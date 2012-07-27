@@ -17,6 +17,7 @@ class MiniEditorController extends WikiaController {
 	 * @request type array loadOnDemandAssets
 	 */
 	public function loadAssets() {
+		$loadStyles = $this->request->getVal('loadStyles', true);
 		$loadOnDemand = $this->request->getVal('loadOnDemand', false);
 		$additionalAssets = $this->request->getVal('additionalAssets', array());
 
@@ -30,6 +31,11 @@ class MiniEditorController extends WikiaController {
 		// Create a JS variable to let us know if we are loading on demand or not
 		$this->response->setJsVar('wgMiniEditorLoadOnDemand', $loadOnDemand);
 
+		// If styles are not loaded here, they must be loaded in JavaScript
+		if ($loadStyles) {
+			$this->response->addAsset('extensions/wikia/MiniEditor/css/MiniEditor.scss');
+		}
+
 		// Loading assets on demand
 		if ($loadOnDemand) {
 
@@ -37,9 +43,6 @@ class MiniEditorController extends WikiaController {
 			$this->response->setJsVar('wgMiniEditorAssets', $this->request->getVal('loadOnDemandAssets', array()));
 
 		} else {
-
-			// Required styles
-			$this->response->addAsset('extensions/wikia/MiniEditor/css/MiniEditor.scss');
 
 			// Load javascript variables
 			$response = $this->sendSelfRequest('makeGlobalVariables');

@@ -203,6 +203,7 @@ class ArticleCommentsController extends WikiaController {
 			// Load MiniEditor assets (except for mobile)
 			if ( $app->wg->EnableMiniEditorExtForArticleComments && !$app->checkSkin( 'wikiamobile' ) ) {
 				$app->sendRequest( 'MiniEditor', 'loadAssets', array(
+					'loadStyles' => !$app->wg->ArticleCommentsLoadOnDemand,
 					'loadOnDemand' => true,
 					'loadOnDemandAssets' => array(
 						'/extensions/wikia/MiniEditor/js/Wall/Wall.Animations.js'
