@@ -129,12 +129,14 @@ class WikiaSolrClient extends WikiaSearchClient {
 
 		$boostFunctions = array();
 
+		$queryFields = array('html'=>1.5, 'title'=>5);
 
 		if( $this->isInterWiki ) {
 			$queryClauses += $this->getInterWikiQueryClauses($hub);
 
 			// this is still pretty important!
 			$boostQueries[] = self::valueForField('wikititle', $queryNoQuotes, array('boost'=>15, 'quote'=>'\"'));
+			$queryFields['wikititle'] = 7;
 
 			# we can do this because the host is a text field
 			if (!$this->includeAnswers($query)) {
@@ -152,7 +154,7 @@ class WikiaSolrClient extends WikiaSearchClient {
 								'group.start' => $start,
 								'group.rows' => 40,
 								'group.format' => 'simple' //@todo implement grouped format?
-							);
+							); 
 		}
 		else {
 			// for caching, hopefully
@@ -174,7 +176,7 @@ class WikiaSolrClient extends WikiaSearchClient {
 		}
 
 
-		$queryFields = array('html'=>1.5, 'title'=>5);
+
 
 		$qfString = "\'";
 		array_walk($queryFields, function($val, $key) use (&$qfString) { $qfString .= WikiaSolrClient::field($key)."^{$val} "; }) ;
@@ -203,7 +205,7 @@ class WikiaSolrClient extends WikiaSearchClient {
 		try {
 			$response = $this->solrClient->search($sanitizedQuery, $start, $size, $params);
 		}
-		catch (Exception $exception) { 
+		catch (Exception $exception) {
 				if (!$skipBoostFunctions) {
 					$methodOptions['skipBoostFunctions'] = true;
 
@@ -253,7 +255,7 @@ class WikiaSolrClient extends WikiaSearchClient {
 		$docs = empty( $response->response->docs ) ? array() : $response->response->docs;
 
 		// @todo replace Apache_Solr_Service with something more sensible. maybe homegrown.
-		if (empty($docs) && isset($response->grouped) && $response->grouped !== null) {
+		if (empty($docs) && $response->grouped !== null) {
 			$docs = array();
 			foreach ($response->grouped->host->doclist->docs as $doc) {
 				$solrDoc = new Apache_Solr_Document();
