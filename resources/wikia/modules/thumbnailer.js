@@ -12,15 +12,19 @@
 	'use strict';
 
 	function thumbnailer() {
-		//targets the resize part of a thumbnail's URL
-		var sizeRegExp = new RegExp('\\/[0-9]+px\\-'),
-			//targets the crop part of a thumbnai's URL
-			cropRegExp = new RegExp('\\/[0-9]+(\\,|%2C)[0-9]+(\\,|%2C)[0-9]+(\\,|%2C)[0-9]+\\-'),
+		//targets the image file extension
+		var extRegExp = new RegExp('\\.(jpg|jpeg|gif|bmp|png|svg)$', 'i'),
 			imagePath = '/images/',
 			thumbPath = '/images/thumb/';
 
 		/**
 		 * @private
+		 *
+		 * Checks if a URL points to a thumbnail
+		 *
+		 * @param {String} url The URL of an image or thumbnail
+		 *
+		 * @return {Boolean} true if it's a thumbnail or false if it's an image
 		 */
 		function isThumbUrl(url) {
 			return url.indexOf('/thumb/') > 0;
@@ -28,13 +32,29 @@
 
 		/**
 		 * @private
+		 *
+		 * Removes the thumbnail options part from a thumbnail URL
+		 *
+		 * @param {String} url The URL of a thumbnail
+		 *
+		 * @return {String} the URL without the thymbnail options
 		 */
 		function clearThumbOptions(url) {
-			return url.replace(sizeRegExp, '/').replace(cropRegExp, '/');
+			//The URL of a thumbnail is in the following format:
+			//http://domain/image_path/image.ext/thumbnail_options.ext
+			//so return the URL till the last / to remove the options
+			return url.substring(0, url.lastIndexOf('/'));
 		}
 
 		/**
 		 * @private
+		 *
+		 * Switches a thumb path into an image path and vice versa inside an URL
+		 *
+		 * @param {String} url The URL of an image or thumbnail
+		 * @param {String} type Either 'image' or 'thumb'
+		 *
+		 * @return {String} the URL with the switched path
 		 */
 		function switchPathTo(url, type) {
 			var from,
@@ -50,13 +70,6 @@
 			}
 
 			url = url.replace(from, to);
-
-			if (thumb) {
-				url += '/' + url.substr(url.lastIndexOf('/') + 1);
-			} else {
-				url = url.substr(0, url.lastIndexOf('/'));
-			}
-
 			return url;
 		}
 
@@ -65,10 +78,11 @@
 			 * @public
 			 *
 			 * Converts the URL of a full size image or of a thumbnail into one of a thumbnail of
-			 * the specified size
+			 * the specified size and returns it
 			 *
 			 * @param {String} url The URL to the full size image or a thumbnail
-			 * @param {String} type The type, either 'image' (default) or 'video'
+			 * @param {String} type The type, either 'image' (default, the result will be cropped)
+			 * or 'video' (the result will be squeezed)
 			 * @param {Integer} width The width of the thumbnail to fetch
 			 * @param {Integer} height The height of the thumbnail to fetch
 			 */
@@ -84,11 +98,11 @@
 					url = switchPathTo(url, 'thumb');
 				}
 
-				// add parameters to the URL
+				//add parameters to the URL
 				var tokens = url.split('/'),
-					last = tokens.slice(-1)[0];
+					last = tokens.slice(-1)[0].replace(extRegExp, '');
 
-				tokens[tokens.length - 1] = width + 'x' + height + ((type === 'video') ? '-' :  'x2-') + last + '.png';
+				tokens.push(width + 'x' + height + ((type === 'video') ? '-' :  'x2-') + last + '.png');
 				return tokens.join('/');
 			},
 
@@ -97,11 +111,11 @@
 			 *
 			 * Converts the URL of a thumbnail into one of a full size image
 			 *
-			 * @param {String} url The URL to the full size image or a thumbnail
+			 * @param {String} url The URL to a thumbnail
 			 */
 			getImageURL: function getImageURL(url) {
 				if (isThumbUrl(url)) {
-					// URL points to a thumbnail, remove crop and size
+					// URL points to a thumbnail
 					url = clearThumbOptions(url);
 					url = switchPathTo(url, 'image');
 				}
