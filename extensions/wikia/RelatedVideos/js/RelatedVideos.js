@@ -63,7 +63,6 @@ var RelatedVideos = {
 			RelatedVideos.trackItemImpressions(RelatedVideos.currentRoom);
 			RelatedVideos.checkButtonState();
 			$('.addVideo',this.rvModule).tooltip({
-				placement: 'top',
 				delay: { show: 500, hide: 100 }
 			});
 		}

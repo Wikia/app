@@ -1,6 +1,6 @@
 <section class="LatestPhotosModule module" id="LatestPhotosModule">
 	<h1 class="tight"><?= wfMsg('oasis-latest-photos-title') ?></h1>
-	<?= (!empty($wg->EnableUploads)) ? Wikia::specialPageLink('Upload', 'oasis-add-photo', (!$isUserLoggedIn ? 'wikia-button upphotoslogin' :'wikia-button upphotos'), 'blank.gif', 'oasis-add-photo', 'sprite photo') : '' ?>
+	<?= (!empty($wg->EnableUploads)) ? Wikia::specialPageLink('Upload', 'oasis-add-photo', (!$isUserLoggedIn ? 'wikia-button upphotoslogin' :'wikia-button upphotos'), 'blank.gif', 'oasis-add-photo-to-wiki', 'sprite photo', '', 'tooltip') : '' ?>
 	<div class="tally counter">
 		<?= wfMsgExt('oasis-latest-photos-header', array( 'parsemag' ), $total, ($total < 100000 ? 'fixedwidth' : '') ) ?>
 	</div>

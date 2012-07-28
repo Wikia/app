@@ -111,6 +111,7 @@ $messages['en'] = array(
 
 	'oasis-random-wiki' => 'Random Wiki',
 	'oasis-add-photo' => 'Add a Photo',
+	'oasis-add-photo-to-wiki' => 'Add a photo to this wiki',
 	'oasis-anon-user' => 'A Wikia contributor',
 	'oasis-create-page' => 'Create a new page on this wiki',
 	'oasis-add-page' => 'Add a Page',
