@@ -7,7 +7,11 @@ var UploadPhotos = {
 	libinit: false,
 	init: function() {
 		if(!($(".upphotoslogin").exists())) {
-			$(".upphotos").click(UploadPhotos.showDialog);
+			$(".upphotos")
+				.click(UploadPhotos.showDialog)
+				.tooltip({
+					delay: { show: 500, hide: 100 }
+				});
 		}
 	},
 	showDialog: function(evt) {

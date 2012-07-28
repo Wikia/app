@@ -1363,7 +1363,7 @@ class Wikia {
 	 * @param query array [optional] query parameters
 	 */
 
-	static function normalPageLink($title, $message = '', $class = null, $img = null, $alt = null, $imgclass = null, $query = null) {
+	static function normalPageLink($title, $message = '', $class = null, $img = null, $alt = null, $imgclass = null, $query = null, $rel = null) {
 		global $wgStylePath, $wgBlankImgUrl;
 
 		$classes = array();
@@ -1376,6 +1376,10 @@ class Wikia {
 
 		if ($alt != '') {
 			$classes['title'] = wfMsg($alt);
+		}
+
+		if ($alt != '') {
+			$classes['rel'] = $rel;
 		}
 
 		if ($message != '') {
@@ -1427,12 +1431,13 @@ class Wikia {
 	 * @param img String - [optional] the name of an image to pre-pend to the text (for secondary buttons)
 	 * @param alt String - [optional] the name of a message to be used as link tooltip
 	 * @param imgclass String - [optional] the name of a css class for the image (for secondary buttons)
+	 * @param rel String - [optional] the link's rel attribute
 	 */
 
-	static function specialPageLink($pageName, $message = '', $class = null, $img = null, $alt = null, $imgclass = null, $query = null)
+	static function specialPageLink($pageName, $message = '', $class = null, $img = null, $alt = null, $imgclass = null, $query = null, $rel = null)
 	{
 		$title = SpecialPage::getTitleFor( $pageName );
-		return self::normalPageLink($title, $message, $class, $img, $alt, $imgclass, $query);
+		return self::normalPageLink($title, $message, $class, $img, $alt, $imgclass, $query, $rel);
 	}
 
 	/**
