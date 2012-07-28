@@ -45,9 +45,8 @@ class ArticleCommentsController extends WikiaController {
 			}
 
 			$this->getCommentsData( $this->wg->Title, $this->wg->request->getInt( 'page', 1 ) );
-			$this->showComments = $this->countCommentsNested === 0 || empty( $this->wg->ArticleCommentsLoadOnDemand );
 
-			if ( !$this->showComments ) {
+			if ( !empty( $this->wg->ArticleCommentsLoadOnDemand ) ) {
 				$this->response->setJsVar( 'wgArticleCommentsLoadOnDemand', true );
 			}
 

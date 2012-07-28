@@ -9,9 +9,9 @@
 		<? endif ?>
 	</ul>
 	<h1 id="article-comments-counter-header"><?= wfMsgExt( 'oasis-comments-header', array( 'parsemag' ), $wg->Lang->FormatNum( $countCommentsNested ) ) ?></h1>
-	<div id="article-comments-wrapper" class="article-comments-wrapper<?= $showComments ? '' : ' loading' ?>">
+	<div id="article-comments-wrapper" class="article-comments-wrapper<?= empty( $wg->ArticleCommentsLoadOnDemand ) ? '' : ' loading' ?>">
 		<div id="article-comments" class="article-comments" data-page="<?= $page ?>">
-			<? if ( $showComments ): ?>
+			<? if ( empty( $wg->ArticleCommentsLoadOnDemand ) ): ?>
 				<?= $app->renderView( 'ArticleCommentsController', 'Content' ) ?>
 			<? endif ?>
 		</div>
