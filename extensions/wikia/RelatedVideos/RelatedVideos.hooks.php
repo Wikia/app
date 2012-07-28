@@ -1,14 +1,14 @@
 <?php
 
 class RelatedVideosHookHandler {
-	
+
 	const RELATED_VIDEOS_POSITION = 2;
 
 	private $count = 0;
-	 
+
 	public function onOutputPageBeforeHTML( &$out, &$text ) {
 		wfProfileIn(__METHOD__);
-		
+
 		if( $out->isArticle() && F::app()->wg->request->getVal( 'diff' ) === null && ( F::app()->wg->title->getNamespace() == NS_MAIN ) ) {
 			$text .= F::app()->sendRequest('RelatedVideos', 'getCarusel')->toString();
 		}
@@ -20,7 +20,7 @@ class RelatedVideosHookHandler {
 	public function onBeforePageDisplay( $out, $skin ) {
 		wfProfileIn(__METHOD__);
 
-		if( get_class($skin) == 'SkinOasis' ) {
+		if( F::app()->checkSkin( 'oasis', $skin ) ) {
 			$assetsManager = F::build( 'AssetsManager', array(), 'getInstance' );
 			$scssPackage = 'relatedvideos_scss';
 			$jsPackage = 'relatedvideos_js';
@@ -28,7 +28,7 @@ class RelatedVideosHookHandler {
 			foreach ( $assetsManager->getURL( $scssPackage ) as $url ) {
 				$out->addStyle( $url );
 			}
-	
+
 			foreach ( $assetsManager->getURL( $jsPackage ) as $url ) {
 				$out->addScript( "<script src=\"{$url}\"></script>" );
 			}
@@ -37,7 +37,7 @@ class RelatedVideosHookHandler {
 		wfProfileOut(__METHOD__);
 		return true;
 	}
-	
+
 	 /**
 	 * Purge RelatedVideos namespace article after an edit
 	 */
@@ -62,7 +62,7 @@ class RelatedVideosHookHandler {
 				break;
 			}
 		}
-			
+
 		wfProfileOut(__METHOD__);
 		return true;
 	}
@@ -95,23 +95,23 @@ class RelatedVideosHookHandler {
 		wfProfileOut(__METHOD__);
 		return true;
 	}
-	
+
 	public function onGetRailModuleList(&$modules) {
 		$app = F::App();
 		$app->wf->ProfileIn(__METHOD__);
-		
+
 		$title = $app->wg->Title;
 		$namespace = $title->getNamespace();
-		
+
 		if( $title->exists() && $app->wg->request->getVal( 'diff' ) === null && ( $namespace == NS_MAIN ) ) {
 			$pos = $app->wg->User->isAnon() ? 1301 : 1281;
 			$modules[$pos] = array('RelatedVideosRail', 'index', null);
 		}
-		
+
 		$app->wf->ProfileOut(__METHOD__);
 		return true;
 	}
-	
-	
-	
+
+
+
 }
