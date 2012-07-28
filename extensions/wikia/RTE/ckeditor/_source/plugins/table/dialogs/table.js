@@ -218,11 +218,14 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 					if ( !table.getAttribute( 'style' ) )
 						table.removeAttribute( 'style' );
+					// Wikia change start - this is needed to prevent styles from losing whitespace
+					// during reverse parsing (BugId:34438).
+					else
+						table.setAttribute( 'data-rte-style', table.getAttribute( 'style' ) );
+					// Wikia change end
 				}
 
-				// Wikia - remove data-rte-attribs and data-rte-style attributes, so changes made in popup will be saved in wikitext
-				table.removeAttribute('data-rte-attribs');
-				table.removeAttribute('data-rte-style');
+				// Wikia change - add table class
 				table.addClass('article-table');
 
 				// Insert the table element if we're creating one.
@@ -398,10 +401,16 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 											},
 											commit : function( data, selectedTable )
 											{
-												if ( this.getValue() )
-													selectedTable.setAttribute( 'align', this.getValue() );
-												else
-													selectedTable.removeAttribute( 'align' );
+												// Wikia change start - use style attributes instead of align (BugId:34438)
+												var value = this.getValue();
+												if ( value ) {
+													value == 'center' ? selectedTable.setStyle( 'margin', '0 auto' ) :
+														selectedTable.setStyle( 'float', value );
+												} else {
+													selectedTable.removeStyle( 'float' );
+													selectedTable.removeStyle( 'margin' );
+												}
+												// Wikia change end
 											}
 										}
 									]
