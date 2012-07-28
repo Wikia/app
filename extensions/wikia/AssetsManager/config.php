@@ -741,7 +741,7 @@ $config['forum_mini_editor_js'] = array(
 /** RelatedVideos **/
 
 $config['relatedvideos_js'] = array(
-	'skin' => array( 'monobook', 'oasis' ),//this package need to be reviewed before inclusion in WikiaMobile, JWplayer is not needed and too big
+	'skin' => array( 'oasis' ), //we have no support for relatedvideos in wikiamobile and monobook as for now
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'//extensions/wikia/RelatedVideos/js/RelatedVideos.js'
@@ -750,7 +750,7 @@ $config['relatedvideos_js'] = array(
 
 $config['relatedvideos_scss'] = array(
 		'type' => AssetsManager::TYPE_SCSS,
-		'skin' => array( 'monobook', 'oasis' ), //we have no support for relatedvideos in wikiamobile skin as for now
+		'skin' => array( 'oasis' ), //we have no support for relatedvideos in wikiamobile and monobook as for now
 		'assets' => array(
 			'//extensions/wikia/RelatedVideos/css/RelatedVideos.scss'
 		)
