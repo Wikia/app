@@ -240,6 +240,7 @@ $config['oasis_nojquery_shared_js'] = array(
 		'//skins/oasis/js/SharingToolbar.js',
 		'//skins/oasis/js/ContributeMenu.js',
 		'//skins/oasis/js/WikiaForm.js',
+		'//resources/wikia/libraries/bootstrap/tooltip.js',
 	)
 );
 
@@ -747,32 +748,11 @@ $config['relatedvideos_js'] = array(
 	)
 );
 
-/** RelatedVideos **/
-
-$config['relatedvideos_js_tooltips'] = array(
-	'skin' => 'oasis',
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => array(
-		'//resources/wikia/libraries/bootstrap/tooltip.js',
-		'//resources/wikia/libraries/bootstrap/popover.js',
-		'#group_relatedvideos_js'
-	)
-);
-
 $config['relatedvideos_scss'] = array(
 		'type' => AssetsManager::TYPE_SCSS,
 		'skin' => array( 'monobook', 'oasis' ), //we have no support for relatedvideos in wikiamobile skin as for now
 		'assets' => array(
 			'//extensions/wikia/RelatedVideos/css/RelatedVideos.scss'
-		)
-);
-
-$config['relatedvideos_scss_tooltips'] = array(
-		'type' => AssetsManager::TYPE_SCSS,
-		'skin' => 'oasis',
-		'assets' => array(
-			'//resources/wikia/libraries/bootstrap/tooltip.scss',
-			'#group_relatedvideos_scss'
 		)
 );
 
