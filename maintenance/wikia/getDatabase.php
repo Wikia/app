@@ -95,10 +95,10 @@ if (array_key_exists( 'f', $opts )) {
 				if ($day > 2000) {
 					list ($unused, $year, $month, $day) = $matches;
 					$day_of_year = date('z', mktime('0','0','0', $month, $day, $year));
-					$date_list[$year][$day_of_year] = "fulldump_$year$spacer$month$spacer$day";
+					$date_list[$year][$day_of_year] = "$year$spacer$month$spacer$day";
 				} else {
 					$day_of_year = date('z', mktime('0','0','0', $month, $day, $year));
-					$date_list[$year][$day_of_year] = "fulldump_$day$spacer$month$spacer$year";
+					$date_list[$year][$day_of_year] = "$day$spacer$month$spacer$year";
 				}
 			}
 			krsort($date_list, SORT_NUMERIC);
@@ -110,10 +110,12 @@ if (array_key_exists( 'f', $opts )) {
 			// now we have a sorted list of directories by most recent date.  how many dumps are in there?
 			echo "THIS STEP CAN TAKE A WHILE...\n";
 			foreach ($date_list as $year => $day_of_year) {
-				foreach ($day_of_year as $dirname) {
+				foreach ($day_of_year as $date) {
+					$dirname = "fulldump_" . $date;
 					echo "Searching $dirname...\n";
-					$filename = null;
-					$response = shell_exec("s3cmd ls s3://".$databaseDirectory."/$dirname/".$dbname."*");
+					$filename = $databaseDirectory."/$dirname/".$dbname."_$date".".sql.gz" ;
+					echo "Searching for $filename...\n";
+					$response = shell_exec("s3cmd ls s3://".$databaseDirectory."/$dirname/".$dbname."_$date".".sql.gz");
 					$file_list = explode("\n", $response);
 					echo "Found " . count($file_list) . " items...\n";
 					foreach ($file_list as $file) {
