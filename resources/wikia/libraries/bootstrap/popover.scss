@@ -1,5 +1,7 @@
 @import "skins/oasis/css/core/color";
 
+$color-shadow: mix(#000000, $color-page, 50%);
+
 .popover {
   position: absolute;
   top: 0;
@@ -68,13 +70,11 @@
 }
 
 .popover-inner {
-  max-width: 400px;
-  padding: 3px;
-  overflow: hidden;
-  background: $color-page;
-  -webkit-box-shadow: 0 0px 15px rgba(0, 0, 0, 0.5);
-     //-moz-box-shadow: 0 0px 10px rgba(0, 0, 0, 0.3);
-          //box-shadow: 0 0px 10px rgba(0, 0, 0, 0.3);
+	@include box-shadow(0, 0, 15px, $color-shadow, false, .5);
+	max-width: 400px;
+	padding: 3px;
+	overflow: hidden;
+	background: $color-page;
 }
 
 .popover-title {

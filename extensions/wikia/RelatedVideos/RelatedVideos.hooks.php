@@ -25,9 +25,6 @@ class RelatedVideosHookHandler {
 			$scssPackage = 'relatedvideos_scss';
 			$jsPackage = 'relatedvideos_js';
 
-			$scssPackage = 'relatedvideos_scss_tooltips';
-			$jsPackage = 'relatedvideos_js_tooltips';
-
 			foreach ( $assetsManager->getURL( $scssPackage ) as $url ) {
 				$out->addStyle( $url );
 			}
