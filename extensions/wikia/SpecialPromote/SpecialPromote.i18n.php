@@ -64,7 +64,7 @@ $messages['en'] = array(
 	'promote-statusbar-icon' => 'Status',
 	'promote-statusbar-inreview' => 'One or more of your images are currently in review. Your wiki will appear on [http://www.wikia.com www.wikia.com] when images have been approved.',
 	'promote-statusbar-approved' => 'Woohoo! $1 is promoted on [http://www.wikia.com www.wikia.com]!',
-	'promote-statusbar-rejected' => 'One or more of your images was not approved. [[Special:Contact Find out why]]',
+	'promote-statusbar-rejected' => 'One or more of your images was not approved. [[Special:Contact|Find out why]]',
 );
 
 $messages['qqq'] = array(
