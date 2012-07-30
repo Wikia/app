@@ -22,6 +22,21 @@ abstract class VideoHandler extends BitmapHandler {
 	protected static $classnameSuffix = 'VideoHandler';
 	protected static $providerDetailUrlTemplate = '';	// must have a token called "$1"
 
+	/**
+	 * @param $image File
+	 * @return array|bool
+	 */
+	function formatMetadata( $image ) {
+		$meta = $image->getMetadata();
+
+		if ( !$meta ) {
+			return false;
+		}
+		$meta = unserialize( $meta );
+
+		return $this->formatMetadataHelper( $meta );
+	}
+
 	function normaliseParams( $image, &$params ) {
 		global $wgMaxImageArea, $wgMaxThumbnailArea;
 		wfProfileIn( __METHOD__ );
@@ -281,9 +296,8 @@ abstract class VideoHandler extends BitmapHandler {
 //				? round( $oThumbnailImage->width / $this::$aspectRatio )
 //				: $oThumbnailImage->height,
 			$oThumbnailImage->path,
-			$oThumbnailImage->page,
-			$this::$aspectRatio
-		);		
+			$oThumbnailImage->page
+		);
 	}
 
 	public function addExtraBorder( $width ){
