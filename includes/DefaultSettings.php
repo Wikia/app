@@ -1236,7 +1236,7 @@ $wgDBTableOptions = 'ENGINE=InnoDB';
  * DBA has done his best job.
  * String override can be used for some additional fun :-)
  */
-$wgSQLMode = '';
+$wgSQLMode = null;
 
 /** Mediawiki schema */
 $wgDBmwschema = 'mediawiki';
