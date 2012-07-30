@@ -1326,7 +1326,7 @@ class WallHooksHelper {
 
 					$vars = array(
 						'cntChanges'	=> $cntChanges,
-						'hdrtitle'		=> wfMsg('wall-recentchanges-wall-group', array(Xml::element('a', array('href' => $wallMsgUrl), $wallMsgTitle), $wallUrl, $wallOwnerName)),
+						'hdrtitle'		=> wfMsg('wall-recentchanges-thread-group', array(Xml::element('a', array('href' => $wallMsgUrl), $wallMsgTitle), $wallUrl, $wallOwnerName)),
 						'inx'			=> $oChangeList->rcCacheIndex,
 						'users'			=> $users,
 						'sideArrowLink' => '<a href="#" title="'.htmlspecialchars(wfMsg( 'rc-enhanced-expand' )).'">'.$oChangeList->getSideArrow().'</a>',
