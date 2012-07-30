@@ -96,7 +96,7 @@ select {
 	<?php
 	if (!empty($formData['wikis']) && count($formData['wikis'])) {
 		?>
-		<h3 id="headerWikis"><?php print wfMsg('whereisextension-list') ?></h3>
+		<h3 id="headerWikis"><?php print wfMsg('whereisextension-list', $formData['count'] ) ?></h3>
 		<form method="post" action="<?php print $formData['actionURL'] ?>" name="wikiSelectForm">
 			<ul>
 			<?php
