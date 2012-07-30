@@ -25,7 +25,8 @@ class RecentChangesFiltersStorage {
 		}
 		
 		if(empty($values)) {
-			return array();
+			//if nothing is selected we are selecting all
+			return array_keys($this->namespaces);
 		}
 		
 		if(!$onlyFromThisWiki) {
