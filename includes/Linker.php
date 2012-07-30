@@ -258,6 +258,11 @@ class Linker {
 		#
 		global $wgWikiaEnableAutoPageCreateExt;
 		$isAutoPageCreateEnabled =  isset( $wgWikiaEnableAutoPageCreateExt ) && $wgWikiaEnableAutoPageCreateExt == true;
+		//do not add queries to link if this is a link to user page and message wall is enabled
+		if ( $target->isTalkPage() && F::app()->wg->EnableWallExt ) {
+			$num = array_search( 'broken', $options );
+			if($num !== false) unset($options[$num]);
+		}
 
 		# If it's a broken link, add the appropriate query pieces, unless
 		# there's already an action specified, or unless 'edit' makes no sense
@@ -287,6 +292,14 @@ class Linker {
 		wfProfileIn( __METHOD__ );
 		global $wgUser;
 		$defaults = array();
+
+		//wikia change - start
+		// do not add 'new' class to link to user talk page if wall is enabled
+		if ( $target->isTalkPage() && F::app()->wg->EnableWallExt ) {
+			$num = array_search( 'broken', $options );
+			if ( $num !== false ) unset( $options[$num] );
+		}
+		//wikia change - end
 
 		if ( !in_array( 'noclasses', $options ) ) {
 			wfProfileIn( __METHOD__ . '-getClasses' );
