@@ -17,7 +17,7 @@ class AdminUploadReviewTask extends BatchTask {
 		$mUsername;
 
 	protected $helper;
-	protected $model;
+	protected $model; /** @var CityVisualization $model */
 	protected $corporatePagesIds = array(80433, 111264);
 	protected $dbNamesToBeSkipped = array('wikiaglobal', 'dewiki');
 
@@ -330,23 +330,30 @@ class AdminUploadReviewTask extends BatchTask {
 
 			$imagesToAdd[] = $imageData;
 		}
-
 		$dbm = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
-		$dbm->begin(__METHOD__);
 
+		$deleteArray = array();
+		$insertArray = array();
 		foreach( $imagesToAdd as $image ) {
-			$insertArray = array();
-
+			$tmpArr = array();
 			foreach( $image as $field => $value ) {
-				$insertArray[$field] = $value;
+				$tmpArr[$field] = $value;
 			}
-
-			$dbm->insert(
-				'city_visualization_images',
-				$insertArray
-			);
+			$insertArray[] = $tmpArr;
+			$deleteArray[] = $image->page_id;
 		}
 
+		$dbm->begin(__METHOD__);
+		$sql = 'DELETE FROM city_visualization_images WHERE page_id IN (' . $dbm->makeList($deleteArray) . ') AND city_id = \'' . $targetWikiId . '\'';
+
+		$dbm->query($sql);
+		$dbm->commit(__METHOD__);
+
+		$dbm->begin(__METHOD__);
+		$dbm->insert(
+			'city_visualization_images',
+			$insertArray
+		);
 		$dbm->commit(__METHOD__);
 	}
 
