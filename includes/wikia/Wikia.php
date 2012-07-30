@@ -34,6 +34,7 @@ $wgHooks['MediaWikiPerformAction']   [] = "Wikia::onPerformActionNewrelicNameTra
 $wgHooks['SkinTemplateOutputPageBeforeExec'][] = "Wikia::onSkinTemplateOutputPageBeforeExec";
 $wgHooks['ResourceLoaderRegisterModules'][] = "Wikia::onResourceLoaderRegisterModules";
 $wgHooks['ResourceLoaderUserOptionsModuleGetOptions'][] = "Wikia::onResourceLoaderUserOptionsModuleGetOptions";
+$wgHooks['ResourceLoaderFileModuleConcatenateScripts'][] = 'Wikia::onResourceLoaderFileModuleConcatenateScripts';
 
 /**
  * This class have only static methods so they can be used anywhere
@@ -1897,4 +1898,11 @@ class Wikia {
 
 		return true;
 	}
+
+	static public function onResourceLoaderFileModuleConcatenateScripts( &$script ) {
+		$script = preg_replace('#^.*@Packager\\.RemoveLine.*$#m', '', $script);
+
+		return true;
+	}
+
 }
