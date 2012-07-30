@@ -724,6 +724,10 @@ var Lightbox = {
 			var originalCount = LightboxLoader.cache[Lightbox.current.carouselType].length;
 
 			idx1 = idx1 - originalCount - 1;
+			// (BugId:38546) Don't count placeholder thumb when it is first in the row 
+			if(idx1 == 0) {
+				idx1 = 1;
+			}
 			idx2 = idx2 - originalCount - 1;
 			total = Lightbox.backfillCount;
 			
@@ -765,7 +769,7 @@ var Lightbox = {
 			// add more thumbs to carousel if we need them
 			if(Lightbox.current.thumbs.length < Lightbox.thumbLoadCount) {
 				// asynchronous 
-				Lightbox.getMediaThumbs.wikiPhotos(); // uses Lightbox.to to this is called in promise pattern  
+				Lightbox.getMediaThumbs.wikiPhotos(); // uses Lightbox.to which is recieved in promise pattern  
 			}
 			
 			// Do insert of placeholder thumb now that we know the number of backfill items 
@@ -871,6 +875,7 @@ var Lightbox = {
 		});
 	},
 	getMediaThumbs: {
+		backfilling: false,
 		// Get article images/videos from DOM
 		articleMedia: function(backfill) {
 			var cached = LightboxLoader.cache.articleMedia,
@@ -1025,10 +1030,13 @@ var Lightbox = {
 		},
 		// Get the rest of the photos from the wiki
 		wikiPhotos: function() {
-			if(!Lightbox.to) {
+			if(Lightbox.getMediaThumbs.backfilling || !Lightbox.to) {
 				return;
 			}
+			Lightbox.getMediaThumbs.backfilling = true;
+			
 			$().log("Backfilling with wiki photos", "Lightbox");
+			
 			$.nirvana.sendRequest({
 				controller: 'Lightbox',
 				method: 'getThumbImages',
@@ -1057,6 +1065,8 @@ var Lightbox = {
 					Lightbox.includeLatestPhotos = false; 
 					
 					Lightbox.addThumbsToCarousel(thumbArr, true);
+					
+					Lightbox.getMediaThumbs.backfilling = false;
 				}
 			});
 		}

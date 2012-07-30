@@ -34,7 +34,7 @@
 			itemClick: false,
 			trackProgress: false, // pass in function for inserting progress data into dom.
 			beforeMove: false, // execute before moving the caoursel
-			afterMove: false // execute after moving the carousel
+			afterMove: false // execute after moving the carousel left or right
 		};
 
 		options = $.extend(defaults, options);
@@ -180,8 +180,10 @@
 			if(isNaN(left)) {
 				left = 0;
 			}
-
-			if(left == constants.minLeft) {
+			
+			// "left" value might not be exact, so we're checking 
+			// if we're within half a thumbnail's width of the end. 
+			if(left < constants.minLeft + constants.itemWidth/2) {
 				// disable right arrow
 				disableNext();
 				enablePrevious();
@@ -196,7 +198,6 @@
 			}
 		}
 
-		// ranges is an array of ranges, ex: [visible, next, previous]
 		function lazyLoadImages() {
 			var idx1 = states.currIndex - options.itemsShown,
 				idx2 = states.currIndex,
