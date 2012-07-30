@@ -114,8 +114,6 @@ function SharedHelpHook(&$out, &$text) {
 		return true;
 	}
 
-	error_log('11111111111'.__FUNCTION__);
-
 	if(!$out->isArticle()) { # Do not process for pages other then articles
 		return true;
 	}
