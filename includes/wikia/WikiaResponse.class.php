@@ -332,7 +332,15 @@ class WikiaResponse {
 		$this->data[$key] = $value;
 	}
 
-	public function getVal( $key, $default = null ) {
+	/* getVal can be called directly via $this->response->getVal() 
+	 * or by __get on WikiaDispatchable, which is frequently a "get" right before a "set"
+	 * Returning a reference here allows us to use a pattern like:
+	 * $this->foo = array();
+	 * $this->foo['a'] = 'b';
+	 * This style was valid in Oasis, not valid in Nirvana and now works again. BugId: 30231
+	 */
+
+	public function &getVal( $key, $default = null ) {
 		if( isset( $this->data[$key] ) ) {
 			return $this->data[$key];
 		}

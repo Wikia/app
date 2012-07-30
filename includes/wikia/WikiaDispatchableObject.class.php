@@ -175,7 +175,8 @@ abstract class WikiaDispatchableObject extends WikiaObject {
 		}
 	}
 	
-	public function __get($propertyName) {
+	// Returns a reference now, allowing for better syntax during set operations
+	public function &__get($propertyName) {
 		if (property_exists($this, $propertyName)) {
 			return $this->$propertyName;
 		} else {
