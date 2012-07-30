@@ -22,6 +22,8 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 		$this->slider = $this->sendRequest('SpecialWikiaHubsV2Controller','slider')->getData();
 		$this->explore = $this->sendRequest('SpecialWikiaHubsV2Controller','explore')->getData();
 		$this->pulse= $this->sendRequest('SpecialWikiaHubsV2Controller','pulse')->getData();
+
+		$this->response->addAsset('extensions/wikia/WikiaHubsV2/css/WikiaHubsV2.scss');
 	}
 
 	public function slider() {
