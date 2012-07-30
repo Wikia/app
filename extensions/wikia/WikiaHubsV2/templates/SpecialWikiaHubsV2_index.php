@@ -1,204 +1,209 @@
-<?= F::app()->renderView('SpecialWikiaHubsV2', 'pulse', array()); ?>
-
-<div id="mw-content-text" lang="en" dir="ltr" class="mw-content-ltr"><p>
-<script>
-var wgWikiaHubType = 'gaming';
-</script>
-<div class="WikiaGrid WikiaHubs" id="WikiaHubs">
-<div class="grid-3 alpha">
-<section style="margin-bottom:20px" class="grid-3 alpha">
-</p>
-<div class="WikiaMosaicSlider" style="display:none">
-<div class="wikia-mosaic-slider-region">
-<p>		<a href="" class="wikia-mosaic-link">
-</p>
-<div class="wikia-mosaic-slider-panorama">
-</div>
-<div class="wikia-mosaic-slider-description-mask">
-</div>
-<div class="wikia-mosaic-slider-description">
-</div>
-<p>		</a>
-</p>
-</div>
-<ul class="wikia-mosaic-thumb-region">
-<li class="wikia-mosaic-slide">
-<a href='http://www.wikia.com/Video_Games%2FVideo_Game_Olympics' class='wikia-mosaic-link'>
-<img width='320' height='210' src='http://images3.wikia.nocookie.net/__cb57088/wikiaglobal/images/thumb/e/e6/VG_Olympics_slider.jpg/320px-0%2C321%2C0%2C210-VG_Olympics_slider.jpg' class="wikia-mosaic-hero-image">
-<img width='155' height='100' src='http://images2.wikia.nocookie.net/__cb57088/wikiaglobal/images/thumb/e/e6/VG_Olympics_slider.jpg/155px-0%2C320%2C0%2C206-VG_Olympics_slider.jpg' class="wikia-mosaic-thumb-image">
-<span class="wikia-mosaic-description-mask">
-</span>
-<span class="wikia-mosaic-description">
-<span class="image-description"><b>Exclusively on Wikia!</b></span>
-<span class="wikia-mosaic-short-title">Gaming Olympics</span>
-<span class="description-more">Participate in the biggest gaming event of 2012</span>
-</span>
-</a>
-</li>
-<li class="wikia-mosaic-slide">
-<a href='http://tera.wikia.com/wiki/Play_Tera_for_Free' class='wikia-mosaic-link'>
-<img width='320' height='210' src='http://images4.wikia.nocookie.net/__cb57088/wikiaglobal/images/thumb/1/12/Teraslider.jpg/320px-0%2C321%2C0%2C210-Teraslider.jpg' class="wikia-mosaic-hero-image">
-<img width='155' height='100' src='http://images3.wikia.nocookie.net/__cb57088/wikiaglobal/images/thumb/1/12/Teraslider.jpg/155px-0%2C320%2C0%2C206-Teraslider.jpg' class="wikia-mosaic-thumb-image">
-<span class="wikia-mosaic-description-mask">
-</span>
-<span class="wikia-mosaic-description">
-<span class="image-description"><b>Play Tera NOW</b></span>
-<span class="wikia-mosaic-short-title">Tera Special Offer</span>
-<span class="description-more">Also inside: Exclusive developer interview</span>
-</span>
-</a>
-</li>
-<li class="wikia-mosaic-slide">
-<a href='http://gta.wikia.com/Grand_Theft_Auto_V' class='wikia-mosaic-link'>
-<img width='320' height='210' src='http://images2.wikia.nocookie.net/__cb57088/wikiaglobal/images/thumb/2/22/GTAFIVE-COPS.png/320px-137%2C719%2C0%2C381-GTAFIVE-COPS.png' class="wikia-mosaic-hero-image">
-<img width='155' height='100' src='http://images3.wikia.nocookie.net/__cb57088/wikiaglobal/images/thumb/2/22/GTAFIVE-COPS.png/155px-132%2C724%2C0%2C381-GTAFIVE-COPS.png' class="wikia-mosaic-thumb-image">
-<span class="wikia-mosaic-description-mask">
-</span>
-<span class="wikia-mosaic-description">
-<span class="image-description"><b>What's up with GTA V?</b></span>
-<span class="wikia-mosaic-short-title">GTA V Update</span>
-<span class="description-more">All the latest details right here</span>
-</span>
-</a>
-</li>
-<li class="wikia-mosaic-slide">
-<a href='http://dishonored.wikia.com/wiki/User_blog:JAlbor/Dishonored_AMA_with_Harvey_Smith' class='wikia-mosaic-link'>
-<img width='320' height='210' src='http://images3.wikia.nocookie.net/__cb57088/wikiaglobal/images/thumb/c/c5/Harvey_Smith.jpg/320px-45%2C569%2C0%2C343-Harvey_Smith.jpg' class="wikia-mosaic-hero-image">
-<img width='155' height='100' src='http://images4.wikia.nocookie.net/__cb57088/wikiaglobal/images/thumb/c/c5/Harvey_Smith.jpg/155px-40%2C573%2C0%2C343-Harvey_Smith.jpg' class="wikia-mosaic-thumb-image">
-<span class="wikia-mosaic-description-mask">
-</span>
-<span class="wikia-mosaic-description">
-<span class="image-description"><b>Designer Harvey Smith talks Dishonored</b></span>
-<span class="wikia-mosaic-short-title">Dishonored Q&amp;A</span>
-<span class="description-more">A recent interview proves quite enlightening</span>
-</span>
-</a>
-</li>
-<li class="wikia-mosaic-slide last">
-<a href='http://callofduty.wikia.com/wiki/User_blog:Chiafriend12/Upcoming_Call_of_Duty_quiz_%E2%80%94_Submit_questions!' class='wikia-mosaic-link'>
-<img width='320' height='210' src='http://images1.wikia.nocookie.net/__cb57088/wikiaglobal/images/thumb/6/66/Callofduty_Delta_Soldier_MW3.png/320px-69%2C856%2C0%2C516-Callofduty_Delta_Soldier_MW3.png' class="wikia-mosaic-hero-image">
-<img width='155' height='100' src='http://images2.wikia.nocookie.net/__cb57088/wikiaglobal/images/thumb/6/66/Callofduty_Delta_Soldier_MW3.png/155px-62%2C863%2C0%2C516-Callofduty_Delta_Soldier_MW3.png' class="wikia-mosaic-thumb-image">
-<span class="wikia-mosaic-description-mask">
-</span>
-<span class="wikia-mosaic-description">
-<span class="image-description"><b>Call for COD canon questions</b></span>
-<span class="wikia-mosaic-short-title">COD Quiz</span>
-<span class="description-more">The COD wiki is building the ultimate quiz. Fire away!</span>
-</span>
-</a>
-</li>
-</ul>
-</div><script>JSSnippetsStack.push({dependencies:["/resources/wikia/libraries/modernizr/modernizr-2.0.6.js","/extensions/wikia/WikiaPhotoGallery/css/WikiaPhotoGallery.slidertag.mosaic.scss","/extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.slider.mosaic.js"],callback:function(json){WikiaMosaicSliderMasterControl.init(json)},id:"WikiaMosaicSliderMasterControl.init",options:[0]})</script><script>JSSnippetsStack.push({dependencies:["/extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.view.js"],callback:function(json){WikiaPhotoGalleryView.init(json)},id:"WikiaPhotoGalleryView.init"})</script>
-<p></section>
-<section class="grid-3 alpha wikiahubs-newstabs">
-<div class="title-wrapper">
-<span class="title">
-Wikia's Picks
-</span>
-</p>
-<div class="floatright"><a href="http://images3.wikia.nocookie.net/__cb57088/wikiaglobal/images/5/5e/5x5transparent.png" class="image" data-image-name="5x5transparent.png"><img alt="5x5transparent.png" src="http://images3.wikia.nocookie.net/__cb20120306180629/wikiaglobal/images/5/5e/5x5transparent.png" width="5" height="5" /></a></div>
-<p>
-</div>
-</p>
-<link rel="stylesheet" href="http://slot2.images.wikia.nocookie.net/__cb57086/common/extensions/3rdparty/tabber/tabber.css?57086" TYPE="text/css" MEDIA="screen"><script>JSSnippetsStack.push({dependencies:["/extensions/3rdparty/tabber/tabber.js"],getLoaders:function(){return [$.loadJQueryUI]}})</script><div class="tabber"><div class="tabbertab" title="
-New Announcements"><p><div style="padding:5px;">
-<div class="floatright"><a href="http://masseffect.wikia.com/wiki/User_blog:James12708/Crazy_battle_Mass_Effect_vs_Halo_vs_Darksiders_Army_of_Heaven"><img alt="Halo-4-trailer.jpg" src="http://images4.wikia.nocookie.net/__cb20120710163050/wikiaglobal/images/thumb/c/c9/Halo-4-trailer.jpg/200px-Halo-4-trailer.jpg" width="200" height="111" /></a></div>
-<p><b>Mass Effect vs. Halo vs Darksiders?</b><br />Wikian <a  class="text" href="http://masseffect.wikia.com/wiki/User:James12708">James12708</a> posits a fictional battle between three different gaming universes. Who would win? And why? <a  class="text" href="http://masseffect.wikia.com/wiki/User_blog:James12708/Crazy_battle_Mass_Effect_vs_Halo_vs_Darksiders_Army_of_Heaven">Read about it now</a>, and join the conversation.<br /><br />
-<b>This week, in The Hole</b><br />
-This week’s prize fight on Nukapedia is a special Cybernetic Securitron battle between Yes Man and Victor. <a  class="text" href="http://fallout.wikia.com/wiki/User_blog:Agent_c/The_Hole_-_Cybernetic_Division_Heat_3_-_Securitron_Battle.">Vote now!</a><br /><br />And, speaking of Fallout, did you know that September 30 marks the 15th anniversary of the first game? We're rounding up ideas for celebrating. Head on over to <a  class="text" href="http://fallout.wikia.com/wiki/Fallout_Wiki">Nukapedia</a> to chime in.<br /><br />
-<b>DeadPool: The Game</b><br /> 
-We'll be honest - Activision's announcement of the <a  class="text" href="http://marvel.wikia.com/User_blog:Nassirdada/Deadpool_game_announced">Deadpool video game</a> for console systems surprised us. And the wiki could use some work. <a  class="text" href="http://deadpool.wikia.com/wiki/Deadpool_Wiki">Join the effort</a>, and let's whip this thing into shape!<br /><br /><b>Rusty Hearts: Reborn</b><br />The first major expansion pack just hit and the franchise is being reborn in more ways than one. Look for new character select screen, four new dungeons, and new <a  class="text" href="http://rustyhearts.wikia.com/wiki/Rusty_Hearts:_Reborn">immersive quests</a>. <br /><br />
-</p>
-</div>
-</p></div><div class="tabbertab" title="
-Screenshots &amp; Media"><p><div style="padding:5px;">
-<div class="floatright"><a href="http://gaming.wikia.com/wiki/User_blog:JAlbor/Natural_Selection_2_Preview"><img alt="002e47.jpg" src="http://images3.wikia.nocookie.net/__cb20120606170945/wikiaglobal/images/thumb/8/8b/002e47.jpg/200px-002e47.jpg" width="200" height="118" /></a></div>
-<p>Some pretty cool new trailers dropped on Thursday. Bethesda released an interactive trailer for Dishonored- choose one of three daring <a  class="text" href="http://dishonored.wikia.com/wiki/Dishonored_Wiki">escapes</a>. Another interactive trailer was released for the fifth installment in the Crysis series- giving you the option to control <a  class="text" href="http://crysis.wikia.com/wiki/Crysis_3">modes</a>.  
-And you can get your beta on with the new Planetside 2 <a  class="text" href="http://planetside.wikia.com/wiki/Planetside_2_Wiki">trailer</a>.
-</p>
-</div>
-</p></div><div class="tabbertab" title="
-Other Great Games"><p><div style="padding:5px;">
-<div class="floatright"><a href="http://gaming.wikia.com/wiki/Top_10_list:Favorite_Mass_Effect_Love_Interest"><img alt="Splinter cell blacklist action.jpg" src="http://images3.wikia.nocookie.net/__cb20120604182839/wikiaglobal/images/thumb/2/2c/Splinter_cell_blacklist_action.jpg/200px-Splinter_cell_blacklist_action.jpg" width="200" height="113" /></a></div>
-<p><a  class="text" href="http://southpark.wikia.com/wiki/South_Park:_The_Stick_of_Truth">South Park: The Stick of Truth</a> <br />
-<a  class="text" href="http://assassinscreed.wikia.com/wiki/Assassin's_Creed_III">Assassin's Creed III</a> <br />
-<a  class="text" href="http://laracroft.wikia.com/wiki/Tomb_Raider_(2013)">Tomb Raider</a> <br />
-<a  class="text" href="http://callofduty.wikia.com/wiki/Portal:Call_of_Duty:_Black_Ops_II">Call of Duty: Black Ops II</a> <br />
-<a  class="text" href="http://halo.wikia.com/wiki/Halo_4">Halo 4</a><br />
-<a  class="text" href="http://splintercell.wikia.com/wiki/Tom_Clancy%27s_Splinter_Cell:_Black_List">Splinter Cell: Black List</a><br />
-<a  class="text" href="http://borderlands.wikia.com/wiki/Borderlands_Wiki">Borderlands 2</a><br />
-<a  class="text" href="http://simcity.wikia.com/wiki/Simcity_(2013_game)">SimCity 2013</a><br />
-<a  class="text" href="http://lostplanet.wikia.com/wiki/Lost_Planet_3">Lost Planet 3</a><br />
-<a  class="text" href="http://warhammeronline.wikia.com/wiki/Warhammer_Online:_Wrath_of_Heroes">Warhammer Online: Wrath of Heroes</a> <br />
-</p>
-</div>
-</p></div></div>
-<p>
-</section>
-</div>
-<div class="grid-3">
-<section style="margin-bottom: 25px;" class="grid-3 alpha wikiahubs-pulse">
-<span class="social">
-<a href="http://www.facebook.com/WikiaGaming" id="facebook"></a>
-<a href="https://plus.google.com/u/0/b/106259394279355057996/posts" id="twitter"></a>
-<a href="https://twitter.com/#!/WikiaGames" id="google"></a>
-</span>
-</p>
-<h2><span class="mw-headline" id="The_Pulse_on_Mass_Effect_Wiki">The Pulse on <a  class="text" href="http://masseffect.wikia.com/wiki/Mass_Effect_Wiki">Mass Effect Wiki</a></span></h2>
-<p>
-<div class="pulse-content">
-<div class="boxes">
-<div class="box">
-</p>
-<h5><span class="mw-headline" id="Page_Views"><b>Page Views</b></span></h5>
-<p>
-<b>16,073,289</b>
-</div>
-<div class="box">
-</p>
-<h5><span class="mw-headline" id="Editors"><b>Editors</b></span></h5>
-<p>
-<b>497</b>
-</div>
-<div class="box">
-</p>
-<h5><span class="mw-headline" id="Pages"><b>Pages</b></span></h5>
-<p>
-<b>2420</b>
-</div>
-</div>
-<div class="search">
-<div class="buttons">
-<form id="WikiaSearch" class="WikiaSearch" action="index.php?title=Special:Search" method="get">
-<label for="HubSearch">What's your game?</label>
-<input id="HubSearch" type="text" name="search" placeholder="Search Wikia" autocomplete="off" accesskey="f" value="">
-<input type="hidden" name="fulltext" value="0">
-<input type="hidden" name="hub" value="Gaming">
-<input type="submit">
-<button class="wikia-button"><img src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" class="sprite search" height="17" width="21"></button>
-<div id="AutocompleteContainter_1329745972863" style="position: absolute; top: 25px; left: 0px; ">
-</div>
-</div>
-</form>
-</div>
-</div>
-</section>
-<div class="grid-1 alpha wikiahubs-explore plainlinks">
-</p>
-<h2><span class="mw-headline" id="Games_We.27re_Drooling_Over">Games We're Drooling Over</span></h2>
-<p>
-<div class="explore-content">
-</p>
-<h4><span class="mw-headline" id="Comic-Con_2012">Comic-Con 2012</span></h4>
-<p><a  class="text" href="http://hitman.wikia.com/wiki/Main_Page">Hitman: Absolution</a><br />
-</p><p><a  class="text" href="http://laracroft.wikia.com/wiki/Tomb_Raider_(2013)">Tomb Raider</a><br />
-</p><p><a  class="text" href="http://fortnite.wikia.com/wiki/Fortnite_Wiki">Fortnite</a><br />
-</p><p><a  class="text" href="http://injusticegodsamongus.wikia.com/wiki/Injustice:Gods_Among_Us_Wiki">Injustice</a><br />
-</p><p><a  class="text" href="http://assassinscreed.wikia.com/wiki/Assassin%27s_Creed_Wiki">Assassin's Creed III</a><br />
-</p><p><a  class="text" href="http://marvelheroes.wikia.com/wiki/Marvel_Heroes_Wiki">Marvel Heroes</a><br />
-</p><p><br />
-</p>
-<h4><span class="mw-headline" id="Nintendo">Nintendo</span></h4>
+<div id="mw-content-text" lang="en" dir="ltr" class="mw-content-ltr">
+	<script>var wgWikiaHubType = 'gaming';</script>
+	<div class="WikiaGrid WikiaHubs" id="WikiaHubs">
+		<div class="grid-3 alpha">
+			<section style="margin-bottom:20px" class="grid-3 alpha">
+				<div class="WikiaMosaicSlider" style="display:none">
+					<div class="wikia-mosaic-slider-region">
+						<a href="" class="wikia-mosaic-link">
+							<div class="wikia-mosaic-slider-panorama"></div>
+							<div class="wikia-mosaic-slider-description-mask"></div>
+							<div class="wikia-mosaic-slider-description"></div>
+						</a>
+					</div>
+					<ul class="wikia-mosaic-thumb-region">
+						<li class="wikia-mosaic-slide">
+							<a href='http://www.wikia.com/Video_Games%2FVideo_Game_Olympics' class='wikia-mosaic-link'>
+								<img width='320' height='210' src='http://images3.wikia.nocookie.net/__cb57088/wikiaglobal/images/thumb/e/e6/VG_Olympics_slider.jpg/320px-0%2C321%2C0%2C210-VG_Olympics_slider.jpg' class="wikia-mosaic-hero-image">
+								<img width='155' height='100' src='http://images2.wikia.nocookie.net/__cb57088/wikiaglobal/images/thumb/e/e6/VG_Olympics_slider.jpg/155px-0%2C320%2C0%2C206-VG_Olympics_slider.jpg' class="wikia-mosaic-thumb-image">
+								<span class="wikia-mosaic-description-mask"></span>
+								<span class="wikia-mosaic-description">
+									<span class="image-description"><b>Exclusively on Wikia!</b></span>
+									<span class="wikia-mosaic-short-title">Gaming Olympics</span>
+									<span class="description-more">Participate in the biggest gaming event of 2012</span>
+								</span>
+							</a>
+						</li>
+						<li class="wikia-mosaic-slide">
+							<a href='http://tera.wikia.com/wiki/Play_Tera_for_Free' class='wikia-mosaic-link'>
+								<img width='320' height='210' src='http://images4.wikia.nocookie.net/__cb57088/wikiaglobal/images/thumb/1/12/Teraslider.jpg/320px-0%2C321%2C0%2C210-Teraslider.jpg' class="wikia-mosaic-hero-image">
+								<img width='155' height='100' src='http://images3.wikia.nocookie.net/__cb57088/wikiaglobal/images/thumb/1/12/Teraslider.jpg/155px-0%2C320%2C0%2C206-Teraslider.jpg' class="wikia-mosaic-thumb-image">
+								<span class="wikia-mosaic-description-mask"></span>
+								<span class="wikia-mosaic-description">
+									<span class="image-description"><b>Play Tera NOW</b></span>
+									<span class="wikia-mosaic-short-title">Tera Special Offer</span>
+									<span class="description-more">Also inside: Exclusive developer interview</span>
+								</span>
+							</a>
+						</li>
+						<li class="wikia-mosaic-slide">
+							<a href='http://gta.wikia.com/Grand_Theft_Auto_V' class='wikia-mosaic-link'>
+								<img width='320' height='210' src='http://images2.wikia.nocookie.net/__cb57088/wikiaglobal/images/thumb/2/22/GTAFIVE-COPS.png/320px-137%2C719%2C0%2C381-GTAFIVE-COPS.png' class="wikia-mosaic-hero-image">
+								<img width='155' height='100' src='http://images3.wikia.nocookie.net/__cb57088/wikiaglobal/images/thumb/2/22/GTAFIVE-COPS.png/155px-132%2C724%2C0%2C381-GTAFIVE-COPS.png' class="wikia-mosaic-thumb-image">
+								<span class="wikia-mosaic-description-mask"></span>
+								<span class="wikia-mosaic-description">
+									<span class="image-description"><b>What's up with GTA V?</b></span>
+									<span class="wikia-mosaic-short-title">GTA V Update</span>
+									<span class="description-more">All the latest details right here</span>
+								</span>
+							</a>
+						</li>
+						<li class="wikia-mosaic-slide">
+							<a href='http://dishonored.wikia.com/wiki/User_blog:JAlbor/Dishonored_AMA_with_Harvey_Smith' class='wikia-mosaic-link'>
+								<img width='320' height='210' src='http://images3.wikia.nocookie.net/__cb57088/wikiaglobal/images/thumb/c/c5/Harvey_Smith.jpg/320px-45%2C569%2C0%2C343-Harvey_Smith.jpg' class="wikia-mosaic-hero-image">
+								<img width='155' height='100' src='http://images4.wikia.nocookie.net/__cb57088/wikiaglobal/images/thumb/c/c5/Harvey_Smith.jpg/155px-40%2C573%2C0%2C343-Harvey_Smith.jpg' class="wikia-mosaic-thumb-image">
+								<span class="wikia-mosaic-description-mask"></span>
+								<span class="wikia-mosaic-description">
+									<span class="image-description"><b>Designer Harvey Smith talks Dishonored</b></span>
+									<span class="wikia-mosaic-short-title">Dishonored Q&amp;A</span>
+									<span class="description-more">A recent interview proves quite enlightening</span>
+								</span>
+							</a>
+						</li>
+						<li class="wikia-mosaic-slide last">
+							<a href='http://callofduty.wikia.com/wiki/User_blog:Chiafriend12/Upcoming_Call_of_Duty_quiz_%E2%80%94_Submit_questions!' class='wikia-mosaic-link'>
+								<img width='320' height='210' src='http://images1.wikia.nocookie.net/__cb57088/wikiaglobal/images/thumb/6/66/Callofduty_Delta_Soldier_MW3.png/320px-69%2C856%2C0%2C516-Callofduty_Delta_Soldier_MW3.png' class="wikia-mosaic-hero-image">
+								<img width='155' height='100' src='http://images2.wikia.nocookie.net/__cb57088/wikiaglobal/images/thumb/6/66/Callofduty_Delta_Soldier_MW3.png/155px-62%2C863%2C0%2C516-Callofduty_Delta_Soldier_MW3.png' class="wikia-mosaic-thumb-image">
+								<span class="wikia-mosaic-description-mask"></span>
+								<span class="wikia-mosaic-description">
+									<span class="image-description"><b>Call for COD canon questions</b></span>
+									<span class="wikia-mosaic-short-title">COD Quiz</span>
+									<span class="description-more">The COD wiki is building the ultimate quiz. Fire away!</span>
+								</span>
+							</a>
+						</li>
+					</ul>
+				</div>
+				<script>JSSnippetsStack.push({dependencies:["/resources/wikia/libraries/modernizr/modernizr-2.0.6.js","/extensions/wikia/WikiaPhotoGallery/css/WikiaPhotoGallery.slidertag.mosaic.scss","/extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.slider.mosaic.js"],callback:function(json){WikiaMosaicSliderMasterControl.init(json)},id:"WikiaMosaicSliderMasterControl.init",options:[0]})</script>
+				<script>JSSnippetsStack.push({dependencies:["/extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.view.js"],callback:function(json){WikiaPhotoGalleryView.init(json)},id:"WikiaPhotoGalleryView.init"})</script>
+			</section>
+			<section class="grid-3 alpha wikiahubs-newstabs">
+				<div class="title-wrapper">
+					<span class="title">Wikia's Picks</span>
+					<div class="floatright">
+						<a href="http://images3.wikia.nocookie.net/__cb57088/wikiaglobal/images/5/5e/5x5transparent.png" class="image" data-image-name="5x5transparent.png"><img alt="5x5transparent.png" src="http://images3.wikia.nocookie.net/__cb20120306180629/wikiaglobal/images/5/5e/5x5transparent.png" width="5" height="5" /></a>
+					</div>
+				</div>
+				<link rel="stylesheet" href="http://slot2.images.wikia.nocookie.net/__cb57086/common/extensions/3rdparty/tabber/tabber.css?57086" TYPE="text/css" MEDIA="screen">
+				<script>JSSnippetsStack.push({dependencies:["/extensions/3rdparty/tabber/tabber.js"],getLoaders:function(){return [$.loadJQueryUI]}})</script>
+				<div class="tabber">
+					<div class="tabbertab" title="New Announcements">
+						<div style="padding:5px;">
+							<div class="floatright">
+								<a href="http://masseffect.wikia.com/wiki/User_blog:James12708/Crazy_battle_Mass_Effect_vs_Halo_vs_Darksiders_Army_of_Heaven">
+									<img alt="Halo-4-trailer.jpg" src="http://images4.wikia.nocookie.net/__cb20120710163050/wikiaglobal/images/thumb/c/c9/Halo-4-trailer.jpg/200px-Halo-4-trailer.jpg" width="200" height="111" />
+								</a>
+							</div>
+							<p>
+								<b>Mass Effect vs. Halo vs Darksiders?</b><br />Wikian <a  class="text" href="http://masseffect.wikia.com/wiki/User:James12708">James12708</a> posits a fictional battle between three different gaming universes. Who would win? And why? <a  class="text" href="http://masseffect.wikia.com/wiki/User_blog:James12708/Crazy_battle_Mass_Effect_vs_Halo_vs_Darksiders_Army_of_Heaven">Read about it now</a>, and join the conversation.<br /><br />
+								<b>This week, in The Hole</b><br />
+								This week’s prize fight on Nukapedia is a special Cybernetic Securitron battle between Yes Man and Victor. <a  class="text" href="http://fallout.wikia.com/wiki/User_blog:Agent_c/The_Hole_-_Cybernetic_Division_Heat_3_-_Securitron_Battle.">Vote now!</a><br /><br />And, speaking of Fallout, did you know that September 30 marks the 15th anniversary of the first game? We're rounding up ideas for celebrating. Head on over to <a  class="text" href="http://fallout.wikia.com/wiki/Fallout_Wiki">Nukapedia</a> to chime in.<br /><br />
+								<b>DeadPool: The Game</b><br /> 
+								We'll be honest - Activision's announcement of the <a  class="text" href="http://marvel.wikia.com/User_blog:Nassirdada/Deadpool_game_announced">Deadpool video game</a> for console systems surprised us. And the wiki could use some work. <a  class="text" href="http://deadpool.wikia.com/wiki/Deadpool_Wiki">Join the effort</a>, and let's whip this thing into shape!<br /><br /><b>Rusty Hearts: Reborn</b><br />The first major expansion pack just hit and the franchise is being reborn in more ways than one. Look for new character select screen, four new dungeons, and new <a  class="text" href="http://rustyhearts.wikia.com/wiki/Rusty_Hearts:_Reborn">immersive quests</a>. <br /><br />
+							</p>
+						</div>
+					</div>
+					<div class="tabbertab" title="Screenshots &amp; Media">
+						<div style="padding:5px;">
+							<div class="floatright">
+								<a href="http://gaming.wikia.com/wiki/User_blog:JAlbor/Natural_Selection_2_Preview">
+									<img alt="002e47.jpg" src="http://images3.wikia.nocookie.net/__cb20120606170945/wikiaglobal/images/thumb/8/8b/002e47.jpg/200px-002e47.jpg" width="200" height="118" />
+								</a>
+							</div>
+							<p>
+								Some pretty cool new trailers dropped on Thursday. Bethesda released an interactive trailer for Dishonored- choose one of three daring <a  class="text" href="http://dishonored.wikia.com/wiki/Dishonored_Wiki">escapes</a>. Another interactive trailer was released for the fifth installment in the Crysis series- giving you the option to control <a  class="text" href="http://crysis.wikia.com/wiki/Crysis_3">modes</a>.  
+								And you can get your beta on with the new Planetside 2 <a  class="text" href="http://planetside.wikia.com/wiki/Planetside_2_Wiki">trailer</a>.
+							</p>
+						</div>
+					</div>
+					<div class="tabbertab" title="Other Great Games">
+						<div style="padding:5px;">
+							<div class="floatright">
+								<a href="http://gaming.wikia.com/wiki/Top_10_list:Favorite_Mass_Effect_Love_Interest">
+									<img alt="Splinter cell blacklist action.jpg" src="http://images3.wikia.nocookie.net/__cb20120604182839/wikiaglobal/images/thumb/2/2c/Splinter_cell_blacklist_action.jpg/200px-Splinter_cell_blacklist_action.jpg" width="200" height="113" />
+								</a>
+							</div>
+							<p>
+								<a  class="text" href="http://southpark.wikia.com/wiki/South_Park:_The_Stick_of_Truth">South Park: The Stick of Truth</a> <br />
+								<a  class="text" href="http://assassinscreed.wikia.com/wiki/Assassin's_Creed_III">Assassin's Creed III</a> <br />
+								<a  class="text" href="http://laracroft.wikia.com/wiki/Tomb_Raider_(2013)">Tomb Raider</a> <br />
+								<a  class="text" href="http://callofduty.wikia.com/wiki/Portal:Call_of_Duty:_Black_Ops_II">Call of Duty: Black Ops II</a> <br />
+								<a  class="text" href="http://halo.wikia.com/wiki/Halo_4">Halo 4</a><br />
+								<a  class="text" href="http://splintercell.wikia.com/wiki/Tom_Clancy%27s_Splinter_Cell:_Black_List">Splinter Cell: Black List</a><br />
+								<a  class="text" href="http://borderlands.wikia.com/wiki/Borderlands_Wiki">Borderlands 2</a><br />
+								<a  class="text" href="http://simcity.wikia.com/wiki/Simcity_(2013_game)">SimCity 2013</a><br />
+								<a  class="text" href="http://lostplanet.wikia.com/wiki/Lost_Planet_3">Lost Planet 3</a><br />
+								<a  class="text" href="http://warhammeronline.wikia.com/wiki/Warhammer_Online:_Wrath_of_Heroes">Warhammer Online: Wrath of Heroes</a> <br />
+							</p>
+						</div>
+					</div>
+				</div>
+			</section>
+		</div>
+		<div class="grid-3">
+			<section style="margin-bottom: 25px;" class="grid-3 alpha wikiahubs-pulse">
+				<span class="social">
+					<a href="http://www.facebook.com/WikiaGaming" id="facebook"></a>
+					<a href="https://plus.google.com/u/0/b/106259394279355057996/posts" id="twitter"></a>
+					<a href="https://twitter.com/#!/WikiaGames" id="google"></a>
+				</span>
+				<h2>
+					<span class="mw-headline" id="The_Pulse_on_Mass_Effect_Wiki">
+						The Pulse on <a  class="text" href="http://masseffect.wikia.com/wiki/Mass_Effect_Wiki">Mass Effect Wiki</a>
+					</span>
+				</h2>
+				<div class="pulse-content">
+					<div class="boxes">
+						<div class="box">
+							<h5>
+								<span class="mw-headline" id="Page_Views">
+									<b>Page Views</b>
+								</span>
+							</h5>
+							<b>16,073,289</b>
+						</div>
+						<div class="box">
+							<h5>
+								<span class="mw-headline" id="Editors">
+									<b>Editors</b>
+								</span>
+							</h5>
+							<b>497</b>
+						</div>
+						<div class="box">
+							<h5>
+								<span class="mw-headline" id="Pages">
+									<b>Pages</b>
+								</span>
+							</h5>
+							<b>2420</b>
+						</div>
+					</div>
+					<div class="search">
+						<div class="buttons">
+							<label for="HubSearch">What's your game?</label>
+							<?= F::app()->renderView('SpecialWikiaHubsV2', 'pulse', array()); ?>
+						</div>
+					</div>
+				</div>
+			</section>
+			<div class="grid-1 alpha wikiahubs-explore plainlinks">
+				<h2>
+					<span class="mw-headline" id="Games_We.27re_Drooling_Over">Games We're Drooling Over</span>
+				</h2>
+				<div class="explore-content">
+					<h4>
+						<span class="mw-headline" id="Comic-Con_2012">Comic-Con 2012</span>
+					</h4>
+					<p><a  class="text" href="http://hitman.wikia.com/wiki/Main_Page">Hitman: Absolution</a><br /></p>
+					<p><a  class="text" href="http://laracroft.wikia.com/wiki/Tomb_Raider_(2013)">Tomb Raider</a><br /></p>
+					<p><a  class="text" href="http://fortnite.wikia.com/wiki/Fortnite_Wiki">Fortnite</a><br /></p>
+					<p><a  class="text" href="http://injusticegodsamongus.wikia.com/wiki/Injustice:Gods_Among_Us_Wiki">Injustice</a><br /></p>
+					<p><a  class="text" href="http://assassinscreed.wikia.com/wiki/Assassin%27s_Creed_Wiki">Assassin's Creed III</a><br /></p>
+					<p><a  class="text" href="http://marvelheroes.wikia.com/wiki/Marvel_Heroes_Wiki">Marvel Heroes</a><br /></p>
+					<h4>
+						<span class="mw-headline" id="Nintendo">Nintendo</span>
+					</h4>
 <p><a  class="text" href="http://wiiu.wikia.com/wiki/Wii_U_Wiki">Wii U</a><br />
 </p><p><a  class="text" href="http://nintendo.wikia.com/wiki/New_Super_Mario_Bros._U">New Super Mario</a><br />
 </p><p><a  class="text" href="http://nintendo.wikia.com/wiki/Pikmin_3">Pikmin 3</a><br />
