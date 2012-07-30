@@ -108,8 +108,7 @@ $config['oasis_blocking'] = array(
 $config['jquery'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
-		'#function_AssetsConfig::getJQueryUrl',
-		'//resources/wikia/libraries/jquery/jquery.pushstack-fix.js'
+		'#function_AssetsConfig::getJQueryUrl'
 	)
 );
 
