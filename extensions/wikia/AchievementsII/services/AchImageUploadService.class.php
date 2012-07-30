@@ -90,7 +90,7 @@ class AchImageUploadService {
 	public static function uploadBadge($destinationFileName, $badgeLevel) {
 		global $wgRequest, $wgUser;
 		$upload = new UploadAchievementsFromFile();
-		$upload->initialize( $destinationFileName, $wgRequest);
+		$upload->initialize( $destinationFileName, $wgRequest->getUpload( 'wpUploadFile' ) );
 
 		$details = $upload->verifyUpload();
 
@@ -218,7 +218,7 @@ class AchImageUploadService {
 	public static function uploadHover( $destinationFileName ) {
 		global $wgRequest, $wgUser;
 		$upload = new UploadAchievementsFromFile();
-		$upload->initialize( $destinationFileName, $wgRequest);
+		$upload->initialize( $destinationFileName, $wgRequest->getUpload( 'wpUploadFile' ) );
 
 		$details = $upload->verifyUpload();
 
