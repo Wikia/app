@@ -17,11 +17,17 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 	}
 
 	public function index() {
-		$this->response->setCacheValidity(24*60*60,24*60*60,array(WikiaResponse::CACHE_TARGET_BROWSER, WikiaResponse::CACHE_TARGET_VARNISH));
+		$this->response->setCacheValidity(
+			24 * 60 * 60,
+			24 * 60 * 60,
+			array(WikiaResponse::CACHE_TARGET_BROWSER, WikiaResponse::CACHE_TARGET_VARNISH)
+		);
 
-		$this->slider = $this->sendRequest('SpecialWikiaHubsV2Controller','slider')->getData();
-		$this->explore = $this->sendRequest('SpecialWikiaHubsV2Controller','explore')->getData();
-		$this->pulse= $this->sendRequest('SpecialWikiaHubsV2Controller','pulse')->getData();
+		$this->slider = $this->sendRequest('SpecialWikiaHubsV2Controller', 'slider')->getData();
+		$this->explore = $this->sendRequest('SpecialWikiaHubsV2Controller', 'explore')->getData();
+		$this->pulse = $this->sendRequest('SpecialWikiaHubsV2Controller', 'pulse')->getData();
+		$this->featuredvideo = $this->sendRequest('SpecialWikiaHubsV2Controller', 'featuredvideo')->getData();
+		$this->topwikis = $this->sendRequest('SpecialWikiaHubsV2Controller', 'topwikis')->getData();
 
 		$this->response->addAsset('extensions/wikia/WikiaHubsV2/css/WikiaHubsV2.scss');
 	}
@@ -46,14 +52,31 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 		$helper = $this->getHelper();
 		$pulseData = $helper->getDataForModulePulse();
 		$this->title = $pulseData['title'];
+		$this->socialmedia = $pulseData['socialmedia'];
 		$this->boxes = $pulseData['boxes'];
+	}
+
+	public function featuredvideo() {
+		$helper = $this->getHelper();
+		$videoData = $helper->getDataForModuleFeaturedVideo();
+		$this->headline = $videoData['headline'];
+		$this->sponsor = $videoData['sponsor'];
+		$this->video = $videoData['video'];
+		$this->description = $videoData['description'];
+	}
+
+	public function topwikis() {
+		$helper = $this->getHelper();
+		$wikiData = $helper->getDataForModuleTopWikis();
+		$this->headline = $wikiData['headline'];
+		$this->wikis = $wikiData['wikis'];
 	}
 
 	/**
 	 * @return WikiaHubsV2Model
 	 */
 	protected function getHelper() {
-		if(!$this->helper) {
+		if (!$this->helper) {
 			$this->helper = F::build('WikiaHubsV2Model');
 		}
 		return $this->helper;

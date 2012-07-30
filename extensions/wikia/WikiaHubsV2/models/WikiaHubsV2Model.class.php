@@ -1,13 +1,13 @@
 <?php
 
-	/**
-	 * Hubs V2 Model
-	 *
-	 * @author Andrzej 'nAndy' Łukaszewski
-	 * @author Marcin Maciejewski
-	 * @author Sebastian Marzjan
-	 *
-	 */
+/**
+ * Hubs V2 Model
+ *
+ * @author Andrzej 'nAndy' Łukaszewski
+ * @author Marcin Maciejewski
+ * @author Sebastian Marzjan
+ *
+ */
 
 class WikiaHubsV2Model extends WikiaModel {
 	protected $lang;
@@ -121,6 +121,11 @@ class WikiaHubsV2Model extends WikiaModel {
 				'title' => 'WoWwiki',
 				'anchor' => 'http://www.wowwiki.com'
 			),
+			'socialmedia' => array(
+				'facebook' => 'link to facebook',
+				'googleplus' => 'link to G+',
+				'twitter' => 'link to twitter',
+			),
 			'boxes' => array(
 				array(
 					'headline' => array(
@@ -155,6 +160,74 @@ class WikiaHubsV2Model extends WikiaModel {
 						'anchor' => 'http://www.wowwiki.com'
 					),
 				)
+			)
+		);
+	}
+
+	public function getDataForModuleFeaturedVideo() {
+		//mock data
+		return array(
+			'headline' => 'Featured video',
+			'sponsor' => 'FVSponsor.jpg',
+			'video' => array(
+				'title' => 'WWE_13_(VG)_(2012)_-_Live_trailer'
+			),
+			'description' => array(
+				'main title' => 'Resident Evil 6',
+				'subtitle' => 'More evil awaits you on the',
+				'link' => array(
+					'title' => 'WoWwiki',
+					'anchor' => 'http://www.wowwiki.com'
+				)
+			)
+		);
+	}
+
+	public function getDataForModuleTopWikis() {
+		//mock data
+		return array(
+			'headline' => 'Top Gaming Wikis',
+			'wikis' => array(
+				array(
+					'title' => 'WoWwiki',
+					'anchor' => 'http://www.wowwiki.com'
+				),
+				array(
+					'title' => 'WoWwiki',
+					'anchor' => 'http://www.wowwiki.com'
+				),
+				array(
+					'title' => 'WoWwiki',
+					'anchor' => 'http://www.wowwiki.com'
+				),
+				array(
+					'title' => 'WoWwiki',
+					'anchor' => 'http://www.wowwiki.com'
+				),
+				array(
+					'title' => 'WoWwiki',
+					'anchor' => 'http://www.wowwiki.com'
+				),
+				array(
+					'title' => 'WoWwiki',
+					'anchor' => 'http://www.wowwiki.com'
+				),
+				array(
+					'title' => 'WoWwiki',
+					'anchor' => 'http://www.wowwiki.com'
+				),
+				array(
+					'title' => 'WoWwiki',
+					'anchor' => 'http://www.wowwiki.com'
+				),
+				array(
+					'title' => 'WoWwiki',
+					'anchor' => 'http://www.wowwiki.com'
+				),
+				array(
+					'title' => 'WoWwiki',
+					'anchor' => 'http://www.wowwiki.com'
+				),
 			)
 		);
 	}
