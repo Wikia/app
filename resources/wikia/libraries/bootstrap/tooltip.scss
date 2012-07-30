@@ -74,7 +74,7 @@ $color-shadow: mix(#000000, $color-page, 50%);
 }
 
 .tooltip-inner {
-	@include box-shadow(0, 0, 15px, $color-shadow, false, .5);
+	@include box-shadow(0, 0, 15px, $color-shadow);
 	background-color: $color-page;
 	font-size: 12px;
 	max-width: 400px;

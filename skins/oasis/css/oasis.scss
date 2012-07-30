@@ -51,10 +51,9 @@
 @import "core/WikiaForm";
 @import "core/SharingToolbar";
 @import "core/GlobalNotification";
-@import "resources/wikia/libraries/bootstrap/tooltip";
+@import "../../../resources/wikia/libraries/bootstrap/tooltip";
 
-
-// sryling for jQuery UI autocomplete
+// styling for jQuery UI autocomplete
 @import "core/jquery.ui.autocomplete";
 
 // Ubiquitous modules that should be combined here to save space. Each file should contain a comment w/its name so we can see what was packaged. //
