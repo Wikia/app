@@ -68,7 +68,7 @@ var CategoryExhibition = {
 		}
 
 		CategoryExhibition.log('begin: paginatorClick');
-		$('#mw-pages .category-gallery').startThrobbing();
+		$(pageSection).find('.category-gallery').startThrobbing();
 		var UrlVars = $.getUrlVars();
 		var data = {
 			action: 'ajax',
@@ -86,7 +86,7 @@ var CategoryExhibition = {
 			var room1 = pageSection.find('div.category-gallery-room1');
 			var room2 = pageSection.find('div.category-gallery-room2');
 			pageSection.find('div.category-gallery-paginator').html(axData.paginator);
-			$('#mw-pages .category-gallery').stopThrobbing();
+			$(pageSection).find('.category-gallery').stopThrobbing();
 
 			if ( typeof goBack !== "undefined" && goBack ){
 				room2.html(room1.html());
