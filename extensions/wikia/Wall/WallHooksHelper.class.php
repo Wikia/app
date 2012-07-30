@@ -1945,6 +1945,6 @@ class WallHooksHelper {
 		}
 		return true;
 	}
-
+	
 }
 

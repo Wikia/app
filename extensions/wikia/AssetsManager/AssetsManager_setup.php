@@ -31,7 +31,6 @@ $wgHooks['MakeGlobalVariablesScript'][] = 'AssetsManager::onMakeGlobalVariablesS
 $wgHooks['UserLoadFromSession'][] = 'AssetsManagerClearCookie';
 $wgHooks['UserGetRights'][] = 'onUserGetRights';
 
-
 /*
  * Add read right to all am reqest. 
  * That is solving problems with Loading Assets  
