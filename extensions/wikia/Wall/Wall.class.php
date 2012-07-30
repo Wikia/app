@@ -163,7 +163,9 @@ class Wall {
 		$this->notCached = array();
 		foreach( $this->threads as $tId => $thread ) {
 			if( !$thread->loadIfCached() ) {
-				$this->notCached[$tId] = $this->mThreadMappingRev[ $tId ];
+				if(!empty($this->mThreadMappingRev[ $tId ])) {
+					$this->notCached[$tId] = $this->mThreadMappingRev[ $tId ];					
+				}
 			}
 		}
 	}
@@ -208,21 +210,21 @@ class Wall {
 		if ( empty($query) ) {
 			// page_latest condition is for BugId:22821
 			$query = "
-		select page.page_id, page.page_title from page
-		left join page_wikia_props
-		on page.page_id = page_wikia_props.page_id
-		and (page_wikia_props.propname = ".WPP_WALL_ADMINDELETE."
-		     or page_wikia_props.propname = ".WPP_WALL_REMOVE."
-		     or page_wikia_props.propname = ".WPP_WALL_ARCHIVE.")
-		where page_wikia_props.page_id is null
-		and page.page_title" . $dbr->buildLike( sprintf( "%s/%s", $this->mTitle->getDBkey(), ARTICLECOMMENT_PREFIX ), $dbr->anyString() ) . " 
-		and page.page_title NOT " . $dbr->buildLike( sprintf( "%s/%s%%/%s", $this->mTitle->getDBkey(), ARTICLECOMMENT_PREFIX, ARTICLECOMMENT_PREFIX ), $dbr->anyString() ) . "
-		and page.page_title not like '%@%@%'
-		and page.page_namespace = ".MWNamespace::getTalk($this->mTitle->getNamespace())."
-		and page.page_latest > 0
-		order by page.page_id desc";
+				select page.page_id, page.page_title from page
+				left join page_wikia_props
+				on page.page_id = page_wikia_props.page_id
+				and (page_wikia_props.propname = ".WPP_WALL_ADMINDELETE."
+				     or page_wikia_props.propname = ".WPP_WALL_REMOVE."
+				     or page_wikia_props.propname = ".WPP_WALL_ARCHIVE.")
+				where page_wikia_props.page_id is null
+				and page.page_title" . $dbr->buildLike( sprintf( "%s/%s", $this->mTitle->getDBkey(), ARTICLECOMMENT_PREFIX ), $dbr->anyString() ) . " 
+				and page.page_title NOT " . $dbr->buildLike( sprintf( "%s/%s%%/%s", $this->mTitle->getDBkey(), ARTICLECOMMENT_PREFIX, ARTICLECOMMENT_PREFIX ), $dbr->anyString() ) . "
+				and page.page_title not like '%@%@%'
+				and page.page_namespace = ".MWNamespace::getTalk($this->mTitle->getNamespace())."
+				and page.page_latest > 0
+				order by page.page_id desc";
 		}
-
+		
 		$res = $dbr->query( $query );
 		
 		$this->mThreadMapping = array();
@@ -342,7 +344,7 @@ class Wall {
 	}
 
 	private function getWallThreadListKey() {
-		return  wfMemcKey(__CLASS__ ,'wall-threadlist-key', $this->mTitle->getDBkey(), $this->mTitle->getNamespace(), 'v1');
+		return  wfMemcKey(__CLASS__ ,'wall-threadlist-key', $this->mTitle->getDBkey(), $this->mTitle->getNamespace(), 'v4');
 	}
 	
 	private function getCache() {
