@@ -157,14 +157,41 @@ class ResourceLoader {
 		try {
 			switch ( $filter ) {
 				case 'minify-js':
-					$result = JavaScriptMinifier::minify( $data,
+					// Wikia - change begin - @author: wladek
+					global $wgResourceLoaderJavascriptMinifier;
+					$minifierCallback = 'JavaScriptMinifier::minify';
+					if ( !empty($wgResourceLoaderJavascriptMinifier) ) {
+						$minifierCallback = $wgResourceLoaderJavascriptMinifier;
+					}
+					if ( !is_callable($minifierCallback) ) {
+						throw new MWException(
+							'ResourceLoader invalid javascript minifier: ' . $minifierCallback
+						);
+					}
+					$result = call_user_func($minifierCallback,
+						$data,
 						$wgResourceLoaderMinifierStatementsOnOwnLine,
 						$wgResourceLoaderMinifierMaxLineLength
 					);
+					// Wikia - change end
 					$result .= "\n\n/* cache key: $key */\n";
 					break;
 				case 'minify-css':
-					$result = CSSMin::minify( $data );
+					// Wikia - change begin - @author: wladek
+					global $wgResourceLoaderCssMinifier;
+					$minifierCallback = 'CSSMin::minify';
+					if ( !empty($wgResourceLoaderCssMinifier) ) {
+						$minifierCallback = $wgResourceLoaderCssMinifier;
+					}
+					if ( !is_callable($minifierCallback) ) {
+						throw new MWException(
+							'ResourceLoader invalid css minifier: ' . $minifierCallback
+						);
+					}
+					$result = call_user_func($minifierCallback,
+						$data
+					);
+					// Wikia - change end
 					$result .= "\n\n/* cache key: $key */\n";
 					break;
 			}

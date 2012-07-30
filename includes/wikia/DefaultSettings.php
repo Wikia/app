@@ -923,3 +923,15 @@ $wgWikiaHubsPages = array();
  * core mediawiki feature variable
  */
 $wgArticleCountMethod = "comma";
+
+/**
+ * Javascript minifier used by ResourceLoader
+ * @var false|callback
+ */
+$wgResourceLoaderJavascriptMinifier = false;
+
+/**
+ * CSS minifier used by ResourceLoader
+ * @var false|callback
+ */
+$wgResourceLoaderCssMinifier = false;
