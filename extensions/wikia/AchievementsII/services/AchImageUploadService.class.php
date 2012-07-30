@@ -89,6 +89,7 @@ class AchImageUploadService {
 
 	public static function uploadBadge($destinationFileName, $badgeLevel) {
 		global $wgRequest, $wgUser;
+
 		$upload = new UploadAchievementsFromFile();
 		$upload->initialize( $destinationFileName, $wgRequest->getUpload( 'wpUploadFile' ) );
 
@@ -110,7 +111,7 @@ class AchImageUploadService {
 		}
 
 		// badge data
-		$badgeFile = $upload->getTempPath();
+		$badgeFile = $wgRequest->getUpload( 'wpUploadFile' )->getTempName();
 
 		// validate image using GD
 		$badgeImage = imagecreatefromstring(file_get_contents($badgeFile));
@@ -206,13 +207,12 @@ class AchImageUploadService {
 		}
 
 		// upload generated badge
-		$status = $upload->performUpload('/* comment */', '/* page text */', false, $wgUser);
-
-		if ( !$status->isGood() ) {
-			return false;
-		}
-
-		return $upload->getLocalFile();
+		$file = new LocalFile(
+			Title::newFromText($destinationFileName, 6),
+			RepoGroup::singleton()->getLocalRepo()
+		);
+		$file->upload( $badgeFile, '/* comment */', '/* page text */' );
+		return $file;
 	}
 
 	public static function uploadHover( $destinationFileName ) {
