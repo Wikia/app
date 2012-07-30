@@ -566,6 +566,7 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 			}
 			$js .= $contents . "\n";
 		}
+		wfRunHooks( 'ResourceLoaderFileModuleConcatenateScripts', array( &$js, $this ) );
 		return $js;
 	}
 
@@ -595,6 +596,7 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 				)
 			);
 		}
+		wfRunHooks( 'ResourceLoaderFileModuleConcatenateStyles', array( &$styles, $this ) );
 		return $styles;
 	}
 
