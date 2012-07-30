@@ -14,7 +14,8 @@ html>body #WallNotifications .avatars { *float: left; }
 
 #WallNotifications {
 	.bubbles {
-		background: url(/skins/common/images/bubbles.png) no-repeat 0 0; /* $wgCdnStylePath */
+		background-image: url(/skins/common/images/bubbles.png); /* base64 */
+		background-repeat: no-repeat;
 		width: 34px;
 		height: 20px;
 		&.reddot #bubbles_count {
@@ -54,7 +55,7 @@ html>body #WallNotifications .avatars { *float: left; }
 	top: 1px;
 	right: 10px;
 	.notifications-empty { color: $color-text; width: 250px; text-align: center; }
-	li { border: none; margin: 0; padding: 0; } 
+	li { border: none; margin: 0; padding: 0; }
 	&>li {
 		height: 30px;
 		padding: 6px 10px 0 10px;
@@ -94,7 +95,7 @@ html>body #WallNotifications .avatars { *float: left; }
 			.avatars_3_1 .avatar { left: -3px; top: -3px; }
 			.avatars_3_2 .avatar { left:  0px; top:  0px; }
 			.avatars_3_3 .avatar { left:  3px; top:  3px; }
-	
+
 			.avatar {
 				position: absolute;
 			}
@@ -106,16 +107,16 @@ html>body #WallNotifications .avatars { *float: left; }
 			font-size: 10px;
 			line-height: 1.5em;
 			.timeago { display: block; font-size: 10px; padding-top: 3px; padding-bottom: 3px;}
-			.msg-title { 
-				padding-top: 3px; 
-				padding-bottom: 2px; 
+			.msg-title {
+				padding-top: 3px;
+				padding-bottom: 2px;
 				width: 185px;
 				display: block;
 			}
 			.msg-body {
 				width: 185px;
 				display: block;
-			} 
+			}
 		}
 	}
 	.subnav {
@@ -219,7 +220,7 @@ html>body #WallNotifications .avatars { *float: left; }
 			cursor: pointer;
 			position: relative;
 		}
-		
+
 		.notifications-for-wiki {
 			.chevron { border-color: transparent transparent transparent white; margin: 6px 7px 0px 8px; position: absolute; right: 0px; }
 		 	.notifications-for-wiki-list { display: none; }
@@ -237,7 +238,7 @@ html>body #WallNotifications .avatars { *float: left; }
 	#wall-notifications-markasread, #wall-notifications-markasread * {
 		@include border-radius(3px);
 		color: $color-links;
-		cursor: pointer; 
+		cursor: pointer;
 		text-align: right;
 		font-weight: normal;
 		font-size: 11px;
