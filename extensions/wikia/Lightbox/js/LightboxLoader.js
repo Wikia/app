@@ -82,6 +82,17 @@ var LightboxLoader = {
 		}
 
 		var target = $(ev.target);
+		
+		// Expand Slideshow button functionality 
+		// TODO LightboxLoader.js and WikiPhotoGallery.js needs refactoring, the conditional bellow is just a quick fix for lunching lightbox after clicking expand slideshow button
+		if (target.hasClass('wikia-slideshow-popout')) {
+	        
+	        var currentSlideMediaTitle = target.parents('.wikia-slideshow-toolbar').siblings('.wikia-slideshow-images-wrapper').find('li:visible').attr('data-image-name');
+	        
+	        LightboxLoader.loadLightbox(currentSlideMediaTitle);
+	        
+	        return;
+        }
 
 		// move to parent of an image -> anchor
 		if ( target.is('span') || target.is('img') ) {
@@ -94,7 +105,7 @@ var LightboxLoader = {
         if (target.is('div') && target.hasClass('playButton')) {
             target = target.parent();
         }
-
+        
 		/* handle click ignore cases */
 		
 		// handle clicks on links only
