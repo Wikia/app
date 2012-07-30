@@ -176,6 +176,11 @@ class WallThread {
 		if( $this->data->threadReplyIds === false )
 			$this->loadReplyIdsFromDB();
 		$this->data->threadReplyObjs = array();
+		
+		if(empty($this->data->threadReplyIds)) {
+			$this->data->threadReplyIds = array();
+		}
+		
 		foreach( $this->data->threadReplyIds as $id ) {
 			$wm = WallMessage::newFromId( $id, $this->mForceMaster );
 			if($wm instanceof WallMessage && !$wm->isAdminDelete()) {
@@ -193,6 +198,10 @@ class WallThread {
 
 		if( empty($title) ) {
 			$title = Title::newFromId( $this->mThreadId, Title::GAID_FOR_UPDATE );
+		}
+		
+		if( empty($title) ) {
+			return ;
 		}
 
 		$dbr = wfGetDB( $master ? DB_MASTER : DB_SLAVE );
@@ -223,7 +232,7 @@ class WallThread {
 	}
 	
 	private function getThreadKey() {
-		return  __CLASS__ . '-'.$this->mCityId.'-thread-key-v11-' . $this->mThreadId;
+		return  wfMemcKey(__CLASS__, '-thread-key-v15-', $this->mThreadId);
 	}
 	
 	private function getCache() {
