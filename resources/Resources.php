@@ -75,12 +75,7 @@ return array(
 	/* jQuery */
 
 	'jquery' => array(
-		// wikia change - start: @author kflorence
-		'scripts' => array(
-			'resources/jquery/jquery-1.7.2.js',
-			'resources/wikia/libraries/jquery/jquery.pushstack-fix.js'
-		),
-		// wikia change - end
+		'scripts' => 'resources/jquery/jquery-1.7.2.js',
 		'debugRaw' => false,
 	),
 
