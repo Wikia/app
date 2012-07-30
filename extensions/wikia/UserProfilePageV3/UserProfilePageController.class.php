@@ -1269,7 +1269,7 @@ class UserProfilePageController extends WikiaController {
 
 	//WikiaMobile hook to add assets so they are minified and concatenated
 	public function onWikiaMobileAssetsPackages( &$jsHeadPackages, &$jsBodyPackages, &$scssPackages){
-		if ( $this->app->checkSkin( 'wikiamobile' ) ) {
+		if ( $this->app->checkSkin( 'wikiamobile' ) && $this->app->wg->Title->getNamespace() === NS_USER ) {
 			$scssPackages[] = 'userprofilepage_scss_wikiamobile';
 		}
 		return true;
