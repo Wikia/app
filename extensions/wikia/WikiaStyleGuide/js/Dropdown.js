@@ -22,7 +22,7 @@ Wikia.Dropdown = $.createClass(Observable, {
 		this.$window = $(window);
 		this.$wrapper = $(element).addClass('closed');
 		this.$dropdown = this.$wrapper.find('.dropdown');
-		
+
 		this.bindEvents();
 	},
 
@@ -46,15 +46,15 @@ Wikia.Dropdown = $.createClass(Observable, {
 		if (this.settings.closeOnOutsideClick || this.settings.onWindowClick) {
 			this.$window.on('click.' + this.settings.eventNamespace, this.proxy(this.onWindowClick));
 		}
-		
+
 		this.fire('bindEvents');
 	},
-	
+
 	disable: function() {
 		this.close();
 		this.$wrapper.addClass('disable');
 	},
-	
+
 	enable: function() {
 		this.$wrapper.removeClass('disable');
 	},
@@ -160,14 +160,9 @@ Wikia.MultiSelectDropdown = $.createClass(Wikia.Dropdown, {
 
 		this.$checkboxes.on('change.' + this.settings.eventNamespace, this.proxy(this.onChange));
 
-		// Do we need this?
-		//this.$window.on(
-		//	'resize.' + this.settings.eventNamespace + ' ' +
-		//	'scroll.' + this.settings.eventNamespace, this.proxy(this.updateDropdownHeight));
-
 		this.updateDropdownHeight();
 		this.updateSelectedItemsList();
-		
+
 		this.$selectAll = this.$dropdown.find('.select-all');
 		this.$selectAll.on('change', $.proxy(this.selectAll, this));
 		this.$selectAll.prop('checked', this.everythingSelected());
@@ -186,30 +181,33 @@ Wikia.MultiSelectDropdown = $.createClass(Wikia.Dropdown, {
 		Wikia.MultiSelectDropdown.superclass.open.apply(this, arguments);
 		this.updateDropdownHeight();
 	},
-	
-	
+
+
 	everythingSelected: function() {
 		return this.getItems().length == this.getSelectedItems().length;
 	},
-	
+
 	selectAll: function(event) {
 		var checked = this.$selectAll.removeClass('modified').is(':checked');
 
 		this.doSelectAll(checked);
 	},
-	
+
 	doSelectAll: function(checked) {
 		this.getItems()
 		.toggleClass('selected', checked)
-		.find(':checkbox').prop('checked', checked);		
+		.find(':checkbox').prop('checked', checked);
 	},
 
 	// Change the height of the dropdown between a minimum and maximum height
 	// to make sure it doesn't overlap the footer toolbar.
 	updateDropdownHeight: function() {
 		var dropdownOffset = this.$dropdown.offset().top,
-			footerToolbarOffset = this.$footerToolbar.offset().top,
-			dropdownHeight = Math.min(this.settings.maxHeight, footerToolbarOffset - dropdownOffset - this.dropdownMarginBottom);
+			footerToolbarOffset = this.$footerToolbar.length ? this.$footerToolbar.offset().top : 0,
+			dropdownHeight = dropdownOffset - this.dropdownMarginBottom;
+
+		// Filter the new height through the dropdown maximum height, making sure it doesn't overlap the footer toolbar
+		dropdownHeight = Math.min(this.settings.maxHeight, footerToolbarOffset ? (footerToolbarOffset - dropdownHeight) : dropdownHeight);
 
 		// Filter the new height through the dropdown minimum height and item height
 		dropdownHeight = Math.max(this.settings.minHeight, Math.floor(dropdownHeight / this.dropdownItemHeight) * this.dropdownItemHeight);
@@ -278,8 +276,8 @@ Wikia.MultiSelectDropdown = $.createClass(Wikia.Dropdown, {
 
 		if (this.$selectAll.is(':checked')) {
 			this.$selectAll.toggleClass('modified', !this.everythingSelected());
-		}	
-		
+		}
+
 		this.fire('change', event);
 	}
 });
