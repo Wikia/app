@@ -96,6 +96,7 @@ class AdminDashboardLogic {
 				"Version",
 				"WhereIsExtension",
 				"WikiActivity",
+				"WikiaHubsV2",
 				"WikiaStyleGuide",
 				"WikiFactory",
 				"WikiFactoryReporter",
