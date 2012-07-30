@@ -36,23 +36,23 @@ $color-related-videos-background: darken($color-page, 20%);
 }
 
 .RelatedVideos {
-	//@include clearfix;
-	//display: inline-block;
-	//width: 660px;
-	//height: 230px;
+	@include clearfix;
+	display: inline-block;
+	width: 660px;
+	height: 230px;
 
-//	.messageHolder {
-//		display: none;
-//	}
+	.messageHolder {
+		display: none;
+	}
 
-	/*.add-this-video {
+	.add-this-video {
 		position: absolute;
 		bottom: 10px;
 		text-align: center;
 		width: 100%;
 		margin: -5px; // correcting padding from parent
 		cursor: pointer;
-	}*/
+	}
 
 	img.sprite {
 		background-color: transparent;
@@ -175,14 +175,14 @@ $color-related-videos-background: darken($color-page, 20%);
 				width: 500000px;
 				position: relative;
 				div.item {
-					//vertical-align: top;
-					//padding: 5px;
-					//height: 175px;
-					//width: 160px;
-					//margin: 11px;
-					//display: inline-block;
-					//float: left;
-					//position: relative;
+					vertical-align: top;
+					padding: 5px;
+					height: 175px;
+					width: 160px;
+					margin: 11px;
+					display: inline-block;
+					float: left;
+					position: relative;
 					.description{
 						width: 160px;
 						line-height: 15px;
