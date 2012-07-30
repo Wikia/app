@@ -468,15 +468,13 @@ class EditPageLayout extends EditPage {
 	 * If you want to use another entry point to this function, be careful.
 	 */
 	protected function showConflict() {
-		$this->textbox2 = $this->textbox1;
-		$this->textbox1 = $this->getContent();
-
 		if ( wfRunHooks( 'EditPageBeforeConflictDiff', array( &$this, &$this->out ) ) ) {
 			// diff
 			$this->out->addHtml('<div id="diff">');
 			$this->out->wrapWikiMsg( '<h2>$1</h2>', 'editpagelayout-diff-header' );
 
 			$de = new DifferenceEngine( $this->mTitle );
+			
 			$de->setText( $this->textbox2, $this->textbox1 );
 			$de->showDiff( wfMsg( "yourtext" ), wfMsg( "storedversion" ) );
 
