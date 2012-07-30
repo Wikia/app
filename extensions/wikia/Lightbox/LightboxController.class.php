@@ -168,17 +168,26 @@ class LightboxController extends WikiaController {
 		$articleListIsSmaller = 0;
 		$readableTitles = array();
 
-		if(!empty($articles)) {
+		if( !empty($articles) ) {
 			$isPostedIn = true;
-			$numOfArticles = count($articles);
-			for($i = 0; $i < $numOfArticles; $i++) {
-				$readableTitles[] = str_replace("_"," ",$articles[$i]);
-				if($i < 2) {
-					// Create truncated list for lightbox header
-					$smallerArticleList[] = $readableTitles[$i];
+
+			foreach( $articles as $article ) {
+				$article = str_replace( "_", " ", $article );
+				$readableTitles[] = $article;
+
+				// Create truncated list for lightbox header
+				if ( count($smallerArticleList) < 3 ) {
+					if ( $article['articleNS'] == NS_MAIN
+						|| ( (!empty($this->wg->ContentNamespace)) && in_array($article['articleNS'], $this->wg->ContentNamespace) ) ) {
+							$smallerArticleList[] = $article;
+					}
 				}
 			}
-			$articleListIsSmaller = $numOfArticles > 2 ? 1 : 0;
+
+			if ( count($smallerArticleList) > 2 ) {
+				array_pop( $smallerArticleList );
+				$articleListIsSmaller = 1;
+			}
 		}
 
 		// file details
