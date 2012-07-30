@@ -100,11 +100,21 @@ class SharedHttp extends Http {
 }
 
 function SharedHelpHook(&$out, &$text) {
-	global $wgTitle, $wgMemc, $wgSharedDB, $wgDBname, $wgCityId, $wgHelpWikiId, $wgContLang, $wgLanguageCode, $wgArticlePath;
+	global $wgTitle, $wgMemc, $wgSharedDB, $wgCityId, $wgHelpWikiId, $wgContLang, $wgLanguageCode, $wgArticlePath;
+
+	/* Insurance that hook will be called only once #BugId:  */
+	static $wasCalled = false;
+
+	if($wasCalled == true){
+		return true;
+	}
+	$wasCalled = true;
 
 	if(empty($wgHelpWikiId) || $wgCityId == $wgHelpWikiId) { # Do not proceed if we don't have a help wiki or are on it
 		return true;
 	}
+
+	error_log('11111111111'.__FUNCTION__);
 
 	if(!$out->isArticle()) { # Do not process for pages other then articles
 		return true;
