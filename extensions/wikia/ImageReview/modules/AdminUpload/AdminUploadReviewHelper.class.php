@@ -234,18 +234,15 @@ class AdminUploadReviewHelper extends ImageReviewHelperBase {
 
 		$values[] = ' image_review_status = ' . $newState;
 
-
 		$query = 'SELECT * from city_visualization_images '
 			. ' WHERE ' . $whereState
 			. ' ORDER BY  ' . $this->getOrder($order)
 			. ' LIMIT ' . self::LIMIT_IMAGES_FROM_DB;
 
-
 		$result = $db->query($query);
 
 		$rows = array();
 		$updateWhere = array();
-		$iconsWhere = array();
 		while ($row = $db->fetchObject($result)) {
 			$rows[] = $row;
 			$updateWhere[] = "(city_id = {$row->city_id} and page_id = {$row->page_id})";
