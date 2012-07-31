@@ -32,9 +32,12 @@ class RebuildLocalisationCacheTask extends BatchTask {
 	public function execute( $params = null ) {
 		$this->mData = $params;
 		$this->log( 'RebuildLocalisationCacheTask started.' );
-		$out = wfShellExec(
-			"pdsh -g all_web 'echo {$this->mTaskID} > /tmp/l10n-rebuild'"
-		);
+		for ( $i = 0; $i < 2; $i++ ) {
+			$slot = $i+1;
+			$out = wfShellExec(
+				"/usr/bin/perl /usr/wikia/backend/bin/run-script-and-rsync.pl --script='rebuildLocalisationCache.php --force' --wiki=177 --all --slot={$slot} --dir=/usr/wikia/slot{$slot}/cache/messages/ "
+			);
+		}
 		$this->log( $out );
 		$this->log( 'RebuildLocalisationCacheTask completed.' );
 		return true;
