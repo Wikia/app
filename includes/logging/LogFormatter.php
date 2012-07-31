@@ -148,8 +148,30 @@ class LogFormatter {
 	 * @see getActionText()
 	 * @return string text
 	 */
+	public function getIRCActionComment() {
+		$actionComment = $this->getIRCActionText();
+		$comment = $this->entry->getComment();
+
+		if ( $comment != '' ) {
+			if ( $actionComment == '' ) {
+				$actionComment = $comment;
+			} else {
+				$actionComment .= wfMsgForContent( 'colon-separator' ) . $comment;
+			}
+		}
+
+		return $actionComment;
+	}
+
+	/**
+	 * Even uglier hack to maintain backwards compatibilty with IRC bots
+	 * (bug 34508).
+	 * @see getActionText()
+	 * @return string text
+	 */
 	public function getIRCActionText() {
 		$this->plaintext = true;
+		$this->irctext = true;
 		$text = $this->getActionText();
 
 		$entry = $this->entry;
@@ -204,6 +226,20 @@ class LogFormatter {
 				}
 				break;
 
+			case 'protect':
+				switch( $entry->getSubtype() ) {
+				case 'protect':
+					$text = wfMsgExt( 'protectedarticle', $msgOpts, $target . ' ' . $parameters[0] );
+						break;
+				case 'unprotect':
+					$text = wfMsgExt( 'unprotectedarticle', $msgOpts, $target );
+						break;
+				case 'modify':
+					$text = wfMsgExt( 'modifiedarticleprotection', $msgOpts, $target . ' ' . $parameters[0] );
+						break;
+				}
+				break;
+
 			case 'newusers':
 				switch( $entry->getSubtype() ) {
 					case 'newusers':
@@ -238,6 +274,7 @@ class LogFormatter {
 		}
 
 		$this->plaintext = false;
+		$this->irctext = false;
 		return $text;
 	}
 
@@ -500,7 +537,11 @@ class LegacyLogFormatter extends LogFormatter {
 		);
 
 		$performer = $this->getPerformerElement();
-		return $performer .  $this->msg( 'word-separator' )->text() . $action;
+		if ( !$this->irctext ) {
+			$action = $performer .  $this->msg( 'word-separator' )->text() . $action;
+		}
+
+		return $action;
 	}
 
 }
