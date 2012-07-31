@@ -1,3 +1,5 @@
+/* global LightboxLoader:true */
+
 var Lightbox = {
 	log: function(content) {
 		$().log(content, "Lightbox");
@@ -179,11 +181,11 @@ var Lightbox = {
 			var target = $(evt.target);
 			var overlayActive = Lightbox.openModal.data('overlayactive');
 			if(overlayActive) {
-				var pinnedTitle = target.data('pinned-title')
+				var pinnedTitle = target.data('pinned-title');
 				target.addClass('active').attr('title', pinnedTitle);	// add active state to button when carousel overlay is active
 				Lightbox.openModal.addClass('pinned-mode');
 			} else {
-				var pinTitle = target.data('pin-title')
+				var pinTitle = target.data('pin-title');
 				target.removeClass('active').attr('title', pinTitle);
 				Lightbox.openModal.removeClass('pinned-mode');
 			}
@@ -288,8 +290,9 @@ var Lightbox = {
 					modalMinHeight = LightboxLoader.defaults.height,
 					windowHeight = $(window).height(),
 					modalHeight = windowHeight - topOffset*2,  
-					modalHeight = modalHeight < modalMinHeight ? modalMinHeight : modalHeight,
 					currentModalHeight = Lightbox.openModal.height();
+
+				modalHeight = modalHeight < modalMinHeight ? modalMinHeight : modalHeight;
 
 				// Just in case image is wider than 1000px
 				if(image.width() > 1000) {
@@ -340,7 +343,7 @@ var Lightbox = {
 				};
 
 				// remove preloader image
-				$(this).remove();
+				image.remove();
 				
 				callback(dimensions);
 			});
@@ -493,7 +496,7 @@ var Lightbox = {
 	renderHeader: function() {
 		var headerTemplate = Lightbox.openModal.headerTemplate;
 		LightboxLoader.getMediaDetail({fileTitle: Lightbox.current.title}, function(json) {
-			var renderedResult = headerTemplate.mustache(json)
+			var renderedResult = headerTemplate.mustache(json);
 			Lightbox.openModal.header
 				.html(renderedResult)
 				.prepend($(Lightbox.openModal.closeButton).clone(true, true));	// clone close button into header
@@ -679,13 +682,14 @@ var Lightbox = {
 	
 		// Pass control functions to jquery.wikia.carousel.js
 		var itemClick = function(e) {
+			var $this = $(this);
 			// If the clicked item is disabled, treat it as the next item in the batch
-			if($(this).hasClass('disabled')) {
-				$(this).next().click();
+			if($this.hasClass('disabled')) {
+				$this.next().click();
 				return false;
 			}
 			
-			var idx = $(this).index(),
+			var idx = $this.index(),
 				mediaArr = Lightbox.current.thumbs;
 			
 			if(Lightbox.ads.adIsShowing) { 
@@ -949,8 +953,9 @@ var Lightbox = {
 					titles = []; // array to check for title dupes
 	
 				thumbs.each(function() {
-					var thumbUrl = $(this).data('src') || $(this).attr('src'),
-						title = $(this).data('video');
+					var $thisThumb = $(this),
+						thumbUrl = $thisThumb.data('src') || $thisThumb.attr('src'),
+						title = $thisThumb.data('video');
 	
 					if(title) {
 						// Check for dupes
@@ -995,8 +1000,9 @@ var Lightbox = {
 					titles = []; // array to check for title dupes
 				
 				thumbs.each(function() {
-					var thumbUrl = $(this).data('src') || $(this).attr('src'),
-						title = $(this).parent().data('ref').replace('File:', '');
+					var $thisThumb = $(this),
+						thumbUrl = $thisThumb.data('src') || $thisThumb.attr('src'),
+						title = $thisThumb.parent().data('ref').replace('File:', '');
 						
 					if(title) {
 						// Check for dupes

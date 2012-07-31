@@ -28,7 +28,7 @@ var LightboxLoader = {
 			$(window).off('.Lightbox');
 			LightboxLoader.lightboxLoading = false;
 			// Reset carousel
-			Lightbox.current.thumbs = [];
+			Lightbox.current.thumbs = []; /* global Lightbox */
 			Lightbox.current.thumbTypesAdded = [];
 			Lightbox.to = LightboxLoader.cache.to;
 			// Reset Ad Flags
@@ -56,10 +56,8 @@ var LightboxLoader = {
 			liztest: true
 		}
 		
-		trackParams = $.extend({}, data || {}, ga_params);
+		var trackParams = $.extend({}, data || {}, ga_params);
 		
-		$().log(trackParams, "LightboxLoader");
-
 		WikiaTracker.trackEvent(null, trackParams, 'internal');
 	},
 	init: function() {
