@@ -6,28 +6,28 @@
  * @preserve Copyright(c) 2012 Cardinal Path
  * @author Eduardo Cereto <ecereto@cardinalpath.com>
  *
- * @version: dev_10 XXX
+ * @version: dev_11
  */
 
 (function(window, undefined) {
-    var possible_domains, i, _gaq;
+    var possible_domains, i;
     /**
      * Main Tracker
      *
      * To be used for everything that is not advertisement
      */
-    _gaq = window._gaq = window._gaq || [];
+    window._gaq = window._gaq || [];
 
     // Main Roll-up Account - UA-32129070-1
-    //_gaq.push(['_setAccount', 'UA-32129070-1']); // PROD XXX
-    _gaq.push(['_setAccount', 'UA-32129070-2']); // DEV
-    _gaq.push(['_setSampleRate', '10']); // 10% Sampling
+    //window._gaq.push(['_setAccount', 'UA-32129070-1']); // PROD
+    window._gaq.push(['_setAccount', 'UA-32129070-2']); // DEV
+    window._gaq.push(['_setSampleRate', '10']); // 10% Sampling
 
     if (window.wgIsGASpecialWiki) {
         // Special Wikis account - UA-32132943-1
-        //_gaq.push(['special._setAccount', 'UA-32132943-1']); // PROD XXX
-        _gaq.push(['special._setAccount', 'UA-32132943-2']); // DEV
-        _gaq.push(['special._setSampleRate', '100']); // No Sampling
+        //window._gaq.push(['special._setAccount', 'UA-32132943-1']); // PROD
+        window._gaq.push(['special._setAccount', 'UA-32132943-2']); // DEV
+        window._gaq.push(['special._setSampleRate', '100']); // No Sampling
     }
 
     /**
@@ -51,19 +51,18 @@
       for (i=0; i < args.length; i++) {
         // If it's a function just push to _gaq
         if (typeof args[i] === 'function') {
-          _gaq.push(args[i]);
+          window._gaq.push(args[i]);
           continue;
         }
 
         // Send to Main Account
-        _gaq.push(args[i]);
+        window._gaq.push(args[i]);
 
         if (window.wgIsGASpecialWiki) {
           spec = args[i].slice();
           // Send to Special Wikis Account
           spec[0] = 'special.' + spec[0];
-          _gaq.push(spec);
-
+          window._gaq.push(spec);
         }
       }
     }
@@ -107,14 +106,14 @@
      * To be used for all ad impression and click events
      */
     // Advertisment Account UA-32129071-1
-    //_gaq.push(['ads._setAccount', 'UA-32129071-1']); // PROD XXX
-    _gaq.push(['ads._setAccount', 'UA-32129071-2']); // DEV
+    //window._gaq.push(['ads._setAccount', 'UA-32129071-1']); // PROD
+    window._gaq.push(['ads._setAccount', 'UA-32129071-2']); // DEV
 
     // Try to use the full domain to get a different cookie domain
-    _gaq.push(['ads._setDomainName', document.location.hostname]);
+    window._gaq.push(['ads._setDomainName', document.location.hostname]);
 
     /* Ads Account customVars */
-    _gaq.push(['ads._setCustomVar', 1, 'DBname', window.wgDBname, 3],
+    window._gaq.push(['ads._setCustomVar', 1, 'DBname', window.wgDBname, 3],
               ['ads._setCustomVar', 2, 'ContentLanguage',
                   window.wgContentLanguage, 3],
               ['ads._setCustomVar', 3, 'Hub', window.cscoreCat, 3],
@@ -123,7 +122,7 @@
                   !!window.wgUserName ? 'user' : 'anon', 3]);
 
     /**** Medium-Priority CVs ****/
-    _gaq.push(['ads._setCustomVar', 8, 'PageType',
+    window._gaq.push(['ads._setCustomVar', 8, 'PageType',
                   window.adLogicPageType, 3],
               ['ads._setCustomVar', 9, 'CityId', window.wgCityId, 3],
               ['ads._setCustomVar', 12, 'MedusaSlot', window.wgMedusaSlot, 3]);
