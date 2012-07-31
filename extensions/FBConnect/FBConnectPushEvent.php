@@ -36,6 +36,14 @@ class FBConnectPushEvent {
 	 * the push events.
 	 */
 	static public function initExtension(){
+
+		/**
+		 * running this extension in maintenance scripts preventing rebuildCache from running
+		 */
+		global $wgCommandLineMode;
+		if( $wgCommandLineMode == true ) {
+			return;
+		}
 		wfProfileIn(__METHOD__);
 
 		// The push feature of the extension requires the publish_stream extended permission.
