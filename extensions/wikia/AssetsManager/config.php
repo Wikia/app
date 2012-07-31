@@ -57,6 +57,7 @@ $config['oasis_noads_extensions_js'] = array(
 		'//extensions/wikia/CreatePage/js/CreatePage.js',
 		'//extensions/wikia/ImageLightbox/ImageLightbox.js',
 		'//extensions/wikia/Lightbox/js/LightboxLoader.js',
+		'//extensions/wikia/ImageLazyLoad/js/ImageLazyLoad.js',
 		'//extensions/wikia/AjaxLogin/AjaxLoginBindings.js',
 		'//extensions/wikia/UserLogin/js/UserLoginAjaxForm.js', // TODO: do we need to load this for logged-in?  answer: yes, we allow logged in users to change login without logging out
 		'//extensions/wikia/UserLogin/js/UserSignupAjaxForm.js', // TODO: do we need to load this for logged-in?  answer: yes, we allow logged in users to create account without logging out
@@ -480,6 +481,7 @@ $config['monobook_js'] = array(
 		'//resources/wikia/libraries/my.class/my.class.js',
 		'//extensions/wikia/JSMessages/js/JSMessages.js',
 		'//extensions/wikia/AjaxLogin/AjaxLoginBindings.js',
+		'//extensions/wikia/ImageLazyLoad/js/ImageLazyLoad.js',
 		'//extensions/FBConnect/fbconnect.js',
 		'//extensions/wikia/AdEngine/AdProviderOpenX.js',
 		'//extensions/wikia/AdEngine/LazyLoadAds.js',
