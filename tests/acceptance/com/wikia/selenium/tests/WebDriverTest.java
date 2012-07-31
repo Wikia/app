@@ -3,8 +3,12 @@ package com.wikia.selenium.tests;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 import java.io.File;
+import java.awt.AWTException;
+import java.awt.Robot;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
