@@ -58,7 +58,7 @@ var LightboxLoader = {
 		
 		trackParams = $.extend({}, data || {}, ga_params);
 		
-		console.log(trackParams);
+		$().log(trackParams, "LightboxLoader");
 
 		WikiaTracker.trackEvent(null, trackParams, 'internal');
 	},
