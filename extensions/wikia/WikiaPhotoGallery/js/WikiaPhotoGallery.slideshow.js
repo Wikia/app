@@ -11,7 +11,7 @@ var WikiaPhotoGallerySlideshow = {
 
 		var slideCallback = function(index) {
 			var item = slideshow.find('li').eq(index),
-				img = item.find('img'),
+				img = item.find('img').first(),
 				src = img.attr('data-src');
 				
 			if(src) {
