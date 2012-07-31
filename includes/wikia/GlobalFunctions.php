@@ -1576,9 +1576,9 @@ function wfAssetManagerGetSASSFilePath( $file, $relativeToPath = false ) {
 			if ( file_exists( $d ) ) {
 				foreach( $filenames as $f ) {
 					$fullPath = $d . $f;
-					if ( file_exists( $fullPath ) ) {
+					$fileExists = file_exists( $fullPath );
+					if ( $fileExists ) {
 						$file = $fullPath;
-						$fileExists = true;
 						break;
 					}
 				}
