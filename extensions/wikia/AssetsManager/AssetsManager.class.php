@@ -469,7 +469,7 @@ class AssetsManager {
 		$cb = $this->mCacheBuster;
 
 		if ( !empty( $wgSpeedBox ) && !empty( $wgDevelEnvironment ) ) {
-			if ( $type == 'sass' && $wgSpeedBox && $wgDevelEnvironment ) {
+			if ( $type == 'sass' ) {
 				$cb = hexdec( substr( wfAssetManagerGetSASShash( $IP . '/' . $oid ), 0, 8 ) );
 
 			} else if ( $type == 'one' && endsWith( $oid, '.js' ) ) {
