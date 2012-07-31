@@ -11,6 +11,7 @@ class WikiaMobileBodyService extends WikiaService {
 		$categoryLinks = $this->getVal( 'categoryLinks', '' );
 		$afterBodyHtml = '';
 		$afterContentHookText = null;
+		$this->pageHeaderContent = '';
 		
 		// this hook allows adding extra HTML just after <body> opening tag
 		// append your content to $html variable instead of echoing
@@ -22,7 +23,10 @@ class WikiaMobileBodyService extends WikiaService {
 			$afterContentHookText = '';
 		}
 
-		$this->pageHeaderContent = $this->app->renderView( 'WikiaMobilePageHeaderService', 'index' );
+		/* Dont show header if user profile page */
+		if($this->app->wg->Title->getNamespace() !== NS_USER){
+			$this->pageHeaderContent = $this->app->renderView( 'WikiaMobilePageHeaderService', 'index' );
+		}
 		$this->bodyContent = $bodyContent;
 		$this->response->setVal(
 			'relatedPages',
