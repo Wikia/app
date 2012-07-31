@@ -144,8 +144,17 @@ class RecentChange {
 	public function &getTitle() {
 		if( $this->mTitle === false ) {
 			$this->mTitle = Title::makeTitle( $this->mAttribs['rc_namespace'], $this->mAttribs['rc_title'] );
-			# Make sure the correct page ID is process cached
-			$this->mTitle->resetArticleID( $this->mAttribs['rc_cur_id'] );
+
+			/* Wikia change begin - @author: garth */
+			# Don't reset here if the FastLinkCache is enabled.  Calling
+			# resetArticleID clears this memcached key when its likely we
+			# just set it earlier in this request.  BugID 42735
+			global $wgEnableFastLinkCache;
+			if (!$wgEnableFastLinkCache) {
+				# Make sure the correct page ID is process cached
+				$this->mTitle->resetArticleID( $this->mAttribs['rc_cur_id'] );
+			}
+			/* Wikia change - end */
 		}
 		return $this->mTitle;
 	}
