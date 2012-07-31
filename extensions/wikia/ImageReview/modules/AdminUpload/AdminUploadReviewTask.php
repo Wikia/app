@@ -67,6 +67,7 @@ class AdminUploadReviewTask extends BatchTask {
 		return false;
 	}
 
+	//todo: think about some refactoring, maybe adding $isItUploadForCorporate variable and then split body of method to different methods?
 	function uploadImages($targetWikiId, $wikis) {
 		$targetWikiLang = WikiFactory::getVarValueByName('wgLanguageCode', $targetWikiId);
 
@@ -84,8 +85,9 @@ class AdminUploadReviewTask extends BatchTask {
 				}
 			}
 
-			if( !empty($uploadedImages) ) {
-				$updateData = $this->getImagesToUpdateInDb($uploadedImages);
+			if( !empty($uploadedImages) && !in_array($sourceWikiId, $this->corporatePagesIds) ) {
+			//if images uploaded but not from import script
+				$updateData = $this->getImagesToUpdateInDb($sourceWikiId, $sourceWikiLang, $uploadedImages);
 
 				if( !empty($updateData) ) {
 					//update in db
@@ -99,6 +101,8 @@ class AdminUploadReviewTask extends BatchTask {
 					F::app()->wg->Memc->set($memcKey, null);
 				}
 			}
+
+			//todo: investigate and implatement if needed if we need here additional if block for images uploaded for import script
 		}
 
 		if( !empty($uploadedImages) && in_array($sourceWikiId, $this->corporatePagesIds) ) {
@@ -108,6 +112,8 @@ class AdminUploadReviewTask extends BatchTask {
 		}
 
 		if( !empty($uploadedImages) ) {
+		//if images uploaded but not from import script
+			//todo: investigate if we have to add purging interstitial?
 			$this->model->purgeVisualizationWikisListCache($targetWikiId, $targetWikiLang);
 			return true;
 		}
@@ -247,8 +253,19 @@ class AdminUploadReviewTask extends BatchTask {
 		}
 	}
 
-	protected function getImagesToUpdateInDb($images) {
+	protected function getImagesToUpdateInDb($sourceWikiId, $sourceWikiLang, $images) {
 		$data = array();
+
+		$wikiData = $this->model->getWikiData($sourceWikiId, $sourceWikiLang, $this->helper);
+		$currentImages = $wikiData['images'];
+
+		if( !empty($currentImages) ) {
+			foreach($currentImages as $imageName) {
+				if( $this->getImageType($imageName) === 'additional' && !in_array($imageName, $images) ) {
+					$data['city_images'][] = $imageName;
+				}
+			}
+		}
 
 		foreach($images as $image) {
 			$imageName = $image['name'];
