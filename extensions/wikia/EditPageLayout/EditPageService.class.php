@@ -19,9 +19,31 @@ class EditPageService extends Service {
 		return new self($article->getTitle());
 	}
 
+	# Disgustingly copied from SkinTemplate
+	static public function wrapBodyText($title, $request, $html) {
+		global $wgContLang;
+
+                # An ID that includes the actual body text; without categories, contentSub, ...
+                $realBodyAttribs = array( 'id' => 'mw-content-text' );
+
+                # Add a mw-content-ltr/rtl class to be able to style based on text direction
+                # when the content is different from the UI language, i.e.:
+                # not for special pages or file pages AND only when viewing AND if the page exists
+                # (or is in MW namespace, because that has default content)
+                if( !in_array( $title->getNamespace(), array( NS_SPECIAL, NS_FILE ) ) ) {
+                        $lang = ( $title->exists() ) ? $title->getPageLanguage() : $wgContLang;
+			
+                        $realBodyAttribs['lang'] = $lang->getHtmlCode();
+                        $realBodyAttribs['dir'] = $lang->getDir();
+                       	$realBodyAttribs['class'] = 'mw-content-'.$lang->getDir();
+                }
+
+                return Html::rawElement( 'div', $realBodyAttribs, $html );
+	}
+
 	public function getPreview($wikitext) {
 		// TODO: use wgParser here because some parser hooks initialize themselves on wgParser (should on provided parser instance)
-		global $wgParser, $wgUser;
+		global $wgParser, $wgUser, $wgRequest;
 		wfProfileIn(__METHOD__);
 
 		$parserOptions = new ParserOptions($wgUser);
@@ -31,6 +53,8 @@ class EditPageService extends Service {
 
 		// parse wikitext using MW parser
 		$html = $wgParser->parse($wikitext, $this->mTitle, $parserOptions)->getText();
+
+		$html = EditPageService::wrapBodyText($this->mTitle, $wgRequest, $html);
 
 		// we should also render categories and interlanguage links
 		$parserOutput = $wgParser->getOutput();
