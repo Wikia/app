@@ -170,6 +170,7 @@ public class WebDriverTest {
 		}
 		*/
 	}
+	
 	public void HoverOverElement(String cssSelectorHoverOver, WebDriver driver) throws AWTException, InterruptedException {
 	// Author: Michal Nowierski 
 	// This method is designed to manage ChromeDriver FirefoxDriver and InternetExplorerDriver
@@ -230,12 +231,9 @@ public class WebDriverTest {
 //		Actions builder = new Actions(driver);
 //		builder.moveToElement(HoverOverElement).perform();
 		// End
-
-		
-		
-		
-	   	    	
+   	    	
 	      }
+		  
 public void HoverOverElementAndClick(String cssSelectorHoverOver, String cssSelectorClick, WebDriver driver) throws AWTException, InterruptedException {
 	// Author: Michal Nowierski 
 	// This method is designed to manage ChromeDriver FirefoxDriver and InternetExplorerDriver
@@ -334,6 +332,7 @@ protected void NavigateToWikia(WebDriver driver) {
 
 		
 }
+
 protected void scrollToElement(WebDriver driver, WebElement element) {
 	// Author: Michal Nowierski 
 	// Scroll to an element
@@ -354,6 +353,7 @@ public void MakeSureUserLoggedOut(WebDriver driver) throws AWTException, Interru
 		}
 
 	}
+	
 public void MakeSureUserLoggedIn(WebDriver driver, String username, String password) throws AWTException, InterruptedException {
 	// Author: Michal Nowierski 
     // Make sure that user is logged in. If he is, dont throw exception.
@@ -364,8 +364,8 @@ public void MakeSureUserLoggedIn(WebDriver driver, String username, String passw
 		} catch (Exception e) {
 			
 		}
-
 	}
+	
 protected void LogOutUsingUserDropDown(WebDriver driver) throws AWTException, InterruptedException {
 	// Author: Michal Nowierski
 	//Log out using user drop down log out item.
@@ -377,7 +377,6 @@ protected void LogOutUsingUserDropDown(WebDriver driver) throws AWTException, In
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By
 	.cssSelector("ul[id='AccountNavigation'] li a[data-id='login']")));
 
-	
 }
 protected void LogInUsingUserDropDown(WebDriver driver, String username, String password) throws AWTException, InterruptedException {
 	// Author: Michal Nowierski
