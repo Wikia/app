@@ -6,7 +6,7 @@
  */
 class WikiaMobileHooks extends WikiaObject{
 	const IMAGE_GROUP_MIN = 2;
-	const IMAGE_GROUP_MAX = 15;
+	const IMAGE_GROUP_MAX = 10;
 
 	public function onParserAfterTidy( &$parser, &$text ){
 		$this->wf->profileIn( __METHOD__ );
