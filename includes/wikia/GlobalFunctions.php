@@ -1539,6 +1539,8 @@ function wfAssetManagerGetSASShash( $file ) {
 
 /**
  * @brief Generates the absolute file path to a Sass file
+ *
+ * @author Piotr Bablok <piotr.bablok@gmail.com>
  * @author Kyle Florence <kflorence@wikia-inc.com>
  */
 function wfAssetManagerGetSASSFilePath( $file, $relativeToPath = false ) {
@@ -1551,7 +1553,8 @@ function wfAssetManagerGetSASSFilePath( $file, $relativeToPath = false ) {
 		$filename = array_pop( $parts );
 		$directory = implode( '/', $parts ) . '/';
 
-		// Directories to search in. These should be arranged in order of likeliness.
+		// Directories to search in.
+		// These should be arranged in order of likeliness.
 		$directories = array();
 
 		if ( $relativeToPath ) {
@@ -1561,22 +1564,23 @@ function wfAssetManagerGetSASSFilePath( $file, $relativeToPath = false ) {
 		$directories[] = $IP . '/' . $directory;
 		$directories[] = $directory;
 
-		// Filenames to check. These should be arranged in order of likeliness.
+		// Filenames to check.
+		// These should be arranged in order of likeliness.
 		$filenames = array();
-		$filenames[] = $filename;
-		$filenames[] = '_' . $filename;
 		$filenames[] = $filename . '.scss';
 		$filenames[] = '_' . $filename . '.scss';
 		$filenames[] = $filename . '.sass';
 		$filenames[] = '_' . $filename . '.sass';
 
 		foreach( $directories as $d ) {
-			foreach( $filenames as $f ) {
-				$fullPath = $d . $f;
-				if ( file_exists( $fullPath ) ) {
-					$file = $fullPath;
-					$fileExists = true;
-					break;
+			if ( file_exists( $d ) ) {
+				foreach( $filenames as $f ) {
+					$fullPath = $d . $f;
+					if ( file_exists( $fullPath ) ) {
+						$file = $fullPath;
+						$fileExists = true;
+						break;
+					}
 				}
 			}
 		}
