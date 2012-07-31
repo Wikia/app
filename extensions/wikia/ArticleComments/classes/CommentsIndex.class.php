@@ -203,8 +203,9 @@ class CommentsIndex extends WikiaModel {
 			if ( empty($this->lastTouched) ) {
 				$this->lastTouched = $timestamp;
 			}
-			$db->insert(
+			$db->replace(
 				'comments_index',
+				'',
 				array(
 					'parent_page_id' => $this->parentPageId,
 					'comment_id' => $this->commentId,
