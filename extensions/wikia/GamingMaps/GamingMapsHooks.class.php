@@ -64,28 +64,36 @@ class GamingMapsHooks extends WikiaObject{
         foreach ($simplyxml->children() as $node) {
             $arr = $node->attributes();   // returns an array
             if($node->children()){
-                $aDefMarkers[] = array((string)$arr["name"],(string)$arr["id"],self::getUrlIMG((string)$arr["img"]),(string)$arr["view"]);
+                $aDefMarkers[] = array('name'=>(string)$arr["name"],'id'=>(string)$arr["id"],'img'=>self::getUrlIMG((string)$arr["img"]),'view'=>(string)$arr["view"]);
                 foreach ($node->children() as $nodeNodes) {
                     if(trim($nodeNodes->getName())=='marker'){
                         $arr2 = $nodeNodes->attributes();   // returns an array
-                        $aMarkers[] = array((string)$arr2["lat"],(string)$arr2["lon"],(string)$arr["id"], (string)$nodeNodes);
+                        if($arr2["title"]){
+                            $aMarkers[] = array('lat'=>(string)$arr2["lat"],'lon'=>(string)$arr2["lon"], 'id'=>(string)$arr["id"], 'content'=>"", 'title'=>(string)$arr2["title"]);
+                        }else{
+                            $aMarkers[] = array('lat'=>(string)$arr2["lat"],'lon'=>(string)$arr2["lon"], 'id'=>(string)$arr["id"], 'content'=>(string)$nodeNodes, 'title'=>"");
+                        }
                     }elseif(trim($nodeNodes->getName())=='polygon'){
-                        echo('find polygon');
                         $aPolygons[] = self::setPolygon($nodeNodes, (string)$arr["id"]);
                     }
                 }
             }
         }
 
-        foreach($aDefMarkers as $val)
+        /*foreach($aDefMarkers as $val)
         {
             if(!empty($val))
             {
                 $val[2]=self::getUrlIMG($val[2]);
             }
-        }
+        }*/
 
-        $aDefMarkers[sizeof($aDefMarkers)] = array('Others','other', self::getUrlIMG('iOtherIcon.png'),'true'); // create default marker
+        /*$imgFile = F::app()->wf->findFile( $attributes['img']);
+        if($imgFile->exists()){
+            $app->sendRequest("GamingMaps", "createMap", array( 'oImage' => $imgFile )); //send values to controller
+        }*/
+
+        $aDefMarkers[sizeof($aDefMarkers)] = array('name'=>'Others','id'=>'other', 'img'=>self::getUrlIMG('iOtherIcon.png'),'true'); // create default marker
 
         $mapa = $app->sendRequest("GamingMaps", "index", array( 'attr' => $attributes, 'markers'=> $aMarkers)); //send values to controller
         $mapa = str_replace("\n","",$mapa);
