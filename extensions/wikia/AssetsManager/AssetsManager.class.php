@@ -465,9 +465,17 @@ class AssetsManager {
 		wfProfileIn( __METHOD__ );
 
 		global $wgAssetsManagerQuery, $IP, $wgSpeedBox, $wgDevelEnvironment;
-		$cb = $wgSpeedBox && $wgDevelEnvironment ?
-			hexdec(substr(wfAssetManagerGetSASShash( $IP.'/'.$oid ),0,6)) :
-			$this->mCacheBuster;
+
+		$cb = $this->mCacheBuster;
+
+		if ( !empty( $wgSpeedBox ) && !empty( $wgDevelEnvironment ) ) {
+			if ( $type == 'sass' && $wgSpeedBox && $wgDevelEnvironment ) {
+				$cb = hexdec( substr( wfAssetManagerGetSASShash( $IP . '/' . $oid ), 0, 8 ) );
+
+			} else if ( $type == 'one' && endsWith( $oid, '.js' ) ) {
+				$cb = filemtime( $IP . '/' . $oid );
+			}
+		}
 
 		$url = sprintf($wgAssetsManagerQuery,
 			/* 1 */ $type,
