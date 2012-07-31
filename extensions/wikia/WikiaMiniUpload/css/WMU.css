@@ -200,7 +200,7 @@
 	margin-right: 5px;
 }
 #ImageUploadSlider {
-	background: url(../images/slider_groove.png) center center repeat-x;
+	background: url(/extensions/wikia/WikiaMiniUpload/images/slider_groove.png) center center repeat-x; /* $wgCdnStylePath */
 	height: 16px;
 	float: left;
 	margin-right: 5px;
