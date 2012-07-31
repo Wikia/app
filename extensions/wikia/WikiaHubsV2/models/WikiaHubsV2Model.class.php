@@ -24,35 +24,35 @@ class WikiaHubsV2Model extends WikiaModel {
 		return array(
 			'images' => array(
 				array(
-					'image' => 'VG_Olympics_slider.jpg',
+					'image' => 'File:Wikia-Visualization-Main,rappelz.png',
 					'anchor' => 'http://www.wikia.com/Video_Games%2FVideo_Game_Olympics',
 					'title' => 'Gaming Olympics',
 					'headline' => 'Exclusively on Wikia!',
 					'description' => 'Participate in the biggest gaming event of 2012'
 				),
 				array(
-					'image' => 'VG_Olympics_slider.jpg',
+					'image' => 'File:Wikia-Visualization-Main,rappelz.png',
 					'anchor' => 'http://www.wikia.com/Video_Games%2FVideo_Game_Olympics',
 					'title' => 'Gaming Olympics',
 					'headline' => 'Exclusively on Wikia!',
 					'description' => 'Participate in the biggest gaming event of 2012'
 				),
 				array(
-					'image' => 'VG_Olympics_slider.jpg',
+					'image' => 'File:Wikia-Visualization-Main,rappelz.png',
 					'anchor' => 'http://www.wikia.com/Video_Games%2FVideo_Game_Olympics',
 					'title' => 'Gaming Olympics',
 					'headline' => 'Exclusively on Wikia!',
 					'description' => 'Participate in the biggest gaming event of 2012'
 				),
 				array(
-					'image' => 'VG_Olympics_slider.jpg',
+					'image' => 'File:Wikia-Visualization-Main,rappelz.png',
 					'anchor' => 'http://www.wikia.com/Video_Games%2FVideo_Game_Olympics',
 					'title' => 'Gaming Olympics',
 					'headline' => 'Exclusively on Wikia!',
 					'description' => 'Participate in the biggest gaming event of 2012'
 				),
 				array(
-					'image' => 'VG_Olympics_slider.jpg',
+					'image' => 'File:Wikia-Visualization-Main,rappelz.png',
 					'anchor' => 'http://www.wikia.com/Video_Games%2FVideo_Game_Olympics',
 					'title' => 'Gaming Olympics',
 					'headline' => 'Exclusively on Wikia!',
