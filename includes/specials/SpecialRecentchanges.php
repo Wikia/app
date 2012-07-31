@@ -889,7 +889,8 @@ class SpecialRecentChanges extends IncludableSpecialPage {
 			'hideanons'     => 'rcshowhideanons',
 			'hideliu'       => 'rcshowhideliu',
 			'hidepatrolled' => 'rcshowhidepatr',
-			'hidemyself'    => 'rcshowhidemine'
+			'hidemyself'    => 'rcshowhidemine',
+			'hideenhanced'  => 'rcshowhideenhanced'
 		);
 		foreach ( $this->getCustomFilters() as $key => $params ) {
 			$filters[$key] = $params['msg'];
@@ -898,9 +899,6 @@ class SpecialRecentChanges extends IncludableSpecialPage {
 		if ( !$this->getUser()->useRCPatrol() ) {
 			unset( $filters['hidepatrolled'] );
 		}
-		$enhancedLink = $this->makeOptionsLink( $showhide[1-$options['hideenhanced']],
-			array( 'hideenhanced' => 1-$options['hideenhanced'] ), $nondefaults);
-
 		$links = array();
 		foreach ( $filters as $key => $msg ) {
 			$link = $this->makeOptionsLink( $showhide[1 - $options[$key]],
