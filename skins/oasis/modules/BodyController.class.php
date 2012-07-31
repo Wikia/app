@@ -54,9 +54,11 @@ class BodyController extends WikiaController {
 	 */
 	public static function isGridLayoutEnabled() {
 		$app = F::app();
+		/* temporarily removing this
 		if( in_array( MWNamespace::getSubject($app->wg->Title->getNamespace()), $app->wg->WallNS) ) {
 			return true;
 		}
+		*/
 		return false;
 	}
 
