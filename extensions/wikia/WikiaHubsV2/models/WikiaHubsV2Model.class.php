@@ -231,4 +231,41 @@ class WikiaHubsV2Model extends WikiaModel {
 			)
 		);
 	}
+
+	public function getDataForModuleTabber() {
+		//mock data
+		return array(
+			'headline' => 'Wikia\'s Picks',
+			'sponsor' => 'FVSponsor.jpg',
+			'tabs' => array(
+				array(
+					'title' => 'Tab title',
+					'image' => 'Image.jpg',
+					'link' => array(
+						'title' => 'WoWwiki',
+						'anchor' => 'http://www.wowwiki.com'
+					),
+					'content' => 'Tab content'
+				),
+				array(
+					'title' => 'Tab title',
+					'image' => 'Image.jpg',
+					'link' => array(
+						'title' => 'WoWwiki',
+						'anchor' => 'http://www.wowwiki.com'
+					),
+					'content' => 'Tab content'
+				),
+				array(
+					'title' => 'Tab title',
+					'image' => 'Image.jpg',
+					'link' => array(
+						'title' => 'WoWwiki',
+						'anchor' => 'http://www.wowwiki.com'
+					),
+					'content' => 'Tab content'
+				)
+			)
+		);
+	}
 }
