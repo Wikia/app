@@ -68,7 +68,7 @@ class InterwikiEdit extends SpecialPage {
 
 
 function wfSIWEGetWikiaData($wikia=null, $wikiaID=null){
-	global $wgOut, $wgLanguageNames, $wgExternalSharedDB;
+	global $wgOut, $wgExternalSharedDB;
 
 	if (!$wikia && !$wikiaID ){
 		$wgOut->addHTML("No wikia specified <br />\n<br />\n");
@@ -87,7 +87,7 @@ function wfSIWEGetWikiaData($wikia=null, $wikiaID=null){
 		# (a) there's no dot in cityname we add .wikia.com
 		# (b) there's one dot in cityname and the first part is a language code
 		$domain = explode('.', $wikia);
-		if ( count($domain) == 1 || ( count($domain) == 2 && array_key_exists($domain[0], $wgLanguageNames) ) ) {
+		if ( count($domain) == 1 || ( count($domain) == 2 && Language::getLanguageName($domain[0]) != '' )) {
 			$wikia = $wikia.".wikia.com";
 		}
 
@@ -100,9 +100,10 @@ function wfSIWEGetWikiaData($wikia=null, $wikiaID=null){
 
 	}
 
-        $result = $db->select('city_list', 'city_id,city_dbname,city_url,city_umbrella,city_lang', "city_id = ". $db->addQuotes($wikiaID));
+	$result = $db->select('city_list', 'city_id,city_dbname,city_url,city_umbrella,city_lang', "city_id = ". $db->addQuotes($wikiaID));
 
-	if ($dbobject = $db->fetchObject($result)){
+	$dbobject = $db->fetchObject($result);
+	if (!empty($dbobject)){
 		return array(
 			$dbobject->city_id,
 			$dbobject->city_dbname,
@@ -187,8 +188,7 @@ function wfSIWEEditInterwiki(){
 
 	$db =& wfGetDB (DB_MASTER, array(), $wikiaDB );
 
-	global $wgLanguageNames, $IP;
-#	$lang_names = array_keys($wgLanguageNames);
+	global $IP;
 
 	$fields['iw_prefix'] = htmlspecialchars($wgRequest->getVal('iw_prefix', null));
 	$fields['iw_url'] = htmlspecialchars($wgRequest->getVal('iw_url', null));
