@@ -63,6 +63,7 @@ var JSSnippets = (function(){
 			var dependencies = [],
 				callbacks = {},
 				options = {},
+				debugMode = mw.config.get('debug'),
 				entry,
 				dependency,
 				ext,
@@ -85,16 +86,24 @@ var JSSnippets = (function(){
 										// fetch SCSS files via SASS processor
 										dependency = $.getSassCommonURL(dependency);
 									}else if(slashRegex.test(dependency)){
-										/*
-										 * paths rewrite for CSS and JS files
-										 * use AssetsManager to get minified CSS and JS files (when relative path is provided)
-										 * for instance: /extensions/wikia/FooFeature/js/Foo.js
-										 */
-										dependency = wgCdnRootUrl + wgAssetsManagerQuery.
-											replace('%1$s', 'one').
-											replace('%2$s', dependency.replace(slashRegex, '')). // remove first slash
-											replace('%3$s', '-').
-											replace('%4$d', wgStyleVersion);
+										if (debugMode) {
+											/*
+											 * Handle allinone=0 mode
+											 */
+											dependency = wgResourceBasePath + dependency;
+										}
+										else {
+											/*
+											 * paths rewrite for CSS and JS files
+											 * use AssetsManager to get minified CSS and JS files (when relative path is provided)
+											 * for instance: /extensions/wikia/FooFeature/js/Foo.js
+											 */
+											dependency = wgCdnRootUrl + wgAssetsManagerQuery.
+												replace('%1$s', 'one').
+												replace('%2$s', dependency.replace(slashRegex, '')). // remove first slash
+												replace('%3$s', '-').
+												replace('%4$d', wgStyleVersion);
+										}
 									}
 								}
 							}
