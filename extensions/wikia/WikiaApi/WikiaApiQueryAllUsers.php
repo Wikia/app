@@ -26,9 +26,12 @@ class WikiaApiQueryAllUsers extends ApiQueryAllUsers {
 		$data = $wgMemc->get( $memkey );
 		if ( empty($data) && !empty( $wgStatsDBEnabled ) ) {
 			$db = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
+
+			$group = isset($this->params['group'][0]) ? $this->params['group'][0] : '';
+
 			$where = array(
 				'wiki_id' => intval($this->mCityId),
-				"all_groups" . $db->buildLike( $db->anyString(), $this->params['group'], $db->anyString() )
+				"all_groups" . $db->buildLike( $db->anyString(), $group, $db->anyString() )
 			);
 
 			$this->profileDBIn();
