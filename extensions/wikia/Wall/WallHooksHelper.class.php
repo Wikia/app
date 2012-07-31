@@ -153,37 +153,25 @@ class WallHooksHelper {
 			$title = $app->wg->Title;
 
 			if( $title->getNamespace() === NS_USER ) {
-				if( !empty($contentActions['talk']) ) {
-					$contentActions['talk']['text'] = $app->wf->Msg('wall-message-wall');
-
+				if( !empty($contentActions['namespaces']) && !empty($contentActions['namespaces']['user_talk']) ) {
+                
+					$contentActions['namespaces']['user_talk']['text'] = $app->wf->Msg('wall-message-wall');
+		
 					$userWallTitle = $this->getWallTitle();
 
 					if( $userWallTitle instanceof Title ) {
-						$contentActions['talk']['href'] = $userWallTitle->getLocalUrl();
+						$contentActions['namespaces']['user_talk']['href'] = $userWallTitle->getLocalUrl();
 					}
 
 					// BugId:23000 Remove the class="new" to prevent the link from being displayed as a redlink in monobook.
 					if ( $app->wg->User->getSkin() instanceof SkinMonoBook ) {
-						unset( $contentActions['talk']['class'] );
+						unset( $contentActions['namespaces']['user_talk']['class'] );
 					}
 				}
 			}
 
 			if( $title->getNamespace() === NS_USER_WALL || $title->getNamespace() === NS_USER_WALL_MESSAGE ) {
 				$userPageTitle = $helper->getTitle(NS_USER);
-				$contentActionsOld = $contentActions;
-
-				$contentActions = array();
-
-				if($app->wg->User->getName() != $title->getBaseText() && !$title->isSubpage()){
-					if(isset($contentActionsOld['watch'])){
-						$contentActions['watch'] = $contentActionsOld['watch'];
-					}
-
-					if(isset($contentActionsOld['unwatch'])){
-						$contentActions['unwatch'] = $contentActionsOld['unwatch'];
-					}
-				}
 
 				if( $title->getNamespace() === NS_USER_WALL_MESSAGE ) {
 					$text = $title->getText();
@@ -200,6 +188,7 @@ class WallHooksHelper {
 
 					if( empty($wm) ) {
 						//FB#19394
+
 						return true;
 					}
 
@@ -210,37 +199,35 @@ class WallHooksHelper {
 					$user = $wall->getUser();
 				}
 
+				$contentActions['namespaces'] = array();
+				
 				if( $user instanceof User ) {
-					$contentActions['user-profile'] = array(
+					$contentActions['namespaces']['user-profile'] = array(
 							'class' => false,
 							'href' => $user->getUserPage()->getFullUrl(),
 							'text' => $app->wf->Msg('nstab-user'),
 					);
 				}
 
-				$contentActions['message-wall'] = array(
+				$contentActions['namespaces']['message-wall'] = array(
 						'class' => 'selected',
 						'href' => $wall->getUrl(),
 						'text' => $app->wf->Msg('wall-message-wall'),
-				);
-
-				$contentActions['message-wall-history'] = array(
-						'class' => 'selected',
-						'href' => $title->getLocalUrl( array('action'=>'history') ),
-						'text' => $app->wf->Msg('wall-history'),
 				);
 			}
 
 			if( $title->getNamespace() === NS_USER_WALL && $title->isSubpage() ) {
 				$userTalkPageTitle = $helper->getTitle(NS_USER_TALK);
-
-				$contentActions['view-source'] = array(
+				$contentActions = array();
+				$contentActions['namespaces'] = array();
+				
+				$contentActions['namespaces']['view-source'] = array(
 						'class' => false,
 						'href' => $userTalkPageTitle->getLocalUrl(array('action' => 'edit')),
 						'text' => $app->wf->Msg('user-action-menu-view-source'),
 				);
 
-				$contentActions['history'] = array(
+				$contentActions['namespaces']['history'] = array(
 						'class' => false,
 						'href' => $userTalkPageTitle->getLocalUrl(array('action' => 'history')),
 						'text' => $app->wf->Msg('user-action-menu-history'),
