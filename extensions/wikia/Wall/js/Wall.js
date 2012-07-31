@@ -41,7 +41,7 @@ var Wall = $.createClass(Object, {
 			.on('click', '.Pagination', this.proxy(this.trackClick))
 			.on('click', '.user-talk-archive-anchor', this.proxy(this.trackClick))
 			.on('click', '.wall-owner', this.proxy(this.trackClick))
-			.on('click', '.load-more a', this.proxy(this.trackClick))
+			.on('click', '.load-more a', this.proxy(this.loadMore))
 			.on('click', '.msg-title', this.proxy(this.trackClick))
 			.on('click', '.sortingOption', this.proxy(this.trackClick))
 			.on('keydown', 'textarea', this.proxy(this.focusButton))
@@ -79,7 +79,6 @@ var Wall = $.createClass(Object, {
 			$('#ForumNewMessage .highlight').wikiaTooltip($('#WallTooltipMeta .tooltip-highlight-thread').text());
 		});
 
-		$('.load-more').on('click', 'a', this.proxy(this.loadMore));
 		$('.timeago').timeago();
 
 		// If any textarea has content make sure Reply / Post button is visible
@@ -196,6 +195,8 @@ var Wall = $.createClass(Object, {
 
 	loadMore: function(e) {
 		e.preventDefault();
+		
+		this.proxy(this.trackClick(e));
 
 		$(e.target).closest('ul').find('li.SpeechBubble').show();
 		$(e.target).closest('.load-more').remove();
@@ -547,6 +548,7 @@ var Wall = $.createClass(Object, {
 		} else if( parent.parent().hasClass('speech-bubble-avatar') ) {
 			this.track('wall/message/avatar');
 		} else if( parent.hasClass('load-more') ) {
+			console.log("tracking load more");
 			this.track('wall/message/uncondense');
 		} else if( node.hasClass('wall-owner') && parent.hasClass('WallName') ) {
 			this.track('wall/thread_page/owners_wall');
