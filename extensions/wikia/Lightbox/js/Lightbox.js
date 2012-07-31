@@ -162,7 +162,7 @@ var Lightbox = {
 				Lightbox.openModal.share.shareUrl = json.shareUrl; // cache shareUrl for email share
 				Lightbox.setupShareEmail();
 				
-				Lightbox.openModal.share.find('.social-links a').click(function() {
+				Lightbox.openModal.share.find('.social-links').on('click', 'a', function() {
 					var shareType = $(this).attr('class');
 					LightboxLoader.track(WikiaTracker.ACTIONS.SHARE, shareType, null, {title:Lightbox.current.title, type: Lightbox.current.type});
 				});
