@@ -1546,6 +1546,10 @@ function wfAssetManagerGetSASShash( $file ) {
 function wfAssetManagerGetSASSFilePath( $file, $relativeToPath = false ) {
 	global $IP;
 
+	if ( empty( $file ) ) {
+		return null;
+	}
+
 	$fileExists = file_exists( $file );
 
 	if ( !$fileExists ) {
@@ -1558,15 +1562,16 @@ function wfAssetManagerGetSASSFilePath( $file, $relativeToPath = false ) {
 		$directories = array();
 
 		if ( $relativeToPath ) {
-			$directories[] = $relativeToPath . '/' . $directory;
+			$directories[] = str_replace( '//', '/', $relativeToPath . '/' . $directory );
 		}
 
-		$directories[] = $IP . '/' . $directory;
+		$directories[] = str_replace( '//', '/', $IP . '/' . $directory );
 		$directories[] = $directory;
 
 		// Filenames to check.
 		// These should be arranged in order of likeliness.
 		$filenames = array();
+		$filenames[] = $filename;
 		$filenames[] = $filename . '.scss';
 		$filenames[] = '_' . $filename . '.scss';
 		$filenames[] = $filename . '.sass';
@@ -1579,7 +1584,7 @@ function wfAssetManagerGetSASSFilePath( $file, $relativeToPath = false ) {
 					$fileExists = file_exists( $fullPath );
 					if ( $fileExists ) {
 						$file = $fullPath;
-						break;
+						break 2;
 					}
 				}
 			}
@@ -1608,9 +1613,7 @@ function wfAssetManagerGetSASShashCB( $file, &$processedFiles, &$hash ) {
 
 	// Look for imported files within this one so we can include those too
 	preg_replace_callback( '/\\@import(\\s)*[\\"\']([^\\"\']*)[\\"\']/', function( $match ) use ( $file, &$processedFiles, &$hash ) {
-		if ( $match[ 2 ] ) {
-			wfAssetManagerGetSASShashCB( wfAssetManagerGetSASSFilePath( $match[ 2 ], dirname( $file ) ), $processedFiles, $hash );
-		}
+		wfAssetManagerGetSASShashCB( wfAssetManagerGetSASSFilePath( $match[ 2 ], dirname( $file ) ), $processedFiles, $hash );
 	}, $contents);
 }
 
