@@ -8,21 +8,21 @@ $wgHooks['WikiaSkinTopScripts'][] = 'wfJSVariablesTopScripts';
 
 function wfJSVariablesTopScripts(Array $vars) {
 	global $wgWikiFactoryTags, $wgDBname, $wgCityId, $wgMedusaSlot;
-	
+
 	// ads need it
 	$vars['wgAfterContentAndJS'] = array();
 	if(isset($wgWikiFactoryTags) && is_array($wgWikiFactoryTags)) {
 		$vars['wgWikiFactoryTagIds'] = array_keys( $wgWikiFactoryTags );
 		$vars['wgWikiFactoryTagNames'] = array_values( $wgWikiFactoryTags );
 	}
-	
+
 	// analytics needs it (from here till the end of the function)
 	$vars['wgDBname'] = $wgDBname;
 	$vars['wgCityId'] = $wgCityId;
 	if (!empty($wgMedusaSlot)) {
 		$vars['wgMedusaSlot'] = 'slot' . $wgMedusaSlot;
 	}
-	
+
 	// c&p from OutputPage::getJSVars with an old 1.16 name
 	$title = F::app()->wg->Title;
 	$lang = $title->getPageLanguage();
@@ -33,7 +33,7 @@ function wfJSVariablesTopScripts(Array $vars) {
 	if (!$user->isAnon()) {
 		$vars['wgUserName'] = $user->getName();
 	}
-	
+
 	// missing in 1.19
 	$skin = RequestContext::getMain()->getSkin();
 	$vars['skin'] = $skin->getSkinName();
@@ -45,7 +45,7 @@ function wfMakeGlobalVariablesScript(Array $vars, OutputPage $out) {
 	wfProfileIn(__METHOD__);
 	global $wgMemc, $wgEnableAjaxLogin, $wgPrivateTracker, $wgExtensionsPath,
 		$wgArticle, $wgStyleVersion, $wgSitename, $wgDisableAnonymousEditing,
-		$wgGroupPermissions, $wgBlankImgUrl, $wgCookieDomain, $wgCookiePath;
+		$wgGroupPermissions, $wgBlankImgUrl, $wgCookieDomain, $wgCookiePath, $wgResourceBasePath;
 
 	$skin = $out->getSkin();
 	$title = $out->getTitle();
@@ -93,6 +93,7 @@ function wfMakeGlobalVariablesScript(Array $vars, OutputPage $out) {
 	}
 
 	$vars['wgExtensionsPath'] = $wgExtensionsPath;
+	$vars['wgResourceBasePath'] = $wgResourceBasePath;
 	$vars['wgSitename'] = $wgSitename;
 
 	// Set the JavaScript variable which is used by AJAX request to make data caching possible - Inez
