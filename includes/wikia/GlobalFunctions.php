@@ -1534,52 +1534,79 @@ function wfAssetManagerGetSASShash( $file ) {
 	$hash = '';
 	wfAssetManagerGetSASShashCB( $file, $processedFiles, $hash );
 	//error_log("done $file = $hash");
-	return md5($hash); // shorten it
+	return md5( $hash ); // shorten it
+}
+
+/**
+ * @brief Generates the absolute file path to a Sass file
+ * @author Kyle Florence <kflorence@wikia-inc.com>
+ */
+function wfAssetManagerGetSASSFilePath( $file, $relativeToPath = false ) {
+	global $IP;
+
+	$fileExists = file_exists( $file );
+
+	if ( !$fileExists ) {
+		$parts = explode( '/', $file );
+		$filename = array_pop( $parts );
+		$directory = implode( '/', $parts ) . '/';
+
+		// Directories to search in. These should be arranged in order of likeliness.
+		$directories = array();
+
+		if ( $relativeToPath ) {
+			$directories[] = $relativeToPath . '/' . $directory;
+		}
+
+		$directories[] = $IP . '/' . $directory;
+		$directories[] = $directory;
+
+		// Filenames to check. These should be arranged in order of likeliness.
+		$filenames = array();
+		$filenames[] = $filename;
+		$filenames[] = '_' . $filename;
+		$filenames[] = $filename . '.scss';
+		$filenames[] = '_' . $filename . '.scss';
+		$filenames[] = $filename . '.sass';
+		$filenames[] = '_' . $filename . '.sass';
+
+		foreach( $directories as $d ) {
+			foreach( $filenames as $f ) {
+				$fullPath = $d . $f;
+				if ( file_exists( $fullPath ) ) {
+					$file = $fullPath;
+					$fileExists = true;
+					break;
+				}
+			}
+		}
+
+		if ( !$fileExists ) {
+			error_log( 'wfAssetManagerGetSASSFilePath: file not found: ' . $file );
+			return null;
+		}
+	}
+
+	return realpath( $file );
 }
 
 function wfAssetManagerGetSASShashCB( $file, &$processedFiles, &$hash ) {
-	if ( !file_exists( $file ) ) {
-		$parts = explode('/', $file);
-		$filename = array_pop($parts);
-		$alter = array();
-		$dir = implode('/',$parts) . '/';
-		$alter[] = $dir . $filename;
-		$alter[] = $dir . $filename . '.scss';
-		$alter[] = $dir . $filename . '.sass';
-		$alter[] = $dir . '/_' . $filename;
-		$alter[] = $dir . '/_' . $filename . '.scss';
-		$alter[] = $dir . '/_' . $filename . '.sass';
-		$found = false;
-		foreach( $alter as $x => $a ) {
-			if ( file_exists( $a ) ) {
-				$file = $a;
-				$found = true;
-				break;
-			}
-		}
-		if(!$found) {
-			error_log("SpeedBox: file not found: " . $file);
-			return;
-		}
-	}
-	$file = realpath( $file );
-	//error_log("\t".$file);
-	if ( isset($processedFiles[$file]) ) return;
-	$processedFiles[$file] = true;
+	$file = wfAssetManagerGetSASSFilePath( $file );
 
-	//error_log( 'Processing: ' . $file );
-	$contents = file_get_contents($file);
+	// File not found or already processed
+	if ( !$file || isset( $processedFiles[ $file ] ) ) {
+		return;
+	}
+
+	$processedFiles[ $file ] = true;
+	$contents = file_get_contents( $file );
 	$hash .= md5( $contents );
 
-	preg_replace_callback('/\\@import(\\s)*[\\"\']([^\\"\']*)[\\"\']/', function($match) use($file, &$processedFiles, &$hash) {
-		global $IP;
-		if ( startsWith( $match[2], '/' ) ) {
-			$newfile = $IP . $match[2];
-		} else {
-			$newfile = dirname( $file ) . '/' . $match[2];
+	// Look for imported files within this one so we can include those too
+	preg_replace_callback( '/\\@import(\\s)*[\\"\']([^\\"\']*)[\\"\']/', function( $match ) use ( $file, &$processedFiles, &$hash ) {
+		if ( $match[ 2 ] ) {
+			wfAssetManagerGetSASShashCB( wfAssetManagerGetSASSFilePath( $match[ 2 ], dirname( $file ) ), $processedFiles, $hash );
 		}
-		//error_log( $match[2] . " ::: " . $newfile );
-		wfAssetManagerGetSASShashCB( $newfile, $processedFiles, $hash );
 	}, $contents);
 }
 
