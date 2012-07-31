@@ -701,7 +701,8 @@ class SpecialRecentChanges extends IncludableSpecialPage {
 		$nsSelect = '';
 		/* Wikia Change */
 		wfRunHooks( 'onGetNamespaceCheckbox', array(&$nsSelect, $opts['namespace'], '', 'namespace', null) );
-
+		
+		$nsLabel = Xml::label( wfMsg( 'namespace' ), 'namespace' );
 		if ( empty($nsSelect) ) {
 			$nsSelect = Html::namespaceSelector(
 				array( 'selected' => $opts['namespace'], 'all' => '' ),
@@ -709,7 +710,6 @@ class SpecialRecentChanges extends IncludableSpecialPage {
 			);
 
 			# end wikia change
-			$nsLabel = Xml::label( wfMsg( 'namespace' ), 'namespace' );
 			$invert = Xml::checkLabel(
 				wfMsg( 'invert' ), 'invert', 'nsinvert',
 				$opts['invert'],
@@ -723,7 +723,6 @@ class SpecialRecentChanges extends IncludableSpecialPage {
 		} else {
 			$invert = "";
 			$associated = "";
-			$nsLabel = "";
 		}
 		/* Wikia Change end*/
 		return array( $nsLabel, "$nsSelect $invert $associated" );
