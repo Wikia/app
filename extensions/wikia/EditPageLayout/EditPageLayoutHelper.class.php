@@ -331,8 +331,6 @@ class EditPageLayoutHelper {
 			'resources/wikia/libraries/jquery/md5/jquery.md5.js',
 			'resources/wikia/libraries/mustache/mustache.js',
 			'resources/wikia/libraries/jquery/uniqueId/jquery.uniqueId.js',
-			// TODO: this is only used for the thumbnail size slider when adding a video - refactor this out. 
-			'resources/wikia/libraries/jquery-ui/jquery-ui-1.8.14.custom.js',  
 			// >> editor stack loaders and configurers
 			'extensions/wikia/EditPageLayout/js/loaders/EditPageEditorLoader.js',
 			// >> editor core

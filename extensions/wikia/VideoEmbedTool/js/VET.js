@@ -394,7 +394,7 @@ function VET_show( e, gallery, box, align, thumb, size, caption ) {
 			wikiaEditor.plugins.MiniEditor.hasFocus = true;
 		}
 	}
-
+	
 	if(typeof gallery == "undefined") {
 		if (typeof showComboAjaxForPlaceHolder == 'function') {
 			if (showComboAjaxForPlaceHolder("",false)) {
@@ -765,17 +765,21 @@ function VET_displayDetails(responseText) {
 		VET_orgThumbSize = null;
 	}
 
-	/* can't figure out why $().slider is not loaded */
-	$('.WikiaSlider').slider && $('.WikiaSlider').slider({
-		min: 100,
-		max: 500,
-		value: 300,
-		slide: function(event, ui) {
-			$('#VideoEmbedManualWidth').val(ui.value);
-		},
-		create: function(event, ui) {
-			$('#VideoEmbedManualWidth').val(300);
-		}
+	$.when(
+		$.getResources([wgResourceBasePath+'/resources/wikia/libraries/jquery-ui/jquery-ui-1.8.14.custom.js'])
+	).done(function() {
+		console.log("DONE");
+		$('.WikiaSlider').slider && $('.WikiaSlider').slider({
+			min: 100,
+			max: 500,
+			value: 300,
+			slide: function(event, ui) {
+				$('#VideoEmbedManualWidth').val(ui.value);
+			},
+			create: function(event, ui) {
+				$('#VideoEmbedManualWidth').val(300);
+			}
+		});	
 	});
 
 
