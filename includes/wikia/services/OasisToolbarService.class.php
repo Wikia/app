@@ -40,10 +40,13 @@
 				if ($v['defaultCaption'] !== $v['caption']) {
 					$entry['data']['caption'] = $v['caption'];
 				}
-				if (isset($v['items'])) {
+				/* FB:42264 - data is corrupt in production, so we have to handle both items list existing condition and isMenu condition*/
+				if (!empty($v['isMenu'])) {
+					$items = isset($v['items']) ? $v['items'] : array();
 					$entry['type'] = 'menu';
-					$entry['items'] = $this->jsonToList($v['items']);
+					$entry['items'] = $this->jsonToList($items);
 				}
+				/* end FB:42264 */
 				$result[] = $entry;
 			}
 			return array_values($result);
@@ -253,9 +256,6 @@
 			$this->saveToolbarList($data);
 		}
 
-
-		protected $toolbarCache = null;
-
 		protected function loadToolbarList() {
 			global $wgUser;
 			if (!$wgUser->isAnon()) {
@@ -263,7 +263,15 @@
 				if (is_string($toolbar)) {
 					$toolbar = @unserialize($toolbar);
 					if (is_array($toolbar)) {
-						$this->toolbarCache = $toolbar;
+						/* FB:42264 Fix bad data by switch my-tools to menu if it is item */
+						foreach($toolbar as $k => $v) {
+							if($v['type'] === 'item' && strpos($v['id'], 'my-tools')) {
+								$v['type'] = 'menu';
+								$v['items'] = array();
+								$toolbar[$k] = $v;
+							}
+						}
+						/* end FB:42264 */
 						return $toolbar;
 					}
 				}

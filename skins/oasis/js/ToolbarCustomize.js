@@ -91,6 +91,7 @@
 				if (v.hasClass('list-item-menu')) {
 					level = 1;
 					o.items = [];
+					o.isMenu = true;
 					stack[level] = o.items;
 				}
 			});
