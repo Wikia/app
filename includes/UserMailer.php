@@ -787,8 +787,6 @@ class EmailNotification {
 		$postTransformKeys['$PAGESUMMARY'] = $summary;
 
 		# Now build message's subject and body
-
-		$subject = wfMsgExt( 'enotif_subject', 'content' );
 		# <Wikia>
 		wfRunHooks('ComposeCommonSubjectMail', array( $this->title, &$keys, &$subject, $this->editor ));
 		# </Wikia>
