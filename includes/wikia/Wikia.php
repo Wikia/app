@@ -26,6 +26,7 @@ $wgHooks['ComposeMail']              [] = "Wikia::isUnsubscribed";
 $wgHooks['AllowNotifyOnPageChange']  [] = "Wikia::allowNotifyOnPageChange";
 $wgHooks['AfterInitialize']          [] = "Wikia::onAfterInitialize";
 $wgHooks['UserMailerSend']           [] = "Wikia::onUserMailerSend";
+$wgHooks['ArticleDeleteComplete']    [] = "Wikia::onArticleDeleteComplete";
 
 # changes in recentchanges (MultiLookup)
 $wgHooks['RecentChange_save']        [] = "Wikia::recentChangesSave";
@@ -1902,6 +1903,25 @@ class Wikia {
 	static public function onResourceLoaderFileModuleConcatenateScripts( &$script ) {
 		$script = preg_replace('#^.*@Packager\\.RemoveLine.*$#m', '', $script);
 
+		return true;
+	}
+
+	/*
+	* FIX FOR bugId:42480 File rename is not completed when replacement is required
+	* "When moving a file to a file name that already belongs to an existing file,
+	* it gives you the option to delete the existing file to make way for the move.
+	* After completion, it deletes the existing file as intended, but the file
+	* that you originally wanted to move is not moved, and keeps it's previous file name."
+	*
+	* That is because $nt (NewTitle) -> getArticleId() returns value that is cached
+	* (after delete it should be 0)
+	*/
+	public static function onArticleDeleteComplete( $page, $user, $reason, $id ) {
+
+		$title = $page->getTitle();
+		if ( $title instanceof Title ) {
+			$title->getArticleID( Title::GAID_FOR_UPDATE );
+		}
 		return true;
 	}
 
