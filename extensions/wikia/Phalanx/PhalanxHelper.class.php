@@ -22,7 +22,7 @@ class PhalanxHelper {
 	 *
 	 * @return boolean: true on success, false on failure
 	 */
-	static public function update( $data, $updateCache = true ) {
+	static public function update( $data, $updateCache = false ) {
 		global $wgExternalSharedDB, $wgMemc;
 		$result = false;
 		wfProfileIn( __METHOD__ );
