@@ -6,6 +6,7 @@
  */
 class WikiaMobileHooks extends WikiaObject{
 	const IMAGE_GROUP_MIN = 2;
+	const IMAGE_GROUP_MAX = 15;
 
 	public function onParserAfterTidy( &$parser, &$text ){
 		$this->wf->profileIn( __METHOD__ );
@@ -16,7 +17,7 @@ class WikiaMobileHooks extends WikiaObject{
 			$text = preg_replace( '/\s+(style|color|bgcolor|border|align|cellspacing|cellpadding|hspace|vspace)=(\'|")[^"\']*(\'|")/im', '', $text );
 
 			//transform groups of IMAGE_GROUP_MIN images in a row into a media stack
-			$text = preg_replace( '/(\s*<figure[^>]*>(<\/?a|<img|<\/?figcaption|<\/?noscript|[^<])+<\/figure>\s*){' . self::IMAGE_GROUP_MIN . ',}/im', '<section class="wkImgStk grp thumb">$0<footer class=thumbcaption>' . $this->wf->Msg('wikiaPhotoGallery-slideshow-view-number', '1', '') . '</footer></section>', $text );
+			$text = preg_replace( '/(\s*<figure[^>]*>(<\/?a|<img|<\/?figcaption|<\/?noscript|[^<])+<\/figure>\s*){' . self::IMAGE_GROUP_MIN . ',' . self::IMAGE_GROUP_MAX . '}/im', '<section class="wkImgStk grp thumb">$0<footer class=thumbcaption>' . $this->wf->Msg('wikiaPhotoGallery-slideshow-view-number', '1', '') . '</footer></section>', $text );
 		}
 
 		$this->wf->profileOut( __METHOD__ );
