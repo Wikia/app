@@ -1,4 +1,4 @@
-/* global LightboxLoader:true */
+/*global LightboxLoader:true*/
 
 var Lightbox = {
 	log: function(content) {

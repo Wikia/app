@@ -1,3 +1,5 @@
+/*global Lightbox:true*/
+
 var LightboxLoader = {
 	// cached thumbnail arrays and detailed info 
 	cache: {
