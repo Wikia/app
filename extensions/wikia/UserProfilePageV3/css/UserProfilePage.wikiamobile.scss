@@ -28,13 +28,14 @@ em{
 	max-width: 60px;
 }
 .mstHgr{
-	padding: 10px;
-	margin-left: 73px;
+	display: block;
+	margin: 10px;
+	margin-left: 82px;
+	position: relative;
 }
 .mstNm{
 	display: inline;
 	font-size: 22px;
-	margin-right: 10px;
 }
 .mstRn, .mstEd{
 	font-size: 14px;
@@ -44,7 +45,6 @@ em{
 	text-transform: lowercase;
 }
 .mstAva{
-	display: inline-block;
 	float:left;
 	height: 62px;
 	width: 62px;
