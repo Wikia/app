@@ -11,8 +11,11 @@ $wgExtensionCredits['other'][] = array(
 $wgHooks["MakeGlobalVariablesScript"][] = "wfAdEngineSetupJSVars";
 $wgHooks['WikiaSkinTopScripts'][] = 'wfAdEngineSetupTopVars';
 
+//$wgHooks["WikiaSkinTopScripts"][] = "wfAdEngineSetupJSVars";
+//$wgHooks['WikiaSkinTopScripts'][] = 'wfAdEngineSetupTopVars';
+
 function wfAdEngineSetupTopVars($vars) {
-	global $wgCityId;
+	global $wgCityId, $wgEnableKruxTargeting, $wgNoExternals;
 
 	wfProfileIn(__METHOD__);
 
@@ -22,6 +25,13 @@ function wfAdEngineSetupTopVars($vars) {
 	// category/hub
 	$catInfo = HubService::getComscoreCategory($wgCityId);
 	$vars['cscoreCat'] = $catInfo->cat_name;
+
+	// Krux
+	$cat = AdEngine::getCachedCategory();
+	if (!empty($wgEnableKruxTargeting) && empty($wgNoExternals)) {
+		$vars['wgEnableKruxTargeting'] = $wgEnableKruxTargeting;
+		$vars['wgKruxCategoryId'] = WikiFactoryHub::getInstance()->getKruxId($cat['id']);
+	}
 
 	wfProfileOut(__METHOD__);
 
@@ -71,11 +81,13 @@ function wfAdEngineSetupJSVars($vars) {
 	// Answers sites
 	if (!empty($wgEnableWikiAnswers)) $vars['wgEnableWikiAnswers'] = $wgEnableWikiAnswers;
 
+	/*
 	// Krux
 	if (!empty($wgEnableKruxTargeting) && empty($wgNoExternals)) {
 		$vars['wgEnableKruxTargeting'] = $wgEnableKruxTargeting;
 		$vars['wgKruxCategoryId'] = WikiFactoryHub::getInstance()->getKruxId($cat['id']);
 	}
+	*/
 
 	wfProfileOut(__METHOD__);
 	return true;
