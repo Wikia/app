@@ -31,8 +31,10 @@ $wgExtensionMessagesFiles['ImagePlaceholder'] = dirname(__FILE__).'/ImagePlaceho
 $wgHooks['Parser::FetchTemplateAndTitle'][] = 'ImagePlaceholderFetchTemplateAndTitle';
 $wgHooks['ImageBeforeProduceHTML'][] = 'ImagePlaceholderImageBeforeProduceHTML';
 $wgHooks['ParserBeforeStrip'][] = 'ImagePlaceholderParserBeforeStrip';
+
 // this is a custom hook defined in Parser.php, of course required for it to work
 $wgHooks['BeforeParserMakeImageLinkObjOptions'][] = 'ImagePlaceholderBeforeParserMakeImageLinkObjOptions';
+$wgHooks['ParserShouldAddTrackingCategory'][] = 'ImagePlaceholderParserShouldAddTrackingCategory';
 
 function ImagePlaceholderFetchTemplateAndTitle( $text, $finalTitle ) {
         global $wgContLang, $wgWikiaImagesFoundInTemplates;
@@ -60,6 +62,14 @@ function ImagePlaceholderTranslateNsImage() {
 	} else {
 		return wfMsgForContent( 'imgplc-image' );
 	}
+}
+
+function ImagePlaceholderParserShouldAddTrackingCategory( Parser $parser, Title $title, $file, $shouldAddTrackingCategory ) {
+
+	if( ImagePlaceholderIsPlaceholder( $title->getText() ) ){
+		$shouldAddTrackingCategory = false;
+	}
+	return true;
 }
 
 // this function is to bypass the default MW parameter handling, because it assumes we have an actual file on the way

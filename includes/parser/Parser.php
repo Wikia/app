@@ -5379,7 +5379,13 @@ class Parser {
 
 		list( $paramMap, $mwArray ) = $this->getImageParams( $handler );
 
-		if ( !$file ) {
+		# wikia start
+		$shouldAddTrackingCategory = true;
+		wfRunHooks( 'ParserShouldAddTrackingCategory', array( $this, $title, $file, &$shouldAddTrackingCategory ) );
+
+		if ( !$file && $shouldAddTrackingCategory ) {
+		# wikia end
+
 			$this->addTrackingCategory( 'broken-file-category' );
 		}
 
