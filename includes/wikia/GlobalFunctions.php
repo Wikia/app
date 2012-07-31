@@ -1557,15 +1557,19 @@ function wfAssetManagerGetSASSFilePath( $file, $relativeToPath = false ) {
 		$filename = array_pop( $parts );
 		$directory = implode( '/', $parts ) . '/';
 
+		if ( !startsWith( $directory, '/' ) ) {
+			$directory = '/' . $directory;
+		}
+
 		// Directories to search in.
 		// These should be arranged in order of likeliness.
 		$directories = array();
 
 		if ( $relativeToPath ) {
-			$directories[] = str_replace( '//', '/', $relativeToPath . '/' . $directory );
+			$directories[] = rtrim( $relativeToPath, '/' ) . $directory;
 		}
 
-		$directories[] = str_replace( '//', '/', $IP . '/' . $directory );
+		$directories[] = $IP . $directory;
 		$directories[] = $directory;
 
 		// Filenames to check.
