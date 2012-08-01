@@ -6,7 +6,7 @@ class WikiMapModel extends WikiaObject {
         parent::__construct();
         $this->title = $currentTitle;
     }
-    public function getDB(){
+    private function getDB(){
         return $this->app->wf->getDB(DB_SLAVE, array(), $this->app->wg->DBname);
     }
     /*
