@@ -55,7 +55,7 @@ abstract class VideoFeedIngester {
 		wfProfileIn( __METHOD__ );
 		$debug = !empty($params['debug']);
 		if($debug) {
-			print "\ndata from stream: \n";
+			print "data after initial processing: \n";
 			foreach( explode("\n", var_export($data, 1)) as $line ) {
 				print ":: $line\n";
 			}
@@ -77,6 +77,9 @@ abstract class VideoFeedIngester {
 		if ( $dup_count > 0 ) {
 			if ( $this->reupload === false ) {
 				// if reupload is disabled finish now
+				if($debug) {
+					print "Not uploading - video already exists and reupload is disabled\n";
+				}
 				return 0;
 			}
 
