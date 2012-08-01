@@ -1,5 +1,7 @@
 @import "../../../../skins/oasis/css/core/color";
 @import "../../../../skins/oasis/css/mixins/clearfix";
+@import "../../../../skins/oasis/css/mixins/gradient";
+@import "../../../../skins/oasis/css/mixins/opacity";
 @import 'NewsTabs';
 @import 'Explore';
 @import 'Pulse';
@@ -118,5 +120,81 @@ $wikiahubs-line-height: 16px;
 	}
 	.close-button {
 		display: none;
+	}
+}
+
+$color-inactive-button: darken($color-secondary-button, 50%);
+@if lightness($color-page) < 50 {
+	$color-inactive-button: lighten($color-secondary-button, 50%);
+}
+
+.carouselContainer {
+	height: 65px;
+	left: 49px;
+	overflow: hidden;
+	position: relative;
+	width: 402px;
+	& > div {
+		position: relative;
+	}
+	.carousel {
+		position: absolute;
+		li {
+			border: 0;
+			margin-right: 19px;
+			width: 115px;
+		}
+		img {
+			width: 115px;
+			height: 65px;
+		}
+		img:hover {
+			cursor: pointer;
+		}
+		li {
+			float: left;
+		}
+
+	}
+}
+
+.WikiaMediaCarousel {
+	.button {
+		&.secondary {
+			@include linear-gradient($color-secondary-button, top, $color-secondary-button-highlight, 35%, $color-secondary-button, 65%);
+			&:hover {
+				@include linear-gradient($color-secondary-button, top, $color-secondary-button, 5%, $color-secondary-button, 50%);
+			}
+		}
+		height: 90px;
+		width: 15px;
+		position: absolute;
+		margin-top: 15px;
+		left: 10px;
+		.chevron {
+			border-color: transparent $color-buttons transparent transparent;
+			border-width: 11px;
+			margin: 35px -9px;
+		}
+		&.left{
+			left: 633px;
+			.chevron {
+				border-color: transparent transparent transparent $color-buttons;
+				margin: 35px 4px;
+			}
+			&.inactive{
+				img {
+					border-color: transparent transparent transparent $color-inactive-button;
+				}
+			}
+		}
+		&.inactive{
+			@include opacity(50);
+			@include linear-gradient($color-secondary-button, left, $color-secondary-button, 5%, $color-secondary-button, 50%);
+			cursor: auto;
+			img {
+				border-color: transparent $color-inactive-button transparent transparent;
+			}
+		}
 	}
 }
