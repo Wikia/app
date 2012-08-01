@@ -5,7 +5,7 @@ MiniEditor.Wall.ReplyMessageForm = $.createClass(Wall.settings.classBindings.rep
 	initEvents: function() {
 		var self = this;
 
-		$(this.replyWrapper)
+		$(this.mainContent)
 			.on('click.MiniEditor', this.replyButton, this.proxy(this.replyToMessage))
 			.on('click.MiniEditor', this.replyBody, this.proxy(this.initEditor));
 

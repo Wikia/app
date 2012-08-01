@@ -34,10 +34,12 @@ Wall.ReplyMessageForm = $.createClass(Wall.MessageForm, {
 		this.replyThreadFollow = '.follow';
 		this.replyThreadMessages = 'ul .message';
 		this.replyThreadCount = 'ul .load-more .count';
+		
+		this.mainContent = '.WikiaMainContent';
 	},
 
 	initEvents: function() {
-		$(this.replyWrapper)
+		$(this.mainContent)
 			.on('click', this.replyButton, this.proxy(this.replyToMessage))
 			.on('keydown keyup change', this.replyBody, this.proxy(this.change))
 			.on('focus', this.replyBody, this.proxy(this.focus))
