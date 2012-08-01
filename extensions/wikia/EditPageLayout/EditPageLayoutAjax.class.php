@@ -14,11 +14,13 @@ class EditPageLayoutAjax {
 				$wikitext = $pageObj->getWikitextFromRequestForPreview($wgRequest->getVal('title', 'empty'));
 				$service = new EditPageService($wgTitle);
 				$html = $pageObj->getOwnPreviewDiff($wikitext, $method);
+				$catbox = null;
+				$interlanglinks = null;
 
 				if($html === false ) {
 					$html = '';
 					if($method == 'preview') {
-						$html = $service->getPreview($wikitext);
+						list($html, $catbox, $interlanglinks) = $service->getPreview($wikitext);
 
 						// allow extensions to modify preview (BugId:8354) - this hook should only be run on article's content
 						wfRunHooks('OutputPageBeforeHTML', array(&$wgOut, &$html));
@@ -35,9 +37,13 @@ class EditPageLayoutAjax {
 						$html = $service->getDiff($wikitext, intval($section));
 					}
 				}
-
+				
+				$html = '<div class="WikiaArticle">'. $html .'</div>';
+				
 				$res = array(
-					'html' => $html
+					'html' => $html,
+					'catbox' => $catbox,
+					'interlanglinks' => $interlanglinks
 				);
 
 				wfProfileOut(__METHOD__);
