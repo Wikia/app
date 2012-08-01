@@ -10,19 +10,17 @@
  */
 
 class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
-	protected $helper;
+	const CACHE_VALIDITY_BROWSER = 86400;
+	const CACHE_VALIDITY_VARNISH = 86400;
+
+	protected $model;
 
 	public function __construct() {
 		parent::__construct('WikiaHubsV2');
 	}
 
 	public function index() {
-		$this->response->setCacheValidity(
-			24 * 60 * 60,
-			24 * 60 * 60,
-			array(WikiaResponse::CACHE_TARGET_BROWSER, WikiaResponse::CACHE_TARGET_VARNISH)
-		);
-
+		$this->setCacheValidity();
 		$this->slider = $this->sendRequest('SpecialWikiaHubsV2Controller', 'slider')->getData();
 		$this->explore = $this->sendRequest('SpecialWikiaHubsV2Controller', 'explore')->getData();
 		$this->pulse = $this->sendRequest('SpecialWikiaHubsV2Controller', 'pulse')->getData();
@@ -37,14 +35,16 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 	}
 
 	public function slider() {
-		$helper = $this->getHelper();
-		$exploreData = $helper->getDataForModuleSlider();
+		$this->setCacheValidity();
+		$model = $this->getModel();
+		$exploreData = $model->getDataForModuleSlider();
 		$this->images = $exploreData['images'];
 	}
 
 	public function explore() {
-		$helper = $this->getHelper();
-		$exploreData = $helper->getDataForModuleExplore();
+		$this->setCacheValidity();
+		$model = $this->getModel();
+		$exploreData = $model->getDataForModuleExplore();
 		$this->headline = $exploreData['headline'];
 		$this->article = $exploreData['article'];
 		$this->image = $exploreData['image'];
@@ -53,16 +53,18 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 	}
 
 	public function pulse() {
-		$helper = $this->getHelper();
-		$pulseData = $helper->getDataForModulePulse();
+		$this->setCacheValidity();
+		$model = $this->getModel();
+		$pulseData = $model->getDataForModulePulse();
 		$this->title = $pulseData['title'];
 		$this->socialmedia = $pulseData['socialmedia'];
 		$this->boxes = $pulseData['boxes'];
 	}
 
 	public function featuredvideo() {
-		$helper = $this->getHelper();
-		$videoData = $helper->getDataForModuleFeaturedVideo();
+		$this->setCacheValidity();
+		$model = $this->getModel();
+		$videoData = $model->getDataForModuleFeaturedVideo();
 		$this->headline = $videoData['headline'];
 		$this->sponsor = $videoData['sponsor'];
 		$this->video = $videoData['video'];
@@ -70,45 +72,65 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 	}
 
 	public function popularvideos() {
-		$helper = $this->getHelper();
-		$videosData = $helper->getDataForModulePopularVideos();
+		$this->setCacheValidity();
+		$model = $this->getModel();
+		$videosData = $model->getDataForModulePopularVideos();
 		$this->headline = $videosData ['headline'];
 		$this->videos = $videosData['videos'];
 	}
 
 	public function topwikis() {
-		$helper = $this->getHelper();
-		$wikiData = $helper->getDataForModuleTopWikis();
+		$this->setCacheValidity();
+		$model = $this->getModel();
+		$wikiData = $model->getDataForModuleTopWikis();
 		$this->headline = $wikiData['headline'];
 		$this->wikis = $wikiData['wikis'];
 	}
 
 	public function tabber() {
-		$helper = $this->getHelper();
-		$tabData = $helper->getDataForModuleTabber();
+		$this->setCacheValidity();
+		$model = $this->getModel();
+		$tabData = $model->getDataForModuleTabber();
 		$this->headline = $tabData['headline'];
 		$this->tabs = $tabData['tabs'];
 	}
 
 	public function wikitextmodule() {
-		$helper = $this->getHelper();
-		$this->wikitextmoduledata = $helper->getDataForModuleWikitext();
+		$this->setCacheValidity();
+		$model = $this->getModel();
+		$this->wikitextmoduledata = $model->getDataForModuleWikitext();
 	}
 
 	public function fromthecommunity() {
-		$helper = $this->getHelper();
-		$fromTheCommunityData = $helper->getDataForModuleFromTheCommunity();
+		$this->setCacheValidity();
+		$model = $this->getModel();
+		$fromTheCommunityData = $model->getDataForModuleFromTheCommunity();
 		$this->headline = $fromTheCommunityData['headline'];
 		$this->entries = $fromTheCommunityData['entries'];
 	}
 
 	/**
+	 *
+	 */
+	protected function setCacheValidity() {
+		$this->response->setCacheValidity(
+			self::CACHE_VALIDITY_BROWSER,
+			self::CACHE_VALIDITY_VARNISH,
+			array(WikiaResponse::CACHE_TARGET_BROWSER, WikiaResponse::CACHE_TARGET_VARNISH)
+		);
+	}
+
+	/**
 	 * @return WikiaHubsV2Model
 	 */
-	protected function getHelper() {
-		if (!$this->helper) {
-			$this->helper = F::build('WikiaHubsV2Model');
+	protected function getModel() {
+		if (!$this->model) {
+			$this->model = F::build('WikiaHubsV2Model');
+			$date = $this->getRequest()->getVal('date', date('Y-m-d'));
+			$lang = $this->getRequest()->getVal('cityId', $this->wg->cityId);
+			$this->model->setDate($date);
+			$this->model->setLang($lang);
 		}
-		return $this->helper;
+		return $this->model;
 	}
 }
