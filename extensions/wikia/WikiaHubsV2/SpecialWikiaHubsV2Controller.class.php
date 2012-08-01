@@ -13,6 +13,9 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 	const CACHE_VALIDITY_BROWSER = 86400;
 	const CACHE_VALIDITY_VARNISH = 86400;
 
+	/**
+	 * @var WikiaHubsV2Model
+	 */
 	protected $model;
 
 	public function __construct() {
@@ -22,14 +25,14 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 	public function index() {
 		$this->setCacheValidity();
 		$this->slider = $this->sendRequest('SpecialWikiaHubsV2Controller', 'slider')->getData();
-		$this->explore = $this->sendRequest('SpecialWikiaHubsV2Controller', 'explore')->getData();
 		$this->pulse = $this->sendRequest('SpecialWikiaHubsV2Controller', 'pulse')->getData();
-		$this->featuredvideo = $this->sendRequest('SpecialWikiaHubsV2Controller', 'featuredvideo')->getData();
-		$this->topwikis = $this->sendRequest('SpecialWikiaHubsV2Controller', 'topwikis')->getData();
 		$this->tabber = $this->sendRequest('SpecialWikiaHubsV2Controller', 'tabber')->getData();
+		$this->explore = $this->sendRequest('SpecialWikiaHubsV2Controller', 'explore')->getData();
+		$this->featuredvideo = $this->sendRequest('SpecialWikiaHubsV2Controller', 'featuredvideo')->getData();
 		$this->wikitextmoduledata = $this->sendRequest('SpecialWikiaHubsV2Controller', 'wikitextmodule')->getData();
-		$this->fromthecommunity = $this->sendRequest('SpecialWikiaHubsV2Controller', 'fromthecommunity')->getData();
+		$this->topwikis = $this->sendRequest('SpecialWikiaHubsV2Controller', 'topwikis')->getData();
 		$this->popularvideos = $this->sendRequest('SpecialWikiaHubsV2Controller', 'popularvideos')->getData();
+		$this->fromthecommunity = $this->sendRequest('SpecialWikiaHubsV2Controller', 'fromthecommunity')->getData();
 
 		$this->response->addAsset('extensions/wikia/WikiaHubsV2/css/WikiaHubsV2.scss');
 	}
@@ -109,9 +112,6 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 		$this->entries = $fromTheCommunityData['entries'];
 	}
 
-	/**
-	 *
-	 */
 	protected function setCacheValidity() {
 		$this->response->setCacheValidity(
 			self::CACHE_VALIDITY_BROWSER,
@@ -128,8 +128,10 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 			$this->model = F::build('WikiaHubsV2Model');
 			$date = $this->getRequest()->getVal('date', date('Y-m-d'));
 			$lang = $this->getRequest()->getVal('cityId', $this->wg->cityId);
+			$vertical = $this->getRequest()->getVal('vertical', WikiFactoryHub::CATEGORY_ID_GAMING);
 			$this->model->setDate($date);
 			$this->model->setLang($lang);
+			$this->model->setVertical($vertical);
 		}
 		return $this->model;
 	}

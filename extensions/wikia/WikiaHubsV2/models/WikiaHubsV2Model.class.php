@@ -12,6 +12,7 @@
 class WikiaHubsV2Model extends WikiaModel {
 	protected $lang;
 	protected $date;
+	protected $vertical;
 
 	public function setLang($lang) {
 		$this->lang = $lang;
@@ -27,6 +28,14 @@ class WikiaHubsV2Model extends WikiaModel {
 
 	public function getDate() {
 		return $this->date;
+	}
+
+	public function setVertical($vertical) {
+		$this->vertical = $vertical;
+	}
+
+	public function getVertical() {
+		return $this->vertical;
 	}
 
 	public function getDataForModuleSlider() {
