@@ -113,13 +113,13 @@ class WikiaMiniUpload {
         } else if($sourceId == 0) {
 
             $dbr = wfGetDB( DB_SLAVE, array(), $wgExternalDatawareDB );
-			$query = $dbr->buildLike( $dbr->anyString(), mb_strtolower( $query ), $dbr->anyString() );
+			$dbquerylike = $dbr->buildLike( $dbr->anyString(), mb_strtolower( $query ), $dbr->anyString() );
             $res = $dbr->select(
                     array( 'pages' ),
                     array( 'count(page_id) as count ' ),
                     array(
                            'page_wikia_id' => $wgCityId,
-                           "page_title_lower $query" ,
+                           "page_title_lower $dbquerylike" ,
                            'page_namespace' => 6,
                            'page_status' => 0 ),
                     __METHOD__ ,
