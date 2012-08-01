@@ -99,7 +99,8 @@ var WikiaWideTables = {
 
 	//This function is called by the "expand" button
 	makeModal: function(event) {
-		var table = $(event.currentTarget).next(".table").children("table:first");
+		var table = $(event.currentTarget).next(".table").children("table:first"),
+			$sortableTable;
 		table.clone().makeModal({
 			id: "ModalTable",
 			width: $(window).width() - 100
@@ -108,6 +109,10 @@ var WikiaWideTables = {
 			overflow: "auto",
 			height: $(window).height() - 150
 		});
+		$sortableTable = $( '#ModalTable' ).find( 'table.sortable' );
+		if ( $sortableTable.length ) {
+			$sortableTable.tablesorter();
+		}
 	},
 
 	popoutScrolling: function() {
