@@ -1,7 +1,7 @@
 <div class="grid-2 alpha wikiahubs-wikitext-module">
 	<h2><?= $wikitextmoduledata['headline'] ?></h2>
 
-	<div style="width:300px;">
+	<div class="modulecontent">
 		<?php
 
 		/**
