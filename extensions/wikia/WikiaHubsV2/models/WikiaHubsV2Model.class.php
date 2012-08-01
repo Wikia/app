@@ -268,4 +268,15 @@ class WikiaHubsV2Model extends WikiaModel {
 			)
 		);
 	}
+	public function getDataForModuleWikitext() {
+		//mock data
+		return array(
+			'headline' => 'The Big Question',
+			'wikitext' => '<poll>
+Should the older, original Call of Duty games be <html> <a href=http://callofduty.wikia.com/wiki/User_blog:Flamesword300/OLD_COD_GAMES-_SHOULD_THEY_BE_REMADE%3F_:YES_OR_NO>remade</a></html> with modern 3D engine tech?
+Yes
+No
+</poll>'
+		);
+	}
 }

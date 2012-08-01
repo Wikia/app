@@ -1,9 +1,10 @@
+<?php $app = F::app(); ?>
 <div id="mw-content-text" lang="en" dir="ltr" class="mw-content-ltr">
 	<script>var wgWikiaHubType = 'gaming';</script>
 	<div class="WikiaGrid WikiaHubs" id="WikiaHubs">
 		<div class="grid-3 alpha">
 			<section style="margin-bottom:20px" class="grid-3 alpha">
-				<?= F::app()->renderView('SpecialWikiaHubsV2', 'slider', array()); ?>
+				<?= $app->renderView('SpecialWikiaHubsV2', 'slider', array()); ?>
 			</section>
 			<section class="grid-3 alpha wikiahubs-newstabs">
 				<div class="title-wrapper">
@@ -69,7 +70,7 @@
 			</section>
 		</div>
 		<div class="grid-3">
-			<?= F::app()->renderView('SpecialWikiaHubsV2', 'pulse', array()); ?>
+			<?= $app->renderView('SpecialWikiaHubsV2', 'pulse', array()); ?>
 			<div class="grid-1 alpha wikiahubs-explore plainlinks">
 				<h2>
 					<span class="mw-headline" id="Games_We.27re_Drooling_Over">Games We're Drooling Over</span>
@@ -304,59 +305,7 @@
 		</div>
 		<div class="grid-2" style="margin-top:-360px">
 			<div class="grid-2 alpha">
-				<h2>
-					<span class="mw-headline" id="The_Big_Question">The Big Question</span>
-				</h2>
-				<div style="width:300px;">
-					<!-- AjaxPoll #0 --><script>JSSnippetsStack.push({dependencies:["/extensions/wikia/AjaxPoll/css/AjaxPoll.scss","/extensions/wikia/AjaxPoll/js/AjaxPoll.js"],callback:function(json){AjaxPoll.init(json)},id:"AjaxPoll.init"})</script>
-					<!-- s:poll -->
-					<div class="ajax-poll" id="ajax-poll-AC87CC2E46CC9E0C4C279A41782505BD" >
-						<div class="header">
-							Should the older, original Call of Duty games be
-							<a href=http://callofduty.wikia.com/wiki/User_blog:Flamesword300/OLD_COD_GAMES-_SHOULD_THEY_BE_REMADE%3F_:YES_OR_NO>remade</a>
-							with modern 3D engine tech?
-						</div>
-						<div id="wpPollStatusAC87CC2E46CC9E0C4C279A41782505BD" class="center">&#160;</div>
-						<form action="#" method="post" id="axPollAC87CC2E46CC9E0C4C279A41782505BD">
-							<input type="hidden" name="wpPollId" value="AC87CC2E46CC9E0C4C279A41782505BD" />
-							<div id="ajax-poll-area">
-								<div class='pollAnswer' id='pollAnswer2'>
-									<div class='pollAnswerName'>
-										<label for='pollAnswerRadioAC87CC2E46CC9E0C4C279A41782505BD'>
-											<input type='radio' name='wpPollRadioAC87CC2E46CC9E0C4C279A41782505BD' id='wpPollRadioAC87CC2E46CC9E0C4C279A41782505BD' value='2' />Yes
-										</label>
-									</div>
-									<div class='pollAnswerVotes' onmouseover='span=this.getElementsByTagName("span")[0];tmpPollVar=span.innerHTML;span.innerHTML=span.title;span.title="";' onmouseout='span=this.getElementsByTagName("span")[0];span.title=span.innerHTML;span.innerHTML=tmpPollVar;'>
-										<span id="wpPollVoteAC87CC2E46CC9E0C4C279A41782505BD-2" title='30.83% of all votes'>41</span>
-										<div class="wpPollBarAC87CC2E46CC9E0C4C279A41782505BD" id="wpPollBarAC87CC2E46CC9E0C4C279A41782505BD-2" style="width: 30.83%; border:0;">&#160;</div>
-									</div>
-								</div>
-								<div class='pollAnswer' id='pollAnswer3'>
-									<div class='pollAnswerName'>
-										<label for='pollAnswerRadioAC87CC2E46CC9E0C4C279A41782505BD'>
-											<input type='radio' name='wpPollRadioAC87CC2E46CC9E0C4C279A41782505BD' id='wpPollRadioAC87CC2E46CC9E0C4C279A41782505BD' value='3' />No
-										</label>
-									</div>
-									<div class='pollAnswerVotes' onmouseover='span=this.getElementsByTagName("span")[0];tmpPollVar=span.innerHTML;span.innerHTML=span.title;span.title="";' onmouseout='span=this.getElementsByTagName("span")[0];span.title=span.innerHTML;span.innerHTML=tmpPollVar;'>
-										<span id="wpPollVoteAC87CC2E46CC9E0C4C279A41782505BD-3" title='69.17% of all votes'>92</span>
-										<div class="wpPollBarAC87CC2E46CC9E0C4C279A41782505BD" id="wpPollBarAC87CC2E46CC9E0C4C279A41782505BD-3" style="width: 69.17%; border:0;">&#160;</div>
-									</div>
-								</div>
-								<br style="clear: both;" />
-								<div>
-									The poll was created at 00:31 on July 20, 2012, and so far
-									<span class="total" id="wpPollTotalAC87CC2E46CC9E0C4C279A41782505BD">133</span>
-									people voted.
-								</div>
-							</div>
-							<input type="submit" name="wpVote" id="axPollSubmitAC87CC2E46CC9E0C4C279A41782505BD" value="Vote!" />
-							<span id="pollSubmittingInfoAC87CC2E46CC9E0C4C279A41782505BD" style="padding-left: 10px; visibility: hidden;">
-								Please wait, submitting your vote...
-							</span>
-						</form>
-					</div>
-					<!-- e:poll -->
-				</div>
+				<?= $app->renderView('SpecialWikiaHubsV2', 'wikitextmodule', array()); ?>
 			</div>
 			<div class="grid-2">
 				<div class="grid-2 alpha wikiahubs-top-wikis">
