@@ -327,8 +327,8 @@ var WikiHeaderV2 = {
 				// handle special cases
 				switch(canonicalName) {
 					case 'chat':
-						ChatEntryPoint.onClickChatButton(wgUserName !== null, node.attr('href'));
 						event.preventDefault();
+						ChatEntryPoint.onClickChatButton(wgUserName !== null, node.attr('href'));
 						break;
 				}
 			}
