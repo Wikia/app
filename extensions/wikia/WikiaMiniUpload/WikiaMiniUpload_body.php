@@ -139,7 +139,7 @@ class WikiaMiniUpload {
                     array( ' page_title ' ),
                     array(
                            'page_wikia_id' => $wgCityId,
-                           "page_title_lower $query",
+                           "page_title_lower $dbquerylike",
                            'page_namespace' => 6,
                            'page_status' => 0 ),
                     __METHOD__ ,
