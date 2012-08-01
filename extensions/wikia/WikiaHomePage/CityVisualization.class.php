@@ -12,7 +12,7 @@ class CityVisualization extends WikiaModel {
 	const GERMAN_CORPORATE_SITE_ID = 111264;
 	const ENGLISH_CORPORATE_SITE_ID = 80433;
 
-	const CITY_VISUALIZATION_MEMC_VERSION = 'v0.40';
+	const CITY_VISUALIZATION_MEMC_VERSION = 'v0.45';
 
 	public function getList($corpWikiId, $contLang) {
 		$this->wf->ProfileIn(__METHOD__);

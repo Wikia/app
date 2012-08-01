@@ -118,7 +118,7 @@ class SpecialPromoteController extends WikiaSpecialPageController {
 	public function saveData() {
 		if( !$this->checkAccess() ) {
 			$this->success = false;
-			$this->error = 'no rights';
+			$this->error = $this->wf->Msg('promote-wrong-rights');
 			return;
 		}
 
@@ -130,7 +130,7 @@ class SpecialPromoteController extends WikiaSpecialPageController {
 		}
 
 		try {
-			$this->helper->saveVisualizationData($data,$this->wg->contLang->getCode());
+			$this->helper->saveVisualizationData($data, $this->wg->contLang->getCode());
 			$this->success = true;
 		} catch(Exception $e) {
 			$this->success = false;
