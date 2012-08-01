@@ -4,7 +4,7 @@ jQuery(document).ready(function(){
 
 //result links click tracking
 jQuery(document).ready(function() {
-	$('.ResultLink').bind('click', function() {
+	$('.result-link').bind('click', function() {
 		if( typeof $.tracker == 'undefined' ) {
 			return true;
 		}
