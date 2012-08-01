@@ -838,18 +838,29 @@ if (window.wgEnableKruxTargeting) {
 		var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(k,s);
 	};
 
-	window.Krux||((Krux=function(){Krux.q.push(arguments)}).q=[]);
+	window.Krux||((Krux=function(){Krux.q.push(arguments);}).q=[]);
 	(function(){
-		function store(n){var m,k='kx'+n;return((m=this.localStorage)?m[k]||'':(m=document.cookie)&&(m=m.match('\\b'+k+'=([^;]*)'))&&decodeURIComponent(m[1]))||''}
-
-		// expose user and segments to javascript
-		Krux.user     = store('user');
-		Krux.segments = store('segs') && store('segs').split(',') || [];
-
-		// dartKeyValues
-		var key = ';ksgmnt='; Krux.dartKeyValues =
-			(Krux.segments.length ? key+Krux.segments.join(key) : '') +
-			(Krux.user ? ';u='+Krux.user+';' : '');
+	  function retrieve(n){
+	    var m, k='kx'+n;
+	    if (window.localStorage) {
+	        return window.localStorage[k] || "";
+	    } else if (navigator.cookieEnabled) {
+	        m = document.cookie.match(k+'=([^;]*)');
+	        return (m && unescape(m[1])) || "";
+	    } else {
+	        return '';
+	    }
+	  }
+	  var kvs = [];
+	  Krux.user = retrieve('user');
+	  if (Krux.user) {
+	    kvs.push('u=' + Krux.user);
+	  }
+	  Krux.segments = retrieve('segs') && retrieve('segs').split(',') || [];
+	  for (var i = 0; i < Krux.segments.length; i++ ) {
+	    kvs.push('ksgmnt=' + Krux.segments[i]);
+	  }
+	  Krux.dartKeyValues = kvs.length ? kvs.join(';') + ';': '';
 	})();
 }
 
