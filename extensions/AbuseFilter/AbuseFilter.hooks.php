@@ -25,8 +25,13 @@ class AbuseFilterHooks {
 
 		$article = $editor->getArticle();
 		if ( $article->exists() ) {
-			// Make sure we load the latest text saved in database (bug 31656)
-			$oldtext = $article->getRevision()->getRawText();
+			//Wikia Change Start - Jakub Olek
+			$rev = $article->getRevision();
+			if ( !empty( $rev ) ) {
+				// Make sure we load the latest text saved in database (bug 31656)
+				$oldtext = $rev->getRawText();
+			}
+			//Wikia Change End
 		}
 
 		// Cache article object so we can share a parse operation
