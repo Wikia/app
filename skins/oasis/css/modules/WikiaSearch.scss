@@ -127,13 +127,6 @@ $form-negative-side-padding: $form-side-padding*-1;
 			&:first-child:before {
 				content: "";
 			}
-
-			a {
-				color: $color-alternate-text;
-				&:hover {
-					color: $color-links;
-				}
-			}
 		}
 		article {
 			@include clearfix;
@@ -182,8 +175,8 @@ $form-negative-side-padding: $form-side-padding*-1;
 	}
 	h3 {
 		font-size: 14px;
-		margin: 0 0 12px 0;
-		padding: 0;
+		margin: 0;
+		padding: 0 0 12px 0;
 	}
 	.list {
 		list-style: none;
@@ -202,6 +195,12 @@ $form-negative-side-padding: $form-side-padding*-1;
 	}
 	.link {
 		font-size: 16px;
+	}
+	.result-link {
+		color: $color-alternate-text;
+		&:hover {
+			color: $color-links;
+		}
 	}
 }
 
