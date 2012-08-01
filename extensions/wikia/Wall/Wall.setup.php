@@ -68,6 +68,7 @@ $app->registerHook('MakeGlobalVariablesScript', 'WallHooksHelper', 'onMakeGlobal
 //wall history in toolbar
 $app->registerHook('BeforeToolbarMenu', 'WallHooksHelper', 'onBeforeToolbarMenu');
 $app->registerHook('BeforePageHistory', 'WallHooksHelper', 'onBeforePageHistory');
+$app->registerHook('GetHistoryDescription', 'WallHooksHelper', 'onGetHistoryDescription');
 
 $app->registerHook('AllowNotifyOnPageChange', 'WallHooksHelper', 'onAllowNotifyOnPageChange');
 $app->registerHook('GetPreferences', 'WallHooksHelper', 'onGetPreferences');

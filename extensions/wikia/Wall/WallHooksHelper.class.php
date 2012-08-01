@@ -259,22 +259,42 @@ class WallHooksHelper {
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 
-	public function onBeforePageHistory(&$article, &$wgOut) {
+	public function onBeforePageHistory( &$article ) {
 		$title = $article->getTitle();
 		$app = F::App();
 		$page = $app->wg->Request->getVal('page', 1);
 
-		if( !empty($title) && $title->getNamespace() === NS_USER_WALL  && !$title->isSubpage() ) {
-			$app->wg->Out->addHTML($app->renderView('WallHistoryController', 'index', array('title' => $title, 'page' => $page) ));
-			return false;
-		}
+		if( !empty( $title ) ) {
+			if( $title->getNamespace() === NS_USER_WALL  && !$title->isSubpage() ) {
+				$app->wg->Out->addHTML( $app->renderView( 'WallHistoryController', 'index', array( 'title' => $title, 'page' => $page) ) );
+				return false;
+			}
 
-		if( !empty($title) && $title->getNamespace() === NS_USER_WALL_MESSAGE ) {
-			$app->wg->Out->addHTML($app->renderView('WallHistoryController', 'index', array('title' => $title, 'page' => $page, 'threadLevelHistory' => true)));
-			return false;
+			if( $title->getNamespace() === NS_USER_WALL_MESSAGE ) {
+				$app->wg->Out->addHTML( $app->renderView( 'WallHistoryController', 'index', array( 'title' => $title, 'page' => $page, 'threadLevelHistory' => true ) ) );
+				return false;
+			}
 		}
 
 		$this->doSelfRedirect();
+		return true;
+	}
+
+	/**
+	 * @brief Overrides descrpiton of history page
+	 *
+	 * @return true
+	 *
+	 * @author Jakub Olek
+	 */
+
+	public function onGetHistoryDescription( &$description ){
+		$app = F::app();
+
+		if( $app->wg->Title->getNamespace() === NS_USER_WALL || $app->wg->Title->getNamespace() === NS_USER_WALL_MESSAGE) {
+			$description = '';
+		}
+
 		return true;
 	}
 

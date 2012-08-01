@@ -64,7 +64,7 @@ class WallHistoryController extends WallController {
 			$wallOwnerUser = $wall->getUser();
 			
 			$perPage = 100;
-			$wallHistory = F::build('WallHistory', array($this->app->wg->CityId) );
+			$wallHistory = F::build( 'WallHistory', array( $this->app->wg->CityId ) );
 			$wallHistory->setPage($page, $perPage);
 			$count = $wallHistory->getCount($wallOwnerUser);
 			$sort = $this->getSortingSelected();

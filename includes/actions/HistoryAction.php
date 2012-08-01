@@ -37,12 +37,18 @@ class HistoryAction extends FormlessAction {
 
 	protected function getDescription() {
 		// Creation of a subtitle link pointing to [[Special:Log]]
-		return Linker::linkKnown(
+		/* Wikia change @author Jakub Olek */
+		$description = Linker::linkKnown(
 			SpecialPage::getTitleFor( 'Log' ),
 			$this->msg( 'viewpagelogs' )->escaped(),
 			array(),
 			array( 'page' => $this->getTitle()->getPrefixedText() )
 		);
+
+		wfRunHooks('GetHistoryDescription', array( &$description ) );
+
+		return $description;
+		/* End of Wikia change */
 	}
 
 	/**
@@ -78,7 +84,7 @@ class HistoryAction extends FormlessAction {
 		$request = $this->getRequest();
 
 		/* Wikia change @author Tomek */
-		if( !wfRunHooks('BeforePageHistory', array(&$this->page, &$wgOut)) ) {
+		if( !wfRunHooks('BeforePageHistory', array( &$this->page ) ) ) {
 			return;
 		}
 		/* End of Wikia change */
