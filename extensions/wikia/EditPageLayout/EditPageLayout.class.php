@@ -617,10 +617,11 @@ class EditPageLayout extends EditPage {
 		}
 
 		// Edit notice (BugId:7616)
-		$editnotice_ns = 'editnotice-'.$this->mTitle->getNamespace();
-		if ( !wfEmptyMsg( $editnotice_ns, wfMsgForContent( $editnotice_ns ) ) ) {
+		$editnotice_ns_key = 'editnotice-'.$this->mTitle->getNamespace();
+		$editnotice_ns = $this->app->wf->msgExt( $editnotice_ns_key, array( 'parse' ) );
+		if ( !wfEmptyMsg( $editnotice_ns_key, $editnotice_ns ) ) {
 			$this->mEditPagePreloads['EditPageEditNotice'] = array(
-				'content' => $this->app->wf->msg($editnotice_ns),
+				'content' => $editnotice_ns,
 				'class' => 'mw-editnotice',
 			);
 		}
