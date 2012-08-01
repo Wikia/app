@@ -179,7 +179,6 @@ class WallHistory extends WikiaModel {
 	public function get($user, $sort, $parent_page_id = 0) {
 		$sort = ($sort === 'nf') ? 'desc' : 'asc';
 		$where = $this->getWhere($user, $parent_page_id);
-
 		if($where === false) {
 			return array();
 		}

@@ -649,8 +649,8 @@ class WallHooksHelper {
 		wfProfileIn( __METHOD__ );
 		// notifications
 		$app = F::app();
-
-		if($recentChange->getAttribute('rc_namespace') == NS_USER_WALL_MESSAGE) {
+  
+		if(  MWNamespace::isTalk( $recentChange->getAttribute('rc_namespace') ) && in_array( MWNamespace::getSubject($recentChange->getAttribute('rc_namespace')), $app->wg->WallNS ) ) {
 			$rcType = $recentChange->getAttribute('rc_type');
 
 			//FIXME: WallMessage::remove() creates a new RC but somehow there is no rc_this_oldid
