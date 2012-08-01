@@ -27,7 +27,7 @@ class AbuseFilterViewEdit extends AbuseFilterView {
 		$didEdit = $this->canEdit()
 			&& $user->matchEditToken( $editToken, array( 'abusefilter', $filter ) );
 
-		if ( $didEdit ) {
+		if ( $didEdit ) { 
 			// Check syntax
 			$syntaxerr = AbuseFilter::checkSyntax( $request->getVal( 'wpFilterRules' ) );
 			if ( $syntaxerr !== true ) {
@@ -229,6 +229,11 @@ class AbuseFilterViewEdit extends AbuseFilterView {
 			if ( $history_id ) {
 				$out->addWikiMsg(
 					'abusefilter-edit-oldwarning', $this->mHistoryID, $this->mFilter );
+			}
+
+			//bugid 40795 -- calling $out->addHTML seems to wipe out subtitle, so we'll use $out->addHTML to add the subtitle first
+			if ($subtitle = $out->getSubtitle()) {
+				$out->addHTML($subtitle);
 			}
 
 			$out->addHTML( $this->buildFilterEditor( null, $this->mFilter, $history_id ) );
