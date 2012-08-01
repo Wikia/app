@@ -618,7 +618,11 @@ class WikiaSearch extends WikiaObject {
 			$article = new Article( $title );
 
 			if($article->isRedirect()) {
-				$this->client->setArticleMatch(array('article'=>new Article($article->getRedirectTarget()), 'redirect'=>$article));
+				$target = $article->getRedirectTarget();
+				// apparently the target can be null
+				if ($target instanceOf Title) {
+					$this->client->setArticleMatch(array('article'=>new Article($target), 'redirect'=>$article));
+				}
 			}
 			else {
 				$this->client->setArticleMatch(array('article'=>$article));
