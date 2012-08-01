@@ -75,16 +75,16 @@ class WikiaHubsV2Model extends WikiaModel {
 					'links' =>
 					array(
 						array(
-							'anchor' => 'http://www.wikia.com',
-							'title' => 'Wikia'
+							'anchor' => 'WoWwiki',
+							'href' => 'http://www.wowwiki.com'
 						),
 						array(
-							'anchor' => 'http://www.wikia.com',
-							'title' => 'Wikia'
+							'anchor' => 'WoWwiki',
+							'href' => 'http://www.wowwiki.com'
 						),
 						array(
-							'anchor' => 'http://www.wikia.com',
-							'title' => 'Wikia'
+							'anchor' => 'WoWwiki',
+							'href' => 'http://www.wowwiki.com'
 						),
 					),
 				),
@@ -93,23 +93,23 @@ class WikiaHubsV2Model extends WikiaModel {
 					'links' =>
 					array(
 						array(
-							'anchor' => 'http://www.wikia.com',
-							'title' => 'Wikia'
+							'anchor' => 'WoWwiki',
+							'href' => 'http://www.wowwiki.com'
 						),
 						array(
-							'anchor' => 'http://www.wikia.com',
-							'title' => 'Wikia'
+							'anchor' => 'WoWwiki',
+							'href' => 'http://www.wowwiki.com'
 						),
 						array(
-							'anchor' => 'http://www.wikia.com',
-							'title' => 'Wikia'
+							'anchor' => 'WoWwiki',
+							'href' => 'http://www.wowwiki.com'
 						),
 					)
 				)
 			),
 			'link' => array(
 				'title' => 'WoWwiki',
-				'anchor' => 'http://www.wowwiki.com'
+				'href' => 'http://www.wowwiki.com'
 			),
 		);
 	}
@@ -176,8 +176,8 @@ class WikiaHubsV2Model extends WikiaModel {
 				'main title' => 'Resident Evil 6',
 				'subtitle' => 'More evil awaits you on the',
 				'link' => array(
-					'title' => 'WoWwiki',
-					'anchor' => 'http://www.wowwiki.com'
+					'anchor' => 'WoWwiki',
+					'href' => 'http://www.wowwiki.com'
 				)
 			)
 		);
@@ -190,43 +190,43 @@ class WikiaHubsV2Model extends WikiaModel {
 			'wikis' => array(
 				array(
 					'title' => 'WoWwiki',
-					'anchor' => 'http://www.wowwiki.com'
+					'href' => 'http://www.wowwiki.com'
 				),
 				array(
 					'title' => 'WoWwiki',
-					'anchor' => 'http://www.wowwiki.com'
+					'href' => 'http://www.wowwiki.com'
 				),
 				array(
 					'title' => 'WoWwiki',
-					'anchor' => 'http://www.wowwiki.com'
+					'href' => 'http://www.wowwiki.com'
 				),
 				array(
 					'title' => 'WoWwiki',
-					'anchor' => 'http://www.wowwiki.com'
+					'href' => 'http://www.wowwiki.com'
 				),
 				array(
 					'title' => 'WoWwiki',
-					'anchor' => 'http://www.wowwiki.com'
+					'href' => 'http://www.wowwiki.com'
 				),
 				array(
 					'title' => 'WoWwiki',
-					'anchor' => 'http://www.wowwiki.com'
+					'href' => 'http://www.wowwiki.com'
 				),
 				array(
 					'title' => 'WoWwiki',
-					'anchor' => 'http://www.wowwiki.com'
+					'href' => 'http://www.wowwiki.com'
 				),
 				array(
 					'title' => 'WoWwiki',
-					'anchor' => 'http://www.wowwiki.com'
+					'href' => 'http://www.wowwiki.com'
 				),
 				array(
 					'title' => 'WoWwiki',
-					'anchor' => 'http://www.wowwiki.com'
+					'href' => 'http://www.wowwiki.com'
 				),
 				array(
 					'title' => 'WoWwiki',
-					'anchor' => 'http://www.wowwiki.com'
+					'href' => 'http://www.wowwiki.com'
 				),
 			)
 		);
@@ -243,7 +243,7 @@ class WikiaHubsV2Model extends WikiaModel {
 					'image' => 'Image.jpg',
 					'link' => array(
 						'title' => 'WoWwiki',
-						'anchor' => 'http://www.wowwiki.com'
+						'href' => 'http://www.wowwiki.com'
 					),
 					'content' => 'Tab content'
 				),
@@ -252,7 +252,7 @@ class WikiaHubsV2Model extends WikiaModel {
 					'image' => 'Image.jpg',
 					'link' => array(
 						'title' => 'WoWwiki',
-						'anchor' => 'http://www.wowwiki.com'
+						'href' => 'http://www.wowwiki.com'
 					),
 					'content' => 'Tab content'
 				),
@@ -261,13 +261,14 @@ class WikiaHubsV2Model extends WikiaModel {
 					'image' => 'Image.jpg',
 					'link' => array(
 						'title' => 'WoWwiki',
-						'anchor' => 'http://www.wowwiki.com'
+						'href' => 'http://www.wowwiki.com'
 					),
 					'content' => 'Tab content'
 				)
 			)
 		);
 	}
+
 	public function getDataForModuleWikitext() {
 		//mock data
 		return array(
@@ -279,4 +280,66 @@ No
 </poll>'
 		);
 	}
+
+	public function getDataForModuleFromTheCommunity() {
+		//mock data
+		return array(
+			'headline' => 'From the Community',
+			'entries' => array(
+				array(
+					'article' => array(
+						'title' => 'Assassins Creed Film News',
+						'href' => 'http://www.wowwiki.com'
+					),
+					'contributor' => 'Master Sima Yi',
+					'image' => 'Michael-Fassbender-cast-in-Assassins-Creed-Movie.jpg',
+					'content' => 'Today, several news sites have reported that actor Michael Fassbender (known for his roles in Inglourious Basterds, Shame, X-Men: First Class and Prometheus) has signed on for the planned Assassin\'s Creed film.',
+					'wikilink' => array(
+						'title' => 'WoWwiki',
+						'href' => 'http://www.wowwiki.com'
+					),
+				),
+				array(
+					'article' => array(
+						'title' => 'Assassins Creed Film News',
+						'href' => 'http://www.wowwiki.com'
+					),
+					'contributor' => 'Master Sima Yi',
+					'image' => 'Michael-Fassbender-cast-in-Assassins-Creed-Movie.jpg',
+					'content' => 'Today, several news sites have reported that actor Michael Fassbender (known for his roles in Inglourious Basterds, Shame, X-Men: First Class and Prometheus) has signed on for the planned Assassin\'s Creed film.',
+					'wikilink' => array(
+						'title' => 'WoWwiki',
+						'href' => 'http://www.wowwiki.com'
+					),
+				),
+				array(
+					'article' => array(
+						'title' => 'Assassins Creed Film News',
+						'href' => 'http://www.wowwiki.com'
+					),
+					'contributor' => 'Master Sima Yi',
+					'image' => 'Michael-Fassbender-cast-in-Assassins-Creed-Movie.jpg',
+					'content' => 'Today, several news sites have reported that actor Michael Fassbender (known for his roles in Inglourious Basterds, Shame, X-Men: First Class and Prometheus) has signed on for the planned Assassin\'s Creed film.',
+					'wikilink' => array(
+						'title' => 'WoWwiki',
+						'href' => 'http://www.wowwiki.com'
+					),
+				),
+				array(
+					'article' => array(
+						'title' => 'Assassins Creed Film News',
+						'href' => 'http://www.wowwiki.com'
+					),
+					'contributor' => 'Master Sima Yi',
+					'image' => 'Michael-Fassbender-cast-in-Assassins-Creed-Movie.jpg',
+					'content' => 'Today, several news sites have reported that actor Michael Fassbender (known for his roles in Inglourious Basterds, Shame, X-Men: First Class and Prometheus) has signed on for the planned Assassin\'s Creed film.',
+					'wikilink' => array(
+						'title' => 'WoWwiki',
+						'href' => 'http://www.wowwiki.com'
+					),
+				)
+			)
+		);
+	}
+
 }
