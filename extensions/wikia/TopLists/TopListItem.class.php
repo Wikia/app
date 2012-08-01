@@ -300,7 +300,10 @@ class TopListItem extends TopListBase {
 	 */
 	public function getParsedContent() {
 		if( $this->exists() ) {
-			return F::app()->wg->Parser->recursiveTagParse( $this->getArticle()->getContent() );
+			//return F::app()->wg->Parser->recursiveTagParse( $this->getArticle()->getContent() );
+			// temporarly disabling wikitext parsing to get rid of error flood
+			// TODO: fix this error properly
+			return $this->getArticle()->getContent();
 		}
 
 		return null;
