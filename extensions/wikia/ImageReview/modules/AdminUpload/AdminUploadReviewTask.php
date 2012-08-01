@@ -67,7 +67,13 @@ class AdminUploadReviewTask extends BatchTask {
 		return false;
 	}
 
-	//todo: think about some refactoring, maybe adding $isItUploadForCorporate variable and then split body of method to different methods?
+	/**
+	 * @desc This method uploads images from a wiki to corporate wiki (i.e. wikia.com or de.wikia.com) but also it can upload images from corporate wiki to target wikis
+	 *
+	 * @param $targetWikiId
+	 * @param $wikis
+	 * @return bool
+	 */
 	function uploadImages($targetWikiId, $wikis) {
 		$targetWikiLang = WikiFactory::getVarValueByName('wgLanguageCode', $targetWikiId);
 
@@ -90,30 +96,29 @@ class AdminUploadReviewTask extends BatchTask {
 				$updateData = $this->getImagesToUpdateInDb($sourceWikiId, $sourceWikiLang, $uploadedImages);
 
 				if( !empty($updateData) ) {
-					//update in db
+					//updating city_visualization table
 					$this->model->saveVisualizationData(
 						$sourceWikiId,
 						$updateData,
 						$sourceWikiLang
 					);
-					$memcKey = $this->helper->getMemcKey($sourceWikiId, $sourceWikiLang);
 
+					//purging interstitial cache
+					$memcKey = $this->helper->getMemcKey($sourceWikiId, $sourceWikiLang);
 					F::app()->wg->Memc->set($memcKey, null);
 				}
 			}
-
-			//todo: investigate and implatement if needed if we need here additional if block for images uploaded for import script
 		}
 
 		if( !empty($uploadedImages) && in_array($sourceWikiId, $this->corporatePagesIds) ) {
-		//if wikis have been added by import script
+		//if images uploaded but not from import script
+			//saving changes in city_visualization_images table and purging cache
 			$this->addImagesToPromoteDb($targetWikiId, $targetWikiLang, $uploadedImages);
 			$this->model->purgeWikiPromoteDataCache($targetWikiId, $targetWikiLang);
 		}
 
 		if( !empty($uploadedImages) ) {
-		//if images uploaded but not from import script
-			//todo: investigate if we have to add purging interstitial?
+		//if wikis have been added by import script or regularly by Special:Promote
 			$this->model->purgeVisualizationWikisListCache($targetWikiId, $targetWikiLang);
 			return true;
 		}
@@ -196,11 +201,14 @@ class AdminUploadReviewTask extends BatchTask {
 
 				//update in db
 				if( !empty($updateData) ) {
+					//updating city_visualization table
 					$this->model->saveVisualizationData(
 						$sourceWikiId,
 						$updateData,
 						$sourceWikiLang
 					);
+
+					//purging interstitial cache
 					$app->wg->Memc->set($memcKey, null);
 				}
 			}
