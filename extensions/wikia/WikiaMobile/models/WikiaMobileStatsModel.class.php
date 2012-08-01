@@ -48,11 +48,13 @@ class WikiaMobileStatsModel extends WikiaModel {
 
 				$pages = $is->getVal('result');
 
-				foreach( $pages as $key => $r){
-					array_unshift( $pages[$key], $res[$key]['title']);
-				}
+				if ( is_array( $pages ) ) {
+					foreach( $pages as $key => $r){
+						array_unshift( $pages[$key], $res[$key]['title']);
+					}
 
-				$this->wg->Memc->set( $memKey, $pages, self::POPULAR_PAGES_CACHE_TIME );
+					$this->wg->Memc->set( $memKey, $pages, self::POPULAR_PAGES_CACHE_TIME );
+				}
 			}
 		}
 
