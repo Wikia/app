@@ -41,9 +41,26 @@ class IgnFeedIngester extends VideoFeedIngester {
 		$content = json_decode($content, true);
 		if(empty($content)) $content = array();
 
+		if(!empty($content)) {
+			$testvideo = $content[0];
+			if(!isset($testvideo['metadata']['gameContent'])) {
+				print "Failed feed download, redownloading\n";
+				$file = $this->downloadFeed($params['startDate'],$params['endDate']);
+				return $this->import($file, $params);
+			}
+		}
+
+
 		$i = 0;
 		foreach($content as $video) {
 			$i++;
+
+			if($debug) {
+				print "\nraw data: \n";
+				foreach( explode("\n", var_export($video, 1)) as $line ) {
+					print ":: $line\n";
+				}
+			}
 
 			$found = false;
 			if (!empty($params['keyphrasesCategories'])) {
@@ -73,14 +90,6 @@ class IgnFeedIngester extends VideoFeedIngester {
 				print "Skipping non-gaming content: $name\n";
 				continue;
 			}
-
-			if($debug) {
-				print "\nraw data: \n";
-				foreach( explode("\n", var_export($video, 1)) as $line ) {
-					print ":: $line\n";
-				}
-			}
-
 
 			$clipData = array();
 
