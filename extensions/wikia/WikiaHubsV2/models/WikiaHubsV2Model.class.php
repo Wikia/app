@@ -118,8 +118,8 @@ class WikiaHubsV2Model extends WikiaModel {
 		//mock data
 		return array(
 			'title' => array(
-				'title' => 'WoWwiki',
-				'anchor' => 'http://www.wowwiki.com'
+				'anchor' => 'WoWwiki',
+				'href' => 'http://www.wowwiki.com'
 			),
 			'socialmedia' => array(
 				'facebook' => 'link to facebook',
@@ -129,35 +129,35 @@ class WikiaHubsV2Model extends WikiaModel {
 			'boxes' => array(
 				array(
 					'headline' => array(
-						'title' => 'WoWwiki',
-						'anchor' => 'http://www.wowwiki.com'
+						'anchor' => 'WoWwiki',
+						'href' => 'http://www.wowwiki.com'
 					),
 					'number' => 10000,
 					'link' => array(
-						'title' => 'WoWwiki',
-						'anchor' => 'http://www.wowwiki.com'
+						'anchor' => 'WoWwiki',
+						'href' => 'http://www.wowwiki.com'
 					),
 				),
 				array(
 					'headline' => array(
-						'title' => 'WoWwiki',
-						'anchor' => 'http://www.wowwiki.com'
+						'anchor' => 'WoWwiki',
+						'href' => 'http://www.wowwiki.com'
 					),
 					'number' => 10000,
 					'link' => array(
-						'title' => 'WoWwiki',
-						'anchor' => 'http://www.wowwiki.com'
+						'anchor' => 'WoWwiki',
+						'href' => 'http://www.wowwiki.com'
 					),
 				),
 				array(
 					'headline' => array(
-						'title' => 'WoWwiki',
-						'anchor' => 'http://www.wowwiki.com'
+						'anchor' => 'WoWwiki',
+						'href' => 'http://www.wowwiki.com'
 					),
 					'number' => 10000,
 					'link' => array(
-						'title' => 'WoWwiki',
-						'anchor' => 'http://www.wowwiki.com'
+						'anchor' => 'WoWwiki',
+						'href' => 'http://www.wowwiki.com'
 					),
 				)
 			)

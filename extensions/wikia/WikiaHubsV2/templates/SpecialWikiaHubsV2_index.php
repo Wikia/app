@@ -69,52 +69,7 @@
 			</section>
 		</div>
 		<div class="grid-3">
-			<section style="margin-bottom: 25px;" class="grid-3 alpha wikiahubs-pulse">
-				<span class="social">
-					<a href="http://www.facebook.com/WikiaGaming" id="facebook"></a>
-					<a href="https://plus.google.com/u/0/b/106259394279355057996/posts" id="twitter"></a>
-					<a href="https://twitter.com/#!/WikiaGames" id="google"></a>
-				</span>
-				<h2>
-					<span class="mw-headline" id="The_Pulse_on_Mass_Effect_Wiki">
-						The Pulse on <a  class="text" href="http://masseffect.wikia.com/wiki/Mass_Effect_Wiki">Mass Effect Wiki</a>
-					</span>
-				</h2>
-				<div class="pulse-content">
-					<div class="boxes">
-						<div class="box">
-							<h5>
-								<span class="mw-headline" id="Page_Views">
-									<b>Page Views</b>
-								</span>
-							</h5>
-							<b>16,073,289</b>
-						</div>
-						<div class="box">
-							<h5>
-								<span class="mw-headline" id="Editors">
-									<b>Editors</b>
-								</span>
-							</h5>
-							<b>497</b>
-						</div>
-						<div class="box">
-							<h5>
-								<span class="mw-headline" id="Pages">
-									<b>Pages</b>
-								</span>
-							</h5>
-							<b>2420</b>
-						</div>
-					</div>
-					<div class="search">
-						<div class="buttons">
-							<label for="HubSearch">What's your game?</label>
-							<?= F::app()->renderView('SpecialWikiaHubsV2', 'pulse', array()); ?>
-						</div>
-					</div>
-				</div>
-			</section>
+			<?= F::app()->renderView('SpecialWikiaHubsV2', 'pulse', array()); ?>
 			<div class="grid-1 alpha wikiahubs-explore plainlinks">
 				<h2>
 					<span class="mw-headline" id="Games_We.27re_Drooling_Over">Games We're Drooling Over</span>
