@@ -86,18 +86,18 @@ class WikiaPhotoGalleryHelper {
 	 * Load extension's JS on edit page
 	 */
 	static public function setupEditPage($editform) {
-		global $wgOut, $wgExtensionsPath, $wgJsMimeType;
+		$app = F::app();
 
-		wfProfileIn(__METHOD__);
+		$app->wf->ProfileIn( __METHOD__ );
 
-		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.js\"></script>\n");
+		if ( F::app()->checkSkin( 'oasis' ) ) {
+			$app->wg->Out->addScript("<script type=\"{$app->wg->JsMimeType}\" src=\"{$app->wg->ExtensionsPath}/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.js\"></script>\n");
 
-		// load message for MW toolbar button tooltip
-		global $wgHooks;
-		$wgHooks['MakeGlobalVariablesScript'][] = 'WikiaPhotoGalleryHelper::makeGlobalVariablesScript';
+			// load message for MW toolbar button tooltip
+			$app->registerHook('MakeGlobalVariablesScript', 'WikiaPhotoGalleryHelper', 'makeGlobalVariablesScript');
+		}
 
-		wfProfileOut(__METHOD__);
-
+		$app->wf->ProfileOut( __METHOD__ );
 		return true;
 	}
 
