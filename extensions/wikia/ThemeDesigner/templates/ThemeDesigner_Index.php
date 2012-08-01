@@ -13,7 +13,7 @@
 
 	<link rel="stylesheet" href="<?= AssetsManager::getInstance()->getSassCommonURL('/extensions/wikia/ThemeDesigner/css/ThemeDesigner.scss') ?>">
 	<link rel="stylesheet" href="<?= AssetsManager::getInstance()->getSassCommonURL('/skins/oasis/css/core/WikiaSlider.scss') ?>">
-	<link rel="stylesheet" href="<?= AssetsManager::getInstance()->getSassCommonURL('/skins/oasis/css/modules/WikiaTooltip.scss') ?>">
+	<link rel="stylesheet" href="<?= AssetsManager::getInstance()->getSassCommonURL('/resources/wikia/libraries/bootstrap/tooltip.scss') ?>">
 
 	<?= $globalVariablesScript ?>
 

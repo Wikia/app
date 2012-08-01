@@ -650,7 +650,7 @@ $config['theme_designer_js'] = array(
 		'#group_oasis_tracker_js',
 
 		'//resources/wikia/libraries/jquery-ui/jquery-ui-1.8.14.custom.js',
-		'//resources/wikia/libraries/jquery/tooltip/jquery.wikia.tooltip.js',
+		'//resources/wikia/libraries/bootstrap/tooltip.js',
 		'//resources/wikia/libraries/aim/jquery.aim.js',
 		'//extensions/wikia/ThemeDesigner/js/ThemeDesigner.js',
 	)

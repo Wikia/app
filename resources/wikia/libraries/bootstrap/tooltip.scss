@@ -6,85 +6,86 @@
 $color-shadow: mix(#000000, $color-page, 50%);
 
 .tooltip {
-  position: absolute;
-  z-index: 1020;
-  display: block;
-  padding: 5px;
-  font-size: 11px;
-  opacity: 0;
-  filter: alpha(opacity=0);
-  visibility: visible;
-}
-
-.tooltip.in {
-  opacity: 0.8;
-  filter: alpha(opacity=80);
-}
-
-.tooltip.top {
-  margin-top: -2px;
-}
-
-.tooltip.right {
-  margin-left: 2px;
-}
-
-.tooltip.bottom {
-  margin-top: 2px;
-}
-
-.tooltip.left {
-  margin-left: -2px;
-}
-
-.tooltip.top .tooltip-arrow {
-  bottom: 0;
-  left: 50%;
-  margin-left: -5px;
-  border-top: 5px solid $color-page;
-  border-right: 5px solid transparent;
-  border-left: 5px solid transparent;
-}
-
-.tooltip.left .tooltip-arrow {
-  top: 50%;
-  right: 0;
-  margin-top: -5px;
-  border-top: 5px solid transparent;
-  border-bottom: 5px solid transparent;
-  border-left: 5px solid $color-page;
-}
-
-.tooltip.bottom .tooltip-arrow {
-  top: 0;
-  left: 50%;
-  margin-left: -5px;
-  border-right: 5px solid transparent;
-  border-bottom: 5px solid $color-page;
-  border-left: 5px solid transparent;
-}
-
-.tooltip.right .tooltip-arrow {
-  top: 50%;
-  left: 0;
-  margin-top: -5px;
-  border-top: 5px solid transparent;
-  border-right: 5px solid $color-page;
-  border-bottom: 5px solid transparent;
+	position: absolute;
+	z-index: 1020;
+	display: block;
+	padding: 5px;
+	font-size: 11px;
+	visibility: visible;
 }
 
 .tooltip-inner {
 	@include box-shadow(0, 0, 15px, $color-shadow);
 	background-color: $color-page;
 	font-size: 12px;
-	max-width: 400px;
+	max-width: 200px;
 	padding: 14px;
 	text-align: center;
 	text-decoration: none;
 }
 
+.tooltip.in {
+}
+
+.tooltip.top {
+	margin-top: -2px;
+}
+
+.tooltip.right {
+	margin-left: 2px;
+	.tooltip-inner {
+		text-align: left;
+	}
+}
+
+.tooltip.bottom {
+	margin-top: 2px;
+}
+
+.tooltip.left {
+	margin-left: -2px;
+	.tooltip-inner {
+		text-align: left;
+	}
+}
+
+.tooltip.top .tooltip-arrow {
+	bottom: 0;
+	left: 50%;
+	margin-left: -5px;
+	border-top: 5px solid $color-page;
+	border-right: 5px solid transparent;
+	border-left: 5px solid transparent;
+}
+
+.tooltip.left .tooltip-arrow {
+	top: 50%;
+	right: 0;
+	margin-top: -5px;
+	border-top: 5px solid transparent;
+	border-bottom: 5px solid transparent;
+	border-left: 5px solid $color-page;
+}
+
+.tooltip.bottom .tooltip-arrow {
+	top: 0;
+	left: 50%;
+	margin-left: -5px;
+	border-right: 5px solid transparent;
+	border-bottom: 5px solid $color-page;
+	border-left: 5px solid transparent;
+}
+
+.tooltip.right .tooltip-arrow {
+	top: 50%;
+	left: 0;
+	margin-top: -5px;
+	border-top: 5px solid transparent;
+	border-right: 5px solid $color-page;
+	border-bottom: 5px solid transparent;
+}
+
 .tooltip-arrow {
-	//@include box-shadow(0, 4px, 10px, mix(#000000, $color-page, 50%), false, 0);
 	position: absolute;
 	width: 0;
 	height: 0;
