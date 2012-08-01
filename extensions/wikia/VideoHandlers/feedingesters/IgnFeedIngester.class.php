@@ -67,6 +67,20 @@ class IgnFeedIngester extends VideoFeedIngester {
 				//continue;
 			}
 
+			if(empty($video['metadata']['gameContent'])) {
+				// only ingest gaming content
+				$name = $video['metadata']['name'];
+				print "Skipping non-gaming content: $name\n";
+				continue;
+			}
+
+			if($debug) {
+				print "\nraw data: \n";
+				foreach( explode("\n", var_export($video, 1)) as $line ) {
+					print ":: $line\n";
+				}
+			}
+
 
 			$clipData = array();
 
