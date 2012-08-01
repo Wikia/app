@@ -1982,7 +1982,10 @@ class EditPage {
 
 		$editnotice_ns_message = wfMessage( $editnotice_ns )->inContentLanguage();
 		if ( $editnotice_ns_message->exists() ) {
-			$wgOut->addWikiText( $editnotice_ns_message->plain() );
+			/* Wikia change begin
+			 * parse instead of posting a plain text version */
+			$wgOut->addWikiText( $editnotice_ns_message->parse() );
+			/* Wikia change end */
 		}
 		if ( MWNamespace::hasSubpages( $this->mTitle->getNamespace() ) ) {
 			$parts = explode( '/', $this->mTitle->getDBkey() );
