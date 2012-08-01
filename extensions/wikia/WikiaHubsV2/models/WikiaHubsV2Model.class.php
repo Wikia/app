@@ -183,6 +183,64 @@ class WikiaHubsV2Model extends WikiaModel {
 		);
 	}
 
+	public function getDataForModulePopularVideos() {
+		//mock data
+		return array(
+			'headline' => 'Popular videos',
+			'sponsor' => 'FVSponsor.jpg',
+			'videos' => array(
+				array(
+					'title' => 'WWE_13_(VG)_(2012)_-_Live_trailer',
+					'headline' => 'Resident Evil 6',
+					'submitter' => 'Bschwood',
+					'wiki' => 'http://www.wowwiki.com'
+				),
+				array(
+					'title' => 'WWE_13_(VG)_(2012)_-_Live_trailer',
+					'headline' => 'Resident Evil 6',
+					'submitter' => 'Bschwood',
+					'wiki' => 'http://www.wowwiki.com'
+				),
+				array(
+					'title' => 'WWE_13_(VG)_(2012)_-_Live_trailer',
+					'headline' => 'Resident Evil 6',
+					'submitter' => 'Bschwood',
+					'wiki' => 'http://www.wowwiki.com'
+				),
+				array(
+					'title' => 'WWE_13_(VG)_(2012)_-_Live_trailer',
+					'headline' => 'Resident Evil 6',
+					'submitter' => 'Bschwood',
+					'wiki' => 'http://www.wowwiki.com'
+				),
+				array(
+					'title' => 'WWE_13_(VG)_(2012)_-_Live_trailer',
+					'headline' => 'Resident Evil 6',
+					'submitter' => 'Bschwood',
+					'wiki' => 'http://www.wowwiki.com'
+				),
+				array(
+					'title' => 'WWE_13_(VG)_(2012)_-_Live_trailer',
+					'headline' => 'Resident Evil 6',
+					'submitter' => 'Bschwood',
+					'wiki' => 'http://www.wowwiki.com'
+				),
+				array(
+					'title' => 'WWE_13_(VG)_(2012)_-_Live_trailer',
+					'headline' => 'Resident Evil 6',
+					'submitter' => 'Bschwood',
+					'wiki' => 'http://www.wowwiki.com'
+				),
+				array(
+					'title' => 'WWE_13_(VG)_(2012)_-_Live_trailer',
+					'headline' => 'Resident Evil 6',
+					'submitter' => 'Bschwood',
+					'wiki' => 'http://www.wowwiki.com'
+				),
+			)
+		);
+	}
+
 	public function getDataForModuleTopWikis() {
 		//mock data
 		return array(

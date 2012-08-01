@@ -31,6 +31,7 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 		$this->tabber = $this->sendRequest('SpecialWikiaHubsV2Controller', 'tabber')->getData();
 		$this->wikitextmoduledata = $this->sendRequest('SpecialWikiaHubsV2Controller', 'wikitextmodule')->getData();
 		$this->fromthecommunity = $this->sendRequest('SpecialWikiaHubsV2Controller', 'fromthecommunity')->getData();
+		$this->popularvideos = $this->sendRequest('SpecialWikiaHubsV2Controller', 'popularvideos')->getData();
 
 		$this->response->addAsset('extensions/wikia/WikiaHubsV2/css/WikiaHubsV2.scss');
 	}
@@ -66,6 +67,13 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 		$this->sponsor = $videoData['sponsor'];
 		$this->video = $videoData['video'];
 		$this->description = $videoData['description'];
+	}
+
+	public function popularvideos() {
+		$helper = $this->getHelper();
+		$videosData = $helper->getDataForModulePopularVideos();
+		$this->headline = $videosData ['headline'];
+		$this->videos = $videosData['videos'];
 	}
 
 	public function topwikis() {
