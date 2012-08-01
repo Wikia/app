@@ -307,7 +307,9 @@ class UserMailer {
 			$chunks = array_chunk( $to, $wgEnotifMaxRecips );
 			foreach ( $chunks as $chunk ) {
 				# <Wikia>
-				wfRunHooks( 'ComposeMail', array( $chunk, &$body, &$headers ) );
+				if ( !wfRunHooks( 'ComposeMail', array( $chunk, &$body, &$headers ) ) ) {
+					continue;
+				}
 				# </Wikia>
 				$status = self::sendWithPear( $mail_object, $chunk, $headers, $body );
 				# FIXME : some chunks might be sent while others are not!
@@ -347,7 +349,9 @@ class UserMailer {
 			$safeMode = wfIniGetBool( 'safe_mode' );
 			foreach ( $to as $recip ) {
 				# <Wikia>
-				wfRunHooks( 'ComposeMail', array( $recip, &$body, &$headers ) );
+				if ( !wfRunHooks( 'ComposeMail', array( $recip, &$body, &$headers ) ) ) {
+					continue;
+				}
 				# </Wikia>
 				if ( $safeMode ) {
 					$sent = mail( $recip, self::quotedPrintable( $subject ), $body, $headers );
