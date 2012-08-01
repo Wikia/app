@@ -22,7 +22,7 @@ class ChatRailController extends WikiaController {
 			$this->buttonText = wfMsg('chat-start-a-chat');
 		}
 		$this->linkToSpecialChat = SpecialPage::getTitleFor("Chat")->escapeLocalUrl();
-		$this->chatClickAction = "window.open('{$this->linkToSpecialChat}', 'wikiachat', '".self::CHAT_WINDOW_FEATURES."'); $('.modalWrapper').closeModal();";
+		$this->chatClickAction = "window.open('{$this->linkToSpecialChat}', 'wikiachat', '".self::CHAT_WINDOW_FEATURES."'); $('.modalWrapper').closeModal(); location.reload();";
 
 		wfProfileOut( __METHOD__ );
 	}
