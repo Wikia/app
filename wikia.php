@@ -21,7 +21,7 @@ if ( !empty( $wgEnableNirvanaAPI ) ){
 	$app = F::app();
 	
 	// Ensure that we have a title stub, otherwise parser does not work BugId: 12901
-	$app->wg->title = new Title();
+	$app->wg->title = Wikia::createTitleFromRequest( $app->wg->Request );
 	
 	// initialize skin if requested
 	$app->initSkin( (bool) $app->wg->Request->getVal( "skin", false ) );
