@@ -1139,7 +1139,7 @@ class SkinTemplate extends Skin {
 			}
 		}
 
-		wfRunHooks('SkinTemplateTabs', array($template, &$content_navigation));
+		wfRunHooks('SkinTemplateTabs', array($this, &$content_navigation));
 
 		wfProfileOut( __METHOD__ );
 
