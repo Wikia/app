@@ -281,7 +281,7 @@
 		margin-left: 0;
 	}
 	div.gallerybox, li.gallerybox{
-		border: 1px solid $color-page-border; 
+		border: 1px solid $color-page-border;
 		div.thumb {
 			background: $color-article-thumb-background;
 			border: 1px solid $color-article-thumb-border;
@@ -458,6 +458,7 @@
 
 	.wikiaPlaceholder > div {
 		text-align: center;
+		border: 1px solid $color-article-thumb-border;
 	}
 }
 
