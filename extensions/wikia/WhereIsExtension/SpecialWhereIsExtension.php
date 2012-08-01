@@ -24,6 +24,7 @@ if (!defined('MEDIAWIKI')) {
 
 $wgAvailableRights[] = 'WhereIsExtension';
 $wgGroupPermissions['staff']['WhereIsExtension'] = true;
+$wgGroupPermissions['util']['WhereIsExtension'] = true;
 
 $wgExtensionMessagesFiles['WhereIsExtension'] = dirname(__FILE__) . '/SpecialWhereIsExtension.i18n.php';
 
