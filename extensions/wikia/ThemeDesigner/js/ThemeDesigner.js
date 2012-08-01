@@ -48,13 +48,39 @@ var ThemeDesigner = {
 		ThemeDesigner.applySettings(false, false);
 
 		// init tooltips
-		$('.form-questionmark').wikiaTooltip(function(el){
-			// Pass tooltip text to wikiaTooltip
-			return el.data('tooltip');
-		}, { hoverStay: true, maxWidth: '200', side: 'right', align: 'middle' });
-
+		ThemeDesigner.initTooltips();
+		
 		// track page view
 		ThemeDesigner.track('open');
+	},
+	
+	initTooltips: function() {
+		var tooltipTimeout = 0;
+
+		function setTooltipTimeout(elem) {
+			tooltipTimeout = setTimeout(function() {
+				elem.tooltip('hide');	
+			}, 300);
+		}
+
+		// This tooltip will not go away if you hover inside the tooltip 
+		$('.form-questionmark').tooltip({
+			trigger: "manual",
+			placement: "right"
+		}).on('mouseenter', function() {
+			clearTimeout(tooltipTimeout);
+			$(this).tooltip('show');
+		}).on('mouseleave', function() {
+			var $this = $(this);
+			setTooltipTimeout($this);
+			$('.tooltip').mouseenter(function() {
+				clearTimeout(tooltipTimeout);
+			}).mouseleave(function() {
+				$().log("mouse leaving");
+				setTooltipTimeout($this);
+			});
+		});
+		
 	},
 
 	themeTabInit: function() {

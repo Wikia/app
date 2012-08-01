@@ -1,4 +1,5 @@
 @import "skins/oasis/css/core/color";
+@import "skins/oasis/css/mixins/box-shadow";
 
 $color-shadow: mix(#000000, $color-page, 50%);
 
@@ -70,7 +71,7 @@ $color-shadow: mix(#000000, $color-page, 50%);
 }
 
 .popover-inner {
-	@include box-shadow(0, 0, 15px, $color-shadow, false, .5);
+	@include box-shadow(0, 0, 15px, $color-shadow);
 	max-width: 400px;
 	padding: 3px;
 	overflow: hidden;
