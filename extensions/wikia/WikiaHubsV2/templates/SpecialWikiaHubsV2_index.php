@@ -208,6 +208,7 @@
 						</div>
 					</div>
 				</nowiki>
+				<?= $app->renderView('SpecialWikiaHubsV2', 'popularvideos', array()); ?>
 			</div>
 			<div class="grid-4 alpha wikiahubs-from-the-community">
 				<h2>

@@ -35,6 +35,7 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 		$this->fromthecommunity = $this->sendRequest('SpecialWikiaHubsV2Controller', 'fromthecommunity')->getData();
 
 		$this->response->addAsset('extensions/wikia/WikiaHubsV2/css/WikiaHubsV2.scss');
+		$this->response->addAsset('extensions/wikia/WikiaHubsV2/js/WikiaHubsV2.js');
 	}
 
 	public function slider() {
@@ -102,6 +103,10 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 		$this->setCacheValidity();
 		$model = $this->getModel();
 		$this->wikitextmoduledata = $model->getDataForModuleWikitext();
+	}
+
+	public function popularvideos() {
+		//this method returns a template
 	}
 
 	public function fromthecommunity() {
