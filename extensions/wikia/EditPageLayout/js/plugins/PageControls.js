@@ -358,7 +358,7 @@
 		renderDialog: function(title, options, callback) {
 			options = $.extend({
 				callback: function() {
-					var contentNode = $('#EditPageDialog .WikiaArticle');
+					var contentNode = $('#EditPageDialog .ArticlePreview');
 
 					// block all clicks
 					contentNode.
@@ -371,7 +371,7 @@
 							}
 						}).
 						css({
-							height: options.height || ($(window).height() - 250)
+							'min-height': options.height || ($(window).height() - 250)
 						});
 
 					if (typeof callback == 'function') {
@@ -383,7 +383,7 @@
 			}, options);
 
 			// use loading indicator before real content will be fetched
-			var content = '<div class="ArticlePreview WikiaArticle"><img src="' + stylepath + '/common/images/ajax.gif" class="loading"></div>';
+			var content = '<div class="ArticlePreview"><img src="' + stylepath + '/common/images/ajax.gif" class="loading"></div>';
 
 			$.showCustomModal(title, content, options);
 		},
@@ -453,7 +453,7 @@
 					self.ajax('preview',
 						extraData,
 						function(data) {
-							contentNode.html(data.html);
+							contentNode.html(data.html + data.catbox);
 
 							// move "edit" link to the right side of heading names
 							contentNode.find('.editsection').each(function() {

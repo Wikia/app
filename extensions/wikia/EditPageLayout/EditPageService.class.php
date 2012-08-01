@@ -61,10 +61,8 @@ class EditPageService extends Service {
 		$catbox = $this->renderCategoryBoxFromParserOutput($parserOutput);
 		$interlanglinks = $this->renderInterlangBoxFromParserOutput($parserOutput);
 
-		$html = implode('',array($html,$catbox,$interlanglinks));
-
 		wfProfileOut(__METHOD__);
-		return $html;
+		return array( $html, $catbox, $interlanglinks);
 	}
 
 	public function getDiff($wikitext, $section = '') {
@@ -111,7 +109,7 @@ class EditPageService extends Service {
 
 		$catbox = null;
 		if(!empty($categories ) && ($skin instanceof SkinOasis)) {
-			$catlinks = $skin->getCategoryLinks();
+			$catlinks = $skin->getCategories();
 			$catbox = F::app()->sendRequest('ArticleCategories','Index',array('catlinks' => $catlinks))->toString();
 		}
 
