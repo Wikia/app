@@ -204,7 +204,7 @@ public class WebDriverTest {
 			WebElement someElem = driver.findElement(By.cssSelector(cssSelectorHoverOver)); //replace with your own WebElement call/code here
 			js.executeScript(mouseOverScript, someElem);
 	   }
-	   if (driver.getClass().getSimpleName().equalsIgnoreCase("FirefoxDriver")||driver.getClass().getSimpleName().equalsIgnoreCase("ChromeDriver")||driver.getClass().getSimpleName().equalsIgnoreCase("RemoteWebDriver")) {
+	   else if (driver.getClass().getSimpleName().equalsIgnoreCase("FirefoxDriver")||driver.getClass().getSimpleName().equalsIgnoreCase("ChromeDriver")||driver.getClass().getSimpleName().equalsIgnoreCase("RemoteWebDriver")) {
 		 //For Firefox, or Chrome (RemoteWebDriver) special script is NOT NEEDED
 		   String mouseOverScript = "if(document.createEvent){var evObj = document.createEvent('MouseEvents');evObj.initEvent('mouseover', true, false); arguments[0].dispatchEvent(evObj);} else if(document.createEventObject) { arguments[0].fireEvent('onmouseover');}";
 			JavascriptExecutor js = (JavascriptExecutor) driver;
@@ -274,7 +274,7 @@ public void HoverOverElementAndClick(String cssSelectorHoverOver, String cssSele
 			 Thread.sleep(500);
 			 ClickOnElement.click();
 	}
-	   if (driver.getClass().getSimpleName().equalsIgnoreCase("FirefoxDriver")||driver.getClass().getSimpleName().equalsIgnoreCase("ChromeDriver")||driver.getClass().getSimpleName().equalsIgnoreCase("RemoteWebDriver")) {
+	   else if (driver.getClass().getSimpleName().equalsIgnoreCase("FirefoxDriver")||driver.getClass().getSimpleName().equalsIgnoreCase("ChromeDriver")||driver.getClass().getSimpleName().equalsIgnoreCase("RemoteWebDriver")) {
 		 //For Firefox, or Chrome (RemoteWebDriver) special script is  NEEDED
 		   String mouseOverScript = "if(document.createEvent){var evObj = document.createEvent('MouseEvents');evObj.initEvent('mouseover', true, false); arguments[0].dispatchEvent(evObj);} else if(document.createEventObject) { arguments[0].fireEvent('onmouseover');}";
 			JavascriptExecutor js = (JavascriptExecutor) driver;
