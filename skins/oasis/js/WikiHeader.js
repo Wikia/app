@@ -327,7 +327,7 @@ var WikiHeaderV2 = {
 				// handle special cases
 				switch(canonicalName) {
 					case 'chat':
-						$.openPopup(wgArticlePath.replace('$1', 'Special:Chat'), 'wikiachat', 'ChatRail', 600, 600);
+						ChatEntryPoint.onClickChatButton(wgUserName !== null, node.attr('href'));
 						event.preventDefault();
 						break;
 				}
