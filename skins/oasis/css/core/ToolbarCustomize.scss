@@ -179,6 +179,8 @@
 	.autocomplete {
 		@include menu-regular;
 		margin-top: 2px;
+		overflow: auto;
+		overflow-x: hidden;
 		position: relative;
 		width: 313px;
 		z-index: 10;
