@@ -1925,4 +1925,24 @@ class Wikia {
 		return true;
 	}
 
+	/**
+	 * Tries to create an existing title object for current request. Used for setting the title
+	 * global during ajax requests. It uses title URL param to keep backward compatibility.
+	 *
+	 * @static
+	 * @param $request
+	 * @return Title
+	 */
+	public static function createTitleFromRequest( $request ) {
+		if ( $request->getVal('title','') === '' ) {
+			$title = Title::newMainPage();
+		} else {
+			$title = Title::newFromText($request->getVal('title', 'AJAX'));
+			if (!$title instanceof Title) {
+				$title = Title::makeTitle( NS_MAIN, 'AJAX' );
+			}
+		}
+		return $title;
+	}
+
 }

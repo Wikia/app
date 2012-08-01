@@ -595,16 +595,8 @@ class MediaWiki {
 
 			// Set a dummy title, because $wgTitle == null might break things
 			// Wikia change - start
-			// use title URL param to keep backward compatibility
 			// @author macbre, wladek
-			if ( $request->getVal('title','') === '' ) {
-				$title = Title::newMainPage();
-			} else {
-				$title = Title::newFromText($request->getVal('title', 'AJAX'));
-				if (!$title instanceof Title) {
-					$title = Title::makeTitle( NS_MAIN, 'AJAX' );
-				}
-			}
+			$title = Wikia::createTitleFromRequest( $request );
 			// Wikia change - end
 
 			$this->context->setTitle( $title );
