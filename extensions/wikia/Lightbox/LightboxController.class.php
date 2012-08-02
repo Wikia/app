@@ -155,12 +155,19 @@ class LightboxController extends WikiaController {
 			return;
 		}
 
-		$data = WikiaFileHelper::getMediaDetail($title, array('imageMaxWidth'  => 1000,
-									'contextWidth'   => $this->request->getVal('width', 660),
-									'contextHeight'  => $this->request->getVal('height', 360),
-									'userAvatarWidth'=> 16,
-									'maxHeight'	 => 395
-							));
+		$config = array(
+			'imageMaxWidth'  => 1000,
+			'contextWidth'   => $this->request->getVal('width', 660),
+			'contextHeight'  => $this->request->getVal('height', 360),
+			'userAvatarWidth'=> 16,
+		);
+
+		// set max height if play in lightbox
+		if ( $this->request->getVal('width', 0) == 0 ) {
+			$config['maxHeight'] = 395;
+		}
+
+		$data = WikiaFileHelper::getMediaDetail( $title, $config );
 
 		$articles = $data['articles'];
 		$isPostedIn = false; // Bool to tell mustache to print "posted in" section
