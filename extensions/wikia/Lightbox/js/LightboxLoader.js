@@ -82,24 +82,31 @@ var LightboxLoader = {
 		}
 
 		var target = $(ev.target);
-		
+
 		// Expand Slideshow button functionality 
 		// TODO LightboxLoader.js and WikiPhotoGallery.js needs refactoring, the conditional bellow is just a quick fix for lunching lightbox after clicking expand slideshow button
 		if (target.hasClass('wikia-slideshow-popout')) {
-	        
-	        var currentSlideMediaTitle = target.parents('.wikia-slideshow-toolbar').siblings('.wikia-slideshow-images-wrapper').find('li:visible').attr('data-image-name');
-	        
-	        LightboxLoader.loadLightbox(currentSlideMediaTitle);
-	        
+			var currentSlideMediaTitle = target.parents('.wikia-slideshow-toolbar').siblings('.wikia-slideshow-images-wrapper').find('li:visible').attr('data-image-name');
+
+			LightboxLoader.loadLightbox(currentSlideMediaTitle);
+
 	        return;
         }
 
 		// move to parent of an image -> anchor
 		if ( target.is('span') || target.is('img') ) {
-			target = target.parent();
-			if ( target.hasClass('Wikia-video-play-button') || target.hasClass('Wikia-video-thumb') ) {
-				target.addClass('image');
+
+			// (BugId:43483) clicking on a slideshow in IE9
+			var next = target.next();
+			if(next.is('.wikia-slideshow-image')) {
+				target = next;
+			} else {
+				target = target.parent();
+				if ( target.hasClass('Wikia-video-play-button') || target.hasClass('Wikia-video-thumb') ) {
+					target.addClass('image');
+				}
 			}
+
 		}
         // move to parent of an playButton (relatedVideos)
         if (target.is('div') && target.hasClass('playButton')) {
