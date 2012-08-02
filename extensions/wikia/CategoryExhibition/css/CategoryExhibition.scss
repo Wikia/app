@@ -222,7 +222,7 @@ $color-inctive-button: mix($color-page, #000, 60%);
 	}
 
 	.snippet {
-		@include box-shadow(0, 0, 20px, mix($color-page, #000, 60%));
+		@include box-shadow(0, 0, 5px, mix($color-page, #000, 60%));
 
 		position: absolute;
 		padding: $thumb-border-top $thumb-border-right $thumb-border-bottom $thumb-border-left;
@@ -322,7 +322,6 @@ $color-inctive-button: mix($color-page, #000, 60%);
 		font-size: 11px;
 		padding: 4px;
 		margin: 0px;
-		line-height: 13px;
 		max-height: 11px;
 		overflow: hidden;
 		width: $thumb-size-width + $thumb-border-left + $thumb-border-right;
@@ -330,7 +329,6 @@ $color-inctive-button: mix($color-page, #000, 60%);
 
 	.title.bigger {
 
-		max-height: 24px;
 		height: 24px;
 
 		a {
