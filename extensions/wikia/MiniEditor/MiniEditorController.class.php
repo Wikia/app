@@ -71,6 +71,9 @@ class MiniEditorController extends WikiaController {
 			}
 		}
 
+		// TODO: for some reason we can't load this on demand. Need to investigate.
+		$this->wg->Out->addModules('mediawiki.action.edit');
+
 		// Additional assets
 		foreach($additionalAssets as $asset) {
 			$this->response->addAsset($asset);
