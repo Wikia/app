@@ -117,8 +117,8 @@ class BodyController extends WikiaController {
 
 		$namespace = $wgTitle->getNamespace();
 		$subjectNamespace = MWNamespace::getSubject($namespace);
-		$isDiff = ($wgRequest->getVal('diff', false) && $wgRequest->getVal('oldid', false));
-
+		$isDiff = ( !is_null( $wgRequest->getVal('diff', false) ) && $wgRequest->getVal('oldid', false));
+		
 		/** @TODO should be done via a hook instead **/
 		if ( !empty($wgEnableWallExt) && $namespace === NS_USER_WALL_MESSAGE && $isDiff ) {
 			$this->wg->SuppressRail = true;
