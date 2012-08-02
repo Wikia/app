@@ -108,7 +108,6 @@
 .WikiaBlogListingBox {
 	display: block !important;
 	line-height: 16px;
-	width: 282px;
 
 	.wikia-button {	 // /** adding padding to make the button look wider **/
 		float: right;
@@ -215,6 +214,7 @@
 }
 
 .WikiaArticle .WikiaBlogListingBox {
+	width: 282px;
 		ul {
 			border: 1px solid $color-page-border;
 			padding: 0px 8px 8px;
@@ -224,16 +224,16 @@
 // /** styling for Create blog listing box special page **/
 
 .categoryCloudSection {
-border:1px solid lightgray;
-padding:15px;
+	border: 1px solid lightgray;
+	padding: 15px;
 }
 
 .wpCategoryTextarea {
-display:none;
+	display: none;
 }
 
 #wpCategoryInput,#wpCategoryButton {
-margin:4px 2px 0;
+	margin: 4px 2px 0;
 }
 
 wpCategoryInput {
