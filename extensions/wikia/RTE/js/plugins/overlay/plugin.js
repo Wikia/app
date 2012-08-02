@@ -55,6 +55,7 @@ CKEDITOR.plugins.add('rte-overlay',
 		overlay.children('div'). css('right', rightMargin + 'px');
 
 		// 2. overlay is above RTE toolbar - move it down
+		var origTopPosition = position.top;
 		position.top = Math.max(position.top, 0);
 
 		// position overlay
@@ -72,6 +73,11 @@ CKEDITOR.plugins.add('rte-overlay',
 
 		if (positionCaption < RTE.tools.getEditorHeight()) {
 			caption.show();
+		} else {
+			// reposition caption, because overlay isn't always aligned with the of image
+			// eg. top part of the image is hidden above the viewport top (BugId: 43646|
+			var captionMarginTop = Math.min(parseInt(origTopPosition),0);
+			caption.css('margin-top',captionMarginTop+'px');
 		}
 
 		// show all overlays
