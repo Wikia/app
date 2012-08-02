@@ -11,7 +11,7 @@ Wall.BackendBridge = $.createClass(Observable, {
 			data: {
 				page: pagenumber,
 				pagetitle: page['title'],
-				pagenamespace: page['namespace'],
+				pagenamespace: page['namespace']
 			},
 			callback: this.proxy(function(data) {
 				var html = data.html,
