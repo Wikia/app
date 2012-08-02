@@ -4,6 +4,7 @@ $(document).ready(function() {
 
 var WallHistory = $.createClass(Wall, {
 	constructor: function() {
+		var sortingBar = new Wall.settings.classBindings.sortingBar();
 		$('#WallHistory .message-restore, #WallThreadHistory .message-restore' ).click(this.proxy(this.confirmAction));
 		var timeout = null;
 		$('#WallHistory tr').hover(
