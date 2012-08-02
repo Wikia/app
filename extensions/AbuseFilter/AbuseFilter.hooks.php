@@ -27,7 +27,7 @@ class AbuseFilterHooks {
 		if ( $article->exists() ) {
 			//Wikia Change Start - Jakub Olek
 			$rev = $article->getRevision();
-			if ( !empty( $rev ) ) {
+			if ( $rev instanceof Revision ) {
 				// Make sure we load the latest text saved in database (bug 31656)
 				$oldtext = $rev->getRawText();
 			}
