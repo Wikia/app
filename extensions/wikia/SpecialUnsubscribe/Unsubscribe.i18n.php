@@ -389,6 +389,7 @@ $messages['nl-informal'] = array(
 
 /** Polish (polski)
  * @author BeginaFelicysym
+ * @author Sovq
  */
 $messages['pl'] = array(
 	'unsubscribe' => 'Zrezygnuj z subskrypcji',
@@ -401,10 +402,10 @@ $messages['pl'] = array(
 	'unsubscribe-confirm-legend' => 'Potwierdź',
 	'unsubscribe-confirm-text' => 'Wycofanie subskrypcji wszystkich kont z <code>$1</code> ?',
 	'unsubscribe-confirm-button' => 'Tak, potwierdzam',
-	'unsubscribe-working' => 'Anulowanie  subskrypcji $1   {{PLURAL:$1| konta|kont|kont}} dla $2',
+	'unsubscribe-working' => 'Anulowanie subskrypcji $1 {{PLURAL:$1|konta|kont|kont}} dla $2',
 	'unsubscribe-working-problem' => 'problem podczas wczytywania informacji o użytkowniku:$1',
 	'unsubscribe-working-done' => 'Ukończono.',
-	'unsubscribe-preferences-toggle' => 'Zakończyć subskrypcję wszystkich kont e-mail z Wikia (odznacz tę opcję, aby uzyskać dostęp do opcji poniżej)',
+	'unsubscribe-preferences-toggle' => 'Zakończyć subskrypcję wszystkich kont e-mail z Wikii (odznacz tę opcję, aby uzyskać dostęp do opcji poniżej)',
 	'unsubscribe-preferences-notice' => 'Wiadomości e-mail na to konto zostały wyłączone. Odwiedź kartę profilu użytkownika, aby włączyć je ponownie.',
 );
 

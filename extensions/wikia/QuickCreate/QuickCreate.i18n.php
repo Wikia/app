@@ -249,8 +249,8 @@ $messages['pt'] = array(
 );
 
 /** Brazilian Portuguese (português do Brasil)
- * @author Giro720
  * @author 555
+ * @author Giro720
  */
 $messages['pt-br'] = array(
 	'quickcreate-desc' => 'Adiciona um botão criar-nova-página com solicitação de autenticação para usuários anônimos',

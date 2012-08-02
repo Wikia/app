@@ -273,7 +273,7 @@ $messages['kn'] = array(
  * @author Purodha
  */
 $messages['ksh'] = array(
-	'ircgate-username' => 'Metmaachername:',
+	'ircgate-username' => 'Metmaacher_Naame:',
 	'ircgate-channel' => 'Kanaal:',
 );
 
@@ -380,11 +380,12 @@ $messages['pdc'] = array(
 );
 
 /** Polish (polski)
+ * @author Sovq
  * @author Sp5uhe
  */
 $messages['pl'] = array(
-	'ircgate-username' => 'Nazwa użytkownika',
-	'ircgate-channel' => 'Kanał',
+	'ircgate-username' => 'Nazwa użytkownika:',
+	'ircgate-channel' => 'Kanał:',
 );
 
 /** Piedmontese (Piemontèis)

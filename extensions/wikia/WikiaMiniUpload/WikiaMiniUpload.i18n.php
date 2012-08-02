@@ -1649,6 +1649,7 @@ $messages['ko'] = array(
 	'wmu-find' => '찾기',
 	'wmu-find-btn' => '찾기',
 	'wmu-license' => '라이선스',
+	'wmu-caption' => '설명',
 	'wmu-added-from-plc' => '플레이스홀더를 통해 삽입된 그림',
 );
 
@@ -2126,8 +2127,8 @@ $messages['pfl'] = array(
  * @author Sovq
  */
 $messages['pl'] = array(
-	'wmu-upload-image' => 'Prześlij zdjęcie',
-	'wmu-title' => 'Prześlij fotografię',
+	'wmu-upload-image' => 'Prześlij obraz',
+	'wmu-title' => 'Prześlij obraz',
 	'wmu-upload' => 'Prześlij',
 	'wmu-notlogged' => 'Zaloguj się lub zarejestruj, aby przesyłać obrazy z komputera',
 	'wmu-find' => 'Znajdź',
@@ -2164,7 +2165,7 @@ $messages['pl'] = array(
 	'wmu-success' => '<h1>Sukces</h1>Obraz został wstawiony.',
 	'wmu-success-placeholder' => '<h1>Sukces</h1>',
 	'wmu-return' => 'Powrót do edycji',
-	'wmu-back' => 'Wybierz inne zdjęcie',
+	'wmu-back' => 'Wybierz inny obraz',
 	'wmu-close' => 'zamknij',
 	'wmu-warn1' => 'Należy najpierw określić zapytanie!',
 	'wmu-warn2' => 'Musisz najpierw wybrać plik!',
@@ -2184,8 +2185,8 @@ $messages['pl'] = array(
 	'wmu-gallery' => 'Galeria',
 	'wmu-columns' => '$1 {{PLURAL:$1|kolumna|kolumny|kolumn}}',
 	'wmu-column' => 'Kolumny',
-	'wmu-added-from-plc' => 'Plik dodany przez pole obrazka',
-	'wmu-uploaddisabled' => 'Przesyłanie plików zostało na tej wiki zablokowane.',
+	'wmu-added-from-plc' => 'Plik dodany przez wypełniacz obrazu',
+	'wmu-uploaddisabled' => 'Przesyłanie plików zostało na tej wiki wyłączone.',
 	'wmu-gallery-success' => 'Dodano obraz do nowej galerii. Kliknij poniżej, aby dodać więcej obrazów lub wstawić galerię',
 	'wmu-gallery-btn1' => 'Dodaj kolejny obraz',
 	'wmu-gallery-btn2' => 'Wstaw galerię na stronę',

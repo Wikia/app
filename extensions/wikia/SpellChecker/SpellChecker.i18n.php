@@ -388,6 +388,7 @@ $messages['ru'] = array(
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'spellchecker-desc' => 'Ger ett gränssnitt för stavningskontroll för modulen enchant PHP',
 	'enablespellchecker' => 'Aktivera stavningskontroll i visuellt läge',
 	'spellchecker-info' => 'Information om stavningskontroll',
 	'spellchecker-info-languages' => 'Tillgängliga språk ($1)',

@@ -98,11 +98,17 @@ $messages['cs'] = array(
  */
 $messages['de'] = array(
 	'timeagomessaging-desc' => 'Stellt i18n für das jquery.timeago.js Plugin bereit',
+	'timeago-year' => 'vor {{PLURAL:$1|einem Jahr|$1 Jahren}}',
 	'timeago-month' => 'vor {{PLURAL:$1|einem Monat|$1 Monaten}}',
 	'timeago-day' => 'vor {{PLURAL:$1|einem Tag|$1 Tagen}}',
 	'timeago-hour' => 'vor {{PLURAL:$1|einer Stunde|$1 Stunden}}',
 	'timeago-minute' => 'vor {{PLURAL:$1|einer Minute|$1 Minuten}}',
 	'timeago-second' => 'vor einer Minute',
+	'timeago-day-from-now' => '{{PLURAL:$1|einen Tag|$1 Tagen}} ab jetzt',
+	'timeago-hour-from-now' => '{{PLURAL:$1|eine Stunde|$1 Stunden}} ab jetzt',
+	'timeago-minute-from-now' => '{{PLURAL:$1|eine Minute|$1 Minuten}} ab jetzt',
+	'timeago-month-from-now' => '{{PLURAL:$1|einen Monat|$1 Monate}} ab jetzt',
+	'timeago-second-from-now' => 'eine Minute ab jetzt',
 );
 
 /** Zazaki (Zazaki)
@@ -119,14 +125,21 @@ $messages['diq'] = array(
 /** Spanish (español)
  * @author Armando-Martin
  * @author Bola
+ * @author VegaDark
  */
 $messages['es'] = array(
 	'timeagomessaging-desc' => 'Proporciona internacionalización para el plugin jquery.timeago.js',
+	'timeago-year' => 'hace {{PLURAL:$1|un año|$1 años}}',
 	'timeago-month' => 'hace {{PLURAL:$1|un mes|$1 meses}}',
 	'timeago-day' => 'hace {{PLURAL:$1|un día|$1 días}}',
 	'timeago-hour' => 'hace {{PLURAL:$1|una hora|$1 horas}}',
 	'timeago-minute' => 'hace $1 {{PLURAL:$1|minuto|$1 minutos}}',
 	'timeago-second' => 'hace un minuto',
+	'timeago-day-from-now' => '{{PLURAL:$1|un día|$1 días}} desde ahora',
+	'timeago-hour-from-now' => '{{PLURAL:$1|una hora|$1 horas}} desde ahora',
+	'timeago-minute-from-now' => '{{PLURAL:$1|un minuto|$1 minutos}} desde ahora',
+	'timeago-month-from-now' => '{{PLURAL:$1|un mes|$1 mes}} desde ahora',
+	'timeago-second-from-now' => 'un minuto desde ahora',
 );
 
 /** Finnish (suomi)
@@ -144,15 +157,22 @@ $messages['fi'] = array(
 
 /** French (français)
  * @author Crochet.david
+ * @author Gomoko
  * @author Wyz
  */
 $messages['fr'] = array(
 	'timeagomessaging-desc' => 'Support du i18n pour le plugin jquery.timeago.js',
+	'timeago-year' => 'il y a {{PLURAL:$1|un an|$1 ans}}',
 	'timeago-month' => 'il y a {{PLURAL:$1|un mois|$1 mois}}',
 	'timeago-day' => '{{PLURAL:$1|la veille|il y a $1 jours}}',
 	'timeago-hour' => 'il y a {{PLURAL:$1|une heure|$1 heures}}',
 	'timeago-minute' => 'il y a {{PLURAL:$1|une minute|$1 minutes}}',
 	'timeago-second' => 'il y a une minute',
+	'timeago-day-from-now' => '{{PLURAL:$1|un jour|$1 jours}} à partir de maintenant',
+	'timeago-hour-from-now' => '{{PLURAL:$1|une heure|$1 heures}} à partir de maintenant',
+	'timeago-minute-from-now' => '{{PLURAL:$1|une minute|$1 minutes}} à partir de maintenant',
+	'timeago-month-from-now' => '{{PLURAL:$1|un mois|$1 mois}} à partir de maintenant',
+	'timeago-second-from-now' => 'une minute à partir de maintenant',
 );
 
 /** Galician (galego)
@@ -160,11 +180,17 @@ $messages['fr'] = array(
  */
 $messages['gl'] = array(
 	'timeagomessaging-desc' => 'Proporciona internacionalización para o complemento jquery.timeago.js',
+	'timeago-year' => 'hai {{PLURAL:$1|un ano|$1 anos}}',
 	'timeago-month' => 'hai {{PLURAL:$1|un mes|$1 meses}}',
 	'timeago-day' => 'hai {{PLURAL:$1|un día|$1 días}}',
 	'timeago-hour' => 'hai {{PLURAL:$1|unha hora|$1 horas}}',
 	'timeago-minute' => 'hai {{PLURAL:$1|un minuto|$1 minutos}}',
 	'timeago-second' => 'hai un minuto',
+	'timeago-day-from-now' => 'hai {{PLURAL:$1|un día|$1 días}} desde agora',
+	'timeago-hour-from-now' => 'hai {{PLURAL:$1|unha hora|$1 horas}} desde agora',
+	'timeago-minute-from-now' => 'hai {{PLURAL:$1|un minuto|$1 minutos}} desde agora',
+	'timeago-month-from-now' => 'hai {{PLURAL:$1|un mes|$1 meses}} desde agora',
+	'timeago-second-from-now' => 'un minuto desde agora',
 );
 
 /** Hungarian (magyar)
@@ -173,11 +199,17 @@ $messages['gl'] = array(
  */
 $messages['hu'] = array(
 	'timeagomessaging-desc' => 'Honosítást biztosít a jquery.timeago.js plugin számára.',
+	'timeago-year' => '{{PLURAL:$1|egy|$1}} éve',
 	'timeago-month' => '{{PLURAL:$1|egy|$1}} hónappal ezelőtt',
 	'timeago-day' => '{{PLURAL:$1|egy|$1}} nappal ezelőtt',
 	'timeago-hour' => '{{PLURAL:$1|egy|$1}} órával ezelőtt',
 	'timeago-minute' => '{{PLURAL:$1|egy|$1}} perccel ezelőtt',
 	'timeago-second' => 'egy perccel ezelőtt',
+	'timeago-day-from-now' => '{{PLURAL:$1|egy|$1}} nap múlva',
+	'timeago-hour-from-now' => '{{PLURAL:$1|egy|$1}} óra múlva',
+	'timeago-minute-from-now' => '{{PLURAL:$1|egy|$1}} perc múlva',
+	'timeago-month-from-now' => '{{PLURAL:$1|egy|$1}} hónap múlva',
+	'timeago-second-from-now' => 'egy perc múlva',
 );
 
 /** Interlingua (interlingua)
@@ -194,12 +226,22 @@ $messages['ia'] = array(
 
 /** Italian (italiano)
  * @author Leviathan 89
+ * @author Minerva Titani
  */
 $messages['it'] = array(
+	'timeagomessaging-desc' => "Fornisce l'internazionalizzazione del plugin jquery.timeago.js",
+	'timeago-year' => '
+{{PLURAL:$1|un anno|$1 anni}} fa',
+	'timeago-month' => '{{PLURAL:$1|un mese|$1 mesi}} fa',
 	'timeago-day' => '{{PLURAL:$1|un giorno|$1 giorni}} fa',
 	'timeago-hour' => "{{PLURAL:$1|un'ora|$1 ore}} fa",
 	'timeago-minute' => '{{PLURAL:$1|un minuto|$1 minuti}} fa',
 	'timeago-second' => 'un minuto fa',
+	'timeago-day-from-now' => '{{PLURAL:$1|un giorno|$1 giorni}} da ora',
+	'timeago-hour-from-now' => "{{PLURAL:$1|un'ora|$1 ore}} da ora",
+	'timeago-minute-from-now' => '{{PLURAL:$1|un minuto|$1 minuti}} da ora',
+	'timeago-month-from-now' => '{{PLURAL:$1|un mese|$1 mesi}} da ora',
+	'timeago-second-from-now' => 'un minuto da ora',
 );
 
 /** Japanese (日本語)
@@ -248,11 +290,17 @@ $messages['ms'] = array(
  */
 $messages['nb'] = array(
 	'timeagomessaging-desc' => 'Gir i18n til jquery.timeago.js plugginnen',
+	'timeago-year' => '{{PLURAL:$1|et år|$1 år}} siden',
 	'timeago-month' => '{{PLURAL:$1|én måned|$1 måneder}} siden',
 	'timeago-day' => 'for {{PLURAL:$1|én dag|$1 dager}} siden',
 	'timeago-hour' => 'for {{PLURAL:$1|én time|$1 timer}} siden',
 	'timeago-minute' => 'for {{PLURAL:$1|ett minutt|$1 minutter}} siden',
 	'timeago-second' => 'for et øyeblikk siden',
+	'timeago-day-from-now' => '{{PLURAL:$1|en dag|$1 dager}} siden',
+	'timeago-hour-from-now' => '{{PLURAL:$1|en time|$1 timer}} siden',
+	'timeago-minute-from-now' => '{{PLURAL:$1|et minutt|$1 minutter}} siden',
+	'timeago-month-from-now' => '{{PLURAL:$1|en måned|$1 måned}} siden',
+	'timeago-second-from-now' => 'et øyeblikk siden',
 );
 
 /** Dutch (Nederlands)
@@ -272,6 +320,7 @@ $messages['nl'] = array(
  */
 $messages['pl'] = array(
 	'timeagomessaging-desc' => 'Umozliwia lokalizowanie wtyczki jquery.timeago.js',
+	'timeago-year' => '{{PLURAL:$1|rok|$1 lata|$1 lat}} temu',
 	'timeago-month' => '{{PLURAL:$1|miesiąc|$1 miesiące|$1 miesięcy}} temu',
 	'timeago-day' => '{{PLURAL:$1|dzień|$1 dni}} temu',
 	'timeago-hour' => '{{PLURAL:$1|godzinę|$1 godziny|$1 godzin}} temu',
@@ -280,7 +329,7 @@ $messages['pl'] = array(
 	'timeago-day-from-now' => '{{PLURAL:$1|jutro|za $1 dni}}',
 	'timeago-hour-from-now' => 'za {{PLURAL:$1|godzinę|$1 godziny|$1 godzin}}',
 	'timeago-minute-from-now' => 'za {{PLURAL:$1|minutę|$1 minuty|$1 minut}}',
-	'timeago-month-from-now' => 'za {{PLURAL:$1|miesiąc|$1 miesiące}}',
+	'timeago-month-from-now' => 'za {{PLURAL:$1|miesiąc|$1 miesiące|$1 miesięcy}}',
 	'timeago-second-from-now' => 'za minutę',
 );
 
@@ -344,11 +393,17 @@ $messages['ro'] = array(
  */
 $messages['ru'] = array(
 	'timeagomessaging-desc' => 'Предоставляет i18n для плагина jquery.timeago.js',
+	'timeago-year' => '{{PLURAL:$1|$1 год|$1 года|$1 лет}} назад',
 	'timeago-month' => '{{PLURAL:$1|месяц|$1 месяца|$1 месяцев}} назад',
 	'timeago-day' => '{{PLURAL:$1|$1 день|$1 дня|$1 дней}} назад',
 	'timeago-hour' => '{{PLURAL:$1|$1 час|$1 часа|$1 часов}} назад',
 	'timeago-minute' => '{{PLURAL:$1|$1 минута|$1 минуты|$1 минут}} назад',
 	'timeago-second' => 'минуту назад',
+	'timeago-day-from-now' => '{{PLURAL:$1|$1 день|$1 дня|$1 дней}} назад',
+	'timeago-hour-from-now' => '{{PLURAL:$1|$1 час|$1 часа|$1 часов}} назад',
+	'timeago-minute-from-now' => '{{PLURAL:$1|$1 минута|$1 минуты|$1 минут}} назад',
+	'timeago-month-from-now' => '{{PLURAL:$1|месяц|$1 месяца|$1 месяцев}} назад',
+	'timeago-second-from-now' => 'минуту назад',
 );
 
 /** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
@@ -367,11 +422,17 @@ $messages['sr-ec'] = array(
  */
 $messages['sv'] = array(
 	'timeagomessaging-desc' => 'Ger i18n till jquery.timeago.js-tillägget',
+	'timeago-year' => '{{PLURAL:$1|ett år|$1 år}} sedan',
 	'timeago-month' => '{{PLURAL:$1|en månad|$1 månader}} sedan',
 	'timeago-day' => '{{PLURAL:$1|en dag|$1 dagar}} sedan',
 	'timeago-hour' => '{{PLURAL:$1|en timme|$1 timmar}} sedan',
 	'timeago-minute' => '{{PLURAL:$1|en minut|$1 minuter}} sedan',
 	'timeago-second' => 'en minut sedan',
+	'timeago-day-from-now' => '{{PLURAL:$1|en dag|$1 dagar}} från nu',
+	'timeago-hour-from-now' => '{{PLURAL:$1|en timme|$1 timmar}} från nu',
+	'timeago-minute-from-now' => '{{PLURAL:$1|en minut|$1 minuter}} från nu',
+	'timeago-month-from-now' => '{{PLURAL:$1|en månad|$1 månader}} från nu',
+	'timeago-second-from-now' => 'en minut från nu',
 );
 
 /** Telugu (తెలుగు)

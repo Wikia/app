@@ -877,6 +877,7 @@ $messages['sv'] = array(
 	'multilookuplastedithdr' => 'Sista redigeringen',
 	'multilookuprecordspager' => "Visar '''$1''' till '''$2''' av '''$3''' poster.",
 	'right-multilookup' => 'Kolla upp information om användare på flera wikis',
+	'action-multilookup' => 'kolla upp information om användare på flera wikis',
 );
 
 /** Swahili (Kiswahili)

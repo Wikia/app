@@ -185,11 +185,12 @@ $messages['nl'] = array(
 );
 
 /** Polish (polski)
+ * @author Sovq
  * @author Sp5uhe
  */
 $messages['pl'] = array(
 	'wikia-watchsubpages-desc' => 'Automatycznie obserwuj również podstrony',
-	'tog-watchlistsubpages' => 'Również podstrony',
+	'tog-watchlistsubpages' => 'Obserwuj podstrony',
 );
 
 /** Piedmontese (Piemontèis)

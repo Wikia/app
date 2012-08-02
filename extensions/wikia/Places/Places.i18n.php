@@ -40,6 +40,16 @@ $messages['qqq'] = array(
 	'places-editor-title-edit' => 'Title of places editor modal when editing an existing geotag',
 );
 
+/** Breton (brezhoneg)
+ * @author Y-M D
+ */
+$messages['br'] = array(
+	'places-editor-geoposition' => "Geolec'hiadur a-vremañ :",
+	'places-geolocation-button-label' => "Ouzhpennañ ul lec'hiadur",
+	'places-geolocation-modal-add-title' => "Ouzhpennañ ul lec'hiadur",
+	'places-geolocation-modal-error-title' => 'Fazi',
+);
+
 /** German (Deutsch)
  * @author Alphakilo
  * @author George Animal
@@ -163,6 +173,23 @@ $messages['gl'] = array(
 	'places-updated-geolocation' => 'Etiquetou xeograficamente esta páxina',
 	'places-category-switch' => 'Desactivar as etiquetas xeográficas',
 	'places-category-switch-off' => 'Activar as etiquetas xeográficas',
+);
+
+/** Hungarian (magyar)
+ * @author TK-999
+ */
+$messages['hu'] = array(
+	'places' => 'Helyek ezen a wikin',
+	'places-desc' => '<nowiki><place> and <places></nowiki> címkéket biztosít az oldalak geotaggeléséhez, valamint [[Special:Places|az összes így megjelölt oldal listáját]]',
+	'places-in-category' => 'Helyek a(z) $1 kategóriában',
+	'places-on-map' => '{{PLURAL:$1|Egy|$1}} hely van ezen a térképen',
+	'places-modal-go-to-special' => 'Megjelenítve {{PLURAL:$1|egy|$1}} hely ([[Special:Places|összes megtekintése]])',
+	'places-editor-search' => 'Keresés',
+	'places-editor-show-my-location' => 'Vigyen a saját helyzetemre',
+	'places-geolocation-modal-error-title' => 'Hiba',
+	'places-geolocation-modal-error' => 'Hiba történt a pozíciód megállapítása közben:<br />$1',
+	'places-geolocation-modal-not-available' => 'Hoppá! Ez a szolgáltatás jelenleg csak mobil eszközökön érhető el.<br /><br />Szeretnéd kipróbálni? Egszerűen látogass el erre a lapra egy általad választott mobil eszközzel.',
+	'places-error-no-article' => 'Meg kell adnod egy lapot',
 );
 
 /** Interlingua (interlingua)

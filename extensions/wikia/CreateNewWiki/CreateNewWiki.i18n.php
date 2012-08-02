@@ -199,6 +199,7 @@ $messages['af'] = array(
 /** Arabic (العربية)
  * @author OsamaK
  * @author ترجمان05
+ * @author زكريا
  */
 $messages['ar'] = array(
 	'cnw-next' => 'التالي',
@@ -212,7 +213,7 @@ $messages['ar'] = array(
 	'cnw-auth-headline' => 'لج',
 	'cnw-auth-headline2' => 'أنشئ حسابًا',
 	'cnw-userauth-creative' => 'لُج',
-	'cnw-userauth-marketing-heading' => 'ألا تملك حساباً؟',
+	'cnw-userauth-marketing-heading' => 'ليس لديك حساب؟',
 	'cnw-desc-lang' => 'اللغة',
 );
 
@@ -401,6 +402,10 @@ $messages['br'] = array(
 	'cnw-auth-signup-creative' => "Ezhomm ho po eus ur gont evit kenderc'hel da sevel ur wiki.<br />Ne bado nemet ur vunutenn evit bezañ enskrivet !",
 	'cnw-auth-facebook-signup' => 'En em enskrivañ dre Facebook',
 	'cnw-auth-facebook-login' => 'Kevreañ gant Facebook',
+	'cnw-userauth-headline' => 'Hag ur gont ho peus ?',
+	'cnw-userauth-creative' => 'Kevreañ',
+	'cnw-userauth-marketing-heading' => "N'hoc'h eus kont ebet ?",
+	'cnw-userauth-signup-button' => 'En em enskrivañ',
 	'cnw-desc-headline' => 'Eus petra zo kaoz en ho wiki ?',
 	'cnw-desc-creative' => 'Deskrivit ho sujed',
 	'cnw-desc-placeholder' => 'Dont a ray war wel war bajenn bennañ ho wiki.',
@@ -437,9 +442,11 @@ Hizivait dre PayPal evit kaout ur wiki nevez ouzhpenn evit $4.95 ar miz nemetken
 	'cnw-welcome-help' => 'Kavout a reot respontoù, kuzulioù ha kement zo war <a href="http://community.wikia.com">Kalonenn ar gumuniezh</a>.',
 	'cnw-error-general' => "Un dra bennak a zo aet a-dreuz pa veze krouet ho wiki. Mar plij adklaskit diwezhatoc'h.",
 	'cnw-error-general-heading' => "Ur fazi 'zo bet e-pad krouidigezh ur wiki nevez",
+	'cnw-error-database' => 'Fazi en diaz roadennoù : $1',
 	'cnw-badword-msg' => "Ac'hanta, mar plij chomit hep implijout gerioù vil pe difennet e deskrivadur ho wiki : $1",
 	'cnw-error-wiki-limit-header' => 'Bevenn ar wikioù bet tizhet',
 	'cnw-error-wiki-limit' => "Ac'hanta, bevennet eo ar c'hrouiñ wikioù da $1 wiki dre zen ha dre zevezh. Gortozit 24 eurvezh a-benn gellout krouiñ unan all.",
+	'cnw-error-blocked-header' => 'Kont stanket',
 );
 
 /** Czech (česky)

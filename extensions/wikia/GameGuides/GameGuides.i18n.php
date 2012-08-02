@@ -191,7 +191,7 @@ $messages['sl'] = array(
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
-	'wikiagameguides-desc' => 'Moduler för Wikias spelguides-app',
+	'wikiagameguides-desc' => 'Moduler för Wikias app om spelguider',
 );
 
 /** Tagalog (Tagalog)

@@ -573,17 +573,17 @@ $messages['pap'] = array(
  * @author Sp5uhe
  */
 $messages['pl'] = array(
-	'wva-success' => 'Strona video „$1” została pomyślnie dodana.',
-	'wva-success-replaced' => 'Strona wideo „$1” została zastąpiona.',
+	'wva-success' => 'Strona filmu „$1” została pomyślnie dodana.',
+	'wva-success-replaced' => 'Strona filmu „$1” została pomyślnie zastąpiona.',
 	'wva-failure' => 'Podaj prawidłowe parametry.',
 	'wva-name' => 'Wpisz nazwę:',
 	'wva-url' => 'Podaj URL:',
 	'wva-add' => 'Dodaj',
-	'wva-title' => 'Dodaj szybko film, korzystając z jego adresu URL.',
+	'wva-title' => 'Dodaj film z adresu URL',
 	'wva-notlogged' => 'Dodawanie filmów jest możliwe po zarejestrowaniu i zalogowaniu się.',
 	'wva-notallowed' => 'Nie możesz dodawać filmów do tej wiki.',
 	'wva-protected' => 'Ten film jest zabezpieczony.',
-	'wva-thumbnail-upload-failed' => 'Wgrywanie filmu nie powiodło się, wystąpił błąd w trakcie generowania miniatury.',
+	'wva-thumbnail-upload-failed' => 'Osadzanie filmu nie powiodło się, wystąpił błąd w trakcie generowania miniatury.',
 );
 
 /** Piedmontese (Piemontèis)
