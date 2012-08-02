@@ -4,8 +4,9 @@ table.jquery-tablesorter th.headerSort {
 	background-image: url(images/sort_both.gif);
 	cursor: pointer;
 	background-repeat: no-repeat;
-	background-position: center right;
-	padding-right: 21px;
+	background-position: 50% 75%;
+	padding-bottom: 21px;
+	text-align: center;
 }
 table.jquery-tablesorter th.headerSortUp {
 	/* @embed */
