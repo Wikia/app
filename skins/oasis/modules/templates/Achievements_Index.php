@@ -28,7 +28,7 @@
 								<img src="<?= $hover_url ;?>"/>
 								<p class="earned"><?= wfMsgExt('achievements-earned', array('parsemag'), $ownerBadge->getEarnedBy()) ?></p>
 							<? else :?>
-								<img src="<?=$badge_url;?>" width="90" height="90"/>
+								<img src="<?=$badge_url;?>" width="85" height="85"/>
 
 								<div class="profile-hover-text">
 									<h3 class="badge-name"><?= $badge_name ?></h3>
@@ -45,7 +45,7 @@
 							title="<?= wfMsg( 'achievements-community-platinum-sponsored-badge-click-tooltip' ) ;?>"
 							<?= ( !empty( $badge_tracking_url ) ) ? " data-badgetrackurl=\"{$badge_tracking_url}\"" : null ;?>>
 						<? endif ;?>
-								<img class="<?= ( !$is_sponsored ) ? 'badge-icon ' : null ;?>badge-icon-<?= $i  . $moreClass ?>" width="90" height="90" src="<?= $badge_url ?>" alt="<?=$badge_name;?>" />
+								<img class="<?= ( !$is_sponsored ) ? 'badge-icon ' : null ;?>badge-icon-<?= $i  . $moreClass ?>" width="85" height="85" src="<?= $badge_url ?>" alt="<?=$badge_name;?>" />
 						<? if ( $is_sponsored ) :?>
 							</a>
 						<? endif ;?>
