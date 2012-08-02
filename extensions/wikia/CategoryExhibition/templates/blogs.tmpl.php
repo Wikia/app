@@ -16,7 +16,7 @@
 									<span class="text"><?=$row['snippet']; ?></span>
 								</div>
 							<?php } else {
-								?><div class="category-gallery-placeholder" ></div><?
+								?><div class="snippet category-gallery-placeholder" ></div><?
 							}?>
 
 						</div>
