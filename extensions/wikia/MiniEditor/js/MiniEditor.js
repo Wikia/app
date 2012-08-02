@@ -136,7 +136,9 @@
 						if ($.isFunction(callback)) {
 							callback();
 						}
-					}, self));
+					}, self), function(jqXHR, status, error) {
+						$().log(arguments, 'MiniEditor');
+					});
 				}
 			});
 		},
