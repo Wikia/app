@@ -19,44 +19,52 @@ CKEDITOR.plugins.add('rte-dialog',
 
 			RTE.log('enabling MW suggest on #' + fieldId);
 
-			// @see http://www.mediawiki.org/wiki/ResourceLoader/JavaScript_Deprecations#mwsuggest.js
-			// uses CSS rules from 'wikia.jquery.ui' module
-			node.autocomplete({
-				minLength: 2,
-				source: function( request, response ) {
-					$.getJSON(
-						mw.util.wikiScript( 'api' ),
-						{
-							format: 'json',
-							action: 'opensearch',
-							search: request.term
-						},
-						function( arr ) {
-							if ( arr && arr.length > 1 ) {
-								response( arr[1] );
-							}
-							else {
-								response( [] );
-							}
-						}
-					);
-				}
-			});
-			node.data('suggestSetUp', true);
+			$.when( mw.loader.use( ['jquery.ui.autocomplete'] ) ).then( function( ) {
 
-			// Prevent some keys from bubbling up. (#4269)
-			var element = new CKEDITOR.dom.element(node[0]),
-				ev;
-
-			for (ev in { keyup :1, keydown :1, keypress :1}) {
-				element.on(ev, function(e) {
-					// ESC, ENTER
-					var preventKeyBubblingKeys = { 27 :1, 13 :1 };
-					if (e.data.getKeystroke() in preventKeyBubblingKeys) {
-						e.data.stopPropagation();
+				// @see http://www.mediawiki.org/wiki/ResourceLoader/JavaScript_Deprecations#mwsuggest.js
+				// uses CSS rules from 'wikia.jquery.ui' module
+			
+				node.autocomplete({
+					minLength: 2,
+					source: function( request, response ) {
+						$.getJSON(
+							mw.util.wikiScript( 'api' ),
+							{
+								format: 'json',
+								action: 'opensearch',
+								search: request.term,
+								namespace: namespaces.join('|')
+								// WARNING: Regardless what the API documentation says, MediaWiki's
+								// PrefixSearch::defaultSearchBackend() supports only one namespace
+								// and falls back to NS_MAIN when multiple namespaces given.
+							},
+							function( arr ) {
+								if ( arr && arr.length > 1 ) {
+									response( arr[1] );
+								}
+								else {
+									response( [] );
+								}
+							}
+						);
 					}
 				});
-			}
+				node.data('suggestSetUp', true);
+
+				// Prevent some keys from bubbling up. (#4269)
+				var element = new CKEDITOR.dom.element(node[0]),
+					ev;
+
+				for (ev in { keyup :1, keydown :1, keypress :1}) {
+					element.on(ev, function(e) {
+						// ESC, ENTER
+						var preventKeyBubblingKeys = { 27 :1, 13 :1 };
+						if (e.data.getKeystroke() in preventKeyBubblingKeys) {
+							e.data.stopPropagation();
+						}
+					});
+				}
+			});
 		};
 
 		// set loading state of current dialog
