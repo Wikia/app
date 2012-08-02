@@ -1,0 +1,1 @@
+<div class="GameStarLogo"></div>
