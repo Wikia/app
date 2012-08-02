@@ -901,14 +901,15 @@ var Lightbox = {
 				thumbs = thumbs.add(article.find('.thumbimage'));
 	
 				thumbs.each(function() {
-					var $thisThumb = $(this);
-					var type = ($thisThumb.hasClass('Wikia-video-thumb')) ? 'video' : 'image',
-						title = (type == 'image') ? $thisThumb.parent().data('image-name') : $thisThumb.parent().data('video-name'),
+					var $thisThumb = $(this),
+						$thisParent = $thisThumb.parent(),
+						type = ($thisThumb.hasClass('Wikia-video-thumb') || $thisParent.hasClass('video')) ? 'video' : 'image',
+						title = (type == 'image') ? $thisParent.data('image-name') : $thisParent.data('video-name'),
 						playButtonSpan = (type == 'video') ? playButton : '';
 						
 					// (BugId:38144) 
 					title = title || $thisThumb.attr('alt');
-					
+
 					if(title) {
 						// Check for dupes
 						if($.inArray(title, titles) > -1) {
