@@ -9,6 +9,7 @@ $messages['en'] = array(
 	'related-videos-remove' => 'Remove',
 	'related-videos-add-video' => 'Add a video',
 	'related-videos-leave-feedback' => 'Leave feedback',
+	'related-videos-add-video-to-this-page' => 'Add a video to this page',
 	'related-videos-add-video-to-this-wiki' => 'Add a video to this wiki',
 	'related-videod-add-video-ok' => 'Add',
 	'related-videod-add-video-label-name' => 'Enter the full URL, from any of the supported sites.',
