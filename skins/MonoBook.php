@@ -140,6 +140,7 @@ class MonoBookTemplate extends WikiaMonoBookTemplate {
 <?php
 	$this->renderPortals( $this->data['sidebar'] );
 
+		$skin = $this->getSkin();
 		/* Wikia change begin - @author: Macbre */
 		if (method_exists($skin, 'wikiaBox')) {
 			$skin->wikiaBox();
