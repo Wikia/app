@@ -38,6 +38,7 @@ class CodeLintJs extends CodeLint {
 			'mw',
 			'mediaWiki',
 			'Modernizr',
+			'Mustache',
 			'Node',
 			'Observable',
 			'require',
