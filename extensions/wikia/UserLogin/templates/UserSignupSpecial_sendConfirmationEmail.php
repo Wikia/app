@@ -22,8 +22,7 @@
 	<p>
 		<span class="change-email-msg">
 			<?= wfMsg('usersignup-confirm-email-change-email-content') ?>
-			<span class="email-tooltip">?</span>
-			<span class="email-tooltip-content"><?= wfMsg('usersignup-confirm-email-tooltip') ?></span>
+			<span class="email-tooltip" rel="tooltip" title="<?= wfMsg('usersignup-confirm-email-tooltip') ?>">?</span>
 		</span>
 	</p>
 
