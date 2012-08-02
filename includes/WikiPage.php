@@ -1370,7 +1370,7 @@ class WikiPage extends Page {
 
 						# Log auto-patrolled edits
 						if ( $patrolled ) {
-							PatrolLog::record( $rc, true );
+							PatrolLog::record( $rc, true, $user );
 						}
 					}
 					$user->incEditCount();
@@ -1451,7 +1451,7 @@ class WikiPage extends Page {
 
 				# Log auto-patrolled edits
 				if ( $patrolled ) {
-					PatrolLog::record( $rc, true );
+					PatrolLog::record( $rc, true, $user );
 				}
 			}
 			$user->incEditCount();
