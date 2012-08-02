@@ -1044,7 +1044,7 @@ class Parser {
 					$last_tag = array_pop( $last_tag_history );
 
 					if ( array_pop( $td_history ) ) {
-						$previous = "</{$last_tag}>\n{$previous}";
+						$previous = "</{$last_tag}>{$previous}";
 					}
 
 					if ( $first_character === '|' ) {
