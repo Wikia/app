@@ -507,11 +507,9 @@ class AchAwardingService {
 			}
 
 		}
-
 		// BADGE_SAYHI
 		if(!$this->hasBadge(BADGE_SAYHI)) {
-
-			if($this->mTitle->getNamespace() == NS_USER_TALK && $this->mTitle->getBaseText() != $this->mUser->getName()) {
+			if(($this->mTitle->getNamespace() == NS_USER_TALK || ( defined("NS_USER_WALL_MESSAGE") && $this->mTitle->getNamespace() == NS_USER_WALL_MESSAGE ))&& $this->mTitle->getBaseText() != $this->mUser->getName()) {
 				$this->awardNotInTrackBadge(BADGE_SAYHI);
 			}
 
