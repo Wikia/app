@@ -88,12 +88,17 @@ class RTELinkerHooks extends Linker {
 		// get link metadata entry ID and remove RTE marker from link text
 		$dataIdx = RTEMarker::getDataIdx($markerType, $text);
 
-		// add internal RTE attribute pointing to link metadata entry
-		// it has to be the first one - use array_merge()
-		$attribs = array_merge(
-			array('_rte_dataidx' => sprintf('%04d', $dataIdx)),
-			$attribs
-		);
+		if (is_null($dataIdx)) {
+			wfDebug(__METHOD__ . " - dataIdx is empty!\n");
+		}
+		else {
+			// add internal RTE attribute pointing to link metadata entry
+			// it has to be the first one - use array_merge()
+			$attribs = array_merge(
+				array('_rte_dataidx' => sprintf('%04d', $dataIdx)),
+				$attribs
+			);
+		}
 
 		wfProfileOut(__METHOD__);
 		return $attribs;
