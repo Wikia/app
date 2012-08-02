@@ -73,8 +73,8 @@ class UserPreferencesV2 {
 			$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'skin');
 		}
 		if (isset($defaultPreferences['myhomedisableredirect'])) {
-			$redirectOptions[wfMsg('preferences-v2-redirect-enable')] = false;
-			$redirectOptions[wfMsg('preferences-v2-redirect-disable')] = true;
+			$redirectOptions[wfMsg('preferences-v2-redirect-enable')] = 0;
+			$redirectOptions[wfMsg('preferences-v2-redirect-disable')] = 1;
 			$defaultPreferences['myhomedisableredirect']['type'] = 'select';
 			$defaultPreferences['myhomedisableredirect']['options'] = $redirectOptions;
 			$defaultPreferences['myhomedisableredirect']['label-message'] = 'preferences-v2-myhomedisableredirect';
