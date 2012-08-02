@@ -335,7 +335,9 @@ function wfArrayToCGI( $array1, $array2 = null, $prefix = '' ) {
 
 	$cgi = '';
 	foreach ( $array1 as $key => $value ) {
-		if ( !is_null($value) && $value !== false ) {
+		/* Wikia change - begin ( Options set to false will be output ) */
+		if ( !is_null($value) && $value !== '' ) {
+		/* Wikia change - end */
 			if ( $cgi != '' ) {
 				$cgi .= '&';
 			}
