@@ -92,6 +92,7 @@ var WikiMapIndexContent = {
                 );
                 svga.append("svg:text").
                     text(value.title)
+                    .attr("font-style", value.connections.length == 0 ? "italic" : "normal")
                     .attr("id", "label" + index)
                     .attr("font-size", 11)
                     .attr("text-anchor", rot == 90 ? "end" : "start")

@@ -22,11 +22,15 @@ class VisualStatsSpecialController extends WikiaSpecialPageController {
             $parameter = "commit";
         }
         $username=$this->getVal('user');
+        if ((is_null($username)) || ($username=='')){
+            $username = "0";
+        }
 
 
 
         $this->wg->Out->setPageTitle( $this->wf->msg('visualStats-specialpage-title'));
 
+        $this->setVal( 'user', $username);
         $this->setVal( 'param', $parameter);
         $this->setVal( 'data', $this->businessLogic->performQuery($username));
         $this->setVal( 'dates', $this->businessLogic->getDatesFromTwoWeeksOn());

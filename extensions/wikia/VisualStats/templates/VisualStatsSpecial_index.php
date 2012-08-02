@@ -1,12 +1,12 @@
 <div class="tabs-container">
     <ul class="tabs">
-        <li id="commit"><a href="/wiki/Special:VisualStats/commit" title="Commit Activity">Commit Activity</a></li>
-        <li id="punchcard"><a href="/wiki/Special:VisualStats/punchcard" title="Punchcard">Punchcard</a>
+        <li id="commit"><a href="/wiki/Special:VisualStats/commit?user=<? echo $user;?>" title="Commit Activity">Commit Activity</a></li>
+        <li id="punchcard"><a href="/wiki/Special:VisualStats/punchcard?user=<?=$user?>" title="Punchcard">Punchcard</a>
         </li>
-        <li id="histogram"><a href="/wiki/Special:VisualStats/histogram" title="Histogram">Histogram</a></li>
+        <li id="histogram"><a href="/wiki/Special:VisualStats/histogram?user=<?=$user?>" title="Histogram">Histogram</a></li>
     </ul>
 </div>
-<div id="Graphic"></div>
+<div id="Graph"></div>
 
 <script type="text/javascript">
 
