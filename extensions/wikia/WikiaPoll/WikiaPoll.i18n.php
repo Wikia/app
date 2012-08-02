@@ -509,19 +509,19 @@ $messages['nl'] = array(
  * @author Woytecr
  */
 $messages['pl'] = array(
-	'wikiapoll-desc' => 'Pozwala łatwo tworzyć i zarządzać sondami',
-	'wikiapoll-people-voted' => '{{PLURAL:$1|Zagłosowała $1 osoba|Zagłosowało $1 osób}}',
+	'wikiapoll-desc' => 'Pozwala łatwo tworzyć i zarządzać ankietami',
+	'wikiapoll-people-voted' => '{{PLURAL:$1|Zagłosowała $1 osoba|Zagłosowały $1 osoby|Zagłosowało $1 osób}}',
 	'wikiapoll-question' => '$1?',
 	'wikiapoll-thanks-for-vote' => 'Dzięki!',
 	'wikiapoll-vote' => 'Głosuj!',
-	'wikiapoll-votes' => '{{PLURAL:$1|$1 głos|$1 głosów}}',
-	'wikiapoll-createpoll-headline' => 'Utwórz sondę',
-	'wikiapoll-editpoll-headline' => 'Edytuj sondę',
+	'wikiapoll-votes' => '{{PLURAL:$1|$1 głos|$1 głosy|$1 głosów}}',
+	'wikiapoll-createpoll-headline' => 'Utwórz ankietę',
+	'wikiapoll-editpoll-headline' => 'Edytuj ankietę',
 	'wikiapoll-question-label' => 'Pytanie',
 	'wikiapoll-addnewitem-label' => 'Dodaj nowy element',
 	'wikiapoll-cancel-label' => 'Anuluj',
 	'wikiapoll-publish-label' => 'Publikuj',
-	'wikiapoll-error-duplicate' => 'Sonda o tej nazwie już istnieje.',
+	'wikiapoll-error-duplicate' => 'Ankieta o tej nazwie już istnieje.',
 	'wikiapoll-error-invalid-title' => 'Tekst pytania jest nieprawidłowy.',
 );
 

@@ -1571,9 +1571,9 @@ Ferramentas Úteis:
 );
 
 /** Brazilian Portuguese (português do Brasil)
+ * @author 555
  * @author Aristóbulo
  * @author Caio1478
- * @author 555
  */
 $messages['pt-br'] = array(
 	'wikiadoption' => 'Adoção automática de wikis',

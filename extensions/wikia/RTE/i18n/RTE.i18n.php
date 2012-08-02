@@ -616,7 +616,9 @@ $messages['sr-ec'] = array(
  */
 $messages['sv'] = array(
 	'rte-desc' => 'CKeditor-integration för MediaWiki',
+	'rte-no-js-fallback' => 'Rich text-redigeraren fungerar inte om JavaScript är inaktiverat. Var god aktivera det i dina webbläsarinställningar eller besök [[Special:Preferences|inställningar]] för att byta tillbaka till den gamla MediaWiki-redigeraren.',
 	'rte-edgecase-info-title' => 'Källäget krävs',
+	'rte-edgecase-info' => 'Rich text-redigeraren har inaktiverats eftersom sidan innehåller komplicerad kod.',
 	'rte-edgecase-comment' => 'HTML-kommentarer',
 	'rte-edgecase-triplecurls' => 'mallparametrar',
 	'rte-edgecase-nowysiwyg' => 'kommandot "ingen WYSIWYG"',
@@ -625,9 +627,12 @@ $messages['sv'] = array(
 	'rte-edgecase-syntax' => 'inte tillåten syntax',
 	'rte-edgecase-image-with-link' => 'bild med en länk i beskrivningen',
 	'rte-edgecase-redirect' => 'omdirigera',
+	'rte-edgecase-templateintable' => 'en tabell med mallanrop i definitionen',
+	'rte-edgecase-unclosed-tags' => 'icke-stängd HTML-tagg',
 	'enablerichtexteditor' => 'Aktivera redigering i visuellt läge (utöver källäge)',
 	'rte-enablerichtexteditormessage' => 'Rich Text Editor aktiverat!',
 	'rte-first-run-notice' => 'Vi har gjort den del förbättringar om redigeraren. Om du vill veta mer, [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news läs nyheten].',
+	'prefs-rte' => 'Rich Text-redigerare',
 );
 
 /** Tagalog (Tagalog)

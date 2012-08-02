@@ -87,12 +87,20 @@ $messages['qqq'] = array(
 
 /** Breton (brezhoneg)
  * @author Fulup
+ * @author Y-M D
  */
 $messages['br'] = array(
+	'photopop-setup-submit-label' => 'Hizivaat',
 	'photopop-game-correct' => 'Reizh',
+	'photopop-game-points' => 'poentoù',
 	'photopop-game-total' => 'hollad',
+	'photopop-game-wiki' => 'wiki',
 	'photopop-game-date' => 'deiziad',
 	'photopop-game-please-wait' => 'Gortozit ur pennadig',
+	'photopop-game-loading-image' => 'O kargañ ar skeudenn... <br />Gortozit mar plij',
+	'photopop-game-loading' => 'O kargañ...',
+	'photopop-game-progress' => "luc'hskeudennoù",
+	'photopop-game-finished' => 'echuet !',
 	'photopop-game-month-0' => 'Gen',
 	'photopop-game-month-1' => "C'hwe",
 	'photopop-game-month-2' => 'Meu',
@@ -179,7 +187,7 @@ $messages['de'] = array(
  * @author Erdemaslancan
  */
 $messages['diq'] = array(
-	'photopop-setup-submit-label' => 'Anewen ke',
+	'photopop-setup-submit-label' => 'Noroc resn',
 );
 
 /** Spanish (español)

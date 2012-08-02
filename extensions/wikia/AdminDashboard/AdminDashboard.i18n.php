@@ -234,6 +234,7 @@ $messages['bg'] = array(
  * @author Y-M D
  */
 $messages['br'] = array(
+	'admindashboard-loading' => 'O kargañ...',
 	'admindashboard-title' => '{{SITENAME}} - Taolenn-stur',
 	'admindashboard-header' => 'Taolenn-stur merour',
 	'admindashboard-toolbar-link' => 'Merour',
@@ -314,6 +315,7 @@ $messages['cs'] = array(
  * @author SVG
  */
 $messages['de'] = array(
+	'admindashboard-loading' => 'Lade …',
 	'admindashboard-title' => '{{SITENAME}} Übersicht',
 	'admindashboard-header' => 'Admin-Übersicht',
 	'admindashboard-toolbar-link' => 'Admin',
@@ -385,9 +387,11 @@ $messages['el'] = array(
  * @author Benfutbol10
  * @author Bola
  * @author DJ Nietzsche
+ * @author VegaDark
  * @author Vivaelcelta
  */
 $messages['es'] = array(
+	'admindashboard-loading' => 'Cargando...',
 	'admindashboard-title' => 'Panel de Administración de {{SITENAME}}',
 	'admindashboard-header' => 'Panel de administración',
 	'admindashboard-toolbar-link' => 'Administración',
@@ -512,9 +516,11 @@ $messages['fo'] = array(
 );
 
 /** French (français)
+ * @author Gomoko
  * @author Wyz
  */
 $messages['fr'] = array(
+	'admindashboard-loading' => 'Chargement…',
 	'admindashboard-title' => '{{SITENAME}} — Tableau de bord',
 	'admindashboard-header' => 'Tableau de bord administrateur',
 	'admindashboard-toolbar-link' => 'Administration',
@@ -562,6 +568,7 @@ $messages['fr'] = array(
  * @author Toliño
  */
 $messages['gl'] = array(
+	'admindashboard-loading' => 'Cargando…',
 	'admindashboard-title' => 'Taboleiro de {{SITENAME}}',
 	'admindashboard-header' => 'Taboleiro dos administradores',
 	'admindashboard-toolbar-link' => 'Administración',
@@ -791,10 +798,12 @@ $messages['id'] = array(
  * @author Karika
  * @author Lexaeus 94
  * @author Minerva Titani
+ * @author WM3DAS
  * @author Ximo17
  */
 $messages['it'] = array(
-	'admindashboard-title' => 'Cruscotto di {{SITENAME}}',
+	'admindashboard-loading' => 'Caricamento in corso...',
+	'admindashboard-title' => 'Pannello di controllo di {{SITENAME}}',
 	'admindashboard-header' => 'Pannello di controllo Admin',
 	'admindashboard-toolbar-link' => 'Amministratore',
 	'admindashboard-tab-advanced' => 'Avanzato',
@@ -1089,6 +1098,7 @@ $messages['ms'] = array(
  * @author Audun
  */
 $messages['nb'] = array(
+	'admindashboard-loading' => 'Laster...',
 	'admindashboard-title' => '{{SITENAME}}-dashbord',
 	'admindashboard-header' => 'Dashbord for administratorer',
 	'admindashboard-toolbar-link' => 'Administrator',
@@ -1202,6 +1212,7 @@ $messages['pi'] = array(
  * @author Woytecr
  */
 $messages['pl'] = array(
+	'admindashboard-loading' => 'Trwa ładowanie...',
 	'admindashboard-title' => 'Panel {{SITENAME}}',
 	'admindashboard-header' => 'Panel Administratora',
 	'admindashboard-toolbar-link' => 'Administrator',
@@ -1274,20 +1285,21 @@ $messages['ps'] = array(
 
 /** Portuguese (português)
  * @author Andresilvazito
+ * @author Hamilton Abreu
  * @author Malafaya
  * @author Rhaijin
  */
 $messages['pt'] = array(
 	'admindashboard-header' => 'Painel de administração',
 	'admindashboard-toolbar-link' => 'Administrador',
-	'admindashboard-tab-advanced' => '↓Avançado',
+	'admindashboard-tab-advanced' => 'Avançado',
 	'admindashboard-tab-general' => 'Geral',
 	'admindashboard-controls-wiki-header' => 'Wiki',
-	'admindashboard-control-recent-changes-label' => 'Alterações Recentes',
+	'admindashboard-control-recent-changes-label' => 'Mudanças Recentes',
 	'admindashboard-control-user-list-label' => 'Lista de Utilizadores',
-	'admindashboard-control-user-list-tooltip' => 'Exibir uma lista completa dos usuários que participaram no seu wiki.',
-	'admindashboard-control-user-rights-label' => 'Direitos de Usuário',
-	'admindashboard-control-user-rights-tooltip' => 'Adicionar e remover os direitos de grupos e permissões para usuários no seu wiki.',
+	'admindashboard-control-user-list-tooltip' => 'Ver uma lista completa dos utilizadores que participaram na sua wiki.',
+	'admindashboard-control-user-rights-label' => 'Direitos de Utilizador',
+	'admindashboard-control-user-rights-tooltip' => 'Adicionar e remover direitos de grupos e permissões de utilizadores na sua wiki.',
 	'admindashboard-control-help-label' => 'Ajuda',
 	'admindashboard-control-add-photo-tooltip' => 'Adicione novas fotos ao seu wiki.',
 );
@@ -1348,9 +1360,11 @@ $messages['roa-tara'] = array(
 
 /** Russian (русский)
  * @author Askarmuk
+ * @author DCamer
  * @author Kuzura
  */
 $messages['ru'] = array(
+	'admindashboard-loading' => 'Загрузка...',
 	'admindashboard-title' => 'Кабинет администратора {{SITENAME}}',
 	'admindashboard-header' => 'Кабинет администратора',
 	'admindashboard-toolbar-link' => 'Администратор',
@@ -1444,6 +1458,7 @@ $messages['sr-ec'] = array(
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'admindashboard-loading' => 'Läser in...',
 	'admindashboard-title' => '{{SITENAME}}s instrumentpanel',
 	'admindashboard-header' => 'Instrumentpanel för administratörer',
 	'admindashboard-toolbar-link' => 'Administratör',
@@ -1595,6 +1610,7 @@ $messages['tr'] = array(
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(
+	'admindashboard-loading' => 'Йөкләү...',
 	'admindashboard-title' => '{{SITENAME}} идарәчесе бүлмәсе',
 	'admindashboard-header' => 'Идарәче бүлмәсе',
 	'admindashboard-toolbar-link' => 'Идарәче',
@@ -1636,6 +1652,7 @@ $messages['tt-cyrl'] = array(
 	'admindashboard-control-add-blog-tooltip' => 'Бу вики блогында яңа хәбәр калдырырга.',
 	'admindashboard-control-multiple-upload-label' => 'Берничә сурәт өстәргә',
 	'admindashboard-control-multiple-upload-tooltip' => 'Махсус корал ярдәмендә бер юлы берничә сурәт  өстәргә.',
+	'admindashboard-back-to-dashboard' => 'Кабинетка кире кайтырга',
 );
 
 /** Ukrainian (українська)

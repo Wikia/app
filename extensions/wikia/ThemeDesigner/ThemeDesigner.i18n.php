@@ -247,6 +247,7 @@ $messages['br'] = array(
 	'themedesigner-dont-use-a-graphic' => 'Non pas implijout a grafik',
 	'themedesigner-history-item' => '$1 dre $2',
 	'themedesigner-button-change-text' => 'Kemmañ an destenn',
+	'themedesigner-wodmark-preview' => 'Rakwelet',
 );
 
 /** Bosnian (bosanski)
@@ -468,6 +469,7 @@ $messages['diq'] = array(
 	'themedesigner-button-cancel' => 'Bıterkne',
 	'themedesigner-button-ok' => 'Temam',
 	'themedesigner-button-upload-wordmark' => 'Barke',
+	'themedesigner-default' => 'Hesıbyaye',
 	'themedesigner-wodmark-preview' => 'Verqayt',
 );
 
@@ -1303,7 +1305,7 @@ $messages['pdc'] = array(
 $messages['pl'] = array(
 	'themedesigner-or' => 'lub',
 	'themedesigner-desc' => 'Pozwala administratorom edytować motyw graficzny wiki.',
-	'themedesigner-title' => 'Kreator Motywu Wikii',
+	'themedesigner-title' => 'Kreator motywu Wikia',
 	'themedesigner-background' => 'Tło',
 	'themedesigner-page' => 'Strona',
 	'themedesigner-color' => 'kolor',
@@ -1347,7 +1349,7 @@ $messages['pl'] = array(
 	'themedesigner-dont-use-a-graphic' => 'Usuń',
 	'themedesigner-history-item' => '$1 przez $2',
 	'themedesigner-button-change-text' => 'Zmień tekst',
-	'themedesigner-reason' => 'Edytor Motywów - wersja wykonana przez $1',
+	'themedesigner-reason' => 'Kreator motywu - wersja wykonana przez $1',
 	'themedesigner-size-error' => 'Niewłaściwy rozmiar pliku',
 	'themedesigner-dimensions-error' => 'Wymiary obrazu przekraczają limit',
 	'themedesigner-type-error' => 'Nieprawidłowy typ pliku',

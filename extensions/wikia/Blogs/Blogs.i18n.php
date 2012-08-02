@@ -799,7 +799,7 @@ $messages['diq'] = array(
 	'blog-userblog' => "Blogê $1'i",
 	'blog-fromsitename' => '$1 ra',
 	'blogs-comment-hidden' => 'Vatışi bınımne',
-	'blog-comment-sending' => 'Oyo Rısêno',
+	'blog-comment-sending' => 'Rışêno...',
 );
 
 /** Ewe (eʋegbe) */

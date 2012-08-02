@@ -1551,7 +1551,7 @@ Je kunt <a href="$4">uitschrijven</a> van wijzigingen op deze lijst.',
  */
 $messages['pl'] = array(
 	'toplists-desc' => 'Listy Top 10',
-	'right-toplists-create-edit-list' => 'Stwórz i edytuj listy Top 10',
+	'right-toplists-create-edit-list' => 'Ttwórz i edytuj listy Top 10',
 	'right-toplists-create-item' => 'Dodawaj elementy do list Top 10',
 	'right-toplists-edit-item' => 'Edytuj elementy na listach Top 10',
 	'right-toplists-delete-item' => 'Usuwaj elementy z listy Top 10',
@@ -2178,8 +2178,13 @@ Tumungo sa Wikia upang suriin ang mga pagbabago! $1
 	'toplists-create-button-msg' => 'Lumikha ng isang talaan',
 );
 
-/** Ukrainian (українська) */
+/** Ukrainian (українська)
+ * @author Pig1995z
+ */
 $messages['uk'] = array(
+	'toplists-desc' => 'Список Топ 10',
+	'right-toplists-create-edit-list' => 'Створення і редагування сторінок списку топ-10',
+	'right-toplists-create-item' => 'Створення і додавання елементів на сторінку списку топ-10',
 	'toplists-seconds' => '$1 {{PLURAL:$1|секунда|секунди|секунд}}',
 	'toplists-minutes' => '$1 {{PLURAL:$1|хвилина|хвилини|хвилин}}',
 	'toplists-hours' => '$1 {{PLURAL:$1|година|години|годин}}',

@@ -565,16 +565,16 @@ $messages['oc'] = array(
  */
 $messages['pl'] = array(
 	'dump-database' => 'Zrzuty bazy danych',
-	'dump-database-info' => 'Zrzuty bazy danych mogą być używane jako osobista kopia zapasowa (produkty Wikii automatycznie oddzielają kopie zapasowe ze wszystkich wiki automatycznie) lub przez boty',
+	'dump-database-info' => 'Zrzuty bazy danych mogą być używane jako osobista kopia zapasowa (Wikia tworzy kopie zapasowe wszystkich wiki automatycznie) lub przez boty',
 	'dump-database-curr-pages' => 'Obecne strony',
 	'dump-database-curr-pages-info' => '(Ta wersja jest najlepsza dla używania przez boty)',
 	'dump-database-full-pages' => 'Obecne strony i historia',
 	'dump-database-full-pages-info' => '(Ostrzeżenie: plik może być bardzo duży)',
-	'dump-database-request' => 'Wniosek o aktualizację',
+	'dump-database-request' => 'Prośba o aktualizację',
 	'dump-database-request-info' => '(Zrzuty są zwykle generowane co tydzień)',
 	'dump-database-request-submit' => 'Wyślij zapytanie',
 	'dump-database-request-already-submitted' => 'Zrzut był pobierany niedawno (mniej niż 7 dni temu)',
-	'dump-database-request-requested' => 'Wniosek o wysłanie zrzutu bazy danych',
+	'dump-database-request-requested' => 'Prośba o zrzut bazy danych przesłana',
 	'dump-database-info-more' => 'Zobacz <a href="http://community.wikia.com/wiki/Help:Database_download">tę stronę</a> aby uzyskać więcej informacji.',
 );
 

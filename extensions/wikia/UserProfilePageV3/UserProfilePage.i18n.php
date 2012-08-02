@@ -186,15 +186,25 @@ $messages['bg'] = array(
 
 /** Breton (brezhoneg)
  * @author Fulup
+ * @author Y-M D
  */
 $messages['br'] = array(
 	'userprofilepage-lightbox-interview-cancel' => 'Nullañ',
+	'userprofilepage-add-question' => 'Ouzhpennañ ur goulenn nevez',
 	'user-identity-box-avatar-cancel' => 'Nullañ',
 	'user-identity-box-group-blocked' => 'Stanket',
+	'user-identity-box-zero-state-twitter' => 'Ma Z/Twitter',
+	'user-identity-box-zero-state-website' => "Ma lec'hienn internet",
+	'user-identity-box-zero-state-fb-page' => 'Ma Facebook',
+	'user-identity-box-about-me' => 'Diwar ma fenn',
+	'user-identity-box-avatar' => 'Avatar',
+	'user-identity-box-about-fav-wikis-refresh' => 'Freskaat',
 	'userprofilepage-lightbox-about-me-cancel' => 'Nullañ',
 	'userprofilepage-lightbox-about-me-save' => 'Enrollañ, poent echuiñ',
 	'userprofilepage-closing-popup-save-and-quit' => 'Enrollañ ha kuitaat',
 	'userprofilepage-closing-popup-cancel' => 'Nullañ',
+	'user-action-menu-protect' => 'Gwareziñ',
+	'user-action-menu-unprotect' => 'Diwareziñ',
 	'user-action-menu-rename' => 'Adenvel',
 	'user-action-menu-delete' => 'Diverkañ',
 	'user-action-menu-history' => 'Istor',
@@ -1803,7 +1813,7 @@ $messages['pl'] = array(
 	'user-identity-box-about-occupation' => 'Czym się zajmujesz?',
 	'user-identity-box-about-gender' => 'Jakiej jesteś płci?',
 	'user-identity-box-about-website' => 'Jaka jest twoja osobista strona?',
-	'user-identity-box-about-tweet' => 'Jak nazywa się Twoje konto Twittera?',
+	'user-identity-box-about-tweet' => 'Jak nazywa się Twoje konto na Twitterze?',
 	'user-identity-box-about-fav-wikis' => 'Wiki, na których dokonałeś edycji:',
 	'user-identity-box-about-fav-wikis-refresh' => 'Odśwież',
 	'user-identity-box-join-more-wikis' => 'Dołącz do większej ilości wiki, żeby je tutaj zobaczyć!',
@@ -1835,13 +1845,13 @@ $messages['pl'] = array(
 	'user-action-menu-rename' => 'Zmień nazwę',
 	'user-action-menu-delete' => 'Usuń',
 	'user-action-menu-history' => 'Historia',
-	'usermasthead-log' => 'Panel użytkownika',
+	'usermasthead-log' => 'Profil użytkownika',
 	'usermasthead-log-message' => 'dodano informacje do profilu',
-	'usermasthead-log-alt' => 'Rejestr operacji w panelu użytkownika',
+	'usermasthead-log-alt' => 'Rejestr operacji w profilu użytkownika',
 	'useravatar-log' => 'Avatary',
-	'blog-avatar-changed-log' => 'zmiana lub dodanie avatara',
+	'blog-avatar-changed-log' => 'Zmiana lub dodanie avatara',
 	'blog-avatar-removed-log' => 'Usunięto avatary użytkownika $1',
-	'blog-avatar-alt' => 'Avatar',
+	'blog-avatar-alt' => 'Rejestr zmian avatarów',
 	'user-identity-remove-confirmation' => 'Czy na pewno chcesz usunąć avatar?',
 	'user-identity-remove-fail' => 'Wystąpił błąd podczas usuwania avatara!',
 );
@@ -2563,3 +2573,4 @@ $messages['zh-hant'] = array(
 	'blog-avatar-changed-log' => '添加或更改頭像',
 	'blog-avatar-removed-log' => '刪除 $1 的頭像',
 );
+

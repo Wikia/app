@@ -105,6 +105,7 @@ $messages['cy'] = array(
  * @author Tiin
  */
 $messages['de'] = array(
+	'wikia-videohandlers-desc' => 'Handhabung von Videos innerhalb der MediaWiki-Dateiorganisation',
 	'videohandler' => 'Video handler',
 	'prototype-videohandler-extension-desc' => 'Prototyp-Video-Steuerung',
 	'movieclips-videohandler-extension-desc' => 'MovieClips-Video-Steuerungsprogramm',
@@ -133,6 +134,7 @@ $messages['de-formal'] = array(
  * @author VegaDark
  */
 $messages['es'] = array(
+	'wikia-videohandlers-desc' => 'Manejo de vídeos dentro de la arquitectura de MediaWiki',
 	'videohandler' => 'Controlador de vídeo',
 	'prototype-videohandler-extension-desc' => 'Controlador del prototipo de vídeo',
 	'movieclips-videohandler-extension-desc' => 'Controlador de clips de película',
@@ -171,6 +173,7 @@ $messages['fi'] = array(
  * @author Wyz
  */
 $messages['fr'] = array(
+	'wikia-videohandlers-desc' => "Gestion des vidéos au sein de l'architecture de fichiers de MediaWiki",
 	'videohandler' => 'Gestionnaire de vidéos',
 	'prototype-videohandler-extension-desc' => 'Gestionnaire de vidéos de Prototype',
 	'movieclips-videohandler-extension-desc' => 'Gestionnaire de vidéos de MovieClips',
@@ -188,6 +191,7 @@ $messages['fr'] = array(
  * @author Toliño
  */
 $messages['gl'] = array(
+	'wikia-videohandlers-desc' => 'Manipulación de vídeos dentro da arquitectura de ficheiros de MediaWiki',
 	'videohandler' => 'Manipulador de vídeos',
 	'prototype-videohandler-extension-desc' => 'Manipulador de vídeos de Prototype',
 	'movieclips-videohandler-extension-desc' => 'Manipulador de vídeos de MovieClips',
@@ -308,6 +312,7 @@ $messages['mk'] = array(
 	'videohandler-video-details' => '$1 (добавувач: $2)',
 	'videohandler-category' => 'Видеоснимки',
 	'videohandler-description' => 'Опис',
+	'videohandler-video-views' => '$1 {{PLURAL:$1|преглед|прегледи}}',
 );
 
 /** Malay (Bahasa Melayu)
@@ -332,6 +337,7 @@ $messages['ms'] = array(
  * @author Nghtwlkr
  */
 $messages['nb'] = array(
+	'wikia-videohandlers-desc' => 'Behandling av videoer innenfor MediaWikis filarkitektur',
 	'videohandler' => 'Videobehandler',
 	'prototype-videohandler-extension-desc' => 'Prototype-videobehandler',
 	'movieclips-videohandler-extension-desc' => 'MovieClips-videobehandler',
@@ -373,6 +379,7 @@ $messages['pa'] = array(
  * @author Woytecr
  */
 $messages['pl'] = array(
+	'wikia-videohandlers-desc' => 'Obsługa filmów wewnątrz systemu plików MediaWiki',
 	'videohandler' => 'Odtwarzacz filmów',
 	'prototype-videohandler-extension-desc' => 'Prototypowy odtwarzacz filmów',
 	'movieclips-videohandler-extension-desc' => 'Odtwarzacz filmów MovieClips',
@@ -424,12 +431,14 @@ $messages['ro'] = array(
 );
 
 /** Russian (русский)
+ * @author DCamer
  * @author Eleferen
  * @author Kuzura
  * @author Lockal
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
+	'wikia-videohandlers-desc' => 'Обработка видео с файловой архитектурой MediaWiki',
 	'videohandler' => 'Видео обработчик',
 	'prototype-videohandler-extension-desc' => 'Прототип видео обработчик',
 	'movieclips-videohandler-extension-desc' => 'Видео обработчик клипов',

@@ -187,6 +187,19 @@ $messages['bcl'] = array(
 	'userlogin-error-wrongpasswordempty' => 'Ay, paki kaagán an liangliang para sa susing tataramon.',
 );
 
+/** Breton (brezhoneg)
+ * @author Y-M D
+ */
+$messages['br'] = array(
+	'userlogin-password-page-title' => 'Cheñch ar ger-tremen',
+	'userlogin-oldpassword' => 'Ger-tremen kozh',
+	'userlogin-newpassword' => 'Ger-tremen nevez',
+	'userlogin-retypenew' => 'Adskrivañ ar ger-tremen nevez',
+	'userlogin-password-email-greeting' => 'Ac\'hanta $USERNAME,',
+	'userlogin-provider-or' => 'Pe',
+	'userlogin-loginreqlink' => 'kevreañ',
+);
+
 /** Catalan (català)
  * @author BroOk
  */
@@ -605,6 +618,8 @@ Szeretnéd módosítani a kapott e-mailekre vonatkozó beállításaidat? Ugrás
 	'userlogin-provider-or' => 'vagy',
 	'userlogin-provider-tooltip-facebook' => 'Kattints a gombra a Facebook használatával történő bejelentkezéshez',
 	'userlogin-provider-tooltip-facebook-signup' => 'Kattints a gombra a Facebookra történő regisztrációhoz',
+	'userlogin-facebook-show-preferences' => 'Facebook-hírcsatorna beállításainak megjelenítése',
+	'userlogin-facebook-hide-preferences' => 'Facebook-hírcsatorna beállításainak elrejtése',
 	'userlogin-loginreqlink' => 'bejelentkezés',
 	'wikiamobile-sendpassword-label' => 'Új jelszó küldése',
 	'wikiamobile-facebook-connect-fail' => 'Sajnos a Facebook fiókod nincs összekötve egy Wikia fiókkal sem.',
@@ -1065,10 +1080,10 @@ $messages['pl'] = array(
 	'userlogin-error-nosuchuser' => 'Nie rozpoznaliśmy tej nazwy użytkownika. Nie zapominaj o tym, że przy nazwie użytkownika wielkość liter ma znaczenie.',
 	'userlogin-error-wrongpassword' => 'Ups, złe hasło. Upewnij się, czy klawisz caps lock jest wyłączony i spróbuj ponownie.',
 	'userlogin-error-wrongpasswordempty' => 'Ups, proszę wypełnij hasło.',
-	'userlogin-error-resetpass_announce' => 'Wygląda na to, że użyłeś tymczasowego hasła. Wpisz nowe hasło w celu kontynuacji logowania się.',
+	'userlogin-error-resetpass_announce' => 'Wygląda na to, że użyłeś tymczasowego hasła. Wpisz nowe hasło aby kontynuować logowanie.',
 	'userlogin-error-login-throttled' => 'Próbowałeś zalogować się podając złe hasło zbyt wiele razy. Poczekaj chwilę zanim będziesz mógł spróbować ponownie.',
 	'userlogin-error-login-userblocked' => 'Twoja nazwa użytkownika została zablokowana i nie możesz się zalogować używając jej.',
-	'userlogin-error-edit-account-closed-flag' => 'Twoje konto zostało wyłączone przez Wikia.',
+	'userlogin-error-edit-account-closed-flag' => 'Twoje konto zostało wyłączone przez Wikię.',
 	'userlogin-error-cantcreateaccount-text' => 'Nie możesz zakładać nowych kont z adresu IP, którego obecnie używasz.',
 	'userlogin-error-userexists' => 'Ktoś już używa takiej nazwy użytkownika. Spróbuj innej!',
 	'userlogin-error-invalidemailaddress' => 'Wprowadź prawidłowy adres e-mail.',
@@ -1082,7 +1097,7 @@ $messages['pl'] = array(
 	'userlogin-error-noemailtitle' => 'Wprowadź prawidłowy adres e-mail.',
 	'userlogin-error-acct_creation_throttle_hit' => 'Przepraszamy, ten adres IP stworzył dzisiaj już zbyt dużo nowych kont. Prosimy spróbować ponownie później.',
 	'userlogin-error-resetpass_forbidden' => 'Hasła nie mogą zostać zmienione',
-	'userlogin-error-blocked-mailpassword' => 'Nie możesz prosić o nowe hasło ponieważ Twój adres IP został zablokowany przez Wikia.',
+	'userlogin-error-blocked-mailpassword' => 'Nie możesz prosić o nowe hasło ponieważ Twój adres IP został zablokowany przez Wikię.',
 	'userlogin-error-throttled-mailpassword' => 'Wysłaliśmy już przypomnienie z hasłem tego konta w ciągu {{PLURAL:$1|ostatniej godziny|ostatnich $1 godzin}}. Sprawdź swoją skrzynkę e-mail.',
 	'userlogin-error-mail-error' => 'Ups, wystąpił problem z wysyłką Twojej wiadomości e-mail. Prosimy [[Special:Contact/general|skontaktuj się z nami]].',
 	'userlogin-password-email-sent' => 'Hasło zostało wysłane na adres e-mail $1.',
@@ -1098,7 +1113,7 @@ $messages['pl'] = array(
 Jeśli nie zgłaszałeś prośby o nowe hasło, nie martw się! Twoje konto jest bezpieczne. Możesz zignorować tą wiadomość i zalogować się przy użyciu starego hasła.
 <br /><br />
 Masz pytania lub wątpliwości? Daj nam znać.',
-	'userlogin-password-email-signature' => 'Zespół Wikia',
+	'userlogin-password-email-signature' => 'Zespół Wikii',
 	'userlogin-password-email-body' => 'Witaj $2,
 
 Użyj tego tymczasowego hasła, aby zalogować się na Wikii: "$3"
@@ -1107,7 +1122,7 @@ Jeśli nie zgłaszałeś prośby o nowe hasło, nie martw się! Twoje konto jest
 
 Masz pytania lub wątpliwości? Daj nam znać.
 
-Zespół Wikia
+Zespół Wikii
 
 
 ___________________________________________

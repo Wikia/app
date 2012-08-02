@@ -302,6 +302,13 @@ Wikia
 	'globalwatchlist-no-blog-page-found' => 'Non se atopou ningunha páxina de blogue.',
 );
 
+/** Hebrew (עברית)
+ * @author Amire80
+ */
+$messages['he'] = array(
+	'tog-watchlistdigest' => 'לשלוח אליי בדואר אלקטרוני סיכום רשימת מעקב שבועי',
+);
+
 /** Hungarian (magyar)
  * @author Glanthor Reviol
  * @author Misibacsi
@@ -408,7 +415,7 @@ $messages['ksh'] = array(
 	'globalwatchlist-desc' => 'Scheck jede Woch en Zosammefaßong met de <i lang="en">e-mail</i>vu dä Sigge en de Oppaßleß vu alle Wikis',
 	'tog-watchlistdigest' => 'Scheck mer jeede Woch en Zosammefaßong met de <i lang="en">e-mail</i>',
 	'globalwatchlist-see-more' => 'Bes esu jood un donn op Dinge einzelne Oppaßleßte noh mieh Änderonge looere.',
-	'globalwatchlist-digest-email-subject' => 'Zusammefassong vun de Woch',
+	'globalwatchlist-digest-email-subject' => 'Zosammefassong vun der Woch',
 	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|Aanmerkong|Aanmerkonge|Aanmerkonge}})',
 	'globalwatchlist-no-page-found' => 'Kein Sigg jefonge',
 	'globalwatchlist-no-blog-page-found' => 'Kein Sigg vun enem <i lang="en">blog</i> jefonge.',
@@ -837,7 +844,7 @@ $messages['tl'] = array(
 	'tog-watchlistdigest' => 'Padalhan ako ng e-liham ng isang Lingguhang Katipunan ng Mga Binabantayan',
 	'tog-watchlistdigestclear' => 'Markahan ang lahat ng mga pahina mula sa aking Lingguhang Katipunan ng Mga Binabantayan bilang nadalaw na',
 	'globalwatchlist-see-more' => 'Pakisuri ang iyong katutubong mga talaan ng mga binabantayan para sa marami pang mga pagbabago',
-	'globalwatchlist-digest-email-subject' => 'Lingguhan Katipunan',
+	'globalwatchlist-digest-email-subject' => 'Lingguhang Katipunan',
 	'globalwatchlist-digest-email-body' => 'Mahal na $1,
 
 Isa itong talaan ng mga pahina ng iyong bantayan sa Wikia na nabago magmula noong huling dalawin mo sila.

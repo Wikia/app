@@ -917,17 +917,23 @@ $messages['gl'] = array(
 
 /** Hungarian (magyar)
  * @author Dani
+ * @author TK-999
  */
 $messages['hu'] = array(
 	'scavengerhunt-list-header-name' => 'Játék neve',
+	'scavengerhunt-list-header-is-enabled' => 'Engedélyezi? (kattintsa a váltáshoz)',
 	'scavengerhunt-list-header-actions' => 'Műveletek',
 	'scavengerhunt-list-enabled' => 'Engedélyezve',
 	'scavengerhunt-list-disabled' => 'Letiltva',
 	'scavengerhunt-list-edit' => 'szerkesztés',
-	'scavengerhunt-label-dialog-check' => '(párbeszédablak megjelenítése)',
+	'scavengerhunt-label-dialog-check' => '(vizuális szerkesztő megjelenítése - alfaverzió előtti, még nem működik)',
 	'scavengerhunt-label-image-check' => '(kép megjelenítése)',
 	'scavengerhunt-label-general' => 'Általános',
 	'scavengerhunt-label-name' => 'Név:',
+	'scavengerhunt-label-landing-title' => 'Céloldal neve (szócikk URL-címe bármely wikin)',
+	'scavengerhunt-label-landing-button-text' => 'Céloldal gombjának felirata',
+	'scavengerhunt-label-landing-button-x' => 'Céloldal gombjának x-koordinátája',
+	'scavengerhunt-label-landing-button-y' => 'Céloldal gombjának y-koordinátája',
 	'scavengerhunt-button-add' => 'Játék hozzáadása',
 	'scavengerhunt-button-save' => 'Mentés',
 	'scavengerhunt-button-disable' => 'Letiltás',

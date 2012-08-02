@@ -50,6 +50,17 @@ $messages['qqq'] = array(
 	'stafflog-filter-user' => '',
 );
 
+/** Breton (brezhoneg)
+ * @author Y-M D
+ */
+$messages['br'] = array(
+	'stafflog-filter-label' => 'Sil',
+	'stafflog-filter-user' => 'Implijer :',
+	'stafflog-filter-type' => 'Seurt :',
+	'stafflog-filter-apply' => 'Arloañ ar sil',
+	'stafflog-filter-type-block' => 'Stankadennoù',
+);
+
 /** Bosnian (bosanski) */
 $messages['bs'] = array(
 	'stafflog-desc' => 'Centralizirani zapisnik za osoblje',

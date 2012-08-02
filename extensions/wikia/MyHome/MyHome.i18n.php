@@ -740,7 +740,7 @@ $messages['diq'] = array(
 	'myhome-feed-moved-by' => "$1'i berd",
 	'myhome-feed-article-comment-created-by' => '$1 ra yew vatışo newe ame',
 	'myhome-feed-article-comment-edited-by' => "$1' xulasa vurne",
-	'myhome-feed-by' => '$1 ke',
+	'myhome-feed-by' => '$1 kerden ra',
 	'myhome-feed-new-blog-comment-details' => 'Vatış',
 	'myhome-feed-new-article-comment-details' => 'Mışewre',
 	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|Resime ke debyay|Resime ke debyay}}',
@@ -752,12 +752,13 @@ $messages['diq'] = array(
 /** Greek (Ελληνικά)
  * @author Crazymadlover
  * @author Evropi
+ * @author Geraki
  * @author Περίεργος
  */
 $messages['el'] = array(
 	'myhome-desc' => 'Μια ιδιωτική κεντρική σελίδα για συνδεδεμένους χρήστες',
 	'myhome' => 'Η αρχική μου σελίδα',
-	'wikiactivity' => 'Δραστηριότητα Βίκι',
+	'wikiactivity' => 'Δραστηριότητα Wiki',
 	'myhome-activity-more' => 'δείτε πιο πρόσφατη δραστηριότητα',
 	'myhome-activity-feed' => 'δραστηριότητα τροφοδότησης',
 	'myhome-activity-feed-empty' => "Αυτό το wiki σας περιμένει να πάρετε μέρος.

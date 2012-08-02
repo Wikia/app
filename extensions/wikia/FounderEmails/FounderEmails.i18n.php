@@ -453,6 +453,7 @@ Evit doare eo bet kemmet evit ar wech kentañ ho wiki gant an implijer enrollet 
 -- Skipailh Wikia',
 	'founderemails-email-first-edit-greeting' => 'Ac\'hanta $USERNAME,',
 	'founderemails-email-first-edit-signature' => 'Skipailh Wikia',
+	'founderemails-email-first-edit-button' => 'Gwiriekaat !',
 	'founderemails-email-page-edited-reg-user-first-edit-body-HTML' => 'Ac\'hanta $USERNAME,<br /><br />
 Evit doare eo bet kemmet evit ar wech kentañ ho wiki gant an implijer enrollet $EDITORNAME ! Perak ned afec\'h ket da saludiñ anezhañ war <a href="$EDITORTALKPAGEURL">e bajenn kaozeal</a> ?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- Skipailh Wikia</div>',
@@ -464,6 +465,7 @@ Evit doare eo bet kemmet ho wiki gant an implijer enrollet $EDITORNAME ! Perak n
 -- Skipailh Wikia',
 	'founderemails-email-general-edit-greeting' => 'Ac\'hanta $USERNAME,',
 	'founderemails-email-general-edit-signature' => 'Skipailh Wikia',
+	'founderemails-email-general-edit-button' => 'Gwiriekaat !',
 	'founderemails-email-page-edited-reg-user-body-HTML' => 'Ac\'hanta, $USERNAME,<br /><br />
 Evit doare eo bet kemmet ho wiki gant an implijer enrollet $EDITORNAME ! Perak ned afec\'h ket da saludiñ anezhañ war <a href="$EDITORTALKPAGEURL">e bajenn kaozeal</a> ?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- Skipailh Wikia</div>',
@@ -475,6 +477,7 @@ Evit doare eo bet kemmet ho wiki gant an implijer enrollet $USERNAME ! Perak ned
 -- Skipailh Wikia',
 	'founderemails-email-anon-edit-greeting' => 'Ac\'hanta $USERNAME,',
 	'founderemails-email-anon-edit-signature' => 'Skipailh Wikia',
+	'founderemails-email-anon-edit-button' => 'Gwiriekaat !',
 	'founderemails-email-page-edited-anon-body-HTML' => 'Ac\'hanta $USERNAME,
 Evit doare eo bet kemmet ho wiki gant an implijer enrollet $USERNAME ! Perak ned afec\'h ket <a href="$MYHOMEURL">da welet ar pezh zo kemmet</a> ?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- Skipailh Wikia</div>',
@@ -2505,6 +2508,13 @@ Sempre pode pasar pola actividade do wiki para ollar todos os cambios que se est
 	'founderemails-pref-edits-v2' => '...alguén edita',
 	'founderemails-pref-views-digest-v2' => '...un resumo diario das visitas totais',
 	'founderemails-pref-complete-digest-v2' => '...un resumo diario das incorporacións, edicións e visitas',
+);
+
+/** Hebrew (עברית)
+ * @author Amire80
+ */
+$messages['he'] = array(
+	'tog-founderemailsenabled' => 'לשלוח אליי בדואר אלקטרוני עדכונים על דברים שאנשים אחרים עושים (רק למייסדים)',
 );
 
 /** Hungarian (magyar)

@@ -382,6 +382,7 @@ $messages['sv'] = array(
 	'right-taskmanager' => 'Kan visa bakgrundsaktiviteter',
 	'right-taskmanager-action' => 'Kan hantera bakgrundsaktiviteter',
 	'taskmanager-invert' => 'Invertera markering',
+	'action-taskmanager' => 'visa och hantera bakgrundsuppgifter',
 );
 
 /** Telugu (తెలుగు)

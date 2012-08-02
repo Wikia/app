@@ -249,6 +249,13 @@ $messages['tt-cyrl'] = array(
 	'signup' => 'Теркәлү',
 );
 
+/** Ukrainian (українська)
+ * @author Pig1995z
+ */
+$messages['uk'] = array(
+	'signup-desc' => 'Додає псевдонім [[{{#Special:Signup}}]] для  [[{{#Special:UserLogin}}/signup]]',
+);
+
 /** Vietnamese (Tiếng Việt)
  * @author Xiao Qiao
  * @author XiaoQiaoGrace
