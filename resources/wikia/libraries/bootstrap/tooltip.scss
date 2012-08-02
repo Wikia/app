@@ -18,8 +18,9 @@ $color-shadow: mix(#000000, $color-page, 50%);
 	@include box-shadow(0, 0, 15px, $color-shadow);
 	background-color: $color-page;
 	font-size: 12px;
+	line-height: 18px;
 	max-width: 200px;
-	padding: 14px;
+	padding: 10px 14px;
 	text-align: center;
 	text-decoration: none;
 }
