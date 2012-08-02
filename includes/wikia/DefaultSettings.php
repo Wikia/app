@@ -205,6 +205,7 @@ $wgAutoloadClasses['PageHeaderController'] = $IP.'/skins/oasis/modules/PageHeade
 $wgAutoloadClasses['LatestActivityController'] = $IP.'/skins/oasis/modules/LatestActivityController.class.php';
 $wgAutoloadClasses['LatestPhotosController'] = $IP.'/skins/oasis/modules/LatestPhotosController.class.php';
 $wgAutoloadClasses['FooterController'] = $IP.'/skins/oasis/modules/FooterController.class.php';
+$wgAutoloadClasses['GameStarLogoController'] = $IP.'/skins/oasis/modules/GameStarLogoController.class.php';
 $wgAutoloadClasses['ArticleCategoriesController'] = $IP.'/skins/oasis/modules/ArticleCategoriesController.class.php';
 $wgAutoloadClasses['AchievementsController'] = $IP.'/skins/oasis/modules/AchievementsController.class.php';
 $wgAutoloadClasses['AccountNavigationController'] = $IP.'/skins/oasis/modules/AccountNavigationController.class.php';

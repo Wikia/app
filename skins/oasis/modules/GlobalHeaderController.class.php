@@ -49,6 +49,12 @@ class GlobalHeaderController extends WikiaController {
 		$this->response->setVal('menuNodes', $this->menuNodes);
 		$this->response->setVal('menuNodesHash', $this->menuNodes[0]['hash']);
 		$this->response->setVal('topNavMenuItems', $this->menuNodes[0]['children']);
+		$isGameStarLogoEnabled = $this->isGameStarLogoEnabled();
+		$this->response->setVal('isGameStarLogoEnabled', $isGameStarLogoEnabled);
+		if($isGameStarLogoEnabled) {
+			$this->response->addAsset('skins/oasis/css/modules/GameStarLogo.scss');
+		}
+
 	}
 
 	public function menuItems() {
@@ -74,5 +80,14 @@ class GlobalHeaderController extends WikiaController {
 			WikiaResponse::CACHE_TARGET_BROWSER,
 			WikiaResponse::CACHE_TARGET_VARNISH
 		));
+	}
+
+	protected function isGameStarLogoEnabled() {
+		if($this->wg->contLang->getCode() == 'de') {
+			$result = true;
+		} else {
+			$result = false;
+		}
+		return $result;
 	}
 }
