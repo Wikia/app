@@ -31,6 +31,7 @@ class AssetsManagerOneBuilder extends AssetsManagerBaseBuilder {
 		else {
 			$requestDetails = AssetsManager::getRequestDetails();
 			Wikia::log(__METHOD__, false, "file '{$filePath}' doesn't exist ({$requestDetails})", true /* $always */);
+			throw new Exception('File does not exist');
 		}
 	}
 }
