@@ -905,6 +905,9 @@ var Lightbox = {
 					var type = ($thisThumb.hasClass('Wikia-video-thumb')) ? 'video' : 'image',
 						title = (type == 'image') ? $thisThumb.parent().data('image-name') : $thisThumb.parent().data('video-name'),
 						playButtonSpan = (type == 'video') ? playButton : '';
+						
+					// (BugId:38144) 
+					title = title || $thisThumb.attr('alt');
 					
 					if(title) {
 						// Check for dupes
