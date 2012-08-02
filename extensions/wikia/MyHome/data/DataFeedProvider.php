@@ -156,7 +156,7 @@ class DataFeedProvider {
 
 								// Note that memcache returns null if record does not exists in cache
 								// versus 0 returned from database when image does not link to anything
-								if (self::$images[$imageName] === null) {
+								if (self::$images[$imageName] === false) {
 									$dbr = wfGetDB( DB_SLAVE );
 									self::$images[$imageName] = $dbr->selectField(
 										'imagelinks',
