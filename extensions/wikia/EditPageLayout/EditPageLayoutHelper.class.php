@@ -328,7 +328,9 @@ class EditPageLayoutHelper {
 	static public function getAssets() {
 		return array(
 			// >> 3rd party libraries
+			'resources/jquery.ui/jquery.ui.core.js',
 			'resources/jquery.ui/jquery.ui.widget.js',
+			'resources/jquery.ui/jquery.ui.position.js',
 			'resources/jquery.ui/jquery.ui.autocomplete.js',
 			'resources/wikia/libraries/jquery/md5/jquery.md5.js',
 			'resources/wikia/libraries/mustache/mustache.js',
