@@ -19,10 +19,9 @@
 		return{
 			show: function(msg, opt){
 				if(msg){
-					opt = opt || {},
-						t = this;
-
-					var oTime = opt.timeout,
+					var opt = opt || {},
+						t = this,
+						oTime = opt.timeout,
 						time = (typeof oTime == 'undefined') ? 5000 : (typeof oTime == 'number' ? oTime : false);
 
 					if(d.body.className.indexOf('hasToast') > -1){
