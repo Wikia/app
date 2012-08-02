@@ -40,15 +40,7 @@ var WikiaForm = function(el) {
 	this.inputGroups = {};
 
 	// handle tooltips
-	var tooltips = this.el.find('.tooltip');
-	if (tooltips.exists()) {
-		$.loadWikiaTooltip(function() {
-			tooltips.each(function() {
-				var tooltip = $(this);
-				tooltip.wikiaTooltip(tooltip.attr('data-tooltip'));
-			});
-		});
-	}
+	this.el.find('.tooltip').tooltip();
 };
 
 WikiaForm.prototype.showGenericError = function(msg) {

@@ -16,9 +16,7 @@ var ConfirmEmail = {
 			}
 		});
 		
-		$('.ConfirmEmail .email-tooltip').wikiaTooltip($('.ConfirmEmail .email-tooltip-content'),{
-			relativeToParent: true
-		});
+		$('.ConfirmEmail .email-tooltip').tooltip();
 	}
 };
 
