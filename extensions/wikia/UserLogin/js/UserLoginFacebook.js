@@ -19,14 +19,7 @@ var UserLoginFacebook = {
 	},
 
 	setupTooltips: function() {
-		$.loadWikiaTooltip(function() {
-			var buttons = $('.sso-login > a');
-
-			buttons.each(function() {
-				var button = $(this);
-				button.wikiaTooltip(button.attr('data-tooltip'));
-			});
-		});
+		$('.sso-login > a').tooltip();
 	},
 
 	loginSetup: function() {

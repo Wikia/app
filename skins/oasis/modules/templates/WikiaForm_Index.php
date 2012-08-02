@@ -12,7 +12,8 @@
 					$tooltip = Xml::element('img', array(
 						'src' => $wg->BlankImgUrl,
 						'class' => 'tooltip sprite question',
-						'data-tooltip' => $input['tooltip'],
+						'rel' => 'tooltip',
+						'title' => $input['tooltip'],
 					));
 				}
 				else {

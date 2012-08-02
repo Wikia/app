@@ -198,10 +198,8 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 	public function sendConfirmationEmail() {
 		if($this->request->getVal('format', '') !== 'json') {
 			$this->wg->Out->setPageTitle($this->wf->Msg('usersignup-confirm-page-title'));
-			$this->response->addAsset('skins/oasis/css/modules/WikiaTooltip.scss');
 			$this->response->addAsset('extensions/wikia/UserLogin/css/UserSignup.scss');
 			$this->response->addAsset('extensions/wikia/UserLogin/css/ConfirmEmail.scss');
-			$this->response->addAsset('resources/wikia/libraries/jquery/tooltip/jquery.wikia.tooltip.js');
 			$this->response->addAsset('extensions/wikia/UserLogin/js/ConfirmEmail.js');
 
 			// hide things in the skin
