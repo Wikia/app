@@ -309,7 +309,7 @@ class User {
 				$_touched = $wgMemc->get( $_key );
 				if($_touched == null){
 					$wgMemc->set( $_key, $data['mTouched'] );
-				} else if( $_touched < $data['mTouched'] ) {
+				} else if( $_touched <= $data['mTouched'] ) {
 					$isExpired = false;
 				}
 			}
