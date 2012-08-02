@@ -56,7 +56,6 @@ var UserLoginModal = {
 					}
 				});
 
-				// lazy load jquery.wikia.tooltip.js (BugId:22143)
 				UserLoginFacebook.init();
 			});
 			$.getResources([$.getSassCommonURL('/extensions/wikia/UserLogin/css/UserLoginModal.scss')]);

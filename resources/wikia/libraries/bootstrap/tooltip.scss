@@ -7,7 +7,7 @@ $color-shadow: mix(#000000, $color-page, 50%);
 
 .tooltip {
 	position: absolute;
-	z-index: 1020;
+	z-index: 2000000003; // It's so high because it needs to show up over modals too. 
 	display: block;
 	padding: 5px;
 	font-size: 11px;
