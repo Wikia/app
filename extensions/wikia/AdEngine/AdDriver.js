@@ -101,7 +101,7 @@ AdDriver.isHighValue = function(slotname) {
 			return AdConfig.isHighValueCountry(AdDriver.country);
 		}
 		else {
-			WikiaTracker.track(Liftium.buildTrackUrl([LiftiumOptions.pubid, "error", "no_geo"]), 'liftium.varia'); // FIXME NEF should be liftium.errors but the volume is too heavy...
+			WikiaTracker.trackAdEvent('liftium.errors', {'ga_category':'addriver_no_geo', 'ga_action':'addriver_no_geo'}, 'ga');
 		}
 	}
 
@@ -144,7 +144,7 @@ AdDriver.getNumCall = function(storageName, slotname) {
 		if (window.wgAdDriverUseExpiryStorage && window.wgAdDriverUseCookie) {
 			// compare and report error if they're not equal
 			if (storageNum != cookieNum) {
-				WikiaTracker.track([LiftiumOptions.pubid, "error", "numcalloutofsync", storageName, slotname, window.wgDBname, storageNum, cookieNum], 'liftium.errors');
+				WikiaTracker.trackAdEvent('liftium.errors', {'ga_category':'numcalloutofsync', 'ga_action':slotname, 'ga_label':'storage ' + storageName + ', num ' + storageNum + ', cookie ' + cookieNum}, 'ga');
 				AdDriver.log('Cookie and ExpiryStorage for ' + storageName + ':' + slotname + ' are out of sync!');
 				AdDriver.log('Cookie contents: ' + cookieNum);
 				AdDriver.log('ExpiryStogage contents: ' + storageNum);
@@ -284,7 +284,7 @@ AdDriver.isLastDARTCallNoAd = function(slotname) {
 
 		if (window.wgAdDriverUseExpiryStorage && window.wgAdDriverUseCookie) {
 			if (storageValue != cookieValue) {
-				WikiaTracker.track([LiftiumOptions.pubid, "error", "lastdartcallnoadoutofsync", slotname, window.wgDBname], 'liftium.errors');
+				WikiaTracker.trackAdEvent('liftium.errors', {'ga_category':'lastdartcallnoadoutofsync', 'ga_action':slotname}, 'ga');
 			}
 		}
 	}
@@ -592,7 +592,7 @@ AdDriverDelayedLoader.callDART = function() {
 					// Track only calls that do not fall back to Liftium.
 					// (Those calls will be tracked by Liftium.)
 					// Based on Liftium.callInjectedIframeAd
-					WikiaTracker.track(Liftium.buildTrackUrl([LiftiumOptions.pubid, "slot", AdDriverDelayedLoader.currentAd.size+ "_" + AdDriverDelayedLoader.currentAd.slotname]) + '/addriver', 'liftium.slot');
+					WikiaTracker.trackAdEvent('liftium.slot', {'ga_category':AdDriverDelayedLoader.currentAd.size, 'ga_action':AdDriverDelayedLoader.currentAd.slotname, 'ga_label':'addriver'}, 'ga');
 				}
 				AdDriverDelayedLoader.loadNext();
 			}
