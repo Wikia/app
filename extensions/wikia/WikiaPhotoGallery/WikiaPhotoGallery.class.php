@@ -396,6 +396,7 @@ class WikiaPhotoGallery extends ImageGallery {
 				'link' => $link,
 				'linktext' => $linktext,
 				'shorttext' => $shorttext,
+				'data-caption' => htmlspecialchars( $caption ),
 			);
 
 			// store list of images from inner content of tag (to be used by front-end)
@@ -865,8 +866,8 @@ class WikiaPhotoGallery extends ImageGallery {
 						//'height' => isset($thumbParams) ? $thumbParams['height'] : $image['height'],
 					);
 
-					if (!empty($image['caption'])) {
-						$imgAttribs['data-caption'] = $image['caption'];
+					if ( !empty($image['data-caption']) ) {
+						$imgAttribs['data-caption'] = $image['data-caption'];
 					}
 
 					$thumbHtml .= Xml::openElement('img', $imgAttribs);
@@ -1122,8 +1123,8 @@ class WikiaPhotoGallery extends ImageGallery {
 					'width' => $thumb->width,
 					'height' => $thumb->height,
 				);
-				if ($text != '') {
-					$thumbAttribs['data-caption'] = $text;
+				if ( $this->mData['images'][$p]['data-caption'] != '' ) {
+					$thumbAttribs['data-caption'] = $this->mData['images'][$p]['data-caption'];
 				}
 				$thumbHtml = Xml::element('img', $thumbAttribs);
 			}
