@@ -4,70 +4,70 @@
 $color-shadow: mix(#000000, $color-page, 50%);
 
 .popover {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 1010;
-  display: none;
-  padding: 5px;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 2000000003; // It's so high because it needs to show up over modals too. 
+	display: none;
+	padding: 5px;
 }
 
 .popover.top {
-  margin-top: -1px;
+	margin-top: -1px;
 }
 
 .popover.right {
-  margin-left: 5px;
+	margin-left: 5px;
 }
 
 .popover.bottom {
-  margin-top: 5px;
+	margin-top: 5px;
 }
 
 .popover.left {
-  margin-left: -5px;
+	margin-left: -5px;
 }
 
 .popover.top .arrow {
-  bottom:1px;
-  left: 50%;
-  margin-left: -5px;
-  border-top: 4px solid $color-page;
-  border-right: 10px solid transparent;
-  border-left: 10px solid transparent;
+	bottom:1px;
+	left: 50%;
+	margin-left: -5px;
+	border-top: 4px solid $color-page;
+	border-right: 10px solid transparent;
+	border-left: 10px solid transparent;
 }
 
 .popover.right .arrow {
-  top: 50%;
-  left: 0;
-  margin-top: -5px;
-  border-top: 5px solid transparent;
-  border-right: 5px solid $color-page;
-  border-bottom: 5px solid transparent;
+	top: 50%;
+	left: 0;
+	margin-top: -5px;
+	border-top: 5px solid transparent;
+	border-right: 5px solid $color-page;
+	border-bottom: 5px solid transparent;
 }
 
 .popover.bottom .arrow {
-  top: 0;
-  left: 50%;
-  margin-left: -5px;
-  border-right: 5px solid transparent;
-  border-bottom: 5px solid $color-page;
-  border-left: 5px solid transparent;
+	top: 0;
+	left: 50%;
+	margin-left: -5px;
+	border-right: 5px solid transparent;
+	border-bottom: 5px solid $color-page;
+	border-left: 5px solid transparent;
 }
 
 .popover.left .arrow {
-  top: 50%;
-  right: 0;
-  margin-top: -5px;
-  border-top: 5px solid transparent;
-  border-bottom: 5px solid transparent;
-  border-left: 5px solid $color-page;
+	top: 50%;
+	right: 0;
+	margin-top: -5px;
+	border-top: 5px solid transparent;
+	border-bottom: 5px solid transparent;
+	border-left: 5px solid $color-page;
 }
 
 .popover .arrow {
-  position: absolute;
-  width: 0;
-  height: 0;
+	position: absolute;
+	width: 0;
+	height: 0;
 }
 
 .popover-inner {
@@ -79,28 +79,28 @@ $color-shadow: mix(#000000, $color-page, 50%);
 }
 
 .popover-title {
-  padding: 9px 15px;
-  line-height: 1;
-  background-color: #f5f5f5;
-  border-bottom: 1px solid #eee;
-  -webkit-border-radius: 3px 3px 0 0;
-     -moz-border-radius: 3px 3px 0 0;
-          border-radius: 3px 3px 0 0;
+	padding: 9px 15px;
+	line-height: 1;
+	background-color: #f5f5f5;
+	border-bottom: 1px solid #eee;
+	-webkit-border-radius: 3px 3px 0 0;
+	 -moz-border-radius: 3px 3px 0 0;
+	      border-radius: 3px 3px 0 0;
 }
 
 .popover-content {
-  padding: 14px;
-  background-color: $color-page;
-  -webkit-border-radius: 0 0 3px 3px;
-     -moz-border-radius: 0 0 3px 3px;
-          border-radius: 0 0 3px 3px;
-  -webkit-background-clip: padding-box;
-     -moz-background-clip: padding-box;
-          background-clip: padding-box;
+	padding: 14px;
+	background-color: $color-page;
+	-webkit-border-radius: 0 0 3px 3px;
+	 -moz-border-radius: 0 0 3px 3px;
+	      border-radius: 0 0 3px 3px;
+	-webkit-background-clip: padding-box;
+	 -moz-background-clip: padding-box;
+	      background-clip: padding-box;
 }
 
 .popover-content p,
 .popover-content ul,
 .popover-content ol {
-  margin-bottom: 0;
+	margin-bottom: 0;
 }

@@ -11,7 +11,7 @@
 				if (isset($input['tooltip'])) {
 					$tooltip = Xml::element('img', array(
 						'src' => $wg->BlankImgUrl,
-						'class' => 'tooltip sprite question',
+						'class' => 'sprite question',
 						'rel' => 'tooltip',
 						'title' => $input['tooltip'],
 					));
