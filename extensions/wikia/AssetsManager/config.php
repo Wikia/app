@@ -585,10 +585,10 @@ $config['mini_editor_js'] = array(
 		'//extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.js',
 		'//extensions/wikia/WikiaMiniUpload/js/WMU.js',
 		// Third Party
+		'//resources/jquery.ui/jquery.ui.core.js',
 		'//resources/jquery.ui/jquery.ui.widget.js',
+		'//resources/jquery.ui/jquery.ui.position.js',
 		'//resources/jquery.ui/jquery.ui.autocomplete.js',
-		'//resources/jquery.ui/jquery.ui.mouse.js',
-		'//resources/jquery.ui/jquery.ui.slider.js',
 		'//resources/wikia/libraries/mustache/mustache.js',
 	)
 );
