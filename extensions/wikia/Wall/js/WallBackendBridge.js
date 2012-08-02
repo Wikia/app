@@ -75,14 +75,6 @@ Wall.BackendBridge = $.createClass(Observable, {
 		});
 	},
 
-	cancelEdit: function(username, id, callback) {
-		if ($.isFunction(callback)) {
-			callback(newmsg);
-		}
-
-		this.fire('editCanceled', newmsg);
-	},
-
 	loadEditData: function(page, id, mode, convertToFormat, callback) {
 		this.fire('beforeEditDataLoad', id);
 
@@ -171,7 +163,7 @@ Wall.BackendBridge = $.createClass(Observable, {
 			format: 'json',
 			data: {
 				msgid: msgid,
-				dir: dir,
+				dir: dir
 			},
 			callback: this.proxy(function(data) {
 				if ($.isFunction(callback)) {
