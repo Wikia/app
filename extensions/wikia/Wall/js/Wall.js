@@ -41,7 +41,7 @@ var Wall = $.createClass(Object, {
 			.on('click', '.Pagination', this.proxy(this.trackClick))
 			.on('click', '.user-talk-archive-anchor', this.proxy(this.trackClick))
 			.on('click', '.wall-owner', this.proxy(this.trackClick))
-			.on('click', '.load-more a', this.proxy(this.loadMore))
+			.on('click', '.load-more a', this.proxy(this.trackClick))
 			.on('click', '.msg-title', this.proxy(this.trackClick))
 			.on('click', '.sortingOption', this.proxy(this.trackClick))
 			.on('keydown', 'textarea', this.proxy(this.focusButton))
@@ -52,6 +52,8 @@ var Wall = $.createClass(Object, {
 	
 			.on('mouseenter', '.follow', this.proxy(this.hoverFollow))
 			.on('mouseleave', '.follow', this.proxy(this.unhoverFollow))
+
+			.on('click', '.load-more a', this.proxy(this.loadMore))
 
 			// Fix FireFox bug where textareas remain disabled on page reload
 			.find('textarea').removeAttr('disabled');
@@ -69,12 +71,11 @@ var Wall = $.createClass(Object, {
 				return {};
 			}, {nocache: true});
 			$('.voting-controls .vote').wikiaTooltip(function(el) {
-				var el = $(el);
+				var $el = $(el);
 				if(el.hasClass('voted') || el.hasClass('inprogress')) {
 					return $('#WallTooltipMeta .tooltip-votes-voted').text();
-				} else {
-					return $('#WallTooltipMeta .tooltip-votes-vote').text();
 				}
+				return $('#WallTooltipMeta .tooltip-votes-vote').text();
 			}, {nocache: true});
 			$('#ForumNewMessage .highlight').wikiaTooltip($('#WallTooltipMeta .tooltip-highlight-thread').text());
 		});
@@ -143,8 +144,9 @@ var Wall = $.createClass(Object, {
 		setTimeout( function() { // make sure all textareas are inicialized already
 			//$('.new-message textarea.body').trigger('focus');
 			$('.new-reply textarea').each( function() {
-				if( $(this).is(':focus') ) {
-					$(this).trigger('focus');
+				var el = $(this);
+				if( el.is(':focus') ) {
+					el.trigger('focus');
 				}
 			});
 			var title = $('#WallMessageTitle');
@@ -182,24 +184,24 @@ var Wall = $.createClass(Object, {
 	},
 
 	hoverFollow: function(e) {
-		if( $(e.target).html() == $.msg('wikiafollowedpages-following') ) {
-			$(e.target).html($.msg('wall-message-unfollow'));
+		var target = $(e.target);
+		if( target.html() == $.msg('wikiafollowedpages-following') ) {
+			target.html($.msg('wall-message-unfollow'));
 		}
 	},
 
 	unhoverFollow: function(e) {
-		if( $(e.target).html() == $.msg('wall-message-unfollow') ) {
-			$(e.target).html($.msg('wikiafollowedpages-following'));
+		var target = $(e.target);
+		if( target.html() == $.msg('wall-message-unfollow') ) {
+			target.html($.msg('wikiafollowedpages-following'));
 		}
 	},
 
 	loadMore: function(e) {
 		e.preventDefault();
-		
-		this.proxy(this.trackClick(e));
-
-		$(e.target).closest('ul').find('li.SpeechBubble').show();
-		$(e.target).closest('.load-more').remove();
+		var target = $(e.target);
+		target.closest('ul').find('li.SpeechBubble').show();
+		target.closest('.load-more').remove();
 
 		var comment_id = $(e.target).closest('li.message').attr('data-id');
 		$.nirvana.sendRequest({
@@ -320,12 +322,12 @@ var Wall = $.createClass(Object, {
 				formdata: formdata
 			},
 			callback: this.proxy(function(data){
-				this.afterRestore(data, target);
+				this.afterRestore(id, data, target);
 			})
 		});
 	},
 
-	afterRestore: function(data, target) {
+	afterRestore: function(id, data, target) {
 		var msg = target.closest('li');
 
 		if(msg.attr('is-reply') != 1 ) {
@@ -372,7 +374,7 @@ var Wall = $.createClass(Object, {
 		var id = wallMsg.attr('data-id');
 
 		if(target.attr('data-id')) {
-			var id = target.attr('data-id');
+			id = target.attr('data-id');
 		}
 
 		var type = isreply ? 'reply':'thread';
@@ -548,7 +550,6 @@ var Wall = $.createClass(Object, {
 		} else if( parent.parent().hasClass('speech-bubble-avatar') ) {
 			this.track('wall/message/avatar');
 		} else if( parent.hasClass('load-more') ) {
-			console.log("tracking load more");
 			this.track('wall/message/uncondense');
 		} else if( node.hasClass('wall-owner') && parent.hasClass('WallName') ) {
 			this.track('wall/thread_page/owners_wall');
