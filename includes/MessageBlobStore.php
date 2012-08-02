@@ -78,6 +78,13 @@ class MessageBlobStore {
 		}
 
 		$dbw = wfGetDB( DB_MASTER );
+
+		// Wikia change - begin
+		// @author macbre (BugId:42185)
+		// do smaller transactions
+		$dbw->begin(__METHOD__);
+		// Wikia change - end
+
 		$success = $dbw->insert( 'msg_resource', array(
 				'mr_lang' => $lang,
 				'mr_resource' => $name,
@@ -113,6 +120,11 @@ class MessageBlobStore {
 			}
 		}
 
+		// Wikia change - begin
+		// @author macbre (BugId:42185)
+		$dbw->commit(__METHOD__);
+		// Wikia change - end
+
 		return $blob;
 	}
 
@@ -134,10 +146,16 @@ class MessageBlobStore {
 			return null;
 		}
 
+		// Wikia change - begin
+		// @author macbre (BugId:42185)
+		// do smaller transactions
+		$dbw->begin(__METHOD__);
+		// Wikia change - end
+
 		// Save the old and new blobs for later
 		$oldBlob = $row->mr_blob;
 		$newBlob = self::generateMessageBlob( $module, $lang );
-		
+
 		$newRow = array(
 			'mr_resource' => $name,
 			'mr_lang' => $lang,
@@ -179,6 +197,11 @@ class MessageBlobStore {
 				 array( 'IGNORE' ) // just in case
 			);
 		}
+
+		// Wikia change - begin
+		// @author macbre (BugId:42185)
+		$dbw->commit(__METHOD__);
+		// Wikia change - end
 
 		return $newBlob;
 	}
