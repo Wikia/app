@@ -151,6 +151,7 @@ class WallHelper {
 					if( isset($parent->mMetadata['title']) ) $title = $wmessage->getMetaTitle();
 					$this->mapParentData($item, $parent, $title);
 					$res['title'] = 'message-wall-thread-#'.$parent->getTitle()->getArticleID();
+					$item['wall-msg'] = wfMsg( 'wall-wiki-activity-on', '<a href="'.$item['wall-url'].'">'.wfMsg('wall-wiki-activity-wall-owner', $item['wall-owner']).'</a>');
 				} else {
 				//message was removed or deleted
 					$item = array();
