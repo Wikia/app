@@ -18,13 +18,8 @@ class ExtendedFeedItem extends FeedItem {
 	 * @todo document
 	 * @param $Url URL uniquely designating the item.
 	 */
-	function __construct( $Title, $Description, $Url, $Date = '', $Author = '', $Comments = '', $OtherTags = false ) {
-		$this->Title = $Title;
-		$this->Description = $Description;
-		$this->Url = $Url;
-		$this->Date = $Date;
-		$this->Author = $Author;
-		$this->Comments = $Comments;
+	function __construct( $title, $description, $url, $date = '', $author = '', $comments = '', $OtherTags = false ) {
+		parent::__construct( $title, $description, $url, $date , $author , $comments );
 		$this->OtherTags = !empty( $OtherTags ) ? $OtherTags : array();
 	}
 

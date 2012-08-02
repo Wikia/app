@@ -42,10 +42,9 @@ class PartnerFeed extends SpecialPage {
 			&& in_array( $feed, array( "rss", "atom" ) )
 		) {
 			// Varnish cache controll. Cache max for 12h.
-
 			header( "Cache-Control: s-maxage=".( 60*60*12 ) );
 			header( "X-Pass-Cache-Control: max-age=".( 60*60*12 ) );
-
+			$isFeed = true;
 			switch( $feedType ){
 				case 'AchivementsLeaderboard':
 					$this->FeedAchivementsLeaderboard( $feed );
@@ -69,13 +68,16 @@ class PartnerFeed extends SpecialPage {
 					$this->FeedRecentChanges( $feed );
 				break;
 				default :
+					$isFeed = false;
 					$this->showMenu();
 				break;
+			}
+			if ( $isFeed ) {
+				header("Content-Type: application/rss+xml");
 			}
 		} else {
 			$this->showMenu();
 		}
-
 		return false;
 	}
 
@@ -634,7 +636,6 @@ class PartnerFeed extends SpecialPage {
  * returns RSS/Atom feed
  */
 	private function showFeed( $format, $subtitle, $feedData ) {
-
 		global $wgOut, $wgRequest, $wgParser, $wgMemc, $wgTitle, $wgSitename;
 
 		wfProfileIn( __METHOD__ );
