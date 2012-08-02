@@ -1,4 +1,5 @@
 <header id="WikiaHeader" class="WikiaHeader">
+	<? if ( !empty($isGameStarLogoEnabled )) echo wfRenderModule('GameStarLogo'); ?>
 	<nav>
 		<h1>Wikia Navigation</h1>
 		<ul>
