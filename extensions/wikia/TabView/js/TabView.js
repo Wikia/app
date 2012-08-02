@@ -19,13 +19,15 @@ var TabView = {
 		//
 		// *****************************************************
 		
+		var tabsWrapperSelector = $('#' + options.id);
+		
 		// cashed data used across TabView methods
 		this.cashedStuff = {
 		
 			tabsWrapperId: options.id,
-			tabsWrapperSelector: $('#' + options.id),
-			tabsSelector: $('#' + options.id).find('li'),
-			containersWrapperId: options.id + '-content-wrapper',			
+			tabsWrapperSelector: tabsWrapperSelector,
+			tabsSelector: tabsWrapperSelector.find('li'),
+			containersWrapperId: options.id + '-content-wrapper'			
 		};
 		
 		var that = this,
@@ -107,7 +109,7 @@ var TabView = {
 			containerSelector = $('#' + this.cashedStuff.containersWrapperId).children('div[data-tab-body="' + dataTabId + '"]');
 			
 		// if content not loaded, make AJAX request 
-		if (!containerSelector.data('loaded') == true) {
+		if (containerSelector.data('loaded') !== true) {
 			
 			containerSelector.startThrobbing();
 			
