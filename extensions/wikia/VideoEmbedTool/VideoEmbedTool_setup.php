@@ -76,7 +76,6 @@ function VETSetup($editform) {
 		$wgHooks['MakeGlobalVariablesScript'][] = 'VETSetupVars';
 		$wgOut->addScript('<script type="text/javascript" src="'.$wgExtensionsPath.'/wikia/VideoEmbedTool/js/VET.js"></script>');
 		$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/VideoEmbedTool/css/VET.scss'));
-		$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('skins/oasis/css/core/WikiaSlider.scss'));
 	}
 	return true;
 }

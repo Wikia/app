@@ -56,7 +56,7 @@ jQuery.getResources = function(resources, callback, failureFn) {
 		}
 		// JS files and Asset Manager groups are scripts
 		else if (type == 'js' || isJs.test(resource) || isGroup.test(resource)) {
-			$.getScript(resource, onComplete);
+			$.getScript(resource, onComplete, failureFn);
 		}
 	}
 

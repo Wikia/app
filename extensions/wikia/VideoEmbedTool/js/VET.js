@@ -59,12 +59,12 @@ function VET_editVideo() {
 
 			setTimeout(function() {
 
-        if ( (typeof (data.thumbnail) != "undefined" && data.thumbnail ) || 
+        if ( (typeof (data.thumbnail) != "undefined" && data.thumbnail ) ||
              (typeof (data.thumb) != "undefined" && data.thumb ) ) {
-                 
-             $G("VideoEmbedThumbOption").checked = true;      
+
+             $G("VideoEmbedThumbOption").checked = true;
         }  else {
-        
+
              $G("VideoEmbedThumbOption").checked = false;
         }
 
@@ -96,7 +96,7 @@ function VET_editVideo() {
 	YAHOO.util.Connect.abort(VET_asyncTransaction);
 	var params = [];
   if ( typeof(FCK.wysiwygData[VET_refid].href) == "undefined" ) {
-     params.push('itemTitle='+FCK.wysiwygData[VET_refid].title);  
+     params.push('itemTitle='+FCK.wysiwygData[VET_refid].title);
   } else {
 	   params.push('itemTitle='+FCK.wysiwygData[VET_refid].href);
   }
@@ -394,7 +394,7 @@ function VET_show( e, gallery, box, align, thumb, size, caption ) {
 			wikiaEditor.plugins.MiniEditor.hasFocus = true;
 		}
 	}
-	
+
 	if(typeof gallery == "undefined") {
 		if (typeof showComboAjaxForPlaceHolder == 'function') {
 			if (showComboAjaxForPlaceHolder("",false)) {
@@ -577,7 +577,7 @@ function VET_show( e, gallery, box, align, thumb, size, caption ) {
 
 	YAHOO.util.Event.addListener('VideoEmbedBack', 'click', VET_back);
 	YAHOO.util.Event.addListener('VideoEmbedClose', 'click', VET_close);
-	
+
 	if ( 400 == wgNamespaceNumber ) {
 		if( $G( 'VideoEmbedPageWindow' ) ) {
 			$G( 'VideoEmbedPageWindow' ).style.visibility = 'hidden';
@@ -714,7 +714,7 @@ function VET_onVideoEmbedUrlKeypress(e) {
 		VET_preQuery(null);
 		return false;
 	}
-	
+
 }
 
 function VET_preQuery(e) {
@@ -757,7 +757,7 @@ function VET_displayDetails(responseText) {
 	// and execute this script
 	//$G('VideoEmbed' + VET_curScreen).innerHTML = responseText;
 	$('#VideoEmbed' + VET_curScreen).html(responseText);
-	
+
 	if($G('VideoEmbedThumb')) {
 		VET_orgThumbSize = null;
 		var image = $G('VideoEmbedThumb').firstChild;
@@ -765,10 +765,8 @@ function VET_displayDetails(responseText) {
 		VET_orgThumbSize = null;
 	}
 
-	$.when(
-		$.getResources([wgResourceBasePath+'/resources/wikia/libraries/jquery-ui/jquery-ui-1.8.14.custom.js'])
-	).done(function() {
-		$('.WikiaSlider').slider && $('.WikiaSlider').slider({
+	function initSlider() {
+		$('.WikiaSlider').slider({
 			min: 100,
 			max: 500,
 			value: 300,
@@ -778,9 +776,21 @@ function VET_displayDetails(responseText) {
 			create: function(event, ui) {
 				$('#VideoEmbedManualWidth').val(300);
 			}
-		});	
-	});
+		});
+	}
 
+	// VET uses jquery ui slider, lazy load it if needed
+	if (!$.fn.slider) {
+		$.when(
+			$.getResources([
+				wgResourceBasePath + '/resources/jquery.ui/jquery.ui.widget.js',
+				wgResourceBasePath + '/resources/jquery.ui/jquery.ui.mouse.js',
+				wgResourceBasePath + '/resources/jquery.ui/jquery.ui.slider.js'
+			])
+		).done(initSlider);
+	} else {
+		initSlider();
+	}
 
 	if ($G( 'VET_error_box' )) {
 		alert( $G( 'VET_error_box' ).innerHTML );
@@ -819,9 +829,9 @@ function VET_displayDetails(responseText) {
 			$G( 'VideoEmbedNameRow' ).style.display = 'none';
 		}
 	}
-	
+
 	if ( $G('VideoEmbedMain').innerHTML == '' ) {
-		VET_loadMain();		
+		VET_loadMain();
 	}
 
 	VET_indicator(1, false);
@@ -1016,7 +1026,7 @@ function VET_insertFinalVideo(e, type) {
 		},
 		failure: function(o) {
 			alert( vet_insert_error );
-		}	
+		}
 	}
 
 	VET_indicator(1, true);
@@ -1025,7 +1035,7 @@ function VET_insertFinalVideo(e, type) {
 }
 
 function VET_switchScreen(to) {
-	
+
 	VET_prevScreen = VET_curScreen;
 	VET_curScreen = to;
 	$G('VideoEmbed' + VET_prevScreen).style.display = 'none';
@@ -1053,7 +1063,7 @@ function VET_switchScreen(to) {
 }
 
 function VET_back(e) {
-	
+
 	YAHOO.util.Event.preventDefault(e);
 	VET_track('back/' + VET_curScreen);
 	if(VET_curScreen == 'Details') {
@@ -1072,7 +1082,7 @@ function VET_previewClose(e) {
 }
 
 function VET_close(e) {
-	
+
 	if(e) {
 		YAHOO.util.Event.preventDefault(e);
 	}

@@ -558,7 +558,11 @@ $config['eplrte'] = array(
 $config['mini_editor_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
-		'//resources/wikia/libraries/mustache/mustache.js',
+		// MediaWiki Edit stack
+		'//resources/jquery/jquery.byteLimit.js',
+		'//resources/jquery/jquery.textSelection.js',
+		'//resources/mediawiki.action/mediawiki.action.edit.js',
+		// Edit Page Layout
 		'//extensions/wikia/EditPageLayout/js/editor/WikiaEditor.js',
 		'//extensions/wikia/EditPageLayout/js/editor/Buttons.js',
 		'//extensions/wikia/EditPageLayout/js/editor/Modules.js',
@@ -576,12 +580,16 @@ $config['mini_editor_js'] = array(
 		'//extensions/wikia/EditPageLayout/js/modules/Insert.js',
 		'//extensions/wikia/EditPageLayout/js/modules/InsertMiniEditor.js',
 		'//extensions/wikia/EditPageLayout/js/modules/ModeSwitch.js',
-		// TODO: Load this on the fly with JSSnippets. Only thing really needed is slider (so far)
-		'//resources/wikia/libraries/jquery-ui/jquery-ui-1.8.14.custom.js',
+		// Photo and Video tools
 		'//extensions/wikia/VideoEmbedTool/js/VET.js',
 		'//extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.js',
 		'//extensions/wikia/WikiaMiniUpload/js/WMU.js',
-		//'extensions/wikia/LinkSuggest/LinkSuggest.js'
+		// Third Party
+		'//resources/jquery.ui/jquery.ui.widget.js',
+		'//resources/jquery.ui/jquery.ui.autocomplete.js',
+		'//resources/jquery.ui/jquery.ui.mouse.js',
+		'//resources/jquery.ui/jquery.ui.slider.js',
+		'//resources/wikia/libraries/mustache/mustache.js',
 	)
 );
 
