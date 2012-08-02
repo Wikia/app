@@ -14,6 +14,7 @@ var HoverMenu = function(selector) {
 	this.mouseoverTimerRunning = false;
 
 	//Variables
+	this.event = {};
 	this.selector = selector;
 	this.menu = $(this.selector);
 
@@ -45,10 +46,10 @@ var HoverMenu = function(selector) {
 
 var globalNavigationMenusCached = false;
 HoverMenu.prototype.mouseover = function(event) {
-	var li = $(event.currentTarget);
+	this.event = event;
 
 	//Hide all subnavs except for this one
-	this.menu.children("li").children("ul").not(li.find("ul")).removeClass("show");
+	this.menu.children("li").children("ul").not($(event.currentTarget).find("ul")).removeClass("show");
 
 	//Cancel mouseoutTimer
 	clearTimeout(this.mouseoutTimer);
@@ -79,7 +80,10 @@ HoverMenu.prototype.mouseover = function(event) {
 					}).find('.subnav').html(html);
 				});
 
-				this.handleShowNav(event);
+				// Make sure we haven't left yet (BugId:43496).
+				if (this.event.type == 'mouseover') {
+					this.handleShowNav(event);
+				}
 			}, this)
 		});
 
@@ -90,15 +94,14 @@ HoverMenu.prototype.mouseover = function(event) {
 };
 
 HoverMenu.prototype.handleShowNav = function(event) {
-	var self = this;
 
 	// Mouse is not coming from within the nav.
 	if ($(event.relatedTarget).closest(this.selector).length == 0) {
 
 		//Delay before showing subnav.
-		this.mouseoverTimer = setTimeout(function() {
-			self.showNav(event.currentTarget);
-		}, this.settings.mouseoverDelay);
+		this.mouseoverTimer = setTimeout($.proxy(function() {
+			this.showNav(event.currentTarget);
+		}, this), this.settings.mouseoverDelay);
 
 		this.mouseoverTimerRunning = true;
 
@@ -112,9 +115,9 @@ HoverMenu.prototype.handleShowNav = function(event) {
 			clearTimeout(this.mouseoverTimer);
 
 			//Start new timer
-			this.mouseoverTimer = setTimeout(function() {
-				self.showNav(event.currentTarget);
-			}, this.settings.mouseoverDelay);
+			this.mouseoverTimer = setTimeout($.proxy(function() {
+				this.showNav(event.currentTarget);
+			}, this), this.settings.mouseoverDelay);
 
 		//Mouseover timer isn't running, so show subnavs immediately
 		} else {
@@ -124,7 +127,7 @@ HoverMenu.prototype.handleShowNav = function(event) {
 };
 
 HoverMenu.prototype.mouseout = function(event) {
-	var self = this;
+	this.event = event;
 
 	//Mouse has exited the nav.
 	if ($(event.relatedTarget).closest(this.selector).length == 0) {
@@ -134,9 +137,9 @@ HoverMenu.prototype.mouseout = function(event) {
 		this.mouseoverTimerRunning = false;
 
 		//Start mouseoutTimer
-		this.mouseoutTimer = setTimeout(function() {
-			self.hideNav();
-		}, this.settings.mouseoutDelay);
+		this.mouseoutTimer = setTimeout($.proxy(function() {
+			this.hideNav();
+		}, this), this.settings.mouseoutDelay);
 
 	//Mouse is still within the nav
 	} else {
