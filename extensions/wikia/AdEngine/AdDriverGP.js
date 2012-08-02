@@ -89,6 +89,8 @@ var AdDriverGP = {
 
 	fillInSlot: function(s) {
 		this.log('fillInSlot', s);
+		
+		WikiaTracker.trackAdEvent('liftium.slot', {'ga_category':s[1], 'ga_action':s[0], 'ga_label':'gamepro'}, 'ga');
 
 		var url = this.getUrl(s[0], s[1]);
 		ghostwriter(
