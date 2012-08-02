@@ -346,15 +346,6 @@ HTML;
 					$personal_urls['userpage']['text'] = $name;
 				}
 			}
-			// Replace logout link with a button to disconnect from Facebook Connect
-
-			if(empty($fbPersonalUrls['hide_logout_of_fb'])){
-				$html = Xml::openElement("span",array("id" => 'fbuser' ));
-					$html .= Xml::openElement("a",array("href" => $personal_urls['userpage']['href'], 'class' => 'fb_button fb_button_small fb_usermenu_button' ));
-					$html .= Xml::closeElement( "a" );
-				$html .= Xml::closeElement( "span" );
-				$personal_urls['fbuser']['html'] = $html;
-			}
 
 			/*
 			 * Personal URLs option: link_back_to_facebook
