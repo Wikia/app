@@ -350,8 +350,21 @@ $.store.serializers = {
 			decoders.push( "json" );
 		},
 		// macbre: use interface provided by jQuery JSON plugin
-		encode: $.toJSON,
-		decode: $.secureEvalJSON
+		// wladek: try/catch block is here to prevent weird errors
+		encode: function(data) {
+			try {
+				return JSON.stringify(data);
+			} catch (e) {
+				return '';
+			}
+		},
+		decode: function(data) {
+			try {
+				return JSON.parse(data);
+			} catch (e) {
+				return null;
+			}
+		}
 	}
 };
 
