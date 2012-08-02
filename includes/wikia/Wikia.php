@@ -27,6 +27,7 @@ $wgHooks['AllowNotifyOnPageChange']  [] = "Wikia::allowNotifyOnPageChange";
 $wgHooks['AfterInitialize']          [] = "Wikia::onAfterInitialize";
 $wgHooks['UserMailerSend']           [] = "Wikia::onUserMailerSend";
 $wgHooks['ArticleDeleteComplete']    [] = "Wikia::onArticleDeleteComplete";
+$wgHooks['PageHistoryLineEnding']    [] = "Wikia::onPageHistoryLineEnding";
 
 # changes in recentchanges (MultiLookup)
 $wgHooks['RecentChange_save']        [] = "Wikia::recentChangesSave";
@@ -1922,6 +1923,15 @@ class Wikia {
 		if ( $title instanceof Title ) {
 			$title->getArticleID( Title::GAID_FOR_UPDATE );
 		}
+		return true;
+	}
+
+	/*
+	 * Fix for bugid:38093
+	 * Chrome bug: No "Undo" links on Recent Changes
+	 */
+	public static function onPageHistoryLineEnding( $HistoryActionObj, $row , $s, $classes ) {
+		$s = '<span dir="auto">'.$s.'</span>';
 		return true;
 	}
 
