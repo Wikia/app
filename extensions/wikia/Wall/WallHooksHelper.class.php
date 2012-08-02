@@ -1661,7 +1661,7 @@ class WallHooksHelper {
 				);
 
 				if( $isThread && $isNew ) {
-					$wfMsgOpts[7] = Xml::element('strong', array(), 'N ');
+					$wfMsgOpts[7] = Xml::element('strong', array(), wfMsg('newpageletter').' ');
 				} else {
 					$wfMsgOpts[7] = '';
 				}
