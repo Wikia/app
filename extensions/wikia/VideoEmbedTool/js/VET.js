@@ -768,7 +768,6 @@ function VET_displayDetails(responseText) {
 	$.when(
 		$.getResources([wgResourceBasePath+'/resources/wikia/libraries/jquery-ui/jquery-ui-1.8.14.custom.js'])
 	).done(function() {
-		console.log("DONE");
 		$('.WikiaSlider').slider && $('.WikiaSlider').slider({
 			min: 100,
 			max: 500,
