@@ -1,9 +1,9 @@
 <div class="tabs-container">
     <ul class="tabs">
-        <li id="commit"><a href="/wiki/Special:VisualStats/commit?user=<? echo $user;?>" title="Commit Activity">Commit Activity</a></li>
-        <li id="punchcard"><a href="/wiki/Special:VisualStats/punchcard?user=<?=$user?>" title="Punchcard">Punchcard</a>
+        <li id="commit"><a href="<?=$urlCommit?>" title="Commit Activity">Commit Activity</a></li>
+        <li id="punchcard"><a href="<?=$urlPunchcard?>" title="Punchcard">Punchcard</a>
         </li>
-        <li id="histogram"><a href="/wiki/Special:VisualStats/histogram?user=<?=$user?>" title="Histogram">Histogram</a></li>
+        <li id="histogram"><a href="<?=$urlHistogram?>" title="Histogram">Histogram</a></li>
     </ul>
 </div>
 <div id="Graph"></div>
@@ -21,7 +21,19 @@
 
     wgAfterContentAndJS.push(function(){
         $(function () {
-            VisualStatsIndexContent.init(parameter, data, user);
+            $('#' + parameter).addClass("selected");
+            switch (parameter){
+                case "commit":
+                    VisualStatsCommitActivity.init(parameter, data, user)
+                    break;
+                case "punchcard":
+                    //this.drawPunchcard();
+                    break;
+                case "histogram":
+                    //this.drawHistogram();
+                    break;
+            }
+           // VisualStatsIndexContent.init(parameter, data, user);
         });
     });
 

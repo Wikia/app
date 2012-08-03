@@ -1,59 +1,43 @@
 /*global d3:true*/
-var VisualStatsIndexContent = {
+var VisualStatsCommitActivity = {
     init: function(parameter, data, user){
         this.wikiaCommit = data.wikiaCommit;
         this.userCommit = data.userCommit;
         this.user = user;
 
-        $('#' + parameter).addClass("selected");
-        switch (parameter){
-            case "commit":
-                this.drawCommitActivity();
-                break;
-            case "punchcard":
-                this.drawPunchcard();
-                break;
-            case "histogram":
-                this.drawHistogram();
-                break;
+        this.drawCommitActivity();
 
-        }
     },
+
     roundUp: function(number){
-        number+=12;
-        number=Math.ceil(number/10)*10;
+        number+= 12;
+        number = Math.ceil(number / 10) * 10;
         return number;
     },
+
     drawAxis: function(svg){
         svg.append("svg:line")
-            .attr("x1", 60)
-            .attr("y1",600)
-            .attr("x2", 920)
-            .attr("y2",600)
+            .attr("x1", 60).attr("y1", 600)
+            .attr("x2", 920).attr("y2", 600)
             .attr("stroke", "green");
         svg.append("svg:line")
-            .attr("x1", 60)
-            .attr("y1",600)
-            .attr("x2", 60)
-            .attr("y2",50)
+            .attr("x1", 60).attr("y1", 600)
+            .attr("x2", 60).attr("y2", 50)
             .attr("stroke", "green");
         svg.append("svg:line")
-            .attr("x1", 60)
-            .attr("y1",350)
-            .attr("x2", 920)
-            .attr("y2",350)
+            .attr("x1", 60).attr("y1", 350)
+            .attr("x2", 920).attr("y2", 350)
             .style("stroke-width", "0.5px")
             .attr("stroke", "green");
         svg.append("svg:line")
-            .attr("x1", 60)
-            .attr("y1",100)
-            .attr("x2", 920)
-            .attr("y2",100)
+            .attr("x1", 60).attr("y1", 100)
+            .attr("x2", 920).attr("y2", 100)
             .style("stroke-width", "0.5px")
             .attr("stroke", "green");
     },
+
     drawCommitActivity: function(){
-        var svg = this.createSvgContainer(980, 650, "#Graph");
+        var svg = VisualStatsCommon.createSvgContainer(980, 650, "#Graph");
         var self = this;
         var wikiaMax = this.roundUp(this.wikiaCommit.max);
         var userMax = this.roundUp(this.userCommit.max);
@@ -73,7 +57,7 @@ var VisualStatsIndexContent = {
 
         var scaleX = d3.scale.linear()
             .domain([0, 14])
-            .range([120, 840]);
+            .range([120, 860]);
         var i = 0;
         var wikiaDataset= [];
         var userDataset= [];
@@ -92,15 +76,15 @@ var VisualStatsIndexContent = {
         })
 
         svg.append("svg:text")
-            .text(parseInt(wikiaMax/2))
+            .text(parseInt(wikiaMax / 2))
             .attr("id", "halfLabel")
-            .attr("x",55)
+            .attr("x", 55)
             .attr("y", 352)
             .attr("text-anchor", "end");
         svg.append("svg:text")
             .text(wikiaMax)
             .attr("id", "maxLabel")
-            .attr("x",55)
+            .attr("x", 55)
             .attr("y", 102)
             .attr("text-anchor", "end");
 
@@ -108,7 +92,7 @@ var VisualStatsIndexContent = {
         $.each(this.userCommit.data, function(date, value){
             userDataset[i] = value;
             i++;
-        })
+        });
 
         this.line = d3.svg.line()
             .x(function(d, i) { return scaleX(i); })
@@ -119,7 +103,7 @@ var VisualStatsIndexContent = {
             .style("stroke", "#248EA6")
             .style("fill", "none")
             .style("stroke-width", "3px");
-        var curLabel;
+
         svg.selectAll("circle")
             .data(wikiaDataset)
             .enter()
@@ -131,13 +115,13 @@ var VisualStatsIndexContent = {
             .attr("fill", "#42C5E3")
             .on("mouseover", function(d,i){
                 d3.select(this).attr("fill", "#72D6BF").attr("r", 6);
-                d3.select("#label" + i).attr("font-size", 13);
-                d3.select("#date" + i).attr("font-size", 10).attr("fill", "red");
+                d3.select("#label" + i).attr("font-size", 13).attr("font-weight", "bold");
+                d3.select("#date" + i).attr("font-size", 10).attr("fill", "red").attr("font-weight", "bold");
             })
             .on("mouseout", function(d,i){
                 d3.select(this).attr("fill", "#42C5E3").attr("r", 4);
-                d3.select("#label" + i).attr("font-size", 9);
-                d3.select("#date" + i).attr("font-size", 8).attr("fill", "black");
+                d3.select("#label" + i).attr("font-size", 9).attr("font-weight", "normal");
+                d3.select("#date" + i).attr("font-size", 8).attr("fill", "black").attr("font-weight", "normal");
             });
 
         svg.selectAll(".labels")
@@ -146,8 +130,8 @@ var VisualStatsIndexContent = {
             .append("svg:text")
             .attr("class", "labels")
             .attr("id", function(d,i){ return 'label' + i;})
-            .attr("x", function(d, i) { return scaleX(i)-5; })
-            .attr("y", function(d) { return self.scaleY(d)-5; })
+            .attr("x", function(d, i) { return scaleX(i) - 5; })
+            .attr("y", function(d) { return self.scaleY(d) - 5; })
             .text(function(d) { return d; })
             .attr("font-size", 9)
             .attr("text-anchor", "end");
@@ -159,20 +143,20 @@ var VisualStatsIndexContent = {
             $("#wikiaButton").click(function(){
                 $(this).removeClass("secondary");
                 $("#userButton").addClass("secondary");
-                self.updateCommitActivity(svg,wikiaDataset, wikiaMax);
+                self.updateCommitActivity(svg, wikiaDataset, wikiaMax);
             });
             $("#userButton").click(function(){
                 $(this).removeClass("secondary");
                 $("#wikiaButton").addClass("secondary");
-                self.updateCommitActivity(svg,userDataset, userMax);
+                self.updateCommitActivity(svg, userDataset, userMax);
             })
         }
 
     },
+
     updateCommitActivity: function(svg, dataToUpdate, max){
-        //[20,20,20,20,20,20,20,20,20,20,20,20,20,20,20]
         this.scaleY.domain([0, max]);
-        svg.select("#halfLabel").text(parseInt(max/2));
+        svg.select("#halfLabel").text(parseInt(max / 2));
         svg.select("#maxLabel").text(max);
 
         var self = this;
@@ -189,23 +173,5 @@ var VisualStatsIndexContent = {
             .transition()
             .attr("d", this.line(dataToUpdate));
 
-    },
-    drawPunchcard: function(){
-        this.createSvgContainer(1000,1000,"#Graph");
-
-    },
-    drawHistogram: function(){
-        this.createSvgContainer(1000,1000,"#Graph");
-
-    },
-    createSvgContainer: function(width, height, div){
-        return d3.select(div)
-            .append("svg")
-            .attr("width", width)
-            .attr("height", height)
-            .attr("xmlns", "http://www.w3.org/2000/svg")
-            .attr("version", "1.1");
     }
-
-
 }
