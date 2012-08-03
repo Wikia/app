@@ -387,9 +387,10 @@ var WikiBuilder = {
 				} else {
 					$.showModal(res.caption, res.content);
 				}
+			},
+			onErrorCallback: function() {
+				WikiBuilder.generateAjaxErrorMsg();
 			}
-		}).error(function() {
-			WikiBuilder.generateAjaxErrorMsg();
 		});
 	},
 
@@ -434,9 +435,10 @@ var WikiBuilder = {
 					$('#ThemeWiki .next-controls input').attr('disabled', 'true');
 					$.showModal(res.statusHeader, WikiBuilder.createStatusMessage);
 				}
+			},
+			onErrorCallback: function() {
+				WikiBuilder.generateAjaxErrorMsg();
 			}
-		}).error(function() {
-			WikiBuilder.generateAjaxErrorMsg();
 		});
 	},
 
