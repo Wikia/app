@@ -162,8 +162,7 @@ $color-related-videos-background: darken($color-page, 20%);
           margin-bottom:10px;
         }
         .video-views {
-        	//display: block;
-        	display: none; // (BugId:42639) - remove this later once we have some views
+        	display: block;
         	font-weight: normal;
         	margin-top: 7px;
         }

@@ -81,7 +81,7 @@ $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 		z-index: 2;
 	}
 	.more-info h1 {
-		//float: left; // (BugId:42639) - remove this later once we have some views
+		float: left;
 	}
 	.more-info, .share {
 		display: none;
@@ -511,16 +511,12 @@ $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 		margin-left: 10px;
 		padding-left: 10px;
 	}
-	.video-views {
-		display: none; // (BugId:42639) - remove this later once we have some views
-	}
 	&.video-lightbox {
 		.see-full-size-link {
 			display: none;
 		}
 		.video-views {
 			font-size: 12px;
-			display: none; // (BugId:42639) - remove this later once we have some views
 		}
 	}
 	&.image-lightbox {
