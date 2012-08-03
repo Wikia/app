@@ -4,7 +4,7 @@ class WikiaSearch extends WikiaObject {
 
 	const RESULTS_PER_PAGE = 10;
 	const RESULTS_PER_WIKI = 4;
-	const GROUP_RESULTS_SEARCH_LIMIT = 40;
+	const GROUP_RESULTS_SEARCH_LIMIT = 20;
 	const GROUP_RESULTS_CACHE_TTL = 900; // 15 mins
 	const WIKIPAGES_CACHE_TTL = 604800; // 7 days
 	const VIDEO_WIKI_ID = 298117;
@@ -50,49 +50,17 @@ class WikiaSearch extends WikiaObject {
 		$groupResults = ( empty($cityId) && $groupResults );
 
 		if($groupResults) {
-			$methodOptions = array('rank'=>$rank, 'hub'=>$hub);
-			$cacheSignature = $query . serialize($methodOptions);
-			$results = $this->getGroupResultsFromCache($cacheSignature);
 
-			if(empty($results) || $this->skipCache) {
-				$methodOptions += array( 'size' => self::GROUP_RESULTS_SEARCH_LIMIT, 
-										 'cityId' =>  $cityId,
-										 'isInterWiki' => true 
-									   );
-				$results = $this->client->search( $query, $methodOptions );
-				$results = $this->groupResultsPerWiki( $results );
-				$this->setGroupResultsToCache( $query, $results );
-			}
+			$length = self::GROUP_RESULTS_SEARCH_LIMIT;
 
-			$results->setCurrentPage($page);
-			$results->setResultsPerPage($length);
-			$searchCount = 1;
-			while( !$results->valid() && $results->hasResults() ) {
-			  $methodOptions = array('start'  => ($results->getResultsStart() + self::GROUP_RESULTS_SEARCH_LIMIT), 'size' => self::GROUP_RESULTS_SEARCH_LIMIT, 'cityId' => $cityId);
-				$moreResults = $this->client->search( $query, $methodOptions );
-
-				if(!$moreResults->hasResults()) {
-					$results->markAsComplete();
-					// we reached the point, when there's too many pages than grouped results, so we need to find very last one page and show it
-					do {
-						$results->setCurrentPage($results->getCurrentPage()-1);
-					} while( !$results->valid() && ( $results->getCurrentPage() > 1 ) );
-				} else {
-					$moreResults = $this->groupResultsPerWiki( $moreResults );
-					$results->merge( $moreResults );
-				}
-
-				$this->setGroupResultsToCache( $cacheSignature, $results );
-				if($results->isComplete()) {
-					break;
-				}
-
-				if($searchCount < self::GROUP_RESULT_MAX_FETCHES) {
-					// throw an exception in case something went wrong
-					throw new WikiaException( 'ERROR: Too many group search fetches' );
-				}
-				$searchCount++;
-			}
+			$methodOptions = array( 'rank'=>$rank,
+									'hub'=>$hub,
+									'size' => $length,
+									'cityId' =>  $cityId,
+									'isInterWiki' => true,
+									'start' => $length * ($page - 1)
+								  );
+			$results = $this->client->search( $query, $methodOptions );
 		}
 		else {
 			// no grouping, e.g. intra-wiki searching
@@ -114,7 +82,7 @@ class WikiaSearch extends WikiaObject {
 		}
 
 		if( $page == 1 ) {
-			$resultCount = $results->getRealResultsFound();
+			$resultCount = $results->getResultsFound();
 			Track::event( ( !empty( $resultCount ) ? 'search_start' : 'search_start_nomatch' ), 
 							array(	'sterm' => $query, 
 									'rver' => self::RELEVANCY_FUNCTION_ID,
@@ -127,69 +95,6 @@ class WikiaSearch extends WikiaObject {
 		return $results;
 	}
 
-	/**
-	 * @param string $cacheSignature (query + serialized options)
-	 * @return WikiaSearchResultSet
-	 */
-	private function getGroupResultsFromCache($cacheSignature) {
-		return $this->wg->Memc->get( $this->getGroupResultsCacheKey($cacheSignature) );
-	}
-
-	private function setGroupResultsToCache($cacheSignature, WikiaSearchResultSet $resultSet) {
-		$this->wg->Memc->set( $this->getGroupResultsCacheKey($cacheSignature), $resultSet, self::GROUP_RESULTS_CACHE_TTL );
-	}
-
-	private function getGroupResultsCacheKey($cacheSignature) {
-		return $this->wf->SharedMemcKey( 'WikiaSearchResultSet', md5($cacheSignature) );
-	}
-
-	private function groupResultsPerWiki(WikiaSearchResultSet $results) {
-		wfProfileIn(__METHOD__);
-
-		$wikiResults = array();
-		$wikisByScore = array();
-		foreach($results as $result) {
-			if($result instanceof WikiaSearchResult) {
-				$cityId = $result->getCityId();
-				if(!isset($wikiResults[$cityId])) {
-					$wikiResultSet = F::build( 'WikiaSearchResultSet' );
-					$wikiResultSet->setHeader('cityId', $cityId );
-					$wikiResultSet->setHeader('cityTitle', WikiFactory::getVarValueByName( 'wgSitename', $cityId ));
-					$wikiResultSet->setHeader('cityUrl', WikiFactory::getVarValueByName( 'wgServer', $cityId ));
-					$wikiResultSet->setHeader('cityArticlesNum', $result->getVar('cityArticlesNum', false));
-					$wikiResultSet->setHeader('1stResultPos', $result->getVar('position', 0));
-
-					$wikiResults[$cityId] = $wikiResultSet;
-				}
-				$set = $wikiResults[$cityId];
-				if($set->getResultsNum() < self::RESULTS_PER_WIKI) {
-					$set->addResult($result);
-				}
-
-				$set->totalScore += ($result->score > 0) ? $result->score : 0;
-
-				$set->incrResultsFound();
-				$wikisByScore['id:'.$cityId] = $set->totalScore; //((1+$set->totalScore)/log($set->getHeader('1stResultPos')+1, 2));
-			} else {
-			  $wikisByScore['id'.$result->getCityId()] = $result->score; //(1+$result->score) / log($result->getVar('position')+1, 2);
-			}
-		}
-
-		arsort($wikisByScore);
-
-		$sortedWikiResults = array();
-
-		# create an ordered result set based on score
-		array_walk(array_keys($wikisByScore),
-			   function($key) use (&$sortedWikiResults, &$wikiResults) {
-			     $sortedWikiResults[] = $wikiResults[str_replace('id:', '', $key)];
-			   });
-
-		$resultSet = F::build( 'WikiaSearchResultSet', array( 'results' => $sortedWikiResults, 'resultsFound' => $results->getResultsFound(), 'resultsStart' => $results->getResultsStart(), 'isComplete' => $results->isComplete(), 'query' => $results->getQuery() ) );
-
-		wfProfileOut(__METHOD__);
-		return $resultSet;
-	}
 
 	public function setClient( WikiaSearchClient $client ) {
 		$this->client = $client;
