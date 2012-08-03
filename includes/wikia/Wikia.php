@@ -530,17 +530,10 @@ class Wikia {
 		}
 
 		/**
-		 * fallback to Angela (with an override)
+		 * fallback to Wikia (with an override)
 		 */
 		if( ! $staffUser ) {
-			$fallbackname = "Angela"; //still hardcoded
-
-			if( !empty($data['?']) && is_array($data['?']) ) {
-				//but overrideable
-				$fallbackname = $data['?'][ array_rand($data['?']) ];
-			}
-
-			$staffUser = User::newFromName( $fallbackname );
+			$staffUser = User::newFromName( 'Wikia' );
 			$staffUser->load();
 		}
 
