@@ -143,22 +143,6 @@ $.toJSON({foo: true});
 jQuery.evalJSON('{foo: true}');
 $.secureEvalJSON('{foo: 1234}');
 
-// deprecated moduleProxy calls
-$('.modalContent').load(wgServer + wgScript + '?action=ajax&rs=moduleProxy&moduleName=ChatRail&actionName=AnonLoginSuccess&outputType=html');
-
-$.get(wgScript, {
-	action: 'ajax',
-	rs: 'moduleProxy',
-	moduleName: 'UploadPhotos',
-	actionName: 'Index',
-	outputType: 'html',
-	title: wgPageName,
-	cb: wgCurRevisionId,
-	uselang: wgUserLanguage
-}, function(html) {
-	// ...
-});
-
 // test ignore statement
 $.toJSON({foo: true}); /* JSlint ignore */
 console.log('Core JS lint rule'); /* JSlint ignore */

@@ -222,6 +222,8 @@ class CreateNewWikiController extends WikiaController {
 	/**
 	 * Checks if WikiPayment is enabled and handles fetching PayPal token - if disabled, displays error message
 	 *
+	 * TODO: review and remove
+	 *
 	 * @author Maciej B?aszkowski <marooned at wikia-inc.com>
 	 */
 	public function executeUpgradeToPlus() {

@@ -7,6 +7,15 @@
  * @author Maciej Brencz
  */
 
+$wgExtensionCredits['other'][] = array(
+	'name' => 'Oasis Skin',
+	'version' => '1.0',
+	'author' => array('Wikia'),
+);
+
+// Messages
+$wgExtensionMessagesFiles['Oasis'] = dirname(__FILE__) . '/Oasis.i18n.php';
+
 $wgExtensionFunctions[] = 'wfOasisSetup';
 
 function wfOasisSetup() {
@@ -219,42 +228,4 @@ $wgOasisThemes = array(
 		"background-tiled" => "false",
 		"page-opacity" => "100"
 	),
-);
-
-// AJAX dispatcher
-// TODO: Remove this and unify ajax call entry point
-// migrate JS code to $.nirvana.sendRequest
-$wgAjaxExportList[] = 'moduleProxy';
-function moduleProxy() {
-	global $wgRequest;
-	wfProfileIn(__METHOD__);
-
-	wfDeprecated(__METHOD__);
-
-	$outputType = $wgRequest->getVal('outputType'); // html or data for oasis modules
-	if ($outputType == 'data') $outputType = 'json';
-
-	$params = json_decode($wgRequest->getVal('moduleParams'), true);
-	$params ['format'] = $outputType;
-
-	$response = F::app()->sendRequest( $wgRequest->getVal('moduleName'), $wgRequest->getVal('actionName', 'Index'), $params, false );
-
-	$callback = $wgRequest->getVal('callback');
-	if($callback && ($outputType == 'json')) {
-		$text = Xml::escapeJsString($callback) . '(' . $response->toString() . ')';
-		$response->setContentType('text/javascript');
-		$response->setBody($text);
-	}
-
-	wfProfileOut(__METHOD__);
-	return $response;
-}
-
-// Messages
-$wgExtensionMessagesFiles['Oasis'] = dirname(__FILE__) . '/Oasis.i18n.php';
-
-$wgExtensionCredits['other'][] = array(
-	'name' => 'Oasis Skin',
-	'version' => '1.0',
-	'author' => array('Wikia'),
 );

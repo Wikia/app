@@ -112,12 +112,6 @@ exports.rules  = [
 		}
 	},
 	**/
-	// detect use of module proxy
-	{
-		name: 'Found moduleProxy',
-		regexp: /\&rs=moduleProxy\&|rs:\s?['"]moduleProxy/,
-		reason: 'Use of deprecated Oasis module API (use $.nirvana)'
-	},
 	// detect requests to wikia.php
 	{
 		name: '$.get(wikia.php) request',
