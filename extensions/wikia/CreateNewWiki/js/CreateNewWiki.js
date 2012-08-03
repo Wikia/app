@@ -330,25 +330,6 @@ var WikiBuilder = {
 		}
 	},
 
-	/*
-	transition: function(from, next, dot) {
-		var f = $('#' + from);
-		var t = (next ? f.next() : f.prev());
-
-		f.hide(0, function() {
-			WikiBuilder.wb.width(t.width());
-			if (dot) {
-				if (dot === '+') {
-					$('#StepsIndicator .step.active').last().next().addClass('active');
-				} else if (dot === '-') {
-					$('#StepsIndicator .step.active').last().removeClass('active');
-				}
-			}
-			t.show();
-		});
-	},
-	*/
-
 	transition: function (from, next, dot) {
 		var f = $('#' + from);
 		var t = (next ? f.next() : f.prev());
