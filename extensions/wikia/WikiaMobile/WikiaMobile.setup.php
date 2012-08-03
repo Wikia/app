@@ -156,7 +156,6 @@ if ( empty( $app->wg->WikiaMobileExcludeJSGlobals ) ) {
 			'fbReturnToTitle',
 			'fbScriptLangCode',
 			'wgLoadScript',
-			'debug',
 			'wgUrlProtocols',
 			'wgVariantArticlePath',
 			'wgActionPaths',
