@@ -1,3 +1,4 @@
+/*global ChatEntryPoint: true */
 var WikiHeader = {
 	isDisplayed: false,
 

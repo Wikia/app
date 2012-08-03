@@ -12,7 +12,7 @@
 		padding-left: 30px;
 
 		list-style: none;
-		&:not(:first-child) { 
+		&:not(:first-child) {
 			border-top: 1px solid $color-page-border;
 		}
 	}
@@ -82,7 +82,7 @@
 	}
 
 	.myhome-video-play {
-		background-image: url(/extensions/wikia/MyHome/images/play.png); /* $wgCdnStylePath */
+		background-image: url(/extensions/wikia/MyHome/images/play.png); /* base64 */
 		background-repeat: no-repeat;
 		background-position: 50% 50%;
 		top: 0;

@@ -5,7 +5,7 @@
 
 .toolbar-edit-rename-item {
 	padding: 10px 0;
-	
+
 	.input-box {
 		border: 1px solid $color-page-border;
 		width: 350px;
@@ -24,35 +24,37 @@
 			padding-left: 0px;
 		}
 	}
-	
+
 	.options-list, .search-box {
 		margin-top: 6px;
 	}
-	
-	
-	
+
+
+
 	label {
 		font-weight: bold;
 		font-size: 110%;
 		margin-bottom: 3px;
 	}
-	
+
 	.reset-defaults {
 		.wikia-chiclet-button {
 			margin-top: -1px;
 			vertical-align: middle;
 			height: 11px;
 			width: 12px;
-			
+
 			img {
-				background: url(/skins/oasis/images/icon_return_6.png) top left transparent no-repeat; /* $wgCdnStylePath */
+				background: url(/skins/oasis/images/icon_return_6.png); /* base64 */
+				background-repeat: no-repeat;
+                background-position: top left;
 				height: 6px;
 				left: 3px;
 				position: relative;
 				top: -2px;
 				width: 7px;
 			}
-			
+
 			background-color: $color-links;
 			background-image: none;
 			&:hover {
@@ -60,7 +62,7 @@
 			}
 		}
 	}
-	
+
 	.reset-defaults, .advanced-tools {
 		position: absolute;
 		display: block;
@@ -68,14 +70,14 @@
 		right: 10px;
 		font-size: 80%;
 	}
-	
+
 	.options-list {
 		border: 1px solid $color-page-border;
 		height: 380px;
 		overflow: auto;
 		padding: 0 6px;
 		position: relative;
-		
+
 		li {
 			padding: 6px 60px 6px 5px;
 			position: relative;
@@ -93,7 +95,7 @@
 			&.list-item-indent-1 {
 				margin-left: 30px;
 			}
-			
+
 			.edit-pencil, .trash, .drag {
 				display: none;
 			}
@@ -102,7 +104,7 @@
 					display: block;
 				}
 			}
-			
+
 			.edit-pencil {
 				cursor: pointer;
 				right: 46px
@@ -115,9 +117,9 @@
 				cursor: move;
 				right: 6px;
 			}
-			
+
 			.folder-icon {
-				background-image: url(/skins/oasis/images/icon_folder_16.png); /* $wgCdnStylePath */
+				background-image: url(/skins/oasis/images/icon_folder_16.png); /* base64 */
 				verical-align: middle;
 				height: 16px;
 				width: 16px;
@@ -151,31 +153,31 @@
 			}
 		}
 	}
-	
+
 	.search-box {
 		border: 1px solid $color-page-border;
 		border-bottom: 0;
 		padding: 11px 12px 5px 9px;
 		position: relative;
-		
+
 		.search {
 			@include linear-gradient(false, top, rgba(#000, .05), 0, rgba(#000, 0), 40%);
 			border: 1px solid $color-page-border;
 			height: 19px;
 			width: 310px;
-			
+
 			&::-webkit-input-placeholder {
 				color: mix($color-page,$color-text,50%);
 			}
 			&:-moz-placeholder {
 				color: mix($color-page,$color-text,50%);
 			}
-			&.placeholder { 
+			&.placeholder {
 				color: mix($color-page,$color-text,50%);
 			}
 		}
 	}
-	
+
 	.autocomplete {
 		@include menu-regular;
 		margin-top: 2px;
@@ -192,30 +194,30 @@
 			background: $color-menu-highlight;
 		}
 	}
-	
-	
+
+
 	.popular-tools-group {
 		@include linear-gradient(false, top, $color-module-highlight, 60%, $color-module-shadow, 100%);
 		border: 1px solid $color-page-border;
 		border-top: 0;
 		padding: 5px 9px 5px 9px;
-		
+
 		.popular-list {
 			padding: 4px 0;
 			max-height: 290px;
 			overflow-y: auto;
-			
+
 			li {
 				line-height: 20px;
 			}
 		}
-		
+
 		.popular-toggle {
 			padding: 0 10px 0 7px;
 			line-height: 28px;
 			color: $color-links;
 			cursor: pointer;
-			
+
 			.icon-show, .icon-hide {
 				border-color: transparent;
 				border-style: solid;
@@ -235,7 +237,7 @@
 			}
 		}
 	}
-	
+
 	.buttons {
 		@include clearfix;
 		clear: both;

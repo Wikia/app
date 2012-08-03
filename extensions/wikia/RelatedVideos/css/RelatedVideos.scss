@@ -20,6 +20,7 @@ $color-related-videos-background: darken($color-page, 20%);
 	height: 230px;
 	display: inline-block;
 	width: 660px;
+	/* FIXME: file does not exist!!! */
 	background-image: url(/extensions/wikia/RelatedVideos/images/mock1.png); /* wgCdnStylePath */
 }
 
@@ -58,7 +59,7 @@ $color-related-videos-background: darken($color-page, 20%);
 		background-color: transparent;
 		background-repeat: no-repeat;
 		&.addRelatedVideo {
-			background-image: url(/extensions/wikia/RelatedVideos/images/AddVideo_Icon.png);  /* wgCdnStylePath */
+			background-image: url(/extensions/wikia/RelatedVideos/images/AddVideo_Icon.png);  /* base64 */
 			height: 22px;
 			width: 30px;
 		}
@@ -239,7 +240,7 @@ $color-related-videos-background: darken($color-page, 20%);
 							height: 90px;
 							position: absolute;
 							z-index: 1;
-							background-image: url(/extensions/wikia/RelatedVideos/images/PlayBtn_35Alpha.png); /* wgCdnStylePath */
+							background-image: url(/extensions/wikia/RelatedVideos/images/PlayBtn_35Alpha.png); /* base64 */
 							background-repeat:no-repeat;
 							background-position:center;
 							&:hover {
@@ -270,7 +271,7 @@ $color-related-videos-background: darken($color-page, 20%);
 							margin-right:5px;
 							width: 11px;
 							height: 14px;
-							background-image: url(/extensions/wikia/RelatedVideos/images/TrashCan.png); /* wgCdnStylePath */
+							background-image: url(/extensions/wikia/RelatedVideos/images/TrashCan.png); /* base64 */
 						}
 					}
 				}
@@ -297,7 +298,7 @@ $color-related-videos-background: darken($color-page, 20%);
 							height: 83px;
 							position: absolute;
 							z-index: 100;
-							background-image: url(/extensions/wikia/RelatedVideos/images/AddVideo_Large.png); /* wgCdnStylePath */
+							background-image: url(/extensions/wikia/RelatedVideos/images/AddVideo_Large.png); /* base64 */
 							background-repeat:no-repeat;
 							background-position:center;
 							&:hover {
@@ -513,7 +514,7 @@ $color-related-videos-background: darken($color-page, 20%);
     						height: 85px;
     						position: absolute;
     						z-index: 100;
-    						background-image: url(/extensions/wikia/RelatedVideos/images/AddVideo_Large.png); /* wgCdnStylePath */
+    						background-image: url(/extensions/wikia/RelatedVideos/images/AddVideo_Large.png); /* base64 */
     						background-repeat:no-repeat;
     						background-position:center;
     						&:hover {
@@ -588,7 +589,7 @@ $color-related-videos-background: darken($color-page, 20%);
 				padding: 0 0 2px 0;
 				text-align: center;
                 clear: both;
-				&:before{ 
+				&:before{
 					@include opacity(50);
 					border-top: 1px solid $color-secondary-button-border;
 					content: "";
@@ -598,7 +599,7 @@ $color-related-videos-background: darken($color-page, 20%);
 				button {
 					margin-bottom: 12px;
 				}
-			}	
+			}
 
 		}
 	}

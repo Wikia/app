@@ -167,7 +167,7 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 				}
 			}
 			.remix {
-				background-image: url("/extensions/wikia/WikiaHomePage/images/brush.png");	/* $wgCdnStylePath */
+				background-image: url("/extensions/wikia/WikiaHomePage/images/brush.png");	/* base64 */
 				height: 210px;
 				position: relative;
 				text-align: center;
@@ -248,7 +248,7 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 				}
 			}
 			.stats {
-				background-image: url("/extensions/wikia/WikiaHomePage/images/brush.png");/* $wgCdnStylePath */
+				background-image: url("/extensions/wikia/WikiaHomePage/images/brush.png");/* base64 */
 				border-top: 4px solid $color-wikiahome-community;
 				height: 186px;
 				padding: 10px 15px;

@@ -65,7 +65,7 @@
 						z-index: 5;
 						@include transform-origin(0 0);
 						@include transform(translate(-17px, 54px) rotate(-45deg));
-						
+
 					}
 					&:after {
 						background: url(/extensions/wikia/WikiFeatures/images/new_ribbon.png); /* $wgCdnStylePath */
@@ -78,7 +78,7 @@
 					}
 				}
 			}
-			
+
 			.details {
 				margin: 0 190px 0 165px;
 			}
@@ -175,12 +175,12 @@
 	label {
 		font-weight: bold;
 	}
-	
+
 	.input-group {
 		clear: both;
 		margin-top: 10px;
 	}
-	
+
 	.comment-group {
 		text-align: right;
 		label {
@@ -199,17 +199,17 @@
 			}
 		}
 	}
-	
-	input[type=submit], 
+
+	input[type=submit],
 	.status-msg {
 		float: right;
 		margin-left: 20px
 	}
-	
+
 	.status-msg {
 		color: #090;
 	}
-	
+
 	.invalid {
 		color: #f00;
 	}
@@ -238,12 +238,12 @@
 .star-rating {
 	@include clearfix;
 	>img {
-		background: url('/extensions/wikia/WikiFeatures/images/star-inactive.png'); /* $wgCdnStylePath */
+		background: url('/extensions/wikia/WikiFeatures/images/star-inactive.png'); /* base64 */
 		height: 16px;
 		float: left;
 		width: 16px;
 		&.active {
-			background: url('/extensions/wikia/WikiFeatures/images/star-active.png'); /* $wgCdnStylePath */
+			background: url('/extensions/wikia/WikiFeatures/images/star-active.png'); /* base64 */
 		}
 	}
 }

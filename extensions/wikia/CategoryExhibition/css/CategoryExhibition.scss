@@ -49,7 +49,7 @@ $color-inctive-button: mix($color-page, #000, 60%);
 		position: relative;
 		width: 14px;
 		height: 14px;
-		background-image: url('/extensions/wikia/CategoryExhibition/img/icon-category-images-inactive.png'); /* $wgCdnStylePath */
+		background-image: url('/extensions/wikia/CategoryExhibition/img/icon-category-images-inactive.png'); /* base64 */
 		background-repeat: no-repeat;
 		background-position: center;
 
@@ -66,7 +66,7 @@ $color-inctive-button: mix($color-page, #000, 60%);
 			div {
 				background-color: $color-buttons;
 			}
-			background-image: url('/extensions/wikia/CategoryExhibition/img/icon-category-images-active.png'); /* $wgCdnStylePath */
+			background-image: url('/extensions/wikia/CategoryExhibition/img/icon-category-images-active.png'); /* base64 */
 		}
 
 		#cat-exh-new-one {
@@ -93,7 +93,7 @@ $color-inctive-button: mix($color-page, #000, 60%);
 		position: relative;
 		width: 14px;
 		height: 14px;
-		background-image: url('/extensions/wikia/CategoryExhibition/img/icon-category-list-inactive.png'); /* $wgCdnStylePath */
+		background-image: url('/extensions/wikia/CategoryExhibition/img/icon-category-list-inactive.png'); /* base64 */
 		background-repeat: no-repeat;
 		background-position: center;
 
@@ -110,7 +110,7 @@ $color-inctive-button: mix($color-page, #000, 60%);
 			div {
 				background-color: $color-buttons;
 			}
-			background-image: url('/extensions/wikia/CategoryExhibition/img/icon-category-list-active.png'); /* $wgCdnStylePath */
+			background-image: url('/extensions/wikia/CategoryExhibition/img/icon-category-list-active.png'); /* base64 */
 		}
 
 		#cat-exh-old-one {
