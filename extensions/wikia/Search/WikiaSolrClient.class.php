@@ -97,7 +97,7 @@ class WikiaSolrClient extends WikiaSearchClient {
 		$fields = array();
 		array_walk(self::$requestedFields, function($val) use(&$fields) { $fields[] = WikiaSolrClient::field($val); } );
 
-		$isMobile = F::app()->checkSkin('wikiamobile');
+		$isMobile = F::app()->checkSkin( 'wikiamobile' );
 
 		$params = array(
 						# html makes the response too big
