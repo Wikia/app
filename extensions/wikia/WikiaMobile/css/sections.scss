@@ -67,6 +67,11 @@ body {
 		right: 0;
 		top: 37%;
     }
+
+	//TODO:Find it in core and do not print it out in mobile skin
+	.editsection {
+		display: none;
+	}
 }
 
 #wkMainCntFtr .collSec{
