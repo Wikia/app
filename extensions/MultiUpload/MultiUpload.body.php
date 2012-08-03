@@ -134,6 +134,7 @@ class MultipleUpload extends SpecialUpload {
 		}
 		$form = new MultiUploadForm( $options );
 		$form->setTitle( $this->getTitle() );
+		$form->setMessagePrefix( "upload");
 
 		# Check the token, but only if necessary
 		if( !$this->mTokenOk && !$this->mCancelUpload
