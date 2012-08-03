@@ -5,7 +5,7 @@
 ?>
 	<p>
 		<a class=groupTitle href="<?= $resultSet->getHeader( 'cityUrl' );?>" <?= $trackingData; ?> ><?= $resultSet->getHeader( 'cityTitle' );?></a>
-		<a class="searchGroup" href="<?= $resultSet->getHeader('cityUrl') .'/wiki/Special:Search?search='.urlencode($query).'&fulltext=Search';?>"></a>
+		<a class=searchGroup href="<?= $resultSet->getHeader('cityUrl') .'/wiki/Special:Search?search='.urlencode($query).'&fulltext=Search';?>"></a>
 	</p>
 	<a class=url href="<?= $resultSet->getHeader( 'cityUrl' );?>" <?= $trackingData; ?> ><?=$resultSet->getHeader( 'cityUrl' );?></a>
 	<?php for($i = 1; $i < 5; $i++){

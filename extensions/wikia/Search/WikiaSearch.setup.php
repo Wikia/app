@@ -58,6 +58,10 @@ $app->registerExtensionMessageFile('WikiaSearch', $dir . 'WikiaSearch.i18n.php' 
  */
 $app->registerHook('GetPreferences', 'WikiaSearch', 'onGetPreferences');
 
+/*
+ * hooks
+ */
+$app->registerHook('WikiaMobileAssetsPackages', 'WikiaSearchController', 'onWikiaMobileAssetsPackages');
 
 $wgExtensionCredits['other'][] = array(
 	'name'        => 'Wikia Search',

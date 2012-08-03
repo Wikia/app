@@ -44,7 +44,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 		$page = $this->getVal('page', 1);
 		$rank = $this->getVal('rank', 'default');
-		$debug = $this->request->getBool('debug');
+		$debug = $this->request->getBool('debug', false);
 		$crossWikia = $this->request->getBool('crossWikia');
 		$skipCache = $this->request->getBool('skipCache');
 		$activeAdvancedTab = $this->getActiveAdvancedTab();
@@ -141,7 +141,6 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		}
 
         if ( $this->app->checkSkin( 'wikiamobile' ) ) {
-			$this->app->registerHook('WikiaMobileAssetsPackages', 'WikiaSearchController', 'onWikiaMobileAssetsPackages');
             $this->overrideTemplate( 'WikiaMobileIndex' );
         }
 
@@ -157,7 +156,6 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setVal( 'pageUrl', $this->wg->Title->getFullUrl() );
 		$this->setVal( 'debug', $debug );
 		$this->setVal( 'solrHost', $this->wg->SolrHost);
-		$this->setVal( 'debug', $this->getVal('debug', false) );
 		$this->setVal( 'isInterWiki', $isInterWiki );
 		$this->setVal( 'relevancyFunctionId', WikiaSearch::RELEVANCY_FUNCTION_ID );
 		$this->setVal( 'namespaces', $namespaces );
