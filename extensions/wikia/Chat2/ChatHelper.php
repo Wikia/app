@@ -212,7 +212,7 @@ class ChatHelper {
 	public static function onLogLine($logType, $logaction, $title, $paramArray, &$comment, &$revert, $logTimestamp) {
 		global $wgUser, $wgCityId;
 
-		if( strpos($logaction,'chatban') == 0 ) {
+		if( strpos($logaction,'chatban') === 0 ) {
 			$user = User::newFromId($paramArray[1]);
 			if(!empty($user) && Chat::getBanInformation($wgCityId, $user) !== false && $wgUser->isAllowed( 'chatmoderator' ) ) {
 				$revert = "(" . "<a class='chat-change-ban' data-user-id='{$paramArray[1]}' href='#'>" . wfMsg( 'chat-ban-log-change-ban-link') . "</a>" . ")";
