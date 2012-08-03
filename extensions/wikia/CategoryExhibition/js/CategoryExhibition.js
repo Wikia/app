@@ -24,10 +24,14 @@ var CategoryExhibition = {
 	},
 
 	redrawFormButtons : function(){
-		$('#category-exhibition-display-old').css('background', 'none');
-		$('#category-exhibition-display-old').html('<div id="cat-exh-old-one"></div><div id="cat-exh-old-two"></div><div id="cat-exh-old-three"></div><div id="cat-exh-old-four"></div><div id="cat-exh-old-five"></div>');
-		$('#category-exhibition-display-new').css('background', 'none');
-		$('#category-exhibition-display-new').html('<div id="cat-exh-new-one"></div><div id="cat-exh-new-two"></div><div id="cat-exh-new-three"></div><div id="cat-exh-new-four"></div>');
+		// FIXME: move HTML to the template
+		$('#category-exhibition-display-old').
+			css('background', 'none').
+			html('<div id="cat-exh-old-one"></div><div id="cat-exh-old-two"></div><div id="cat-exh-old-three"></div><div id="cat-exh-old-four"></div><div id="cat-exh-old-five"></div>');
+
+		$('#category-exhibition-display-new').
+			css('background', 'none').
+			html('<div id="cat-exh-new-one"></div><div id="cat-exh-new-two"></div><div id="cat-exh-new-three"></div><div id="cat-exh-new-four"></div>');
 	},
 
 	log: function(msg) {
