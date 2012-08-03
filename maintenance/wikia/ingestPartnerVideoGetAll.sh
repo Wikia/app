@@ -2,6 +2,14 @@
 # Mass ingestion script
 # Author: Piotr Bablok <pbablok@wikia-inc.com>
 
+# config
+startdate='2007-01-01'
+provider='ign'
+logfile='/tmp/ingestion.log'
+extra='-d'
+timeslice=2
+
+
 counter=0
 user="`whoami`"
 
@@ -24,24 +32,20 @@ then
 fi
 
 nowunix=`date '+%s'`
-startdate='2007-01-01'
-provider='ign'
-logfile='/tmp/ingestion.log'
-debug='-d'
 
 while [ 1 ]
 do
-	endtime=$(( $counter + 60 * 60 * 24 * 28 - 1 ))
+	endtime=$(( $counter + 60 * 60 * 24 * $timeslice - 1 ))
 
 	echo ">>> From: `date -d "$startdate $counter sec"`     To:   `date -d "$startdate $endtime sec"`" | tee -a /tmp/ingestion.log
 	sleep 1
 	from=`date -d "$startdate $counter sec" '+%s'`
 	to=`date -d "$startdate $endtime sec" '+%s'`
 
-	SERVER_ID=298117 php ./ingestPartnerVideoWithData.php --conf=/usr/wikia/docroot/wiki.factory/LocalSettings.php $debug -e $to -s $from $provider | tee -a $logfile || exit
-	#/usr/wikia/backend/bin/withcity --maintenance-script="wikia/ingestPartnerVideoWithData.php $debug -e $to -s $from $provider" --usedb=video151 | tee -a $logfile
+	SERVER_ID=298117 php ./ingestPartnerVideoWithData.php --conf=/usr/wikia/docroot/wiki.factory/LocalSettings.php $extra -e $to -s $from $provider | tee -a $logfile || exit
+	#/usr/wikia/backend/bin/withcity --maintenance-script="wikia/ingestPartnerVideoWithData.php $extra -e $to -s $from $provider" --usedb=video151 | tee -a $logfile
 
-	counter=$(( $counter + 60 * 60 * 24 * 28 ))
+	counter=$(( $counter + 60 * 60 * 24 * $timeslice ))
 	from=`date -d "$startdate $counter sec" '+%s'`
 	if [ $from -gt $nowunix ]
 	then

@@ -62,28 +62,6 @@ class IgnFeedIngester extends VideoFeedIngester {
 				}
 			}
 
-			$found = false;
-			if (!empty($params['keyphrasesCategories'])) {
-				foreach( $video['objectRelations'] as $obj ) {
-					foreach ($params['keyphrasesCategories'] as $keyphrase=>$categories) {
-						//if( $keyphrase != 'fallout' && $keyphrase != 'starcraft') {
-							// only support those two for now
-							//continue;
-						//}
-						if ($this->isKeyphraseInString($obj['objectName'], $keyphrase)) {
-							echo "Matched for keywords $keyphrase\n";
-							$addlCategories = array_merge($addlCategories, $categories);
-							$found = true;
-						}
-					}
-				}
-			}
-
-			if($found == false) {
-				// if keywords don't match, skip this video
-				//continue;
-			}
-
 			if(empty($video['metadata']['gameContent'])) {
 				// only ingest gaming content
 				$name = $video['metadata']['name'];
@@ -101,6 +79,7 @@ class IgnFeedIngester extends VideoFeedIngester {
 			$clipData['thumbnail'] =  $video['metadata']['thumbnail'];
 			$clipData['videoUrl'] =  $video['metadata']['url'];
 			$clipData['classification'] = $video['metadata']['classification'];
+			$clipData['gameContent'] = $video['metadata']['gameContent'];
 			if( isset($video['metadata']['ageGate']) ) {
 				$clipData['ageGate'] = $video['metadata']['ageGate'];
 			} else {
@@ -133,7 +112,10 @@ class IgnFeedIngester extends VideoFeedIngester {
 
 		$categories = !empty($addlCategories) ? $addlCategories : array();
 		$categories[] = 'IGN';
-		$categories[] = 'Games';
+
+		if(!empty($data['gameContent'])) {
+			$categories[] = 'Games';
+		}
 
 		wfProfileOut( __METHOD__ );
 
