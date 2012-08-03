@@ -164,7 +164,6 @@
 			-webkit-transform: translateZ(0);
 			-moz-transform: translateZ(0);
 			transform: translateZ(0);
-			-webkit-perspective: 1000;
 			-webkit-backface-visibility: hidden;
 
 			li {
@@ -215,7 +214,7 @@
 
 		&.cur3 {
 			#lvl1 {
-				-webkit-transform: translate(-200%);
+				-webkit-transform: translate(-200%) ;
 			}
 		}
 
