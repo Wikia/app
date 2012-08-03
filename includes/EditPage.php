@@ -1870,7 +1870,7 @@ class EditPage {
 		/* Wikia change end */
 
 		/* Wikia change begin - @author: kflorence (BugId:40705) */
-		if ( !$this->isCssJsSubpage && $showToolbar && ( $wgUser->getSkin() instanceof SkinOasis || $wgUser->getOption( 'showtoolbar' ) ) ) {
+		if ( !$this->isCssJsSubpage && $showToolbar && ( !( $wgUser->getSkin() instanceof SkinMonobook ) || $wgUser->getOption( 'showtoolbar' ) ) ) {
 			$wgOut->addHTML( EditPage::getEditToolbar() );
 		}
 		/* Wikia change end */
