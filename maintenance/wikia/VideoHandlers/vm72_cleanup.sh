@@ -1,6 +1,6 @@
 #!/bin/bash
 
-scriptpath="../../../../../usr/wikia/mac/maintenance/wikia/VideoHandlers"
+scriptpath="/usr/wikia/source/wiki/maintenance/wikia/VideoHandlers"
 
 TMPFILE=`mktemp /tmp/$0.XXXXXX` || exit 1
 echo "Getting list of wikis..."
