@@ -339,7 +339,11 @@ var wgUploadLicenseObj = {
 		}
 		injectSpinner( document.getElementById( 'wpLicense' ), 'license' );
 
-		var title = document.getElementById( 'wpDestFile' + current ).value;
+		var title = false;
+		if(typeof current != 'undefined') {
+			title = document.getElementById( 'wpDestFile' + current ).value;
+		}
+
 		if ( !title ) {
 			title = 'File:Sample.jpg';
 		}
