@@ -139,16 +139,13 @@ var WikiBuilder = {
 			$.tracker.byStr('createnewwiki/descwiki/next');
 			var val = WikiBuilder.wikiCategory.find('option:selected').val();
 			if(val) {
-				$.post(wgScript,
-					{
-						action: 'ajax',
-						rs: 'moduleProxy',
-						moduleName: 'CreateNewWiki',
-						actionName: 'Phalanx',
-						outputType: 'data',
+				$.nirvana.sendRequest({
+					controller: 'CreateNewWiki',
+					method: 'Phalanx',
+					data: {
 						text: $('#Description').val()
 					},
-					function(res) {
+					callback: function(res) {
 						// check phalanx result
 						if (res.msgHeader) {
 							$.showModal(res.msgHeader, res.msgBody);
@@ -162,6 +159,7 @@ var WikiBuilder = {
 								WikiBuilder.transition('DescWiki', true, '+');
 							});
 						}
+					}
 				});
 			} else {
 				WikiBuilder.descWikiSubmitError.show().html(WikiBuilderCfg['desc-wiki-submit-error']).delay(3000).fadeOut();
@@ -254,23 +252,24 @@ var WikiBuilder = {
 		var lang = WikiBuilder.wikiLanguage.val();
 		if(name) {
 			WikiBuilder.nameAjax = true;
-			$.post(wgScript, {
-				action: 'ajax',
-				rs: 'moduleProxy',
-				moduleName: 'CreateNewWiki',
-				actionName: 'CheckWikiName',
-				outputType: 'data',
-				name: name,
-				lang: lang
-			}, function(res) {
-				if(res) {
-					var response = res['res'];
-					if(response) {
-						WikiBuilder.wikiNameError.html(response);
-					} else {
-						WikiBuilder.wikiNameError.html('');
+			
+			$.nirvana.sendRequest({
+				controller: 'CreateNewWiki',
+				method: 'CheckWikiName',
+				data: {
+					name: name,
+					lang: lang  	
+				},
+				callback: function(res) {
+					if(res) {
+						var response = res['res'];
+						if(response) {
+							WikiBuilder.wikiNameError.html(response);
+						} else {
+							WikiBuilder.wikiNameError.html('');
+						}
+						WikiBuilder.nameAjax = false;
 					}
-					WikiBuilder.nameAjax = false;
 				}
 			});
 		} else {
@@ -287,26 +286,26 @@ var WikiBuilder = {
 			WikiBuilder.wikiDomain.val(wd);
 			WikiBuilder.showIcon(WikiBuilder.wikiDomainStatus, 'spinner');
 			WikiBuilder.domainAjax = true;
-			$.post(wgScript, {
-				action: 'ajax',
-				rs: 'moduleProxy',
-				moduleName: 'CreateNewWiki',
-				actionName: 'CheckDomain',
-				outputType: 'data',
-				name: wd,
-				lang: lang,
-				type: ''
-			}, function(res) {
-				if(res) {
-					var response = res['res'];
-					if(response) {
-						WikiBuilder.wikiDomainError.html(response);
-						WikiBuilder.showIcon(WikiBuilder.wikiDomainStatus, '');
-					} else {
-						WikiBuilder.wikiDomainError.html('');
-						WikiBuilder.showIcon(WikiBuilder.wikiDomainStatus, 'ok');
+			$.nirvana.sendRequest({
+				controller: 'CreateNewWiki',
+				method: 'CheckDomain',
+				data: {
+					name: wd,
+					lang: lang,
+					type: '' 	
+				},
+				callback: function(res) {
+					if(res) {
+						var response = res['res'];
+						if(response) {
+							WikiBuilder.wikiDomainError.html(response);
+							WikiBuilder.showIcon(WikiBuilder.wikiDomainStatus, '');
+						} else {
+							WikiBuilder.wikiDomainError.html('');
+							WikiBuilder.showIcon(WikiBuilder.wikiDomainStatus, 'ok');
+						}
+						WikiBuilder.domainAjax = false;
 					}
-					WikiBuilder.domainAjax = false;
 				}
 			});
 		} else {
@@ -395,24 +394,20 @@ var WikiBuilder = {
 	},
 
 	upgradeToWikiaPlus: function() {
-		$.post(wgScript,
-			{
-				action: 'ajax',
-				rs: 'moduleProxy',
-				moduleName: 'CreateNewWiki',
-				actionName: 'UpgradeToPlus',
-				outputType: 'data',
+		$.nirvana.sendRequest({
+			controller: 'CreateNewWiki',
+			method: 'UpgradeToPlus',
+			data: {
 				cityId: WikiBuilder.cityId
 			},
-			function(res) {
+			callback: function(res) {
 				if (res.status == 'ok') {
 					location.href = res.data.url;
 				} else {
 					$.showModal(res.caption, res.content);
 				}
 			}
-		)
-		.error(function() {
+		}).error(function() {
 			WikiBuilder.generateAjaxErrorMsg();
 		});
 	},
@@ -437,22 +432,17 @@ var WikiBuilder = {
 	createWiki: function() {
 		WikiBuilder.requestKeys();
 		WikiBuilder.solveKeys();
-		$.postJSON(wgScript,
-			{
-				action: 'ajax',
-				rs: 'moduleProxy',
-				moduleName: 'CreateNewWiki',
-				actionName: 'CreateWiki',
-				outputType: 'data',
-				data: {
-					wName: WikiBuilder.wikiName.val(),
-					wDomain: WikiBuilder.wikiDomain.val(),
-					wLanguage: WikiBuilder.wikiLanguage.find('option:selected').val(),
-					wCategory: WikiBuilder.wikiCategory.find('option:selected').val(),
-					wAnswer: Math.floor(WikiBuilder.answer)
-				}
+		$.nirvana.sendRequest({
+			controller: 'CreateNewWiki',
+			method: 'CreateWiki',
+			data: {
+				wName: WikiBuilder.wikiName.val(),
+				wDomain: WikiBuilder.wikiDomain.val(),
+				wLanguage: WikiBuilder.wikiLanguage.find('option:selected').val(),
+				wCategory: WikiBuilder.wikiCategory.find('option:selected').val(),
+				wAnswer: Math.floor(WikiBuilder.answer)  	
 			},
-			function(res) {
+			callback: function(res) {
 				WikiBuilder.createStatus = res.status;
 				WikiBuilder.createStatusMessage = res.statusMsg;
 				if(WikiBuilder.createStatus && WikiBuilder.createStatus == 'ok') {
@@ -464,8 +454,7 @@ var WikiBuilder = {
 					$.showModal(res.statusHeader, WikiBuilder.createStatusMessage);
 				}
 			}
-		)
-		.error(function() {
+		}).error(function() {
 			WikiBuilder.generateAjaxErrorMsg();
 		});
 	},
