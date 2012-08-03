@@ -200,8 +200,10 @@ class WallController extends WallBaseController {
 		$renderUserTalkArchiveAnchor = $this->request->getVal('renderUserTalkArchiveAnchor', false);
 
 		$title = $this->request->getVal('title');
-		$content = $this->getUserTalkContent();
-		if( !empty($content) && $renderUserTalkArchiveAnchor !== false ) {
+		
+		$pageTitle = $this->helper->getTitle(NS_USER_TALK);
+		
+		if( $renderUserTalkArchiveAnchor !== false && empty($pageTitle) && $pageTitle->exists()) {
 			$this->renderUserTalkArchiveAnchor = true;
 			$this->userTalkArchivePageUrl = (empty($title) ? $this->wg->Title->getFullUrl():$title->getFullUrl()).'/'.$this->helper->getArchiveSubPageText();
 		}

@@ -10,15 +10,19 @@ class Wall {
 	private $mSorting = false;
 
 	static public function newFromTitle( Title $title ) {
+		wfProfileIn(__METHOD__);
 		$wall = new Wall();
 		$wall->mTitle = $title;
 		$wall->mCityId = F::app()->wg->CityId;
+		wfProfileOut(__METHOD__);
 		return $wall;
 	} 
 	
 	static function getParentTitleFromReplyTitle( $titleText ) {
+		wfProfileIn(__METHOD__);
 		$parts = explode('/@', $titleText);
-		if(count($parts) < 3) return null;	
+		if(count($parts) < 3) return null;
+		wfProfileOut(__METHOD__);	
 		return $parts[0] . '/@' . $parts[1];
 	}
 	
@@ -27,12 +31,15 @@ class Wall {
 	}
 	
 	public function getUrl() {
+		wfProfileIn(__METHOD__);
 		$title = F::build( 'title', array( $this->getUser()->getName(), NS_USER_WALL ), 'newFromText' );
+		wfProfileOut(__METHOD__);
 		return $title->getFullUrl();
 	}
 
 	
 	public function getThreads($page = 1, $queryLimit = array() ) {
+		wfProfileIn(__METHOD__);
 		// make objects out of IDs
 		// load missing data in ONE SQL query
 		// grouping together all threads without reply data
@@ -53,6 +60,7 @@ class Wall {
 				$this->sliceThreads( $page );
 				$this->checkWhichThreadsAreCached();
 				$this->preloadThreadsGrouped();
+				wfProfileOut(__METHOD__);
 				return $this->threads;
 			case 'ot': // oldest threads first
 				$this->loadThreads();
@@ -60,6 +68,7 @@ class Wall {
 				$this->sliceThreads( $page );
 				$this->checkWhichThreadsAreCached();
 				$this->preloadThreadsGrouped();
+				wfProfileOut(__METHOD__);
 				return $this->threads;
 			case 'nr': // threads with newest reply first
 				$this->loadThreads();
@@ -68,6 +77,7 @@ class Wall {
 				$this->preloadThreadTimestamp();
 				uasort($this->threads, array($this, 'sortLastReply'));
 				$this->sliceThreads( $page );
+				wfProfileOut(__METHOD__);
 				return $this->threads;
 			case 'ma': // most active threads first
 				$this->loadThreads();
@@ -76,6 +86,7 @@ class Wall {
 				$this->preloadThreadScore();
 				uasort($this->threads, array($this, 'sortMostactive'));
 				$this->sliceThreads( $page );
+				wfProfileOut(__METHOD__);
 				return $this->threads;
 			case 'mr': // most replies in 7 days first
 				$this->loadThreads();
@@ -84,82 +95,110 @@ class Wall {
 				$this->preloadThreadReplyScore();
 				uasort($this->threads, array($this, 'sortMostReply'));
 				$this->sliceThreads( $page );
+				wfProfileOut(__METHOD__);
 				return $this->threads;
 		}
-		
+		wfProfileOut(__METHOD__);
 	}
 
 	public function sortLastReply( $a, $b ) {
-		return ($a->getLastReplyTimestamp() < $b->getLastReplyTimestamp() ) ? 1 : -1;
+		wfProfileIn(__METHOD__);
+		$out = ($a->getLastReplyTimestamp() < $b->getLastReplyTimestamp() ) ? 1 : -1;
+		wfProfileOut(__METHOD__);
+		return $out;
 	}
 
 	public function sortMostactive( $a, $b ) {
-		return ($a->getScore() < $b->getScore() ) ? 1 : -1;
+		wfProfileIn(__METHOD__);
+		$out = ($a->getScore() < $b->getScore() ) ? 1 : -1;
+		wfProfileOut(__METHOD__);
+		return $out;
 	}
 
 	public function sortMostReply( $a, $b ) {
+		wfProfileIn(__METHOD__);
 		if ( $a->getReplyScore() < $b->getReplyScore() ) {
+			wfProfileOut(__METHOD__);
 			return 1;
 		} else if ( $a->getReplyScore() > $b->getReplyScore() ) {
+			wfProfileOut(__METHOD__);
 			return -1;
 		} else {
+			wfProfileOut(__METHOD__);
 			return $this->sortLastReply( $a, $b );
 		}
 	}
 
 	public function getThreadHistoryCount() {
+		wfProfileIn(__METHOD__);
 		if(is_null($this->mThreadsHistory)) {
 			$this->loadWallThreadsHistory();
 		}
+		wfProfileOut(__METHOD__);
 		return count($this->mThreadsHistory);
 	}
 	
 	public function getThreadCount() {
+		wfProfileIn(__METHOD__);
 		if(is_null($this->mThreadMapping)) {
 			$this->loadThreadList();
 		}
+		wfProfileOut(__METHOD__);
 		return count($this->mThreadMapping);
 	}
 	
 	public function setMaxPerPage( $val ) {
+		wfProfileIn(__METHOD__);
  		$this->mMaxPerPage = $val;
+ 		wfProfileOut(__METHOD__);
 	}
 
 	public function setSorting( $val ) {
+		wfProfileIn(__METHOD__);
  		$this->mSorting = $val;
+ 		wfProfileOut(__METHOD__);
 	}
 	
 	private function preloadThreadTimestamp() {
+		wfProfileIn(__METHOD__);
 		// preload timestamps of replies (and cache in thread object)
 		// to prevent changing object when sorting
 		foreach( $this->threads as $thread ) {
 			$thread->getLastReplyTimestamp(); 
 		}
+		wfProfileOut(__METHOD__);
 	}
 	
 	private function preloadThreadScore() {
+		wfProfileIn(__METHOD__);
 		// preload score of threads (and cache in thread object)
 		// to prevent changing object when sorting
 		foreach( $this->threads as $thread ) {
 			$thread->getScore();
 		}
+		wfProfileOut(__METHOD__);
 	}
 	
 	private function preloadThreadReplyScore() {
+		wfProfileIn(__METHOD__);
 		// preload reply score of threads (and cache in thread object)
 		// to prevent changing object when sorting
 		foreach( $this->threads as $thread ) {
 			$thread->getReplyScore();
 		}
+		wfProfileOut(__METHOD__);
 	}
 
 	private function sliceThreads( $page ) {
+		wfProfileIn(__METHOD__);
 		if(!empty($this->mMaxPerPage)) {
 			$this->threads = array_slice($this->threads, $this->mMaxPerPage * ($page - 1), $this->mMaxPerPage, true);
 		}
+		wfProfileOut(__METHOD__);
 	}
 	
 	private function checkWhichThreadsAreCached() {
+		wfProfileIn(__METHOD__);
 		$this->notCached = array();
 		foreach( $this->threads as $tId => $thread ) {
 			if( !$thread->loadIfCached() ) {
@@ -168,17 +207,21 @@ class Wall {
 				}
 			}
 		}
+		wfProfileOut(__METHOD__);
 	}
 	
 	private function loadThreads() {
+		wfProfileIn(__METHOD__);
 		$this->threads = array();
 		foreach( $this->mThreadMapping as $tTitle => $tId ) {
 			$thread = WallThread::newFromId( $tId );
 			$this->threads[$tId] = $thread;
 		}
+		wfProfileOut(__METHOD__);
 	}
 
 	private function loadThreadList( $forceReload = false ) {
+		wfProfileIn(__METHOD__);
 		$cache = $this->getCache();
 		$key = $this->getWallThreadListKey();
 		
@@ -199,9 +242,11 @@ class Wall {
 			$this->mThreadMapping = $val['threadMapping'];
 			$this->mThreadMappingRev = $val['threadMappingRev'];
 		}
+		wfProfileOut(__METHOD__);
 	}
 	
 	private function loadThreadListFromDB($master = true) {
+		wfProfileIn(__METHOD__);
 		// get list of threads (article IDs) on Message Wall
 		$dbr = wfGetDB( $master ? DB_MASTER : DB_SLAVE );
 		
@@ -233,71 +278,22 @@ class Wall {
 			$this->mThreadMapping[$row->page_title] = $row->page_id;
 			$this->mThreadMappingRev[$row->page_id] = $row->page_title;
 		}
+		wfProfileOut(__METHOD__);
 	}
-	
-	/*
-	private function propsCond($dbr, $type, $title) {
-		$flags = array();
-		if(empty($this->mFlagedPages)) {
-			foreach($this->mFilters as $key => $value) {
-				$flags = $flags + array_keys($value);		
-			}
-			
-			$this->mFlagedPages = $this->getInList($dbr, $title, $flags);
-		}
-
-		$out = array(
-			'in' => array(),
-			'out' => array() 
-		);
-		
-		foreach($this->mFilters[$type] as $key => $value ) {
-			if(empty( $this->mFlagedPages[$key] )) {
-				continue;
-			}
-			
-			if($value) {
-				$out['in'] = $out['in'] + $this->mFlagedPages[$key];
-			} else {
-				$out['out'] = $out['out'] + $this->mFlagedPages[$key];
-			}
-		}
-		
-		return $out;
-	}
-	//TODO: add caching
-	private function getInList($dbr, $title, $flags = array()) {
-		$conds = array();
-		$conds['page_wikia_props.propname'] = $flags;
-		$conds[] = "page.page_title " . $dbr->buildLike( sprintf( "%s/%s", $this->mTitle->getDBkey(), ARTICLECOMMENT_PREFIX ), $dbr->anyString() );
-		$conds[] = "page_wikia_props.page_id = page.page_id";
-		
-		$res = $dbr->select( array('page', 'page_wikia_props'), 
-			array('page.page_title', 'page_wikia_props.page_id', 'props', 'propname'), 
-			$conds , 
-		__METHOD__);
-
-		$out = array();
-		
-		while ( $row = $dbr->fetchObject( $res ) ) {
-			if(empty($conds[$row->propname])) {
-				$conds[$row->propname] = array();
-			}
-			
-			$out[$row->propname][$row->page_id] = $row->page_id; //it make it easy merge
-		}
-		
-		return $out;
-	}*/
 	
 	private function preloadThreadsGrouped( $master = true ) {
+		wfProfileIn(__METHOD__);
 		// load data for threads on the notCached list
 		// send it to objects on threads list
-		if( count($this->notCached) == 0 ) return;
+		if( count($this->notCached) == 0 ) {
+			wfProfileOut(__METHOD__);
+			return;
+		}
 
 		$return = false;
 		wfRunHooks( 'WallPreloadThreadsGrouped', array( $this->mTitle, $master, $this->notCached, &$this->mThreadMapping, &$this->threads, &$return ) );
 		if ( $return ) {
+			wfProfileOut(__METHOD__);
 			return;
 		}
 
@@ -339,7 +335,9 @@ class Wall {
 		
 		foreach($threadWithNoReplies as $title=>$id) {
 			$this->threads[ $id ]->setReplies( array() );
-		}		
+		}	
+
+		wfProfileOut(__METHOD__);
 		//var_dump($threads); die();
 	}
 
@@ -353,10 +351,10 @@ class Wall {
 
 	
 	public function invalidateCache() {
+		wfProfileIn(__METHOD__);
 		// invalidate cache at Wall level (new thread or thread removed)
 		$this->loadThreadList( true );
+		wfProfileOut(__METHOD__);
 	}
 	
 }
-
-?>
