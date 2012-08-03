@@ -1,0 +1,95 @@
+@import "../../../../skins/oasis/css/core/color";
+@import "../../../../skins/oasis/css/mixins/border-radius";
+@import "../../../../skins/oasis/css/mixins/clearfix";
+@import "UserStatsMenu";
+
+$color-chat-live: $color-buttons;
+$color-chat-live-text: $color-button-text;
+$color-chat-live-corner: mix($color-chat-live, #000);
+$color-chat-avatar-border: $color-page-border;
+
+.ChatModule {
+	
+	.chat-live {
+		@include border-radius-nw(3px);
+		@include border-radius-ne(3px);
+		@include border-radius-sw(3px);
+		background: $color-chat-live;
+		color: $color-chat-live-text;
+		float: right;
+		font-size: 14px;
+		margin-right: -13px;
+		padding: 5px 12px;
+		position: relative;
+		&:before {
+			border-width: 2px;
+			border-style: solid;
+			border-color: $color-chat-live-corner transparent transparent $color-chat-live-corner;
+			content: url(/skins/common/blank.gif); /* $wgCdnStylePath */
+			height: 0px;
+			width: 0px;
+			position: absolute;
+			bottom: -4px;
+			right: 0;
+		}
+	}
+	
+	.chat-join {
+		text-align: right;
+	}
+	
+	.avatar {
+		border: 1px solid $color-chat-avatar-border;
+		height: 32px;
+		margin-right: 10px;
+		vertical-align: middle;
+		width: 32px;
+	}
+	
+	.chat-whos-here {
+		margin: 10px 0;
+		h2 {
+			display: block !important;
+			margin-bottom: 8px;
+		}
+		.avatar {
+			margin: 0;
+		}
+		>ul {
+			@include clearfix;
+			>li {
+				display: block;
+				float: left;
+				margin: 0 0 0 10px;
+				position: relative;
+				&:first-child {
+					margin: 0;
+				}
+			}
+		}
+	}
+	
+	&.module h1 {
+		margin-bottom: 15px;
+	}
+	&.module h2 {
+		font-size: 13px;
+		padding: 0;
+	}
+	
+	.UserStatsMenu {
+		right: 30px;
+		top: 0;
+		z-index: 1000;
+	}
+}
+
+/* IE7 hackery */
+.WikiaRail {
+	*position: relative;
+	*z-index: 1;
+}
+.ChatModule {
+	*position: relative;
+	*z-index: 1;
+}
