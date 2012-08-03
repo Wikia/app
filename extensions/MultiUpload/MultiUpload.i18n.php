@@ -30,6 +30,10 @@ Inappropriate files will be deleted immediately, see the [[{{MediaWiki:Multipleu
 	'multiupload-toolbox' => 'Upload multiple files',
 	'multiupload-no-files' => 'Please select at least one file to upload',
 	'multiupload-blank' => 'No file selected',
+	'multiupload-source' => 'Source files',
+	'multiupload-description' => 'File description', // duplicate of upload-description
+	'multiupload-options' => 'Upload options', // duplicate of upload-options
+	'multiupload-successful-upload' => 'Successful upload',
 );
 
 /** Message documentation (Message documentation)
@@ -151,7 +155,7 @@ Ned geeignete Datein wean sufuat glöscht, schau da dazua de [[{{MediaWiki:Multi
 	'multiupload-blank' => 'Ka Datei ausgwöihd',
 );
 
-/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -176,7 +180,7 @@ $messages['be-tarask'] = array(
 	'multiupload-blank' => 'Файлы ня выбраны',
 );
 
-/** Bulgarian (Български)
+/** Bulgarian (български)
  * @author DCLXVI
  * @author Spiritia
  */
@@ -210,7 +214,7 @@ $messages['bn'] = array(
 	'multiupload-blank' => 'কোনো ফাইল নির্বাচন করা হয়নি',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Fulup
  */
 $messages['br'] = array(
@@ -234,7 +238,7 @@ Diverket raktal e vo ar restroù didalvez, sellit ouzh ar [[{{MediaWiki:Multiple
 	'multiupload-blank' => "N'eus bet diuzet restr ebet",
 );
 
-/** Bosnian (Bosanski)
+/** Bosnian (bosanski)
  * @author CERminator
  */
 $messages['bs'] = array(
@@ -258,7 +262,7 @@ Neodgovarajuće datoteke će biti obrisane odmah, pogledajte [[{{MediaWiki:Multi
 	'multiupload-blank' => 'Nijedna datoteka nije odabrana',
 );
 
-/** Catalan (Català)
+/** Catalan (català)
  * @author SMP
  * @author Solde
  */
@@ -290,7 +294,7 @@ $messages['ch'] = array(
 	'multipleupload' => "Na'kåtga hulu' atkibu",
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Li-sung
  * @author Matěj Grabovský
  * @author Mormegil
@@ -339,7 +343,7 @@ Caiff ffeiliau anaddas eu dileu ar unwaith; gweler y [[{{MediaWiki:Multipleuploa
 	'multiupload-blank' => 'Heb ddewis unrhyw ffeiliau',
 );
 
-/** Danish (Dansk)
+/** Danish (dansk)
  * @author BabelFrode
  * @author Byrial
  * @author Emilkris33
@@ -375,7 +379,7 @@ Upassende filer bliver slettet øjeblikkeligt - se [[{{MediaWiki:Multipleupload-
  */
 $messages['de'] = array(
 	'multipleupload' => 'Mehrere Dateien hochladen',
-	'multiupload-desc' => 'Erlaubt das [[Special:MultipleUpload|Hochladen mehrerer Dateien]] in einer Aktion',
+	'multiupload-desc' => 'Ergänzt eine [[Special:MultipleUpload|Spezialseite]] über die mehrerer Dateien gleichzeitig hochgeladen werden können',
 	'multipleupload-ignoreallwarnings' => "Ignoriere '''alle Warnungen''' und speichere die Dateien.",
 	'multipleupload-saveallfiles' => 'Alle Dateien speichern',
 	'multipleupload-addresswarnings' => 'Bitte vor dem erneuten Hochladen dieser Dateien jede Warnung bearbeiten und ausräumen.',
@@ -392,6 +396,10 @@ Ungeeignete Dateien werden sofort gelöscht, siehe die [[{{MediaWiki:Multipleupl
 	'multiupload-toolbox' => 'Mehrere Dateien hochladen',
 	'multiupload-no-files' => 'Bitte wähle mindestens eine Datei zum Hochladen aus',
 	'multiupload-blank' => 'Keine Datei ausgewählt',
+	'multiupload-source' => 'Quelldateien',
+	'multiupload-description' => 'Dateibeschreibung',
+	'multiupload-options' => 'Hochladeoptionen',
+	'multiupload-successful-upload' => 'Erfolgreich hochgeladen',
 );
 
 /** German (formal address) (‪Deutsch (Sie-Form)‬)
@@ -412,7 +420,14 @@ Ungeeignete Dateien werden sofort gelöscht, siehe die [[{{MediaWiki:Multipleupl
 	'multiupload-no-files' => 'Bitte wählen Sie mindestens eine Datei zum Hochladen aus',
 );
 
-/** Lower Sorbian (Dolnoserbski)
+/** Zazaki (Zazaki)
+ * @author Erdemaslancan
+ */
+$messages['diq'] = array(
+	'multiupload-desc' => 'Karberan rê [[Special:MultipleUpload|Pêpeya yew ra vêşi dosyaya barkerdışi rê]] icazet dano.',
+);
+
+/** Lower Sorbian (dolnoserbski)
  * @author Michawiki
  */
 $messages['dsb'] = array(
@@ -434,6 +449,10 @@ Njegóźece se dataje budu se ned lašowaś, glědaj [[{{MediaWiki:Multipleuploa
 	'multiupload-toolbox' => 'Někotare dataje nagraś',
 	'multiupload-no-files' => 'Pšosym wubjeŕ nanejmjenjej jadnu dataju za nagraśe',
 	'multiupload-blank' => 'Žedna dataja wubrana',
+	'multiupload-source' => 'Žrědłowe dataje',
+	'multiupload-description' => 'Datajowe wopisanje',
+	'multiupload-options' => 'Nagrawańske opcije',
+	'multiupload-successful-upload' => 'Nagraśe jo było wuspěšne',
 );
 
 /** Greek (Ελληνικά)
@@ -487,7 +506,8 @@ Malkonvenaj dosieroj estos tuj forigita. Vidu la [[{{MediaWiki:Multipleupload-pa
 	'multiupload-blank' => 'Neniu dosiero elektita',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
+ * @author Armando-Martin
  * @author Crazymadlover
  * @author Imre
  * @author Sanbec
@@ -510,9 +530,13 @@ Los archivos inapropiados se eliminarán inmediatamente: mira la [[{{MediaWiki:M
 	'multiupload-toolbox' => 'Subir varios archivos',
 	'multiupload-no-files' => 'Por favor seleccione al menos un archivo a cargar',
 	'multiupload-blank' => 'Ningún archivo seleccionado',
+	'multiupload-source' => 'Archivos de origen',
+	'multiupload-description' => 'Descripción del archivo',
+	'multiupload-options' => 'Opciones de carga',
+	'multiupload-successful-upload' => 'Subida con éxito',
 );
 
-/** Estonian (Eesti)
+/** Estonian (eesti)
  * @author Avjoska
  */
 $messages['et'] = array(
@@ -524,7 +548,7 @@ $messages['et'] = array(
 	'multiupload-blank' => 'Ühtegi faili ei ole valitud',
 );
 
-/** Basque (Euskara)
+/** Basque (euskara)
  * @author An13sa
  * @author Kobazulo
  */
@@ -561,7 +585,7 @@ $messages['fa'] = array(
 	'multiupload-blank' => 'پرونده‌ای گزینش نشده',
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author Crt
  * @author Jack Phoenix
  * @author Jack Phoenix <jack@countervandalism.net>
@@ -587,7 +611,7 @@ Sopimattomat tiedostot poistetaan välittömästi; katso [[{{MediaWiki:Multipleu
 	'multiupload-blank' => 'Yhtään tiedostoa ei ole valittu',
 );
 
-/** French (Français)
+/** French (français)
  * @author Crochet.david
  * @author Dereckson
  * @author Grondin
@@ -613,9 +637,13 @@ Les images non pertinentes pourront être supprimées immédiatement. Voyez la p
 	'multiupload-toolbox' => 'Importer (téléverser) plusieurs fichiers',
 	'multiupload-no-files' => 'Sélectionnez au moins un fichier à téléverser',
 	'multiupload-blank' => 'Aucun fichier sélectionné',
+	'multiupload-source' => 'Fichiers source',
+	'multiupload-description' => 'Description du fichier',
+	'multiupload-options' => "Options d'import",
+	'multiupload-successful-upload' => 'Import effectué avec succès',
 );
 
-/** Franco-Provençal (Arpetan)
+/** Franco-Provençal (arpetan)
  * @author ChrisPtDe
  */
 $messages['frp'] = array(
@@ -635,7 +663,7 @@ $messages['fy'] = array(
 	'multipleupload' => 'Meardere triemmen oanbiede',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Alma
  * @author Toliño
  * @author Xosé
@@ -737,7 +765,7 @@ $messages['hil'] = array(
 	'multipleupload' => 'Mag karga mga files',
 );
 
-/** Croatian (Hrvatski)
+/** Croatian (hrvatski)
  * @author Dalibor Bosits
  * @author Ex13
  */
@@ -760,7 +788,7 @@ Neprimjerene datoteke će odmah biti obrisane, vidi [[{{MediaWiki:Multipleupload
 	'multiupload-toolbox' => 'Postavi više datoteka',
 );
 
-/** Upper Sorbian (Hornjoserbsce)
+/** Upper Sorbian (hornjoserbsce)
  * @author Michawiki
  */
 $messages['hsb'] = array(
@@ -783,7 +811,7 @@ Njepřihódne wobrazy budu so hnydom wušmórować, hlej [[{{MediaWiki:Multipleu
 	'multiupload-blank' => 'Žana dataja wubrana',
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author Dani
  * @author Glanthor Reviol
  */
@@ -808,7 +836,7 @@ A nem megfelelő fájlok azonnal törölve lesznek, lásd a [[{{MediaWiki:Multip
 	'multiupload-blank' => 'Nincs fájl kiválasztva',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -830,6 +858,10 @@ Le files inappropriate essera delite immediatemente; vide le [[{{MediaWiki:Multi
 	'multiupload-toolbox' => 'Incargar plure files',
 	'multiupload-no-files' => 'Per favor selige al minus un file a incargar',
 	'multiupload-blank' => 'Nulle file seligite',
+	'multiupload-source' => 'Files de origine',
+	'multiupload-description' => 'Description del file',
+	'multiupload-options' => 'Optiones de incargamento',
+	'multiupload-successful-upload' => 'Incargamento succedite',
 );
 
 /** Indonesian (Bahasa Indonesia)
@@ -866,7 +898,7 @@ $messages['io'] = array(
 	'multipleupload-saveallfiles' => 'Registragar omna arkivi',
 );
 
-/** Italian (Italiano)
+/** Italian (italiano)
  * @author Darth Kule
  * @author Pietrodn
  * @author Stefano-c
@@ -895,11 +927,12 @@ File inappropriati verranno cancellati immediatamente, leggi le [[{{MediaWiki:Mu
 /** Japanese (日本語)
  * @author Fryed-peach
  * @author Mizusumashi
+ * @author Shirayuki
  */
 $messages['ja'] = array(
 	'multipleupload' => '複数ファイルをアップロード',
 	'multiupload-desc' => '利用者が[[Special:MultipleUpload|複数のファイルを一度にアップロード]]できるようにする',
-	'multipleupload-ignoreallwarnings' => "'''すべての警告'''を無視し、ファイルを保存する。",
+	'multipleupload-ignoreallwarnings' => "'''すべての警告'''を無視し、ファイルを保存します。",
 	'multipleupload-saveallfiles' => 'すべてのファイルを保存する',
 	'multipleupload-addresswarnings' => 'ファイルを再アップロードする前に、すべての警告に対処してください。',
 	'multipleupload-page' => '{{ns:project}}:ファイル削除の方針',
@@ -912,7 +945,7 @@ $messages['ja'] = array(
 不適切なファイルはすぐに削除されます。[[{{MediaWiki:Multipleupload-page}}|ファイル削除の方針]]をご覧ください。",
 	'multiupload-fileuploaded' => 'ファイルをアップロードしました。',
 	'multiupload-toolbox' => '複数のファイルをアップロード',
-	'multiupload-no-files' => '最低でも一つはアップロードするファイルを選んでください',
+	'multiupload-no-files' => 'アップロードするファイルを少なくとも1つ選択してください',
 	'multiupload-blank' => 'ファイルが選択されていません',
 );
 
@@ -961,6 +994,7 @@ $messages['km'] = array(
  * @author Devunt
  * @author Gapo
  * @author Kwj2772
+ * @author 아라
  */
 $messages['ko'] = array(
 	'multipleupload' => '여러 파일을 올리기',
@@ -968,6 +1002,8 @@ $messages['ko'] = array(
 	'multipleupload-page' => '{{ns:project}}:파일 삭제 정책',
 	'multiupload-fileuploaded' => '파일이 올려졌습니다.',
 	'multiupload-toolbox' => '파일 다중 올리기',
+	'multiupload-no-files' => '하나 이상의 올릴 파일을 선택하세요',
+	'multiupload-blank' => '선택한 파일이 없음',
 );
 
 /** Colognian (Ripoarisch)
@@ -1026,7 +1062,7 @@ Net ubruechte Fichiere ginn direkt geläscht, kuckt d'[[{{MediaWiki:Multipleuplo
 	'multiupload-blank' => 'Kee Fichier erausgesicht',
 );
 
-/** Latvian (Latviešu)
+/** Latvian (latviešu)
  * @author GreenZeb
  */
 $messages['lv'] = array(
@@ -1040,14 +1076,14 @@ $messages['lv'] = array(
 	'multiupload-blank' => 'Nav izvēlēts neviens fails',
 );
 
-/** Eastern Mari (Олык Марий)
+/** Eastern Mari (олык марий)
  * @author Сай
  */
 $messages['mhr'] = array(
 	'multipleupload' => 'Файлым пурташ',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -1085,7 +1121,7 @@ $messages['ml'] = array(
 	'multiupload-toolbox' => 'ഒന്നിലധികം പ്രമാണങ്ങൾ അപ്‌ലോഡ് ചെയ്യുക',
 );
 
-/** Mongolian (Монгол)
+/** Mongolian (монгол)
  * @author Chinneeb
  * @author E.shijir
  */
@@ -1153,7 +1189,7 @@ $messages['mt'] = array(
 	'multiupload-toolbox' => "Tella' fajls multipli",
 );
 
-/** Erzya (Эрзянь)
+/** Erzya (эрзянь)
  * @author Botuzhaleny-sodamo
  */
 $messages['myv'] = array(
@@ -1168,11 +1204,10 @@ $messages['myv'] = array(
  * @author Ricardo gs
  */
 $messages['nah'] = array(
-	'multipleupload' => 'Titlahcuilōlquetzāz',
+	'multipleupload' => 'Nepapan titlahcuilōlquetzaz',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Jon Harald Søby
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Nghtwlkr
  */
 $messages['nb'] = array(
@@ -1222,11 +1257,12 @@ Zie het [[{{MediaWiki:Multipleupload-page}}|verwijderingsbeleid van bestanden]].
 	'multiupload-blank' => 'Er is geen bestand geselecteerd',
 );
 
-/** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
+/** Norwegian Nynorsk (‪norsk (nynorsk)‬)
  * @author Frokor
  * @author Gunnernett
  * @author Harald Khan
  * @author Jon Harald Søby
+ * @author Njardarlogar
  */
 $messages['nn'] = array(
 	'multipleupload' => 'Last opp fleire filer',
@@ -1248,7 +1284,7 @@ Upassande filer vil bli sletta med ein gong, sjå [[{{MediaWiki:Multipleupload-p
 	'multiupload-blank' => 'Inga fil vald',
 );
 
-/** Occitan (Occitan)
+/** Occitan (occitan)
  * @author Cedric31
  */
 $messages['oc'] = array(
@@ -1271,7 +1307,7 @@ Los imatges pas pertinents poiràn èsser escafadas immediatament. Vejatz la pag
 	'multiupload-blank' => 'Cap de fichièr pas seleccionat',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author Leinad
  * @author Maikking
  * @author Sp5uhe
@@ -1344,7 +1380,7 @@ Inappropriate files will be deleted immediately, see the [[{{MediaWiki:Multipleu
 	'multiupload-blank' => 'کومه دوتنه نه ده ټاکل شوې',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Hamilton Abreu
  * @author Malafaya
  * @author Waldir
@@ -1370,7 +1406,7 @@ Ficheiros impróprios serão eliminados imediatamente. Veja a [[{{MediaWiki:Mult
 	'multiupload-blank' => 'Nenhum ficheiro selecionado',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author Eduardo.mps
  * @author Jesielt
  */
@@ -1395,7 +1431,7 @@ Arquivos impróprios serão eliminados imediatamente. Veja a [[{{MediaWiki:Multi
 	'multiupload-blank' => 'Nenhum arquivo selecionado',
 );
 
-/** Romanian (Română)
+/** Romanian (română)
  * @author KlaudiuMihaila
  */
 $messages['ro'] = array(
@@ -1406,7 +1442,7 @@ $messages['ro'] = array(
 	'multiupload-blank' => 'Nici un fișier selectat',
 );
 
-/** Tarandíne (Tarandíne)
+/** tarandíne (tarandíne)
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
@@ -1430,7 +1466,7 @@ Le file inappropriate avènene scangellate subbete subbete, vide le [[{{MediaWik
 	'multiupload-blank' => 'Nisciune file scacchiate',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author Ferrer
  * @author Александр Сигачёв
  */
@@ -1454,7 +1490,7 @@ $messages['ru'] = array(
 	'multiupload-blank' => 'Нет выбранных файлов',
 );
 
-/** Sakha (Саха тыла)
+/** Sakha (саха тыла)
  * @author HalanTul
  */
 $messages['sah'] = array(
@@ -1474,7 +1510,7 @@ $messages['sah'] = array(
 	'multiupload-blank' => 'Талыллыбыт билэлэр суохтар',
 );
 
-/** Sardinian (Sardu)
+/** Sardinian (sardu)
  * @author Andria
  * @author Marzedu
  */
@@ -1483,7 +1519,7 @@ $messages['sc'] = array(
 	'multipleupload-saveallfiles' => 'Sarva totu is files',
 );
 
-/** Sicilian (Sicilianu)
+/** Sicilian (sicilianu)
  * @author Melos
  * @author Santu
  */
@@ -1515,7 +1551,7 @@ $messages['sdc'] = array(
 	'multipleupload' => 'Carrigga file mùrthimediari',
 );
 
-/** Slovak (Slovenčina)
+/** Slovak (slovenčina)
  * @author Helix84
  */
 $messages['sk'] = array(
@@ -1538,7 +1574,7 @@ Nevhodné súbory budú okamžite zmazané, pozri [[{{MediaWiki:Multipleupload-p
 	'multiupload-blank' => 'Nie je vybraný žiadny súbor',
 );
 
-/** Slovenian (Slovenščina)
+/** Slovenian (slovenščina)
  * @author Dbc334
  */
 $messages['sl'] = array(
@@ -1562,7 +1598,7 @@ Neprimerne datoteke bodo nemudoma izbrisane; oglejte si [[{{MediaWiki:Multipleup
 	'multiupload-blank' => 'Izbrana ni nobena datoteka',
 );
 
-/** Albanian (Shqip)
+/** Albanian (shqip)
  * @author Puntori
  */
 $messages['sq'] = array(
@@ -1573,7 +1609,7 @@ $messages['sq'] = array(
 	'multiupload-toolbox' => 'Ngarko skeda të shumta',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Rancher
  * @author Verlor
  * @author Михајло Анђелковић
@@ -1590,7 +1626,7 @@ $messages['sr-ec'] = array(
 	'multiupload-blank' => 'Није изабрана ниједна датотека',
 );
 
-/** Serbian (Latin script) (‪Srpski (latinica)‬)
+/** Serbian (Latin script) (‪srpski (latinica)‬)
  * @author Michaello
  */
 $messages['sr-el'] = array(
@@ -1628,7 +1664,7 @@ Uunoainde Doatäie wäide fluks läsked, sjuch do [[{{MediaWiki:Multipleupload-p
 	'multiupload-blank' => 'Neen Doatäi uutwääld',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author Lokal Profil
  * @author M.M.S.
  * @author Najami
@@ -1705,7 +1741,7 @@ $messages['te'] = array(
 	'multiupload-blank' => 'ఏ దస్త్రాన్నీ ఎంచుకోలేదు',
 );
 
-/** Tajik (Cyrillic script) (Тоҷикӣ)
+/** Tajik (Cyrillic script) (тоҷикӣ)
  * @author Ibrahim
  */
 $messages['tg-cyrl'] = array(
@@ -1804,7 +1840,7 @@ Uygun olmayan dosyalar hemen silinecektir, [[{{MediaWiki:Multipleupload-page}}|d
 	'multiupload-blank' => 'Hiçbir dosya seçilmedi',
 );
 
-/** Ukrainian (Українська)
+/** Ukrainian (українська)
  * @author AS
  */
 $messages['uk'] = array(
@@ -1828,7 +1864,7 @@ $messages['uk'] = array(
 	'multiupload-blank' => 'Нема вибраних файлів',
 );
 
-/** Vèneto (Vèneto)
+/** vèneto (vèneto)
  * @author Candalua
  */
 $messages['vec'] = array(
@@ -1852,7 +1888,7 @@ I file inapropriati i vegnarà scancelati de paca, lèzi le [[{{MediaWiki:Multip
 	'multiupload-blank' => 'Nissun file selessionà',
 );
 
-/** Veps (Vepsan kel')
+/** Veps (vepsän kel’)
  * @author Игорь Бродский
  */
 $messages['vep'] = array(
@@ -1862,6 +1898,11 @@ $messages['vep'] = array(
 	'multipleupload-saveallfiles' => 'Panda muštho kaik failad',
 	'multipleupload-addresswarnings' => 'Olgat hüväd, lugegat kaik varutandad edel ut failoiden jügutoitandad.',
 	'multipleupload-page' => '{{ns:project}}:Failoiden poiščutandan politik',
+	'multipleupload-text' => "Necen lehtpolen abul sab jügutoitta kuverdan-se failoid ühtes,
+Paingat \"Kacta\" i valikat fail, kudamban tö tahtoit jügutoitta.
+Sab jügetoitta 1 - \$1 failad ühtes.
+Tö sat täutta opcionaližen  '''Failan metnimi'''-pöudon i kirjutada '''lühüdad tedod''' teiden failoiš.
+Värad failad heittas sid'-žo, kc. [[{{MediaWiki:Multipleupload-page}}|failoiden heitmižen järgendused]].",
 	'multiupload-fileuploaded' => 'Fail om jügutoittud',
 	'multiupload-toolbox' => 'Jügutoitta äi failoid',
 	'multiupload-no-files' => "Olgat hüväd, valikat hot' üks' fail jügutoitandan täht",
@@ -1907,7 +1948,7 @@ $messages['vo'] = array(
 	'multiupload-toolbox' => 'Löpükön ragivis mödik',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
  * @author Gzdavidwong
  * @author Liangent
  * @author PhiLiP
@@ -1933,7 +1974,7 @@ $messages['zh-hans'] = array(
 	'multiupload-blank' => '未选择文件',
 );
 
-/** Traditional Chinese (‪中文(繁體)‬)
+/** Traditional Chinese (‪中文（繁體）‬)
  * @author Mark85296341
  * @author Tomchiukc
  * @author Wrightbus

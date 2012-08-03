@@ -13,7 +13,7 @@ class MultipleUpload extends SpecialUpload {
 	public $mUploadHasBeenShown;
 	public $mSessionKeys;
 
-	// status messagse for multiple files
+	// status messages for multiple files
 	public $mWarnings;
 	public $mSuccesses;
 	public $mErrors;
@@ -24,11 +24,9 @@ class MultipleUpload extends SpecialUpload {
 	 * @param WebRequest $request Data posted.
 	 */
 	public function __construct( $request = null ) {
-		global $wgRequest;
-
 		SpecialPage::__construct( 'MultipleUpload', 'upload' );
 
-		$this->loadRequest( is_null( $request ) ? $wgRequest : $request );
+		$this->loadRequest();
 		$this->mUploadHasBeenShown = false;
 		$this->mSessionKeys = array();
 		$this->mWarnings = array();
@@ -37,13 +35,32 @@ class MultipleUpload extends SpecialUpload {
 	}
 
 	/**
+	 * ShoutWiki change -- gets and returns the amount of files a user can
+	 * upload at once.
+	 *
+	 * @return Integer: amount of files the user can upload at once
+	 */
+	public static function getMaxUploadFiles() {
+		global $wgUser, $wgMaxUploadFiles;
+		$groups = $wgUser->getEffectiveGroups();
+		if( in_array( 'staff', $groups ) ) {
+			$wgMaxUploadFiles = 40;
+		} elseif( in_array( 'sysop', $groups ) ) {
+			$wgMaxUploadFiles = 20;
+		} elseif( in_array( 'autoconfirmed', $groups ) ) {
+			$wgMaxUploadFiles = 10;
+		} else {
+			$wgMaxUploadFiles = 5;
+		}
+		return $wgMaxUploadFiles;
+	}
+
+	/**
 	 * Initialize instance variables from request and create an Upload handler
 	 *
 	 * @param WebRequest $request The request to extract variables from
 	 */
-	protected function loadRequest( ) {
-		global $wgUser, $wgMaxUploadFiles;
-
+	protected function loadRequest() {
 		$request = $this->getRequest();
 
 		// let's make the parent happy
@@ -52,16 +69,16 @@ class MultipleUpload extends SpecialUpload {
 		wfRestoreWarnings();
 		// Guess the desired name from the filename if not provided
 		$this->mDesiredDestNames = array();
-		$this->mUploads			 = array();
+		$this->mUploads = array();
 
 		// deal with session keys, if we have some pick the first one, for now
 		$vals = $request->getValues();
-		$fromsession = false;
+		$fromSession = false;
 		foreach ( $vals as $k => $v ) {
-			if ( preg_match( "@^wpSessionKey@", $k ) ) {
+			if ( preg_match( '@^wpSessionKey@', $k ) ) {
 				$request->setVal( 'wpSessionKey', $v );
-				$fromsession = true;
-				$filenum = preg_replace( "@wpSessionKey@", '', $k );
+				$fromSession = true;
+				$filenum = preg_replace( '@wpSessionKey@', '', $k );
 				$request->setVal( 'wpDestFile', $request->getVal( 'wpDestFile' . $filenum ) );
 				$up = UploadBase::createFromRequest( $request );
 				$this->mUploads[] = $up;
@@ -75,8 +92,8 @@ class MultipleUpload extends SpecialUpload {
 			&& ( $request->getCheck( 'wpUpload' )
 				|| $request->getCheck( 'wpUploadIgnoreWarning' ) );
 
-		if ( !$fromsession ) {
-			for ( $i = 0; $i < $wgMaxUploadFiles; $i++ ) {
+		if ( !$fromSession ) {
+			for ( $i = 0; $i < MultipleUpload::getMaxUploadFiles(); $i++ ) {
 				$this->mDesiredDestNames[$i] = $request->getText( 'wpDestFile'. $i );
 				if( !$this->mDesiredDestNames[$i] && $request->getFileName( 'wpUploadFile' . $i ) !== null ) {
 					$this->mDesiredDestNames[$i] = $request->getFileName( 'wpUploadFile' . $i );
@@ -90,13 +107,13 @@ class MultipleUpload extends SpecialUpload {
 				$_FILES['wpUploadFile'] = $_FILES['wpUploadFile' . $i];
 				wfRestoreWarnings();
 				$up = UploadBase::createFromRequest( $request );
-				if ($up) {
+				if ( $up ) {
 					$this->mUploads[] = $up;
 				}
 			}
 		}
 		$this->mDesiredDestName = $this->mDesiredDestNames[0];
-		$this->mUpload= $this->mUploads[0];
+		$this->mUpload = $this->mUploads[0];
 	}
 
 	function showUploadForm( $form ) {
@@ -115,8 +132,6 @@ class MultipleUpload extends SpecialUpload {
 	 * @return UploadForm
 	 */
 	protected function getUploadForm( $message = '', $sessionKeys = array(), $hideIgnoreWarning = false ) {
-		global $wgOut, $wgMaxUploadFiles;
-
 		# Initialize form
 		$options = array(
 			'watch' => $this->getWatchCheck(),
@@ -127,14 +142,13 @@ class MultipleUpload extends SpecialUpload {
 			'textaftersummary' => $this->uploadFormTextAfterSummary,
 		);
 		foreach ( $this->mSessionKeys as $f => $key ) {
-			$options['sessionkey'. $f] = $key;
+			$options['sessionkey' . $f] = $key;
 		}
-		for ( $i = 0; $i < $wgMaxUploadFiles; $i++ ) {
+		for ( $i = 0; $i < MultipleUpload::getMaxUploadFiles(); $i++ ) {
 			$options['destfile' . $i] = $this->mDesiredDestNames[$i];
 		}
 		$form = new MultiUploadForm( $options );
 		$form->setTitle( $this->getTitle() );
-		$form->setMessagePrefix( "upload");
 
 		# Check the token, but only if necessary
 		if( !$this->mTokenOk && !$this->mCancelUpload
@@ -153,7 +167,7 @@ class MultipleUpload extends SpecialUpload {
 		$uploadFooter = wfMsgNoTrans( 'uploadfooter' );
 		if ( $uploadFooter != '-' && !wfEmptyMsg( 'uploadfooter', $uploadFooter ) ) {
 			$form->addPostText( '<div id="mw-upload-footer-message">'
-				. $wgOut->parse( $uploadFooter ) . "</div>\n" );
+				. $this->getOutput()->parse( $uploadFooter ) . "</div>\n" );
 		}
 
 		return $form;
@@ -163,35 +177,33 @@ class MultipleUpload extends SpecialUpload {
 	 * Shows the "view X deleted revivions link"
 	 */
 	protected function showViewDeletedLinks() {
-		global $wgMaxUploadFiles;
-		for ( $i = 0; $i < $wgMaxUploadFiles; $i++ ) {
+		for ( $i = 0; $i < MultipleUpload::getMaxUploadFiles(); $i++ ) {
 			$this->showViewDeletedLinksInner( $this->mDesiredDestNames[$i] );
 		}
 	}
 
 	protected function showViewDeletedLinksInner( $name ) {
-		global $wgOut, $wgUser;
-
 		$title = Title::makeTitleSafe( NS_FILE, $this->mDesiredDestName );
 		// Show a subtitle link to deleted revisions (to sysops et al only)
 		if( $title instanceof Title ) {
 			$count = $title->isDeleted();
-			if ( $count > 0 && $wgUser->isAllowed( 'deletedhistory' ) ) {
+			$user = $this->getUser();
+			if ( $count > 0 && $user->isAllowed( 'deletedhistory' ) ) {
 				$link = wfMsgExt(
-					$wgUser->isAllowed( 'delete' ) ? 'thisisdeleted' : 'viewdeleted',
+					$user->isAllowed( 'delete' ) ? 'thisisdeleted' : 'viewdeleted',
 					array( 'parse', 'replaceafter' ),
-					$wgUser->getSkin()->linkKnown(
+					Linker::linkKnown(
 						SpecialPage::getTitleFor( 'Undelete', $title->getPrefixedText() ),
 						wfMsgExt( 'restorelink', array( 'parsemag', 'escape' ), $count )
 					)
 				);
-				$wgOut->addHTML( "<div id=\"contentSub2\">{$link}</div>" );
+				$this->getOutput()->addHTML( "<div id=\"contentSub2\">{$link}</div>" );
 			}
 		}
 
 		// Show the relevant lines from deletion log (for still deleted files only)
 		if( $title instanceof Title && $title->isDeletedQuick() && !$title->exists() ) {
-			$this->showDeletionLog( $wgOut, $title->getPrefixedText() );
+			$this->showDeletionLog( $this->getOutput(), $title->getPrefixedText() );
 		}
 	}
 
@@ -204,8 +216,6 @@ class MultipleUpload extends SpecialUpload {
 	 * 	warnings and the should continue processing like there was no warning
 	 */
 	protected function showUploadWarning( $warnings ) {
-		global $wgUser;
-
 		# If there are no warnings, or warnings we can ignore, return early.
 		# mDestWarningAck is set when some javascript has shown the warning
 		# to the user. mForReUpload is set when the user clicks the "upload a
@@ -218,8 +228,6 @@ class MultipleUpload extends SpecialUpload {
 		}
 
 		$sessionKey = $this->mUpload->stashSession();
-
-		$sk = $wgUser->getSkin();
 
 		$warningHtml = '<h2>' . wfMsgHtml( 'uploadwarning' ) . "</h2>\n"
 			. '<ul class="warning">';
@@ -260,12 +268,12 @@ class MultipleUpload extends SpecialUpload {
 	 * @param $message String
 	 */
 	protected function showUploadError( $message ) {
-		$err ='<ul><li>';
+		$err = '<ul><li>';
 		$file = $this->mLocalFile;
 		if ( $file ) {
 			$t = $this->mLocalFile->getTitle();
 			if ( $t ) {
-				$err .= $t->getFullText() . ":";
+				$err .= $t->getFullText() . ':';
 			}
 		}
 		$err .= $message . "</li></ul>\n";
@@ -277,13 +285,11 @@ class MultipleUpload extends SpecialUpload {
 	 * Checks are made in SpecialUpload::execute()
 	 */
 	protected function processUpload() {
-		global $wgMaxUploadFiles, $wgOut;
-
-		for ( $i = 0; $i < $wgMaxUploadFiles; $i++ ) {
-			if ( isset( $this->mUploads[$i] ) )  {
+		for ( $i = 0; $i < MultipleUpload::getMaxUploadFiles(); $i++ ) {
+			if ( isset( $this->mUploads[$i] ) ) {
 				$this->mUpload = $this->mUploads[$i];
 				$title = $this->mUpload->getTitle();
-				if ( !empty($title) ) {
+				if ( !empty( $title ) ) {
 					$this->mUploadSuccessful = false; // reset
 					parent::processUpload();
 					if ( $this->mUploadSuccessful ) {
@@ -294,24 +300,27 @@ class MultipleUpload extends SpecialUpload {
 				}
 			}
 		}
+
+		$out = $this->getOutput();
+
 		// clear out the redirects
-		$wgOut->redirect( '' );
+		$out->redirect( '' );
 
 		// tell the good news first
 		if ( sizeof( $this->mSuccesses ) > 0 ) {
-			$wgOut->addHTML( '<h2>' . wfMsgHtml( 'upload-success-subj' ) . "</h2>\n" );
-			$wgOut->addHTML( implode( $this->mSuccesses ) );
+			$out->addHTML( '<h2>' . wfMsgHtml( 'multiupload-successful-upload' ) . "</h2>\n" );
+			$out->addHTML( implode( $this->mSuccesses ) );
 		}
 
 		// the bad news
 		if ( sizeof( $this->mErrors ) > 0 ) {
-			$wgOut->addHTML( '<h2>' . wfMsgHtml( 'upload-failure-subj' ) . "</h2>\n" );
-			$wgOut->addHTML( implode( $this->mErrors ) );
+			$out->addHTML( '<h2>' . wfMsgHtml( 'uploaderror' ) . "</h2>\n" );
+			$out->addHTML( implode( $this->mErrors ) );
 		}
 
 		// the hopefully recoverable news
 		if ( sizeof( $this->mWarnings ) > 0 || sizeof( $this->mErrors ) > 0 ) {
-			$wgOut->addHTML( '<br /><br /><hr />' ); // visually separate the form from the errors/successes
+			$out->addHTML( '<br /><br /><hr />' ); // visually separate the form from the errors/successes
 			$form = $this->getUploadForm( implode( $this->mWarnings ), $this->mSessionKeys, /* $hideIgnoreWarning */ true );
 			$form->setSubmitText( wfMsg( 'upload-tryagain' ) );
 			$form->addButton( 'wpUploadIgnoreWarning', wfMsg( 'ignorewarning' ) );
@@ -327,9 +336,8 @@ class MultipleUpload extends SpecialUpload {
 	 * @return Boolean: success
 	 */
 	protected function unsaveUploadedFile() {
-		global $wgMaxUploadFiles;
 		$ret = true;
-		for ( $i = 0; $i < $wgMaxUploadFiles; $i++ ) {
+		for ( $i = 0; $i < MultipleUpload::getMaxUploadFiles(); $i++ ) {
 			if ( isset( $this->mUploads[$i] ) ) {
 				$this->mUpload = $this->mUploads[$i];
 				// return false if even one of them failed
@@ -343,9 +351,9 @@ class MultipleUpload extends SpecialUpload {
 	 * Construct a warning and a gallery from an array of duplicate files.
 	 * Override because the original doesn't say which file is a dupe
 	 */
-	public static function getDupeWarning( $dupes, $dupetitle = null ) {
+	public static function getDupeWarning( $dupes, $dupeTitle = null ) {
 		$result = parent::getDupeWarning( $dupes );
-		return preg_replace( "@<li>@", "<li>{$dupetitle->getText()}", $result );
+		return preg_replace( '@<li>@', "<li>{$dupeTitle->getText()}", $result );
 	}
 
 }
@@ -358,20 +366,63 @@ class MultiUploadForm extends UploadForm {
 	protected $mDestFiles;
 	protected $mSessionKeys;
 
-	public function __construct( $options = array() ) {
+	public function __construct( $options = array(), $context = null, $messagePrefix = 'multiupload' ) {
 		// basically we want to map filenames to session keys here somehow
-		global $wgMaxUploadFiles;
 		$this->mDestFiles = array();
-		for( $i = 0; $i < $wgMaxUploadFiles; $i++ ) {
+		for( $i = 0; $i < MultipleUpload::getMaxUploadFiles(); $i++ ) {
 			$this->mDestFiles[$i] = $options['destfile'. $i];
 		}
 		$this->mSessionKeys = array();
 		foreach ( $options as $k => $v ) {
-			if ( preg_match( "@^sessionkey@", $k ) ) {
+			if ( preg_match( '@^sessionkey@', $k ) ) {
 				$this->mSessionKeys[$k] = $v;
 			}
 		}
-		parent::__construct( $options );
+		// In an ideal world, this would work:
+		#parent::__construct( $options, $context, $messagePrefix );
+		// But MediaWiki is MediaWiki, so of course you can't pass the third
+		// parameter to UploadForm::__construct(), but instead it hardcodes it
+		// to 'upload'...great. So, we have to duplicate that function here. :(
+		$this->mWatch = !empty( $options['watch'] );
+		$this->mForReUpload = !empty( $options['forreupload'] );
+		$this->mSessionKey = isset( $options['sessionkey'] )
+				? $options['sessionkey'] : '';
+		$this->mHideIgnoreWarning = !empty( $options['hideignorewarning'] );
+		$this->mDestWarningAck = !empty( $options['destwarningack'] );
+		$this->mDestFile = isset( $options['destfile'] ) ? $options['destfile'] : '';
+
+		$this->mComment = isset( $options['description'] ) ?
+			$options['description'] : '';
+
+		$this->mTextTop = isset( $options['texttop'] )
+			? $options['texttop'] : '';
+
+		$this->mTextAfterSummary = isset( $options['textaftersummary'] )
+			? $options['textaftersummary'] : '';
+
+		$sourceDescriptor = $this->getSourceSection();
+		$descriptor = $sourceDescriptor
+			+ $this->getDescriptionSection()
+			+ $this->getOptionsSection();
+
+		wfRunHooks( 'UploadFormInitDescriptor', array( &$descriptor ) );
+		$this->setMessagePrefix( 'multiupload' );
+		HTMLForm::__construct( $descriptor, $context, 'multiupload' ); // here's the change
+
+		# Set some form properties
+		$this->setSubmitText( wfMsg( 'uploadbtn' ) );
+		$this->setSubmitName( 'wpUpload' );
+		# Used message keys: 'accesskey-upload', 'tooltip-upload'
+		$this->setSubmitTooltip( 'upload' );
+		$this->setId( 'mw-upload-form' );
+
+		# Build a list of IDs for javascript insertion
+		$this->mSourceIds = array();
+		foreach ( $sourceDescriptor as $field ) {
+			if ( !empty( $field['id'] ) ) {
+				$this->mSourceIds[] = $field['id'];
+			}
+		}
 	}
 
 	protected function getDescriptionSection() {
@@ -388,9 +439,7 @@ class MultiUploadForm extends UploadForm {
 	 * @return array Descriptor array
 	 */
 	protected function getSourceSection() {
-		global $wgLang, $wgUser, $wgRequest, $wgMaxUploadFiles;
-
-		if ( sizeof( $this->mSessionKeys ) > 0) {
+		if ( sizeof( $this->mSessionKeys ) > 0 ) {
 			$data = array(
 				'wpSourceType' => array(
 					'type' => 'hidden',
@@ -415,9 +464,9 @@ class MultiUploadForm extends UploadForm {
 			return $data;
 		}
 
-		$canUploadByUrl = UploadFromUrl::isEnabled() && $wgUser->isAllowed( 'upload_by_url' );
+		$canUploadByUrl = UploadFromUrl::isEnabled() && $this->getUser()->isAllowed( 'upload_by_url' );
 		$radio = $canUploadByUrl;
-		$selectedSourceType = strtolower( $wgRequest->getText( 'wpSourceType', 'File' ) );
+		$selectedSourceType = strtolower( $this->getRequest()->getText( 'wpSourceType', 'File' ) );
 
 		$descriptor = array();
 		if ( $this->mTextTop ) {
@@ -429,7 +478,7 @@ class MultiUploadForm extends UploadForm {
 			);
 		}
 
-		for ( $i = 0; $i < $wgMaxUploadFiles; $i++ ) {
+		for ( $i = 0; $i < MultipleUpload::getMaxUploadFiles(); $i++ ) {
 			$descriptor['UploadFile' . $i] = array(
 				'class' => 'UploadSourceField',
 				'section' => 'source',
@@ -462,7 +511,7 @@ class MultiUploadForm extends UploadForm {
 					'radio' => &$radio,
 					'help' => wfMsgExt( 'upload-maxfilesize',
 							array( 'parseinline', 'escapenoentities' ),
-							$wgLang->formatSize( $wgMaxUploadSize )
+							$this->getLang()->formatSize( $wgMaxUploadSize )
 						) . ' ' . wfMsgHtml( 'upload_source_url' ),
 					'checked' => $selectedSourceType == 'url',
 				);
@@ -477,7 +526,7 @@ class MultiUploadForm extends UploadForm {
 			'raw' => true,
 				'help' => wfMsgExt( 'upload-maxfilesize',
 						array( 'parseinline', 'escapenoentities' ),
-						$wgLang->formatSize(
+						$this->getLang()->formatSize(
 							wfShorthandToInteger( ini_get( 'upload_max_filesize' ) )
 						)
 					) . ' ' . wfMsgHtml( 'upload_source_file' ),
@@ -489,10 +538,9 @@ class MultiUploadForm extends UploadForm {
 	 * Add upload JavaScript to $wgOut
 	 */
 	protected function addUploadJS() {
-		global $wgScriptPath, $wgMaxUploadFiles, $wgFileExtensions;
+		global $wgScriptPath, $wgFileExtensions;
 
 		global $wgUseAjax, $wgAjaxUploadDestCheck, $wgAjaxLicensePreview, $wgEnableAPI;
-		global $wgOut;
 
 		$useAjaxDestCheck = $wgUseAjax && $wgAjaxUploadDestCheck;
 		$useAjaxLicensePreview = $wgUseAjax && $wgAjaxLicensePreview && $wgEnableAPI;
@@ -507,18 +555,19 @@ class MultiUploadForm extends UploadForm {
 			'wgUploadSourceIds' => $this->mSourceIds,
 		);
 
-		$wgOut->addScript( Skin::makeVariablesScript( $scriptVars ) );
+		$out = $this->getOutput();
+		$out->addScript( Skin::makeVariablesScript( $scriptVars ) );
 
 		// For <charinsert> support
-		$wgOut->addScriptFile( 'edit.js' );
+		$out->addScriptFile( 'edit.js' );
 
 		// changed
-		$wgOut->addScriptFile( "$wgScriptPath/extensions/MultiUpload/multiupload.js" );
+		$out->addScriptFile( "$wgScriptPath/extensions/MultiUpload/multiupload.js" );
 		$newscriptVars = array(
-			'wgMaxUploadFiles' => $wgMaxUploadFiles,
+			'wgMaxUploadFiles' => MultipleUpload::getMaxUploadFiles(),
 			'wgFileExtensions' => $wgFileExtensions
 		);
-		$wgOut->addScript( Skin::makeVariablesScript( $newscriptVars ) );
+		$out->addScript( Skin::makeVariablesScript( $newscriptVars ) );
 	}
 
 }
