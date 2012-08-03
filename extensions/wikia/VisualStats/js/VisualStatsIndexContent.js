@@ -2,7 +2,7 @@
 var VisualStatsIndexContent = {
     init: function(parameter, data, dates){
         this.wikiaCommit = data.wikiaCommit;
-        //this.userData = data.user;
+        this.userCommit = data.userCommit;
         this.dates = dates;
 
         $('#' + parameter).addClass("selected");
@@ -19,102 +19,151 @@ var VisualStatsIndexContent = {
 
         }
     },
+    roundUp: function(number){
+        number+=12;
+        number=Math.ceil(number/10)*10;
+        return number;
+    },
     drawCommitActivity: function(){
         var svg = this.createSvgContainer(1000,1000,"#Graph");
-        svg.append("svg:line").
-            attr("x1", 60).
-            attr("y1",600).
-            attr("x2", 900).
-            attr("y2",600).
-            attr("stroke", "green");
-        svg.append("svg:line").
-            attr("x1", 60).
-            attr("y1",600).
-            attr("x2", 60).
-            attr("y2",100).
-            attr("stroke", "green");
+        var self = this;
+        svg.append("svg:line")
+            .attr("x1", 60)
+            .attr("y1",600)
+            .attr("x2", 900)
+            .attr("y2",600)
+            .attr("stroke", "green");
+        svg.append("svg:line")
+            .attr("x1", 60)
+            .attr("y1",600)
+            .attr("x2", 60)
+            .attr("y2",100)
+            .attr("stroke", "green");
 
-        var max = this.wikiaCommit.max;
-        max+=12;
-        max=Math.ceil(max/10)*10;
-        var scaleY = d3.scale.linear()
-            .domain([0, max])
+        var wikiaMax = this.roundUp(this.wikiaCommit.max);
+        var userMax = this.roundUp(this.userCommit.max);
+
+        this.scaleY = d3.scale.linear()
+            .domain([0, wikiaMax])
             .range([600, 100]);
 
         var scaleX = d3.scale.linear()
             .domain([0, 14])
             .range([120, 840]);
         var i = 0;
-        var dataset= [];
+        var wikiaDataset= [];
+        var userDataset= [];
         console.log(this.wikiaCommit.data);
         $.each(this.wikiaCommit.data, function(date, value){
-            svg.append("svg:text").
-                attr("x", scaleX(i)).
-                attr("y", 620).
-                text(date).
-                attr("font-size", 8).
-                attr("text-anchor", "middle");
-
-           /* svg.append("circle").
-                attr("cx", scaleX(i)).
-                attr("cy", scaleY(value)).
-                attr("r", 3).
-                attr("stroke", "pink").
-                attr("fill", "#42C5E3").
-                on("mouseover", function(){
-                    d3.select(this).attr("fill", "#A1D9E6");
-                }).
-                on("mouseout", function(){
-                    d3.select(this).attr("fill", "#42C5E3");
-                });*/
-           /* svg.append("svg:text").
-                attr("class", "labels").
-                attr("x", scaleX(i)-5).
-                attr("y", scaleY(value)-5).
-                text(value).
-                attr("font-size", 9).
-                attr("text-anchor", "end");*/
-            dataset[i] = value;
+            svg.append("svg:text")
+                .attr("x", scaleX(i))
+                .attr("y", 620)
+                .text(date)
+                .attr("id", function(){return "date" + i;})
+                .attr("font-size", 8)
+                .attr("fill", "black")
+                .attr("text-anchor", "middle");
+            wikiaDataset[i] = value;
+            i++;
+        })
+        i=0;
+        $.each(this.userCommit.data, function(date, value){
+            userDataset[i] = value;
             i++;
         })
 
 
-        var line = d3.svg.line()
+        this.line = d3.svg.line()
             .x(function(d, i) { return scaleX(i); })
-            .y(function(d) { return scaleY(d); })
+            .y(function(d) { return this.scaleY(d); })
             .interpolate("monotone");
 
-        svg.append("path").attr("d", line(dataset))
+        svg.append("path").attr("d", this.line(wikiaDataset))
             .style("stroke", "#248EA6")
             .style("fill", "none")
             .style("stroke-width", "3px");
-
+        var curLabel;
         svg.selectAll("circle")
-            .data(dataset)
-            .enter().append("circle")
+            .data(wikiaDataset)
+            .enter()
+            .append("circle")
             .attr("cx", function(d, i) { return scaleX(i); })
-            .attr("cy", function(d) { return scaleY(d); })
-            .attr("r", 4).
-            attr("stroke", "pink").
-            attr("fill", "#42C5E3").
-            on("mouseover", function(){
+            .attr("cy", function(d) { return self.scaleY(d); })
+            .attr("r", 4)
+            .attr("stroke", "pink")
+            .attr("fill", "#42C5E3")
+            .on("mouseover", function(d,i){
                 d3.select(this).attr("fill", "#72D6BF").attr("r", 6);
-            }).
-            on("mouseout", function(){
+                d3.select("#label" + i).attr("font-size", 13);
+                d3.select("#date" + i).attr("font-size", 10).attr("fill", "red");
+            })
+            .on("mouseout", function(d,i){
                 d3.select(this).attr("fill", "#42C5E3").attr("r", 4);
+                d3.select("#label" + i).attr("font-size", 9);
+                d3.select("#date" + i).attr("font-size", 8).attr("fill", "black");
             });
 
-        svg.selectAll(".labels").
-            data(dataset).
-            enter().
-            append("svg:text").
-            attr("x", function(d, i) { return scaleX(i)-5; }).
-            attr("y", function(d) { return scaleY(d)-5; }).
-            text(function(d) { return d; }).
-            attr("font-size", 9).
-            attr("text-anchor", "end");
+        svg.selectAll(".labels")
+            .data(wikiaDataset)
+            .enter()
+            .append("svg:text")
+            .attr("class", "labels")
+            .attr("id", function(d,i){ return 'label' + i;})
+            .attr("x", function(d, i) { return scaleX(i)-5; })
+            .attr("y", function(d) { return self.scaleY(d)-5; })
+            .text(function(d) { return d; })
+            .attr("font-size", 9)
+            .attr("text-anchor", "end");
 
+        /*setTimeout(
+        function(){self.updateCommitActivity(svg,[20,76,20,0,20,20,80,20,20,20,20,20,20,90,20], 100)}, 3000);
+        setTimeout(
+            function(){self.updateCommitActivity(svg,userDataset, userMax)}, 6000);
+        setTimeout(
+            function(){self.updateCommitActivity(svg,wikiaDataset, wikiaMax)}, 9000);*/
+        svg.append("rect")
+            .attr("id", "wikiaButton")
+            .attr("x", 60)
+            .attr("y", 650)
+            .attr("width", 400)
+            .attr("height", 60)
+            .attr("fill", "#35F098")
+            .on("click", function(){
+                d3.select(this).attr("fill", "#35F098");
+                d3.select("#userButton").attr("fill", "#C9D4CF");
+                self.updateCommitActivity(svg,wikiaDataset, wikiaMax)
+            });
 
+        svg.append("rect")
+            .attr("id", "userButton")
+            .attr("x", 500)
+            .attr("y", 650)
+            .attr("width", 400)
+            .attr("height", 60)
+            .attr("fill", "#C9D4CF")
+            .on("click", function(){
+                d3.select(this).attr("fill", "#35F098");
+                d3.select("#wikiaButton").attr("fill", "#C9D4CF");
+                self.updateCommitActivity(svg,userDataset, userMax)
+            });
+
+    },
+    updateCommitActivity: function(svg, dataToUpdate, max){
+        //[20,20,20,20,20,20,20,20,20,20,20,20,20,20,20]
+        this.scaleY.domain([0, max]);
+        var self = this;
+        svg.selectAll("circle")
+            .data(dataToUpdate)
+            .transition()
+            .attr("cy", function(d) { return self.scaleY(d); });
+        svg.selectAll(".labels")
+            .data(dataToUpdate)
+            .transition()
+            .attr("y", function(d) { return self.scaleY(d)-5; })
+            .text(function(d) { return d; });
+        svg.select("path")
+            .transition()
+            .attr("d", this.line(dataToUpdate));
 
     },
     drawPunchcard: function(){

@@ -72,11 +72,15 @@ class VisualStats extends WikiaObject {
                 array ('GROUP BY' => 'left(rev_timestamp,10)')
             );
             while ($row = $this->getDB()->fetchObject($newquery)){
-                $userResult[] = array('date' => date("d-m-Y", strtotime(substr($row->date,0,8))), 'hour' => substr($row->date,8,2), 'count' => $row->count);
-                $userCommit[date("d-m-Y", strtotime(substr($row->date,0,8)))]+=$row->count;
+                $tempDate = date("d-m-Y", strtotime(substr($row->date,0,8)));
+                $userResult[] = array('date' => $tempDate, 'hour' => substr($row->date,8,2), 'count' => $row->count);
+                $userCommit[$tempDate]+=$row->count;
+                if ($userCommit[$tempDate]>$userCommitMax){
+                    $userCommitMax=$userCommit[$tempDate];
+                }
             };
 
-        return array('wikiaCommit' => array('data' => $wikiaCommit, 'max' =>$wikiaCommitMax), 'userCommit' => $userCommit);
+        return array('wikiaCommit' => array('data' => $wikiaCommit, 'max' =>$wikiaCommitMax), 'userCommit' => array('data' => $userCommit, 'max' =>$userCommitMax));
 
     }
 /*
