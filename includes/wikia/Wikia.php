@@ -530,7 +530,7 @@ class Wikia {
 		}
 
 		/**
-		 * fallback to Wikia (with an override)
+		 * fallback to Wikia
 		 */
 		if( ! $staffUser ) {
 			$staffUser = User::newFromName( 'Wikia' );
