@@ -12,4 +12,5 @@ $app = F::app();
 $app->registerHook( 'ThumbnailImageHTML', 'ImageLazyLoad', 'onThumbnailImageHTML' );
 $app->registerHook( 'ThumbnailVideoHTML', 'ImageLazyLoad', 'onThumbnailImageHTML' );
 $app->registerHook( 'ParserClearState', 'ImageLazyLoad', 'onParserClearState' );
+$app->registerHook( 'BeforePageDisplay', 'ImageLazyLoad', 'onBeforePageDisplay' );
 

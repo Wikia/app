@@ -8,19 +8,24 @@
 class ImageLazyLoad extends WikiaObject {
 
 	static private $isWikiaMobile = null;
+	static private $enabled = false;
 	const LAZY_IMAGE_CLASSES = 'lzy lzyPlcHld';
 
 	function __construct(){
 		parent::__construct();
 
-		if ( self::$isWikiaMobile === null )
+		if ( self::$isWikiaMobile === null ) {
 			self::$isWikiaMobile = $this->app->checkSkin( 'wikiamobile' );
+		}
 
+		if( ! self::$isWikiaMobile && !$this->app->wg->RTEParserEnabled ) {
+				self::$enabled = true;
+		}
 	}
 
 	public function onThumbnailImageHTML( $options, $linkAttribs, $attribs, $file,  &$html ) {
 
-		if( ! self::$isWikiaMobile && !$this->app->wg->RTEParserEnabled ) {
+		if( self::$enabled ) {
 
 			if( startsWith($attribs['src'], 'data:') ) {
 				// dont lazy-load data elements
@@ -60,5 +65,12 @@ class ImageLazyLoad extends WikiaObject {
 		return true;
 	}
 
+	function onBeforePageDisplay(&$out, &$skin) {
+		if( self::$enabled) {
+			$url = "{$this->app->wg->ExtensionsPath}/wikia/ImageLazyLoad/css/ImageLazyLoadNoScript.css";
+			$out->addHtml('<noscript><link rel="stylesheet" href="'.$url.'"/></noscript>');
+		}
+		return true;
+	}
 
 }
