@@ -105,10 +105,6 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 		$this->wikitextmoduledata = $model->getDataForModuleWikitext();
 	}
 
-	public function popularvideos() {
-		//this method returns a template
-	}
-
 	public function fromthecommunity() {
 		$this->setCacheValidity();
 		$model = $this->getModel();
