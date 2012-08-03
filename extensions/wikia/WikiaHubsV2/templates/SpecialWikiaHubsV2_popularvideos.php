@@ -14,19 +14,19 @@
 		<div>
 			<ul class="carousel" style="">
 				<li class="thumbs active">
-					<img src="http://images3.wikia.nocookie.net/__cb57524/wikiaglobal/images/thumb/d/dd/Darksiders320.jpg/115px-0%2C320%2C25%2C206-Darksiders320.jpg" data-bigimage="http://images3.wikia.nocookie.net/__cb57524/wikiaglobal/images/thumb/d/dd/Darksiders320.jpg/320px-0%2C320%2C16%2C229-Darksiders320.jpg">
+					<?= $app->renderView( 'RelatedHubsVideos', 'getCaruselElement', array( 'video' => $videos[0], 'preloaded' => 1 ) ) ?>
 				</li>
 				<li class="thumbs active">
-					<img src="http://images3.wikia.nocookie.net/__cb57524/wikiaglobal/images/thumb/d/dd/Darksiders320.jpg/115px-0%2C320%2C25%2C206-Darksiders320.jpg" data-bigimage="http://images3.wikia.nocookie.net/__cb57524/wikiaglobal/images/thumb/d/dd/Darksiders320.jpg/320px-0%2C320%2C16%2C229-Darksiders320.jpg">
+					<?= $app->renderView( 'RelatedHubsVideos', 'getCaruselElement', array( 'video' => $videos[0], 'preloaded' => 1 ) ) ?>
 				</li>
 				<li class="thumbs active">
-					<img src="http://images3.wikia.nocookie.net/__cb57524/wikiaglobal/images/thumb/d/dd/Darksiders320.jpg/115px-0%2C320%2C25%2C206-Darksiders320.jpg" data-bigimage="http://images3.wikia.nocookie.net/__cb57524/wikiaglobal/images/thumb/d/dd/Darksiders320.jpg/320px-0%2C320%2C16%2C229-Darksiders320.jpg">
+					<?= $app->renderView( 'RelatedHubsVideos', 'getCaruselElement', array( 'video' => $videos[0], 'preloaded' => 1 ) ) ?>
 				</li>
 				<li class="thumbs active">
-					<img src="http://images3.wikia.nocookie.net/__cb57524/wikiaglobal/images/thumb/d/dd/Darksiders320.jpg/115px-0%2C320%2C25%2C206-Darksiders320.jpg" data-bigimage="http://images3.wikia.nocookie.net/__cb57524/wikiaglobal/images/thumb/d/dd/Darksiders320.jpg/320px-0%2C320%2C16%2C229-Darksiders320.jpg">
+					<?= $app->renderView( 'RelatedHubsVideos', 'getCaruselElement', array( 'video' => $videos[0], 'preloaded' => 1 ) ) ?>
 				</li>
 				<li class="thumbs active">
-					<img src="http://images3.wikia.nocookie.net/__cb57524/wikiaglobal/images/thumb/d/dd/Darksiders320.jpg/115px-0%2C320%2C25%2C206-Darksiders320.jpg" data-bigimage="http://images3.wikia.nocookie.net/__cb57524/wikiaglobal/images/thumb/d/dd/Darksiders320.jpg/320px-0%2C320%2C16%2C229-Darksiders320.jpg">
+					<?= $app->renderView( 'RelatedHubsVideos', 'getCaruselElement', array( 'video' => $videos[0], 'preloaded' => 1 ) ) ?>
 				</li>
 			</ul>
 		</div>

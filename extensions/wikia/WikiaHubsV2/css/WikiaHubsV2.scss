@@ -129,7 +129,7 @@ $color-inactive-button: darken($color-secondary-button, 50%);
 }
 
 .carouselContainer {
-	height: 65px;
+	height: 160px;
 	left: 49px;
 	overflow: hidden;
 	position: relative;
@@ -138,6 +138,7 @@ $color-inactive-button: darken($color-secondary-button, 50%);
 		position: relative;
 	}
 	.carousel {
+		margin-top: 15px;
 		position: absolute;
 		li {
 			border: 0;
@@ -159,6 +160,7 @@ $color-inactive-button: darken($color-secondary-button, 50%);
 }
 
 .WikiaMediaCarousel {
+	height: 200px;
 	.button {
 		&.secondary {
 			@include linear-gradient($color-secondary-button, top, $color-secondary-button-highlight, 35%, $color-secondary-button, 65%);
@@ -177,7 +179,7 @@ $color-inactive-button: darken($color-secondary-button, 50%);
 			margin: 35px -9px;
 		}
 		&.left{
-			left: 633px;
+			left: 623px;
 			.chevron {
 				border-color: transparent transparent transparent $color-buttons;
 				margin: 35px 4px;
