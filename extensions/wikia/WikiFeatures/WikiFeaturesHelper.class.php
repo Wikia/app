@@ -103,7 +103,7 @@ class WikiFeaturesHelper extends WikiaModel {
 		
 		$memKey = $this->getMemcKeyNumActiveWikis($feature);
 		$num = $this->wg->Memc->get($memKey);
-		if (is_null($num)) {
+		if ( $num === false ) {
 			$db = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
 
 			$result = $db->selectRow(
