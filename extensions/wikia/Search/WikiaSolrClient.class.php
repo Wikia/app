@@ -103,7 +103,7 @@ class WikiaSolrClient extends WikiaSearchClient {
 		$params = array(
 						# html makes the response too big
 				'fl' => implode(',', $fields),
-				'qf' => sprintf('%s^5 %s', self::field('title'), self::field('html')), 
+				'qf' => sprintf('%s^5 %s %s^4', self::field('title'), self::field('html'), self::field('redirect_titles')), 
 				'hl' => 'true',
 				'hl.fl' => sprintf('%s', self::field('html')),
 				'hl.requireFieldMatch' => 'true',
@@ -132,7 +132,7 @@ class WikiaSolrClient extends WikiaSearchClient {
 
 		$boostFunctions = array();
 
-		$queryFields = array('html'=>1.5, 'title'=>5);
+		$queryFields = array('html'=>1.5, 'title'=>5, 'redirect_titles'=>4);
 
 		if( $this->isInterWiki ) {
 			$queryClauses += $this->getInterWikiQueryClauses($hub);
@@ -157,6 +157,13 @@ class WikiaSolrClient extends WikiaSearchClient {
 								'group.start' => $start,
 								'group.rows' => $size,
 							); 
+
+			$params['fq'] = 'iscontent:true';
+
+			if ($hub) {
+				$params['fq'] .= ' hub:'.$this->sanitizeQuery($hub);
+			}
+
 		}
 		else {
 			// for caching, hopefully
@@ -176,9 +183,6 @@ class WikiaSolrClient extends WikiaSearchClient {
 			$queryClauses[] = "is_redirect:false";
 			$params['fq'] = (isset($params['fq']) ? $params['fq'] . ' AND ' : '') . 'is_redirect:false';
 		}
-
-
-
 
 		$qfString = "\'";
 		array_walk($queryFields, function($val, $key) use (&$qfString) { $qfString .= WikiaSolrClient::field($key)."^{$val} "; }) ;
