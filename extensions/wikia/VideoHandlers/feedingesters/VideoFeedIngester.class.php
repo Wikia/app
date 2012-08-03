@@ -103,6 +103,7 @@ abstract class VideoFeedIngester {
 		// prepare wiki categories string (eg [[Category:MyCategory]] )
 		$categories = $this->generateCategories($data, $addlCategories);
 		$categories[] = wfMsgForContent( 'videohandler-category' );
+		$categories = array_unique( $categories );
 		$categoryStr = '';
 		foreach ($categories as $categoryName) {
 			$category = Category::newFromName($categoryName);
