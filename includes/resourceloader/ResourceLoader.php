@@ -225,7 +225,12 @@ class ResourceLoader {
 		$this->addSource( $wgResourceLoaderSources );
 
 		// Register core modules
-		$this->register( include( "$IP/resources/Resources.php" ) );
+		// Wikia - change begin - @author: wladek
+		// add source: common for global modules
+		$this->register( include( "$IP/resources/Resources.php" ), null, /*source*/ 'common' );
+		// add Wikia-specific global modules
+		$this->register( include( "$IP/resources/wikia/Resources.php" ), null, /*source*/ 'common' );
+		// Wikia - change end
 		// Register extension modules
 		wfRunHooks( 'ResourceLoaderRegisterModules', array( &$this ) );
 		$this->register( $wgResourceModules );
@@ -251,7 +256,7 @@ class ResourceLoader {
 	 * @return Boolean: False if there were any errors, in which case one or more modules were not
 	 *     registered
 	 */
-	public function register( $name, $info = null ) {
+	public function register( $name, $info = null, /* Wikia */ $source = null ) {
 		wfProfileIn( __METHOD__ );
 
 		// Allow multiple modules to be registered in one call
@@ -285,6 +290,9 @@ class ResourceLoader {
 				$this->modules[$name] = $info;
 			} else {
 				// New calling convention
+				if ( $source && empty( $info['class'] ) ) {
+					$info['source'] = $source;
+				}
 				$this->moduleInfos[$name] = $info;
 			}
 		}

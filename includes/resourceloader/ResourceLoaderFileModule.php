@@ -129,7 +129,7 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 	/**
 	 * Added by Wikia
 	 */
-	protected $source = 'common';
+	protected $source = 'local';
 
 	/* Methods */
 
