@@ -46,9 +46,8 @@ class VisualStats extends WikiaObject {
                 __METHOD__,
                 array ('GROUP BY' => 'left(rev_timestamp,10)')
             );
+
             while ($row = $this->getDB()->fetchObject($newquery)){
-
-
                 $tempDate = date("d-m-Y", strtotime(substr($row->date, 0, 8)));
                 $wikiaResult[] = array('date' => $tempDate, 'hour' => substr($row->date, 8, 2), 'count' => $row->count);
                 $wikiaCommit[$tempDate]+= $row->count;
@@ -56,7 +55,7 @@ class VisualStats extends WikiaObject {
                     $wikiaCommitMax = $wikiaCommit[$tempDate];
                 }
             };
-
+        if ($username!="0"){
             $user = $this->getUserData($username);
             $newquery = $dbr->select(
                 array( 'revision' ),
@@ -75,6 +74,7 @@ class VisualStats extends WikiaObject {
                     $userCommitMax = $userCommit[$tempDate];
                 }
             };
+        }
 
         return array('wikiaCommit' => array('data' => $wikiaCommit, 'max' =>$wikiaCommitMax), 'userCommit' => array('data' => $userCommit, 'max' =>$userCommitMax));
 

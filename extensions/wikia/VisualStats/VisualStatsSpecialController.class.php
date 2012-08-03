@@ -11,22 +11,26 @@ class VisualStatsSpecialController extends WikiaSpecialPageController {
     }
 
     public function index() {
-        $this->response->addAsset('extensions/wikia/VisualStats/js/VisualStatsIndexContent.js');
+        $this->response->addAsset('extensions/wikia/VisualStats/js/VisualStatsCommitActivity.js');
+        $this->response->addAsset('extensions/wikia/VisualStats/js/VisualStatsCommon.js');
         $this->response->addAsset('extensions/wikia/VisualStats/js/d3.v2.js');
         $this->response->addAsset('extensions/wikia/VisualStats/css/VisualStats_style.css');
-
-        /*parameter - first parameter after '/'
-        * username - parameter passed via GET (after '?')
-        */
         $parameter = $this->getPar();
         if ($parameter == null){
             $parameter = "commit";
         }
+        /*parameter - first parameter after '/'
+        * username - parameter passed via GET (after '?')
+        */
+
         $username=$this->getVal('user');
         if ((is_null($username)) || ($username=='')){
             $username = "0";
         }
 
+        $this->setVal( 'urlCommit', $this->getTitleFor( 'VisualStats', 'commit')->getLocalURL("user=" . $username));
+        $this->setVal( 'urlPunchcard', $this->getTitleFor( 'VisualStats', 'punchcard')->getLocalURL("user=" . $username));
+        $this->setVal( 'urlHistogram', $this->getTitleFor( 'VisualStats', 'histogram')->getLocalURL("user=" . $username));
 
 
         $this->wg->Out->setPageTitle( $this->wf->msg('visualStats-specialpage-title'));
