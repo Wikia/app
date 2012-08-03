@@ -2,9 +2,6 @@
 
 class WikiaSearchResultSet implements Iterator {
 	private $position = 0;
-	private $resultsPerPage = 25;
-	private $currentPage = false;
-	private $isComplete = false;
 
 	protected $resultsFound = 0;
 	protected $resultsStart = 0;
@@ -15,15 +12,11 @@ class WikiaSearchResultSet implements Iterator {
 	public $totalScore;
 	public $score = 0;
 
-	public function __construct(Array $results = array(), $resultsFound = 0, $resultsStart = 0, $isComplete = false, $query = null) {
+	public function __construct(Array $results = array(), $resultsFound = 0, $resultsStart = 0, $query = null) {
 		$this->setResults($results);
 		$this->setResultsFound($resultsFound);
 		$this->setResultsStart($resultsStart);
 		$this->setQuery($query);
-
-		if($isComplete || ($this->getResultsNum() == $resultsFound) || $this->isOnlyArticleMatchFound()) {
-			$this->markAsComplete();
-		}
 	}
 
 	/**
@@ -56,20 +49,9 @@ class WikiaSearchResultSet implements Iterator {
 		return $this->resultsFound;
 	}
 
-	public function getRealResultsFound() {
-		return $this->isComplete() ? $this->getResultsNum() : $this->resultsFound;
-	}
 
 	public function incrResultsFound($value = 1) {
 		$this->resultsFound += $value;
-	}
-
-	public function markAsComplete() {
-		$this->isComplete = true;
-	}
-
-	public function isComplete() {
-		return $this->isComplete;
 	}
 
 	public function getResultsStart() {
@@ -86,24 +68,6 @@ class WikiaSearchResultSet implements Iterator {
 
 	public function hasResults() {
 		return (bool) $this->getResultsNum();
-	}
-
-	public function getResultsPerPage() {
-		return $this->resultsPerPage;
-	}
-
-	public function setResultsPerPage($value) {
-		$this->resultsPerPage = $value;
-		$this->resetPosition();
-	}
-
-	public function getCurrentPage() {
-		return $this->currentPage;
-	}
-
-	public function setCurrentPage($value) {
-		$this->currentPage = $value;
-		$this->resetPosition();
 	}
 
 	public function next() {
@@ -130,19 +94,7 @@ class WikiaSearchResultSet implements Iterator {
 	}
 
 	public function valid() {
-		if($this->getCurrentPage() === false) {
-			$maxPosition = $this->getResultsNum();
-		}
-		else {
-			$maxPosition = ( ( $this->getCurrentPage() - 1) * $this->getResultsPerPage() ) + $this->getResultsPerPage();
-		}
-
-		if(($this->position < $maxPosition) && isset($this->results[$this->position])) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		return isset($this->results[$this->position]);
 	}
 
 	public function setHeader($key, $value) {
@@ -161,16 +113,7 @@ class WikiaSearchResultSet implements Iterator {
 	}
 
 	private function resetPosition() {
-		$this->position = $this->getStartPosition();
-	}
-
-	public function getStartPosition() {
-		if($this->getCurrentPage() === false) {
-			return 0;
-		}
-		else {
-			return ($this->getCurrentPage() - 1) * $this->getResultsPerPage();
-		}
+		$this->position = 0;
 	}
 
 	public function getQuery() {
@@ -194,15 +137,12 @@ class WikiaSearchResultSet implements Iterator {
 
 		$this->setResultsFound($resultSet->getResultsFound());
 		$this->setResultsStart($resultSet->getResultsStart());
-		if($resultSet->isComplete()) {
-			$this->markAsComplete();
-		}
 
 		wfProfileOut(__METHOD__);
 	}
 
 	public function __sleep() {
-		return array( 'header', 'results', 'resultsFound', 'resultsStart', 'isComplete' );
+		return array( 'header', 'results', 'resultsFound', 'resultsStart');
 	}
 
 	public function __wakeup() {

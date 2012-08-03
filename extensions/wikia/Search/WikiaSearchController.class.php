@@ -110,15 +110,15 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			$this->wikiaSearch->setIncludeRedirects( $redirs );
 
 			$params = array('page'=>$page,
-					'length'=>self::RESULTS_PER_PAGE,
-					'cityId'=>( $isInterWiki ? 0 : $this->wg->CityId ),
-					'groupResults'=>$isInterWiki,
-					'rank'=>$rank,
-					'hub'=>$hub);
+							'length'=>self::RESULTS_PER_PAGE,
+							'cityId'=>( $isInterWiki ? 0 : $this->wg->CityId ),
+							'groupResults'=>$isInterWiki,
+							'rank'=>$rank,
+							'hub'=>$hub);
 
 			$results = $this->wikiaSearch->doSearch( $query, $params );
 
-			$resultsFound = $results->getRealResultsFound();
+			$resultsFound = $results->getResultsFound();
 
 			if(!empty($resultsFound)) {
 				$paginationLinks = $this->sendSelfRequest( 'pagination', array( 'query' => $query, 'page' => $page, 'count' => $resultsFound, 'crossWikia' => $isInterWiki, 'skipCache' => $skipCache, 'debug' => $debug, 'namespaces' => $namespaces, 'advanced' => $advanced, 'redirs' => $redirs ) );

@@ -10,6 +10,7 @@ class WikiaSolrClient extends WikiaSearchClient {
 	protected $isInterWiki = false;
 	protected $articleMatch;
 	protected $paginatedSearch = false;
+	protected $articleMatchId;
 	private static $languageFields  = array('title',
 											'html',
 											'wikititle',
@@ -154,8 +155,7 @@ class WikiaSolrClient extends WikiaSearchClient {
 								'group.field' => 'host',
 								'group.limit' => '4',
 								'group.start' => $start,
-								'group.rows' => 40,
-								'group.format' => 'simple' //@todo implement grouped format?
+								'group.rows' => $size,
 							); 
 		}
 		else {
@@ -227,7 +227,7 @@ class WikiaSolrClient extends WikiaSearchClient {
 					      );
 		} 
 
-		$docs = $this->isInterWiki ? $response->grouped->host->doclist->docs : $response->response->docs;
+		$docs = $this->isInterWiki ? $response->grouped->host->groups : $response->response->docs;
 
 		// @todo: this is just for automated spelling correction. we should also provide "did you mean"
 		if ( $response instanceOf Apache_Solr_Response &&
@@ -258,14 +258,18 @@ class WikiaSolrClient extends WikiaSearchClient {
 
 		// @todo replace Apache_Solr_Service with something more sensible. maybe homegrown.
 		if (empty($docs) && $response->grouped !== null) {
-			$docs = array();
-			foreach ($response->grouped->host->doclist->docs as $doc) {
-				$solrDoc = new Apache_Solr_Document();
-				foreach ($doc as $key=>$val) {
-					$solrDoc->{$key} = $val;
+			foreach ($response->grouped->host->groups as $group) {			
+				$docs = array();
+				foreach ($group->doclist->docs as $doc) {
+					$solrDoc = new Apache_Solr_Document();
+					foreach ($doc as $key=>$val) {
+						$solrDoc->{$key} = $val;
+					}
+					$docs[] = $solrDoc;
 				}
-				$docs[] = $solrDoc;
+				$group->doclist->docs = $docs;
 			}
+			$docs = $response->grouped->host->groups;
 		}
 
 		if (is_object($response->highlighting)) {
@@ -275,21 +279,82 @@ class WikiaSolrClient extends WikiaSearchClient {
 		}
 		$highlighting = empty($highlighting) ? array() : $highlighting;
 
-		$numFound = $response->response === null ? ($response->grouped === null ? 0 : $response->grouped->host->doclist->numFound) : $response->response->numFound;
+		if ($response->grouped === null) {
+			$numFound = $response->response === null ? 0 : $response->response->numFound;
+			$resultsStart = $response->response === null ? 0 : $response->response->start;
+			$method = 'getWikiaResults';
+		} else {
+			$numFound = $response->grouped->host->matches ?: 0;
+			$resultsStart = $start;
+			$method = 'getGroupedWikiaResults';
+		}
 
-		$resultsStart = $response->response === null ? 0 : $response->response->start;
-
-		$results = $this->getWikiaResults( $docs, $highlighting );
+		$results = call_user_func_array( array($this, $method), array($docs, $highlighting) );
 
 		wfProfileOut(__METHOD__);
+
 		return F::build( 'WikiaSearchResultSet', 
 				 array( 'results'      => $results, 
-					'resultsFound' => $numFound,
-					'resultsStart' => $start,
-					'isComplete'   => false, 
-					'query'        => $this->query 
-					) 
+						'resultsFound' => $numFound,
+						'resultsStart' => $start,
+						'query'        => $this->query 
+					  ) 
 				 );
+	}
+
+	private function getGroupedWikiaResults(Array $groupedSolrDocs, Array $solrHighlighting)
+	{
+		wfProfileIn(__METHOD__);
+
+		$groupedResults = array();
+		
+		foreach ($groupedSolrDocs as $groupedSolrDoc) {
+
+			$results = array();
+			$position = 1;
+
+			foreach($groupedSolrDoc->doclist->docs as $doc) {
+
+				$snippetField = self::field('html');
+				$docHighlighting = isset($solrHighlighting[$doc->id]) 
+											&& isset($solrHighlighting[$doc->id]->{$snippetField}) 
+											&& isset($solrHighlighting[$doc->id]->{$snippetField}[0])
+								  ? $solrHighlighting[$doc->id]->{$snippetField}[0]
+								  : null;
+
+				$result = $this->buildResult($doc, $position, $docHighlighting);
+	
+				if ($result !== false) {
+					$results[] = $result;
+					$position++;
+				}
+			}
+
+			$resultSet = F::build( 'WikiaSearchResultSet', 
+									array( 'results'      => $results,
+										   'resultsFound' => $groupedSolrDoc->doclist->numFound,
+										   'resultsStart' => 0,
+										   'query'        => $this->query,
+										   'score'		  => $groupedSolrDoc->doclist->maxScore
+										 ) 
+								  );
+
+			$cityId = $result->getCityId();
+
+			$resultSet->setHeader('cityId', $cityId );
+			$resultSet->setHeader('cityTitle', WikiFactory::getVarValueByName( 'wgSitename', $cityId ));
+			$resultSet->setHeader('cityUrl', WikiFactory::getVarValueByName( 'wgServer', $cityId ));
+			// can give inaccurate results, but reduces backend load
+			$resultSet->setHeader('cityArticlesNum', $result->getVar('cityArticlesNum', false));
+
+			$resultSets[] = $resultSet;
+
+		}
+
+		wfProfileOut(__METHOD__);
+
+		return $resultSets;
+
 	}
 
 	private function getWikiaResults(Array $solrDocs, Array $solrHighlighting) {
@@ -297,8 +362,6 @@ class WikiaSolrClient extends WikiaSearchClient {
 
 		$results = array();
 		$position = 1;
-
-		$articleMatchId = '';
 
 		if ((!$this->paginatedSearch) && (!$this->isInterWiki) && ($articleMatch = $this->getArticleMatch())) {
 			global $wgCityId;
@@ -325,13 +388,35 @@ class WikiaSolrClient extends WikiaSearchClient {
 			  $results[] = $result;
 			  $position++;
 			}
+
+			$this->articleMatchId = $articleMatchId;
 		}
 
 		foreach($solrDocs as $doc) {
 
+			$snippetField = self::field('html');
+			$docHighlighting = isset($solrHighlighting[$doc->id]) 
+										&& isset($solrHighlighting[$doc->id]->{$snippetField}) 
+										&& isset($solrHighlighting[$doc->id]->{$snippetField}[0])
+							  ? $solrHighlighting[$doc->id]->{$snippetField}[0]
+							  : null;
+
+			$result = $this->buildResult($doc, $position, $docHighlighting);
+
+			if ($result !== false) {
+				$results[] = $result;
+				$position++;
+			}
+		}
+		wfProfileOut(__METHOD__);
+		return $results;
+	}
+
+	private function buildResult($doc, $position, $solrHighlighting = null)
+	{
 			$id = 'c'.$doc->wid.'p'.$doc->pageid;
-			if ($articleMatchId == $id) {
-			  continue;
+			if ($this->articleMatchId == $id) {
+			  return false;
 			}
 
 			$result = F::build( 'WikiaSearchResult', array( 'id' => $id ) );
@@ -340,14 +425,9 @@ class WikiaSolrClient extends WikiaSearchClient {
 			$titleKey = self::field('title');
 			$result->setTitle($doc->{$titleKey});
 
-			$text = '';
-			$snippetField = self::field('html');
-
-			if (   isset($solrHighlighting[$doc->id]) 
-				&& isset($solrHighlighting[$doc->id]->{$snippetField}) 
-				&& isset($solrHighlighting[$doc->id]->{$snippetField}[0])) {
-				$text = $solrHighlighting[$doc->id]->{$snippetField}[0];
-			} 
+			$html = self::field('html');
+			$limit = F::app()->checkSkin( 'wikiamobile' ) ? 100 : 300;
+			$text = $solrHighlighting ?: '';
 
 			$result->setText($text);
 			$result->setUrl(urldecode($doc->url));
@@ -367,11 +447,7 @@ class WikiaSolrClient extends WikiaSearchClient {
 			$wikiTitleKey = self::field('wikititle');
 			$result->setVar('wikititle', $doc->{$wikiTitleKey});
 
-			$results[] = $result;
-			$position++;
-		}
-		wfProfileOut(__METHOD__);
-		return $results;
+			return $result;
 	}
 
 	/**
