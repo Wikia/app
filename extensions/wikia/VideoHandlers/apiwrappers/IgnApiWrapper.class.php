@@ -16,6 +16,9 @@ class IgnApiWrapper extends IngestionApiWrapper {
 		if ($keywords = $this->getVideoKeywords()) {
 			$description .= "\n\nKeywords: $keywords";
 		}
+		if ($tags = $this->getVideoTags()) {
+			$description .= "\n\nTags: $tags";
+		}
 
 		wfProfileOut( __METHOD__ );
 
@@ -66,6 +69,14 @@ class IgnApiWrapper extends IngestionApiWrapper {
 	protected function getVideoKeywords() {
 		if (!empty($this->metadata['keywords'])) {
 			return $this->metadata['keywords'];
+		}
+
+		return '';
+	}
+
+	protected function getVideoTags() {
+		if (!empty($this->metadata['tags'])) {
+			return $this->metadata['tags'];
 		}
 
 		return '';
