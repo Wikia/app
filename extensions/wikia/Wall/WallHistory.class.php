@@ -305,7 +305,6 @@ class WallHistory extends WikiaModel {
 				'title' => $title,
 				'is_reply' => $row['is_reply'],
 				'action' => $row['action'],
-				'metatitle' => $row['metatitle'],
 				'reason' => $row['reason'],
 				'revision_id' => $row['revision_id'],
 				'wall_message' => $message

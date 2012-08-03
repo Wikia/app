@@ -45,7 +45,6 @@ $messages['en'] = array(
 	'wall-message-edit' => "Edit",
 	'wall-message-more' => 'More',
 	'wall-message-delete' => "Delete",
-	'wall-message-remove' => "Remove",
 	'wall-message-removed-thread-because' => "$1 removed this thread because:",
 	'wall-message-deleted-thread-because' => "$1 deleted this thread because:",
 	'wall-message-restore-thread' => "Restore Thread",
