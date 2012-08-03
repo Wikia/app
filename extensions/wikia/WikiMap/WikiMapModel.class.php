@@ -31,7 +31,7 @@ class WikiMapModel extends WikiaObject {
 
         $this->app->wf->profileIn( __METHOD__ );
 
-        $key = $this->app->wf->MemcKey( 'wikiMap', 'categories' );
+        $key = $this->app->wf->MemcKey('wikiMap', 'categories' );
         $data = $this->app->wg->memc->get($key);
 
         if (is_array($data)){
@@ -43,8 +43,8 @@ class WikiMapModel extends WikiaObject {
                 'list' => 'querypage',
                 'qppage' => 'Mostpopularcategories',
                 'qplimit' => '20'));
-            $result=$result['query']['querypage']['results'];
-            $i=0;
+            $result = $result['query']['querypage']['results'];
+            $i = 0;
             foreach($result as $item){
                 $res[] = array('title' => $item['title'], 'titleNoSpaces' => str_replace(' ', '_', $item['title']));
                 $i++;
@@ -83,12 +83,12 @@ class WikiMapModel extends WikiaObject {
                     'qplimit' => '120'
                 ));
 
-                $result=$result['query']['querypage']['results'];
+                $result = $result['query']['querypage']['results'];
                 $res = array();
                 $map = array();
                 foreach ($result as $i => $item){
-                    if ($item['ns']==0){
-                        $title = F::build('Title',array($item['title']),'newFromText');
+                    if ($item['ns'] == 0){
+                        $title = F::build('Title', array($item['title']), 'newFromText');
                         if($title instanceof Title)  {
                             $articleId = $title->getArticleId();
                             $res[] = array('title' => $item['title'], 'id' => $articleId, 'connections' => array());
@@ -138,11 +138,10 @@ class WikiMapModel extends WikiaObject {
                 $map = array();
                 foreach ($resultSecondQuery as $i => $item){
                     //var_dump($item);
-                    $articleTitle = str_replace('_', ' ',$item->title);
+                    $articleTitle = str_replace('_', ' ', $item->title);
                     $res[] = array('title' => $articleTitle, 'id' => $item->page_id, 'connections' => array());
                     $map[$articleTitle] = $i;
                 }
-
 
                 $new = array( 'nodes' => $this->query($res, $map), 'all' => $allArticlesCount);
                 $this->app->wg->memc->set($key, $new, 900);
@@ -153,7 +152,7 @@ class WikiMapModel extends WikiaObject {
         $max=0;
         foreach($new['nodes'] as $item){
             $localMax = count($item['connections']);
-            if ($localMax>$max) $max=$localMax;
+            if ($localMax > $max) $max = $localMax;
         }
 
         $this->app->wf->profileOut( __METHOD__ );
@@ -167,7 +166,7 @@ class WikiMapModel extends WikiaObject {
 
         $dbr = $this->getDB();
         $revertIDs = array();
-        for($i = 0; $i<count($item); $i++){
+        for($i = 0; $i < count($item); $i++){
             $withoutSpace[$i] = str_replace(' ', '_', $item[$i]['title']);
             $keys[$i] = $item[$i]['id'];
             $keysRev[$item[$i]['id']] = $i;
@@ -185,7 +184,6 @@ class WikiMapModel extends WikiaObject {
         while ($row = $this->getDB()->fetchObject($result)){
             $item[$keysRev[$row->pl_from]]['connections'][] = $map[str_replace('_', ' ', $row->pl_title)];
         };
-
 
         $this->app->wf->profileOut( __METHOD__ );
         return $item;

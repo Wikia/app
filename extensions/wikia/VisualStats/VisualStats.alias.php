@@ -10,5 +10,5 @@ $specialPageAliases['en'] = array(
  * Polish
  */
 $specialPageAliases['pl'] = array(
-    'VisualStats' => array( 'StatystykiWizualizacja' )
+    'VisualStats' => array( 'WizualneStatystyki' )
 );

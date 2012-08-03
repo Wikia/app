@@ -23,12 +23,12 @@
     var data = <? echo json_encode($res); ?>;
     var categories = <? echo json_encode($categories); ?>;
     var ns = <? echo json_encode($namespace); ?>;
+
     wgAfterContentAndJS.push(function(){
         $(function () {
             WikiMapIndexContent.init(colour, data, categories, ns);
         });
     });
-
 
 </script>
 

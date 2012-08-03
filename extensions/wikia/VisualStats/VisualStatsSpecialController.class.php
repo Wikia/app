@@ -13,6 +13,7 @@ class VisualStatsSpecialController extends WikiaSpecialPageController {
     public function index() {
         $this->response->addAsset('extensions/wikia/VisualStats/js/VisualStatsIndexContent.js');
         $this->response->addAsset('extensions/wikia/VisualStats/js/d3.v2.js');
+        $this->response->addAsset('extensions/wikia/VisualStats/css/VisualStats_style.css');
 
         /*parameter - first parameter after '/'
         * username - parameter passed via GET (after '?')
@@ -34,6 +35,8 @@ class VisualStatsSpecialController extends WikiaSpecialPageController {
         $this->setVal( 'param', $parameter);
         $this->setVal( 'data', $this->businessLogic->performQuery($username));
         $this->setVal( 'dates', $this->businessLogic->getDatesFromTwoWeeksOn());
+        $this->setVal( 'wikiButtonLabel', $this->wf->msg('visualStats-wikiEdits'));
+        $this->setVal( 'userButtonLabel', $this->wf->msg('visualStats-userEdits', $username));
 
     }
 }
