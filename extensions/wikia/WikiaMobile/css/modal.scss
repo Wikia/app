@@ -26,7 +26,6 @@ html.modal{
 	display: none;
 	overflow: hidden;
 	color: $modal-text-color;
-	z-index: $highest-z-index + 1000;
 	-webkit-tap-highlight-color: rgba(0,0,0,0);
 	@include transition(opacity 1s);
 
@@ -44,7 +43,7 @@ html.modal{
 	position: fixed;
 	top: 0;
 	left: 0;
-	z-index: $highest-z-index + 1001;
+	z-index: 21;
 	background-color: rgba(0,0,0,.8);
 	@include transition(top .3s ease-in);
 
@@ -74,8 +73,8 @@ html.modal{
 	left: 0;
 	color: white;
 	line-height: 20px;
-	z-index: $highest-z-index + 1005;
 	font-weight: 100;
+	z-index: 21;
 	@include transition(bottom .3s ease-in);
 	display: none;
 
@@ -85,11 +84,11 @@ html.modal{
 }
 
 #wkMdlClo {
+	z-index: 21;
 	height: 50px;
 	width: 50px;
 	position: absolute;
 	right: 0;
 	top: 0;
-	z-index: $highest-z-index + 1005;
 	background-position: 27px 7px;
 }
