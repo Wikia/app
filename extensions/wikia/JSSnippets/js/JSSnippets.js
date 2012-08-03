@@ -63,7 +63,7 @@ var JSSnippets = (function(){
 			var dependencies = [],
 				callbacks = {},
 				options = {},
-				debugMode = mw.config.get('debug'),
+				debugMode = window.mw ? mw.config.get('debug') : debug,
 				entry,
 				dependency,
 				ext,
