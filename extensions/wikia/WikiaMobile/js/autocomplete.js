@@ -28,9 +28,11 @@ var reEscape = /(\/|\.|\*|\+|\?|\||\(|\)|\[|\]|\{|\}|\\)/g,
 							search: curVal
 						},
 						success: function(resp) {
-							suggestions = resp[1];
-							cachedResponse[curVal] = resp;
-							suggest();
+							if(!resp.error){
+								suggestions = resp[1];
+								cachedResponse[curVal] = resp;
+								suggest();
+							}
 						},
 						dataType: 'json'
 					});

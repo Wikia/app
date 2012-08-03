@@ -94,7 +94,7 @@
 }
 
 .groupResults{
-	margin-left: 20px;
+	padding: 20px 0 0 20px;
 }
 
 .searchGroup {
@@ -105,4 +105,8 @@
 	float: right;
 	height: 25px;
 	width: 25px;
+}
+
+.searchmatch{
+	font-weight: 800;
 }
