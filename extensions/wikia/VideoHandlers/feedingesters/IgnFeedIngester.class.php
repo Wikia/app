@@ -95,6 +95,13 @@ class IgnFeedIngester extends VideoFeedIngester {
 			$addlCategories = array_merge( $addlCategories, $keywords );
 			$clipData['keywords'] = implode(", ", $keywords );
 
+			$tags = array();
+			foreach( $video['tags'] as $obj ) {
+				$tags[$obj['slug']] = true;
+			}
+			$tags = array_keys( $tags );
+			$clipData['tags'] = implode(", ", $tags );
+
 
 			$createParams = array('addlCategories'=>$addlCategories, 'debug'=>$debug);
 			$articlesCreated += $this->createVideo($clipData, $msg, $createParams);
@@ -156,6 +163,7 @@ class IgnFeedIngester extends VideoFeedIngester {
 				'category'		=> $data['classification'],
 				'description'	=> $data['description'],
 				'keywords'		=> $data['keywords'],
+				'tags'			=> $data['tags'],
 			);
 		return $metadata;
 	}
