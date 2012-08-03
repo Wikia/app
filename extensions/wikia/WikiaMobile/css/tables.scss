@@ -3,6 +3,8 @@
 //mixins
 @import "mixins/box-shadow";
 
+$wide-table-border: 5px solid rgb(215,232,242);
+
 .wikitable, .sortable{
 	border:1px solid $border-color;
 
@@ -29,6 +31,14 @@
     -webkit-transition: border .2s;
   	-moz-transition: border .2s;
   	-o-transtion: border .2s;
+
+	.left{
+		border-right: $wide-table-border;
+	}
+
+	.right{
+		border-left: $wide-table-border;
+	}
 }
 
 //if native scroll is available:
@@ -55,14 +65,4 @@
 			display: none;
 		}
 	}
-}
-
-$wide-table-border: 5px solid rgb(215,232,242);
-
-.left{
-	border-right: $wide-table-border;
-}
-
-.right{
-	border-left: $wide-table-border;
 }
