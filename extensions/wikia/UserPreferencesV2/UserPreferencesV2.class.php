@@ -371,8 +371,12 @@ class UserPreferencesV2 {
 		return true;
 	}
 
-	public function onSpecialPreferencesSetUserOptions($preferences, &$user) {
-		global $wgOut, $wgCityId;
+	/**
+	 * Before resetting the options, save the masthead info so we can restore it in onSpecialPreferencesAfterResetUserOptions
+	 *
+	 * @param $storage - storage in which we can save some options, it will be passed in onSpecialPreferencesAfterResetUserOptions hook call
+	 */
+	public function onSpecialPreferencesBeforeResetUserOptions($preferences, &$user, &$storage) {
 		$userIdentityObject = new UserIdentityBox(F::app(), $user, 0);
 
 		$mastheadOptions = $userIdentityObject->getFullData();
@@ -380,18 +384,23 @@ class UserPreferencesV2 {
 		if(!empty($masthead->mUser->mOptionOverrides['avatar'])) {
 			$mastheadOptions['avatar'] = $masthead->mUser->mOptionOverrides['avatar'];
 		}
+		$storage['mastheadOptions'] = $mastheadOptions;
 
-		$user->resetOptions();
+		return true;
+	}
 
-		foreach ($mastheadOptions as $optionName => $optionValue) {
+	/**
+	 * Restore some user options after reset
+	 *
+	 * @param $storage - storage with info from SpecialPreferencesBeforeResetUserOptions hook call
+	 */
+	public function onSpecialPreferencesAfterResetUserOptions($preferences, &$user, &$storage) {
+		foreach ($storage['mastheadOptions'] as $optionName => $optionValue) {
 			if(!is_array($optionValue)) {
 				$user->setOption($optionName, $optionValue);
 			}
 		}
 
-		$user->saveSettings();
-		$url = SpecialPage::getTitleFor('Preferences')->getFullURL('success');
-		$wgOut->redirect($url);
 		return true;
 	}
 

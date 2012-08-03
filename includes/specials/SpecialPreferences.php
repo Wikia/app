@@ -92,10 +92,15 @@ class SpecialPreferences extends SpecialPage {
 
 	public function submitReset( $formData ) {
 		$user = $this->getUser();
+
+		$storage = array();
+
+		wfRunHooks('SpecialPreferencesBeforeResetUserOptions', array( $this, &$user, &$storage ) );
+
 		$user->resetOptions();
-		
-		wfRunHooks('SpecialPreferencesSetUserOptions', array( $this, &$user ) );
-				
+
+		wfRunHooks('SpecialPreferencesAfterResetUserOptions', array( $this, &$user, &$storage) );
+
 		$user->saveSettings();
 
 		$url = SpecialPage::getTitleFor( 'Preferences' )->getFullURL( 'success' );
