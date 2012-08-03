@@ -252,13 +252,13 @@ var WikiBuilder = {
 		var lang = WikiBuilder.wikiLanguage.val();
 		if(name) {
 			WikiBuilder.nameAjax = true;
-			
+
 			$.nirvana.sendRequest({
 				controller: 'CreateNewWiki',
 				method: 'CheckWikiName',
 				data: {
 					name: name,
-					lang: lang  	
+					lang: lang
 				},
 				callback: function(res) {
 					if(res) {
@@ -292,7 +292,7 @@ var WikiBuilder = {
 				data: {
 					name: wd,
 					lang: lang,
-					type: '' 	
+					type: ''
 				},
 				callback: function(res) {
 					if(res) {
@@ -374,6 +374,7 @@ var WikiBuilder = {
 		}
 	},
 
+	// TODO: review and remove
 	upgradeToWikiaPlus: function() {
 		$.nirvana.sendRequest({
 			controller: 'CreateNewWiki',
@@ -422,7 +423,7 @@ var WikiBuilder = {
 				wDomain: WikiBuilder.wikiDomain.val(),
 				wLanguage: WikiBuilder.wikiLanguage.find('option:selected').val(),
 				wCategory: WikiBuilder.wikiCategory.find('option:selected').val(),
-				wAnswer: Math.floor(WikiBuilder.answer)  	
+				wAnswer: Math.floor(WikiBuilder.answer)
 			},
 			callback: function(res) {
 				WikiBuilder.createStatus = res.status;
