@@ -1,0 +1,17 @@
+#buttons{
+    padding-left: 60px;
+    padding-right: 60px;
+}
+button{
+    font-size: 18px;
+    border: 1px solid;
+    border-radius: 4px;
+    height: 40px;
+    width: 400px;
+}
+#wikiaButton{
+    float: left;
+}
+#userButton{
+    float: right;
+}

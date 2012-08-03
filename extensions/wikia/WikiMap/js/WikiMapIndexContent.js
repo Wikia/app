@@ -2,19 +2,16 @@
 var WikiMapIndexContent = {
     init: function(colour, res, categories, ns){
         if (ns!= -1){
-            this.modifier = 0.67;
+            this.modifier = 0.68;
         }
         else{
             this.modifier = 1;
         }
-
             this.buildMap(colour, res);
             this.buildCategoriesContainer(colour, categories);
             this.triggerAnimation(res.length, colour);
-
-
-
     },
+
     triggerAnimation: function(length, colour){
         this.actNumber = 0;
         var self = this;
@@ -27,25 +24,25 @@ var WikiMapIndexContent = {
                 self.stopAnimation(colour);
             }
         });
-
-
     },
+
     initAnimate: function(length, colour){
-    var self = this;
+        var self = this;
 
         self.interval = setInterval(function(){
-            var labelname = "label" + self.actNumber;
-            self.actObj = document.getElementById(labelname);
+            var labelName = "label" + self.actNumber;
+            self.actObj = document.getElementById(labelName);
             self.onMouseOut(self.actObj, self.actNumber, colour);
             self.actNumber++;
             if (self.actNumber == length){
                 self.actNumber = 0;
             }
-            labelname = "label" + self.actNumber;
-            self.actObj = document.getElementById(labelname);
+            labelName = "label" + self.actNumber;
+            self.actObj = document.getElementById(labelName);
             self.onMouseOver(self.actObj, self.actNumber);
         }, 750);
     },
+
     stopAnimation: function(colour){
         var self = this;
             clearInterval(self.interval);
@@ -56,17 +53,15 @@ var WikiMapIndexContent = {
         var self = this;
         this.nodes = data.nodes;
         var max = data.max;
-        var svg = this.createSvgContainer(1000*this.modifier,1000*this.modifier,"#wikiMap");
+        var svg = this.createSvgContainer(980 * this.modifier, 1000 * this.modifier, "#wikiMap");
 
         //Declaring variables needed to draw
         //rotationByOne - measured in degrees
         var rotationByOne = 360 / (data.length);
         var angleRadian;
         var rot = 270;
-        var modifier = 0;
         var halfNodes = parseInt(data.length / 2);
         var points = [];
-        var currentTitle;
         this.transparencyByOne = 0.5/max;
         this.textColor = $.xcolor.darken(colour.labels);
         this.highlighted = $.xcolor.green(colour.line);
@@ -81,13 +76,13 @@ var WikiMapIndexContent = {
                 //angleRadian - measured in radians
                 var path = wgArticlePath;
                 angleRadian = ((180 - rotationByOne * index) % 360) * Math.PI / 180;
-                var attrX = 500*self.modifier + 250 *self.modifier * Math.sin(angleRadian);
-                var attrY = 500*self.modifier + 250*self.modifier * Math.cos(angleRadian);
+                var attrX = 490 * self.modifier + 250 * self.modifier * Math.sin(angleRadian);
+                var attrY = 500 * self.modifier + 250 * self.modifier * Math.cos(angleRadian);
                 var svga = svg
                     .append("a")
                     .attr("xlink:href", function()
                     {
-                        return path.replace('$1',value.title.replace(/ /g,'_'));
+                        return path.replace('$1', value.title.replace(/ /g, '_'));
                     }
                 );
                 svga.append("svg:text").
@@ -99,7 +94,7 @@ var WikiMapIndexContent = {
                     .attr("x", attrX)
                     .attr("y", attrY)
                     .attr("fill", function(){
-                        return $.xcolor.opacity(colour.body, self.textColor, 0.5+self.transparencyByOne*value.connections.length);
+                        return $.xcolor.opacity(colour.body, self.textColor, 0.5 + self.transparencyByOne * value.connections.length);
                     })
                     .on("mouseover", function(){
                         self.onMouseOver(this, index);
@@ -115,11 +110,10 @@ var WikiMapIndexContent = {
                 //Creating array of points, where text labels are placed
                 //Attributes X and Y are the same as attrX and attrY, but are drawn based on different radius
                 var point = {
-                    x: 500*self.modifier + 246*self.modifier * Math.sin(angleRadian),
-                    y: 500*self.modifier + 246*self.modifier * Math.cos(angleRadian)
+                    x: 490 * self.modifier + 246 * self.modifier * Math.sin(angleRadian),
+                    y: 500 * self.modifier + 246 * self.modifier * Math.cos(angleRadian)
                 };
                 points.push(point);
-
             }
         );
 
@@ -131,7 +125,6 @@ var WikiMapIndexContent = {
 
     onMouseOver: function(object, index){
         var self = this;
-
 
         d3.selection.prototype.moveToFront = function() {
             return this.each(function() {
@@ -162,19 +155,19 @@ var WikiMapIndexContent = {
                 .attr("fill", function(){
                     return $.xcolor.opacity(colour.body,
                         self.textColor,
-                        0.5+self.transparencyByOne*self.nodes[pt2].connections.length);
+                        0.5 + self.transparencyByOne * self.nodes[pt2].connections.length);
                 });
         });
         d3.select(object)
             .attr("fill", function(){
                 return $.xcolor.opacity(colour.body,
                     self.textColor,
-                    0.5+self.transparencyByOne*self.nodes[index].connections.length);
+                    0.5 + self.transparencyByOne * self.nodes[index].connections.length);
             });
     },
 
     drawConnections: function(points, colour, svg){
-        var self=this;
+        var self = this;
         $.each(this.nodes, function (index, value) {
             $.each(value.connections, function (ind, pt2) {
                 svg.append("path").
@@ -183,13 +176,13 @@ var WikiMapIndexContent = {
                     })
                     .attr("d", function(){
                         var str = 'M ' + points[index].x +' ' + points[index].y +' q ';
-                        str+= 500*self.modifier-points[index].x;
+                        str+= 490 * self.modifier - points[index].x;
                         str+= ' ';
-                        str+= 500*self.modifier-points[index].y;
+                        str+= 500 * self.modifier - points[index].y;
                         str+= ' ';
-                        str+= points[pt2].x-points[index].x;
+                        str+= points[pt2].x - points[index].x;
                         str+= ' ';
-                        str+= points[pt2].y-points[index].y;
+                        str+= points[pt2].y - points[index].y;
                         return str;
                     })
                     .style("stroke", colour.line)
@@ -200,22 +193,22 @@ var WikiMapIndexContent = {
     },
 
     buildCategoriesContainer: function(colour, categories){
-        var catSvg = this.createSvgContainer(1000*this.modifier, 100, "#categoriesContainer");
+        var catSvg = this.createSvgContainer(980 * this.modifier, 100, "#categoriesContainer");
         var data = categories.data;
-        var move = 900*this.modifier/(categories.length+3);
-        var i=0;
+        var move = 920 * this.modifier/(categories.length+3);
+        var i = 0;
         $.each(data, function(index, value){
             var path = wgArticlePath;
             var svga = catSvg.
                 append("a").
                 attr("xlink:href", function()
                 {
-                    return path.replace('$1',function(){
+                    return path.replace('$1', function(){
                         return "Special:wikiMap/" + value.titleNoSpaces;
                     });
                 }
             );
-            var attrX = i*move;
+            var attrX = i * move;
             svga.append("sgv:text")
                 .attr("x", attrX)
                 .attr("y", 90)
@@ -224,10 +217,8 @@ var WikiMapIndexContent = {
                 .attr("fill", colour.labels)
                 .attr("transform", "rotate(340, " + attrX + ",5)");
             i++;
-
         });
     },
-
 
     createSvgContainer: function(width, height, div){
         return d3.select(div)

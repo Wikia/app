@@ -1,9 +1,9 @@
 /*global d3:true*/
 var VisualStatsIndexContent = {
-    init: function(parameter, data, dates){
+    init: function(parameter, data, user){
         this.wikiaCommit = data.wikiaCommit;
         this.userCommit = data.userCommit;
-        this.dates = dates;
+        this.user = user;
 
         $('#' + parameter).addClass("selected");
         switch (parameter){
@@ -24,24 +24,48 @@ var VisualStatsIndexContent = {
         number=Math.ceil(number/10)*10;
         return number;
     },
-    drawCommitActivity: function(){
-        var svg = this.createSvgContainer(1000,1000,"#Graph");
-        var self = this;
+    drawAxis: function(svg){
         svg.append("svg:line")
             .attr("x1", 60)
             .attr("y1",600)
-            .attr("x2", 900)
+            .attr("x2", 920)
             .attr("y2",600)
             .attr("stroke", "green");
         svg.append("svg:line")
             .attr("x1", 60)
             .attr("y1",600)
             .attr("x2", 60)
-            .attr("y2",100)
+            .attr("y2",50)
             .attr("stroke", "green");
-
+        svg.append("svg:line")
+            .attr("x1", 60)
+            .attr("y1",350)
+            .attr("x2", 920)
+            .attr("y2",350)
+            .style("stroke-width", "0.5px")
+            .attr("stroke", "green");
+        svg.append("svg:line")
+            .attr("x1", 60)
+            .attr("y1",100)
+            .attr("x2", 920)
+            .attr("y2",100)
+            .style("stroke-width", "0.5px")
+            .attr("stroke", "green");
+    },
+    drawCommitActivity: function(){
+        var svg = this.createSvgContainer(980, 650, "#Graph");
+        var self = this;
         var wikiaMax = this.roundUp(this.wikiaCommit.max);
         var userMax = this.roundUp(this.userCommit.max);
+
+        svg.append("rect")
+            .attr("x", 20)
+            .attr("y", 45)
+            .attr("width", 940)
+            .attr("height", 600)
+            .attr("fill", "#E4EDD3");
+
+        this.drawAxis(svg);
 
         this.scaleY = d3.scale.linear()
             .domain([0, wikiaMax])
@@ -66,12 +90,25 @@ var VisualStatsIndexContent = {
             wikiaDataset[i] = value;
             i++;
         })
-        i=0;
+
+        svg.append("svg:text")
+            .text(parseInt(wikiaMax/2))
+            .attr("id", "halfLabel")
+            .attr("x",55)
+            .attr("y", 352)
+            .attr("text-anchor", "end");
+        svg.append("svg:text")
+            .text(wikiaMax)
+            .attr("id", "maxLabel")
+            .attr("x",55)
+            .attr("y", 102)
+            .attr("text-anchor", "end");
+
+        i = 0;
         $.each(this.userCommit.data, function(date, value){
             userDataset[i] = value;
             i++;
         })
-
 
         this.line = d3.svg.line()
             .x(function(d, i) { return scaleX(i); })
@@ -115,42 +152,29 @@ var VisualStatsIndexContent = {
             .attr("font-size", 9)
             .attr("text-anchor", "end");
 
-        /*setTimeout(
-        function(){self.updateCommitActivity(svg,[20,76,20,0,20,20,80,20,20,20,20,20,20,90,20], 100)}, 3000);
-        setTimeout(
-            function(){self.updateCommitActivity(svg,userDataset, userMax)}, 6000);
-        setTimeout(
-            function(){self.updateCommitActivity(svg,wikiaDataset, wikiaMax)}, 9000);*/
-        svg.append("rect")
-            .attr("id", "wikiaButton")
-            .attr("x", 60)
-            .attr("y", 650)
-            .attr("width", 400)
-            .attr("height", 60)
-            .attr("fill", "#35F098")
-            .on("click", function(){
-                d3.select(this).attr("fill", "#35F098");
-                d3.select("#userButton").attr("fill", "#C9D4CF");
-                self.updateCommitActivity(svg,wikiaDataset, wikiaMax)
+        if (this.user == "0"){
+            $("#buttons").remove();
+        }
+        else{
+            $("#wikiaButton").click(function(){
+                $(this).removeClass("secondary");
+                $("#userButton").addClass("secondary");
+                self.updateCommitActivity(svg,wikiaDataset, wikiaMax);
             });
-
-        svg.append("rect")
-            .attr("id", "userButton")
-            .attr("x", 500)
-            .attr("y", 650)
-            .attr("width", 400)
-            .attr("height", 60)
-            .attr("fill", "#C9D4CF")
-            .on("click", function(){
-                d3.select(this).attr("fill", "#35F098");
-                d3.select("#wikiaButton").attr("fill", "#C9D4CF");
-                self.updateCommitActivity(svg,userDataset, userMax)
-            });
+            $("#userButton").click(function(){
+                $(this).removeClass("secondary");
+                $("#wikiaButton").addClass("secondary");
+                self.updateCommitActivity(svg,userDataset, userMax);
+            })
+        }
 
     },
     updateCommitActivity: function(svg, dataToUpdate, max){
         //[20,20,20,20,20,20,20,20,20,20,20,20,20,20,20]
         this.scaleY.domain([0, max]);
+        svg.select("#halfLabel").text(parseInt(max/2));
+        svg.select("#maxLabel").text(max);
+
         var self = this;
         svg.selectAll("circle")
             .data(dataToUpdate)

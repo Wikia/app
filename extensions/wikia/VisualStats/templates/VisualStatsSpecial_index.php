@@ -7,16 +7,21 @@
     </ul>
 </div>
 <div id="Graph"></div>
+    <div id="buttons">
+        <button id="wikiaButton"><?=$wikiButtonLabel?></button>
+        <button id="userButton" class="secondary"><?=$userButtonLabel?></button>
+    </div>
+
 
 <script type="text/javascript">
 
     var parameter = <? echo json_encode($param); ?>;
     var data = <? echo json_encode($data); ?>;
-    var dates = <? echo json_encode($dates); ?>;
+    var user = <? echo json_encode($user); ?>;
 
     wgAfterContentAndJS.push(function(){
         $(function () {
-            VisualStatsIndexContent.init(parameter, data, dates);
+            VisualStatsIndexContent.init(parameter, data, user);
         });
     });
 

@@ -18,15 +18,12 @@ class WikiMapSpecialController extends WikiaSpecialPageController {
        // $this->response->addAsset('wiki_map_js');
 
         $parameter = $this->getPar();
-        $parameterSpaces = str_replace('_', ' ',$parameter);
+        $parameterSpaces = str_replace('_', ' ', $parameter);
 
         $this->wg->Out->setPageTitle( $this->wf->msg('wikiMap-specialpage-title'));
         // setting response data
 
         $resultNodes = $this->businessLogic->getArticles($parameter);
-
-
-
 
         if (is_null($parameter)){
             $this->setVal( 'header', $this->wf->msg('wikiMap-title-nonparam'));
@@ -37,13 +34,12 @@ class WikiMapSpecialController extends WikiaSpecialPageController {
 
             $artPath = $this->app->wg->get('wgArticlePath');
             $path = str_replace('$1', 'Category:', $artPath);
-            $path.=$parameter;
+            $path.= $parameter;
 
             $output = '<a href="' . $path . '">' . $this->wf->msg('wikiMap-category') . $parameterSpaces . '</a>';
             $this->setVal( 'header', $output);
 
         }
-
 
         $this->setVal( 'categoriesHeader', $this->wf->msg('wikiMap-categoriesHeader'));
         $this->setVal( 'animation', $this->wf->msg('wikiMap-animation'));
@@ -52,8 +48,6 @@ class WikiMapSpecialController extends WikiaSpecialPageController {
         $this->setVal( 'res', $resultNodes);
         $this->setVal( 'colourArray', $this->businessLogic->getColours());
         $this->setVal( 'categories', $this->businessLogic->getListOfCategories());
-
-
 
     }
 }
