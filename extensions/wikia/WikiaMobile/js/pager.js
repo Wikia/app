@@ -8,7 +8,7 @@ define('pager', function () {
 		addTransitionEnd = (function(){
 			return (tr) ?
 				function(elm, c){
-					elm.addEventListener(tr, c, true)
+					elm.addEventListener(tr, c, true);
 				} :
 				function(elm, c, t){
 					setTimeout(c, t);
@@ -24,8 +24,8 @@ define('pager', function () {
 		setTransform = function(prev, current, next, x){
 			var translate = 'translate3d(' + x + 'px,0,0)';
 			current.style.webkitTransform = translate;
-			if(next) next.style.webkitTransform = translate;
-			if(prev) prev.style.webkitTransform = translate;
+			if(next) {next.style.webkitTransform = translate;}
+			if(prev) {prev.style.webkitTransform = translate;}
 		},
 		wrap = function(pages){
 			var i = pages.length-1;
@@ -35,7 +35,7 @@ define('pager', function () {
 			}
 
 			return pages;
-		}
+		};
 
 	return function(options){
 		var pos,

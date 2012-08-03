@@ -49,11 +49,12 @@ require(['loader', 'querystring', 'events'], function(loader, qs, events){
 			}
 
 			//unused now, clear them up :)
-			commentsHTML = styles = scripts = messages = responseCounter = null;
+			commentsHTML = styles = scripts = responseCounter = null;
 
 			collSec.removeEventListener(clickEvent, init, true);
 		}
 	}
+
 	function init(){
 		loader.show(wkArtCom, {center: true, size:'40px'});
 

@@ -47,10 +47,10 @@
 			scroll.style[vendor + 'TransitionProperty'] = hasTransform ? '-' + vendor.toLowerCase() + '-transform' : 'left';
 			scroll.style[vendor + 'TransitionDuration'] = '0';
 			scroll.style[vendor + 'TransformOrigin'] = '0 0';
-			if (hasTransitionEnd) scroll.style[vendor + 'TransitionTimingFunction'] = 'cubic-bezier(0.33,0.66,0.66,1)';
+			if (hasTransitionEnd) {scroll.style[vendor + 'TransitionTimingFunction'] = 'cubic-bezier(0.33,0.66,0.66,1)';}
 
-			if (hasTransform) scroll.style[vendor + 'Transform'] = trnOpen + '0,0' + trnClose;
-			else scroll.style.cssText += ';position:absolute;left:0;';
+			if (hasTransform) {scroll.style[vendor + 'Transform'] = trnOpen + '0,0' + trnClose;}
+			else {scroll.style.cssText += ';position:absolute;left:0;';}
 
 			this.scrollerW = this.scroller.offsetWidth;
 			this.refresh();
@@ -72,38 +72,38 @@
 				point,
 				x;
 			switch(e.type) {
-				case START_EV:
-					point = e.touches[0];
+			case START_EV:
+				point = e.touches[0];
 
-					if (hasTransitionEnd) this._transitionTime(0);
+				if (hasTransitionEnd) {this._transitionTime(0);}
 
-					this.moved = false;
-					this.animating = false;
-					this.distX = 0;
+				this.moved = false;
+				this.animating = false;
+				this.distX = 0;
 
-					if(hasTransform) {
-						// Very lame general purpose alternative to CSSMatrix
-						x = ~~getComputedStyle(this.scroller, null)[vendor + 'Transform'].replace(/[^0-9\-.,]/g, '').split(',')[4];
+				if(hasTransform) {
+					// Very lame general purpose alternative to CSSMatrix
+					x = ~~getComputedStyle(this.scroller, null)[vendor + 'Transform'].replace(/[^0-9\-.,]/g, '').split(',')[4];
+				} else {
+					x = ~~getComputedStyle(this.scroller, null).left.replace(/[^0-9\-]/g, '');
+				}
+
+				if(x != this.x) {
+					if (hasTransitionEnd) {
+						this.scroller.removeEventListener('webkitTransitionEnd', this);
 					} else {
-						x = ~~getComputedStyle(this.scroller, null).left.replace(/[^0-9\-]/g, '');
+						clearTimeout(this.aniTime);
 					}
+					this.steps = [];
+					this._pos(x);
+				}
 
-					if(x != this.x) {
-						if (hasTransitionEnd) {
-							this.scroller.removeEventListener('webkitTransitionEnd', this);
-						} else {
-							clearTimeout(this.aniTime);
-						}
-						this.steps = [];
-						this._pos(x);
-					}
+				this.startX = this.x;
+				this.pointX = point.pageX;
 
-					this.startX = this.x;
-					this.pointX = point.pageX;
-
-					this.startTime = e.timeStamp || Date.now();
-					break;
-				case MOVE_EV:
+				this.startTime = e.timeStamp || Date.now();
+				break;
+			case MOVE_EV:
 					point = e.touches[0];
 					var deltaX = point.pageX - that.pointX,
 						newX = that.x + deltaX,
@@ -130,43 +130,43 @@
 						that.startX = that.x;
 					}
 					break;
-				case END_EV:
-				case CANCEL_EV:
-					if (e.touches.length != 0) return;
+			case END_EV:
+			case CANCEL_EV:
+				if (e.touches.length != 0) return;
 
-					var momentumX,
-						duration = (e.timeStamp || Date.now()) - that.startTime,
-						newPosX = that.x,
-						newDuration;
+				var momentumX,
+					duration = (e.timeStamp || Date.now()) - that.startTime,
+					newPosX = that.x,
+					newDuration;
 
-					if (!that.moved) {
-						that._resetPos(200);
-						return;
-					}
-
-					if (duration < 300) {
-						momentumX = newPosX ? that._momentum(newPosX - that.startX, duration) : { dist:0, time:0 };
-
-						newPosX = newPosX + momentumX.dist;
-
-						if ((that.x > 0 && newPosX > 0) || (that.x < that.maxScrollX && newPosX < that.maxScrollX)) momentumX = { dist:0, time:0 };
-					}
-
-					if (momentumX.dist) {
-						that.scrollTo((newPosX >> 0), m.max(momentumX.time, 10));
-						return;
-					}
-
+				if (!that.moved) {
 					that._resetPos(200);
-					break;
-				case RESIZE_EV: this.refresh(); break;
-				case 'webkitTransitionEnd':
-					if (e.target != this.scroller) return;
+					return;
+				}
 
-					this.scroller.removeEventListener('webkitTransitionEnd', this);
+				if (duration < 300) {
+					momentumX = newPosX ? that._momentum(newPosX - that.startX, duration) : { dist:0, time:0 };
 
-					this._startAni();
-					break;
+					newPosX = newPosX + momentumX.dist;
+
+					if ((that.x > 0 && newPosX > 0) || (that.x < that.maxScrollX && newPosX < that.maxScrollX)) {momentumX = { dist:0, time:0 };}
+				}
+
+				if (momentumX.dist) {
+					that.scrollTo((newPosX >> 0), m.max(momentumX.time, 10));
+					return;
+				}
+
+				that._resetPos(200);
+				break;
+			case RESIZE_EV: this.refresh(); break;
+			case 'webkitTransitionEnd':
+				if (e.target != this.scroller) return;
+
+				this.scroller.removeEventListener('webkitTransitionEnd', this);
+
+				this._startAni();
+				break;
 			}
 		},
 
@@ -187,7 +187,7 @@
 
 			if (resetX == x) {
 				if(this.moved){
-					if(typeof this.onstop == 'function') this.onstop(this.wrapper, -x, -max - 10);
+					if(typeof this.onstop == 'function') {this.onstop(this.wrapper, -x, -max - 10);}
 					this.moved = false;
 				}
 				return;
@@ -217,7 +217,7 @@
 
 			step = that.steps.shift();
 
-			if (step.x == startX) step.time = 0;
+			if (step.x == startX) {step.time = 0;}
 
 			that.animating = true;
 			that.moved = true;
@@ -227,7 +227,7 @@
 				that._pos(step.x);
 				that.animating = false;
 				if (step.time) {
-					this.scroller.addEventListener('webkitTransitionEnd', this)
+					this.scroller.addEventListener('webkitTransitionEnd', this);
 				} else {
 					that._resetPos(0);
 				}
@@ -249,7 +249,7 @@
 				easeOut = m.sqrt(1 - now * now);
 				newX = (step.x - startX) * easeOut + startX;
 				that._pos(newX);
-				if (that.animating) that.aniTime = setTimeout(animate, 17);
+				if (that.animating) {that.aniTime = setTimeout(animate, 17);}
 			};
 
 			animate();
@@ -292,7 +292,7 @@
 			this.scroller.removeEventListener(MOVE_EV, this);
 			this.scroller.removeEventListener(END_EV, this);
 			this.scroller.removeEventListener(CANCEL_EV, this);
-			if (hasTransitionEnd) this.scroller.removeEventListener('webkitTransitionEnd', this);
+			if (hasTransitionEnd) {this.scroller.removeEventListener('webkitTransitionEnd', this);}
 		},
 
 		refresh: function() {

@@ -37,7 +37,7 @@ var reEscape = /(\/|\.|\*|\+|\?|\||\(|\)|\[|\]|\{|\}|\\)/g,
 				}, 250);
 			}
 		}
-	};
+	}
 
 	function suggest() {
 		var len = suggestions.length,
@@ -47,8 +47,8 @@ var reEscape = /(\/|\.|\*|\+|\?|\||\(|\)|\[|\]|\{|\}|\\)/g,
 		list.innerHTML = '';
 
 		if (len > 0) {
-			clearInterval(a)
-			regExp = new RegExp('(' + currentValue.replace(reEscape, '\\$1') + ')', 'gi')
+			clearInterval(a);
+			regExp = new RegExp('(' + currentValue.replace(reEscape, '\\$1') + ')', 'gi');
 
 			for (var i = 0; i < len; i++) {
 				sug = suggestions[i];

@@ -10,8 +10,7 @@
 define('sections', ['events', 'track'], function(ev, track){
 	var d = document,
 		article = d.getElementById('mw-content-text'),
-		page = d.getElementById('wkMainCnt'),
-		fragment = d.createDocumentFragment();
+		fragment = d.createDocumentFragment(),
 		click = ev.click,
 		callbacks = {
 			open: [],
@@ -19,8 +18,8 @@ define('sections', ['events', 'track'], function(ev, track){
 		};
 
 		function fireEvent(event, target){
-			var stack = callbacks[event];
-			len = stack.length;
+			var stack = callbacks[event],
+				len = stack.length;
 
 			if(len > 0){
 				setTimeout(function(){
@@ -99,7 +98,7 @@ define('sections', ['events', 'track'], function(ev, track){
 				next.className += ' open';
 			}
 
-			 fireEvent((isOpen) ? 'close' : 'open', next);
+			fireEvent((isOpen) ? 'close' : 'open', next);
 		}).on(click, '.goBck', function(){
 			var parent = this.parentElement,
 				prev = parent.previousElementSibling;

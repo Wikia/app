@@ -60,9 +60,9 @@ define('mediagallery', ['media', 'modal', 'pager', 'thumbnailer'], function(med,
 			i = 0,
 			l = all.length,
 			updateImg = function(img, src){
-				if(src) img.style.backgroundImage = 'url("' + src + '")';
+				if(src) {img.style.backgroundImage = 'url("' + src + '")';}
 				img.className += ' loaded';
-			}
+			};
 
 		for(; i < l; i++){
 			var imgPreload,

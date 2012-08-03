@@ -103,7 +103,6 @@ define('topbar', ['querystring', 'loader', 'toc', 'track', 'events'], function (
 				height,
 				i = 0,
 				ul2,
-				ul2l = uls2.length,
 				check = function(ul){
 					height = ul.offsetHeight;
 					max = (height > max) ? height : max;
@@ -112,8 +111,7 @@ define('topbar', ['querystring', 'loader', 'toc', 'track', 'events'], function (
 				ul3,
 				uls3l;
 
-			for(;i < ul2l; i++){
-				ul2 = uls2[i];
+			while(ul2 = uls2[i++]){
 				ul2.style.display = 'block';
 				check(ul2);
 

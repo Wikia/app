@@ -24,11 +24,13 @@ define('tables', ['cache', 'events'], function(cache, ev){
 						cellLength = row.cells.length;
 
 						//sample only the first X rows
-						if(cellLength > 2 || index == 9)
+						if(cellLength > 2 || index == 9){
 							return false;
+						}
 
-						if(cellLength == 2)
+						if(cellLength == 2){
 							correctRows++;
+						}
 					});
 
 					if(correctRows > Math.floor(rowsLength/2)) {
@@ -58,8 +60,9 @@ define('tables', ['cache', 'events'], function(cache, ev){
 				}
 			});
 
-			if(handledTables.length > 0)
+			if(handledTables.length > 0){
 				w.addEventListener('resize', processTables);
+			}
 		}else if(handledTables.length > 0){
 			var table, row, isWrapped, isBig, wasWrapped,
 				maxWidth = w.innerWidth || w.clientWidth;

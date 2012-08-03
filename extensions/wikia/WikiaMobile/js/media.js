@@ -172,7 +172,7 @@ define('media', ['modal', 'loader', 'querystring', 'popover', 'track', 'events',
 			event.stopPropagation();
 			var num = ~~(this.getAttribute('data-num') || this.parentElement.getAttribute('data-num'));
 
-			if(num >= 0) openModal(num);
+			if(num >= 0) {openModal(num);}
 		});
 	}
 
@@ -452,21 +452,6 @@ define('media', ['modal', 'loader', 'querystring', 'popover', 'track', 'events',
 		heightFll = wkMdlImages.offsetHeight;
 
 		require('pager', function(pg){
-			//handling next/previous image
-			if(imagesLength > 1){
-				function tap(ev){
-					ev.stopPropagation();
-					resetZoom();
-					zoomed = false;
-					if(ev.target.id === 'nxtImg') {
-						pager.next();
-					}else{
-						pager.prev();
-					}
-				}
-				document.getElementById('nxtImg').addEventListener('tap', tap);
-				document.getElementById('prvImg').addEventListener('tap', tap);
-			}
 
 			pager = pg({
 				wrapper: wrapper,
@@ -483,6 +468,23 @@ define('media', ['modal', 'loader', 'querystring', 'popover', 'track', 'events',
 				},
 				circle: true
 			});
+
+			function tap(ev){
+				ev.stopPropagation();
+				resetZoom();
+				zoomed = false;
+				if(ev.target.id === 'nxtImg') {
+					pager.next();
+				}else{
+					pager.prev();
+				}
+			}
+
+			//handling next/previous image
+			if(imagesLength > 1){
+				document.getElementById('nxtImg').addEventListener('tap', tap);
+				document.getElementById('prvImg').addEventListener('tap', tap);
+			}
 
 			//setupImage and get references to currentImage and it's style property
 			refresh();
@@ -519,7 +521,7 @@ define('media', ['modal', 'loader', 'querystring', 'popover', 'track', 'events',
 			return current;
 		},
 		hideShare: function(){
-			if(shareBtn) shareBtn.style.display = 'none';
+			if(shareBtn) {shareBtn.style.display = 'none';}
 		},
 		init: init,
 		cleanup: function(){

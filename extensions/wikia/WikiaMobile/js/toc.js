@@ -22,7 +22,7 @@ define('toc', ['track', 'events'], function toc(track, events){
 		if(table){
 			table.className = table.className.replace(' open', '');
 			d.body.className =  d.body.className.replace(' hidden', '');
-			if(!a) track('/toc/close');
+			if(!a) {track('/toc/close');}
 			conStyle.minHeight = '0';
 		}
 	}

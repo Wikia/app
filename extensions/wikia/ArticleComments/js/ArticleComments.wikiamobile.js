@@ -71,6 +71,28 @@ require(['loader', 'toast', 'modal', 'events', 'track'], function(loader, toast,
 		}
 	}
 
+	function loginRequired(ev){
+		if(window.wgDisableAnonymousEditing && !window.wgUserName){
+			ev.stopPropagation();
+
+			var target = ev.target,
+				elm = (target.nodeName == 'FORM') ? target : target.parentElement,
+				prev = elm.previousElementSibling;
+
+			target.blur();
+
+			toast.show($.msg('wikiamobile-article-comments-login-post'), {error: true});
+
+			require('topbar', function(t){
+				t.openProfile('comm-' + (prev ? (prev.id || 'wkComm') : elm.parentElement.id));
+				modal.close(true);
+			});
+
+			return true;
+		}
+		return false;
+	}
+
 	function post(ev) {
 		ev.preventDefault();
 		ev.stopPropagation();
@@ -160,28 +182,6 @@ require(['loader', 'toast', 'modal', 'events', 'track'], function(loader, toast,
 		modal.setToolbar(replies + ' ('+cnt+')');
 	}
 
-	function loginRequired(ev){
-		if(window.wgDisableAnonymousEditing && !window.wgUserName){
-			ev.stopPropagation();
-
-			var target = ev.target,
-				elm = (target.nodeName == 'FORM') ? target : target.parentElement,
-				prev = elm.previousElementSibling;
-
-			target.blur();
-
-			toast.show($.msg('wikiamobile-article-comments-login-post'), {error: true});
-
-			require('topbar', function(t){
-				t.openProfile('comm-' + (prev ? (prev.id || 'wkComm') : elm.parentElement.id));
-				modal.close(true);
-			});
-
-			return true;
-		}
-		return false;
-	}
-
 	function openModal(elm, focus){
 		var parent = elm.parentElement,
 			num = ~~parent.getAttribute('data-replies'),
@@ -194,7 +194,7 @@ require(['loader', 'toast', 'modal', 'events', 'track'], function(loader, toast,
 			stopHiding: true
 		});
 
-		if(focus) d.getElementById('wkMdlCnt').getElementsByClassName('wkInp')[0].focus();
+		if(focus) {d.getElementById('wkMdlCnt').getElementsByClassName('wkInp')[0].focus();}
 	}
 
 	if(totalPages > 1 && wgArticleId){
