@@ -381,7 +381,7 @@ include_once( "$IP/extensions/wikia/EmailsStorage/EmailsStorage.setup.php" );
 include_once( "$IP/extensions/wikia/ShareButtons/ShareButtons.setup.php" );
 include_once( "$IP/extensions/wikia/SpecialUnlockdb/SpecialUnlockdb.setup.php" );
 include_once( "$IP/extensions/wikia/WikiaWantedQueryPage/WikiaWantedQueryPage.setup.php" );
-include_once( "$IP/includes/wikia/Resources.php" );
+//include_once( "$IP/includes/wikia/Resources.php" );
 include_once( "$IP/extensions/wikia/ImageServing/imageServing.setup.php" );
 include_once( "$IP/extensions/wikia/ImageServing/Test/ImageServingTest.setup.php" );
 include_once( "$IP/extensions/wikia/MostVisitedPages/SpecialMostVisitedPages.php" );
