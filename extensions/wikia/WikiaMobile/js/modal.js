@@ -78,7 +78,7 @@ define('modal', ['loader', 'track', 'events', 'ads'], function modal(loader, tra
 	function open(options){
 		options = options || {};
 
-		if(!created) setup();
+		if(!created) {setup();}
 
 		var con = options.content,
 			tool = options.toolbar,
@@ -126,7 +126,7 @@ define('modal', ['loader', 'track', 'events', 'ads'], function modal(loader, tra
 			content.innerHTML = '';
 			caption.innerHTML = '';
 			wrapper.className = caption.className = topBar.className = '';
-			if(!Modernizr.positionfixed && ads) ads.moveSlot();
+			if(!Modernizr.positionfixed && ads) {ads.moveSlot();}
 
 			if(typeof onClose === 'function'){
 				onClose();

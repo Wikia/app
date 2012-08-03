@@ -19,8 +19,9 @@
 		return{
 			show: function(msg, opt){
 				if(msg){
-					var opt = opt || {},
-						t = this,
+					opt = opt || {};
+
+					var t = this,
 						oTime = opt.timeout,
 						time = (typeof oTime == 'undefined') ? 5000 : (typeof oTime == 'number' ? oTime : false);
 

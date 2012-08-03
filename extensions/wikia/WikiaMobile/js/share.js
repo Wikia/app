@@ -22,7 +22,7 @@ define('share', ['cache'], function(cache){
 					var imgUrl = pageUrl + '?file=' + encodeURIComponent(encodeURIComponent(link));
 					cnt.innerHTML = html.replace($1,imgUrl).replace($2, shrImgTxt).replace($3, shrMailImgTxt).replace($4, shrImgTxt);
 				}
-			};
+			}
 
 			if(!shrData){
 				shrData = cache.get(cacheKey);
@@ -57,4 +57,4 @@ define('share', ['cache'], function(cache){
 			}
 		}
 	}
-})
+});

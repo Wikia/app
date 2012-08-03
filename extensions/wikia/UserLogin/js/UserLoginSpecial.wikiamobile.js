@@ -5,6 +5,6 @@ $(function(){
 	if(msg){
 		require('toast', function(t){
 			t.show(msg);
-		})
+		});
 	}
 });

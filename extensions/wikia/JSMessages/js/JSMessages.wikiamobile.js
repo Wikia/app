@@ -1,3 +1,4 @@
+/* globals Zepto */
 (function($){
 	/**
 	 * JS version of wfMsg()

@@ -59,10 +59,9 @@ $(function(){
 
 			//add chevrons to elements that need it
 			var addChevs = d.getElementsByClassName('addChev'),
-				l = addChevs.length,
-				i = 0;
+				i = addChevs.length;
 
-			for(; i < l; i++){
+			while(i--){
 				addChevs[i].insertAdjacentHTML('beforeend', '<span class=chev></span>');
 			}
 
