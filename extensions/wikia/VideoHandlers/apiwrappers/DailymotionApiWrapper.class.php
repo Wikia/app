@@ -12,22 +12,8 @@ class DailymotionApiWrapper extends ApiWrapper {
 	}
 
 	public static function newFromUrl( $url ) {
-
-		wfProfileIn( __METHOD__ );
-		$parsed = explode( "/", $url );
-		if( is_array( $parsed ) ) {
-			$mdata = array_pop( $parsed );
-			if ( ('' != $mdata ) && ( false === strpos( $mdata, "?" ) ) ) {
-				$videoId = $mdata;
-			} else {
-				$videoId = array_pop( $parsed );
-			}
-			wfProfileOut( __METHOD__ );
-			return new static( $videoId );
-		}
-
-		wfProfileOut( __METHOD__ );
-		return null;
+		$parsed = explode( '/', parse_url($url, PHP_URL_PATH) );
+		return is_array( $parsed ) ? new static( array_pop( $parsed ) ) : null;
 	}
 
 	public function getDescription() {
