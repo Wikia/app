@@ -5,7 +5,7 @@ abstract class VideoFeedIngester {
 	const PROVIDER_REALGRAVITY = 'realgravity';
 	const PROVIDER_IGN = 'ign';
 	public static $PROVIDERS = array(self::PROVIDER_SCREENPLAY, self::PROVIDER_IGN);
-	public static $PROVIDERS_DEFAULT = array(self::PROVIDER_SCREENPLAY);
+	public static $PROVIDERS_DEFAULT = array(self::PROVIDER_SCREENPLAY, self::PROVIDER_IGN);
 	protected static $API_WRAPPER;
 	protected static $PROVIDER;
 	protected static $FEED_URL;
