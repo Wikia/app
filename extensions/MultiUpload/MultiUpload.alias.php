@@ -23,7 +23,7 @@ $specialPageAliases['arz'] = array(
 	'MultipleUpload' => array( 'Upload_متعدد' ),
 );
 
-/** Bosnian (Bosanski) */
+/** Bosnian (bosanski) */
 $specialPageAliases['bs'] = array(
 	'MultipleUpload' => array( 'VisestrukoPos' ),
 );
@@ -33,7 +33,12 @@ $specialPageAliases['de'] = array(
 	'MultipleUpload' => array( 'Mehrere_Dateien_hochladen' ),
 );
 
-/** Lower Sorbian (Dolnoserbski) */
+/** Zazaki (Zazaki) */
+$specialPageAliases['diq'] = array(
+	'MultipleUpload' => array( 'ZafınBarkardış' ),
+);
+
+/** Lower Sorbian (dolnoserbski) */
 $specialPageAliases['dsb'] = array(
 	'MultipleUpload' => array( 'Někotare_dataje_nagraś' ),
 );
@@ -43,27 +48,27 @@ $specialPageAliases['fa'] = array(
 	'MultipleUpload' => array( 'بارگذاری_چندتایی' ),
 );
 
-/** French (Français) */
+/** French (français) */
 $specialPageAliases['fr'] = array(
 	'MultipleUpload' => array( 'Téléversement_multiple', 'TéléversementMultiple' ),
 );
 
-/** Franco-Provençal (Arpetan) */
+/** Franco-Provençal (arpetan) */
 $specialPageAliases['frp'] = array(
 	'MultipleUpload' => array( 'Tèlèchargement_multiplo', 'TèlèchargementMultiplo' ),
 );
 
 /** Swiss German (Alemannisch) */
 $specialPageAliases['gsw'] = array(
-	'MultipleUpload' => array( 'Mehreri Dateie uffelade' ),
+	'MultipleUpload' => array( 'Mehreri_Dateie_uffelade' ),
 );
 
-/** Croatian (Hrvatski) */
+/** Croatian (hrvatski) */
 $specialPageAliases['hr'] = array(
 	'MultipleUpload' => array( 'Višestruko_postavljanje' ),
 );
 
-/** Upper Sorbian (Hornjoserbsce) */
+/** Upper Sorbian (hornjoserbsce) */
 $specialPageAliases['hsb'] = array(
 	'MultipleUpload' => array( 'Wjacore_dataje_nahrać' ),
 );
@@ -73,7 +78,7 @@ $specialPageAliases['ht'] = array(
 	'MultipleUpload' => array( 'PlizyèChajman' ),
 );
 
-/** Interlingua (Interlingua) */
+/** Interlingua (interlingua) */
 $specialPageAliases['ia'] = array(
 	'MultipleUpload' => array( 'Incargar_plures', 'Cargar_plures' ),
 );
@@ -83,7 +88,7 @@ $specialPageAliases['id'] = array(
 	'MultipleUpload' => array( 'Multi_unggah', 'MultiUnggah' ),
 );
 
-/** Italian (Italiano) */
+/** Italian (italiano) */
 $specialPageAliases['it'] = array(
 	'MultipleUpload' => array( 'CaricaMultipli' ),
 );
@@ -113,7 +118,7 @@ $specialPageAliases['lb'] = array(
 	'MultipleUpload' => array( 'Vill_Fichieren_eroplueden' ),
 );
 
-/** Macedonian (Македонски) */
+/** Macedonian (македонски) */
 $specialPageAliases['mk'] = array(
 	'MultipleUpload' => array( 'ПовеќекратноПодигање' ),
 );
@@ -123,7 +128,7 @@ $specialPageAliases['ml'] = array(
 	'MultipleUpload' => array( 'വിവിധ_അപ്‌ലോഡുകൾ' ),
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬) */
+/** Norwegian Bokmål (‪norsk (bokmål)‬) */
 $specialPageAliases['nb'] = array(
 	'MultipleUpload' => array( 'Last_opp_mange_filer' ),
 );
@@ -138,19 +143,19 @@ $specialPageAliases['nl'] = array(
 	'MultipleUpload' => array( 'MultiUploaden' ),
 );
 
-/** Occitan (Occitan) */
+/** Occitan (occitan) */
 $specialPageAliases['oc'] = array(
 	'MultipleUpload' => array( 'Telecargament_multiple', 'TelecargamentMultiple' ),
 );
 
-/** Portuguese (Português) */
+/** Portuguese (português) */
 $specialPageAliases['pt'] = array(
 	'MultipleUpload' => array( 'Carregamento_múltiplo' ),
 );
 
-/** Brazilian Portuguese (Português do Brasil) */
+/** Brazilian Portuguese (português do Brasil) */
 $specialPageAliases['pt-br'] = array(
-	'MultipleUpload' => array( 'Carregamentos_em_massa' ),
+	'MultipleUpload' => array( 'Uploads_em_massa' ),
 );
 
 /** Sanskrit (संस्कृतम्) */
@@ -158,24 +163,24 @@ $specialPageAliases['sa'] = array(
 	'MultipleUpload' => array( 'अनेकभारंन्यस्यति' ),
 );
 
-/** Slovak (Slovenčina) */
+/** Slovak (slovenčina) */
 $specialPageAliases['sk'] = array(
 	'MultipleUpload' => array( 'Multinahrávanie' ),
 );
 
-/** Albanian (Shqip) */
+/** Albanian (shqip) */
 $specialPageAliases['sq'] = array(
 	'MultipleUpload' => array( 'MultiNgarkim' ),
 );
 
-/** Swedish (Svenska) */
+/** Swedish (svenska) */
 $specialPageAliases['sv'] = array(
 	'MultipleUpload' => array( 'Multiuppladdning' ),
 );
 
 /** Tagalog (Tagalog) */
 $specialPageAliases['tl'] = array(
-	'MultipleUpload' => array( 'Maramihang pagkarga' ),
+	'MultipleUpload' => array( 'Maramihang_pagkarga' ),
 );
 
 /** Turkish (Türkçe) */
@@ -188,7 +193,12 @@ $specialPageAliases['yue'] = array(
 	'MultipleUpload' => array( '上傳多個檔案' ),
 );
 
-/** Traditional Chinese (‪中文(繁體)‬) */
+/** Simplified Chinese (‪中文（简体）‬) */
+$specialPageAliases['zh-hans'] = array(
+	'MultipleUpload' => array( '上传多个文件' ),
+);
+
+/** Traditional Chinese (‪中文（繁體）‬) */
 $specialPageAliases['zh-hant'] = array(
 	'MultipleUpload' => array( '大量上傳' ),
 );
