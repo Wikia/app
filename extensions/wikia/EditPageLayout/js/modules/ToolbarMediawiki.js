@@ -81,7 +81,8 @@
 
 			// toolbar's lazy loading
 			if (mode == 'source') {
-				if (!this.toolbarBuilt) {
+				// Toolbar can be disabled in user preferences (BugId:40705).
+				if (!this.toolbarBuilt && typeof mw.toolbar != 'undefined') {
 					this.buildToolbar(this.el.get(0));
 				}
 			}

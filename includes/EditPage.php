@@ -1869,9 +1869,11 @@ class EditPage {
 		wfRunHooks( 'EditPage::showEditForm:beforeToolbar', array( &$this, &$wgOut ) );
 		/* Wikia change end */
 
-		if ( !$this->isCssJsSubpage && $showToolbar && $wgUser->getOption( 'showtoolbar' ) ) {
+		/* Wikia change begin - @author: kflorence (BugId:40705) */
+		if ( !$this->isCssJsSubpage && $showToolbar && ( $wgUser->getSkin() instanceof SkinOasis || $wgUser->getOption( 'showtoolbar' ) ) ) {
 			$wgOut->addHTML( EditPage::getEditToolbar() );
 		}
+		/* Wikia change end */
 
 		if ( $this->isConflict ) {
 			// In an edit conflict bypass the overrideable content form method
