@@ -1054,10 +1054,10 @@ class WikiaPhotoGalleryHelper {
 		$images = array();
 
 		if(!empty($query)) {
-			$results = MediaQueryService::search($query, $limit);
+			$results = MediaQueryService::searchInTitle($query, 1, $limit);
 
-			foreach($results as $title) {
-				$oImageTitle = Title::newFromText($title, NS_FILE);
+			foreach($results['images'] as $img) {
+				$oImageTitle = Title::newFromText($img['title'], NS_FILE);
 
 				$thumb = self::getResultsThumbnailUrl($oImageTitle);
 				if ($thumb) {

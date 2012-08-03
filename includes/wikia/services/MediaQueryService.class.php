@@ -59,6 +59,51 @@ class MediaQueryService extends Service {
 		return $images;
 	}
 
+	public static function searchInTitle($query, $page=1, $limit=8) {
+
+		global $wgCityId, $wgExternalDatawareDB;
+
+		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalDatawareDB );
+		$dbquerylike = $dbr->buildLike( $dbr->anyString(), mb_strtolower( $query ), $dbr->anyString() );
+		$res = $dbr->select(
+			array( 'pages' ),
+			array( 'count(page_id) as count ' ),
+			array(
+				'page_wikia_id' => $wgCityId,
+				"page_title_lower $dbquerylike" ,
+				'page_namespace' => 6,
+				'page_status' => 0 ),
+			__METHOD__
+		);
+
+		$row = $dbr->fetchRow($res);
+
+		$results = array();
+		$results['total'] = $row['count'];
+		$results['pages'] = ceil($row['count']/$limit);
+		$results['page'] = $page;
+
+		$res = $dbr->select(
+			array( 'pages' ),
+			array( ' page_title ' ),
+			array(
+				'page_wikia_id' => $wgCityId,
+				"page_title_lower $dbquerylike",
+				'page_namespace' => 6,
+				'page_status' => 0 ),
+			__METHOD__ ,
+			array (
+				"LIMIT" => $limit,
+				"OFFSET" => ($page*$limit-$limit) )
+		);
+
+		while($row = $dbr->fetchObject($res)) {
+			$results['images'][] = array('title' => $row->page_title);
+		}
+
+		return $results;
+	}
+
 	public function __construct() {
 		$this->app = F::app();
 	}

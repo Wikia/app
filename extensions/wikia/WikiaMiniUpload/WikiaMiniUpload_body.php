@@ -95,7 +95,7 @@ class WikiaMiniUpload {
         global $wgHTTPProxy;
 
         $query = $wgRequest->getText('query');
-        $page = $wgRequest->getVal('page');
+        $page = $wgRequest->getVal('page', 1);
         $sourceId = $wgRequest->getVal('sourceId');
 
         if($sourceId == 1) {
@@ -112,48 +112,12 @@ class WikiaMiniUpload {
 
         } else if($sourceId == 0) {
 
-            $dbr = wfGetDB( DB_SLAVE, array(), $wgExternalDatawareDB );
-			$dbquerylike = $dbr->buildLike( $dbr->anyString(), mb_strtolower( $query ), $dbr->anyString() );
-            $res = $dbr->select(
-                    array( 'pages' ),
-                    array( 'count(page_id) as count ' ),
-                    array(
-                           'page_wikia_id' => $wgCityId,
-                           "page_title_lower $dbquerylike" ,
-                           'page_namespace' => 6,
-                           'page_status' => 0 ),
-                    __METHOD__ ,
-                   array (
-                         "LIMIT" => 8 )
-            );
+		if ( (int)$page == 0 ) $page = 1;
 
-            $row = $dbr->fetchRow($res);
-
-            $results = array();
-            $results['total'] = $row['count'];
-            $results['pages'] = ceil($row['count']/8);
-            $results['page'] = $page;
-
-            $res = $dbr->select(
-                    array( 'pages' ),
-                    array( ' page_title ' ),
-                    array(
-                           'page_wikia_id' => $wgCityId,
-                           "page_title_lower $dbquerylike",
-                           'page_namespace' => 6,
-                           'page_status' => 0 ),
-                    __METHOD__ ,
-                   array (
-                         "LIMIT" => 8,
-                         "OFFSET" => ($page*8-8) )
-            );
-
-            while($row = $dbr->fetchObject($res)) {
-                $results['images'][] = array('title' => $row->page_title);
-            }
-            $tmpl = new EasyTemplate(dirname(__FILE__).'/templates/');
-            $tmpl->set_vars(array('results' => $results, 'query' => addslashes($query)));
-            return $tmpl->execute('results_thiswiki');
+		$results = MediaQueryService::searchInTitle($query, $page, 8);
+		$tmpl = new EasyTemplate(dirname(__FILE__).'/templates/');
+		$tmpl->set_vars(array('results' => $results, 'query' => addslashes($query)));
+		return $tmpl->execute('results_thiswiki');
         }
     }
 
