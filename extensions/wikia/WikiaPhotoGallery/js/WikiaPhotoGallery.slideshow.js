@@ -21,7 +21,7 @@ var WikiaPhotoGallerySlideshow = {
 				}
 				img.attr('src', src).removeAttr('data-src');
 			}
-		}
+		};
 		
 		// Lazy load first image
 		slideCallback(0);
