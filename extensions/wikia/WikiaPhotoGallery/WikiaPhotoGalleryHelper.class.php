@@ -332,7 +332,7 @@ class WikiaPhotoGalleryHelper {
 		$parserOptions = new ParserOptions();
 
 		// render thumbnail and parse caption for each image (default "box" is 200x200)
-		$thumbSize = !empty($gallery['params']['widths']) ? $gallery['params']['widths'] : 185;
+		$thumbSize = !empty($gallery['params']['widths']) && is_numeric($gallery['params']['widths']) ? $gallery['params']['widths'] : 185;
 		$borderSize = (!empty($gallery['params']['bordersize'])) ? $gallery['params']['bordersize'] : 'small';
 		$orientation = !empty($gallery['params']['orientation']) ? $gallery['params']['orientation'] : 'none';
 		$ratio = self::getRatioFromOption($orientation);
@@ -521,7 +521,7 @@ class WikiaPhotoGalleryHelper {
 		$crop = isset($slideshow['params']['crop']) ? ($slideshow['params']['crop'] == 'true') : false;
 
 		// render thumbnail
-		$maxWidth = isset($slideshow['params']['widths']) ? $slideshow['params']['widths'] : 300;
+		$maxWidth = isset($slideshow['params']['widths']) && is_numeric($slideshow['params']['widths']) ? $slideshow['params']['widths'] : 300;
 		$maxHeight = round($maxWidth * 3/4);
 
 		wfDebug(__METHOD__ . " - {$maxWidth}x{$maxHeight}\n");
@@ -677,7 +677,7 @@ class WikiaPhotoGalleryHelper {
 		$gallery['images'] = $data['images'];
 
 		// render thumbnail and parse caption for each image (default "box" is 200x200)
-		$thumbSize = !empty($gallery['params']['widths']) ? $gallery['params']['widths'] : 200;
+		$thumbSize = !empty($gallery['params']['widths']) && is_numeric($gallery['params']['widths']) ? $gallery['params']['widths'] : 200;
 		$borderSize = (!empty($gallery['params']['bordersize'])) ? $gallery['params']['bordersize'] : 'small';
 		$orientation = !empty($gallery['params']['orientation']) ? $gallery['params']['orientation'] : 'none';
 		$ratio = self::getRatioFromOption($orientation);
@@ -757,7 +757,7 @@ class WikiaPhotoGalleryHelper {
 		$crop = isset($slideshow['params']['crop']) ? ($slideshow['params']['crop'] == 'true') : false;
 
 		// render thumbnail
-		$maxWidth = isset($slideshow['params']['widths']) ? $slideshow['params']['widths'] : 300;
+		$maxWidth = isset($slideshow['params']['widths']) && is_numeric($slideshow['params']['widths']) ? $slideshow['params']['widths'] : 300;
 		$maxHeight = round($maxWidth * 3/4);
 
 		// render slideshow images
