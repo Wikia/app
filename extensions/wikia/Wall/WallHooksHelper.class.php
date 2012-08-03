@@ -424,7 +424,7 @@ class WallHooksHelper {
 						'class'=>'wall-notifications-monobook',
 						'active'=>false
 				);
-				$app->wg->Out->addStyle("{$app->wg->ExtensionsPath}/wikia/Wall/css/WallNotificationsMonobook.css?{$app->wg->StyleVersion}");
+				$app->wg->Out->addStyle("{$app->wg->ExtensionsPath}/wikia/Wall/css/WallNotificationsMonobook.css");
 			}
 		}
 
