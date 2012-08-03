@@ -34,7 +34,6 @@ class IgnFeedIngester extends VideoFeedIngester {
 		wfProfileIn( __METHOD__ );
 
 		$debug = !empty($params['debug']);
-		$addlCategories = !empty($params['addlCategories']) ? $params['addlCategories'] : array();
 
 		$articlesCreated = 0;
 
@@ -54,6 +53,7 @@ class IgnFeedIngester extends VideoFeedIngester {
 		$i = 0;
 		foreach($content as $video) {
 			$i++;
+			$addlCategories = !empty($params['addlCategories']) ? $params['addlCategories'] : array();
 
 			if($debug) {
 				print "\nraw data: \n";
@@ -92,6 +92,7 @@ class IgnFeedIngester extends VideoFeedIngester {
 				$keywords[$obj['objectName']] = true;
 			}
 			$keywords = array_keys( $keywords );
+			$addlCategories = array_merge( $addlCategories, $keywords );
 			$clipData['keywords'] = implode(", ", $keywords );
 
 
