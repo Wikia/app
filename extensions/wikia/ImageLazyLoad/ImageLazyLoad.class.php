@@ -22,6 +22,12 @@ class ImageLazyLoad extends WikiaObject {
 
 		if( ! self::$isWikiaMobile && !$this->app->wg->RTEParserEnabled ) {
 
+			if( startsWith($attribs['src'], 'data:') ) {
+				// dont lazy-load data elements
+				return true;
+			}
+
+
 			if ( !empty($this->app->wg->Parser) ) {
 				if ( empty($this->app->wg->Parser->lazyLoadedImagesCount) ) $this->app->wg->Parser->lazyLoadedImagesCount = 0;
 				$this->app->wg->Parser->lazyLoadedImagesCount += 1;
@@ -36,7 +42,7 @@ class ImageLazyLoad extends WikiaObject {
 			$lazyImageAttribs['src'] = $this->wf->BlankImgUrl();
 			$lazyImageAttribs['class'] = ( ( !empty( $lazyImageAttribs['class'] ) ) ? "{$lazyImageAttribs['class']} " : '' ) . self::LAZY_IMAGE_CLASSES;
 			/* for AJAX requests - makes sure that they are handled properly */
-			/* this is not executed for main content because ImgLzy object is initiated on DOM ready event and those images */
+			/* ImgLzy.load is not executed for main content because ImgLzy object is initiated on DOM ready event and those images */
 			/* are base64 encoded so they are "loaded" with the content itself */
 			$lazyImageAttribs['onload'] = 'if(typeof ImgLzy=="object")ImgLzy.load(this);';
 
@@ -44,6 +50,13 @@ class ImageLazyLoad extends WikiaObject {
 
 		}
 
+		return true;
+	}
+
+	function onParserClearState(&$parser) {
+		if ( !empty($parser->lazyLoadedImagesCount) ) {
+			$parser->lazyLoadedImagesCount = 0;
+		}
 		return true;
 	}
 

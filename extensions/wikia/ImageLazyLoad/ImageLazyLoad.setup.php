@@ -11,3 +11,5 @@ $wgAutoloadClasses['ImageLazyLoad'] = "$dir/ImageLazyLoad.class.php";
 $app = F::app();
 $app->registerHook( 'ThumbnailImageHTML', 'ImageLazyLoad', 'onThumbnailImageHTML' );
 $app->registerHook( 'ThumbnailVideoHTML', 'ImageLazyLoad', 'onThumbnailImageHTML' );
+$app->registerHook( 'ParserClearState', 'ImageLazyLoad', 'onParserClearState' );
+
