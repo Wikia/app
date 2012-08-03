@@ -280,7 +280,7 @@ window.wgUploadLicenseObj = {
 
 		var url = mw.util.wikiScript( 'api' )
 			+ '?action=parse&text={{' + encodeURIComponent( license ) + '}}'
-			+ '&title=' + encodeURIComponent( title.replace(/\./g, "%2E") ) 
+			+ '&title=' + encodeURIComponent( title )
 			+ '&prop=text&pst&format=json';
 
 		var req = sajax_init_object();
