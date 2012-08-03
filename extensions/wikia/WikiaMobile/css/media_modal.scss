@@ -8,6 +8,7 @@
 	height: 100%;
 
 	div{
+		z-index: 18;
 		height: 100%;
 		background-repeat: no-repeat;
 		background-position: 50%;
@@ -18,13 +19,14 @@
 
 .chnImg {
 	position: absolute;
-	z-index: 20;
+	display: block;
+	z-index: 19;
 	top: 0;
 	height: 100%;
 	width: 15%;
 	background-repeat: no-repeat;
 	background-position: center;
-	@include transition(all .5s ease-in);
+	@include transition(opacity .5s ease-in);
 	-webkit-tap-highlight-color: rgba(0,0,0,0);
 
 	.hdn & {
