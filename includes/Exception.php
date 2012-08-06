@@ -181,6 +181,7 @@ class MWException extends Exception {
 			$wgOut->clearHTML();
 			*/
 			$wgOut->prepareErrorPage( $this->getPageTitle() );
+			$wgOut->setStatusCode( 500 );
 
 			$hookResult = $this->runHooks( get_class( $this ) );
 			if ( $hookResult ) {
@@ -191,6 +192,7 @@ class MWException extends Exception {
 
 			$wgOut->output();
 		} else {
+			header( 'HTTP/1.1 500 Internal Server Error' );
 			header( "Content-Type: text/html; charset=utf-8" );
 			$hookResult = $this->runHooks( get_class( $this ) . "Raw" );
 			if ( $hookResult ) {
