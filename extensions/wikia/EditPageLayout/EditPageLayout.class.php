@@ -474,7 +474,7 @@ class EditPageLayout extends EditPage {
 			$this->out->wrapWikiMsg( '<h2>$1</h2>', 'editpagelayout-diff-header' );
 
 			$de = new DifferenceEngine( $this->mTitle );
-			
+
 			$de->setText( $this->textbox2, $this->textbox1 );
 			$de->showDiff( wfMsg( "yourtext" ), wfMsg( "storedversion" ) );
 
@@ -637,10 +637,10 @@ class EditPageLayout extends EditPage {
 		if ( $this->editintro ) {
 			$title = Title::newFromText( $this->editintro );
 			if ( $title instanceof Title && $title->exists() && $title->userCan( 'read' ) ) {
-				$revision = Revision::newFromTitle( $title );
-
 				$wgOut = new OutputPage();
-				$wgOut->addWikiTextTitleTidy( $revision->getText(), $this->mTitle );
+
+				// Added using template syntax, to take <noinclude>'s into account.
+				$wgOut->addWikiTextTitleTidy( '{{:' . $title->getFullText() . '}}', $this->mTitle );
 
 				// store it
 				$text = $wgOut->getHTML();
