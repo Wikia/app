@@ -212,6 +212,7 @@ If you prefer to use regular e-mail or have attachments, you can contact us at [
 	'specialcontact-error-title' => 'Contact Form Error',
 	'specialcontact-error-message' => 'Something went wrong while submitting your form. Please try again later.',
 	'specialcontact-error-logintext' => 'You must be logged in to make this request. Please [[Special:SignUp|login to your account]] and try again.',
+	'specialcontact-error-alreadyrenamed' => 'You have previously been renamed so you are not eligible for another one. Please [[Special:Contact/general|contact staff]] if you require further assistance.',
 
 	/* email */
 	'specialcontact-mailsub' => 'Wikia Support',
