@@ -59,9 +59,7 @@ class ArticleCommentsController extends WikiaController {
 	}
 
 	public function executeContent() {
-		$this->response->setFormat( 'json' );
-
-		$articleId = $this->request->getVal( 'articleId', 0 );
+		$articleId = $this->request->getVal( 'articleId', null );
 		$page = $this->request->getVal( 'page', 1 );
 
 		if ( !empty( $articleId ) ) {
@@ -71,12 +69,7 @@ class ArticleCommentsController extends WikiaController {
 			$title = $this->wg->title;
 		}
 
-		$commentsData = $this->getCommentsData( $title, $page );
-
-		$responseData = array();
-		$responseData[ 'content' ] = $this->app->getView( 'ArticleCommentsController', 'Content', $commentsData )->render();
-
-		$this->response->setData( $responseData );
+		$this->getCommentsData( $title, $page );
 	}
 
 	/**
