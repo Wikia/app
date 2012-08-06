@@ -604,14 +604,14 @@ if (ArticleComments.loadOnDemand) {
 				$.nirvana.sendRequest({
 					controller: 'ArticleCommentsController',
 					method: 'Content',
-					format: 'json',
+					format: 'html',
 					type: 'GET',
 					data: {
 						articleId: window.wgArticleId,
 						page: $comments.data('page')
 					},
-					callback: function(response) {
-						$comments.hide().html(response.content);
+					callback: function(content) {
+						$comments.hide().html(content);
 					}
 				})
 			).then(function() {
