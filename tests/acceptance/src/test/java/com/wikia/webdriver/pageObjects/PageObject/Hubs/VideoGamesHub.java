@@ -6,9 +6,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-import com.wikia.webdriver.pageObjects.PageObject.Hub;
+import com.wikia.webdriver.pageObjects.PageObject.HubBasePageObject;
 
-public class VideoGamesHub extends Hub {
+public class VideoGamesHub extends HubBasePageObject {
 
 
 	
