@@ -52,71 +52,70 @@
 			top: 3px;
 		}
 	}
+}
 
-	.profile-hover { // /** the popup when mouse stays over badge **/
-		display: none;
-		padding: 5px 10px;
-		min-width: 270px;
-		margin-bottom: 3px;
-
-		&.sponsored-hover {
-			padding: 0 0 0 0;
-			border: {
-				color:$color-buttons;
-				style: solid;
-				top-width: 3px;
-				right-width: 3px;
-				left-width: 3px;
-				bottom: none;
-			}
-
-			img {
-				margin: 0 0 0 0;
-			}
-
-			& > .earned {
-				clear: both;
-				font-size: 10px;
-				font-weight: bold;
-				text-align: right;
-				color: $color-button-text;
-				background-color: $color-buttons;
-				line-height: 20px;
-				margin: 0 0 0 0;
-			}
-		}
-
-		h3 {
-			font-size: 13px;
-			font-weight: bold;
-			margin-bottom: 3px;
-			padding-top: 10px !important;
-			text-align: left;
-		}
-
-		p{
-			font-size: 11px;
-			text-align: left;
-		}
-
-		.profile-hover-text {
-			float: right;
-			width: 170px;
-
-			p {
-				font-size: 11px;
-				line-height: 18px;
-			}
+.profile-hover { // /** the popup when mouse stays over badge **/
+	@include clearfix;
+	display: none;
+	padding: 5px 10px;
+	min-width: 270px;
+	
+	&.sponsored-hover {
+		padding: 0 0 0 0;
+		border: {
+			color:$color-buttons;
+			style: solid;
+			top-width: 3px;
+			right-width: 3px;
+			left-width: 3px;
+			bottom: none;
 		}
 
 		img {
-			float: left;
-			margin: {
-				top: 8px;
-				bottom: 8px;
-			}
+			margin: 0 0 0 0;
+		}
+
+		& > .earned {
+			clear: both;
+			font-size: 10px;
+			font-weight: bold;
+			text-align: right;
+			color: $color-button-text;
+			background-color: $color-buttons;
+			line-height: 20px;
+			margin: 0 0 0 0;
 		}
 	}
+
+	h3 {
+		font-size: 13px;
+		font-weight: bold;
+		margin-bottom: 3px;
+		text-align: left;
+	}
+
+	p{
+		font-size: 11px;
+		text-align: left;
+	}
+
+	.profile-hover-text {
+		float: right;
+		width: 170px;
+
+		p {
+			font-size: 11px;
+			line-height: 18px;
+		}
+	}
+
+	img {
+		float: left;
+		margin-top: 4px;
+	}
+}
+.popover .profile-hover {
+	display: block;
 }
 
 /* rail in the right side */

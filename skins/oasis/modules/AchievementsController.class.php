@@ -20,10 +20,8 @@ class AchievementsController extends WikiaController {
 		global $wgOut, $wgResourceBasePath, $wgStylePath, $wgJsMimeType;
 
 		// add CSS and JS for this module
-		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgResourceBasePath}/resources/wikia/libraries/jquery/tooltip/jquery.wikia.tooltip.js\"></script>");
-		$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('skins/oasis/css/modules/WikiaTooltip.scss'));
-		$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL("extensions/wikia/AchievementsII/css/oasis.scss"));
-		$wgOut->addScript("<script src=\"{$wgStylePath}/oasis/js/Achievements.js\"></script>\n");
+		$this->response->addAsset( 'achievements_css' );
+		$this->response->addAsset( 'achievements_js' );
 
 		$this->getBadgesData();
 	}
