@@ -36,7 +36,7 @@
 		<header class="wkPrfHead<?= (!$loggedIn) ? ' up' : '' ?>">
 		<? if($loggedIn) {
 		$userName = $wg->User->getName();
-			echo AvatarService::renderAvatar( $userName, 22 ) . $userName;
+			echo AvatarService::renderAvatar( $userName, AvatarService::AVATAR_SIZE_SMALL ) . $userName;
 		} else {
 			echo $wf->Msg('userlogin-login-heading');
 		}
