@@ -24,7 +24,11 @@
 			$this->mockApp();
 		}
 
-		// get data with valid response - check html response
+		/**
+		 * get data with valid response - check html response
+		 *
+		 * @group Infrastructure
+		 */
 		public function testgetDataFromValidHtmlResponse() {
 			// setup
 			$this->setUpMock();
