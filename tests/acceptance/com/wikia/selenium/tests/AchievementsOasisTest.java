@@ -24,3 +24,4 @@ public class AchievementsOasisTest extends BaseTest {
 		assertTrue(session().isElementPresent("//ul[@class='badges-icons badges']/li[@class='badge-0']"));
 	}
 }
+ 
