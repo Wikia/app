@@ -97,6 +97,13 @@ class ArticleCommentList {
 	}
 
 	/**
+	 * getCountPages -- get a count for the number of pages of article comments
+	 */
+	public function getCountPages() {
+		return ceil( $this->getCountAll() / $this->mMaxPerPage );
+	}
+
+	/**
 	 * getCommentPages -- get the article contents from the list of article pages
 	 *
 	 * pass false in page parameter to get ALL pages but

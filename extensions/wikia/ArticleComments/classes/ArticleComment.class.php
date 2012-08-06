@@ -1,7 +1,7 @@
 <?php
 
 /**
- * ArticleComment is article, this class is used for manipulation on 
+ * ArticleComment is article, this class is used for manipulation on
  */
 class ArticleComment {
 
@@ -73,7 +73,7 @@ class ArticleComment {
 	public function setMetadata( $key, $val ) {
 		$this->mMetadata[$key] = $val;
 	}
-	
+
 	public function removeMetadata( $key ) {
 		unset($this->mMetadata[$key]);
 	}
@@ -623,12 +623,12 @@ class ArticleComment {
 		} else {
 			$res = false;
 		}
-		
+
 		$this->mLastRevId = $this->mTitle->getLatestRevID( Title::GAID_FOR_UPDATE );
 		$this->mLastRevision = Revision::newFromId( $this->mLastRevId );
 
 		wfProfileOut( __METHOD__ );
-		
+
 		return $res;
 	}
 
@@ -785,25 +785,47 @@ class ArticleComment {
 	static public function doPurge($title, $commentTitle) {
 		wfProfileIn( __METHOD__ );
 
-		//purge of the article
-		$listing = ArticleCommentList::newFromTitle($title);
-		// old code
-		// $comments = $listing->getCommentPages(true, false);
+		global $wgMemc, $wgArticleCommentsLoadOnDemand;
 
-		// new code
-		global $wgMemc;
+		$wgMemc->set( wfMemcKey( 'articlecomment', 'comm', $title->getDBkey(), 'v1' ), null );
 
-		$wgMemc->set( wfMemcKey( 'articlecomment', 'comm', $title->getDBkey(), 'v1' ), null);
 		// make sure our comment list is refreshed from the master RT#141861
-		$listing->getCommentList(true);
-		
-		//BugID: 2483 purge the parent article when new comment is posted
-		//BugID: 29462, purge the ACTUAL parent, not the root page... $#%^!
-		$parentTitle = Title::newFromText( $commentTitle->getBaseText() );
+		$commentList = ArticleCommentList::newFromTitle($title);
+		$commentList->getCommentList(true);
 
-		if ($parentTitle) {
-			$parentTitle->invalidateCache();
-			$parentTitle->purgeSquid();
+		// Purge squid proxy URLs for ajax loaded content if we are lazy loading
+		if ( !empty( $wgArticleCommentsLoadOnDemand ) ) {
+			$app = F::app();
+
+			$urls = array();
+			$pages = $commentList->getCountPages();
+			$basePath = $app->wf->ExpandUrl( $app->wg->Server . $app->wg->ScriptPath . '/wikia.php' );
+			$params = array(
+				'controller' => 'ArticleCommentsController',
+				'method' => 'Content',
+				'format' => 'json',
+				'articleId' => $title->getArticleId(),
+			);
+
+			for ( $page = 1; $page <= $pages; $page++ ) {
+				$params[ 'page' ] = $page;
+				$urls[] = $app->wf->AppendQuery( $basePath, $params );
+			}
+
+			$squidUpdate = new SquidUpdate( $urls );
+			$squidUpdate->doUpdate();
+
+		// Otherwise, purge the article
+		} else {
+
+			//BugID: 2483 purge the parent article when new comment is posted
+			//BugID: 29462, purge the ACTUAL parent, not the root page... $#%^!
+			$parentTitle = Title::newFromText( $commentTitle->getBaseText() );
+
+			if ($parentTitle) {
+				$parentTitle->invalidateCache();
+				$parentTitle->purgeSquid();
+			}
 		}
 
 		wfProfileOut( __METHOD__ );
