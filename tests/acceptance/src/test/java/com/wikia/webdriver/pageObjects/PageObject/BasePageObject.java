@@ -11,7 +11,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 
 
-public class BaseBageObject{
+public class BasePageObject{
 
 	public final WebDriver driver;
 	
@@ -19,7 +19,7 @@ public class BaseBageObject{
 
 	private int timeOut = 30;
 	
-	public BaseBageObject(WebDriver driver)
+	public BasePageObject(WebDriver driver)
 	{
 		this.driver = driver;
 	}
