@@ -15,6 +15,7 @@ class VisualStatsSpecialController extends WikiaSpecialPageController {
         $this->response->addAsset('extensions/wikia/VisualStats/js/VisualStatsCommon.js');
         $this->response->addAsset('extensions/wikia/VisualStats/js/d3.v2.js');
         $this->response->addAsset('extensions/wikia/VisualStats/css/VisualStats_style.css');
+
         $parameter = $this->getPar();
         if ($parameter == null){
             $parameter = "commit";
@@ -32,12 +33,27 @@ class VisualStatsSpecialController extends WikiaSpecialPageController {
         $this->setVal( 'urlPunchcard', $this->getTitleFor( 'VisualStats', 'punchcard')->getLocalURL("user=" . $username));
         $this->setVal( 'urlHistogram', $this->getTitleFor( 'VisualStats', 'histogram')->getLocalURL("user=" . $username));
 
+        switch($parameter){
+            case "commit":
+                $this->setVal( 'data', $this->businessLogic->getDataForCommitActivity($username));
+                break;
+            case "punchcard":
+                $this->setVal( 'data', $this->businessLogic->getDataForPunchcard($username));
+                break;
+            case "histogram":
+                $this->setVal( 'data', $this->businessLogic->getDataForHistogram($username));
+                break;
+            default:
+                $this->setVal( 'data', $this->businessLogic->getDataForCommitActivity($username));
+                $parameter = "commit";
+        }
+
 
         $this->wg->Out->setPageTitle( $this->wf->msg('visualStats-specialpage-title'));
 
         $this->setVal( 'user', $username);
         $this->setVal( 'param', $parameter);
-        $this->setVal( 'data', $this->businessLogic->performQuery($username));
+        $this->setVal( 'data', $this->businessLogic->getDataForCommitActivity($username));
         $this->setVal( 'dates', $this->businessLogic->getDatesFromTwoWeeksOn());
         $this->setVal( 'wikiButtonLabel', $this->wf->msg('visualStats-wikiEdits'));
         $this->setVal( 'userButtonLabel', $this->wf->msg('visualStats-userEdits', $username));

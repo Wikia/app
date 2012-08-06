@@ -42,6 +42,8 @@ var VisualStatsCommitActivity = {
         var wikiaMax = this.roundUp(this.wikiaCommit.max);
         var userMax = this.roundUp(this.userCommit.max);
 
+        svg.append("svg:text").text($.msg('visualStats-wikiEdits'));
+
         svg.append("rect")
             .attr("x", 20)
             .attr("y", 45)
@@ -61,7 +63,6 @@ var VisualStatsCommitActivity = {
         var i = 0;
         var wikiaDataset= [];
         var userDataset= [];
-        console.log(this.wikiaCommit.data);
         $.each(this.wikiaCommit.data, function(date, value){
             svg.append("svg:text")
                 .attr("x", scaleX(i))
@@ -73,7 +74,27 @@ var VisualStatsCommitActivity = {
                 .attr("text-anchor", "middle");
             wikiaDataset[i] = value;
             i++;
-        })
+        });
+
+        i = 0;
+        $.each(this.userCommit.data, function(date, value){
+            userDataset[i] = value;
+            i++;
+        });
+
+        if (this.user != "0"){
+            $("#buttons").css('visibility', 'visible');
+            $("#wikiaButton").click(function(){
+                $(this).removeClass("secondary");
+                $("#userButton").addClass("secondary");
+                self.updateCommitActivity(svg, wikiaDataset, wikiaMax);
+            });
+            $("#userButton").click(function(){
+                $(this).removeClass("secondary");
+                $("#wikiaButton").addClass("secondary");
+                self.updateCommitActivity(svg, userDataset, userMax);
+            });
+        }
 
         svg.append("svg:text")
             .text(parseInt(wikiaMax / 2))
@@ -87,12 +108,6 @@ var VisualStatsCommitActivity = {
             .attr("x", 55)
             .attr("y", 102)
             .attr("text-anchor", "end");
-
-        i = 0;
-        $.each(this.userCommit.data, function(date, value){
-            userDataset[i] = value;
-            i++;
-        });
 
         this.line = d3.svg.line()
             .x(function(d, i) { return scaleX(i); })
@@ -135,22 +150,6 @@ var VisualStatsCommitActivity = {
             .text(function(d) { return d; })
             .attr("font-size", 9)
             .attr("text-anchor", "end");
-
-        if (this.user == "0"){
-            $("#buttons").remove();
-        }
-        else{
-            $("#wikiaButton").click(function(){
-                $(this).removeClass("secondary");
-                $("#userButton").addClass("secondary");
-                self.updateCommitActivity(svg, wikiaDataset, wikiaMax);
-            });
-            $("#userButton").click(function(){
-                $(this).removeClass("secondary");
-                $("#wikiaButton").addClass("secondary");
-                self.updateCommitActivity(svg, userDataset, userMax);
-            })
-        }
 
     },
 
