@@ -26,6 +26,8 @@ class WallHooksHelper {
 	}
 
 	public function onArticleViewHeader(&$article, &$outputDone, &$useParserCache) {
+		wfProfileIn(__METHOD__);
+
 		$app = F::App();
 		$helper = F::build('WallHelper', array());
 		$title = $article->getTitle();
@@ -66,6 +68,8 @@ class WallHooksHelper {
 			if(empty($dbkey) || !$helper->isDbkeyFromWall($dbkey) ) {
 				// no dbkey or not from wall, redirect to wall
 				$app->wg->Out->redirect($this->getWallTitle()->getFullUrl(), 301);
+
+				wfProfileOut(__METHOD__);
 				return true;
 			} else {
 				// article exists or existed
@@ -90,6 +94,7 @@ class WallHooksHelper {
 				}
 			}
 
+			wfProfileOut(__METHOD__);
 			return true;
 		}
 
@@ -97,10 +102,15 @@ class WallHooksHelper {
 				&& !$title->isSubpage()
 		) {
 			$title = $this->getWallTitle();
-			if ( empty($title) ) return true;
+			if ( empty($title) ) {
+				wfProfileOut(__METHOD__);
+				return true;
+			}
 			//user talk page -> redirect to message wall
 			$outputDone = true;
 			$app->wg->Out->redirect($title->getFullUrl(), 301);
+
+			wfProfileOut(__METHOD__);
 			return true;
 		}
 
@@ -116,6 +126,8 @@ class WallHooksHelper {
 
 			$title = F::build('Title', array($parts[0].'/'.$parts[1], NS_USER_WALL), 'newFromText');
 			$app->wg->Out->redirect($title->getFullUrl(), 301);
+
+			wfProfileOut(__METHOD__);
 			return true;
 		}
 
@@ -134,9 +146,12 @@ class WallHooksHelper {
 			$outputDone = true;
 
 			$app->wg->Out->addHTML($app->renderView('WallController', 'renderOldUserTalkSubpage', array('subpage' => $parts[1], 'wallUrl' => $this->getWallTitle()->getFullUrl()) ));
+
+			wfProfileOut(__METHOD__);
 			return true;
 		}
 
+		wfProfileOut(__METHOD__);
 		return true;
 	}
 
@@ -154,9 +169,9 @@ class WallHooksHelper {
 
 			if( $title->getNamespace() === NS_USER ) {
 				if( !empty($contentActions['namespaces']) && !empty($contentActions['namespaces']['user_talk']) ) {
-                
+
 					$contentActions['namespaces']['user_talk']['text'] = $app->wf->Msg('wall-message-wall');
-		
+
 					$userWallTitle = $this->getWallTitle();
 
 					if( $userWallTitle instanceof Title ) {
@@ -200,7 +215,7 @@ class WallHooksHelper {
 				}
 
 				$contentActions['namespaces'] = array();
-				
+
 				if( $user instanceof User ) {
 					$contentActions['namespaces']['user-profile'] = array(
 							'class' => false,
@@ -220,7 +235,7 @@ class WallHooksHelper {
 				$userTalkPageTitle = $helper->getTitle(NS_USER_TALK);
 				$contentActions = array();
 				$contentActions['namespaces'] = array();
-				
+
 				$contentActions['namespaces']['view-source'] = array(
 						'class' => false,
 						'href' => $userTalkPageTitle->getLocalUrl(array('action' => 'edit')),
@@ -649,7 +664,7 @@ class WallHooksHelper {
 		wfProfileIn( __METHOD__ );
 		// notifications
 		$app = F::app();
-  
+
 		if(  MWNamespace::isTalk( $recentChange->getAttribute('rc_namespace') ) && in_array( MWNamespace::getSubject($recentChange->getAttribute('rc_namespace')), $app->wg->WallNS ) ) {
 			$rcType = $recentChange->getAttribute('rc_type');
 
@@ -885,6 +900,8 @@ class WallHooksHelper {
 	 * @author Andrzej 'nAndy' Lukaszewski
 	 */
 	public function onChangesListInsertDiffHist($list, &$diffLink, &$historyLink, &$s, $rc, $unpatrolled) {
+		wfProfileIn(__METHOD__);
+
 		$app = F::app();
 		if( in_array(MWNamespace::getSubject(intval($rc->getAttribute('rc_namespace'))), $app->wg->WallNS) ) {
 			$rcTitle = $rc->getTitle();
@@ -943,6 +960,7 @@ class WallHooksHelper {
 
 		}
 
+		wfProfileOut(__METHOD__);
 		return true;
 	}
 
@@ -1127,6 +1145,8 @@ class WallHooksHelper {
 	 * @author Andrzej 'nAndy' Lukaszewski
 	 */
 	private function getParentTitleTxt($title) {
+		wfProfileIn(__METHOD__);
+
 		$app = F::app();
 
 		if( $title instanceof Title ) {
@@ -1160,9 +1180,11 @@ class WallHooksHelper {
 				}
 			}
 
+			wfProfileOut(__METHOD__);
 			return $articleTitleTxt;
 		}
 
+		wfProfileOut(__METHOD__);
 		return null;
 	}
 
@@ -1275,6 +1297,8 @@ class WallHooksHelper {
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	public function onChangesListHeaderBlockGroup($oChangeList, &$r, &$oRCCacheEntryArray) {
+		wfProfileIn(__METHOD__);
+
 		$oRCCacheEntry = null;
 
 		if ( !empty($oRCCacheEntryArray) ) {
@@ -1346,6 +1370,7 @@ class WallHooksHelper {
 			}
 		}
 
+		wfProfileOut(__METHOD__);
 		return true;
 	}
 
@@ -1521,6 +1546,8 @@ class WallHooksHelper {
 	}
 
 	private function processActionOnWatchlist($user, $followedUserName, $action) {
+		wfProfileIn(__METHOD__);
+
 		$watchTitle = Title::newFromText($followedUserName, NS_USER);
 
 		if( $watchTitle instanceof Title ) {
@@ -1539,6 +1566,8 @@ class WallHooksHelper {
 			//just-in-case -- it shouldn't happen but if it does we want to know about it
 			Wikia::log( __METHOD__, false, 'WALL_HOOK_ERROR: No title instance while syncing follows. User name: '.$followedUserName);
 		}
+
+		wfProfileOut(__METHOD__);
 	}
 
 	public function onGetPreferences( $user, &$preferences ) {
@@ -1595,6 +1624,8 @@ class WallHooksHelper {
 	 * @return true
 	 */
 	public function onContributionsLineEnding(&$contribsPager, &$ret, $row) {
+		wfProfileIn(__METHOD__);
+
 		$app = F::app();
 
 		if( isset($row->page_namespace) && in_array(MWNamespace::getSubject($row->page_namespace), $app->wg->WallNS)) {
@@ -1675,6 +1706,7 @@ class WallHooksHelper {
 
 		}
 
+		wfProfileOut(__METHOD__);
 		return true;
 	}
 
@@ -1689,6 +1721,8 @@ class WallHooksHelper {
 	 * @return Array
 	 */
 	private function getMessageOptions($rc = null, $row = null, $fullUrls = false) {
+		wfProfileIn(__METHOD__);
+
 		if( !is_null($rc) ) {
 			$actionUser = $rc->getAttribute('rc_user_text');
 		} else {
@@ -1741,6 +1775,7 @@ class WallHooksHelper {
 			$wallUrl = $wm->getWallUrl();
 		}
 
+		wfProfileOut(__METHOD__);
 		return array(
 			'articleUrl' => $articleUrl,
 			'articleTitleVal' => $articleTitleTxt,
@@ -1763,6 +1798,8 @@ class WallHooksHelper {
 	 * @return Boolean
 	 */
 	public function onRenderWhatLinksHereRow(&$row, &$level, &$defaultRendering) {
+		wfProfileIn(__METHOD__);
+
 		if( isset($row->page_namespace) && intval($row->page_namespace) === NS_USER_WALL_MESSAGE ) {
 			$defaultRendering = false;
 			$title = F::build('Title', array($row->page_title, $row->page_namespace), 'newFromText');
@@ -1793,6 +1830,7 @@ class WallHooksHelper {
 			);
 		}
 
+		wfProfileOut(__METHOD__);
 		return true;
 	}
 
@@ -1806,6 +1844,8 @@ class WallHooksHelper {
 	 * @return true
 	 */
 	public function onDiffViewHeader($differenceEngine, $oldRev, $newRev) {
+		wfProfileIn(__METHOD__);
+
 		$app = F::App();
 		$diff = $app->wg->request->getVal('diff', false);
 		$oldId = $app->wg->request->getVal('oldid', false);
@@ -1816,6 +1856,7 @@ class WallHooksHelper {
 			$differenceEngine->mNewPage->mPrefixedText = $metaTitle;
 		}
 
+		wfProfileOut(__METHOD__);
 		return true;
 	}
 
@@ -1851,6 +1892,8 @@ class WallHooksHelper {
 	 * @return String
 	 */
 	private function getMetatitleFromTitleObject($title, &$wmRef = null) {
+		wfProfileIn(__METHOD__);
+
 		$wm = F::build('WallMessage', array($title));
 
 		if( $wm instanceof WallMessage ) {
@@ -1865,6 +1908,7 @@ class WallHooksHelper {
 						$wmRef = $wmParent;
 					}
 
+					wfProfileOut(__METHOD__);
 					return $wmParent->getMetaTitle();
 				}
 			}
@@ -1873,9 +1917,11 @@ class WallHooksHelper {
 				$wmRef = $wm;
 			}
 
+			wfProfileOut(__METHOD__);
 			return $metaTitle;
 		}
 
+		wfProfileOut(__METHOD__);
 		return '';
 	}
 
@@ -1889,6 +1935,8 @@ class WallHooksHelper {
 	 * @return true
 	 */
 	public function onContributionsToolLinks($id, $nt, &$tools) {
+		wfProfileIn(__METHOD__);
+
 		$app = F::app();
 
 		if( !empty($app->wg->EnableWallExt) && !empty($tools[0]) && $nt instanceof Title ) {
@@ -1903,6 +1951,7 @@ class WallHooksHelper {
 			}
 		}
 
+		wfProfileOut(__METHOD__);
 		return true;
 	}
 
@@ -1916,6 +1965,8 @@ class WallHooksHelper {
 	 * @return true
 	 */
 	public function onLinkerUserTalkLinkAfter($userId, $userText, &$userTalkLink) {
+		wfProfileIn(__METHOD__);
+
 		$app = F::app();
 
 		if( !empty($app->wg->EnableWallExt) ) {
@@ -1929,6 +1980,7 @@ class WallHooksHelper {
 			);
 		}
 
+		wfProfileOut(__METHOD__);
 		return true;
 	}
 
@@ -1952,6 +2004,6 @@ class WallHooksHelper {
 		}
 		return true;
 	}
-	
+
 }
 
