@@ -60,9 +60,8 @@ class WikiaHomePageController extends WikiaController {
 		//cache response on varnish for 1h to enable rolling of stats
 		$this->response->setCacheValidity(3600, 3600, array(WikiaResponse::CACHE_TARGET_BROWSER, WikiaResponse::CACHE_TARGET_VARNISH));
 
-		$this->response->addAsset('extensions/wikia/WikiaHomePage/js/WikiaHomePage.js');
-		$this->response->addAsset('skins/oasis/css/wikiagrid.scss');
-		$this->response->addAsset('skins/oasis/css/modules/WikiaMediaCarousel.scss');
+		$this->response->addAsset('wikiahomepage_scss');
+		$this->response->addAsset('wikiahomepage_js');
 
 		$response = $this->app->sendRequest('WikiaHomePageController', 'getHubImages');
 		$this->hubImages = $response->getVal('hubImages', '');
