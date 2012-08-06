@@ -85,6 +85,13 @@ public class BasePageObject{
 	}
 	
 	
+	public void waitForElementNotVisibleByCss(String css)
+	{
+		WebDriverWait wait = new WebDriverWait(driver, timeOut);
+		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(css)));
+
+	}
+	
 	
 	public String getTimeStamp()
 	{
