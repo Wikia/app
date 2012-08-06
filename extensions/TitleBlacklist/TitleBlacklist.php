@@ -57,6 +57,6 @@ $wgHooks['AbortMove'][] = 'TitleBlacklistHooks::abortMove';
 $wgHooks['CentralAuthAutoCreate'][] = 'TitleBlacklistHooks::centralAuthAutoCreate';
 $wgHooks['EditFilter'][] = 'TitleBlacklistHooks::validateBlacklist';
 $wgHooks['ArticleSaveComplete'][] = 'TitleBlacklistHooks::clearBlacklist';
-$wgHooks['UserCreateForm'][] = 'TitleBlacklistHooks::addOverrideCheckbox';
+//$wgHooks['UserCreateForm'][] = 'TitleBlacklistHooks::addOverrideCheckbox';
 
 //@}
