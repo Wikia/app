@@ -762,7 +762,7 @@ class ArticleCommentList {
 	 * @return true -- because it's a hook
 	 */
 	static public function setHeaderBlockGroup($oChangeList, &$header, Array /*of oRCCacheEntry*/ &$oRCCacheEntryArray) {
-		global $wgLang, $wgContLang, $wgEnableGroupedArticleCommentsRC, $wgEnableWallExt;
+		global $wgLang, $wgContLang, $wgEnableGroupedArticleCommentsRC, $wgEnableWallExt, $wgStylePath;
 
 		if ( empty($wgEnableGroupedArticleCommentsRC) ) {
 			return true;
@@ -776,6 +776,7 @@ class ArticleCommentList {
 		if ( !is_null($oRCCacheEntry) ) {
 			$oTitle = $oRCCacheEntry->getTitle();
 			$namespace = $oTitle->getNamespace();
+			$timestamp = null;
 
 			if ( !is_null($oTitle) && MWNamespace::isTalk($oTitle->getNamespace()) && ArticleComment::isTitleComment($oTitle)) {
 				$parts = ArticleComment::explode($oTitle->getFullText());
@@ -790,6 +791,7 @@ class ArticleCommentList {
 							$userlinks[$u] = 0;
 						}
 						$userlinks[$u]++;
+						if ( is_null( $timestamp ) ) $timestamp = $oRCCacheEntry->timestamp;
 					}
 
 					$users = array();
@@ -818,7 +820,10 @@ class ArticleCommentList {
 							'cntChanges'	=> $cntChanges,
 							'hdrtitle' 		=> wfMsgExt($messageKey, array('parseinline'), $title->getPrefixedText()),
 							'inx'			=> $oChangeList->rcCacheIndex,
-							'users'			=> $users
+							'users'			=> $users,
+							'wgStylePath'	=> $wgStylePath,
+							'title'			=> $title,
+							'timestamp'		=> $timestamp
 					);
 
 					$header = F::app()->getView('ArticleComments', 'RCHeaderBlock', $vars)->render();

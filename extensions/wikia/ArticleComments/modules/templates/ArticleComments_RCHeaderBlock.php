@@ -1,8 +1,19 @@
-<table cellpadding="0" cellspacing="0" border="0" style="background: none">
+<table class="mw-collapsible mw-collapsed mw-enhanced-rc <?= Sanitizer::escapeClass( 'mw-changeslist-ns' . $title->getNamespace() . '-' . $title->getText() ) ?>">
 <tr>
-	<td valign="top" style="white-space: nowrap">
-		<tt><span id='mw-rc-openarrow-<?=$inx?>' class='mw-changeslist-expanded changes-list-entry' style='visibility:hidden'><a href='#' onclick='toggleVisibility(<?=$inx?>); return false' title='<?=htmlspecialchars( wfMsg( 'rc-enhanced-expand' ) )?>' class='mw-arr-r'><img src="/skins/common/images/Arr_r.png" width="12" height="12" alt="+" title="<?=htmlspecialchars( wfMsg( 'rc-enhanced-expand' ) )?>" /></a></span><span id='mw-rc-closearrow-<?=$inx?>' class='mw-changeslist-hidden changes-list-entry' style='display:none'><a href='#' onclick='toggleVisibility(<?=$inx?>); return false' title='<?=htmlspecialchars( wfMsg( 'rc-enhanced-hide' ) )?>' class='mw-arr-d'><img src="/skins/common/images/Arr_d.png" width="12" height="12" alt="-" title="<?=htmlspecialchars( wfMsg( 'rc-enhanced-hide' ) )?>" /></a></span>&nbsp;<span class="newpage">&nbsp;</span>&nbsp;&nbsp;&nbsp;&nbsp;</tt>
-	</td>
-	<td style="padding-left:2px"><?=$hdrtitle?>&nbsp;(<?=$cntChanges?>) . . [<?= implode("; ", $users) ?>]</td>
+<td>
+<span class="mw-collapsible-toggle mw-collapsible-toggle-collapsed">		
+	<span class="mw-rc-openarrow">
+		<a title="<?=htmlspecialchars( wfMsg( 'rc-enhanced-expand' ) )?>" href="#">
+			<img width="12" height="12" title="<?=htmlspecialchars( wfMsg( 'rc-enhanced-expand' ) )?>" alt="+" src="<?= $wgStylePath ?>/common/images/Arr_r.png">
+		</a>
+	</span>
+	<span class="mw-rc-closearrow">
+		<a title="<?=htmlspecialchars( wfMsg( 'rc-enhanced-hide' ) )?>" href="#">
+			<img width="12" height="12" title="<?=htmlspecialchars( wfMsg( 'rc-enhanced-hide' ) )?>" alt="-" src="<?= $wgStylePath ?>/common/images/Arr_d.png">
+		</a>
+	</span>
+</span>
+</td>
+<td class="mw-enhanced-rc">&#160;&#160;&#160;&#160;&#160;<?= $timestamp ?>&#160;</td>
+<td><?=$hdrtitle?>&nbsp;(<?=$cntChanges?>) . . [<?= implode("; ", $users) ?>]</td>
 </tr>
-</table>
