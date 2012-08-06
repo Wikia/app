@@ -69,7 +69,9 @@ function gracenote_obfuscateText($text){
 	}
 
 	# Prevent over-encoding of special HTML-encoded characters.
+	# TODO: Is it safe to just make sure all /&([0-9a-zA-Z]{2,4});/ are put back to normal text?
 	$lyrics = str_replace( "&#38;&#110;&#98;&#115;&#112;&#59;", "&nbsp;", $lyrics );
+	$lyrics = str_replace( "&#38;&#35;&#49;&#54;&#48;&#59;", "&#160;", $lyrics); // fb#42619
 	$lyrics = str_replace( "&#38;&#97;&#109;&#112;&#59;", "&amp;", $lyrics); // rt#35365
 	$lyrics = str_replace( "&#38;&#103;&#116;&#59;", "&gt;", $lyrics ); // fb#16034
 	$lyrics = str_replace( "&#38;&#108;&#116;&#59;", "&lt;", $lyrics );
