@@ -472,6 +472,9 @@ class ContactForm extends SpecialPage {
 		} elseif ( $wgUser->isAnon() && !empty( $this->secDat['reqlogin'] ) ) {
 			$wgOut->showErrorPage( 'loginreqtitle', 'specialcontact-error-logintext' );
 			return;
+		} elseif ( $this->secDat['form'] === 'rename-account' && $wgUser->getOption( 'wasRenamed', 0 ) ) {
+			$wgOut->showErrorPage( 'specialcontact-error-title', 'specialcontact-error-alreadyrenamed' );
+			return;
 		} else {
 			$wgOut->addHTML( $oTmpl->execute( $this->secDat['form'] ) );
 		}
