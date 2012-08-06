@@ -12,6 +12,7 @@ timeslice=2
 
 counter=0
 user="`whoami`"
+dir=`pwd`
 
 echo "+====================================+"
 echo "|      Mass ingestion script         |"
@@ -43,7 +44,8 @@ do
 	to=`date -d "$startdate $endtime sec" '+%s'`
 
 	SERVER_ID=298117 php ./ingestPartnerVideoWithData.php --conf=/usr/wikia/docroot/wiki.factory/LocalSettings.php $extra -e $to -s $from $provider | tee -a $logfile || exit
-	#/usr/wikia/backend/bin/withcity --maintenance-script="wikia/ingestPartnerVideoWithData.php $extra -e $to -s $from $provider" --usedb=video151 | tee -a $logfile
+	#SERVER_ID=298117 php ./ingestPartnerVideoWithData.php --conf=/home/release/video_refactoring/LocalSettings.php $extra -e $to -s $from $provider | tee -a $logfile || exit
+	#/usr/wikia/backend/bin/withcity --maintenance-script="../../../../../$dir/ingestPartnerVideoWithData.php $extra -e $to -s $from $provider" --usedb=video151 | tee -a $logfile
 
 	counter=$(( $counter + 60 * 60 * 24 * $timeslice ))
 	from=`date -d "$startdate $counter sec" '+%s'`

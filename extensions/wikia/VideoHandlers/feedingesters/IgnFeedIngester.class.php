@@ -62,13 +62,6 @@ class IgnFeedIngester extends VideoFeedIngester {
 				}
 			}
 
-			if(empty($video['metadata']['gameContent'])) {
-				// only ingest gaming content
-				$name = $video['metadata']['name'];
-				print "Skipping non-gaming content: $name\n";
-				continue;
-			}
-
 			$clipData = array();
 
 			$clipData['titleName'] = $video['metadata']['name'];
@@ -100,6 +93,7 @@ class IgnFeedIngester extends VideoFeedIngester {
 				$tags[$obj['slug']] = true;
 			}
 			$tags = array_keys( $tags );
+			$addlCategories = array_merge( $addlCategories, $tags );
 			$clipData['tags'] = implode(", ", $tags );
 
 
@@ -123,6 +117,9 @@ class IgnFeedIngester extends VideoFeedIngester {
 
 		if(!empty($data['gameContent'])) {
 			$categories[] = 'Games';
+		} else {
+			$categories[] = 'IGN_entertainment';
+			$categories[] = 'Entertainment';
 		}
 
 		wfProfileOut( __METHOD__ );
