@@ -23,10 +23,10 @@ public class CreateAWiki{
 		PageFactory.initElements(driver, createNewWiki);
 		String timeStamp = createNewWiki.getTimeStamp();
 		
-		createNewWiki.TypeInWikiName("qaTest"+timeStamp);
-		createNewWiki.TypeInWikiDomain("qaTest"+timeStamp);
-		createNewWiki.WaitForSuccessIcon();
-		createNewWiki.Submit();
+		createNewWiki.typeInWikiName("qaTest"+timeStamp);
+		createNewWiki.typeInWikiDomain("qaTest"+timeStamp);
+		createNewWiki.waitForSuccessIcon();
+		createNewWiki.submit();
 		
 		driver.close();
 	}
