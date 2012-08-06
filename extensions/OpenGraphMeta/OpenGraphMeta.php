@@ -63,23 +63,27 @@ function efOpenGraphMetaPageHook( &$out, &$sk ) {
 	global $wgLogo, $wgSitename, $wgXhtmlNamespaces, $egFacebookAppId, $egFacebookAdmins;
 	$wgXhtmlNamespaces["og"] = "http://opengraphprotocol.org/schema/";
 	$title = $out->getTitle();
-	$isMainpage = $title->equals(Title::newMainPage());
+	$isMainpage = $title->isMainPage();
 
 	$meta = array();
 
-	$meta["og:type"] = $isMainpage ? "website" : "article";
-	$meta["og:site_name"] = $wgSitename;
-
-	// Try to chose the most appropriate title for showing in news feeds.
-	if ((defined('NS_BLOG_ARTICLE') && $title->getNamespace() == NS_BLOG_ARTICLE) ||
-		(defined('NS_BLOG_ARTICLE_TALK') && $title->getNamespace() == NS_BLOG_ARTICLE_TALK)){
-		$meta["og:title"] = $title->getSubpageText();
+	if ( $isMainpage ) {
+		$meta["og:type"] = "website";
+		$meta["og:title"] = $wgSitename;
 	} else {
-		$meta["og:title"] = $title->getText();
+		$meta["og:type"] = "article";
+		$meta["og:site_name"] = $wgSitename;
+		// Try to chose the most appropriate title for showing in news feeds.
+		if ( ( defined('NS_BLOG_ARTICLE') && $title->getNamespace() == NS_BLOG_ARTICLE ) ||
+			( defined('NS_BLOG_ARTICLE_TALK') && $title->getNamespace() == NS_BLOG_ARTICLE_TALK ) ){
+			$meta["og:title"] = $title->getSubpageText();
+		} else {
+			$meta["og:title"] = $title->getText();
+		}
 	}
 
-	if ( isset($out->mMainImage) && ($out->mMainImage !== false) ) {
-		if( is_object($out->mMainImage) ){
+	if ( isset( $out->mMainImage ) && ( $out->mMainImage !== false ) ) {
+		if( is_object( $out->mMainImage ) ){
 			$meta["og:image"] = wfExpandUrl($out->mMainImage->createThumb(100*3, 100));
 		} else {
 			// In some edge-cases we won't have defined an object but rather a full URL.
@@ -100,9 +104,13 @@ function efOpenGraphMetaPageHook( &$out, &$sk ) {
 	}
 
 	foreach( $meta as $property => $value ) {
-		if ( $value )
-			//$out->addMeta($property, $value ); // FB wants property= instead of name= blech, is that even valid html?
-			$out->addHeadItem("meta:property:$property", "	".Html::element( 'meta', array( 'property' => $property, 'content' => $value ) )."\n");
+		if ( $value ) {
+			if ( isset( OutputPage::$metaAttrPrefixes ) && isset( OutputPage::$metaAttrPrefixes['property'] ) ) {
+				$out->addMeta( "property:$property", $value );
+			} else {
+				$out->addHeadItem("meta:property:$property", "	".Html::element( 'meta', array( 'property' => $property, 'content' => $value ) )."\n");
+			}
+		}
 	}
 
 	return true;
