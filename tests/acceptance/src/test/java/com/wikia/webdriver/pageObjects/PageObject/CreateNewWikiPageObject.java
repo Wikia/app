@@ -21,25 +21,25 @@ public class CreateNewWikiPageObject extends BasePageObject{
 		// TODO Auto-generated constructor stub
 	}
 	
-	public void TypeInWikiName(String name)
+	public void typeInWikiName(String name)
 	{
 		wikiName.sendKeys(name);
 		
 	}
 	
-	public void TypeInWikiDomain(String domain)
+	public void typeInWikiDomain(String domain)
 	{
 		wikiDomain.clear();
 		wikiDomain.sendKeys(domain);
 		
 	}
 	
-	public void WaitForSuccessIcon()
+	public void waitForSuccessIcon()
 	{
 		watForElementByXPath("//span[@class='domain-status-icon status-icon']/img[@src]");
 	}
 	
-	public void Submit()
+	public void submit()
 	{
 		submitButton.click();
 	}
