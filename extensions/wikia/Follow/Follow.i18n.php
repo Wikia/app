@@ -69,7 +69,7 @@ ___________________________________________
 * Want to control which e-mails you receive?
 Go to: {{fullurl:{{ns:special}}:Preferences}}.',
 
-	'enotif_body_categoryadd-html' => '<p>
+	'enotif_body_categoryadd-HTML' => '<p>
 Dear $WATCHINGUSERNAME,
 <br /><br />
 A page has been added to a category you are following on {{SITENAME}}.
@@ -186,7 +186,7 @@ ___________________________________________
 
 * هل تريد أن تتحكم في الرسئل الإلكترونية التي تتلقاها منا?
 زر: {{fullurl:{{ns:special}}:تفضيلات}}.',
-	'enotif_body_categoryadd-html' => ' <p>
+	'enotif_body_categoryadd-HTML' => ' <p>
 عزيزي $WATCHINGUSERNAME,
 <br /><br />
 لقد تمت إضافة صفحة لتصنيف تتابعه أنت في {{SITENAME}}.
@@ -432,7 +432,7 @@ ___________________________________________
 * Koukněte se na dobré wiki! http://www.wikia.com
 
 * Chcete nastavit, jaké e-maily dostanete? Jděte na: {{fullurl:{{ns:special}}:Preferences}}.',
-	'enotif_body_categoryadd-html' => '<p>Drahý(á) $WATCHINGUSERNAME,<br /><br />
+	'enotif_body_categoryadd-HTML' => '<p>Drahý(á) $WATCHINGUSERNAME,<br /><br />
 Do kategorie, kterou sledujete, byla přidána stránka na {{SITENAME}}.<br /> <br />
 Viz <a href="$PAGETITLE_URL">$PAGETITLE</a>.<br /><br />
 {{SITENAME}}<br /><hr />
@@ -526,7 +526,7 @@ ___________________________________________
 
 * Willst du kontrollieren, welche E-Mails du erhältst?
 Gehe auf: {{fullurl:{{ns:special}}:Preferences}}.',
-	'enotif_body_categoryadd-html' => '<p>
+	'enotif_body_categoryadd-HTML' => '<p>
 Hallo $WATCHINGUSERNAME,
 <br /><br />
 Eine Seite, die du auf {{SITENAME}} beobachtest, wurde einer Kategorie hinzugefügt.
@@ -601,7 +601,7 @@ ___________________________________________
 
 * Wollen Sie kontrollieren, welche E-Mails Sie erhalten?
 Gehen Sie auf: {{fullurl:{{ns:special}}:Preferences}}.',
-	'enotif_body_categoryadd-html' => '<p>
+	'enotif_body_categoryadd-HTML' => '<p>
 Hallo $WATCHINGUSERNAME,
 <br /><br />
 Eine Seite, die Sie auf {{SITENAME}} beobachten, wurde einer Kategorie hinzugefügt.
@@ -736,7 +736,7 @@ ___________________________________________
 
 * Deseas controlar los correos que recibes?
 Ve a: {{fullurl:{{ns:special}}:Preferencias}}.',
-	'enotif_body_categoryadd-html' => '<p>
+	'enotif_body_categoryadd-HTML' => '<p>
 Querido $WATCHINGUSERNAME,
 <br /><br />
 Una página ha sido agregada a una categoría que estás siguiendo en {{SITENAME}}.
@@ -889,7 +889,7 @@ ___________________________________________
 * Pour voir les derniers évènements sur Wikia, rendez-vous sur http://communaute.wikia.com
 * Vous souhaitez contrôler les courriels que vous recevez ? Rendez-vous sur : {{fullurl:{{ns:special}}:Preferences}}.
 * Cliquez sur le lien suivant pour vous désabonner de tous les courriels de Wikia : $UNSUBSCRIBEURL',
-	'enotif_body_categoryadd-html' => '<p>
+	'enotif_body_categoryadd-HTML' => '<p>
 $WATCHINGUSERNAME,
 <br /><br />
 Une page a été ajoutée à une catégorie que vous suivez sur {{SITENAME}}.
@@ -1003,7 +1003,7 @@ ___________________________________________
 
 * Quere controlar os correos que lle chegan?
 Vaia a: {{fullurl:{{ns:special}}:Preferences}}.',
-	'enotif_body_categoryadd-html' => '<p>
+	'enotif_body_categoryadd-HTML' => '<p>
 Estimado $WATCHINGUSERNAME:
 <br /><br />
 Engadiron unha páxina a unha categoría que vixía en {{SITENAME}}.
@@ -1116,7 +1116,7 @@ ___________________________________________
 
 * רוצים לקבוע אילו הודעות דוא"ל לקבל?
 ראו: {{fullurl:{{ns:special}}:Preferences}}.',
-	'enotif_body_categoryadd-html' => '<p>
+	'enotif_body_categoryadd-HTML' => '<p>
 לכבוד $WATCHINGUSERNAME,
 <br /><br />
 נוסף דף לקטגוריה שאתם עוקבים אחריה ב{{grammar:תחילית|{{SITENAME}}}}.
@@ -1270,7 +1270,7 @@ ___________________________________________
 
 * Vole determinar qual e-mails tu recipe?
 Visita: {{fullurl:{{ns:special}}:Preferences}}.',
-	'enotif_body_categoryadd-html' => '<p>
+	'enotif_body_categoryadd-HTML' => '<p>
 Car $WATCHINGUSERNAME,
 <br /><br />
 Un pagina ha essite addite a un categoria que tu observa in {{SITENAME}}.
@@ -1428,7 +1428,7 @@ $PAGETITLE_URL
 --
 設定を変更する:
 {{fullurl:Special:Preferences}}',
-	'enotif_body_categoryadd-html' => '<p>$WATCHINGUSERNAMEさん、<br /><br />
+	'enotif_body_categoryadd-HTML' => '<p>$WATCHINGUSERNAMEさん、<br /><br />
 
 {{SITENAME}}のフォローしているカテゴリに新しいページが追加されました。<br />
 新しいページを見るには次のURLにアクセスしてください:<br />
@@ -1578,7 +1578,7 @@ ___________________________________________
 
 * Сакате да изберете кои пораки ги добивате по е-пошта?
 Одете на: {{fullurl:{{ns:special}}:Preferences}}.',
-	'enotif_body_categoryadd-html' => '<p>
+	'enotif_body_categoryadd-HTML' => '<p>
 Драг/а $WATCHINGUSERNAME,
 <br /><br />
 Во категоријата што ја следите на {{SITENAME}} е додадена страница.
@@ -1711,7 +1711,7 @@ ___________________________________________
 
 * Nak kawal e-mel yang anda terima?
 Sila ke: {{fullurl:{{ns:special}}:Preferences}}.',
-	'enotif_body_categoryadd-html' => '<p>
+	'enotif_body_categoryadd-HTML' => '<p>
 $WATCHINGUSERNAME,
 <br /><br />
 Satu laman telah ditambahkan dalam kategori yang anda ikuti di {{SITENAME}}.
@@ -1823,7 +1823,7 @@ ___________________________________________
 
 * Vil du kontrollere hva slags e-post du får?
 Gå til: {{fullurl:{{ns:special}}:Preferences}}.',
-	'enotif_body_categoryadd-html' => '<p>
+	'enotif_body_categoryadd-HTML' => '<p>
 Kjære $WATCHINGUSERNAME,
 <br /><br />
 En side har blitt lagt til i en kategori du følger på {{SITENAME}}.
@@ -1934,7 +1934,7 @@ ___________________________________________
 
  * Wilt u bepalen welke e-mails u ontvangt? 
 Ga naar: {{fullurl:{{ns:special}}:Preferences}}.',
-	'enotif_body_categoryadd-html' => '<p>
+	'enotif_body_categoryadd-HTML' => '<p>
 Beste $WATCHINGUSERNAME,
 <br /><br />
 Er is een pagina is toegevoegd aan een categorie die u volgt op {{SITENAME}}.
@@ -2007,7 +2007,7 @@ ___________________________________________
 
  * Wil je bepalen welke e-mails je ontvangt? 
 Ga naar: {{fullurl:{{ns:special}}:Preferences}}.',
-	'enotif_body_categoryadd-html' => '<p>Hoi $WATCHINGUSERNAME,
+	'enotif_body_categoryadd-HTML' => '<p>Hoi $WATCHINGUSERNAME,
 <br /><br />
 Er is een pagina is toegevoegd aan een categorie die je volgt op {{SITENAME}}.
 <br /><br />
@@ -2129,7 +2129,7 @@ ___________________________________________
 
 * Chcesz kontrolować otrzymywane wiadomości?
 Przejdź na: {{fullurl:{{ns:special}}:Preferencje}}.',
-	'enotif_body_categoryadd-html' => '<p>
+	'enotif_body_categoryadd-HTML' => '<p>
 Witaj $WATCHINGUSERNAME,
 <br /><br />
 Do kategorii śledzonej na stronie {{SITENAME}} została dodana strona.
@@ -2235,7 +2235,7 @@ ___________________________________________
 
 * Veul-lo controlé che mëssagi a arsèiv?
 Ch'a vada a: {{fullurl:{{ns:special}}:Preferences}}.",
-	'enotif_body_categoryadd-html' => '<p>
+	'enotif_body_categoryadd-HTML' => '<p>
 Car $WATCHINGUSERNAME,
 <br /><br />
 Na pàgina a l\'é stàita giontà a na categorìa ch\'a ten sot euj su {{SITENAME}}.
@@ -2375,7 +2375,7 @@ ___________________________________________
 
 * Quer definir que notificações deseja receber?
 Visite: {{fullurl:{{ns:special}}:Preferências}}.',
-	'enotif_body_categoryadd-html' => '<p>
+	'enotif_body_categoryadd-HTML' => '<p>
 Caro(a) $WATCHINGUSERNAME,
 <br /><br />
 Foi adicionada uma página a uma categoria que está a seguir no site {{SITENAME}}.
@@ -2489,7 +2489,7 @@ ___________________________________________
 
 * Quer definir que notificações deseja receber?
 Visite: {{fullurl:{{ns:special}}:Preferências}}.',
-	'enotif_body_categoryadd-html' => '<p>
+	'enotif_body_categoryadd-HTML' => '<p>
 Caro(a) $WATCHINGUSERNAME,
 <br /><br />
 Foi adicionada uma página a uma categoria que está a seguir no site {{SITENAME}}.
@@ -2617,7 +2617,7 @@ ___________________________________________
 
 * Хотите изменить параметры уведомления по электронной почте?
 Пройдите по ссылке: {{fullurl:{{ns:special}}:Preferences}}.',
-	'enotif_body_categoryadd-html' => '<p>Уважаемый $WATCHINGUSERNAME,
+	'enotif_body_categoryadd-HTML' => '<p>Уважаемый $WATCHINGUSERNAME,
 <br /><br />
 страница была добавлена в категорию, которую Вы отслеживаете в проекте «{{SITENAME}}».
 <br /><br />
@@ -2761,7 +2761,7 @@ ___________________________________________
 
 * Vill du kontrollera vilka mail du får?
 Gå till: {{fullurl:{{ns:special}}:Preferences}}.',
-	'enotif_body_categoryadd-html' => '<p>
+	'enotif_body_categoryadd-HTML' => '<p>
 Kära $WATCHINGUSERNAME,
 <br /><br />
 En sida har lagts till en kategori du bevakar, på {{SITENAME}}.
@@ -2901,7 +2901,7 @@ Mangyaring dalawin at madalas na mamatnugot ...
 
  * Nais mo bang tabanan kung anong mga e-liham ang matatanggap mo? 
  Pumunta sa: {{fullurl:{{ns: special}}:Preferences}}.',
-	'enotif_body_categoryadd-html' => '<p>	
+	'enotif_body_categoryadd-HTML' => '<p>	
 Mahal na $WATCHINGUSERNAME,
 <br /><br />
 Isang pahina ang nadagdag sa isang kategoryang tinutugaygayan mo sa {{SITENAME}}.
@@ -3058,7 +3058,7 @@ ___________________________________________
 
 * Бажаєте змінити параметри отримання повідомлень електронною поштою? 
 Перейдіть до: {{fullurl:{{ns:special}}:Preferences}}.',
-	'enotif_body_categoryadd-html' => '<p>
+	'enotif_body_categoryadd-HTML' => '<p>
 Шановний $WATCHINGUSERNAME,
 <br /><br />
 У проекті {{SITENAME}} в категорії, за якою Ви слідкуєте, була створена сторінка.
@@ -3177,7 +3177,7 @@ ___________________________________________
 
  * Muốn kiểm soát e-mail bạn nhận được?!
 Đi đến: {{fullurl:{{ns:special}}:Tùy chọn}}.',
-	'enotif_body_categoryadd-html' => '<p>
+	'enotif_body_categoryadd-HTML' => '<p>
 Chào $WATCHINGUSERNAME,
 <br /><br />
 Một trang bạn đang theo dõi đã được thêm vào một thể loại trên {{SITENAME}}.
@@ -3278,7 +3278,7 @@ ___________________________________________
 
 * 希望管理您收到何种邮件?
 访问:{{fullurl:{{ns:special}}:Preferences}}。',
-	'enotif_body_categoryadd-html' => '<p>
+	'enotif_body_categoryadd-HTML' => '<p>
 亲爱的$WATCHINGUSERNAME，
 <br/><br/>
 您在{{SITENAME}}上关注的一个页面已被添加至一个分类之中。
