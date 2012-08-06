@@ -4,7 +4,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class HomePageObject extends BaseBageObject{
+public class HomePageObject extends BasePageObject{
 
 	@FindBy(className="create-wiki") 
 	public WebElement startWikiButton;
