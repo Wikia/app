@@ -74,6 +74,15 @@ var UserLoginModal = {
 
 		return false;
 	},
+	isPreventingForceLogin: function(element) {
+		if(
+			!(element.closest('span').hasClass('drop'))
+			&& !(element.closest('ul').hasClass('WikiaMenuElement'))
+		) {
+			return true;
+		}
+		return false;
+	},
 	init: function() {
 		// attach event handler
 		var editpromptable = $("#ca-viewsource, #te-editanon, .loginToEditProtectedPage, .upphotoslogin");
@@ -83,12 +92,14 @@ var UserLoginModal = {
 			editpromptable = editpromptable.add(".editsection");
 		}
 
-		editpromptable.click(function(ev) {
-			ev.stopPropagation(); // (BugId:34026) stop bubbling up when parent and child both have event listener. 
-			if(UserLogin.isForceLogIn()) {
+		editpromptable.click($.proxy(function(ev) {
+			ev.stopPropagation(); // (BugId:34026) stop bubbling up when parent and child both have event listener.
+
+			if( !this.isPreventingForceLogin($(ev.target))
+				&& UserLogin.isForceLogIn()) {
 				ev.preventDefault();
 			}
-		});
+		},this));
 
 		//Attach DOM-Ready handlers
 		$('body').delegate('.ajaxLogin', 'click', function(e) {
