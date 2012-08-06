@@ -30,6 +30,7 @@ $modal-border-opacity: 80;
 		@include clearfix;
 		float: right;
 		margin: 20px 20px 0 0;
+		z-index: 1;
 	}
 	.neutral {
 		background: transparent;
