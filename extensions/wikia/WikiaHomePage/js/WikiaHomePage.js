@@ -351,26 +351,36 @@ WikiPreview.prototype = {
 	AVATAR_HOVER_TIMEOUT: 750,
 
 	init: function () {
-		this.avatars = this.el.find('.users .user');
-		this.avatars.bind('mouseenter.wikipreview',
-			function (e) {
-				var node = $(this);	// dom node context, not object
-				var timeoutHandle = node.data('timeoutHandle');
-				clearTimeout(timeoutHandle);
-				timeoutHandle = setTimeout(function () {
-					node.find('.details').fadeIn('fast');
-				}, this.AVATAR_HOVER_TIMEOUT);
-				node.data('timeoutHandle', timeoutHandle);
-				WikiPreviewInterstitial.mask.css('overflow', 'visible');	//reference WikiaPreviewInterstitial global and unmask for hover outside the mask
-			}).bind('mouseleave.wikipreview', function (e) {
-				var node = $(this);	// dom node context, not object
-				var timeoutHandle = node.data('timeoutHandle');
-				clearTimeout(timeoutHandle);
-				timeoutHandle = setTimeout(function () {
-					node.find('.details').fadeOut('fast');
-				}, this.AVATAR_HOVER_TIMEOUT);
-				node.data('timeoutHandle', timeoutHandle);
+		var avatars = this.el.find('.users .user');
+		
+		var popoverTimeout = 0;
+
+		function setPopoverTimeout(elem) {
+			popoverTimeout = setTimeout(function() {
+				elem.popover('hide');	
+			}, 300);
+		}
+		
+		avatars.popover({
+			trigger: "manual",
+			placement: "top",
+			content: function() {
+				return $(this).find('.details').clone().wrap('<div>').parent().html();
+			}
+		}).on('mouseenter', function() {
+			clearTimeout(popoverTimeout);
+			$('.popover').remove();
+			$(this).popover('show');
+		}).on('mouseleave', function() {
+			var $this = $(this);
+			setPopoverTimeout($this);
+			$('.popover').mouseenter(function() {
+				$().log("mouse re-entering");
+				clearTimeout(popoverTimeout);
+			}).mouseleave(function() {
+				setPopoverTimeout($this);
 			});
+		});
 	}
 };
 
@@ -418,9 +428,10 @@ var WikiPreviewInterstitial = {
 					$('#carouselContainer').carousel({
 						itemClick: WikiPreviewInterstitial.changeHeroImg
 					});
-					$('.WikiaMediaCarousel .previous').addClass('disabled');
-					$('.WikiaMediaCarousel').on('click', '.previous', function(e) {e.preventDefault()});
-					$('.WikiaMediaCarousel').on('click', '.next', function(e) {e.preventDefault()});
+					var carousel = $('.WikiaMediaCarousel');
+					carousel.find('.previous').addClass('disabled');
+					carousel.on('click', '.previous', function(e) {e.preventDefault()});
+					carousel.on('click', '.next', function(e) {e.preventDefault()});
 				}
 			});
 		}
@@ -443,7 +454,7 @@ var WikiPreviewInterstitial = {
 		}
 	},
 	hide: function () {
-		WikiPreviewInterstitial.mask.css('overflow', 'hidden').addClass('hidden');
+		WikiPreviewInterstitial.mask.addClass('hidden');
 	},
 	changeHeroImg: function(e) {
 		$(e.target).parents('.WikiPreviewInterstitial').find('.hero-image').attr(

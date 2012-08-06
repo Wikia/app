@@ -445,6 +445,7 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 		width: $width-outside;
 		&.hidden {
 			height: 0;
+			overflow: hidden;
 		}
 		&.toggle {
 			@include interstitial-toggle-animation;
@@ -594,46 +595,7 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 							width: 28px;
 						}
 						.details {
-							@include box-shadow(0, 0, 10px, mix(#000000, $color-page, 50%), false, 0);
-							background-color: $color-page;
-							bottom: 37px;	/* 30px for avatar and 7px distance */
 							display: none;
-							font-size: 12px;
-							left: -80px;
-							padding: 5px;
-							position: absolute;
-							width: 180px;
-							ul {
-								li {
-									padding: 6px 5px;
-								}
-								li:first-child {
-									border-bottom: 1px solid #ccc;
-								}
-							}
-							.avatar {
-								left: 3px;
-								position: absolute;
-								top: 3px;
-							}
-							.info {
-								background: #f2f2f2;	/* static color */
-								padding: 3px 3px 3px 43px;
-								position: relative;
-								>strong {
-									display: block;
-								}
-							}
-							&:after {
-								content: ' ';
-								position: absolute;
-								width: 0;
-								height: 0;
-								left: 89px;
-								top: 100%;
-								border: 4px solid transparent;
-								border-color: #fff transparent transparent transparent;
-							}
 						}
 					}
 				}
@@ -799,6 +761,36 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 		}
 	}
 }
+
+.popover .details {
+	//@include box-shadow(0, 0, 10px, mix(#000000, $color-page, 50%), false, 0);
+	background-color: $color-page;
+	font-size: 12px;
+	padding: 2px;
+	width: 180px;
+	ul {
+		li {
+			padding: 6px 5px;
+		}
+		li:first-child {
+			border-bottom: 1px solid #ccc;
+		}
+	}
+	.avatar {
+		left: 3px;
+		position: absolute;
+		top: 3px;
+	}
+	.info {
+		background: #f2f2f2;	/* static color */
+		padding: 3px 3px 3px 43px;
+		position: relative;
+		>strong {
+			display: block;
+		}
+	}
+}
+
 
 /* footer */
 .wikiahomepage-footer {

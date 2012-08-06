@@ -812,6 +812,25 @@ $config['userprofilepage_scss_wikiamobile'] = array(
 
 /** WikiaHomepage **/
 
+$config['wikiahomepage_scss'] = array(
+		'type' => AssetsManager::TYPE_SCSS,
+		'skin' => 'oasis',
+		'assets' => array(
+			'//resources/wikia/libraries/bootstrap/popover.scss',
+			'//skins/oasis/css/wikiagrid.scss',
+			'//skins/oasis/css/modules/WikiaMediaCarousel.scss',
+		)
+);
+
+$config['wikiahomepage_js'] = array(
+		'type' => AssetsManager::TYPE_JS,
+		'skin' => 'oasis',
+		'assets' => array(
+			'//resources/wikia/libraries/bootstrap/popover.js',
+			'//extensions/wikia/WikiaHomePage/js/WikiaHomePage.js',
+		)
+);
+
 $config['wikiahomepage_scss_wikiamobile'] = array(
 		'type' => AssetsManager::TYPE_SCSS,
 		'skin' => 'wikiamobile',
@@ -982,6 +1001,7 @@ $config['achievements_js'] = array(
 		'//skins/oasis/js/Achievements.js',
 	)
 );
+
 
 
 
