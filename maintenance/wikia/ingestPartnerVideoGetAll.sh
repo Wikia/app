@@ -38,7 +38,7 @@ while [ 1 ]
 do
 	endtime=$(( $counter + 60 * 60 * 24 * $timeslice - 1 ))
 
-	echo ">>> From: `date -d "$startdate $counter sec"`     To:   `date -d "$startdate $endtime sec"`" | tee -a /tmp/ingestion.log
+	echo ">>> From: `date -d "$startdate $counter sec"`     To:   `date -d "$startdate $endtime sec"`" | tee -a $logfile
 	sleep 1
 	from=`date -d "$startdate $counter sec" '+%s'`
 	to=`date -d "$startdate $endtime sec" '+%s'`
