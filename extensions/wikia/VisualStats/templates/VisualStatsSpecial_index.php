@@ -22,6 +22,9 @@
     wgAfterContentAndJS.push(function(){
         $(function () {
             $('#' + parameter).addClass("selected");
+            if (user == "0"){
+                $("#buttons").remove();
+            }
             switch (parameter){
                 case "commit":
                     VisualStatsCommitActivity.init(parameter, data, user)

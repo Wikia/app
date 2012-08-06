@@ -9,7 +9,7 @@ $messages['en'] = array(
     'visualStats-desc' => 'This extension visualise data concerning number of edits on particular wiki.'
 );
 $messages['pl'] = array(
-    'visualStats-specialpage-title' => 'Wizualne Statystyki',
+    'visualStats-specialpage-title' => 'Statystyki Wizualne',
     'visualStats-wikiEdits' => 'Edycje na wiki',
     'visualStats-userEdits' => 'Edycje użytkownika $1',
     'visualStats-desc' => 'To rozszerzenie generuje wizualne statystyki dotyczące liczy edycji na danej wiki.'

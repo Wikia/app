@@ -150,6 +150,7 @@ var WikiMapIndexContent = {
         d3.selectAll(".from" + index)
             .style("stroke", colour.line)
             .style("stroke-width", "1px");
+
         $.each(this.nodes[index].connections, function (ind, pt2) {
             d3.select("#label" + pt2)
                 .attr("fill", function(){

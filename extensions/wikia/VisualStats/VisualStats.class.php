@@ -29,57 +29,97 @@ class VisualStats extends WikiaObject {
     private function getDB(){
         return $this->app->wf->getDB(DB_SLAVE, array(), $this->app->wg->DBname);
     }
-    public function performQuery($username){
-        $dbr = $this->getDB();
-        $wikiaResult = array();
-        $userResult = array();
-        $wikiaCommit = $this->getDatesFromTwoWeeksOn();
-        $userCommit = $this->getDatesFromTwoWeeksOn();
-        $wikiaCommitMax = 0;
-        $userCommitMax = 0;
 
-            $newquery = $dbr->select(
-                array( 'revision' ),
-                array( 'left(rev_timestamp,10) as date',
-                    'count(*) as count'),
-                array( 'left(rev_timestamp,8)>' .  $this->getDateTwoWeeksBefore()),
-                __METHOD__,
-                array ('GROUP BY' => 'left(rev_timestamp,10)')
-            );
+    private function performQuery($username){
+        $this->app->wf->profileIn( __METHOD__ );
 
-            while ($row = $this->getDB()->fetchObject($newquery)){
+
+            $dbr = $this->getDB();
+            $userQuery = array();
+
+                $wikiaQuery = $dbr->select(
+                    array( 'revision' ),
+                    array( 'left(rev_timestamp,10) as date',
+                        'count(*) as count'),
+                    array( 'left(rev_timestamp,8)>' .  $this->getDateTwoWeeksBefore()),
+                    __METHOD__,
+                    array ('GROUP BY' => 'left(rev_timestamp,10)')
+                );
+
+
+            if ($username != "0"){
+                $user = $this->getUserData($username);
+                $userQuery = $dbr->select(
+                    array( 'revision' ),
+                    array( 'left(rev_timestamp,10) as date',
+                        'count(*) as count'),
+                    array( 'left(rev_timestamp,8)>' .  $this->getDateTwoWeeksBefore(),
+                        'rev_user' => $user['id']),
+                    __METHOD__,
+                    array ('GROUP BY' => 'left(rev_timestamp,10)')
+                );
+
+            }
+            $out = array('wikia' =>$wikiaQuery, 'user' =>$userQuery, 'db' => $dbr);
+
+        $this->app->wf->profileOut( __METHOD__ );
+
+        return $out;
+
+    }
+    public function getDataForCommitActivity($username){
+        $this->app->wf->profileIn( __METHOD__ );
+
+        $key = $this->app->wf->MemcKey('VisualStats', 'commitActivity', $username );
+        $data = $this->app->wg->memc->get($key);
+        if (is_array($data)){
+            $out = $data;
+        }
+        else
+        {
+            $result = $this->performQuery($username);
+            $dbr = $result['db'];
+            $userData = $result['user'];
+            $wikiaData = $result['wikia'];
+
+            $wikiaCommit = $this->getDatesFromTwoWeeksOn();
+            $userCommit = $this->getDatesFromTwoWeeksOn();
+            $wikiaCommitMax = 0;
+            $userCommitMax = 0;
+
+            while ($row = $dbr->fetchObject($wikiaData)){
                 $tempDate = date("d-m-Y", strtotime(substr($row->date, 0, 8)));
-                $wikiaResult[] = array('date' => $tempDate, 'hour' => substr($row->date, 8, 2), 'count' => $row->count);
                 $wikiaCommit[$tempDate]+= $row->count;
                 if ($wikiaCommit[$tempDate] > $wikiaCommitMax){
                     $wikiaCommitMax = $wikiaCommit[$tempDate];
                 }
             };
-        if ($username!="0"){
-            $user = $this->getUserData($username);
-            $newquery = $dbr->select(
-                array( 'revision' ),
-                array( 'left(rev_timestamp,10) as date',
-                    'count(*) as count'),
-                array( 'left(rev_timestamp,8)>' .  $this->getDateTwoWeeksBefore(),
-                    'rev_user' => $user['id']),
-                __METHOD__,
-                array ('GROUP BY' => 'left(rev_timestamp,10)')
-            );
-            while ($row = $this->getDB()->fetchObject($newquery)){
+            if ($username != "0"){
+            while ($row = $dbr->fetchObject($userData)){
                 $tempDate = date("d-m-Y", strtotime(substr($row->date, 0, 8)));
-                $userResult[] = array('date' => $tempDate, 'hour' => substr($row->date, 8, 2), 'count' => $row->count);
                 $userCommit[$tempDate]+= $row->count;
                 if ($userCommit[$tempDate] > $userCommitMax){
                     $userCommitMax = $userCommit[$tempDate];
                 }
-            };
+                };
+            }
+            $out = array('wikiaCommit' => array('data' => $wikiaCommit, 'max' =>$wikiaCommitMax), 'userCommit' => array('data' => $userCommit, 'max' =>$userCommitMax));
+            $this->app->wg->memc->set($key, $out, 600);
         }
+        $this->app->wf->profileOut( __METHOD__ );
 
-        return array('wikiaCommit' => array('data' => $wikiaCommit, 'max' =>$wikiaCommitMax), 'userCommit' => array('data' => $userCommit, 'max' =>$userCommitMax));
+        return $out;
 
     }
+/*
+            while ($row = $this->getDB()->fetchObject($newquery)){
+                $tempDate = date("d-m-Y", strtotime(substr($row->date, 0, 8)));
+                $wikiaResult[] = array('date' => $tempDate, 'hour' => substr($row->date, 8, 2), 'count' => $row->count);
 
+            while ($row = $this->getDB()->fetchObject($newquery)){
+                $tempDate = date("d-m-Y", strtotime(substr($row->date, 0, 8)));
+                $userResult[] = array('date' => $tempDate, 'hour' => substr($row->date, 8, 2), 'count' => $row->count);
+*/
 
 
 

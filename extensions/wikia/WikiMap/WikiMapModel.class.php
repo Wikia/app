@@ -62,14 +62,94 @@ class WikiMapModel extends WikiaObject {
 
     }
 
+    private function getMostRevisedArticles(){
+
+        $this->app->wf->profileIn( __METHOD__ );
+
+        $result = ApiService::call(array('action' =>'query',
+            'list' => 'querypage',
+            'qppage' => 'Mostrevisions',
+            'qplimit' => '120'
+        ));
+
+        $result = $result['query']['querypage']['results'];
+        $res = array();
+        $map = array();
+        foreach ($result as $i => $item){
+            if ($item['ns'] == 0){
+                $title = F::build('Title', array($item['title']), 'newFromText');
+                if($title instanceof Title)  {
+                    $articleId = $title->getArticleId();
+                    $res[] = array('title' => $item['title'], 'id' => $articleId, 'connections' => array());
+                    $map[$item['title']] = $i;
+                }
+            }
+        }
+        $query = $this->query($res, $map);
+        $new = array( 'nodes' => $query, 'all' => 0);
+
+        $this->app->wf->profileOut( __METHOD__ );
+
+        return $new;
+
+    }
+
+    private function getMostPopularArticlesFromCat($Category){
+
+        $this->app->wf->profileIn( __METHOD__ );
+
+        //Getting list of articles belonging to specified category using API
+        $result = ApiService::call(array('action' =>'query',
+            'list' => 'categorymembers',
+            'cmtitle' => 'Category:' . $Category,
+            'cmnamespace' => '0',
+            'cmlimit' => '5000'
+        ));
+
+        //Preparing arrays to be used as parameters for next method
+        $result = $result['query']['categorymembers'];
+
+        foreach ($result as $item){
+            $ids[] = $item['pageid'];
+        }
+        $allArticlesCount = count($ids);
+        $dbr = $this->getDB();
+        $newquery = $dbr->select(
+            array( 'revision', 'page' ),
+            array( 'page_id',
+                'page_title AS title',
+                'COUNT(*) AS value'),
+            array( 'page_id = rev_page', 'page_id' => $ids),
+            __METHOD__,
+            array ('GROUP BY' => 'page_title',
+                'ORDER BY' => 'value desc',
+                'LIMIT' => '120')
+        );
+        while ($row = $dbr->fetchObject($newquery)){
+            $resultSecondQuery[] = $row;
+        };
+        $res = array();
+        $map = array();
+        foreach ($resultSecondQuery as $i => $item){
+            $articleTitle = str_replace('_', ' ', $item->title);
+            $res[] = array('title' => $articleTitle, 'id' => $item->page_id, 'connections' => array());
+            $map[$articleTitle] = $i;
+        }
+        $new = array( 'nodes' => $this->query($res, $map), 'all' => $allArticlesCount);
+
+        $this->app->wf->profileOut( __METHOD__ );
+
+        return $new;
+    }
+
     public function getArticles($Category){
 
         $this->app->wf->profileIn( __METHOD__ );
         $result = null;
 
         $key = $this->app->wf->MemcKey( 'wikiMap', 'articles', $Category );
-        $data = $this->app->wg->memc->get($key);
-
+        //$data = $this->app->wg->memc->get($key);
+        $data=null;
         if (is_array($data)){
             $new = $data;
         }
@@ -77,73 +157,14 @@ class WikiMapModel extends WikiaObject {
         {
             //If there is no parameter specified, wikiMap will base on list of articles with most revisions
             if(is_null($Category)){
-                $result = ApiService::call(array('action' =>'query',
-                    'list' => 'querypage',
-                    'qppage' => 'Mostrevisions',
-                    'qplimit' => '120'
-                ));
 
-                $result = $result['query']['querypage']['results'];
-                $res = array();
-                $map = array();
-                foreach ($result as $i => $item){
-                    if ($item['ns'] == 0){
-                        $title = F::build('Title', array($item['title']), 'newFromText');
-                        if($title instanceof Title)  {
-                            $articleId = $title->getArticleId();
-                            $res[] = array('title' => $item['title'], 'id' => $articleId, 'connections' => array());
-                            $map[$item['title']] = $i;
-                        }
-                    }
-                }
-                $query = $this->query($res, $map);
-                $new = array( 'nodes' => $query, 'all' => 0);
+                $new =  $this->getMostRevisedArticles();
                 $this->app->wg->memc->set($key, $new, 86400);
             }
 
             else{
 
-                //Getting list of articles belonging to specified category using API
-                $result = ApiService::call(array('action' =>'query',
-                                    'list' => 'categorymembers',
-                                    'cmtitle' => 'Category:' . $Category,
-                                    'cmnamespace' => '0',
-                                    'cmlimit' => '5000'
-                    ));
-
-                //Preparing arrays to be used as parameters for next method
-                $result = $result['query']['categorymembers'];
-
-                foreach ($result as $item){
-                    //var_dump($item);
-                    $ids[] = $item['pageid'];
-                }
-                $allArticlesCount = count($ids);
-                $dbr = $this->getDB();
-                $newquery = $dbr->select(
-                    array( 'revision', 'page' ),
-                    array( 'page_id',
-                        'page_title AS title',
-                        'COUNT(*) AS value'),
-                    array( 'page_id = rev_page', 'page_id' => $ids),
-                    __METHOD__,
-                    array ('GROUP BY' => 'page_title',
-                    'ORDER BY' => 'value desc',
-                    'LIMIT' => '120')
-                );
-                while ($row = $this->getDB()->fetchObject($newquery)){
-                    $resultSecondQuery[] = $row;
-                };
-                $res = array();
-                $map = array();
-                foreach ($resultSecondQuery as $i => $item){
-                    //var_dump($item);
-                    $articleTitle = str_replace('_', ' ', $item->title);
-                    $res[] = array('title' => $articleTitle, 'id' => $item->page_id, 'connections' => array());
-                    $map[$articleTitle] = $i;
-                }
-
-                $new = array( 'nodes' => $this->query($res, $map), 'all' => $allArticlesCount);
+                $new = $this->getMostPopularArticlesFromCat($Category);
                 $this->app->wg->memc->set($key, $new, 900);
             }
 
@@ -181,7 +202,7 @@ class WikiMapModel extends WikiaObject {
             array( 'pl_from' => $keys, 'pl_title' => $withoutSpace),
             __METHOD__);
 
-        while ($row = $this->getDB()->fetchObject($result)){
+        while ($row = $dbr->fetchObject($result)){
             $item[$keysRev[$row->pl_from]]['connections'][] = $map[str_replace('_', ' ', $row->pl_title)];
         };
 
