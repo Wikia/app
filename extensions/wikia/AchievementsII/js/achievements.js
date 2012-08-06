@@ -1,3 +1,8 @@
+/* 
+ *  This file is being used for Special:AchievementsCustomize
+ *  There is also skins/oasis/js/Achievements.js 
+ */
+ 
 var Achievements = {
 	// track events
 	track: function(fakeUrl) {
