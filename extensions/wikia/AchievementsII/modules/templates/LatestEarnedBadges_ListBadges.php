@@ -47,8 +47,7 @@ foreach ($badges as $item) {
 		</div>
 		<? if ( $is_sponsored ) :?>
 			<a class="sponsored-link badge-icon badge-small"
-				<?= ( !empty( $badge_click_url ) ) ? " href=\"{$badge_click_url}\" title=\"". wfMsg( 'achievements-community-platinum-sponsored-badge-click-tooltip' ) . "\"" : null ;?>
-				title="<?= wfMsg( 'achievements-community-platinum-sponsored-badge-click-tooltip' ) ;?>"
+				<?= ( !empty( $badge_click_url ) ) ? " href=\"{$badge_click_url}\"" : null ;?>
 				<?= ( !empty( $badge_tracking_url ) ) ? " data-badgetrackurl=\"{$badge_tracking_url}\"" : null ;?>>
 		<? endif ;?>
 			<img class="<?= ( !$is_sponsored ) ? 'badge-icon ' : null ;?>badge-small badge-icon-<?= $count++ ?> badge-icon-earnable" width="40" height="40"  src="<?= $badge_url ;?>" alt="<?= $badge_name ;?>">

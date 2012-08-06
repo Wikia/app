@@ -943,3 +943,45 @@ $config['wiki_map_js'] = array(
         '//extensions/wikia/WikiMap/js/wikiMapIndexContent.js'
     )
 );
+
+/* Special:Leaderboard in AchievementsII extensions */
+$config['special_leaderboard_oasis_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => array( 'oasis' ),
+	'assets' => array(
+		'//resources/wikia/libraries/bootstrap/popover.js',
+		'//extensions/wikia/AchievementsII/js/SpecialLeaderboard.js',
+		'//skins/oasis/js/Achievements.js',
+	)
+);
+
+$config['special_leaderboard_oasis_css'] = array(
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => array( 'oasis' ),
+	'assets' => array(
+		'//resources/wikia/libraries/bootstrap/popover.scss',
+		'//extensions/wikia/AchievementsII/css/leaderboard_oasis.scss',
+	)
+);
+
+/* Achievements module */
+$config['achievements_css'] = array(
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => array( 'oasis' ),
+	'assets' => array(
+		'//resources/wikia/libraries/bootstrap/popover.scss',
+		'//extensions/wikia/AchievementsII/css/oasis.scss',
+	)
+);
+
+$config['achievements_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => array( 'oasis' ),
+	'assets' => array(
+		'//resources/wikia/libraries/bootstrap/popover.js',
+		'//skins/oasis/js/Achievements.js',
+	)
+);
+
+
+

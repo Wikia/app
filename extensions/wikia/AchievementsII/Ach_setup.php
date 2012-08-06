@@ -107,6 +107,7 @@ $wgAutoloadClasses[ 'WikiaPhotoGalleryUpload' ] = "{$dir}../WikiaPhotoGallery/Wi
 // I18N
 $wgExtensionMessagesFiles['AchievementsII'] = $dir.'i18n/AchievementsII.i18n.php';
 $wgExtensionMessagesFiles['AchievementsIIAliases'] = $dir.'AchievementsII.alias.php' ;
+$wgExtensionMessagesFiles['AutoCreateWiki'] = $dir.'../AutoCreateWiki/AutoCreateWiki.i18n.php' ;
 
 // Michał Roszka (Mix) <michal@wikia-inc.com>
 // BugId:10474

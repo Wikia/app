@@ -20,16 +20,20 @@ class SpecialLeaderboard extends SpecialPage {
 
 		$skinName = get_class($this->getSkin());
 
-		// FIXME: use AM group here
 		if ($skinName == 'SkinOasis') {
-			//tooltips
-			$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgResourceBasePath}/resources/wikia/libraries/jquery/tooltip/jquery.wikia.tooltip.js\"></script>");
-			$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('skins/oasis/css/modules/WikiaTooltip.scss'));
+			$assetsManager = F::build( 'AssetsManager', array(), 'getInstance' );
+			$scssPackage = 'special_leaderboard_oasis_css';
+			$jsPackage = 'special_leaderboard_oasis_js';
 
-			$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('/extensions/wikia/AchievementsII/css/leaderboard_oasis.scss'));
-			$wgOut->addScript("<script src=\"{$wgExtensionsPath}/wikia/AchievementsII/js/SpecialLeaderboard.js\"></script>\n");
-			$wgOut->addScript("<script src=\"{$wgStylePath}/oasis/js/Achievements.js\"></script>\n");
+			foreach ( $assetsManager->getURL( $scssPackage ) as $url ) {
+				$wgOut->addStyle( $url );
+			}
+
+			foreach ( $assetsManager->getURL( $jsPackage ) as $url ) {
+				$wgOut->addScript( "<script src=\"{$url}\"></script>" );
+			}
 		} else {
+			// FIXME: use AM group here
 			$wgOut->addStyle( "common/article_sidebar.css" );
 			$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/AchievementsII/css/achievements_sidebar.css");
 			$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/AchievementsII/js/achievements.js\"></script>\n");

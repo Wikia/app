@@ -5,8 +5,11 @@ var AchievementsThing = {
 		//Show badge description when hovering over the badge
 		$('.AchievementsModule, .WikiaLatestEarnedBadgesModule').find('.badges li > img, .badges .sponsored-link').add("#LeaderboardTable .badge-icon").each(function(){
 			var badge = $(this);
-			var hover = badge.prevAll(".profile-hover");
-			badge.wikiaTooltip(hover, {relativeToParent:true, align:'right'});
+			var html = badge.prevAll(".profile-hover").clone().wrap('<div>').parent().html();;
+			badge.popover({
+				content: html,
+				placement: 'left'
+			});
 		});
 		
 		$('.AchievementsModule, .WikiaLatestEarnedBadgesModule').find('.sponsored-link img:not(.badges-more)').each(function(){
@@ -20,12 +23,7 @@ var AchievementsThing = {
 
 			url = url.replace('[timestamp]', cb);
 
-			//$().log("Requesting tracking pixel from " + url, 'Sponsored achievements');
 			var i = new Image(1, 1);
-
-			/*i.onload = function(){
-				$().log("Tracking pixel granted from " + this.src, 'Sponsored achievements');
-			};*/
 
 			i.src = url;
 		}
