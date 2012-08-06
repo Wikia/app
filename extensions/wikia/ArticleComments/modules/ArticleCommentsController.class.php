@@ -59,7 +59,10 @@ class ArticleCommentsController extends WikiaController {
 	}
 
 	public function executeContent() {
+		$this->response->setFormat( 'json' );
+
 		$articleId = $this->request->getVal( 'articleId', 0 );
+		$page = $this->request->getVal( 'page', 1 );
 
 		if ( !empty( $articleId ) ) {
 			$title = Title::newFromID( $articleId );
@@ -68,7 +71,12 @@ class ArticleCommentsController extends WikiaController {
 			$title = $this->wg->title;
 		}
 
-		$this->getCommentsData( $title, $this->request->getVal( 'page', 1 ) );
+		$commentsData = $this->getCommentsData( $title, $page );
+
+		$responseData = array();
+		$responseData[ 'content' ] = $this->app->getView( 'ArticleCommentsController', 'Content', $commentsData )->render();
+
+		$this->response->setData( $responseData );
 	}
 
 	/**
@@ -161,26 +169,25 @@ class ArticleCommentsController extends WikiaController {
 		// TODO: don't pass whole instance of Masthead object for author of current comment
 		// Did I miss something? It doesn't seem to pass the whole Masthead object anywhere... -- Federico
 		$this->avatar = $data['avatar'];
-
-		$this->title = $this->wg->Title;
 		$this->ajaxicon = $this->wg->StylePath.'/common/images/ajax.gif';
 		$this->canEdit = $data['canEdit'];
 		$this->isBlocked = $data['isBlocked'];
 		$this->reason = $data['reason'];
 		$this->commentListRaw = $data['commentListRaw'];
-		$this->isLoggedIn =  $this->wg->User->isLoggedIn();
-
+		$this->isAnon = $data['isAnon'];
 		$this->isReadOnly = $data['isReadOnly'];
 		$this->page = $data['page'];
 		$this->pagination = $data['pagination'];
-
 		$this->countComments = $data['countComments'];
 		$this->countCommentsNested = $data['countCommentsNested'];
 		$this->commentingAllowed = $data['commentingAllowed'];
 		$this->commentsPerPage = $data['commentsPerPage'];
 		$this->pagesCount = ( $data['commentsPerPage'] > 0 ) ? ceil( $data['countComments'] / $data['commentsPerPage'] ) : 0;
+		$this->title = $data['title'];
 
 		wfProfileOut(__METHOD__);
+
+		return $data;
 	}
 
 	public static function onSkinAfterContent( &$afterContentHookText ) {
