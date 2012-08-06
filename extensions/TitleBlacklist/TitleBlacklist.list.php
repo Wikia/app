@@ -328,7 +328,7 @@ class TitleBlacklistEntry {
 			return false;
 		}
 		wfSuppressWarnings();
-		$match = preg_match( "/^(?:{$this->mRegex})$/us" . ( isset( $this->mParams['casesensitive'] ) ? '' : 'i' ), $title->getFullText() );
+		$match = preg_match( "/(?:{$this->mRegex})/us" . ( isset( $this->mParams['casesensitive'] ) ? '' : 'i' ), $title->getFullText() );
 		wfRestoreWarnings();
 
 		global $wgUser;
