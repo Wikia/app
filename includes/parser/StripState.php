@@ -191,5 +191,16 @@ class StripState {
 	function killMarkers( $text ) {
 		return preg_replace( $this->regex, '', $text );
 	}
+
+	/**
+	 * -- Wikia change -- getter method added for Negref extension backward compatibility --
+	 *
+	 * @author ADi
+	 * @param $key
+	 * @return array
+	 */
+	public function getData($key) {
+		return $this->data[$key];
+	}
 }
 
