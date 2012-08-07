@@ -5,7 +5,7 @@ var AchievementsThing = {
 		//Show badge description when hovering over the badge
 		$('.AchievementsModule, .WikiaLatestEarnedBadgesModule').find('.badges li > img, .badges .sponsored-link').add("#LeaderboardTable .badge-icon").each(function(){
 			var badge = $(this);
-			var html = badge.prevAll(".profile-hover").clone().wrap('<div>').parent().html();;
+			var html = badge.prevAll(".profile-hover").clone().wrap('<div>').parent().html();
 			badge.popover({
 				content: html,
 				placement: 'left'
