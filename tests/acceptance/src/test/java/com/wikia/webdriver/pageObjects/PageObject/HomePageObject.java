@@ -50,8 +50,9 @@ public class HomePageObject extends BasePageObject{
 	
 	public void logIn(String userName, String password)
 	{
-		Actions builder = new Actions(driver);
-		builder.click(logInAjax).build().perform();
+//		Actions builder = new Actions(driver);
+//		builder.moveToElement(logInAjax).build().perform();
+		logInAjax.click();
 		WebDriverWait wait = new WebDriverWait(driver, timeOut);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("input[name='username']")));
 		userNameField.sendKeys(userName);
