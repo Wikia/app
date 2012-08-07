@@ -295,8 +295,6 @@ class WikiaResponse {
 		if( !is_null( $maxAge ) ) {
 			$maxAge = (int) $maxAge;
 			$cacheControl = ( $maxAge > 0 ) ? "public, max-age={$maxAge}" : 'no-cache, no-store, max-age=0, must-revalidate';
-			
-			$cacheControl = ( $maxAge > 0 ) ? "public, max-age={$maxAge}" : 'no-cache, no-store, max-age=0, must-revalidate';
 
 			if ( $targetBrowser ) {
 				$this->setHeader( 'X-Pass-Cache-Control', $cacheControl, true );
