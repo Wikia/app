@@ -16,12 +16,15 @@ public class BasePageObject{
 	public final WebDriver driver;
 	
 	public String liveDomain = "http://www.wikia.com/";
+	
+	public String wikiFactoryLiveDomain = liveDomain + "wiki/Special:WikiFactory";
 
-	private int timeOut = 30;
+	protected int timeOut = 30;
 	
 	public BasePageObject(WebDriver driver)
 	{
 		this.driver = driver;
+		driver.manage().window().maximize();
 	}
 	
 	/*
@@ -46,9 +49,7 @@ public class BasePageObject{
 	 * */
 	public void click(WebElement pageElem)
 	{
-		Actions action = new Actions(driver);
-		action.click(pageElem).perform();
-		
+		pageElem.click();
 	}
 	
 	public void watForElementByCss(String cssSelector)
@@ -89,7 +90,6 @@ public class BasePageObject{
 	{
 		WebDriverWait wait = new WebDriverWait(driver, timeOut);
 		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(css)));
-
 	}
 	
 	
