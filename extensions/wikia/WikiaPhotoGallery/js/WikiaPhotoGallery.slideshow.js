@@ -3,7 +3,7 @@ var WikiaPhotoGallerySlideshow = {
 	log: function(msg) {
 		$().log(msg, 'WikiaPhotoGallery:Slideshow');
 	},
-
+	
 	init: function(params) {
 		var slideshow = $('#' + params.id),
 			hash = slideshow.attr('data-hash'),
@@ -54,7 +54,7 @@ var WikiaPhotoGallerySlideshow = {
 				
 			$.when(
 				WikiaPhotoGalleryView.loadEditorJS(), 
-				WikiaPhotoGallery.ajax('getGalleryData', {hash:hash, articleId:wgArticleId})
+				WikiaPhotoGalleryView.ajax('getGalleryData', {hash:hash, articleId:wgArticleId})
 			).then(function(loadEditorJSScripts,data) {
 				
 				//get data stuff from jQuery object passed by promise pattern
