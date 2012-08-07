@@ -19,14 +19,17 @@ var WikiaPhotoGalleryView = {
 	// load jQuery UI + editor JS (if not loaded yet) and fire callback
 	loadEditorJS: function(callback) {
 		if (typeof WikiaPhotoGallery == 'undefined') {
-			$.getResources([
+			return $.getResources([
 				wgExtensionsPath + '/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.js',
 				$.loadJQueryUI,
 				$.loadJQueryAIM
 			],
 			callback);
 		} else {
-			callback();
+			// create deferred and automatically resolve it to pass promise pattern to callback on else statement
+			var deferred = new jQuery.Deferred();
+			deferred.then(callback).resolve();	
+			return deferred;
 		}
 	},
 
