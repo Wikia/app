@@ -105,6 +105,7 @@
 	<li id="UserAuth" class="step">
 		<h2 class="headline"><?= wfMsg('cnw-userauth-headline') ?></h2>
 		<p class="creative"><?= wfMsg('cnw-userauth-creative') ?></p>
+		<div class="signup-loginmodal"><?= F::app()->sendRequest('UserLoginSpecial', 'modal') ?></div>
 		<div class="signup-marketing">
 			<h3><?= wfMsg('cnw-userauth-marketing-heading') ?></h3>
 			<p><?= wfMsgExt('cnw-userauth-marketing-body', array('parse')) ?></p>
@@ -115,7 +116,6 @@
 				<input type="submit" value="<?= wfMsg('cnw-userauth-signup-button') ?>">
 			</form>
 		</div>
-		<?= F::app()->sendRequest('UserLoginSpecial', 'modal') ?>
 	</li>
 <?php
 		} // else, UserLogin
