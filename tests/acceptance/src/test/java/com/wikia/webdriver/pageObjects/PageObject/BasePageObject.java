@@ -18,12 +18,16 @@ public class BasePageObject{
 	public String liveDomain = "http://www.wikia.com/";
 	
 	public String wikiFactoryLiveDomain = liveDomain + "wiki/Special:WikiFactory";
-
+	
 	protected int timeOut = 30;
+	
+	public WebDriverWait wait;
+
 	
 	public BasePageObject(WebDriver driver)
 	{
 		this.driver = driver;
+		wait = new WebDriverWait(driver, timeOut);
 		driver.manage().window().maximize();
 	}
 	
@@ -54,49 +58,49 @@ public class BasePageObject{
 	
 	public void watForElementByCss(String cssSelector)
 	{
-		WebDriverWait wait = new WebDriverWait(driver, timeOut);
+		
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(cssSelector)));
 	}
 
 	public void watForElementByClassName(String className)
 	{
-		WebDriverWait wait = new WebDriverWait(driver, timeOut);
+		
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className(className)));
 	}
 	
 	public void watForElementByClassId(String id)
 	{
-		WebDriverWait wait = new WebDriverWait(driver, timeOut);
+		
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(id)));
 	}
 	
 	public void watForElementByXPath(String xPath)
 	{
-		WebDriverWait wait = new WebDriverWait(driver, timeOut);
+		
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xPath)));
 	}
 	
-	public void waitForElementNotPresentByClass(String className)
-	{
-		
-//		WebDriverWait wait = new WebDriverWait(driver, timeOut);
-//		wait.until(ExpectedConditions.stalenessOf(driver.findElement(By.className(className))));
-		
-		
-	}
 	
 	
 	public void waitForElementNotVisibleByCss(String css)
 	{
-		WebDriverWait wait = new WebDriverWait(driver, timeOut);
+
 		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(css)));
 	}
+	
+	public void waitForElementClickableByClassName(String className)
+	{
+		wait.until(ExpectedConditions.elementToBeClickable(By.className(className)));
+	}
+	
 	public void waitForElementClickableByCss(String css)
 	{
-		WebDriverWait wait = new WebDriverWait(driver, timeOut);
 		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(css)));
-
-	}	
+	}
+	
+	
+	
+	
 	public String getTimeStamp()
 	{
 		Date time = new Date();
