@@ -8,50 +8,57 @@ var ThemeDesigner = {
 	},
 
 	init: function() {
+	
+		var that = this;
 		// theme settings
-		ThemeDesigner.settings = window.themeSettings;
+		this.settings = window.themeSettings;
 
 		// settings history
-		ThemeDesigner.history = window.themeHistory;
+		this.history = window.themeHistory;
 
 		// themes
-		ThemeDesigner.themes = window.themes;
+		this.themes = window.themes;
 
 		//$().log(ThemeDesigner, 'ThemeDesigner');
 
-		// iframe resizing
-		$(window).resize(ThemeDesigner.resizeIframe).resize();
 
 		// handle navigation clicks - switching between tabs
-		$("#Navigation a").click(ThemeDesigner.navigationClick);
+		$("#Navigation a").click(that.navigationClick);
 
 		// handle "Save" and "Cancel" button clicks
-		$('#Toolbar').find(".save").click(ThemeDesigner.saveClick)
+		$('#Toolbar').find(".save").click(that.saveClick)
                     .end()
-                    .find(".cancel").click(ThemeDesigner.cancelClick);
+                    .find(".cancel").click(that.cancelClick);
 
 		// init tabs
-		ThemeDesigner.themeTabInit();
-		ThemeDesigner.customizeTabInit();
-		ThemeDesigner.wordmarkTabInit();
+		this.themeTabInit();
+		this.customizeTabInit();
+		this.wordmarkTabInit();
 
 		// click appropriate tab based on the settings
-		if(ThemeDesigner.settings["theme"] == "custom") {
+		if(this.settings["theme"] == "custom") {
 			$('#Navigation [rel="CustomizeTab"]').click();
 		} else {
 			$('#Navigation [rel="ThemeTab"]').click();
 		}
 
 		// init Tool Bar
-		ThemeDesigner.toolBarInit();
+		this.toolBarInit();
 
-		ThemeDesigner.applySettings(false, false);
+		this.applySettings(false, false);
 
 		// init tooltips
-		ThemeDesigner.initTooltips();
+		this.initTooltips();
 		
 		// track page view
-		ThemeDesigner.track('open');
+		this.track('open');
+		
+		// Cashe selectors
+		this.themeDesignerPicker = $('#ThemeDesignerPicker');
+		this.previewFrame = $('#PreviewFrame');
+		
+		// iframe resizing
+		$(window).resize($.proxy(this.resizeIframe, this)).resize();
 	},
 	
 	initTooltips: function() {
@@ -129,10 +136,13 @@ var ThemeDesigner = {
 
 		// click handler for themes thumbnails
 		$("#ThemeTab").find(".slider").find("li").click(function() {
+			
+			var targetObject = $(this);
+			 
 			// highlight selected theme
-			$(this).parent().find(".selected").removeClass("selected").end().end().addClass("selected");
+			targetObject.parent().find(".selected").removeClass("selected").end().end().addClass("selected");
 
-			ThemeDesigner.set("theme", $(this).attr("data-theme"));
+			ThemeDesigner.set("theme", targetObject.attr("data-theme"));
 
 			ThemeDesigner.track('theme/click');
 		});
@@ -285,10 +295,10 @@ var ThemeDesigner = {
 			for (var i=0; i<ThemeDesigner.swatches[swatchName].length; i++) {
 				swatchNodes += '<li style="background-color: #' + ThemeDesigner.swatches[swatchName][i] + ';"></li>';
 			}
-			$("#ThemeDesignerPicker").children(".color").find(".swatches").append(swatchNodes);
+			this.themeDesignerPicker.children(".color").find(".swatches").append(swatchNodes);
 
 			//add user color if different than swatches
-			var swatches = $("#ThemeDesignerPicker").children(".color").find(".swatches");
+			var swatches = this.themeDesignerPicker.children(".color").find(".swatches");
 			var duplicate = false;
 			swatches.find("li").each(function() {
 				if(swatch.css("background-color") == $(this).css("background-color")) {
@@ -351,14 +361,14 @@ var ThemeDesigner = {
 
 		} else if (type == "image") {
 
-			var swatches = $("#ThemeDesignerPicker").children(".image").find(".swatches");
+			var swatches = this.themeDesignerPicker.children(".image").find(".swatches");
 			// add admin background
 			if (ThemeDesigner.settings["user-background-image"]) {
 				$('<li class="user"><img src="' + ThemeDesigner.settings["user-background-image-thumb"] + '" data-image="' + ThemeDesigner.settings["user-background-image"] + '"></li>').insertBefore(swatches.find(".no-image"));
 			}
 
 			// click handling
-			$("#ThemeDesignerPicker").children(".image").find(".swatches").find("li").click(function() {
+			this.themeDesignerPicker.children(".image").find(".swatches").find("li").click(function() {
 
 				//set correct alignment
 				if ($(this).attr("class") == "user") {
@@ -381,7 +391,7 @@ var ThemeDesigner = {
 		}
 
 		// show picker
-		$("#ThemeDesignerPicker")
+		this.themeDesignerPicker
 			.css({
 				top: swatch.offset().top + 10,
 				left: swatch.offset().left + 10
@@ -391,7 +401,7 @@ var ThemeDesigner = {
 
 		// clicking away will close picker
 		$("body").bind("click.picker", ThemeDesigner.hidePicker);
-		$("#ThemeDesignerPicker").click(function(event) {
+		this.themeDesignerPicker.click(function(event) {
 			event.stopPropagation();
 		});
 	},
@@ -399,7 +409,7 @@ var ThemeDesigner = {
 	hidePicker: function() {
 		$("body").unbind(".picker");
 		$("#ColorNameForm").unbind();
-		$("#ThemeDesignerPicker")
+		this.themeDesignerPicker
 			.removeClass("color image")
 			.find(".user").remove().end()
 			.find(".color li").remove().end()
@@ -637,7 +647,7 @@ var ThemeDesigner = {
 	},
 
 	resizeIframe: function() {
-		$("#PreviewFrame").css("height", $(window).height() - $("#Designer").height());
+		this.previewFrame.css("height", $(window).height() - $("#Designer").height());
 	},
 
 	history: false,
@@ -736,7 +746,7 @@ var ThemeDesigner = {
 
 			$().log('applySettings, updateSkinPreview');
 
-			var wordmark = $("#PreviewFrame").contents().find("#WikiHeader").find(".wordmark");
+			var wordmark = this.previewFrame.contents().find("#WikiHeader").find(".wordmark");
 
 			if (ThemeDesigner.settings["wordmark-type"] == "text") {
 				wordmark
@@ -753,8 +763,8 @@ var ThemeDesigner = {
 						.append('<img src="' + ThemeDesigner.settings["wordmark-image-url"] + '">');
 			}
 
-			$("#PreviewFrame").contents().find('#WikiaPageBackground').css("opacity", ThemeDesigner.settings["page-opacity"]/100);
-			ThemeDesigner.settings["page-opacity"] < 100 ? $("#PreviewFrame").contents().find("#WikiHeader .shadow-mask").hide() : $("#PreviewFrame").contents().find("#WikiHeader .shadow-mask").show();
+			this.previewFrame.contents().find('#WikiaPageBackground').css("opacity", ThemeDesigner.settings["page-opacity"]/100);
+			ThemeDesigner.settings["page-opacity"] < 100 ? this.previewFrame.contents().find("#WikiHeader .shadow-mask").hide() : this.previewFrame.contents().find("#WikiHeader .shadow-mask").show();
 		}
 	},
 
