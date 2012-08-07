@@ -33,9 +33,10 @@ public class PageObjectLogging implements WebDriverEventListener{
 			appendTextToFile("c:/log.html", l3);
 	}
 	
-	public void log(String command, String description)
+	public void log(String command, String description, boolean success)
 	{
-		String s = "<tr style=\"background:#CCFFCC;\"><td>"+command+"</td><td>"+description+"</td><td> <br/> &nbsp;</td></tr>";
+		String hexColor = success ? "#CCFFCC" : "#FFCCCC";
+		String s = "<tr style=\"background:"+hexColor+";\"><td>"+command+"</td><td>s"+description+"</td><td> <br/> &nbsp;</td></tr>";
 		appendTextToFile(reportPath, s);
 	}
 	
