@@ -133,7 +133,6 @@ function CategorySelectInitializeHooks($output, $article, $title, $user, $reques
 		//view mode
 		$wgHooks['Skin::getCategoryLinks::end'][] = 'CategorySelectGetCategoryLinksEnd';
 		$wgHooks['Skin::getCategoryLinks::begin'][] = 'CategorySelectGetCategoryLinksBegin';
-		// $wgHooks['MakeGlobalVariablesScript'][] = 'CategorySelectSetupVars'; // lazy load these ones (BugId:24570)
 	} else if ($action == 'edit' || $action == 'submit' || $force) {
 		//edit mode
 		$wgHooks['EditPage::importFormData'][] = 'CategorySelectImportFormData';
@@ -154,7 +153,7 @@ function CategorySelectInitializeHooks($output, $article, $title, $user, $reques
  *
  * @author Maciej Błaszkowski <marooned at wikia-inc.com>
  */
-function CategorySelectSetupVars($vars) {
+function CategorySelectSetupVars(Array &$vars) {
 	global $wgParser, $wgContLang;
 
 	$vars['csAddCategoryButtonText'] = wfMsg('categoryselect-addcategory-button');
@@ -617,7 +616,7 @@ function CategorySelectGenerateHTMLforView() {
 
 	// lazy load global JS variables
 	$vars = array();
-	CategorySelectSetupVars(&$vars);
+	CategorySelectSetupVars($vars);
 
 	$data = json_encode(array(
 		'html' => $html,
