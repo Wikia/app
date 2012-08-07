@@ -1,3 +1,5 @@
+/*global WikiaEditor, MiniEditor, Wall*/
+
 (function($) {
 
 MiniEditor.Wall = MiniEditor.Wall || {};
@@ -12,7 +14,7 @@ MiniEditor.Wall.EditMessageForm = $.createClass(Wall.settings.classBindings.edit
 			wikiaEditor = body.data('wikiaEditor'),
 			id = msg.attr('data-id'),
 			bubble = msg.find('.speech-bubble-message').first(),
-			animation = msg.data('is-reply') ? {} : {};
+			animation = {};
 
 		e.preventDefault();
 

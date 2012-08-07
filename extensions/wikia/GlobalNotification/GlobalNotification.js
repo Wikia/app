@@ -4,7 +4,7 @@
  * @param string type - 'notify' (blue), 'confirm' (green), 'error' (red), 'warn' (yellow)
 */
 
-GlobalNotification = {
+var GlobalNotification = {
 	init: function() {
 		// If there's already a global notification on page load, set up JS
 		GlobalNotification.dom = $('.global-notification');
