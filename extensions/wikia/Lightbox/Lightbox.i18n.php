@@ -44,7 +44,12 @@ Someone wanted to show you a photo on Wikia. Check it out:
 
 $1
 
-- The Wikia team',
+- The Wikia team
+
+___________________________________________
+* Find help and advice on Community Central: http://community.wikia.com
+* Want to receive fewer messages from us? You can unsubscribe or change
+your email preferences here: http://community.wikia.com/Special:Preferences',
 	'lightbox-share-button-email' => 'Email',
 	'lightbox-share-button-www' => 'Share',
 	'lightbox-share-button-embed' => 'Embed',

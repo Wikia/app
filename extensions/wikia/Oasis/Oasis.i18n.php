@@ -196,7 +196,12 @@ $messages['en'] = array(
 $1 sent you this page from {{SITENAME}} on Wikia:
       $2
 Enjoy!
-- The Wikia team',
+- The Wikia team
+
+___________________________________________
+* Find help and advice on Community Central: http://community.wikia.com
+* Want to receive fewer messages from us? You can unsubscribe or change
+your email preferences here: http://community.wikia.com/Special:Preferences',
 );
 
 /** Message documentation (Message documentation)
