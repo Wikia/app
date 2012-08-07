@@ -391,9 +391,9 @@ class WikiaSolrClient extends WikiaSearchClient {
 
 			  $results[] = $result;
 			  $position++;
-			}
 
-			$this->articleMatchId = $articleMatchId;
+				$this->articleMatchId = $articleMatchId;
+			}
 		}
 
 		foreach($solrDocs as $doc) {
