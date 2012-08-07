@@ -91,8 +91,12 @@ public class BasePageObject{
 		WebDriverWait wait = new WebDriverWait(driver, timeOut);
 		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(css)));
 	}
-	
-	
+	public void waitForElementClickableByCss(String css)
+	{
+		WebDriverWait wait = new WebDriverWait(driver, timeOut);
+		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(css)));
+
+	}	
 	public String getTimeStamp()
 	{
 		Date time = new Date();
