@@ -162,6 +162,7 @@ $config['oasis_wikia_js'] = array(
 
 /** Oasis **/
 
+// The main combined file for logged-in users.
 $config['oasis_shared_js_user'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
@@ -170,6 +171,7 @@ $config['oasis_shared_js_user'] = array(
 	)
 );
 
+// The main combined file for logged-out (anonymous) users.
 $config['oasis_shared_js_anon'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
@@ -178,7 +180,9 @@ $config['oasis_shared_js_anon'] = array(
 	)
 );
 
-//core shared JS
+// core shared JS - used as part of oasis_shared_js_anon or oasis_shared_js_user.
+// See BugzId 38541 for details on why it's better to have these 2 different packages!
+// (short version: less HTTP requests is more important than optimizing page-weight of the single page after you log in/out)
 $config['oasis_shared_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
