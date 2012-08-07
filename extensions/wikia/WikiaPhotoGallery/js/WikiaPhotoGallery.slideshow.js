@@ -43,31 +43,37 @@ var WikiaPhotoGallerySlideshow = {
 
 		// handle clicks on "Add Image"
 		slideshow.find('.wikia-slideshow-addimage').click(function(e) {
-			WikiaPhotoGalleryView.loadEditorJS(function() {
-				// tracking
-				WikiaPhotoGalleryView.track('/slideshow/basic/addImage');
-
-				// BugId:7453
-				if (WikiaPhotoGalleryView.forceLogIn()) {
-					return;
+			
+			// BugId:7453
+			if (WikiaPhotoGalleryView.forceLogIn()) {
+				return;
+			}
+			
+			// tracking
+			WikiaPhotoGalleryView.track('/slideshow/basic/addImage');
+				
+			$.when(
+				WikiaPhotoGalleryView.loadEditorJS(), 
+				WikiaPhotoGallery.ajax('getGalleryData', {hash:hash, articleId:wgArticleId})
+			).then(function(loadEditorJSScripts,data) {
+				
+				//get data stuff from jQuery object passed by promise pattern
+				data = data[0];
+				
+				if (data && data.info == 'ok') {
+					data.gallery.id = params.id;
+					WikiaPhotoGallerySlideshow.log(data.gallery);
+					WikiaPhotoGallery.showEditor({
+						from: 'view',
+						gallery: data.gallery,
+						target: $(e.target).closest('.wikia-slideshow')
+					});
+				} else {
+					WikiaPhotoGallery.showAlert(
+						data.errorCaption,
+						data.error
+					);
 				}
-
-				WikiaPhotoGallery.ajax('getGalleryData', {hash:hash, articleId:wgArticleId}, function(data) {
-					if (data && data.info == 'ok') {
-						data.gallery.id = params.id;
-						WikiaPhotoGallerySlideshow.log(data.gallery);
-						WikiaPhotoGallery.showEditor({
-							from: 'view',
-							gallery: data.gallery,
-							target: $(e.target).closest('.wikia-slideshow')
-						});
-					} else {
-						WikiaPhotoGallery.showAlert(
-							data.errorCaption,
-							data.error
-						);
-					}
-				});
 			});
 		});
 
