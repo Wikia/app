@@ -1,3 +1,4 @@
+@import "../../../../skins/oasis/css/core/color";
 @import "../../../../skins/oasis/css/mixins/box-shadow";
 @import "../../../../skins/oasis/css/mixins/opacity";
 
@@ -126,5 +127,14 @@ $previewwidth: 250px;
 		left: 0;
 		position: absolute;
 		top: 0;
+	}
+}
+body .tooltip {
+	.tooltip-inner {
+		background-color: white;
+		border: 1px solid #EAEAEA;
+	}
+	&.right .tooltip-arrow {
+		border-right: 5px solid white;
 	}
 }
