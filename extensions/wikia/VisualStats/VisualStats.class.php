@@ -13,10 +13,20 @@ class VisualStats extends WikiaObject {
         $user = F::build('User', array($name), 'newFromName');
         return array('id' => $user->getId(), 'name' => $name, 'isAnon' => $user->isAnon());
     }
-    public function getDatesFromTwoWeeksOn(){
+    public function getDatesFromTwoWeeksOn($hours){
         $date = strtotime($this->getDateTwoWeeksBefore());
-        for ($i = 0; $i <= 14; $i++){
-            $arr[date("d-m-Y", ($date + 86400 * $i))] = 0;
+        if ($hours){
+            for($hour = 0; $hour <= 23; $hour++){
+                    $arr2[$hour] = 0;
+                }
+            for ($i = 14; $i >= 0; $i--){
+                    $arr[date("d-m-Y", ($date + 86400 * $i))] = $arr2;
+            }
+        }
+        else{
+            for ($i = 0; $i <= 14; $i++){
+                $arr[date("d-m-Y", ($date + 86400 * $i))] = 0;
+            }
         }
         return $arr;
 
@@ -32,7 +42,6 @@ class VisualStats extends WikiaObject {
 
     private function performQuery($username){
         $this->app->wf->profileIn( __METHOD__ );
-
 
             $dbr = $this->getDB();
             $userQuery = array();
@@ -82,12 +91,13 @@ class VisualStats extends WikiaObject {
             $userData = $result['user'];
             $wikiaData = $result['wikia'];
 
-            $wikiaCommit = $this->getDatesFromTwoWeeksOn();
-            $userCommit = $this->getDatesFromTwoWeeksOn();
+            $wikiaCommit = $this->getDatesFromTwoWeeksOn(false);
+            $userCommit = $wikiaCommit;
             $wikiaCommitMax = 0;
             $userCommitMax = 0;
 
             while ($row = $dbr->fetchObject($wikiaData)){
+
                 $tempDate = date("d-m-Y", strtotime(substr($row->date, 0, 8)));
                 $wikiaCommit[$tempDate]+= $row->count;
                 if ($wikiaCommit[$tempDate] > $wikiaCommitMax){
@@ -111,16 +121,53 @@ class VisualStats extends WikiaObject {
         return $out;
 
     }
-/*
-            while ($row = $this->getDB()->fetchObject($newquery)){
+    public function getDataForPunchcard($username){
+        $this->app->wf->profileIn( __METHOD__ );
+
+        $key = $this->app->wf->MemcKey('VisualStats', 'punchcard', $username );
+        $data = $this->app->wg->memc->get($key);
+        if (is_array($data)){
+            $out = $data;
+        }
+        else
+        {
+            $result = $this->performQuery($username);
+            $dbr = $result['db'];
+            $userData = $result['user'];
+            $wikiaData = $result['wikia'];
+
+            $wikiaPunchcard = $this->getDatesFromTwoWeeksOn(true);
+            $userPunchcard = $wikiaPunchcard;
+            $wikiaPunchcardMax = 0;
+            $userPunchcardMax = 0;
+
+            while ($row = $dbr->fetchObject($wikiaData)){
+
                 $tempDate = date("d-m-Y", strtotime(substr($row->date, 0, 8)));
-                $wikiaResult[] = array('date' => $tempDate, 'hour' => substr($row->date, 8, 2), 'count' => $row->count);
+                $tempHour = substr($row->date, 8, 2);
+                if ($tempHour[0]=='0') $tempHour = (int)$tempHour[1];
+                $wikiaPunchcard[$tempDate][$tempHour]+= $row->count;
+                if ($wikiaPunchcard[$tempDate][$tempHour] > $wikiaPunchcardMax){
+                    $wikiaPunchcardMax = $wikiaPunchcard[$tempDate][$tempHour];
+                }
+            };
+            if ($username != "0"){
+                while ($row = $dbr->fetchObject($userData)){
+                    $tempDate = date("d-m-Y", strtotime(substr($row->date, 0, 8)));
+                    $tempHour = substr($row->date, 8, 2);
+                    if ($tempHour[0]=='0') $tempHour = (int)$tempHour[1];
+                    $userPunchcard[$tempDate][$tempHour]+= $row->count;
+                    if ($userPunchcard[$tempDate][$tempHour] > $userPunchcardMax){
+                        $userPunchcardMax = $userPunchcard[$tempDate][$tempHour];
+                    }
+                };
+            }
+            $out = array('wikiaPunchcard' => array('data' => $wikiaPunchcard, 'max' =>$wikiaPunchcardMax), 'userPunchcard' => array('data' => $userPunchcard, 'max' =>$userPunchcardMax));
+            $this->app->wg->memc->set($key, $out, 600);
+        }
+        $this->app->wf->profileOut( __METHOD__ );
 
-            while ($row = $this->getDB()->fetchObject($newquery)){
-                $tempDate = date("d-m-Y", strtotime(substr($row->date, 0, 8)));
-                $userResult[] = array('date' => $tempDate, 'hour' => substr($row->date, 8, 2), 'count' => $row->count);
-*/
+        return $out;
 
-
-
+    }
 }

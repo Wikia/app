@@ -16,3 +16,34 @@ button{
 #userButton{
     float: right;
 }
+.circle {
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    background: #adff2f;
+    display: inline-block;
+}
+#punchcardTable{
+    padding: 2px;
+    float: right;
+    border-color: black;
+
+}
+td{
+    padding: 2px;
+    border: 2px;
+    border-color: black;
+    vertical-align: middle;
+    text-align: center;
+    width: 30px;
+    height: 30px;
+
+}
+tr{
+    padding: 2px;
+    border: 2px;
+    border-color: black;
+}
+th{
+    font-size: 11;
+}

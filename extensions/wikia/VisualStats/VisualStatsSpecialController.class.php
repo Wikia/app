@@ -12,6 +12,7 @@ class VisualStatsSpecialController extends WikiaSpecialPageController {
 
     public function index() {
         $this->response->addAsset('extensions/wikia/VisualStats/js/VisualStatsCommitActivity.js');
+        $this->response->addAsset('extensions/wikia/VisualStats/js/VisualStatsPunchcard.js');
         $this->response->addAsset('extensions/wikia/VisualStats/js/VisualStatsCommon.js');
         $this->response->addAsset('extensions/wikia/VisualStats/js/d3.v2.js');
         $this->response->addAsset('extensions/wikia/VisualStats/css/VisualStats_style.css');
@@ -41,11 +42,12 @@ class VisualStatsSpecialController extends WikiaSpecialPageController {
                 $this->setVal( 'data', $this->businessLogic->getDataForPunchcard($username));
                 break;
             case "histogram":
-                $this->setVal( 'data', $this->businessLogic->getDataForHistogram($username));
+                //$this->setVal( 'data', $this->businessLogic->getDataForHistogram($username));
                 break;
             default:
                 $this->setVal( 'data', $this->businessLogic->getDataForCommitActivity($username));
                 $parameter = "commit";
+                break;
         }
 
 
@@ -54,7 +56,7 @@ class VisualStatsSpecialController extends WikiaSpecialPageController {
         $this->setVal( 'user', $username);
         $this->setVal( 'param', $parameter);
         $this->setVal( 'data', $this->businessLogic->getDataForCommitActivity($username));
-        $this->setVal( 'dates', $this->businessLogic->getDatesFromTwoWeeksOn());
+        $this->setVal( 'dates', $this->businessLogic->getDatesFromTwoWeeksOn(false));
         $this->setVal( 'wikiButtonLabel', $this->wf->msg('visualStats-wikiEdits'));
         $this->setVal( 'userButtonLabel', $this->wf->msg('visualStats-userEdits', $username));
 
