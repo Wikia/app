@@ -238,7 +238,10 @@ class EditcountHTML extends Editcount {
 
 		$this->setHeaders();
 
-		$action = $wgTitle->escapeLocalUrl();
+		list( $name, $subpage ) = SpecialPageFactory::resolveAlias( $this->getTitle()->getDBkey() );
+		$title = SpecialPage::getTitleFor( $name ); // get link WITHOUT subpage
+		$action = $title->getLocalUrl();
+
 		$user = wfMsgHtml( 'editcount_username' );
 		$submit = wfMsgHtml( 'editcount_submit' );
 

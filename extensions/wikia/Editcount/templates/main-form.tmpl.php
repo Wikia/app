@@ -5,7 +5,7 @@
 .ecrowcenter { border:1px outset #FFFFFF; text-align:center;}
 .ecrowleft { border:1px outset #FFFFFF; text-align:left;}
 </style>
-<form id='editcount' method='post' action="<?=$action?>">
+<form id='editcount' method='post' action="<?= htmlspecialchars($action) ?>">
 <table>
 <tr>
 	<td><?=$user?></td>
