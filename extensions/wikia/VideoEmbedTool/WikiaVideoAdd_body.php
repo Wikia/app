@@ -64,8 +64,7 @@ class WikiaVideoAddForm extends SpecialPage {
 	}
 
 	public function doSubmit() {
-		global $wgOut, $wgRequest, $IP, $wgUser;
-		require_once( "$IP/extensions/wikia/WikiaVideo/VideoPage.php" );
+		global $wgOut, $wgRequest, $wgUser;
 		$replaced = false;
 		if( '' == $wgRequest->getVal( 'wpWikiaVideoAddName' ) ) {
 			if( '' != $wgRequest->getVal( 'wpWikiaVideoAddPrefilled' ) ) {
@@ -99,7 +98,11 @@ class WikiaVideoAddForm extends SpecialPage {
 				}
 
 				if ( WikiaFileHelper::useVideoHandlersExtForEmbed() ){
-					$res = VideoFileUploader::URLtoTitle( $this->mUrl, $this->mName );
+					$res = null;
+					try {
+						$res = VideoFileUploader::URLtoTitle( $this->mUrl, $this->mName );
+					} catch (Exception $e) {}
+
 					if( !$res ) {
 						$wgOut->addHTML( wfMsg( 'wva-failure' ) );
 						return;
