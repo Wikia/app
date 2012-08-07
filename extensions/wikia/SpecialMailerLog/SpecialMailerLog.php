@@ -42,7 +42,7 @@ class SpecialMailerLog extends UnlistedSpecialPage {
 		$filter_roster = array();
 
 		// Create an array of filters based on was was passed to us
-		$filter = self::getFilters(&$query, &$filter_roster);
+		$filter = self::getFilters($query, $filter_roster);
 
 		// Set sorting and page length
 		$sort     = $wgRequest->getVal('new_sort', $wgRequest->getVal('sort', 'created'));
