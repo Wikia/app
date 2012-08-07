@@ -59,11 +59,18 @@ class WikiaApp {
 	public $wf = null;
 
 	/**
+	 * this variable is use for local cache of view. Used by getViewOnce, renderViewOnce
+	 */
+	
+	protected static $viewCache = array();
+	
+	/**
 	 * constructor
 	 * @param WikiaGlobalRegistry $globalRegistry
 	 * @param WikiaLocalRegistry $localRegistry
 	 * @param WikiaHookDispatcher $hookDispatcher
 	 */
+	
 	public function __construct(WikiaGlobalRegistry $globalRegistry = null, WikiaLocalRegistry $localRegistry = null, WikiaHookDispatcher $hookDispatcher = null, WikiaFunctionWrapper $functionWrapper = null) {
 
 		if(!is_object($globalRegistry)) {
@@ -494,13 +501,26 @@ class WikiaApp {
 	}
 
 	/**
-	 * get view Object for given controller and method, providing your own data (previously wfRenderPartial)
+	 * get view Object for given controller and method, providing your own data 
 	 * @param string $controllerName
 	 * @param string $method
-	 * @param object WikiaView
+	 * @param Array $params
+	 * @return WikiaView
 	 */
-	public function getView( $controllerName, $method, Array $data = array() ) {
-		return F::build( 'WikiaView', array( $controllerName, $method, $data ), 'newFromControllerAndMethodName' );
+	public function getView( $controllerName, $method, Array $params = array() ) {
+		return F::build( 'WikiaView', array( $controllerName, $method, $params ), 'newFromControllerAndMethodName' );
+	}
+	
+	/**
+	 * shortcut for getView(...)->render(); (previously wfRenderPartial) 
+	 * @param string $controllerName
+	 * @param string $method
+	 * @param Array $params
+	 * @return string
+	 */
+	
+	public function renderPartial( $controllerName, $method, Array $params = array() ) {
+	 	return $this->getView( $controllerName, $method, $params )->render();
 	}
 
 	/**
@@ -510,10 +530,53 @@ class WikiaApp {
 	 * @param array $params
 	 * @return string
 	 */
+	
 	public function renderView( $controllerName, $method, Array $params = null ) {
 		return $this->sendRequest( $controllerName, $method, $params, true )->toString();
 	}
-
+	
+	/**
+	 * call renderView and cache results locally. In case of subsequent call for the same controller/method with the same $key, 
+	 * previously rendered string will be returned.
+	 *
+	 * Use Case: repeated rendering of the some controller/method with the some input data
+	 *   
+	 * @param string $controllerName
+	 * @param string $method
+	 * @param string $key caching key for you extension/parent template 
+	 * @param array $params
+	 * @return string
+	 */
+	
+	public function renderViewCached( $controllerName, $method, $key, Array $params = array() ) {
+		if(empty(self::$viewCache["V_". $controllerName . $method . $key])) {
+			self::$viewCache["V_". $controllerName . $method . $key] =  $this->renderView($controllerName, $method, $params);
+		}
+		
+		return self::$viewCache["V_". $controllerName . $method . $key];
+	}
+	
+	/** 
+	 * call renderPartial and cache results locally. In case of subsequent call for the same controller/method with the same $key, 
+	 * previously rendered string will be returned.
+	 * 
+	 * Use Case: repeated rendering of the some controller/method with the some input data
+	 *   
+	 * @param string $controllerName
+	 * @param string $method
+	 * @param string $key caching key for you extension/parent template 
+	 * @param array $params
+	 * @return string
+	 */
+	
+	public function renderPartialCached( $controllerName, $method, $key, Array $params = array() ) {
+		if(empty(self::$viewCache["P_". $controllerName . $method . $key])) {
+			self::$viewCache["P_". $controllerName . $method . $key] =  $this->renderPartial($controllerName, $method, $params);
+		}
+		
+		return self::$viewCache["P_". $controllerName . $method . $key];
+	}
+	
 	/**
 	 * @todo: take a look here, consider removing
 	 */
