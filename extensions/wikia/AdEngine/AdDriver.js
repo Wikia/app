@@ -684,7 +684,7 @@ AdDriverDelayedLoader.loadNext = function() {
 			AdDriverDelayedLoader.loadNext();
 		}
 	}
-	else {
+	else if(typeof EXP_AD_LOAD_TIMING != "undefined"){
 		if (window.getTreatmentGroup && (window.wgLoadAdDriverOnLiftiumInit || getTreatmentGroup(EXP_AD_LOAD_TIMING) == TG_AS_WRAPPERS_ARE_RENDERED)) {
 			if (AdDriverDelayedLoader.runFinalize) {
 				AdDriverDelayedLoader.finalize();
@@ -776,7 +776,8 @@ AdDriverDelayedLoader.load = function() {
 	AdDriverDelayedLoader.started = true;
 
 	// Temporary AdDriver tracking by Inez
-	if((typeof abBeingTracked != "undefined") && (typeof abBeingTracked[EXP_AD_LOAD_TIMING] != "undefined") && abBeingTracked[EXP_AD_LOAD_TIMING]){
+	if((typeof EXP_AD_LOAD_TIMING != "undefined") &&
+		(typeof abBeingTracked != "undefined") && (typeof abBeingTracked[EXP_AD_LOAD_TIMING] != "undefined") && abBeingTracked[EXP_AD_LOAD_TIMING]){
 		if ( AdDriverDelayedLoader.startCalled === false ) {
 			AdDriverDelayedLoader.startCalled = true;
 			WikiaTracker.trackEvent(
@@ -811,7 +812,8 @@ AdDriverDelayedLoader.isRunning = function() {
 AdDriverDelayedLoader.finalize = function() {
 
 	// Temporary AdDriver tracking by Inez
-	if((typeof abBeingTracked != "undefined") && (typeof abBeingTracked[EXP_AD_LOAD_TIMING] != "undefined") && abBeingTracked[EXP_AD_LOAD_TIMING]){
+	if((typeof EXP_AD_LOAD_TIMING != "undefined") &&
+		(typeof abBeingTracked != "undefined") && (typeof abBeingTracked[EXP_AD_LOAD_TIMING] != "undefined") && abBeingTracked[EXP_AD_LOAD_TIMING]){
 		WikiaTracker.trackEvent(
 			'AdDriver',
 			{ pos: 'stop' },
