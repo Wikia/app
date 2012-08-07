@@ -1,5 +1,6 @@
 <?php
 
+// TODO: Comments!
 class WallNotificationsEveryone extends WallNotifications {
 	const queueTimeout = 30;
 	public function __construct() {
@@ -68,14 +69,6 @@ class WallNotificationsEveryone extends WallNotifications {
 
 	public function processEntites($userId, $entityKey) {
 		wfProfileIn(__METHOD__);
-		$row = $this->getDB(false)->selectRow('wall_notification_queue_processed',
-			array('count(*) as cnt', 'entity_key'),
-			array(
-				'user_id' => $userId,
-				'entity_key' => $entityKey
-			),
-			__METHOD__
-		);
 
 		if (!$this->getEntityProcessed($userId, $entityKey)) {
 			$entityKeyArray = explode('_', $entityKey);
