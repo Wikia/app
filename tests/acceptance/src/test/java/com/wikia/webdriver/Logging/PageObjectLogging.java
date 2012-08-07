@@ -33,6 +33,12 @@ public class PageObjectLogging implements WebDriverEventListener{
 			appendTextToFile("c:/log.html", l3);
 	}
 	
+	public void log(String command, String description)
+	{
+		String s = "<tr style=\"background:#CCFFCC;\"><td>"+command+"</td><td>"+description+"</td><td> <br/> &nbsp;</td></tr>";
+		appendTextToFile(reportPath, s);
+	}
+	
 
 	
 	@Override
