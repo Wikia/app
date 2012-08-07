@@ -1359,7 +1359,10 @@ abstract class Skin extends ContextSource {
 		$newtalks = $this->getUser()->getNewMessageLinks();
 		$ntl = '';
 
-		if ( count( $newtalks ) == 1 && $newtalks[0]['wiki'] === wfWikiID() ) {
+		/* Wikia change begin - @author: tor - see also: SkinTemplate.php */
+		global $wgSitename;
+		if( count( $newtalks ) == 1 && $newtalks[0]['wiki'] === $wgSitename ) {
+		/* Wikia change end */
 			$userTitle = $this->getUser()->getUserPage();
 			$userTalkTitle = $userTitle->getTalkPage();
 
@@ -1379,7 +1382,9 @@ abstract class Skin extends ContextSource {
 				);
 
 				$ntl = $this->msg(
-					'youhavenewmessages',
+					/* Wikia change begin - @author: Macbre - see also: SkinTemplate.php */
+					( F::app()->checkSkin( 'oasis' ) ) ? 'oasis-notification-youhavenewmessages' : 'youhavenewmessages',
+					/* Wikia change end */
 					$newMessagesLink,
 					$newMessagesDiffLink
 				)->text();
