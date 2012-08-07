@@ -147,6 +147,8 @@ class CodeLintJs extends CodeLint {
 				case "Expected '{a}' at column {b}, not column {c}.":
 				// allow object['foo'] notation
 				case "['{a}'] is better written in dot notation.":
+				// remove noise
+				case "Unexpected 'else' after 'return'.":
 					$remove = true;
 					break;
 			}
