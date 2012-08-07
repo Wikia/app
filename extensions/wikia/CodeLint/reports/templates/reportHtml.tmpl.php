@@ -79,8 +79,8 @@
 		<colgroup>
 			<col width="25">
 			<col width="*">
-			<col width="250">
-			<col width="300">
+			<col width="100">
+			<col width="200">
 		</colgroup>
 		<thead>
 			<tr>
