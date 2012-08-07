@@ -79,13 +79,15 @@
 		<colgroup>
 			<col width="25">
 			<col width="*">
-			<col width="150">
+			<col width="175">
+			<col width="250">
 		</colgroup>
 		<thead>
 			<tr>
 				<th>No</th>
 				<th>Error</th>
 				<th>Lines</th>
+				<th>Blame</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -125,6 +127,7 @@
 				<td><?= ($n+1) ?></td>
 				<td><?= htmlspecialchars($entry['error']) ?></td>
 				<td><?= implode(', ', $blameLinks) ?></td>
+				<td><?= $entry['blame']['author'] ?> @ <a href="http://trac.wikia-code.com/changeset/<?= $entry['blame']['rev'] ?>">r<?= $entry['blame']['rev'] ?></a></td>
 			</tr>
 <?php
 		}
