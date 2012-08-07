@@ -56,25 +56,25 @@ public class BasePageObject{
 		pageElem.click();
 	}
 	
-	public void watForElementByCss(String cssSelector)
+	public void waitForElementByCss(String cssSelector)
 	{
 		
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(cssSelector)));
 	}
 
-	public void watForElementByClassName(String className)
+	public void waitForElementByClassName(String className)
 	{
 		
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className(className)));
 	}
 	
-	public void watForElementByClassId(String id)
+	public void waitForElementByClass(String id)
 	{
 		
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(id)));
 	}
 	
-	public void watForElementByXPath(String xPath)
+	public void waitForElementByXPath(String xPath)
 	{
 		
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xPath)));
@@ -97,6 +97,8 @@ public class BasePageObject{
 	{
 		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(css)));
 	}
+	
+
 	
 	
 	
