@@ -1,0 +1,9 @@
+<!DOCTYPE suite SYSTEM "http://beust.com/testng/testng-1.0.dtd" >
+<suite name="Wikia test suite">
+  <test name="testing" preserve-order = "true"> <!-- parallel="classes" thread-count="2"  -->
+    <classes>
+       <class name="com.wikia.webdriver.TestCases.CreateAWiki" />
+       <class name="com.wikia.webdriver.TestCases.HubsTests" />
+    </classes>
+  </test>
+</suite>
