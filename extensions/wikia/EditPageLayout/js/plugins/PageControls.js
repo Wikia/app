@@ -371,7 +371,8 @@
 							}
 						}).
 						css({
-							'min-height': options.height || ($(window).height() - 250)
+							'height': options.height || ($(window).height() - 250),
+							'overflow': 'auto'
 						});
 
 					if (typeof callback == 'function') {
