@@ -40,3 +40,9 @@ foreach ($wgWikiaHubsPages as $hubGroup) {
 		}
 	}
 }
+
+echo "Purging WikiaHomePage cache for hubs images...\n\n";
+$app = F::app();
+
+$memKey = $app->wf->SharedMemcKey('wikiahomepage', 'hubimages', $app->wg->contLang->getCode(), WikiaHomePageController::HUBS_IMAGES_MEMC_KEY_VER);
+$app->wg->memc->set($memKey, null);
