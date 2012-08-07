@@ -1,5 +1,5 @@
 <form method='post' name='upload-tool' class='WikiaForm UploadTool' enctype="multipart/form-data">
-	<div class="status-bar">
+	<div class="status-bar plainlinks">
 		<div class="status-wrapper">
 			<span class="status-icon">
 				<?= wfMsg('promote-statusbar-icon') ?>
