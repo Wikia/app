@@ -38,8 +38,7 @@ class VideoHandlerSpecialController extends WikiaSpecialPageController {
 				$result = VideoFileUploader::uploadVideo($provider, $videoId, $title, null, $undercover, $overrideMetadata);
 			}
 			catch (Exception $e) {
-				$result->ok = null;
-				$result->value = null;
+				$result = (object) array('ok'=>null, 'value'=>null);
 			}
         
 			$this->setVal( 'uploadStatus', $result->ok );
