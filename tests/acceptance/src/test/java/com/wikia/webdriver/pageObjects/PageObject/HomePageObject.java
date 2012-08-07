@@ -8,15 +8,24 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+<<<<<<< .mine
+import com.wikia.webdriver.pageObjects.PageObject.Hubs.EntertainmentHub;
+import com.wikia.webdriver.pageObjects.PageObject.Hubs.LifestyleHub;
+=======
 import com.wikia.webdriver.pageObjects.PageObject.CreateNewWiki.CreateNewWikiPageObjectStep1;
+>>>>>>> .r57803
 import com.wikia.webdriver.pageObjects.PageObject.Hubs.VideoGamesHub;
 
 public class HomePageObject extends BasePageObject{
 
 	@FindBy(className="create-wiki") 
-	public WebElement startWikiButton;
+	private WebElement startWikiButton;
 	@FindBy(css="section.grid-2.videogames a img") 
-	public WebElement OpenVideoGamesHub;
+	private WebElement OpenVideoGamesHub;
+	@FindBy(css="section.grid-2.entertainment a img") 
+	private WebElement OpenEntertainmentHub;
+	@FindBy(css="section.grid-2.lifestyle a img") 
+	private WebElement OpenLifestyleHub;
 	@FindBy(className="ajaxLogin")
 	public WebElement logInAjax;
 	@FindBy (xpath="//div[@class='input-group required   ']/input[@name='username']")
@@ -54,8 +63,18 @@ public class HomePageObject extends BasePageObject{
 	
 	public VideoGamesHub OpenVideoGamesHub() {
 	
-		
+		click(OpenVideoGamesHub);
 		return new VideoGamesHub(driver);		
+	}
+	public EntertainmentHub OpenEntertainmentHub() {
+		
+		click(OpenEntertainmentHub);
+		return new EntertainmentHub(driver);		
+	}
+	public LifestyleHub OpenLifestyleHub() {
+		
+		click(OpenLifestyleHub);
+		return new LifestyleHub(driver);		
 	}
 
 }
