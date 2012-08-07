@@ -21,7 +21,7 @@ public class BasePageObject{
 	
 	protected int timeOut = 30;
 	
-	public WebDriverWait wait;
+	private WebDriverWait wait;
 
 	
 	public BasePageObject(WebDriver driver)

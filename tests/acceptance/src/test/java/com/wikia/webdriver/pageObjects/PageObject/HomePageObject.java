@@ -8,12 +8,10 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-<<<<<<< .mine
+
 import com.wikia.webdriver.pageObjects.PageObject.Hubs.EntertainmentHub;
 import com.wikia.webdriver.pageObjects.PageObject.Hubs.LifestyleHub;
-=======
 import com.wikia.webdriver.pageObjects.PageObject.CreateNewWiki.CreateNewWikiPageObjectStep1;
->>>>>>> .r57803
 import com.wikia.webdriver.pageObjects.PageObject.Hubs.VideoGamesHub;
 
 public class HomePageObject extends BasePageObject{
