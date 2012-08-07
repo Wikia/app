@@ -21,7 +21,7 @@ public class BasePageObject{
 	
 	protected int timeOut = 30;
 	
-	private WebDriverWait wait;
+	public WebDriverWait wait;
 
 	
 	public BasePageObject(WebDriver driver)
@@ -31,12 +31,11 @@ public class BasePageObject{
 		driver.manage().window().maximize();
 	}
 	
-	/*
+	/**
 	 * Checks page title
-	 * @param title 
-	 * @return true|false
-	 * */
-	
+	 *
+	 ** @param title Specifies the title that you want to compare with the actual current title
+	 */
 	public boolean verifyTitle(String title)
 	{
 		String currentTitle = driver.getTitle();
@@ -47,21 +46,61 @@ public class BasePageObject{
 		return true;
 	}
 	
+	/**
+	 * Checks if the current URL contains the given String
+	 *
+	 ** @param GivenString 
+	 */
+	public boolean verifyURLcontains(String GivenString)
+	{
+		String currentURL = driver.getCurrentUrl();
+		if (currentURL.contains(GivenString))
+		{
+			return true;
+		}
+		return false;
+	}
 	
-	/*
+	/**
+	 * Checks if the current URL is the given URL
+	 *
+	 ** @param GivenURL 
+	 */
+	public boolean verifyURL(String GivenURL)
+	{
+		String currentURL = driver.getCurrentUrl();
+		if (currentURL.equals(GivenURL))
+		{
+			return true;
+		}
+		return false;
+	}
+	
+	
+	/**
 	 * Clicks on an element
-	 * */
+	 */
 	public void click(WebElement pageElem)
 	{
 		pageElem.click();
 	}
 	
-	public void waitForElementByCss(String cssSelector)
+	/**
+	 * Checks if the element is visible on browser
+	 *
+	 ** @param element The elementto be checked
+	 */
+	public void waitForElementByElement(WebElement element)
+	{
+		wait.until(ExpectedConditions.visibilityOf(element));
+	}
+	
+	public void watForElementByCss(String cssSelector)
 	{
 		
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(cssSelector)));
 	}
-
+	
 	public void waitForElementByClassName(String className)
 	{
 		
@@ -98,7 +137,12 @@ public class BasePageObject{
 		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(css)));
 	}
 	
-
+	/**
+	 * Navigates back to the previous page 
+	 */
+	public void navigateBack() {
+		driver.navigate().back();
+	}
 	
 	
 	
@@ -110,6 +154,8 @@ public class BasePageObject{
 		return String.valueOf(timeCurrent);
 		
 	}
+	
+
 	
     
 } 

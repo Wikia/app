@@ -41,7 +41,7 @@ public class CreateNewWikiPageObjectStep1 extends BasePageObject{
 	
 	public void waitForSuccessIcon()
 	{
-		watForElementByXPath("//span[@class='domain-status-icon status-icon']/img[@src='http://slot2.images.wikia.nocookie.net/__cb57524/common/extensions/wikia/CreateNewWiki/images/check.png']");
+		waitForElementByXPath("//span[@class='domain-status-icon status-icon']/img[@src='http://slot2.images.wikia.nocookie.net/__cb57524/common/extensions/wikia/CreateNewWiki/images/check.png']");
 																						
 		
 	}

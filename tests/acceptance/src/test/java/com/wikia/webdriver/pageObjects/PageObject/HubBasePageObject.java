@@ -9,17 +9,25 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 
+import com.wikia.webdriver.Logging.PageObjectLogging;
 import com.wikia.webdriver.pageObjects.PageObject.Hubs.VideoGamesHub;
 
 public class HubBasePageObject extends BasePageObject{
-
+	//Author Michal Nowierski
 	@FindBy(css="div.button.scrollleft p") 
 	private WebElement RelatedVideosScrollLeft;
 	@FindBy(css="div.button.scrollright p") 
 	private WebElement RelatedVideosScrollRight;
-		
+	@FindBy(css="form.WikiaSearch input[name='search']") 
+	private WebElement SearchField;
+	@FindBy(css="form.WikiaSearch button.wikia-button") 
+	private WebElement SearchButton;
+	
+	
 	public HubBasePageObject(WebDriver driver) {
 		super(driver);
 		PageFactory.initElements(driver, this);
@@ -28,18 +36,77 @@ public class HubBasePageObject extends BasePageObject{
 	public void ClickOnNewsTab(int TabNumber) {
 		List<WebElement> newstabs = driver.findElements(By.cssSelector("section.wikiahubs-newstabs ul.tabbernav li a"));
 		waitForElementClickableByCss("section.wikiahubs-newstabs ul.tabbernav li a");
+		PageObjectLogging.log("Click on news tab numer "+TabNumber+".", "", true);
 		click(newstabs.get(TabNumber - 1));
 
 	}
 	public void RelatedVideosScrollLeft() {
+		PageObjectLogging.log("RV module: scroll left", "", true);
 		click(RelatedVideosScrollLeft);
 	}
 	
 	public void RelatedVideosScrollRight() {
+		PageObjectLogging.log("RV module: scroll right", "", true);
 		click(RelatedVideosScrollRight);
 	}
 	public HomePageObject BackToHomePage() {
+		PageObjectLogging.log("navigate to www.wikia.com", "", true);
 		return new HomePageObject(driver);
+	}
+
+	/**
+	 * Allows to type into a search filed the given SearchString
+	 * <p>
+	 * This method is global for all WikiaSearch forms on all of the wikis
+	 *
+	 * @param  SearchString  Specifies what you want to search for
+	 */
+	public void SearchFieldTypeIn(String SearchString) {
+		PageObjectLogging.log("Type " + SearchString
+				+ " String into the search field ", "", true);
+		SearchField.sendKeys(SearchString);
+		}
+
+	/**
+	 * Allows to left click on search button in order to initiate searching.
+	 * <p>
+	 * This method is global for all WikiaSearch forms on all of the wikis
+	 * The method should be invoked after SearchFieldType method
+	 *
+	 * @param  SearchString  Specifies what you want to search for
+	 */
+	public void SearchButtonClick() {
+		PageObjectLogging.log("Left click on the WikiaSearch button", "", true);
+		SearchButton.click();
+		
+		
+	}
+	
+	public void verifyWikiaMosaicSliderHasImages() {
+		PageObjectLogging.log("Veridy that WikiaMosaicSlider has images ", "", true);
+		List<WebElement> WikiaMosaicSliderPanoramaImages = driver.findElements(By.cssSelector("div.wikia-mosaic-slider-panorama"));
+		List<WebElement> WikiaMosaicSliderThumbRegionImages = driver.findElements(By.cssSelector("ul.wikia-mosaic-thumb-region img"));
+		waitForElementByElement(WikiaMosaicSliderPanoramaImages.get(0));
+		for (int i = 0; i < 5; i++) {
+			waitForElementByElement(WikiaMosaicSliderThumbRegionImages.get(i));
+		}
+	}
+	
+	/**
+	 * Verifies that the given URL is one of the searching process results. You must be 100% sure that the URL will be found after searching
+	 * <p>
+	 * The method should be invoked after SearchButtonClick method
+	 *
+	 * @param  URL  Specifies what URL you expect as 100% sure result of searching
+	 */
+	protected void SearchResultsVerifyFoundURL(String URL) {
+		PageObjectLogging.log("Verify if " + URL
+				+ " URL is one of found the results", "", true);
+			
+			wait.until(ExpectedConditions.visibilityOfElementLocated(By
+					.cssSelector("li.result a[href='"+URL+"']")));
+
+		
 	}
 
 }
