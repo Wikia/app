@@ -212,7 +212,7 @@ $color-inctive-button: mix($color-page, #000, 60%);
 	}
 
 	img {
-		@include box-shadow(0, 0, 20px, mix($color-page, #000, 60%));
+		@include box-shadow(0, 0, 5px, mix($color-page, #000, 60%));
 
 		position: absolute;
 		padding: $thumb-border-top $thumb-border-right $thumb-border-bottom $thumb-border-left;
@@ -297,7 +297,7 @@ $color-inctive-button: mix($color-page, #000, 60%);
 	}
 
 	img {
-		@include box-shadow(0, 0, 20px, mix($color-page, #000, 60%));
+		@include box-shadow(0, 0, 5px, mix($color-page, #000, 60%));
 
 /*		position: absolute;*/
 		padding: $thumb-border-top $thumb-border-right $thumb-border-bottom $thumb-border-left;
