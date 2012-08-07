@@ -184,6 +184,44 @@ abstract class CodeLint {
 	}
 
 	/**
+	 * Get blame data (author and revision ID) for given file and line
+	 *
+	 * @param string $fileName file to generate blame for
+	 * @param $line file line number
+	 * @return mixed blame data
+	 */
+	protected function getBlameInfo($fileName, $line) {
+		wfProfileIn(__METHOD__);
+
+		static $cache = array(
+			'fileName' => '',
+			'lines' => array()
+		);
+
+		if ($cache['fileName'] !== $fileName) {
+			// svn blame WallHistory.class.php 2> /dev/null |  head -n 100 | tail -n 1
+			$lines = explode("\n", wfShellExec("svn blame {$fileName}"));
+
+			$cache['fileName'] = $fileName;
+			$cache['lines'] = $lines;
+		}
+
+		$blameLine = $cache['lines'][$line];
+
+		// parse blame line
+		// 666     author 	doSomething();
+		list($rev, $author, ) = preg_split('#\\s+#', trim($blameLine), 3);
+
+		$ret = array(
+			'rev' => intval($rev),
+			'author' => $author
+		);
+
+		wfProfileOut(__METHOD__);
+		return $ret;
+	}
+
+	/**
 	 * Filter out message we don't really want in the report
 	 *
 	 * @param array $error error entry reported by jslint
@@ -259,6 +297,9 @@ abstract class CodeLint {
 				if ($this->isImportantError($msg)) {
 					$entry['isImportant'] = true;
 				}
+
+				// svn blame (for the first line)
+				$entry['blame'] = $this->getBlameInfo($fileName, reset($entry['lines']));
 
 				$output['errors'][] = $entry;
 			}

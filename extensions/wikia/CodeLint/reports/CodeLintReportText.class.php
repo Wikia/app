@@ -12,7 +12,7 @@
 
 class CodeLintReportText extends CodeLintReport {
 
-	const FORMAT = "%3d | %-100s %3s | %s\n";
+	const FORMAT = "%3d | %-100s %3s | %10s | %s @ r%d\n";
 
 	/**
 	 * Return report for a given set of results
@@ -46,7 +46,9 @@ class CodeLintReportText extends CodeLintReport {
 						$n+1,
 						$entry['error'],
 						(!empty($entry['isImportant']) ? '!!!' : ''),
-						implode(',', $entry['lines'])
+						implode(',', $entry['lines']),
+						$entry['blame']['author'],
+						$entry['blame']['rev']
 					);
 				}
 			}
