@@ -4,6 +4,10 @@ var WikiaPhotoGalleryView = {
 		$().log(msg, 'WikiaPhotoGallery:view');
 	},
 
+	ajax: function(method, params, callback) {
+		return $.get(wgScript + '?action=ajax&rs=WikiaPhotoGalleryAjax&method=' + method, params, callback, 'json');
+	},
+
 	getArticle: function() {
 		return (window.skin == 'oasis') ? $('#WikiaArticle') : $('#bodyContent');
 	},
