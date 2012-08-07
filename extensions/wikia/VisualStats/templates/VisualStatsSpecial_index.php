@@ -6,11 +6,14 @@
         <li id="histogram"><a href="<?=$urlHistogram?>" title="Histogram">Histogram</a></li>
     </ul>
 </div>
-<div id="Graph"></div>
+<div id="Graph">
+    <? if ($param=="punchcard") include 'VisualStatsPunchcardContent.php'?>
+</div>
     <div id="buttons">
         <button id="wikiaButton"><?=$wikiButtonLabel?></button>
         <button id="userButton" class="secondary"><?=$userButtonLabel?></button>
     </div>
+
 
 
 <script type="text/javascript">
@@ -30,7 +33,7 @@
                     VisualStatsCommitActivity.init(parameter, data, user)
                     break;
                 case "punchcard":
-                    //this.drawPunchcard();
+                    VisualStatsPunchcard.init();
                     break;
                 case "histogram":
                     //this.drawHistogram();
