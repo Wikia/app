@@ -4,13 +4,14 @@ class SpecialSearchDigest extends SpecialPage {
 	const MODE_CSV = 'csv';
 
 	function __construct() {
-		parent::__construct( 'SearchDigest' );	
+		parent::__construct( 'SearchDigest' );
 	}
 
 	function execute( $mode ) {
+		wfProfileIn(__METHOD__);
 		global $wgOut;
 
-		$wgOut->setPageTitle( wfMsg( 'searchdigest' ) );	
+		$wgOut->setPageTitle( wfMsg( 'searchdigest' ) );
 
 		switch ( $mode ) {
 			case self::MODE_CSV:
@@ -44,6 +45,8 @@ class SpecialSearchDigest extends SpecialPage {
 
 				$wgOut->addHTML( $html );
 		}
+
+		wfProfileOut(__METHOD__);
 	}
 
 	private function setDownloadHeaders( $output ) {
@@ -112,6 +115,8 @@ class SearchDigestPager extends ReverseChronologicalPager {
 	 * Override these functions to allow for offsetting based on result number as there aren't unique indices
 	 */
 	function getPagingQueries() {
+		wfProfileIn(__METHOD__);
+
 		if ( !$this->mQueryDone ) {
 			$this->doQuery();
 		}
@@ -150,6 +155,8 @@ class SearchDigestPager extends ReverseChronologicalPager {
 				}
 			}
 		}
+
+		wfProfileOut(__METHOD__);
 		return array(
 			'prev' => $prev,
 			'next' => $next,
@@ -159,6 +166,8 @@ class SearchDigestPager extends ReverseChronologicalPager {
 	}
 
 	function reallyDoQuery( $offset, $limit, $descending ) {
+		wfProfileIn(__METHOD__);
+
 		$fname = __METHOD__ . ' (' . get_class( $this ) . ')';
 		$info = $this->getQueryInfo();
 		$tables = $info['tables'];
@@ -179,7 +188,10 @@ class SearchDigestPager extends ReverseChronologicalPager {
 			$options['OFFSET'] = intval( $offset );
 		}
 		$res = $this->mDb->select( $tables, $fields, $conds, $fname, $options, $join_conds );
-		return new ResultWrapper( $this->mDb, $res );
+		$ret = new ResultWrapper( $this->mDb, $res );
+
+		wfProfileOut(__METHOD__);
+		return $ret;
 	}
 }
 
@@ -196,6 +208,8 @@ class SearchDigestCSV {
 	}
 
 	function getCSVText() {
+		wfProfileIn(__METHOD__);
+
 		global $wgMemc, $wgCityId;
 
 		$csvText = '';
@@ -215,10 +229,12 @@ class SearchDigestCSV {
 			$csvText = $cached;
 		}
 
+		wfProfileOut(__METHOD__);
 		return $csvText;
 	}
 
 	private function doQuery() {
+		wfProfileIn(__METHOD__);
 		global $wgCityId;
 
 		// Get the date one week ago
@@ -232,6 +248,7 @@ class SearchDigestCSV {
 			array( 'ORDER BY' => 'sd_misses DESC' )
 		);
 
+		wfProfileOut(__METHOD__);
 		return $res;
 	}
 }
