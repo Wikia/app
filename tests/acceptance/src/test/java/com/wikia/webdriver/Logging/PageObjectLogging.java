@@ -21,7 +21,7 @@ public class PageObjectLogging implements WebDriverEventListener{
 
 	private By lastFindBy;
 	
-	private String reportPath = "c:/log.html";
+	private static String reportPath = "c:/log.html";
 	
 	public static void startLogging(String className)
 	{
@@ -33,7 +33,7 @@ public class PageObjectLogging implements WebDriverEventListener{
 			appendTextToFile("c:/log.html", l3);
 	}
 	
-	public void log(String command, String description, boolean success)
+	public static void log(String command, String description, boolean success)
 	{
 		String hexColor = success ? "#CCFFCC" : "#FFCCCC";
 		String s = "<tr style=\"background:"+hexColor+";\"><td>"+command+"</td><td>s"+description+"</td><td> <br/> &nbsp;</td></tr>";
