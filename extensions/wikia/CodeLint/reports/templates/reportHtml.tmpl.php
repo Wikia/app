@@ -79,8 +79,8 @@
 		<colgroup>
 			<col width="25">
 			<col width="*">
-			<col width="175">
 			<col width="250">
+			<col width="300">
 		</colgroup>
 		<thead>
 			<tr>
@@ -100,7 +100,7 @@
 		}
 ?>
 			<tr>
-				<th colspan="2"><?= $fileEntry['fileChecked'] ?> (checked in <?= $fileEntry['time'] ?> s)</th>
+				<th colspan="3"><?= $fileEntry['fileChecked'] ?> (checked in <?= $fileEntry['time'] ?> s)</th>
 				<th><a href="<?= htmlspecialchars($fileEntry['blameUrl']) ?>">Blame</a></th>
 			</tr>
 <?php
