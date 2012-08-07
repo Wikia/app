@@ -176,16 +176,26 @@ class WikiaSearch extends WikiaObject {
 		$namespace = $this->wg->Title->getNamespace();
 
 		$isVideo = false;
-		if ( $namespace == NS_FILE && ($file = $this->wf->findFile( $this->wg->Title->getText() ))
-			&& WikiaFileHelper::isVideoFile( $file )) {
+		$isImage = false;
+		if ( $namespace == NS_FILE && ($file = $this->wf->findFile( $this->wg->Title->getText() )) ) {
+
+			$detail = WikiaFileHelper::getMediaDetail( $this->wg->Title );
+
+			$isVideo = WikiaFileHelper::isVideoFile( $file );
+			$isImage = $detail['mediaType'] == 'image' && !$isVideo;
+
 			$metadata = $file->getMetadata();
-			$metadata = unserialize( $metadata );
 
-			foreach (array('description', 'movieTitleAndYear', 'videoTitle', 'keywords') as $datum) {
-				$html .= isset( $metadata[$datum] ) ? ' ' . $metadata[$datum] : '';
+			if ($metadata !== "0") {
+				$metadata = unserialize( $metadata );
+
+				$fileParams = array('description', 'keywords')
+							+ ($isVideo ? array('movieTitleAndYear', 'videoTitle') : array());
+
+				foreach ($fileParams as $datum) {
+					$html .= isset( $metadata[$datum] ) ? ' ' . $metadata[$datum] : '';
+				}
 			}
-
-			$isVideo = true;
 		}
 
 		$title = $page->getTitle()->getText();
@@ -226,6 +236,7 @@ class WikiaSearch extends WikiaObject {
 		$result['is_main_page'] = ($page->getId() == Title::newMainPage()->getArticleId() && $page->getId() != 0) ? 'true' : 'false';
 		$result['is_redirect'] = ($canonical == '') ? 'false' : 'true';
 		$result['is_video'] = $isVideo ? 'true' : 'false';
+		$result['is_image'] = $isImage ? 'true' : 'false';
 
 		if( $withMetaData ) {
 			$result = array_merge($result, $this->getPageMetaData($page));
