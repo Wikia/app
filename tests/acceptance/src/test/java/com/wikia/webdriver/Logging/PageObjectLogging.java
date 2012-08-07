@@ -89,8 +89,8 @@ public class PageObjectLogging implements WebDriverEventListener{
 	@Override
 	public void afterFindBy(By by, WebElement element, WebDriver driver) {
 		lastFindBy = by;
-		String s = "<tr style=\"background:#CCFFCC;\"><td>Found element</td><td>"+lastFindBy+"</td><td> <br/> &nbsp;</td></tr>";
-		appendTextToFile(reportPath, s);
+//		String s = "<tr style=\"background:#CCFFCC;\"><td>Found element</td><td>"+lastFindBy+"</td><td> <br/> &nbsp;</td></tr>";
+//		appendTextToFile(reportPath, s);
 
 	}
 
