@@ -66,29 +66,6 @@ CKEDITOR.plugins.add('rte-media',
 			RTE.log('VET is not enabled here - disabling "Video" button');
 		}
 
-		// check for existance of MediaUploadTool
-		if (typeof window.MediaTool == 'object') {
-			// register "Media" command
-			editor.addCommand('mediaupload', {
-				exec: function(editor) {
-					window.MediaTool.showModal.call(window.MediaTool, function(wikiText) {
-						self.addWikiText( wikiText );
-					});
-				}
-			});
-
-			// register "Media" toolbar button
-			editor.ui.addButton('MediaUpload', {
-				label: editor.lang.mut.mut,
-				title: editor.lang.mut.add,
-				className: 'RTEMUTButton',
-				command: 'mediaupload'
-			});
-		}
-		else {
-			RTE.log('MUT is not enabled here - disabling "Media" button');
-		}
-
 		// set reference to plugin object
 		RTE.mediaEditor.plugin = self;
 	},
@@ -150,22 +127,6 @@ CKEDITOR.plugins.add('rte-media',
 		]; 
          
 		RTE.overlay.add(media, standardButtons);
-    
-		if (typeof window.MediaTool == 'object') {
-
-			var buttonsWithMut = standardButtons.slice(0);
-
-			buttonsWithMut.unshift(
-			      {
-				    label: msgs['edit']+" (beta)",
-				    'class': 'RTEMediaOverlayEditBeta',
-				    callback: function(node) {
-					node.trigger('mediaupload');
-				    }
-				}
-				);
-			RTE.overlay.add(media.filter(".video"), buttonsWithMut);
-		}
     
 
 		// unbind previous events
@@ -333,32 +294,6 @@ CKEDITOR.plugins.add('rte-media',
 			// call VideoEmbedTool and provide VET with video clicked
 			if (!UserLogin.isForceLogIn()) RTE.tools.callFunction(window.VET_show,$(this));
 		});
-
-        video.bind('mediaupload.media', function(ev) {
-
-            if (!UserLogin.isForceLogIn()) {
-
-                var data = $(this).getData();
-                var editedElement = this;
-
-                var initialBasketContent = [];
-
-                window.MediaTool.callBackend('getMediaItems', {mediaList:[data.title]}, function(items) {
-
-			$.each(items, function(i, item) {
-				item.caption = data.params.caption;
-				initialBasketContent.push( item );
-			});
-			var mediaSettings = data.params;
-			if (!mediaSettings.thumbnail) mediaSettings.thumbnail = false;
-
-			window.MediaTool.showModal.call(window.MediaTool, function(wikiText) {
-				self.addWikiText( wikiText, $(editedElement) );
-			}, data.params, initialBasketContent);
-                });
-            }
-        });
-
 	},
 
 	// poll specific setup

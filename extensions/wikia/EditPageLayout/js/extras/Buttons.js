@@ -9,10 +9,6 @@
 		return typeof window.VET_show == 'function';
 	};
 
-	var checkMUT = function() {
-		return typeof window.MediaTool == 'object';
-	};
-
 	var getTextarea = function() {
 		return WikiaEditor.getInstance().getEditbox()[0];
 	};
@@ -87,21 +83,6 @@
 		clicksource: function() { VET_show({target: {id:"mw-editbutton-vet"}}); },
 		ckcommand: 'addvideo',
 		precondition: checkVET
-	};
-
-	buttons['InsertMedia'] = {
-		type: 'button',
-		labelId: 'wikia-editor-media-mut',
-		titleId: 'wikia-editor-media-mut-tooltip',
-		className: 'RTEMUTButton',
-		forceLogin: true,
-		clicksource: function() {
-			MediaTool.showModal(function(wikiText) {
-				insertTags( wikiText, '', '', getTextarea());
-			});
-		},
-		ckcommand: 'mediaupload',
-		precondition: checkMUT
 	};
 
 	buttons['SourceBold'] = {
