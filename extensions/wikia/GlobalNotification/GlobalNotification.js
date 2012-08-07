@@ -28,7 +28,9 @@ GlobalNotification = {
 			GlobalNotification.msg.html( GlobalNotification.content );
 			GlobalNotification.dom.removeClass('confirm, error, notify, warn').addClass(type);
 			// Share scroll event with WikiaFooterApp's toolbar floating (BugId:33365)
-			WikiaFooterApp.addScrollEvent();
+			if (window.WikiaFooterApp) {
+				WikiaFooterApp.addScrollEvent();
+			}
 			GlobalNotification.dom.fadeIn('slow');
 		};
 		GlobalNotification.hide( callback );

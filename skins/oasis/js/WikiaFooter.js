@@ -62,7 +62,7 @@ var WikiaFooterApp = {
 		}
 
 		// GlobalNotification uses same scroll event for performance reasons (BugId:33365)
-		if(GlobalNotification) {
+		if(window.GlobalNotification) {
 			GlobalNotification.onScroll(scrollTop);
 		}
 	}
