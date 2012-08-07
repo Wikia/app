@@ -156,7 +156,6 @@ class AdminUploadReviewHelper extends ImageReviewHelperBase {
 			),
 			array(
 				"review_start < now() - " . $timeLimit,
-				"review_end = '0000-00-00 00:00:00'",
 				'reviewer_id' => $this->wg->User->getId(),
 				'image_review_status' => ImageReviewStatuses::STATE_IN_REVIEW,
 			),
@@ -168,7 +167,6 @@ class AdminUploadReviewHelper extends ImageReviewHelperBase {
 			array('image_review_status' => ImageReviewStatuses::STATE_QUESTIONABLE),
 			array(
 				"review_start < now() - " . $timeLimit,
-				"review_end = '0000-00-00 00:00:00'",
 				'reviewer_id' => $this->wg->User->getId(),
 				'image_review_status' => ImageReviewStatuses::STATE_QUESTIONABLE_IN_REVIEW,
 			),
