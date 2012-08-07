@@ -173,8 +173,10 @@ class WikiaSearch extends WikiaObject {
 
 		$html = $this->wg->Out->getHTML();
 
+		$namespace = $this->wg->Title->getNamespace();
+
 		$isVideo = false;
-		if ( $this->wg->Title->getNamespace() == NS_FILE && ($file = $this->wf->findFile( $this->wg->Title->getText() ))
+		if ( $namespace == NS_FILE && ($file = $this->wf->findFile( $this->wg->Title->getText() ))
 			&& WikiaFileHelper::isVideoFile( $file )) {
 			$metadata = $file->getMetadata();
 			$metadata = unserialize( $metadata );
@@ -186,6 +188,24 @@ class WikiaSearch extends WikiaObject {
 			$isVideo = true;
 		}
 
+		$title = $page->getTitle()->getText();
+
+		// if it's the namespace for forum thread post... <-- 2001 (forum) 1201 (wall)
+		// @todo -- replace numbers with constants
+		if ( in_array( $namespace, array(2001, 1201) ) ){
+			$wm = WallMessage::newFromId($page->getId());
+			$wm->load();
+			if ($wm->isMain()) {
+				$title = $wm->getMetaTitle();
+			} else {
+				if ($main = $wm->getTopParentObj() and !empty($main)) {
+					$main->load();
+					$title = $main->getMetaTitle();
+				}
+			}
+		}
+		
+
 		// clear output buffer in case we want get more pages
 		$this->wg->Out->clearHTML();
 
@@ -193,7 +213,7 @@ class WikiaSearch extends WikiaObject {
 		$result['pageid'] = $page->getId();
 		$result['id'] = $result['wid'] . '_' . $result['pageid'];
 		$result['sitename'] = $this->wg->Sitename;
-		$result['title'] = $page->getTitle()->getText();
+		$result['title'] = $title;
 		$result['canonical'] = $canonical;
 		$result['html'] = html_entity_decode($html, ENT_COMPAT, 'UTF-8'); // where are the other constants?
 		$result['url'] = $page->getTitle()->getFullUrl();
