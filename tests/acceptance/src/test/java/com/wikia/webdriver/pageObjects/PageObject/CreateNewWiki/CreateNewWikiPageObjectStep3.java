@@ -5,16 +5,18 @@ import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import com.wikia.webdriver.Logging.PageObjectLogging;
 import com.wikia.webdriver.pageObjects.PageObject.BasePageObject;
 
 public class CreateNewWikiPageObjectStep3 extends BasePageObject{
 
 	@FindBy(css="li[data-theme]")
 	private WebElement themeList;
-	@FindBy(css="form[name='desc-form'] input[class='next']") 
+	@FindBy(css="li[id='ThemeWiki'] input[class='next']") 
 	private WebElement submitButton;
 
 	
@@ -28,14 +30,21 @@ public class CreateNewWikiPageObjectStep3 extends BasePageObject{
 	
 	public void selectTheme(int skinNumber)
 	{
+		waitForElementByCss("li[data-theme]");
 		List<WebElement> lista = driver.findElements(By.cssSelector("li[data-theme]"));
-		lista.get(skinNumber).click();
+		PageObjectLogging.log("selectTheme", "skin number: " + skinNumber + " selected", true);
+		Actions builder = new Actions(driver);
+		WebElement e = lista.get(skinNumber);
+		builder.click(e);
+//		builder.moveToElement(logInAjax).build().perform();
+//		lista.get(skinNumber).click();
 	}
 	
-	public CreateNewWikiPageObjectStep4 submit()
+	public NewWikiaHomePage submit()
 	{
 		submitButton.click();
-		return new CreateNewWikiPageObjectStep4(driver);
+		PageObjectLogging.log("submit", "Submit button clicked", true);
+		return new NewWikiaHomePage(driver);
 	}
 
 }

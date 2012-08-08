@@ -15,13 +15,20 @@ public class BasePageObject{
 
 	public final WebDriver driver;
 	
-	public String liveDomain = "http://www.wikia.com/";
+	protected String liveDomain = "http://www.wikia.com/";
+	protected String wikiFactoryLiveDomain = "http://community.wikia.com/wiki/Special:WikiFactory";
 	
-	public String wikiFactoryLiveDomain = liveDomain + "wiki/Special:WikiFactory";
+	public String userName = "KarolK1";
+	public String password = "123";
+	
+	public String userNameStaff = "KarolK";
+	public String passwordStaff = "123";
+	
+	public String wikiName;
 	
 	protected int timeOut = 30;
 	
-	public WebDriverWait wait;
+	private WebDriverWait wait;
 
 	
 	public BasePageObject(WebDriver driver)
@@ -31,11 +38,12 @@ public class BasePageObject{
 		driver.manage().window().maximize();
 	}
 	
-	/**
+	/*
 	 * Checks page title
-	 *
-	 ** @param title Specifies the title that you want to compare with the actual current title
-	 */
+	 * @param title 
+	 * @return true|false
+	 * */
+	
 	public boolean verifyTitle(String title)
 	{
 		String currentTitle = driver.getTitle();
@@ -46,70 +54,28 @@ public class BasePageObject{
 		return true;
 	}
 	
-	/**
-	 * Checks if the current URL contains the given String
-	 *
-	 *  @author Michal Nowierski
-	 ** @param GivenString 
-	 */
-	public boolean verifyURLcontains(String GivenString)
-	{
-		String currentURL = driver.getCurrentUrl();
-		if (currentURL.contains(GivenString))
-		{
-			return true;
-		}
-		return false;
-	}
 	
-	/**
-	 * Checks if the current URL is the given URL
-	 *
-	 *  @author Michal Nowierski
-	 ** @param GivenURL 
-	 */
-	public boolean verifyURL(String GivenURL)
-	{
-		String currentURL = driver.getCurrentUrl();
-		if (currentURL.equals(GivenURL))
-		{
-			return true;
-		}
-		return false;
-	}
-	
-	
-	/**
+	/*
 	 * Clicks on an element
-	 */
+	 * */
 	public void click(WebElement pageElem)
 	{
 		pageElem.click();
 	}
 	
-	/**
-	 * Checks if the element is visible on browser
-	 *
-	 ** @param element The elementto be checked
-	 */
-	public void waitForElementByElement(WebElement element)
-	{
-		wait.until(ExpectedConditions.visibilityOf(element));
-	}
-	
-	public void watForElementByCss(String cssSelector)
+	public void waitForElementByCss(String cssSelector)
 	{
 		
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(cssSelector)));
 	}
-	
+
 	public void waitForElementByClassName(String className)
 	{
 		
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className(className)));
 	}
 	
-	public void waitForElementByClass(String id)
+	public void waitForElementById(String id)
 	{
 		
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(id)));
@@ -139,16 +105,6 @@ public class BasePageObject{
 		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(css)));
 	}
 	
-	/**
-	 * Navigates back to the previous page 
-	 */
-	public void navigateBack() {
-		driver.navigate().back();
-	}
-	
-	
-	
-	
 	public String getTimeStamp()
 	{
 		Date time = new Date();
@@ -157,7 +113,7 @@ public class BasePageObject{
 		
 	}
 	
-
+	
 	
     
 } 

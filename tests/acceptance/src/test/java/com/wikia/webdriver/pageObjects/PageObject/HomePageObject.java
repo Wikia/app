@@ -1,5 +1,6 @@
 package com.wikia.webdriver.pageObjects.PageObject;
 
+import org.apache.http.auth.UsernamePasswordCredentials;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -8,6 +9,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
 
 
 import com.wikia.webdriver.pageObjects.PageObject.Hubs.EntertainmentHubPageObject;
@@ -62,8 +64,36 @@ public class HomePageObject extends BasePageObject{
 		
 	}
 	
-	public VideoGamesHubPageObject OpenVideoGamesHub() {
+	public void logIn()
+	{
+//		Actions builder = new Actions(driver);
+//		builder.moveToElement(logInAjax).build().perform();
+		logInAjax.click();
+		WebDriverWait wait = new WebDriverWait(driver, timeOut);
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("input[name='username']")));
+		userNameField.sendKeys(userName);
+		passwordField.sendKeys(password);
+		submitButton.click();
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("a[href='/User:"+userName+"']")));
+		
+	}
 	
+	public void logInAsStaff()
+	{
+//		Actions builder = new Actions(driver);
+//		builder.moveToElement(logInAjax).build().perform();
+		logInAjax.click();
+		WebDriverWait wait = new WebDriverWait(driver, timeOut);
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("input[name='username']")));
+		userNameField.sendKeys(userNameStaff);
+		passwordField.sendKeys(passwordStaff);
+		submitButton.click();
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("a[href='/User:"+userNameStaff+"']")));
+		
+	}
+	
+	public VideoGamesHubPageObject OpenVideoGamesHub() {
+		
 		click(OpenVideoGamesHub);
 		return new VideoGamesHubPageObject(driver);		
 	}
