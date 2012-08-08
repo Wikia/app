@@ -178,7 +178,7 @@
 		}
 
 
-		protected function getToolbarOptionName() {
+		public function getToolbarOptionName() {
 			return $this->name.'-toolbar-contents';
 		}
 		protected function getPromotionsOptionName() {
@@ -504,15 +504,15 @@
 		}
 
 		public function getBlacklist() {
-                        $out = array(
-                            'PageAction:Share',
-                            'SpecialPage:WikiaLabs',
-                        );
-                        // BugId:5497, blacklist DevInfo if not allowed
-                        if ( !F::app()->wg->user->isAllowed( 'performancestats' ) ) {
-                            $out[] = 'Action:DevInfo';
-                        }
-                        return $out;
+			$out = array(
+				'PageAction:Share',
+				'SpecialPage:WikiaLabs',
+			);
+			// BugId:5497, blacklist DevInfo if not allowed
+			if ( !F::app()->wg->user->isAllowed( 'performancestats' ) ) {
+				$out[] = 'Action:DevInfo';
+			}
+			return $out;
 		}
 
 		protected function importMyTools() {
