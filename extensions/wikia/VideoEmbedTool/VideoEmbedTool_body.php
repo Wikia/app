@@ -99,7 +99,7 @@ class VideoEmbedTool {
 
 		$tempname = 'Temp_video_'.$wgUser->getID().'_'.rand(0, 1000);
 		$title = Title::makeTitle( NS_FILE, $tempname );
-
+		$isNonPremium = false;
 		try {
 			$awf = ApiWrapperFactory::getInstance(); /* @var $awf ApiWrapperFactory */
 			$apiwrapper = $awf->getApiWrapper( $url );
@@ -107,8 +107,7 @@ class VideoEmbedTool {
 		}
 		catch (WikiaException $e) {
 
-			header('X-screen-type: error');
-			return wfMsg( 'videohandler-non-premium' );
+			$isNonPremium = true;
 		}
 
 
@@ -145,6 +144,10 @@ class VideoEmbedTool {
 				}
 			}
 			else {
+				if ( $isNonPremium ) {
+					header('X-screen-type: error');
+					return wfMsg( 'videohandler-non-premium' );
+				}
 				header('X-screen-type: error');
 				return wfMsg( 'vet-bad-url' );
 			}
