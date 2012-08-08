@@ -301,7 +301,7 @@ class BlogArticle extends Article {
 		$r = '';
 		$cat = $catView->getCat();
 
-		$dbcnt = $cat->getPageCount() - $cat->getSubcatCount() - $cat->getFileCount();
+		$dbcnt = self::blogsInCategory($cat);
 		$rescnt = count( $catView->blogs );
 		$countmsg = self::getCountMessage( $catView, $rescnt, $dbcnt, 'article' );
 
@@ -324,6 +324,65 @@ class BlogArticle extends Article {
 
 		wfProfileOut(__METHOD__);
 		return true;
+	}
+
+	static public function blogsInCategory ( $cat ) {
+		global $wgMemc;
+		$titleText = $cat->getTitle()->getText();
+		$memKey = self::getCountKey( $titleText );
+
+		$count = $wgMemc->get( $memKey );
+
+		if (empty($count)) {
+			$dbr = wfGetDB( DB_SLAVE );
+			$res = $dbr->select(
+				array('page', 'categorylinks'),
+				'count(*) as count',
+				array(
+					'page_id = cl_from',
+					'page_namespace' => array(NS_BLOG_ARTICLE, NS_BLOG_LISTING),
+					'cl_to' => $titleText,
+				),
+				__METHOD__
+			);
+
+			$count = 0;
+			if ( $res->numRows() > 0 ) {
+				while ( $row = $res->fetchObject() ) {
+					$count = $row->count;
+				}
+				$dbr->freeResult( $res );
+			}
+
+			$wgMemc->set($memKey, $count);
+		}
+
+		return $count;
+	}
+
+	/**
+	 * Hook - AfterCategoriesUpdate
+	 */
+	static public function clearCountCache ($categoryInserts, $categoryDeletes, $title) {
+		global $wgMemc;
+
+		// Clear the count cache for inserts
+		foreach ($categoryInserts as $catName => $prefix) {
+			$memKey = self::getCountKey( $catName );
+			$wgMemc->delete($memKey);
+		}
+
+		// Clear the count cache for deletes
+		foreach ($categoryDeletes as $catName => $prefix) {
+			$memKey = self::getCountKey( $catName );
+			$wgMemc->delete($memKey);
+		}
+
+		return true;
+	}
+
+	static public function getCountKey ($catName) {
+		return wfMemcKey( 'blog', 'category', 'count', $catName );
 	}
 
 	/*
