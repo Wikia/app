@@ -212,7 +212,7 @@ var SuggestModal = {
 			callback: function (html) {
 				var modal = $(html).makeModal({width: 490, onClose: SuggestModal.closeModal});
 				var wikiaForm = new WikiaForm(modal.find('form'));
-	
+				
 				// show submit button
 				SuggestModal.showSubmit(modal);
 				
@@ -308,10 +308,10 @@ var SuggestModal = {
 	},
 
 	showSubmit: function (modal) {
-		$('.WikiaForm.WikiaHubs').keyup(function () {
+		$('.WikiaForm.WikiaHubs').keyup(function() {
 			var empty = false;
 			$('.WikiaForm.WikiaHubs .required').each(function () {
-				if ($(this).is('.default-value') || $(this).find('input').val() == '' || $(this).find('textarea').val() == '') {
+				if ($(this).find('input').val() == '' || $(this).find('textarea').val() == '') {
 					empty = true;
 				}
 			});
