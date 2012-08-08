@@ -1293,81 +1293,33 @@ class WallHooksHelper {
 	 * @param ChangeList $oChangeList
 	 * @param string $r
 	 * @param array $oRCCacheEntryArray an array of RCCacheEntry instances
+	 * @param boolean $changeRecentChangesHeader a flag saying Wikia's hook if we want to change header or not
+	 * @param string $headerTitle string which will be put as a header for RecentChanges block
 	 *
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
-	public function onChangesListHeaderBlockGroup($oChangeList, &$r, &$oRCCacheEntryArray) {
+	public function onWikiaRecentChangesBlockHandlerChangeHeaderBlockGroup($oChangeList, $r, $oRCCacheEntryArray, &$changeRecentChangesHeader, $oTitle, &$headerTitle) {
 		wfProfileIn(__METHOD__);
 
-		$oRCCacheEntry = null;
+		if( $oTitle instanceof Title && in_array(MWNamespace::getSubject($oTitle->getNamespace()), F::app()->wg->WallNS) ) {
+			$changeRecentChangesHeader = true;
 
-		if ( !empty($oRCCacheEntryArray) ) {
-			$oRCCacheEntry = $oRCCacheEntryArray[0];
-			$oTitle = $oRCCacheEntry->getTitle();
-			$namespace = intval( $oRCCacheEntry->getAttribute('rc_namespace') );
-			$app = F::app();
-			if( $oTitle instanceof Title && in_array(MWNamespace::getSubject($namespace), $app->wg->WallNS)  ) {
+			$wm = F::build('WallMessage', array($oTitle));
+			$wallMsgUrl = $wm->getMessagePageUrl();
+			$wallUrl = $wm->getWallUrl();
+			$wallOwnerName = $wm->getWallOwnerName();
+			$parent = $wm->getTopParentObj();
+			$isMain = is_null($parent);
 
-				$wm = F::build('WallMessage', array($oTitle));
-				$wallMsgUrl = $wm->getMessagePageUrl();
-				$wallUrl = $wm->getWallUrl();
-				$wallOwnerName = $wm->getWallOwnerName();
-				$parent = $wm->getTopParentObj();
-				$isMain = is_null($parent);
-
-				if( !$isMain ) {
-					$wm = $parent;
-					unset($parent);
-				}
-
-				$wm->load();
-				$wallMsgTitle = $wm->getMetaTitle();
-
-				if( !is_null($oRCCacheEntry) ) {
-					$cnt = count($oRCCacheEntryArray);
-					$cntChanges = wfMsgExt( 'nchanges', array( 'parsemag', 'escape' ), $app->wg->Lang->formatNum( $cnt ) );
-
-					$userlinks = array();
-					foreach( $oRCCacheEntryArray as $id => $oRCCacheEntry ) {
-						$u = $oRCCacheEntry->userlink;
-						if( !isset($userlinks[$u]) ) {
-							$userlinks[$u] = 0;
-						}
-						$userlinks[$u]++;
-					}
-
-					$users = array();
-					foreach( $userlinks as $userlink => $count) {
-						$text = $userlink;
-						$text .= $app->wg->ContLang->getDirMark();
-						if( $count > 1 ) {
-							$text .= ' (' . $app->wg->Lang->formatNum($count) . '×)';
-						}
-						array_push($users, $text);
-					}
-
-					if ( $oRCCacheEntry->mAttribs['rc_log_type'] ) {
-						# Log entry
-						$classes = 'mw-collapsible mw-collapsed mw-enhanced-rc ';
-						$classes .= Sanitizer::escapeClass( 'mw-changeslist-log-'.$oRCCacheEntry->mAttribs['rc_log_type'].'-'.$oRCCacheEntry->mAttribs['rc_title'] );
-					} else {
-						$classes = 'mw-collapsible mw-collapsed mw-enhanced-rc ';
-						$classes .= Sanitizer::escapeClass( 'mw-changeslist-ns'.$oRCCacheEntry->mAttribs['rc_namespace'].'-'.$oRCCacheEntry->mAttribs['rc_title'] );
-					}
-
-					$vars = array(
-						'cntChanges'	=> $cntChanges,
-						'hdrtitle'		=> wfMsg('wall-recentchanges-thread-group', array(Xml::element('a', array('href' => $wallMsgUrl), $wallMsgTitle), $wallUrl, $wallOwnerName)),
-						'inx'			=> $oChangeList->rcCacheIndex,
-						'users'			=> $users,
-						'sideArrowLink' => '<a href="#" title="'.htmlspecialchars(wfMsg( 'rc-enhanced-expand' )).'">'.$oChangeList->getSideArrow().'</a>',
-						'downArrowLink' => '<a href="#" title="'.htmlspecialchars(wfMsg( 'rc-enhanced-hide' )).'">'.$oChangeList->getDownArrow().'</a>',
-						'classes' => $classes,
-					);
-
-					$r = $app->getView('Wall', 'renderRCHeaderBlock', $vars)->render();
-				}
+			if( !$isMain ) {
+				$wm = $parent;
+				unset($parent);
 			}
+
+			$wm->load();
+			$wallMsgTitle = $wm->getMetaTitle();
+			$oTitle = $wm->getTitle();
+			$headerTitle = wfMsg('wall-recentchanges-thread-group', array(Xml::element('a', array('href' => $wallMsgUrl), $wallMsgTitle), $wallUrl, $wallOwnerName));
 		}
 
 		wfProfileOut(__METHOD__);

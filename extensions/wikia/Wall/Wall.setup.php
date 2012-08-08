@@ -83,9 +83,9 @@ $app->registerHook('ChangesListInsertLogEntry', 'WallHooksHelper', 'onChangesLis
 $app->registerHook('ChangesListInsertComment', 'WallHooksHelper', 'onChangesListInsertComment');
 $app->registerHook('ArticleDoDeleteArticleBeforeLogEntry', 'WallHooksHelper', 'onArticleDoDeleteArticleBeforeLogEntry');
 $app->registerHook('PageArchiveUndeleteBeforeLogEntry', 'WallHooksHelper', 'onPageArchiveUndeleteBeforeLogEntry');
-$app->registerHook('ChangesListHeaderBlockGroup', 'WallHooksHelper', 'onChangesListHeaderBlockGroup');
 $app->registerHook('OldChangesListRecentChangesLine', 'WallHooksHelper', 'onOldChangesListRecentChangesLine');
 $app->registerHook('ChangesListMakeSecureName', 'WallHooksHelper', 'onChangesListMakeSecureName');
+$app->registerHook('WikiaRecentChangesBlockHandlerChangeHeaderBlockGroup', 'WallHooksHelper', 'onWikiaRecentChangesBlockHandlerChangeHeaderBlockGroup');
 
 $app->registerHook('ArticleDeleteComplete' , 'WallHooksHelper', 'onArticleDeleteComplete');
 
