@@ -12,9 +12,10 @@
 ini_set("include_path", dirname(__FILE__) . "/..");
 require_once('commandLine.inc');
 
-echo "\n";
+
+echo "\n---------------------\n";
 echo date("Y-m-d H:i:s");
-echo "Purging WikiaHubs pages...\n\n";
+echo " / Purging WikiaHubs pages...\n\n";
 
 foreach ($wgWikiaHubsPages as $hubGroup) {
 	foreach ($hubGroup as $hubName) {
@@ -43,8 +44,13 @@ foreach ($wgWikiaHubsPages as $hubGroup) {
 	}
 }
 
-echo "Purging WikiaHomePage cache for hubs images...\n\n";
+echo "* Purging WikiaHomePage cache for hubs images...\n";
 $app = F::app();
 
 $memKey = $app->wf->SharedMemcKey('wikiahomepage', 'hubimages', $app->wg->contLang->getCode(), WikiaHomePageController::HUBS_IMAGES_MEMC_KEY_VER);
 $app->wg->memc->set($memKey, null);
+
+
+echo "\n";
+echo date("Y-m-d H:i:s");
+echo " / Script finished running!\n\n";
