@@ -1,5 +1,7 @@
 <?php
 class UserPreferencesV2 {
+	const MASTHEAD_OPTIONS_STORAGE_ARRAY_KEY_NAME = 'mastheadOptions';
+	const MY_TOOLBAR_OPTIONS_STORAGE_ARRAY_KEY_NAME = 'myToolbarOptions';
 
 	/**
 	 * @brief This function change user preferences special page
@@ -377,14 +379,23 @@ class UserPreferencesV2 {
 	 * @param $storage - storage in which we can save some options, it will be passed in onSpecialPreferencesAfterResetUserOptions hook call
 	 */
 	public function onSpecialPreferencesBeforeResetUserOptions($preferences, &$user, &$storage) {
+		//user identity box/masthead
 		$userIdentityObject = new UserIdentityBox(F::app(), $user, 0);
-
 		$mastheadOptions = $userIdentityObject->getFullData();
 		$masthead = F::build('Masthead', array($user));
 		if(!empty($masthead->mUser->mOptionOverrides['avatar'])) {
 			$mastheadOptions['avatar'] = $masthead->mUser->mOptionOverrides['avatar'];
 		}
-		$storage['mastheadOptions'] = $mastheadOptions;
+		$storage[self::MASTHEAD_OPTIONS_STORAGE_ARRAY_KEY_NAME] = $mastheadOptions;
+
+		//customize toolbar/myToolbar
+		$skinName = RequestContext::getMain()->getSkin()->getSkinName();
+		$oasisToolbarService = new OasisToolbarService($skinName);
+		$toolbarNameInUserOptions = $oasisToolbarService->getToolbarOptionName();
+		$toolbarCurrentList = $user->getOption($oasisToolbarService->getToolbarOptionName());
+		$storage[self::MY_TOOLBAR_OPTIONS_STORAGE_ARRAY_KEY_NAME] = array(
+			$toolbarNameInUserOptions => $toolbarCurrentList,
+		);
 
 		return true;
 	}
@@ -395,11 +406,11 @@ class UserPreferencesV2 {
 	 * @param $storage - storage with info from SpecialPreferencesBeforeResetUserOptions hook call
 	 */
 	public function onSpecialPreferencesAfterResetUserOptions($preferences, &$user, &$storage) {
-		foreach ($storage['mastheadOptions'] as $optionName => $optionValue) {
-			if(!is_array($optionValue)) {
-				$user->setOption($optionName, $optionValue);
-			}
-		}
+		//user identity box/masthead
+		$this->setUserOptionByNameAndValue($user, $storage[self::MASTHEAD_OPTIONS_STORAGE_ARRAY_KEY_NAME]);
+
+		//customize toolbar
+		$this->setUserOptionByNameAndValue($user, $storage[self::MY_TOOLBAR_OPTIONS_STORAGE_ARRAY_KEY_NAME]);
 
 		return true;
 	}
@@ -413,7 +424,6 @@ class UserPreferencesV2 {
 
 		return true;
 	}
-
 
 	public function onPreferencesTrySetUserEmail( $user, $newEmail, &$result ) {
 		list( $status, $info ) = Preferences::trySetUserEmail( $user, $newEmail );
@@ -429,6 +439,14 @@ class UserPreferencesV2 {
 		$temp[$key] = $array[$key];
 		unset($array[$key]);
 		return array_merge($array, $temp);
+	}
+
+	protected function setUserOptionByNameAndValue($user, $options) {
+		foreach($options as $optionName => $optionValue) {
+			if(!is_array($optionValue)) {
+				$user->setOption($optionName, $optionValue);
+			}
+		}
 	}
 
 }
