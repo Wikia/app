@@ -36,21 +36,21 @@ public class HubBasePageObject extends BasePageObject{
 	public void ClickOnNewsTab(int TabNumber) {
 		List<WebElement> newstabs = driver.findElements(By.cssSelector("section.wikiahubs-newstabs ul.tabbernav li a"));
 		waitForElementClickableByCss("section.wikiahubs-newstabs ul.tabbernav li a");
-		PageObjectLogging.log("Click on news tab numer "+TabNumber+".", "", true);
+		PageObjectLogging.log("Click on news tab numer "+TabNumber+".", "", true, driver);
 		click(newstabs.get(TabNumber - 1));
 
 	}
 	public void RelatedVideosScrollLeft() {
-		PageObjectLogging.log("RV module: scroll left", "", true);
+		PageObjectLogging.log("RV module: scroll left", "", true, driver);
 		click(RelatedVideosScrollLeft);
 	}
 	
 	public void RelatedVideosScrollRight() {
-		PageObjectLogging.log("RV module: scroll right", "", true);
+		PageObjectLogging.log("RV module: scroll right", "", true, driver);
 		click(RelatedVideosScrollRight);
 	}
 	public HomePageObject BackToHomePage() {
-		PageObjectLogging.log("navigate to www.wikia.com", "", true);
+		PageObjectLogging.log("navigate to www.wikia.com", "", true, driver);
 		return new HomePageObject(driver);
 	}
 
@@ -64,7 +64,7 @@ public class HubBasePageObject extends BasePageObject{
 	 */
 	public void SearchFieldTypeIn(String SearchString) {
 		PageObjectLogging.log("Type " + SearchString
-				+ " String into the search field ", "", true);
+				+ " String into the search field ", "", true, driver);
 		SearchField.sendKeys(SearchString);
 		}
 
@@ -78,14 +78,14 @@ public class HubBasePageObject extends BasePageObject{
 	 * @param  SearchString  Specifies what you want to search for
 	 */
 	public void SearchButtonClick() {
-		PageObjectLogging.log("Left click on the WikiaSearch button", "", true);
+		PageObjectLogging.log("Left click on the WikiaSearch button", "", true, driver);
 		SearchButton.click();
 		
 		
 	}
 	
 	public void verifyWikiaMosaicSliderHasImages() {
-		PageObjectLogging.log("Veridy that WikiaMosaicSlider has images ", "", true);
+		PageObjectLogging.log("Veridy that WikiaMosaicSlider has images ", "", true, driver);
 		List<WebElement> WikiaMosaicSliderPanoramaImages = driver.findElements(By.cssSelector("div.wikia-mosaic-slider-panorama"));
 		List<WebElement> WikiaMosaicSliderThumbRegionImages = driver.findElements(By.cssSelector("ul.wikia-mosaic-thumb-region img"));
 		waitForElementByElement(WikiaMosaicSliderPanoramaImages.get(0));
@@ -104,7 +104,7 @@ public class HubBasePageObject extends BasePageObject{
 	 */
 	protected void SearchResultsVerifyFoundURL(String URL) {
 		PageObjectLogging.log("Verify if " + URL
-				+ " URL is one of found the results", "", true);
+				+ " URL is one of found the results", "", true, driver);
 		
 			wait.until(ExpectedConditions.visibilityOfElementLocated(By
 					.cssSelector("li.result a[href='"+URL+"']")));

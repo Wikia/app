@@ -36,50 +36,50 @@ public class SpecialFactoryPageObject extends BasePageObject
 	public void typeInDomainName(String name)
 	{
 		domainField.sendKeys(name);		
-		PageObjectLogging.log("typeInDomainName ", "Typed domain name " +name, true);
+		PageObjectLogging.log("typeInDomainName ", "Typed domain name " +name, true, driver);
 	}
 	
 	public void getConfiguration()
 	{
 		getConfigButton.click();
-		PageObjectLogging.log("getConfiguration ", "Get configuration button clicked", true);
+		PageObjectLogging.log("getConfiguration ", "Get configuration button clicked", true, driver);
 	}
 	
 	public void clickCloseWikiButton()
 	{
 		closeWikiButton.click();
-		PageObjectLogging.log("clickCloseWikiButton ", "Close wiki button clicked", true);
+		PageObjectLogging.log("clickCloseWikiButton ", "Close wiki button clicked", true, driver);
 	}
 	
 	public void deselectCreateDumpCheckBox()
 	{
 		dumpCheckBox.click();
-		PageObjectLogging.log("deselectCreateDumpCheckBox ", "Create dump checkbox deselected", true);
+		PageObjectLogging.log("deselectCreateDumpCheckBox ", "Create dump checkbox deselected", true, driver);
 	}
 	
 	public void deselectImageArchiveCheckBox()
 	{
 		imageArchiveCheckBox.click();
-		PageObjectLogging.log("deselectImageArchiveCheckBox ", "Create image archive checkbox deselected", true);
+		PageObjectLogging.log("deselectImageArchiveCheckBox ", "Create image archive checkbox deselected", true, driver);
 	}
 	
 	public void confirmClose()
 	{
 		confirmCloseButton.click();
-		PageObjectLogging.log("confirmClose ", "Close confirmation button clicked", true);
+		PageObjectLogging.log("confirmClose ", "Close confirmation button clicked", true, driver);
 	}
 	
 	public void clickClosedWikiaLink()
 	{
 		closedWikiaLink.click();
-		PageObjectLogging.log("clickClosedWikiaLink ", "Closed wikia link clicked", true);
+		PageObjectLogging.log("clickClosedWikiaLink ", "Closed wikia link clicked", true, driver);
 	}
 	
 	public void verifyWikiaClosed()
 	{
 		waitForElementById("close-title");
 		waitForElementById("close-info");
-		PageObjectLogging.log("verifyWikiaClosed ", "Closed wikia verified", true);
+		PageObjectLogging.log("verifyWikiaClosed ", "Closed wikia verified", true, driver);
 	}
 			
 }
