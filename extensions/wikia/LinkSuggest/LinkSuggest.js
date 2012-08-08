@@ -403,7 +403,7 @@ YAHOO.lang.extend(YAHOO.example.AutoCompleteTextArea, YAHOO.widget.AutoComplete,
 
 				left += YAHOO.util.Dom.getX(this._elTextbox) - YAHOO.util.Dom.getX('article');
 		}
-		var linkSuggestBoxHeight = this.getListItems().length * 23,
+		var linkSuggestBoxHeight = this.getListItems().length * 40,
 			freeBottomSpace = $('body').height() - top;
 		if (freeBottomSpace <= linkSuggestBoxHeight) {
 			top -= linkSuggestBoxHeight;
