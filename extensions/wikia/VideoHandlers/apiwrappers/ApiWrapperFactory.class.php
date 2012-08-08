@@ -43,9 +43,10 @@ class ApiWrapperFactory {
 		wfProfileIn( __METHOD__ );
 
 		if ( empty( F::app()->wg->allowNonPremiumVideos ) ) {
+
 			wfProfileOut( __METHOD__ );
-			return null;
- 		}
+			throw new WikiaException(wfMsg("videohandler-non-premium"));
+		}
 
 		$map = F::app()->wg->videoMigrationProviderMap;
 		$url = trim($url);
