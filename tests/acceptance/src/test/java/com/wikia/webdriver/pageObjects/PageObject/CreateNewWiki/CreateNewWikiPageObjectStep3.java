@@ -32,7 +32,7 @@ public class CreateNewWikiPageObjectStep3 extends BasePageObject{
 	{
 		waitForElementByCss("li[data-theme]");
 		List<WebElement> lista = driver.findElements(By.cssSelector("li[data-theme]"));
-		PageObjectLogging.log("selectTheme", "skin number: " + skinNumber + " selected", true);
+		PageObjectLogging.log("selectTheme", "skin number: " + skinNumber + " selected", true, driver);
 		Actions builder = new Actions(driver);
 		WebElement e = lista.get(skinNumber);
 		builder.click(e);
@@ -43,7 +43,7 @@ public class CreateNewWikiPageObjectStep3 extends BasePageObject{
 	public NewWikiaHomePage submit()
 	{
 		submitButton.click();
-		PageObjectLogging.log("submit", "Submit button clicked", true);
+		PageObjectLogging.log("submit", "Submit button clicked", true, driver);
 		return new NewWikiaHomePage(driver);
 	}
 

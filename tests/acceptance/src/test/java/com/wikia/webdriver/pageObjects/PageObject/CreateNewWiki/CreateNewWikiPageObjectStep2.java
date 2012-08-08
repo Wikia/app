@@ -27,20 +27,20 @@ public class CreateNewWikiPageObjectStep2 extends BasePageObject{
 	public void describeYourTopic(String description)
 	{
 		descriptionField.sendKeys(description);
-		PageObjectLogging.log("describeYourTopic", "describe your topic populated with: "+description, true);
+		PageObjectLogging.log("describeYourTopic", "describe your topic populated with: "+description, true, driver);
 	}
 	
 	public void selectCategory(String category)
 	{
 		Select dropList = new Select(wikiCategory);
 		dropList.selectByVisibleText(category);
-		PageObjectLogging.log("selectCategory", "selected "+category+" category", true);
+		PageObjectLogging.log("selectCategory", "selected "+category+" category", true, driver);
 	}
 	
 	public CreateNewWikiPageObjectStep3 submit()
 	{
 		submitButton.click();
-		PageObjectLogging.log("submit", "Submit button clicked", true);
+		PageObjectLogging.log("submit", "Submit button clicked", true, driver);
 		return new CreateNewWikiPageObjectStep3(driver);
 	}
 
