@@ -128,6 +128,7 @@
 	right: 0;
 	top: 0;
 	white-space: nowrap;
+	z-index: 2; // place it over caption
 }
 
 .RTEMediaMenu span {
