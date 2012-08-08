@@ -326,6 +326,8 @@ class TopListItem extends TopListBase {
 				"wkuservote" => 1
 			)
 		);
+		$oContext->setUser( F::app()->wg->User );
+
 		$oApi = new ApiMain( $oContext, F::app()->wg->EnableWriteAPI );
 
 		$oApi->execute();
