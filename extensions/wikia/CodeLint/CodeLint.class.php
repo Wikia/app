@@ -200,7 +200,7 @@ abstract class CodeLint {
 
 		if ($cache['fileName'] !== $fileName) {
 			// svn blame WallHistory.class.php 2> /dev/null |  head -n 100 | tail -n 1
-			$lines = explode("\n", wfShellExec("svn blame --use-merge-history {$fileName}"));
+			$lines = explode("\n", wfShellExec("svn blame {$fileName}"));
 
 			$cache['fileName'] = $fileName;
 			$cache['lines'] = $lines;
