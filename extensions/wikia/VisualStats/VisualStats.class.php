@@ -183,4 +183,55 @@ class VisualStats extends WikiaObject {
         return $out;
 
     }
+
+    public function getDataForHistogram($username){
+        $this->app->wf->profileIn( __METHOD__ );
+
+        $key = $this->app->wf->MemcKey('VisualStats', 'histogram', $username );
+        $data = $this->app->wg->memc->get($key);
+        if (is_array($data)){
+            $out = $data;
+        }
+        else
+        {
+            $result = $this->performQuery($username);
+            $dbr = $result['db'];
+            $userData = $result['user'];
+            $wikiaData = $result['wikia'];
+
+        for ($i = 0; $i <= 23; $i++){
+            $wikiaHistogram[$i] = 0;
+            $userHistogram[$i] = 0;
+        }
+
+            $wikiaHistogramMax = 0;
+            $userHistogramMax = 0;
+
+            while ($row = $dbr->fetchObject($wikiaData)){
+
+                $tempHour = substr($row->date, 8, 2);
+                if ($tempHour[0]=='0') $tempHour = (int)$tempHour[1];
+                $wikiaHistogram[$tempHour]+= $row->count;
+                if ($wikiaHistogram[$tempHour] > $wikiaHistogramMax){
+                    $wikiaHistogramMax = $wikiaHistogram[$tempHour];
+                }
+            };
+            if ($username != "0"){
+                while ($row = $dbr->fetchObject($userData)){
+                    $tempHour = substr($row->date, 8, 2);
+                    if ($tempHour[0]=='0') $tempHour = (int)$tempHour[1];
+                    $userHistogram[$tempHour]+= $row->count;
+                    if ($userHistogram[$tempHour] > $userHistogramMax){
+                        $userHistogramMax = $userHistogram[$tempHour];
+                    }
+                };
+            }
+            $out = array('wikiaHistogram' => array('data' => $wikiaHistogram, 'max' =>$wikiaHistogramMax), 'userHistogram' => array('data' => $userHistogram, 'max' =>$userHistogramMax));
+            $this->app->wg->memc->set($key, $out, 600);
+        }
+        $this->app->wf->profileOut( __METHOD__ );
+
+        return $out;
+
+    }
 }

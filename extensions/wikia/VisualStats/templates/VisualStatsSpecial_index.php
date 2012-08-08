@@ -38,7 +38,7 @@
                     VisualStatsPunchcard.init(data, user, color);
                     break;
                 case "histogram":
-                    //this.drawHistogram();
+                    VisualStatsHistogram.init(data, user)
                     break;
             }
         });

@@ -13,6 +13,7 @@ class VisualStatsSpecialController extends WikiaSpecialPageController {
     public function index() {
         $this->response->addAsset('extensions/wikia/VisualStats/js/VisualStatsCommitActivity.js');
         $this->response->addAsset('extensions/wikia/VisualStats/js/VisualStatsPunchcard.js');
+        $this->response->addAsset('extensions/wikia/VisualStats/js/VisualStatsHistogram.js');
         $this->response->addAsset('extensions/wikia/VisualStats/js/VisualStatsCommon.js');
         $this->response->addAsset('extensions/wikia/VisualStats/js/d3.v2.js');
         $this->response->addAsset('extensions/wikia/VisualStats/css/VisualStats_style.css');
@@ -45,7 +46,7 @@ class VisualStatsSpecialController extends WikiaSpecialPageController {
                 $this->setVal( 'data', $this->businessLogic->getDataForPunchcard($username));
                 break;
             case "histogram":
-                //$this->setVal( 'data', $this->businessLogic->getDataForHistogram($username));
+                $this->setVal( 'data', $this->businessLogic->getDataForHistogram($username));
                 break;
             default:
                 $this->setVal( 'data', $this->businessLogic->getDataForCommitActivity($username));
