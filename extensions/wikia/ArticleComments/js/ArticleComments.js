@@ -591,8 +591,7 @@ if (ArticleComments.loadOnDemand) {
 	$(function() {
 		var hash = window.location.hash,
 			permalink = /^#comm-/.test(hash),
-			$comments = $('#article-comments'),
-			$commentsWrapper = $('.article-comments-wrapper');
+			$comments = $('#WikiaArticleComments');
 
 		var belowTheFold = function() {
 			return $comments.offset().top >= ($window.scrollTop() + $window.height());
@@ -600,7 +599,11 @@ if (ArticleComments.loadOnDemand) {
 
 		var loadAssets = function() {
 			$.when(
-				$.getResources([$.getSassCommonURL('extensions/wikia/MiniEditor/css/MiniEditor.scss')]),
+				$.getResources([
+					$.getSassCommonURL('skins/oasis/css/core/ArticleComments.scss'),
+					$.getSassCommonURL('extensions/wikia/MiniEditor/css/MiniEditor.scss'),
+					$.getSassCommonURL('extensions/wikia/MiniEditor/css/ArticleComments/ArticleComments.scss')
+				]),
 				$.nirvana.sendRequest({
 					controller: 'ArticleCommentsController',
 					method: 'Content',
@@ -611,12 +614,10 @@ if (ArticleComments.loadOnDemand) {
 						page: $comments.data('page')
 					},
 					callback: function(content) {
-						$comments.hide().html(content);
+						$comments.removeClass('loading').html(content);
 					}
 				})
 			).then(function() {
-				$commentsWrapper.removeClass('loading');
-				$comments.fadeIn();
 				ArticleComments.init();
 
 				if (permalink) {

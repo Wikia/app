@@ -348,39 +348,39 @@
 		border-bottom: solid 1px $color-page-border;
 		margin-bottom: 5px;
 		padding-bottom: 5px;
-		
+
 		th {
 			width: 25%;
 			text-align: right;
 			padding-right: 10px;
 			vertical-align: top;
 		}
-		
+
 		td {
 			margin-left: 8px;
 			padding-right: 10px;
 		}
 	}
-	
+
 	/** user interview **/
 	.user-interview-profile-container {
 		@include clearfix;
-		
+
 		text-align: left;
 		td {
 			padding-right: 20px;
 		}
-		
+
 		margin: {
 			top: 0px;
 			left: 10px;
 			bottom: 10px;
 		}
-		
+
 		.avatar {
 			float: left;
-		}	
-		
+		}
+
 		.odd blockquote {
 			background: $color-speech-bubble;
 			&:after {
@@ -393,7 +393,7 @@
 				border-color: transparent $color-speech-bubble-alt $color-speech-bubble-alt transparent;
 			}
 		}
-		
+
 		blockquote {
 			@include border-radius(5px);
 			border: 1px solid $color-page-border;
@@ -422,12 +422,12 @@
 				overflow: hidden;
 				width: 553px;
 			}
-			
+
 			&.question {
 				padding-top: 10px;
 			}
 		}
-		
+
 		blockquote.answer:before {
 			border-color: transparent $color-page-border $color-page-border transparent;
 			border-style: solid;
@@ -453,7 +453,7 @@
 		h3 {
 			font: {
 				size: 12px;
-				weight: bold;	
+				weight: bold;
 			}
 		}
 	}
@@ -612,4 +612,13 @@ table.wikitable {
 			right: auto;
 		}
 	}
+}
+
+// Needed for article comments lazy loading
+.WikiaArticleComments.loading {
+	background: url(/skins/common/images/ajax.gif) no-repeat 50% 50%; /* $wgCdnStylePath */
+	border-top: 1px solid $color-page;
+	height: 16px;
+	margin: 10px;
+	padding-top: 10px;
 }

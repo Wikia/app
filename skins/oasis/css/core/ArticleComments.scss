@@ -59,13 +59,6 @@
 		display: none;
 	}
 
-	.article-comments-wrapper {
-		&.loading {
-			background: url(/skins/common/images/ajax.gif) no-repeat 50% 50%; /* $wgCdnStylePath */
-			min-height: 50px;
-		}
-	}
-
 	.article-comments {
 		border-top: 1px solid $color-page-border;
 		margin-top: 10px;
