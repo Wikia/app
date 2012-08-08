@@ -419,11 +419,13 @@ var WikiBuilder = {
 			controller: 'CreateNewWiki',
 			method: 'CreateWiki',
 			data: {
-				wName: WikiBuilder.wikiName.val(),
-				wDomain: WikiBuilder.wikiDomain.val(),
-				wLanguage: WikiBuilder.wikiLanguage.find('option:selected').val(),
-				wCategory: WikiBuilder.wikiCategory.find('option:selected').val(),
-				wAnswer: Math.floor(WikiBuilder.answer)
+				data: {
+					wName: WikiBuilder.wikiName.val(),
+					wDomain: WikiBuilder.wikiDomain.val(),
+					wLanguage: WikiBuilder.wikiLanguage.find('option:selected').val(),
+					wCategory: WikiBuilder.wikiCategory.find('option:selected').val(),
+					wAnswer: Math.floor(WikiBuilder.answer)
+				}
 			},
 			callback: function(res) {
 				WikiBuilder.createStatus = res.status;
