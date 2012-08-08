@@ -100,7 +100,13 @@ class VideoEmbedTool {
 		$tempname = 'Temp_video_'.$wgUser->getID().'_'.rand(0, 1000);
 		$title = Title::makeTitle( NS_FILE, $tempname );
 
-		$awf = ApiWrapperFactory::getInstance(); /* @var $awf ApiWrapperFactory */
+		try {
+			$awf = ApiWrapperFactory::getInstance(); /* @var $awf ApiWrapperFactory */
+		} catch (WikiaException $e) {
+
+			header('X-screen-type: error');
+			return wfMsg( 'vet-bad-url' );
+		}
 		$apiwrapper = $awf->getApiWrapper( $url );
 
 		if( !empty($apiwrapper) ) { // try ApiWrapper first - is it from partners?
