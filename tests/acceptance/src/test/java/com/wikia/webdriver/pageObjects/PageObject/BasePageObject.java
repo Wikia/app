@@ -5,9 +5,9 @@ import java.util.Date;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.BeforeClass;
 
 
 
@@ -17,7 +17,7 @@ public class BasePageObject{
 	
 	public String liveDomain = "http://www.wikia.com/";
 	
-	public String wikiFactoryLiveDomain = liveDomain + "wiki/Special:WikiFactory";
+	public String wikiFactoryLiveDomain = "http://community.wikia.com/wiki/Special:WikiFactory";
 	
 	public String userName = "KarolK1";
 	public String password = "123";
@@ -171,6 +171,8 @@ public class BasePageObject{
 		return String.valueOf(timeCurrent);
 		
 	}
+	
+	
 	
 
 	

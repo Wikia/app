@@ -3,6 +3,7 @@ package com.wikia.webdriver.pageObjects.PageObject;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -36,8 +37,12 @@ public class HomePageObject extends BasePageObject{
 	public HomePageObject(WebDriver driver) 
 	{
 		super(driver);
-		driver.get(liveDomain);
 		PageFactory.initElements(driver, this);
+	}
+	
+	public void openHomePage()
+	{
+		driver.get(liveDomain);
 	}
 	
 	public CreateNewWikiPageObjectStep1 StartAWikia()
@@ -48,17 +53,22 @@ public class HomePageObject extends BasePageObject{
 	
 	public void logIn(String userName, String password)
 	{
-//		Actions builder = new Actions(driver);
-//		builder.moveToElement(logInAjax).build().perform();
 		logInAjax.click();
 		WebDriverWait wait = new WebDriverWait(driver, timeOut);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("input[name='username']")));
 		userNameField.sendKeys(userName);
 		passwordField.sendKeys(password);
 		submitButton.click();
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("a[href='/User:"+userName+"']")));
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("a[href='/User:"+userName+"']")));		
+	}
+	
+	public void logOut(String userName)
+	{
+		driver.get("http://community.wikia.com/wiki/Special:UserLogout?returnto=User "+userName);
 		
 	}
+	
+	
 	
 	public void logIn()
 	{
