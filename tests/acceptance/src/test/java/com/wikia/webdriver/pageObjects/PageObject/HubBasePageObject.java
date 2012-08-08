@@ -14,7 +14,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 
 import com.wikia.webdriver.Logging.PageObjectLogging;
-import com.wikia.webdriver.pageObjects.PageObject.Hubs.VideoGamesHub;
+import com.wikia.webdriver.pageObjects.PageObject.Hubs.VideoGamesHubPageObject;
 
 public class HubBasePageObject extends BasePageObject{
 	//Author Michal Nowierski
@@ -59,6 +59,7 @@ public class HubBasePageObject extends BasePageObject{
 	 * <p>
 	 * This method is global for all WikiaSearch forms on all of the wikis
 	 *
+	 * @author Michal Nowierski
 	 * @param  SearchString  Specifies what you want to search for
 	 */
 	public void SearchFieldTypeIn(String SearchString) {
@@ -73,6 +74,7 @@ public class HubBasePageObject extends BasePageObject{
 	 * This method is global for all WikiaSearch forms on all of the wikis
 	 * The method should be invoked after SearchFieldType method
 	 *
+	 * @author Michal Nowierski
 	 * @param  SearchString  Specifies what you want to search for
 	 */
 	public void SearchButtonClick() {
@@ -97,12 +99,13 @@ public class HubBasePageObject extends BasePageObject{
 	 * <p>
 	 * The method should be invoked after SearchButtonClick method
 	 *
+	 * @author Michal Nowierski
 	 * @param  URL  Specifies what URL you expect as 100% sure result of searching
 	 */
 	protected void SearchResultsVerifyFoundURL(String URL) {
 		PageObjectLogging.log("Verify if " + URL
 				+ " URL is one of found the results", "", true);
-			
+		
 			wait.until(ExpectedConditions.visibilityOfElementLocated(By
 					.cssSelector("li.result a[href='"+URL+"']")));
 

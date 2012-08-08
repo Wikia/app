@@ -6,9 +6,9 @@ import org.testng.annotations.Test;
 
 import com.wikia.webdriver.DriverProvider.DriverProvider;
 import com.wikia.webdriver.pageObjects.PageObject.HomePageObject;
-import com.wikia.webdriver.pageObjects.PageObject.Hubs.EntertainmentHub;
-import com.wikia.webdriver.pageObjects.PageObject.Hubs.LifestyleHub;
-import com.wikia.webdriver.pageObjects.PageObject.Hubs.VideoGamesHub;
+import com.wikia.webdriver.pageObjects.PageObject.Hubs.EntertainmentHubPageObject;
+import com.wikia.webdriver.pageObjects.PageObject.Hubs.LifestyleHubPageObject;
+import com.wikia.webdriver.pageObjects.PageObject.Hubs.VideoGamesHubPageObject;
 
 public class HubsTests {
 
@@ -20,7 +20,7 @@ public class HubsTests {
 		HomePageObject home = new HomePageObject(driver);
 		
 		
-		VideoGamesHub VGHub = home.OpenVideoGamesHub();
+		VideoGamesHubPageObject VGHub = home.OpenVideoGamesHub();
 		VGHub.verifyURL("http://www.wikia.com/Video_Games");
 		
 		VGHub.verifyWikiaMosaicSliderHasImages();
@@ -33,7 +33,7 @@ public class HubsTests {
 		home = VGHub.BackToHomePage();
 		
 		
-		LifestyleHub LHub = home.OpenLifestyleHub();
+		LifestyleHubPageObject LHub = home.OpenLifestyleHub();
 		LHub.verifyURL("http://www.wikia.com/Lifestyle");
 		
 		LHub.verifyWikiaMosaicSliderHasImages();
@@ -46,7 +46,7 @@ public class HubsTests {
 		
 		home = LHub.BackToHomePage();
 		
-		EntertainmentHub EHub = home.OpenEntertainmentHub();
+		EntertainmentHubPageObject EHub = home.OpenEntertainmentHub();
 		EHub.verifyURL("http://www.wikia.com/Entertainment");
 		
 		EHub.verifyWikiaMosaicSliderHasImages();
