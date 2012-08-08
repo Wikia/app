@@ -69,18 +69,18 @@ class WatchSubPagesHelper {
 	static public function NotifyOnSubPageChange( $watchers, $title, $editor, $notificationTimeoutSql ) {
 		// Gets parent data
 		$arrTitle = explode( '/' , $title->getDBkey() );
-		
+
 		if ( empty($arrTitle) ) {
 			return true;
 		}
-		
-		// make Title		
+
+		// make Title
 		$t = reset( $arrTitle );
 		$newTitle = Title::newFromDBkey( $t );
 		if ( ! ( $newTitle instanceof Title ) ) {
 			return true;
 		}
-		
+
 		$parentOnlyWatchers = array();
 		$dbw = wfGetDB( DB_MASTER );
 		$res = $dbw->select( array( 'watchlist' ),
@@ -100,19 +100,19 @@ class WatchSubPagesHelper {
 			$tmpUser = new User();
 			$tmpUser->setId( intval( $row->wl_user ) );
 			$tmpUser->loadFromId();
-			
+
 			$userToggles = $tmpUser->getToggles();
-			WatchSubPagesHelper::AddToUserMenu( &$userToggles );
+			WatchSubPagesHelper::AddToUserMenu( $userToggles );
 			if ( $tmpUser->getBoolOption( 'watchlistsubpages' ) ) {
 				$parentpageWatchers[] = (integer)$row->wl_user;
 			}
-			
+
 			unset( $tmpUser );
 		}
 
 		// Updates parent watchlist timestamp for $parentOnlyWatchers.
 		$parentOnlyWatchers = array_diff( $parentpageWatchers, $watchers );
-		
+
 		$wl = WatchedItem::fromUserTitle( $editor, $newTitle );
 		$wl->updateWatch( $parentOnlyWatchers, $timestamp );
 
