@@ -1301,7 +1301,7 @@ class WallHooksHelper {
 	public function onWikiaRecentChangesBlockHandlerChangeHeaderBlockGroup($oChangeList, $r, $oRCCacheEntryArray, &$changeRecentChangesHeader, $oTitle, &$headerTitle) {
 		wfProfileIn(__METHOD__);
 
-		if( $oTitle instanceof Title && in_array(MWNamespace::getSubject($oTitle->getNamespace()), F::app()->wg->WallNS) ) {
+		if( in_array(MWNamespace::getSubject($oTitle->getNamespace()), F::app()->wg->WallNS) ) {
 			$changeRecentChangesHeader = true;
 
 			$wm = F::build('WallMessage', array($oTitle));
