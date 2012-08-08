@@ -6,13 +6,14 @@ var UploadPhotos = {
 	status: false,
 	libinit: false,
 	init: function() {
+		// Special:NewFiles and LatestPhotos module
 		if(!($(".upphotoslogin").exists())) {
-			$(".upphotos")
-				.click(UploadPhotos.showDialog)
-				.tooltip({
-					delay: { show: 500, hide: 100 }
-				});
+			$(".upphotos").click(UploadPhotos.showDialog);
 		}
+		// LatestPhotos module only
+		$('#LatestPhotosModule').find('.upphotos, .upphotoslogin').tooltip({
+			delay: { show: 500, hide: 100 }
+		});
 	},
 	showDialog: function(evt) {
 		if(evt) {

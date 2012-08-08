@@ -9,7 +9,7 @@
 
 	// "Add a photo" button
 	if (!empty($isNewFiles) && !empty($wg->EnableUploads)) {
-		echo Wikia::specialPageLink('Upload', 'oasis-add-photo', (!$isUserLoggedIn ? 'wikia-button upphotoslogin' :'wikia-button upphotos'), 'blank.gif', 'oasis-add-photo', 'sprite photo');
+		echo Wikia::specialPageLink('Upload', 'oasis-add-photo', (!$isUserLoggedIn ? 'wikia-button upphotoslogin' :'wikia-button upphotos'), 'blank.gif', 'oasis-add-photo-to-wiki', 'sprite photo');
 	}
 
 	// comments & like button
