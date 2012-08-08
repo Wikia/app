@@ -2,8 +2,9 @@
 function WidgetSlideshow_init(id, widget) {
 	// preload images
 	$('#widget_' + id + '-images').find('li').each( function() {
-		$(this)
-			.css('backgroundImage', 'url(' + $(this).attr('title') + ')')
+		var node = $(this);
+		node
+			.css('backgroundImage', 'url(' + node.attr('title') + ')')
 			.removeAttr('title');
 	});
 

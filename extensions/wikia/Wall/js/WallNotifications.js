@@ -46,7 +46,7 @@ var WallNotifications = $.createClass(Object, {
 			$(document).scroll( this.proxy( this.documentScroll ) );
 			$('#WallNotificationsReminder a').click( function() {
 				var destination = 0;
-				if($.browser.msie) {
+				if($.browser.msie) { /* JSlint ignore */
 					$("html:not(:animated),body:not(:animated)").css({ scrollTop: destination-20});
 				} else {
 					$("html:not(:animated),body:not(:animated)").animate({ scrollTop: destination-20}, 500 );
