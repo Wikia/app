@@ -217,7 +217,7 @@ class GameGuidesModel{
 					'cityId'=> $this->app->wg->CityId,
 				) );
 
-				$found = $resultSet->getRealResultsFound();
+				$found = $resultSet->getResultsFound();
 				$count = 0;
 				$ret['textResults'] = array();
 
