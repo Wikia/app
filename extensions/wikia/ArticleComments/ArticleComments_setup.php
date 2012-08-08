@@ -58,8 +58,8 @@ if (!empty($wgEnableWallExt) || !empty($wgEnableArticleCommentsExt) || !empty($w
 	$wgHooks['RecentChange_save'][] = 'ArticleComment::watchlistNotify';
 	// recentchanges
 	$wgHooks['ChangesListMakeSecureName'][] = 'ArticleCommentList::makeChangesListKey';
-	$wgHooks['ChangesListHeaderBlockGroup'][] = 'ArticleCommentList::setHeaderBlockGroup';
 	$wgHooks['ChangesListInsertArticleLink'][] = 'ArticleCommentList::ChangesListInsertArticleLink';
+	$wgHooks['WikiaRecentChangesBlockHandlerChangeHeaderBlockGroup'][] = 'ArticleCommentList::setHeaderBlockGroup';
 	// special::watchlist
 	$wgHooks['ComposeCommonSubjectMail'][] = 'ArticleComment::ComposeCommonMail';
 	$wgHooks['ComposeCommonBodyMail'][] = 'ArticleComment::ComposeCommonMail';

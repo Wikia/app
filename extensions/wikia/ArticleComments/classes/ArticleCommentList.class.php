@@ -723,6 +723,8 @@ class ArticleCommentList {
 	/**
 	 * Hook
 	 *
+	 * @desc Changes $secureName in MW ChangesList.php #L815 so Article Comments and extensions which are based on AC (as long as those extensions doesn't have their own hook)
+	 *
 	 * @param ChangeList $oChangeList -- instance of ChangeList class
 	 * @param String $currentName    -- current value of RC key
 	 * @param RCCacheEntry $oRCCacheEntry  -- instance of RCCacheEntry class
@@ -732,7 +734,6 @@ class ArticleCommentList {
 	 *
 	 * @return true -- because it's a hook
 	 */
-	//TODO: review - blogs only?
 	static public function makeChangesListKey( $oChangeList, &$currentName, $oRCCacheEntry ) {
 		global $wgEnableGroupedArticleCommentsRC, $wgEnableBlogArticles;
 		wfProfileIn( __METHOD__ );
@@ -744,8 +745,7 @@ class ArticleCommentList {
 		$oTitle = $oRCCacheEntry->getTitle();
 		$namespace = $oTitle->getNamespace();
 
-		$allowed = !( $wgEnableBlogArticles && in_array($namespace, array(NS_BLOG_ARTICLE, NS_BLOG_ARTICLE_TALK)) );
-		if (!is_null($oTitle) && MWNamespace::isTalk($namespace) && ArticleComment::isTitleComment($oTitle) && $allowed) {
+		if (!is_null($oTitle) && MWNamespace::isTalk($namespace) && ArticleComment::isTitleComment($oTitle) ) {
 			$parts = ArticleComment::explode($oTitle->getText());
 			if ($parts['title'] != '') {
 				$currentName = 'ArticleComments' . $parts['title'];
@@ -762,81 +762,47 @@ class ArticleCommentList {
 	 * @param ChangeList $oChangeList -- instance of ChangeList class
 	 * @param String $header    -- current value of RC key
 	 * @param Array of RCCacheEntry $oRCCacheEntryArray  -- array of instance of RCCacheEntry classes
+	 * @param boolean $changeRecentChangesHeader a flag saying Wikia's hook if we want to change header or not
+	 * @param string $headerTitle string which will be put as a header for RecentChanges block
 	 *
 	 * @static
 	 * @access public
 	 *
 	 * @return true -- because it's a hook
 	 */
-	static public function setHeaderBlockGroup($oChangeList, &$header, Array /*of oRCCacheEntry*/ &$oRCCacheEntryArray) {
-		global $wgLang, $wgContLang, $wgEnableGroupedArticleCommentsRC, $wgEnableWallExt, $wgStylePath;
+	static public function setHeaderBlockGroup($oChangeList, $header, Array /*of oRCCacheEntry*/ $oRCCacheEntryArray, &$changeRecentChangesHeader, $oTitle, &$headerTitle) {
+		global $wgEnableGroupedArticleCommentsRC, $wgEnableWallExt;
+		$namespace = $oTitle->getNamespace();
 
 		if ( empty($wgEnableGroupedArticleCommentsRC) ) {
 			return true;
 		}
 
-		$oRCCacheEntry = null;
-		if ( !empty($oRCCacheEntryArray) ) {
-			$oRCCacheEntry = $oRCCacheEntryArray[0];
-		}
+		if( !is_null($oTitle)
+			&& MWNamespace::isTalk($namespace)
+			&& ArticleComment::isTitleComment($oTitle)
+			&& ( empty($wgEnableWallExt) || (!empty($wgEnableWallExt) && !in_array(MWNamespace::getSubject($namespace), F::app()->wg->WallNS)) )
+		) {
+			$parts = ArticleComment::explode($oTitle->getFullText());
 
-		if ( !is_null($oRCCacheEntry) ) {
-			$oTitle = $oRCCacheEntry->getTitle();
-			$namespace = $oTitle->getNamespace();
-			$timestamp = null;
+			if ($parts['title'] != '') {
+				$changeRecentChangesHeader = true;
 
-			if ( !is_null($oTitle) && MWNamespace::isTalk($oTitle->getNamespace()) && ArticleComment::isTitleComment($oTitle)) {
-				$parts = ArticleComment::explode($oTitle->getFullText());
+				$title = Title::newFromText($parts['title']);
+				$namespace = $title->getNamespace();
+				$title = Title::newFromText($title->getText(), MWNamespace::getSubject($namespace));
 
-				if ($parts['title'] != '') {
-					$cnt = count($oRCCacheEntryArray);
-
-					$userlinks = array();
-					foreach ( $oRCCacheEntryArray as $id => $oRCCacheEntry ) {
-			 			$u = $oRCCacheEntry->userlink;
-						if ( !isset( $userlinks[$u] ) ) {
-							$userlinks[$u] = 0;
-						}
-						$userlinks[$u]++;
-						if ( is_null( $timestamp ) ) $timestamp = $oRCCacheEntry->timestamp;
-					}
-
-					$users = array();
-					foreach( $userlinks as $userlink => $count) {
-						$text = $userlink;
-						$text .= $wgContLang->getDirMark();
-						if ( $count > 1 ) {
-							$text .= ' (' . $wgLang->formatNum( $count ) . '×)';
-						}
-						array_push( $users, $text );
-					}
-
-					$cntChanges = wfMsgExt( 'nchanges', array( 'parsemag', 'escape' ), $wgLang->formatNum( $cnt ) );
-					$title = Title::newFromText($parts['title']);
-					$namespace = $title->getNamespace();
-					$title = Title::newFromText($title->getText(), MWNamespace::getSubject($namespace));
-
-					if ((defined('NS_BLOG_ARTICLE') && $namespace == NS_BLOG_ARTICLE) ||
-						defined('NS_BLOG_ARTICLE_TALK') && $namespace == NS_BLOG_ARTICLE_TALK ) {
-						$messageKey = 'article-comments-rc-blog-comments';
-					} else {
-						$messageKey = 'article-comments-rc-comments';
-					}
-
-					$vars = array (
-							'cntChanges'	=> $cntChanges,
-							'hdrtitle' 		=> wfMsgExt($messageKey, array('parseinline'), $title->getPrefixedText()),
-							'inx'			=> $oChangeList->rcCacheIndex,
-							'users'			=> $users,
-							'wgStylePath'	=> $wgStylePath,
-							'title'			=> $title,
-							'timestamp'		=> $timestamp
-					);
-
-					$header = F::app()->getView('ArticleComments', 'RCHeaderBlock', $vars)->render();
+				if( (defined('NS_BLOG_ARTICLE') && $namespace == NS_BLOG_ARTICLE) ||
+					defined('NS_BLOG_ARTICLE_TALK') && $namespace == NS_BLOG_ARTICLE_TALK ) {
+					$messageKey = 'article-comments-rc-blog-comments';
+				} else {
+					$messageKey = 'article-comments-rc-comments';
 				}
+
+				$headerTitle = wfMsgExt($messageKey, array('parseinline'), $title->getPrefixedText());
 			}
 		}
+
 		return true;
 	} // end setHeaderBlockGroup()
 
