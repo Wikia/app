@@ -803,7 +803,7 @@ class ArticleComment {
 			$params = array(
 				'controller' => 'ArticleCommentsController',
 				'method' => 'Content',
-				'format' => 'json',
+				'format' => 'html',
 				'articleId' => $title->getArticleId(),
 			);
 
