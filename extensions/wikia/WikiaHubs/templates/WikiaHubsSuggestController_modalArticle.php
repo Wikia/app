@@ -5,7 +5,7 @@
 		'class' => 'WikiaHubs',
 		'inputs' => array(
 			array(
-				'class' => 'articleurl default-value',
+				'class' => 'articleurl',
 				'type' => 'text',
 				'name' => 'articleurl',
 				'isRequired' => true,

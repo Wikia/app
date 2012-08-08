@@ -5,7 +5,7 @@
 		'class' => 'WikiaHubs',
 		'inputs' => array(
 			array(
-				'class' => 'videourl default-value',
+				'class' => 'videourl',
 				'type' => 'text',
 				'name' => 'videourl',
 				'isRequired' => true,
@@ -15,7 +15,7 @@
 				)
 			),
 			array(
-				'class' => 'wikiname default-value',
+				'class' => 'wikiname',
 				'type' => 'text',
 				'name' => 'wikiname',
 				'isRequired' => true,
