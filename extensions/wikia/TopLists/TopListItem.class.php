@@ -74,6 +74,8 @@ class TopListItem extends TopListBase {
 					"wkvote" => 3
 				)
 			);
+			$oContext->setUser( F::app()->wg->User );
+
 			$oApi = new ApiMain( $oContext, F::app()->wg->EnableWriteAPI );
 
 			$oApi->execute();
@@ -180,6 +182,7 @@ class TopListItem extends TopListBase {
 				"wktimestamps" => 1
 			)
 		);
+		$oContext->setUser( F::app()->wg->User );
 		$oApi = new ApiMain( $oContext, F::app()->wg->EnableWriteAPI );
 
 		$oApi->execute();
