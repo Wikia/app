@@ -7,9 +7,10 @@ class ArticleCommentsController extends WikiaController {
 
 		if (class_exists('ArticleCommentInit') && ArticleCommentInit::ArticleCommentCheck()) {
 			$isMobile = $this->app->checkSkin( 'wikiamobile' );
+			$isLoadingOnDemand = !empty( $this->wg->ArticleCommentsLoadOnDemand ) && !$isMobile;
 
+			// for non-JS version !!! (used also for Monobook and WikiaMobile)
 			if ($this->wg->Request->wasPosted()) {
-				// for non-JS version !!! (used also for Monobook and WikiaMobile)
 				$sComment = $this->wg->Request->getVal( 'wpArticleComment', false );
 				$iArticleId = $this->wg->Request->getVal( 'wpArticleId', false );
 				$sSubmit = $this->wg->Request->getVal( 'wpArticleSubmit', false );
@@ -44,21 +45,36 @@ class ArticleCommentsController extends WikiaController {
 				}
 			}
 
-			$this->getCommentsData( $this->wg->Title, $this->wg->request->getInt( 'page', 1 ) );
+			$this->page = $this->wg->request->getVal( 'page', 1 );
 
-			if ( !empty( $this->wg->ArticleCommentsLoadOnDemand ) ) {
+			if ( $isLoadingOnDemand ) {
 				$this->response->setJsVar( 'wgArticleCommentsLoadOnDemand', true );
-			}
 
-			if ( $isMobile ) {
-				$this->forward( __CLASS__, 'WikiaMobileIndex', false );
+			} else {
+				$this->getCommentsData( $this->wg->Title, $this->page );
+
+				if ( $isMobile ) {
+					$this->forward( __CLASS__, 'WikiaMobileIndex', false );
+
+				// Required style assets
+				} else {
+					$this->response->addAsset('skins/oasis/css/core/ArticleComments.scss');
+					$this->response->addAsset('extensions/wikia/MiniEditor/css/MiniEditor.scss');
+					$this->response->addAsset('extensions/wikia/MiniEditor/css/ArticleComments/ArticleComments.scss');
+				}
 			}
 		}
 
 		$this->wf->ProfileOut(__METHOD__);
 	}
 
+	/**
+	 * The content for an article page. This is included on the index (for the current title)
+	 * if lazy loading is disabled, otherwise it is requested via AJAX.
+	 */
 	public function executeContent() {
+		$this->wf->profileIn( __METHOD__ );
+
 		$articleId = $this->request->getVal( 'articleId', null );
 		$page = $this->request->getVal( 'page', 1 );
 
@@ -70,12 +86,14 @@ class ArticleCommentsController extends WikiaController {
 		}
 
 		$this->getCommentsData( $title, $page );
+
+		$this->wf->profileIn( __METHOD__ );
 	}
 
 	/**
 	 * Overrides the main template for the WikiaMobile skin
 	 *
-	 * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com?
+	 * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
 	 **/
 	public function executeWikiaMobileIndex() {
 		/** render WikiaMobile template**/
@@ -91,7 +109,7 @@ class ArticleCommentsController extends WikiaController {
 	/**
 	 * Overrides the template for one comment item for the WikiaMobile skin
 	 *
-	 * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com?
+	 * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
 	 **/
 	public function executeWikiaMobileComment() {/** render WikiaMobile template**/}
 
@@ -99,7 +117,7 @@ class ArticleCommentsController extends WikiaController {
 	 * Renders the contents of a page of comments including post button/form and prev/next page
 	 * used in the WikiaMobile skin to deliver the first page of comments via AJAX and any page of comments for non-JS browsers
 	 *
-	 * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com?
+	 * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
 	 **/
 	public function executeWikiaMobileCommentsPage() {
 		$this->wf->profileIn( __METHOD__ );
