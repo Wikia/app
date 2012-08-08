@@ -56,17 +56,18 @@
                 })(),
                 lastScrollTop = null,
                 updateSize = function() {
+					var node = $(this);
 					
                     // Prepare the clone:
                     clone.height(0).width(textarea.outerWidth()).val($(this).val()).scrollTop(10000);
 					
                     // Find the height of text:
                     var scrollTop = Math.max(clone.scrollTop(), origHeight) + settings.extraSpace,
-                        toChange = $(this).add(clone);
+                        toChange = node.add(clone);
                         
                     // Check for mins:
-                    var focus = $(this).hasClass('focus') ? true : false;
-                    var content = $(this).val().length > 0 && !$(this).hasClass('placeholder') ? true : false;
+                    var focus = node.hasClass('focus') ? true : false;
+                    var content = node.val().length > 0 && !node.hasClass('placeholder') ? true : false;
                     if ( scrollTop < settings.min ) scrollTop = settings.min;
                     if ( focus && scrollTop < settings.minFocus ) scrollTop = settings.minFocus;
                     if ( content && scrollTop < settings.minContent ) scrollTop = settings.minContent;
@@ -80,7 +81,7 @@
 					
                     // Check for limit:
                     if ( scrollTop >= settings.limit ) {
-                        $(this).css('overflow-y','');
+						node.css('overflow-y','');
                         if(diff < 100) // do not return if diff is large (probably a copy-paste)
                         	return;
                         else
