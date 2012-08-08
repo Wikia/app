@@ -9,12 +9,12 @@ import org.openqa.selenium.support.PageFactory;
 
 import com.wikia.webdriver.pageObjects.PageObject.HubBasePageObject;
 
-public class VideoGamesHub extends HubBasePageObject {
+public class LifestyleHubPageObject extends HubBasePageObject {
 
 
 	
 	
-	public VideoGamesHub(WebDriver driver) {
+	public LifestyleHubPageObject(WebDriver driver) {
 		super(driver);
 		PageFactory.initElements(driver, this);
 	}

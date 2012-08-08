@@ -49,6 +49,7 @@ public class BasePageObject{
 	/**
 	 * Checks if the current URL contains the given String
 	 *
+	 *  @author Michal Nowierski
 	 ** @param GivenString 
 	 */
 	public boolean verifyURLcontains(String GivenString)
@@ -64,6 +65,7 @@ public class BasePageObject{
 	/**
 	 * Checks if the current URL is the given URL
 	 *
+	 *  @author Michal Nowierski
 	 ** @param GivenURL 
 	 */
 	public boolean verifyURL(String GivenURL)

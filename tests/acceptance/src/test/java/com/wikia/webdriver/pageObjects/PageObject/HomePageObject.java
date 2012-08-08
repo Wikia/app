@@ -10,10 +10,10 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 
-import com.wikia.webdriver.pageObjects.PageObject.Hubs.EntertainmentHub;
-import com.wikia.webdriver.pageObjects.PageObject.Hubs.LifestyleHub;
+import com.wikia.webdriver.pageObjects.PageObject.Hubs.EntertainmentHubPageObject;
+import com.wikia.webdriver.pageObjects.PageObject.Hubs.LifestyleHubPageObject;
 import com.wikia.webdriver.pageObjects.PageObject.CreateNewWiki.CreateNewWikiPageObjectStep1;
-import com.wikia.webdriver.pageObjects.PageObject.Hubs.VideoGamesHub;
+import com.wikia.webdriver.pageObjects.PageObject.Hubs.VideoGamesHubPageObject;
 
 public class HomePageObject extends BasePageObject{
 
@@ -62,20 +62,20 @@ public class HomePageObject extends BasePageObject{
 		
 	}
 	
-	public VideoGamesHub OpenVideoGamesHub() {
+	public VideoGamesHubPageObject OpenVideoGamesHub() {
 	
 		click(OpenVideoGamesHub);
-		return new VideoGamesHub(driver);		
+		return new VideoGamesHubPageObject(driver);		
 	}
-	public EntertainmentHub OpenEntertainmentHub() {
+	public EntertainmentHubPageObject OpenEntertainmentHub() {
 		
 		click(OpenEntertainmentHub);
-		return new EntertainmentHub(driver);		
+		return new EntertainmentHubPageObject(driver);		
 	}
-	public LifestyleHub OpenLifestyleHub() {
+	public LifestyleHubPageObject OpenLifestyleHub() {
 		
 		click(OpenLifestyleHub);
-		return new LifestyleHub(driver);		
+		return new LifestyleHubPageObject(driver);		
 	}
 
 }
