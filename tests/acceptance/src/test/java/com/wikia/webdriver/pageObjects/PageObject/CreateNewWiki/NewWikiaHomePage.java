@@ -3,6 +3,7 @@ package com.wikia.webdriver.pageObjects.PageObject.CreateNewWiki;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 
+import com.wikia.webdriver.Logging.PageObjectLogging;
 import com.wikia.webdriver.pageObjects.PageObject.BasePageObject;
 
 public class NewWikiaHomePage extends BasePageObject{
@@ -23,6 +24,7 @@ public class NewWikiaHomePage extends BasePageObject{
 		waitForElementByCss("section#WikiWelcomeWrapper");
 		waitForElementByCss("div#WikiWelcome");
 		waitForElementByCss("div.WikiWelcome");		
+		PageObjectLogging.log("waitForCongratulationsLightBox ", "Congratulations lightbox verified", true, driver);
 	}
 	
 	

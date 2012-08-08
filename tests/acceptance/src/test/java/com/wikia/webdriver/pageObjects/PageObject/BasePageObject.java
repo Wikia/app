@@ -9,6 +9,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.BeforeClass;
 
+import com.wikia.webdriver.Logging.PageObjectLogging;
+
 
 
 public class BasePageObject{

@@ -9,6 +9,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import com.wikia.webdriver.Logging.PageObjectLogging;
 import com.wikia.webdriver.pageObjects.PageObject.CreateNewWiki.CreateNewWikiPageObjectStep1;
 import com.wikia.webdriver.pageObjects.PageObject.Hubs.EntertainmentHubPageObject;
 import com.wikia.webdriver.pageObjects.PageObject.Hubs.LifestyleHubPageObject;
@@ -94,7 +95,8 @@ public class HomePageObject extends BasePageObject{
 		userNameField.sendKeys(userNameStaff);
 		passwordField.sendKeys(passwordStaff);
 		submitButton.click();
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("a[href='/User:"+userNameStaff+"']")));
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("a[href='/wiki/User:"+userNameStaff+"']")));
+		PageObjectLogging.log("logInAsStaff ", "Staff user logged in", true, driver);
 		
 	}
 	

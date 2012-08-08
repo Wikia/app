@@ -21,9 +21,9 @@ public class PageObjectLogging implements WebDriverEventListener{
 
 	private By lastFindBy;
 	
-	private static int imageCounter = 0;
+	private static long imageCounter;
 	private static String reportPath = "."+File.separator+"logs"+File.separator;
-	private static String screenPath = reportPath + "screenshots"+File.separator+"screenshot" + imageCounter;
+	private static String screenPath = reportPath + "screenshots"+File.separator+"screenshot";
 	private static String logFileName = "log.html";
 	private static String logPath = reportPath + logFileName;
 	
@@ -31,7 +31,7 @@ public class PageObjectLogging implements WebDriverEventListener{
 	
 	public static void startLogging(String className)
 	{
-			
+			imageCounter = 0; 
 			String l1 = "<html><head><meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\"><style>td { border-top: 1px solid grey; } </style></head><body>";
 			String l2 = "<h1>Class: <em>"+className+"</em></h1>";
 			String l3 = "<table>";
@@ -42,10 +42,11 @@ public class PageObjectLogging implements WebDriverEventListener{
 	
 	public static void log(String command, String description, boolean success, WebDriver driver)
 	{
-		captureScreenshot(screenPath, driver);
+		captureScreenshot(screenPath+imageCounter, driver);
 		String hexColor = success ? "#CCFFCC" : "#FFCCCC";
-		String s = "<tr style=\"background:"+hexColor+";\"><td>"+command+"</td><td>"+description+"</td><td> <br/> &nbsp;</td></tr>";
+		String s = "<tr style=\"background:"+hexColor+";\"><td>"+command+"</td><td>"+description+"</td><td> <br/><a href='screenshots/screenshot"+imageCounter+".png'>Screenshot</a></td></tr>";
 		appendTextToFile(logPath, s);
+		imageCounter +=1;
 	}
 	
 
@@ -111,7 +112,7 @@ public class PageObjectLogging implements WebDriverEventListener{
 	@Override
 	public void afterClickOn(WebElement element, WebDriver driver) {
 		
-		String s = "<tr style=\"background:#CCFFCC;\"><td>click</td><td>"+lastFindBy+"</td><td> <br/> &nbsp;</td></tr>";
+		String s = "<tr style=\"background:#CCFFCC;\"><td>click</td><td>"+lastFindBy+"</td><td> <br/><a href='screenshots/screenshot"+imageCounter+".png'>Screenshot</a></td></tr>";
 		appendTextToFile(logPath, s);
 
 		System.out.println("afterClick");
@@ -143,12 +144,14 @@ public class PageObjectLogging implements WebDriverEventListener{
 	}
 
 	@Override
-	public void onException(Throwable throwable, WebDriver driver) {
-		
+	public void onException(Throwable throwable, WebDriver driver) 
+	{
+		captureScreenshot(screenPath+imageCounter, driver);
 		String stackTrace = Throwables.getStackTraceAsString(throwable);
-		String s1 = "<tr style=\"background:#FFCCCC;\"><td>error</td><td>"+stackTrace+"</td><td> <br/> &nbsp;</td></tr>";
+		String s1 = "<tr style=\"background:#FFCCCC;\"><td>error</td><td>"+stackTrace+"</td><td> <br/><a href='screenshots/screenshot"+imageCounter+".png'>Screenshot</a></td></tr>";
 				
 		appendTextToFile(logPath, s1);
+		imageCounter +=1;
 				
 		System.out.println(throwable.toString());
 		
