@@ -562,7 +562,7 @@ class MultiUploadForm extends UploadForm {
 		$out->addScriptFile( 'edit.js' );
 
 		// changed
-		$out->addScriptFile( "$wgScriptPath/extensions/MultiUpload/multiupload.js" );
+		$out->addScriptFile( "$wgExtensionsPath/MultiUpload/multiupload.js" );
 		$newscriptVars = array(
 			'wgMaxUploadFiles' => MultipleUpload::getMaxUploadFiles(),
 			'wgFileExtensions' => $wgFileExtensions
