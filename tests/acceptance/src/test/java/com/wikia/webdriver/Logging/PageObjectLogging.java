@@ -5,8 +5,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import net.sourceforge.htmlunit.corejs.javascript.tools.shell.Global;
-
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
@@ -15,29 +13,39 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.events.WebDriverEventListener;
 
+import com.google.common.base.Throwables;
+
 
 
 public class PageObjectLogging implements WebDriverEventListener{
 
 	private By lastFindBy;
 	
-	private static String reportPath = "c:/log.html";
+	private static int imageCounter = 0;
+	private static String reportPath = "."+File.separator+"logs"+File.separator;
+	private static String screenPath = reportPath + "screenshots"+File.separator+"screenshot" + imageCounter;
+	private static String logFileName = "log.html";
+	private static String logPath = reportPath + logFileName;
+	
+	
 	
 	public static void startLogging(String className)
 	{
+			
 			String l1 = "<html><head><meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\"><style>td { border-top: 1px solid grey; } </style></head><body>";
 			String l2 = "<h1>Class: <em>"+className+"</em></h1>";
 			String l3 = "<table>";
-			appendTextToFile("c:/log.html", l1);
-			appendTextToFile("c:/log.html", l2);
-			appendTextToFile("c:/log.html", l3);
+			appendTextToFile(logPath, l1);
+			appendTextToFile(logPath, l2);
+			appendTextToFile(logPath, l3);
 	}
 	
-	public static void log(String command, String description, boolean success)
+	public static void log(String command, String description, boolean success, WebDriver driver)
 	{
+		captureScreenshot(screenPath, driver);
 		String hexColor = success ? "#CCFFCC" : "#FFCCCC";
 		String s = "<tr style=\"background:"+hexColor+";\"><td>"+command+"</td><td>"+description+"</td><td> <br/> &nbsp;</td></tr>";
-		appendTextToFile(reportPath, s);
+		appendTextToFile(logPath, s);
 	}
 	
 
@@ -52,7 +60,7 @@ public class PageObjectLogging implements WebDriverEventListener{
 	public void afterNavigateTo(String url, WebDriver driver) {
 		System.out.println("After navigate to " + url);
 		String s = "<tr style=\"background:#CCFFCC;\"><td>Navigate to</td><td>"+url+"</td><td> <br/> &nbsp;</td></tr>";
-		appendTextToFile(reportPath, s);
+		appendTextToFile(logPath, s);
 		
 	}
 
@@ -104,7 +112,7 @@ public class PageObjectLogging implements WebDriverEventListener{
 	public void afterClickOn(WebElement element, WebDriver driver) {
 		
 		String s = "<tr style=\"background:#CCFFCC;\"><td>click</td><td>"+lastFindBy+"</td><td> <br/> &nbsp;</td></tr>";
-		appendTextToFile(reportPath, s);
+		appendTextToFile(logPath, s);
 
 		System.out.println("afterClick");
 		
@@ -136,6 +144,12 @@ public class PageObjectLogging implements WebDriverEventListener{
 
 	@Override
 	public void onException(Throwable throwable, WebDriver driver) {
+		
+		String stackTrace = Throwables.getStackTraceAsString(throwable);
+		String s1 = "<tr style=\"background:#FFCCCC;\"><td>error</td><td>"+stackTrace+"</td><td> <br/> &nbsp;</td></tr>";
+				
+		appendTextToFile(logPath, s1);
+				
 		System.out.println(throwable.toString());
 		
 	}
@@ -164,7 +178,7 @@ public class PageObjectLogging implements WebDriverEventListener{
 			}
 		}
 
-	public String captureScreenshot(String outputFilePath, WebDriver driver) {
+	public static String captureScreenshot(String outputFilePath, WebDriver driver) {
 		if (!outputFilePath.endsWith(".png"))
 			outputFilePath = outputFilePath + ".png";
 		File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
