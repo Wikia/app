@@ -199,7 +199,10 @@ $.store.drivers = {
 		},
 		set: function( key, value )
 		{
-			window.localStorage.setItem( key, value );
+			// BugID: 44030 silent localStorage error: QUOTA_EXCEEDED_ERR
+			try {
+				window.localStorage.setItem( key, value );
+			} catch(error) {}
 		},
 		del: function( key )
 		{
