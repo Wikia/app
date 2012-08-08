@@ -37,12 +37,12 @@
 							</li>
 						<? endif; ?>
 						
-						<? if( $notifyeveryone ): ?>
+						<? if( $canNotifyeveryone ): ?>
 							<li>
 								<a href="#" class="edit-notifyeveryone" data-dir="1"> <?= wfMsg('wall-message-notifyeveryone'); ?> </a>
 							</li>
 						<? endif; ?>
-						<? if( $unnotifyeveryone ): ?>
+						<? if( $canUnnotifyeveryone ): ?>
 							<li>
 								<a href="#" class="edit-notifyeveryone" data-mode="0"> <?= wfMsg('wall-message-unnotifyeveryone'); ?> </a>
 							</li>

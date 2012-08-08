@@ -1,5 +1,5 @@
 <? if( $userBlocked === false ): ?>
-	<li class="SpeechBubble new-reply" <?php echo ($showReplyForm ? '' : 'style="display:none"') ?>>
+	<li class="SpeechBubble new-reply" >
 		<? if ( $wg->EnableMiniEditorExtForWall ):
 			echo $app->getView( 'MiniEditorController', 'Header', array(
 				'attributes' => array(

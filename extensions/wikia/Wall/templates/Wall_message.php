@@ -39,6 +39,7 @@
 			<? endif ?>
 		</a>
 	</div>
+	
 	<blockquote class="speech-bubble-message">
 		<? if(!$isreply): ?>
 			<?php if($isWatched): ?>
@@ -60,16 +61,11 @@
 				<?php endif; ?>
 			</div>
 		<?php endif; ?>	
-		
 		<? if ( $wg->EnableMiniEditorExtForWall ):
-			echo $app->getView( 'MiniEditorController', 'Header', array(
-				'attributes' => array(
-					'data-min-height' => 100,
-					'data-max-height' => 400
-				)
-			))->render();
+			echo $app->renderPartialCached( 'MiniEditorController', 'Header', 'Wall_message', array(
+				'attributes' => array( 'data-min-height' => 100, 'data-max-height' => 400 )
+			));
 		endif; ?>
-		
 		<? if(!$isreply): ?>
 			<div class="msg-title"><a href="<?= $fullpageurl; ?>"><? echo $feedtitle ?></a></div>
 		<? endif; ?>
@@ -82,13 +78,13 @@
 			<?php endif; ?>
 		</div>
 		<? if ( $wg->EnableMiniEditorExtForWall ):
-			echo $app->getView( 'MiniEditorController', 'Editor_Header' )->render();
+			echo $app->renderPartialCached( 'MiniEditorController', 'Editor_Header', 'Wall_message' );
 		endif; ?>
 		<div class="msg-body" id="WallMessage_<?= $id ?>">
 			<? echo $body ?>
 		</div>
 		<? if ( $wg->EnableMiniEditorExtForWall ):
-			echo $app->getView( 'MiniEditorController', 'Editor_Footer' )->render();
+			echo $app->renderPartialCached( 'MiniEditorController', 'Editor_Footer', 'Wall_message' );
 		endif; ?>
 		<div class="msg-toolbar">
 			<div class="timestamp">
@@ -103,22 +99,18 @@
 						<span><?= $fmt_timestamp ?></span>
 					<?php endif; ?>
 				</a>
+	
 				<div class="buttonswrapper">
 					<?= $app->renderView( 'WallController', 'messageButtons', array('comment' => $comment)); ?>
 				</div>
 			</div>
-			<div class="edit-buttons sourceview">
-				<button class="wikia-button cancel-edit cancel-source"><?php echo wfMsg('wall-button-done-source'); ?></button>
-			</div>
-			<div class="edit-buttons edit" id="WallMessage_<?= $id ?>Buttons" data-space-type="buttons">
-				<button class="wikia-button save-edit"><?php echo wfMsg('wall-button-save-changes'); ?></button>
-				<button class="wikia-button cancel-edit secondary"><?php echo wfMsg('wall-button-cancel-changes'); ?></button>
-			</div>
+			<?= $app->renderPartialCached( 'WallController', 'messageEditButtons', 'Wall_message' ); ?>
 		</div>
 		<? if ( $wg->EnableMiniEditorExtForWall ):
-			echo $app->getView( 'MiniEditorController', 'Footer' )->render();
+			echo $app->renderPartialCached( 'MiniEditorController', 'Footer', 'Wall_message' );
 		endif; ?>
 	</blockquote>
+	
 	<? if(!$isreply): ?>
 		<ul class="replies">
 			<? if(!empty($replies)): ?>
@@ -136,7 +128,7 @@
 					<? $i++; ?>
 				<? endforeach; ?>
 			<? endif; ?>
-			<?= $app->renderView( 'WallController', 'reply', array('showReplyForm' => $showReplyForm )); ?>
+			<?= $app->renderViewCached( 'WallController', 'reply', 'Wall_message'.$showReplyForm, array('showReplyForm' => $showReplyForm )); ?>
 		</ul>
 	<? endif; ?>
 </li>

@@ -342,7 +342,7 @@ class Wall {
 	}
 
 	private function getWallThreadListKey() {
-		return  wfMemcKey(__CLASS__ ,'wall-threadlist-key', $this->mTitle->getDBkey(), $this->mTitle->getNamespace(), 'v4');
+		return  wfMemcKey(__CLASS__ ,'wall-threadlist-key', $this->mTitle->getDBkey(), $this->mTitle->getNamespace(), 'v5');
 	}
 	
 	private function getCache() {
