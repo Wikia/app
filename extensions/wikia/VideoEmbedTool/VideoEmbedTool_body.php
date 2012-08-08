@@ -102,12 +102,15 @@ class VideoEmbedTool {
 
 		try {
 			$awf = ApiWrapperFactory::getInstance(); /* @var $awf ApiWrapperFactory */
-		} catch (WikiaException $e) {
+			$apiwrapper = $awf->getApiWrapper( $url );
+
+		}
+		catch (WikiaException $e) {
 
 			header('X-screen-type: error');
-			return wfMsg( 'vet-bad-url' );
+			return wfMsg( 'videohandler-non-premium' );
 		}
-		$apiwrapper = $awf->getApiWrapper( $url );
+
 
 		if( !empty($apiwrapper) ) { // try ApiWrapper first - is it from partners?
 			$provider = $apiwrapper->getMimeType();
