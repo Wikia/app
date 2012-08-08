@@ -71,13 +71,13 @@ CKEDITOR.plugins.add('rte-overlay',
 		var caption = overlay.children().eq(1),
 			positionCaption = parseInt(position.top) + parseInt(caption.css('top')) + 16 /* caption height */;
 
-		if (positionCaption < RTE.tools.getEditorHeight()) {
+		// reposition caption, because overlay isn't always aligned with top of image
+		// eg. top part of the image is hidden above the viewport top (BugId: 43646|
+		var captionMarginTop = Math.min(parseInt(origTopPosition),0);
+		caption.css('margin-top',captionMarginTop+'px');
+
+		if (positionCaption + captionMarginTop < RTE.tools.getEditorHeight()) {
 			caption.show();
-		} else {
-			// reposition caption, because overlay isn't always aligned with the of image
-			// eg. top part of the image is hidden above the viewport top (BugId: 43646|
-			var captionMarginTop = Math.min(parseInt(origTopPosition),0);
-			caption.css('margin-top',captionMarginTop+'px');
 		}
 
 		// show all overlays
