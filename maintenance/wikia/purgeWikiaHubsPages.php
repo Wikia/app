@@ -12,6 +12,8 @@
 ini_set("include_path", dirname(__FILE__) . "/..");
 require_once('commandLine.inc');
 
+echo "\n";
+echo date("Y-m-d H:i:s");
 echo "Purging WikiaHubs pages...\n\n";
 
 foreach ($wgWikiaHubsPages as $hubGroup) {
