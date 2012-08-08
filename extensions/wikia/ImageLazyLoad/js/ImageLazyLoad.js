@@ -4,7 +4,7 @@
 
 $(function() {
 	// it's a global, it should be a global
-	ImgLzy = {
+	var ImgLzy = {
 		cache: [],
 		timestats: 0,
 		lastScrollTop: 0,
@@ -33,13 +33,13 @@ $(function() {
 		},
 
 		verifyCache: function() {
-			if (this.cache.length == 0) return;
+			if( this.cache.length == 0 ) { return; }
 			// make sure that position of elements in the cache didn't change
 			var lastidx = this.cache.length - 1;
 			var randidx = Math.floor(Math.random() * lastidx);
 			var checkidx = [lastidx, randidx];
 			var changed = false;
-			for( i in checkidx ) {
+			for( var i in checkidx ) {
 				var idx = checkidx[i];
 				if( idx in this.cache ) {
 					var pos = this.cache[idx][1].offset().top;
@@ -75,8 +75,9 @@ $(function() {
 			scrollSpeed = Math.min(scrollSpeed, 2000)*3 + 500;
 			this.lastScrollTop = scrollTop;
 			var scrollBottom = scrollTop + $(window).height() + scrollSpeed;
-			var scrollTop = scrollTop - scrollSpeed;
-			for (idx in this.cache) {
+			scrollTop = scrollTop - scrollSpeed;
+			var onload = function() { this.classname += " lzyLoaded"; };
+			for (var idx in this.cache) {
 				var cacheEl = this.cache[idx];
 				var el = cacheEl[0];
 				var $el = cacheEl[1];
@@ -84,7 +85,7 @@ $(function() {
 				var elBottom = cacheEl[3];
 				if( (scrollTop < elTop && scrollBottom > elTop) || (scrollTop < elBottom && scrollBottom > elBottom) ) {
 					$el.addClass('lzyTrns');
-					el.onload = function() { this.style.opacity = 1; };
+					el.onload = onload;
 					el.src = $el.data('src');
 					$el.removeClass('lzy');
 					delete this.cache[idx];
@@ -96,4 +97,6 @@ $(function() {
 	}
 
 	ImgLzy.init();
+
+	window.ImgLzy = ImgLzy;
 });
