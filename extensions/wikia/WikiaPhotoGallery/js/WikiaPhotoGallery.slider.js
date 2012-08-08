@@ -22,12 +22,14 @@ var WikiaPhotoGallerySlider = {
 			node.css('left', parseInt(node.css('left')) - (620 * WikiaPhotoGallerySlider.initialImageId), 10);
 		});
 
+		var currentImage = $('#wikiaPhotoGallery-slider-' + sliderId + '-' + WikiaPhotoGallerySlider.initialImageId);
+
 		//select nav
-		$('#wikiaPhotoGallery-slider-' + sliderId + '-' + WikiaPhotoGallerySlider.initialImageId).find('.nav').addClass('selected');
+		currentImage.find('.nav').addClass('selected');
 
 		//show description
-		$('#wikiaPhotoGallery-slider-' + sliderId + '-' + WikiaPhotoGallerySlider.initialImageId).find('.description').show();
-		$('#wikiaPhotoGallery-slider-' + sliderId + '-' + WikiaPhotoGallerySlider.initialImageId).find('.description-background').show();
+		currentImage.find('.description').show();
+		currentImage.find('.description-background').show();
 
 		//bind events
 		$('#wikiaPhotoGallery-slider-body-' + sliderId + ' .nav').click(function() {
@@ -42,7 +44,6 @@ var WikiaPhotoGallerySlider = {
 
 		$('#wikiaPhotoGallery-slider-body-' + sliderId).show();
 
-		
 		//only slideshows with more than one item should animate
 		if ($('#wikiaPhotoGallery-slider-body-' + sliderId).find('ul').children().length > 1) {
 			this.timer = setInterval(this.slideshow, 7000);
