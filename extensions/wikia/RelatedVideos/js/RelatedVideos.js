@@ -110,12 +110,13 @@ var RelatedVideos = {
 	scroll: function( param, callback ) {
 		//setup variables
 
+		var scroll_by, anim_time;
 		if( this.onRightRail ) {
-			var scroll_by = parseInt( $('.group',this.rvModule).outerWidth(true) );
-			var anim_time = 300;
+			scroll_by = parseInt( $('.group',this.rvModule).outerWidth(true) );
+			anim_time = 300;
 		} else {
-			var scroll_by = parseInt( $('.item',this.rvModule).outerWidth(true) * 3 );
-			var anim_time = 500;
+			scroll_by = parseInt( $('.item',this.rvModule).outerWidth(true) * 3 );
+			anim_time = 500;
 		}
 		//scroll_by = scroll_by * param;
 
@@ -588,7 +589,7 @@ var RelatedVideos = {
 		RelatedVideos.scroll(
 			scrollLength,
 			function(){
-				$( html ).css('display', 'inline-block')
+				$( html ).css('display', 'inline-block') /* JSlint ignore */
 					.prependTo( $('.container',RelatedVideos.rvModule) )
 					.fadeOut( 0 )
 					.fadeIn( 'slow', function(){
