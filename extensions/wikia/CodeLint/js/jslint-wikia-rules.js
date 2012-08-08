@@ -46,6 +46,7 @@ exports.rules  = [
 				case 'top':
 				case 'bottom':
 				case 'visibility':
+				case 'backgroundImage':
 					return false;
 
 				default:
