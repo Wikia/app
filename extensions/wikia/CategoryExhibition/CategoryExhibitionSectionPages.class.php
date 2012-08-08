@@ -7,11 +7,11 @@ class CategoryExhibitionSectionPages extends CategoryExhibitionSection {
 
 	public $urlParameter = 'page'; // contains section url variable that stores pagination
 	public $templateName = 'page';
-	
+
 	public function getSectionHTML(){
 		global $wgCategoryExhibitionPagesSectionRows, $wgContentNamespaces;
 		$this->loadPaginationVars();
-		$oTmpl = $this->getTemplateForNameSpace( array( 500, NS_FILE, NS_VIDEO, NS_CATEGORY ), $wgCategoryExhibitionPagesSectionRows * 4, true );
+		$oTmpl = $this->getTemplateForNameSpace( $this->getExcludes(), $wgCategoryExhibitionPagesSectionRows * 4, true );
 		return $this->executeTemplate( $oTmpl );
 	}
 
@@ -21,11 +21,30 @@ class CategoryExhibitionSectionPages extends CategoryExhibitionSection {
 		$this->isFromAjax = true;
 		$this->paginatorPosition = $paginatorPosition;
 		$this->sUrl = $sUrl;
-		$oTmpl = $this->getTemplateForNameSpace( array( 500, NS_FILE, NS_VIDEO, NS_CATEGORY ), $wgCategoryExhibitionPagesSectionRows * 4, true );
+		$oTmpl = $this->getTemplateForNameSpace( $this->getExcludes(), $wgCategoryExhibitionPagesSectionRows * 4, true );
 		return $this->executeTemplate( $oTmpl );
 	}
 
 	protected function getTitleForElement( $oTitle ){
 		return $oTitle->getPrefixedText();
+	}
+
+	protected function updateExcludes() {
+		$excludes = array (
+			500, NS_FILE, NS_VIDEO, NS_CATEGORY
+		);
+
+		// exclude 700 (NS_TOPLIST), 701 (NS_TOPLIST_TALK)
+		// if TopList extension which defines them is disabled
+		if(empty(F::app()->wg->enableTopListsExt)) {
+			if(!in_array(700,$this->excludes)) {
+				$excludes []= 700;
+			}
+			if(!in_array(701,$this->excludes)) {
+				$excludes []= 701;
+			}
+		}
+
+		return $excludes;
 	}
 }
