@@ -1,16 +1,6 @@
 //as fast as possible to avoid screen flickering
 //document.documentElement.className += ' js';
 
-//analytics
-WikiaTracker.trackEvent(
-	'trackingevent',
-	{
-		ga_category: 'wikiamobile-view',
-		ga_action: WikiaTracker.ACTIONS.VIEW
-	},
-	'both'
-);
-
 //init
 $(function(){
 	require(['media', 'querystring', 'topbar', 'toc', 'events', 'hideURLBar', 'tables', 'sections', 'share', 'popover', 'cookies', 'ads', 'lazyload'],
@@ -97,18 +87,18 @@ $(function(){
 			//window.addEventListener('load') doesn't work on iOS 4.x
 			//this is the only supported way to bind to that event
 			//and DOMReady is too early
-			window.onload = function () {
+			window.onload = function(){
 				lazyLoad(
 					document.getElementsByClassName('lazy'),
 					'imgPlcHld',
 					'fit'
 				);
 
-				sections.addEventListener('open', function () {
+				sections.addEventListener('open', function(){
 					var self = this,
 						id = self.getAttribute('data-index');
 
-					if (id !== null && id !== undefined && !processedSections[id]) {
+					if(id !== null && id !== undefined && !processedSections[id]){
 						lazyLoad(
 							self.getElementsByClassName('lazy'),
 							'imgPlcHld',
@@ -119,7 +109,7 @@ $(function(){
 					}
 				});
 
-				if (origOnLoad instanceof Function) {
+				if(origOnLoad instanceof Function){
 					origOnLoad();
 				}
 			};
