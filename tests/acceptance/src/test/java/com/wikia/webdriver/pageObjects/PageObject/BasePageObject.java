@@ -19,6 +19,12 @@ public class BasePageObject{
 	
 	public String wikiFactoryLiveDomain = liveDomain + "wiki/Special:WikiFactory";
 	
+	public String userName = "KarolK1";
+	public String password = "123";
+	
+	public String userNameStaff = "KarolK";
+	public String passwordStaff = "123";
+	
 	protected int timeOut = 30;
 	
 	public WebDriverWait wait;
@@ -31,11 +37,13 @@ public class BasePageObject{
 		driver.manage().window().maximize();
 	}
 	
+
 	/**
 	 * Checks page title
 	 *
 	 ** @param title Specifies the title that you want to compare with the actual current title
 	 */
+
 	public boolean verifyTitle(String title)
 	{
 		String currentTitle = driver.getTitle();
@@ -82,6 +90,7 @@ public class BasePageObject{
 	/**
 	 * Clicks on an element
 	 */
+
 	public void click(WebElement pageElem)
 	{
 		pageElem.click();
@@ -90,14 +99,14 @@ public class BasePageObject{
 	/**
 	 * Checks if the element is visible on browser
 	 *
-	 ** @param element The elementto be checked
+	 ** @param element The element to be checked
 	 */
 	public void waitForElementByElement(WebElement element)
 	{
 		wait.until(ExpectedConditions.visibilityOf(element));
 	}
 	
-	public void watForElementByCss(String cssSelector)
+	public void waitForElementByCss(String cssSelector)
 	{
 		
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(cssSelector)));
@@ -137,6 +146,12 @@ public class BasePageObject{
 	public void waitForElementClickableByCss(String css)
 	{
 		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(css)));
+	}
+	
+	public void waitForElementById(String id)
+	{
+		
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(id)));
 	}
 	
 	/**
