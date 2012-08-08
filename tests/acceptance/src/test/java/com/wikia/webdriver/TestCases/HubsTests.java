@@ -1,24 +1,21 @@
 package com.wikia.webdriver.TestCases;
 
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.PageFactory;
 import org.testng.annotations.Test;
 
-import com.wikia.webdriver.DriverProvider.DriverProvider;
+import com.wikia.webdriver.Templates.TestTemplate;
 import com.wikia.webdriver.pageObjects.PageObject.HomePageObject;
 import com.wikia.webdriver.pageObjects.PageObject.Hubs.EntertainmentHubPageObject;
 import com.wikia.webdriver.pageObjects.PageObject.Hubs.LifestyleHubPageObject;
 import com.wikia.webdriver.pageObjects.PageObject.Hubs.VideoGamesHubPageObject;
 
-public class HubsTests {
+public class HubsTests extends TestTemplate{
 
 	@Test
 	public void VideoGamesHubTest()
 	{
-		WebDriver driver = DriverProvider.getInstance().getWebDriver();
 		
 		HomePageObject home = new HomePageObject(driver);
-		
+		home.openHomePage();
 		
 		VideoGamesHubPageObject VGHub = home.OpenVideoGamesHub();
 		VGHub.verifyURL("http://www.wikia.com/Video_Games");
@@ -55,6 +52,6 @@ public class HubsTests {
 		EHub.ClickOnNewsTab(1);
 		EHub.RelatedVideosScrollRight();
 		EHub.RelatedVideosScrollLeft();
-		driver.close();
+		
 	}
 }
