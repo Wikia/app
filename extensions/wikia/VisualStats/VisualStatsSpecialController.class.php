@@ -34,6 +34,9 @@ class VisualStatsSpecialController extends WikiaSpecialPageController {
         $this->setVal( 'urlPunchcard', $this->getTitleFor( 'VisualStats', 'punchcard')->getLocalURL("user=" . $username));
         $this->setVal( 'urlHistogram', $this->getTitleFor( 'VisualStats', 'histogram')->getLocalURL("user=" . $username));
 
+        $this->setVal( 'color', $this->businessLogic->getColorForPunchcard());
+        $this->setVal( 'link', $this->businessLogic->getColorForLabels());
+
         switch($parameter){
             case "commit":
                 $this->setVal( 'data', $this->businessLogic->getDataForCommitActivity($username));
@@ -50,12 +53,10 @@ class VisualStatsSpecialController extends WikiaSpecialPageController {
                 break;
         }
 
-
         $this->wg->Out->setPageTitle( $this->wf->msg('visualStats-specialpage-title'));
 
         $this->setVal( 'user', $username);
         $this->setVal( 'param', $parameter);
-        $this->setVal( 'data', $this->businessLogic->getDataForCommitActivity($username));
         $this->setVal( 'dates', $this->businessLogic->getDatesFromTwoWeeksOn(false));
         $this->setVal( 'wikiButtonLabel', $this->wf->msg('visualStats-wikiEdits'));
         $this->setVal( 'userButtonLabel', $this->wf->msg('visualStats-userEdits', $username));
