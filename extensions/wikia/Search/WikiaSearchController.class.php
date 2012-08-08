@@ -451,9 +451,10 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 	//WikiaMobile hook to add assets so they are minified and concatenated
 	public function onWikiaMobileAssetsPackages( &$jsHeadPackages, &$jsBodyPackages, &$scssPackages){
-		$jsBodyPackages[] = 'wikiasearch_js_wikiamobile';
-		$scssPackages[] = 'wikiasearch_scss_wikiamobile';
-
+		if( F::app()->wg->Title->isSpecial( 'Search' ) ) {
+			$jsBodyPackages[] = 'wikiasearch_js_wikiamobile';
+			$scssPackages[] = 'wikiasearch_scss_wikiamobile';
+		}
 		return true;
 	}
 }
