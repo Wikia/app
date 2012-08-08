@@ -102,7 +102,7 @@ class VoteHelper {
 		$cache = $this->getCache();
 		if($db != DB_MASTER) {
 			$cacheVal = $cache->get($this->getPageCacheKey(), null);
-			if(!empty($cacheVal) && $cacheVal !== 0) {
+			if($cacheVal !== false) {
 				wfProfileOut(__METHOD__);
 				return $cacheVal;
 			}

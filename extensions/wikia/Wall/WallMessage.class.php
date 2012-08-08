@@ -9,9 +9,12 @@ class WallMessage {
 	protected $isLoaded = false;
 	protected $propsCache = array();
 	protected $cityId = 0;
-	protected static $permissionsCache; //permissions cache
+	protected static $permissionsCache = array(); //permissions cache
+	protected static $wallURLCache = array(); 
+	protected static $topObjectCache;
 	protected $commentIndex;
 	function __construct(Title $title, $articleComment = null) {
+		wfProfileIn(__METHOD__);
 		$this->title = $title;
 		$this->articleComment = $articleComment;
 		$this->commentsIndex = F::build( 'CommentsIndex' );
@@ -20,9 +23,11 @@ class WallMessage {
 		$this->cityId = $app->wg->CityId;
 		
 		$this->helper = F::build('WallHelper', array());
+		wfProfileOut(__METHOD__);
 	}
 
 	static public function newFromId($id, $master = false) {
+		wfProfileIn(__METHOD__);
 		if( $master == true ) {
 			$title = F::build('Title', array($id, Title::GAID_FOR_UPDATE), 'newFromId');
 		} else {
@@ -30,10 +35,12 @@ class WallMessage {
 		}
 
 		if( $title instanceof Title && $title->exists() ) {
+			wfProfileOut(__METHOD__);
 			return  F::build('WallMessage', array($title), 'newFromTitle');
 		}
 
 		if( $master == false ) {
+			wfProfileOut(__METHOD__);
 			// if you fail from slave try again from master
 			return self::newFromId( $id, true );
 		}
@@ -41,16 +48,17 @@ class WallMessage {
 	}
 
 	static public function addMessageWall( $userPageTitle ) {
-			$botUser = User::newFromName( 'WikiaBot' );
-			$article = F::build( 'Article', array($userPageTitle) );
-			$status = $article->doEdit( '', '', EDIT_NEW | EDIT_MINOR | EDIT_SUPPRESS_RC | EDIT_FORCE_BOT, false, $botUser );
-			$title = ( $status->isOK() ) ? $article->getTitle() : false ;
-
-			return $title;
+		wfProfileIn(__METHOD__);
+		$botUser = User::newFromName( 'WikiaBot' );
+		$article = F::build( 'Article', array($userPageTitle) );
+		$status = $article->doEdit( '', '', EDIT_NEW | EDIT_MINOR | EDIT_SUPPRESS_RC | EDIT_FORCE_BOT, false, $botUser );
+		$title = ( $status->isOK() ) ? $article->getTitle() : false ;
+		wfProfileOut(__METHOD__);
+		return $title;
 	}
 
 	static public function buildNewMessageAndPost( $body, $page, $user, $metaTitle = '', $parent = false, $notify = true, $notifyEveryone = false) {
-		
+		wfProfileIn(__METHOD__);
 		if($page instanceof Title ) {
 			$userPageTitle = $page;
 		} else {
@@ -63,6 +71,7 @@ class WallMessage {
 		}
 
 		if( empty($userPageTitle) ) {
+			wfProfileOut(__METHOD__);
 			return false;
 		}
 
@@ -75,6 +84,7 @@ class WallMessage {
 			$acStatus = F::build( 'ArticleComment', array( $body, $user, $userPageTitle, false , $metaData ), 'doPost' );
 		} else {
 			if( !$parent->canReply() ) {
+				wfProfileOut(__METHOD__);
 				return false;
 			}
 
@@ -82,11 +92,13 @@ class WallMessage {
 		}
 
 		if( $acStatus === false ) {
+			wfProfileOut(__METHOD__);
 			return false;
 		}
 
 		$ac = ArticleComment::newFromId( $acStatus[1]->getId() );
 		if( empty( $ac ) ) {
+			wfProfileOut(__METHOD__);
 			return false;
 		}
 
@@ -119,50 +131,68 @@ class WallMessage {
 		$class->addWatch($user);
 
 		wfRunHooks( 'AfterBuildNewMessageAndPost', array(&$class) );
-		
+		wfProfileOut(__METHOD__);
 		return $class;
 	}
 
 	static public function newFromTitle(Title $title) {
+		wfProfileIn(__METHOD__);
 		$class = new WallMessage($title);
+		wfProfileOut(__METHOD__);
 		return $class;
 	}
 
 	static public function newFromArticleComment(ArticleComment $articleComment) {
+		wfProfileIn( __METHOD__ );
 		$class = new WallMessage( $articleComment->getTitle(), $articleComment );
+		wfProfileOut( __METHOD__ );
 		return $class;
 	}
 
 
 	//TODO: add some cache
 	public function setOrderId($val = 1) {
-		wfSetWikiaPageProp(WPP_WALL_COUNT,  $this->getTitle()->getArticleId(),  $val);
+		wfProfileIn( __METHOD__ );
+		$this->setInProps(WPP_WALL_COUNT, $val);
 		$this->order = $val;
+		wfProfileOut( __METHOD__ );
 		return $val;
 	}
 
 	//TODO: add some cache
 	public function getOrderId($for_update = false) {
+		wfProfileIn(__METHOD__);
 		if($for_update) {
+			wfProfileOut(__METHOD__);
 			return wfGetWikiaPageProp(WPP_WALL_COUNT, $this->getTitle()->getArticleId(), DB_MASTER);
 		}
 
 		if($this->order != 0) {
+			wfProfileOut(__METHOD__);
 			return $this->order;
 		}
 
-		return wfGetWikiaPageProp(WPP_WALL_COUNT, $this->getTitle()->getArticleId());
+		$out = $this->getPropVal(WPP_WALL_COUNT);
+		wfProfileOut(__METHOD__);
+		return $out;
 	}
 
 	public function addNewReply($body, $user) {
-		return self::buildNewMessageAndPost($body, $this->getWallTitle(), $user, '', $this );
+		wfProfileIn( __METHOD__ );
+		$out = self::buildNewMessageAndPost($body, $this->getWallTitle(), $user, '', $this );
+		wfProfileOut( __METHOD__ );
+		return $out; 
 	}
 
 	public function canEdit(User $user){
-		return $this->can( $user, 'edit' ) && ( $this->isAuthor($user) || $user->isAllowed('walledit') || $user->isAllowed('rollback') );
+		wfProfileIn( __METHOD__ );
+		$out = $this->can( $user, 'edit' ) && ( $this->isAuthor($user) || $this->can($user, 'walledit') || $this->can($user, 'rollback') );
+		wfProfileOut( __METHOD__ );
+		return $out; 
 	}
 		
 	public function doSaveComment($body, $user) {
+		wfProfileIn( __METHOD__ );
 		if($this->canEdit($user)){
 			$this->getArticleComment()->doSaveComment( $body, $user, null, 0, true );
 		}
@@ -176,23 +206,45 @@ class WallMessage {
 		*       so we re-subscribe (it's not a hack, it's a workaround)
 		*/
 		$this->addWatch($user);
-		return $this->getArticleComment()->parseText($body);
+		$out = $this->getArticleComment()->parseText($body);
+		wfProfileOut( __METHOD__ );
+		return $out; 
 	}
 	
 	public function doSaveMetadata($user) {
+		wfProfileIn( __METHOD__ );
 		$body = $this->getRawText(true);
-	
-		return $this->doSaveComment($body, $user);
+		$out = $this->doSaveComment($body, $user);
+		wfProfileOut( __METHOD__ );
+		return $out; 
 	}
 
 	protected function can($user, $prev ) {
-		if(!empty(self::$permissionsCache[$prev][$user->getName()])) {
-			return self::$permissionsCache[$prev][$user->getName()];
+		wfProfileIn( __METHOD__ );
+		$username = $user->getName();
+		if(isset(self::$permissionsCache[$username][$prev])) {
+			wfProfileOut( __METHOD__ );
+			return self::$permissionsCache[$username][$prev];
 		}
 
-		self::$permissionsCache[$prev][$user->getName()] = !$user->isBlocked() && $user->isAllowed($prev);
+		if(empty(self::$permissionsCache[$username])) {
+			self::$permissionsCache[$username] = array();
+		}
 
-		return self::$permissionsCache[$prev][$user->getName()];
+		wfProfileIn( __METHOD__."2" );
+		if($prev == 'wallshowwikiaemblem') {
+			self::$permissionsCache[$username][$prev] = $user->isAllowed($prev);
+		} else {
+			self::$permissionsCache[$username][$prev] = $user->isAllowed($prev) && !$user->isBlocked();	
+		}
+		wfProfileOut( __METHOD__."2" );
+		
+		wfProfileOut( __METHOD__ );
+		return self::$permissionsCache[$username][$prev];
+	}
+	
+	public function showWikiaEmblem() {
+		return $this->can($this->getUser(), 'wallshowwikiaemblem');
 	}
 
 	public function canDelete(User $user){
@@ -284,6 +336,7 @@ class WallMessage {
 	public function getWallOwner() {
 		$parts = explode( '/', $this->getWallTitle()->getText() );
 		$wall_owner = User::newFromName(  $parts[0], false);
+		
 		if( empty($wall_owner) ) {
 			error_log('EMPTY_WALL_OWNER: (id)'. $this->getArticleComment()->getArticleTitle()->getArticleID());
 			error_log('EMPTY_WALL_OWNER: (basetext)'. $this->getArticleComment()->getArticleTitle()->getBaseText());
@@ -320,35 +373,48 @@ class WallMessage {
 	}
 
 	public function getPageUrlPostFix() {
+		wfProfileIn(__METHOD__);
 		if($this->isMain()){
+			wfProfileOut(__METHOD__);
 			return '';
 		} else {
 			$order = $this->getOrderId();
 			if($order != null) {
+				wfProfileOut(__METHOD__);
 				return $order;
 			} else {
+				wfProfileOut(__METHOD__);
 				return $this->getArticleId();
 			}
 		}
+		wfProfileOut(__METHOD__);
 	}
 
 	public function getMessagePageUrl($withoutAnchor = false) {
+		wfProfileIn(__METHOD__);
+		//local cache consider cache this in memc
+		if(!empty($this->messagePageUrl)) {
+			wfProfileOut(__METHOD__);
+			return $this->messagePageUrl[$withoutAnchor];
+		}
+		
 		if($this->isMain()){
 			$id = $this->getArticleId();
 		} else {
 			$topParent = $this->getTopParentObj();
 			$id = $topParent->getArticleId();
 		}
-		$postFix = $this->getPageUrlPostFix();
-
-		if( !empty($postFix) && $withoutAnchor === false ) {
-			$postFix = '#'.$postFix;
-		} else {
-			$postFix = '';
-		}
-
+		
+		$postFix = '#'.$this->getPageUrlPostFix();
 		$title = Title::newFromText($id, NS_USER_WALL_MESSAGE);
-		return $title->getFullUrl().$postFix;
+
+		$this->messagePageUrl = array();
+		
+		$this->messagePageUrl[true] = $title->getFullUrl();
+		$this->messagePageUrl[false] = $this->messagePageUrl[true].$postFix; 
+
+		wfProfileOut(__METHOD__);
+		return $this->messagePageUrl[$withoutAnchor]; 
 	}
 
 	public function getArticleId(&$articleData = null) {
@@ -387,15 +453,27 @@ class WallMessage {
 	}
 
 	public function getTopParentObj(){
+		wfProfileIn(__METHOD__);
+		
+		$key = $this->getArticleComment()->getTopParent();
+		if( !empty(self::$topObjectCache[$key]) ) {
+			wfProfileOut(__METHOD__);
+			return self::$topObjectCache[$key];
+		}
+	
 		$obj = $this->getArticleComment()->getTopParentObj();
 
 		if( empty($obj) ) {
+			wfProfileOut(__METHOD__);
 			return null;
 		}
 
 		if($obj instanceof ArticleComment){
-			return WallMessage::newFromArticleComment($obj);
+			wfProfileOut(__METHOD__);
+			self::$topObjectCache[$key] = WallMessage::newFromArticleComment($obj); 
+			return self::$topObjectCache[$key];
 		} else {
+			wfProfileOut(__METHOD__);
 			return null;
 		}
 	}
@@ -444,17 +522,22 @@ class WallMessage {
 
 		$user = $this->getArticleComment()->mUser;
 		if($user) {
-			/*
-			 * FB 19409 - cannot user the user object cached in article comment,
-			 * cos it may have an old real name
-			 */
-			$freshUser = User::newFromName($user->getName(), false);
-			return ($freshUser) ? $freshUser : $user;
+			return $user;
 		} else {
 			// this only happend for wrong enties in DB
 			// without revision information
 			return User::newFromName('0.0.0.0', false);
 		}
+	}
+	
+	public function getUserWallUrl() {
+		$name = $this->getUser()->getName();
+		
+		if(empty(self::$wallURLCache[$name])) {
+			self::$wallURLCache[$name] = F::build( 'Title', array( $name, NS_USER_WALL ), 'newFromText' )->getFullUrl();	
+		}
+		
+		return self::$wallURLCache[$name];
 	}
 
 	public function getText() {
@@ -509,8 +592,12 @@ class WallMessage {
 	}
 	
 	public function getVoteHelper() {
+		if(!empty($this->voteVoteHelper)) {
+			return $this->voteVoteHelper;
+		}
 		$app = F::App();
-		return F::build('VoteHelper', array($app->wg->User, $this->title->getArticleId()));
+		$this->voteVoteHelper = F::build('VoteHelper', array($app->wg->User, $this->title->getArticleId()));
+		return $this->voteVoteHelper; 
 	}
 	
 	public function vote($user) {
@@ -773,15 +860,19 @@ class WallMessage {
 	}
 
 	public function canRestore($user) {
+		wfProfileIn(__METHOD__);
 		if( $this->isAdminDelete() ) {
-			if($user->isAllowed('walladmindelete')) {
+			if($this->can($user, 'walladmindelete')) {
+				wfProfileOut(__METHOD__);
 				return true;
 			}
 		} elseif($this->isRemove()) {
 			if($this->canRemove($user)) {
+				wfProfileOut(__METHOD__);
 				return true;
 			}
 		}
+		wfProfileOut(__METHOD__);
 		return false;
 	}
 
@@ -798,7 +889,7 @@ class WallMessage {
 	 */
 
 	public function canViewDeletedMessage($user) {
-		if($user->isAllowed('walladmindelete')) {
+		if($this->can($user, 'walladmindelete')) {
 			return true;
 		}
 
@@ -943,21 +1034,23 @@ class WallMessage {
 
 	protected function setInProps($prop, $val = 1) {
 		wfSetWikiaPageProp($prop, $this->getId(), $val);
-		$id = $this->getPropCacheKey($prop, $this->getId());
-		$this->propsCache[$id] = $val;
-
+		
+		$key = $this->getPropCacheKey();
 		$cache = $this->getCache();
-		$cache->set( $id, $val );
+		$this->propsCache = $cache->get( $key );
+		$this->propsCache[$prop] = $val;
+
+		$cache->set( $key, $this->propsCache );
 
 		return true;
 	}
 
 	protected function unMarkInProps($prop) {
-		$id = $this->getPropCacheKey($prop, $this->getId());
-		$this->propsCache[$id] = false;
+		$key = $this->getPropCacheKey();
+		$this->propsCache[$prop] = false;
 
 		$cache = $this->getCache();
-		$cache->set( $id, false );
+		$cache->set( $key, false );
 
 		wfDeleteWikiaPageProp( $prop, $this->getId() );
 
@@ -965,32 +1058,50 @@ class WallMessage {
 	}
 
 	protected function getPropVal($prop) {
-		$id = $this->getPropCacheKey($prop, $this->getId());
+		wfProfileIn(__METHOD__);
+
+		$key = $this->getPropCacheKey();
 
 		// check local memory cache
-		if(isset($this->propsCache[$id])) {
-			return $this->propsCache[$id];
+		if( array_key_exists($prop, $this->propsCache) ) {
+			wfProfileOut(__METHOD__);
+			return $this->propsCache[$prop];
 		}
 
+		wfProfileIn(__METHOD__."_1");
 		// check memcache
 		$cache = $this->getCache();
-		$val = $cache->get( $id );
-		if($val !== false) {
-			$this->propsCache[$id] = ($val == 1);
+		$fromcache = $cache->get( $key );
+		
+		if(!empty($fromcache)) {
+			$this->propsCache =	$fromcache;
+		}
+		
+		if($this->propsCache === false) {
+			$this->propsCache = array();
+		}
+
+		if( array_key_exists($prop, $this->propsCache) ) {
+			wfProfileOut(__METHOD__."_1");
+			wfProfileOut(__METHOD__);
+			$this->propsCache[$prop] = $val;
 			return $val;
 		} 
-
-		$this->propsCache[$id] = wfGetWikiaPageProp($prop, $this->getId());
-		$cache->set( $id, $this->propsCache[$id] ? 1:0 );
-		return $this->propsCache[$id];
+		
+		$this->propsCache[$prop] = wfGetWikiaPageProp($prop, $this->getId());
+		
+		$cache->set( $key, $this->propsCache );
+		wfProfileOut(__METHOD__."_1");
+		wfProfileOut(__METHOD__);
+		return $this->propsCache[$prop];
 	}
 
 	protected function isMarkInProps($prop) {
 		return $this->getPropVal($prop) == 1;
 	}
 
-	protected function getPropCacheKey($prop, $id) {
-		return  wfMemcKey(__CLASS__, $this->cityId, $prop, $this->getId(), 'v1');
+	protected function getPropCacheKey() {
+		return  wfMemcKey(__CLASS__, __METHOD__, $this->cityId, $this->getId(), 'v5');
 	}
 
 	private function getCache() {

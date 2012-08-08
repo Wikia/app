@@ -12,29 +12,45 @@ class WallBaseController extends ArticleCommentsController {
 		$this->app = F::App();
 		$this->helper = F::build('WallHelper', array());
 	}
-	
-	protected function index() {
+
+	public function index() {
+		wfProfileIn( __METHOD__ );
+		F::build('JSMessages')->enqueuePackage('Wall', JSMessages::EXTERNAL);
+
+		$this->response->addAsset('wall_js');
+		$this->response->addAsset('extensions/wikia/Wall/css/Wall.scss');
+
+		// Load MiniEditor assets, if enabled
+		if ($this->wg->EnableMiniEditorExtForWall && $this->app->checkSkin( 'oasis' )) {
+			$this->sendRequest('MiniEditor', 'loadAssets', array(
+				'additionalAssets' => array(
+					'wall_mini_editor_js',
+					'extensions/wikia/MiniEditor/css/Wall/Wall.scss'
+				)
+			));
+		}
+
 		$title = $this->request->getVal('title', $this->app->wg->Title);
 		$page = $this->request->getVal('page', 1);
-		
-		$wallMessagesPerPage = 20;
+
+		$wallMessagesPerPage = 10;
 		if( !empty($this->app->wg->WallMessagesPerPage) ){
 			$wallMessagesPerPage = $this->app->wg->WallMessagesPerPage;
 		};
-		
+
 		$filterid = $this->request->getVal('filterid', null);
 		if( !empty($filterid) ) {
 			$this->getThread($filterid);
 		} else {
 			$this->getThreads($title, $page, $wallMessagesPerPage);
 		}
-		
+
 		if( !empty($filterid) ) {
 			$this->response->setVal('showNewMessage', false);
 			$this->response->setVal('type', 'Thread');
 			$this->response->setVal('condenseMessage', false);
 			$this->response->setVal('showDeleteOrRemoveInfo', true);
-			
+
 			if( count($this->threads) > 0 ) {
 				$wn = F::build('WallNotifications', array());
 				foreach($this->threads as $key => $val ){
@@ -42,36 +58,37 @@ class WallBaseController extends ArticleCommentsController {
 					break;
 				}
 			}
-			
+
 			$this->response->setVal('renderUserTalkArchiveAnchor', false);
 			$this->response->setVal('greeting', '');
-			
+
 			$title = F::build('Title', array($filterid), 'newFromId' );
-			if(!empty($title) && $title->exists() && $title->getNamespace() == NS_USER_WALL_MESSAGE ) {
+			if(!empty($title) && $title->exists() && in_array(MWNamespace::getSubject( $title->getNamespace() ), $this->app->wg->WallNS) ) {
 				$wallMessage = F::build('WallMessage', array($title), 'newFromTitle' );
 				$wallMessage->load();
 				$this->app->wg->Out->setPageTitle( $wallMessage->getMetaTitle() );
 			}
-			
+
 		} else {
 			$this->response->setVal('type', 'Board');
 			$this->response->setVal('showDeleteOrRemoveInfo', false);
 			$this->response->setVal('showNewMessage', true);
 			$this->response->setVal('condenseMessage', true);
-			
+
 			$this->response->setVal('renderUserTalkArchiveAnchor', $this->request->getVal('dontRenderUserTalkArchiveAnchor', false) != true);
-			
+
 			$greeting = F::build('Title', array($title->getText(), NS_USER_WALL_MESSAGE_GREETING), 'newFromText' );
-			
+			$greetingText = '';
+
 			if(!empty($greeting) && $greeting->exists() ) {
 				$article = F::build( 'Article', array($greeting));
 				$article->getParserOptions();
 				$article->mParserOptions->setIsPreview(true); //create parser option
 				$article->mParserOptions->setEditSection(false);
-				$this->response->setVal('greeting', $article->getParserOutput()->getText());
-			} else {
-				$this->response->setVal('greeting', '');
+				$greetingText = $article->getParserOutput()->getText();
 			}
+			wfRunHooks( 'WallGreetingContent', array( &$greetingText ) ); // used by SWM to add messages to Wall in monobook
+			$this->response->setVal('greeting', $greetingText);
 		}
 		$this->response->setVal('sortingOptions', $this->getSortingOptions());
 		$this->response->setVal('sortingSelected', $this->getSortingSelectedText());
@@ -89,15 +106,17 @@ class WallBaseController extends ArticleCommentsController {
 				array(
 					'wl_title' => array( $title->getDbKey() ),
 					'wl_namespace' => array(NS_USER_WALL, NS_USER_WALL_MESSAGE),
-					'wl_wikia_addedtimestamp < "2012-01-31" '  
+					'wl_wikia_addedtimestamp < "2012-01-31" '
 				), __METHOD__
 			);
-			
+
 			if($row->cnt > 0) {
 				$this->wg->User->removeWatch($this->wg->Title);
 			}
 		}
+		wfProfileOut( __METHOD__ );
 	}
+	
 	
 	public function reply() {
 		$this->response->setVal('username', $this->wg->User->getName() );
@@ -117,19 +136,21 @@ class WallBaseController extends ArticleCommentsController {
 		$this->response->setVal( 'wgBlankImgUrl', $this->wg->BlankImgUrl );
 		$this->response->setVal( 'isRemoved', $wallMessage->isRemove() );
 		$this->response->setVal( 'isAnon', $this->wg->User->isAnon() );
-		$this->response->setVal( 'notifyeveryone', $wallMessage->canNotifyeveryone() );
-		$this->response->setVal( 'unnotifyeveryone', $wallMessage->canUnnotifyeveryone() );
+		$this->response->setVal( 'canNotifyeveryone', $wallMessage->canNotifyeveryone() );
+		$this->response->setVal( 'canUnnotifyeveryone', $wallMessage->canUnnotifyeveryone() );
 	}
 	
 	public function message() {
 		wfProfileIn( __METHOD__ );
+		
 		$wallMessage = $this->getWallMessage(); 
 		
 		if( !($wallMessage instanceof WallMessage) ) {
 			$this->forward(__CLASS__, 'message_error');
+			wfProfileOut( __METHOD__);
 			return true;
 		}
-		
+
 		$this->response->setVal( 'comment', $wallMessage);
 		$this->response->setVal( 'hide',  false);
 		
@@ -137,7 +158,7 @@ class WallBaseController extends ArticleCommentsController {
 		$this->response->setVal( 'showDeleteOrRemoveInfo', false);
 		$this->response->setVal( 'removedOrDeletedMessage', false);
 		$this->response->setVal( 'showRemovedBox', false);
-		
+
 		if($this->request->getVal( 'showDeleteOrRemoveInfo', false )) {
 			if( $wallMessage->isRemove() || $wallMessage->isAdminDelete() ) {
 				$info = $wallMessage->getLastActionReason();
@@ -200,26 +221,8 @@ class WallBaseController extends ArticleCommentsController {
 			
 			$this->response->setVal('linkid', $wallMessage->getPageUrlPostFix() );
 		}
-
-		// even though $data['author'] is a User object already
-		// it's a cached object, and we need to make sure that we are
-		// using newest RealName
-		// cache invalidation in this case would require too many queries
-		$authorUser = User::newFromName($wallMessage->getUser()->getName());
-		if($authorUser) {
-			$realname = "";
-			$name = $authorUser->getName();
-			$isStaff = $authorUser->isAllowed('wallshowwikiaemblem');
-		} else {
-			$realname = '';
-			$name = $wallMessage->getUser()->getName();
-			$isStaff = false;
-		}
-		$this->response->setVal( 'isStaff', $isStaff );
-	
-		$this->response->setVal( 'id', $wallMessage->getTitle()->getArticleID());
-		$this->response->setVal( 'username', $name );
-		$this->response->setVal( 'realname', $realname );
+		
+		$this->response->setVal( 'id', $wallMessage->getId());
 		
 		if($wallMessage->isEdited()) {
 			if (time() - $wallMessage->getEditTime(TS_UNIX) < self::WALL_MESSAGE_RELATIVE_TIMESTAMP) {
@@ -252,18 +255,26 @@ class WallBaseController extends ArticleCommentsController {
 			$this->response->setVal( 'isEdited',  false);
 		}
 		
+		
 		$this->response->setVal( 'fullpageurl', $wallMessage->getMessagePageUrl() );
 		$this->response->setVal( 'wgBlankImgUrl', $this->wg->BlankImgUrl );
 		
 		$this->response->setVal( 'id', $wallMessage->getId() );
-
+		
 		if($this->wg->User->getId() > 0 && !$wallMessage->isWallOwner($this->wg->User) ) {
 			$this->response->setVal( 'showFollowButton', true );
 		} else {
 			$this->response->setVal( 'showFollowButton', false );
 		}
 		
-		$displayname  = $realname;
+		
+		$name = $wallMessage->getUser()->getName();
+		
+		$this->response->setVal( 'isStaff', $wallMessage->showWikiaEmblem() );
+		$this->response->setVal( 'username', $name );
+		
+		
+		$displayname  = "";
 		$displayname2 = $name;
 		
 		if( empty($displayname) ) {
@@ -271,41 +282,38 @@ class WallBaseController extends ArticleCommentsController {
 			$displayname2 = '';
 		}
 
-		$url = F::build( 'Title', array( $name, NS_USER_WALL ), 'newFromText' )->getFullUrl();
+		$url = $wallMessage->getUserWallUrl();
 		
 		if($wallMessage->getUser()->getId() == 0) { // anynymous contributor
 			$url = Skin::makeSpecialUrl('Contributions').'/'.$wallMessage->getUser()->getName();
 			
 			$displayname = wfMsg('oasis-anon-user');
 			$displayname2 = $wallMessage->getUser()->getName();
-		}
-
+		} 
 		
-		$this->response->setVal('canRestore', $wallMessage->canRestore
-		($this->app->wg->User) );
+		$canRestore = $wallMessage->canRestore($this->app->wg->User);
 		
-		$this->response->setVal('fastrestore', $wallMessage->canFastrestore($this->app->wg->User) );
-				
+		$this->response->setVal('canRestore', $canRestore ); 
+		$this->response->setVal('fastrestore', $canRestore && $wallMessage->canFastrestore($this->app->wg->User) );
+			
 		$this->response->setVal( 'displayname',  $displayname );
 		$this->response->setVal( 'displayname2', $displayname2 );
-		
-		$this->response->setVal('votes', $wallMessage->getVoteCount() );
-		$this->response->setVal('isVoted', $wallMessage->isVoted() );
-		
-		$this->response->setVal('isVoted', $wallMessage->isVoted() );
-		
-		$this->response->setVal('showVotes', $wallMessage->showVotes() );
-		
-		$this->response->setVal('canVotes', $wallMessage->canVotes($this->wg->User) || !$this->wg->User->isLoggedIn() );
-		
+
+		if($wallMessage->showVotes()) {
+			$this->response->setVal('showVotes', true);		
+			$this->response->setVal('votes', $wallMessage->getVoteCount() );
+			$this->response->setVal('isVoted', $wallMessage->isVoted() );
+			$this->response->setVal('canVotes', $wallMessage->canVotes($this->wg->User) || !$this->wg->User->isLoggedIn() );
+		} else {
+			$this->response->setVal('showVotes', false);
+		}
 		
 		$this->response->setVal( 'user_author_url',  $url );
 
-		$this->response->setCacheValidity(0, 0, array(WikiaResponse::CACHE_TARGET_BROWSER));
-		
 		wfProfileOut( __METHOD__ );
 	}
 	
+		
 	protected function getWallMessage() {
 		$comment = $this->request->getVal('comment');
 		if(($comment instanceof ArticleComment)) {
