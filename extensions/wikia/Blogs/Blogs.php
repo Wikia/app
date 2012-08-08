@@ -144,6 +144,7 @@ $wgHooks[ 'onSkinTemplateNavigation' ][] = 'BlogArticle::skinTemplateTabs';
 $wgHooks[ 'EditPage::showEditForm:checkboxes' ][] = 'BlogArticle::editPageCheckboxes';
 $wgHooks[ 'LinksUpdate' ][] = 'BlogArticle::linksUpdate';
 $wgHooks[ 'UnwatchArticleComplete' ][] = 'BlogArticle::UnwatchBlogComments';
+$wgHooks[ 'AfterCategoriesUpdate'][] = 'BlogArticle::clearCountCache';
 
 /**
  * load other parts
