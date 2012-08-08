@@ -14,17 +14,27 @@ var VisualStatsPunchcard = {
         $("#Graph").css('padding', '20px');
 
         this.setDates();
-        this.setWikiaData();
+        this.setData("wikia");
         this.triggerButtons();
 
     },
 
-    setWikiaData: function(){
+    setData: function(attr){
         var dateIndex = 1;
         var self = this;
-        this.scale.domain([0, self.wikiaPunchcardMax]);
 
-        $.each(this.wikiaPunchcardData, function(date, hourset){
+        if (attr=="wikia"){
+            data = self.wikiaPunchcardData;
+            max = self.wikiaPunchcardMax;
+        }
+        else{
+            data = self.userPunchcardData;
+            max = self.userPunchcardMax;
+        }
+
+        this.scale.domain([0, max]);
+
+        $.each(data, function(date, hourset){
             $.each(hourset, function(hour, value){
                 var object = $("#day" + dateIndex + "hour" + hour);
                 var strDate = "#day" + dateIndex;
@@ -52,7 +62,7 @@ var VisualStatsPunchcard = {
         })
     },
 
-    setUserData: function(){
+   /* setUserData: function(){
         var dateIndex=1;
         var self = this;
         this.scale.domain([0, self.userPunchcardMax]);
@@ -83,7 +93,7 @@ var VisualStatsPunchcard = {
             })
             dateIndex++;
         })
-    },
+    },*/
     triggerButtons: function(){
         var self = this;
         if (this.user != "0"){
@@ -93,7 +103,7 @@ var VisualStatsPunchcard = {
                 $("#userButton").addClass("secondary");
                 $(".circle").hide(1000);
                 setTimeout(function(){
-                    self.setWikiaData();
+                    self.setData("wikia");
                 }, 1100);
             });
             $("#userButton").click(function(){
@@ -101,7 +111,7 @@ var VisualStatsPunchcard = {
                 $("#wikiaButton").addClass("secondary");
                 $(".circle").hide(1000);
                 setTimeout(function(){
-                    self.setUserData();
+                    self.setData("user");
                 }, 1100);
             });
         }
