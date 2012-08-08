@@ -29,27 +29,27 @@ public class CreateNewWikiPageObjectStep1 extends BasePageObject{
 	public void typeInWikiName(String name)
 	{
 		wikiName.sendKeys(name);
-		PageObjectLogging.log("typeInWikiName ", "Typed wiki name" +name, true);
+		PageObjectLogging.log("typeInWikiName ", "Typed wiki name" +name, true, driver);
 	}
 	
 	public void typeInWikiDomain(String domain)
 	{
 		wikiDomain.clear();
 		wikiDomain.sendKeys(domain);
-		PageObjectLogging.log("typeInWikiDomain ", "Typed wiki domain" +domain, true);
+		PageObjectLogging.log("typeInWikiDomain ", "Typed wiki domain" +domain, true, driver);
 	}
 	
 	public void waitForSuccessIcon()
 	{
 
-		waitForElementByXPath("//span[@class='domain-status-icon status-icon']/img[@src='http://slot2.images.wikia.nocookie.net/__cb57524/common/extensions/wikia/CreateNewWiki/images/check.png']");
-		PageObjectLogging.log("waitForSuccessIcon", "Success icon found", true);																							
+		waitForElementByCss("span.domain-status-icon img[src]");																				 
+		PageObjectLogging.log("waitForSuccessIcon", "Success icon found", true, driver);																							
 	}
 	
 	public CreateNewWikiPageObjectStep2 submit()
 	{
 		submitButton.click();
-		PageObjectLogging.log("submit", "Submit button clicked", true);		
+		PageObjectLogging.log("submit", "Submit button clicked", true, driver);		
 		return new CreateNewWikiPageObjectStep2(driver);
 	}
 
