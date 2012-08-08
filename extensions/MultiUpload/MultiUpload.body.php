@@ -558,9 +558,6 @@ class MultiUploadForm extends UploadForm {
 		$out = $this->getOutput();
 		$out->addScript( Skin::makeVariablesScript( $scriptVars ) );
 
-		// For <charinsert> support
-		$out->addScriptFile( 'edit.js' );
-
 		// changed
 		$out->addScriptFile( "$wgExtensionsPath/MultiUpload/multiupload.js" );
 		$newscriptVars = array(
