@@ -538,7 +538,7 @@ class MultiUploadForm extends UploadForm {
 	 * Add upload JavaScript to $wgOut
 	 */
 	protected function addUploadJS() {
-		global $wgScriptPath, $wgFileExtensions;
+		global $wgExtensionsPath, $wgFileExtensions;
 
 		global $wgUseAjax, $wgAjaxUploadDestCheck, $wgAjaxLicensePreview, $wgEnableAPI;
 
