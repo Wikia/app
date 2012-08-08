@@ -20,30 +20,28 @@ button{
     border-radius: 50%;
     width: 30px;
     height: 30px;
-    background: #adff2f;
-    display: inline-block;
+    display: none;
+    vertical-align: middle;
 }
 #punchcardTable{
-    padding: 2px;
     float: right;
-    border-color: black;
-
+    border: none;
+    border-collapse: collapse;
 }
 td{
-    padding: 2px;
-    border: 2px;
-    border-color: black;
-    vertical-align: middle;
+    padding: 3px;
     text-align: center;
     width: 30px;
     height: 30px;
-
+    border-bottom: 1px solid black;
 }
-tr{
-    padding: 2px;
-    border: 2px;
-    border-color: black;
+.days{
+    text-align: right;
+    width: 65px;
 }
 th{
-    font-size: 11;
+    font-size: 10px;
+    font-weight: normal;
+    color: black;
+    border-bottom: 1px solid black;
 }

@@ -28,18 +28,19 @@
             if (user == "0"){
                 $("#buttons").remove();
             }
+            console.log(parameter);
             switch (parameter){
                 case "commit":
-                    VisualStatsCommitActivity.init(parameter, data, user)
+                    VisualStatsCommitActivity.init(data, user)
                     break;
                 case "punchcard":
-                    VisualStatsPunchcard.init();
+                    var color = <? echo json_encode($link); ?>;
+                    VisualStatsPunchcard.init(data, user, color);
                     break;
                 case "histogram":
                     //this.drawHistogram();
                     break;
             }
-           // VisualStatsIndexContent.init(parameter, data, user);
         });
     });
 

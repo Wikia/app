@@ -6,18 +6,27 @@ class VisualStats extends WikiaObject {
         parent::__construct();
         $this->title = $currentTitle;
     }
-    public function getUserData($name){
-  /*  if ($name==''){
-        $name = "0";
-    }*/
+
+    public function getColorForPunchcard(){
+        $result = SassUtil::getOasisSettings();
+        return $result['color-buttons'];
+    }
+
+    public function getColorForLabels(){
+        $result = SassUtil::getOasisSettings();
+        return $result['color-links'];
+    }
+
+    private function getUserData($name){
         $user = F::build('User', array($name), 'newFromName');
         return array('id' => $user->getId(), 'name' => $name, 'isAnon' => $user->isAnon());
     }
+
     public function getDatesFromTwoWeeksOn($hours){
         $date = strtotime($this->getDateTwoWeeksBefore());
         if ($hours){
             for($hour = 0; $hour <= 23; $hour++){
-                    $arr2[$hour] = 0;
+                $arr2[$hour] = 0;
                 }
             for ($i = 14; $i >= 0; $i--){
                     $arr[date("d-m-Y", ($date + 86400 * $i))] = $arr2;
@@ -28,14 +37,17 @@ class VisualStats extends WikiaObject {
                 $arr[date("d-m-Y", ($date + 86400 * $i))] = 0;
             }
         }
+
         return $arr;
 
     }
+
     private function getDateTwoWeeksBefore(){
         $date = date("Ymd");
         $date = date("Ymd", (strtotime($date) - 1209600)); //1209600 seconds = 14 days
         return $date;
     }
+
     private function getDB(){
         return $this->app->wf->getDB(DB_SLAVE, array(), $this->app->wg->DBname);
     }
@@ -54,7 +66,6 @@ class VisualStats extends WikiaObject {
                     __METHOD__,
                     array ('GROUP BY' => 'left(rev_timestamp,10)')
                 );
-
 
             if ($username != "0"){
                 $user = $this->getUserData($username);
@@ -76,6 +87,7 @@ class VisualStats extends WikiaObject {
         return $out;
 
     }
+
     public function getDataForCommitActivity($username){
         $this->app->wf->profileIn( __METHOD__ );
 
@@ -121,6 +133,7 @@ class VisualStats extends WikiaObject {
         return $out;
 
     }
+
     public function getDataForPunchcard($username){
         $this->app->wf->profileIn( __METHOD__ );
 

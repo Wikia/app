@@ -1,6 +1,6 @@
 /*global d3:true*/
 var VisualStatsCommitActivity = {
-    init: function(parameter, data, user){
+    init: function(data, user){
         this.wikiaCommit = data.wikiaCommit;
         this.userCommit = data.userCommit;
         this.user = user;
@@ -41,8 +41,6 @@ var VisualStatsCommitActivity = {
         var self = this;
         var wikiaMax = this.roundUp(this.wikiaCommit.max);
         var userMax = this.roundUp(this.userCommit.max);
-
-        svg.append("svg:text").text($.msg('visualStats-wikiEdits'));
 
         svg.append("rect")
             .attr("x", 20)
