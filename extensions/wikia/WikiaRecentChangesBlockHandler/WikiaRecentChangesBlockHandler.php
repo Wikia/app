@@ -21,50 +21,53 @@ class WikiaRecentChangesBlockHandler extends Service {
 
 			if( !is_null($oRCCacheEntry) ) {
 				$oTitle = $oRCCacheEntry->getTitle();
-				$changeRecentChangesHeader = false;
 
-				wfRunHooks('WikiaRecentChangesBlockHandlerChangeHeaderBlockGroup', array($oChangeList, $r, $oRCCacheEntryArray, &$changeRecentChangesHeader, $oTitle, &$headerTitle));
+				if( $oTitle instanceof Title ) {
+					$changeRecentChangesHeader = false;
 
-				if( $changeRecentChangesHeader ) {
-					$app = F::app();
-					$cnt = count($oRCCacheEntryArray);
-					$cntChanges = wfMsgExt( 'nchanges', array( 'parsemag', 'escape' ), $app->wg->Lang->formatNum( $cnt ) );
-					$timestamp = null;
+					wfRunHooks('WikiaRecentChangesBlockHandlerChangeHeaderBlockGroup', array($oChangeList, $r, $oRCCacheEntryArray, &$changeRecentChangesHeader, $oTitle, &$headerTitle));
 
-					$userlinks = array();
-					foreach( $oRCCacheEntryArray as $id => $oRCCacheEntry ) {
-						$u = $oRCCacheEntry->userlink;
-						if( !isset($userlinks[$u]) ) {
-							$userlinks[$u] = 0;
+					if( $changeRecentChangesHeader ) {
+						$app = F::app();
+						$cnt = count($oRCCacheEntryArray);
+						$cntChanges = wfMsgExt( 'nchanges', array( 'parsemag', 'escape' ), $app->wg->Lang->formatNum( $cnt ) );
+						$timestamp = null;
+
+						$userlinks = array();
+						foreach( $oRCCacheEntryArray as $id => $oRCCacheEntry ) {
+							$u = $oRCCacheEntry->userlink;
+							if( !isset($userlinks[$u]) ) {
+								$userlinks[$u] = 0;
+							}
+							$userlinks[$u]++;
+							if( is_null($timestamp) ) $timestamp = $oRCCacheEntry->timestamp;
 						}
-						$userlinks[$u]++;
-						if( is_null($timestamp) ) $timestamp = $oRCCacheEntry->timestamp;
-					}
 
-					$users = array();
-					foreach( $userlinks as $userlink => $count) {
-						$text = $userlink;
-						$text .= $app->wg->ContLang->getDirMark();
-						if( $count > 1 ) {
-							$text .= ' (' . $app->wg->Lang->formatNum($count) . '×)';
+						$users = array();
+						foreach( $userlinks as $userlink => $count) {
+							$text = $userlink;
+							$text .= $app->wg->ContLang->getDirMark();
+							if( $count > 1 ) {
+								$text .= ' (' . $app->wg->Lang->formatNum($count) . '×)';
+							}
+							array_push($users, $text);
 						}
-						array_push($users, $text);
+
+						$vars = array(
+							'cntChanges'	=> $cntChanges,
+							'hdrtitle'		=> $headerTitle,
+							'inx'			=> $oChangeList->rcCacheIndex,
+							'users'			=> $users,
+							'wgStylePath'	=> $app->wg->StylePath,
+							'title'			=> $oTitle,
+							'timestamp'		=> $timestamp,
+						);
+
+						$oTmpl = new EasyTemplate( dirname(__FILE__) . "/templates/" );
+						$oTmpl->set_vars($vars);
+
+						$r = $oTmpl->execute('RecentChangesHeaderBlock');
 					}
-
-					$vars = array(
-						'cntChanges'	=> $cntChanges,
-						'hdrtitle'		=> $headerTitle,
-						'inx'			=> $oChangeList->rcCacheIndex,
-						'users'			=> $users,
-						'wgStylePath'	=> $app->wg->StylePath,
-						'title'			=> $oTitle,
-						'timestamp'		=> $timestamp,
-					);
-
-					$oTmpl = new EasyTemplate( dirname(__FILE__) . "/templates/" );
-					$oTmpl->set_vars($vars);
-
-					$r = $oTmpl->execute('RecentChangesHeaderBlock');
 				}
 			}
 		}

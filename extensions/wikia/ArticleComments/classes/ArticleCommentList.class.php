@@ -745,7 +745,7 @@ class ArticleCommentList {
 		$oTitle = $oRCCacheEntry->getTitle();
 		$namespace = $oTitle->getNamespace();
 
-		if (!is_null($oTitle) && MWNamespace::isTalk($namespace) && ArticleComment::isTitleComment($oTitle) ) {
+		if( MWNamespace::isTalk($namespace) && ArticleComment::isTitleComment($oTitle) ) {
 			$parts = ArticleComment::explode($oTitle->getText());
 			if ($parts['title'] != '') {
 				$currentName = 'ArticleComments' . $parts['title'];
