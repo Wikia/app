@@ -16,8 +16,9 @@ $messages['en'] = array(
 	'videohandler-unknown-title' => 'Unknown title',
 	'videohandler-video-details' => '$1 (provider: $2)',
 	'videohandler-category' => 'Videos',
-    'videohandler-description' => 'Description',
+    	'videohandler-description' => 'Description',
 	'videohandler-video-views' => '$1 {{PLURAL:$1|view|views}}',
+	'videohandler-non-premium' => 'Non premium videos are disabled on this Wiki.'
 );
 
 /** Message documentation (Message documentation) */
