@@ -107,11 +107,14 @@ class VisualStats extends WikiaObject {
             $userCommit = $wikiaCommit;
             $wikiaCommitMax = 0;
             $userCommitMax = 0;
+            $wikiaCommitAll = 0;
+            $userCommitAll = 0;
 
             while ($row = $dbr->fetchObject($wikiaData)){
 
                 $tempDate = date("d-m-Y", strtotime(substr($row->date, 0, 8)));
                 $wikiaCommit[$tempDate]+= $row->count;
+                $wikiaCommitAll+= $row->count;
                 if ($wikiaCommit[$tempDate] > $wikiaCommitMax){
                     $wikiaCommitMax = $wikiaCommit[$tempDate];
                 }
@@ -120,12 +123,22 @@ class VisualStats extends WikiaObject {
             while ($row = $dbr->fetchObject($userData)){
                 $tempDate = date("d-m-Y", strtotime(substr($row->date, 0, 8)));
                 $userCommit[$tempDate]+= $row->count;
+                $userCommitAll+= $row->count;
                 if ($userCommit[$tempDate] > $userCommitMax){
                     $userCommitMax = $userCommit[$tempDate];
                 }
                 };
             }
-            $out = array('wikiaCommit' => array('data' => $wikiaCommit, 'max' =>$wikiaCommitMax), 'userCommit' => array('data' => $userCommit, 'max' =>$userCommitMax));
+            $out = array(
+                'wikiaCommit' => array(
+                    'data' => $wikiaCommit,
+                    'max' =>$wikiaCommitMax,
+                    'all' =>$wikiaCommitAll),
+                'userCommit' => array(
+                    'data' => $userCommit,
+                    'max' =>$userCommitMax,
+                    'all' =>$userCommitAll));
+
             $this->app->wg->memc->set($key, $out, 600);
         }
         $this->app->wf->profileOut( __METHOD__ );
@@ -153,6 +166,8 @@ class VisualStats extends WikiaObject {
             $userPunchcard = $wikiaPunchcard;
             $wikiaPunchcardMax = 0;
             $userPunchcardMax = 0;
+            $wikiaPunchcardAll = 0;
+            $userPunchcardAll = 0;
 
             while ($row = $dbr->fetchObject($wikiaData)){
 
@@ -160,6 +175,7 @@ class VisualStats extends WikiaObject {
                 $tempHour = substr($row->date, 8, 2);
                 if ($tempHour[0]=='0') $tempHour = (int)$tempHour[1];
                 $wikiaPunchcard[$tempDate][$tempHour]+= $row->count;
+                $wikiaPunchcardAll+= $row->count;
                 if ($wikiaPunchcard[$tempDate][$tempHour] > $wikiaPunchcardMax){
                     $wikiaPunchcardMax = $wikiaPunchcard[$tempDate][$tempHour];
                 }
@@ -170,12 +186,22 @@ class VisualStats extends WikiaObject {
                     $tempHour = substr($row->date, 8, 2);
                     if ($tempHour[0]=='0') $tempHour = (int)$tempHour[1];
                     $userPunchcard[$tempDate][$tempHour]+= $row->count;
+                    $userPunchcardAll+= $row->count;
                     if ($userPunchcard[$tempDate][$tempHour] > $userPunchcardMax){
                         $userPunchcardMax = $userPunchcard[$tempDate][$tempHour];
                     }
                 };
             }
-            $out = array('wikiaPunchcard' => array('data' => $wikiaPunchcard, 'max' =>$wikiaPunchcardMax), 'userPunchcard' => array('data' => $userPunchcard, 'max' =>$userPunchcardMax));
+            $out = array(
+                'wikiaPunchcard' => array(
+                    'data' => $wikiaPunchcard,
+                    'max' =>$wikiaPunchcardMax,
+                    'all' =>$wikiaPunchcardAll),
+                'userPunchcard' => array(
+                    'data' => $userPunchcard,
+                    'max' =>$userPunchcardMax,
+                    'all' =>$userPunchcardAll));
+
             $this->app->wg->memc->set($key, $out, 600);
         }
         $this->app->wf->profileOut( __METHOD__ );
@@ -206,12 +232,15 @@ class VisualStats extends WikiaObject {
 
             $wikiaHistogramMax = 0;
             $userHistogramMax = 0;
+            $wikiaHistogramAll = 0;
+            $userHistogramAll = 0;
 
             while ($row = $dbr->fetchObject($wikiaData)){
 
                 $tempHour = substr($row->date, 8, 2);
                 if ($tempHour[0]=='0') $tempHour = (int)$tempHour[1];
                 $wikiaHistogram[$tempHour]+= $row->count;
+                $wikiaHistogramAll+= $row->count;
                 if ($wikiaHistogram[$tempHour] > $wikiaHistogramMax){
                     $wikiaHistogramMax = $wikiaHistogram[$tempHour];
                 }
@@ -221,12 +250,21 @@ class VisualStats extends WikiaObject {
                     $tempHour = substr($row->date, 8, 2);
                     if ($tempHour[0]=='0') $tempHour = (int)$tempHour[1];
                     $userHistogram[$tempHour]+= $row->count;
+                    $userHistogramAll+= $row->count;
                     if ($userHistogram[$tempHour] > $userHistogramMax){
                         $userHistogramMax = $userHistogram[$tempHour];
                     }
                 };
             }
-            $out = array('wikiaHistogram' => array('data' => $wikiaHistogram, 'max' =>$wikiaHistogramMax), 'userHistogram' => array('data' => $userHistogram, 'max' =>$userHistogramMax));
+            $out = array(
+                'wikiaHistogram' => array(
+                    'data' => $wikiaHistogram,
+                    'max' =>$wikiaHistogramMax,
+                    'all' => $wikiaHistogramAll),
+                'userHistogram' => array(
+                    'data' => $userHistogram,
+                    'max' =>$userHistogramMax,
+                    'all' => $userHistogramAll));
             $this->app->wg->memc->set($key, $out, 600);
         }
         $this->app->wf->profileOut( __METHOD__ );

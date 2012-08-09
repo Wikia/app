@@ -1,13 +1,19 @@
 /*global d3:true*/
 var VisualStatsPunchcard = {
-    init: function(data, user, color){
+    init: function(data, user, color, edits, edit){
 
         this.wikiaPunchcardData = data.wikiaPunchcard.data;
         this.wikiaPunchcardMax = data.wikiaPunchcard.max;
+        this.wikiaPunchcardAll = data.wikiaPunchcard.all;
+
         this.userPunchcardData = data.userPunchcard.data;
         this.userPunchcardMax = data.userPunchcard.max;
+        this.userPunchcardAll = data.userPunchcard.all;
+
         this.user = user;
         this.color = color;
+        this.edits = edits;
+        this.edit = edit;
 
         this.scale = d3.scale.linear()
             .range([5, 30]);
@@ -26,10 +32,12 @@ var VisualStatsPunchcard = {
         if (attr=="wikia"){
             data = self.wikiaPunchcardData;
             max = self.wikiaPunchcardMax;
+            $("#numberOfEdits").text(self.wikiaPunchcardAll);
         }
         else{
             data = self.userPunchcardData;
             max = self.userPunchcardMax;
+            $("#numberOfEdits").text(self.userPunchcardAll);
         }
 
         this.scale.domain([0, max]);
@@ -49,7 +57,16 @@ var VisualStatsPunchcard = {
                         $(strDate).css('font-weight', 'normal').css('color', 'black').css('font-size', '10px');
                         $(strHour).css('font-weight', 'normal').css('color', 'black');
                     })
-                    object.attr("title", value);
+                    object.attr("title", function(){
+                        if (value != 1){
+                            return value + " " + self.edits;
+                        }
+                        else
+                        {
+                            return value + " " + self.edit;
+                        }
+
+                    });
                 }
                 else{
                     object.css('display', 'none');
