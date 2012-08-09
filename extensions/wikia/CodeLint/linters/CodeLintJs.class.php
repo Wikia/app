@@ -149,6 +149,7 @@ class CodeLintJs extends CodeLint {
 				case "['{a}'] is better written in dot notation.":
 				// remove noise
 				case "Unexpected 'else' after 'return'.":
+				case "Unexpected 'in'. Compare with undefined, or use the hasOwnProperty method instead.":
 					$remove = true;
 					break;
 			}
