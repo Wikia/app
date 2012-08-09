@@ -188,6 +188,7 @@ $messages['br'] = array(
  * @author Kghbln
  * @author LWChris
  * @author Laximilian scoken
+ * @author MtaÄ
  * @author PtM
  * @author Quedel
  * @author SVG
@@ -230,6 +231,7 @@ $messages['de'] = array(
 	'founderprogressbar-commcentral-visit-label' => 'Besuche das Gründer & Admin Central',
 	'founderprogressbar-commcentral-visit-action' => 'Gehe zu Gründer & Admin Central',
 	'founderprogressbar-commcentral-visit-description' => 'Du bist nicht allein! Das Gründer & Admin Central ist der Ort, an dem die Gemeinschaft der Wikia-Admins zusammenkommt, um Ratschläge und Tipps zu teilen, außerdem findest du dort Hilfe-Artikel und Möglichkeiten, um Wikia-Mitarbeiter zu kontaktieren.',
+	'founderprogressbar-commcentral-visit-url' => 'http://de.community.wikia.com/wiki/Admin-Bereich:Hauptseite',
 	'founderprogressbar-wikiactivity-visit-label' => 'Zeige die Wiki-Aktivitäten',
 	'founderprogressbar-wikiactivity-visit-action' => 'Gehe zu Spezial:WikiActivity',
 	'founderprogressbar-wikiactivity-visit-description' => 'Die letzten Aktivitäten zeigen dir alles, was sich in deinem Wiki getan hat. Es zeigt dir, welche Benutzer etwas bearbeitet haben und bietet dir eine einfache Möglichkeit, zu den Seiten zu gelangen, die verändert wurden.',
@@ -260,6 +262,7 @@ $messages['de'] = array(
 	'founderprogressbar-gallery-add-label' => 'Eine Fotogalerie hinzufügen',
 	'founderprogressbar-gallery-add-action' => 'Gehe zur Hilfeseite',
 	'founderprogressbar-gallery-add-description' => 'Fotogallerien sind gut dafür geeignet, mehrere Fotos in einem Bereich einer Seite zu präsentieren. Außerdem macht es Spaß, Fotos au deinem Wiki auf unterschiedliche Weisen darzustellen, um es für Besucher interessant zu gestalten.',
+	'founderprogressbar-gallery-add-url' => 'http://de.community.wikia.com/wiki/Hilfe:Foto-Galerien_und_Diashows',
 	'founderprogressbar-topnav-edit-label' => 'Passe deinen Navigationsbereich an',
 	'founderprogressbar-topnav-edit-action' => 'Bearbeite den Navigationsbereich',
 	'founderprogressbar-topnav-edit-description' => 'Die Dropdown-Menüs neben deinem Wiki-Schriftzug sind die Navigation deines Wikis. Du kannst hier auf Seiten verlinken, die deinen Besuchern helfen, Artikel, Kategorien, Blogs und vieles mehr in deinem Wiki zu finden. Besuche das Community Central, wenn du Hilfe beim Bearbeiten der Navigation benötigst.',
@@ -779,6 +782,19 @@ $messages['hu'] = array(
 	'founderprogressbar-category-add5-action' => 'Kategória létrehozása',
 	'founderprogressbar-category-add5-description' => 'Mivel már további lapokat is létrehoztál, valószínűleg szükséged lesz új kategóriákra a szervezettség fenntartásához.',
 	'founderprogressbar-gallery-add-label' => 'Hozz létre egy képgalériát',
+	'founderprogressbar-gallery-add-action' => 'Súgólap meglátogatása',
+	'founderprogressbar-gallery-add-description' => 'A képgalériák remek módot kínálnak több kép egy területen történő elhelyezéséhez. Ráadásul váltogathatod a képek pozícióját, hogy érdekes maradjon a látogatók számára.',
+	'founderprogressbar-topnav-edit-label' => 'Szabd testre a navigációt',
+	'founderprogressbar-topnav-edit-action' => 'Navigáció szerkesztése',
+	'founderprogressbar-topnav-edit-description' => 'A wikid logója melletti legördülő menüsor képezi a wiki navigációs sávját. Itt hivatkozásokat helyezhetsz el az oldalak, kategóriák, blogok és sok minden más megtalálhatóságának érdekében. Látogass el a Community Central wikire, ha segítségre van szükséged a navigáció szerkesztéséhez.',
+	'founderprogressbar-mainpage-addslider-label' => 'Hozz létre egy főoldali csúszkát',
+	'founderprogressbar-mainpage-addslider-action' => 'Főoldal szerkesztése',
+	'founderprogressbar-mainpage-addslider-description' => 'A főoldali csúszka használatával professzionális kinézetet kölcsönözhetsz a főoldalnak, hozzáadva néhány minőségi képet. Mindegyik kép hivatkozhat egy lapra, így az általad leginkább nagyra tartott lapok bemutatására is remek módszert kínál. Olvasd el <a href="http://community.wikia.com/wiki/User_blog:Susan_Taylor/Tips_to_spruce_up_your_main_page">Susan Taylor blogbejegyzését</a> a képek csúszkához való átméretezéséhez.',
+	'founderprogressbar-commcorner-edit-label' => 'Szerkeszd a közösségi sarkot',
+	'founderprogressbar-commcorner-edit-action' => 'Ugrás a közösségi sarokhoz',
+	'founderprogressbar-commcorner-edit-description' => 'A közösségi sarok szerkesztésekor a wikid látogatói értesítést kapnak. Remekül használható a közösség bemutatására, a közreműködés módjainak ismertetésére és bejelntések megtételére.',
+	'founderprogressbar-video-add-label' => 'Tölts fel egy videót',
+	'founderprogressbar-video-add-action' => 'Videó hozzáadása',
 );
 
 /** Interlingua (interlingua)
@@ -1876,6 +1892,7 @@ $messages['tl'] = array(
 	'founderprogressbar-commcentral-visit-label' => 'Dalawin ang Lunduyan ng Tagapagtatag at Tagapangasiwa',
 	'founderprogressbar-commcentral-visit-action' => 'Magpunta sa Lunduyan ng Tagapagtatag at Tagapangasiwa',
 	'founderprogressbar-commcentral-visit-description' => 'Hindi ka nag-iisa! Ang Lunduyan ng Tagapagtatag at Tagapangasiwa ay ang kung saan nagsasama-sama ang pamayanan ng tagapangasiwa ng Wikia upang makapamahagi ng payo at mga impormasyon, makakahanap ka rin ng mga pahina ng tulong, mga gabay at mga paraan upang makapag-ugnayan sa tauhan ng Wikia rito.',
+	'founderprogressbar-commcentral-visit-url' => 'http://community.wikia.com/wiki/Admin_Central:Main_Page',
 	'founderprogressbar-wikiactivity-visit-label' => 'Dalawin ang Gawain ng Wiki',
 	'founderprogressbar-wikiactivity-visit-action' => 'Pumunta sa Special:WikiActivity',
 	'founderprogressbar-wikiactivity-visit-description' => 'Ang Gawain ng Wiki ay nagpapahintulot sa iyo upang makita ang lahat ng mga bagay na nagaganap sa wiki mo. Ipinapakita nito sa iyo kung alin mga tagagamit ang gumawa ng mga pagbabago at nagpapahintulot sa iyo na madaliang makapunta sa mga pahinang nabago.',
@@ -1906,6 +1923,7 @@ $messages['tl'] = array(
 	'founderprogressbar-gallery-add-label' => 'Magdagdag ng isang galeriya ng litrato',
 	'founderprogressbar-gallery-add-action' => 'Pumunta sa Pahina ng Tulong',
 	'founderprogressbar-gallery-add-description' => 'Ang mga galeriya ng litrato ay isang mahusay na paraan upang maitanghal ang maramihang mga litrato sa loob ng isang pook ng isang pahina. At saka masayang paghaluin ang paraan mo ng pagpapakita ng mga larawan sa wiki mo upang mapanatiling kawili-wili para sa dumadalaw na mga tao.',
+	'founderprogressbar-gallery-add-url' => 'http://community.wikia.com/wiki/Help:Gallery',
 	'founderprogressbar-topnav-edit-label' => 'Ipasadya ang panglibot mo',
 	'founderprogressbar-topnav-edit-action' => 'Baguhin ang Panglibot',
 	'founderprogressbar-topnav-edit-description' => 'Ang mga menung ibabagsak na paibaba na katabi ng markang salita ng wiki mo ay ang panglibot ng iyong wiki. Makapaglalagay ka ng mga kawing sa mga pahina rito upang matulungan ang mga tao na makatagpo sa wiki mo ng mga pahina, mga kategorya, mga blog at mas madali. Dalawin ang Lunduyan ng Pamayanan kung mangangailangan ka ng tulong sa pagbago ng panglibot.',
@@ -1921,6 +1939,7 @@ $messages['tl'] = array(
 	'founderprogressbar-user-add5-label' => 'Abutin ang 5 mga balangkas ng katangian ng tagagamit',
 	'founderprogressbar-user-add5-action' => 'Pumunta sa Pahina ng Tulong',
 	'founderprogressbar-user-add5-description' => 'Ang isang kahanga-hangang wiki ay kinakatigan ng isang dakilang pamayanan. Ang pinaka mahuhusay na mga wiki ay mayroong maraming mga taong namamatnugot ng mga ito, ang pagkuha ng 5 mga tao upang mamatnugot sa wiki mo ay isang kagila-gilalas na simula!',
+	'founderprogressbar-user-add5-url' => 'http://help.wikia.com/wiki/Advice:Building_a_Community',
 	'founderprogressbar-recentchanges-visit-label' => 'Dalawin ang Kamakailang mga Pagbabago',
 	'founderprogressbar-recentchanges-visit-action' => 'Pumunta sa Special:RecentChanges',
 	'founderprogressbar-recentchanges-visit-description' => 'Ang Kamakailang mga Pagbabago ay isang mas masulong na bersiyon ng paggalaw ng wiki. Makikita mo ang "mga pagkakaiba" na nagdedetalye ng talagang pagbabago na ginawa sa isang pahina, gumawa ng mga pagpapanumbalik sa mga pagbabago, at tumingin ng mas marami pang mga detalye kaysa sa nakikita mo sa galaw ng wiki. Isa itong kahanga-hangang kasangkapan na pangpamamahala kapag nangangailangan ka ng impormasyon.',

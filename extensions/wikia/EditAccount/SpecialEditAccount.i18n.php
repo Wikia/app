@@ -685,6 +685,7 @@ $messages['he'] = array(
  * @author Dani
  * @author Glanthor Reviol
  * @author Misibacsi
+ * @author R-Joe
  * @author TK-999
  */
 $messages['hu'] = array(
@@ -719,6 +720,13 @@ $messages['hu'] = array(
 	'editaccount-error-close' => 'Hiba történt a fiók szerkesztése közben. Próbálja újra, vagy lépjen kapcsolatba a műszaki csoporttal.',
 	'editaccount-invalid-email' => '"$1" nem érvényes e-mail cím!',
 	'editaccount-nouser' => 'A(z) „$1” felhasználói fiók nem létezik!',
+	'editaccount-labal-account-status' => 'Fiók állapota',
+	'editaccount-labal-email-status' => 'E-mail állapota',
+	'editaccount-status-confirmed' => 'Megerősítve',
+	'editaccount-status-unconfirmed' => 'Nincs megerősítve',
+	'editaccount-status-realuser' => 'Valódi felhasználó',
+	'editaccount-status-tempuser' => 'Ideiglenes felhasználó',
+	'editaccount-error-tempuser-email' => 'Ideiglenes felhasználónak nem lehet üres az e-mail cím mezője, adjon meg egy e-mail címet.',
 	'editaccount-log' => 'Felhasználói fiókok naplója',
 	'editaccount-log-entry-email' => '„$2” e-mail címe megváltoztatva',
 	'editaccount-log-entry-pass' => '„$2” jelszava megváltoztatva',

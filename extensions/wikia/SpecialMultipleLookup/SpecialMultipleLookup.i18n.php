@@ -37,6 +37,7 @@ $messages['en'] = array(
 
 /** Message documentation (Message documentation)
  * @author EugeneZelenko
+ * @author Siebrand
  * @author Umherirrender
  */
 $messages['qqq'] = array(
@@ -44,6 +45,7 @@ $messages['qqq'] = array(
 	'multilookupnext' => '{{Identical|Next}}',
 	'multilookupprevious' => '{{Identical|Previous}}',
 	'right-multilookup' => '{{doc-right|multilookup}}',
+	'action-multilookup' => '{{doc-action|multilookup}}',
 );
 
 /** Tati (Tati)
@@ -241,6 +243,7 @@ $messages['diq'] = array(
 	'multilookupwiki' => 'Wiki',
 	'multilookupwikiurl' => 'URL',
 	'multilookupwikititle' => 'Sername',
+	'multilookupwikioptions' => 'Weçinegi',
 );
 
 /** Spanish (español)
@@ -931,11 +934,13 @@ $messages['tl'] = array(
 );
 
 /** толышә зывон (толышә зывон)
+ * @author Erdemaslancan
  * @author Гусейн
  */
 $messages['tly'] = array(
 	'multilookupwikiurl' => 'URL',
 	'multilookupwikititle' => 'Сәрловһә',
+	'multilookupwikioptions' => 'Кукон',
 );
 
 /** Tatar (Cyrillic script) (татарча)

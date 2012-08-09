@@ -624,6 +624,7 @@ $messages['ps'] = array(
  * @author Crazymadlover
  * @author Giro720
  * @author Hamilton Abreu
+ * @author SandroHc
  */
 $messages['pt'] = array(
 	'wva-success' => 'A página do vídeo $1 foi adicionada com sucesso.',
@@ -636,6 +637,7 @@ $messages['pt'] = array(
 	'wva-notlogged' => 'Precisa de se autenticar ou registar para inserir vídeos.',
 	'wva-notallowed' => 'Não pode inserir vídeos nesta wiki.',
 	'wva-protected' => 'Este vídeo está protegido.',
+	'wva-thumbnail-upload-failed' => 'A incorporação de vídeo falhou, não foi possível obter uma miniatura',
 );
 
 /** Brazilian Portuguese (português do Brasil)

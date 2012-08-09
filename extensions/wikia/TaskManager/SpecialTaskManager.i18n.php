@@ -17,6 +17,13 @@ $messages['en'] = array(
 	'action-taskmanager' => 'display and manage background tasks',
 );
 
+/** Message documentation (Message documentation)
+ * @author Siebrand
+ */
+$messages['qqq'] = array(
+	'action-taskmanager' => '{{doc-action|taskmanager}}',
+);
+
 /** Afrikaans (Afrikaans)
  * @author Naudefj
  */

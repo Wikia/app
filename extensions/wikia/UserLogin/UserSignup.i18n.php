@@ -240,6 +240,7 @@ Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Prefer
 );
 
 /** Message documentation (Message documentation)
+ * @author McDutchie
  * @author Siebrand
  */
 $messages['qqq'] = array(
@@ -331,7 +332,11 @@ $messages['qqq'] = array(
 	'usersignup-account-creation-heading' => 'Page heading for confirm page when byemail=1 is used.',
 	'usersignup-account-creation-subheading' => 'Page subheading for confirm page when byemail=1 is used. Parameters:
 * $1 is an e-mail address.',
-	'usersignup-account-creation-email-sent' => 'Page content for confirm page when byemail=1 is used.  $2 is the user name that the account has been created for.  $1 is e-mail address sent to.',
+	'usersignup-account-creation-email-sent' => 'Page content for confirm page when byemail=1 is used.  Parameters:
+* $1 is e-mail address sent to,
+* $2 is the user name that the account has been created for.
+
+{{doc-singularthey}}',
 	'usersignup-account-creation-email-subject' => 'Confirmation email subject for people receiving the account when byemail=1 is used.',
 	'usersignup-account-creation-email-greeting' => 'Confirmation email greeting for people receiving the account when byemail=1 is used.',
 	'usersignup-account-creation-email-content' => 'Confirmation email body for people receiving the account when byemail=1 is used.  $USERNAME is user name, $NEWPASSWORD is new password for the user to use.',
@@ -1518,6 +1523,7 @@ Vole seliger le e-mail que tu recipe? Va a: {{fullurl:{{ns:special}}:Preferences
 );
 
 /** Italian (italiano)
+ * @author Lexaeus 94
  * @author Minerva Titani
  */
 $messages['it'] = array(
@@ -1567,8 +1573,61 @@ $messages['it'] = array(
 
 Clicca sul link di conferma nella email per completare la creazione del tuo account.",
 	'usersignup-confirmation-email_subject' => 'Ci sei quasi! Conferma il tuo account Wikia',
+	'usersignup-confirmation-email-greeting' => 'Ciao $USERNAME,',
+	'usersignup-confirmation-email-content' => 'Sei a un passo dal creare il tuo account Wikia! Clicca sul link sottostante per confermare il tuo indirizzo email e iniziare.
+
+<a style="color:#2C85D5;" href="$CONFIRMURL">$CONFIRMURL</a>',
+	'usersignup-confirmation-email-signature' => 'Il Team di Wikia',
+	'usersignup-reconfirmation-email-sent' => 'Il tuo indirizzo email è stato cambiato in $1. Ti abbiamo inviato una nuova email di conferma. Ti preghiamo di confermare il nuovo indirizzo email.',
+	'usersignup-reconfirmation-email_subject' => "Conferma il cambio d'indirizzo email su Wikia",
+	'usersignup-reconfirmation-email-greeting' => 'Ciao $USERNAME',
+	'usersignup-reconfirmation-email-signature' => 'Il Team di Wikia',
+	'usersignup-reconfirmation-email_body' => "Ciao $2
+
+Clicca sul link sottostante per confermare la modifica dell'indirizzo email su Wikia.
+
+$3
+
+Continuerai a ricevere email al tuo vecchio indirizzo, sino a quando questo non sarà stato confermato.
+
+Il Team di Wikia
+
+___________________________________________
+
+Per scoprire le ultime novità su Wikia, visita http://it.community.wikia.com
+Vuoi controllare quali email ricevere? Vai a: {{fullurl:{{ns:special}}:Preferences}}",
+	'usersignup-welcome-email-subject' => 'Benvenuto su Wikia, $USERNAME!',
+	'usersignup-welcome-email-greeting' => 'Ciao $USERNAME',
+	'usersignup-welcome-email-heading' => 'Siamo felici di darti il benvenuto su Wikia e su {{SITENAME}}! Ecco alcune cose che potresti fare per iniziare.',
+	'usersignup-welcome-email-edit-profile-heading' => 'Modifica il tuo profilo',
+	'usersignup-welcome-email-edit-profile-content' => 'Aggiungi una foto e racconta qualcosa su di te sul tuo profilo su {{SITENAME}}',
+	'usersignup-welcome-email-edit-profile-button' => 'Vai al profilo',
+	'usersignup-welcome-email-learn-basic-heading' => 'Impara le basi',
+	'usersignup-welcome-email-learn-basic-content' => 'Ottieni un rapido tutorial sulle basi di Wikia: come modificare una pagina, il tuo profilo utente, modificare le preferenze e altro ancora.',
+	'usersignup-welcome-email-learn-basic-button' => 'Controlla',
+	'usersignup-welcome-email-explore-wiki-heading' => 'Esplora più wiki',
+	'usersignup-welcome-email-explore-wiki-content' => 'Ci sono migliaia di wiki su Wikia, trova la wiki che ti interessa esplorando uno dei nostri hub: <a style="color:#2C85D5;" href="http://www.wikia.com/Video_Games">Video Games</a>, <a style="color:#2C85D5;" href="http://www.wikia.com/Entertainment">Entertainment</a>, o <a style="color:#2C85D5;" href="http://www.wikia.com/Lifestyle">Lifestyle</a>.',
+	'usersignup-welcome-email-explore-wiki-button' => 'Vai a wikia.com',
+	'usersignup-welcome-email-content' => 'Vuoi ulteriori informazioni? Trova consigli, risposte e la comunità di Wikia a <a style="color:#2C85D5;" href="http://it.community.wikia.com">Wiki della Community</a>.  Buon editing!',
+	'usersignup-welcome-email-signature' => 'Il Team di Wikia',
+	'usersignup-heading' => 'Unisciti a Wikia oggi',
+	'usersignup-heading-byemail' => 'Crea un account per qualcun altro',
+	'usersignup-marketing-wikia' => 'Inizia a collaborare con milioni di persone da tutto il mondo, che si riuniscono per condividere conoscenza e passione.',
+	'usersignup-marketing-login' => 'Sei già registrato? [[Special:UserLogin|Effettua il login]]',
+	'usersignup-marketing-benefits' => 'Sii parte di qualcosa di grande',
+	'usersignup-marketing-community-heading' => 'Collabora',
+	'usersignup-marketing-community' => 'Scopri ed esplora argomenti che vanno da videogiochi, film e tv. Incontra persone con passioni ed interessi simili.',
+	'usersignup-marketing-global-heading' => 'Crea',
+	'usersignup-marketing-creativity-heading' => 'Essere originali',
+	'usersignup-marketing-creativity' => 'Usa Wikia per esprimere la tua creatività con i sondaggi e le liste top 10, le gallerie di foto e video, le applicazioni e altro ancora.',
+	'usersignup-createaccount-byemail' => 'Crea un account per qualcun altro',
+	'usersignup-error-captcha' => 'La parola che hai inserito non corrisponde a quella nel riquadro, riprova!',
 	'usersignup-account-creation-heading' => 'Successo!',
 	'usersignup-account-creation-subheading' => 'Abbiamo inviato un email a $1',
+	'usersignup-account-creation-email-subject' => 'Un account è stato creato per te su Wikia!',
+	'usersignup-account-creation-email-greeting' => 'Ciao,',
+	'usersignup-account-creation-email-signature' => 'Il Team di Wikia',
+	'usersignup-confirmation-reminder-email-signature' => 'Il Team di Wikia',
 	'usersignup-facebook-problem' => "C'è stato un problema di comunicazione con Facebook. Per favore riprova più tardi.",
 );
 
@@ -1942,9 +2001,9 @@ $2 akan dikehendaki mengklik pautan dalam e-mel yang kami hantar itu untuk menge
 	'usersignup-account-creation-email-subject' => 'Akaun telah dibuka untuk anda di Wikia!',
 	'usersignup-account-creation-email-greeting' => 'Selamat sejahtera,',
 	'usersignup-account-creation-email-content' => 'Satu akaun telah dibuka khas untuk anda di {{SITENAME}}. Untuk mengakses akaun anda dan menukar kata laluan sementara anda, sila klik pautan di bawah dan log masuk dengan nama pengguna "$USERNAME" dan kata laluan "$NEWPASSWORD".
-<br /><br />
+
 Sila log masuk di <a style="color:#2C85D5;" href="{{fullurl:{{ns:special}}:UserLogin}}">{{fullurl:{{ns:special}}:UserLogin}}</a>
-<br /><br />
+
 Jika anda tidak mengingini pembukaan akaun ini, anda boleh mengabaikan e-mel ini begitu sahaja atau menghubungi pasukan Bantuan Komuniti kami jika ada sebarang pertanyaan.',
 	'usersignup-account-creation-email-signature' => 'Pasukan Wikia',
 	'usersignup-account-creation-email-body' => 'Selamat sejahtera,
@@ -1964,10 +2023,10 @@ Untuk mengikuti perkembangan terkini di Wikia, layari http://community.wikia.com
 Ingin mengawal e-mel yang anda terima? Pergi ke: {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-confirmation-reminder-email_subject' => 'Janganlah menyepi…',
 	'usersignup-confirmation-reminder-email-greeting' => '$USERNAME,',
-	'usersignup-confirmation-reminder-email-content' => '!Sudah beberapa hari berlalu, tetapi nampaknya anda belum menghabiskan pembukaan akaun anda di Wikia. Senang sahaja. Anda cuma perlu klik pautan pengesahan yang berikut:
-<br /><br />
+	'usersignup-confirmation-reminder-email-content' => 'Sudah beberapa hari berlalu, tetapi nampaknya anda belum menghabiskan pembukaan akaun anda di Wikia. Senang sahaja. Anda cuma perlu klik pautan pengesahan yang berikut:
+
 <a style="color:#2C85D5;" href="$CONFIRMURL">$CONFIRMURL</a>
-<br /><br />
+
 Jika anda tidak membuat pengesahan dalam 23 hari, maka nama pengguna anda, $USERNAME, akan dibuka kepada orang lain semula, jadi jangan tunggu lagi!',
 	'usersignup-confirmation-reminder-email-signature' => 'Pasukan Wikia',
 	'usersignup-confirmation-reminder-email_body' => '$2,

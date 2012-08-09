@@ -19,6 +19,7 @@ Check your spelling.',
 	'log-description-piggyback' => 'This log is a record of account piggybacks.',
 );
 
+/** Message documentation (Message documentation) */
 $messages['qqq'] = array(
 	'log-name-piggyback' => '{{doc-logpage}}',
 	'log-description-piggyback' => 'Appears on top of Special:Log/piggyback.',
@@ -73,6 +74,8 @@ Bitte Schreibweise überprüfen.',
 	'piggyback-itisyou' => 'Du kannst dich nicht selbst huckepack nehmen.',
 	'piggyback-issysopto' => 'Du kannst keinen Benutzer mit dem Huckepack-Recht Huckepack nehmen.',
 	'action-piggyback' => 'als anderer Benutzer anmelden',
+	'log-name-piggyback' => 'Huckepack-Logbuch',
+	'log-description-piggyback' => "Dieses Logbuch zeigt ''Huckepack''-Kontoübernahmen.",
 );
 
 /** Spanish (español)

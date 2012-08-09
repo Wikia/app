@@ -284,7 +284,7 @@ $messages['de'] = array(
 	'userlogin-password-email-greeting' => 'Hallo $USERNAME,',
 	'userlogin-password-email-content' => 'Gib dieses temporäre Passwort an, um dich bei Wikia anzumelden: "$NEWPASSWORD"
  <br /><br />
-Falls du kein neues Passwort beantragt hast kannst du diese E-Mail ignorieren und weiterhin dein altes Passwort verwenden. Keine Sorge! Dein Benutzerkonto ist immernoch sicher.
+Falls du kein neues Passwort beantragt hast kannst du diese E-Mail ignorieren und weiterhin dein altes Passwort verwenden. Keine Sorge! Dein Benutzerkonto ist immernoch sicher. 
  <br /><br />
 Bei Fragen oder Bedenken kannst du uns jederzeit kontaktieren.',
 	'userlogin-password-email-signature' => 'Wikia Community Support',
@@ -292,7 +292,7 @@ Bei Fragen oder Bedenken kannst du uns jederzeit kontaktieren.',
 
 gib dieses temporäre Passwort an, um dich bei Wikia anzumelden: "$3"
 
-Falls du kein neues Passwort beantragt hast kannst du diese E-Mail ignorieren und weiterhin dein altes Passwort verwenden. Keine Sorge! Dein Benutzerkonto ist immernoch sicher.
+Falls du kein neues Passwort beantragt hast kannst du diese E-Mail ignorieren und weiterhin dein altes Passwort verwenden. Keine Sorge! Dein Benutzerkonto ist immernoch sicher. 
 
 Bei Fragen oder Bedenken kannst du uns jederzeit kontaktieren.
 
@@ -741,7 +741,7 @@ $messages['it'] = array(
 	'userlogin-password-email-subject' => 'Richiesta per password dimenticata',
 	'userlogin-password-email-greeting' => 'Ciao $USERNAME,',
 	'userlogin-password-email-content' => 'Per favore usa questa password temporarea per effettuare il login su Wikia: "$NEWPASSWORD"
-<br /><br />
+<br/><br/>
 Se non hai richiesto una nuova password, non preoccuparti! Il tuo account è al sicuro. Puoi ignorare questa email e continuare a effettuare il login su Wikia con la tua vecchia password.
 <br /><br />
 Domande o dubbi? Sentiti libero di contattarci.',
@@ -965,7 +965,7 @@ $messages['nb'] = array(
 	'userlogin-password-email-greeting' => 'Hei $USERNAME,',
 	'userlogin-password-email-content' => 'Vennligst bruk dette midlertidige passordet for å logge inn i Wikia: «$NEWPASSWORD»
 <br /><br />
-Hvis du ikke har bedt om et nytt passord, ikke vær bekymret! Kontoen din er trygg og sikker. Du kan ignorere denne e-posten og fortsette å logge inn i Wikia med det gamle passordet ditt.
+Hvis du ikke har bedt om et nytt passord, ikke vær bekymret! Kontoen din er trygg og sikker. Du kan ignorere denne e-posten og fortsette å logge inn i Wikia med det gamle passordet ditt. 
 <br /><br />
 Spørsmål eller bekymringer? Kontakt oss gjerne.',
 	'userlogin-password-email-signature' => 'Wikia fellesskapssupport',
@@ -1155,6 +1155,14 @@ $messages['ps'] = array(
 	'userlogin-retypenew' => 'نوی پټنوم مو بيا وليکۍ',
 	'userlogin-password-email-greeting' => 'سلامونه $USERNAME،',
 	'userlogin-loginreqlink' => 'ننوتل',
+);
+
+/** Portuguese (português)
+ * @author SandroHc
+ */
+$messages['pt'] = array(
+	'userlogin-login-heading' => 'Login',
+	'userlogin-password-email-greeting' => 'Olá $USERNAME,',
 );
 
 /** Brazilian Portuguese (português do Brasil)
@@ -1509,7 +1517,7 @@ $messages['uk'] = array(
 
 Є питання чи сумніви? Сміливо звертайтеся до нас.
 
-Спільнота підтримки Wikia
+Спільнота підтримки Wikia 
 
 ___________________________________________
 Останні події на Wikia - http://community.wikia.com

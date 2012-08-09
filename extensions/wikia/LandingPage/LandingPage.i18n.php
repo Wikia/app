@@ -70,6 +70,7 @@ $messages['cs'] = array(
 /** German (Deutsch)
  * @author Diebuche
  * @author LWChris
+ * @author PtM
  */
 $messages['de'] = array(
 	'landingpage' => 'Willkommen bei Wikia',
@@ -78,6 +79,7 @@ $messages['de'] = array(
 	'landingpage-readfaq' => 'Fragen? Lies unsere FAQ &gt;',
 	'landingpage-text' => 'Bei Wikia kannst du dich <strong>mit den Menschen treffen</strong>, die deine <strong>Leidenschaften und Interessen</strong> teilen. Finde deine Gruppe, kommentiere und bearbeite, <strong>starte sogar deine eigene Website</strong> und Community.',
 	'landingpage-buttons-learn-more' => 'Mehr erfahren &gt;',
+	'landingpage-buttons-about-wikia-url' => 'http://de.community.wikia.com/wiki/Was_ist_Wikia',
 );
 
 /** Spanish (español)
@@ -421,6 +423,11 @@ $messages['tl'] = array(
 	'landingpage-readfaq' => 'May mga katanungan? Basahin ang aming Mga Malimit Itanong &gt;',
 	'landingpage-text' => "Sa Wikia ay maaari kang <strong>makipag-ugnayan sa mga tao</strong> na makikisalamuha sa iyong mga <strong>mga kahumalingan at mga kinawiwilihan</strong>. Hanapin ang pangkat mo, gumawa ng mga puna at mga pamamatnugot, kahi't na ang <strong>magsimula ng sarili mong pook sa sangkasaputan</strong> at pamayanan.",
 	'landingpage-buttons-learn-more' => 'Umalam ng marami pa &gt;',
+	'landingpage-language-links' => '* English|en
+* Español|es
+* Deutsch|de
+* Français|fr',
+	'landingpage-buttons-about-wikia-url' => 'http://www.community.wikia.com/wiki/About_Wikia',
 );
 
 /** Tatar (Cyrillic script) (татарча)

@@ -55,6 +55,41 @@ $messages['az'] = array(
 	'lightbox-share-button-email' => 'E-məktub',
 );
 
+/** Catalan (català)
+ * @author BroOk
+ */
+$messages['ca'] = array(
+	'lightbox_details_tooltip' => 'Veure detalls de la imatge',
+	'lightbox-forum' => 'Fòrum',
+	'lightbox-standard-link' => 'Enllaç estàndard',
+	'lightbox-blog-link' => 'Enllaç de bloc',
+	'lightbox-send' => 'Enviar',
+	'lightbox-share-description' => 'Imatge de $1 a $2',
+	'lightbox-share-email-subject' => "$1 t'ha enviat una imatge a Wikia",
+	'lightbox-share-email-body' => "Hola,
+
+Algú volia mostrar-te una imatge a Wikia. Mira-la:
+
+$1
+
+- L'Equip de Wikia",
+	'lightbox-share-button-email' => 'Email',
+	'lightbox-share-button-www' => 'Compartir',
+	'lightbox-share-button-embed' => 'Insereix',
+	'lightbox-share-email-label' => 'Enviar per correu electrònic aquesta imatge a un amic',
+	'lightbox-share-email-page-label' => 'Enviar per correu electrònic aquesta pàgina a un amic',
+	'lightbox-share-email-page-label-address' => 'Adreça de correu electrònic',
+	'lightbox-share-email-ok-caption' => 'Confirmació',
+	'lightbox-share-email-ok-content' => '{{PLURAL:$1|El correu ha estat enviat|Els correus han estat enviats}}.',
+	'lightbox-share-email-error-caption' => 'Error',
+	'lightbox-share-email-error-content' => "Error a l'enviar {{PLURAL:$1|el correu|els correus}}.
+
+Detalls: $2",
+	'lightbox-share-email-error-login' => "Per enviar correus electrònics has d'iniciar sessió.",
+	'lightbox-share-email-error-noaddress' => 'No has especificat cap direcció.',
+	'lightbox-visit-the-wiki' => 'Visita el wiki:',
+);
+
 /** German (Deutsch)
  * @author George Animal
  * @author PtM

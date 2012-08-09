@@ -871,7 +871,7 @@ $messages['diq'] = array(
 	'autocreatewiki-required' => '$1 = icab keno',
 	'autocreatewiki-web-address' => 'Adrese webi',
 	'autocreatewiki-category-select' => 'yeweri bıweçin',
-	'autocreatewiki-language-top' => 'Top 10 zıwani',
+	'autocreatewiki-language-top' => 'Top $1 zıwani',
 	'autocreatewiki-language-all' => 'Zıwani pêro',
 	'autocreatewiki-birthdate' => 'Demê biyayışi:',
 	'autocreatewiki-remember' => 'Mı biya xo viri',
@@ -2668,6 +2668,7 @@ $messages['lez'] = array(
 );
 
 /** Lithuanian (lietuvių)
+ * @author Cyklopas
  * @author Eitvys200
  */
 $messages['lt'] = array(
@@ -2713,6 +2714,7 @@ $messages['lt'] = array(
 	'autocreatewiki-empty-retype-password' => 'Iš naujo įveskite slaptažodį negali būti tuščias.',
 	'autocreatewiki-category-label' => 'Kategorija:',
 	'autocreatewiki-category-other' => 'Kita',
+	'autocreatewiki-set-username' => 'Pirma pasirinkite naudotojo vardą.',
 	'autocreatewiki-invalid-birthday' => 'Neleistina gimimo data',
 	'autocreatewiki-congratulation' => 'Sveikinimai!',
 	'autocreatewiki-welcometalk-log' => 'Sveikinimo Žinutė',
@@ -3786,6 +3788,7 @@ $messages['ps'] = array(
 
 /** Portuguese (português)
  * @author Hamilton Abreu
+ * @author SandroHc
  * @author Waldir
  */
 $messages['pt'] = array(
@@ -3879,23 +3882,22 @@ Seleccione uma apropriada da lista descendente.',
 	'autocreatewiki-step7-error' => 'Não foi possível copiar a base de dados inicial para a língua!',
 	'autocreatewiki-protect-reason' => 'Parte da interface oficial',
 	'autocreatewiki-welcomesubject' => '$1 foi criada!',
-	'autocreatewiki-welcomebody' => 'Olá $2,
+	'autocreatewiki-welcomebody' => 'Olá $2!
 
-A wiki que solicitou está agora disponível em <$1>. Esperamos vê-lo a editá-la em breve!
+A wiki que solicitou está agora disponível! Dê uma olhada agora em: <$1>
 
-Adicionámos alguma Informação e Dicas na sua Página de Discussão (<$5>) para ajudá-lo a começar.
+Preparado para começar? Nós adicionámos alguns links na sua Página de Discussão (<$5>) para ajudá-lo a começar e para o encorajar a explorar as muitas áreas à volta da Wikia. Se você tiver alguma pergunta ou se sentir um pouco perdido, responda a este e-mail ou verifique as nossas páginas de ajuda <http://help.wikia.com>.
 
-Se tiver algum problema, pode pedir ajuda à comunidade de utilizadores da wiki em <http://www.wikia.com/wiki/Forum:Help_desk>, ou por correio electrónico para community@wikia.com. Também pode visitar o nosso canal IRC #wikia de conversação ao vivo <http://irc.wikia.com>.
+Você também pode verificar o blogue do Fundador & Admin <http://community.wikia.com/wiki/Blog%3AWikia_Founders_%26_Admins> e o blogue da Gerência da Wikia <http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog> onde poderás encontrar dicas, truques, e informações sobre novas funcionalidades e novidades da Wikia.
 
-Se tiver quaisquer questões, pode contactar-me directamente por correio electrónico ou na minha página de discussão.
-
-Boa sorte para o seu projecto!
+Boas edições!
 
 $3
-
 A Equipa da Comunidade Wikia
+<http://community.wikia.com/wiki/User:$4>
 
-<http://www.wikia.com/wiki/User:$4>',
+___________________________________________
+* Você quer receber menos mensagens nossas? Você pode remover a subscrição ou alterar as suas preferências de e-mail aqui: http://community.wikia.com/Special:Preferences',
 	'autocreatewiki-welcometalk' => "== Bem-vindo(a)! ==
 <div style=\"font-size:120%; line-height:1.2em;\">Olá \$1 -- é óptimo poder contar com a '''\$4''' na comunidade Wikia!
 
@@ -4693,6 +4695,7 @@ Kung mayroong kang mga katanungan, mapapadalhan mo kami ng e-liham sa pamamagita
 -- [[User:\$2|\$3]] <staff /></div>",
 	'newwikis' => 'Bagong mga wiki',
 	'newwikisstart' => 'Ipakita ang mga wiki na nagsisimula sa:',
+	'autocreatewiki-reminder-subject' => '{{SITENAME}}',
 	'autocreatewiki-reminder-body' => "Minamahal na $1:
 
 Maligayang bati sa pagsisimula ng bago mong wiki, ang {{SITENAME}}! Maaari kang bumalik at magdagdag pa sa wiki mo sa pamamagitan ng pagdalaw sa $2.
@@ -5051,9 +5054,11 @@ $messages['vep'] = array(
 );
 
 /** Vietnamese (Tiếng Việt)
+ * @author Thanhtai2009
  * @author Xiao Qiao
  */
 $messages['vi'] = array(
+	'autocreatewiki' => 'Tạo wiki mới',
 	'autocreatewiki-info-terms-agree' => 'Bằng việc tạo ra một wiki và một tài khoản thành viên, bạn đồng ý với <a href="http://www.wikia.com/wiki/Terms_of_use">Điều khoản Sử dụng của Wikia</a>',
 );
 

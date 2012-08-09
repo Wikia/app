@@ -278,11 +278,17 @@ $messages['mk'] = array(
  */
 $messages['ms'] = array(
 	'timeagomessaging-desc' => 'Menyediakan i18n untuk pemalam jqurey.timeago.js',
+	'timeago-year' => '{{PLURAL:$1|setahun|$1 tahun}} yang lalu',
 	'timeago-month' => '{{PLURAL:$1|sebulan|$1 bulan}} yang lalu',
 	'timeago-day' => '{{PLURAL:$1|sehari|$1 hari}} yang lalu',
 	'timeago-hour' => '{{PLURAL:$1|sejam|$1 jam}} lalu',
 	'timeago-minute' => '{{PLURAL:$1|seminit|$1 minit}} yang lalu',
 	'timeago-second' => 'seminit lalu',
+	'timeago-day-from-now' => '{{PLURAL:$1|sehari|$1 hari}} dari sekarang',
+	'timeago-hour-from-now' => '{{PLURAL:$1|sejam|$1 jam}} dari sekarang',
+	'timeago-minute-from-now' => '{{PLURAL:$1|seminit|$1 minit}} dari sekarang',
+	'timeago-month-from-now' => '{{PLURAL:$1|sebulan|$1 bulan}} dari sekarang',
+	'timeago-second-from-now' => 'seminit dari sekarang',
 );
 
 /** Norwegian Bokmål (‪norsk (bokmål)‬)
@@ -304,10 +310,12 @@ $messages['nb'] = array(
 );
 
 /** Dutch (Nederlands)
+ * @author SPQRobin
  * @author Siebrand
  */
 $messages['nl'] = array(
 	'timeagomessaging-desc' => 'Biedt i18n voor de plug-in jquery.timeago.js',
+	'timeago-year' => '{{PLURAL:$1|een jaar|$1 jaar}} geleden',
 	'timeago-month' => '{{PLURAL:$1|een maand|$1 maanden}} geleden',
 	'timeago-day' => '{{PLURAL:$1|een dag|$1 dagen}} geleden',
 	'timeago-hour' => '{{PLURAL:$1|een uur|$1 uur}} geleden',

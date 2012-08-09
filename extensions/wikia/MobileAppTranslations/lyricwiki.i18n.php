@@ -73,7 +73,7 @@ $messages['qqq'] = array(
 $messages['az'] = array(
 	'app-loading' => 'Yüklənir…',
 	'app-tab-search' => 'Axtar',
-	'app-tab-about' => 'İzah',
+	'app-tab-about' => 'Haqqında',
 	'app-nonetwork-dialog-close-button' => 'OK',
 	'search-go' => 'Seç!',
 	'login-username-hint' => 'İstifadəçi adı',
@@ -828,7 +828,7 @@ $messages['pl'] = array(
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
-	'app-loading' => 'د برسېرېدو په حال کې',
+	'app-loading' => 'برسېرېدنې کې دی...',
 	'app-tab-search' => 'پلټل',
 	'app-tab-about' => 'په اړه',
 	'app-nonetwork-dialog-close-button' => 'ښه',
@@ -837,7 +837,7 @@ $messages['ps'] = array(
 	'login-password-hint' => 'پټنوم',
 	'login-submit-button' => 'ننوتل',
 	'about-credits' => 'د %s لخوا',
-	'about-heading-tips' => 'د پلټنې په حال کې...',
+	'about-heading-tips' => 'پلټنې کې دی...',
 	'lyrics-artist-byline' => 'د %s لخوا',
 );
 

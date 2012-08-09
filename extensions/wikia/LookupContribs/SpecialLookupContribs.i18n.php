@@ -280,6 +280,7 @@ Bitte überprüfen Sie den angegebenen Benutzernamen auf mögliche Tippfehler.</
  * @author Erdemaslancan
  */
 $messages['diq'] = array(
+	'lookupcontribswikioptions' => 'Weçinegi',
 	'lookupcontribsrecordspager' => "'''$1''' , '''$2''' u '''$3''' basnı",
 );
 
@@ -1495,12 +1496,14 @@ Suriin ang ibinigay na pangalan ng tagagamit para sa maaaring mga kamalian.</p>'
 );
 
 /** толышә зывон (толышә зывон)
+ * @author Erdemaslancan
  * @author Гусейн
  */
 $messages['tly'] = array(
 	'lookupcontribswiki' => 'Вики',
 	'lookupcontribswikiurl' => 'URL',
 	'lookupcontribswikititle' => 'Ном',
+	'lookupcontribswikioptions' => 'Кукон',
 	'lookupcontribsnext' => 'думотоно шә',
 	'lookupcontribsprevious' => 'навынәни',
 	'lookupcontribsall' => 'һәммәј',

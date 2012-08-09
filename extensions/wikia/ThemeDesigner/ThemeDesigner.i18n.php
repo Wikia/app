@@ -1439,9 +1439,11 @@ $messages['ps'] = array(
  * @author Hamilton Abreu
  * @author Malafaya
  * @author Rhaijin
+ * @author SandroHc
  * @author Waldir
  */
 $messages['pt'] = array(
+	'themedesigner-or' => 'ou',
 	'themedesigner-desc' => 'Permite que os administradores componham variantes do tema da wiki',
 	'themedesigner-title' => 'Compositor de Variantes do Tema, da Wikia',
 	'themedesigner-background' => 'Fundo',
@@ -1457,6 +1459,8 @@ $messages['pt'] = array(
 	'themedesigner-medium' => 'Médio',
 	'themedesigner-large' => 'Grande',
 	'themedesigner-tile-background' => 'Repetir imagem de fundo',
+	'themedesigner-fix-background' => 'fixar',
+	'themedesigner-transparency' => 'transparência',
 	'themedesigner-tab-theme' => 'Variante',
 	'themedesigner-tab-customize' => 'Personalizar',
 	'themedesigner-tab-wordmark' => 'Símbolo',
@@ -1473,13 +1477,15 @@ $messages['pt'] = array(
 	'themedesigner-upload-your-own' => 'Faça o upload de uma',
 	'themedesigner-button-upload' => 'Upload',
 	'themedesigner-button-upload-wordmark' => 'Enviar',
-	'themedesigner-rules-background' => 'jpg, gif ou png. Máx: 100 KB',
+	'themedesigner-rules-background' => 'jpg, gif ou png. Máximo: {{PLURAL:$1|$1 kilobyte|$1 kilobytes}}',
 	'themedesigner-default' => 'Padrão',
 	'themedesigner-font' => 'fonte',
 	'themedesigner-size' => 'tamanho',
 	'themedesigner-button-save' => 'Gravar',
 	'themedesigner-upload-a-graphic' => 'upload de um padrão gráfico',
 	'themedesigner-rules-wordmark' => 'até 250x65 pixels (só ficheiros .png)',
+	'themedesigner-rules-favicon' => 'Envie um ficheiro .ico de 16x16 pixels. Um favicon é um pequeno ícone que aparece na aba da wiki do navegador',
+	'themedesigner-rules-favicon-learn-more-link' => 'Saiba mais.',
 	'themedesigner-dont-use-a-graphic' => 'remover',
 	'themedesigner-history-item' => '$1 de $2',
 	'themedesigner-button-change-text' => 'Alterar texto',
@@ -1489,6 +1495,8 @@ $messages['pt'] = array(
 	'themedesigner-type-error' => 'Tipo de ficheiro incorrecto',
 	'themedesigner-unknown-error' => 'Ocorreu um erro que não é possível identificar. Tente novamente, por favor.',
 	'themedesigner-manual-upload-error' => 'Use o Compositor de Variantes do Tema para colocar o símbolo da wiki e definir o fundo',
+	'themedesigner-favicon-heading' => 'Favicon',
+	'themedesigner-wodmark-preview' => 'Antevisão',
 );
 
 /** Brazilian Portuguese (português do Brasil)

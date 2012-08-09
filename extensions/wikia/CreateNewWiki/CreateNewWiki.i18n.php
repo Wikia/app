@@ -1173,10 +1173,83 @@ $messages['inh'] = array(
 
 /** Italian (italiano)
  * @author Lexaeus 94
+ * @author Minerva Titani
  */
 $messages['it'] = array(
+	'createnewwiki-desc' => '[[Special:CreateNewWiki|Procedura guidata per la creazione di una wiki]]',
+	'cnw-next' => 'Avanti',
+	'cnw-back' => 'Indietro',
+	'cnw-or' => 'o',
+	'cnw-title' => 'Crea una nuova wiki',
+	'cnw-name-wiki-headline' => 'Crea una wiki',
+	'cnw-name-wiki-creative' => 'Wikia è il posto migliore per costruire un sito web e far crescere una community intorno a ciò che ti piace.',
+	'cnw-name-wiki-label' => 'Dai un nome alla tua wiki',
+	'cnw-name-wiki-wiki' => 'Wiki',
+	'cnw-name-wiki-domain-label' => 'Dai un indirizzo alla tua wiki',
+	'cnw-name-wiki-submit-error' => 'Ops! Devi riempire entrambi i campi qui sopra per continuare.',
+	'cnw-login' => 'Login',
+	'cnw-signup' => 'Crea un account',
+	'cnw-signup-prompt' => 'Ti serve un account?',
+	'cnw-call-to-signup' => 'Registrati qui',
+	'cnw-login-prompt' => 'Hai già un account?',
+	'cnw-call-to-login' => 'Effettua qui il login',
+	'cnw-auth-headline' => 'Login',
+	'cnw-auth-headline2' => 'Registrati',
+	'cnw-auth-creative' => 'Effettua il login per continuare a costruire la tua wiki.',
+	'cnw-auth-signup-creative' => 'È necessario avere un account per continuare a costruire la tua wiki. <br />Ci vuole solo un minuto per registrarsi!',
+	'cnw-auth-facebook-signup' => 'Registrati con Facebook',
+	'cnw-auth-facebook-login' => 'Effettua il login con Facebook',
+	'cnw-userauth-headline' => 'Hai un account?',
 	'cnw-userauth-creative' => 'Entra',
-	'cnw-desc-change-lang' => 'Cambiamento',
+	'cnw-userauth-marketing-heading' => 'Non hai un account?',
+	'cnw-userauth-marketing-body' => 'È necessario avere un account per continuare a costruire la tua wiki. <br />Ci vuole solo un minuto per [[Special:UserSignup|registrarsi]]!',
+	'cnw-userauth-signup-button' => 'Registrati',
+	'cnw-desc-headline' => "Qual è l'argomento della tua wiki?",
+	'cnw-desc-creative' => 'Descrivi il tuo argomento',
+	'cnw-desc-placeholder' => 'Questo testo apparirà nella pagina principale della tua wiki.',
+	'cnw-desc-tip1' => 'Suggerimento',
+	'cnw-desc-tip1-creative' => 'Utilizza questo spazio per descrivere alle persone la tua wiki con poche parole',
+	'cnw-desc-tip2' => 'Psst',
+	'cnw-desc-tip2-creative' => 'Fornisci ai visitatori alcuni dettagli specifici sul tuo argomento',
+	'cnw-desc-tip3' => 'Suggerimento avanzato',
+	'cnw-desc-tip3-creative' => 'Fai sapere alle persone che possono aiutarti a far crescere la wiki creando e modificando le pagine',
+	'cnw-desc-choose' => 'Scegli una categoria',
+	'cnw-desc-select-one' => 'Seleziona',
+	'cnw-desc-default-lang' => 'La tua wiki sarà in $1',
+	'cnw-desc-change-lang' => 'Cambia',
+	'cnw-desc-lang' => 'Lingua',
+	'cnw-desc-wiki-submit-error' => 'Per favore scegli una categoria',
+	'cnw-theme-headline' => 'Scegli un tema',
+	'cnw-theme-creative' => "Scegli uno dei temi qui sotto. Puoi vedere l'anteprima di ogni tema quando lo selezioni.",
+	'cnw-theme-instruction' => 'Puoi anche creare il tuo tema personalizzato più avanti tramite "I miei strumenti".',
+	'cnw-upgrade-headline' => "Vuoi effettuare l'aggiornamento?",
+	'cnw-upgrade-creative' => 'L\'aggiornamento a Wikia Plus ti permette di rimuovere la pubblicità da <span class="wiki-name"></span>; si tratta di un\'offerta disponibile una volta solo per i nuovi fondatori.',
+	'cnw-upgrade-marketing' => "Wikia Plus è un'ottima soluzione per:<ul>
+<li>Le wiki professionali</li>
+<li>Le associazioni no-profit</li>
+<li>Le famiglie</li>
+<li>Le scuole</li>
+<li>I progetti personali</li>
+</ul>
+Effettua l'aggiornamento tramite PayPal per avere una wiki senza pubblicità a soli 4,95\$ al mese!",
+	'cnw-upgrade-now' => "Effettua l'aggiornamento ora",
+	'cnw-upgrade-decline' => 'No grazie, voglio continuare con la mia wiki',
+	'cnw-welcome-headline' => 'Complimenti! $1 è stata creata',
+	'cnw-welcome-instruction1' => 'Clicca il pulsante sottostante per iniziare a creare pagine nella tua wiki.',
+	'cnw-welcome-instruction2' => 'Vedrai questo pulsante in tutta la wiki: utilizzalo ogni volta che vuoi creare una nuova pagina.',
+	'cnw-welcome-help' => 'Puoi trovare risposte, consigli e altro nella <a href="http://it.community.wikia.com/wiki/Wiki_della_Community">Wiki della Community</a>.',
+	'cnw-error-general' => 'Qualcosa è andato storto durante la creazione della tua wiki. Si prega di riprovare più tardi.',
+	'cnw-error-general-heading' => 'Errore nella creazione di una nuova wiki',
+	'cnw-error-database' => 'Errore del database: $1',
+	'cnw-badword-header' => 'Hey!',
+	'cnw-badword-msg' => 'Ciao, per favore non utilizzare parole non consone o proibite nella descrizione della tua wiki: $1',
+	'cnw-error-wiki-limit-header' => 'Raggiunto il limite di wiki',
+	'cnw-error-wiki-limit' => "Ciao, puoi creare un massimo di {{PLURAL:$1|$1 wiki|$1 wiki}} al giorno. Attendi 24 ore prima di creare un'altra wiki.",
+	'cnw-error-blocked-header' => 'Account bloccato',
+	'cnw-error-blocked' => 'Sei stato bloccato da $1. La motivazione è la seguente: $2. (ID di riferimento del blocco: $3)',
+	'cnw-error-torblock' => 'Non è permesso creare wiki tramite la rete Tor.',
+	'cnw-error-bot' => 'Ti abbiamo indentificato come un probabile bot. Se si tratta di un errore, per favore contattaci dicendoci che sei stato erroneamente rilevato come bot e ti aiuteremo a creare la tua wiki: [http://www.wikia.com/Special:Contact/general Contattaci]',
+	'cnw-error-bot-header' => 'Sei stato identificato come un bot',
 );
 
 /** Japanese (日本語)
@@ -1288,9 +1361,52 @@ $messages['km'] = array(
 
 /** Korean (한국어)
  * @author Wrightbus
+ * @author 아라
  */
 $messages['ko'] = array(
+	'createnewwiki-desc' => '[[Special:CreateNewWiki|위키 만들기 마법사]]',
+	'cnw-next' => '다음',
+	'cnw-back' => '뒤로',
+	'cnw-or' => '또는',
+	'cnw-title' => '새 위키 만들기',
+	'cnw-name-wiki-headline' => '위키 시작하기',
+	'cnw-name-wiki-label' => '위키 이름을 입력하세요',
+	'cnw-name-wiki-wiki' => '위키',
+	'cnw-name-wiki-domain-label' => '위키 주소를 입력하세요',
 	'cnw-login' => '로그인',
+	'cnw-signup' => '계정 만들기',
+	'cnw-signup-prompt' => '계정이 필요합니까?',
+	'cnw-call-to-signup' => '여기서 가입하세요',
+	'cnw-login-prompt' => '계정이 이미 있습니까?',
+	'cnw-call-to-login' => '여기서 로그인하세요',
+	'cnw-auth-headline' => '로그인',
+	'cnw-auth-headline2' => '가입하기',
+	'cnw-auth-facebook-signup' => '페이스북으로 가입',
+	'cnw-auth-facebook-login' => '페이스북으로 로그인',
+	'cnw-userauth-headline' => '계정이 있나요?',
+	'cnw-userauth-creative' => '로그인',
+	'cnw-userauth-marketing-heading' => '계정이 없나요?',
+	'cnw-userauth-signup-button' => '가입하기',
+	'cnw-desc-headline' => '어떤 위키를 만들겠습니까?',
+	'cnw-desc-creative' => '주제에 대한 설명',
+	'cnw-desc-tip1' => '힌트',
+	'cnw-desc-tip2' => '약간의 보충',
+	'cnw-desc-tip3' => '전문 팁',
+	'cnw-desc-choose' => '분류를 선택하세요',
+	'cnw-desc-select-one' => '1개 선택',
+	'cnw-desc-default-lang' => '위키 언어는 $1입니다',
+	'cnw-desc-change-lang' => '바꾸기',
+	'cnw-desc-lang' => '언어',
+	'cnw-desc-wiki-submit-error' => '분류를 선택하세요',
+	'cnw-theme-headline' => '테마 선택',
+	'cnw-upgrade-headline' => '업그레이드하겠습니까?',
+	'cnw-upgrade-now' => '지금 업그레이드합니다',
+	'cnw-upgrade-decline' => '괜찮습니다, 위키를 계속합니다',
+	'cnw-welcome-headline' => '축하합니다! $1(을)를 만들었습니다',
+	'cnw-error-general-heading' => '새 위키 만들기 오류',
+	'cnw-error-database' => '데이터베이트 오류: $1',
+	'cnw-error-wiki-limit-header' => '위키 제한에 도달함',
+	'cnw-error-blocked-header' => '계정이 차단됨',
 );
 
 /** Kurdish (Latin script) (‪Kurdî (latînî)‬)

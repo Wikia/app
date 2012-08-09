@@ -480,11 +480,62 @@ Ma'z oc'h diazezer ar wiki-mañ pe unan eus merourien anezhañ e c'hallit kemma�
  * @author BroOk
  */
 $messages['ca'] = array(
+	'myhome-desc' => "Una pàgina d'inici privada pels usuaris registrats.",
+	'myhome' => "La meva pàgina d'inici",
+	'wikiactivity' => 'Wiki Activity',
+	'myhome-activity-more' => 'veure més activitat recent',
+	'myhome-activity-feed' => "Llista d'activitat",
+	'myhome-activity-feed-empty' => "Aquest wiki està esperant a que t'uneixis. Fes clic a ''[[Special:CreatePage|nova pàgina]]''' per començar a escriure!",
+	'myhome-watchlist-feed' => 'Llista de seguiment',
+	'myhome-watchlist-feed-empty' => "Pots afegir pàgines a la teva llista de seguiment clicant a l'enllaç \"{{int:watch}}\" a la barra que t'apareix a la part superior de la pàgina. Pots fer servir la teva llista de seguiment per mantenir-te informat sobre els últims canvis a les pàgines que t'interessen.",
+	'myhome-user-contributions-feed' => 'Contribucions',
+	'myhome-hot-spots-feed' => 'Més Populars!',
+	'myhome-hot-spots-feed-empty' => "Aquest wiki està esperant a que t'uneixis. Fes clic a ''[[Special:CreatePage|nova pàgina]]''' per començar a escriure!",
+	'myhome-hot-spots-newest' => 'Pàgines noves al wiki',
+	'tog-myhomedisableredirect' => 'Desactivar la redirecció al Wiki Activity',
+	'prefs-myhome' => 'Inici',
 	'myhome-feed-newpage' => 'nova pàgina',
-	'myhome-feed-edit' => 'edita',
+	'myhome-feed-edit' => 'modifica',
+	'myhome-feed-move' => "S'ha mogut la pàgina",
+	'myhome-feed-talkpage' => 'Pàgina de discussió',
+	'myhome-feed-blogcomment' => 'Comentari de bloc',
+	'myhome-feed-delete' => 'Esborrat',
+	'myhome-feed-image' => 'imatge afegida',
+	'myhome-feed-video' => 'vídeo afegit',
 	'myhome-feed-categorization' => 'categorització',
+	'myhome-feed-created-by' => 'creat per $1',
+	'myhome-feed-added-by' => 'afegit per $1',
 	'myhome-feed-edited-by' => 'editat per $1',
+	'myhome-feed-posted-by' => 'escrit per $1',
+	'myhome-feed-comment-by' => 'comentat per $1',
+	'myhome-feed-deleted-by' => 'eliminat per $1',
+	'myhome-feed-moved-by' => 'traslladat per $1',
+	'myhome-feed-article-comment-created-by' => 'nou comentari per $1',
 	'myhome-feed-article-comment-edited-by' => 'comentari editat per $1',
+	'myhome-feed-by' => 'per $1',
+	'myhome-feed-diff-alt' => 'mostrar els canvis a aquesta pàgina',
+	'myhome-feed-new-page-details' => 'Pàgina nova',
+	'myhome-feed-summary-details' => 'Resum',
+	'myhome-feed-section-edit-details' => 'Secció editada',
+	'myhome-feed-new-blog-post-details' => 'Nou bloc',
+	'myhome-feed-new-blog-comment-details' => 'Comentari',
+	'myhome-feed-new-article-comment-details' => 'Comentari',
+	'myhome-feed-move-details' => 'Reanomenat',
+	'myhome-feed-redirect-details' => 'Redirecció',
+	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|Imatge afegida|Imatges afegides}}',
+	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|Vídeo afegit|Vídeos afegits}}',
+	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|Categoria afegida|Categories afegides}}',
+	'myhome-hot-spots-number-of-editors' => 'editors',
+	'myhome-namespace-blog' => 'Bloc',
+	'myhome-community-corner-header' => 'Missatges de la Comunitat',
+	'oasis-myhome-community-corner-edit' => 'editar el missatge &gt;',
+	'myhome-community-corner-edit' => 'editar el missatge',
+	'myhome-hot-spots-definition' => "Pàgines amb més editors {{PLURAL:$1|a l'últim dia|als últims $1 dies}}.",
+	'myhome-default-view-checkbox' => 'Fer de $1 la meva vista per defecte',
+	'myhome-default-view-success' => "Perfecte, així serà a partir d'ara",
+	'tooltip-pt-myhome' => 'Anar a la meva pàgina',
+	'activityfeed' => "Llista d'activitat",
+	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|un missatge|$1 missatges}}',
 );
 
 /** Chechen (нохчийн)
@@ -2449,21 +2500,21 @@ Jeśli chcesz widzieć swoją własną stronę startową zmień '''[[Special:Pre
 	'myhome-community-corner-header' => 'Zakątek Społeczności',
 	'oasis-myhome-community-corner-edit' => 'edytuj wiadomość &gt;',
 	'myhome-community-corner-edit' => 'edytuj wiadomość',
-	'community-corner' => "Witaj na '''My Home'''!
+	'community-corner' => 'Witaj!
 
 Ta strona pomoże Ci być na bieżąco z tym co dzieje się na wiki.
 
-Jeśli jesteś założycielem lub administratorem tej Wiki, możesz zmienić tą wiadomość aby komunikować się ze społecznością w sprawie ważnych spraw dziejących się na stronie. Przykładowo, możesz:
+Jeśli jesteś założycielem lub administratorem tej wiki, możesz zmienić tą wiadomość aby komunikować się ze społecznością w sprawie ważnych spraw dziejących się na stronie. Przykładowo, możesz:
 
 * zorganizować projekt rozbudowy strony wiki
 
 * pokazać nowe strony, które wszyscy powinni zobaczyć
 
-* zachęcić ludzi do udziału w dyskusji o tym co dzieje się na stronie
+* zachęcić innych do udziału w dyskusji o tym co dzieje się na wiki
 
-* wyróżnić użytkowników , którzy dodali coś specjalnego do wiki
+* wyróżnić użytkowników, którzy dodali coś specjalnego do wiki
 
-* lub tylko dodać kilka słów zachęty",
+* lub tylko dodać kilka słów zachęty',
 	'myhome-hot-spots-definition' => 'Strony z największą liczbą edycji w ciągu {{PLURAL:$1|ostatniego dnia|ostatnich $1 dni}}.',
 	'myhome-default-view-checkbox' => 'Niech zakładka $1 będzie moją domyślną',
 	'myhome-default-view-success' => 'Zmiana została zapisana',

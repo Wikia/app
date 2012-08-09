@@ -466,7 +466,7 @@ $messages['pl'] = array(
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
-	'activityindicator-message' => 'د برسېرېدو په حال کې',
+	'activityindicator-message' => 'برسېرېدنې کې دی...',
 	'window-category-load-batch' => 'نور',
 	'window-article-button-close' => 'تړل',
 	'window-article-button-back' => 'پر شا',
