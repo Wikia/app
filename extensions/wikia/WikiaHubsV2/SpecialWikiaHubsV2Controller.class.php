@@ -24,18 +24,26 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 
 	public function index() {
 		$this->setCacheValidity();
-		$this->slider = $this->sendRequest('SpecialWikiaHubsV2Controller', 'slider')->getData();
-		$this->pulse = $this->sendRequest('SpecialWikiaHubsV2Controller', 'pulse')->getData();
-		$this->tabber = $this->sendRequest('SpecialWikiaHubsV2Controller', 'tabber')->getData();
-		$this->explore = $this->sendRequest('SpecialWikiaHubsV2Controller', 'explore')->getData();
-		$this->featuredvideo = $this->sendRequest('SpecialWikiaHubsV2Controller', 'featuredvideo')->getData();
-		$this->wikitextmoduledata = $this->sendRequest('SpecialWikiaHubsV2Controller', 'wikitextmodule')->getData();
-		$this->topwikis = $this->sendRequest('SpecialWikiaHubsV2Controller', 'topwikis')->getData();
-		$this->popularvideos = $this->sendRequest('SpecialWikiaHubsV2Controller', 'popularvideos')->getData();
-		$this->fromthecommunity = $this->sendRequest('SpecialWikiaHubsV2Controller', 'fromthecommunity')->getData();
+
+		$model = $this->getModel();
+
+		// TODO: setPageTitle
+		$this->wg->out->setPageTitle($model->getHubName());
+
+		$this->slider = $model->getDataForModuleSlider();
+		$this->pulse = $model->getDataForModulePulse();
+		$this->tabber = $model->getDataForModuleTabber();
+		$this->explore = $model->getDataForModuleExplore();
+		$this->featuredvideo = $model->getDataForModuleFeaturedVideo();
+		$this->wikitextmoduledata = $model->getDataForModuleWikitext();
+		$this->topwikis = $model->getDataForModuleTopWikis();
+		$this->popularvideos = $model->getDataForModulePopularVideos();
+		$this->fromthecommunity = $model->getDataForModuleFromTheCommunity();
 
 		$this->response->addAsset('extensions/wikia/WikiaHubsV2/css/WikiaHubsV2.scss');
 		$this->response->addAsset('extensions/wikia/WikiaHubsV2/js/WikiaHubsV2.js');
+
+		OasisController::addBodyClass($model->getHubName());
 	}
 
 	public function slider() {
@@ -88,6 +96,7 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 		$model = $this->getModel();
 		$wikiData = $model->getDataForModuleTopWikis();
 		$this->headline = $wikiData['headline'];
+		$this->description = $wikiData['description'];
 		$this->wikis = $wikiData['wikis'];
 	}
 

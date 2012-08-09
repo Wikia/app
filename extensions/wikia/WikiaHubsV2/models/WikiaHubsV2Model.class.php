@@ -264,6 +264,7 @@ class WikiaHubsV2Model extends WikiaModel {
 		//mock data
 		return array(
 			'headline' => 'Top Gaming Wikis',
+			'description' => 'Here are the top 10 Video Game wikis based on wiki activity, breadth of content and awesomeness.',
 			'wikis' => array(
 				array(
 					'title' => 'WoWwiki',
@@ -417,6 +418,11 @@ No
 				)
 			)
 		);
+	}
+
+	public function getHubName() {
+		// mock data
+		return 'Video Games';
 	}
 
 }

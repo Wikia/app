@@ -1,14 +1,11 @@
-<section style="margin-bottom: 25px;" class="grid-3 alpha wikiahubs-pulse">
+<section class="grid-3 alpha wikiahubs-pulse">
 	<span class="social">
 		<a href="<?= $socialmedia['facebook'] ?>" id="facebook"></a>
 		<a href="<?= $socialmedia['twitter'] ?>" id="twitter"></a>
 		<a href="<?= $socialmedia['googleplus'] ?>" id="google"></a>
 	</span>
-	<h2>
-		<span class="mw-headline" id="The_Pulse_on_Mass_Effect_Wiki">
-			The Pulse on <a  class="text" href="<?= $title['href'] ?>"><?= $title['anchor'] ?></a>
-		</span>
-	</h2>
+
+	<h2>The Pulse on <a  class="text" href="<?= $title['href'] ?>"><?= $title['anchor'] ?></a></h2>
 	<div class="pulse-content">
 		<div class="boxes">
 			<? if (is_array($boxes)): ?>
