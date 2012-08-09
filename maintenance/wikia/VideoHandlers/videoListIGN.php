@@ -15,9 +15,21 @@ require_once( '../../commandLine.inc' );
 
 global $IP, $wgCityId, $wgExternalDatawareDB;
 
+$onlyEnt = true;
 
 $wgUser = User::newFromName( 'Wikia Video Library' );
 $dbw = wfGetDB( DB_SLAVE );
+
+$cachecategories = arrray();
+$rows = $dbw->select('categorylinks',
+	'*',
+	array('cl_to'=>'IGN_entertainment')
+);
+while($row = $dbw->fetchObject($rows)) {
+	$cachecategories[$row->cl_from] = true;
+}
+$dbw->freeResult($rows);
+
 
 $rows = $dbw->select('image',
 	'*',
@@ -36,6 +48,10 @@ while($row = $dbw->fetchObject($rows)) {
 	//if($count>30) break;
 	$name = $row->img_name;
 	$title = Title::newFromText($name, NS_FILE);
+	if($onlyEnt && !isset($cachecategories[$title->getArticleID()]) ) {
+		continue;
+	}
+
 	$wgTitle = $title;
 	$file = wfFindFile( $name );
 	if( $file->exists() ) {
@@ -47,6 +63,15 @@ while($row = $dbw->fetchObject($rows)) {
 		$row->title = $metaU['title'];
 		$row->cat = $metaU['category'];
 		$all[$name] = $row;
+
+		if($onlyEnt) {
+			$found = false;
+			$key2 = $metaU['category'];
+			if(!isset($by_category2[$key2])) {
+				$by_category2[$key2] = array();
+			}
+			$by_category2[$key2][] = $name;
+		}
 
 		$k = $metaU['keywords'];
 		foreach ( explode(',', $k) as $key) {
