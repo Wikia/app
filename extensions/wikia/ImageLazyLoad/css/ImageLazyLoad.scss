@@ -5,7 +5,7 @@ img.lzyPlcHld {
 	@include opacity(0);
 }
 img.lzyLoaded {
-	@include opacity(1);
+	@include opacity(100);
 }
 img.lzyTrns {
 	@include transition-shorthand(opacity 600ms ease-out);
