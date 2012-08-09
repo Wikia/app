@@ -5,7 +5,9 @@
  *
  * Class used for linting PHP code
  *
- * Requires "phplint" binary - <http://www.icosaedro.it/phplint/download.html>
+ * Requires PHP Storm local installation
+ *
+ * UNDER DEVELOPMENT
  *
  * @author Maciej Brencz (Macbre) <macbre at wikia-inc.com>
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
@@ -16,38 +18,80 @@ class CodeLintPhp extends CodeLint {
 
 	// file name pattern - used when linting directories
 	protected $filePattern = '*.php';
-	private $phpLintVersion = null;
 
-	private function getPhpLintVersion() {
-		if (is_null($this->phpLintVersion)) {
-			exec('phplint --version', $lines);
+	/**
+	 * Run PHP Storm's Code Inspect for a given file
+	 *
+	 * Actually, PHP storm will be run for a given directory.
+	 * XML reports will then be parsed to get issues for given file.
+	 *
+	 * @param string $fileName file to run Code Inspect for
+	 * @return string output from Code Inspect
+	 */
+	protected function runCodeInspect($fileName) {
+		global $wgPHPStormPath;
 
-			// take the first line
-			$this->phpLintVersion = reset($lines);
+		$start = microtime(true);
+
+		$lintProfile = dirname(__FILE__) . '/php/profiles/phplint.xml';
+		$projectMetaData = dirname(__FILE__) . '/php/project';
+
+		// create a temporary directory for Code Inspect results
+		$tmpDir = wfTempDir() . '/phpstorm/' . uniqid('lint');
+		wfMkdirParents($tmpDir);
+
+		// code directory to check
+		$dir = dirname($fileName);
+
+		$cmd = sprintf('/bin/sh %s/inspect.sh %s %s %s -d %s -v2',
+			$wgPHPStormPath,
+			$projectMetaData, // PHP Storm project directory
+			$lintProfile, // XML file with linting profile
+			$tmpDir, // output directory
+			$dir // directory to check
+		);
+
+		echo "Running PHP storm <{$cmd}>...";
+
+		$retval = 0;
+		$output = array();
+		exec($cmd, $output, $retVal);
+
+		// get the version of PhpStorm
+		$tool = '';
+
+		foreach($output as $line) {
+			if (strpos($line, 'Starting up JetBrains PhpStorm') !== false) {
+				preg_match('#JetBrains PhpStorm [\\d\\.]+#', $line, $matches);
+				$tool = $matches[0];
+			}
 		}
 
-		return $this->phpLintVersion;
+		echo implode("\n", $output); // debug
+		echo " [ok]\n";
+
+		// format results
+		$output = array(
+			'time' => microtime(true) - $start,
+			'tool' => $tool,
+		);
+
+		return $output;
 	}
 
 	/**
-	 * Run phplint for a given file
+	 * Get issues for a given fle
 	 *
-	 * @param string $fileName file to run phplint for
-	 * @return string output from phplint
+	 * @param string $fileName file to get issues for
+	 * @return string output from Code Inspect
 	 */
-	protected function runPhpLint($fileName) {
-		$output = $this->runCommand('phplint', array(
-			'--no-overall',
-			 '--no-print-source',
-			 '--no-print-context',
-			 '--no-print-file-name',
-			$fileName
-		));
+	protected function getFileIssues($fileName) {
+		$output = $this->runCodeInspect($fileName);
 
 		if (!empty($output)) {
 			$output = array(
-				'errors' => $output['output'],
-				'tool' => $this->getPhpLintVersion(),
+				'errors' => array(), //$output['output'],
+				'tool' => $output['tool'],
 				'time' => $output['time'],
 			);
 		}
@@ -116,7 +160,7 @@ class CodeLintPhp extends CodeLint {
 	 * @return array list of reported warnings
 	 */
 	public function internalCheckFile($fileName) {
-		$output = $this->runPhpLint($fileName);
+		$output = $this->getFileIssues($fileName);
 
 		// parse raw output
 		if (!empty($output['errors'])) {
