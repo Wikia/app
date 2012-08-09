@@ -34,6 +34,7 @@ class VisualStatsSpecialController extends WikiaSpecialPageController {
         $this->setVal( 'urlCommit', $this->getTitleFor( 'VisualStats', 'commit')->getLocalURL("user=" . $username));
         $this->setVal( 'urlPunchcard', $this->getTitleFor( 'VisualStats', 'punchcard')->getLocalURL("user=" . $username));
         $this->setVal( 'urlHistogram', $this->getTitleFor( 'VisualStats', 'histogram')->getLocalURL("user=" . $username));
+        $this->setVal( 'urlCodeFrequency', $this->getTitleFor( 'VisualStats', 'codeFrequency')->getLocalURL("user=" . $username));
 
         $this->setVal( 'color', $this->businessLogic->getColorForPunchcard());
         $this->setVal( 'link', $this->businessLogic->getColorForLabels());
@@ -47,6 +48,9 @@ class VisualStatsSpecialController extends WikiaSpecialPageController {
                 break;
             case "histogram":
                 $this->setVal( 'data', $this->businessLogic->getDataForHistogram($username));
+                break;
+            case "codeFrequency":
+                //$this->setVal( 'data', $this->businessLogic->getDataForCodeFrequency($username));
                 break;
             default:
                 $this->setVal( 'data', $this->businessLogic->getDataForCommitActivity($username));

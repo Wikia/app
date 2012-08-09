@@ -4,6 +4,7 @@
         <li id="punchcard"><a href="<?=$urlPunchcard?>" title="Punchcard">Punchcard</a>
         </li>
         <li id="histogram"><a href="<?=$urlHistogram?>" title="Histogram">Histogram</a></li>
+        <li id="codeFrequency"><a href="<?=$urlCodeFrequency?>" title="Code Frequency">Code Frequency</a></li>
     </ul>
 </div>
 <div id="editsCount">

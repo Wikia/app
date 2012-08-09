@@ -17,7 +17,7 @@ var VisualStatsPunchcard = {
 
         this.scale = d3.scale.linear()
             .range([5, 30]);
-        $("#Graph").css('padding', '20px');
+        $("#Graph").css('padding', '10px');
 
         this.setDates();
         this.setData("wikia");
@@ -50,7 +50,7 @@ var VisualStatsPunchcard = {
                 if (value > 0){
                     self.setRadius(value, object);
                     object.mouseover(function(){
-                        $(strDate).css('font-weight', 'bold').css('color', self.color).css('font-size', '13px');
+                        $(strDate).css('font-weight', 'bold').css('color', self.color).css('font-size', '11px');
                         $(strHour).css('font-weight', 'bold').css('color', self.color);
                     })
                     object.mouseout(function(){
