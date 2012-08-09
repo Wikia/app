@@ -30,7 +30,7 @@ class HubService extends Service {
 		}
 
 		if (empty($catInfo)) {
-			if (F::app()->wg->enableWikiaHubsExt && self::isCorporatePage($cityId)) {
+			if ((F::app()->wg->enableWikiaHubsExt || F::app()->wg->enableWikiaHubsV2Ext) && self::isCorporatePage($cityId)) {
 				$catInfo = self::getWikiaHubsCategory();
 			} else {
 				$catInfo = WikiFactory::getCategory($cityId);
