@@ -32,6 +32,7 @@ class OasisController extends WikiaController {
 		// initialize variables
 		$this->comScore = null;
 		$this->quantServe = null;
+		$this->ivw = null;
 
 		$this->app->registerHook('MakeGlobalVariablesScript', 'OasisController', 'onMakeGlobalVariablesScript');
 		wfProfileOut(__METHOD__);
@@ -196,10 +197,10 @@ class OasisController extends WikiaController {
 		}
 
 		// macbre: RT #25697 - hide Comscore & QuantServe tags on edit pages
-
 		if(!in_array($wgRequest->getVal('action'), array('edit', 'submit'))) {
 			$this->comScore = AnalyticsEngine::track('Comscore', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->quantServe = AnalyticsEngine::track('QuantServe', AnalyticsEngine::EVENT_PAGEVIEW);
+			$this->ivw = AnalyticsEngine::track('IVW', AnalyticsEngine::EVENT_PAGEVIEW);
 		}
 
 		$this->mainsassfile = 'skins/oasis/css/oasis.scss';
