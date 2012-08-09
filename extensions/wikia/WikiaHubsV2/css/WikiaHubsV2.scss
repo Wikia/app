@@ -159,7 +159,7 @@ $color-inactive-button: darken($color-secondary-button, 50%);
 	}
 }
 
-.WikiaMediaCarousel {
+.wikiahubs-popular-videos .WikiaMediaCarousel {
 	height: 200px;
 	.button {
 		&.secondary {
@@ -172,30 +172,30 @@ $color-inactive-button: darken($color-secondary-button, 50%);
 		width: 15px;
 		position: absolute;
 		margin-top: 15px;
-		left: 10px;
+		left: 623px;
 		.chevron {
-			border-color: transparent $color-buttons transparent transparent;
+			border-color: transparent transparent transparent $color-buttons;
 			border-width: 11px;
-			margin: 35px -9px;
+			margin: 35px 4px;
 		}
-		&.left{
-			left: 623px;
+		&.left {
+			left: 10px;
 			.chevron {
-				border-color: transparent transparent transparent $color-buttons;
-				margin: 35px 4px;
+				border-color: transparent $color-buttons transparent transparent;
+				margin: 35px -9px;
 			}
-			&.inactive{
+			&.disabled {
 				img {
-					border-color: transparent transparent transparent $color-inactive-button;
+					border-color: transparent $color-inactive-button transparent transparent;
 				}
 			}
 		}
-		&.inactive{
+		&.disabled {
 			@include opacity(50);
 			@include linear-gradient($color-secondary-button, left, $color-secondary-button, 5%, $color-secondary-button, 50%);
 			cursor: auto;
 			img {
-				border-color: transparent $color-inactive-button transparent transparent;
+				border-color: transparent transparent transparent $color-inactive-button;
 			}
 		}
 	}
