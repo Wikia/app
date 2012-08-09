@@ -5,6 +5,7 @@ import java.util.Date;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.BeforeClass;
@@ -99,6 +100,20 @@ public class BasePageObject{
 	public void click(WebElement pageElem)
 	{
 		pageElem.click();
+	}
+	
+	/**
+	 * Clicks on an element using Actions click method
+	 * 
+	 * @author Michal Nowierski
+	 * ** @param pageElem The WebElement to be clicked on 
+	 */
+	public void clickActions(WebElement pageElem)
+	{
+		Actions builder = new Actions(driver);
+		Actions click = builder.click(pageElem);
+		click.perform();
+		
 	}
 	
 	/**
