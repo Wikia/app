@@ -56,7 +56,7 @@ class ContentWarningController extends WikiaController {
 			$userId = $this->wg->User->getId();
 			$memKey = $this->getMemKeyContentWarning( $userId );
 			$contentWarningApproved = $this->wg->Memc->get( $memKey );
-			if ( is_null($contentWarningApproved) ) {
+			if ( empty( $contentWarningApproved ) ) {
 				$contentWarningApproved = intval( $this->wf->GetWikiaPageProp( WPP_CONTENT_WARNING, $userId ) );
 
 				$this->wg->Memc->set( $memKey, $contentWarningApproved, 60*60*12 );
