@@ -17,9 +17,6 @@ define ('AVATAR_UPLOAD_FIELD', 'wkUserAvatar');
  */
 $app->registerClass('UserProfilePage', $dir . '/UserProfilePage.class.php');
 $app->registerClass('UserIdentityBox', $dir . '/UserIdentityBox.class.php');
-//TODO: we'll implement interview later
-//$app->registerClass('Interview', $dir . '/Interview.class.php');
-//$app->registerClass('InterviewQuestion', $dir . '/InterviewQuestion.class.php');
 $app->registerClass('UserProfilePageRailHelper', $dir . '/UserProfilePageRailHelper.class.php');
 $app->registerClass('ImageOperationsHelper', $dir . '/ImageOperationsHelper.class.php');
 
@@ -31,14 +28,9 @@ $app->registerClass('ImageOperationsHelper', $dir . '/ImageOperationsHelper.clas
 $app->registerClass('UserProfilePageController', $dir . '/UserProfilePageController.class.php');
 $app->registerClass('Masthead', $dir . '/Masthead.class.php');
 
-//TODO: we'll implement interview later
-//$app->registerClass('InterviewSpecialPageController', $dir . '/InterviewSpecialPageController.class.php');
-
 /**
  * special pages
  */
-//TODO: we'll implement interview later
-//$app->registerSpecialPage('Interview', 'InterviewSpecialPageController');
 
 /**
  * hooks
@@ -46,8 +38,6 @@ $app->registerClass('Masthead', $dir . '/Masthead.class.php');
 $app->registerHook('SkinTemplateOutputPageBeforeExec', 'UserProfilePageController', 'onSkinTemplateOutputPageBeforeExec');
 $app->registerHook('SkinSubPageSubtitleAfterTitle', 'UserProfilePageController', 'onSkinSubPageSubtitleAfterTitle');
 $app->registerHook('ArticleSaveComplete', 'UserProfilePageController', 'onArticleSaveComplete');
-//TODO: we'll implement interview later
-//$app->registerHook('GetRailModuleSpecialPageList', 'InterviewSpecialPageController', 'onGetRailModuleSpecialPageList' );
 $app->registerHook('GetRailModuleList', 'UserProfilePageRailHelper', 'onGetRailModuleList');
 $app->registerHook('WikiaMobileAssetsPackages', 'UserProfilePageController', 'onWikiaMobileAssetsPackages');
 
@@ -63,9 +53,6 @@ $app->registerExtensionMessageFile('UserProfilePageV3', $dir . '/UserProfilePage
 /**
  * DI setup
  */
-//we'll implement interview later
-//F::addClassConstructor( 'Interview', array( 'app' => $app ) );
-//F::addClassConstructor( 'InterviewQuestion', array( 'app' => $app ) );
 F::addClassConstructor( 'UserProfilePage', array( 'app' => $app ) );
 F::addClassConstructor( 'UserProfilePageController', array( 'app' => $app ) );
 
