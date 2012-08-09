@@ -1,13 +1,9 @@
 package com.wikia.webdriver.TestCases;
 
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.PageFactory;
 import org.testng.annotations.Test;
 
-import com.wikia.webdriver.DriverProvider.DriverProvider;
-import com.wikia.webdriver.Logging.PageObjectLogging;
+import com.wikia.webdriver.Common.CommonFunctions;
 import com.wikia.webdriver.Templates.TestTemplate;
-import com.wikia.webdriver.pageObjects.PageObject.BasePageObject;
 import com.wikia.webdriver.pageObjects.PageObject.HomePageObject;
 import com.wikia.webdriver.pageObjects.PageObject.SpecialFactoryPageObject;
 import com.wikia.webdriver.pageObjects.PageObject.CreateNewWiki.CreateNewWikiPageObjectStep1;
@@ -15,7 +11,7 @@ import com.wikia.webdriver.pageObjects.PageObject.CreateNewWiki.CreateNewWikiPag
 import com.wikia.webdriver.pageObjects.PageObject.CreateNewWiki.CreateNewWikiPageObjectStep3;
 import com.wikia.webdriver.pageObjects.PageObject.CreateNewWiki.NewWikiaHomePage;
 
-public class CreateAWiki extends TestTemplate{
+public class CreateAWiki_1 extends TestTemplate{
 	
 	private String wikiName;
 	
@@ -24,7 +20,7 @@ public class CreateAWiki extends TestTemplate{
 	{	
 		HomePageObject home = new HomePageObject(driver);	
 		home.openHomePage();
-		home.logIn();
+		CommonFunctions.logIn();
 		CreateNewWikiPageObjectStep1 createNewWikistep1 = home.StartAWikia();
 		String timeStamp = createNewWikistep1.getTimeStamp();
 		wikiName = "QaTest"+timeStamp;
@@ -46,11 +42,11 @@ public class CreateAWiki extends TestTemplate{
 		NewWikiaHomePage newWikia = createNewWikiStep3.submit();
 		newWikia.waitForCongratulationsLightBox(wikiName);
 		//logout
-		home.logOut("KarolK1");
+		CommonFunctions.logOut("KarolK1");
 		
 		
 		//delete created wiki
-		home.logInAsStaff();
+		CommonFunctions.logInAsStaff();
 		SpecialFactoryPageObject factory = new SpecialFactoryPageObject(driver);
 		factory.typeInDomainName(wikiName);
 		factory.getConfiguration();
