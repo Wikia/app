@@ -450,6 +450,12 @@ class MovePageForm extends UnlistedSpecialPage {
 				$this->showForm( array( array( 'cannotdelete', wfEscapeWikiText( $nt->getPrefixedText() ) ) ) );
 				return;
 			}
+			/* Wikia Change bugID:44171 */
+			else {
+				// Need to refresh $nt->mArticleID
+				$nt->getArticleID( Title::GAID_FOR_UPDATE );
+			}
+			/* Wikia Change end */
 		}
 
 		if ( $user->isAllowed( 'suppressredirect' ) ) {
