@@ -20,15 +20,19 @@ public class DriverProvider {
 	{
 
 		PageObjectLogging listener = new PageObjectLogging();
+//		File file = new File("c:/IEDriverServer.exe");
+//		System.setProperty("webdriver.ie.driver", file.getAbsolutePath());
+//		driver = new EventFiringWebDriver(new InternetExplorerDriver()).register(listener);
 		driver = new EventFiringWebDriver(new FirefoxDriver()).register(listener);
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		return instance;
 	}
 	
-	public WebDriver getWebDriver()
+	public static WebDriver getWebDriver()
 	{
 		return driver;
 	}
+	
 	
 	public void close()
 	{
