@@ -60,6 +60,9 @@ class VisualStatsSpecialController extends WikiaSpecialPageController {
         $this->setVal( 'param', $parameter);
         $this->setVal( 'dates', $this->businessLogic->getDatesFromTwoWeeksOn(false));
         $this->setVal( 'wikiButtonLabel', $this->wf->msg('visualStats-wikiEdits'));
+        $this->setVal( 'edits', $this->wf->msg('visualStats-edits-plural'));
+        $this->setVal( 'edit', $this->wf->msg('visualStats-edits-singular'));
+        $this->setVal( 'shown', $this->wf->msg('visualStats-shown-edits'));
         $this->setVal( 'userButtonLabel', $this->wf->msg('visualStats-userEdits', $username));
 
     }

@@ -6,6 +6,10 @@
         <li id="histogram"><a href="<?=$urlHistogram?>" title="Histogram">Histogram</a></li>
     </ul>
 </div>
+<div id="editsCount">
+    <? echo $shown; ?>
+    <span id="numberOfEdits"></span>
+</div>
 <div id="Graph">
     <? if ($param=="punchcard") include 'VisualStatsPunchcardContent.php'?>
 </div>
@@ -35,7 +39,9 @@
                     break;
                 case "punchcard":
                     var color = <? echo json_encode($link); ?>;
-                    VisualStatsPunchcard.init(data, user, color);
+                    var edits = <? echo json_encode($edits); ?>;
+                    var edit = <? echo json_encode($edit); ?>;
+                    VisualStatsPunchcard.init(data, user, color, edits, edit);
                     break;
                 case "histogram":
                     VisualStatsHistogram.init(data, user)

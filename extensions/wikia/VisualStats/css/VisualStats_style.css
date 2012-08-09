@@ -28,6 +28,11 @@ button{
     border: none;
     border-collapse: collapse;
 }
+#editsCount{
+    float:right;
+    padding: 10px;
+
+}
 td{
     padding: 3px;
     text-align: center;

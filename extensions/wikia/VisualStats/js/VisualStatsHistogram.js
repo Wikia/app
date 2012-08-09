@@ -5,42 +5,20 @@ var VisualStatsHistogram = {
         this.userHistogram = data.userHistogram;
         this.user = user;
 
+        this.wikiaAll = data.wikiaHistogram.all;
+        this.userAll = data.userHistogram.all;
+
         this.drawHistogram();
 
-    },
-
-    roundUp: function(number){
-        number+= 12;
-        number = Math.ceil(number / 10) * 10;
-        return number;
-    },
-
-    drawAxis: function(svg){
-        svg.append("svg:line")
-            .attr("x1", 60).attr("y1", 600)
-            .attr("x2", 920).attr("y2", 600)
-            .attr("stroke", "green");
-        svg.append("svg:line")
-            .attr("x1", 60).attr("y1", 600)
-            .attr("x2", 60).attr("y2", 50)
-            .attr("stroke", "green");
-        svg.append("svg:line")
-            .attr("x1", 60).attr("y1", 350)
-            .attr("x2", 920).attr("y2", 350)
-            .style("stroke-width", "0.5px")
-            .attr("stroke", "green");
-        svg.append("svg:line")
-            .attr("x1", 60).attr("y1", 100)
-            .attr("x2", 920).attr("y2", 100)
-            .style("stroke-width", "0.5px")
-            .attr("stroke", "green");
     },
 
     drawHistogram: function(){
         var svg = VisualStatsCommon.createSvgContainer(980, 650, "#Graph");
         var self = this;
-        var wikiaMax = this.roundUp(this.wikiaHistogram.max);
-        var userMax = this.roundUp(this.userHistogram.max);
+        var wikiaMax = VisualStatsCommon.roundUp(this.wikiaHistogram.max);
+        var userMax = VisualStatsCommon.roundUp(this.userHistogram.max);
+
+        $("#numberOfEdits").text(self.wikiaAll);
 
         svg.append("rect")
             .attr("x", 20)
@@ -49,7 +27,7 @@ var VisualStatsHistogram = {
             .attr("height", 600)
             .attr("fill", "#E4EDD3");
 
-        this.drawAxis(svg);
+        VisualStatsCommon.drawAxis(svg);
 
         this.scaleY = d3.scale.linear()
             .domain([0, wikiaMax])
@@ -81,11 +59,13 @@ var VisualStatsHistogram = {
             $("#wikiaButton").click(function(){
                 $(this).removeClass("secondary");
                 $("#userButton").addClass("secondary");
+                $("#numberOfEdits").text(self.wikiaAll);
                 self.updateHistogram(svg, wikiaDataset, wikiaMax);
             });
             $("#userButton").click(function(){
                 $(this).removeClass("secondary");
                 $("#wikiaButton").addClass("secondary");
+                $("#numberOfEdits").text(self.userAll);
                 self.updateHistogram(svg, userDataset, userMax);
             });
         }

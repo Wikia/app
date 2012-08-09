@@ -5,42 +5,20 @@ var VisualStatsCommitActivity = {
         this.userCommit = data.userCommit;
         this.user = user;
 
+        this.wikiaAll = data.wikiaCommit.all;
+        this.userAll = data.userCommit.all;
+
         this.drawCommitActivity();
 
-    },
-
-    roundUp: function(number){
-        number+= 12;
-        number = Math.ceil(number / 10) * 10;
-        return number;
-    },
-
-    drawAxis: function(svg){
-        svg.append("svg:line")
-            .attr("x1", 60).attr("y1", 600)
-            .attr("x2", 920).attr("y2", 600)
-            .attr("stroke", "green");
-        svg.append("svg:line")
-            .attr("x1", 60).attr("y1", 600)
-            .attr("x2", 60).attr("y2", 50)
-            .attr("stroke", "green");
-        svg.append("svg:line")
-            .attr("x1", 60).attr("y1", 350)
-            .attr("x2", 920).attr("y2", 350)
-            .style("stroke-width", "0.5px")
-            .attr("stroke", "green");
-        svg.append("svg:line")
-            .attr("x1", 60).attr("y1", 100)
-            .attr("x2", 920).attr("y2", 100)
-            .style("stroke-width", "0.5px")
-            .attr("stroke", "green");
     },
 
     drawCommitActivity: function(){
         var svg = VisualStatsCommon.createSvgContainer(980, 650, "#Graph");
         var self = this;
-        var wikiaMax = this.roundUp(this.wikiaCommit.max);
-        var userMax = this.roundUp(this.userCommit.max);
+        var wikiaMax = VisualStatsCommon.roundUp(this.wikiaCommit.max);
+        var userMax = VisualStatsCommon.roundUp(this.userCommit.max);
+
+        $("#numberOfEdits").text(self.wikiaAll);
 
         svg.append("rect")
             .attr("x", 20)
@@ -49,7 +27,7 @@ var VisualStatsCommitActivity = {
             .attr("height", 600)
             .attr("fill", "#E4EDD3");
 
-        this.drawAxis(svg);
+        VisualStatsCommon.drawAxis(svg);
 
         this.scaleY = d3.scale.linear()
             .domain([0, wikiaMax])
@@ -85,11 +63,13 @@ var VisualStatsCommitActivity = {
             $("#wikiaButton").click(function(){
                 $(this).removeClass("secondary");
                 $("#userButton").addClass("secondary");
+                $("#numberOfEdits").text(self.wikiaAll);
                 self.updateCommitActivity(svg, wikiaDataset, wikiaMax);
             });
             $("#userButton").click(function(){
                 $(this).removeClass("secondary");
                 $("#wikiaButton").addClass("secondary");
+                $("#numberOfEdits").text(self.userAll);
                 self.updateCommitActivity(svg, userDataset, userMax);
             });
         }
