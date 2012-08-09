@@ -47,11 +47,12 @@ class ArticleService extends WikiaService {
 			wfProfileIn(__METHOD__ . '::miss');
 
 			$content = $this->mArticle->getContent();
+
 			// Run hook to allow wikis to modify the content (ie: customize their snippets) before the stripping and length limitations are done.
 			wfRunHooks( 'ArticleService::getTextSnippet::beforeStripping', array( &$this->mArticle, &$content, $length ) );
 
 			// Perl magic will happen! Beware! Perl 5.10 required!
-			$re_magic = '#SSX(?<R>([^SE]++|S(?!S)|E(?!E)|SS(?&R))*EE)#i';
+			$re_magic = '#SSX(?<R>([^SE]++|S(?!S)|E(?!E)|SS(?&R))*EE)#im';
 
 			// (RT #73141) saves {{PAGENAME}} and related tags from deletion; Not using parser because of options problems via ajax.
 			$content = str_replace("{{PAGENAME}}", wfEscapeWikiText( $this->mArticle->getTitle()->getText() ), $content);
@@ -65,11 +66,13 @@ class ArticleService extends WikiaService {
 			// remove [[Image:...]] and [[File:...]] tags
 			$nsFile = $this->wg->ContLang->getNsText( NS_FILE );
 			$nsFileAlias = $this->getNsAlias( NS_FILE ); // [[Image:...]]
+
 			if( empty( $nsFileAlias ) ) {
 				// hardcoded "Image" as fallback, just in case
 				$nsFileAlias = 'Image';
 			}
-			$re = strtr( $re_magic, array( 'S' => "\\[", 'E' => "\\]", 'X' => "($nsFileAlias:$nsFile):" ));
+
+			$re = strtr( $re_magic, array( 'S' => "\\[", 'E' => "\\]", 'X' => "($nsFileAlias|$nsFile):" ));
 			$content = preg_replace($re, '', $content);
 
 			// skip "edit" section and TOC
@@ -77,10 +80,11 @@ class ArticleService extends WikiaService {
 
 			// remove parser hooks from wikitext (RT #72703)
 			$hooks = F::App()->wg->Parser->getTags();
+
 			if (!empty( $hooks )) {
 				$hooksRegExp = implode('|', array_map('preg_quote', $hooks));
-				$content = preg_replace('#<(' . $hooksRegExp . ')[^>]{0,}>(.*)<\/[^>]+>#', '', $content); // <foo>content</foo>
-				$content = preg_replace('#<(' . $hooksRegExp . ')[^>]{0,}/?>#', '', $content); // <places foo="bar" />
+				$content = preg_replace('#<(' . $hooksRegExp . ')[^>]*>(.*?)</[^>]+>#sm', '', $content); // <foo>content</foo>
+				$content = preg_replace('#<(' . $hooksRegExp . ')[^>]*/?>#m', '', $content); // <places foo="bar" />
 			}
 
 			$tmpParser = new Parser();
@@ -88,7 +92,7 @@ class ArticleService extends WikiaService {
 
 			// the ? in (.*?) is INCREDIBLY important, guaranting non-greedy behaviour
 			foreach ( $this->mTagsToRemove as $tag ) {
-				$content = preg_replace( "#<{$tag}[^>]*>(.*?)<\/{$tag}>#s", '', $content );
+				$content = preg_replace( "#<{$tag}[^>]*>(.*?)<\/{$tag}>#sm", '', $content );
 			}
 			// strip HTML tags
 			$content = trim(strip_tags($content));

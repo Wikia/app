@@ -613,12 +613,20 @@ class Linker {
 		 * Wikia change begin
 		 */
 		$params = array();
+		$origHTML = null;
 		/**
 		 * Wikia change end
 		 */
 
 		if ( !$thumb ) {
-			$s = self::makeBrokenImageLinkObj( $title, $fp['title'], '', '', '', $time == true );
+			/**
+			 * Wikia change start
+			 * @author Federico
+			 */
+			$s = $origHTML = self::makeBrokenImageLinkObj( $title, $fp['title'], '', '', '', $time == true );
+			/**
+			 * Wikia change end
+			 */
 		} else {
 			$params = array(
 				'alt' => $fp['alt'],
@@ -627,7 +635,15 @@ class Linker {
 				'img-class' => isset( $fp['border'] ) ? 'thumbborder' : false );
 
 			$params = self::getImageLinkMTOParams( $fp, $query ) + $params;
-			$s = $thumb->toHtml( $params );
+
+			/**
+			 * Wikia change start
+			 * @author Federico
+			 */
+			$origHTML = $s = $thumb->toHtml( $params );
+			/**
+			 * Wikia change end
+			 */
 		}
 		if ( $fp['align'] != '' ) {
 			$s = "<div class=\"float{$fp['align']}\">{$s}</div>";
@@ -635,7 +651,7 @@ class Linker {
 
 		/* Wikia change begin - @author: Federico "Lox" Lucignano */
 		/* Give extensions the ability to add HTML to full size unframed images */
-		wfRunHooks( 'ImageAfterProduceHTML', array( $title, $file, $frameParams, $handlerParams, $thumb, $params, $time, &$s ) );
+		wfRunHooks( 'ImageAfterProduceHTML', array( $title, $file, $frameParams, $handlerParams, $thumb, $params, $time, $origHTML, &$s ) );
 		/* Wikia change end */
 
 		return str_replace( "\n", ' ', $prefix . $s . $postfix );
@@ -778,15 +794,34 @@ class Linker {
 		 * allow access tot he $params variable
 		 */
 		$params = array();
+		$origHTML = null;
 		/**
 		 * Wikia change end
 		 */
 
 		if ( !$exists ) {
-			$s .= self::makeBrokenImageLinkObj( $title, $fp['title'], '', '', '', $time == true );
+			/**
+			 * Wikia change start
+			 * @author Federico
+			 */
+			$origHTML = self::makeBrokenImageLinkObj( $title, $fp['title'], '', '', '', $time == true );
+			$s .= $origHTML;
+			/**
+			 * Wikia change end
+			 */
+
 			$zoomIcon = '';
 		} elseif ( !$thumb ) {
-			$s .= htmlspecialchars( wfMsg( 'thumbnail_error', '' ) );
+			/**
+			 * Wikia change start
+			 * @author Federico
+			 */
+			$origHTML = htmlspecialchars( wfMsg( 'thumbnail_error', '' ) );
+			$s .= $origHTML;
+			/**
+			 * Wikia change end
+			 */
+
 			$zoomIcon = '';
 		} else {
 			$params = array(
@@ -795,7 +830,17 @@ class Linker {
 				'img-class' => 'thumbimage' );
 
 			$params = self::getImageLinkMTOParams( $fp, $query ) + $params;
-			$s .= $thumb->toHtml( $params );
+
+			/**
+			 * Wikia change start
+			 * @author Federico
+			 */
+			$origHTML = $thumb->toHtml( $params );
+			$s .= $origHTML;
+			/**
+			 * Wikia change end
+			 */
+
 			if ( isset( $fp['framed'] ) ) {
 				$zoomIcon = "";
 			} else {
@@ -816,7 +861,7 @@ class Linker {
 		/* Wikia change begin - @author: macbre */
 		/* Give extensions ability to add HTML to thumbed / framed images */
 		/* @author: wladek - added outerWidth parameter for BugId: 3734 */
-		wfRunHooks( 'ThumbnailAfterProduceHTML', array( $title, $file, $frameParams, $handlerParams, $outerWidth, $thumb, $params, $zoomIcon, $url,  $time, &$s ) );
+		wfRunHooks( 'ThumbnailAfterProduceHTML', array( $title, $file, $frameParams, $handlerParams, $outerWidth, $thumb, $params, $zoomIcon, $url,  $time, $origHTML, &$s ) );
 		/* Wikia change end */
 
 		return str_replace( "\n", ' ', $s );

@@ -16,7 +16,7 @@ class ImageTweaksHooks extends WikiaObject {
 			self::$isWikiaMobile = ( !empty( $isOasis ) ) ? false : $this->app->checkSkin( 'wikiamobile' );
 	}
 
-	public function onThumbnailAfterProduceHTML( $title, $file, $frameParams, $handlerParams, $outerWidth, $thumb, $thumbParams, $zoomIcon, $url,  $time, &$html ){
+	public function onThumbnailAfterProduceHTML( $title, $file, $frameParams, $handlerParams, $outerWidth, $thumb, $thumbParams, $zoomIcon, $url,  $time, $origHTML, &$html ){
 		/**
 		 * Images SEO
 		 * @author: Marooned, Federico
@@ -25,49 +25,36 @@ class ImageTweaksHooks extends WikiaObject {
 			$this->wf->profileIn( __METHOD__ );
 			$exists = ( $file && $file->exists() );
 			$showCaption = ( !empty( $frameParams['caption'] ) || self::$isOasis );
-			$imageHTML = null;
 
-			if ( !$exists ) {
-				$imageHTML = Linker::makeBrokenImageLinkObj( $title, $frameParams['title'], '', '', '', $time == true );
-				$zoomIcon = '';
-			} elseif ( !$thumb ) {
-				$imageHTML = htmlspecialchars( wfMsg( 'thumbnail_error', '' ) );
-				$zoomIcon = '';
-			} else {
-				$imageHTML = $thumb->toHTML( $thumbParams );
-
+			if( !self::$isWikiaMobile ) {
 				/**
 				 * Change img src from magnify-clip.png to blank.gif. Image is set via CSS Background
 				 * @author: Christian, Marooned
 				 */
-			   if ( !self::$isWikiaMobile ) {
-				   $zoomIcon =  Html::rawElement(
-					   'a',
-					   array(
-						   'href' => $url,
-						   'class' => "internal sprite details magnify",
-						   'title' => $this->wf->Msg( 'thumbnail-more' )
-					   ),
-					   ''
-				   );
-				} else {
-					$zoomIcon = '';
-				}
+			   $zoomIcon =  Html::rawElement(
+				   'a',
+				   array(
+					   'href' => $url,
+					   'class' => "internal sprite details magnify",
+					   'title' => $this->wf->Msg( 'thumbnail-more' )
+				   ),
+				   ''
+				);
 			}
 
 			$html = $this->getTag(
-				$imageHTML,
+				$origHTML,
 				$frameParams['align'],
 				$outerWidth,
 				$showCaption,
 				$frameParams['caption'],
 				$zoomIcon,
-					(
+				(
 					self::$isOasis &&
-					!empty( $this->wg->EnableOasisPictureAttribution ) &&
-					!empty( $file ) &&
-					//BugId: 3734 Remove picture attribution for thumbnails 99px wide and under
-					$outerWidth >= 102
+						!empty( $this->wg->EnableOasisPictureAttribution ) &&
+						!empty( $file ) &&
+						//BugId: 3734 Remove picture attribution for thumbnails 99px wide and under
+						$outerWidth >= 102
 				),
 				( !empty( $file ) ) ? $file->getUser() : null
 			);
@@ -78,24 +65,18 @@ class ImageTweaksHooks extends WikiaObject {
 		return true;
 	}
 
-	public function onImageAfterProduceHTML( $title, $file, $frameParams, $handlerParams, $thumb, $params, $time, &$html ){
+	public function onImageAfterProduceHTML( $title, $file, $frameParams, $handlerParams, $thumb, $params, $time, $origHTML, &$html ){
 		/**
 		 * WikiaMobile - non-framed non-thumb images should have the same markup as thumbed/framed images/thumbnails
 		 * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
 		 */
 		if ( self::$isWikiaMobile ) {
 			$this->wf->profileIn( __METHOD__ );
-			$imageHTML = null;
 
-			if ( !empty( $thumb ) ) {
-				$imageHTML = $thumb->toHtml( $params );
-			} else {
-				$imageHTML = Linker::makeBrokenImageLinkObj( $title, $frameParams['title'], '', '', '', $time == true );
-			}
 
 			$showCaption = !empty( $frameParams['caption'] );
 			$html = $this->getTag(
-				$imageHTML,
+				$origHTML,
 				$frameParams['align'],
 				$handlerParams['width'],
 				!empty( $frameParams['caption'] ),
@@ -110,6 +91,8 @@ class ImageTweaksHooks extends WikiaObject {
 
 	public function onThumbnailImageHTML( $options, $linkAttribs, $imageAttribs, $file, &$html ){
 		$this->wf->profileIn( __METHOD__ );
+
+
 		if (
 			/**
 			* Images SEO project
@@ -127,6 +110,8 @@ class ImageTweaksHooks extends WikiaObject {
 			 */
 			self::$isWikiaMobile
 		) {
+			$link = null;
+
 			if ( is_array( $linkAttribs ) ) {
 				if ( !empty( $file ) ) {
 					$title = $file->getTitle();
@@ -137,15 +122,6 @@ class ImageTweaksHooks extends WikiaObject {
 
 					$linkAttribs['href'] = $this->wf->ReplaceImageServer($file->getFullUrl());
 				}
-
-				/**
-				 * data-link start
-				 * this will work only for the WikiaMobile skin due to the
-				 * bool check wrapping this scope
-				 *
-				 * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
-				 */
-				$link = null;
 
 				if ( !empty ( $options['custom-url-link'] ) ) {
 					$link = $options['custom-url-link'];
@@ -160,22 +136,9 @@ class ImageTweaksHooks extends WikiaObject {
 					$linkAttribs['href'] = $this->wf->ReplaceImageServer( $file->getURL(), $file->getTimestamp() );
 				}
 
-				if ( !empty ( $link ) ) {
-					$linkAttribs['data-link'] = $link;
-				}
-				/**
-				 * data-link end
-				 */
-
 				//override any previous value if title is passed as an option
 				if ( !empty( $options['title'] ) ) {
 					$linkAttribs['title'] = $options['title'];
-				}
-
-				//WikiaMobile: apply the image class if another is not defined
-				//other skins don't get here due to the boolean check at the top
-				if ( empty( $linkAttribs['class'] ) ) {
-					$linkAttribs['class'] = 'image';
 				}
 			}
 
@@ -187,9 +150,18 @@ class ImageTweaksHooks extends WikiaObject {
 			$contents = Xml::element( 'img', $imageAttribs );
 
 			if ( self::$isWikiaMobile ) {
+				if ( !empty( $link ) ) {
+					$linkAttribs['href'] = $link;
+				}
+
+				if ( empty( $linkAttribs['class'] ) ) {
+					$linkAttribs['class'] = 'image';
+				}
+
 				/**
 				 *WikiaMobile: lazy loading images in a SEO-friendly manner
 				 *@author Federico "Lox" Lucignano <federico@wikia-inc.com
+				 *
 				 */
 				$lazyImageAttribs = $imageAttribs;
 				$lazyImageAttribs['data-src'] = $lazyImageAttribs['src'];
