@@ -76,7 +76,7 @@ $(function() {
 			this.lastScrollTop = scrollTop;
 			var scrollBottom = scrollTop + $(window).height() + scrollSpeed;
 			scrollTop = scrollTop - scrollSpeed;
-			var onload = function() { this.classname += " lzyLoaded"; };
+			var onload = function() { this.setAttribute( 'class', this.getAttribute('class') + " lzyLoaded" ); };
 			for (var idx in this.cache) {
 				var cacheEl = this.cache[idx];
 				var el = cacheEl[0];
