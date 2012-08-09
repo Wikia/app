@@ -23,18 +23,19 @@ class VisualStats extends WikiaObject {
     }
 
     public function getDatesFromTwoWeeksOn($hours){
+
         $date = strtotime($this->getDateTwoWeeksBefore());
         if ($hours){
             for($hour = 0; $hour <= 23; $hour++){
                 $arr2[$hour] = 0;
                 }
             for ($i = 14; $i >= 0; $i--){
-                    $arr[date("d-m-Y", ($date + 86400 * $i))] = $arr2;
+                $arr[$this->app->wg->lang->date(date("Ymdhis", ($date + 86400 * $i)))] = $arr2;
             }
         }
         else{
             for ($i = 0; $i <= 14; $i++){
-                $arr[date("d-m-Y", ($date + 86400 * $i))] = 0;
+                $arr[$this->app->wg->lang->date(date("Ymdhis", ($date + 86400 * $i)))] = 0;
             }
         }
 
@@ -91,8 +92,9 @@ class VisualStats extends WikiaObject {
     public function getDataForCommitActivity($username){
         $this->app->wf->profileIn( __METHOD__ );
 
-        $key = $this->app->wf->MemcKey('VisualStats', 'commitActivity', $username );
+        $key = $this->app->wf->MemcKey('VisualStats', 'commitActivity', $this->app->wg->lang->getCode(), $username );
         $data = $this->app->wg->memc->get($key);
+
         if (is_array($data)){
             $out = $data;
         }
@@ -111,8 +113,8 @@ class VisualStats extends WikiaObject {
             $userCommitAll = 0;
 
             while ($row = $dbr->fetchObject($wikiaData)){
-
-                $tempDate = date("d-m-Y", strtotime(substr($row->date, 0, 8)));
+                $tempDate = substr($row->date, 0, 8) . "000000";
+                $tempDate = $this->app->wg->lang->date($tempDate);
                 $wikiaCommit[$tempDate]+= $row->count;
                 $wikiaCommitAll+= $row->count;
                 if ($wikiaCommit[$tempDate] > $wikiaCommitMax){
@@ -121,7 +123,8 @@ class VisualStats extends WikiaObject {
             };
             if ($username != "0"){
             while ($row = $dbr->fetchObject($userData)){
-                $tempDate = date("d-m-Y", strtotime(substr($row->date, 0, 8)));
+                $tempDate = substr($row->date, 0, 8) . "000000";
+                $tempDate = $this->app->wg->lang->date($tempDate);
                 $userCommit[$tempDate]+= $row->count;
                 $userCommitAll+= $row->count;
                 if ($userCommit[$tempDate] > $userCommitMax){
@@ -150,7 +153,7 @@ class VisualStats extends WikiaObject {
     public function getDataForPunchcard($username){
         $this->app->wf->profileIn( __METHOD__ );
 
-        $key = $this->app->wf->MemcKey('VisualStats', 'punchcard', $username );
+        $key = $this->app->wf->MemcKey('VisualStats', 'punchcard', $this->app->wg->lang->getCode(), $username );
         $data = $this->app->wg->memc->get($key);
         if (is_array($data)){
             $out = $data;
@@ -170,8 +173,8 @@ class VisualStats extends WikiaObject {
             $userPunchcardAll = 0;
 
             while ($row = $dbr->fetchObject($wikiaData)){
-
-                $tempDate = date("d-m-Y", strtotime(substr($row->date, 0, 8)));
+                $tempDate = substr($row->date, 0, 8) . "000000";
+                $tempDate = $this->app->wg->lang->date($tempDate);
                 $tempHour = substr($row->date, 8, 2);
                 if ($tempHour[0]=='0') $tempHour = (int)$tempHour[1];
                 $wikiaPunchcard[$tempDate][$tempHour]+= $row->count;
@@ -182,7 +185,8 @@ class VisualStats extends WikiaObject {
             };
             if ($username != "0"){
                 while ($row = $dbr->fetchObject($userData)){
-                    $tempDate = date("d-m-Y", strtotime(substr($row->date, 0, 8)));
+                    $tempDate = substr($row->date, 0, 8) . "000000";
+                    $tempDate = $this->app->wg->lang->date($tempDate);
                     $tempHour = substr($row->date, 8, 2);
                     if ($tempHour[0]=='0') $tempHour = (int)$tempHour[1];
                     $userPunchcard[$tempDate][$tempHour]+= $row->count;
@@ -213,7 +217,7 @@ class VisualStats extends WikiaObject {
     public function getDataForHistogram($username){
         $this->app->wf->profileIn( __METHOD__ );
 
-        $key = $this->app->wf->MemcKey('VisualStats', 'histogram', $username );
+        $key = $this->app->wf->MemcKey('VisualStats', 'histogram', $this->app->wg->lang->getCode(), $username );
         $data = $this->app->wg->memc->get($key);
         if (is_array($data)){
             $out = $data;
@@ -225,10 +229,10 @@ class VisualStats extends WikiaObject {
             $userData = $result['user'];
             $wikiaData = $result['wikia'];
 
-        for ($i = 0; $i <= 23; $i++){
-            $wikiaHistogram[$i] = 0;
-            $userHistogram[$i] = 0;
-        }
+            for ($i = 0; $i <= 23; $i++){
+                $wikiaHistogram[$i] = 0;
+                $userHistogram[$i] = 0;
+            }
 
             $wikiaHistogramMax = 0;
             $userHistogramMax = 0;

@@ -13,7 +13,7 @@ var VisualStatsCommitActivity = {
     },
 
     drawCommitActivity: function(){
-        var svg = VisualStatsCommon.createSvgContainer(980, 650, "#Graph");
+        var svg = VisualStatsCommon.createSvgContainer(980, 670, "#Graph");
         var self = this;
         var wikiaMax = VisualStatsCommon.roundUp(this.wikiaCommit.max);
         var userMax = VisualStatsCommon.roundUp(this.userCommit.max);
@@ -24,7 +24,7 @@ var VisualStatsCommitActivity = {
             .attr("x", 20)
             .attr("y", 45)
             .attr("width", 940)
-            .attr("height", 600)
+            .attr("height", 620)
             .attr("fill", "#E4EDD3");
 
         VisualStatsCommon.drawAxis(svg);
@@ -35,7 +35,7 @@ var VisualStatsCommitActivity = {
 
         var scaleX = d3.scale.linear()
             .domain([0, 14])
-            .range([120, 860]);
+            .range([100, 880]);
         var i = 0;
         var wikiaDataset= [];
         var userDataset= [];
@@ -47,7 +47,8 @@ var VisualStatsCommitActivity = {
                 .attr("id", function(){return "date" + i;})
                 .attr("font-size", 8)
                 .attr("fill", "black")
-                .attr("text-anchor", "middle");
+                .attr("text-anchor", "start")
+                .attr("transform", "rotate(20 " + scaleX(i) + " " + 602 + ")");
             wikiaDataset[i] = value;
             i++;
         });
