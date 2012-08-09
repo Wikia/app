@@ -15,6 +15,13 @@ Check your spelling.',
 	'piggyback-itisyou' => 'You cannot piggyback yourself.',
 	'piggyback-issysopto' => 'You cannot piggyback a user with the right to piggyback.',
 	'action-piggyback' => 'log on as another user',
+	'log-name-piggyback' => 'Piggyback log',
+	'log-description-piggyback' => 'This log is a record of account piggybacks.',
+);
+
+$messages['qqq'] = array(
+	'log-name-piggyback' => '{{doc-logpage}}',
+	'log-description-piggyback' => 'Appears on top of Special:Log/piggyback.',
 );
 
 /** Afrikaans (Afrikaans) */
