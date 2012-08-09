@@ -12,15 +12,15 @@ import com.wikia.webdriver.pageObjects.PageObject.BasePageObject;
 
 public class CommonFunctions 
 {
-	By logInAjax = By.className("ajaxLogin");
-	By userNameField = By.xpath("//div[@class='input-group required   ']/input[@name='username']");
-	By passwordField = By.xpath("//div[@class='input-group required   ']/input[@name='password']");
-	By submitButton = By.cssSelector("input[type='submit']");
+	static By logInAjax = By.className("ajaxLogin");
+	static By userNameField = By.xpath("//div[@class='input-group required   ']/input[@name='username']");
+	static By passwordField = By.xpath("//div[@class='input-group required   ']/input[@name='password']");
+	static By submitButton = By.cssSelector("input[type='submit']");
 			
 	private static WebDriver driver = DriverProvider.getWebDriver();
-	private WebDriverWait wait = new WebDriverWait(driver, 30);
+	private static WebDriverWait wait = new WebDriverWait(driver, 30);
 	
-	public void logIn(String userName, String password)
+	public static void logIn(String userName, String password)
 	{
 		WebElement logInAjaxElem = driver.findElement(logInAjax);
 		logInAjaxElem.click();
@@ -34,7 +34,7 @@ public class CommonFunctions
 //		wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("a[href='/wiki/User:"+userName+"']")));		
 	}
 	
-	public void logOut(String userName)
+	public static void logOut(String userName)
 	{
 		driver.get("http://community.wikia.com/wiki/Special:UserLogout?returnto=User "+userName);
 		
@@ -42,7 +42,7 @@ public class CommonFunctions
 	
 	
 	
-	public void logIn()
+	public static void logIn()
 	{
 		WebElement logInAjaxElem = driver.findElement(logInAjax);
 		logInAjaxElem.click();
@@ -57,7 +57,7 @@ public class CommonFunctions
 		PageObjectLogging.log("logIn ", "Normal user logged in", true, driver);
 	}
 	
-	public void logInAsStaff()
+	public static void logInAsStaff()
 	{
 		WebElement logInAjaxElem = driver.findElement(logInAjax);
 		logInAjaxElem.click();
