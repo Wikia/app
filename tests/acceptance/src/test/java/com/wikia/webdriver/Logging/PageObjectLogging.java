@@ -14,6 +14,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.events.WebDriverEventListener;
 
 import com.google.common.base.Throwables;
+import com.wikia.webdriver.Common.CommonUtils;
+import com.wikia.webdriver.DriverProvider.DriverProvider;
 
 
 
@@ -29,23 +31,48 @@ public class PageObjectLogging implements WebDriverEventListener{
 	
 	
 	
-	public static void startLogging(String className)
+	
+	
+	public static void startLoggingSuite()
 	{
 			imageCounter = 0; 
 			String l1 = "<html><head><meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\"><style>td { border-top: 1px solid grey; } </style></head><body>";
-			String l2 = "<h1>Class: <em>"+className+"</em></h1>";
-			String l3 = "<table>";
-			appendTextToFile(logPath, l1);
-			appendTextToFile(logPath, l2);
-			appendTextToFile(logPath, l3);
+			CommonUtils.appendTextToFile(logPath, l1);
+			
+	}
+	
+	public static void stopLoggingSuite()
+	{
+			imageCounter = 0; 
+			String l1 = "</body></html>";
+			CommonUtils.appendTextToFile(logPath, l1);
+			
+	}
+	
+	public static void startLoggingMethod(String className)
+	{
+			imageCounter = 0; 
+			String l1 = "<h1>Class: <em>"+className+"</em></h1>";
+			String l2 = "<table>";
+			CommonUtils.appendTextToFile(logPath, l1);
+			CommonUtils.appendTextToFile(logPath, l2);
+	}
+	
+	
+	public static void stopLoggingMethod()
+	{ 
+			
+			String l1 = "</table>";
+			CommonUtils.appendTextToFile(logPath, l1);
 	}
 	
 	public static void log(String command, String description, boolean success, WebDriver driver)
 	{
-		captureScreenshot(screenPath+imageCounter, driver);
+		
+		CommonUtils.captureScreenshot(screenPath+imageCounter, driver);
 		String hexColor = success ? "#CCFFCC" : "#FFCCCC";
 		String s = "<tr style=\"background:"+hexColor+";\"><td>"+command+"</td><td>"+description+"</td><td> <br/><a href='screenshots/screenshot"+imageCounter+".png'>Screenshot</a></td></tr>";
-		appendTextToFile(logPath, s);
+		CommonUtils.appendTextToFile(logPath, s);
 		imageCounter +=1;
 	}
 	
@@ -61,7 +88,7 @@ public class PageObjectLogging implements WebDriverEventListener{
 	public void afterNavigateTo(String url, WebDriver driver) {
 		System.out.println("After navigate to " + url);
 		String s = "<tr style=\"background:#CCFFCC;\"><td>Navigate to</td><td>"+url+"</td><td> <br/> &nbsp;</td></tr>";
-		appendTextToFile(logPath, s);
+		CommonUtils.appendTextToFile(logPath, s);
 		
 	}
 
@@ -113,7 +140,7 @@ public class PageObjectLogging implements WebDriverEventListener{
 	public void afterClickOn(WebElement element, WebDriver driver) {
 		
 		String s = "<tr style=\"background:#CCFFCC;\"><td>click</td><td>"+lastFindBy+"</td><td> <br/><a href='screenshots/screenshot"+imageCounter+".png'>Screenshot</a></td></tr>";
-		appendTextToFile(logPath, s);
+		CommonUtils.appendTextToFile(logPath, s);
 
 		System.out.println("afterClick");
 		
@@ -146,52 +173,18 @@ public class PageObjectLogging implements WebDriverEventListener{
 	@Override
 	public void onException(Throwable throwable, WebDriver driver) 
 	{
-		captureScreenshot(screenPath+imageCounter, driver);
+		CommonUtils.captureScreenshot(screenPath+imageCounter, driver);
 		String stackTrace = Throwables.getStackTraceAsString(throwable);
 		String s1 = "<tr style=\"background:#FFCCCC;\"><td>error</td><td>"+stackTrace+"</td><td> <br/><a href='screenshots/screenshot"+imageCounter+".png'>Screenshot</a></td></tr>";
 				
-		appendTextToFile(logPath, s1);
+		CommonUtils.appendTextToFile(logPath, s1);
 		imageCounter +=1;
 				
 		System.out.println(throwable.toString());
-		
 	}
 
-	public static void appendTextToFile(String filePath, String textToWrite) {
-		try {
-			boolean append;
-			File file = new File(filePath);
-			if (!file.exists())
-			{
-				append = false;
-			}
-			else
-			{
-				append = true;
-			}
-			FileWriter newFile = new FileWriter(filePath, true);
-			BufferedWriter out = new BufferedWriter(newFile);
-			out.write(textToWrite);
-			out.newLine();
-			out.flush();
-			out.close();
-			} catch (Exception e) 
-			{
-				System.out.println("ERROR in saveTextToFile(2 args) in Utils.java \n"+ e.getMessage());
-			}
-		}
 
-	public static String captureScreenshot(String outputFilePath, WebDriver driver) {
-		if (!outputFilePath.endsWith(".png"))
-			outputFilePath = outputFilePath + ".png";
-		File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-		try {
-			FileUtils.copyFile(scrFile, new File(outputFilePath));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return outputFilePath;
-	}
+
+
 	
 }
