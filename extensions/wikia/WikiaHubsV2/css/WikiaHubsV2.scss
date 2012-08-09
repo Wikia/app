@@ -130,10 +130,10 @@ $color-inactive-button: darken($color-secondary-button, 50%);
 
 .carouselContainer {
 	height: 160px;
-	left: 49px;
+	left: 61px;
 	overflow: hidden;
 	position: relative;
-	width: 402px;
+	width: 550px;
 	& > div {
 		position: relative;
 	}
@@ -142,8 +142,8 @@ $color-inactive-button: darken($color-secondary-button, 50%);
 		position: absolute;
 		li {
 			border: 0;
-			margin-right: 19px;
-			width: 115px;
+			margin-right: 24px;
+			width: 160px;
 		}
 		img {
 			width: 115px;
@@ -155,7 +155,29 @@ $color-inactive-button: darken($color-secondary-button, 50%);
 		li {
 			float: left;
 		}
-
+		.description{
+			width: 160px;
+			line-height: 15px;
+			font-size: 12px;
+			font-weight: bold;
+			padding-top: 8px;
+			max-height: 30px;
+			overflow: hidden;
+			margin-left: 2px;
+		}
+		.playButton {
+			@include opacity(30);
+			width: 160px;
+			height: 90px;
+			position: absolute;
+			z-index: 1;
+			background-image: url(/extensions/wikia/RelatedVideos/images/PlayBtn_35Alpha.png); /* base64 */
+			background-repeat:no-repeat;
+			background-position:center;
+			&:hover {
+				@include opacity(75);
+			}
+		}
 	}
 }
 
