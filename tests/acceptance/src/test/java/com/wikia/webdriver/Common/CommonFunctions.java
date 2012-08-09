@@ -31,7 +31,7 @@ public class CommonFunctions
 		passwordFieldElem.sendKeys(password);
 		WebElement submitButtonElem = driver.findElement(submitButton);
 		submitButtonElem.click();
-//		wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("a[href='/wiki/User:"+userName+"']")));		
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("a[href*='/wiki/User:"+userName+"']")));		
 	}
 	
 	public static void logOut(String userName)
@@ -53,7 +53,7 @@ public class CommonFunctions
 		passwordFieldElem.sendKeys(BasePageObject.password);
 		WebElement submitButtonElem = driver.findElement(submitButton);
 		submitButtonElem.click();
-//		wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("a[href='/wiki/User:"+BasePageObject.userName+"']")));
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("a[href*='/wiki/User:"+BasePageObject.userName+"']")));
 		PageObjectLogging.log("logIn ", "Normal user logged in", true, driver);
 	}
 	
