@@ -162,6 +162,7 @@ $messages['en'] = array(
 	'oasis-corporatefooter-hub-Entertainment-link' => 'http://www.wikia.com/Entertainment',
 	'oasis-corporatefooter-hub-Gaming-link' => 'http://www.wikia.com/Video_Games',
 	'oasis-corporatefooter-hub-Video_Games-link' => 'http://www.wikia.com/Video_Games',
+	'oasis-corporatefooter-hub-Videospiele-link' => 'http://de.wikia.com/Videospiele',
 	'oasis-corporatefooter-hub-Lifestyle-link' => 'http://www.wikia.com/Lifestyle',
 	'oasis-corporatefooter-hub-Food and Drink-link' => 'http://www.wikia.com/Recipes',
 
