@@ -545,10 +545,20 @@ $messages['ps'] = array(
 
 /** Portuguese (português)
  * @author Malafaya
+ * @author SandroHc
  */
 $messages['pt'] = array(
+	'quickstats-header-label' => 'Estatísticas Rápidas',
 	'quickstats-header-date' => 'Data',
+	'quickstats-header-views' => 'Visualizações',
+	'quickstats-header-edits' => 'Edições',
+	'quickstats-header-photos' => 'Imagens',
+	'quickstats-header-likes' => 'Gostos',
 	'quickstats-totals-label' => 'Totais',
+	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Ver mais estatísticas]]',
+	'quickstats-number-shortening' => '$1K',
+	'quickstats-number-shortening-millions' => '$1M',
+	'quickstats-number-shortening-billions' => '$1B',
 );
 
 /** Brazilian Portuguese (português do Brasil)
@@ -680,6 +690,7 @@ $messages['tl'] = array(
 	'quickstats-header-edits' => 'Mga pagpatnugot',
 	'quickstats-header-photos' => 'Mga larawan',
 	'quickstats-header-likes' => 'Mga pagnais',
+	'quickstats-date-format' => 'B a',
 	'quickstats-totals-label' => 'Mga kabuoan',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Tumingin ng marami pang estadistika]]',
 	'quickstats-number-shortening' => '$1,000',

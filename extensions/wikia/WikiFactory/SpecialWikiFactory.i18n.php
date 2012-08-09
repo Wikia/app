@@ -145,6 +145,7 @@ $messages['en'] = array(
  * @author EugeneZelenko
  * @author LWChris
  * @author McDutchie
+ * @author PtM
  * @author Purodha
  * @author Siebrand
  * @author Umherirrender
@@ -168,6 +169,7 @@ $messages['qqq'] = array(
 	'action-wikifactory' => '{{doc-action|wikifactory}}',
 	'closewiki-nbr-wiki' => 'What is $1? If it is a number it should support PLURAL',
 	'closewiki-unknown' => '{{Identical|Unknown}}',
+	'wikifactory-public-status-change-default-reason' => 'WikiFactory is a staff tool that allows Wikia to manage per-wiki settings across their network. The "public status" setting determines whether a wiki is available for users or closed and assigned for removal. Staff members usually justify a change of the status of a wiki by filling in the "Reason" field in the form. If no reason is provided, the wikifactory-public-status-change-default-reason is used automatically so it can be deduced where the change had been requested from.',
 	'awc-metrics-nbr-result' => '{{Identical|Result}}',
 	'awc-metrics-close' => '{{Identical|Close}}',
 	'awc-metrics-active' => '{{Identical|Active}}',
@@ -3162,7 +3164,8 @@ $messages['ms'] = array(
 	'wikifactory-label-findtags' => 'FindTags',
 	'wikifactory-label-ezsharedupload' => 'EZSharedUpload',
 	'wikifactory-label-compare' => 'Bandingkan',
-	'right-wikifactory' => 'Tukar tetapan dalaman untuk wiki',
+	'right-wikifactory' => 'Mengubah tetapan dalaman wiki',
+	'action-wikifactory' => 'mengubah tetapan dalaman wiki',
 	'wikifactory-domain-edit' => 'edit URL ini',
 	'wikifactory-domain-remove' => 'padamkan URL ini dari wiki',
 	'wikifactory-domain-setmain' => 'letakkan URL ini ke dalam wgServer',
@@ -4820,6 +4823,7 @@ $messages['tl'] = array(
 	'wikifactory-label-masstags' => 'Maramihang mga Tatak',
 	'wikifactory-label-findtags' => 'Maghanap ng mga Tatak',
 	'wikifactory-label-ezsharedupload' => 'Kargang EZShare',
+	'wikifactory-label-eznamespace' => 'EZNamespace',
 	'wikifactory-label-compare' => 'Paghambingin',
 	'right-wikifactory' => 'Baguhin ang mga katakdang panloob para sa mga wiki',
 	'action-wikifactory' => 'baguhin ang mga katakdang panloob para sa mga wiki',

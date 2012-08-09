@@ -3136,6 +3136,7 @@ $messages['ps'] = array(
  * @author 555
  * @author Hamilton Abreu
  * @author Malafaya
+ * @author SandroHc
  */
 $messages['pt'] = array(
 	'userrenametool' => 'Alterar o nome de um utilizador',

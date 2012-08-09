@@ -364,22 +364,40 @@ $messages['de'] = array(
  * @author Erdemaslancan
  */
 $messages['diq'] = array(
+	'admindashboard-loading' => 'Barêno...',
 	'admindashboard-title' => 'panoy {{SITENAME}}',
 	'admindashboard-header' => 'Panoy Admini',
 	'admindashboard-toolbar-link' => 'Admin',
+	'admindashboard-tab-advanced' => 'Raver',
+	'admindashboard-tab-general' => 'Heran',
+	'admindashboard-controls-wiki-header' => 'Wiki',
 	'admindashboard-control-theme-designer-label' => 'Tema vıraşter',
+	'admindashboard-control-recent-changes-label' => 'Vurnayışê peyêni',
+	'admindashboard-control-top-navigation-label' => 'Serni ra Geyrayış',
+	'admindashboard-control-wiki-features-label' => 'Tepyayina Wiki',
 	'admindashboard-controls-community-header' => 'Bol',
 	'admindashboard-control-user-list-label' => 'Listeyê Karberan',
+	'admindashboard-control-user-rights-label' => 'Heqê Karberan',
+	'admindashboard-control-group-rights-label' => 'Heqê Gruban',
 	'admindashboard-control-invite-label' => 'Dewam kere',
+	'admindashboard-control-help-label' => 'Peşti',
 	'admindashboard-control-help-tooltip' => 'bewni re wesikey peştiyer',
+	'admindashboard-control-community-corner-label' => 'Kışta Cemeati',
+	'admindashboard-controls-content-header' => 'Tede este',
+	'admindashboard-control-categories-list-label' => 'Kategori pêro',
 	'admindashboard-control-add-page-label' => 'Pele vıraze',
+	'admindashboard-control-add-photo-label' => 'Fotraf dekerê de',
 	'admindashboard-control-add-photo-tooltip' => 'fotrafe newey dekere viki miyan',
+	'admindashboard-control-add-blog-label' => 'Nuştey blog dekerê de',
+	'admindashboard-control-add-blog-tooltip' => 'Wiki da xo rê nuştey blog dekerê de',
+	'admindashboard-control-multiple-upload-label' => 'Zaf Fotraf Deke',
 );
 
 /** Greek (Ελληνικά)
  * @author Glavkos
  */
 $messages['el'] = array(
+	'admindashboard-loading' => 'Φόρτωση...',
 	'admindashboard-control-invite-label' => 'Πρόσκληση',
 );
 
@@ -654,9 +672,11 @@ $messages['he'] = array(
 );
 
 /** Hungarian (magyar)
+ * @author R-Joe
  * @author TK-999
  */
 $messages['hu'] = array(
+	'admindashboard-loading' => 'Betöltés…',
 	'admindashboard-title' => '{{SITENAME}} Műszerfal',
 	'admindashboard-header' => 'Adminisztrációs panel',
 	'admindashboard-toolbar-link' => 'Adminisztrátor',
@@ -895,6 +915,7 @@ $messages['ja'] = array(
  * @author 아라
  */
 $messages['ko'] = array(
+	'admindashboard-loading' => '불러오는 중…',
 	'admindashboard-title' => '{{SITENAME}} 대시보드',
 	'admindashboard-header' => '관리자 대시보드',
 	'admindashboard-toolbar-link' => '관리',
@@ -1051,6 +1072,7 @@ $messages['mk'] = array(
  * @author Anakmalaysia
  */
 $messages['ms'] = array(
+	'admindashboard-loading' => 'Sedang dimuatkan...',
 	'admindashboard-title' => 'Papan Pemuka {{SITENAME}}',
 	'admindashboard-header' => 'Papan Pemuka Pentadbir',
 	'admindashboard-toolbar-link' => 'Pentadbir',
@@ -1148,6 +1170,7 @@ $messages['nb'] = array(
  * @author Siebrand
  */
 $messages['nl'] = array(
+	'admindashboard-loading' => 'Bezig met laden...',
 	'admindashboard-title' => '{{SITENAME}}-dashboard',
 	'admindashboard-header' => 'Beheerdersdashboard',
 	'admindashboard-toolbar-link' => 'Beheer',
@@ -1288,20 +1311,51 @@ $messages['ps'] = array(
  * @author Hamilton Abreu
  * @author Malafaya
  * @author Rhaijin
+ * @author SandroHc
  */
 $messages['pt'] = array(
+	'admindashboard-loading' => 'A carregar...',
+	'admindashboard-title' => 'Painel de administração da {{SITENAME}}',
 	'admindashboard-header' => 'Painel de administração',
 	'admindashboard-toolbar-link' => 'Administrador',
 	'admindashboard-tab-advanced' => 'Avançado',
 	'admindashboard-tab-general' => 'Geral',
 	'admindashboard-controls-wiki-header' => 'Wiki',
+	'admindashboard-control-theme-designer-label' => 'Compositor de Temas Visuais',
+	'admindashboard-control-theme-designer-tooltip' => 'O Compositor de Temas Visuais permite-te personalizar as cores da wiki, fundo, e muito mais.',
 	'admindashboard-control-recent-changes-label' => 'Mudanças Recentes',
+	'admindashboard-control-recent-changes-tooltip' => 'As Mudanças Recentes exibem todas as alterações feitas na sua wiki num certo período de tempo.',
+	'admindashboard-control-top-navigation-label' => 'Navegação Superior',
+	'admindashboard-control-top-navigation-tooltip' => 'A Navegação Superior permite-te personalizar o menu de navegação na parte superior da sua wiki.',
+	'admindashboard-control-wiki-features-label' => 'Funcionalidades Wiki',
+	'admindashboard-control-wiki-features-tooltip' => 'As Funcionalidades Wiki permitem-te ativar ferramentas adicionar na sua wiki.',
+	'admindashboard-control-page-layout-builder-label' => 'Criador de Designs',
+	'admindashboard-control-page-layout-builder-tooltip' => 'O Criador de Designs permite-te criar esquemas de páginas que os utilizadores possam escolher e utilizar para criar páginas novas.',
+	'admindashboard-controls-community-header' => 'Comunidade',
 	'admindashboard-control-user-list-label' => 'Lista de Utilizadores',
 	'admindashboard-control-user-list-tooltip' => 'Ver uma lista completa dos utilizadores que participaram na sua wiki.',
 	'admindashboard-control-user-rights-label' => 'Direitos de Utilizador',
 	'admindashboard-control-user-rights-tooltip' => 'Adicionar e remover direitos de grupos e permissões de utilizadores na sua wiki.',
+	'admindashboard-control-group-rights-label' => 'Direitos de Grupo',
+	'admindashboard-control-group-rights-tooltip' => 'Visão geral dos direitos para os grupos de utilizadores diferentes.',
+	'admindashboard-control-invite-label' => 'Convidar',
+	'admindashboard-control-invite-tooltip' => 'Convidar outras pessoas para esta wiki.',
 	'admindashboard-control-help-label' => 'Ajuda',
+	'admindashboard-control-help-tooltip' => 'Encontrar Ajuda.',
+	'admindashboard-control-community-corner-label' => 'Portal Comunitário',
+	'admindashboard-control-community-corner-tooltip' => 'Edita o Portal Comunitário da sua wiki e notifica todos os utilizadores.',
+	'admindashboard-controls-content-header' => 'Conteúdo',
+	'admindashboard-control-categories-list-label' => 'Todas as Categorias',
+	'admindashboard-control-categories-list-tooltip' => 'Ver todas as categorias atualmente listadas na sua wiki.',
+	'admindashboard-control-add-page-label' => 'Adicionar uma página',
+	'admindashboard-control-add-page-tooltip' => 'Adicionar uma nova página para a sua wiki.',
+	'admindashboard-control-add-photo-label' => 'Adicionar uma imagem',
 	'admindashboard-control-add-photo-tooltip' => 'Adicione novas fotos ao seu wiki.',
+	'admindashboard-control-add-blog-label' => 'Adicionar uma postagem de Blogue',
+	'admindashboard-control-add-blog-tooltip' => 'Adicionar uma postagem de Blogue para a sua wiki.',
+	'admindashboard-control-multiple-upload-label' => 'Adicionar várias imagens',
+	'admindashboard-control-multiple-upload-tooltip' => 'Envie mais do que uma imagem de cada vez com a nossa ferramenta de envio de imagens.',
+	'admindashboard-back-to-dashboard' => 'Voltar ao Painel de administração',
 );
 
 /** Brazilian Portuguese (português do Brasil)
@@ -1564,6 +1618,7 @@ $messages['tl'] = array(
 	'admindashboard-control-invite-tooltip' => 'Mag-anyaya ng ibang mga tao na gamitin ang wiking ito.',
 	'admindashboard-control-help-label' => 'Tulong',
 	'admindashboard-control-help-tooltip' => 'Maghanap ng Tulong.',
+	'admindashboard-control-help-url' => 'http://community.wikia.com/wiki/Help:Contents',
 	'admindashboard-control-community-corner-label' => 'Sulok ng Pamayanan',
 	'admindashboard-control-community-corner-tooltip' => 'Baguhin ang bahagi ng Sulok ng Pamayanan ng wiki at ipagbigay-alam sa mga tagagamit.',
 	'admindashboard-controls-content-header' => 'Nilalaman',
@@ -1581,11 +1636,14 @@ $messages['tl'] = array(
 );
 
 /** толышә зывон (толышә зывон)
+ * @author Erdemaslancan
  * @author Гусейн
  */
 $messages['tly'] = array(
 	'admindashboard-controls-wiki-header' => 'Вики',
 	'admindashboard-control-recent-changes-label' => 'Ән нујә дәгишон',
+	'admindashboard-control-help-label' => 'Арајиш',
+	'admindashboard-controls-content-header' => 'Мәзмун.',
 	'admindashboard-control-add-page-label' => 'Сәһифә зијод карде',
 	'admindashboard-control-add-page-tooltip' => 'Тожә сәһифә зијод карде бә вики.',
 	'admindashboard-control-add-photo-label' => 'Шикил зијод карде',
@@ -1717,9 +1775,11 @@ $messages['vep'] = array(
 );
 
 /** Vietnamese (Tiếng Việt)
+ * @author Thanhtai2009
  * @author Xiao Qiao
  */
 $messages['vi'] = array(
+	'admindashboard-loading' => 'Đang tải...',
 	'admindashboard-title' => 'Bảng điều khiển {{SITENAME}}',
 	'admindashboard-header' => 'Bảng điều khiển Bảo quản viên',
 	'admindashboard-toolbar-link' => 'Bảo quản viên',

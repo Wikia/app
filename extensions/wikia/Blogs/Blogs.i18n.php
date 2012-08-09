@@ -778,8 +778,9 @@ $messages['de-formal'] = array(
  */
 $messages['diq'] = array(
 	'createblogpage' => 'Blog vırazê',
-	'create-blog-save' => 'Pela star fi',
+	'create-blog-save' => 'Ena pele qeyd ke',
 	'create-blog-listing-matches-calculate' => 'Hesab cihazi',
+	'create-blog-listing-sortby' => 'raten',
 	'create-blog-listing-sortby-author' => 'Nuskar',
 	'blog-defaulttitle' => 'Blogi',
 	'blog-added' => 'Debiya',
@@ -4086,6 +4087,7 @@ $messages['tl'] = array(
 	'blog-comment-edit' => 'baguhin',
 	'blog-comment-error' => 'Hindi masasagip ang puna',
 	'blog-comment-cannot-add' => 'Hindi ka makapagdaragdag ng puna sa blog.',
+	'blug-cut-sign' => '…',
 	'blog-avatar-preferences-title' => 'Huwaran',
 	'blog-page-rate' => 'Antasan ang artikulong ito:',
 	'blog-create-post-label' => 'Lumikha ng paskil na pamblog',
@@ -4113,6 +4115,7 @@ $messages['tl'] = array(
 );
 
 /** толышә зывон (толышә зывон)
+ * @author Erdemaslancan
  * @author Гусейн
  */
 $messages['tly'] = array(
@@ -4122,6 +4125,7 @@ $messages['tly'] = array(
 	'create-blog-listing-sortby-author' => 'Мыәллиф',
 	'blog-readfullpost' => 'Әтрофин һандеј',
 	'blog-added' => 'зијод кардә быә',
+	'blog-comments' => 'Мындәриҹот',
 	'blog-comment-delete' => 'рәдд кардеј',
 	'blog-comment-hide' => 'нијо кардеј',
 	'blog-comment-unhide' => 'нишо дој',

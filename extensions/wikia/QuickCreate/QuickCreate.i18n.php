@@ -172,6 +172,14 @@ $messages['ja'] = array(
 	'quickcreate' => 'レシピを送信',
 );
 
+/** Korean (한국어)
+ * @author 아라
+ */
+$messages['ko'] = array(
+	'quickcreate-desc' => '익명 사용자에게 로그인 요청으로 새-문서-만들기 버튼 추가',
+	'quickcreate' => '레시피 제출',
+);
+
 /** Colognian (Ripoarisch)
  * @author Purodha
  */

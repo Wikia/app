@@ -888,10 +888,12 @@ $messages['ps'] = array(
 /** Portuguese (português)
  * @author Hamilton Abreu
  * @author Malafaya
+ * @author SandroHc
  */
 $messages['pt'] = array(
 	'categoryselect-desc' => 'Fornece uma interface de gestão das categorias de um artigo sem editar o artigo completo.',
 	'categoryselect-code-view' => 'Modo de código',
+	'categoryselect-code-view-placeholder' => 'Adiciona categorias aqui, exemplo: [[Categoria:Nome]]',
 	'categoryselect-visual-view' => 'Modo de visionamento',
 	'categoryselect-infobox-caption' => 'Opções de categoria',
 	'categoryselect-infobox-category' => 'Introduza o nome da categoria:',

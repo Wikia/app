@@ -302,10 +302,10 @@ $messages['ps'] = array(
 	'main-tab-personal' => 'زما ويکييا',
 	'main-tab-search' => 'پلټل',
 	'main-tab-offline' => 'پرې ليکه',
-	'tab-discover-loading-message' => 'د برسېرېدو په حال کې',
+	'tab-discover-loading-message' => 'برسېرېدنې کې دی...',
 	'tab-discover-no-network-dialog-close-button' => 'ښه',
 	'tab-search-loading-message' => 'د پلټنې په حال کې...',
-	'browser-loading-message' => 'د برسېرېدو په حال کې',
+	'browser-loading-message' => 'برسېرېدنې کې دی...',
 );
 
 /** Portuguese (português)

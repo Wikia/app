@@ -186,6 +186,13 @@ $messages['ps'] = array(
 	'minieditor-reply' => 'ځوابول',
 );
 
+/** Portuguese (português)
+ * @author SandroHc
+ */
+$messages['pt'] = array(
+	'minieditor-reply' => 'Responder',
+);
+
 /** Russian (русский)
  * @author Kuzura
  */

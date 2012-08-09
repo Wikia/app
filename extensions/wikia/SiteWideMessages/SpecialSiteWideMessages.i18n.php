@@ -712,6 +712,7 @@ $messages['diq'] = array(
 	'swm-list-table-group' => 'Grub',
 	'swm-list-table-removed' => 'wedariya',
 	'swm-list-table-content' => 'Tede este',
+	'swm-list-table-tools' => 'Xecetî',
 	'swm-list-table-lang' => 'Zıwani',
 	'swm-yes' => 'E',
 	'swm-no' => 'Nê',

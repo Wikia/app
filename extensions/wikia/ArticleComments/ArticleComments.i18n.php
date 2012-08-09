@@ -517,6 +517,8 @@ $messages['diq'] = array(
 	'article-comments-edit' => 'bıvurne',
 	'article-comments-history' => 'Ravêrden',
 	'article-comments-error' => 'Mışewre qeyd nêbı',
+	'article-comments-rc-comments' => 'Vatışê wesiqe da ([[$1]])',
+	'article-comments-rc-blog-comments' => 'Vatışê Blog da ([[$1]])',
 	'article-comments-toc-item' => 'Vatışi',
 	'article-comments-vote' => 'Rey çek',
 	'article-comments-reply' => 'Cewab bıde',
@@ -524,6 +526,7 @@ $messages['diq'] = array(
 	'article-comments-prev-page' => 'Verên',
 	'article-comments-next-page' => 'Bahdoyên',
 	'article-comments-page-spacer' => '&#160...&#160',
+	'wikiamobile-article-comments-header' => 'vatışê <span class=cnt id=wkArtCnt>$1</span>i',
 	'wikiamobile-article-comments-more' => 'Zewbi buwane',
 	'wikiamobile-article-comments-prev' => 'Bahdoyêni buwane',
 	'wikiamobile-article-comments-none' => 'Vatış çıno',
@@ -1827,6 +1830,17 @@ $messages['pt'] = array(
 	'article-comments-page-spacer' => '&#160...&#160',
 	'article-comments-delete-reason' => 'O artigo raiz / comentário raiz foi apagado.',
 	'article-comments-empty-comment' => "Não pode publicar um comentário vazio. <a href='$1'>Quer apagá-lo?</a>",
+	'wikiamobile-article-comments-header' => 'comentários (<span class=cnt id=wkArtCnt>$1</span>)',
+	'wikiamobile-article-comments-more' => 'Ler mais',
+	'wikiamobile-article-comments-prev' => 'Ler anteriores',
+	'wikiamobile-article-comments-none' => 'Sem comentários',
+	'wikiamobile-article-comments-view' => 'Ver respostas',
+	'wikiamobile-article-comments-replies' => 'respostas',
+	'wikiamobile-article-comments-post-reply' => 'Publicar uma resposta',
+	'wikiamobile-article-comments-post' => 'Publicar',
+	'wikiamobile-article-comments-placeholder' => 'Publicar um comentário',
+	'wikiamobile-article-comments-show' => 'Mostrar',
+	'wikiamobile-article-comments-login-post' => 'Inicie sessão antes de publicar um comentário.',
 	'enotif_subject_article_comment' => '$PAGEEDITOR comentou "$PAGETITLE" na {{SITENAME}}',
 	'enotif_body_article_comment' => 'Caro $WATCHINGUSERNAME,
 
@@ -2244,6 +2258,7 @@ Wikia
 );
 
 /** толышә зывон (толышә зывон)
+ * @author Erdemaslancan
  * @author Гусейн
  */
 $messages['tly'] = array(
@@ -2251,6 +2266,7 @@ $messages['tly'] = array(
 	'article-comments-delete' => 'рәдд кардеј',
 	'article-comments-edit' => 'сәрост кардеј',
 	'article-comments-history' => 'тарых',
+	'article-comments-toc-item' => 'Мындәриҹот',
 	'article-comments-prev-page' => 'Навы.',
 	'wikiamobile-article-comments-show' => 'Нишо дој',
 );

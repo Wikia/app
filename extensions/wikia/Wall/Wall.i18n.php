@@ -603,8 +603,8 @@ $messages['qqq'] = array(
 	'wall-history-action-thread-history' => 'wall history page, link to view thread history',
 	'wall-thread-history-title' => 'heading on thread history page',
 	'wall-thread-history-thread-created' => 'thread history page. GENDER is supported in this message. Parameters:
-* $1 is thread title
-* $2 is username.',
+* $1 is preferred name
+* $2 is username',
 	'wall-thread-history-reply-created' => 'thread history page item. GENDER is supported in this message. Parameters:
 * $1 is preferred name
 * $2 is username.',
@@ -726,7 +726,7 @@ $messages['br'] = array(
  */
 $messages['de'] = array(
 	'wall-no-title' => 'Kein Titel',
-	'wall-message-loadmore' => 'Zeige alle $1 {{PLURAL:$1|Antwort|Antworten}}',
+	'wall-message-loadmore' => 'Zeige <span class="count">{{PLURAL:$1|eine Antwort|alle $1 Antworten}}</span>',
 	'wall-message-wall' => 'Nachrichtenseite',
 	'wall-message-wall-shorten' => 'Nachrichten',
 	'wall-message-unfollow' => 'Nicht mehr folgen',
@@ -1041,7 +1041,7 @@ $messages['diq'] = array(
  */
 $messages['es'] = array(
 	'wall-no-title' => 'Sin título',
-	'wall-message-loadmore' => 'Ver todas las $1 {{PLURAL:$1|respuesta|respuestas}}',
+	'wall-message-loadmore' => 'Ver <span class="count">{{PLURAL:$1|$1 respuesta|$1 respuestas}}</span>',
 	'wall-message-wall' => 'Muro de mensajes',
 	'wall-message-wall-shorten' => 'muro',
 	'wall-message-unfollow' => 'Dejar de seguir',
@@ -1257,27 +1257,27 @@ El mensaje original y tu resumen aparecerá en el historial del wiki.',
 	'mail-notification-html-footer-line1' => 'Para comprobar las últimas novedades en Wikia, visita <a style="color:#2a87d5;text-decoration:none;" href="http://es.wikia.com">es.wikia.com</a>',
 	'mail-notification-html-footer-line2' => '¿Quieres controlar los emails que recibes? Ve a tus <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">Preferencias</a>',
 	'mail-notification-body' => 'Hola $WATCHER,
-
+	
 $SUBJECT
-
+			
 $METATITLE
-
+		
 $MESSAGE_NO_HTML
-
+			
 -- $AUTHOR
 
 Ver la conversación($MESSAGE_LINK)
-
+ 
 El equipo de Wikia
 
 ___________________________________________
 * Encuentra la ayuda y los consejos que necesitas en la Central de Wikia en español: http://es.wikia.com
 * ¿Quieres recibir menos mensajes de nosotros? Puedes cambiar tus preferencias con respecto a los emails aquí: http://es.wikia.com/wiki/Especial:Preferencias',
 	'mail-notification-body-HTML' => 'Hola $WATCHER,
-			<p>$SUBJECT.</p>
+			<p>$SUBJECT.</p> 
 			<p><a href="$MESSAGE_LINK">$METATITLE</a></p>
 			<p>$MESSAGE_HTML</p>
-			<p>-- $AUTHOR_SIGNATURE<p>
+			<p>-- $AUTHOR_SIGNATURE<p> 			
 			<p><a style="padding: 4px 10px;background-color: #006CB0; color: #FFF !important;text-decoration: none;" href="$MESSAGE_LINK">Ver la conversación</a></p>
 			<p>El equipo de Wikia</p>
 ___________________________________________<br />
@@ -1294,7 +1294,7 @@ ___________________________________________<br />
 	'walldelete-toggle' => 'Activar el borrado de revisiones en publicaciones en el Muro de Mensajes',
 	'wall-notifications-notifyeveryone' => 'Resaltado por $1',
 	'wall-message-notifyeveryone' => 'Resaltar este tema',
-	'wall-message-unnotifyeveryone' => '',
+	'wall-message-unnotifyeveryone' => 'Dejar de resaltar este tema',
 	'wall-message-notifyeveryone-tooltip' => 'Todo usuario que ha iniciado sesión en el wiki será notificado sobre este tema',
 	'wall-votes-modal-showmore' => 'Ver a otros que les gusta',
 	'wall-votes-modal-title' => 'Valoraciones',
@@ -1460,7 +1460,7 @@ Tätä ei voi peruuttaa.',
  */
 $messages['fr'] = array(
 	'wall-no-title' => 'Sans titre',
-	'wall-message-loadmore' => 'Voir {{PLURAL:$1|une réponse|les $1 réponses}}',
+	'wall-message-loadmore' => 'Voir <span class="count">{{PLURAL:$1|une réponse|les $1 réponses}}</span>',
 	'wall-message-wall' => 'Mur de discussion',
 	'wall-message-wall-shorten' => 'mur',
 	'wall-message-unfollow' => 'Ne plus suivre',
@@ -1673,17 +1673,17 @@ Le message original et votre résumé seront toujours visibles dans l’historiq
 	'mail-notification-html-footer-line1' => 'Pour connaître les derniers évènements sur Wikia, visitez <a style="color:#2a87d5;text-decoration:none;" href="http://communaute.wikia.com">communaute.wikia.com</a>',
 	'mail-notification-html-footer-line2' => 'Vous souhaitez contrôler les courriels que vous recevez ? Allez à vos <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">Préférences</a>',
 	'mail-notification-body' => 'Bonjour $WATCHER,
-
+	
 $SUBJECT
-
+			
 $METATITLE
-
+		
 $MESSAGE_NO_HTML
-
+			
 — $AUTHOR
 
 voir la conversation($MESSAGE_LINK)
-
+ 
 L’équipe Wikia
 
 ___________________________________________
@@ -1691,10 +1691,10 @@ ___________________________________________
 * Vous souhaitez recevoir moins de messages de notre part ? Vous pouvez vous désinscrire ou modifier
 vos préférence de courriel ici : http://communaute.wikia.com/Special:Preferences',
 	'mail-notification-body-HTML' => 'Bonjour $WATCHER,
-<p>$SUBJECT.</p>
+<p>$SUBJECT.</p> 
 <p><a href="$MESSAGE_LINK">$METATITLE</a></p>
 <p>$MESSAGE_HTML</p>
-<p>— $AUTHOR_SIGNATURE<p>
+<p>— $AUTHOR_SIGNATURE<p> 			
 <p><a style="padding: 4px 10px;background-color: #006CB0; color: #FFF !important;text-decoration: none;" href="$MESSAGE_LINK">Voir la conversation</a></p>
 <p>L’équipe Wikia</p>
 ___________________________________________<br />
@@ -1728,7 +1728,7 @@ modifier vos préférence de courriel ici : http://communaute.wikia.com/Special:
  */
 $messages['gl'] = array(
 	'wall-no-title' => 'Sen título',
-	'wall-message-loadmore' => 'Ollar {{PLURAL:$1|$1 resposta|as $1 respostas}}',
+	'wall-message-loadmore' => 'Ollar <span class="count">{{PLURAL:$1|$1 resposta|as $1 respostas}}</span>',
 	'wall-message-wall' => 'Muro de mensaxes',
 	'wall-message-wall-shorten' => 'muro',
 	'wall-message-unfollow' => 'Deixar de seguir',
@@ -2430,17 +2430,17 @@ Le message original e tu summario apparera totevia in le historia del wiki.',
 	'mail-notification-html-footer-line1' => 'Pro cognoscer le ultime evenimentos in Wikia, visita <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>',
 	'mail-notification-html-footer-line2' => 'Vole seliger le e-mails que tu recipe? Face lo in tu <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">Preferentias</a>',
 	'mail-notification-body' => 'Salute $WATCHER,
-
+	
 $SUBJECT
-
+			
 $METATITLE
-
+		
 $MESSAGE_NO_HTML
-
+			
 -- $AUTHOR
 
 Vide le conversation($MESSAGE_LINK)
-
+ 
 Le equipa de Wikia
 
 ___________________________________________
@@ -2448,10 +2448,10 @@ ___________________________________________
 * Vole reciper minus messages de nos? Tu pote disabonar te o cambiar le
 tue preferentias de e-mail: http://community.wikia.com/Special:Preferences',
 	'mail-notification-body-HTML' => 'Salute $WATCHER,
-			<p>$SUBJECT.</p>
+			<p>$SUBJECT.</p> 
 			<p><a href="$MESSAGE_LINK">$METATITLE</a></p>
 			<p>$MESSAGE_HTML</p>
-			<p>-- $AUTHOR_SIGNATURE<p>
+			<p>-- $AUTHOR_SIGNATURE<p> 			
 			<p><a style="padding: 4px 10px;background-color: #006CB0; color: #FFF !important;text-decoration: none;" href="$MESSAGE_LINK">Vide le conversation</a></p>
 			<p>Le equipa de Wikia</p>
 ___________________________________________<br />
@@ -2710,7 +2710,7 @@ ___________________________________________
 <p>$SUBJECT</p>
 <p><a href="$MESSAGE_LINK">$METATITLE</a></p>
 <p>$MESSAGE_HTML</p>
-<p>-- $AUTHOR_SIGNATURE<p>
+<p>-- $AUTHOR_SIGNATURE<p> 
 <p><a style="padding: 4px 10px;background-color: #006CB0; color: #FFF !important;text-decoration: none;" href="$MESSAGE_LINK">スレッドを見るにはこちら</a></p>
 <p>ウィキアチーム</p>
 ___________________________________________<br />
@@ -2834,10 +2834,10 @@ $messages['mk'] = array(
 	'wall-action-all-confirm-notify' => 'Извести администратор',
 	'wall-action-remove-reply-title' => 'Отстрани го одговоров',
 	'wall-action-remove-thread-title' => 'Отстрани ја нишкава',
-	'wall-confirm-monobook-remove' => 'Кажете ни зошто сакате да го избришете ова.
+	'wall-confirm-monobook-remove' => 'Кажете ни зошто сакате да го избришете ова. 
 
 Изворната објава и вашиот опис сепак ќе фигурираат во историјата на викито.',
-	'wall-confirm-monobook-admin' => 'Кажете ни зошто сакате да го избришете ова.
+	'wall-confirm-monobook-admin' => 'Кажете ни зошто сакате да го избришете ова. 
 
 Изворната објава и вашиот опис сепак ќе фигурираат во историјата на викито.',
 	'wall-confirm-monobook-restore' => 'Кажете ни зошто сакате да го вратите ова',
@@ -3002,17 +3002,17 @@ $messages['mk'] = array(
 	'mail-notification-html-footer-line1' => 'За да ги проследите најновите случувања на Викија, посетете ја страницата <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>',
 	'mail-notification-html-footer-line2' => 'Сакате да одберете кои пораки да ги добивате? Појдете на вашите <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">Нагодувања</a>',
 	'mail-notification-body' => 'Hi $WATCHER,
-
+	
 $SUBJECT
-
+			
 $METATITLE
-
+		
 $MESSAGE_NO_HTML
-
+			
 -- $AUTHOR
 
 Погледајте го разговорот($MESSAGE_LINK)
-
+ 
 Екипата на Викија
 
 ___________________________________________
@@ -3020,10 +3020,10 @@ ___________________________________________
 * Сакате да добивате помалку пораки од нас? Можете да се отпишете или да ги смените
 нагодувањата за е-пошта на: http://community.wikia.com/Special:Preferences',
 	'mail-notification-body-HTML' => 'Здраво $WATCHER,
-			<p>$SUBJECT.</p>
+			<p>$SUBJECT.</p> 
 			<p><a href="$MESSAGE_LINK">$METATITLE</a></p>
 			<p>$MESSAGE_HTML</p>
-			<p>-- $AUTHOR_SIGNATURE<p>
+			<p>-- $AUTHOR_SIGNATURE<p> 			
 			<p><a style="padding: 4px 10px;background-color: #006CB0; color: #FFF !important;text-decoration: none;" href="$MESSAGE_LINK">Погледајте го разговорот</a></p>
 			<p>Екипата на Викија</p>
 ___________________________________________<br />
@@ -3057,7 +3057,7 @@ ___________________________________________<br />
  */
 $messages['ms'] = array(
 	'wall-no-title' => 'Tiada tajuk',
-	'wall-message-loadmore' => 'Lihat kesemua $1 balasan',
+	'wall-message-loadmore' => 'Lihat <span class="count">{{PLURAL:$1|$1 balasan|kesemua $1 balasan}}</span>',
 	'wall-message-wall' => 'Papan Pesanan',
 	'wall-message-wall-shorten' => 'papan',
 	'wall-message-unfollow' => 'Berhenti mengikut',
@@ -3071,6 +3071,7 @@ $messages['ms'] = array(
 	'wall-message-elseswall' => 'Papan $1',
 	'wall-message-no-permission' => 'Anda tidak diberi izin untuk melakukan tindakan ini pada pesanan ini',
 	'wall-thread-removed' => 'Dibuang',
+	'wall-thread-isnotifyeveryone' => 'Sorotan',
 	'wall-thread-deleted' => 'Dihapuskan',
 	'wall-default-title' => 'Pesanan dari $1',
 	'wall-no-title-warning' => '← Anda tidak memberikan sebarang tajuk',
@@ -3104,10 +3105,10 @@ $messages['ms'] = array(
 	'wall-action-all-confirm-notify' => 'Beritahu pentadbir',
 	'wall-action-remove-reply-title' => 'Buang balasan ini',
 	'wall-action-remove-thread-title' => 'Buang tred ini',
-	'wall-confirm-monobook-remove' => 'Sila terangkan sebab anda ingin membuangnya.
+	'wall-confirm-monobook-remove' => 'Sila terangkan sebab anda ingin membuangnya. 
 
 Pos yang asal dan ringkasan anda akan kekal dalam sejarah wiki.',
-	'wall-confirm-monobook-admin' => 'Sila terangkan sebab anda ingin menghapuskannya.
+	'wall-confirm-monobook-admin' => 'Sila terangkan sebab anda ingin menghapuskannya. 
 
 Pos yang asal dan ringkasan anda akan kekal dalam sejarah wiki.',
 	'wall-confirm-monobook-restore' => 'Sila terangkan sebab anda ingin memulihkannya',
@@ -3171,7 +3172,7 @@ Pos yang asal dan ringkasan anda akan kekal dalam sejarah wiki.',
 	'wn-user3-reply-other-a-wall' => '$1 dan lain-lain membalas pesanan $3',
 	'wn-newmsg-onmywall' => '$1 meninggalkan pesanan baru di papan anda',
 	'wn-newmsg' => 'Anda meninggalkan pesanan baru di papan $1',
-	'wn-newmsg-on-followed-wall' => '$1 meninggalkan pesanan baru di papan $2.',
+	'wn-newmsg-on-followed-wall' => '$1 meninggalkan pesanan baru di papan $2',
 	'wn-admin-thread-deleted' => 'Tred dibuang dari papan $1',
 	'wn-admin-reply-deleted' => 'Balasan dibuang dari tred di papan $1',
 	'wn-owner-thread-deleted' => 'Tred dibuang dari papan anda',
@@ -3272,33 +3273,33 @@ Pos yang asal dan ringkasan anda akan kekal dalam sejarah wiki.',
 	'mail-notification-html-footer-line1' => 'Untuk meninjau perkembangan terkini di Wikia, lawati <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>',
 	'mail-notification-html-footer-line2' => 'Ingin mengawal e-mel yang anda terima? Pergi ke <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">Keutamaan</a> anda',
 	'mail-notification-body' => 'Apa khabar $WATCHER,
-
+	
 $SUBJECT
-
+			
 $METATITLE
-
+		
 $MESSAGE_NO_HTML
-
+			
 -- $AUTHOR
 
 Lihat perbualan($MESSAGE_LINK)
-
+ 
 Pasukan Wikia
 
 ___________________________________________
 * Dapatkan bantuan dan nasihat di Community Central: http://community.wikia.com
-* Tak nak terima banyak pesanan daripada kami? Anda boleh berhenti melanggan atau
+* Tak nak terima banyak pesanan daripada kami? Anda boleh berhenti melanggan atau 
 ubah keutamaan e-mel anda di sini: http://community.wikia.com/Special:Preferences',
 	'mail-notification-body-HTML' => 'Hi $WATCHER,
-<p>$SUBJECT.</p>
+<p>$SUBJECT.</p> 
 <p><a href="$MESSAGE_LINK">$METATITLE</a></p>
 <p>$MESSAGE_HTML</p>
-<p>-- $AUTHOR_SIGNATURE<p>
+<p>-- $AUTHOR_SIGNATURE<p> 			
 <p><a style="padding: 4px 10px;background-color: #006CB0; color: #FFF !important;text-decoration: none;" href="$MESSAGE_LINK">Lihat perbualan</a></p>
 <p>Pasukan Wikia</p>
 ___________________________________________<br />
 * Dapatkan bantuan dan nasihat di Community Central: http://community.wikia.com
-* Tak nak terima banyak pesanan daripada kami? Anda boleh berhenti melanggan atau
+* Tak nak terima banyak pesanan daripada kami? Anda boleh berhenti melanggan atau 
 ubah keutamaan e-mel anda di sini: http://community.wikia.com/Special:Preferences',
 	'prefs-email-wall-v2' => 'Papan Pesanan',
 	'tog-enotifwallthread-v2' => 'E-mel saya…',
@@ -3309,6 +3310,17 @@ ubah keutamaan e-mel anda di sini: http://community.wikia.com/Special:Preference
 	'wallshowsource-toggle-v2' => 'Hidupkan pilihan {{int:user-action-menu-view-source}} pada pos-pos Papan Pesanan',
 	'wallshowsource-toggle' => 'Hidupkan {{int:user-action-menu-view-source}} pada pos-pos Papan Pesanan',
 	'walldelete-toggle' => 'Hidupkan ciri Hapus semakan pada pos-pos Papan Pesanan',
+	'wall-notifications-notifyeveryone' => 'Disorotkan oleh $1',
+	'wall-message-notifyeveryone' => 'Sorotkan tred ini',
+	'wall-message-unnotifyeveryone' => 'Padamkan sorotan tred ini',
+	'wall-message-notifyeveryone-tooltip' => 'Setiap orang yang log masuk ke dalam wiki ini akan diberitahu tentang tred ini',
+	'wall-votes-modal-showmore' => 'Lihat orang lain yang memberikan Pujian',
+	'wall-votes-modal-title' => 'Pujian',
+	'wall-votes-modal-title-desc' => 'Pesanan ini dipuji oleh {{PLURAL:$1|seorang|$1 orang}} ahli',
+	'wall-votes-number' => '$1 Pujian',
+	'wall-votes-number-tooltip' => 'Lihat siapa yang memuji pesanan ini',
+	'wall-votes-vote-tooltip' => 'Puji pesanan ini',
+	'wall-votes-voted-tooltip' => 'Anda telah memuji pesanan ini!',
 );
 
 /** Norwegian Bokmål (‪norsk (bokmål)‬)
@@ -3316,7 +3328,7 @@ ubah keutamaan e-mel anda di sini: http://community.wikia.com/Special:Preference
  */
 $messages['nb'] = array(
 	'wall-no-title' => 'Ingen tittel',
-	'wall-message-loadmore' => 'Vis alle $1 {{PLURAL:$1|svar|svar}}',
+	'wall-message-loadmore' => 'Vis <span class="count">{{PLURAL:$1|$1 svar|alle $1 svar}}</span>',
 	'wall-message-wall' => 'Beskjedtavle',
 	'wall-message-wall-shorten' => 'beskjedtavle',
 	'wall-message-unfollow' => 'Slutt å følge',
@@ -3525,7 +3537,7 @@ $MESSAGE_NO_HTML
 -- $AUTHOR
 
 Se samtalen($MESSAGE_LINK)
-
+ 
 Wikia-teamet
 
 ___________________________________________
@@ -3533,10 +3545,10 @@ ___________________________________________
 * Vil du motta færre meldinger fra oss? Du kan avslutte abonnementet eller
 endre e-post-innstillingene dine her: http://community.wikia.com/Special:Preferences',
 	'mail-notification-body-HTML' => 'Hei $WATCHER,
- <p>$SUBJECT.</p>
+ <p>$SUBJECT.</p> 
 <p><a href="$MESSAGE_LINK">$METATITLE</a></p>
 <p>$MESSAGE_HTML</p>
-<p>-- $AUTHOR_SIGNATURE<p>
+<p>-- $AUTHOR_SIGNATURE<p> 
 <p><a style="padding: 4px 10px;background-color: #006CB0; color: #FFF !important;text-decoration: none;" href="$MESSAGE_LINK">Se samtalen</a></p>
 <p>Wikia-teamet</p>
 ___________________________________________<br />
@@ -3838,7 +3850,8 @@ $messages['pfl'] = array(
  */
 $messages['pl'] = array(
 	'wall-no-title' => 'Brak tytułu',
-	'wall-message-loadmore' => 'Zobacz wszystkie odpowiedzi ({{PLURAL:$1|$1 odpowiedź|$1 odpowiedzi}})',
+	'wall-message-loadmore' => 'View <span class="count">{{PLURAL:$1|$1 reply|all $1 replies}}</span>
+Zobacz wszystkie <span class="count">({{PLURAL:$1|$1 odpowiedź|$1 odpowiedzi}})</span>',
 	'wall-message-wall' => 'Tablica',
 	'wall-message-wall-shorten' => 'tablica',
 	'wall-message-unfollow' => 'Nie obserwuj',
@@ -3886,10 +3899,10 @@ $messages['pl'] = array(
 	'wall-action-all-confirm-notify' => 'Powiadom administratora',
 	'wall-action-remove-reply-title' => 'Usuń tę odpowiedź',
 	'wall-action-remove-thread-title' => 'Usuń ten wątek',
-	'wall-confirm-monobook-remove' => 'Podaj powód usunięcia.
+	'wall-confirm-monobook-remove' => 'Podaj powód usunięcia. 
 
 Ten wątek i jego historia nadal będą dostępne w historii wiki.',
-	'wall-confirm-monobook-admin' => 'Podaj powód skasowania.
+	'wall-confirm-monobook-admin' => 'Podaj powód skasowania. 
 
 Ten wątek i jego historia nadal będą dostępne w historii wiki.',
 	'wall-confirm-monobook-restore' => 'Podaj powód przywrócenia',
@@ -4039,42 +4052,42 @@ Ten wątek i jego historia nadal będą dostępne w historii wiki.',
 	'mail-notification-html-footer-line3' => '<a href="http://www.twitter.com/wikia" style="text-decoration:none">
 <img alt="twitter" src="http://images4.wikia.nocookie.net/wikianewsletter/images/f/f7/Twitter.png" style="border:none">
 </a>
-
+ 
 <a href="http://www.facebook.com/wikia" style="text-decoration:none">
 <img alt="facebook" src="http://images2.wikia.nocookie.net/wikianewsletter/images/5/55/Facebook.png" style="border:none">
 </a>
-
+ 
 <a href="http://www.youtube.com/wikia" style="text-decoration:none">
 <img alt="youtube" src="http://images3.wikia.nocookie.net/wikianewsletter/images/a/af/Youtube.png" style="border:none">
 </a>
-
+ 
 <a href="http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog" style="text-decoration:none">
 <img alt="wikia" src="http://images1.wikia.nocookie.net/wikianewsletter/images/b/be/Wikia_blog.png" style="border:none">
 </a>',
 	'mail-notification-html-footer-line1' => 'Aby dowiedzieć się co nowego na Wikii, odwiedź <a style="color:#2a87d5;text-decoration:none;" href="http://spolecznosc.wikia.com">spolecznosc.wikia.com</a>',
 	'mail-notification-html-footer-line2' => 'Chcesz zmienić ustawienia przysyłanych wiadomości? Idź do swoich <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">preferencji</a>',
 	'mail-notification-body' => 'Witaj $WATCHER,
-
+	
 $SUBJECT
-
+			
 $METATITLE
-
+		
 $MESSAGE_NO_HTML
-
+			
 -- $AUTHOR
 
 Przejdź do wiadomości($MESSAGE_LINK)
-
+ 
 Zespół Wikii
 
 ___________________________________________
 * Znajdź pomoc w Centrum Społeczności: http://spolecznosc.wikia.com
 * Nie chcesz otrzymywać wiadomości? Możesz zmienić ustawienia tutaj: http://community.wikia.com/Special:Preferences',
 	'mail-notification-body-HTML' => 'Witaj $WATCHER,
-<p>$SUBJECT.</p>
+<p>$SUBJECT.</p> 
 <p><a href="$MESSAGE_LINK">$METATITLE</a></p>
 <p>$MESSAGE_HTML</p>
-<p>-- $AUTHOR_SIGNATURE<p>
+<p>-- $AUTHOR_SIGNATURE<p> 			
 <p><a style="padding: 4px 10px;background-color: #006CB0; color: #FFF !important;text-decoration: none;" href="$MESSAGE_LINK">Przejdź do wiadomości</a></p>
 <p>Zespół Wikii</p>
 ___________________________________________<br />
@@ -4093,13 +4106,13 @@ ___________________________________________<br />
 	'wall-message-notifyeveryone' => 'Wyróżnij',
 	'wall-message-unnotifyeveryone' => 'Nie wyróżniaj tego wątku',
 	'wall-message-notifyeveryone-tooltip' => 'Każdy zalogowany użytkownik na wiki zostanie powiadomiony o tym wątku',
-	'wall-votes-modal-showmore' => 'Zobacz kto jeszcze wyraził aprobatę',
-	'wall-votes-modal-title' => 'Aprobata',
-	'wall-votes-modal-title-desc' => '{{PLURAL:$1|Jedna osoba|$1 osoby|$1 osób}} zaaprobowało tą wiadomość',
-	'wall-votes-number' => '{{PLURAL:$1|$1 Aprobata|$1 Aprobaty|$1 Aprobat}}',
-	'wall-votes-number-tooltip' => 'Zobacz kto wyraził aprobatę tej wiadomości',
-	'wall-votes-vote-tooltip' => 'Zaaprobuj tą wiadomość',
-	'wall-votes-voted-tooltip' => 'Zaaprobowano wiadomość',
+	'wall-votes-modal-showmore' => 'Zobacz kto jeszcze dał OKejkę',
+	'wall-votes-modal-title' => 'OKejka',
+	'wall-votes-modal-title-desc' => '{{PLURAL:$1|Jedna osoba dała|$1 osoby dały|$1 osób dało}} OKejkę tej wiadomości',
+	'wall-votes-number' => '$1 {{PLURAL:$1|OKejka|OKejki|OKejek}}',
+	'wall-votes-number-tooltip' => 'Zobacz kto dał OKejkę tej wiadomości',
+	'wall-votes-vote-tooltip' => 'Daj OKejkę tej wiadomości',
+	'wall-votes-voted-tooltip' => 'Przyznano OKejkę tej wiadomości!',
 );
 
 /** Pashto (پښتو)
@@ -4164,9 +4177,139 @@ $messages['ps'] = array(
 
 /** Portuguese (português)
  * @author Malafaya
+ * @author SandroHc
  */
 $messages['pt'] = array(
+	'wall-no-title' => 'Sem título',
+	'wall-message-loadmore' => 'Ver <span class="count">{{PLURAL:$1|a $1 resposta|todas as $1 respostas}}</span>',
+	'wall-message-wall' => 'Mural de Mensagens',
+	'wall-message-wall-shorten' => 'mural',
+	'wall-message-unfollow' => 'Parar de seguir',
+	'wall-message-undoremove' => 'Desfazer',
+	'wall-message-edited' => '<a href="$3" >Editado por</a> <a class="username" href="$2">$1</a>',
+	'wall-message-mywall' => 'Meu mural',
+	'wall-toolbar-history' => 'Histórico',
+	'wall-message-notify' => 'Notificar administrador',
+	'wall-message-remove' => 'Remover',
+	'wall-message-rev-delete' => 'Eliminar revisão',
+	'wall-message-elseswall' => 'mural de $1',
+	'wall-thread-removed' => 'Removido',
+	'wall-thread-isnotifyeveryone' => 'Destacado',
+	'wall-thread-deleted' => 'Eliminado',
+	'wall-default-title' => 'Mensagem de $1',
+	'wall-no-title-warning' => '← Nenhum título especificado',
+	'wall-placeholder-topic' => 'Qual é o assunto?',
+	'wall-placeholder-message' => 'Publicar uma nova mensagem no mural de $1',
+	'wall-placeholder-message-anon' => 'Publicar uma nova mensagem neste mural',
+	'wall-placeholder-reply' => 'Publicar uma resposta',
+	'wall-button-to-preview-comment' => 'Antevisão',
+	'wall-button-to-cancel-preview' => 'Editar',
+	'wall-button-to-submit-comment' => 'Publicar',
+	'wall-button-to-submit-reply' => 'Responder',
+	'wall-button-to-submit-comment-no-topic' => 'Publicar sem título',
+	'wall-button-save-changes' => 'Salvar alterações',
+	'wall-button-cancel-changes' => 'Cancelar',
+	'wall-button-done-source' => 'Finalizado',
+	'wall-message-edit' => 'Editar',
+	'wall-message-more' => 'Mais',
+	'wall-message-delete' => 'Eliminar',
+	'wall-message-removed-thread-because' => '$1 removeu este tópico porque:',
+	'wall-message-deleted-thread-because' => '$1 eliminou este tópico porque:',
+	'wall-message-restore-thread' => 'Restaurar Tópico',
+	'wall-message-removed-reply-because' => '$1 removeu esta resposta porque:',
+	'wall-message-deleted-reply-because' => '$1 eliminou esta resposta porque:',
+	'wall-message-restore-reply' => 'Restaurar Resposta',
+	'wall-delete-reason' => 'Ação utilizador/administrador',
+	'wall-user-talk-page-archive-anchor' => 'Ver página de discussão arquivada',
+	'wall-user-talk-archive-page-title' => 'Utilizador_discussão_arquivo',
+	'wall-action-all-confirm-cancel' => 'Cancelar',
+	'wall-action-all-confirm-notify' => 'Notificar um administrador',
+	'wall-action-remove-reply-title' => 'Remover esta resposta',
+	'wall-action-remove-thread-title' => 'Remover este tópico',
 	'wall-delete-error-title' => 'Erro',
+	'wall-action-remove-confirm-ok' => 'Remover',
+	'wall-action-admin-thread-title' => 'Eliminar este tópico',
+	'wall-action-admin-reply-title' => 'Eliminar esta resposta',
+	'wall-action-admin-confirm-ok' => 'Eliminar',
+	'wall-action-restore-thread-title' => 'Restaurar este tópico',
+	'wall-action-restore-reply-title' => 'Restaurar esta resposta',
+	'wall-action-restore-confirm-ok' => 'Restaurar',
+	'wall-action-rev-confirm-ok' => 'Sim, eliminar',
+	'wall-notifications' => 'Notificações',
+	'wall-notifications-all' => 'Todas as Notificações',
+	'wall-notifications-markasread' => 'Marcar todas como lidas',
+	'wall-notifications-markasread-all-wikis' => 'Todas as wikis',
+	'wall-notifications-markasread-this-wiki' => 'Esta wiki',
+	'wall-notifications-empty' => 'Não existem notificações',
+	'wall-notifications-loading' => 'A carregar notificações',
+	'wall-notifications-reminder' => 'Você tem <span>$1</span> {{PLURAL:$1|notificação|notificações}} por ler',
+	'wn-user1-reply-self-a-wall' => '$1 respondeu á mensagem',
+	'wn-newmsg' => 'Você deixou uma nova mensagem no mural de $1',
+	'wall-sorting-newest-threads' => 'Tópicos mais recentes',
+	'wall-sorting-oldest-threads' => 'Tópicos mais antigos',
+	'wall-sorting-newest-replies' => 'Respostas mais recentes',
+	'wall-sorting-most-active' => 'Mais ativos primeiro',
+	'wall-sorting-archived' => 'Arquivado',
+	'wall-deleted-msg-pagetitle' => 'Mensagem eliminada',
+	'wall-deleted-msg-return-to' => 'Voltar ao mural de $1.',
+	'wall-deleted-msg-view' => '(Ver/Restaurar)',
+	'wall-recentchanges-new-message' => 'no <a href="$1">mural de $2</a>',
+	'wall-recentchanges-edit' => '(mensagem editada)',
+	'wall-recentchanges-namespace-selector-message-wall' => 'Mural de Mensagens',
+	'wall-recentchanges-history-link' => 'histórico do mural',
+	'wall-whatlinkshere-wall-line' => '<a href="$1">$2</a> no <a href="$3">mural de $4</a>',
+	'wall-wiki-activity-on' => 'em $1',
+	'wall-wiki-activity-wall-owner' => 'mural de $1',
+	'wall-history' => 'Histórico',
+	'wall-history-title' => 'histórico do mural',
+	'wall-history-sorting-newest-first' => 'Mais recentes primeiro',
+	'wall-history-sorting-oldest-first' => 'Mais antigos primeiro',
+	'wall-history-summary-label' => 'Sumário',
+	'wall-history-rail-wall' => 'mural',
+	'wall-history-rail-contribs' => 'contribuições',
+	'wall-history-rail-block' => 'bloquear',
+	'wall-history-action-view' => 'ver',
+	'wall-history-action-restore' => 'restaurar',
+	'mail-notification-html-greeting' => 'Olá $1,',
+	'mail-notification-html-button' => 'Ver a conversação',
+	'mail-notification-body' => 'Olá $WATCHER,
+
+$SUBJECT
+
+$METATITLE
+
+$MESSAGE_NO_HTML
+
+-- $AUTHOR
+
+Veja a conversação($MESSAGE_LINK)
+
+A Equipa da Wikia
+
+___________________________________________
+* Encontre ajuda e conselhos na Central da Comunidade: http://community.wikia.com
+* Quer receber menos mensagens nossas? Você pode parar de subscrever ou alterar as
+suas preferências de e-mail aqui: http://community.wikia.com/Special:Preferences',
+	'mail-notification-body-HTML' => 'Olá $WATCHER,
+			<p>$SUBJECT.</p>
+			<p><a href="$MESSAGE_LINK">$METATITLE</a></p>
+			<p>$MESSAGE_HTML</p>
+			<p>-- $AUTHOR_SIGNATURE<p>
+			<p><a style="padding: 4px 10px;background-color: #006CB0; color: #FFF !important;text-decoration: none;" href="$MESSAGE_LINK">Veja a conversação</a></p>
+			<p>The Wikia Team</p>
+___________________________________________<br />
+* Encontre ajuda e conselhos na Central da Comunidade: http://community.wikia.com
+* Quer receber menos mensagens nossas? Você pode parar de subscrever ou alterar as
+suas preferências de e-mail aqui: http://community.wikia.com/Special:Preferences',
+	'prefs-email-wall-v2' => 'Mural de Mensagens',
+	'wall-notifications-notifyeveryone' => 'Destacado por $1',
+	'wall-message-notifyeveryone' => 'Destacar este tópico',
+	'wall-votes-modal-title' => 'Gostos',
+	'wall-votes-modal-title-desc' => '{{PLURAL:$1|Uma pessoa|$1 pessoas}} deram "Gosto" a esta mensagem',
+	'wall-votes-number' => '$1 Gostos',
+	'wall-votes-number-tooltip' => 'Veja quem deu "Gosto" a esta mensagem',
+	'wall-votes-vote-tooltip' => 'Dar um "Gosto" a esta mensagem',
+	'wall-votes-voted-tooltip' => 'Você deu um "Gosto" a esta mensagem!',
 );
 
 /** Brazilian Portuguese (português do Brasil)
@@ -4222,7 +4365,7 @@ $messages['pt-br'] = array(
 	'wall-action-all-confirm-notify' => 'Notificar um administrador',
 	'wall-action-remove-reply-title' => 'Remover esta resposta',
 	'wall-action-remove-thread-title' => 'Remover este tópico',
-	'wall-confirm-monobook-remove' => 'Informe-nos por que você gostaria de remover isto.
+	'wall-confirm-monobook-remove' => 'Informe-nos por que você gostaria de remover isto. 
 
 O post original e seu sumário ainda aparecerão no histórico da wiki.',
 	'wall-confirm-monobook-admin' => 'Informe-nos por que você gostaria de excluir isto.
@@ -4296,7 +4439,7 @@ $MESSAGE_NO_HTML
 -- $AUTHOR
 
 Veja a conversa($MESSAGE_LINK)
-
+ 
 A Equipe Wikia
 
 ___________________________________________
@@ -4304,13 +4447,13 @@ ___________________________________________
 * Quer receber menos mensagens de nós? Você pode cancelar sua inscrição ou alterar
 suas preferências de email aqui: http://pt-br.wikia.com/wiki/Especial:Preferências',
 	'mail-notification-body-HTML' => 'Olá $WATCHER,
-<p>$SUBJECT.</p>
+<p>$SUBJECT.</p> 
 <p><a href="$MESSAGE_LINK">$METATITLE</a></p>
 <p>$MESSAGE_HTML</p>
-<p>-- $AUTHOR_SIGNATURE<p>
+<p>-- $AUTHOR_SIGNATURE<p> 
 <p><a style="padding: 4px 10px;background-color: #006CB0; color: #FFF !important;text-decoration: none;" href="$MESSAGE_LINK">Veja a conversa</a></p>
 <p>A Equipe Wikia</p>
-___________________________________________<br />
+___________________________________________<br>
 * Procure ajuda e conselho na Wikia Português do Brasil: http://pt-br.wikia.com
 * Quer receber menos mensagens de nós? Você pode cancelar sua inscrição ou alterar
 suas preferências de email aqui: http://pt-br.wikia.com/wiki/Especial:Preferências',
@@ -4320,12 +4463,13 @@ suas preferências de email aqui: http://pt-br.wikia.com/wiki/Especial:Preferên
 
 /** Russian (русский)
  * @author DCamer
+ * @author Eleferen
  * @author Express2000
  * @author Kuzura
  */
 $messages['ru'] = array(
 	'wall-no-title' => 'Без названия',
-	'wall-message-loadmore' => 'Просмотреть $1 {{PLURAL:$1|ответ|ответа|ответов}}',
+	'wall-message-loadmore' => 'Просмотреть <span class="count">$1 {{PLURAL:$1|ответ|ответа|ответов}}</span>',
 	'wall-message-wall' => 'Обсуждение участника',
 	'wall-message-wall-shorten' => 'обсуждение',
 	'wall-message-unfollow' => 'Не следить',
@@ -4541,27 +4685,27 @@ $messages['ru'] = array(
 	'mail-notification-html-footer-line1' => 'Чтобы узнать о последних событиях на Викия, посетите <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>',
 	'mail-notification-html-footer-line2' => 'Чтобы настроить уведомления по email, перейдите на страницу <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">личных настроек</a>',
 	'mail-notification-body' => 'Hi $WATCHER,
-
+	
 $SUBJECT
-
+			
 $METATITLE
-
+		
 $MESSAGE_NO_HTML
-
+			
 -- $AUTHOR
 
 Смотрите обсуждение ($MESSAGE_LINK)
-
+ 
 Команда Викия
 
 ___________________________________________
 * Найти помощь и совет можно на Community Central (http://community.wikia.com) и Вики Сообщества (http://ru.community.wikia.com)
 * Хотите уменьшить количество данных писем? Вы можете отписаться от рассылки или внести в неё коррективы на странице личных настроек: http://community.wikia.com/Special:Preferences',
 	'mail-notification-body-HTML' => 'Уважаемый $WATCHER,
-<p>$SUBJECT.</p>
+<p>$SUBJECT.</p> 
 <p><a href="$MESSAGE_LINK">$METATITLE</a></p>
 <p>$MESSAGE_HTML</p>
-<p>-- $AUTHOR_SIGNATURE<p>
+<p>-- $AUTHOR_SIGNATURE<p> 			
 <p><a style="padding: 4px 10px;background-color: #006CB0; color: #FFF !important;text-decoration: none;" href="$MESSAGE_LINK">Смотрите обсуждение</a></p>
 <p>Команда Викия</p>
 ___________________________________________<br />
@@ -4594,7 +4738,7 @@ ___________________________________________<br />
  */
 $messages['sv'] = array(
 	'wall-no-title' => 'Ingen titel',
-	'wall-message-loadmore' => 'Visa alla $1 {{PLURAL:$1|svar|svar}}',
+	'wall-message-loadmore' => 'Visa <span class="count">{{PLURAL:$1|$1 svar|alla $1 svar}}</span>',
 	'wall-message-wall' => 'Meddelandevägg',
 	'wall-message-wall-shorten' => 'vägg',
 	'wall-message-unfollow' => 'Sluta följ',
@@ -4810,17 +4954,17 @@ Originalinlägget och din sammanfattning kommer fortfarande att visas i wikins h
 	'mail-notification-html-footer-line1' => 'För att kolla in de senaste händelserna på Wikia, besök <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>',
 	'mail-notification-html-footer-line2' => 'Vill du kontrollera vilka e-postmeddelanden du får? Gå till dina <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">Inställningar</a>',
 	'mail-notification-body' => 'Hej $WATCHER,
-
+	
 $SUBJECT
-
+			
 $METATITLE
-
+		
 $MESSAGE_NO_HTML
-
+			
 -- $AUTHOR
 
 Se konversationen ($MESSAGE_LINK)
-
+ 
 Wikia-teamet
 
 ___________________________________________
@@ -4828,10 +4972,10 @@ ___________________________________________
 * Vill du få färre meddelanden från oss? Du kan avprenumerera eller ändra
 dina e-postinställningar här: http://community.wikia.com/Special:Preferences',
 	'mail-notification-body-HTML' => 'Hej $WATCHER,
-			<p>$SUBJECT.</p>
+			<p>$SUBJECT.</p> 
 			<p><a href="$MESSAGE_LINK">$METATITLE</a></p>
 			<p>$MESSAGE_HTML</p>
-			<p>-- $AUTHOR_SIGNATURE<p>
+			<p>-- $AUTHOR_SIGNATURE<p> 			
 			<p><a style="padding: 4px 10px;background-color: #006CB0; color: #FFF !important;text-decoration: none;" href="$MESSAGE_LINK">Se konversationen</a></p>
 			<p>Wikia-teamet</p>
 ___________________________________________<br />
@@ -4888,7 +5032,7 @@ $messages['ta'] = array(
  */
 $messages['tl'] = array(
 	'wall-no-title' => 'Walang pamagat',
-	'wall-message-loadmore' => 'Tingnan ang lahat ng $1 {{PLURAL:$1|tugon|mga tugon}}',
+	'wall-message-loadmore' => 'Tingnan ang <span class="count">{{PLURAL:$1|$1 tugon|lahat ng $1 mga tugon}}</span>',
 	'wall-message-wall' => 'Dingding ng Mensahe',
 	'wall-message-wall-shorten' => 'dingding',
 	'wall-message-unfollow' => 'Huwag sundan',
@@ -5047,6 +5191,8 @@ Ang orihinal na pagpapaskil at ang buod mo ay lilitaw pa rin sa loob ng kasaysay
 	'wall-deleted-reply-undo' => 'Nabura na ang tugon na ito. $1',
 	'wall-deleted-reply' => 'Nabura na ang tugon na ito',
 	'wall-history' => 'Kasaysayan',
+	'wall-history-username-full' => '<a href="$3">$1</a> <a href="$3" class="username"><small>$2</small></a>',
+	'wall-history-username-short' => '<a href="$2">$1</a>',
 	'wall-history-title' => 'kasaysayan ng dingding',
 	'wall-history-who-involved-wall-title' => 'Sino ba ang kasangkot sa dingding na ito?',
 	'wall-history-who-involved-thread-title' => 'Sino ba ang kasangkot sa sinulid na ito?',
@@ -5083,6 +5229,22 @@ Ang orihinal na pagpapaskil at ang buod mo ay lilitaw pa rin sa loob ng kasaysay
 	'mail-notification-reply-someone' => 'Si $AUTHOR_NAME ay tumugon sa mensahe ni $PARENT_AUTHOR_NAME na nasa $WIKI.',
 	'mail-notification-html-greeting' => 'Kumusta $1,',
 	'mail-notification-html-button' => 'Tingnan ang pag-uusap',
+	'mail-notification-subject' => '$1 -- $2',
+	'mail-notification-html-footer-line3' => '<a href="http://www.twitter.com/wikia" style="text-decoration:none">
+<img alt="twitter" src="http://images4.wikia.nocookie.net/wikianewsletter/images/f/f7/Twitter.png" style="border:none">
+</a>
+&nbsp;
+<a href="http://www.facebook.com/wikia" style="text-decoration:none">
+<img alt="facebook" src="http://images2.wikia.nocookie.net/wikianewsletter/images/5/55/Facebook.png" style="border:none">
+</a>
+&nbsp;
+<a href="http://www.youtube.com/wikia" style="text-decoration:none">
+<img alt="youtube" src="http://images3.wikia.nocookie.net/wikianewsletter/images/a/af/Youtube.png" style="border:none">
+</a>
+&nbsp;
+<a href="http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog" style="text-decoration:none">
+<img alt="wikia" src="http://images1.wikia.nocookie.net/wikianewsletter/images/b/be/Wikia_blog.png" style="border:none">
+</a>',
 	'mail-notification-html-footer-line1' => 'Upang matingnan ang pinaka huling mga kaganapan sa Wikia, dalawin ang <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>',
 	'mail-notification-html-footer-line2' => 'Nais mong kontrolin ang tinatanggap mong mga e-liham? Pumunta sa iyong <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">Mga nais</a>',
 	'mail-notification-body' => 'Kumusta $WATCHER,
@@ -5101,7 +5263,7 @@ Ang Pangkat ng Wikia
 
 ___________________________________________
 * Maghanap ng tulong at payo sa Lunduyan ng Pamayanan: http://community.wikia.com
-* Nais tumanggap ng mas kakaunting mga mensahe mula sa amin? Maaari kang huwag nang magpasipi o baguhin
+* Nais tumanggap ng mas kakaunting mga mensahe mula sa amin? Maaari kang huwag nang magpasipi o baguhin 
 ang iyong mga kanaisan ng elektronikong liham dito: http://community.wikia.com/Special:Preferences',
 	'mail-notification-body-HTML' => 'Kumusta $WATCHER,
 <p>$SUBJECT.</p>
@@ -5112,7 +5274,7 @@ ang iyong mga kanaisan ng elektronikong liham dito: http://community.wikia.com/S
 <p>Ang Pangkat ng Wikia</p>
 ___________________________________________<br />
 * Maghanap ng tulong at payo sa Lunduyan ng Pamayanan: http://community.wikia.com
-* Nais tumanggap ng mas kakaunting mga mensahe mula sa amin? Maaari kang huwag nang magpasipi o baguhin
+* Nais tumanggap ng mas kakaunting mga mensahe mula sa amin? Maaari kang huwag nang magpasipi o baguhin 
 ang iyong mga kanaisan ng elektronikong liham dito: http://community.wikia.com/Special:Preferences',
 	'prefs-email-wall-v2' => 'Dingding ng Mensahe',
 	'tog-enotifwallthread-v2' => 'Padalhan ako ng e-liham...',
@@ -5263,10 +5425,10 @@ $messages['vi'] = array(
 	'wall-action-all-confirm-notify' => 'Thông báo cho một bảo quản viên',
 	'wall-action-remove-reply-title' => 'Dời bỏ hồi âm này',
 	'wall-action-remove-thread-title' => 'Dời bỏ luồng này',
-	'wall-confirm-monobook-remove' => 'Xin vui lòng cho chúng tôi biết tại sao bạn muốn dời bỏ điều này.
+	'wall-confirm-monobook-remove' => 'Xin vui lòng cho chúng tôi biết tại sao bạn muốn dời bỏ điều này. 
 
 Các bản gốc và tóm tắt của bạn vẫn sẽ xuất hiện trong lịch sử của wiki.',
-	'wall-confirm-monobook-admin' => 'Xin vui lòng cho chúng tôi biết tại sao bạn muốn xóa bỏ điều này.
+	'wall-confirm-monobook-admin' => 'Xin vui lòng cho chúng tôi biết tại sao bạn muốn xóa bỏ điều này. 
 
 Các bản gốc và tóm tắt của bạn vẫn sẽ xuất hiện trong lịch sử của wiki.',
 	'wall-confirm-monobook-restore' => 'Xin vui lòng cho chúng tôi biết tại sao bạn muốn khôi phục lại tin nhắn này',
@@ -5417,17 +5579,17 @@ Các bản gốc và tóm tắt của bạn vẫn sẽ xuất hiện trong lịc
 Để nhận được sự hỗ trợ cho ngôn ngữ của bạn, truy cập <a style="color:#2a87d5;text-decoration:none;" href="http://vi.wikia.com">vi.wikia.com</a>',
 	'mail-notification-html-footer-line2' => 'Muốn kiểm soát những email mà bạn nhận được? <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">Tùy chọn</a>',
 	'mail-notification-body' => 'Xin chào $WATCHER,
-
+	
 $SUBJECT
-
+			
 $METATITLE
-
+		
 $MESSAGE_NO_HTML
-
+			
 -- $AUTHOR
 
 Xem cuộc hội thoại($MESSAGE_LINK)
-
+ 
 Wikia Team
 
 ___________________________________________
@@ -5436,10 +5598,10 @@ ___________________________________________
 * Muốn nhận ít thư thông báo hơn từ chúng tôi? Bạn có thể bỏ chọn hoặc thay đổi
  tuỳ chọn thư điện tử của bạn ở đây: http://vi.wikia.com/wiki/Đặc_biệt:Tùy_chọn',
 	'mail-notification-body-HTML' => 'Chào $WATCHER,
-			<p>$SUBJECT.</p>
+			<p>$SUBJECT.</p> 
 			<p><a href="$MESSAGE_LINK">$METATITLE</a></p>
 			<p>$MESSAGE_HTML</p>
-			<p>-- $AUTHOR_SIGNATURE<p>
+			<p>-- $AUTHOR_SIGNATURE<p> 			
 			<p><a style="padding: 4px 10px;background-color: #006CB0; color: #FFF !important;text-decoration: none;" href="$MESSAGE_LINK">Xem cuộc hội thoại</a></p>
 			<p>Wikia Team</p>
 ___________________________________________<br />

@@ -109,7 +109,7 @@ $messages['de'] = array(
  * @author Mirzali
  */
 $messages['diq'] = array(
-	'stafflog-filter-label' => 'Filtre',
+	'stafflog-filter-label' => 'Avrêc',
 	'stafflog-filter-user' => 'Karber:',
 	'stafflog-filter-type' => 'Babet:',
 	'stafflog-filter-type-block' => 'Bloki',
