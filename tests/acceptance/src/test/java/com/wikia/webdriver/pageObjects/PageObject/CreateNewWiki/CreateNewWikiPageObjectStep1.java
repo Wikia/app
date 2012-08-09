@@ -49,8 +49,15 @@ public class CreateNewWikiPageObjectStep1 extends BasePageObject{
 	public CreateNewWikiPageObjectStep2 submit()
 	{
 		submitButton.click();
-		PageObjectLogging.log("submit", "Submit button clicked", true, driver);		
+		PageObjectLogging.log("submit", "Submit button clicked", true, driver);
 		return new CreateNewWikiPageObjectStep2(driver);
+	}
+	
+	public CreateNewWikiLogInPageObject submitToLogIn()
+	{
+		submitButton.click();
+		PageObjectLogging.log("submit", "Submit button clicked", true, driver);
+		return new CreateNewWikiLogInPageObject(driver);
 	}
 
 

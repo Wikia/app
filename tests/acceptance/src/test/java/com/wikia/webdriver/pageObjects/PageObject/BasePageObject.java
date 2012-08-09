@@ -21,11 +21,11 @@ public class BasePageObject{
 	
 	public String wikiFactoryLiveDomain = "http://community.wikia.com/wiki/Special:WikiFactory";
 	
-	public String userName = "KarolK1";
-	public String password = "123";
+	public static String userName = "KarolK1";
+	public static String password = "123";
 	
-	public String userNameStaff = "KarolK";
-	public String passwordStaff = "123";
+	public static String userNameStaff = "KarolK";
+	public static String passwordStaff = "123";
 	
 	protected int timeOut = 30;
 	
@@ -62,14 +62,17 @@ public class BasePageObject{
 	 *  @author Michal Nowierski
 	 ** @param GivenString 
 	 */
-	public boolean verifyURLcontains(String GivenString)
+	public void verifyURLcontains(String GivenString)
 	{
 		String currentURL = driver.getCurrentUrl();
 		if (currentURL.contains(GivenString))
 		{
-			return true;
+			PageObjectLogging.log("verifyURLcontains", "current url is the same as expected url", true, driver);
 		}
-		return false;
+		else
+		{
+			PageObjectLogging.log("verifyURLcontains", "current url isn't the same as expetced url", false, driver);
+		}
 	}
 	
 	/**
