@@ -20,7 +20,7 @@ $onlyEnt = true;
 $wgUser = User::newFromName( 'Wikia Video Library' );
 $dbw = wfGetDB( DB_SLAVE );
 
-$cachecategories = arrray();
+$cachecategories = array();
 $rows = $dbw->select('categorylinks',
 	'*',
 	array('cl_to'=>'IGN_entertainment')
