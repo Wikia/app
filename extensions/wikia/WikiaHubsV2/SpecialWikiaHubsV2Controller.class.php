@@ -24,11 +24,7 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 
 	public function index() {
 		$this->setCacheValidity();
-
 		$model = $this->getModel();
-
-		// TODO: setPageTitle
-		$this->wg->out->setPageTitle($model->getHubName());
 
 		$this->slider = $model->getDataForModuleSlider();
 		$this->pulse = $model->getDataForModulePulse();
@@ -43,7 +39,9 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 		$this->response->addAsset('extensions/wikia/WikiaHubsV2/css/WikiaHubsV2.scss');
 		$this->response->addAsset('extensions/wikia/WikiaHubsV2/js/WikiaHubsV2.js');
 
-		OasisController::addBodyClass($model->getHubName());
+		$hubName = $model->getHubName();
+		$this->wg->out->setPageTitle($hubName);
+		OasisController::addBodyClass($hubName);
 	}
 
 	public function slider() {
