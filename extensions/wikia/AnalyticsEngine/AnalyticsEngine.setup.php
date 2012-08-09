@@ -14,6 +14,7 @@ $wgAutoloadClasses['AnalyticsProviderGA_Urchin'] = "$dir/AnalyticsProviderGA_Urc
 $wgAutoloadClasses['AnalyticsProviderComscore'] = "$dir/AnalyticsProviderComscore.php";
 $wgAutoloadClasses['AnalyticsProviderExelate'] = "$dir/AnalyticsProviderExelate.php";
 $wgAutoloadClasses['AnalyticsProviderGAS'] = "$dir/AnalyticsProviderGAS.php";
+$wgAutoloadClasses['AnalyticsProviderIVW'] = "$dir/AnalyticsProviderIVW.php";
 
 //hooks
 //register hook to inject gas js library (MW 1.19)

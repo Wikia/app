@@ -82,6 +82,9 @@
 <!-- googleAnalytics -->
 <?= $googleAnalytics ?>
 
+<!-- IVW -->
+<?= $ivw ?>
+
 <?=  AdEngine::getLiftiumOptionsScript() //this script has a dependency on script from the AbTesting extension, which is in $globalVariablesScript above ?>
 
 <?= $adsABtesting; ?>

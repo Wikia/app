@@ -54,6 +54,7 @@ class AnalyticsEngine {
 		  case 'Comscore': $AP = new AnalyticsProviderComscore(); break;
 		  case 'Exelate': $AP = new AnalyticsProviderExelate(); break;
 		  case 'GAS': $AP = new AnalyticsProviderGAS; break;
+		  case 'IVW': $AP = new AnalyticsProviderIVW; break;
 		  default: return null;
 		}
 
