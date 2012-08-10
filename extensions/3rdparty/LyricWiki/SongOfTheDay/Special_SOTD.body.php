@@ -260,7 +260,6 @@ class SOTD extends SpecialPage
 				{
 					$dbw = wfGetDB( DB_SLAVE );
 				}
-				$sql = 'SELECT * FROM sotdnoms';
 				$result = $dbw->select( 'sotdnoms', array( '*' ), '', __METHOD__ );
 				$rows = $dbw->numRows( $result );
 				if ( $rows )
