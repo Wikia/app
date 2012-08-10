@@ -78,6 +78,10 @@
 			width: 16px;
 			margin: 5px;
 		}
+		// BugId: 7234
+		&.cke_button_big a {
+			cursor: pointer;
+		}
 		&.cke_button_big .cke_icon {
 			height: 32px;
 			width: 48px;
