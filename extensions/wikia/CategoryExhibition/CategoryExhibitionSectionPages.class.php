@@ -29,7 +29,7 @@ class CategoryExhibitionSectionPages extends CategoryExhibitionSection {
 		return $oTitle->getPrefixedText();
 	}
 
-	protected function updateExcludes() {
+	protected function getExcludes() {
 		$excludes = array (
 			500, NS_FILE, NS_VIDEO, NS_CATEGORY
 		);
