@@ -365,6 +365,7 @@ abstract class Job {
 				'job_cmd' => $this->command,
 				'job_namespace' => $this->title->getNamespace(),
 				'job_title' => $this->title->getDBkey(),
+				'job_timestamp' => $dbw->timestamp(),
 				'job_params' => Job::makeBlob( $this->params )
 			);
 		}
@@ -381,6 +382,7 @@ abstract class Job {
 
 		$fields = $this->insertFields();
 		unset( $fields['job_id'] );
+		unset( $fields['job_timestamp'] );
 		$dbw = wfGetDB( DB_MASTER );
 		$dbw->begin();
 		$dbw->delete( 'job', $fields, __METHOD__ );
