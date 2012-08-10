@@ -125,9 +125,13 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 		$this->href = $videoTitle->getFullUrl();
 		$this->imgUrl = $videoThumbObj->getUrl();
 		$this->description = $videoArr['headline'];
-		$this->info = wfMsgExt('wikiahubs-popular-videos-suggested-by', array('parseinline'), array($videoArr['submitter']));
+		if( empty($videoArr['profile']) ) {
+			$this->info = wfMsgExt('wikiahubs-popular-videos-suggested-by', array('parseinline'), array($videoArr['submitter']));
+		} else {
+			$this->info = wfMsgExt('wikiahubs-popular-videos-suggested-by-profile', array('parseinline'), array($videoArr['submitter'], $videoArr['profile']));
+		}
 
-		//todo: remove this hack described below once discussed the topic with PO
+		//todo: remove this hack described below once we finish research about customizing lightbox
 		//do we want it in lightbox or modal
 		//also quite important can be $this->wg->VideoHandlersVideosMigrated
 		$this->videoPlay = self::PLAY_IN_LIGHTBOX ? 'lightbox' : 'video-play';
