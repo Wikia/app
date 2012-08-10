@@ -64,8 +64,8 @@ class CodeLintPhp extends CodeLint {
 				$dirName // directory to check
 			);
 
-			//echo "Running PHP storm <{$cmd}>...";
-			echo "Running PhpStorm for <{$dirName}>...";
+			echo "Running PHP storm <{$cmd}>...";
+			//echo "Running PhpStorm for <{$dirName}>...";
 
 			$retVal = 0;
 			$output = array();
