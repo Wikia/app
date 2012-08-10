@@ -110,13 +110,16 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 		$this->data = array(
 			'wiki' => $videoArr['wiki'],
 			'video-name' => $videoArr['title'],
-			'ref' => $videoThumbObj->getFile()->getTitle()->getText(),
+			'ref' => $videoThumbObj->getPath(),
 		);
-		$this->href = $videoThumbObj->getFile()->getTitle()->getFullUrl();
+
+		$videoTitle = $videoThumbObj->getFile()->getTitle();
+		$this->href = $videoTitle->getNsText() . ':' . $videoTitle->getDBkey();
+
 		$this->imgUrl = $videoThumbObj->getUrl();
-		$this->duration = '6:66';
+		$this->duration = $videoArr['duration'];
 		$this->description = $videoArr['title'];
-		$this->info = $this->wf->Msg('wikiahubs-popular-videos-suggested-by', array($videoArr['submitter']));
+		$this->info = wfMsgExt('wikiahubs-popular-videos-suggested-by', array('parseinline'), array($videoArr['submitter']));
 	}
 
 	public function topwikis() {
