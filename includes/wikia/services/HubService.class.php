@@ -3,7 +3,7 @@
 class HubService extends Service {
 	private static $comscore_prefix = 'comscore_';
 	// WF city_ids
-	private static $corporate_sites = array(80433,111264);
+	private static $corporate_sites = array(80433, 111264);
 
 	/**
 	 * get proper category to report to Comscore for cityId
@@ -79,10 +79,23 @@ class HubService extends Service {
 	}
 
 	protected static function getWikiaHubsCategory() {
-		$wikiaHub = WikiFactoryHub::getInstance()->getCategory(WikiFactoryHub::CATEGORY_ID_CORPORATE);
-		$hubName = $wikiaHub['name'];
-		$hubId = WikiFactoryHub::CATEGORY_ID_CORPORATE;
+		if (F::app()->wg->enableWikiaHubsV2Ext) {
+			$catInfo = self::getWikiaHubsV2Category();
+		} elseif (F::app()->wg->enableWikiaHubsExt) {
+			$catInfo = self::getWikiaHubsV1Category();
+		}
 
+		if (empty($catInfo)) {
+			$wikiaHub = WikiFactoryHub::getInstance()->getCategory(WikiFactoryHub::CATEGORY_ID_CORPORATE);
+			$hubName = $wikiaHub['name'];
+			$hubId = WikiFactoryHub::CATEGORY_ID_CORPORATE;
+			$catInfo = self::initCategoryInfo($hubId, $hubName);
+		}
+
+		return $catInfo;
+	}
+
+	private static function getWikiaHubsV1Category() {
 		$title = F::app()->wg->Title;
 		$hubsPages = F::app()->wg->wikiaHubsPages;
 		if (!empty($hubsPages) && $title instanceof Title) {
@@ -92,13 +105,34 @@ class HubService extends Service {
 				if (!empty($textTitle) && in_array($textTitle, $hubGroup)) {
 					$hubId = $hubPageId;
 					$hubName = $textTitle;
-					break;
+					$catInfo = self::initCategoryInfo($hubId, $hubName);
+					return $catInfo;
 				}
 			}
 		}
 
-		$catInfo = self::initCategoryInfo($hubId, $hubName);
-		return $catInfo;
+		return false;
+	}
+
+	private static function getWikiaHubsV2Category() {
+		$hubsPages = F::app()->wg->wikiaHubsPages;
+		$vertical = RequestContext::getMain()->getRequest()->getVal('vertical');
+		$title = F::build('Title', array($vertical), 'newFromText');
+
+		if ($title instanceof Title) {
+			$hubName = $title->getDbKey();
+
+			if ($hubName) {
+				foreach ($hubsPages as $hubPageId => $hubGroup) {
+					if (in_array($hubName, $hubGroup)) {
+						$hubId = $hubPageId;
+						$catInfo = self::initCategoryInfo($hubId, $hubName);
+						return $catInfo;
+					}
+				}
+			}
+		}
+		return false;
 	}
 
 	private static function initCategoryInfo($id, $name) {

@@ -1,3 +1,4 @@
+<section style="margin-bottom:20px" class="grid-3 alpha wikiahubs-rail">
 <?php
 
 /**
@@ -24,3 +25,5 @@ $galleryText .= "\n</gallery>";
 echo $app->wg->parser->parse( $galleryText, $app->wg->title, $app->wg->out->parserOptions(),true )->getText();
 
 ?>
+
+</section>

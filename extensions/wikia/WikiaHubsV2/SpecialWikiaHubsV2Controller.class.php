@@ -39,9 +39,8 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 		$this->response->addAsset('extensions/wikia/WikiaHubsV2/css/WikiaHubsV2.scss');
 		$this->response->addAsset('extensions/wikia/WikiaHubsV2/js/WikiaHubsV2.js');
 
-		$hubName = $model->getHubName();
-		$this->wg->out->setPageTitle($hubName);
-		OasisController::addBodyClass($hubName);
+		$hubName = $model->getHubName($this->request->getVal('vertical'));
+		$this->setHub($hubName);
 	}
 
 	public function slider() {
@@ -173,5 +172,15 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 			$this->model->setVertical($vertical);
 		}
 		return $this->model;
+	}
+
+	/**
+	 * @param $hubName string
+	 */
+	protected function setHub($hubName) {
+		$this->wg->out->setPageTitle($hubName);
+		$this->wg->wikiaHubName = $hubName;
+		RequestContext::getMain()->getRequest()->setVal('vertical',$hubName);
+		OasisController::addBodyClass('WikiaHubs' . mb_ereg_replace(' ','',$hubName));
 	}
 }
