@@ -44,10 +44,10 @@ class AnalyticsProviderIVW implements iAnalyticsProvider {
 		if ($dbname == 'dehauptseite') {		
 			if (F::app()->wg->IsMainpage) return 'RC_WIKIA_HOME';
 
-			if (strpos($title, 'Mobile') === 0) return 'RC_WIKIA_MOBIL';
+			if (strpos($title, 'Mobil') === 0) return 'RC_WIKIA_MOBIL';
 			if (in_array($title, array('Videospiele', 'Entertainment', 'Lifestyle'))) return 'RC_WIKIA_START';
 			
-			if (false /* search */) return 'RC_WIKIA_SEARCH';
+			if (ArticleAdLogic::getPageType() == 'search') return 'RC_WIKIA_SEARCH';
 
 			return 'RC_WIKIA_SVCE';
 		}
@@ -57,8 +57,8 @@ class AnalyticsProviderIVW implements iAnalyticsProvider {
 			
 			return 'RC_WIKIA_COMMUNITY';
 		}
-		
-		if (false /* ent hub*/) return 'RC_WIKIA_UGCENT';
+
+		if (HubService::getComscoreCategory(F::app()->wg->CityId)->cat_name == 'Entertainment') return 'RC_WIKIA_UGCENT';
 
 		return 'RC_WIKIA_UGC';
 	}
