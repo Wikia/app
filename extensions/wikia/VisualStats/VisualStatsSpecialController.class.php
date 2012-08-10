@@ -12,6 +12,7 @@ class VisualStatsSpecialController extends WikiaSpecialPageController {
 
     public function index() {
         $this->response->addAsset('extensions/wikia/VisualStats/js/VisualStatsCommitActivity.js');
+        $this->response->addAsset('extensions/wikia/VisualStats/js/VisualStatsCodeFrequency.js');
         $this->response->addAsset('extensions/wikia/VisualStats/js/VisualStatsPunchcard.js');
         $this->response->addAsset('extensions/wikia/VisualStats/js/VisualStatsHistogram.js');
         $this->response->addAsset('extensions/wikia/VisualStats/js/VisualStatsCommon.js');
@@ -50,7 +51,7 @@ class VisualStatsSpecialController extends WikiaSpecialPageController {
                 $this->setVal( 'data', $this->businessLogic->getDataForHistogram($username));
                 break;
             case "codeFrequency":
-                //$this->setVal( 'data', $this->businessLogic->getDataForCodeFrequency($username));
+                $this->setVal( 'data', $this->businessLogic->getDataForCodeFrequency($username));
                 break;
             default:
                 $this->setVal( 'data', $this->businessLogic->getDataForCommitActivity($username));
@@ -63,10 +64,21 @@ class VisualStatsSpecialController extends WikiaSpecialPageController {
         $this->setVal( 'user', $username);
         $this->setVal( 'param', $parameter);
         $this->setVal( 'dates', $this->businessLogic->getDatesFromTwoWeeksOn(false));
+
+        /*
+         * Messages
+         */
+        $this->setVal( 'commitActivity', $this->wf->msg('visualStats-commitActivity'));
+        $this->setVal( 'histogram', $this->wf->msg('visualStats-histogram'));
+        $this->setVal( 'punchcard', $this->wf->msg('visualStats-punchcard'));
+        $this->setVal( 'codeFrequency', $this->wf->msg('visualStats-codeFrequency'));
+
         $this->setVal( 'wikiButtonLabel', $this->wf->msg('visualStats-wikiEdits'));
         $this->setVal( 'edits', $this->wf->msg('visualStats-edits-plural'));
         $this->setVal( 'edit', $this->wf->msg('visualStats-edits-singular'));
         $this->setVal( 'shown', $this->wf->msg('visualStats-shown-edits'));
+        $this->setVal( 'added', $this->wf->msg('visualStats-added'));
+        $this->setVal( 'deleted', $this->wf->msg('visualStats-deleted'));
         $this->setVal( 'userButtonLabel', $this->wf->msg('visualStats-userEdits', $username));
 
     }

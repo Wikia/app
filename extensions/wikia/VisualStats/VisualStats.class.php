@@ -276,4 +276,114 @@ class VisualStats extends WikiaObject {
         return $out;
 
     }
+    public function getDataForCodeFrequency($username){
+        $this->app->wf->profileIn( __METHOD__ );
+
+        $key = $this->app->wf->MemcKey('VisualStats', 'codeFrequency', $this->app->wg->lang->getCode(), $username );
+        $data = $this->app->wg->memc->get($key);
+        if (is_array($data)){
+            $out = $data;
+        }
+        else
+        {
+
+            $dbr = $this->getDB();
+            $wikiaResult = $this->getDatesFromTwoWeeksOn(false);
+            foreach($wikiaResult as &$item){
+                $item = array ('added' => 0, 'deleted' => 0);
+            }
+            $userResult = $wikiaResult;
+            $wikiaTotal = 0;
+            $userTotal = 0;
+            $wikiaMax = 0;
+            $userMax = 0;
+            $userCount = array('added' => 0, 'deleted' => 0);
+            $wikiaCount = array('added' => 0, 'deleted' => 0);
+
+            $wikiaQuery = $dbr->select(
+                array( 'recentchanges' ),
+                array( 'left(rc_timestamp,8) as date',
+                    'rc_old_len',
+                    'rc_new_len'),
+                array( 'left(rc_timestamp,8)>' .  $this->getDateTwoWeeksBefore()),
+                __METHOD__,
+                array ()
+            );
+
+            while ($row = $dbr->fetchObject($wikiaQuery)){
+                $tempDate = $row->date . "000000";
+                $tempDate = $this->app->wg->lang->date($tempDate);
+                $diff = $row->rc_new_len - $row->rc_old_len;
+                $wikiaTotal++;
+                if ($diff > 0){
+                    $wikiaResult[$tempDate]['added']+= $diff;
+                    $wikiaCount['added']+= $diff;
+                    if ($wikiaResult[$tempDate]['added'] > $wikiaMax){
+                        $wikiaMax = $wikiaResult[$tempDate]['added'];
+                    }
+                }
+                else{
+                    $wikiaResult[$tempDate]['deleted']+= abs($diff);
+                    $wikiaCount['deleted']+= abs($diff);
+                    if ($wikiaResult[$tempDate]['deleted'] > $wikiaMax){
+                        $wikiaMax = $wikiaResult[$tempDate]['deleted'];
+                    }
+                }
+            }
+
+            if ($username != "0"){
+                $user = $this->getUserData($username);
+                $userQuery = $dbr->select(
+                    array( 'recentchanges' ),
+                    array( 'left(rc_timestamp,8) as date',
+                        'rc_old_len',
+                        'rc_new_len'),
+                    array( 'left(rc_timestamp,8)>' .  $this->getDateTwoWeeksBefore(),
+                        'rc_user' => $user['id']),
+                    __METHOD__,
+                    array ()
+                );
+
+                while ($row = $dbr->fetchObject($userQuery)){
+                    $tempDate = $row->date . "000000";
+                    $tempDate = $this->app->wg->lang->date($tempDate);
+                    $diff = $row->rc_new_len - $row->rc_old_len;
+                    $userTotal++;
+                    if ($diff > 0){
+                        $userResult[$tempDate]['added']+= $diff;
+                        $userCount['added']+= $diff;
+                        if ($userResult[$tempDate]['added'] > $userMax){
+                            $userMax = $userResult[$tempDate]['added'];
+                        }
+                    }
+                    else{
+                        $userResult[$tempDate]['deleted']+= abs($diff);
+                        $userCount['deleted']+= abs($diff);
+                        if ($userResult[$tempDate]['deleted'] > $userMax){
+                            $userMax = $userResult[$tempDate]['deleted'];
+                        }
+                    }
+                }
+            }
+            $out = array(
+                'wikiaFrequency' => array(
+                    'data' => $wikiaResult,
+                    'total' => $wikiaTotal,
+                    'max' => $wikiaMax,
+                    'count' => $wikiaCount),
+                'userFrequency' => array(
+                    'data' => $userResult,
+                    'total' => $userTotal,
+                    'max' => $userMax,
+                    'count' => $userCount));
+            $this->app->wg->memc->set($key, $out, 600);
+
+        }
+       // var_dump($out);
+
+        $this->app->wf->profileOut( __METHOD__ );
+
+        return $out;
+
+    }
 }
