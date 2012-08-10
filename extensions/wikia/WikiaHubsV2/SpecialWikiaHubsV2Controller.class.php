@@ -107,19 +107,25 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 	}
 
 	protected function extractDataForCaruselTemplate($videoArr, $videoThumbObj) {
+		$videoFile = $videoThumbObj->getFile();
+		$videoTitle = $videoFile->getTitle();
+		$wikiUrl = WikiFactory::getVarValueByName('wgServer', $videoArr['wikiId']);
+
+		$this->duration = $videoFile->getHandler()->getFormattedDuration();
 		$this->data = array(
-			'wiki' => $videoArr['wiki'],
+			'wiki' => $wikiUrl,
 			'video-name' => $videoArr['title'],
-			'ref' => $videoThumbObj->getPath(),
+			'ref' => $videoTitle->getNsText() . ':' . $videoTitle->getDBkey(),
 		);
-
-		$videoTitle = $videoThumbObj->getFile()->getTitle();
-		$this->href = $videoTitle->getNsText() . ':' . $videoTitle->getDBkey();
-
+		$this->href = $videoTitle->getFullUrl();
 		$this->imgUrl = $videoThumbObj->getUrl();
-		$this->duration = $videoArr['duration'];
-		$this->description = $videoArr['title'];
+		$this->description = $videoArr['headline'];
 		$this->info = wfMsgExt('wikiahubs-popular-videos-suggested-by', array('parseinline'), array($videoArr['submitter']));
+
+		//todo: remove this hack described below once discussed the topic with PO
+		//do we want it in lightbox or modal -- change false to true in next line if you want to play it in modal
+		$playItInLightbox = ( empty($this->wg->VideoHandlersVideosMigrated) && false );
+		$this->videoPlay = $playItInLightbox ? 'lightbox' : 'video-play';
 	}
 
 	public function topwikis() {
