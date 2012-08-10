@@ -219,37 +219,6 @@ class WikiaPhotoGalleryAjax {
 	}
 
 	/**
-	 * Return HTML for slideshow pop out dialog
-	 */
-	static public function getSlideshowPopOut() {
-		wfProfileIn(__METHOD__);
-		global $wgRequest;
-
-		$hash = $wgRequest->getVal('hash');
-		$maxWidth = $wgRequest->getInt('maxwidth', 650) - 20;
-		$maxHeight = $wgRequest->getInt('maxheight', 1200) - 320;
-		$articleId = $wgRequest->getVal('articleId');
-
-		// used on pages with oldid URL param
-		$revisionId = $wgRequest->getInt('revid', 0);
-
-		$slideshow = WikiaPhotoGalleryHelper::getGalleryDataByHash($hash, $articleId, $revisionId, WikiaPhotoGallery::WIKIA_PHOTO_SLIDESHOW);
-
-		if (isset($slideshow['info']) && $slideshow['info'] == 'ok') {
-			if (empty($slideshow['gallery']['params']->rssfeed)) {
-				$ret = WikiaPhotoGalleryHelper::renderSlideshowPopOut($slideshow['gallery'], $maxWidth, $maxHeight);
-			} else {
-				$ret = WikiaPhotoGalleryHelper::renderFeedSlideshowPopOut($slideshow['gallery'], $maxWidth, $maxHeight);
-			}
-		} else {
-			$ret = $slideshow;
-		}
-
-		wfProfileOut(__METHOD__);
-		return $ret;
-	}
-
-	/**
 	 * Handle uploads
 	 */
 	static public function upload() {

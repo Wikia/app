@@ -111,51 +111,5 @@ var WikiaPhotoGallerySlideshow = {
 		}
 
 		this.log('#' + params.id + ' initialized');
-	},
-	
-	onPopOutClickFn: function(ev) {
-		var node = $(this),
-		slideshow = node.closest('.wikia-slideshow'),
-		nodeId = node.attr('id'),
-		// if user clicked on slideshow image, open popout on this image (index)
-		index = nodeId ? parseInt(nodeId.split('-').pop()) : 0,
-		isFromFeed = node.parent().hasClass('wikia-slideshow-from-feed'),
-		// tracking
-		fakeUrl = '/slideshow/basic';
-
-		// stop slideshow animation
-		slideshow.trigger('stop');
-
-		if (node.hasClass('wikia-slideshow-popout')) {
-			// zoom icon clicked
-			fakeUrl += '/popout';
-		}
-		else {
-			// slideshow image clicked
-			if (node.attr('href') && !isFromFeed) {
-				// linked image
-				fakeUrl += '/imageClick/link';
-			}
-			else {
-				fakeUrl += '/imageClick/popout';
-			}
-		}
-
-		WikiaPhotoGalleryView.track(fakeUrl);
-
-		// linked image - leave here
-		if (node.attr('href') && !isFromFeed) {
-			return;
-		}
-
-		if (isFromFeed) {
-			//every image in feed slideshow has href - ctrl+click will lead to that page but by default - display popup
-			ev.preventDefault();
-		}
-
-		// load popout
-		WikiaPhotoGalleryView.loadEditorJS(function() {
-			//WikiaPhotoGallery.showSlideshowPopOut(slideshow.attr('id'), slideshow.attr('data-hash'), index, WikiaPhotoGalleryView.isViewPage(), isFromFeed);
-		});
 	}
 };
