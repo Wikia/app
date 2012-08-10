@@ -61,18 +61,21 @@ class ApiRunJob extends ApiBase {
 			$this->dieUsageMsg( array( "cantrunjobs" ) );
 		}
 
-		if( !empty( $wgApiRunJobsPerRequest )
+		#
+		# api param has precedence
+		#
+		if( isset( $params[ "max" ] ) ) {
+			$max = $params[ "max" ];
+			if( is_numeric( $max ) && $max > 0 && $max <= 100 )  {
+				$this->maxJobs = $max;
+			}
+		}
+		elseif( !empty( $wgApiRunJobsPerRequest )
 			&& is_numeric(  $wgApiRunJobsPerRequest  )
 			&& $wgApiRunJobsPerRequest > 0
 			&& $wgApiRunJobsPerRequest <= 100
 		) {
 			$this->maxJobs =  $wgApiRunJobsPerRequest;
-		}
-		elseif( isset( $params[ "max" ] ) ) {
-			$max = $params[ "max" ];
-			if( is_numeric( $max ) && $max > 0 && $max <= 100 )  {
-				$this->maxJobs = $max;
-			}
 		}
 
 		$result = array();
