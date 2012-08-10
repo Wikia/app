@@ -27,7 +27,7 @@
 								<b>Mass Effect vs. Halo vs Darksiders?</b><br />Wikian <a  class="text" href="http://masseffect.wikia.com/wiki/User:James12708">James12708</a> posits a fictional battle between three different gaming universes. Who would win? And why? <a  class="text" href="http://masseffect.wikia.com/wiki/User_blog:James12708/Crazy_battle_Mass_Effect_vs_Halo_vs_Darksiders_Army_of_Heaven">Read about it now</a>, and join the conversation.<br /><br />
 								<b>This week, in The Hole</b><br />
 								This week’s prize fight on Nukapedia is a special Cybernetic Securitron battle between Yes Man and Victor. <a  class="text" href="http://fallout.wikia.com/wiki/User_blog:Agent_c/The_Hole_-_Cybernetic_Division_Heat_3_-_Securitron_Battle.">Vote now!</a><br /><br />And, speaking of Fallout, did you know that September 30 marks the 15th anniversary of the first game? We're rounding up ideas for celebrating. Head on over to <a  class="text" href="http://fallout.wikia.com/wiki/Fallout_Wiki">Nukapedia</a> to chime in.<br /><br />
-								<b>DeadPool: The Game</b><br /> 
+								<b>DeadPool: The Game</b><br />
 								We'll be honest - Activision's announcement of the <a  class="text" href="http://marvel.wikia.com/User_blog:Nassirdada/Deadpool_game_announced">Deadpool video game</a> for console systems surprised us. And the wiki could use some work. <a  class="text" href="http://deadpool.wikia.com/wiki/Deadpool_Wiki">Join the effort</a>, and let's whip this thing into shape!<br /><br /><b>Rusty Hearts: Reborn</b><br />The first major expansion pack just hit and the franchise is being reborn in more ways than one. Look for new character select screen, four new dungeons, and new <a  class="text" href="http://rustyhearts.wikia.com/wiki/Rusty_Hearts:_Reborn">immersive quests</a>. <br /><br />
 							</p>
 						</div>
@@ -40,7 +40,7 @@
 								</a>
 							</div>
 							<p>
-								Some pretty cool new trailers dropped on Thursday. Bethesda released an interactive trailer for Dishonored- choose one of three daring <a  class="text" href="http://dishonored.wikia.com/wiki/Dishonored_Wiki">escapes</a>. Another interactive trailer was released for the fifth installment in the Crysis series- giving you the option to control <a  class="text" href="http://crysis.wikia.com/wiki/Crysis_3">modes</a>.  
+								Some pretty cool new trailers dropped on Thursday. Bethesda released an interactive trailer for Dishonored- choose one of three daring <a  class="text" href="http://dishonored.wikia.com/wiki/Dishonored_Wiki">escapes</a>. Another interactive trailer was released for the fifth installment in the Crysis series- giving you the option to control <a  class="text" href="http://crysis.wikia.com/wiki/Crysis_3">modes</a>.
 								And you can get your beta on with the new Planetside 2 <a  class="text" href="http://planetside.wikia.com/wiki/Planetside_2_Wiki">trailer</a>.
 							</p>
 						</div>
@@ -147,7 +147,7 @@
 				<nowiki>
 					<div class="RelatedVideos RelatedVideosHidden RelatedHubsVideos noprint" id="RelatedVideos" data-count="7">
 						<div class="embedCodeTooltip messageHolder">Paste this URL in the video embed tool</div>
-						<div class="errorWhileLoading messageHolder">Error occured while loading data. Please recheck your connection and refresh the page.</div>
+						<div class="errorWhileLoading messageHolder">Error occurred while loading data. Please recheck your connection and refresh the page.</div>
 						<div class="RVBody">
 							<div class="button vertical secondary scrollleft" >
 								<p><img src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" class="chevron" /></p>
@@ -212,7 +212,7 @@
 			</div>
 			<div class="grid-4 alpha wikiahubs-from-the-community">
 				<h2>
-					<span class="mw-headline" id="From_the_Community_.0A.0A_Get_Promoted">From the Community 
+					<span class="mw-headline" id="From_the_Community_.0A.0A_Get_Promoted">From the Community
 						<button id="suggestArticle" class="wikia-button secondary">Get Promoted </button>
 					</span>
 				</h2>
@@ -315,7 +315,7 @@
 	<div class="removingProcess messageHolder">Please wait wile we are removing the video</div>
 	<div class="addVideoTooltip messageHolder">Add a video to this page</div>
 	<div class="embedCodeTooltip messageHolder">Paste this URL in the video embed tool</div>
-	<div class="errorWhileLoading messageHolder">Error occured while loading data. Please recheck your connection and refresh the page.</div>
+	<div class="errorWhileLoading messageHolder">Error occurred while loading data. Please recheck your connection and refresh the page.</div>
 	<div class="RVHeader">
 		<div class="tally">
 			<em>2</em>
