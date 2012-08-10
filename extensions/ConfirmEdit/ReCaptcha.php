@@ -26,11 +26,11 @@ $wgAutoloadClasses['ReCaptcha'] = $dir . '/ReCaptcha.class.php';
 require_once( 'recaptchalib.php' );
 
 // Set these in LocalSettings.php
-$wgReCaptchaPublicKey = '';
-$wgReCaptchaPrivateKey = '';
+# $wgReCaptchaPublicKey = '';
+# $wgReCaptchaPrivateKey = '';
 // For backwards compatibility
-$recaptcha_public_key = '';
-$recaptcha_private_key = '';
+# $recaptcha_public_key = '';
+# $recaptcha_private_key = '';
 
 /**
  * Sets the theme for ReCaptcha
