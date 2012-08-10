@@ -1,6 +1,6 @@
 <?php $app = F::app(); ?>
 <div id="mw-content-text" lang="en" dir="ltr" class="mw-content-ltr">
-	<script>var wgWikiaHubType = <?= $app->wg->wikiaHubType; ?>;</script>
+	<script>var wgWikiaHubType = '<?= htmlspecialchars($wgWikiaHubType); ?>' || '';</script>
 
 	<div class="WikiaGrid WikiaHubs" id="WikiaHubs">
 		<section style="margin-bottom:20px" class="grid-3 alpha">

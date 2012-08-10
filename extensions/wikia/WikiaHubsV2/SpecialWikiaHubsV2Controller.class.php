@@ -179,7 +179,7 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 	 */
 	protected function setHub($hubName) {
 		$this->wg->out->setPageTitle($hubName);
-		$this->wg->wikiaHubName = $hubName;
+		$this->wgWikiaHubType = $hubName;
 		RequestContext::getMain()->getRequest()->setVal('vertical',$hubName);
 		OasisController::addBodyClass('WikiaHubs' . mb_ereg_replace(' ','',$hubName));
 	}

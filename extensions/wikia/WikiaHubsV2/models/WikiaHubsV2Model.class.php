@@ -151,8 +151,9 @@ class WikiaHubsV2Model extends WikiaModel {
 						'href' => 'http://www.wowwiki.com'
 					),
 					'number' => 10000,
+					'unit' => 'editors',
 					'link' => array(
-						'anchor' => 'WoWwiki',
+						'anchor' => 'see more',
 						'href' => 'http://www.wowwiki.com'
 					),
 				),
@@ -162,8 +163,9 @@ class WikiaHubsV2Model extends WikiaModel {
 						'href' => 'http://www.wowwiki.com'
 					),
 					'number' => 10000,
+					'unit' => 'pages',
 					'link' => array(
-						'anchor' => 'WoWwiki',
+						'anchor' => 'see more',
 						'href' => 'http://www.wowwiki.com'
 					),
 				),
@@ -173,8 +175,9 @@ class WikiaHubsV2Model extends WikiaModel {
 						'href' => 'http://www.wowwiki.com'
 					),
 					'number' => 10000,
+					'unit' => 'videos',
 					'link' => array(
-						'anchor' => 'WoWwiki',
+						'anchor' => 'see more',
 						'href' => 'http://www.wowwiki.com'
 					),
 				)

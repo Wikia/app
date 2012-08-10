@@ -18,7 +18,7 @@
 								</a></b>
 							</span>
 						</h5>
-						<b><?= $box['number'] ?></b>
+						<b><?= $box['number'] ?><?= !empty($box['unit'])?' ' . $box['unit']:''; ?></b>
 						<br />
 						<a href="<?= $box['link']['href'] ?>">
 							<?= $box['link']['anchor'] ?>
