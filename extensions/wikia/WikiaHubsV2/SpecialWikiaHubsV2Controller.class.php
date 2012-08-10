@@ -12,6 +12,7 @@
 class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 	const CACHE_VALIDITY_BROWSER = 86400;
 	const CACHE_VALIDITY_VARNISH = 86400;
+	const PLAY_IN_LIGHTBOX = true;
 
 	/**
 	 * @var WikiaHubsV2Model
@@ -38,6 +39,10 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 
 		$this->response->addAsset('extensions/wikia/WikiaHubsV2/css/WikiaHubsV2.scss');
 		$this->response->addAsset('extensions/wikia/WikiaHubsV2/js/WikiaHubsV2.js');
+
+		if( !self::PLAY_IN_LIGHTBOX ) {
+			$this->response->addAsset('extensions/wikia/RelatedVideos/js/RelatedVideos.js');
+		}
 
 		$hubName = $model->getHubName($this->request->getVal('vertical'));
 		$this->setHub($hubName);
@@ -84,7 +89,7 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 		$this->setCacheValidity();
 		$model = $this->getModel();
 		$videosData = $model->getDataForModulePopularVideos();
-		$this->headline = $videosData ['headline'];
+		$this->headline = $videosData['headline'];
 		$this->videos = $videosData['videos'];
 	}
 
@@ -123,9 +128,9 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 		$this->info = wfMsgExt('wikiahubs-popular-videos-suggested-by', array('parseinline'), array($videoArr['submitter']));
 
 		//todo: remove this hack described below once discussed the topic with PO
-		//do we want it in lightbox or modal -- change false to true in next line if you want to play it in modal
-		$playItInLightbox = ( empty($this->wg->VideoHandlersVideosMigrated) && false );
-		$this->videoPlay = $playItInLightbox ? 'lightbox' : 'video-play';
+		//do we want it in lightbox or modal
+		//also quite important can be $this->wg->VideoHandlersVideosMigrated
+		$this->videoPlay = self::PLAY_IN_LIGHTBOX ? 'lightbox' : 'video-play';
 	}
 
 	public function topwikis() {
