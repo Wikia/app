@@ -125,7 +125,7 @@ class WikiaHomePageSpecialController extends WikiaSpecialPageController {
 		}
 
 		if (in_array(false, $statusArr)) {
-			Wikia::log(__METHOD__, false, "A problem with saving WikiFactory variable(s) occured. Status array: " . print_r($statusArr, true));
+			Wikia::log(__METHOD__, false, "A problem with saving WikiFactory variable(s) occurred. Status array: " . print_r($statusArr, true));
 			$this->setVal('errorMsg', wfMsg('wikia-home-page-special-error-wikifactory-failure'));
 
 			$this->wf->ProfileOut(__METHOD__);

@@ -10,7 +10,7 @@ $messages['en'] = array(
 	'userprofilepage-interview-edit-new-summary' => "User interview created",
 	'userprofilepage-interview-edit-update-summary' => "User interview updated",
 	'userprofilepage-interview-save-error' => "Saving interview failed",
-	'userprofilepage-interview-save-internal-error' => "Saving interview failed - internal error occured",
+	'userprofilepage-interview-save-internal-error' => "Saving interview failed - internal error occurred",
 	'userprofilepage-answers-stats-title' => 'Interview Statistics',
 	'userprofilepage-add-question' => 'Add new question',
 	'userprofilepage-question-save' => 'Save question',
@@ -63,7 +63,7 @@ $messages['en'] = array(
 	'user-identity-box-zero-state-twitter' => 'My Twitter',
 	'user-identity-box-zero-state-website' => 'My Website',
 	'user-identity-box-zero-state-fb-page' => 'My Facebook',
-	
+
 	'user-identity-box-about-me' => 'About Me',
 	'user-identity-box-avatar' => 'Avatar',
 	'user-identity-box-about-name' => 'What\'s your name?',
@@ -93,7 +93,7 @@ $messages['en'] = array(
 	'userprofilepage-lightbox-about-me-save' => "Save, I'm Done",
 
 	'user-identity-box-saving-error' => 'Saving user data failed - your data should be a plain text',
-	'user-identity-box-saving-internal-error' => 'Saving user data failed - internal error occured',
+	'user-identity-box-saving-internal-error' => 'Saving user data failed - internal error occurred',
 
 	'userprofilepage-closing-popup-header' => 'Exit Profile Editor',
 	'userprofilepage-closing-popup-info' => 'There are unsaved changes in your profile. What would you like to do?',

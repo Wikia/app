@@ -46,7 +46,7 @@ $messages['en'] = array(
 	'editaccount-error-email' => 'Email was not changed. Try again or contact the Tech Team.',
 	'editaccount-error-pass' => 'Password was not changed. Try again or contact the Tech Team.',
 	'editaccount-error-realname' => 'Real name was not changed. Try again or contact the Tech Team.',
-	'editaccount-error-close' => 'A problem occured when closing account. Try again or contact the Tech Team.',
+	'editaccount-error-close' => 'A problem occurred when closing account. Try again or contact the Tech Team.',
 	'editaccount-invalid-email' => '"$1" is not a valid email address!',
 	'editaccount-nouser' => 'Account "$1" does not exist!',
 	'editaccount-remove-avatar-fail' => 'Problem auto-removing avatar.',
@@ -60,7 +60,7 @@ $messages['en'] = array(
 	'editaccount-status-tempuser' => 'Temp User',
 	'editaccount-error-tempuser-email' => 'Temp users cannot have blank email address field, please enter an email address.',
 	'editaccount-email-change-requested' => 'User requested email change via Preferences to $1. To confirm the requested email address change for the user, enter the requested email address into the field below and click "Save and confirm."',
-	
+
 	# logging
 	'editaccount-log' => 'User accounts log',
 	'editaccount-log-header' => 'This page lists changes made to user information by Wikia Staff.',

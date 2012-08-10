@@ -20,7 +20,7 @@ class RTE {
 	// mode in which CK editor should be stared
 	private static $initMode = 'wysiwyg';
 
-	// list of edgecases which occured in parsed wikitext
+	// list of edgecases which occurred in parsed wikitext
 	public static $edgeCases = array();
 
 	// Title object of currently edited page
