@@ -31,6 +31,9 @@ $messages['en'] = array(
 	'wikiahubs-suggest-article-success' => 'Thanks for suggesting an article, our editors will look over it. Check back often to see if it\'s up!',
 	'wikiahubs-error-invalid-article-url-length' => 'Article url requires at least 10 characters',
 	'wikiahubs-error-invalid-reason-length' => 'Comment must be between 1 and 140 characters',
+
+	//popular videos
+	'wikiahubs-popular-videos-suggested-by' => 'Suggested by $1',
 );
 
 

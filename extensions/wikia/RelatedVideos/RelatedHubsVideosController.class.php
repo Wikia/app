@@ -69,7 +69,7 @@ class RelatedHubsVideosController extends RelatedVideosController {
 				}
 			}
 		}
-		
+
 		$this->setVal('videos', $videos);
 	}
 	
