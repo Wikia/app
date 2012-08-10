@@ -1,26 +1,28 @@
-<div class="title-wrapper">
-	<h2>Popular video from template</h2>
-	<button id="suggestVideo" class="wikia-button secondary">Suggest a Video</button>
-</div>
+<div class="grid-4 alpha wikiahubs-pupular-videos">
+	<div class="title-wrapper">
+		<h2>Popular video from template</h2>
+		<button id="suggestVideo" class="wikia-button secondary">Suggest a Video</button>
+	</div>
 
-<section class="WikiaMediaCarousel">
-	<a href="#" class="button secondary right next">
-		<img src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" class="chevron" />
-	</a>
-	<a href="#" class="button secondary left previous">
-		<img src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" class="chevron" />
-	</a>
-	<? if (is_array($videos)): ?>
+	<section class="WikiaMediaCarousel">
+		<a href="#" class="button secondary right next">
+			<img src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" class="chevron" />
+		</a>
+		<a href="#" class="button secondary left previous">
+			<img src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" class="chevron" />
+		</a>
+		<? if (is_array($videos)): ?>
 		<div id="carouselContainer" class="carouselContainer">
 			<div>
 				<ul class="carousel" style="">
 					<? foreach($videos as $video): ?>
-						<li class="thumbs active">
-							<?= $app->renderView( 'SpecialWikiaHubsV2', 'renderCaruselElement', array('video' => $video) ); ?>
-						</li>
+					<li class="thumbs active">
+						<?= $app->renderView( 'SpecialWikiaHubsV2', 'renderCaruselElement', array('video' => $video) ); ?>
+					</li>
 					<? endforeach; ?>
 				</ul>
 			</div>
 		</div>
-	<? endif; ?>
-</section>
+		<? endif; ?>
+	</section>
+</div>

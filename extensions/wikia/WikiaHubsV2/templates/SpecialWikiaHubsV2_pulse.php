@@ -1,4 +1,4 @@
-<section class="grid-3 alpha wikiahubs-pulse">
+<section class="grid-3 wikiahubs-rail wikiahubs-pulse" >
 	<span class="social">
 		<a href="<?= $socialmedia['facebook'] ?>" id="facebook"></a>
 		<a href="<?= $socialmedia['twitter'] ?>" id="twitter"></a>

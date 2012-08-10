@@ -34,6 +34,11 @@ $messages['en'] = array(
 
 	//popular videos
 	'wikiahubs-popular-videos-suggested-by' => 'Suggested by $1',
+
+	// wikia hubs
+	'wikiahubs-vertical-VideoGames' => 'Video Games',
+	'wikiahubs-vertical-Entertainment' => 'Entertainment',
+	'wikiahubs-vertical-Lifestyle' => 'Lifestyle',
 );
 
 
@@ -58,4 +63,10 @@ $messages['de'] = array(
 	'wikiahubs-suggest-article-success' => 'Danke für deinen Vorschlag! Wie schauen ihn uns schnellstmöglich an. Schau bald wieder vorbei!',
 	'wikiahubs-error-invalid-article-url-length' => 'Die Artikel-URL muss mindestens 10 Zeichen lang sein.',
 	'wikiahubs-error-invalid-reason-length' => 'Dein Kommentar muss zwischen 1 und 140 Zeichen lang sein.',
+
+	// wikia hubs
+	'wikiahubs-vertical-video-games' => 'Videospiele',
+	'wikiahubs-vertical-entertainment' => 'Entertainment',
+	'wikiahubs-vertical-lifestyle' => 'Lifestyle',
+
 );

@@ -1,4 +1,4 @@
-<div class="grid-2 alpha wikiahubs-wikitext-module">
+<div class="grid-2 alpha wikiahubs-module wikiahubs-wikitext-module">
 	<h2><?= $wikitextmoduledata['headline'] ?></h2>
 
 	<div class="modulecontent">

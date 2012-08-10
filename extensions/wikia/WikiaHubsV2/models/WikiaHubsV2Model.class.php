@@ -437,9 +437,13 @@ No
 		);
 	}
 
-	public function getHubName() {
-		// mock data
-		return 'Video Games';
+	public function getHubName($name) {
+		if(empty($name)) {
+			// mock data
+			return 'Video Games';
+		} else {
+			return $name;
+		}
 	}
 
 }
