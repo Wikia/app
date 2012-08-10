@@ -203,7 +203,7 @@ class WikiaHubsV2Model extends WikiaModel {
 				'title' => 'WWE_13_(VG)_(2012)_-_Live_trailer'
 			),
 			'description' => array(
-				'main title' => 'Resident Evil 6',
+				'maintitle' => 'Resident Evil 6',
 				'subtitle' => 'More evil awaits you on the',
 				'link' => array(
 					'anchor' => 'WoWwiki',
