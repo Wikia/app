@@ -126,15 +126,12 @@ class ApiRunJob extends ApiBase {
 
 		$total = 0;
 		if( $done > 0 ) {
+			#
+			# don't count how many left, it's too expensive. Just check if any
+			# left.
+			#
 			$dbr = wfGetDB( DB_SLAVE, 'vslow' );
-			$total = $dbr->estimateRowCount( "job", "*", "", __METHOD__ );
-
-			#
-			# check again using count if $total near working value
-			#
-			if( $total < $wgApiRunJobsPerRequest ) {
-				$total = $dbr->selectField( "job", "COUNT(*)", "", __METHOD__ );
-			}
+			$total = $dbr->selectField( "job", "job_id", "", __METHOD__ );
 		}
 
 		$wgMemc->set( wfMemcKey( 'SiteStats', 'jobs' ), $total, 3600 );
