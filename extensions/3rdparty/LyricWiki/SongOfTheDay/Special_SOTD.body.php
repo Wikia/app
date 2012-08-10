@@ -218,8 +218,7 @@ class SOTD extends SpecialPage
 								$result = $dbw->update( 'sotdnoms' , array( 'sn_status' => $values[$id] ) , array( 'sn_id' => $id ) );
 								if ( $values[$id] == 4 )
 								{	# Accepted
-									$sql = "SELECT * FROM sotdnoms WHERE sn_id=$id"; # No need to escape: is_numeric($id)
-									$result = $dbw->doQuery( $sql );
+									$result = $dbw->select( 'sotdnoms', array( '*' ), array( 'sn_id' => $id ), __METHOD__ );
 									$row = $dbw->fetchRow( $result );
 									$text .= $this->parsePreview( $row )."<br/>";
 									++$count;
@@ -262,7 +261,7 @@ class SOTD extends SpecialPage
 					$dbw = wfGetDB( DB_SLAVE );
 				}
 				$sql = 'SELECT * FROM sotdnoms';
-				$result = $dbw->doQuery( $sql );
+				$result = $dbw->select( 'sotdnoms', array( '*' ), '', __METHOD__ );
 				$rows = $dbw->numRows( $result );
 				if ( $rows )
 				{
@@ -450,8 +449,7 @@ class SOTD extends SpecialPage
 			else
 			{	# A token was submitted to the page
 				$dbw = wfGetDB( DB_SLAVE );
-				$sql = "SELECT * FROM sotdnoms WHERE sn_token='" . mysql_real_escape_string( $token ) . "'";
-				$result = $dbw->doQuery( $sql );
+				$result = $dbw->select( 'sotdnoms', array( '*' ), array( 'sn_token' => $token ), __METHOD__ );
 				$rows = $dbw->numRows( $result );
 				if ( $rows )
 				{	# Try to retrieve the according nomination
@@ -679,8 +677,16 @@ class SOTD extends SpecialPage
 				if ( empty( $token ) )
 				{	# No token yet => seems to be a new nomination
 					$dbw = wfGetDB( DB_MASTER );
-					$sql = "SELECT sn_status FROM sotdnoms WHERE sn_artist='" . mysql_real_escape_string( $artist ) . "' AND sn_song='" . mysql_real_escape_string( $song ) . "' AND NOT sn_status=3";
-					$result = $dbw->doQuery( $sql );
+					$result = $dbw->select( 
+						'sotdnoms', 
+						array( 'sn_status' ), 
+						array(
+							'sn_artist' => $artist, 
+							'sn_song' => $song,
+							'sn_status != 3' 
+						), 
+						__METHOD__ 
+					);
 					$rows = $dbw->numRows( $result );
 					if ( $rows )
 					{	# The song alread exists as nomination
@@ -719,8 +725,7 @@ class SOTD extends SpecialPage
 				else
 				{	# A token was submitted, seems to be an attempt to update
 					$dbw = wfGetDB( DB_MASTER );
-					$sql = "SELECT * FROM sotdnoms WHERE sn_token='" . mysql_real_escape_string( $token ) . "'";
-					$result = $dbw->doQuery( $sql );
+					$result = $dbw->select( 'sotdnoms', array( '*' ), array( 'sn_token' => $token ), __METHOD__ );
 					$rows = $dbw->numRows( $result );
 					if ( $rows )
 					{
