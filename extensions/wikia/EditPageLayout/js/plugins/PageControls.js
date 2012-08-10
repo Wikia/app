@@ -303,6 +303,13 @@
 
 					// set focus on the first field
 					$('#HiddenFieldsDialog label').children().focus();
+					
+					//add press "Enter" = submit form functionality - BugId: 38480
+					$('#HiddenFieldsDialog input[name="wpTitle"]').keyup(function(event) { 
+						if (event.keyCode == 13) { 
+							$('#ok').click(); 
+						}
+					});
 				},
 				// don't show close button, user has to click "Ok" and fields have to be validated
 				showCloseButton: false,
