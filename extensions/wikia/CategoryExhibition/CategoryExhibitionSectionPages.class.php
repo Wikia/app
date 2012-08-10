@@ -37,10 +37,10 @@ class CategoryExhibitionSectionPages extends CategoryExhibitionSection {
 		// exclude 700 (NS_TOPLIST), 701 (NS_TOPLIST_TALK)
 		// if TopList extension which defines them is disabled
 		if(empty(F::app()->wg->enableTopListsExt)) {
-			if(!in_array(700,$this->excludes)) {
+			if(!in_array(700,$excludes)) {
 				$excludes []= 700;
 			}
-			if(!in_array(701,$this->excludes)) {
+			if(!in_array(701,$excludes)) {
 				$excludes []= 701;
 			}
 		}
