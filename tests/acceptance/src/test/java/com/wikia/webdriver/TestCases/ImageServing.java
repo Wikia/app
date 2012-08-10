@@ -14,19 +14,32 @@ import com.wikia.webdriver.pageObjects.PageObject.WikiPage.SpecialNewFilesPageOb
 import com.wikia.webdriver.pageObjects.PageObject.WikiPage.SpecialUploadPageObject;
 
 public class ImageServing extends TestTemplate {
-
+	private String file = "Image001.jpg";
+	private String wikiName = "mediawiki119";
 	@Test
 	public void ImageServingTest()
 	{
-	WikiBasePageObject wiki = new WikiBasePageObject(driver, "preview.mediawiki119");
-	System.out.println("nie za szybko");
+	
+	WikiBasePageObject wiki = new WikiBasePageObject(driver, wikiName);
 	SpecialNewFilesPageObject wikiSpecialNF = wiki.OpenSpecialNewFiles();
-	
+//	
+//	CommonFunctions.logIn("Michaltester", "1tester.");
+//	wikiSpecialNF.ClickOnAddaPhoto();
+//	wikiSpecialNF.ClickOnMoreOrFewerOptions();
+//	wikiSpecialNF.CheckIgnoreAnyWarnings();
+//	wikiSpecialNF.ClickOnMoreOrFewerOptions();
+//	
+//	wikiSpecialNF.TypeInFileToUploadPath(file);
+//	wikiSpecialNF.ClickOnUploadaPhoto();
+//	wikiSpecialNF.waitForFile(file);
+//
+	SpecialUploadPageObject wikiSpecialU = wikiSpecialNF.OpenSpecialUpload();
 	CommonFunctions.logIn("Michaltester", "1tester.");
-	System.out.println("nie za szybko2");
-	wikiSpecialNF.ClickOnAddaPhoto();
-	wikiSpecialNF.TypeInFileToUploadPath("Image001");
-	wikiSpecialNF.ClickOnUploadaPhoto();
-
+	wikiSpecialU.TypeInFileToUploadPath("Image001.jpg");
+	wikiSpecialU.verifyFilePreviewAppeared("Image001.jpg");
+	wikiSpecialU.CheckIgnoreAnyWarnings();
+	wikiSpecialU.ClickOnUploadFile();
+	wikiSpecialU.waitForFilePage("Image001.jpg");
 	
+
 	}}

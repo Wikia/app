@@ -22,8 +22,6 @@ public class HomePageObject extends BasePageObject{
 	private WebElement OpenLifestyleHub;
 
 	
-	
-	
 	public HomePageObject(WebDriver driver) 
 	{
 		super(driver);
