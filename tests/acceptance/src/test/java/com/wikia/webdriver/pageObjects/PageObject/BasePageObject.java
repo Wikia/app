@@ -1,6 +1,7 @@
 package com.wikia.webdriver.pageObjects.PageObject;
 
 import java.util.Date;
+import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -10,6 +11,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.BeforeClass;
 
+import com.wikia.webdriver.Common.CommonExpectedConditions;
 import com.wikia.webdriver.Logging.PageObjectLogging;
 
 
@@ -101,6 +103,14 @@ public class BasePageObject{
 	{
 		pageElem.click();
 	}
+	/**
+	 * Send keys to WebElement
+	 */
+
+	public void sendKeys(WebElement pageElem, String KeysToSend)
+	{
+		pageElem.sendKeys(KeysToSend);
+	}
 	
 	/**
 	 * Clicks on an element using Actions click method
@@ -114,6 +124,17 @@ public class BasePageObject{
 		Actions click = builder.click(pageElem);
 		click.perform();
 		
+	}
+	
+	/**
+	 * Returns List of WebElements by CssSelector
+	 * 
+	 * @author Michal Nowierski
+	 * ** @param Selector  
+	 */
+	public List<WebElement> getListOfElementsByCss(String Selector) {
+	
+		return driver.findElements(By.cssSelector(Selector));
 	}
 	
 	/**
@@ -158,6 +179,7 @@ public class BasePageObject{
 		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(css)));
 	}
 	
+	
 	public void waitForElementClickableByClassName(String className)
 	{
 		wait.until(ExpectedConditions.elementToBeClickable(By.className(className)));
@@ -172,6 +194,16 @@ public class BasePageObject{
 	{
 		
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(id)));
+	}
+	public void waitForValueToBePresentInElementsAttributeByCss(String selector, String attribute,
+			String value) {
+		wait.until(CommonExpectedConditions.valueToBePresentInElementsAttribute(By.cssSelector(selector), attribute, value));
+		
+	}
+
+	public void waitForStringInURL(String givenString) {
+		wait.until(CommonExpectedConditions.givenStringtoBePresentInURL(givenString));
+		
 	}
 	
 	/**

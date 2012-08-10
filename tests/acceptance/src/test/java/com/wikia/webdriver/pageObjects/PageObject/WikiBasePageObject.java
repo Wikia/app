@@ -31,7 +31,7 @@ public class WikiBasePageObject extends HomePageObject {
 
 
 	public SpecialUploadPageObject OpenSpecialUpload() {
-		driver.get(wikiname+".wikia.com/Special:Upload");
+		driver.get("http://"+wikiname+".wikia.com/Special:Upload");
 		return new SpecialUploadPageObject(driver, wikiname);
 	}
 	
