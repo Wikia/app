@@ -16,7 +16,7 @@
 				<ul class="carousel" style="">
 					<? foreach($videos as $video): ?>
 						<li class="thumbs active">
-							<?= $app->renderView( 'RelatedHubsVideos', 'getCaruselElement', array( 'video' => $video, 'preloaded' => 1 ) ) ?>
+							<?= $app->renderView( 'SpecialWikiaHubsV2', 'renderCaruselElement', array('video' => $video) ); ?>
 						</li>
 					<? endforeach; ?>
 				</ul>

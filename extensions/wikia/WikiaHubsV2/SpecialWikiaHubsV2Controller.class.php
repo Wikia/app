@@ -89,6 +89,37 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 		$this->videos = $videosData['videos'];
 	}
 
+	/**
+	 * @requestParam Array $video
+	 */
+	public function renderCaruselElement() {
+		$video = $this->request->getVal('video', false);
+		$videoTitle = ($video) ? F::build('Title', array($video['title'], NS_FILE), 'newFromText') : false;
+		$videoFile = ($videoTitle) ? wfFindFile($videoTitle) : false;
+
+		if( $videoFile ) {
+			$thumbWidth = $video['thumbnailData']['width'];
+			$thumbHeight = $video['thumbnailData']['height'];
+			$videoThumbObj = $videoFile->transform( array('width'=> $thumbWidth, 'height' => $thumbHeight) );
+			$this->extractDataForCaruselTemplate($video, $videoThumbObj);
+		} else {
+			Wikia::log(__METHOD__, false, 'A video file not found. ID: '.$video['title']);
+		}
+	}
+
+	protected function extractDataForCaruselTemplate($videoArr, $videoThumbObj) {
+		$this->data = array(
+			'wiki' => $videoArr['wiki'],
+			'video-name' => $videoArr['title'],
+			'ref' => $videoThumbObj->getFile()->getTitle()->getText(),
+		);
+		$this->href = $videoThumbObj->getFile()->getTitle()->getFullUrl();
+		$this->imgUrl = $videoThumbObj->getUrl();
+		$this->duration = '6:66';
+		$this->description = $videoArr['title'];
+		$this->info = $this->wf->Msg('wikiahubs-popular-videos-suggested-by', array($videoArr['submitter']));
+	}
+
 	public function topwikis() {
 		$this->setCacheValidity();
 		$model = $this->getModel();
