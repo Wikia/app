@@ -1081,13 +1081,14 @@ class WallMessage {
 			$this->propsCache = array();
 		}
 
+		//we have it memc 
 		if( array_key_exists($prop, $this->propsCache) ) {
 			wfProfileOut(__METHOD__."_1");
 			wfProfileOut(__METHOD__);
-			$this->propsCache[$prop] = $val;
-			return $val;
+			return $this->propsCache[$prop];
 		} 
 		
+		//we don't lets add it 
 		$this->propsCache[$prop] = wfGetWikiaPageProp($prop, $this->getId());
 		
 		$cache->set( $key, $this->propsCache );
