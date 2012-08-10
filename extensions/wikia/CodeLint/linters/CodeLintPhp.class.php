@@ -19,6 +19,13 @@ class CodeLintPhp extends CodeLint {
 	// file name pattern - used when linting directories
 	protected $filePattern = '*.php';
 
+	// per-directory results cache
+	// subdirectories will get these results from cache
+	private $cache = array(
+		'directory' => '',
+		'output' => array()
+	);
+
 	/**
 	 * Run PHP Storm's Code Inspect for a given directory
 	 *
@@ -32,51 +39,83 @@ class CodeLintPhp extends CodeLint {
 		global $wgPHPStormPath, $IP;
 		$start = microtime(true);
 
-		$lintProfile = dirname(__FILE__) . '/php/profiles/phplint.xml';
-		$projectMetaData = dirname(__FILE__) . '/php/project';
+		$isCached = ($this->cache['directory'] !== '') && (strpos($dirName, $this->cache['directory']) === 0);
 
-		// copy project meta data to trunk root
-		$copyCmd = "cp -rf {$projectMetaData}/.idea {$IP}";
+		if (!$isCached) {
+			$lintProfile = dirname(__FILE__) . '/php/profiles/phplint.xml';
+			$projectMetaData = dirname(__FILE__) . '/php/project';
 
-		echo "Copying project meta data <{$copyCmd}>...";
-		exec($copyCmd);
-		echo " [done]\n";
+			// copy project meta data to trunk root
+			$copyCmd = "cp -rf {$projectMetaData}/.idea {$IP}";
 
-		// create a temporary directory for Code Inspect results
-		$resultsDir = wfTempDir() . '/phpstorm/' . uniqid('lint');
-		echo "Creating temporary directory for results <{$resultsDir}>...";
-		wfMkdirParents($resultsDir);
-		echo " [done]\n";
+			#echo "Copying project meta data <{$copyCmd}>...";
+			exec($copyCmd);
+			#echo " [done]\n";
 
-		$cmd = sprintf('/bin/sh %s/inspect.sh %s %s %s -d %s -v2',
-			$wgPHPStormPath,
-			$IP, // PHP Storm project directory
-			$lintProfile, // XML file with linting profile
-			$resultsDir, // output directory
-			$dirName // directory to check
-		);
+			// create a temporary directory for Code Inspect results
+			$resultsDir = wfTempDir() . '/phpstorm/' . uniqid('lint');
+			echo "Creating temporary directory for results <{$resultsDir}>...";
+			wfMkdirParents($resultsDir);
+			echo " [done]\n";
 
-		//echo "Running PHP storm <{$cmd}>...";
-		echo "Running PhpStorm for <{$dirName}>...";
+			$cmd = sprintf('/bin/sh %s/inspect.sh %s %s %s -d %s -v2',
+				$wgPHPStormPath,
+				$IP, // PHP Storm project directory
+				$lintProfile, // XML file with linting profile
+				$resultsDir, // output directory
+				$dirName // directory to check
+			);
 
-		$retVal = 0;
-		$output = array();
-		exec($cmd, $output, $retVal);
+			//echo "Running PHP storm <{$cmd}>...";
+			echo "Running PhpStorm for <{$dirName}>...";
 
-		// get the version of PhpStorm
-		$tool = '';
+			$retVal = 0;
+			$output = array();
+			exec($cmd, $output, $retVal);
 
-		foreach($output as $line) {
-			if (strpos($line, 'Starting up JetBrains PhpStorm') !== false) {
-				preg_match('#JetBrains PhpStorm [\\d\\.]+#', $line, $matches);
-				$tool = $matches[0];
+			// get the version of PhpStorm
+			$tool = '';
+
+			foreach($output as $line) {
+				if (strpos($line, 'Starting up JetBrains PhpStorm') !== false) {
+					preg_match('#JetBrains PhpStorm [\\d\\.]+#', $line, $matches);
+					$tool = $matches[0];
+				}
 			}
+
+			echo implode("\n", $output); // debug
+			echo " [done]\n";
+
+			// format results
+			$output = array(
+				'problems' => $this->parseResults($resultsDir),
+				'tool' => $tool,
+			);
+
+			// update the cache
+			$this->cache = array(
+				'directory' => $dirName,
+				'output' => $output,
+			);
+		}
+		else {
+			//echo "Got results from cache for <{$this->cache['directory']}>\n";
+			$output = $this->cache['output'];
 		}
 
-		echo implode("\n", $output); // debug
-		echo " [done]\n";
+		$output['time'] = microtime(true) - $start;
 
-		// parse XML results
+		return $output;
+	}
+
+	/**
+	 * Parse XML files in resuls directory and return list of problems foudn
+	 *
+	 * @param string $resultsDir results directory with XML files
+	 */
+	private function parseResults($resultsDir) {
+		global $IP;
+
 		$files = glob($resultsDir . '/Php*.xml');
 		$problems = array();
 
@@ -107,14 +146,7 @@ class CodeLintPhp extends CodeLint {
 			}
 		}
 
-		// format results
-		$output = array(
-			'problems' => $problems,
-			'time' => microtime(true) - $start,
-			'tool' => $tool,
-		);
-
-		return $output;
+		return $problems;
 	}
 
 	/**

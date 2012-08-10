@@ -206,7 +206,7 @@ abstract class CodeLint {
 			$cache['lines'] = $lines;
 		}
 
-		$blameLine = $cache['lines'][$line];
+		$blameLine = $cache['lines'][$line-1];
 
 		// parse blame line
 		// G 666     author 	doSomething();
