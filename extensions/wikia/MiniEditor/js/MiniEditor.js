@@ -117,7 +117,7 @@ var MiniEditor = {
 
 					// Add cdn url to path to prevent loading from wrong slot (BugId:33467)
 					$.each(assets, function(i, path) {
-						assets[i] = window.wgCdnRootUrl + path;
+						assets[i] = window.wgResourceBasePath + path;
 					});
 
 					assets = window.wgMiniEditorAssets = data.wgMiniEditorAssets.concat(assets);
