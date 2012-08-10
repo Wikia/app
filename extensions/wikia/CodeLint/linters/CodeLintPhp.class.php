@@ -20,7 +20,7 @@ class CodeLintPhp extends CodeLint {
 	protected $filePattern = '*.php';
 
 	/**
-	 * Run PHP Storm's Code Inspect for a given file
+	 * Run PHP Storm's Code Inspect for a given directory
 	 *
 	 * Actually, PHP storm will be run for a given directory.
 	 * XML reports will then be parsed to get issues for given file.
@@ -28,32 +28,38 @@ class CodeLintPhp extends CodeLint {
 	 * @param string $fileName file to run Code Inspect for
 	 * @return string output from Code Inspect
 	 */
-	protected function runCodeInspect($fileName) {
-		global $wgPHPStormPath;
-
+	protected function inspectDirectory($dirName) {
+		global $wgPHPStormPath, $IP;
 		$start = microtime(true);
 
 		$lintProfile = dirname(__FILE__) . '/php/profiles/phplint.xml';
 		$projectMetaData = dirname(__FILE__) . '/php/project';
 
-		// create a temporary directory for Code Inspect results
-		$tmpDir = wfTempDir() . '/phpstorm/' . uniqid('lint');
-		wfMkdirParents($tmpDir);
+		// copy project meta data to trunk root
+		$copyCmd = "cp -rf {$projectMetaData}/.idea {$IP}";
 
-		// code directory to check
-		$dir = dirname($fileName);
+		echo "Copying project meta data <{$copyCmd}>...";
+		exec($copyCmd);
+		echo " [done]\n";
+
+		// create a temporary directory for Code Inspect results
+		$resultsDir = wfTempDir() . '/phpstorm/' . uniqid('lint');
+		echo "Creating temporary directory for results <{$resultsDir}>...";
+		wfMkdirParents($resultsDir);
+		echo " [done]\n";
 
 		$cmd = sprintf('/bin/sh %s/inspect.sh %s %s %s -d %s -v2',
 			$wgPHPStormPath,
-			$projectMetaData, // PHP Storm project directory
+			$IP, // PHP Storm project directory
 			$lintProfile, // XML file with linting profile
-			$tmpDir, // output directory
-			$dir // directory to check
+			$resultsDir, // output directory
+			$dirName // directory to check
 		);
 
-		echo "Running PHP storm <{$cmd}>...";
+		//echo "Running PHP storm <{$cmd}>...";
+		echo "Running PhpStorm for <{$dirName}>...";
 
-		$retval = 0;
+		$retVal = 0;
 		$output = array();
 		exec($cmd, $output, $retVal);
 
@@ -68,33 +74,45 @@ class CodeLintPhp extends CodeLint {
 		}
 
 		echo implode("\n", $output); // debug
-		echo " [ok]\n";
+		echo " [done]\n";
+
+		// parse XML results
+		$files = glob($resultsDir . '/Php*.xml');
+		$problems = array();
+
+		foreach($files as $file) {
+			// parse each XML file and add <problem> nodes to $problems array
+			$xml = simplexml_load_file($file);
+			if ($xml instanceof SimpleXMLElement) {
+				$nodes = $xml->xpath('//problem');
+
+				foreach($nodes as $node) {
+					$entry = array(
+						// make a path relative to code checkout
+						'file' => str_replace('file://$PROJECT_DIR$', $IP, $node->file),
+						'line' => intval($node->line),
+						'error' => (string) $node->description
+					);
+
+					// group problems by files
+					if (!isset($problems[ $entry['file'] ])) {
+						$problems[ $entry['file'] ] = array();
+					}
+
+					$problems[ $entry['file'] ][] = $entry;
+				}
+			}
+			else {
+				throw new Exception("Parsing {$file} failed!");
+			}
+		}
 
 		// format results
 		$output = array(
+			'problems' => $problems,
 			'time' => microtime(true) - $start,
 			'tool' => $tool,
 		);
-
-		return $output;
-	}
-
-	/**
-	 * Get issues for a given fle
-	 *
-	 * @param string $fileName file to get issues for
-	 * @return string output from Code Inspect
-	 */
-	protected function getFileIssues($fileName) {
-		$output = $this->runCodeInspect($fileName);
-
-		if (!empty($output)) {
-			$output = array(
-				'errors' => array(), //$output['output'],
-				'tool' => $output['tool'],
-				'time' => $output['time'],
-			);
-		}
 
 		return $output;
 	}
@@ -106,31 +124,9 @@ class CodeLintPhp extends CodeLint {
 	 * @return boolean returns true if the entry should be kept
 	 */
 	public function filterErrorsOut($error) {
-		$remove = true;
-
-		switch($error['error']) {
-			// keep the following
-			case "ERROR: unreachable statement":
-				$remove = false;
-				break;
-		}
-
-		// notice: in the last function, variable `$foo' declared global but not used
-		if (startsWith($error['error'], 'notice: in the last function, variable')) {
-			$remove = false;
-		}
-
-		// FATAL ERROR: expected `;', found symbol sym_variable
-		if (startsWith($error['error'], 'FATAL ERROR')) {
-			$remove = false;
-		}
-
-		// Variable `$wgHooks' assigned but never used
-		if (strpos($error['error'], 'variable `$wg') !== false && endsWith($error['error'], ' assigned but never used')) {
-			$remove = true;
-		}
-
-		return !$remove;
+		// keep all entries for now
+		// TODO: review it
+		return true;
 	}
 
 	/**
@@ -140,16 +136,6 @@ class CodeLintPhp extends CodeLint {
 	 * @return array modified entry
 	 */
 	public function internalFormatReportEntry($entry) {
-		// remove entry type (error / warning / notice)
-		if (isset($entry['error'])) {
-			list($type, $msg) = explode(': ', $entry['error'], 2);
-			$entry['error'] = ucfirst($msg);
-
-			if ($type === 'FATAL ERROR') {
-				$entry['error'] = "FATAL ERROR: {$entry['error']}";
-			}
-		}
-
 		return $entry;
 	}
 
@@ -160,18 +146,18 @@ class CodeLintPhp extends CodeLint {
 	 * @return array list of reported warnings
 	 */
 	public function internalCheckFile($fileName) {
-		$output = $this->getFileIssues($fileName);
+		// run PhpStorm for the whole directory
+		$output = $this->inspectDirectory(dirname($fileName));
 
-		// parse raw output
-		if (!empty($output['errors'])) {
-			foreach($output['errors'] as &$entry) {
-				list($fileName, $lineNo, $msg) = explode(':', $entry, 3);
+		// take issues for just the current file
+		$errors = isset($output['problems'][$fileName]) ? $output['problems'][$fileName] : array();
 
-				$entry = array(
-					'error' => ltrim($msg),
-					'line' => intval($lineNo),
-				);
-			}
+		if (!empty($output)) {
+			$output = array(
+				'errors' => $errors,
+				'tool' => $output['tool'],
+				'time' => $output['time'],
+			);
 		}
 
 		return $output;
@@ -192,12 +178,12 @@ class CodeLintPhp extends CodeLint {
 				break;
 		}
 
-		if (endsWith($errorMsg, 'declared global but not used')) {
+		if (startsWith($errorMsg, 'Undefined variable')) {
 			$ret = true;
 		}
 
-		if (startsWith($errorMsg, 'FATAL ERROR') && strpos($errorMsg, 'old-style syntax') === false) {
-			#$ret = true; // TODO
+		if (startsWith($errorMsg, 'Undefined constant')) {
+			$ret = true;
 		}
 
 		return $ret;
