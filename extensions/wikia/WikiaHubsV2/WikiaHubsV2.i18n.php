@@ -33,7 +33,7 @@ $messages['en'] = array(
 	'wikiahubs-error-invalid-reason-length' => 'Comment must be between 1 and 140 characters',
 
 	//popular videos
-	'wikiahubs-popular-videos-suggested-by' => 'Suggested by $1',
+	'wikiahubs-popular-videos-suggested-by' => 'Suggested by [[User:$1]]',
 	'wikiahubs-suggest-video-header' => 'Favorite Videos',
 	'wikiahubs-suggest-video-submit-button' => 'Suggest Video',
 
