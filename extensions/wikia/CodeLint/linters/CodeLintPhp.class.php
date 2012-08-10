@@ -7,8 +7,6 @@
  *
  * Requires PHP Storm local installation
  *
- * UNDER DEVELOPMENT
- *
  * @author Maciej Brencz (Macbre) <macbre at wikia-inc.com>
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  * @package MediaWiki
@@ -103,7 +101,7 @@ class CodeLintPhp extends CodeLint {
 			$output = $this->cache['output'];
 		}
 
-		$output['time'] = microtime(true) - $start;
+		$output['time'] = round(microtime(true) - $start, 4);
 
 		return $output;
 	}
