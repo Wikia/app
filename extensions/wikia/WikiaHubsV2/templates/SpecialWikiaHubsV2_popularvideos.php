@@ -1,9 +1,10 @@
 <div class="grid-4 alpha wikiahubs-popular-videos">
 	<div class="title-wrapper">
-		<h2>Popular video from template</h2>
-		<button id="suggest-popularvideos" class="wikia-button secondary">Suggest a Video</button>
+		<h2><?= wfMsg('wikiahubs-suggest-video-header'); ?></h2>
+		<button id="suggest-popularvideos" class="wikia-button secondary">
+			<?= wfMsg('wikiahubs-suggest-video-submit-button'); ?>
+		</button>
 	</div>
-
 	<section class="WikiaMediaCarousel">
 		<a href="#" class="button secondary right next">
 			<img src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" class="chevron" />

@@ -34,6 +34,8 @@ $messages['en'] = array(
 
 	//popular videos
 	'wikiahubs-popular-videos-suggested-by' => 'Suggested by $1',
+	'wikiahubs-suggest-video-header' => 'Favorite Videos',
+	'wikiahubs-suggest-video-submit-button' => 'Suggest Video',
 
 	// wikia hubs
 	'wikiahubs-vertical-VideoGames' => 'Video Games',
