@@ -81,6 +81,7 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 		$videoData = $model->getDataForModuleFeaturedVideo();
 		$this->headline = $videoData['headline'];
 		$this->sponsor = $videoData['sponsor'];
+		$this->sponsorThumb = $videoData['sponsorthumb'];
 		$this->video = $videoData['video'];
 		$this->description = $videoData['description'];
 	}

@@ -1,11 +1,14 @@
 <div class="grid-2 alpha wikiahubs-sponsored-video">
 	<div class="title-wrapper">
 		<h2>
-			<span class="mw-headline" id="Video_of_the_Day">Video of the Day</span>
+			<span class="mw-headline" id="Video_of_the_Day"><?= $headline; ?></span>
 		</h2>
-		<span class="sponsorbox"><ins></ins></span>
+
+		<?php if( !empty($sponsorThumb) ): ?>
+			<span class="sponsorbox"><img src="<?= $sponsorThumb; ?>" /><ins></ins></span>
+		<?php endif; ?>
 	</div>
-	<div class="description"></div>
+
 	<div class="sponsored-video-content">
 		<figure class="thumb tright thumbinner" style="width:302px;">
 			<a href="/File:Resident_Evil_6_(VG)_(2012)_-_SDCC_trailer" class="image video" data-video-name="Resident Evil 6 (VG) (2012) - SDCC trailer">
@@ -16,8 +19,8 @@
 			<figcaption class="thumbcaption"></figcaption>
 		</figure>
 		<h4>
-			<span class="mw-headline" id="Resident_Evil:_6"><b>Resident Evil: 6</b></span>
+			<span class="mw-headline" id="<?= $description['maintitle']; ?>"><b><?= $description['maintitle']; ?></b></span>
 		</h4>
-		More evil awaits you on the <a  class="text" href="http://residentevil.wikia.com/?redirect=no">Resident Evil Wiki</a>.
+		<?= $description['subtitle']; ?> <a href="<?= $description['link']['href']; ?>"><?= $description['link']['anchor']; ?></a>
 	</div>
 </div>
