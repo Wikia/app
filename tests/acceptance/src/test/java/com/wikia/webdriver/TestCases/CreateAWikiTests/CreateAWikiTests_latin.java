@@ -17,7 +17,7 @@ import com.wikia.webdriver.pageObjects.PageObject.CreateNewWiki.NewWikiaHomePage
 
 
 
-public class CreateAWikiTests extends TestTemplate
+public class CreateAWikiTests_latin extends TestTemplate
 {
 	private String wikiName;
 
