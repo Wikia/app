@@ -415,6 +415,7 @@ No
 						'title' => 'WoWwiki',
 						'href' => 'http://www.wowwiki.com'
 					),
+					'blogurl' => 'http://assassinscreed.wikia.com/wiki/User_blog:Master_Sima_Yi/Assassinews_07/09_-_Assassin%27s_Creed_film_news',
 				),
 				array(
 					'article' => array(
@@ -433,6 +434,7 @@ No
 						'title' => 'WoWwiki',
 						'href' => 'http://www.wowwiki.com'
 					),
+					'blogurl' => 'http://assassinscreed.wikia.com/wiki/User_blog:Master_Sima_Yi/Assassinews_07/09_-_Assassin%27s_Creed_film_news',
 				),
 				array(
 					'article' => array(
@@ -451,6 +453,7 @@ No
 						'title' => 'WoWwiki',
 						'href' => 'http://www.wowwiki.com'
 					),
+					'blogurl' => 'http://assassinscreed.wikia.com/wiki/User_blog:Master_Sima_Yi/Assassinews_07/09_-_Assassin%27s_Creed_film_news',
 				),
 				array(
 					'article' => array(
@@ -469,6 +472,7 @@ No
 						'title' => 'WoWwiki',
 						'href' => 'http://www.wowwiki.com'
 					),
+					'blogurl' => 'http://assassinscreed.wikia.com/wiki/User_blog:Master_Sima_Yi/Assassinews_07/09_-_Assassin%27s_Creed_film_news',
 				)
 			)
 		);

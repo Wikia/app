@@ -42,6 +42,10 @@ $messages['en'] = array(
 	'wikiahubs-vertical-VideoGames' => 'Video Games',
 	'wikiahubs-vertical-Entertainment' => 'Entertainment',
 	'wikiahubs-vertical-Lifestyle' => 'Lifestyle',
+	
+	// from the community
+	'wikiahubs-from-community-promoted' => 'Get Promoted',
+	'wikiahubs-from-community-caption' => 'From [$1 $2] on [$3 $4]',
 );
 
 $messages['de'] = array(

@@ -1,12 +1,14 @@
 <h2>
 	<?= $headline ?>
-	<button id="suggestArticle" class="wikia-button secondary">Get Promoted </button>
+	<button id="suggestArticle" class="wikia-button secondary">
+		<?= wfMsg('wikiahubs-from-community-promoted') ?>
+	</button>
 </h2>
 <ul class="wikiahubs-ftc-list">
 	<? foreach($entries as $entry): ?>
 		<li class="wikiahubs-ftc-item">
 			<div class="floatleft">
-				<a href="http://assassinscreed.wikia.com/wiki/User_blog:Master_Sima_Yi/Assassinews_07/09_-_Assassin%27s_Creed_film_news">
+				<a href="<?= $entry['blogurl'] ?>">
 					<img alt="<?= $entry['image'] ?>" src="<?= $entry['imagethumb'] ?>" width="570" height="300" />
 				</a>
 			</div>
@@ -18,13 +20,15 @@
 				</p>
 			</div>
 			<div class="wikiahubs-ftc-subtitle">
-				<p>
-					From <a  class="text" href="<?= $entry['contributor']['href'] ?>">
-						<?= $entry['contributor']['name'] ?>
-					</a>
-					on <a  class="text" href="<?= $entry['wikilink']['href'] ?>">
-						<?= $entry['wikilink']['title'] ?>
-					</a>
+				<p class="plaintext">
+					<?= wfMsgExt(
+						'wikiahubs-from-community-caption',
+						array('parseinline'),
+						$entry['contributor']['href'],
+						$entry['contributor']['name'],
+						$entry['wikilink']['href'],
+						$entry['wikilink']['title']
+					) ?>
 				</p>
 			</div>
 			<div class="wikiahubs-ftc-creative">
