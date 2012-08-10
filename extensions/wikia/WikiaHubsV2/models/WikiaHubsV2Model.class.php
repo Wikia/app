@@ -229,7 +229,7 @@ class WikiaHubsV2Model extends WikiaModel {
 					'duration' => 31,
 					'headline' => 'The Twilight Saga',
 					'submitter' => 'Bschwood',
-					'wiki' => 'http://www.twilight.wikia.com'
+					'wikiId' => 5687,
 				),
 				array(
 					'title' => 'The Twilight Saga: Eclipse (2010) - Clip: Battle recut',
@@ -237,10 +237,9 @@ class WikiaHubsV2Model extends WikiaModel {
 						'width' => 160,
 						'height' => 90,
 					),
-					'duration' => 31,
 					'headline' => 'The Twilight Saga',
 					'submitter' => 'Bschwood',
-					'wiki' => 'http://www.twilight.wikia.com'
+					'wikiId' => 5687,
 				),
 				array(
 					'title' => 'The Twilight Saga: Eclipse (2010) - Clip: Battle recut',
@@ -248,10 +247,9 @@ class WikiaHubsV2Model extends WikiaModel {
 						'width' => 160,
 						'height' => 90,
 					),
-					'duration' => 31,
 					'headline' => 'The Twilight Saga',
 					'submitter' => 'Bschwood',
-					'wiki' => 'http://www.twilight.wikia.com'
+					'wikiId' => 5687,
 				),
 				array(
 					'title' => 'The Twilight Saga: Eclipse (2010) - Clip: Battle recut',
@@ -259,10 +257,9 @@ class WikiaHubsV2Model extends WikiaModel {
 						'width' => 160,
 						'height' => 90,
 					),
-					'duration' => 31,
 					'headline' => 'The Twilight Saga',
 					'submitter' => 'Bschwood',
-					'wiki' => 'http://www.twilight.wikia.com'
+					'wikiId' => 5687,
 				),
 				array(
 					'title' => 'The Twilight Saga: Eclipse (2010) - Clip: Battle recut',
@@ -270,10 +267,9 @@ class WikiaHubsV2Model extends WikiaModel {
 						'width' => 160,
 						'height' => 90,
 					),
-					'duration' => 31,
 					'headline' => 'The Twilight Saga',
 					'submitter' => 'Bschwood',
-					'wiki' => 'http://www.twilight.wikia.com'
+					'wikiId' => 5687,
 				),
 				array(
 					'title' => 'The Twilight Saga: Eclipse (2010) - Clip: Battle recut',
@@ -281,10 +277,9 @@ class WikiaHubsV2Model extends WikiaModel {
 						'width' => 160,
 						'height' => 90,
 					),
-					'duration' => 31,
 					'headline' => 'The Twilight Saga',
 					'submitter' => 'Bschwood',
-					'wiki' => 'http://www.twilight.wikia.com'
+					'wikiId' => 5687,
 				),
 			)
 		);
