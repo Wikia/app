@@ -204,6 +204,7 @@ class CodeLintPhp extends CodeLint {
 
 		switch($errorMsg) {
 			case 'Unreachable statement':
+			case 'Redundant closing tag':
 				$ret = true;
 				break;
 		}
