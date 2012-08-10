@@ -10,6 +10,8 @@
  */
 
 class WikiaHubsV2Model extends WikiaModel {
+	const MINIATURE_SIZE = 300;
+
 	protected $lang;
 	protected $date;
 	protected $vertical;
@@ -39,7 +41,7 @@ class WikiaHubsV2Model extends WikiaModel {
 	}
 
 	public function getDataForModuleSlider() {
-		return array(
+		$data = array(
 			'images' => array(
 				array(
 					'image' => 'File:Wikia-Visualization-Main,rappelz.png',
@@ -78,6 +80,11 @@ class WikiaHubsV2Model extends WikiaModel {
 				),
 			)
 		);
+
+		foreach ($data['images'] as &$image) {
+			$image['imagethumb'] = $this->getStandardThumbnailUrl($image['image']);
+		}
+		return $data;
 	}
 
 	public function getDataForModuleExplore() {
@@ -86,6 +93,7 @@ class WikiaHubsV2Model extends WikiaModel {
 			'headline' => 'Explore',
 			'article' => 'Article content',
 			'image' => 'Marvel320.jpg',
+			'imagethumb' => $this->getStandardThumbnailUrl('Marvel320.jpg'),
 			'linkgroups' =>
 			array(
 				array(
@@ -190,6 +198,7 @@ class WikiaHubsV2Model extends WikiaModel {
 		return array(
 			'headline' => 'Featured video',
 			'sponsor' => 'FVSponsor.jpg',
+			'sponsorthumb' => $this->getStandardThumbnailUrl('FVSponsor.jpg'),
 			'video' => array(
 				'title' => 'WWE_13_(VG)_(2012)_-_Live_trailer'
 			),
@@ -209,6 +218,7 @@ class WikiaHubsV2Model extends WikiaModel {
 		return array(
 			'headline' => 'Popular videos',
 			'sponsor' => 'FVSponsor.jpg',
+			'sponsorthumb' => $this->getStandardThumbnailUrl('FVSponsor.jpg'),
 			'videos' => array(
 				array(
 					'title' => 'The Twilight Saga: Eclipse (2010) - Clip: Battle recut',
@@ -335,10 +345,12 @@ class WikiaHubsV2Model extends WikiaModel {
 		return array(
 			'headline' => 'Wikia\'s Picks',
 			'sponsor' => 'FVSponsor.jpg',
+			'sponsorthumb' => $this->getStandardThumbnailUrl('FVSponsor.jpg'),
 			'tabs' => array(
 				array(
 					'title' => 'Tab title',
 					'image' => 'Image.jpg',
+					'imagethumb' => $this->getStandardThumbnailUrl('Image.jpg'),
 					'link' => array(
 						'title' => 'WoWwiki',
 						'href' => 'http://www.wowwiki.com'
@@ -348,6 +360,7 @@ class WikiaHubsV2Model extends WikiaModel {
 				array(
 					'title' => 'Tab title',
 					'image' => 'Image.jpg',
+					'imagethumb' => $this->getStandardThumbnailUrl('Image.jpg'),
 					'link' => array(
 						'title' => 'WoWwiki',
 						'href' => 'http://www.wowwiki.com'
@@ -357,6 +370,7 @@ class WikiaHubsV2Model extends WikiaModel {
 				array(
 					'title' => 'Tab title',
 					'image' => 'Image.jpg',
+					'imagethumb' => $this->getStandardThumbnailUrl('Image.jpg'),
 					'link' => array(
 						'title' => 'WoWwiki',
 						'href' => 'http://www.wowwiki.com'
@@ -391,6 +405,7 @@ No
 					),
 					'contributor' => 'Master Sima Yi',
 					'image' => 'Michael-Fassbender-cast-in-Assassins-Creed-Movie.jpg',
+					'imagethumb' => $this->getStandardThumbnailUrl('Michael-Fassbender-cast-in-Assassins-Creed-Movie.jpg'),
 					'content' => 'Today, several news sites have reported that actor Michael Fassbender (known for his roles in Inglourious Basterds, Shame, X-Men: First Class and Prometheus) has signed on for the planned Assassin\'s Creed film.',
 					'wikilink' => array(
 						'title' => 'WoWwiki',
@@ -404,6 +419,7 @@ No
 					),
 					'contributor' => 'Master Sima Yi',
 					'image' => 'Michael-Fassbender-cast-in-Assassins-Creed-Movie.jpg',
+					'imagethumb' => $this->getStandardThumbnailUrl('Michael-Fassbender-cast-in-Assassins-Creed-Movie.jpg'),
 					'content' => 'Today, several news sites have reported that actor Michael Fassbender (known for his roles in Inglourious Basterds, Shame, X-Men: First Class and Prometheus) has signed on for the planned Assassin\'s Creed film.',
 					'wikilink' => array(
 						'title' => 'WoWwiki',
@@ -417,6 +433,7 @@ No
 					),
 					'contributor' => 'Master Sima Yi',
 					'image' => 'Michael-Fassbender-cast-in-Assassins-Creed-Movie.jpg',
+					'imagethumb' => $this->getStandardThumbnailUrl('Michael-Fassbender-cast-in-Assassins-Creed-Movie.jpg'),
 					'content' => 'Today, several news sites have reported that actor Michael Fassbender (known for his roles in Inglourious Basterds, Shame, X-Men: First Class and Prometheus) has signed on for the planned Assassin\'s Creed film.',
 					'wikilink' => array(
 						'title' => 'WoWwiki',
@@ -430,6 +447,7 @@ No
 					),
 					'contributor' => 'Master Sima Yi',
 					'image' => 'Michael-Fassbender-cast-in-Assassins-Creed-Movie.jpg',
+					'imagethumb' => $this->getStandardThumbnailUrl('Michael-Fassbender-cast-in-Assassins-Creed-Movie.jpg'),
 					'content' => 'Today, several news sites have reported that actor Michael Fassbender (known for his roles in Inglourious Basterds, Shame, X-Men: First Class and Prometheus) has signed on for the planned Assassin\'s Creed film.',
 					'wikilink' => array(
 						'title' => 'WoWwiki',
@@ -441,12 +459,29 @@ No
 	}
 
 	public function getHubName($name) {
-		if(empty($name)) {
+		if (empty($name)) {
 			// mock data
 			return 'Video Games';
 		} else {
 			return $name;
 		}
+	}
+
+	protected function getStandardThumbnailUrl($imageName) {
+		$title = F::build('Title', array($imageName, NS_FILE), 'newFromText');
+		if (!($title instanceof Title)) {
+			return false;
+		}
+
+		$file = F::app()->wf->FindFile($title);
+		if (!($file instanceof File)) {
+			return false;
+		}
+
+		$thumbParams = array('width' => self::MINIATURE_SIZE);
+		/* @var $thumb ThumbnailImage */
+		$thumb = $file->transform($thumbParams);
+		return $thumb->getUrl();
 	}
 
 }
