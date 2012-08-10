@@ -35,7 +35,7 @@ var WikiaScriptLoader = {};
 				if (!this.onLoadDone && typeof this.onLoadCallback == 'function') {
 					this.onLoadCallback();
 					this.onLoadDone = true;
-				}					
+				}
 			};
 			//for Opera
 			script.onreadystatechange = function() {
@@ -67,8 +67,9 @@ var WikiaScriptLoader = {};
 	function injectNode(type, urls, options){
 		options = options || {};
 
-		if(!isArray(urls))
+		if(!isArray(urls)) {
 			urls = [urls];
+		}
 
 		var node,
 		url,
@@ -84,12 +85,13 @@ var WikiaScriptLoader = {};
 				}
 			}
 		}
-		
+
 		if(type == 'js'){
 			opts = {callback: finalCallback};
 			counter += urls.length;
-		}else
+		} else {
 			opts = options;
+		}
 
 		for(var x = 0, y = urls.length; x < y; x++){
 			headNode.appendChild(NodeFactories[type](urls[x], opts));
@@ -106,7 +108,7 @@ var WikiaScriptLoader = {};
 		}
 		return output;
 	}
-	
+
 	function writeScript(urls, callback){
 		var output = buildScript(urls);
 
@@ -124,7 +126,7 @@ var WikiaScriptLoader = {};
 				window.attachEvent('onload', handler);
 		}
 	}
-	
+
 	/**
 	 * @public
 	 */
