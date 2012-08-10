@@ -34,6 +34,7 @@ $messages['en'] = array(
 
 	//popular videos
 	'wikiahubs-popular-videos-suggested-by' => 'Suggested by [[User:$1|$1]]',
+	'wikiahubs-popular-videos-suggested-by-profile' => 'Suggested by [$2 $1]',
 	'wikiahubs-suggest-video-header' => 'Favorite Videos',
 	'wikiahubs-suggest-video-submit-button' => 'Suggest Video',
 
@@ -42,7 +43,6 @@ $messages['en'] = array(
 	'wikiahubs-vertical-Entertainment' => 'Entertainment',
 	'wikiahubs-vertical-Lifestyle' => 'Lifestyle',
 );
-
 
 $messages['de'] = array(
 	'wikiahubs-button-cancel' => 'Abbrechen',
@@ -70,5 +70,9 @@ $messages['de'] = array(
 	'wikiahubs-vertical-video-games' => 'Videospiele',
 	'wikiahubs-vertical-entertainment' => 'Entertainment',
 	'wikiahubs-vertical-lifestyle' => 'Lifestyle',
+);
 
+$messages['qqq'] = array(
+	'wikiahubs-popular-videos-suggested-by' => 'A link under video thumbnail on hubs page. The only parameter is username.',
+	'wikiahubs-popular-videos-suggested-by-profile' => "A link under video thumbnail on hubs page. The first parameter is username and second one is a full page address to user's profile page.",
 );

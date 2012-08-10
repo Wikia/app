@@ -226,9 +226,20 @@ class WikiaHubsV2Model extends WikiaModel {
 						'width' => 160,
 						'height' => 90,
 					),
-					'duration' => 31,
 					'headline' => 'The Twilight Saga',
 					'submitter' => 'Bschwood',
+					'profile' => 'http://community.wikia.com/wiki/User:Bchwood',
+					'wikiId' => 5687,
+				),
+				array(
+					'title' => 'The Twilight Saga: Eclipse (2010) - Clip: Battle recut',
+					'thumbnailData' => array(
+						'width' => 160,
+						'height' => 90,
+					),
+					'headline' => 'The Twilight Saga',
+					'submitter' => 'Andrzej Łukaszewski',
+					'profile' => 'http://poznan.wikia.com/wiki/U%C5%BCytkownik:Andrzej_%C5%81ukaszewski',
 					'wikiId' => 5687,
 				),
 				array(
@@ -239,6 +250,7 @@ class WikiaHubsV2Model extends WikiaModel {
 					),
 					'headline' => 'The Twilight Saga',
 					'submitter' => 'Bschwood',
+					'profile' => '',
 					'wikiId' => 5687,
 				),
 				array(
@@ -249,6 +261,7 @@ class WikiaHubsV2Model extends WikiaModel {
 					),
 					'headline' => 'The Twilight Saga',
 					'submitter' => 'Bschwood',
+					'profile' => 'http://community.wikia.com/wiki/User:Bchwood',
 					'wikiId' => 5687,
 				),
 				array(
@@ -259,6 +272,7 @@ class WikiaHubsV2Model extends WikiaModel {
 					),
 					'headline' => 'The Twilight Saga',
 					'submitter' => 'Bschwood',
+					'profile' => 'http://community.wikia.com/wiki/User:Bchwood',
 					'wikiId' => 5687,
 				),
 				array(
@@ -269,16 +283,7 @@ class WikiaHubsV2Model extends WikiaModel {
 					),
 					'headline' => 'The Twilight Saga',
 					'submitter' => 'Bschwood',
-					'wikiId' => 5687,
-				),
-				array(
-					'title' => 'The Twilight Saga: Eclipse (2010) - Clip: Battle recut',
-					'thumbnailData' => array(
-						'width' => 160,
-						'height' => 90,
-					),
-					'headline' => 'The Twilight Saga',
-					'submitter' => 'Bschwood',
+					'profile' => 'http://community.wikia.com/wiki/User:Bchwood',
 					'wikiId' => 5687,
 				),
 			)
