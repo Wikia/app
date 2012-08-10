@@ -35,6 +35,8 @@ class WallCopyFollowsTask extends BatchTask {
 	 * @return boolean - status of operation
 	 */
 	public function execute($params = null) {
+		global $wgCityId;
+
 		$noErrors = true;
 		$params = unserialize($params->task_arguments);
 		
