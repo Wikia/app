@@ -118,9 +118,7 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 
 	private function getCaptchaObj() {
 		$captchaObj = null;
-		if(empty( $this->wg->WikiaEnableConfirmEditExt ) && !empty( $this->wg->EnableReCaptchaExt) ) {
-			$captchaObj = new ReCaptcha();
-		} else if(!empty($this->wg->WikiaEnableConfirmEditExt)) {
+		if( !empty( $this->wg->WikiaEnableConfirmEditExt ) ) {
 			$captchaObj = ConfirmEditHooks::getInstance();
 		}
 
