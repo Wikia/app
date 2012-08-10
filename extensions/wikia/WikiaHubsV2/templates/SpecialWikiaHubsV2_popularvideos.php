@@ -1,4 +1,4 @@
-<div class="grid-4 alpha wikiahubs-pupular-videos">
+<div class="grid-4 alpha wikiahubs-popular-videos">
 	<div class="title-wrapper">
 		<h2>Popular video from template</h2>
 		<button id="suggestVideo" class="wikia-button secondary">Suggest a Video</button>
