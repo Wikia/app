@@ -521,6 +521,7 @@ $messages['fi'] = array(
 	'editaccount-submit-email' => 'Tallenna sähköpostiosoite',
 	'editaccount-submit-pass' => 'Tallenna salasana',
 	'editaccount-submit-realname' => 'Tallenna oikea nimi',
+	'editaccount-submit-cleardisable' => 'Nollaa poista käytöstä -lippu',
 	'editaccount-submit-close' => 'Sulje tunnus',
 	'editaccount-usage-close' => 'Käyttäjätunnuksen voi poistaa käytöstä myös sekoittamalla sen salasanan ja poistamalla sen sähköpostiosoitteen. Huomioi, että nämä tiedot katoavat eikä niitä voi palauttaa.',
 	'editaccount-warning-close' => '<b>Varoitus!</b> Olet poistamassa pysyvästi käytöstä käyttäjän <b>$1</b> tilin. Tämä ei voi palauttaa. Oletko varma, että haluat tehdä tämän?',
@@ -536,13 +537,19 @@ $messages['fi'] = array(
 	'editaccount-error-close' => 'Tunnusta suljettaessa tapahtui virhe. Yritä uudelleen tai ota yhteyttä tekniseen tiimiin.',
 	'editaccount-invalid-email' => '"$1" ei ole kelvollinen sähköpostiosoite!',
 	'editaccount-nouser' => 'Tunnusta nimeltä "$1" ei ole olemassa!',
+	'editaccount-labal-account-status' => 'Tilin tila',
+	'editaccount-labal-email-status' => 'Sähköpostin tila',
+	'editaccount-status-confirmed' => 'Vahvistetaan',
+	'editaccount-status-unconfirmed' => 'Vahvistamaton',
+	'editaccount-status-realuser' => 'Todellinen käyttäjä',
+	'editaccount-status-tempuser' => 'Tilapäinen käyttäjä',
 	'editaccount-log' => 'Käyttäjätunnusloki',
 	'editaccount-log-header' => 'Tämä sivu listaa Wikian henkilökunnan käyttäjäkohtaisiin asetuksiin tekemät muutokset.',
 	'editaccount-log-entry-email' => 'muutti käyttäjän $2 sähköpostiosoitetta',
 	'editaccount-log-entry-pass' => 'muutti käyttäjän $2 salasanaa',
 	'editaccount-log-entry-realname' => 'käyttäjän $2 oikea nimi vaihtui',
 	'editaccount-log-entry-close' => 'poisti käytöstä tunnuksen $2',
-	'edit-account-closed-flag' => '<div style="border: 1px solid black; padding: 1em">Tämä tunnus on poistettu käytöstä.</div>',
+	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;">Wikia on poistanut tämän tilin käytöstä kaikkialta.</div>',
 	'right-editaccount' => 'Muokata toisten käyttäjien asetuksia',
 );
 
@@ -1416,7 +1423,7 @@ $messages['ps'] = array(
 	'editaccount-submit-close' => 'کارن حساب تړل',
 	'editaccount-status' => 'د پيغام دريځ',
 	'editaccount-labal-account-status' => 'د ګڼون دريځ',
-	'editaccount-labal-email-status' => 'د برېښليک دریځ',
+	'editaccount-labal-email-status' => 'د برېښليک دريځ',
 );
 
 /** Portuguese (português)

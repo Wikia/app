@@ -1980,6 +1980,7 @@ $messages['pt'] = array(
 	'userprofilepage-lightbox-about-me-cancel' => 'Cancelar',
 	'userprofilepage-lightbox-about-me-save' => 'Terminei, gravar',
 	'userprofilepage-closing-popup-header' => 'Sair do Editor de Perfil',
+	'userprofilepage-closing-popup-info' => 'Existem alterações não salvas no seu perfil. O que você pretende fazer?',
 	'userprofilepage-closing-popup-discard-and-quit' => 'Descartar alterações e sair',
 	'userprofilepage-closing-popup-save-and-quit' => 'Gravar e sair',
 	'userprofilepage-closing-popup-cancel' => 'Cancelar',

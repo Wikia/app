@@ -834,21 +834,27 @@ $messages['fa'] = array(
  * @author Tofu II
  */
 $messages['fi'] = array(
+	'multitasks-link-back-label' => 'tässä',
 	'multiwikiedit_button' => 'Muokkaa',
 	'multiwikiedit_confirm' => 'Vahvista',
+	'multiwikiedit_caption' => 'Sivuluettelo',
 	'multiwikiedit_or' => '<b>TAI</b>',
 	'multiwikiedit_page_text' => 'Tallennettava teksti',
 	'multiwikiedit_list_caption' => 'Wiki-luettelo',
 	'multiwikiedit_select_yourself' => 'Sinä',
 	'multiwikiedit_edit_options' => 'Muokkausvalitsimet',
 	'multidelete_button' => 'Poista',
+	'multidelete_caption' => 'Sivuluettelo',
+	'multidelete_or' => '<b>TAI</b>',
 	'multidelete_reason' => 'Syy poistolle',
+	'multidelete_error_empty_selection' => 'Anna valittujen wikien luettelo',
 	'multidelete_info_empty_list' => 'Annettuja otsikkoja ei löytynyt valituista wikeistä.',
 	'multidelete_select_all' => 'Valitse kaikki',
 	'multidelete_page' => 'Poistettavat sivut',
 	'multidelete_processing' => 'poistetaan sivuja',
 	'multidelete_selected_wikis' => 'valitut wikit',
 	'multidelete_omitting_invalid' => 'Ohitetaan virheellinen sivu $1.',
+	'multidelete_file_bad_format' => 'Tiedoston tulisi olla raakatekstiä',
 	'multidelete_file_missing' => 'Ei voitu lukea annettua tiedostoa',
 	'multidelete_brazilian_portuguese_wikis' => 'kaikki Brasilian portugalinkieliset wikit',
 	'multidelete_hebrew_wikis' => 'kaikki hebreankieliset wikit',
@@ -866,6 +872,7 @@ $messages['fi'] = array(
 	'multidelete_french_wikis' => 'kaikki ranskankieliset wikit',
 	'multidelete_swedish_wikis' => 'kaikki ruotsinkieliset wikit',
 	'multidelete_german_wikis' => 'kaikki saksankieliset wikit',
+	'multiwikienterpagename' => 'Kirjoita sivunimi:',
 	'multiwikirecords' => '$1 wiki löytyi',
 );
 

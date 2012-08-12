@@ -114,6 +114,16 @@ $messages['eu'] = array(
 	'contentfeeds-firstfewarticles-tag-next' => 'Hurrengoa',
 );
 
+/** Finnish (suomi)
+ * @author Centerlink
+ */
+$messages['fi'] = array(
+	'contentfeeds-firstfewarticles-tag-title' => 'Otsikko',
+	'contentfeeds-firstfewarticles-tag-next' => 'Seuraava',
+	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'Virhe: Sivun otsikko on pakollinen',
+	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Virhe: Sivun runko on pakollinen',
+);
+
 /** French (français) */
 $messages['fr'] = array(
 	'contentfeeds-desc' => 'Fournit de l’information riche et à jour grâce à de nombreuses balises ou « flux ».',

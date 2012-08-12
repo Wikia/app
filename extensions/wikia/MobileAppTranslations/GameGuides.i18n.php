@@ -155,6 +155,18 @@ $messages['es'] = array(
 	'error-json-parse' => 'Hubo un problema con los datos devueltos desde nuestros servidores, lo sentimos.\\nInténtalo de nuevo.',
 );
 
+/** Finnish (suomi)
+ * @author Centerlink
+ */
+$messages['fi'] = array(
+	'activityindicator-message' => 'Ladataan...',
+	'window-category-load-batch' => 'Lisää',
+	'window-article-button-close' => 'Sulje',
+	'window-article-button-back' => 'Takaisin',
+	'window-article-menu-search-label' => 'Etsi',
+	'window-article-menu-cancel-label' => 'Peruuta',
+);
+
 /** French (français)
  * @author Wyz
  */

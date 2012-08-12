@@ -217,11 +217,17 @@ $messages['hu'] = array(
  */
 $messages['ia'] = array(
 	'timeagomessaging-desc' => 'Forni internationalisation pro le plug-in jquery.timeago.js',
+	'timeago-year' => '{{PLURAL:$1|un anno|$1 annos}} retro',
 	'timeago-month' => '{{PLURAL:$1|un mense|$1 menses}} retro',
 	'timeago-day' => '{{PLURAL:$1|un die|$1 dies}} retro',
 	'timeago-hour' => '{{PLURAL:$1|un hora|$1 horas}} retro',
 	'timeago-minute' => '{{PLURAL:$1|un minuta|$1 minutas}} retro',
 	'timeago-second' => 'un minuta retro',
+	'timeago-day-from-now' => '{{PLURAL:$1|un die|$1 dies}} ab nunc',
+	'timeago-hour-from-now' => '{{PLURAL:$1|un hora|$1 horas}} ab nunc',
+	'timeago-minute-from-now' => '{{PLURAL:$1|un minuta|$1 minutas}} ab nunc',
+	'timeago-month-from-now' => '{{PLURAL:$1|un mense|$1 menses}} ab nunc',
+	'timeago-second-from-now' => 'un minuta ab nunc',
 );
 
 /** Italian (italiano)

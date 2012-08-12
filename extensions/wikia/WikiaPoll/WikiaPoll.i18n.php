@@ -62,6 +62,7 @@ $messages['af'] = array(
 
 /** Arabic (العربية)
  * @author Achraf94
+ * @author Meno25
  * @author OsamaK
  */
 $messages['ar'] = array(
@@ -73,7 +74,7 @@ $messages['ar'] = array(
 	'wikiapoll-votes' => '{{PLURAL:$1||صوت واحد|صوتان|$1 أصوات|$1 صوتًا|$1 صوت}}',
 	'wikiapoll-createpoll-headline' => 'إنشاء اقتراع',
 	'wikiapoll-editpoll-headline' => 'تعديل اقتراع',
-	'wikiapoll-question-label' => 'السؤال',
+	'wikiapoll-question-label' => 'سؤال',
 	'wikiapoll-addnewitem-label' => 'أضف عنصرًا جديدًا',
 	'wikiapoll-cancel-label' => 'ألغِ',
 	'wikiapoll-publish-label' => 'انشر',

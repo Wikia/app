@@ -465,10 +465,43 @@ Si crees que es un error, por favor [[Special:Contact|contacta a Wikia]].<br />E
 );
 
 /** Finnish (suomi)
+ * @author Centerlink
  * @author Nike
  * @author Tofu II
  */
 $messages['fi'] = array(
+	'phalanx' => 'Phalanx',
+	'phalanx-type-content' => 'sivun sisältö',
+	'phalanx-type-summary' => 'sivun yhteenveto',
+	'phalanx-type-title' => 'sivun otsikko',
+	'phalanx-type-user' => 'käyttäjä',
+	'phalanx-type-user-email' => 'sähköpostiosoite',
+	'phalanx-type-answers-question-title' => 'kysymysotsikko',
+	'phalanx-type-answers-recent-questions' => 'äskettäiset kysymykset',
+	'phalanx-type-wiki-creation' => 'wiki-luominen',
+	'phalanx-add-block' => 'Käytä estoa',
+	'phalanx-edit-block' => 'Tallenna esto',
+	'phalanx-label-filter' => 'Suodatin:',
+	'phalanx-label-reason' => 'Syy:',
+	'phalanx-label-expiry' => 'Kesto:',
+	'phalanx-label-type' => 'Tyyppi:',
+	'phalanx-label-lang' => 'Kieli:',
+	'phalanx-view-type' => 'Eston tyyppi...',
+	'phalanx-view-blocks' => 'Etsintäsuodattimet',
+	'phalanx-view-id-submit' => 'Nouda suodatin',
+	'phalanx-format-text' => 'pelkkä teksti',
+	'phalanx-format-case' => 'Kirjainkoosta riippuva',
+	'phalanx-format-exact' => 'tarkka',
+	'phalanx-tab-main' => 'Hallinnoi suodattimia',
+	'phalanx-test-submit' => 'Testi',
+	'phalanx-test-results-legend' => 'Testitulokset',
+	'phalanx-display-row-blocks' => 'estot:$1',
+	'phalanx-link-modify' => 'muokkaa',
+	'phalanx-link-stats' => 'tilastot',
+	'phalanx-reset-form' => 'Tyhjennä lomake',
+	'phalanx-legend-input' => 'Luo tai muokkaa suodatinta',
+	'phalanx-legend-listing' => 'Tällä hetkellä käytetyt suodattimet',
+	'phalanx-unblock-message' => 'Estotunnisteen #$1 poisto onnistui',
 	'phalanx-user-block-reason-exact' => 'Tämä käyttäjätunnus tai IP-osoite on estetty ilkivallan tai muunlaisen häiriköinnin vuoksi.
 Jos tämä on mielestäsi virhe, ole hyvä ja [[Special:Contact|ota yhteyttä Wikiaan]].',
 );
@@ -938,6 +971,7 @@ Per favor [[Special:Contact|contacta Wikia]] a proposito de iste problema.<br />
 	'phalanx-stats-table-wiki-url' => 'URL del wiki',
 	'phalanx-stats-table-wiki-last-edited' => 'Ultime modification',
 	'phalanx-email-filter-hidden' => 'Le filtro de e-mail es celate. Tu non ha le permission de vider le texto.',
+	'action-phalanx' => 'usar le systema anti-spam integrate',
 	'right-phalanx' => 'Pote gerer global blocadas e filtros anti-spam',
 	'right-phalanxexempt' => 'Exempte de regulas de Phalanx',
 	'right-phalanxemailblock' => 'Pote submitter, vider e gerer blocadas a base de e-mail',
@@ -1249,6 +1283,7 @@ Sila [[Special:Contact|hubungi Wikia]] tentang masalah ini.<br />Penyekat juga m
 	'phalanx-stats-table-wiki-url' => 'URL Wiki',
 	'phalanx-stats-table-wiki-last-edited' => 'Suntingan terkini',
 	'phalanx-email-filter-hidden' => 'Penapis e-mel disorokkan. Anda tidak dibenarkan untuk membaca teksnya.',
+	'action-phalanx' => 'menggunakan Mekanisme Pertahanan Spam Bersepadu',
 	'right-phalanx' => 'Boleh menguruskan sekatan dan penapis spam sedunia',
 	'right-phalanxexempt' => 'Dikecualikan daripada peraturan Phalanx',
 	'right-phalanxemailblock' => 'Boleh memfailkan, melihat dan mengurus sekatan berasaskan e-mel',

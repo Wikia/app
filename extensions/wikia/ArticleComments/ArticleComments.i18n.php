@@ -110,6 +110,7 @@ $messages['af'] = array(
 
 /** Arabic (العربية)
  * @author DRIHEM
+ * @author Meno25
  * @author OsamaK
  * @author ترجمان05
  */
@@ -118,8 +119,8 @@ $messages['ar'] = array(
 	'article-comments-comments' => 'التعليقات ($1)',
 	'article-comments-post' => 'أرسل تعليقا',
 	'article-comments-cancel' => 'ألغِ',
-	'article-comments-delete' => 'احذف',
-	'article-comments-edit' => 'عدّل',
+	'article-comments-delete' => 'حذف',
+	'article-comments-edit' => 'تعديل',
 	'article-comments-history' => 'التاريخ',
 	'article-comments-error' => 'تعذّر حفظ التعليق',
 	'article-comments-undeleted-comment' => 'تعليق غير محذوف من المدونة $1',
@@ -701,6 +702,7 @@ $messages['fa'] = array(
 );
 
 /** Finnish (suomi)
+ * @author Centerlink
  * @author Ilkea
  * @author Lukkipoika
  * @author Tm T
@@ -755,6 +757,39 @@ $PAGETILE_URL
 Vieraile ja muokkaa usein...
 
 Wikia',
+	'enotif_body_article_comment-HTML' => '<p>Arvoisa $WATCHINGUSERNAME,
+<br /><br />
+$PAGEEDITOR teki kommentin sivulle "$PAGETITLE".
+<br /><br />
+Seuraa tätä linkkiä nähdäksesi kommenttisäikeen: <a href="$PAGETITLE_URL">$PAGETITLE</a>
+<br /><br />
+Vieraile ja muokkaa usein...
+<br /><br />
+Wikia
+<br /><hr />
+<ul>
+<li>Haluatko valita, että mitkä sähköpostiviestit sinä vastaanotat? <a href="{{fullurl:Special:Preferences}}">Päivitä asetuksiasi<a>.</li>
+</ul>
+</p>',
+);
+
+/** Faroese (føroyskt)
+ * @author EileenSanda
+ */
+$messages['fo'] = array(
+	'article-comments-anonymous' => 'Dulnevndur brúkari',
+	'article-comments-comments' => 'Viðmerkingar ($1)',
+	'article-comments-post' => 'Send tína viðmerking',
+	'article-comments-cancel' => 'Angrað',
+	'article-comments-delete' => 'strikað',
+	'article-comments-edit' => 'rætta',
+	'article-comments-history' => 'søga',
+	'article-comments-error' => 'Viðmerkingin kundi ikki verða goymd',
+	'article-comments-reply' => 'Svara',
+	'article-comments-show-all' => 'Vís allar viðmerkingar',
+	'article-comments-prev-page' => 'Áðrenn',
+	'article-comments-next-page' => 'Næsta',
+	'article-comments-page-spacer' => '&#160...&#160',
 );
 
 /** French (français)

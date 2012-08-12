@@ -180,7 +180,7 @@ $messages['diq'] = array(
 	'specialcontact-username' => 'Namey Karberi',
 	'specialcontact-realname' => 'Namey şıma',
 	'specialcontact-yourmail' => 'Adresê e-posta',
-	'specialcontact-problem' => 'Mesela',
+	'specialcontact-problem' => 'Mersel',
 	'specialcontact-problemdesc' => 'Mesac',
 );
 

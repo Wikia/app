@@ -80,6 +80,7 @@ Bitte Schreibweise überprüfen.',
 
 /** Spanish (español)
  * @author Armando-Martin
+ * @author VegaDark
  */
 $messages['es'] = array(
 	'piggybac-desc' => 'Permite iniciar sesión con la cuenta de otro usuario',
@@ -94,12 +95,16 @@ Verifica tu escritura.',
 	'piggyback-itisyou' => 'No puedes personificarte a ti mismo.',
 	'piggyback-issysopto' => 'No puedes personificar a un usuario con el derecho de personificar.',
 	'action-piggyback' => 'Iniciar sesión como otro usuario',
+	'log-name-piggyback' => 'Registro de personificaciones',
+	'log-description-piggyback' => 'Esta página es un registro de personificaciones a cuentas de usuario.',
 );
 
 /** Finnish (suomi)
+ * @author Centerlink
  * @author Tofu II
  */
 $messages['fi'] = array(
+	'piggyback-otherusername' => 'Toinen käyttäjätunnus:',
 	'piggyback-wronguser' => '$1 ei ole sinun käyttäjätunnuksesi',
 );
 
@@ -119,6 +124,8 @@ Vérifiez l'orthographe.",
 	'piggyback-itisyou' => 'Vous ne pouvez pas vous connecter de manière superposée sur votre propre compte.',
 	'piggyback-issysopto' => 'Vous ne pouvez pas vous connecter de manière superposée sur le compte d’un utilisateur ayant lui-même ce droit.',
 	'action-piggyback' => 'se connecter sous un autre compte utilisateur',
+	'log-name-piggyback' => 'Journal d’accès superposé',
+	'log-description-piggyback' => 'Ce journal est une liste des accès superposés à des comptes.',
 );
 
 /** Galician (galego)
@@ -126,7 +133,7 @@ Vérifiez l'orthographe.",
  */
 $messages['gl'] = array(
 	'piggybac-desc' => 'Permite iniciar sesión como outro usuario',
-	'piggyback' => 'Acceso non autorizado',
+	'piggyback' => 'Acceso autorizado',
 	'piggyback-otherusername' => 'Outro nome de usuario:',
 	'piggyback-nosuchuser' => 'Non hai ningún usuario co nome "$1".
 Os nomes de usuario distinguen entre maiúsculas e minúsculas.
@@ -134,9 +141,11 @@ Comprobe a ortografía.',
 	'piggyback-wronguser' => '$1 non é o seu nome de usuario',
 	'piggyback-loginprompt' => 'Introduza de novo o seu nome de usuario e contrasinal.',
 	'piggyback-firstlogout' => 'Saia primeiro da conta e volva á súa.',
-	'piggyback-itisyou' => 'Non pode acceder sen autorización á súa propia conta.',
-	'piggyback-issysopto' => 'Non pode acceder sen autorización á conta dun usuario con dereitos de acceso sen autorización.',
+	'piggyback-itisyou' => 'Non pode autorizar o acceso á súa propia conta.',
+	'piggyback-issysopto' => 'Non pode autorizar o acceso a un usuario con dereitos de autorizar accesos.',
 	'action-piggyback' => 'conectarse como outro usuario',
+	'log-name-piggyback' => 'Rexistro de accesos autorizados',
+	'log-description-piggyback' => 'Este rexistro contén os accesos autorizados a contas.',
 );
 
 /** Interlingua (interlingua)
@@ -153,8 +162,10 @@ Verifica le orthographia.',
 	'piggyback-loginprompt' => 'Per favor re-entra tu nomine de usator e contrasigno.',
 	'piggyback-firstlogout' => 'Per favor primo claude session pro retornar a tu conto.',
 	'piggyback-itisyou' => 'Non es possibile portar le proprie conto.',
-	'piggyback-issysopto' => 'Non es possibile portar le conto de un usator con le derecto al portacontos.',
+	'piggyback-issysopto' => 'Non es possibile portar le conto de un usator con le derecto al Portacontos.',
 	'action-piggyback' => 'aperir session como un altere usator',
+	'log-name-piggyback' => 'Registro del Portacontos',
+	'log-description-piggyback' => 'Iste registro es un historia de personificationes autorisate per le Portacontos.',
 );
 
 /** Japanese (日本語)
@@ -196,6 +207,8 @@ $messages['mk'] = array(
 	'piggyback-itisyou' => 'Не можете да се качите на ушка самите на себе.',
 	'piggyback-issysopto' => 'Не можете да се качите на ушка на корисник со право за качување на ушка.',
 	'action-piggyback' => 'најава како друг корисник',
+	'log-name-piggyback' => 'Дневник на качувања на ушка',
+	'log-description-piggyback' => 'Овој дневник е записник за качувања на ушка на сметки.',
 );
 
 /** Malayalam (മലയാളം)
@@ -222,6 +235,8 @@ Sila semak ejaan anda.',
 	'piggyback-itisyou' => 'Anda tidak boleh menggendong diri sendiri.',
 	'piggyback-issysopto' => 'Anda tidak boleh menggendong pengguna dengan hak menggendong.',
 	'action-piggyback' => 'log masuk sebagai pengguna lain',
+	'log-name-piggyback' => 'Log gendong',
+	'log-description-piggyback' => 'Log ini merupakan rekod gendongan akaun.',
 );
 
 /** Norwegian Bokmål (‪norsk (bokmål)‬)
@@ -240,6 +255,8 @@ Sjekk stavemåten.',
 	'piggyback-itisyou' => 'Du kan ikke operere som deg selv.',
 	'piggyback-issysopto' => 'Du kan ikke operere som en bruker med rett til å operere som andre brukere.',
 	'action-piggyback' => 'logg på som en annen bruker',
+	'log-name-piggyback' => 'Logg over operasjoner som annen bruker',
+	'log-description-piggyback' => 'Denne loggen er en oppføring av operasjoner som andre kontoer.',
 );
 
 /** Dutch (Nederlands)
@@ -291,6 +308,8 @@ Sprawdź poprawność wpisanej nazwy.',
 	'piggyback-itisyou' => 'Nie możesz podłączyć się pod samego siebie.',
 	'piggyback-issysopto' => 'Nie możesz podłączyć się pod użytkownika posiadającego prawo do podłączania.',
 	'action-piggyback' => 'zaloguj się jako inny użytkownik',
+	'log-name-piggyback' => 'Rejestr Piggyback',
+	'log-description-piggyback' => 'Ten rejestr zawiera wszystkie logowania z użyciem piggyback.',
 );
 
 /** Piedmontese (Piemontèis)
@@ -349,7 +368,7 @@ Verifique a ortografia.',
  */
 $messages['ru'] = array(
 	'piggybac-desc' => 'Позволяет войти в качестве другого пользователя',
-	'piggyback' => 'Вход',
+	'piggyback' => 'Piggyback',
 	'piggyback-otherusername' => 'Имя другого участника:',
 	'piggyback-nosuchuser' => 'Не существует участника с именем «$1».
 Имя участника чувствительно к регистру символов.
@@ -400,6 +419,8 @@ Suriin ang iyong pagbabaybay.',
 	'piggyback-itisyou' => 'Hindi ka maaaring sumakay sa likod ng sarili mo.',
 	'piggyback-issysopto' => 'Hindi mo maaaring sakyan ang likod ng isang tagagamit na mayroong karapatan na makisakay sa likod.',
 	'action-piggyback' => 'lumagdang papasok bilang ibang tagagamit',
+	'log-name-piggyback' => 'Talaan ng pag-angkas sa likod',
+	'log-description-piggyback' => 'Ang talaang ito ay isang rekord ng mga pag-angkas sa likod ng akawnt.',
 );
 
 /** Simplified Chinese (‪中文（简体）‬)

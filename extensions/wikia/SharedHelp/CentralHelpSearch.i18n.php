@@ -149,6 +149,14 @@ $messages['pms'] = array(
 	'centralhelpsearch-placeholder' => "Arserché ant l'Agiut...",
 );
 
+/** Portuguese (português)
+ * @author SandroHc
+ */
+$messages['pt'] = array(
+	'centralhelpsearch-desc' => 'Permite a inclusão de um formulário para procura na Central de Ajuda da Comunidade',
+	'centralhelpsearch-placeholder' => 'Procurar Ajuda...',
+);
+
 /** Russian (русский)
  * @author Kuzura
  */

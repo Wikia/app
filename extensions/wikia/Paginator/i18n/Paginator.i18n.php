@@ -16,11 +16,12 @@ $messages['af'] = array(
 );
 
 /** Arabic (العربية)
+ * @author Meno25
  * @author OsamaK
  */
 $messages['ar'] = array(
 	'paginator-next' => 'التالي',
-	'paginator-back' => 'السابق',
+	'paginator-back' => 'رجوع',
 );
 
 /** Asturian (asturianu)
@@ -77,6 +78,14 @@ $messages['de'] = array(
 $messages['es'] = array(
 	'paginator-next' => 'Siguiente',
 	'paginator-back' => 'Atrás',
+);
+
+/** Finnish (suomi)
+ * @author Centerlink
+ */
+$messages['fi'] = array(
+	'paginator-next' => 'Seuraava',
+	'paginator-back' => 'Takaisin',
 );
 
 /** French (français)

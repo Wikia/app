@@ -165,11 +165,12 @@ $messages['af'] = array(
 );
 
 /** Arabic (العربية)
+ * @author Meno25
  * @author OsamaK
  */
 $messages['ar'] = array(
-	'rte-ck-hoverPreview-delete' => 'احذف',
-	'rte-ck-hoverPreview-edit' => 'عدل',
+	'rte-ck-hoverPreview-delete' => 'حذف',
+	'rte-ck-hoverPreview-edit' => 'تعديل',
 	'rte-ck-link-error-title' => 'خطأ',
 	'rte-ck-link-external-linkText' => 'نص الوصلة',
 	'rte-ck-link-external-tab' => 'وصلة خارجية',
@@ -182,8 +183,8 @@ $messages['ar'] = array(
 	'rte-ck-templateEditor-dialog-magicWords' => 'كلمات سحرية',
 	'rte-ck-templateEditor-dialog-magicWordsLink' => 'Help:كلمات سحرية',
 	'rte-ck-templateEditor-dialog-mostFrequentlyUsed' => 'الأكثر استخداما',
-	'rte-ck-templateEditor-editor-previewButton' => 'عاين',
-	'rte-ck-templateEditor-editor-previewTitle' => 'معاينة',
+	'rte-ck-templateEditor-editor-previewButton' => 'عرض مسبق',
+	'rte-ck-templateEditor-editor-previewTitle' => 'عرض مسبق',
 );
 
 /** Asturian (asturianu)
@@ -937,16 +938,62 @@ $messages['fa'] = array(
 );
 
 /** Finnish (suomi)
+ * @author Centerlink
  * @author Tofu II
  */
 $messages['fi'] = array(
 	'rte-ck-errorPopupTitle' => 'Virhe!',
 	'rte-ck-media-delete' => 'poista',
+	'rte-ck-photoGallery-slideshow' => 'Kuvaesitys',
+	'rte-ck-photoGallery-slider' => 'Liukusäädin',
+	'rte-ck-photoGallery-addGallery' => 'Lisää valokuvavalikoima',
+	'rte-ck-photoGallery-addSlideshow' => 'Lisää kuvaesitys',
+	'rte-ck-photoGallery-addSlider' => 'Lisää liukusäädin',
+	'rte-ck-photoGallery-confirmDelete' => 'Oletko varma, että haluat poistaa valokuvavalikoiman tältä sivulta?',
+	'rte-ck-photoGallery-confirmDeleteTitle' => 'Poistetaanko tämä valokuvavalikoima?',
 	'rte-ck-photoGallery-tooltip' => 'Tämä on galleria.',
 	'rte-ck-photoGallery-tooltipSlideshow' => 'Tämä on diaesitys.',
+	'rte-ck-poll-add' => 'Lisää äänestys',
+	'rte-ck-poll-poll' => 'Äänestys',
 	'rte-ck-signature-add' => 'Lisää allekirjoituksesi',
+	'rte-ck-signature-label' => 'allekirjoitus',
+	'rte-ck-table-alignNotSet' => 'Ei ole asetettu',
+	'rte-ck-table-invalidCols' => 'Sarakkeiden määrän on oltava suurempi kuin 0.',
+	'rte-ck-table-invalidRows' => 'Rivien määrän on oltava suurempi kuin 0.',
+	'rte-ck-table-toolbarTooltip' => 'Lisää taulukko',
+	'rte-ck-templateDropDown-chooseAnotherTpl' => 'Muu mallinne / maaginen sana',
+	'rte-ck-templateDropDown-showUsedList' => 'Näytä käytettyjen mallinteiden luettelo',
+	'rte-ck-templateDropDown-makeLayout' => 'Tee asettelu tältä sivulta',
+	'rte-ck-templateDropDown-label' => 'Malline',
+	'rte-ck-templateDropDown-title' => 'Valitse mallinne',
+	'rte-ck-templateEditor-dialog-browse' => 'Selaa mallinnetta',
+	'rte-ck-templateEditor-dialog-insert' => 'Lisää',
+	'rte-ck-templateEditor-dialog-magicWords' => 'Maaginen sanat',
 	'rte-ck-templateEditor-dialog-magicWordsLink' => 'Help:Taikasanat',
+	'rte-ck-templateEditor-dialog-mostFrequentlyUsed' => 'Useimmin käytetyt',
+	'rte-ck-templateEditor-dialog-search' => 'Etsi mallinnetta',
+	'rte-ck-templateEditor-editor-chooseAnotherTpl' => 'Valitse toinen mallinne',
+	'rte-ck-templateEditor-editor-intro' => 'Muuttaa arvot vasemmalla ja valitse Esikatselu. Kun muokkaus on valmis, valitse "OK".',
+	'rte-ck-templateEditor-editor-parameters' => 'Parametrit',
+	'rte-ck-templateEditor-editor-previewButton' => 'Esikatselu',
+	'rte-ck-templateEditor-editor-previewTitle' => 'Esikatselu',
+	'rte-ck-templateEditor-usedTemplates-title' => 'Käytettyjen mallinteiden luettelo',
+	'rte-ck-templateEditor-title' => 'Mallinne-editori',
+	'rte-ck-unlink' => 'Poista linkki',
 	'rte-ck-video-add' => 'Lisää video',
+	'rte-ck-video-video' => 'Video',
+	'rte-ck-video-confirmDelete' => 'Oletko varma, että haluat poistaa videon tältä sivulta?',
+	'rte-ck-video-confirmDeleteTitle' => 'Poistetaanko tämä video?',
+	'rte-ck-videoPlaceholder-confirmDelete' => 'Oletko varma, että haluat poistaa videon paikkamerkin tältä sivulta?',
+	'rte-ck-videoPlaceholder-confirmDeleteTitle' => 'Poistetaanko tämä videon paikkamerkki?',
+	'rte-ck-videoPlaceholder-tooltip' => 'Tämä on videon paikkamerkki.',
+	'rte-ck-mut-add' => 'Lisää video (beeta)',
+	'rte-ck-mut-mut' => 'Video (beeta)',
+	'rte-ck-poll-confirmDelete' => 'Oletko varma, että haluat poistaa äänestyksen tältä sivulta?',
+	'rte-ck-poll-confirmDeleteTitle' => 'Poistetaanko tämä äänestys?',
+	'rte-ck-spellchecker-moreSuggestions' => 'Lisäehdostuksia',
+	'rte-ck-pasteText-title' => 'Liitä teksti',
+	'rte-ck-format-tag_p' => 'Normaali teksti',
 );
 
 /** French (français)

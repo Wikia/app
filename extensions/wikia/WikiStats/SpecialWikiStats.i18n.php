@@ -461,6 +461,7 @@ $messages['an'] = array(
 );
 
 /** Arabic (العربية)
+ * @author Meno25
  * @author OsamaK
  * @author ترجمان05
  * @author روخو
@@ -487,7 +488,7 @@ $messages['ar'] = array(
 	'wikistats_active_year' => 'سنة',
 	'wikistats_active_months' => 'شهور',
 	'wikistats_wikians' => 'محررين مسجلين',
-	'wikistats_articles_text' => 'مقالات',
+	'wikistats_articles_text' => 'المقالات',
 	'wikistats_archived' => 'أرشفة',
 	'wikistats_other' => 'أخرى',
 	'wikistats_database' => 'قاعدة بيانات',
@@ -517,12 +518,12 @@ $messages['ar'] = array(
 	'wikistats_website' => 'موقع وب',
 	'wikistats_tables' => 'جداول',
 	'wikistats_back_to_mainpage' => 'انتقل إلى إحصاءات الصفحة الرئيسية',
-	'wikistats_back_to_prevpage' => 'للخلف',
+	'wikistats_back_to_prevpage' => 'رجوع',
 	'wikistats_trend_value' => 'القيمة',
 	'wikistats_trend_formula' => 'صيغة',
-	'wikistats_current_dump_stats' => 'الحالي',
+	'wikistats_current_dump_stats' => 'حالي',
 	'wikistats_date_of_generate' => 'وُلّدت في $1',
-	'wikistats_search_text' => 'ابحث',
+	'wikistats_search_text' => 'بحث:',
 	'wikistats_image_uploads' => 'صور مرفوعة',
 	'wikistats_video_uploads' => 'فيديوهات مرفوعة',
 	'wikistats_userns' => 'المستخدم',

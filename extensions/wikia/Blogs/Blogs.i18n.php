@@ -231,6 +231,7 @@ $messages['an'] = array(
  * @author Alexknight12
  * @author DRIHEM
  * @author Imksa
+ * @author Meno25
  * @author OsamaK
  */
 $messages['ar'] = array(
@@ -255,11 +256,11 @@ $messages['ar'] = array(
 	'create-blog-empty-article-log' => 'أنشأ مقالة فيها قائمة المدونات',
 	'create-blog-invalid-title-error' => 'عنوان غير صحيح',
 	'create-listing-confirm-info' => 'إنسخ و لصق الكود التالي:',
-	'create-blog-no-login' => 'لم تقم بتسجيل الدخول',
+	'create-blog-no-login' => 'غير مسجل الدخول',
 	'create-blog-login-required' => 'يجب أن تكون [{{fullurl:Special:Signup|$1}} مسجلا] لكي تنشأ قوائم أو مشاركات في المدونة.',
 	'create-blog-categories-title' => 'أضف هذه المعلقة من المدونة إلى إحدى التصانيف التاليى (انقر لكي تختار)',
 	'create-blog-categories-textinput' => 'إضافة تصنيف جديد',
-	'create-blog-categories-submit' => 'أرسل',
+	'create-blog-categories-submit' => 'إرسال',
 	'create-blog-save' => 'احفظ الصفحة',
 	'create-blog-preview' => 'أظهر معاينة',
 	'create-blog-updated' => 'تم إنشاء أو تحديث معلقة المدونة.',
@@ -270,7 +271,7 @@ $messages['ar'] = array(
 	'create-blog-listing-form-info' => 'تستخدم صفحات قائمة المدونة لتجميع قوائم المدونات من مؤلفين مختلفين معا في صفحة واحدة.
 أنشأ صفحات قائمة مدونة لكي تصنف المشاركات أو لكي تجمع بين تصنيفين مختلفين.',
 	'create-blog-listing-page-title' => 'عنوان صفحة قائمة المدونة',
-	'create-blog-listing-preview' => 'معاينة',
+	'create-blog-listing-preview' => 'عرض مسبق',
 	'create-blog-listing-authors' => 'الحصول على معلقات المدونة لهؤلاء المستخدمين (بين كل اسم مستخدم ضع فاصل)',
 	'create-blog-listing-blog-post-categories-title' => 'استعمال معلقات المدونة من هذه التصانيف',
 	'create-blog-listing-page-categories-title' => 'أضف صفحة قائمة المدونة هذه إلى التصانيف التالية',
@@ -320,7 +321,7 @@ $messages['ar'] = array(
 	'blog-comment-hide' => 'أخف',
 	'blog-comment-unhide' => 'أظهر',
 	'blog-comment-history' => 'تاريخ',
-	'blog-comment-edit' => 'عدل',
+	'blog-comment-edit' => 'تعديل',
 	'blog-comment-error' => 'تعذّر حفظ التعليق',
 	'blog-comment-cannot-add' => 'لا يمكنك التعليق على المدونة.',
 	'blog-avatar-preferences-title' => 'الصورة الرمزية',
@@ -3209,6 +3210,7 @@ $messages['ps'] = array(
  * @author Luckas Blade
  * @author McDutchie
  * @author Rhaijin
+ * @author SandroHc
  * @author Waldir
  */
 $messages['pt'] = array(
@@ -3226,7 +3228,7 @@ $messages['pt'] = array(
 	'create-blog-post-title-edit' => 'Editar uma entrada de blog',
 	'create-blog-form-title' => 'O que é uma entrada de um blogue?',
 	'create-blog-form-post-text' => 'Texto do blogue',
-	'create-blog-form-info' => 'As entradas num blogue são uma forma óptima de partilhar novidades, opiniões e obras criativas com a comunidade. Não podem ser editadas pelos restantes utilizadores. Podem ser agregadas numa página de listagem de entradas, baseada nas categorias das entradas. Pode decidir se permite que os utilizadores votem ou comentem a sua entrada.',
+	'create-blog-form-info' => 'As entradas num blogue são uma ótima forma de partilhar novidades, opiniões, e obras criativas com a comunidade.',
 	'create-blog-form-post-title' => 'Título da entrada',
 	'create-blog-empty-title-error' => 'Título obrigatório',
 	'create-blog-empty-post-error' => 'O conteúdo da entrada está vazio',

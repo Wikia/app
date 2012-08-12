@@ -269,7 +269,9 @@ $messages['es'] = array(
 	'ringtone-matcher-by-song' => 'Enviar tono %s a su teléfono.',
 );
 
-/** Finnish (suomi) */
+/** Finnish (suomi)
+ * @author Centerlink
+ */
 $messages['fi'] = array(
 	'app-loading' => 'Ladataan...',
 	'app-tab-search' => 'Haku',
@@ -285,6 +287,9 @@ $messages['fi'] = array(
 	'search-hint-text' => "esim: 'John Lennon:Imagine'",
 	'search-no-match-found' => 'Ei osumia.',
 	'search-no-match-found-query' => 'Hakusana: %s',
+	'login-username-hint' => 'Käyttäjätunnus',
+	'login-password-hint' => 'Salasana',
+	'login-submit-button' => 'Kirjaudu sisään',
 	'about-heading' => 'LyricWiki',
 	'about-credits' => '%s',
 	'about-heading-tips' => 'Hakeminen',
@@ -891,7 +896,7 @@ $messages['ru'] = array(
 	'login-password-hint' => 'Пароль',
 	'login-submit-button' => 'Вход',
 	'about-heading' => 'LyricWiki',
-	'about-credits' => '%s',
+	'about-credits' => 'by %s',
 	'about-heading-tips' => 'Поиск',
 	'about-tips-0' => 'Начните набирать имя исполнителя, чтобы увидеть варианты.',
 	'about-tips-1' => 'Картинки на главном экране отображают Топ 9 песен на iTunes прямо сейчас.',
@@ -903,7 +908,7 @@ $messages['ru'] = array(
 	'about-rate-0-android' => 'Если вам нравится это приложение, пожалуйста, оцените его в 5 звёзд на Android Market!',
 	'about-rate-0-ios' => 'Если вам нравится это приложение, пожалуйста, оцените его в 5 звёзд на App Store!',
 	'gracenote-takedown' => 'К сожалению мы не лицензированы для отображения полного текста для этой песни на данный момент (это происходит на менее, чем 1% из наших песен). Пожалуйста, попробуйте снова на следующей неделе.',
-	'lyrics-artist-byline' => '%s',
+	'lyrics-artist-byline' => 'by %s',
 	'ringtone-matcher-by-song' => 'Отправить  %s  рингтон для вашей группы',
 );
 

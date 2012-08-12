@@ -176,6 +176,7 @@ $messages['af'] = array(
 /** Arabic (العربية)
  * @author Achraf94
  * @author Alexknight12
+ * @author Meno25
  * @author OsamaK
  */
 $messages['ar'] = array(
@@ -194,7 +195,7 @@ $messages['ar'] = array(
 	'myhome-hot-spots-newest' => 'الصفحات الجديدة في الويكي',
 	'tog-myhomedisableredirect' => 'عدم توجيهي إلى "صفحتي الرئيسية" أوتوماتيكيا',
 	'myhome-feed-newpage' => 'صفحة جديدة',
-	'myhome-feed-edit' => 'عدل',
+	'myhome-feed-edit' => 'تعديل',
 	'myhome-feed-move' => 'نقلت الصفحة',
 	'myhome-feed-talkpage' => 'صفحة نقاش',
 	'myhome-feed-blogcomment' => 'تعليق على مدونة',
@@ -797,7 +798,7 @@ $messages['diq'] = array(
 	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|Resime ke debyay|Resime ke debyay}}',
 	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|Videoye ke debyay|Videoye ke debyay}}',
 	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|Kategoriye ke debyay|Kategoriye ke debyay}}',
-	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|jew mesac|$1 mesaci}}',
+	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|yew mesac|$1 mesaci}}',
 );
 
 /** Greek (Ελληνικά)
@@ -2435,6 +2436,7 @@ $messages['pfl'] = array(
 );
 
 /** Polish (polski)
+ * @author Ankry
  * @author Sovq
  * @author Sp5uhe
  * @author Wyvek
@@ -2668,13 +2670,14 @@ $messages['ps'] = array(
 /** Portuguese (português)
  * @author Hamilton Abreu
  * @author Malafaya
+ * @author SandroHc
  */
 $messages['pt'] = array(
 	'myhome-desc' => 'Uma página privada para utilizadores autenticados',
 	'myhome' => 'A Minha Casa',
-	'wikiactivity' => 'Actividade na Wiki',
-	'myhome-activity-more' => 'ver mais actividade recente',
-	'myhome-activity-feed' => 'Actividade recente',
+	'wikiactivity' => 'Atividade na Wiki',
+	'myhome-activity-more' => 'ver mais atividade recente',
+	'myhome-activity-feed' => 'Atividade recente',
 	'myhome-activity-feed-empty' => "Esta wiki está a aguardar a sua participação.
 Clique '''[[Special:CreatePage|Página nova]]''' para começar a escrever!",
 	'myhome-watchlist-feed' => 'Páginas vigiadas',
@@ -2685,7 +2688,7 @@ Use a lista de páginas vigiadas para monitorizar alterações das páginas que 
 	'myhome-hot-spots-feed-empty' => "Esta wiki está a aguardar a sua participação.
 Clique '''[[Special:CreatePage|Página nova]]''' para começar a escrever!",
 	'myhome-hot-spots-newest' => 'Páginas novas na wiki',
-	'tog-myhomedisableredirect' => 'Desactivar o meu redireccionamento para a Actividade na Wikia',
+	'tog-myhomedisableredirect' => 'Desativar o meu redirecionamento para a Atividade na Wikia',
 	'prefs-myhome' => 'A Minha Casa',
 	'myhome-feed-newpage' => 'página nova',
 	'myhome-feed-edit' => 'editar',
@@ -2724,7 +2727,7 @@ Esta wiki é criada pela comunidade e, ao clicar o botão para editar, torna-se 
 Experimente!',
 	'myhome-hot-spots-number-of-editors' => 'editores',
 	'myhome-log-in' => "<center>A funcionalidade A Minha Casa só fica disponível se estiver autenticado.<br /><br /><big>'''[{{fullurl:Special:Signup|$1}} Autentique-se para ver esta página!]'''</big></center>",
-	'myhome-switch-to-monaco' => "A funcionalidade Actividade na Wiki só fica disponível se estiver a usar o tema da Wikia.
+	'myhome-switch-to-monaco' => "A funcionalidade Atividade na Wiki só fica disponível se estiver a usar o tema da Wikia.
 Se quer ver A Minha Casa, visite '''[[Special:Preferences|as suas Preferências]]''' para mudar de tema, por favor.",
 	'myhome-namespace-blog' => 'Blogue',
 	'myhome-community-corner-header' => 'Mensagens Comunitárias',
@@ -2750,7 +2753,7 @@ Pode, por exemplo:
 	'myhome-default-view-checkbox' => 'Tornar $1 a minha vista padrão',
 	'myhome-default-view-success' => 'Foi configurada',
 	'tooltip-pt-myhome' => 'Ir para A Minha Casa',
-	'activityfeed' => 'Actividade recente',
+	'activityfeed' => 'Atividade recente',
 	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|uma mensagem|$1 mensagens}}',
 );
 
@@ -3573,6 +3576,7 @@ $messages['zh'] = array(
 
 /** Simplified Chinese (‪中文（简体）‬)
  * @author Hydra
+ * @author Hzy980512
  * @author Liangent
  * @author Yanmiao liu
  */
@@ -3658,7 +3662,7 @@ $messages['zh-hans'] = array(
 	'myhome-default-view-success' => '好的，现在这是您的默认视图了',
 	'tooltip-pt-myhome' => '转到我的主页',
 	'activityfeed' => '活动供稿',
-	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|一条信息|$1 条信息}}',
+	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|一条信息|$1条信息}}',
 );
 
 /** Traditional Chinese (‪中文（繁體）‬)

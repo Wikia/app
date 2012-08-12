@@ -1276,6 +1276,7 @@ $3
  */
 $messages['fi'] = array(
 	'autocreatewiki' => 'Luo uusi wiki',
+	'autocreatewiki-desc' => 'Luo käyttäjän pyynnöistä wikin sivustolle WikiFactory',
 	'autocreatewiki-page-title-default' => 'Luo uusi wiki',
 	'autocreatewiki-page-title-answers' => 'Luo uusi "Vastaussivusto"',
 	'createwiki' => 'Luo uusi wiki',
@@ -1303,6 +1304,7 @@ $messages['fi'] = array(
 	'autocreatewiki-info-category-answers' => 'Tämä auttaa vierailijoita löytämään sinun Vastaussivustosi.',
 	'autocreatewiki-info-language' => 'Tämä tulee olemaan wikisi kävijöiden oletuskieli.',
 	'autocreatewiki-info-email-address' => 'Sähköpostiosoitettasi ei koskaan näytetä kenellekään Wikiassa.',
+	'autocreatewiki-info-realname' => 'Jos valitset sen tarjoamisen, tätä käytetään antamaan sinulle syy työhön.',
 	'autocreatewiki-info-birthdate' => 'Wikia vaatii kaikkia käyttäjiä antamaan oikean syntymäaikansa sekä turvatoimena että tapana säilyttää sivuston eheys samalla, kun tulee noudattaa hallinnollisia säädöksiä.',
 	'autocreatewiki-info-blurry-word' => 'Automaattisen tunnusten luonnin estämiseksi kirjoita näkemäsi sumea sana tähän kenttään.',
 	'autocreatewiki-info-terms-agree' => 'Luomalla wikin ja käyttäjätunnuksen hyväksyt <a href="http://www.wikia.com/wiki/Terms_of_use">Wikian käyttösäännöt</a>.',
@@ -1333,6 +1335,7 @@ $messages['fi'] = array(
 	'autocreatewiki-set-username' => 'Aseta käyttäjätunnus ensin.',
 	'autocreatewiki-invalid-category' => 'Virheellinen luokka.
 Valitse asianmukainen nimi avattavasta luettelosta.',
+	'autocreatewiki-invalid-language' => 'Valitse sopiva alasvetovalikosta.',
 	'autocreatewiki-invalid-retype-passwd' => 'Kirjoita sama salasana kuin edellä',
 	'autocreatewiki-invalid-birthday' => 'Virheellinen syntymäaika',
 	'autocreatewiki-limit-birthday' => 'Tunnuksen luonti ei onnistunut.',
@@ -1378,19 +1381,19 @@ Wikia-yhteisön tukihenkilökunta
 ___________________________________________
  * haluatko saada meiltä vähemmän viestejä? Voit peruuttaa tilauksen tai muuttaa sähköpostin asetukset tässä: http://community.wikia.com/Special:Preferences</http:> </http:>',
 	'autocreatewiki-welcometalk' => "== Tervetuloa! ==
-<div style=\"font-size:120%; line-height:1.2em;\">Hei \$1 -- olemme kiinnostuneita siitä että saimme '''\$4'''n osaksi Wikia-yhteisöämme!
+<div style=\"font-size:120%; line-height:1.2em;\">Hei \$1 -- olemme innostuneita saamaan '''\$4''' osaksi Wikia-yhteisöämme!
 
 Nyt sinulla on kokonainen nettisivusto täytettäväksi tiedolla, kuvilla ja videoilla suosikkiaiheestasi. Mutta juuri nyt, se on tyhjä wiki täynnä tyhjiä sivuja vain tuijottamassa sinua... Pelottavaa, eikö? Tässä on muutamia keinoja aloittamiseen:
 
 * '''Esittele aihettasi''' etusivulla. Tämä on mahdollisuutesi selittää wikisi lukijoille, mistä se kertoo. Kirjoita niin paljon kuin haluat! Kuvauksessasi voi olla vaikka linkkejä wikisi tärkeille sivuille.
 
-* '''Tee uusia sivuja''' -- vain lause tai kaksi on hyvä aloitus. Älä anna tyhjien sivujen tuijottaa sinua enempää! Joka kerta kun tulet sivulle, voit muokata sitä miten haluat. Sinä voit myös lisätä kuvia ja videoita täyttääksesi sivusi ja tehdäksesi siitä enemmän kiintoisan.
+* '''Tee uusia sivuja''' -- vain lause tai kaksi on hyvä aloitus. Älä anna tyhjien sivujen tuijottaa sinua enempää! Joka kerta kun tulet sivulle, voit muokata sitä miten haluat. Sinä voit myös lisätä kuvia ja videoita täyttääksesi sivusi ja tehdäksesi siitä kiinnostavamman.
 
-Ja sitten jatka vain samaan malliin! Ihmiset pitävät vierailusta wikeissä kun siellä on paljon mistä lukea ja katsoa, joten lisää asioita monesti wikiisi, ja sinä houkuttelet varmasti paljon lukijoita ja muokkaajia. Täällä on paljon tehtävää, mutta älä huoli -- tämä on ensimmäinen päiväsi, ja sinulla on paljon aikaa. Joka wiki aloittaa samalla tavalla -- vähän kerrallaan, aloittamalla muutamia entisiä sivuja, kunnes se kasvaa suureksi, kiireiseksi wikiksi.
+Ja sitten jatka vain samaan malliin! Ihmiset pitävät vierailusta wikeissä kun siellä on paljon mistä lukea ja katsoa, joten lisää asioita usein wikiisi, ja sinä houkuttelet varmasti paljon lukijoita ja muokkaajia. Täällä on paljon tehtävää, mutta älä huoli -- tämä on ensimmäinen päiväsi, ja sinulla on paljon aikaa. Joka wiki aloittaa samalla tavalla -- vähän kerrallaan, aloittamalla muutamia entisiä sivuja, kunnes se kasvaa suureksi, kiireiseksi wikiksi.
 
-Jos sinulla on kysyttävää, [[Toiminnot:Contact|lähetä sähköpostia]] Wikian tukihenkilökunnalle. Pidä hauskaa!
+Jos sinulla on kysyttävää, [[Special:Contact|lähetä sähköpostia]] Wikian tukihenkilökunnalle. Pidä hauskaa!
 
--- [[Käyttäjä:\$2|\$3]] <staff /></div>",
+-- [[User:\$2|\$3]] <staff /></div>",
 	'newwikis' => 'Uudet wikit',
 	'newwikisstart' => 'Näytä wikit alkaen:',
 	'autocreatewiki-reminder-body' => 'Hyvä $1:
@@ -1401,7 +1404,29 @@ Tämä on uusi projekti, joten ystävällisesti kirjoita meille jos sinulla on k
 
 
 -- Wikian Community Team',
+	'autocreatewiki-reminder-body-HTML' => '<p>Hyvä $1:</p>
+
+<p>Onnittelut siitä, etttä käynnistit uuden wiki-sivuston, {{SITENAME}}! Voit palata ja lisätä lisää wiki-tekstiä vierailemalla osoitteessa
+<a href="$2">$2</a>.</p>
+
+<p>Tämä on uposuusi projekti, joten kirjoita meille, jos sinulla on jotain kysyttävä!</p>
+
+<p>-- Wikia-yhteistöryhmä</p>',
 	'autocreatewiki-subname-answers' => 'Vastaukset',
+);
+
+/** Faroese (føroyskt)
+ * @author EileenSanda
+ */
+$messages['fo'] = array(
+	'autocreatewiki' => 'Stovnað eina nýggja wiki',
+	'autocreatewiki-desc' => 'Stovnað wiki í WikiFactory eftir áheitan frá brúkara',
+	'autocreatewiki-page-title-default' => 'Stovnað nýggja wiki',
+	'autocreatewiki-page-title-answers' => 'Stovnað eina nýggja Svar síðu',
+	'createwiki' => 'Stovna eina nýggja wiki',
+	'autocreatewiki-chooseone' => 'Vel ein',
+	'autocreatewiki-required' => '$1 = er kravt',
+	'autocreatewiki-web-address' => 'Internet bústaður:',
 );
 
 /** French (français)
@@ -4300,6 +4325,7 @@ ___________________________________________
  * @author Rancher
  * @author Verlor
  * @author Жељко Тодоровић
+ * @author Михајло Анђелковић
  */
 $messages['sr-ec'] = array(
 	'autocreatewiki' => 'Направи нову викију',
@@ -4311,7 +4337,7 @@ $messages['sr-ec'] = array(
 	'autocreatewiki-birthdate' => 'Датум рођења:',
 	'autocreatewiki-blurry-word' => 'Мутна реч:',
 	'autocreatewiki-remember' => 'Запамти ме',
-	'autocreatewiki-create-account' => 'Отвори налог',
+	'autocreatewiki-create-account' => 'Отворите налог',
 	'autocreatewiki-done' => 'готово',
 	'autocreatewiki-error' => 'грешка',
 	'autocreatewiki-haveaccount-question' => 'Имате ли налог на Викији?',

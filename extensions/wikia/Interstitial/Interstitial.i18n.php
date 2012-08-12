@@ -86,10 +86,13 @@ $messages['es'] = array(
 );
 
 /** Finnish (suomi)
+ * @author Centerlink
  * @author Tofu II
  */
 $messages['fi'] = array(
 	'interstitial-default-campaign-code' => 'Wikia rakastaa sinua!',
+	'interstitial-skip-ad' => 'Ohita tämä mainos',
+	'exitstitial-button' => 'Ohita tämä mainos',
 );
 
 /** French (français)

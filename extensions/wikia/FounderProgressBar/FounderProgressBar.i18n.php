@@ -345,6 +345,7 @@ $messages['de-formal'] = array(
  */
 $messages['diq'] = array(
 	'founderprogressbar-fb-likes3-action' => 'Şo Pela Seri',
+	'founderprogressbar-browse-page-name' => 'Çımpawe',
 );
 
 /** Spanish (español)
@@ -471,6 +472,34 @@ $messages['es'] = array(
 	'founderprogressbar-bonus-edit50-action' => 'Ir a Especial:WikiActivity',
 	'founderprogressbar-bonus-edit50-description' => 'Apunta alto y consigue 50 ediciones más para completar esta tarea de bonificación.',
 	'founderprogressbar-browse-page-name' => 'Navegador',
+);
+
+/** Finnish (suomi)
+ * @author Centerlink
+ */
+$messages['fi'] = array(
+	'founderprogressbar-progress-see-full-list' => 'Katso täydellinen luettelo',
+	'founderprogressbar-progress-hide-full-list' => 'Piilota koko luettelo',
+	'founderprogressbar-skip-for-now' => 'Ohita nyt',
+	'founderprogressbar-task-completed' => 'Valmis',
+	'founderprogressbar-list-label' => '{{SITENAME}}-tehtävät',
+	'founderprogressbar-list-task-label' => 'Tehtävät',
+	'founderprogressbar-list-skipped-task-label' => 'Ohitetut tehtävät',
+	'founderprogressbar-list-skipped-task-desc' => 'Voit suorittaa nämä milloin tahansa.',
+	'founderprogressbar-list-bonus-task-label' => 'Bonustehtävät',
+	'founderprogressbar-page-add10-action' => 'Lisää sivu',
+	'founderprogressbar-mainpage-edit-action' => 'Muokkaa pääsivua',
+	'founderprogressbar-photo-add10-action' => 'Lisää valokuva',
+	'founderprogressbar-category-add3-action' => 'Lisää luokka',
+	'founderprogressbar-photo-add20-action' => 'Lisää valokuva',
+	'founderprogressbar-total-edit75-action' => 'Lisää sivu',
+	'founderprogressbar-category-edit-label' => 'Muokkaa luokkasivua',
+	'founderprogressbar-category-add5-action' => 'Lisää luokka',
+	'founderprogressbar-gallery-add-label' => 'Lisää valokuvavalikoima',
+	'founderprogressbar-video-add-label' => 'Lisää video',
+	'founderprogressbar-video-add-action' => 'Lisää video',
+	'founderprogressbar-toptenlist-add-label' => 'Lisää 10-kärjessä -luetteloon',
+	'founderprogressbar-toptenlist-add-action' => 'Lisää 10-kärjessä -luetteloon',
 );
 
 /** French (français)
@@ -1603,11 +1632,44 @@ $messages['ps'] = array(
 /** Portuguese (português)
  * @author Malafaya
  * @author Rhaijin
+ * @author SandroHc
  */
 $messages['pt'] = array(
+	'founderprogressbar-widget-label' => 'Progresso de {{SITENAME}}',
+	'founderprogressbar-progress-label' => 'Tarefas realizadas',
+	'founderprogressbar-progress-see-full-list' => 'Ver lista completa',
+	'founderprogressbar-progress-hide-full-list' => 'Esconder lista completa',
+	'founderprogressbar-skip-for-now' => 'Saltar por agora',
+	'founderprogressbar-task-completed' => 'Concluído',
+	'founderprogressbar-list-label' => 'Tarefas de {{SITENAME}}',
+	'founderprogressbar-list-task-label' => 'Tarefas',
+	'founderprogressbar-list-skipped-task-label' => 'Tarefas Ignoradas',
+	'founderprogressbar-list-skipped-task-desc' => 'Você pode completar estas a qualquer altura.',
+	'founderprogressbar-list-bonus-task-label' => 'Tarefas Bónus',
+	'founderprogressbar-task-call-to-action' => 'Ir para tarefa',
+	'founderprogressbar-page-add10-action' => 'Adicionar uma página',
+	'founderprogressbar-photo-add10-action' => 'Adicionar uma imagem',
 	'founderprogressbar-category-add3-action' => 'Adicionar uma categoria',
+	'founderprogressbar-photo-add20-label' => 'Alcançou $1 {{PLURAL:$1|Imagem|Imagens}}',
+	'founderprogressbar-photo-add20-action' => 'Adicionar uma imagem',
+	'founderprogressbar-total-edit75-label' => 'Alcançar 75 Edições',
+	'founderprogressbar-total-edit75-action' => 'Adicionar uma página',
+	'founderprogressbar-page-add20-label' => 'Alcançou $1 {{PLURAL:$1|página|páginas}}',
+	'founderprogressbar-page-add20-action' => 'Adicionar uma página',
+	'founderprogressbar-fb-connect-label' => 'Conectar com o Facebook',
+	'founderprogressbar-fb-connect-action' => 'Conectar com o Facebook',
+	'founderprogressbar-category-add5-action' => 'Adicionar uma categoria',
+	'founderprogressbar-gallery-add-label' => 'Adicionar uma galeria de imagens',
+	'founderprogressbar-topnav-edit-action' => 'Editar Navegação',
+	'founderprogressbar-mainpage-addslider-action' => 'Editar a Página Principal',
+	'founderprogressbar-video-add-label' => 'Adicionar um vídeo',
+	'founderprogressbar-video-add-action' => 'Adicionar um vídeo',
+	'founderprogressbar-user-add5-label' => 'Alcançar 5 perfis de utilizadores',
 	'founderprogressbar-recentchanges-visit-description' => 'Mudanças recentes é uma versão mais avançada de atividade wiki. Você pode ver "diffs" que detalhe a mudança exata que foi feita para uma página, verifique reversions para alterações e ver mais detalhes do que você pode ver na atividade do wiki. É uma ferramenta de gerenciamento grande quando você precisa de mais informações.',
 	'founderprogressbar-wordmark-edit-label' => 'Fazer upload de uma marca',
+	'founderprogressbar-fb-likes3-label' => 'Alcançar $1 Gostos no Facebook',
+	'founderprogressbar-fb-likes3-action' => 'Ir para Página Principal',
+	'founderprogressbar-total-edit300-label' => 'Alcançou {{PLURAL:$1|$1 edição|as $1 edições}}',
 );
 
 /** Russian (русский)

@@ -43,6 +43,13 @@ $messages['es'] = array(
 	'globalnotification-general-ajax-failure' => 'El navegador no pudo conectarse a Wikia. Inténtalo más tarde.',
 );
 
+/** Finnish (suomi)
+ * @author Centerlink
+ */
+$messages['fi'] = array(
+	'globalnotification-general-ajax-failure' => 'Et saanut selaimellasi yhteyttä Wikiaan.  Yritä myöhemmin uudelleen.',
+);
+
 /** French (français)
  * @author Wyz
  */

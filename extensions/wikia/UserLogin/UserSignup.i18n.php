@@ -2565,7 +2565,7 @@ $messages['ps'] = array(
  */
 $messages['ru'] = array(
 	'usersignup-page-title' => 'Присоединиться к Викия',
-	'usersignup-page-captcha-label' => 'Размытое слово',
+	'usersignup-page-captcha-label' => 'Blurry Word',
 	'usersignup-error-username-length' => 'К сожалению, имя участника не может быть больше {{PLURAL:$1|одного символа|$1 символов}}.',
 	'usersignup-error-invalid-user' => 'Недопустимое имя. Пожалуйста войдите снова.',
 	'usersignup-error-invalid-email' => 'Пожалуйста, введите действительный адрес электронной почты.',

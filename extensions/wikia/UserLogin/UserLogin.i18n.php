@@ -1162,7 +1162,29 @@ $messages['ps'] = array(
  */
 $messages['pt'] = array(
 	'userlogin-login-heading' => 'Login',
+	'userlogin-forgot-password' => 'Esqueceu a sua senha?',
+	'userlogin-remembermypassword' => 'Manter-me logado',
+	'userlogin-error-noname' => 'Ops, preencha o campo do nome de utilizador.',
+	'userlogin-error-nosuchuser' => 'Hum, nos não reconhecemos este nome. Não se esqueça que os nomes de utilizador são sensíveis a maiúsculas e minúsculas.',
+	'userlogin-error-wrongpassword' => 'Ops, senha incorreta. Certifique-se que o caps lock está desativado e tente novamente.',
+	'userlogin-error-wrongpasswordempty' => 'Ops, preencha o campo da senha.',
+	'userlogin-error-edit-account-closed-flag' => 'A sua conta foi desativada pela Wikia.',
+	'userlogin-error-cantcreateaccount-text' => 'O seu endereço de IP não está permitido de criar novas contas.',
+	'userlogin-error-userexists' => 'Alguém já tem este nome de utilizador. Tente um diferente!',
+	'userlogin-error-invalidemailaddress' => 'Coloque um endereço de e-mail válido.',
+	'userlogin-get-account' => 'Não possui uma conta? [[Special:UserSignup|Registe-se agora]]!',
+	'userlogin-error-invalid-username' => 'Nome de utilizador inválido',
+	'userlogin-error-user-not-allowed' => 'Este nome de utilizador não é permitido.',
+	'userlogin-password-page-title' => 'Alterar a senha',
+	'userlogin-oldpassword' => 'Senha antiga',
+	'userlogin-newpassword' => 'Nova senha',
+	'userlogin-retypenew' => 'Confirme a nova senha',
 	'userlogin-password-email-greeting' => 'Olá $USERNAME,',
+	'userlogin-provider-or' => 'Ou',
+	'userlogin-loginreqlink' => 'entrar',
+	'userlogin-changepassword-needlogin' => 'Você necessita de $1 para alterar a senha.',
+	'wikiamobile-sendpassword-label' => 'Enviar nova senha',
+	'wikiamobile-facebook-connect-fail' => 'Lamentamos, mas a sua conta do Facebook não está atualmente conectada a uma conta da Wikia.',
 );
 
 /** Brazilian Portuguese (português do Brasil)

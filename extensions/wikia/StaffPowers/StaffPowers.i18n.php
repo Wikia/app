@@ -117,6 +117,13 @@ $messages['pl'] = array(
 	'staffpowers-ipblock-abort' => 'Blokowanie pracowników, helperów czy członków VSTF nie jest możliwe. Użyj [[Special:Contact|formularza kontaktowego]] aby zgłosić problem związany z użytkownikiem posiadającym takie uprawnienia.',
 );
 
+/** Portuguese (português)
+ * @author SandroHc
+ */
+$messages['pt'] = array(
+	'staffpowers-ipblock-abort' => 'Bloquear Wikia Staff, Wikia Helpers, ou membros da nossa equipa de utilizadores do "Voluntário da Task Force Contra o Spam" (VTFCS) não é possível. Por favor, use o [[Special:Contact|formulário de contacto]] para reportar alguma questão ou problema com os nossos staff.',
+);
+
 /** Russian (русский)
  * @author Kuzura
  * @author Александр Сигачёв
