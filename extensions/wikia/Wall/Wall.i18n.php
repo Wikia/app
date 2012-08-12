@@ -338,6 +338,7 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
 
 /** Message documentation (Message documentation)
  * @author PtM
+ * @author SandroHc
  * @author Siebrand
  */
 $messages['qqq'] = array(
@@ -540,6 +541,7 @@ $messages['qqq'] = array(
 	'wall-recentchanges-namespace-selector-message-wall' => 'Recent changes, item in namespace dropdown',
 	'wall-recentchanges-thread-group' => 'Grouped recent changes item. Parameters:
 * $1 is thread title
+* $2 is link to wall
 * $3 is wall owner',
 	'wall-recentchanges-history-link' => 'Recent changes, link to wall history for items about removed and deleted threads',
 	'wall-recentchanges-thread-history-link' => 'Recent changes, link to thread history for items about removed replies',
@@ -3845,13 +3847,13 @@ $messages['pfl'] = array(
 );
 
 /** Polish (polski)
+ * @author Ankry
  * @author BeginaFelicysym
  * @author Sovq
  */
 $messages['pl'] = array(
 	'wall-no-title' => 'Brak tytułu',
-	'wall-message-loadmore' => 'View <span class="count">{{PLURAL:$1|$1 reply|all $1 replies}}</span>
-Zobacz wszystkie <span class="count">({{PLURAL:$1|$1 odpowiedź|$1 odpowiedzi}})</span>',
+	'wall-message-loadmore' => 'Zobacz <span class="count">({{PLURAL:$1|odpowiedź|wszystkie $1 odpowiedzi}})</span>',
 	'wall-message-wall' => 'Tablica',
 	'wall-message-wall-shorten' => 'tablica',
 	'wall-message-unfollow' => 'Nie obserwuj',
@@ -4245,6 +4247,7 @@ $messages['pt'] = array(
 	'wall-notifications-reminder' => 'Você tem <span>$1</span> {{PLURAL:$1|notificação|notificações}} por ler',
 	'wn-user1-reply-self-a-wall' => '$1 respondeu á mensagem',
 	'wn-newmsg' => 'Você deixou uma nova mensagem no mural de $1',
+	'wn-admin-thread-deleted' => 'Tópico removido do mural de $1',
 	'wall-sorting-newest-threads' => 'Tópicos mais recentes',
 	'wall-sorting-oldest-threads' => 'Tópicos mais antigos',
 	'wall-sorting-newest-replies' => 'Respostas mais recentes',
@@ -4255,13 +4258,29 @@ $messages['pt'] = array(
 	'wall-deleted-msg-view' => '(Ver/Restaurar)',
 	'wall-recentchanges-new-message' => 'no <a href="$1">mural de $2</a>',
 	'wall-recentchanges-edit' => '(mensagem editada)',
+	'wall-recentchanges-removed-reply' => 'removeu a resposta de "[[$1|$2]]" do [[$3|mural de $4]]',
 	'wall-recentchanges-namespace-selector-message-wall' => 'Mural de Mensagens',
+	'wall-recentchanges-thread-group' => '$1 no <a href="$2">mural de $3</a>',
 	'wall-recentchanges-history-link' => 'histórico do mural',
+	'wall-recentchanges-thread-history-link' => 'histórico do tópico',
+	'wall-contributions-wall-line' => '$5 ($6 | $7) $8 <a href="$1">$2</a> no <a href="$3">mural de $4</a>',
 	'wall-whatlinkshere-wall-line' => '<a href="$1">$2</a> no <a href="$3">mural de $4</a>',
 	'wall-wiki-activity-on' => 'em $1',
 	'wall-wiki-activity-wall-owner' => 'mural de $1',
+	'wall-removed-thread-undo' => 'Este tópico foi eliminado. $1',
+	'wall-removed-reply-undo' => 'Esta resposta foi removida. $1',
+	'wall-removed-reply' => 'Esta resposta foi removida',
+	'wall-deleted-thread-undo' => 'Este tópico foi eliminado. $1',
+	'wall-deleted-reply-undo' => 'Esta resposta foi eliminada. $1',
+	'wall-deleted-reply' => 'Esta resposta foi eliminada',
 	'wall-history' => 'Histórico',
 	'wall-history-title' => 'histórico do mural',
+	'wall-history-who-involved-wall-title' => 'Quem está envolvido neste mural?',
+	'wall-history-who-involved-thread-title' => 'Quem está envolvido neste tópico?',
+	'wall-history-thread-created' => '$1 foi criado por $2',
+	'wall-history-thread-removed' => '$1 foi removido por $2',
+	'wall-history-thread-restored' => '$1 foi restaurado por $2',
+	'wall-history-thread-admin-deleted' => '$1 foi eliminado por $2',
 	'wall-history-sorting-newest-first' => 'Mais recentes primeiro',
 	'wall-history-sorting-oldest-first' => 'Mais antigos primeiro',
 	'wall-history-summary-label' => 'Sumário',
@@ -4270,6 +4289,25 @@ $messages['pt'] = array(
 	'wall-history-rail-block' => 'bloquear',
 	'wall-history-action-view' => 'ver',
 	'wall-history-action-restore' => 'restaurar',
+	'wall-history-action-thread-history' => 'histórico do tópico',
+	'wall-thread-history-title' => 'histórico do tópico',
+	'wall-thread-history-thread-created' => '$1 ($2) criou este tópico',
+	'wall-thread-history-reply-created' => '$1 ($2) deixou uma resposta',
+	'wall-thread-history-thread-removed' => '$1 ($2) eliminou este tópico',
+	'wall-thread-history-reply-removed' => '$1 ($2) removeu a $5ª resposta de $3',
+	'wall-thread-history-thread-restored' => '$1 ($2) restaurou este tópico',
+	'wall-thread-history-reply-restored' => '$1 ($2) restaurou a $5ª resposta de $3',
+	'wall-thread-history-thread-deleted' => '$1 ($2) eliminou este tópico',
+	'wall-thread-history-thread-edited' => '$1 ($2) editou a $5ª mensagem de $3',
+	'wall-thread-history-reply-edited' => '$1 ($2) editou a $5ª mensagem de $3',
+	'wall-history-action-restore-reply' => 'restaurar resposta',
+	'wall-history-action-restore-thread' => 'restaurar tópico',
+	'wall-message-not-found-in-db' => 'Não conseguimos encontrar esta mural de mensagens na nossa base de dados.',
+	'mail-notification-new-someone' => '$AUTHOR_NAME escreveu uma nova mensagem na $WIKI.',
+	'mail-notification-new-your' => '$AUTHOR_NAME deixou-te uma nova mensagem na $WIKI.',
+	'mail-notification-reply-your' => '$AUTHOR_NAME respondeu á tua mensagem na $WIKI.',
+	'mail-notification-reply-his' => '$AUTHOR_NAME respondeu a uma mensagem na $WIKI.',
+	'mail-notification-reply-someone' => '$AUTHOR_NAME respondeu á mensagem de $PARENT_AUTHOR_NAME na $WIKI.',
 	'mail-notification-html-greeting' => 'Olá $1,',
 	'mail-notification-html-button' => 'Ver a conversação',
 	'mail-notification-body' => 'Olá $WATCHER,
@@ -4302,8 +4340,15 @@ ___________________________________________<br />
 * Quer receber menos mensagens nossas? Você pode parar de subscrever ou alterar as
 suas preferências de e-mail aqui: http://community.wikia.com/Special:Preferences',
 	'prefs-email-wall-v2' => 'Mural de Mensagens',
+	'tog-enotifwallthread-v2' => 'Enviar-me um email...',
+	'tog-enotifmywall-every' => 'Para cada mensagem & resposta',
+	'tog-enotifmywall-sincevisited' => 'Uma vez por tópico desde a minha última visita',
+	'tog-enotifmywall-reminder' => 'Com um e-mail diário',
+	'tog-enotifmywall-noemail' => 'Nunca. Não me envie nenhum e-mail do Mural de Mensagens',
 	'wall-notifications-notifyeveryone' => 'Destacado por $1',
 	'wall-message-notifyeveryone' => 'Destacar este tópico',
+	'wall-message-unnotifyeveryone' => 'Retirar Destaque deste tópico',
+	'wall-message-notifyeveryone-tooltip' => 'Todas as pessoas logadas na wiki irão ser notificadas deste tópico',
 	'wall-votes-modal-title' => 'Gostos',
 	'wall-votes-modal-title-desc' => '{{PLURAL:$1|Uma pessoa|$1 pessoas}} deram "Gosto" a esta mensagem',
 	'wall-votes-number' => '$1 Gostos',
@@ -4483,7 +4528,7 @@ $messages['ru'] = array(
 	'wall-message-elseswall' => 'Стена $1',
 	'wall-message-no-permission' => 'У вас нет прав выполнять это действие над сообщением',
 	'wall-thread-removed' => 'Удалено',
-	'wall-thread-isnotifyeveryone' => 'Выделить',
+	'wall-thread-isnotifyeveryone' => 'Highlight',
 	'wall-thread-deleted' => 'Удалить',
 	'wall-default-title' => 'Сообщение от $1',
 	'wall-no-title-warning' => '← Вы не указали название темы',
@@ -4720,17 +4765,17 @@ ___________________________________________<br />
 	'wallshowsource-toggle-v2' => 'Включить {{int:user-action-menu-view-source}} опцию для сообщений на Стене обсуждения',
 	'wallshowsource-toggle' => 'Включить {{int:user-action-menu-view-source}} для сообщений на Стене обсуждения',
 	'walldelete-toggle' => 'Включить просмотр постов, удалённых со Стены обсуждения',
-	'wall-notifications-notifyeveryone' => 'Выделил $1',
-	'wall-message-notifyeveryone' => 'Выделить эту тему',
-	'wall-message-unnotifyeveryone' => 'Отменить выделение этой темы',
-	'wall-message-notifyeveryone-tooltip' => 'Каждый человек представившейся системе будет уведомлен об этой теме',
-	'wall-votes-modal-showmore' => 'Посмотреть, кто добавил репутацию',
-	'wall-votes-modal-title' => 'Репутация',
-	'wall-votes-modal-title-desc' => '{{PLURAL:$1|Один человек| $1 человека| $1 человек}} добавил репутацию этому сообщению',
-	'wall-votes-number' => 'Репутация: $1',
-	'wall-votes-number-tooltip' => 'Посмотреть, кто добавил репутацию этому сообщению',
-	'wall-votes-vote-tooltip' => 'Добавить репутацию этому сообщению',
-	'wall-votes-voted-tooltip' => 'Вы прибавили этому сообщению репутацию!',
+	'wall-notifications-notifyeveryone' => 'Highlighted by $1',
+	'wall-message-notifyeveryone' => 'Highlight this thread',
+	'wall-message-unnotifyeveryone' => 'Un-Highlight this thread',
+	'wall-message-notifyeveryone-tooltip' => 'Every logged-in person on the wiki will be notified about this thread',
+	'wall-votes-modal-showmore' => 'See others who gave Kudos',
+	'wall-votes-modal-title' => 'Kudos',
+	'wall-votes-modal-title-desc' => '{{PLURAL:$1|One person|$1 people}} gave Kudos to this message',
+	'wall-votes-number' => '$1 Kudos',
+	'wall-votes-number-tooltip' => 'See who gave Kudos to this message',
+	'wall-votes-vote-tooltip' => 'Give Kudos to this message',
+	'wall-votes-voted-tooltip' => "You've given this message Kudos!",
 );
 
 /** Swedish (svenska)

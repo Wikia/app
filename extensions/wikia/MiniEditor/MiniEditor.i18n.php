@@ -57,6 +57,17 @@ $messages['es'] = array(
 	'minieditor-placeholder-reply' => 'Responder al mensaje aquí',
 );
 
+/** Finnish (suomi)
+ * @author Centerlink
+ */
+$messages['fi'] = array(
+	'minieditor-new-heading' => 'Luo uusi viesti',
+	'minieditor-placeholder-new' => 'Kirjoita viestin teksti tähän',
+	'minieditor-message-edit' => 'Tämä on olemassa oleva viesti',
+	'minieditor-reply' => 'Vastaus',
+	'minieditor-placeholder-reply' => 'Vastaa viestiin tässä',
+);
+
 /** French (français)
  * @author Wyz
  */

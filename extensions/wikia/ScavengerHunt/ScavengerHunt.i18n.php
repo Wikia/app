@@ -211,10 +211,11 @@ $messages['af'] = array(
 );
 
 /** Arabic (العربية)
+ * @author Meno25
  * @author OsamaK
  */
 $messages['ar'] = array(
-	'scavengerhunt-list-edit' => 'عدل',
+	'scavengerhunt-list-edit' => 'تعديل',
 	'scavengerhunt-label-name' => 'الاسم:',
 	'scavengerhunt-entry-form-name' => 'اسمك:',
 	'scavengerhunt-entry-form-email' => 'عنوان بريدك الإلكتروني:',
@@ -441,6 +442,7 @@ $messages['de-formal'] = array(
  */
 $messages['diq'] = array(
 	'scavengerhunt-list-header-name' => 'Namey qayer',
+	'scavengerhunt-list-header-actions' => 'Kerdeni',
 	'scavengerhunt-entry-form-name' => 'Namey şıma',
 );
 
@@ -601,10 +603,17 @@ $messages['es'] = array(
 );
 
 /** Finnish (suomi)
+ * @author Centerlink
  * @author Tofu II
  */
 $messages['fi'] = array(
 	'scavengerhunt-label-image-check' => '(näytä kuva)',
+	'scavengerhunt-button-add' => 'Lisää peli',
+	'scavengerhunt-button-save' => 'Tallenna',
+	'scavengerhunt-button-disable' => 'Poista käytöstä',
+	'scavengerhunt-button-enable' => 'Ota käyttöön',
+	'scavengerhunt-button-delete' => 'Poista',
+	'scavengerhunt-button-export' => 'Vie CSV-tiedostoksi',
 );
 
 /** French (français)

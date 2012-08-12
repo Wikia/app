@@ -259,6 +259,62 @@ $messages['es'] = array(
 	'photopop-game-download-error-text' => 'Un error ha ocurrido mientras se descargaban los datos del juego, intenta nuevamente.',
 );
 
+/** Finnish (suomi)
+ * @author Centerlink
+ */
+$messages['fi'] = array(
+	'photopop-setup-category-label' => 'Luokka',
+	'photopop-setup-category-tip' => 'Kirjoita luokan nimi...',
+	'photopop-setup-icon-label' => 'Pelikuvake (120px x 120px)',
+	'photopop-setup-icon-tip' => 'Kirjoita tiedostoartikkelin otsikko...',
+	'photopop-setup-watermark-label' => 'Vesileima',
+	'photopop-setup-submit-label' => 'Päivitä',
+	'photopop-current-settings-title' => 'Nykyiset asetukset',
+	'photpop-category-none' => 'PUUTTUU',
+	'photopop-error-category-non-existing' => 'Määritetty luokka ei ole olemassa',
+	'photopop-error-field-compulsory' => 'Tämä kenttä on pakollinen',
+	'photopop-error-file-non-existing' => 'Määritettyä tiedostoartikkelia ei ole olemassa',
+	'photopop-error-db-error' => 'Tapahtui virhe, asetuksia ei tallennettu',
+	'photopop-settings-saved' => 'Asetukset on tallennettu',
+	'photopop-image-preview' => 'Kuvien esikatselu:',
+	'photopop-game-round' => 'Pyöreä',
+	'photopop-game-correct' => 'Korjaa',
+	'photopop-game-points' => 'pistettä',
+	'photopop-game-total' => 'yhteensä',
+	'photopop-game-score' => 'piste',
+	'photopop-game-wiki' => 'wiki',
+	'photopop-game-date' => 'päivämäärä',
+	'photopop-game-timeup' => 'aika loppui!',
+	'photopop-game-please-wait' => 'Odota',
+	'photopop-game-loading-image' => 'Ladataan kuvaa...<br>Odota',
+	'photopop-game-loading' => 'Ladataan...',
+	'photopop-game-highscore' => 'Korkein pistemäärä',
+	'photopop-game-highscores' => 'ennätyspisteet',
+	'photopop-game-continue' => 'Se on:',
+	'photopop-game-yougot' => 'Sait',
+	'photopop-game-outof' => '/',
+	'photopop-game-progress' => 'valokuvaa',
+	'photopop-game-finished' => 'valmis!',
+	'photopop-game-image-load-error' => 'Kuvaa ei voitu ladata. Yritä uudelleen.',
+	'photopop-game-month-0' => 'Tammi',
+	'photopop-game-month-1' => 'Helmi',
+	'photopop-game-month-2' => 'Maalis',
+	'photopop-game-month-3' => 'Huhti',
+	'photopop-game-month-4' => 'Touko',
+	'photopop-game-month-5' => 'Kesä',
+	'photopop-game-month-6' => 'Heinä',
+	'photopop-game-month-7' => 'Elo',
+	'photopop-game-month-8' => 'Syys',
+	'photopop-game-month-9' => 'Loka',
+	'photopop-game-month-10' => 'Marras',
+	'photopop-game-month-11' => 'Joulu',
+	'photopop-game-no-highscore' => 'Ei korkeinta pistemäärää',
+	'photopop-game-error-text' => 'Virhe tapahtui, yritä uudelleen.',
+	'photopop-game-error-network-text' => 'Näyttää kuin sinulla ei olisi yhteyttä internettiin. Käännä päälle Wi-Fi-verkko tai mobiiliyhteys.',
+	'photopop-game-download-progress-text' => 'Ladataan peli...',
+	'photopop-game-update-progress-text' => 'Päivitetään peli...',
+);
+
 /** French (français)
  * @author Gomoko
  * @author Wyz
@@ -896,9 +952,48 @@ $messages['ps'] = array(
 
 /** Portuguese (português)
  * @author Malafaya
+ * @author SandroHc
  */
 $messages['pt'] = array(
+	'photopop-setup-title' => 'Configurações do Photo Pop',
 	'photopop-setup-category-label' => 'Categoria',
+	'photopop-setup-category-tip' => 'Coloque o nome da categoria...',
+	'photopop-setup-icon-label' => 'ícone do jogo (120px x 120px)',
+	'photopop-setup-icon-tip' => 'Coloque o título do artigo do ficheiro',
+	'photopop-setup-watermark-label' => 'Marca de água',
+	'photopop-setup-submit-label' => 'Atualizar',
+	'photopop-current-settings-title' => 'Configurações atuais',
+	'photpop-category-none' => 'N/A',
+	'photopop-game-round' => 'Ronda',
+	'photopop-game-correct' => 'Correto',
+	'photopop-game-points' => 'pontos',
+	'photopop-game-total' => 'total',
+	'photopop-game-score' => 'pontuação',
+	'photopop-game-wiki' => 'wiki',
+	'photopop-game-date' => 'data',
+	'photopop-game-timeup' => 'o tempo acabou!',
+	'photopop-game-please-wait' => 'Aguarde',
+	'photopop-game-loading-image' => 'A carregar imagem...<br>Aguarde',
+	'photopop-game-loading' => 'A carregar...',
+	'photopop-game-yougot' => 'Você conseguiu',
+	'photopop-game-outof' => 'de',
+	'photopop-game-progress' => 'imagens',
+	'photopop-game-finished' => 'finalizado!',
+	'photopop-game-paused' => 'Jogo pausado',
+	'photopop-game-month-0' => 'Jan',
+	'photopop-game-month-1' => 'Fev',
+	'photopop-game-month-2' => 'Mar',
+	'photopop-game-month-3' => 'Abr',
+	'photopop-game-month-4' => 'Mai',
+	'photopop-game-month-5' => 'Jun',
+	'photopop-game-month-6' => 'Jul',
+	'photopop-game-month-7' => 'Ago',
+	'photopop-game-month-8' => 'Set',
+	'photopop-game-month-9' => 'Out',
+	'photopop-game-month-10' => 'Nov',
+	'photopop-game-month-11' => 'Dez',
+	'photopop-game-no-highscore' => 'Sem pontuações máximas',
+	'photopop-game-update-progress-text' => 'Atualizando jogo...',
 );
 
 /** Russian (русский)

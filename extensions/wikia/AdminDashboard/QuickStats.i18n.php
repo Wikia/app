@@ -221,6 +221,20 @@ $messages['fi'] = array(
 	'quickstats-number-shortening-billions' => '$1B',
 );
 
+/** Faroese (føroyskt)
+ * @author EileenSanda
+ */
+$messages['fo'] = array(
+	'quickstats-header-label' => 'Skjót Hagtøl',
+	'quickstats-header-date' => 'Dagur',
+	'quickstats-header-edits' => 'Rættingar',
+	'quickstats-header-photos' => 'Myndir',
+	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Sí fleiri hagtøl]]',
+	'quickstats-number-shortening' => '$1K',
+	'quickstats-number-shortening-millions' => '$1M',
+	'quickstats-number-shortening-billions' => '$1B',
+);
+
 /** French (français)
  * @author Gomoko
  * @author Wyz

@@ -76,6 +76,13 @@ $messages['es'] = array(
 	'interwikidispatcher-desc' => 'Resuelve los vínculos interwiki para reducir las redirecciones Apache',
 );
 
+/** Finnish (suomi)
+ * @author Centerlink
+ */
+$messages['fi'] = array(
+	'interwikidispatcher' => 'Interwiki-lähettäjä',
+);
+
 /** French (français)
  * @author IAlex
  * @author Od1n

@@ -138,13 +138,22 @@ $messages['es'] = array(
 );
 
 /** Finnish (suomi)
+ * @author Centerlink
  * @author Lukkipoika
  * @author Nike
  * @author Tofu II
  */
 $messages['fi'] = array(
+	'category-exhibition-sorttype' => 'Lajittelun tyyppi:',
+	'category-exhibition-alphabetical' => 'Aakkosjärjestyksessä',
+	'category-exhibition-mostvisited' => 'Eniten käyntejä',
+	'category-exhibition-recentedits' => 'Viimeksi muokattu',
 	'category-exhibition-page-header' => 'Sivut luokassa $1',
+	'category-exhibition-subcategories-header' => 'Alaluokat',
+	'category-exhibition-media-header' => 'Media luokassa "$1"',
 	'category-exhibition-blogs-header' => 'Blogiartikkelit',
+	'category-exhibition-display-old' => 'Luokkaluettelonäkymä',
+	'category-exhibition-display-new' => 'Luokkanäyttelynäkymä',
 );
 
 /** French (français) */

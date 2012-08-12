@@ -282,6 +282,7 @@ Bitte überprüfen Sie den angegebenen Benutzernamen auf mögliche Tippfehler.</
 $messages['diq'] = array(
 	'lookupcontribswikioptions' => 'Weçinegi',
 	'lookupcontribsrecordspager' => "'''$1''' , '''$2''' u '''$3''' basnı",
+	'lookupcontribsprevious' => 'verên',
 );
 
 /** Spanish (español)
@@ -366,12 +367,25 @@ $messages['fi'] = array(
 	'lookupcontribsdisplaymode' => 'Näyttötila:',
 	'lookupcontribsfullurls' => 'täydelliset verkko-osoitteet',
 	'lookupcontribsgo' => 'Siirry',
+	'lookupcontribsselectwikis' => 'Valitse wikit:',
 	'lookupcontribsnoresultfound' => 'Tuloksia ei löytynyt!',
+	'lookupcontribsinvalidresults' => 'Virheelliset tulokset!',
+	'lookupcontribswiki' => 'Wiki',
+	'lookupcontribswikidbname' => 'Tietokannan nimi',
 	'lookupcontribswikiurl' => 'Verkko-osoite',
+	'lookupcontribswikititle' => 'Otsikko',
+	'lookupcontribswikioptions' => 'Valitsimet',
+	'lookupcontribsdetails' => 'Katso tarkemmat tiedot:',
 	'lookupcontribslastedited' => 'Viimeksi muokattu',
+	'lookupcontribsnbrresult' => 'Tulosten määrä:',
 	'lookupcontribsnext' => 'seuraava',
 	'lookupcontribsprevious' => 'edellinen',
+	'lookupcontribspageremoved' => 'Poistettu:',
+	'lookupcontribsrestore' => 'palauta',
 	'lookupcontribscontent' => 'sisältö',
+	'lookupcontribsnormal' => 'äskettäinen',
+	'lookupcontribsfinal' => 'lopullinen',
+	'lookupcontribsall' => 'kaikki',
 );
 
 /** French (français)

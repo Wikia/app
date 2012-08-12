@@ -179,10 +179,15 @@ $messages['fa'] = array(
 );
 
 /** Finnish (suomi)
+ * @author Centerlink
  * @author Nike
  * @author Tofu II
  */
 $messages['fi'] = array(
+	'cloakcheck-form-username' => 'Käyttäjätunnus:',
+	'cloakcheck-form-check' => 'Tarkista käyttäjätunnus',
+	'cloakcheck-process-empty' => 'Käyttäjätunnus ei saa olla tyhjä.',
+	'cloakcheck-process-notexist' => 'Käyttäjätunnusta  ei ole olemassa.',
 	'cloakcheck-process-username' => 'Käyttäjätunnus: $1',
 	'cloakcheck-process-accountage-yes' => 'Käyttäjätunnus on tarpeeksi vanha.',
 	'cloakcheck-process-accountage-no' => 'Käyttäjätunnus on liian uusi.',
@@ -614,9 +619,10 @@ $messages['ta'] = array(
 
 /** Telugu (తెలుగు)
  * @author Praveen Illa
+ * @author Veeven
  */
 $messages['te'] = array(
-	'cloakcheck-form-username' => 'వాడుకరిపేరు:',
+	'cloakcheck-form-username' => 'వాడుకరి పేరు:',
 	'cloakcheck-process-username' => 'వాడుకరిపేరు: $1',
 );
 

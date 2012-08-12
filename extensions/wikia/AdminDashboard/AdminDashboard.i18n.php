@@ -116,6 +116,7 @@ $messages['hu-formal'] = array(
 
 /** Arabic (العربية)
  * @author Achraf94
+ * @author Meno25
  * @author ترجمان05
  */
 $messages['ar'] = array(
@@ -123,7 +124,7 @@ $messages['ar'] = array(
 	'admindashboard-header' => 'لوحة الإداريين',
 	'admindashboard-toolbar-link' => 'الادارة',
 	'admindashboard-tab-advanced' => 'تقارير متقدمة',
-	'admindashboard-tab-general' => 'تقارير عامة',
+	'admindashboard-tab-general' => 'عام',
 	'admindashboard-controls-wiki-header' => 'الويكي',
 	'admindashboard-control-theme-designer-label' => 'مصمم المظهر',
 	'admindashboard-control-theme-designer-tooltip' => 'مصمم المظهر يسمح لك بتغيير ألوان و خلفيات الويكي, والمزيد.',
@@ -472,10 +473,12 @@ $messages['fa'] = array(
 );
 
 /** Finnish (suomi)
+ * @author Centerlink
  * @author Nike
  * @author VezonThunder
  */
 $messages['fi'] = array(
+	'admindashboard-loading' => 'Ladataan...',
 	'admindashboard-title' => '{{GRAMMAR:genitive|{{SITENAME}}}} kojelauta',
 	'admindashboard-header' => 'Ylläpitäjän kojelauta',
 	'admindashboard-toolbar-link' => 'Ylläpito',
@@ -523,6 +526,16 @@ $messages['fi'] = array(
  * @author EileenSanda
  */
 $messages['fo'] = array(
+	'admindashboard-loading' => 'Tekur niður...',
+	'admindashboard-title' => '{{SITENAME}} Tólborð',
+	'admindashboard-header' => 'Tólborð fyri umboðsstjórar (administratorar)',
+	'admindashboard-toolbar-link' => 'Administrator',
+	'admindashboard-tab-advanced' => 'Víðkað',
+	'admindashboard-tab-general' => 'Generelt',
+	'admindashboard-controls-wiki-header' => 'Wiki',
+	'admindashboard-control-user-list-label' => 'Brúkaralisti',
+	'admindashboard-control-user-list-tooltip' => 'Síggj ein fullfíggjaðan lista yvir brúkarar, sum hava givið sítt íkast til tína wiki.',
+	'admindashboard-control-user-rights-label' => 'Brúkararættindi',
 	'admindashboard-control-help-label' => 'Hjálp',
 	'admindashboard-control-help-tooltip' => 'Finn hjálp.',
 	'admindashboard-controls-content-header' => 'Innihald',
@@ -722,6 +735,7 @@ $messages['hu'] = array(
  * @author McDutchie
  */
 $messages['ia'] = array(
+	'admindashboard-loading' => 'Cargamento…',
 	'admindashboard-title' => 'Pannello de instrumentos de {{SITENAME}}',
 	'admindashboard-header' => 'Pannello de administration',
 	'admindashboard-toolbar-link' => 'Admin',

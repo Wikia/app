@@ -583,6 +583,7 @@ $messages['fa'] = array(
 );
 
 /** Finnish (suomi)
+ * @author Centerlink
  * @author Ilkea
  */
 $messages['fi'] = array(
@@ -608,11 +609,14 @@ $messages['fi'] = array(
 	'wikia-editor-media-image' => 'Kuva',
 	'wikia-editor-media-gallery' => 'Galleria',
 	'wikia-editor-media-slideshow' => 'Diaesitys',
+	'wikia-editor-media-slider' => 'Liukusäädin',
 	'wikia-editor-media-video' => 'Video',
+	'wikia-editor-media-mut' => 'Video',
 	'wikia-editor-media-image-tooltip' => 'Lisää kuva',
 	'wikia-editor-media-gallery-tooltip' => 'Lisää galleria',
 	'wikia-editor-media-slideshow-tooltip' => 'Lisää diaesitys',
 	'wikia-editor-media-video-tooltip' => 'Lisää video',
+	'wikia-editor-media-mut-tooltip' => 'Lisää Video (beeta)',
 	'wikia-editor-source-bold-tooltip' => 'Lihavointi',
 	'wikia-editor-source-italic-tooltip' => 'Kursivointi',
 	'wikia-editor-source-link-tooltip' => 'Lisää linkki',
@@ -623,6 +627,14 @@ $messages['fi'] = array(
 	'wikia-editor-modules-templates-showUsedList-dialog-title' => 'Lista käytetyistä mallineista',
 	'wikia-editor-modules-templates-makeLayout' => 'Tee uusi malli tästä sivusta',
 	'wikia-editor-modules-templates-makeLayout-confirmation-title' => 'Luo malli tästä sivusta',
+	'wikia-editor-modules-insert-title' => 'Lisää ominaisuuksia ja media',
+	'wikia-editor-modules-categories-title' => 'Luokat',
+	'wikia-editor-loadingStates-loading' => 'Ladataan editori',
+	'wikia-editor-loadingStates-toSource' => 'Vaihdetaan lähdetilaan...',
+	'wikia-editor-loadingStates-toVisual' => 'Vaihdetaan visuaalitilaan...',
+	'wikia-editor-loadingStates-saving' => 'Muokkaustesi julkistaminen',
+	'wikia-editor-edittools-caption' => 'lisää',
+	'nonunicodebrowser-notice' => "'''Varoitus: Selaimesi ei ole Unicode-yhteensopiva.'''",
 );
 
 /** French (français)
@@ -1700,12 +1712,15 @@ $messages['ps'] = array(
  * @author Hamilton Abreu
  * @author Malafaya
  * @author Rhaijin
+ * @author SandroHc
  */
 $messages['pt'] = array(
 	'editpagelayout-more' => 'mais',
 	'editpagelayout-less' => 'menos',
 	'editpagelayout-helpLink-url' => 'Help:Editar',
 	'editpagelayout-helpLink' => 'Precisa de [[{{MediaWiki:Editpagelayout-helpLink-url}}|ajuda?]]',
+	'editpagelayout-notificationsLink' => '<span>$1</span> {{PLURAL:$1|Notificação|Notificações}}',
+	'editpagelayout-notificationsLink-none' => 'Notificações',
 	'editpagelayout-edit-title' => 'Editar título',
 	'editpagelayout-edit-info' => 'Editar informação',
 	'editpagelayout-diff-header-url' => 'Help:Diferenças',
@@ -1719,16 +1734,23 @@ $messages['pt'] = array(
 	'editpagelayout-pageControls-back' => 'Voltar ao editor',
 	'editpagelayout-pageControls-changes' => 'Alterações',
 	'editpagelayout-blocked-user' => 'O seu nome de utilizador, ou o endereço IP, foi bloqueado',
+	'editpagelayout-edit-summary-label' => 'Editar Sumário',
+	'editpagelayout-subject-headline-label' => 'Assunto/cabeçalho:',
 	'wikia-editor-media-image' => 'Fotografia',
 	'wikia-editor-media-gallery' => 'Galeria',
 	'wikia-editor-media-slideshow' => 'Apresentação de Diapositivos',
 	'wikia-editor-media-slider' => 'Apresentador de Diapositivos',
 	'wikia-editor-media-video' => 'Vídeo',
+	'wikia-editor-media-mut' => 'Vídeo',
 	'wikia-editor-media-image-tooltip' => 'Adicionar Fotografia',
 	'wikia-editor-media-gallery-tooltip' => 'Adicionar Galeria',
 	'wikia-editor-media-slideshow-tooltip' => 'Adicionar Apresentação de Diapositivos',
 	'wikia-editor-media-slider-tooltip' => 'Adicionar Apresentador de Diapositivos',
 	'wikia-editor-media-video-tooltip' => 'Adicionar Vídeo',
+	'wikia-editor-media-mut-tooltip' => 'Adicionar Vídeo (beta)',
+	'wikia-editor-source-bold-tooltip' => 'Negrito',
+	'wikia-editor-source-italic-tooltip' => 'Itálico',
+	'wikia-editor-source-link-tooltip' => 'Adicionar link',
 	'wikia-editor-modules-templates-title' => 'Predefinições',
 	'wikia-editor-modules-templates-add-tooltip' => "Adicionar Predefinição '$1'",
 	'wikia-editor-modules-templates-otherTemplates' => 'Adicionar outras predefinições',
@@ -1737,7 +1759,7 @@ $messages['pt'] = array(
 	'wikia-editor-modules-templates-makeLayout' => 'Criar uma composição nova para esta página',
 	'wikia-editor-modules-templates-makeLayout-confirmation-title' => 'Criar uma composição nova a partir desta página',
 	'wikia-editor-modules-templates-makeLayout-confirmation-text' => 'Isto irá conduzi-lo para fora da página de edição, para criar uma composição a partir desta página. Todas as edições que não foram gravadas serão perdidas.',
-	'wikia-editor-modules-license-text' => '$1 Contribuições licenciadas com a CC-BY-SA. <a href="$2">Mais detalhes.</a>',
+	'wikia-editor-modules-license-text' => '$1 Contribuições licenciadas como $3. <a href="$2">Mais detalhes.</a>',
 	'wikia-editor-modules-insert-title' => 'Adicionar características e ficheiros multimédia',
 	'wikia-editor-modules-categories-title' => 'Categorias',
 	'wikia-editor-loadingStates-loading' => 'A carregar o editor...',
@@ -1747,14 +1769,18 @@ $messages['pt'] = array(
 	'wikia-editor-edittools-caption' => 'mais',
 	'wikia-editor-edittools-dialog-title' => 'Atalhos para a notação wiki',
 	'wikia-editor-notices-dialog-title' => 'Detalhes de avisos',
+	'wikia-editor-preview-editSummary' => 'Editar Sumário: $1',
+	'wikia-editor-leaveconfirm-message' => 'Você fez algumas alterações não publicadas. Você tem a certeza que quer sair sem as publicar?',
 	'nonunicodebrowser-notice' => "'''Aviso: O seu browser não é compatível com o Unicode.'''",
 	'rev-deleted-text-notice' => "Esta revisão foi '''eliminada'''. [Mais informações]",
-	'readonlywarning-notice' => "'''Aviso: A base de dados está bloqueada para manutenção.''' [Mais informações]",
+	'readonlywarning-notice' => "'''Aviso: A base de dados está bloqueada para manutenção.''' As edições irão voltar ao normal assim que a manutenção acabar [Mais informações]",
 	'userinvalidcssjstitle-notice' => "'''Aviso:''' O tema \"\$1\" não existe. [Mais informações]",
 	'semiprotectedpagewarning-notice' => "'''Nota:''' Esta página foi protegida para só poder ser editada por utilizadores registados. [Mais informações]",
 	'protectedpagewarning-notice' => "'''Aviso:''' Esta página foi protegida para só poder ser editada por administradores. [Mais informações]",
-	'titleprotectedwarning-notice' => "'''Aviso:''' Esta página foi protegida para que só alguns utilizadores a possam criar. [Mais informações]",
+	'titleprotectedwarning-notice' => "'''Nota:''' Esta página foi protegida para que só administradores a possam criar. Os administradores locais podem alterar este estado. [Mais informações]",
 	'recreate-moveddeleted-warn-notice' => "'''Nota:''' Está a recriar uma página que já tinha sido eliminada. [Mais informações]",
+	'restore-edits-notice' => "Bem vindo de volta! Restauramos algumas da alterações que você não publicou. <a class='notice-action restoreeditlink'>Eliminar as minhas alterações e começar uma nova edição</a>",
+	'restore-edits-diff-notice' => "Bem vindo de volta! Restauramos algumas da alterações que você não publicou. No entanto, a página foi atualizada desde essa altura. Você gostaria de: <a class='notice-action restoreeditlink'>Eliminar as minhas alterações e começar com o último texto</a> ou <a class='notice-action difflink'>Comparar as alterações com o último texto</a>",
 	'prefs-general' => 'Geral',
 	'prefs-starting-an-edit' => 'Começar uma edição',
 	'prefs-editing-experience' => 'Experiência de edição',

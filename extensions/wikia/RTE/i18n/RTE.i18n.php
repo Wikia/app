@@ -224,6 +224,14 @@ $messages['fa'] = array(
 	'enablerichtexteditor' => 'فعال‌کردن ویرایش در حالت بصری (علاوه بر حالت مبدأ)',
 );
 
+/** Finnish (suomi)
+ * @author Centerlink
+ */
+$messages['fi'] = array(
+	'rte-edgecase-info' => 'Rich text-muokkaus on poistettu käytöstä, koska sivu sisältää monimutkaisia koodi.',
+	'rte-edgecase-comment' => 'HTML-kommentit',
+);
+
 /** French (français)
  * @author IAlex
  * @author Wyz

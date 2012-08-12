@@ -398,18 +398,43 @@ $messages['fa'] = array(
 );
 
 /** Finnish (suomi)
+ * @author Centerlink
  * @author Lukkipoika
  * @author Nike
  * @author Tofu II
  */
 $messages['fi'] = array(
 	'wikiadoption' => 'Automaattinen wikin adoptointi',
+	'wikiadoption-desc' => 'MediaWiki AutomaticWikiAdoption laajentaminen',
 	'wikiadoption-header' => 'Adoptoi tämä wiki',
-	'wikiadoption-button-adopt' => 'Adoptoi nyt',
+	'wikiadoption-button-adopt' => 'Kyllä, haluan hyväksyä {{SITENAME}}!',
 	'wikiadoption-adopt-inquiry' => 'Ota enemmän selvää!',
+	'wikiadoption-description' => '$1, valmis hyväksymään sivuston {{SITENAME}}?
+<br /><br />
+Sivustolla {{SITENAME}} ei ole ollut vähään aikaan aktiivista ylläpitäjää, ja etsimme uutta johtajaa auttamaan tämän wikin sisällössä ja yhteisön kasvussa! Koska olet yksi sivua {{SITENAME}} avustanut, utelemme, että haluaisitkö työn ylläpitäjänä.
+<br /><br />
+Hyväksymällä wikin, sinut ylennetään ylläpitäjäksi ja byrokraatiksi, jolle annetaaan työkalut, joita tarvitset wiki-yhteistön ja sisällön hallintaan. Kykenet myös luomaan muita ylläpitäjiä auttamaan, poistaamaan, palauttamaan takaisin, siirtämään ja suojaamaan suojattuja sivuja.
+<br /><br />
+Oletko valmis ottamaan seuraavan askeleen auttaaksesi sivua {{SITENAME}}?',
 	'wikiadoption-know-more-header' => 'Haluatko tietää enemmän?',
+	'wikiadoption-know-more-description' => 'Tarkista lisätietoja näistä linkeistä. Ota myös vapaasti yhteyttä, jos sinulla on joitain kysymyksiä!',
 	'wikiadoption-adoption-successed' => 'Onnittelut! Olet nyt ylläpitäjä tässä wikissä!',
-	'wikiadoption-notification' => "$1 on adoptoitavana! Sinusta voi tulla uusi omistaja. '''Adoptoi nyt!'''",
+	'wikiadoption-adoption-failed' => 'Yritimme tehdä sinusta ylläpitäjän, mutta valitettavasti se ei toiminut. [http://community.wikia.com/Special:Ota erikoisyhteys meihin], ja yritämme auttaa sinua.',
+	'wikiadoption-not-allowed' => 'Emme valitettavasti voi myöntää tätä wikia juuri nyt.',
+	'wikiadoption-not-enough-edits' => 'Hups, sinulla on oltava yli 10 muokkausta, jotta tämä wiki myönnetään sinulle.',
+	'wikiadoption-adopted-recently' => 'Hups! Sinulle on jo myönnetty toinen wiki äskettäin. Sinun on odotettava kunnes sinulle voidaan myöntää uusi wiki.',
+	'wikiadoption-log-reason' => 'Automaattinen Wiki-hyväksyminen',
+	'wikiadoption-notification' => '{{SITENAME}} odottaa ylläpitäjyyden myöntämistä. Kiinnostaako sinua tulla johtaja täällä? Aloita tämän wikin myöntämismenettely! $2',
+	'wikiadoption-mail-first-subject' => 'Emme ole nähneet sinua vähään aikaan',
+	'wikiadoption-mail-first-content' => 'Hei $1,
+
+Emme ole nähneet pariin viikkoon ylläpitäjää sivustolla #WIKINAME. Ylläpitäjät ovat olennainen osa sivustoa #WIKINAME ja on tärkeää, että he ovat läsnä säännöllisesti. Jos aktiivista ylläpitäjää ei ole pitkään aikaan, tälle wikille laitetaan ylläpidon myöntämismenettely, jolla sallitaan toisen käyttäjän ryhtyä ylläpitäjäksi.
+
+Jos tarvitset apua wikin ylläpidossa, voit sallia myös yhteisön muiden jäsenten tulla ylläpitäjäksi menemällä kohteeseen $2.  Toivon mukaan näemme sinut pian sivustolla #WIKINAME!
+
+Wikia-ryhmä
+
+Voit perua tilauksen tämän listan muutoksiin täältä: $3',
 	'wikiadoption-mail-adoption-subject' => '#WIKINAME on adoptoitu',
 );
 
@@ -825,6 +850,7 @@ Instrumentos utile:
 );
 
 /** Italian (italiano)
+ * @author Darth Kule
  * @author Minerva Titani
  * @author Ximo17
  */
@@ -839,7 +865,7 @@ $messages['it'] = array(
 	'wikiadoption-adopted-recently' => "Oop! Hai già adottato un altro wiki recentemente. Devi aspettare un po' di tempo prima di adottarne un altro.",
 	'wikiadoption-log-reason' => 'Adozione Automatica di Wiki',
 	'wikiadoption-mail-adoption-subject' => '#WIKINAME è stata adottata',
-	'tog-adoptionmails' => "Mandami una mail se la wiki diventa disponibile per l'adozione da parte di altri utenti",
+	'tog-adoptionmails' => "Mandami una mail se $1 diventa disponibile per l'adozione da parte di altri utenti",
 	'tog-adoptionmails-v2' => "...se la wiki diventa disponibile per l'adozione da parte di altri utenti",
 	'wikiadoption-pref-label' => 'Il cambio di queste preferenze si ripercuoterà solo sulle email da $1.',
 );

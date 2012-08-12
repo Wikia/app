@@ -146,6 +146,14 @@ $messages['pms'] = array(
 	'confirmemailprompt-error' => "É-lo costa soa adrëssa ëd pòsta eletrònica: <strong>$1</strong>? [[$2|Ch'a la confirma]] o [[$3|ch'a la cangia]].",
 );
 
+/** Portuguese (português)
+ * @author SandroHc
+ */
+$messages['pt'] = array(
+	'confirmemailprompt-desc' => 'Exibe uma mensagem de aviso se um utilizador tiver um endereço de e-mail não confirmado',
+	'confirmemailprompt-error' => 'Este é o seu endereço de e-mail: <strong>$1</strong>? [[$2|Confirmar]] ou [[$3|modifica-lo]].',
+);
+
 /** Russian (русский)
  * @author DCamer
  * @author Kuzura

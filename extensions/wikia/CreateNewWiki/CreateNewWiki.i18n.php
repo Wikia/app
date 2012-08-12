@@ -197,13 +197,14 @@ $messages['af'] = array(
 );
 
 /** Arabic (العربية)
+ * @author Meno25
  * @author OsamaK
  * @author ترجمان05
  * @author زكريا
  */
 $messages['ar'] = array(
 	'cnw-next' => 'التالي',
-	'cnw-back' => 'السابق',
+	'cnw-back' => 'رجوع',
 	'cnw-or' => 'أو',
 	'cnw-title' => 'إنشاء ويكي جديدة',
 	'cnw-name-wiki-headline' => 'بدء ويكي',

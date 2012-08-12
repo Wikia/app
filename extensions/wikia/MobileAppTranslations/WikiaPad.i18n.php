@@ -114,6 +114,20 @@ $messages['es'] = array(
 	'browser-loading-message' => 'Cargando...',
 );
 
+/** Finnish (suomi)
+ * @author Centerlink
+ */
+$messages['fi'] = array(
+	'main-tab-discover' => 'Tutustu',
+	'main-tab-search' => 'Etsi',
+	'main-tab-offline' => 'Ei kirjautuneena',
+	'tab-discover-loading-message' => 'Ladataan...',
+	'tab-discover-no-network-dialog-title' => 'Verkko ei ole käytettävissä',
+	'tab-discover-no-network-dialog-close-button' => 'Valmis',
+	'tab-search-loading-message' => 'Etsitään...',
+	'browser-loading-message' => 'Ladataan...',
+);
+
 /** French (français)
  * @author Verdy p
  * @author Wyz

@@ -214,6 +214,7 @@ $messages['an'] = array(
 /** Arabic (العربية)
  * @author Achraf94
  * @author Malhargan
+ * @author Meno25
  * @author OsamaK
  */
 $messages['ar'] = array(
@@ -224,8 +225,8 @@ $messages['ar'] = array(
 	'swm-page-title-sent' => 'موقع الرسائل على نطاق واسع:: المرسلة',
 	'swm-page-title-dismiss' => 'موقع الرسائل على نطاق واسع:: استبعاد',
 	'swm-page-title-list' => 'موقع الرسائل على نطاق واسع:: قائمة',
-	'swm-label-preview' => 'عاين',
-	'swm-label-edit' => 'تحرير',
+	'swm-label-preview' => 'عرض مسبق',
+	'swm-label-edit' => 'تعديل',
 	'swm-label-remove' => 'إزالة',
 	'swm-label-sent' => 'إرسال',
 	'swm-label-list' => 'قائمة',
@@ -261,7 +262,7 @@ $messages['ar'] = array(
 	'swm-link-dismiss' => 'استبعاد هذه الرسالة',
 	'swm-dismiss-content' => '<p>تم استبعاد الرسالة.</p><p>%s</p>',
 	'swm-list-no-messages' => 'لا توجد رسائل.',
-	'swm-list-table-id' => 'المعرّف',
+	'swm-list-table-id' => 'رقم',
 	'swm-list-table-sender' => 'المرسل',
 	'swm-list-table-wiki' => 'ويكي',
 	'swm-list-table-recipient' => 'المستلم',
@@ -2293,7 +2294,7 @@ $messages['ru'] = array(
 	'swm-error-empty-group' => 'Введите название группы.',
 	'swm-error-invalid-time' => 'Недопустимое время.',
 	'swm-lang-other' => 'все остальные языки',
-	'action-messagetool' => 'отправить уведомление для всего сайта',
+	'action-messagetool' => 'send site wide messages',
 );
 
 /** Slovenian (slovenščina)

@@ -619,7 +619,7 @@ Por favor, contáctalo para más información.',
 	'group-bannedfromchat-member' => 'Baneado del chat',
 	'grouppage-bannedfromchat' => 'w:c:ayuda:Ayuda:Chat',
 	'chat-ban-option-list' => '2 horas:2 hours,1 día:1 day,3 días:3 days,1 semana:1 week,2 semanas:2 weeks,1 mes:1 month,3 meses:3 months,6 meses:6 months,1 año:1 year,para siempre:infinite',
-	'chat-ban-log-change-ban-link' => 'cambia baneo',
+	'chat-ban-log-change-ban-link' => 'cambiar baneo',
 	'chat-chatconnect-log' => 'Registro de conexiones al chat',
 	'chat-chatconnect-log-entry' => 'conectado a $1 desde $2',
 	'chat-chatban-log' => 'Registro de baneos del chat',
@@ -633,6 +633,7 @@ Por favor, contáctalo para más información.',
 );
 
 /** Finnish (suomi)
+ * @author Centerlink
  * @author Ilkea
  * @author Lukkipoika
  * @author Nike
@@ -647,6 +648,7 @@ $messages['fi'] = array(
 	'chat-welcome-message' => 'Tervetuloa $1n chattiin',
 	'chat-user-joined' => '$1 on liittynyt chattiin.',
 	'chat-read-only' => 'Chat on tilapäisesti poissa käytöstä wikin ollessa vain luku -tilassa.',
+	'chat-private-messages' => 'Yksityisviestit',
 	'chat-user-parted' => '$1 on poistunut chatista.',
 	'chat-user-blocked' => '$1 on estänyt käyttäjän $2.',
 	'chat-user-allow' => '$1 on sallinut käyttäjän $2.',
@@ -654,9 +656,19 @@ $messages['fi'] = array(
 	'chat-inlinealert-a-made-b-chatmod' => '$1 on tehnyt käyttäjästä <strong> $2 </strong> chat-valvojan.',
 	'chat-err-connected-from-another-browser' => 'Olet muodostanut yhteyden toisesta selaimesta. Tämä yhteys suljetaan.',
 	'chat-err-communicating-with-mediawiki' => 'Virhe tiedonvälityksessä MediaWiki-palvelimen kanssa.',
+	'chat-ban-contributions-heading' => 'Estetty juttelukanavalta',
+	'chat-ban-modal-heading' => 'Estä tämä käyttäjä juttelukanavalta',
+	'chat-ban-modal-label-expires' => 'Vanhenee',
+	'chat-ban-modal-label-reason' => 'Syy',
+	'chat-log-reason-banadd' => 'Huono käyttäytyminen juttelukanavalla',
+	'chat-log-reason-undo' => 'kumoa',
+	'chat-ban-undolink' => 'kumoa',
 	'chat-ban-modal-button-ok' => 'Lukitse tämä käyttäjä',
 	'chat-ban-modal-button-change-ban' => 'Muuta lukitusta',
+	'chat-ban-modal-button-cancel' => 'Peruuta',
 	'chat-ban-modal-end-ban' => 'Poista lukitus',
+	'chat-log-reason-banchange' => 'Ei syytä',
+	'chat-log-reason-banremove' => 'Ei syytä',
 	'chat-ban-cant-ban-moderator' => 'Et voi estää toista chat-valvojaa.',
 	'chat-ban-already-banned' => '$1 on jo estetty tämän wikin chatissa.',
 	'chat-ban-you-need-permission' => 'Sinulla ei ole käyttöoikeutta $1, joka vaaditaan käyttäjän estämiseen.',
@@ -675,9 +687,13 @@ $messages['fi'] = array(
 	'chat-edit-count' => '{{PLURAL:$1|$1 muokkaus|$1 muokkausta}}',
 	'chat-member-since' => 'Liittynyt: $1',
 	'chat-great-youre-logged-in' => 'Hienoa! Olet kirjautunut sisään.',
+	'chat-user-menu-message-wall' => 'Viestiseinä',
+	'chat-user-menu-talk-page' => 'Keskustelusivu',
 	'chat-user-menu-contribs' => 'Muokkaukset',
 	'chat-user-menu-private' => 'Yksityisviesti',
 	'chat-user-menu-give-chat-mod' => 'Anna valvoja-asema',
+	'chat-user-menu-kick' => 'Anna potkut',
+	'chat-user-menu-ban' => 'Kielto',
 	'chat-user-menu-private-block' => 'Estä yksityisviestit',
 	'chat-user-menu-private-allow' => 'Salli yksityisviestit',
 	'chat-user-menu-private-close' => 'Sulje yksityishuone',
@@ -688,6 +704,9 @@ $messages['fi'] = array(
 	'grouppage-chatmoderator' => 'w:c:community:Help:Chat',
 	'group-bannedfromchat' => 'Estetty chatista',
 	'group-bannedfromchat-member' => 'chatista estetty',
+	'chat-chatconnect-log' => 'Juttelukanavan yhteysloki',
+	'chat-checkuser-join-action' => 'Liittyi juttelukanavalle',
+	'chat-status-away' => 'Poissa',
 );
 
 /** French (français)
@@ -1033,6 +1052,7 @@ Per favor contacta le pro plus informationes.',
 	'chat-contributions-ban-notice' => 'Iste usator es actualmente bannite del chat. Le ultime entrata del registro de bannos es fornite a basso pro referentia:',
 	'chat-browser-is-notsupported' => 'Iste navigator del web non es supportate. Pro le melior experientia, per favor usa un <a href="http://community.wikia.com/wiki/Help:Supported_browsers">navigator plus nove</a>.',
 	'chat-checkuser-join-action' => 'Entrava in chat',
+	'chat-status-away' => 'Absente',
 );
 
 /** Indonesian (Bahasa Indonesia)
@@ -1751,7 +1771,7 @@ $messages['pl'] = array(
 	'chat-ban-log-change-ban-link' => 'zmień blokadę',
 	'chat-chatconnect-log' => 'Rejestr wejść na czat',
 	'chat-chatconnect-log-entry' => 'połączono z $1 z adresu $2',
-	'chat-chatban-log' => 'Rejestr wejść na czat',
+	'chat-chatban-log' => 'Rejestr blokad na czacie',
 	'chat-chatbanadd-log-entry' => 'zablokował(a) $1 na czacie na okres: $2, koniec blokady: $3',
 	'chat-chatbanremove-log-entry' => 'odblokował(a) użytkownika $1 na czacie',
 	'chat-chatbanchange-log-entry' => 'zmienił(a) ustawienia blokady użytkownika $1 na czacie na okres: $2, koniec blokady: $3',
@@ -2040,7 +2060,7 @@ $messages['ru'] = array(
 	'chat-contributions-ban-notice' => 'Этот участник в данный момент забанен в чате. Ниже приведена последняя запись из журнала банов в чате:',
 	'chat-browser-is-notsupported' => 'Ваш браузер не поддерживается. Используйте <a href="http://community.wikia.com/wiki/Help:Supported_browsers">другой браузер или другую версию браузера</a>.',
 	'chat-checkuser-join-action' => 'Присоединиться',
-	'chat-status-away' => 'Отошел',
+	'chat-status-away' => 'Отсутствует',
 );
 
 /** Serbian (Cyrillic script) (‪српски (ћирилица)‬)

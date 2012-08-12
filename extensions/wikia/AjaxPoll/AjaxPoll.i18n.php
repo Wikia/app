@@ -211,6 +211,18 @@ $messages['fi'] = array(
 	'ajaxpoll-submitting' => 'Odota, vastaustasi lähetetään...',
 );
 
+/** Faroese (føroyskt)
+ * @author EileenSanda
+ */
+$messages['fo'] = array(
+	'ajaxpoll-percentVotes' => '$1%&nbsp;av øllum atkvøðum',
+	'ajaxpoll-thankyou' => 'Takk fyri tína atkvøðu!',
+	'ajaxpoll-error' => 'Tað var ein trupulleiki við at skráseta tína atkvøðu, vinarliga royn aftur.',
+	'ajaxpoll-submit' => 'Atkvøð!',
+	'ajaxpoll-closed' => 'Atkvøðugreiðslan er stongd nú. Njót úrslitini.',
+	'ajaxpoll-submitting' => 'Vinarliga bíða eitt sindur, tín atkvøða verður viðgjørt...',
+);
+
 /** French (français)
  * @author Jean-Frédéric
  * @author Wyz

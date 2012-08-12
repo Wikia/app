@@ -283,7 +283,7 @@ $1
 	'lightbox-share-email-label' => 'Envíe esta imaxe por correo a un amigo',
 	'lightbox-share-email-page-label' => 'Envíe esta páxina por correo a un amigo',
 	'lightbox-share-email-page-label-address' => 'Enderezo de correo electrónico',
-	'lightbox-share-email-ok-caption' => 'Configuración',
+	'lightbox-share-email-ok-caption' => 'Confirmación',
 	'lightbox-share-email-ok-content' => '{{PLURAL:$1|Enviouse o correo|Enviáronse os correos}}.',
 	'lightbox-share-email-error-caption' => 'Erro',
 	'lightbox-share-email-error-content' => 'Erro ao enviar {{PLURAL:$1|o correo|os correos}}.

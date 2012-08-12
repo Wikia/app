@@ -124,6 +124,15 @@ De esta forma no ocurrirá nada.
 El resto de la página será ejecutada solo para que puedas ver fácilmente si algún nombre de usuario no se puede cargar.',
 );
 
+/** Finnish (suomi)
+ * @author Centerlink
+ */
+$messages['fi'] = array(
+	'batchuserrights-names' => 'Tähän ryhmään lisättävät käyttäjätunnukset (yksi per rivi):',
+	'batchuserrights-single-progress-update' => 'Lisätty {{PLURAL:$1|ryhmä|ryhmää}} kohteeseen <strong>$2</strong>.',
+	'batchuserrights-add-groups' => 'Lisätään {{PLURAL:$1|yksi käyttäjä|$1 käyttäjää}} seuraavaan {{PLURAL:$2|ryhmään|ryhmiin}}: <strong>$3</strong>.',
+);
+
 /** French (français)
  * @author Gomoko
  * @author Peter17
@@ -341,6 +350,7 @@ A sarà fàit gnente.
 
 /** Portuguese (português)
  * @author Hamilton Abreu
+ * @author SandroHc
  * @author Waldir
  */
 $messages['pt'] = array(

@@ -312,6 +312,7 @@ $messages['an'] = array(
 
 /** Arabic (العربية)
  * @author Achraf94
+ * @author Meno25
  * @author OsamaK
  */
 $messages['ar'] = array(
@@ -375,7 +376,7 @@ $messages['ar'] = array(
 	'awc-metrics-nbr-result' => 'النتائج:',
 	'awc-metrics-created-between' => 'أنشأت بين $1 (السنة/الشهر/اليوم) و $2 (السنة/الشهر/اليوم)',
 	'awc-metrics-wikians' => 'ويكيون <br />(>10 تعديلات)',
-	'awc-metrics-articles' => 'االمقالات',
+	'awc-metrics-articles' => 'المقالات',
 	'awc-metrics-articles-per-day' => 'المقالات <br />(المعدل حسب اليوم)',
 	'awc-metrics-revisions-per-page' => 'المراجعات <br />(المعدل حسب الصفحة)',
 	'awc-metrics-article-avg-size' => 'معدل <br />الحجم',
@@ -2529,6 +2530,7 @@ $messages['ig'] = array(
 );
 
 /** Italian (italiano)
+ * @author Darth Kule
  * @author Gifh
  * @author HalphaZ
  */
@@ -2589,6 +2591,7 @@ $messages['it'] = array(
 	'awc-metrics-close' => 'Chiudi',
 	'awc-metrics-active' => 'attivo',
 	'awc-metrics-closed' => 'chiusa',
+	'awc-metrics-exact-match' => 'corrispondenza esatta',
 	'closed-wiki-create-wiki' => 'Crea un nuovo wiki',
 	'closed-reason' => 'Motivo:',
 );
@@ -4360,7 +4363,7 @@ $messages['ru'] = array(
 	'closewiki-images-url' => 'Архив изображений: $1',
 	'closewiki-unknown' => 'Неизвестно',
 	'closewiki-return' => 'Назад к $1',
-	'wikifactory-button-saveparse' => 'Проанализировать и сохранить',
+	'wikifactory-button-saveparse' => 'Parse &amp; Save changes',
 	'wikifactory-button-save' => 'Сохранить изменения',
 	'wikifactory-public-status-change-default-reason' => 'Статус изменён для вкладки Домены.',
 	'awc-metrics-wikis' => 'Показать вики',

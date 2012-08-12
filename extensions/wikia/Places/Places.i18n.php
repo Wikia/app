@@ -118,6 +118,23 @@ $messages['es'] = array(
 	'places-category-switch-off' => 'Activar las geoetiquetas',
 );
 
+/** Finnish (suomi)
+ * @author Centerlink
+ */
+$messages['fi'] = array(
+	'places-editor-search' => 'Etsi',
+	'places-editor-title-create-new' => 'Lisää geo-tunniste',
+	'places-editor-title-edit' => 'Muokkaa geo-tunnistetta',
+	'places-editor-show-my-location' => 'Käytä minun sijaintiani',
+	'places-editor-geoposition' => 'Nykyinen geo-sijainti:',
+	'places-geolocation-button-label' => 'Lisää sijainti',
+	'places-geolocation-modal-add-title' => 'Lisää sijainti',
+	'places-geolocation-modal-error-title' => 'Virhe',
+	'places-error-no-article' => 'Sinun on määritettävä sivu',
+	'places-error-place-already-exists' => 'Tämä sivu on jo geo-merkitty',
+	'places-updated-geolocation' => 'Geo-merkitse tämä sivu',
+);
+
 /** French (français)
  * @author Gomoko
  * @author Wyz
