@@ -40,11 +40,11 @@ public class CreateNewWikiPageObjectStep3 extends BasePageObject{
 //		lista.get(skinNumber).click();
 	}
 	
-	public NewWikiaHomePage submit()
+	public NewWikiaHomePage submit(String wikiName)
 	{
 		submitButton.click();
 		PageObjectLogging.log("submit", "Submit button clicked", true, driver);
-		return new NewWikiaHomePage(driver);
+		return new NewWikiaHomePage(driver, wikiName);
 	}
 
 }
