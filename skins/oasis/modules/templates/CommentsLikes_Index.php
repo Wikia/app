@@ -24,7 +24,7 @@
 		if ($showLike) {
 ?>
 	<li class="likes">
-		<fb:like layout="button_count" width="50" colorscheme="<?= $likeTheme ?>" ref="<?= $likeRef ?>" href="<?= htmlspecialchars($likeHref) ?>"></fb:like>
+		<div class="fb-like" data-href="<?= htmlspecialchars($likeHref) ?>" data-send="false" data-layout="button_count" data-width="50" data-show-faces="false" data-colorscheme="<?= $likeTheme ?>"></div>
 	</li>
 <?php
 		}
