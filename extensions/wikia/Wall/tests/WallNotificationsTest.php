@@ -7,7 +7,7 @@ $wgCanonicalNamespaceNames = $wgCanonicalNamespaceNames + $wgExtraNamespaces;
 
 class testWallNotifications extends WallNotifications {
 	public function addNotificationToData(&$data, $userId, $wikiId, $uniqueId, $entityKey, $authorId, $isReply, $read = false) {
-		return parent::addNotificationToData(&$data, $userId, $wikiId, $uniqueId, $entityKey, $authorId, $isReply, $read);
+		return parent::addNotificationToData($data, $userId, $wikiId, $uniqueId, $entityKey, $authorId, $isReply, $read);
 	}
 }
 
