@@ -72,6 +72,11 @@
 		>ul {
 			position: relative;
 			z-index: 1;
+			
+		}
+		// BugId: 44309
+		ul, li {
+			margin: 0;
 		}
 		li {
 			line-height: 31px;
