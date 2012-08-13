@@ -39,7 +39,7 @@ public class CreateAWiki_1 extends TestTemplate{
 		//create new wiki step 3
 		CreateNewWikiPageObjectStep3 createNewWikiStep3 = createNewWikistep2.submit();
 		createNewWikiStep3.selectTheme(3);
-		NewWikiaHomePage newWikia = createNewWikiStep3.submit();
+		NewWikiaHomePage newWikia = createNewWikiStep3.submit(wikiName);
 		newWikia.waitForCongratulationsLightBox(wikiName);
 		//logout
 		CommonFunctions.logOut("KarolK1");

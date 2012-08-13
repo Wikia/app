@@ -11,6 +11,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.wikia.webdriver.Common.CommonExpectedConditions;
+import com.wikia.webdriver.Common.CommonFunctions;
 import com.wikia.webdriver.Logging.PageObjectLogging;
 
 
@@ -115,6 +116,7 @@ public class BasePageObject{
 
 	public void click(WebElement pageElem)
 	{
+		CommonFunctions.scrollToElement(pageElem);
 		pageElem.click();
 	}
 	/**

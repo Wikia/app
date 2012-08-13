@@ -70,7 +70,7 @@ public class CreateAWikiTests_latin extends TestTemplate
 		createNewWiki2.selectCategory("Auto");
 		CreateNewWikiPageObjectStep3 createNewWiki3 = createNewWiki2.submit();
 		createNewWiki3.selectTheme(3);
-		NewWikiaHomePage newWikia = createNewWiki3.submit();
+		NewWikiaHomePage newWikia = createNewWiki3.submit(wikiName);
 		newWikia.VerifyCongratulationsLightBox();
 		newWikia.closeCongratulationsLightBox();
 		newWikia.vefifyUserLoggedIn(BasePageObject.userName);
@@ -106,7 +106,7 @@ public class CreateAWikiTests_latin extends TestTemplate
 		createNewWiki2.selectCategory("Auto");
 		CreateNewWikiPageObjectStep3 createNewWiki3 = createNewWiki2.submit();
 		createNewWiki3.selectTheme(3);
-		NewWikiaHomePage newWikia = createNewWiki3.submit();
+		NewWikiaHomePage newWikia = createNewWiki3.submit(wikiName);
 		newWikia.VerifyCongratulationsLightBox();
 		newWikia.closeCongratulationsLightBox();
 		newWikia.vefifyUserLoggedIn(BasePageObject.userName);
@@ -142,7 +142,7 @@ public class CreateAWikiTests_latin extends TestTemplate
 		createNewWiki2.selectCategory("Auto");
 		CreateNewWikiPageObjectStep3 createNewWiki3 = createNewWiki2.submit();
 		createNewWiki3.selectTheme(3);
-		NewWikiaHomePage newWikia = createNewWiki3.submit();
+		NewWikiaHomePage newWikia = createNewWiki3.submit(wikiName);
 		newWikia.VerifyCongratulationsLightBox();
 		newWikia.closeCongratulationsLightBox();
 		newWikia.vefifyUserLoggedIn(BasePageObject.userName);
@@ -179,7 +179,7 @@ public class CreateAWikiTests_latin extends TestTemplate
 		createNewWiki2.selectCategory("Auto");
 		CreateNewWikiPageObjectStep3 createNewWiki3 = createNewWiki2.submit();
 		createNewWiki3.selectTheme(3);
-		NewWikiaHomePage newWikia = createNewWiki3.submit();
+		NewWikiaHomePage newWikia = createNewWiki3.submit(wikiName);
 		newWikia.VerifyCongratulationsLightBox();
 		newWikia.closeCongratulationsLightBox();
 		newWikia.vefifyUserLoggedIn(BasePageObject.userName);
@@ -211,7 +211,7 @@ public class CreateAWikiTests_latin extends TestTemplate
 		createNewWiki2.selectCategory("Auto");
 		CreateNewWikiPageObjectStep3 createNewWiki3 = createNewWiki2.submit();
 		createNewWiki3.selectTheme(3);
-		NewWikiaHomePage newWikia = createNewWiki3.submit();
+		NewWikiaHomePage newWikia = createNewWiki3.submit(wikiName);
 		newWikia.VerifyCongratulationsLightBox();
 		newWikia.closeCongratulationsLightBox();
 		newWikia.vefifyUserLoggedIn(BasePageObject.userName);
