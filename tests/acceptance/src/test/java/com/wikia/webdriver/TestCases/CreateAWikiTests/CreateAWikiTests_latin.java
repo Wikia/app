@@ -3,7 +3,6 @@ package com.wikia.webdriver.TestCases.CreateAWikiTests;
 import org.testng.annotations.Test;
 
 import com.wikia.webdriver.Common.CommonFunctions;
-import com.wikia.webdriver.Common.CommonUtils;
 import com.wikia.webdriver.Templates.TestTemplate;
 import com.wikia.webdriver.pageObjects.PageObject.BasePageObject;
 import com.wikia.webdriver.pageObjects.PageObject.HomePageObject;
