@@ -1210,6 +1210,7 @@ class UserProfilePageController extends WikiaController {
 
 		$html = '';
 
+		$out = array();
 		wfRunHooks('AddToUserProfile', array(&$out, $user));
 
 		if (count($out) > 0) {
