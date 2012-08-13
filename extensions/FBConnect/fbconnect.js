@@ -42,8 +42,6 @@
  * TODO: "connect" it with $.loadFacebookAPI loader function
  */
 window.onFBloaded = function() {
-	$().log('onFBloaded', 'FB');
-
 	var fbAppId = window.fbAppId,
 		// macbre: fix IE issue (RT #140425)
 		// @see http://threebrothers.org/brendan/blog/facebook-connect-ie-fb_xd_fragment-iframe/
@@ -92,7 +90,6 @@ $(function() {
 
 	//window.fbAsyncInit ();
 	$("#fbconnect a").on('click', function(ev){
-		WET.byStr( 'FBconnect/userlinks/connect' );
 		loginByFBConnect();
 		ev.preventDefault();
 	});
@@ -103,7 +100,6 @@ $(function() {
 		if( type !== '' ) {
 			suffix = '/' + type;
 		}
-		WET.byStr( 'FBconnect/userfromfb' + suffix );
 	}
 
 
@@ -160,12 +156,7 @@ function sendToConnectOnLoginForSpecificForm(formName){
 			if(data.status == "ok") {
 				$().getModal(window.wgScript + '?action=ajax&rs=SpecialConnect::ajaxModalChooseName&returnto=' + encodeURIComponent(wgPageName) + '&returntoquery=' + encodeURIComponent(window.wgPageQuery || ''),  "#fbConnectModal", {
 			        id: "fbConnectModalWrapper",
-			        width: 600,
-			        callback: function() {
-						$('#fbConnectModalWrapper .close').click(function(){
-							WET.byStr( 'FBconnect/ChooseName/X' );
-						});
-					}
+			        width: 600
 				});
 			} else {
 				window.location.href = destUrl;
@@ -222,7 +213,6 @@ function loginAndConnectExistingUser(){
 
 window.wgAjaxLoginOnInit = function() {
 	AjaxLogin.slideToNormalLogin = function(el){
-		$().log('AjaxLogin: slideToNormalLogin()');
 		var firstSliderCell = $("#AjaxLoginSliderNormal");
 		var slideto = 0;
 
@@ -236,7 +226,6 @@ window.wgAjaxLoginOnInit = function() {
 		}, function(){$('#fbLoginAndConnect').hide();});
 	};
 	AjaxLogin.slideToLoginAndConnect = function(el){
-		$().log('AjaxLogin: slideToLoginAndConnect()');
 		$('#fbLoginAndConnect').show();
 		var firstSliderCell = $("#AjaxLoginSliderNormal");
 		var slideto = -351;
@@ -288,24 +277,6 @@ window.wgAjaxLoginOnInit = function() {
 
 	//setup slider
 	$("#AjaxLoginConnectMarketing a").click(AjaxLogin.slider);
-
-	$('#fbAjaxLoginConnect').click(function() {
-		WET.byStr( 'FBconnect/login_dialog/connect' );
-	});
-
-	$("#AjaxLoginConnectMarketing .forward").click(function() {
-		WET.byStr( 'FBconnect/login_dialog/slider/forward' );
-	});
-
-	$("#AjaxLoginConnectMarketing .back").click(function() {
-		WET.byStr( 'FBconnect/login_dialog/slider/back' );
-	});
-
-	$("#wpLoginAndConnectCombo").click(function() {
-		WET.byStr( 'FBconnect/login_dialog/login_and_connect' );
-	});
-
-	$().log('Fbconnect: AjaxLogin expend');
 }
 
 function fixXFBML(id) {
@@ -320,8 +291,6 @@ function fixXFBML(id) {
 
 			// force button to be rendered again
 			FB.XFBML.parse(node.get(0));
-
-			$().log('XFBML run for #' + id, 'FB');
 		});
 	}
 }

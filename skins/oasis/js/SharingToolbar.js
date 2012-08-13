@@ -3,10 +3,6 @@ var SharingToolbar = {
 	toolbarNode: false,
 	contributeOffsetTop: 0,
 
-	track: function(url) {
-		$.tracker.byStr('/wikiheader/wikinav/' + url);
-	},
-
 	init: function() {
 		this.toolbarNode = $('#SharingToolbar');
 
@@ -36,11 +32,11 @@ var SharingToolbar = {
 		lightboxSend = node.attr('data-lightboxSend'),
 		lightboxShareEmailLabelAddress = node.attr('data-lightboxShareEmailLabelAddress'),
 		lightboxCancel = node.attr('data-lightboxcancel');
-		
+
 		var showEmailModal = function() {
 			SharingToolbar.showEmailModal(lightboxShareEmailLabel, lightboxSend, lightboxShareEmailLabelAddress, lightboxCancel);
 		};
-		
+
 		if ( window.wgUserName == null ) {
 			if (window.wgComboAjaxLogin) {
 				showComboAjaxForPlaceHolder(false, false, function () {
@@ -67,7 +63,7 @@ var SharingToolbar = {
 		var refreshPage = function() {
 			UserLoginAjaxForm.prototype.reloadPage();
 		};
-	
+
 		$.showCustomModal(
 			lightboxShareEmailLabel,
 			'<label>'+lightboxShareEmailLabelAddress+'<br/>'
@@ -95,7 +91,7 @@ var SharingToolbar = {
 								// close email modal when share is successful (BugId:16061)
 								if (result.success) {
 									$('#shareEmailModal').closeModal();
-									
+
 								}
 							}
 						});
@@ -131,13 +127,9 @@ var SharingToolbar = {
 		button.toggleClass('share-enabled');
 		self.toolbarNode.toggle();
 
-		// click tracking and width checking
+		// width checking
 		if (button.hasClass('share-enabled')) {
-			self.track('share-activate');
 			self.checkWidth();
-		}
-		else {
-			self.track('share-deactivate');
 		}
 	}
 }

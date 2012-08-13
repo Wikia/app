@@ -77,15 +77,6 @@ var CreateWikiaQuizArticle = {
 	onSave: function(event) {
 		event.preventDefault();
 
-		// track number of options in quizElement
-		var optionCount = 0;
-		$("#CreateWikiaQuizArticle li:not('.new-item') input[type='text']").each(function() {
-			if ($(this).val().length > 0) {
-				optionCount++;
-			}
-		});
-		CreateWikiaQuizArticle.track('/optioncount/' + optionCount);
-
 		if ($("#CreateWikiaQuizArticle").data('quizelementid')) {
 			// editing existing quizElement
 			$.get(wgScript + '?action=ajax&rs=WikiaQuizAjax&method=updateQuizArticle', $("#CreateWikiaQuizArticle").find("form").serialize(), function(data) {
@@ -108,7 +99,6 @@ var CreateWikiaQuizArticle = {
 					if (data.success) {
 						RTE.mediaEditor._add("[[" + data.question + "]]");
 						$("#CreateWikiaQuizArticle").closest(".modalWrapper").closeModal();
-						CreateWikiaQuizArticle.track('/insertNewQuizElement');
 					} else if (data.error) {
 						$("#CreateWikiaQuizArticle").find(".errorbox").remove().end().prepend(data.error);
 					}
@@ -121,10 +111,6 @@ var CreateWikiaQuizArticle = {
 				}
 			});
 		}
-	},
-
-	track: function(fakeUrl) {
-		window.jQuery.tracker.byStr('quiz' + fakeUrl, true);
 	}
 };
 

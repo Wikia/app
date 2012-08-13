@@ -56,7 +56,6 @@ class WallController extends WallBaseController {
 	public function renderOldUserTalkPage() {
 		$wallUrl = $this->request->getVal('wallUrl');
 
-		$this->response->addAsset('extensions/wikia/Wall/js/WallUserTalkArchive.js');
 		$this->userTalkArchiveContent = $this->getUserTalkContent();
 
 		if( $this->userTalkArchiveContent === false && !empty($wallUrl) ) {
@@ -102,7 +101,7 @@ class WallController extends WallBaseController {
 		if( $title->getNamespace() == NS_USER_WALL && !empty($pageTitle) && $pageTitle->exists()) {
 			$this->renderUserTalkArchiveAnchor = true;
 			$this->userTalkArchivePageUrl = (empty($title) ? $this->wg->Title->getFullUrl():$title->getFullUrl()).'/'.$this->helper->getArchiveSubPageText();
-		}		
+		}
 	}
 
 	public function loadMore() {

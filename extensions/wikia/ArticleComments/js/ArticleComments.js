@@ -35,12 +35,8 @@ var ArticleComments = {
 			}
 		}
 
-		$articleComments.on('click', '.article-comm-delete', ArticleComments.linkDelete);
 		$articleComments.on('click', '.article-comm-edit', ArticleComments.actionProxy(ArticleComments.edit));
-		$articleComments.on('click', '.article-comm-history', ArticleComments.linkHistory);
 		$articleComments.on('click', '.article-comm-reply', ArticleComments.actionProxy(ArticleComments.reply));
-
-		$('#article-comm-order').find('a').bind('click', ArticleComments.actionProxy(ArticleComments.changeOrder));
 		$('#article-comm-submit').bind('click', { source: '#article-comm' }, ArticleComments.actionProxy(ArticleComments.postComment));
 
 		$articleCommFbMonit.mouseenter(function() {
@@ -54,15 +50,6 @@ var ArticleComments = {
 		ArticleComments.addHover();
 		ArticleComments.showEditLink();
 		ArticleComments.initCompleted = true;
-	},
-
-	track: function(fakeUrl) {
-		//blogs
-		if (wgNamespaceNumber == 500 || wgNamespaceNumber == 501) {
-			WET.byStr('comment/blog/' + fakeUrl);
-		} else {
-			WET.byStr('comment/article/' + fakeUrl);
-		}
 	},
 
 	actionProxy: function(callback) {
@@ -88,7 +75,7 @@ var ArticleComments = {
 
 	edit: function(e) {
 		e.preventDefault();
-		ArticleComments.track('edit');
+
 		if (ArticleComments.processing) { return; }
 
 		// If MiniEditor is enabled, we need to determine the correct content format before making the request
@@ -174,7 +161,7 @@ var ArticleComments = {
 
 	saveEdit: function(e) {
 		e.preventDefault();
-		ArticleComments.track('editSave');
+
 		if (ArticleComments.processing) { return; }
 
 		var commentId = e.data.id,
@@ -240,7 +227,7 @@ var ArticleComments = {
 
 	reply: function(e) {
 		e.preventDefault();
-		ArticleComments.track('reply');
+
 		if (ArticleComments.processing) { return; }
 
 		$.getJSON(wgScript, {
@@ -305,7 +292,6 @@ var ArticleComments = {
 
 	postComment: function(e) {
 		e.preventDefault();
-		ArticleComments.track('post');
 
 		if (ArticleComments.processing) { return; }
 
@@ -428,17 +414,6 @@ var ArticleComments = {
 
 		var page = parseInt($(this).attr('page'));
 		var $commentsList = $('#article-comments-ul').addClass('loading');
-		var trackingPage = page;
-		var id = $(this).attr('id');
-
-		if (id == 'article-comments-pagination-link-prev') {
-			trackingPage = 'prev';
-		} else if (id == 'article-comments-pagination-link-next') {
-			trackingPage = 'next';
-		}
-
-		ArticleComments.track('pageSwitch/' + trackingPage);
-		$('#article-comments-pagination-link-' + trackingPage).blur();
 
 		$.getJSON(wgScript + '?action=ajax&rs=ArticleCommentsAjax&method=axGetComments&article=' + wgArticleId, {
 			page: page,
@@ -461,14 +436,6 @@ var ArticleComments = {
 		});
 	},
 
-	linkDelete: function() {
-		ArticleComments.track('delete');
-	},
-
-	linkHistory: function() {
-		ArticleComments.track('history');
-	},
-
 	addHover: function() {
 		$('.article-comments-pagination-link')
 			.bind('click', ArticleComments.setPage)
@@ -479,14 +446,6 @@ var ArticleComments = {
 			}, function() {
 				$(this).removeClass('accent');
 			});
-	},
-
-	changeOrder: function() {
-		if ($(this).hasClass('desc')) {
-			ArticleComments.track('orderSwitch/newestFirst');
-		} else {
-			ArticleComments.track('orderSwitch/newestLast');
-		}
 	},
 
 	// Used to initialize MiniEditor

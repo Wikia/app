@@ -627,8 +627,6 @@ class PageHeaderController extends WikiaController {
 		}
 		else if (BodyController::isHubPage()) {
 			$this->title = wfMsg('hub-header', $wgTitle);
-			global $wgOut;
-			$wgOut->addScriptFile('../oasis/js/CorporateHub.js');
 		}
 
 		wfProfileOut( __METHOD__ );

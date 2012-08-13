@@ -1,13 +1,9 @@
-/* 
+/*
  *  This file is being used for Special:AchievementsCustomize
- *  There is also skins/oasis/js/Achievements.js 
+ *  There is also skins/oasis/js/Achievements.js
  */
 
 var Achievements = {
-	// track events
-	track: function(fakeUrl) {
-		window.jQuery.tracker.byStr('Achievements/' + fakeUrl);
-	},
 
 	//hover delay (in ms)
 	delay: 500,
@@ -22,16 +18,12 @@ var Achievements = {
 			$('#view-all').hide();
 			$('#view-less').show();
 			$(".article-sidebar #badges").animate({height: badgeHeight +'px'}, 'slow');
-
-			self.track('userprofile/viewall');
 		});
 
 		$('#view-less').click(function() {
 			$('#view-less').hide();
 			$('#view-all').show();
 			$(".article-sidebar #badges").animate({height: '200px'}, 'slow');
-
-			self.track('userprofile/viewless');
 		});
 
 		//Show badge description when hovering over the badge
@@ -50,7 +42,6 @@ var Achievements = {
 					.css("left", hoverPosition.left)
 					.css("top", hoverPosition.top)
 					.show();
-				self.track('userprofile/hover');
 			}, self.delay);
 		}, function() {
 			$(this).css('position', 'static');
@@ -58,20 +49,7 @@ var Achievements = {
 			$(this).prevAll(".profile-hover").hide();
 		});
 
-		$('form.customize-upload').find('input').click(function(e) {
-			self.track('customize/browse');
-		});
-
-		$('#achievements-leaderboard').click(function() {
-			self.track('userprofile/leaderboardlink');
-		});
-
-		$('#achievements-customize').click(function() {
-			self.track('userprofile/customizelink');
-		});
-
 		$('#about-achievements').find('a').click(function(e) {
-			self.track('leaderboard/yourprofile');
 			if (wgUserName == null) {
 				var callbackLink = $(e.target).attr('href');
 				showComboAjaxForPlaceHolder(false, false, function(){
@@ -82,40 +60,12 @@ var Achievements = {
 				return false;
 			}
 		});
-
-		//avatars
-		$('#leaderboard').find('a').click(function(e) {
-			self.track('leaderboard/avatar');
-		});
-
-		//user names
-		$('#leaderboard-sidebar').find('a').click(function(e) {
-			self.track('leaderboard/username');
-		});
-
-		$('span.custom-text').find('a').click(function(e) {
-			self.track('leaderboard/revert');
-		});
-
-		$('input.c-enabled-flags').click(function(e) {
-			if($(this).attr('checked')){
-				self.track('customize/enabled');
-			} else {
-				self.track('customize/disabled');
-			}
-		});
-
-		$('.article-sidebar form.customize-edit-plus-category button').click(function(e) {
-			self.track('customize/createtrack');
-		});
 	},
 
 	submitPicture:function(form){
 		var inputs = $(form).find('button, input[type=file]');
 		var img = $(form).prev().children().eq(0);
 		var handler = form.onsubmit;
-
-		Achievements.track('customize/savepicture');
 
 		$.AIM.submit(form, {onComplete: function(response){
 			$("#body").removeClass("ajax");
@@ -168,7 +118,6 @@ var Achievements = {
 	},
 
 	AchPrepareData: function(createInTrackEditPlusCategory, sectionId) {
-		this.track('customize/savechanges');
 		var dataStore = {
 			messages: {},
 			statusFlags: {},

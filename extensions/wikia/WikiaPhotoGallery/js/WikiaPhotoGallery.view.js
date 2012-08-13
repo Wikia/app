@@ -32,21 +32,8 @@ var WikiaPhotoGalleryView = {
 		} else {
 			// create deferred and automatically resolve it to pass promise pattern to callback on else statement
 			var deferred = new jQuery.Deferred();
-			deferred.then(callback).resolve();	
+			deferred.then(callback).resolve();
 			return deferred;
-		}
-	},
-
-	// track events
-	track: function(fakeUrl) {
-		$.tracker.byStr('articleAction/photogallery' + fakeUrl);
-
-		// extra tracking for Oasis (RT #68550)
-		if (window.skin == 'oasis') {
-			var part = fakeUrl.split('/').pop();
-			if (part == 'next' || part == 'previous' || part == 'popout') {
-				$.tracker.byStr('contentpage/slideshow/' + part);
-			}
 		}
 	},
 
@@ -100,9 +87,6 @@ var WikiaPhotoGalleryView = {
 							id = gallery.attr('id');
 
 						self.loadEditorJS(function() {
-							// tracking
-							//self.track('/gallery/addImage'); // RT #75226
-
 							WikiaPhotoGallery.ajax('getGalleryData', {hash:hash, articleId:wgArticleId}, function(data) {
 								if (data && data.info == 'ok') {
 									data.gallery.id = id;

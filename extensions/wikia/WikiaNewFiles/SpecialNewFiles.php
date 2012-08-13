@@ -13,8 +13,6 @@ function wfSpecialWikiaNewFiles ( $par, $specialPage ) {
 	global $wgJsMimeType, $wgExtensionsPath;
 	global $wmu, $wgOasisHD;
 
-	$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"$wgExtensionsPath/wikia/WikiaNewFiles/js/WikiaNewFiles.js\"></script>\n" );
-
 	$wpIlMatch = $wgRequest->getText( 'wpIlMatch' );
 	$dbr = wfGetDB( DB_SLAVE );
 	$sk = $wgUser->getSkin();

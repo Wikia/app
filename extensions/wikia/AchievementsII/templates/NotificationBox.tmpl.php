@@ -18,26 +18,12 @@ $badgeName = htmlspecialchars($badge->getName());
 </div>
 
 <script>
-	wgAfterContentAndJS.push(
-		function() {
-			$(function() {
-
-				var trackFunc = function(e) {
-					window.jQuery.tracker.byStr('Achievements/notification/yourprofile');
-				};
-
-				$('.AchievementsNotification').find('a').click(trackFunc);
-
-				$('.AchievementsNotification').click(function(e) {
-					trackFunc();
-					window.location.href = $('.AchievementsNotification').find('a').attr('href');
-				});
-
-				$('.AchievementsNotification').slideDown('slow');
-				setTimeout(function() {$('.AchievementsNotification').slideUp('slow');}, 10000);
-				window.jQuery.tracker.byStr('Achievements/notification/appears');
-			});
-		}
-	);
+	// FIXME: move this somewhere else?
+	wgAfterContentAndJS.push(function() {
+		$(function() {
+			$('.AchievementsNotification').slideDown('slow');
+			setTimeout(function() {$('.AchievementsNotification').slideUp('slow');}, 10000);
+		});
+	});
 </script>
 

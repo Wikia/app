@@ -157,27 +157,16 @@ HoverMenu.prototype.showNav = function(parent) {
 	if (nav.exists()) {
 		nav.addClass("show");
 
-		// tracking
-		switch(this.selector) {
-			case '#GlobalNavigation':
-				$.tracker.byStr('globalheader/globalnav/open');
+		// spotlights displaying
+		if (this.selector == '#GlobalNavigation') {
+			var i = $(parent).index() + 1,
+				funcSuffix = "_SPOTLIGHT_GLOBALNAV_" + i,
+				func = window[ "fillIframe" + funcSuffix ] || window[ "fillElem" + funcSuffix ];
 
-				// spotlights displaying
-				var i = $(parent).index() + 1;
-				if(typeof window["fillIframe_SPOTLIGHT_GLOBALNAV_"+i] == "function") {
-					window["fillIframe_SPOTLIGHT_GLOBALNAV_"+i]();
-					window["fillIframe_SPOTLIGHT_GLOBALNAV_"+i] = null;
-				}
-				else if(typeof window["fillElem_SPOTLIGHT_GLOBALNAV_"+i] == "function") {
-					window["fillElem_SPOTLIGHT_GLOBALNAV_"+i]();
-					window["fillElem_SPOTLIGHT_GLOBALNAV_"+i] = null;
-				}
-
-				break;
-
-			case '#AccountNavigation':
-				$.tracker.byStr('globalheader/usermenu/open');
-				break;
+			if ( func ) {
+				func();
+				func = null;
+			}
 		}
 	}
 };

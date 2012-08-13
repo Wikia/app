@@ -102,7 +102,7 @@ class LoginForm extends SpecialPage {
 		$this->mCreateaccountMail = $request->getCheck( 'wpCreateaccountMail' )
 									&& $wgEnableEmail;
 		$this->mMailmypassword = $request->getCheck( 'wpMailmypassword' )
-		                         && $wgEnableEmail;						
+		                         && $wgEnableEmail;
 		$this->mLoginattempt = $request->getCheck( 'wpLoginattempt' );
 		$this->mAction = $request->getVal( 'action' );
 		$this->mRemember = $request->getCheck( 'wpRemember' );
@@ -147,9 +147,9 @@ class LoginForm extends SpecialPage {
 			$this->wpUserLoginExt = false;
 		} else {
 			$this->wpMsgPrefix = 'userlogin-error-';
-			$this->wpUserLoginExt = true;			
+			$this->wpUserLoginExt = true;
 		}
-		
+
 		$title = Title::newFromText($this->mReturnTo);
 		if (!empty($title))
 		{
@@ -293,16 +293,16 @@ class LoginForm extends SpecialPage {
 			return true;
 		}
 	}
-	
+
 	/**
 	 * @private
 	 * clear code after 1.19 merge (MoLi)
 	 */
 	private function wikiaInternalCheck() {
 		global $wgExternalSharedDB;
-		
+
 		$out = $this->getOutput();
-		
+
 		//new registration - start [Marooned [at] wikia-inc.com]
 		if ($this->wpBirthYear == -1 || $this->wpBirthMonth == -1 || $this->wpBirthDay == -1) {
 			$this->mainLoginForm( $this->msg( $this->wpMsgPrefix . 'userlogin-bad-birthday' )->text(), 'error', 'birthday' );
@@ -313,7 +313,6 @@ class LoginForm extends SpecialPage {
 			$out->setPageTitle( $this->msg( 'userlogin-unable-title' ) );
 			$out->setRobotpolicy( 'noindex,nofollow' );
 			$out->setArticleRelated( false );
-			$out->addScript( '<script type="text/javascript">WET.byStr(\'signupActions/signup/createaccount/failure\');</script>' );
 			$out->addWikiText( $this->msg( $this->wpMsgPrefix . 'userlogin-unable-info' ) );
 			if ( !empty( $this->mReturnTo ) ) {
 				$out->returnToMain( true, $this->mReturnTo );
@@ -341,7 +340,7 @@ class LoginForm extends SpecialPage {
 				}
 			}
 		}
-		
+
 		return true;
 	}
 
@@ -1061,7 +1060,7 @@ class LoginForm extends SpecialPage {
 		if (empty($wgEnableRichEmails)) {
 			$userLanguage = $u->getOption( 'language' );
 			$m = $this->msg( $emailText, $ip, $u->getName(), $np, $wgServer . $wgScript,
-				round( $wgNewPasswordExpiry / 86400 ) )->inLanguage( $userLanguage )->text();			
+				round( $wgNewPasswordExpiry / 86400 ) )->inLanguage( $userLanguage )->text();
 			$result = $u->sendMail( $this->msg( $emailTitle )->inLanguage( $userLanguage )->text(), $m, null, $nr, 'TemporaryPassword', $priority );
 		} else {
 			$wantHTML = $u->isAnon() || $u->getOption('htmlemails');
@@ -1204,10 +1203,6 @@ class LoginForm extends SpecialPage {
 
 		$titleObj = $this->getTitle();
 		$user = $this->getUser();
-
-		if ( ('' != $msg) && ('error' == $msgtype) && ('signup' == $this->mType) ) {
-			$wgOut->addScript('<script type="text/javascript">WET.byStr(\'signupActions/signup/createaccount/failure\');</script>');
-		}
 
 		if ( $this->mType == 'signup' ) {
 			// Block signup here if in readonly. Keeps user from

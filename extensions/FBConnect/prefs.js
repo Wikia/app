@@ -19,7 +19,6 @@ function enableDisablePushAllow(force_enable) {
 
 $(function(){
 	$('#fbConnectDisconnect').click(function() {
-		WET.byStr( 'FBconnect/prefs/disconnect' );
 		$('#fbConnectDisconnectDone').hide();
 		$('#fbDisconnectProgress').show();
 		$.postJSON(wgServer + wgScript + "?action=ajax&rs=FBConnect::disconnectFromFB" ,
@@ -39,10 +38,6 @@ $(function(){
 	$('#fbconnect-push-allow-never').change( function() { enableDisablePushAllow(false); });
 	enableDisablePushAllow(false);
 	$('#mw-preferences-form').submit(function() { enableDisablePushAllow(true); });
-
-	$('#fbPrefsConnect').click(function() {
-		WET.byStr( 'FBconnect/prefs/connect' );
-	});
 
 	// BugId:19603
 	fixXFBML('fbPrefsConnect');

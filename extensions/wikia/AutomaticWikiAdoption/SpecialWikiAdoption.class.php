@@ -50,8 +50,6 @@ class SpecialWikiAdoption extends UnlistedSpecialPage {
 
 		$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/AutomaticWikiAdoption/css/AutomaticWikiAdoption.scss'));
 
-		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/AutomaticWikiAdoption/js/AutomaticWikiAdoption.js\"></script>\n");
-
 		$canAdopt = AutomaticWikiAdoptionHelper::isAllowedToAdopt($wgCityId, $wgUser);
 		if ($canAdopt == AutomaticWikiAdoptionHelper::USER_ALLOWED) {
 			//allowed to adopt

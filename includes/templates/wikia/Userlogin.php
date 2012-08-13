@@ -74,9 +74,9 @@ class UserloginTemplate extends QuickTemplate {
 		<?php } ?>
 		<tr>
 			<td>
-			<?php if( $this->haveData( 'loginToken' ) ): ?> 
+			<?php if( $this->haveData( 'loginToken' ) ): ?>
 				<input type="hidden" name="wpLoginToken" value="<?php $this->text( 'loginToken' ); ?>" />
-			<?php elseif($this->haveData( 'token' )): ?>  
+			<?php elseif($this->haveData( 'token' )): ?>
 				<input type="hidden" name="wpLoginToken" value="<?php $this->text( 'token' ); ?>" />
 			<?php endif; ?>
 			</td>
@@ -372,8 +372,8 @@ class UsercreateTemplate extends QuickTemplate {
 					<a id="wpCreateaccountX" class="wikia_button" href="#" onclick="UserRegistration.submitForm();" ><span><?= wfMsg("createaccount") ?></span></a>
 				<?php if( $this->data['createemail'] ) { ?>
 					<a id="wpCreateaccountX" class="wikia_button" href="#" onclick="$('#wpCreateaccountXSteer').value = false; $('#wpCreateaccountYSteer').value = true; UserRegistration.submitForm();" ><span><?= wfMsg("createaccountmail") ?></span></a>
-				</div>					
-					<input type="hidden" id="wpCreateaccountYSteer" name="wpCreateaccountMail" value="false" >							
+				</div>
+					<input type="hidden" id="wpCreateaccountYSteer" name="wpCreateaccountMail" value="false" >
 				<?php } else { ?>
 				</div>
 					<input type="hidden" id="wpCreateaccountXSteer" name="wpCreateaccount" value="true" >
@@ -386,13 +386,6 @@ class UsercreateTemplate extends QuickTemplate {
 		var AjaxLogin2 = {};
 
 		AjaxLogin2.formSubmitHandler = function(ev) {
-			WET.byStr('loginActions2/' + AjaxLogin2.action);
-
-			AjaxLogin2.form.log('AjaxLogin2: selected action = '+ AjaxLogin2.action);
-
-			// tracking
-			WET.byStr('loginActions2/' + AjaxLogin2.action);
-
 			var controlbox = document.getElementById('ControlBox');
 			var newButton = document.createElement('input');
 
@@ -415,7 +408,7 @@ class UsercreateTemplate extends QuickTemplate {
 
 		AjaxLogin2.displayReason = function (reason) {
 			$('#userloginInnerErrorBox2').css('display', '').html(reason);
-			$('#userloginErrorBox2').show();			
+			$('#userloginErrorBox2').show();
 		}
 
 		AjaxLogin2.blockLoginForm = function (block) {
@@ -515,7 +508,6 @@ class UsercreateTemplate extends QuickTemplate {
 	function executeRegisterJS()
 	{ ?>
 		var UserRegistration = {};
-		UserRegistration.WET_str = 'signupActions/signup';
 
 		UserRegistration.errorNick = false;	//nick checking can be disabled
 		UserRegistration.errorEmail = UserRegistration.errorPass = UserRegistration.errorRetype = UserRegistration.errorDate = true;
@@ -581,7 +573,7 @@ class UsercreateTemplate extends QuickTemplate {
 			UserRegistration.checkUsername(UserRegistration.fillErrors);
 			return !(UserRegistration.errorNick || UserRegistration.errorEmail || UserRegistration.errorRetype || UserRegistration.errorDate);
 		}
-		
+
 		UserRegistration.update_day_field = function() {
 			var year = $('#wpBirthYear').attr('value');
 			var month = $('#wpBirthMonth').attr('value');
@@ -629,10 +621,17 @@ class UsercreateTemplate extends QuickTemplate {
 			});
 		}
 
-		$('#wpEmailInfo').bind('click', function(){$.showModal(prefs_help_mailmesg, prefs_help_email, {'id': 'wpEmailInfoModal', 'onClose': function() {WET.byStr(UserRegistration.WET_str + '/moreinfo/email/close');} }); WET.byStr(UserRegistration.WET_str + '/moreinfo/email/open'); });
-		$('#wpBirthDateInfo').bind('click', function(){$.showModal(prefs_help_birthmesg, prefs_help_birthinfo, {'id': 'wpBirthDateInfoModal', 'onClose': function() {WET.byStr(UserRegistration.WET_str + '/moreinfo/birthdate/close'); } });  WET.byStr(UserRegistration.WET_str + '/moreinfo/birthdate/open'); });
-		$('#wpUserCaptchaInfo').bind('click', function(){$.showModal(prefs_help_blurmesg, prefs_help_blurinfo, {'id': 'wpUserCaptchaInfoModal', 'onClose' : function() {WET.byStr(UserRegistration.WET_str + '/moreinfo/captcha/close'); } });  WET.byStr(UserRegistration.WET_str + '/moreinfo/captcha/open'); });
-		$('#termsOfUse').bind('click', function(){ WET.byStr(UserRegistration.WET_str + '/termsofuse'); } );
+		$('#wpEmailInfo').bind('click', function(){
+			$.showModal(prefs_help_mailmesg, prefs_help_email, { 'id': 'wpEmailInfoModal' });
+		});
+
+		$('#wpBirthDateInfo').bind('click', function(){
+			$.showModal(prefs_help_birthmesg, prefs_help_birthinfo, { 'id': 'wpBirthDateInfoModal' });
+		});
+
+		$('#wpUserCaptchaInfo').bind('click', function(){
+			$.showModal(prefs_help_blurmesg, prefs_help_blurinfo, { 'id': 'wpUserCaptchaInfoModal'});
+		});
 
 		UserRegistration.toggleError = function(id, show) {
 			if (show == 'ok') {
@@ -725,8 +724,6 @@ class UsercreateTemplate extends QuickTemplate {
 		UserRegistration.submitForm = function() {
 			if (UserRegistration.checkForm()) {
 				$('#userlogin2').submit();
-			} else {
-				WET.byStr(UserRegistration.WET_str + '/createaccount/failure');
 			}
 		}
 
@@ -759,7 +756,7 @@ class UsercreateTemplate extends QuickTemplate {
 		$('#wpPassword2').bind('blur', function(){UserRegistration.checkPass(); UserRegistration.checkRetype();});
 		$('#wpRetype').bind('blur', UserRegistration.checkRetype);
 	<?php  }
-	
+
 }
 
 

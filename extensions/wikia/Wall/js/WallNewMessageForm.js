@@ -26,7 +26,7 @@ Wall.NewMessageForm = $.createClass(Wall.MessageForm, {
 
 	initEvents: function() {
 		var self = this;
-		
+
 		this.messageTitle
 			.keydown(function(e) {
 				if (e.which == 13) {
@@ -41,10 +41,7 @@ Wall.NewMessageForm = $.createClass(Wall.MessageForm, {
 				limit: 300,
 				limitEmpty: 30,
 				extraSpace: 15
-			})
-			.click(this.proxy(function() {
-				this.track('wall/new_message/subject_field');
-			}));
+			});
 
 		this.messageBody
 			.keydown(function(e) {
@@ -99,7 +96,6 @@ Wall.NewMessageForm = $.createClass(Wall.MessageForm, {
 
 		this.clearNewMessageTitle();
 		this.disableNewMessage();
-		this.track(title ? 'wall/new_message/post' : 'wall/new_message/post_without_title');
 
 		if (reload) {
 			this.reloadAfterLogin();
@@ -175,7 +171,6 @@ Wall.NewMessageForm = $.createClass(Wall.MessageForm, {
 
 	postNewMessage_focus: function(e) {
 		this.buttons.show();
-		this.track('wall/new_message/body');
 		if($(e.target).hasClass('body')) {
 			this.messageBody.css('font-size','13px');
 		}

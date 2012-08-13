@@ -290,9 +290,6 @@ if( $wgUser->isAllowed('createaccount') ) {
 		AjaxLogin2.formSubmitHandler = function(ev) {
 			AjaxLogin2.form.log('AjaxLogin2: selected action = '+ AjaxLogin2.action);
 
-			// tracking
-			WET.byStr('loginActions2/' + AjaxLogin2.action);
-
 			var controlbox = document.getElementById('ControlBox');
 			var newButton = document.createElement('input');
 
@@ -300,12 +297,12 @@ if( $wgUser->isAllowed('createaccount') ) {
 				newButton.name = 'wpMailmypassword';
 				newButton.value = '1';
 				newButton.type = 'hidden';
-                                controlbox.appendChild(newButton);
+                controlbox.appendChild(newButton);
 			} else {
 				newButton.name = 'wpLoginattempt';
 				newButton.value = '1';
 				newButton.type = 'hidden';
-                                controlbox.appendChild(newButton);
+                controlbox.appendChild(newButton);
 			}
 		}
 
@@ -433,10 +430,17 @@ if( $wgUser->isAllowed('createaccount') ) {
 		}
 		$(UserRegistration.init);
 
-		$('#wpEmailInfo').bind('click', function(){$.showModal(prefs_help_mailmesg, prefs_help_email, {'id': 'wpEmailInfoModal', 'onClose': function() {WET.byStr('signupActions/signup/moreinfo/email/close');} }); WET.byStr('signupActions/signup/moreinfo/email/open'); });
-		$('#wpBirthDateInfo').bind('click', function(){$.showModal(prefs_help_birthmesg, prefs_help_birthinfo, {'id': 'wpBirthDateInfoModal', 'onClose': function() {WET.byStr('signupActions/signup/moreinfo/birthdate/close'); } });  WET.byStr('signupActions/signup/moreinfo/birthdate/open'); });
-		$('#wpUserCaptchaInfo').bind('click', function(){$.showModal(prefs_help_blurmesg, prefs_help_blurinfo, {'id': 'wpUserCaptchaInfoModal', 'onClose' : function() {WET.byStr('signupActions/signup/moreinfo/captcha/close'); } });  WET.byStr('signupActions/signup/moreinfo/captcha/open'); });
-		$('#termsOfUse').bind('click', function(){ WET.byStr('signupActions/signup/termsofuse'); } );
+		$('#wpEmailInfo').bind('click', function(){
+			$.showModal(prefs_help_mailmesg, prefs_help_email, { 'id': 'wpEmailInfoModal' });
+		});
+
+		$('#wpBirthDateInfo').bind('click', function(){
+			$.showModal(prefs_help_birthmesg, prefs_help_birthinfo, { 'id': 'wpBirthDateInfoModal' });
+		});
+
+		$('#wpUserCaptchaInfo').bind('click', function(){
+			$.showModal(prefs_help_blurmesg, prefs_help_blurinfo, { 'id': 'wpUserCaptchaInfoModal' });
+		});
 
 		UserRegistration.toggleError = function(id, show) {
 			if (show == 'ok') {
@@ -520,8 +524,6 @@ if( $wgUser->isAllowed('createaccount') ) {
 		UserRegistration.submitForm = function() {
 			if (UserRegistration.checkForm()) {
 				$('#userlogin2').submit();
-			} else {
-				WET.byStr('signupActions/signup/createaccount/failure');
 			}
 		}
 

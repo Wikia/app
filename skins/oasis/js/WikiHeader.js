@@ -20,7 +20,7 @@ var WikiHeader = {
 		//Events
 		WikiHeader.navLI
 			.children("a").focus(function(){
-                                WikiHeader.hideNav();
+				WikiHeader.hideNav();
 				WikiHeader.showSubNav($(this).parent("li"));
 			});
 
@@ -33,22 +33,23 @@ var WikiHeader = {
 		//Accessibility Events
 		//Show when any inner anchors are in focus
 
-                // IE9 focus handling fix - see BugId:5914.
-                // Assume keyboard-based navigation (IE9 focus handling fix).
-                var suppressOnFocus = false;
+		// IE9 focus handling fix - see BugId:5914.
+		// Assume keyboard-based navigation (IE9 focus handling fix).
+		var suppressOnFocus = false;
 
 		WikiHeader.subnav.find("a")
-                    // Switch to browser's default onfocus behaviour when mouse-based navigation is detected  (IE9 focus handling fix).
-                    .bind('mousedown', function() { suppressOnFocus = true; })
-                    // Switch back to keyboard-based navigation mode  (IE9 focus handling fix).
-                    .bind('mouseup', function() { suppressOnFocus = false; })
-                    // The onfocus behaviour intended only for keyboard-based navigation (IE9 focus handling fix).
-                    .focus(function(event) {
-                        if ( !suppressOnFocus ) {
-                            WikiHeader.hideNav();
-                            WikiHeader.showSubNav($(event.currentTarget).closest(".subnav").parent("li"));
-                        }
-                    });
+			// Switch to browser's default onfocus behaviour when mouse-based navigation is detected  (IE9 focus handling fix).
+			.bind('mousedown', function() { suppressOnFocus = true; })
+			// Switch back to keyboard-based navigation mode  (IE9 focus handling fix).
+			.bind('mouseup', function() { suppressOnFocus = false; })
+			// The onfocus behaviour intended only for keyboard-based navigation (IE9 focus handling fix).
+			.focus(function(event) {
+				if ( !suppressOnFocus ) {
+					WikiHeader.hideNav();
+					WikiHeader.showSubNav($(event.currentTarget).closest(".subnav").parent("li"));
+				}
+			});
+
 		//Hide when focus out of first and last anchor
 		WikiHeader.nav.children("ul").find("li:first-child a").focusout(WikiHeader.hideNav);
 		WikiHeader.subnav.last().find("li:last-child a").focusout(WikiHeader.hideNav);
@@ -152,8 +153,6 @@ var WikiHeader = {
 		if (subnav.exists()) {
 			WikiHeader.isDisplayed = true;
 			subnav.css("top", WikiHeader.navtop).show();
-
-			$.tracker.byStr('wikiheader/wikinav/open');
 		}
 	},
 
@@ -190,10 +189,6 @@ var WikiHeaderV2 = {
 
 	log: function(msg) {
 		$().log(msg, 'WikiHeaderV2');
-	},
-
-	track: function(url) {
-		$.tracker.byStr('wikiheader/wikinav/' + url);
 	},
 
 	init: function(isValidator) {
@@ -316,34 +311,11 @@ var WikiHeaderV2 = {
 			WikiHeaderV2.showSubNavL2(this);
 		}
 
-		// click tracking
+		// Handle chat link
 		var node = $(event.target);
-
-		if (node.is('a')) {
-			var canonicalName = node.attr('data-canonical');
-
-			if (typeof canonicalName != 'undefined') {
-				WikiHeaderV2.track('lvl2/' + canonicalName);
-
-				// handle special cases
-				switch(canonicalName) {
-					case 'chat':
-						event.preventDefault();
-						ChatEntryPoint.onClickChatButton(wgUserName !== null, node.attr('href'));
-						break;
-				}
-			}
-			else {
-				if (node.hasClass('subnav-2a')) {
-					WikiHeaderV2.track('lvl2/click');
-				}
-				else if (node.hasClass('subnav-3a')) {
-					WikiHeaderV2.track('lvl3/click');
-				}
-				else {
-					WikiHeaderV2.track('lvl1/click');
-				}
-			}
+		if (node.is('a') && node.attr('data-canonical') == 'chat') {
+			event.preventDefault();
+			ChatEntryPoint.onClickChatButton(wgUserName !== null, node.attr('href'));
 		}
 	},
 
@@ -431,8 +403,6 @@ var WikiHeaderV2 = {
 
 		if (subnav.exists()) {
 			subnav.show();
-
-			WikiHeaderV2.track('lvl2/open');
 		}
 	},
 
@@ -445,8 +415,6 @@ var WikiHeaderV2 = {
 
 			WikiHeaderV2.isDisplayed = true;
 			subnav.css('top', WikiHeaderV2.navtop).show();
-
-			WikiHeaderV2.track('lvl3/open');
 		}
 	},
 

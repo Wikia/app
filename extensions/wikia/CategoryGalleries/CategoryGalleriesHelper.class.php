@@ -47,7 +47,6 @@
 				$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/CategoryGalleries/css/CategoryGalleries.scss'));
 				$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/CategoryGalleries/css/CategoryGalleries.IE.scss'),
 					'', /*condition*/ 'lte IE 8' );
-				$wgOut->addScriptFile("{$wgExtensionsPath}/wikia/CategoryGalleries/js/CategoryGalleries.js");
 				self::$initialized = true;
 			}
 		}
@@ -117,7 +116,7 @@
 			wfProfileIn(__METHOD__.'::outer');
 			if (self::$categoryPage && !self::$categoryProcessed) {
 				self::$categoryProcessed = true;
-				
+
 				wfProfileIn(__METHOD__);
 
 				// Nice trick to check if the current page is first page
@@ -133,10 +132,10 @@
 						$wgOut->addHTML($output);
 					}
 				}
-				
+
 				wfProfileOut(__METHOD__);
 			}
-			
+
 			wfProfileOut(__METHOD__.'::outer');
 			return true;
 		}

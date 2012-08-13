@@ -18,12 +18,6 @@ YAHOO.lang.extend(YAHOO.example.AutoCompleteTextArea, YAHOO.widget.AutoComplete,
 		if ((v.keyCode == 221)) { //double brackets
 			var text = oSelf._elTextbox.value.replace(/\r/g, "");
 			var caret = oSelf.getCaret(oSelf._elTextbox);
-			/**
-			// macbre: what is i variable???
-                        if(text.charAt(i) == "]") {
-				oSelf._toggleContainer(false);
-                        }
-			**/
 		}
 
 		if(v.keyCode== 27) {
@@ -159,8 +153,6 @@ YAHOO.lang.extend(YAHOO.example.AutoCompleteTextArea, YAHOO.widget.AutoComplete,
 	},
 
 	_updateValue: function(oItem) {
-
-		this.track('success');
 		this._suggestionSuccessful = true;
 
 		this._elTextbox.focus();
@@ -289,7 +281,6 @@ YAHOO.lang.extend(YAHOO.example.AutoCompleteTextArea, YAHOO.widget.AutoComplete,
 		elContainer.style.width = Math.round((maxLen*7.5) < 400 ? maxLen*7.5 : 400) +'px';
 
 		if (!this.isContainerOpen()) {
-			this.track('open');
 			this._suggestionSuccessful = false;
 		}
 
@@ -421,12 +412,7 @@ YAHOO.lang.extend(YAHOO.example.AutoCompleteTextArea, YAHOO.widget.AutoComplete,
 		var position = oSelf.getCaretPosition(oSelf._elTextbox);
 		oSelf._elContainer.style.left = position[0] + 'px'
 		oSelf._elContainer.style.top = position[1] + 'px'
-	},
-
-	track: function(str) {
-		//YAHOO.Wikia.Tracker.trackByStr(null, 'linkSuggest/' + str + (wgCanonicalSpecialPageName == 'Createpage' ? '/createPage' : '/editpage'));
 	}
-
 });
 
 function LS_PrepareTextarea (textareaId, oDS) {
@@ -459,9 +445,6 @@ function LS_PrepareTextarea (textareaId, oDS) {
 
 	oAutoComp.containerCollapseEvent.subscribe(function(o) {
 			LS_itemUnHighlight();
-			if ( this._suggestionSuccessful == false ) {
-				this.track('close');
-			}
 			YAHOO.util.Event.removeListener(this._elTextbox, "keydown");
 			YAHOO.util.Event.removeListener(this._elTextbox, "keypress");
 			});

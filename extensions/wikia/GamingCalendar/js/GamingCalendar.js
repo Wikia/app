@@ -1,10 +1,5 @@
 var GamingCalendar = {
-
 	data: {},
-
-	track: function(url) {
-		$.tracker.byStr('gamingCalendar/' + url);
-	},
 
     init: function() {
 		$.nirvana.getJson('GamingCalendar', 'getEntries', {weeks:3, offset: 0}, $.proxy(function(data) {
@@ -104,8 +99,6 @@ var GamingCalendar = {
 	},
 
 	showCalendar: function() {
-
-		GamingCalendar.track('calendar/open');
 
 		// Check, whether the GamingCalendarModal has already been triggered once.
 		// We don't want the resources to be retrieved more than once.

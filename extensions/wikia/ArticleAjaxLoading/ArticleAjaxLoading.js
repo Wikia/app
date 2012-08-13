@@ -1,12 +1,6 @@
 var ArticleAjaxLoading = {
-
 	counter: 0,
-
 	cache: {},
-
-	track: function(str) {
-		$.tracker.byStr(str, true); // FIXME unsample when done
-	},
 
 	init: function() {
 		if(window.aal) { // for users who have not changed preferences for article rendering (like thumbnail size for example)
@@ -20,8 +14,6 @@ var ArticleAjaxLoading = {
 
 									if(document.location.href.toLowerCase().indexOf('aal') > -1 || window.aal == 'G1') {
 
-										ArticleAjaxLoading.track('/aal/pageview/g1/1');
-
 										// backup variables that we have to recover after every ajax request
 										ArticleAjaxLoading.cache.articleComments = $('#article-comments').find('.session').html();
 										ArticleAjaxLoading.cache.wgUserName = wgUserName;
@@ -29,17 +21,7 @@ var ArticleAjaxLoading = {
 
 										// handle clicks on links in article content
 										$('#WikiaPage').on('click', '#WikiaArticle a', ArticleAjaxLoading.linkClickHandler);
-
-									} else if(window.aal == 'G2') {
-
-										ArticleAjaxLoading.track('/aal/pageview/g2/1');
-
-									} else if(window.aal == 'G3') {
-
-										ArticleAjaxLoading.track('/aal/pageview/g3/1');
-
 									}
-
 								}
 							}
 						}
@@ -56,7 +38,6 @@ var ArticleAjaxLoading = {
 		}
 
 		if(ArticleAjaxLoading.counter > 100) {
-			ArticleAjaxLoading.track('/aal/CounterExceeded');
 			return true;
 		}
 
@@ -136,7 +117,6 @@ $.pjax = function( options ) {
 				$('script').eq(0).replaceWith(data.globalVariablesScript);
 
 				if(window.wgIsMainpage == true || window.wgNamespaceNumber !== 0) {
-					ArticleAjaxLoading.track('/aal/NavigatedToMainPage');
 					return (window.location = options.url);
 				}
 
@@ -146,7 +126,6 @@ $.pjax = function( options ) {
 				$container.replaceWith(data.body);
 				document.title = data.title;
 			} catch(err) {
-				ArticleAjaxLoading.track('/aal/ErrorInResponse');
 				return (window.location = options.url);
 			}
 
@@ -155,8 +134,6 @@ $.pjax = function( options ) {
 			scroll(0,0);
 
 			ArticleAjaxLoading.counter++;
-
-			ArticleAjaxLoading.track('/aal/pageview/g1/' + (ArticleAjaxLoading.counter+1));
 
 			if(window.WikiaPhotoGalleryView) {
 				WikiaPhotoGalleryView.init.call(WikiaPhotoGalleryView);

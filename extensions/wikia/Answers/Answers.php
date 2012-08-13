@@ -658,8 +658,6 @@ class CategoryWithAds extends CategoryViewer{
 	}
 }
 
-include( dirname(__FILE__) . "/TrackCategories.php");
-include( dirname(__FILE__) . "/TrackMainPage.php");
 include( dirname(__FILE__) . "/HomePageList.php");
 include( dirname(__FILE__) . "/EditSimilarAnswers.php");
 include( dirname(__FILE__) . "/FakeAnswersMessaging.php");

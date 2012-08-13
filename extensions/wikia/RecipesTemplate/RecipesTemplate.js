@@ -4,11 +4,6 @@ var RecipesTemplate = {
 		$.post(wgScript + '?action=ajax&rs=RecipesTemplateAjax&method=' + method, params, callback, 'json');
 	},
 
-	// track events
-	track: function(fakeUrl) {
-		window.jQuery.tracker.byStr(this.formType + fakeUrl);
-	},
-
 	// console logging
 	log: function(msg) {
 		$().log(msg, 'RecipesTemplate');
@@ -62,11 +57,6 @@ var RecipesTemplate = {
 			self.setupTextarea($(this));
 		});
 
-		// setup input field with mini MW toolbar disabled
-		form.find('.recipes-template-simple-input').children().bind('focus', function() {
-			self.track('/' + self.getTrackingId($(this)));
-		});
-
 		// block form submit using ENTER key
 		form.keypress(function(ev) {
 			if (ev.keyCode == 13 && $(ev.target).is('input')) {
@@ -74,57 +64,6 @@ var RecipesTemplate = {
 				self.log('form submit blocked');
 			}
 		});
-
-		// setup click tracking
-		this.setupClickTracking(form);
-
-		this.log('init() - ' + this.formType);
-	},
-
-	// setup click tracking
-	setupClickTracking: function(form) {
-		var self = this;
-
-		// create forms toggle
-		$('.recipes-template-toggle').find('a').
-			unbind('.tracking').
-			bind('click.tracking',function(ev) {
-				self.track('/' + $(this).attr('ref'));
-			});
-
-		// time form fields focus
-		form.
-			find('.recipes-template-time').children('input').
-			unbind('.tracking').
-			bind('focus.tracking', function(ev) {
-				self.track('/' + self.getTrackingId($(this)));
-			});
-
-		// publish
-		$('#wpSubmit').
-			unbind('.tracking').
-			bind('click.tracking', function(ev) {
-				self.track('/publish');
-			});
-
-		// preview
-		$('#wpPreview').
-			unbind('.tracking').
-			bind('click.tracking', function(ev) {
-				self.track('/preview');
-			});
-	},
-
-	// get tracking ID for given node
-	getTrackingId: function(node) {
-		var fieldId = $(node).attr('id') || $(node).attr('name');
-
-		// remove wp prefix and various suffixes
-		return fieldId.
-			replace(/^wp/, '').
-			replace(/\-(.*)$/, '').
-			replace(/\[\]$/, '').
-			toLowerCase();
 	},
 
 	// setup dynamic rows for multifield area
@@ -213,14 +152,8 @@ var RecipesTemplate = {
 			ev.preventDefault();
 
 			if (typeof WMU_show == 'function') {
-				self.log('opening WMU');
 				WMU_show();
 			}
-			else {
-				self.log('WMU not loaded!');
-			}
-
-			self.track('/photo-browse');
 		});
 	},
 
@@ -233,7 +166,6 @@ var RecipesTemplate = {
 		var otherField = otherFieldWrapper.children('input');
 
 		chooser.bind('change', function(ev) {
-			self.track('/menu' + (i+1));
 
 			// show other field if needed
 			if ($(this).val() == 'other') {
@@ -427,8 +359,6 @@ var RecipesTemplate = {
 			bind('focus.editor', function(ev) {
 				clearTimeout(toolbarHideTimeout);
 				toolbar.show();
-
-				self.track('/' + self.getTrackingId($(this)));
 			}).
 			bind('blur.editor', function(ev) {
 				toolbarHideTimeout = setTimeout(function() {
@@ -529,6 +459,4 @@ function insertTags(wikitext) {
 	self.ajax('makeThumb', {imageName: imageName}, function(data) {
 		uploadPreview.css('backgroundImage', 'url(' + data.thumb + ')').show();
 	});
-
-	self.track('/photo-upload');
 }

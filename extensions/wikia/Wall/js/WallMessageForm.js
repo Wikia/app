@@ -16,7 +16,7 @@ Wall.MessageForm = $.createClass(Observable, {
 			})
 		});
 	},
-	
+
 	reloadAfterLogin: function() {
 		UserLoginAjaxForm.prototype.reloadPage();
 	},
@@ -25,15 +25,7 @@ Wall.MessageForm = $.createClass(Observable, {
 		// gets overriden if MiniEditor is enabled
 		return '';
 	},
-		
-	track: function(url) {
-		if( typeof($.tracker) != 'undefined' ) {
-			$.tracker.byStr(url);
-		} else {
-			WET.byStr(url);
-		}
-	},
-	
+
 	proxy: function(func) {
 		return $.proxy(func, this);
 	}

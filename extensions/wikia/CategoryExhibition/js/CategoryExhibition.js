@@ -1,24 +1,11 @@
 var CategoryExhibition = {
-
 	lockTable: {},
 
 	init: function() {
-
-		$('#WikiaArticle').delegate('.category-gallery-item', 'click', CategoryExhibition.trackClick);
-
 		$('#mw-pages').delegate('.wikia-paginator a', 'click', CategoryExhibition.articlesPaginatorClick);
 		$('#mw-subcategories').delegate('.wikia-paginator a', 'click', CategoryExhibition.subcategoriesPaginatorClick);
 		$('#mw-images').delegate('.wikia-paginator a', 'click', CategoryExhibition.mediaPaginatorClick);
 		$('#mw-blogs').delegate('.wikia-paginator a', 'click', CategoryExhibition.blogsPaginatorClick);
-
-		// tracking
-
-		$('#category-exhibition-form-current').trackClick('categoryExhibition/filter/open');
-		$('#category-exhibition-form-alphabetical').trackClick('categoryExhibition/filter/alphabetical');
-		$('#category-exhibition-form-recentedits').trackClick('categoryExhibition/filter/recentlyEdited');
-		$('#category-exhibition-form-mostvisited').trackClick('categoryExhibition/filter/mostVisited');
-		$('#category-exhibition-form-new').trackClick('categoryExhibition/layout/switch2new');
-		$('#category-exhibition-form-old').trackClick('categoryExhibition/layout/switch2old');
 
 		CategoryExhibition.redrawFormButtons();
 	},
@@ -62,16 +49,6 @@ var CategoryExhibition = {
 
 		CategoryExhibition.lockTable[ name ] = clickedObj.attr('data-page');
 
-		// tracking;
-		if ( clickedObj.hasClass('paginator-next') ){
-			CategoryExhibition.track(name + '/pagination/next');
-		} else if ( clickedObj.hasClass('paginator-prev') ) {
-			CategoryExhibition.track(name + '/pagination/prev');
-		} else {
-			CategoryExhibition.track(name + '/pagination/' + clickedObj.attr('data-page'));
-		}
-
-		CategoryExhibition.log('begin: paginatorClick');
 		$(pageSection).find('.category-gallery').startThrobbing();
 		var UrlVars = $.getUrlVars();
 		var data = {
@@ -115,45 +92,7 @@ var CategoryExhibition = {
 		});
 
 		return false;
-	},
-
-	track: function(fakeUrl) {
-		$.tracker.byStr('categoryExhibition/' + fakeUrl);
-	},
-
-	trackClick: function(ev) {
-
-		var node = $(ev.target);
-		var itemSection = '';
-		var itemType = '';
-		var itemIndex = '';
-
-		// perform detection of which element has been clicked
-
-		if ( node.hasParent('#mw-pages') ){
-			itemSection = 'page';
-		} else if ( node.hasParent('#mw-images') ){
-			itemSection = 'media';
-		} else if ( node.hasParent('#mw-blogs') ){
-			itemSection = 'blogs';
-		} else if ( node.hasParent('#mw-subcategories') ){
-			itemSection = 'subcategories';
-		}
-
-		itemIndex = $(this).index() + 1;
-
-		if ( $(this).has('div.category-gallery-placeholder').length ){
-			itemType = 'placeholder';
-		} else if ( $(this).has('span.quote').length ) {
-			itemType = 'text';
-		} else {
-			itemType = 'image';
-		}
-
-		if ( itemType != '' && itemSection != '' && itemIndex != '' ){
-			CategoryExhibition.track(itemSection + '/' + itemType + '/' + itemIndex);
-		}
-	  }
+	}
 };
 
 //on content ready

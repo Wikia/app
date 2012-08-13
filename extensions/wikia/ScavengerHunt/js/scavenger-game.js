@@ -17,11 +17,6 @@ var ScavengerHunt = {
 		$().log(msg, 'ScavengerHunt');
 	},
 
-	//track events
-	track: function(fakeUrl) {
-		window.jQuery.tracker.byStr('scavengerhunt/' + fakeUrl);
-	},
-
 	//global init
 	init: function() {
 
@@ -60,9 +55,6 @@ var ScavengerHunt = {
 
 	//init starting page
 	initStartPage: function() {
-		ScavengerHunt.track('start/showButton');
-		// check if game is already running
-
 		$.each(
 			window.wgScavengerHuntStart,
 			function( index ) {
@@ -108,8 +100,6 @@ var ScavengerHunt = {
 						if (ScavengerHunt.huntData.completed) {
 							ScavengerHunt.showEntryForm();
 						} else {
-
-							ScavengerHunt.track( 'game/hiddenImage/show/currentPage=' + wgPageName );
 							ScavengerHunt.spritePrepared = false;
 							if (ScavengerHunt.setupProgressBarSprite()) {
 								ScavengerHunt.showProgressBar();
@@ -227,9 +217,6 @@ var ScavengerHunt = {
 
 	//handler start button
 	onStartClick: function(e) {
-		ScavengerHunt.log('onStartClick begin');
-		ScavengerHunt.track('start/clickButton');
-
 		var indexId = $(this).data('indexid');
 		var gameId = window.wgScavengerHuntStart[indexId];
 
@@ -241,12 +228,9 @@ var ScavengerHunt = {
 				width: ScavengerHunt.MODAL_WIDTH,
 				callback: function() {
 					$('#scavengerClueModal a.button').click(function(e) {
-						ScavengerHunt.track('start/modalClue/clickButton');
-
 						if ($(this).attr('href')) {
 							var redirect = $(this).attr('href');
 							e.preventDefault();
-							ScavengerHunt.track('start/modalClue/clickButton' + gameId);
 							ScavengerHunt.setCookieHuntId( gameId );
 							$.getJSON(
 								window.wgScriptPath + '/wikia.php',
@@ -268,7 +252,6 @@ var ScavengerHunt = {
 					});
 
 					if (ScavengerHunt.gameId) {
-						ScavengerHunt.track('start/modalClue/otherGameAlreadyInProgress');
 						$('#scavengerConflictMessage').show();
 					}
 				}
@@ -282,7 +265,7 @@ var ScavengerHunt = {
 		if (!ScavengerHunt.huntData.completed) {
 			return;
 		}
-		ScavengerHunt.track('game/modalEntryForm/show');
+
 		//hide progress bar
 		$('#scavenger-hunt-progress-bar').remove();
 		ScavengerHunt.progressBarVisible = false;	//TODO: is it necessary?
@@ -315,7 +298,6 @@ var ScavengerHunt = {
 						b.attr('disabled','disabled');
 					}
 					inputFrom.submit( function(e) {
-						ScavengerHunt.track('game/modalEntryForm/clickButton');
 						e.preventDefault();
 						if ( b.attr('disabled') != 'disabled' ){
 							b.attr('disabled','disabled');
@@ -337,12 +319,9 @@ var ScavengerHunt = {
 								function(json) {
 									ScavengerHunt.goodbyeData = json.result;
 									if (json.result.status) {
-										ScavengerHunt.track('game/modalEntryForm/saveOk');
 										w.closeModal();
 										ScavengerHunt.showGoodbyeForm();
 									} else {
-										ScavengerHunt.track('game/modalEntryForm/saveError');
-										ScavengerHunt.log('entryForm error: ' + json.error);
 										b.attr('disabled', '');
 									}
 								}
@@ -351,7 +330,6 @@ var ScavengerHunt = {
 					});
 				},
 				onClose: function() {
-					ScavengerHunt.track('game/modalEntryForm/close');
 					ScavengerHunt.quitHunt();
 				}
 			}
@@ -364,7 +342,6 @@ var ScavengerHunt = {
 			return false;
 		}
 		ScavengerHunt.resetHuntId();
-		ScavengerHunt.track('game/modalGoodbye/show');
 		$.showModal(
 			ScavengerHunt.goodbyeData.goodbyeTitle,
 			ScavengerHunt.goodbyeData.goodbyeContent,
@@ -374,7 +351,6 @@ var ScavengerHunt = {
 				callback: function() {
 					var w = $('#scavengerGoodbyeModal');
 					w.find('.scavenger-clue-button a').click(function(e) {
-						ScavengerHunt.track('game/modalGoodbye/clickButton');
 						e.preventDefault();
 						w.closeModal();
 					});
@@ -473,8 +449,6 @@ var ScavengerHunt = {
 
 	onHuntItemClick: function(e) {
 		var clickedElement = $(this);
-		ScavengerHunt.log('onHuntItemClick invoked with target = ' + clickedElement.data('name'));
-		ScavengerHunt.track('game/hiddenImage/click/currentPage=' + wgPageName);
 
 		//show found item
 		var index = ScavengerHunt.currentArticleIndex;
@@ -556,20 +530,16 @@ var ScavengerHunt = {
 
 	onProgressBarCloseClick: function(e) {
 		var targetItem = $(this).data('name');
-		ScavengerHunt.log('onProgressBarCloseClick invoked with target = ' + targetItem);
-		ScavengerHunt.track('progressBar/closeButton/click/currentPage=' + wgPageName + '/targetItem=' + targetItem);
 
 		$.showCustomModal(ScavengerHunt.huntData.closeBox.title, ScavengerHunt.huntData.closeBox.content, {
 			buttons: [
 				{id: 'quit', message: ScavengerHunt.huntData.closeBox.buttonQuit, handler: function() {
-					ScavengerHunt.track('progressBar/closeButton/quit/click');
 					$('#scavenger-hunt-progress-bar').remove();
 					$('#scavenger-ingame-image').remove();
 					$('#scavemger-hunt-quit-dialog').closeModal();
 					ScavengerHunt.quitHunt();
 				}},
 				{id: 'stay', defaultButton:true, message: ScavengerHunt.huntData.closeBox.buttonStay, handler: function() {
-					ScavengerHunt.track('progressBar/closeButton/stay/click');
 					$('#scavemger-hunt-quit-dialog').closeModal();
 				}}
 			],
@@ -580,10 +550,8 @@ var ScavengerHunt = {
 
 	onProgressBarItemClick: function(e) {
 		var targetItem = $(this).data('name');
-		ScavengerHunt.log('onProgressBarItemClick invoked with target = ' + targetItem);
-		ScavengerHunt.track('progressBar/targetItem/click/targetItem=' + targetItem);
-		//using <a> in <div> for sprites is harder - let's stick to JS version for now
 
+		//using <a> in <div> for sprites is harder - let's stick to JS version for now
 		window.location.href = ScavengerHunt.addCachebusterToLink( ScavengerHunt.huntData.articles[$(this).data('index')].articleTitle );
 	},
 

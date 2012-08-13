@@ -3,12 +3,8 @@ var ThemeDesigner = {
 	slideByItems: 5,
 	isSliding: false,
 
-	track: function(url) {
-		$.tracker.byStr('themedesigner/' + url);
-	},
-
 	init: function() {
-	
+
 		var that = this;
 		// theme settings
 		this.settings = window.themeSettings;
@@ -49,28 +45,25 @@ var ThemeDesigner = {
 
 		// init tooltips
 		this.initTooltips();
-		
-		// track page view
-		this.track('open');
-		
+
 		// Cashe selectors
 		this.themeDesignerPicker = $('#ThemeDesignerPicker');
 		this.previewFrame = $('#PreviewFrame');
-		
+
 		// iframe resizing
 		$(window).resize($.proxy(this.resizeIframe, this)).resize();
 	},
-	
+
 	initTooltips: function() {
 		var tooltipTimeout = 0;
 
 		function setTooltipTimeout(elem) {
 			tooltipTimeout = setTimeout(function() {
-				elem.tooltip('hide');	
+				elem.tooltip('hide');
 			}, 300);
 		}
 
-		// This tooltip will not go away if you hover inside the tooltip 
+		// This tooltip will not go away if you hover inside the tooltip
 		$('.form-questionmark').tooltip({
 			trigger: "manual",
 			placement: "right"
@@ -87,7 +80,7 @@ var ThemeDesigner = {
 				setTooltipTimeout($this);
 			});
 		});
-		
+
 	},
 
 	themeTabInit: function() {
@@ -129,22 +122,18 @@ var ThemeDesigner = {
 				} else {
 					$("#ThemeTab .next, #ThemeTab .previous").removeClass("disabled");
 				}
-
-				ThemeDesigner.track('theme/arrow');
 			}
 		});
 
 		// click handler for themes thumbnails
 		$("#ThemeTab").find(".slider").find("li").click(function() {
-			
+
 			var targetObject = $(this);
-			 
+
 			// highlight selected theme
 			targetObject.parent().find(".selected").removeClass("selected").end().end().addClass("selected");
 
 			ThemeDesigner.set("theme", targetObject.attr("data-theme"));
-
-			ThemeDesigner.track('theme/click');
 		});
 
 		// select current theme
@@ -164,7 +153,6 @@ var ThemeDesigner = {
 			} else {
 				ThemeDesigner.set("background-tiled", "false");
 			}
-			ThemeDesigner.track('customize/background-image/tile');
 		});
 		$("#fix-background").change(function() {
 			ThemeDesigner.set("background-fixed", $(this).attr("checked") ? "true" : "false");
@@ -191,28 +179,20 @@ var ThemeDesigner = {
 		// handle font family and font size menu change
 		$("#wordmark-font").change(function() {
 			ThemeDesigner.set("wordmark-font", $(this).val());
-
-			ThemeDesigner.track('wordmark/font');
 		});
 		$("#wordmark-size").change(function() {
 			ThemeDesigner.set("wordmark-font-size", $(this).val());
-
-			ThemeDesigner.track('wordmark/size');
 		});
 
 		// handle wordmark editing
 		$("#wordmark-edit").find("button").click(function(event) {
 			event.preventDefault();
 			ThemeDesigner.set("wordmark-text", $("#wordmark-edit").find('input[type="text"]').val());
-
-			ThemeDesigner.track('wordmark/save');
 		});
 
 		//graphic wordmark clicking
 		$("#WordmarkTab").find(".graphic").find(".preview").find(".wordmark").click(function() {
 			ThemeDesigner.set("wordmark-type", "graphic");
-
-			ThemeDesigner.track('wordmark/choose');
 		});
 
 		//grapic wordmark button
@@ -223,8 +203,6 @@ var ThemeDesigner = {
 
 			// Can't use js to clear file input value so reseting form
 			$('#WordMarkUploadForm')[0].reset();
-
-			ThemeDesigner.track('wordmark/nowordmark');
 		});
 
 		// submit handler for uploading custom logo image
@@ -239,8 +217,6 @@ var ThemeDesigner = {
 
 			// Can't use js to clear file input value so reseting form
 			$('#FaviconUploadForm')[0].reset();
-
-			ThemeDesigner.track('favicon/faviconwordmark');
 		});
 
 		// submit handler for uploading favicon image
@@ -270,7 +246,6 @@ var ThemeDesigner = {
 		$("#Toolbar .history")
 			.click(function() {
 				$(this).find("ul").show();
-				ThemeDesigner.track('previous/click');
 			})
 			.find("ul").mouseleave(function() {
 				$(this).hide();
@@ -284,8 +259,6 @@ var ThemeDesigner = {
 		event.stopPropagation();
 		var swatch = $(event.currentTarget);
 		var swatchName = event.currentTarget.className;
-
-		ThemeDesigner.track('customize/' + swatchName + '/click');
 
 		// check the type (color or image)
 		if(type == "color") {
@@ -316,8 +289,6 @@ var ThemeDesigner = {
 				ThemeDesigner.hidePicker();
 				ThemeDesigner.set(swatch.attr("class"), ThemeDesigner.rgb2hex($(this).css("background-color")));
 				ThemeDesigner.set("theme", "custom");
-
-				ThemeDesigner.track('customize/' + swatchName + '/color');
 			});
 
 			//handle custom colors
@@ -355,8 +326,6 @@ var ThemeDesigner = {
 				ThemeDesigner.hidePicker();
 				ThemeDesigner.set(swatch.attr("class"), ThemeDesigner.rgb2hex(color));
 				ThemeDesigner.set("theme", "custom");
-
-				ThemeDesigner.track('customize/' + swatchName + '/ok');
 			});
 
 		} else if (type == "image") {
@@ -385,8 +354,6 @@ var ThemeDesigner = {
 				}
 
 				ThemeDesigner.hidePicker();
-
-				ThemeDesigner.track('customize/' + swatchName + '/choose');
 			})
 		}
 
@@ -490,8 +457,6 @@ var ThemeDesigner = {
 				ThemeDesigner.set("wordmark-image-url", response.wordmarkImageUrl);
 				ThemeDesigner.set("wordmark-type", "graphic");
 			}
-
-			ThemeDesigner.track('wordmark/upload');
 		}
 	},
 
@@ -523,8 +488,6 @@ var ThemeDesigner = {
 				ThemeDesigner.set("favicon-image-name", response.faviconImageName);
 				ThemeDesigner.set("favicon-image-url", response.faviconImageUrl);
 			}
-
-			ThemeDesigner.track('favicon/upload');
 		}
 	},
 
@@ -559,8 +522,6 @@ var ThemeDesigner = {
 				ThemeDesigner.set("background-image-name", response.backgroundImageName);
 				ThemeDesigner.set("background-image", response.backgroundImageUrl);
 			}
-
-			ThemeDesigner.track('customize/background-image/upload');
 		}
 	},
 
@@ -580,24 +541,17 @@ var ThemeDesigner = {
 
 	revertToPreviousTheme: function(event) {
 		event.preventDefault();
-		event.stopPropagation(); // don't fire "previous/click" tracking event
+		event.stopPropagation();
 		ThemeDesigner.settings = ThemeDesigner.history[$(this).index()]['settings'];
-		console.log(ThemeDesigner.settings)
 		ThemeDesigner.applySettings(true, true);
-
-		ThemeDesigner.track('previous/choose');
 	},
 
 	cancelClick: function(event) {
-		ThemeDesigner.track('cancel');
-
 		event.preventDefault();
 		document.location = returnTo;
 	},
 
 	saveClick: function(event) {
-		ThemeDesigner.track('save');
-
 		event.preventDefault();
 		$(event.target).attr('disabled', true);
 		ThemeDesigner.save();
@@ -640,10 +594,6 @@ var ThemeDesigner = {
 		if (command == "WordmarkTab") {
 			ThemeDesigner.wordmarkShield();
 		}
-
-		// tracking
-		var tabName = command.replace(/Tab$/, '').toLowerCase();
-		ThemeDesigner.track(tabName + '/tab');
 	},
 
 	resizeIframe: function() {

@@ -1,15 +1,5 @@
 var Follow = {};
 
-Follow.tracklick = function(e) {
-    var index = 0;
-    var ul = null;
-    var msg = "";
-    ul =  $(e.target).closest("UL");
-    index = $(e.target).closest("LI").index() + 1;
-    msg = ul.attr("id").split("-");
-    WET.byStr( 'WikiaFollowedPages/specialpage/links/' + msg[3] + '/' + index );
-}
-
 Follow.hover = function(e) {
     $(e.target).closest("LI").find(".otherNs,.ajax-unwatch").css('visibility', 'visible');
 }
@@ -21,16 +11,11 @@ Follow.unhover = function(e) {
 
 
 Follow.uwatch = function(e) {
-    var msg = "";
     var target = $(e.target);
 
     var title = target.closest("A").attr("title");
     var ul = target.closest("UL");
     var li = target.closest("LI");
-    var index = li.index() + 1;
-
-    msg = ul.attr("id").split("-");
-    WET.byStr( 'WikiaFollowedPages/specialpage/delete/' + msg[3] + '/' + index);
 
 	api = new mw.Api();
 	api['unwatch'](
@@ -50,7 +35,6 @@ Follow.showMore = function(e) {
     var msg = eid.split("-");
     var key = msg[4];
     var head = eid.replace('more-', '');
-    WET.byStr( 'WikiaFollowedPages/specialpage/viewall/' + msg[4] );
 
     if(typeof(Follow.loadStatus[key]) == 'undefined' || Follow.loadStatus[key] === null ) {
         var valueKey = 'count-' + head;
@@ -69,7 +53,6 @@ Follow.showMore = function(e) {
                     $( "#" + head ).append(data);
                     var lis = $( "#wikiafollowedpages-special-heading-article" ).find('li');
                     lis.unbind().hover( Follow.hover,Follow.unhover );
-                    lis.find('.title-link').unbind().click(Follow.tracklick);
                     lis.find('.ajax-unwatch').click(Follow.uwatch);
               }
             });
@@ -99,9 +82,4 @@ $(function(){
     Follow.syncUserPrefs($('#mw-input-enotifminoredits'));
     Follow.syncUserPrefs($('#mw-input-enotifwatchlistpages'));
     $('.watched-list li').hover( Follow.hover,Follow.unhover );
-    $('.title-link').click(Follow.tracklick);
-
-    $('#unhide_list').click( function() {
-        WET.byStr( 'WikiaFollowedPages/specialpage/unhide' );
-    });
 });
