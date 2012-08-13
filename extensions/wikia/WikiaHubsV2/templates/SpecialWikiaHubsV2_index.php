@@ -5,7 +5,9 @@
 	<div class="WikiaGrid WikiaHubs" id="WikiaHubs">
 		<section style="margin-bottom:20px" class="grid-3 alpha">
 			<?= $app->renderView('SpecialWikiaHubsV2', 'slider', array()); ?>
-			<?= $app->renderView('SpecialWikiaHubsV2', 'tabber', array()); ?>
+			<section class="grid-3 alpha wikiahubs-newstabs">
+				<?= $app->renderView('SpecialWikiaHubsV2', 'tabber', array()); ?>
+			</section>
 		</section>
 		<section class="grid-3 wikiahubs-rail wikiahubs-pulse" >
 			<?= $app->renderView('SpecialWikiaHubsV2', 'pulse', array()); ?>

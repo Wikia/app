@@ -4,14 +4,9 @@
 	.title-wrapper {
 		width: 100%;
 		@include clearfix;
-		.title {
-			float: left;
-			font-size: 18px;
-			font-weight: bold;
-		}
-		.floatright {
-			margin-bottom: 0;
-		}
+		float: left;
+		font-size: 18px;
+		font-weight: bold;
 	}
 	.tabberlive {
 		margin: 0;
