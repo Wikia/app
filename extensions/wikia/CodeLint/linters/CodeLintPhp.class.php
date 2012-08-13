@@ -71,6 +71,10 @@ class CodeLintPhp extends CodeLint {
 			$output = array();
 			exec($cmd, $output, $retVal);
 
+			if ($retVal !== 0) {
+				throw new Exception("$cmd ended with code #{$retVal}");
+			}
+
 			// get the version of PhpStorm
 			$tool = '';
 
@@ -126,7 +130,7 @@ class CodeLintPhp extends CodeLint {
 				foreach($nodes as $node) {
 					$entry = array(
 						// make a path relative to code checkout
-						'file' => str_replace('file://$PROJECT_DIR$', $IP, $node->file),
+						'file' => realpath(str_replace('file://$PROJECT_DIR$', $IP, $node->file)),
 						'line' => intval($node->line),
 						'error' => (string) $node->description
 					);
