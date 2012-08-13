@@ -75,10 +75,10 @@
 				<?php endif; ?> 
 
 
-				 <? if( $notifyeveryone ): ?>
+				 <? if( $canNotifyeveryone ): ?>
 				 	<a href="#" class="edit-notifyeveryone" data-dir="1"> <?= wfMsg('wall-message-notifyeveryone'); ?> </a>
 				 <? endif; ?>
-				 <? if( $unnotifyeveryone ): ?>
+				 <? if( $canUnnotifyeveryone ): ?>
 				 	<a href="#" class="edit-notifyeveryone" data-mode="0"> <?= wfMsg('wall-message-unnotifyeveryone'); ?> </a>
 				 <? endif; ?>
 
