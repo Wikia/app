@@ -403,34 +403,22 @@ class WikiaHubsV2Model extends WikiaModel {
 			'sponsorthumb' => $this->getStandardThumbnailUrl('Sponsored_by_xbox.png'),
 			'tabs' => array(
 				array(
-					'title' => 'Tab title',
-					'image' => 'Image.jpg',
-					'imagethumb' => $this->getStandardThumbnailUrl('Image.jpg'),
-					'link' => array(
-						'anchor' => 'WoWwiki',
-						'href' => 'http://www.wowwiki.com'
-					),
-					'content' => 'Tab content'
+					'title' => 'Tab 1 title',
+					'image' => 'Wikia-Visualization-Add-5,glee.png',
+					'imagethumb' => $this->getStandardThumbnailUrl('Wikia-Visualization-Add-5,glee.png'),
+					'content' => 'Tab 1 content'
 				),
 				array(
-					'title' => 'Tab title',
-					'image' => 'Image.jpg',
-					'imagethumb' => $this->getStandardThumbnailUrl('Image.jpg'),
-					'link' => array(
-						'anchor' => 'WoWwiki',
-						'href' => 'http://www.wowwiki.com'
-					),
-					'content' => 'Tab content'
+					'title' => 'Tab 2 title',
+					'image' => 'Wikia-Visualization-Add-5,glee.png',
+					'imagethumb' => $this->getStandardThumbnailUrl('Wikia-Visualization-Add-5,glee.png'),
+					'content' => 'Tab 2 content'
 				),
 				array(
-					'title' => 'Tab title',
-					'image' => 'Image.jpg',
-					'imagethumb' => $this->getStandardThumbnailUrl('Image.jpg'),
-					'link' => array(
-						'anchor' => 'WoWwiki',
-						'href' => 'http://www.wowwiki.com'
-					),
-					'content' => 'Tab content'
+					'title' => 'Tab 3 title',
+					'image' => 'Wikia-Visualization-Add-5,glee.png',
+					'imagethumb' => $this->getStandardThumbnailUrl('Wikia-Visualization-Add-5,glee.png'),
+					'content' => 'Tab 3 content'
 				)
 			)
 		);
