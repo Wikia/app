@@ -113,7 +113,7 @@ class WallExternalController extends WikiaController {
 		$wallMessage = F::build('WallMessage', array($body, $title, $this->wg->User, $titleMeta, false, true, $notifyEveryone), 'buildNewMessageAndPost');
 		
 		if( $wallMessage === false ) {
-			error_log('WALL_NOAC_ON_POST (acStatus)'.print_r($acStatus,1));
+			error_log('WALL_NOAC_ON_POST');
 			$this->response->setVal('status', false);
 			$this->app->wf->ProfileOut(__METHOD__);
 			return true;
