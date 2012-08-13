@@ -375,18 +375,21 @@ class WikiaHomePageHelper extends WikiaModel {
 		$this->wf->ProfileIn(__METHOD__);
 
 		$dataGetter = F::build('WikiDataGetterForSpecialPromote');
+		$wikiInfo = $this->getWikiInfo($wikiId, $langCode, $dataGetter);
 
 		$this->wf->ProfileOut(__METHOD__);
-		return $this->getWikiInfo($wikiId, $langCode, $dataGetter);
+		return $wikiInfo;
 	}
 
 	public function getWikiInfoForVisualization($wikiId, $langCode) {
 		$this->wf->ProfileIn(__METHOD__);
 
 		$dataGetter = F::build('WikiDataGetterForVisualization');
-		return $this->getWikiInfo($wikiId, $langCode, $dataGetter);
+		$wikiInfo = $this->getWikiInfo($wikiId, $langCode, $dataGetter);
 
 		$this->wf->ProfileOut(__METHOD__);
+
+		return $wikiInfo;
 	}
 
 
