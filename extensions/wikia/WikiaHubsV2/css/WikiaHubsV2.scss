@@ -8,7 +8,7 @@
 @import 'VideoModule';
 @import 'HubsTopWikis';
 @import 'HubsPopularVideos';
-@import 'SponsoredVideo';
+@import 'FeaturedVideo';
 @import 'WikitextModule';
 @import 'CorporateFooter';
 @import 'ColorsPerVertical';
@@ -40,6 +40,7 @@ $wikiahubs-line-height: 16px;
 		padding: 0;
 	}
 	.wikiahubs-module {
+		overflow: hidden;
 		h1 {
 			border-bottom: 4px solid #d8e3e9;
 			font-weight: bold;

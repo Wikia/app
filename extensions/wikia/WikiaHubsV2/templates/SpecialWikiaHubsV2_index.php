@@ -12,18 +12,24 @@
 		<section class="grid-3 wikiahubs-rail wikiahubs-pulse" >
 			<?= $app->renderView('SpecialWikiaHubsV2', 'pulse', array()); ?>
 		</section>
-		<div class="grid-1">
+		<section class="grid-1 plainlinks wikiahubs-module wikiahubs-explore">
 			<?= $app->renderView('SpecialWikiaHubsV2', 'explore', array()); ?>
-		</div>
+		</section>
 		<div class="grid-2 alpha" style="float:right">
-			<?= $app->renderView('SpecialWikiaHubsV2', 'featuredvideo', array()); ?>
+			<section class="grid-2 alpha wikiahubs-featured-video">
+				<?= $app->renderView('SpecialWikiaHubsV2', 'featuredvideo', array()); ?>
+			</section>
+
 			<?= $app->renderView('SpecialWikiaHubsV2', 'wikitextmodule', array()); ?>
-			<?= $app->renderView('SpecialWikiaHubsV2', 'topwikis', array()); ?>
+
+			<section class="grid-2 alpha wikiahubs-module wikiahubs-top-wikis">
+				<?= $app->renderView('SpecialWikiaHubsV2', 'topwikis', array()); ?>
+			</section>
 		</div>
-		<div class="grid-4 alpha wikiahubs-popular-videos">
+		<div class="grid-4 alpha wikiahubs-module wikiahubs-popular-videos">
 			<?= $app->renderView('SpecialWikiaHubsV2', 'popularvideos', array()); ?>
 		</div>
-		<div class="grid-4 alpha wikiahubs-from-the-community">
+		<div class="grid-4 alpha wikiahubs-module wikiahubs-from-the-community">
 			<?= $app->renderView('SpecialWikiaHubsV2', 'fromthecommunity', array()); ?>
 		</div>
 	</div>
