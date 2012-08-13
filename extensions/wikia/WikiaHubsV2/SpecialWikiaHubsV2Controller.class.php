@@ -172,7 +172,7 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 		$tabberSource = '{{#tag:tabber|';
 		foreach($tabData['tabs'] as $tab) {
 			$tabberSource .= $tab['title'].'=
-				[[File:'.$tab['image'].'|200px|right|link='.$tab['imagethumb'].']]
+				[[File:'.$tab['image'].'|200px|right|link='.$tab['imagelink'].']]
 				'.$tab['content'].'
 			{{!}}-{{!}}';
 		}
