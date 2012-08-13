@@ -9,11 +9,9 @@ import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 
-import com.wikia.webdriver.Common.CommonFunctions;
 import com.wikia.webdriver.Common.CommonUtils;
 import com.wikia.webdriver.DriverProvider.DriverProvider;
 import com.wikia.webdriver.Logging.PageObjectLogging;
-import com.wikia.webdriver.pageObjects.PageObject.BasePageObject;
 
 public class TestTemplate {
 	
@@ -38,16 +36,28 @@ public class TestTemplate {
 	public void start(Method method)
 	{
 		PageObjectLogging.startLoggingMethod(getClass().getSimpleName().toString(), method.getName());
-		DriverProvider.getInstance();
-		driver = DriverProvider.getWebDriver();
+			
 	}
 	
 	@AfterMethod
 	public void stop()
 	{
 		PageObjectLogging.stopLoggingMethod();
-		driver.close();
+		
 	}
+	
+	
+	public void startBrowser()
+	{
+		DriverProvider.getInstance();
+		driver = DriverProvider.getWebDriver();
+	}
+	
+	public void stopBrowser()
+	{
+		driver.quit();
+	}
+	
 	
 	
 
