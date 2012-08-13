@@ -251,13 +251,13 @@ class CloseWikiMaintenance {
 					/**
 					 * remove images from D.I.R.T.
 					 */
-					$datawareDB->delete( "image_review", array( "wiki_id" => $city_id ), __METHOD__  );
+					$datawareDB->delete( "image_review", array( "wiki_id" => $row->city_id ), __METHOD__  );
 					$this->log( "{$row->city_id} removed from image_review table" );
 
-					$datawareDB->delete( "image_review_stats", array( "wiki_id" => $city_id ), __METHOD__  );
+					$datawareDB->delete( "image_review_stats", array( "wiki_id" => $row->city_id ), __METHOD__  );
 					$this->log( "{$row->city_id} removed from image_review_stats table" );
 
-					$datawareDB->delete( "image_review_wikis", array( "wiki_id" => $city_id ), __METHOD__  );
+					$datawareDB->delete( "image_review_wikis", array( "wiki_id" => $row->city_id ), __METHOD__  );
 					$this->log( "{$row->city_id} removed from image_review_wikis table" );
 
 					$datawareDB->commit();
