@@ -7,15 +7,16 @@ import org.openqa.selenium.support.PageFactory;
 
 import com.wikia.webdriver.Logging.PageObjectLogging;
 import com.wikia.webdriver.pageObjects.PageObject.BasePageObject;
+import com.wikia.webdriver.pageObjects.PageObject.WikiBasePageObject;
 
-public class NewWikiaHomePage extends BasePageObject{
+public class NewWikiaHomePage extends WikiBasePageObject{
 
 	@FindBy(css="button[class='close wikia-chiclet-button']")
 	WebElement congratulationLightBoxCloseButton;
 	
-	public NewWikiaHomePage(WebDriver driver) 
+	public NewWikiaHomePage(WebDriver driver, String wikiname) 
 	{
-		super(driver);
+		super(driver, wikiname);
 		PageFactory.initElements(driver, this);	
 	}
 	
