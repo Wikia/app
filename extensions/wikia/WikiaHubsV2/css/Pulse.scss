@@ -39,24 +39,17 @@
 			.search {
 				overflow: hidden;
 				clear: both;
-				.WikiaSearch {
-					right: 0;
-					bottom: 5px;
-					input[type="text"] {
-						float: none;
-						width: 246px;
-					}
-					label { 
-						text-align: left;
-						font-size: 15px;
-						line-height: 27px;
-						color: #7E7E7E;
-						width: 160px;
-						display: inline-block;
-					}
-					.wikia-button {
-						float: none;
-					}
+				label {
+					color: #7E7E7E;
+					display: block;
+					font-size: 15px;
+					line-height: 27px;
+					margin-top: 25px;
+					text-align: left;
+					width: 160px;
+				}
+				.wikia-button {
+					float: none;
 				}
 			}
 			.boxes {

@@ -7,13 +7,12 @@
 			<?= $app->renderView('SpecialWikiaHubsV2', 'slider', array()); ?>
 			<?= $app->renderView('SpecialWikiaHubsV2', 'tabber', array()); ?>
 		</section>
-
-		<?= $app->renderView('SpecialWikiaHubsV2', 'pulse', array()); ?>
-
+		<section class="grid-3 wikiahubs-rail wikiahubs-pulse" >
+			<?= $app->renderView('SpecialWikiaHubsV2', 'pulse', array()); ?>
+		</section>
 		<div class="grid-1">
 			<?= $app->renderView('SpecialWikiaHubsV2', 'explore', array()); ?>
 		</div>
-
 		<div class="grid-2 alpha" style="float:right">
 			<?= $app->renderView('SpecialWikiaHubsV2', 'featuredvideo', array()); ?>
 			<?= $app->renderView('SpecialWikiaHubsV2', 'wikitextmodule', array()); ?>
