@@ -43,7 +43,7 @@ class InterwikiDispatcher extends UnlistedSpecialPage {
 				$redirect = self::getCityUrl($iCityId);
 				if (empty($art)) {	//no article set - redir to the main page
 					$output = null;
-					exec ("'echo Title::newMainPage();' | SERVER_ID={$row->city_id} php $IP/maintenance/eval.php --conf /usr/wikia/docroot/wiki.factory/LocalSettings.php", $output);
+					exec ("'echo Title::newMainPage();' | SERVER_ID={$iCityId} php $IP/maintenance/eval.php --conf /usr/wikia/docroot/wiki.factory/LocalSettings.php", $output);
 					if (count($output)) {
 						$redirect .= '/index.php?title=' . $output[0];
 					}
