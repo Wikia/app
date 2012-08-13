@@ -10,7 +10,7 @@
  *
  * Depends on jQuery
  */
-meerkat = (function($) {
+window.meerkat = (function($) {
 	'use strict';
 
 	return function(options) {
@@ -47,4 +47,4 @@ meerkat = (function($) {
 			$("#meerkat-wrap").slideUp();
 		});
 	};
-}(jQuery));
+}(window.jQuery));

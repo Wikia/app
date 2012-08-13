@@ -1,4 +1,4 @@
-Athena = Athena || (function(Liftium) {
+window.Athena = window.Athena || (function(Liftium) {
 	'use strict';
 	var date = new Date();
 	return {
@@ -10,4 +10,4 @@ Athena = Athena || (function(Liftium) {
 		getPageVar: Liftium.getPageVar,
 		setPageVar: Liftium.setPageVar
 	};
-}(Liftium));
+}(window.Liftium));

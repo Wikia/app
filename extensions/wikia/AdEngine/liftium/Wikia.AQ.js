@@ -13,8 +13,12 @@
  * baseUrl, rand
  */
 
-AQ = AQ || (function(topWindow, inIframe, Athena, undef) {
+window.AQ = window.AQ || (function(window, Athena, undef) {
 	'use strict';
+
+	var inIframe = (window.top !== window);
+	var AQ = this;
+
 	return {
 		eventUrls : [],
 		chain : {},
@@ -220,6 +224,6 @@ AQ = AQ || (function(topWindow, inIframe, Athena, undef) {
 			return true;
 		}
 	};
-}(top, window !== top, top.Athena));
+}(window, window.top.Athena));
 
-AQNext = AQ.next; // Backward compatibility
+window.AQNext = window.AQ.next; // Backward compatibility
