@@ -41,8 +41,8 @@ class AnalyticsProviderIVW implements iAnalyticsProvider {
 		$t = F::app()->wg->Title;
 		$title = $t->getText();
 
-		if ($dbname == 'dehauptseite') {		
-			if (F::app()->wg->IsMainpage) return 'RC_WIKIA_HOME';
+		if ($dbname == 'dehauptseite') {
+			if (Wikia::isMainPage()) return 'RC_WIKIA_HOME';
 
 			if (strpos($title, 'Mobil') === 0) return 'RC_WIKIA_MOBIL';
 			if (in_array($title, array('Videospiele', 'Entertainment', 'Lifestyle'))) return 'RC_WIKIA_START';
