@@ -30,6 +30,7 @@ public class CreateAWikiTests_nonLatin extends TestTemplate
 	@Test
 	public void CreateNewWiki_nonLatin_TC001_user_name_does_not_exists()
 	{
+		startBrowser();
 		driver.get("http://community.wikia.com/wiki/Special:UserLogout?returnto=User "+BasePageObject.userNameNonLatinEncoded);
 		HomePageObject home = new HomePageObject(driver);
 		home.openHomePage();
@@ -56,6 +57,7 @@ public class CreateAWikiTests_nonLatin extends TestTemplate
 		newWikia.verifyUserToolBar();
 		CommonFunctions.logOut(BasePageObject.userNameNonLatin);
 		driver.get("http://community.wikia.com/wiki/Special:UserLogout?returnto=User "+BasePageObject.userNameNonLatinEncoded);
+		stopBrowser();
 	}
 	
 	/*
@@ -66,6 +68,7 @@ public class CreateAWikiTests_nonLatin extends TestTemplate
 	@Test
 	public void CreateNewWiki_nonLatin_TC002_password_is_blank()
 	{
+		startBrowser();
 		driver.get("http://community.wikia.com/wiki/Special:UserLogout?returnto=User "+BasePageObject.userNameNonLatinEncoded);
 		HomePageObject home = new HomePageObject(driver);
 		home.openHomePage();
@@ -92,6 +95,7 @@ public class CreateAWikiTests_nonLatin extends TestTemplate
 		newWikia.verifyUserToolBar();
 		CommonFunctions.logOut(BasePageObject.userNameNonLatinEncoded);
 		driver.get("http://community.wikia.com/wiki/Special:UserLogout?returnto=User "+BasePageObject.userNameNonLatinEncoded);
+		stopBrowser();
 	}
 	
 	/*
@@ -102,6 +106,7 @@ public class CreateAWikiTests_nonLatin extends TestTemplate
 	@Test
 	public void CreateNewWiki_nonLatin_TC003_password_is_incorrect()
 	{
+		startBrowser();
 		driver.get("http://community.wikia.com/wiki/Special:UserLogout?returnto=User "+BasePageObject.userNameNonLatinEncoded);
 		HomePageObject home = new HomePageObject(driver);
 		home.openHomePage();
@@ -128,6 +133,7 @@ public class CreateAWikiTests_nonLatin extends TestTemplate
 		newWikia.vefifyUserLoggedIn(BasePageObject.userNameNonLatinEncoded);
 		newWikia.verifyUserToolBar();
 		driver.get("http://community.wikia.com/wiki/Special:UserLogout?returnto=User "+BasePageObject.userNameNonLatinEncoded);
+		stopBrowser();
 	}
 	
 	/*
@@ -138,6 +144,7 @@ public class CreateAWikiTests_nonLatin extends TestTemplate
 	@Test
 	public void CreateNewWiki_nonLatin_TC004_user_name_and_password_are_correct()
 	{
+		startBrowser();
 		driver.get("http://community.wikia.com/wiki/Special:UserLogout?returnto=User "+BasePageObject.userNameNonLatinEncoded);
 		HomePageObject home = new HomePageObject(driver);
 		home.openHomePage();
@@ -160,6 +167,7 @@ public class CreateAWikiTests_nonLatin extends TestTemplate
 		newWikia.vefifyUserLoggedIn(BasePageObject.userNameNonLatinEncoded);
 		newWikia.verifyUserToolBar();
 		driver.get("http://community.wikia.com/wiki/Special:UserLogout?returnto=User "+BasePageObject.userNameNonLatinEncoded);
+		stopBrowser();
 	}	
 	
 }
