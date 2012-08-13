@@ -80,7 +80,7 @@ function VETSetup($editform) {
 	return true;
 }
 
-function VETSetupVars($vars) {
+function VETSetupVars(&$vars) {
 	global $wgFileBlacklist, $wgCheckFileExtensions, $wgStrictFileExtensions, $wgFileExtensions;
 
 	$vars['vet_back'] = wfMsg('vet-back');
