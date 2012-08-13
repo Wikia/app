@@ -47,6 +47,7 @@ class WikiFactoryLoader {
 	public $mSaveDefaults = false;
 	public $mBeta = false;
 	public $mCacheAnyway = array( "wgArticlePath" );
+	public $mCheckUpgrade = false;
 
 	private $mDBhandler, $mDBname;
 
@@ -474,9 +475,6 @@ class WikiFactoryLoader {
 		}
 
 		/**
-		 * if wikia is marked for deletion
-
-		/**
 		 * if wikia is disabled and is not Commandline mode we redirect it to
 		 * dump directory.
 		 */
@@ -681,6 +679,13 @@ class WikiFactoryLoader {
 			}
 			$this->debug( "reading from database, id {$this->mWikiID}, count ".count( $this->mVariables ) );
 			wfProfileOut( __METHOD__."-varsdb" );
+
+			/**
+			 * maybe upgrade database to current schema
+			 */
+			if( $this->mCheckUpgrade === true ) {
+				$this->maybeUpgrade();
+			}
 		}
 
 		/**
@@ -897,5 +902,36 @@ class WikiFactoryLoader {
 		if( !empty( $this->mDebug ) ) {
 			error_log("wikifactory: {$message}");
 		}
+	}
+
+	/**
+	 * maybeUpgrade
+	 *
+	 * look for existence of some columns in database. If they are not exist
+	 * run database upgrade  on first request. Not very efficient for regular
+	 * usage but good for transition time
+	 */
+	private function maybeUpgrade( ) {
+		wfProfileIn( __METHOD__ . "-upgradedb" );
+		$dbr = $this->getDB();
+
+		/**
+		 * look for rev_sha1 in revision table
+		 */
+		if( !$dbr->fieldExists( "revision", "rev_sha1", __METHOD__ ) ) {
+			$ret = true;
+			ob_start( array( $this, 'outputHandler' ) );
+			try {
+				$up = DatabaseUpdater::newForDB( $this->db );
+				$up->doUpdates();
+			} catch ( MWException $e ) {
+				$this->debug( "An error occured: " . $e->getText() );
+				$ret = false;
+			}
+			ob_end_flush();
+			return $ret;
+		}
+
+		wfProfileOut( __METHOD__ . "-upgradedb" );
 	}
 };
