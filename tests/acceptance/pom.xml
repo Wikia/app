@@ -83,16 +83,16 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>2.12</version>
 				<configuration>							
-					<systemPropertyVariables>
+					<!--systemPropertyVariables>
 						<base-path>${base-path}</base-path>
 						<browser>${browser}</browser>
 						<resource-path>${resource-path}</resource-path>
 						<firefox.firebug.export-path>${firefox.firebug.export-path}</firefox.firebug.export-path>
 						<capability>${capability}</capability>
 						<preparation-mode>${preparation-mode}</preparation-mode>
-					</systemPropertyVariables>
+					</systemPropertyVariables-->
 					<suiteXmlFiles>
-						<suiteXmlFile>com/wikia/selenium/tests/testSuite.xml</suiteXmlFile>
+						<suiteXmlFile>src/test/java/com/wikia/webdriver/TestSuites/testSuite.xml</suiteXmlFile>
 					</suiteXmlFiles>
 				</configuration>				
 			</plugin>
@@ -105,20 +105,11 @@
 						<directory>${base-path}/logs</directory>
 						<excludes>
 							<exclude>**/screens/**</exclude>
-							<!--exclude>**/.svn/**</exclude-->
 							<exclude>**/FF/**</exclude>
 							<exclude>**/IE/**</exclude>
 						</excludes>
 						<followSymlinks>false</followSymlinks>
 					</fileset>
-					<!--fileset>
-						<directory>${base-path}\screens\FF\screenTest\</directory>
-						<followSymlinks>false</followSymlinks>
-					</fileset>
-					<fileset>
-						<directory>${base-path}\screens\IE\screenTest\</directory>
-						<followSymlinks>false</followSymlinks>
-					</fileset-->
 				</filesets>
 			</configuration>
 			</plugin>
