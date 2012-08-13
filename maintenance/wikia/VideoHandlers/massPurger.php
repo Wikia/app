@@ -3,8 +3,10 @@
 ini_set( 'display_errors', 'stdout' );
 
 ini_set( "include_path", dirname(__FILE__)."/.." );
-require_once( 'commandLine.inc' );
+require_once( '../../commandLine.inc' );
 
+
+$dbw = wfGetDB( DB_SLAVE );
 
 echo "Purging articles:";
 
@@ -15,6 +17,7 @@ while( $page = $dbw->fetchObject( $rows ) ) {
 	$wgTitle = $oTitle = Title::newFromId( $page->page_id );
 	if ( $oTitle instanceof Title && $oTitle->exists() && ($oArticle = new Article ( $oTitle )) instanceof Article ) {
 		$oTitle->purgeSquid();
+		/* @var $oArticle Article */
 		$oArticle->doPurge();
 		echo "+";
 	} else {
