@@ -857,7 +857,7 @@ class ArticleComment {
 				}
 
 				if ( !empty($comment->mTitle) ) {
-					$ok = self::addArticlePageToWatchlist( $comment ) ;
+					self::addArticlePageToWatchlist( $comment ) ;
 				}
 
 				$message = false;

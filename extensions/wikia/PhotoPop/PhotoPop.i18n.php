@@ -36,7 +36,6 @@ $messages['en'] = array(
 	'photopop-game-date' => 'date',
 	'photopop-game-timeup' => 'time\'s up!',
 	'photopop-game-please-wait' => 'Please wait',
-	'photopop-game-loading-image' => 'Loading image...',
 	'photopop-game-loading' => 'Loading...',
 	'photopop-game-highscore' => 'Highscore',
 	'photopop-game-highscores' => 'high scores',
