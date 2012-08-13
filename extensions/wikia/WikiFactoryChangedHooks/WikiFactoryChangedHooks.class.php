@@ -10,19 +10,19 @@
 Class WikiFactoryChangedHooks {
 	static public function achievements( $cv_name, $city_id, $value ) {
 		wfProfileIn( __METHOD__ );
-                
+
 		if ( $cv_name == 'wgEnableAchievementsExt' && $value == true ) {
-                    
+
                     $wiki = WikiFactory::getWikiById( $city_id );
-                    
+
                     // Force WikiFactory::getWikiById() to query DB_MASTER if needed.
                     if ( !is_object( $wiki ) ) {
                         $wiki = WikiFactory::getWikiById( $city_id, true );
                     }
-                    
+
                     $user = User::newFromId( $wiki->city_founding_user );
                     $user->load();
-                    
+
                     $achService = new AchAwardingService( $city_id );
                     $achService->awardCustomNotInTrackBadge( $user, BADGE_CREATOR );
                 }
@@ -31,7 +31,7 @@ Class WikiFactoryChangedHooks {
 
 		return true;
 	}
-	
+
 	/**
 	 * Hook handler - will install the datbase and messaging changes for recipes sites with RecipesTweaks.
 	 *
@@ -108,7 +108,7 @@ Class WikiFactoryChangedHooks {
 			# Do the edit
 			$flags = 0;
 			$summary = "Switching to Recipes messaging.";
-			$success = $wgArticle->doEdit( $text, $summary, $flags);
+			$success = $wgArticle->doEdit( $content, $summary, $flags);
 			if ( $success ) {
 				$wgOut->addHTML("Sucessfully updated \"$msgName\".<br/>\n");
 			} else {
@@ -119,7 +119,7 @@ Class WikiFactoryChangedHooks {
 
 		return $numErrors;
 	} // end setMessage()
-	
+
 	/*
 	 *@author Federico "Lox" Lucignano
 	 *
@@ -129,7 +129,7 @@ Class WikiFactoryChangedHooks {
 	 */
 	static public function onAbuseFilterEnabled( $varName, $wikiId, $value ) {
 		wfProfileIn( __METHOD__ );
-		
+
 		if ( $varName == 'wgEnableAbuseFilterExtension' && $value == true ) {
 			global $wgDBtype;
 			$dir = dirname( __FILE__ ) . '/../../AbuseFilter';
@@ -168,7 +168,7 @@ Class WikiFactoryChangedHooks {
 
 		return true;
 	}
-	
+
 	// Initialize schema if not already initialized
 	static public function FounderProgressBar( $cv_name, $wiki_id, $value ) {
 
@@ -182,7 +182,7 @@ Class WikiFactoryChangedHooks {
 			for($task_id = 10; $task_id <= 300; $task_id+=10) {
 				$sql = "INSERT IGNORE INTO founder_progress_bar_tasks SET wiki_id=$wiki_id, task_id=$task_id";
 				$dbw->query ($sql);
-			}		
+			}
 			// also clear out any lingering memcache keys
 			$memc = $app->wg->Memc;
 			$memc->delete( $app->wf->MemcKey('FounderLongTaskList') );
@@ -190,7 +190,7 @@ Class WikiFactoryChangedHooks {
 		}
 		return true;
 	}
-	
+
 
 	static public function BlogArticle( $cv_name, $city_id, $value ) {
 		Wikia::log( __METHOD__, $city_id, "{$cv_name} = {$value}" );
@@ -200,12 +200,12 @@ Class WikiFactoryChangedHooks {
 			 */
 			if (!class_exists('BlogTask')) {
 				global $IP;
-				extAddBatchTask( "$IP/extensions/wikia/Blogs/BlogTask.php", "blog", "BlogTask" );				
+				extAddBatchTask( "$IP/extensions/wikia/Blogs/BlogTask.php", "blog", "BlogTask" );
 			}
 			$Task = new BlogTask();
 			$Task->createTask( array( "city_id" => $city_id ), TASK_QUEUED );
 		}
 		return true;
 	}
-			
+
 }
