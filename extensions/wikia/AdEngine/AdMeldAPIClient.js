@@ -12,8 +12,8 @@ var AdMeldAPIClient = {
 };
 
 AdMeldAPIClient.log = function(msg, level) {
-	if (typeof top.Wikia != 'undefined' && typeof top.Wikia.log == 'function') {
-		top.Wikia.log(msg, level, 'AdMeldAPIClient');
+	if (typeof window.top.Wikia !== 'undefined' && typeof window.top.Wikia.log === 'function') {
+		window.top.Wikia.log(msg, level, 'AdMeldAPIClient');
 	}
 };
 
@@ -38,12 +38,12 @@ AdMeldAPIClient.getAd = function(slotname) {
 	try {
 		slotname = slotname.replace('HOME_', '');
 		this.log('slotname HOME_' + slotname + ' replaced with ' + slotname, 'trace_l3');
-	} catch(e) {
+	} catch(e1) {
 	}
 	
 	try {
 		return this.slots[slotname].ad.creative + this.slots[slotname].pixels.join("\n");
-	} catch(e) {
+	} catch(e2) {
 		this.log('Error in getAd ' + slotname + ', returning null', 'error');
 		this.track(['error', 'get_ad', slotname], 'error');
 		return null;
@@ -56,12 +56,12 @@ AdMeldAPIClient.getBid = function(slotname) {
 	try {
 		slotname = slotname.replace('HOME_', '');
 		this.log('slotname HOME_' + slotname + ' replaced with ' + slotname, 'trace');
-	} catch(e) {
+	} catch(e1) {
 	}
 
 	try {
 		return this.slots[slotname].ad.bid;
-	} catch(e) {
+	} catch(e2) {
 		this.log('Error in getBid ' + slotname + ', returning -1', 'error');
 		this.track(['error', 'get_bid', slotname], 'error');
 		return -1;
@@ -71,7 +71,7 @@ AdMeldAPIClient.getBid = function(slotname) {
 AdMeldAPIClient.init = function() {
 	this.log('init', 'info');
 	
-	var page = top.wgServer + top.wgArticlePath.replace('$1', top.wgPageName);
+	var page = window.top.wgServer + window.top.wgArticlePath.replace('$1', window.top.wgPageName);
 
 	for (var slot in this.slots) {
 		this.log('ask for ' + slot + ' bid', 'trace_l3');
@@ -210,6 +210,6 @@ AdMeldAPIClient.roundBidForDART = function(bid) {
 	return bid;
 };
 
-if (!top.wgNoExternals && !(top.wgUserName && !top.wgUserShowAds) && top.wgEnableAdMeldAPIClient) {
-	top.AdMeldAPIClient.init();
+if (!window.top.wgNoExternals && !(window.top.wgUserName && !window.top.wgUserShowAds) && window.top.wgEnableAdMeldAPIClient) {
+	window.top.AdMeldAPIClient.init();
 }

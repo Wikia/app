@@ -10,13 +10,16 @@ var AIC2 = {
 	isRightToLeft   : false,
 	visible         : false
 };
-		
+
 AIC2.init = function() {
+	var $wikiaMainContent = $("#WikiaMainContent")
+		, $window = $(window);
+
 	Liftium.d("AIC2: init", 5);
 	AIC2.called = true;
 
-	if ($("#WikiaMainContent").width() != AIC2.WMCbaseWidth) {
-		AIC2.marginLeft = AIC2.marginLeft + parseInt( ($("#WikiaMainContent").width() - AIC2.baseWidth) / 2 );
+	if ($wikiaMainContent.width() != AIC2.WMCbaseWidth) {
+		AIC2.marginLeft = AIC2.marginLeft + parseInt(($wikiaMainContent.width() - AIC2.baseWidth) / 2, 10);
 		Liftium.d("AIC2: non standard width, new marginLeft set to " + AIC2.marginLeft, 5);
 		WikiaTracker.track(Liftium.buildTrackUrl([LiftiumOptions.pubid, "AIC2", "wide"]), 'liftium.varia');
 	}
@@ -26,12 +29,12 @@ AIC2.init = function() {
 		AIC2.isRightToLeft = true;
 	}
 
-// FIXME
-if ($(window).width() < 1010) {
-	Liftium.d("AIC2: window too narrow, bailing out", 3);
-	WikiaTracker.track(Liftium.buildTrackUrl([LiftiumOptions.pubid, "AIC2", "too_narrow"]), 'liftium.varia');
-	return;
-}
+	// FIXME
+	if ($window.width() < 1010) {
+		Liftium.d("AIC2: window too narrow, bailing out", 3);
+		WikiaTracker.track(Liftium.buildTrackUrl([LiftiumOptions.pubid, "AIC2", "too_narrow"]), 'liftium.varia');
+		return;
+	}
 
 	if (!AIC2.checkStartStopPosition()) { return; }
 
@@ -40,8 +43,8 @@ if ($(window).width() < 1010) {
 		$('#WikiaRail').append('<div id="INCONTENT_BOXAD_1" class="noprint" style="height: 250px; width: 300px; position: relative;"><div id="Liftium_300x250_99"><iframe width="300" height="250" id="INCONTENT_BOXAD_1_iframe" class="" noresize="true" scrolling="no" frameborder="0" marginheight="0" marginwidth="0" style="border:none" target="_blank"></iframe></div></div><!-- END SLOTNAME: INCONTENT_BOXAD_1 -->');
 		
 		//if (!AIC2.checkFooterAd()) {
-			$(window).bind("scroll.AIC2", AIC2.onScroll);
-			$(window).bind("resize.AIC2", AIC2.onScroll);
+			$window.bind("scroll.AIC2", AIC2.onScroll);
+			$window.bind("resize.AIC2", AIC2.onScroll);
 		//}
 
 	/*
@@ -79,13 +82,13 @@ if ($(window).width() < 1010) {
 };
 
 AIC2.checkStartStopPosition = function() {
+	var startPosition, stopPosition, adHeight;
 	Liftium.d("AIC2: check start/stop position", 7);
 
 	try {
-		var adHeight = parseInt($('#INCONTENT_BOXAD_1').height()) || 0;
-
-		var startPosition = parseInt($('#WikiaRail').offset().top) + parseInt($('#WikiaRail').height()) - adHeight;
-		var stopPosition = parseInt($('#WikiaFooter').offset().top) - 10 - adHeight;
+		adHeight = parseInt($('#INCONTENT_BOXAD_1').height(), 10) || 0;
+		startPosition = parseInt($('#WikiaRail').offset().top, 10) + parseInt($('#WikiaRail').height(), 10) - adHeight;
+		stopPosition = parseInt($('#WikiaFooter').offset().top, 10) - 10 - adHeight;
 
 		if ($('#LEFT_SKYSCRAPER_3').length && $('#LEFT_SKYSCRAPER_3').height() > 50) {
 			Liftium.d("AIC2: sky3 found", 3);
@@ -123,16 +126,15 @@ AIC2.checkStartStopPosition = function() {
 };
 
 AIC2.isAlmostEqual = function(a, b) {
-	if (a == b) { return true; }
-	if (b - 3 < a && a < b + 3) { return true; }
-	
-	return false;
+	return Math.abs(a - b) < 3;
 };
 
 AIC2.onScroll = function() {
+	var $window = $(window);
+
 	Liftium.d("AIC2: onScroll", 9);
 		
-	if (($(window).scrollTop() > AIC2.startPosition) && ($(window).scrollTop() < AIC2.stopPosition)) {
+	if (($window.scrollTop() > AIC2.startPosition) && ($window.scrollTop() < AIC2.stopPosition)) {
 		if (!AIC2.visible) {
 			Liftium.d("AIC2.showAd", 5);
 			if (!AIC2.checkStartStopPosition()) { return; }
@@ -208,12 +210,11 @@ AIC2.checkFooterAd = function() {
 		Liftium.d("AIC2: footer ad detected, bailing out", 3);
 		$(window).unbind("scroll.AIC2");
 		return true;
-	} else {
-		Liftium.d("AIC2: footer ad not detected, proceeding", 7);
-		return false;
 	}
+	Liftium.d("AIC2: footer ad not detected, proceeding", 7);
+	return false;
 };
 
-if (top == self && !(window.wgUserName && !window.wgUserShowAds) && window.wgEnableAdsInContent && window.wgIsContentNamespace && ! AIC2.called && ! window.wgIsMainpage ) {
+if (window.top == window.self && !(window.wgUserName && !window.wgUserShowAds) && window.wgEnableAdsInContent && window.wgIsContentNamespace && ! AIC2.called && ! window.wgIsMainpage ) {
 	wgAfterContentAndJS.push(function(){AIC2.init();});
 }
