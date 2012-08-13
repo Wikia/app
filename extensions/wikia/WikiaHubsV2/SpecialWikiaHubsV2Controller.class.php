@@ -78,12 +78,29 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 	public function featuredvideo() {
 		$this->setCacheValidity();
 		$model = $this->getModel();
+
 		$videoData = $model->getDataForModuleFeaturedVideo();
 		$this->headline = $videoData['headline'];
 		$this->sponsor = $videoData['sponsor'];
-		$this->sponsorThumb = $videoData['sponsorthumb'];
-		$this->video = $videoData['video'];
+		$this->sponsorThumb = Xml::element('img', array(
+			'src' => $videoData['sponsorthumb']['src'],
+			'width' => $videoData['sponsorthumb']['width'],
+			'height' => $videoData['sponsorthumb']['height'],
+		), '', true);
 		$this->description = $videoData['description'];
+
+		$videoTitle = F::build('Title', array($videoData['videoTitle'], NS_FILE), 'newFromText');
+		$videoFile = ($videoTitle) ? wfFindFile($videoTitle) : false;
+		if( $videoFile ) {
+			$videoThumbObj = $videoFile->transform( array('width'=> WikiaHubsV2Model::FEATURED_VIDEO_WIDTH, 'height' => WikiaHubsV2Model::FEATURED_VIDEO_HEIGHT) );
+			$this->video = array(
+				'title' => $videoData['videoTitle'],
+				'href' => $videoTitle->getFullUrl(),
+				'thumbSrc' => $videoThumbObj->getUrl()
+			);
+		} else {
+			$this->video = false;
+		}
 	}
 
 	public function popularvideos() {
