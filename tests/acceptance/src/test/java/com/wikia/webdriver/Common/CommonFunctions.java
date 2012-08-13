@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 
 import com.wikia.webdriver.DriverProvider.DriverProvider;
 import com.wikia.webdriver.Logging.PageObjectLogging;
@@ -36,9 +37,10 @@ public class CommonFunctions
 	
 	public static void logOut(String userName)
 	{
-		driver.get("http://community.wikia.com/wiki/Special:UserLogout?returnto=User "+userName);
-		
+		driver.get("http://community.wikia.com/wiki/Special:UserLogout?returnto=User "+userName);	
 	}
+	
+
 	
 	
 	
@@ -74,14 +76,41 @@ public class CommonFunctions
 	
 	public static void assertString(String pattern, String current)
 	{
-		if (pattern.equals(current))
+//		if (pattern.equals(current))
+//		{
+//			PageObjectLogging.log("assertString", "pattern string: "+pattern+" <br/>current string: "+current+"<br/>are the same", true, driver);
+//		}
+//		else
+//		{
+//			PageObjectLogging.log("assertString", "pattern string: "+pattern+" <br/>current string: "+current+"<br/>are different", false, driver);
+//		}
+		try
 		{
-			PageObjectLogging.log("assertString", "pattern string: "+pattern+" <br/>current string: "+current+"<br/>are the same", true, driver);
+			Assert.assertEquals(pattern, current);
+			PageObjectLogging.log("assertString", "pattern string: "+pattern+" <br/>current string: "+current+"<br/>are the same", true);
 		}
-		else
+		catch(AssertionError e)
 		{
-			PageObjectLogging.log("assertString", "pattern string: "+pattern+" <br/>current string: "+current+"<br/>are different", false, driver);
+			PageObjectLogging.log("assertString", "pattern string: "+pattern+" <br/>current string: "+current+"<br/>are different", false);
 		}
+		
+	}
+	
+	public static String currentlyFocusedGetAttributeValue(String attributeName)
+	{
+		String currentlyFocusedName = getCurrentlyFocused().getAttribute(attributeName);
+		return currentlyFocusedName;
+	}
+	
+	public static String getAttributeValue(WebElement element, String attributeName)
+	{
+		return element.getAttribute(attributeName);
+	}
+	
+	
+	public static WebElement getCurrentlyFocused()
+	{
+		return driver.switchTo().activeElement();
 	}
 
 }
