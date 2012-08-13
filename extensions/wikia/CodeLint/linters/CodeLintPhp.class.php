@@ -205,6 +205,7 @@ class CodeLintPhp extends CodeLint {
 		switch($errorMsg) {
 			case 'Unreachable statement':
 			case 'Redundant closing tag':
+			case 'Call-time pass-by-reference has been removed in PHP 5.4':
 				$ret = true;
 				break;
 		}
