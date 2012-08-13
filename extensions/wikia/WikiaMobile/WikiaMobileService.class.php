@@ -12,6 +12,8 @@ class WikiaMobileService extends WikiaService {
 
 	static protected $initialized = false;
 	private $pgExists = null;
+	private $skin;
+	private $templateObject;
 
 	function __construct(){
 		parent::__construct();

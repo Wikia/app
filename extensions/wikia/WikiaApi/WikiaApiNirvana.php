@@ -10,7 +10,6 @@
 $wgAPIModules['wikia'] = 'WikiaApiNirvana';
 
 class WikiaApiNirvana extends ApiBase {
-	private $app;
 
 	public function __construct( $main, $action ) {
 		parent :: __construct( $main, $action, '' /* prefix for parameters... so controller becomes $controller */ );
@@ -22,6 +21,8 @@ class WikiaApiNirvana extends ApiBase {
 	public function execute() {
 		$app = F::app();
 		$app->wf->profileIn(__METHOD__);
+
+		$format = 'html';
 
 		extract( $this->extractRequestParams() );
 
@@ -48,9 +49,9 @@ class WikiaApiNirvana extends ApiBase {
 				$resp = $resp->toString();
 			}
 
-			$result = $this->getResult()->addValue( $this->getModuleName(), $controller,  $resp );
+			$this->getResult()->addValue( $this->getModuleName(), $controller,  $resp );
 		} else {
-			$result = $this->getResult()->addValue( $this->getModuleName(), 'Error',  'No Controller Specified' );
+			$this->getResult()->addValue( $this->getModuleName(), 'Error',  'No Controller Specified' );
 		}
 
 		$app->wf->profileOut(__METHOD__);

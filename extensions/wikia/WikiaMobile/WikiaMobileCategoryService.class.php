@@ -77,6 +77,7 @@ class WikiaMobileCategoryService extends WikiaService {
 		}
 
 		$this->wf->profileOut( __METHOD__ );
+		return true;
 	}
 
 	public function getBatch(){

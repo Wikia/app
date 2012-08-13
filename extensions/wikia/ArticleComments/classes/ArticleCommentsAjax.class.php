@@ -132,7 +132,7 @@ class ArticleCommentsAjax {
 	 * @return String -- html -> textarea
 	 */
 	static public function axReply() {
-		global $wgRequest, $wgStylePath, $wgUser;
+		global $wgRequest, $wgStylePath;
 
 		$articleId = $wgRequest->getVal( 'article', false );
 		$commentId = $wgRequest->getVal( 'id', false );
@@ -168,7 +168,7 @@ class ArticleCommentsAjax {
 	 * @return String -- json-ized array`
 	 */
 	static public function axPost() {
-		global $wgRequest, $wgUser, $wgLang, $wgArticleCommentsMaxPerPage;
+		global $wgRequest, $wgUser, $wgLang;
 
 		$articleId = $wgRequest->getVal( 'article', false );
 		$parentId = $wgRequest->getVal( 'parentId' );
@@ -238,7 +238,7 @@ class ArticleCommentsAjax {
 	 * @return String - HTML
 	 */
 	static function axGetComments() {
-		global $wgRequest, $wgUser;
+		global $wgRequest;
 
 		$page = $wgRequest->getVal('page', false);
 		$articleId = $wgRequest->getVal('article', false);
