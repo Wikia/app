@@ -27,6 +27,15 @@ public class BasePageObject{
 	public static String userName = "KarolK1";
 	public static String password = "123";
 	
+	public static String userNameNonLatin = "卡羅爾";
+	public static String userNameNonLatinEncoded = "%E5%8D%A1%E7%BE%85%E7%88%BE";
+													
+	public static String passwordNonLatin = "!@#QWEASD";
+	
+	public static String email = "webdriverseleniumwikia@gmail.com";
+	public static String emailPassword = "!@#QWEASD";
+	//卡羅爾
+	
 	public static String userNameStaff = "KarolK";
 	public static String passwordStaff = "123";
 	
@@ -213,6 +222,12 @@ public class BasePageObject{
 		driver.navigate().back();
 	}
 	
+	public void verifyUserToolBar()
+	{
+		waitForElementByCss("div.toolbar ul.tools li.overflow");
+		waitForElementByCss("div.toolbar ul.tools li.mytools");
+		waitForElementByCss("div.toolbar ul.tools li a.tools-customize");
+	}
 	
 	
 	
