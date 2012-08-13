@@ -21,16 +21,16 @@ public class CreateAWikiTests_logInFieldValidation extends TestTemplate{
 	{
 		return new Object[][]
 				{
-					{BasePageObject.userNameWithUnderScore},
-					{BasePageObject.userNameWithBackwardSlash},
-					{BasePageObject.userNameLong}
+					{BasePageObject.userNameWithUnderScore, BasePageObject.userNameWithUnderScore},
+					{BasePageObject.userNameWithBackwardSlash, "Driver%5Cweb"},
+					{BasePageObject.userNameLong, BasePageObject.userNameLong}
 				};
 	}
 			
 	@Test(dataProvider="getUserName")
-	public void CreateNewWiki_LogInFieldValidation(String userName)
+	public void CreateNewWiki_LogInFieldValidation(String userName, String userNameEnc)
 	{
-		driver.get("http://community.wikia.com/wiki/Special:UserLogout?returnto=User "+userName);
+		driver.get("http://community.wikia.com/wiki/Special:UserLogout?returnto=User "+userNameEnc);
 		HomePageObject home = new HomePageObject(driver);
 		home.openHomePage();
 		CreateNewWikiPageObjectStep1 createNewWiki1 = home.StartAWikia();
@@ -49,11 +49,8 @@ public class CreateAWikiTests_logInFieldValidation extends TestTemplate{
 		NewWikiaHomePage newWikia = createNewWiki3.submit();
 		newWikia.VerifyCongratulationsLightBox();
 		newWikia.closeCongratulationsLightBox();
-		newWikia.vefifyUserLoggedIn(userName);
+		newWikia.vefifyUserLoggedIn(userNameEnc);
 		newWikia.verifyUserToolBar();
-		driver.get("http://community.wikia.com/wiki/Special:UserLogout?returnto=User "+userName);
+		driver.get("http://community.wikia.com/wiki/Special:UserLogout?returnto=User "+userNameEnc);
 	}
-	
-	
-
 }
