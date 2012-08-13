@@ -1,6 +1,7 @@
 package com.wikia.webdriver.Common;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -112,5 +113,18 @@ public class CommonFunctions
 	{
 		return driver.switchTo().activeElement();
 	}
+	/**
+	 * Scroll to the given element
+	 * <p> This mehtod is used mostly because Chrome does not scroll to elements automaticly (18 july 2012)
+	 * <p> This method uses JavascriptExecutor
+	 * 
+	 * @author Michal Nowierski
+	 * @param element Webelement to be scrolled to
+	*/
+	
+	public static void scrollToElement(WebElement element) {
+		int y = element.getLocation().getY();
+			((JavascriptExecutor)driver).executeScript("window.scrollBy(0,"+y+");");
+		}
 
 }
