@@ -7,6 +7,7 @@ import com.wikia.webdriver.Common.CommonFunctions;
 import com.wikia.webdriver.DriverProvider.DriverProvider;
 import com.wikia.webdriver.Templates.TestTemplate;
 import com.wikia.webdriver.pageObjects.PageObject.BasePageObject;
+import com.wikia.webdriver.pageObjects.PageObject.FilePageObject;
 import com.wikia.webdriver.pageObjects.PageObject.HomePageObject;
 import com.wikia.webdriver.pageObjects.PageObject.WikiBasePageObject;
 import com.wikia.webdriver.pageObjects.PageObject.Hubs.EntertainmentHubPageObject;
@@ -21,7 +22,7 @@ public class ImageServing extends TestTemplate {
 	{
 	
 	WikiBasePageObject wiki = new WikiBasePageObject(driver, wikiName);
-	SpecialNewFilesPageObject wikiSpecialNF = wiki.OpenSpecialNewFiles();
+//	SpecialNewFilesPageObject wikiSpecialNF = wiki.OpenSpecialNewFiles();
 //	
 //	CommonFunctions.logIn("Michaltester", "1tester.");
 //	wikiSpecialNF.ClickOnAddaPhoto();
@@ -33,13 +34,13 @@ public class ImageServing extends TestTemplate {
 //	wikiSpecialNF.ClickOnUploadaPhoto();
 //	wikiSpecialNF.waitForFile(file);
 //
-	SpecialUploadPageObject wikiSpecialU = wikiSpecialNF.OpenSpecialUpload();
+	SpecialUploadPageObject wikiSpecialU = wiki.OpenSpecialUpload();
 	CommonFunctions.logIn("Michaltester", "1tester.");
 	wikiSpecialU.TypeInFileToUploadPath("Image001.jpg");
 	wikiSpecialU.verifyFilePreviewAppeared("Image001.jpg");
 	wikiSpecialU.CheckIgnoreAnyWarnings();
-	wikiSpecialU.ClickOnUploadFile();
-	wikiSpecialU.waitForFilePage("Image001.jpg");
+	FilePageObject filePage = wikiSpecialU.ClickOnUploadFile("Image001.jpg");
+	filePage.VerifyCorrectFilePage();
 	
 
 	}}
