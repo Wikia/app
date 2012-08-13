@@ -9,17 +9,19 @@ class GamestarVideoHandler extends VideoHandler {
 	
 	public function getEmbed( $articleId, $width, $autoplay = false, $isAjax = false, $postOnload = false ) {
 		$height =  $this->getHeight( $width );
-		$params = array('rel'=>0);
 		$url = str_replace('$1', $this->getEmbedVideoId(), static::$urlTemplate);
-		
+		$autoStart = ( $autoplay ) ? 1 : 0 ;
+
 		$html = <<<EOT
 <object width="$width" height="$height">
 	<param name="movie" value="$url"></param>
+	<param name="flashVars" value="autoStart=$autoStart"></param>
 	<param name="allowFullScreen" value="true"></param>
 	<param name="allowscriptaccess" value="always"></param>
-	<embed src="$url" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="$width" height="$height"></embed>
+	<embed src="$url" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" flashVars="autoStart=$autoStart" width="$width" height="$height"></embed>
 </object>
 EOT;
+
 		return $html;
 	}
 
