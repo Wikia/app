@@ -225,6 +225,10 @@ class CodeLintPhp extends CodeLint {
 			$ret = true;
 		}
 
+		if (endsWith($errorMsg, 'should not be called statically')) {
+			$ret = true;
+		}
+
 		return $ret;
 	}
 }
