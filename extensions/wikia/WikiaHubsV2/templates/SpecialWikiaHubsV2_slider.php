@@ -14,9 +14,9 @@ foreach($images as $image) {
 	$galleryText .= "\n" . implode('|',array(
 			$image['image'],
 			$image['headline'],
-			'link=' . $image['anchor'],
+			'link=' . $image['href'],
 			'linktext=' . $image['description'],
-			'shorttext=' . $image['anchor']
+			'shorttext=' . $image['title']
 		)
 	);
 }

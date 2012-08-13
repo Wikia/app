@@ -11,8 +11,8 @@
 
 class WikiaHubsV2Model extends WikiaModel {
 	const GRID_0_5_MINIATURE_SIZE = 75;
-	const GRID_1_MINIATURE_SIZE = 150;
-	const GRID_2_MINIATURE_SIZE = 300;
+	const GRID_1_MINIATURE_SIZE = 155;
+	const GRID_2_MINIATURE_SIZE = 320;
 
 	const FEATURED_VIDEO_WIDTH = 300;
 	const FEATURED_VIDEO_HEIGHT = 225;
@@ -56,35 +56,35 @@ class WikiaHubsV2Model extends WikiaModel {
 			'images' => array(
 				array(
 					'image' => 'File:Wikia-Visualization-Main,rappelz.png',
-					'anchor' => 'http://www.wikia.com/Video_Games%2FVideo_Game_Olympics',
+					'href' => 'http://www.wikia.com/Video_Games%2FVideo_Game_Olympics',
 					'title' => 'Gaming Olympics',
 					'headline' => 'Exclusively on Wikia!',
 					'description' => 'Participate in the biggest gaming event of 2012'
 				),
 				array(
 					'image' => 'File:Wikia-Visualization-Main,rappelz.png',
-					'anchor' => 'http://www.wikia.com/Video_Games%2FVideo_Game_Olympics',
+					'href' => 'http://www.wikia.com/Video_Games%2FVideo_Game_Olympics',
 					'title' => 'Gaming Olympics',
 					'headline' => 'Exclusively on Wikia!',
 					'description' => 'Participate in the biggest gaming event of 2012'
 				),
 				array(
 					'image' => 'File:Wikia-Visualization-Main,rappelz.png',
-					'anchor' => 'http://www.wikia.com/Video_Games%2FVideo_Game_Olympics',
+					'href' => 'http://www.wikia.com/Video_Games%2FVideo_Game_Olympics',
 					'title' => 'Gaming Olympics',
 					'headline' => 'Exclusively on Wikia!',
 					'description' => 'Participate in the biggest gaming event of 2012'
 				),
 				array(
 					'image' => 'File:Wikia-Visualization-Main,rappelz.png',
-					'anchor' => 'http://www.wikia.com/Video_Games%2FVideo_Game_Olympics',
+					'href' => 'http://www.wikia.com/Video_Games%2FVideo_Game_Olympics',
 					'title' => 'Gaming Olympics',
 					'headline' => 'Exclusively on Wikia!',
 					'description' => 'Participate in the biggest gaming event of 2012'
 				),
 				array(
 					'image' => 'File:Wikia-Visualization-Main,rappelz.png',
-					'anchor' => 'http://www.wikia.com/Video_Games%2FVideo_Game_Olympics',
+					'href' => 'http://www.wikia.com/Video_Games%2FVideo_Game_Olympics',
 					'title' => 'Gaming Olympics',
 					'headline' => 'Exclusively on Wikia!',
 					'description' => 'Participate in the biggest gaming event of 2012'
@@ -454,7 +454,7 @@ No
 						'href' => 'http://assassinscreed.wikia.com/wiki/User:Master_Sima_Yi'
 					),
 					'image' => 'Wikia-Visualization-Add-5,glee.png',
-					'imagethumb' => $this->getStandardThumbnailUrl('Wikia-Visualization-Add-5,glee.png'),
+					'imagethumb' => $this->getSmallThumbnailUrl('Wikia-Visualization-Add-5,glee.png'),
 					'subtitle' => 'Master Sima Yi Says:',
 					'content' => 'Today, several news sites have reported that actor Michael Fassbender (known for his roles in Inglourious Basterds, Shame, X-Men: First Class and Prometheus) has signed on for the planned Assassin\'s Creed film.',
 					'wikilink' => array(
@@ -473,7 +473,7 @@ No
 						'href' => 'http://assassinscreed.wikia.com/wiki/User:Master_Sima_Yi'
 					),
 					'image' => 'Wikia-Visualization-Add-5,glee.png',
-					'imagethumb' => $this->getStandardThumbnailUrl('Wikia-Visualization-Add-5,glee.png'),
+					'imagethumb' => $this->getSmallThumbnailUrl('Wikia-Visualization-Add-5,glee.png'),
 					'subtitle' => 'Master Sima Yi Says:',
 					'content' => 'Today, several news sites have reported that actor Michael Fassbender (known for his roles in Inglourious Basterds, Shame, X-Men: First Class and Prometheus) has signed on for the planned Assassin\'s Creed film.',
 					'wikilink' => array(
@@ -492,7 +492,7 @@ No
 						'href' => 'http://assassinscreed.wikia.com/wiki/User:Master_Sima_Yi'
 					),
 					'image' => 'Wikia-Visualization-Add-5,glee.png',
-					'imagethumb' => $this->getStandardThumbnailUrl('Wikia-Visualization-Add-5,glee.png'),
+					'imagethumb' => $this->getSmallThumbnailUrl('Wikia-Visualization-Add-5,glee.png'),
 					'subtitle' => 'Master Sima Yi Says:',
 					'content' => 'Today, several news sites have reported that actor Michael Fassbender (known for his roles in Inglourious Basterds, Shame, X-Men: First Class and Prometheus) has signed on for the planned Assassin\'s Creed film.',
 					'wikilink' => array(
@@ -511,7 +511,7 @@ No
 						'href' => 'http://assassinscreed.wikia.com/wiki/User:Master_Sima_Yi'
 					),
 					'image' => 'Wikia-Visualization-Add-5,glee.png',
-					'imagethumb' => $this->getStandardThumbnailUrl('Wikia-Visualization-Add-5,glee.png'),
+					'imagethumb' => $this->getSmallThumbnailUrl('Wikia-Visualization-Add-5,glee.png'),
 					'subtitle' => 'Master Sima Yi Says:',
 					'content' => 'Today, several news sites have reported that actor Michael Fassbender (known for his roles in Inglourious Basterds, Shame, X-Men: First Class and Prometheus) has signed on for the planned Assassin\'s Creed film.',
 					'wikilink' => array(
