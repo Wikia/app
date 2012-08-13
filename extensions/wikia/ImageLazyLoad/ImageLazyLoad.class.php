@@ -26,7 +26,7 @@ class ImageLazyLoad extends WikiaObject {
 	public function onThumbnailImageHTML( $options, $linkAttribs, $attribs, $file,  &$html ) {
 		global $wgRTEParserEnabled;
 
-		if( self::$enabled && !empty($wgRTEParserEnabled) ) {
+		if( self::$enabled && empty($wgRTEParserEnabled) ) {
 
 			if( startsWith($attribs['src'], 'data:') ) {
 				// dont lazy-load data elements
