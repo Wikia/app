@@ -22,12 +22,10 @@ var AdDriver = {
 
 	getMinNumDARTCall: function(country) {
 		country = country.toUpperCase();
-		if (country in window.wgHighValueCountries) {
+		if (window.wgHighValueCountries && window.wgHighValueCountries[country]) {
 			return window.wgHighValueCountries[country];
 		}
-		else {
-			return AdDriver.minNumDARTCall;
-		}
+		return AdDriver.minNumDARTCall;
 	},
 
 	init: function() {
@@ -41,7 +39,7 @@ var AdDriver = {
 			$().log('AdDriver: ' + msg);
 		}
 	}
-}
+};
 
 AdDriver.getAdProviderForSpecialCase = function(slotname) {
 	switch (wgDBname) {
@@ -51,7 +49,6 @@ AdDriver.getAdProviderForSpecialCase = function(slotname) {
 		case 'sexpositive':
 		case 'wswiki':
 			return AdDriver.adProviderLiftium;
-			break;
 		case 'cookbook_import':
 			//switch (slotname) {
 				//case 'LEFT_SKYSCRAPER_2':
@@ -84,7 +81,7 @@ AdDriver.getAdProviderForSpecialCase = function(slotname) {
 	}
 
 	return '';
-}
+};
 
 AdDriver.isHighValue = function(slotname) {
 	if (AdConfig.isHighValueSlot(slotname)) {
@@ -92,21 +89,18 @@ AdDriver.isHighValue = function(slotname) {
 		// Read from Liftium.geo first
 		if (Liftium.geo) {
 			AdDriver.country = Liftium.geo.country;
-		}
-		else if (AdConfig.geo) {
+		} else if (AdConfig.geo) {
 			AdDriver.country = AdConfig.geo.country;
 		}
 
 		if (AdDriver.country) {
 			return AdConfig.isHighValueCountry(AdDriver.country);
 		}
-		else {
-			WikiaTracker.trackAdEvent('liftium.errors', {'ga_category':'addriver_no_geo', 'ga_action':'addriver_no_geo'}, 'ga');
-		}
+		WikiaTracker.trackAdEvent('liftium.errors', {'ga_category':'addriver_no_geo', 'ga_action':'addriver_no_geo'}, 'ga');
 	}
 
 	return false;
-}
+};
 
 AdDriver.getNumDARTCall = function(slotname) {
 	var num = 0;
@@ -115,7 +109,7 @@ AdDriver.getNumDARTCall = function(slotname) {
 	AdDriver.log(slotname + ' has ' + num + ' DART calls');
 
 	return num;
-}
+};
 
 AdDriver.getNumAllCall = function(slotname) {
 	var num = 0;
@@ -123,7 +117,7 @@ AdDriver.getNumAllCall = function(slotname) {
 	num = AdDriver.getNumCall(AdDriver.storageNameNumAllCall, slotname);
 
 	return num;
-}
+};
 
 AdDriver.getNumCall = function(storageName, slotname) {
 	var storageNum = 0,
@@ -156,7 +150,7 @@ AdDriver.getNumCall = function(storageName, slotname) {
 	}
 
 	return window.wgAdDriverUseExpiryStorage ? storageNum : cookieNum;
-}
+};
 
 AdDriver.getNumCallFromStorageContents = function(numCallStorage, slotname) {
 	var num = 0;
@@ -174,15 +168,15 @@ AdDriver.getNumCallFromStorageContents = function(numCallStorage, slotname) {
 	}
 
 	return num;
-}
+};
 
 AdDriver.incrementNumDARTCall = function(slotname) {
 	return AdDriver.incrementNumCall(AdDriver.storageNameNumDARTCall, slotname);
-}
+};
 
 AdDriver.incrementNumAllCall = function(slotname) {
 	return AdDriver.incrementNumCall(AdDriver.storageNameNumAllCall, slotname);
-}
+};
 
 AdDriver.incrementNumCall = function(storageName, slotname) {
 
@@ -235,7 +229,7 @@ AdDriver.incrementNumCall = function(storageName, slotname) {
 	}
 
 	return window.wgAdDriverUseExpiryStorage ? numInStorage : numInCookie;
-}
+};
 
 AdDriver.incrementStorageContents = function(numCallStorage, slotname) {
 	var newSlotnameObjs = new Array();
@@ -265,7 +259,7 @@ AdDriver.incrementStorageContents = function(numCallStorage, slotname) {
 	retObj.num = num;
 	retObj.slotnameInStorage = slotnameInStorage;
 	return retObj;
-}
+};
 
 AdDriver.isLastDARTCallNoAd = function(slotname) {
 	var storageValue = false;
@@ -295,7 +289,7 @@ AdDriver.isLastDARTCallNoAd = function(slotname) {
 	AdDriver.log(slotname + ' last DART call had no ad? ' + (window.wgAdDriverUseExpiryStorage ? storageValue : cookieValue));
 
 	return window.wgAdDriverUseExpiryStorage ? storageValue : cookieValue;
-}
+};
 
 AdDriver.getLastDARTCallNoAdFromStorageContents = function(lastDARTCallNoAdStorage, slotname) {
 	var value = false;
@@ -313,7 +307,7 @@ AdDriver.getLastDARTCallNoAdFromStorageContents = function(lastDARTCallNoAdStora
 	}
 
 	return value;
-}
+};
 
 AdDriver.setLastDARTCallNoAd = function(slotname, value) {
 	var newSlotnameTimestamps = new Array();
@@ -363,7 +357,7 @@ AdDriver.setLastDARTCallNoAd = function(slotname, value) {
 	}
 
 	return value;
-}
+};
 
 AdDriver.setLastDARTCallNoAdInStorageContents = function(lastDARTCallNoAdStorage, slotname, value) {
 	var slotnameInStorage = false;
@@ -390,7 +384,7 @@ AdDriver.setLastDARTCallNoAdInStorageContents = function(lastDARTCallNoAdStorage
 	retObj.slotnameInStorage = slotnameInStorage;
 	retObj.newSlotnameTimestamps = newSlotnameTimestamps;
 	return retObj;
-}
+};
 
 AdDriver.adjustSlotDisplay = function(slotname) {
 	var $slot = $('#'+slotname);
@@ -428,7 +422,7 @@ AdDriver.adjustSlotDisplay = function(slotname) {
 	}
 
 	return false;
-}
+};
 
 AdDriver.canCallLiftium = function(slotname) {
 	switch (slotname) {
@@ -443,7 +437,7 @@ AdDriver.canCallLiftium = function(slotname) {
 	}
 
 	return true;
-}
+};
 
 AdDriver.doesUrlParameterExist = function(param) {
 	if ($.getUrlVar(param) != null) {
@@ -451,7 +445,7 @@ AdDriver.doesUrlParameterExist = function(param) {
 	}
 
 	return false;
-}
+};
 
 AdDriver.isForceLiftium = function() {
 	var forceLiftiumParams = new Array(AdDriver.paramLiftiumTag);
@@ -463,7 +457,7 @@ AdDriver.isForceLiftium = function() {
 	}
 
 	return false;
-}
+};
 
 AdDriver.getAdProvider = function(slotname, size, defaultAdProvider) {
 	if (AdDriver.isForceLiftium()) {
@@ -486,7 +480,7 @@ AdDriver.getAdProvider = function(slotname, size, defaultAdProvider) {
 	}
 
 	return AdDriver.adProviderLiftium;
-}
+};
 
 AdDriver.init();
 //// END AdDriver
@@ -509,7 +503,7 @@ var AdDriverDelayedLoaderItem = function (slotname, size, defaultAdProvider) {
 
 		return this.dartUrl;
 	};
-}
+};
 //// END AdDriverDelayedLoaderItem
 
 //// BEGIN AdDriverDelayedLoader
@@ -529,17 +523,17 @@ var AdDriverDelayedLoader = {
 		AdDriverDelayedLoader.runFinalize = false;
 		AdDriverDelayedLoader.started = false;
 	}
-}
+};
 
 AdDriverDelayedLoader.init();
 
 AdDriverDelayedLoader.appendItem = function(adDriverItem) {
 	AdDriverDelayedLoader.adDriverItems.push(adDriverItem);
-}
+};
 
 AdDriverDelayedLoader.prependItem = function(adDriverItem) {
 	AdDriverDelayedLoader.adDriverItems.unshift(adDriverItem);
-}
+};
 
 AdDriverDelayedLoader.removeItemsBySlotname = function(slotname) {
 	// iterate through AdDriverDelayedLoader.adDriverItems and look for
@@ -553,7 +547,7 @@ AdDriverDelayedLoader.removeItemsBySlotname = function(slotname) {
 	for (var i=0; i < itemIdxs.length; i++) {
 		AdDriverDelayedLoader.adDriverItems.splice(itemIdxs[i], 1);
 	}
-}
+};
 
 AdDriverDelayedLoader.callDART = function() {
 	AdDriver.log(AdDriverDelayedLoader.currentAd.slotname + ': calling DART...');
@@ -598,12 +592,12 @@ AdDriverDelayedLoader.callDART = function() {
 			}
 		}
 	);
-}
+};
 
 AdDriverDelayedLoader.getPlaceHolderIframeScript = function(slotname, size) {
 	var dims = size.split('x');
 	return "document.write('<div id=\"Liftium_"+size+"_"+(++AdDriverDelayedLoader.adNum)+"\"><iframe width=\""+dims[0]+"\" height=\""+dims[1]+"\" id=\""+escape(slotname)+"_iframe\" noresize=\"true\" scrolling=\"no\" frameborder=\"0\" marginheight=\"0\" marginwidth=\"0\" style=\"border:none;\" target=\"_blank\"></iframe><div>');";
-}
+};
 
 AdDriverDelayedLoader.getLiftiumCallScript = function(slotname, size) {
 	var script = '';
@@ -617,7 +611,7 @@ AdDriverDelayedLoader.getLiftiumCallScript = function(slotname, size) {
 	}
 
 	return script;
-}
+};
 
 AdDriverDelayedLoader.callLiftium = function() {
 	var slotname = AdDriverDelayedLoader.currentAd.slotname;
@@ -652,7 +646,7 @@ AdDriverDelayedLoader.callLiftium = function() {
 		AdDriver.log(e.message);
 		AdDriverDelayedLoader.loadNext();
 	}
-}
+};
 
 AdDriverDelayedLoader.loadNext = function() {
 	if (AdDriverDelayedLoader.adDriverItems.length) {
@@ -680,7 +674,7 @@ AdDriverDelayedLoader.loadNext = function() {
 		}
 		else {
 			// hide slot and load next one
-			$('#' + AdDriverDelayedLoader.currentAd.slotname).css("display", "none");
+			$('#' + AdDriverDelayedLoader.currentAd.slotname).hide();
 			AdDriverDelayedLoader.loadNext();
 		}
 	}
@@ -698,7 +692,7 @@ AdDriverDelayedLoader.loadNext = function() {
 	if (!AdDriverDelayedLoader.adDriverItems.length && typeof Liftium != 'undefined' && Liftium) {
 		Liftium.hasMoreCalls = 0;
 	}
-}
+};
 
 // This functions reorders the queue of slots so that TOP_LEADERBOARD and
 // TOP_RIGHT_BOXAD are first. It does not guarantee the order of the rest of
@@ -727,7 +721,7 @@ AdDriverDelayedLoader.reorderItems = function() {
 	}
 
 	AdDriverDelayedLoader.adDriverItems = tmpItems;
-}
+};
 
 // Move slots from the window.adslots buffer to AdDriverDelayedLoader's internal
 // queue. Slots that are moved are based on load priority. After all eligible
@@ -747,7 +741,7 @@ AdDriverDelayedLoader.prepareSlots = function(loadPriorityFloor) {
 	if (!AdDriverDelayedLoader.started) {
 		AdDriverDelayedLoader.load();
 	}
-}
+};
 
 // Get highest priority slot from buffer and remove. Destructively changes
 // window.adslots
@@ -770,7 +764,7 @@ AdDriverDelayedLoader.getNextSlotFromBuffer = function(loadPriorityFloor) {
 	}
 
 	return null;
-}
+};
 AdDriverDelayedLoader.startCalled = false;
 AdDriverDelayedLoader.load = function() {
 	AdDriverDelayedLoader.started = true;
@@ -799,15 +793,15 @@ AdDriverDelayedLoader.load = function() {
 	AdDriverDelayedLoader.reorderItems();
 
 	AdDriverDelayedLoader.loadNext();
-}
+};
 
 AdDriverDelayedLoader.reset = function() {
 	AdDriverDelayedLoader.init();
-}
+};
 
 AdDriverDelayedLoader.isRunning = function() {
 	return AdDriverDelayedLoader.started && AdDriverDelayedLoader.adDriverItems.length;
-}
+};
 
 AdDriverDelayedLoader.finalize = function() {
 
@@ -828,7 +822,7 @@ AdDriverDelayedLoader.finalize = function() {
 
 	var loadTime = (new Date()).getTime() - wgNow.getTime();
 	$().log('AdDriver finished at ' + loadTime + ' ms');
-}
+};
 //// END AdDriverDelayedLoader
 
 if (window.wgEnableKruxTargeting) {
@@ -866,7 +860,9 @@ if (window.wgEnableKruxTargeting) {
 	})();
 }
 
-if (!window.adslots) window.adslots = [];
+if (!window.adslots) {
+	window.adslots = [];
+}
 
 if (window.getTreatmentGroup) {	// any page without getTreatmentGroup() defined doesn't have ads'
 	var tgId = getTreatmentGroup(EXP_AD_LOAD_TIMING);

@@ -59,11 +59,11 @@ Liftium._ = function(id){
 Liftium.addEventListener = function(item, eventName, callback){
 	if (window.addEventListener) { // W3C
 		return item.addEventListener(eventName, callback, false);
-	} else if (window.attachEvent){ // IE 
-		return item.attachEvent("on" + eventName, callback);
-	} else {
-		return false;
 	}
+    if (window.attachEvent) { // IE
+		return item.attachEvent("on" + eventName, callback);
+	}
+    return false;
 };
 
 
@@ -121,9 +121,9 @@ Liftium.buildChain = function(slotname) {
 		return false;
 	}
 
-	if (typeof top.wgEnableAdMeldAPIClient != 'undefined' && top.wgEnableAdMeldAPIClient) {
+	if (typeof window.top.wgEnableAdMeldAPIClient != 'undefined' && window.top.wgEnableAdMeldAPIClient) {
 		Liftium.d('Calling AdMeldAPIClient.adjustLiftiumChain for ' + size, 3);
-		top.AdMeldAPIClient.adjustLiftiumChain(Liftium.config.sizes[size]);
+		window.top.AdMeldAPIClient.adjustLiftiumChain(Liftium.config.sizes[size]);
 	}
 
 	Liftium.setAdjustedValues(Liftium.config.sizes[size]);
@@ -812,16 +812,16 @@ Liftium.getIframeUrl = function(slotname, tag) {
 	var m = tag.tag ? tag.tag.match(/<iframe[\s\S]+src="([^"]+)"/) : null;
 	var iframeUrl;
 
-	if ( m !== null ){
+	if (m !== null) {
 		iframeUrl = m[1].replace(/&amp;/g, "&");
 		Liftium.d("Found iframe in tag, using " + iframeUrl + " for " + slotname, 3);
-        // Handle "No Ad" here so it doesn't get called by iframe 
-        } else if (tag.network_name == "No Ad"){
-                Liftium.d("Using about:blank for 'No Ad' to avoid iframe in " + slotname, 3);
-                iframeUrl = "about:blank";
-        // Special case for DART.
-        } else if (tag.network_name == "DART"){
-                iframeUrl = window.LiftiumDART.getUrl(Liftium.slotPlacements[slotname], tag.size, tag.network_options, true);
+		// Handle "No Ad" here so it doesn't get called by iframe
+	} else if (tag.network_name == "No Ad") {
+		Liftium.d("Using about:blank for 'No Ad' to avoid iframe in " + slotname, 3);
+		iframeUrl = "about:blank";
+		// Special case for DART.
+	} else if (tag.network_name == "DART") {
+		iframeUrl = window.LiftiumDART.getUrl(Liftium.slotPlacements[slotname], tag.size, tag.network_options, true);
 	} else {
 		var p = { "tag_id": tag.tag_id, "size": tag.size, "slotname": slotname, "placement": Liftium.slotPlacements[slotname]};
 		iframeUrl = Liftium.baseUrl + "tag/?" + Liftium.buildQueryString(p);
@@ -1633,7 +1633,7 @@ Liftium.onLoadHandler = function () {
 	} else if (Liftium.loadDelay < Liftium.maxLoadDelay){
 		// Check again in a bit. Keep increasing the time
 		Liftium.loadDelay += Liftium.loadDelay;
-		window.setTimeout("Liftium.onLoadHandler()", Liftium.loadDelay);
+		window.setTimeout(Liftium.onLoadHandler, Liftium.loadDelay);
 	} else {
 		Liftium.d("Gave up waiting for ads to load, sending beacon now");
 		WikiaTracker.trackAdEvent('liftium.errors', {'ga_category':'gave_up_waiting_for_ads', 'ga_action':'gave_up_waiting_for_ads'}, 'ga');

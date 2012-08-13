@@ -28,7 +28,7 @@ AdProviderOpenX.getUrl = function (baseUrl, slotname, zoneId, affiliateId, hub, 
 	AdProviderOpenX.url = url;
 
 	return AdProviderOpenX.url;
-}
+};
 
 AdProviderOpenX.getUrl2 = function() {
 	var url = "/__spotlights/spc.php";
@@ -36,10 +36,12 @@ AdProviderOpenX.getUrl2 = function() {
 	url += "&source=";
 	url += "&r=" + Math.floor(Math.random()*99999999);
 	url += "&loc=" + escape(window.location);
-	if(typeof document.referrer != "undefined") url += "&referer=" + escape(document.referrer);
+	if (typeof document.referrer !== "undefined") {
+		url += "&referer=" + escape(document.referrer);
+	}
 	url += "&target=_top";
 	url += "&cb=" + Math.floor(Math.random()*99999999);
-	url += "&hub=" + cityShort;
+	url += "&hub=" + window.cityShort;
 	url += "&skin_name=" + skin;
 	url += "&cont_lang=" + wgContentLanguage;
 	url += "&user_lang=" + wgUserLanguage;
@@ -52,7 +54,7 @@ AdProviderOpenX.getUrl2 = function() {
 	AdProviderOpenX.url2 = url;
 
 	return AdProviderOpenX.url2;
-}
+};
 
 if (!window.wgNoExternals && window.wgEnableOpenXSPC) {
 	setTimeout(function() {

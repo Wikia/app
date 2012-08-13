@@ -30,20 +30,22 @@ var AdDriverGP = {
 		this.log(url);
 		return url;
 	},
-	
+
 	// from: egnre=action;egnre=adventure;egnre=drama;egnre=scifi;media=tv
 	// to: egnre=action,adventure,drama,scifi;media=tv
 	// TODO: cache it
 	rebuildKV: function(kv) {
 		this.log('rebuildKV', kv);
 
-		if (kv.indexOf(';') == -1) return kv;
+		if (kv.indexOf(';') === -1) {
+			return kv;
+		}
 
 		kv = kv.split(';');
-		kv.sort;
+		kv.sort();
 
 		var out = '', last_k = '';
-		for (var i=0; i < kv.length; i++) {
+		for (var i = 0; i < kv.length; i++) {
 			var k_v = kv[i].split('=');
 			if (k_v[0] == last_k) {
 				out = out + ',' + k_v[1];
@@ -57,7 +59,7 @@ var AdDriverGP = {
 		this.log(out);
 		return out;
 	},
-	
+
 	log: function(msg, obj) {
 		if (typeof console == 'undefined') return;
 		

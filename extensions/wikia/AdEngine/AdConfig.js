@@ -6,7 +6,7 @@ var AdConfig = {
 	isHighValueCountry: function(country) {
 		country = country.toUpperCase();
 		if (window.wgHighValueCountries) {
-			return country in window.wgHighValueCountries && window.wgHighValueCountries[country];
+			return window.wgHighValueCountries[country] || false;
 		}
 	},
 
@@ -31,7 +31,6 @@ var AdConfig = {
 			case 'TOP_LEADERBOARD':
 			case 'TOP_RIGHT_BOXAD':
 				return true;
-				break;
 			default:
 				return false;
 		}
@@ -41,11 +40,10 @@ var AdConfig = {
 	 * or a number of *milli*seconds until the cookie expires */
 	cookie: function(name, value, options){
 		// name and value given, set cookie
-	    if(arguments.length > 1){
+	    if (arguments.length > 1) {
 			return Wikia.Cookies.set(name, value, options);
-		} else {
-			return Wikia.Cookies.get(name);
 		}
+		return Wikia.Cookies.get(name);
 	},
 
 	/* Pull the geo data from cookie */
@@ -160,8 +158,7 @@ AdConfig.DART.getUrl = function(slotname, size, useIframe, adProvider) {
 			src = 'direct';
 			mtfIFPath = 'mtfIFPath=/extensions/wikia/AdEngine/;';  // http://www.google.com/support/richmedia/bin/answer.py?hl=en&answer=117857, http://www.google.com/support/richmedia/bin/answer.py?hl=en&answer=117427
 			break;
-		case 'Liftium':
-		default:
+		default: // Liftium
 			src = 'liftium';
 			mtfIFPath = 'mtfIFPath=/extensions/wikia/AdEngine/;';  // http://www.google.com/support/richmedia/bin/answer.py?hl=en&answer=117857, http://www.google.com/support/richmedia/bin/answer.py?hl=en&answer=117427
 			break;
@@ -193,7 +190,7 @@ AdConfig.DART.getUrl = function(slotname, size, useIframe, adProvider) {
 		AdConfig.DART.getCategories() +
 		AdConfig.DART.getLocKV(slotname) +
 		AdConfig.DART.getDcoptKV(slotname) +
-		((typeof top.wgEnableAdMeldAPIClient != 'undefined' && top.wgEnableAdMeldAPIClient) ? top.AdMeldAPIClient.getParamForDART(slotname) : '') +
+		((typeof window.top.wgEnableAdMeldAPIClient != 'undefined' && window.top.wgEnableAdMeldAPIClient) ? window.top.AdMeldAPIClient.getParamForDART(slotname) : '') +
 		AdConfig.DART.getCustomVarAB() +
 		mtfIFPath +
 		'src=' + src + ';' +
@@ -204,7 +201,7 @@ AdConfig.DART.getUrl = function(slotname, size, useIframe, adProvider) {
 		'ord=' + AdConfig.DART.ord + '?';
 
 	return url;
-}
+};
 
 AdConfig.DART.getMobileUrl = function(slotname, size, useIframe, adProvider) {
 		size = '5x5';
@@ -248,7 +245,7 @@ AdConfig.DART.getMobileUrl = function(slotname, size, useIframe, adProvider) {
 		'&u=' + AdConfig.DART.getUniqueId();
 
 	return url;
-}
+};
 
 AdConfig.DART.getSubdomain = function() {
 	var subdomain = 'ad';
@@ -287,25 +284,25 @@ AdConfig.DART.getSubdomain = function() {
 			case 'OC':
 				subdomain = 'ad-apac';
 				break;
-			case 'NA':
-			case 'SA':
-			default:
+			default: // NA, SA
 				subdomain = 'ad';
 		}
 	}
 
 	return subdomain;
-}
+};
 
 AdConfig.DART.getAdType = function(useIframe) {
-	if (useIframe == 'jwplayer') return 'pfadx';
+	if (useIframe === 'jwplayer') {
+		return 'pfadx';
+	}
 
 	if (useIframe) {
 		return 'adi';
-	} else {
-		return 'adj';
 	}
-}
+
+	return 'adj';
+};
 
 AdConfig.DART.initSiteAndZones = function() {
 	if (AdConfig.DART.isWikiaHub()) {
@@ -328,7 +325,7 @@ AdConfig.DART.initSiteAndZones = function() {
 	if (!AdConfig.DART.zone2) {
 		AdConfig.DART.zone2 = AdConfig.DART.getZone2(window.adLogicPageType);
 	}
-}
+};
 
 AdConfig.DART.isWikiaHub = function() {
 	if (window.wgWikiaHubType) {	// defined in source of hub article
@@ -336,7 +333,7 @@ AdConfig.DART.isWikiaHub = function() {
 	}
 
 	return false;
-}
+};
 
 AdConfig.DART.isAutoHub = function() {
 	if (wgDBname != AdConfig.DART.corporateDbName) {
@@ -358,11 +355,11 @@ AdConfig.DART.isAutoHub = function() {
 	}
 
 	return false;
-}
+};
 
 AdConfig.DART.getSite = function(hub) {
 	return 'wka.' + hub;
-}
+};
 
 // Effectively the dbname, defaulting to wikia.
 AdConfig.DART.getZone1 = function(dbname){
@@ -557,8 +554,8 @@ AdConfig.DART.getDcoptKV = function(slotname){
 };
 
 AdConfig.DART.getCustomVarAB = function() {
-	if (typeof top.getTreatmentGroup == 'function') {
-		var ab = top.getTreatmentGroup(1);
+	if (typeof window.top.getTreatmentGroup === 'function') {
+		var ab = window.top.getTreatmentGroup(1);
 		if (ab == 1 || ab == 2 || ab == 3) {
 			return 'ab=e1g' + ab + ';';
 		}
