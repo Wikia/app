@@ -126,15 +126,11 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 	public function tabber() {
 		$tabData = $this->model->getDataForModuleTabber();
 		$this->headline = $tabData['headline'];
-		$tabberSource = '{{#tag:tabber|';
-		foreach ($tabData['tabs'] as $tab) {
-			$tabberSource .= $tab['title'] . '=
-				[[File:' . $tab['image'] . '|200px|right|link=' . $tab['imagelink'] . ']]
-				' . $tab['content'] . '
-			{{!}}-{{!}}';
+		if($this->format == 'json') {
+			$this->tabdata = $tabData;
+		} else {
+			$this->tabs = $this->model->generateTabberWikiText($tabData);
 		}
-		$tabberSource .= '}}';
-		$this->tabs = $tabberSource;
 	}
 
 	public function wikitextmodule() {
