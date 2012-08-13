@@ -19,7 +19,6 @@ MiniEditor.Wall.EditMessageForm = $.createClass(Wall.settings.classBindings.edit
 		e.preventDefault();
 
 		this.setOldHTML(id, bubble);
-		this.track('wall/message/action/edit');
 
 		msg.find('.timestamp').hide();
 		msg.find('.buttons').first().hide();
@@ -37,7 +36,7 @@ MiniEditor.Wall.EditMessageForm = $.createClass(Wall.settings.classBindings.edit
 				initEditor();
 			}
 		});
-		
+
 		$('.msg-title textarea.title', msg).autoResize({
                         min: 30,
                         limit: 256,
