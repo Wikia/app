@@ -1,12 +1,11 @@
 /*global d3:true*/
 var VisualStatsCodeFrequency = {
     init: function(data, user){
-        var self = this;
         this.wikiaData = data.wikiaFrequency;
         this.userData = data.userFrequency;
         this.user = user;
 
-        svg = this.drawBackground();
+        var svg = this.drawBackground();
         this.drawVisualisation(svg);
         if (this.user != "0"){
             this.triggerButtons();
@@ -19,7 +18,7 @@ var VisualStatsCodeFrequency = {
         $("#delChars").text(this.wikiaData.count.deleted);
         $("#numberOfEdits").text(this.wikiaData.total);
 
-        scaleX = d3.scale.linear()
+        var scaleX = d3.scale.linear()
             .domain([0, 14])
             .range([100, 880]);
 
@@ -182,7 +181,6 @@ var VisualStatsCodeFrequency = {
         }
 
         return svg;
-
     }
 
 }

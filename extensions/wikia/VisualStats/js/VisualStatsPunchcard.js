@@ -28,6 +28,8 @@ var VisualStatsPunchcard = {
     setData: function(attr){
         var dateIndex = 1;
         var self = this;
+        var data;
+        var max;
 
         if (attr=="wikia"){
             data = self.wikiaPunchcardData;
@@ -52,11 +54,11 @@ var VisualStatsPunchcard = {
                     object.mouseover(function(){
                         $(strDate).css('font-weight', 'bold').css('color', self.color).css('font-size', '11px');
                         $(strHour).css('font-weight', 'bold').css('color', self.color);
-                    })
+                    });
                     object.mouseout(function(){
                         $(strDate).css('font-weight', 'normal').css('color', 'black').css('font-size', '10px');
                         $(strHour).css('font-weight', 'normal').css('color', 'black');
-                    })
+                    });
                     object.attr("title", function(){
                         if (value != 1){
                             return value + " " + self.edits;
@@ -65,7 +67,6 @@ var VisualStatsPunchcard = {
                         {
                             return value + " " + self.edit;
                         }
-
                     });
                 }
                 else{
@@ -74,9 +75,9 @@ var VisualStatsPunchcard = {
                     object.mouseover(function(){});
                     object.removeAttr("title");
                 }
-            })
+            });
             dateIndex++;
-        })
+        });
     },
 
     triggerButtons: function(){
