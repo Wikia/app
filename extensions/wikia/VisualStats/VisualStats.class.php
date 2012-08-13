@@ -281,11 +281,11 @@ class VisualStats extends WikiaObject {
 
         $key = $this->app->wf->MemcKey('VisualStats', 'codeFrequency', $this->app->wg->lang->getCode(), $username );
         $data = $this->app->wg->memc->get($key);
-        if (is_array($data)){
+        /*if (is_array($data)){
             $out = $data;
         }
         else
-        {
+        {*/
 
             $dbr = $this->getDB();
             $wikiaResult = $this->getDatesFromTwoWeeksOn(false);
@@ -333,6 +333,14 @@ class VisualStats extends WikiaObject {
                 }
             }
 
+            $wikiFunction = array();
+            $userFunction = array();
+            $actualChars = 0;
+            foreach ($wikiaResult as $item){
+                $actualChars+= $item['added'] - $item['deleted'];
+                $wikiFunction[] = $actualChars;
+            }
+
             if ($username != "0"){
                 $user = $this->getUserData($username);
                 $userQuery = $dbr->select(
@@ -366,6 +374,12 @@ class VisualStats extends WikiaObject {
                         }
                     }
                 }
+                $actualChars = 0;
+                foreach ($userResult as $item){
+                    $actualChars+= $item['added'] - $item['deleted'];
+                    $userFunction[] = $actualChars;
+                }
+
             }
             $out = array(
                 'wikiaFrequency' => array(
@@ -374,15 +388,23 @@ class VisualStats extends WikiaObject {
                     'max' => $wikiaMax,
                     'min' => $wikiaMin,
                     'count' => $wikiaCount),
+                'wikiaLine' => array(
+                    'nodes' => $wikiFunction,
+                    'max' => max($wikiFunction),
+                    'min' => min($wikiFunction)),
                 'userFrequency' => array(
                     'data' => $userResult,
                     'total' => $userTotal,
                     'max' => $userMax,
                     'min' => $userMin,
-                    'count' => $userCount));
+                    'count' => $userCount),
+                'userLine' => array(
+                    'nodes' => $userFunction,
+                    'max' => max($userFunction),
+                    'min' => min($userFunction)));
             $this->app->wg->memc->set($key, $out, 600);
 
-        }
+      //  }
 
         $this->app->wf->profileOut( __METHOD__ );
 
