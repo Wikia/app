@@ -12,7 +12,7 @@ $wgHooks['MakeGlobalVariablesScript'][] = 'Track::addGlobalVars';
 class Track {
 	const BASE_URL = 'http://a.wikia-beacon.com/__track';
 
-	public function getURL ($type=null, $name=null, $param=null, $for_html=true) {
+	public static function getURL ($type=null, $name=null, $param=null, $for_html=true) {
 		global $wgCityId, $wgContLanguageCode, $wgDBname, $wgDBcluster, $wgUser, $wgArticle, $wgTitle, $wgAdServerTest;
 
 		$sep = $for_html ? '&amp;' : '&';
@@ -44,7 +44,7 @@ class Track {
 		return $url;
 	}
 
-	public function getViewJS ($param=null) {
+	public static function getViewJS ($param=null) {
 		$url = Track::getURL('view', '', $param);
 
 		$script = <<<SCRIPT1
@@ -70,7 +70,7 @@ SCRIPT1;
 		return $script;
 	}
 
-	public function event ($event_type, $param=null) {
+	public static function event ($event_type, $param=null) {
 		$backtrace = debug_backtrace();
 		$class = $backtrace[1]['class'];
 		$func  = $backtrace[1]['function'];
@@ -85,7 +85,7 @@ SCRIPT1;
 		}
 	}
 
-	public function addGlobalVars($vars) {
+	public static function addGlobalVars($vars) {
 		global $wgUser;
 		if ($wgUser->getId() && $wgUser->getId() > 0) {
 			$vars['wgTrackID'] = $wgUser->getId();
