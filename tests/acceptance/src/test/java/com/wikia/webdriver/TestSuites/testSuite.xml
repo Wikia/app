@@ -4,7 +4,6 @@
     <classes>
        <class name="com.wikia.webdriver.TestCases.CreateAWikiTests.CreateAWikiTests_latin" />
        <class name="com.wikia.webdriver.TestCases.CreateAWikiTests.CreateAWikiTests_nonLatin" />
-       
     </classes>
   </test>
 </suite>
