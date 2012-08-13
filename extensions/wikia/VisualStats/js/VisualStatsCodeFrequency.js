@@ -109,6 +109,20 @@ var VisualStatsCodeFrequency = {
             .attr("id", "totalCharsLine")
             .attr("fill", "none");
 
+        svg.append("svg:line")
+            .attr("x1", 100).attr("y1", self.scaleTotalChars(0))
+            .attr("x2", 920).attr("y2", self.scaleTotalChars(0))
+            .attr("stroke", "#54B7E8")
+            .attr("stroke-width", "1px");
+        svg.append("svg:text")
+            .attr("text-anchor", "start")
+            .attr("font-size", "9")
+            .attr("id", "axisRightZero")
+            .attr("fill", "#54B7E8")
+            .attr("x", 921)
+            .attr("y", self.scaleTotalChars(0))
+            .text("0");
+
     },
 
     triggerButtons: function(){
@@ -325,8 +339,8 @@ var VisualStatsCodeFrequency = {
                 .attr("fill", "#48C783")
                 .attr("x", 57)
                 .attr("y", yUp);
-
         }
+
         this.scaleRightAxis = d3.scale.linear()
             .domain([4, 0])
             .range([20, 630]);
