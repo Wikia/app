@@ -1,13 +1,15 @@
 <form method='post' name='upload-tool' class='WikiaForm UploadTool' enctype="multipart/form-data">
-	<div class="status-bar plainlinks">
-		<div class="status-wrapper">
-			<span class="status-icon">
-				<?= wfMsg('promote-statusbar-icon') ?>
-			</span>
-			<span class="status-arrow"></span>
+	<? if(!empty($wikiStatus)): ?>
+		<div class="status-bar plainlinks">
+			<div class="status-wrapper">
+				<span class="status-icon">
+					<?= wfMsg('promote-statusbar-icon') ?>
+				</span>
+				<span class="status-arrow"></span>
+			</div>
+			<?= $wikiStatus ?>
 		</div>
-		<?= $wikiStatus ?>
-	</div>
+	<? endif; ?>
 	<p class='introduction'>
 		<strong><?= wfMsg('promote-introduction-header'); ?></strong><br/>
 		<?= wfMsg('promote-introduction-copy'); ?>
