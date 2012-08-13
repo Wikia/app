@@ -16,8 +16,8 @@
 window.AQ = window.AQ || (function(window, Athena, undef) {
 	'use strict';
 
-	var inIframe = (window.top !== window);
-	var AQ = this;
+	var inIframe = (window.top !== window)
+		, AQ = this;
 
 	return {
 		eventUrls : [],
