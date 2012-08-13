@@ -34,6 +34,12 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 		$this->topwikis = $this->model->getDataForModuleTopWikis();
 		$this->popularvideos = $this->model->getDataForModulePopularVideos();
 		$this->fromthecommunity = $this->model->getDataForModuleFromTheCommunity();
+
+		$this->response->addAsset('extensions/wikia/WikiaHubsV2/css/WikiaHubsV2.scss');
+		$this->response->addAsset('extensions/wikia/WikiaHubsV2/js/WikiaHubsV2.js');
+		if (!self::PLAY_IN_LIGHTBOX) {
+			$this->response->addAsset('extensions/wikia/RelatedVideos/js/RelatedVideos.js');
+		}
 	}
 
 	public function slider() {
@@ -150,12 +156,6 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 		$this->format = $this->request->getVal('format', 'html');
 		$hubName = $this->model->getHubName($this->request->getVal('vertical'));
 		$this->setHub($hubName);
-
-		$this->response->addAsset('extensions/wikia/WikiaHubsV2/css/WikiaHubsV2.scss');
-		$this->response->addAsset('extensions/wikia/WikiaHubsV2/js/WikiaHubsV2.js');
-		if (!self::PLAY_IN_LIGHTBOX) {
-			$this->response->addAsset('extensions/wikia/RelatedVideos/js/RelatedVideos.js');
-		}
 	}
 
 	protected function setCacheValidity() {
