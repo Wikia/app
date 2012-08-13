@@ -281,11 +281,11 @@ class VisualStats extends WikiaObject {
 
         $key = $this->app->wf->MemcKey('VisualStats', 'codeFrequency', $this->app->wg->lang->getCode(), $username );
         $data = $this->app->wg->memc->get($key);
-        /*if (is_array($data)){
+        if (is_array($data)){
             $out = $data;
         }
         else
-        {*/
+        {
 
             $dbr = $this->getDB();
             $wikiaResult = $this->getDatesFromTwoWeeksOn(false);
@@ -335,6 +335,8 @@ class VisualStats extends WikiaObject {
 
             $wikiFunction = array();
             $userFunction = array();
+            $maxUserFunction = 0;
+            $minUserFunction = 0;
             $actualChars = 0;
             foreach ($wikiaResult as $item){
                 $actualChars+= $item['added'] - $item['deleted'];
@@ -379,6 +381,8 @@ class VisualStats extends WikiaObject {
                     $actualChars+= $item['added'] - $item['deleted'];
                     $userFunction[] = $actualChars;
                 }
+                $maxUserFunction = max($userFunction);
+                $minUserFunction = min($userFunction);
 
             }
             $out = array(
@@ -400,11 +404,11 @@ class VisualStats extends WikiaObject {
                     'count' => $userCount),
                 'userLine' => array(
                     'nodes' => $userFunction,
-                    'max' => max($userFunction),
-                    'min' => min($userFunction)));
+                    'max' => $maxUserFunction,
+                    'min' => $minUserFunction));
             $this->app->wg->memc->set($key, $out, 600);
 
-      //  }
+        }
 
         $this->app->wf->profileOut( __METHOD__ );
 
