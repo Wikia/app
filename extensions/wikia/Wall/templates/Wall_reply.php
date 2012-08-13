@@ -13,11 +13,11 @@
 		</div>
 		<blockquote class="speech-bubble-message">
 			<? if ( $wg->EnableMiniEditorExtForWall ):
-				echo $app->getView( 'MiniEditorController', 'Editor_Header' )->render(); 
+				echo $app->getView( 'MiniEditorController', 'Editor_Header' )->render();
 			endif; ?>
-			<textarea class="body" placeholder="<?= wfMsg('wall-placeholder-reply') ?>"></textarea>
+			<textarea class="replyBody" placeholder="<?= wfMsg('wall-placeholder-reply') ?>"></textarea>
 			<? if ( $wg->EnableMiniEditorExtForWall ):
-				echo $app->getView( 'MiniEditorController', 'Editor_Footer' )->render(); 
+				echo $app->getView( 'MiniEditorController', 'Editor_Footer' )->render();
 			endif; ?>
 		</blockquote>
 		<div class="speech-bubble-buttons" data-space-type="buttons">
@@ -31,7 +31,7 @@
 			<div class="loadingAjax"></div>
 		</div>
 		<? if ( $wg->EnableMiniEditorExtForWall ):
-			echo $app->getView( 'MiniEditorController', 'Footer' )->render(); 
+			echo $app->getView( 'MiniEditorController', 'Footer' )->render();
 		endif; ?>
 	</li>
 <? endif; ?>
