@@ -32,8 +32,7 @@ public class CreateNewWikiTests extends WebDriverTest{
 	
  	private WebDriver driver;
 	private WebDriverWait wait;
-	private String STAFFlogin = "NeptuNooo";
-	private String STAFFpassword = "123michalNexternalwikia.";
+	
 	
 	@BeforeClass
 		public void setUp() {
