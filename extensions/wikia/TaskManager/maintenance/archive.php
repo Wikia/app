@@ -125,7 +125,7 @@ class TaskManagerArchive extends Maintenance {
 			$dbw->insert(
 				"wikia_tasks",
 				$values,
-				__method__,
+				__METHOD__,
 				array( "IGNORE" )
 			);
 			Wikia::log( __METHOD__, "", sprintf("Task id=%d type=%s added=%s moved.", $task->task_id, $task->task_type, $task->task_added ) );
