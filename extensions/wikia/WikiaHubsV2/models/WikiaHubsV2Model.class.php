@@ -612,4 +612,29 @@ No
 		return $result;
 	}
 
+    public function generateImage($image) {
+		return Xml::element('img', array(
+			'src' => $image['src'],
+			'width' => $image['width'],
+			'height' => $image['height'],
+		), '', true);
+	}
+
+	public function parseVideoData($videoData) {
+		$videoTitle = F::build('Title', array($videoData['videoTitle'], NS_FILE), 'newFromText');
+		$videoFile = ($videoTitle) ? wfFindFile($videoTitle) : false;
+		if ($videoFile) {
+			$videoThumbObj = $videoFile->transform(array('width' => self::FEATURED_VIDEO_WIDTH, 'height' => self::FEATURED_VIDEO_HEIGHT));
+			$video = array(
+				'title' => $videoData['videoTitle'],
+				'href' => $videoTitle->getFullUrl(),
+				'thumbSrc' => $videoThumbObj->getUrl()
+			);
+		} else {
+			$video = false;
+		}
+		return $video;
+	}
+
+
 }
