@@ -39,13 +39,4 @@
 		<? endif; ?>
 	</div>
 	<? endif; ?>
-
-	<?php
-	/*
-	   $this->headline = $exploreData['headline'];
-	   $this->article = $exploreData['article'];
-	   $this->image = $exploreData['image'];
-	   $this->link = $exploreData['link'];
-	   */
-	?>
 </section>
