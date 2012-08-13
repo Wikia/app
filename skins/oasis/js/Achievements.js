@@ -11,7 +11,7 @@ var AchievementsThing = {
 				placement: 'left'
 			});
 		});
-		
+
 		$('.AchievementsModule, .WikiaLatestEarnedBadgesModule').find('.sponsored-link img:not(.badges-more)').each(function(){
 			AchievementsThing.trackSponsored($(this).parent().attr('data-badgetrackurl'));
 		});
@@ -48,5 +48,4 @@ var AchievementsThing = {
 
 $(function() {
 		AchievementsThing.init();
-		$().log('init', 'AchievementsModule');
 });

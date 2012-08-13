@@ -92,7 +92,6 @@ var displayAnchorAd = function(){
 			}
 
 			if (!AnchorAd.settings.creative || !AnchorAd.settings.url) {
-				WET.byStr("anchor_ad/no_background_creative_or_url_set");
 				return;
 			}
 
@@ -100,18 +99,15 @@ var displayAnchorAd = function(){
 
 			if (AnchorAd.settings.url) {
 				$(".wikia_anchor_ad .clickable").click(function() {
-					WET.byStr("anchor_ad/jumped");
 					window.open(AnchorAd.settings.url, "blank");
 				});
 			}
 
 			$(".wikia_anchor_ad .close").click(function() {
-				WET.byStr("anchor_ad/closed");
 				var top = AnchorAd.settings.height + 21;
 				$(".wikia_anchor_ad").animate({"top": top+"px"}, AnchorAd.settings.speed);
 			});
 
-			WET.byStr("anchor_ad/started");
 			setTimeout(function() {
 				$(".wikia_anchor_ad").animate({"top": 0}, AnchorAd.settings.speed);
 			}, AnchorAd.settings.delay);

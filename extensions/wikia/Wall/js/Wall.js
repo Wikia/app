@@ -34,25 +34,12 @@ var Wall = $.createClass(Object, {
 			.on('click', '.message-restore', this.proxy(this.confirmAction))
 			.on('click', '.message-undo-remove', this.proxy(this.undoRemoveOrAdminDelete))
 			.on('click', '.follow', this.proxy(this.switchWatch))
-			.on('click', '.edited-by a', this.proxy(this.trackClick))
-			.on('click', '.timeago-fmt', this.proxy(this.trackClick))
-			.on('click', '.username', this.proxy(this.trackClick))
-			.on('click', '.avatar', this.proxy(this.trackClick))
-			.on('click', '.Pagination', this.proxy(this.trackClick))
-			.on('click', '.user-talk-archive-anchor', this.proxy(this.trackClick))
-			.on('click', '.wall-owner', this.proxy(this.trackClick))
-			.on('click', '.load-more a', this.proxy(this.trackClick))
-			.on('click', '.msg-title', this.proxy(this.trackClick))
-			.on('click', '.sortingOption', this.proxy(this.trackClick))
 			.on('keydown', 'textarea', this.proxy(this.focusButton))
 			.on('click', '.edit-notifyeveryone', this.proxy(this.editNotifyEveryone))
-
 			.on('click', '.votes', this.proxy(this.showVotersModal))
 			.on('click', '.vote', this.proxy(this.vote))
-	
 			.on('mouseenter', '.follow', this.proxy(this.hoverFollow))
 			.on('mouseleave', '.follow', this.proxy(this.unhoverFollow))
-
 			.on('click', '.load-more a', this.proxy(this.loadMore))
 
 			// Fix FireFox bug where textareas remain disabled on page reload
@@ -61,7 +48,7 @@ var Wall = $.createClass(Object, {
 		$("#WikiaArticle")
 			.bind('afterWatching', this.proxy(this.onWallWatch))
 			.bind('afterUnwatching', this.proxy(this.onWallUnwatch));
-			
+
 		$.loadWikiaTooltip(function() {
 			// tooltips for votes
 			$('.voting-controls .votes').wikiaTooltip(function(el) {
@@ -174,11 +161,9 @@ var Wall = $.createClass(Object, {
 			if(isWatched) {
 				element.animate({'opacity':0.7},'slow', function() { element.css('opacity','');} );
 				element.text($.msg('oasis-follow')).addClass('secondary').removeClass('following');
-				this.track('wall/message/unfollow');
 			} else {
 				element.animate({'opacity':0.7},'slow', function() { element.css('opacity','');} );
 				element.text($.msg('wikiafollowedpages-following')).removeClass('secondary').addClass('following');
-				this.track('wall/message/follow');
 			}
 		}
 	},
@@ -212,7 +197,7 @@ var Wall = $.createClass(Object, {
 			callback: function(data) { }
 		});
 	},
-	
+
 	vote: function(e) {
 		e.preventDefault();
 		if(!window.wgUserName) {
@@ -222,7 +207,7 @@ var Wall = $.createClass(Object, {
 								window.location.reload();
 							}
 					);
-				})	
+				})
 			});
 		} else {
 			this.voteBase(e, function(target, data, dir) {
@@ -241,7 +226,7 @@ var Wall = $.createClass(Object, {
 			});
 		}
 	},
-	
+
 	voteBase: function(e, callback) {
 		var target = $(e.target).closest('a');
 		var id = target.closest('li.message').attr('data-id');
@@ -250,10 +235,10 @@ var Wall = $.createClass(Object, {
 		if(target.hasClass('inprogress')) {
 			return true;
 		}
-		
+
 		target.addClass('inprogress');
 		target.trigger('mouseenter.wikiaTooltip');
-		
+
 		$.nirvana.sendRequest({
 			controller: 'WallExternalController',
 			method: 'vote',
@@ -265,14 +250,14 @@ var Wall = $.createClass(Object, {
 			callback: function(data) {
 				callback(target, data, dir);
 			}
-		}); 
+		});
 	},
-	
+
 	showVotersModal: function(e) {
 		var target = $(e.target),
 			id = target.closest('li.message').data('id'),
 			votes = parseInt(target.closest('.votes').data('votes'));
-		
+
 		if(votes > 0) {
 			$.nirvana.sendRequest({
 				controller: 'WallExternalController',
@@ -288,10 +273,10 @@ var Wall = $.createClass(Object, {
 				}
 			});
 		}
-		
+
 		$.getResources([$.getSassCommonURL('/extensions/wikia/Wall/css/WallVoters.scss')]);
 	},
-	
+
 	undoRemoveOrAdminDelete: function(e) {
 		var target = $(e.target);
 		var id = target.attr('data-id');
@@ -490,8 +475,6 @@ var Wall = $.createClass(Object, {
 						msg.fadeOut('fast', function() { msg.remove(); });
 					}
 				}
-				//click tracking
-				this.track('wall/message/action/delete');
 			})
 		});
 	},
@@ -519,49 +502,9 @@ var Wall = $.createClass(Object, {
 		});
 	},
 
-	track: function(url) {
-		if( typeof($.tracker) != 'undefined' ) {
-			$.tracker.byStr(url);
-		} else {
-			WET.byStr(url);
-		}
-	},
-
 	proxy: function(func) {
 		return $.proxy(func, this);
-	},
-
-	trackClick: function(event) {
-		var node = $(event.target),
-			parent = node.parent();
-
-		if( node.hasClass('user-talk-archive-anchor') ) {
-			this.track('wall/archived_talk_page/view');
-		} else if( node.hasClass('timeago-fmt') && parent.parent().hasClass('timestamp') ) {
-			this.track('wall/message/timestamp');
-		} else if( node.hasClass('username') && parent.hasClass('timestamp') ) {
-			this.track('wall/message/edited_by');
-		} else if( parent.hasClass('edited-by') && node.hasClass('subtle') ) {
-			this.track('wall/message/username');
-		} else if( parent.hasClass('edited-by') && !node.hasClass('subtle') ) {
-			this.track('wall/message/name');
-		} else if( parent.hasClass('msg-title') ) {
-			this.track('wall/message/title');
-		} else if( parent.parent().hasClass('speech-bubble-avatar') ) {
-			this.track('wall/message/avatar');
-		} else if( parent.hasClass('load-more') ) {
-			this.track('wall/message/uncondense');
-		} else if( node.hasClass('wall-owner') && parent.hasClass('WallName') ) {
-			this.track('wall/thread_page/owners_wall');
-		} else if( parent.parent().hasClass('Pagination') && parent.hasClass('next') ) {
-			this.track('wall/pagination/next');
-		} else if( parent.parent().hasClass('Pagination') && parent.hasClass('prev') ) {
-			this.track('wall/pagination/prev');
-		} else if( parent.parent().hasClass('Pagination')  ) {
-			this.track('wall/pagination/number');
-		}
 	}
-
 });
 
 // Global public settings

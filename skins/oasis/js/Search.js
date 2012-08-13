@@ -4,10 +4,6 @@ var WikiaSearchApp = {
 
 	ads: false,
 
-	track: function(url) {
-		$.tracker.byStr('module/search/' + url);
-	},
-
 	trackInternal: function(event, params) {
 		WikiaTracker.trackEvent(
 			event,
@@ -33,14 +29,6 @@ var WikiaSearchApp = {
 			// load autosuggest code on first focus
 			this.searchField.one('focus', $.proxy(this.initSuggest, this));
 		}
-
-		// track form submittion
-		this.searchForm.submit($.proxy(function(ev) {
-			this.track('submit');
-		}, this));
-		this.searchFormBottom.submit($.proxy(function(ev) {
-			this.track('submit');
-		}, this));
 	},
 
 	hideAds: function() {
@@ -66,7 +54,6 @@ var WikiaSearchApp = {
 				onSelect: $.proxy(function(value, data) {
 					var valueEncoded = encodeURIComponent(value.replace(/ /g, '_'));
 
-					this.track('suggest');
 					this.trackInternal('search_start_suggest', {
 						'sterm': valueEncoded,
 						'rver': 0

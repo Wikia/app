@@ -6,10 +6,6 @@ var Crunchyroll = {
 		$('#WikiaArticle').delegate('.wikia-paginator a', 'click', Crunchyroll.paginatorClick);
 	},
 
-	log: function(msg) {
-		$().log(msg, 'Crunchyroll');
-	},
-
 	hideThrobber: function(){
 		$('#toplists-loading-screen').remove();
 	},
@@ -29,17 +25,6 @@ var Crunchyroll = {
 		}
 
 		Crunchyroll.lockTable[ 'crunchyroll' ] = clickedObj.attr('data-page');
-
-		// tracking;
-		if ( clickedObj.hasClass('paginator-next') ){
-			Crunchyroll.track('pagination/next');
-		} else if ( clickedObj.hasClass('paginator-prev') ) {
-			Crunchyroll.track('pagination/prev');
-		} else {
-			Crunchyroll.track('/crunchyrollpagination/' + clickedObj.attr('data-page'));
-		}
-
-		Crunchyroll.log('begin: paginatorClick');
 		Crunchyroll.showThrobber(pageSection.find('div.crunchyroll-holder'));
 		var UrlVars = $.getUrlVars();
 		var data = {
@@ -82,10 +67,6 @@ var Crunchyroll = {
 		});
 
 		return false;
-	},
-
-	track: function(fakeUrl) {
-		$.tracker.byStr('crunchyroll/' + fakeUrl);
 	}
 };
 

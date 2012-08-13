@@ -8,25 +8,15 @@ import java.util.UUID;
 import org.testng.annotations.Test;
 
 public class CorporatePageTest extends BaseTest {
-	private void initTrackerTest(){
-		session().runScript("$('body').append('<input id=\'selenium_tracker\' id=\'hidden\' />');");
-		session().runScript("jQuery.tracker.track = function(msg) { $('#selenium_tracker').val(msg); };");
-	};
 
 	private void clearAllLinks(){
 		session().runScript("$('A').attr('href','#');");
 	};
 
-	private void assertLastTracker(String track){
-		assertEquals("1", session().getText("//input[@id='selenium_tracker']"));
-	};
-
 	@Test(groups={"central","CI"})
 	public void testAjaxLoginImagePlaceholder() throws Exception {
-		initTrackerTest();
 		clearAllLinks();
 		session().click("//li[@id='wikia-international-0']");
-		assertLastTracker("footer/left_column/Deutsch");
 	};
 
 	private void corporateLogin() throws Exception {

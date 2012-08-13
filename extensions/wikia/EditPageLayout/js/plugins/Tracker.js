@@ -1,5 +1,7 @@
 /**
  * Provides click tracking interface for edit page modules
+ * FIXME: This file is useless now because $.tracker is gone.
+ * Get rid of references to these functions across EditPageLayout.
  *
  * @author macbre
  */
@@ -19,14 +21,15 @@
 		initialMode: false,
 
 		beforeInit: function() {
+			var noop = function(){};
 
 			// Update trackerRoot for the MiniEditor
 			if (this.editor.config.isMiniEditor) {
 				this.trackerRoot = 'MiniEditor';
 			}
 
-			this.setTrackingFunction(jQuery.tracker.byStr);
-			this.eventTrackerFn = jQuery.tracker.trackEvent;
+			this.setTrackingFunction(noop);
+			this.eventTrackerFn = noop;
 		},
 
 		init: function() {

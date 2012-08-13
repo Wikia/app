@@ -113,7 +113,6 @@ Blogs.submit = function( event ) {
 	} else {
 		oForm = $( event.target.parentNode.parentNode  );
 		Blogs.submit.controlButton(false,$(event.target));
-		WET.byStr('articleAction/postComment');
 		var postData = oForm.serialize() + "&action=ajax&rs=BlogComment::axPost&article=" + wgArticleId ;
 		$.getJSON(wgServer + wgScript, postData , Blogs.callback);
 		return false;
@@ -145,7 +144,6 @@ Blogs.save = function( event ) {
 	var oForm = $( "#blog-comm-form-" + id );
 
 	if (oForm.length > 0) {
-		WET.byStr('articleAction/postComment');
 		document.body.style.cursor = "wait";
 		var textfield = $( "#blog-comm-textfield-" + id );
 		$.postJSON(wgServer + wgScript + "?action=ajax&rs=BlogComment::axSave&article=" + wgArticleId + "&id=" + id , oForm.serialize(), Blogs.callback);

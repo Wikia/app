@@ -115,7 +115,6 @@ function gracenote_getAnalyticsHtml($google_action){
 			}
 		}
 		if(jsGoogleLabel!=\"".GRACENOTE_ALREADY_PROCESSED."\"){
-			var wgGracenoteToTrack = 'GN/{$google_action}/' + jsGoogleLabel; // store for when WET is available
 			gIdDiv.innerHTML = '".GRACENOTE_ALREADY_PROCESSED."';
 		}";
 	} else {
@@ -123,11 +122,6 @@ function gracenote_getAnalyticsHtml($google_action){
 		var gIdDiv = document.getElementById('gracenoteid');
 		if(gIdDiv){
 			jsGoogleLabel = gIdDiv.innerHTML;
-		}
-		if(typeof wgGracenoteToTrack!=\"undefined\" && (wgGracenoteToTrack != \"\")){
-			WET.byStr(wgGracenoteToTrack);
-		} else if(jsGoogleLabel!=\"".GRACENOTE_ALREADY_PROCESSED."\"){
-			WET.byStr('GN/{$google_action}');
 		}";
 	}
 
@@ -244,18 +238,18 @@ function gracenote_installCopyProtection(&$out, &$sk){
 
 			$DISABLE_CLIPBOARD_CODE
 			$DISABLE_TEXT_SELECTION_CODE
-			
+
 			// Select all should be disabled on pages that have lyrics (even if they're 'edit' pages).
 			if((wgNamespaceNumber == 220) || (wgNamespaceNumber == 0)){
 				$DISABLE_SELECT_ALL
 			}"./*
 			// Not used right now. Comment out to not be a waste of synchronously-loaded JS.
-			
+
 			var ns = wgNamespaceNumber;
 			if(wgNamespaceNumber == 220){
 				// Code that should only be on Gracenote pages.
-				
-				
+
+
 			} else if(wgNamespaceNumber == 0){
 				var ALBUM_NS = -1;
 				var ARTIST_NS = -2;
@@ -268,8 +262,8 @@ function gracenote_installCopyProtection(&$out, &$sk){
 					ns = ARTIST_NS;
 				} else {
 					// Code that should only be on (non-Gracenote) Lyrics pages.
-					
-					
+
+
 				}
 			}*/"
 

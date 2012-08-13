@@ -34,7 +34,7 @@ Wall.ReplyMessageForm = $.createClass(Wall.MessageForm, {
 		this.replyThreadFollow = '.follow';
 		this.replyThreadMessages = 'ul .message';
 		this.replyThreadCount = 'ul .load-more .count';
-		
+
 		this.mainContent = 'body';
 	},
 
@@ -49,7 +49,6 @@ Wall.ReplyMessageForm = $.createClass(Wall.MessageForm, {
 
 	focus: function(e) {
 		$(e.target).closest(this.replyWrapper).addClass('open');
-		this.track('wall/message/reply_field');
 	},
 
 	change: function(e) {
@@ -118,8 +117,6 @@ Wall.ReplyMessageForm = $.createClass(Wall.MessageForm, {
 
 			thread.find(this.replyThreadCount).html(thread.find(this.replyThreadMessages).length);
 			thread.find(this.replyThreadFollow).text($.msg('wikiafollowedpages-following')).removeClass('secondary');
-
-			this.track('wall/message/reply_post');
 
 			if (reload) {
 				this.reloadAfterLogin();

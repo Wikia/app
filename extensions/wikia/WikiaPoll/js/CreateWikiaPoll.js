@@ -105,15 +105,6 @@ var CreateWikiaPoll = {
 	onSave: function(event) {
 		event.preventDefault();
 
-		// track number of options in poll
-		var optionCount = 0;
-		$("#CreateWikiaPoll li:not('.new-item') input[type='text']").each(function() {
-			if ($(this).val().length > 0) {
-				optionCount++;
-			}
-		});
-		CreateWikiaPoll.track('/optioncount/' + optionCount);
-
 		if ($("#CreateWikiaPoll").data('pollId')) {
 			// editing existing poll
 			$.get(wgScript + '?action=ajax&rs=WikiaPollAjax&method=update', $("#CreateWikiaPoll").find("form").serialize(), function(data) {
@@ -136,7 +127,6 @@ var CreateWikiaPoll = {
 					if (data.success) {
 						RTE.mediaEditor._add("[[" + data.question + "]]");
 						$("#CreateWikiaPoll").closest(".modalWrapper").closeModal();
-						CreateWikiaPoll.track('/insertNewPoll');
 					} else if (data.error) {
 						$("#CreateWikiaPoll").find(".errorbox").remove().end().prepend(data.error);
 					}
@@ -149,10 +139,6 @@ var CreateWikiaPoll = {
 				}
 			});
 		}
-	},
-
-	track: function(fakeUrl) {
-		window.jQuery.tracker.byStr('poll' + fakeUrl);
 	}
 };
 

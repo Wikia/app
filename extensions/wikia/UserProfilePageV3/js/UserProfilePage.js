@@ -36,14 +36,7 @@ var UserProfilePage = {
 		$('#userAvatarEdit').click(function(event) {
 			event.preventDefault();
 			UserProfilePage.renderLightbox('avatar');
-			UserProfilePage.track('edit/avatar');
-			//test
 		});
-
-		$('.masthead-info .wikis li').click(UserProfilePage.trackFavoriteWiki);
-		$('#UserProfileMasthead .links li').click(UserProfilePage.trackLinkedSites);
-
-		$('#WikiaUserPagesHeader .tabs-container').click(UserProfilePage.trackNavTabs);
 
 		// for touch devices (without hover state) make sure that Edit is always
 		// visible
@@ -57,7 +50,6 @@ var UserProfilePage = {
 		//if lightbox is generating we don't want to let user open second one
 			UserProfilePage.isLightboxGenerating = true;
 			UserProfilePage.newAvatar = false;
-			UserProfilePage.track('edit/personal_data');
 
 			$.getResources([$.getSassCommonURL('/extensions/wikia/UserProfilePageV3/css/UserProfilePage_modal.scss')]);
 
@@ -116,8 +108,6 @@ var UserProfilePage = {
 				$(this).css('display', 'none');
 			}
 		});
-
-		UserProfilePage.track('edit/lightbox/' + tabName + '_tab');
 	},
 
 	renderAvatarLightbox: function(modal) {
@@ -128,7 +118,6 @@ var UserProfilePage = {
 		});
 
 		modal.find('.modalToolbar .save').unbind('click').click(function(e) {
-			UserProfilePage.track('edit/lightbox/save_personal_data');
 			UserProfilePage.closeModal(modal);
 
 			window.location = UserProfilePage.reloadUrl;
@@ -139,7 +128,6 @@ var UserProfilePage = {
 		modal.find('.modalToolbar .cancel').unbind('click').click(function(e) {
 			UserProfilePage.closeModal(modal);
 			e.preventDefault();
-			UserProfilePage.track('edit/lightbox/cancel');
 		});
 
 		var sampleAvatars = modal.find('.sample-avatars img');
@@ -218,13 +206,11 @@ var UserProfilePage = {
 
 	renderAboutMeLightbox: function(modal) {
 		modal.find('.modalToolbar .save').unbind('click').click(function() {
-			UserProfilePage.track('edit/lightbox/save_personal_data');
 			UserProfilePage.saveUserData();
 		});
 
 		modal.find('.modalToolbar .cancel').unbind('click').click(function() {
 			UserProfilePage.closeModal(modal);
-			UserProfilePage.track('edit/lightbox/cancel');
 		});
 
 		var fbUnsyncButton = modal.find('#facebookUnsync');
@@ -241,13 +227,11 @@ var UserProfilePage = {
 
 		$('.favorite-wikis').on('click', '.delete', function() {
 			UserProfilePage.hideFavWiki($(this).closest('li').data('wiki-id'));
-			UserProfilePage.track('edit/lightbox/top_wiki_hide');
 		});
 
 		modal.find('.favorite-wikis-refresh').click(function(event) {
 			event.preventDefault();
 			UserProfilePage.refreshFavWikis();
-			UserProfilePage.track('edit/lightbox/top_wiki_refresh');
 		});
 
 		var formFields = modal.find('input[type="text"], select');
@@ -264,7 +248,6 @@ var UserProfilePage = {
 		$('#facebookPage a').click(function(event) {
 			event.preventDefault();
 			window.open($(this).attr('href'));
-			UserProfilePage.track('edit/lightbox/feed_preferences');
 		});
 	},
 
@@ -277,7 +260,6 @@ var UserProfilePage = {
 
 		modal.find('.modalToolbar .cancel').unbind('click').click(function() {
 			UserProfilePage.closeModal(modal);
-			UserProfilePage.track('edit/lightbox/cancel');
 		});
 
 		var nextButton = modal.find('#UPPLightboxNextQuestionBtn');
@@ -557,39 +539,6 @@ var UserProfilePage = {
 		}
 	},
 
-	track: function(url) {
-		$.tracker.byStr('profile/' + url);
-	},
-
-	trackNavTabs: function(ev) {
-		var node = $(ev.target);
-		if (node.is('img')) {
-			node = node.parent();
-		}
-		var id = node.parent().data('id');
-		if(id == "talk") {
-			UserProfilePage.track('talk_tab');
-		} else if(id == "profile") {
-			UserProfilePage.track('profile_tab');
-		} else if(id == "contribs") {
-			UserProfilePage.track('contribs_tab');
-		} else if(id == "blog") {
-			UserProfilePage.track('blog_tab');
-		} else if(id == "following") {
-			UserProfilePage.track('following_tab');
-		} else if(id == "wall") {
-			UserProfilePage.track('wall_tab');
-		}
-	},
-
-	trackFavoriteWiki: function(ev) {
-		UserProfilePage.track('top_wikis');
-	},
-
-	trackLinkedSites: function(event) {
-		UserProfilePage.track(event.currentTarget.className);
-	},
-
 	closeModal: function(modal, resetDataChangedFlag) {
 		if( typeof(modal.closeModal) === 'function' ) {
 			modal.closeModal();
@@ -601,8 +550,6 @@ var UserProfilePage = {
 					}, 50 );
 				}
 				return false
-			} else {
-				UserProfilePage.track('edit/lightbox/exit');
 			}
 		}
 

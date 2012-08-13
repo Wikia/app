@@ -27,12 +27,10 @@ function wfQuickCreateButton( $input, $argv, $parser ) {
 
 	$title = Title::makeTitle( NS_SPECIAL, "CreatePage");
 	$link = $title->getFullUrl();
-	$onclick = "WET.byStr('newrecipes/contestsubmission')";
 	$output = Xml::openElement( 'a', array(
 			'class' => 'wikia-button wikiaComboAjaxLogin',
 			'id'	=> 'mr-submit',
-			'href' => $link,
-			'onclick' => $onclick
+			'href' => $link
 		) )
 		.wfMsg( 'quickcreate' )
 		.Xml::closeElement( 'a' );

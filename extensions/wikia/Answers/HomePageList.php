@@ -96,7 +96,7 @@ class HomePageList {
 					if ( !is_null($oQuestion) && !$oQuestion->badWordsTest() && !$oQuestion->filterWordsTest() ) {
 						$text = $page["title"] . "?";
 						$timestamp = $page["timestamp"];
-						$html .= "<li><a href=\"/wiki/" . urlencode($url) . "\" onclick=\"WET.byStr('unanswered/click')\">" . htmlspecialchars(Answer::s2q($text)) . "</a></li>";
+						$html .= "<li><a href=\"/wiki/" . urlencode($url) . "\">" . htmlspecialchars(Answer::s2q($text)) . "</a></li>";
 
 						if (empty($timestamp1)) $timestamp1 = $timestamp;
 					}
@@ -197,7 +197,7 @@ class HomePageList {
 						$oQuestion = new DefaultQuestion($url);
 						if ( !is_null($oQuestion) && !$oQuestion->badWordsTest() && !$oQuestion->filterWordsTest() ) {
 							$text = $page["title"] . "?";
-							$html .= "<li><a href=\"/wiki/" . urlencode($url) . "\" onclick=\"WET.byStr('{$key}')\">" . htmlspecialchars(Answer::s2q($text)) . "</a></li>";
+							$html .= "<li><a href=\"/wiki/" . urlencode($url) . "\">" . htmlspecialchars(Answer::s2q($text)) . "</a></li>";
 						}
 					}
 				}
@@ -268,7 +268,7 @@ class HomePageList {
 					$oQuestion = new DefaultQuestion($url);
 					if ( !is_null($oQuestion) && !$oQuestion->badWordsTest() && !$oQuestion->filterWordsTest() ) {
 						$text = $page["title"] . "?";
-						$html .= "<li><a href=\"/wiki/" . htmlspecialchars($url) . "\" onclick=\"WET.byStr('mainpage/{$key}')\">" . htmlspecialchars(Answer::s2q($text)) . "</a></li>";
+						$html .= "<li><a href=\"/wiki/" . htmlspecialchars($url) . "\">" . htmlspecialchars(Answer::s2q($text)) . "</a></li>";
 					}
 				}
 			}

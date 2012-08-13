@@ -104,7 +104,6 @@ var displayOverlayAd = function(){
 					$.extend(true, OverlayAd.settings, window.OverlayAd_settings);
 				}
 				if (!OverlayAd.settings.creative || !OverlayAd.settings.url) {
-					WET.byStr("overlay_ad/no_background_creative_or_url_set");
 					return;
 				}
 				OverlayAd.settings.urlencoded = encodeURIComponent(OverlayAd.settings.url);
@@ -112,13 +111,11 @@ var displayOverlayAd = function(){
 				$(".WikiaPage").append(this.getCreative());
 
 				$(".wikia_overlay_ad .close").click(function() {
-					WET.byStr("overlay_ad/closed");
 					$(".wikia_overlay_ad").hide(OverlayAd.settings.speed);
 				});
 
 				if (OverlayAd.settings.type == "image") {
 					$(".wikia_overlay_ad .clickable").click(function() {
-						WET.byStr("overlay_ad/jumped");
 						window.open(OverlayAd.settings.url, "blank");
 					});
 				}
@@ -132,11 +129,9 @@ var displayOverlayAd = function(){
 					swfobject.embedSWF(OverlayAd.settings.creative, "wikia_overlay_ad_flash", OverlayAd.settings.width, OverlayAd.settings.height, "9.0.0", false, flashvars, params, attributes);
 				}
 
-				WET.byStr("overlay_ad/started");
 				$(".wikia_overlay_ad").show(OverlayAd.settings.speed, function() {
 					if (OverlayAd.settings.duration > 0) {
 						setTimeout(function() {
-							WET.byStr("overlay_ad/autoclosed");
 							$(".wikia_overlay_ad").hide(OverlayAd.settings.speed);
 						}, OverlayAd.settings.duration);
 					}

@@ -440,11 +440,7 @@ function VET_show( e, gallery, box, align, thumb, size, caption ) {
 	if(YAHOO.lang.isNumber(e)) {
 		if( typeof FCK != "undefined" ){
 			VET_refid = e;
-			if(VET_refid == -1) {
-				VET_track('open/fromWysiwyg/new');
-				// go to main page
-			} else {
-				VET_track('open/fromWysiwyg/existing');
+			if(VET_refid != -1) {
 				if(FCK.wysiwygData[VET_refid].href) {
 					// go to details page
 					VET_wysiwygStart = 2;
@@ -479,28 +475,14 @@ function VET_show( e, gallery, box, align, thumb, size, caption ) {
 				VET_refid = 0;
 				window.FCK = {wysiwygData: {0: {}}};
 				window.FCK.wysiwygData[0] = data;
-
-				VET_track('open/fromWysiwyg/existing');
 			}
 			else {
 				// add new video
 				VET_refid = -1;
-
-				VET_track('open/fromWysiwyg/new');
-			}
-		}
-		else {
-			var el = YAHOO.util.Event.getTarget(e);
-			if (el.id == 'vetHelpLink') {
-				VET_track('open/fromEditTips'); //tracking
-			} else if (el.id == 'mw-editbutton-vet') {
-				VET_inGalleryPosition = VET_inGallery();
-				VET_track('open/fromToolbar'); //tracking
-			} else {
-				VET_track('open');
 			}
 		}
 	}
+
 	VET_tracking(WikiaTracker.ACTIONS.CLICK, 'open', wgCityId);
 
 	YAHOO.util.Dom.setStyle('header_ad', 'display', 'none');
@@ -649,9 +631,6 @@ function VET_loadMainFromView() {
 }
 
 function VET_recentlyUploaded(param, pagination) {
-	if(pagination) {
-		VET_track('pagination/' + pagination + '/src-recent'); // tracking
-	}
 	var callback = {
 		success: function(o) {
 			$G('VET_results_0').innerHTML = o.responseText;
@@ -663,10 +642,6 @@ function VET_recentlyUploaded(param, pagination) {
 }
 
 function VET_sendQuery(query, page, sourceId, pagination) {
-
-	if(pagination) {
-		VET_track('pagination/' + pagination + '/src-' + sourceId); // tracking
-	}
 	var callback = {
 		success: function(o) {
 			$G('VET_results_' + o.argument[0]).innerHTML = o.responseText;
@@ -697,8 +672,6 @@ function VET_indicator(id, show) {
 }
 
 function VET_chooseImage(sourceId, itemId, itemLink, itemTitle) {
-	VET_track('insertVideo/choose/src-' + sourceId); // tracking
-
 	var callback = {
 		success: function(o) {
 			VET_displayDetails(o.responseText);
@@ -721,12 +694,10 @@ function VET_onVideoEmbedUrlKeypress(e) {
 
 function VET_preQuery(e) {
 	if($G('VideoEmbedUrl').value == '') {
-		VET_track('query/undefined'); // tracking
 		alert(vet_warn2);
 		return false;
 	} else {
 		var query = $G('VideoEmbedUrl').value;
-		VET_track('query/search/' + query); // tracking
 		VET_indicator(1, true);
 		VET_sendQueryEmbed( query );
 		return false;
@@ -841,7 +812,6 @@ function VET_displayDetails(responseText) {
 
 function VET_insertFinalVideo(e, type) {
 	VET_tracking(WikiaTracker.ACTIONS.CLICK, 'complete', wgCityId);
-	VET_track('insertVideo/' + type); // tracking
 
 	YAHOO.util.Event.preventDefault(e);
 
@@ -1067,7 +1037,7 @@ function VET_switchScreen(to) {
 function VET_back(e) {
 
 	YAHOO.util.Event.preventDefault(e);
-	VET_track('back/' + VET_curScreen);
+
 	if(VET_curScreen == 'Details') {
 		VET_switchScreen('Main');
 	} else if(VET_curScreen == 'Conflict' && VET_prevScreen == 'Details') {
@@ -1079,7 +1049,7 @@ function VET_previewClose(e) {
 	if(e) {
 		YAHOO.util.Event.preventDefault(e);
 	}
-	VET_track('closePreview/' + VET_curScreen);
+
 	VET_previewPanel.hide();
 }
 
@@ -1088,7 +1058,7 @@ function VET_close(e) {
 	if(e) {
 		YAHOO.util.Event.preventDefault(e);
 	}
-	VET_track('close/' + VET_curScreen);
+
 	VET_panel.hide();
 	if ( 400 == wgNamespaceNumber ) {
 		if( $G( 'VideoEmbedPageWindow' ) ) {
@@ -1111,14 +1081,7 @@ function VET_close(e) {
 	}
 }
 
-function VET_track(str) {
-//	YAHOO.Wikia.Tracker.track('VET/' + str);
-}
-
 function VET_tracking(action, label, value) {
-	/*
-		tracking using new werehouse
-	 */
 	WikiaTracker.trackEvent(null, {
 		ga_category: 'vet',
 		ga_action: action,

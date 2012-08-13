@@ -10,10 +10,6 @@ var ImageLightbox = {
 		$().log(msg, 'ImageLightbox');
 	},
 
-	track: function(fakeUrl) {
-		window.jQuery.tracker.byStr('lightbox' + fakeUrl);
-	},
-
 	// setup click handler on article content
 	init: function() {
 		var self = this,
@@ -80,7 +76,7 @@ var ImageLightbox = {
 				target.addClass('image');
 			} else {
 				target = target.parent();
-			}	
+			}
 		}
         // move to parent of an playButton (relatedVideos)
         if (target.is('div') && target.hasClass('playButton')) {
@@ -91,7 +87,7 @@ var ImageLightbox = {
 		if (!target.is('a')) {
 			return;
 		}
-		
+
 		// handle clicks on "a.lightbox, a.image" only
 		if (!target.hasClass('lightbox') && !target.hasClass('image')) {
 			return;
@@ -113,7 +109,7 @@ var ImageLightbox = {
 			return;
 		}
 
-		
+
 		// store clicked element
 		this.target = target;
 
@@ -175,20 +171,20 @@ var ImageLightbox = {
 			}
 
 		}
-		
+
 		// for Video Thubnails:
 		var targetChildImg = target.find('img').eq(0);
 		if ( targetChildImg.length > 0 && targetChildImg.hasClass('Wikia-video-thumb') ) {
-			
+
 			if ( target.attr('data-video-name') ) {
-				
+
 				imageName = 'File:' + target.attr('data-video-name');
-			
+
 			} else if ( targetChildImg.length > 0 && targetChildImg.attr('data-video') ) {
-				
+
 				imageName = 'File:' + targetChildImg.attr('data-video');
 			}
-			
+
 			if (imageName && targetChildImg.width() >= this.videoThumbWidthThreshold) {
 
 				this.displayInlineVideo(targetChildImg, imageName);
@@ -238,9 +234,9 @@ var ImageLightbox = {
 				WikiaTracker.trackEvent(
 					'trackingevent',
 					{
-						'ga_category':RelatedVideos.gaCat, 
-						'ga_action':WikiaTracker.ACTIONS.PLAY_VIDEO, 
-						'ga_label':(target.hasClass('video-thumbnail') ? 'thumbnail' : 'title'), 
+						'ga_category':RelatedVideos.gaCat,
+						'ga_action':WikiaTracker.ACTIONS.PLAY_VIDEO,
+						'ga_label':(target.hasClass('video-thumbnail') ? 'thumbnail' : 'title'),
 						'ga_value':eventValue,
 						'video_title':imageName
 					},
@@ -250,13 +246,13 @@ var ImageLightbox = {
 
 		}
 	},
-	
+
 	displayInlineVideo: function(targetImage, imageName) {
-		
+
 		var parentTag = targetImage.parent();
 		if (!parentTag.is('a')) {
 			return;
-		}		
+		}
 		parentTag.wrap('<span class="wikiaVideoPlaceholder" />');
         var wrapperTag = parentTag.parent('span.wikiaVideoPlaceholder');
 
@@ -280,15 +276,15 @@ var ImageLightbox = {
 						wrapperTag.find('a').hide();
 						wrapperTag.append( '<div id="'+res.jsonData.id+'" style="width:'+imageWidth+'px; height:'+imageHeight+'px; display: inline-block;" class="Wikia-video-enabledEmbedCode"></div>');
 						$('body').append('<script>' + res.jsonData.script + ' loadJWPlayer(); </script>');
-					});					
+					});
 				} else {
                     wrapperTag.find('a').hide();
                     wrapperTag.append('<div  class="Wikia-video-enabledEmbedCode">'+res.html+'</div>');
 				}
-			} 
+			}
 		});
-		
-		
+
+
 	},
 
     restoreInlineThumbnails: function() {
@@ -297,10 +293,10 @@ var ImageLightbox = {
     },
 
 	setTopPosition: function() {
-		var lightbox = $('#lightbox');							
+		var lightbox = $('#lightbox');
 		if (window.skin == 'oasis') {
 			lightbox.css('top', lightbox.getModalTopOffset());
-		}		
+		}
 	},
 
 	// fetch data and show lightbox
@@ -316,9 +312,6 @@ var ImageLightbox = {
 
 		this.lock = true;
 		this.imageName = imageName;
-
-		// tracking
-		this.track('/init');
 
 		// calculate maximum dimensions for image
 		var maxWidth = $(window).width();
@@ -346,9 +339,9 @@ var ImageLightbox = {
 					$.getScript(res.asset, function() {
 						self.showLightbox(res.title, '<div id="'+res.jsonData.id+'"></div>'+res.html, caption, res.width, function(){
 
-							
+
 							if ( typeof(res.jsonData.events) == "undefined" || typeof(res.jsonData.events.onReady) == "undefined" ) {
-								res.jsonData.events = { 
+								res.jsonData.events = {
 									onReady: function() {
 										self.setTopPosition();
 									}
@@ -357,11 +350,11 @@ var ImageLightbox = {
 							$('body').append('<script>' + res.jsonData.script + ' loadJWPlayer(); </script>');
 							self.setTopPosition();
 						});
-					});					
+					});
 				} else {
 					self.showLightbox(res.title, res.html, caption, res.width);
 					self.setTopPosition();
-				}	
+				}
 			} else {
 				// remove lock
 				delete self.lock;
@@ -379,23 +372,13 @@ var ImageLightbox = {
 		$.showModal(title, content, {
 			'id': 'lightbox',
 			'width': width || 'auto',
-
-			// track when popup is closed
-			'onClose': function() {
-				self.track('/close');
-			},
-
-			// setup tracking
 			'callback': function() {
 				var lightbox = $('#lightbox');
 
-				$('#lightbox-link').click(function() {
-					self.track('/details');
-				});
 				$('#lightbox-share-buttons').find('a').click(function() {
 					var source = $(this).attr('data-func');
 					if (source == "email") {
-						if ( window.wgUserName === null ) { 
+						if ( window.wgUserName === null ) {
 							if ( window.wgComboAjaxLogin ) {
 								showComboAjaxForPlaceHolder(false, "", function(){
 									AjaxLogin.doSuccess = function() {
@@ -424,11 +407,9 @@ var ImageLightbox = {
 					if (source == 'embed') {
 						$('#lightbox-share-embed-standard').select();
 					}
-					self.track('/share/' + source);
 				});
 
 				$('#lightbox-share-email-button').click(function() {
-					self.track('/share/email/send');
 					var addresses = $('#lightbox-share-email-text').val();
 					//TODO: add simple validation for e-mails
 					var throbber = $(this).next('.throbber');
@@ -443,16 +424,6 @@ var ImageLightbox = {
 						throbber.hide();
 						$.showModal(res['info-caption'], res['info-content']);
 					});
-				});
-
-				$('#lightbox-share').find('.share-links').find('a').click(function() {
-					var source = $(this).attr('data-func');
-					self.track('/share/www/' + source);
-				});
-
-				$('#lightbox-share').find('.share-code').find('input').click(function() {
-					var source = $(this).select().attr('data-func');
-					self.track('/share/embed/' + source);
 				});
 
 				$('#lightbox-caption-content').html(caption);

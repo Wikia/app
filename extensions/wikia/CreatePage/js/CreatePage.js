@@ -11,9 +11,6 @@ var CreatePage = {
 		},
 		function(response) {
 			if(response.result == 'ok') {
-				var action = (enterWasHit) ? 'enter' : 'create';
-
-				CreatePage.track(action + '/' + CreatePage.options[CreatePage.pageLayout]['trackingId']);
 				location.href = CreatePage.options[CreatePage.pageLayout]['submitUrl'].replace('$1', encodeURIComponent( title ));
 			}
 			else {
@@ -52,7 +49,6 @@ var CreatePage = {
 					id: 'CreatePageDialog',
 					callback: function() {
 						CreatePage.loading = false;
-						CreatePage.track( 'open' );
 
 						for(var name in CreatePage.options){
 							var idToken = name.charAt(0).toUpperCase() + name.substring(1);
@@ -74,9 +70,6 @@ var CreatePage = {
 							e.preventDefault();
 							CreatePage.submitDialog(false);
 						});
-					},
-					onClose: function() {
-						CreatePage.track( 'close' );
 					}
 				});
 			});
@@ -100,11 +93,6 @@ var CreatePage = {
 		$('#CreatePageDialog' + idToken).attr( 'checked', 'checked' );
 		$('#CreatePageDialogChoices').children('li').removeClass( 'accent' );
 		$('#CreatePageDialog' + idToken + 'Container').addClass( 'accent' );
-		CreatePage.track(CreatePage.options[layout]['trackingId']);
-	},
-
-	track: function( str ) {
-		WET.byStr('CreatePage/' + str);
 	},
 
 	getTitleFromUrl: function( url ) {

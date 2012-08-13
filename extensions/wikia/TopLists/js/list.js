@@ -1,15 +1,11 @@
 var TopList = {
 	_canVote: false,
 	_mWrapper: null,
-	
+
 	_init: function() {
 		TopList._mWrapper = $('#toplists-list-body');
 		TopList.attachEvents();
 		TopList.checkList();
-	},
-
-	track: function(token){
-		$.tracker.byStr('TopLists/list-view/' + token);
 	},
 
 	unblockInput: function(){
@@ -23,7 +19,7 @@ var TopList = {
 
 	voteItem: function(e) {
 		TopList.blockInput();
-		
+
 		$.getJSON(wgScript,
 			{
 				'action': 'ajax',
@@ -42,7 +38,7 @@ var TopList = {
 				}
 			}
 		);
-		TopList.track('vote-item');
+
 		return false;
 	},
 
@@ -73,11 +69,10 @@ var TopList = {
 					errorDisplay.html(response.errors.join('<br/>'));
 				}
 
-				
+
 			}
 		);
 
-		TopList.track('item-add');
 		return false;
 	},
 
@@ -100,7 +95,7 @@ var TopList = {
 		);
 		return false;
 	},
-	
+
 	enableVotes: function() {
 		if( TopList.canVote ) {
 			TopList._mWrapper.find('.VoteButton').css('visibility', 'visible');

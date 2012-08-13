@@ -6,18 +6,6 @@ var oAutoComp,
 	csDraggingEvent = false,
 	csMode = 'wysiwyg';
 
-// macbre: generic tracking for CategorySelect (refs RT #68550)
-function csTrack(fakeUrl) {
-	if (window.skin == 'oasis') {
-		// enterCategory -> enter
-		fakeUrl = fakeUrl.replace(/^(.*)Cat(.*)$/g, '$1');
-		$.tracker.byStr('action/category/' + fakeUrl);
-	}
-	else {
-		$.tracker.byStr('articleAction/' + fakeUrl);
-	}
-}
-
 function positionSuggestBox() {
 	if(csType != 'module') {
 		var $csCategoryInput = $('#csCategoryInput');
@@ -84,7 +72,6 @@ function modifyCategory(e) {
 		id: 'sortDialog',
 		width: 500,
 		callbackBefore: function() {
-			csTrack('sortSave');
 			//fill up initial values
 			$('#csInfoboxCategory').val(category);
 			$('#csInfoboxSortKey').val(sortkey);
@@ -269,14 +256,30 @@ function addCategoryBase(category, params, index, checkdupes) {
 	elementImg = document.createElement('img');
 	elementImg.src = wgBlankImgUrl;
 	elementImg.className = 'sprite-small edit';
-	elementImg.onclick = function(e) {if (csDraggingEvent) return; csTrack('sortCategory'); modifyCategory(this); return false;};
+	elementImg.onclick = function(e) {
+		if (csDraggingEvent) {
+			return;
+		}
+
+		modifyCategory(this);
+		return false;
+	};
+
 	elementA.appendChild(elementImg);
 
 	elementImg = document.createElement('img');
 	elementImg.src = wgBlankImgUrl;
 	elementImg.className = 'sprite-small delete';
 
-	elementImg.onclick = function(e) {if (csDraggingEvent) return; csTrack('deleteCategory'); deleteCategory(this); return false;};
+	elementImg.onclick = function(e) {
+		if (csDraggingEvent) {
+			return;
+		}
+
+		deleteCategory(this);
+		return false;
+	};
+
 	elementA.appendChild(elementImg);
 
 	if(csType == 'module') {
@@ -380,8 +383,6 @@ function initializeDragAndDrop() {
 
 function toggleCodeView() {
 	if ($('#csWikitextContainer').css('display') != 'block') {	//switch to code view
-		$.tracker.byStr('editpage/codeviewCategory');
-
 		$('#csWikitext').val(generateWikitextForCategories());
 		$('#csItemsContainerDiv').hide();
 		$('#csHintContainer').hide();
@@ -395,8 +396,6 @@ function toggleCodeView() {
 
 		$().log(window.csMode, 'CS mode');
 	} else {	//switch to visual code
-		$.tracker.byStr('editpage/visualviewCategory');
-
 		$.post(csAjaxUrl, {rs: "CategorySelectAjaxParseCategories", rsargs: [$('#csWikitext').val() + ' ']}, function(result){
 			if (typeof result.error !== 'undefined') {
 				alert(result.error);
@@ -455,8 +454,6 @@ function moveElement(movedId, prevSibId) {
 
 function inputKeyPress(e) {
 	if(e.keyCode == 13) {
-		csTrack('enterCategory');
-
 		//TODO: stop AJAX call for AutoComplete
 		e.preventDefault();
 		var category = $('#csCategoryInput').val();
@@ -467,7 +464,6 @@ function inputKeyPress(e) {
 				$('#csWikitext').val(generateWikitextForCategories());
 			}
 		} else {
-			csTrack('enterCategoryEmpty');
 			//on view page, hide input and show button when [enter] pressed with empty input
 			if(csType != 'module'){
 				$('#csCategoryInput').blur();
@@ -476,7 +472,6 @@ function inputKeyPress(e) {
 		}
 	}
 	if(e.keyCode == 27) {
-		csTrack('escapeCategory');
 		$('#csCategoryInput').blur();
 		inputBlur();
 	}
@@ -614,8 +609,6 @@ function initHandlers() {
 
 //`view article` mode
 function showCSpanel() {
-	csTrack('addCategory');
-
 	$.when(
 		$.getJSON(wgScript, {action: 'ajax', rs: 'CategorySelectGenerateHTMLforView', uselang: wgUserLanguage}),
 		mw.loader.use('jquery.ui.sortable'),
@@ -656,8 +649,6 @@ function showCSpanel() {
 }
 
 function csSave() {
-	csTrack('saveCategory');
-
 	var $csCategoryInput = $('#csCategoryInput');
 	if ($csCategoryInput.attr('value') != '') {
 		addCategory($csCategoryInput.attr('value'));
@@ -691,8 +682,6 @@ function csSave() {
 }
 
 function csCancel() {
-	csTrack('cancelCategory');
-
 	var csMainContainer = $('#csMainContainer').get(0);
 	csMainContainer.parentNode.removeChild(csMainContainer);
 	$('#csAddCategorySwitch').show();

@@ -104,8 +104,6 @@ var UploadPhotos = {
 						"json"
 					);
 				});
-
-				$.tracker.byStr('action/uploadphoto/dialog');
 			}
 		});
 
@@ -120,7 +118,6 @@ var UploadPhotos = {
 			var json = JSON.parse(res);
 			if(json) {
 				if(json['status'] == 0) {	// 0 is success...
-					$.tracker.byStr('action/uploadphoto/upload');
 					window.location = wgArticlePath.replace('$1', 'Special:NewFiles');
 				} else if(json['status'] == -2) {	// show conflict dialog
 					UploadPhotos.step1.hide(400, function() {
@@ -194,26 +191,6 @@ var LatestPhotos = {
 	init: function() {
 		this.carousel = $('.LatestPhotosModule').find('.carousel-container');
 		this.carousel.carousel({attachBlindImages: true});
-		LatestPhotos.addLightboxTracking();
-		$('.timeago').timeago();
-	},
-	// add extra tracking for lightbox shown for image from latest photos module (RT #74852)
-	addLightboxTracking: function() {
-		this.carousel.bind('lightbox', function(ev, lightbox) {
-			$().log('lightbox shown', 'LatestPhotos');
-
-			var fakeUrl = 'module/latestphotos/';
-			var lightboxCaptionLinks = $('#lightbox-caption-content').find('a');
-
-			// user name
-			lightboxCaptionLinks.eq(0).trackClick(fakeUrl + 'lightboxusername');
-
-			// page name
-			lightboxCaptionLinks.filter('.wikia-gallery-item-posted').trackClick(fakeUrl + 'lightboxlink');
-
-			// "more"
-			lightboxCaptionLinks.filter('.wikia-gallery-item-more').trackClick(fakeUrl + 'lightboxmore');
-		});
 	}
 };
 

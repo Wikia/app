@@ -9,7 +9,7 @@ var TopListsEditor = {
 	_mSelectedPictureField: null,
 	_mPictureFrame: null,
 	_mAutocompleteFieldChanged: false,
-	
+
 	_init: function(){
 		TopListsEditor._mListContainer = $('#toplist-editor .ItemsList');
 		TopListsEditor._mAutocompleteField = $('#toplist-editor input[name="related_article_name"]');
@@ -25,7 +25,6 @@ var TopListsEditor = {
 				selectedClass: 'selected',
 				width: '270px',
 				onSelect: function(v, d){
-					TopListsEditor.track('autocomplete-suggestion-selected');
 					TopListsEditor._mAutocompleteFieldChanged = true;
 					TopListsEditor.autoSelectImage(v);
 				}
@@ -56,12 +55,7 @@ var TopListsEditor = {
 		$('#toplist-add-item').click(TopListsEditor.addItem);
 	},
 
-	track: function(token){
-		$.tracker.byStr('TopLists/editor/' + token);
-	},
-
 	_fixLabels: function(){
-		TopListsEditor.track('item-drag-order');
 		TopListsEditor._mListContainer.find('li:not(.ItemTemplate) .ItemNumber').each(function(index, elm){
 			$(elm).html('#' + (index + 1));
 		});
@@ -69,15 +63,12 @@ var TopListsEditor = {
 
 	autoSelectImage: function(imageText){
 		if(typeof imageText != 'undefined' && imageText != '' && TopListsEditor._mAutocompleteFieldChanged){
-			TopListsEditor.track('autoselecting-image-requested');
 			TopListsEditor._mAutocompleteFieldChanged = false;
 			TopListsImageBrowser.getImageData(imageText);
 		}
 	},
 
 	addItem: function(){
-		TopListsEditor.track('item-add');
-		
 		var item = TopListsEditor._mListContainer
 			.find('li:first')
 			.clone()
@@ -97,7 +88,6 @@ var TopListsEditor = {
 	},
 
 	removeItem: function(){
-		TopListsEditor.track('item-remove');
 		var item = $(this).closest('li');
 
 		if(!item.hasClass('NewItem')){
@@ -108,20 +98,18 @@ var TopListsEditor = {
 				val(parseInt(item.find('input[type="hidden"]').val())).
 				appendTo($('#toplist-editor'));
 		}
-		
+
 		item.remove();
 		TopListsEditor._fixLabels();
 	},
 
 	setPicture: function(picture){
 		TopListsEditor._mPictureFrame.find('img').remove();
-		
+
 		if(picture == null || typeof picture === 'undefined'){
-			TopListsEditor.track('picture-cleared-out');
 			TopListsEditor._mPictureFrame.find('.NoPicture').show();
 			TopListsEditor._mSelectedPictureField.val('');
 		} else {
-			TopListsEditor.track('picture-selected');
 			$('<img/>', {
 				'src': picture.url,
 				'alt': picture.name,
@@ -154,7 +142,7 @@ var TopListsImageBrowser = {
 		TopListsImageBrowser._mDialog = $('.modalWrapper');
 		TopListsImageBrowser._mContext = $('#image-browser-dialog');
 		TopListsImageBrowser._uploadForm = TopListsImageBrowser._mContext.find('form');
-		
+
 		$.loadJQueryAIM(function(){
 
 			TopListsImageBrowser._uploadForm.find('input[type="file"]').change(TopListsImageBrowser._onImageFileSelected);
@@ -176,7 +164,6 @@ var TopListsImageBrowser = {
 
 	_onSelect: function(){
 		if( !TopListsImageBrowser._uploadInProgress ){
-			TopListsEditor.track('image-browser-picture-selected');
 			var elm = $(this);
 			var selectedPicture = null;
 
@@ -196,7 +183,6 @@ var TopListsImageBrowser = {
 
 	_onImageFileSelected: function(){
 		if( !TopListsImageBrowser._uploadInProgress ){
-			TopListsEditor.track('image-browser-upload-file-selected');
 			TopListsImageBrowser._uploadForm.submit();
 		}
 	},
@@ -204,7 +190,7 @@ var TopListsImageBrowser = {
 	_onImageUpload: function(){
 		TopListsImageBrowser._uploadInProgress = true;
 		TopListsImageBrowser.blockInput();
-		
+
 		$.AIM.submit(
 			this,
 			{
@@ -218,13 +204,11 @@ var TopListsImageBrowser = {
 		TopListsImageBrowser.unblockInput();
 
 		if(response.success === true){
-			TopListsEditor.track('image-browser-upload-completed');
 			if(typeof TopListsImageBrowser._mOnSelectCallback === 'function') {
 				TopListsImageBrowser._mOnSelectCallback(response);
 			}
 			TopListsImageBrowser._destroy();
 		} else if (response.error === true || response.conflict === true){
-			TopListsEditor.track('image-browser-upload-file-failed');
 			TopListsImageBrowser._uploadForm.find('p.error').html(response.message);
 		}
 	},
@@ -237,10 +221,8 @@ var TopListsImageBrowser = {
 		TopListsImageBrowser.unblockInput();
 		TopListsImageBrowser._mContext.prepend('<div id="toplists-loading-screen"></div>');
 	},
-	
-	show: function(relatedArticle, selectedPicture, onSelectCallback){
-		TopListsEditor.track('image-browser-opened');
 
+	show: function(relatedArticle, selectedPicture, onSelectCallback){
 		$().getModal(
 			wgScript + '?action=ajax&rs=TopListHelper::renderImageBrowser&title=' + encodeURI(relatedArticle) + '&selected=' + encodeURI(selectedPicture),
 			'#image-browser-dialog',
@@ -250,7 +232,7 @@ var TopListsImageBrowser = {
 				onClose: TopListsImageBrowser._destroy
 			}
 		);
-		
+
 		TopListsImageBrowser._mOnSelectCallback = onSelectCallback;
 	},
 
@@ -263,13 +245,9 @@ var TopListsImageBrowser = {
 			},
 			function(response) {
 				if(response.result === true){
-					TopListsEditor.track('autoselecting-image-success');
 					TopListsEditor.setPicture(response);
 				}
-				else{
-					TopListsEditor.track('autoselecting-image-fail');
-				}
-				
+
 				return false;
 			}
 		);

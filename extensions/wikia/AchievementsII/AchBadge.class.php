@@ -138,10 +138,10 @@ class AchBadge {
 				'ach_user_badges',
 				'count(distinct(user_id))',
 				array(
-					'badge_type_id' => $this->mBadgeTypeId, 
-					'badge_lap' => $this->mBadgeLap, 
+					'badge_type_id' => $this->mBadgeTypeId,
+					'badge_lap' => $this->mBadgeLap,
 					'wiki_id' => $wgCityId
-				), 
+				),
 				__METHOD__,
 				array(
 					'USE INDEX' => 'user_wiki_badge'
@@ -210,7 +210,7 @@ class AchBadge {
 				wfTimeFormatAgo($badgeWrapper['date'])
 			);
 		}
-		
+
 		?>
 			<div class='achievement-in-activity-feed'>
 				<div class="profile-hover">
@@ -220,7 +220,7 @@ class AchBadge {
 						<p><?=$badge_details;?></p>
 					</div>
 				</div>
-				<a href="<?= $linkToLeaderboard; ?>" class='achievement-image-link' onclick="WET.byStr('activityFeed/achievement/icon');">
+				<a href="<?= $linkToLeaderboard; ?>" class='achievement-image-link'>
 					<img rel="leaderboard" src="<?= $badge_url ?>" alt="<?=$badge_name;?>" height="82" width="82" />
 				</a>
 				<div class="badge-text">

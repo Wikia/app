@@ -20,11 +20,6 @@ var VideoUpload = {
 		$.post(wgScript + '?action=ajax&rs=VideoUpload&method=' + method, params, callback, 'json');
 	},
 
-	// track events
-	track: function(fakeUrl) {
-		window.jQuery.tracker.byStr('videoupload' + fakeUrl);
-	},
-
 	// add MW toolbar button (don't add it when using Monobook)
 	addToolbarButton: function() {
 		if ( (skin != 'monobook') && (typeof mwCustomEditButtons != 'undefined') ) {

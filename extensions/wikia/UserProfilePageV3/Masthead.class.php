@@ -380,9 +380,6 @@ class Masthead {
 			$hideEditDiv = "document.getElementById('wk-avatar-change').style.visibility='hidden'";
 			$additionalAttribs = "onmouseover=\"{$showEditDiv}\" onmouseout=\"{$hideEditDiv}\"";
 		}
-		if (!empty($tracker)) {
-			$additionalAttribs .= " onclick=\"WET.byStr('{$tracker}')\"";
-		}
 		if( ! $this->mUser->isAnon() ) {
 			$url = sprintf('<a href="%s" %s>%s</a>', $this->getUserPageUrl(), $additionalAttribs, $image );
 		}

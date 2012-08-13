@@ -50,56 +50,6 @@ var WikiaPhotoGallery = {
 		return $.post(wgScript + '?action=ajax&rs=WikiaPhotoGalleryAjax&method=' + method, params, callback, 'json');
 	},
 
-	// track events
-	track: function(fakeUrl) {
-		window.jQuery.tracker.byStr('photogallery' + fakeUrl);
-	},
-
-	// track pop-out events
-	trackForView: function(fakeUrl) {
-		window.jQuery.tracker.byStr('articleAction/photogallery' + fakeUrl);
-	},
-
-	// tracking of parameter values
-	trackParam: function(paramName, fakeUrl) {
-		var params = this.editor.gallery.params;
-		var defaultParams = this.editor.defaultParamValues;
-
-		var value = (typeof params[paramName] != 'undefined') ? params[paramName] : defaultParams[paramName];
-
-		this.track('/dialog/gallery/preview' + fakeUrl + '/' + value);
-	},
-
-	// get current page related suffix for tracker fake URLs
-	getPageTrackerSuffix: function() {
-		var trackerSuffix = this.isSlideshow() ? 'slideshow/' : 'gallery/';
-
-		switch(this.editor.currentPage) {
-			case this.CHOOSE_TYPE_PAGE:
-				trackerSuffix = 'choice';
-				break;
-
-			case this.UPLOAD_FIND_PAGE:
-				trackerSuffix += 'find';
-				break;
-
-			case this.CAPTION_LINK_PAGE:
-				trackerSuffix += 'options';
-				break;
-
-			case this.SLIDER_PREVIEW_PAGE:
-			case this.GALLERY_PREVIEW_PAGE:
-			case this.SLIDESHOW_PREVIEW_PAGE:
-				trackerSuffix += 'preview';
-				break;
-
-			default:
-				trackerSuffix = false;
-		}
-
-		return trackerSuffix;
-	},
-
 	// console logging
 	log: function(msg) {
 		$().log(msg, 'WikiaPhotoGallery');
@@ -273,16 +223,6 @@ var WikiaPhotoGallery = {
 			newParams = {},
 			position;
 
-		this.log('onSave');
-		this.log(params);
-
-
-
-		// tracking
-		var trackerSuffix = this.getPageTrackerSuffix();
-		if (trackerSuffix) {
-			this.track('/dialog/' + trackerSuffix + '/save');
-		}
 		switch (this.editor.currentPage) {
 			case this.UPLOAD_FIND_PAGE:
 				break;
@@ -330,25 +270,6 @@ var WikiaPhotoGallery = {
 					// update gallery entry
 					this.editor.gallery.images[ params.imageId ] = data;
 				}
-
-				// track options
-				if (caption != '') {
-					this.track('/dialog/' + trackerSuffix + '/caption');
-				}
-
-				if (this.isSlideshow()) {
-					if (link != '') {
-						this.track('/dialog/' + trackerSuffix + '/linkURL');
-					}
-					if (linktext != '') {
-						this.track('/dialog/' + trackerSuffix + '/linkText');
-					}
-				}
-				else {
-					if (link != '') {
-						this.track('/dialog/' + trackerSuffix + '/link');
-					}
-				}
 				break;
 
 			case this.SLIDER_PREVIEW_PAGE:
@@ -356,7 +277,7 @@ var WikiaPhotoGallery = {
 			case this.SLIDESHOW_PREVIEW_PAGE:
 				// update gallery data, generate wikitext and store it in wikitext
 				var gallery = this.editor.gallery;
-				this.log(gallery.params);
+
 				// get widths / alignment from sliders
 				if (this.isSlideshow()) {
 					gallery.params.widths = $('#WikiaPhotoGallerySliderSlideshow').find('.slider').slider('value');
@@ -378,47 +299,6 @@ var WikiaPhotoGallery = {
 				}
 
 				gallery.wikitext = this.JSONtoWikiText(gallery);
-
-				// slideshow / gallery parameters tracking
-				if (this.isSlideshow()) {
-					// track usage of slideshow "smart" cropping
-					if (gallery.params.crop && gallery.params.crop == 'true') {
-						this.track('/dialog/slideshow/preview/crop');
-					}
-
-					if (gallery.params.showrecentuploads && gallery.params.showrecentuploads == 'true') {
-						this.track('/dialog/slideshow/preview/recentUploads');
-					}
-
-					if (gallery.params.rssfeed) {
-						this.track('/dialog/slideshow/preview/rssFeed');
-					}
-
-					position = gallery.params.position || 'right';
-					this.track('/dialog/slideshow/preview/position/' + position);
-				} else if ( !this.isSlider() ) {
-					this.trackParam('widths', '/layoutTab/size');
-					this.trackParam('columns', '/layoutTab/columns');
-					this.trackParam('position', '/layoutTab/position');
-					this.trackParam('spacing', '/layoutTab/photoSpacing');
-					this.trackParam('orientation', '/layoutTab/photoOrientation');
-
-					this.trackParam('captionposition', '/themeTab/captionPosition');
-					this.trackParam('captionalign', '/themeTab/captionAlignment');
-					this.trackParam('captionsize', '/themeTab/captionSize');
-					this.trackParam('captiontextcolor', '/themeTab/captionColor');
-					this.trackParam('bordersize', '/themeTab/borderSize');
-					this.trackParam('bordercolor', '/themeTab/borderColor');
-
-					// track usage of gallery "smart" cropping
-					if (gallery.params.crop && gallery.params.crop == 'true') {
-						this.track('/dialog/gallery/preview/layoutTab/crop');
-					}
-
-					if (gallery.params.rssfeed) {
-						this.track('/dialog/gallery/preview/rssFeed');
-					}
-				}
 
 				// update / save gallery
 				switch (this.editor.from) {
@@ -517,7 +397,7 @@ var WikiaPhotoGallery = {
 						var element_id = this.editor.allparams.element_id || 0;
 						$("body").trigger(event, [element_id, gallery, $('#WikiaPhotoGalleryEditor')]);
 						if ( event.isDefaultPrevented() ) {
-						    return false;
+							return false;
 						}
 						WikiaPhotoGallery.ajax('saveGalleryData', {hash:gallery.hash, wikitext:gallery.wikitext, title:wgPageName, starttime:gallery.starttime}, function(data) {
 							if (data.info == 'ok') {
@@ -556,18 +436,8 @@ var WikiaPhotoGallery = {
 		// variable shortcuts
 		var editor = this.editor;
 		var params = editor.currentPageParams;
-
-		this.log('onCancel');
-		this.log(params);
-
 		var newPage = null;
 		var newPageParams = {};
-
-		// tracking
-		var trackerSuffix = this.getPageTrackerSuffix();
-		if (trackerSuffix) {
-			this.track('/dialog/' + trackerSuffix + '/cancel');
-		}
 
 		switch (editor.currentPage) {
 			case this.UPLOAD_FIND_PAGE:
@@ -622,13 +492,9 @@ var WikiaPhotoGallery = {
 			node: false
 		};
 
-		this.log(params);
-
 		switch (params.from) {
 			case 'wysiwyg':
 				if (typeof params.gallery == 'object') {
-					this.log('editing existing gallery');
-					this.log(params.gallery);
 
 					// read gallery data from gallery node and store it in editor
 					var data = params.gallery.getData();
@@ -645,71 +511,47 @@ var WikiaPhotoGallery = {
 
 					if (this.isSlideshow()) {
 						firstPage = this.SLIDESHOW_PREVIEW_PAGE;
-						this.track('/init/edit/editpage/slideshow');
 					} else if (this.isSlider()){
 						firstPage = this.SLIDER_PREVIEW_PAGE;
-						this.track('/init/edit/editpage/slider');
 					} else {
 						firstPage = this.GALLERY_PREVIEW_PAGE;
-						this.track('/init/edit/editpage/gallery');
 					}
 				} else if (typeof params.type == 'number') {
-					this.log('add new gallery with specified type');
 					this.editor.gallery.type = params.type;
 					if (this.isSlideshow()) {
 						firstPage = this.SLIDESHOW_PREVIEW_PAGE;
-						this.track('/init/new/editpage/slideshow');
 					} else if (this.isSlider()){
 						firstPage = this.SLIDER_PREVIEW_PAGE;
-						this.track('/init/new/editpage/slider');
 					} else {
 						firstPage = this.GALLERY_PREVIEW_PAGE;
-						this.track('/init/new/editpage/gallery');
 					}
-				} else {
-					this.log('add new gallery');
-					this.track('/init/new');
 				}
-
-				this.log(this.editor.gallery);
 				break;
 
 			case 'source':
 				if (typeof params.type == 'number') {
-					this.log('add new gallery with specified type');
 					this.editor.gallery.type = params.type;
 					if (this.isSlideshow()) {
 						firstPage = this.SLIDESHOW_PREVIEW_PAGE;
-						this.track('/init/new/editpage/slideshow');
 					} else if (this.isSlider()){
 						firstPage = this.SLIDER_PREVIEW_PAGE;
-						this.track('/init/new/editpage/slider');
 					} else {
 						firstPage = this.GALLERY_PREVIEW_PAGE;
-						this.track('/init/new/editpage/gallery');
 					}
-				} else {
-					this.track('/init/new');
 				}
 				break;
 
 			case 'view':
 				if (typeof params.gallery == 'object') {
-					this.log('editing existing gallery');
-					this.log(params.gallery);
-
 					this.editor.gallery = params.gallery;
 					this.editor.allparams = params;
 
 					if (this.isSlideshow()) {
 						firstPage = this.SLIDESHOW_PREVIEW_PAGE;
-						this.track('/init/edit/view/slideshow');
 					} else if (this.isSlider()){
 						firstPage = this.SLIDER_PREVIEW_PAGE;
-						this.track('/init/edit/view/slider');
 					} else {
 						firstPage = this.GALLERY_PREVIEW_PAGE;
-						this.track('/init/edit/view/gallery');
 					}
 				}
 				break;
@@ -749,9 +591,6 @@ var WikiaPhotoGallery = {
 		$('#WikiaPhotoGalleryImageUpload').
 			unbind('.upload').
 			bind('click.upload', function(ev) {
-				// tracking
-				var trackerSuffix = self.getPageTrackerSuffix();
-				self.track('/dialog/' + trackerSuffix + '/upload/button');
 				if ( self.isSlider() ) {
 				 	$('#WikiaPhotoGalleryImageUploadSize').show();
 				}
@@ -773,8 +612,6 @@ var WikiaPhotoGallery = {
 					return;
 				}
 
-				self.log('uploading...');
-
 				// show loading indicator and block "Upload" button
 				$('#WikiaPhotoGalleryImageUploadButton').attr('disabled', true);
 				$('#WikiaPhotoGalleryUploadProgress').show();
@@ -783,77 +620,50 @@ var WikiaPhotoGallery = {
 					onComplete: function(response) {
 						var data = $.parseJSON(response);
 
-						self.log('response from upload: ' + response);
-						self.log( response );
-						self.log( data );
-						self.log('upload done');
-
-						// tracking
-						var trackerSuffix = self.getPageTrackerSuffix();
-						self.track('/dialog/' + trackerSuffix + '/upload/success');
-
 						// hide loading indicator and unblock "Upload" button
 						$('#WikiaPhotoGalleryImageUploadButton').attr('disabled', false);
 						$('#WikiaPhotoGalleryUploadProgress').hide();
 
-                                                // are we editing gallery entry?
-                                                var imageId = self.editor.currentPageParams.imageId;
+						// are we editing gallery entry?
+						var imageId = self.editor.currentPageParams.imageId;
 
-                                                if (data.success) {
-                                                        // proceed to the caption / link page
-                                                        self.selectPage(self.CAPTION_LINK_PAGE, {
-                                                                imageId: imageId,
-                                                                imageName: data.name
-                                                        });
-                                                } else if (data.conflict) {
-                                                        // handle name conflicts
-                                                        // generate thumbnail of temporary uploaded file (and show it next to the current one from MW)
+						if (data.success) {
+							// proceed to the caption / link page
+							self.selectPage(self.CAPTION_LINK_PAGE, {
+								imageId: imageId,
+								imageName: data.name
+							});
+						} else if (data.conflict) {
+							// handle name conflicts
+							// generate thumbnail of temporary uploaded file (and show it next to the current one from MW)
 
-                                                        var thumbnail = '<img src="' + data.thumbnail.url + '" alt="" border="0" ' +
-                                                                'width="' + data.thumbnail.width + '" height ="' + data.thumbnail.height + '" />';
+							var thumbnail = '<img src="' + data.thumbnail.url + '" alt="" border="0" ' +
+								'width="' + data.thumbnail.width + '" height ="' + data.thumbnail.height + '" />';
 
-                                                        self.selectPage(self.UPLOAD_CONFLICT_PAGE, {
-                                                                imageId: imageId,
-                                                                imageName: data.name,
-                                                                nameParts: data.nameParts,
-                                                                tempId: data.tempId,
-                                                                thumbnail: thumbnail
-                                                        });
-                                                } else {
-                                                        // error handling
-                                                        self.log('upload error #' + data.reason);
+							self.selectPage(self.UPLOAD_CONFLICT_PAGE, {
+								imageId: imageId,
+								imageName: data.name,
+								nameParts: data.nameParts,
+								tempId: data.tempId,
+								thumbnail: thumbnail
+							});
+						} else {
+							self.showAlert(
+								self.editor.msg['wikiaPhotoGallery-upload-title'],
+								data.message
+							);
 
-                                                        self.showAlert(
-                                                                self.editor.msg['wikiaPhotoGallery-upload-title'],
-                                                                data.message
-                                                        );
-
-                                                        // clear upload form
-                                                        $('#WikiaPhotoGalleryImageUpload').val('');
-                                                }
+							// clear upload form
+							$('#WikiaPhotoGalleryImageUpload').val('');
+						}
 					}
 				});
 			});
 	},
 
-	// setup given search results area (clicks, tracking)
+	// setup given search results area
 	setupSearchResults: function(type) {
-		var self = this,
-			resultsTrackingType;
-
-		switch(type) {
-			case this.RESULTS_RECENT_UPLOADS:
-				resultsTrackingType = 'recent';
-				break;
-
-			case this.RESULTS_IMAGES_FROM_THIS_PAGE:
-				resultsTrackingType = 'images';
-				break;
-
-			case this.RESULTS_SEARCH:
-				resultsTrackingType = 'results';
-				break;
-		}
+		var self = this;
 
 		// setup chooser links
 		var chooserLinks = $('#WikiaPhotoGallerySearchResultsChooser').children('span');
@@ -930,10 +740,6 @@ var WikiaPhotoGallery = {
 			var node = $(this);
 			var imageName = node.attr('title');
 
-			// tracking
-			var num = node.attr('num');
-			self.track('/dialog/upload/' + resultsTrackingType + '/' + num);
-
 			// are we editing gallery entry?
 			var imageId = self.editor.currentPageParams.imageId;
 
@@ -947,17 +753,11 @@ var WikiaPhotoGallery = {
 		// setup clicks on "Select" button
 		$('#WikiaPhotoGallerySearchResultsSelect').unbind('.selectImage').bind('click.selectImage', function(ev) {
 			var selected = results.find('input:checked');
-			self.log(selected.length + ' image(s) selected');
 
 			if (!selected.exists()) {
 				// no images selected
 				return;
 			}
-
-			// tracking
-			var trackerSuffix = self.getPageTrackerSuffix();
-			var listType = (results.attr('type') == 'uploaded') ? 'recent' : 'onpage';
-			self.track('/dialog/' + trackerSuffix + '/list/' + listType + '/' + selected.length);
 
 			if (selected.length == 1) {
 				// one image selected - proceed to caption/link page
@@ -984,7 +784,7 @@ var WikiaPhotoGallery = {
 						linktext: '',
 						name: imageName
 					};
-					$().log(self.editor.gallery.images);
+
 					self.editor.gallery.images.push(data);
 				});
 
@@ -1177,10 +977,7 @@ var WikiaPhotoGallery = {
 			self.setupSearchResults(self.RESULTS_SEARCH);
 		});
 
-		// tracking
-		// TODO: update?
 		if (query != '') {
-			this.track('/dialog/upload/find/find/' + query.replace(/[^A-Za-z0-9]/g, '_'));
 			if ( self.isSlider() ) {
 				$('#WikiaPhotoGalleryImageUploadSize').show();
 			}
@@ -1201,17 +998,13 @@ var WikiaPhotoGallery = {
 
 				// set the type: gallery / slideshow
 				self.editor.gallery.type = type;
-				self.log('choosen type is #' + type);
 
 				if (self.isSlideshow()) {
 					self.selectPage(self.SLIDESHOW_PREVIEW_PAGE);
-					self.track('/dialog/choice/slideshow');
 				} else if (self.isSlider()) {
 					self.selectPage(self.SLIDER_PREVIEW_PAGE);
-					self.track('/dialog/choice/slider');
 				} else {
 					self.selectPage(self.GALLERY_PREVIEW_PAGE);
-					self.track('/dialog/choice/gallery');
 				}
 			});
 	},
@@ -1430,20 +1223,12 @@ var WikiaPhotoGallery = {
 						// "modify"
 						menuItems.eq(0).bind('click.menu', function(ev) {
 							ev.preventDefault();
-
-							var trackerSuffix = self.getPageTrackerSuffix();
-							self.track('/dialog/' + trackerSuffix + '/photo/modify');
-
 							self.modifyPhoto(imageId);
 						});
 
 						// "delete"
 						menuItems.eq(1).bind('click.menu', function(ev) {
 							ev.preventDefault();
-
-							var trackerSuffix = self.getPageTrackerSuffix();
-							self.track('/dialog/' + trackerSuffix + '/photo/delete');
-
 							self.removePhoto(imageId);
 						});
 					},
@@ -1452,7 +1237,6 @@ var WikiaPhotoGallery = {
 						var image = $(this);
 
 						image.removeClass('accent WikiaPhotoGalleryPreviewItemHover');
-
 						image.children('.WikiaPhotoGalleryPreviewItemMenu').hide();
 					}
 				);
@@ -1460,10 +1244,6 @@ var WikiaPhotoGallery = {
 			// setup image placeholders
 			preview.find('.WikiaPhotoGalleryPreviewItemPlaceholder').find('a').click(function(ev) {
 				ev.preventDefault();
-
-				self.log('adding next picture...');
-				self.track('/dialog/gallery/preview/placeholder');
-
 				self.selectPage(self.UPLOAD_FIND_PAGE, {});
 			});
 
@@ -1482,22 +1262,6 @@ var WikiaPhotoGallery = {
 
 						var node = $(this);
 						var imageId = parseInt( node.closest('.WikiaPhotoGalleryPreviewItem').attr('imageid') );
-
-						// tracking
-						var trackerSuffix = self.getPageTrackerSuffix();
-
-						if (node.hasClass('WikiaPhotoGalleryPreviewItemLink')) {
-							// link icon clicked
-							self.track('/dialog/' + trackerSuffix + '/photo/link');
-						}
-						else if (node.hasClass('WikiaPhotoGalleryPreviewItemAddCaption')) {
-							// "Add a caption" clicked
-							self.track('/dialog/' + trackerSuffix + '/photo/captionNew');
-						}
-						else {
-							// exisiting photo caption clicked
-							self.track('/dialog/' + trackerSuffix + '/photo/captionEdit');
-						}
 
 						self.modifyPhoto(imageId);
 					}
@@ -1577,16 +1341,10 @@ var WikiaPhotoGallery = {
 						}
 					});
 
-					self.log('drag&drop: #' + oldId + ' -> #' + newId);
-
 					// useless D&D
 					if (oldId == newId) {
 						return;
 					}
-
-					// tracking
-					var trackerSuffix = self.getPageTrackerSuffix();
-					self.track('/dialog/' + trackerSuffix + '/photo/move');
 
 					// switch #oldId and #newId images
 					var images = self.editor.gallery.images;
@@ -1601,11 +1359,9 @@ var WikiaPhotoGallery = {
 
 					// render preview
 					if ( self.isSlider()) {
-
 						self.renderSliderPreview();
 
 					} else if ( self.isSlideshow() ) {
-
 						self.renderSlideshowPreview();
 
 					} else {
@@ -1630,9 +1386,6 @@ var WikiaPhotoGallery = {
 
 		// setup option tabs
 		this.setupTabs($('#WikiaPhotoGalleryOptionsTabs'), function(index) {
-			// track tabs switching
-			self.track('/dialog/gallery/preview/tab/' + (index == 0 ? 'theme2layout' : 'layout2theme'));
-
 			resizePreview();
 		});
 
@@ -1645,9 +1398,6 @@ var WikiaPhotoGallery = {
 		};
 
 		this.setupSlider($('#WikiaPhotoGallerySliderGallery'), 'widths', values, function(slider, value) {
-			// tracking
-			self.track('/dialog/gallery/preview/layoutTab/changeSize');
-
 			// regenerate gallery preview with updated width
 			self.renderGalleryPreview();
 		});
@@ -1674,9 +1424,6 @@ var WikiaPhotoGallery = {
 			var button = $(this);
 
 			ev.preventDefault();
-
-			self.log('adding next picture...');
-			self.track('/dialog/gallery/preview/addPhoto');
 
 			self.selectPage(self.UPLOAD_FIND_PAGE, {});
 		});
@@ -1735,9 +1482,6 @@ var WikiaPhotoGallery = {
 		};
 
 		this.setupSlider($('#WikiaPhotoGallerySliderSlideshow'), 'widths', values, function(slider, value) {
-			// tracking
-			self.track('/dialog/slideshow/preview/changeSize');
-
 			// regenerate slideshow preview with updated width
 			self.renderSlideshowPreview();
 		});
@@ -1798,9 +1542,6 @@ var WikiaPhotoGallery = {
 
 			ev.preventDefault();
 
-			self.log('adding next picture...');
-			self.track('/dialog/slideshow/preview/addPhoto');
-
 			self.selectPage(self.UPLOAD_FIND_PAGE, {});
 		});
 
@@ -1829,9 +1570,6 @@ var WikiaPhotoGallery = {
 			var button = $(this);
 
 			ev.preventDefault();
-
-			self.log('adding next picture...');
-			self.track('/dialog/slider/preview/addPhoto');
 
 			self.selectPage(self.UPLOAD_FIND_PAGE, {});
 		});
@@ -1880,29 +1618,17 @@ var WikiaPhotoGallery = {
 		var pageUrl = window.wgArticlePath.replace(/\$1/, window.wgPageName);
 
 		// "View edit mode"
-		buttons.eq(0).
-			attr('href', pageUrl + (pageUrl.indexOf('?') != -1 ? '&' : '?') + 'action=edit').
-			click(function() {
-				self.track('/dialog/conflict/edit');
-			});
+		buttons.eq(0).attr('href', pageUrl + (pageUrl.indexOf('?') != -1 ? '&' : '?') + 'action=edit');
 
 		// "View the current article"
-		buttons.eq(1).
-			attr('href', pageUrl).
-			click(function() {
-				self.track('/dialog/conflict/view');
-			});
+		buttons.eq(1).attr('href', pageUrl);
 
 		// generate wikitext
 		wikitext.val(this.editor.gallery.wikitext);
-
-		// tracking
-		this.track('/dialog/conflict/init');
 	},
 
 	// modify selected photo
 	modifyPhoto: function(photoId) {
-		this.log('modifying photo #' + photoId);
 
 		//TODO: use externalImages
 		var image = this.editor.gallery.images[photoId];
@@ -2444,11 +2170,7 @@ var WikiaPhotoGallery = {
 					buttons.eq(0).click(function() {
 						$('#WikiaPhotoGalleryShowSaveQuitDialog').closeModal();
 
-						self.log('showSaveAndQuitDialog: save & quit');
-						self.track('/dialog/quit/savequit');
-
 						// save changes (let's pretend we're on gallery preview where user can click "Save")
-
 						// apply any changes made on Caption / link page
 						if (self.editor.currentPage == self.CAPTION_LINK_PAGE) {
 							self.onSave();
@@ -2461,23 +2183,13 @@ var WikiaPhotoGallery = {
 					// discard changes
 					buttons.eq(1).click(function() {
 						$('#WikiaPhotoGalleryShowSaveQuitDialog').closeModal();
-
-						self.log('showSaveAndQuitDialog: discard changes & quit');
-						self.track('/dialog/quit/quit');
-
 						$('#WikiaPhotoGalleryEditor').hideModal();
 					});
 
 					// cancel
 					buttons.eq(2).click(function() {
 						$('#WikiaPhotoGalleryShowSaveQuitDialog').closeModal();
-
-						self.log('showSaveAndQuitDialog: cancel');
-						self.track('/dialog/quit/cancel');
 					});
-				},
-				onClose: function() {
-					self.track('/dialog/quit/close');
 				}
 			}
 		);
@@ -2578,17 +2290,10 @@ var WikiaPhotoGallery = {
 					self.setupEditor(params);
 				},
 				onClose: function(type) {
-					self.log('onClose');
 
 					// prevent close event triggered by ESCAPE key
 					if (type.keypress) {
 						return false;
-					}
-
-					// tracking
-					var trackerSuffix = self.getPageTrackerSuffix();
-					if (trackerSuffix) {
-						self.track('/dialog/' + trackerSuffix + '/close');
 					}
 
 					// X has been clicked
@@ -2656,10 +2361,10 @@ var WikiaPhotoGallery = {
 					continue;
 				}
 
-                                // skip if empty or corrupted data
-                                if ( typeof imageData.name == 'undefined' ) {
-                                    continue;
-                                }
+								// skip if empty or corrupted data
+								if ( typeof imageData.name == 'undefined' ) {
+									continue;
+								}
 
 				HTML += imageData.name;
 				if (imageData.caption != '') {

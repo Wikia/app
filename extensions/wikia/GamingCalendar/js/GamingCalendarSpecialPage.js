@@ -50,15 +50,6 @@ var EditGamingCalendarEntries = {
 	onSave: function(event) {
 		event.preventDefault();
 
-		// track number of titles
-		var titleCount = 0;
-		$("#EditGamingCalendarEntries li:not('.new-item') input[type='text']").each(function() {
-			if ($(this).val().length > 0) {
-				titleCount++;
-			}
-		});
-		EditGamingCalendarEntries.track('/titlecount/' + titleCount);
-
 		if ($("#EditGamingCalendarEntries").data('calendarentriesdate')) {
 			// editing existing Calendar Entries
 			$.post('/wikia.php?controller=GamingCalendarSpecialPage&method=updateCalendarEntriesForDate&format=json', $("#EditGamingCalendarEntries").find("form").serialize(), function(data) {
@@ -69,10 +60,6 @@ var EditGamingCalendarEntries = {
 				}
 			});
 		}
-	},
-
-	track: function(fakeUrl) {
-		window.jQuery.tracker.byStr('gc' + fakeUrl, true);
 	}
 };
 

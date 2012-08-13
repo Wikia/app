@@ -3,7 +3,6 @@
  * Mod by: Tomasz Odrobny, Sean Colombo.
  */
 var AjaxLogin = {
-	WET_str : 'signupActions/popup',
 	init: function(form) {
 		this.form = form;
 
@@ -204,9 +203,6 @@ var AjaxLogin = {
 		}
 		AjaxLogin.form.log('AjaxLogin: selected action = ' + AjaxLogin.action);
 
-		// tracking
-		WET.byStr('loginActions/' + AjaxLogin.action);
-
 		var params = [
 			'action=ajaxlogin',
 			'format=json',
@@ -252,13 +248,8 @@ var AjaxLogin = {
 				break;
 
 			case 'Success':
-				// Bartek: tracking
 				if( AjaxLogin.action == 'password'  ) {
-					// FIXME: Should we delete this? It seems password only returns 'OK', not 'Success'. Do we ever end up here?
-					WET.byStr(AjaxLogin.WET_str + '/emailpassword/success');
 					AjaxLogin.removeMailMyPassword();
-				} else {
-					WET.byStr(AjaxLogin.WET_str + '/login/success');
 				}
 				if (AjaxLogin.beforeDoSuccess()) {
 					AjaxLogin.doSuccess();
@@ -281,16 +272,8 @@ var AjaxLogin = {
 				// continue on...
 
 			default:
-				// Bartek: tracking
 				if( AjaxLogin.action == 'password'  ) {
 					AjaxLogin.removeMailMyPassword();
-					if( responseResult == 'OK' ) {
-						WET.byStr(AjaxLogin.WET_str + '/emailpassword/success');
-					} else {
-						WET.byStr(AjaxLogin.WET_str + '/emailpassword/failure');
-					}
-				} else {
-						WET.byStr(AjaxLogin.WET_str + '/login/failure');
 				}
 
 				AjaxLogin.blockLoginForm(false);
@@ -337,7 +320,6 @@ var AjaxLogin = {
 				ev.preventDefault();
 			}
 		}
-		WET.byStr(AjaxLogin.WET_str + '/switchtocreateaccount');
 	},
 	showFromDOM: function() {
 		$('#AjaxLoginBoxWrapper').showModal();
@@ -384,8 +366,6 @@ if ( (typeof wgComboAjaxLogin != 'undefined') && wgComboAjaxLogin ) {
 					$('#AjaxLoginRegisterForm').show();
 					if ($('#wpName2').length > 0) { $('#wpName2').focus(); }
 
-		        	WET.byStr(AjaxLogin.WET_str + '/choosecreateaccount');
-
 					// RT #85685 - add click handler for "log in" link in read-only message
 					var readOnlyMessage = $('#AjaxLoginReadOnlyMessage');
 					if (readOnlyMessage.exists()) {
@@ -404,13 +384,9 @@ if ( (typeof wgComboAjaxLogin != 'undefined') && wgComboAjaxLogin ) {
 					$('#AjaxLoginRegisterForm').hide();
 					$('#AjaxLoginLoginForm').show();
 					if ($('#wpName2Ajax').length > 0) { $('#wpName2Ajax').focus(); }
-
-					WET.byStr(AjaxLogin.WET_str + '/chooselogin');
 				},
 				close: function()
 				{
-					WET.byStr(AjaxLogin.WET_str + '/close');
-
 					// If this is in ajax-mode hide the box, otherwise return to the source page.
 					if($('#AjaxLoginBoxWrapper').length > 0){
 						$('#AjaxLoginBoxWrapper').hideModal();
@@ -492,16 +468,14 @@ if ( (typeof wgComboAjaxLogin != 'undefined') && wgComboAjaxLogin ) {
 					}
 				},
 				show: function() {
-					AjaxLogin.WET_str = 'signupActions/combopopup';
-					if (typeof UserRegistration != 'undefined'){
-						UserRegistration.WET_str = AjaxLogin.WET_str;
-					}
-					$('#AjaxLoginBox').makeModal({width: 700, topMaximum: 130, persistent: true, onClose: function(){ WET.byStr(AjaxLogin.WET_str + '/close'); } });
+					$('#AjaxLoginBox').makeModal({
+						width: 700,
+						topMaximum: 130,
+						persistent: true
+					});
 					setTimeout(function() {
-//									$('#AjaxLoginBoxWrapper').css({ 'top' : AjaxLogin.topPos});
-									$('#wpName2Ajax').focus();
-								},100);
-					WET.byStr(AjaxLogin.WET_str + '/open');
+						$('#wpName2Ajax').focus();
+					},100);
 				}
 			});
 	//override submitForm for submitForm
@@ -543,7 +517,6 @@ if ( (typeof wgComboAjaxLogin != 'undefined') && wgComboAjaxLogin ) {
 					 	$("#wpCaptchaWord").val("");
 					 	/* post data to normal form if age < 13 */
 					 	if (msg.type === "redirectQuery") {
-					 		WET.byStr(UserRegistration.WET_str + '/createaccount/failure');
 					 		$('#userajaxregisterform').submit();
 					 		return ;
 					 	}
@@ -552,12 +525,10 @@ if ( (typeof wgComboAjaxLogin != 'undefined') && wgComboAjaxLogin ) {
 							if($('#AjaxLoginBoxWrapper').length > 0){
 								$('#AjaxLoginBoxWrapper').closeModal();
 							}
-					 		WET.byStr(UserRegistration.WET_str + '/createaccount/success');
 			 				AjaxLogin.doSuccess();
 					 		return ;
 					 	}
 
-					 	WET.byStr(UserRegistration.WET_str + '/createaccount/failure');
 					 	$('#userloginInnerErrorBox').empty().append(msg.msg);
 					 	$("#userloginErrorBox").show();
 					 	$(".captcha img").attr("src",msg.captchaUrl);
@@ -567,11 +538,8 @@ if ( (typeof wgComboAjaxLogin != 'undefined') && wgComboAjaxLogin ) {
 				});
 			} else {
 				$("#userloginErrorBox").show();
-				WET.byStr(UserRegistration.WET_str + '/createaccount/failure');
 				UserRegistration.submitForm.statusAjax = false;
 			}
 		}
 	}
 }
-
-

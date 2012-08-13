@@ -1,34 +1,3 @@
-function trackTag( str ) {
-	WET.byStr( 'hub/' + str );
-}
-
-function trackContainer ( ev ) {
-	var obj = $(ev.target);
-
-	if( 'IMG' == obj.attr( 'nodeName' ) ) {
-		if( obj.hasClass( 'avatar' )  ) {
-			trackTag( 'topusers/avatar' );
-		}
-	}
-
-	if( 'A' == obj.attr( 'nodeName' ) ) {
-		if( obj.parent().parent().hasClass( 'top-wiki-data' )  ) {
-			trackTag( 'featuredwikis' );
-		} else if( obj.parent().hasClass( 'hub-blog-artlink' )  ) {
-			trackTag( 'blog/article' );
-
-		} else if( obj.parent().hasClass( 'user-info' )  ) {
-			trackTag( 'blog/username' );
-		} else if( obj.parent().hasClass( 'topuser-info' )  ) {
-			trackTag( 'topusers/name' );
-		}
-	}
-
-	if( obj.parent().parent().hasClass( 'blog-jump' )  ) {
-		trackTag( 'blog/comments' );
-	}
-}
-
 function makeWikiaButtons() {
 	//There is no way to provide CSS class for links created in MediaWiki. This function adds appropriate classes and markup to buttons.
 	$(".MainArticle-sidebar .create-wiki-container a").addClass("wikia-button").addClass("primary");
@@ -191,16 +160,6 @@ $(function() {
 			$(this).parent().addClass( "hiddenAdminSection" );
 		}
 	});
-
-	// Bartek - pack tracking so it doesn't pollute other pages
-	if( $('#hub-name').exists() ) {
-		$('#top-wikis-lists-box').click(trackContainer);
-		$('#hub-blogs').click(trackContainer);
-		$('#wikia-global-hot-spots').click(trackContainer);
-		$('#hub-top-contributors').click(trackContainer);
-
-		trackTag( 'pv/' + wgPageName );
-	}
 
 	makeWikiaButtons();
 	initHideLinks();

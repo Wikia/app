@@ -25,7 +25,6 @@ $config['oasis_tracker_js'] = array(
 	'assets' => array(
 		'//extensions/wikia/WikiaTracker/js/WikiaTracker_config.js',
 		'//extensions/wikia/WikiaTracker/js/WikiaTracker.js',
-		'//resources/wikia/tracker/jquery.wikia.tracker.js',
 	)
 );
 
@@ -230,7 +229,6 @@ $config['oasis_nojquery_shared_js'] = array(
 	'assets' => array(
 
 		// shared libraries
-		'//skins/oasis/js/tracker.js',
 		'//resources/wikia/libraries/my.class/my.class.js',
 		'//resources/wikia/modules/querystring.js',
 		'//resources/wikia/modules/cookies.js',
@@ -255,7 +253,6 @@ $config['oasis_nojquery_shared_js'] = array(
 		'//skins/oasis/js/isTouchScreen.js',
 		'//skins/oasis/js/tabs.js',
 		'//skins/oasis/js/SharingToolbar.js',
-		'//skins/oasis/js/ContributeMenu.js',
 		'//skins/oasis/js/WikiaForm.js',
 		'//resources/wikia/libraries/bootstrap/tooltip.js',
 	)
@@ -493,8 +490,6 @@ $config['monobook_js'] = array(
 //		'//resources/mediawiki/mediawiki.util.js', # instead of //skins/common/wikibits.js'
 //		'//skins/common/ajax.js',
 		'//skins/monobook/main.js',
-		'//skins/monobook/tracker.js',
-		'//skins/common/tracker.js',
 		'//resources/wikia/libraries/my.class/my.class.js',
 		'//extensions/wikia/JSMessages/js/JSMessages.js',
 		'//extensions/wikia/AjaxLogin/AjaxLoginBindings.js',

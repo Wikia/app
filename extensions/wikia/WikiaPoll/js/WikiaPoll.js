@@ -11,15 +11,6 @@ var WikiaPoll = {
 		$.post(wgScript + '?action=ajax&rs=WikiaPollAjax&method=' + method, params, callback, 'json');
 	},
 
-	// track events
-	track: function(fakeUrl) {
-		window.jQuery.tracker.byStr('wikiapoll' + fakeUrl);
-	},
-
-	log: function(msg) {
-		$().log(msg, 'WikiaPoll');
-	},
-
 	init: function() {
 		var self = WikiaPoll;
 
@@ -32,7 +23,6 @@ var WikiaPoll = {
 
 		// find and init all polls
 		var polls = $('#WikiaArticle .WikiaPoll');
-		self.log(polls);
 
 		polls.each(function() {
 			self.setupPoll.call(self, $(this));
@@ -64,7 +54,6 @@ var WikiaPoll = {
 				// get selected answer
 				var answer = answers.find('input:checked').val();
 				if (answer > -1) {
-					self.log('voting for answer #' + answer);
 
 					// block "Vote" button
 					voteButton.attr('disabled', true);

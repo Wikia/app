@@ -56,8 +56,6 @@ function showComboAjaxForPlaceHolder(element, isPlaceholder, callback, showRegis
 	if ((typeof  AjaxLogin != 'undefined') && AjaxLogin.showComboFromDOM()) {
 		// show ajax login dialog if already in DOM
 		if (isPlaceholder) { AjaxLogin.setPlaceHolder(element); }
-		WET.byStr('signupActions/signup/open');
-
 		// Show the tab that was configured to be shown first (defaults to login).
 		if((typeof showRegisterTabFirst != 'undefined') && showRegisterTabFirst){
 			AjaxLogin.showRegister($('#wpGoRegister'));
@@ -72,10 +70,6 @@ function showComboAjaxForPlaceHolder(element, isPlaceholder, callback, showRegis
 		return true;
 	}
 
-/*   	$("#positioned_elements").append('<div id="loadmask" class="blackout"></div>');
-   	$(".blackout:last")
-   		.height($(document).height())
-		.css({zIndex: 9999}).fadeTo("fast", 0.65); */
 	showComboAjaxForPlaceHolder.statusAjaxLogin = true;
 
 	// scroll top
@@ -183,7 +177,7 @@ $(function() {
 						if( target.is('a') ){
 							window.location.href = target.attr('href');
 						} else {
-							/* fogbugz BugId: 20320 */ 
+							/* fogbugz BugId: 20320 */
 							if(target.parent().is('a')) {
 								window.location.href = target.parent().attr('href');
 							} else {

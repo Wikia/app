@@ -53,9 +53,6 @@ Wall.EditMessageForm = $.createClass(Wall.MessageForm, {
 		this.model.loadEditData(this.page, id, mode, format, this.proxy(function(data) {
 			this.setOldHTML(id, bubble);
 			this.initEditForm(msg, data, mode);
-
-			//click tracking
-			this.track('wall/message/action/edit');
 		}));
 	},
 
@@ -92,9 +89,6 @@ Wall.EditMessageForm = $.createClass(Wall.MessageForm, {
 		}
 
 		this.afterCancel(body, isSource, target, bubble);
-
-		//click tracking
-		this.track('wall/message/edit/cancel');
 	},
 
 	getNewBodyVal: function(container) {
@@ -129,7 +123,6 @@ Wall.EditMessageForm = $.createClass(Wall.MessageForm, {
 			$('.msg-title', msg).first().html(data.msgTitle);
 			var body = $('.msg-body', msg).first().html(data.body);
 
-			//click tracking
 			var timestamp = $(bubble).find('.timestamp');
 
 			var editor = timestamp.find('.username');
@@ -149,8 +142,6 @@ Wall.EditMessageForm = $.createClass(Wall.MessageForm, {
 			//$('.SpeechBubble .timestamp .permalink')
 			$('.buttons', msg).first().show();
 			buttons.removeAttr('disabled');
-
-			this.track('wall/message/edit/save_changes');
 		}));
 	},
 
