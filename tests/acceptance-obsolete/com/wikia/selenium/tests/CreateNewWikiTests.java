@@ -32,7 +32,8 @@ public class CreateNewWikiTests extends WebDriverTest{
 	
  	private WebDriver driver;
 	private WebDriverWait wait;
-	
+	private String STAFFlogin = "";
+	private String STAFFpassword = "";
 	
 	@BeforeClass
 		public void setUp() {
@@ -206,8 +207,8 @@ public class CreateNewWikiTests extends WebDriverTest{
 
 	String wikiname = "qatest"+getDateString()+"Automation";
 	System.out.println("Create New Wiki Test Case 3.1.02 2.2.1");
-	String Username = "QAautomationBot";
-	String Password = "QAcorrectpassword123";
+	String Username = "";
+	String Password = "";
 				
 			// Step 0 - Preconditions
 			System.out.println("preconditions assurance");
@@ -307,8 +308,8 @@ public class CreateNewWikiTests extends WebDriverTest{
 		
 		String wikiname = "qatest"+getDateString()+"Automation";
 		System.out.println("Create New Wiki Test Case 3.1.02 2.2.2");
-		String Username = "QAautomationBot";
-		String Password = "QAcorrectpassword123";
+		String Username = "";
+		String Password = "";
 		String Latin_Username_does_not_exist = "tester"+getDateString();
 					
 			// Step 0 - Preconditions
@@ -409,8 +410,8 @@ public class CreateNewWikiTests extends WebDriverTest{
 		
 		String wikiname = "qatest"+getDateString()+"Automation";
 		System.out.println("Create New Wiki Test Case 3.1.02 2.2.3");
-		String Username = "QAautomationBot";
-		String Password = "QAcorrectpassword123";
+		String Username = "";
+		String Password = "";
 		
 			// Step 0 - Preconditions
 			System.out.println("preconditions assurance");
@@ -509,8 +510,8 @@ public class CreateNewWikiTests extends WebDriverTest{
 		
 		String wikiname = "qatest"+getDateString()+"Automation";
 		System.out.println("Create New Wiki Test Case 3.1.02 2.2.4");
-		String Username = "QAautomationBot";
-		String Password = "QAcorrectpassword123";
+		String Username = "";
+		String Password = "";
 	
 		// Step 0 - Preconditions
 		System.out.println("preconditions assurance");
@@ -609,8 +610,8 @@ public class CreateNewWikiTests extends WebDriverTest{
 		
 		String wikiname = "qatest"+getDateString()+"Automation";
 		System.out.println("Create New Wiki Test Case 3.1.02 2.2.5");
-		String Username = "QAautomationBot";
-		String Password = "QAcorrectpassword123";
+		String Username = "";
+		String Password = "";
 
 			// Step 0 - Preconditions
 			System.out.println("preconditions assurance");
@@ -696,7 +697,7 @@ public class CreateNewWikiTests extends WebDriverTest{
 		String wikiname = "qatest"+getDateString()+"Automation";
 		System.out.println("Create New Wiki Test Case 3.1.03 2.3.1");
 		String Username = "¥êœNonLatinQAautomationBot";
-		String Password = "QAcorrectpassword123";
+		String Password = "";
 		String Non_Latin_Username_does_not_exist = "¹êœ"+getDateString();
 		// Step 0 - Preconditions
 		System.out.println("preconditions assurance");
@@ -796,7 +797,7 @@ public class CreateNewWikiTests extends WebDriverTest{
 		String wikiname = "qatest"+getDateString()+"Automation";
 		System.out.println("Create New Wiki Test Case 3.1.03 2.3.2");
 		String Username = "¥êœNonLatinQAautomationBot";
-		String Password = "QAcorrectpassword123";
+		String Password = "";
 		
 			// Step 0 - Preconditions
 			System.out.println("preconditions assurance");
@@ -897,7 +898,7 @@ public class CreateNewWikiTests extends WebDriverTest{
 		String wikiname = "qatest"+getDateString()+"Automation";
 		System.out.println("Create New Wiki Test Case 3.1.03 2.3.3");
 		String Username = "¥êœNonLatinQAautomationBot";
-		String Password = "QAcorrectpassword123";
+		String Password = "";
 		
 			// Step 0 - Preconditions
 			System.out.println("preconditions assurance");
@@ -997,7 +998,7 @@ public class CreateNewWikiTests extends WebDriverTest{
 		String wikiname = "qatest"+getDateString()+"Automation";
 		System.out.println("Create New Wiki Test Case 3.1.03 2.3.4");
 		String Username = "¥êœNonLatinQAautomationBot";
-		String Password = "QAcorrectpassword123";
+		String Password = "";
 		
 			// Step 0 - Preconditions
 			System.out.println("preconditions assurance");
@@ -1270,7 +1271,7 @@ public class CreateNewWikiTests extends WebDriverTest{
 		System.out.println("Create New Wiki Test Case 3.1.07");
 		// REMEMBER! in JAVA \\ actualy means \. Same as \" actualy means "
 		String Username = "1QAautomationBotAutomationAutomationAutomation";
-		String Password = "QAcorrectpassword123";
+		String Password = "";
 		
 			// Step 0 - Preconditions
 			System.out.println("preconditions assurance");
