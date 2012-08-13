@@ -35,7 +35,7 @@ Wall.ReplyMessageForm = $.createClass(Wall.MessageForm, {
 		this.replyThreadMessages = 'ul .message';
 		this.replyThreadCount = 'ul .load-more .count';
 		
-		this.mainContent = '.WikiaMainContent';
+		this.mainContent = 'body';
 	},
 
 	initEvents: function() {
