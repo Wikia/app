@@ -4,11 +4,11 @@ class AdProviderLiftium extends AdProviderIframeFiller implements iAdProvider {
 
 	protected static $instance = false;
 
-        private $slotsToCall = array();
+	private $slotsToCall = array();
 
-        public function addSlotToCall($slotname){
-                $this->slotsToCall[]=$slotname;
-        }
+	public function addSlotToCall($slotname){
+		$this->slotsToCall[]=$slotname;
+	}
 
 	public function batchCallAllowed(){
 		return false;
@@ -19,14 +19,14 @@ class AdProviderLiftium extends AdProviderIframeFiller implements iAdProvider {
 	}
 
 	public function getSetupHtml($params=null){
-		wfProfileIn(__METHOD__);
+		static $called = false;
 
-                static $called = false;
-                if ($called){
-			wfProfileOut(__METHOD__);
-                        return false;
-                }
-                $called = true;
+		if ($called) {
+			return false;
+		}
+		$called = true;
+
+		wfProfileIn(__METHOD__);
 
 		global $wgDBname, $wgLang, $wgUser, $wgTitle, $wgLiftiumDevHosts, $wgDevelEnvironment;
 		global $wgDartCustomKeyValues, $wgLoadAdDriverOnLiftiumInit;
@@ -85,13 +85,10 @@ class AdProviderLiftium extends AdProviderIframeFiller implements iAdProvider {
 			$version = "";
 		}
 		
-		if($options['kv_skin'] != 'oasis') {
-			$out .=  '<script type="text/javascript" src="'. $base .'js/Liftium.js' . $version . '"></script>' . "\n";
-			$out .=  '<script type="text/javascript" src="'. $base .'js/Wikia.LiftiumDART.js' . $version . '"></script>' . "\n";
-			$out .=  '<script type="text/javascript" src="'. $base .'js/Wikia.Athena.js' . $version . '"></script>' . "\n";
-			$out .=  '<script type="text/javascript" src="'. $base .'js/Wikia.AQ.js' . $version . '"></script>' . "\n";
-			$out .=  '<script type="text/javascript" src="'. $base .'js/Wikia.meerkat.js' . $version . '"></script>' . "\n";
-			$out .=  '<script type="text/javascript" src="'. $base .'js/Wikia.ve_alternate.js' . $version . '"></script>' . "\n";
+		if ($options['kv_skin'] != 'oasis') {
+			foreach (AssetsManager::getInstance()->getGroupCommonURL('liftium_ads_js') as $src) {
+				$out .= '<script type="text/javascript" src="'. htmlspecialchars($src) . '"></script>' . "\n";
+			}
 		}
 
 		wfProfileOut(__METHOD__);
