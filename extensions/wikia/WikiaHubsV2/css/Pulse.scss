@@ -35,6 +35,10 @@
 			position: relative;
 			@include clearfix;			
 		}
+		.WikiaSearch {
+			bottom: 5px;
+			right: 0px;
+		}
 		.pulse-content {
 			.search {
 				overflow: hidden;
@@ -49,6 +53,9 @@
 					width: 160px;
 				}
 				.wikia-button {
+					float: none;
+				}
+				input[type="text"] {
 					float: none;
 				}
 			}
