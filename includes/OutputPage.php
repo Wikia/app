@@ -3653,4 +3653,11 @@ $templates
 			}
 		}
 	}
+	/**
+	 * @author Wikia
+	 */
+	function tagWithSurrogateKeys( $keyArr ) {
+		header( 'Surrogate-Key: ' . implode( $keyArr, ' '), false );
+	}
+
 }
