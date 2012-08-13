@@ -1855,9 +1855,8 @@ Liftium.reportError = function (msg, type) {
 		WikiaTracker.trackAdEvent('liftium.errors', {'ga_category':'js', 'ga_action':msg}, 'ga');
 
 	} else {
-
 		var p = {
-			'msg' : msg,
+			'msg' : msg.substr(0, 512),
 			'type': type || "general",
 			'pubid' : LiftiumOptions.pubid,
 			'lang' : "en" // hard coded for now, because we excluded above
