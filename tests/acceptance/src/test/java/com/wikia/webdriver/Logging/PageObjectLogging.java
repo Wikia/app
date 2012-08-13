@@ -49,10 +49,10 @@ public class PageObjectLogging implements WebDriverEventListener{
 			
 	}
 	
-	public static void startLoggingMethod(String className)
+	public static void startLoggingMethod(String className, String methodName)
 	{
 			imageCounter = 0; 
-			String l1 = "<h1>Class: <em>"+className+"</em></h1>";
+			String l1 = "<h1>Class: <em>"+className+"."+methodName+"</em></h1>";
 			String l2 = "<table>";
 			CommonUtils.appendTextToFile(logPath, l1);
 			CommonUtils.appendTextToFile(logPath, l2);
@@ -76,17 +76,24 @@ public class PageObjectLogging implements WebDriverEventListener{
 		imageCounter +=1;
 	}
 	
+	public static void log(String command, String description, boolean success)
+	{
+		String hexColor = success ? "#CCFFCC" : "#FFCCCC";
+		String s = "<tr style=\"background:"+hexColor+";\"><td>"+command+"</td><td>"+description+"</td><td> <br/><a href='screenshots/screenshot"+imageCounter+".png'>Screenshot</a></td></tr>";
+		CommonUtils.appendTextToFile(logPath, s);
+	}
+	
 
 	
 	@Override
 	public void beforeNavigateTo(String url, WebDriver driver) {
-		System.out.println("Before navigate to " + url);
+//		System.out.println("Before navigate to " + url);
 		
 	}
 
 	@Override
 	public void afterNavigateTo(String url, WebDriver driver) {
-		System.out.println("After navigate to " + url);
+//		System.out.println("After navigate to " + url);
 		String s = "<tr style=\"background:#CCFFCC;\"><td>Navigate to</td><td>"+url+"</td><td> <br/> &nbsp;</td></tr>";
 		CommonUtils.appendTextToFile(logPath, s);
 		
@@ -118,7 +125,7 @@ public class PageObjectLogging implements WebDriverEventListener{
 
 	@Override
 	public void beforeFindBy(By by, WebElement element, WebDriver driver) {
-		System.out.println("beforeFindBy");
+//		System.out.println("beforeFindBy");
 		
 	}
 
@@ -132,7 +139,7 @@ public class PageObjectLogging implements WebDriverEventListener{
 
 	@Override
 	public void beforeClickOn(WebElement element, WebDriver driver) {
-		System.out.println("beforeClick");
+//		System.out.println("beforeClick");
 		
 	}
 
@@ -142,7 +149,7 @@ public class PageObjectLogging implements WebDriverEventListener{
 		String s = "<tr style=\"background:#CCFFCC;\"><td>click</td><td>"+lastFindBy+"</td><td> <br/><a href='screenshots/screenshot"+imageCounter+".png'>Screenshot</a></td></tr>";
 		CommonUtils.appendTextToFile(logPath, s);
 
-		System.out.println("afterClick");
+//		System.out.println("afterClick");
 		
 	}
 
@@ -180,7 +187,7 @@ public class PageObjectLogging implements WebDriverEventListener{
 		CommonUtils.appendTextToFile(logPath, s1);
 		imageCounter +=1;
 				
-		System.out.println(throwable.toString());
+//		System.out.println(throwable.toString());
 	}
 
 
