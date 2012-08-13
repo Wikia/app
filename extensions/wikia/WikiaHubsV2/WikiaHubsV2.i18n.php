@@ -46,6 +46,9 @@ $messages['en'] = array(
 	// from the community
 	'wikiahubs-from-community-promoted' => 'Get Promoted',
 	'wikiahubs-from-community-caption' => 'From [$1 $2] on [$3 $4]',
+
+	//featured video
+	'wikiahubs-sponsored-by' => 'Sponsored by $1',
 );
 
 $messages['de'] = array(
@@ -79,4 +82,5 @@ $messages['de'] = array(
 $messages['qqq'] = array(
 	'wikiahubs-popular-videos-suggested-by' => 'A link under video thumbnail on hubs page. The only parameter is username.',
 	'wikiahubs-popular-videos-suggested-by-profile' => "A link under video thumbnail on hubs page. The first parameter is username and second one is a full page address to user's profile page.",
+	'wikiahubs-sponsored-by' => 'Just a text next to the sponsor image (logo). First parameter is <img /> tag with the image path',
 );

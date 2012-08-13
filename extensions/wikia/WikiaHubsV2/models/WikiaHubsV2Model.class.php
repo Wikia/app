@@ -14,9 +14,18 @@ class WikiaHubsV2Model extends WikiaModel {
 	const GRID_1_MINIATURE_SIZE = 150;
 	const GRID_2_MINIATURE_SIZE = 300;
 
+	const FEATURED_VIDEO_WIDTH = 300;
+	const FEATURED_VIDEO_HEIGHT = 225;
+
+	const SPONORED_IMAGE_WIDTH = 91;
+	const SPONORED_IMAGE_HEIGHT = 27;
+
 	protected $lang;
 	protected $date;
 	protected $vertical;
+
+	/* @var $imageThumb ThumbnailImage */
+	protected $imageThumb = null;
 
 	public function setLang($lang) {
 		$this->lang = $lang;
@@ -236,13 +245,11 @@ class WikiaHubsV2Model extends WikiaModel {
 
 	public function getDataForModuleFeaturedVideo() {
 		//mock data
-		return array(
+		$results = array(
 			'headline' => 'Featured video',
-			'sponsor' => 'FVSponsor.jpg',
-			'sponsorthumb' => $this->getStandardThumbnailUrl('FVSponsor.jpg'),
-			'video' => array(
-				'title' => 'WWE_13_(VG)_(2012)_-_Live_trailer'
-			),
+			'sponsor' => 'Sponsored_by_xbox.png',
+			'sponsorthumb' => array(),
+			'videoTitle' => 'Dishonored_(VG)_()_-_Debut_trailer',
 			'description' => array(
 				'maintitle' => 'Resident Evil 6',
 				'subtitle' => 'More evil awaits you on the',
@@ -252,14 +259,21 @@ class WikiaHubsV2Model extends WikiaModel {
 				)
 			)
 		);
+
+		$results['sponsorthumb']['src'] = $this->getThumbnailUrl('Sponsored_by_xbox.png', self::SPONORED_IMAGE_WIDTH, self::SPONORED_IMAGE_HEIGHT);
+		$sponsorThumbSizes = $this->getImageThumbSize();
+		$results['sponsorthumb']['width'] = $sponsorThumbSizes['width'];
+		$results['sponsorthumb']['height'] = $sponsorThumbSizes['height'];
+
+		return $results;
 	}
 
 	public function getDataForModulePopularVideos() {
 		//mock data
 		return array(
 			'headline' => 'Popular videos',
-			'sponsor' => 'FVSponsor.jpg',
-			'sponsorthumb' => $this->getStandardThumbnailUrl('FVSponsor.jpg'),
+			'sponsor' => 'Sponsored_by_xbox.png',
+			'sponsorthumb' => $this->getStandardThumbnailUrl('Sponsored_by_xbox.png'),
 			'videos' => array(
 				array(
 					'title' => 'The Twilight Saga: Eclipse (2010) - Clip: Battle recut',
@@ -385,8 +399,8 @@ class WikiaHubsV2Model extends WikiaModel {
 		//mock data
 		return array(
 			'headline' => 'Wikia\'s Picks',
-			'sponsor' => 'FVSponsor.jpg',
-			'sponsorthumb' => $this->getStandardThumbnailUrl('FVSponsor.jpg'),
+			'sponsor' => 'Sponsored_by_xbox.png',
+			'sponsorthumb' => $this->getStandardThumbnailUrl('Sponsored_by_xbox.png'),
 			'tabs' => array(
 				array(
 					'title' => 'Tab title',
@@ -529,32 +543,82 @@ No
 	}
 
 	protected function getStandardThumbnailUrl($imageName) {
-		return $this->getThumbnailUrl($imageName,self::GRID_2_MINIATURE_SIZE);
-	}
+ 		return $this->getThumbnailUrl($imageName, self::GRID_2_MINIATURE_SIZE);
+ 	}
 
 	protected function getSmallThumbnailUrl($imageName) {
-		return $this->getThumbnailUrl($imageName,self::GRID_1_MINIATURE_SIZE);
-	}
+ 		return $this->getThumbnailUrl($imageName, self::GRID_1_MINIATURE_SIZE);
+ 	}
 
 	protected function getMiniThumbnailUrl($imageName) {
-		return $this->getThumbnailUrl($imageName,self::GRID_0_5_MINIATURE_SIZE);
+ 		return $this->getThumbnailUrl($imageName, self::GRID_0_5_MINIATURE_SIZE);
+ 	}
+
+	/**
+	 * @param string $imageName
+	 *
+	 * @return bool|Title
+	 */
+	protected function getImageTitle($imageName) {
+		$title = F::build('Title', array($imageName, NS_FILE), 'newFromText');
+		if( !($title instanceof Title) ) {
+			return false;
+		}
+
+		return $title;
 	}
 
-	protected function getThumbnailUrl($imageName,$width) {
-		$title = F::build('Title', array($imageName, NS_FILE), 'newFromText');
-		if (!($title instanceof Title)) {
+	/**
+	 * @param Title $imageTitle Title instance of an image
+	 *
+	 * @return bool|File
+	 */
+	protected function getImageFile(Title $imageTitle) {
+		$file = F::app()->wf->FindFile($imageTitle);
+		if( !($file instanceof File) ) {
 			return false;
 		}
 
-		$file = F::app()->wf->FindFile($title);
-		if (!($file instanceof File)) {
-			return false;
+		return $file;
+	}
+
+	/**
+	 * @param string $imageName
+	 * @return string
+	 */
+	protected function getThumbnailUrl($imageName, $width = -1, $height = -1) {
+		$result = false;
+		$this->imageThumb = null;
+
+		$title = $this->getImageTitle($imageName);
+		$file = $this->getImageFile($title);
+
+		if( $file ) {
+			$width = ($width === -1) ? self::GRID_2_MINIATURE_SIZE : $width;
+
+			$thumbParams = array('width' => $width, 'height' => $height);
+			$this->imageThumb = $file->transform($thumbParams);
+
+			$result = $this->imageThumb->getUrl();
 		}
 
-		$thumbParams = array('width' => $width);
-		/* @var $thumb ThumbnailImage */
-		$thumb = $file->transform($thumbParams);
-		return $thumb->getUrl();
+		return $result;
+	}
+
+	/**
+	 * @return array
+	 */
+	protected function getImageThumbSize() {
+		$result = array();
+
+		if( !is_null($this->imageThumb) ) {
+			$result = array(
+				'width' => $this->imageThumb->getWidth(),
+				'height' => $this->imageThumb->getHeight(),
+			);
+		}
+
+		return $result;
 	}
 
 }
