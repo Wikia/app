@@ -406,18 +406,21 @@ class WikiaHubsV2Model extends WikiaModel {
 					'title' => 'Tab 1 title',
 					'image' => 'Wikia-Visualization-Add-5,glee.png',
 					'imagethumb' => $this->getStandardThumbnailUrl('Wikia-Visualization-Add-5,glee.png'),
+					'imagelink' => 'http://assassinscreed.wikia.com/wiki/User_blog:Master_Sima_Yi/Assassinews_07/09_-_Assassin%27s_Creed_film_news',
 					'content' => 'Tab 1 content'
 				),
 				array(
 					'title' => 'Tab 2 title',
 					'image' => 'Wikia-Visualization-Add-5,glee.png',
 					'imagethumb' => $this->getStandardThumbnailUrl('Wikia-Visualization-Add-5,glee.png'),
+					'imagelink' => 'http://assassinscreed.wikia.com/wiki/User_blog:Master_Sima_Yi/Assassinews_07/09_-_Assassin%27s_Creed_film_news',
 					'content' => 'Tab 2 content'
 				),
 				array(
 					'title' => 'Tab 3 title',
 					'image' => 'Wikia-Visualization-Add-5,glee.png',
 					'imagethumb' => $this->getStandardThumbnailUrl('Wikia-Visualization-Add-5,glee.png'),
+					'imagelink' => 'http://assassinscreed.wikia.com/wiki/User_blog:Master_Sima_Yi/Assassinews_07/09_-_Assassin%27s_Creed_film_news',
 					'content' => 'Tab 3 content'
 				)
 			)
