@@ -67,7 +67,7 @@ class VideoEmbedTool {
 	}
 
 	function editVideo() {
-		global $wgRequest, $wgTitle, $wgVideoMigrationProviderMap;
+		global $wgRequest;
 		$itemTitle = $wgRequest->getVal('itemTitle');
 
 		$title = Title::newFromText($itemTitle, NS_FILE);
@@ -93,7 +93,7 @@ class VideoEmbedTool {
 	}
 
 	function insertVideo() {
-		global $IP, $wgRequest, $wgUser, $wgTitle;
+		global $wgRequest, $wgUser;
 
 		$url = $wgRequest->getVal( 'url' );
 
