@@ -42,8 +42,8 @@ public class BasePageObject{
 	public static String emailPassword = "!@#QWEASD";
 	//卡羅爾
 	
-	public static String userNameStaff = "KarolK";
-	public static String passwordStaff = "123";
+	public static String userNameStaff = "";
+	public static String passwordStaff = "";
 	
 	protected int timeOut = 30;
 	
