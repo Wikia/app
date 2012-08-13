@@ -29,6 +29,18 @@ $config['oasis_tracker_js'] = array(
 	)
 );
 
+$config['liftium_ads_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/AdEngine/liftium/Liftium.js',
+		'//extensions/wikia/AdEngine/liftium/Wikia.Athena.js',
+		'//extensions/wikia/AdEngine/liftium/Wikia.LiftiumDART.js',
+		'//extensions/wikia/AdEngine/liftium/Wikia.AQ.js',
+		'//extensions/wikia/AdEngine/liftium/Wikia.meerkat.js',
+		'//extensions/wikia/AdEngine/liftium/Wikia.ve_alternate.js',
+	),
+);
+
 $config['oasis_ads_js'] = array(
     'type' => AssetsManager::TYPE_JS,
     'assets' => array(
@@ -42,12 +54,9 @@ $config['oasis_ads_js'] = array(
 		'//extensions/wikia/AdEngine/AdProviderOpenX.js',
 		'//extensions/wikia/AdEngine/LazyLoadAds.js',
 		'//extensions/wikia/AdEngine/ghost/gw-11.6.7/lib/gw.min.js',
-		'//extensions/wikia/AdEngine/liftium/Liftium.js',
-		'//extensions/wikia/AdEngine/liftium/Wikia.LiftiumDART.js',
-		'//extensions/wikia/AdEngine/liftium/Wikia.Athena.js',
-		'//extensions/wikia/AdEngine/liftium/Wikia.AQ.js',
-		'//extensions/wikia/AdEngine/liftium/Wikia.meerkat.js',
-		'//extensions/wikia/AdEngine/liftium/Wikia.ve_alternate.js',
+
+		'#group_liftium_ads_js',
+
 		'//extensions/wikia/AdEngine/liftium/AdsInContent.js',
 		'//extensions/wikia/AdEngine/AdDriver.js',
 		'//extensions/wikia/AdEngine/AdDriverGP.js',
