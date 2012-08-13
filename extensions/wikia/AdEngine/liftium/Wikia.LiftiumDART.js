@@ -1,4 +1,4 @@
-LiftiumDart = (function(window, $, WikiaTracker, Athena, AdEngine, AdConfig, Liftium, LiftiumOptions, undef) {
+window.LiftiumDART = (function(window, $, WikiaTracker, Athena, AdEngine, AdConfig, Liftium, LiftiumOptions, undef) {
 	'use strict';
 
 	var wgPageName = window.wgPageName
@@ -312,4 +312,4 @@ LiftiumDart = (function(window, $, WikiaTracker, Athena, AdEngine, AdConfig, Lif
 			return out;
 		}
 	};
-}(window, jQuery, WikiaTracker, Athena, AdEngine, AdConfig, Liftium, LiftiumOptions));
+}(window, window.jQuery, window.WikiaTracker, window.Athena, window.AdEngine, window.AdConfig, window.Liftium, window.LiftiumOptions));
