@@ -87,7 +87,11 @@ class AdProviderLiftium extends AdProviderIframeFiller implements iAdProvider {
 		
 		if($options['kv_skin'] != 'oasis') {
 			$out .=  '<script type="text/javascript" src="'. $base .'js/Liftium.js' . $version . '"></script>' . "\n";
-			$out .=  '<script type="text/javascript" src="'. $base .'js/Wikia.js' . $version . '"></script>' . "\n";
+			$out .=  '<script type="text/javascript" src="'. $base .'js/Wikia.LiftiumDART.js' . $version . '"></script>' . "\n";
+			$out .=  '<script type="text/javascript" src="'. $base .'js/Wikia.Athena.js' . $version . '"></script>' . "\n";
+			$out .=  '<script type="text/javascript" src="'. $base .'js/Wikia.AQ.js' . $version . '"></script>' . "\n";
+			$out .=  '<script type="text/javascript" src="'. $base .'js/Wikia.meerkat.js' . $version . '"></script>' . "\n";
+			$out .=  '<script type="text/javascript" src="'. $base .'js/Wikia.ve_alternate.js' . $version . '"></script>' . "\n";
 		}
 
 		wfProfileOut(__METHOD__);
