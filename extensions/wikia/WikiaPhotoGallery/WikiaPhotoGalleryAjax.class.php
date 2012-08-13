@@ -80,7 +80,8 @@ class WikiaPhotoGalleryAjax {
 		$html = $template->render('editorDialog');
 
 		// get list of this extension messages
-		require($wgExtensionMessagesFiles['WikiaPhotoGallery']);
+		$messages = array();
+		require($wgExtensionMessagesFiles['WikiaPhotoGallery']); // contains i18n in $messages
 		$list = array_keys($messages['en']);
 
 		// additional messages
