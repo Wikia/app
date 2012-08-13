@@ -869,17 +869,13 @@ class WikiFactoryPage extends SpecialPage {
 			//"tab"         => $this->mTab,
 			"hub"         => WikiFactoryHub::getInstance(),
 			"wiki"        => $this->mWiki,
-			"info"        => $info,
 			"title"       => $this->mTitle,
 			"groups"      => WikiFactory::getGroups(),
 			"cluster"     => WikiFactory::getVarValueByName( "wgDBcluster", $this->mWiki->city_id ),
 			"domains"     => WikiFactory::getDomains( $this->mWiki->city_id ),
 			"statuses" 	  => $this->mStatuses,
 			"variables"   => WikiFactory::getVariables(),
-			"wikiRequest" => $oWikiRequest,
 			"variableName"=> $this->mVariableName,
-			"user_name"   => $user_name,
-			"isDevel"     => $wgDevelEnvironment
 		);
 		$vars = array_merge($vars, $varOverrides);
 		$oTmpl->set_vars( $vars );
