@@ -4,6 +4,10 @@ var VisualStatsCodeFrequency = {
         this.wikiaData = data.wikiaFrequency;
         this.userData = data.userFrequency;
         this.user = user;
+        this.scaleDown = d3.scale.linear();
+        this.scaleUp = d3.scale.linear();
+
+        this.roundUpAll();
 
         var svg = this.drawBackground();
         this.drawVisualisation(svg);
@@ -22,15 +26,17 @@ var VisualStatsCodeFrequency = {
             .domain([0, 14])
             .range([100, 880]);
 
-        var max = VisualStatsCommon.roundUp(this.wikiaData.max);
+        this.setScales(self.wikiaData);
 
-        this.scaleUp.domain([0, max]);
-        this.scaleDown.domain([0, max]);
-
-        for (var i = 0; i <= 3; i++){
-            d3.selectAll(".axisLabel" + i).text(function(){
-                return parseInt(max / 3 * i);
-            });
+        for (var i = 1; i <= 3; i++){
+            d3.select("#axisUpLabel" + i)
+                .text(function(){
+                    return parseInt(self.wikiaData.max / 3 * i);})
+                .attr("y", self.scaleUpAxis(i));
+            d3.select("#axisDownLabel" + i)
+                .text(function(){
+                    return parseInt(self.wikiaData.min / 3 * i);})
+                .attr("y", self.scaleDownAxis(i));
         }
 
         this.lineUp = d3.svg.line()
@@ -43,8 +49,8 @@ var VisualStatsCodeFrequency = {
 
 
         var i = 0;
-        this.wikiaDataset= [];
-        this.userDataset= [];
+        this.wikiaDataset = [];
+        this.userDataset = [];
         $.each(this.wikiaData.data, function(date, value){
             svg.append("svg:text")
                 .attr("x", scaleX(i))
@@ -101,36 +107,109 @@ var VisualStatsCodeFrequency = {
 
     updateVisualisation: function (name){
         var self = this;
+        var yUp;
+        var yDown;
         if (name == "wikia"){
-            var max = VisualStatsCommon.roundUp(this.wikiaData.max);
-            for (var i = 0; i <= 3; i++){
-                d3.selectAll(".axisLabel" + i).text(function(){
-                    return parseInt(max / 3 * i);
-                });
-            }
-            self.scaleDown.domain([0, max]);
-            self.scaleUp.domain([0, max]);
+            self.setScales(self.wikiaData);
+            self.updateAxis(self.wikiaData);
+
             d3.select("#greenLine").transition().attr("d", self.lineUp(self.wikiaDataset));
             d3.select("#redLine").transition().attr("d", self.lineDown(self.wikiaDataset));
-
         }
-        else{
-            var max = VisualStatsCommon.roundUp(this.userData.max);
-            for (var i = 0; i <= 3; i++){
-                d3.selectAll(".axisLabel" + i).text(function(){
-                    return parseInt(max / 3 * i);});
-            }
-            self.scaleDown.domain([0, max]);
-            self.scaleUp.domain([0, max]);
+        else
+        {
+            self.setScales(self.userData);
+            self.updateAxis(self.userData);
+
             d3.select("#greenLine").transition().attr("d", self.lineUp(self.userDataset));
             d3.select("#redLine").transition().attr("d", self.lineDown(self.userDataset));
         }
 
     },
 
+    updateAxis: function(data){
+        var yUp;
+        var yDown;
+        var self = this;
+
+        d3.select("#axisZero")
+            .attr("y1", self.scaleUpAxis(0))
+            .attr("y2", self.scaleUpAxis(0));
+
+        for (var i = 1; i <= 3; i++){
+            yUp = self.scaleUpAxis(i);
+            yDown = self.scaleDownAxis(i);
+
+            d3.select("#axisUpLabel" + i)
+                .text(function(){
+                    return parseInt(data.max / 3 * i);})
+                .attr("y", yUp);
+            d3.select("#axisUp" + i)
+                .attr("y1", yUp)
+                .attr("y2", yUp);
+            d3.select("#axisDownLabel" + i)
+                .text(function(){
+                    return parseInt(data.min / 3 * i);})
+                .attr("y", yDown);
+            d3.select("#axisDown" + i)
+                .attr("y1", yDown)
+                .attr("y2", yDown);
+        }
+    },
+
+    setScales: function(data){
+        var self = this;
+        var domainSum = data.max + data.min;
+        self.AllScale.domain([0, domainSum]);
+        var zero = self.AllScale(data.max);
+
+        self.scaleDown.domain([0, data.min]).range([zero, 630]);
+        self.scaleUp.domain([0, data.max]).range([zero, 20]);
+        self.scaleDownAxis.range([zero, 630]);
+        self.scaleUpAxis.range([zero, 20]);
+
+    },
+
+    roundUpAll: function(){
+        var self = this;
+
+        if (self.wikiaData.min > self.wikiaData.max){
+            self.wikiaData.min = self.wikiaData.min * 1.05;
+            self.wikiaData.max+= self.wikiaData.min * 0.05;
+        }
+        else{
+            self.wikiaData.min+= self.wikiaData.max * 0.05;
+            self.wikiaData.max = self.wikiaData.max * 1.05;
+        }
+
+        if (self.userData.min > self.userData.max){
+            self.userData.min = self.userData.min * 1.05;
+            self.userData.max+= self.userData.min * 0.05;
+        }
+        else{
+            self.userData.min+= self.userData.max * 0.05;
+            self.userData.max = self.userData.max * 1.05;
+        }
+
+        this.wikiaData.min = VisualStatsCommon.roundUp(this.wikiaData.min);
+        this.wikiaData.max = VisualStatsCommon.roundUp(this.wikiaData.max);
+        this.userData.min = VisualStatsCommon.roundUp(this.userData.min);
+        this.userData.max = VisualStatsCommon.roundUp(this.userData.max);
+
+    },
+
     drawBackground: function(){
         var self = this;
-        svg = VisualStatsCommon.createSvgContainer(980, 690, "#Graph");
+        var svg = VisualStatsCommon.createSvgContainer(980, 690, "#Graph");
+
+        var domainSum = this.wikiaData.max + this.wikiaData.min;
+
+        this.AllScale = d3.scale.linear()
+            .domain([0, domainSum])
+            .range([20, 630]);
+
+        var zero = self.AllScale(self.wikiaData.max);
+
         svg.append("rect")
             .attr("x", 20)
             .attr("y", 0)
@@ -138,49 +217,54 @@ var VisualStatsCodeFrequency = {
             .attr("height", 670)
             .attr("fill", "#F0F5FA");
 
+        this.scaleUpAxis = d3.scale.linear()
+            .domain([0, 3])
+            .range([zero, 20]);
+
+        this.scaleDownAxis = d3.scale.linear()
+            .domain([0, 3])
+            .range([zero, 630]);
+
         svg.append("svg:line")
-            .attr("x1", 60).attr("y1", 325)
-            .attr("x2", 920).attr("y2", 325)
-            .attr("stroke", "#41A4FA");
+            .attr("x1", 60).attr("y1", self.scaleDownAxis(0))
+            .attr("x2", 920).attr("y2", self.scaleDownAxis(0))
+            .attr("stroke", "#41A4FA")
+            .attr("stroke-width", "1px")
+            .attr("id", "axisZero");
 
-        this.scaleUp = d3.scale.linear()
-            .domain([0, 3])
-            .range([325, 20]);
-
-        this.scaleDown = d3.scale.linear()
-            .domain([0, 3])
-            .range([325, 630]);
-
-        for (var i = 0; i<=3; i++){
+        var yUp;
+        var yDown;
+        for (var i = 1; i <= 3; i++){
+            yUp = self.scaleUpAxis(i);
+            yDown = self.scaleDownAxis(i);
             svg.append("svg:line")
-                .attr("x1", 60).attr("y1", self.scaleDown(i))
-                .attr("x2", 920).attr("y2", self.scaleDown(i))
+                .attr("x1", 60).attr("y1", yDown)
+                .attr("x2", 920).attr("y2", yDown)
                 .attr("stroke", "#41A4FA")
-                .attr("stroke-width", "1px");
+                .attr("stroke-width", "1px")
+                .attr("id", "axisDown" + i);
             svg.append("svg:text")
                 .attr("text-anchor", "end")
                 .attr("font-size", "9")
-                .attr("class", "axisLabel" + i)
+                .attr("id", "axisDownLabel" + i)
                 .attr("fill", i == 0 ? "black":"#F53131")
                 .attr("x", 57)
-                .attr("y", self.scaleDown(i));
+                .attr("y", yDown);
             svg.append("svg:line")
-                .attr("x1", 60).attr("y1", self.scaleUp(i))
-                .attr("x2", 920).attr("y2", self.scaleUp(i))
+                .attr("x1", 60).attr("y1", yUp)
+                .attr("x2", 920).attr("y2", yUp)
                 .attr("stroke", "#41A4FA")
-                .attr("stroke-width", "1px");
-            if (i > 0){
-                svg.append("svg:text")
-                    .attr("text-anchor", "end")
-                    .attr("font-size", "9")
-                    .attr("class", "axisLabel" + i)
-                    .attr("fill", "#48C783")
-                    .attr("x", 57)
-                    .attr("y", self.scaleUp(i));
-            }
-        }
+                .attr("stroke-width", "1px")
+                .attr("id", "axisUp" + i);
+            svg.append("svg:text")
+                .attr("text-anchor", "end")
+                .attr("font-size", "9")
+                .attr("id", "axisUpLabel" + i)
+                .attr("fill", "#48C783")
+                .attr("x", 57)
+                .attr("y", yUp);
 
+        }
         return svg;
     }
-
 }

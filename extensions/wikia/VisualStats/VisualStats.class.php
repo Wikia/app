@@ -297,6 +297,8 @@ class VisualStats extends WikiaObject {
             $userTotal = 0;
             $wikiaMax = 0;
             $userMax = 0;
+            $wikiaMin = 0;
+            $userMin = 0;
             $userCount = array('added' => 0, 'deleted' => 0);
             $wikiaCount = array('added' => 0, 'deleted' => 0);
 
@@ -325,8 +327,8 @@ class VisualStats extends WikiaObject {
                 else{
                     $wikiaResult[$tempDate]['deleted']+= abs($diff);
                     $wikiaCount['deleted']+= abs($diff);
-                    if ($wikiaResult[$tempDate]['deleted'] > $wikiaMax){
-                        $wikiaMax = $wikiaResult[$tempDate]['deleted'];
+                    if ($wikiaResult[$tempDate]['deleted'] > $wikiaMin){
+                        $wikiaMin = $wikiaResult[$tempDate]['deleted'];
                     }
                 }
             }
@@ -359,8 +361,8 @@ class VisualStats extends WikiaObject {
                     else{
                         $userResult[$tempDate]['deleted']+= abs($diff);
                         $userCount['deleted']+= abs($diff);
-                        if ($userResult[$tempDate]['deleted'] > $userMax){
-                            $userMax = $userResult[$tempDate]['deleted'];
+                        if ($userResult[$tempDate]['deleted'] > $userMin){
+                            $userMin = $userResult[$tempDate]['deleted'];
                         }
                     }
                 }
@@ -370,16 +372,17 @@ class VisualStats extends WikiaObject {
                     'data' => $wikiaResult,
                     'total' => $wikiaTotal,
                     'max' => $wikiaMax,
+                    'min' => $wikiaMin,
                     'count' => $wikiaCount),
                 'userFrequency' => array(
                     'data' => $userResult,
                     'total' => $userTotal,
                     'max' => $userMax,
+                    'min' => $userMin,
                     'count' => $userCount));
             $this->app->wg->memc->set($key, $out, 600);
 
         }
-       // var_dump($out);
 
         $this->app->wf->profileOut( __METHOD__ );
 
