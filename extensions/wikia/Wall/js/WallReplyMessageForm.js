@@ -27,7 +27,7 @@ Wall.ReplyMessageForm = $.createClass(Wall.MessageForm, {
 
 		// Relative to replyWrapper
 		this.replyButton = '.replyButton';
-		this.replyBody = '.body';
+		this.replyBody = '.replyBody';
 		this.replyThread = '.comments > .SpeechBubble';
 
 		// Relative to replyThread

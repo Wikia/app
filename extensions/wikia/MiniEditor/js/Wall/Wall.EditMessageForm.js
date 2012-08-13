@@ -38,10 +38,10 @@ MiniEditor.Wall.EditMessageForm = $.createClass(Wall.settings.classBindings.edit
 		});
 
 		$('.msg-title textarea.title', msg).autoResize({
-                        min: 30,
-                        limit: 256,
-                        extraSpace: 15
-                });
+			min: 30,
+			limit: 256,
+			extraSpace: 15
+		});
 
 		// Initialize the editor after assets are loaded
 		function initEditor() {

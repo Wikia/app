@@ -108,8 +108,8 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 		}
 	}
 
-	.speech-bubble-message { 
-		padding: 5px 10px 0px 8px; 
+	.speech-bubble-message {
+		padding: 5px 10px 0px 8px;
 		text-align: left;
 		.voting-controls {
 			float: right;
@@ -486,7 +486,7 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 			background-image: url("/extensions/wikia/Forum/imageGenerator/kudo_20x20.png");	/* $wgCdnStylePath */
 			cursor: pointer;
 		}
-		&.inprogress, 
+		&.inprogress,
 		&.voted {
 			img {
 				@include opacity(50);
@@ -624,21 +624,6 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 	&.ns-1201 #contentSub {
 		display: none;
 	}
-	#Wall {
-		.timestamp {
-			width: 100%;
-			margin-bottom: 5px;
-			.buttonswrapper {
-				float: right;
-				a {
-					margin: 0 10px 0 5px;
-				}
-			}
-		}
-	}
-}
-
-body.skin-monobook {
 	.BreadCrumbs {
 		padding-top: 10px;
 	}
@@ -651,6 +636,9 @@ body.skin-monobook {
 		}
 		.SpeechBubble {
 			margin-right: 0px;
+			&.open .speech-bubble-message {
+				margin-left: 50px;
+			}
 			.SpeechBubble {
 				&:before, &:after { display: none; }
 			}
@@ -659,9 +647,6 @@ body.skin-monobook {
 			margin: 0;
 			padding: 0;
 			background: none;
-			.msg-title {
-
-			}
 		}
 		.comments .SpeechBubble .msg-title a {
 			color: black;
@@ -690,8 +675,17 @@ body.skin-monobook {
 			border: solid;
 			border-width: 1px;
 		}
+		.timestamp {
+			width: 100%;
+			margin-bottom: 5px;
+			.buttonswrapper {
+				float: right;
+				a {
+					margin: 0 10px 0 5px;
+				}
+			}
+		}
 	}
-
 }
 
 .WallGreeting {
