@@ -1,5 +1,7 @@
 package com.wikia.webdriver.TestCases.CreateAWikiTests;
 
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import com.wikia.webdriver.Common.CommonFunctions;
@@ -19,7 +21,8 @@ import com.wikia.webdriver.pageObjects.PageObject.CreateNewWiki.NewWikiaHomePage
 public class CreateAWikiTests_latin extends TestTemplate
 {
 	private String wikiName;
-
+	
+	
 	
 	/*
 	 * Test Case 3.1.01 Create new wiki Have an account? page: Display
@@ -28,6 +31,7 @@ public class CreateAWikiTests_latin extends TestTemplate
 	@Test
 	public void CreateNewWiki_latin_001_have_an_account()
 	{
+		startBrowser();
 		driver.get("http://community.wikia.com/wiki/Special:UserLogout?returnto=User "+BasePageObject.userName);
 		HomePageObject home = new HomePageObject(driver);
 		home.openHomePage();
@@ -41,6 +45,7 @@ public class CreateAWikiTests_latin extends TestTemplate
 		logInPage.verifyFaceBookToolTip();
 		logInPage.verifySignUpText();		
 		driver.get("http://community.wikia.com/wiki/Special:UserLogout?returnto=User "+BasePageObject.userName);
+		stopBrowser();
 	}
 	
 	
@@ -52,6 +57,7 @@ public class CreateAWikiTests_latin extends TestTemplate
 	@Test
 	public void CreateNewWiki_latin_TC002_user_name_is_blank()
 	{
+		startBrowser();
 		driver.get("http://community.wikia.com/wiki/Special:UserLogout?returnto=User "+BasePageObject.userName);
 		HomePageObject home = new HomePageObject(driver);
 		home.openHomePage();
@@ -75,6 +81,7 @@ public class CreateAWikiTests_latin extends TestTemplate
 		newWikia.closeCongratulationsLightBox();
 		newWikia.vefifyUserLoggedIn(BasePageObject.userName);
 		driver.get("http://community.wikia.com/wiki/Special:UserLogout?returnto=User "+BasePageObject.userName);
+		stopBrowser();
 		
 	}
 	
@@ -87,6 +94,7 @@ public class CreateAWikiTests_latin extends TestTemplate
 	@Test
 	public void CreateNewWiki_latin_TC003_user_name_does_not_exists()
 	{
+		startBrowser();
 		driver.get("http://community.wikia.com/wiki/Special:UserLogout?returnto=User "+BasePageObject.userName);
 		HomePageObject home = new HomePageObject(driver);
 		home.openHomePage();
@@ -113,6 +121,7 @@ public class CreateAWikiTests_latin extends TestTemplate
 		newWikia.verifyUserToolBar();
 		CommonFunctions.logOut(BasePageObject.userName);
 		driver.get("http://community.wikia.com/wiki/Special:UserLogout?returnto=User "+BasePageObject.userName);
+		stopBrowser();
 	}
 	
 	/*
@@ -123,6 +132,7 @@ public class CreateAWikiTests_latin extends TestTemplate
 	@Test
 	public void CreateNewWiki_latin_TC004_password_is_blank()
 	{
+		startBrowser();
 		driver.get("http://community.wikia.com/wiki/Special:UserLogout?returnto=User "+BasePageObject.userName);
 		HomePageObject home = new HomePageObject(driver);
 		home.openHomePage();
@@ -149,6 +159,7 @@ public class CreateAWikiTests_latin extends TestTemplate
 		newWikia.verifyUserToolBar();
 		CommonFunctions.logOut(BasePageObject.userName);
 		driver.get("http://community.wikia.com/wiki/Special:UserLogout?returnto=User "+BasePageObject.userName);
+		stopBrowser();
 	}
 	
 	/*
@@ -159,6 +170,7 @@ public class CreateAWikiTests_latin extends TestTemplate
 	@Test
 	public void CreateNewWiki_latin_TC005_password_is_incorrect()
 	{
+		startBrowser();
 		driver.get("http://community.wikia.com/wiki/Special:UserLogout?returnto=User "+BasePageObject.userName);
 		HomePageObject home = new HomePageObject(driver);
 		home.openHomePage();
@@ -185,6 +197,7 @@ public class CreateAWikiTests_latin extends TestTemplate
 		newWikia.vefifyUserLoggedIn(BasePageObject.userName);
 		newWikia.verifyUserToolBar();
 		driver.get("http://community.wikia.com/wiki/Special:UserLogout?returnto=User "+BasePageObject.userName);
+		stopBrowser();
 	}
 	
 	/*
@@ -195,6 +208,7 @@ public class CreateAWikiTests_latin extends TestTemplate
 	@Test
 	public void CreateNewWiki_latin_TC006_user_name_and_password_are_correct()
 	{
+		startBrowser();
 		driver.get("http://community.wikia.com/wiki/Special:UserLogout?returnto=User "+BasePageObject.userName);
 		HomePageObject home = new HomePageObject(driver);
 		home.openHomePage();
@@ -217,6 +231,9 @@ public class CreateAWikiTests_latin extends TestTemplate
 		newWikia.vefifyUserLoggedIn(BasePageObject.userName);
 		newWikia.verifyUserToolBar();
 		driver.get("http://community.wikia.com/wiki/Special:UserLogout?returnto=User "+BasePageObject.userName);
+		stopBrowser();
 	}	
+	
+	
 	
 }

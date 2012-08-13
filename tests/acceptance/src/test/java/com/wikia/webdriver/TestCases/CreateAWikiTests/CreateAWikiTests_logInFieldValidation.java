@@ -30,6 +30,7 @@ public class CreateAWikiTests_logInFieldValidation extends TestTemplate{
 	@Test(dataProvider="getUserName")
 	public void CreateNewWiki_LogInFieldValidation(String userName, String userNameEnc)
 	{
+		startBrowser();
 		driver.get("http://community.wikia.com/wiki/Special:UserLogout?returnto=User "+userNameEnc);
 		HomePageObject home = new HomePageObject(driver);
 		home.openHomePage();
@@ -52,5 +53,6 @@ public class CreateAWikiTests_logInFieldValidation extends TestTemplate{
 		newWikia.vefifyUserLoggedIn(userNameEnc);
 		newWikia.verifyUserToolBar();
 		driver.get("http://community.wikia.com/wiki/Special:UserLogout?returnto=User "+userNameEnc);
+		stopBrowser();
 	}
 }
