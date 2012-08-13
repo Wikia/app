@@ -39,6 +39,16 @@ $wikiahubs-line-height: 16px;
 		margin: 0;
 		padding: 0;
 	}
+	.wikiahubs-module {
+		h1 {
+			border-bottom: 4px solid #d8e3e9;
+			font-weight: bold;
+			font-size: 18px;
+			line-height: 23px;
+			margin: 0;
+			padding: 0;
+		}
+	}
 	/* resets */
 	ul {
 		list-style: none;

@@ -10,7 +10,9 @@
  */
 
 class WikiaHubsV2Model extends WikiaModel {
-	const MINIATURE_SIZE = 300;
+	const GRID_0_5_MINIATURE_SIZE = 75;
+	const GRID_1_MINIATURE_SIZE = 150;
+	const GRID_2_MINIATURE_SIZE = 300;
 
 	protected $lang;
 	protected $date;
@@ -89,15 +91,14 @@ class WikiaHubsV2Model extends WikiaModel {
 
 	public function getDataForModuleExplore() {
 		// mock data
-		return array(
+		$data = array(
 			'headline' => 'Explore',
-			'article' => 'Article content',
+			'article' => 'Article content which is very long because it is so long that it is too long',
 			'image' => 'Marvel320.jpg',
-			'imagethumb' => $this->getStandardThumbnailUrl('Marvel320.jpg'),
 			'linkgroups' =>
 			array(
 				array(
-					'headline' => 'Group1',
+					'headline' => 'Group 1',
 					'links' =>
 					array(
 						array(
@@ -115,7 +116,43 @@ class WikiaHubsV2Model extends WikiaModel {
 					),
 				),
 				array(
-					'headline' => 'Group2',
+					'headline' => 'Group 2',
+					'links' =>
+					array(
+						array(
+							'anchor' => 'WoWwiki',
+							'href' => 'http://www.wowwiki.com'
+						),
+						array(
+							'anchor' => 'WoWwiki',
+							'href' => 'http://www.wowwiki.com'
+						),
+						array(
+							'anchor' => 'WoWwiki',
+							'href' => 'http://www.wowwiki.com'
+						),
+					)
+				),
+				array(
+					'headline' => 'Group 3',
+					'links' =>
+					array(
+						array(
+							'anchor' => 'WoWwiki',
+							'href' => 'http://www.wowwiki.com'
+						),
+						array(
+							'anchor' => 'WoWwiki',
+							'href' => 'http://www.wowwiki.com'
+						),
+						array(
+							'anchor' => 'WoWwiki',
+							'href' => 'http://www.wowwiki.com'
+						),
+					)
+				),
+				array(
+					'headline' => 'Group 4',
 					'links' =>
 					array(
 						array(
@@ -134,10 +171,14 @@ class WikiaHubsV2Model extends WikiaModel {
 				)
 			),
 			'link' => array(
-				'title' => 'WoWwiki',
+				'anchor' => 'WoWwiki',
 				'href' => 'http://www.wowwiki.com'
 			),
 		);
+
+		$data['imagelink'] = $this->getMiniThumbnailUrl($data['image']);
+
+		return $data;
 	}
 
 	public function getDataForModulePulse() {
@@ -297,43 +338,43 @@ class WikiaHubsV2Model extends WikiaModel {
 			'description' => 'Here are the top 10 Video Game wikis based on wiki activity, breadth of content and awesomeness.',
 			'wikis' => array(
 				array(
-					'title' => 'WoWwiki',
+					'anchor' => 'WoWwiki',
 					'href' => 'http://www.wowwiki.com'
 				),
 				array(
-					'title' => 'WoWwiki',
+					'anchor' => 'WoWwiki',
 					'href' => 'http://www.wowwiki.com'
 				),
 				array(
-					'title' => 'WoWwiki',
+					'anchor' => 'WoWwiki',
 					'href' => 'http://www.wowwiki.com'
 				),
 				array(
-					'title' => 'WoWwiki',
+					'anchor' => 'WoWwiki',
 					'href' => 'http://www.wowwiki.com'
 				),
 				array(
-					'title' => 'WoWwiki',
+					'anchor' => 'WoWwiki',
 					'href' => 'http://www.wowwiki.com'
 				),
 				array(
-					'title' => 'WoWwiki',
+					'anchor' => 'WoWwiki',
 					'href' => 'http://www.wowwiki.com'
 				),
 				array(
-					'title' => 'WoWwiki',
+					'anchor' => 'WoWwiki',
 					'href' => 'http://www.wowwiki.com'
 				),
 				array(
-					'title' => 'WoWwiki',
+					'anchor' => 'WoWwiki',
 					'href' => 'http://www.wowwiki.com'
 				),
 				array(
-					'title' => 'WoWwiki',
+					'anchor' => 'WoWwiki',
 					'href' => 'http://www.wowwiki.com'
 				),
 				array(
-					'title' => 'WoWwiki',
+					'anchor' => 'WoWwiki',
 					'href' => 'http://www.wowwiki.com'
 				),
 			)
@@ -352,7 +393,7 @@ class WikiaHubsV2Model extends WikiaModel {
 					'image' => 'Image.jpg',
 					'imagethumb' => $this->getStandardThumbnailUrl('Image.jpg'),
 					'link' => array(
-						'title' => 'WoWwiki',
+						'anchor' => 'WoWwiki',
 						'href' => 'http://www.wowwiki.com'
 					),
 					'content' => 'Tab content'
@@ -362,7 +403,7 @@ class WikiaHubsV2Model extends WikiaModel {
 					'image' => 'Image.jpg',
 					'imagethumb' => $this->getStandardThumbnailUrl('Image.jpg'),
 					'link' => array(
-						'title' => 'WoWwiki',
+						'anchor' => 'WoWwiki',
 						'href' => 'http://www.wowwiki.com'
 					),
 					'content' => 'Tab content'
@@ -372,7 +413,7 @@ class WikiaHubsV2Model extends WikiaModel {
 					'image' => 'Image.jpg',
 					'imagethumb' => $this->getStandardThumbnailUrl('Image.jpg'),
 					'link' => array(
-						'title' => 'WoWwiki',
+						'anchor' => 'WoWwiki',
 						'href' => 'http://www.wowwiki.com'
 					),
 					'content' => 'Tab content'
@@ -400,7 +441,7 @@ No
 			'entries' => array(
 				array(
 					'article' => array(
-						'title' => 'Assassins Creed Film News',
+						'anchor' => 'Assassins Creed Film News',
 						'href' => 'http://www.wowwiki.com'
 					),
 					'contributor' => array(
@@ -412,14 +453,14 @@ No
 					'subtitle' => 'Master Sima Yi Says:',
 					'content' => 'Today, several news sites have reported that actor Michael Fassbender (known for his roles in Inglourious Basterds, Shame, X-Men: First Class and Prometheus) has signed on for the planned Assassin\'s Creed film.',
 					'wikilink' => array(
-						'title' => 'WoWwiki',
+						'anchor' => 'WoWwiki',
 						'href' => 'http://www.wowwiki.com'
 					),
 					'blogurl' => 'http://assassinscreed.wikia.com/wiki/User_blog:Master_Sima_Yi/Assassinews_07/09_-_Assassin%27s_Creed_film_news',
 				),
 				array(
 					'article' => array(
-						'title' => 'Assassins Creed Film News',
+						'anchor' => 'Assassins Creed Film News',
 						'href' => 'http://www.wowwiki.com'
 					),
 					'contributor' => array(
@@ -431,14 +472,14 @@ No
 					'subtitle' => 'Master Sima Yi Says:',
 					'content' => 'Today, several news sites have reported that actor Michael Fassbender (known for his roles in Inglourious Basterds, Shame, X-Men: First Class and Prometheus) has signed on for the planned Assassin\'s Creed film.',
 					'wikilink' => array(
-						'title' => 'WoWwiki',
+						'anchor' => 'WoWwiki',
 						'href' => 'http://www.wowwiki.com'
 					),
 					'blogurl' => 'http://assassinscreed.wikia.com/wiki/User_blog:Master_Sima_Yi/Assassinews_07/09_-_Assassin%27s_Creed_film_news',
 				),
 				array(
 					'article' => array(
-						'title' => 'Assassins Creed Film News',
+						'anchor' => 'Assassins Creed Film News',
 						'href' => 'http://www.wowwiki.com'
 					),
 					'contributor' => array(
@@ -450,14 +491,14 @@ No
 					'subtitle' => 'Master Sima Yi Says:',
 					'content' => 'Today, several news sites have reported that actor Michael Fassbender (known for his roles in Inglourious Basterds, Shame, X-Men: First Class and Prometheus) has signed on for the planned Assassin\'s Creed film.',
 					'wikilink' => array(
-						'title' => 'WoWwiki',
+						'anchor' => 'WoWwiki',
 						'href' => 'http://www.wowwiki.com'
 					),
 					'blogurl' => 'http://assassinscreed.wikia.com/wiki/User_blog:Master_Sima_Yi/Assassinews_07/09_-_Assassin%27s_Creed_film_news',
 				),
 				array(
 					'article' => array(
-						'title' => 'Assassins Creed Film News',
+						'anchor' => 'Assassins Creed Film News',
 						'href' => 'http://www.wowwiki.com'
 					),
 					'contributor' => array(
@@ -469,7 +510,7 @@ No
 					'subtitle' => 'Master Sima Yi Says:',
 					'content' => 'Today, several news sites have reported that actor Michael Fassbender (known for his roles in Inglourious Basterds, Shame, X-Men: First Class and Prometheus) has signed on for the planned Assassin\'s Creed film.',
 					'wikilink' => array(
-						'title' => 'WoWwiki',
+						'anchor' => 'WoWwiki',
 						'href' => 'http://www.wowwiki.com'
 					),
 					'blogurl' => 'http://assassinscreed.wikia.com/wiki/User_blog:Master_Sima_Yi/Assassinews_07/09_-_Assassin%27s_Creed_film_news',
@@ -488,6 +529,18 @@ No
 	}
 
 	protected function getStandardThumbnailUrl($imageName) {
+		return $this->getThumbnailUrl($imageName,self::GRID_2_MINIATURE_SIZE);
+	}
+
+	protected function getSmallThumbnailUrl($imageName) {
+		return $this->getThumbnailUrl($imageName,self::GRID_1_MINIATURE_SIZE);
+	}
+
+	protected function getMiniThumbnailUrl($imageName) {
+		return $this->getThumbnailUrl($imageName,self::GRID_0_5_MINIATURE_SIZE);
+	}
+
+	protected function getThumbnailUrl($imageName,$width) {
 		$title = F::build('Title', array($imageName, NS_FILE), 'newFromText');
 		if (!($title instanceof Title)) {
 			return false;
@@ -498,7 +551,7 @@ No
 			return false;
 		}
 
-		$thumbParams = array('width' => self::MINIATURE_SIZE);
+		$thumbParams = array('width' => $width);
 		/* @var $thumb ThumbnailImage */
 		$thumb = $file->transform($thumbParams);
 		return $thumb->getUrl();

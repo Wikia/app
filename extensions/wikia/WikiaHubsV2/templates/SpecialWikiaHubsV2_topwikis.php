@@ -10,7 +10,7 @@
 			<? if(is_array($wikis)): ?>
 				<? foreach($wikis as $wiki): ?>
 				<li>
-					<a  class="text" title="<?= $wiki['title']; ?>" href="<?= $wiki['href']; ?>"><?= $wiki['title']; ?></a>
+					<a  class="text" title="<?= $wiki['anchor']; ?>" href="<?= $wiki['href']; ?>"><?= $wiki['anchor']; ?></a>
 				</li>
 				<? endforeach; ?>
 			<? endif; ?>

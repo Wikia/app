@@ -4,12 +4,20 @@
 			width: 100%;
 			@include clearfix;
 		}
+		figure {
+			float: right;
+			margin: 0 0 0 5px;
+		}
 		.explore-content {
 			border-left: 1px dotted #B9B9B9;
 			border-right: 1px dotted #B9B9B9;
+			margin-top: 20px;
+			overflow: hidden;
 			padding-left:8px;
 			padding-right:8px;
-			margin-top: 20px;		
+			.text {
+				margin-top: 15px;
+			}
 		}	
 		h4 {
 			font-weight: bold;
