@@ -51,7 +51,7 @@ class VideoHandlerHooks extends WikiaObject{
 
 	public function WikiaVideoParserBeforeStrip($parser, $text, $strip_state) {
 
-		global $wgExtraNamespaces, $wgWikiaVideoGalleryId, $wgWikiaVideoPlaceholderId, $wgRTEParserEnabled;
+		global $wgWikiaVideoGalleryId, $wgWikiaVideoPlaceholderId, $wgRTEParserEnabled;
 
 		$wgWikiaVideoGalleryId = 0;
 		$wgWikiaVideoPlaceholderId = 0;
