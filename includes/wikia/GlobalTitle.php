@@ -36,6 +36,8 @@ class GlobalTitle extends Title {
 	private $mNamespaceNames = false;
 	private $mLastEdit = false;
 	private $mExists = null;
+	private $mContent = false;
+	private $mDbName = null;
 
 	/**
 	 * static constructor, Create new Title from name of page
@@ -65,7 +67,8 @@ class GlobalTitle extends Title {
 		$memkey = sprintf( "GlobalTitle:%d:%d", $id, $city_id );
 		$res = $wgMemc->get( $memkey );
 		if ( empty($res) && WikiFactory::isPublic($city_id) ) {
-			$dbr = wfGetDB( DB_SLAVE, array(), ( $dbname ) ? $dbname : WikiFactory::IDtoDB($city_id) );
+			$dbname = ( $dbname ) ? $dbname : WikiFactory::IDtoDB($city_id);
+			$dbr = wfGetDB( DB_SLAVE, array(), $dbname );
 			$row = $dbr->selectRow( 'page',
 				array( 'page_namespace', 'page_title' ),
 				array( 'page_id' => $id ),
@@ -81,6 +84,10 @@ class GlobalTitle extends Title {
 			$title = GlobalTitle::newFromText( $res['title'], $res['namespace'], $city_id );
 		} else {
 			$title = NULL;
+		}
+
+		if ( !empty($title) && !empty($dbname) ) {
+			$title->mDbName = $dbname;
 		}
 
 		return $title;
@@ -103,8 +110,27 @@ class GlobalTitle extends Title {
 		}
 	}
 
-	public function getNamespace() {
-		return $this->mNamespace;
+	/**
+	 * Get database name that this object belongs to
+	 *
+	 * @return string
+	 */
+	public function getDatabaseName() {
+		if ( empty( $this->mDbName ) ) {
+			$this->mDbName = WikiFactory::IDtoDB( $this->mCityId );
+		}
+		return $this->mDbName;
+	}
+
+	/**
+	 * Get a database connection to this object database
+	 *
+	 * @param $type Master or slave constants
+	 * @param $groups array Query group
+	 * @return DatabaseBase
+	 */
+	protected function getConnection( $type, $groups = array() ) {
+		return wfGetDB( $type, $groups, $this->getDatabaseName() );
 	}
 
 	/**
@@ -128,6 +154,10 @@ class GlobalTitle extends Title {
 	 */
 	public function getText() {
 		return $this->mTextform;
+	}
+
+	public function getCityId() {
+		return $this->mCityId;
 	}
 
 	/**
@@ -221,7 +251,7 @@ class GlobalTitle extends Title {
 				array( 'revision', 'page' ),
 				array( 'rev_timestamp' ),
 				array(
-					'page_title' => $this->mText,
+					'page_title' => $this->mDbkeyform,
 					'page_namespace' => $this->mNamespace,
 					'page_latest=rev_id'
 				),
@@ -232,6 +262,95 @@ class GlobalTitle extends Title {
 		}
 
 		return $this->mLastEdit;
+	}
+
+	/**
+	 * Returns text contents by given text_id from foreign wiki
+	 *
+	 * @see Revision::loadText
+	 * @param $textId int Foreign wiki text id
+	 * @return String|false
+	 */
+	protected function getContentByTextId( $textId ) {
+		global $wgMemc;
+		$key = wfForeignMemcKey( $this->getDatabaseName(), null, 'revisiontext', 'textid', $textId );
+		$text = $wgMemc->get( $key );
+		if ( !empty( $text ) ) {
+			return $text;
+		}
+
+		$row = null;
+
+		// copied from Article::loadText()
+		if( !$row ) {
+			// Text data is immutable; check slaves first.
+			$dbr = $this->getConnection( DB_SLAVE );
+			$row = $dbr->selectRow( 'text',
+				array( 'old_text', 'old_flags' ),
+				array( 'old_id' => $textId ),
+				__METHOD__ );
+		}
+
+		if( !$row && wfGetLB()->getServerCount() > 1 ) {
+			// Possible slave lag!
+			$dbw = $this->getConnection( DB_MASTER );
+			$row = $dbw->selectRow( 'text',
+				array( 'old_text', 'old_flags' ),
+				array( 'old_id' => $textId ),
+				__METHOD__ );
+		}
+
+		$text = Revision::getRevisionText( $row );
+
+		if ( !is_string($text) ) {
+			$text = false;
+		}
+		return $text;
+	}
+
+	/**
+	 * Get the most recent content of the given title
+	 * Returns false on any failure (incl. when title doesn't exist)
+	 *
+	 * @return string|bool
+	 */
+	public function getContent() {
+		$this->loadAll();
+
+		if ( $this->mContent ) {
+			return $this->mContent;
+		}
+
+		if( WikiFactory::isPublic($this->mCityId) ) {
+			$dbName = WikiFactory::IDtoDB($this->mCityId);
+
+			$dbr = wfGetDB( DB_SLAVE, array(), $dbName );
+
+			$textId = $dbr->selectField(
+				array( 'revision', 'page' ),
+				array( 'rev_text_id' ),
+				array(
+					'page_title' => $this->mDbkeyform,
+					'page_namespace' => $this->mNamespace,
+					'page_latest=rev_id'
+				),
+				__METHOD__
+			);
+
+			$this->mContent = !empty( $textId ) ? $this->getContentByTextId($textId) : false;
+		} else {
+			$this->mContent = false;
+		}
+
+		return $this->mContent;
+	}
+
+	/**
+	 * @stub
+	 * @return Bool
+	 */
+	public function isRedirect() {
+		return false;
 	}
 
 	/*

@@ -141,6 +141,7 @@ $wgAutoloadClasses[ 'AutomaticWikiAdoptionGatherData' ] = "$IP/extensions/wikia/
 $wgAutoloadClasses[ 'FakeSkin'                        ] = "$IP/includes/wikia/FakeSkin.class.php";
 $wgAutoloadClasses[ 'WikiaUpdater'                    ] = "$IP/includes/wikia/WikiaUpdater.php";
 $wgHooks          [ 'LoadExtensionSchemaUpdates'      ][] = 'WikiaUpdater::update';
+$wgAutoloadClasses[ 'ResourceLoaderGlobalWikiModule'  ] = "$IP/includes/wikia/resourceloader/ResourceLoaderGlobalWikiModule.class.php";
 
 // core
 $wgAutoloadClasses['Module']  =  $IP.'/includes/wikia/Module.php';
@@ -912,6 +913,8 @@ $wgPasswordSenderName = 'Wikia';
 
 /**
  * Defines the mapping for per-skin Common.js/css
+ * IMPORTANT: use non-capitalized skin names here!
+ *
  * @var array
  */
 $wgResourceLoaderAssetsSkinMapping = array(

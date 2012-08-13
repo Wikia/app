@@ -23,7 +23,7 @@
 /**
  * Module for user customizations
  */
-class ResourceLoaderUserModule extends ResourceLoaderWikiModule {
+class ResourceLoaderUserModule extends ResourceLoaderGlobalWikiModule {
 
 	/* Protected Methods */
 	protected $origin = self::ORIGIN_USER_INDIVIDUAL;
@@ -39,22 +39,14 @@ class ResourceLoaderUserModule extends ResourceLoaderWikiModule {
 			$userpageTitle = Title::makeTitleSafe( NS_USER, $username );
 			$userpage = $userpageTitle->getPrefixedDBkey(); // Needed so $excludepages works
 
-			// Wikia change - begin - @author: wladek
-			global $wgResourceLoaderAssetsSkinMapping;
-			$skinName = $context->getSkin();
-			if ( isset( $wgResourceLoaderAssetsSkinMapping[$skinName] ) ) {
-				$skinName = $wgResourceLoaderAssetsSkinMapping[$skinName];
-			}
-
 			$pages = array(
 				"$userpage/common.js" => array( 'type' => 'script' ),
-				"$userpage/" . $skinName . '.js' =>
+				"$userpage/" . $context->getSkin() . '.js' =>
 					array( 'type' => 'script' ),
 				"$userpage/common.css" => array( 'type' => 'style' ),
-				"$userpage/" . $skinName . '.css' =>
+				"$userpage/" . $context->getSkin() . '.css' =>
 					array( 'type' => 'style' ),
 			);
-			// Wikia change - end
 
 			// Hack for bug 26283: if we're on a preview page for a CSS/JS page,
 			// we need to exclude that page from this module. In that case, the excludepage
@@ -65,6 +57,9 @@ class ResourceLoaderUserModule extends ResourceLoaderWikiModule {
 				// just like the keys in $pages[] above
 				unset( $pages[$excludepage] );
 			}
+
+			wfRunHooks( 'ResourceLoaderUserModule::getPages', array( $this, $context, $userpage, &$pages ) );
+
 			return $pages;
 		}
 		return array();
