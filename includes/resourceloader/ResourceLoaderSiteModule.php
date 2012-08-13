@@ -23,7 +23,7 @@
 /**
  * Module for site customizations
  */
-class ResourceLoaderSiteModule extends ResourceLoaderWikiModule {
+class ResourceLoaderSiteModule extends ResourceLoaderGlobalWikiModule {
 
 	/* Protected Methods */
 
@@ -37,34 +37,21 @@ class ResourceLoaderSiteModule extends ResourceLoaderWikiModule {
 	protected function getPages( ResourceLoaderContext $context ) {
 		global $wgHandheldStyle;
 
-		// Wikia change - begin - @author: wladek
-		global $wgResourceLoaderAssetsSkinMapping;
-		$skinName = $context->getSkin();
-		if ( isset( $wgResourceLoaderAssetsSkinMapping[$skinName] ) ) {
-			$skinName = $wgResourceLoaderAssetsSkinMapping[$skinName];
-		}
-		$skinName = ucfirst($skinName);
-
 		$pages = array(
 			'MediaWiki:Common.js' => array( 'type' => 'script' ),
 			'MediaWiki:Common.css' => array( 'type' => 'style' ),
-			'MediaWiki:' . $skinName . '.js' => array( 'type' => 'script' ),
-			'MediaWiki:' . $skinName . '.css' => array( 'type' => 'style' ),
+			'MediaWiki:' . ucfirst( $context->getSkin() ) . '.js' => array( 'type' => 'script' ),
+			'MediaWiki:' . ucfirst( $context->getSkin() ) . '.css' => array( 'type' => 'style' ),
 			'MediaWiki:Print.css' => array( 'type' => 'style', 'media' => 'print' ),
 		);
-
-		// Wikia doesn't include Mediawiki:Common.css in Oasis
-		// lower-case skin name is returned by getSkin()
-		if ( $context->getSkin() == 'oasis' ) {
-			unset($pages['MediaWiki:Common.css']);
-		}
-		// Wikia change - end
-
 		if ( $wgHandheldStyle ) {
 			$pages['MediaWiki:Handheld.css'] = array( 
 				'type' => 'style', 
 				'media' => 'handheld' );
 		}
+
+		wfRunHooks( 'ResourceLoaderSiteModule::getPages', array( $this, $context, &$pages ) );
+
 		return $pages;
 	}
 

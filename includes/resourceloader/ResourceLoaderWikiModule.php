@@ -66,9 +66,10 @@ abstract class ResourceLoaderWikiModule extends ResourceLoaderModule {
 
 	/**
 	 * @param $title Title
+	 * @param $options array Extra options for subclasses
 	 * @return null|string
 	 */
-	protected function getContent( $title ) {
+	protected function getContent( $title, $options = array() ) {
 		if ( $title->getNamespace() === NS_MEDIAWIKI ) {
 			$message = wfMessage( $title->getDBkey() )->inContentLanguage();
 			return $message->exists() ? $message->plain() : '';
@@ -86,6 +87,18 @@ abstract class ResourceLoaderWikiModule extends ResourceLoaderModule {
 	/* Methods */
 
 	/**
+	 * Create a title given title text and options coming along with this
+	 * title item.
+	 *
+	 * @param $titleText string Title text
+	 * @param $options array Options provided with this item
+	 * @return Title|null
+	 */
+	protected function createTitle( $titleText, $options = array() ) {
+		return Title::newFromText( $titleText );
+	}
+
+	/**
 	 * @param $context ResourceLoaderContext
 	 * @return string
 	 */
@@ -95,7 +108,7 @@ abstract class ResourceLoaderWikiModule extends ResourceLoaderModule {
 			if ( $options['type'] !== 'script' ) {
 				continue;
 			}
-			$title = Title::newFromText( $titleText );
+			$title = $this->createTitle( $titleText, $options );
 			if ( !$title || $title->isRedirect() ) {
 				continue;
 			}
@@ -103,7 +116,7 @@ abstract class ResourceLoaderWikiModule extends ResourceLoaderModule {
 			if ( strval( $script ) !== '' ) {
 				$script = $this->validateScriptFile( $titleText, $script );
 				if ( strpos( $titleText, '*/' ) === false ) {
-					$scripts .=  "/* $titleText */\n";
+					$scripts .=  "/* " . $this->getResourceName($title,$titleText,$options) . " */\n";
 				}
 				$scripts .= $script . "\n";
 			}
@@ -123,7 +136,7 @@ abstract class ResourceLoaderWikiModule extends ResourceLoaderModule {
 			if ( $options['type'] !== 'style' ) {
 				continue;
 			}
-			$title = Title::newFromText( $titleText );
+			$title = $this->createTitle( $titleText, $options );
 			if ( !$title || $title->isRedirect()  ) {
 				continue;
 			}
@@ -140,7 +153,7 @@ abstract class ResourceLoaderWikiModule extends ResourceLoaderModule {
 				$styles[$media] = '';
 			}
 			if ( strpos( $titleText, '*/' ) === false ) {
-				$styles[$media] .=  "/* $titleText */\n";
+				$styles[$media] .=  "/* " . $this->getResourceName($title,$titleText,$options) . " */\n";
 			}
 			$styles[$media] .= $style . "\n";
 		}
@@ -172,25 +185,41 @@ abstract class ResourceLoaderWikiModule extends ResourceLoaderModule {
 	/**
 	 * Get the modification times of all titles that would be loaded for
 	 * a given context.
+	 * Caches data from underlying layers.
+	 *
 	 * @param $context ResourceLoaderContext: Context object
 	 * @return array( prefixed DB key => UNIX timestamp ), nonexistent titles are dropped
 	 */
 	protected function getTitleMtimes( ResourceLoaderContext $context ) {
-		$dbr = $this->getDB();
-		if ( !$dbr ) {
-			// We're dealing with a subclass that doesn't have a DB
-			return array();
-		}
-		
 		$hash = $context->getHash();
 		if ( isset( $this->titleMtimes[$hash] ) ) {
 			return $this->titleMtimes[$hash];
 		}
 
-		$this->titleMtimes[$hash] = array();
+		$this->titleMtimes[$hash] = $this->reallyGetTitleMtimes( $context );
+
+		return $this->titleMtimes[$hash];
+	}
+
+	/**
+	 * Get the modification times of all title that would be loaded for
+	 * a given context.
+	 * Doesn't cache data and executes direct queries on database.
+	 *
+	 * @param $context ResourceLoaderContext: Context object
+	 * @return array( prefixed DB key => UNIX timestamp ), nonexistent titles are dropped
+	 */
+	protected function reallyGetTitleMtimes( ResourceLoaderContext $context ) {
+		$dbr = $this->getDB();
+		if ( !$dbr ) {
+			// We're dealing with a subclass that doesn't have a DB
+			return array();
+		}
+
+		$mtimes = array();
 		$batch = new LinkBatch;
 		foreach ( $this->getPages( $context ) as $titleText => $options ) {
-			$batch->addObj( Title::newFromText( $titleText ) );
+			$batch->addObj( $this->createTitle( $titleText, $options ) );
 		}
 
 		if ( !$batch->isEmpty() ) {
@@ -201,10 +230,25 @@ abstract class ResourceLoaderWikiModule extends ResourceLoaderModule {
 			);
 			foreach ( $res as $row ) {
 				$title = Title::makeTitle( $row->page_namespace, $row->page_title );
-				$this->titleMtimes[$hash][$title->getPrefixedDBkey()] =
+				$mtimes[$title->getPrefixedDBkey()] =
 					wfTimestamp( TS_UNIX, $row->page_touched );
 			}
 		}
-		return $this->titleMtimes[$hash];
+
+		return $mtimes;
 	}
+
+	/**
+	 * Return human-readable name of the file that was included
+	 * By default it's put in the comment before the file contents
+	 *
+	 * @param $title Title
+	 * @param $titleText string
+	 * @param $options array
+	 * @return string
+	 */
+	protected function getResourceName( $title, $titleText, $options ) {
+		return $titleText;
+	}
+
 }

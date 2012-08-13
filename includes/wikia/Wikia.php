@@ -37,6 +37,8 @@ $wgHooks['SkinTemplateOutputPageBeforeExec'][] = "Wikia::onSkinTemplateOutputPag
 $wgHooks['ResourceLoaderRegisterModules'][] = "Wikia::onResourceLoaderRegisterModules";
 $wgHooks['ResourceLoaderUserOptionsModuleGetOptions'][] = "Wikia::onResourceLoaderUserOptionsModuleGetOptions";
 $wgHooks['ResourceLoaderFileModuleConcatenateScripts'][] = 'Wikia::onResourceLoaderFileModuleConcatenateScripts';
+$wgHooks['ResourceLoaderSiteModule::getPages'][] = 'Wikia::onResourceLoaderSiteModuleGetPages';
+$wgHooks['ResourceLoaderUserModule::getPages'][] = 'Wikia::onResourceLoaderUserModuleGetPages';
 
 /**
  * This class have only static methods so they can be used anywhere
@@ -1865,7 +1867,7 @@ class Wikia {
 	 * @param array $options user options to be filtered out
 	 * @return bool true because it's a hook
 	 */
-	static public function onResourceLoaderUserOptionsModuleGetOptions( ResourceLoaderContext $context, array $options ) {
+	static public function onResourceLoaderUserOptionsModuleGetOptions( ResourceLoaderContext $context, array &$options ) {
 		wfProfileIn(__METHOD__);
 		#wfDebug(__METHOD__ . 'user options count (before): ' . count($options) . "\n");
 
@@ -1946,6 +1948,64 @@ class Wikia {
 			}
 		}
 		return $title;
+	}
+
+	public static function renameArrayKeys( $array, $mapping ) {
+		$newArray = array();
+		foreach ($array as $k => $v) {
+			$k = array_key_exists($k,$mapping) ? $mapping[$k] : $k;
+			$newArray[$k] = $v;
+		}
+
+		return $newArray;
+	}
+
+	public static function onResourceLoaderSiteModuleGetPages( $module, $context, &$pages ) {
+		global $wgResourceLoaderAssetsSkinMapping;
+
+		// handle skin name changes
+		$skinName = $context->getSkin();
+		if ( isset( $wgResourceLoaderAssetsSkinMapping[$skinName] ) ) {
+			$mappedName = $wgResourceLoaderAssetsSkinMapping[$skinName];
+			$mapping = array(
+				'MediaWiki:' . ucfirst( $skinName ) . '.js'
+					=> 'MediaWiki:' . ucfirst( $mappedName ) . '.js',
+				'MediaWiki:' . ucfirst( $skinName ) . '.css'
+					=> 'MediaWiki:' . ucfirst( $mappedName ) . '.css'
+			);
+			$pages = Wikia::renameArrayKeys($pages,$mapping);
+		}
+
+		// Wikia doesn't include Mediawiki:Common.css in Oasis
+		// lower-case skin name is returned by getSkin()
+		if ( $skinName == 'oasis' ) {
+			unset($pages['MediaWiki:Common.css']);
+		}
+
+		// todo: add user-defined site scripts here
+
+		return true;
+	}
+
+	public static function onResourceLoaderUserModuleGetPages( $module, $context, $userpage, &$pages ) {
+		global $wgResourceLoaderAssetsSkinMapping;
+
+		// handle skin name changes
+		$skinName = $context->getSkin();
+		if ( isset( $wgResourceLoaderAssetsSkinMapping[$skinName] ) ) {
+			$mappedName = $wgResourceLoaderAssetsSkinMapping[$skinName];
+			$mapping = array(
+				"$userpage/" . $skinName . '.js'
+					=> "$userpage/" . $mappedName . '.js',
+				"$userpage/" . $skinName . '.css'
+					=> "$userpage/" . $mappedName . '.css'
+			);
+			$pages = Wikia::renameArrayKeys($pages,$mapping);
+		}
+
+		// todo: add user-defined user scripts here
+
+		return true;
 	}
 
 }
