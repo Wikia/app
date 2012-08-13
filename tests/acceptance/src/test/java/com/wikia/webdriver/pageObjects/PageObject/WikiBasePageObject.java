@@ -12,7 +12,7 @@ import com.wikia.webdriver.Logging.PageObjectLogging;
 import com.wikia.webdriver.pageObjects.PageObject.WikiPage.SpecialNewFilesPageObject;
 import com.wikia.webdriver.pageObjects.PageObject.WikiPage.SpecialUploadPageObject;
 
-public class WikiBasePageObject extends HomePageObject {
+public class WikiBasePageObject extends BasePageObject {
 	private String wikiname;
 
 	public WikiBasePageObject(WebDriver driver, String wikiname) {

@@ -5,6 +5,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import com.google.common.io.FileBackedOutputStream;
+import com.wikia.webdriver.Common.CommonFunctions;
+import com.wikia.webdriver.pageObjects.PageObject.FilePageObject;
 import com.wikia.webdriver.pageObjects.PageObject.WikiBasePageObject;
 
 public class SpecialUploadPageObject extends WikiBasePageObject {
@@ -33,7 +36,7 @@ public class SpecialUploadPageObject extends WikiBasePageObject {
 	 * ** @param file Look at folder acceptancesrc/src/resources/ImagesForUploadTests
 	 *  */
 	public void TypeInFileToUploadPath(String file){
-	sendKeys(BrowseForFileInput, System.getProperty("user.dir")+"\\src\\resources\\ImagesForUploadTests"+file);
+	sendKeys(BrowseForFileInput, System.getProperty("user.dir")+"\\src\\test\\resources\\ImagesForUploadTests\\"+file);
 	
 	}
 
@@ -43,19 +46,18 @@ public class SpecialUploadPageObject extends WikiBasePageObject {
 
 	public void CheckIgnoreAnyWarnings() {
 		waitForElementByElement(IgnoreAnyWarnings);
+		CommonFunctions.scrollToElement(IgnoreAnyWarnings);
 		click(IgnoreAnyWarnings);
 		
 	}
 
-	public void ClickOnUploadFile() {
+	public FilePageObject ClickOnUploadFile(String file) {
 		waitForElementByElement(UploadFileInput);
 		click(UploadFileInput);
+		return new FilePageObject(driver, file);
 	}
 
-	public void waitForFilePage(String file) {
-		waitForStringInURL("File:"+file);
-		
-	}
+
 
 
 }
