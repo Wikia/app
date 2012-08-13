@@ -69,6 +69,11 @@
 		}
 	}
 	.WikiaHubs {
+		.wikiahubs-module {
+			h1 {
+				border-color: $color-wikiahome-hubcolor;
+			}
+		}
 		.wikiahubs-explore {
 			h2 {
 				border-bottom: 4px solid $color-wikiahome-hubcolor;

@@ -15,7 +15,7 @@
 			<div class="wikiahubs-ftc-title">
 				<p>
 					<a class="text" href="<?= $entry['article']['href'] ?>">
-						<?= $entry['article']['title']; ?>
+						<?= $entry['article']['anchor']; ?>
 					</a>
 				</p>
 			</div>
@@ -27,7 +27,7 @@
 						$entry['contributor']['href'],
 						$entry['contributor']['name'],
 						$entry['wikilink']['href'],
-						$entry['wikilink']['title']
+						$entry['wikilink']['anchor']
 					) ?>
 				</p>
 			</div>

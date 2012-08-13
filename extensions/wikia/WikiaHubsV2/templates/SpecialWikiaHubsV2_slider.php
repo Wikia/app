@@ -16,7 +16,7 @@ foreach($images as $image) {
 			$image['headline'],
 			'link=' . $image['anchor'],
 			'linktext=' . $image['description'],
-			'shorttext=' . $image['title']
+			'shorttext=' . $image['anchor']
 		)
 	);
 }
