@@ -233,7 +233,7 @@ function WidgetShoutBoxAddMessage($msg) {
 
 	// add only non-empty messages
 	if( wfReadOnly() ){ // Change to wgReadOnlyDbMode if we implement that
-		wfDebug('Shoutbox: NOT adding msg ' . $message . " because we're in read-only mode...\n");
+		wfDebug('Shoutbox: NOT adding msg ' . $msg . " because we're in read-only mode...\n");
 	} else if ( !empty($msg) ) {
 		$message = substr(trim(urldecode($msg), ' :'), 0, 100);	// limit message length (100 chars)
 
