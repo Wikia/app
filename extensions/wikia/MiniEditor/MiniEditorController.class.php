@@ -92,7 +92,7 @@ class MiniEditorController extends WikiaController {
 			// Need to call RTE::init to get Disabled reason (if any, usually preferences)
 			$ep = new EditPage(new Article(new Title()));
 			RTE::init($ep);
-			RTE::makeGlobalVariablesScript(&$vars);
+			RTE::makeGlobalVariablesScript($vars);  // pass by reference
 		}
 
 		// FIXME: We have to force AssetsManager to combine scripts.
@@ -119,10 +119,10 @@ class MiniEditorController extends WikiaController {
 		// Extensions use hooks to load their setup only on edit pages (VideoEmbedTool, WikiaMiniUploader)
 		// To load ONLY the vars we need and not all of them we will call the setup functions directly
 		if ($app->wg->EnableVideoToolExt) {
-			VETSetupVars(&$vars);
+			VETSetupVars($vars);  // pass by reference
 		}
 		if ($app->wg->EnableWikiaMiniUploadExt) {
-			WMUSetupVars(&$vars);
+			WMUSetupVars($vars);  // pass by reference
 		}
 
 		$this->response->setData($vars);
