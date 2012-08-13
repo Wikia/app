@@ -11,7 +11,7 @@ import com.wikia.webdriver.pageObjects.PageObject.BasePageObject;
 
 public class CreateNewWikiPageObjectStep2 extends BasePageObject{
 	
-	@FindBy(id="Description")
+	@FindBy(css="textarea#Description")
 	private WebElement descriptionField;
 	@FindBy(css="select[name='wiki-category']")
 	private WebElement wikiCategory;
