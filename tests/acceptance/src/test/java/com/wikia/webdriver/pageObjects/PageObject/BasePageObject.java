@@ -9,7 +9,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.annotations.BeforeClass;
 
 import com.wikia.webdriver.Common.CommonExpectedConditions;
 import com.wikia.webdriver.Logging.PageObjectLogging;
@@ -29,6 +28,12 @@ public class BasePageObject{
 	
 	public static String userNameNonLatin = "卡羅爾";
 	public static String userNameNonLatinEncoded = "%E5%8D%A1%E7%BE%85%E7%88%BE";
+	
+	public static String userNameWithUnderScore = "Driver_web";
+	public static String userNameWithBackwardSlash = "Driver\\web";
+	public static String userNameLong = "Webdriverwikiaselenium";
+	
+	
 													
 	public static String passwordNonLatin = "!@#QWEASD";
 	
