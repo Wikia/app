@@ -19,7 +19,7 @@
 		<dependency>
 			<groupId>org.testng</groupId>
 			<artifactId>testng</artifactId>
-			<version>6.1.1</version>
+			<version>6.7</version>
 		<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -83,14 +83,10 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>2.12</version>
 				<configuration>							
-					<!--systemPropertyVariables>
-						<base-path>${base-path}</base-path>
+					<systemPropertyVariables>
+						<run_mvn>true</run_mvn>
 						<browser>${browser}</browser>
-						<resource-path>${resource-path}</resource-path>
-						<firefox.firebug.export-path>${firefox.firebug.export-path}</firefox.firebug.export-path>
-						<capability>${capability}</capability>
-						<preparation-mode>${preparation-mode}</preparation-mode>
-					</systemPropertyVariables-->
+					</systemPropertyVariables>
 					<suiteXmlFiles>
 						<suiteXmlFile>src/test/java/com/wikia/webdriver/TestSuites/testSuite.xml</suiteXmlFile>
 					</suiteXmlFiles>
