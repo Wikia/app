@@ -60,23 +60,26 @@ public class DriverProvider {
 	{
 		Global.RUN_BY_MAVEN = "true".equals(System.getProperty("run_mvn"));
 		if (Global.RUN_BY_MAVEN)
-		{
+		{	
 			getPropertiesFromPom();
 		}
 		else
 		{
 			setPropertiesManually();
 		}
+		
 	}
 	
 	private static void getPropertiesFromPom()
 	{
-		Global.BROWSER = System.getProperty("browser"); 
+		Global.BROWSER = System.getProperty("browser");
+		Global.CONFIG_FILE = new File(System.getProperty("config"));
 	}
 	
 	private static void setPropertiesManually()
 	{
-		Global.BROWSER = "CHROME";
+		Global.BROWSER = "FF";
+		Global.CONFIG_FILE = new File("c:"+File.separator+"config.xml"+File.separator+"config.xml");
 	}
 
 	private static void setIEProperties()

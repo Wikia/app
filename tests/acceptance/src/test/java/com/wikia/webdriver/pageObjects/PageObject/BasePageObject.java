@@ -1,5 +1,6 @@
 package com.wikia.webdriver.pageObjects.PageObject;
 
+import java.io.File;
 import java.util.Date;
 import java.util.List;
 
@@ -12,6 +13,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.wikia.webdriver.Common.CommonExpectedConditions;
 import com.wikia.webdriver.Common.CommonFunctions;
+import com.wikia.webdriver.Common.Global;
+import com.wikia.webdriver.Common.XMLFunctions;
 import com.wikia.webdriver.Logging.PageObjectLogging;
 
 
@@ -24,8 +27,11 @@ public class BasePageObject{
 	
 	public String wikiFactoryLiveDomain = "http://community.wikia.com/wiki/Special:WikiFactory";
 	
-	public static String userName = "KarolK1";
-	public static String password = "123";
+
+	
+	
+	public static String userName = XMLFunctions.getXMLConfiguration(Global.CONFIG_FILE, "ci.user.regular.username");
+	public static String password = XMLFunctions.getXMLConfiguration(Global.CONFIG_FILE, "ci.user.regular.password");
 	
 	public static String userNameNonLatin = "卡羅爾";
 	public static String userNameNonLatinEncoded = "%E5%8D%A1%E7%BE%85%E7%88%BE";
@@ -36,14 +42,14 @@ public class BasePageObject{
 	
 	
 													
-	public static String passwordNonLatin = "!@#QWEASD";
+	public static String passwordNonLatin = "";
 	
 	public static String email = "webdriverseleniumwikia@gmail.com";
-	public static String emailPassword = "!@#QWEASD";
+	public static String emailPassword = "";
 	//卡羅爾
 	
-	public static String userNameStaff = "";
-	public static String passwordStaff = "";
+	public static String userNameStaff = System.getenv("STAFF_USER");
+	public static String passwordStaff = System.getenv("STAFF_PASS");;
 	
 	protected int timeOut = 30;
 	
