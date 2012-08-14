@@ -3659,8 +3659,10 @@ $templates
 	function tagWithSurrogateKeys( $keyArr ) {
 		if(is_array($keyArr)) {
 			header( 'X-Surrogate-Key: ' . implode( $keyArr, ' '), false );
+			header( 'Surrogate-Key: ' . implode( $keyArr, ' '), false );
 		} else {
 			header( 'X-Surrogate-Key: ' . $keyArr, false );
+			header( 'Surrogate-Key: ' . $keyArr, false );
 		}
 	}
 
