@@ -237,6 +237,11 @@ class CodeLintPhp extends CodeLint {
 			$ret = true;
 		}
 
+		// Method foo is deprecated
+		if (endsWith($errorMsg, ' is deprecated')) {
+			$ret = true;
+		}
+
 		return $ret;
 	}
 }
