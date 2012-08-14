@@ -290,6 +290,10 @@ class SquidUpdate {
 			return true;
 		}
 
+		if( !is_array( $keyArr ) ) {
+			$keyArr = array( $keyArr );
+		}
+
 		try {
 			foreach ( $keyArr as $key ) {
 				if ( !is_string( $key ) ) {
