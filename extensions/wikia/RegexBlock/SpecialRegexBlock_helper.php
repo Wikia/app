@@ -28,10 +28,10 @@ class RegexBlockData
         $this->mTable = REGEXBLOCK_TABLE;
         $this->mStatsTable = WIKIA_REGEXBLOCK_STATS_TABLE;
         $this->mNbrResults = 0;
-    }    
-    
-    /* 
-     * fetch number of all rows 
+    }
+
+    /*
+     * fetch number of all rows
      */
     public function fetchNbrResults () {
         global $wgMemc, $wgExternalSharedDB ;
@@ -48,10 +48,10 @@ class RegexBlockData
             $oRes = $dbr->select(
                 $this->mTable,
                 array("COUNT(*) as cnt"),
-                array("blckby_blocker <> ''"), 
+                array("blckby_blocker <> ''"),
                 __METHOD__
             );
-            
+
             if ($oRow = $dbr->fetchObject($oRes)) {
                 $this->mNbrResults = $oRow->cnt;
             }
@@ -60,16 +60,16 @@ class RegexBlockData
         } else {
             $this->mNbrResults = $cached ;
         }
-        
+
         wfProfileOut( __METHOD__ );
         return $this->mNbrResults;
     }
-    
+
     public function getNbrResults() {
         return $this->mNbrResults;
     }
-    
-    /* 
+
+    /*
      * fetch names of all blockers and write them into select's options
      */
     public function fetchBlockers () {
@@ -220,7 +220,7 @@ class RegexBlockData
 
         wfProfileIn( __METHOD__ );
         $record = null;
-        
+
         $dbr = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
         $oRes = $dbr->select(
             $this->mTable,
@@ -228,22 +228,22 @@ class RegexBlockData
             array("blckby_id = '".intval($id)."'"),
             __METHOD__
         );
-        
+
         if ($oRow = $dbr->fetchObject($oRes)) {
             $record = $oRow;
         }
         $dbr->freeResult($oRes);
-        
+
         wfProfileOut( __METHOD__ );
         return $record;
     }
 
 	static public function getRegexBlockByName($name, $iregex = 0, $master = 0) {
 		global $wgExternalSharedDB;
-		
+
 		/* get from database */
 		$dbr = wfGetDB( (empty($master)) ? DB_SLAVE : DB_MASTER, array(), $wgExternalSharedDB );
-		$where = array( "blckby_name " . $dbs->buildLike( $dbs->anyString(), $name, $dbs->anyString() ) );
+		$where = array( "blckby_name " . $dbr->buildLike( $dbr->anyString(), $name, $dbr->anyString() ) );
 		if ( !empty($iregex) ) {
 			$where = array( "blckby_name = " . $dbr->addQuotes( $name ) );
 		}
@@ -258,7 +258,7 @@ class RegexBlockData
 			$blocked = $oRow;
 		}
 		$dbr->freeResult ($oRes);
-		
+
 		return $blocked;
 	}
 
@@ -270,13 +270,13 @@ class RegexBlockData
         $dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
         $name = $wgUser->getName() ;
 
-        $oRes = $dbw->replace( 
+        $oRes = $dbw->replace(
             REGEXBLOCK_TABLE,
             array( "blckby_id", "blckby_name" ),
             array(
                 "blckby_id"         => "null",
-                "blckby_name"       => $address, 
-                "blckby_blocker"    => $name, 
+                "blckby_name"       => $address,
+                "blckby_blocker"    => $name,
                 "blckby_timestamp"  => wfTimestampNow(),
                 "blckby_expire"     => $expiry,
                 "blckby_exact"      => intval($exact),
@@ -291,9 +291,9 @@ class RegexBlockData
     }
 
     static public function getExpireValues() {
-        $expiry_values = explode(",", wfMsg('regexblock_expire_duration')); 
+        $expiry_values = explode(",", wfMsg('regexblock_expire_duration'));
         $expiry_text = array("1 hour","2 hours","4 hours","6 hours","1 day","3 days","1 week","2 weeks","1 month","3 months","6 months","1 year","infinite");
-        
+
         if (!function_exists("array_combine")) {
             function array_combine($a,$b) {
                 $out = array();
@@ -301,21 +301,21 @@ class RegexBlockData
                     $out[$v] = $b[$k];
                 }
                 return $out;
-            }            
+            }
         }
-        
+
         return array_combine($expiry_text, $expiry_values);
     }
-    
+
     static function isValidRegex($text) {
         return (sprintf("%s",@preg_match("/{$text}/",'regex')) === '');
-    }    
-    
+    }
+
     static public function getMemcKey($type, $username = "") {
     	global $wgExternalSharedDB;
-    	
+
     	$dbKey = (isset($wgExternalSharedDB)) ? $wgExternalSharedDB : "wikicities";
-    	
+
     	$key = "";
     	switch ( $type ) {
     		case "num_rec": $key = wfForeignMemcKey( $dbKey, "", REGEXBLOCK_SPECIAL_KEY, REGEXBLOCK_SPECIAL_NUM_RECORD ); break;
@@ -323,7 +323,7 @@ class RegexBlockData
     		case "block_user" : $key = wfForeignMemcKey( $dbKey, "", REGEXBLOCK_USER_KEY, str_replace( ' ', '_', $username ) ); break;
 			case "all_blockers" : $key = wfForeignMemcKey( $dbKey, "", REGEXBLOCK_BLOCKERS_KEY, "All-In-One" ); break;
 		}
-		
+
 		return $key;
 	}
 }
