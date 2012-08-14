@@ -81,3 +81,10 @@ function CreatePollSetup($editform) {
 	$wgOut->addScript('<script src="'.$wgExtensionsPath.'/wikia/WikiaPoll/js/CreateWikiaPoll.js"></script>');
 	return true;
 }
+
+//WikiaMobile
+
+F::build('JSMessages')->registerPackage( 'WikiaMobilePolls', array(
+	'wikiamobile-wikiapoll-thanks-voting',
+	'wikiamobile-wikiapoll-poll'
+) );

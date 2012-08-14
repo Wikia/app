@@ -447,6 +447,22 @@ $config['wikiamobile_categorypage_js'] = array(
 	)
 );
 
+$config['wikiapoll_wikiamobile_scss'] = array(
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => 'wikiamobile',
+	'assets' => array(
+		'//extensions/wikia/WikiaPoll/css/WikiaPoll.wikiamobile.scss',
+	)
+);
+
+$config['wikiapoll_wikiamobile_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => 'wikiamobile',
+	'assets' => array(
+		'//extensions/wikia/WikiaPoll/js/WikiaPoll.wikiamobile.js',
+	)
+);
+
 /** WikiaApp **/
 
 $config['wikiaapp_css'] = array(

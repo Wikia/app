@@ -1,0 +1,151 @@
+@import 'extensions/wikia/WikiaMobile/css/variables.scss';
+@import 'extensions/wikia/WikiaMobile/css/mixins/linear-gradient.scss';
+
+.WikiaPoll {
+	border: 1px solid $shadow-color;
+	padding: 5px;
+	box-shadow: 0 0 5px $shadow-color;
+
+	ul {
+		list-style: none;
+		padding: 10px;
+		margin: 0;
+	}
+
+	li {
+		clear: both;
+		height: 60px;
+	}
+}
+
+.pollHeader {
+	font-weight: 800;
+	padding: 10px;
+}
+
+.openPoll {
+	width: 90%;
+	margin: 10px auto;
+	padding: 10px;
+	display: block;
+	color: black;
+	font-weight: 400;
+}
+
+.votes {
+	border-top: 1px solid $shadow-color;
+	text-align: right;
+	padding: 3px 10px;
+	height: 28px;
+	font-size: small;
+}
+
+.bar {
+	float: left;
+	width: 70%;
+	height: 25px;
+	position: relative;
+
+	&::after {
+		content: '';
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		box-shadow: -7px 7px 10px -6px inset;
+	}
+}
+
+.percentage {
+	height: 100%;
+	background: rgb(43,132,213);
+}
+
+.perc {
+	float: right;
+	font-size: 1.5em;
+}
+
+.WikiaPollModal{
+	&#wkMdlWrp {
+		height: auto;
+		min-height: 100%;
+		background-color: white;
+	}
+
+	#wkMdlCnt {
+		background-color: white;
+		color: black;
+		padding: 40px 0;
+	}
+
+	.pollHeader {
+		margin: 0 0 20px 0;
+	}
+}
+
+.modalTitle {
+	font-weight: 800;
+	line-height: 30px;
+	margin-left: 10px;
+}
+
+.wkPollForm {
+	label {
+		display: block;
+		border-top: 1px solid;
+		padding: 12px 15px;
+		-webkit-transition: background .2s;
+		-moz-transition: background .2s;
+		transition: background .2s;
+		word-break: break-word;
+
+		&:last-of-type {
+			border-bottom: 1px solid;
+		}
+	}
+
+	input:checked + label {
+		@include linear-gradient(rgb(38,148,225), rgb(17,105,178));
+		color: white;
+	}
+
+	input:not(.wkBtn) {
+		display: none;
+	}
+
+	.wkBtn {
+		width: 90%;
+		margin: 15px auto;
+		display: block;
+		padding: 10px;
+		pointer-events: none;
+		color: black;
+		background: grey;
+		-webkit-transition: background .2s;
+		-moz-transition: background .2s;
+		transition: background .2s;
+	}
+
+	input:checked ~ .wkBtn {
+		pointer-events: auto;
+		@include linear-gradient(rgb(38,148,225), rgb(17,105,178));
+		color: white;
+	}
+}
+
+.voted {
+	pointer-events: none;
+
+	input:not(:checked) + label{
+		color: grey;
+	}
+}
+
+.wkThanks {
+	height: 50px;
+	text-align: center;
+	margin: 20px auto;
+	font-weight: 800;
+}

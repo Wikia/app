@@ -66,25 +66,45 @@ class WikiaPollHooks {
 	 */
 
 	public static function generate($poll, $finalTitle) {
-		global $wgJsMimeType;
 		wfProfileIn(__METHOD__);
 
 		if ($finalTitle instanceof Title && $finalTitle->exists() && $finalTitle->getNamespace() == NS_WIKIA_POLL) {
-			$css = $jsFile = "";
+
+			$app = F::app();
+			$ret = $poll->renderEmbedded();
+
 			if (self::$alreadyAddedCSSJS == false) {
 				// make sure we don't include twice if there are multiple polls on one page
 				self::$alreadyAddedCSSJS = true;
 				// add CSS & JS and Poll HTML together
-				$sassUrl = AssetsManager::getInstance()->getSassCommonURL('/extensions/wikia/WikiaPoll/css/WikiaPoll.scss');
-				$css = '<link rel="stylesheet" type="text/css" href="' . htmlspecialchars($sassUrl) . ' " />';
 
-				$jsFile = F::build('JSSnippets')->addToStack(
-					array( '/extensions/wikia/WikiaPoll/js/WikiaPoll.js' ),
-					array(),
-					'WikiaPoll.init'
-				);
+				if( $app->checkSkin( 'wikiamobile' ) ){
+
+					$app->wg->Out->addHTML(
+						F::build('JSSnippets')->addToStack(
+							array(
+								'wikiapoll_wikiamobile_scss',
+								'wikiapoll_wikiamobile_js'
+							)
+						)
+					);
+
+					F::build( 'JSMessages' )->enqueuePackage( 'WikiaMobilePolls', JSMessages::INLINE );
+
+				} else {
+					$sassUrl = AssetsManager::getInstance()->getSassCommonURL('/extensions/wikia/WikiaPoll/css/WikiaPoll.scss');
+					$css = '<link rel="stylesheet" type="text/css" href="' . htmlspecialchars($sassUrl) . ' " />';
+
+					$jsFile = F::build('JSSnippets')->addToStack(
+						array( '/extensions/wikia/WikiaPoll/js/WikiaPoll.js' ),
+						array(),
+						'WikiaPoll.init'
+					);
+
+					$ret =  str_replace("\n", ' ', "{$css} {$ret} {$jsFile}");
+				}
 			}
-			return str_replace("\n", ' ', "{$css} {$poll->renderEmbedded()} {$jsFile}");
+			return $ret;
 		}
 		
 		wfProfileOut(__METHOD__);

@@ -35,10 +35,8 @@ define('layout', ['sections', 'media'], function(sections, media) {
 	sections.init();
 
 	if(images.length === 0){
-		console.log('old');
 		media.oldInit();
 	}else{
-		console.log('new');
 		media.init(images);
 	}
 });

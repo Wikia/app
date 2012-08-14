@@ -20,6 +20,10 @@ class WikiaPollController extends WikiaController {
 		}
 
 		$this->embedded = !empty($params['embedded']);
+
+		if( $this->app->checkSkin( 'wikiamobile' ) ) {
+			$this->overrideTemplate( 'WikiaMobileIndex' );
+		}
 	}
 
 	public function executeSpecialPage() {
