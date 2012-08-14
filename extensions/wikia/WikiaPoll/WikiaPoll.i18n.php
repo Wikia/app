@@ -18,7 +18,12 @@ $messages['en'] = array(
 	'wikiapoll-cancel-label' => 'Cancel',
 	'wikiapoll-publish-label' => 'Publish',
 	'wikiapoll-error-duplicate' => 'A poll with that name already exists.',
-	'wikiapoll-error-invalid-title' => 'Question text is invalid.'
+	'wikiapoll-error-invalid-title' => 'Question text is invalid.',
+
+	//WikiaMobile
+	'wikiamobile-wikiapoll-open-poll' => 'What do you think?',
+	'wikiamobile-wikiapoll-thanks-voting' => 'Thanks for voting!',
+	'wikiamobile-wikiapoll-poll' => 'Poll',
 );
 
 /** Message documentation (Message documentation) */
@@ -40,6 +45,11 @@ $messages['qqq'] = array(
 	'wikiapoll-publish-label' => 'Create/Edit Poll button label for confirming changes',
 	'wikiapoll-error-duplicate' => 'Error message when user tries to create a poll that already exists',
 	'wikiapoll-error-invalid-title' => 'Error message when title of poll is invalid/empty',
+
+	//WikiaMobile
+	'wikiamobile-wikiapoll-open-poll' => 'Text on a button to open poll in a modal',
+	'wikiamobile-wikiapoll-thanks-voting' => 'Message displayed to a user after voting',
+	'wikiamobile-wikiapoll-poll' => 'Title of a modal',
 );
 
 /** Afrikaans (Afrikaans)

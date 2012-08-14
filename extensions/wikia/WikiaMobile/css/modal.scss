@@ -22,7 +22,6 @@ html.modal{
 	left:0;
 	height: 100%;
 	min-width: 100%;
-	opacity: 0;
 	display: none;
 	overflow: hidden;
 	color: $modal-text-color;
@@ -30,7 +29,6 @@ html.modal{
 	@include transition(opacity 1s);
 
 	&.open {
-		opacity: 1;
 		display: block;
 	}
 }
