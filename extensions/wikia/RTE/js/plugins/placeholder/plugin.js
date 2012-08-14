@@ -109,7 +109,7 @@ CKEDITOR.plugins.add('rte-placeholder',
 						className = 'RTEPlaceholderPreviewBrokenImage';
 
 						// image name (just image name - no parameteres and no brackets)
-						var imageName = data.wikitext.replace(/^\[\[/, '').replace(/]]$/, '').split('|').shift();
+						var imageName = data.wikitext.replace(/^\[\[/, '').replace(/\]\]$/, '').split('|').shift();
 						title = imageName;
 
 						intro = lang.media.notExisting;
