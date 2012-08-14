@@ -91,7 +91,7 @@ class WikiNavigationController extends WikiaController {
 	 * @param string $html current wikitext from the editor
 	 * @return bool return true
 	 */
-	public static function onEditPageLayoutModifyPreview(Title $title, $html, $wikitext) {
+	public static function onEditPageLayoutModifyPreview(Title $title, &$html, $wikitext) {
 		global $wgOasisNavV2;
 
 		if (self::isWikiNavMessage($title) && !empty($wgOasisNavV2)) {
