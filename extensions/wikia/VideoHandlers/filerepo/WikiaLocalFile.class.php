@@ -6,7 +6,7 @@
  */
 
 class WikiaLocalFile extends LocalFile {
-	
+
 	protected $oLocalFileLogic = null; // Leaf object
 
 	// obligatory contructors
@@ -60,13 +60,13 @@ class WikiaLocalFile extends LocalFile {
 	}
 
 	/* Composite/Leaf interface
-	 * 
+	 *
 	 * if no method of var found in current object tries to get it from $this->oLocalFileLogic
 	 */
 
 	function __construct( $title, $repo ){
 		parent::__construct( $title, $repo );
-		
+
 	}
 
 	function  __call( $name, $arguments ){

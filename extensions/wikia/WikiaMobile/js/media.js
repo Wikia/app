@@ -4,16 +4,17 @@
  *
  * @author Jakub "Student" Olek
  */
-define('media', ['modal', 'loader', 'querystring', 'popover', 'track', 'events', 'share'], function(modal, loader, qs, popover, track, events, share){
+define('media', ['modal', 'loader', 'querystring', 'popover', 'track', 'events', 'share', 'cache'], function(modal, loader, qs, popover, track, events, share, cache){
 	/** @private **/
 
 	var	images = [],
+		elements,
 		pages = [],
 		videoCache = {},
 		pager,
 		currentImage,
 		currentImageStyle,
-		imagesLength,
+		imagesLength = 0,
 		wkMdlImages,
 		current = 0,
 		shrImg = (new qs()).getVal('file'),
@@ -36,9 +37,10 @@ define('media', ['modal', 'loader', 'querystring', 'popover', 'track', 'events',
 		heightFll,
 		startD,
 		galleryInited = false,
-		imgNameProcessRegEx = new RegExp(' ', 'g');
+		imgNameProcessRegEx = new RegExp(' ', 'g'),
+		inited;
 
-	function init() {
+	function oldInit() {
 		var	number = 0, href = '', name = '', nameMatch = /[^\/]*\.\w*$/,
 			i, j, elm,
 			elements = $('.infobox .image, .wkImgStk, figure').not('.wkImgStk > figure'),
@@ -176,12 +178,97 @@ define('media', ['modal', 'loader', 'querystring', 'popover', 'track', 'events',
 		});
 	}
 
-	function encodeImageName(name){
-		return name.replace(imgNameProcessRegEx, '_');
+	//Media object that holds all data needed to display it in modal/gallery
+	function Media(elem, data, length, i){
+
+		this.element = elem;
+		this.url = data.full;
+
+		if(data.name) this.name = data.name;
+		if(data.thumb) this.thumb = data.thumb;
+		if(data.med) this.med = data.med;
+		if(data.capt) this.caption = data.capt;
+		if(data.type === 'video') this.isVideo = true;
+
+		if(length > 1){
+			this.length = length;
+			this.number = i;
+		}
 	}
 
-	function decodeImageName(name){
-		return name.replace(imgNameProcessRegEx, ' ');
+	function setup(){
+		var	name,
+			i = 0,
+			element,
+			imageData,
+			j,
+			l;
+
+		//loop that gets all media from a page
+		while(element = elements[i++]) {
+			var params = element.getAttribute('data-params') || false,
+				data = JSON.parse(params);
+
+			if(data && data instanceof Array){
+				j = 0;
+
+				element.setAttribute('data-num', imagesLength);
+
+				l = data.length;
+
+				while(imageData = data[j++]){
+					name = imageData.name;
+
+					if (name === shrImg) shrImg = imagesLength;
+
+					images[images.length] = new Media(element, imageData, l, j);
+
+					//create pages for modal
+					pages[imagesLength++] = '<div style="background-image: url(' + imageData.full + ')"></div>';
+				}
+			}
+		}
+
+		if(imagesLength > 1) {
+			content = '<div class=chnImg id=prvImg></div>' + content + '<div class=chnImg id=nxtImg></div>';
+			toolbar += '<div id=wkGalTgl></div>';
+		}
+
+		//this function should not run twice
+		inited = true;
+		elements = null;
+	}
+
+	function init(images){
+
+		elements = images;
+
+		//if url contains image=imageName - setup and find the image
+		if(shrImg) {
+			setTimeout(function(){
+				!inited && setup();
+				openModal(shrImg);
+			}, 2000);
+		}
+
+		document.body.addEventListener(clickEvent, function(event){
+			var t = event.target,
+				className = t.className;
+
+			//if this image is a linked image don't open modal
+			if(className.indexOf('media') > -1){
+				event.preventDefault();
+				event.stopPropagation();
+
+				!inited && setup();
+
+				openModal(~~t.getAttribute('data-num'));
+			}
+		}, true);
+	}
+
+	function encodeImageName(name){
+		return name.replace(imgNameProcessRegEx, '_');
 	}
 
 	function setupImage(){
@@ -222,7 +309,8 @@ define('media', ['modal', 'loader', 'querystring', 'popover', 'track', 'events',
 				}
 			}else{
 				var img = new Image();
-				img.src = image.image;
+				//TODO: remove after 2 weeks second option
+				img.src = image.url || image.image;
 
 				if(!img.complete){
 					img.onload = function(){
@@ -250,12 +338,29 @@ define('media', ['modal', 'loader', 'querystring', 'popover', 'track', 'events',
 
 	function getCaption(num){
 		var img = images[num],
-			cap = img.caption || '',
+			cap = img.caption,
 			number = img.number,
-			length = img.length;
+			length = img.length,
+			figCap;
+
+		if(typeof cap !== 'string'){
+			if(cap) {
+				//if caption is not a string and img.caption is set to true grab it from DOM
+				figCap = img.element.parentElement.parentElement.getElementsByClassName('thumbcaption')[0];
+
+				cap = figCap ? figCap.innerHTML : '';
+				//and then cache it in media object
+				img.caption = cap;
+			}else{
+				img.caption = cap = '';
+			}
+		}
+
+
+
 
 		if(number >= 0 && length >= 0) {
-			cap += '<div class=wkStkFtr> ' + (number+1) + ' / ' + length + ' </div>';
+			cap += '<div class=wkStkFtr> ' + number + ' / ' + length + ' </div>';
 		}
 
 		return cap;
@@ -414,6 +519,10 @@ define('media', ['modal', 'loader', 'querystring', 'popover', 'track', 'events',
 	}
 
 	function openModal(num){
+		var cacheKey = 'mediaGalleryAssets' + wgStyleVersion,
+			galleryData,
+			ttl = 604800; //7days
+
 		current = ~~num;
 
 		modal.open({
@@ -427,16 +536,29 @@ define('media', ['modal', 'loader', 'querystring', 'popover', 'track', 'events',
 		});
 
 		if(imagesLength > 1 && !galleryInited) {
-			Wikia.getMultiTypePackage({
-				styles: '/extensions/wikia/WikiaMobile/css/mediagallery.scss',
-				scripts: 'wikiamobile_mediagallery_js',
-				ttl: 604800,
-				callback: function(res){
-					Wikia.processScript(res.scripts[0]);
-					Wikia.processStyle(res.styles);
-					require('mediagallery');
-				}
-			});
+			galleryData = cache.get(cacheKey);
+
+			if(galleryData){
+				Wikia.processStyle(galleryData[0]);
+				Wikia.processScript(galleryData[1]);
+				require('mediagallery');
+			}else{
+				Wikia.getMultiTypePackage({
+					styles: '/extensions/wikia/WikiaMobile/css/mediagallery.scss',
+					scripts: 'wikiamobile_mediagallery_js',
+					ttl: ttl,
+					callback: function(res){
+						var script = res.scripts[0],
+							style = res.styles;
+
+						Wikia.processStyle(style);
+						Wikia.processScript(script);
+
+						cache.set(cacheKey, [style, script], ttl);
+						require('mediagallery');
+					}
+				});
+			}
 			galleryInited = true;
 		}
 
@@ -523,6 +645,7 @@ define('media', ['modal', 'loader', 'querystring', 'popover', 'track', 'events',
 		hideShare: function(){
 			if(shareBtn) {shareBtn.style.display = 'none';}
 		},
+		oldInit: oldInit,
 		init: init,
 		cleanup: function(){
 			removeZoom();

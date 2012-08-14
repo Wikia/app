@@ -19,7 +19,7 @@ class WikiaMobileStatsModel extends WikiaModel {
 	 * @return Array The array of results
 	 */
 	public function getPopularPages(){
-		$this->app->wf->profileIn( __METHOD__ );
+		$this->wf->profileIn( __METHOD__ );
 		$memKey = $this->getPopularPagesCacheKey();
 		$pages = $this->wg->Memc->get( $memKey );
 
@@ -58,7 +58,7 @@ class WikiaMobileStatsModel extends WikiaModel {
 			}
 		}
 
-		$this->app->wf->profileOut( __METHOD__ );
+		$this->wf->profileOut( __METHOD__ );
 		return $pages;
 	}
 
@@ -72,9 +72,11 @@ class WikiaMobileStatsModel extends WikiaModel {
 	 * and the 1st element being the URL of the thumbnail
 	 */
 	public function getRandomPopularPage(){
-		$this->app->wf->profileIn( __METHOD__ );
+		$this->wf->profileIn( __METHOD__ );
 		$pages = $this->getPopularPages();
 		$useMainPage = true;
+		$link = '';
+		$imgUrl = '';
 		$count = 0;
 		$skipped = 0;
 		$cachePurged = false;
@@ -106,6 +108,13 @@ class WikiaMobileStatsModel extends WikiaModel {
 			}
 		}
 
+		//invalidate mem cache in case half of pages are invalid
+		//in that case is worth to regenerate the whole pool
+		if ( $skipped > ( $count / 2 ) ) {
+			$this->wg->Memc->delete( $this->getPopularPagesCacheKey() );
+			$cachePurged = true;
+		}
+
 		//if some pages were skipped report that to LOG
 		if( $skipped > 0 ) {
 			Wikia::log(
@@ -118,22 +127,16 @@ class WikiaMobileStatsModel extends WikiaModel {
 			);
 		}
 
-		//invalidate mem cache in case half of pages are invalid
-		//in that case is worth to regenerate the whole pool
-		if ( $skipped > ( $count / 2 ) ) {
-			$this->wg->Memc->delete( $this->getPopularPagesCacheKey() );
-			$cachePurged = true;
-		}
-
 		//if for whatever reason all of the above fails to deliver a result
 		//then get the link to the main page and show no image
 		if ( $useMainPage ) {
 			$link = Title::newMainPage()->getLocalUrl();
 			//@TODO: Jakub, I think we agreed to use "mr pickle" as the fallback eventually?
+			//true I'll ask for an asset
 			$imgUrl = '';
 		}
 
-		$this->app->wf->profileOut( __METHOD__ );
+		$this->wf->profileOut( __METHOD__ );
 		return array( $link, $imgUrl );
 	}
 

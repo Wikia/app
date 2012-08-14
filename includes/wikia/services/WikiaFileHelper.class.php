@@ -11,10 +11,10 @@ class WikiaFileHelper extends Service {
 	 * @return boolean
 	 */
 	public static function isVideoStoredAsFile() {
-		
+
 		$convertedVar = F::app()->wg->videoHandlersVideosMigrated;
 		return !empty( $convertedVar );
-	}	
+	}
 
 	/*
 	 * Checks if given File is video
@@ -22,7 +22,7 @@ class WikiaFileHelper extends Service {
 	 * @return boolean
 	 */
 	public static function isFileTypeVideo( $file ) {
-		
+
 		if ( self::isVideoStoredAsFile() ) {
 			// File can be video only when new video logic is enabled for the wiki
 			if ( $file instanceof Title ) {
@@ -38,22 +38,22 @@ class WikiaFileHelper extends Service {
 	}
 
 	/*
-	 * Checks if given Title is video 
+	 * Checks if given Title is video
 	 * @return boolean
 	 */
 	public static function isTitleVideo( $title, $allowOld = true ) {
-		
+
 		$title = self::getTitle( $title );
-		
+
 		if ( empty($title) ) {
 			return false;
 		}
-		
+
 		if ( self::isVideoStoredAsFile() ) {
 
 			// video-as-file logic
 			if ( self::isFileTypeVideo($title) ) {
-			
+
 				return true;
 			}
 			return false;
@@ -62,7 +62,7 @@ class WikiaFileHelper extends Service {
 
 			return true;
 		}
-		
+
 		return false;
 	}
 
@@ -204,13 +204,13 @@ class WikiaFileHelper extends Service {
 	 * @return boolean
 	 */
 	public static function preserveOldImageBehaviour() {
-		
+
 		return false;
 	}
 
 	/**
 	 * Can WikiaVideo extension be used to ingest video
-	 * @return boolean 
+	 * @return boolean
 	 */
 	public static function useWikiaVideoExtForIngestion() {
 		return !empty(F::app()->wg->ingestVideosUseWikiaVideoExt);
@@ -229,7 +229,7 @@ class WikiaFileHelper extends Service {
 	 * @return boolean
 	 */
 	public static function useWikiaVideoExtForEmbed() {
-		return !static::isVideoStoredAsFile() && !empty(F::app()->wg->embedVideosUseWikiaVideoExt);		
+		return !static::isVideoStoredAsFile() && !empty(F::app()->wg->embedVideosUseWikiaVideoExt);
 	}
 
 	/**

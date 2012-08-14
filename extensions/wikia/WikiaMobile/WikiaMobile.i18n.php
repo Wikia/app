@@ -32,6 +32,7 @@ $messages['en'] = array(
 	'mobile-full-site' => 'Full site',
 
 	//categories
+	'wikiamobile-categories-tagline' => 'Category Page',
 	'wikiamobile-categories-items-total' => '$1 {{PLURAL:$1|article|articles}}',
 	'wikiamobile-category-items-more' => 'Load more',
 	'wikiamobile-category-items-prev' => 'Load previous',
@@ -46,6 +47,12 @@ $messages['en'] = array(
 you should definitely check this out:
 
  $1',
+
+ 	//media
+ 	'wikiamobile-media-group-footer' => '1 of $1',
+ 	'wikiamobile-unsupported-video-download' => 'Your browser doesn\'t support this video format, try clicking <a href="$1">here</a>',
+ 	'wikiamobile-video-views-counter' => '$1 {{PLURAL:$1|view|views}}',
+
 	//ad
 	'wikiamobile-ad-close' => 'close',
 
@@ -64,10 +71,14 @@ $messages['qqq'] = array(
 	'wikiamobile-footer-link-lifestyle' => 'interwiki link, please translate only the last paramenter after the last "|" if that makes sense',
 	'wikiamobile-footer-link-entertainment' => 'interwiki link, please translate only the last paramenter after the last "|" if that makes sense',
 	'wikiamobile-footer-link-videogames' => 'interwiki link, please translate only the last paramenter after the last "|" if that makes sense',
+	'wikiamobile-categories-tagline' => 'Tagline that appears next to the category page title, please keep it really short',
 	'wikiamobile-categories-items-total' => '$1 is the total number of articles in the category',
 	'wikiamobile-sharing-page-text' => '$1 is the title of the article, $2 is the name of the wiki',
 	'wikiamobile-sharing-modal-text' => '$1 is the type of media, $2 is the title of the article, $3 is the name of the wiki',
 	'wikiamobile-sharing-email-text' => '$1 is the result of wikiamobile-sharing-modal-text or wikiamobile-sharing-page-text, please keep the empty space before $1',
+	'wikiamobile-media-group-footer' => 'the caption under a media-group/gallery, $1 contains the total amount of images/videos in the group',
+	'wikiamobile-unsupported-video-download' => 'feedback message for browsers not supporting html5 videos with link to play the video in a native app (the video URL is in $1)',
+	'wikiamobile-video-views-counter' => 'counter for the number of views for a video, $1 is an integer number, minimum 0; possibly it should be no more than 1 or 2 words',
 	'wikiamobile-ad-close' => 'text on the close button for the ad place',
 );
 

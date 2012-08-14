@@ -373,7 +373,6 @@ $config['wikiamobile_js_body_full'] = array(
 		//polyfills
 		'//resources/wikia/polyfills/outerhtml.js',
 
-
 		//platform components
 		'//extensions/wikia/AssetsManager/js/AssetsManager.js',
 		'//extensions/wikia/JSMessages/js/JSMessages.wikiamobile.js',
@@ -384,6 +383,7 @@ $config['wikiamobile_js_body_full'] = array(
 		'//resources/wikia/libraries/zepto/zepto.wikiamobile.js',
 
 		//modules
+		'//extensions/wikia/WikiaMobile/js/lazyload.js',
 		'//extensions/wikia/WikiaMobile/js/track.js',
 		'//extensions/wikia/WikiaMobile/js/events.js',
 		'//extensions/wikia/WikiaMobile/js/toc.js',
@@ -392,13 +392,15 @@ $config['wikiamobile_js_body_full'] = array(
 		'//extensions/wikia/WikiaMobile/js/pager.js',
 		'//extensions/wikia/WikiaMobile/js/modal.js',
 		'//extensions/wikia/WikiaMobile/js/media.js',
+		'//extensions/wikia/WikiaMobile/js/sections.js',
+		'//extensions/wikia/WikiaMobile/js/layout.js',
 		'//extensions/wikia/WikiaMobile/js/topbar.js',
 		'//extensions/wikia/WikiaMobile/js/popover.js',
 		'//extensions/wikia/WikiaMobile/js/hide_url_bar.js',
-		'//extensions/wikia/WikiaMobile/js/sections.js',
 		'//extensions/wikia/WikiaMobile/js/share.js',
 		'//extensions/wikia/WikiaMobile/js/tables.js',
-		'//extensions/wikia/WikiaMobile/js/lazyload.js',
+		'//resources/wikia/modules/thumbnailer.js',
+
 
 		//entrypoint
 		'//extensions/wikia/WikiaMobile/js/WikiaMobile.js',
@@ -417,7 +419,6 @@ $config['wikiamobile_mediagallery_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'wikiamobile',
 	'assets' => array(
-		'//resources/wikia/modules/thumbnailer.js',
 		'//extensions/wikia/WikiaMobile/js/mediagallery.js'
 	)
 );

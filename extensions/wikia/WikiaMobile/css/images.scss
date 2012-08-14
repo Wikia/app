@@ -1,45 +1,106 @@
-#wkMainCnt{
-	.thumb {
-		text-align: center;
-		margin: 10px 0;
-		padding: 5px;
-		border-top: 1px solid $border-color;
-		border-bottom: 1px solid $border-color;
+//mixins
+@import "variables.scss";
 
-		.image {
-			display: block;
-			margin-bottom: -7px;
-		}
+@import "mixins/transition.scss";
+
+$image-border: 1px solid $border-color;
+
+figure{
+	text-align: center;
+	margin: 10px 0;
+	//without this 'a' adds empty space beteween img and bottom line
+	line-height: 0;
+	position: relative;
+
+	a {
+		display: inline-block;
+	}
+}
+
+.thumb, .link {
+	display: table;
+	margin: 5px auto;
+}
+
+.thumbcaption {
+	pointer-events: none;
+
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+
+	padding: 5px;
+	font-size: small;
+	line-height: 15px;
+	min-height: 25px;
+
+	background-color: rgba(0,0,0,.6);
+
+	color: white;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+
+	a {
+		color: inherit;
+		text-decoration: underline;
 	}
 
-	.thumbcaption, .info-overlay {
-		font-size: 90%;
-		line-height: 20px;
-		color: rgb(125,125,125);
+	&:before {
+		position: absolute;
+		right: 0;
+		top: 0;
+
+		height: 25px;
+		width: 15px;
+		background-size: 15px;
+		background-position: center;
+
+		-webkit-transform: rotate(-90deg);
+		-moz-transform: rotate(-90deg);
+		transform: rotate(-90deg);
 	}
+}
+
+.lazy {
+	background-size: 70px;
+	display: none;
+	background-color: $imagePlaceholderBackground;
+
+	.js & {
+		display: inline;
+	}
+}
+
+noscript img {
+	height: auto;
 }
 
 img {
 	max-width: 100%;
+	@include transition(opacity .2s);
+	//this turns on hardware acceleration
+	-webkit-transform: translateZ(0);
 
-	&.lazy {
-		display: none;
+	&.load {
+		opacity: .1;
 	}
 
-	&.fit {
+	&.loaded {
+		background-image: none;
+		background-color: transparent;
+		opacity: 1;
+		width: auto;
 		height: auto;
 	}
 }
 
-.js {
-	img {
-		&.lazy {
-			background-size: 70px;
-			display: inline;
+//TODO: remove after 2 weeks
+.wkImgStk {
+	position: relative;
+}
 
-			&.imgPlcHld {
-				background-color: $imagePlaceholderBackground;
-			}
-		}
-	}
+.magnify {
+	display: none;
 }

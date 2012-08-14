@@ -8,7 +8,6 @@
 	-webkit-transition: opacity .4s, -webkit-transform .4s;
 	opacity: 0;
 	-webkit-transform: scale(2) translateZ(0);
-	-webkit-perspective: 1000;
 	-webkit-backface-visibility: hidden;
 }
 
@@ -33,7 +32,7 @@
 	display: inline-block;
 	height: 100px;
 	width: 100px;
-	margin: 0 2.5px;
+	margin: -1px 2.5px;
 }
 
 .galPlc.img {
@@ -72,12 +71,11 @@
 	-moz-transition: opacity .6s, -moz-transform .3s;
 	-o-transition: opacity .6s, transform .3s;
 	transition: opacity .6s, transform .3s;
-	-webkit-perspective: 1000;
 	-webkit-backface-visibility: hidden;
 
 	.dot {
 		background-color: rgb(111, 111, 111);
-		border-radius: 200px; //iphone 3 does not support % so I make it bigger than width&height
+		border-radius: 200px; //iphone 3 does not support % so I make it bigger than width&height to make it round
 		padding: 4px;
 		margin: 5px;
 		display: inline-block;
@@ -100,7 +98,7 @@
 }
 
 @media screen and (min-width: 600px){
-	.galImg {
+	.galPlc {
 		width: 140px;
 		height: 140px;
 	}

@@ -6,7 +6,7 @@
  *
  * In future common handler logic will be migrated here
  * If you are using public video handler specyfic function write them down here
- * 
+ *
  */
 
 abstract class VideoHandler extends BitmapHandler {
@@ -48,7 +48,7 @@ abstract class VideoHandler extends BitmapHandler {
 		$params['physicalWidth'] = $params['width'];
 		$params['physicalHeight'] = $params['height'];
 
-		
+
 		// Video files can be bigger than usuall images. We are alowing them to stretch up to WikiaFileHelper::maxWideoWidth px.
 		if ( $params['physicalWidth'] > WikiaFileHelper::maxWideoWidth ) {
 			$srcWidth = $image->getWidth( $params['page'] );
@@ -71,7 +71,7 @@ abstract class VideoHandler extends BitmapHandler {
 	function getPlayerAssetUrl() {
 		return '';
 	}
-	
+
 	/**
 	 * Returns embed code for a provider
 	 * @return string Embed HTML
@@ -85,24 +85,24 @@ abstract class VideoHandler extends BitmapHandler {
 	public function getProviderDetailUrl() {
 		return str_replace('$1', $this->videoId, static::$providerDetailUrlTemplate);
 	}
-	
+
 	public function getProviderHomeUrl() {
 		return static::$providerHomeUrl;
 	}
 
-	
+
 	function setVideoId( $videoId ){
 		$this->videoId = $videoId;
 	}
-	
+
 	public function getVideoId() {
 		return $this->videoId;
 	}
-	
+
 	function setTitle( $title ) {
 		$this->title = $title;
 	}
-	
+
 	function getTitle() {
 		return $this->title;
 	}
@@ -118,7 +118,7 @@ abstract class VideoHandler extends BitmapHandler {
 			} else {
 				$ratio = $metadata['aspectRatio'];
 			}
-			
+
 		}
 		wfProfileOut( __METHOD__ );
 		return $ratio;
@@ -160,7 +160,7 @@ abstract class VideoHandler extends BitmapHandler {
 		wfProfileOut( __METHOD__ );
 		return empty($unserialize) ? $this->metadata : unserialize($this->metadata);
 	}
-	
+
 	/**
 	 *
 	 * @param string $metadata serialized array
@@ -171,12 +171,12 @@ abstract class VideoHandler extends BitmapHandler {
 
 	/**
 	 *
-	 * @param ThumbnailImage $thumbnailImage 
+	 * @param ThumbnailImage $thumbnailImage
 	 */
 	function setThumbnailImage( $thumbnailImage ) {
 		$this->thumbnailImage = $thumbnailImage;
 	}
-	
+
 	/**
 	 * Returns propper api for a current handler
 	 * @return ApiWrapper object
@@ -206,7 +206,7 @@ abstract class VideoHandler extends BitmapHandler {
 		$metadata = $this->getMetadata(true);
 		return (!empty($metadata['hd']));
 	}
-	
+
 	/**
 	 *
 	 * @return boolean
@@ -215,7 +215,7 @@ abstract class VideoHandler extends BitmapHandler {
 		$metadata = $this->getMetadata(true);
 		return (!empty($metadata['ageGate']));
 	}
-	
+
 	/**
 	 *
 	 * @return int duration in seconds, or null
@@ -224,7 +224,7 @@ abstract class VideoHandler extends BitmapHandler {
 		$metadata = $this->getMetadata(true);
 		return (!empty($metadata['duration']) ? $metadata['duration'] : null);
 	}
-  
+
 	public function getFormattedDuration() {
 
 		$metadata = $this->getMetadata(true);
@@ -235,17 +235,17 @@ abstract class VideoHandler extends BitmapHandler {
 			if ( (int)$sec == $sec ) {
 
 				$hms = "";
-				$hours = intval(intval($sec) / 3600);  
+				$hours = intval(intval($sec) / 3600);
 				if ($hours > 0) {
-					$hms .= str_pad($hours, 2, "0", STR_PAD_LEFT). ":";          
+					$hms .= str_pad($hours, 2, "0", STR_PAD_LEFT). ":";
 				}
 
-				$minutes = intval(($sec / 60) % 60); 
+				$minutes = intval(($sec / 60) % 60);
 				$hms .= str_pad($minutes, 2, "0", STR_PAD_LEFT). ":";
 
-				$seconds = intval($sec % 60); 
+				$seconds = intval($sec % 60);
 				$hms .= str_pad($seconds, 2, "0", STR_PAD_LEFT);
-				
+
 				return $hms;
 
 			} else {
@@ -256,7 +256,7 @@ abstract class VideoHandler extends BitmapHandler {
 
 		return '';
 	}
-	
+
 	/**
 	 * Get the video id that is used for embed code
 	 * @return string
@@ -268,7 +268,7 @@ abstract class VideoHandler extends BitmapHandler {
 		}
 		return $this->videoId;
 	}
-	
+
 
 	/**
 	 * Returns fedault thumbnail mime type

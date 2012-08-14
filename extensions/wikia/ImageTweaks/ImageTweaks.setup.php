@@ -37,6 +37,11 @@ $app->wg->append(
 $app->wg->set( 'wgAutoloadClasses', "{$dir}/ImageTweaksHooks.class.php", 'ImageTweaksHooks' );
 
 /**
+ * services
+ */
+$app->wg->set( 'wgAutoloadClasses', "{$dir}/ImageTweaksService.class.php", 'ImageTweaksService' );
+
+/**
  * hooks
  */
 //hook into Linker::MakeImageLink2

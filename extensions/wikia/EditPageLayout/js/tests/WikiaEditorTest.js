@@ -1,4 +1,5 @@
 /*
+global module, text
 @test-exclude AssetsManager packages are not supported
 @test-framework QUnit
 @test-require-asset rte
@@ -82,7 +83,6 @@ test('Plugins > Initialization',function(){
 });
 
 test('Plugins > Spaces',function(){
-	var we = window.WikiaEditor;
 	var e1 = $('<div data-space-type="testxx" />'),
 		e2 = $('<div data-space-type="testyy" />'),
 		ed = $('<div data-space-type="editor" />'),

@@ -4,9 +4,10 @@
  *
  * @author Jakub "Student" Olek
  */
-define('mediagallery', ['media', 'modal', 'pager', 'thumbnailer'], function(med, mod, pag, thumbnailer) {
+define('mediagallery', ['media', 'modal', 'pager', 'thumbnailer', 'lazyload'], function(med, mod, pag, thumbnailer, lazyload) {
 	var
 		MAX_THUMB_SIZE = 140,
+		width,
 		imagesize,
 		d = document,
 		pager,
@@ -50,47 +51,18 @@ define('mediagallery', ['media', 'modal', 'pager', 'thumbnailer'], function(med,
 	}, true);
 
 	function loadImages(){
-		var slice = Array.prototype.slice,
-			//this gives me a chance to first load current page then next and at the end prev
-			all = slice.call(modalWrapper.querySelectorAll('.current .img')).concat(
-				slice.call(modalWrapper.querySelectorAll('.prev .img'))
-			).concat(
-				slice.call(modalWrapper.querySelectorAll('.next .img'))
-			),
-			i = 0,
-			l = all.length,
-			updateImg = function(img, src){
-				if(src) {img.style.backgroundImage = 'url("' + src + '")';}
-				img.className += ' loaded';
-			};
+		//this gives me a chance to first load current page then next and at the end prev
 
-		for(; i < l; i++){
-			var imgPreload,
-				img = all[i];
+		lazyload(modalWrapper.querySelectorAll('.current .img'), true);
 
-			if(!img.style.backgroundImage) {
-				imgPreload = new Image();
-				imgPreload.src = img.getAttribute('data-img');
+		setTimeout(function(){
+			lazyload(modalWrapper.querySelectorAll('.next .img'), true);
 
-				if(imgPreload.complete){
-					updateImg(img, imgPreload.src);
-				}else{
-					imgPreload.onload = (function(img, src){
-						//as there are more images I need to freeze references to img and src
-						return function(ev){
-							if(img.className.indexOf(' load') == -1) img.className += ' load';
-
-							setTimeout(function(){
-								updateImg(img, src);
-							},200);
-						}
-					})(img, imgPreload.src);
-				}
-			}else{
-				updateImg(img);
-			}
-		}
-	};
+			setTimeout(function(){
+				lazyload(modalWrapper.querySelectorAll('.prev .img'), true);
+			}, 100);
+		}, 100);
+	}
 
 	function goBackToImgModal(img){
 		mod.removeClass('wkMedGal');
@@ -108,17 +80,14 @@ define('mediagallery', ['media', 'modal', 'pager', 'thumbnailer'], function(med,
 			pagesNum;
 
 		width = gal.offsetWidth;
-		if(width > 600) {
-			imagesize = MAX_THUMB_SIZE + 5; //width + margin
-		}else{
-			imagesize = 105; //width + margin
-		}
+		imagesize = (width > 600 ? MAX_THUMB_SIZE + 5 : 105); //width + margin
 
 		var cols = ~~(width/imagesize),
 			imgL = images.length,
 			//how many placeholders need to be added
 			//to keep gallery tiles in correct places
 			x = (Math.ceil(imgL / cols) * cols) - imgL,
+			img,
 			thumb,
 			isVideo;
 
@@ -135,17 +104,20 @@ define('mediagallery', ['media', 'modal', 'pager', 'thumbnailer'], function(med,
 				dots += '<div class="dot'+((current == pagesNum) ? ' curr':'')+'" id=dot'+pagesNum+'><div></div></div>';
 			}
 
-			isVideo = images[i].isVideo;
-			thumb = images[i].thumb;
+			img = images[i];
+
+			isVideo = img.isVideo;
+			thumb = img.thumb;
 
 			//no thumb available, generate one
 			if (!thumb) {
-				thumb = thumbnailer.getThumbURL(images[i].image, (isVideo ? 'video' : 'image'), MAX_THUMB_SIZE, MAX_THUMB_SIZE);
+				//TODO: remove after 2 weeks images[i].image
+				thumb = thumbnailer.getThumbURL(img.url || img.image, (isVideo ? 'video' : 'image'), MAX_THUMB_SIZE, MAX_THUMB_SIZE);
 			}
 
 			pages[pagesNum] += '<div class="galPlc img' +
 				(isVideo ? ' video' : '') +
-				((goToImg == i) ? ' this' : '') + '" data-img="' + thumb + '" id=img' + i + '></div>';
+				((goToImg == i) ? ' this' : '') + '" data-src="' + thumb + '" id=img' + i + '></div>';
 		}
 
 		//add placeholders
@@ -153,16 +125,14 @@ define('mediagallery', ['media', 'modal', 'pager', 'thumbnailer'], function(med,
 
 		pages[pagesNum] += '</div>';
 
-		pagination.innerHTML = dots;
+		if(pagesNum > 1) {
+			pagination.innerHTML = dots;
 
-		//18 is a width of a single dot
-		paginationWidth = (pagesNum * 18);
-		dotsPerWidth = ~~(width / 18);
+			//18 is a width of a single dot
+			paginationWidth = (pagesNum * 18);
+			dotsPerWidth = ~~(width / 18);
 
-		if(paginationWidth > width){
-			paginationStyle.width = paginationWidth + 'px';
-		}else{
-			paginationStyle.width = '';
+			paginationStyle.width = (paginationWidth > width ? paginationWidth + 'px' : '');
 		}
 	}
 
@@ -175,8 +145,6 @@ define('mediagallery', ['media', 'modal', 'pager', 'thumbnailer'], function(med,
 	}
 
 	function open(){
-		var pos;
-
 		goToImg = med.getCurrent();
 		med.hideShare();
 		med.cleanup();

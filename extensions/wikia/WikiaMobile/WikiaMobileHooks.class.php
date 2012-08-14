@@ -5,8 +5,88 @@
  * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
  */
 class WikiaMobileHooks extends WikiaObject{
-	const IMAGE_GROUP_MIN = 2;
-	const IMAGE_GROUP_MAX = 10;
+	static private $mediaNsString = null;
+
+	public function onParserBeforeStrip( &$parser, &$text, &$strip_state ) {
+		$this->wf->profileIn( __METHOD__ );
+
+		if ( empty( $this->wg->WikiaMobileDisableMediaGrouping ) && $this->app->checkSkin( 'wikiamobile', $parser->getOptions()->getSkin() ) ) {
+			$matches = array();
+			$translatedNs = $this->getLocalizedMediaNsString();
+
+			//capture all the clusters (more than one consecuteive item) of wikitext media tags
+			//and convert them to gallery tags (i.e. media grouping)
+			if (
+				!empty( $translatedNs ) &&
+				preg_match_all(
+					'/(?:\[\[\b(?:' . $translatedNs . ')\b:.*\]\]\s{0,2}){2,}/',
+					$text,
+					$matches,
+					PREG_OFFSET_CAPTURE
+				)
+			) {
+				$count = count( $matches[0] );
+
+				//replacing substrings, you gotta start from the bottom ;)
+				//to keep char offsets valid
+				for ( $x = $count - 1; $x >= 0; $x-- ) {
+					$match = $matches[0][$x];
+
+					$submatches = array();
+
+					$itemsCount = preg_match_all(
+						'/\[\[((?:' . $translatedNs . '):.*)\]\]/',
+						$match[0],
+						$submatches,
+						PREG_SET_ORDER
+					);
+
+					if ( $itemsCount > 0 ) {
+						$result = "<gallery>\n";
+
+						//analyze entries
+						foreach ( $submatches as $item ) {
+							$parts = explode( '|', $item[1] );
+							$components = array();
+							$totalParts = count( $parts );
+
+							foreach ( $parts as $index => $part ) {
+								if (
+									//File:name
+									$index == 0 ||
+									//link=url
+									strpos( 'link=', $part ) === 0 ||
+									//caption
+									(
+										( $index == ( $totalParts - 1 ) )  &&
+										!preg_match( '/(?:frame|thumb|right|left|[0-9]+px)/', $part )
+									)
+								) {
+									$components[] = $part;
+								}
+							}
+
+							$result .= implode( '|', $components ) . "\n";
+						}
+
+						//IMPORTANT: keep a new line at the end of the string to preserve
+						//the wikitext that comes next
+						$result .= "</gallery>\n";
+
+						$text = substr_replace(
+							$text,
+							$result,
+							$match[1],
+							strlen( $match[0] )
+						);
+					}
+				}
+			}
+		}
+
+		$this->wf->profileOut( __METHOD__ );
+		return true;
+	}
 
 	public function onParserAfterTidy( &$parser, &$text ){
 		$this->wf->profileIn( __METHOD__ );
@@ -14,10 +94,11 @@ class WikiaMobileHooks extends WikiaObject{
 		//cleanup page output from unwanted stuff
 		if ( $this->app->checkSkin( 'wikiamobile', $parser->getOptions()->getSkin() ) ) {
 			//remove inline styling to avoid weird results and optimize the output size
-			$text = preg_replace( '/\s+(style|color|bgcolor|border|align|cellspacing|cellpadding|hspace|vspace)=(\'|")[^"\']*(\'|")/im', '', $text );
-
-			//transform groups of IMAGE_GROUP_MIN images in a row into a media stack
-			//$text = preg_replace( '/(\s*<figure[^>]*>(<\/?a|<img|<\/?figcaption|<\/?noscript|[^<])+<\/figure>\s*){' . self::IMAGE_GROUP_MIN . ',' . self::IMAGE_GROUP_MAX . '}/im', '<section class="wkImgStk grp thumb">$0<footer class=thumbcaption>' . $this->wf->Msg('wikiaPhotoGallery-slideshow-view-number', '1', '') . '</footer></section>', $text );
+			$text = preg_replace(
+				'/\s+(style|color|bgcolor|border|align|cellspacing|cellpadding|hspace|vspace)=(\'|")[^"\']*(\'|")/im',
+				'',
+				$text
+			);
 		}
 
 		$this->wf->profileOut( __METHOD__ );
@@ -73,7 +154,7 @@ class WikiaMobileHooks extends WikiaObject{
 
 			$scripts = F::build( 'AssetsManager' ,array(), 'getInstance')->getURL( array( 'wikiamobile_categorypage_js' ) );
 
-			$this->wg->Out->setPageTitle( $categoryPage->getTitle()->getText() . ' <span id=catTtl>Category Page</span>');
+			$this->wg->Out->setPageTitle( $categoryPage->getTitle()->getText() . ' <span id=catTtl>' . $this->wf->MsgForContent( 'wikiamobile-categories-tagline' ) . '</span>');
 
 			$this->wg->Out->setHTMLTitle( $categoryPage->getTitle()->getText() );
 
@@ -108,5 +189,30 @@ class WikiaMobileHooks extends WikiaObject{
 
 		$this->wf->profileOut( __METHOD__ );
 		return true;
+	}
+
+	private function getLocalizedMediaNsString() {
+		$this->wf->profileIn( __METHOD__ );
+
+		if ( self::$mediaNsString === null ) {
+			$translatedNs = array();
+
+			//get all the possible variations of the File namespace
+			//and the translation in the wiki's language
+			foreach ( array( NS_FILE, NS_IMAGE, NS_VIDEO ) as $ns ) {
+				$translatedNs[] = $this->wg->ContLang->getNsText( $ns );
+
+				foreach( $this->wg->NamespaceAliases as $alias => $nsAlias ) {
+					if( $nsAlias == $ns ) {
+						$translatedNs[] = $alias;
+					}
+				}
+			}
+
+			self::$mediaNsString = implode( '|', array_unique( $translatedNs ) );
+		}
+
+		$this->wf->profileOut( __METHOD__ );
+		return self::$mediaNsString;
 	}
 }

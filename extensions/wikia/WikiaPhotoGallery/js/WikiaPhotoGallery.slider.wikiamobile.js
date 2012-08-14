@@ -1,14 +1,14 @@
 /*global WikiaMobile: true */
-
+/*
 $(function(){
 	var sliders = document.getElementsByClassName('wkSlider'),
-		i = sliders.length,
 		width = window.innerWidth,
 		height = window.innerHeight,
-		width = (height > width) ? width : height,
 		slider,
 		size = 'big',
-		sizePx;
+		i = 0;
+
+	width = (height > width) ? width : height
 
 	function onLoad(plc){
 		return function(){
@@ -21,8 +21,7 @@ $(function(){
 		}
 	}
 
-	while(--i >= 0){
-		slider = sliders[i];
+	while(slider = sliders[i++]){
 
 		var imgs = slider.getElementsByClassName('img'),
 			l = imgs.length,
@@ -45,3 +44,4 @@ $(function(){
 		}
 	}
 });
+*/

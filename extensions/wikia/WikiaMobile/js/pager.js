@@ -56,8 +56,7 @@ define('pager', function () {
 			width,
 			lastPage,
 			end = function(){
-				var page,
-					insertPage,
+				var insertPage,
 					changePage = (toX !== 0),
 					elem,
 					where;

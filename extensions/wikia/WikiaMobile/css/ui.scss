@@ -1,6 +1,6 @@
 @import 'variables';
-@import 'mixins/linear-gradient';
-@import 'mixins/box-sizing';
+@import 'mixins/linear-gradient.scss';
+@import 'mixins/box-sizing.scss';
 
 //I use it in a lot of places so it makes sense to have it here
 //The faster the better as it is not rendering but browser does calculation based on it
@@ -133,9 +133,9 @@
 }
 
 //chevrons
-.chg:before {
+.chg:before, .link .thumbcaption:before {
 	content:"";
-	background-image:  url('/extensions/wikia/WikiaMobile/images/chevron-grey-down.png'); /* base64 */
+	background-image: url('/extensions/wikia/WikiaMobile/images/chevron-grey-down.png'); /* base64 */
 	background-repeat: no-repeat;
 }
 

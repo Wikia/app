@@ -191,7 +191,7 @@ blockquote {
 	background-repeat: no-repeat;
 	background-image:  url('/extensions/wikia/WikiaMobile/images/share_grey.png'); /* base64 */
 	background-size: 50%;
-	
+
 	&.on {
 		background-image:  url('/extensions/wikia/WikiaMobile/images/share_blue.png'); /* base64 */
 
@@ -212,7 +212,7 @@ blockquote {
 			position: absolute;
 			width: 0;
 		}
-		
+
 		&.top {
 			&::after {
 				border-color: white transparent transparent transparent;
@@ -285,27 +285,22 @@ blockquote {
 	background-position: 98% 20%;
 	background-size: 8px;
 	z-index: $top-layer-z-index;
-	
+
 	&.show {
 		border-color: $link-color;
 		pointer-events: auto;
 		opacity: 1;
 	}
-	
+
 	&.hide {
 		pointer-events: none;
 		opacity: 0;
 		-webkit-transform: translateY(20px);
 	}
-	
+
 	&.err{
 		border-color: red;
 	}
-}
-
-//small overhead on for a page load but sliders don't flicker that much with it
-.wkSlider{
-	display: none;
 }
 
 //article comments header

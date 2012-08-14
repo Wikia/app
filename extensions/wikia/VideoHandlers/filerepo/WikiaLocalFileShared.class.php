@@ -1,7 +1,7 @@
 <?php
 
 /* Leaf to WikiaLocalFile Composite
- * 
+ *
  * Handles logic shared through Wikia LocalFile Wrappers
  */
 
@@ -105,8 +105,8 @@ class WikiaLocalFileShared  {
 		if ( $this->isVideo() && !empty( $handler ) ){
 			return $handler->getProviderHomeUrl();
 		}
-		
-		return false;		
+
+		return false;
 	}
 
 	/*
@@ -181,7 +181,7 @@ class WikiaLocalFileShared  {
 			$this->oFile->dataLoaded = true;
 			$this->oFile->mime = $this->forceMime;
 			list( $this->oFile->major_mime, $this->oFile->minor_mime ) = LocalFile::splitMime( $this->oFile->mime );
-			// normally, this kind of method would call 
+			// normally, this kind of method would call
 			// MediaHandler::getHandler(). However, this function
 			// may be called repeatedly in one session (by a video
 			// ingestion script) for different videos. MediaHandler::getHandler()
@@ -199,7 +199,7 @@ class WikiaLocalFileShared  {
 	}
 
 	/* alter loadFromFile logic
-	 * 
+	 *
 	 * loadFromFile resets few params in class based on actual file in file system.
 	 * As videos are represented as image files we want some data not to be reseted.
 	 */

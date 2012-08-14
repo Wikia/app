@@ -2,14 +2,14 @@
 
 //init toc
 
-define('toc', ['track', 'events'], function toc(track, events){
+define('toc', ['track', 'events', 'sections'], function toc(track, events, sections){
 	//private
 	var d = document,
 		table,
 		conStyle,
 		click = events.click;
 
-	function open(a){
+	function open(){
 		if(table){
 			table.className += ' open';
 			d.body.className += ' hidden';
@@ -39,7 +39,7 @@ define('toc', ['track', 'events'], function toc(track, events){
 			table.addEventListener(click, function(ev){
 				ev.preventDefault();
 
-				var node = ev.target.parentNode,
+				var node = ev.target,
 					a = (node.nodeName == 'A');
 
 				(table.className.indexOf('open') > -1) ? close(a) : open(a);
@@ -57,8 +57,7 @@ define('toc', ['track', 'events'], function toc(track, events){
 
 					//open section if necessarry
 					if(h2.className.indexOf('open') == -1){
-						h2.className += ' open';
-						h2.nextElementSibling.className += ' open';
+						sections.toggle(h2);
 					}
 
 					//scroll header into view
@@ -70,7 +69,7 @@ define('toc', ['track', 'events'], function toc(track, events){
 						elm.scrollIntoView();
 					}, 50);
 				}
-			});
+			}, true);
 		}
 	}
 

@@ -17,20 +17,30 @@ define('sections', ['events', 'track'], function(ev, track){
 			close: []
 		};
 
-		function fireEvent(event, target){
-			var stack = callbacks[event],
-				len = stack.length;
+	function fireEvent(event, target){
+		var stack = callbacks[event],
+			len = stack.length;
 
-			if(len > 0){
-				setTimeout(function(){
-					var x = 0;
+		if(len > 0){
+			setTimeout(function(){
+				var x = 0;
 
-					for(; x < len; x++){
-						stack[x].call(target);
-					}
-				}, 0);
-			}
+				while(x < len){
+					stack[x++].call(target);
+				}
+			}, 0);
 		}
+	}
+
+	//add class noSect to images outside sections
+	function addNoSectClass(parent){
+		//documentFragment has no support for getElementsByClassName
+		var images = parent.querySelectorAll('.lazy'),
+			i = 0,
+			elm;
+
+		while(elm = images[i++]) elm.className += ' noSect';
+	}
 
 	function init(){
 		//avoid running if there are no sections which are direct children of the article section
@@ -43,6 +53,7 @@ define('sections', ['events', 'track'], function(ev, track){
 				node,
 				nodeName,
 				isH2,
+				addNoSect = true,
 				goBck = '<span class=goBck>&uarr; '+$.msg('wikiamobile-hide-section')+'</span>';
 
 			for (x=0; x < y; x++) {
@@ -56,6 +67,12 @@ define('sections', ['events', 'track'], function(ev, track){
 						currentSection.insertAdjacentHTML('beforeend', goBck);
 						root = fragment;
 					}else if (isH2){
+
+						if(addNoSect){
+							addNoSectClass(fragment);
+							addNoSect = false;
+						}
+
 						if (currentSection) {
 							currentSection.insertAdjacentHTML('beforeend', goBck);
 							fragment.appendChild(currentSection);
@@ -70,60 +87,69 @@ define('sections', ['events', 'track'], function(ev, track){
 
 						//append chevron
 						node.insertAdjacentHTML('beforeend', '<span class=chev></span>');
-
 						fragment.appendChild(node);
 						fragment.appendChild(currentSection);
 						root = currentSection;
 						continue;
 					}
+
 					root.appendChild(node.cloneNode(true));
 				}
 			}
 
 			article.innerHTML = '';
 			article.appendChild( fragment );
+		}else{
+			addNoSectClass(article);
 		}
+
 		//this has to run even if we don't find any sections on a page for ie. Category Pages, pages without any sections but with readmore and stuff
-		$(d.body).on(click, '.collSec', function(){
-			var isOpen = (this.className.indexOf('open') > -1),
-				next = this.nextElementSibling;
+		d.body.addEventListener(click, function(ev){
+			var t = ev.target;
+			if(t.className.indexOf('collSec') > -1){
+				toggle(t);
+			}else if(t.className.indexOf('goBck') > -1){
+				var parent = t.parentElement,
+					prev = parent.previousElementSibling;
 
-			track(['section', isOpen ? 'close' : 'open']);
+				track('section/close');
 
-			if(isOpen){
-				this.className = this.className.replace(' open', '');
-				next.className = next.className.replace(' open', '');
-			}else{
-				this.className += ' open';
-				next.className += ' open';
+				parent.className = parent.className.replace(' open', '');
+				prev.className = prev.className.replace(' open', '');
+				fireEvent('close', parent);
+				prev.scrollIntoView();
 			}
-
-			fireEvent((isOpen) ? 'close' : 'open', next);
-		}).on(click, '.goBck', function(){
-			var parent = this.parentElement,
-				prev = parent.previousElementSibling;
-
-			track('section/close');
-
-			parent.className = parent.className.replace(' open', '');
-			prev.className = prev.className.replace(' open', '');
-			next.className = next.className.replace(' open', '');
-			fireEvent('close', parent);
-			prev.scrollIntoView();
 		});
+	}
+
+	function toggle(h2){
+		var isOpen = (h2.className.indexOf('open') > -1),
+			next = h2.nextElementSibling;
+
+		track(['section', isOpen ? 'close' : 'open']);
+
+		if(isOpen){
+			h2.className = h2.className.replace(' open', '');
+			next.className = next.className.replace(' open', '');
+		}else{
+			h2.className += ' open';
+			next.className += ' open';
+		}
+
+		fireEvent((isOpen) ? 'close' : 'open', next);
 	}
 
 	return {
 		init: init,
+		toggle: toggle,
 		addEventListener: function(event, callback){
-			if(callbacks[event]){
-				callbacks[event].push(callback);
-			}
+			callbacks[event] && callbacks[event].push(callback);
 		},
 		removeEventListener: function(event, callback){
-			if(callbacks[event]){
-				var stack = callbacks[event],
-					len = stack.lenght;
+			var stack = callbacks[event];
+
+			if(stack){
+				var len = stack.length;
 
 				while(len--){
 					if(stack[len] === callback){
@@ -134,4 +160,4 @@ define('sections', ['events', 'track'], function(ev, track){
 			}
 		}
 	}
-})
+});

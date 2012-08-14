@@ -678,6 +678,15 @@ class Linker {
 			$mtoParams['desc-link'] = true;
 			$mtoParams['desc-query'] = $query;
 		}
+
+		/**
+		 * Wikia change begin - author Federico
+		 * Allow MediaTransformOutput subclasses know if there's a caption
+		 */
+		$mtoParams['caption'] = ( !empty( $frameParams['caption'] ) ) ? $frameParams['caption'] : null;
+		/**
+		 * Wikia change end
+		 */
 		return $mtoParams;
 	}
 
