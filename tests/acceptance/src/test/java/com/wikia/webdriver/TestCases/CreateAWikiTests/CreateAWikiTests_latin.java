@@ -1,10 +1,9 @@
 package com.wikia.webdriver.TestCases.CreateAWikiTests;
 
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import com.wikia.webdriver.Common.CommonFunctions;
+import com.wikia.webdriver.Properties.Properties;
 import com.wikia.webdriver.Templates.TestTemplate;
 import com.wikia.webdriver.pageObjects.PageObject.BasePageObject;
 import com.wikia.webdriver.pageObjects.PageObject.HomePageObject;
@@ -32,7 +31,7 @@ public class CreateAWikiTests_latin extends TestTemplate
 	public void CreateNewWiki_latin_001_have_an_account()
 	{
 		startBrowser();
-		driver.get("http://community.wikia.com/wiki/Special:UserLogout?returnto=User "+BasePageObject.userName);
+		driver.get("http://community.wikia.com/wiki/Special:UserLogout?returnto=User "+Properties.userName);
 		HomePageObject home = new HomePageObject(driver);
 		home.openHomePage();
 		CreateNewWikiPageObjectStep1 createNewWiki1 = home.StartAWikia();
@@ -44,7 +43,7 @@ public class CreateAWikiTests_latin extends TestTemplate
 		logInPage.verifyTabTransition();
 		logInPage.verifyFaceBookToolTip();
 		logInPage.verifySignUpText();		
-		driver.get("http://community.wikia.com/wiki/Special:UserLogout?returnto=User "+BasePageObject.userName);
+		driver.get("http://community.wikia.com/wiki/Special:UserLogout?returnto=User "+Properties.userName);
 		stopBrowser();
 	}
 	
@@ -58,7 +57,7 @@ public class CreateAWikiTests_latin extends TestTemplate
 	public void CreateNewWiki_latin_TC002_user_name_is_blank()
 	{
 		startBrowser();
-		driver.get("http://community.wikia.com/wiki/Special:UserLogout?returnto=User "+BasePageObject.userName);
+		driver.get("http://community.wikia.com/wiki/Special:UserLogout?returnto=User "+Properties.userName);
 		HomePageObject home = new HomePageObject(driver);
 		home.openHomePage();
 		CreateNewWikiPageObjectStep1 createNewWiki1 = home.StartAWikia();
@@ -69,8 +68,8 @@ public class CreateAWikiTests_latin extends TestTemplate
 		CreateNewWikiLogInPageObject logInPage = createNewWiki1.submitToLogIn();
 		logInPage.submitLogin();
 		logInPage.verifyEmptyUserNameValidation();
-		logInPage.typeInUserName(BasePageObject.userName);		
-		logInPage.typeInPassword(BasePageObject.password);
+		logInPage.typeInUserName(Properties.userName);		
+		logInPage.typeInPassword(Properties.password);
 		CreateNewWikiPageObjectStep2 createNewWiki2 = logInPage.submitLogin();
 		createNewWiki2.describeYourTopic("Duis quam ante, fringilla at cursus tristique, laoreet vel elit. Nullam rhoncus, magna ut dictum ultrices, mauris lectus consectetur tellus, sed dignissim elit justo vel ante.");
 		createNewWiki2.selectCategory("Auto");
@@ -79,8 +78,8 @@ public class CreateAWikiTests_latin extends TestTemplate
 		NewWikiaHomePage newWikia = createNewWiki3.submit(wikiName);
 		newWikia.VerifyCongratulationsLightBox();
 		newWikia.closeCongratulationsLightBox();
-		newWikia.vefifyUserLoggedIn(BasePageObject.userName);
-		driver.get("http://community.wikia.com/wiki/Special:UserLogout?returnto=User "+BasePageObject.userName);
+		newWikia.vefifyUserLoggedIn(Properties.userName);
+		driver.get("http://community.wikia.com/wiki/Special:UserLogout?returnto=User "+Properties.userName);
 		stopBrowser();
 		
 	}
@@ -95,7 +94,7 @@ public class CreateAWikiTests_latin extends TestTemplate
 	public void CreateNewWiki_latin_TC003_user_name_does_not_exists()
 	{
 		startBrowser();
-		driver.get("http://community.wikia.com/wiki/Special:UserLogout?returnto=User "+BasePageObject.userName);
+		driver.get("http://community.wikia.com/wiki/Special:UserLogout?returnto=User "+Properties.userName);
 		HomePageObject home = new HomePageObject(driver);
 		home.openHomePage();
 		CreateNewWikiPageObjectStep1 createNewWiki1 = home.StartAWikia();
@@ -107,8 +106,8 @@ public class CreateAWikiTests_latin extends TestTemplate
 		logInPage.typeInUserName("invalidUserName");
 		logInPage.submitLogin();
 		logInPage.verifyInvalidUserNameValidation();
-		logInPage.typeInUserName(BasePageObject.userName);
-		logInPage.typeInPassword(BasePageObject.password);
+		logInPage.typeInUserName(Properties.userName);
+		logInPage.typeInPassword(Properties.password);
 		CreateNewWikiPageObjectStep2 createNewWiki2 = logInPage.submitLogin();
 		createNewWiki2.describeYourTopic("Duis quam ante, fringilla at cursus tristique, laoreet vel elit. Nullam rhoncus, magna ut dictum ultrices, mauris lectus consectetur tellus, sed dignissim elit justo vel ante.");
 		createNewWiki2.selectCategory("Auto");
@@ -117,10 +116,10 @@ public class CreateAWikiTests_latin extends TestTemplate
 		NewWikiaHomePage newWikia = createNewWiki3.submit(wikiName);
 		newWikia.VerifyCongratulationsLightBox();
 		newWikia.closeCongratulationsLightBox();
-		newWikia.vefifyUserLoggedIn(BasePageObject.userName);
+		newWikia.vefifyUserLoggedIn(Properties.userName);
 		newWikia.verifyUserToolBar();
-		CommonFunctions.logOut(BasePageObject.userName);
-		driver.get("http://community.wikia.com/wiki/Special:UserLogout?returnto=User "+BasePageObject.userName);
+		CommonFunctions.logOut(Properties.userName);
+		driver.get("http://community.wikia.com/wiki/Special:UserLogout?returnto=User "+Properties.userName);
 		stopBrowser();
 	}
 	
@@ -133,7 +132,7 @@ public class CreateAWikiTests_latin extends TestTemplate
 	public void CreateNewWiki_latin_TC004_password_is_blank()
 	{
 		startBrowser();
-		driver.get("http://community.wikia.com/wiki/Special:UserLogout?returnto=User "+BasePageObject.userName);
+		driver.get("http://community.wikia.com/wiki/Special:UserLogout?returnto=User "+Properties.userName);
 		HomePageObject home = new HomePageObject(driver);
 		home.openHomePage();
 		CreateNewWikiPageObjectStep1 createNewWiki1 = home.StartAWikia();
@@ -142,11 +141,11 @@ public class CreateAWikiTests_latin extends TestTemplate
 		createNewWiki1.typeInWikiName(wikiName);
 		createNewWiki1.waitForSuccessIcon();
 		CreateNewWikiLogInPageObject logInPage = createNewWiki1.submitToLogIn();
-		logInPage.typeInUserName(BasePageObject.userName);
+		logInPage.typeInUserName(Properties.userName);
 		logInPage.submitLogin();
 		logInPage.verifyBlankPasswordValidation();
-		logInPage.typeInUserName(BasePageObject.userName);
-		logInPage.typeInPassword(BasePageObject.password);
+		logInPage.typeInUserName(Properties.userName);
+		logInPage.typeInPassword(Properties.password);
 		CreateNewWikiPageObjectStep2 createNewWiki2 = logInPage.submitLogin();
 		createNewWiki2.describeYourTopic("Duis quam ante, fringilla at cursus tristique, laoreet vel elit. Nullam rhoncus, magna ut dictum ultrices, mauris lectus consectetur tellus, sed dignissim elit justo vel ante.");
 		createNewWiki2.selectCategory("Auto");
@@ -155,10 +154,10 @@ public class CreateAWikiTests_latin extends TestTemplate
 		NewWikiaHomePage newWikia = createNewWiki3.submit(wikiName);
 		newWikia.VerifyCongratulationsLightBox();
 		newWikia.closeCongratulationsLightBox();
-		newWikia.vefifyUserLoggedIn(BasePageObject.userName);
+		newWikia.vefifyUserLoggedIn(Properties.userName);
 		newWikia.verifyUserToolBar();
-		CommonFunctions.logOut(BasePageObject.userName);
-		driver.get("http://community.wikia.com/wiki/Special:UserLogout?returnto=User "+BasePageObject.userName);
+		CommonFunctions.logOut(Properties.userName);
+		driver.get("http://community.wikia.com/wiki/Special:UserLogout?returnto=User "+Properties.userName);
 		stopBrowser();
 	}
 	
@@ -171,7 +170,7 @@ public class CreateAWikiTests_latin extends TestTemplate
 	public void CreateNewWiki_latin_TC005_password_is_incorrect()
 	{
 		startBrowser();
-		driver.get("http://community.wikia.com/wiki/Special:UserLogout?returnto=User "+BasePageObject.userName);
+		driver.get("http://community.wikia.com/wiki/Special:UserLogout?returnto=User "+Properties.userName);
 		HomePageObject home = new HomePageObject(driver);
 		home.openHomePage();
 		CreateNewWikiPageObjectStep1 createNewWiki1 = home.StartAWikia();
@@ -180,12 +179,12 @@ public class CreateAWikiTests_latin extends TestTemplate
 		createNewWiki1.typeInWikiName(wikiName);
 		createNewWiki1.waitForSuccessIcon();
 		CreateNewWikiLogInPageObject logInPage = createNewWiki1.submitToLogIn();
-		logInPage.typeInUserName(BasePageObject.userName);
+		logInPage.typeInUserName(Properties.userName);
 		logInPage.typeInPassword("Invalid password");
 		logInPage.submitLogin();
 		logInPage.verifyInvalidPasswordValidation();
-		logInPage.typeInUserName(BasePageObject.userName);
-		logInPage.typeInPassword(BasePageObject.password);
+		logInPage.typeInUserName(Properties.userName);
+		logInPage.typeInPassword(Properties.password);
 		CreateNewWikiPageObjectStep2 createNewWiki2 = logInPage.submitLogin();
 		createNewWiki2.describeYourTopic("Duis quam ante, fringilla at cursus tristique, laoreet vel elit. Nullam rhoncus, magna ut dictum ultrices, mauris lectus consectetur tellus, sed dignissim elit justo vel ante.");
 		createNewWiki2.selectCategory("Auto");
@@ -194,9 +193,9 @@ public class CreateAWikiTests_latin extends TestTemplate
 		NewWikiaHomePage newWikia = createNewWiki3.submit(wikiName);
 		newWikia.VerifyCongratulationsLightBox();
 		newWikia.closeCongratulationsLightBox();
-		newWikia.vefifyUserLoggedIn(BasePageObject.userName);
+		newWikia.vefifyUserLoggedIn(Properties.userName);
 		newWikia.verifyUserToolBar();
-		driver.get("http://community.wikia.com/wiki/Special:UserLogout?returnto=User "+BasePageObject.userName);
+		driver.get("http://community.wikia.com/wiki/Special:UserLogout?returnto=User "+Properties.userName);
 		stopBrowser();
 	}
 	
@@ -209,7 +208,7 @@ public class CreateAWikiTests_latin extends TestTemplate
 	public void CreateNewWiki_latin_TC006_user_name_and_password_are_correct()
 	{
 		startBrowser();
-		driver.get("http://community.wikia.com/wiki/Special:UserLogout?returnto=User "+BasePageObject.userName);
+		driver.get("http://community.wikia.com/wiki/Special:UserLogout?returnto=User "+Properties.userName);
 		HomePageObject home = new HomePageObject(driver);
 		home.openHomePage();
 		CreateNewWikiPageObjectStep1 createNewWiki1 = home.StartAWikia();
@@ -218,8 +217,8 @@ public class CreateAWikiTests_latin extends TestTemplate
 		createNewWiki1.typeInWikiName(wikiName);
 		createNewWiki1.waitForSuccessIcon();
 		CreateNewWikiLogInPageObject logInPage = createNewWiki1.submitToLogIn();
-		logInPage.typeInUserName(BasePageObject.userName);
-		logInPage.typeInPassword(BasePageObject.password);
+		logInPage.typeInUserName(Properties.userName);
+		logInPage.typeInPassword(Properties.password);
 		CreateNewWikiPageObjectStep2 createNewWiki2 = logInPage.submitLogin();
 		createNewWiki2.describeYourTopic("Duis quam ante, fringilla at cursus tristique, laoreet vel elit. Nullam rhoncus, magna ut dictum ultrices, mauris lectus consectetur tellus, sed dignissim elit justo vel ante.");
 		createNewWiki2.selectCategory("Auto");
@@ -228,9 +227,9 @@ public class CreateAWikiTests_latin extends TestTemplate
 		NewWikiaHomePage newWikia = createNewWiki3.submit(wikiName);
 		newWikia.VerifyCongratulationsLightBox();
 		newWikia.closeCongratulationsLightBox();
-		newWikia.vefifyUserLoggedIn(BasePageObject.userName);
+		newWikia.vefifyUserLoggedIn(Properties.userName);
 		newWikia.verifyUserToolBar();
-		driver.get("http://community.wikia.com/wiki/Special:UserLogout?returnto=User "+BasePageObject.userName);
+		driver.get("http://community.wikia.com/wiki/Special:UserLogout?returnto=User "+Properties.userName);
 		stopBrowser();
 	}	
 	
