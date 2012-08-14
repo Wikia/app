@@ -1,9 +1,9 @@
-<a class="video-thumbnail video-hubs-video <?= $videoPlay ?>" data-wiki="<?= $data['wiki']; ?>" data-video-name="<?= $data['video-name']; ?>" data-ref="<?= $data['ref']; ?>" href="<?= $href; ?>">
-	<?php if( !empty($duration) ): ?>
-		<div class="timer"><?= $duration; ?></div>
+<a class="video-thumbnail video-hubs-video <?= $video->videoPlay ?>" data-wiki="<?= $video->data['wiki']; ?>" data-video-name="<?= $video->data['video-name']; ?>" data-ref="<?= $video->data['ref']; ?>" href="<?= $video->href; ?>">
+	<?php if( !empty($video->duration) ): ?>
+		<div class="timer"><?= $video->duration; ?></div>
 	<?php endif; ?>
 	<div class="playButton"></div>
-	<img class="Wikia-video-thumb" src="<?= $imgUrl; ?>" data-src="<?= $imgUrl; ?>" />
+	<img class="Wikia-video-thumb" src="<?= $video->imgUrl; ?>" data-src="<?= $video->imgUrl; ?>" />
 </a>
-<div class="description"><?= $description; ?></div>
-<div class="info"><?= $info; ?></div>
+<div class="description"><?= $video->description; ?></div>
+<div class="info"><?= $video->info; ?></div>

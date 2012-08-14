@@ -12,7 +12,6 @@
 class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 	const CACHE_VALIDITY_BROWSER = 86400;
 	const CACHE_VALIDITY_VARNISH = 86400;
-	const PLAY_IN_LIGHTBOX = true;
 
 	/**
 	 * @var WikiaHubsV2Model
@@ -37,7 +36,7 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 
 		$this->response->addAsset('extensions/wikia/WikiaHubsV2/css/WikiaHubsV2.scss');
 		$this->response->addAsset('extensions/wikia/WikiaHubsV2/js/WikiaHubsV2.js');
-		if (!self::PLAY_IN_LIGHTBOX) {
+		if (!WikiaHubsV2Model::PLAY_VIDEO_IN_LIGHTBOX) {
 			$this->response->addAsset('extensions/wikia/RelatedVideos/js/RelatedVideos.js');
 		}
 	}
@@ -83,43 +82,7 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 	 */
 	public function renderCaruselElement() {
 		$video = $this->request->getVal('video', false);
-		$videoTitle = ($video) ? F::build('Title', array($video['title'], NS_FILE), 'newFromText') : false;
-		$videoFile = ($videoTitle) ? wfFindFile($videoTitle) : false;
-
-		if ($videoFile) {
-			$thumbWidth = $video['thumbnailData']['width'];
-			$thumbHeight = $video['thumbnailData']['height'];
-			$videoThumbObj = $videoFile->transform(array('width' => $thumbWidth, 'height' => $thumbHeight));
-			$this->extractDataForCaruselTemplate($video, $videoThumbObj);
-		} else {
-			Wikia::log(__METHOD__, false, 'A video file not found. ID: ' . $video['title']);
-		}
-	}
-
-	protected function extractDataForCaruselTemplate($videoArr, $videoThumbObj) {
-		$videoFile = $videoThumbObj->getFile();
-		$videoTitle = $videoFile->getTitle();
-		$wikiUrl = WikiFactory::getVarValueByName('wgServer', $videoArr['wikiId']);
-
-		$this->duration = $videoFile->getHandler()->getFormattedDuration();
-		$this->data = array(
-			'wiki' => $wikiUrl,
-			'video-name' => $videoArr['title'],
-			'ref' => $videoTitle->getNsText() . ':' . $videoTitle->getDBkey(),
-		);
-		$this->href = $videoTitle->getFullUrl();
-		$this->imgUrl = $videoThumbObj->getUrl();
-		$this->description = $videoArr['headline'];
-		if (empty($videoArr['profile'])) {
-			$this->info = wfMsgExt('wikiahubs-popular-videos-suggested-by', array('parseinline'), array($videoArr['submitter']));
-		} else {
-			$this->info = wfMsgExt('wikiahubs-popular-videos-suggested-by-profile', array('parseinline'), array($videoArr['submitter'], $videoArr['profile']));
-		}
-
-		//todo: remove this hack described below once we finish research about customizing lightbox
-		//do we want it in lightbox or modal
-		//also quite important can be $this->wg->VideoHandlersVideosMigrated
-		$this->videoPlay = self::PLAY_IN_LIGHTBOX ? 'lightbox' : 'video-play';
+		$this->video = $this->model->getVideoElementData($video);
 	}
 
 	public function topwikis() {

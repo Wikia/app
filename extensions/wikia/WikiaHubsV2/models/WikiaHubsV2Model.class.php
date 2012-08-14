@@ -20,6 +20,8 @@ class WikiaHubsV2Model extends WikiaModel {
 	const SPONORED_IMAGE_WIDTH = 91;
 	const SPONORED_IMAGE_HEIGHT = 27;
 
+	const PLAY_VIDEO_IN_LIGHTBOX = true;
+
 	protected $lang;
 	protected $date;
 	protected $vertical;
@@ -634,6 +636,50 @@ No
 			$video = false;
 		}
 		return $video;
+	}
+
+	public function getVideoElementData($video) {
+		$videoTitle = ($video) ? F::build('Title', array($video['title'], NS_FILE), 'newFromText') : false;
+		$videoFile = ($videoTitle) ? wfFindFile($videoTitle) : false;
+
+		if ($videoFile) {
+			$thumbWidth = $video['thumbnailData']['width'];
+			$thumbHeight = $video['thumbnailData']['height'];
+			$videoThumbObj = $videoFile->transform(array('width' => $thumbWidth, 'height' => $thumbHeight));
+			return $this->extractDataForCaruselTemplate($video, $videoThumbObj);
+		} else {
+			Wikia::log(__METHOD__, false, 'A video file not found. ID: ' . $video['title']);
+			return false;
+		}
+	}
+
+	protected function extractDataForCaruselTemplate($videoArr, $videoThumbObj) {
+		$videoFile = $videoThumbObj->getFile();
+		$videoTitle = $videoFile->getTitle();
+		$wikiUrl = WikiFactory::getVarValueByName('wgServer', $videoArr['wikiId']);
+
+		$videoItem = new stdClass();
+
+		$videoItem->duration = $videoFile->getHandler()->getFormattedDuration();
+		$videoItem->data = array(
+			'wiki' => $wikiUrl,
+			'video-name' => $videoArr['title'],
+			'ref' => $videoTitle->getNsText() . ':' . $videoTitle->getDBkey(),
+		);
+		$videoItem->href = $videoTitle->getFullUrl();
+		$videoItem->imgUrl = $videoThumbObj->getUrl();
+		$videoItem->description = $videoArr['headline'];
+		if (empty($videoArr['profile'])) {
+			$videoItem->info = wfMsgExt('wikiahubs-popular-videos-suggested-by', array('parseinline'), array($videoArr['submitter']));
+		} else {
+			$videoItem->info = wfMsgExt('wikiahubs-popular-videos-suggested-by-profile', array('parseinline'), array($videoArr['submitter'], $videoArr['profile']));
+		}
+
+		//todo: remove this hack described below once we finish research about customizing lightbox
+		//do we want it in lightbox or modal
+		//also quite important can be $this->wg->VideoHandlersVideosMigrated
+		$videoItem->videoPlay = self::PLAY_VIDEO_IN_LIGHTBOX ? 'lightbox' : 'video-play';
+		return $videoItem;
 	}
 
 	public function generateTabberWikiText($tabData) {
