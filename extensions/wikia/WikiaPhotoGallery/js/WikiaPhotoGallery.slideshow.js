@@ -32,9 +32,29 @@ var WikiaPhotoGallerySlideshow = {
 			prevClass: 'wikia-slideshow-prev',
 			slideWidth: params.width,
 			slidesClass: 'wikia-slideshow-images',
-			slideCallback: slideCallback
+			slideCallback: slideCallback,
+			stayOn: true
 		});
-		
+
+		var lastInView = false;
+		$(window).on('scrollstop', function() {
+			var scrollTop = $(window).scrollTop();
+			var scrollBottom = scrollTop + $(window).height();
+			var elemTop = slideshow.offset().top;
+			var elemBottom = elemTop + slideshow.height();
+			var inView = (	(scrollTop <= elemTop && scrollBottom >= elemTop) ||
+				(scrollTop <= elemBottom && scrollBottom >= elemBottom ) );
+			if ( inView != lastInView ) {
+				if (inView) {
+					slideshow.trigger('start');
+				} else {
+					slideshow.trigger('stop');
+				}
+			}
+			lastInView = inView;
+		});
+
+
 		// handle clicks on "Pop Out" button
 		//slideshow.find('.wikia-slideshow-popout').click(this.onPopOutClickFn);
 
