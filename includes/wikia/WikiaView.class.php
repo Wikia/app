@@ -204,10 +204,11 @@ class WikiaView {
 	protected function renderRaw() {
 		wfProfileIn(__METHOD__);
 		if ($this->response->hasException()) {
+			wfProfileOut(__METHOD__);
 			return '<pre>' . print_r ($this->response->getException(), true) . '</pre>';
 		}
-		return '<pre>' . var_export( $this->response->getData(), true ) . '</pre>';
 		wfProfileOut(__METHOD__);
+		return '<pre>' . var_export( $this->response->getData(), true ) . '</pre>';
 	}
 
 	protected function renderHtml() {
