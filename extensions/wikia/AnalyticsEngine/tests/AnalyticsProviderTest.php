@@ -43,13 +43,27 @@ class AnalyticsProviderTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * Test the IVW provider
-	 *
-	 * @group Infrastructure
+	 * Return test data for testAnalyticsProviderIVW test
+	 * @static
+	 * @return array
 	 */
-	public function testAnalyticsProviderIVW() {
-		$this->assertEquals($this->getAnalyticsProviderTag('http://shaun.wikia.com/wiki/Shaun'), 'RC_WIKIA_UGCENT');
-		$this->assertEquals($this->getAnalyticsProviderTag('http://de.wikia.com/Videospiele'), 'RC_WIKIA_START');
+	public static function analyticsDataProvider()
+	{
+		return array(
+			array('http://shaun.wikia.com/wiki/Shaun', 'RC_WIKIA_UGCENT'),
+			array('http://de.wikia.com/Videospiele', 'RC_WIKIA_START'),
+		);
+	}
+
+	/**
+	 * Test the IVW provider
+	 * @param $url page address
+	 * @param $result expected result
+	 * @group Infrastructure
+	 * @dataProvider analyticsDataProvider
+	 */
+	public function testAnalyticsProviderIVW($url, $result) {
+		$this->assertEquals($this->getAnalyticsProviderTag($url), $result);
 	}
 }
 
