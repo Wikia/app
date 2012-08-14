@@ -37,8 +37,8 @@ class ChatAjax {
 		
 		$user = User::newFromId( $data['user_id'] );
 		if( empty($user) || !$user->isLoggedIn() || $user->getName() != $wgRequest->getVal('name', '') ) {
-			return array( 'errorMsg' => wfMsg('chat-room-is-not-on-this-wiki'));
 			wfProfileOut( __METHOD__ );
+			return array( 'errorMsg' => wfMsg('chat-room-is-not-on-this-wiki'));
 		}
 		
 		$isCanGiveChatMode = false;
