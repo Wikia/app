@@ -172,6 +172,7 @@ var SuggestModalWikiaHubsV2 = {
 	},
 
 	closeModal: function (modal) {
+	//todo: use QueryString made by Jakub Olek :)
 		if (!window.wgUserName) {
 			var searchstring = window.location.search || '';
 			if (typeof searchstring === "undefined") {
