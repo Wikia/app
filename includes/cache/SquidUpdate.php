@@ -283,7 +283,7 @@ class SquidUpdate {
 	static function VarnishPurgeKey( $keyArr ) {
 		global $wgEnableScribeReport;
 		wfProfileIn( __METHOD__ );
-		$key = 'varnish_purges_by_key';
+		$queue = 'varnish_purges_by_key';
 
 		if ( empty($wgEnableScribeReport) ) {
 			wfProfileOut( __METHOD__ );
@@ -303,7 +303,7 @@ class SquidUpdate {
 						'time' => time(),
 					)
 				);
-				WScribeClient::singleton($key)->send($data);
+				WScribeClient::singleton($queue)->send($data);
 			}
 		}
 		catch( TException $e ) {
