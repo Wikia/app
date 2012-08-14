@@ -37,17 +37,17 @@ public class HubBasePageObject extends BasePageObject{
 		List<WebElement> newstabs = driver.findElements(By.cssSelector("section.wikiahubs-newstabs ul.tabbernav li a"));
 		waitForElementClickableByCss("section.wikiahubs-newstabs ul.tabbernav li a");
 		PageObjectLogging.log("Click on news tab numer "+TabNumber+".", "", true, driver);
-		click(newstabs.get(TabNumber - 1));
+		newstabs.get(TabNumber - 1).click();
 
 	}
 	public void RelatedVideosScrollLeft() {
 		PageObjectLogging.log("RV module: scroll left", "", true, driver);
-		click(RelatedVideosScrollLeft);
-	}
+		RelatedVideosScrollLeft.click();
+		}
 	
 	public void RelatedVideosScrollRight() {
 		PageObjectLogging.log("RV module: scroll right", "", true, driver);
-		click(RelatedVideosScrollRight);
+		RelatedVideosScrollRight.click();
 	}
 	public HomePageObject BackToHomePage() {
 		PageObjectLogging.log("navigate to www.wikia.com", "", true, driver);
