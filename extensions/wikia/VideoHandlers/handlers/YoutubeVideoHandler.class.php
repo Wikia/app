@@ -29,6 +29,6 @@ EOT;
 			return 15;
 		} else {
 			return 0;
-		};
+		}
 	}
 }
