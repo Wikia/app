@@ -1287,6 +1287,6 @@ class ArticleComment {
 
 	static function getSurrogateKey( $articleId ) {
 		global $wgCityId;
-		return 'Wiki_ ' . $wgCityId . ' _ArticleComments_' . $articleId;
+		return 'Wiki_' . $wgCityId . '_ArticleComments_' . $articleId;
 	}
 }
