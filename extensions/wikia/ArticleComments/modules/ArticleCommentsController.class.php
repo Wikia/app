@@ -88,6 +88,12 @@ class ArticleCommentsController extends WikiaController {
 		$this->getCommentsData( $title, $page );
 		$this->wg->Out->tagWithSurrogateKeys( ArticleComment::getSurrogateKey($articleId) );
 
+		global $wgArticleCommentsLoadOnDemand;
+		if(!empty($wgArticleCommentsLoadOnDemand)) {
+			// when lazy loading this request shouldn't be cached in the browser
+			$this->response->setCacheValidity(0, 0, array(WikiaResponse::CACHE_TARGET_BROWSER));
+		}
+
 		$this->wf->profileIn( __METHOD__ );
 	}
 
