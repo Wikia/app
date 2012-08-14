@@ -71,11 +71,37 @@
 			line-height: 3em;
 			color: #666;
 		}
+
+		/* toggling of important-only errors */
+		#show-important:target tr {
+			display: none;
+		}
+		#show-important:target tr.important {
+			display: table-row;
+		}
+		.report caption a[href='#show-all'] {
+			display: none;
+		}
+		.report caption a[href='#show-important'] {
+			display: inline;
+		}
+		#show-important:target caption a[href='#show-all'] {
+			display: inline;
+		}
+		#show-important:target caption a[href='#show-important'] {
+			display: none;
+		}
 	</style>
 </head>
 <body>
-	<table class="report" width="100%">
-		<caption>Code lint report for <?= count($results) ?> file(s) / <?= $stats['errorsCount'] ?> issue(s) found</caption>
+	<table id="show-important" class="report" width="100%">
+		<caption>
+			Code lint report for <?= count($results) ?> file(s) / <?= $stats['errorsCount'] ?> issue(s) found
+			<div>
+				<a href="#show-all">[Show all errors]</a>
+				<a href="#show-important">[Show only important errors]</a>
+			</div>
+		</caption>
 		<colgroup>
 			<col width="25">
 			<col width="*">
@@ -98,13 +124,21 @@
 		if ($fileEntry['errorsCount'] == 0) {
 			continue;
 		}
+
+		$importantClass = '';
+		foreach ($fileEntry['errors'] as $n => $entry) {
+			if (!empty($entry['isImportant'])) {
+				$importantClass = ' class="important"';
+				break;
+			}
+		}
 ?>
-			<tr>
+			<tr<?= $importantClass ?>>
 				<th colspan="3"><?= $fileEntry['fileChecked'] ?> (checked in <?= $fileEntry['time'] ?> s)</th>
 				<th><a href="<?= htmlspecialchars($fileEntry['blameUrl']) ?>">Blame</a></th>
 			</tr>
 <?php
-		foreach($fileEntry['errors'] as $n => $entry) {
+		foreach ($fileEntry['errors'] as $n => $entry) {
 			$className = !($n%2) ? 'odd' : '';
 
 			if (!empty($entry['isImportant'])) {
