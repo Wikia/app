@@ -73,11 +73,17 @@ class OasisController extends WikiaController {
 		global $wgOut, $wgUser, $wgTitle, $wgRequest, $wgCityId, $wgEnableAdminDashboardExt, $wgEnableWikiaHubsExt, $wgAllInOne;
 
 		wfProfileIn(__METHOD__);
-		// TODO: move to WikiaHubs extension - this code should use a hook
-		if(!empty($wgEnableWikiaHubsExt)) {
-			$wgOut->addStyle( $this->assetsManager->getSassCommonURL( 'extensions/wikia/WikiaHubs/css/WikiaHubs.scss' ) );
-			$wgOut->addScriptFile($this->wg->ExtensionsPath . '/wikia/WikiaHubs/js/WikiaHubs.js');
-		}
+
+		$jsPackages = array();
+		$scssPackages = array();
+		$this->app->runHook(
+			'WikiaAssetsPackages',
+			array(
+				&$wgOut,
+				&$jsPackages,
+				&$scssPackages
+			)
+		);
 
 		$this->showAllowRobotsMetaTag = !$this->wg->DevelEnvironment;
 
@@ -165,6 +171,17 @@ class OasisController extends WikiaController {
 		// printable CSS (to be added at the bottom of the page)
 		// FIXME: move to renderPrintCSS() method
 		$this->printableCss = $this->renderPrintCSS(); // The HTML for the CSS links (whether async or not).
+
+		if (is_array($jsPackages)) {
+			foreach ($jsPackages as $package) {
+				$wgOut->addScriptFile($this->wg->ExtensionsPath . '/' . $package);
+			}
+		}
+		if (is_array($scssPackages)) {
+			foreach ($scssPackages as $package) {
+				$wgOut->addStyle($this->assetsManager->getSassCommonURL('extensions/'.$package));
+			}
+		}
 
 		// setup loading of JS/CSS using WSL (WikiaScriptLoader)
 		$this->loadJs();
