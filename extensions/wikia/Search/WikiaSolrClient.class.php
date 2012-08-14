@@ -316,6 +316,7 @@ class WikiaSolrClient extends WikiaSearchClient {
 
 			$results = array();
 			$position = 1;
+			$cityId = null;
 
 			foreach($groupedSolrDoc->doclist->docs as $doc) {
 
@@ -331,6 +332,7 @@ class WikiaSolrClient extends WikiaSearchClient {
 				if ($result !== false) {
 					$results[] = $result;
 					$position++;
+					$cityId = $cityId ?: $result->getCityId();
 				}
 			}
 
@@ -342,8 +344,6 @@ class WikiaSolrClient extends WikiaSearchClient {
 										   'score'		  => $groupedSolrDoc->doclist->maxScore
 										 ) 
 								  );
-
-			$cityId = $result->getCityId();
 
 			$resultSet->setHeader('cityId', $cityId );
 			$resultSet->setHeader('cityTitle', WikiFactory::getVarValueByName( 'wgSitename', $cityId ));
