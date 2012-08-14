@@ -10,9 +10,9 @@ class MostvisitedpagesSpecialPage extends SpecialPage {
 		$this->page = $page;
 		parent::__construct( $this->page, '' );
 	}
-	
+
 	function setList( $showList = false ) { $this->showList = $showList; }
-	
+
 	function setPageID ( $page_id ) { $this->page_id = $page_id; }
 
 	function execute( $par = '' ) {
@@ -51,12 +51,12 @@ class MostvisitedpagesPage extends QueryPage {
 	function __construct($page) {
 		$this->mName = $page;
 		$this->mTitle = Title::makeTitle( NS_SPECIAL, $page );
-		parent::__construct( $page, '' ); 
+		parent::__construct( $page, '' );
 	}
 
 	function setVisible( $show ) { $this->show = $show; }
-	function setPageID( $page_id ) { 
-		$this->mArticleId = $page_id; 
+	function setPageID( $page_id ) {
+		$this->mArticleId = $page_id;
 		if ( $page_id == 'latest' ) {
 			$this->setOrder('prev_diff');
 			$this->setOrderColumn('prev_diff');
@@ -98,7 +98,7 @@ class MostvisitedpagesPage extends QueryPage {
 
 	function getQueryInfo() {
 		global $wgContentNamespaces, $wgEnableBlogArticles;
-		
+
 		$namespaces = array( NS_MAIN, NS_USER, NS_TALK, NS_USER_TALK, NS_IMAGE, NS_IMAGE_TALK );
 		if ( !empty($wgContentNamespaces) && is_array($wgContentNamespaces) ) {
 			foreach ($wgContentNamespaces as $nspace) {
@@ -107,19 +107,20 @@ class MostvisitedpagesPage extends QueryPage {
 				}
 			}
 		}
-		
+
 		if ( !empty($wgEnableBlogArticles) ) {
 			if ( !in_array(NS_BLOG_ARTICLE, $namespaces) ) {
 				$namespaces[] = NS_BLOG_ARTICLE;
 			}
 		}
-		
+
 		$where = array(
 			" page_id = article_id ",
 			"page_namespace" => $namespaces
-		);	
+		);
 
 		if ( !empty($this->mArticle) ) {
+			$dbr = wfGetDB( DB_SLAVE );
    			$where[] = " lower(page_title) " . $dbr->buildLike( $dbr->anyString(), strtolower( $this->mArticle ), $dbr->anyString() );
 		}
 		if ( !empty($this->mArticleId) && ( $this->mArticleId == 'latest' ) ) {
@@ -131,15 +132,15 @@ class MostvisitedpagesPage extends QueryPage {
 
 		return array (
 			'tables' => array ( 'page', 'page_visited' ),
-			'fields' => array ( 
-				"'Mostpopularpages' AS type", 
-				'page_namespace AS namespace', 
-				'page_title AS title', 
+			'fields' => array (
+				"'Mostpopularpages' AS type",
+				'page_namespace AS namespace',
+				'page_title AS title',
 				"{$this->order_column} as value"
 			),
 			'conds' => $where
 		);
-	}	
+	}
 
 	function formatResult( $skin, $result ) {
 		$res = false;
