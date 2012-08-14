@@ -124,7 +124,7 @@ EOT
 	 * @param $target Mixed: user whose info we're looking up
 	 */
 	function showInfo( $target, $emailUser = "" ) {
-		global $wgOut, $wgLang, $wgScript, $wgEnableWallExt;
+		global $wgOut, $wgLang, $wgScript, $wgEnableWallExt, $wgEnableUserLoginExt;
 		//Small Stuff Week - adding table from Special:LookupContribs --nAndy
 		global $wgExtensionsPath, $wgJsMimeType, $wgResourceBasePath, $wgEnableLookupContribsExt;
 
@@ -157,105 +157,119 @@ EOT
 
 		$user = User::newFromName( (!empty($userTarget)) ? $userTarget : $target );
 		if ( $user == null || $user->getId() == 0 ) {
-			$wgOut->addWikiText( '<span class="error">' . wfMsg( 'lookupuser-nonexistent', $target ) . '</span>' );
-		} else {
-			if ( $count > 1 ) {
-				$options = array();
-				if (!empty($aUsers) && is_array($aUsers)) {
-					foreach ($aUsers as $id => $userName) {
-						$options[] = XML::option( $userName, $userName, ($userName == $userTarget) );
-					}
-				}
-				$selectForm = Xml::openElement( 'select', array( 'id' => 'email_user', 'name' => "email_user" ) );
-				$selectForm .= "\n" . implode( "\n", $options ) . "\n";
-				$selectForm .= Xml::closeElement( 'select' );
-				$selectForm .= "({$count})";
-
-				$wgOut->addHTML(
-					Xml::openElement( 'fieldset' ) . "\n" .
-					Xml::openElement( 'form', array( 'method' => 'get', 'action' => $wgScript ) ) . "\n" .
-					Html::hidden( 'title', $this->getTitle()->getPrefixedText() ) . "\n" .
-					Html::hidden( 'target', $target ) . "\n" .
-					Xml::openElement( 'table', array( 'border' => '0' ) ) . "\n" .
-					Xml::openElement( 'tr' ) . "\n" .
-					Xml::openElement( 'td', array( 'align' => 'right' ) ) .
-					wfMsgHtml( 'lookupuser-foundmoreusers' ) .
-					Xml::closeElement( 'td' ) . "\n" .
-					Xml::openElement( 'td', array( 'align' => 'left' ) ) . "\n" .
-					$selectForm . Xml::closeElement( 'td' ) . "\n" .
-					Xml::openElement( 'td', array( 'colspan' => '2', 'align' => 'center' ) ) .
-					Xml::submitButton( wfMsgHtml( 'go' ) ) .
-					Xml::closeElement( 'td' ) . "\n" .
-					Xml::closeElement( 'tr' ) . "\n" .
-					Xml::closeElement( 'table' ) . "\n" .
-					Xml::closeElement( 'form' ) . "\n" .
-					Xml::closeElement( 'fieldset' )
-				);
+			// Check if a temporary user is at this name
+			if ( !empty( $wgEnableUserLoginExt ) ) {
+				$tempUser = TempUser::getTempUserFromName( ( !empty( $userTarget ) ) ? $userTarget : $target );
 			}
-
-			$authTs = $user->getEmailAuthenticationTimestamp();
-			if ( $authTs ) {
-				$authenticated = wfMsg( 'lookupuser-authenticated', $wgLang->timeanddate( $authTs ) );
+			if ( $tempUser ) {
+				$user = $tempUser->mapTempUserToUser( false );;
 			} else {
-				$authenticated = wfMsg( 'lookupuser-not-authenticated' );
+				$wgOut->addWikiText( '<span class="error">' . wfMsg( 'lookupuser-nonexistent', $target ) . '</span>' );
+				return;
 			}
-			$optionsString = '';
-			foreach ( $user->getOptions() as $name => $value ) {
-				$optionsString .= "$name = $value <br />";
-			}
-			$name = $user->getName();
-			if( $user->getEmail() ) {
-				$email = $user->getEmail();
-				$email_output = wfMsg( 'lookupuser-email', $email, $name );
-			} else {
-				$email_output = wfMsg( 'lookupuser-no-email' );
-			}
-			if( $user->getRegistration() ) {
-				$registration = $wgLang->timeanddate( $user->getRegistration() );
-			} else {
-				$registration = wfMsg( 'lookupuser-no-registration' );
-			}
-			$wgOut->addWikiText( '*' . wfMsg( 'username' ) . ' [[User:' . $name . '|' . $name . ']] (' .
-				$wgLang->pipeList( array(
-					'<span id="lu-tools">[[' . ( !empty( $wgEnableWallExt ) ?
-					'Message Wall:' . $name . '|' . wfMsg( 'wall-message-wall-shorten' ) :
-					'User talk:' . $name . '|' . wfMsg( 'talkpagelinktext' ) ) . ']]',
-					'[[Special:Contributions/' . $name . '|' . wfMsg( 'contribslink' ) . ']]</span>)'
-				) ) );
-
-			$wgOut->addWikiText( '*' . wfMsgForContent( 'lookupuser-toollinks', $name, urlencode($name) ) );
-			$wgOut->addWikiText( '*' . wfMsg( 'lookupuser-id', $user->getId() ) );
-			$wgOut->addWikiText( '*' . $email_output );
-			$wgOut->addWikiText( '*' . wfMsg( 'lookupuser-realname', $user->getRealName() ) );
-			$wgOut->addWikiText( '*' . wfMsg( 'lookupuser-registration', $registration ) );
-			$wgOut->addWikiText( '*' . wfMsg( 'lookupuser-touched', $wgLang->timeanddate( $user->mTouched ) ) );
-			$wgOut->addWikiText( '*' . wfMsg( 'lookupuser-info-authenticated', $authenticated ) );
-
-			//Begin: Small Stuff Week - adding table from Special:LookupContribs --nAndy
-			if( !empty($wgEnableLookupContribsExt) ) {
-				$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/LookupContribs/css/table.css");
-				$wgOut->addExtensionStyle("{$wgExtensionsPath}/LookupUser/css/lookupuser.css");
-				$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgResourceBasePath}/resources/wikia/libraries/jquery/datatables/jquery.dataTables.min.js\"></script>\n");
-
-				//checking and setting User::mBlockedGlobally if needed
-				//only for this instance of class User
-				if( class_exists('UserBlock') ) {
-					UserBlock::blockCheck($user);
-				}
-
-				$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
-				$oTmpl->set_vars(array(
-					'username' => $name,
-					'isUsernameGloballyBlocked' => $user->isBlockedGlobally(),
-				));
-				$wgOut->addHTML( $oTmpl->execute('contribution.table') );
-			} else {
-				$wgOut->addWikiText( '*' . wfMsg('lookupuser-table-cannot-be-displayed') );
-			}
-			//End: Small Stuff Week
-
-			$wgOut->addWikiText( '*' . wfMsg( 'lookupuser-useroptions' ) . '<br />' . $optionsString );
 		}
+		if ( $count > 1 ) {
+			$options = array();
+			if (!empty($aUsers) && is_array($aUsers)) {
+				foreach ($aUsers as $id => $userName) {
+					$options[] = XML::option( $userName, $userName, ($userName == $userTarget) );
+				}
+			}
+			$selectForm = Xml::openElement( 'select', array( 'id' => 'email_user', 'name' => "email_user" ) );
+			$selectForm .= "\n" . implode( "\n", $options ) . "\n";
+			$selectForm .= Xml::closeElement( 'select' );
+			$selectForm .= "({$count})";
+
+			$wgOut->addHTML(
+				Xml::openElement( 'fieldset' ) . "\n" .
+				Xml::openElement( 'form', array( 'method' => 'get', 'action' => $wgScript ) ) . "\n" .
+				Html::hidden( 'title', $this->getTitle()->getPrefixedText() ) . "\n" .
+				Html::hidden( 'target', $target ) . "\n" .
+				Xml::openElement( 'table', array( 'border' => '0' ) ) . "\n" .
+				Xml::openElement( 'tr' ) . "\n" .
+				Xml::openElement( 'td', array( 'align' => 'right' ) ) .
+				wfMsgHtml( 'lookupuser-foundmoreusers' ) .
+				Xml::closeElement( 'td' ) . "\n" .
+				Xml::openElement( 'td', array( 'align' => 'left' ) ) . "\n" .
+				$selectForm . Xml::closeElement( 'td' ) . "\n" .
+				Xml::openElement( 'td', array( 'colspan' => '2', 'align' => 'center' ) ) .
+				Xml::submitButton( wfMsgHtml( 'go' ) ) .
+				Xml::closeElement( 'td' ) . "\n" .
+				Xml::closeElement( 'tr' ) . "\n" .
+				Xml::closeElement( 'table' ) . "\n" .
+				Xml::closeElement( 'form' ) . "\n" .
+				Xml::closeElement( 'fieldset' )
+			);
+		}
+
+		$authTs = $user->getEmailAuthenticationTimestamp();
+		if ( $authTs ) {
+			$authenticated = wfMsg( 'lookupuser-authenticated', $wgLang->timeanddate( $authTs ) );
+		} else {
+			$authenticated = wfMsg( 'lookupuser-not-authenticated' );
+		}
+		$optionsString = '';
+		foreach ( $user->getOptions() as $name => $value ) {
+			$optionsString .= "$name = $value <br />";
+		}
+		$name = $user->getName();
+		if( $user->getEmail() ) {
+			$email = $user->getEmail();
+			$email_output = wfMsg( 'lookupuser-email', $email, $name );
+		} else {
+			$email_output = wfMsg( 'lookupuser-no-email' );
+		}
+		if( $user->getRegistration() ) {
+			$registration = $wgLang->timeanddate( $user->getRegistration() );
+		} else {
+			$registration = wfMsg( 'lookupuser-no-registration' );
+		}
+		$wgOut->addWikiText( '*' . wfMsg( 'username' ) . ' [[User:' . $name . '|' . $name . ']] (' .
+			$wgLang->pipeList( array(
+				'<span id="lu-tools">[[' . ( !empty( $wgEnableWallExt ) ?
+				'Message Wall:' . $name . '|' . wfMsg( 'wall-message-wall-shorten' ) :
+				'User talk:' . $name . '|' . wfMsg( 'talkpagelinktext' ) ) . ']]',
+				'[[Special:Contributions/' . $name . '|' . wfMsg( 'contribslink' ) . ']]</span>)'
+			) ) );
+
+		$wgOut->addWikiText( '*' . wfMsgForContent( 'lookupuser-toollinks', $name, urlencode($name) ) );
+		$wgOut->addWikiText( '*' . wfMsg( 'lookupuser-id', $user->getId() ) );
+		if ( !empty( $tempUser ) ) {
+			$userStatus = wfMsg( 'lookupuser-account-status-tempuser' );
+		} else {
+			$userStatus = wfMsg( 'lookupuser-account-status-realuser' );
+		}
+		$wgOut->addWikiText( '*' . wfMsg( 'lookupuser-account-status' ) . $userStatus );
+		$wgOut->addWikiText( '*' . $email_output );
+		$wgOut->addWikiText( '*' . wfMsg( 'lookupuser-realname', $user->getRealName() ) );
+		$wgOut->addWikiText( '*' . wfMsg( 'lookupuser-registration', $registration ) );
+		$wgOut->addWikiText( '*' . wfMsg( 'lookupuser-touched', $wgLang->timeanddate( $user->mTouched ) ) );
+		$wgOut->addWikiText( '*' . wfMsg( 'lookupuser-info-authenticated', $authenticated ) );
+
+		//Begin: Small Stuff Week - adding table from Special:LookupContribs --nAndy
+		if( !empty($wgEnableLookupContribsExt) ) {
+			$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/LookupContribs/css/table.css");
+			$wgOut->addExtensionStyle("{$wgExtensionsPath}/LookupUser/css/lookupuser.css");
+			$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgResourceBasePath}/resources/wikia/libraries/jquery/datatables/jquery.dataTables.min.js\"></script>\n");
+
+			//checking and setting User::mBlockedGlobally if needed
+			//only for this instance of class User
+			if( class_exists('UserBlock') ) {
+				UserBlock::blockCheck($user);
+			}
+
+			$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+			$oTmpl->set_vars(array(
+				'username' => $name,
+				'isUsernameGloballyBlocked' => $user->isBlockedGlobally(),
+			));
+			$wgOut->addHTML( $oTmpl->execute('contribution.table') );
+		} else {
+			$wgOut->addWikiText( '*' . wfMsg('lookupuser-table-cannot-be-displayed') );
+		}
+		//End: Small Stuff Week
+
+		$wgOut->addWikiText( '*' . wfMsg( 'lookupuser-useroptions' ) . '<br />' . $optionsString );
 	}
 
 	/**
