@@ -24,7 +24,6 @@
 </div>
 
 
-
 <script type="text/javascript">
 
     var parameter = <? echo json_encode($param); ?>;
@@ -52,7 +51,9 @@
                     VisualStatsHistogram.init(data, user);
                     break;
                 case "codeFrequency":
-                    VisualStatsCodeFrequency.init(data, user);
+                    var addition = <? echo json_encode($addition); ?>;
+                    var totalChars = <? echo json_encode($totalChars); ?>;
+                    VisualStatsCodeFrequency.init(data, user, addition, totalChars);
                     break;
             }
         });
