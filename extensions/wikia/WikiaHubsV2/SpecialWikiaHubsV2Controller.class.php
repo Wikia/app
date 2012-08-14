@@ -8,7 +8,6 @@
  * @author Sebastian Marzjan
  *
  */
-
 class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 	const CACHE_VALIDITY_BROWSER = 86400;
 	const CACHE_VALIDITY_VARNISH = 86400;
@@ -64,7 +63,7 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 		$videoData = $this->model->getDataForModuleFeaturedVideo();
 		$this->headline = $videoData['headline'];
 		$this->sponsor = $videoData['sponsor'];
-		$this->sponsorThumb = !empty($videoData['sponsorthumb'])?$this->model->generateImage($videoData['sponsorthumb']):null;
+		$this->sponsorThumb = !empty($videoData['sponsorthumb'])?$this->model->generateImageXml($videoData['sponsorthumb']):null;
 		$this->description = $videoData['description'];
 		$this->video = $this->model->parseVideoData($videoData);
 	}
@@ -110,8 +109,8 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 		$this->entries = $fromTheCommunityData['entries'];
 	}
 
-
 	public function init() {
+		parent::init();
 		$this->setCacheValidity();
 		$this->initModel();
 		$this->format = $this->request->getVal('format', 'html');
@@ -136,7 +135,6 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 		}
 		return $this->model;
 	}
-
 
 	protected function initModel() {
 		$this->model = F::build('WikiaHubsV2Model');

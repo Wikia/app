@@ -8,7 +8,6 @@
  * @author Sebastian Marzjan
  *
  */
-
 class WikiaHubsV2Model extends WikiaModel {
 	const GRID_0_5_MINIATURE_SIZE = 75;
 	const GRID_1_MINIATURE_SIZE = 155;
@@ -180,7 +179,7 @@ class WikiaHubsV2Model extends WikiaModel {
 				)
 			),
 			'link' => array(
-				'anchor' => 'WoWwiki',
+				'anchor' => 'See more...',
 				'href' => 'http://www.wowwiki.com'
 			),
 		);
@@ -260,7 +259,7 @@ class WikiaHubsV2Model extends WikiaModel {
 			)
 		);
 
-		$results['sponsorthumb']['src'] = $this->getThumbnailUrl('Sponsored_by_xbox.png', self::SPONORED_IMAGE_WIDTH, self::SPONORED_IMAGE_HEIGHT);
+		$results['sponsorthumb']['src'] = $this->getThumbnailUrl($results['sponsor'], self::SPONORED_IMAGE_WIDTH, self::SPONORED_IMAGE_HEIGHT);
 		$sponsorThumbSizes = $this->getImageThumbSize();
 		$results['sponsorthumb']['width'] = $sponsorThumbSizes['width'];
 		$results['sponsorthumb']['height'] = $sponsorThumbSizes['height'];
@@ -612,7 +611,7 @@ No
 		return $result;
 	}
 
-    public function generateImage($image) {
+    public function generateImageXml($image) {
 		return Xml::element('img', array(
 			'src' => $image['src'],
 			'width' => $image['width'],
