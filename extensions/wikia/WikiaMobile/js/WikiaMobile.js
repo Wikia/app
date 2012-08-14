@@ -3,16 +3,14 @@
 
 //init
 $(function(){
-	require(['media', 'querystring', 'topbar', 'toc', 'events', 'hideURLBar', 'tables', 'sections', 'share', 'popover', 'cookies', 'ads', 'lazyload'],
-		function(media, qs, topbar, toc, events, hideURLBar, tables, sections, share, popover, cookies, ads, lazyLoad){
+	require(['layout', 'querystring', 'topbar', 'toc', 'events', 'hideURLBar', 'tables', 'share', 'popover', 'cookies', 'ads'],
+		function(layout, qs, topbar, toc, events, hideURLBar, tables, share, popover, cookies, ads){
 			var d = document,
 				clickEvent = events.click;
 
 			hideURLBar();
 
-			sections.init();//NEEDS to run before table wrapping!!!
 			tables.init();
-			media.init();
 			toc.init();
 
 			//init ad (removing it if empty and closing in on close button)
@@ -79,40 +77,6 @@ $(function(){
 					style: 'right:0;'
 				});
 			}
-
-			var processedSections = {},
-				origOnLoad = window.onload;
-
-			//Image lazy loading
-			//window.addEventListener('load') doesn't work on iOS 4.x
-			//this is the only supported way to bind to that event
-			//and DOMReady is too early
-			window.onload = function(){
-				lazyLoad(
-					document.getElementsByClassName('lazy'),
-					'imgPlcHld',
-					'fit'
-				);
-
-				sections.addEventListener('open', function(){
-					var self = this,
-						id = self.getAttribute('data-index');
-
-					if(id !== null && id !== undefined && !processedSections[id]){
-						lazyLoad(
-							self.getElementsByClassName('lazy'),
-							'imgPlcHld',
-							'fit'
-						);
-
-						processedSections[id] = true;
-					}
-				});
-
-				if(origOnLoad instanceof Function){
-					origOnLoad();
-				}
-			};
 		}
 	);
 });

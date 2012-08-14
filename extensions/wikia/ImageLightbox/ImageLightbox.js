@@ -196,9 +196,7 @@ var ImageLightbox = {
         if (target.hasClass('video-hubs-video')) {
             if(target[0] && target[0].dataset['wiki']) {
                 if(typeof target[0].dataset['wiki'] !== 'undefined') {
-                    var wikiaddress = target[0].dataset['wiki'];
-
-                    this.wikiAddress = wikiaddress;
+                    this.wikiAddress = target[0].dataset['wiki'];
                     this.showEmbedCodeInstantly = true;
                 }
             }
@@ -428,8 +426,9 @@ var ImageLightbox = {
 
 				$('#lightbox-caption-content').html(caption);
 
-                if($('#lightbox-subtitle').text() != '') {
-                    $('#lightbox-subtitle').show();
+				var lightboxSubtitle = $('#lightbox-subtitle');
+                if(lightboxSubtitle.text() != '') {
+					lightboxSubtitle.show();
                 }
 
 				// resize lightbox (used mostly for external images)

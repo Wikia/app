@@ -1,3 +1,16 @@
-<nav class="wkSlider imgs<?= count($images)?> images<?= (count($images) % 2 == 0) ? 'Even' : 'Odd' ?> "><?php foreach ( $images as $key => $val ) { ?><div class="img img<?= $key?>" data-src-small=<?= $val['imageUrl'][0];?> data-src-med=<?= $val['imageUrl'][1];?> data-src-big=<?= $val['imageUrl'][2];?>><?= (!empty($val['imageLink']) ? "<a href='{$val['imageLink']}'>" : "") ?>
-<noscript><img src=<?= $val['imageUrl'][2];?>></noscript><div class=cap><span><?= $val['imageTitle'] ?></span></div>
-<?= (!empty($val['imageLink']) ? "</a>" : "") ?></div><?php } ?></nav>
+<nav class="wkSlider imgs<?= count($images)?> images<?= (count($images) % 2 == 0) ? 'Even' : 'Odd' ?> "><?
+	foreach ( $images as $i => $image ) {
+		$mediaInfo = $image['mediaInfo'];
+		$mediaInfo['attributes']['class'] = 'getThumb';
+
+		?><?= F::app()->renderView( 'WikiaMobileMediaService', 'renderMedia', array(
+		'class' => "img{$i}",
+		'linked' => !empty( $image['imageLink'] ),
+		'anchorAttributes' => ( !empty( $image['imageLink'] ) ) ? array( 'href' => $image['imageLink'] ) : null,
+		'caption' => ( !empty( $image['imageTitle'] ) ) ? $image['imageTitle'] : null,
+		'attributes' => $mediaInfo['attributes'],
+		'parameters' => $mediaInfo['parameters'],
+		'noscript' => $mediaInfo['noscript']
+	)) ;?><?
+	}
+?></nav>

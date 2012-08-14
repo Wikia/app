@@ -17,7 +17,7 @@ class WikiaView {
 	 */
 	private $response = null;
 	private $templatePath = null;
-	
+
 	function __construct( WikiaResponse $response = null ) {
 		if ( !empty ( $response ) ) {
 			$this->setResponse( $response );
@@ -38,7 +38,7 @@ class WikiaView {
 		$response->setMethodName( $methodName );
 		$response->setData( $data );
 		$app = F::app();
-		
+
 		if ( $app->wg->EnableSkinTemplateOverride ) {
 			if ( $app->isSkinInitialized() ) {
 				$response->setSkinName( $app->wg->User->getSkin()->getSkinName() );
@@ -101,13 +101,13 @@ class WikiaView {
 		if( ( $this->templatePath == null ) || $forceRebuild ) {
 			$app = F::app();
 			$autoloadClasses = $app->wg->AutoloadClasses;
-			
+
 			if ( !empty( $this->response ) ) {
 				$extension = $this->response->getTemplateEngine();
 			} else {
 				$extension = WikiaResponse::TEMPLATE_ENGINE_PHP;
 			}
-			
+
 			if (
 				(
 					$app->isService( $controllerName ) ||
@@ -140,20 +140,20 @@ class WikiaView {
 			 */
 			if ( !empty( $this->response ) ) {
 				$requestedSkinName = $this->response->getSkinName();
-		
+
 				if ( !empty( $requestedSkinName ) ) {
 					$skinSpecificPath = "{$basePath}_{$requestedSkinName}.$extension";
-	
+
 					if ( file_exists( $skinSpecificPath ) ) {
 						$templatePath = $skinSpecificPath;
 					}
 				}
 			}
-			
+
 			if ( empty( $templatePath ) ) {
 				$templatePath = "{$basePath}.$extension";
 			}
-			
+
 			$templateExists = file_exists( $templatePath );
 
 			if( !$templateExists && !$app->isService( $controllerName ) ) {
@@ -205,7 +205,7 @@ class WikiaView {
 		wfProfileIn(__METHOD__);
 		if ($this->response->hasException()) {
 			return '<pre>' . print_r ($this->response->getException(), true) . '</pre>';
-		} 
+		}
 		return '<pre>' . var_export( $this->response->getData(), true ) . '</pre>';
 		wfProfileOut(__METHOD__);
 	}
@@ -223,7 +223,7 @@ class WikiaView {
 				wfProfileOut(__METHOD__);
 
 				return $result;
-			break;
+				break;
 			case WikiaResponse::TEMPLATE_ENGINE_PHP:
 			default:
 				// Export the app wg and wf helper objects into the template
@@ -236,9 +236,9 @@ class WikiaView {
 
 				if( !empty( $data ) ) {
 					extract( $data );
-				}		
-				
-				
+				}
+
+
 				ob_start();
 				$templatePath = $this->getTemplatePath();
 				wfProfileIn(__METHOD__ . ' - template: ' . $templatePath);
@@ -247,9 +247,9 @@ class WikiaView {
 				$out = ob_get_clean();
 				wfProfileOut(__METHOD__ . ' - templateengine PHP');
 				wfProfileOut(__METHOD__);
-				return $out;			
-			break;	
-		} 
+				return $out;
+				break;
+		}
 
 	}
 
@@ -268,7 +268,7 @@ class WikiaView {
 		$callbackName = $this->response->getRequest()->getVal('callback');
 		return "$callbackName(".$this->renderJson().");";
 	}
-	
+
 	// Invalid request format is an interesting case since it's not really a fatal error by itself
 	// For now, we will process the request normally, default to json and attach an exception message
 	protected function renderInvalid() {

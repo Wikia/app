@@ -3,7 +3,7 @@
  * WikiaMobile skin entry point
  *
  * @author Jakub Olek <jakubolek(at)wikia-inc.com>
- * @authore Federico "Lox" Lucignano <federico(at)wikia-inc.com>
+ * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
  */
 class WikiaMobileService extends WikiaService {
 	//AppCache will be disabled for the first several releases
@@ -46,7 +46,6 @@ class WikiaMobileService extends WikiaService {
 		$assetsManager = F::build( 'AssetsManager', array(), 'getInstance' );
 		$advert = '';
 		$nav = '';
-		$pageContent = '';
 		$footer = '';
 
 		if ( $pageExists ) {

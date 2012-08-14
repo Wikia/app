@@ -29,6 +29,13 @@ $app->wg->append(
 );
 
 /**
+ * settings
+ */
+//used internally to avoid an infinite wikitext expansion loop in galleries
+//it might be moved to CommonSettings if it turns out to be desireable for wider usage
+$wgWikiaMobileDisableMediaGrouping = false;
+
+/**
  * classes
  */
 $app->wg->set( 'wgAutoloadClasses', "{$dir}/WikiaMobileHooks.class.php", 'WikiaMobileHooks' );
@@ -49,6 +56,7 @@ $app->wg->set( 'wgAutoloadClasses', "{$dir}/WikiaMobileAdService.class.php", 'Wi
 $app->wg->set( 'wgAutoloadClasses', "{$dir}/WikiaMobileCategoryService.class.php", 'WikiaMobileCategoryService' );
 $app->wg->set( 'wgAutoloadClasses', "{$dir}/WikiaMobileSharingService.class.php", 'WikiaMobileSharingService' );
 $app->wg->set( 'wgAutoloadClasses', "{$dir}/WikiaMobileErrorService.class.php", 'WikiaMobileErrorService' );
+$app->wg->set( 'wgAutoloadClasses', "{$dir}/WikiaMobileMediaService.class.php", 'WikiaMobileMediaService' );
 
 /**
  * models
@@ -83,6 +91,7 @@ F::build('JSMessages')->registerPackage( 'WkMbl', array(
 /**
  * hooks
  */
+$app->registerHook( 'ParserBeforeStrip', 'WikiaMobileHooks', 'onParserBeforeStrip' );
 $app->registerHook( 'ParserAfterTidy', 'WikiaMobileHooks', 'onParserAfterTidy' );
 $app->registerHook( 'ParserLimitReport', 'WikiaMobileHooks', 'onParserLimitReport' );
 $app->registerHook( 'MakeHeadline', 'WikiaMobileHooks', 'onMakeHeadline' );

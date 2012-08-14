@@ -595,7 +595,7 @@ class WikiaPhotoGallery extends ImageGallery {
 		$widths = array();
 
 		if( F::app()->checkSkin( 'wikiamobile' ) ) {
-			$html =  $this->renderWikiaMobileImageStack();
+			$html =  $this->renderWikiaMobileMediaGroup();
 		} else {
 
 			// loop throught the images and get height of the tallest one
@@ -1003,7 +1003,7 @@ class WikiaPhotoGallery extends ImageGallery {
 
 		//renderSlideshow for WikiaMobile
 		if( F::app()->checkSkin( 'wikiamobile' ) ) {
-			$slideshowHtml = $this->renderWikiaMobileImageStack();
+			$slideshowHtml = $this->renderWikiaMobileMediaGroup();
 		} else {
 
 		$slideshowHtml = Xml::openElement('div', $attribs);
@@ -1262,13 +1262,9 @@ class WikiaPhotoGallery extends ImageGallery {
 			);
 		}
 
-		if( F::app()->checkSkin( 'wikiamobile' ) ){
-			$smallImage = new ImageServing(null, 300, array('w' => 300, 'h' => 145));
-			$mediumImage = new ImageServing(null, 460, array('w' => 460, 'h' => 220));
-			$bigImage = new ImageServing(null, 660, array('w' => 660, 'h' => 330));
-		}else {
-			$imageServingForImages = new ImageServing(null, $imagesDimensions['w'], $imagesDimensions);
-		}
+
+		$imageServingForImages = new ImageServing(null, $imagesDimensions['w'], $imagesDimensions);
+
 
 
 		// setup image serving for navigation thumbnails
@@ -1306,11 +1302,7 @@ class WikiaPhotoGallery extends ImageGallery {
 			if ( !WikiaFileHelper::isFileTypeVideo($img) && is_object($img) && ($nt->getNamespace() == NS_FILE)) {
 
 				if( F::app()->checkSkin( 'wikiamobile' ) ){
-					$imageUrl = array(
-						$smallImage->getUrl($img),
-						$mediumImage->getUrl($img),
-						$bigImage->getUrl($img, max(660, $img->getWidth()), max(330, $img->getHeight()))
-					);
+					$imageUrl = wfReplaceImageServer( $img->getUrl(), $img->getTimestamp() );
 				}else{
 					// generate cropped version of big image (fit within 660x360 box)
 					// BugId:9678 image thumbnailer does not always land on 360px height since we scale on width
@@ -1319,18 +1311,41 @@ class WikiaPhotoGallery extends ImageGallery {
 					$imageUrl = $imageServingForImages->getUrl($img, max($imagesDimensions['w'], $img->getWidth()), max($imagesDimensions['h'], $img->getHeight()));
 				}
 
-
 				// generate navigation thumbnails
 				$thumbUrl = $imageServingForThumbs->getUrl($img, $img->getWidth(), $img->getHeight());
 
-				$out[] = array(
-				    'imageUrl' => $imageUrl,
-				    'imageTitle' => $text,
+				$data = array(
+					'imageUrl' => $imageUrl,
+					'imageTitle' => $text,
 					'imageShortTitle' => $shortText,
-				    'imageLink' => !empty($link) ? $linkAttribs['href'] : '',
-				    'imageDescription' => $linkText,
-				    'imageThumbnail' => $thumbUrl,
+					'imageLink' => !empty($link) ? $linkAttribs['href'] : '',
+					'imageDescription' => $linkText,
+					'imageThumbnail' => $thumbUrl,
 				);
+
+				if ( F::app()->checkSkin( 'wikiamobile' ) ) {
+					$origWidth = $img->getWidth();
+					$origHeight = $img->getHeight();
+					$size = WikiaMobileMediaService::calculateMediaSize( $origWidth, $origHeight );
+					$thumb = $img->transform( $size );
+
+					$imageAttribs = array(
+						'src' => wfReplaceImageServer( $thumb->getUrl(), $img->getTimestamp() ),
+						'width' => $size['width'],
+						'height' => $size['height']
+					);
+
+					$imageParams = array( 'full' => $imageUrl );
+
+					$data['mediaInfo'] = array(
+						'attributes' => $imageAttribs,
+						'parameters' => $imageParams,
+						'caption' => $text,
+						'noscript' => Xml::element( 'img', $imageAttribs, '', true )
+					);
+				}
+
+				$out[] = $data;
 			}
 
 			if ( count( $out ) >= $sliderImageLimit ) {
@@ -1383,7 +1398,9 @@ class WikiaPhotoGallery extends ImageGallery {
 
 			//load WikiaMobile resources if needed using JSSnippets filtering mechanism
 			$html .= F::build('JSSnippets')->addToStack(
-				array( 'wikiaphotogallery_slider_js_wikiamobile', 'wikiaphotogallery_slider_scss_wikiamobile' )
+				array(
+					'wikiaphotogallery_slider_scss_wikiamobile'
+				)
 			);
 		}
 
@@ -1814,35 +1831,34 @@ class WikiaPhotoGallery extends ImageGallery {
 	}
 
 	/**
-	 * Renders a gallery/slideshow as a stack from the WikiaMobile skin
+	 * Renders a gallery/slideshow as a media group in the WikiaMobile skin
 	 */
-	private function renderWikiaMobileImageStack() {
-		$pics = array();
+	private function renderWikiaMobileMediaGroup() {
+		$media = array();
+		$count = 0;
+		$result = '';
 
-		foreach($this->mImages as $val) {
-			$img = wfFindFile( $val[0], false );
+		foreach( $this->mImages as $v=>$val ) {
+			$item = wfFindFile( $val[0] );
 
-			if( !empty( $img ) ) {
-				$bigVersion = $img->transform( array("width" => 320, "height" => 480) );
-				$pics[] = array(
-					'width' => $bigVersion->getWidth(),
-					'height' => $bigVersion->getHeight(),
-					'url' => $bigVersion->getUrl(),
-					'thumbURL' => $img->transform( array("width" => 140, "height" => 140) )->getUrl(),
-					'tag' => $val[1],
-					'name' => $val[0]->getText() );
+			if( !empty( $item ) ) {
+				$media[] = array(
+					'title' => $val[0],
+					'caption' => $val[1],
+					'link' => $val[2]
+				);
 			}
 		}
 
-		$count = count($pics);
+		if ( !empty( $media ) ) {
+			$result = F::app()->sendRequest(
+				'WikiaMobileMediaService',
+				'renderMediaGroup',
+				array( 'items' => $media ),
+				true
+			)->toString();
+		}
 
-		$template = new EasyTemplate( dirname(__FILE__) . '/templates' );
-		$template->set_vars( array(
-			'images' => $pics,
-			'count' => $count,
-			'footerText' => wfMsg( 'wikiaPhotoGallery-slideshow-view-number', '1', $count )
-		) );
-
-		return $template->render('renderWikiaMobileImageStack');
+		return $result;
 	}
 }

@@ -2,10 +2,10 @@
 @import "variables";
 
 //mixins
-@import "mixins/linear-gradient";
-@import "mixins/box-sizing";
-@import "mixins/box-shadow";
-@import "mixins/transition";
+@import "mixins/linear-gradient.scss";
+@import "mixins/box-sizing.scss";
+@import "mixins/box-shadow.scss";
+@import "mixins/transition.scss";
 
 #wkWrdMrk {
 	line-height: 40px;
@@ -29,12 +29,14 @@
 	background-image:  url('/extensions/wikia/WikiaMobile/images/topbar_menu.png'); /* base64 */
 }
 
-#wkPrfTgl.lgdin{
-	background-image:  url('/extensions/wikia/WikiaMobile/images/user_loggedin.png'); /* base64 */
-}
+#wkPrfTgl{
+	&.lgdin{
+		background-image:  url('/extensions/wikia/WikiaMobile/images/user_loggedin.png'); /* base64 */
+	}
 
-#wkPrfTgl.lgdout{
-	background-image:  url('/extensions/wikia/WikiaMobile/images/user_loggedout.png'); /* base64 */
+	&.lgdout{
+		background-image:  url('/extensions/wikia/WikiaMobile/images/user_loggedout.png'); /* base64 */
+	}
 }
 
 
@@ -57,7 +59,7 @@
 			font-weight: bold;
 		}
 
-		a:before {
+		.chg:before {
 			background-size: 16px;
 			float:right;
 			height:16px;
@@ -161,11 +163,15 @@
 			width: 100%;
 			color:  $link-color;
 			background-color: white;
-			@include transition(-webkit-transform .6s);
+			-webkit-transition: -webkit-transform .6s;
+			-moz-transition: -moz-transform .6s;
+			transition: transform .6s;
 			-webkit-transform: translateZ(0);
 			-moz-transform: translateZ(0);
 			transform: translateZ(0);
 			-webkit-backface-visibility: hidden;
+			-moz-backface-visibility: hidden;
+			backface-visibility: hidden;
 
 			li {
 				padding-right: 20px;
@@ -204,18 +210,24 @@
 		&.cur1 {
 			header {
 				-webkit-transform: translate(100%);
+				-moz-transform: translate(100%);
+				transform: translate(100%);
 			}
 		}
 
 		&.cur2 {
 			#lvl1 {
 				-webkit-transform: translate(-100%);
+				-moz-transform: translate(-100%);
+				transform: translate(-100%);
 			}
 		}
 
 		&.cur3 {
 			#lvl1 {
 				-webkit-transform: translate(-200%) ;
+				-moz-transform: translate(-200%);
+				transform: translate(-200%);
 			}
 		}
 
@@ -254,7 +266,9 @@
 		line-height: 50px;
 		background-color: white;
 		@include box-shadow(0 5px 15px -10px black);
-		@include transition(-webkit-transform .6s);
+		-webkit-transition: -webkit-transform .6s;
+		-moz-transition: -moz-transform .6s;
+		transition: transform .6s;
 		position: relative;
 		z-index: 120;
 		left: 0;

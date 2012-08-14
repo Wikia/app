@@ -1,3 +1,4 @@
+@import 'mixins/box-shadow.scss';
 @import 'variables.scss';
 
 #toc {
@@ -58,7 +59,7 @@
 	&.open {
 		border-radius: 5px;
 		@include box-shadow(none);
-		z-index:101;
+		z-index: 101;
 
 		td > ul {
 			margin-bottom: 10px;
@@ -71,6 +72,11 @@
 		h2{
 			display: block;
 		}
+	}
+
+	//this helps me with normalizing clicks in toc.js
+	span, b {
+		pointer-events: none;
 	}
 }
 

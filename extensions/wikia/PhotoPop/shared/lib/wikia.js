@@ -127,7 +127,7 @@ var Wikia = {};
 	};
 
 	Array.prototype.contains = function(value) {
-		var contains = false;;
+		var contains = false;
 
 		for(var i = 0; i< this.length; i++) {
 			if(this[i] == value) {
