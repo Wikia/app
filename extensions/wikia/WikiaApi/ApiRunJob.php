@@ -56,58 +56,65 @@ class ApiRunJob extends ApiBase {
 		ini_set( "memory_limit", -1 );
 		ini_set( "max_execution_time", 0 );
 
-		$params = $this->extractRequestParams();
-		if( !$wgUser->isAllowed( "runjob" ) ) { // change to 'runjob' later
-			$this->dieUsageMsg( array( "cantrunjobs" ) );
-		}
-
-		#
-		# api param has precedence
-		#
-		if( isset( $params[ "max" ] ) ) {
-			$max = $params[ "max" ];
-			if( is_numeric( $max ) && $max > 0 && $max <= 100 )  {
-				$this->maxJobs = $max;
-			}
-		}
-		elseif( !empty( $wgApiRunJobsPerRequest )
-			&& is_numeric(  $wgApiRunJobsPerRequest  )
-			&& $wgApiRunJobsPerRequest > 0
-			&& $wgApiRunJobsPerRequest <= 100
-		) {
-			$this->maxJobs =  $wgApiRunJobsPerRequest;
-		}
-
 		$result = array();
 		$done = 0;
-		foreach( range( 1, $this->maxJobs ) as $counter ) {
-			if( isset( $params[ "type" ] ) ) {
-				$job = Job::pop_type( $params[ "type" ] );
+
+		#
+		# check if wiki is not readonly
+		#
+		if( !wfReadOnly() ) {
+
+			$params = $this->extractRequestParams();
+			if( !$wgUser->isAllowed( "runjob" ) ) {
+				$this->dieUsageMsg( array( "cantrunjobs" ) );
 			}
-			else {
-				// refreshlinks2 has precedence
-				$job = Job::pop_type( "refreshLinks2" );
-				if( !$job ) {
-					// any job
-					$job = Job::pop();
+
+			#
+			# api param has precedence
+			#
+			if( isset( $params[ "max" ] ) ) {
+				$max = $params[ "max" ];
+				if( is_numeric( $max ) && $max > 0 && $max <= 100 )  {
+					$this->maxJobs = $max;
 				}
 			}
-			if( $job ) {
-				$status = $job->run();
-				$result[ "job" ][] = array(
-					"id" => $job->id,
-					"type" => $job->command,
-					"status" => $job->toString(),
-					"error" => $job->error
-				);
-				$done++;
+			elseif( !empty( $wgApiRunJobsPerRequest )
+				&& is_numeric(  $wgApiRunJobsPerRequest  )
+				&& $wgApiRunJobsPerRequest > 0
+				&& $wgApiRunJobsPerRequest <= 100
+			) {
+				$this->maxJobs =  $wgApiRunJobsPerRequest;
 			}
-			else {
-				// there's no job in queue, finish loop, release request
-				break;
-			}
-		}
 
+			foreach( range( 1, $this->maxJobs ) as $counter ) {
+				if( isset( $params[ "type" ] ) ) {
+					$job = Job::pop_type( $params[ "type" ] );
+				}
+				else {
+					// refreshlinks2 has precedence
+					$job = Job::pop_type( "refreshLinks2" );
+					if( !$job ) {
+						// any job
+						$job = Job::pop();
+					}
+				}
+				if( $job ) {
+					$status = $job->run();
+					$result[ "job" ][] = array(
+						"id" => $job->id,
+						"type" => $job->command,
+						"status" => $job->toString(),
+						"error" => $job->error
+					);
+					$done++;
+				}
+				else {
+					// there's no job in queue, finish loop, release request
+					break;
+				}
+			}
+
+		}
 		$result[ "left" ]  = $this->checkQueue( $done );
 
 		$this->getResult()->addValue( null, $this->getModuleName(), $result );
@@ -125,7 +132,8 @@ class ApiRunJob extends ApiBase {
 	 */
 	private function checkQueue( $done  ) {
 
-		global $wgMemc, $wgApiRunJobsPerRequest;
+		wfProfileIn( __METHOD__ );
+		global $wgApiRunJobsPerRequest;
 
 		$total = 0;
 		if( $done > 0 ) {
@@ -137,9 +145,10 @@ class ApiRunJob extends ApiBase {
 			$total = $dbr->selectField( "job", "job_id", "", __METHOD__ );
 		}
 
-		$wgMemc->set( wfMemcKey( 'SiteStats', 'jobs' ), $total, 3600 );
 		$result[ "total" ] = $total;
 		$result[ "done" ] = $done;
+
+		wfProfileOut( __METHOD__ );
 
 		return $result;
 	}
