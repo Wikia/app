@@ -24,16 +24,17 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 	}
 
 	public function index() {
-		$this->slider = $this->model->getDataForModuleSlider();
-		$this->pulse = $this->model->getDataForModulePulse();
-		$this->tabber = $this->model->getDataForModuleTabber();
-		$this->explore = $this->model->getDataForModuleExplore();
-		$this->featuredvideo = $this->model->getDataForModuleFeaturedVideo();
-		$this->wikitextmoduledata = $this->model->getDataForModuleWikitext();
-		$this->topwikis = $this->model->getDataForModuleTopWikis();
-		$this->popularvideos = $this->model->getDataForModulePopularVideos();
-		$this->fromthecommunity = $this->model->getDataForModuleFromTheCommunity();
-
+		if($this->format == 'json') {
+			$this->slider = $this->model->getDataForModuleSlider();
+			$this->pulse = $this->model->getDataForModulePulse();
+			$this->tabber = $this->model->getDataForModuleTabber();
+			$this->explore = $this->model->getDataForModuleExplore();
+			$this->featuredvideo = $this->model->getDataForModuleFeaturedVideo();
+			$this->wikitextmoduledata = $this->model->getDataForModuleWikitext();
+			$this->topwikis = $this->model->getDataForModuleTopWikis();
+			$this->popularvideos = $this->model->getDataForModulePopularVideos();
+			$this->fromthecommunity = $this->model->getDataForModuleFromTheCommunity();
+		}
 		$this->response->addAsset('extensions/wikia/WikiaHubsV2/css/WikiaHubsV2.scss');
 		$this->response->addAsset('extensions/wikia/WikiaHubsV2/js/WikiaHubsV2.js');
 	}
