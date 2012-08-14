@@ -36,9 +36,6 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 
 		$this->response->addAsset('extensions/wikia/WikiaHubsV2/css/WikiaHubsV2.scss');
 		$this->response->addAsset('extensions/wikia/WikiaHubsV2/js/WikiaHubsV2.js');
-		if (!WikiaHubsV2Model::PLAY_VIDEO_IN_LIGHTBOX) {
-			$this->response->addAsset('extensions/wikia/RelatedVideos/js/RelatedVideos.js');
-		}
 	}
 
 	public function slider() {

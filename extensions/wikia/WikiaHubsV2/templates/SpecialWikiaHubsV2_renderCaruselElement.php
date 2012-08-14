@@ -1,4 +1,4 @@
-<a class="video-thumbnail video-hubs-video <?= $video->videoPlay ?>" data-wiki="<?= $video->data['wiki']; ?>" data-video-name="<?= $video->data['video-name']; ?>" data-ref="<?= $video->data['ref']; ?>" href="<?= $video->href; ?>">
+<a class="video-thumbnail video-hubs-video lightbox" data-wiki="<?= $video->data['wiki']; ?>" data-video-name="<?= $video->data['video-name']; ?>" data-ref="<?= $video->data['ref']; ?>" href="<?= $video->href; ?>">
 	<?php if( !empty($video->duration) ): ?>
 		<div class="timer"><?= $video->duration; ?></div>
 	<?php endif; ?>
