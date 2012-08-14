@@ -1,4 +1,4 @@
-<div class="title-wrapper"><?= $headline ?></div>
+<h2><?= $headline ?></h2>
 <?php
 $app = F::app();
 echo $app->wg->parser->parse(

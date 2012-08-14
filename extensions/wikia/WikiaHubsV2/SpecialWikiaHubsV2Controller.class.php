@@ -8,6 +8,7 @@
  * @author Sebastian Marzjan
  *
  */
+
 class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 	const CACHE_VALIDITY_BROWSER = 86400;
 	const CACHE_VALIDITY_VARNISH = 86400;
@@ -16,7 +17,10 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 	 * @var WikiaHubsV2Model
 	 */
 	protected $model;
+
 	protected $format;
+	protected $verticalId;
+	protected $verticalName;
 
 	public function __construct() {
 		parent::__construct('WikiaHubsV2');
@@ -39,8 +43,12 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 	}
 
 	public function slider() {
-		$exploreData = $this->model->getDataForModuleSlider();
-		$this->images = $exploreData['images'];
+		$sliderData = $this->model->getDataForModuleSlider();
+		if($this->format == 'json') {
+			$this->images = $sliderData['images'];
+		} else {
+			$this->slider = $this->model->generateSliderWikiText($sliderData['images']);
+		}
 	}
 
 	public function explore() {
@@ -111,14 +119,14 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 
 	public function init() {
 		parent::init();
-		$this->setCacheValidity();
+		$this->initCacheValidityTimes();
+		$this->initFormat();
 		$this->initModel();
-		$this->format = $this->request->getVal('format', 'html');
-		$hubName = $this->model->getHubName($this->request->getVal('vertical'));
-		$this->setHub($hubName);
+		$this->initVertical();
+		$this->initVerticalSettings();
 	}
 
-	protected function setCacheValidity() {
+	protected function initCacheValidityTimes() {
 		$this->response->setCacheValidity(
 			self::CACHE_VALIDITY_BROWSER,
 			self::CACHE_VALIDITY_VARNISH,
@@ -136,23 +144,31 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 		return $this->model;
 	}
 
+	protected function initFormat() {
+		$this->format = $this->request->getVal('format', 'html');
+	}
+
+	protected function initVertical() {
+		$this->verticalId = $this->getRequest()->getVal('verticalid',WikiFactoryHub::CATEGORY_ID_GAMING);
+		$this->verticalName = $this->model->getVerticalName($this->verticalId);
+	}
+
 	protected function initModel() {
 		$this->model = F::build('WikiaHubsV2Model');
 		$date = $this->getRequest()->getVal('date', date('Y-m-d'));
 		$lang = $this->getRequest()->getVal('cityId', $this->wg->cityId);
-		$vertical = $this->getRequest()->getVal('vertical', WikiFactoryHub::CATEGORY_ID_GAMING);
 		$this->model->setDate($date);
 		$this->model->setLang($lang);
-		$this->model->setVertical($vertical);
+		$this->model->setVertical($this->verticalId);
 	}
 
 	/**
 	 * @param $hubName string
 	 */
-	protected function setHub($hubName) {
-		$this->wg->out->setPageTitle($hubName);
-		$this->wgWikiaHubType = $hubName;
-		RequestContext::getMain()->getRequest()->setVal('vertical', $hubName);
-		OasisController::addBodyClass('WikiaHubs' . mb_ereg_replace(' ', '', $hubName));
+	protected function initVerticalSettings() {
+		$this->wg->out->setPageTitle($this->verticalName);
+		$this->wgWikiaHubType = $this->verticalName;
+		RequestContext::getMain()->getRequest()->setVal('vertical', $this->verticalName);
+		OasisController::addBodyClass('WikiaHubs' . mb_ereg_replace(' ', '', $this->verticalName));
 	}
 }
