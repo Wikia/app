@@ -40,16 +40,6 @@ class IgnFeedIngester extends VideoFeedIngester {
 		$content = json_decode($content, true);
 		if(empty($content)) $content = array();
 
-		if(!empty($content)) {
-			$testvideo = $content[0];
-			if(!isset($testvideo['metadata']['gameContent'])) {
-				print "Failed feed download, redownloading\n";
-				$file = $this->downloadFeed($params['startDate'],$params['endDate']);
-				return $this->import($file, $params);
-			}
-		}
-
-
 		$i = 0;
 		foreach($content as $video) {
 			$i++;
