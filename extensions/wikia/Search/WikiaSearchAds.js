@@ -49,7 +49,7 @@ jQuery(function($) {
 		// Open ad links in a new window (BugId:38665)
 		$('.WikiaSearchAds').on('click', 'a', function(event) {
 			event.preventDefault();
-			window.open(event.target.href);
+			window.open(event.currentTarget.href);
 		});
 	});
 });
