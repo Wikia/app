@@ -42,18 +42,21 @@ public class CreateNewWikiLogInPageObject extends BasePageObject{
 	
 	public void typeInUserName(String userName)
 	{
+		waitForElementByElement(userNameField);
 		userNameField.sendKeys(userName);
 		PageObjectLogging.log("typeInUserName", "user name was typed", true, driver);
 	}
 	
 	public void typeInPassword(String password)
 	{
+		waitForElementByElement(passwordField);
 		passwordField.sendKeys(password);
 		PageObjectLogging.log("typeInPassword", "password name was typed", true, driver);
 	}
 	
 	public CreateNewWikiPageObjectStep2 submitLogin()
 	{
+		waitForElementByElement(submitButton);
 		submitButton.click();
 		PageObjectLogging.log("submitLogin", "submit button was clicked", true, driver);
 		return new CreateNewWikiPageObjectStep2(driver);
@@ -61,6 +64,7 @@ public class CreateNewWikiLogInPageObject extends BasePageObject{
 	
 	public void verifyUserNameIsBlank()
 	{
+		waitForElementByElement(userNameField);
 		String value = userNameField.getAttribute("value");
 		if (value.isEmpty())
 		{
@@ -74,6 +78,7 @@ public class CreateNewWikiLogInPageObject extends BasePageObject{
 	
 	public void verifyPasswordIsBlank()
 	{
+		waitForElementByElement(passwordField);
 		String value = passwordField.getAttribute("value");
 		if (value.isEmpty())
 		{
@@ -87,6 +92,7 @@ public class CreateNewWikiLogInPageObject extends BasePageObject{
 	
 	public void verifyTabTransition()
 	{
+		waitForElementByElement(userNameField);
 		userNameField.click();
 		CommonFunctions.assertString("username", CommonFunctions.currentlyFocusedGetAttributeValue("name")) ;
 		userNameField.sendKeys(Keys.TAB);
