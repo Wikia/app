@@ -46,6 +46,9 @@ $messages['en'] = array(
 	'lookupuser-username-not-blocked-globally' => 'This username <strong>is not</strong> blocked globally.',
 	'lookupuser-founder' => 'Founder',
 	'lookupuser-table-cannot-be-displayed' => 'The contribution table cannot be displayed -- its extension seems to be disabled.',
+	'lookupuser-account-status' => 'Account Status: ',
+	'lookupuser-account-status-tempuser' => 'Temp User',
+	'lookupuser-account-status-realuser' => 'Real User',
 );
 
 /** Message documentation (Message documentation)
@@ -74,6 +77,9 @@ $messages['qqq'] = array(
 	'lookupuser-useroptions' => 'User’s options',
 	'lookupuser-foundmoreusers' => 'Message which will be shown when more than one user is found',
 	'right-lookupuser' => '{{doc-right|lookupuser}}',
+	'lookupuser-account-status' => 'The user\'s account status',
+	'lookupuser-account-status-tempuser' => 'The status of a temporary user account that hasn\'t been confirmed yet',
+	'lookupuser-account-status-realuser' => 'The status of a real user account',
 );
 
 /** Afrikaans (Afrikaans)
