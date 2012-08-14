@@ -87,9 +87,9 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		if( !empty( $query ) ) {
 			$articleMatch = $this->wikiaSearch->getArticleMatch($query);
 			if (!empty($articleMatch) && $this->getVal('fulltext', '0') === '0') {
-				extract($articleMatch);
 
-				$title = isset($redirect) ? $redirect->getTitle() : $article->getTitle();
+				$article = isset($articleMatch['redirect']) ? $articleMatch['redirect'] : $articleMatch['article'];
+				$title = $article->getTitle();
 
 				wfRunHooks( 'SpecialSearchIsgomatch', array( &$title, $query ) );
 
