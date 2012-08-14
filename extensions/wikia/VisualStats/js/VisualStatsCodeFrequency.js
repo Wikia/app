@@ -1,6 +1,6 @@
 /*global d3:true*/
 var VisualStatsCodeFrequency = {
-    init: function(data, user){
+    init: function(data, user, additions, totalChars){
         this.wikiaData = data.wikiaFrequency;
         this.userData = data.userFrequency;
         this.wikiaLine = data.wikiaLine;
@@ -13,6 +13,7 @@ var VisualStatsCodeFrequency = {
 
         var svg = this.drawBackground();
         this.drawVisualisation(svg);
+        this.drawAxisXLabels(additions, totalChars, svg);
         if (this.user != "0"){
             this.triggerButtons();
         }
@@ -122,7 +123,6 @@ var VisualStatsCodeFrequency = {
             .attr("x", 921)
             .attr("y", self.scaleTotalChars(0))
             .text("0");
-
     },
 
     triggerButtons: function(){
@@ -361,5 +361,27 @@ var VisualStatsCodeFrequency = {
                 .attr("y", yUp);
         }
         return svg;
+    },
+
+    drawAxisXLabels: function(additions, totalChars, svg){
+        svg.append("svg:text")
+            .attr("text-anchor", "middle")
+            .attr("font-size", "11")
+            .attr("font-weight", "bold")
+            .attr("fill", "#54B7E8")
+            .attr("x", 890)
+            .attr("y", 325)
+            .text(totalChars)
+            .attr("transform", "rotate(90 890 325)");
+        svg.append("svg:text")
+            .attr("text-anchor", "middle")
+            .attr("font-size", "11")
+            .attr("font-weight", "bold")
+            .attr("fill", "#5d0082")
+            .attr("x", 70)
+            .attr("y", 325)
+            .text(additions)
+            .attr("transform", "rotate(270 70 325)");
+
     }
 }

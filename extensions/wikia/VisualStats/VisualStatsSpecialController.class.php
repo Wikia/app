@@ -79,6 +79,8 @@ class VisualStatsSpecialController extends WikiaSpecialPageController {
         $this->setVal( 'shown', $this->wf->msg('visualStats-shown-edits'));
         $this->setVal( 'added', $this->wf->msg('visualStats-added'));
         $this->setVal( 'deleted', $this->wf->msg('visualStats-deleted'));
+        $this->setVal( 'addition', $this->wf->msg('visualStats-addition'));
+        $this->setVal( 'totalChars', $this->wf->msg('visualStats-total-chars'));
         $this->setVal( 'userButtonLabel', $this->wf->msg('visualStats-userEdits', $username));
 
     }

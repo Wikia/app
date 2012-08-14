@@ -15,7 +15,10 @@ $messages['en'] = array(
     'visualStats-commitActivity' => 'Commit Activity',
     'visualStats-histogram' => 'Histogram',
     'visualStats-codeFrequency' => 'Code frequency',
-    'visualStats-punchcard' => 'Punchcard'
+    'visualStats-punchcard' => 'Punchcard',
+    'visualStats-addition' => 'Additions and deletions',
+    'visualStats-total-chars' => 'Relative change of total characters count'
+
 );
 $messages['pl'] = array(
     'visualStats-specialpage-title' => 'Statystyki Wizualne',
@@ -26,5 +29,7 @@ $messages['pl'] = array(
     'visualStats-edits-singular' => 'edycja',
     'visualStats-shown-edits' => 'Wszystkich edycji: ',
     'visualStats-added' => 'Dodanych znaków: ',
-    'visualStats-deleted' => 'Usuniętych znaków: '
+    'visualStats-deleted' => 'Usuniętych znaków: ',
+    'visualStats-addition' => 'Usuniętych i dodanych znaków',
+    'visualStats-total-chars' => 'Względna zmiana ilości znaków'
 );
