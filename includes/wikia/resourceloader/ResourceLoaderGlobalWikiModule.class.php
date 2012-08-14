@@ -35,16 +35,19 @@ abstract class ResourceLoaderGlobalWikiModule extends ResourceLoaderWikiModule {
 
 	protected function createTitle( $titleText, $options = array() ) {
 		global $wgCityId;
+
+		$title = null;
 		if ( !empty( $options['city_id'] ) && $wgCityId != $options['city_id'] ) {
 			$realTitleText = isset($options['title']) ? $options['title'] : $titleText;
 			list( $text, $namespace ) = $this->parseTitle($realTitleText);
 			if ( $text !== false ) {
-				return GlobalTitle::newFromText($text,$namespace,$options['city_id']);
+				$title = GlobalTitle::newFromText($text,$namespace,$options['city_id']);
 			}
 		} else {
-			return Title::newFromText( $titleText );
+			$title = Title::newFromText( $titleText );
 		}
-		return null;
+
+		return $title;
 	}
 
 	protected function getContent( $title, $options = array() ) {

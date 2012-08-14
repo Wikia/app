@@ -142,6 +142,7 @@ $wgAutoloadClasses[ 'FakeSkin'                        ] = "$IP/includes/wikia/Fa
 $wgAutoloadClasses[ 'WikiaUpdater'                    ] = "$IP/includes/wikia/WikiaUpdater.php";
 $wgHooks          [ 'LoadExtensionSchemaUpdates'      ][] = 'WikiaUpdater::update';
 $wgAutoloadClasses[ 'ResourceLoaderGlobalWikiModule'  ] = "$IP/includes/wikia/resourceloader/ResourceLoaderGlobalWikiModule.class.php";
+$wgAutoloadClasses[ 'ResourceLoaderCustomWikiModule'  ] = "$IP/includes/wikia/resourceloader/ResourceLoaderCustomWikiModule.class.php";
 
 // core
 $wgAutoloadClasses['Module']  =  $IP.'/includes/wikia/Module.php';
