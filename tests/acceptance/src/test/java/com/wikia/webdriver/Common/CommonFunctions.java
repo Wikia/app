@@ -10,7 +10,7 @@ import org.testng.Assert;
 
 import com.wikia.webdriver.DriverProvider.DriverProvider;
 import com.wikia.webdriver.Logging.PageObjectLogging;
-import com.wikia.webdriver.pageObjects.PageObject.BasePageObject;
+import com.wikia.webdriver.Properties.Properties;
 
 public class CommonFunctions 
 {
@@ -51,14 +51,16 @@ public class CommonFunctions
 		logInAjaxElem.click();
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("input[name='username']")));
 		WebElement userNameFieldElem = driver.findElement(userNameField);
-		userNameFieldElem.sendKeys(BasePageObject.userName);
+		userNameFieldElem.sendKeys(Properties.userName);
 		WebElement passwordFieldElem = driver.findElement(passwordField);
-		passwordFieldElem.sendKeys(BasePageObject.password);
+		passwordFieldElem.sendKeys(Properties.password);
 		WebElement submitButtonElem = driver.findElement(submitButton);
 		submitButtonElem.click();
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("a[href*='/wiki/User:"+BasePageObject.userName+"']")));
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("a[href*='/wiki/User:"+Properties.userName+"']")));
 		PageObjectLogging.log("logIn ", "Normal user logged in", true, driver);
 	}
+	
+	/*Obsolete below method*/
 	
 	public static void logInAsStaff()
 	{
@@ -66,9 +68,9 @@ public class CommonFunctions
 		logInAjaxElem.click();
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("input[name='username']")));
 		WebElement userNameFieldElem = driver.findElement(userNameField);
-		userNameFieldElem.sendKeys(BasePageObject.userNameStaff);
+		userNameFieldElem.sendKeys(Properties.userNameStaff);
 		WebElement passwordFieldElem = driver.findElement(passwordField);
-		passwordFieldElem.sendKeys(BasePageObject.passwordStaff);
+		passwordFieldElem.sendKeys(Properties.passwordStaff);
 		WebElement submitButtonElem = driver.findElement(submitButton);
 		submitButtonElem.click();
 //		wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("a[href='/wiki/User:"+BasePageObject.userNameStaff+"']")));
