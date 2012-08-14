@@ -20,8 +20,6 @@ class WikiaHubsV2Model extends WikiaModel {
 	const SPONORED_IMAGE_WIDTH = 91;
 	const SPONORED_IMAGE_HEIGHT = 27;
 
-	const PLAY_VIDEO_IN_LIGHTBOX = true;
-
 	protected $lang;
 	protected $date;
 	protected $vertical;
@@ -674,11 +672,6 @@ No
 		} else {
 			$videoItem->info = wfMsgExt('wikiahubs-popular-videos-suggested-by-profile', array('parseinline'), array($videoArr['submitter'], $videoArr['profile']));
 		}
-
-		//todo: remove this hack described below once we finish research about customizing lightbox
-		//do we want it in lightbox or modal
-		//also quite important can be $this->wg->VideoHandlersVideosMigrated
-		$videoItem->videoPlay = self::PLAY_VIDEO_IN_LIGHTBOX ? 'lightbox' : 'video-play';
 		return $videoItem;
 	}
 
