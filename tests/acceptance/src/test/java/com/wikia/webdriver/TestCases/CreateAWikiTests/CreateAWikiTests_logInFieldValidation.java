@@ -3,8 +3,8 @@ package com.wikia.webdriver.TestCases.CreateAWikiTests;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import com.wikia.webdriver.Properties.Properties;
 import com.wikia.webdriver.Templates.TestTemplate;
-import com.wikia.webdriver.pageObjects.PageObject.BasePageObject;
 import com.wikia.webdriver.pageObjects.PageObject.HomePageObject;
 import com.wikia.webdriver.pageObjects.PageObject.CreateNewWiki.CreateNewWikiLogInPageObject;
 import com.wikia.webdriver.pageObjects.PageObject.CreateNewWiki.CreateNewWikiPageObjectStep1;
@@ -21,14 +21,14 @@ public class CreateAWikiTests_logInFieldValidation extends TestTemplate{
 	{
 		return new Object[][]
 				{
-					{BasePageObject.userNameWithUnderScore, BasePageObject.userNameWithUnderScore},
-					{BasePageObject.userNameWithBackwardSlash, "Driver%5Cweb"},
-					{BasePageObject.userNameLong, BasePageObject.userNameLong}
+					{Properties.userNameWithUnderScore, Properties.userNameWithUnderScore, Properties.passwordWithUnderScore},
+					{Properties.userNameWithBackwardSlash, Properties.userNameWithBackwardSlashEncoded, Properties.passwordWithBackwardSlash},
+					{Properties.userNameLong, Properties.userNameLong, Properties.passwordLong}
 				};
 	}
 			
 	@Test(dataProvider="getUserName")
-	public void CreateNewWiki_LogInFieldValidation(String userName, String userNameEnc)
+	public void CreateNewWiki_LogInFieldValidation(String userName, String userNameEnc, String password)
 	{
 		startBrowser();
 		driver.get("http://community.wikia.com/wiki/Special:UserLogout?returnto=User "+userNameEnc);
@@ -41,7 +41,7 @@ public class CreateAWikiTests_logInFieldValidation extends TestTemplate{
 		createNewWiki1.waitForSuccessIcon();
 		CreateNewWikiLogInPageObject logInPage = createNewWiki1.submitToLogIn();
 		logInPage.typeInUserName(userName);
-		logInPage.typeInPassword(BasePageObject.password);
+		logInPage.typeInPassword(password);
 		CreateNewWikiPageObjectStep2 createNewWiki2 = logInPage.submitLogin();
 		createNewWiki2.describeYourTopic("Duis quam ante, fringilla at cursus tristique, laoreet vel elit. Nullam rhoncus, magna ut dictum ultrices, mauris lectus consectetur tellus, sed dignissim elit justo vel ante.");
 		createNewWiki2.selectCategory("Auto");
