@@ -12,6 +12,7 @@ import org.testng.annotations.BeforeSuite;
 import com.wikia.webdriver.Common.CommonUtils;
 import com.wikia.webdriver.DriverProvider.DriverProvider;
 import com.wikia.webdriver.Logging.PageObjectLogging;
+import com.wikia.webdriver.Properties.Properties;
 
 public class TestTemplate {
 	
@@ -23,6 +24,8 @@ public class TestTemplate {
 		CommonUtils.deleteDirectory("."+File.separator+"logs");
 		CommonUtils.createDirectory("."+File.separator+"logs");
 		PageObjectLogging.startLoggingSuite();
+		
+		Properties.setProperties();
 		
 	}
 	
@@ -55,7 +58,11 @@ public class TestTemplate {
 	
 	public void stopBrowser()
 	{
-		driver.quit();
+		if (driver != null)
+		{
+			driver.close();
+			driver = null;
+		}
 	}
 	
 	
