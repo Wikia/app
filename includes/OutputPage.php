@@ -3657,7 +3657,11 @@ $templates
 	 * @author Wikia
 	 */
 	function tagWithSurrogateKeys( $keyArr ) {
-		header( 'Surrogate-Key: ' . implode( $keyArr, ' '), false );
+		if(is_array($keyArr)) {
+			header( 'Surrogate-Key: ' . implode( $keyArr, ' '), false );
+		} else {
+			header( 'Surrogate-Key: ' . $keyArr, false );
+		}
 	}
 
 }
