@@ -49,13 +49,23 @@ function wfAdEngineSetupJSVars($vars) {
 
 	$wgNoExternals = $wgRequest->getBool('noexternals', $wgNoExternals);
 
-	if (!empty($wgNoExternals))                 $vars["wgNoExternals"] = $wgNoExternals;
-	if (!empty($wgEnableAdsInContent))          $vars["wgEnableAdsInContent"] = $wgEnableAdsInContent;
-	if (!empty($wgEnableAdMeldAPIClient))       $vars["wgEnableAdMeldAPIClient"] = $wgEnableAdMeldAPIClient;
-	if (!empty($wgEnableAdMeldAPIClientPixels)) $vars["wgEnableAdMeldAPIClientPixels"] = $wgEnableAdMeldAPIClientPixels;
+	if (!empty($wgNoExternals)) {
+		$vars["wgNoExternals"] = $wgNoExternals;
+	}
+	if (!empty($wgEnableAdsInContent)) {
+		$vars["wgEnableAdsInContent"] = $wgEnableAdsInContent;
+	}
+	if (!empty($wgEnableAdMeldAPIClient)) {
+		$vars["wgEnableAdMeldAPIClient"] = $wgEnableAdMeldAPIClient;
+	}
+	if (!empty($wgEnableAdMeldAPIClientPixels)) {
+		$vars["wgEnableAdMeldAPIClientPixels"] = $wgEnableAdMeldAPIClientPixels;
+	}
 
 	// OpenX SPC (init in AdProviderOpenX.js)
-	if (!empty($wgEnableOpenXSPC))				$vars["wgEnableOpenXSPC"] = $wgEnableOpenXSPC;
+	if (!empty($wgEnableOpenXSPC)) {
+		$vars["wgEnableOpenXSPC"] = $wgEnableOpenXSPC;
+	}
 
 	// category/hub
 	$cat = AdEngine::getCachedCategory();
@@ -69,17 +79,27 @@ function wfAdEngineSetupJSVars($vars) {
 	}
 	$vars['wgHighValueCountries'] = $highValueCountries;
 
-	if (!empty($wgAdDriverUseExpiryStorage)) $vars["wgAdDriverUseExpiryStorage"] = $wgAdDriverUseExpiryStorage;
-	if (!empty($wgAdDriverUseCookie))        $vars["wgAdDriverUseCookie"] = $wgAdDriverUseCookie;
-	if (!empty($wgLoadAdDriverOnLiftiumInit)) $vars['wgLoadAdDriverOnLiftiumInit'] = $wgLoadAdDriverOnLiftiumInit;
+	if (!empty($wgAdDriverUseExpiryStorage)) {
+		$vars["wgAdDriverUseExpiryStorage"] = $wgAdDriverUseExpiryStorage;
+	}
+	if (!empty($wgAdDriverUseCookie)) {
+		$vars["wgAdDriverUseCookie"] = $wgAdDriverUseCookie;
+	}
+	if (!empty($wgLoadAdDriverOnLiftiumInit)) {
+		$vars['wgLoadAdDriverOnLiftiumInit'] = $wgLoadAdDriverOnLiftiumInit;
+	}
 
 	// Custom KeyValues (for DART requests)
 	$vars['wgDartCustomKeyValues'] = $wgDartCustomKeyValues;
 
-	if ($wgUser->getOption('showAds')) $vars['wgUserShowAds'] = true;
+	if ($wgUser->getOption('showAds')) {
+		$vars['wgUserShowAds'] = true;
+	}
 
 	// Answers sites
-	if (!empty($wgEnableWikiAnswers)) $vars['wgEnableWikiAnswers'] = $wgEnableWikiAnswers;
+	if (!empty($wgEnableWikiAnswers)) {
+		$vars['wgEnableWikiAnswers'] = $wgEnableWikiAnswers;
+	}
 
 	/*
 	// Krux
@@ -103,23 +123,23 @@ interface iAdProvider {
 }
 
 abstract class AdProviderIframeFiller {
-        public function getIframeFillHtml($slotname, $slot) {
+	public function getIframeFillHtml($slotname, $slot) {
 		wfProfileIn(__METHOD__);
 
-                global $wgEnableAdsLazyLoad, $wgAdslotsLazyLoad;
+		global $wgEnableAdsLazyLoad, $wgAdslotsLazyLoad;
 
-                $function_name = AdEngine::fillIframeFunctionPrefix . $slotname;
-                $out = $this->getIframeFillFunctionDefinition($function_name, $slotname, $slot);
-                if (!$wgEnableAdsLazyLoad || empty($wgAdslotsLazyLoad[$slotname]) || empty($this->enable_lazyload)) {
-                	$out .= "\n".'<script type="text/javascript">' . "$function_name();" . '</script>' . "\n";
-                }
+		$function_name = AdEngine::fillIframeFunctionPrefix . $slotname;
+		$out = $this->getIframeFillFunctionDefinition($function_name, $slotname, $slot);
+		if (!$wgEnableAdsLazyLoad || empty($wgAdslotsLazyLoad[$slotname]) || empty($this->enable_lazyload)) {
+			$out .= "\n".'<script type="text/javascript">' . "$function_name();" . '</script>' . "\n";
+		}
 
 		wfProfileOut(__METHOD__);
 
-                return $out;
-        }
+		return $out;
+	}
 
-        abstract protected function getIframeFillFunctionDefinition($function_name, $slotname, $slot);
+	abstract protected function getIframeFillFunctionDefinition($function_name, $slotname, $slot);
 
 }
 
@@ -505,25 +525,20 @@ class AdEngine {
  	 *
  	 * Do the best you can to return a height/width
  	 */
-        public static function getHeightWidthFromSize($size){
-		wfProfileIn(__METHOD__);
-
-                if (preg_match('/^([0-9]{2,4})x([0-9]{2,4})/', $size, $matches)){
-			wfProfileOut(__METHOD__);
-                        return array('width'=>$matches[1], 'height'=>$matches[2]);
-                } else if (preg_match('/^([0-9]{2,4})x\*/', $size, $matches)){
-			wfProfileOut(__METHOD__);
-                        return array('width'=>$matches[1], 'height'=>'*');
-                } else {
-			wfProfileOut(__METHOD__);
-                        return false;
-                }
-        }
+	public static function getHeightWidthFromSize($size) {
+		if (preg_match('/^([0-9]{2,4})x([0-9]{2,4}|\*)/', $size, $matches)) {
+			return array(
+				'width' => $matches[1],
+				'height' => $matches[2]
+			);
+		}
+		return false;
+	}
 
 	public function getPlaceHolderIframe($slotname, $reserveSpace=true){
 		wfProfileIn(__METHOD__);
 
-                global $wgEnableAdsLazyLoad, $wgAdslotsLazyLoad;
+		global $wgEnableAdsLazyLoad, $wgAdslotsLazyLoad;
 
 		$html = null;
 		wfRunHooks("fillInAdPlaceholder", array("iframe", $slotname, &$this, &$html));
@@ -598,7 +613,7 @@ class AdEngine {
 			'<div id="' . htmlspecialchars($slotdiv) . '">' .
 			'<iframe width="' . intval($w) . '" height="' . intval($h) . '" ' .
 			'id="' . htmlspecialchars($slotname) . '_iframe" class="' . $slotiframe_class . '" ' .
-                	'noresize="true" scrolling="no" frameborder="0" marginheight="0" ' .
+			'noresize="true" scrolling="no" frameborder="0" marginheight="0" ' .
 			'marginwidth="0" style="border:none" target="_blank"></iframe></div></div>';
 	}
 
@@ -675,7 +690,7 @@ class AdEngine {
 			// Hmm. Should we just use: class="wikia_$adtype"?
 			$class = self::getAdType($slotname) == 'spotlight' ? ' class="wikia_spotlight"' : ' class="wikia_ad"';
 			// This may be better, but needs more testing. $out .= '<div id="' . $slotname . '_load"' . $class . '>' . $AdProvider->getAd($slotname, $this->slots[$slotname]) . "</div>\n";
-                        $out .= '<div id="' . $slotname . '_load" style="display: none; position: absolute;"'.$class.'>' . $AdProvider->getAd($slotname, $this->slots[$slotname]) . "</div>\n";
+			$out .= '<div id="' . $slotname . '_load" style="display: none; position: absolute;"'.$class.'>' . $AdProvider->getAd($slotname, $this->slots[$slotname]) . "</div>\n";
 
 
 			/* This image is what will be returned if there is NO AD to be displayed.
@@ -712,18 +727,18 @@ class AdEngine {
 
 		// Get the setup code for ad providers used on this page. This is for Ad Providers that support multi-call.
 		foreach ($this->placeholders as $slotname => $load_priority){
-	                $AdProvider = $this->getAdProvider($slotname);
+			$AdProvider = $this->getAdProvider($slotname);
 
 			// Get setup HTML for each provider. May be empty.
 			$out .= $AdProvider->getSetupHtml();
 		}
 
 		// Call the code to set the iframe urls for the iframes
-                foreach ($this->placeholders as $slotname => $load_priority){
-	                $AdProvider = $this->getAdProvider($slotname);
+		foreach ($this->placeholders as $slotname => $load_priority){
+			$AdProvider = $this->getAdProvider($slotname);
 			// Currently only supported by GAM and Athena
 			if (method_exists($AdProvider, "getIframeFillHtml")){
-                        	$out .= $AdProvider->getIframeFillHtml($slotname, $this->slots[$slotname]);
+				$out .= $AdProvider->getIframeFillHtml($slotname, $this->slots[$slotname]);
 			}
 		}
 
