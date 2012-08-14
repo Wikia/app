@@ -86,6 +86,7 @@
 					<systemPropertyVariables>
 						<run_mvn>true</run_mvn>
 						<browser>${browser}</browser>
+						<config>c:/config.xml/config.xml</config>
 					</systemPropertyVariables>
 					<suiteXmlFiles>
 						<suiteXmlFile>src/test/java/com/wikia/webdriver/TestSuites/testSuite.xml</suiteXmlFile>
