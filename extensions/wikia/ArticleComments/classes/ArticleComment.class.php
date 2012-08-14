@@ -791,7 +791,6 @@ class ArticleComment {
 		$commentList = ArticleCommentList::newFromTitle($title);
 		$commentList->getCommentList(true);
 
-		/*
 		// Purge squid proxy URLs for ajax loaded content if we are lazy loading
 		if ( !empty( $wgArticleCommentsLoadOnDemand ) ) {
 			$app = F::app();
@@ -825,9 +824,9 @@ class ArticleComment {
 				$parentTitle->invalidateCache();
 				$parentTitle->purgeSquid();
 			}
-		}*/
+		}
 
-
+		/*
 		$parentTitle = Title::newFromText( $commentTitle->getBaseText() );
 
 		if ($parentTitle) {
@@ -837,6 +836,7 @@ class ArticleComment {
 			}
 			SquidUpdate::VarnishPurgeKey( self::getSurrogateKey( $parentTitle->getArticleID() ) );
 		}
+		*/
 
 		wfProfileOut( __METHOD__ );
 	}
