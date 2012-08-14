@@ -282,35 +282,20 @@ class ArticleAdLogic {
  	 *
  	 * For any of the values
  	 */
-	public function getPixels($in){
-		wfProfileIn(__METHOD__);
-		
-		$in=trim($in);
-		if (preg_match('/^[0-9]{1,4}$/', $in)){
-			// Nothing bug numbers.
-			wfProfileOut(__METHOD__);
+	public function getPixels($in) {
+		$in = trim($in);
+		if (preg_match('/^[0-9]+$/', $in)) {
+			// Nothing but numbers.
 			return $in;
-		} else if (preg_match('/^([0-9]{1,4})px/i', $in, $match)){
+		} else if (preg_match('/^([0-9]+)px/i', $in, $match)) {
 			// NNNpx
-			wfProfileOut(__METHOD__);
 			return $match[1];
-		} else if (preg_match('/^([0-9]{1,4})em/i', $in, $match)){
-			wfProfileOut(__METHOD__);
+		} else if (preg_match('/^([0-9]+)em/i', $in, $match)) {
+			// Convert X em to X*10 em
 			return $match[1] * 10;
 		} else {
-			wfProfileOut(__METHOD__);
 			return false;
 		}
-
-		$out=preg_replace('/px$/i', '', $in);
-		if (intval($out) == $out){
-			wfProfileOut(__METHOD__);
-			return $out;
-		} else {
-			wfProfileOut(__METHOD__);
-			return false;
-		}
-
 	}
 
 	/* Based on our collision detection logic, figure out if we are displaying
@@ -323,35 +308,31 @@ class ArticleAdLogic {
 	 *
 	 * Otherwise, return true.
 	 */
-	public static function isBoxAdArticle($html){
+	public static function isBoxAdArticle($html) {
 		wfProfileIn(__METHOD__);
-		
+
 		static $lastMd5, $lastResult;
 
 		$currentMd5 = md5($html);
-		if ($currentMd5 == $lastMd5 ){
+		if ($currentMd5 === $lastMd5) {
 			// function was called again with the same html as last time.
 			wfProfileOut(__METHOD__);
 			return $lastResult;
 		}
 
-		if (self::hasWikiaMagicWord($html, "__WIKIA_BANNER__")){
-			wfProfileOut(__METHOD__);
+		if (self::hasWikiaMagicWord($html, "__WIKIA_BANNER__")) {
 			$result = false;
-		} else if (self::hasWikiaMagicWord($html, "__WIKIA_BOXAD__")){
-			wfProfileOut(__METHOD__);
+		} else if (self::hasWikiaMagicWord($html, "__WIKIA_BOXAD__")) {
 			$result = true;
-		} else if (self::getCollisionRank($html) >= self::collisionRankThreshold){
-			wfProfileOut(__METHOD__);
+		} else if (self::getCollisionRank($html) >= self::collisionRankThreshold) {
 			$result = false;
 		} else {
-			wfProfileOut(__METHOD__);
 			$result = true;
 		}
 
-
 		$lastMd5 = $currentMd5;
 		$lastResult = $result;
+
 		wfProfileOut(__METHOD__);
 		return $result;
 	}
@@ -359,21 +340,19 @@ class ArticleAdLogic {
 
 	public function isMainPage(){
 		wfProfileIn(__METHOD__);
-		
 		global $wgTitle;
-		if ( is_object($wgTitle) &&
-			$wgTitle->getArticleId() == Title::newMainPage()->getArticleId() &&
-			$wgTitle->getArticleId() != 0 && # caused problems on central due to NS_SPECIAL main page
-			!self::isDiffPage() &&
-			!self::isAnonPurgePrompt() &&
-			!self::isActionPage()) {
 
-			wfProfileOut(__METHOD__);
-			return true;
-		} else {
-			wfProfileOut(__METHOD__);
-			return false;
-		}
+		$isMainPage = (
+			is_object($wgTitle)
+			&& $wgTitle->getArticleId() == Title::newMainPage()->getArticleId()
+			&& $wgTitle->getArticleId() != 0 # caused problems on central due to NS_SPECIAL main page
+			&& !self::isDiffPage()
+			&& !self::isAnonPurgePrompt()
+			&& !self::isActionPage()
+		);
+
+		wfProfileOut(__METHOD__);
+		return $isMainPage;
 	}
 
 	public function isArticlePage(){
