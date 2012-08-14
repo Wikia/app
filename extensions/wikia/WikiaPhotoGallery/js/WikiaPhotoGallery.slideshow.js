@@ -69,9 +69,6 @@ var WikiaPhotoGallerySlideshow = {
 				return;
 			}
 			
-			// tracking
-			WikiaPhotoGalleryView.track('/slideshow/basic/addImage');
-				
 			$.when(
 				WikiaPhotoGalleryView.loadEditorJS(), 
 				WikiaPhotoGalleryView.ajax('getGalleryData', {hash:hash, articleId:wgArticleId})
@@ -101,15 +98,6 @@ var WikiaPhotoGallerySlideshow = {
 		slideshow.bind('slide', function(ev, data) {
 			var counter = slideshow.find('.wikia-slideshow-toolbar-counter');
 			counter.text( counter.data('counter').replace(/\$1/, 1 + data.currentSlideId) );
-		});
-
-		// track clicks on prev / next
-		slideshow.bind('onPrev', function() {
-			WikiaPhotoGalleryView.track('/slideshow/basic/previous');
-		});
-
-		slideshow.bind('onNext', function() {
-			WikiaPhotoGalleryView.track('/slideshow/basic/next');
 		});
 
 		// on-hover effects
