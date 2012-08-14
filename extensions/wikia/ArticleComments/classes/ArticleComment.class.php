@@ -843,7 +843,6 @@ class ArticleComment {
 
 	static public function doAfterPost( $status, $article, $parentId = 0 ) {
 		global $wgUser, $wgDBname;
-		global $wgDevelEnvironment;
 
 		wfRunHooks( 'ArticleCommentAfterPost', array( $status, &$article ) );
 		$commentId = $article->getID();
