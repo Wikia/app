@@ -225,7 +225,8 @@ class CodeLintPhp extends CodeLint {
 			$ret = true;
 		}
 
-		if (endsWith($errorMsg, 'should not be called statically')) {
+		// Non-static method Foo::bar() should not be called statically
+		if (startsWith($errorMsg, 'Non-static method')) {
 			$ret = true;
 		}
 
