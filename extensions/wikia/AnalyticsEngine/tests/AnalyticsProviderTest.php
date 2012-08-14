@@ -6,7 +6,14 @@
  * Time: 1:33 PM
  */
 class AnalyticsProviderTest extends WikiaBaseTest {
-	private function get_data($url)
+
+	/**
+	 * given an URL, fetch the page source
+	 *
+	 * @param $url page address
+	 * @return mixed page content
+	 */
+	private function fetch_page($url)
 	{
 		$ch = curl_init();
 		$timeout = 5;
@@ -22,11 +29,11 @@ class AnalyticsProviderTest extends WikiaBaseTest {
 	 * Check the page source for analytics tracking and return used tag
 	 *
 	 * @param $url page address to fetch
-	 * @return analytics parameter used in this page
+	 * @return string|null analytics parameter used in this page
 	 *
 	 */
 	private function getAnalyticsProviderTag($url) {
-		$page = $this->get_data($url);
+		$page = $this->fetch_page($url);
 		if (preg_match('/<img src="([^">]+)" [^>]+ alt="szmtag"/', $page, $m)) {
 			$path = parse_url($m[1], PHP_URL_PATH);
 			return array_pop(explode('/', $path));
