@@ -86,6 +86,7 @@ class ArticleCommentsController extends WikiaController {
 		}
 
 		$this->getCommentsData( $title, $page );
+		$this->wg->Out->tagWithSurrogateKeys( ArticleComment::getSurrogateKey($articleId) );
 
 		$this->wf->profileIn( __METHOD__ );
 	}
@@ -230,4 +231,5 @@ class ArticleCommentsController extends WikiaController {
 		}
 		return true;
 	}
+
 }

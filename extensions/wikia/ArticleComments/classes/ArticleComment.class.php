@@ -771,8 +771,6 @@ class ArticleComment {
 			wfRunHooks( 'EditCommentsIndex', array($article->getTitle(), $commentsIndex) );
 		}
 
-		$key = $title->getPrefixedDBkey(); // FIXME: does this line cause some side-effects that are needed? Otherwise, this line doesn't appear to serve any purpose.
-
 		$res = ArticleComment::doAfterPost( $retval, $article, $parentId );
 
 		ArticleComment::doPurge($title, $commentTitle);
@@ -793,6 +791,7 @@ class ArticleComment {
 		$commentList = ArticleCommentList::newFromTitle($title);
 		$commentList->getCommentList(true);
 
+		/*
 		// Purge squid proxy URLs for ajax loaded content if we are lazy loading
 		if ( !empty( $wgArticleCommentsLoadOnDemand ) ) {
 			$app = F::app();
@@ -826,6 +825,17 @@ class ArticleComment {
 				$parentTitle->invalidateCache();
 				$parentTitle->purgeSquid();
 			}
+		}*/
+
+
+		$parentTitle = Title::newFromText( $commentTitle->getBaseText() );
+
+		if ($parentTitle) {
+			if ( empty( $wgArticleCommentsLoadOnDemand ) ) {
+				// need to invalidate parsed article if it includes comments in the body
+				$parentTitle->invalidateCache();
+			}
+			SquidUpdate::VarnishPurgeKey( self::getSurrogateKey( $parentTitle->getArticleID() ) );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -1274,5 +1284,10 @@ class ArticleComment {
 		}
 
 		return null;
+	}
+
+	static function getSurrogateKey( $articleId ) {
+		global $wgCityId;
+		return 'Wiki_ ' . $wgCityId . ' _ArticleComments_' . $articleId;
 	}
 }
