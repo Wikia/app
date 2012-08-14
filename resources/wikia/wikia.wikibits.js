@@ -12,6 +12,28 @@ function log( text ) {
 	return $().log( text, 'importArticle' );
 }
 
+/**
+ * Import JavaScript and Stylesheet articles from any wiki.
+ *
+ * >> Examples:
+ *
+ * // Importing a single Stylesheet from the local wiki
+ * importArticle({
+ *     type: "style",
+ *     article: "Mediawiki:MyCustomStyles.css"
+ * });
+ *
+ * // Importing multiple JavaScript files from an external wiki
+ * importArticles({
+ *     type: "script",
+ *     articles: [
+ *         "Mediawiki:MyCustomJavaScript.js",
+ *         "w:starwars:Mediawiki:External.js"
+ *     ]
+ * });
+ *
+ * @author Kyle Florence <kflorence@wikia-inc.com>
+ */
 var importArticle = function() {
 	var i, l, module, uri,
 		modules = slice.call(arguments);
@@ -43,7 +65,7 @@ var importArticle = function() {
 		}
 
 		if ( !importMethod ) {
-			log( 'Invalid article type: ' + type );
+			log( 'Invalid article type: ' + module.type );
 			continue;
 		}
 
