@@ -35,7 +35,7 @@ class WikiaMobileHooks extends WikiaObject{
 					$submatches = array();
 
 					$itemsCount = preg_match_all(
-						'/\[\[((?:' . $translatedNs . '):.*)\]\]/',
+						'/\[\[((?:' . $translatedNs . '):.*)\]\]/U',
 						$match[0],
 						$submatches,
 						PREG_SET_ORDER
