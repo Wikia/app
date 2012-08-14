@@ -579,9 +579,6 @@ class WikiaSolrClient extends WikiaSearchClient {
 	      }
 
 	      return $response;
-
-		wfProfileOut(__METHOD__);
-		return $response->response->docs;
 	}
 
 	public function setNamespaces(array $namespaces) {
