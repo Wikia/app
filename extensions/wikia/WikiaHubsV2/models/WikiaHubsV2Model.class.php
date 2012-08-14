@@ -8,6 +8,7 @@
  * @author Sebastian Marzjan
  *
  */
+
 class WikiaHubsV2Model extends WikiaModel {
 	const GRID_0_5_MINIATURE_SIZE = 75;
 	const GRID_1_MINIATURE_SIZE = 155;
@@ -523,26 +524,17 @@ No
 		);
 	}
 
-	public function getHubName($name) {
-		if (empty($name)) {
-			// mock data
-			return 'Video Games';
-		} else {
-			return $name;
-		}
+	protected function getStandardThumbnailUrl($imageName) {
+		return $this->getThumbnailUrl($imageName, self::GRID_2_MINIATURE_SIZE);
 	}
 
-	protected function getStandardThumbnailUrl($imageName) {
- 		return $this->getThumbnailUrl($imageName, self::GRID_2_MINIATURE_SIZE);
- 	}
-
 	protected function getSmallThumbnailUrl($imageName) {
- 		return $this->getThumbnailUrl($imageName, self::GRID_1_MINIATURE_SIZE);
- 	}
+		return $this->getThumbnailUrl($imageName, self::GRID_1_MINIATURE_SIZE);
+	}
 
 	protected function getMiniThumbnailUrl($imageName) {
- 		return $this->getThumbnailUrl($imageName, self::GRID_0_5_MINIATURE_SIZE);
- 	}
+		return $this->getThumbnailUrl($imageName, self::GRID_0_5_MINIATURE_SIZE);
+	}
 
 	/**
 	 * @param string $imageName
@@ -551,7 +543,7 @@ No
 	 */
 	protected function getImageTitle($imageName) {
 		$title = F::build('Title', array($imageName, NS_FILE), 'newFromText');
-		if( !($title instanceof Title) ) {
+		if (!($title instanceof Title)) {
 			return false;
 		}
 
@@ -565,7 +557,7 @@ No
 	 */
 	protected function getImageFile(Title $imageTitle) {
 		$file = F::app()->wf->FindFile($imageTitle);
-		if( !($file instanceof File) ) {
+		if (!($file instanceof File)) {
 			return false;
 		}
 
@@ -583,7 +575,7 @@ No
 		$title = $this->getImageTitle($imageName);
 		$file = $this->getImageFile($title);
 
-		if( $file ) {
+		if ($file) {
 			$width = ($width === -1) ? self::GRID_2_MINIATURE_SIZE : $width;
 
 			$thumbParams = array('width' => $width, 'height' => $height);
@@ -601,7 +593,7 @@ No
 	protected function getImageThumbSize() {
 		$result = array();
 
-		if( !is_null($this->imageThumb) ) {
+		if (!is_null($this->imageThumb)) {
 			$result = array(
 				'width' => $this->imageThumb->getWidth(),
 				'height' => $this->imageThumb->getHeight(),
@@ -684,5 +676,26 @@ No
 		}
 		$tabberSource .= '}}';
 		return $tabberSource;
+	}
+
+	public function generateSliderWikiText($sliderImages) {
+		$galleryText = '<gallery type="slider" orientation="mosaic">';
+		foreach($sliderImages as $image) {
+			$galleryText .= "\n" . implode('|',array(
+					$image['image'],
+					$image['headline'],
+					'link=' . $image['href'],
+					'linktext=' . $image['description'],
+					'shorttext=' . $image['title']
+				)
+			);
+		}
+		$galleryText .= "\n</gallery>";
+		return $galleryText;
+	}
+
+	public function getVerticalName($verticalId) {
+		$wikiaHub = WikiFactoryHub::getInstance()->getCategory($verticalId);
+		return wfMsgForContent('hub-' . $wikiaHub['name']);
 	}
 }
