@@ -1309,7 +1309,13 @@ var mw = ( function ( $, undefined ) {
 						return key;
 					} );
 				},
-		
+
+				// Wikia - change begin - @author: wladek
+				getSource: function( source ) {
+					return sources[source];
+				},
+				// Wikia - change end
+
 				/**
 				 * For backwards-compatibility with Squid-cached pages. Loads mw.user
 				 */

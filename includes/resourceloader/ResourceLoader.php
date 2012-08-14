@@ -447,6 +447,8 @@ class ResourceLoader {
 	public function respond( ResourceLoaderContext $context ) {
 		global $wgCacheEpoch, $wgUseFileCache;
 
+		wfRunHooks('ResourceLoaderBeforeRespond',array($this,&$context));
+
 		// Use file cache if enabled and available...
 		if ( $wgUseFileCache ) {
 			$fileCache = ResourceFileCache::newFromContext( $context );
@@ -1114,11 +1116,9 @@ class ResourceLoader {
             }
         }
         $loadScript = $resourceLoaderInstance->sources[$source]['loadScript'];
-//        var_dump($loadScript);
 		// Prevent the IE6 extension check from being triggered (bug 28840)
 		// by appending a character that's invalid in Windows extensions ('*')
 		$url = wfExpandUrl( wfAppendQuery( $loadScript, $query ) . '&*', PROTO_RELATIVE );
-//        var_dump($url);
         return $url;
         /* Wikia change - end */
 	}

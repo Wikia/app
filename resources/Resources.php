@@ -921,9 +921,15 @@ return array(
 		),
 	),
 	'mediawiki.legacy.wikibits' => array(
-		'scripts' => 'common/wikibits.js',
-		'remoteBasePath' => $GLOBALS['wgStylePath'],
-		'localBasePath' => $GLOBALS['wgStyleDirectory'],
+		// Wikia - change begin - @author: wladek
+//		'scripts' => 'common/wikibits.js',
+//		'remoteBasePath' => $GLOBALS['wgStylePath'],
+//		'localBasePath' => $GLOBALS['wgStyleDirectory'],
+		'scripts' => array(
+			'skins/common/wikibits.js',
+			'resources/wikia/wikia.wikibits.js',
+		),
+		// Wikia - change end
 		'dependencies' => array(
 			'mediawiki.util',
 		),
