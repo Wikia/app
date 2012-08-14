@@ -17,7 +17,7 @@
 		<section class="grid-1 plainlinks wikiahubs-explore wikiahubs-module">
 			<?= $app->renderView('SpecialWikiaHubsV2', 'explore', array()); ?>
 		</section>
-		<div class="grid-2 alpha" style="float:right">
+		<div class="grid-2 alpha wikiahubs-rail">
 			<section class="grid-2 alpha wikiahubs-featured-video wikiahubs-module">
 				<?= $app->renderView('SpecialWikiaHubsV2', 'featuredvideo', array()); ?>
 			</section>
