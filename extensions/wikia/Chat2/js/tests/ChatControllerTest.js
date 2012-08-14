@@ -18,7 +18,6 @@ test("processText links", function() {
 
 	// create a view instance and test the processtest method
 	var c = new ChatView({});
-
     equal(c.processText('[[Test_underscores]]'),
  		   '<a href="http://poznan.mech.wikia-dev.com/wiki/Test_underscores">Test underscores</a>',
  		   'underscores in article name');
@@ -110,4 +109,9 @@ test("processText links", function() {
     equal(c.processText('http://www.wikia.com/, http://www.google.pl'),
    		   '<a href="http://www.wikia.com/">http://www.wikia.com/</a>, <a href="http://www.google.pl">http://www.google.pl</a>',
    		   'coma separated addresses');
+
+	equal(c.processText('http://potentially_dangerous_site.com/#http://poznan.mech.wikia-dev.com/wiki/Click%20here'),
+		'<a href="http://potentially_dangerous_site.com/#http://poznan.mech.wikia-dev.com/wiki/Click%20here">http://potentially_dangerous_site.com/#http://poznan.mech.wikia-dev.com/wiki/Click here</a>',
+		'showing potentially dangerous URL as a local link (bugid:44524)');
+
 });

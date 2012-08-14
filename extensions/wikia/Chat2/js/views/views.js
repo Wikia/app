@@ -31,7 +31,7 @@ var ChatView = Backbone.View.extend({
 		// TODO: Use the wgServer and wgArticlePath from the chat room. Maybe the room should be passed into this function? (it seems like it could be called a bunch of times in rapid succession).
 		
 		// Prepare a regexp we use to match local wiki links
-		var localWikiLinkReg = wgServer + wgArticlePath;
+		var localWikiLinkReg = '^' + wgServer + wgArticlePath;
 		localWikiLinkReg = localWikiLinkReg.replace(/\$1/, "(\\S+[^.\\s\\?\\,])");
 		localWikiLinkReg = new RegExp(localWikiLinkReg, "i");
 		
