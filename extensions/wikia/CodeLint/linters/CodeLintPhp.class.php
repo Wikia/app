@@ -158,9 +158,16 @@ class CodeLintPhp extends CodeLint {
 	 * @return boolean returns true if the entry should be kept
 	 */
 	public function filterErrorsOut($error) {
-		// keep all entries for now
-		// TODO: review it
-		return true;
+		$keep = true;
+
+		if (isset($error['error'])) {
+			// heavily used in controllers to pass data to a template
+			if (preg_match('#^Field \'(.*)\' not found in class$#', $error['error'])) {
+				$keep = false;
+			}
+		}
+
+		return $keep;
 	}
 
 	/**
