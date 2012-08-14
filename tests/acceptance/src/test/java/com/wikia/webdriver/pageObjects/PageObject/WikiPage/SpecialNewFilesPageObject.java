@@ -48,22 +48,22 @@ public class SpecialNewFilesPageObject extends WikiBasePageObject{
 	public void ClickOnAddaPhoto() {
 		
 		waitForElementByElement(AddAphotoButton);
-		click(AddAphotoButton);
+		AddAphotoButton.click();
 	}
 	
 	public void ClickOnUploadaPhoto() {
 		waitForElementByElement(UploadFileInput);
-		click(UploadFileInput);
+		UploadFileInput.click();
 	}
 	
 	public void ClickOnMoreOrFewerOptions() {
 		waitForElementByElement(MoreOrFewerOptions);
-		click(MoreOrFewerOptions);
+		MoreOrFewerOptions.click();
 		
 	}
 	public void CheckIgnoreAnyWarnings() {
 		waitForElementByElement(IgnoreAnyWarnings);
-		click(IgnoreAnyWarnings);
+		IgnoreAnyWarnings.click();
 		
 	}
 

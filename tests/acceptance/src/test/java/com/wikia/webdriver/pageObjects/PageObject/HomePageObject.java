@@ -33,26 +33,27 @@ public class HomePageObject extends BasePageObject{
 	public void openHomePage()
 	{
 		driver.get(liveDomain);
+		driver.getCurrentUrl();
 	}
 	
 	public CreateNewWikiPageObjectStep1 StartAWikia()
 	{
-		click(startWikiButton);
+		startWikiButton.click();
 		verifyURL("http://www.wikia.com/Special:CreateNewWiki?uselang=en");
 		return new CreateNewWikiPageObjectStep1(driver);
 	}
 	
 	public HubBasePageObject OpenHub(String Hub){
 		if (Hub.equals("VideoGamesHub")) {
-			click(OpenVideoGamesHub);
+			OpenVideoGamesHub.click();
 			return new VideoGamesHubPageObject(driver);
 		}
 		if (Hub.equals("EntertainmentHub")) {
-			click(OpenEntertainmentHub);
+			OpenEntertainmentHub.click();
 			return new EntertainmentHubPageObject(driver);	
 		}
 		if (Hub.equals("LifestyleHub")) {
-			click(OpenLifestyleHub);
+			OpenLifestyleHub.click();
 			return new LifestyleHubPageObject(driver);	
 		}
 		else {

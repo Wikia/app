@@ -26,36 +26,11 @@ public class BasePageObject{
 	public String liveDomain = "http://www.wikia.com/";
 	
 	public String wikiFactoryLiveDomain = "http://community.wikia.com/wiki/Special:WikiFactory";
-	
-
-	
-	
-	public static String userName = XMLFunctions.getXMLConfiguration(Global.CONFIG_FILE, "ci.user.regular.username");
-	public static String password = XMLFunctions.getXMLConfiguration(Global.CONFIG_FILE, "ci.user.regular.password");
-	
-	public static String userNameNonLatin = "卡羅爾";
-	public static String userNameNonLatinEncoded = "%E5%8D%A1%E7%BE%85%E7%88%BE";
-	
-	public static String userNameWithUnderScore = "Driver_web";
-	public static String userNameWithBackwardSlash = "Driver\\web";
-	public static String userNameLong = "Webdriverwikiaselenium";
-	
-	
-													
-	public static String passwordNonLatin = "";
-	
-	public static String email = "webdriverseleniumwikia@gmail.com";
-	public static String emailPassword = "";
-	//卡羅爾
-	
-	public static String userNameStaff = System.getenv("STAFF_USER");
-	public static String passwordStaff = System.getenv("STAFF_PASS");;
-	
+		
 	protected int timeOut = 30;
 	
 	public WebDriverWait wait;
 
-	
 	public BasePageObject(WebDriver driver)
 	{
 		this.driver = driver;

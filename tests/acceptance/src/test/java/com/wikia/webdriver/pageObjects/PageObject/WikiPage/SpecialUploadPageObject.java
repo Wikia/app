@@ -47,13 +47,13 @@ public class SpecialUploadPageObject extends WikiBasePageObject {
 	public void CheckIgnoreAnyWarnings() {
 		waitForElementByElement(IgnoreAnyWarnings);
 //		CommonFunctions.scrollToElement(IgnoreAnyWarnings);
-		click(IgnoreAnyWarnings);
+		IgnoreAnyWarnings.click();
 		
 	}
 
 	public FilePageObject ClickOnUploadFile(String file) {
 		waitForElementByElement(UploadFileInput);
-		click(UploadFileInput);
+		UploadFileInput.click();
 		return new FilePageObject(driver, file);
 	}
 
