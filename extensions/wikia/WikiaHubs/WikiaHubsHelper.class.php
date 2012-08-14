@@ -42,4 +42,15 @@ class WikiaHubsHelper {
 		OasisController::addBodyClass($categoryName);
 		return true;
 	}
+	
+	public function onWikiaAssetsPackages(&$out, &$jsPackages, &$scssPackages) {
+		$dbkey = $out->getContext()->getTitle()->getDBKey();
+		foreach(F::app()->wg->WikiaHubsPages as $hubsPages) {
+			if(in_array($dbkey, $hubsPages)) {
+				$jsPackages[] = 'wikia/WikiaHubs/js/WikiaHubs.js';
+				$scssPackages[] = 'wikia/WikiaHubs/css/WikiaHubs.scss';
+			}
+		}
+		return true;
+	}
 }
