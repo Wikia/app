@@ -18,6 +18,7 @@ $messages['en'] = array(
 	'wall-message-notify' => 'Notify admin',
 	'wall-message-remove' => 'Remove',
 	'wall-message-rev-delete' => 'Revision delete',
+	'wall-message-quote-button' => 'Quote',
 
 	'wall-message-elseswall' => "$1's wall",
 	'wall-message-no-permission' => 'You don\'t have permissions to perfom this action on the message',
@@ -25,6 +26,7 @@ $messages['en'] = array(
 	'wall-thread-removed' => 'Removed',
 	'wall-thread-isnotifyeveryone' => 'Highlight',
 	'wall-thread-deleted' => 'Deleted',
+	'wall-thread-closed' => 'Closed',
 
 	'wall-default-title' => 'Message from $1',
 	'wall-no-title-warning' => '← You did not specify any title',
@@ -45,11 +47,14 @@ $messages['en'] = array(
 	'wall-message-edit' => "Edit",
 	'wall-message-more' => 'More',
 	'wall-message-delete' => "Delete",
+	'wall-message-close-thread' => "Close this thread",
+	'wall-message-reopen-thread' => "Reopen this thread",
 	'wall-message-removed-thread-because' => "$1 removed this thread because:",
 	'wall-message-deleted-thread-because' => "$1 deleted this thread because:",
 	'wall-message-restore-thread' => "Restore Thread",
 	'wall-message-removed-reply-because' => "$1 removed this reply because:",
 	'wall-message-deleted-reply-because' => "$1 deleted this reply because:",
+	'wall-message-closed-by' => "[[$2|$1]] closed this thread",
 	'wall-message-restore-reply' => "Restore Reply",
 	'wall-delete-reason' => "User/admin action",
 	'wall-user-talk-page-archive-anchor' => 'See archived talk page',
@@ -238,6 +243,9 @@ The original post and your summary will still appear in the wiki's history.",
 
 	'wall-thread-history-thread-edited' => "$1 $2 edited $3's message $5",
 	'wall-thread-history-reply-edited' => "$1 $2 edited $3's message $5",
+	
+	'wall-thread-history-thread-closed' => "$2 closed this thread",
+	'wall-thread-history-thread-reopened' => "$2 reopened this thread",
 
 	'wall-history-action-restore-reply' => 'restore reply',
 	'wall-history-action-restore-thread' => 'restore thread',
@@ -334,6 +342,9 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
 	'wall-votes-number-tooltip' => 'See who gave Kudos to this message',
 	'wall-votes-vote-tooltip' => 'Give Kudos to this message',
 	'wall-votes-voted-tooltip' => 'You\'ve given this message Kudos!',
+
+	'wall-quote-author' => '$1 wrote:',
+	'wall-quote-reply-to' => 'reply to $1',
 );
 
 /** Message documentation (Message documentation)
@@ -357,13 +368,17 @@ $messages['qqq'] = array(
 	'wall-toolbar-history' => 'Link in the toolbar to see the history of the wall or thread',
 	'wall-message-notify' => 'In the remove/delete-message modal box, checkbox for telling the admin about the removal',
 	'wall-message-remove' => 'Menu item to remove a message',
+	'wall-message-close-thread' => 'Menu item to close a thread or message',
+	'wall-message-reopen-thread' => "Menu item to reopen a thread",
 	'wall-message-rev-delete' => 'Dropdown menu for staff, option to revision-delete the message',
+	'wall-message-quote-button' => 'Quote button on messages',
 	'wall-message-elseswall' => "Link to a user's wall. Parameters:
 * $1 is the username (GENDER is supported)",
 	'wall-message-no-permission' => 'Error message when a non-admin or staff tries to delete or revision-delete a message',
 	'wall-thread-removed' => 'In parentheses at the top of a removed thread page, next to the title',
 	'wall-thread-isnotifyeveryone' => 'In parentheses at the top of a highlighted thread page, next to the title',
 	'wall-thread-deleted' => 'In parentheses at the top of a deleted thread page, next to the title',
+	'wall-thread-closed' => 'Label stating the thread is closed.',
 	'wall-default-title' => "Default title if the user doesn't give a new thread a title",
 	'wall-no-title-warning' => 'Error message when a user tries to post a thread without a title',
 	'wall-desc' => 'Extension description which shows in special version',
@@ -394,6 +409,7 @@ $messages['qqq'] = array(
 	'wall-message-deleted-reply-because' => 'Summary at the top of a deleted reply page. Parameters:
 * $1 is the user who deleted the reply (GENDER is supported in this message).',
 	'wall-message-restore-reply' => 'Button to restore a reply on a removed reply page',
+	'wall-message-closed-by' => 'message stating thread has been closed.  $1 is username, $2 is userpage title',
 	'wall-delete-reason' => 'default user/admin action',
 	'wall-user-talk-page-archive-anchor' => "Link on a Message Wall page to the user's old talk page archive",
 	'wall-user-talk-archive-page-title' => "Title on a user's talk page archive",
@@ -639,6 +655,8 @@ $messages['qqq'] = array(
 * $2 is username
 * $3 is username
 * $5 is number of the reply.',
+	'wall-thread-history-thread-closed' => "thread history page item.  $2 is username who closed the thread",
+	'wall-thread-history-thread-reopened' => "thread history page item.  $2 is username who reopened the thread",
 	'wall-history-action-restore-reply' => 'Thread history page, link to restore reply.',
 	'wall-history-action-restore-thread' => 'Thread history page, link to restore thread.',
 	'wall-message-not-found-in-db' => 'Error message.',
@@ -688,6 +706,8 @@ $messages['qqq'] = array(
 	'wall-votes-number-tooltip' => 'tooltip tooltip under numbers of Kudos',
 	'wall-votes-vote-tooltip' => 'hover tooltip instructing users they can vote',
 	'wall-votes-voted-tooltip' => 'hover tooltip instructing users they have already voted',
+	'wall-quote-author' => 'part of quoted text, contain information about author of quoted text',
+	'wall-quote-reply-to' => 'link label to quoted text.  $1 is a number such as "reply to 123"',
 );
 
 /** Bulgarian (български)
