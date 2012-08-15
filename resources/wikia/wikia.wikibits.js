@@ -71,7 +71,7 @@ var importArticle = function() {
 		}
 
 		if ( !importMethod ) {
-			log( 'Invalid article type: ' + module.type || '(none provided)' );
+			log( 'Invalid article type: ' + ( module.type || '(none provided)' ) );
 			continue;
 		}
 
