@@ -224,8 +224,8 @@ class CategoryExhibitionSection {
 		$oTmpl->set_vars(array('fromAjax' => $this->isFromAjax));
 			if ( $this->isFromAjax ){
 				return array(
-				    'page'	=> $oTmpl->execute( 'page' ),
-				    'paginator'	=> $oTmpl->mVars['paginator']
+					'page'	=> $oTmpl->execute( 'page' ),
+					'paginator'	=> $oTmpl->mVars['paginator']
 				);
 			} else {
 				return $oTmpl->execute( $this->templateName );
@@ -285,8 +285,8 @@ class CategoryExhibitionSection {
 			$articleData = $this->getArticleData( $item['page_id'] );
 			if(!empty($articleData)) {
 				$aData[] = $articleData;
-			} 
-		};		
+			}
+		};
 		return $aData;
 	}
 
@@ -300,12 +300,12 @@ class CategoryExhibitionSection {
 
 	protected function getArticleData( $pageId ){
 		global $wgVideoHandlersVideosMigrated;
-		
+
 		$oTitle = Title::newFromID( $pageId );
 		if(!($oTitle instanceof Title)) {
 			return false;
 		}
-		
+
 		$oMemCache = F::App()->wg->memc;
 		$sKey = F::App()->wf->sharedMemcKey(
 			'category_exhibition_category_cache',
@@ -313,7 +313,7 @@ class CategoryExhibitionSection {
 			F::App()->wg->cityId,
 			$this->isVerify(),
 			$wgVideoHandlersVideosMigrated ? 1 : 0,
-			$this->getTouched($oTitle)	
+			$this->getTouched($oTitle)
 		);
 
 		$cachedResult = $oMemCache->get( $sKey );
@@ -329,7 +329,7 @@ class CategoryExhibitionSection {
 			$snippetService = new ArticleService ( $pageId );
 			$snippetText = $snippetService->getTextSnippet();
 		}
-		
+
 		$returnData = array(
 			'id'		=> $pageId,
 			'img'		=> $imageUrl,
@@ -340,7 +340,7 @@ class CategoryExhibitionSection {
 
 		// will be purged elsewhere after edit
 		$oMemCache->set( $sKey, $returnData, 60*60*24 );
-		
+
 		return $returnData ;
 	}
 
@@ -375,7 +375,7 @@ class CategoryExhibitionSection {
 		}
 		$this->sUrl = $url;
 		$this->paginatorPosition = $paginatorPosition;
-		return array( 'url' => $url, 'position' => $paginatorPosition );;
+		return array( 'url' => $url, 'position' => $paginatorPosition );
 	}
 
 	/**
@@ -396,35 +396,34 @@ class CategoryExhibitionSection {
 			$this->getTouched($this->categoryTitle)
 		);
 	}
-	
+
 	/**
-	 * this method help us to invalidate cache on any change on category, sub cat, page 
+	 * this method help us to invalidate cache on any change on category, sub cat, page
 	 */
-	
+
 	protected function getTouched($title) {
 		global $wgMemc;
 		return $wgMemc->get($this->getTouchedKey($title), 0);
 	}
-	
+
 	public function setTouched($title) {
 		global $wgMemc;
 		$wgMemc->get($this->getTouchedKey($title), time() . rand(0,9999), 60*60*24 );
-	} 
-	
-	protected function getTouchedKey($title) {
-        //fb#24914
-        if( $title instanceof Title ) {
-		    $key = wfMemcKey( 'category_touched', $title->getDBKey() );
-		    return $key;
-        } else {
-            Wikia::log(__METHOD__, '', '$title not an instance of Title');
-            Wikia::logBacktrace(__METHOD__);
-            return null;
-        }
 	}
-	
+
+	protected function getTouchedKey($title) {
+		//fb#24914
+		if( $title instanceof Title ) {
+			$key = wfMemcKey( 'category_touched', $title->getDBKey() );
+			return $key;
+		} else {
+			Wikia::log(__METHOD__, '', '$title not an instance of Title');
+			Wikia::logBacktrace(__METHOD__);
+			return null;
+		}
+	}
+
 	protected function saveToCache( $content ) {
-		
 		global $wgMemc;
 		$memcData = $this->getFromCache( );
 		if ( empty($memcData) ){
