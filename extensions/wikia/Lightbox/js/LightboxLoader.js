@@ -54,8 +54,7 @@ var LightboxLoader = {
 			ga_category: 'lightbox',
 			ga_action: action,
 			ga_label: label || '',
-			ga_value: value || 0,
-			liztest: true
+			ga_value: value || 0
 		}
 		
 		var trackParams = $.extend({}, data || {}, ga_params);
