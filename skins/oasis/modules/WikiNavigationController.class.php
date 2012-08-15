@@ -38,7 +38,7 @@ class WikiNavigationController extends WikiaController {
 		}
 
 		// render local navigation (more tabs)
-		$this->wikiMenuNodes =
+		$this->wikiMenuNodes = ( $this->wg->User->isAllowed( 'read' ) ? // Only show menu items if user is allowed to view wiki content (BugId:44632)
 			$this->parseMenu(
 				WikiNavigationService::WIKI_LOCAL_MESSAGE,
 				array(
@@ -46,7 +46,7 @@ class WikiNavigationController extends WikiaController {
 					$this->wg->maxLevelTwoNavElements,
 					$this->wg->maxLevelThreeNavElements
 				)
-			);
+			) : array() );
 
 		// report wiki nav parse errors (BugId:15240)
 		$this->parseErrors = $this->service->getErrors();
