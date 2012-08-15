@@ -615,7 +615,7 @@ class WallNotifications {
 			'entity_id' => $entityId
 		);
 
-		$this->getDB(true)->delete('wall_notification' , $value, __METHOD__ );
+		$this->getDB(true)->delete('wall_notification' , $where, __METHOD__ );
 	}
 
 	protected function addNotificationLinkInternal($userId, $wikiId, $uniqueId, $entityKey, $authorId, $isReply ) {
