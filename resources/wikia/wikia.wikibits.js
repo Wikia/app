@@ -36,7 +36,8 @@ function log( text ) {
  */
 var importArticle = function() {
 	var i, l, module, uri,
-		modules = slice.call(arguments);
+		modules = slice.call(arguments),
+		result = [];
 
 	for ( i = 0, l = modules.length; i < l; i++ ) {
 		module = $.extend( {}, defaults, modules[ i ] );
@@ -73,8 +74,10 @@ var importArticle = function() {
 		module.only = module.type + 's';
 		delete module.type;
 
-		return importMethod( baseUri + $.param( module ) );
+		result.push( importMethod( baseUri + $.param( module ) ) );
 	}
+
+	return result;
 };
 
 // Exports
