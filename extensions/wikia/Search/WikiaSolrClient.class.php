@@ -123,8 +123,7 @@ class WikiaSolrClient extends WikiaSearchClient {
 		$sanitizedQuery = $this->sanitizeQuery($query);
 
 		$onWikiId = ( !empty( $solrDebugWikiId ) ) ? $solrDebugWikiId : $cityId;
-
-		$queryNoQuotes = self::sanitizeQuery(preg_replace("/['\"]/", '', $query));
+		$queryNoQuotes = self::sanitizeQuery(preg_replace("/['\"]/", '', html_entity_decode($query, ENT_COMPAT, 'UTF-8')));
 
 		$boostQueries = array(	self::valueForField('html', $queryNoQuotes, array('boost'=>5, 'quote'=>'\"')),
 								self::valueForField('title', $queryNoQuotes, array('boost'=>10, 'quote'=>'\"')),
@@ -204,7 +203,7 @@ class WikiaSolrClient extends WikiaSearchClient {
 
 		$queryClauses[] = sprintf('_query_:"{!edismax %s}%s"',
 					  $paramString,
-					  str_replace("\\", "\\\\", $sanitizedQuery));
+					  $sanitizedQuery);
 
 		$sanitizedQuery = implode(' AND ', $queryClauses);
 
