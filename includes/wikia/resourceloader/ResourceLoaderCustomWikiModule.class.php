@@ -21,12 +21,17 @@ class ResourceLoaderCustomWikiModule extends ResourceLoaderGlobalWikiModule {
 				$pageInfo = array(
 					'type' => $type,
 				);
-				if ( !empty( $article['cityId'] ) ) {
-					$pageIndex = 'fakename'.($id++);
-					$pageInfo['city_id'] = intval($article['cityId']);
-					$pageInfo['title'] = $article['title'];
+				
+				if(isset($article['cityId']) && empty($article['cityId'])){
+					// Caller put in a wiki name, but it didn't resolve to a cityId.
+				} else {
+					if ( !empty( $article['cityId'] ) ) {
+						$pageIndex = 'fakename'.($id++);
+						$pageInfo['city_id'] = intval($article['cityId']);
+						$pageInfo['title'] = $article['title'];
+					}
+					$pages[$pageIndex] = $pageInfo;
 				}
-				$pages[$pageIndex] = $pageInfo;
 			}
 		}
 
