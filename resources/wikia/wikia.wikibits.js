@@ -32,10 +32,15 @@ function log( text ) {
  *     ]
  * });
  *
+ * @param {...Object} Any number of modules to load.
+ *
+ * @returns {Array} An array of DOM nodes used to inject the
+ *                  content into the page.
+ *
  * @author Kyle Florence <kflorence@wikia-inc.com>
  */
 var importArticle = function() {
-	var i, l, module, uri,
+	var i, l, module,
 		modules = slice.call(arguments),
 		result = [];
 
