@@ -387,7 +387,6 @@ class WallMessage {
 				return $this->getArticleId();
 			}
 		}
-		wfProfileOut(__METHOD__);
 	}
 
 	public function getMessagePageUrl($withoutAnchor = false) {
