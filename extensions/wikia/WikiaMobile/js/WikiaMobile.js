@@ -1,6 +1,33 @@
 //as fast as possible to avoid screen flickering
 //document.documentElement.className += ' js';
 
+//image lazyloading
+//needs to run ASAP (before onload actually happens)
+//so it's processed separately from the rest
+//to avoid delays
+(function(w){
+	var onload = function() {
+		require(['lazyload', 'sections'], function(lazyLoad, sections){
+			var processedSections = {};
+
+			lazyLoad(document.getElementsByClassName('noSect'));
+
+			sections.addEventListener('open', function () {
+				var self = this,
+					id = self.getAttribute('data-index');
+
+				if (id && !processedSections[id]) {
+					lazyLoad(self.getElementsByClassName('lazy'));
+
+					processedSections[id] = true;
+				}
+			}, true);
+		});
+	};
+
+	w.addEventListener ? w.addEventListener('load', onload) : w.attachEvent('onload', onload);
+})(window);
+
 //init
 $(function(){
 	require(['layout', 'querystring', 'topbar', 'toc', 'events', 'hideURLBar', 'tables', 'share', 'popover', 'cookies', 'ads'],
