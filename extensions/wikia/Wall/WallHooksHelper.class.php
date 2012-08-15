@@ -1337,6 +1337,7 @@ class WallHooksHelper {
 
 	protected function getMessagePrefix($namespace) {
 		$namespace = MWNamespace::getSubject($namespace);
+		$prefix = '';
 		if(!wfRunHooks('WallRecentchangesMessagePrefix', array($namespace, &$prefix))) {
 			return $prefix;
 		}
