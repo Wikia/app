@@ -156,6 +156,7 @@ EOT
 		}
 
 		$user = User::newFromName( (!empty($userTarget)) ? $userTarget : $target );
+		$tempUser = false;
 		if ( $user == null || $user->getId() == 0 ) {
 			// Check if a temporary user is at this name
 			if ( !empty( $wgEnableUserLoginExt ) ) {
