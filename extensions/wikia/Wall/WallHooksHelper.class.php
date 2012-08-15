@@ -1209,18 +1209,18 @@ class WallHooksHelper {
 			$wm = F::build('WallMessage', array($title));
 			$parentObj = $wm->getTopParentObj();
 			$reason = ''; //we don't want any comment
-			$log = new LogPage( $logtype );
+			$log = new LogPage( $logType );
 
 			if( empty($parentObj) ) {
 				//thread message
-				$logPage->addEntry( 'delete', $title, $reason, array() );
+				$log->addEntry( 'delete', $title, $reason, array() );
 			} else {
 				//reply
 				$result = $parentObj->load(true);
 
 				if( $result ) {
 					//if its parent still exists only this reply is being deleted, so log about it
-					$logPage->addEntry( 'delete', $title, $reason, array() );
+					$log->addEntry( 'delete', $title, $reason, array() );
 				}
 			}
 
