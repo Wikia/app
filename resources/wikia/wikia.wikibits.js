@@ -35,6 +35,7 @@ var importArticle = (function() {
 			mode: 'articles',
 			skin: mw.config.get( 'skin' )
 		},
+		loaded = {},
 		slice = [].slice;
 
 	function log( text ) {
@@ -42,7 +43,7 @@ var importArticle = (function() {
 	}
 
 	return function() {
-		var i, l, module,
+		var i, l, module, uri,
 			modules = slice.call(arguments),
 			result = [];
 
@@ -86,7 +87,16 @@ var importArticle = (function() {
 			module.only = module.type + 's';
 			delete module.type;
 
-			result.push( importMethod( baseUri + $.param( module ) ) );
+			// Make sure we don't load the same URI again
+			uri = baseUri + $.param( module )
+			if ( loaded[ uri ] ) {
+				continue;
+			}
+
+			loaded[ uri ] = true;
+
+			// Inject request into DOM
+			result.push( importMethod( uri ) );
 		}
 
 		return result;
