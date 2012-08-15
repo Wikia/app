@@ -236,6 +236,7 @@ $config['oasis_nojquery_shared_js'] = array(
 		'//resources/wikia/libraries/jquery/modal/jquery.wikia.modal.js',
 		'//extensions/wikia/AssetsManager/js/AssetsManager.js',
 		'//extensions/wikia/JSMessages/js/JSMessages.js',
+		'//extensions/wikia/CategorySelect/CategorySelect.view.js',
 
 		// oasis specific files
 		'//skins/oasis/js/hoverMenu.js',

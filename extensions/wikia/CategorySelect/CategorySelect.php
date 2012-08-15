@@ -499,7 +499,6 @@ function CategorySelectGetCategoryLinksBegin(&$categoryLinks) {
 function CategorySelectGetCategoryLinksEnd(&$categoryLinks) {
 	wfProfileIn(__METHOD__);
 	global $wgRequest, $wgExtensionsPath, $wgOut, $wgStylePath;
-	static $jsEmitted = false;
 
 	if (!wfRunHooks ('CategorySelect:beforeDisplayingView', array () )) {
 		wfProfileOut(__METHOD__);
@@ -511,31 +510,6 @@ function CategorySelectGetCategoryLinksEnd(&$categoryLinks) {
 	if (($action == 'view' || $action == 'purge') && strpos($categoryLinks, '<div id="csAddCategorySwitch"') === false) {
 		global $wgBlankImgUrl;
 		$categoryLinks .= ' <div id="csAddCategorySwitch" class="noprint" style="background:#DDD;position:relative;float:left;border: 1px solid #BBB;-moz-border-radius:3px;-webkit-border-radius:3px;padding:0 5px;line-height: 16px;"><img src="'.$wgBlankImgUrl.'" class="sprite-small add" /><a href="#" onfocus="this.blur();" style="color:#000;font-size:0.85em;text-decoration:none;display:inline-block;" rel="nofollow">' . wfMsg('categoryselect-addcategory-button') . '</a></div>';
-
-		// TODO: REMOVE THE loadYUI wrapper around the .getScript call after YUI is removed.
-		// TODO: move to external JS (BugId:24567)
-		if (!$jsEmitted) {
-			$wgOut->addInlineScript(<<<JS
-/* CategorySelect */
-wgAfterContentAndJS.push(function() {
-	$(".catlinks-allhidden").css("display", "block");
-	$('#csAddCategorySwitch').children('a').click(function(ev) {
-		ev.preventDefault();
-
-		$.getResources([
-			$.loadYUI,
-			wgExtensionsPath + '/wikia/CategorySelect/CategorySelect.js'
-		]).then(function() {
-			showCSpanel();
-		});
-
-		$('#catlinks').addClass('csLoading');
-	});
-});
-JS
-);
-		}
-		$jsEmitted = true;
 	}
 
 	wfProfileOut(__METHOD__);
