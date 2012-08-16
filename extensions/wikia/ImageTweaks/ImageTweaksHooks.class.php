@@ -29,7 +29,8 @@ class ImageTweaksHooks extends WikiaObject {
 					'class' => ( $linked ) ? 'link' : 'thumb',
 					'content' => $origHTML,
 					//force the caption wrapper to exist if it's a linked image without caption
-					'caption' => ( $linked && empty( $caption ) ) ? '' :  $caption
+					'caption' => ( $linked && empty( $caption ) ) ? '' :  $caption,
+					'showRibbon' => WikiaMobileMediaService::showRibbon( $thumb->getWidth(), $thumb->getHeight() )
 				),
 				true
 			)->toString();
@@ -88,7 +89,8 @@ class ImageTweaksHooks extends WikiaObject {
 					'class' => ( $linked ) ? 'link' : 'thumb',
 					'content' => $origHTML,
 					//force the caption wrapper to exist if it's a linked image without caption
-					'caption' => ( $linked && empty( $caption ) ) ? '' : $caption
+					'caption' => ( $linked && empty( $caption ) ) ? '' : $caption,
+					'showRibbon' => WikiaMobileMediaService::showRibbon( $thumb->getWidth(), $thumb->getHeight() )
 				),
 				true
 			)->toString();

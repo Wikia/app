@@ -10,6 +10,7 @@ class WikiaMobileMediaService extends WikiaService {
 	const THUMB_WIDTH = 480;
 	const SINGLE = 1;
 	const GROUP = 2;
+	const RIBBON_SIZE = 50;
 
 	static public function calculateMediaSize( $width, $height ) {
 		if ( $width > self::THUMB_WIDTH ) {
@@ -22,6 +23,14 @@ class WikiaMobileMediaService extends WikiaService {
 		}
 
 		return array( 'width' => $targetWidth, 'height' => $targetHeight );
+	}
+
+	static public function showRibbon( $width, $height ) {
+		if( $width < self::RIBBON_SIZE || $height < self::RIBBON_SIZE ) {
+			return false;
+		}
+
+		return true;
 	}
 
 	public function renderMedia() {
@@ -173,7 +182,7 @@ class WikiaMobileMediaService extends WikiaService {
 		$attribs['class'] = ( ( !empty( $attribs['class'] ) ) ? "{$attribs['class']} " : '' ) . self::CLASS_LAZYLOAD . ( ( empty( $linked ) ) ? ' ' . self::CLASS_MEDIA : '' );
 
 		if ( !empty( $params ) ) {
-			$attribs['data-params'] =  htmlentities( json_encode( $params ) , ENT_QUOTES );
+			$attribs['data-params'] = htmlentities( json_encode( $params ) , ENT_QUOTES );
 		}
 
 		$this->response->setVal( 'attributes', $attribs );
@@ -191,11 +200,13 @@ class WikiaMobileMediaService extends WikiaService {
 		$class = $this->request->getVal( 'class', null );
 		$content = $this->request->getVal( 'content', null );
 		$caption = $this->request->getVal( 'caption', null );
+		$showRibbon = $this->request->getVal( 'showRibbon', false );
 
 		if ( is_array( $class ) ) {
 			$class = implode( ' ', $class );
 		}
 
+		$this->response->setVal( 'showRibbon', $showRibbon );
 		$this->response->setVal( 'class', $class );
 		$this->response->setVal( 'content', $content );
 		$this->response->setVal( 'caption', $caption );
@@ -252,7 +263,8 @@ class WikiaMobileMediaService extends WikiaService {
 			array(
 				'class' => ( ( !empty( $link ) ) ? 'link' : 'thumb' ) . $class,
 				'content' => $content,
-				'caption' => $caption
+				'caption' => $caption,
+				'showRibbon' => self::showRibbon( $attribs['width'], $attribs['height'] )
 			)
 		)->toString();
 
