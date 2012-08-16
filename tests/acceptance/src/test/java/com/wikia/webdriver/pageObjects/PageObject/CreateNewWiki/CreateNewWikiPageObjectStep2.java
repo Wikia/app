@@ -9,6 +9,12 @@ import org.openqa.selenium.support.ui.Select;
 import com.wikia.webdriver.Logging.PageObjectLogging;
 import com.wikia.webdriver.pageObjects.PageObject.BasePageObject;
 
+/**
+ * 
+ * @author Karol
+ *
+ */
+
 public class CreateNewWikiPageObjectStep2 extends BasePageObject{
 	
 	@FindBy(css="textarea#Description")

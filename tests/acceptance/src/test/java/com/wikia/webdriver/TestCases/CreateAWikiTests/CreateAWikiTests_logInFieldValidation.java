@@ -14,6 +14,13 @@ import com.wikia.webdriver.pageObjects.PageObject.CreateNewWiki.NewWikiaHomePage
 
 public class CreateAWikiTests_logInFieldValidation extends TestTemplate{
 	
+	/*
+	 * Test Case 3.1.04 Create new wiki: log in field validation (Username with underscore)
+	 * Test Case 3.1.05 Create new wiki: log in: field validation (Username with backward slash \)
+	 * Test Case 3.1.07 Create new wiki: log in field validation (long Username)
+	 * https://internal.wikia-inc.com/wiki/Global_Log_in_and_Sign_up/Test_Cases:_CNW#Test_Case_3.1.01_Create_new_wiki_Have_an_account.3F_page:_Display  
+	 * */
+	
 	private String wikiName;
 	
 	@DataProvider
@@ -34,7 +41,7 @@ public class CreateAWikiTests_logInFieldValidation extends TestTemplate{
 		driver.get("http://community.wikia.com/wiki/Special:UserLogout?returnto=User "+userNameEnc);
 		HomePageObject home = new HomePageObject(driver);
 		home.openHomePage();
-		CreateNewWikiPageObjectStep1 createNewWiki1 = home.StartAWikia();
+		CreateNewWikiPageObjectStep1 createNewWiki1 = home.StartAWiki();
 		String timeStamp = createNewWiki1.getTimeStamp();
 		wikiName = "QaTest"+timeStamp;
 		createNewWiki1.typeInWikiName(wikiName);

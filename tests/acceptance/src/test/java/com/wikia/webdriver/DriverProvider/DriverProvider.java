@@ -22,7 +22,11 @@ public class DriverProvider {
 	private static WebDriver driver;
 	
 
-	
+	/**
+	 * creating webdriver instance based on given browser string
+	 * @return
+	 * @author Karol Kujawiak
+	 */
 	public static DriverProvider getInstance()
 	{
 		
@@ -48,19 +52,28 @@ public class DriverProvider {
 		return instance;
 	}
 	
+	/**
+	 * 
+	 * @return
+	 * @author Karol Kujawiak
+	 */
 	public static WebDriver getWebDriver()
 	{
 		return driver;
 	}
 	
-	
+	/**
+	 * @author Karol Kujawiak
+	 */
 	public void close()
 	{
 		driver.close();
 	}
 	
 
-
+	/**
+	 * @author Karol Kujawiak
+	 */
 	private static void setIEProperties()
 	{
 		File file = new File("."+File.separator+
@@ -72,6 +85,9 @@ public class DriverProvider {
 			System.setProperty("webdriver.ie.driver", file.getAbsolutePath());
 	}
 	
+	/**
+	 * @author Karol Kujawiak
+	 */
 	private static void setChromeProperties()
 	{
 		File file = new File("."+File.separator+
