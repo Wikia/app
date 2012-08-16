@@ -7,6 +7,7 @@ import org.openqa.selenium.support.PageFactory;
 
 import com.google.common.io.FileBackedOutputStream;
 import com.wikia.webdriver.Common.CommonFunctions;
+import com.wikia.webdriver.Logging.PageObjectLogging;
 import com.wikia.webdriver.pageObjects.PageObject.FilePageObject;
 import com.wikia.webdriver.pageObjects.PageObject.WikiBasePageObject;
 
@@ -33,18 +34,23 @@ public class SpecialUploadPageObject extends WikiBasePageObject {
 	 * 
 	 * 
 	 * @author Michal Nowierski
-	 * ** @param file Look at folder acceptancesrc/src/resources/ImagesForUploadTests
-	 *  */
+	 * ** @param file file to Be uploaded
+	 * <p> Look at folder acceptancesrc/src/test/resources/ImagesForUploadTests - this is where those files are stored
+	 *  */ 
+	
 	public void TypeInFileToUploadPath(String file){
-	sendKeys(BrowseForFileInput, System.getProperty("user.dir")+"\\src\\test\\resources\\ImagesForUploadTests\\"+file);
+		PageObjectLogging.log("TypeInFileToUploadPath", "Type file "+file+" to Special:Upload upload path", true, driver);
+		sendKeys(BrowseForFileInput, System.getProperty("user.dir")+"\\src\\test\\resources\\ImagesForUploadTests\\"+file);
 	
 	}
 
 	public void verifyFilePreviewAppeared(String string) {
+		PageObjectLogging.log("verifyFilePreviewAppeared", "Verify that file preview appeared", true, driver);
 		waitForElementByElement(FilePreview);
 	}
 
 	public void CheckIgnoreAnyWarnings() {
+		PageObjectLogging.log("CheckIgnoreAnyWarnings", "Check 'Ignore Any Warnings' option", true, driver);
 		waitForElementByElement(IgnoreAnyWarnings);
 //		CommonFunctions.scrollToElement(IgnoreAnyWarnings);
 		IgnoreAnyWarnings.click();
@@ -52,6 +58,7 @@ public class SpecialUploadPageObject extends WikiBasePageObject {
 	}
 
 	public FilePageObject ClickOnUploadFile(String file) {
+		PageObjectLogging.log("ClickOnUploadFile", "Click on Upload file button. The method returns FilePageObject", true, driver);
 		waitForElementByElement(UploadFileInput);
 		UploadFileInput.click();
 		return new FilePageObject(driver, file);

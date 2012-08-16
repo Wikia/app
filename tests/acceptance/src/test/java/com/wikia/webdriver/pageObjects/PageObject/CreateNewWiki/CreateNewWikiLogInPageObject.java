@@ -92,7 +92,7 @@ public class CreateNewWikiLogInPageObject extends BasePageObject{
 		}
 		else
 		{
-			PageObjectLogging.log("verifyUserNameIsBlank", "password isn't blank, value: "+value, true, driver);
+			PageObjectLogging.log("verifyUserNameIsBlank", "password isn't blank, value: "+value, false, driver);
 		}
 	}
 	

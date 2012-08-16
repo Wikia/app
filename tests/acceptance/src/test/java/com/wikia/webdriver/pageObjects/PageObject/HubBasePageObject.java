@@ -34,19 +34,19 @@ public class HubBasePageObject extends BasePageObject{
 	}
 
 	public void ClickOnNewsTab(int TabNumber) {
+		PageObjectLogging.log("ClickOnNewsTab", "Click on news tab number "+TabNumber+".", true, driver);
 		List<WebElement> newstabs = driver.findElements(By.cssSelector("section.wikiahubs-newstabs ul.tabbernav li a"));
 		waitForElementClickableByCss("section.wikiahubs-newstabs ul.tabbernav li a");
-		PageObjectLogging.log("Click on news tab numer "+TabNumber+".", "", true, driver);
 		newstabs.get(TabNumber - 1).click();
 
 	}
 	public void RelatedVideosScrollLeft() {
-		PageObjectLogging.log("RV module: scroll left", "", true, driver);
+		PageObjectLogging.log("RelatedVideosScrollLeft", "RV module: scroll left", true, driver);
 		RelatedVideosScrollLeft.click();
 		}
 	
 	public void RelatedVideosScrollRight() {
-		PageObjectLogging.log("RV module: scroll right", "", true, driver);
+		PageObjectLogging.log("RelatedVideosScrollRight", "RV module: scroll right", true, driver);
 		RelatedVideosScrollRight.click();
 	}
 	public HomePageObject BackToHomePage() {
@@ -85,7 +85,7 @@ public class HubBasePageObject extends BasePageObject{
 	}
 	
 	public void verifyWikiaMosaicSliderHasImages() {
-		PageObjectLogging.log("Veridy that WikiaMosaicSlider has images ", "", true, driver);
+		PageObjectLogging.log("verifyWikiaMosaicSliderHasImages", "Veridy that WikiaMosaicSlider has images", true, driver);
 		List<WebElement> WikiaMosaicSliderPanoramaImages = driver.findElements(By.cssSelector("div.wikia-mosaic-slider-panorama"));
 		List<WebElement> WikiaMosaicSliderThumbRegionImages = driver.findElements(By.cssSelector("ul.wikia-mosaic-thumb-region img"));
 		waitForElementByElement(WikiaMosaicSliderPanoramaImages.get(0));

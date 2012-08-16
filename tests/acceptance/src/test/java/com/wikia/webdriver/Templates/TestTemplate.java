@@ -66,6 +66,7 @@ public class TestTemplate {
 	public void stop()
 	{
 		PageObjectLogging.stopLoggingMethod();
+		driver.quit();
 	}
 	
 	

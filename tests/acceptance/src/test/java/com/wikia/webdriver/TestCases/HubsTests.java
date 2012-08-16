@@ -5,6 +5,7 @@ import org.testng.annotations.Test;
 
 
 import com.wikia.webdriver.Templates.TestTemplate;
+import com.wikia.webdriver.pageObjects.PageObject.BasePageObject;
 import com.wikia.webdriver.pageObjects.PageObject.HomePageObject;
 import com.wikia.webdriver.pageObjects.PageObject.HubBasePageObject;
 import com.wikia.webdriver.pageObjects.PageObject.Hubs.EntertainmentHubPageObject;
@@ -33,8 +34,8 @@ public class HubsTests extends TestTemplate{
 	@Test(dataProvider = "provideHub")
 	public void VideoGamesHubTest(HubBasePageObject Hub, String HubName, String HubURL)
 	{
-		
-		
+		startBrowser();
+				
 		home = new HomePageObject(driver);
 		home.openHomePage();
 						
@@ -50,6 +51,8 @@ public class HubsTests extends TestTemplate{
 				
 
 		home = Hub.BackToHomePage();
+		
+		stopBrowser();
 		
 	}
 }

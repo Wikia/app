@@ -89,10 +89,17 @@ public class BasePageObject{
 		String currentURL = driver.getCurrentUrl();
 		if (currentURL.equals(GivenURL))
 		{
+			PageObjectLogging.log("verifyURL", "Given URL matches actual URL", true, driver);
 			return true;
 		}
-		return false;
+		else {
+			PageObjectLogging.log("verifyURL", "Given URL: "+GivenURL+", does not match actual URL: "+currentURL, false, driver);
+			return false;
+		}
+		
 	}
+	
+	
 	
 	
 	/**
@@ -137,6 +144,15 @@ public class BasePageObject{
 	
 		return driver.findElements(By.cssSelector(Selector));
 	}
+	/**
+	 * Checks if the element is visible on browser
+	 *
+	 ** @param by The By class defined for the element
+	 */
+	public void waitForElementByBy(By by)
+	{
+		wait.until(ExpectedConditions.visibilityOfElementLocated(by));
+	}
 	
 	/**
 	 * Checks if the element is visible on browser
@@ -180,6 +196,10 @@ public class BasePageObject{
 		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(css)));
 	}
 	
+	public void waitForElementNotVisibleByBy(By by)
+	{
+		wait.until(ExpectedConditions.invisibilityOfElementLocated(by));
+	}
 	
 	public void waitForElementClickableByClassName(String className)
 	{
@@ -189,6 +209,11 @@ public class BasePageObject{
 	public void waitForElementClickableByCss(String css)
 	{
 		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(css)));
+	}
+	
+	public void waitForElementClickableByBy(By by)
+	{
+		wait.until(ExpectedConditions.elementToBeClickable(by));
 	}
 	
 	public void waitForElementById(String id)
