@@ -12,7 +12,7 @@
 
 class CodeLintReportText extends CodeLintReport {
 
-	const FORMAT = "%3d | %-100s %3s | %10s | %s @ r%d\n";
+	const FORMAT = "%3d | %-100s %3s | %20s | %s @ r%d\n";
 
 	/**
 	 * Return report for a given set of results
@@ -22,7 +22,7 @@ class CodeLintReportText extends CodeLintReport {
 	 */
 	public function render($results, $tool) {
 		$report = '';
-		$line = str_repeat('-', 130) . "\n";
+		$line = str_repeat('-', 160) . "\n";
 		$totalTime = 0;
 
 		foreach($results as $fileEntry) {
