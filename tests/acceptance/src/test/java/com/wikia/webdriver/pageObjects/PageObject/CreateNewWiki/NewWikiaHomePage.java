@@ -9,6 +9,12 @@ import com.wikia.webdriver.Logging.PageObjectLogging;
 import com.wikia.webdriver.pageObjects.PageObject.BasePageObject;
 import com.wikia.webdriver.pageObjects.PageObject.WikiBasePageObject;
 
+
+/**
+ * 
+ * @author Karol
+ *
+ */
 public class NewWikiaHomePage extends WikiBasePageObject{
 
 	@FindBy(css="button[class='close wikia-chiclet-button']")

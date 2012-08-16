@@ -12,6 +12,15 @@ import org.openqa.selenium.WebDriver;
 
 public class CommonUtils {
 	
+	
+	
+	/**
+	 * appends given text to specified file
+	 * 
+	 * @param filePath
+	 * @param textToWrite
+	 * @author Karol Kujawiak
+	 */
 	public static void appendTextToFile(String filePath, String textToWrite) {
 		try {
 			boolean append;
@@ -36,6 +45,14 @@ public class CommonUtils {
 			}
 		}
 	
+	
+	/**
+	 * captures screenshot with given path, returns output file path
+	 * @param outputFilePath
+	 * @param driver
+	 * @return captured screen path
+	 * @author Karol Kujawiak
+	 */
 	public static String captureScreenshot(String outputFilePath, WebDriver driver) {
 		if (!outputFilePath.endsWith(".png"))
 			outputFilePath = outputFilePath + ".png";
@@ -49,16 +66,27 @@ public class CommonUtils {
 		return outputFilePath;
 	}
 	
-	public static void deleteDirectory(String fileName)
+	
+	/**
+	 * delete directory by path
+	 * @param fileName
+	 * @author Karol Kujawiak
+	 */
+	public static void deleteDirectory(String dirName)
 	{
 		try {
-			FileUtils.deleteDirectory(new File(fileName));
+			FileUtils.deleteDirectory(new File(dirName));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
+	/**
+	 * creates directory based on given path
+	 * @param fileName
+	 * @author Karol Kujawiak
+	 */
 	public static void createDirectory(String fileName)
 	{
 		new File(fileName).mkdir();

@@ -12,6 +12,12 @@ import org.openqa.selenium.support.PageFactory;
 import com.wikia.webdriver.Logging.PageObjectLogging;
 import com.wikia.webdriver.pageObjects.PageObject.BasePageObject;
 
+
+/**
+ * 
+ * @author Karol
+ *
+ */
 public class CreateNewWikiPageObjectStep3 extends BasePageObject{
 
 	@FindBy(css="li[data-theme]")

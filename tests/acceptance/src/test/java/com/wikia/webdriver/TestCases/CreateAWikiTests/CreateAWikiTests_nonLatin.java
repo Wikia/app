@@ -35,7 +35,7 @@ public class CreateAWikiTests_nonLatin extends TestTemplate
 		driver.get("http://community.wikia.com/wiki/Special:UserLogout?returnto=User "+Properties.userNameNonLatinEncoded);
 		HomePageObject home = new HomePageObject(driver);
 		home.openHomePage();
-		CreateNewWikiPageObjectStep1 createNewWiki1 = home.StartAWikia();
+		CreateNewWikiPageObjectStep1 createNewWiki1 = home.StartAWiki();
 		String timeStamp = createNewWiki1.getTimeStamp();
 		wikiName = "QaTest"+timeStamp;
 		createNewWiki1.typeInWikiName(wikiName);
@@ -73,7 +73,7 @@ public class CreateAWikiTests_nonLatin extends TestTemplate
 		driver.get("http://community.wikia.com/wiki/Special:UserLogout?returnto=User "+Properties.userNameNonLatinEncoded);
 		HomePageObject home = new HomePageObject(driver);
 		home.openHomePage();
-		CreateNewWikiPageObjectStep1 createNewWiki1 = home.StartAWikia();
+		CreateNewWikiPageObjectStep1 createNewWiki1 = home.StartAWiki();
 		String timeStamp = createNewWiki1.getTimeStamp();
 		wikiName = "QaTest"+timeStamp;
 		createNewWiki1.typeInWikiName(wikiName);
@@ -111,7 +111,7 @@ public class CreateAWikiTests_nonLatin extends TestTemplate
 		driver.get("http://community.wikia.com/wiki/Special:UserLogout?returnto=User "+Properties.userNameNonLatinEncoded);
 		HomePageObject home = new HomePageObject(driver);
 		home.openHomePage();
-		CreateNewWikiPageObjectStep1 createNewWiki1 = home.StartAWikia();
+		CreateNewWikiPageObjectStep1 createNewWiki1 = home.StartAWiki();
 		String timeStamp = createNewWiki1.getTimeStamp();
 		wikiName = "QaTest"+timeStamp;
 		createNewWiki1.typeInWikiName(wikiName);
@@ -149,7 +149,7 @@ public class CreateAWikiTests_nonLatin extends TestTemplate
 		driver.get("http://community.wikia.com/wiki/Special:UserLogout?returnto=User "+Properties.userNameNonLatinEncoded);
 		HomePageObject home = new HomePageObject(driver);
 		home.openHomePage();
-		CreateNewWikiPageObjectStep1 createNewWiki1 = home.StartAWikia();
+		CreateNewWikiPageObjectStep1 createNewWiki1 = home.StartAWiki();
 		String timeStamp = createNewWiki1.getTimeStamp();
 		wikiName = "QaTest"+timeStamp;
 		createNewWiki1.typeInWikiName(wikiName);

@@ -1,10 +1,12 @@
 package com.wikia.webdriver.pageObjects.PageObject;
 
 import org.junit.internal.runners.statements.Fail;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import com.wikia.webdriver.pageObjects.PageObject.CreateNewWiki.CreateNewWikiPageObjectStep1;
 import com.wikia.webdriver.pageObjects.PageObject.Hubs.EntertainmentHubPageObject;
@@ -22,7 +24,12 @@ public class HomePageObject extends BasePageObject{
 	private WebElement OpenEntertainmentHub;
 	@FindBy(css="section.grid-2.lifestyle a img") 
 	private WebElement OpenLifestyleHub;
-
+	@FindBy(css="a.ajaxLogin")
+	private WebElement LoginOverlay;
+	@FindBy(css="div#UserLoginDropdown input[name='username']")
+	private WebElement UserNameField;
+	@FindBy(css="div#UserLoginDropdown a.forgot-password")
+	private WebElement ForgotYourPassword;
 	
 	public HomePageObject(WebDriver driver) 
 	{
@@ -36,7 +43,26 @@ public class HomePageObject extends BasePageObject{
 		driver.getCurrentUrl();
 	}
 	
-	public CreateNewWikiPageObjectStep1 StartAWikia()
+	public void triggerLoginOverlay()
+	{
+		LoginOverlay.click();
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("input[name='username']")));
+	}
+	
+	public void typeInUserName(String userName)
+	{	
+		waitForElementByElement(UserNameField);
+		UserNameField.sendKeys(userName);
+	}
+	
+	public void forgotYourPasswordClick()
+	{
+		waitForElementByElement(ForgotYourPassword);
+		ForgotYourPassword.click();
+		waitForElementByCss("div#UserLoginDropdown div.error-msg");
+	}
+	
+	public CreateNewWikiPageObjectStep1 StartAWiki()
 	{
 		startWikiButton.click();
 		verifyURL("http://www.wikia.com/Special:CreateNewWiki?uselang=en");

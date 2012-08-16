@@ -17,7 +17,11 @@ import com.wikia.webdriver.Common.Global;
 import com.wikia.webdriver.Common.XMLFunctions;
 import com.wikia.webdriver.Logging.PageObjectLogging;
 
-
+/**
+ * 
+ * @author Karol
+ *
+ */
 
 public class BasePageObject{
 

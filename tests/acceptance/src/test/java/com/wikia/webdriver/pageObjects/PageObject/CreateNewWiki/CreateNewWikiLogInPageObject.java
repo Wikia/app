@@ -2,18 +2,24 @@ package com.wikia.webdriver.pageObjects.PageObject.CreateNewWiki;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import com.wikia.webdriver.Common.CommonFunctions;
 import com.wikia.webdriver.Logging.PageObjectLogging;
 import com.wikia.webdriver.pageObjects.PageObject.BasePageObject;
 
+
+/**
+ * 
+ * @author Karol
+ *
+ */
 public class CreateNewWikiLogInPageObject extends BasePageObject{
 
 	public CreateNewWikiLogInPageObject(WebDriver driver) {
@@ -30,7 +36,7 @@ public class CreateNewWikiLogInPageObject extends BasePageObject{
 	WebElement submitButton;
 	@FindBy(css="div.UserLoginModal a.forgot-password")
 	WebElement forgotYourPasswordLink;
-	@FindBy(css="div.UserLoginModal a[data-id='facebook']")
+	@FindBy(css="div.UserLoginModal a[data-id='facebook'] img")
 	WebElement facebookButton;
 	@FindBy(css="li#UserAuth input[value='Sign up']")
 	WebElement signUpButton;
@@ -148,6 +154,28 @@ public class CreateNewWikiLogInPageObject extends BasePageObject{
 		CommonFunctions.assertString("Oops, wrong password. Make sure caps lock is off and try again.", usernameValidationText.getText());
 		userNameField.clear();
 		passwordField.clear();
+	}
+	
+	public void facebookConnectButtonClick()
+	{
+		userNameField.click();
+		CommonFunctions.assertString("username", CommonFunctions.currentlyFocusedGetAttributeValue("name")) ;
+		userNameField.sendKeys(Keys.TAB);
+		CommonFunctions.assertString("password", CommonFunctions.currentlyFocusedGetAttributeValue("name")) ;
+		CommonFunctions.getCurrentlyFocused().sendKeys(Keys.TAB);
+		CommonFunctions.assertString("forgot-password", CommonFunctions.currentlyFocusedGetAttributeValue("class")) ;
+		CommonFunctions.getCurrentlyFocused().sendKeys(Keys.TAB);
+		CommonFunctions.assertString("submit", CommonFunctions.currentlyFocusedGetAttributeValue("type")) ;
+		CommonFunctions.getCurrentlyFocused().sendKeys(Keys.TAB);
+		CommonFunctions.assertString("facebook", CommonFunctions.currentlyFocusedGetAttributeValue("data-id")) ;
+		CommonFunctions.getCurrentlyFocused().sendKeys(Keys.ENTER);
+//		
+//		Actions builder = new Actions(driver);
+//		builder.moveToElement(facebookButton).click().click().click().click().build().perform();
+//		Point point = facebookButton.getLocation();
+//		builder.moveByOffset(point.y, point.x).click().build().perform();
+		
+		
 	}
 	
 	
