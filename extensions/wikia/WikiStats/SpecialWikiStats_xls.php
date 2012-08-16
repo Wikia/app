@@ -629,7 +629,7 @@ class WikiStatsXLS {
 		global $wgLang, $wgDBname;
 
 		$canonicalNamespace = WikiFactory::getVarValueByName('wgExtraNamespacesLocal', $city_id);
-		if ( is_array($otherNspaces) ) {
+		if ( is_array($canonicalNamespace) ) {
 			$canonicalNamespace = array_merge($wgCanonicalNamespaceNames, $canonicalNamespace);
 		} else {
 			$canonicalNamespace = $wgCanonicalNamespaceNames;
