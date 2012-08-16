@@ -26,7 +26,6 @@ class SpecialCreateTopList extends SpecialPage {
 		//Check blocks
 		if( $wgUser->isBlocked() ) {
 			throw new UserBlockedError( $wgUser->getBlock() );
-			return;
 		}
 
 		if ( !$this->userCanExecute( $wgUser ) || !( F::app()->checkSkin( 'oasis' ) ) ) {
