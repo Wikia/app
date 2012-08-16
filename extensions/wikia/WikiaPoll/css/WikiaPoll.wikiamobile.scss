@@ -1,5 +1,10 @@
 @import 'extensions/wikia/WikiaMobile/css/variables.scss';
 @import 'extensions/wikia/WikiaMobile/css/mixins/linear-gradient.scss';
+@import 'extensions/wikia/WikiaMobile/css/mixins/box-shadow.scss';
+
+$poll-shadow-color: rgba(0,0,0,.4);
+$gradient-color-first: rgb(38,148,225);
+$gradient-color-second: rgb(17,105,178);
 
 .WikiaPoll {
 	border: 1px solid $shadow-color;
@@ -14,7 +19,7 @@
 
 	li {
 		clear: both;
-		height: 60px;
+		padding-bottom: 30px;
 	}
 }
 
@@ -27,9 +32,13 @@
 	width: 90%;
 	margin: 10px auto;
 	padding: 10px;
-	display: block;
 	color: black;
 	font-weight: 400;
+	display: none;
+
+	.js & {
+		display: block;
+	}
 }
 
 .votes {
@@ -53,7 +62,7 @@
 		top: 0;
 		width: 100%;
 		height: 100%;
-		box-shadow: -7px 7px 10px -6px inset;
+		box-shadow: inset -1px 1px 10px 0 $poll-shadow-color;
 	}
 }
 
@@ -92,10 +101,13 @@
 }
 
 .wkPollForm {
+	position: relative;
+
 	label {
+		position: relative;
 		display: block;
 		border-top: 1px solid;
-		padding: 12px 15px;
+		padding: 12px 30px 12px 15px;
 		-webkit-transition: background .2s;
 		-moz-transition: background .2s;
 		transition: background .2s;
@@ -107,7 +119,7 @@
 	}
 
 	input:checked + label {
-		@include linear-gradient(rgb(38,148,225), rgb(17,105,178));
+		@include linear-gradient($gradient-color-first, $gradient-color-second);
 		color: white;
 	}
 
@@ -121,17 +133,22 @@
 		display: block;
 		padding: 10px;
 		pointer-events: none;
+		@include linear-gradient(rgb(129,129,129), rgb(100,100,100));
 		color: black;
-		background: grey;
 		-webkit-transition: background .2s;
 		-moz-transition: background .2s;
 		transition: background .2s;
 	}
 
-	input:checked ~ .wkBtn {
+	.active {
 		pointer-events: auto;
-		@include linear-gradient(rgb(38,148,225), rgb(17,105,178));
+		@include linear-gradient($gradient-color-first, $gradient-color-second);
 		color: white;
+	}
+
+	.wkMblLdr {
+		position: absolute;
+		top: 0;
 	}
 }
 
@@ -140,6 +157,15 @@
 
 	input:not(:checked) + label{
 		color: grey;
+	}
+
+	input:checked + label::after {
+		content: '✓';
+		right: 5px;
+		position: absolute;
+		font-size: 1.5em;
+		top: 50%;
+		margin-top: -0.5em;
 	}
 }
 
