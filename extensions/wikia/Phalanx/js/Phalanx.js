@@ -6,7 +6,7 @@ Phalanx.blockId = 0;
 
 Phalanx.ajax = function(method, data, callback) {
 	$.postJSON(wgServer + wgScript + '?action=ajax&rs=PhalanxAjax&method=' + method, data, callback);
-}
+};
 
 Phalanx.getSingleBlockData = function( e ) {
 	if( e ) {
@@ -30,7 +30,7 @@ Phalanx.getSingleBlockData = function( e ) {
 		}
 	});
 	return false;
-}
+};
 
 Phalanx.removeSingleBlock = function( e ) {
 	if( e ) {
@@ -52,7 +52,7 @@ Phalanx.removeSingleBlock = function( e ) {
 		}
 	});
 	return false;
-}
+};
 
 Phalanx.loadBlockData = function( response ) {
 	var mesg = $( '#phalanx-feedback-msg' );
@@ -124,7 +124,7 @@ Phalanx.loadBlockData = function( response ) {
 		$( '#wpPhalanxLanguages' ).attr( 'value', response.data['lang'] );
 	}
 
-}
+};
 
 Phalanx.postForm = function( e ) {
 	if ( e ) {
@@ -145,7 +145,7 @@ Phalanx.postForm = function( e ) {
 			//document.location.reload(); // disable the submit reload by popular demand
 		});
 	}
-}
+};
 
 Phalanx.postFormCallback = function( response ) {
 	var mesg = $( '#phalanx-feedback-msg' );
@@ -156,7 +156,7 @@ Phalanx.postFormCallback = function( response ) {
 	} else {
 		mesg.removeClass( 'error' );
 	}
-}
+};
 
 Phalanx.postTestForm = function(e) {
 	e.preventDefault();
@@ -168,29 +168,29 @@ Phalanx.postTestForm = function(e) {
 		//TODO: add i18n
 		$.showModal('Phalanx', 'Provide some text!');
 	}
-}
+};
 
 Phalanx.postTestFormCallback = function(response) {
 	//TODO: add displaying results
 	$('#phalanx-block-test-result').html(response);
-}
+};
 
 Phalanx.selectTab = function(tab) {
 	$('#phalanx-nav-area').find('li').removeClass('selected');
 	var tabId = $('#' + tab).addClass('selected').attr('id');
 	$('#phalanx-content-area').children().hide();
 	$('#' + tabId + '-content').show();
-}
+};
 
 Phalanx.displayInfo = function(e) {
 	var helpId = '#phalanx-help-' + $(this).prev('input').attr('value');
 	$(helpId).show();
-}
+};
 
 Phalanx.hideInfo = function(e) {
 	var helpId = '#phalanx-help-' + $(this).prev('input').attr('value');
 	$(helpId).hide();
-}
+};
 
 $(function(){
 	$('#phalanx-block').bind('submit', Phalanx.postForm);
@@ -221,7 +221,7 @@ $(function(){
 			Phalanx.selectTab(id);
 		}
 	}
-	
+
 	$('#enterbulk').click( function() {
 		$().log('pushed the button');
 		$('div#singlemode').toggle('slow');
