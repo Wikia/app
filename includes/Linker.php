@@ -911,20 +911,22 @@ class Linker {
 
 			wfProfileOut( __METHOD__ );
 
-			# wikia change start
+			// Wikia change start
 			global $wgWikiaUseNoFollow;
 			if( !empty( $wgWikiaUseNoFollow ) ) {
-				$nofollow = 'rel  = "nofollow"';
-			}
-			else {
+				$nofollow = 'rel  = \'nofollow\'';
+			} else {
 				$nofollow = '';
 			}
-			# wikia change end
 
-			return '<a href="' . htmlspecialchars( $href ) . '" class="new" title="' .
-				$nofollow . # wikia change
-				htmlspecialchars( $title->getPrefixedText(), ENT_QUOTES ) . '">' .
-				"$prefix$html$inside</a>$trail";
+			return '<a href="'
+				. htmlspecialchars( $href )
+				. '" class="new" '
+				. ' title="' . htmlspecialchars( $title->getPrefixedText(), ENT_QUOTES ) . '"'
+				. $nofollow # wikia change
+				. '>'
+				. "$prefix$html$inside</a>$trail";
+			// Wikia change end
 		} else {
 			wfProfileOut( __METHOD__ );
 			return self::linkKnown( $title, "$prefix$html$inside", array(), $query ) . $trail;
