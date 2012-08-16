@@ -1861,13 +1861,3 @@ class AutoCreateWikiPage extends SpecialPage {
 		wfProfileOut( __METHOD__ );
 	}
 }
-
-class AutoCreateAnswersPage extends AutoCreateWikiPage {
-
-	public function  __construct() {
-		global $wgRequest;
-		$wgRequest->setVal( 'type', 'answers' );
-
-		parent::__construct( 'CreateAnswers' );
-	}
-}
