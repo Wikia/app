@@ -62,7 +62,8 @@ class ScribeEventProducerController extends WikiaController {
 			return true;
 		}
 
-		$oPage = WikiPage::factory( $oTitle );		
+		$oPage = WikiPage::factory( $oTitle );
+		$oUser = User::newFromId( $oRevision->getUser() );		
 
  		$oScribeProducer = F::build( 'ScribeEventProducer', array( 'key' => 'edit' ) );		
 		if ( is_object( $oScribeProducer ) ) {
