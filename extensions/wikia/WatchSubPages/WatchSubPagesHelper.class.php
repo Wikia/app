@@ -114,7 +114,7 @@ class WatchSubPagesHelper {
 		$parentOnlyWatchers = array_diff( $parentpageWatchers, $watchers );
 
 		$wl = WatchedItem::fromUserTitle( $editor, $newTitle );
-		$wl->updateWatch( $parentOnlyWatchers, $timestamp );
+		$wl->updateWatch( $parentOnlyWatchers );
 
 		return true;
 	}
