@@ -235,7 +235,10 @@ class PlacesController extends WikiaController {
 	 * Purge geolocationplaceholder cache
 	 */
 	public function purgeGeoLocationButton(){
-		$this->getGeolocationButtonParams( true );
+		if ($this->wg->Title instanceof Title) {
+			$this->getGeolocationButtonParams( true );
+		}
+
 		$this->skipRendering();
 	}
 
@@ -264,7 +267,7 @@ class PlacesController extends WikiaController {
 		);
 
 		$aMemcResult = $this->app->wg->memc->get( $sMemcKey );
-		$refreshCache = true;
+		$refreshCache = true; // FIXME
 		if ( $refreshCache || empty( $aMemcResult ) ){
 			$oArticle = F::build( 'Article', array( $this->app->wg->title ) );
 			$sRawText = $oArticle->getRawText();
