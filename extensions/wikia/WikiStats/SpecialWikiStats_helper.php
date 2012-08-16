@@ -181,8 +181,8 @@ class WikiStats {
 		if ( isset($this->oWikia) && !empty($this->oWikia) ) {
 			# created 
 			$this->oWikia->city_created_txt = "";
-			if ( isset($cityInfo->city_created) ) {
-				$city_created = preg_replace("/(\s|\:|\-)/", "", $cityInfo->city_created);
+			if ( isset($$this->oWikia->city_created) ) {
+				$city_created = preg_replace("/(\s|\:|\-)/", "", $this->oWikia->city_created);
 				$this->oWikia->city_created_txt = $wgLang->timeanddate( $city_created, true );
 			}
 			# category
@@ -498,7 +498,7 @@ class WikiStats {
 			) 
 		) {
 			wfProfileOut( __METHOD__ );
-			Wikia::log( _METHOD__, false, wfMsg('wikistats_invalid_date') );
+			Wikia::log( __METHOD__, false, wfMsg('wikistats_invalid_date') );
 			return false;
 		} 
 
@@ -740,7 +740,7 @@ class WikiStats {
 			) 
 		) {
 			wfProfileOut( __METHOD__ );
-			Wikia::log( _METHOD__, false, wfMsg('wikistats_invalid_date') );
+			Wikia::log( __METHOD__, false, wfMsg('wikistats_invalid_date') );
 			return false;
 		} 
 
@@ -1061,9 +1061,10 @@ class WikiStats {
 			$this->mStatsDate['toYear']++;
 		} 
 		$endDate = sprintf( "%04d-%02d-01", $this->mStatsDate['toYear'], $this->mStatsDate['toMonth'] );
+		$date = $startDate;
 
 		$dates = array();
-		while (strtotime($date) <= strtotime($end_date)) {
+		while (strtotime($date) <= strtotime($endDate)) {
 			$dates[] = $date;
 			$date = date ("Y-m-d", strtotime("+1 month", strtotime($date)));
 		}
