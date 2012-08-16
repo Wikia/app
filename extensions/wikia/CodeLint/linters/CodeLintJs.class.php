@@ -228,6 +228,7 @@ class CodeLintJs extends CodeLint {
 			case 'Use of deprecated Oasis module API (use $.nirvana)':
 			case 'Use of direct call to wikia.php (use $.nirvana)':
 			case 'debugger statement found':
+			case 'Use of YUI library (migrate to jQuery)':
 				$ret = true;
 				break;
 
