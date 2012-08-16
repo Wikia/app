@@ -1,5 +1,9 @@
 package com.wikia.webdriver.Common;
 
+import java.awt.AWTException;
+import java.awt.Robot;
+import java.io.File;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -21,7 +25,7 @@ public class CommonFunctions
 	static By submitButton = By.cssSelector("input[type='submit']");
 	
 			
-	private static WebDriver driver = DriverProvider.getWebDriver();
+	private static WebDriver driver   = DriverProvider.getWebDriver();;
 	private static WebDriverWait wait = new WebDriverWait(driver, 30);
 	
 	
@@ -191,5 +195,22 @@ public class CommonFunctions
 		int y = element.getLocation().getY();
 			((JavascriptExecutor)driver).executeScript("window.scrollBy(0,"+y+");");
 		}
+	/**
+	 * Move cursor to the given X and Y coordinates
+	 * 
+	 * @author Michal Nowierski
+	 * @param x 
+	 * @param y 
+	*/
+	public static void MoveCursorTo(int x, int y)
+	{
+		Robot robot = null;
+		try {
+			robot = new Robot();
+		} catch (AWTException e) {
+			e.printStackTrace();
+		}
+	   robot.mouseMove(x,y);
+	}
 
 }

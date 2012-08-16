@@ -8,6 +8,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
+import com.wikia.webdriver.Logging.PageObjectLogging;
 import com.wikia.webdriver.pageObjects.PageObject.CreateNewWiki.CreateNewWikiPageObjectStep1;
 import com.wikia.webdriver.pageObjects.PageObject.Hubs.EntertainmentHubPageObject;
 import com.wikia.webdriver.pageObjects.PageObject.Hubs.LifestyleHubPageObject;
@@ -70,6 +71,7 @@ public class HomePageObject extends BasePageObject{
 	}
 	
 	public HubBasePageObject OpenHub(String Hub){
+		PageObjectLogging.log("OpenHub", "Opening "+Hub, true, driver);
 		if (Hub.equals("VideoGamesHub")) {
 			OpenVideoGamesHub.click();
 			return new VideoGamesHubPageObject(driver);
@@ -83,7 +85,7 @@ public class HomePageObject extends BasePageObject{
 			return new LifestyleHubPageObject(driver);	
 		}
 		else {
-			fail("Incorrect parameter. Hub name: '"+Hub+"' is wrong and won't open any hub");
+			PageObjectLogging.log("OpenHub", "Incorrect parameter. Hub name: '"+Hub+"' is wrong and won't open any hub", false, driver);
 			return null;
 		}
 	}

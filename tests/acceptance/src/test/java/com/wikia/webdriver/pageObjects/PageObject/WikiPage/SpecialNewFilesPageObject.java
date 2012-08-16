@@ -18,6 +18,7 @@ import org.openqa.selenium.remote.RemoteWebElement;
 import org.testng.Assert;
 
 import com.wikia.webdriver.Common.CommonFunctions;
+import com.wikia.webdriver.Logging.PageObjectLogging;
 import com.wikia.webdriver.pageObjects.PageObject.WikiBasePageObject;
 
 public class SpecialNewFilesPageObject extends WikiBasePageObject{
@@ -35,6 +36,8 @@ public class SpecialNewFilesPageObject extends WikiBasePageObject{
 	private WebElement IgnoreAnyWarnings;
 	@FindBy(css="section[id='UploadPhotosWrapper']") 
 	private WebElement UploadPhotoDialog;
+	
+	private String WikiaPreviewImgCssSelector = "div.wikia-gallery span.wikia-gallery-item img";
 
 	public SpecialNewFilesPageObject(WebDriver driver, String wikiname) {
 		
@@ -46,22 +49,25 @@ public class SpecialNewFilesPageObject extends WikiBasePageObject{
 
 	
 	public void ClickOnAddaPhoto() {
-		
+		PageObjectLogging.log("ClickOnAddaPhoto", "Click on add a photo button", true, driver);
 		waitForElementByElement(AddAphotoButton);
 		AddAphotoButton.click();
 	}
 	
 	public void ClickOnUploadaPhoto() {
+		PageObjectLogging.log("ClickOnUploadaPhoto", "Click on upload a photo button", true, driver);
 		waitForElementByElement(UploadFileInput);
 		UploadFileInput.click();
 	}
 	
 	public void ClickOnMoreOrFewerOptions() {
+		PageObjectLogging.log("ClickOnMoreOrFewerOptions", "Click on More or Fewer options (depends on which of those two is currently visible)", true, driver);
 		waitForElementByElement(MoreOrFewerOptions);
 		MoreOrFewerOptions.click();
 		
 	}
 	public void CheckIgnoreAnyWarnings() {
+		PageObjectLogging.log("CheckIgnoreAnyWarnings", "Check 'Ignore Any Warnings' option", true, driver);
 		waitForElementByElement(IgnoreAnyWarnings);
 		IgnoreAnyWarnings.click();
 		
@@ -70,17 +76,17 @@ public class SpecialNewFilesPageObject extends WikiBasePageObject{
 	/**
 	 * Selects given image in upload browser. 
 	 * 
-	 * 
 	 * @author Michal Nowierski
-	 * ** @param file Look at folder acceptance/ImagesForUploadTests. 
-	 *  */
+	 * ** @param file file to Be uploaded
+	 * <p> Look at folder acceptancesrc/src/test/resources/ImagesForUploadTests - this is where those files are stored
+	 *  */ 
 	public void TypeInFileToUploadPath(String file){
 	sendKeys(BrowseForFileInput, System.getProperty("user.dir")+"\\ImagesForUploadTests\\"+file);
 	}
 
 	public void waitForFile(String FileName) {
-		
-		waitForValueToBePresentInElementsAttributeByCss("div.wikia-gallery span.wikia-gallery-item img", "src", FileName);
+		PageObjectLogging.log("waitForFile", "Verify if "+FileName+" has been succesfully uploaded", true, driver);
+		waitForValueToBePresentInElementsAttributeByCss(WikiaPreviewImgCssSelector, "src", FileName);
 
 		
 	}
