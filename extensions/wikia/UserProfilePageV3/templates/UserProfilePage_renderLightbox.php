@@ -38,7 +38,6 @@
 			<form id="usersAvatar" name="usersAvatar" method="post" enctype="multipart/form-data" action="/wikia.php?controller=UserProfilePage&method=onSubmitUsersAvatar&format=json&userId=<?= $userId; ?>">
 				<div class="column avatar">
 					<?= $avatar; ?>
-					<img src="<?= $wg->stylePath; ?>/common/skins/common/images/ajax.gif" class="avatar-loader" style="display: none;">
 				</div>
 				<div class="column avatar-options">
 					<? if($isUploadsPossible): ?>

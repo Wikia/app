@@ -102,10 +102,11 @@ var UserProfilePage = {
 		// Show correct tab content
 		var tabName = tab.data('tab');
 		$('.tab-content > li').each(function() {
-			if( $(this).attr('class') === tabName ) {
-				$(this).css('display', 'block');
+			var currentItem = $(this);
+			if( currentItem.attr('class') === tabName ) {
+				currentItem.show();
 			} else {
-				$(this).css('display', 'none');
+				currentItem.hide();
 			}
 		});
 	},
@@ -148,7 +149,7 @@ var UserProfilePage = {
 
 	sampleAvatarChecked: function(img) {
 		UserProfilePage.modal.find('img.avatar').hide();
-		UserProfilePage.modal.find('.avatar-loader').show();
+		UserProfilePage.modal.startThrobbing();
 
 		var image = $(img);
 		UserProfilePage.newAvatar = {file: image.attr('class'), source: 'sample', userId: UserProfilePage.userId };
@@ -156,7 +157,7 @@ var UserProfilePage = {
 
 		var avatarImg = UserProfilePage.modal.find('img.avatar');
 		avatarImg.attr('src', image.attr('src'));
-		UserProfilePage.modal.find('.avatar-loader').hide();
+		UserProfilePage.modal.stopThrobbing();
 		avatarImg.show();
 	},
 
@@ -166,33 +167,29 @@ var UserProfilePage = {
 
 		$.AIM.submit(form, {
 			onStart: function() {
-				UserProfilePage.modal.find('img.avatar').hide();
-				UserProfilePage.modal.find('.avatar-loader').show();
+				UserProfilePage.modal.startThrobbing();
 			},
 			onComplete: function(response) {
 				try {
 					response = JSON.parse(response);
 					var avatarImg = UserProfilePage.modal.find('img.avatar');
 					if( response.result.success === true ) {
-						UserProfilePage.modal.find('.avatar-loader').hide();
-						avatarImg.attr('src', response.result.avatar).show();
+						avatarImg.attr('src', response.result.avatar);
 						UserProfilePage.newAvatar = { file: response.result.avatar , source: 'uploaded', userId: UserProfilePage.userId };
 						UserProfilePage.wasDataChanged = true;
 						GlobalNotification.hide();
 					} else {
 						if( typeof(response.result.error) !== 'undefined' ) {
-							UserProfilePage.modal.find('.avatar-loader').hide();
-							avatarImg.show();
 							GlobalNotification.show(response.result.error, 'error');
 						}
 					}
+					UserProfilePage.modal.stopThrobbing();
 
 					if( typeof(form[0]) !== 'undefined' ) {
 						form[0].reset();
 					}
 				} catch(e) {
-					$().log(e);
-
+					UserProfilePage.modal.stopThrobbing();
 					form[0].reset();
 				}
 			}
@@ -237,7 +234,7 @@ var UserProfilePage = {
 		var formFields = modal.find('input[type="text"], select');
 		var change = function() {
 			UserProfilePage.wasDataChanged = true;
-		}
+		};
 
 		formFields.change(change);
 		formFields.keypress(change);
@@ -383,8 +380,9 @@ var UserProfilePage = {
 			day: null
 		};
 		for(var i in userData) {
-			if( typeof($(document.userData[i]).val()) !== 'undefined' ) {
-				userData[i] = $(document.userData[i]).val();
+			var userDataItem = $(document.userData[i]).val();
+			if( typeof(userDataItem) !== 'undefined' ) {
+				userData[i] = userDataItem;
 			}
 		}
 		if (document.userData['hideEditsWikis'].checked) {
@@ -442,13 +440,13 @@ var UserProfilePage = {
 
 	fbConnectAvatar: function() {
 		UserProfilePage.modal.find('img.avatar').hide();
-		UserProfilePage.modal.find('.avatar-loader').show();
+		UserProfilePage.modal.startThrobbing();
 		$.postJSON( this.ajaxEntryPoint, { method: 'onFacebookConnectAvatar', avatar: true, cb: wgStyleVersion }, function(data) {
 			if( data.result.success === true ) {
 				$('#facebookConnectAvatar').hide();
 				var avatarImg = UserProfilePage.modal.find('img.avatar');
-				UserProfilePage.modal.find('.avatar-loader').hide();
 				avatarImg.attr('src', data.result.avatar).show();
+				UserProfilePage.modal.stopThrobbing();
 				UserProfilePage.wasDataChanged = true;
 				UserProfilePage.newAvatar = {file: data.result.avatar, source: 'facebook', userId: UserProfilePage.userId };
 			}
