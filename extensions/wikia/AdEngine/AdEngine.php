@@ -369,7 +369,7 @@ class AdEngine {
 
 
 	/* Category name/id is needed multiple times for multiple providers. Be gentle on our dbs by adding a thin caching layer. */
-	public function getCachedCategory(){
+	public static function getCachedCategory() {
 		wfProfileIn(__METHOD__);
 
 		static $cat;
@@ -495,7 +495,6 @@ class AdEngine {
 
 		return $this->adProviders[$slotname];
 	}
-
 
 	public function getProviderFromId ($provider_id) {
 		switch (strtolower($this->providers[$provider_id])){
@@ -708,7 +707,6 @@ class AdEngine {
 		wfProfileOut(__METHOD__);
 		return $out;
 	}
-
 
 	public function getDelayedIframeLoadingCode(){
 		wfProfileIn(__METHOD__);
