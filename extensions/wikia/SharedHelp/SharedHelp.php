@@ -227,7 +227,12 @@ function SharedHelpHook(&$out, &$text) {
 			curl_close( $c );
 		}
 
-		if (empty($content)) return true;
+		if ( empty( $content ) ) {
+			return true;
+		} else {
+			// So we don't return 404s for local requests to these pages as they have content (BugID: 44611)
+			$out->setStatusCode( 200 );
+		}
 
 		//process article if not redirected before
 		if (empty($wasRedirected)) {
@@ -279,24 +284,24 @@ function SharedHelpHook(&$out, &$text) {
 				);
 			}
 
-            /* Tomasz Odrobny #36016 */
-            $sharedRedirectsArticlesKey = wfSharedMemcKey('sharedRedirectsArticles', $wgHelpWikiId, MWNamespace::getCanonicalName( $wgTitle->getNamespace() ), $wgTitle->getDBkey());
-            $articleLink = $wgMemc->get($sharedRedirectsArticlesKey, null);
+			/* Tomasz Odrobny #36016 */
+			$sharedRedirectsArticlesKey = wfSharedMemcKey('sharedRedirectsArticles', $wgHelpWikiId, MWNamespace::getCanonicalName( $wgTitle->getNamespace() ), $wgTitle->getDBkey());
+			$articleLink = $wgMemc->get($sharedRedirectsArticlesKey, null);
 
-            if ( $articleLink == null ){
-                $articleLink =  MWNamespace::getCanonicalName(NS_HELP_TALK) . ':' . $wgTitle->getDBkey();
-                $apiUrl = $sharedServer."/api.php?action=query&redirects&format=json&titles=".$articleLink;
-                $file = @file_get_contents($apiUrl, FALSE );
-                $json = new Services_JSON();
-                $APIOut = $json->decode($file);
-                if (isset($APIOut->query) && isset($APIOut->query->redirects) && (count($APIOut->query->redirects) > 0) ){
-                    $articleLink =  str_replace(" ", "_", $APIOut->query->redirects[0]->to);
-                }
-                $wgMemc->set($sharedRedirectsArticlesKey, $articleLink, 60*60*12);
-            }
+			if ( $articleLink == null ){
+				$articleLink =  MWNamespace::getCanonicalName(NS_HELP_TALK) . ':' . $wgTitle->getDBkey();
+				$apiUrl = $sharedServer."/api.php?action=query&redirects&format=json&titles=".$articleLink;
+				$file = @file_get_contents($apiUrl, FALSE );
+				$json = new Services_JSON();
+				$APIOut = $json->decode($file);
+				if (isset($APIOut->query) && isset($APIOut->query->redirects) && (count($APIOut->query->redirects) > 0) ){
+					$articleLink =  str_replace(" ", "_", $APIOut->query->redirects[0]->to);
+				}
+				$wgMemc->set($sharedRedirectsArticlesKey, $articleLink, 60*60*12);
+			}
 
 			// "this text is stored..."
-            $info = '<div class="sharedHelpInfo plainlinks" style="text-align: right; font-size: smaller;padding: 5px">' . wfMsgExt('shared_help_info', 'parseinline', $sharedServer . $sharedArticlePathClean . $articleLink ) . '</div>';
+			$info = '<div class="sharedHelpInfo plainlinks" style="text-align: right; font-size: smaller;padding: 5px">' . wfMsgExt('shared_help_info', 'parseinline', $sharedServer . $sharedArticlePathClean . $articleLink ) . '</div>';
 
 			if(strpos($text, '"noarticletext"') > 0) {
 				$text = '<div style="border: solid 1px; padding: 10px; margin: 5px" class="sharedHelp">' . $info . $content . '<div style="clear:both"></div></div>';
