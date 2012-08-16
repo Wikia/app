@@ -1832,7 +1832,15 @@ class Wikia {
      * @return bool true because it's a hook
      */
     static public function onResourceLoaderRegisterModules( ResourceLoader $resourceLoader ) {
-		global $wgScriptPath, $wgScriptExtension, $wgMedusaHostPrefix, $wgCdnRootUrl, $wgDevelEnvironment, $wgStagingEnvironment;
+		global $wgScriptPath, $wgScriptExtension, $wgMedusaHostPrefix, $wgCdnRootUrl, $wgDevelEnvironment,
+		       $wgStagingEnvironment, $wgCityId;
+
+		// staff and internal special case
+		if ( $wgCityId === null ) {
+			$sources = $resourceLoader->getSources();
+			$resourceLoader->addSource('common',$sources['local']);
+			return true;
+		}
 
 		// Determine the shared domain name
 		if ( empty($wgDevelEnvironment) && empty($wgStagingEnvironment) ) {
