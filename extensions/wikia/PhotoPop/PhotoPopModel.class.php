@@ -175,9 +175,8 @@ class PhotoPopModel extends WikiaModel{
 			}
 		}
 
-		return ( !empty( $game->category ) ) ? $game : null;
-		
 		$this->app->wf->profileOut( __METHOD__ );
+		return ( !empty( $game->category ) ) ? $game : null;
 	}
 
 	public function saveSettings( $wikiId, $categoryName, $iconUrl, $watermarkUrl ){
