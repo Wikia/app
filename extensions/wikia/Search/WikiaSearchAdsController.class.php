@@ -12,7 +12,7 @@ class WikiaSearchAdsController extends WikiaController {
 		$ip = $this->request->getVal('ip');
 		$header = $this->request->getVal('header');
 		
-		$url = $this->getUrl($query, $ip, $header);
+		$url = self::getUrl($query, $ip, $header);
 		$xml = $this->getSearchResults($url);
 		$ads = $this->parseXml($xml);
 
@@ -45,9 +45,7 @@ class WikiaSearchAdsController extends WikiaController {
 		return $results;
 	}
 	
-	public function getURL($query = null, $ip = null, $header = null) {
-		$ip = wfGetIp();
-
+	public static function getURL($query = null, $ip = null, $header = null) {
 		$url = '';
 
 		if (!empty($query) && !empty($ip) && !empty($header)) {

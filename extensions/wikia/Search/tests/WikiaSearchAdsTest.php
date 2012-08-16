@@ -115,15 +115,15 @@ class WikiaSearchAdsTest extends WikiaBaseTest {
 		//$response = $this->app->sendRequest('WikiaSearchAdsController', 'getUrl');
 
 		$responseData = WikiaSearchAdsController::getURL();
-		
+
 		$this->assertInternalType( 'string', $responseData );
 		$this->assertEmpty( $responseData );
-		
+
 		$responseData = WikiaSearchAdsController::getURL($this->url_params[0], $this->url_params[1], $this->url_params[2]);
 
 		$this->assertInternalType( 'string', $responseData );
 		$this->assertEquals( $this->url_result, $responseData );
-		
+
 		$responseData = WikiaSearchAdsController::getURL('foo', 'bar', 'baz');
 
 		$this->assertInternalType( 'string', $responseData );
