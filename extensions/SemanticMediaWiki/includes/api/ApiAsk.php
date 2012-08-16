@@ -1,7 +1,7 @@
 <?php
 
 /**
- * API module to query SMW by providing a query in the ask language. 
+ * API module to query SMW by providing a query in the ask language.
  *
  * @since 1.6.2
  *
@@ -13,7 +13,7 @@
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
 class ApiAsk extends ApiSMWQuery {
-	
+
 	public function execute() {
 		$params = $this->extractRequestParams();
 		$this->requireParameters( $params, array( 'query' ) );
@@ -21,14 +21,14 @@ class ApiAsk extends ApiSMWQuery {
 		$rawParams = explode( '|', $params['query'] );
 		$queryString = '';
 		$printouts = array();
-		
+
 		SMWQueryProcessor::processFunctionParams( $rawParams, $queryString, $this->parameters, $printouts );
-		
+
 		$queryResult = $this->getQueryResult( $this->getQuery(
 			$queryString,
 			$printouts
 		) );
-		
+
 		$this->addQueryResult( $queryResult );
 	}
 
@@ -39,13 +39,13 @@ class ApiAsk extends ApiSMWQuery {
 			),
 		);
 	}
-	
+
 	public function getParamDescription() {
 		return array(
 			'query' => 'The query string in ask-language'
 		);
 	}
-	
+
 	public function getDescription() {
 		return array(
 			'API module to query SMW by providing a query in the ask language.
@@ -53,14 +53,14 @@ class ApiAsk extends ApiSMWQuery {
 		);
 	}
 
-	protected function getExamples() {
+	public function getExamples() {
 		return array(
 			'api.php?action=ask&query=[[Modification%20date::%2B]]|%3FModification%20date|sort%3DModification%20date|order%3Ddesc',
 		);
-	}	
-	
+	}
+
 	public function getVersion() {
 		return __CLASS__ . ': $Id: ApiAsk.php 112438 2012-02-26 14:21:22Z nikerabbit $';
-	}		
-	
+	}
+
 }
