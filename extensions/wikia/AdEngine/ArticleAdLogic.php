@@ -23,7 +23,7 @@ class ArticleAdLogic {
 	const percentThreshold = 50; // what % of the content is a "wide" table that will cause a collision
 	const columnThreshold = 3; // what # of columns is a "wide" table that will cause a collision
 
-	public static function isStubArticle($html){
+	public static function isStubArticle($html) {
 		wfProfileIn(__METHOD__);
 		$length = strlen(strip_tags($html));
 		$out = $length < self::stubArticleThreshold;
@@ -32,7 +32,7 @@ class ArticleAdLogic {
 		return $out;
 	}
 
-	public static function isShortArticle($html){
+	public static function isShortArticle($html) {
 		wfProfileIn(__METHOD__);
 		$height = self::getArticleHeight($html);
 		$out = $height < self::shortArticleThreshold;
@@ -41,7 +41,7 @@ class ArticleAdLogic {
 		return $out;
 	}
 
-	public static function isLongArticle($html){
+	public static function isLongArticle($html) {
 		wfProfileIn(__METHOD__);
 		$height = self::getArticleHeight($html);
 		$out = $height > self::longArticleThreshold;
@@ -50,7 +50,7 @@ class ArticleAdLogic {
 		return $out;
 	}
 
-	public static function isSuperLongArticle($html){
+	public static function isSuperLongArticle($html) {
 		wfProfileIn(__METHOD__);
 		$height = self::getArticleHeight($html);
 		$out = $height > self::superLongArticleThreshold;
@@ -60,7 +60,7 @@ class ArticleAdLogic {
 	}
 
 	/* Note, this comment in the html is filled in by the hook AdEngineMagicWords */
-	public static function hasWikiaMagicWord ($html, $word){
+	public static function hasWikiaMagicWord ($html, $word) {
 		wfProfileIn(__METHOD__);
 		$out = strpos($html, "<!--{$word}-->") !== false;
 		self::adDebug( "Check for $word is ". var_export($out, true));
@@ -77,7 +77,7 @@ class ArticleAdLogic {
  	 * Check for a series of things known to cause collision. If found, increase score based
  	 * based on the likelihood of that item causing a collision, ala Mr. Bayes.
  	 */
-	public static function getCollisionRank($html){
+	public static function getCollisionRank($html) {
 		wfProfileIn(__METHOD__);
 
 		$score = 0;
@@ -127,7 +127,7 @@ class ArticleAdLogic {
 
 
 	/* Find out how naughty a particular tag is.*/
-	private function getTagCollisionScore($tag, $attr){
+	private static function getTagCollisionScore($tag, $attr) {
 		wfProfileIn(__METHOD__);
 
 		switch (strtolower($tag)){
@@ -266,7 +266,7 @@ class ArticleAdLogic {
 
 
 
-	public function getPercentage($in){
+	public static function getPercentage($in) {
 		$out = str_replace('%', '', $in);
 		if ($out != $in ){
 			return $out;
@@ -282,7 +282,7 @@ class ArticleAdLogic {
  	 *
  	 * For any of the values
  	 */
-	public function getPixels($in) {
+	public static function getPixels($in) {
 		$in = trim($in);
 		if (preg_match('/^[0-9]+$/', $in)) {
 			// Nothing but numbers.
@@ -338,7 +338,7 @@ class ArticleAdLogic {
 	}
 
 
-	public function isMainPage(){
+	public static function isMainPage() {
 		wfProfileIn(__METHOD__);
 		global $wgTitle;
 
@@ -355,7 +355,7 @@ class ArticleAdLogic {
 		return $isMainPage;
 	}
 
-	public function isArticlePage(){
+	public static function isArticlePage() {
 		wfProfileIn(__METHOD__);
 		global $wgOut;
 		if (is_object($wgOut) &&
@@ -371,7 +371,7 @@ class ArticleAdLogic {
 	}
 
 
-	public function isContentPage(){
+	public static function isContentPage() {
 		wfProfileIn(__METHOD__);
 		global $wgTitle, $wgContentNamespaces;
 
@@ -392,7 +392,7 @@ class ArticleAdLogic {
 		}
 	}
 
-	public function isDiffPage() {
+	public static function isDiffPage() {
 		global $wgRequest;
 		return $wgRequest->getVal( 'diff' ) != '';
 	}
@@ -402,7 +402,7 @@ class ArticleAdLogic {
 	 *
 	 * Catch all check for page actions
 	 */
-	public function isActionPage() {
+	public static function isActionPage() {
 		global $wgRequest;
 
 		$noAdActions = array(
@@ -427,12 +427,12 @@ class ArticleAdLogic {
 	 *
 	 * @return boolean
 	 */
-	public function isAnonPurgePrompt() {
+	public static function isAnonPurgePrompt() {
 		global $wgUser, $wgRequest;
 		return ($wgRequest->getVal('action') == 'purge' && $wgUser->isAnon() && !$wgRequest->wasPosted());
 	}
 
-	public function isMandatoryAd($slotname){
+	public static function isMandatoryAd($slotname) {
 		/* Ads that always display, even if user is logged in, etc.
   	 	* See http://staff.wikia-inc.com/wiki/DART_Implementation#When_to_show_ads */
 		$mandatoryAds = array(
@@ -442,16 +442,14 @@ class ArticleAdLogic {
 		);
 
 		// Certain ads always display
-		if (AdEngine::getInstance()->getAdType($slotname) == 'spotlight' ||
-			in_array($slotname, $mandatoryAds)){
-			return true;
-		} else {
-			return false;
-		}
+		return (
+			AdEngine::getInstance()->getAdType($slotname) == 'spotlight'
+			|| in_array($slotname, $mandatoryAds)
+		);
 	}
 
 
-	public function getCssAttributes($style){
+	public static function getCssAttributes($style){
 		wfProfileIn(__METHOD__);
 		$pattern = '/([a-zA-Z\-0-9]+)\:([^;]+);/';
 		$attr = array();
@@ -468,7 +466,7 @@ class ArticleAdLogic {
 
 	// Get attributes from html tag.
 	// Note, this requires well-formed html with quoted attributes. Second regexp for poor html?
-	public function getHtmlAttributes($tag){
+	public static function getHtmlAttributes($tag) {
 		wfProfileIn(__METHOD__);
 		$pattern = '/\s([a-zA-Z]+)\=[\x22\x27]([^\x22\x27]+)[\x22\x27]/';
 		$attr = array();
@@ -482,7 +480,7 @@ class ArticleAdLogic {
 	}
 
 
-	public function adDebug($msg){
+	public static function adDebug($msg){
 		if (empty($_GET['adDebug'])){
 			return;
 		} else {
@@ -494,7 +492,7 @@ class ArticleAdLogic {
 
 
 	/* Function to guess the height, in pixels of the supplied html */
-	public function getArticleHeight($html){
+	public static function getArticleHeight($html) {
 		wfProfileIn(__METHOD__);
 		
 		static $lastMd5, $lastResult;
@@ -540,7 +538,7 @@ class ArticleAdLogic {
 	 * Tested in Firefox 3, with negligible differences in other browsers.
 	 * See testfiles/testHeight.html if you want to do your own experimenting
 	 */
-	public function getCharacterFactor(){
+	public static function getCharacterFactor() {
 		$usableWidth = self::getArticleAreaWidth();
 		if ($usableWidth < 500) { return 1000/3151;
 		} else if ($usableWidth < 750) { return 1000/4760;
@@ -551,7 +549,7 @@ class ArticleAdLogic {
 		}
 	}
 
-	public function getArticleAreaWidth(){
+	public static function getArticleAreaWidth() {
 		/* Average window width is 1100 (confirmed with the collision tester),
 		 * note this is different from screen resolution reported by Google Analytics.
 		 */
@@ -570,7 +568,7 @@ class ArticleAdLogic {
 	}
 
 
-	public static function getHtmlHeight($html){
+	public static function getHtmlHeight($html) {
 		wfProfileIn(__METHOD__);
 		
 		$height = 0;
@@ -587,7 +585,7 @@ class ArticleAdLogic {
 
 
 
-	public static function getImageHeight($html){
+	public static function getImageHeight($html) {
 		wfProfileIn(__METHOD__);
 		
 		$imageArea = 0;
