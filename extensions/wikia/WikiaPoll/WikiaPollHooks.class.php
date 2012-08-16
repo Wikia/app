@@ -79,18 +79,27 @@ class WikiaPollHooks {
 				// add CSS & JS and Poll HTML together
 
 				if( $app->checkSkin( 'wikiamobile' ) ){
+					$cssLinks = AssetsManager::getInstance()->getURL( 'wikiapoll_wikiamobile_scss' );
+					$jsLinks = AssetsManager::getInstance()->getURL( 'wikiapoll_wikiamobile_js' );
 
-					$app->wg->Out->addHTML(
-						F::build('JSSnippets')->addToStack(
-							array(
-								'wikiapoll_wikiamobile_scss',
-								'wikiapoll_wikiamobile_js'
-							)
-						)
-					);
+					$css = '';
+					$js = '';
 
-					F::build( 'JSMessages' )->enqueuePackage( 'WikiaMobilePolls', JSMessages::INLINE );
+					if ( is_array( $cssLinks ) ) {
+						foreach ( $cssLinks as $s ) {
+							$css .= "<link rel=stylesheet href={$s} />";
+						}
+					}
 
+					if ( is_array( $jsLinks ) ) {
+						foreach ( $jsLinks as $s ) {
+							$js .= "<script src={$s}></script>";
+						}
+					}
+
+					$js .= F::build( 'JSMessages' )->printPackages( array( 'WikiaMobilePolls' ) );
+
+					$ret = str_replace("\n", ' ', "{$css}{$ret}{$js}");
 				} else {
 					$sassUrl = AssetsManager::getInstance()->getSassCommonURL('/extensions/wikia/WikiaPoll/css/WikiaPoll.scss');
 					$css = '<link rel="stylesheet" type="text/css" href="' . htmlspecialchars($sassUrl) . ' " />';
@@ -101,7 +110,7 @@ class WikiaPollHooks {
 						'WikiaPoll.init'
 					);
 
-					$ret =  str_replace("\n", ' ', "{$css} {$ret} {$jsFile}");
+					$ret = str_replace("\n", ' ', "{$css} {$ret} {$jsFile}");
 				}
 			}
 			return $ret;
