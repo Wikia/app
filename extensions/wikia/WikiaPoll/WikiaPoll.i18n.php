@@ -24,6 +24,7 @@ $messages['en'] = array(
 	'wikiamobile-wikiapoll-open-poll' => 'What do you think?',
 	'wikiamobile-wikiapoll-thanks-voting' => 'Thanks for voting!',
 	'wikiamobile-wikiapoll-poll' => 'Poll',
+	'wikiamobile-wikiapoll-user-voted' => 'You voted for $1'
 );
 
 /** Message documentation (Message documentation) */
@@ -50,6 +51,7 @@ $messages['qqq'] = array(
 	'wikiamobile-wikiapoll-open-poll' => 'Text on a button to open poll in a modal',
 	'wikiamobile-wikiapoll-thanks-voting' => 'Message displayed to a user after voting',
 	'wikiamobile-wikiapoll-poll' => 'Title of a modal',
+	'wikiamobile-wikiapoll-user-voted' => 'Message displayed to a user after voting instead of wikiamobile-wikiapoll-open-poll button'
 );
 
 /** Afrikaans (Afrikaans)

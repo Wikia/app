@@ -22,6 +22,9 @@ class WikiaPollController extends WikiaController {
 		$this->embedded = !empty($params['embedded']);
 
 		if( $this->app->checkSkin( 'wikiamobile' ) ) {
+			$answer = $this->wg->Request->getInt( 'answer' );
+			$this->response->setVal( 'showButton' , empty( $answer ) );
+			$this->response->setVal( 'answerNum' , $answer );
 			$this->overrideTemplate( 'WikiaMobileIndex' );
 		}
 	}
