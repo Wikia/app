@@ -16,6 +16,7 @@ class Track {
 		global $wgCityId, $wgContLanguageCode, $wgDBname, $wgDBcluster, $wgUser, $wgArticle, $wgTitle, $wgAdServerTest;
 
 		$sep = $for_html ? '&amp;' : '&';
+		$ip = F::app()->wg->Request->getIP();
 
 		$url = Track::BASE_URL.
 			($type ? "/$type" : '').
@@ -27,7 +28,7 @@ class Track {
 			'x='.$wgDBname.$sep.
 			'y='.$wgDBcluster.$sep.
 			'u='.$wgUser->getID().$sep.
-			'ip='.wfGetIp().$sep.
+			'ip='.$ip.$sep.
 			'a='.(is_object($wgArticle) ? $wgArticle->getID() : null).$sep.
 			's='.$wgUser->getSkin()->getSkinName().
 			($wgTitle && !is_object($wgArticle) ? $sep.'pg='.urlencode($wgTitle->getPrefixedDBkey()) : '').
