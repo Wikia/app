@@ -890,6 +890,25 @@ class UserProfilePageController extends WikiaController {
 	}
 
 	/**
+	 * Don't send 404 status for user pages with filled in masthead (bugid:44602)
+	 * @brief hook handler
+	 */
+	public function onBeforeDisplayNoArticleText($article) {
+		$this->setRequest( new WikiaRequest( $this->app->wg->Request->getValues() ) );
+		$user = $this->getUserFromTitle();
+		if ( $user instanceof User ) {
+			$userIdentityBox = F::build('UserIdentityBox', array( $this->app, $user, self::MAX_TOP_WIKIS ) );
+			$userData = $userIdentityBox->getFullData();
+			if ( is_array( $userData ) && array_key_exists( 'showZeroStates', $userData ) ) {
+				if ( !$userData['showZeroStates'] ) {
+					$this->app->wg->Out->setStatusCode (200 );
+				}
+			}
+		}
+		return true;
+	}
+
+	/**
 	 * @brief hook handler
 	 */
 	public function onSkinTemplateOutputPageBeforeExec($skin, $template) {

@@ -40,6 +40,7 @@ $app->registerHook('SkinSubPageSubtitleAfterTitle', 'UserProfilePageController',
 $app->registerHook('ArticleSaveComplete', 'UserProfilePageController', 'onArticleSaveComplete');
 $app->registerHook('GetRailModuleList', 'UserProfilePageRailHelper', 'onGetRailModuleList');
 $app->registerHook('WikiaMobileAssetsPackages', 'UserProfilePageController', 'onWikiaMobileAssetsPackages');
+$app->registerHook('BeforeDisplayNoArticleText', 'UserProfilePageController', 'onBeforeDisplayNoArticleText');
 
 $app->registerHook('ArticleSaveComplete', 'Masthead', 'userMastheadInvalidateCache');
 
