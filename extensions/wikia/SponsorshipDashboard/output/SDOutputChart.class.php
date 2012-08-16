@@ -104,7 +104,7 @@ class SponsorshipDashboardOutputChart extends SponsorshipDashboardOutputFormatte
 					'datasets'		=> $datasets,
 					'ticks'			=> $ticks,
 					'fullTicks'		=> $fullTicks,
-					'hiddenSeries'		=> Wikia::json_encode($this->hiddenSeries),
+					'hiddenSeries'		=> json_encode($this->hiddenSeries),
 					'number'		=> $this->chartNumericId,
 					'path'			=> !empty( $this->groupId )
 									? $wgTitle->getFullURL().'/'.$this->groupId.'/'.$this->report->id.'/csv'
