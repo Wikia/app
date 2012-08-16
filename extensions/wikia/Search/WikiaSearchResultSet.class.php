@@ -157,4 +157,8 @@ class WikiaSearchResultSet implements Iterator {
 
 	}
 
+	public function getPageCount() {
+		return  ceil($this->getResultsFound() / count($this->results));
+	}
+
 }
