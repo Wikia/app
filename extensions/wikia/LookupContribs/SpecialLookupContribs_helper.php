@@ -715,7 +715,7 @@ class LookupContribsCore {
 						unset($res);
 					}
 				}
-				if (!LOOKUPCONTRIBS_NO_CACHE) $wgMemc->set($key, $fetched_data, 60*15);
+				if (!LOOKUPCONTRIBS_NO_CACHE) $wgMemc->set($memkey, $fetched_data, 60*15);
 			}
 		} else {
 			/* get that data from memcache */
