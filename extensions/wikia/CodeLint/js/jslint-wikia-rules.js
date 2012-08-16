@@ -152,7 +152,7 @@ exports.rules  = [
 	// detect YAHOO (BugId;44748)
 	{
 		name: 'Found YUI',
-		regexp: /YAHOO./,
+		regexp: /YAHOO\./,
 		reason: 'Use of YUI library (migrate to jQuery)'
 	}
 ];
