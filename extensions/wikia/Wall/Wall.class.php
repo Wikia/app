@@ -98,7 +98,6 @@ class Wall {
 				wfProfileOut(__METHOD__);
 				return $this->threads;
 		}
-		wfProfileOut(__METHOD__);
 	}
 
 	public function sortLastReply( $a, $b ) {
