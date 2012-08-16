@@ -69,7 +69,6 @@ class WikiStatsXLS {
 	}
 
 	public function generateEmptyFile()	{
-		$dbname = sprintf(DEFAULT_WIKIA_XLS_FILENAME, intval($cityId));
 		$this->setXLSHeader();
 		#----
 		$this->setXLSFileBegin();
@@ -630,7 +629,7 @@ class WikiStatsXLS {
 		global $wgLang, $wgDBname;
 
 		$canonicalNamespace = WikiFactory::getVarValueByName('wgExtraNamespacesLocal', $city_id);
-		if ( is_array($aNamespaces) ) {
+		if ( is_array($otherNspaces) ) {
 			$canonicalNamespace = array_merge($wgCanonicalNamespaceNames, $canonicalNamespace);
 		} else {
 			$canonicalNamespace = $wgCanonicalNamespaceNames;
