@@ -695,7 +695,7 @@ class GlobalWatchlistBot {
 			if ( $wikiDB ) {
 				$db_wiki = wfGetDB( DB_SLAVE, 'stats', $wikiDB );
 				$like_title = $db_wiki->buildLike( $oResultRow->gwa_title, $db_wiki->anyString() );
-				if ( $db_wiki && $title ) {
+				if ( $db_wiki && $like_title ) {
 					$oRow = $db_wiki->selectRow(
 						array( "watchlist" ),
 						array( "count(*) as cnt" ),
