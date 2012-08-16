@@ -406,7 +406,7 @@ class WikiaHubStats {
 	 */
 	public function newFromHub( $hubName ) {
 		global $wgCityId;
-		return new WikiaHubStats($cityId, $hubName);
+		return new WikiaHubStats($wgCityId, $hubName);
 	}
 
 	/**
@@ -907,7 +907,7 @@ class WikiaGlobalStats {
 			$count = 0; if ( $oRow ) {
 				$count = $oRow->all_count;
 			}
-			$wgTTCache->set( $memkey , $data, 60*60*3 );
+			$wgTTCache->set( $memkey , $count, 60*60*3 );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -935,7 +935,7 @@ class WikiaGlobalStats {
 			$count = 0; if ( $oRow ) {
 				$count = $oRow->all_count;
 			}
-			$wgTTCache->set( $memkey , $data, 60*60*12 );
+			$wgTTCache->set( $memkey , $count, 60*60*12 );
 		}
 
 		wfProfileOut( __METHOD__ );
