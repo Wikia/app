@@ -72,4 +72,3 @@ class SiteWideMessagesMaintenance {
 		wfDebug(basename(__FILE__) . ' || ' . __METHOD__ . " || result=" . ($dbResult ? 'true':'false') . "\n");
 	}
 }
-?>
