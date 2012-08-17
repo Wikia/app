@@ -93,7 +93,7 @@ public class Properties {
 		Global.BROWSER = "FF";
 		Global.CONFIG_FILE = new File("c:"+File.separator+"config.xml"+File.separator+"config.xml");
 		Global.DOMAIN = "http://mediawiki119.wikia.com/";
-		Global.LIVE_DOMAIN = "http://wikia.com/";
+		Global.LIVE_DOMAIN = "http://www.wikia.com/";
 	}
 	
 	
