@@ -35,7 +35,7 @@ public class WikiBasePageObject extends BasePageObject {
 
 
 	public SpecialUploadPageObject OpenSpecialUpload() {
-		driver.get(Domain+"pecial:Upload");
+		driver.get(Domain+"Special:Upload");
 		return new SpecialUploadPageObject(driver, Domain);
 	}
 
