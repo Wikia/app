@@ -10,6 +10,7 @@ import org.openqa.selenium.support.PageFactory;
 
 import com.wikia.webdriver.Logging.PageObjectLogging;
 
+import com.wikia.webdriver.pageObjects.PageObject.CreateNewWiki.CreateNewWikiPageObjectStep1;
 import com.wikia.webdriver.pageObjects.PageObject.WikiPage.SpecialMultipleUploadPageObject;
 import com.wikia.webdriver.pageObjects.PageObject.WikiPage.SpecialNewFilesPageObject;
 import com.wikia.webdriver.pageObjects.PageObject.WikiPage.SpecialUploadPageObject;
@@ -47,6 +48,12 @@ public class WikiBasePageObject extends BasePageObject {
 	public WikiArticlePageObject OpenArticle(String wikiArticle) {
 		driver.get("http://"+wikiname+".wikia.com/wiki/"+wikiArticle);
 		return new WikiArticlePageObject(driver, wikiname, wikiArticle);
+		
+	}
+	
+	public CreateNewWikiPageObjectStep1 startAWiki()
+	{
+		return null;
 		
 	}
 	

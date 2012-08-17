@@ -27,8 +27,6 @@ public class BasePageObject{
 
 	public final WebDriver driver;
 	
-	public String liveDomain = "http://www.wikia.com/";
-	
 	public String wikiFactoryLiveDomain = "http://community.wikia.com/wiki/Special:WikiFactory";
 		
 	protected int timeOut = 30;
