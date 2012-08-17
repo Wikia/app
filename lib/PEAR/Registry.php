@@ -517,7 +517,7 @@ class PEAR_Registry extends PEAR
         } else {
             return $channel;
         }
-    }    
+    }
     // }}}
     // {{{ _getChannelFromAlias()
 
@@ -540,7 +540,7 @@ class PEAR_Registry extends PEAR
             return $channel;
         }
         return $channel->getAlias();
-    }    
+    }
     // }}}
     // {{{ _channelDirectoryName()
 
@@ -696,8 +696,6 @@ class PEAR_Registry extends PEAR
             return $this->raiseError('PEAR_Registry: could not open filemap "' . $this->filemap . '"', PEAR_REGISTRY_ERROR_FILE, null, null, $php_errormsg);
         }
         clearstatcache();
-        $rt = get_magic_quotes_runtime();
-        set_magic_quotes_runtime(0);
         $fsize = filesize($this->filemap);
         if (function_exists('file_get_contents')) {
             fclose($fp);
@@ -706,7 +704,6 @@ class PEAR_Registry extends PEAR
             $data = fread($fp, $fsize);
             fclose($fp);
         }
-        set_magic_quotes_runtime($rt);
         $tmp = unserialize($data);
         if (!$tmp && $fsize > 7) {
             return $this->raiseError('PEAR_Registry: invalid filemap data', PEAR_REGISTRY_ERROR_FORMAT, null, null, $data);
@@ -1132,7 +1129,7 @@ class PEAR_Registry extends PEAR
     }
 
     // }}}
-    
+
     function _listAllPackages()
     {
         $ret = array();
@@ -2098,7 +2095,7 @@ class PEAR_Registry extends PEAR
                     return PEAR::raiseError('parsePackageName(): "' . $param['version'] .
                         '" is neither a valid version nor a valid state in "' .
                         $saveparam . '"', 'version/state', null, null, $param);
-                }                    
+                }
             }
         }
         return $param;
@@ -2157,5 +2154,3 @@ class PEAR_Registry extends PEAR
         return $ret;
     }
 }
-
-?>
