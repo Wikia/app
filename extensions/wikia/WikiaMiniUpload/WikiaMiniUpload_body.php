@@ -91,8 +91,7 @@ class WikiaMiniUpload {
 	}
 
      function query() {
-        global $wgRequest, $IP, $wgCityId, $wgExternalDatawareDB;
-        global $wgHTTPProxy;
+        global $wgRequest, $wgHTTPProxy;
 
         $query = $wgRequest->getText('query');
         $page = $wgRequest->getVal('page', 1);
@@ -100,24 +99,25 @@ class WikiaMiniUpload {
 
         if($sourceId == 1) {
 
-            require_once($IP.'/lib/phpFlickr/phpFlickr.php');
             $flickrAPI = new phpFlickr('bac0bd138f5d0819982149f67c0ca734');
             $proxyArr = explode(':', $wgHTTPProxy);
             $flickrAPI->setProxy($proxyArr[0], $proxyArr[1]);
             $flickrResult = $flickrAPI->photos_search(array('tags' => $query, 'tag_mode' => 'all', 'page' => $page, 'per_page' => 8, 'license' => '4,5', 'sort' => 'interestingness-desc'));
-            $tmpl = new EasyTemplate(dirname(__FILE__).'/templates/');
+
+			$tmpl = new EasyTemplate(dirname(__FILE__).'/templates/');
             $tmpl->set_vars(array('results' => $flickrResult, 'query' => addslashes($query)));
 
             return $tmpl->execute('results_flickr');
 
         } else if($sourceId == 0) {
 
-		if ( (int)$page == 0 ) $page = 1;
+			if ( (int)$page == 0 ) $page = 1;
 
-		$results = MediaQueryService::searchInTitle($query, $page, 8);
-		$tmpl = new EasyTemplate(dirname(__FILE__).'/templates/');
-		$tmpl->set_vars(array('results' => $results, 'query' => addslashes($query)));
-		return $tmpl->execute('results_thiswiki');
+			$results = MediaQueryService::searchInTitle($query, $page, 8);
+
+			$tmpl = new EasyTemplate(dirname(__FILE__).'/templates/');
+			$tmpl->set_vars(array('results' => $results, 'query' => addslashes($query)));
+			return $tmpl->execute('results_thiswiki');
         }
     }
 
@@ -167,8 +167,7 @@ class WikiaMiniUpload {
 
 	// this function loads the image details page
 	function chooseImage() {
-		global $wgRequest, $wgUser, $IP;
-                global $wgHTTPProxy;
+		global $wgRequest, $wgUser, $wgHTTPProxy;
 		$itemId = $wgRequest->getVal('itemId');
 		$sourceId = $wgRequest->getInt('sourceId');
 
@@ -179,7 +178,6 @@ class WikiaMiniUpload {
 			$props['mwname'] = $itemId;
 			$props['default_caption'] = !empty($file) ? Wikia::getProps($file->getTitle()->getArticleID(), 'default_caption') : '';
 		} else if($sourceId == 1) {
-                    require_once($IP.'/lib/phpFlickr/phpFlickr.php');
                     $flickrAPI = new phpFlickr('bac0bd138f5d0819982149f67c0ca734');
                     $proxyArr = explode(':', $wgHTTPProxy);
                     $flickrAPI->setProxy($proxyArr[0], $proxyArr[1]);
@@ -367,8 +365,7 @@ class WikiaMiniUpload {
 
 	// this functions handle the third step of the WMU, image insertion
 	function insertImage() {
-		global $wgRequest, $wgUser, $wgContLang, $IP;
-                global $wgHTTPProxy;
+		global $wgRequest, $wgUser, $wgContLang, $wgHTTPProxy;
 		$type = $wgRequest->getVal('type');
 		$name = $wgRequest->getVal('name');
 		$mwname = $wgRequest->getVal('mwname');
@@ -426,7 +423,6 @@ class WikiaMiniUpload {
 						$file_mwname = new FakeLocalFile(Title::newFromText($mwname, 6), RepoGroup::singleton()->getLocalRepo());
 
 						if(!empty($extraId)) {
-							require_once($IP.'/lib/phpFlickr/phpFlickr.php');
 							$flickrAPI = new phpFlickr('bac0bd138f5d0819982149f67c0ca734');
 							$proxyArr = explode(':', $wgHTTPProxy);
                                                         $flickrAPI->setProxy($proxyArr[0], $proxyArr[1]);
@@ -502,7 +498,6 @@ class WikiaMiniUpload {
 					$file = new LocalFile($title, RepoGroup::singleton()->getLocalRepo());
 
 					if(!empty($extraId)) {
-						require_once($IP.'/lib/phpFlickr/phpFlickr.php');
 						$flickrAPI = new phpFlickr('bac0bd138f5d0819982149f67c0ca734');
 
                                                 $proxyArr = explode(':', $wgHTTPProxy);
