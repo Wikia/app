@@ -34,6 +34,8 @@ public class Properties {
 	public static String userNameStaff;
 	public static String passwordStaff;
 	
+	
+	
 	private static void setVariables()
 	{
 		userName = XMLFunctions.getXMLConfiguration(Global.CONFIG_FILE, "ci.user.regular.username");
@@ -81,12 +83,17 @@ public class Properties {
 	{
 		Global.BROWSER = System.getProperty("browser");
 		Global.CONFIG_FILE = new File(System.getProperty("config"));
+		Global.DOMAIN = System.getProperty("base-address");
+		Global.LIVE_DOMAIN = "http://wikia.com/";
+		
 	}
 	
 	private static void setPropertiesManually()
 	{
 		Global.BROWSER = "FF";
 		Global.CONFIG_FILE = new File("c:"+File.separator+"config.xml"+File.separator+"config.xml");
+		Global.DOMAIN = "http://mediawiki119.wikia.com/";
+		Global.LIVE_DOMAIN = "http://wikia.com/";
 	}
 	
 	
