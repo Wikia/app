@@ -2,14 +2,13 @@
 /**
  * An extension to Resource Loader that lets the community serve
  * up multiple Articles as resources in a single request.
- * 
+ *
  * This allows several different resources:
  * - JS or CSS articles on the same wiki
  * - JS or CSS articles on different wikia wikis.
  *
  * JS files from the current wiki can be mixed in the same request with JS files from other wikis
  * but JS and CSS files can not be mixed in the same request as each other.
- *
  *
  * All the magic begins when mode= parameter is given in the URL.
  * Article list should be present in articles= argument.
@@ -30,6 +29,7 @@
  *
  * @author Sean Colombo
  * @author Wladyslaw Bodzek
+ * @author Kyle Florence
  */
 
 $wgExtensionCredits['other'][] = array(
@@ -38,14 +38,13 @@ $wgExtensionCredits['other'][] = array(
 	'author' => array(
 		'Sean Colombo',
 		'Wladyslaw Bodzek',
+		'Kyle Florence'
 	),
 	'description' => 'Serves multiple MediaWiki articles combined together (and minified) as JS or CSS resources.',
 );
 
 $dir = dirname(__FILE__);
-
-// WikiaApp
-$app = WF::build('App');
+$app = F::app();
 
 // classes
 $app->registerClass('ArticlesAsResources', $dir . '/ArticlesAsResources.class.php');

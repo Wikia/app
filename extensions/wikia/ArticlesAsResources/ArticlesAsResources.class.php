@@ -12,7 +12,7 @@ class ArticlesAsResources {
 
 	// application
 	private $app;
-	
+
 	// Cached (hard-coded) IDs of popular wikis
 	// (may be we should not do it)
 	const COMMUNITY_WIKI_ID = 177;
@@ -21,7 +21,6 @@ class ArticlesAsResources {
 	// Domain suffix that is used as a fallback when finding wiki
 	// by its domain name
 	const WIKIA_DEFAULT_DOMAIN_SUFFIX = '.wikia.com';
-
 
 	function __construct() {
 		$this->app = WF::build('App');
@@ -100,7 +99,7 @@ class ArticlesAsResources {
 	}
 
 	/**
-	 * Parser user-supplied list of articles in various formats
+	 * Parse user-supplied list of articles in various formats
 	 * to the other one that is understood by ResourceLoaderCustomWikiModule.
 	 *
 	 * Supported forms are:
@@ -197,11 +196,10 @@ class ArticlesAsResources {
 	}
 
 	public function onTopScripts( &$vars ) {
-		global $wgArticlesAsResourcesExperimentalMagic;
-		if ( !empty( $wgArticlesAsResourcesExperimentalMagic ) ) {
-			$vars['wgArticlesAsResources'] = true;
+		global $wgArticlesAsResources;
+		if ( !empty( $wgArticlesAsResources ) ) {
+			$vars[ 'wgArticlesAsResources' ] = true;
 		}
 		return true;
 	}
-
 }
