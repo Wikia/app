@@ -63,7 +63,7 @@ $language_data = array (
             1 => 'color: #666666; font-style: italic;'
             ),
         'BRACKETS' => array(
-            0 => 'color: #66cc66;'
+            0 => 'color: #660000;'
             ),
         'STRINGS' => array(
             0 => 'color: #ff0000;'
@@ -76,8 +76,8 @@ $language_data = array (
             0 => 'color: #006600;',
             1 => 'color: #660000;',
             2 => 'color: #000066;',
-            3 => 'color: #660066;',
-            4 => 'color: #666600;'
+            3 => 'color: #666600;',
+            4 => 'color: #660066;'
             ),
         'ESCAPE_CHAR' => array(
             ),
@@ -102,8 +102,9 @@ $language_data = array (
     'PARSER_CONTROL' => array(
         'ENABLE_FLAGS' => array(
             'STRINGS' => GESHI_NEVER,
-            'NUMBERS' => GESHI_NEVER
-            ),
+            'NUMBERS' => GESHI_NEVER,
+            'BRACKETS' => GESHI_NEVER
+        ),
         'KEYWORDS' => array(
             'DISALLOW_BEFORE' => '',
             'DISALLOW_AFTER' => ''

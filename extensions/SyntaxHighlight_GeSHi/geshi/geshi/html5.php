@@ -7,7 +7,7 @@
  * Release Version: 1.0.8.10
  * Date Started: 2004/07/10
  *
- * HTML 4.01 strict language file for GeSHi.
+ * HTML 5 language file for GeSHi.
  *
  * CHANGES
  * -------
@@ -50,7 +50,7 @@
  ************************************************************************************/
 
 $language_data = array (
-    'LANG_NAME' => 'HTML',
+    'LANG_NAME' => 'HTML5',
     'COMMENT_SINGLE' => array(),
     'COMMENT_MULTI' => array(),
     'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
@@ -58,7 +58,7 @@ $language_data = array (
     'ESCAPE_CHAR' => '',
     'KEYWORDS' => array(
         2 => array(
-            'a', 'abbr', 'address', 'article', 'aside', 'audio'.
+            'a', 'abbr', 'address', 'article', 'area', 'aside', 'audio',
 
             'base', 'bdo', 'blockquote', 'body', 'br', 'button', 'b',
 

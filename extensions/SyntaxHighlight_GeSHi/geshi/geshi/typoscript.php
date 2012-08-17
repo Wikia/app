@@ -218,6 +218,15 @@ $language_data = array (
     'OBJECT_SPLITTERS' => array(
         ),
     'REGEXPS' => array(
+            // xhtml tag
+        2 => array(
+            GESHI_SEARCH => '(&lt;)([a-zA-Z\\/][^\\/\\|]*?)(&gt;)',
+            GESHI_REPLACE => '\\2',
+            GESHI_MODIFIERS => 's',
+            GESHI_BEFORE => '\\1',
+            GESHI_AFTER => '\\3'
+            ),
+
             // Constant
         0 => array(
             GESHI_SEARCH => '(\{)(\$[a-zA-Z_\.]+[a-zA-Z0-9_\.]*)(\})',
@@ -234,15 +243,6 @@ $language_data = array (
             GESHI_MODIFIERS => '',
             GESHI_BEFORE => '',
             GESHI_AFTER => '\\2'
-            ),
-
-            // xhtml tag
-        2 => array(
-            GESHI_SEARCH => '(&lt;[a-zA-Z\!\/].*?&gt;)',
-            GESHI_REPLACE => '\\1',
-            GESHI_MODIFIERS => 's',
-            GESHI_BEFORE => '',
-            GESHI_AFTER => ''
             ),
 
             // extension keys / tables: (static|user|ttx|tx|tt|fe)_something[_something]

@@ -53,7 +53,7 @@ $language_data = array (
             'casex', 'casez', 'cmos', 'deassign', 'default', 'defparam',
             'disable', 'edge', 'else', 'end', 'endcase', 'endfunction',
             'endmodule', 'endprimitive', 'endspecify', 'endtable', 'endtask',
-            'event', 'for', 'force', 'forever', 'function', 'highz0',
+            'event', 'fork', 'for', 'force', 'forever', 'function', 'highz0',
             'highz1', 'if', 'ifnone', 'initial', 'inout', 'input', 'integer',
             'join', 'large', 'macromodule', 'medium', 'module', 'nand',
             'negedge', 'nmos', 'nor', 'not', 'notif0', 'notif1', 'or',

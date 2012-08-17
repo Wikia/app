@@ -46,8 +46,8 @@ $language_data = array (
         3 => "/{-(?:(?R)|.)-}/s", //Nested Comments
         ),
     'CASE_KEYWORDS' => 0,
-    'QUOTEMARKS' => array('"'),
-    'ESCAPE_CHAR' => "\\",
+    'QUOTEMARKS' => array('"',"'"),
+    'ESCAPE_CHAR' => '\\',
     'KEYWORDS' => array(
         /* main haskell keywords */
         1 => array(
@@ -95,7 +95,7 @@ $language_data = array (
             'product', 'concat', 'concatMap', 'maximum',
             'minimum', 'scanl', 'scanl1', 'scanr', 'scanr1',
             'iterate', 'repeat', 'cycle', 'take', 'drop',
-            'splitAt', 'teakWhile', 'dropWhile', 'span',
+            'splitAt', 'takeWhile', 'dropWhile', 'span',
             'break', 'elem', 'notElem', 'lookup', 'zip',
             'zip3', 'zipWith', 'zipWith3', 'unzip', 'unzip3',
             'lines', 'words', 'unlines',

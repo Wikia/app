@@ -171,7 +171,7 @@ $language_data = array (
         /* Variable assignement */
         1 => array(
 /*            GESHI_SEARCH => '(SET[\s]+(?si:\/A[\s]+|\/P[\s]+|))([^=\s\n]+)([\s]*=)',*/
-            GESHI_SEARCH => '(SET[\s]+(?si:\/A[\s]+|\/P[\s]+|))([^=\n]+)([\s]*=)',
+            GESHI_SEARCH => '(SET\s+(?si:\\/A\s+|\\/P\s+)?)([^=\n]+)(\s*=)',
             GESHI_REPLACE => '\\2',
             GESHI_MODIFIERS => 'si',
             GESHI_BEFORE => '\\1',
@@ -180,7 +180,7 @@ $language_data = array (
         /* Arguments or variable evaluation */
         2 => array(
 /*            GESHI_SEARCH => '(%)([\d*]|[^%\s]*(?=%))((?<!%\d)%|)',*/
-            GESHI_SEARCH => '(%(?:%(?=[a-z0-9]))?)([\d*]|(?:~[adfnpstxz]*(?:$\w+:)?)?[a-z0-9](?!\w)|[^%\n]*(?=%))((?<!%\d)%|)',
+            GESHI_SEARCH => '(!(?:!(?=[a-z0-9]))?)([\d*]|(?:~[adfnpstxz]*(?:$\w+:)?)?[a-z0-9](?!\w)|[^!>\n]*(?=!))((?<!%\d)%|)(?!!>)',
             GESHI_REPLACE => '\\2',
             GESHI_MODIFIERS => 'si',
             GESHI_BEFORE => '\\1',
@@ -189,7 +189,7 @@ $language_data = array (
         /* Arguments or variable evaluation */
         3 => array(
 /*            GESHI_SEARCH => '(%)([\d*]|[^%\s]*(?=%))((?<!%\d)%|)',*/
-            GESHI_SEARCH => '(!(?:!(?=[a-z0-9]))?)([\d*]|(?:~[adfnpstxz]*(?:$\w+:)?)?[a-z0-9](?!\w)|[^!>\n]*(?=!))((?<!%\d)%|)(?!!>)',
+            GESHI_SEARCH => '(%(?:%(?=[a-z0-9]))?)([\d*]|(?:~[adfnpstxz]*(?:$\w+:)?)?[a-z0-9](?!\w)|[^%\n]*(?=%))((?<!%\d)%|)',
             GESHI_REPLACE => '\\2',
             GESHI_MODIFIERS => 'si',
             GESHI_BEFORE => '\\1',
