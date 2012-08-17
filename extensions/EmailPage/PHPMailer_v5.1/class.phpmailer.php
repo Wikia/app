@@ -1466,13 +1466,13 @@ class PHPMailer {
           return false;
         }
       }
-      if (PHP_VERSION < 6) {
+      if (version_compare(PHP_VERSION, '5.4', '<')) {
         $magic_quotes = get_magic_quotes_runtime();
         set_magic_quotes_runtime(0);
       }
       $file_buffer  = file_get_contents($path);
       $file_buffer  = $this->EncodeString($file_buffer, $encoding);
-      if (PHP_VERSION < 6) { set_magic_quotes_runtime($magic_quotes); }
+      if (version_compare(PHP_VERSION, '5.4', '<')) { set_magic_quotes_runtime($magic_quotes); }
       return $file_buffer;
     } catch (Exception $e) {
       $this->SetError($e->getMessage());
@@ -2317,4 +2317,3 @@ class phpmailerException extends Exception {
     return $errorMsg;
   }
 }
-?>
