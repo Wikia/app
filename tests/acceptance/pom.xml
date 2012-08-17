@@ -85,6 +85,7 @@
 				<configuration>							
 					<systemPropertyVariables>
 						<run_mvn>true</run_mvn>
+						<base-address>${base-address}</base-address>
 						<browser>${browser}</browser>
 						<config>c:/config.xml/config.xml</config>
 					</systemPropertyVariables>
