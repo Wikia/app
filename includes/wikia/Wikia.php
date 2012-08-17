@@ -315,81 +315,13 @@ class Wikia {
         switch ( $type ) {
             default:
                 return Xml::element( 'img', array(
-                    "src"    => "{$sImagesCommonPath}/skins/quartz/images/progress_bar.gif",
+                    "src"    => "{$sImagesCommonPath}/skins/quartz/images/progress_bar.gif", // FIXME: image does not exist
                     "width"  => 100,
                     "height" => 9,
                     "alt"    => ".....",
                     "border" => 0
                 ));
         }
-    }
-
-    /**
-     * json_encode
-     *
-     * json encoding function
-	 *
-	 * @deprecated
-     *
-     * @access public
-     * @static
-     * author eloy@wikia
-     *
-     * @param mixed $what: structure for encoding
-     *
-     * @return string: encoded string
-     */
-    static public function json_encode( $what ) {
-        wfProfileIn( __METHOD__ );
-		wfDeprecated(__METHOD__);
-
-        $response = "";
-
-        if( 1 ) { // currently json class included in MW looks better
-            $json = new Services_JSON();
-            $response = $json->encode( $what );
-        }
-        else {
-            $response = json_encode( $what );
-        }
-        wfProfileOut( __METHOD__ );
-
-        return $response;
-    }
-
-    /**
-     * json_decode
-     *
-     * json decoding function
-	 *
-	 * @deprecated
-     *
-     * @access public
-     * @static
-     * author eloy@wikia
-     *
-     * @param string $what: json string for decoding
-     * @param boolean $assoc: returned object will be converted into associative array
-     *
-     * @return mixed: decoded structure
-     */
-    static public function json_decode( $what, $assoc = false ) {
-		wfProfileIn( __METHOD__ );
-		wfDeprecated(__METHOD__);
-
-		$mResponse = null;
-
-		if (!function_exists('json_decode'))  { #--- php < 5.2
-		    $oJson = new Services_JSON();
-		    $mResponse = $oJson->decode( $what );
-		}
-		else {
-		    $mResponse = json_decode( $what, $assoc );
-		}
-
-		wfProfileOut( __METHOD__ );
-
-		return $mResponse;
     }
 
     /**
@@ -417,20 +349,6 @@ class Wikia {
 
 		return $path;
 	}
-
-	static public function binWkhtmltopdf() {
-		wfProfileIn( __METHOD__ );
-
-		$path = ( file_exists( "/opt/wikia/bin/wkhtmltopdf" )
-			&& is_executable( "/opt/wikia/bin/wkhtmltopdf" ) )
-			? "/opt/wikia/bin/wkhtmltopdf"
-			: "/usr/bin/wkhtmltopdf";
-
-		wfProfileOut( __METHOD__ );
-
-		return $path;
-	}
-
 
 	/**
 	 * simple logger which log message to STDERR if devel environment is set
@@ -945,14 +863,14 @@ class Wikia {
 		wfProfileOut(__METHOD__);
 		return $result;
 	}
-	
+
 	public static function isContentNamespace() {
 		wfProfileIn(__METHOD__);
 
 		global $wgTitle, $wgContentNamespaces;
 
 		static $result = null;
-		
+
 		if (is_null($result)) {
 			if (in_array($wgTitle->getNamespace(), $wgContentNamespaces)) {
 				$result = true;
@@ -1892,7 +1810,7 @@ class Wikia {
 	/**
 	 * Hook: reset recipient's name
 	 * @param array of MailAddress $to
-	 * @return bool true 
+	 * @return bool true
 	 */
 	static public function onUserMailerSend( &$to ) {
 		foreach ( $to as $u ) {
