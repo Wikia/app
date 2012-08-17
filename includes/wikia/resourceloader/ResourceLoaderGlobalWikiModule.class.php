@@ -50,7 +50,7 @@ abstract class ResourceLoaderGlobalWikiModule extends ResourceLoaderWikiModule {
 		return $title;
 	}
 
-	protected function getContent( $title, $options = array() ) {
+	protected function getContent( $title, $titleText, $options = array() ) {
 		if ( $title instanceof GlobalTitle ) {
 			// todo: think of pages like NS_MAIN:Test/code.js that are pulled
 			// from dev.wikia.com
@@ -59,10 +59,20 @@ abstract class ResourceLoaderGlobalWikiModule extends ResourceLoaderWikiModule {
 				return null;
 			}
 			*/
-			return $title->getContent();
+			$content = $title->getContent();
 		} else {
-			return parent::getContent($title,$options);
+			$content = parent::getContent($title,$options);
 		}
+
+        if ( ($content === false || $content === null)
+                && isset($options['missingCallback']) ) {
+            $missingCallback = $options['missingCallback'];
+            $missingArticle = $this->getResourceName($title,$titleText,$options);
+            $missingArticle = json_encode((string)$missingArticle);
+            $content = "window.{$missingCallback} && {$missingCallback}({$missingArticle});";
+        }
+
+        return $content;
 	}
 
 	protected function reallyGetTitleMtimes( ResourceLoaderContext $context ) {
@@ -133,6 +143,9 @@ abstract class ResourceLoaderGlobalWikiModule extends ResourceLoaderWikiModule {
 	}
 
 	protected function getResourceName( $title, $titleText, $options ) {
+        if ( isset( $options['originalName'] ) ) {
+            return $options['originalName'];
+        }
 		if ( $title instanceof GlobalTitle ) {
 			$name = "[city_id=".$title->getCityId()."]:";
 			$name .= isset($options['title']) ? $options['title'] : $titleText;

@@ -122,21 +122,25 @@ class ArticlesAsResources {
 			$matches = array();
 			if (preg_match("/^(?:l|local):(.*)\$/",$name,$matches)) {
 				$articles[] = array(
+                    'originalName' => $name,
 					'title' => $matches[1],
 				);
 			} elseif (preg_match("/^(?:w|remote|external):([^:]+):(.*)\$/",$name,$matches)) {
 				$articles[] = array(
-					'cityId' => $this->getCityIdByDbName( $matches[1] ),
+                    'originalName' => $name,
+                    'cityId' => $this->getCityIdByDbName( $matches[1] ),
 					'title' => $matches[2],
 				);
 			} elseif (preg_match("/^(?:u|url):([^:]+):(.*)\$/",$name,$matches)) {
 				$articles[] = array(
-					'cityId' => $this->getCityIdByUrl( $matches[1] ),
+                    'originalName' => $name,
+                    'cityId' => $this->getCityIdByUrl( $matches[1] ),
 					'title' => $matches[2],
 				);
 			} else {
 				$articles[] = array(
-					'title' => $name,
+                    'originalName' => $name,
+                    'title' => $name,
 				);
 			}
 		}
