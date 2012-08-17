@@ -17,6 +17,7 @@
 
 	.WikiaDropdown {
 		float: left;
+		margin-top: 1px;
 		margin-right: 10px;
 
 		.toolbar {
@@ -37,9 +38,5 @@
 				display: block;
 			}
 		}
-	}
-
-	input[type="submit"] {
-		margin-top: 5px;
 	}
 }

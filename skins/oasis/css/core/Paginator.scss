@@ -18,7 +18,7 @@
 		margin: 0px auto 10px auto;
 		padding: 0px;
 		list-style-type: none;
-		text-align: center;
+		text-align: left;
 
 		li {
 			margin: 0px;
@@ -40,7 +40,9 @@
 				color: $color-text;
 				font-size: 15px;
 				font-weight: bold;
+				position: relative;
 				text-decoration: none;
+				top: 1px;
 			}
 
 		}
@@ -83,6 +85,7 @@
 		}
 		.paginator-prev {
 			padding: 0 8px 0 6px;
+			margin-right: 10px;
 			&:after {
 				margin-top: -2px;
 				content: "";

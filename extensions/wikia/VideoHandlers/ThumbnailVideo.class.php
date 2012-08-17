@@ -144,13 +144,18 @@ class ThumbnailVideo extends ThumbnailImage {
 		}
 
 		$linkAttribs['class'] = empty($linkAttribs['class']) ? 'video' : $linkAttribs['class'].' video';
+		
+		$linkAttribs['itemprop'] = 'video';
+		$linkAttribs['itemscope'] = '';
+		$linkAttribs['itemtype'] = 'http://schema.org/VideoObject';
 
 		$attribs = array(
 			'alt' => $alt,
 			'src' => !empty($options['src']) ? $options['src'] : $this->url,
 			'width' => $this->width,
 			'height' => $this->height,
-			'data-video' => $this->file->getTitle()->getText()
+			'data-video' => $this->file->getTitle()->getText(),
+			'itemprop' => 'thumbnail',
 		);
 
 	        if ( !empty($options['usePreloading']) ) {
@@ -199,7 +204,7 @@ class ThumbnailVideo extends ThumbnailImage {
 		$html = ( $linkAttribs && isset($linkAttribs['href']) ) ? Xml::openElement( 'a', $linkAttribs ) : '';
 
 			if ( isset( $duration ) && !empty( $duration ) ) {
-				$html .= Xml::element( 'div', array('class'=>'timer'),  $duration );
+				$html .= Xml::element( 'div', array('class'=>'timer', 'itemprop'=>'duration'),  $duration );
 			}
 			$playButtonHeight =  ( isset( $options['constHeight'] ) && $this->height > $options['constHeight'] ) ? $options['constHeight'] : $this->height;
 			if ( !empty( $extraBorder ) ) $playButtonHeight += ( $extraBorder*2 );

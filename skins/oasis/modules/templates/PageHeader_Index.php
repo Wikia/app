@@ -12,7 +12,7 @@
 			}
 		?>
 		<div class="tally mainpage-tally">
-			<?= wfMsgExt('oasis-total-articles-mainpage', array( 'parsemag' ), $total, 'fixedwidth' ) ?>
+			<?= $tallyMsg ?>
 		</div>
 	<?php } ?>
 

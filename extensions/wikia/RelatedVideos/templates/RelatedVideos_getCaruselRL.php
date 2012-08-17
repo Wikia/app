@@ -9,7 +9,7 @@
 	<div class="errorWhileLoading messageHolder"><?=wfMsg('related-videos-error-while-loading');?></div>
 	<div class="RVHeader">
 		<div class="tally">
-			<em><?=count($videos);?></em>
+			<em><?=$totalVideos?></em>
 			<span class="fixedwidth"><?=wfMsg('related-videos-tally-article') ?></span>
 		</div>
 		<a class="button addVideo" href="#" rel="tooltip" title="<?=wfMsg('related-videos-tooltip-add');?>"><img src="<?=wfBlankImgUrl();?>" class="sprite addRelatedVideo" /> <?=wfMsg('related-videos-add-video')?></a>
@@ -65,7 +65,7 @@
 		</div>
 
 		<div class="seemore">
-			<a href="<?= Title::newFromText(WikiaVideoPage::getVideosCategory())->getFullUrl() ?>" class="more">
+			<a href="<?= $linkToSpecialVideos ?>" class="more">
 				<?=wfMsg('related-videos-see-more')?> &gt;
 			</a>
 		</div>

@@ -12,6 +12,11 @@
 		echo Wikia::specialPageLink('Upload', 'oasis-add-photo', (!$isUserLoggedIn ? 'wikia-button upphotoslogin' :'wikia-button upphotos'), 'blank.gif', 'oasis-add-photo-to-wiki', 'sprite photo');
 	}
 
+	// "Add a photo" button
+	if (!empty($isSpecialVideos) && !empty($wg->EnableUploads)) { ?>
+		<a class="button addVideo" href="#" rel="tooltip" title="<?=wfMsg('related-videos-tooltip-add');?>"><img src="<?=wfBlankImgUrl();?>" class="sprite addRelatedVideo" /> <?=wfMsg('related-videos-add-video')?></a>
+	<? }
+
 	// comments & like button
 	if( !$isWallEnabled ) {
 		echo wfRenderModule('CommentsLikes', 'Index', array('comments' => $comments, 'likes' => $likes));
@@ -21,10 +26,10 @@
 	}
 
 	// "pages on this wiki" counter
-	if (!is_null($total)) {
+	if (!is_null($tallyMsg)) {
 ?>
 	<div class="tally">
-		<?= wfMsgExt('oasis-total-articles-mainpage', array( 'parsemag' ), $total ) ?>
+		<?= $tallyMsg ?>
 	</div>
 <?php
 	}

@@ -12,7 +12,7 @@ class PageHeaderController extends WikiaController {
 	public function init() {
 		$this->isMainPage = null;
 		$this->likes = null;
-		$this->total = null;
+		$this->tallyMsg = null;
 
 		$this->action = null;
 		$this->actionImage = null;
@@ -258,7 +258,8 @@ class PageHeaderController extends WikiaController {
 			}
 
 			// number of pages on this wiki
-			$this->total = SiteStats::articles();
+			$this->tallyMsg = wfMsgExt('oasis-total-articles-mainpage', array( 'parsemag' ), SiteStats::articles() );
+
 		}
 
 		// remove namespaces prefix from title
@@ -353,9 +354,17 @@ class PageHeaderController extends WikiaController {
 					$this->displaytitle = true;
 					$this->pageType = "";
 				}
+
 				if($wgTitle->isSpecial('Newimages')) {
 					$this->isNewFiles = true;
 				}
+
+				if($wgTitle->isSpecial('Videos')) {
+					$this->isSpecialVideos = true;
+					$mediaService = F::build( 'MediaQueryService' );
+					$this->tallyMsg = wfMsgExt('specialvideos-wiki-videos-tally', array( 'parsemag' ), $mediaService->getTotalVideos() );
+				}
+
 				break;
 
 			case NS_CATEGORY:
