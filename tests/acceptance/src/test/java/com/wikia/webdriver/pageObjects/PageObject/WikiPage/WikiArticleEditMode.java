@@ -1,5 +1,7 @@
 package com.wikia.webdriver.pageObjects.PageObject.WikiPage;
 
+import java.util.List;
+
 import org.apache.commons.exec.Watchdog;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -8,6 +10,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
+import com.wikia.webdriver.Common.CommonExpectedConditions;
 import com.wikia.webdriver.Common.CommonFunctions;
 import com.wikia.webdriver.Logging.PageObjectLogging;
 
@@ -41,7 +44,18 @@ public class WikiArticleEditMode extends WikiArticlePageObject {
 	private By CancelImageRemovalButton = By.cssSelector("div.RTEConfirmButtons a[id='RTEConfirmCancel'] span");
 	private By RemovePhotoDialog = By.cssSelector("section.modalWrapper.RTEModal");
 	private By OKbutton = By.cssSelector("a[id='RTEConfirmOk'] span");
-	private By ImageOnPage = By.cssSelector("div.WikiaArticle figure a img");
+	private By ImageOnArticleEditMode = By.cssSelector("div.WikiaArticle figure a img");
+	private By ObjectModal = By.cssSelector("section[id='WikiaPhotoGalleryEditor']");
+	private By GalleryPhotosList = By.cssSelector("ul.WikiaPhotoGalleryResults li input");
+	private By GalleryDialogSelectButton = By.cssSelector("a[id='WikiaPhotoGallerySearchResultsSelect']");
+	private By GalleryDialogFinishButton = By.cssSelector("a[id='WikiaPhotoGalleryEditorSave']");
+//	private By IframeVisualEditor = By.cssSelector("div.cke_wrapper.cke_ltr div.cke_contents iframe");
+	private By VideoModalInput = By.cssSelector("input[id='VideoEmbedUrl']");
+	private By VideoNextButton = By.cssSelector("a[id='VideoEmbedUrlSubmit']");
+	private By VideoAddVideoButton = By.cssSelector("tr.VideoEmbedNoBorder input.wikia-button");
+	private By VideoReturnToEditing = By.cssSelector("div[id='VideoEmbed'] input[value='Return to editing']");
+	private By VideoInEditMode = By.cssSelector("img.video");
+	private By VideoOnPreview = By.cssSelector("div.ArticlePreview span.Wikia-video-play-button");
 	
 //	private String CSS_RemovePhotoDialog = "section.modalWrapper.RTEModal";
 //	private String CSS_ImageOnPage = "div.WikiaArticle figure a img";
@@ -330,16 +344,186 @@ public class WikiArticleEditMode extends WikiArticlePageObject {
 	}
 
 	/**
-	 * Verify that the image does not appear on the page
+	 * Verify that the image does not appear on the Article Edit mode
 	 *  
 	 * @author Michal Nowierski
 	 * 	 */
-	public void VerifyTheImageNotOnThePage() {
-		PageObjectLogging.log("VerifyTheImageNotOnThePage", "Verify that the image does not appear on the page", true, driver);
-		wait.until(ExpectedConditions.invisibilityOfElementLocated(ImageOnPage));
+	public void VerifyTheImageNotOnTheArticleEditMode() {
+		PageObjectLogging.log("VerifyTheImageNotOnTheArticleEditMode", "Verify that the image does not appear on the Article edit mode", true, driver);
+		wait.until(ExpectedConditions.invisibilityOfElementLocated(ImageOnArticleEditMode));
 //		waitForElementNotVisibleByBy(ImageOnPage);
 				
 	}
+
+	/**
+	 * Wait for Object and click on 'add this photo' under the first seen
+	 *  
+	 * @author Michal Nowierski
+	 * @param Object Object = {Gallery, GallerySlideshow, GallerySlider}
+	 * 	 */
+	public void WaitForObjectModalAndClickAddAphoto(String Object) {
+		PageObjectLogging.log("WaitForObjectModalAndClickAddAphoto", "Wait for "
+						+ Object
+						+ " modal and click on 'add a photo'", true, driver);
+		waitForElementByBy(ObjectModal);
+		waitForElementClickableByBy(By.cssSelector("button[id='WikiaPhoto"+Object+"AddImage']"));
+		driver.findElement(
+				By.cssSelector("button[id='WikiaPhoto"+Object+"AddImage']"))
+				.click();
+	}
+
+	/**
+	 * Wait for Object and click on 'add this photo' under the first seen
+	 *  
+	 * @author Michal Nowierski
+	 * @param n n = parameter determining how many inputs the method should check
+	 * 	 */
+	public void CheckGalleryImageInputs(int n) {
+		PageObjectLogging.log("CheckGalleryImageInputs", "Check first "+n+" image inputs", true, driver);
+		List<WebElement> List = driver.findElements(GalleryPhotosList);
+		for (int i = 0; i < n; i++) {
+			List.get(i).click();
+		}
+	}
+
+	/**
+	 * Gallery dialog: Left click 'Select' button
+	 *  
+	 * @author Michal Nowierski
+	 * 	 */
+	public void GalleryClickOnSelectButton() {
+		PageObjectLogging.log("GalleryClickOnSelectButton", "Gallery dialog: Left click 'Select' button", true, driver);
+		waitForElementByBy(GalleryDialogSelectButton);
+		waitForElementClickableByBy(GalleryDialogSelectButton);
+		driver.findElement(GalleryDialogSelectButton).click();
+		
+	}
+
+	
+	/**
+	 * Gallery dialog: Left click 'Finish' button 
+	 *  
+	 * @author Michal Nowierski
+	 * 	 */
+	public void GalleryClickOnFinishButton() {
+		PageObjectLogging.log("GalleryClickOnFinishButton", "Gallery dialog: Left click 'Finish' button ", true, driver);
+		waitForElementByBy(GalleryDialogFinishButton);
+		waitForElementClickableByBy(GalleryDialogFinishButton);
+		driver.findElement(GalleryDialogFinishButton).click();
+		
+	}
+
+	/**
+	 * Verify Gallery object appears in edit mode
+	 *  
+	 * @author Michal Nowierski
+	 * @param Object Object = {gallery, slideshow, gallery-slider}
+	 * 	 */
+	public void VerifyObjectInEditMode(String Object) {
+		PageObjectLogging.log("VerifyObjectInEditMode", "Verify "+Object+" object appears in edit mode", true, driver);
+		//The Editor is iframe so we have to switch to the iframe in order to investigate its content
+		waitForElementByElement(iFrame);
+//		WebElement iFrame = driver.findElement(IframeVisualEditor);
+		driver.switchTo().frame(iFrame);
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("img.media-placeholder.image-"+Object)));
+		// Now switch back to the normal DOM
+		driver.switchTo().defaultContent();
+		
+	}
+
+	/**
+	 * Verify Gallery object appears in the preview
+	 *  
+	 * @author Michal Nowierski
+	 * @param Object Object = {gallery, slideshow, slider}
+	 * 	 */
+	public void VerifyTheObjectOnThePreview(String Object) {
+		PageObjectLogging.log("VerifyTheObjectOnThePreview", "Verify that the "+Object+" appears in the preview", true, driver);
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div.ArticlePreview div[id*='"+Object+"']")));
+
+		
+	}
+
+	/**
+	 * Wait for Video modal and type in the video URL 
+	 *  
+	 * @author Michal Nowierski
+	 * 	 */
+	public void WaitForVideoModalAndTypeVideoURL(String videoURL) {
+		PageObjectLogging.log("WaitForVideoModalAndTypeVideoURL", "Wait for Video modal and type in the video URL: "+videoURL, true, driver);
+		waitForElementByBy(VideoModalInput);
+		waitForElementClickableByBy(VideoModalInput);
+		driver.findElement(VideoModalInput).clear();
+		driver.findElement(VideoModalInput).sendKeys(videoURL);
+		
+	}
+
+	/**
+	 * Video Click Next button
+	 *  
+	 * @author Michal Nowierski
+	 * 	 */
+	public void ClickVideoNextButton() {
+		PageObjectLogging.log("ClickVideoNextButton", "Left Click Next button", true, driver);
+		waitForElementByBy(VideoNextButton);
+		waitForElementClickableByBy(VideoNextButton);
+		driver.findElement(VideoNextButton).click();
+			
+	}
+
+	/**
+	 * Wait for video dialog and left click 'Add a video'
+	 *  
+	 * @author Michal Nowierski
+	 * 	 */
+	public void WaitForVideoDialogAndClickAddAvideo() {
+		PageObjectLogging.log("WaitForVideoDialogAndClickAddAvideo", "Wait for video dialog and left click 'Add a video'", true, driver);
+		waitForElementByBy(VideoAddVideoButton);
+		waitForElementClickableByBy(VideoAddVideoButton);
+		driver.findElement(VideoAddVideoButton).click();	
+	}
+
+	/**
+	 * Wait For Succes dialog and click on 'return to editing'
+	 *  
+	 * @author Michal Nowierski
+	 * 	 */
+	public void WaitForSuccesDialogAndReturnToEditing() {
+		PageObjectLogging.log("WaitForSuccesDialogAndReturnToEditing", "Wait For Succes dialog and click on 'return to editing'", true, driver);
+		waitForElementByBy(VideoReturnToEditing);
+		waitForElementClickableByBy(VideoReturnToEditing);
+		driver.findElement(VideoReturnToEditing).click();
+		
+	}
+
+	/**
+	 * Verify that video appears in edit mode
+	 *  
+	 * @author Michal Nowierski
+	 * 	 */
+	public void VerifyVideoInEditMode() {
+		PageObjectLogging.log("VerifyVideoInEditMode", "Verify that video appears in edit mode", true, driver);
+		waitForElementByElement(iFrame);
+//		WebElement iFrame = driver.findElement(IframeVisualEditor);
+		driver.switchTo().frame(iFrame);
+		wait.until(ExpectedConditions.visibilityOfElementLocated(VideoInEditMode));
+		driver.switchTo().defaultContent();
+		
+	}
+
+	/**
+	 * Verify that the video appears in the preview
+	 *  
+	 * @author Michal Nowierski
+	 * 	 */
+	public void VerifyTheVideoOnThePreview() {
+	PageObjectLogging.log("VerifyTheVideoOnThePreview", "Verify that the video appears in the preview", true, driver);
+	waitForElementByBy(VideoOnPreview);
+			
+	}
+
+
+
 
 
 
