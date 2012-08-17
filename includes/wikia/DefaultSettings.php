@@ -143,6 +143,7 @@ $wgAutoloadClasses[ 'WikiaUpdater'                    ] = "$IP/includes/wikia/Wi
 $wgHooks          [ 'LoadExtensionSchemaUpdates'      ][] = 'WikiaUpdater::update';
 $wgAutoloadClasses[ 'ResourceLoaderGlobalWikiModule'  ] = "$IP/includes/wikia/resourceloader/ResourceLoaderGlobalWikiModule.class.php";
 $wgAutoloadClasses[ 'ResourceLoaderCustomWikiModule'  ] = "$IP/includes/wikia/resourceloader/ResourceLoaderCustomWikiModule.class.php";
+$wgAutoloadClasses[ 'phpFlickr'                       ] = "$IP/lib/phpFlickr/phpFlickr.php";
 
 // core
 $wgAutoloadClasses['Module']  =  $IP.'/includes/wikia/Module.php';
