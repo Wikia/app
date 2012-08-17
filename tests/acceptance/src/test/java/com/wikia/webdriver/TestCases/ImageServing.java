@@ -6,6 +6,7 @@ import org.testng.annotations.Test;
 
 import com.wikia.webdriver.Common.CommonFunctions;
 import com.wikia.webdriver.DriverProvider.DriverProvider;
+import com.wikia.webdriver.Properties.Properties;
 import com.wikia.webdriver.Templates.TestTemplate;
 import com.wikia.webdriver.pageObjects.PageObject.BasePageObject;
 import com.wikia.webdriver.pageObjects.PageObject.FilePageObject;
@@ -19,8 +20,6 @@ import com.wikia.webdriver.pageObjects.PageObject.WikiPage.WikiArticleEditMode;
 import com.wikia.webdriver.pageObjects.PageObject.WikiPage.WikiArticlePageObject;
 
 public class ImageServing extends TestTemplate {
-	private String username = "Michaltester";
-	private String password = "1tester.";
 	private String file = "Image001.jpg";
 	private String[] ListOfFiles = {"Image001.jpg","Image002.jpg", "Image003.jpg", "Image004.jpg", "Image005.jpg", "Image006.jpg", "Image007.jpg", "Image008.jpg", "Image009.jpg", "Image010.jpg"};
 	private String wikiName = "mediawiki119";
@@ -32,7 +31,7 @@ public class ImageServing extends TestTemplate {
 	private String videoURL2name = "What is love (?) - on piano (Haddway)";
 	
 	
-//	@Test(groups = {"ImageServing"}) 
+	@Test(groups = {"ImageServing001"}) 
 //	https://internal.wikia-inc.com/wiki/QA/Core_Features_and_Testing/Manual_Regression_Tests/Image_Serving
 	public void ImageServing001_SpecialNewFilesTest()
 	{
@@ -41,7 +40,7 @@ public class ImageServing extends TestTemplate {
 	WikiBasePageObject wiki = new WikiBasePageObject(driver, wikiName);
 	SpecialNewFilesPageObject wikiSpecialNF = wiki.OpenSpecialNewFiles();
 	
-	CommonFunctions.logIn(username, password);
+	CommonFunctions.logIn(Properties.userName2, Properties.password2);
 	wikiSpecialNF.ClickOnAddaPhoto();
 	wikiSpecialNF.ClickOnMoreOrFewerOptions();
 	wikiSpecialNF.CheckIgnoreAnyWarnings();
@@ -53,38 +52,38 @@ public class ImageServing extends TestTemplate {
 	stopBrowser();
 	}
 	
-//	@Test(groups = {"ImageServing"}) 
+	@Test(groups = {"ImageServing002"}) 
 //	https://internal.wikia-inc.com/wiki/QA/Core_Features_and_Testing/Manual_Regression_Tests/Image_Serving
 	public void ImageServing002_SpecialUploadTest()
 	{
 		startBrowser();
 		WikiBasePageObject wiki = new WikiBasePageObject(driver, wikiName);
 		 SpecialUploadPageObject wikiSpecialU = wiki.OpenSpecialUpload();
-		CommonFunctions.logIn(username, password);
+		CommonFunctions.logIn(Properties.userName2, Properties.password2);
 		wikiSpecialU.TypeInFileToUploadPath(file);
 		wikiSpecialU.verifyFilePreviewAppeared(file);
 		wikiSpecialU.CheckIgnoreAnyWarnings();
 		FilePageObject filePage = wikiSpecialU.ClickOnUploadFile(file);
 		filePage.VerifyCorrectFilePage();
-		CommonFunctions.logOut(username);
+		CommonFunctions.logOut(Properties.userName2);
 		stopBrowser();
 	}
-//	@Test(groups = {"ImageServing"}) 
+	@Test(groups = {"ImageServing003"}) 
 //	https://internal.wikia-inc.com/wiki/QA/Core_Features_and_Testing/Manual_Regression_Tests/Image_Serving
 	public void ImageServing003_SpecialMultipleUploadTest()
 	{
 		startBrowser();
 		WikiBasePageObject wiki = new WikiBasePageObject(driver, wikiName);
 		SpecialMultipleUploadPageObject wikiSpecialMU = wiki.OpenSpecialMultipleUpload();
-		CommonFunctions.logIn(username, password);
+		CommonFunctions.logIn(Properties.userName2, Properties.password2);
 		wikiSpecialMU.TypeInFilesToUpload(ListOfFiles);
 		wikiSpecialMU.CheckIgnoreAnyWarnings();
 		wikiSpecialMU.ClickOnUploadFile();
 		wikiSpecialMU.VerifySuccessfulUpload(ListOfFiles);
-		CommonFunctions.logOut(username);
+		CommonFunctions.logOut(Properties.userName2);
 		stopBrowser();
 	}
-//	@Test(groups = {"ImageServing"}) 
+	@Test(groups = {"ImageServing004"}) 
 //	https://internal.wikia-inc.com/wiki/QA/Core_Features_and_Testing/Manual_Regression_Tests/Image_Serving
 	// Test Case 004 Adding images to an article in edit mode
 	public void ImageServing004_AddingImages()
@@ -92,7 +91,7 @@ public class ImageServing extends TestTemplate {
 		startBrowser();
 		WikiBasePageObject wiki = new WikiBasePageObject(driver, wikiName);
 		WikiArticlePageObject article = wiki.OpenArticle(wikiArticle);
-		CommonFunctions.logIn(username, password);
+		CommonFunctions.logIn(Properties.userName2, Properties.password2);
 		WikiArticleEditMode editArticle = article.Edit();
 		editArticle.ClickOnAddObjectButton("Image");
 		editArticle.WaitForModalAndClickAddThisPhoto();
@@ -107,11 +106,11 @@ public class ImageServing extends TestTemplate {
 		editArticle = article.Edit();
 		editArticle.deleteArticleContent();
 		article = editArticle.ClickOnPublishButton();
-		CommonFunctions.logOut(username);
+		CommonFunctions.logOut(Properties.userName2);
 		stopBrowser();
 	}
 	
-//	@Test(groups = {"ImageServing"}) 
+	@Test(groups = {"ImageServing005"}) 
 //	https://internal.wikia-inc.com/wiki/QA/Core_Features_and_Testing/Manual_Regression_Tests/Image_Serving
 	// Test Case 005 Modifying images in an article in edit mode
 	public void ImageServing005_ModifyingImages()
@@ -119,7 +118,7 @@ public class ImageServing extends TestTemplate {
 		startBrowser();
 		WikiBasePageObject wiki = new WikiBasePageObject(driver, wikiName);
 		WikiArticlePageObject article = wiki.OpenArticle(wikiArticle);
-		CommonFunctions.logIn(username, password);
+		CommonFunctions.logIn(Properties.userName2, Properties.password2);
 		WikiArticleEditMode editArticle = article.Edit();
 		editArticle.ClickOnAddObjectButton("Image");
 		editArticle.WaitForModalAndClickAddThisPhoto();
@@ -137,12 +136,12 @@ public class ImageServing extends TestTemplate {
 		editArticle = article.Edit();
 		editArticle.deleteArticleContent();
 		article = editArticle.ClickOnPublishButton();
-		CommonFunctions.logOut(username);
+		CommonFunctions.logOut(Properties.userName2);
 		stopBrowser();
 		
 	}
 	
-//	@Test(groups = {"ImageServing"}) 
+	@Test(groups = {"ImageServing006"}) 
 //	https://internal.wikia-inc.com/wiki/QA/Core_Features_and_Testing/Manual_Regression_Tests/Image_Serving	
 	// Test Case 006  Removing images in an article in edit mode
 	public void ImageServing006_RemovingImages()
@@ -150,7 +149,7 @@ public class ImageServing extends TestTemplate {
 		startBrowser();
 		WikiBasePageObject wiki = new WikiBasePageObject(driver, wikiName);
 		WikiArticlePageObject article = wiki.OpenArticle(wikiArticle);
-		CommonFunctions.logIn(username, password);
+		CommonFunctions.logIn(Properties.userName2, Properties.password2);
 		WikiArticleEditMode editArticle = article.Edit();
 		editArticle.ClickOnAddObjectButton("Image");
 		editArticle.WaitForModalAndClickAddThisPhoto();
@@ -159,20 +158,20 @@ public class ImageServing extends TestTemplate {
 		editArticle.HoverCursorOverImage(Caption);
 		editArticle.ClickRemoveButtonOfImage(Caption);
 		editArticle.LeftClickCancelButton();
-		editArticle.VerifyModalDisappeared();  
+//		editArticle.VerifyModalDisappeared();  
 		editArticle.HoverCursorOverImage(Caption);
 		editArticle.ClickRemoveButtonOfImage(Caption);
 		editArticle.LeftClickOkButton();
-		editArticle.VerifyModalDisappeared();
-		editArticle.VerifyTheImageNotOnTheArticleEditMode();
+//		editArticle.VerifyModalDisappeared();
+//		editArticle.VerifyTheImageNotOnTheArticleEditMode();
 		article = editArticle.ClickOnPublishButton();
 		article.VerifyTheImageOnThePage();
 		
-		CommonFunctions.logOut(username);
+		CommonFunctions.logOut(Properties.userName2);
 		stopBrowser();
 	}
 
-//	@Test(groups = {"ImageServing"}) 
+	@Test(groups = {"ImageServing007"}) 
 //	https://internal.wikia-inc.com/wiki/QA/Core_Features_and_Testing/Manual_Regression_Tests/Image_Serving	
 	// Test Case 007  Adding galleries to an article in edit mode
 	public void ImageServing007_AddingGalleries()
@@ -180,7 +179,7 @@ public class ImageServing extends TestTemplate {
 		startBrowser();
 		WikiBasePageObject wiki = new WikiBasePageObject(driver, wikiName);
 		WikiArticlePageObject article = wiki.OpenArticle(wikiArticle);
-		CommonFunctions.logIn(username, password);
+		CommonFunctions.logIn(Properties.userName2, Properties.password2);
 		WikiArticleEditMode editArticle = article.Edit();
 		editArticle.ClickOnAddObjectButton("Gallery");
 		editArticle.WaitForObjectModalAndClickAddAphoto("Gallery");
@@ -195,12 +194,12 @@ public class ImageServing extends TestTemplate {
 		editArticle = article.Edit();
 		editArticle.deleteArticleContent();
 		article = editArticle.ClickOnPublishButton();
-		CommonFunctions.logOut(username);
+		CommonFunctions.logOut(Properties.userName2);
 		stopBrowser();
 		
 	}
 	
-//	@Test(groups = {"ImageServing"}) 
+	@Test(groups = {"ImageServing008"}) 
 //	https://internal.wikia-inc.com/wiki/QA/Core_Features_and_Testing/Manual_Regression_Tests/Image_Serving	
 	// Test Case 008 Adding slideshows to an article in edit mode
 	public void ImageServing008_AddingSlideshow()
@@ -208,7 +207,7 @@ public class ImageServing extends TestTemplate {
 		startBrowser();
 		WikiBasePageObject wiki = new WikiBasePageObject(driver, wikiName);
 		WikiArticlePageObject article = wiki.OpenArticle(wikiArticle);
-		CommonFunctions.logIn(username, password);
+		CommonFunctions.logIn(Properties.userName2, Properties.password2);
 		WikiArticleEditMode editArticle = article.Edit();
 		editArticle.ClickOnAddObjectButton("Slideshow");
 		editArticle.WaitForObjectModalAndClickAddAphoto("GallerySlideshow");
@@ -223,12 +222,12 @@ public class ImageServing extends TestTemplate {
 		editArticle = article.Edit();
 		editArticle.deleteArticleContent();
 		article = editArticle.ClickOnPublishButton();
-		CommonFunctions.logOut(username);
+		CommonFunctions.logOut(Properties.userName2);
 		stopBrowser();
 		
 	}
 	
-//	@Test(groups = {"ImageServing"}) 
+	@Test(groups = {"ImageServing009"}) 
 //	https://internal.wikia-inc.com/wiki/QA/Core_Features_and_Testing/Manual_Regression_Tests/Image_Serving	
 	// Test Case 009 Adding sliders to an article in edit mode
 	public void ImageServing009_AddingSliders()
@@ -236,7 +235,7 @@ public class ImageServing extends TestTemplate {
 		startBrowser();
 		WikiBasePageObject wiki = new WikiBasePageObject(driver, wikiName);
 		WikiArticlePageObject article = wiki.OpenArticle(wikiArticle);
-		CommonFunctions.logIn(username, password);
+		CommonFunctions.logIn(Properties.userName2, Properties.password2);
 		WikiArticleEditMode editArticle = article.Edit();
 		editArticle.ClickOnAddObjectButton("Slider");
 		editArticle.WaitForObjectModalAndClickAddAphoto("GallerySlider");
@@ -251,12 +250,12 @@ public class ImageServing extends TestTemplate {
 		editArticle = article.Edit();
 		editArticle.deleteArticleContent();
 		article = editArticle.ClickOnPublishButton();
-		CommonFunctions.logOut(username);
+		CommonFunctions.logOut(Properties.userName2);
 		stopBrowser();
 		
 	}
 	
-//	@Test(groups = {"ImageServing"}) 
+	@Test(groups = {"ImageServing010"}) 
 //	https://internal.wikia-inc.com/wiki/QA/Core_Features_and_Testing/Manual_Regression_Tests/Image_Serving	
 	// Test Case 010 Adding videos to an article in edit mode
 	public void ImageServing010_AddingVideo()
@@ -264,7 +263,7 @@ public class ImageServing extends TestTemplate {
 		startBrowser();
 		WikiBasePageObject wiki = new WikiBasePageObject(driver, wikiName);
 		WikiArticlePageObject article = wiki.OpenArticle(wikiArticle);
-		CommonFunctions.logIn(username, password);
+		CommonFunctions.logIn(Properties.userName2, Properties.password2);
 		WikiArticleEditMode editArticle = article.Edit();
 		editArticle.ClickOnAddObjectButton("Video");
 		editArticle.WaitForVideoModalAndTypeVideoURL(videoURL);
@@ -279,34 +278,34 @@ public class ImageServing extends TestTemplate {
 		editArticle = article.Edit();
 		editArticle.deleteArticleContent();
 		article = editArticle.ClickOnPublishButton();
-		CommonFunctions.logOut(username);
+		CommonFunctions.logOut(Properties.userName2);
 		stopBrowser();
 		
 	}
 	
-	@Test(groups = {"ImageServing"}) 
+	@Test(groups = {"ImageServing011"}) 
 //	https://internal.wikia-inc.com/wiki/QA/Core_Features_and_Testing/Manual_Regression_Tests/Image_Serving	
 	// Test Case 011 Adding related videos through Related Video (RV) module
 	public void ImageServing011_AddingVideoThroughRV()
 	{
 		startBrowser();
 		WikiBasePageObject wiki = new WikiBasePageObject(driver, wikiName);
-		//delete all videos from RV module on QAAutopage using RelatedVideos:QAautoPage (message article)
-		WikiArticlePageObject RVmoduleMessage = wiki.OpenArticle("RelatedVideos:QAautoPage");
-		CommonFunctions.logIn(username, password);
-		WikiArticleEditMode RVmoduleMessageEdit = RVmoduleMessage.Edit();
-		RVmoduleMessageEdit.deleteArticleContent();
-		RVmoduleMessage = RVmoduleMessageEdit.ClickOnPublishButton();
-		// after deletion start testing
-		WikiArticlePageObject article = RVmoduleMessageEdit.OpenArticle(wikiArticle);
+		WikiArticlePageObject article = wiki.OpenArticle(wikiArticle);
+		CommonFunctions.logIn(Properties.userName2, Properties.password2);
 		article.VerifyRVModulePresence();
 		article.ClickOnAddVideoRVModule();
 		article.TypeInVideoURL(videoURL2);
 		article.ClickOnRVModalAddButton();
 //		article.WaitForProcessingToFinish();
 		article.VerifyVideoAddedToRVModule(videoURL2name);
+		//delete all videos from RV module on QAAutopage using RelatedVideos:QAautoPage (message article)
+		WikiArticlePageObject RVmoduleMessage = article.OpenArticle("RelatedVideos:"+wikiArticle);
+		WikiArticleEditMode RVmoduleMessageEdit = RVmoduleMessage.Edit();
+		RVmoduleMessageEdit.deleteArticleContent();
+		RVmoduleMessage = RVmoduleMessageEdit.ClickOnPublishButton();
+		// after deletion start testing
 		
-		CommonFunctions.logOut(username);
+		CommonFunctions.logOut(Properties.userName2);
 		stopBrowser();
 		
 	}
