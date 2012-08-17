@@ -169,7 +169,7 @@ $language_data = array (
         ),
     'REGEXPS' => array(
         //Variables
-        0 => "[\\$]{1,2}[a-zA-Z_][a-zA-Z0-9_]*"
+        0 => "[\\$]+[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*"
         ),
     'STRICT_MODE_APPLIES' => GESHI_MAYBE,
     'SCRIPT_DELIMITERS' => array(

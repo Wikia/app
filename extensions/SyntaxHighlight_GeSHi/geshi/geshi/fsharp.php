@@ -44,7 +44,7 @@ $language_data = array(
     'LANG_NAME' => 'F#',
     'COMMENT_SINGLE' => array(1 => '//', 2 => '#'),
     'COMMENT_MULTI' => array('/*' => '*/'),
-    'COMMENT_REGEXP' => array(3 => '/\(\*(?!\)).*?\*\)/'),
+    'COMMENT_REGEXP' => array(3 => '/\(\*(?!\)).*?\*\)/s'),
     'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
     'QUOTEMARKS' => array("'", '"'),
     'HARDQUOTE' => array('@"', '"'),

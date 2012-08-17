@@ -56,7 +56,7 @@ $language_data = array (
     'ESCAPE_CHAR' => '',
     'KEYWORDS' => array(
         1 => array(
-            'If','EndIf','ElseIf','Else If','Else','While','Wend','Return','Next','Include','End Type','End Select','End If','End Function','End','Select',
+            'If','EndIf','ElseIf','Else','While','Wend','Return','Next','Include','End Type','End Select','End If','End Function','End','Select',
             'Type','Forever','For','Or','And','AppTitle','Case','Goto','Gosub','Step','Stop','Int','Last','False','Then','To','True','Until','Float',
             'String','Before','Not'
             ),

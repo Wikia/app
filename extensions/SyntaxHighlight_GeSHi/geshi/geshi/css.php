@@ -72,6 +72,8 @@ $language_data = array (
             'aqua', 'azimuth', 'background-attachment', 'background-color',
             'background-image', 'background-position', 'background-repeat',
             'background', 'black', 'blue', 'border-bottom-color',
+            'border-radius', 'border-top-left-radius', 'border-top-right-radius',
+            'border-bottom-right-radius', 'border-bottom-left-radius',
             'border-bottom-style', 'border-bottom-width', 'border-left-color',
             'border-left-style', 'border-left-width', 'border-right',
             'border-right-color', 'border-right-style', 'border-right-width',
@@ -215,7 +217,8 @@ $language_data = array (
     'TAB_WIDTH' => 4,
     'PARSER_CONTROL' => array(
         'KEYWORDS' => array(
-            'DISALLOWED_AFTER' => '(?![a-zA-Z0-9_\|%\\-&\.])'
+            'DISALLOWED_AFTER' => '(?![\-a-zA-Z0-9_\|%\\-&\.])',
+            'DISALLOWED_BEFORE' => '(?<![\-a-zA-Z0-9_\|%\\~&\.])'
         )
     )
 );
