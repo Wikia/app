@@ -66,10 +66,11 @@ abstract class ResourceLoaderWikiModule extends ResourceLoaderModule {
 
 	/**
 	 * @param $title Title
+     * @param $titleText string Title text
 	 * @param $options array Extra options for subclasses
 	 * @return null|string
 	 */
-	protected function getContent( $title, $options = array() ) {
+	protected function getContent( $title, $titleText, $options = array() ) {
 		if ( $title->getNamespace() === NS_MEDIAWIKI ) {
 			$message = wfMessage( $title->getDBkey() )->inContentLanguage();
 			return $message->exists() ? $message->plain() : '';
@@ -112,7 +113,7 @@ abstract class ResourceLoaderWikiModule extends ResourceLoaderModule {
 			if ( !$title || $title->isRedirect() ) {
 				continue;
 			}
-			$script = $this->getContent( $title );
+			$script = $this->getContent( $title, $titleText, $options );
 			if ( strval( $script ) !== '' ) {
 				$script = $this->validateScriptFile( $titleText, $script );
 				if ( strpos( $titleText, '*/' ) === false ) {
@@ -141,7 +142,7 @@ abstract class ResourceLoaderWikiModule extends ResourceLoaderModule {
 				continue;
 			}
 			$media = isset( $options['media'] ) ? $options['media'] : 'all';
-			$style = $this->getContent( $title );
+			$style = $this->getContent( $title, $titleText, $options );
 			if ( strval( $style ) === '' ) {
 				continue;
 			}

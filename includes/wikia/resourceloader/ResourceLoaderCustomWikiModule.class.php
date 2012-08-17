@@ -12,6 +12,7 @@ class ResourceLoaderCustomWikiModule extends ResourceLoaderGlobalWikiModule {
 
 	public function getPages( ResourceLoaderContext $context ) {
 		$pages = array();
+        $missingCallback = $context->getRequest()->getVal('missingCallback');
 
 		if ( $this->type ) {
 			$id = 1;
@@ -21,7 +22,14 @@ class ResourceLoaderCustomWikiModule extends ResourceLoaderGlobalWikiModule {
 				$pageInfo = array(
 					'type' => $type,
 				);
-				
+
+                if ( isset( $article['originalName'] ) ) {
+                    $pageInfo['originalName'] = $article['originalName'];
+                }
+                if ( $missingCallback ) {
+                    $pageInfo['missingCallback'] = $missingCallback;
+                }
+
 				if(isset($article['cityId']) && empty($article['cityId'])){
 					// Caller put in a wiki name, but it didn't resolve to a cityId.
 				} else {
