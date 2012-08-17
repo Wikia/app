@@ -3,14 +3,13 @@
  * @author Piotr Bablok <pbablok@wikia-inc.com>
  */
 
-
-$dir = dirname(__FILE__);
-$wgAutoloadClasses['ImageLazyLoad'] = "$dir/ImageLazyLoad.class.php";
-
-
+$dir = dirname(__FILE__) . '/';
 $app = F::app();
+
+$app->registerClass( 'ImageLazyLoad', $dir . 'ImageLazyLoad.class.php' );
+
+/* Hooks */
+$app->registerHook( 'BeforePageDisplay', 'ImageLazyLoad', 'onBeforePageDisplay' );
+$app->registerHook( 'ParserClearState', 'ImageLazyLoad', 'onParserClearState' );
 $app->registerHook( 'ThumbnailImageHTML', 'ImageLazyLoad', 'onThumbnailImageHTML' );
 $app->registerHook( 'ThumbnailVideoHTML', 'ImageLazyLoad', 'onThumbnailImageHTML' );
-$app->registerHook( 'ParserClearState', 'ImageLazyLoad', 'onParserClearState' );
-$app->registerHook( 'BeforePageDisplay', 'ImageLazyLoad', 'onBeforePageDisplay' );
-
