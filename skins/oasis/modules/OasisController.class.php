@@ -138,6 +138,12 @@ class OasisController extends WikiaController {
 		$this->printStyles = array();
 		$this->csslinks = '';
 
+		if (is_array($scssPackages)) {
+			foreach ($scssPackages as $package) {
+				$wgOut->addStyle($this->assetsManager->getSassCommonURL('extensions/'.$package));
+			}
+		}
+
 		foreach ( $skin->getStyles() as $s ) {
 			// Remove the non-inlined media="print" CSS from the normal array and add it to another so that it can be loaded asynchronously at the bottom of the page.
 			if ( !empty( $s['url'] ) && stripos($s['tag'], 'media="print"')!== false) {
@@ -177,11 +183,7 @@ class OasisController extends WikiaController {
 				$wgOut->addScriptFile($this->wg->ExtensionsPath . '/' . $package);
 			}
 		}
-		if (is_array($scssPackages)) {
-			foreach ($scssPackages as $package) {
-				$wgOut->addStyle($this->assetsManager->getSassCommonURL('extensions/'.$package));
-			}
-		}
+
 
 		// setup loading of JS/CSS using WSL (WikiaScriptLoader)
 		$this->loadJs();
