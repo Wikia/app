@@ -39,9 +39,9 @@ public class SpecialNewFilesPageObject extends WikiBasePageObject{
 	
 	private String WikiaPreviewImgCssSelector = "div.wikia-gallery span.wikia-gallery-item img";
 
-	public SpecialNewFilesPageObject(WebDriver driver, String wikiname) {
+	public SpecialNewFilesPageObject(WebDriver driver, String Domain) {
 		
-		super(driver, wikiname);
+		super(driver, Domain);
 		
 		PageFactory.initElements(driver, this);
 	}
@@ -81,7 +81,7 @@ public class SpecialNewFilesPageObject extends WikiBasePageObject{
 	 * <p> Look at folder acceptancesrc/src/test/resources/ImagesForUploadTests - this is where those files are stored
 	 *  */ 
 	public void TypeInFileToUploadPath(String file){
-	sendKeys(BrowseForFileInput, System.getProperty("user.dir")+"\\ImagesForUploadTests\\"+file);
+	sendKeys(BrowseForFileInput, System.getProperty("user.dir")+"\\src\\test\\resources\\ImagesForUploadTests\\"+file);
 	}
 
 	public void waitForFile(String FileName) {

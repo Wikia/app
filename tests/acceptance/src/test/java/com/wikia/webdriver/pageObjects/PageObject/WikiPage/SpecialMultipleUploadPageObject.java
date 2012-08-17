@@ -32,9 +32,9 @@ public class SpecialMultipleUploadPageObject extends WikiBasePageObject {
 	private By UploadedFilesListContener = By.cssSelector("div[id='mw-content-text']");
 	private By UploadedFilesList = By.cssSelector("div[id='mw-content-text'] ul li a");
 		
-	public SpecialMultipleUploadPageObject(WebDriver driver, String wikiname) {
+	public SpecialMultipleUploadPageObject(WebDriver driver, String Domain) {
 		
-		super(driver, wikiname);
+		super(driver, Domain);
 		
 		PageFactory.initElements(driver, this);
 	}
