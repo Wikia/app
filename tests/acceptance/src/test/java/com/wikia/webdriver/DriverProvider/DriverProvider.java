@@ -31,6 +31,7 @@ public class DriverProvider {
 	{
 		
 		PageObjectLogging listener = new PageObjectLogging();
+		
 		if (Global.BROWSER.equals("IE"))
 		{
 			setIEProperties();
@@ -76,13 +77,29 @@ public class DriverProvider {
 	 */
 	private static void setIEProperties()
 	{
-		File file = new File("."+File.separator+
-				"src"+File.separator+
-				"test"+File.separator+
-				"resources"+File.separator+
-				"IEDriver"+File.separator+
-				"IEDriverServer.exe");
+		String sysArch = System.getProperty("os.arch");
+		if (sysArch.equals("x86"))
+		{
+			File file = new File("."+File.separator+
+					"src"+File.separator+
+					"test"+File.separator+
+					"resources"+File.separator+
+					"IEDriver"+File.separator+
+					"IEDriverServer_x86.exe");	
 			System.setProperty("webdriver.ie.driver", file.getAbsolutePath());
+
+		}
+		else
+		{
+			File file = new File("."+File.separator+
+					"src"+File.separator+
+					"test"+File.separator+
+					"resources"+File.separator+
+					"IEDriver"+File.separator+
+					"IEDriverServer_x64.exe");	
+			System.setProperty("webdriver.ie.driver", file.getAbsolutePath());
+		}
+		
 	}
 	
 	/**
