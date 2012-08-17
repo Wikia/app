@@ -16,7 +16,7 @@ public class WikiArticlePageObject extends WikiBasePageObject {
 	
 	protected String articlename;
 	
-	@FindBy(css="nav.wikia-menu-button a[accesskey='e']")
+	@FindBy(css="a[accesskey='e']")
 	private WebElement EditButton;
 	@FindBy(css="section.RelatedVideosModule")
 	private WebElement RVModule;
@@ -31,9 +31,9 @@ public class WikiArticlePageObject extends WikiBasePageObject {
 	
 	
 
-	public WikiArticlePageObject(WebDriver driver, String wikiname,
+	public WikiArticlePageObject(WebDriver driver, String Domain,
 			String wikiArticle) {
-		super(driver, wikiname);
+		super(driver, Domain);
 		this.articlename = wikiArticle;
 		PageFactory.initElements(driver, this);
 	}
@@ -45,9 +45,9 @@ public class WikiArticlePageObject extends WikiBasePageObject {
 	 */
 	public WikiArticleEditMode Edit() {
 		waitForElementByElement(EditButton);
-		PageObjectLogging.log("Edit", "Edit Article: "+articlename+", on wiki: "+wikiname+"", true, driver);
+		PageObjectLogging.log("Edit", "Edit Article: "+articlename+", on wiki: "+Domain+"", true, driver);
 		EditButton.click();
-		return new WikiArticleEditMode(driver, wikiname, articlename);
+		return new WikiArticleEditMode(driver, Domain, articlename);
 	}
 
 	/**

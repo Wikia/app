@@ -17,37 +17,37 @@ import com.wikia.webdriver.pageObjects.PageObject.WikiPage.SpecialUploadPageObje
 import com.wikia.webdriver.pageObjects.PageObject.WikiPage.WikiArticlePageObject;
 
 public class WikiBasePageObject extends BasePageObject {
-	protected String wikiname;
+	protected String Domain;
 
-	public WikiBasePageObject(WebDriver driver, String wikiname) {
+	public WikiBasePageObject(WebDriver driver, String Domain) {
 		super(driver);
-		this.wikiname = wikiname;
+		this.Domain = Domain;
 		}
 
 	public String getWikiName() {
-		return wikiname;
+		return Domain;
 	}
 	
 	public SpecialNewFilesPageObject OpenSpecialNewFiles() {
-		driver.get("http://"+wikiname+".wikia.com/Special:NewFiles");
-		return new SpecialNewFilesPageObject(driver, wikiname);
+		driver.get(Domain+"Special:NewFiles");
+		return new SpecialNewFilesPageObject(driver, Domain);
 	}
 
 
 	public SpecialUploadPageObject OpenSpecialUpload() {
-		driver.get("http://"+wikiname+".wikia.com/Special:Upload");
-		return new SpecialUploadPageObject(driver, wikiname);
+		driver.get(Domain+"pecial:Upload");
+		return new SpecialUploadPageObject(driver, Domain);
 	}
 
 	public SpecialMultipleUploadPageObject OpenSpecialMultipleUpload() {
-		driver.get("http://"+wikiname+".wikia.com/Special:MultipleUpload");
-		return new SpecialMultipleUploadPageObject(driver, wikiname);
+		driver.get(Domain+"Special:MultipleUpload");
+		return new SpecialMultipleUploadPageObject(driver, Domain);
 		
 	}
 
 	public WikiArticlePageObject OpenArticle(String wikiArticle) {
-		driver.get("http://"+wikiname+".wikia.com/wiki/"+wikiArticle);
-		return new WikiArticlePageObject(driver, wikiname, wikiArticle);
+		driver.get(Domain+"wiki/"+wikiArticle);
+		return new WikiArticlePageObject(driver, Domain, wikiArticle);
 		
 	}
 	
