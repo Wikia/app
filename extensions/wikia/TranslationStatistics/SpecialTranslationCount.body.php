@@ -58,7 +58,7 @@ class SpecialTranslationCount extends SpecialPage {
 		}
 
 		foreach ( $data['total'] as $type => &$row ) {
-			$this->processRow( &$row, $type );
+			$this->processRow( $row, $type );
 		}
 
 		$headers = array(
@@ -86,7 +86,7 @@ class SpecialTranslationCount extends SpecialPage {
 		$groupSelector = new XmlSelect( 'group', 'group-select' );
 
 		// pull groups
-		$groups = MessageGroups::singleton()->getGroups();	
+		$groups = MessageGroups::singleton()->getGroups();
 
 		foreach ( $groups as $group ) {
 			if ( !$group->isMeta() ) {
@@ -110,7 +110,7 @@ class SpecialTranslationCount extends SpecialPage {
 		$wgOut->addHTML( $out );
 	}
 
-	private function processRow( $row, $type = false ) {
+	private function processRow( &$row, $type = false ) {
 		unset( $row['gs_group'] );
 		unset( $row[0] );
 		unset( $row[1] );
