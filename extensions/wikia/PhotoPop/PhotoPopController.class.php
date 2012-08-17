@@ -8,7 +8,7 @@
 class PhotoPopController extends WikiaController {
 	//const CACHE_MANIFEST_PATH = 'wikia.php?controller=PhotoPopAppCacheController&method=serveManifest&format=html';
 	const JS_MESSAGES_PACKAGE = 'PhotoPop';
-	
+
 	private $model;
 	private $isJSON;
 
@@ -33,7 +33,7 @@ class PhotoPopController extends WikiaController {
 
 	public function index() {
 		$this->checkGameAllowed();
-		
+
 		//AppCache disabled for now, it generates more problems than expected
 		//$this->response->setVal( 'appCacheManifestPath', self::CACHE_MANIFEST_PATH . "&cb={$this->wg->CacheBuster}" );//$this->wg->StyleVersion
 
@@ -44,10 +44,10 @@ class PhotoPopController extends WikiaController {
 			'wgCacheBuster' => $this->wg->CacheBuster,
 			'wgMessages' => $jsMsg->getPackages( array ( self::JS_MESSAGES_PACKAGE ) )
 		);
-		
+
 		//getting WikiaTracker global JS vars
-		F::build( 'WikiaTrackerController' )->onMakeGlobalVariablesScript( &$jsVars );
-		
+		F::build( 'WikiaTrackerController' )->onMakeGlobalVariablesScript( $jsVars );
+
 		$this->response->setVal( 'globalVariablesScript', Skin::makeVariablesScript($jsVars) );
 		$this->response->setVal( 'scripts', AssetsManager::getInstance()->getGroupCommonURL( 'photopop' ) );
 		$this->response->setVal( 'dataMain', $this->wg->ExtensionsPath . '/wikia/PhotoPop/shared/lib/main');
@@ -86,9 +86,9 @@ class PhotoPopController extends WikiaController {
 
 	public function getData(){
 		$this->checkGameAllowed();
-		
+
 		$this->wf->profileIn( __METHOD__ );
-		
+
 		$category = trim( $this->request->getVal( 'category' ) );
 		$callbackName = $this->request->getVal( 'callback' );
 
@@ -119,7 +119,7 @@ class PhotoPopController extends WikiaController {
 			$this->wf->profileOut( __METHOD__ );
 		}
 	}
-	
+
 	private function checkGameAllowed(){
 		if ( empty ( $this->wg->AllowPhotoPopGame ) ){
 			throw new WikiaException('Playing PhotoPop is not allowed from this wiki');
