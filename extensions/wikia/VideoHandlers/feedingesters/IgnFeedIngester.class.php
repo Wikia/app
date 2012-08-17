@@ -78,14 +78,25 @@ class IgnFeedIngester extends VideoFeedIngester {
 			$addlCategories = array_merge( $addlCategories, $keywords );
 			$clipData['keywords'] = implode(", ", $keywords );
 
+			foreach(array('keywords', 'titleName', 'description') as $key) {
+				if (preg_match('/\b(Babeology|Porn|Threesome|Cock|Fag|Dyke|Gay|Cunt|Pussy|Pornstars)\b/i', $clipData[$key])) {
+					echo "Blacklisting video ! ".$clipData['titleName'].", videId ".$clipData['videoId']." (reason $key: ".$clipData[$key].")\n";
+					continue;
+				}
+			}
 			$tags = array();
 			foreach( $video['tags'] as $obj ) {
-				$tags[$obj['slug']] = true;
+				if (array_key_exists('slug', $obj)) {
+					if (preg_match('/\b(Sex|Sexy|Babes|Boobs)\b/i', $obj['slug'])) {
+						echo "Skipping blacklisted keyword ".$obj['slug']."\n";
+						continue;
+					}
+					$tags[$obj['slug']] = true;
+				}
 			}
 			$tags = array_keys( $tags );
 			$addlCategories = array_merge( $addlCategories, $tags );
 			$clipData['tags'] = implode(", ", $tags );
-
 
 			$createParams = array('addlCategories'=>$addlCategories, 'debug'=>$debug);
 			$articlesCreated += $this->createVideo($clipData, $msg, $createParams);
