@@ -194,12 +194,4 @@ class ArticlesAsResources {
 
 		return true;
 	}
-
-	public function onTopScripts( &$vars ) {
-		global $wgArticlesAsResources;
-		if ( !empty( $wgArticlesAsResources ) ) {
-			$vars[ 'wgArticlesAsResources' ] = true;
-		}
-		return true;
-	}
 }
