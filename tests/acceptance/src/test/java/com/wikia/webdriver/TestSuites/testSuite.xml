@@ -2,12 +2,12 @@
 <suite name="Wikia test suite">
   <test name="testing" preserve-order = "true"> <!-- parallel="classes" thread-count="2"  -->
     <classes>
-    <class name="com.wikia.webdriver.TestCases.ImageServing"/>
-       <class name="com.wikia.webdriver.TestCases.CreateAWikiTests.CreateAWikiTests_latin"/>
-       <class name="com.wikia.webdriver.TestCases.CreateAWikiTests.CreateAWikiTests_nonLatin"/>
-       <class name="com.wikia.webdriver.TestCases.CreateAWikiTests.CreateAWikiTests_logInFieldValidation"/>
-       <class name="com.wikia.webdriver.TestCases.ImageServing"/>
-       <class name="com.wikia.webdriver.TestCases.HubsTests"/>
+	    <class name="com.wikia.webdriver.TestCases.ImageServing"/>
+	    <!-- class name="com.wikia.webdriver.TestCases.CreateAWikiTests.CreateAWikiTests_latin"/>
+	    <class name="com.wikia.webdriver.TestCases.CreateAWikiTests.CreateAWikiTests_nonLatin"/>
+	    <class name="com.wikia.webdriver.TestCases.CreateAWikiTests.CreateAWikiTests_logInFieldValidation"/>
+	    <class name="com.wikia.webdriver.TestCases.ImageServing"/>
+	    <class name="com.wikia.webdriver.TestCases.HubsTests"/>-->
     </classes>
   </test>
 </suite>
