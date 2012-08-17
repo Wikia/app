@@ -60,9 +60,9 @@ public class WikiArticleEditMode extends WikiArticlePageObject {
 //	private String CSS_RemovePhotoDialog = "section.modalWrapper.RTEModal";
 //	private String CSS_ImageOnPage = "div.WikiaArticle figure a img";
 	
-	public WikiArticleEditMode(WebDriver driver, String wikiname,
+	public WikiArticleEditMode(WebDriver driver, String Domain,
 			String articlename) {
-		super(driver, wikiname, articlename);
+		super(driver, Domain, articlename);
 		PageFactory.initElements(driver, this);
 	}
 
@@ -76,7 +76,7 @@ public class WikiArticleEditMode extends WikiArticlePageObject {
 		// TODO Auto-generated method stub
 		waitForElementByCss("span.cke_button.RTE"+Object+"Button");
 		waitForElementClickableByCss("span.cke_button.RTE"+Object+"Button");
-		PageObjectLogging.log("ClickOnAddObjectButton", "Edit Article: "+articlename+", on wiki: "+wikiname+"", true, driver);
+		PageObjectLogging.log("ClickOnAddObjectButton", "Edit Article: "+articlename+", on wiki: "+Domain+"", true, driver);
 		driver.findElement(By.cssSelector("span.cke_button.RTE"+Object+"Button")).click();
 	}
 
@@ -187,7 +187,7 @@ public class WikiArticleEditMode extends WikiArticlePageObject {
 		waitForElementClickableByBy(PublishButtonPreview);
 		driver.findElement(PublishButtonPreview).click();
 	
-		return new WikiArticlePageObject(driver, wikiname, articlename);
+		return new WikiArticlePageObject(driver, Domain, articlename);
 	}
 
 	/**
@@ -240,7 +240,7 @@ public class WikiArticleEditMode extends WikiArticlePageObject {
 		waitForElementClickableByBy(PublishButton);
 		driver.findElement(PublishButton).click();
 	
-		return new WikiArticlePageObject(driver, wikiname, articlename);
+		return new WikiArticlePageObject(driver, Domain, articlename);
 	}
 	
 	/**
