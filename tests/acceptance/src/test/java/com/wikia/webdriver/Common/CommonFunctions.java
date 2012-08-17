@@ -57,7 +57,7 @@ public class CommonFunctions
 	 */
 	public static void logOut(String userName)
 	{
-		driver.get("http://community.wikia.com/wiki/Special:UserLogout?returnto=User "+userName);	
+		driver.get(Global.LIVE_DOMAIN+"wiki/Special:UserLogout?returnto=User "+userName);	
 	}
 	
 

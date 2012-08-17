@@ -8,6 +8,8 @@ public class Global {
 	public static boolean RUN_BY_MAVEN;
 	public static String BROWSER;
 	public static File CONFIG_FILE;
+	public static String DOMAIN;
+	public static String LIVE_DOMAIN;
 	
 
 }
