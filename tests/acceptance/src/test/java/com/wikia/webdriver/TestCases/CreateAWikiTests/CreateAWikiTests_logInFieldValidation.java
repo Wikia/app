@@ -3,6 +3,7 @@ package com.wikia.webdriver.TestCases.CreateAWikiTests;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import com.wikia.webdriver.Common.Global;
 import com.wikia.webdriver.Properties.Properties;
 import com.wikia.webdriver.Templates.TestTemplate;
 import com.wikia.webdriver.pageObjects.PageObject.HomePageObject;
@@ -38,10 +39,10 @@ public class CreateAWikiTests_logInFieldValidation extends TestTemplate{
 	public void CreateNewWiki_LogInFieldValidation(String userName, String userNameEnc, String password)
 	{
 		startBrowser();
-		driver.get("http://community.wikia.com/wiki/Special:UserLogout?returnto=User "+userNameEnc);
+		driver.get(Global.LIVE_DOMAIN + "wiki/Special:UserLogout?returnto=User "+userNameEnc);
 		HomePageObject home = new HomePageObject(driver);
 		home.openHomePage();
-		CreateNewWikiPageObjectStep1 createNewWiki1 = home.StartAWiki();
+		CreateNewWikiPageObjectStep1 createNewWiki1 = home.startAWiki();
 		String timeStamp = createNewWiki1.getTimeStamp();
 		wikiName = "QaTest"+timeStamp;
 		createNewWiki1.typeInWikiName(wikiName);
@@ -59,7 +60,7 @@ public class CreateAWikiTests_logInFieldValidation extends TestTemplate{
 		newWikia.closeCongratulationsLightBox();
 		newWikia.vefifyUserLoggedIn(userNameEnc);
 		newWikia.verifyUserToolBar();
-		driver.get("http://community.wikia.com/wiki/Special:UserLogout?returnto=User "+userNameEnc);
+		driver.get(Global.LIVE_DOMAIN + "wiki/Special:UserLogout?returnto=User "+userNameEnc);
 		stopBrowser();
 	}
 }
