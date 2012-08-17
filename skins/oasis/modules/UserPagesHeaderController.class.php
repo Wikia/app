@@ -207,22 +207,6 @@ class UserPagesHeaderController extends WikiaController {
 				'dropdown' => array(),
 				);
 
-
-		/*  Disabled for now -- this is not used and hiphop complains that saveUserAnswersHTML is not implemented
-		global $wgEnableUserInterview;
-
-		if ($wgEnableUserInterview == true && $wgUser->isLoggedIn() && self::isItMe( $this->userName ) && isset($this->content_actions['edit']) && $namespace == NS_USER) {
-			if (count(SpecialUserInterview::getUserQuestions() > 0)) { // if there are questions
-				if ($wgRequest->getVal( 'userinterviewaction' ) == 'sent') { // save the questions
-					SpecialUserInterview::saveUserAnswersHTML();
-				}
-				else { // show the question alert
-					$this->userInterview = SpecialUserInterview::getUserQuestionsHTML();
-				}
-			}
-		}
-		 */
-
 		// page type specific stuff
 		if ($namespace == NS_USER) {
 			// edit button
