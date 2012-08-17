@@ -23,7 +23,6 @@ import com.wikia.webdriver.pageObjects.PageObject.WikiPage.WikiArticlePageObject
 public class ImageServing extends TestTemplate {
 	private String file = "Image001.jpg";
 	private String[] ListOfFiles = {"Image001.jpg","Image002.jpg", "Image003.jpg", "Image004.jpg", "Image005.jpg", "Image006.jpg", "Image007.jpg", "Image008.jpg", "Image009.jpg", "Image010.jpg"};
-	private String Domain = Global.DOMAIN;
 	private String wikiArticle = "QAautoPage";
 	private String Caption = "QAcaption1";
 	private String Caption2 = "QAcaption2";
@@ -38,7 +37,7 @@ public class ImageServing extends TestTemplate {
 	{
 	
 		startBrowser();
-	WikiBasePageObject wiki = new WikiBasePageObject(driver, Domain);
+	WikiBasePageObject wiki = new WikiBasePageObject(driver, Global.DOMAIN);
 	SpecialNewFilesPageObject wikiSpecialNF = wiki.OpenSpecialNewFiles();
 	
 	CommonFunctions.logIn(Properties.userName2, Properties.password2);
@@ -58,7 +57,7 @@ public class ImageServing extends TestTemplate {
 	public void ImageServing002_SpecialUploadTest()
 	{
 		startBrowser();
-		WikiBasePageObject wiki = new WikiBasePageObject(driver, Domain);
+		WikiBasePageObject wiki = new WikiBasePageObject(driver, Global.DOMAIN);
 		 SpecialUploadPageObject wikiSpecialU = wiki.OpenSpecialUpload();
 		CommonFunctions.logIn(Properties.userName2, Properties.password2);
 		wikiSpecialU.TypeInFileToUploadPath(file);
@@ -74,7 +73,7 @@ public class ImageServing extends TestTemplate {
 	public void ImageServing003_SpecialMultipleUploadTest()
 	{
 		startBrowser();
-		WikiBasePageObject wiki = new WikiBasePageObject(driver, Domain);
+		WikiBasePageObject wiki = new WikiBasePageObject(driver, Global.DOMAIN);
 		SpecialMultipleUploadPageObject wikiSpecialMU = wiki.OpenSpecialMultipleUpload();
 		CommonFunctions.logIn(Properties.userName2, Properties.password2);
 		wikiSpecialMU.TypeInFilesToUpload(ListOfFiles);
@@ -90,7 +89,7 @@ public class ImageServing extends TestTemplate {
 	public void ImageServing004_AddingImages()
 	{
 		startBrowser();
-		WikiBasePageObject wiki = new WikiBasePageObject(driver, Domain);
+		WikiBasePageObject wiki = new WikiBasePageObject(driver, Global.DOMAIN);
 		WikiArticlePageObject article = wiki.OpenArticle(wikiArticle);
 		CommonFunctions.logIn(Properties.userName2, Properties.password2);
 		WikiArticleEditMode editArticle = article.Edit();
@@ -117,7 +116,7 @@ public class ImageServing extends TestTemplate {
 	public void ImageServing005_ModifyingImages()
 	{
 		startBrowser();
-		WikiBasePageObject wiki = new WikiBasePageObject(driver, Domain);
+		WikiBasePageObject wiki = new WikiBasePageObject(driver, Global.DOMAIN);
 		WikiArticlePageObject article = wiki.OpenArticle(wikiArticle);
 		CommonFunctions.logIn(Properties.userName2, Properties.password2);
 		WikiArticleEditMode editArticle = article.Edit();
@@ -148,7 +147,7 @@ public class ImageServing extends TestTemplate {
 	public void ImageServing006_RemovingImages()
 	{
 		startBrowser();
-		WikiBasePageObject wiki = new WikiBasePageObject(driver, Domain);
+		WikiBasePageObject wiki = new WikiBasePageObject(driver, Global.DOMAIN);
 		WikiArticlePageObject article = wiki.OpenArticle(wikiArticle);
 		CommonFunctions.logIn(Properties.userName2, Properties.password2);
 		WikiArticleEditMode editArticle = article.Edit();
@@ -178,7 +177,7 @@ public class ImageServing extends TestTemplate {
 	public void ImageServing007_AddingGalleries()
 	{
 		startBrowser();
-		WikiBasePageObject wiki = new WikiBasePageObject(driver, Domain);
+		WikiBasePageObject wiki = new WikiBasePageObject(driver, Global.DOMAIN);
 		WikiArticlePageObject article = wiki.OpenArticle(wikiArticle);
 		CommonFunctions.logIn(Properties.userName2, Properties.password2);
 		WikiArticleEditMode editArticle = article.Edit();
@@ -206,7 +205,7 @@ public class ImageServing extends TestTemplate {
 	public void ImageServing008_AddingSlideshow()
 	{
 		startBrowser();
-		WikiBasePageObject wiki = new WikiBasePageObject(driver, Domain);
+		WikiBasePageObject wiki = new WikiBasePageObject(driver, Global.DOMAIN);
 		WikiArticlePageObject article = wiki.OpenArticle(wikiArticle);
 		CommonFunctions.logIn(Properties.userName2, Properties.password2);
 		WikiArticleEditMode editArticle = article.Edit();
@@ -234,7 +233,7 @@ public class ImageServing extends TestTemplate {
 	public void ImageServing009_AddingSliders()
 	{
 		startBrowser();
-		WikiBasePageObject wiki = new WikiBasePageObject(driver, Domain);
+		WikiBasePageObject wiki = new WikiBasePageObject(driver, Global.DOMAIN);
 		WikiArticlePageObject article = wiki.OpenArticle(wikiArticle);
 		CommonFunctions.logIn(Properties.userName2, Properties.password2);
 		WikiArticleEditMode editArticle = article.Edit();
@@ -262,7 +261,7 @@ public class ImageServing extends TestTemplate {
 	public void ImageServing010_AddingVideo()
 	{
 		startBrowser();
-		WikiBasePageObject wiki = new WikiBasePageObject(driver, Domain);
+		WikiBasePageObject wiki = new WikiBasePageObject(driver, Global.DOMAIN);
 		WikiArticlePageObject article = wiki.OpenArticle(wikiArticle);
 		CommonFunctions.logIn(Properties.userName2, Properties.password2);
 		WikiArticleEditMode editArticle = article.Edit();
@@ -290,7 +289,7 @@ public class ImageServing extends TestTemplate {
 	public void ImageServing011_AddingVideoThroughRV()
 	{
 		startBrowser();
-		WikiBasePageObject wiki = new WikiBasePageObject(driver, Domain);
+		WikiBasePageObject wiki = new WikiBasePageObject(driver, Global.DOMAIN);
 		WikiArticlePageObject article = wiki.OpenArticle(wikiArticle);
 		CommonFunctions.logIn(Properties.userName2, Properties.password2);
 		article.VerifyRVModulePresence();
