@@ -5,6 +5,7 @@ import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
 
 import com.wikia.webdriver.Common.CommonFunctions;
+import com.wikia.webdriver.Common.Global;
 import com.wikia.webdriver.Properties.Properties;
 import com.wikia.webdriver.Templates.TestTemplate;
 import com.wikia.webdriver.pageObjects.PageObject.HomePageObject;
@@ -25,11 +26,11 @@ public class CreateAWikiTests_misc extends TestTemplate
 	public void CreateNewWiki_misc_001_log_in_browser_back_button()
 	{
 		startBrowser();
-		driver.get("http://community.wikia.com/wiki/Special:UserLogout?returnto=User "+Properties.userName);
+		driver.get(Global.LIVE_DOMAIN + "wiki/Special:UserLogout?returnto=User "+Properties.userName);
 		HomePageObject home = new HomePageObject(driver);
 		home.openHomePage();
 		CommonFunctions.logIn();
-		CreateNewWikiPageObjectStep1 createNewWiki1 = home.StartAWiki();
+		CreateNewWikiPageObjectStep1 createNewWiki1 = home.startAWiki();
 		String timeStamp = createNewWiki1.getTimeStamp();
 		wikiName = "QaTest"+timeStamp;
 		createNewWiki1.typeInWikiName(wikiName);
@@ -55,10 +56,10 @@ public class CreateAWikiTests_misc extends TestTemplate
 	public void CreateNewWiki_misc_002_log_in_facebook_button_logged_out()
 	{
 		startBrowser();
-		driver.get("http://community.wikia.com/wiki/Special:UserLogout?returnto=User "+Properties.userName);
+		driver.get(Global.LIVE_DOMAIN + "wiki/Special:UserLogout?returnto=User "+Properties.userName);
 		HomePageObject home = new HomePageObject(driver);
 		home.openHomePage();
-		CreateNewWikiPageObjectStep1 createNewWiki1 = home.StartAWiki();
+		CreateNewWikiPageObjectStep1 createNewWiki1 = home.startAWiki();
 		String timeStamp = createNewWiki1.getTimeStamp();
 		wikiName = "QaTest"+timeStamp;
 		createNewWiki1.typeInWikiName(wikiName);
