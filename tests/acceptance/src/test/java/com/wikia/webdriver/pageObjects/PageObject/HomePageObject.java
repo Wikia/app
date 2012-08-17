@@ -8,6 +8,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
+import com.wikia.webdriver.Common.Global;
 import com.wikia.webdriver.Logging.PageObjectLogging;
 import com.wikia.webdriver.pageObjects.PageObject.CreateNewWiki.CreateNewWikiPageObjectStep1;
 import com.wikia.webdriver.pageObjects.PageObject.Hubs.EntertainmentHubPageObject;
@@ -40,7 +41,7 @@ public class HomePageObject extends BasePageObject{
 	
 	public void openHomePage()
 	{
-		driver.get(liveDomain);
+		driver.get(Global.LIVE_DOMAIN);
 		driver.getCurrentUrl();
 	}
 	
@@ -63,10 +64,10 @@ public class HomePageObject extends BasePageObject{
 		waitForElementByCss("div#UserLoginDropdown div.error-msg");
 	}
 	
-	public CreateNewWikiPageObjectStep1 StartAWiki()
+	public CreateNewWikiPageObjectStep1 startAWiki()
 	{
 		startWikiButton.click();
-		verifyURL("http://www.wikia.com/Special:CreateNewWiki?uselang=en");
+		verifyURL(Global.LIVE_DOMAIN+"Special:CreateNewWiki?uselang=en");
 		return new CreateNewWikiPageObjectStep1(driver);
 	}
 	
