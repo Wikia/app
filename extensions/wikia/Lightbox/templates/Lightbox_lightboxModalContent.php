@@ -116,7 +116,7 @@
 				<h2><?= wfMsg('lightbox-more-info-filelinks-heading') ?></h2>
 				<ul>
 				{{#articles}}
-					<li><a href="{{articleUrl}}" target="_blank">{{articleTitle}}</a></li>
+					<li><a href="{{url}}" target="_blank">{{title}}</a></li>
 				{{/articles}}
 				</ul>
 			</div>

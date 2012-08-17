@@ -317,7 +317,7 @@
 		 * @param integer $wikiId
 		 * @return array $videoviews [ array( 'YYYY-MM-DD' => videoviews ) ]
 		 */
-		public static function getVideoViewsByTitleTotal( $title, $startDate = null, $endDate = null, $wikiId = null ) {
+		public static function getVideoViewsByTitleTotal( $title, $periodId = null, $startDate = null, $endDate = null, $wikiId = null ) {
 			$app = F::app();
 
 			$app->wf->ProfileIn( __METHOD__ );
@@ -334,12 +334,14 @@
 				$startDate = '2012-07-01'; // start tracking video view
 			}
 
-			$memKey = $app->wf->SharedMemcKey( 'datamart', 'total_video_views', $wikiId, $startDate, $endDate, md5($title) );
+			if ( empty($periodId) ) {
+				$periodId = self::PERIOD_ID_MONTHLY;
+			}
+
+			$memKey = $app->wf->SharedMemcKey( 'datamart', 'total_video_views', $wikiId, $periodId, $startDate, $endDate, md5($title) );
 			$videoViews = $app->wg->Memc->get( $memKey );
 			if ( $videoViews === false ) {
-				$periodId = self::PERIOD_ID_MONTHLY;
 				$videoViews = 0;
-
 				if ( !empty($app->wg->StatsDBEnabled) ) {
 					$db = $app->wf->GetDB( DB_SLAVE, array(), $app->wg->DatamartDB );
 

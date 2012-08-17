@@ -30,7 +30,11 @@ class RelatedVideosController extends WikiaController {
 		$rvs = new RelatedVideosService();
 		$videos = $rvs->getRVforArticleId( $this->app->wg->title->getArticleId() );
 		
-		$this->setVal( 'videos', $videos );
+		$this->linkToSpecialVideos = SpecialPage::getTitleFor("Videos")->escapeLocalUrl();
+		$this->videos = $videos;
+
+		$mediaService = F::build( 'MediaQueryService' );
+		$this->totalVideos = $mediaService->getTotalVideos();
 	}
 
 	public function getVideo(){

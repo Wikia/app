@@ -167,6 +167,7 @@ class WikiaFileHelper extends Service {
 		$attribs = array(
 			'class' => 'info-overlay-title',
 			'style' => 'max-width:'.$width.'px;',
+			'itemprop' => 'name',
 		);
 
 		return Xml::element( 'span', $attribs, $title, false );
@@ -178,6 +179,7 @@ class WikiaFileHelper extends Service {
 		if ( !empty($duration) ) {
 			$attribs = array(
 				'class' => 'info-overlay-duration',
+				'itemprop' => 'duration',
 			);
 
 			$html = Xml::element( 'span', $attribs, "($duration)", false );
@@ -336,6 +338,7 @@ class WikiaFileHelper extends Service {
 
 					$mediaPage = F::build( 'WikiaVideoPage', array($fileTitle) );
 
+					$data['providerName'] = $file->getProviderName();
 				} else {
 
 					$width = $width > $config['imageMaxWidth'] ? $config['imageMaxWidth'] : $width;
@@ -345,6 +348,10 @@ class WikiaFileHelper extends Service {
 				$thumb = $file->transform( array('width'=>$width, 'height'=>$height), 0 );
 				$user = F::build('User', array( $file->getUser('id') ), 'newFromId' );
 
+				// get article list
+				$mediaQuery =  F::build( 'ArticlesUsingMediaQuery' , array( $fileTitle ) );
+				$articleList = $mediaQuery->getArticleList();
+
 				$data['imageUrl'] = $thumb->getUrl();
 				$data['fileUrl'] = $fileTitle->getLocalUrl();
 				$data['rawImageUrl'] = $file->getUrl();
@@ -353,25 +360,38 @@ class WikiaFileHelper extends Service {
 				$data['userThumbUrl'] = F::build( 'AvatarService', array($user, $config['userAvatarWidth'] ), 'getAvatarUrl' );
 				$data['userPageUrl'] = $user->getUserPage()->getFullURL();
 				$data['description']  = $mediaPage->getContent();
-
-				if ( WikiaFileHelper::isFileTypeVideo($file) ) {
-					$data['providerName'] = $file->getProviderName();
-				}
-
-				$mediaQuery =  F::build( 'ArticlesUsingMediaQuery' , array( $fileTitle ) );
-				$articlesData = $mediaQuery->getArticleList();
-
-				if ( is_array($articlesData) ) {
-					foreach ( $articlesData as $art ) {
-						$data['articles'][] = array( 'articleUrl' => $art['url'], 'articleTitle' => $art['title'], 'articleNS' => $art['ns'] );
-					}
-				}
-
+				$data['articles'] = $articleList;
 			}
 		}
 
 		return $data;
-
 	}
 
+	// truncate article list
+	public static function truncateArticleList( $articles, $limit = 2 )  {
+		$app = F::app();
+
+		$isTruncated = 0;
+		$truncatedList = array();
+		if( !empty($articles) ) {
+			foreach( $articles as $article ) {
+				$article = str_replace( "_", " ", $article );
+
+				// Create truncated list
+				if ( count($truncatedList) <= $limit ) {
+					if ( $article['ns'] == NS_MAIN
+						|| ( (!empty($app->wg->ContentNamespace)) && in_array($article['ns'], $app->wg->ContentNamespace) ) ) {
+							$truncatedList[] = $article;
+					}
+				}
+			}
+
+			if ( count($truncatedList) > $limit ) {
+				array_pop( $truncatedList );
+				$isTruncated = 1;
+			}
+		}
+
+		return array( $truncatedList, $isTruncated );
+	}
 }

@@ -94,4 +94,10 @@ a:hover .Wikia-video-play-button, .Wikia-video-play-button:hover {
 }
 
 .Wikia-video-title-bar .title { display:block; text-decoration:none; color:white; padding-left:5px; overflow-x: hidden; white-space: nowrap;  }
-.Wikia-video-title-bar .info { display:block; text-decoration:none; color:white; font-size:11px; padding-left:5px; }   
+.Wikia-video-title-bar .info { display:block; text-decoration:none; color:white; font-size:11px; padding-left:5px; }
+
+// Fix styles in monobook
+
+.skin-monobook a.image.video {
+	display: inline-block;
+}

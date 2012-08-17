@@ -4,7 +4,7 @@
  */
 class MediaQueryService extends Service {
 
-	const MEDIA_TYPE_VIDE0 = 'video';
+	const MEDIA_TYPE_VIDEO = 'video';
 	const MEDIA_TYPE_IMAGE = 'image';
 
 	/**
@@ -149,7 +149,7 @@ class MediaQueryService extends Service {
 						if ( !empty( $file ) ) {
 							if ( $file->canRender() ) {
 								$titles[] = array('title' => $row->il_to,
-										'type' => WikiaFileHelper::isTitleVideo( $media ) ? self::MEDIA_TYPE_VIDE0 : self::MEDIA_TYPE_IMAGE);
+										'type' => WikiaFileHelper::isTitleVideo( $media ) ? self::MEDIA_TYPE_VIDEO : self::MEDIA_TYPE_IMAGE);
 							}
 						}
 					}
@@ -233,10 +233,177 @@ class MediaQueryService extends Service {
 		foreach( $list as $title ) {
 			$output[] = array(
 				'title' => $title,
-				'type'  => WikiaFileHelper::isTitleVideo( $title ) ? self::MEDIA_TYPE_VIDE0 : self::MEDIA_TYPE_IMAGE
+				'type'  => WikiaFileHelper::isTitleVideo( $title ) ? self::MEDIA_TYPE_VIDEO : self::MEDIA_TYPE_IMAGE
 			);
 		}
 		return $output;
 
 	}
+
+	/**
+	 * get list of all videos (order by timestamp)
+	 * @param integer $limit
+	 * @return array $videoList
+	 */
+	public function getVideoList( $onlyPremium = false, $limit = 10000 ) {
+		$this->app->wf->ProfileIn( __METHOD__ );
+
+		$memKey = $this->getMemKeyVideoList( $onlyPremium );
+		$videoList = $this->app->wg->Memc->get( $memKey );
+		if ( !is_array($videoList) ) {
+			$db = $this->app->wf->GetDB( DB_SLAVE );
+
+			$exclusion = "img_name is null AND lower(il_to) != 'placeholder' ";
+			$excludeList = array( '.png', '.jpg', '.jpeg', '.ogg', '.ico', '.svg', '.mp3', '.wav', '.midi' );
+			foreach( $excludeList as $exclude ) {
+				$exclusion .= " AND lower(il_to) not like '%".$exclude."'";
+			}
+
+			if ( $onlyPremium ) {
+				$sqlWhere[] = $exclusion;
+			} else {
+				$sqlWhere[] = "img_media_type = '".MEDIATYPE_VIDEO."' or ( ".$exclusion." )";
+			}
+
+			$sqlOptions = array( 'ORDER BY' => 'img_timestamp DESC' );
+
+			// check for limit
+			if ( !empty($limit) ) {
+				$sqlOptions['LIMIT'] = $limit;
+			}
+
+			$result = $db->select(
+				array(
+					'imagelinks',
+					'image'
+				),
+				array(
+					'distinct il_to as name',
+				),
+				$sqlWhere,
+				__METHOD__,
+				$sqlOptions,
+				array(
+					'image' => array(
+						'LEFT JOIN',
+						array( 'il_to=img_name' )
+					)
+				)
+			);
+
+			$videoList = array();
+			while( $row = $db->fetchObject($result) ) {
+				$title = F::build( 'Title', array( $row->name, NS_FILE ), 'newFromText' );
+				$file = $this->app->wf->FindFile( $title );
+				if ( $file instanceof File && $file->exists()
+					&& F::build( 'WikiaFileHelper', array($title), 'isTitleVideo' ) ) {
+					$videoList[] = array(
+						'name' => $row->name,
+						'timestamp' => $file->getTimestamp(),
+					);
+				}
+			}
+
+			// sort by timestamp
+			uasort( $videoList, array($this, 'sortByMostRecent') );
+
+			$this->app->wg->Memc->set( $memKey, $videoList, 60*60*24 );
+		}
+
+		$this->app->wf->ProfileOut( __METHOD__ );
+
+		return $videoList;
+	}
+
+	// get memcache key for video list
+	protected function getMemKeyVideoList( $onlyPremium = false ) {
+		return $this->app->wf->MemcKey(  'videos', 'video_list', intval($onlyPremium) );
+	}
+
+	// sort by most recently added
+	protected function sortByMostRecent( $a, $b ) {
+		$result = ( $a['timestamp'] < $b['timestamp'] ) ? 1 : -1;
+		return $result;
+	}
+
+	// get number of total videos
+	public function getTotalVideos() {
+		$this->app->wf->ProfileIn( __METHOD__ );
+
+		$memKey = $this->getMemKeyTotalVideos();
+		$totalVideos = $this->app->wg->Memc->get( $memKey );
+		if ( !is_numeric($totalVideos) ) {
+			$videoList = $this->getVideoList();
+			$totalVideos = count( $videoList );
+
+			$this->app->wg->Memc->set( $memKey, $totalVideos, 60*60*24 );
+		}
+
+		$this->app->wf->ProfileOut( __METHOD__ );
+		return $totalVideos;
+	}
+
+	//get memcache key for total videos
+	protected function getMemKeyTotalVideos() {
+		return $this->app->wf->MemcKey( 'videos', 'total_videos' );
+	}
+
+	public function clearCacheVideoList() {
+		$this->app->wg->Memc->delete( $this->getMemKeyVideoList() );
+	}
+
+	public function clearCachePremiumVideoList() {
+		$this->app->wg->Memc->delete( $this->getMemKeyVideoList( true ) );
+	}
+
+	public function clearCacheTotalVideos() {
+		$this->app->wg->Memc->delete( $this->getMemKeyTotalVideos() );
+	}
+
+	// Hook: clear cache after file upload
+	public static function onFileUpload( $file, $reupload, $hasDescription ) {
+		$title = $file->getTitle();
+		if ( $title instanceof Title && F::build( 'WikiaFileHelper', array( $file ), 'isFileTypeVideo' ) ) {
+			$mediaService = F::build( __CLASS__ );
+			if ( $file->isLocal() ) {
+				$mediaService->clearCacheVideoList();
+			} else {
+				$mediaService->clearCachePremiumVideoList();
+			}
+
+			if ( !$reupload ) {
+				$mediaService->clearCacheTotalVideos();
+			}
+		}
+
+		return true;
+	}
+
+	// Hook: clear cache for premium videos
+	public static function onArticleSaveComplete( $article, $user, $revision, $status ) {
+		$insertedImages = Wikia::getVar( 'imageInserts' );
+		$imageDeletes = Wikia::getVar( 'imageDeletes' );
+		
+		$changedImages = $imageDeletes;
+		foreach( $insertedImages as $img ) {
+			$changedImages[ $img['il_to'] ] = true;
+		}
+		
+		foreach( $changedImages as $imageDBName => $dummy ) {
+			$title = F::build( 'Title', array( NS_FILE, $imageDBName ), 'makeTitle' );
+			if ( $title instanceof Title ) {
+				$file = wfFindFile( $title );
+				if ( $file instanceof File && $file->exists() && !$file->isLocal()
+					&& F::build( 'WikiaFileHelper', array( $file ), 'isFileTypeVideo' ) ) {
+					$mediaService = F::build( __CLASS__ );
+					$mediaService->clearCachePremiumVideoList();
+					$mediaService->clearCacheTotalVideos();
+					break;
+				}
+			}
+		}
+
+		return true;
+	}
+
 }

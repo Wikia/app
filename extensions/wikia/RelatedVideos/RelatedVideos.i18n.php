@@ -4,7 +4,7 @@ $messages = array();
 
 $messages['en'] = array(
 	'related-videos-tally' => 'Related Videos',
-	'related-videos-tally-article' => 'Videos on this article',
+	'related-videos-tally-article' => 'Videos on this wiki',
 	'related-videos-added-by' => 'Added by',
 	'related-videos-remove' => 'Remove',
 	'related-videos-add-video' => 'Add a video',

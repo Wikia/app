@@ -7,8 +7,11 @@
 
 @import "DropdownColors";
 
+$ddHeight: 20px;
+
 .WikiaDropdown {
 	font-size: 12px;
+	position: relative;
 
 	.dropdown {
 		@include border-radius(3px);
@@ -17,10 +20,13 @@
 		background-color: $Dropdown-color-background;
 		border: 1px solid $Dropdown-color-border;
 		display: none;
+		left: 0;
 		margin-bottom: 10px;
 		min-width: 200px;
 		overflow-x: hidden;
 		overflow-y: auto;
+		position: absolute;
+		top: $ddHeight+1;
 		z-index: $zTop;
 	}
 	
@@ -35,11 +41,15 @@
 	}
 
 	.dropdown-item {
-		cursor: pointer;
 		display: block;
-		line-height: 30px;
+		line-height: $ddHeight;
 		margin: 0;
-		padding: 0 10px;
+		
+		label {
+			cursor: pointer;
+			display: block;
+			padding: 0 10px;
+		}
 
 		&:hover {
 			background-color: $Dropdown-color-hover-background;
@@ -54,47 +64,33 @@
 		display: block;
 	}
 
-	&.MultiSelect {
+	.selected-items {
+		@include border-radius(3px);
+
+		background-color: $Dropdown-color-background;
+		border: 1px solid $Dropdown-color-border;
+		cursor: pointer;
+		line-height: $ddHeight;
+		min-height: $ddHeight;
+		min-width: 180px;
+		padding: 0 25px 0 10px;
 		position: relative;
 
-		.dropdown {
-			left: 0;
+		.arrow {
+			@include arrow(4px, $Dropdown-color-arrow);
+			@include opacity(70);
 			position: absolute;
-			top: 0;
+			right: 10px;
+			top: 45%;
 		}
 
-		.dropdown-item {
-			input[type="checkbox"] {
-				margin-right: 10px;
-			}
-
-			label {
-				display: block;
-			}
-		}
-
-		.selected-items {
-			@include border-radius(3px);
-
-			background-color: $Dropdown-color-background;
-			border: 1px solid $Dropdown-color-border;
-			cursor: pointer;
-			line-height: 30px;
-			min-height: 30px;
-			min-width: 180px;
-			padding: 0 25px 0 10px;
-			position: relative;
-
-			&:hover {
-				background-color: $Dropdown-color-hover-background;
-			}
-
+		&:hover {
+			background-color: $Dropdown-color-hover-background;
 			.arrow {
-				@include arrow(4px, $Dropdown-color-arrow);
-				position: absolute;
-				right: 10px;
-				top: 50%;
+				@include opacity(100);
 			}
 		}
+
 	}
+
 }

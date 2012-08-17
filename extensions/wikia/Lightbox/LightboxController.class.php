@@ -184,8 +184,8 @@ class LightboxController extends WikiaController {
 
 				// Create truncated list for lightbox header
 				if ( count($smallerArticleList) < 3 ) {
-					if ( $article['articleNS'] == NS_MAIN
-						|| ( (!empty($this->wg->ContentNamespace)) && in_array($article['articleNS'], $this->wg->ContentNamespace) ) ) {
+					if ( $article['ns'] == NS_MAIN
+						|| ( (!empty($this->wg->ContentNamespace)) && in_array($article['ns'], $this->wg->ContentNamespace) ) ) {
 							$smallerArticleList[] = $article;
 					}
 				}

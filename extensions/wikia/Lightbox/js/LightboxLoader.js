@@ -43,7 +43,7 @@ var LightboxLoader = {
 			Lightbox.clearTrackingTimeouts();
 		}
 	},
-	videoThumbWidthThreshold: 320,
+	videoThumbWidthThreshold: 400,
 	log: function(content) {
 		$().log(content, "LightboxLoader");
 	},

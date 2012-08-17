@@ -94,6 +94,7 @@ class AdminDashboardLogic {
 				"UserSignup",
 				"UserPathPrediction",
 				"Version",
+				"Videos",
 				"WhereIsExtension",
 				"WikiActivity",
 				"WikiaHubsV2",
