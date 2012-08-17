@@ -8,7 +8,7 @@ $messages = array();
 
 $messages['en'] = array(
 	'skinchooser-desc' => 'Allows users to choose skins in their preferences',
-	'new-look' => 'New Wikia Look',
+	'new-look' => 'Wikia',
 	'site-layout' => 'Site Layouts',
 );
 
