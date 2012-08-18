@@ -103,7 +103,9 @@ class RelatedVideosHookHandler {
 		$title = $app->wg->Title;
 		$namespace = $title->getNamespace();
 
-		if( $title->exists() && $app->wg->request->getVal( 'diff' ) === null && ( $namespace == NS_MAIN ) ) {
+		if( $title->exists() && $app->wg->request->getVal( 'diff' ) === null 
+			&& ( $namespace == NS_MAIN || $namespace == NS_FILE || $namespace == NS_CATEGORY
+				|| ( (!empty($app->wg->ContentNamespace)) && in_array($namespace, $app->wg->ContentNamespace) ) ) ) {
 			$pos = $app->wg->User->isAnon() ? 1301 : 1281;
 			$modules[$pos] = array('RelatedVideosRail', 'index', null);
 		}
