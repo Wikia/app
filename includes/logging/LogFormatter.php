@@ -229,13 +229,13 @@ class LogFormatter {
 			case 'protect':
 				switch( $entry->getSubtype() ) {
 				case 'protect':
-					$text = wfMsgExt( 'protectedarticle', $msgOpts, $target . ' ' . $parameters[0] );
+					$text = wfMsgExt( 'protectedarticle', $msgOpts, $target ) . ' ' . $parameters[0];
 						break;
 				case 'unprotect':
 					$text = wfMsgExt( 'unprotectedarticle', $msgOpts, $target );
 						break;
 				case 'modify':
-					$text = wfMsgExt( 'modifiedarticleprotection', $msgOpts, $target . ' ' . $parameters[0] );
+					$text = wfMsgExt( 'modifiedarticleprotection', $msgOpts, $target ) . ' ' . $parameters[0];
 						break;
 				}
 				break;
