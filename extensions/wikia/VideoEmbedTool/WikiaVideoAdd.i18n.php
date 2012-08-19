@@ -736,6 +736,20 @@ $messages['sv'] = array(
 	'wva-thumbnail-upload-failed' => 'Inbäddningen av videoklippet misslyckades; det gick inte att hämta en miniatyr',
 );
 
+/** Tamil (தமிழ்)
+ * @author மதனாஹரன்
+ */
+$messages['ta'] = array(
+	'wva-success' => 'காணொளிப் பக்கம் $1 வெற்றிகரமாகச் சேர்க்கப்பட்டது.',
+	'wva-name' => 'பெயரை உள்ளிடவும்:',
+	'wva-url' => 'உரலியை உள்ளிடவும்:',
+	'wva-add' => 'சேர்க்கவும்',
+	'wva-title' => 'உரலியிலிருந்து விரைந்து காணொளியைச் சேர்க்கவும்',
+	'wva-notlogged' => 'காணொளிகளைச் சேர்ப்பதற்கு நீங்கள் உள்நுழைய அல்லது பதிவு செய்ய வேண்டும்.',
+	'wva-notallowed' => 'இவ்விக்கியில் நீங்கள் காணொளிகளைச் சேர்க்க முடியாது.',
+	'wva-protected' => 'இக்காணொளி காக்கப்பட்டுள்ளது.',
+);
+
 /** Telugu (తెలుగు)
  * @author Veeven
  */

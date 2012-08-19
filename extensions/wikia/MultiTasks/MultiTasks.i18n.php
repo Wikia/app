@@ -139,17 +139,21 @@ No, the message won\'t be displayed of $1 or $2 was just "1".',
 
 /** Message documentation (Message documentation)
  * @author Kghbln
+ * @author Siebrand
  */
 $messages['qqq'] = array(
 	'multiwikiedit_task_link' => ' "check" as in "verify" or as in "select"?',
 	'multiwikiedit_on' => 'Lego. Probably has leading and trailing parameters. Please add this to the message...',
+	'action-multiwikiedit' => '{{doc-action|multiwikiedit}}',
 	'multidelete_button' => '{{Identical|Delete}}',
 	'multidelete_reason' => '{{Identical|Reason for deletion}}',
 	'multidelete_task_link' => ' "check" as in "verify" or as in "select"?',
 	'multidelete_split_results' => 'Needs plural support for $1 and $2.
 No, the message won\'t be displayed of $1 or $2 was just "1".',
 	'multidelete_max_display_size' => 'Needs plural support for $1',
+	'action-multidelete' => '{{doc-action|multidelete}}',
 	'multiwikirecords' => 'If $1 is a number, add plural support',
+	'action-multiwikifinder' => '{{doc-action|multiwikifinder}}',
 );
 
 /** Afrikaans (Afrikaans)
@@ -854,7 +858,7 @@ $messages['fi'] = array(
 	'multidelete_processing' => 'poistetaan sivuja',
 	'multidelete_selected_wikis' => 'valitut wikit',
 	'multidelete_omitting_invalid' => 'Ohitetaan virheellinen sivu $1.',
-	'multidelete_file_bad_format' => 'Tiedoston tulisi olla raakatekstiä',
+	'multidelete_file_bad_format' => 'Tiedoston tulisi olla muotoilematonta tekstiä',
 	'multidelete_file_missing' => 'Ei voitu lukea annettua tiedostoa',
 	'multidelete_brazilian_portuguese_wikis' => 'kaikki Brasilian portugalinkieliset wikit',
 	'multidelete_hebrew_wikis' => 'kaikki hebreankieliset wikit',
@@ -2013,6 +2017,7 @@ Voer de taak daarna opnieuw uit om alle overgebleven pagina's te verwerken.",
 	'multiwikiedit_tasks_list' => 'Lijst met uit te voeren taken',
 	'multiwikiedit_general_options' => 'Algemene multiwerkingsinstellingen',
 	'multiwikiedit_edit_options' => 'Bewerkingsinstellingen',
+	'action-multiwikiedit' => "meerdere pagina's tegelijk te bewerken",
 	'multidelete' => "Lijst van pagina's verwijderen",
 	'multidelete_button' => 'Verwijderen',
 	'multidelete_help' => "Een verzameling pagina's verwijderen via een achtergrondtaak.
@@ -2071,10 +2076,12 @@ Voer de taak daarna opnieuw uit om alle overgebleven pagina's te verwerken.",
 	'multidelete_french_wikis' => "alle Franse wiki's",
 	'multidelete_swedish_wikis' => "alle Zweedse wiki's",
 	'multidelete_german_wikis' => "alle Duitse wiki's",
+	'action-multidelete' => "een lijst van pagina's te verwijderen",
 	'multiwikifinder' => 'Multiwiki paginazoeker',
 	'multiwikifindpagenames' => 'Paginanamen zoeken',
 	'multiwikienterpagename' => 'Geef een paginanaam op:',
 	'multiwikirecords' => "Gevonden op $1 wiki's",
+	'action-multiwikifinder' => "naar een bepaalde pagina in alle Wikiawiki's te zoeken",
 );
 
 /** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)

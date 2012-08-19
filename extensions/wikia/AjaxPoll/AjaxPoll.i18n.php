@@ -343,7 +343,7 @@ $messages['ja'] = array(
 	'ajaxpoll-summary' => 'この投票は $2 $1 に作成され、これまでに$3人が投票しました。',
 	'ajaxpoll-submit' => '投票',
 	'ajaxpoll-closed' => '投票は既に終了しています。結果をお楽しみください。',
-	'ajaxpoll-submitting' => 'あなたの投票を送信しています。お待ちください・・・',
+	'ajaxpoll-submitting' => '投票を送信しています。お待ちください...',
 );
 
 /** Colognian (Ripoarisch)

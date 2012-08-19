@@ -476,6 +476,7 @@ $messages['es'] = array(
 
 /** Finnish (suomi)
  * @author Centerlink
+ * @author Nike
  */
 $messages['fi'] = array(
 	'founderprogressbar-progress-see-full-list' => 'Katso täydellinen luettelo',
@@ -488,14 +489,14 @@ $messages['fi'] = array(
 	'founderprogressbar-list-skipped-task-desc' => 'Voit suorittaa nämä milloin tahansa.',
 	'founderprogressbar-list-bonus-task-label' => 'Bonustehtävät',
 	'founderprogressbar-page-add10-action' => 'Lisää sivu',
-	'founderprogressbar-mainpage-edit-action' => 'Muokkaa pääsivua',
+	'founderprogressbar-mainpage-edit-action' => 'Muokkaa etusivua',
 	'founderprogressbar-photo-add10-action' => 'Lisää valokuva',
 	'founderprogressbar-category-add3-action' => 'Lisää luokka',
 	'founderprogressbar-photo-add20-action' => 'Lisää valokuva',
 	'founderprogressbar-total-edit75-action' => 'Lisää sivu',
 	'founderprogressbar-category-edit-label' => 'Muokkaa luokkasivua',
 	'founderprogressbar-category-add5-action' => 'Lisää luokka',
-	'founderprogressbar-gallery-add-label' => 'Lisää valokuvavalikoima',
+	'founderprogressbar-gallery-add-label' => 'Lisää kuvagalleria',
 	'founderprogressbar-video-add-label' => 'Lisää video',
 	'founderprogressbar-video-add-action' => 'Lisää video',
 	'founderprogressbar-toptenlist-add-label' => 'Lisää 10-kärjessä -luetteloon',
@@ -945,6 +946,35 @@ $messages['ia'] = array(
 	'founderprogressbar-bonus-edit50-action' => 'Vader a Special:WikiActivity',
 	'founderprogressbar-bonus-edit50-description' => 'Face un effortio stellar e face 50 modificationes in addition a illos que tu ha jam facite pro completar iste carga de bonus.',
 	'founderprogressbar-browse-page-name' => 'Foliar',
+);
+
+/** Japanese (日本語)
+ * @author Shirayuki
+ * @author Tommy6
+ */
+$messages['ja'] = array(
+	'founderprogressbar-widget-label' => '{{SITENAME}} のウィキ作成進行状況',
+	'founderprogressbar-progress-see-full-list' => '完全な一覧を見る',
+	'founderprogressbar-progress-hide-full-list' => '完全な一覧を隠す',
+	'founderprogressbar-list-label' => '{{SITENAME}} のタスク',
+	'founderprogressbar-list-task-label' => '課題',
+	'founderprogressbar-task-call-to-action' => '課題に移動',
+	'founderprogressbar-page-add10-label' => '記事数を$1件にする',
+	'founderprogressbar-page-add10-action' => 'ページを追加',
+	'founderprogressbar-themedesigner-visit-label' => '自分のテーマをカスタマイズ',
+	'founderprogressbar-mainpage-edit-action' => 'メイン ページを編集',
+	'founderprogressbar-photo-add10-action' => '画像を追加',
+	'founderprogressbar-category-add3-action' => 'カテゴリを追加',
+	'founderprogressbar-photo-add20-action' => '画像を追加',
+	'founderprogressbar-total-edit75-action' => 'ページを追加',
+	'founderprogressbar-page-add20-label' => '記事数を$1件にする',
+	'founderprogressbar-page-add20-action' => 'ページを追加',
+	'founderprogressbar-category-edit-label' => 'カテゴリ ページを編集',
+	'founderprogressbar-category-add5-action' => 'カテゴリを追加',
+	'founderprogressbar-gallery-add-label' => '写真ギャラリーを追加',
+	'founderprogressbar-mainpage-addslider-action' => 'メイン ページを編集',
+	'founderprogressbar-video-add-label' => '動画を追加',
+	'founderprogressbar-video-add-action' => '動画を追加',
 );
 
 /** Kurdish (Latin script) (‪Kurdî (latînî)‬)

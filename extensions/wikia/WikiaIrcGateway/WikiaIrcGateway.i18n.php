@@ -269,6 +269,13 @@ $messages['kn'] = array(
 	'ircgate-channel' => 'ಚಾನೆಲ್:',
 );
 
+/** Korean (한국어)
+ * @author 아라
+ */
+$messages['ko'] = array(
+	'ircgate-username' => '사용자 이름:',
+);
+
 /** Colognian (Ripoarisch)
  * @author Purodha
  */

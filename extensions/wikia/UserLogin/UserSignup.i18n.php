@@ -373,6 +373,26 @@ $messages['br'] = array(
 	'usersignup-confirmation-reminder-email-signature' => 'Skipailh Wikia',
 );
 
+/** Czech (česky)
+ * @author Vks
+ */
+$messages['cs'] = array(
+	'usersignup-confirm-page-title' => 'Potvrzení e-mailu',
+	'usersignup-confirm-email-resend-email' => 'Pošlete mi další potvrzovací e-mail',
+	'usersignup-confirm-email-change-email-content' => 'Chci použít jinou e-mailovou adresu.',
+	'usersignup-confirm-email-change-email' => 'Změňit mou e-mailovou adresu',
+	'usersignup-confirm-email-new-email-label' => 'Nový e-mail',
+	'usersignup-confirm-email-update' => 'Aktualizovat',
+	'usersignup-resend-email-heading-success' => 'Nový e-mail odeslán',
+	'usersignup-confirm-page-heading-confirmed-user' => 'Gratulujeme!',
+	'usersignup-confirm-page-subheading-confirmed-user' => 'Vaše e-mailová adresa je už ověřená',
+	'usersignup-confirmation-heading' => 'Už to bude!',
+	'usersignup-confirmation-heading-email-resent' => 'Nový e-mail odeslán',
+	'usersignup-confirmation-subheading' => 'Zkontrolujte si e-maily',
+	'usersignup-confirmation-email_subject' => 'Už to skoro je! Ověřte si účet na Wikia',
+	'usersignup-confirmation-email-signature' => 'Wikia Tým',
+);
+
 /** German (Deutsch)
  * @author PtM
  */
@@ -1631,6 +1651,24 @@ Vuoi controllare quali email ricevere? Vai a: {{fullurl:{{ns:special}}:Preferenc
 	'usersignup-facebook-problem' => "C'è stato un problema di comunicazione con Facebook. Per favore riprova più tardi.",
 );
 
+/** Japanese (日本語)
+ * @author Shirayuki
+ */
+$messages['ja'] = array(
+	'usersignup-page-title' => 'ウィキアに参加',
+	'usersignup-page-captcha-label' => '画像認証',
+	'usersignup-error-invalid-email' => '正しいメール アドレスを入力してください。',
+	'usersignup-facebook-create-account' => 'アカウント作成',
+	'usersignup-facebook-have-an-account-heading' => '既にアカウントをお持ちですか？',
+	'usersignup-confirm-email-change-email' => 'メールアドレスを変更',
+	'usersignup-confirm-email-update' => '更新',
+	'usersignup-confirmation-email-signature' => 'ウィキア チーム',
+	'usersignup-reconfirmation-email-signature' => 'ウィキア チーム',
+	'usersignup-welcome-email-signature' => 'ウィキア チーム',
+	'usersignup-account-creation-email-signature' => 'ウィキア チーム',
+	'usersignup-confirmation-reminder-email-signature' => 'ウィキア チーム',
+);
+
 /** Macedonian (македонски)
  * @author Bjankuloski06
  */
@@ -2255,6 +2293,7 @@ Vil du kontrollere hva slags e-post du får? Gå til: {{fullurl:{{ns:special}}:P
 
 /** Dutch (Nederlands)
  * @author AvatarTeam
+ * @author SPQRobin
  * @author Siebrand
  */
 $messages['nl'] = array(
@@ -2305,6 +2344,7 @@ Klik op de verwijzing in die e-mail om het aanmaken van uw gebruiker af te ronde
 	'usersignup-confirmation-email_subject' => 'U bent bijna klaar. Bevestig uw Wikiagebruiker',
 	'usersignup-confirmation-email-greeting' => 'Hallo $USERNAME,',
 	'usersignup-confirmation-email-signature' => 'Het Wikia-team',
+	'usersignup-reconfirmation-email-sent' => 'Uw e-mailadres is gewijzigd naar $1. We hebben u een nieuwe bevestigings-e-mail verzonden. Bevestig nu het nieuwe e-mailadres.',
 	'usersignup-reconfirmation-email_subject' => 'Bevestig de wijziging van uw e-mailadres op Wikia',
 	'usersignup-reconfirmation-email-greeting' => 'Hallo $USERNAME,',
 	'usersignup-reconfirmation-email-signature' => 'Het Wikia-team',
@@ -2332,10 +2372,12 @@ Klik op de verwijzing in die e-mail om het aanmaken van uw gebruiker af te ronde
 	'usersignup-error-captcha' => 'Het woord dat u hebt opgegeven komt niet overeen met het woord in het venster. Probeer het opnieuw.',
 	'usersignup-account-creation-heading' => 'Afgerond',
 	'usersignup-account-creation-subheading' => 'Er is een e-mail verzonden naar $1.',
+	'usersignup-account-creation-email-subject' => 'Er is voor u een gebruiker aangemaakt op Wikia!',
 	'usersignup-account-creation-email-greeting' => 'Hallo,',
 	'usersignup-account-creation-email-signature' => 'Het Wikia-team',
 	'usersignup-confirmation-reminder-email_subject' => 'We hebben nog niets van u gehoord...',
 	'usersignup-confirmation-reminder-email-greeting' => 'Hallo $USERNAME',
+	'usersignup-confirmation-reminder-email-signature' => 'Het Wikia-team',
 	'usersignup-facebook-problem' => 'Er is een probleem opgetreden in de communicatie met Facebook. Probeer het later opnieuw.',
 );
 

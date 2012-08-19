@@ -45,9 +45,10 @@ $messages['es'] = array(
 
 /** Finnish (suomi)
  * @author Centerlink
+ * @author Nike
  */
 $messages['fi'] = array(
-	'globalnotification-general-ajax-failure' => 'Et saanut selaimellasi yhteyttä Wikiaan.  Yritä myöhemmin uudelleen.',
+	'globalnotification-general-ajax-failure' => 'Yhteyden muodostaminen Wikian palvelimille epäonnistui. Yritä myöhemmin uudelleen.',
 );
 
 /** French (français)

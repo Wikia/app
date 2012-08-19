@@ -152,7 +152,7 @@ $messages['ar'] = array(
 	'admindashboard-control-categories-list-label' => 'كل التصنيفات',
 	'admindashboard-control-add-page-label' => 'أضف صفحة',
 	'admindashboard-control-add-page-tooltip' => 'أضف صفحة إلى الويكي الخاص بك.',
-	'admindashboard-control-add-photo-label' => 'أضف صورة',
+	'admindashboard-control-add-photo-label' => 'إضافة صورة',
 	'admindashboard-control-add-photo-tooltip' => 'أضف صورا جديدة إلى الويكي الخاص بك.',
 	'admindashboard-control-multiple-upload-label' => 'أضف صورا متعددة',
 	'admindashboard-back-to-dashboard' => 'العودة إلى لوحة التحكم',
@@ -218,6 +218,8 @@ $messages['bar'] = array(
  * @author DCLXVI
  */
 $messages['bg'] = array(
+	'admindashboard-loading' => 'Зареждане...',
+	'admindashboard-header' => 'Административно табло',
 	'admindashboard-toolbar-link' => 'Администратор',
 	'admindashboard-controls-wiki-header' => 'Уики',
 	'admindashboard-control-recent-changes-label' => 'Последни промени',
@@ -228,6 +230,7 @@ $messages['bg'] = array(
 	'admindashboard-controls-content-header' => 'Съдържание',
 	'admindashboard-control-categories-list-label' => 'Всички категории',
 	'admindashboard-control-add-page-label' => 'Добавяне на страница',
+	'admindashboard-control-add-photo-label' => 'Добавяне на снимка',
 );
 
 /** Breton (brezhoneg)
@@ -283,8 +286,10 @@ $messages['ca'] = array(
 /** Czech (česky)
  * @author Jezevec
  * @author Mr. Richard Bolla
+ * @author Vks
  */
 $messages['cs'] = array(
+	'admindashboard-header' => 'Administrátorský panel',
 	'admindashboard-toolbar-link' => 'Správce',
 	'admindashboard-tab-advanced' => 'Pokročilé',
 	'admindashboard-tab-general' => 'Obecné',

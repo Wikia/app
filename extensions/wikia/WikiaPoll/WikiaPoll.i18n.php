@@ -46,12 +46,10 @@ $messages['qqq'] = array(
 	'wikiapoll-publish-label' => 'Create/Edit Poll button label for confirming changes',
 	'wikiapoll-error-duplicate' => 'Error message when user tries to create a poll that already exists',
 	'wikiapoll-error-invalid-title' => 'Error message when title of poll is invalid/empty',
-
-	//WikiaMobile
 	'wikiamobile-wikiapoll-open-poll' => 'Text on a button to open poll in a modal',
 	'wikiamobile-wikiapoll-thanks-voting' => 'Message displayed to a user after voting',
 	'wikiamobile-wikiapoll-poll' => 'Title of a modal',
-	'wikiamobile-wikiapoll-user-voted' => 'Message displayed to a user after voting instead of wikiamobile-wikiapoll-open-poll button'
+	'wikiamobile-wikiapoll-user-voted' => 'Message displayed to a user after voting instead of wikiamobile-wikiapoll-open-poll button',
 );
 
 /** Afrikaans (Afrikaans)
@@ -88,7 +86,7 @@ $messages['ar'] = array(
 	'wikiapoll-editpoll-headline' => 'تعديل اقتراع',
 	'wikiapoll-question-label' => 'سؤال',
 	'wikiapoll-addnewitem-label' => 'أضف عنصرًا جديدًا',
-	'wikiapoll-cancel-label' => 'ألغِ',
+	'wikiapoll-cancel-label' => 'إلغاء',
 	'wikiapoll-publish-label' => 'انشر',
 	'wikiapoll-error-duplicate' => 'يوجد اقتراع بهذا الاسم بالفعل.',
 	'wikiapoll-error-invalid-title' => 'نص السؤال غير صالح.',
@@ -203,6 +201,7 @@ $messages['cs'] = array(
 
 /** German (Deutsch)
  * @author LWChris
+ * @author PtM
  */
 $messages['de'] = array(
 	'wikiapoll-desc' => 'Bietet eine einfache Möglichkeit zum Erstellen und Verwalten von Umfragen',
@@ -219,6 +218,10 @@ $messages['de'] = array(
 	'wikiapoll-publish-label' => 'Veröffentlichen',
 	'wikiapoll-error-duplicate' => 'Eine Umfrage mit diesem Namen ist bereits vorhanden.',
 	'wikiapoll-error-invalid-title' => 'Der Fragetext ist ungültig.',
+	'wikiamobile-wikiapoll-open-poll' => 'Deine Meinung?',
+	'wikiamobile-wikiapoll-thanks-voting' => 'Danke für deine Stimme!',
+	'wikiamobile-wikiapoll-poll' => 'Umfrage',
+	'wikiamobile-wikiapoll-user-voted' => 'Für $1 abgestimmt',
 );
 
 /** Zazaki (Zazaki)
@@ -342,6 +345,10 @@ $messages['gl'] = array(
 	'wikiapoll-publish-label' => 'Publicar',
 	'wikiapoll-error-duplicate' => 'Xa existe unha enquisa con ese nome.',
 	'wikiapoll-error-invalid-title' => 'O texto da pregunta non é válido.',
+	'wikiamobile-wikiapoll-open-poll' => 'Que pensa?',
+	'wikiamobile-wikiapoll-thanks-voting' => 'Grazas por votar!',
+	'wikiamobile-wikiapoll-poll' => 'Enquisa',
+	'wikiamobile-wikiapoll-user-voted' => 'Votou $1',
 );
 
 /** Hungarian (magyar)
@@ -694,6 +701,25 @@ $messages['sv'] = array(
 	'wikiapoll-publish-label' => 'Publicera',
 	'wikiapoll-error-duplicate' => 'En omröstning med det namnet finns redan.',
 	'wikiapoll-error-invalid-title' => 'Frågetexten är ogiltig.',
+);
+
+/** Tamil (தமிழ்)
+ * @author மதனாஹரன்
+ */
+$messages['ta'] = array(
+	'wikiapoll-desc' => 'வாக்கெடுப்புகளை உருவாக்கவும் முகாமிக்கவும் ஓர் எளிய வழியை வழங்குகின்றது',
+	'wikiapoll-people-voted' => '{{PLURAL:$1|$1 ஆள் வாக்களித்தார்|$1 ஆட்கள் வாக்களித்தனர்}}',
+	'wikiapoll-question' => '$1?',
+	'wikiapoll-thanks-for-vote' => 'நன்றிகள்!',
+	'wikiapoll-vote' => 'வாக்களிக்கவும்!',
+	'wikiapoll-votes' => '{{PLURAL:$1|$1 வாக்கு|$1 வாக்குகள்}}',
+	'wikiapoll-createpoll-headline' => 'வாக்கெடுப்பை உருவாக்கவும்',
+	'wikiapoll-editpoll-headline' => 'வாக்கெடுப்பைத் தொகுக்கவும்',
+	'wikiapoll-question-label' => 'கேள்வி',
+	'wikiapoll-cancel-label' => 'கைவிடவும்',
+	'wikiapoll-publish-label' => 'வெளியிடவும்',
+	'wikiapoll-error-duplicate' => 'அப்பெயருடனான வாக்கெடுப்பொன்று ஏற்கனவே உள்ளது.',
+	'wikiapoll-error-invalid-title' => 'செல்லாத கேள்வி உரை.',
 );
 
 /** Telugu (తెలుగు)

@@ -346,6 +346,13 @@ $messages['sv'] = array(
 	'wikiawidget' => 'Wikia widgets',
 );
 
+/** Tamil (தமிழ்)
+ * @author மதனாஹரன்
+ */
+$messages['ta'] = array(
+	'wikiawidget' => 'விக்கியாக் கருவிகள்',
+);
+
 /** Telugu (తెలుగు)
  * @author Ravichandra
  */

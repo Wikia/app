@@ -253,11 +253,12 @@ $messages['ang'] = array(
 );
 
 /** Arabic (العربية)
+ * @author Meno25
  * @author OsamaK
  */
 $messages['ar'] = array(
 	'wmu-flickr' => 'فلكر',
-	'wmu-upload-btn' => 'ارفع',
+	'wmu-upload-btn' => 'رفع',
 	'wmu-insert' => 'أدرج',
 	'wmu-name' => 'الاسم',
 	'wmu-license' => 'الرخصة',

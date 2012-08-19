@@ -274,6 +274,15 @@ $messages['br'] = array(
 	'scavengerhunt-label-clue-size' => 'Ment ar font',
 );
 
+/** Czech (česky)
+ * @author Vks
+ */
+$messages['cs'] = array(
+	'scavengerhunt-quit-game-button-quit' => 'Ukončit',
+	'scavengerhunt-quit-game-button-cancel' => 'Zrušit',
+	'scavengerhunt-quit-game-button-stay' => 'Pokračovat ve hře',
+);
+
 /** German (Deutsch)
  * @author George Animal
  * @author LWChris
@@ -1108,6 +1117,26 @@ $messages['ia'] = array(
 $messages['it'] = array(
 	'scavengerhunt-label-entry-form-username' => 'Nome utente',
 	'scavengerhunt-editor-tip-article-title' => "Questa è la posizione della pagina con l'elemento successivo.",
+);
+
+/** Japanese (日本語)
+ * @author Shirayuki
+ */
+$messages['ja'] = array(
+	'scavengerhunt-list-header-name' => 'ゲーム名',
+	'scavengerhunt-list-header-actions' => '操作',
+	'scavengerhunt-list-enabled' => '有効',
+	'scavengerhunt-list-disabled' => '無効',
+	'scavengerhunt-list-edit' => '編集',
+	'scavengerhunt-label-general' => '全般',
+	'scavengerhunt-label-name' => '名前:',
+	'scavengerhunt-button-add' => 'ゲームを追加',
+	'scavengerhunt-button-save' => '保存',
+	'scavengerhunt-button-disable' => '無効化',
+	'scavengerhunt-button-enable' => '有効化',
+	'scavengerhunt-button-delete' => '削除',
+	'scavengerhunt-entry-form-name' => '名前:',
+	'scavengerhunt-entry-form-email' => 'メール アドレス',
 );
 
 /** Kurdish (Latin script) (‪Kurdî (latînî)‬)
@@ -2281,10 +2310,13 @@ $messages['sv'] = array(
 	'scavengerhunt-quit-game-button-quit' => 'Avsluta',
 	'scavengerhunt-quit-game-button-cancel' => 'Avbryt',
 	'scavengerhunt-quit-game-button-stay' => 'Fortsätt spela',
+	'scavengerhunt-label-progressBarHintLabel' => 'Koordinater för ledtrådsetikett',
 	'scavengerhunt-label-entry-form-email' => 'Användar-e-post',
 	'scavengerhunt-label-entry-form-username' => 'Användarnamn',
+	'scavengerhunt-label-progressBarBackgroundSprite' => 'Bakgrundssprite för förloppsindikator',
 	'scavengerhunt-label-progressBarExitSprite' => 'Spritekoordinater för avslutningsknapp',
 	'scavengerhunt-label-startPopupSprite' => 'Koordinater för popup-bildsprite',
+	'scavengerhunt-label-spriteNotFound' => 'Spritekoordinater för jaktobjekt',
 	'scavengerhunt-label-spriteInProgressBar' => 'Koordinater för förloppsmätarsprite',
 	'scavengerhunt-label-spriteInProgressBarHover' => 'Koordinater för förloppsmätarsprite vid hovring',
 	'scavengerhunt-label-spriteInProgressBarNotFound' => 'Förloppsmätarobjekt hittades inte',
@@ -2293,6 +2325,7 @@ $messages['sv'] = array(
 	'scavengerhunt-label-clue-font' => 'Teckendekorationer',
 	'scavengerhunt-label-article-congrats' => 'Gratulationsmeddelande',
 	'scavengerhunt-label-facebook' => 'Facebook-delning',
+	'scavengerhunt-editor-tip-name' => 'Detta är namnet som dyker upp i listan över alla jakter.',
 	'scavengerhunt-editor-tip-landing-title' => 'Detta är sidan där användare går till för att börja jakten.',
 	'scavengerhunt-editor-tip-landing-button-text' => 'Detta är textetiketten på \'start\'-knappen (t.ex., "Klicka här för att starta jakten!")',
 	'scavengerhunt-editor-tip-progressBarBackgroundSprite' => 'Använd dessa koordinater för att ange: <br />

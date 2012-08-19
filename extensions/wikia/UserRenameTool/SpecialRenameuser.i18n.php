@@ -1972,7 +1972,8 @@ $messages['ja'] = array(
 	'userrenametool-logpage' => '利用者名変更記録',
 	'userrenametool-logpagetext' => 'これは、利用者名の変更を記録したものです。',
 	'userrenametool-logentry' => '$1を "$2" へ利用者名変更しました。',
-	'userrenametool-log' => '投稿数$1回。理由: $2',
+	'userrenametool-log' => '{{PLURAL:$1|$1 回の編集}}。
+理由: $2',
 	'userrenametool-move-log' => '名前の変更と共に "[[User:$1|$1]]" を "[[User:$2|$2]]" へ自動的に移動しました。',
 	'right-renameuser' => '利用者名変更',
 );
@@ -2191,16 +2192,16 @@ $messages['kn'] = array(
  * @author 아라
  */
 $messages['ko'] = array(
-	'renameuser' => '계정 이름 바꾸기',
-	'userrenametool-desc' => "계정 이름 변경을 위한 [[Special:Renameuser|특수 문서]]를 추가 (''renameuser'' 권한이 필요합니다)",
-	'userrenametool-old' => '기존 계정 이름:',
+	'renameuser' => '사용자 이름 바꾸기',
+	'userrenametool-desc' => "사용자 이름을 바꾸기 위한 [[Special:UserRenameTool|특수 문서]]를 추가 (''renameuser'' 권한 필요) 및 모든 관련 데이터 처리",
+	'userrenametool-old' => '기존 사용자 이름:',
 	'userrenametool-new' => '새 이름:',
 	'userrenametool-reason' => '바꾸는 이유:',
 	'userrenametool-move' => '사용자 문서와 토론 문서, 하위 문서를 새 사용자 이름으로 이동하기',
 	'userrenametool-reserve' => '나중에 이전의 이름이 사용되지 않도록 차단하기',
 	'userrenametool-warnings' => '경고:',
 	'userrenametool-confirm' => '예, 이름을 변경합니다.',
-	'userrenametool-submit' => '계정 이름 바꾸기',
+	'userrenametool-submit' => '사용자 이름 바꾸기',
 	'userrenametool-errordoesnotexist' => '‘<nowiki>$1</nowiki>’ 사용자가 존재하지 않습니다.',
 	'userrenametool-errorexists' => '‘<nowiki>$1</nowiki>’ 사용자가 이미 존재합니다.',
 	'userrenametool-errorinvalid' => '‘<nowiki>$1</nowiki>’ 사용자 이름이 잘못되었습니다.',
@@ -2213,11 +2214,11 @@ $messages['ko'] = array(
 	'userrenametool-page-moved' => '$1 문서를 $2 문서로 이동했습니다.',
 	'userrenametool-page-unmoved' => '$1 문서를 $2 문서로 이동하지 못했습니다.',
 	'userrenametool-logpage' => '이름 바꾸기 기록',
-	'userrenametool-logpagetext' => '계정 이름 변경 기록입니다.',
+	'userrenametool-logpagetext' => '사용자 이름 바꾸기 기록입니다.',
 	'userrenametool-logentry' => '$1에서 "$2"(으)로 이름을 바꾸었습니다.',
 	'userrenametool-log' => '기여 $1개. 이유: $2',
-	'userrenametool-move-log' => '‘[[User:$1|$1]]’ 사용자를 ‘[[User:$2|$2]]’(으)로 바꾸면서 문서를 자동으로 이동함',
-	'right-renameuser' => '계정 이름 바꾸기',
+	'userrenametool-move-log' => '"[[User:$1|$1]]" 사용자를 "[[User:$2|$2]]" 사용자로 바꾸면서 문서를 자동으로 이동함',
+	'right-renameuser' => '사용자 이름 바꾸기',
 );
 
 /** Colognian (Ripoarisch)

@@ -84,6 +84,9 @@ $messages['bg'] = array(
 	'quickstats-header-date' => 'Дата',
 	'quickstats-header-edits' => 'Редакции',
 	'quickstats-header-photos' => 'Снимки',
+	'quickstats-number-shortening' => '$1K',
+	'quickstats-number-shortening-millions' => '$1M',
+	'quickstats-number-shortening-billions' => '$1B',
 );
 
 /** Breton (brezhoneg)
@@ -160,7 +163,7 @@ $messages['diq'] = array(
 	'quickstats-header-edits' => 'Bıvurne',
 	'quickstats-header-photos' => 'Fotrafi',
 	'quickstats-header-likes' => 'Rındeni',
-	'quickstats-totals-label' => 'Pero piya',
+	'quickstats-totals-label' => 'Pêro piya',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|istatistiki bıvin]]',
 	'quickstats-number-shortening' => '$1K',
 	'quickstats-number-shortening-millions' => '$1M',

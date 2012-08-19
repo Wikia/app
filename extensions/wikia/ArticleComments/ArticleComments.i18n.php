@@ -118,7 +118,7 @@ $messages['ar'] = array(
 	'article-comments-anonymous' => 'مستخدم مجهول',
 	'article-comments-comments' => 'التعليقات ($1)',
 	'article-comments-post' => 'أرسل تعليقا',
-	'article-comments-cancel' => 'ألغِ',
+	'article-comments-cancel' => 'إلغاء',
 	'article-comments-delete' => 'حذف',
 	'article-comments-edit' => 'تعديل',
 	'article-comments-history' => 'التاريخ',
@@ -346,6 +346,7 @@ Wikia
  * @author Jezevec
  * @author Jkjk
  * @author Mr. Richard Bolla
+ * @author Vks
  */
 $messages['cs'] = array(
 	'article-comments-anonymous' => 'Anonymní uživatel',
@@ -378,6 +379,13 @@ $messages['cs'] = array(
 	'wikiamobile-article-comments-more' => 'Nahrát více',
 	'wikiamobile-article-comments-prev' => 'Načíst předchozí',
 	'wikiamobile-article-comments-none' => 'Žádné komentáře',
+	'wikiamobile-article-comments-view' => 'Ukázat odpovědi',
+	'wikiamobile-article-comments-replies' => 'odpovědi',
+	'wikiamobile-article-comments-post-reply' => 'Odpovědět',
+	'wikiamobile-article-comments-post' => 'Poslat',
+	'wikiamobile-article-comments-placeholder' => 'Přidat komentář',
+	'wikiamobile-article-comments-show' => 'Ukázat',
+	'wikiamobile-article-comments-login-post' => 'Prosím, přihlašte se, abyste mohli odesílat komentáře.',
 	'enotif_subject_article_comment' => '$PAGEEDITOR přidal komentář "$PAGETITLE" na {{SITENAME}}.',
 	'enotif_body_article_comment' => 'Vážený $WATCHINGUSERNAME,
 
@@ -705,6 +713,7 @@ $messages['fa'] = array(
  * @author Centerlink
  * @author Ilkea
  * @author Lukkipoika
+ * @author Nike
  * @author Tm T
  * @author Tofu II
  */

@@ -45,6 +45,14 @@ $messages['bs'] = array(
 	'signup' => 'Prijava',
 );
 
+/** Catalan (català)
+ * @author BroOk
+ */
+$messages['ca'] = array(
+	'signup-desc' => "Afegeix l'àlies [[{{#Special:Signup}}]] per [[{{#Special:UserLogin}}/signup]]",
+	'signup' => 'Registrar-se',
+);
+
 /** Czech (česky)
  * @author Dontlietome7
  */
