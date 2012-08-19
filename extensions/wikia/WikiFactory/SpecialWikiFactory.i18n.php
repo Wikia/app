@@ -3481,6 +3481,7 @@ $messages['nl'] = array(
 	'wikifactory-label-ezsharedupload' => 'Eenvoudige gedeelde upload',
 	'wikifactory-label-compare' => 'Vergelijken',
 	'right-wikifactory' => 'Interne instellingen van de wiki wijzigen',
+	'action-wikifactory' => "de interne instellingen voor wiki's te wijzigen",
 	'wikifactory-domain-edit' => 'deze URL bewerken',
 	'wikifactory-domain-remove' => 'deze URL van de wiki verwijderen',
 	'wikifactory-domain-setmain' => 'deze URL in wgServer plaatsen',

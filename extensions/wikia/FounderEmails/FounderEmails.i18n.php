@@ -395,6 +395,7 @@ $messages['bg'] = array(
 	'founderemails-email-0-days-passed-body' => 'Поздравления за създаването на $WIKINAME - вече сте част от общността на Wikia!
 
 -- Екипът на Wikia',
+	'founderemails-email-page-edited-anon-subject' => 'Тайнствен приятел редактира $WIKINAME',
 	'founderemails-email-anon-edit-signature' => 'Екипът на Wikia',
 	'founderemails-email-lot-happening-signature' => 'Екипът на Wikia',
 	'founderemails-email-0-day-addpages-heading' => 'Добавяне на страници.',

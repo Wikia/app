@@ -165,10 +165,11 @@ $messages['it'] = array(
 );
 
 /** Japanese (日本語)
+ * @author Shirayuki
  * @author 青子守歌
  */
 $messages['ja'] = array(
-	'quickcreate-desc' => '匿名利用者のログインとともに、ページの新規作成ボタンを追加する',
+	'quickcreate-desc' => '匿名利用者へのログイン要請機能付きの、ページの新規作成ボタンを追加する',
 	'quickcreate' => 'レシピを送信',
 );
 

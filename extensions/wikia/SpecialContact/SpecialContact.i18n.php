@@ -447,7 +447,7 @@ $messages['ja'] = array(
 普段利用しているメーラーを使いたい、あるいはファイルを添付したいときは、[mailto:community@wikia.com community@wikia.com] にメールを送信してください。',
 	'specialcontact-username' => '利用者名',
 	'specialcontact-wikiname' => 'ウィキ',
-	'specialcontact-realname' => 'あなたの氏名',
+	'specialcontact-realname' => '名前',
 	'specialcontact-yourmail' => 'メールアドレス',
 	'specialcontact-problem' => '件名',
 	'specialcontact-problemdesc' => '本文',

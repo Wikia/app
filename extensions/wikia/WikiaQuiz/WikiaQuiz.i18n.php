@@ -234,6 +234,14 @@ $messages['ca'] = array(
 	'wikiaquiz-game-mute' => 'Atenuar-se',
 );
 
+/** Czech (česky)
+ * @author Vks
+ */
+$messages['cs'] = array(
+	'wikiaquiz-createquiz-headline' => 'Vytvořit kvíz',
+	'wikiaquiz-editquiz-headline' => 'Upravit kvíz',
+);
+
 /** German (Deutsch)
  * @author Avatar
  * @author Dennis07
@@ -1595,20 +1603,56 @@ $messages['sv'] = array(
 
 /** Tamil (தமிழ்)
  * @author Karthi.dr
+ * @author மதனாஹரன்
  */
 $messages['ta'] = array(
+	'wikiaquiz-desc' => 'புதிர்களை உருவாக்கவும் முகாமிக்கவும் ஓர் எளிய வழியை வழங்குகின்றது',
+	'wikiaquiz-createquiz-headline' => 'புதிரை உருவாக்கவும்',
+	'wikiaquiz-editquiz-headline' => 'புதிரைத் தொகுக்கவும்',
+	'wikiaquiz-createquizarticle-headline' => 'புதிர்க் கேள்வியையும் விடைகளையும் உருவாக்கவும்',
+	'wikiaquiz-editquizarticle-headline' => 'புதிர்க் கேள்வியையும் விடைகளையும் தொகுக்கவும்',
 	'wikiaquiz-title-label' => 'தலைப்பு',
+	'wikiaquiz-titlescreentext-label' => 'தலைப்புத் திரை உரை',
+	'wikiaquiz-fbrecommendationtext-label' => 'முகநூல் பரிந்துரை விளக்கம்',
+	'wikiaquiz-titlescreenimages-label' => 'தலைப்புத் திரைப் படிமங்கள்',
+	'wikiaquiz-requireemail-label' => 'ஆட்டத்தின் இறுதியில் ஒரு மின்னஞ்சல் முகவரியை உள்ளிடுமாறு போட்டியாளரை வேண்டவும்',
 	'wikiaquiz-moreinfoarticle-label' => 'கட்டுரைகள்',
 	'wikiaquiz-question-label' => 'கேள்வி',
+	'wikiaquiz-image-label' => 'படிமம் (விருப்பத்துக்குரியது)',
+	'wikiaquiz-explanation-label' => 'விடைக்கான விளக்கம் (விருப்பத்துக்குரியது)',
+	'wikiaquiz-quiz-label' => 'புதிர்',
 	'wikiaquiz-questions-label' => 'கேள்விகள்',
 	'wikiaquiz-answers-label' => 'விடைகள்',
 	'wikiaquiz-answer-label' => 'விடை',
+	'wikiaquiz-correct-label' => 'சரியா?',
 	'wikiaquiz-cancel-label' => 'ரத்து செய்',
 	'wikiaquiz-publish-label' => 'வெளியிடு',
+	'wikiaquiz-error-duplicate-quiz' => 'அப்பெயருடனான புதிரொன்று ஏற்கனவே உள்ளது.',
+	'wikiaquiz-error-duplicate-question' => 'அப்பெயருடனான கேள்வியொன்று ஏற்கனவே உள்ளது.',
+	'wikiaquiz-error-invalid-question' => 'செல்லாத கேள்வி உரை.',
+	'wikiaquiz-error-invalid-image' => 'செல்லாத படிமம்: $1',
+	'wikiaquiz-error-invalid-video' => 'செல்லாத காணொளி: $1',
+	'wikiaquiz-error-missing-answers' => 'நீங்கள் குறைந்தது ஒரு விடையையாவது வழங்க வேண்டும்.',
+	'wikiaquiz-error-invalid-correct-answer' => 'நீங்கள் ஒரு சரியான விடையைக் குறிப்பிட வேண்டும்.',
+	'wikiaquiz-error-invalid-quiz' => 'புதிரின் பெயர் செல்லாதது.',
+	'wikiaquiz-error-invalid-article' => 'செல்லாத கட்டுரை இலக்கம்.',
+	'wikiaquiz-error-invalid-article-with-details' => 'செல்லாத கட்டுரை: $1',
 	'wikiaquiz-game-start-button' => 'விளையாட்டை ஆரம்பி',
+	'wikiaquiz-game-cadence-3' => 'தயார்',
 	'wikiaquiz-game-cadence-1' => 'செல்!',
+	'wikiaquiz-game-question-label' => 'கேள்வி',
+	'wikiaquiz-game-next-button' => 'அடுத்த கேள்வி',
+	'wikiaquiz-game-finish-button' => 'நிறைவு',
+	'wikiaquiz-game-correct-label' => 'சரி! நீங்கள் கலக்குகிறீர்கள்.',
+	'wikiaquiz-game-incorrect-label' => 'தவறு. ஓ.',
+	'wikiaquiz-game-your-score' => 'உங்கள் புள்ளி',
 	'wikiaquiz-game-continue-button' => 'தொடரவும்',
 	'wikiaquiz-game-thanks' => 'விளையாடியதற்கு நன்றி!',
+	'wikiaquiz-game-provide-email' => 'தயவு செய்து உங்கள் மின்னஞ்சல் முகவரியை உள்ளிடவும்',
+	'wikiaquiz-game-email-placeholder' => 'உங்கள்பெயர்@உங்கள்மின்னஞ்சல்.com',
+	'wikiaquiz-game-email-valid-please' => 'தயவு செய்து செல்லுபடியாகும் மின்னஞ்சல் முகவரியொன்றை உள்ளிடவும்.',
+	'wikiaquiz-game-email-error' => 'இம்மின்னஞ்சலை அனுப்பும்போது தவறொன்று ஏற்பட்டுள்ளது: $1',
+	'wikiaquiz-game-mute' => 'அமைதியாக்கவும்',
 );
 
 /** Telugu (తెలుగు)

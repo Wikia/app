@@ -131,8 +131,11 @@ Please [[Special:Contact|contact Wikia]] about the problem.<br />The blocker als
 	'right-phalanxemailblock' => 'Can file, view and manage e-mail based blocks',
 );
 
-/** Message documentation (Message documentation) */
+/** Message documentation (Message documentation)
+ * @author McDutchie
+ */
 $messages['qqq'] = array(
+	'phalanx-add-block' => 'This message is used as a button label (like "Save", "Show preview" and "Show changes" in <code>action=edit</code>). Clicking on the button adds a new block to the Phalanx database. ([[Thread:Support/About_Wikia:Phalanx-add-block/fi/reply|documentation]] by [[User:Jack Phoenix|Jack Phoenix]])',
 	'phalanx-stats-row' => '$1 is a type of block (e.g. user or title), $2 is a user (name or IP), $3 is the URL of a wiki, $4 is a time and date',
 	'phalanx-stats-row-per-wiki' => '$1 is a type of block (e.g. user or title), $2 is a user (name or IP), $3 is a filter ID, $4 is the URL of a wiki, $4 is a time and date, $5 is a link to stats for that filter ID',
 	'action-phalanx' => '{{doc-action|phalanx}}',
@@ -347,6 +350,7 @@ $messages['diq'] = array(
 	'phalanx-stats-table-create' => 'Vıraziya',
 	'phalanx-stats-table-language' => 'Zıwan',
 	'phalanx-stats-table-text' => 'nuşte',
+	'phalanx-stats-table-reason' => 'Sebeb',
 );
 
 /** Spanish (español)
@@ -477,9 +481,9 @@ $messages['fi'] = array(
 	'phalanx-type-user' => 'käyttäjä',
 	'phalanx-type-user-email' => 'sähköpostiosoite',
 	'phalanx-type-answers-question-title' => 'kysymysotsikko',
-	'phalanx-type-answers-recent-questions' => 'äskettäiset kysymykset',
+	'phalanx-type-answers-recent-questions' => 'tuoreet kysymykset',
 	'phalanx-type-wiki-creation' => 'wiki-luominen',
-	'phalanx-add-block' => 'Käytä estoa',
+	'phalanx-add-block' => 'Toteuta esto',
 	'phalanx-edit-block' => 'Tallenna esto',
 	'phalanx-label-filter' => 'Suodatin:',
 	'phalanx-label-reason' => 'Syy:',
@@ -487,15 +491,15 @@ $messages['fi'] = array(
 	'phalanx-label-type' => 'Tyyppi:',
 	'phalanx-label-lang' => 'Kieli:',
 	'phalanx-view-type' => 'Eston tyyppi...',
-	'phalanx-view-blocks' => 'Etsintäsuodattimet',
+	'phalanx-view-blocks' => 'Hakusuodattimet',
 	'phalanx-view-id-submit' => 'Nouda suodatin',
-	'phalanx-format-text' => 'pelkkä teksti',
-	'phalanx-format-case' => 'Kirjainkoosta riippuva',
+	'phalanx-format-text' => 'muotoilematon teksti',
+	'phalanx-format-case' => 'kirjainkoko on merkitsevä',
 	'phalanx-format-exact' => 'tarkka',
-	'phalanx-tab-main' => 'Hallinnoi suodattimia',
+	'phalanx-tab-main' => 'Suodattimien hallinta',
 	'phalanx-test-submit' => 'Testi',
 	'phalanx-test-results-legend' => 'Testitulokset',
-	'phalanx-display-row-blocks' => 'estot:$1',
+	'phalanx-display-row-blocks' => 'estot: $1',
 	'phalanx-link-modify' => 'muokkaa',
 	'phalanx-link-stats' => 'tilastot',
 	'phalanx-reset-form' => 'Tyhjennä lomake',
@@ -975,6 +979,40 @@ Per favor [[Special:Contact|contacta Wikia]] a proposito de iste problema.<br />
 	'right-phalanx' => 'Pote gerer global blocadas e filtros anti-spam',
 	'right-phalanxexempt' => 'Exempte de regulas de Phalanx',
 	'right-phalanxemailblock' => 'Pote submitter, vider e gerer blocadas a base de e-mail',
+);
+
+/** Japanese (日本語)
+ * @author Shirayuki
+ */
+$messages['ja'] = array(
+	'phalanx-type-title' => 'ページ名',
+	'phalanx-type-user-email' => 'メール',
+	'phalanx-type-wiki-creation' => 'ウィキ作成',
+	'phalanx-add-block' => 'ブロックを適用',
+	'phalanx-edit-block' => 'ブロックを保存',
+	'phalanx-label-filter' => 'フィルター:',
+	'phalanx-label-reason' => '理由:',
+	'phalanx-label-type' => '種類:',
+	'phalanx-label-lang' => '言語:',
+	'phalanx-format-text' => 'プレーンテキスト',
+	'phalanx-format-regex' => '正規表現',
+	'phalanx-format-case' => '大文字・小文字を区別',
+	'phalanx-tab-main' => 'フィルターを管理',
+	'phalanx-tab-secondary' => 'フィルターをテスト',
+	'phalanx-test-submit' => 'テスト',
+	'phalanx-link-unblock' => 'ブロック解除',
+	'phalanx-link-modify' => '修正',
+	'phalanx-reset-form' => 'フォームをリセット',
+	'phalanx-stats-block-notfound' => 'ブロック ID が見つかりません',
+	'phalanx-stats-table-id' => 'ブロック ID',
+	'phalanx-stats-table-regex' => '正規表現',
+	'phalanx-stats-table-language' => '言語',
+	'phalanx-stats-table-text' => 'テキスト',
+	'phalanx-stats-table-reason' => '理由',
+	'phalanx-stats-table-wiki-id' => 'ウィキ ID',
+	'phalanx-stats-table-wiki-name' => 'ウィキ名',
+	'phalanx-stats-table-wiki-url' => 'ウィキの URL',
+	'phalanx-stats-table-wiki-last-edited' => '最終編集',
 );
 
 /** Khmer (ភាសាខ្មែរ)
@@ -1514,6 +1552,7 @@ Kies een andere gebruikersnaam of [[Special:Contact|neem contact op met Wikia]] 
 	'phalanx-stats-table-wiki-url' => 'Wiki-URL',
 	'phalanx-stats-table-wiki-last-edited' => 'Laatste bewerking',
 	'phalanx-email-filter-hidden' => 'E-mailfilter verborgen. U hebt geen rechten om de tekst te bekijken.',
+	'action-phalanx' => 'de Integrated Spam Defense Mechanism te gebruiken',
 	'right-phalanx' => 'Kan globale blokkades en spamfilters beheren',
 	'right-phalanxexempt' => 'Kan Phalanx-regels omzeilen',
 	'right-phalanxemailblock' => 'Kan e-mailgebaseerde blokkades toevoegen, bekijken en beheren',

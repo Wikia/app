@@ -183,6 +183,7 @@ $messages['cs'] = array(
  * @author Geitost
  * @author LWChris
  * @author MF-Warburg
+ * @author PtM
  * @author Quedel
  * @author SVG
  */
@@ -260,7 +261,7 @@ Der #WIKINAME adoptierende Benutzer hat nun Bürokraten- und Administratorstatus
 Das Wikia-Team<br /><br />
 <small>Du kannst Änderungen an dieser Liste <a href="$3">abbestellen</a>.</small>',
 	'tog-adoptionmails' => 'Mich per E-Mail benachrichtigen, wenn $1 zur Adoption durch andere Benutzer freigegeben wird',
-	'tog-adoptionmails-v2' => '… wenn das Wiki zur Adoption durch andere Benutzer freigegeben wird.',
+	'tog-adoptionmails-v2' => '… wenn das Wiki für andere Benutzer zur Adoption freigegeben wird.',
 	'wikiadoption-pref-label' => 'Eine Änderung dieser Einstellungen wirkt sich nur auf E-Mails von $1 aus.',
 	'wikiadoption-welcome-header' => 'Gratulation! Du hast {{SITENAME}} adoptiert!',
 	'wikiadoption-welcome-body' => 'Du bist in diesem Wiki nun ein Bürokrat. Damit hast du nun Zugang zu allen Werkzeugen, um {{SITENAME}} zu verwalten.

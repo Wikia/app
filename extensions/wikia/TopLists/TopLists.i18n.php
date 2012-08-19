@@ -131,6 +131,7 @@ $messages['qqq'] = array(
 
 /** Arabic (العربية)
  * @author Imksa
+ * @author Meno25
  * @author OsamaK
  */
 $messages['ar'] = array(
@@ -168,7 +169,7 @@ $messages['ar'] = array(
 	'toplists-editor-add-item-tooltip' => 'إضافة عنصر جديد إلى القائمة',
 	'toplists-create-button' => 'أنشئ قائمة',
 	'toplists-update-button' => 'احفظ القائمة',
-	'toplists-cancel-button' => 'ألغِ',
+	'toplists-cancel-button' => 'إلغاء',
 	'toplists-items-nochange' => 'لا يوجد تغيير في العناصر',
 	'toplits-image-browser-no-picture-selected' => 'ليست هناك صورة مختارة',
 	'toplits-image-browser-clear-picture' => 'صورة واضحة',

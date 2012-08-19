@@ -149,7 +149,7 @@ $messages['qqq'] = array(
 	'chat-ban-cannt-undo' => 'sent to a user who cannt undo ban',
 	'chat-inlinealert-a-made-b-chatmod' => '$1 is user name when "he" make other user ($2) to become moderator. (account upgrade)',
 	'chat-ban-contributions-heading' => 'shown in contributions under the list of actions',
-	'chat-ban-modal-heading' => 'This is the <h2> (heading) tag at the top of the modal for banning a user from chat.',
+	'chat-ban-modal-heading' => 'This is the <nowiki><h2></nowiki> (heading) tag at the top of the modal for banning a user from chat.',
 	'chat-ban-modal-label-expires' => 'form label inside modal for banning users.  "Expires" refers to the time at which the banned user can return to chat.',
 	'chat-ban-modal-label-reason' => 'form label inside modal for banning users.  "Reason" is the reason for banning a user from chat.',
 	'chat-log-reason-banadd' => 'Placeholder text for the "reason" input inside the ban user from chat modal.',
@@ -252,6 +252,8 @@ Ponte'n contautu con ellos pa más info.",
  */
 $messages['bg'] = array(
 	'chat-desc' => '[[Special:Chat|Чат]]',
+	'chat-ban-modal-label-reason' => 'Причина',
+	'chat-ban-modal-button-cancel' => 'Отказване',
 );
 
 /** Breton (brezhoneg)
@@ -533,6 +535,13 @@ $messages['de-formal'] = array(
 	'chat-user-permanently-disconnected' => 'Die Verbindung wurde getrennt. Überprüfen Sie ihre Internet-Verbindung und aktualisieren Sie das Browser-Fenster.',
 );
 
+/** Zazaki (Zazaki)
+ * @author Erdemaslancan
+ */
+$messages['diq'] = array(
+	'chat-ban-modal-label-reason' => 'Sebeb',
+);
+
 /** Spanish (español)
  * @author Armando-Martin
  * @author Benfutbol10
@@ -667,8 +676,8 @@ $messages['fi'] = array(
 	'chat-ban-modal-button-change-ban' => 'Muuta lukitusta',
 	'chat-ban-modal-button-cancel' => 'Peruuta',
 	'chat-ban-modal-end-ban' => 'Poista lukitus',
-	'chat-log-reason-banchange' => 'Ei syytä',
-	'chat-log-reason-banremove' => 'Ei syytä',
+	'chat-log-reason-banchange' => 'Syytä ei annettu',
+	'chat-log-reason-banremove' => 'Syytä ei annettu',
 	'chat-ban-cant-ban-moderator' => 'Et voi estää toista chat-valvojaa.',
 	'chat-ban-already-banned' => '$1 on jo estetty tämän wikin chatissa.',
 	'chat-ban-you-need-permission' => 'Sinulla ei ole käyttöoikeutta $1, joka vaaditaan käyttäjän estämiseen.',
@@ -705,7 +714,7 @@ $messages['fi'] = array(
 	'group-bannedfromchat' => 'Estetty chatista',
 	'group-bannedfromchat-member' => 'chatista estetty',
 	'chat-chatconnect-log' => 'Juttelukanavan yhteysloki',
-	'chat-checkuser-join-action' => 'Liittyi juttelukanavalle',
+	'chat-checkuser-join-action' => 'Liittyi keskusteluun',
 	'chat-status-away' => 'Poissa',
 );
 
@@ -1615,20 +1624,25 @@ $messages['nl'] = array(
 	'chat-you-were-kicked' => 'U bent uit de chat gezet door $1.',
 	'chat-user-was-banned' => '$1 is verbannen door  $2 $3.',
 	'chat-you-were-banned' => 'U bent verbannen door $1.',
+	'chat-user-was-unbanned' => '$2 heeft de ban voor $1 beëindigd.',
 	'chat-ban-cannt-undo' => 'De verbanning is al ongedaan gemaakt',
 	'chat-user-permanently-disconnected' => 'U hebt niet langer een verbinding. Controleer uw internetverbinding en ververs de inhoud van uw webbrowser.',
 	'chat-inlinealert-a-made-b-chatmod' => '$1 heeft <strong>$2</strong> chatmoderator gemaakt.',
 	'chat-err-connected-from-another-browser' => 'U bent verbonden via een andere browser. Deze verbinding wordt nu gesloten.',
 	'chat-err-communicating-with-mediawiki' => 'Er is een fout opgetreden in de verbinding met de MediaWiki-server.',
+	'chat-ban-contributions-heading' => 'Verbannen uit chat',
+	'chat-ban-modal-heading' => 'Deze gebruiker uit de chat verbannen',
 	'chat-ban-modal-label-expires' => 'Vervalt',
 	'chat-ban-modal-label-reason' => 'Reden',
 	'chat-log-reason-banadd' => 'Wangedrag in chat',
 	'chat-log-reason-undo' => 'ongedaan maken',
 	'chat-ban-undolink' => 'ongedaan maken',
+	'chat-ban-modal-button-ok' => 'Deze gebruiker verbannen',
 	'chat-ban-modal-button-change-ban' => 'Verbanning wijzigen',
 	'chat-ban-modal-button-cancel' => 'Annuleren',
 	'chat-ban-modal-change-ban-heading' => 'Chatverbanning van gebruiker wijzigen',
 	'chat-ban-modal-change-ban-label' => 'Wijzigen in',
+	'chat-ban-modal-end-ban' => 'Verbanning beëindigen',
 	'chat-log-reason-banchange' => 'Geen reden gegeven',
 	'chat-log-reason-banremove' => 'Geen reden gegeven',
 	'chat-ban-cant-ban-moderator' => 'U kunt een andere chatmoderator niet kicken of verbannen.',
@@ -1657,8 +1671,8 @@ Neem alstublieft contact op met deze gebruiker voor meer informatie.',
 	'chat-user-menu-give-chat-mod' => 'Status van chatmoderator weergeven',
 	'chat-user-menu-kick' => 'Verbannen',
 	'chat-user-menu-ban' => 'Verbannen',
-	'chat-user-menu-private-block' => 'Privéberichten blokkeren.',
-	'chat-user-menu-private-allow' => 'Privéberichten toestaan.',
+	'chat-user-menu-private-block' => 'Privéberichten blokkeren',
+	'chat-user-menu-private-allow' => 'Privéberichten toestaan',
 	'chat-user-menu-private-close' => 'Privéruimte sluiten',
 	'chat-private-headline' => 'Privechat met $1',
 	'right-chatmoderator' => 'Kan gebruikers verwijderen en verbannen uit de [[Help:Chat|Chat]]',
@@ -1666,10 +1680,19 @@ Neem alstublieft contact op met deze gebruiker voor meer informatie.',
 	'group-chatmoderator-member' => 'Chatmoderator',
 	'group-bannedfromchat' => 'Verbannen uit chat',
 	'group-bannedfromchat-member' => 'Verbannen uit chat',
+	'chat-ban-option-list' => '2 uur:2 hours,1 dag:1 day,3 dagen:3 days,1 week:1 week,2 weken:2 weeks,1 maand:1 month,3 maanden:3 months,6 maanden:6 months,1 jaar:1 year,onbepaald:infinite',
 	'chat-ban-log-change-ban-link' => 'verbanning wijzigen',
+	'chat-chatconnect-log' => 'Logboek chatverbindingen',
 	'chat-chatconnect-log-entry' => 'verbonden met $1 vanaf adres $2',
+	'chat-chatban-log' => 'Logboek chatverbanningen',
+	'chat-chatbanadd-log-entry' => 'heeft $1 verbannen uit de chat met een verlooptijd van $2; eindigt $3',
+	'chat-chatbanremove-log-entry' => 'heeft de verbanning van $1 uit de chat beëindigd',
+	'chat-chatbanchange-log-entry' => 'heeft de verbanningsinstellingen voor $1 gewijzigd naar een verlooptijd van $2; eindigt $3.',
+	'chat-contributions-ban-notice' => 'Deze gebruiker is op het moment verbannen uit de chat.
+De laatste regel uit het logboek chatverbanningen wordt hieronder ter referentie weergegeven:',
 	'chat-browser-is-notsupported' => 'Uw browser wordt niet ondersteund. Gebruik een <a href="http://community.wikia.com/wiki/Help:Supported_browsers">nieuwere browser</a> voor de beste ervaring.',
 	'chat-checkuser-join-action' => 'Verbonden met chat',
+	'chat-status-away' => 'Weg',
 );
 
 /** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)

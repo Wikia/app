@@ -622,7 +622,7 @@ Vennligst prøv igjen eller [[Special:Contact|rapporter dette]].',
  */
 $messages['nl'] = array(
 	'comboajaxlogin-desc' => 'Dynamisch venster dat gebruikers laat aanmelden, een nieuw wachtwoord opvragen en registreren',
-	'comboajaxlogin-createlog' => 'Aanmelden of een nieuwe gebruiker aanmaken',
+	'comboajaxlogin-createlog' => 'Meld u aan of maak een nieuwe gebruiker aan',
 	'comboajaxlogin-actionmsg' => 'Om deze handeling uit te kunnen voeren moet u eerst aanmelden of een gebruiker registreren',
 	'comboajaxlogin-actionmsg-protected' => 'U moet eerst aanmelden of een gebruiker aanmaken om deze beveiligde pagina te kunnen bewerken.',
 	'comboajaxlogin-connectmarketing' => '<h1>Met andere websites verbinden</h1>

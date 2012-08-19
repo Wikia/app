@@ -205,7 +205,7 @@ $messages['ja'] = array(
  * @author 아라
  */
 $messages['ko'] = array(
-	'imgplc-create' => '그림 넣기',
+	'imgplc-create' => '그림 추가',
 	'imgplc-placeholder' => '플레이스홀더',
 	'imgplc-image' => '그림',
 	'imgplc-notinhistory' => '역사 모드에서 그림을 더할 수 없습니다.',

@@ -39,11 +39,12 @@ $messages['cs'] = array(
 
 /** German (Deutsch)
  * @author LWChris
+ * @author Metalhead64
  * @author PtM
  */
 $messages['de'] = array(
 	'skinchooser-desc' => 'Ermöglicht Benutzern in ihren Einstellungen Skins zu wählen',
-	'new-look' => 'Wikias eigener Look',
+	'new-look' => 'Wikia',
 	'site-layout' => 'Seitenlayouts',
 );
 

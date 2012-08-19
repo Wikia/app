@@ -362,6 +362,7 @@ Detalios: $2',
 );
 
 /** Japanese (日本語)
+ * @author Shirayuki
  * @author Tommy6
  */
 $messages['ja'] = array(
@@ -394,6 +395,7 @@ $1
 詳細: $2',
 	'lightbox-share-email-error-login' => 'メールを送信するにはログインする必要があります',
 	'lightbox-share-email-error-noaddress' => 'メールアドレスが指定されていません',
+	'lightbox-visit-the-wiki' => 'ウィキに移動:',
 );
 
 /** Luxembourgish (Lëtzebuergesch)

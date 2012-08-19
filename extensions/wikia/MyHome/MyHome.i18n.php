@@ -1761,6 +1761,7 @@ Se sei il fondatore o un admin di questa wiki, puoi modificare questo messaggio 
 );
 
 /** Japanese (日本語)
+ * @author Shirayuki
  * @author Tommy6
  * @author 青子守歌
  */
@@ -1833,7 +1834,7 @@ $messages['ja'] = array(
 	'myhome-default-view-success' => 'このページがデフォルトに設定されました',
 	'tooltip-pt-myhome' => 'My Home',
 	'activityfeed' => 'アクティビティフィード',
-	'wiki-activity-message-wall-messages-count' => '$1件のメッセージ',
+	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|$1件のメッセージ}}',
 );
 
 /** Kannada (ಕನ್ನಡ)

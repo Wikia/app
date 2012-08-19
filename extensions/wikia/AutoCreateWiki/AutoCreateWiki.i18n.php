@@ -561,6 +561,7 @@ $messages['ckb'] = array(
  * @author Jezevec
  * @author Jkjk
  * @author Reaperman
+ * @author Vks
  */
 $messages['cs'] = array(
 	'autocreatewiki' => 'Vytvořit novou wiki',
@@ -602,10 +603,33 @@ $messages['cs'] = array(
 	'autocreatewiki-invalid-username' => 'Toto uživatelské jméno je neplatné.',
 	'autocreatewiki-busy-username' => 'Toto uživatelské jméno je již obsazené.',
 	'autocreatewiki-blocked-username' => 'Nemůžete vytvořit účet.',
+	'autocreatewiki-empty-language' => 'Prosím, vyberte jazyk pro wiki.',
+	'autocreatewiki-empty-category' => 'Prosím, vyberte kategorii.',
+	'autocreatewiki-empty-wikiname' => 'Jméno wiki nemůže být prázdné.',
+	'autocreatewiki-empty-username' => 'Přihlašovací jméno nemůže být prázdné.',
+	'autocreatewiki-empty-password' => 'Heslo nemůže být prázdné.',
+	'autocreatewiki-empty-retype-password' => 'Zopakování hesla nemůže být prázdné.',
 	'autocreatewiki-category-label' => 'Kategorie:',
 	'autocreatewiki-category-other' => 'Jiné',
 	'autocreatewiki-set-username' => 'Nejprve zvolte uživatelské jméno.',
+	'autocreatewiki-invalid-category' => 'Neplatný výběr kategorie.
+Prosím, vyberte hodnotu ze seznamu.',
+	'autocreatewiki-invalid-language' => 'Neplatný výběr jazyka.
+Prosím, vyberte hodnotu ze seznamu.',
+	'autocreatewiki-invalid-retype-passwd' => 'Prosím, zopakujte stejné heslo',
 	'autocreatewiki-invalid-birthday' => 'Neplatné datum narození',
+	'autocreatewiki-limit-birthday' => 'Není možné dokončit registraci.',
+	'autocreatewiki-log-title' => 'Vaše wiki se právě vytváří',
+	'autocreatewiki-step0' => 'Probíha inicializace ...',
+	'autocreatewiki-stepdefault' => 'Proces probíhá, prosím čekejte ...',
+	'autocreatewiki-errordefault' => 'Proces nebyl dokončen ...',
+	'autocreatewiki-step1' => 'Vytváření složky pro obrázky ...',
+	'autocreatewiki-step2' => 'Vytváření databáze ...',
+	'autocreatewiki-step3' => 'Nastavování výchozích informací v databázi ...',
+	'autocreatewiki-step4' => 'Přenos výchozích obrázků a loga ...',
+	'autocreatewiki-step5' => 'Nastavování výchozích proměnných v databázi ...',
+	'autocreatewiki-step6' => 'Vytváření tabulek v databázi ...',
+	'autocreatewiki-step11' => 'Odesílání e-mailu uživateli ...',
 	'autocreatewiki-congratulation' => 'Blahopřejeme!',
 	'autocreatewiki-welcometalk-log' => 'Uvítací zpráva',
 	'autocreatewiki-step2-error' => 'Databáze existuje!',
@@ -1335,7 +1359,7 @@ $messages['fi'] = array(
 	'autocreatewiki-set-username' => 'Aseta käyttäjätunnus ensin.',
 	'autocreatewiki-invalid-category' => 'Virheellinen luokka.
 Valitse asianmukainen nimi avattavasta luettelosta.',
-	'autocreatewiki-invalid-language' => 'Valitse sopiva alasvetovalikosta.',
+	'autocreatewiki-invalid-language' => 'Valitse kelvollinen kieli alasvetovalikosta.',
 	'autocreatewiki-invalid-retype-passwd' => 'Kirjoita sama salasana kuin edellä',
 	'autocreatewiki-invalid-birthday' => 'Virheellinen syntymäaika',
 	'autocreatewiki-limit-birthday' => 'Tunnuksen luonti ei onnistunut.',
@@ -2362,12 +2386,12 @@ $messages['ja'] = array(
 	'autocreatewiki-chooseone' => '一つを選ぶ',
 	'autocreatewiki-required' => '$1 = 必須',
 	'autocreatewiki-web-address' => 'サイトのアドレス:',
-	'autocreatewiki-category-select' => 'どれか一つを選ぶ',
+	'autocreatewiki-category-select' => '1つを選択',
 	'autocreatewiki-language-top' => '上位$1言語',
 	'autocreatewiki-language-all' => 'すべての言語',
 	'autocreatewiki-birthdate' => '生年月日:',
 	'autocreatewiki-blurry-word' => '画像認証:',
-	'autocreatewiki-remember' => 'パスワードを記憶する。',
+	'autocreatewiki-remember' => 'パスワードを記憶',
 	'autocreatewiki-create-account' => 'アカウントを作成する',
 	'autocreatewiki-done' => '完了',
 	'autocreatewiki-error' => 'エラー',
@@ -3248,13 +3272,13 @@ $messages['nl'] = array(
 	'autocreatewiki-success-has-been-created' => 'is aangemaakt!',
 	'autocreatewiki-success-get-started' => 'Beginnen',
 	'autocreatewiki-info-domain' => 'Het is het beste om een woord te kiezen dat vaak gebruikt wordt om uw onderwerp te vinden.',
-	'autocreatewiki-info-topic' => 'Voeg een korte beschrijving toe, zoals "Star Wars" of "TV programma".',
+	'autocreatewiki-info-topic' => 'Voeg een korte beschrijving toe, zoals "Star Wars" of "TV-programma".',
 	'autocreatewiki-info-category-default' => 'Hierdoor kunnen bezoekers uw wiki vinden.',
 	'autocreatewiki-info-category-answers' => 'Hierdoor kunnen bezoekers uw Antwoordensite vinden.',
 	'autocreatewiki-info-language' => 'Dit wordt de standaardtaal voor bezoekers van uw wiki.',
 	'autocreatewiki-info-email-address' => 'Uw e-mailadres wordt nooit bekend gemaakt aan welk persoon dan ook op Wikia.',
 	'autocreatewiki-info-realname' => 'Geef uw naam op zodat deze gebruikt kan worden om u erkenning te geven voor uw werk.',
-	'autocreatewiki-info-birthdate' => 'Wikia vraagt aan alle gebruikers om hun echte geboortedatum op te geven voor veiligheid maar ook om de integriteit van de site aan de federale regels te laten voldoen.',
+	'autocreatewiki-info-birthdate' => 'Wikia vraagt aan alle gebruikers om hun echte geboortedatum op te geven voor veiligheid, maar ook om de integriteit van de site aan de federale regels te laten voldoen.',
 	'autocreatewiki-info-blurry-word' => 'Om het automatisch aanmaken van gebruikers tegen te gaan moet u het wazige woord dat u in dit veld ziet invoeren.',
 	'autocreatewiki-info-terms-agree' => 'Door een wiki en een gebruiker aan te maken accepteert u de <a href="http://www.wikia.com/wiki/Terms_of_use">gebruiksvoorwaarden van Wikia</a>.',
 	'autocreatewiki-info-staff-username' => '<b>Alleen voor stafleden:</b> de aangegeven gebruiker wordt vermeld als de oprichter.',
@@ -3264,19 +3288,19 @@ $messages['nl'] = array(
 	'autocreatewiki-empty-field' => 'Vul dit veld in.',
 	'autocreatewiki-bad-name' => 'De naam kan geen speciale tekens bevatten (zoals $ of @) en moet bestaan uit één woord, zonder hoofdletters en zonder spaties.',
 	'autocreatewiki-invalid-wikiname' => 'De naam kan geen speciale tekens (zoals $ of @) bevatten en kan niet leeg zijn.',
-	'autocreatewiki-violate-policy' => 'Deze wiki bevat een naam dat ons beleid voor namen overschrijdt.',
+	'autocreatewiki-violate-policy' => 'Deze wikinaam bevat een woord dat ons beleid voor namen schendt.',
 	'autocreatewiki-name-taken' => 'Er bestaat al een wiki met dit adres.
 U kunt meehelpen op <a href="http://$1.wikia.com">http://$1.wikia.com</a> of een ander adres kiezen.',
 	'autocreatewiki-name-too-short' => 'Dit adres is te kort.
 Kies alstublieft een adres met tenminste drie tekens.',
 	'autocreatewiki-name-too-long' => 'Het adres is te lang.
 Kies een naam met hoogstens vijftig tekens.',
-	'autocreatewiki-similar-wikis' => "Hieronder staan de wiki's die al aangemaakt zijn met voor onderwerp.
-We raden u aan aan een van wiki's te gaan werken.",
+	'autocreatewiki-similar-wikis' => "Hieronder staan de wiki's die al aangemaakt zijn voor dit onderwerp.
+We raden u aan aan een van deze wiki's te gaan werken.",
 	'autocreatewiki-invalid-username' => 'Deze gebruikersnaam is ongeldig.',
 	'autocreatewiki-busy-username' => 'Deze gebruikersnaam is al in gebruik.',
 	'autocreatewiki-blocked-username' => 'U kunt geen gebruiker aanmaken.',
-	'autocreatewiki-user-notloggedin' => 'Uw gebruiker is gemaakt maar u bent niet aangemeld!',
+	'autocreatewiki-user-notloggedin' => 'Uw gebruiker is aangemaakt maar u bent niet aangemeld!',
 	'autocreatewiki-empty-language' => 'Selecteer de taal voor de wiki.',
 	'autocreatewiki-empty-category' => 'Selecteer een categorie.',
 	'autocreatewiki-empty-wikiname' => 'De naam van de wiki kan niet leeg zijn.',
@@ -3285,7 +3309,7 @@ We raden u aan aan een van wiki's te gaan werken.",
 	'autocreatewiki-empty-retype-password' => 'Het herhaalde wachtwoord kan niet leeg zijn.',
 	'autocreatewiki-category-label' => 'Categorie:',
 	'autocreatewiki-category-other' => 'Overige',
-	'autocreatewiki-set-username' => 'Plaats eerst gebruikersnaam.',
+	'autocreatewiki-set-username' => 'Stel eerst een gebruikersnaam in.',
 	'autocreatewiki-invalid-category' => 'Ongeldige categoriekeuze.
 Kies een categorie uit de lijst.',
 	'autocreatewiki-invalid-language' => 'Ongeldige taalkeuze.
@@ -3332,13 +3356,13 @@ $3
 Wikia Gemeenschapsondersteuning
 <http://community.wikia.com/wiki/User:$4>",
 	'autocreatewiki-welcometalk' => "== Welkom! ==
-<div style=\"font-size:120%; line-height:1.2em;\">Hallo \$1 -- we zijn erg blij dat '''\$4''' onderdeel is geworden van de Wikia-gemeenschap!
+<div style=\"font-size:120%; line-height:1.2em;\">Hallo \$1. We zijn erg blij dat '''\$4''' onderdeel is geworden van de Wikiagemeenschap!
 
 U hebt nu een hele website tot uw beschikking hebt die u met informatie, afbeeldingen en video over uw favoriete onderwerp kunt gaan vullen. Maar nu staart een lege pagina u aan. Spannend, toch? Hier volgen wat tips om u op weg te helpen.
 
 * '''Leid uw onderwerp in''' op de hoofdpagina. Dit is uw gelegenheid om uw lezers aan te geven wat uw onderwerp van belang maakt. Schrijf zoveel u wilt. In uw beschrijving kunt u naar alle belangrijke pagina's op uw site verwijzen.
 
-* '''Maak nieuwe pagina's aan''' -- soms zijn een paar zinnen al voldoende als beginnetje. Laat het geen lege pagina's zijn! Een belangrijke werkwijze in een wiki is toevoegen en later verbeteren en verfijnen. U kunt ook afbeeldingen en video toevoegen om de pagina te vullen en deze interessanter en spannender te maken.
+* '''Maak nieuwe pagina's aan'''. Soms zijn een paar zinnen al voldoende als beginnetje. Laat het geen lege pagina's zijn! Een belangrijke werkwijze in een wiki is toevoegen en later verbeteren en verfijnen. U kunt ook afbeeldingen en video toevoegen om de pagina te vullen en deze interessanter en spannender te maken.
 
 En daarna vooral volhouden! De wiki's waar veel te lezen en te zien is zijn het meest aantrekkelijk, dus blijf vooral informatie toevoegen zodat u meer lezers krijgt en daardoor nieuwe gebruikers die ook bijdragen. Er is veel te doen, maar maak u geen zorgen. Vandaag is uw eerste dag en er is voldoende tijd. Iedere wiki start op dezelfde manier. Beetje voor beetje, de eerste pagina's eerst, om zich in de tijd mogelijk tot een grote, drukke website te ontwikkelen.
 

@@ -133,12 +133,13 @@ $messages['af'] = array(
 );
 
 /** Arabic (العربية)
+ * @author Meno25
  * @author OsamaK
  */
 $messages['ar'] = array(
-	'themedesigner-button-cancel' => 'ألغِ',
+	'themedesigner-button-cancel' => 'إلغاء',
 	'themedesigner-button-ok' => 'موافق',
-	'themedesigner-button-upload' => 'ارفع',
+	'themedesigner-button-upload' => 'رفع',
 	'themedesigner-button-save' => 'احفظ',
 );
 
@@ -893,6 +894,7 @@ $messages['inh'] = array(
  * @author Tommy6
  */
 $messages['ja'] = array(
+	'themedesigner-or' => 'または',
 	'themedesigner-desc' => '管理者がウィキのテーマをデザインすることを可能にします。',
 	'themedesigner-title' => 'テーマデザイナ',
 	'themedesigner-background' => '背景',
@@ -932,8 +934,10 @@ $messages['ja'] = array(
 	'themedesigner-size' => 'サイズ',
 	'themedesigner-button-save' => '保存',
 	'themedesigner-upload-a-graphic' => '画像をアップロード',
-	'themedesigner-rules-wordmark' => '250 x 65 ピクセルまで（.png ファイルのみ）',
-	'themedesigner-dont-use-a-graphic' => '画像を使用しない',
+	'themedesigner-rules-wordmark' => '.png ファイル (250 x 65 ピクセル以下) をアップロードしてください。',
+	'themedesigner-rules-favicon' => '16x16 ピクセルの .ico ファイルをアップロードしてください。favicon は、ウィキのブラウザータブに表示される小さいアイコンです。',
+	'themedesigner-rules-favicon-learn-more-link' => '詳細。',
+	'themedesigner-dont-use-a-graphic' => '除去',
 	'themedesigner-history-item' => '$2 により $1',
 	'themedesigner-button-change-text' => 'テキストを変更',
 	'themedesigner-reason' => 'テーマデザイナ - $1 が保存',
@@ -942,6 +946,8 @@ $messages['ja'] = array(
 	'themedesigner-type-error' => '不適切なファイル形式です',
 	'themedesigner-unknown-error' => '不明なエラーが発生しました。もう一度やり直してください。',
 	'themedesigner-manual-upload-error' => '画像ロゴや背景画像のアップロードにはテーマデザイナを使用してください',
+	'themedesigner-favicon-heading' => 'favicon',
+	'themedesigner-wodmark-preview' => 'プレビュー',
 );
 
 /** Khmer (ភាសាខ្មែរ)

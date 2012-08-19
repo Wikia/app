@@ -70,12 +70,18 @@ $messages['br'] = array(
  * @author BroOk
  */
 $messages['ca'] = array(
-	'timeagomessaging-desc' => 'Proporciona i18n per jquery.timeago.js plugin',
+	'timeagomessaging-desc' => 'Proporciona internacionalització pel plugin jquery.timeago.js',
+	'timeago-year' => 'fa {{PLURAL:$1|un any|$1 anys}}',
 	'timeago-month' => 'fa {{PLURAL:$1|un mes|$1 mesos}}',
 	'timeago-day' => 'fa {{PLURAL:$1|un dia|$1 dies}}',
 	'timeago-hour' => 'fa {{PLURAL:$1|una hora|$1 hores}}',
 	'timeago-minute' => 'fa {{PLURAL:$1|un minut|$1 minuts}}',
 	'timeago-second' => 'fa un minut',
+	'timeago-day-from-now' => "{{PLURAL:$1|un dia|$1 dies}} des d'ara",
+	'timeago-hour-from-now' => "{{PLURAL:$1|una hora|$1 hores}} des d'ara",
+	'timeago-minute-from-now' => "{{PLURAL:$1|un minut|$1 minuts}} des d'ara",
+	'timeago-month-from-now' => "{{PLURAL:$1|un mes|$1 mesos}} des d'ara",
+	'timeago-second-from-now' => "un minut des d'ara",
 );
 
 /** Czech (česky)
@@ -327,6 +333,11 @@ $messages['nl'] = array(
 	'timeago-hour' => '{{PLURAL:$1|een uur|$1 uur}} geleden',
 	'timeago-minute' => '{{PLURAL:$1|een minuut|$1 minuten}} geleden',
 	'timeago-second' => 'een minuut geleden',
+	'timeago-day-from-now' => 'over {{PLURAL:$1|één dag|$1 dagen}}',
+	'timeago-hour-from-now' => 'over {{PLURAL:$1|een uur|$1 uur}}',
+	'timeago-minute-from-now' => 'over {{PLURAL:$1|een minuut|$1 minuten}}',
+	'timeago-month-from-now' => 'over {{PLURAL:$1|een maand|$1 maanden}}',
+	'timeago-second-from-now' => 'over een minuut',
 );
 
 /** Polish (polski)

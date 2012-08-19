@@ -42,6 +42,7 @@ $messages['br'] = array(
 
 /** Czech (česky)
  * @author Dontlietome7
+ * @author Reaperman
  */
 $messages['cs'] = array(
 	'piggybac-desc' => 'Umožňuje přihlásit se jako jiný uživatel',
@@ -55,6 +56,8 @@ Zkontrolujte správné zadání jména.',
 	'piggyback-firstlogout' => 'Odhlaste nejdříve zpět na váš účet.',
 	'piggyback-itisyou' => 'Nemůžete provést piggyback sobě.',
 	'piggyback-issysopto' => 'Nemůžete provést piggyback uživateli s právem piggyback.',
+	'action-piggyback' => 'přihlásit se jako jiný uživatel',
+	'log-name-piggyback' => 'Záznamy užití piggyback',
 );
 
 /** German (Deutsch)
@@ -275,6 +278,8 @@ Controleer uw schrijfwijze.',
 	'piggyback-itisyou' => 'U kunt piggyback niet op uzelf gebruiken.',
 	'piggyback-issysopto' => 'U kunt piggyback niet gebruiken om aan te melden als een andere gebruiker met het recht piggyback.',
 	'action-piggyback' => 'aanmelden als een andere gebruiker',
+	'log-name-piggyback' => 'Logboek piggyback',
+	'log-description-piggyback' => 'Dit logboek bevat een overzicht van alle piggybackhandelingen.',
 );
 
 /** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)

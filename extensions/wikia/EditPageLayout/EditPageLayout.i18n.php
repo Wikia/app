@@ -369,10 +369,27 @@ $messages['ca'] = array(
 
 /** Czech (česky)
  * @author Jezevec
+ * @author Vks
  */
 $messages['cs'] = array(
 	'editpagelayout-more' => 'více',
 	'editpagelayout-less' => 'méně',
+	'wikia-editor-media-image' => 'Obrázek',
+	'wikia-editor-media-gallery' => 'Galerie',
+	'wikia-editor-media-slideshow' => 'Prezentace',
+	'wikia-editor-media-slider' => 'Posuvník',
+	'wikia-editor-media-video' => 'Video',
+	'wikia-editor-media-mut' => 'Video',
+	'wikia-editor-media-image-tooltip' => 'Přidat obrázek',
+	'wikia-editor-media-gallery-tooltip' => 'Přidat galerii',
+	'wikia-editor-media-slideshow-tooltip' => 'Přidat prezentaci',
+	'wikia-editor-media-slider-tooltip' => 'Přidat posuvník',
+	'wikia-editor-media-video-tooltip' => 'Přidat video',
+	'wikia-editor-media-mut-tooltip' => 'Přidat  video (beta)',
+	'wikia-editor-source-bold-tooltip' => 'Tučně',
+	'wikia-editor-source-italic-tooltip' => 'Kurzíva',
+	'wikia-editor-source-link-tooltip' => 'Přidat odkaz',
+	'wikia-editor-modules-templates-title' => 'Šablony',
 	'wikia-editor-edittools-caption' => 'více',
 );
 
@@ -474,9 +491,11 @@ $messages['de-formal'] = array(
 );
 
 /** Zazaki (Zazaki)
+ * @author Erdemaslancan
  * @author Mirzali
  */
 $messages['diq'] = array(
+	'editpagelayout-notificationsLink-none' => 'Tebliği',
 	'editpagelayout-blocked-user' => 'Nameyê karberi ya zi adresa IPê şıma kılit biya.',
 );
 
@@ -585,6 +604,7 @@ $messages['fa'] = array(
 /** Finnish (suomi)
  * @author Centerlink
  * @author Ilkea
+ * @author Nike
  */
 $messages['fi'] = array(
 	'editpagelayout-more' => 'lisää',
@@ -616,7 +636,7 @@ $messages['fi'] = array(
 	'wikia-editor-media-gallery-tooltip' => 'Lisää galleria',
 	'wikia-editor-media-slideshow-tooltip' => 'Lisää diaesitys',
 	'wikia-editor-media-video-tooltip' => 'Lisää video',
-	'wikia-editor-media-mut-tooltip' => 'Lisää Video (beeta)',
+	'wikia-editor-media-mut-tooltip' => 'Lisää Video (beta)',
 	'wikia-editor-source-bold-tooltip' => 'Lihavointi',
 	'wikia-editor-source-italic-tooltip' => 'Kursivointi',
 	'wikia-editor-source-link-tooltip' => 'Lisää linkki',
@@ -629,8 +649,8 @@ $messages['fi'] = array(
 	'wikia-editor-modules-templates-makeLayout-confirmation-title' => 'Luo malli tästä sivusta',
 	'wikia-editor-modules-insert-title' => 'Lisää ominaisuuksia ja media',
 	'wikia-editor-modules-categories-title' => 'Luokat',
-	'wikia-editor-loadingStates-loading' => 'Ladataan editori',
-	'wikia-editor-loadingStates-toSource' => 'Vaihdetaan lähdetilaan...',
+	'wikia-editor-loadingStates-loading' => 'Ladataan muokkainta',
+	'wikia-editor-loadingStates-toSource' => 'Vaihdetaan lähdekooditilaan...',
 	'wikia-editor-loadingStates-toVisual' => 'Vaihdetaan visuaalitilaan...',
 	'wikia-editor-loadingStates-saving' => 'Muokkaustesi julkistaminen',
 	'wikia-editor-edittools-caption' => 'lisää',
@@ -1055,6 +1075,7 @@ $messages['it'] = array(
 );
 
 /** Japanese (日本語)
+ * @author Shirayuki
  * @author Tommy6
  */
 $messages['ja'] = array(
@@ -1073,21 +1094,28 @@ $messages['ja'] = array(
 	'editpagelayout-pageControls-changes' => '差分',
 	'editpagelayout-blocked-user' => 'お使いの利用者名またはIPアドレスはブロックされています',
 	'editpagelayout-edit-summary-label' => '編集内容の要約',
+	'editpagelayout-subject-headline-label' => '題名/見出し：',
 	'wikia-editor-media-image' => '画像',
 	'wikia-editor-media-gallery' => 'ギャラリー',
 	'wikia-editor-media-slideshow' => 'スライドショー',
 	'wikia-editor-media-slider' => 'スライダ',
 	'wikia-editor-media-video' => '動画',
+	'wikia-editor-media-mut' => '動画',
 	'wikia-editor-media-image-tooltip' => '画像を追加',
 	'wikia-editor-media-gallery-tooltip' => 'ギャラリーを追加',
 	'wikia-editor-media-slideshow-tooltip' => 'スライドショーを追加',
 	'wikia-editor-media-slider-tooltip' => 'スライダを追加',
 	'wikia-editor-media-video-tooltip' => '動画を追加',
+	'wikia-editor-source-bold-tooltip' => '太字',
+	'wikia-editor-source-italic-tooltip' => '斜体',
+	'wikia-editor-source-link-tooltip' => 'リンクを追加',
 	'wikia-editor-modules-templates-title' => 'テンプレート',
 	'wikia-editor-modules-templates-add-tooltip' => '「$1」テンプレートを追加',
 	'wikia-editor-modules-templates-otherTemplates' => '他のテンプレートを追加',
 	'wikia-editor-modules-templates-showUsedList' => '使用しているテンプレートの一覧を表示',
 	'wikia-editor-modules-templates-showUsedList-dialog-title' => '使用しているテンプレートの一覧',
+	'wikia-editor-modules-templates-makeLayout' => 'このページから新規レイアウトを作成',
+	'wikia-editor-modules-templates-makeLayout-confirmation-title' => 'このページからレイアウトを作成',
 	'wikia-editor-modules-license-text' => '$1 投稿は CC-BY-SA ライセンスの下に置かれます。<a href="$2">詳細情報</a>',
 	'wikia-editor-modules-insert-title' => '機能とメディアを追加',
 	'wikia-editor-modules-categories-title' => 'カテゴリ',
@@ -1171,7 +1199,7 @@ $messages['ko'] = array(
 	'wikia-editor-media-slideshow-tooltip' => '슬라이드 쇼 추가',
 	'wikia-editor-media-slider-tooltip' => '슬라이더 추가',
 	'wikia-editor-media-video-tooltip' => '비디오 추가',
-	'wikia-editor-source-bold-tooltip' => '굵게',
+	'wikia-editor-source-bold-tooltip' => '굵은 글씨',
 	'wikia-editor-source-italic-tooltip' => '기울인 글씨',
 	'wikia-editor-source-link-tooltip' => '링크 추가',
 	'wikia-editor-modules-templates-title' => '틀',

@@ -208,12 +208,12 @@ $messages['ar'] = array(
 	'cnw-or' => 'أو',
 	'cnw-title' => 'إنشاء ويكي جديدة',
 	'cnw-name-wiki-headline' => 'بدء ويكي',
-	'cnw-login' => 'لُج',
+	'cnw-login' => 'تسجيل الدخول',
 	'cnw-signup' => 'أنشئ حسابا',
 	'cnw-call-to-login' => 'لج هنا',
-	'cnw-auth-headline' => 'لج',
+	'cnw-auth-headline' => 'تسجيل الدخول',
 	'cnw-auth-headline2' => 'أنشئ حسابًا',
-	'cnw-userauth-creative' => 'لُج',
+	'cnw-userauth-creative' => 'تسجيل الدخول',
 	'cnw-userauth-marketing-heading' => 'ليس لديك حساب؟',
 	'cnw-desc-lang' => 'اللغة',
 );
@@ -1254,6 +1254,7 @@ Effettua l'aggiornamento tramite PayPal per avere una wiki senza pubblicità a s
 );
 
 /** Japanese (日本語)
+ * @author Shirayuki
  * @author Tommy6
  * @author Wrightbus
  */
@@ -1269,7 +1270,7 @@ $messages['ja'] = array(
 	'cnw-name-wiki-domain-label' => 'ウィキのアドレスを入力してください',
 	'cnw-name-wiki-submit-error' => '上の入力欄2つとも記入する必要があります。',
 	'cnw-login' => 'ログイン',
-	'cnw-signup' => 'アカウントを作成',
+	'cnw-signup' => 'アカウント作成',
 	'cnw-signup-prompt' => 'アカウントが必要ですか？',
 	'cnw-call-to-signup' => 'こちらでアカウントを登録してください',
 	'cnw-login-prompt' => '既にアカウントをお持ちですか？',
@@ -1290,7 +1291,7 @@ $messages['ja'] = array(
 	'cnw-desc-tip3' => '上級',
 	'cnw-desc-tip3-creative' => 'さらに、訪問者に対して、あなたもページの編集や作成によってウィキの成長を手助けできるということを伝えましょう。',
 	'cnw-desc-choose' => 'カテゴリを選択',
-	'cnw-desc-select-one' => '一つを選択',
+	'cnw-desc-select-one' => '1つを選択',
 	'cnw-desc-default-lang' => 'ウィキの言語設定は $1 になっています',
 	'cnw-desc-change-lang' => '変更する',
 	'cnw-desc-lang' => '言語',

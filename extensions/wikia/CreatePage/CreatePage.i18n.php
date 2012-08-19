@@ -252,7 +252,7 @@ Si us plau, tria un nom diferent.',
 	'createpage_cant_edit' => "No s'ha pogut realitzar l'edició",
 	'createpage-dialog-title' => 'Crea una pàgina nova',
 	'createpage-dialog-message1' => 'Visca, has creat una pàgina nova!',
-	'createpage-dialog-message2' => 'Què vols que et digui?',
+	'createpage-dialog-message2' => 'Com li vols dir?',
 	'createpage-dialog-choose' => 'Trieu un disseny de pàgina:',
 	'createpage-dialog-format' => 'Disseny estàndard',
 	'createpage-dialog-blank' => 'Pàgina en blanc',
@@ -260,12 +260,12 @@ Si us plau, tria un nom diferent.',
 	'createpage-error-invalid-title' => 'Ho sentim, el títol de la pàgina no és vàlid!
 Si us plau, utilitzeu un títol diferent.',
 	'createpage-error-article-exists' => 'Ja existeix una pàgina amb aquest títol.
-Pots anar a <a href="$1">$2</a>, o canviar el nom de la pàgina',
+Pots anar a <a href="$1">$2</a> o canviar el nom de la pàgina',
 	'createpage-error-article-spam' => "Ho sentim, el títol de pàgina ha estat rebutjat pel nostre filtre d'spam.
 Si us plau, utilitzeu un títol diferent.",
 	'createpage-error-article-blocked' => 'Ho sentim, no pots crear aquesta pàgina en aquest moment.',
-	'tog-createpagedefaultblank' => "Utilitzeu la pàgina en blanc per defecte per a la creació d'una nova pàgina",
-	'tog-createpagepopupdisabled' => 'Desactivat la creació de pàgina pop-up',
+	'tog-createpagedefaultblank' => "Utilitzeu una pàgina en blanc per defecte per a la creació d'una nova pàgina",
+	'tog-createpagepopupdisabled' => 'Desactivar el procés "Crear una pàgina nova" (no recomanat)',
 	'newpagelayout' => '[[File:Placeholder|right|300px]]
 Escriu el primer paràgraf de la pàgina aquí.
 
@@ -1278,7 +1278,7 @@ $messages['nl'] = array(
 	'createpage_invalid_title_error' => 'Ongeldige paginanaam',
 	'createpage_article_already_exists' => 'Er bestaat al een pagina met die naam.
 Kies alstublieft een andere naam.',
-	'createpage_spam' => 'Sorry, uw bewerking kon niet worden opgeslagen',
+	'createpage_spam' => 'Uw bewerking kon helaas niet worden opgeslagen',
 	'createpage_cant_edit' => 'Het was niet mogelijk de bewerking uit te voeren',
 	'createpage-dialog-title' => 'Nieuwe pagina aanmaken',
 	'createpage-dialog-message1' => 'Gefeliciteerd.

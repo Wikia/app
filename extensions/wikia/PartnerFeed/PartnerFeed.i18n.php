@@ -131,11 +131,12 @@ $messages['fa'] = array(
 
 /** Finnish (suomi)
  * @author Centerlink
+ * @author Nike
  * @author Tofu II
  */
 $messages['fi'] = array(
 	'partner-feed-recent-changes' => 'Viimeisimmät muutokset',
-	'feed-title-blogposts' => 'Uusimmat blogimerkinnät',
+	'feed-title-blogposts' => 'Tuoreet blogimerkinnät',
 	'feed-title-recent-badges' => 'Viimeaikaiset rintanapit',
 	'feed-title-recent-images' => 'Viimeaikaiset kuvat',
 	'all-blog-posts' => 'kaikki kategoriat',

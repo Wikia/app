@@ -261,9 +261,11 @@ $messages['nb'] = array(
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Feil: Sideinnhold er påkrevd',
 );
 
-/** Dutch (Nederlands) */
+/** Dutch (Nederlands)
+ * @author Siebrand
+ */
 $messages['nl'] = array(
-	'contentfeeds-desc' => 'Biedt rijke en bijgewerkte informatie via verschillnde labels of "feeds"',
+	'contentfeeds-desc' => 'Biedt rijke en bijgewerkte informatie via verschillende labels of "feeds"',
 	'contentfeeds-newimages-rss-title' => 'RSS-feed voor {{#Special:NewFiles}}',
 	'contentfeeds-newimages-rss-desc' => 'Feed van $1',
 	'contentfeeds-firstfewarticles-tag-header' => "Maak uw eerste pagina's aan!",

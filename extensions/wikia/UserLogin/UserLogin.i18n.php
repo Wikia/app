@@ -1372,6 +1372,45 @@ Vill du kontrollera vilka e-postmeddelanden du får? Gå till: {{fullurl:{{ns:sp
 	'wikiamobile-facebook-connect-fail' => 'Tyvärr, ditt Facebook-konto är för tillfället inte är länkat med ett Wikia-konto.',
 );
 
+/** Tamil (தமிழ்)
+ * @author மதனாஹரன்
+ */
+$messages['ta'] = array(
+	'userlogin-login-heading' => 'உள்நுழையவும்',
+	'userlogin-forgot-password' => 'உங்கள் கடவுச் சொல்லை மறந்து விட்டீர்களா?',
+	'userlogin-remembermypassword' => 'உள்நுழைந்து இருக்கவும்',
+	'userlogin-error-noname' => 'ஓ, தயவு செய்து பயனர் பெயர்ப் புலத்தை நிரப்பவும்.',
+	'userlogin-error-wrongpassword' => 'ஓ, தவறான கடவுச் சொல். மேற்றட்டுப் பூட்டு நிறுத்தப்பட்டுள்ளது என்பதை உறுதி செய்து கொண்டு மீண்டும் முயற்சிக்கவும்.',
+	'userlogin-error-wrongpasswordempty' => 'ஓ, தயவு செய்து கடவுச் சொல் புலத்தை நிரப்பவும்.',
+	'userlogin-error-resetpass_announce' => 'நீங்கள் ஒரு தற்காலிகக் கடவுச் சொல்லைப் பயன்படுத்தியது போல் இருக்கின்றது. புகுபதிகையைத் தொடர்வதற்கு இங்கே ஒரு புதிய கடவுச் சொல்லை எடுக்கவும்.',
+	'userlogin-error-login-throttled' => 'நீங்கள் தவறான கடவுச் சொல்லுடன் உள்நுழைவதற்கு பற்பல தடவைகள் முயன்றுள்ளீர்கள். மீண்டும் முயல்வதற்கு முன் சிறிது நேரம் பொறுங்கள்.',
+	'userlogin-error-login-userblocked' => 'உங்கள் பயனர் பெயர் தடை செய்யப்பட்டுள்ளதுடன் புகுபதிகைக்குப் பயன்படுத்த முடியாததுமாகும்.',
+	'userlogin-error-cantcreateaccount-text' => 'புதிய கணக்குகளை உருவாக்குவதற்கு உங்கள் இணைய நெறிமுறை முகவரிக்கு ஒப்புதலில்லை.',
+	'userlogin-error-userexists' => 'யாரோ இப்பயனர் பெயரை ஏற்கனவே கொண்டுள்ளார். வேறுபட்ட ஒன்றை முயலவும்!',
+	'userlogin-error-invalidemailaddress' => 'தயவு செய்து செல்லுபடியாகும் மின்னஞ்சல் முகவரி ஒன்றை உள்ளிடவும்.',
+	'userlogin-error-invalid-username' => 'செல்லாத பயனர் பெயர்',
+	'userlogin-error-userlogin-unable-info' => 'மன்னிக்கவும், இந்நேரத்தில் உங்கள் கணக்கைப் பதிவு செய்ய எங்களால் முடியவில்லை.',
+	'userlogin-error-user-not-allowed' => 'இப்பயனர் பெயருக்கு ஒப்புதலில்லை.',
+	'userlogin-error-captcha-createaccount-fail' => 'நீங்கள் உள்ளிட்ட சொல் பெட்டியினுள் உள்ள சொல்லுடன் ஒத்துப் போகவில்லை, மீண்டும் முயற்சிக்கவும்!',
+	'userlogin-error-userlogin-bad-birthday' => 'ஓ, தயவு செய்து திங்களையும் நாளையும் ஆண்டையும் நிரப்பவும்.',
+	'userlogin-error-noemailtitle' => 'தயவு செய்து செல்லுபடியாகும் மின்னஞ்சல் முகவரி ஒன்றை உள்ளிடவும்.',
+	'userlogin-error-acct_creation_throttle_hit' => 'மன்னிக்கவும். இவ்விணைய நெறிமுறை முகவரி பல கணக்குகளை இன்று உருவாக்கியுள்ளது. தயவு செய்து பிறகு மீண்டும் முயற்சிக்கவும்.',
+	'userlogin-error-resetpass_forbidden' => 'கடவுச் சொற்களை மாற்ற முடியாது',
+	'userlogin-error-throttled-mailpassword' => 'இக்கணக்குக்கான கடவுச் சொல் நினைவுக் குறிப்பொன்றைக் கடந்த {{PLURAL:$1|மணித்தியாலத்தில்|$1 மணித்தியாலங்களில்}} நாங்கள் ஏற்கனவே அனுப்பியுள்ளோம். தயவு செய்து உங்கள் மின்னஞ்சலைப் பாருங்கள்.',
+	'userlogin-password-page-title' => 'உங்கள் கடவுச் சொல்லை மாற்றவும்',
+	'userlogin-oldpassword' => 'பழைய கடவுச் சொல்',
+	'userlogin-newpassword' => 'புதிய கடவுச் சொல்',
+	'userlogin-retypenew' => 'புதிய கடவுச் சொல்லை மீண்டும் தட்டச்சு செய்யவும்',
+	'userlogin-password-email-subject' => 'மறந்த கடவுச் சொல் வேண்டுகோள்',
+	'userlogin-password-email-greeting' => 'வணக்கம் $USERNAME,',
+	'userlogin-provider-or' => 'அல்லது',
+	'userlogin-provider-tooltip-facebook' => 'முகநூல் மூலம் உள்நுழைவதற்கு ஆளியைச் சொடுக்கவும்',
+	'userlogin-facebook-show-preferences' => 'முகநூலூட்ட விருப்பத்தேர்வுகளைக் காட்டவும்',
+	'userlogin-facebook-hide-preferences' => 'முகநூலூட்ட விருப்பத்தேர்வுகளை மறைக்கவும்',
+	'userlogin-loginreqlink' => 'உள்நுழையவும்',
+	'wikiamobile-sendpassword-label' => 'புதிய கடவுச் சொல்லை அனுப்பவும்',
+);
+
 /** Telugu (తెలుగు)
  * @author Jprmvnvijay5
  */

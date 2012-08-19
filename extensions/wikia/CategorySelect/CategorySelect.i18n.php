@@ -77,6 +77,7 @@ $messages['an'] = array(
 
 /** Arabic (العربية)
  * @author Achraf94
+ * @author Meno25
  * @author OsamaK
  */
 $messages['ar'] = array(
@@ -93,7 +94,7 @@ $messages['ar'] = array(
 	'categoryselect-edit-summary' => 'إضافة التصانيف',
 	'categoryselect-empty-name' => 'يوفر إسم التصنيف (الجزء قبل |)',
 	'categoryselect-button-save' => 'سجل',
-	'categoryselect-button-cancel' => 'ألغِ',
+	'categoryselect-button-cancel' => 'إلغاء',
 	'categoryselect-error-not-exist' => 'المقالة [id=$1] لا وجود لها',
 	'categoryselect-error-user-rights' => 'خطأ في حقوق المستخدم',
 	'categoryselect-error-db-locked' => 'قاعدة البيانات مغلقة',
