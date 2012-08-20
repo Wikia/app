@@ -15,7 +15,7 @@ $app->registerClass('WallNotificationsController', $dirnotification . '/WallNoti
 $app->registerClass('WallNotificationsExternalController', $dirnotification . '/WallNotificationsExternalController.class.php');
 
 $app->registerClass('WallNotificationsEveryone', $dirnotification . '/WallNotificationsEveryone.class.php');
-#$app->registerClass('WallNotificationsHooksHelper', $dirnotification . '/WallNotificationsHooksHelper.class.php');
+$app->registerClass('WallNotificationsHooksHelper', $dirnotification . '/WallNotificationsHooksHelper.class.php');
 
 // Notifications are required on NonWall Wikis in order to show proper
 // lower-left corner notification bubbles from Wall Wikis
@@ -23,7 +23,5 @@ $app->registerClass('WallHelper', $dir . '/WallHelper.class.php');
 $app->registerClass('WallMessage', $dir . '/WallMessage.class.php');
 
 //add script in monobook
-#$app->registerHook('SkinAfterBottomScripts', 'WallNotificationsHooksHelper', 'onSkinAfterBottomScripts');
-
-
-#$app->registerHook('MakeGlobalVariablesScript', 'WallNotificationsHooksHelper', 'onMakeGlobalVariablesScript');
+$app->registerHook('SkinAfterBottomScripts', 'WallNotificationsHooksHelper', 'onSkinAfterBottomScripts');
+$app->registerHook('MakeGlobalVariablesScript', 'WallNotificationsHooksHelper', 'onMakeGlobalVariablesScript');
