@@ -23,6 +23,8 @@ $app->registerClass('SpecialWikiaHubsV2Controller', $dir . 'SpecialWikiaHubsV2Co
 $app->registerClass('WikiaHubsV2Model', $dir . 'models/WikiaHubsV2Model.class.php');
 $app->registerClass('WikiaHubsV2Mobile', $dir . 'hooks/WikiaHubsV2MobileHooks.php');
 $app->registerClass('WikiaHubsV2Hooks', $dir . 'hooks/WikiaHubsV2Hooks.php');
+$app->registerClass('WikiaHubsV2SuggestController', $dir . 'WikiaHubsV2SuggestController.class.php');
+$app->registerClass('WikiaHubsV2SuggestModel', $dir . 'models/WikiaHubsV2SuggestModel.class.php');
 
 
 // pages
