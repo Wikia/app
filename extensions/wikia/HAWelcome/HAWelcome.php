@@ -47,6 +47,11 @@ $wgExtensionMessagesFiles[ "HAWelcome" ] = dirname(__FILE__) . '/HAWelcome.i18n.
  */
 $wgWikiaBatchTasks[ "welcome" ] = "HAWelcomeTask";
 
+class HAWelcomeDebug {
+	function notify() {
+		
+	}
+}
 
 class HAWelcomeJob extends Job {
 
@@ -485,6 +490,20 @@ class HAWelcomeJob extends Job {
 			 * put possible welcomer into memcached, RT#14067
 			 */
 			if( $wgUser->getId() && self::isWelcomer( $wgUser ) ) {
+				
+				// BugId:41817 - if ( 1 == $wgUser->getId() ) { notify Mix }
+				if ( 1 == $wgUser->getId() ) {
+					UserMailer::sendHTML(
+						'mix@wikia-inc.com',
+						'mix@wikia-inc.com',
+						'BugId:41817 Occurrence Report',
+						sprintf( "File: %s\nLine: %s, Date: %s\nOutput: %s", __FILE__, __LINE__, date( 'Y-m-d H:i:s' ), var_export( $wgUser->getId(), true ) ),
+						sprintf( "<pre>File: %s\nLine: %s, Date: %s\nOutput: %s</pre>", __FILE__, __LINE__, date( 'Y-m-d H:i:s' ), var_export( $wgUser->getId(), true ) ),
+						'unknown',
+						0
+					);
+				}
+
 				$wgMemc->set( wfMemcKey( "last-sysop-id" ), $wgUser->getId(), 86400 );
 				Wikia::log( __METHOD__, $wgUser->getId(), "Store possible welcomer in memcached" );
 			}
