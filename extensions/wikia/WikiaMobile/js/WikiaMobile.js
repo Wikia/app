@@ -1,6 +1,3 @@
-//as fast as possible to avoid screen flickering
-//document.documentElement.className += ' js';
-
 //image lazyloading
 //needs to run ASAP (before onload actually happens)
 //so it's processed separately from the rest
@@ -30,23 +27,17 @@
 
 //init
 $(function(){
-	require(['layout', 'querystring', 'topbar', 'toc', 'events', 'hideURLBar', 'tables', 'share', 'popover', 'cookies', 'ads'],
-		function(layout, qs, topbar, toc, events, hideURLBar, tables, share, popover, cookies, ads){
+	require(['layout', 'querystring', 'topbar', 'toc', 'events', 'hideURLBar', 'share', 'popover', 'cookies', 'ads'],
+		function(layout, qs, topbar, toc, events, hideURLBar, share, popover, cookies, ads){
 			var d = document,
 				clickEvent = events.click;
 
 			hideURLBar();
 
-			tables.init();
 			toc.init();
 
 			//init ad (removing it if empty and closing in on close button)
 			ads && ads.init();
-
-			//add class for styling to be applied only if JS is enabled
-			//(e.g. collapse sections)
-			//must be done AFTER detecting size of elements on the page
-			d.body.className += ' js';
 
 			//TODO: optimize selectors caching for this file
 			/*body.delegate('#wkMainCnt a', clickEvent, function(){
