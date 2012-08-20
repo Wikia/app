@@ -14,18 +14,26 @@ $wgExtensionFunctions[] = 'wfAdEngineInit';
 
 function wfAdEngineInit() {
 	global $wgRequest, $wgUser;
-	global $wgNoExternals, $wgShowAds, $wgEnableAdsInContent;
+	global $wgNoExternals, $wgShowAds, $wgEnableAdsInContent, $wgEnableAdMeldAPIClient;
 
 	if ($wgRequest->getBool('noexternals', $wgNoExternals)) {
 		$wgShowAds = false;
 	}
 
+	$action = $wgRequest->getVal('action', 'view');
+	if ($action !== 'view') {
+		$wgShowAds = false;
+	}
+
 	if (empty($wgShowAds)) {
 		$wgEnableAdsInContent = false;
+		$wgEnableAdMeldAPIClient = false;
 	}
 
 	if ($wgUser->isLoggedIn() && !$wgUser->getOption('showAds')) {
+		// Disable right rail ads and AdMeld ads for logged in users not willing to see ads
 		$wgEnableAdsInContent = false;
+		$wgEnableAdMeldAPIClient = false;
 	}
 }
 
