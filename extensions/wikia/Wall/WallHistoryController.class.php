@@ -135,6 +135,8 @@ class WallHistoryController extends WallController {
 				'reply-'.WH_DELETE => 'wall-thread-history-reply-deleted',
 				'thread-'.WH_EDIT => 'wall-thread-history-thread-edited',
 				'reply-'.WH_EDIT => 'wall-thread-history-reply-edited',
+				'thread-'.WH_ARCHIVE => 'wall-thread-history-thread-closed',
+				'thread-'.WH_REOPEN => 'wall-thread-history-thread-reopened',
 			);
 		} else {
 			return array(

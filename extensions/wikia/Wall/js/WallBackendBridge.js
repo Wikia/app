@@ -51,7 +51,7 @@ Wall.BackendBridge = $.createClass(Observable, {
 		});
 	},
 
-	postReply: function(page, body, convertToFormat, parent, callback) {
+	postReply: function(page, body, convertToFormat, parent, quotedFrom, callback) {
 		$.nirvana.sendRequest({
 			controller: this.pageController,
 			method: 'replyToMessage',
@@ -61,7 +61,8 @@ Wall.BackendBridge = $.createClass(Observable, {
 
 				pagetitle: page['title'],
 				pagenamespace: page['namespace'],
-				convertToFormat: convertToFormat
+				convertToFormat: convertToFormat,
+				quotedFrom: quotedFrom || ''
 			},
 			callback: this.proxy(function(data) {
 				var newMessage = $(data.message);

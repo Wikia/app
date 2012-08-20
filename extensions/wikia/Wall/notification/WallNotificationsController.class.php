@@ -16,10 +16,11 @@ class WallNotificationsController extends WikiaController {
 
 		if($this->wg->User->isLoggedIn()) {
 
-			$wn = F::build('WallNotifications', array());
-
 			$this->response->addAsset('extensions/wikia/Wall/js/WallNotifications.js');
 			$this->response->addAsset('extensions/wikia/Wall/css/WallNotifications.scss');
+			$this->response->setVal('prehide', (empty($this->wg->EnableWallExt) && empty($this->wg->EnableForumExt)));
+			
+			$this->response->setVal('user', $this->wg->User);
 		}
 
 		$this->response->setVal('user', $this->wg->User);
@@ -30,9 +31,12 @@ class WallNotificationsController extends WikiaController {
 	public function Update() {
 		wfProfileIn(__METHOD__);
 
+		$this->response->setVal('alwaysGrouped', empty($this->app->wg->EnableWallExt) && empty($this->app->wg->EnableForumExt)  );
+
 		$this->response->setVal('notificationKey', $this->request->getVal('notificationKey') );
 
 		$notificationCounts = $this->request->getVal('notificationCounts');
+		
 		$this->response->setVal('notificationCounts', $notificationCounts);
 
 		$unreadCount = $this->request->getVal('count');

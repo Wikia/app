@@ -3,7 +3,7 @@
 class WallHooksHelper {
 	const RC_WALL_COMMENTS_MAX_LEN = 50;
 	const RC_WALL_SECURENAME_PREFIX = 'WallMessage_';
-	private $rcWallActionTypes = array('wall_remove', 'wall_restore', 'wall_admindelete');
+	private $rcWallActionTypes = array('wall_remove', 'wall_restore', 'wall_admindelete', 'wall_archive', 'wall_reopen');
 
 	public function onBlockIpCompleteWatch($name, $title ) {
 		$app = F::App();
@@ -445,26 +445,7 @@ class WallHooksHelper {
 
 		return true;
 	}
-
-	/**
-	 * @brief Adds Wall Notifications script to Monobook pages
-	 *
-	 * @return true
-	 *
-	 * @author Liz Lee
-	 */
-	public function onSkinAfterBottomScripts($skin, $text) {
-		$app = F::App();
-		$user = $app->wg->User;
-
-		if( $user instanceof User && $user->isLoggedIn() && $skin->getSkinName() == 'monobook') {
-			$text .= "<script type=\"{$app->wg->JsMimeType}\" src=\"{$app->wg->ResourceBasePath}/resources/wikia/libraries/jquery/timeago/jquery.timeago.js\"></script>\n" .
-				"<script type=\"{$app->wg->JsMimeType}\" src=\"{$app->wg->ExtensionsPath}/wikia/Wall/js/WallNotifications.js\"></script>\n";
-		}
-
-		return true;
-	}
-
+	
 	/**
 	 * @brief Changes "My talk" to "Message wall" in Oasis (in the tabs on the User page).
 	 *
@@ -1071,6 +1052,12 @@ class WallHooksHelper {
 				case 'wall_admindelete':
 					$actionText = wfMsgExt($this->getMessagePrefix($rc->getAttribute('rc_namespace')) . '-deleted-'.$msgType, array('parseinline'), $wfMsgOpts);
 					break;
+				case 'wall_archive':
+					$actionText = wfMsgExt($this->getMessagePrefix($rc->getAttribute('rc_namespace')) . '-closed-thread', array('parseinline'), $wfMsgOpts);
+					break;
+				case 'wall_reopen':
+					$actionText = wfMsgExt($this->getMessagePrefix($rc->getAttribute('rc_namespace')) . '-reopened-thread', array('parseinline'), $wfMsgOpts);
+					break;
 				default:
 					$actionText = wfMsg($this->getMessagePrefix($rc->getAttribute('rc_namespace')) . '-unrecognized-log-action', $wfMsgOpts);
 					break;
@@ -1553,19 +1540,6 @@ class WallHooksHelper {
 		return true;
 	}
 
-	/**
-	 * @brief pre render the notifications
-	 *
-	 **/
-
-	public function onMakeGlobalVariablesScript( &$vars ){
-		$user =	F::app()->wg->User;
-		if( $user->isLoggedIn() ) {
-			$response = F::app()->sendRequest( 'WallNotificationsExternalController', 'getUpdateCounts', array() );
-			$vars['wgNotificationsCount'] = $response->getData();
-		}
-		return true;
-	}
 
 	/**
 	 * @brief Adjusting Special:Contributions

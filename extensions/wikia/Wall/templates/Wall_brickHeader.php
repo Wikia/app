@@ -12,7 +12,10 @@
 	<? if (!empty($isRemoved) || !empty($isAdminDeleted)): ?>
 		<span class="removed"><?= '('.wfMsg('wall-thread-'.($isAdminDeleted ? 'deleted' : 'removed')).')' ?></span>
 	<? endif; ?>
-        <? if (!empty($isNotifyeveryone)): ?>
-                <span class="removed">(<?= wfMsg('wall-thread-isnotifyeveryone'); ?>)</span>
-        <? endif; ?>
+    <? if (!empty($isNotifyeveryone)): ?>
+            <span class="removed">(<?= wfMsg('wall-thread-isnotifyeveryone'); ?>)</span>
+    <? endif; ?>
+    <? if (!empty($isClosed)): ?>
+    	<span class="removed">(<?= wfMsg('wall-thread-closed') ?>)</span>
+    <? endif; ?>
 </div>

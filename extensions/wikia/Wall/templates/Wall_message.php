@@ -1,28 +1,6 @@
-<li class="SpeechBubble message <?php echo ($removedOrDeletedMessage ? 'hide ':'') . ($showRemovedBox?' message-removed':''); ?> <? echo 'message-'.$linkid ?>" id="<? echo $linkid ?>" data-id="<? echo $id ?>" data-is-reply="<?= $isreply == true ?>" <? if($hide):?> style="display:none" <? endif;?> >
-	<?php if(($showDeleteOrRemoveInfo) && (!empty($deleteOrRemoveInfo) )): ?>
-		<div class="deleteorremove-infobox" >
-			<table class="deleteorremove-container"><tr><td width="100%">
-			<div class="deleteorremove-bubble">
-				<div class="avatar"><?= AvatarService::renderAvatar($deleteOrRemoveInfo['user']->getName(), 20) ?></div>
-				<div class="message">
-					<? if($isreply): ?>
-					<?= wfMsgExt('wall-message-'.$deleteOrRemoveInfo['status'].'-reply-because',array( 'parsemag'), array($deleteOrRemoveInfo['user_displayname_linked'])); ?><br />
-					<? else: ?>
-					<?= wfMsgExt('wall-message-'.$deleteOrRemoveInfo['status'].'-thread-because',array( 'parsemag'), array($deleteOrRemoveInfo['user_displayname_linked'])); ?><br />
-					<? endif; ?>
-					<div class="reason"><?php echo $deleteOrRemoveInfo['reason']; ?></div>
-					<div class="timestamp"><span><?php echo $deleteOrRemoveInfo['fmttime']; ?></span></div>
-				</div>
-			</div>
-			</td><td>
-			<? if($isreply): ?>
-				<button <? echo ($canRestore ? '':'disabled=disbaled') ?>  data-mode='restore<?php echo ($fastrestore ? '-fast':'') ?>' data-id="<?php echo $id; ?>"  class="message-restore wikia-button" ><?php echo wfMsg('wall-message-restore-reply'); ?></button>
-			<? else: ?>
-				<button <? echo ($canRestore ? '':'disabled=disbaled') ?> data-mode='restore<?php echo ($fastrestore ? '-fast':'') ?>' data-id="<?php echo $id; ?>"  class="message-restore wikia-button" ><?php echo wfMsg('wall-message-restore-thread'); ?></button>
-			<? endif; ?>
-			</td></tr></table>
-		</div>
-	<?php endif; ?>
+<li class="SpeechBubble message <?php echo ($isreply ? '':'message-main'); ?> <?php echo ($removedOrDeletedMessage ? 'hide ':'') . ($showRemovedBox?' message-removed':''); ?> <? echo 'message-'.$linkid ?>" id="<? echo $linkid ?>" data-id="<? echo $id ?>" data-is-reply="<?= $isreply == true ?>" <? if($hide):?> style="display:none" <? endif;?> >	
+
+	<?php echo $app->renderView( 'WallController', 'statusInfoBox', array('showDeleteOrRemoveInfo' => $showDeleteOrRemoveInfo, 'comment' => $comment) ); ?>
 
 	<? if($showRemovedBox): ?>
 		<div class='removed-info speech-bubble-message-removed' >
@@ -48,11 +26,11 @@
 				<a <?php if(!$showFollowButton): ?>style="display:none"<?php endif;?> data-iswatched="0" class="follow wikia-button secondary"><?= wfMsg('oasis-follow'); ?></a>
 			<?php endif;?>
 		<? endif; ?>
-		
+
 		<?php if($showVotes): ?>
 			<div class="voting-controls">
 				<a class="votes<?= $votes > 0 ? "" : " notlink" ?>" data-votes="<?= $votes ?>">
-					<?php echo wfMsg('wall-votes-number', '<span class="number" >'.$votes.'</span>'); ?>
+					<?= $isreply ? '<span class="number" >'.$votes.'</span>' : wfMsg('wall-votes-number', '<span class="number" >'.$votes.'</span>') ?>
 				</a>			
 				<?php if($canVotes):?>
 					<a class="vote <?php if($isVoted): ?>voted<?php endif;?>">
@@ -77,6 +55,15 @@
 				<span class="stafflogo"></span>
 			<?php endif; ?>
 		</div>
+		
+		<?php if($quote_of): ?>
+		<div class="quote-of">
+			<a href="<?php echo $quote_of_url; ?>" data-postfix="<?php echo $quote_of_postfix; ?>" >
+				<?= wfMsg('wall-quote-reply-to', $quote_of_postfix) ?>
+			</a>
+		</div>
+		<?php endif; ?>
+		
 		<? if ( $wg->EnableMiniEditorExtForWall ):
 			echo $app->renderPartialCached( 'MiniEditorController', 'Editor_Header', 'Wall_message' );
 		endif; ?>
@@ -99,10 +86,9 @@
 						<span><?= $fmt_timestamp ?></span>
 					<?php endif; ?>
 				</a>
-	
-				<div class="buttonswrapper">
-					<?= $app->renderView( 'WallController', 'messageButtons', array('comment' => $comment)); ?>
-				</div>
+			</div>
+			<div class="buttonswrapper">
+				<?= $app->renderView( 'WallController', 'messageButtons', array('comment' => $comment)); ?>
 			</div>
 			<?= $app->renderPartialCached( 'WallController', 'messageEditButtons', 'Wall_message' ); ?>
 		</div>

@@ -28,6 +28,7 @@ class WallMessage {
 
 	static public function newFromId($id, $master = false) {
 		wfProfileIn(__METHOD__);
+		
 		if( $master == true ) {
 			$title = F::build('Title', array($id, Title::GAID_FOR_UPDATE), 'newFromId');
 		} else {
@@ -262,11 +263,21 @@ class WallMessage {
 	public function canFastrestore(User $user) {
 		return $this->can($user, 'walladmindelete') || $this->isWallOwner($user);
 	}
+	
+	/**
+	 * archive is "close".
+	 */
+	public function canArchive(User $user) {
+		return in_array(MWNamespace::getSubject($this->title->getNamespace()), F::app()->wg->WallThreadCloseNS) && $this->can($user, 'wallarchive') && !$this->isRemove() && !$this->isArchive() && !$this->isRemove() && $this->isMain();
+	}
+	
+	public function canReopen(User $user) {
+		return in_array(MWNamespace::getSubject($this->title->getNamespace()), F::app()->wg->WallThreadCloseNS) && $this->can($user, 'wallarchive') && !$this->isRemove() && $this->isArchive() && $this->isMain();
+	}
 
 	public function getMetaTitle() {
 		return $this->getArticleComment()->getMetadata('title');
 	}
-
 	
 	public function getNotifyeveryone() {
 		$out = (int ) $this->getArticleComment()->getMetadata('notify_everyone');
@@ -280,7 +291,7 @@ class WallMessage {
 	}
 	
 	public function canNotifyeveryone() {
-		if($this->isMain()) {
+		if($this->isMain() && !$this->isArchive() && !$this->isRemove() ) {
 			if(!$this->isAllowedNotifyEveryone()) {
 				return false;
 			}
@@ -669,25 +680,42 @@ class WallMessage {
 	public function getTitle() {
 		return $this->title;
 	}
+	
+	protected function recordAdminHistory($user, $reason, $history, $notifyAdmins = false) {
+		$wnae = $this->getAdminNotificationEntity($user, $reason);
+		if($notifyAdmins) {
+			$this->addAdminNotificationFromEntity($wnae);
+		}
 
-	public function archive() {
-		return $this->markInProps(WPP_WALL_ARCHIVE);
+		$wh = F::build('WallHistory', array($this->cityId));
+		$wh->add( $history, $wnae, $user );
+	}
+
+	public function archive($user) {
+		$status = $this->markInProps(WPP_WALL_ARCHIVE);
+		$this->recordAdminHistory($user, '', WH_ARCHIVE);
+		$this->saveReason($user, '');
+		$this->customActionNotifyRC($user, 'wall_archive', '');
+		return $status;
+	}
+	
+	public function reopen($user) {
+		$this->unMarkInProps(WPP_WALL_ARCHIVE);
+		$this->recordAdminHistory($user, '', WH_REOPEN);
+		$this->customActionNotifyRC($user, 'wall_reopen', '');
+		return true;
 	}
 
 	public function remove($user, $reason = '', $notifyAdmins = false) {
 		$this->saveReason($user, $reason);
+		
+		$this->unMarkInProps(WPP_WALL_ARCHIVE);
 		$status = $this->markInProps(WPP_WALL_REMOVE);
-
+		
 		if( $status === true ) {
 			$this->customActionNotifyRC($user, 'wall_remove', $reason);
 
-			$wnae = $this->getAdminNotificationEntity($user, $reason);
-			if($notifyAdmins) {
-				$this->addAdminNotificationFromEntity($wnae);
-			}
-
-			$wh = F::build('WallHistory', array($this->cityId));
-			$wh->add( WH_REMOVE, $wnae, $user );
+			$this->recordAdminHistory($user, $reason, WH_REMOVE, $notifyAdmins);
 
 			if( $this->isMain() === true ) {
 				$this->getWall()->invalidateCache();
@@ -935,9 +963,9 @@ class WallMessage {
 	}
 
 	//TODO: cache it
-	public function getLastActionReason( ) {
+	public function getLastActionReason() {
 		if(empty($this->mActionReason)) {
-			$info = wfGetWikiaPageProp(WPP_WALL_ACTIONREASON, $this->getId());
+			$info = wfGetWikiaPageProp( WPP_WALL_ACTIONREASON, $this->getId());
 		} else {
 			$info = $this->mActionReason;
 		}
@@ -975,6 +1003,62 @@ class WallMessage {
 		);
 
 		wfSetWikiaPageProp( WPP_WALL_ACTIONREASON, $this->getId(), $this->mActionReason);
+	}
+	
+	protected function getActionPropName($action) {
+		switch($action) {
+			case WH_REMOVE:
+			case WH_DELETE:	
+			case WH_RESTORE:
+				return WPP_WALL_ACTIONREASON;
+			break;
+			case WH_REOPEN:
+			case WH_ARCHIVE:
+				return WPP_WALL_ACTIONREASON_REMOVE_OR_DELETE;
+			break;
+		}
+	}
+
+	public function getQuoteOf() {
+		$id = $this->getPropVal(WPP_WALL_QUOTE_OF);
+		if(empty($id)) {
+			return false;
+		}
+		
+		$msg = F::build('WallMessage', array($id), 'newFromId');
+
+		if(empty($msg)) {
+			return false;
+		}
+		
+		return $msg; 
+	}
+
+	public function setQuoteOf($id) {
+		if($this->isMain()) {
+			return false;
+		}
+		
+		$msgParent = $this->getTopParentObj();		
+		$quotedMsg = F::build('WallMessage', array($id, true), 'newFromId');
+
+		if(empty($quotedMsg)) {
+			return false;
+		}
+
+		if($quotedMsg->isMain()) {
+			if($quotedMsg->getId() != $msgParent->getId()) {
+				return false;
+			}
+		} else {
+			$quotedMsgParent = $quotedMsg->getTopParentObj();
+			if($quotedMsgParent->getId() !=  $msgParent->getId()) {
+				return false;
+			}
+		}
+		
+		$this->setInProps(WPP_WALL_QUOTE_OF, $id);
+		return true;
 	}
 
 	/*

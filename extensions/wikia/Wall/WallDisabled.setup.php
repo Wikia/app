@@ -19,33 +19,11 @@ $wgExtensionCredits['specialpage'][] = array(
 
 $dir = dirname(__FILE__);
 
+$app->registerExtensionMessageFile('Wall', $dir . '/Wall.i18n.php');
 $app->registerClass('WallDisabledHooksHelper', $dir . '/WallDisabledHooksHelper.class.php');
 
-// register task in task manager
-if (function_exists( "extAddBatchTask" ) ) {
-	extAddBatchTask(dirname(__FILE__)."/WallCopyFollowsTask.class.php", "wallcopyfollows", "WallCopyFollowsTask");
-}
-
-// Notifications are required on NonWall Wikis in order to show proper
-// lower-left corner notification bubbles from Wall Wikis
-$app->registerClass('WallHelper', $dir . '/WallHelper.class.php');
-$app->registerClass('WallMessage', $dir . '/WallMessage.class.php');
 include($dir . '/notification/WallNotifications.setup.php');
-
 
 //don't let others edit wall messages after turning wall on and off
 $app->registerHook('AfterEditPermissionErrors', 'WallDisabledHooksHelper', 'onAfterEditPermissionErrors');
-
-//add hook for displaying Notification Bubbles for NonWall wikis FROM Wall wikis
-$app->registerHook('UserRetrieveNewTalks', 'WallDisabledHooksHelper', 'onUserRetrieveNewTalks');
-
-//wikifactory/wikifeatures
-//$app->registerHook('WikiFactoryChanged', 'WallDisabledHooksHelper', 'onWikiFactoryChanged');
-$app->registerHook('DismissWikiaNewtalks', 'WallDisabledHooksHelper', 'onDismissWikiaNewtalks');
-
-
-//watchlist
-//$app->registerHook('WatchArticle', 'WallDisabledHooksHelper', 'onWatchArticle');
-//$app->registerHook('UnwatchArticle', 'WallDisabledHooksHelper', 'onUnwatchArticle');
-
 include($dir . '/WallNamespaces.php');

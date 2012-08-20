@@ -97,7 +97,7 @@ class WallBaseController extends ArticleCommentsController {
 		$this->response->setVal('itemsPerPage', $wallMessagesPerPage);
 		$this->response->setVal('showPager', ($this->countComments > $wallMessagesPerPage) );
 		$this->response->setVal('currentPage', $page );
-
+//$this->isArchive()
 		if($this->wg->User->getId() > 0 && empty($filterid) ) {
 			//THIS hack will be removed after runing script with will clear all notification copy
 			$dbw = wfGetDB( DB_SLAVE, array() );
@@ -131,6 +131,8 @@ class WallBaseController extends ArticleCommentsController {
 		$this->response->setVal( 'canDelete', $wallMessage->canDelete($this->wg->User));
 		$this->response->setVal( 'canAdminDelete', $wallMessage->canAdminDelete($this->wg->User)  && $wallMessage->isRemove()  );
 		$this->response->setVal( 'canRemove', $wallMessage->canRemove($this->wg->User)  && !$wallMessage->isRemove());
+		$this->response->setVal( 'canClose', $wallMessage->canArchive($this->wg->User) );
+		$this->response->setVal( 'canReopen', $wallMessage->canReopen($this->wg->User) );
 		$this->response->setVal( 'showViewSource', $this->wg->User->getOption('wallshowsource', false) );
 		$this->response->setVal( 'threadHistoryLink', $wallMessage->getMessagePageUrl(true).'?action=history' );
 		$this->response->setVal( 'wgBlankImgUrl', $this->wg->BlankImgUrl );
@@ -146,7 +148,7 @@ class WallBaseController extends ArticleCommentsController {
 		$wallMessage = $this->getWallMessage(); 
 		
 		if( !($wallMessage instanceof WallMessage) ) {
-			$this->forward(__CLASS__, 'message_error');
+			$this->forward('WallBaseController', 'message_error');
 			wfProfileOut( __METHOD__);
 			return true;
 		}
@@ -155,33 +157,12 @@ class WallBaseController extends ArticleCommentsController {
 		$this->response->setVal( 'hide',  false);
 		
 		$this->response->setVal( 'showReplyForm', false);
-		$this->response->setVal( 'showDeleteOrRemoveInfo', false);
+		$this->response->setVal( 'showDeleteOrRemoveInfo', $this->request->getVal('showDeleteOrRemoveInfo') );
 		$this->response->setVal( 'removedOrDeletedMessage', false);
 		$this->response->setVal( 'showRemovedBox', false);
 
-		if($this->request->getVal( 'showDeleteOrRemoveInfo', false )) {
-			if( $wallMessage->isRemove() || $wallMessage->isAdminDelete() ) {
-				$info = $wallMessage->getLastActionReason();
-				
-				if(empty($info)) {
-					$showDeleteOrRemoveInfo = false;
-					$this->response->setVal( 'showDeleteOrRemoveInfo', false);
-				} else {
-					$info['fmttime'] = $this->wg->Lang->timeanddate( $info['mwtime'] );
-	
-					$this->response->setVal( 'deleteOrRemoveInfo', $info );
-					$this->response->setVal( 'showDeleteOrRemoveInfo', true);
-				}
-			}
-			
-			$this->response->setVal( 'showDeleteOrRemoveInfo', true);
-			
-			if($wallMessage->isRemove() && !$wallMessage->isMain()) {
-				$this->response->setVal( 'removedOrDeletedMessage', true);	
-				$this->response->setVal( 'showRemovedBox', true);
-			}
-		}
-		
+		$this->response->setVal( 'showClosedBox', false );
+
 		if( !$this->getVal('isreply', false) ) {
 			$this->response->setVal('feedtitle', htmlspecialchars($wallMessage->getMetaTitle()) );
 			$this->response->setVal('body', $wallMessage->getText() );
@@ -207,7 +188,7 @@ class WallBaseController extends ArticleCommentsController {
 			
 			$this->response->setVal('linkid', '1');
 			
-			$this->response->setVal( 'showReplyForm', (!$wallMessage->isRemove() && !$wallMessage->isAdminDelete())); 
+			$this->response->setVal( 'showReplyForm', (!$wallMessage->isRemove() && !$wallMessage->isAdminDelete() && !$wallMessage->isArchive() )); 
 		} else {
 			$showFrom = $this->request->getVal('repliesNumber', 0) - $this->request->getVal('showRepliesNumber', 0);
 			//$current = $this->request->getVal('current', false);
@@ -266,6 +247,11 @@ class WallBaseController extends ArticleCommentsController {
 		} else {
 			$this->response->setVal( 'showFollowButton', false );
 		}
+			
+		if($wallMessage->isRemove() && !$wallMessage->isMain()) {
+			$this->response->setVal( 'removedOrDeletedMessage', true);	
+			$this->response->setVal( 'showRemovedBox', true);
+		}
 		
 		
 		$name = $wallMessage->getUser()->getName();
@@ -291,11 +277,6 @@ class WallBaseController extends ArticleCommentsController {
 			$displayname2 = $wallMessage->getUser()->getName();
 		} 
 		
-		$canRestore = $wallMessage->canRestore($this->app->wg->User);
-		
-		$this->response->setVal('canRestore', $canRestore ); 
-		$this->response->setVal('fastrestore', $canRestore && $wallMessage->canFastrestore($this->app->wg->User) );
-			
 		$this->response->setVal( 'displayname',  $displayname );
 		$this->response->setVal( 'displayname2', $displayname2 );
 
@@ -310,10 +291,55 @@ class WallBaseController extends ArticleCommentsController {
 		
 		$this->response->setVal( 'user_author_url',  $url );
 
+		$this->response->setVal( 'quote_of',  false );
+		
+		$quoteOf = $wallMessage->getQuoteOf();
+		
+		if(!empty($quoteOf)) {
+			$this->response->setVal( 'quote_of',  true );
+			$this->response->setVal( 'quote_of_url',  $quoteOf->getMessagePageUrl() );
+			
+			$postfix = $quoteOf->getPageUrlPostFix();
+			if(empty($postfix)) {
+				$postfix = 1;
+			} 
+			
+			$this->response->setVal( 'quote_of_postfix',  $postfix );	
+		}
+		
 		wfProfileOut( __METHOD__ );
 	}
 	
+	public function statusInfoBox() {
+		$wallMessage = $this->getWallMessage();
+		$this->response->setVal( 'statusInfo', false );
+
+		if(!$this->request->getVal( 'showDeleteOrRemoveInfo', false )) {
+			return true; 
+		}
 		
+		$showRemoveOrDeleteInfo = $wallMessage->isRemove() || $wallMessage->isAdminDelete();
+		$showArchiveInfo = !$showRemoveOrDeleteInfo && $wallMessage->isArchive();
+		
+		if( $showRemoveOrDeleteInfo || $showArchiveInfo ) {
+			$info = $wallMessage->getLastActionReason();
+			
+			if(!empty($info)) {
+				$info['fmttime'] = $this->wg->Lang->timeanddate( $info['mwtime'] );
+				$this->response->setVal( 'statusInfo', $info );
+				$this->response->setVal( 'id', $wallMessage->getId());
+				if($showRemoveOrDeleteInfo) {
+					$this->response->setVal('canRestore', $wallMessage->canRestore($this->app->wg->User) );
+					$this->response->setVal('fastrestore', $wallMessage->canFastrestore($this->app->wg->User) );
+					$this->response->setVal('isreply', $wallMessage->isMain() );
+				}
+			}
+		}
+		
+		$this->response->setVal( 'showRemoveOrDeleteInfo', $showRemoveOrDeleteInfo );
+		$this->response->setVal( 'showArchiveInfo', $showArchiveInfo );
+	}
+	
 	protected function getWallMessage() {
 		$comment = $this->request->getVal('comment');
 		if(($comment instanceof ArticleComment)) {
@@ -434,6 +460,7 @@ class WallBaseController extends ArticleCommentsController {
 		$this->response->setVal( 'isAdminDeleted', false );
 
 		$this->response->setVal( 'isNotifyeveryone', false );
+		$this->response->setVal( 'isClosed', false );
 
 		$path = array();
 		$this->response->setVal( 'path', $path);
@@ -471,6 +498,7 @@ class WallBaseController extends ArticleCommentsController {
 			$this->response->setVal( 'isAdminDeleted', $isDeleted );
 				
 			$this->response->setVal( 'isNotifyeveryone', $wallMessage->getNotifyeveryone() );
+			$this->response->setVal( 'isClosed', $wallMessage->isArchive() );
 
 			
 			if( $isRemoved || $isDeleted ) {

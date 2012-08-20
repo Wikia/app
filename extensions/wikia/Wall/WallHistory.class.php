@@ -16,7 +16,9 @@ class WallHistory extends WikiaModel {
 			case WH_NEW:
 				$this->addNewOrEdit( $type, $feed, $user );
 			break;
+			case WH_ARCHIVE:
 			case WH_DELETE:
+			case WH_REOPEN:
 			case WH_REMOVE:
 			case WH_RESTORE:
 				$this->addStatChangeAction( $type, $feed, $user );

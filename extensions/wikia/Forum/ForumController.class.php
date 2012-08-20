@@ -128,7 +128,7 @@ class ForumController extends WallBaseController {
 	}
 
 	protected function addMiniEditorAssets() {
-		if ($this->wg->EnableMiniEditorExtForWall) {
+		if ($this->wg->EnableMiniEditorExtForWall && $this->app->checkSkin( 'oasis' )) {
 			$this->sendRequest('MiniEditor', 'loadAssets', array(
 				'additionalAssets' => array(
 					'forum_mini_editor_js',

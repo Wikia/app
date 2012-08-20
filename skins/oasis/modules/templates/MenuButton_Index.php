@@ -15,7 +15,7 @@
 		// render edit button with dropdown
 		else {
 ?>
-<nav class="<?= $class ?>" <?= empty($id) ? '' : 'id="'.$id.'"'?>>
+<nav class="<?= $class ?><?= isset($action['href']) ? '' : ' combined' ?>" <?= empty($id) ? '' : 'id="'.$id.'"'?>>
 <?php
 			// render edit menu
 			if (isset($action['href'])) {
@@ -50,7 +50,7 @@
 				$href = isset($item['href']) ? htmlspecialchars($item['href']) : '#';
 ?>
 		<li>
-			<a href="<?= $href ?>"<?= $accesskey ?> data-id="<?= $key ?>"<?= empty($item['id']) ? '' : ' id="'.$item['id'].'"' ?><?= empty($item['class']) ? '' : ' class="'.$item['class'].'"' ?>><?=htmlspecialchars($item['text']) ?></a>
+			<a href="<?= $href ?>"<?= $accesskey ?> data-id="<?= $key ?>"<?= empty($item['id']) ? '' : ' id="'.$item['id'].'"' ?><?= empty($item['class']) ? '' : ' class="'.$item['class'].'"' ?><?= empty($item['attr']) ? '' : ' '.$item['attr'] ?>><?=htmlspecialchars($item['text']) ?></a>
 		</li>
 <?php
 			}

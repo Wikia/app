@@ -11,6 +11,7 @@ var WallNotifications = $.createClass(Object, {
 		this.fetchedCurrent = false; // we only want to force-fetch notifications for current Wiki once
 		this.currentWikiId = 0; // updated after fetching Notification counts for the 1st time
 		setTimeout( this.proxy( this.updateCounts ), 300);
+		
 		//setInterval( this.proxy( this.updateLoop ), 15000);
 
 		var $wallNotificationsMonobook = $('.wall-notifications-monobook');
@@ -79,6 +80,10 @@ var WallNotifications = $.createClass(Object, {
 			if(data.status != true || data.html == '') {
 				return;
 			}
+			if(data.count) {
+				$('#WallNotifications').show();
+			}
+			
 			this.updateCountsHtml(data);
 
 			// if we already have data for some Wikis, show it
@@ -97,20 +102,16 @@ var WallNotifications = $.createClass(Object, {
 
 		if( this.updateInProgress == false ) {
 			this.updateInProgress = true;
-			if(window.wgNotificationsCount) {
-				callback(window.wgNotificationsCount);
-				window.wgNotificationsCount = false;
-			} else {
-				$.nirvana.sendRequest({
-					controller: 'WallNotificationsExternalController',
-					method: 'getUpdateCounts',
-					format: 'json',
-					data: {
-						username: wgTitle
-					},
-					callback: callback
-				});
-			}
+
+			$.nirvana.sendRequest({
+				controller: 'WallNotificationsExternalController',
+				method: 'getUpdateCounts',
+				format: 'json',
+				data: {
+					username: wgTitle
+				},
+				callback: callback
+			});				
 		}
 	},
 
@@ -293,7 +294,7 @@ var WallNotifications = $.createClass(Object, {
 	},
 
 	updateWikiFetch: function(wikiId) {
-		var isMain = (wikiId == this.currentWikiId) ? 'YES' : 'NO';
+		var isCrossWiki = (wikiId == this.currentWikiId) ? '0' : '1';
 		$.nirvana.sendRequest({
 			controller: 'WallNotificationsExternalController',
 			method: 'getUpdateWiki',
@@ -302,7 +303,7 @@ var WallNotifications = $.createClass(Object, {
 			data: {
 				username: wgTitle,
 				wikiId: wikiId,
-				isMain: isMain
+				isCrossWiki: isCrossWiki
 			},
 			callback: this.proxy(function(data) {
 				if(data.status != true || data.html == '') return;

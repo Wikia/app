@@ -13,16 +13,19 @@
 html>body #Wall textarea { *width: 96%; }
 html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9999px; }
 
-#WikiaArticle.WikiaArticle {
-	padding-left: 15px;
-}
-
 #Wall.Wall {
 	ul.comments { list-style: none; }
 	ul.replies { list-style: none; }
 }
 
+.WikiaPage .WikiaRail {
+	padding-top: 15px;
+}
+
 .Wall {
+	ul {
+		margin: 0;
+	}
 	.avatar {
 		position: relative;
 	}
@@ -33,6 +36,9 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 			.buttons {
 				display: block;
 			}
+			.editor-open .buttons{
+				display: none;
+			}
 		}
 		.SpeechBubble {
 			.buttons-monobook{
@@ -40,8 +46,8 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 			}
 			.buttons {
 				display: none;
-				bottom: 10px;
-				right: 10px;
+				bottom: 0;
+				right: 0;
 			}
 			margin: 0;
 			margin-bottom: 20px;
@@ -64,6 +70,9 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 			.msg-body {
 				@include clearfix;
 				word-wrap: break-word;
+			}
+			.quote-of {
+				text-align: right;
 			}
 			> ul { margin-left: 75px; }
 			border: none; // -top: 1px solid $color-wall-border;
@@ -107,6 +116,10 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 			position: relative;
 		}
 	}
+	
+	.replies .speech-bubble-message .voting-controls .votes.notlink {
+		display: none;
+	}
 
 	.speech-bubble-message {
 		padding: 5px 10px 0px 8px;
@@ -122,6 +135,7 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 				&.notlink {
 					color: $color-text;
 					cursor: default;
+					display: inline;
 				}
 			}
 		}
@@ -132,16 +146,15 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 	/* only messages, not replies */
 	ul.comments > li.message {
 		border-bottom: 1px solid $color-wall-border;
-		padding-top: 20px;
+		padding-top: 15px;
 		padding-bottom: 30px;
 
 	  	> .speech-bubble-message {
 			@include border-radius($wall-border-radius);
 			background: $color-wall-bubble;
 			border: none;
-			padding: 10px 20px;
+			padding: 10px;
 			margin-bottom: 15px;
-			margin-right: 16px;
 
 			&:before {
 				border: none;
@@ -226,6 +239,7 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 
 	.msg-toolbar {
 		@include clearfix;
+		position: relative;
 	}
 
 	.edit-buttons {
@@ -238,11 +252,15 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 			margin-left: 10px;
 		}
 	}
+	
+	.toolbar {
+		position: relative;
+		z-index: 2;	/* overlapping with msg-toolbar */
+	}
 
 	/* only replies */
 	ul.comments > li.message ul.replies > li {
 		border-top: 1px solid $color-wall-border;
-		margin-right: 16px;
 	}
 	ul.comments > li.message li.message {
 		.speech-bubble-message {
@@ -277,14 +295,9 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 		}
 	}
 
-	/* Common styles for new message and new reply */
-	.SpeechBubble.new-message, li.SpeechBubble.new-reply {
-		margin-right: 16px;
-	}
-
 	/* Post new message (top of the wall) */
 	.SpeechBubble.new-message {
-		margin-bottom: 40px;
+		margin-bottom: 30px;
 		position: relative;
 		.preview { margin-left: 10px; margin-right: 10px; }
 		.speech-bubble-message {
@@ -462,12 +475,6 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 	}
 
 	.speech-bubble-message .buttons {
-		.wikia-menu-button {
-			padding-left: 8px;
-			font-size: 10px;
-			line-height: 17px;
-			vertical-align: middle;
-			height: 17px; }
 		ul {
 			list-style: none; margin: 0; padding: 0;
 			li { padding: 0; margin: 0; }
@@ -516,6 +523,7 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 	}
 
 	.edited-by {
+		@include clearfix;
 		font-size: 14px;
 		font-weight: bold;
 		margin-bottom: 5px;
@@ -601,7 +609,8 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 	@include clearfix;
 	font-size: 14px;
 	border-bottom: 1px solid $color-wall-border;
-	padding: 5px 0;
+	line-height: 20px;
+	padding: 3px 0 5px;
 	.removed {
 		color: $color-alternate-text;
 		padding-left: 7px;
@@ -656,10 +665,10 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 		}
 		.comments .message li { &:before, &:after { display: none; } }
 		.buttons-monobook{
-			display:block;
+			display: block;
 		}
 		.buttons {
-			display: none !important;
+			display: none;
 		}
 		textarea{
 			background: white;
@@ -714,12 +723,12 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 
 .deleteorremove-infobox {
 	display: block;
-	margin-top: -4px;
+	margin: 0 0 10px;
 	background: $color-wall-infobox;
 	font-size: 12px;
 	border-top: 1px dashed $color-page-border;
+	padding: 10px;
 	position: relative;
-	top: -25px;
 	text-align: left;
 	&.empty {
 		display: none;
@@ -735,7 +744,6 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 		padding: 5px 10px 5px 5px;
 		background: $color-page;
 		border: 1px solid $color-wall-border;
-		margin: 10px;
 		position: relative;
 		div.avatar {
 			display: block;
@@ -749,24 +757,26 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 			color: $color-alternate-text;
 			.reason { color: $color-text; font-size: 13px; margin-top: -2px; }
 		}
-		&:before, &:after {
-			content: '';
-			position: absolute;
-			bottom: 10px;
-			right: -19px;
-			width: 0px;
-			height: 0px;
-			border-style: solid;
-			border-width: 10px;
-		}
-		&:after {
-			border-color: transparent transparent transparent $color-page;
-			z-index: 2;
-		}
-		&:before {
-			border-color: transparent transparent transparent $color-wall-border;
-			right: -20px;
-			z-index: 1;
+		&.tail {
+			&:before, &:after {
+				content: '';
+				position: absolute;
+				bottom: 10px;
+				right: -19px;
+				width: 0px;
+				height: 0px;
+				border-style: solid;
+				border-width: 10px;
+			}
+			&:after {
+				border-color: transparent transparent transparent $color-page;
+				z-index: 2;
+			}
+			&:before {
+				border-color: transparent transparent transparent $color-wall-border;
+				right: -20px;
+				z-index: 1;
+			}
 		}
 	}
 	.deleteorremove-container {
@@ -776,7 +786,7 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 		.message-restore {
 			position: relative;
 			z-index: 1;
-			margin: 0 8px 20px 5px;
+			margin: 0 0 10px 10px;
 		}
 	}
 }
@@ -820,6 +830,34 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 	}
 }
 
+.Wall, .WallPreview {
+	.quote {
+		background-color: $color-wall-infobox;
+		border: 1px solid $color-wall-border;
+		font-style: italic;
+		padding: 10px;
+	}
+}
+
 #WallTooltipMeta {
 	display: none;
+}
+
+.WallPreview {
+	border: 1px solid $color-wall-border;
+	font-size: 13px;
+	min-height: 300px;
+	position: relative;
+	padding: 10px;
+	.WikiaArticle {
+		padding: 0;
+		.msg-title {
+			font-weight: bold;
+			font-size: 18px;
+			span {
+				color: $color-text;
+				text-decoration: none;
+			}
+		}
+	}
 }

@@ -45,4 +45,9 @@ define("WPP_WALL_ACTIONREASON", 12);
 define("WPP_WALL_REMOVE", 13);
 define("WPP_WALL_POSTEDBYBOT", 14);
 
+//Content worning
 define("WPP_CONTENT_WARNING", 15);
+
+//More wall flags
+define("WPP_WALL_QUOTE_OF", 16);
+

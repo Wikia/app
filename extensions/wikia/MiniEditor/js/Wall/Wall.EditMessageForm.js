@@ -21,7 +21,6 @@ MiniEditor.Wall.EditMessageForm = $.createClass(Wall.settings.classBindings.edit
 		this.setOldHTML(id, bubble);
 
 		msg.find('.timestamp').hide();
-		msg.find('.buttons').first().hide();
 		$('.follow', bubble).hide();
 		msg.find('.wikia-menu-button').removeClass('active');
 
@@ -81,7 +80,7 @@ MiniEditor.Wall.EditMessageForm = $.createClass(Wall.settings.classBindings.edit
 		}
 	},
 
-	getNewBodyVal: function(msg) {
+	getNewBody: function(msg) {
 		return $('.msg-body', msg).first().data('wikiaEditor').getContent();
 	},
 

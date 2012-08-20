@@ -209,6 +209,17 @@ This list-based button used for all additional actions
 		&:hover {
 			@include linear-gradient($color-secondary-button, top, $color-secondary-button-highlight, 35%, $color-secondary-button, 65%);
 		}
+		&.combined {
+			padding-left: 10px;
+			&:hover {
+				@include linear-gradient(darken($color-secondary-button, 4%), top, darken($color-secondary-button-highlight, 4%), 35%, darken($color-secondary-button, 4%), 65%);
+			}
+			.drop {
+				&:hover {
+					background: transparent;
+				}
+			}
+		}
 		>a,
 		.drop,
 		>li>a {

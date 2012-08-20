@@ -2,12 +2,19 @@
 
 MiniEditor.Wall = MiniEditor.Wall || {};
 MiniEditor.Wall.ReplyMessageForm = $.createClass(Wall.settings.classBindings.replyMessageForm, {
+	constructor: function(page, model) {
+		MiniEditor.Wall.ReplyMessageForm.superclass.constructor.apply(this,arguments);
+	},
+	
+	deferred: '',
 	initEvents: function() {
 		var self = this;
 
 		$(this.mainContent)
 			.on('click.MiniEditor', this.replyButton, this.proxy(this.replyToMessage))
-			.on('click.MiniEditor', this.replyBody, this.proxy(this.initEditor));
+			.on('click', this.replyPreviewButton, this.proxy(this.showPreview))
+			.on('click.MiniEditor', this.replyBody, this.proxy(this.initEditor))
+			.on('focus.MiniEditor', this.replyBody, this.proxy(this.focus));
 
 		$(this.replyBody).each(function() {
 			if ($(this).is(':focus')) {
@@ -15,17 +22,34 @@ MiniEditor.Wall.ReplyMessageForm = $.createClass(Wall.settings.classBindings.rep
 			}
 		});
 	},
+	
+	focus: function(e) {
+		this.initEditor({ target: e.target });
+	},
+	
+	setContent: function(replyWrapper, content) {
+		if(content) {
+			var wikiaEditor = this.editor.data('wikiaEditor');
+			wikiaEditor.setContent(content);
+			wikiaEditor.getEditbox().putCursorAtEndCE();
+		}
+	},
+	
+	activatedCallback: function(event, wikiaEditor) {
+		this.deferred.resolve(wikiaEditor);
+	},
 
 	initEditor: function(e) {
 		var target = $(e.target);
-
+		this.deferred = $.Deferred();
+		
 		// check if editor exists before unbinding placeholder (BugId:23781)
 		if (!target.data('wikiaEditor')) {
 			// Unbind placeholder and clear textarea before initing mini editor (BugId:23221)
 			target.unbind('.placeholder').val('');
 		}
 
-		target.miniEditor({
+		this.editor = target.miniEditor({
 			config: {
 				animations: MiniEditor.Wall.Animations
 			},
@@ -36,35 +60,29 @@ MiniEditor.Wall.ReplyMessageForm = $.createClass(Wall.settings.classBindings.rep
 					if (!MiniEditor.ckeditorEnabled) {
 						wikiaEditor.getEditbox().placeholder();
 					}
-				}
+				},
+				editorActivated: $.proxy(this.activatedCallback, this)
 			}
 		});
+		
+		return this.deferred.promise();
 	},
 
-	doReplyToMessage: function(thread, reply, reload) {
-		var wikiaEditor = $('.wikiaEditor', reply).data('wikiaEditor'),
-			format = wikiaEditor.mode == 'wysiwyg' ? 'wikitext' : '';
-
-		this.model.postReply(this.page, wikiaEditor.getContent(), format, thread.attr('data-id'), this.proxy(function(newMessage) {
-			newMessage = $(newMessage);
-
-			this.enable(reply);
-
-			reply.find(this.replyBody).val('').trigger('blur');
-			newMessage.insertBefore(reply).hide().fadeIn('slow').find('.timeago').timeago();
-			wikiaEditor.fire('editorReset');
-
-			if (window.skin && window.skin != 'monobook') {
-				WikiaButtons.init(newMessage);
-			}
-
-			thread.find(this.replyThreadCount).html(thread.find(this.replyThreadMessages).length);
-			thread.find(this.replyThreadFollow).text($.msg('wikiafollowedpages-following')).removeClass('secondary');
-
-			if (reload) {
-				this.reloadAfterLogin();
-			}
-		}));
+	getMessageBody: function(reply) {
+		var wikiaEditor = $('.wikiaEditor', reply).data('wikiaEditor');
+		return wikiaEditor.getContent();
+	}, 
+	
+	getFormat: function(reply) {
+		var wikiaEditor = $('.wikiaEditor', reply).data('wikiaEditor');
+		var format = wikiaEditor.mode == 'wysiwyg' ? 'wikitext' : '';
+		return format;
+	},
+	
+	resetEditor: function() {
+		var wikiaEditor = $('.wikiaEditor', reply).data('wikiaEditor');
+		reply.find(this.replyBody).val('').trigger('blur');
+		wikiaEditor.fire('editorReset');
 	}
 });
 

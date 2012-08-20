@@ -24,15 +24,20 @@
 					<? if ($wg->EnableMiniEditorExtForWall): ?>
 						<?= $app->getView('MiniEditorController', 'Editor_Footer')->render() ?>
 					<? endif ?>
-					<div class="buttons" data-space-type="buttons">
-						<button disabled="disabled" class="submit<?=
-							$loginToEditProtectedPage ? ' require-login" data="' . $ajaxLoginUrl .'"' : '"'
-						?>><?= wfMsg('forum-discussion-post') ?></button>
+					<div class="buttons" data-space-type="buttons">							
 						<?php if($notify_everyone): ?>
 							<label class="highlight">
 								<input type="checkbox" class="notify-everyone" name="notifyEveryone" value="1" /><?= wfMsg('forum-discussion-highlight') ?>
 							</label>
 						<?php endif; ?>
+						
+						<button disabled="disabled" class="submit<?=
+							$loginToEditProtectedPage ? ' require-login" data="' . $ajaxLoginUrl .'"' : '"'
+						?>><?= wfMsg('forum-discussion-post') ?></button>
+						
+						<button disabled="disabled" class="preview secondary<?=
+							$loginToEditProtectedPage ? ' require-login" data="' . $ajaxLoginUrl .'"' : '"'
+						?>><?= wfMsg('wall-button-to-preview-comment') ?></button>
 					</div>
 				</div>
 				<? if ($wg->EnableMiniEditorExtForWall): ?>

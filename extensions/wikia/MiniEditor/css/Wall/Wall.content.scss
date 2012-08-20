@@ -16,5 +16,13 @@ html {
 		&.focused {
 			background-color: $color-wall-input-focus;
 		}
+		
+		.quote {
+			background-color: $color-wall-infobox;
+			border: 1px solid $color-wall-border;
+			font-style: italic;
+			margin-top: 5px;
+			padding: 10px;
+		}
 	}
 }

@@ -11,6 +11,11 @@
 	border-right: 1px solid $color-page-border;
 	margin: -59px auto -39px;
 	padding-top: 59px;
+	&.WikiaGrid {
+		.WikiaArticle {
+			padding: 0;
+		}
+	}
 	&.V2 {
 		padding-top: 0;
 		margin: 0px auto -39px;
@@ -87,7 +92,9 @@
 	float: right;
 	padding: 0 $width-gutter;
 	width: $width-rail;
-
+	&.grid-2 {
+		padding: 0;
+	}
 	.module {
 		@include clearfix;
 		@include box-shadow(0px, 2px, 5px, darken($color-page,12%));

@@ -23,9 +23,9 @@ class WallNotificationsExternalController extends WikiaController {
 
 	public function getUpdateWiki() {
 		$id = $this->request->getVal('wikiId');
-		$isMain = $this->request->getVal('isMain');
+		$isCrossWiki = $this->request->getVal('isCrossWiki') == 1;
 		$wn = F::build('WallNotifications', array());
-		$this->getUpdateWikiInternal($wn, $id, $isMain);
+		$this->getUpdateWikiInternal($wn, $id, $isCrossWiki);
 		return true;
 	}
 
@@ -80,11 +80,11 @@ class WallNotificationsExternalController extends WikiaController {
 		wfProfileOut(__METHOD__);
 	}
 
-	private function getUpdateWikiInternal($wn, $wikiId, $isMain = 'YES') {
-		if ( $isMain == 'YES' ) {
-			$all = $wn->getWikiNotifications( $this->wg->User->getId(), $wikiId );
-		} else {
+	private function getUpdateWikiInternal($wn, $wikiId, $isCrossWiki = false) {
+		if ( $isCrossWiki ) {
 			$all = $wn->getWikiNotifications( $this->wg->User->getId(), $wikiId, 0 );
+		} else {
+			$all = $wn->getWikiNotifications( $this->wg->User->getId(), $wikiId, 5, false, true );
 		}
 
 		$this->response->setVal('html', $this->app->renderView( 'WallNotifications', 'UpdateWiki', array('notifications'=>$all) ));

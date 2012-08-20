@@ -1,4 +1,4 @@
-<? if( $userBlocked === false ): ?>
+<? if( $userBlocked === false && $showReplyForm): ?>
 	<li class="SpeechBubble new-reply" >
 		<? if ( $wg->EnableMiniEditorExtForWall ):
 			echo $app->getView( 'MiniEditorController', 'Header', array(
@@ -24,6 +24,11 @@
 			<button disabled="disabled" class="replyButton<?
 				if ( $loginToEditProtectedPage ): ?> wall-require-login" data="<?= $ajaxLoginUrl; ?><? endif;
 			?>"><?= wfMsg('wall-button-to-submit-reply') ?></button>
+			
+			<button class="previewButton secondary" disabled="disabled" >
+				<?= wfMsg('wall-button-to-preview-comment') ?>
+			</button>
+		
 			<? /* ?>
 			<button class="replyPreview secondary" disabled="disabled" style="display: none"><?= wfMsg('wall-button-to-preview-comment') ?></button>
 			<button class="replyPreviewCancel secondary" style="display: none"><?= wfMsg('wall-button-to-cancel-preview') ?></button>
