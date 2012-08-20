@@ -1,29 +1,31 @@
 define('tables', ['events'], function(ev){
 	var w = window,
 		realWidth = w.innerWidth || w.clientWidth,
-		realHeight = w.innerHeight || w.clientHeight,
 		touch = ev.touch,
 		inited = false,
-		handledTables = [],
-		wrap = function(elm){
-			var wrapper = document.createElement('div');
-			wrapper.className = 'bigTable';
-			wrapper.appendChild(elm.cloneNode(true));
-			elm.parentNode.replaceChild(wrapper, elm);
-		},
-		unwrap = function(elm){
-			var parent = elm.parentNode;
-			parent.parentNode.replaceChild(elm, parent);
-		},
-		removeScript = function(elm){
-			var scripts = elm.getElementsByTagName('caption'),
-				script,
-				i = 0;
+		handledTables = [];
 
-			while(script = scripts[i++]){
-				script.parentElement.removeChild(script);
-			}
-		};
+	function wrap(elm){
+		var wrapper = document.createElement('div');
+		wrapper.className = 'bigTable';
+		wrapper.appendChild(elm.cloneNode(true));
+		elm.parentNode.replaceChild(wrapper, elm);
+	}
+
+	function unwrap(elm){
+		var parent = elm.parentNode;
+		parent.parentNode.replaceChild(elm, parent);
+	}
+
+	function removeScripts(elm){
+		var scripts = elm.getElementsByTagName('caption'),
+			script,
+			i = 0;
+
+		while(script = scripts[i++]){
+			script.parentElement.removeChild(script);
+		}
+	}
 
 	function process(tables){
 		var l = tables.length,
@@ -69,43 +71,41 @@ define('tables', ['events'], function(ev){
 			table.computedWidth = firstRowWidth;
 			if(firstRowWidth > realWidth){
 				//remove scripts to avoid re-parsing
-				removeScript(table);
+				removeScripts(table);
 				wrap(table);
 				table.wasWrapped = true;
 				table.isWrapped = true;
-				handledTables.push(table);
-			} else if(firstRowWidth > realHeight){
-				table.wasWrapped = false;
-				table.isWrapped = false;
 				handledTables.push(table);
 			}
 		}
 
 		if(handledTables.length > 0 && !inited){
-			w.addEventListener('resize', function(){
-				var table, isWrapped, isBig, wasWrapped,
-					maxWidth = w.innerWidth || w.clientWidth;
+			w.addEventListener('orientationchange', function(){
+				setTimeout(function(){
+					var table, isWrapped, isBig, wasWrapped,
+						maxWidth = w.innerWidth || w.clientWidth;
 
-				for(var x = 0, y = handledTables.length; x < y; x++){
-					table = handledTables[x];
-					isWrapped = table.isWrapped;
-					wasWrapped = table.wasWrapped;
-					isBig = (table.computedWidth > maxWidth);
+					for(var x = 0, y = handledTables.length; x < y; x++){
+						table = handledTables[x];
+						isWrapped = table.isWrapped;
+						wasWrapped = table.wasWrapped;
+						isBig = (table.computedWidth > maxWidth);
 
-					if(!isWrapped && isBig){
-						if(!wasWrapped){
-							table.wasWrapped = true;
-							//remove scripts to avoid re-parsing
-							removeScript(table);
+						if(!isWrapped && isBig){
+							if(!wasWrapped){
+								table.wasWrapped = true;
+								//remove scripts to avoid re-parsing
+								removeScripts(table);
+							}
+
+							wrap(table);
+							table.isWrapped = true;
+						}else if(isWrapped && !isBig){
+							unwrap(table);
+							table.isWrapped = false;
 						}
-
-						wrap(table);
-						table.isWrapped = true;
-					}else if(isWrapped && !isBig){
-						unwrap(table);
-						table.isWrapped = false;
 					}
-				}
+				},200);
 			});
 
 			if(!Modernizr.overflow){

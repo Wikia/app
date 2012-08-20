@@ -1,6 +1,13 @@
-@mixin box-shadow($value){
-	-moz-box-shadow: $value;
-	-webkit-box-shadow: $value;
-	-o-box-shadow: $value;
-	box-shadow: $value;
+@mixin box-shadow($shadow, $secondShadow: ""){
+	@if $secondShadow == "" {
+		-moz-box-shadow: $shadow;
+		-webkit-box-shadow: $shadow;
+		-o-box-shadow: $shadow;
+		box-shadow: $shadow;
+	} @else {
+		-moz-box-shadow: $shadow, $secondShadow;
+		-webkit-box-shadow: $shadow, $secondShadow;
+		-o-box-shadow: $shadow, $secondShadow;
+		box-shadow: $shadow, $secondShadow;
+	}
 }
