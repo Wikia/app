@@ -7,22 +7,45 @@
  * @require ads
  *
  * @author Jakub Olek
+ *
+ * based on:
+ * @see http://24ways.org/2011/raising-the-bar-on-mobile
+ *
  */
-/*global window, define, setTimeout*/
+/*global window, define, setTimeout, setInterval, clearInterval*/
 
-define('hideURLBar', ['ads'], function (ads) {
+require(['ads'], function (ads) {
 	'use strict';
 
-	var w = window;
+	var w = window,
+		doc = w.document;
 
-	return function () {
-		if (w.pageYOffset < 20) {
-			setTimeout(function () {
-				w.scrollTo(0, 1);
-				if (ads) {
-					ads.moveSlot();
+	// If there's a hash, or addEventListener is undefined, stop here
+	if(!location.hash && w.addEventListener){
+		//scroll to 1
+		w.scrollTo( 0, 1 );
+		var scrollTop = 1,
+			getScrollTop = function(){
+				return w.pageYOffset || doc.compatMode === "CSS1Compat" && doc.documentElement.scrollTop || doc.body.scrollTop || 0;
+			},
+			//reset to 0 on bodyready, if needed
+			bodycheck = setInterval(function(){
+				if( doc.body ){
+					clearInterval( bodycheck );
+					scrollTop = getScrollTop();
+					w.scrollTo( 0, scrollTop === 1 ? 0 : 1 );
 				}
-			}, 100);
-		}
-	};
+			}, 15 );
+
+		w.addEventListener('load', function(){
+			if( getScrollTop() < 20 ){
+				setTimeout(function(){
+					//reset to hide addr bar at onload
+					w.scrollTo( 0, scrollTop === 1 ? 0 : 1 );
+
+					ads && ads.moveSlot();
+				}, 0);
+			}
+		});
+	}
 });

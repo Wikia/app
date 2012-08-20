@@ -27,12 +27,10 @@
 
 //init
 $(function(){
-	require(['layout', 'querystring', 'topbar', 'toc', 'events', 'hideURLBar', 'share', 'popover', 'cookies', 'ads'],
-		function(layout, qs, topbar, toc, events, hideURLBar, share, popover, cookies, ads){
+	require(['layout', 'querystring', 'topbar', 'toc', 'events', 'share', 'popover', 'cookies', 'ads'],
+		function(layout, qs, topbar, toc, events, share, popover, cookies, ads){
 			var d = document,
 				clickEvent = events.click;
-
-			hideURLBar();
 
 			toc.init();
 
