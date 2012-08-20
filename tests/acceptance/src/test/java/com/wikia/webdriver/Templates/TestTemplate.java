@@ -35,25 +35,33 @@ public class TestTemplate {
 	public void afterSuite()
 	{
 		PageObjectLogging.stopLoggingSuite();
-		if (Global.BROWSER.equals("IE"))
+		try 
 		{
-			try {
-				Runtime.getRuntime().exec("taskkill /F /IM IEdriverServer.exe");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			if (Global.BROWSER.equals("IE"))
+			{
+				String sysArch = System.getProperty("os.arch");
+				if (sysArch.equals("x86"))
+				{
+					Runtime.getRuntime().exec("taskkill /F /IM IEDriverServer_x86.exe");
+				} 
+				else
+				{
+					Runtime.getRuntime().exec("taskkill /F /IM IEDriverServer_x64.exe");
+				}							
 			}
-		}
-		else if (Global.BROWSER.equals("CHROME"));
-		{
-			try {
+			else if (Global.BROWSER.equals("CHROME"));
+			{
 				Runtime.getRuntime().exec("taskkill /F /IM chromedriver.exe");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
 		}
+
+		catch (IOException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
 	}
+
 	
 	@BeforeMethod
 	public void start(Method method)
