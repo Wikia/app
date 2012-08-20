@@ -10,6 +10,7 @@
 
 (function(){
 	var m = Math,
+		w = window,
 		vendor = (/webkit/i).test(navigator.appVersion) ? 'webkit' :
 			(/firefox/i).test(navigator.userAgent) ? 'Moz' :
 				'opera' in window ? 'O' : '',
@@ -20,7 +21,7 @@
 		hasTransitionEnd = (/iphone|ipad/gi).test(navigator.appVersion) || (/playbook/gi).test(navigator.appVersion),
 
 		// Events
-		RESIZE_EV = 'resize',
+		RESIZE_EV = 'orientationchange',
 		START_EV = 'touchstart',
 		MOVE_EV = 'touchmove',
 		END_EV = 'touchend',
@@ -55,7 +56,7 @@
 			this.scrollerW = this.scroller.offsetWidth;
 			this.refresh();
 
-			window.addEventListener(RESIZE_EV, this);
+			w.addEventListener(RESIZE_EV, this);
 			scroll.addEventListener(START_EV, this);
 			scroll.addEventListener(MOVE_EV, this);
 			scroll.addEventListener(END_EV, this);
@@ -283,19 +284,20 @@
 		 *
 		 */
 		destroy: function() {
-			this.scroller.style[vendor + 'Transform'] = '';
+			var scroller = this.scroller;
+			scroller.style[vendor + 'Transform'] = '';
 
 			// Remove the event listeners
-			window.removeEventListener(RESIZE_EV, this);
-			this.scroller.removeEventListener(START_EV, this);
-			this.scroller.removeEventListener(MOVE_EV, this);
-			this.scroller.removeEventListener(END_EV, this);
-			this.scroller.removeEventListener(CANCEL_EV, this);
-			if (hasTransitionEnd) {this.scroller.removeEventListener('webkitTransitionEnd', this);}
+			w.removeEventListener(RESIZE_EV, this);
+			scroller.removeEventListener(START_EV, this);
+			scroller.removeEventListener(MOVE_EV, this);
+			scroller.removeEventListener(END_EV, this);
+			scroller.removeEventListener(CANCEL_EV, this);
+			if (hasTransitionEnd) {scroller.removeEventListener('webkitTransitionEnd', this);}
 		},
 
 		refresh: function() {
-			this.wrapperW = this.wrapper.clientWidth;
+			this.wrapperW = this.wrapper.offsetWidth;
 			this.maxScrollX = this.wrapperW - this.scrollerW - 10;
 			this.scroller.style[vendor + 'TransitionDuration'] = '0';
 			this._resetPos(200);

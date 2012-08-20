@@ -149,7 +149,11 @@
 	}
 }
 
-.js {
+#wkTopNav{
+	#wkNavBack {
+		display: block;
+	}
+
 	#wkNavMenu {
 	    border-top: none;
 
@@ -185,10 +189,6 @@
 					border-bottom: 1px solid $border-color;
 				}
 			}
-		}
-
-		#wkNavBack {
-			display: block;
 		}
 
 		.lvl3 {
