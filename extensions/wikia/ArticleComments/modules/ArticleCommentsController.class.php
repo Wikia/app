@@ -94,7 +94,7 @@ class ArticleCommentsController extends WikiaController {
 			$this->response->setCacheValidity(0, 0, array(WikiaResponse::CACHE_TARGET_BROWSER));
 		}
 
-		$this->wf->profileIn( __METHOD__ );
+		$this->wf->profileOut( __METHOD__ );
 	}
 
 	/**
