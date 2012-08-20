@@ -595,7 +595,7 @@ class RTEReverseParser {
 
 		// remove trailing space from text node which is followed by <!-- RTE_LINE_BREAK --> comment
 		if (self::nextCommentIs($node, 'LINE_BREAK')) {
-			$out = substr($out, 0, -1);
+			$out = ltrim( $out, ' ' );
 		}
 
 		// fix for tables created in CK
@@ -1070,7 +1070,7 @@ class RTEReverseParser {
 				}
 
 				// bugfix: fogbugz BugID 11537
-				// losing newline before : and * following h[1-6] or div				
+				// losing newline before : and * following h[1-6] or div
 				if(self::wasHtml($node->previousSibling)) {
 					$out = "\n{$out}";
 				}
@@ -1129,7 +1129,7 @@ class RTEReverseParser {
 				$out = rtrim($textContent, "\n");
 
 				// bugfix: fogbugz BugID 11537
-				// losing newline before : and * following h[1-6] or div 
+				// losing newline before : and * following h[1-6] or div
 				if(self::wasHtml($node->previousSibling)) {
 					$out = "\n{$out}";
 				}
