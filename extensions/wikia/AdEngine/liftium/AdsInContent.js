@@ -82,17 +82,27 @@ AIC2.init = function() {
 };
 
 AIC2.checkStartStopPosition = function() {
-	var startPosition, stopPosition, adHeight;
+	var startPosition, stopPosition, adHeight
+		, $rail = $('#WikiaRail')
+		, $footer = $('#WikiaFooter')
+		, $leftSkyScraper = $('#LEFT_SKYSCRAPER_3')
+		, $incontentBoxAd = $('#INCONTENT_BOXAD_1');
+
 	Liftium.d("AIC2: check start/stop position", 7);
 
-	try {
-		adHeight = parseInt($('#INCONTENT_BOXAD_1').height(), 10) || 0;
-		startPosition = parseInt($('#WikiaRail').offset().top, 10) + parseInt($('#WikiaRail').height(), 10) - adHeight;
-		stopPosition = parseInt($('#WikiaFooter').offset().top, 10) - 10 - adHeight;
+	if (!$rail.length) {
+		// No rail, no ads
+		return false;
+	}
 
-		if ($('#LEFT_SKYSCRAPER_3').length && $('#LEFT_SKYSCRAPER_3').height() > 50) {
+	try {
+		adHeight = parseInt($incontentBoxAd.height(), 10) || 0;
+		startPosition = parseInt($rail.offset().top, 10) + parseInt($rail.height(), 10) - adHeight;
+		stopPosition = parseInt($footer.offset().top, 10) - 10 - adHeight;
+
+		if ($leftSkyScraper.length && $leftSkyScraper.height() > 50) {
 			Liftium.d("AIC2: sky3 found", 3);
-			stopPosition = parseInt($('#LEFT_SKYSCRAPER_3').offset().top) - 20 - adHeight;
+			stopPosition = parseInt($leftSkyScraper.offset().top, 10) - 20 - adHeight;
 		}
 	} catch (e) {
 		Liftium.d("AIC2: catched in start/stop:", 1, e);
