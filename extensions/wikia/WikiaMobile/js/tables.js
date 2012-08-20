@@ -1,7 +1,6 @@
 define('tables', ['events'], function(ev){
 	var w = window,
 		realWidth = w.innerWidth || w.clientWidth,
-		touch = ev.touch,
 		inited = false,
 		handledTables = [];
 
@@ -109,7 +108,7 @@ define('tables', ['events'], function(ev){
 			});
 
 			if(!Modernizr.overflow){
-				document.body.addEventListener(touch, function(ev){
+				document.body.addEventListener(ev.touch, function(ev){
 					var t = ev.target;
 
 					if(t.className.indexOf('bigTable') > -1){
