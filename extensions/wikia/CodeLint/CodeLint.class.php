@@ -210,12 +210,20 @@ abstract class CodeLint {
 
 		// parse blame line
 		// G 666     author 	doSomething();
-		list($rev, $author, ) = preg_split('#\\s+#', trim(substr($blameLine, 1)), 3);
+		if ($blameLine != '') {
+			list($rev, $author, ) = preg_split('#\\s+#', trim(substr($blameLine, 1)), 3);
 
-		$ret = array(
-			'rev' => intval($rev),
-			'author' => $author
-		);
+			$ret = array(
+				'rev' => intval($rev),
+				'author' => $author
+			);
+		}
+		else {
+			$ret = array(
+				'rev' => 0,
+				'author' => 'none'
+			);
+		}
 
 		wfProfileOut(__METHOD__);
 		return $ret;
