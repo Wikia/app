@@ -134,10 +134,9 @@
 			case CANCEL_EV:
 				if (e.touches.length != 0) return;
 
-				var momentumX,
+				var momentumX = {},
 					duration = (e.timeStamp || Date.now()) - that.startTime,
-					newPosX = that.x,
-					newDuration;
+					newPosX = that.x;
 
 				if (!that.moved) {
 					that._resetPos(200);
@@ -236,7 +235,7 @@
 
 			animate = function() {
 				var now = Date.now(),
-					newX, newY;
+					newX;
 
 				if (now >= startTime + step.time) {
 					that._pos(step.x);
