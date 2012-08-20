@@ -3,6 +3,7 @@ package com.wikia.webdriver.TestCases;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import com.wikia.webdriver.Common.Core.Global;
 import com.wikia.webdriver.Common.Templates.TestTemplate;
 import com.wikia.webdriver.pageObjects.PageObject.HomePageObject;
 import com.wikia.webdriver.pageObjects.PageObject.HubBasePageObject;
@@ -23,9 +24,9 @@ public class HubsTests extends TestTemplate{
 	@DataProvider
 	private static final Object[][] provideHub(){
 		return new Object[][] {
-				{VGHub, "VideoGamesHub", "http://www.wikia.com/Video_Games"},
-				{EHub, "EntertainmentHub", "http://www.wikia.com/Entertainment"},
-				{LHub, "LifestyleHub", "http://www.wikia.com/Lifestyle"}
+				{VGHub, "VideoGamesHub", Global.LIVE_DOMAIN+"Video_Games"},
+				{EHub, "EntertainmentHub", Global.LIVE_DOMAIN+"Entertainment"},
+				{LHub, "LifestyleHub", Global.LIVE_DOMAIN+"Lifestyle"}
 		};
 	}
 	
