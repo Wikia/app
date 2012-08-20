@@ -1,6 +1,7 @@
 <?php
 class ArticleCommentsController extends WikiaController {
 	private $dataLoaded = false;
+	private static $content = null;
 
 	public function executeIndex() {
 		$this->wf->ProfileIn(__METHOD__);
@@ -58,9 +59,8 @@ class ArticleCommentsController extends WikiaController {
 
 				// Required style assets
 				} else {
-					$this->response->addAsset('skins/oasis/css/core/ArticleComments.scss');
-					$this->response->addAsset('extensions/wikia/MiniEditor/css/MiniEditor.scss');
-					$this->response->addAsset('extensions/wikia/MiniEditor/css/ArticleComments/ArticleComments.scss');
+					$this->response->addAsset( 'articlecomments' .
+						( !empty( $this->wg->EnableMiniEditorExtForArticleComments ) ? '_mini_editor' : '' ) . '_scss' );
 				}
 			}
 		}
@@ -209,20 +209,18 @@ class ArticleCommentsController extends WikiaController {
 	}
 
 	public static function onSkinAfterContent( &$afterContentHookText ) {
-		global $wgArticleCommentsContent;
-		if(!empty($wgArticleCommentsContent)) {
-			$afterContentHookText .= $wgArticleCommentsContent;
+		if ( !empty( self::$content ) ) {
+			$afterContentHookText .= self::$content;
 		}
 		return true;
 	}
 
 	public static function onBeforePageDisplay( OutputPage &$out, Skin &$skin ) {
-		global $wgArticleCommentsContent;
-
-		// Display comments on content and blog pages
 		if ( class_exists( 'ArticleCommentInit' ) && ArticleCommentInit::ArticleCommentCheck() ) {
 			$app = F::app();
-			$wgArticleCommentsContent = $app->sendRequest( 'ArticleComments', 'index' );
+
+			// This is the actual entry point for Article Comment generation
+			self::$content = $app->sendRequest( 'ArticleComments', 'index' );
 
 			// Load MiniEditor assets (except for mobile)
 			if ( $app->wg->EnableMiniEditorExtForArticleComments && !$app->checkSkin( 'wikiamobile' ) ) {
@@ -237,5 +235,4 @@ class ArticleCommentsController extends WikiaController {
 		}
 		return true;
 	}
-
 }
