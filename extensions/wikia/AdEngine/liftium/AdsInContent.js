@@ -16,7 +16,6 @@ AIC2.init = function() {
 		, $window = $(window);
 
 	Liftium.d("AIC2: init", 5);
-	AIC2.called = true;
 
 	if ($wikiaMainContent.width() != AIC2.WMCbaseWidth) {
 		AIC2.marginLeft = AIC2.marginLeft + parseInt(($wikiaMainContent.width() - AIC2.WMCbaseWidth) / 2, 10);
@@ -225,6 +224,15 @@ AIC2.checkFooterAd = function() {
 	return false;
 };
 
-if (window.top == window.self && !(window.wgUserName && !window.wgUserShowAds) && window.wgEnableAdsInContent && window.wgIsContentNamespace && ! AIC2.called && ! window.wgIsMainpage ) {
-	wgAfterContentAndJS.push(function(){AIC2.init();});
+if (
+	window.top === window.self
+	&& window.wgEnableAdsInContent
+	&& window.wgIsContentNamespace && !window.wgIsMainpage
+) {
+	wgAfterContentAndJS.push(function() {
+		if (!AIC2.called) {
+			AIC2.called = true;
+			AIC2.init();
+		}
+	});
 }

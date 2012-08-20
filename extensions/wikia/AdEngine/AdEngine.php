@@ -8,8 +8,26 @@ $wgExtensionCredits['other'][] = array(
 	'author' => 'Inez Korczynski, Nick Sullivan'
 );
 
-$wgHooks["MakeGlobalVariablesScript"][] = "wfAdEngineSetupJSVars";
+$wgHooks['MakeGlobalVariablesScript'][] = 'wfAdEngineSetupJSVars';
 $wgHooks['WikiaSkinTopScripts'][] = 'wfAdEngineSetupTopVars';
+$wgExtensionFunctions[] = 'wfAdEngineInit';
+
+function wfAdEngineInit() {
+	global $wgRequest, $wgUser;
+	global $wgNoExternals, $wgShowAds, $wgEnableAdsInContent;
+
+	if ($wgRequest->getBool('noexternals', $wgNoExternals)) {
+		$wgShowAds = false;
+	}
+
+	if (empty($wgShowAds)) {
+		$wgEnableAdsInContent = false;
+	}
+
+	if ($wgUser->isLoggedIn() && !$wgUser->getOption('showAds')) {
+		$wgEnableAdsInContent = false;
+	}
+}
 
 //$wgHooks["WikiaSkinTopScripts"][] = "wfAdEngineSetupJSVars";
 //$wgHooks['WikiaSkinTopScripts'][] = 'wfAdEngineSetupTopVars';
@@ -201,12 +219,6 @@ class AdEngine {
 		global $wgAutoloadClasses;
 		foreach($this->providers as $p) {
 			$wgAutoloadClasses['AdProvider' . $p]=dirname(__FILE__) . '/AdProvider'.$p.'.php';
-		}
-
-		global $wgRequest,$wgNoExternals,$wgShowAds;
-		$wgNoExternals = $wgRequest->getBool('noexternals', $wgNoExternals);
-		if(!empty($wgNoExternals)){
-			$wgShowAds = false;
 		}
 
 		wfProfileOut(__METHOD__);
