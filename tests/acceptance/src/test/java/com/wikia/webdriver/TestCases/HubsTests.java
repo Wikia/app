@@ -3,9 +3,7 @@ package com.wikia.webdriver.TestCases;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-
-import com.wikia.webdriver.Templates.TestTemplate;
-import com.wikia.webdriver.pageObjects.PageObject.BasePageObject;
+import com.wikia.webdriver.Common.Templates.TestTemplate;
 import com.wikia.webdriver.pageObjects.PageObject.HomePageObject;
 import com.wikia.webdriver.pageObjects.PageObject.HubBasePageObject;
 import com.wikia.webdriver.pageObjects.PageObject.Hubs.EntertainmentHubPageObject;

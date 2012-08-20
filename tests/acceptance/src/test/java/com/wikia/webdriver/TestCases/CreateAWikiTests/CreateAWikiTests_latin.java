@@ -2,11 +2,9 @@ package com.wikia.webdriver.TestCases.CreateAWikiTests;
 
 import org.testng.annotations.Test;
 
-import com.wikia.webdriver.Common.CommonFunctions;
-import com.wikia.webdriver.Common.Global;
-import com.wikia.webdriver.Properties.Properties;
-import com.wikia.webdriver.Templates.TestTemplate;
-import com.wikia.webdriver.pageObjects.PageObject.BasePageObject;
+import com.wikia.webdriver.Common.Core.CommonFunctions;
+import com.wikia.webdriver.Common.Properties.Properties;
+import com.wikia.webdriver.Common.Templates.TestTemplate;
 import com.wikia.webdriver.pageObjects.PageObject.HomePageObject;
 import com.wikia.webdriver.pageObjects.PageObject.CreateNewWiki.CreateNewWikiLogInPageObject;
 import com.wikia.webdriver.pageObjects.PageObject.CreateNewWiki.CreateNewWikiPageObjectStep1;

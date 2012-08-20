@@ -2,16 +2,14 @@ package com.wikia.webdriver.pageObjects.PageObject.CreateNewWiki;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
-import com.wikia.webdriver.Common.CommonFunctions;
-import com.wikia.webdriver.Logging.PageObjectLogging;
+import com.wikia.webdriver.Common.Core.CommonFunctions;
+import com.wikia.webdriver.Common.Logging.PageObjectLogging;
 import com.wikia.webdriver.pageObjects.PageObject.BasePageObject;
 
 

@@ -5,9 +5,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-import com.google.common.io.FileBackedOutputStream;
-import com.wikia.webdriver.Common.CommonFunctions;
-import com.wikia.webdriver.Logging.PageObjectLogging;
+import com.wikia.webdriver.Common.Logging.PageObjectLogging;
 import com.wikia.webdriver.pageObjects.PageObject.FilePageObject;
 import com.wikia.webdriver.pageObjects.PageObject.WikiBasePageObject;
 

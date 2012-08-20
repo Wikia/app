@@ -1,6 +1,5 @@
 package com.wikia.webdriver.pageObjects.PageObject;
 
-import org.junit.internal.runners.statements.Fail;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -8,13 +7,12 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
-import com.wikia.webdriver.Common.Global;
-import com.wikia.webdriver.Logging.PageObjectLogging;
+import com.wikia.webdriver.Common.Core.Global;
+import com.wikia.webdriver.Common.Logging.PageObjectLogging;
 import com.wikia.webdriver.pageObjects.PageObject.CreateNewWiki.CreateNewWikiPageObjectStep1;
 import com.wikia.webdriver.pageObjects.PageObject.Hubs.EntertainmentHubPageObject;
 import com.wikia.webdriver.pageObjects.PageObject.Hubs.LifestyleHubPageObject;
 import com.wikia.webdriver.pageObjects.PageObject.Hubs.VideoGamesHubPageObject;
-import static org.testng.AssertJUnit.fail;
 
 public class HomePageObject extends BasePageObject{
 

@@ -4,17 +4,13 @@ package com.wikia.webdriver.pageObjects.PageObject.WikiPage;
 
 import java.util.List;
 
-import org.junit.internal.runners.statements.Fail;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.testng.Assert;
 
-import static org.testng.AssertJUnit.fail;
-
-import com.wikia.webdriver.Logging.PageObjectLogging;
+import com.wikia.webdriver.Common.Logging.PageObjectLogging;
 import com.wikia.webdriver.pageObjects.PageObject.WikiBasePageObject;
 
 public class SpecialMultipleUploadPageObject extends WikiBasePageObject {

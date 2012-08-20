@@ -7,9 +7,8 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
-
-import com.wikia.webdriver.Common.CommonFunctions;
-import com.wikia.webdriver.Logging.PageObjectLogging;
+import com.wikia.webdriver.Common.Core.CommonFunctions;
+import com.wikia.webdriver.Common.Logging.PageObjectLogging;
 import com.wikia.webdriver.pageObjects.PageObject.WikiBasePageObject;
 
 public class WikiArticlePageObject extends WikiBasePageObject {

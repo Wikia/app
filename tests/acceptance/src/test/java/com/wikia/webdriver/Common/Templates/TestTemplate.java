@@ -1,4 +1,4 @@
-package com.wikia.webdriver.Templates;
+package com.wikia.webdriver.Common.Templates;
 
 import java.io.File;
 import java.io.IOException;
@@ -10,11 +10,11 @@ import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 
-import com.wikia.webdriver.Common.CommonUtils;
-import com.wikia.webdriver.Common.Global;
-import com.wikia.webdriver.DriverProvider.DriverProvider;
-import com.wikia.webdriver.Logging.PageObjectLogging;
-import com.wikia.webdriver.Properties.Properties;
+import com.wikia.webdriver.Common.Core.CommonUtils;
+import com.wikia.webdriver.Common.Core.Global;
+import com.wikia.webdriver.Common.DriverProvider.DriverProvider;
+import com.wikia.webdriver.Common.Logging.PageObjectLogging;
+import com.wikia.webdriver.Common.Properties.Properties;
 
 public class TestTemplate {
 	

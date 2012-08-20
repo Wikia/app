@@ -1,16 +1,18 @@
-package com.wikia.webdriver.Common;
+package com.wikia.webdriver.Common.Core;
 //http://code.google.com/p/selenium/source/browse/trunk/java/client/src/org/openqa/selenium/support/ui/ExpectedConditions.java
-import org.openqa.selenium.By;
-import org.openqa.selenium.StaleElementReferenceException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriverException;
-import org.openqa.selenium.WebElement;
-import com.wikia.webdriver.DriverProvider.DriverProvider;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.StaleElementReferenceException;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+
+import com.wikia.webdriver.Common.DriverProvider.DriverProvider;
 
 public class CommonExpectedConditions  {
 

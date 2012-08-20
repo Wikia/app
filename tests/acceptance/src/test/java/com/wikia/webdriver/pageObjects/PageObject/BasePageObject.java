@@ -1,6 +1,5 @@
 package com.wikia.webdriver.pageObjects.PageObject;
 
-import java.io.File;
 import java.util.Date;
 import java.util.List;
 
@@ -11,11 +10,9 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import com.wikia.webdriver.Common.CommonExpectedConditions;
-import com.wikia.webdriver.Common.CommonFunctions;
-import com.wikia.webdriver.Common.Global;
-import com.wikia.webdriver.Common.XMLFunctions;
-import com.wikia.webdriver.Logging.PageObjectLogging;
+import com.wikia.webdriver.Common.Core.CommonExpectedConditions;
+import com.wikia.webdriver.Common.Core.CommonFunctions;
+import com.wikia.webdriver.Common.Logging.PageObjectLogging;
 
 /**
  * 

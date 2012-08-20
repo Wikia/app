@@ -1,9 +1,9 @@
-package com.wikia.webdriver.Properties;
+package com.wikia.webdriver.Common.Properties;
 
 import java.io.File;
 
-import com.wikia.webdriver.Common.Global;
-import com.wikia.webdriver.Common.XMLFunctions;
+import com.wikia.webdriver.Common.Core.Global;
+import com.wikia.webdriver.Common.Core.XMLFunctions;
 
 public class Properties {
 

@@ -1,4 +1,4 @@
-package com.wikia.webdriver.Common;
+package com.wikia.webdriver.Common.Core;
 
 import java.io.BufferedWriter;
 import java.io.File;

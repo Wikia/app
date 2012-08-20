@@ -1,21 +1,14 @@
-package com.wikia.webdriver.Logging;
+package com.wikia.webdriver.Common.Logging;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 
-import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.events.WebDriverEventListener;
 
 import com.google.common.base.Throwables;
-import com.wikia.webdriver.Common.CommonUtils;
-import com.wikia.webdriver.DriverProvider.DriverProvider;
+import com.wikia.webdriver.Common.Core.CommonUtils;
 
 
 
