@@ -48,7 +48,7 @@ Meebo('domReady');
 };
 
 if (window.wgEnableMeeboExt
-	&& Geo.getGeoData() && Geo.getGeoData().country === 'US'
+	&& Geo.getGeoData().country === 'US'
 ) {
 	MeeboBar.init();
 }
