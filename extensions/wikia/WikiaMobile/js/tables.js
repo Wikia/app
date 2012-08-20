@@ -14,6 +14,15 @@ define('tables', ['events'], function(ev){
 		unwrap = function(elm){
 			var parent = elm.parentNode;
 			parent.parentNode.replaceChild(elm, parent);
+		},
+		removeScript = function(elm){
+			var scripts = elm.getElementsByTagName('caption'),
+				script,
+				i = 0;
+
+			while(script = scripts[i++]){
+				script.parentElement.removeChild(script);
+			}
 		};
 
 	function process(tables){
@@ -60,7 +69,7 @@ define('tables', ['events'], function(ev){
 			table.computedWidth = firstRowWidth;
 			if(firstRowWidth > realWidth){
 				//remove scripts to avoid re-parsing
-				$(table).find('script').remove();
+				removeScript(table);
 				wrap(table);
 				table.wasWrapped = true;
 				table.isWrapped = true;
@@ -87,7 +96,7 @@ define('tables', ['events'], function(ev){
 						if(!wasWrapped){
 							table.wasWrapped = true;
 							//remove scripts to avoid re-parsing
-							$(table).find('script').remove();
+							removeScript(table);
 						}
 
 						wrap(table);
