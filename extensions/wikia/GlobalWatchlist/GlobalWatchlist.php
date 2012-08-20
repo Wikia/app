@@ -16,7 +16,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'GlobalWatchlist',
-	'author' => '[http://www.wikia.com/wiki/User:Adi3ek Adrian \'ADi\' Wieczorek], [http://www.wikia.com/wiki/User:Moli.wikia]',
+	'author' => '[http://www.wikia.com/wiki/User:Adi3ek Adrian \'ADi\' Wieczorek], [http://www.wikia.com/wiki/User:Moli.wikia Piotr Molski]',
 	'descriptionmsg' => 'globalwatchlist-desc',
 );
 
