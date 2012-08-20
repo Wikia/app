@@ -309,7 +309,7 @@ class WikiaSolrClient extends WikiaSearchClient {
 	{
 		wfProfileIn(__METHOD__);
 
-		$groupedResults = array();
+		$resultSets = array();
 		
 		foreach ($groupedSolrDocs as $groupedSolrDoc) {
 
