@@ -169,32 +169,23 @@
 			margin-right: -8px;
 		}
 		&.disabled {
-			@include opacity(40);
+			@include opacity(50);
 			cursor: default;
 		}
 		
 	}
 	.latest-images-left {
 		@include arrow-style;
-		border-color: transparent $color-links transparent $color-links;
+		border-color: transparent $color-buttons transparent $color-buttons;
 		border-left-width: 0px;
 
 	}
 
-	.latest-images-left-inactive {
-		border-color: transparent $color-page-border transparent $color-page-border;
-	}
-
 	.latest-images-right {
 		@include arrow-style;
-		border-color: transparent transparent transparent $color-links;
+		border-color: transparent transparent transparent $color-buttons;
 		border-right-width: 0px;
 	}
-
-	.latest-images-right-inactive {
-		border-color:  transparent transparent transparent $color-page-border;
-	}
-
 
 
 	// /** when there are less then 3 images **/

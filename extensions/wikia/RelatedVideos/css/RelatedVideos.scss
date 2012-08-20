@@ -567,12 +567,12 @@ $color-related-videos-background: darken($color-page, 20%);
 			}
 			.scrollleft.inactive {
 				img {
-					border-color: transparent $color-inactive-button transparent transparent;
+					@include opacity(50);
 				}
 			}
 			.scrollright.inactive {
 				img {
-					border-color: transparent transparent transparent $color-inactive-button;
+					@include opacity(50);
 				}
 			}
 			.paginationbar {
