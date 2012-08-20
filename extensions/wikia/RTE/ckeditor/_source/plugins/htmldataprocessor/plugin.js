@@ -447,7 +447,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 		// Different protection pattern is used for those that
 		// live in attributes to avoid from being HTML encoded.
-		return data.replace( /(['"]).*?\1/g, function ( match )
+		return data.replace( /<[^>]*(['"]).*?\1*>/g, function ( match )
 		{
 			return match.replace( /<!--\{cke_protected\}([\s\S]+?)-->/g, function( match, data )
 			{
