@@ -32,7 +32,7 @@ public class CreateAWikiTests_latin extends TestTemplate
 	public void CreateNewWiki_latin_001_have_an_account()
 	{
 		startBrowser();
-		CommonFunctions.logOut(Properties.userName);
+//		CommonFunctions.logOut(Properties.userName);
 		driver.get(Global.LIVE_DOMAIN+"wiki/Special:UserLogout?returnto=User "+Properties.userName);
 		HomePageObject home = new HomePageObject(driver);
 		home.openHomePage();
@@ -46,7 +46,7 @@ public class CreateAWikiTests_latin extends TestTemplate
 		logInPage.verifyFaceBookToolTip();
 		logInPage.verifySignUpText();		
 		driver.get(Global.LIVE_DOMAIN+"wiki/Special:UserLogout?returnto=User "+Properties.userName);
-		CommonFunctions.logOut(Properties.userName);
+//		CommonFunctions.logOut(Properties.userName);
 		stopBrowser();
 	}
 	
@@ -159,7 +159,7 @@ public class CreateAWikiTests_latin extends TestTemplate
 		newWikia.closeCongratulationsLightBox();
 		newWikia.vefifyUserLoggedIn(Properties.userName);
 		newWikia.verifyUserToolBar();
-		CommonFunctions.logOut(Properties.userName);
+//		CommonFunctions.logOut(Properties.userName);
 		driver.get(Global.LIVE_DOMAIN+"wiki/Special:UserLogout?returnto=User "+Properties.userName);
 		stopBrowser();
 	}
