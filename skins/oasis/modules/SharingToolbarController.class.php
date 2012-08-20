@@ -16,35 +16,35 @@ class SharingToolbarController extends WikiaController {
 			NS_FILE,
 			NS_CATEGORY,
 		));
-		
+
 		if( defined('NS_VIDEO') ) {
 			$allowedNamespaces[] = intval(NS_VIDEO);
 		}
-		
+
 		if( defined('NS_BLOG_LISTING') ) {
 			$allowedNamespaces[] = intval(NS_BLOG_LISTING);
 		}
-		
+
 		if( !empty($this->app->wg->EnableWallExt) ) {
 			$allowedNamespaces[] = intval(NS_USER_WALL_MESSAGE);
 		}
-		
+
 		if( !empty($this->app->wg->EnableTopListsExt) ) {
 			$allowedNamespaces[] = intval(NS_TOPLIST);
 		}
-		
+
 		if( !empty($this->app->wg->EnableWikiaQuiz) ) {
 			$allowedNamespaces[] = intval(NS_WIKIA_PLAYQUIZ);
 		}
-		
+
 		$title = $this->app->wg->Title;
 		$namespace = ($title instanceof Title) ? $title->getNamespace() : -1;
-		
+
 		$ret = in_array($namespace, $allowedNamespaces) && !empty($this->app->wg->EnableSharingToolbar);
-		
+
 		return $ret;
 	}
-	
+
 	public function executeIndex() {
 		if (!$this->canBeShown()) {
 			// don't render the toolbar
@@ -77,7 +77,7 @@ class SharingToolbarController extends WikiaController {
 	}
 
 	public function executeSendMail() {
-		global $wgRequest, $wgTitle, $wgNoReplyAddress, $wgUser, $wgNoReplyAddress;
+		global $wgRequest, $wgTitle, $wgUser, $wgNoReplyAddress;
 		wfProfileIn(__METHOD__);
 		$user = $wgUser->getId();
 
@@ -110,8 +110,6 @@ class SharingToolbarController extends WikiaController {
 				//should not happen, ever
 				throw new MWException("Could not create Title from $pageName\n");
 			}
-			$imageTitle = $wgTitle->getText();
-			$imageParam = preg_replace('/[^a-z0-9_]/i', '-', Sanitizer::escapeId($imageTitle));
 			$linkStd = $currentTitle->getFullURL();
 
 			//send mails
@@ -144,7 +142,7 @@ class SharingToolbarController extends WikiaController {
 					null,
 					'ImageLightboxShare'
 				);
-				if (WikiError::isError($result)) {
+				if (!$result->isOK()) {
 					$res = array(
 						'info-caption' => wfMsg('lightbox-share-email-error-caption'),
 						'info-content' => wfMsgExt('lightbox-share-email-error-content', array('parsemag'), $countMails, $result->toString())
