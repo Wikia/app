@@ -35,9 +35,9 @@ public class WikiArticleEditMode extends WikiArticlePageObject {
 	private By ImageOnPreview = By.cssSelector("section.modalWrapper.preview section.modalContent figure a img");
 	private By CaptionInPreview = By.cssSelector("section.modalWrapper.preview section.modalContent figcaption");
 	private By PublishButtonPreview = By.cssSelector("div.neutral.modalToolbar a[id='publish']");
-	private By PublishButton = By.cssSelector("input.control-button");
-	private By SourceButton = By.cssSelector("span.cke_button_ModeSource");
-	private By VisualButton = By.cssSelector("span.cke_button_ModeWysiwyg ");
+	private By PublishButtonGeneral = By.cssSelector("input.control-button");
+	private By SourceModeButton = By.cssSelector("span.cke_button_ModeSource");
+	private By VisualModeButton = By.cssSelector("span.cke_button_ModeWysiwyg ");
 	private By ModifyButton = By.cssSelector("span.RTEMediaOverlayEdit");
 	private By RemoveButton = By.cssSelector("span.RTEMediaOverlayDelete");
 	private By CancelImageRemovalButton = By.cssSelector("div.RTEConfirmButtons a[id='RTEConfirmCancel'] span");
@@ -47,14 +47,15 @@ public class WikiArticleEditMode extends WikiArticlePageObject {
 	private By ObjectModal = By.cssSelector("section[id='WikiaPhotoGalleryEditor']");
 	private By GalleryDialogPhotosList = By.cssSelector("ul.WikiaPhotoGalleryResults li input");
 	private By GalleryDialogPhotoOrientationsList = By.cssSelector("ul.clearfix[id='WikiaPhotoGalleryOrientation'] li");
+	private By GalleryDialogSlideshowOrientationsList = By.cssSelector("ul.clearfix[id='WikiaPhotoGallerySliderType'] li");
 	private By GalleryDialogSelectButton = By.cssSelector("a[id='WikiaPhotoGallerySearchResultsSelect']");
 	private By GalleryDialogFinishButton = By.cssSelector("a[id='WikiaPhotoGalleryEditorSave']");
-	private By GalleryDialogGalleryPositionSelect = By.cssSelector("select[id='WikiaPhotoGalleryEditorGalleryPosition']");
 //	private By IframeVisualEditor = By.cssSelector("div.cke_wrapper.cke_ltr div.cke_contents iframe");
 	private By VideoModalInput = By.cssSelector("input[id='VideoEmbedUrl']");
 	private By VideoNextButton = By.cssSelector("a[id='VideoEmbedUrlSubmit']");
 	private By VideoAddVideoButton = By.cssSelector("tr.VideoEmbedNoBorder input.wikia-button");
 	private By VideoReturnToEditing = By.cssSelector("div[id='VideoEmbed'] input[value='Return to editing']");
+	private By VideoCaptionTextArea = By.cssSelector("input[id='VideoEmbedCaption']");
 	private By VideoInEditMode = By.cssSelector("img.video");
 	private By VideoOnPreview = By.cssSelector("div.ArticlePreview span.Wikia-video-play-button");
 	
@@ -96,7 +97,7 @@ public class WikiArticleEditMode extends WikiArticlePageObject {
 	}
 
 	/**
-	 * Type any caption for the photo
+	 * Type given caption for the photo
 	 *  
 	 * @author Michal Nowierski
 	 */
@@ -107,6 +108,19 @@ public class WikiArticleEditMode extends WikiArticlePageObject {
 		CaptionTextArea.sendKeys(caption);
 		
 		
+	}
+	
+	/**
+	 * Type given caption for the video
+	 *  
+	 * @author Michal Nowierski
+	 */
+	public void TypeVideoCaption(String caption) {
+		waitForElementByBy(VideoCaptionTextArea);
+		PageObjectLogging.log("TypeAcaption", "Type any caption for the photo", true, driver);
+		driver.findElement(VideoCaptionTextArea).clear();
+		driver.findElement(VideoCaptionTextArea).sendKeys(caption);
+				
 	}
 
 	/**
@@ -197,10 +211,10 @@ public class WikiArticleEditMode extends WikiArticlePageObject {
 	 * @author Michal Nowierski
 	 */
 	public void ClickOnSourceButton() {
-		waitForElementByBy(SourceButton);
+		waitForElementByBy(SourceModeButton);
 		PageObjectLogging.log("ClickOnSourceButton", "Click on 'Source' button", true, driver);
-		waitForElementClickableByBy(SourceButton);
-		driver.findElement(SourceButton).click();
+		waitForElementClickableByBy(SourceModeButton);
+		driver.findElement(SourceModeButton).click();
 		
 	}
 	
@@ -210,10 +224,10 @@ public class WikiArticleEditMode extends WikiArticlePageObject {
 	 * @author Michal Nowierski
 	 */
 	public void ClickOnVisualButton() {
-		waitForElementByBy(VisualButton);
+		waitForElementByBy(VisualModeButton);
 		PageObjectLogging.log("ClickOnVisualButton", "Click on 'Visual' button", true, driver);
-		waitForElementClickableByBy(VisualButton);
-		driver.findElement(VisualButton).click();
+		waitForElementClickableByBy(VisualModeButton);
+		driver.findElement(VisualModeButton).click();
 		
 	}
 	
@@ -236,10 +250,10 @@ public class WikiArticleEditMode extends WikiArticlePageObject {
 	 * @author Michal Nowierski
 	 */
 	public WikiArticlePageObject ClickOnPublishButton() {
-		waitForElementByBy(PublishButton);
+		waitForElementByBy(PublishButtonGeneral);
 		PageObjectLogging.log("ClickOnPublishButton", "Click on 'Publish' button", true, driver);
-		waitForElementClickableByBy(PublishButton);
-		driver.findElement(PublishButton).click();
+		waitForElementClickableByBy(PublishButtonGeneral);
+		driver.findElement(PublishButtonGeneral).click();
 	
 		return new WikiArticlePageObject(driver, Domain, articlename);
 	}
@@ -473,18 +487,6 @@ public class WikiArticleEditMode extends WikiArticlePageObject {
 	}
 
 	/**
-	 * Wait for video dialog and left click 'Add a video'
-	 *  
-	 * @author Michal Nowierski
-	 * 	 */
-	public void WaitForVideoDialogAndClickAddAvideo() {
-		PageObjectLogging.log("WaitForVideoDialogAndClickAddAvideo", "Wait for video dialog and left click 'Add a video'", true, driver);
-		waitForElementByBy(VideoAddVideoButton);
-		waitForElementClickableByBy(VideoAddVideoButton);
-		driver.findElement(VideoAddVideoButton).click();	
-	}
-
-	/**
 	 * Wait For Succes dialog and click on 'return to editing'
 	 *  
 	 * @author Michal Nowierski
@@ -527,7 +529,7 @@ public class WikiArticleEditMode extends WikiArticlePageObject {
 	 * Set photo orientation option number n
 	 *  
 	 * @author Michal Nowierski
-	 * @param n n = parameter determining which orientation to choose
+	 * @param n = {1,2,3,4} <p> 1 - Original.<p> 2 - Square.<p> 3 - Landscape.<p> 4 - Portrait
 	 * 	 */
 	public void GallerySetPhotoOrientation(int n) {
 		PageObjectLogging.log("GallerySetPhotoOrientation", "Set photo orientation option number "+n, true, driver);
@@ -538,16 +540,16 @@ public class WikiArticleEditMode extends WikiArticlePageObject {
 	}
 
 	/**
-	 * Set Gallery position to the wanted one
+	 * Set Object position to the wanted one
 	 *  
 	 * @author Michal Nowierski
-	 * @param WantedPosition {Left, Center, Right} !CASE SENSITIVITY!
-	 * 	 */
-	public void GallerySetPosition(String WantedPosition) {
-		
-		PageObjectLogging.log("GallerySetPosition", "Set Gallery position to "+WantedPosition, true, driver);
-		Select select = new Select(driver.findElement(GalleryDialogGalleryPositionSelect));
-
+	 * @param Object {Gallery, Slideshow} 
+	 * @param WantedPosition = {Left, Center, Right} !CASE SENSITIVITY!
+	 * 	 * 	 */
+	public void GallerySetPosition(String Object, String WantedPosition) {
+				
+		PageObjectLogging.log("GallerySetPosition", "Set "+Object+" position to "+WantedPosition, true, driver);
+		Select select = new Select(driver.findElement(By.cssSelector("select[id*='WikiaPhotoGalleryEditor"+Object+"']")));
 		select.selectByVisibleText(WantedPosition);
 		// below code will make sure that proper position is selected
 		String category_name = select.getAllSelectedOptions().get(0).getText();
@@ -557,10 +559,43 @@ public class WikiArticleEditMode extends WikiArticlePageObject {
 		
 	}}
 
+	/**
+	 * Set photo orientation option number n
+	 *  
+	 * @author Michal Nowierski
+	 * @param n = {1, 2} <p> 1 - Horizontaal.<p> 2 - Vertical
+	 * 	 */
+	public void GallerySetSliderPosition(int n) {
+		PageObjectLogging.log("GallerySetSliderPosition", "Set photo orientation option number "+n, true, driver);
+		List<WebElement> List = driver.findElements(GalleryDialogSlideshowOrientationsList);
+		waitForElementByElement(List.get(n-1));
+		List.get(n-1).click();
+		
+		
+	}
 
+	/**
+	 * Wait for video dialog
+	 *  
+	 * @author Michal Nowierski
+	 * 	 */
+	public void WaitForVideoDialog() {
+		PageObjectLogging.log("WaitForVideoDialog", "Wait for video dialog", true, driver);
+		waitForElementByBy(VideoAddVideoButton);
+		
+	}
 
-
-
+	/**
+	 * Click 'Add a video'
+	 *  
+	 * @author Michal Nowierski
+	 * 	 */
+	public void ClickAddAvideo() {
+		PageObjectLogging.log("ClickAddAvideo", "Click 'Add a video'", true, driver);
+		waitForElementClickableByBy(VideoAddVideoButton);
+		driver.findElement(VideoAddVideoButton).click();
+		
+	}
 
 
 

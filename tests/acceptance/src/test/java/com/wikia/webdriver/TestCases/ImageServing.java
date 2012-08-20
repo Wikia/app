@@ -32,7 +32,7 @@ public class ImageServing extends TestTemplate {
 	private String videoURL2name = "What is love (?) - on piano (Haddway)";
 	
 	
-//	@Test(groups = {"ImageServing001"}) 
+	@Test(groups = {"ImageServing001"}) 
 //	https://internal.wikia-inc.com/wiki/QA/Core_Features_and_Testing/Manual_Regression_Tests/Image_Serving
 	public void ImageServing001_SpecialNewFilesTest()
 	{
@@ -54,7 +54,7 @@ public class ImageServing extends TestTemplate {
 //	stopBrowser();
 	}
 	
-//	@Test(groups = {"ImageServing002"}) 
+	@Test(groups = {"ImageServing002"}) 
 //	https://internal.wikia-inc.com/wiki/QA/Core_Features_and_Testing/Manual_Regression_Tests/Image_Serving
 	public void ImageServing002_SpecialUploadTest()
 	{
@@ -71,7 +71,7 @@ public class ImageServing extends TestTemplate {
 		CommonFunctions.logOut(Properties.userName2);
 //		stopBrowser();
 	}
-//	@Test(groups = {"ImageServing003"}) 
+	@Test(groups = {"ImageServing003"}) 
 //	https://internal.wikia-inc.com/wiki/QA/Core_Features_and_Testing/Manual_Regression_Tests/Image_Serving
 	public void ImageServing003_SpecialMultipleUploadTest()
 	{
@@ -87,7 +87,7 @@ public class ImageServing extends TestTemplate {
 		CommonFunctions.logOut(Properties.userName2);
 //		stopBrowser();
 	}
-//	@Test(groups = {"ImageServing004"}) 
+	@Test(groups = {"ImageServing004"}) 
 //	https://internal.wikia-inc.com/wiki/QA/Core_Features_and_Testing/Manual_Regression_Tests/Image_Serving
 	// Test Case 004 Adding images to an article in edit mode
 	public void ImageServing004_AddingImages()
@@ -115,7 +115,7 @@ public class ImageServing extends TestTemplate {
 //		stopBrowser();
 	}
 	
-//	@Test(groups = {"ImageServing005"}) 
+	@Test(groups = {"ImageServing005"}) 
 //	https://internal.wikia-inc.com/wiki/QA/Core_Features_and_Testing/Manual_Regression_Tests/Image_Serving
 	// Test Case 005 Modifying images in an article in edit mode
 	public void ImageServing005_ModifyingImages()
@@ -147,7 +147,7 @@ public class ImageServing extends TestTemplate {
 		
 	}
 	
-//	@Test(groups = {"ImageServing006"}) 
+	@Test(groups = {"ImageServing006"}) 
 //	https://internal.wikia-inc.com/wiki/QA/Core_Features_and_Testing/Manual_Regression_Tests/Image_Serving	
 	// Test Case 006  Removing images in an article in edit mode
 	public void ImageServing006_RemovingImages()
@@ -178,7 +178,7 @@ public class ImageServing extends TestTemplate {
 //		stopBrowser();
 	}
 
-//	@Test(groups = {"ImageServing007"}) 
+	@Test(groups = {"ImageServing007"}) 
 //	https://internal.wikia-inc.com/wiki/QA/Core_Features_and_Testing/Manual_Regression_Tests/Image_Serving	
 	// Test Case 007  Adding galleries to an article in edit mode
 	public void ImageServing007_AddingGalleries()
@@ -193,7 +193,7 @@ public class ImageServing extends TestTemplate {
 		editArticle.WaitForObjectModalAndClickAddAphoto("Gallery");
 		editArticle.GalleryCheckImageInputs(4);
 		editArticle.GalleryClickOnSelectButton();
-		editArticle.GallerySetPosition("Center");
+		editArticle.GallerySetPosition("Gallery", "Center");
 		editArticle.GallerySetPhotoOrientation(2);
 		editArticle.GalleryClickOnFinishButton();
 		editArticle.VerifyObjectInEditMode("gallery");
@@ -209,7 +209,7 @@ public class ImageServing extends TestTemplate {
 		
 	}
 	
-//	@Test(groups = {"ImageServing008"}) 
+	@Test(groups = {"ImageServing008"}) 
 //	https://internal.wikia-inc.com/wiki/QA/Core_Features_and_Testing/Manual_Regression_Tests/Image_Serving	
 	// Test Case 008 Adding slideshows to an article in edit mode
 	public void ImageServing008_AddingSlideshow()
@@ -224,6 +224,7 @@ public class ImageServing extends TestTemplate {
 		editArticle.WaitForObjectModalAndClickAddAphoto("GallerySlideshow");
 		editArticle.GalleryCheckImageInputs(4);
 		editArticle.GalleryClickOnSelectButton();
+		editArticle.GallerySetPosition("Slideshow", "Center");
 		editArticle.GalleryClickOnFinishButton();
 		editArticle.VerifyObjectInEditMode("slideshow");
 		editArticle.ClickOnPreviewButton();
@@ -238,7 +239,7 @@ public class ImageServing extends TestTemplate {
 		
 	}
 	
-//	@Test(groups = {"ImageServing009"}) 
+	@Test(groups = {"ImageServing009"}) 
 //	https://internal.wikia-inc.com/wiki/QA/Core_Features_and_Testing/Manual_Regression_Tests/Image_Serving	
 	// Test Case 009 Adding sliders to an article in edit mode
 	public void ImageServing009_AddingSliders()
@@ -253,6 +254,7 @@ public class ImageServing extends TestTemplate {
 		editArticle.WaitForObjectModalAndClickAddAphoto("GallerySlider");
 		editArticle.GalleryCheckImageInputs(4);
 		editArticle.GalleryClickOnSelectButton();
+		editArticle.GallerySetSliderPosition(2);
 		editArticle.GalleryClickOnFinishButton();
 		editArticle.VerifyObjectInEditMode("gallery-slider");
 		editArticle.ClickOnPreviewButton();
@@ -267,7 +269,7 @@ public class ImageServing extends TestTemplate {
 		
 	}
 	
-//	@Test(groups = {"ImageServing010"}) 
+	@Test(groups = {"ImageServing010"}) 
 //	https://internal.wikia-inc.com/wiki/QA/Core_Features_and_Testing/Manual_Regression_Tests/Image_Serving	
 	// Test Case 010 Adding videos to an article in edit mode
 	public void ImageServing010_AddingVideo()
@@ -281,7 +283,9 @@ public class ImageServing extends TestTemplate {
 		editArticle.ClickOnAddObjectButton("Video");
 		editArticle.WaitForVideoModalAndTypeVideoURL(videoURL);
 		editArticle.ClickVideoNextButton();
-		editArticle.WaitForVideoDialogAndClickAddAvideo();
+		editArticle.WaitForVideoDialog();
+		editArticle.TypeVideoCaption(Caption);
+		editArticle.ClickAddAvideo();
 		editArticle.WaitForSuccesDialogAndReturnToEditing();
 		editArticle.VerifyVideoInEditMode();
 		editArticle.ClickOnPreviewButton();
@@ -296,7 +300,7 @@ public class ImageServing extends TestTemplate {
 		
 	}
 	
-//	@Test(groups = {"ImageServing011"}) 
+	@Test(groups = {"ImageServing011"}) 
 //	https://internal.wikia-inc.com/wiki/QA/Core_Features_and_Testing/Manual_Regression_Tests/Image_Serving	
 	// Test Case 011 Adding related videos through Related Video (RV) module
 	public void ImageServing011_AddingVideoThroughRV()
