@@ -181,7 +181,7 @@ class WikiStats {
 		if ( isset($this->oWikia) && !empty($this->oWikia) ) {
 			# created 
 			$this->oWikia->city_created_txt = "";
-			if ( isset($$this->oWikia->city_created) ) {
+			if ( isset($this->oWikia->city_created) ) {
 				$city_created = preg_replace("/(\s|\:|\-)/", "", $this->oWikia->city_created);
 				$this->oWikia->city_created_txt = $wgLang->timeanddate( $city_created, true );
 			}
