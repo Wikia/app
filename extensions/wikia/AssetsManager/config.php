@@ -543,6 +543,24 @@ $config['articlecomments_js'] = array(
 	)
 );
 
+$config['articlecomments_scss'] = array(
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => 'oasis',
+	'assets' => array(
+		'//skins/oasis/css/core/ArticleComments.scss'
+	)
+);
+
+$config['articlecomments_mini_editor_scss'] = array(
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => 'oasis',
+	'assets' => array(
+		'#group_articlecomments_scss',
+		'//extensions/wikia/MiniEditor/css/MiniEditor.scss',
+		'//extensions/wikia/MiniEditor/css/ArticleComments/ArticleComments.scss'
+	)
+);
+
 $config['articlecomments_js_wikiamobile'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'wikiamobile',
