@@ -16,8 +16,6 @@ class UserProfilePageController extends WikiaController {
 		$this->app = $app;
 		$this->allowedNamespaces = $app->getLocalRegistry()->get('UserProfilePageNamespaces');
 		$this->title = $app->wg->Title;
-
-		// CSS
 	}
 
 	/**
@@ -627,13 +625,10 @@ class UserProfilePageController extends WikiaController {
 
 	/**
 	 * @brief get Local Path to avatar
-	 *
 	 */
-
 	private function getLocalPath($user) {
 		$oAvatarObj = F::build('Masthead', array($user), 'newFromUser');
 		return $oAvatarObj->getLocalPath();
-		return '';
 	}
 
 	/**
