@@ -394,6 +394,8 @@ define('media', ['modal', 'loader', 'querystring', 'popover', 'track', 'events',
 		zoomed = (state != undefined) ? state : !zoomed;
 		if(zoomed){
 			modal.hideUI();
+		}else{
+			modal.showUI();
 		}
 
 	}
