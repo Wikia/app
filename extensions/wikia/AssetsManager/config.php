@@ -325,6 +325,9 @@ $config['wikiamobile_js_head'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'wikiamobile',
 	'assets' => array(
+		//set js class as fast as possible to make styling as fast as possible
+		'//extensions/wikia/WikiaMobile/js/html_js_class.js',
+
 		//libraries/frameworks
 		'//resources/wikia/libraries/zepto/zepto-0.8.js',
 		'//resources/wikia/libraries/modil/modil.js',
@@ -399,12 +402,18 @@ $config['wikiamobile_js_body_full'] = array(
 		'//extensions/wikia/WikiaMobile/js/popover.js',
 		'//extensions/wikia/WikiaMobile/js/hide_url_bar.js',
 		'//extensions/wikia/WikiaMobile/js/share.js',
-		'//extensions/wikia/WikiaMobile/js/tables.js',
 		'//resources/wikia/modules/thumbnailer.js',
-
 
 		//entrypoint
 		'//extensions/wikia/WikiaMobile/js/WikiaMobile.js',
+	)
+);
+
+$config['wikiamobile_tables_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => 'wikiamobile',
+	'assets' => array(
+		'//extensions/wikia/WikiaMobile/js/tables.js'
 	)
 );
 
