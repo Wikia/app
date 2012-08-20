@@ -168,9 +168,9 @@ public class ImageServing extends TestTemplate {
 //		editArticle.VerifyModalDisappeared();  
 		editArticle.HoverCursorOverImage(Caption);
 		editArticle.ClickRemoveButtonOfImage(Caption);
-//		editArticle.LeftClickOkButton();
+		editArticle.LeftClickOkButton();
 //		editArticle.VerifyModalDisappeared();
-		editArticle.VerifyTheImageNotOnTheArticleEditMode();
+//		editArticle.VerifyTheImageNotOnTheArticleEditMode();
 		article = editArticle.ClickOnPublishButton();
 //		article.VerifyTheImageNotOnThePage();
 		
