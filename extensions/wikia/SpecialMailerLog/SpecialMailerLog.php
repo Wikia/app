@@ -151,11 +151,10 @@ class SpecialMailerLog extends UnlistedSpecialPage {
 	}
 
 	private function getUserURL ( $email ) {
-		$dbr_user = wfGetDB( DB_SLAVE );
-
 		if (array_key_exists($email, self::$link_cache)) {
-			$user_url = $link_cache[$email];
+			$user_url = self::$link_cache[$email];
 		} else {
+			$dbr_user = wfGetDB( DB_SLAVE );
 			$s = $dbr_user->selectRow( 'user', array( 'user_id' ), array( 'user_email' => $email ), __METHOD__ );
 			if ($s) {
 				$row_user = User::newFromId( $s->user_id );
@@ -165,9 +164,9 @@ class SpecialMailerLog extends UnlistedSpecialPage {
 			}
 
 			if (isset($user_url)) {
-				$link_cache[$email] = $user_url;
+				self::$link_cache[$email] = $user_url;
 			} else {
-				$link_cache[$email] = 0;
+				self::$link_cache[$email] = 0;
 				$user_url = 0;
 			}
 		}
