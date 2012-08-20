@@ -4,13 +4,13 @@ var SuggestModalWikiaHubsV2 = {
 		$('#suggestArticle').click(function () {
 			$().log(window.wgUserName);
 			if (window.wgUserName) {
-				SuggestModal.suggestArticle();
+				SuggestModalWikiaHubsV2.suggestArticle();
 			} else {
 				if (window.wgComboAjaxLogin) {
 					showComboAjaxForPlaceHolder(false, false, function () {
 						AjaxLogin.doSuccess = function () {
 							$('#AjaxLoginBoxWrapper').closest('.modalWrapper').closeModal();
-							SuggestModal.suggestArticle();
+							SuggestModalWikiaHubsV2.suggestArticle();
 						};
 						AjaxLogin.close = function () {
 							$('#AjaxLoginBoxWrapper').closeModal();
@@ -19,7 +19,7 @@ var SuggestModalWikiaHubsV2 = {
 				} else {
 					UserLoginModal.show({
 						callback: function () {
-							SuggestModal.suggestArticle();
+							SuggestModalWikiaHubsV2.suggestArticle();
 						}
 					});
 				}
@@ -28,13 +28,13 @@ var SuggestModalWikiaHubsV2 = {
 		// show modal for suggest related videos
 		$('#suggest-popularvideos').click(function () {
 			if (window.wgUserName) {
-				SuggestModal.suggestVideo();
+				SuggestModalWikiaHubsV2.suggestVideo();
 			} else {
 				if (window.wgComboAjaxLogin) {
 					showComboAjaxForPlaceHolder(false, false, function () {
 						AjaxLogin.doSuccess = function () {
 							$('#AjaxLoginBoxWrapper').closest('.modalWrapper').closeModal();
-							SuggestModal.suggestVideo();
+							SuggestModalWikiaHubsV2.suggestVideo();
 						};
 						AjaxLogin.close = function () {
 							$('#AjaxLoginBoxWrapper').closeModal();
@@ -43,7 +43,7 @@ var SuggestModalWikiaHubsV2 = {
 				} else {
 					UserLoginModal.show({
 						callback: function () {
-							SuggestModal.suggestVideo();
+							SuggestModalWikiaHubsV2.suggestVideo();
 						}
 					});
 				}
@@ -58,45 +58,23 @@ var SuggestModalWikiaHubsV2 = {
 			format: 'html',
 			type: 'get',
 			callback: function (html) {
-				var modal = $(html).makeModal({width: 490, onClose: SuggestModal.closeModal});
+				var modal = $(html).makeModal({width: 490, onClose: SuggestModalWikiaHubsV2.closeModal});
 				var wikiaForm = new WikiaForm(modal.find('form'));
 				
 				// show submit button
-				SuggestModal.showSubmit(modal);
+				SuggestModalWikiaHubsV2.showSubmit(modal);
 				
 				modal.find('button.submit').click(function (e) {
 					e.preventDefault();
 					var articleurl = modal.find('input[name=articleurl]').val();
 					var reason = modal.find('textarea[name=reason]').val();
-					$.nirvana.sendRequest({
-						controller: 'WikiaHubsSuggestController',
-						method: 'modalArticle',
-						format: 'json',
-						data: {
-							hubname: window.wgPageName,
-							articleurl: articleurl,
-							reason: reason,
-							submit: 1
-						},
-						callback: function (res) {
-							if (res['result'] == 'ok') {
-								modal.find('.WikiaForm').replaceWith('<p>' + res['msg'] + '</p>');
-								modal.find('.close-button').show();
-							} else if (res['result'] == 'error') {
-								wikiaForm.clearInputError('articleurl');
-								wikiaForm.clearInputError('reason');
-								wikiaForm.showInputError(res['errParam'], res['msg']);
-							} else {
-								// TODO: show error message
-								GlobalNotification.show('Something is wrong', 'error');
-							}
-						}
-					});
+					$().log('suggestArticle modal submit');
+					SuggestModalWikiaHubsV2.closeModal(modal);
 				});
 	
 				modal.find('button.cancel').click(function (e) {
 					e.preventDefault();
-					SuggestModal.closeModal(modal);
+					SuggestModalWikiaHubsV2.closeModal(modal);
 				});
 			}
 		});
@@ -109,47 +87,25 @@ var SuggestModalWikiaHubsV2 = {
 			format: 'html',
 			type: 'get',
 			callback: function (html) {
-				var modal = $(html).makeModal({width: 490, onClose: SuggestModal.closeModal});
+				var modal = $(html).makeModal({width: 490, onClose: SuggestModalWikiaHubsV2.closeModal});
 				var wikiaForm = new WikiaForm(modal.find('form'));
 				
 				modal.find('input[name=videourl], input[name=wikiname]').placeholder();
 						
 				// show submit button
-				SuggestModal.showSubmit(modal);
+				SuggestModalWikiaHubsV2.showSubmit(modal);
 	
 				modal.find('button.submit').click(function (e) {
 					e.preventDefault();
 					var videourl = modal.find('input[name=videourl]').val();
 					var wikiname = modal.find('input[name=wikiname]').val();
-					$.nirvana.sendRequest({
-						controller: 'WikiaHubsSuggestController',
-						method: 'modalRelatedVideos',
-						format: 'json',
-						data: {
-							hubname: window.wgPageName,
-							videourl: videourl,
-							wikiname: wikiname,
-							submit: 1
-						},
-						callback: function (res) {
-							if (res['result'] == 'ok') {
-								modal.find('.WikiaForm').replaceWith('<p>' + res['msg'] + '</p>');
-								modal.find('.close-button').show();
-							} else if (res['result'] == 'error') {
-								wikiaForm.clearInputError('videourl');
-								wikiaForm.clearInputError('wikiname');
-								wikiaForm.showInputError(res['errParam'], res['msg']);
-							} else {
-								// TODO: show error message
-								GlobalNotification.show('Something is wrong', 'error');
-							}
-						}
-					});
+					$().log('suggestVideo modal submit');
+					SuggestModalWikiaHubsV2.closeModal(modal);
 				});
 	
 				modal.find('button.cancel').click(function (e) {
 					e.preventDefault();
-					SuggestModal.closeModal(modal);
+					SuggestModalWikiaHubsV2.closeModal(modal);
 				});
 			}		
 		});
