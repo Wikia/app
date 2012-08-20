@@ -19,7 +19,7 @@ AIC2.init = function() {
 	AIC2.called = true;
 
 	if ($wikiaMainContent.width() != AIC2.WMCbaseWidth) {
-		AIC2.marginLeft = AIC2.marginLeft + parseInt(($wikiaMainContent.width() - AIC2.baseWidth) / 2, 10);
+		AIC2.marginLeft = AIC2.marginLeft + parseInt(($wikiaMainContent.width() - AIC2.WMCbaseWidth) / 2, 10);
 		Liftium.d("AIC2: non standard width, new marginLeft set to " + AIC2.marginLeft, 5);
 		WikiaTracker.track(Liftium.buildTrackUrl([LiftiumOptions.pubid, "AIC2", "wide"]), 'liftium.varia');
 	}
