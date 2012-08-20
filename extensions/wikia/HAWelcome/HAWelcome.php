@@ -263,7 +263,7 @@ class HAWelcomeJob extends Job {
 		$key = wfMemcKey( "HAWelcome-isPosted", $to->getName());
 
 		if(!empty($wgEnableWallExt)) {
-			$wallMessage = F::build('WallMessage', array($message, $to->getName(), $from, $title, false, false, $flags), 'buildNewMessageAndPost');
+			$wallMessage = F::build('WallMessage', array($message, $to->getName(), $from, $title, false, false, false), 'buildNewMessageAndPost');
 			if( $wallMessage === false ) {
 				return false;
 			}
