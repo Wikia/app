@@ -47,12 +47,6 @@ $wgExtensionMessagesFiles[ "HAWelcome" ] = dirname(__FILE__) . '/HAWelcome.i18n.
  */
 $wgWikiaBatchTasks[ "welcome" ] = "HAWelcomeTask";
 
-class HAWelcomeDebug {
-	function notify() {
-		
-	}
-}
-
 class HAWelcomeJob extends Job {
 
 	private
