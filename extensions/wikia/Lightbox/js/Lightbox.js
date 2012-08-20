@@ -260,6 +260,8 @@ var Lightbox = {
 						'line-height': (dimensions.imageContainerHeight - 3) + 'px' // -3 hack to remove white line in chrome
 					}).html(renderedResult);
 
+				//$(window).trigger('resize'); // firefox image loading hack (BugId:32477)
+
 				Lightbox.updateArrows();
 
 				Lightbox.renderHeader();
@@ -662,7 +664,7 @@ var Lightbox = {
 		Lightbox.openModal.progress = $('#LightboxCarouselProgress');
 		Lightbox.openModal.data('overlayactive', true);
 
-		$(window).on('keydown.Lightbox', function(e) {
+		$(document).on('keydown.Lightbox', function(e) {
 			if(e.keyCode == 37) {
 				$('#LightboxPrevious').click();
 			} else if(e.keyCode == 39) {
