@@ -62,7 +62,7 @@ public class CreateNewWikiPageObjectStep1 extends BasePageObject{
 	public void waitForSuccessIcon()
 	{
 
-		waitForElementByCss("span.domain-status-icon img[src]");																				 
+		waitForElementByCss("span.domain-status-icon img[src*='check.png']");																				 
 		PageObjectLogging.log("waitForSuccessIcon", "Success icon found", true, driver);																							
 	}
 	
