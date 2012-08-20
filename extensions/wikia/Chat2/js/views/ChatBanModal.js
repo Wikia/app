@@ -52,4 +52,4 @@ var ChatBanModal = function(title, okCallback, options) {
 			}
 		});
 	});
-}
+};
