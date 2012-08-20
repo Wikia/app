@@ -2,11 +2,9 @@ package com.wikia.webdriver.TestCases.CreateAWikiTests;
 
 import org.testng.annotations.Test;
 
-import com.wikia.webdriver.Common.CommonFunctions;
-import com.wikia.webdriver.Common.Global;
-import com.wikia.webdriver.Properties.Properties;
-import com.wikia.webdriver.Templates.TestTemplate;
-import com.wikia.webdriver.pageObjects.PageObject.BasePageObject;
+import com.wikia.webdriver.Common.Core.CommonFunctions;
+import com.wikia.webdriver.Common.Properties.Properties;
+import com.wikia.webdriver.Common.Templates.TestTemplate;
 import com.wikia.webdriver.pageObjects.PageObject.HomePageObject;
 import com.wikia.webdriver.pageObjects.PageObject.CreateNewWiki.CreateNewWikiLogInPageObject;
 import com.wikia.webdriver.pageObjects.PageObject.CreateNewWiki.CreateNewWikiPageObjectStep1;
@@ -32,8 +30,7 @@ public class CreateAWikiTests_nonLatin extends TestTemplate
 	@Test
 	public void CreateNewWiki_nonLatin_TC001_user_name_does_not_exists()
 	{
-		startBrowser();
-		driver.get(Global.LIVE_DOMAIN+"wiki/Special:UserLogout?returnto=User "+Properties.userNameNonLatinEncoded);
+		CommonFunctions.logOut(Properties.userNameNonLatinEncoded);
 		HomePageObject home = new HomePageObject(driver);
 		home.openHomePage();
 		CreateNewWikiPageObjectStep1 createNewWiki1 = home.startAWiki();
@@ -57,9 +54,7 @@ public class CreateAWikiTests_nonLatin extends TestTemplate
 		newWikia.closeCongratulationsLightBox();
 		newWikia.vefifyUserLoggedIn(Properties.userNameNonLatinEncoded);
 		newWikia.verifyUserToolBar();
-		CommonFunctions.logOut(Properties.userNameNonLatin);
-		driver.get(Global.LIVE_DOMAIN+"wiki/Special:UserLogout?returnto=User "+Properties.userNameNonLatinEncoded);
-		stopBrowser();
+		CommonFunctions.logOut(Properties.userNameNonLatinEncoded);
 	}
 	
 	/*
@@ -70,8 +65,7 @@ public class CreateAWikiTests_nonLatin extends TestTemplate
 	@Test
 	public void CreateNewWiki_nonLatin_TC002_password_is_blank()
 	{
-		startBrowser();
-		driver.get(Global.LIVE_DOMAIN+"wiki/Special:UserLogout?returnto=User "+Properties.userNameNonLatinEncoded);
+		CommonFunctions.logOut(Properties.userNameNonLatinEncoded);
 		HomePageObject home = new HomePageObject(driver);
 		home.openHomePage();
 		CreateNewWikiPageObjectStep1 createNewWiki1 = home.startAWiki();
@@ -96,8 +90,6 @@ public class CreateAWikiTests_nonLatin extends TestTemplate
 		newWikia.vefifyUserLoggedIn(Properties.userNameNonLatinEncoded);
 		newWikia.verifyUserToolBar();
 		CommonFunctions.logOut(Properties.userNameNonLatinEncoded);
-		driver.get(Global.LIVE_DOMAIN+"wiki/Special:UserLogout?returnto=User "+Properties.userNameNonLatinEncoded);
-		stopBrowser();
 	}
 	
 	/*
@@ -108,8 +100,7 @@ public class CreateAWikiTests_nonLatin extends TestTemplate
 	@Test
 	public void CreateNewWiki_nonLatin_TC003_password_is_incorrect()
 	{
-		startBrowser();
-		driver.get(Global.LIVE_DOMAIN+"wiki/Special:UserLogout?returnto=User "+Properties.userNameNonLatinEncoded);
+		CommonFunctions.logOut(Properties.userNameNonLatinEncoded);
 		HomePageObject home = new HomePageObject(driver);
 		home.openHomePage();
 		CreateNewWikiPageObjectStep1 createNewWiki1 = home.startAWiki();
@@ -134,8 +125,7 @@ public class CreateAWikiTests_nonLatin extends TestTemplate
 		newWikia.closeCongratulationsLightBox();
 		newWikia.vefifyUserLoggedIn(Properties.userNameNonLatinEncoded);
 		newWikia.verifyUserToolBar();
-		driver.get(Global.LIVE_DOMAIN+"wiki/Special:UserLogout?returnto=User "+Properties.userNameNonLatinEncoded);
-		stopBrowser();
+		CommonFunctions.logOut(Properties.userNameNonLatinEncoded);
 	}
 	
 	/*
@@ -146,8 +136,7 @@ public class CreateAWikiTests_nonLatin extends TestTemplate
 	@Test
 	public void CreateNewWiki_nonLatin_TC004_user_name_and_password_are_correct()
 	{
-		startBrowser();
-		driver.get(Global.LIVE_DOMAIN+"wiki/Special:UserLogout?returnto=User "+Properties.userNameNonLatinEncoded);
+		CommonFunctions.logOut(Properties.userNameNonLatinEncoded);
 		HomePageObject home = new HomePageObject(driver);
 		home.openHomePage();
 		CreateNewWikiPageObjectStep1 createNewWiki1 = home.startAWiki();
@@ -168,8 +157,7 @@ public class CreateAWikiTests_nonLatin extends TestTemplate
 		newWikia.closeCongratulationsLightBox();
 		newWikia.vefifyUserLoggedIn(Properties.userNameNonLatinEncoded);
 		newWikia.verifyUserToolBar();
-		driver.get(Global.LIVE_DOMAIN+"wiki/Special:UserLogout?returnto=User "+Properties.userNameNonLatinEncoded);
-		stopBrowser();
+		CommonFunctions.logOut(Properties.userNameNonLatinEncoded);
 	}	
 	
 }

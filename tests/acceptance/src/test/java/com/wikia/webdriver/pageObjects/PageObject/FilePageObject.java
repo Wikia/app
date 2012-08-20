@@ -2,7 +2,7 @@ package com.wikia.webdriver.pageObjects.PageObject;
 
 import org.openqa.selenium.WebDriver;
 
-import com.wikia.webdriver.Logging.PageObjectLogging;
+import com.wikia.webdriver.Common.Logging.PageObjectLogging;
 
 public class FilePageObject extends BasePageObject{
 	

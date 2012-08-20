@@ -1,4 +1,4 @@
-package com.wikia.webdriver.DriverProvider;
+package com.wikia.webdriver.Common.DriverProvider;
 
 import java.io.File;
 import java.util.concurrent.TimeUnit;
@@ -9,9 +9,8 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 
-import com.wikia.webdriver.Common.Global;
-import com.wikia.webdriver.Logging.PageObjectLogging;
-import com.wikia.webdriver.Properties.Properties;
+import com.wikia.webdriver.Common.Core.Global;
+import com.wikia.webdriver.Common.Logging.PageObjectLogging;
 
 
 //import com.wikia.selenium.logging.LoggerDriver;

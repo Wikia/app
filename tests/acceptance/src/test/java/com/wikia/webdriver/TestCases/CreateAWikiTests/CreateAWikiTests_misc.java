@@ -4,10 +4,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
 
-import com.wikia.webdriver.Common.CommonFunctions;
-import com.wikia.webdriver.Common.Global;
-import com.wikia.webdriver.Properties.Properties;
-import com.wikia.webdriver.Templates.TestTemplate;
+import com.wikia.webdriver.Common.Core.CommonFunctions;
+import com.wikia.webdriver.Common.Properties.Properties;
+import com.wikia.webdriver.Common.Templates.TestTemplate;
 import com.wikia.webdriver.pageObjects.PageObject.HomePageObject;
 import com.wikia.webdriver.pageObjects.PageObject.CreateNewWiki.CreateNewWikiLogInPageObject;
 import com.wikia.webdriver.pageObjects.PageObject.CreateNewWiki.CreateNewWikiPageObjectStep1;
@@ -25,8 +24,7 @@ public class CreateAWikiTests_misc extends TestTemplate
 //	@Test
 	public void CreateNewWiki_misc_001_log_in_browser_back_button()
 	{
-		startBrowser();
-		driver.get(Global.LIVE_DOMAIN + "wiki/Special:UserLogout?returnto=User "+Properties.userName);
+		CommonFunctions.logOut(Properties.userName);
 		HomePageObject home = new HomePageObject(driver);
 		home.openHomePage();
 		CommonFunctions.logIn();
@@ -45,7 +43,7 @@ public class CreateAWikiTests_misc extends TestTemplate
 		newWikia.closeCongratulationsLightBox();
 		newWikia.navigateBack();
 		createNewWiki1.verifyOccupiedWikiAddress(wikiName);
-		stopBrowser();
+		
 	}
 	
 	/*
@@ -55,8 +53,7 @@ public class CreateAWikiTests_misc extends TestTemplate
 	@Test
 	public void CreateNewWiki_misc_002_log_in_facebook_button_logged_out()
 	{
-		startBrowser();
-		driver.get(Global.LIVE_DOMAIN + "wiki/Special:UserLogout?returnto=User "+Properties.userName);
+		CommonFunctions.logOut(Properties.userName);
 		HomePageObject home = new HomePageObject(driver);
 		home.openHomePage();
 		CreateNewWikiPageObjectStep1 createNewWiki1 = home.startAWiki();
@@ -71,7 +68,7 @@ public class CreateAWikiTests_misc extends TestTemplate
 		WebElement email = driver.findElement(By.cssSelector("input[id='email']"));
 		WebElement pass = driver.findElement(By.cssSelector("input[id='pass']"));
 		
-		
+		CommonFunctions.logOut(Properties.userName);
 		
 		
 		

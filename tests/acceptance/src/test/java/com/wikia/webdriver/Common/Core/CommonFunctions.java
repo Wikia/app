@@ -1,8 +1,7 @@
-package com.wikia.webdriver.Common;
+package com.wikia.webdriver.Common.Core;
 
 import java.awt.AWTException;
 import java.awt.Robot;
-import java.io.File;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -12,9 +11,9 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
-import com.wikia.webdriver.DriverProvider.DriverProvider;
-import com.wikia.webdriver.Logging.PageObjectLogging;
-import com.wikia.webdriver.Properties.Properties;
+import com.wikia.webdriver.Common.DriverProvider.DriverProvider;
+import com.wikia.webdriver.Common.Logging.PageObjectLogging;
+import com.wikia.webdriver.Common.Properties.Properties;
 
 public class CommonFunctions 
 {

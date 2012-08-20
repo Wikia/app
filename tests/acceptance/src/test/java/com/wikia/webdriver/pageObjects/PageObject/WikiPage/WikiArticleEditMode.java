@@ -2,7 +2,6 @@ package com.wikia.webdriver.pageObjects.PageObject.WikiPage;
 
 import java.util.List;
 
-import org.apache.commons.exec.Watchdog;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -10,9 +9,8 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
-import com.wikia.webdriver.Common.CommonExpectedConditions;
-import com.wikia.webdriver.Common.CommonFunctions;
-import com.wikia.webdriver.Logging.PageObjectLogging;
+import com.wikia.webdriver.Common.Core.CommonFunctions;
+import com.wikia.webdriver.Common.Logging.PageObjectLogging;
 
 
 public class WikiArticleEditMode extends WikiArticlePageObject {
