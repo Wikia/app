@@ -276,6 +276,7 @@ class MediaWiki {
 						"\$wgArticlePath setting and/or toggle \$wgUsePathInfo " .
 						"to true.";
 				}
+				wfProfileOut( __METHOD__ );
 				throw new HttpError( 500, $message );
 			} else {
 				$output->setSquidMaxage( 1200 );
