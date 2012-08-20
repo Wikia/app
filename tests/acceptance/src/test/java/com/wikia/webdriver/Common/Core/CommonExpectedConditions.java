@@ -52,6 +52,7 @@ public class CommonExpectedConditions  {
 	   */
 	  public static ExpectedCondition<Boolean> givenStringtoBePresentInURL(final String givenString) {
 
+		 driver = DriverProvider.getWebDriver();
 	    return new ExpectedCondition<Boolean>() {
 			public Boolean apply(WebDriver d) {
 				Boolean contains;

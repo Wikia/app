@@ -8,6 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 
 import com.wikia.webdriver.Common.Core.CommonFunctions;
 import com.wikia.webdriver.Common.Logging.PageObjectLogging;
@@ -44,9 +45,11 @@ public class WikiArticleEditMode extends WikiArticlePageObject {
 	private By OKbutton = By.cssSelector("a[id='RTEConfirmOk'] span");
 	private By ImageOnArticleEditMode = By.cssSelector("div.WikiaArticle figure a img");
 	private By ObjectModal = By.cssSelector("section[id='WikiaPhotoGalleryEditor']");
-	private By GalleryPhotosList = By.cssSelector("ul.WikiaPhotoGalleryResults li input");
+	private By GalleryDialogPhotosList = By.cssSelector("ul.WikiaPhotoGalleryResults li input");
+	private By GalleryDialogPhotoOrientationsList = By.cssSelector("ul.clearfix[id='WikiaPhotoGalleryOrientation'] li");
 	private By GalleryDialogSelectButton = By.cssSelector("a[id='WikiaPhotoGallerySearchResultsSelect']");
 	private By GalleryDialogFinishButton = By.cssSelector("a[id='WikiaPhotoGalleryEditorSave']");
+	private By GalleryDialogGalleryPositionSelect = By.cssSelector("select[id='WikiaPhotoGalleryEditorGalleryPosition']");
 //	private By IframeVisualEditor = By.cssSelector("div.cke_wrapper.cke_ltr div.cke_contents iframe");
 	private By VideoModalInput = By.cssSelector("input[id='VideoEmbedUrl']");
 	private By VideoNextButton = By.cssSelector("a[id='VideoEmbedUrlSubmit']");
@@ -323,8 +326,8 @@ public class WikiArticleEditMode extends WikiArticlePageObject {
 	 * 	 */
 	public void VerifyModalDisappeared() {
 		PageObjectLogging.log("VerifyModalDisappeared", "Verify that 'Remove this photo?' modal has disappeared", true, driver);
-//		waitForElementNotVisibleByBy(RemovePhotoDialog);
-		wait.until(ExpectedConditions.invisibilityOfElementLocated(RemovePhotoDialog));		
+		waitForElementNotVisibleByBy(RemovePhotoDialog);
+//		wait.until(ExpectedConditions.invisibilityOfElementLocated(RemovePhotoDialog));		
 	}
 
 	/**
@@ -376,9 +379,9 @@ public class WikiArticleEditMode extends WikiArticlePageObject {
 	 * @author Michal Nowierski
 	 * @param n n = parameter determining how many inputs the method should check
 	 * 	 */
-	public void CheckGalleryImageInputs(int n) {
+	public void GalleryCheckImageInputs(int n) {
 		PageObjectLogging.log("CheckGalleryImageInputs", "Check first "+n+" image inputs", true, driver);
-		List<WebElement> List = driver.findElements(GalleryPhotosList);
+		List<WebElement> List = driver.findElements(GalleryDialogPhotosList);
 		for (int i = 0; i < n; i++) {
 			List.get(i).click();
 		}
@@ -519,6 +522,40 @@ public class WikiArticleEditMode extends WikiArticlePageObject {
 	waitForElementByBy(VideoOnPreview);
 			
 	}
+
+	/**
+	 * Set photo orientation option number n
+	 *  
+	 * @author Michal Nowierski
+	 * @param n n = parameter determining which orientation to choose
+	 * 	 */
+	public void GallerySetPhotoOrientation(int n) {
+		PageObjectLogging.log("GallerySetPhotoOrientation", "Set photo orientation option number "+n, true, driver);
+		List<WebElement> List = driver.findElements(GalleryDialogPhotoOrientationsList);
+		waitForElementByElement(List.get(n-1));
+		List.get(n-1).click();
+				
+	}
+
+	/**
+	 * Set Gallery position to the wanted one
+	 *  
+	 * @author Michal Nowierski
+	 * @param WantedPosition {Left, Center, Right} !CASE SENSITIVITY!
+	 * 	 */
+	public void GallerySetPosition(String WantedPosition) {
+		
+		PageObjectLogging.log("GallerySetPosition", "Set Gallery position to "+WantedPosition, true, driver);
+		Select select = new Select(driver.findElement(GalleryDialogGalleryPositionSelect));
+
+		select.selectByVisibleText(WantedPosition);
+		// below code will make sure that proper position is selected
+		String category_name = select.getAllSelectedOptions().get(0).getText();
+		while (!category_name.equalsIgnoreCase(WantedPosition)) {
+			select.selectByVisibleText(WantedPosition);
+			category_name = select.getAllSelectedOptions().get(0).getText();
+		
+	}}
 
 
 
