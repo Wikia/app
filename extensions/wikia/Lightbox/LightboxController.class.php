@@ -286,16 +286,11 @@ class LightboxController extends WikiaController {
 					'url' => $network->getUrl($shareUrl, $linkDescription)
 				);
 			}
-		}
 
-		// Don't show embed code for screenplay b/c it's using JW Player
-		if($file->getProviderName() == 'screenplay') {
-			$embedMarkup = false;
-		}
-
-		// Don't show embed code for screenplay b/c it's using JW Player
-		if($file->getProviderName() == 'screenplay') {
-			$embedMarkup = false;
+			// Don't show embed code for screenplay b/c it's using JW Player
+			if ( $file->getProviderName() == 'screenplay' ) {
+				$embedMarkup = false;
+			}
 		}
 
 		$this->shareUrl = $shareUrl;
