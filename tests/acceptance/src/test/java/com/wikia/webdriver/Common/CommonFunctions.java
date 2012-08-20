@@ -24,9 +24,14 @@ public class CommonFunctions
 	static By remeberMeCheckBox = By.cssSelector("input[type=checkbox]");
 	static By submitButton = By.cssSelector("input[type='submit']");
 	
-			
-	private static WebDriver driver   = DriverProvider.getWebDriver();;
-	private static WebDriverWait wait = new WebDriverWait(driver, 30);
+	private static WebDriver driver;
+	private static WebDriverWait wait;
+	
+//	public CommonFunctions() 
+//	{
+//		driver   = DriverProvider.getWebDriver();
+//		wait = new WebDriverWait(driver, 30);
+//	}		
 	
 	
 	/**
@@ -38,6 +43,8 @@ public class CommonFunctions
 	
 	public static void logIn(String userName, String password)
 	{
+		driver   = DriverProvider.getWebDriver();
+		wait = new WebDriverWait(driver, 30);
 		WebElement logInAjaxElem = driver.findElement(logInAjax);
 		logInAjaxElem.click();
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("input[name='username']")));
@@ -57,6 +64,8 @@ public class CommonFunctions
 	 */
 	public static void logOut(String userName)
 	{
+		driver   = DriverProvider.getWebDriver();
+		wait = new WebDriverWait(driver, 30);
 		driver.get(Global.LIVE_DOMAIN+"wiki/Special:UserLogout?returnto=User "+userName);	
 	}
 	
@@ -69,6 +78,8 @@ public class CommonFunctions
 	 */
 	public static void logIn()
 	{
+		driver   = DriverProvider.getWebDriver();
+		wait = new WebDriverWait(driver, 30);
 		WebElement logInAjaxElem = driver.findElement(logInAjax);
 		logInAjaxElem.click();
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("input[name='username']")));
@@ -91,6 +102,8 @@ public class CommonFunctions
 	 */
 	public static void logInRememberMe()
 	{
+		driver   = DriverProvider.getWebDriver();
+		wait = new WebDriverWait(driver, 30);
 		WebElement logInAjaxElem = driver.findElement(logInAjax);
 		logInAjaxElem.click();
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("input[name='username']")));
@@ -112,6 +125,8 @@ public class CommonFunctions
 	
 	public static void logInAsStaff()
 	{
+		driver   = DriverProvider.getWebDriver();
+		wait = new WebDriverWait(driver, 30);
 		WebElement logInAjaxElem = driver.findElement(logInAjax);
 		logInAjaxElem.click();
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("input[name='username']")));
@@ -136,6 +151,7 @@ public class CommonFunctions
 	 */
 	public static void assertString(String pattern, String current)
 	{
+		
 		try
 		{
 			Assert.assertEquals(pattern, current);
@@ -156,6 +172,7 @@ public class CommonFunctions
 	 */
 	public static String currentlyFocusedGetAttributeValue(String attributeName)
 	{
+		
 		String currentlyFocusedName = getCurrentlyFocused().getAttribute(attributeName);
 		return currentlyFocusedName;
 	}
@@ -169,6 +186,8 @@ public class CommonFunctions
 	 */
 	public static String getAttributeValue(WebElement element, String attributeName)
 	{
+		driver   = DriverProvider.getWebDriver();
+		wait = new WebDriverWait(driver, 30);
 		return element.getAttribute(attributeName);
 	}
 	
@@ -181,6 +200,8 @@ public class CommonFunctions
 	 */
 	public static WebElement getCurrentlyFocused()
 	{
+		driver   = DriverProvider.getWebDriver();
+		wait = new WebDriverWait(driver, 30);
 		return driver.switchTo().activeElement();
 	}
 	/**
@@ -191,7 +212,10 @@ public class CommonFunctions
 	 * @author Michal Nowierski
 	 * @param element Webelement to be scrolled to
 	*/
-	public static void scrollToElement(WebElement element) {
+	public static void scrollToElement(WebElement element) 
+	{
+		driver   = DriverProvider.getWebDriver();
+		wait = new WebDriverWait(driver, 30);
 		int y = element.getLocation().getY();
 			((JavascriptExecutor)driver).executeScript("window.scrollBy(0,"+y+");");
 		}
