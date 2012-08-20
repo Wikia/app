@@ -720,6 +720,7 @@ $config['wall_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'//resources/wikia/libraries/jquery/autoresize/jquery.autoresize.js',
+		'//resources/wikia/libraries/jquery/scrollto/jquery.scrollTo-1.4.2.js',
 		'//extensions/wikia/Wall/js/Wall.js',
 		'//extensions/wikia/Wall/js/WallPagination.js',
 		'//extensions/wikia/Wall/js/WallBackendBridge.js',
@@ -757,7 +758,7 @@ $config['wall_history_js'] = array(
 $config['forum_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
-		'#group_wall_js',
+//		'#group_wall_js',
 		'//extensions/wikia/Forum/js/Forum.js',
 		'//extensions/wikia/Forum/js/ForumNewMessageForm.js',
 		'//extensions/wikia/Forum/js/ForumSortingBar.js',

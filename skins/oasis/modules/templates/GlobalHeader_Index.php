@@ -25,7 +25,7 @@
 		</ul>
 	</nav>
 	<?= wfRenderModule('AccountNavigation') ?>
-	<? if( $wg->EnableWallExt ) echo wfRenderModule('WallNotifications'); ?>
+	<? echo wfRenderModule('WallNotifications'); ?>
 	<img src="<?= $wg->BlankImgUrl ?>" class="banner-corner-left" width="0" height="0">
 	<img src="<?= $wg->BlankImgUrl ?>" class="banner-corner-right" width="0" height="0">
 </header>

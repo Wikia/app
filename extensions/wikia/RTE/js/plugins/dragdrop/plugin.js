@@ -62,11 +62,6 @@ CKEDITOR.plugins.add('rte-dragdrop',
 
 		// trigger custom event
 		target.trigger('dragged');
-
-		// fix for Chrome
-		if (CKEDITOR.env.webkit) {
-			this.fire('wysiwygModeReady');
-		}
 	},
 
 	onDuringDragDrop: function(ev) {

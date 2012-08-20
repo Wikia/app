@@ -189,6 +189,34 @@ class WallExternalController extends WikiaController {
 		return true;
 	}
 	
+	public function changeThreadStatus() {
+		$result = false;
+		$newState = $this->request->getVal('newState', false);
+		$mw =  F::build('WallMessage', array($this->request->getVal('msgid')), 'newFromId');
+
+		if( empty($mw) || empty($newState) ) {
+			$this->response->setVal('status', false);
+			return true;
+		}
+		
+		switch($newState) {
+			case 'close':
+				if($mw->canArchive($this->wg->User)) {
+					$result = $mw->archive($this->wg->User);
+				}
+				break;
+			case 'open':
+				if($mw->canReopen($this->wg->User)) {
+					$result = $mw->reopen($this->wg->User);
+				}
+				break;
+			default:
+				break;
+		}
+		
+		$this->response->setVal('status', $result);
+	}
+	
 	protected function processModalForm($request) {
 		$formdata = $request->getVal('formdata');
 		
@@ -378,13 +406,35 @@ class WallExternalController extends WikiaController {
 			return true;	
 		}
 		
+		$quotedFrom = $this->request->getVal('quotedFrom');
+		
+		if(!empty($quotedFrom)) {
+			$reply->setQuoteOf($quotedFrom);
+		}
+		
 		$this->replyToMessageBuildResponse($this, $reply);
-			
+		
 		// after successfully posting a reply		
 		// remove notification for this thread (if user is following it)
 		$wn = F::build('WallNotifications', array());
 		$wn->markRead( $this->wg->User->getId(), $this->wg->CityId, $this->request->getVal('parent'));		
 		
+	}
+	
+	public function preview() {
+		
+		$body = $this->getConvertedContent( $this->request->getVal('body', ''));
+		$service = new EditPageService($this->wg->Title);
+		
+		$out = $service->getPreview($body);
+		
+		$metatitle = $this->request->getVal('metatitle', '');
+		
+		if(!empty($metatitle)) {
+			$metatitle = '<div class="msg-title"><span>'.htmlspecialchars($metatitle).'</span></div>';
+		}
+		
+		$this->response->setVal('body', $metatitle.$out[0]);
 	}
 	
 	protected function replyToMessageBuildResponse($context, $reply) {
@@ -423,4 +473,39 @@ class WallExternalController extends WikiaController {
 		$title = F::build('Title', array($this->request->getVal('pagetitle'), $this->request->getVal('pagenamespace') ), 'newFromText');
 		$this->response->setVal( 'html', $this->app->renderView( 'WallController', 'index', array('title' => $title, 'page' => $this->request->getVal('page', 1) ) )); 
 	} 
+	
+	/**
+	 * Returns formatted quote wiki text given message id
+	 * @param string messageId - numeric id
+	 * @param string convertToFormat - 'wikitext' or 'richtext'.  'wikitext' if unspecified
+	 * @return string markup - formatted markup (escaped)
+	 * @return string status - success/failure
+	 */
+	public function getFormattedQuoteText() {
+		$messageId = $this->request->getVal('messageId', '');
+		$mode = $this->request->getVal('convertToFormat', 'wikitext');
+		$markup = '';
+		$status = 'failure';
+
+		$msgid = $this->request->getVal('msgid');
+		$mw =  F::build('WallMessage', array($messageId), 'newFromId');
+		$mw->load();
+		
+		if(!empty($mw)) {
+			$username = $mw->getUser()->getName();
+			
+			$convertToFormat = $this->request->getVal('convertToFormat', '');
+			
+			if($convertToFormat == 'wikitext') {
+				$markup = '<div class="quote">' . wfMsgForContent('wall-quote-author', $username) . "\n" . $mw->getRawText() . "</div>\n";
+			} else {
+				$markup = $this->getConvertedContent('<div class="quote">' . wfMsgForContent('wall-quote-author', $username) . "<br>" . $mw->getRawText() . '</div><br>');
+			}
+
+			$status = 'success';
+		}
+		
+		$this->response->setVal('markup', $markup);
+		$this->response->setVal('status', $status);
+	}
 }

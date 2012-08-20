@@ -27,13 +27,13 @@
 			<? endif; ?>
 		</span>
 	</li>
-	<? foreach($notificationCounts as $wikiData): ?>
-	<? if ( $wikiCount == 1 ): ?>
-	<li class="notifications-for-wiki show" data-notification-key="<?= $notificationKey ?>" data-wiki-id="<?= $wikiData['id'] ?>">
+	<? foreach($notificationCounts as $wikiData): ?>	
+	<? if ($wikiCount == 1 ): ?>
+		<li class="notifications-for-wiki show" data-notification-key="<?= $notificationKey ?>" data-wiki-id="<?= $wikiData['id'] ?>">
 	<? else: ?>
-	<li class="notifications-for-wiki" data-notification-key="<?= $notificationKey ?>" data-wiki-path="<?= $wikiData['wgServer'] ?>" data-wiki-id="<?= $wikiData['id'] ?>">
+		<li class="notifications-for-wiki" data-notification-key="<?= $notificationKey ?>" data-wiki-path="<?= $wikiData['wgServer'] ?>" data-wiki-id="<?= $wikiData['id'] ?>">
 	<? endif; ?>
-		<? if ( $wikiCount > 1): ?>
+		<? if ($alwaysGrouped || $wikiCount > 1): ?>
 		<div class="notifications-wiki-header">
 		<? else: ?>
 		<div class="notifications-wiki-header" style="display: none">

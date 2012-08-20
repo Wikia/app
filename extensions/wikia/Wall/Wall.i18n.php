@@ -344,7 +344,11 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
 	'wall-votes-voted-tooltip' => 'You\'ve given this message Kudos!',
 
 	'wall-quote-author' => '$1 wrote:',
-	'wall-quote-reply-to' => 'reply to $1',
+	'wall-quote-reply-to' => 'reply to #$1',
+
+	'wall-preview-modal-title' => 'Preview',
+	'wall-preview-modal-button-back' => 'Back',
+	'wall-preview-modal-button-publish' => 'Publish'
 );
 
 /** Message documentation (Message documentation)
@@ -368,6 +372,8 @@ $messages['qqq'] = array(
 	'wall-toolbar-history' => 'Link in the toolbar to see the history of the wall or thread',
 	'wall-message-notify' => 'In the remove/delete-message modal box, checkbox for telling the admin about the removal',
 	'wall-message-remove' => 'Menu item to remove a message',
+	'wall-message-close-thread' => 'Menu item to close a thread or message',
+	'wall-message-reopen-thread' => "Menu item to reopen a thread",
 	'wall-message-rev-delete' => 'Dropdown menu for staff, option to revision-delete the message',
 	'wall-message-quote-button' => 'Quote button on messages',
 	'wall-message-elseswall' => "Link to a user's wall. Parameters:
@@ -410,6 +416,7 @@ $messages['qqq'] = array(
 * $1 is the user who deleted the reply (GENDER is supported in this message).',
 	'wall-message-closed-by' => 'message stating thread has been closed.  $1 is username, $2 is userpage title',
 	'wall-message-restore-reply' => 'Button to restore a reply on a removed reply page',
+	'wall-message-closed-by' => 'message stating thread has been closed.  $1 is username, $2 is userpage title',
 	'wall-delete-reason' => 'default user/admin action',
 	'wall-user-talk-page-archive-anchor' => "Link on a Message Wall page to the user's old talk page archive",
 	'wall-user-talk-archive-page-title' => "Title on a user's talk page archive",
@@ -706,8 +713,13 @@ $messages['qqq'] = array(
 	'wall-votes-number-tooltip' => 'Tooltip under numbers of Kudos.',
 	'wall-votes-vote-tooltip' => 'hover tooltip instructing users they can vote',
 	'wall-votes-voted-tooltip' => 'hover tooltip instructing users they have already voted',
+
 	'wall-quote-author' => 'part of quoted text, contain information about author of quoted text',
 	'wall-quote-reply-to' => 'link label to quoted text.  $1 is a number such as "reply to 123"',
+
+	'wall-preview-modal-title' => 'Title of preview modal',
+	'wall-preview-modal-button-back' => 'buton on preview modal',
+	'wall-preview-modal-button-publish' => 'buton on preview modal'
 );
 
 /** Bulgarian (български)

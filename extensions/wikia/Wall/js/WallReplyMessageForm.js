@@ -3,7 +3,7 @@
 Wall.ReplyMessageForm = $.createClass(Wall.MessageForm, {
 	constructor: function(page, model) {
 		Wall.ReplyMessageForm.superclass.constructor.apply(this, arguments);
-
+		
 		this.settings = {
 			reply: {
 				minFocus:100,
@@ -28,7 +28,10 @@ Wall.ReplyMessageForm = $.createClass(Wall.MessageForm, {
 		// Relative to replyWrapper
 		this.replyButton = '.replyButton';
 		this.replyBody = '.replyBody';
+		this.replyBodyContent = '.replyBody.content';
+		
 		this.replyThread = '.comments > .SpeechBubble';
+		this.replyPreviewButton = '.previewButton';
 
 		// Relative to replyThread
 		this.replyThreadFollow = '.follow';
@@ -39,29 +42,45 @@ Wall.ReplyMessageForm = $.createClass(Wall.MessageForm, {
 	},
 
 	initEvents: function() {
+		
 		$(this.mainContent)
+			.on('click', this.replyPreviewButton, this.proxy(this.showPreview) )
 			.on('click', this.replyButton, this.proxy(this.replyToMessage))
 			.on('keydown keyup change', this.replyBody, this.proxy(this.change))
 			.on('focus', this.replyBody, this.proxy(this.focus))
 			.on('blur', this.replyBody, this.proxy(this.blur))
 			.find(this.replyBody).autoResize(this.settings.reply);
 	},
-
+	
 	focus: function(e) {
-		$(e.target).closest(this.replyWrapper).addClass('open');
+		var textarea = $(e.target);
+		var reply = textarea.closest(this.replyWrapper);
+		reply.addClass('open');
+	},
+	
+	setContent: function(replyWrapper, content) {
+		if(content) {
+			replyWrapper.find(this.replyBody).val(content).addClass('content').putCursorAtEnd();
+			this.enable(replyWrapper);
+		}
 	},
 
 	change: function(e) {
 		var target = $(e.target),
 			hasContent = target.val() != '';
-
+		
+		var wraper = target.closest(this.replyWrapper);
+		
 		if (hasContent && !target.hasClass('placeholder') && !target.hasClass('content')) {
 			target.addClass('content');
-			target.closest(this.replyWrapper).find(this.replyButton).removeAttr('disabled');
-
+			
+			wraper.find(this.replyButton).removeAttr('disabled');
+			wraper.find(this.replyPreviewButton).removeAttr('disabled');
 		} else if (!hasContent) {
 			target.removeClass('content');
-			target.closest(this.replyWrapper).find(this.replyButton).attr('disabled', true);
+			
+			wraper.find(this.replyButton).attr('disabled', true);
+			wraper.find(this.replyPreviewButton).attr('disabled', true);
 		}
 	},
 
@@ -77,6 +96,7 @@ Wall.ReplyMessageForm = $.createClass(Wall.MessageForm, {
 		replyWrapper.addClass('loading');
 		replyWrapper.find(this.replyBody).attr('disabled', true);
 		replyWrapper.find(this.replyButton).attr('disabled', true);
+		replyWrapper.find(this.replyPreviewButton).attr('disabled', true);
 	},
 
 	enable: function(replyWrapper) {
@@ -102,13 +122,30 @@ Wall.ReplyMessageForm = $.createClass(Wall.MessageForm, {
 		}
 	},
 
+	showPreview: function(e) {
+		var target = $(e.target),
+		reply = target.closest(this.replyWrapper);
+		
+		this.showPreviewModal(this.getFormat(reply), '', this.getMessageBody(reply), this.getMessageWidth(reply), function() {
+			reply.find('.replyButton').click();
+		});
+	},
+	
+	resetEditor: function(reply) {
+		reply.find(this.replyBody).val('').trigger('blur');
+	},
+	
+	getMessageBody: function(reply) {
+		return reply.find(this.replyBodyContent).val();
+	},
+
 	doReplyToMessage: function(thread, reply, reload) {
-		this.model.postReply(this.page, reply.find(this.replyBody).val(), this.getFormat(), thread.attr('data-id'), this.proxy(function(newMessage) {
+		this.model.postReply(this.page, this.getMessageBody(reply), this.getFormat(reply), thread.attr('data-id'), reply.data('quotedFrom'), this.proxy(function(newMessage) {
 			newMessage = $(newMessage);
 
 			this.enable(reply);
-
-			reply.find(this.replyBody).val('').trigger('blur');
+			this.resetEditor(reply);
+			
 			newMessage.insertBefore(reply).hide().fadeIn('slow').find('.timeago').timeago();
 
 			if (window.skin && window.skin != 'monobook') {

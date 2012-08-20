@@ -7,7 +7,61 @@ Wall.MessageForm = $.createClass(Observable, {
 		this.page = page;
 		this.wall = $('#Wall');
 	},
-
+	
+	showPreviewModal: function(format, metatitle, body, width, publishCallback) {
+		var modal;
+		var options = {
+			buttons: [
+				{
+					id: 'close',
+					message: $.msg('back'),
+					handler: function() {
+						modal.closeModal();
+					}
+				},
+				{
+					id: 'publish',
+					defaultButton: true,
+					message: $.msg('savearticle'),
+					handler: function() {
+						modal.closeModal();
+						publishCallback();
+					}
+				}
+			],
+			width: 'auto',
+			className: 'preview',
+			callback: function() {
+				$.nirvana.sendRequest({
+					controller: 'WallExternalController',
+					method: 'preview',
+					format: 'json',
+					data: { 
+						'convertToFormat': format,
+						'metatitle': metatitle,
+						'body': body
+					},
+					callback: function(data) {
+						$('.WallPreview').stopThrobbing();
+						$('.WallPreview .WikiaArticle').html(data.body);
+					}
+				});
+			}
+		};
+		
+		// use loading indicator before real content will be fetched	
+		var content = $('<div class="WallPreview"><div class="WikiaArticle"></div></div>');
+		content.find('.WikiaArticle').css('width', width);
+		var modal = $.showCustomModal($.msg('wall-preview-modal-title'), content, options);
+		$('.WallPreview').startThrobbing();
+		
+		return false;
+	},
+	
+	getMessageWidth: function(msg) {
+		return msg.find('.editarea').width();
+	},
+	
 	loginBeforeAction: function(action) {
 		UserLoginModal.show({
 			callback: this.proxy(function() {

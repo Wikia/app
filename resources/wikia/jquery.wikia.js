@@ -196,6 +196,8 @@ $.showCustomModal = function(title, content, options) {
 	if (typeof options.callback == 'function') {
 		options.callback(modal);
 	}
+	
+	return modal;
 };
 
 // send POST request and parse returned JSON

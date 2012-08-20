@@ -16,27 +16,24 @@
 class WallNotifications {
 	private $removedEntities;
 	private $notUniqueUsers = array(); //used for sicen read email.
-	public function __construct($isMain = true) {
+	public function __construct() {
 		$this->app = F::App();
 		$this->removedEntities = array();
-		//$db = $this->getDB(true);
 	}
 
 	/*
 	 * Public Interface
 	 */
 
-	public function getWikiNotifications($userId, $wikiId, $readSlice = 5, $countonly = false ) {
+	public function getWikiNotifications($userId, $wikiId, $readSlice = 5, $countonly = false, $notifyeveryone = false ) {
 		/* if since == null, get all notifications */
 		/* possibly ignore $wiki at one point and fetch notifications from all wikis */
 
 		$memcSync = $this->getCache($userId, $wikiId);
 		$list = $this->getData($memcSync, $userId, $wikiId);
-
 		if(empty($list)) {
 			return array();
 		}
-
 		$read = array();
 		$unread = array();
 		foreach(array_reverse($list['notification']) as $listval) {
@@ -59,10 +56,12 @@ class WallNotifications {
 							$this->remNotificationsForUniqueID( $userId, $wikiId, $listval );
 						}
 					} else {
-						$unread[] = array(
-							"grouped" => $grouped,
-							"count" => empty($list['relation'][ $listval ]['count']) ? count($list['relation'][ $listval ]['list']) : $list['relation'][ $listval ]['count']
-						);
+						if(empty($list['relation'][ $listval ]['notifyeveryone']) || $notifyeveryone ) {
+							$unread[] = array(
+								"grouped" => $grouped,
+								"count" => empty($list['relation'][ $listval ]['count']) ? count($list['relation'][ $listval ]['list']) : $list['relation'][ $listval ]['count']
+							);
+						}
 					}
 				}
 			}
@@ -98,19 +97,20 @@ class WallNotifications {
 		return $out;
 	}
 
-	public function getCounts($userId, $forceCurrentWiki = true) {
-		$wikiList = $this->getWikiList($userId, $forceCurrentWiki);
+	public function getCounts($userId) {
+		$wikiList = $this->getWikiList($userId);
 
 		$output = array();
-
+		$total = 0;
 		foreach($wikiList as $wiki) {
-			$wiki['unread'] = $this->getCount($userId, $wiki['id']);
-
+			$wiki['unread'] = $this->getCount($userId, $wiki['id'], $wiki['id'] == $this->app->wg->CityId);
+			$total += $wiki['unread']; 
 			// show only Wikis with unread notifications
 			// current Wiki is an exception (show always)
 			if( $wiki['unread'] > 0 || $wiki['id'] == $this->app->wg->CityId )
 				$output[] = $wiki;
 		}
+
 		return $output;
 	}
 
@@ -129,14 +129,14 @@ class WallNotifications {
 		return 1;
 	}
 
-	private function getCount($userId, $wikiId) {
+	private function getCount($userId, $wikiId, $notifyeveryone = false) {
 		// fixme
 		// should not to do the whole work of WikiNotifications
-		$notifs = $this->getWikiNotifications($userId, $wikiId, 5, true );
+		$notifs = $this->getWikiNotifications($userId, $wikiId, 5, true, $notifyeveryone );
 		return $notifs['unread_count'];
 	}
 
-	private function getWikiList($userId, $forceCurrentWiki = true) {
+	private function getWikiList($userId) {
 		// $forceCurrentWiki = true - always return current wiki as part of the list
 		// $forceCurrentWiki = false - return only wikis that ever recived notifications
 
@@ -150,7 +150,7 @@ class WallNotifications {
 
 		// make sure that current Wiki is on the list, as first entry, sort the rest
 		asort($val);
-		if($forceCurrentWiki === true) {
+		if(!empty($this->app->wg->EnableWallExt) || !empty($this->app->wg->EnableForumExt) ) {
 			unset($val[ $this->app->wg->CityId ]);
 			$output = array( array(
 				'id' => $this->app->wg->CityId,
@@ -442,7 +442,8 @@ class WallNotifications {
 			$notification->getUniqueId(),
 			$notification->getId(),
 			$notification->data->msg_author_id,
-			!$notification->isMain()
+			!$notification->isMain(),
+			$notification->data->notifyeveryone
 		);
 	}
 
@@ -618,11 +619,11 @@ class WallNotifications {
 		$this->getDB(true)->delete('wall_notification' , $where, __METHOD__ );
 	}
 
-	protected function addNotificationLinkInternal($userId, $wikiId, $uniqueId, $entityKey, $authorId, $isReply ) {
+	protected function addNotificationLinkInternal($userId, $wikiId, $uniqueId, $entityKey, $authorId, $isReply, $notifyeveryone ) {
 		if($userId < 1) {
 			return true;
 		}
-		$this->storeInDB($userId, $wikiId, $uniqueId, $entityKey, $authorId, $isReply);
+		$this->storeInDB($userId, $wikiId, $uniqueId, $entityKey, $authorId, $isReply, $notifyeveryone);
 		//id use to prevent having of extra entry after memc fail.
 
 		$memcSync = $this->getCache($userId, $wikiId);
@@ -630,7 +631,7 @@ class WallNotifications {
 			$count = 0; //use to set priority of process
 			if($memcSync->lock()) {
 				$data = $this->getData($memcSync, $userId, $wikiId);
-				$this->addNotificationToData($data, $userId, $wikiId, $uniqueId, $entityKey, $authorId, $isReply );
+				$this->addNotificationToData($data, $userId, $wikiId, $uniqueId, $entityKey, $authorId, $isReply, false, $notifyeveryone );
 			} else {
 				$this->sleep($count);
 			}
@@ -658,7 +659,7 @@ class WallNotifications {
 		}
 	}
 
-	protected function addNotificationToData(&$data, $userId, $wikiId, $uniqueId, $entityKey, $authorId, $isReply, $read = false) {
+	protected function addNotificationToData(&$data, $userId, $wikiId, $uniqueId, $entityKey, $authorId, $isReply, $read = false, $notifyeveryone) {
 		$data['notification'][] = $uniqueId;
 		$addedAtTmp = end( $data['notification'] );
 		$addedAt = key( $data['notification'] );
@@ -744,12 +745,15 @@ class WallNotifications {
 		$data['relation'][ $uniqueId ]['list'][] = array('entityKey' => $entityKey, 'authorId' => $authorId, 'isReply'=>$isReply);
 
 		// if this was new author increase author count
-		if($found == false) $data['relation'][ $uniqueId ]['count'] += 1;
-
+		if($found == false){
+			$data['relation'][ $uniqueId ]['count'] += 1;
+			$data['relation'][ $uniqueId ]['notifyeveryone'] = $notifyeveryone;
+		}
+		
 		$data['relation'][ $uniqueId ]['read'] = $read;
 
 	}
-
+ 
 	protected function cleanEntitiesFromDB() {
 		foreach( $this->removedEntities as $val ) {
 			$this->getDB(true)->delete('wall_notification' , $val, __METHOD__ );
@@ -807,7 +811,7 @@ class WallNotifications {
 		$dbData = $this->getBackupData($userId, $wikiId);
 
 		foreach($dbData as $key => $value) {
-			$this->addNotificationToData($data, $userId, $wikiId, $value['unique_id'], $value['entity_key'], $value['author_id'], $value['is_reply'], $value['is_read']);
+			$this->addNotificationToData($data, $userId, $wikiId, $value['unique_id'], $value['entity_key'], $value['author_id'], $value['is_reply'], $value['is_read'], false);
 		}
 
 		return $data;

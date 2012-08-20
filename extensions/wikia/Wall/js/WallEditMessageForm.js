@@ -8,8 +8,9 @@ Wall.EditMessageForm = $.createClass(Wall.MessageForm, {
 		var $wall = $('#Wall');
 		$wall.on('click', '.source-message', this.proxy(this.viewSource));
 		$wall.on('click', '.edit-message', this.proxy(this.editMessage));
-		$wall.on('click', '.cancel-edit', this.proxy(this.cancelEdit));
-		$wall.on('click', '.save-edit', this.proxy(this.saveEdit));
+		$wall.on('click', '.edit-buttons .cancel-edit', this.proxy(this.cancelEdit));
+		$wall.on('click', '.edit-buttons .preview', this.proxy(this.showPreview));
+		$wall.on('click', '.edit-buttons .save-edit', this.proxy(this.saveEdit));
 	},
 
 	initEditForm: function(msg, data, mode) {
@@ -43,11 +44,9 @@ Wall.EditMessageForm = $.createClass(Wall.MessageForm, {
 		var id = msg.attr('data-id');
 		var isreply = msg.attr('data-is-reply');
 		var bubble = $('.speech-bubble-message', msg).first();
-
 		// If we're viewing source, we want wikitext and no conversion.
 		var format = mode == 'source' ? '' : this.getEditFormat(msg);
 
-		$('.buttons', msg).first().hide();
 		msg.find('.wikia-menu-button').removeClass("active");
 
 		this.model.loadEditData(this.page, id, mode, format, this.proxy(function(data) {
@@ -82,8 +81,6 @@ Wall.EditMessageForm = $.createClass(Wall.MessageForm, {
 		/* restore html to state from before edit */
 		this.insertOldHTML(id, bubble);
 
-		$('.buttons', msg).first().show();
-
 		if( window.skin && window.skin != "monobook" ) {
 			WikiaButtons.init(bubble);
 		}
@@ -91,8 +88,12 @@ Wall.EditMessageForm = $.createClass(Wall.MessageForm, {
 		this.afterCancel(body, isSource, target, bubble);
 	},
 
-	getNewBodyVal: function(container) {
+	getNewBody: function(container) {
 		return $('.msg-body textarea.body', container).val();
+	},
+	
+	getNewTitle: function(container) {
+		return $('.msg-title textarea.title', container).val();
 	},
 
 	getEditFormat: function() {
@@ -103,14 +104,21 @@ Wall.EditMessageForm = $.createClass(Wall.MessageForm, {
 		return this.getFormat();
 	},
 
+	showPreview: function(e) {
+		var msg = $(e.target).closest('li.message');
+		this.showPreviewModal(this.getSaveFormat(msg), this.getNewTitle(msg), this.getNewBody(msg), this.getMessageWidth(msg), this.proxy( function() {
+			this.saveEdit(e);
+		}));
+	},
+	
 	saveEdit: function(e) {
 		var target = $(e.target);
 		var buttons = target.parent().children('.wikia-button');
 		var msg = target.closest('li.message');
 		var id = msg.attr('data-id');
 		var isreply = msg.attr('data-is-reply');
-		var newtitle = $('.msg-title textarea.title', msg).val();
-		var newbody = this.getNewBodyVal(msg);
+		var newtitle = this.getNewTitle(msg);
+		var newbody = this.getNewBody(msg);
 		var format = this.getSaveFormat(msg);
 
 		buttons.attr('disabled', true);
@@ -140,7 +148,6 @@ Wall.EditMessageForm = $.createClass(Wall.MessageForm, {
 			}
 
 			//$('.SpeechBubble .timestamp .permalink')
-			$('.buttons', msg).first().show();
 			buttons.removeAttr('disabled');
 		}));
 	},

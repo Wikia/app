@@ -1,7 +1,6 @@
 (function(window, $) {
-
-Forum.NewMessageForm = $.createClass(Wall.NewMessageForm, {
-	initElements: function() {
+Forum.NewMessageForm = $.createClass(Wall.settings.classBindings.newMessageForm, {
+	initElements: function() {	
 		this.wrapper = $('#ForumNewMessage');
 		this.buttons = this.wrapper.find('.buttons');
 		this.message = this.wrapper.find('.message');
@@ -10,9 +9,9 @@ Forum.NewMessageForm = $.createClass(Wall.NewMessageForm, {
 		this.messageBody = this.message.find('.body');
 		this.messageBodyContainer = this.message.find('.body-container');
 		this.messageSubmit = this.message.find('.submit');
+		this.messagePreview = this.message.find('.preview');
 		this.notifyEveryone = this.message.find('.notify-everyone');
 		this.loading = this.message.find('.loadingAjax');
-		
 		this.messageTitle.on('focus', this.proxy(this.messageTitleFocus));
 	},
 	afterPost: function(newmsg) {

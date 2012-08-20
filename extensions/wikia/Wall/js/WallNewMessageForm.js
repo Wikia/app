@@ -7,8 +7,10 @@ Wall.NewMessageForm = $.createClass(Wall.MessageForm, {
 		this.initElements();
 
 		this.model.bind('newPosted', this.proxy(this.afterPost));
+		
 		this.messageSubmit.bind('click', this.proxy(this.postNewMessage));
-
+		this.messagePreview.bind('click', this.proxy(this.showPreview));
+		
 		this.initEvents();
 	},
 
@@ -21,6 +23,7 @@ Wall.NewMessageForm = $.createClass(Wall.MessageForm, {
 		this.messageTitle = $('#WallMessageTitle');
 		this.messageBody = $('#WallMessageBody');
 		this.messageSubmit = $('#WallMessageSubmit');
+		this.messagePreview = $('#WallMessagePreview');
 		this.notifyEveryone = $('#NotifyEveryone');
 	},
 
@@ -67,8 +70,13 @@ Wall.NewMessageForm = $.createClass(Wall.MessageForm, {
 			.blur(this.proxy(this.postNewMessage_blur));
 	},
 
-	postNewMessage: function() {
+	getTitle: function() {
 		var title = !this.messageTitle.hasClass('placeholder') && this.messageTitle.val().length > 0;
+		return title ? this.messageTitle.val():'';
+	},
+	
+	postNewMessage: function() {
+		var title = this.getTitle();
 
 		if(!title && this.messageSubmit.html() != $.msg('wall-button-to-submit-comment-no-topic')) {
 			this.messageSubmit.html($.msg('wall-button-to-submit-comment-no-topic'));
@@ -91,6 +99,12 @@ Wall.NewMessageForm = $.createClass(Wall.MessageForm, {
 		return this.messageBody.val();
 	},
 
+	showPreview: function(e) {
+		this.showPreviewModal(this.getFormat(), this.getTitle(), this.getMessageBody(), this.getMessageWidth(this.message), this.proxy( function() {
+			this.postNewMessage();
+		}));
+	},
+	
 	doPostNewMessage: function(title, reload) {
 		this.model.postNew(this.page, title ? this.messageTitle.val() : '', this.getMessageBody(), this.getFormat(), this.notifyEveryone.is(':checked') ? '1':'0');
 
@@ -164,8 +178,10 @@ Wall.NewMessageForm = $.createClass(Wall.MessageForm, {
 		content =  content && this.messageBody.val().length > 0;
 		if(content) {
 			this.messageSubmit.removeAttr('disabled');
+			this.messagePreview.removeAttr('disabled');
 		} else {
 			this.messageSubmit.attr('disabled','disabled');
+			this.messagePreview.attr('disabled','disabled');
 		}
 	},
 

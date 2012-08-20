@@ -72,7 +72,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 				enterBr( editor, mode, range, forceMode );
 				return;
 			}
-
+			
 			// Determine the block element to be used.
 			var blockTag = ( mode == CKEDITOR.ENTER_DIV ? 'div' : 'p' );
 
@@ -155,11 +155,24 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 						// Otherwise, duplicate the previous block.
 						newBlock = previousBlock.clone();
 					}
-
+					
+					// Wikia - start
+					// Adding support for escaping end of div.quote to new paragraph
+					if( previousBlock.hasClass('quote') ) {
+						newBlock = new CKEDITOR.dom.element('p');
+					}
+					// Wikia - end
+					
 					if ( previousBlock.isReadOnly() ) newBlock = null; // <- Wikia
 				}
 				else if ( nextBlock ) {
-					newBlock = nextBlock.clone();
+					/* Wikia (FB:44769) - enter at the top of quote should create a new paragraph above it, otherwise, do default */
+					if(nextBlock.hasClass('quote')) {
+						newBlock = new CKEDITOR.dom.element('p');
+					} else {
+						newBlock = nextBlock.clone();	// <- this is not Wikia code, and is original default
+					}
+					/* Wikia end 44769 */
 
 					if ( nextBlock.isReadOnly() ) newBlock = null; // <- Wikia
 				}

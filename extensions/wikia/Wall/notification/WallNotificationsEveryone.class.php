@@ -74,18 +74,17 @@ class WallNotificationsEveryone extends WallNotifications {
 			$entityKeyArray = explode('_', $entityKey);
 
 			$rev = Revision::newFromId($entityKeyArray[0]);
-			if (!is_null($rev)) {
-				$notif = F::build('WallNotificationEntity', array($rev, $this->app->wg->CityId), 'createFromRev');
 
+			if(!empty($rev)) {
+				$notif = F::build('WallNotificationEntity', array($rev, $this->app->wg->CityId), 'createFromRev');
 				if(!empty($notif)) {
 					$wn = F::build('WallNotifications', array());
 					$wn->addNotificationLinks(array($userId), $notif);
 				}
-
-				$this->setEntityProcessed($userId, $entityKey);
-
-				$this->clearQueue();
 			}
+
+			$this->setEntityProcessed($userId, $entityKey);
+			$this->clearQueue();
 		}
 
 		wfProfileOut(__METHOD__);

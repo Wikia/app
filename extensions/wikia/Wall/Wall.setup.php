@@ -63,7 +63,6 @@ $app->registerHook('SkinTemplateContentActions', 'WallHooksHelper', 'onSkinTempl
 $app->registerHook('PageHeaderIndexAfterActionButtonPrepared', 'WallHooksHelper', 'onPageHeaderIndexAfterActionButtonPrepared');
 $app->registerHook('BlockIpCompleteWatch', 'WallHooksHelper', 'onBlockIpCompleteWatch');
 $app->registerHook('UserIsBlockedFrom', 'WallHooksHelper', 'onUserIsBlockedFrom');
-$app->registerHook('MakeGlobalVariablesScript', 'WallHooksHelper', 'onMakeGlobalVariablesScript');
 
 //wall history in toolbar
 $app->registerHook('BeforeToolbarMenu', 'WallHooksHelper', 'onBeforeToolbarMenu');
@@ -118,9 +117,6 @@ $app->registerHook('LinkerUserTalkLinkAfter', 'WallHooksHelper', 'onLinkerUserTa
 //saving user talk archive redirects to user talk archive
 $app->registerHook('ArticleSaveComplete', 'WallHooksHelper', 'onArticleSaveComplete');
 
-//add script in monobook
-$app->registerHook('SkinAfterBottomScripts', 'WallHooksHelper', 'onSkinAfterBottomScripts');
-
 //cancel API vote adding
 $app->registerHook('ArticleBeforeVote', 'WallHooksHelper', 'onArticleBeforeVote');
 
@@ -152,9 +148,13 @@ F::build('JSMessages')->registerPackage('Wall', array(
 	'wall-button-to-preview-comment',
 	'wall-votes-modal-title',
 	'wall-button-done-source',
+	'wall-preview-modal-title',
+	'wall-preview-modal-button-back',
+	'wall-preview-modal-button-publish',
 	'wall-action-*',
 	'wall-message-source',
-	'wall-confirm-monobook-*'
+	'wall-confirm-monobook-*',
+	'wall-preview-modal-title'
 ));
 
 /**
@@ -182,6 +182,8 @@ define( 'WH_NEW', 1);
 define( 'WH_DELETE', 2);
 define( 'WH_REMOVE', 4);
 define( 'WH_RESTORE', 5);
+define( 'WH_ARCHIVE', 6);
+define( 'WH_REOPEN', 7);
 
 
 //wall
@@ -193,6 +195,12 @@ $wgGroupPermissions['staff']['walladmindelete'] = true;
 $wgGroupPermissions['vstf']['walladmindelete'] = true;
 $wgGroupPermissions['helper']['walladmindelete'] = true;
 $wgGroupPermissions['sysop']['walladmindelete'] = true;
+
+$wgGroupPermissions['*']['wallarchive'] = false;
+$wgGroupPermissions['staff']['wallarchive'] = true;
+$wgGroupPermissions['vstf']['wallarchive'] = true;
+$wgGroupPermissions['helper']['wallarchive'] = true;
+$wgGroupPermissions['sysop']['wallarchive'] = true;
 
 $wgGroupPermissions['*']['wallremove'] = false;
 $wgGroupPermissions['user']['wallremove'] = true;

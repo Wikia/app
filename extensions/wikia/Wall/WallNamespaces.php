@@ -10,3 +10,4 @@ wfLoadExtensionNamespaces( 'Wall', array( NS_USER_WALL, NS_USER_WALL_MESSAGE, NS
 $wgWallNS = array(NS_USER_WALL);
 $wgWallVotesNS = array();
 $wgWallNotifyEveryoneNS = array();
+$wgWallThreadCloseNS = array();

@@ -127,6 +127,8 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
 	'forum-recentchanges-thread-group' => '$1 on the <a href="$2">$3 Board</a>',
 	'forum-recentchanges-history-link' => 'board history',
 	'forum-recentchanges-thread-history-link' => 'thread history',
+	'forum-recentchanges-closed-thread' => 'closed thread "[[$1|$2]]" from [[$3|$4]]',
+	'forum-recentchanges-reopened-thread' => 'reopened thread "[[$1|$2]]" from [[$3|$4]]',
 );
 
 $messages['qqq'] = array(
@@ -153,4 +155,13 @@ $messages['qqq'] = array(
 	'forum-participation-module-kudos' => 'Gives state of kudos user activity by event and time.  $1 is a url link to the kudos event page.  $2 is a translated time statement such as "20 seconds ago" or "20 hours ago" or "20 days ago"',
 	'forum-participation-module-posted' => 'Gives state of posted user activity by event and time.  $1 is a url link to the posted event page.  $2 is a translated time statement such as "20 seconds ago" or "20 hours ago" or "20 days ago"',
 	'forum-participation-module-started' => 'Gives state of started user activity by event and time.  $1 is a url link to the started event page.  $2 is a translated time statement such as "20 seconds ago" or "20 hours ago" or "20 days ago"',
+	
+	'forum-recentchanges-closed-thread' => 'Recent changes item. Parameters:
+* $2 is thread title
+* $4 is thread owner
+* $5 is optional username and you can use it with GENDER parameter',
+	'forum-recentchanges-reopened-thread' => 'Recent changes item. Parameters:
+* $2 is thread title
+* $4 is thread owner
+* $5 is optional username and you can use it with GENDER parameter',
 );

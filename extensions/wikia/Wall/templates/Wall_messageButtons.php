@@ -1,59 +1,106 @@
 <? if( $canEdit || $canRemove || $canDelete || $showViewSource || ($isRemoved && !$isAnon) ): ?>
 		<div class="buttons">
-			<div data-delay='50' class="wikia-menu-button contribute secondary"> 
-				<?= wfMsg('wall-message-more');?>
-				<span class="drop">
-					<img class="chevron"  src="<?= $wgBlankImgUrl; ?>" >
-				</span>
+			<button class="quote-button secondary"><?= wfMsg('wall-message-quote-button') ?></button>
+			<?php
+				$dropdown = array();
 				
-				<ul style="min-width: 95px;">
-						<?php //TODO: loop ?>
-						<? if( $canEdit ): ?>
-							<li>
-								<a href="#" class="edit-message"><?= wfMsg('wall-message-edit'); ?></a> 
-							</li>
-						<? endif; ?>
-						<li>
-							<a href="<?= $threadHistoryLink; ?>" class="thread-history"><?= wfMsg('history_short'); ?></a> 
-						</li>
-						<? if( $canAdminDelete ): ?>
-						<li>
-							<a href="#" class="admin-delete-message" data-mode="admin"> <?= wfMsg('wall-message-delete'); ?> </a>
-						</li>
-						<? endif; ?>
-						<? if( $showViewSource ): ?>
-							<li>
-								<a href="#" class="source-message"> <?= wfMsg('user-action-menu-view-source'); ?> </a>
-							</li>
-						<? endif; ?>
-						<? if( $canRemove ): ?>
-						<li>
-							<a href="#" class="remove-message" data-mode="remove"> <?= wfMsg('wall-message-remove'); ?> </a>
-						</li>
-						<? endif; ?>
-						<? if( $canDelete ): ?>
-							<li>
-								<a href="#" class="delete-message" data-mode="rev"> <?= wfMsg('wall-message-rev-delete'); ?> </a>
-							</li>
-						<? endif; ?>
+				if($canEdit) {
+					$dropdown[] = array(
+						'class' => 'edit-message',
+						'href' => '#',
+						'text' => wfMsg('wall-message-edit'),
+					);
+				}
+				
+				$dropdown[] = array(
+					'class' => 'thread-history',
+					'href' => $threadHistoryLink,
+					'text' => wfMsg('history_short')
+				);
+				
+				if($canAdminDelete) {
+					$dropdown[] = array(
+						'attr' => 'data-mode="admin"',
+						'class' => 'admin-delete-message',
+						'href' => '#',
+						'text' => wfMsg('wall-message-delete'),
+					);
+				}
+				
+				if($showViewSource) {
+					$dropdown[] = array(
+						'class' => 'source-message',
+						'href' => '#',
+						'text' => wfMsg('user-action-menu-view-source'),
+					);
+				}
+				
+				if($canRemove) {
+					$dropdown[] = array(
+						'attr' => 'data-mode="remove"',
+						'class' => 'remove-message',
+						'href' => '#',
+						'text' => wfMsg('wall-message-remove'),
+					);
+				}
+				
+				if($canDelete) {
+					$dropdown[] = array(
+						'attr' => 'data-mode="rev"',
+						'class' => 'delete-message',
+						'href' => '#',
+						'text' => wfMsg('wall-message-rev-delete'),
+					);
+				}
+
+				if($canNotifyeveryone) {
+					$dropdown[] = array(
+						'attr' => 'data-dir="1"',
+						'class' => 'edit-notifyeveryone',
+						'href' => '#',
+						'text' => wfMsg('wall-message-notifyeveryone'),
+					);
+				}
+
+				if($canUnnotifyeveryone) {
+					$dropdown[] = array(
+						'attr' => 'data-mode="0"',
+						'class' => 'edit-notifyeveryone',
+						'href' => '#',
+						'text' => wfMsg('wall-message-unnotifyeveryone'),
+					);
+				}
+				
+				if($canClose) {
+					$dropdown[] = array(
+						'class' => 'close-thread',
+						'href' => '#',
+						'text' => wfMsg('wall-message-close-thread'),
+					);
+				}
 						
-						<? if( $canNotifyeveryone ): ?>
-							<li>
-								<a href="#" class="edit-notifyeveryone" data-dir="1"> <?= wfMsg('wall-message-notifyeveryone'); ?> </a>
-							</li>
-						<? endif; ?>
-						<? if( $canUnnotifyeveryone ): ?>
-							<li>
-								<a href="#" class="edit-notifyeveryone" data-mode="0"> <?= wfMsg('wall-message-unnotifyeveryone'); ?> </a>
-							</li>
-						<? endif; ?>
-				</ul>
-			</div>
+				if($canReopen) {
+					$dropdown[] = array(
+						'class' => 'reopen-thread',
+						'href' => '#',
+						'text' => wfMsg('wall-message-reopen-thread'),
+					);
+				}
+			?>
+			<?= wfRenderModule('MenuButton', 
+				'Index', 
+				array(
+					'action' => array("text" => wfMsg('wall-message-more'), "id" => ""), 
+					'class' => 'secondary',
+					'dropdown' => $dropdown
+				)
+			) ?>
 		</div>
 		<?php //TODO: This is hack for now unification buttons for all skins ASAP!!! ?> 
 		<div class="buttons-monobook"> 
 			<!-- only show this if it's user's own message -->  
 			<span class="tools"> 
+				<a href="#" class="quote-button"><?= wfMsg('wall-message-quote-button') ?></a>
 				<? if( $showViewSource ): ?>
 					<a href="#" class="source-message"> <?= wfMsg('user-action-menu-view-source'); ?> </a>
 				<? endif; ?>

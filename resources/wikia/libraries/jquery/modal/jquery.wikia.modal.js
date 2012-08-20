@@ -80,15 +80,18 @@ $.fn.extend({
 			if (modalTabs.exists()) {
 				modalTabs.insertBefore(wrapper.find('.modalContent'));
 			}
-
-			//set up dimensions and position
-			var modalWidth = $("#WikiaMainContent").width();
-
-			// or use width provided
-			if (typeof options.width != 'undefined') {
-				modalWidth = options.width + 30 /* padding */;
+			
+			if(options.width != 'auto') {
+				//set up dimensions and position
+				var modalWidth = $("#WikiaMainContent").width();
+	
+				// or use width provided
+				if (typeof options.width != 'undefined') {
+					modalWidth = options.width + 30 /* padding */;
+				}
+			} else {
+				modalWidth = 'auto';
 			}
-
 			//position modal. width must be set before calculating negative left margin
 			wrapper.css({
 				left: "50%",

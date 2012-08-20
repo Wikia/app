@@ -74,7 +74,7 @@
 			<?= F::app()->renderView( 'ForumController', 'header' ) ?>
 		<? endif ?>
 
-		<article id="WikiaMainContent" class="WikiaMainContent<?= !empty($isGridLayoutEnabled) && $railModulesExist ? ' grid-4 alpha' : '' ?>">
+		<article id="WikiaMainContent" class="WikiaMainContent<?= !empty($isGridLayoutEnabled) && $railModulesExist ? ' grid-4' : '' ?>">
 			<?php
 				// Needs to be above page header so it can suppress page header
 				if ($displayAdminDashboard) {

@@ -36,8 +36,11 @@ var Wall = $.createClass(Object, {
 			.on('click', '.follow', this.proxy(this.switchWatch))
 			.on('keydown', 'textarea', this.proxy(this.focusButton))
 			.on('click', '.edit-notifyeveryone', this.proxy(this.editNotifyEveryone))
+			.on('click', '.close-thread, .reopen-thread', this.proxy(this.doThreadChange))
 			.on('click', '.votes', this.proxy(this.showVotersModal))
 			.on('click', '.vote', this.proxy(this.vote))
+			.on('click', '.quote-button', this.proxy(this.quote))
+			.on('click', '.quote-of', this.proxy(this.scrollToQuoted))
 			.on('mouseenter', '.follow', this.proxy(this.hoverFollow))
 			.on('mouseleave', '.follow', this.proxy(this.unhoverFollow))
 			.on('click', '.load-more a', this.proxy(this.loadMore))
@@ -143,6 +146,32 @@ var Wall = $.createClass(Object, {
 		}, 50);
 	},
 
+	scrollToQuoted: function(e) {
+		//check if we are on thread page 
+		//then we are just going to use link
+		if($('.Wall.Thread').length != 0) {
+			return true;
+		}
+		
+		e.preventDefault();
+		var postfix =  $(e.target).data('postfix');
+		var main = $(e.target).closest('.message-main');
+		
+		if(postfix > 1) {
+			var el = $('.message-' + postfix, main);	
+		} else {
+			el = main;
+		}
+
+		if(!el.is(':visible')) {
+			main.find('li.SpeechBubble').show();
+			$('.load-more', main).remove();
+		}
+
+		var p = el.offset();
+		window.scrollTo(0, p.top);
+	},
+	
 	// TODO: this should be refactored so it can be used elsewhere
 	switchWatch: function(e) {
 		var element = $(e.target);
@@ -307,46 +336,9 @@ var Wall = $.createClass(Object, {
 				formdata: formdata
 			},
 			callback: this.proxy(function(data){
-				this.afterRestore(id, data, target);
+				window.location.reload();
 			})
 		});
-	},
-
-	afterRestore: function(id, data, target) {
-		var msg = target.closest('li');
-
-		if(msg.attr('is-reply') != 1 ) {
-			$('#WallBrickHeader .TitleRemoved').hide();
-			$('.SpeechBubble.new-reply').show();
-		}
-
-		if(data.buttons) {
-			var buttonswrap = msg.find('.buttonswrapper:first');
-			buttonswrap.html(data.buttons);
-			if( !this.isMonobook ) {
-				WikiaButtons.init(buttonswrap);
-			}
-		}
-
-		var placeholder = msg.find('.deleteorremove-infobox:first');
-		if(placeholder.exists()) {
-			placeholder.html('');
-			placeholder.addClass('empty');
-			return true;
-		}
-
-		if(data.buttons) {
-			var buttons = msg.find('.buttonswrapper:first');
-			buttons.html('');
-			$().log(data.buttons);
-		}
-
-		msg.fadeOut('fast', this.proxy(function() {
-			if(this.deletedMessages[id]) {
-				msg.remove();
-				this.deletedMessages[id].fadeIn('slow');
-			}
-		}));
 	},
 
 	confirmAction: function(e) {
@@ -478,6 +470,34 @@ var Wall = $.createClass(Object, {
 			})
 		});
 	},
+	
+	doThreadChange: function(e) {
+		e.preventDefault();
+		var target = $(e.target);
+		var id = target.closest('li.message').attr('data-id');
+		var newState = '';
+		if(target.hasClass('reopen-thread')) {
+			newState = 'open';
+		} else if(target.hasClass('close-thread')) {
+			newState = 'close';
+		}
+		if (id && newState) {
+			$.nirvana.sendRequest({
+				controller: 'WallExternalController',
+				method: 'changeThreadStatus',
+				format: 'json',
+				data: {
+					msgid: id,
+					newState: newState
+				},
+				callback: this.proxy(function(json) {
+					if(json.status) {
+						UserLoginAjaxForm.prototype.reloadPage();
+					}
+				})
+			});
+		}
+	},
 
 	editNotifyEveryone: function(e) {
 		var element = $(e.target);
@@ -500,6 +520,61 @@ var Wall = $.createClass(Object, {
 			element.removeAttr('data-inprogress'); */
 			window.location.reload();
 		});
+	},
+	
+	quote: function (e) {
+		e.preventDefault();
+		
+		var message = $(e.target).closest('.message'),
+			reply = message.find('.new-reply'),
+			replyForm = this.replyMessageForm,
+			editorPromise = '',
+			quotedFrom = message.data('id');
+			
+		if(reply.length == 0) {
+			reply = message.parent().find('.new-reply');
+		}
+		
+		var formTarget = reply.find('.body');
+		
+		//scroll
+		$('body').scrollTo(reply, {duration: 600});
+		
+		// start loading editor and get promise, or mock dummy promise
+		if(typeof replyForm.initEditor === 'function') {
+			editorPromise = replyForm.initEditor({target: formTarget});
+		} else {
+			// dummy promise
+			editorDeferred = $.Deferred();
+			editorPromise = editorDeferred.promise();
+			editorDeferred.resolve('');
+		}
+		
+		// get formatted quote
+		var deferredQuote = $.Deferred(),
+			quotePromise = deferredQuote.promise();
+		$.nirvana.sendRequest({
+			controller: 'WallExternalController',
+			method: 'getFormattedQuoteText',
+			format: 'json',
+			data: { 
+				messageId: message.data('id'),
+				convertToFormat: replyForm.editor ? WikiaEditor.modeToFormat(replyForm.editor.data('wikiaEditor').mode) : 'wikitext'
+			},
+			callback: function(data) {
+				deferredQuote.resolve(data);
+			}
+		});
+		
+		// merge two async operations here
+		$.when(editorPromise, quotePromise).done(function() {
+			var data = arguments[1];
+			if(data.status === 'success') {
+				replyForm.setContent(reply, data.markup);
+			}
+		});
+		
+		reply.data('quotedFrom', quotedFrom);
 	},
 
 	proxy: function(func) {
