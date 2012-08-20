@@ -48,8 +48,9 @@ class LightboxController extends WikiaController {
 		$minTimestamp = 0;
 		if ( !empty($to) ) {
 			// get image list - exclude Latest Photos
+			$images = array();
 			$imageList = $this->getImageList( $count, $to );
-			extract($imageList);
+			extract( $imageList );
 
 			// add Latest Photos if not exist
 			if ( $includeLatestPhotos == 'true' ) {
