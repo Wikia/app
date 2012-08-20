@@ -53,8 +53,8 @@ var SuggestModalWikiaHubsV2 = {
 	
 	suggestArticle: function () {
 		$.nirvana.sendRequest({
-			controller: 'WikiaHubsSuggestController',
-			method: 'modalArticle',
+			controller: 'WikiaHubsV2SuggestController',
+			method: 'suggestArticle',
 			format: 'html',
 			type: 'get',
 			callback: function (html) {
@@ -82,8 +82,8 @@ var SuggestModalWikiaHubsV2 = {
 
 	suggestVideo: function () {
 		$.nirvana.sendRequest({
-			controller: 'WikiaHubsSuggestController',
-			method: 'modalRelatedVideos',
+			controller: 'WikiaHubsV2SuggestController',
+			method: 'suggestVideo',
 			format: 'html',
 			type: 'get',
 			callback: function (html) {
