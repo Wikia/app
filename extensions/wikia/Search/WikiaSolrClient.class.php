@@ -43,6 +43,7 @@ class WikiaSolrClient extends WikiaSearchClient {
 											'backlinks',
 											'title',
 											'score',
+											'created',
 											);
 
 	const DEFAULT_RESULTSET_START = 0;
@@ -417,6 +418,8 @@ class WikiaSolrClient extends WikiaSearchClient {
 
 	private function buildResult($doc, $position, $solrHighlighting = null)
 	{
+			global $wgLang;
+
 			$id = 'c'.$doc->wid.'p'.$doc->pageid;
 			if ($this->articleMatchId == $id) {
 			  return false;
@@ -437,6 +440,14 @@ class WikiaSolrClient extends WikiaSearchClient {
 			$result->setScore(($doc->score) ?: 0);
 			$result->setVar('ns', $doc->ns);
 			$result->setVar('pageId', $doc->pageid);
+
+			if ($doc->created !== null && $wgLang) {
+				$result->setVar('created', $doc->created);
+				$result->setVar('fmt_timestamp', $wgLang->date(wfTimestamp(TS_MW, $doc->created)));
+				if ($result->getVar('fmt_timestamp')) {
+					$result->setVar('created_30daysago', time() - strtotime($doc->created) > 2592000 );
+				}
+			}
 
 			if(!empty($doc->canonical)) {
 				$result->setCanonical($doc->canonical);
