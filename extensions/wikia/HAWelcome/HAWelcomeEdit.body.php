@@ -103,6 +103,19 @@ class HAWelcomeEdit extends UnlistedSpecialPage {
 				return false;
 			}
 			#$wgOut->addHTML( "text['new_sysop_id']=" . $new_id . "<br/>\n");
+
+			// BugId:41817 - if ( 1 == $new_id ) { notify Mix }
+			if ( 1 == $new_id ) {
+				UserMailer::sendHTML(
+					'mix@wikia-inc.com',
+					'mix@wikia-inc.com',
+					'BugId:41817 Occurrence Report',
+					sprintf( "File: %s\nLine: %s, Date: %s\nOutput: %s", __FILE__, __LINE__, date( 'Y-m-d H:i:s' ), var_export( $new_id, true ) ),
+					sprintf( "<pre>File: %s\nLine: %s, Date: %s\nOutput: %s</pre>", __FILE__, __LINE__, date( 'Y-m-d H:i:s' ), var_export( $new_id, true ) ),
+					'unknown',
+					0
+				);
+			}
 			
 			$wgMemc->set( wfMemcKey( "last-sysop-id" ), $new_id, 86400 );
 			$wgOut->addHTML( Wikia::successbox("new value saved") );
@@ -121,6 +134,20 @@ class HAWelcomeEdit extends UnlistedSpecialPage {
 			}
 
 			#$wgOut->addHTML( "text['new_sysop_text']=[" . $new_text . "]<br/>\n");
+
+			// BugId:41817 - if ( 1 == $new_id ) { notify Mix }
+			if ( 1 == $new_id ) {
+				UserMailer::sendHTML(
+					'mix@wikia-inc.com',
+					'mix@wikia-inc.com',
+					'BugId:41817 Occurrence Report',
+					sprintf( "File: %s\nLine: %s, Date: %s\nOutput: %s", __FILE__, __LINE__, date( 'Y-m-d H:i:s' ), var_export( $new_id, true ) ),
+					sprintf( "<pre>File: %s\nLine: %s, Date: %s\nOutput: %s</pre>", __FILE__, __LINE__, date( 'Y-m-d H:i:s' ), var_export( $new_id, true ) ),
+					'unknown',
+					0
+				);
+			}
+
 			$wgMemc->set( wfMemcKey( "last-sysop-id" ), $new_id, 86400 );
 			$wgOut->addHTML( Wikia::successbox("new value saved") );
 		}
