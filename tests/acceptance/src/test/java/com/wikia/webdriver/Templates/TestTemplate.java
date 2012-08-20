@@ -66,15 +66,15 @@ public class TestTemplate {
 	@BeforeMethod
 	public void start(Method method)
 	{
+		startBrowser();
 		PageObjectLogging.startLoggingMethod(getClass().getSimpleName().toString(), method.getName());
-			
 	}
 	
 	@AfterMethod
 	public void stop()
 	{
+		stopBrowser();
 		PageObjectLogging.stopLoggingMethod();
-		
 	}
 	
 	

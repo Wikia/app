@@ -31,9 +31,9 @@ public class CreateAWikiTests_latin extends TestTemplate
 	@Test
 	public void CreateNewWiki_latin_001_have_an_account()
 	{
-		startBrowser();
-//		CommonFunctions.logOut(Properties.userName);
-		driver.get(Global.LIVE_DOMAIN+"wiki/Special:UserLogout?returnto=User "+Properties.userName);
+		
+		CommonFunctions.logOut(Properties.userName);
+//		driver.get(Global.LIVE_DOMAIN+"wiki/Special:UserLogout?returnto=User "+Properties.userName);
 		HomePageObject home = new HomePageObject(driver);
 		home.openHomePage();
 		CreateNewWikiPageObjectStep1 createNewWiki1 = home.startAWiki();
@@ -45,9 +45,9 @@ public class CreateAWikiTests_latin extends TestTemplate
 		logInPage.verifyTabTransition();
 		logInPage.verifyFaceBookToolTip();
 		logInPage.verifySignUpText();		
-		driver.get(Global.LIVE_DOMAIN+"wiki/Special:UserLogout?returnto=User "+Properties.userName);
-//		CommonFunctions.logOut(Properties.userName);
-		stopBrowser();
+//		driver.get(Global.LIVE_DOMAIN+"wiki/Special:UserLogout?returnto=User "+Properties.userName);
+		CommonFunctions.logOut(Properties.userName);
+		
 	}
 	
 	
@@ -59,8 +59,9 @@ public class CreateAWikiTests_latin extends TestTemplate
 	@Test
 	public void CreateNewWiki_latin_TC002_user_name_is_blank()
 	{
-		startBrowser();
-		driver.get(Global.LIVE_DOMAIN+"wiki/Special:UserLogout?returnto=User "+Properties.userName);
+//		startBrowser();
+//		driver.get(Global.LIVE_DOMAIN+"wiki/Special:UserLogout?returnto=User "+Properties.userName);
+		CommonFunctions.logOut(Properties.userName);
 		HomePageObject home = new HomePageObject(driver);
 		home.openHomePage();
 		CreateNewWikiPageObjectStep1 createNewWiki1 = home.startAWiki();
@@ -82,8 +83,9 @@ public class CreateAWikiTests_latin extends TestTemplate
 		newWikia.VerifyCongratulationsLightBox();
 		newWikia.closeCongratulationsLightBox();
 		newWikia.vefifyUserLoggedIn(Properties.userName);
-		driver.get(Global.LIVE_DOMAIN+"wiki/Special:UserLogout?returnto=User "+Properties.userName);
-		stopBrowser();
+		CommonFunctions.logOut(Properties.userName);
+		//driver.get(Global.LIVE_DOMAIN+"wiki/Special:UserLogout?returnto=User "+Properties.userName);
+//		stopBrowser();
 		
 	}
 	
@@ -96,8 +98,9 @@ public class CreateAWikiTests_latin extends TestTemplate
 	@Test
 	public void CreateNewWiki_latin_TC003_user_name_does_not_exists()
 	{
-		startBrowser();
-		driver.get(Global.LIVE_DOMAIN+"wiki/Special:UserLogout?returnto=User "+Properties.userName);
+//		startBrowser();
+//		driver.get(Global.LIVE_DOMAIN+"wiki/Special:UserLogout?returnto=User "+Properties.userName);
+		CommonFunctions.logOut(Properties.userName);
 		HomePageObject home = new HomePageObject(driver);
 		home.openHomePage();
 		CreateNewWikiPageObjectStep1 createNewWiki1 = home.startAWiki();
@@ -121,9 +124,9 @@ public class CreateAWikiTests_latin extends TestTemplate
 		newWikia.closeCongratulationsLightBox();
 		newWikia.vefifyUserLoggedIn(Properties.userName);
 		newWikia.verifyUserToolBar();
-//		CommonFunctions.logOut(Properties.userName);
-		driver.get(Global.LIVE_DOMAIN+"wiki/Special:UserLogout?returnto=User "+Properties.userName);
-		stopBrowser();
+		CommonFunctions.logOut(Properties.userName);
+//		driver.get(Global.LIVE_DOMAIN+"wiki/Special:UserLogout?returnto=User "+Properties.userName);
+//		stopBrowser();
 	}
 	
 	/*
@@ -134,8 +137,9 @@ public class CreateAWikiTests_latin extends TestTemplate
 	@Test
 	public void CreateNewWiki_latin_TC004_password_is_blank()
 	{
-		startBrowser();
-		driver.get(Global.LIVE_DOMAIN+"wiki/Special:UserLogout?returnto=User "+Properties.userName);
+//		startBrowser();
+//		driver.get(Global.LIVE_DOMAIN+"wiki/Special:UserLogout?returnto=User "+Properties.userName);
+		CommonFunctions.logOut(Properties.userName);
 		HomePageObject home = new HomePageObject(driver);
 		home.openHomePage();
 		CreateNewWikiPageObjectStep1 createNewWiki1 = home.startAWiki();
@@ -159,9 +163,9 @@ public class CreateAWikiTests_latin extends TestTemplate
 		newWikia.closeCongratulationsLightBox();
 		newWikia.vefifyUserLoggedIn(Properties.userName);
 		newWikia.verifyUserToolBar();
-//		CommonFunctions.logOut(Properties.userName);
-		driver.get(Global.LIVE_DOMAIN+"wiki/Special:UserLogout?returnto=User "+Properties.userName);
-		stopBrowser();
+		CommonFunctions.logOut(Properties.userName);
+//		driver.get(Global.LIVE_DOMAIN+"wiki/Special:UserLogout?returnto=User "+Properties.userName);
+//		stopBrowser();
 	}
 	
 	/*
@@ -172,8 +176,8 @@ public class CreateAWikiTests_latin extends TestTemplate
 	@Test
 	public void CreateNewWiki_latin_TC005_password_is_incorrect()
 	{
-		startBrowser();
-		driver.get(Global.LIVE_DOMAIN+"wiki/Special:UserLogout?returnto=User "+Properties.userName);
+//		startBrowser();
+//		driver.get(Global.LIVE_DOMAIN+"wiki/Special:UserLogout?returnto=User "+Properties.userName);
 		HomePageObject home = new HomePageObject(driver);
 		home.openHomePage();
 		CreateNewWikiPageObjectStep1 createNewWiki1 = home.startAWiki();
@@ -198,8 +202,9 @@ public class CreateAWikiTests_latin extends TestTemplate
 		newWikia.closeCongratulationsLightBox();
 		newWikia.vefifyUserLoggedIn(Properties.userName);
 		newWikia.verifyUserToolBar();
-		driver.get(Global.LIVE_DOMAIN+"wiki/Special:UserLogout?returnto=User "+Properties.userName);
-		stopBrowser();
+		CommonFunctions.logOut(Properties.userName);
+//		driver.get(Global.LIVE_DOMAIN+"wiki/Special:UserLogout?returnto=User "+Properties.userName);
+//		stopBrowser();
 	}
 	
 	/*
@@ -210,8 +215,8 @@ public class CreateAWikiTests_latin extends TestTemplate
 	@Test
 	public void CreateNewWiki_latin_TC006_user_name_and_password_are_correct()
 	{
-		startBrowser();
-		driver.get(Global.LIVE_DOMAIN+"wiki/Special:UserLogout?returnto=User "+Properties.userName);
+//		startBrowser();
+//		driver.get(Global.LIVE_DOMAIN+"wiki/Special:UserLogout?returnto=User "+Properties.userName);
 		HomePageObject home = new HomePageObject(driver);
 		home.openHomePage();
 		CreateNewWikiPageObjectStep1 createNewWiki1 = home.startAWiki();
@@ -232,8 +237,9 @@ public class CreateAWikiTests_latin extends TestTemplate
 		newWikia.closeCongratulationsLightBox();
 		newWikia.vefifyUserLoggedIn(Properties.userName);
 		newWikia.verifyUserToolBar();
-		driver.get(Global.LIVE_DOMAIN+"wiki/Special:UserLogout?returnto=User "+Properties.userName);
-		stopBrowser();
+		CommonFunctions.logOut(Properties.userName);
+//		driver.get(Global.LIVE_DOMAIN+"wiki/Special:UserLogout?returnto=User "+Properties.userName);
+//		stopBrowser();
 	}	
 	
 	
