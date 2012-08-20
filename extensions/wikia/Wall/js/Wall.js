@@ -525,17 +525,17 @@ var Wall = $.createClass(Object, {
 	quote: function (e) {
 		e.preventDefault();
 		
-		var message = $(e.target).closest('.message'),
-			reply = message.find('.new-reply'),
-			replyForm = this.replyMessageForm,
+		var replyForm = this.replyMessageForm,
+			message = $(e.target).closest('.message'),
+			reply = message.find(replyForm.replyWrapper),
 			editorPromise = '',
 			quotedFrom = message.data('id');
 			
 		if(reply.length == 0) {
-			reply = message.parent().find('.new-reply');
+			reply = message.parent().find(replyForm.replyWrapper);
 		}
 		
-		var formTarget = reply.find('.body');
+		var formTarget = reply.find(replyForm.replyBody);
 		
 		//scroll
 		$('body').scrollTo(reply, {duration: 600});
@@ -545,7 +545,7 @@ var Wall = $.createClass(Object, {
 			editorPromise = replyForm.initEditor({target: formTarget});
 		} else {
 			// dummy promise
-			editorDeferred = $.Deferred();
+			var editorDeferred = $.Deferred();
 			editorPromise = editorDeferred.promise();
 			editorDeferred.resolve('');
 		}
@@ -559,7 +559,7 @@ var Wall = $.createClass(Object, {
 			format: 'json',
 			data: { 
 				messageId: message.data('id'),
-				convertToFormat: replyForm.editor ? WikiaEditor.modeToFormat(replyForm.editor.data('wikiaEditor').mode) : 'wikitext'
+				convertToFormat: replyForm.editor && replyForm.editor.data('wikiaEditor') ? WikiaEditor.modeToFormat(replyForm.editor.data('wikiaEditor').mode) : 'wikitext'
 			},
 			callback: function(data) {
 				deferredQuote.resolve(data);
