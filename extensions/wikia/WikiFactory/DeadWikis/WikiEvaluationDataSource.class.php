@@ -121,23 +121,16 @@ class WikiEvaluationDataSource {
 
 	public function getPageViews( $period ) {
 		$timestamp = strtotime($period);
-		$ts = intval(gmdate('Ymd',$timestamp));
-
-		$table = 'page_views_wikia';
-		// wikia version of this table is being filled from the beginning of 2011
-		if ($timestamp < strtotime('2011-02-01 00:00:00')) {
-			$table = 'page_views';
-		}
-
-		global $wgStatsDB, $wgStatsDBEnabled;
+		$startDate = date( 'Y-m-d', $timestamp );
+		$endDate = date( 'Y-m-d', strtotime('-1 day') );
+		
 		$res = 0;
-		if ( !empty( $wgStatsDBEnabled ) ) {
-			$db = wfGetDB(DB_SLAVE,array(),$wgStatsDB);
-			$res = $db->selectField($table,'sum(pv_views)',array(
-				'pv_city_id' => $this->id,
-				"pv_use_date > $ts",
-			),__METHOD__);
-		}
+		$pageviews = DataMartService::getPageviewsMonthly( $startDate, $endDate, $this->id );
+		if ( !empty( $pageviews ) && is_array( $pageviews ) ) {
+			foreach ( $pageviews as $date => $value ) {
+				$res += $value;
+			}
+		} 
 			
 		return intval( $res );
 	}
