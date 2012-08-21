@@ -80,8 +80,6 @@ noscript img {
 img {
 	max-width: 100%;
 	@include transition(opacity .2s);
-	//this turns on hardware acceleration
-	-webkit-transform: translateZ(0);
 
 	&.load {
 		opacity: .1;
