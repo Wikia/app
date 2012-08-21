@@ -8,26 +8,14 @@ define('lazyload', ['thumbnailer'], function (thumbnailer) {
 	'use strict';
 
 	var win = window,
-		w = win.innerWidth,
-		h = win.innerHeight,
-		width = 660,
-		height = 330,
 		//used to help browser not to reflow to much after lazyload
 		//20 is a margin around page
-		pageWidth = w - 20;
-
-	w = (h > w) ? w : h;
-
-	if(w <= 480){
-		width = 300;
-		height = 145;
-	}else if(w <= 680){
-		width = 460;
-		height = 220;
-	}
-
-	window.addEventListener('resize', function(){
 		pageWidth = win.innerWidth - 20;
+
+	win.addEventListener('orientationchange', function(){
+		setTimeout(function(){
+			pageWidth = win.innerWidth - 20;
+		}, 200);
 	});
 
 	return function(elements, background) {
@@ -55,11 +43,8 @@ define('lazyload', ['thumbnailer'], function (thumbnailer) {
 			src = elm.getAttribute('data-src');
 			imageWidth = ~~elm.getAttribute('width');
 
-			if(!thumbnailer.isThumbUrl(src)){
-				if(elm.className.indexOf('getThumb') > -1){
-					elm.setAttribute('height', height);
-					src = thumbnailer.getThumbURL(src, 'image', width, height);
-				}
+			if(elm.className.indexOf('getThumb') > -1 && !thumbnailer.isThumbUrl(src)){
+				src = thumbnailer.getThumbURL(src, 'nocrop', 660, 330);
 			}
 
 			if(pageWidth < imageWidth){
