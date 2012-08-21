@@ -20,7 +20,7 @@ class ImageOperationsHelper {
 		return $this;
 	}
 
-	public function getAllowedMime() {
+	public static function getAllowedMime() {
 		return array( 'image/jpeg', 'image/pjpeg', 'image/gif', 'image/png', 'image/x-png', 'image/jpg' );
 	}
 
