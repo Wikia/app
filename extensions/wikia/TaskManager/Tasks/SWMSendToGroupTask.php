@@ -498,8 +498,8 @@ class SWMSendToGroupTask extends BatchTask {
 		}
 		$DB->FreeResult($dbResult);
 
-		$this->addLog("Look into selected wiki for users that belong to a specified group [wiki_id = $wikiID, wiki_db = $wikiDB]");
 		$wikiDB = WikiFactory::IDtoDB($wikiID);
+		$this->addLog("Look into selected wiki for users that belong to a specified group [wiki_id = $wikiID, wiki_db = $wikiDB]");
 		$DB = wfGetDB( DB_SLAVE );
 		$DB->selectDB($wikiDB);
 		$dbResult = $DB->Query (
