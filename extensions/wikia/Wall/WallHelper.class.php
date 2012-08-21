@@ -1,34 +1,34 @@
-<?php 
+<?php
 
 class WallHelper {
 	//WA = wiki activity
 	const WA_WALL_COMMENTS_MAX_LEN = 150;
 	const WA_WALL_COMMENTS_EXPIRED_TIME = 259200; // = (3 * 24 * 60 * 60) = 3 days
-	
+
 	public function __construct() {
 		$this->urls = array();
 	}
-	
+
 	public function createPostContent($title, $body) {
 		return XML::element("title", array(), $title )."\n".XML::element("body", array(), $body );
 	}
-	
+
 	public function getArchiveSubPageText() {
 		return wfMsg('wall-user-talk-archive-page-title');
 	}
-		
+
 	/**
 	 * @brief Gets and returns user's talk page's content
-	 * 
+	 *
 	 * @desc If $namespace is not passed via method parameter getTitle() will try to get it from Nirvana's architercture
-	 * 
+	 *
 	 * @param int | null $namespace namespace's id passed via const for instance: NS_USER_TALK
 	 * @param string | null $subpage a subpage title/text
 	 * @param User | null $user a user object
 	 * @requestParam int $namespace namespace's id passed via const for instance: NS_USER_TALK
-	 * 
+	 *
 	 * @return Title
-	 * 
+	 *
 	 * @author Andrzej 'nAndy' Åukaszewski
 	 */
 	public function getTitle($namespace = null, $subpage = null, $user = null) {
@@ -37,30 +37,30 @@ class WallHelper {
 		if( empty($user) ) {
 			$user = $this->getUser();
 		}
-		
+
 		if( empty($namespace) ) {
 			$namespace2 = $this->getVal('namespace');
 			$this->title = F::build('Title', array($user->getName(), $namespace2), 'newFromText');
 
 			return $this->title;
 		}
-		
+
 		if( empty($subpage) ) {
 			return F::build('Title', array($user->getName(), $namespace), 'newFromText');
 		} else {
 			return F::build('Title', array($user->getName().'/'.$subpage, $namespace), 'newFromText');
 		}
 	}
-	
+
 	/**
-	 * @brief Gets and returns user's object. 
-	 * 
-	 * @desc !IMPORTANT! It requires UserProfilePage class from UserProfilePageV3 extension. 
+	 * @brief Gets and returns user's object.
+	 *
+	 * @desc !IMPORTANT! It requires UserProfilePage class from UserProfilePageV3 extension.
 	 * It sends request to UserProfilePage controller which should return user object generated
 	 * from passed title.
-	 * 
+	 *
 	 * @return User
-	 * 
+	 *
 	 * @author Andrzej 'nAndy' Åukaszewski
 	 */
 	//TODO: remove call to UserProfilePage
@@ -94,21 +94,21 @@ class WallHelper {
 
         return $user;
 	}
-	
+
 	/**
 	 * @brief Filtring message wall data and spliting it to parents and childs
-	 * 
+	 *
 	 * @param Title $title title object instance
 	 * @param array $res a referance to array returned from recent changes
 	 *
 	 * @return array | boolean returns false if ArticleComment class does not exist
-	 * 
+	 *
 	 * @author Andrzej 'nAndy' Åukaszewski
 	 */
 	public function wikiActivityFilterMessageWall($title, &$res) {
 		$app = F::app();
 		$app->wf->ProfileIn(__METHOD__);
-		
+
 		$item = array();
 		$item['type'] = 'new';
 		$item['wall'] = true;
@@ -116,13 +116,13 @@ class WallHelper {
 		$item['timestamp'] = $res['timestamp'];
 		$item['wall-comment'] = $res['rc_params']['intro'];
 		$item['article-id'] = $title->getArticleID();
-		
+
 		$wmessage = F::build('WallMessage', array($title) );
 		$parent = $wmessage->getTopParentObj();
-		
+
 		if( !in_array(true, array($wmessage->isAdminDelete(), $wmessage->isRemove())) ) {
 			$item['wall-url'] = $wmessage->getWallPageUrl();
-			
+
 			$owner = $wmessage->getWallOwner();
 
 			$item['wall-owner'] = $owner->getName();
@@ -138,14 +138,14 @@ class WallHelper {
 					$metaTitle = $wmessage->getMetaTitle();
 					$item['title'] = empty($metaTitle) ? wfMsg('wall-no-title') : $metaTitle;
 				}
-				
+
 				$item['url'] = $wmessage->getMessagePageUrl();
 				$res['title'] = 'message-wall-thread-#'.$title->getArticleID();
 				$item['wall-msg'] = wfMsg( 'wall-wiki-activity-on', '<a href="'.$item['wall-url'].'">'.wfMsg('wall-wiki-activity-wall-owner', $item['wall-owner']).'</a>');
 			} else {
 			//child
 				$parent->load();
-				
+
 				if( !in_array(true, array($parent->isRemove(), $parent->isAdminDelete())) ) {
 					$title = wfMsg('wall-no-title'); // in case metadata does not include title field
 					if( isset($parent->mMetadata['title']) ) $title = $wmessage->getMetaTitle();
@@ -167,37 +167,37 @@ class WallHelper {
 		$app->wf->ProfileOut(__METHOD__);
 		return $item;
 	}
-	
+
 	/**
 	 * @brief Copies parent's informations to child item
-	 * 
+	 *
 	 * @param array $item a referance to an array with wall comment informations
 	 * @param ArticleComment $parent parent comment
 	 * @param Title $title title object instance
-	 * 
+	 *
 	 * @author Andrzej 'nAndy' Åukaszewski
 	 */
 	private function mapParentData(&$item, $parent, $title) {
 		$app = F::app();
 		$app->wf->ProfileIn(__METHOD__);
-		
+
 		$metaTitle = $parent->getMetaTitle();
-		
+
 		if( !empty($metaTitle) ) {
 			$item['title'] = $metaTitle;
 		} else {
 			$item['title'] = wfMsg('wall-no-title');
 		}
 		$item['url'] = $parent->getMessagePageUrl();
-		
+
 		$parentTitle = $parent->getTitle();
 		if( $parentTitle instanceof Title ) {
 			$item['parent-id'] = $parentTitle->getArticleID();
 		}
-		
+
 		$app->wf->ProfileOut(__METHOD__);
 	}
-	
+
 	/**
 	 * @brief Gets wall comments from memc/db
 	 *
@@ -210,27 +210,27 @@ class WallHelper {
 	public function getWallComments($parentId = null) {
 		$app = F::app();
 		$app->wf->ProfileIn(__METHOD__);
-		
+
 		$comments = array();
 		$commentsCount = 0;
-		
+
 		if( !is_null($parentId) ) {
 			$parent = F::build('WallMessage', array($parentId), 'newFromId');
-			
+
 			if( !($parent instanceof WallMessage) ) {
 			//this should never happen
 				Wikia::log(__METHOD__, false, 'No WallMessage instance article id: '.$parentId);
-				
+
 				return array(
 					'count' => $commentsCount,
 					'comments' => $comments,
 				);
 			}
-			
+
 			$wallThread = F::build('WallThread', array($parentId), 'newFromId');
 			$topMessage = $wallThread->getThreadMainMsg();
 			$comments = $wallThread->getRepliesWallMessages();
-			
+
 			if( !empty($comments) ) {
 			//top message has replies
 				//in wiki activity we display amount of messages
@@ -244,7 +244,7 @@ class WallHelper {
 						$comments[] = $comment;
 						$i++;
 					}
-					
+
 					if( $i === 2 ) break;
 				}
 				if( count($comments) < 2 ) {
@@ -262,25 +262,25 @@ class WallHelper {
 				$comments = $this->getCommentsData(array($topMessage));
 			}
 		}
-		
+
 		$app->wf->ProfileOut(__METHOD__);
 		return array(
 			'count' => $commentsCount,
 			'comments' => $comments,
 		);
 	}
-	
+
 	/**
 	 * @brief Gets wall comments data from memc/db
-	 * 
+	 *
 	 * @param array $comments an array with WallMessage instances
-	 * 
+	 *
 	 * @author Andrzej 'nAndy' Åukaszewski
 	 */
 	private function getCommentsData($comments) {
 		$app = F::app();
 		$app->wf->ProfileIn(__METHOD__);
-		
+
 		$timeNow = time();
 		$items = array();
 		$i = 0;
@@ -296,7 +296,7 @@ class WallHelper {
 				error_log("WallHelper.class.php NO_AUTHOR_FOR_AC:" . $wm->getId() );
 				continue;
 			}
-				
+
 			$items[$i]['avatar'] = $data['avatarSmall'];
 			$items[$i]['user-profile-url'] = $data['userurl'];
 			$user = User::newFromName($data['author']->getName());
@@ -308,7 +308,7 @@ class WallHelper {
 			} else {
 				$items[$i]['real-name'] = '';
 			}
-			
+
 			$items[$i]['author'] = $data['username'];
 			$items[$i]['wall-comment'] = $this->shortenText($this->strip_wikitext($data['rawtext'])).'&nbsp;';
 			if( User::isIP( $data['username']) ) {
@@ -317,7 +317,7 @@ class WallHelper {
 			} else {
 				$items[$i]['author'] = "";
 			}
-			
+
 			//if message is older than 3 days we don't show its timestamp
 			$items[$i]['timestamp'] = $msgTimestamp = $data['rawmwtimestamp'];
 			$ago = $timeNow - strtotime($msgTimestamp) + 1;
@@ -326,43 +326,43 @@ class WallHelper {
 			} else {
 				$items[$i]['timestamp'] = null;
 			}
-			
+
 			$items[$i]['wall-message-url'] = $wm->getMessagePageUrl();
 			$i++;
 		}
 		unset($data);
-		
+
 		$app->wf->ProfileOut(__METHOD__);
 		return $items;
 	}
-	
+
 	/**
 	 * @brief Shorten given text to given limit (if the text is longer than limit) and adds ellipses at the end
-	 * 
-	 * @desc Text is truncated to given limit (by default limit is equal to WA_WALL_COMMENTS_MAX_LEN constant) then it truncates it to last spacebar and adds ellipses. 
-	 * 
+	 *
+	 * @desc Text is truncated to given limit (by default limit is equal to WA_WALL_COMMENTS_MAX_LEN constant) then it truncates it to last spacebar and adds ellipses.
+	 *
 	 * @param string $text text which needs to be shorter
 	 * @param integer $limit limit of characters
-	 * 
+	 *
 	 * @return string
 	 */
 	public function shortenText($text, $limit = self::WA_WALL_COMMENTS_MAX_LEN) {
 		$app = F::app();
 		$app->wf->ProfileIn(__METHOD__);
-		
+
 		if( mb_strlen($text) > $limit ) {
 			$text = $app->wg->Lang->truncate($text, $limit);
 			$lastSpacePos = strrpos($text, ' ');
-			
+
 			if( $lastSpacePos !== false ) {
 				$text = $app->wg->Lang->truncate($text, $lastSpacePos);
 			}
 		}
-		
+
 		$app->wf->ProfileOut(__METHOD__);
 		return $text;
 	}
-	
+
 	public function getDefaultTitle() {
 		$app = F::app();
 		$name = $app->wg->User->getName();
@@ -371,9 +371,9 @@ class WallHelper {
 			$name{0} = strtolower($name{0});
 		}
 		return $app->wf->msg('wall-default-title', array('$1' => $name));
-		
+
 	}
-	
+
 	public function getParsedText($rawtext, $title) {
 		global $wgParser, $wgOut;
 		global $wgEnableParserCache;
@@ -382,46 +382,46 @@ class WallHelper {
 
 		return $wgParser->parse( $rawtext, $title, $wgOut->parserOptions())->getText();
 	}
-	
+
 	/**
 	 * @brief Returns id of a deleted article
-	 * 
+	 *
 	 * @brief Returns id of deleted article from table archive. If an article was restored then it returns false.
-	 * 
+	 *
 	 * @param string $dbkey
 	 * @param array $optFields a referance with other data we'd like to recieve
-	 * 
+	 *
 	 * @return int | boolean
-	 * 
+	 *
 	 * @author Andrzej 'nAndy' Åukaszewski
 	 */
 	public function getArticleId_forDeleted($dbkey, &$optFields) {
 		$dbr = wfGetDB( DB_SLAVE );
-		
+
 		$fields = array('ar_page_id');
-		
+
 		if( is_array($optFields) ) {
 			if( isset($optFields['text_id']) ) {
 				$fields[] = 'ar_text_id';
 			}
 		}
-		
+
 		$row = $dbr->selectRow(
 			'archive',
 			$fields,
 			array( 'ar_title' => str_replace(' ', '_', $dbkey) ),
-			__METHOD__ 
+			__METHOD__
 		);
-		
+
 		if( is_array($optFields) ) {
 			if( isset($optFields['text_id']) && !empty($row->ar_text_id) ) {
 				$optFields['text_id'] = $row->ar_text_id;
 			}
 		}
-		
+
 		return isset($row->ar_page_id) ? $row->ar_page_id : false;
 	}
-	
+
 	public function getDbkeyFromArticleId_forDeleted($articleId) {
 		$dbkey = null;
 
@@ -430,9 +430,9 @@ class WallHelper {
 			array( 'ar_title' ),
 			array( 'ar_page_id' => $articleId ),
 			__METHOD__ );
-		
+
 		if(!empty($row)) $dbkey = $row->ar_title;
-		
+
 		if(empty($dbkey)) {
 			// try again from master
 			$dbr = wfGetDB( DB_MASTER );
@@ -440,13 +440,13 @@ class WallHelper {
 				array( 'ar_title' ),
 				array( 'ar_page_id' => $articleId ),
 				__METHOD__ );
-			
+
 			if(!empty($row)) $dbkey = $row->ar_title;
 		}
-		
+
 		return $dbkey;
 	}
-	
+
 	public function getUserFromArticleId_forDeleted($articleId) {
 		/*
 		 * This is ugly way of doing that
@@ -461,9 +461,9 @@ class WallHelper {
 			array( 'ar_user' ),
 			array( 'ar_page_id' => $articleId ),
 			__METHOD__ );
-		
+
 		if(!empty($row)) $user_id = $row->ar_user;
-		
+
 		if(empty($dbkey)) {
 			// try again from master
 			$dbr = wfGetDB( DB_MASTER );
@@ -471,10 +471,10 @@ class WallHelper {
 				array( 'ar_user' ),
 				array( 'ar_page_id' => $articleId ),
 				__METHOD__ );
-			
+
 			if(!empty($row)) $user_id = $row->ar_user;
 		}
-		
+
 		return User::newFromId( $user_id );
 	}
 
@@ -506,66 +506,66 @@ class WallHelper {
 
 	/**
 	 * @brief Gets old article's text
-	 * 
+	 *
 	 * @desc Returns article's content from text table if fail it'll return empty string
-	 * 
+	 *
 	 * @param integer $textId article's text id in text table
-	 * 
+	 *
 	 * @author Andrzej 'nAndy' Åukaszewski
 	 */
 	public function getDeletedArticleTitleTxt($textId) {
 		$dbr = wfGetDB( DB_SLAVE );
-		
+
 		$row = $dbr->selectRow(
 			'text',
 			array('old_text', 'old_flags'),
 			array('old_id' => $textId),
-			__METHOD__ 
+			__METHOD__
 		);
-		
+
 		if( !empty($row->old_text) && !empty($row->old_flags) ) {
 			$flags = explode(',', $row->old_flags);
 			if( in_array('gzip', $flags) ) {
 				return gzinflate(F::build('ExternalStore', array($row->old_text), 'fetchFromUrl'));
 			}
 		}
-		
+
 		return '';
 	}
-	
+
 	/**
 	 * @brief Extracts title of the message via regural expression
-	 * 
+	 *
 	 * @desc Uses preg_match_all() and extracts title attribute value from given string; returns empty string if fails
-	 * 
+	 *
 	 * @param string $text text which should have <ac_metadata title="A title of a message"> </ac_metadata> tag inside
-	 * 
-	 * TODO: remove it we don't need to operate on delete wall messages anymore 
-	 * 
+	 *
+	 * TODO: remove it we don't need to operate on delete wall messages anymore
+	 *
 	 * @author Andrzej 'nAndy' Åukaszewski
 	 */
 	public function getTitleTxtFromMetadata($text) {
 		$pattern = '#<ac_metadata title="([^"]*)">(.*)</ac_metadata>#i';
 		preg_match_all($pattern, $text, $matches);
-		
+
 		if( !empty($matches[1][0]) ) {
 			return $matches[1][0];
 		}
-		
+
 		return '';
 	}
-	
-	public function haveMsg($user) {
+
+	public static function haveMsg($user) {
 		$title = Title::newFromText( $user->getName(),  NS_USER_WALL );
 		$comments = ArticleCommentList::newFromTitle($title);
 		return $comments->getCountAll() > 0;
 	}
-	
+
 	public function sendNotification($revOldId, $rcType = RC_NEW) {
 		$app = F::App();
 		$rev = Revision::newFromId($revOldId);
 		$notif = F::build('WallNotificationEntity', array($rev, $app->wg->CityId), 'createFromRev');
-		
+
 		$wh = F::build('WallHistory', array($app->wg->CityId));
 		$wh->add($rcType == RC_NEW ? WH_NEW : WH_EDIT, $notif, $app->wg->User);
 
@@ -574,9 +574,9 @@ class WallHelper {
 			$wn->addNotification($notif);
 		}
 	}
-	
+
 	//TODO: move it some how to wall message class
-	
+
 	public function isAllowedNotifyEveryone($ns, $user) {
 		$app = F::App();
 		if(in_array(MWNamespace::getSubject($ns), $app->wg->WallNotifyEveryoneNS) && $user->isAllowed('notifyeveryone')) {
