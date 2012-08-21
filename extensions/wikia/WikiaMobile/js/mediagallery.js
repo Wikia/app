@@ -76,13 +76,12 @@ define('mediagallery', ['media', 'modal', 'pager', 'thumbnailer', 'lazyload'], f
 	}
 
 	function prepareGallery(){
-		var dots,
-			pagesNum;
-
 		width = gal.offsetWidth;
 		imagesize = (width > 600 ? MAX_THUMB_SIZE + 5 : 105); //width + margin
 
-		var cols = ~~(width/imagesize),
+		var dots,
+			pagesNum,
+			cols = ~~(width/imagesize),
 			imgL = images.length,
 			//how many placeholders need to be added
 			//to keep gallery tiles in correct places
