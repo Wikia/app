@@ -38,8 +38,9 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 			$this->popularvideos = $this->model->getDataForModulePopularVideos();
 			$this->fromthecommunity = $this->model->getDataForModuleFromTheCommunity();
 		}
-		$this->response->addAsset('extensions/wikia/WikiaHubsV2/css/WikiaHubsV2.scss');
-		$this->response->addAsset('extensions/wikia/WikiaHubsV2/js/WikiaHubsV2.js');
+		$this->response->addAsset('wikiahubs_v2');
+		$this->response->addAsset('wikiahubs_v2_modal');
+		$this->response->addAsset('wikiahubs_v2_scss');
 	}
 
 	public function slider() {

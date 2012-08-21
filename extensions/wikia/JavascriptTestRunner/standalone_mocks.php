@@ -16,6 +16,7 @@
 	}
 	
 	class AssetsManager {
+		/** @return AssetsManager */
 		static public function getInstance() { 
 			return new AssetsManager(); 
 		}
