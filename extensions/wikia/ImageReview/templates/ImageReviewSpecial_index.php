@@ -48,7 +48,7 @@ if ( is_array($imageList) && count($imageList) > 0) {
 
 	?>
 	<ul class="image-review-list">
-	<?php 
+	<?php
 
 	foreach($imageList as $n => $image) {
 		$id = "img-{$image['wikiId']}-{$image['pageId']}";
@@ -70,9 +70,9 @@ if ( is_array($imageList) && count($imageList) > 0) {
                                         <span class="internal sprite details magnify" title="Flagged: Skin detected." style="clear: both"></span>
                                 <?php } ?>
 
-				<label title="Mark as OK"><input type="radio" name="<?= $id ?>" value="<?= ImageReviewStatuses::STATE_APPROVED ?>"<?= ($stateId == ImageReviewStatuses::STATE_APPROVED || $stateId == ImageReviewStatuses::STATE_IN_REVIEW || $stateId == ImageReviewStatuses::STATE_QUESTIONABLE_IN_REVIEW || ( $stateId == ImageReviewStatuses::STATE_QUESTIONABLE && $action == 'questionable' ) || $stateId == ImageReviewStatuses::STATE_UNREVIEWED ? ' checked' :'') ?>>OK</label>
+				<label title="Mark as OK"><input type="radio" name="<?= $id ?>" value="<?= ImageReviewStatuses::STATE_APPROVED ?>"<?= ($stateId == ImageReviewStatuses::STATE_APPROVED || $stateId == ImageReviewStatuses::STATE_IN_REVIEW || $stateId == ImageReviewStatuses::STATE_UNREVIEWED ? ' checked' :'') ?>>OK</label>
 				<label title="Delete"><input type="radio" name="<?= $id ?>" value="<?= ( $action == 'rejected' ) ? ImageReviewStatuses::STATE_DELETED : ImageReviewStatuses::STATE_REJECTED ?>"<?= ($stateId == ImageReviewStatuses::STATE_REJECTED ? ' checked' :'') ?>>Del</label>
-				<label title="Questionable"><input type="radio" name="<?= $id ?>" value="<?= ImageReviewStatuses::STATE_QUESTIONABLE ?>"<?= ($stateId == ImageReviewStatuses::STATE_QUESTIONABLE && $action != 'questionable' ? ' checked' :'') ?>>Q</label>
+				<label title="Questionable"><input type="radio" name="<?= $id ?>" value="<?= ImageReviewStatuses::STATE_QUESTIONABLE ?>"<?= ( ( $stateId == ImageReviewStatuses::STATE_QUESTIONABLE_IN_REVIEW || $stateId == ImageReviewStatuses::STATE_QUESTIONABLE ) ? ' checked' : '' ) ?>>Q</label>
 			</li>
 <?php
 /*
