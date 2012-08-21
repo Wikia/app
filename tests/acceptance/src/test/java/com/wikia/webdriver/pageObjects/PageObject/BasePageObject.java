@@ -211,6 +211,11 @@ public class BasePageObject{
 		wait.until(ExpectedConditions.elementToBeClickable(by));
 	}
 	
+	public void waitForElementClickableByElement(WebElement element)
+	{
+		wait.until(CommonExpectedConditions.elementToBeClickable(element));
+	}
+	
 	public void waitForElementById(String id)
 	{
 		

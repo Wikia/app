@@ -14,7 +14,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import com.wikia.webdriver.Common.DriverProvider.DriverProvider;
 
-public class CommonExpectedConditions  {
+public class CommonExpectedConditions {
 
 	private final static Logger log = Logger.getLogger(ExpectedConditions.class.getName());
 	
@@ -24,6 +24,8 @@ public class CommonExpectedConditions  {
 	 /**
 	   * An expectation for checking if the given text is present in the specified
 	   * element.
+	   * 
+	   * @author Michal Nowierski
 	   */
 	  public static ExpectedCondition<Boolean> valueToBePresentInElementsAttribute(
 	      final By locator, final String attribute, final String value) {
@@ -49,6 +51,7 @@ public class CommonExpectedConditions  {
 		 /**
 	   * An expectation for checking if the page URL contains givenString
 	   * 
+	   * @author Michal Nowierski
 	   */
 	  public static ExpectedCondition<Boolean> givenStringtoBePresentInURL(final String givenString) {
 
@@ -62,8 +65,41 @@ public class CommonExpectedConditions  {
 	    };
 	  }
 	  
+	  /**
+	   * An Expectation for checking an element is visible and enabled such that you
+	   * can click it.
+	   * 
+	   * @param GivenElement element to be checked
+	   * @author Michal Nowierski
+	   */
+	  public static ExpectedCondition<WebElement> elementToBeClickable(
+	      final WebElement GivenElement) {
+	    return new ExpectedCondition<WebElement>() {
 
+	      public ExpectedCondition<WebElement> visibilityOfElement =
+	          ExpectedConditions.visibilityOf(GivenElement);
+
+	      public WebElement apply(WebDriver driver) {
+	        WebElement element = visibilityOfElement.apply(driver);
+	        try {
+	          if (element != null && element.isEnabled()) {
+	            return element;
+	          } else {
+	            return null;
+	          }
+	        } catch (StaleElementReferenceException e) {
+	          return null;
+	        }
+	      }
+
+	      @Override
+	      public String toString() {
+	        return "element to be clickable: " + GivenElement.getTagName();
+	      }
+	    };
+	  }
 	  
+  	  
 	  /**
 	   * Looks up an element. Logs and re-throws WebDriverException if thrown. <p/>
 	   * Method exists to gather data for http://code.google.com/p/selenium/issues/detail?id=1800
@@ -80,6 +116,6 @@ public class CommonExpectedConditions  {
 	    }
 	  }
 	  
-
+ 
 	  
 }
