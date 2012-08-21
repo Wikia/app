@@ -49,9 +49,13 @@ public class TestTemplate {
 					Runtime.getRuntime().exec("taskkill /F /IM IEDriverServer_x64.exe");
 				}							
 			}
-			else if (Global.BROWSER.equals("CHROME"));
+			else if (Global.BROWSER.equals("CHROME"))
 			{
 				Runtime.getRuntime().exec("taskkill /F /IM chromedriver.exe");
+			}
+			else if (Global.BROWSER.equals("FF"))
+			{
+				Runtime.getRuntime().exec("taskkill /F /IM firefox.exe");
 			}
 		}
 
