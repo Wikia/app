@@ -117,14 +117,6 @@ class WikiaMobileMediaService extends WikiaService {
 				$wikiText = "{$groupWikiText}{$wikiText}";
 			} else {
 				//many left, proceed preparing and rendering the media group
-				if ( $origWidth > self::THUMB_WIDTH ) {
-					$ratio = $origWidth / self::THUMB_WIDTH;
-					$targetWidth = self::THUMB_WIDTH;
-					$targetHeight = (int) ($origHeight / ( ( $ratio > 0 ) ? $ratio : 1 ));
-				} else {
-					$targetWidth = $origWidth;
-					$targetHeight = $origHeight;
-				}
 
 				$size = self::calculateMediaSize( $origWidth, $origHeight );
 				$thumb = $file->transform( $size );
