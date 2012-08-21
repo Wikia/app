@@ -24,7 +24,6 @@ jQuery(function($) {
 			format: 'json',
 			data: {
 				query: $('#search-v2-input').val(),
-				ip: null,
 				header: window.navigator.userAgent
 			}
 		}),
@@ -34,8 +33,8 @@ jQuery(function($) {
 
 	).done(function(libData, resourceData, packagesData) {
 		//$().log([libData, resourceData, packagesData], 'WikiaSearchAds');
-		var template = packagesData[0].mustache[0];
-		var data = resourceData[0].ads;
+		var template = packagesData[0].mustache[0]
+			, data = resourceData[0].ads;
 		//$().log([template, data], 'WikiaSearchAds');
 
 		shrinkWrap($('#SearchAdsTop ul').html($.mustache(template, {

@@ -9,25 +9,25 @@ class WikiaSearchAdsController extends WikiaController {
 
 	public function getAds() {
 		$query = $this->request->getVal('query');
-		$ip = $this->request->getVal('ip');
+		$ip = $this->app->wg->request->getIP();
 		$header = $this->request->getVal('header');
-		
+
 		$url = self::getUrl($query, $ip, $header);
 		$xml = $this->getSearchResults($url);
 		$ads = $this->parseXml($xml);
 
 		$this->response->setVal('ads', $ads);
 	}
-	
+
 	protected function getSearchResults($url) {
 		$xml = '';
-		
+
 		try {
 			if (($xml = Http::get($url)) !== false) {
 				return $xml;
 			}
 		} catch (Exception $e) {}
-		
+
 		return $xml;
 	}
 
@@ -41,7 +41,7 @@ class WikiaSearchAdsController extends WikiaController {
 			}
 			//var_dump($results);
 		} catch(Exception $e) {}
-			
+
 		return $results;
 	}
 	
