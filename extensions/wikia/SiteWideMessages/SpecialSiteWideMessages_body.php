@@ -70,6 +70,9 @@ class SiteWideMessages extends SpecialPage {
 		$formData['listUserNames'] = $wgRequest->getText( 'mUserNames' );
 		$formData['expireTime'] = $wgRequest->getVal('mExpireTime');
 		$formData['expireTimeS'] = $wgRequest->getVal('mExpireTimeS');
+		$formData['registrationDateOption'] = $wgRequest->getVal( 'mRegistrationS' );
+		$formData['registrationDateOne'] = $wgRequest->getVal( 'mRegistrationDateOne' );
+		$formData['registrationDateTwo'] = $wgRequest->getVal( 'mRegistrationDateTwo' );
 		$formData['mLang'] = $wgRequest->getArray('mLang');
 
 		//fetching hub list
@@ -192,9 +195,14 @@ class SiteWideMessages extends SpecialPage {
 				$mText = $wgRequest->getText('mContent');
 				$groupName = $formData['groupName'] == '' ? $formData['groupNameS'] : $formData['groupName'];
 				$expiryArr = array( 'manual' => $formData['expireTimeS'], 'preset' => $formData['expireTime'] );
+				$registrationArr = array(
+					'option' => $formData['registrationDateOption'],
+					'datefrom' => $formData['registrationDateOne'],
+					'dateto' => $formData['registrationDateTwo']
+				);
 				$result = $this->sendMessage( $wgUser, $mRecipientId, $mText, $expiryArr, $formData['wikiName'],
-					$formData['userName'], $formData['listUserNames'], $groupName, $formData['sendModeWikis'], $formData['sendModeUsers'],
-					$formData['hubId'], $formData['mLang'], $formData['clusterId'] );
+					$formData['userName'], $formData['listUserNames'], $groupName, $registrationArr, $formData['sendModeWikis'],
+					$formData['sendModeUsers'], $formData['hubId'], $formData['mLang'], $formData['clusterId'] );
 
 				if (is_null($result['msgId'])) {	//we have an error
 					$formData['messageContent'] = $wgRequest->getText('mContent');
@@ -273,7 +281,8 @@ class SiteWideMessages extends SpecialPage {
 	}
 
 	//DB functions
-	private function sendMessage( $mSender, $mRecipientId, $mText, $mExpireArray, $mWikiName, $mRecipientName, $mUserNames, $mGroupName, $mSendModeWikis, $mSendModeUsers, $mHubId, $mLang, $mClusterId ) {
+	// TODO: refactor most of these parameters into a single array parameter
+	private function sendMessage( $mSender, $mRecipientId, $mText, $mExpireArray, $mWikiName, $mRecipientName, $mUserNames, $mGroupName, $mRegistrationArr, $mSendModeWikis, $mSendModeUsers, $mHubId, $mLang, $mClusterId ) {
 		global $wgExternalSharedDB, $wgStatsDB;
 		$result = array('msgId' => null, 'errMsg' => null);
 		$dbInsertResult = false;
@@ -329,6 +338,11 @@ class SiteWideMessages extends SpecialPage {
 				$mGroupName = '';
 				$mUserNames = '';
 				break;
+			case 'REGISTRATION':
+				$mRecipientName = '';
+				$mGroupName = '';
+				$mUserNames = '';
+				break;
 		}
 
 		$sendToAll = $mSendModeWikis == 'ALL' && $mSendModeUsers == 'ALL';
@@ -358,6 +372,25 @@ class SiteWideMessages extends SpecialPage {
 			$mExpire = $mExpireArray['preset'] != '0' ? date('Y-m-d H:i:s', strtotime(ctype_digit($mExpireArray['preset']) ? " +{$mExpireArray['preset']} day" : ' +' . substr($mExpireArray['preset'], 0, -1) . ' hour')) : null;
 		}
 
+		if ( $mSendModeUsers === 'REGISTRATION' ) {
+			$timestamp = wfTimestamp( TS_UNIX, $mRegistrationArr['datefrom'] );
+			if ( !$timestamp ) {
+				$validDateTime = false;
+			}
+			$mRegistrationArr['datefrom'] = wfTimestamp( TS_MW, $timestamp );
+			if ( $mRegistrationArr['option'] === 'between' ) {
+				if ( $mRegistrationArr['dateto'] !== '' ) {
+					$timestamp = wfTimestamp( TS_UNIX, $mRegistrationArr['dateto'] );
+					if ( !$timestamp ) {
+						$validDateTime = false;
+					}
+					$mRegistrationArr['dateto'] = wfTimestamp( TS_MW, $timestamp );
+				} else {
+					$validDateTime = false;
+				}
+			}
+		}
+
 		if (wfReadOnly()) {
 			$reason = wfReadOnlyReason();
 			$result['errMsg'] = wfMsg('readonlytext', $reason);
@@ -374,6 +407,11 @@ class SiteWideMessages extends SpecialPage {
 			$result['errMsg'] = wfMsg( 'swm-error-no-user-list' );
 		} elseif ( !$validDateTime ) {
 			$result['errMsg'] = wfMsg( 'swm-error-invalid-time' );
+		} elseif ( $mSendModeUsers === 'REGISTRATION'
+			&& $mRegistrationArr['option'] === 'between'
+			&& ( $mRegistrationArr['dateto'] <= $mRegistrationArr['datefrom'] )
+		) {
+			$result['errMsg'] = wfMsg( 'swm-error-registered-tobeforefrom' );
 		} else {
 			global $wgParser, $wgUser;
 			$title = Title::newFromText(uniqid('tmp'));
@@ -471,6 +509,28 @@ class SiteWideMessages extends SpecialPage {
 											'groupName'		=> $mGroupName,
 											'senderId'		=> $mSender->GetID(),
 											'senderName'	=> $mSender->GetName(),
+											'hubId'			=> $mHubId,
+											'clusterId'     => $mClusterId,
+										),
+										TASK_QUEUED
+									);
+									break;
+
+								case 'REGISTRATION':
+									//add task to TaskManager
+									$oTask = new SWMSendToGroupTask();
+									$oTask->createTask(
+										array(
+											'messageId'		=> $result['msgId'],
+											'sendModeWikis'	=> $mSendModeWikis,
+											'sendModeUsers'	=> $mSendModeUsers,
+											'wikiName'		=> $mWikiName,
+											'groupName'		=> $mGroupName,
+											'regOption'     => $mRegistrationArr['option'],
+											'regStartDate'  => $mRegistrationArr['datefrom'],
+											'regEndDate'    => $mRegistrationArr['dateto'],
+											'senderId'		=> $mSender->getID(),
+											'senderName'	=> $mSender->getName(),
 											'hubId'			=> $mHubId,
 											'clusterId'     => $mClusterId,
 										),

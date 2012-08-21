@@ -94,6 +94,13 @@ $messages['en'] = array(
 	'swm-error-invalid-time'    => 'Invalid time provided.',
 	'swm-lang-other'		    => 'all remaining languages',
 	'action-messagetool'        => 'send site wide messages',
+
+	'swm-label-mode-users-registration' => 'Registration date',
+	'swm-mode-users-registration-after' => 'After',
+	'swm-mode-users-registration-before' => 'Before',
+	'swm-mode-users-registration-between' => 'Between',
+	'swm-label-mode-users-registration-hint' => '<i>Dates must be in the form 2012-04-01 00:00:00</i>',
+	'swm-error-registered-tobeforefrom' => 'User registration end date is before start date.',
 );
 
 /** Message documentation (Message documentation)
