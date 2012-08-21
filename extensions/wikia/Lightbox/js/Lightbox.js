@@ -399,7 +399,7 @@ var Lightbox = {
 			Lightbox.video.trackingTimeout = setTimeout(function() {
 				Lightbox.openModal.aggregateViewCount++;
 				LightboxLoader.track(WikiaTracker.ACTIONS.VIEW, 'video', Lightbox.openModal.aggregateViewCount, {title:thisTitle, provider: data.providerName});		
-			}, 5000);
+			}, 1000);
 
 		}
 	},
