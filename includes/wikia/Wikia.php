@@ -1216,7 +1216,7 @@ class Wikia {
 		return true;
 	}
 
-	function getAllHeaders() {
+	static public function getAllHeaders() {
 		if ( function_exists( 'getallheaders' ) ) {
 			$headers = getallheaders();
 		} else {
