@@ -396,6 +396,19 @@ class HAWelcomeJob extends Job {
 						}
 
 						$this->mSysop = User::newFromId( $user );
+
+						// BugId:41817 - if ( 1 == $user ) { notify Mix }
+						if ( 1 == $user ) {
+							UserMailer::sendHTML(
+								'mix@wikia-inc.com',
+								'mix@wikia-inc.com',
+								'BugId:41817 Occurrence Report',
+								sprintf( "File: %s\nLine: %s, Date: %s\nOutput: %s", __FILE__, __LINE__, date( 'Y-m-d H:i:s' ), var_export( $user, true ) ),
+								sprintf( "<pre>File: %s\nLine: %s, Date: %s\nOutput: %s</pre>", __FILE__, __LINE__, date( 'Y-m-d H:i:s' ), var_export( $user, true ) ),
+								'unknown',
+								0
+							);
+						}
 						$wgMemc->set( wfMemcKey( "last-sysop-id" ), $user, 86400 );
 					}
 				}
@@ -413,6 +426,20 @@ class HAWelcomeJob extends Job {
 			}
 			else {
 				$this->mSysop = Wikia::staffForLang( $wgLanguageCode );
+
+				// BugId:41817 - if ( 1 == $this->mSysop->getId() ) { notify Mix }
+				if ( 1 == $this->mSysop->getId() ) {
+					UserMailer::sendHTML(
+						'mix@wikia-inc.com',
+						'mix@wikia-inc.com',
+						'BugId:41817 Occurrence Report',
+						sprintf( "File: %s\nLine: %s, Date: %s\nOutput: %s", __FILE__, __LINE__, date( 'Y-m-d H:i:s' ), var_export( $this->mSysop->getId(), true ) ),
+						sprintf( "<pre>File: %s\nLine: %s, Date: %s\nOutput: %s</pre>", __FILE__, __LINE__, date( 'Y-m-d H:i:s' ), var_export( $this->mSysop->getId(), true ) ),
+						'unknown',
+						0
+					);
+				}
+
 				Wikia::log( __METHOD__, "sysop", "Fallback to hardcoded user: " . $this->mSysop->getName() );
 			}
 		}
