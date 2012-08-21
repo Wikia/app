@@ -34,7 +34,7 @@ class CodeLintReportBlame extends CodeLintReport {
 
 					$item = array(
 						'file' => $fileEntry['fileChecked'],
-						'lines' => reset($entry['lines']),
+						'line' => reset($entry['lines']),
 						'tracUrl' => $tracUrl,
 						'error' => $entry['error'],
 						'rev' => $entry['blame']['rev']
