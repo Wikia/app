@@ -399,7 +399,7 @@ class AutomatedDeadWikisDeletionMaintenance {
 	}
 	
 	protected function sendEmail( $from, $to, $subject, $body, $bodyNoEntries, $fname, $wikis ) {
-//		$fromAddress = new MailAddress($from);
+		$fromAddress = new MailAddress($from);
 		$toAddress = new MailAddress($to);
 
 		if (!empty($wikis)) {
@@ -409,9 +409,9 @@ class AutomatedDeadWikisDeletionMaintenance {
 			}
 			$fileName = "/tmp/$fname.csv";
 			file_put_contents($fileName,$csv);
-			UserMailer::send( $toAddress, $from, $subject, $body, null, null, 'dead-wikis', 0, array( $fileName ) );
+			UserMailer::send( $toAddress, $fromAddress, $subject, $body, null, null, 'dead-wikis', 0, array( $fileName ) );
 		} else {
-			UserMailer::send( $toAddress, $from, $subject, $bodyNoEntries, null, null , 'dead-wikis' );
+			UserMailer::send( $toAddress, $fromAddress, $subject, $bodyNoEntries, null, null , 'dead-wikis' );
 		}
 	}
 	
