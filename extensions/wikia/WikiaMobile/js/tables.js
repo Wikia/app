@@ -46,7 +46,7 @@ define('tables', ['events'], function(ev){
 					cellLength = row.cells.length;
 
 					//sample only the first X rows
-					if(cellLength > 2 || index == 9){
+					if(cellLength > 2 || j == 9){
 						break;
 					}
 
@@ -56,7 +56,7 @@ define('tables', ['events'], function(ev){
 				}
 
 				if(correctRows > Math.floor(rowsLength/2)) {
-					table.addClass('infobox');
+					table.className += ' infobox';
 					break;
 				}
 			}
