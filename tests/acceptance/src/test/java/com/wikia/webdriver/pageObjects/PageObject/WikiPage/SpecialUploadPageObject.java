@@ -5,6 +5,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import com.wikia.webdriver.Common.Core.CommonFunctions;
 import com.wikia.webdriver.Common.Logging.PageObjectLogging;
 import com.wikia.webdriver.pageObjects.PageObject.FilePageObject;
 import com.wikia.webdriver.pageObjects.PageObject.WikiBasePageObject;
@@ -50,6 +51,7 @@ public class SpecialUploadPageObject extends WikiBasePageObject {
 	public void CheckIgnoreAnyWarnings() {
 		PageObjectLogging.log("CheckIgnoreAnyWarnings", "Check 'Ignore Any Warnings' option", true, driver);
 		waitForElementByElement(IgnoreAnyWarnings);
+		CommonFunctions.scrollToElement(IgnoreAnyWarnings);
 //		CommonFunctions.scrollToElement(IgnoreAnyWarnings);
 		IgnoreAnyWarnings.click();
 		
