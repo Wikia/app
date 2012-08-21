@@ -36,15 +36,12 @@ public class PageObjectLogging implements WebDriverEventListener{
 	
 	public static void stopLoggingSuite()
 	{
-			imageCounter = 0; 
 			String l1 = "</body></html>";
-			CommonUtils.appendTextToFile(logPath, l1);
-			
+			CommonUtils.appendTextToFile(logPath, l1);		
 	}
 	
 	public static void startLoggingMethod(String className, String methodName)
 	{
-//			imageCounter = 0; 
 			String l1 = "<h1>Class: <em>"+className+"."+methodName+"</em></h1>";
 			String l2 = "<table>";
 			CommonUtils.appendTextToFile(logPath, l1);
@@ -62,17 +59,17 @@ public class PageObjectLogging implements WebDriverEventListener{
 	public static void log(String command, String description, boolean success, WebDriver driver)
 	{
 		
+		imageCounter +=1;
 		CommonUtils.captureScreenshot(screenPath+imageCounter, driver);
 		String hexColor = success ? "#CCFFCC" : "#FFCCCC";
 		String s = "<tr style=\"background:"+hexColor+";\"><td>"+command+"</td><td>"+description+"</td><td> <br/><a href='screenshots/screenshot"+imageCounter+".png'>Screenshot</a></td></tr>";
 		CommonUtils.appendTextToFile(logPath, s);
-		imageCounter +=1;
 	}
 	
 	public static void log(String command, String description, boolean success)
 	{
 		String hexColor = success ? "#CCFFCC" : "#FFCCCC";
-		String s = "<tr style=\"background:"+hexColor+";\"><td>"+command+"</td><td>"+description+"</td><td> <br/><a href='screenshots/screenshot"+imageCounter+".png'>Screenshot</a></td></tr>";
+		String s = "<tr style=\"background:"+hexColor+";\"><td>"+command+"</td><td>"+description+"</td><td> <br/> &nbsp;</td></tr>";
 		CommonUtils.appendTextToFile(logPath, s);
 	}
 	
