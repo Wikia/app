@@ -44,7 +44,7 @@ public class PageObjectLogging implements WebDriverEventListener{
 	
 	public static void startLoggingMethod(String className, String methodName)
 	{
-			imageCounter = 0; 
+//			imageCounter = 0; 
 			String l1 = "<h1>Class: <em>"+className+"."+methodName+"</em></h1>";
 			String l2 = "<table>";
 			CommonUtils.appendTextToFile(logPath, l1);
