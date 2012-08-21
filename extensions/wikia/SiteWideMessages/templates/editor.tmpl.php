@@ -258,40 +258,45 @@
 </div>
 
 <script type="text/javascript">
-function grayOut( e ) {
-	switch ( e.target.id ) {
-		case 'mSendModeWikisH':
-		case 'mSendModeWikisC':
-		case 'mSendModeWikisW':
-			$( '#mSendModeUsersA' ).prop( 'disabled', true );
-			if ( $( '#mSendModeUsersA' ).prop( 'checked' ) ) {
-				$( '#mSendModeUsersC' ).prop( 'checked', true );
-			}
-			break;
-		case 'mSendModeUsersU':
-		case 'mSendModeUsersM':
-			$( '#mSendModeWikisA' ).prop( 'disabled', true );
-			$( '#mSendModeWikisH' ).prop( 'disabled', true );
-			$( '#mSendModeWikisW' ).prop( 'disabled', true );
-			$( 'input.swm-lang-checkbox' ).prop( 'disabled', true );
-			break;
-		case 'mSendModeUsersIP':
-			$( '#mSendModeWikisA' ).prop( 'disabled', false );
-			$( '#mSendModeWikisC' ).prop( 'disabled', true );
-			$( '#mSendModeWikisH' ).prop( 'disabled', true );
-			$( '#mSendModeWikisW' ).prop( 'disabled', false );
-			$( 'input.swm-lang-checkbox' ).prop( 'disabled', false );
-			break;
-		default:
-			if ( $( '#mSendModeWikisA' ).prop( 'checked' ) ) {
-				$( '#mSendModeUsersA' ).prop( 'disabled', false );
-			}
-			$( '#mSendModeWikisA' ).prop( 'disabled', false );
-			$( '#mSendModeWikisH' ).prop( 'disabled', false );
-			$( '#mSendModeWikisW' ).prop( 'disabled', false );
-			$( 'input.swm-lang-checkbox' ).prop( 'disabled', false );
+jQuery( document ).ready( function ( $ ) {
+	function grayOut( e ) {
+		switch ( e.target.id ) {
+			case 'mSendModeWikisH':
+			case 'mSendModeWikisC':
+			case 'mSendModeWikisW':
+				$( '#mSendModeUsersA' ).prop( 'disabled', true );
+				if ( $( '#mSendModeUsersA' ).prop( 'checked' ) ) {
+					$( '#mSendModeUsersC' ).prop( 'checked', true );
+				}
+				break;
+			case 'mSendModeUsersU':
+			case 'mSendModeUsersM':
+				$( '#mSendModeWikisA' ).prop( 'disabled', true );
+				$( '#mSendModeWikisH' ).prop( 'disabled', true );
+				$( '#mSendModeWikisW' ).prop( 'disabled', true );
+				$( 'input.swm-lang-checkbox' ).prop( 'disabled', true );
+				break;
+			case 'mSendModeUsersIP':
+				$( '#mSendModeWikisA' ).prop( 'disabled', false );
+				$( '#mSendModeWikisC' ).prop( 'disabled', true );
+				$( '#mSendModeWikisH' ).prop( 'disabled', true );
+				$( '#mSendModeWikisW' ).prop( 'disabled', false );
+				$( 'input.swm-lang-checkbox' ).prop( 'disabled', false );
+				break;
+			default:
+				if ( $( '#mSendModeWikisA' ).prop( 'checked' ) ) {
+					$( '#mSendModeUsersA' ).prop( 'disabled', false );
+				}
+				$( '#mSendModeWikisA' ).prop( 'disabled', false );
+				$( '#mSendModeWikisH' ).prop( 'disabled', false );
+				$( '#mSendModeWikisW' ).prop( 'disabled', false );
+				$( 'input.swm-lang-checkbox' ).prop( 'disabled', false );
+		}
 	}
-}
-$( '#mSendModeWikisA' ).add( '#mSendModeWikisH' ).add( '#mSendModeWikisC' ).add( '#mSendModeWikisW' ).add( '#mSendModeUsersA' ).add( '#mSendModeUsersC' ).add( '#mSendModeUsersG' ).add( '#mSendModeUsersU' ).add( '#mSendModeUsersM' ).add( '#mSendModeUsersIP' ).bind( 'click', grayOut );
+	$( '#mSendModeWikisA' ).add( '#mSendModeWikisH' ).add( '#mSendModeWikisC' )
+		.add( '#mSendModeWikisW' ).add( '#mSendModeUsersA' ).add( '#mSendModeUsersC' )
+		.add( '#mSendModeUsersG' ).add( '#mSendModeUsersU' ).add( '#mSendModeUsersM' )
+		.add( '#mSendModeUsersIP' ).bind( 'click', grayOut );
+} );
 </script>
 <!-- e:<?= __FILE__ ?> -->
