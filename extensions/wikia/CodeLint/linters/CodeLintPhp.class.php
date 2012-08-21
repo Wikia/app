@@ -30,8 +30,9 @@ class CodeLintPhp extends CodeLint {
 	 * Actually, PHP storm will be run for a given directory.
 	 * XML reports will then be parsed to get issues for given file.
 	 *
-	 * @param string $fileName file to run Code Inspect for
+	 * @param string $dirName file to run Code Inspect for
 	 * @return string output from Code Inspect
+	 * @throws Exception
 	 */
 	protected function inspectDirectory($dirName) {
 		global $wgPHPStormPath, $IP;
@@ -114,6 +115,8 @@ class CodeLintPhp extends CodeLint {
 	 * Parse XML files in resuls directory and return list of problems found
 	 *
 	 * @param string $resultsDir results directory with XML files
+	 * @return array with list of problems
+	 * @throws Exception
 	 */
 	private function parseResults($resultsDir) {
 		global $IP;
@@ -125,6 +128,7 @@ class CodeLintPhp extends CodeLint {
 			// parse each XML file and add <problem> nodes to $problems array
 			$xml = simplexml_load_file($file);
 			if ($xml instanceof SimpleXMLElement) {
+				/* @var $xml SimpleXMLElement */
 				$nodes = $xml->xpath('//problem');
 
 				foreach($nodes as $node) {
