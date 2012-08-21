@@ -25,20 +25,14 @@ $app->registerClass('WikiaHubsV2Mobile', $dir . 'hooks/WikiaHubsV2MobileHooks.ph
 $app->registerClass('WikiaHubsV2Hooks', $dir . 'hooks/WikiaHubsV2Hooks.php');
 $app->registerClass('WikiaHubsV2SuggestController', $dir . 'WikiaHubsV2SuggestController.class.php');
 $app->registerClass('WikiaHubsV2SuggestModel', $dir . 'models/WikiaHubsV2SuggestModel.class.php');
-
+$app->registerClass('WikiaHubsV2Article', $dir . 'models/WikiaHubsV2Article.class.php');
 
 // pages
 $app->registerSpecialPage('WikiaHubsV2', 'SpecialWikiaHubsV2Controller');
-
-
-
 
 // i18n mapping
 $wgExtensionMessagesFiles['WikiaHubsV2'] = $dir . 'WikiaHubsV2.i18n.php';
 
 // hooks
 $app->registerHook('WikiaMobileAssetsPackages', 'WikiaHubsV2Mobile', 'onWikiaMobileAssetsPackages');
-//$app->registerHook('OutputPageBeforeHTML','WikiaHubsV2Hooks','onOutputPageBeforeHTML');
-
-//$app->registerHook('OutputPageMakeCategoryLinks','WikiaHubsHelper','onOutputPageMakeCategoryLinks');
-//$app->registerHook('OutputPageBeforeHTML','WikiaHubsHelper','onOutputPageBeforeHTML');
+$app->registerHook('ArticleFromTitle', 'WikiaHubsV2Hooks', 'onArticleFromTitle');

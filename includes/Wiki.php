@@ -125,6 +125,7 @@ class MediaWiki {
 
 		/* Wikia change begin - @author: nAndy */
 		/* Add hook to allow modification of page user is redirected to when title is not specified in URL */
+		/* It can be used for redirects but it changes url in end user's browser so it might not be what you want it to be */
 		wfRunHooks( 'AfterCheckInitialQueries', array( &$title, &$action, &$ret ) );
 		/* Wikia change end */
 

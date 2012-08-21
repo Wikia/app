@@ -149,7 +149,7 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 	}
 
 	protected function initVertical() {
-		$this->verticalId = $this->getRequest()->getVal('verticalid',WikiFactoryHub::CATEGORY_ID_GAMING);
+		$this->verticalId = $this->getRequest()->getVal('verticalid', WikiFactoryHub::CATEGORY_ID_GAMING);
 		$this->verticalName = $this->model->getVerticalName($this->verticalId);
 	}
 
