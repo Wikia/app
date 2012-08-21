@@ -130,10 +130,10 @@ class AchRankingService {
 	/**
 	* Returns the list of recently awarded badges for the current wiki and specified level
 	*
-	* @param $badgeLevel the level of the badges to list 
-	* @param $limit limit the list to the specified amount of items Integer
-	* @param $daySpan a span of days to subtract to the current date Integer
-	* @param $blackList a list of the badge type IDs to exclude from the result Array
+	* @param $badgeLevel - the level of the badges to list
+	* @param $limit - limit the list to the specified amount of items Integer
+	* @param $daySpan - a span of days to subtract to the current date Integer
+	* @param $blackList - a list of the badge type IDs to exclude from the result Array
 	* @return Array
 	*/
 	public function getRecentAwardedBadges($badgeLevel = null, $limit = null, $daySpan = null, $blackList = null) {
