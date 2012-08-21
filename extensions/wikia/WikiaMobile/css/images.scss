@@ -42,6 +42,10 @@ figure{
 	text-overflow: ellipsis;
 	white-space: nowrap;
 
+	.link & {
+		padding-right: 15px;
+	}
+
 	a {
 		color: inherit;
 		text-decoration: underline;

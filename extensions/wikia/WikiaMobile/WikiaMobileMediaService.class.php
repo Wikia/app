@@ -174,12 +174,12 @@ class WikiaMobileMediaService extends WikiaService {
 		$params = $this->request->getVal( 'parameters', null );
 		$linkAttribs = $this->request->getVal( 'anchorAttributes', array() );
 		$noscript = $this->request->getVal( 'noscript', null );
-		$linked = $this->request->getBool( 'linked', false );
+		$link = $this->request->getBool( 'link', false );
 		$content = $this->request->getVal( 'content' );
 
 		$attribs['data-src'] = $attribs['src'];
 		$attribs['src'] = $this->wf->BlankImgUrl();
-		$attribs['class'] = ( ( !empty( $attribs['class'] ) ) ? "{$attribs['class']} " : '' ) . self::CLASS_LAZYLOAD . ( ( empty( $linked ) ) ? ' ' . self::CLASS_MEDIA : '' );
+		$attribs['class'] = ( ( !empty( $attribs['class'] ) ) ? "{$attribs['class']} " : '' ) . self::CLASS_LAZYLOAD . ( ( empty( $link ) ) ? ' ' . self::CLASS_MEDIA : '' );
 
 		if ( !empty( $params ) ) {
 			$attribs['data-params'] = htmlentities( json_encode( $params ) , ENT_QUOTES );
