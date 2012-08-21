@@ -1,11 +1,9 @@
 <section class="Search">
 
 	<form class="WikiaSearch" id="search-v2-form" action="<?=$pageUrl;?>">
-		<?php if (empty($advancedSearchBox)) : ?>
-			<?php foreach($namespaces as $ns): ?>
-			<input type="hidden" name="ns<?=$ns;?>" value="1" />
-			<?php endforeach; ?>
-		<?php endif; ?>
+		<?php foreach($namespaces as $ns): ?>
+			<input type="hidden" class="default-tab-value" name="ns<?=$ns;?>" value="1" />
+		<?php endforeach; ?>
 
 		<?php if($isInterWiki): ?>
 			<p><?= wfMsg('wikiasearch2-global-search-headline') ?></p>
