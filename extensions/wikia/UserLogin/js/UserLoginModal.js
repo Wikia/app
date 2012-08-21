@@ -75,13 +75,10 @@ var UserLoginModal = {
 		return false;
 	},
 	isPreventingForceLogin: function(element) {
-		if(
-			!(element.closest('span').hasClass('drop'))
-			&& !(element.closest('ul').hasClass('WikiaMenuElement'))
-		) {
-			return true;
+		if(!(element.closest('span').hasClass('drop')) && !(element.closest('ul').hasClass('WikiaMenuElement'))) {
+			return false;
 		}
-		return false;
+		return true;
 	},
 	init: function() {
 		// attach event handler
@@ -95,8 +92,7 @@ var UserLoginModal = {
 		editpromptable.click($.proxy(function(ev) {
 			ev.stopPropagation(); // (BugId:34026) stop bubbling up when parent and child both have event listener.
 
-			if( !this.isPreventingForceLogin($(ev.target))
-				&& UserLogin.isForceLogIn()) {
+			if(!this.isPreventingForceLogin($(ev.target)) && UserLogin.isForceLogIn()) {
 				ev.preventDefault();
 			}
 		},this));
