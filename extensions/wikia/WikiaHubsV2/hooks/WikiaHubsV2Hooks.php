@@ -10,8 +10,10 @@ class WikiaHubsV2Hooks {
 	public function onArticleFromTitle(&$title, &$article) {
 		wfProfileIn(__METHOD__);
 
+		$app = F::app();
 		$dbKeyName = $title->getDBKey();
-		if( !empty(F::app()->wg->EnableWikiaHomePageExt) && $this->isHubsPage($dbKeyName) ) {
+		if( !empty($app->wg->EnableWikiaHomePageExt) && $this->isHubsPage($dbKeyName) ) {
+			$app->wg->SuppressPageHeader = true;
 			$article = F::build( 'WikiaHubsV2Article', array($title, $this->getHubPageId($dbKeyName)) );
 		}
 
