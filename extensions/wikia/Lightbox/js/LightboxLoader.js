@@ -322,16 +322,6 @@ var LightboxLoader = {
 };
 
 $(function() {
-	// Fix thumbnail overlay styles in IE8 (max-width/overflow hidden bug) (BugId:42229)
-	// TODO: this probably belongs in the VideoHandlers extension
-	if($.browser.msie && $.browser.version=="8.0") {
-		$('#WikiaArticle').find('.info-overlay-title').each(function() {
-			var $this = $(this),
-				width = $this.css('max-width');
-			$this.css('width', width);
-		});
-	}
-
 	if (!window.wgEnableLightboxExt) {
 		return;
 	}

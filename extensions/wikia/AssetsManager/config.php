@@ -65,6 +65,7 @@ $config['oasis_ads_js'] = array(
 $config['oasis_noads_extensions_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
+		'//extensions/wikia/VideoHandlers/js/VideoHandlers.js',
 		'//extensions/wikia/RelatedPages/js/RelatedPages.js',
 		'//extensions/wikia/CreatePage/js/CreatePage.js',
 		'//extensions/wikia/ImageLightbox/ImageLightbox.js',
