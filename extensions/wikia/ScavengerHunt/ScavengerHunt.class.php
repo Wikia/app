@@ -109,7 +109,7 @@ class ScavengerHunt {
 			return array();
 		}
 		$aAllGameArticles = $game->getArticleIdentifier();
-		$articleIdentifier = $this->makeIdentifier( $wikiId, $articleName );
+		$articleIdentifier = self::makeIdentifier( $wikiId, $articleName );
 
 		if ( in_array( $articleIdentifier, $aAllGameArticles ) ){
 			$aFoundArticles = $this->getDataFromCache();
@@ -167,18 +167,18 @@ class ScavengerHunt {
 		$aJSData['clueFont'] = $game->getClueFont();
 		$aJSData['clueSize'] = $game->getClueSize();
 		$aJSData['clueColor'] = $game->getClueColor();
-		$aJSData['progressBarBg'] = $this->formatSpriteForJS( $aData, 'progressBarBackgroundSprite' );
-		$aJSData['progressBarClose'] = $this->formatSpriteForJS( $aData, 'progressBarExitSprite' );
-		$aJSData['startingDialog'] = $this->formatSpriteForJS( $aData, 'startPopupSprite' );
-		$aJSData['goodbyeDialog'] = $this->formatSpriteForJS( $aData, 'finishPopupSprite' );
-		$aJSData['hintLabel'] = $this->formatSpriteForJS( $aData, 'progressBarHintLabel' );
+		$aJSData['progressBarBg'] = self::formatSpriteForJS( $aData, 'progressBarBackgroundSprite' );
+		$aJSData['progressBarClose'] = self::formatSpriteForJS( $aData, 'progressBarExitSprite' );
+		$aJSData['startingDialog'] = self::formatSpriteForJS( $aData, 'startPopupSprite' );
+		$aJSData['goodbyeDialog'] = self::formatSpriteForJS( $aData, 'finishPopupSprite' );
+		$aJSData['hintLabel'] = self::formatSpriteForJS( $aData, 'progressBarHintLabel' );
 		foreach( $game->getArticles() as $article ){
 			$aArticle = array();
 			$articleData = $article->getAll();
-			$aArticle['huntItem'] = $this->formatSpriteForJS( $articleData, 'spriteNotFound' );
-			$aArticle['notFound'] = $this->formatSpriteForJS( $articleData, 'spriteInProgressBarNotFound' );
-			$aArticle['found'] = $this->formatSpriteForJS( $articleData, 'spriteInProgressBar' );
-			$aArticle['active'] = $this->formatSpriteForJS( $articleData, 'spriteInProgressBarHover' );
+			$aArticle['huntItem'] = self::formatSpriteForJS( $articleData, 'spriteNotFound' );
+			$aArticle['notFound'] = self::formatSpriteForJS( $articleData, 'spriteInProgressBarNotFound' );
+			$aArticle['found'] = self::formatSpriteForJS( $articleData, 'spriteInProgressBar' );
+			$aArticle['active'] = self::formatSpriteForJS( $articleData, 'spriteInProgressBarHover' );
 			$aArticle['articleTitle'] = $article->getTitle();
 			$aArticle['articleClue'] = $article->getClueText();
 			$aArticle['articleName'] = $article->getArticleName();
@@ -212,7 +212,7 @@ class ScavengerHunt {
 			));
 			$aReturn['text'] = $template->render('modal-form');
 			$aReturn['title'] = $game->getEntryFormTitle();
-			$aReturn['image'] = $this->formatSpriteForJS( $game->getFinishPopupSprite() );
+			$aReturn['image'] = ScavengerHunt::formatSpriteForJS( $game->getFinishPopupSprite() );
 		}
 
 		return $aReturn;
@@ -249,7 +249,7 @@ class ScavengerHunt {
 		return -1;
 	}
 
-	public function formatSpriteForJS( $data, $key = false ){
+	public static function formatSpriteForJS( $data, $key = false ){
 		if ( !empty( $key ) ){
 			if ( isset( $data[$key] ) ){
 				$source = $data[$key];
@@ -457,12 +457,11 @@ class ScavengerHunt {
 		return $template->render('modal-clue');
 	}
 
-	public function makeIdentifier( $cityId, $articleName ){
+	public static function makeIdentifier( $cityId, $articleName ){
 		return ( $cityId.'|'.urldecode( $articleName ) );
 	}
 
 	public function onOpenGraphMetaBeforeCustomFields( $articleId, &$titleImage, &$titleDescription) {
-		global $wgCityId;
 		$games = F::build( 'ScavengerHuntGames' );
 		$elements = $games->getOpenGraphMetaElements();
 		if (

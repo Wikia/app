@@ -240,7 +240,7 @@ class ScavengerHuntGames {
 			self::log('performance', __METHOD__);
 			$enabledGames = $this->getEnabledGames();
 			$value = array();
-			foreach( $enabledGames as $game ){
+			foreach( $enabledGames as $game /** @var $game ScavengerHuntGame */ ){
 				$template = WF::build('EasyTemplate', array(dirname( __FILE__ ) . '/../templates/'));
 				$template->set_vars(array(
 					'game' => $game
