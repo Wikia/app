@@ -1,6 +1,8 @@
 <?php
 
 class WikiaHubsV2Hooks {
+	const hubCategoryFailover = 'Gaming';
+
 	/**
 	 * @param Title $title
 	 * @param Page $article
@@ -10,8 +12,8 @@ class WikiaHubsV2Hooks {
 	public function onArticleFromTitle(&$title, &$article) {
 		wfProfileIn(__METHOD__);
 
-		if( $this->isCorporateWiki() && $this->isHubsPage($title) ) {
-			$article = F::build( 'WikiaHubsV2Article', array($title, $this->getHubPageId($title->getDBKey())) );
+		if( HubService::isCorporatePage(F::app()->wg->CityId) && $this->isHubsPage($title) ) {
+			$article = F::build( 'WikiaHubsV2Article', array($title, $this->getHubPageId($title->getText())) );
 		}
 
 		wfProfileOut(__METHOD__);
@@ -19,24 +21,33 @@ class WikiaHubsV2Hooks {
 	}
 
 	/**
-	 * @return bool
-	 */
-	protected function isCorporateWiki() {
-		return (F::app()->wg->CityId == 80433) ? true : false;
-	}
-
-	/**
 	 * @param Title $title
 	 * @return bool
+	 *
+	 * @todo find a better way, global array variable?
 	 */
 	protected function isHubsPage($title) {
-		return ($title->getDBKey() === 'Entertainment' && !$title->isSubpage() ) ? true : false;
+		return in_array($title->getDBKey(), array(
+			'Video_Games',
+			'Videospiele',
+			'Entertainment',
+			'Lifestyle'
+		));
 	}
 
 	/**
 	 * @return bool
+	 *
+	 * @todo find a better way, global array variable?
 	 */
-	protected function getHubPageId() {
-		return (F::app()->wg->CityId == 80433) ? true : false;
+	protected function getHubPageId($hubName) {
+		$id = WikiFactoryHub::getInstance()->getIdByName($hubName);
+
+		if( !$id ) {
+			$hubName = self::hubCategoryFailover;
+			$id = WikiFactoryHub::getInstance()->getIdByName($hubName);
+		}
+
+		return $id;
 	}
 }
