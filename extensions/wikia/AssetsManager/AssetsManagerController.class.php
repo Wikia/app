@@ -196,6 +196,7 @@ class AssetsManagerController extends WikiaController {
 	 *
 	 * @param array relative paths to mustache templates
 	 * @return array templates content
+	 * @throws WikiaException 
 	 */
 	private function getMustacheTemplates($mustacheTemplates) {
 		wfProfileIn(__METHOD__);
