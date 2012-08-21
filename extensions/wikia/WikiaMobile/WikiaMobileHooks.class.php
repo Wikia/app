@@ -19,7 +19,7 @@ class WikiaMobileHooks extends WikiaObject{
 			if (
 				!empty( $translatedNs ) &&
 				preg_match_all(
-					'/(?:\[\[\b(?:' . $translatedNs . ')\b:.*\]\]\s{0,2}){2,}/',
+					'/(?:\[\[\b(?:' . $translatedNs . ')\b:[^\]]+\]\](\s)*){2,}/',
 					$text,
 					$matches,
 					PREG_OFFSET_CAPTURE
