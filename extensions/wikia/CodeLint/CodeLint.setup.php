@@ -41,6 +41,7 @@ $app->registerClass('CodeLintReport', $dir . '/CodeLintReport.class.php');
 $app->registerClass('CodeLintReportHtml', $dir . '/reports/CodeLintReportHtml.class.php');
 $app->registerClass('CodeLintReportJson', $dir . '/reports/CodeLintReportJson.class.php');
 $app->registerClass('CodeLintReportText', $dir . '/reports/CodeLintReportText.class.php');
+$app->registerClass('CodeLintReportBlame', $dir . '/reports/CodeLintReportBlame.class.php');
 
 // config
 $wgPHPStormPath = '/usr/share/phpstorm/bin';
