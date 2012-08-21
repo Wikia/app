@@ -20,6 +20,8 @@ public class CreateNewWikiPageObjectStep1 extends BasePageObject{
 	private WebElement wikiName;
 	@FindBy(name="wiki-domain") 
 	private WebElement wikiDomain;
+	@FindBy(css="span.domain-status-icon img[src*='check.png']")
+	private WebElement successIcon;
 	@FindBy(className="next") 
 	private WebElement submitButton;
 	
@@ -61,9 +63,14 @@ public class CreateNewWikiPageObjectStep1 extends BasePageObject{
 	 */
 	public void waitForSuccessIcon()
 	{
-
-		waitForElementByCss("span.domain-status-icon img[src*='check.png']");																				 
+		waitForElementByElement(successIcon);																				 
 		PageObjectLogging.log("waitForSuccessIcon", "Success icon found", true, driver);																							
+	}
+	
+	public CreateNewWikiPageObjectStep1 openCreateNewWikiPage()
+	{
+		driver.get("http://www.wikia.com/Special:CreateNewWiki?uselang=en");
+		return new CreateNewWikiPageObjectStep1(driver);
 	}
 	
 	public void verifyOccupiedWikiAddress(String wikiName)
