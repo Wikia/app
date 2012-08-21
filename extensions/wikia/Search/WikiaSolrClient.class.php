@@ -2,6 +2,8 @@
 
 class WikiaSolrClient extends WikiaSearchClient {
 
+	const VIDEO_WIKI = 298117;
+
 	protected $solrClient;
 	protected $solrPort;
 	protected $solrHost;
@@ -202,11 +204,17 @@ class WikiaSolrClient extends WikiaSearchClient {
 
 		array_walk($dismaxParams, function($val,$key) use (&$paramString) {$paramString .= "{$key}={$val} "; });
 
-		$queryClauses[] = sprintf('_query_:"{!edismax %s}%s"',
-					  $paramString,
-					  $sanitizedQuery);
+		$subQuery = sprintf('_query_:"{!edismax %s}%s"',
+							$paramString,
+							$sanitizedQuery);
 
-		$sanitizedQuery = implode(' AND ', $queryClauses);
+		$sanitizedQuery = sprintf("(%s AND %s)", implode(' AND ', $queryClauses), $subQuery);
+
+		if ( in_array( NS_FILE, $namespaces ) ) {
+			$orQuery = sprintf("(wid:%d AND ns:%d AND %s)", self::VIDEO_WIKI, NS_FILE, $subQuery);
+			$sanitizedQuery = sprintf("%s OR %s", $sanitizedQuery, $orQuery);
+			$params['fq'] = sprintf("(%s) OR (wid:%d)", $params['fq'], self::VIDEO_WIKI);
+		}
 
 		try {
 			$response = $this->solrClient->search($sanitizedQuery, $start, $size, $params);
