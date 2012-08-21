@@ -99,7 +99,7 @@ define('sections', ['events', 'track'], function(ev, track){
 
 			article.innerHTML = '';
 			article.appendChild( fragment );
-		}else{
+		}else if(article){//check if the node exists, since sometimes it doesn't (Example: User Profile Pages)
 			addNoSectClass(article);
 		}
 
