@@ -659,24 +659,6 @@ $config['mini_editor_rte_js'] = array(
 	)
 );
 
-/** Chat **/
-
-$config['chat_js'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => array(
-		'#group_oasis_jquery',
-		'//resources/wikia/polyfills/jquery.wikia.placeholder.js',
-		'//extensions/wikia/Chat/js/lib/socket.io.client.js',
-		'//extensions/wikia/JSMessages/js/JSMessages.js',
-		'//extensions/wikia/Chat/js/emoticons.js', // must be before controllers.js
-		'//extensions/wikia/Chat/js/lib/underscore.js',
-		'//extensions/wikia/Chat/js/lib/backbone.js',
-		'//extensions/wikia/Chat/js/models/models.js',
-		'//extensions/wikia/Chat/js/controllers/controllers.js',
-		'//extensions/wikia/Chat/js/views/views.js'
-	)
-);
-
 $config['chat_js2'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
@@ -693,7 +675,6 @@ $config['chat_js2'] = array(
 	)
 );
 
-// For Chat2 (doesn't exist in Chat(1))
 $config['chat_ban_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
