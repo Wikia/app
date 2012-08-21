@@ -30,15 +30,14 @@ $wgSpecialPages['InterwikiEdit'] = 'InterwikiEdit';
 class InterwikiEdit extends SpecialPage {
 
 	public function InterwikiEdit(){
-		SpecialPage::SpecialPage('InterwikiEdit');
+		parent::__construct('InterwikiEdit');
 	}
 
 	function execute(){
 		global $wgOut, $wgUser, $wgRequest;
 
 		if( !$wgUser->isAllowed( 'InterwikiEdit' ) ) {
-			$wgOut->permissionRequired( 'InterwikiEdit' );
-			return;
+			throw new PermissionsError( 'InterwikiEdit' );
 		}
 
 		$action = $wgRequest->getVal('action', 'choose');
@@ -174,7 +173,7 @@ function wfSIWEChangeUmbrella(){
 }
 
 function wfSIWEEditInterwiki(){
-	global $wgOut, $wgRequest;
+	global $wgRequest;
 
 	$ret = '';
 
@@ -185,10 +184,6 @@ function wfSIWEEditInterwiki(){
 	        return wfSIWEChooseAction();
 	}
 	$db = wfGetDB (DB_MASTER, array(), $wikiaDB );
-
-	$db =& wfGetDB (DB_MASTER, array(), $wikiaDB );
-
-	global $IP;
 
 	$fields['iw_prefix'] = htmlspecialchars($wgRequest->getVal('iw_prefix', null));
 	$fields['iw_url'] = htmlspecialchars($wgRequest->getVal('iw_url', null));
@@ -332,7 +327,7 @@ function wfSIWEEditInterwiki(){
 	                }
 
 	        }else{
-	                alert('JS error: didn\'t manage to get some HTML element');
+	                alert(\"JS error: didn't manage to get some HTML element\");
 	        }
 	}
 
@@ -422,8 +417,6 @@ function wfSIWEEditInterwiki(){
 }
 
 function wfSIWELinkWikis(){
-	global $wgOut;
-
 	list($wikia, $wikiaID, $ext_wikia, $ext_wikiaID) = wfSIWEGetRequestData();
 
 	list($wikiaID, $wikiaDB, $wikiaURL, $wikiaUmbrella, $wikiaLang) = wfSIWEGetWikiaData($wikia, $wikiaID);
@@ -553,9 +546,8 @@ function wfSIWEClearCache() {
 	}
 
 	foreach ( $prefixes as $prefix ) {
-		$r = $wgMemc->delete("$db:interwiki:" . md5($prefix) );
+		$wgMemc->delete("$db:interwiki:" . md5($prefix) );
 	}
 
 	return 'Cache cleared for ' . $db;
 }
-
