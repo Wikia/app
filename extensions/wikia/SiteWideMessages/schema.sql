@@ -23,7 +23,7 @@ CREATE index removed_mode_expire_date ON messages_text (msg_removed,msg_mode,msg
 CREATE TABLE IF NOT EXISTS `messages_status`
 (
 	`msg_wiki_id`      int (9),
-	`msg_recipient_id` int (10) unsigned, -- NULL -> message to ALL users
+	`msg_recipient_id` int (10) unsigned   NOT NULL    default 0,
 	`msg_id`           int (7)  unsigned   NOT NULL,
 	`msg_status`       tinyint             NOT NULL,
 	`msg_date`         timestamp           NOT NULL    default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
