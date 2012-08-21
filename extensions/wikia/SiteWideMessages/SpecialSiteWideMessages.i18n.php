@@ -135,6 +135,12 @@ $messages['qqq'] = array(
 	'swm-list-table-lang' => '{{Identical|Language}}',
 	'swm-yes' => '{{Identical|Yes}}',
 	'swm-no' => '{{Identical|No}}',
+	'swm-label-mode-users-registration' => 'Label for option to select users by registration date.',
+	'swm-mode-users-registration-after' => 'Option to select if user wants to send message to users who registered after the given date.',
+	'swm-mode-users-registration-before' => 'Option to select if user wants to send message to users who registered before the given date.',
+	'swm-mode-users-registration-between' => 'Option to select if user wants to send message to users who registered between two given dates.',
+	'swm-label-mode-users-registration-hint' => 'Message that lets the user know that dates must be in the form 2012-04-01 00:00:00.',
+	'swm-error-registered-tobeforefrom' => 'Error message when given user registration end date is before start date.',
 );
 
 /** Afrikaans (Afrikaans)
