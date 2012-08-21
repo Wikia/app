@@ -17,7 +17,7 @@ define('tables', ['events'], function(ev){
 	}
 
 	function removeScripts(elm){
-		var scripts = elm.getElementsByTagName('caption'),
+		var scripts = elm.getElementsByTagName('script'),
 			script,
 			i = 0;
 
