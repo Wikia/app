@@ -169,6 +169,12 @@ class CodeLintPhp extends CodeLint {
 			if (preg_match('#^Field \'(.*)\' not found in class$#', $error['error'])) {
 				$keep = false;
 			}
+
+			switch($error['error']) {
+				case "Undefined variable 'IP'":
+					$keep = false;
+					break;
+			}
 		}
 
 		return $keep;
