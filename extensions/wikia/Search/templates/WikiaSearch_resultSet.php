@@ -30,6 +30,6 @@
 			<?php else: break; endif; ?>
 		<?php endfor; ?>
 	</li>
-<?php else: ?>
-	<?= $app->getView( 'WikiaSearch', 'result', array( 'result' => $resultSet->next(), 'gpos' => 0, 'pos' => $pos, 'debug' => $debug, 'query' => $query, 'rank' =>  $resultSet->getHeader('cityRank'), 'isInterWiki'=> true, 'relevancyFunctionId' => $relevancyFunctionId )); ?>
+<?php elseif ($nextResult = $resultSet->next()): ?>
+	<?= $app->getView( 'WikiaSearch', 'result', array( 'result' => $nextResult, 'gpos' => 0, 'pos' => $pos, 'debug' => $debug, 'query' => $query, 'rank' =>  $resultSet->getHeader('cityRank'), 'isInterWiki'=> true, 'relevancyFunctionId' => $relevancyFunctionId )); ?>
 <?php endif; ?>
