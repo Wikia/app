@@ -84,7 +84,7 @@ public class Properties {
 		Global.BROWSER = System.getProperty("browser");
 		Global.CONFIG_FILE = new File(System.getProperty("config"));
 		Global.DOMAIN = System.getProperty("base-address");
-		Global.LIVE_DOMAIN = "http://wikia.com/";
+		Global.LIVE_DOMAIN = "http://www.wikia.com/";
 		
 	}
 	
