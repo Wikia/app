@@ -136,7 +136,7 @@ class HomePageList {
 		return self::_related_questions("related_answered_questions", "yes", $wgTitle, $ignore_cache);
 	}
 
-	function related_unanswered_questions($is_ajax = false) {
+	static  function related_unanswered_questions($is_ajax = false) {
 		global $wgRequest, $wgTitle;
 
 		if ($is_ajax) {
