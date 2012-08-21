@@ -75,7 +75,7 @@ class AutoCreateWiki {
 	 *
 	 * @return array with matches
 	 */
-	function getDomainsLikeOrExact( $name, $language = null, $type = false ) {
+	public static function getDomainsLikeOrExact( $name, $language = null, $type = false ) {
 		global $wgExternalSharedDB;
 		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
 
