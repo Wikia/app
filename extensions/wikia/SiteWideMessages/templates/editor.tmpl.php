@@ -169,6 +169,26 @@
 								<?= wfMsg( 'swm-label-mode-users-anon-hint' ) ?>
 							</td>
 						</tr>
+						<tr>
+							<td>
+								<input name="mSendModeUsers" id="mSendModeUsersReg" type="radio" value="REGISTRATION"<?= $formData['sendModeUsers'] == 'REGISTRATION' ? ' checked="checked"' : ''; ?>/>
+							</td>
+							<td>
+								<label for="mSendModeUsersReg"><?= wfMsg( 'swm-label-mode-users-registration' ) ?></label>
+							</td>
+							<td>
+								<select name="mRegistrationS" id="mRegistrationS">
+									<option value="after"<?= $formData['registrationDateOption'] == 'after' ? ' selected="selected"' : ''; ?>><?= wfMsg( 'swm-mode-users-registration-after' ) ?></option>
+									<option value="before"<?= $formData['registrationDateOption'] == 'before' ? ' selected="selected"' : ''; ?>><?= wfMsg( 'swm-mode-users-registration-before' ) ?></option>
+									<option value="between"<?= $formData['registrationDateOption'] == 'between' ? ' selected="selected"' : ''; ?>><?= wfMsg( 'swm-mode-users-registration-between' ) ?></option>
+								</select>
+								<input name="mRegistrationDateOne" id="mRegistrationDateOne" type="text" size="20" value="<?= $formData['registrationDateOne'] ?>" />
+								<input name="mRegistrationDateTwo" id="mRegistrationDateTwo" type="text" size="20" value="<?= $formData['registrationDateTwo'] ?>" style="display: <?= $formData['registrationDateOption'] == 'between' ? 'inline' : 'none' ?>" />
+							</td>
+							<td>
+								<?= wfMsg( 'swm-label-mode-users-registration-hint' ) ?>
+							</td>
+						</tr>
 					</table>
 				</fieldset>
 			</fieldset>
@@ -283,6 +303,13 @@ jQuery( document ).ready( function ( $ ) {
 				$( '#mSendModeWikisW' ).prop( 'disabled', false );
 				$( 'input.swm-lang-checkbox' ).prop( 'disabled', false );
 				break;
+			case 'mSendModeUsersReg':
+				$( '#mSendModeWikisA' ).prop( 'disabled', false );
+				$( '#mSendModeWikisC' ).prop( 'disabled', true );
+				$( '#mSendModeWikisH' ).prop( 'disabled', true );
+				$( '#mSendModeWikisW' ).prop( 'disabled', true );
+				$( 'input.swm-lang-checkbox' ).prop( 'disabled', false );
+				break;
 			default:
 				if ( $( '#mSendModeWikisA' ).prop( 'checked' ) ) {
 					$( '#mSendModeUsersA' ).prop( 'disabled', false );
@@ -296,7 +323,15 @@ jQuery( document ).ready( function ( $ ) {
 	$( '#mSendModeWikisA' ).add( '#mSendModeWikisH' ).add( '#mSendModeWikisC' )
 		.add( '#mSendModeWikisW' ).add( '#mSendModeUsersA' ).add( '#mSendModeUsersC' )
 		.add( '#mSendModeUsersG' ).add( '#mSendModeUsersU' ).add( '#mSendModeUsersM' )
-		.add( '#mSendModeUsersIP' ).bind( 'click', grayOut );
+		.add( '#mSendModeUsersIP' ).add( '#mSendModeUsersReg' ).bind( 'click', grayOut );
+
+	$( '#mRegistrationS' ).change( function () {
+		if ( $( this ).val() === 'between' ) {
+			$( '#mRegistrationDateTwo' ).show();
+		} else {
+			$( '#mRegistrationDateTwo' ).hide();
+		}
+	} );
 } );
 </script>
 <!-- e:<?= __FILE__ ?> -->
