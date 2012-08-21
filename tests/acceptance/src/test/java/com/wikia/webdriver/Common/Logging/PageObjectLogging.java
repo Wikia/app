@@ -136,7 +136,7 @@ public class PageObjectLogging implements WebDriverEventListener{
 	@Override
 	public void afterClickOn(WebElement element, WebDriver driver) {
 		
-		String s = "<tr style=\"background:#CCFFCC;\"><td>click</td><td>"+lastFindBy+"</td><td> <br/><a href='screenshots/screenshot"+imageCounter+".png'>Screenshot</a></td></tr>";
+		String s = "<tr style=\"background:#CCFFCC;\"><td>click</td><td>"+lastFindBy+"</td><td> <br/> &nbsp;</td></tr>";
 		CommonUtils.appendTextToFile(logPath, s);
 
 //		System.out.println("afterClick");
