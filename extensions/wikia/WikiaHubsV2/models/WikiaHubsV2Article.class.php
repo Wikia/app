@@ -22,7 +22,9 @@ class WikiaHubsV2Article extends Article {
 
 		//render hub page
 		$app = F::app();
-		RequestContext::getMain()->getRequest()->setVal('verticalid', $this->verticalId);
+		if( !empty($this->verticalId) ) {
+			RequestContext::getMain()->getRequest()->setVal('verticalid', $this->verticalId);
+		}
 		$app->wg->Out->clearHTML();
 		$app->wg->Out->addHTML( $app->sendRequest('SpecialWikiaHubsV2Controller', 'index') );
 
