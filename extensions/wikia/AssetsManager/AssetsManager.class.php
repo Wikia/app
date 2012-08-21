@@ -79,6 +79,7 @@ class AssetsManager {
 	 * if it's an array then it must contain only single file assets or packages (not mixed) and all of the same type.
 	 * Please note that when passing an array this method will try to return a combined URL if possible (works only for non-SASS packages ATM),
 	 * if you want/need separate URL's for each asset in the array then call this method separately for each of them.
+	 * @param mixed $type either string "js" or "css" or "scss"
 	 * @param bool $local [OPTIONAL] wether to fetch per-wiki local URL's or not,
 	 * (false by default, i.e. the method returns a shared host URL's for our network).
 	 *
@@ -569,6 +570,8 @@ class AssetsManager {
 	 * @param bool $local wheter to fetch the URL with or without domain
 	 *
 	 * @return string the multi-type URL
+	 *
+	 * @throws WikiaException in case of empty request
 	 *
 	 * @example
 	 * 	F::build( 'AssetsManager', array(), 'getInstance' )->getMultiTypePackageURL( array (
