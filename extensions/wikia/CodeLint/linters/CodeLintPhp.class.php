@@ -208,7 +208,7 @@ class CodeLintPhp extends CodeLint {
 	}
 
 	/**
-	 * Decide whether given error is important and should be eventaully marked in the report
+	 * Decide whether given error is important and should be eventually marked in the report
 	 *
 	 * @param string $errorMsg error message
 	 * @return boolean is it an important error
