@@ -71,6 +71,10 @@ class SWMSendToGroupTask extends BatchTask {
 					case 'USERS':
 						$result = $this->sendMessageToList( $args );
 						break;
+
+					case 'REGISTRATION':
+						$result = $this->sendMessageToRegistered( $args );
+						break;
 				}
 				break;
 
@@ -235,6 +239,18 @@ class SWMSendToGroupTask extends BatchTask {
 									$args['senderId']
 								);
 								break;
+
+							case 'REGISTRATION':
+								$desc = sprintf('SiteWideMessages :: Send to users by registration date on all wikis<br/>' .
+									'Option: %s, Start date: %s, End date: %s, Wiki: <i>ALL</i><br/>' .
+									'Sender: %s [id: %d]',
+									$args['regOption'],
+									$args['regStartDate'],
+									( $args['regEndDate'] === false ? '' : $args['regEndDate'] ),
+									$args['senderName'],
+									$args['senderId']
+								);
+								break;
 						}
 						break;
 
@@ -377,6 +393,60 @@ class SWMSendToGroupTask extends BatchTask {
 		}
 
 		$this->addLog("Step 2 of 2: add records about new message to right users [number of users = " . count( $sqlValues ) . "]");
+		$result = $this->sendMessageHelperToUsers( $sqlValues );
+
+		unset( $sqlValues );
+
+		return $result;
+	}
+
+	/**
+	 * sendMessageToRegistered
+	 *
+	 * sends a message to specified group of users
+	 *
+	 * @access private
+	 * @author Daniel Grunwell (grunny)
+	 *
+	 * @param mixed $params - task arguments
+	 *
+	 * @return boolean: result of sending
+	 */
+	private function sendMessageToRegistered( $params ) {
+		global $wgExternalSharedDB;
+		$result = true;
+		$sqlValues = array();
+		$where = array();
+
+		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
+
+		switch ( $params['regOption'] ) {
+			case 'after':
+				$where[] = "user_registration > {$dbr->addQuotes( $params['regStartDate'] )}";
+				break;
+
+			case 'before':
+				$where[] = "user_registration < {$dbr->addQuotes( $params['regStartDate'] )}";
+				break;
+
+			case 'between':
+				$where[] = "user_registration BETWEEN {$dbr->addQuotes( $params['regStartDate'] )} AND {$dbr->addQuotes( $params['regEndDate'] )}";
+				break;
+		}
+
+		$this->addLog( "Step 1 of 2: make list of user ids from users who registered {$params['regOption']} start date {$params['regStartDate']} and {$params['regEndDate']}." );
+		$res = $dbr->select(
+			array( 'user' ),
+			array( 'user_id' ),
+			$where,
+			__METHOD__
+		);
+		while ( $row = $dbr->fetchObject( $res ) ) {
+			$sqlValues[] = "(NULL, {$row->user_id}, {$params['messageId']}, " . MSG_STATUS_UNSEEN . ')';
+		}
+		$dbr->freeResult( $res );
+
+		$this->addLog( 'Step 2 of 2: add records about new message to right users [number of users = ' . count( $sqlValues ) . ']' );
 		$result = $this->sendMessageHelperToUsers( $sqlValues );
 
 		unset( $sqlValues );
