@@ -1848,7 +1848,6 @@ class soap_transport_http extends nusoap_base {
 		$this->outgoing_headers['Accept-Encoding'] = $enc;
 		$this->outgoing_headers['Connection'] = 'close';
 		$this->persistentConnection = false;
-		set_magic_quotes_runtime(0);
 		// deprecated
 		$this->encoding = $enc;
 	}
