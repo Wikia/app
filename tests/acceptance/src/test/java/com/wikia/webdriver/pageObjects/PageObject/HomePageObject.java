@@ -64,7 +64,8 @@ public class HomePageObject extends BasePageObject{
 	
 	public CreateNewWikiPageObjectStep1 startAWiki()
 	{
-		startWikiButton.click();
+		startWikiButton.click();	
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("form[name='label-wiki-form']")));
 		verifyURL(Global.LIVE_DOMAIN+"Special:CreateNewWiki?uselang=en");
 		return new CreateNewWikiPageObjectStep1(driver);
 	}
