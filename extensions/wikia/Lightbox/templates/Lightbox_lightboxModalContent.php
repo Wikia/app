@@ -69,7 +69,7 @@
 			<?= wfMsg('lightbox-header-added-by', '<a href="{{userPageUrl}}" target="_blank">{{userName}}</a>') ?>
 			{{#isPostedIn}}
 				<span class="posted-in">
-					<?= wfMsg('lightbox-header-posted-in', '{{#smallerArticleList}}<span class="posted-in-article"><a href="{{articleUrl}}" target="_blank">{{articleTitle}}</a></span>{{/smallerArticleList}}{{#articleListIsSmaller}}&hellip;{{/articleListIsSmaller}}') ?>
+					<?= wfMsg('lightbox-header-posted-in', '{{#smallerArticleList}}<span class="posted-in-article"><a href="{{url}}" target="_blank">{{title}}</a></span>{{/smallerArticleList}}{{#articleListIsSmaller}}&hellip;{{/articleListIsSmaller}}') ?>
 				</span>
 			{{/isPostedIn}}
 		</div>
@@ -193,11 +193,11 @@
 						    )
 						);
 					?>
-					<?= wfRenderModule('WikiaForm', 'Index', array('form' => $formHeader)); ?>								
+					<?= wfRenderModule('WikiaForm', 'Index', array('form' => $formHeader)); ?>
 					{{#embedMarkup}}
-						<?= wfRenderModule('WikiaForm', 'Index', array('form' => $formEmbed)); ?>								
+						<?= wfRenderModule('WikiaForm', 'Index', array('form' => $formEmbed)); ?>
 					{{/embedMarkup}}
-					<?= wfRenderModule('WikiaForm', 'Index', array('form' => $formFilePage)); ?>								
+					<?= wfRenderModule('WikiaForm', 'Index', array('form' => $formFilePage)); ?>
 				</div>
 				<div class="email">
 					<?php 
@@ -226,7 +226,7 @@
 							)
 						);
 					?>
-					<?= wfRenderModule('WikiaForm', 'Index', array('form' => $form)); ?>				
+					<?= wfRenderModule('WikiaForm', 'Index', array('form' => $form)); ?>
 				</div>
 			</div>
 		</div>
