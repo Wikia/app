@@ -111,7 +111,7 @@ class CodeLintPhp extends CodeLint {
 	}
 
 	/**
-	 * Parse XML files in resuls directory and return list of problems foudn
+	 * Parse XML files in resuls directory and return list of problems found
 	 *
 	 * @param string $resultsDir results directory with XML files
 	 */
