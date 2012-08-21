@@ -15,7 +15,7 @@ require $IP . '/extensions/wikia/CodeLint/CodeLint.setup.php';
 function printHelp() {
 		echo <<<HELP
 Performs lint check on given file / directory
-USAGE: php codelint.php --file|--dir [--help] [--blacklist] [--mode] [--format] [--output]
+USAGE: php codelint.php --file|--dir [--help] [--blacklist] [--mode] [--format] [--output] [--blame-report]
 
 	--help
 		Show this help information
@@ -37,6 +37,9 @@ USAGE: php codelint.php --file|--dir [--help] [--blacklist] [--mode] [--format] 
 
 	--output
 		Name of the file to write report to
+
+	--blame-report
+		Name of the JSON file to write blame report to
 
 HELP;
 }
@@ -97,6 +100,15 @@ if (!empty($output)) {
 }
 else {
 	echo $report;
+}
+
+// generate JSON blame report
+$blmaeReport = isset($options['blame-report']) ? $options['blame-report'] : false;
+
+if ($blmaeReport !== false) {
+	$report = $lint->formatReport($results, 'blame');
+	file_put_contents($blmaeReport, json_encode($report));
+	echo "\nBlame report saved to {$blmaeReport}\n";
 }
 
 // this script is run by CruiseControl requiring return code to equal zero
