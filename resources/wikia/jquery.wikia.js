@@ -24,6 +24,18 @@ $.getSassLocalURL = function(scssFilePath, params) {
 		replace('%4$d', wgStyleVersion);
 };
 
+$.getAssetManagerGroupUrl = function( groups, params ) {
+	if ( typeof groups == 'string' ) {
+		groups = [ groups ];
+	}
+
+	return wgAssetsManagerQuery .
+		replace( '%1$s', 'groups' ) .
+		replace( '%2$s', groups.join( ',' ) ) .
+		replace( '%3$s', params ? encodeURIComponent( $.param( params ) ) : '-' ) .
+		replace( '%4$d', wgStyleVersion );
+}
+
 //see http://jamazon.co.uk/web/2008/07/21/jquerygetscript-does-not-cache
 $.ajaxSetup({cache: true});
 
@@ -196,7 +208,7 @@ $.showCustomModal = function(title, content, options) {
 	if (typeof options.callback == 'function') {
 		options.callback(modal);
 	}
-	
+
 	return modal;
 };
 

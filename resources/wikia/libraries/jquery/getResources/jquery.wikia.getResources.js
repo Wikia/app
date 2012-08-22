@@ -1,64 +1,86 @@
+(function( $ ) {
+
 /**
- * Fetches given list of JS / CSS / SASS files and then fires callback (RT #70163)
+ * Fetches a list of resources and fires a callback when they have all finished
+ * loading. Supports CSS, JavaScript, Sass and AssetManager groups.
+ *
+ * TODO: Right now, asset group file type is determined by searching for a
+ * file type extension in the URI. Is there a better way to detect file type?
  *
  * @author macbre
- *
- * FIXME: added support for asset manager groups, but it assumes they are javascript (which is not always true)
+ * @author kflorence
  */
-jQuery.getResources = function(resources, callback, failureFn) {
-	var isJs = /.js(\?(.*))?$/,
-		isCss = /.css(\?(.*))?$/,
-		isSass = /.scss/,
-		isGroup = /__am\/\d+\/group/,
-		jsFiles = [],
-		remaining = 0,
-		dfd = new jQuery.Deferred();
+var getResources = (function() {
+	var l, n, matches, remaining,
+		rAssetManagerGroup = /__am\/\d+\/groups?\/.*\/(.*)$/,
+		rAssetManagerGroupType = /(js|s?css)/,
+		rExtension = /\.(js|s?css)$/;
 
-	// called every time:
-	//  - loader function is completed
-	//  - yepnope loads all CSS / JS files
-	var onComplete = function() {
-		remaining--;
+	return function( resources, success, failure ) {
+		var dfd = new $.Deferred();
 
-		// all files have been downloaded
-		if (remaining === 0) {
-			if (typeof callback == 'function') {
-				callback();
+		// This will be called everytime a resource is loaded
+		var complete = function() {
+			remaining--;
+
+			// All files have been downloaded
+			if ( remaining === 0 ) {
+				if ( typeof success == 'function' ) {
+					success();
+				}
+
+				// Resolve the deferred object
+				dfd.resolve();
+			}
+		};
+
+		// Support single resource
+		if ( !$.isArray( resources ) ) {
+			resources = [ resources ];
+		}
+
+		for ( n = 0, l = remaining = resources.length; n < l; n++ ) {
+			var resource = resources[ n ],
+				type = typeof resource;
+
+			// "loader" function: $.loadYUI, $.loadJQueryUI
+			if ( type == 'function' ) {
+				resource.call( $, complete );
+				continue;
+
+			// AssetsManager package object (e.g. as passed by JSSnippets)
+			} else if ( type == 'object' ) {
+				if ( resource.type && resource.url ) {
+					type = resource.type;
+					resource = resource.url;
+				}
+
+			// URI string
+			} else if ( type == 'string' ) {
+				matches = resource.match( rAssetManagerGroup );
+				matches = matches ? matches[ 1 ].match( rAssetManagerGroupType ) : resource.match( rExtension );
+				type = matches ? matches[ 1 ] : 'unknown';
 			}
 
-			// resolve deferred object
-			dfd.resolve();
-		}
-	};
+			if ( type == 'js' ) {
+				$.getScript( resource, complete, failure );
 
-	// download files:
-	// 1. call functions, i.e. library loaders
-	// 2. prepare list of CSS and JS files to be fetched using async loader
-	remaining = resources.length;
+			} else if ( type == 'css' || type == 'scss' ) {
+				$.getCSS( resource, complete );
 
-	for (var n=0, len=resources.length; n<len; n++) {
-		var resource = resources[n],
-			type = '';
-
-		//AssetsManager package object (e.g. as passed by JSSnippets)
-		if(resource && resource.type && resource.url) {
-			type = resource.type;
-			resource = resource.url;
+			} else {
+				dfd.reject({
+					error: 'Unknown type',
+					resource: resource
+				});
+			}
 		}
 
-		// "loader" function: $.loadYUI, $.loadJQueryUI
-		if (typeof resource == 'function') {
-			resource.call(jQuery, onComplete);
-		}
-		// CSS /SASS files
-		else if (type == 'css' || isCss.test(resource) || isSass.test(resource)) {
-			$.getCSS(resource, onComplete);
-		}
-		// JS files and Asset Manager groups are scripts
-		else if (type == 'js' || isJs.test(resource) || isGroup.test(resource)) {
-			$.getScript(resource, onComplete, failureFn);
-		}
+		return dfd.promise();
 	}
+}());
 
-	return dfd.promise();
-};
+// Exports
+$.getResources = $.getResource = getResources;
+
+})( jQuery );
