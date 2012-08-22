@@ -14,7 +14,7 @@ define('layout', ['sections', 'media', 'cache'], function(sections, media, cache
 		tablesKey = 'wideTables' + wgStyleVersion,
 		ttl = 604800,//7days
 		process = function(res){
-			//cache.get(tablesKey, res, ttl);
+			cache.set(tablesKey, res, ttl);
 
 			var scripts = res.scripts,
 				l = scripts.length,
@@ -55,14 +55,14 @@ define('layout', ['sections', 'media', 'cache'], function(sections, media, cache
 			Wikia.getMultiTypePackage({
 				scripts: 'wikiamobile_tables_js' + (!Modernizr.overflow ? ',wikiamobile_scroll_js' : ''),
 				styles: '/extensions/wikia/WikiaMobile/css/tables.scss',
-				//ttl: ttl,
+				ttl: ttl,
 				callback: process
 			});
 		}
 	}
 
 	//init media
-	if(images.length === 0){
+	if(images.length === 0 && !document.querySelector('figure.link')){
 		media.oldInit();
 	}else{
 		media.init(images);
