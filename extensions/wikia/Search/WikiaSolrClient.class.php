@@ -117,7 +117,7 @@ class WikiaSolrClient extends WikiaSearchClient {
 				'f.html.hl.alternateField' => 'html',
 				'f.html.hl.maxAlternateFieldLength' => $isMobile ? 100 : 300,
 				'indent' => 1,
-				'timeAllowed' => 5000,
+				'timeAllowed' => $this->isInterWiki ? 7500 : 5000,
 				);
 
 		$params['sort'] = $this->getRankSort($rank);
@@ -138,6 +138,7 @@ class WikiaSolrClient extends WikiaSearchClient {
 
 		if( $this->isInterWiki ) {
 			$queryClauses += $this->getInterWikiQueryClauses($hub);
+			$sanitizedQuery = preg_replace('/\bwiki\b/i', '', $sanitizedQuery);
 
 			// this is still pretty important!
 			$boostQueries[] = self::valueForField('wikititle', $queryNoQuotes, array('boost'=>15, 'quote'=>'\"'));
@@ -269,7 +270,7 @@ class WikiaSolrClient extends WikiaSearchClient {
 		$docs = empty( $response->response->docs ) ? array() : $response->response->docs;
 
 		// @todo replace Apache_Solr_Service with something more sensible. maybe homegrown.
-		if (empty($docs) && $response->grouped !== null) {
+		if (empty($docs) && is_object($response->grouped)) {
 			foreach ($response->grouped->host->groups as $group) {			
 				$docs = array();
 				foreach ($group->doclist->docs as $doc) {
@@ -291,7 +292,7 @@ class WikiaSolrClient extends WikiaSearchClient {
 		}
 		$highlighting = empty($highlighting) ? array() : $highlighting;
 
-		if ($response->grouped === null) {
+		if (!is_object($response->grouped)) {
 			$numFound = $response->response === null ? 0 : $response->response->numFound;
 			$resultsStart = $response->response === null ? 0 : $response->response->start;
 			$method = 'getWikiaResults';
@@ -325,6 +326,12 @@ class WikiaSolrClient extends WikiaSearchClient {
 			$results = array();
 			$position = 1;
 			$cityId = null;
+			$cityArticlesNum = 0;
+			$latestResultDate = 0;
+
+			if (empty($groupedSolrDoc->doclist->docs)) {
+				continue;
+			}
 
 			foreach($groupedSolrDoc->doclist->docs as $doc) {
 
@@ -342,6 +349,14 @@ class WikiaSolrClient extends WikiaSearchClient {
 					$position++;
 					$cityId = $cityId ?: $result->getCityId();
 				}
+
+				$resultDate = strtotime($result->getVar('indexed'));
+				if ($latestResultDate < $resultDate) {
+					$cityArticlesNum = (($val = $result->getVar('cityArticlesNum', false)) && $val) ? $val : $cityArticlesNum;
+					$latestResultDate = $resultDate;
+				}
+
+
 			}
 
 			$resultSet = F::build( 'WikiaSearchResultSet', 
@@ -356,8 +371,7 @@ class WikiaSolrClient extends WikiaSearchClient {
 			$resultSet->setHeader('cityId', $cityId );
 			$resultSet->setHeader('cityTitle', WikiFactory::getVarValueByName( 'wgSitename', $cityId ));
 			$resultSet->setHeader('cityUrl', WikiFactory::getVarValueByName( 'wgServer', $cityId ));
-			// can give inaccurate results, but reduces backend load
-			$resultSet->setHeader('cityArticlesNum', $result->getVar('cityArticlesNum', false));
+			$resultSet->setHeader('cityArticlesNum', $cityArticlesNum);
 
 			$resultSets[] = $resultSet;
 
@@ -448,6 +462,8 @@ class WikiaSolrClient extends WikiaSearchClient {
 			$result->setScore(($doc->score) ?: 0);
 			$result->setVar('ns', $doc->ns);
 			$result->setVar('pageId', $doc->pageid);
+
+			$result->setVar('indexed', $doc->indexed);
 
 			if ($doc->created !== null && $wgLang) {
 				$result->setVar('created', $doc->created);
