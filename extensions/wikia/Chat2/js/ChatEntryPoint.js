@@ -1,3 +1,5 @@
+/*global UserLoginModal*/
+
 var ChatEntryPoint = {
 	loading: false,
 
