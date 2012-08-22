@@ -92,7 +92,8 @@ var result = {
 };
 
 // additional, Wikia specific rules
-var regExpRules = require('./jslint-wikia-rules.js').rules;
+var regExpRules = require('./jslint-wikia-rules.js').rules,
+	commentRegExp = /^\s*\*|\/\//;
 
 // scan each line
 var lines = fileSrc.split("\n"),
@@ -108,6 +109,11 @@ for(var n=0, len = lines.length; n < len; n++) {
 		result.errors = result.errors.filter(function(item) {
 			return (item && item.line == (n+1)) ?  false /* error should be ignored */ : true;
 		});
+		continue;
+	}
+
+	// ignore comment lines
+	if (commentRegExp.test(line)) {
 		continue;
 	}
 
