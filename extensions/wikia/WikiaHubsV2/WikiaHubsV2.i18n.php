@@ -13,7 +13,6 @@ $messages['en'] = array(
 	'wikiahubs-button-close' => 'Finished',
 
 	// suggest video
-	'wikiahubs-suggest-video-header' => 'Suggest a Video',
 	'wikiahubs-suggest-video-submit-button' => 'Suggest Video',
 	'wikiahubs-suggest-video-what-video' => 'What video do you want to share?',
 	'wikiahubs-suggest-video-what-video-default-value' => 'From YouTube, Hulu, your favorite wiki, etc.',
