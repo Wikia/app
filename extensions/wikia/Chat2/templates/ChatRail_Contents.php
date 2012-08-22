@@ -25,22 +25,15 @@
 		<div class="chat-whos-here">
 			<span class="arrow-left"><img src="<?= $wg->BlankImgUrl ?>" /></span>
 			<span class="arrow-right"><img src="<?= $wg->BlankImgUrl ?>" /></span>
-			<ul class="slider">
-				<? if (!empty($totalInRoom) && !empty($chatters)): ?>
-					<li class="slide">
-						<ul class="chatters">
+			<div class="carousel-container">
+				<div>
+					<? if (!empty($totalInRoom) && !empty($chatters)): ?>
+						<ul class="carousel">
 							<? $rowSize = 6; ?>
 							<? foreach($chatters as $i => $chatter): ?>
-								<?
-									$isLast = ($totalInRoom - $i == 1);
-									$isLastInRow = !$isLast && ($i + 1) % $rowSize == 0;
-								?>
-								<li class="chatter<?= (($isLast || $isLastInRow) ? ' last' : '') ?>">
-									<? if ($i < $rowSize): ?>
-										<img src="<?= $chatter['avatarUrl'] ?>" class="avatar" width="32" height="32" />
-									<? else: ?>
-										<img src="<?= $wg->BlankImgUrl ?>" data-src="<?= $chatter['avatarUrl'] ?>" class="avatar lazyLoad" width="32" height="32" />
-									<? endif ?>
+								<li class="chatter">
+									<img src="<?= $wg->BlankImgUrl ?>" data-src="<?= $chatter['avatarUrl'] ?>" class="avatar" width="32" height="32" />
+
 									<div class="UserStatsMenu">
 										<div class="info">
 											<img src="<?= $wg->BlankImgUrl ?>" data-src="<?= $chatter['avatarUrl'] ?>" class="avatar" width="24" height="24" />
@@ -69,22 +62,16 @@
 											</ul>
 										</div>
 									</div>
+
+
 								</li>
-								<? if ($isLastInRow): ?>
-							</ul>
-						</li>
-						<li class="slide">
-							<ul class="chatters">
-								<? endif; ?>
 							<? endforeach; ?>
 						</ul>
-					</li>
-				<? elseif (!empty($profileAvatarUrl)): ?>
-					<li class="slide">
+					<? elseif (!empty($profileAvatarUrl)): ?>
 						<img src="<?= $profileAvatarUrl ?>" class="avatar" width="32" height="32" />
-					</li>
-				<? endif; ?>
-			</ul>
+					<? endif; ?>
+				</div>
+			</div>
 		</div>
 	<? endif; ?>
 </div>

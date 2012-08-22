@@ -94,7 +94,7 @@ body.skin-oasis .ChatMonobookEntryPoint {
 			line-height: 34px;
 			position: absolute;
 
-			&.inactive {
+			&.disabled {
 				@include opacity(50);
 				cursor: auto;
 			}
@@ -118,49 +118,34 @@ body.skin-oasis .ChatMonobookEntryPoint {
 			}
 		}
 
+		.carousel-container {
+			left: 16px;
+			height: 34px;
+			overflow: hidden;
+			position: relative;
+			width: 250px; // set to desired width
+			& > div {
+				position: relative;
+			}
+			ul {
+				@include clearfix;
+				position: absolute;
+			}
+			li {
+				float: left;
+				margin-right: 8px;
+			}
+		}
+
 		.avatar {
 			border: 1px solid $color-chat-avatar-border;
 			vertical-align: middle;
-		}
-
-		.slider {
-			height: 34px;
-			list-style: none;
-			margin: 0 auto;
-			width: 230px;
-
-			.slide, .chatter {
-				line-height: 34px;
-				margin: 0;
-			}
-
-			.chatters {
-				@include clearfix;
-				list-style: none;
-				margin: 0;
-			}
-
-			.chatter {
-				float: left;
-				margin-right: 5px;
-				position: relative;
-
-				&.last {
-					margin-right: 0;
-				}
-			}
 		}
 	}
 
 	&.module h2 {
 		font-size: 13px;
 		padding: 0;
-	}
-
-	.UserStatsMenu {
-		left: 0;
-		top: 34px;
-		z-index: 1000;
 	}
 }
 

@@ -3,11 +3,6 @@
 
 $color-shadow: mix(#000000, $color-page, 50%);
 
-$color-border: mix(#FFFFFF, $color-page-border, 50%);	
-@if($is-dark-wiki) {
-	$color-border: mix(#000000, $color-page-border, 50%);
-}
-
 .tooltip {
 	position: absolute;
 	z-index: 2000000003; // It's so high because it needs to show up over modals too. 
@@ -19,7 +14,7 @@ $color-border: mix(#FFFFFF, $color-page-border, 50%);
 
 .tooltip-inner {
 	@include box-shadow(0, 0, 15px, $color-shadow);
-	border: 1px solid $color-border;
+	border: 1px solid $color-page-border;
 	background-color: $color-page;
 	font-size: 12px;
 	line-height: 18px;
