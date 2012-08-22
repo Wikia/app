@@ -18,3 +18,4 @@ $(function() {
 	SpecialVideos.init();
 });
 
+alert('hi');
