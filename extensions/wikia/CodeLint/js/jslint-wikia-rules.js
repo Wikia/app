@@ -96,6 +96,7 @@ exports.rules  = [
 		reason: 'Deprecated skin check found'
 	},
 	// MW1.19 deprecated functions and variables (BugId:32267)
+	/**
 	{
 		name: 'MW1.19',
 		regexp: require('./jslint-deprecated').regexp,
@@ -103,6 +104,7 @@ exports.rules  = [
 			return "'" + matches[2] + "' is deprecated in MW 1.19";
 		}
 	},
+	 **/
 	// old tracking code
 	/**
 	{
