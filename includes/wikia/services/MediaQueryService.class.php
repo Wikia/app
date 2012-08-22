@@ -253,43 +253,40 @@ class MediaQueryService extends Service {
 		if ( !is_array($videoList) ) {
 			$db = $this->app->wf->GetDB( DB_SLAVE );
 
-			$exclusion = "img_name is null AND lower(il_to) != 'placeholder' ";
-			$excludeList = array( '.png', '.jpg', '.jpeg', '.ogg', '.ico', '.svg', '.mp3', '.wav', '.midi' );
+			$sqlWhere = "NOT EXISTS ( select 1 from image where img_media_type = 'VIDEO' and img_name = il_to ) AND lower(il_to) != 'placeholder'";
+			$excludeList = array( '.png', '.gif', '.jpg', '.jpeg', '.ogg', '.ico', '.svg', '.mp3', '.wav', '.midi' );
 			foreach( $excludeList as $exclude ) {
-				$exclusion .= " AND lower(il_to) not like '%".$exclude."'";
+				$sqlWhere .= " AND lower(il_to) not like '%".$exclude."'";
 			}
 
 			if ( $onlyPremium ) {
-				$sqlWhere[] = $exclusion;
+				$sqlSelect = '';
+				$sqlUnion = '';
+				$sqlOrderBy = '';
 			} else {
-				$sqlWhere[] = "img_media_type = '".MEDIATYPE_VIDEO."' or ( ".$exclusion." )";
+				$sqlSelect = ", '' as ts";
+				$sqlUnion = <<<SQL
+					UNION ALL
+					SELECT img_name as name, img_timestamp as ts
+					FROM image
+					WHERE img_media_type = 'VIDEO'
+SQL;
+				$sqlOrderBy = 'ORDER BY ts DESC';
 			}
-
-			$sqlOptions = array( 'ORDER BY' => 'img_timestamp DESC' );
 
 			// check for limit
-			if ( !empty($limit) ) {
-				$sqlOptions['LIMIT'] = $limit;
-			}
+			$sqlLimit = ( empty($limit) ) ? '' : "LIMIT $limit";
 
-			$result = $db->select(
-				array(
-					'imagelinks',
-					'image'
-				),
-				array(
-					'distinct il_to as name',
-				),
-				$sqlWhere,
-				__METHOD__,
-				$sqlOptions,
-				array(
-					'image' => array(
-						'LEFT JOIN',
-						array( 'il_to=img_name' )
-					)
-				)
-			);
+			$sql = <<<SQL
+				SELECT  il_to as name $sqlSelect
+				FROM `imagelinks`
+				WHERE $sqlWhere
+				$sqlUnion
+				$sqlOrderBy
+				$sqlLimit
+SQL;
+
+			$result = $db->query( $sql, __METHOD__ );
 
 			$videoList = array();
 			while( $row = $db->fetchObject($result) ) {
@@ -317,7 +314,7 @@ class MediaQueryService extends Service {
 
 	// get memcache key for video list
 	protected function getMemKeyVideoList( $onlyPremium = false ) {
-		return $this->app->wf->MemcKey(  'videos', 'video_list', intval($onlyPremium) );
+		return $this->app->wf->MemcKey( 'videos', 'video_list', 'v2', intval($onlyPremium) );
 	}
 
 	// sort by most recently added
@@ -345,7 +342,7 @@ class MediaQueryService extends Service {
 
 	//get memcache key for total videos
 	protected function getMemKeyTotalVideos() {
-		return $this->app->wf->MemcKey( 'videos', 'total_videos' );
+		return $this->app->wf->MemcKey( 'videos', 'total_videos', 'v2' );
 	}
 
 	public function clearCacheVideoList() {
