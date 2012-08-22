@@ -179,3 +179,6 @@ var foo = $('#bar').attr('data-foo'),
  *	$('#test').wikiaTooltip('this is a tooltip aligned top-left');
  *	$('#test').wikiaTooltip('and this is a tooltip aligned bottom-right', {side: 'bottom', align: 'right'});
  */
+
+// debugger;
+	// debugger;

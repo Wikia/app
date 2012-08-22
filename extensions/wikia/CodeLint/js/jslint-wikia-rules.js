@@ -140,12 +140,6 @@ exports.rules  = [
 		reason: function(matches, currLine, nextLine) {
 			var selector = matches[0];
 
-			// ignore comments
-			var commentRegExp = /^\s*\*|\/\//;
-			if (commentRegExp.test(currLine)) {
-				return false;
-			}
-
 			return (nextLine.indexOf(selector) > -1)
 				? ('Not cached jQuery selector found - ' + selector)
 				: false;
