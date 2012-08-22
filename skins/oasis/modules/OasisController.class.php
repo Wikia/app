@@ -136,6 +136,12 @@ class OasisController extends WikiaController {
 		if (SassUtil::isThemeDark()) {
 			$bodyClasses[] = 'oasis-dark-theme';
 		}
+		
+		// support for oasis split skin
+		if (!empty($this->wg->GlobalHeaderFullWidth)) {
+			$bodyClasses[] = 'oasis-split-skin';
+		}
+		
 		$this->bodyClasses = $bodyClasses;
 
     	//reset, this ensures no duplication in CSS links

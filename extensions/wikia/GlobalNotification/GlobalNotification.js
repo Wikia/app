@@ -18,7 +18,15 @@ var GlobalNotification = {
 			GlobalNotification.dom = $( '<div class="global-notification"><button class="close wikia-chiclet-button"><img src="' + stylepath + '/oasis/images/icon_close.png"></button><div class="msg"></div></div>' ).hide();
 			GlobalNotification.setUpClose();
 		}
-		$( GlobalNotification.isModal() ? GlobalNotification.modal : '.WikiaPageContentWrapper' ).prepend( GlobalNotification.dom );
+		if(GlobalNotification.isModal()) {
+			GlobalNotification.modal.prepend( GlobalNotifcation.dom );
+		} else {
+			if($('.oasis-split-skin').length) {
+				$('.WikiaHeader').after( GlobalNotification.dom );
+			} else {
+				$('.WikiaPageContentWrapper').prepend( GlobalNotification.dom );
+			}
+		}
 		GlobalNotification.msg = GlobalNotification.dom.find( '.msg' );
 	},
 	show: function(content, type) {

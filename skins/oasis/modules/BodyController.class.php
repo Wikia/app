@@ -514,17 +514,6 @@ class BodyController extends WikiaController {
 			}
 		}
 
-		if ($wgEnableTopButton) {
-			if (strtolower($wgTopButtonPosition) == 'right') {
-				$this->topAdsExtraClasses = ' WikiaTopButtonRight';
-			}
-			else {
-				$this->topAdsExtraClasses = ' WikiaTopButtonLeft';
-			}
-		}
-		else {
-			$this->topAdsExtraClasses = '';
-		}
 		wfProfileOut(__METHOD__);
 	}
 
