@@ -18,9 +18,8 @@ class SpecialEditTopList extends SpecialPage {
 	}
 
 	function execute( $editListName ) {
+		global $wgExtensionsPath, $wgJsMimeType, $wgSupressPageSubtitle, $wgRequest, $wgOut, $wgUser;
 		wfProfileIn( __METHOD__ );
-
-		global $wgExtensionsPath, $wgStylePath , $wgJsMimeType, $wgSupressPageSubtitle, $wgRequest, $wgOut, $wgUser;
 
 		// set basic headers
 		$this->setHeaders();
@@ -33,12 +32,13 @@ class SpecialEditTopList extends SpecialPage {
 
 		//Check blocks
 		if( $wgUser->isBlocked() ) {
+			wfProfileOut( __METHOD__ );
 			throw new UserBlockedError( $wgUser->getBlock() );
-			return;
 		}
 
 		if( !$this->userCanExecute( $wgUser )  || !( F::app()->checkSkin( 'oasis' ) ) ) {
 			$this->displayRestrictionError();
+			wfProfileOut( __METHOD__ );
 			return;
 		}
 
@@ -60,10 +60,9 @@ class SpecialEditTopList extends SpecialPage {
         $description = null;
 		$selectedPictureName = null;
 		$items = array();
-		$listItems = array();
 		$removedItems = array();
 
-		$list = TopList::newFromText( $editListName );
+		$list = TopList::newFromText( $editListName ); /** @var $list TopList */
 
 		if ( empty( $list ) || !$list->exists() ) {
 			$this->_redirectToCreateSP( $editListName );
