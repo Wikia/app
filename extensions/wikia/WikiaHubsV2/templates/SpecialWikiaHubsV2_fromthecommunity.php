@@ -1,8 +1,10 @@
 <h2>
 	<?= $headline ?>
-	<button id="suggestArticle" class="wikia-button secondary">
-		<?= wfMsg('wikiahubs-from-community-promoted') ?>
-	</button>
+	<? if (!F::app()->checkSkin('wikiamobile')): ?>
+		<button id="suggestArticle" class="wikia-button secondary">
+			<?= wfMsg('wikiahubs-from-community-promoted') ?>
+		</button>
+	<? endif; ?>
 </h2>
 <ul class="wikiahubs-ftc-list">
 	<? foreach($entries as $entry): ?>

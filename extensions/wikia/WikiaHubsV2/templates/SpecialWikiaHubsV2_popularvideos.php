@@ -1,8 +1,10 @@
 <div class="title-wrapper">
-	<h2><?= wfMsg('wikiahubs-suggest-video-header'); ?></h2>
-	<button id="suggest-popularvideos" class="wikia-button secondary">
-		<?= wfMsg('wikiahubs-suggest-video-submit-button'); ?>
-	</button>
+	<h2><?= $headline ?></h2>
+	<? if (!F::app()->checkSkin('wikiamobile')): ?>
+		<button id="suggest-popularvideos" class="wikia-button secondary">
+			<?= wfMsg('wikiahubs-suggest-video-submit-button'); ?>
+		</button>
+	<? endif; ?>
 </div>
 <section class="WikiaMediaCarousel">
 	<a href="#" class="button secondary right next">
