@@ -358,19 +358,3 @@ category-gallery-paginator{
 	height: 50px;
 
 }
-
-/* FF3.0 hack */
-.category-gallery-item img, .category-gallery-item .snippet, x:-moz-any-link {
-	border: 1px solid mix($color-page, #000, 60%);
-}
-.category-gallery-item img, .category-gallery-item .snippet, x:-moz-any-link, x:first-of-type  {
-	border: 0px solid;
-}
-
-.category-gallery-media img, x:-moz-any-link {
-	border: 1px solid mix($color-page, #000, 60%);
-}
-.category-gallery-media img, x:-moz-any-link, x:first-of-type  {
-	border: 0px solid;
-}
-/* end of FF3.0 hack */

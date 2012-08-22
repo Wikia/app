@@ -7,7 +7,7 @@ $color-shadow: mix(#000000, $color-page, 50%);
 	position: absolute;
 	top: 0;
 	left: 0;
-	z-index: 2000000003; // It's so high because it needs to show up over modals too. 
+	z-index: 2000000003; // It's so high because it needs to show up over modals too.
 	display: none;
 	padding: 5px;
 }
@@ -85,11 +85,10 @@ $color-shadow: mix(#000000, $color-page, 50%);
 .popover-content {
 	background-color: $color-page;
 	-webkit-border-radius: 0 0 3px 3px;
-	 -moz-border-radius: 0 0 3px 3px;
-	      border-radius: 0 0 3px 3px;
-	-webkit-background-clip: padding-box;
-	 -moz-background-clip: padding-box;
-	      background-clip: padding-box;
+    border-radius: 0 0 3px 3px;
+    -webkit-background-clip: padding-box;
+    -moz-background-clip: padding-box;
+    background-clip: padding-box;
 }
 
 .popover-content p,
