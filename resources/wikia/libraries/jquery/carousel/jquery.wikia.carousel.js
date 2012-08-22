@@ -94,7 +94,9 @@
 					// instead of just moving one element at a time
 					// move the whole page
 					var leftmost = idx - options.itemsShown + 1;
-					if(leftmost < 0) leftmost = 0;
+					if(leftmost < 0) {
+						leftmost = 0;
+					}
 					idx = leftmost;
 				}
 				var left = constants.itemWidth * idx * -1;
