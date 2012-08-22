@@ -7,15 +7,6 @@ $(function(){
 			vote = $.msg('wikiapoll-vote'),
 			currentPoll,
 			modalWrapper,
-			// send AJAX request to extension's ajax dispatcher in MW
-			ajax = function(method, params, callback) {
-				$.ajax({
-					url: wgScript + '?action=ajax&rs=WikiaPollAjax&method=' + method,
-					data: params,
-					dataType: 'json',
-					success: callback
-				});
-			},
 			pollId,
 			buildContent = function(elm){
 				var answers = elm.getElementsByClassName('answer'),
@@ -62,17 +53,25 @@ $(function(){
 				if(checked) {
 					loader.show(form, {center: true});
 
-					ajax('vote', {
-						pollId: pollId,
-						answer: checked.value,
-						title: wgPageName
-					}, function (res) {
-						if (res && res.html) {
-							loader.hide(form);
-							form.removeChild(t);
-							form.insertAdjacentHTML('afterend', thanks);
-							form.className += ' voted';
-							currentPoll.outerHTML = res.html;
+					$.ajax({
+						url: wgScript,
+						data: {
+							action: 'ajax',
+							rs: 'WikiaPollAjax',
+							method: 'vote',
+							pollId: pollId,
+							answer: checked.value,
+							title: wgPageName
+						},
+						dataType: 'json',
+						success: function (res) {
+							if (res && res.html) {
+								loader.hide(form);
+								form.removeChild(t);
+								form.insertAdjacentHTML('afterend', thanks);
+								form.className += ' voted';
+								currentPoll.outerHTML = res.html;
+							}
 						}
 					});
 				}
