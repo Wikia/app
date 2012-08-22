@@ -4,9 +4,10 @@ $(function(){
 			body = d.body,
 			toolbar = '<span class=modalTitle>' + $.msg('wikiamobile-wikiapoll-poll') + '</span>',
 			thanks = '<div class=wkThanks>' + $.msg('wikiamobile-wikiapoll-thanks-voting') + '</div>',
+			vote = $.msg('wikiapoll-vote'),
 			currentPoll,
 			modalWrapper,
-		// send AJAX request to extension's ajax dispatcher in MW
+			// send AJAX request to extension's ajax dispatcher in MW
 			ajax = function(method, params, callback) {
 				$.ajax({
 					url: wgScript + '?action=ajax&rs=WikiaPollAjax&method=' + method,
@@ -29,7 +30,7 @@ $(function(){
 					form += '<input class=pollInput name=wpAnswer type=radio id=ans' + i + ' value=' + i + '><label for=ans' + (i++) + '>' + answer.innerHTML + '</label>';
 				}
 
-				form += '<input type=submit class="wkBtn wkVote" value=Vote></form>';
+				form += '<input type=submit class="wkBtn wkVote" value="' + vote + '"></form>';
 
 				return form;
 			};
