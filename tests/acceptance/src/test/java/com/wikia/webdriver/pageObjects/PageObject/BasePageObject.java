@@ -3,16 +3,24 @@ package com.wikia.webdriver.pageObjects.PageObject;
 import java.util.Date;
 import java.util.List;
 
+import org.junit.internal.runners.statements.Fail;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.interactions.internal.Coordinates;
+import org.openqa.selenium.internal.Locatable;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.wikia.webdriver.Common.Core.CommonExpectedConditions;
 import com.wikia.webdriver.Common.Core.CommonFunctions;
 import com.wikia.webdriver.Common.Logging.PageObjectLogging;
+import static org.testng.AssertJUnit.fail;
 
 /**
  * 
@@ -30,10 +38,22 @@ public class BasePageObject{
 	
 	public WebDriverWait wait;
 
+	@FindBy(css="a.tools-customize[data-name='customize']")
+	WebElement customizeToolbar_CustomizeButton;
+	@FindBy(css="div.search-box input.search")
+	WebElement customizeToolbar_FindAToolField;
+	@FindBy(css="input.save-button")
+	WebElement customizeToolbar_SaveButton;
+	@FindBy(css="span.reset-defaults a")
+	WebElement customizeToolbar_ResetDefaultsButton;
+	
+	private By ToolsList = By.cssSelector("ul.tools li");
+	
 	public BasePageObject(WebDriver driver)
 	{
 		this.driver = driver;
 		wait = new WebDriverWait(driver, timeOut);
+		PageFactory.initElements(driver, this);
 		driver.manage().window().maximize();
 	}
 	
@@ -233,7 +253,9 @@ public class BasePageObject{
 	}
 	
 	/**
-	 * Navigates back to the previous page 
+	 * Navigates back to the previous page
+	 * 
+	 * @author Michal Nowierski
 	 */
 	public void navigateBack() {
 		driver.navigate().back();
@@ -246,7 +268,162 @@ public class BasePageObject{
 		waitForElementByCss("div.toolbar ul.tools li a.tools-customize");
 	}
 	
+	/**
+	 * Clicks on "Customize" button. User must be logged in.
+	 * 
+	 * @author Michal Nowierski
+	 */
+	public void customizeToolbar_ClickCustomize() {
+		PageObjectLogging.log("customizeToolbar_ClickCustomize", "Clicks on 'Customize' button.", true, driver);
+		waitForElementByElement(customizeToolbar_CustomizeButton);
+		waitForElementClickableByElement(customizeToolbar_CustomizeButton);
+		customizeToolbar_CustomizeButton.click();
+		
+	}
 	
+	/**
+	 * Clicks on "ResetDefaults" button.
+	 * 	 
+	 * @author Michal Nowierski
+	 */
+	public void customizeToolbar_ClickOnResetDefaults() {
+		PageObjectLogging.log("customizeToolbar_ClickOnResetDefaults", "Clicks on 'ResetDefaults' button.", true, driver);
+		waitForElementByElement(customizeToolbar_ResetDefaultsButton);
+		waitForElementClickableByElement(customizeToolbar_ResetDefaultsButton);
+		customizeToolbar_ResetDefaultsButton.click();
+		
+	}
+	
+	/**
+	 * Types GivenString to Find A Tool field
+	 * 
+	 * @param GivenString String to be typed into search field 
+	 * @author Michal Nowierski
+	 */
+	public void customizeToolbar_TypeIntoFindATool(String GivenString) {
+		PageObjectLogging.log("customizeToolbar_TypeIntoFindATool", "Type "+GivenString+" into Find A Tool field", true, driver);
+		waitForElementByElement(customizeToolbar_FindAToolField);
+		waitForElementClickableByElement(customizeToolbar_FindAToolField);
+		customizeToolbar_FindAToolField.clear();
+		customizeToolbar_FindAToolField.sendKeys(GivenString);
+		
+	}
+	
+	/**
+	 * Click on a Tool after searching for it
+	 * 
+	 * @param Tool Tool to be chosen
+	 * @author Michal Nowierski
+	 */
+	public void customizeToolbar_ClickOnFoundTool(String Tool) {
+		PageObjectLogging.log("customizeToolbar_ClickOnFoundTool", "Click on "+Tool, true, driver);
+		waitForElementByCss("div.autocomplete div[title='"+Tool+"']");
+		waitForElementClickableByCss("div.autocomplete div[title='"+Tool+"']");
+		driver.findElement(By.cssSelector("div.autocomplete div[title='"+Tool+"']")).click();
+		
+	}
+	
+	/**
+	 * Look up if Tool appears on Toolbar List
+	 * 
+	 * @param ToolID {PageAction:Follow, PageAction:Edit, PageAction:History, (...)} 
+	 * @author Michal Nowierski
+	 */
+	public void customizeToolbar_VerifyToolOnToolbarList(String ToolID) {
+		PageObjectLogging.log("customizeToolbar_VerifyToolOnToolbarList", "Check if "+ToolID+" appears", true, driver);
+		waitForElementByCss("ul.options-list li[data-tool-id='"+ToolID+"']");
+	
+	}
+	
+	/**
+	 * Look up if Tool does not appear on Toolbar List
+	 * 
+	 * @param ToolID {PageAction:Follow, PageAction:Edit, PageAction:History, (...)} 
+	 * @author Michal Nowierski
+	 */
+	public void customizeToolbar_VerifyToolNotOnToolbarList(String ToolID) {
+		PageObjectLogging.log("customizeToolbar_VerifyToolNotOnToolbarList", "Check if "+ToolID+" does not appear on Toolbar list", true, driver);
+		waitForElementByCss("ul.options-list li");
+		waitForElementNotVisibleByCss("ul.options-list li[data-tool-id='"+ToolID+"']");
+	}
+	
+	/**
+	 * Remove a wanted Tool by its data-tool-id
+	 * 
+	 * @param ToolID {PageAction:Follow, PageAction:Edit, PageAction:History, (...)} 
+	 * @author Michal Nowierski
+	 */
+	public void customizeToolbar_ClickOnToolRemoveButton(String ToolID) {
+		PageObjectLogging.log("customizeToolbar_ClickOnToolRemoveButton", "Remove Tool with id "+ToolID+" from Toolbar List", true, driver);
+		By By1 = By.cssSelector("ul.options-list li[data-tool-id='"+ToolID+"']");
+		By By2 = By.cssSelector("ul.options-list li[data-tool-id='"+ToolID+"'] img.trash");
+		moveCursorToElem1UntilElem2IsVisible(By1, By2);
+		waitForElementByBy(By2);
+		waitForElementClickableByBy(By2);
+		driver.findElement(By2).click();
+	}
+	
+
+	/**
+	 * Click on save button on customize toolbar
+	 * 
+	 * @author Michal Nowierski
+	 */
+	public void customizeToolbar_ClickOnSaveButton() {
+		PageObjectLogging.log("customizeToolbar_ClickOnSaveButton", "Click on save button on customize toolbar.", true, driver);
+		waitForElementByElement(customizeToolbar_SaveButton);
+		waitForElementClickableByElement(customizeToolbar_SaveButton);
+		customizeToolbar_SaveButton.click();
+		
+	}
+	
+	/**
+	 * <p> Verify that wanted Tool appears in Toolbar. <br> 
+	 * The method finds all of Tools appearing in Toolbar (by their name), and checks if there is at least one name which fits the given param (ToolName)
+	 * 
+	 * @param ToolName Tool to be verified (name that should appear on toolbar)
+	 * @author Michal Nowierski
+	 */
+	public void customizeToolbar_VerifyToolOnToolbar(String ToolName) {
+		PageObjectLogging.log("customizeToolbar_VerifyToolOnToolbar",
+				"Verify that "+ToolName+" appears in Toolbar.", true, driver);
+		List<WebElement> List = driver.findElements(ToolsList);
+		int amountOfToolsOtherThanTheWantedTool = 0;
+		for (int i = 0; i < List.size(); i++) {
+			if (!List.get(i).getText().equals(ToolName)) {
+				++amountOfToolsOtherThanTheWantedTool;
+			}
+		}
+		if (amountOfToolsOtherThanTheWantedTool==List.size()) {
+			PageObjectLogging.log("customizeToolbar_VerifyToolOnToolbar",
+					ToolName+" does not appear on toolbar. All of tools are other than the wanted one.", false, driver);
+				fail();
+		}
+	}
+	
+	/**
+	 * <p> Verify that wanted Tool does not appear in Toolbar. <br> 
+	 * The method finds all of Tools appearing in Toolbar (by their name), and checks if there is no tool that fits the given param (ToolName)
+	 * 
+	 * @param ToolName Tool to be verified (name that should not appear on toolbar)
+	 * @author Michal Nowierski
+	 */
+	public void customizeToolbar_VerifyToolNotOnToolbar(String ToolName){
+		PageObjectLogging.log("customizeToolbar_VerifyToolNotOnToolbar",
+				"Verify that "+ToolName+" tool does not appear in Toolbar.", true, driver);
+		List<WebElement> List = driver.findElements(ToolsList);
+		int amountOfToolsOtherThanTheWantedTool = 0;
+		for (int i = 0; i < List.size(); i++) {
+			if (!List.get(i).getText().equals(ToolName)) {
+				++amountOfToolsOtherThanTheWantedTool;
+			}
+		}
+		if (amountOfToolsOtherThanTheWantedTool<List.size()) {
+			PageObjectLogging.log("customizeToolbar_VerifyToolNotOnToolbar",
+					ToolName+" Tool appears on toolbar (Not all of tools are other than the wanted one).", false, driver);
+				fail();
+		}
+	}
 	
 	public String getTimeStamp()
 	{
@@ -254,6 +431,74 @@ public class BasePageObject{
 		long timeCurrent = time.getTime();
 		return String.valueOf(timeCurrent);
 		
+	}
+	
+	/**
+	 * <p> Method moves cursor down from Element1 until that action makes the wanted Element2 visible <br> 
+	 * When the cursor reaches bottom of window, it moves to right and starts going down again
+	 * 
+	 * @param By1 Element1 to start moving cursor from
+	 * @param By2 Element2 to be visible at some point after moving the cursor
+	 * @author Michal Nowierski
+	 */
+	public void moveCursorToElem1UntilElem2IsVisible(By By1, By By2) {
+			
+		PageObjectLogging.log("moveCursorToEleme1UntilElem2IsVisible",
+				"move cursor down from Element1 until that action makes the wanted Element2 visible", true, driver);
+		WebElement Elem = driver.findElement(By1);
+		Point location = Elem.getLocation();
+		location = location.moveBy(15, 0);
+		CommonFunctions.MoveCursorTo(location.getX(), location.getY());
+		ChangeLocationUntilElemVisible(location, location, By2);		
+		
+	}
+	
+	/**
+	 * The recursive method is used by moveCursorToEleme1UntilElem2IsVisible <br> 
+	 * The method is engine for moving the cursor
+	 * 
+	 * @param location Location of element to start moving cursor from
+	 * @param OriginalLocation The same location, but this parameter won't be changed inside the method
+	 * @param By Element to be visible at some point after moving the cursor
+	 * 
+	 * @author Michal Nowierski
+	 */
+	private boolean ChangeLocationUntilElemVisible(Point location, Point OriginalLocation, By by) {
+	try {
+			if (driver.findElement(by).isDisplayed()) {
+				return true;
+			}
+			else {
+				location = location.moveBy(0, 5);
+				CommonFunctions.MoveCursorTo(location.getX(), location.getY());
+				int WindowHeight = driver.manage().window().getSize().height;
+				int WindowWidth = driver.manage().window().getSize().width;
+				if (location.getX() > WindowWidth) {
+					return false;
+				}
+				if (location.getY() > WindowHeight) {
+					location = OriginalLocation.moveBy(10, 0);
+					ChangeLocationUntilElemVisible(location, location, by);				
+				}
+				return ChangeLocationUntilElemVisible(location, OriginalLocation, by);
+				
+			}
+
+		} 
+		catch (NoSuchElementException e) {
+			location = location.moveBy(0, 5);
+			CommonFunctions.MoveCursorTo(location.getX(), location.getY());
+			int WindowHeight = driver.manage().window().getSize().height;
+			int WindowWidth = driver.manage().window().getSize().width;
+			if (location.getX() > WindowWidth) {
+				return false;
+			}
+			if (location.getY() > WindowHeight) {
+				location = OriginalLocation.moveBy(10, 0);
+				ChangeLocationUntilElemVisible(location, location, by);	
+			}
+			return ChangeLocationUntilElemVisible(location, OriginalLocation, by);
+		}
 	}
 	
 	
