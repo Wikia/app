@@ -1,5 +1,5 @@
 <?php
-
+ 
 class OasisController extends WikiaController {
 
 	private static $extraBodyClasses = array();
