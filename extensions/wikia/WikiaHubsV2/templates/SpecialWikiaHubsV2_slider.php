@@ -6,5 +6,3 @@ echo $app->wg->parser->parse(
 	$app->wg->out->parserOptions(),
 	true
 )->getText();
-
-?>
