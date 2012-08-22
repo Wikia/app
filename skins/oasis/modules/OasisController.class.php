@@ -93,8 +93,7 @@ class OasisController extends WikiaController {
 
 		$this->isUserLoggedIn = $wgUser->isLoggedIn();
 
-		// TODO: move to CreateNewWiki extension - this code should use a hook
-		$wikiWelcome = $wgRequest->getVal('wiki-welcome');
+		// TODO: move to CreateNewWiki extension - this code should use a 		$wikiWelcome = $wgRequest->getVal('wiki-welcome');
 		if(!empty($wikiWelcome)) {
 			$wgOut->addStyle( $this->assetsManager->getSassCommonURL( 'extensions/wikia/CreateNewWiki/css/WikiWelcome.scss' ) );
 			$wgOut->addScript( '<script src="' . $this->wg->ExtensionsPath . '/wikia/CreateNewWiki/js/WikiWelcome.js"></script>' );
