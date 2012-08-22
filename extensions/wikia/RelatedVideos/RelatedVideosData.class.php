@@ -9,9 +9,9 @@ class RelatedVideosData {
 	const MAX_TITLE_LENGTH = 240;
 
 	function __construct() {
-		
+
 	}
-	
+
 	public function getVideoData( $titleText, $thumbnailWidth, $videoWidth = self::DEFAULT_OASIS_VIDEO_WIDTH, $autoplay = true, $useMaster = false, $cityShort='life', $videoHeight='', $useJWPlayer=true, $inAjaxResponse=false ) {
 
 		wfProfileIn( __METHOD__ );
@@ -58,7 +58,7 @@ class RelatedVideosData {
 		wfProfileOut( __METHOD__ );
 		return $data;
 	}
-	
+
 	public function addVideo( $articleId, $url ) {
 
 		wfProfileIn( __METHOD__ );
@@ -108,6 +108,7 @@ class RelatedVideosData {
 					list($videoTitle, $videoPageId, $videoProvider) = $this->addVideoVideoHandlers( $url );
 				}
 			} else {
+				wfProfileOut( __METHOD__ );
 				throw new Exception( 'Old type of videos no longer supported (VideoPage)');
 			}
 		}
@@ -137,7 +138,6 @@ class RelatedVideosData {
 			}
 		}
 		wfProfileOut( __METHOD__ );
-
 		return $retval;
 	}
 
@@ -149,7 +149,6 @@ class RelatedVideosData {
 	}
 
 	protected function sanitizeTitle($name) {
-
 		wfProfileIn( __METHOD__ );
 		// sanitize title
 		$name = preg_replace(Title::getTitleInvalidRegex(), ' ', $name);
@@ -160,10 +159,12 @@ class RelatedVideosData {
 
 		$name = substr($name, 0, self::MAX_TITLE_LENGTH);	// DB column Image.img_name has size 255
 
+		$title = Title::makeTitleSafe(NS_VIDEO, $name);
+
 		wfProfileOut( __METHOD__ );
-		return Title::makeTitleSafe(NS_VIDEO, $name);		
+		return $title;
 	}
-	
+
 	public function removeVideo($articleId, $title, $isExternal) {
 
 		wfProfileIn( __METHOD__ );
@@ -183,14 +184,14 @@ class RelatedVideosData {
 			wfProfileOut( __METHOD__ );
 			return wfMsg('related-videos-error-unknown', 876464);
 		}
-		
+
 		// check permission
 		$permErrors = $targetTitle->getUserPermissionsErrors( 'edit', F::app()->wg->user );
 		if ($permErrors) {
 			wfProfileOut( __METHOD__ );
 			return wfMsg('related-videos-error-permission-article');
 		}
-		
+
 		$rvn = F::build('RelatedVideosNamespaceData', array($targetTitle), 'newFromTargetTitle');
 
 		// standardize format of title
@@ -200,7 +201,7 @@ class RelatedVideosData {
 
 		// check video exists
 		$rvs = F::build('RelatedVideosService');
-		
+
 		$entry['articleId'] = 0;
 		$data = $rvs->getRelatedVideoData( $entry );
 		if ( empty( $data['title'] ) ) {
@@ -216,10 +217,13 @@ class RelatedVideosData {
 			}
 		}
 		else {	// error message returned
+			wfProfileOut( __METHOD__ );
 			return $retval;
 		}
-		
+
+		$msg = wfMsg('related-videos-error-unknown', 543886);
+
 		wfProfileOut( __METHOD__ );
-		return wfMsg('related-videos-error-unknown', 543886);
+		return $msg;
 	}
 }
