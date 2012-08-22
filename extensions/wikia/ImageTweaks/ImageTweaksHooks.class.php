@@ -192,7 +192,13 @@ class ImageTweaksHooks extends WikiaObject {
 					$imageParams['capt'] = true;
 				}
 
-				if ( $file instanceof File ) {
+				//images set to be less than 64px are probably
+				//being used as icons in templates
+				//do not resize them
+				if (
+					( (!empty( $imageAttribs['width'] ) && $imageAttribs['width'] > 64 ) || empty( $imageAttribs['width'] ) )
+					&& $file instanceof File
+				) {
 					$size = WikiaMobileMediaService::calculateMediaSize( $file->getWidth(), $file->getHeight() );
 					$thumb = $file->transform( $size );
 					$imageAttribs['src'] = wfReplaceImageServer( $thumb->getUrl(), $file->getTimestamp() );
