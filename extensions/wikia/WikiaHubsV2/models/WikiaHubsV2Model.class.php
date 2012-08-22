@@ -565,8 +565,13 @@ No
 	}
 
 	/**
-	 * @param string $imageName
-	 * @return string
+	 * @desc Returns false if failed or string with thumbnail url
+	 *
+	 * @param String $imageName image name
+	 * @param Integer $width optional parameter
+	 * @param Integer $height optional parameter
+	 *
+	 * @return bool|string
 	 */
 	protected function getThumbnailUrl($imageName, $width = -1, $height = -1) {
 		$result = false;
@@ -612,9 +617,12 @@ No
 	}
 
 	public function parseVideoData($videoData) {
+		/** @var Title $videoTitle */
 		$videoTitle = F::build('Title', array($videoData['videoTitle'], NS_FILE), 'newFromText');
+		/** @var File $videoFile */
 		$videoFile = ($videoTitle) ? wfFindFile($videoTitle) : false;
 		if ($videoFile) {
+			/** @var MediaTransformOutput $videoThumbObj */
 			$videoThumbObj = $videoFile->transform(array('width' => self::FEATURED_VIDEO_WIDTH, 'height' => self::FEATURED_VIDEO_HEIGHT));
 			$video = array(
 				'title' => $videoData['videoTitle'],
@@ -642,13 +650,20 @@ No
 		}
 	}
 
+	/**
+	 * @param Array $videoArr
+	 * @param MediaTransformOutput $videoThumbObj
+	 *
+	 * @return stdClass
+	 */
 	protected function extractDataForCaruselTemplate($videoArr, $videoThumbObj) {
+		/** @var File $videoFile */
 		$videoFile = $videoThumbObj->getFile();
+		/** @var Title $videoTitle */
 		$videoTitle = $videoFile->getTitle();
 		$wikiUrl = WikiFactory::getVarValueByName('wgServer', $videoArr['wikiId']);
 
 		$videoItem = new stdClass();
-
 		$videoItem->duration = $videoFile->getHandler()->getFormattedDuration();
 		$videoItem->data = array(
 			'wiki' => $wikiUrl,
@@ -658,11 +673,13 @@ No
 		$videoItem->href = $videoTitle->getFullUrl();
 		$videoItem->imgUrl = $videoThumbObj->getUrl();
 		$videoItem->description = $videoArr['headline'];
+
 		if (empty($videoArr['profile'])) {
 			$videoItem->info = wfMsgExt('wikiahubs-popular-videos-suggested-by', array('parseinline'), array($videoArr['submitter']));
 		} else {
 			$videoItem->info = wfMsgExt('wikiahubs-popular-videos-suggested-by-profile', array('parseinline'), array($videoArr['submitter'], $videoArr['profile']));
 		}
+
 		return $videoItem;
 	}
 
@@ -695,7 +712,9 @@ No
 	}
 
 	public function getVerticalName($verticalId) {
-		$wikiaHub = WikiFactoryHub::getInstance()->getCategory($verticalId);
+		$wikiFactoryHub = WikiFactoryHub::getInstance();
+		/** @var WikiFactoryHub $wikiFactoryHub */
+		$wikiaHub = $wikiFactoryHub->getCategory($verticalId);
 		return wfMsgForContent('hub-' . $wikiaHub['name']);
 	}
 }

@@ -164,7 +164,7 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 	}
 
 	/**
-	 * @param $hubName string
+	 * @desc Sets hubs specific settings: page title, hub type, vertical body class
 	 */
 	protected function initVerticalSettings() {
 		$this->wg->out->setPageTitle($this->verticalName);

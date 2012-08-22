@@ -12,7 +12,7 @@ $messages['en'] = array(
 	'wikiahubs-button-cancel' => 'Cancel',
 	'wikiahubs-button-close' => 'Finished',
 
-	// suggest related video
+	// suggest video
 	'wikiahubs-suggest-video-header' => 'Suggest a Video',
 	'wikiahubs-suggest-video-submit-button' => 'Suggest Video',
 	'wikiahubs-suggest-video-what-video' => 'What video do you want to share?',
@@ -35,8 +35,6 @@ $messages['en'] = array(
 	//popular videos
 	'wikiahubs-popular-videos-suggested-by' => 'Suggested by [[User:$1|$1]]',
 	'wikiahubs-popular-videos-suggested-by-profile' => 'Suggested by [$2 $1]',
-	'wikiahubs-suggest-video-header' => 'Favorite Videos',
-	'wikiahubs-suggest-video-submit-button' => 'Suggest Video',
 
 	// wikia hubs
 	'wikiahubs-vertical-VideoGames' => 'Video Games',
