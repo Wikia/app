@@ -15,7 +15,7 @@
 
 <?= empty($wg->GlobalHeaderFullWidth) ? '' : wfRenderModule('Ad', 'Top') ?>
 
-<section id="WikiaPage" class="WikiaPage<?= empty( $wg->OasisNavV2 ) ? '' : ' V2' ?><?= empty($isGridLayoutEnabled) ? '' : ' WikiaGrid' ?>">
+<section id="WikiaPage" class="WikiaPage<?= empty( $wg->OasisNavV2 ) ? '' : ' V2' ?><?= !empty($isGridLayoutEnabled) && $railModulesExist ? ' WikiaGrid' : '' ?>">
 	<div id="WikiaPageBackground" class="WikiaPageBackground"></div>
 	<div class="WikiaPageContentWrapper">
 		<?= empty($wg->GlobalHeaderFullWidth) ? wfRenderModule('Notifications', 'Confirmation') : '' ?>
