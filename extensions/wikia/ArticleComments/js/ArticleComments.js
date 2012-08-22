@@ -558,11 +558,15 @@ if (ArticleComments.loadOnDemand) {
 
 		var loadAssets = function() {
 			$.when(
-				$.getResources([
-					$.getSassCommonURL('skins/oasis/css/core/ArticleComments.scss'),
-					$.getSassCommonURL('extensions/wikia/MiniEditor/css/MiniEditor.scss'),
-					$.getSassCommonURL('extensions/wikia/MiniEditor/css/ArticleComments/ArticleComments.scss')
-				]),
+				$.getResources(
+					// TODO: we should be able to load it this way
+					//$.getAssetManagerGroupUrl( 'articlecomments' + ( ArticleComments.miniEditorEnabled ? '_mini_editor' : '' ) + '_scss' )
+					[
+						$.getSassCommonURL('skins/oasis/css/core/ArticleComments.scss'),
+						$.getSassCommonURL('extensions/wikia/MiniEditor/css/MiniEditor.scss'),
+						$.getSassCommonURL('extensions/wikia/MiniEditor/css/ArticleComments/ArticleComments.scss')
+					]
+				),
 				$.nirvana.sendRequest({
 					controller: 'ArticleCommentsController',
 					method: 'Content',
