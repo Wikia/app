@@ -17,5 +17,3 @@ var SpecialVideos = {
 $(function() {
 	SpecialVideos.init();
 });
-
-alert('hi');
