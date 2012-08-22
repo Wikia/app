@@ -43,11 +43,6 @@ $wgFounderEmailsExtensionConfig = array(
 			'hookName'   => 'CreateWikiLocalJob-complete',
 			'days'       => array( 0, 3, 10 )
 		),
-		'viewsDigest' => array(
-			'className'  => 'FounderEmailsDailyDigestEvent',
-			'hookName'   => null,
-			'type'       => "viewsDigest"
-		),
 		'completeDigest' => array(
 			'className'  => 'FounderEmailsCompleteDigestEvent',
 			'hookName'   => null
