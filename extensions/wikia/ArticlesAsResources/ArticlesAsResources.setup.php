@@ -50,8 +50,4 @@ $app = F::app();
 $app->registerClass('ArticlesAsResources', $dir . '/ArticlesAsResources.class.php');
 
 // hooks
-$app->registerHook('ResourceLoaderBeforeRespond','ArticlesAsResources','onResourceLoaderBeforeRespond');
-$app->registerHook('WikiaSkinTopScripts', 'ArticlesAsResources', 'onTopScripts');
-
-// register instances
-//F::setInstance('ArticlesAsResources', new ArticlesAsResources());
+$app->registerHook('ResourceLoaderBeforeRespond', 'ArticlesAsResources', 'onResourceLoaderBeforeRespond');
