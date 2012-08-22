@@ -218,7 +218,7 @@ class TaskManagerPage extends SpecialPage {
 							$arguments = unserialize ($oTaskData->task_arguments) ;
 							$thisTask->mArguments = $arguments ;
 							$thisTask->mMode = $arguments ["mode"] ;
-							$thistask->mAdmin = $wgUser->getName () ;
+							$thisTask->mAdmin = $wgUser->getName () ;
 							$thisTask->mMotherTask = $oTaskData->task_id ;
 							$submit_id = $thisTask->submitForm () ;
 							$wgOut->addHTML( Wikia::successbox("Task nr {$oTaskData->task_id} was scheduled to be undone") );
@@ -421,7 +421,7 @@ class TaskManagerPager extends TablePager {
 	 * @return string  HTML code for row
 	 */
 	function formatValue( $field, $value ) {
-		global $wgStylePath, $wgRequest;
+		global $wgRequest;
 
 		switch ($field) {
 			case "task_status":

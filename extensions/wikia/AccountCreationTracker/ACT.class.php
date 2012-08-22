@@ -165,7 +165,7 @@ class AccountCreationTracker extends WikiaObject {
 
 	public function rollbackPage( $article, $user_name, $summary, &$messages = '' ) {
 		wfProfileIn( __METHOD__ );
-		
+
 		// build article object and find article id
 		$a = $article;
 		$pageId = $a->getID();
@@ -224,7 +224,7 @@ class AccountCreationTracker extends WikiaObject {
 				$messages = "delete errors: " . $errorDelete;
 			}
 		}
-		
+
 		wfProfileOut( __METHOD__ );
 		return false;
 	}

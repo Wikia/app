@@ -38,7 +38,7 @@ define( "TASK_FINISHED_UNDO", 5 );     #--- task finished but undone later
  *
  */
 abstract class BatchTask {
-	
+
 	const PRIORITY_LOW = 1;
 	const PRIORITY_NORMAL = 10;
 	const PRIORITY_HIGH = 100;
@@ -120,7 +120,7 @@ abstract class BatchTask {
     /**
      * @return string message for given status number (if defined)
      */
-    public function getStatusName( $status ) {
+    public static function getStatusName( $status ) {
         if (isset( self::$mStatuses[$status] )) {
             return self::$mStatuses[$status];
         }
@@ -164,7 +164,7 @@ abstract class BatchTask {
 
         $retval = null;
 
-        $dbr = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB ); 
+        $dbr = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
         $oTask = $dbr->selectRow(
             "wikia_tasks",
             array( "*" ),
@@ -312,7 +312,7 @@ abstract class BatchTask {
 		wfProfileIn( __METHOD__ );
 		if(!$wgWikicitiesReadOnly){
 			$sTimestamp = is_null($timestamp) ? wfTimestampNow() : $timestamp;
-			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB ); 
+			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 			$dbw->insert(
 				"wikia_tasks_log",
 				array(
@@ -350,7 +350,7 @@ abstract class BatchTask {
 			return false;
 		}
 		wfProfileIn( __METHOD__ );
-		$dbr = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB ); 
+		$dbr = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 		$oRes = $dbr->select(
 			"wikia_tasks_log",
 			array( "*" ),
@@ -400,9 +400,9 @@ abstract class BatchTask {
 		global $wgUser, $wgExternalSharedDB, $wgWikicitiesReadOnly;
 
 		wfProfileIn( __METHOD__ );
-		
+
 		if(!$wgWikicitiesReadOnly){
-			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB ); 
+			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 			$dbw->insert(
 				"wikia_tasks",
 				array(
@@ -452,7 +452,7 @@ abstract class BatchTask {
 			: TASK_FINISHED_ERROR;
 
 		if(!$wgWikicitiesReadOnly){
-			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB ); 
+			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 			$dbw->update(
 				"wikia_tasks",
 				array(
