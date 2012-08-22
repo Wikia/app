@@ -12,6 +12,7 @@ class OasisController extends WikiaController {
 	 * @author: Inez Korczyński
 	 */
 	public static function addBodyClass($className) {
+
 		if(!in_array($className,self::$extraBodyClasses)) {
 			self::$extraBodyClasses[] = $className;
 			return true;
@@ -93,7 +94,9 @@ class OasisController extends WikiaController {
 
 		$this->isUserLoggedIn = $wgUser->isLoggedIn();
 
-		// TODO: move to CreateNewWiki extension - this code should use a 		$wikiWelcome = $wgRequest->getVal('wiki-welcome');
+		// TODO: move to CreateNewWiki extension - this code should use a hook
+		$wikiWelcome = $wgRequest->getVal('wiki-welcome');
+
 		if(!empty($wikiWelcome)) {
 			$wgOut->addStyle( $this->assetsManager->getSassCommonURL( 'extensions/wikia/CreateNewWiki/css/WikiWelcome.scss' ) );
 			$wgOut->addScript( '<script src="' . $this->wg->ExtensionsPath . '/wikia/CreateNewWiki/js/WikiWelcome.js"></script>' );
@@ -114,7 +117,6 @@ class OasisController extends WikiaController {
 			$this->body = !empty($params['body']) ? $params['body'] : wfRenderModule('Body');
 			wfProfileOut(__METHOD__ . ' - renderBody');
 		}
-		
 		// get microdata for body tag
 		$this->itemType = self::getItemType();
 
