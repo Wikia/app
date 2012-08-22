@@ -46,30 +46,49 @@ var ChatEntryPoint = {
 			chatWhosHere.find('.arrow-right').toggleClass('inactive', data.currentSlideId == (data.totalSlides - 1));
 		});
 
-		chatWhosHere.slideshow({
-			fadeDuration: 0,
+		chatWhosHere.find('.carousel-container').carousel({
 			nextClass: 'arrow-right',
 			prevClass: 'arrow-left',
-			slidesClass: 'slider',
-			stayOn: 1
+			itemsShown: 6
 		});
+		
+		var popoverTimeout = 0;
 
-		// Hovering on avatar opens user stats menu
-		chatWhosHere.find('.chatter').hover(function(event) {
-			var userStatsMenu = $(this).find('.UserStatsMenu'),
-				userAvatar = userStatsMenu.find('.avatar'),
+		function setPopoverTimeout(elem) {
+			popoverTimeout = setTimeout(function() {
+				elem.popover('hide');	
+			}, 300);
+		}
+				
+		chatWhosHere.find('.chatter').popover({
+			trigger: "manual",
+			placement: "bottom",
+			content: function() {
+				var userStatsMenu = $(this).find('.UserStatsMenu');
+
+				return userStatsMenu.clone().wrap('<div>').parent().html();
+			}
+		}).on('mouseenter', function() {
+			clearTimeout(popoverTimeout);
+			$('.popover').remove();
+			$(this).popover('show');
+
+			var userAvatar = $('.popover').find('.avatar'),
 				userAvatarUrl = userAvatar.data('src');
-
-			$('.UserStatsMenu').hide();
 
 			// Lazy load user avatar image
 			if (userAvatarUrl) {
 				userAvatar.attr('src', userAvatarUrl).removeAttr('data-src').removeData('src');
 			}
 
-			userStatsMenu.show();
-		}, function() {
-			$(this).find('.UserStatsMenu').hide();
+		}).on('mouseleave', function() {
+			var $this = $(this);
+			setPopoverTimeout($this);
+			$('.popover').mouseenter(function() {
+				clearTimeout(popoverTimeout);
+			}).mouseleave(function() {
+				setPopoverTimeout($this);
+			});
 		});
 	},
 

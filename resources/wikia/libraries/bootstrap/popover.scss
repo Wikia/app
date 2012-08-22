@@ -3,12 +3,6 @@
 
 $color-shadow: mix(#000000, $color-page, 50%);
 
-$color-border: mix(#000000, $color-page-border, 50%);
-@if($is-dark-wiki) {
-	$color-border: mix(#FFFFFF, $color-page-border, 50%);	
-}
-
-
 .popover {
 	position: absolute;
 	top: 0;
@@ -20,6 +14,7 @@ $color-border: mix(#000000, $color-page-border, 50%);
 
 .popover-inner {
 	@include box-shadow(0, 0, 15px, $color-shadow);
+	border: 1px solid $color-page-border;
 	max-width: 400px;
 	padding: 3px;
 	overflow: hidden;

@@ -6,14 +6,10 @@
 @import "ChatSprite";
 
 .UserStatsMenu {
-	@include box-shadow(0, 0, 12px, $color-body);
 	background: $color-page;
-	border: 3px solid $color-body;
 	display: none;
 	font-size: 12px;
-	position: absolute;
-	z-index: 100;
-
+	
 	.info {
 		@include clearfix;
 		background: $color-menu-highlight;
@@ -152,4 +148,7 @@
 			border-top: $color-page-border 1px solid;
 		}
 	}
+}
+.popover .UserStatsMenu {
+	display: block;
 }

@@ -43,7 +43,7 @@
 		var dom = {
 			wrapper: $this,
 			carousel: $this.find('.carousel'),
-			items: $this.find('.carousel li'),
+			items: $this.find('.carousel > li'),
 			container: $this.children('div:first'),
 			next: $this.siblings('.' + options.nextClass),
 			previous: $this.siblings('.' + options.prevClass)
