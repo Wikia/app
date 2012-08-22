@@ -63,8 +63,10 @@ class RelatedVideosNamespaceData {
 	}
 
 	static public function createGlobalList() {
+		wfProfileIn( __METHOD__ );
 		$oTitle =  Title::newFromText( self::GLOBAL_RV_LIST, NS_MEDIAWIKI );
 		self::create($oTitle);
+		wfProfileOut( __METHOD__ );
 		return self::newFromGeneralMessage();
 	}
 	
