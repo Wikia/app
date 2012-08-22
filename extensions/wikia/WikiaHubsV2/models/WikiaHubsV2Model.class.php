@@ -17,8 +17,8 @@ class WikiaHubsV2Model extends WikiaModel {
 	const FEATURED_VIDEO_WIDTH = 300;
 	const FEATURED_VIDEO_HEIGHT = 225;
 
-	const SPONORED_IMAGE_WIDTH = 91;
-	const SPONORED_IMAGE_HEIGHT = 27;
+	const SPONSORED_IMAGE_WIDTH = 91;
+	const SPONSORED_IMAGE_HEIGHT = 27;
 
 	protected $lang;
 	protected $date;
@@ -260,7 +260,7 @@ class WikiaHubsV2Model extends WikiaModel {
 			)
 		);
 
-		$results['sponsorthumb']['src'] = $this->getThumbnailUrl($results['sponsor'], self::SPONORED_IMAGE_WIDTH, self::SPONORED_IMAGE_HEIGHT);
+		$results['sponsorthumb']['src'] = $this->getThumbnailUrl($results['sponsor'], self::SPONSORED_IMAGE_WIDTH, self::SPONSORED_IMAGE_HEIGHT);
 		$sponsorThumbSizes = $this->getImageThumbSize();
 		$results['sponsorthumb']['width'] = $sponsorThumbSizes['width'];
 		$results['sponsorthumb']['height'] = $sponsorThumbSizes['height'];

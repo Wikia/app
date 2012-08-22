@@ -15,11 +15,11 @@
 				<? foreach($boxes as $box): ?>
 					<div class="box">
 						<h5>
-							<b><a href="<?= $box['headline']['href'] ?>">
+							<strong><a href="<?= $box['headline']['href'] ?>">
 								<?= $box['headline']['anchor'] ?>
-							</a></b>
+							</a></strong>
 						</h5>
-						<b><?= $box['number'] ?><?= !empty($box['unit'])?' ' . $box['unit']:''; ?></b>
+						<strong><?= $box['number'] ?><?= !empty($box['unit'])?' ' . $box['unit']:''; ?></strong>
 						<br />
 						<a href="<?= $box['link']['href'] ?>">
 							<?= $box['link']['anchor'] ?>

@@ -44,7 +44,11 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 	}
 
 	public function slider() {
-		$sliderData = $this->model->getDataForModuleSlider();
+		/** @var $sliderModule WikiaHubsV2SliderModule */
+		$sliderModule = F::build('WikiaHubsV2SliderModule');
+		$this->initModule($sliderModule);
+		$sliderData = $sliderModule->loadData();
+
 		if($this->format == 'json') {
 			$this->images = $sliderData['images'];
 		} else {
@@ -62,10 +66,14 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 	}
 
 	public function pulse() {
-		$pulseData = $this->model->getDataForModulePulse();
-		$this->title = $pulseData['title'];
-		$this->socialmedia = $pulseData['socialmedia'];
-		$this->boxes = $pulseData['boxes'];
+		/** @var $pulseModule WikiaHubsV2PulseModule */
+		$pulseModule = F::build('WikiaHubsV2PulseModule');
+		$this->initModule($pulseModule);
+		$pulseData = $pulseModule->loadData();
+
+		$this->title = !empty($pulseData['title'])?$pulseData['title']:null;
+		$this->socialmedia = !empty($pulseData['socialmedia'])?$pulseData['socialmedia']:null;
+		$this->boxes = !empty($pulseData['boxes'])?$pulseData['boxes']:null;
 	}
 
 	public function featuredvideo() {
@@ -163,12 +171,22 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 		$this->model->setVertical($this->verticalId);
 	}
 
+	protected function initModule(WikiaHubsV2Module $module) {
+		$date = $this->getRequest()->getVal('date', date('Y-m-d'));
+		$lang = $this->getRequest()->getVal('cityId', $this->wg->cityId);
+		$module->setDate($date);
+		$module->setLang($lang);
+		$module->setVertical($this->verticalId);
+	}
+
 	/**
 	 * @desc Sets hubs specific settings: page title, hub type, vertical body class
 	 */
 	protected function initVerticalSettings() {
 		$this->wg->out->setPageTitle($this->verticalName);
-		$this->wgWikiaHubType = $this->verticalName;
+		if($this->format != 'json') {
+			$this->wgWikiaHubType = $this->verticalName;
+		}
 		RequestContext::getMain()->getRequest()->setVal('vertical', $this->verticalName);
 		OasisController::addBodyClass('WikiaHubs' . mb_ereg_replace(' ', '', $this->verticalName));
 	}
