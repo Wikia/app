@@ -103,12 +103,12 @@ else {
 }
 
 // generate JSON blame report
-$blmaeReport = isset($options['blame-report']) ? $options['blame-report'] : false;
+$blameReport = isset($options['blame-report']) ? $options['blame-report'] : false;
 
-if ($blmaeReport !== false) {
+if ($blameReport !== false) {
 	$report = $lint->formatReport($results, 'blame');
-	file_put_contents($blmaeReport, json_encode($report));
-	echo "\nBlame report saved to {$blmaeReport}\n";
+	file_put_contents($blameReport, json_encode($report));
+	echo "\nBlame report saved to {$blameReport}\n";
 }
 
 // this script is run by CruiseControl requiring return code to equal zero
