@@ -915,6 +915,14 @@ $config['wikiahubs_v2_scss'] = array(
 		)
 );
 
+$config['wikiahubs_v2_scss_mobile'] = array(
+		'type' => AssetsManager::TYPE_SCSS,
+		'skin' => array('wikiamobile'),
+		'assets' => array(
+				'//extensions/wikia/WikiaHubsV2/css/WikiaHubsV2Mobile.scss'
+		)
+);
+
 /** WikiaSearch **/
 
 $config['wikiasearch_js_wikiamobile'] = array(

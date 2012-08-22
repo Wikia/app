@@ -41,6 +41,7 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 		$this->response->addAsset('wikiahubs_v2');
 		$this->response->addAsset('wikiahubs_v2_modal');
 		$this->response->addAsset('wikiahubs_v2_scss');
+		$this->response->addAsset('wikiahubs_v2_scss_mobile');
 		if (F::app()->checkSkin('wikiamobile')) {
 			$this->overrideTemplate('wikiamobileindex');
 		}
