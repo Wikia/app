@@ -13,7 +13,7 @@ class Chat {
 	public function __construct($chatId){
 		$this->chatId = $chatId;
 	}
-		
+
 	/**
 	 * This function is meant to just echo the COOKIES which are available to the apache server.
 	 *
@@ -30,8 +30,8 @@ class Chat {
 		$wgMemc->set($key, array( "user_id" => $wgUser->getId(), "cookie" => $_COOKIE) , 60*60*48);
 		return $key;
 	} // end echoCookies()
-	
-	
+
+
 	/**
 	 * Given a username, if the current user has permission to do so, ban the user
 	 * from chat on the current wiki. This can be reversed by removing them from
@@ -49,9 +49,9 @@ class Chat {
 		$errorMsg = "";
 		$PERMISSION_TO_KICKBAN = "chatmoderator";
 		$userToKickBan = User::newFromName($userNameToKickBan);
-		
+
 		if( ($userToKickBan instanceof User) && $kickingUser->isAllowed( $PERMISSION_TO_KICKBAN ) ){
-		
+
 			if( $userToKickBan->isAllowed( $PERMISSION_TO_KICKBAN ) ){
 				$errorMsg .= wfMsg('chat-ban-cant-ban-moderator')."\n";
 			} else {
@@ -68,26 +68,26 @@ class Chat {
 	public static function blockPrivate($username, $dir = 'add', $kickingUser) {
 		global $wgExternalDatawareDB;
 		wfProfileIn( __METHOD__ );
-		
+
 		$kickingUserId = intval($kickingUser->getId());
 		$userToBlock = User::newFromName($username);
 		$dbw = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
-		
+
 		if( !empty($userToBlock) && $kickingUserId > 0) {
 			if( !wfReadOnly() ){ // Change to wgReadOnlyDbMode if we implement thatwgReadOnly
 				if($dir == 'remove') {
-					$dbw->delete( 
+					$dbw->delete(
 						"chat_blocked_users",
-						array( 
+						array(
 							'cbu_user_id' => $kickingUserId,
 							'cbu_blocked_user_id' => $userToBlock->getId()
-						), 
-						__METHOD__ 
+						),
+						__METHOD__
 					);
 				} else {
 					$dbw->insert(
 						"chat_blocked_users",
-						array( 
+						array(
 							'cbu_user_id' => $kickingUserId,
 							'cbu_blocked_user_id' => $userToBlock->getId()
 						),
@@ -102,93 +102,92 @@ class Chat {
 		return true;
 	}
 
-	//TODO: move it to some data base table 
+	//TODO: move it to some data base table
 	public static function banUserDB($cityId, $banUser, $adminUser, $time, $reason, $dir = 'add') {
 		global $wgExternalDatawareDB;
 		wfProfileIn( __METHOD__ );
-		
+
 		$dbw = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
-		
+
 		if( !empty($banUser) && !empty($adminUser) ) {
 			if( !wfReadOnly() ){ // Change to wgReadOnlyDbMode if we implement thatwgReadOnly
 				if($dir == 'remove') {
 					if(Chat::getBanInformation($cityId, $banUser) === false) {
 						return true;
 					}
-					$dbw->delete( 
+					$dbw->delete(
 						"chat_ban_users",
-						array( 
+						array(
 							'cbu_wiki_id' => $cityId,
 							'cbu_user_id' => $banUser->getId(),
-						), 
-						__METHOD__ 
+						),
+						__METHOD__
 					);
 				} else {
 					if(Chat::getBanInformation($cityId, $banUser) !== false) {
 						$dir = "change";
 					}
-					
+
 					$endon = time() + $time;
 					$dbw->replace(
 						"chat_ban_users",
 						null,
-						array( 
+						array(
 							'cbu_wiki_id' => $cityId,
 							'cbu_user_id' => $banUser->getId(),
 							'cbu_admin_user_id' => $adminUser->getId(),
 							'start_date' => wfTimestamp( TS_MW ),
 							'end_date' => wfTimestamp( TS_MW, $endon ),
 							'reason' =>  $reason
-						), 
+						),
 						__METHOD__
 					);
 
 					$options = self::getBanOptions();
 					foreach($options as $key => $val) {
 						if($val == $time) {
-							$timeLabel = $key;	
+							$timeLabel = $key;
 						}
-					}		
+					}
 				}
-				
+
 				Chat::addLogEntry($banUser, $adminUser, array(
 					$adminUser->getId(),
 					$banUser->getId(),
 					empty($timeLabel) ? null:$timeLabel,
 					empty($endon) ? null:$endon,
 				), 'ban'.$dir, $reason);
-					
+
 				$dbw->commit();
 			}
 		}
 		wfProfileOut( __METHOD__ );
 		return true;
 	}
-	
+
 	/**
 	 * Return ban information if user is not ban return false;
 	 */
-	
-	public function getBanInformation($cityId, $banUser) {
+	public static function getBanInformation($cityId, $banUser) {
 		global $wgExternalDatawareDB;
 		wfProfileIn( __METHOD__ );
-		
+
 		$dbw = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
-		
+
 		$row = $dbw->selectRow(
 			"chat_ban_users",
-			array( 
+			array(
 				'cbu_wiki_id',
 				'cbu_user_id',
 				'cbu_admin_user_id',
 				'end_date',
 				'reason'
 			),
-			array( 
+			array(
 				'cbu_wiki_id' => $cityId,
 				'cbu_user_id' => $banUser->getId(),
-			), 
-			__METHOD__ 
+			),
+			__METHOD__
 		);
 
 		if(empty($row)) {
@@ -197,12 +196,12 @@ class Chat {
 		}
 
 		$row->end_date = wfTimestamp( TS_UNIX, $row->end_date );
-		
+
 		if($row->end_date < (time() ) ) {
 			wfProfileOut( __METHOD__ );
 			return false;
 		}
-		
+
 		wfProfileOut( __METHOD__ );
 		return $row;
 	}
@@ -212,57 +211,57 @@ class Chat {
 		if(!is_array($in)) {
 			$in = array();
 		}
-		
+
 		$out = array();
 		foreach($in as $value) {
 			$user = User::newFromID($value);
 			$out[] = $user->getName();
-		} 
+		}
 		wfProfileOut( __METHOD__ );
 		return $out;
 	}
-	
+
 	public static function getListOfBlockedPrivate() {
 		global $wgUser, $wgExternalDatawareDB;
 		wfProfileIn( __METHOD__ );
 		$dbw = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
-		
-		$res = $dbw->select ( 
-			"chat_blocked_users", 
+
+		$res = $dbw->select (
+			"chat_blocked_users",
 			array('cbu_user_id', 'cbu_blocked_user_id'),
-			array( 
-				'cbu_user_id' => $wgUser->getId() 
-			), 
-			__METHOD__ 
+			array(
+				'cbu_user_id' => $wgUser->getId()
+			),
+			__METHOD__
 		);
-			
+
 		$blockedChatUsers = array();
 		while ( $row = $res->fetchObject() ) {
 			$blockedChatUsers[] = $row->cbu_blocked_user_id;
 		}
-		
-		$res = $dbw->select ( 
-			"chat_blocked_users", 
+
+		$res = $dbw->select (
+			"chat_blocked_users",
 			array('cbu_user_id', 'cbu_blocked_user_id'),
-			array( 
-				'cbu_blocked_user_id' => $wgUser->getId() 
-			), 
-			__METHOD__ 
+			array(
+				'cbu_blocked_user_id' => $wgUser->getId()
+			),
+			__METHOD__
 		);
-			
+
 		$blockedByChatUsers = array();
 		while ( $row = $res->fetchObject() ) {
 			$blockedByChatUsers[] = $row->cbu_user_id;
 		}
 
-		$result = array( 
+		$result = array(
 			'blockedChatUsers' => self::userIds2UserNames($blockedChatUsers),
 			'blockedByChatUsers' => self::userIds2UserNames($blockedByChatUsers)
 		);
 		wfProfileOut( __METHOD__ );
 		return $result;
 	}
-	
+
 	/**
 	 * Attempts to add the 'chatmoderator' group to the user whose name is provided
 	 * in 'userNameToPromote'.
@@ -272,16 +271,16 @@ class Chat {
 	static public function promoteChatModerator($userNameToPromote, $promottingUser) {
 		wfProfileIn( __METHOD__ );
 		$CHAT_MOD_GROUP = 'chatmoderator';
-		
+
 		$userToPromote = User::newFromName($userNameToPromote);
-		
+
 		if( !($userToPromote instanceof User) ) {
 			$errorMsg = wfMsg('chat-err-invalid-username-chatmod', $userNameToPromote);
-			
+
 			wfProfileOut( __METHOD__ );
 			return $errorMsg;
 		}
-		
+
 		// Check if the userToPromote is already in the chatmoderator group.
 		$errorMsg = '';
 		if( in_array($CHAT_MOD_GROUP, $userToPromote->getEffectiveGroups()) ) {
@@ -291,23 +290,23 @@ class Chat {
 			$promottingUserName = $promottingUser->getName();
 			$isSelf = ($userToPromote->getName() == $promottingUserName);
 			$addableGroups = array_merge( $changeableGroups['add'], $isSelf ? $changeableGroups['add-self'] : array() );
-			
+
 			if( in_array($CHAT_MOD_GROUP, $addableGroups) ) {
 				// Adding the group is allowed. Add the group, clear the cache, run necessary hooks, and log the change.
 				$oldGroups = $userToPromote->getGroups();
-				
+
 				$userToPromote->addGroup( $CHAT_MOD_GROUP );
 				$userToPromote->invalidateCache();
-				
+
 				if( $userToPromote instanceof User ) {
 					$removegroups = array();
 					$addgroups = array( $CHAT_MOD_GROUP );
 					wfRunHooks( 'UserRights', array( &$userToPromote, $addgroups, $removegroups ) );
 				}
-				
+
 				// Update user-rights log.
 				$newGroups = array_merge($oldGroups, array($CHAT_MOD_GROUP));
-				
+
 				// Log the rights-change.
 				Chat::addLogEntry($userToPromote, $promottingUser, array(
 					Chat::makeGroupNameListForLog( $oldGroups ),
@@ -317,12 +316,12 @@ class Chat {
 				$errorMsg = wfMsg("chat-err-no-permission-to-add-chatmod", $CHAT_MOD_GROUP);
 			}
 		}
-		
+
 		wfProfileOut( __METHOD__ );
 		return ( $errorMsg == "" ? true : $errorMsg);
 	} // end promoteChatMod()
-	
-	
+
+
 	static public function makeGroupNameListForLog( $ids ) {
 		if ( empty( $ids ) ) {
 			return '';
@@ -344,7 +343,7 @@ class Chat {
 	 */
 	static public function isChatMod($userName){
 		wfProfileIn( __METHOD__ );
-		
+
 		$isChatMod = false;
 		$user = User::newFromName($userName);
 		if(!empty($user)){
@@ -354,7 +353,7 @@ class Chat {
 		wfProfileOut( __METHOD__ );
 		return $isChatMod;
 	} // end isChatMod()
-	
+
 	/**
 	 * Add a rights log entry for an action.
 	 * Partially copied from SpecialUserrights.php
@@ -367,9 +366,9 @@ class Chat {
 	public static function addLogEntry($user, $doer, $attr, $type = 'banadd', $reasone = null) {
 		global $wgRequest;
 		wfProfileIn(__METHOD__);
-		
+
 		$doerName = $doer->getName();
-		
+
 		if( $type === 'chatmoderator' ) {
 			$reason = empty($reasone) ? wfMsgForContent('chat-userrightslog-a-made-b-chatmod', $doerName, $user->getName()):$reasone;
 			$type = 'rights';
@@ -379,7 +378,7 @@ class Chat {
 			$subtype = 'chat'.$type;
 			$type =  'chatban';
 		}
-		
+
 		$log = new LogPage($type);
 		$log->addEntry($subtype,
 			$user->getUserPage(),
@@ -387,16 +386,16 @@ class Chat {
 			$attr,
 			$doer
 		);
-		
+
 		wfProfileOut(__METHOD__);
 	}
-	
+
 	/**
 	 * Logs to chatlog table that a user opened chat room
-	 * 
+	 *
 	 * Using chatlog table is temporaly. It'll be last till event_type_description table will be done.
 	 * Now we have:
-	 * mysql> select * from event_type_details ; 
+	 * mysql> select * from event_type_details ;
 	 * +------------------------+------------+
 	 * | event_type_detail_text | event_type |
 	 * +------------------------+------------+
@@ -406,24 +405,24 @@ class Chat {
 	 * | UNDELETE_CATEGORY      |          4 |
 	 * | UPLOAD_CATEGORY        |          5 |
 	 * +------------------------+------------+
-	 * 
+	 *
 	 * That's why I put as default 6 as a event_type value.
-	 * 
+	 *
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	public static function logChatWindowOpenedEvent() {
 		global $wgCityId, $wgUser, $wgCatId, $wgDevelEnvironment, $wgStatsDB;
-		
+
 		wfProfileIn(__METHOD__);
-		
+
 		if( $wgDevelEnvironment ) {
 		//devbox
 			return true;
 		}
-		
+
 		//production
 		$dbw = wfGetDB( DB_MASTER, array(), $wgStatsDB );
-		
+
 		$wikiId = intval($wgCityId);
 		$userId = intval($wgUser->GetId());
 		if( $wikiId > 0 && $userId > 0 ) {
@@ -432,7 +431,7 @@ class Chat {
 				'user_id' => $wgUser->GetId(),
 				'event_type' => 6
 			);
-			
+
 			if( !wfReadOnly() ){ // Change to wgReadOnlyDbMode if we implement thatwgReadOnly
 				$dbw->insert('chatlog', $eventRow, __METHOD__);
 				$dbw->commit();
@@ -440,10 +439,10 @@ class Chat {
 		} else {
 			wfDebugLog('chat', 'User did open a chat room but it was not logged in chatlog');
 		}
-		
+
 		wfProfileOut(__METHOD__);
 	}
-	
+
 	/**
 	 * Since the permission essentially has to be implemented as an anti-permission, this function removes the
 	 * need for confusing double-negatives in the code.
@@ -460,66 +459,66 @@ class Chat {
 		if(Chat::getBanInformation($wgCityId, $userObject) !== false) {
 			return false;
 		}
-		
+
 		return ( $userObject->isLoggedin() && $userObject->isAllowed( 'chat' ) );
 	} // end canChat()
-	
+
 	static public function getBanTimeFactors() {
 		return array(
 			'hours' => 60*60,
 			'days' => 60*60*24,
 			'weeks' => 60*60*24*7,
 			'months' => 60*60*24*30,
-			'years' => 60*60*24*365 
+			'years' => 60*60*24*365
 		);
 	}
-	
+
 	static public function getBanOptions() {
 		wfProfileIn(__METHOD__);
 		$in = wfMsgForContent('chat-ban-option-list');
 		$in = preg_replace('!\s+!', ' ', $in);
 		$list = explode(',', $in);
-		$out = array(); 
-		
+		$out = array();
+
 		$factors = self::getBanTimeFactors();
-		
+
 		foreach($list as $val) {
 			$explode1 = explode(':', $val);
 			if(count($explode1) != 2) {
 				continue;
 			}
 			$label = $explode1[0];
-			
+
 			if(trim($explode1[1]) == 'infinite') {
 				$out[$label] =  $factors['years'] * 1000;
 				continue;
 			}
-			
+
 			$explode2 = explode(' ', $explode1[1]);
-			
+
 			if(count($explode2) != 2) {
 				continue;
 			}
-		
+
 			$factor = trim($explode2[1]);
 			$factor = (int) (empty($factors[$factor]) ? (empty($factors[$factor.'s']) ? 0:$factors[$factor.'s'] ):$factors[$factor]);
-			
+
 			if($factor < 1) {
 				continue;
 			}
-		
+
 			$base = (int) trim($explode2[0]);
-			
+
 			if($base < 1) {
 				continue;
 			}
-		
-			$out[$label] = $base*$factor; 
+
+			$out[$label] = $base*$factor;
 		}
 
 		wfProfileOut(__METHOD__);
 		return $out;
-	} 
-	
-	
+	}
+
+
 } // end class Chat
