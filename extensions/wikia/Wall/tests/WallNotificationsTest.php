@@ -6,8 +6,8 @@ require_once(dirname(__FILE__) . '/../Wall.setup.php');
 $wgCanonicalNamespaceNames = $wgCanonicalNamespaceNames + $wgExtraNamespaces;
 
 class testWallNotifications extends WallNotifications {
-	public function addNotificationToData(&$data, $userId, $wikiId, $uniqueId, $entityKey, $authorId, $isReply, $read = false) {
-		return parent::addNotificationToData($data, $userId, $wikiId, $uniqueId, $entityKey, $authorId, $isReply, $read);
+	public function addNotificationToData(&$data, $userId, $wikiId, $uniqueId, $entityKey, $authorId, $isReply, $read = false, $notifyeveryone = false) {
+		return parent::addNotificationToData($data, $userId, $wikiId, $uniqueId, $entityKey, $authorId, $isReply, $read, $notifyeveryone);
 	}
 }
 
@@ -76,6 +76,7 @@ class WallNotificationsTest extends PHPUnit_Framework_TestCase
 		$authorId = 6666;
 		$isReply = false;
 		$read = false;
+		$notifyeveryone = false;
 		
 		$dataS = array(
 			'notification' => array(
@@ -86,7 +87,8 @@ class WallNotificationsTest extends PHPUnit_Framework_TestCase
 					'read' => true,
 					'list' => array( array('entityKey' => '404_101', 'authorId' => 6600, 'isReply' => false ) ),
 					'last' => 0,
-					'count' => 1
+					'count' => 1,
+					'notifyeveryone' => 0
 				)
 			)
 		);
@@ -102,13 +104,15 @@ class WallNotificationsTest extends PHPUnit_Framework_TestCase
 					'read' => true,
 					'list' => array( 0 => array('entityKey' => '404_101', 'authorId' => 6600, 'isReply' => false ) ),
 					'last' => 0,
-					'count' => 1
+					'count' => 1,
+					'notifyeveryone' => 0
 				),
 				$uniqueId => array(
 					'read' => $read,
 					'list' => array( 0 => array('entityKey' => $entityKey, 'authorId' => $authorId, 'isReply' => $isReply ) ),
 					'last' => 1,
-					'count' => 1
+					'count' => 1,
+					'notifyeveryone' => $notifyeveryone
 				)
 			)
 		);
@@ -129,13 +133,15 @@ class WallNotificationsTest extends PHPUnit_Framework_TestCase
 					'read' => true,
 					'list' => array( 0 => array('entityKey' => '404_101', 'authorId' => 6600, 'isReply' => false ) ),
 					'last' => 0,
-					'count' => 1
+					'count' => 1,
+					'notifyeveryone' => 0
 				),
 				$uniqueId => array(
 					'read' => $read,
 					'list' => array( 1 => array('entityKey' => $entityKey, 'authorId' => $authorId, 'isReply' => $isReply ) ),
 					'last' => 2,
-					'count' => 1
+					'count' => 1,
+					'notifyeveryone' => $notifyeveryone
 				)
 			)
 		);		
@@ -156,7 +162,8 @@ class WallNotificationsTest extends PHPUnit_Framework_TestCase
 					'read' => true,
 					'list' => array( 0 => array('entityKey' => '404_101', 'authorId' => 6600, 'isReply' => false ) ),
 					'last' => 0,
-					'count' => 1
+					'count' => 1,
+					'notifyeveryone' => 0
 				),
 				$uniqueId => array(
 					'read' => $read,
@@ -165,7 +172,8 @@ class WallNotificationsTest extends PHPUnit_Framework_TestCase
 						1 => array('entityKey' => $entityKey2, 'authorId' => $authorId2, 'isReply' => $isReply )
 					),
 					'last' => 2,
-					'count' => 2
+					'count' => 2,
+					'notifyeveryone' => $notifyeveryone
 				)
 			)
 		);
@@ -187,7 +195,8 @@ class WallNotificationsTest extends PHPUnit_Framework_TestCase
 					'read' => true,
 					'list' => array( 0 => array('entityKey' => '404_101', 'authorId' => 6600, 'isReply' => false ) ),
 					'last' => 0,
-					'count' => 1
+					'count' => 1,
+					'notifyeveryone' => 0
 				),
 				$uniqueId => array(
 					'read' => $read,
@@ -197,7 +206,8 @@ class WallNotificationsTest extends PHPUnit_Framework_TestCase
 						2 => array('entityKey' => $entityKey3, 'authorId' => $authorId3, 'isReply' => $isReply )
 					),
 					'last' => 3,
-					'count' => 3
+					'count' => 3,
+					'notifyeveryone' => $notifyeveryone
 				)
 			)
 		);		
@@ -219,7 +229,8 @@ class WallNotificationsTest extends PHPUnit_Framework_TestCase
 					'read' => true,
 					'list' => array( 0 => array('entityKey' => '404_101', 'authorId' => 6600, 'isReply' => false ) ),
 					'last' => 0,
-					'count' => 1
+					'count' => 1,
+					'notifyeveryone' => 0
 				),
 				$uniqueId => array(
 					'read' => $read,
@@ -229,7 +240,8 @@ class WallNotificationsTest extends PHPUnit_Framework_TestCase
 						2 => array('entityKey' => $entityKey4, 'authorId' => $authorId4, 'isReply' => $isReply )
 					),
 					'last' => 4,
-					'count' => 4
+					'count' => 4,
+					'notifyeveryone' => $notifyeveryone
 				)
 			)
 		);		
@@ -250,7 +262,8 @@ class WallNotificationsTest extends PHPUnit_Framework_TestCase
 					'read' => true,
 					'list' => array( 0 => array('entityKey' => '404_101', 'authorId' => 6600, 'isReply' => false ) ),
 					'last' => 0,
-					'count' => 1
+					'count' => 1,
+					'notifyeveryone' => 0
 				),
 				$uniqueId => array(
 					'read' => $read,
@@ -260,7 +273,8 @@ class WallNotificationsTest extends PHPUnit_Framework_TestCase
 						3 => array('entityKey' => $entityKey5, 'authorId' => $authorId4, 'isReply' => $isReply )
 					),
 					'last' => 5,
-					'count' => 4
+					'count' => 4,
+					'notifyeveryone' => $notifyeveryone
 				)
 			)
 		);		
