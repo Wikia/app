@@ -35,7 +35,11 @@
 			}
 
 			if ( empty($endDate) ) {
-				$endDate = date( 'Y-m-d', strtotime('-1 day') );
+				if ( $periodId == self::PERIOD_ID_MONTHLY ) {
+					$endDate = date( 'Y-m-01' );
+				} else {
+					$endDate = date( 'Y-m-d', strtotime('-1 day') );
+				}
 			}
 
 			$memKey = $app->wf->SharedMemcKey( 'datamart', 'pageviews', $wikiId, $periodId, $startDate, $endDate );
@@ -173,7 +177,11 @@
 			}
 
 			if ( empty($endDate) ) {
-				$endDate = date( 'Y-m-d', strtotime('-1 day') );
+				if ( $periodId == self::PERIOD_ID_MONTHLY ) {
+					$endDate = date( 'Y-m-01' );
+				} else {
+					$endDate = date( 'Y-m-d', strtotime('-1 day') );
+				}
 			}
 
 			$memKey = $app->wf->SharedMemcKey( 'datamart', 'events', $wikiId, $periodId, $startDate, $endDate );
@@ -259,7 +267,11 @@
 			}
 
 			if ( empty($endDate) ) {
-				$endDate = date( 'Y-m-d', strtotime('-1 day') );
+				if ( $periodId == self::PERIOD_ID_MONTHLY ) {
+					$endDate = date( 'Y-m-01' );
+				} else {
+					$endDate = date( 'Y-m-d', strtotime('-1 day') );
+				}
 			}
 
 			$memKey = $app->wf->SharedMemcKey( 'datamart', 'video_views', $wikiId, $periodId, $startDate, $endDate, md5($title) );
@@ -327,7 +339,11 @@
 			}
 
 			if ( empty($endDate) ) {
-				$endDate = date( 'Y-m-d', strtotime('-1 day') );
+				if ( $periodId == self::PERIOD_ID_MONTHLY ) {
+					$endDate = date( 'Y-m-01' );
+				} else {
+					$endDate = date( 'Y-m-d', strtotime('-1 day') );
+				}
 			}
 
 			if ( empty($startDate) ) {
