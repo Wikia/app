@@ -175,7 +175,7 @@ class RelatedVideosController extends WikiaController {
 		$pgTitle = $this->request->getVal('title', '');
 		$this->setVal( 'pageTitle', $pgTitle );
 		$this->setVal( 'html', $this->app->renderView( 'RelatedVideos', 'addVideoModalText', array('pageTitle'=>$pgTitle) ) );
-		$this->setVal( 'title',	wfMsg('related-videos-add-video-to-this-page') );
+		$this->setVal( 'title',	wfMsg('related-videos-add-video-to-this-wiki') );
 	}
 
 	public function addVideoModalText(){

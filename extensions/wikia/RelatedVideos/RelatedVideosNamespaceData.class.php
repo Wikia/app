@@ -61,6 +61,12 @@ class RelatedVideosNamespaceData {
 		$oTitle =  Title::newFromText( self::GLOBAL_RV_LIST, NS_MEDIAWIKI );
 		return $oTitle->exists() ? self::newFromTitle( $oTitle ) : null;
 	}
+
+	static public function createGlobalList() {
+		$oTitle =  Title::newFromText( self::GLOBAL_RV_LIST, NS_MEDIAWIKI );
+		self::create($oTitle);
+		return self::newFromGeneralMessage();
+	}
 	
 	static public function create(Title $title) {
 
@@ -361,7 +367,7 @@ class RelatedVideosNamespaceData {
 			return wfMsg('related-videos-error-unknown', 76543);
 		}
 
-		$article = F::build('Article', array($title));
+		$article = F::build('Article', array($title)); /* @var $article Article */
 
 		if ( empty( $summary )){
 			$summary = wfMsg( 'related-videos-update-summary-' . strtolower( $list ) );

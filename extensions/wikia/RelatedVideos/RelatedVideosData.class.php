@@ -72,6 +72,7 @@ class RelatedVideosData {
 			return wfMsg('related-videos-error-no-video-url');
 		}
 
+		/*
 		$targetTitle = F::build('Title', array($articleId), 'newFromId');
 		if (!$targetTitle->exists()) {
 			wfProfileOut( __METHOD__ );
@@ -83,7 +84,7 @@ class RelatedVideosData {
 		if ($permErrors) {
 			wfProfileOut( __METHOD__ );
 			return wfMsg('related-videos-error-permission-article');
-		}
+		}*/
 
 		try {
 			if ( WikiaFileHelper::isVideoStoredAsFile() ) {
@@ -118,7 +119,11 @@ class RelatedVideosData {
 		}
 
 		// add to article's whitelist
-		$rvn = F::build( 'RelatedVideosNamespaceData', array( $targetTitle ), 'newFromTargetTitle' );
+		//$rvn = F::build( 'RelatedVideosNamespaceData', array( $targetTitle ), 'newFromTargetTitle' );
+		$rvn = RelatedVideosNamespaceData::newFromGeneralMessage();
+		if(empty($rvn)) {
+			$rvn = RelatedVideosNamespaceData::createGlobalList();
+		}
 		$entry = $rvn->createEntry( $videoTitle->getText(), $videoProvider == self::V_WIKIAVIDEO );
 		$retval = $rvn->addToList( RelatedVideosNamespaceData::WHITELIST_MARKER, array( $entry ), $articleId );
 		if ( is_array( $rvn->entries ) ){
