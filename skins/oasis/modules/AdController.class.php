@@ -181,5 +181,19 @@ class AdController extends WikiaController {
 		$this->conf = self::$config;
 
 	}
+	
+	public function executeTop() {
+		if ($this->wg->EnableTopButton) {
+			if (strtolower($this->wg->EnableTopButton) == 'right') {
+				$this->topAdsExtraClasses = ' WikiaTopButtonRight';
+			}
+			else {
+				$this->topAdsExtraClasses = ' WikiaTopButtonLeft';
+			}
+		}
+		else {
+			$this->topAdsExtraClasses = '';
+		}
+	}
 
 }

@@ -18,7 +18,7 @@
 
 	min-height: 69px;
 	margin: 0 0 3px;
-	padding: 25px 10px 9px;
+	padding: 25px 10px 1px;
 	position: relative;
 	z-index: 1000; // BugId:2516
 
@@ -279,7 +279,6 @@
 
 
 	.buttons {
-		bottom: 15px;
 		right: 10px;
 		position: absolute;
 		text-align: right;
@@ -378,6 +377,16 @@
 				}
 			}
 		}
+	}
+}
+
+.oasis-split-skin .WikiHeaderRestyle {
+	padding-top: 20px;
+	>nav {
+		top: 20px;
+	}
+	.buttons {
+		top: 22px;
 	}
 }
 

@@ -50,6 +50,23 @@
 	}
 }
 
+/**
+ * IMPORTANT (21-Aug-2012, FB:45031): Integrate this code into base css above after transition.
+ * This is currently an override depending on skin switch.
+ */
+.oasis-split-skin {
+	.WikiaTopAds {
+		margin: 0 auto;
+		padding: 10px 0 7px;
+		width: $width-outside;
+	}
+	.wikia-ad {
+		>img {
+			float: right;	/* invisible tracking pixel is taking up height for some reason.  taking it out of the flow for now */
+		}
+	}
+}
+
 /** Skyscrapers **/
 #LEFT_SKYSCRAPER_2 {
 	@extend section;
