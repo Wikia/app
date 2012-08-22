@@ -86,5 +86,6 @@ function CreatePollSetup($editform) {
 
 F::build('JSMessages')->registerPackage( 'WikiaMobilePolls', array(
 	'wikiamobile-wikiapoll-thanks-voting',
-	'wikiamobile-wikiapoll-poll'
+	'wikiamobile-wikiapoll-poll',
+	'wikiapoll-vote'
 ) );

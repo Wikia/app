@@ -3,6 +3,7 @@
 @import 'extensions/wikia/WikiaMobile/css/mixins/box-shadow.scss';
 
 $poll-shadow-color: rgba(0,0,0,.4);
+$poll-border-color: #E3E3E3;
 $gradient-color-first: rgb(38,148,225);
 $gradient-color-second: rgb(17,105,178);
 
@@ -13,7 +14,7 @@ $gradient-color-second: rgb(17,105,178);
 
 	ul {
 		list-style: none;
-		padding: 10px;
+		padding: 10px 10px 36px 10px;
 		margin: 0;
 	}
 
@@ -51,7 +52,7 @@ $gradient-color-second: rgb(17,105,178);
 
 .bar {
 	float: left;
-	width: 70%;
+	width: 80%;
 	height: 25px;
 	position: relative;
 
@@ -73,7 +74,7 @@ $gradient-color-second: rgb(17,105,178);
 
 .perc {
 	float: right;
-	font-size: 1.5em;
+	font-size: 1.2em;
 }
 
 .WikiaPollModal{
@@ -85,7 +86,7 @@ $gradient-color-second: rgb(17,105,178);
 
 	#wkMdlCnt {
 		background-color: white;
-		color: black;
+		color: rgb(58, 58, 58);
 		padding: 40px 0;
 	}
 
@@ -106,15 +107,15 @@ $gradient-color-second: rgb(17,105,178);
 	label {
 		position: relative;
 		display: block;
-		border-top: 1px solid;
-		padding: 12px 30px 12px 15px;
+		border-top: 1px solid $poll-border-color;
+		padding: 12px 35px 12px 15px;
 		-webkit-transition: background .2s;
 		-moz-transition: background .2s;
 		transition: background .2s;
 		word-break: break-word;
 
 		&:last-of-type {
-			border-bottom: 1px solid;
+			border-bottom: 1px solid $poll-border-color;
 		}
 	}
 
@@ -133,8 +134,9 @@ $gradient-color-second: rgb(17,105,178);
 		display: block;
 		padding: 10px;
 		pointer-events: none;
-		@include linear-gradient(rgb(129,129,129), rgb(100,100,100));
-		color: black;
+		background: #AAA;
+		color: #A1A1A1;
+		font-weight: 800;
 		-webkit-transition: background .2s;
 		-moz-transition: background .2s;
 		transition: background .2s;
@@ -160,12 +162,19 @@ $gradient-color-second: rgb(17,105,178);
 	}
 
 	input:checked + label::after {
-		content: '✓';
-		right: 5px;
+		content: '';
+
 		position: absolute;
-		font-size: 1.5em;
 		top: 50%;
-		margin-top: -0.5em;
+		right: 15px;
+		margin-top: -10px;
+
+		height: 20px;
+		width: 20px;
+
+		background-image: url('/extensions/wikia/WikiaPoll/images/check_4x.png'); /* base64 */
+		background-size: 20px;
+		background-repeat: no-repeat;
 	}
 }
 
