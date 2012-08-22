@@ -12,7 +12,11 @@ class OasisController extends WikiaController {
 	 * @author: Inez Korczyński
 	 */
 	public static function addBodyClass($className) {
-		self::$extraBodyClasses[] = $className;
+		if(!in_array($className,self::$extraBodyClasses)) {
+			self::$extraBodyClasses[] = $className;
+			return true;
+		}
+		return false;
 	}
 
 	public function init() {
@@ -70,7 +74,7 @@ class OasisController extends WikiaController {
 	}
 
 	public function executeIndex($params) {
-		global $wgOut, $wgUser, $wgTitle, $wgRequest, $wgCityId, $wgEnableAdminDashboardExt, $wgEnableWikiaHubsExt, $wgAllInOne;
+		global $wgOut, $wgUser, $wgTitle, $wgRequest, $wgCityId, $wgEnableAdminDashboardExt, $wgAllInOne;
 
 		wfProfileIn(__METHOD__);
 
