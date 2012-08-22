@@ -28,7 +28,8 @@ class RelatedVideosService {
 		if ( empty( $result ) ){
 			Wikia::log( __METHOD__, 'RelatedVideos', 'Not from cache' );
 			$result = array();
-			$result['data'] = RelatedVideosData::getVideoData(
+			$rvd = F::build('RelatedVideosData'); /* @var $rvd RelatedVideosData */
+			$result['data'] = $rvd->getVideoData(
 				$titleText,
 				self::$width,
 				$videoWidth,

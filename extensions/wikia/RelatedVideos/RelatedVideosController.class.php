@@ -102,7 +102,7 @@ class RelatedVideosController extends WikiaController {
 	}
 
 	/*
-	 * for getting videos localy and cross wiki
+	 * for getting videos locally and cross wiki
 	 */
 	public function getVideoData() {
 
