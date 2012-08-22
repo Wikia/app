@@ -182,6 +182,10 @@ class WikiaMiniUpload {
                     $proxyArr = explode(':', $wgHTTPProxy);
                     $flickrAPI->setProxy($proxyArr[0], $proxyArr[1]);
                     $flickrResult = $flickrAPI->photos_getInfo($itemId);
+
+					// phpFlickr 3.x has different response structure than previous version
+					$flickrResult = $flickrResult['photo'];
+
                     $url = "http://farm{$flickrResult['farm']}.static.flickr.com/{$flickrResult['server']}/{$flickrResult['id']}_{$flickrResult['secret']}.jpg";
                     $data = array('wpUpload' => 1, 'wpSourceType' => 'web', 'wpUploadFileURL' => $url);
 					$upload = new UploadFromUrl();
