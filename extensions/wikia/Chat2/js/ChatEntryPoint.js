@@ -40,18 +40,13 @@ var ChatEntryPoint = {
 
 		var chatWhosHere = $('.ChatModule .chat-whos-here');
 
-		// Bound before slideshow is called so we can capture the first event
-		chatWhosHere.bind('slide', function(e, data) {
-			chatWhosHere.find('.arrow-left').toggleClass('inactive', data.currentSlideId == 0);
-			chatWhosHere.find('.arrow-right').toggleClass('inactive', data.currentSlideId == (data.totalSlides - 1));
-		});
-
 		chatWhosHere.find('.carousel-container').carousel({
 			nextClass: 'arrow-right',
 			prevClass: 'arrow-left',
 			itemsShown: 6
 		});
 		
+		// TODO: abstract this because we use this pattern in a few places: i.e. hovering over popover will not close it
 		var popoverTimeout = 0;
 
 		function setPopoverTimeout(elem) {
@@ -68,18 +63,11 @@ var ChatEntryPoint = {
 
 				return userStatsMenu.clone().wrap('<div>').parent().html();
 			}
+
 		}).on('mouseenter', function() {
 			clearTimeout(popoverTimeout);
 			$('.popover').remove();
 			$(this).popover('show');
-
-			var userAvatar = $('.popover').find('.avatar'),
-				userAvatarUrl = userAvatar.data('src');
-
-			// Lazy load user avatar image
-			if (userAvatarUrl) {
-				userAvatar.attr('src', userAvatarUrl).removeAttr('data-src').removeData('src');
-			}
 
 		}).on('mouseleave', function() {
 			var $this = $(this);
