@@ -350,10 +350,6 @@ var Wall = $.createClass(Object, {
 		var wallMsg = target.closest('li.message');
 		var id = wallMsg.attr('data-id');
 
-		if(target.attr('data-id')) {
-			id = target.attr('data-id');
-		}
-
 		var type = isreply ? 'reply':'thread';
 		var mode = target.attr('data-mode').split('-');
 
