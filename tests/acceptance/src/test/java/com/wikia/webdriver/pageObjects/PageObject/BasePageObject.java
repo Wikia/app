@@ -42,6 +42,10 @@ public class BasePageObject{
 	WebElement customizeToolbar_CustomizeButton;
 	@FindBy(css="div.search-box input.search")
 	WebElement customizeToolbar_FindAToolField;
+	@FindBy(css="div.MyToolsRenameItem input.input-box")
+	WebElement customizeToolbar_RenameItemDialogInput;
+	@FindBy(css="div.MyToolsRenameItem input.save-button")
+	WebElement customizeToolbar_SaveItemDialogInput;
 	@FindBy(css="input.save-button")
 	WebElement customizeToolbar_SaveButton;
 	@FindBy(css="span.reset-defaults a")
@@ -287,7 +291,7 @@ public class BasePageObject{
 	 * @author Michal Nowierski
 	 */
 	public void customizeToolbar_ClickOnResetDefaults() {
-		PageObjectLogging.log("customizeToolbar_ClickOnResetDefaults", "Clicks on 'ResetDefaults' button.", true, driver);
+		PageObjectLogging.log("customizeToolbar_ClickOnResetDefaults", "Click on 'ResetDefaults' button.", true, driver);
 		waitForElementByElement(customizeToolbar_ResetDefaultsButton);
 		waitForElementClickableByElement(customizeToolbar_ResetDefaultsButton);
 		customizeToolbar_ResetDefaultsButton.click();
@@ -310,9 +314,36 @@ public class BasePageObject{
 	}
 	
 	/**
+	 * Types GivenString to Find A Tool field
+	 * 
+	 * @param GivenString new name for the Tool
+	 * @author Michal Nowierski
+	 */
+	public void customizeToolbar_TypeIntoRenameItemDialog(String GivenString) {
+		PageObjectLogging.log("customizeToolbar_TypeIntoRenameItemDialog", "Type "+GivenString+" into Find A Tool field", true, driver);
+		waitForElementByElement(customizeToolbar_RenameItemDialogInput);
+		waitForElementClickableByElement(customizeToolbar_RenameItemDialogInput);
+		customizeToolbar_RenameItemDialogInput.clear();
+		customizeToolbar_RenameItemDialogInput.sendKeys(GivenString);
+	}
+	
+	/**
+	 * Clicks on "save" button on Rename Item dialog.
+	 * 	 
+	 * @author Michal Nowierski
+	 */
+	public void customizeToolbar_saveInRenameItemDialog() {
+		PageObjectLogging.log("customizeToolbar_saveInRenameItemDialog", "Click on 'save' button on Rename Item dialog.", true, driver);
+		waitForElementByElement(customizeToolbar_SaveItemDialogInput);
+		waitForElementClickableByElement(customizeToolbar_SaveItemDialogInput);
+		customizeToolbar_SaveItemDialogInput.click();
+		
+	}
+	
+	/**
 	 * Click on a Tool after searching for it
 	 * 
-	 * @param Tool Tool to be chosen
+	 * @param Tool toolname appearing on the list of found tools
 	 * @author Michal Nowierski
 	 */
 	public void customizeToolbar_ClickOnFoundTool(String Tool) {
@@ -324,45 +355,75 @@ public class BasePageObject{
 	}
 	
 	/**
-	 * Look up if Tool appears on Toolbar List
+	 * Click on a toolbar tool.
 	 * 
-	 * @param ToolID {PageAction:Follow, PageAction:Edit, PageAction:History, (...)} 
+	 * @param data-name data-name of the toolbar tool. <br> You should check the data-name of the tool you want to click.
 	 * @author Michal Nowierski
 	 */
-	public void customizeToolbar_VerifyToolOnToolbarList(String ToolID) {
-		PageObjectLogging.log("customizeToolbar_VerifyToolOnToolbarList", "Check if "+ToolID+" appears", true, driver);
-		waitForElementByCss("ul.options-list li[data-tool-id='"+ToolID+"']");
+	public void customizeToolbar_ClickOnTool(String Tool_dataname) {
+		PageObjectLogging.log("customizeToolbar_ClickOnFoundTool", "Click on "+Tool_dataname, true, driver);
+		waitForElementByCss("li.overflow a[data-name='"+Tool_dataname+"']");
+		waitForElementClickableByCss("li.overflow a[data-name='"+Tool_dataname+"']");
+		driver.findElement(By.cssSelector("li.overflow a[data-name='"+Tool_dataname+"']")).click();
+		
+	}
+	/**
+	 * Look up if Tool appears on Toolbar List
+	 * 
+	 * @param Tool {Follow, Edit, History, (...)} 
+	 * @author Michal Nowierski
+	 */
+	public void customizeToolbar_VerifyToolOnToolbarList(String Tool) {
+		PageObjectLogging.log("customizeToolbar_VerifyToolOnToolbarList", "Check if "+Tool+" appears", true, driver);
+		waitForElementByCss("ul.options-list li[data-caption='"+Tool+"']");
 	
 	}
 	
 	/**
 	 * Look up if Tool does not appear on Toolbar List
 	 * 
-	 * @param ToolID {PageAction:Follow, PageAction:Edit, PageAction:History, (...)} 
+	 * @param Tool {Follow, Edit, History, (...)} 
 	 * @author Michal Nowierski
 	 */
-	public void customizeToolbar_VerifyToolNotOnToolbarList(String ToolID) {
-		PageObjectLogging.log("customizeToolbar_VerifyToolNotOnToolbarList", "Check if "+ToolID+" does not appear on Toolbar list", true, driver);
+	public void customizeToolbar_VerifyToolNotOnToolbarList(String Tool) {
+		PageObjectLogging.log("customizeToolbar_VerifyToolNotOnToolbarList", "Check if "+Tool+" does not appear on Toolbar list", true, driver);
 		waitForElementByCss("ul.options-list li");
-		waitForElementNotVisibleByCss("ul.options-list li[data-tool-id='"+ToolID+"']");
+		waitForElementNotVisibleByCss("ul.options-list li[data-caption='"+Tool+"']");
 	}
 	
 	/**
-	 * Remove a wanted Tool by its data-tool-id
+	 * Remove a wanted Tool by its data-caption
 	 * 
-	 * @param ToolID {PageAction:Follow, PageAction:Edit, PageAction:History, (...)} 
+	 * @param Tool ID of tool to be removed. {Follow, Edit, History, (...)} 
 	 * @author Michal Nowierski
 	 */
-	public void customizeToolbar_ClickOnToolRemoveButton(String ToolID) {
-		PageObjectLogging.log("customizeToolbar_ClickOnToolRemoveButton", "Remove Tool with id "+ToolID+" from Toolbar List", true, driver);
-		By By1 = By.cssSelector("ul.options-list li[data-tool-id='"+ToolID+"']");
-		By By2 = By.cssSelector("ul.options-list li[data-tool-id='"+ToolID+"'] img.trash");
-		moveCursorToElem1UntilElem2IsVisible(By1, By2);
+	public void customizeToolbar_ClickOnToolRemoveButton(String Tool) {
+		PageObjectLogging.log("customizeToolbar_ClickOnToolRemoveButton", "Remove Tool with id "+Tool+" from Toolbar List", true, driver);
+		By By1 = By.cssSelector("ul.options-list li[data-caption='"+Tool+"']");
+		By By2 = By.cssSelector("ul.options-list li[data-caption='"+Tool+"'] img.trash");
+		Point Elem1_location = driver.findElement(By1).getLocation();
+		moveCursorToElem1UntilElem2IsVisible(Elem1_location, By2);
 		waitForElementByBy(By2);
 		waitForElementClickableByBy(By2);
 		driver.findElement(By2).click();
 	}
 	
+	/**
+	 * Rename the wanted Tool
+	 * 
+	 * @param ToolID ID of tool to be removed. {PageAction:Follow, PageAction:Edit, PageAction:History, (...)} 
+	 * @author Michal Nowierski
+	 */
+	public void customizeToolbar_ClickOnToolRenameButton(String ToolID) {
+		PageObjectLogging.log("customizeToolbar_ClickOnToolRenameButton", "Rename the wanted "+ToolID+" Tool", true, driver);
+		By By1 = By.cssSelector("ul.options-list li[data-caption='"+ToolID+"']");
+		By By2 = By.cssSelector("ul.options-list li[data-caption='"+ToolID+"'] img.edit-pencil");
+		Point Elem1_location = driver.findElement(By1).getLocation();
+		moveCursorToElem1UntilElem2IsVisible(Elem1_location, By2);
+		waitForElementByBy(By2);
+		waitForElementClickableByBy(By2);
+		driver.findElement(By2).click();
+	}
 
 	/**
 	 * Click on save button on customize toolbar
@@ -411,6 +472,7 @@ public class BasePageObject{
 	public void customizeToolbar_VerifyToolNotOnToolbar(String ToolName){
 		PageObjectLogging.log("customizeToolbar_VerifyToolNotOnToolbar",
 				"Verify that "+ToolName+" tool does not appear in Toolbar.", true, driver);
+		waitForElementByBy(ToolsList);
 		List<WebElement> List = driver.findElements(ToolsList);
 		int amountOfToolsOtherThanTheWantedTool = 0;
 		for (int i = 0; i < List.size(); i++) {
@@ -434,29 +496,28 @@ public class BasePageObject{
 	}
 	
 	/**
-	 * <p> Method moves cursor down from Element1 until that action makes the wanted Element2 visible <br> 
+	 * Method moves cursor down from location of Element1 until that action makes the wanted Element2 visible <br> 
 	 * When the cursor reaches bottom of window, it moves to right and starts going down again
 	 * 
-	 * @param By1 Element1 to start moving cursor from
+	 * @param location1 Element1Location to start moving cursor from
 	 * @param By2 Element2 to be visible at some point after moving the cursor
 	 * @author Michal Nowierski
 	 */
-	public void moveCursorToElem1UntilElem2IsVisible(By By1, By By2) {
+	public void moveCursorToElem1UntilElem2IsVisible(Point location1, By By2) {
 			
 		PageObjectLogging.log("moveCursorToEleme1UntilElem2IsVisible",
 				"move cursor down from Element1 until that action makes the wanted Element2 visible", true, driver);
-		WebElement Elem = driver.findElement(By1);
-		Point location = Elem.getLocation();
-		location = location.moveBy(15, 0);
-		CommonFunctions.MoveCursorTo(location.getX(), location.getY());
-		ChangeLocationUntilElemVisible(location, location, By2);		
+		location1 = location1.moveBy(15, 0);
+		CommonFunctions.MoveCursorTo(location1.getX(), location1.getY());
+		ChangeLocationUntilElemVisible(location1, location1, By2);		
 		
 	}
 	
 	/**
-	 * The recursive method is used by moveCursorToEleme1UntilElem2IsVisible <br> 
-	 * The method is engine for moving the cursor
-	 * 
+	 * The method is engine for moving the cursor <br>
+	 * The method is recursive <br> 
+	 * The method is used by moveCursorToEleme1UntilElem2IsVisible 
+	 *  
 	 * @param location Location of element to start moving cursor from
 	 * @param OriginalLocation The same location, but this parameter won't be changed inside the method
 	 * @param By Element to be visible at some point after moving the cursor
