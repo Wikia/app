@@ -115,6 +115,9 @@ class OasisController extends WikiaController {
 			$this->body = !empty($params['body']) ? $params['body'] : wfRenderModule('Body');
 			wfProfileOut(__METHOD__ . ' - renderBody');
 		}
+		
+		// get microdata for body tag
+		$this->itemType = self::getItemType();
 
 		// generate list of CSS classes for <body> tag
 		$bodyClasses = array('mediawiki', $this->dir, $this->pageclass);
@@ -602,5 +605,20 @@ EOT;
 			$first = false;
 		}
 	}
+	
+	/**
+	 *	Logic for microdata to be added to body tag. 
+	 */
+	protected function getItemType() {
+		$type = '';
+		if($this->wg->Title->isSpecial('Videos')) {
+			$type = "VideoGallery";
+		}
+		// TODO: Add ImageGallery for photos page
+		if(!empty($type)) {
+			return ' itemscope itemtype="http://schema.org/'.$type.'"';
 
+		}
+		return '';
+	}
 }

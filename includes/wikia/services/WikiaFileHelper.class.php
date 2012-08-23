@@ -143,12 +143,15 @@ class WikiaFileHelper extends Service {
 
 				// video duration
 				$duration = $file->getHandler()->getFormattedDuration();
+				$isoDuration = $file->getHandler()->getISO8601Duration();
 				$content .= self::videoOverlayDuration( $duration );
 				$content .= '<br />';
+				$content .= '<meta itemprop="duration" content="'.$isoDuration.'">';
 
 				// video views
 				$views = DataMartService::getVideoViewsByTitleTotal( $videoTitle );
 				$content .= self::videoOverlayViews( $views );
+				$content .= '<meta itemprop="interactionCount" content="UserPlays:'.$views.'" />';
 
 				// info
 				$attribs = array(
@@ -179,7 +182,6 @@ class WikiaFileHelper extends Service {
 		if ( !empty($duration) ) {
 			$attribs = array(
 				'class' => 'info-overlay-duration',
-				'itemprop' => 'duration',
 			);
 
 			$html = Xml::element( 'span', $attribs, "($duration)", false );
