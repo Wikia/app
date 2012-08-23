@@ -11,8 +11,6 @@ abstract class WikiaBaseTemplate extends BaseTemplate {
 	protected $wf = null;
 
 	function __construct() {
-		parent::__construct();
-
 		$this->app = F::app();
 		$this->wg = $this->app->wg;
 		$this->wf = $this->app->wf;
@@ -22,7 +20,7 @@ abstract class WikiaBaseTemplate extends BaseTemplate {
 	 * QuickTemplate doesn't have a pure "get" method, only "set", this method will ensure
 	 * access to the data without using directly the data member which could be re-declared as private
 	 * in upcoming versions of MediaWiki
-	 * 
+	 *
 	 * @param string $name
 	 */
 	public function get( $name ) {
