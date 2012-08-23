@@ -1,39 +1,39 @@
 <?php
-/*
+/**
  * Author: Jakub Kurcek <jakub@wikia-inc.com>
  * Helper function for extension hook etc.
  */
-
 class WatchSubPagesHelper {
 
-	/*
+	/**
 	 * Add togglers and translations\
 	 *
 	 * @author Jakub Kurcek <jakub@wikia-inc.com>
 	 */
-
 	public static function AddToUserMenu( &$extraToggles ) {
 		$extraToggles[] = 'watchlistsubpages';
 		return true;
 	}
 
+	/**
+	 * @static
+	 */
 	static public function AddUsedToggles( &$obj ) {
 		$obj->mUsedToggles['watchsubpages'] = true;
 		return true;
 	}
 
-	/*
+	/**
 	 * Clears notification for parent pages if:
 	 * - User is NOT watching currently viewed subpage
 	 * - User is watching parent page
 	 * - User has 'watchlistsubpages' turned on
-	 * 	 *
+	 *
 	 * @param $article Article object ( subpage )
 	 *
 	 * @author Jakub Kurcek <jakub@wikia-inc.com>
 	 */
-
-	static public function ClearParentNotification( $article ) {
+	static public function ClearParentNotification( Article $article ) {
 		global $wgUser;
 
 		if ( $wgUser->getBoolOption( 'watchlistsubpages' ) ) {
@@ -51,7 +51,7 @@ class WatchSubPagesHelper {
 		return true;
 	}
 
-	/*
+	/**
 	 * Adds users to watchlist if:
 	 * - User is watching parent page
 	 * - User has 'watchlistsubpages' turned on
@@ -60,12 +60,9 @@ class WatchSubPagesHelper {
 	 * @param $title Title object
 	 * @param $editor User object
 	 * @param $notificationTimeoutSql string | timeout to the watchlist
-	 * @param $method __METHOD__
-	 * @param $dbtypestring database type
 	 *
 	 * @author Jakub Kurcek <jakub@wikia-inc.com>
 	 */
-
 	static public function NotifyOnSubPageChange( $watchers, $title, $editor, $notificationTimeoutSql ) {
 		// Gets parent data
 		$arrTitle = explode( '/' , $title->getDBkey() );
@@ -81,8 +78,7 @@ class WatchSubPagesHelper {
 			return true;
 		}
 
-		$parentOnlyWatchers = array();
-		$dbw = wfGetDB( DB_MASTER );
+		$dbw = wfGetDB( DB_MASTER ); /** @var $dbw Database */
 		$res = $dbw->select( array( 'watchlist' ),
 			array( 'wl_user' ),
 			array(
@@ -95,14 +91,13 @@ class WatchSubPagesHelper {
 		);
 
 		// Gets user settings
-		while ( $row = $dbw->fetchObject( $res ) ) {
+		$parentpageWatchers = array();
 
+		while ( $row = $dbw->fetchObject( $res ) ) {
 			$tmpUser = new User();
 			$tmpUser->setId( intval( $row->wl_user ) );
 			$tmpUser->loadFromId();
 
-			$userToggles = $tmpUser->getToggles();
-			WatchSubPagesHelper::AddToUserMenu( $userToggles );
 			if ( $tmpUser->getBoolOption( 'watchlistsubpages' ) ) {
 				$parentpageWatchers[] = (integer)$row->wl_user;
 			}
