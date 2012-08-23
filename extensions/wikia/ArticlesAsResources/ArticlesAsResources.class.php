@@ -109,7 +109,7 @@ class ArticlesAsResources {
 	 * - <page> - page from local wiki
 	 *
 	 * Output format is:
-	 * - lolal wiki: array( 'title' => '<page>' )
+	 * - local wiki: array( 'title' => '<page>' )
 	 * - other wiki: array( 'cityId' => <numeric_id>, 'title' => '<page>' )
 	 *
 	 * @param $list array
@@ -124,7 +124,7 @@ class ArticlesAsResources {
                     'originalName' => $name,
 					'title' => $matches[1],
 				);
-			} elseif (preg_match("/^(?:w|remote|external):([^:]+):(.*)\$/",$name,$matches)) {
+			} elseif (preg_match("/^(?:w|remote|external):(?:c:)?([^:]+):(.*)\$/",$name,$matches)) {
 				$articles[] = array(
                     'originalName' => $name,
                     'cityId' => $this->getCityIdByDbName( $matches[1] ),
