@@ -96,7 +96,11 @@ class HubService extends Service {
 	}
 
 	private static function getWikiaHubsV1Category() {
-		$title = F::app()->wg->Title;
+		$baseText = F::app()->wg->Title->getBaseText();
+
+		/** @var $tmpTitle Title */
+		$title = F::build('Title', array($baseText), 'newFromText');
+
 		$hubsPages = F::app()->wg->wikiaHubsPages;
 		if (!empty($hubsPages) && $title instanceof Title) {
 			$textTitle = $title->getDBKey();
