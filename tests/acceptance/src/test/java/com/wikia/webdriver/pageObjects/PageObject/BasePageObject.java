@@ -265,6 +265,9 @@ public class BasePageObject{
 		driver.navigate().back();
 	}
 	
+	/**
+	 * Verifies that user toolbar buttons are visible
+	 */
 	public void verifyUserToolBar()
 	{
 		waitForElementByCss("div.toolbar ul.tools li.overflow");
