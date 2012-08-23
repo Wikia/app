@@ -11,6 +11,13 @@ var SpecialVideos = {
 				}
 			}
 		});
+		
+		$('.addVideo').addVideoButton({
+			gaCat: 'testing',
+			callback: function() {
+				alert('added');
+			}
+		});
 	}
 };
 
