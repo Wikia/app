@@ -23,7 +23,7 @@
 </div>
 
 
-<div class="WikiaGrid VideoGrid" itemscope itemtype="http://schema.org/VideoGallery">
+<div class="WikiaGrid VideoGrid">
 	<?php $counter = 0 ?>
 	<?php foreach( $videos as $video ) { ?>
 		<?php $alpha = $counter % 3 == 0 ? 'alpha' : ''; ?>
