@@ -58,7 +58,6 @@ class WikiaApiQueryVoteArticle extends WikiaApiQuery {
 		extract($this->extractRequestParams());
 
 		$this->initCacheKey($lcache_key, __METHOD__);
-		error_log("MECH lcache_key is ".$lcache_key);
         #--- blank variables
 
 		#---
@@ -67,7 +66,6 @@ class WikiaApiQueryVoteArticle extends WikiaApiQuery {
 		$browserId = $this->getBrowser();
 
 		if ( !is_null($page) ) {
-			error_log("MECH 1");
 			# get votes for selected article
 			try {
 				$this->addTables( array("page_vote") );
@@ -88,11 +86,9 @@ class WikiaApiQueryVoteArticle extends WikiaApiQuery {
 
 				if ( !is_null($uservote) ) {
 					if ( !empty($user_id) ) {
-						error_log("MECH 2 - userid is " . $user_id);
 						$this->setCacheKey ($lcache_key, 'U', $user_id);
 						$this->addWhereFld( "user_id", $user_id );
 					} else {
-						error_log("MECH 3");
 						$this->setCacheKey ($lcache_key, 'UB', $browserId);
 						$this->addWhereFld( "unique_id", $browserId );
 					}
@@ -101,11 +97,8 @@ class WikiaApiQueryVoteArticle extends WikiaApiQuery {
 
 				$data = array();
 				// check data from cache ...
-				error_log("MECH calling getDataFromCache with key " . $lcache_key);
 				$cached = $this->getDataFromCache($lcache_key);
-				//$cached - null;
 				if (empty($cached)) {
-					error_log("MECH 5");
 					#--- database instance - DB_SLAVE
 					$db =& $this->getDB();
 					$db->selectDB( (!defined(WIKIA_API_QUERY_DBNAME)) ? WIKIA_API_QUERY_DBNAME : $wgDBname );
@@ -122,9 +115,8 @@ class WikiaApiQueryVoteArticle extends WikiaApiQuery {
 							);
 
 							if (isset($row->uservote)) {
-								error_log("MECH uservote is ".$row->uservote);
 								$data[$page]["uservote"] = $row->uservote;
-							} else error_log("MECH no uservote");
+							}
 
 							if ( !empty($timestamps) ) {
 								$data[$page]['timestamps'] = $this->getTimestampsFromDB($db, $page);
@@ -137,7 +129,6 @@ class WikiaApiQueryVoteArticle extends WikiaApiQuery {
 					$this->saveCacheData($lcache_key, $data, $ctime);
 				} else {
 					// ... cached
-					error_log("MECH returning cached data " . json_encode($cached));
 					$data = $cached;
 				}
 
@@ -337,7 +328,6 @@ class WikiaApiQueryVoteArticle extends WikiaApiQuery {
 			}
 
 			$cached = $this->isAddedVote($db, $page, $ip, $user_id, $browserId);
-			error_log("MECH is added vote for user $user_id, browser $browserId:".json_encode($cached));
 			if ( !empty($cached) ) {
 				$data = $cached;
 			} else {
@@ -671,16 +661,13 @@ class WikiaApiQueryVoteArticle extends WikiaApiQuery {
 		#--- init cache-key
 		$this->initCacheKey( $lcache_key, $method );
 		$this->deleteCacheData($lcache_key);
-		error_log("MECH removing cache key ".$lcache_key);
 
 		$this->initCacheKey( $lcache_key, __CLASS__, ':getVoteArticle' );
 		$this->deleteCacheData($lcache_key);
-		error_log("MECH removing cache key ".$lcache_key);
 
 		$this->initCacheKey($lcache_key, __CLASS__);
 		$this->setCacheKey ($lcache_key, 'P', $page);
 		$this->deleteCacheData($lcache_key);
-		error_log("MECH removing cache key ".$lcache_key);
 
 		$this->initCacheKey($lcache_key, __CLASS__);
 		$this->setCacheKey ($lcache_key, 'P', $page);
@@ -688,20 +675,17 @@ class WikiaApiQueryVoteArticle extends WikiaApiQuery {
 		$this->setCacheKey ($lcache_key, 'UB', $browserId);
 		$this->setCacheKey ($lcache_key, 'U', $user_id);
 		$this->deleteCacheData($lcache_key);
-		error_log("MECH removing cache key ".$lcache_key);
 
 		$this->initCacheKey( $lcache_key, __CLASS__, ':getVoteArticle' );
 		$this->setCacheKey ($lcache_key, 'P', $page);
 		$this->setCacheKey ($lcache_key, 'U', $user_id);
 		$this->deleteCacheData($lcache_key);
-		error_log("MECH removing cache key ".$lcache_key);
 
 		$this->initCacheKey( $lcache_key, __CLASS__, ':getVoteArticle' );
 		$this->setCacheKey ($lcache_key, 'P', $page);
 		$this->setCacheKey ($lcache_key, 'UB', $browserId);
 		$this->deleteCacheData($lcache_key);
-		error_log("MECH removing cache key ".$lcache_key);
-		
+
 		//Refresh cache
 	}
 
