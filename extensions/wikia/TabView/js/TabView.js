@@ -6,19 +6,17 @@
 //
 // ******************************** 
 
-var TabView = {
+var	TabView =  $.createClass(Object, {
 
 	init: function(options) {
 		
-		// new instance for each tabs on a single page
-		new TabViewClass(options);
+		// create new instance for each tabs on a single page
+		new TabView(options);
 		
-	}
+	},
 	
-};
-
-var	TabViewClass =  $.createClass(Object, {
-
+	// all the logic starts here !!!!!!!!
+	
 	constructor: function(options) {
 	
 		// *****************************************************

@@ -129,6 +129,10 @@ ol.tabs {
 
 .tabBody {
 	display:none;
+	
+	// minimal space for ajax spinner 
+	min-height: 100px;
+	position: relative;
 }
 .tabBody.selected{
 	display:block;
