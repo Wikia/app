@@ -5,7 +5,7 @@
  * @author Jakub "Student" Olek
  */
 
-define('topbar', ['querystring', 'loader', 'toc', 'track', 'events'], function (qs, loader, toc, track, events){
+define('topbar', ['querystring', 'loader', 'toc', 'events'], function (qs, loader, toc, events){
 	var w = window,
 		d = document,
 		wkPrfTgl = d.getElementById('wkPrfTgl'),
@@ -14,18 +14,31 @@ define('topbar', ['querystring', 'loader', 'toc', 'track', 'events'], function (
 		searchInput = d.getElementById('wkSrhInp'),
 		searchSug = d.getElementById('wkSrhSug'),
 		searchForm = d.getElementById('wkSrhFrm'),
-		wkNavMenu = d.getElementById('wkNavMenu'),
-		wikiNavHeader = wkNavMenu.getElementsByTagName('h1')[0],
-		wikiNavLink = d.getElementById('wkNavLink'),
+		wkNavMenu,
+		wikiNavHeader,
+		wikiNavH1,
+		wikiNavLink,
 		clickEvent = events.click,
 		lvl2Link,
-		minimumSet,
+		barSetUp = false,
+		navSetUp = false,
 		searchInit = false;
 
-	//replace menu from bottom to topBar - the faster the better
-	d.getElementById('wkNav').replaceChild(wkNavMenu, d.getElementById('wkWikiNav'));
+	function setupTopBar(){
+		//close WikiNav on back button
+		if('onhashchange' in w) {
+			w.addEventListener('hashchange', function() {
+				if(w.location.hash == '' && navBar.className){
+					closeDropDown();
+				}
+			}, false);
+		}
+
+		barSetUp = true;
+	}
 
 	function reset(stopScrolling){
+		!barSetUp && setupTopBar();
 		!stopScrolling && window.scrollTo(0,0);
 		toc.close();
 		w.location.hash = 'topbar';
@@ -35,7 +48,7 @@ define('topbar', ['querystring', 'loader', 'toc', 'track', 'events'], function (
 	function openSearch(){
 		closeNav();
 		reset(true);
-		track('search/toggle/open');
+		//track('search/toggle/open');
 		navBar.className = 'srhOpn';
 		searchForm.scrollIntoView();
 		searchInput.focus();
@@ -44,7 +57,7 @@ define('topbar', ['querystring', 'loader', 'toc', 'track', 'events'], function (
 	function closeSearch(){
 		if(navBar.className.indexOf('srhOpn') > -1){
 			searchInput.value = '';
-			track('search/toggle/close');
+			//track('search/toggle/close');
 			showPage();
 			searchSug.innerHTML = '';
 		}
@@ -54,7 +67,7 @@ define('topbar', ['querystring', 'loader', 'toc', 'track', 'events'], function (
 		if(searchInput.value === '') {
 			ev.preventDefault();
 		}else{
-			track('search/submit');
+			//track('search/submit');
 		}
 	});
 
@@ -69,71 +82,108 @@ define('topbar', ['querystring', 'loader', 'toc', 'track', 'events'], function (
 	});
 	//end search setup
 
-	//preparing the navigation
-	wikiNavHeader.className = '';
+	//navigation setup
+	function setupNav(){
+		wkNavMenu = d.getElementById('wkNavMenu');
 
-	$(wkNavMenu).delegate('#lvl1 a', clickEvent, function(){
-		track('link/nav/list');
-	})
-	.delegate('header > a', clickEvent, function(){
-		track('link/nav/header');
-	})
-	//add chevrons to all elements that have child lists
-	.find('ul ul').parent().addClass('cld');
+		//replace menu from bottom to topBar - the faster the better
+		d.getElementById('wkNav').replaceChild(wkNavMenu, d.getElementById('wkWikiNav'));
 
-	//close WikiNav on back button
-	if('onhashchange' in w) {
-		w.addEventListener('hashchange', function(ev) {
-			if(w.location.hash == '' && navBar.className){
-				closeDropDown();
+		wikiNavHeader = wkNavMenu.getElementsByTagName('header')[0];
+		wikiNavH1 = wikiNavHeader.getElementsByTagName('h1')[0];
+		wikiNavLink = d.getElementById('wkNavLink');
+
+		wikiNavH1.className = '';
+
+		//add chevrons to all elements that have child lists
+		var uls = wkNavMenu.querySelectorAll('ul ul'),
+			i = uls.length;
+
+		while(i){
+			uls[--i].parentElement.className += ' cld';
+		}
+
+		d.getElementById('lvl1').addEventListener(clickEvent, function(event) {
+			var t = event.target;
+
+			if(t.className.indexOf('cld') > -1) {
+				event.preventDefault();
+
+				var element = t.childNodes[0],
+					href = element.href;
+
+				t.getElementsByTagName('ul')[0].className += ' cur';
+
+				handleHeaderLink(href);
+
+				if(wkNavMenu.className == 'cur1'){
+					wikiNavH1.innerText = element.innerText;
+					lvl2Link = href;
+					//track('nav/level-2');
+					wkNavMenu.className = 'cur2';
+					wikiNavH1.className = 'anim';
+				}else{
+					//track('nav/level-3');
+
+					wkNavMenu.className = 'cur3';
+					wikiNavH1.className = 'animNext';
+
+					setTimeout(function(){
+						wikiNavH1.innerText = element.innerText;
+					}, 250);
+				}
 			}
-		}, false);
+		});
+
+		d.getElementById('wkNavBack').addEventListener(clickEvent, function() {
+			if(wkNavMenu.className == 'cur2') {
+				setTimeout(function(){
+					wkNavMenu.querySelector('.lvl2.cur').className = 'lvl2';
+				}, 501);
+				//track('nav/level-1');
+				wkNavMenu.className = 'cur1';
+				wikiNavH1.className = 'animBack';
+			} else {
+				setTimeout(function(){
+					wkNavMenu.querySelector('.lvl3.cur').className = 'lvl3';
+					wikiNavH1.className = '';
+				}, 501);
+
+				wikiNavH1.className = 'animBack';
+				setTimeout(function(){
+					wikiNavH1.innerText = wkNavMenu.querySelector('.lvl2.cur').previousSibling.innerText;
+				}, 250);
+
+
+				handleHeaderLink(lvl2Link);
+
+				//track('nav/level-2');
+				wkNavMenu.className = 'cur2';
+			}
+		});
+
+		navSetUp = true;
 	}
 
-	//navigation setup
-	function openNav(){
-		reset();
-		track('nav/open');
-		navBar.className = 'fllNav';
-
-		if(!minimumSet){
-			var uls2 = wkNavMenu.getElementsByClassName('lvl2'),
-				uls3,
-				max = d.getElementById('lvl1').offsetHeight,
-				height,
-				i = 0,
-				ul2,
-				check = function(ul){
-					height = ul.offsetHeight;
-					max = (height > max) ? height : max;
-				},
-				j,
-				ul3,
-				uls3l;
-
-			while(ul2 = uls2[i++]){
-				ul2.style.display = 'block';
-				check(ul2);
-
-				uls3 = ul2.getElementsByClassName('lvl3');
-				for(j = 0, uls3l = uls3.length; j < uls3l; j++){
-					ul3 = uls3[j];
-					ul3.style.display = 'block';
-					check(ul3);
-					ul3.style.display = '';
-				}
-
-				ul2.style.display = '';
-			}
-
-			wkNavMenu.style.minHeight = (max + 50) + 'px';
-			minimumSet = true;
+	d.getElementById('wkNavTgl').addEventListener(clickEvent, function(event){
+		event.preventDefault();
+		if(navBar.className.indexOf('fllNav') > -1){
+			closeDropDown();
+		}else{
+			openNav();
 		}
+	});
+
+	function openNav(){
+		!navSetUp && setupNav();
+		reset();
+		//track('nav/open');
+		navBar.className = 'fllNav';
 	}
 
 	function closeNav(){
 		if(navBar.className.indexOf('fllNav') > -1){
-			track('nav/close');
+			//track('nav/close');
 			wkNavMenu.className = 'cur1';
 			showPage();
 		}
@@ -147,60 +197,6 @@ define('topbar', ['querystring', 'loader', 'toc', 'track', 'events'], function (
 			wikiNavLink.style.display = 'none';
 		}
 	}
-
-	d.getElementById('wkNavTgl').addEventListener(clickEvent, function(event){
-		event.preventDefault();
-		if(navBar.className.indexOf('fllNav') > -1){
-			closeDropDown();
-		}else{
-			openNav();
-		}
-	});
-
-	$(d.getElementById('lvl1')).delegate('.cld', clickEvent, function(event) {
-		//there are places where .cld is inside .cld I need to check for that
-		//as this would prevent links to be clickable
-		if(event.target.parentNode.className.indexOf('cld') > -1) {
-			event.preventDefault();
-
-			var element = this.childNodes[0],
-				href = element.href;
-
-			this.getElementsByTagName('ul')[0].className += ' cur';
-
-			wikiNavHeader.innerText = element.innerText;
-
-			handleHeaderLink(href);
-
-			if(wkNavMenu.className == 'cur1'){
-				lvl2Link = href;
-				track('nav/level-2');
-				wkNavMenu.className = 'cur2';
-			}else{
-				track('nav/level-3');
-				wkNavMenu.className = 'cur3';
-			}
-		}
-	});
-
-	d.getElementById('wkNavBack').addEventListener(clickEvent, function() {
-		var current;
-
-		if(wkNavMenu.className == 'cur2') {
-			setTimeout(function(){wkNavMenu.querySelector('.lvl2.cur').className = 'lvl2'}, 610);
-			track('nav/level-1');
-			wkNavMenu.className = 'cur1';
-		} else {
-			setTimeout(function(){wkNavMenu.querySelector('.lvl3.cur').className = 'lvl3'}, 610);
-			current = wkNavMenu.querySelector('.lvl2.cur');
-			wikiNavHeader.innerText = current.previousSibling.text;
-
-			handleHeaderLink(lvl2Link);
-
-			track('nav/level-2');
-			wkNavMenu.className = 'cur2';
-		}
-	});
 	//end navigation setup
 
 
@@ -244,7 +240,7 @@ define('topbar', ['querystring', 'loader', 'toc', 'track', 'events'], function (
 		reset();
 
 		if(wgUserName){
-			track('profile/open');
+			//track('profile/open');
 		}else{
 			openLogin(hash);
 		}
@@ -285,7 +281,7 @@ define('topbar', ['querystring', 'loader', 'toc', 'track', 'events'], function (
 				}
 			});
 		}
-		track('login/open');
+		//track('login/open');
 	}
 
 	function closeDropDown() {
@@ -301,11 +297,11 @@ define('topbar', ['querystring', 'loader', 'toc', 'track', 'events'], function (
 
 	function closeProfile(){
 		if(navBar.className.indexOf('prf') > -1){
-			if(wgUserName){
+			/*if(wgUserName){
 				track('profile/close');
 			}else{
 				track('login/close');
-			}
+			}*/
 			showPage();
 		}
 	}

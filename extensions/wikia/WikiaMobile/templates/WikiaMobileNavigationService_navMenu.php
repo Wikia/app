@@ -1,10 +1,10 @@
 <nav class=cur1 id=wkNavMenu<? if ( !empty( $parseErrors ) ) :?> data-error="<?= implode( '; ', $parseErrors ) ;?>"<? endif ;?>>
-		<header>
-			<button id=wkNavBack class=wkBtn><?= $wf->MsgExt( 'wikiamobile-back', array( 'parseinline' ) );?></button>
-			<h1 class='collSec addChev'><?= $wf->MsgForContent( 'wikiamobile-menu' ); ?></h1>
-			<a id=wkNavLink class=chvRgt></a>
-		</header>
-	<ul id=lvl1 class=wkLst>
+	<header>
+		<button id=wkNavBack class=wkBtn><?= $wf->MsgExt( 'wikiamobile-back', array( 'parseinline' ) );?></button>
+		<h1 class='collSec addChev'><?= $wf->MsgForContent( 'wikiamobile-menu' ); ?></h1>
+		<a id=wkNavLink class=chvRgt></a>
+	</header>
+<ul id=lvl1 class=wkLst>
 <?
 	foreach ( array( $wikiaMenuNodes, $wikiMenuNodes ) as $menuNodes ) {
 		if ( is_array( $menuNodes ) && isset( $menuNodes[0] ) ) {
@@ -113,5 +113,5 @@
 		}
 	}
 ?>
-	</ul>
+</ul>
 </nav>
