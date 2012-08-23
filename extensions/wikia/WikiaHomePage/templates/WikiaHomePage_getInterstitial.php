@@ -1,6 +1,9 @@
 <? if( !empty($wikiInfo['images']) ): ?>
 <header class="preview-header">
 	<span class="hotNew">
+		<? if($wikiInfo['official'] == 1): ?>
+			<strong class="official"><?= wfMsg('wikia-home-page-official') ?></strong>
+		<? endif; ?>
 		<? if($wikiInfo['hot'] == 1): ?>
 			<strong class="hot"><?= wfMsg('wikia-home-page-hot') ?></strong>
 		<? endif; ?>

@@ -409,6 +409,7 @@ class WikiaHomePageHelper extends WikiaModel {
 			'url' => '',
 			'new' => 0,
 			'hot' => 0,
+			'official' => 0,
 			'promoted' => 0,
 			'blocked' => 0,
 			'images' => array(),
@@ -429,6 +430,7 @@ class WikiaHomePageHelper extends WikiaModel {
 				// wiki status
 				$wikiInfo['new'] = intval(CityVisualization::isNewWiki($wikiData['flags']));
 				$wikiInfo['hot'] = intval(CityVisualization::isHotWiki($wikiData['flags']));
+				$wikiInfo['official'] = intval(CityVisualization::isOfficialWiki($wikiData['flags']));
 				$wikiInfo['promoted'] = intval(CityVisualization::isPromotedWiki($wikiData['flags']));
 				$wikiInfo['blocked'] = intval(CityVisualization::isBlockedWiki($wikiData['flags']));
 
