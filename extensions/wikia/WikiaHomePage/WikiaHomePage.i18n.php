@@ -128,6 +128,7 @@ $messages['en'] = array(
 	'wikia-home-page-special-change-button' => 'Change',
 	'wikia-home-page-hot' => 'Hot',
 	'wikia-home-page-new' => 'New',
+	'wikia-home-page-official' => 'Official',
 
 	'wikia-home-parse-exception-empty-data-from-database' => 'There were no data pulled from database. Database table is empty or all wikis are blocked.',
 	'wikia-home-parse-exception-read-only' => 'Our databases are in read-only mode.',

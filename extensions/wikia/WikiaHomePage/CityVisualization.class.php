@@ -4,6 +4,7 @@ class CityVisualization extends WikiaModel {
 	const FLAG_HOT = 2;
 	const FLAG_PROMOTED = 4;
 	const FLAG_BLOCKED = 8;
+	const FLAG_OFFICIAL = 16;
 
 	const CITY_TAG_ENTERTAINMENT_ID = 129;
 	const CITY_TAG_VIDEO_GAMES_ID = 131;
@@ -56,6 +57,7 @@ class CityVisualization extends WikiaModel {
 					'main_image' => $row->city_main_image,
 					'wikinew' => $this->isNewWiki($row->city_flags),
 					'wikihot' => $this->isHotWiki($row->city_flags),
+					'wikiofficial' => $this->isOfficialWiki($row->city_flags),
 				);
 			}
 
@@ -74,6 +76,7 @@ class CityVisualization extends WikiaModel {
 							'main_image' => $wiki['main_image'],
 							'wikinew' => $wiki['wikinew'],
 							'wikihot' => $wiki['wikihot'],
+							'wikiofficial' => $wiki['wikiofficial'],
 						);
 					}
 				}
@@ -542,6 +545,10 @@ class CityVisualization extends WikiaModel {
 
 	public static function isHotWiki($wikiFlags) {
 		return (($wikiFlags & self::FLAG_HOT) == self::FLAG_HOT);
+	}
+
+	public static function isOfficialWiki($wikiFlags) {
+		return (($wikiFlags & self::FLAG_OFFICIAL) == self::FLAG_OFFICIAL);
 	}
 
 	public static function isPromotedWiki($wikiFlags) {
