@@ -129,6 +129,8 @@ Avatar6.jpg",
 	"blog-movepage-badtitle" => "Invalid blog post title.",
 	"blog-comment-sending" => "Sending...",
 	'blog-by' => '$1 by $2',
+	'blogs-searchprofile' => 'Blogs',
+	'blogs-searchprofile-tooltip' => 'Search in Blog Articles and Blog Listings',
 );
 
 /** Message documentation (Message documentation)
@@ -154,6 +156,8 @@ $messages['qqq'] = array(
 	'right-blog-articles-edit' => '{{doc-right|blog-articles-edit}}',
 	'right-blog-articles-move' => '{{doc-right|blog-articles-move}}',
 	'blog-desc' => '{{desc}}',
+	'blogs-searchprofile' => 'Name of a tab with blog articles and blog listings. This tab is displayed in the right column on search page',
+	'blogs-searchprofile-tooltip' => 'Search in Blog Articles and Blog Listings. Tooltip displayed on hover on Blogs Tab in the right column on search page',
 );
 
 /** Afrikaans (Afrikaans)

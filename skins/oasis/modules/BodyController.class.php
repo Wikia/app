@@ -450,7 +450,6 @@ class BodyController extends WikiaController {
 
 		// Inter-wiki search
 		if($wgTitle && ($wgTitle->isSpecial( 'WikiaSearch' ) || ($wgTitle->isSpecial( 'Search' ) && $this->wg->WikiaSearchIsDefault ))) {
-			$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL("skins/oasis/css/modules/WikiaSearch.scss"));
 			$this->headerModuleName = null;
 		}
 

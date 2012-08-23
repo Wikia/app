@@ -87,7 +87,7 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 				if (strtolower($clipData['trailerType']) == 'not set') unset($clipData['trailerType']);
 				if (strtolower($clipData['trailerVersion']) == 'not set') unset($clipData['trailerVersion']);
 				$clipData['videoId'] = $clip->getElementsByTagName('EclipId')->item(0)->textContent;
-				$clipData['description'] = html_entity_decode( $clip->getElementsByTagName('Description')->item(0)->textContent );
+				$clipData['description'] = 'MECH !!!11!jeden!oneone ' . html_entity_decode( $clip->getElementsByTagName('Description')->item(0)->textContent );
 				$clipData['duration'] = $clip->getElementsByTagName('RunTime')->item(0)->textContent;
 				$clipData['trailerRating'] = $clip->getElementsByTagName('TrailerRating')->item(0)->textContent;
 				$clipData['industryRating'] = $clip->getElementsByTagName('MPAARating')->item(0)->textContent;
@@ -235,7 +235,8 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 			    'ageGate'		=>	(int) $data['ageGate'],
 			    'language'		=>	$data['language'],
 				'streamUrl'		=>	$data['stdMp4Url'],
-				'streamHdUrl'	=>	$data['hdMp4Url']
+				'streamHdUrl'	=>	$data['hdMp4Url'],
+				'description'   => $data['description']
 			    );
 		return $metadata;
 	}

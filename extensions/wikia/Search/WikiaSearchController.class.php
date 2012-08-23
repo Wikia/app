@@ -19,8 +19,13 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		parent::__construct( $specialPageName, $specialPageName, false );
 	}
 
+	protected function  isCorporateWiki() {
+		return !empty($this->wg->EnableWikiaHomePageExt);
+	}
+
 	public function index() {
 		$this->wg->Out->addHTML( F::build('JSSnippets')->addToStack( array( "/extensions/wikia/Search/WikiaSearch.js" ) ) );
+		$this->wg->SuppressRail = true;
 
 		$skin = $this->wg->User->getSkin();
 		$showSearchAds = false;
@@ -39,6 +44,9 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		if ( $skin instanceof SkinMonoBook ) {
 			$this->response->addAsset('extensions/wikia/Search/monobook/monobook.scss');
 		}
+		if ( get_class($this->wg->User->getSkin()) == 'SkinOasis' ) {
+			$this->response->addAsset('extensions/wikia/Search/css/WikiaSearch.scss');
+		}
 
 		$query = $this->getVal('query', $this->getVal('search'));
 		$query = htmlentities( Sanitizer::StripAllTags ( $query ), ENT_COMPAT, 'UTF-8' );
@@ -48,7 +56,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$debug = $this->request->getBool('debug', false);
 		$crossWikia = $this->request->getBool('crossWikia');
 		$skipCache = $this->request->getBool('skipCache');
-		$activeAdvancedTab = $this->getActiveAdvancedTab();
+
 		$advanced = $this->getVal( 'advanced' );
 		$searchableNamespaces = SearchEngine::searchableNamespaces();
 		$wikiName = $this->wg->Sitename;
@@ -73,7 +81,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			$namespaces = array_keys($searchableNamespaces);
 		}
 
-		$isCorporateWiki = !empty($this->wg->EnableWikiaHomePageExt);
+		$isCorporateWiki = $this->isCorporateWiki();
 
 		//  Check for crossWikia value set in url.  Otherwise, check if we're on the corporate wiki
 		$isInterWiki = $crossWikia ? true : $isCorporateWiki;
@@ -106,7 +114,9 @@ class WikiaSearchController extends WikiaSpecialPageController {
 				}
 			}
 
+
 		 	$this->wikiaSearch->setNamespaces( $namespaces );
+
 			$this->wikiaSearch->setSkipCache( $skipCache );
 			$this->wikiaSearch->setIncludeRedirects( $redirs );
 
@@ -122,7 +132,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			$resultsFound = $results->getResultsFound();
 
 			if(!empty($resultsFound)) {
-				$paginationLinks = $this->sendSelfRequest( 'pagination', array( 'query' => $query, 'page' => $page, 'count' => $resultsFound, 'crossWikia' => $isInterWiki, 'skipCache' => $skipCache, 'debug' => $debug, 'namespaces' => $namespaces, 'advanced' => $advanced, 'redirs' => $redirs ) );
+				$paginationLinks = $this->sendSelfRequest( 'pagination', array( 'query' => $query, 'page' => $page, 'count' => $resultsFound, 'crossWikia' => $isInterWiki, 'skipCache' => $skipCache, 'debug' => $debug, 'namespaces' => $namespaces, 'advanced' => $advanced, 'redirs' => $redirs, 'pageCount' => $results->getPageCount() ) );
 			}
 
 			$this->app->wg->Out->setPageTitle( $this->wf->msg( 'wikiasearch2-page-title-with-query', array(ucwords($query), $wikiName) )  );
@@ -135,9 +145,10 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		}
 
 		$namespaces = $namespaces ?: $this->wikiaSearch->getNamespaces();
+		$activeTab = $this->getActiveTab( $namespaces );
 
 		if(!$isInterWiki) {
-			$advancedSearchBox = $this->sendSelfRequest( 'advancedBox', array( 'term' => $query, 'namespaces' => $namespaces, 'activeTab' => $activeAdvancedTab, 'searchableNamespaces' => $searchableNamespaces, 'advanced' => $advanced, 'redirs' => $redirs ) );
+			$advancedSearchBox = $this->sendSelfRequest( 'advancedBox', array( 'term' => $query, 'namespaces' => $namespaces, 'searchableNamespaces' => $searchableNamespaces, 'advanced' => $advanced, 'redirs' => $redirs ) );
 			$this->setval( 'advancedSearchBox', $advancedSearchBox );
 		}
 
@@ -149,9 +160,10 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setVal( 'resultsFound', $resultsFound );
 		$this->setVal( 'resultsFoundTruncated', $this->wg->Lang->formatNum( $this->getTruncatedResultsNum($resultsFound) ) );
 		$this->setVal( 'isOneResultsPageOnly', ( $resultsFound <= self::RESULTS_PER_PAGE ) );
-        $this->setVal( 'pagesCount', ceil($resultsFound/self::RESULTS_PER_PAGE) );
-        $this->setVal( 'currentPage',  $page );
+		$this->setVal( 'pagesCount', ceil($resultsFound/self::RESULTS_PER_PAGE) );
+		$this->setVal( 'currentPage',  $page );
 		$this->setVal( 'paginationLinks', $paginationLinks );
+		$this->setVal( 'tabs', $this->sendSelfRequest( 'tabs', array( 'term' => $query, 'redirs' => $redirs,  'activeTab' => $activeTab) ) );
 		$this->setVal( 'query', $query );
 		$this->setVal( 'resultsPerPage', self::RESULTS_PER_PAGE );
 		$this->setVal( 'pageUrl', $this->wg->Title->getFullUrl() );
@@ -164,12 +176,12 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setVal( 'hasArticleMatch', (isset($articleMatch) && !empty($articleMatch)) );
 		$this->setVal( 'isMonobook', ($this->wg->User->getSkin() instanceof SkinMonobook) );
 		$this->setVal( 'showSearchAds', $query ? $showSearchAds : false );
+		$this->setVal( 'isCorporateWiki', $isCorporateWiki );
 	}
 
 	public function advancedBox() {
 		$term = $this->getVal( 'term' );
 		$namespaces = $this->getVal( 'namespaces', $this->wikiaSearch->getNamespaces() );
-		$activeTab = $this->getVal( 'activeTab' );
 		$searchableNamespaces = $this->getVal( 'searchableNamespaces' );
 		$advanced = $this->getVal( 'advanced' );
 		$redirs = $this->getVal( 'redirs' );
@@ -180,14 +192,30 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			$bareterm = substr( $term, strpos( $term, ':' ) + 1 );
 		}
 
-		$this->setVal( 'searchProfiles', $this->getSearchProfiles( $namespaces ) );
 		$this->setVal( 'term',  $term);
 		$this->setVal( 'bareterm', $bareterm );
 		$this->setVal( 'namespaces', $namespaces );
-		$this->setVal( 'activeTab', $activeTab );
 		$this->setVal( 'searchableNamespaces', $searchableNamespaces );
 		$this->setVal( 'redirs', $redirs );
 		$this->setVal( 'advanced', $advanced);
+	}
+
+	public function tabs() {
+		$term = $this->getVal( 'term' );
+		$namespaces = $this->getVal( 'namespaces', $this->wikiaSearch->getNamespaces() );
+		$redirs = $this->getVal( 'redirs' );
+		$activeTab = $this->getVal( 'activeTab' );
+
+		$bareterm = $term;
+		if( $this->termStartsWithImage( $term ) ) {
+			// Deletes prefixes
+			$bareterm = substr( $term, strpos( $term, ':' ) + 1 );
+		}
+
+		$this->setVal( 'bareterm', $bareterm );
+		$this->setVal( 'searchProfiles', $this->getSearchProfiles($namespaces));
+		$this->setVal( 'redirs', $redirs );
+		$this->setVal( 'activeTab', $activeTab );
 	}
 
 	public function advancedTabLink() {
@@ -241,10 +269,9 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	protected function getSearchProfiles($namespaces) {
 		// Builds list of Search Types (profiles)
 		$nsAllSet = array_keys( SearchEngine::searchableNamespaces() );
-
 		$profiles = array(
 			'default' => array(
-				'message' => 'searchprofile-articles',
+				'message' => 'wikiasearch2-tabs-articles',
 				'tooltip' => 'searchprofile-articles-tooltip',
 				'namespaces' => SearchEngine::defaultNamespaces(),
 				'namespace-messages' => SearchEngine::namespacesAsText(
@@ -252,17 +279,14 @@ class WikiaSearchController extends WikiaSpecialPageController {
 				),
 			),
 			'images' => array(
-				'message' => 'searchprofile-images',
+				'message' => 'wikiasearch2-tabs-photos-and-videos',
 				'tooltip' => 'searchprofile-images-tooltip',
 				'namespaces' => array( NS_FILE ),
 			),
-			'help' => array(
-				'message' => 'searchprofile-project',
-				'tooltip' => 'searchprofile-project-tooltip',
-				'namespaces' => SearchEngine::helpNamespaces(),
-				'namespace-messages' => SearchEngine::namespacesAsText(
-					SearchEngine::helpNamespaces()
-				),
+			'users' => array(
+				'message' => 'searchprofile-users',
+				'tooltip' => 'searchprofile-users-tooltip',
+				'namespaces' => array( NS_USER )
 			),
 			'all' => array(
 				'message' => 'searchprofile-everything',
@@ -286,15 +310,15 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		return $profiles;
 	}
 
-	protected function getActiveAdvancedTab() {
+	protected function getActiveTab( $namespaces ) {
 		if($this->request->getVal('advanced')) {
 			return 'advanced';
 		}
 
-		$namespaces = array_keys(SearchEngine::searchableNamespaces());
+		$searchableNamespaces = array_keys( SearchEngine::searchableNamespaces() );
 		$nsVals = array();
 
-		foreach($namespaces as $ns) {
+		foreach($searchableNamespaces as $ns) {
 			if ($val = $this->request->getVal('ns'.$ns)) {
 				$nsVals[] = $ns;
 			}
@@ -304,20 +328,10 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			return $this->wg->User->getOption('searchAllNamespaces') ? 'all' :  'default';
 		}
 
-		if($nsVals == $namespaces) {
-			return 'all';
-		}
-
-		if($nsVals == array( NS_FILE )) {
-			return 'images';
-		}
-
-		if($nsVals == SearchEngine::helpNamespaces()) {
-			return 'help';
-		}
-
-		if($nsVals == SearchEngine::defaultNamespaces()) {
-			return 'default';
+		foreach( $this->getSearchProfiles( $namespaces ) as $name => $profile ) {
+			if ( !count( array_diff( $nsVals, $profile['namespaces'] ) ) && !count( array_diff($profile['namespaces'], $nsVals ) )) {
+				return $name;
+			}
 		}
 
 		return 'advanced';
@@ -328,7 +342,8 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$query = $this->getVal('query');
 		$page = $this->getVal( 'page', 1 );
 		$resultsCount = $this->getVal( 'count', 0);
-		$pagesNum = ceil( $resultsCount / self::RESULTS_PER_PAGE );
+		$pagesNum = $this->getVal( 'pageCount', 0);
+
 		$crossWikia = $this->getVal('crossWikia');
 		$debug = $this->getVal('debug');
 		$skipCache = $this->getVal('skipCache');
@@ -459,4 +474,5 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 		return true;
 	}
+
 }

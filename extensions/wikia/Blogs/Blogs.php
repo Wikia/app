@@ -107,6 +107,7 @@ $wgAutoloadClasses['CreateBlogPage'] = $dir . '/SpecialCreateBlogPage.php';
 $wgSpecialPages['CreateBlogPage'] = 'CreateBlogPage';
 $wgSpecialPages['Myblog'] = 'SpecialMyblog';
 $wgAutoloadClasses['SpecialMyblog'] = $dir . '/SpecialMyblog.php';
+$wgAutoloadClasses['BlogsHelper'] = $dir . '/BlogsHelper.class.php';
 
 // initialize blogs special pages (BugId:7604)
 $wgHooks['BeforeInitialize'][] = 'wfBlogsOnBeforeInitialize';
@@ -145,6 +146,7 @@ $wgHooks[ 'EditPage::showEditForm:checkboxes' ][] = 'BlogArticle::editPageCheckb
 $wgHooks[ 'LinksUpdate' ][] = 'BlogArticle::linksUpdate';
 $wgHooks[ 'UnwatchArticleComplete' ][] = 'BlogArticle::UnwatchBlogComments';
 $wgHooks[ 'AfterCategoriesUpdate'][] = 'BlogArticle::clearCountCache';
+$wgHooks[ 'SpecialSearchProfiles' ][] = 'BlogsHelper::OnSpecialSearchProfiles';
 
 /**
  * load other parts
