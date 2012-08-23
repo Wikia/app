@@ -2,11 +2,24 @@
 //
 // Depends on skins/oasis/js/tab.js 
 //
+// author: Rafal Leszczynski
+//
 // ******************************** 
 
 var TabView = {
 
 	init: function(options) {
+		
+		// new instance for each tabs on a single page
+		new TabViewClass(options);
+		
+	}
+	
+};
+
+var	TabViewClass =  $.createClass(Object, {
+
+	constructor: function(options) {
 	
 		// *****************************************************
 		//	
@@ -32,7 +45,6 @@ var TabView = {
 		
 		var that = this,
 			selectedTab = this.cashedStuff.tabsSelector.eq(options.selected),
-			tabsWrapperSelector = this.cashedStuff.tabsWrapperSelector,
 			eventTarget = '#' + this.cashedStuff.tabsWrapperId + ' a';
 			
 		// set data-tab attributes
@@ -120,4 +132,4 @@ var TabView = {
 			
 	}
 	
-}
+});
