@@ -27,7 +27,7 @@ public class CreateAWikiTests_nonLatin extends TestTemplate
 	 * https://internal.wikia-inc.com/wiki/Global_Log_in_and_Sign_up/Test_Cases:_CNW#Test_Case_3.1.02_Create_new_wiki:_log_in_field_validation_.28Latin_characters.29
 	 * Username field validation: username does not exist  
 	 * */
-	@Test
+	@Test(groups = {"CreateNewWiki_nonLatin_TC001"})
 	public void CreateNewWiki_nonLatin_TC001_user_name_does_not_exists()
 	{
 		CommonFunctions.logOut(Properties.userNameNonLatinEncoded);
@@ -62,7 +62,7 @@ public class CreateAWikiTests_nonLatin extends TestTemplate
 	 * https://internal.wikia-inc.com/wiki/Global_Log_in_and_Sign_up/Test_Cases:_CNW#Test_Case_3.1.02_Create_new_wiki:_log_in_field_validation_.28Latin_characters.29
 	 * Password field Validation: password is blank
 	 * */
-	@Test
+	@Test(groups = {"CreateNewWiki_nonLatin_TC002"})
 	public void CreateNewWiki_nonLatin_TC002_password_is_blank()
 	{
 		CommonFunctions.logOut(Properties.userNameNonLatinEncoded);
@@ -97,7 +97,7 @@ public class CreateAWikiTests_nonLatin extends TestTemplate
 	 * https://internal.wikia-inc.com/wiki/Global_Log_in_and_Sign_up/Test_Cases:_CNW#Test_Case_3.1.02_Create_new_wiki:_log_in_field_validation_.28Latin_characters.29
 	 * Password field Validation: password is incorrect
 	 * */
-	@Test
+	@Test(groups = {"CreateNewWiki_nonLatin_TC003"})
 	public void CreateNewWiki_nonLatin_TC003_password_is_incorrect()
 	{
 		CommonFunctions.logOut(Properties.userNameNonLatinEncoded);
@@ -133,7 +133,7 @@ public class CreateAWikiTests_nonLatin extends TestTemplate
 	 * https://internal.wikia-inc.com/wiki/Global_Log_in_and_Sign_up/Test_Cases:_CNW#Test_Case_3.1.02_Create_new_wiki:_log_in_field_validation_.28Latin_characters.29
 	 * Password field Validation: username and password are correct
 	 * */
-	@Test
+	@Test(groups = {"CreateNewWiki_nonLatin_TC004"})
 	public void CreateNewWiki_nonLatin_TC004_user_name_and_password_are_correct()
 	{
 		CommonFunctions.logOut(Properties.userNameNonLatinEncoded);
@@ -159,5 +159,4 @@ public class CreateAWikiTests_nonLatin extends TestTemplate
 		newWikia.verifyUserToolBar();
 		CommonFunctions.logOut(Properties.userNameNonLatinEncoded);
 	}	
-	
 }
