@@ -79,58 +79,15 @@ function gracenote_obfuscateText($text){
 	return substr($lyrics, 0, strlen($lyrics) - strlen($LINE_BREAK));
 } // end gracenote_obfuscateText()
 
-////
-// Returns the HTML which should be inserted into a tag page to track the song-specific stats for Gracenote tracking.
-//
-// The only parameter is the 'action' to pass into the _trackEvent function.  Use one of the predefined values from
-// the top of the Gracenote.php file such as GRACENOTE_VIEW_GRACENOTE_LYRICS or GRACENOTE_VIEW_OTHER_LYRICS.
-//
-// For more info on how this works, see:
-// http://code.google.com/intl/en-US/apis/analytics/docs/tracking/eventTrackerGuide.html
-//
-// NOTE: This function is just for outputting the tracking inside of tags (which will be stored in the parser-cache).
-// In order to make sure that stats get tracked even on pages without lyrics or gracenotelyrics tags, this code will
-// be called after the parser-cached area with the GRACENOTE_VIEW_NOT_LYRICS parameter.  If that is set, then the code
-// will only record a hit when there was not a previously-recorded hit by a lyrics or gracenotelyrics tag earlier on the
-// page.
-////
+/**
+ * DEPRECATED.
+ *
+ * This code used to return some HTML containing Javascript for tracking lyrics page-views
+ * in Google Analytics.  However, now we use the data warehouse for Gracenote Reporting instead
+ * of Google Analytics.
+ */
 function gracenote_getAnalyticsHtml($google_action){
-	return ""; // TODO: FIXME - This whole function should probably go away now that we use the data warehouse.
-
-	$trackEventCode = "";
-	if($google_action != GRACENOTE_VIEW_NOT_LYRICS){
-		$trackEventCode = "var jsGoogleLabel = \"Unknown\";
-		var gIdDiv = document.getElementById('gracenoteid');
-		if(gIdDiv){
-			jsGoogleLabel = gIdDiv.innerHTML;
-		} else {
-			var titleElement = document.getElementsByTagName('title')[0];
-			if(titleElement){
-				jsGoogleLabel = titleElement.innerHTML;
-				jsGoogleLabel = jsGoogleLabel.substring(0, jsGoogleLabel.indexOf(\" - LyricWiki\")); // Get just the page-name from the title.
-				var gnPrefix  = \"Gracenote:\"; // If the page name starts with \"Gracenote:\", get rid of that.
-				if(jsGoogleLabel.substring(0, gnPrefix.length) == gnPrefix){
-					jsGoogleLabel = jsGoogleLabel.substring(gnPrefix.length);
-				}
-			}
-		}
-		if(jsGoogleLabel!=\"".GRACENOTE_ALREADY_PROCESSED."\"){
-			gIdDiv.innerHTML = '".GRACENOTE_ALREADY_PROCESSED."';
-		}";
-	} else {
-		$trackEventCode = "var jsGoogleLabel = \"Unknown\";
-		var gIdDiv = document.getElementById('gracenoteid');
-		if(gIdDiv){
-			jsGoogleLabel = gIdDiv.innerHTML;
-		}";
-	}
-
-	// Do not remove the leading line-break or the parser will put a <p> tag inside the <script> tag (which causes a JS error).
-	$retVal = "\n<script type=\"text/javascript\">/* <![CDATA[ */
-		$trackEventCode
-	/* ]]> */</script>";
-
-	return $retVal;
+	return "";
 } // end gracenote_getAnalyticsHtml()
 
 ////
