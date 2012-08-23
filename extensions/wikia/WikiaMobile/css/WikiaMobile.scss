@@ -66,7 +66,6 @@ body {
 	border-bottom: 1px solid $border-color;
 	padding: $page-padding;
 	position: relative;
-	margin-top: 10px;
 
 	h1{
 		float: left;
@@ -89,8 +88,7 @@ a {
 	//I want page to be at least 305px long to be able to show share
 	min-height: 305px;
 	background-color: white;
-	overflow-x: hidden;
-	padding-top: 40px;
+	padding-top: 10px;
 }
 //for browsers that don't know that these should be block
 section, article, header, footer, aside, figure, figcaption {
@@ -98,22 +96,14 @@ section, article, header, footer, aside, figure, figcaption {
 }
 
 #wkMainCnt{
-	padding: $page-padding $page-padding 0 $page-padding;
+	padding: $page-padding;
+	padding-bottom: 1px;
 	//fixes for fluid content
 	.tvetnone {
 		width: 100% !important;
 		text-align: center;
     }
 	//end of fluiding thead content
-
-	div.wikia-slideshow-wrapper{
-		width: auto;
-
-		div.wikia-slideshow-images-wrapper ul.wikia-slideshow-images {
-			width: auto;
-			height: auto;
-		}
-	}
 }
 
 blockquote {
