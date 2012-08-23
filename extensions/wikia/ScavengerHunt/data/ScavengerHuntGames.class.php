@@ -29,7 +29,6 @@ class ScavengerHuntGames {
 	}
 
 	public function findById( $id, $readWrite = false, $where = array(), $raw = false ) {
-		$db = null;
 		$options = array();
 		if ($readWrite === true) {
 			$db = $this->getDb(DB_MASTER);
@@ -55,7 +54,9 @@ class ScavengerHuntGames {
 			return false;
 		}
 
-		if ( $raw ) return $row;
+		if ( $raw ) {
+			return $row;
+		}
 
 		$game = $this->newGameFromRow($row);
 
@@ -173,7 +174,7 @@ class ScavengerHuntGames {
 			);
 			$game->setId( $db->insertId() );
 		}
-		$db->commit();
+		$db->commit(__METHOD__);
 
 		$this->clearCache($oldGame, $game);
 		return true;
@@ -185,10 +186,13 @@ class ScavengerHuntGames {
 		}
 
 		$db = $this->getDb(DB_MASTER);
-		$db->delete(self::GAMES_TABLE_NAME, array(
-			'game_id' => $game->getId(),
-		));
-		$db->commit();
+		$db->delete(self::GAMES_TABLE_NAME,
+			array(
+				'game_id' => $game->getId(),
+			),
+			__METHOD__
+		);
+		$db->commit(__METHOD__);
 		$game->setId(0);
 
 		$this->clearCache($game, null);
@@ -211,7 +215,6 @@ class ScavengerHuntGames {
 	public function isPagePartOfAnyHunt( $cityId, $articleName ) {
 		$identifier = ScavengerHunt::makeIdentifier( $cityId, $articleName );
 		$indexCache = $this->getIndexCache();
-		$found = false;
 
 		if ( is_array( $indexCache ) ){
 			foreach( $indexCache as $index ){
@@ -266,13 +269,15 @@ class ScavengerHuntGames {
 	protected function clearCache( $oldGame, $newGame ) {
 		$this->clearIndexCache();
 
+		/** @var $oldGame ScavengerHuntGame */
+		/** @var $newGame ScavengerHuntGame */
 		if ( (!$oldGame || !$oldGame->isEnabled()) && (!$newGame || !$newGame->isEnabled()) ) {
 			// no squid purges required - game not enabled
 			return;
 		}
-		$titles = array();
 
 		foreach( array( $oldGame, $newGame ) as $game ){
+			/** @var $game ScavengerHuntGame */
 			if ( !empty( $game ) ) {
 				$this	->getCache()
 					->delete( wfSharedMemcKey(
@@ -294,9 +299,10 @@ class ScavengerHuntGames {
 						1,
 						self::CACHE_VERSION
 					));
-				$this->purgeURL( $url );
+
+				$this->purgeURL( $oldGame->getLandingTitle() );
 				foreach( $oldGame->getArticleURLs() as $url ){
-					$this->purgeURL( $oldGame->getLandingTitle() );
+					$this->purgeURL( $url );
 				}
 			}
 		};
@@ -306,8 +312,7 @@ class ScavengerHuntGames {
 		if ( empty( $url ) ){
 			return false;
 		}
-		$url = $title;
-		if ( strpos( $title, '?' ) === false ){
+		if ( strpos( $url, '?' ) === false ){
 			$url.= '?action=purge';
 		} else {
 			$url.= '&action=purge';
