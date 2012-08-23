@@ -27,11 +27,13 @@
 			<? else: ?>
 				<h1 itemprop="name"><?= $user['name']; ?></h1>
 			<? endif; ?>
-			<? if( !empty($user['group']) ): ?>
-				<span class="group"><?= $user['group']; ?></span>
+			<? if( !empty($user['tags']) ): ?>
+				<?php foreach($user['tags'] as $tag): ?>
+					<span class="tag"><?= $tag; ?></span>
+				<?php endforeach; ?>
 			<? endif; ?>
 			<? if(!empty($user['chatBanned'])): ?>
-				<span class="group"><?= wfMsg('user-identity-box-banned-from-chat'); ?></span>
+				<span class="tag"><?= wfMsg('user-identity-box-banned-from-chat'); ?></span>
 			<? endif; ?>
 		</hgroup>
 

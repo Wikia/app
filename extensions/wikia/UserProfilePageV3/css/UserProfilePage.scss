@@ -126,7 +126,7 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 			font-weight: bold;
 			line-height: 38px;
 		}
-		.group {
+		.tag {
 			@include border-radius(3px);
 			background: mix($color-button-highlight, $color-page, 80%);
 			display: inline-block;
@@ -135,6 +135,9 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 			position: relative;
 			text-transform: uppercase;
 			top: -4px;
+			+.tag {
+				margin-left: 0;
+			}
 		}
 		h2 {
 			display: inline;

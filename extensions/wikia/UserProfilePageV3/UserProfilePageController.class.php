@@ -106,7 +106,6 @@ class UserProfilePageController extends WikiaController {
 
 		$this->setVal('zeroStateCssClass', ($userData['showZeroStates']) ? 'zero-state' : '');
 
-
 		$this->setVal('user', $userData);
 		$this->setVal('deleteAvatarLink', F::build('SpecialPage', array('RemoveUserAvatar'), 'getTitleFor')->getFullUrl('av_user=' . $userData['name']));
 		$this->setVal('canRemoveAvatar', $sessionUser->isAllowed('removeavatar'));
