@@ -10,7 +10,7 @@
 	<div class="RVHeader">
 		<div class="tally">
 			<em><?=$totalVideos?></em>
-			<span class="fixedwidth"><?=wfMsg('related-videos-tally-article') ?></span>
+			<span class="fixedwidth"><?=wfMsg('related-videos-tally-wiki') ?></span>
 		</div>
 		<a class="button addVideo" href="#" rel="tooltip" title="<?=wfMsg('related-videos-tooltip-add');?>"><img src="<?=wfBlankImgUrl();?>" class="sprite addRelatedVideo" /> <?=wfMsg('related-videos-add-video')?></a>
 	</div>
