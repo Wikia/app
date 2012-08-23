@@ -211,12 +211,6 @@ class WikiaSolrClient extends WikiaSearchClient {
 
 		$sanitizedQuery = sprintf("(%s AND %s)", implode(' AND ', $queryClauses), $subQuery);
 
-		if ( in_array( NS_FILE, $namespaces ) ) {
-			$orQuery = sprintf("(wid:%d AND ns:%d AND %s)", self::VIDEO_WIKI, NS_FILE, $subQuery);
-			$sanitizedQuery = sprintf("%s OR %s", $sanitizedQuery, $orQuery);
-			$params['fq'] = sprintf("(%s) OR (wid:%d)", $params['fq'], self::VIDEO_WIKI);
-		}
-
 		try {
 			$response = $this->solrClient->search($sanitizedQuery, $start, $size, $params);
 		}
