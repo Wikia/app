@@ -46,7 +46,7 @@ class WikiMapModel extends WikiaObject {
             $result = $result['query']['querypage']['results'];
             $i = 0;
             $res = array();
-           foreach($result as $item){
+            foreach($result as $item){
                 $res[] = array('title' => $item['title'], 'titleNoSpaces' => str_replace(' ', '_', $item['title']));
                 $i++;
             }

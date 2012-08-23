@@ -30,10 +30,10 @@ class VisualStatsSpecialController extends WikiaSpecialPageController {
         $username=$this->getVal('user');
         if ((is_null($username)) || ($username=='')){
             if (!$this->app->wg->user->isAnon()){
-		$username = $this->app->wg->user->getName();
-	    }
+                $username = $this->app->wg->user->getName();
+            }
         else
-	    $username = "0";
+            $username = "0";
         }
 
         $this->setVal( 'urlCommit', $this->getTitleFor( 'VisualStats', 'commit')->getLocalURL("user=" . $username));
