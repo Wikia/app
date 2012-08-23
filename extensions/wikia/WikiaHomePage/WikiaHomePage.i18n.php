@@ -105,27 +105,6 @@ $messages['en'] = array(
 *[http://mediakit.wikia.com/Advertising-Products Ad products]
 *[https://wikia.sl.advertising.com/admin/advertisers/indexPl.jsp Self Service]',
 
-	'wikia-home-page-special-title' => 'Wikia Home Page -- staff tool',
-	'wikia-home-page-special-wrong-rights' => "You are probably logged-out or you don't have permissions to use this special page.",
-
-	'wikia-home-page-special-wikis-in-slots-heading' => 'Slots setup',
-	'wikia-home-page-special-wikis-in-slots-total' => 'Total amount of slots: ',
-	'wikia-hone-page-special-wikis-in-slots-change-reason' => 'Wikia Home Page Staff Tool change',
-
-	'wikia-home-page-special-wikis-in-slots-success' => 'Numbers slots has been changed.',
-
-	'wikia-home-page-special-verticals-proportions' => 'Number of wikis for each vertical in WV',
-	'wikia-home-page-special-hot-new-numbers' => 'Number of hot/new wikis in WV',
-
-	'wikia-home-page-special-slot-type-hot-wikis' => 'Number of Hot wikis',
-	'wikia-home-page-special-slot-type-new-wikis' => 'Number of New wikis',
-
-	'wikia-home-page-special-error-invalid-total-no-of-slots' => "Invalid slots amount in total ($1). Please make sure sum of each hub's slots equals total amount of slots ($2).",
-	'wikia-home-page-special-error-exceeded-total-no-of-slots' => "Invalid slots amount for new and hot wikis. Please make sure neither hot nor new slots exceed total amount of slots ($1).",
-	'wikia-home-page-special-error-negative-slots-number-not-allowed' => 'Negative number of slots is not allowed',
-	'wikia-home-page-special-error-wikifactory-failure' => "Something wrong happened during saving the variables all of them wasn't saved or they were saved partly. Try again.",
-
-	'wikia-home-page-special-change-button' => 'Change',
 	'wikia-home-page-hot' => 'Hot',
 	'wikia-home-page-new' => 'New',
 	'wikia-home-page-official' => 'Official',
@@ -276,10 +255,6 @@ $messages['qqq'] = array(
 
 	'wikiahome-hubs-videogames-heading' => 'Section header for Videogames section',
 
-	'wikia-home-page-special-title' => 'Title of Wikia Home Page special page',
-	'wikia-home-page-special-wrong-rights' => "A message displayed to a user if he doesn't have rights to use this special page",
-
-	'wikia-home-page-special-error-invalid-total-no-of-slots' => "An error which is displayed when set numbers in total doesn't equal required number of all slots; first parameter is the sum of entered numbers and second one is the required number",
 	'wikiahome-preview-stats-page' => "Number of pages on a wiki.  Could be singular or plural.  Please bold the number via wikitext or html.",
 	'wikiahome-preview-stats-photos' => "Number of photos on a wiki.  Could be singular or plural.  Please bold the number via wikitext or html.",
 	'wikiahome-preview-stats-videos' => "Number of videos on a wiki.  Could be singular or plural.  Please bold the number via wikitext or html.",

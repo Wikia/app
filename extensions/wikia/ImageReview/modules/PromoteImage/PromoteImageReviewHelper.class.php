@@ -1,6 +1,6 @@
 <?php
 
-class AdminUploadReviewHelper extends ImageReviewHelperBase {
+class PromoteImageReviewHelper extends ImageReviewHelperBase {
 
 	const LIMIT_IMAGES = 20;
 	const LIMIT_IMAGES_FROM_DB = 20;
@@ -92,7 +92,7 @@ class AdminUploadReviewHelper extends ImageReviewHelperBase {
 
 	protected function createUploadTask($taskAdditionList) {
 		if (!empty($taskAdditionList)) {
-			$task = new AdminUploadReviewTask();
+			$task = new PromoteImageReviewTask();
 			$task->createTask(
 				array(
 					'upload_list' => $taskAdditionList,
@@ -181,7 +181,7 @@ class AdminUploadReviewHelper extends ImageReviewHelperBase {
 	/**
 	 * get image list from reviewer id based on the timestamp
 	 * Note: NOT update image state
-	 * @param integer review_end
+	 * @param integer $timestamp review_end
 	 * @return array images
 	 */
 	public function refetchImageListByTimestamp($timestamp) {
@@ -208,7 +208,6 @@ class AdminUploadReviewHelper extends ImageReviewHelperBase {
 
 		// get images
 		$imageList = array();
-		$reviewList = array();
 
 		$where = array();
 		$list = $this->getWhitelistedWikis();
@@ -304,14 +303,14 @@ class AdminUploadReviewHelper extends ImageReviewHelperBase {
 				__METHOD__
 			);
 			$commit = true;
-			error_log("AdminUploadReview : returning " . count($unusedImages) . " back to the queue");
+			error_log("PromoteImageReview : returning " . count($unusedImages) . " back to the queue");
 		}
 
 		if ($commit) {
 			$db->commit();
 		}
 
-		error_log("AdminUploadReview : fetched new " . count($imageList) . " images");
+		error_log("PromoteImageReview : fetched new " . count($imageList) . " images");
 
 		$this->wf->ProfileOut(__METHOD__);
 
@@ -472,7 +471,7 @@ class AdminUploadReviewHelper extends ImageReviewHelperBase {
 
 		$summary['avg'] = $userCount > 0 ? $summary['all'] / $userCount : 0;
 
-		foreach ($data as $reviewer => &$stats) {
+		foreach ($data as &$stats) {
 			$stats['toavg'] = $stats['total'] - $summary['avg'];
 		}
 
@@ -483,7 +482,7 @@ class AdminUploadReviewHelper extends ImageReviewHelperBase {
 	}
 
 	public function getUserTsKey() {
-		return $this->wf->MemcKey('AdminUploadReviewHelper', 'userts', $this->wg->user->getId());
+		return $this->wf->MemcKey('PromoteImageReviewHelper', 'userts', $this->wg->user->getId());
 	}
 
 	public function getImageUrl($wikiId, $pageId, $imgSize) {

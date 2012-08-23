@@ -50,6 +50,16 @@
 							</a>
 						</li>
 					<? } ?>
+					<? if ($displaySpecialPromote) { ?>
+					<li class="control" data-tooltip="<?= wfMsg("admindashboard-control-admin-upload-tool-tooltip") ?>">
+						<a href="<?= $urlGetPromoted ?>" class="set" data-tracking="general/promoteimagetool">
+						      <span class="representation">
+	                          	<span class="icon promoteimagetool"></span>
+	                          </span>
+							<?= wfMsg("admindashboard-control-admin-upload-tool-label") ?>
+						</a>
+					</li>
+					<? } ?>
 				</ul>
 			</section>
 			<section class="control-section community">

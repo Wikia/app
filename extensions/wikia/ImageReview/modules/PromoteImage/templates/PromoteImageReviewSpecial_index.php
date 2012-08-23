@@ -13,18 +13,6 @@
 
 	<?php if ( $accessControls ) { ?>
 
-	<form action="<?php echo $submitUrl ?>" method="get" id="ImageReviewControls">
-		Sort order: <?php
-		$sortSelect = new XmlSelect( 'sort', 'sort', intval( $order ) );
-
-		$sortSelect->addOptions( ImageReviewHelper::$sortOptions );
-
-		echo $sortSelect->getHTML();
-		?>
-
-		<input type="submit" class="wikia-button secondary" value="Change sort order" />
-	</form>
-
 	<a href="<?= $fullUrl ?>/stats" class="wikia-button secondary">View stats</a>
 
 	<?php } ?>

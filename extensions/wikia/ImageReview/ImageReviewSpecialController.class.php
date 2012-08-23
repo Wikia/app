@@ -200,7 +200,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 
 		echo implode( ",", $this->statsHeaders ) . "\n";
 
-		foreach ( $stats['data'] as $reviewer => $dataRow ) {
+		foreach ( $stats['data'] as $dataRow ) {
 			echo implode( ",", $dataRow ) . "\n";
 		}
 

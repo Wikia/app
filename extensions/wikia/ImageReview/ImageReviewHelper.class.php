@@ -26,8 +26,8 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 
 	/**
 	 * update image state
-	 * @param array images
-	 * @param integer review_end
+	 * @param array $images
+	 * @param string $action
 	 */
 	public function updateImageState( $images, $action = '' ) {
 		$this->wf->ProfileIn( __METHOD__ );
@@ -170,7 +170,7 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 	/**
 	* get image list from reviewer id based on the timestamp
 	* Note: NOT update image state
-	* @param integer review_end
+	* @param integer $timestamp review_end
 	* @return array images
 	*/
 	public function refetchImageListByTimestamp( $timestamp ) {
@@ -527,7 +527,7 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 
 		$summary['avg'] = $userCount > 0 ? $summary['all'] / $userCount : 0;
 
-		foreach ( $data as $reviewer => &$stats ) {
+		foreach ( $data as &$stats ) {
 			$stats['toavg'] = $stats['total'] - $summary['avg'];
 		}
 

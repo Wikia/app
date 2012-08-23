@@ -40,6 +40,7 @@ class AdminDashboardSpecialPageController extends WikiaSpecialPageController {
 		$this->urlAddPhoto = Title::newFromText('Upload', NS_SPECIAL)->getFullURL();
 		$this->urlCreateBlogPage = Title::newFromText('CreateBlogPage', NS_SPECIAL)->getFullURL();
 		$this->urlMultipleUpload = Title::newFromText('MultipleUpload', NS_SPECIAL)->getFullURL();
+		$this->urlGetPromoted = Title::newFromText('Promote', NS_SPECIAL)->getFullURL();
 
 		// special:specialpages
 		$this->advancedSection = (string)$this->app->sendRequest( 'AdminDashboardSpecialPage', 'getAdvancedSection', array());
@@ -47,6 +48,7 @@ class AdminDashboardSpecialPageController extends WikiaSpecialPageController {
 		// icon display logic
 		$this->displayPageLayoutBuilder = !empty($this->wg->EnablePageLayoutBuilder);
 		$this->displayWikiFeatures = !empty($this->wg->EnableWikiFeatures);
+		$this->displaySpecialPromote = !empty($this->wg->EnableSpecialPromoteExt);
 
 		// add messages package
 		F::build('JSMessages')->enqueuePackage('AdminDashboard', JSMessages::INLINE);

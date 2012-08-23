@@ -41,23 +41,24 @@ $color-admin-article-border: $color-page-border;
 $color-admin-article-box-shadow: $color-admin-icon-shadow;
 $color-admin-global-header: mix($color-page, $color-buttons, 65%);
 $color-admin-global-header-shadow: darken($color-admin-global-header, 5%);
-@if lightness($color-admin-global-header) < 75 {
-	$color-admin-global-header-shadow: darken($color-admin-global-header, 3%);
-}
+	@if lightness($color-admin-global-header) < 75 {
+	 $color-admin-global-header-shadow: darken($color-admin-global-header, 3%);
+ }
+
 $color-totals: $color-alternate-text;
 $color-totals-text: white;
-@if $is-dark-wiki {
-	$color-totals-text: black;	
-}
+	@if $is-dark-wiki {
+	 $color-totals-text: black;
+ }
 
 $color-admin-global-header-text: white;
-@if lightness($color-admin-global-header) > 75 {
-	$color-admin-global-header-text: black;
-}
+	@if lightness($color-admin-global-header) > 75 {
+	 $color-admin-global-header-text: black;
+ }
 
-@if $is-dark-wiki {
-	$color-admin-tab-inactive: mix($color-page, $color-admin-light-mix, 90%);
-}
+	@if $is-dark-wiki {
+	 $color-admin-tab-inactive: mix($color-page, $color-admin-light-mix, 90%);
+ }
 
 $color-highlight-column: rgba($color-page, 0);
 
@@ -148,7 +149,7 @@ $color-highlight-column: rgba($color-page, 0);
 		list-style: none;
 	}
 	.admin-dashboard-content {
-		
+
 		.control-section {
 			header {
 				@include clearfix;
@@ -172,13 +173,13 @@ $color-highlight-column: rgba($color-page, 0);
 				@include linear-gradient($color-admin-content-highlight, top, $color-admin-content-highlight, 10%, $color-admin-content-shadow, 100%);
 				font-size: 11px;
 				line-height: 13px;
-				padding: 3.2em 15px 0;	/* note: keep top padding relative to font size, change this if font-size changes for two-line control description */
+				padding: 3.2em 15px 0; /* note: keep top padding relative to font size, change this if font-size changes for two-line control description */
 				text-align: center;
 				@include clearfix;
 				.control {
 					cursor: pointer;
 					float: left;
-					/* 115px visual height */
+				/* 115px visual height */
 					height: 95px;
 					line-height: 12px;
 					padding: 20px 3px 0;
@@ -192,7 +193,7 @@ $color-highlight-column: rgba($color-page, 0);
 						margin: 0px auto 5px;
 						width: 50px;
 						.icon {
-							background-image: url(/extensions/wikia/AdminDashboard/images/icons.png);	/* $wgCdnStylePath */
+							background-image: url(/extensions/wikia/AdminDashboard/images/icons.png); /* $wgCdnStylePath */
 							background-repeat: no-repeat;
 							display: block;
 							height: 50px;
@@ -212,6 +213,9 @@ $color-highlight-column: rgba($color-page, 0);
 							&.wikifeatures {
 								background-position: -750px 0;
 							}
+							&.promoteimagetool {
+								background-position: -800px 0;
+							}
 							&.pagelayoutbuilder {
 								background-position: -200px 0;
 							}
@@ -221,7 +225,7 @@ $color-highlight-column: rgba($color-page, 0);
 							&.userrights {
 								background-position: -300px 0;
 							}
-							
+
 							&.communitycorner {
 								background-position: -350px 0;
 							}
@@ -362,80 +366,79 @@ $color-highlight-column: rgba($color-page, 0);
 	width: 100%;
 }
 
-
 .QuickStatsWidget {
-	/* make this reusable later */
-	/* ng -> not global */
+/* make this reusable later */
+/* ng -> not global */
 	.WikiaDataTable {
-		@include linear-gradient($color-admin-header-shadow, top, $color-admin-header-highlight, 40%, $color-admin-header-shadow, 100%);	/* ng */
+		@include linear-gradient($color-admin-header-shadow, top, $color-admin-header-highlight, 40%, $color-admin-header-shadow, 100%); /* ng */
 		border: 1px solid $color-admin-rail-border; /* ng */
 		th, td {
 			&:first-child {
-				color: $color-alternate-text;	/* ng */
+				color: $color-alternate-text; /* ng */
 			}
-            &:nth-child(2) {
-            	color: $color-alternate-text;	/* ng */
-                @include linear-gradient($color-page, left, $color-admin-header-shadow, 0%, $color-admin-header-highlight, 15%, $color-admin-header-highlight, 85%, $color-admin-header-shadow, 100%);
-            }
+			&:nth-child(2) {
+				color: $color-alternate-text; /* ng */
+				@include linear-gradient($color-page, left, $color-admin-header-shadow, 0%, $color-admin-header-highlight, 15%, $color-admin-header-highlight, 85%, $color-admin-header-shadow, 100%);
+			}
 		}
 		thead {
 			th {
-				color: $color-text;	/* ng */
-	            &:nth-child(2) {
-                    padding: 0;
-                }
+				color: $color-text; /* ng */
+				&:nth-child(2) {
+					padding: 0;
+				}
 			}
 		}
 		.totals {
 			td {
 				background: $color-page; /* ng */
-				color: $color-text;	/* ng */
+				color: $color-text; /* ng */
 				&:first-child {
 					.pointer {
-						background: $color-totals;	/* ng */
-						color: $color-totals-text;	/* ng */
+						background: $color-totals; /* ng */
+						color: $color-totals-text; /* ng */
 						&:before {
-							border-left: 10px solid $color-alternate-text;	/* ng */
+							border-left: 10px solid $color-alternate-text; /* ng */
 						}
 					}
 				}
-	            &:nth-child(2) {
-	                color: $color-alternate-text;	/* ng */
-                    border-color: transparent;
-                    @include linear-gradient($color-page, left, $color-admin-header-shadow, 0%, $color-admin-header-highlight, 15%, $color-admin-header-highlight, 85%, $color-admin-header-shadow, 100%);
-                    padding: 0;
-                }
+				&:nth-child(2) {
+					color: $color-alternate-text; /* ng */
+					border-color: transparent;
+					@include linear-gradient($color-page, left, $color-admin-header-shadow, 0%, $color-admin-header-highlight, 15%, $color-admin-header-highlight, 85%, $color-admin-header-shadow, 100%);
+					padding: 0;
+				}
 			}
 		}
 		tbody {
 			tr {
 				td {
-                    border-top: 1px solid $color-admin-rail-border; /* ng */
-                    &:nth-child(2) {
-                        border-color: transparent;
-                    }
+					border-top: 1px solid $color-admin-rail-border; /* ng */
+					&:nth-child(2) {
+						border-color: transparent;
+					}
 				}
 			}
 		}
 	}
-    .highlight-top {
-        background: -moz-linear-gradient(top, $color-admin-header-shadow 0%, $color-highlight-column 25%); /* FF3.6+ */
-        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, $color-admin-header-shadow), color-stop(25%, $color-highlight-column)); /* Chrome,Safari4+ */
-        background: -webkit-linear-gradient(top, $color-admin-header-shadow 0%, $color-highlight-column 25%); /* Chrome10+,Safari5.1+ */
-        background: -o-linear-gradient(top, $color-admin-header-shadow 0%, $color-highlight-column 25%); /* Opera 11.10+ */
-        background: -ms-linear-gradient(top, $color-admin-header-shadow 0%, $color-highlight-column 25%); /* IE10+ */
-        background: linear-gradient(top, $color-admin-header-shadow 0%, $color-highlight-column 25%); /* W3C */
-        display: block;
-        padding: 10px 10px 7px 0;
-    }
-    .highlight-bottom {
-        background: -moz-linear-gradient(bottom, $color-admin-header-shadow 0%, $color-highlight-column 25%); /* FF3.6+ */
-        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, $color-admin-header-shadow), color-stop(25%, $color-highlight-column)); /* Chrome,Safari4+ */
-        background: -webkit-linear-gradient(bottom, $color-admin-header-shadow 0%, $color-highlight-column 25%); /* Chrome10+,Safari5.1+ */
-        background: -o-linear-gradient(bottom, $color-admin-header-shadow 0%, $color-highlight-column 25%); /* Opera 11.10+ */
-        background: -ms-linear-gradient(bottom, $color-admin-header-shadow 0%, $color-highlight-column 25%); /* IE10+ */
-        background: linear-gradient(bottom, $color-admin-header-shadow 0%, $color-highlight-column 25%); /* W3C */
-        display: block;
-        padding: 10px 10px 7px 0;
-    }
+	.highlight-top {
+		background: -moz-linear-gradient(top, $color-admin-header-shadow 0%, $color-highlight-column 25%); /* FF3.6+ */
+		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, $color-admin-header-shadow), color-stop(25%, $color-highlight-column)); /* Chrome,Safari4+ */
+		background: -webkit-linear-gradient(top, $color-admin-header-shadow 0%, $color-highlight-column 25%); /* Chrome10+,Safari5.1+ */
+		background: -o-linear-gradient(top, $color-admin-header-shadow 0%, $color-highlight-column 25%); /* Opera 11.10+ */
+		background: -ms-linear-gradient(top, $color-admin-header-shadow 0%, $color-highlight-column 25%); /* IE10+ */
+		background: linear-gradient(top, $color-admin-header-shadow 0%, $color-highlight-column 25%); /* W3C */
+		display: block;
+		padding: 10px 10px 7px 0;
+	}
+	.highlight-bottom {
+		background: -moz-linear-gradient(bottom, $color-admin-header-shadow 0%, $color-highlight-column 25%); /* FF3.6+ */
+		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, $color-admin-header-shadow), color-stop(25%, $color-highlight-column)); /* Chrome,Safari4+ */
+		background: -webkit-linear-gradient(bottom, $color-admin-header-shadow 0%, $color-highlight-column 25%); /* Chrome10+,Safari5.1+ */
+		background: -o-linear-gradient(bottom, $color-admin-header-shadow 0%, $color-highlight-column 25%); /* Opera 11.10+ */
+		background: -ms-linear-gradient(bottom, $color-admin-header-shadow 0%, $color-highlight-column 25%); /* IE10+ */
+		background: linear-gradient(bottom, $color-admin-header-shadow 0%, $color-highlight-column 25%); /* W3C */
+		display: block;
+		padding: 10px 10px 7px 0;
+	}
 }

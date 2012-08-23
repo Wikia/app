@@ -41,7 +41,6 @@ class AdminDashboardLogic {
 
 			// NOTE: keep this list in alphabetical order
 			static $exclusionList = array(
-				"AdminUploadReview",
 				"ApiExplorer",
 				"ApiGate",
 				"Chat",
@@ -68,6 +67,7 @@ class AdminDashboardLogic {
 				"Leaderboard",
 				"LookupContribs",
 				"LookupUser",
+				"ManageWikiaHome",
 				"MiniEditor",
 				"MovePage",
 				"MultiLookup",
@@ -81,6 +81,7 @@ class AdminDashboardLogic {
 				"PhotoPopSetup",
 				"Places",
 				"Preferences",
+				"PromoteImageReview",
 				"ScavengerHunt",
 				"Search",
 				"WikiaSearch",

@@ -14,7 +14,7 @@ $messages['en'] = array(
 	'promote-title' => 'Promote',
 	'promote-introduction-header' => 'Promote your wiki on wikia.com',
 
-	'promote-introduction-copy' => "This page allows you to promote your wiki by making it eligible to appear on www.wikia.com! Add images and a summary to introduce your wiki to visitors on Wikia's main page. Find more tips here.",
+	'promote-introduction-copy' => "This page allows you to promote your wiki by making it eligible to appear on [http://www.wikia.com wikia.com]! Add images and a summary to introduce your wiki to visitors on Wikia's main page. Find more tips [http://help.wikia.com/wiki/Help:Promote here].",
 
 	'promote-description' => 'Description',
 	'promote-description-header' => 'Headline',
@@ -62,9 +62,68 @@ $messages['en'] = array(
 	'promote-image-in-review' => 'In review',
 
 	'promote-statusbar-icon' => 'Status',
-	'promote-statusbar-inreview' => 'One or more of your images are currently in review. Your wiki will appear on [http://www.wikia.com www.wikia.com] when images have been approved.',
-	'promote-statusbar-approved' => 'Woohoo! $1 is promoted on [http://www.wikia.com www.wikia.com]!',
+	'promote-statusbar-inreview' => 'Some of your images are currently in review and will appear on [http://www.wikia.com wikia.com] after they\'re approved.  This can take 2-4 business days, so we\'ll update you here when we\'re done.',
+	'promote-statusbar-approved' => 'Woohoo! $1 is promoted on [http://www.wikia.com wikia.com]!',
 	'promote-statusbar-rejected' => 'One or more of your images was not approved. [[Special:Contact|Find out why]]',
+);
+
+$messages['de'] = array(
+	'promote' => 'Wiki vorstellen',
+
+	'promote-title' => 'Wiki vorstellen',
+	'promote-introduction-header' => 'Stelle dein Wiki auf Wikia\'s Hauptseite vor!',
+
+	'promote-introduction-copy' => "Diese Seite ermöglicht dir, dein Wiki auf der [http://de.wikia.com Hauptseite von Wikia] vorzustellen! Füge Bilder und eine Beschreibung hinzu, um dein Wiki anderen Besuchern auf Wikia näherzubringen. Weitere Hinweise findest du auf der [http://hilfe.wikia.com/wiki/Hilfe:Wiki_vorstellen Hilfeseite].",
+
+	'promote-description' => 'Beschreibung',
+	'promote-description-header' => 'Überschrift',
+	'promote-description-header-explanation' => 'Eine einfacher kurzer Text wie "Finde mehr über das Schlumpf-Wiki heraus" oder "Willkommen im Schlumpf-Wiki" funktioniert am besten!',
+
+	'promote-description-about' => "Welches Thema behandelt dein Wiki?",
+	'promote-description-about-explanation' => "Beschreibe das Thema deines Wikis. Hab keine Angst davor, den Text zu detailliert zu schreiben - du willst die Besucher ja für dein Thema begeistern und sicherstellen, dass sie eine gute Idee haben, was sie in deinem Wiki erwartet.",
+
+	'promote-upload' => 'Bilder hinzufügen',
+	'promote-upload-main-photo-header' => 'Hauptbild',
+	'promote-upload-main-photo-explanation' => "Dieses Bild steht für dein Wiki. Es ist das Bild, welches dein Wiki auf der Hauptseite von Wikia repräsentiert - stell also sicher, dass es ein tolles Bild ist! Denk dran: Du kannst dieses Bild jederzeit ändern, so dass es aktuell ist und dein Wiki gut darstellt.",
+	'promote-upload-additional-photos-header' => 'Zusätzliche Bilder',
+	'promote-upload-additional-photos-explanation' => 'Durch weitere Bilder machst du dein Wiki interessanter und findest mehr mögliche Besucher. Du kannst bis zu neun Bilder hier einfügen - und wir empfehlen jedem, dieses Limit auszunutzen!',
+
+	'promote-publish' => 'Veröffentlichen',
+
+	'promote-upload-tool' => 'Admin-Upload',
+	'promote-add-photo' => 'Bild hinzufügen',
+	'promote-remove-photo' => 'Entfernen',
+	'promote-modify-photo' => 'Ändern',
+
+	'promote-upload-main-image-form-modal-title' => 'Hauptbild',
+	'promote-upload-main-image-form-modal-copy' => "Lade ein Bild hoch, dass das Thema deines Wikis verdeutlicht. Stelle sicher, dass es sich um eine \".png\"-Datei mit einer Mindestgröße von 480x320 Pixeln handelt.",
+	'promote-upload-additional-image-form-modal-title' => 'Zusätzliche Bilder',
+	'promote-upload-additional-image-form-modal-copy' => "Lade weitere Bilder hoch, um mehr von deinem Wiki zu zeigen. Stelle sicher, dass die Bilder im \".png\"-Format vorliegen und eine Mindestgröße von 480x320 haben.",
+	'promote-upload-form-modal-cancel' => 'Abbrechen',
+
+	'promote-upload-submit-button' => 'Los geht\'s',
+
+	'promote-error-less-characters-than-minimum' => 'Ups! Deine Überschrift muss mindestens {{PLURAL:$2|einen Buchstaben|$2 Buchstaben}} lang sein.',
+	'promote-error-more-characters-than-maximum' => 'Ups! Deine Überschrift darf nicht länger als $2 Buchstaben sein.',
+	'promote-error-upload-unknown-error' => 'Unbekannter Fehler beim Hochladen',
+	'promote-error-upload-filetype-error' => 'Stelle sicher, dass du deine Datei im \".png\"-Format speicherst.',
+	'promote-error-upload-dimensions-error' => 'Falsche Dateigröße - das Bild sollte mindestens 480x320 Pixel groß sein.',
+	'promote-error-too-many-images' => 'Ups! Du hast bereits neun Bilder hinzugefügt. Bitte entferne erst welche, bevor du neue hinzufügst.',
+	'promote-error-upload-type' => "Ups! Falsches Dateiformat.",
+	'promote-error-upload-form' => "Falsches Dateiformat in getUploadForm.",
+
+	'promote-manual-file-size-error' => 'Das Hauptbild muss mindestens 480x320 Pixel groß sein.',
+	'promote-manual-upload-error' => 'Diese Datei kann nicht manuell hochgeladen werden - bitte nutze die Admin-Upload-Funktion.',
+	'promote-wrong-rights' => "Verflixt - augenscheinlich hast du nicht ausreichende Rechte um diese Seite zu nutzen. Bist du angemeldet?",
+
+	'promote-image-rejected' => 'Abgelehnt',
+	'promote-image-accepted' => 'Akzeptiert',
+	'promote-image-in-review' => 'Im Review',
+
+	'promote-statusbar-icon' => 'Status',
+	'promote-statusbar-inreview' => 'Einige deiner Bilder sind noch im Review-Prozess. Sie tauchen auf [http://de.wikia.com Wikias Hauptseite] auf, nachdem sie gerpüft wurden. Das kann 2-4 Arbeitstage dauern. Du findest dann hier ein Update, sobald das erledigt ist.',
+	'promote-statusbar-approved' => 'Juchu! $1 wird nun auf [http://de.wikia.com Wikias Hauptseite] angezeigt!',
+	'promote-statusbar-rejected' => 'Ein oder mehrere Bilder wurden nicht akzeptiert [[Special:Contact|Finde den Grund heraus]].',
 );
 
 $messages['qqq'] = array(

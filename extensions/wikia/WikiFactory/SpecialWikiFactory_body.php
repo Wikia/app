@@ -317,6 +317,7 @@ class WikiFactoryPage extends SpecialPage {
 					}
 					break;
 			}
+			wfRunHooks('WikiFactory::onPostChangesApplied', array($this->mWiki->city_id));
 		}
 		else {
 			/**

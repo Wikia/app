@@ -20,6 +20,6 @@ class WikiGetDataForVisualizationHelper implements WikiGetDataHelper {
 	 * @return bool
 	 */
 	public function getMainImage($wikiId, $langCode, $imageSource, &$currentData) {
-		return $imageSource->city_main_image;
-	}
+ 		return $imageSource->city_main_image;
+ 	}
 }

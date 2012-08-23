@@ -31,10 +31,10 @@ class WikiGetDataForPromoteHelper implements WikiGetDataHelper {
 	 * @return bool
 	 */
 	public function getMainImage($wikiId, $langCode, $imageSource, &$currentData) {
-		if(!empty($currentData['images']) && !empty($currentData['images'][0])) {
+ 		if(!empty($currentData['images']) && !empty($currentData['images'][0])) {
 			$mainImage = array_shift($currentData['images']);
-			return $mainImage;
-		}
-		return false;
-	}
+ 			return $mainImage;
+ 		}
+ 		return false;
+ 	}
 }

@@ -1,7 +1,7 @@
 <?php
 /**
  * How to run this script:
- * $ cd maintenance/wikia/ImageReview/AdminUpload/upload.php
+ * $ cd maintenance/wikia/ImageReview/PromoteImage/upload.php
  * To remove an image from wikia.com as a WikiaBot:
  * $ SERVER_ID=80433 php remove.php --conf /usr/wikia/docroot/wiki.factory/LocalSettings.php --imagename="Wikia-Visualization-Add-3,starwars.jpg" --userid=4663069
  */
