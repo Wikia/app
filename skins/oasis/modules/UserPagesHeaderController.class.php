@@ -14,10 +14,10 @@ class UserPagesHeaderController extends WikiaController {
 		$this->content_actions = $this->app->getSkinTemplateObj()->data['content_actions'];
 		$this->isUserProfilePageExt = false;
 		$this->actionMenu = array();
-		
+
 		$this->fbAccessRequestURL = '';
 	}
-	
+
 	/**
 	 * Checks whether given user name is the current user
 	 */
@@ -118,7 +118,7 @@ class UserPagesHeaderController extends WikiaController {
 						'data-id' => 'following',
 						);
 			}
-			
+
 			// avatar dropdown menu
 			$this->avatarMenu = array(
 					Wikia::link(SpecialPage::getTitleFor('Preferences'), wfMsg('oasis-user-page-change-avatar'))
@@ -167,7 +167,7 @@ class UserPagesHeaderController extends WikiaController {
 		$this->isInternalWiki = empty($wgCityId);
 		$this->isUserAnon = $wgUser->isAnon();
 		$this->isPrivateWiki = $wgIsPrivateWiki;
-		
+
 		$namespace = $wgTitle->getNamespace();
 
 		// get user name to display in header
@@ -287,13 +287,17 @@ class UserPagesHeaderController extends WikiaController {
 	 * @param bool $arg Users has granted access (true or false)*
 	 */
 	public function executeFacebookConnect($arg) {
-		global $wgRequest, $wgCityId, $wgFacebookSyncAppID, $wgFacebookSyncAppSecret, $IP;
+		global $wgRequest, $wgCityId, $wgFacebookSyncAppID, $wgFacebookSyncAppSecret, $IP, $wgTitle;
+		wfProfileIn(__METHOD__);
 
 		if ($arg['fbAccess'] == true) {
 			include($IP . '/extensions/FBConnect/facebook-sdk/facebook.php');
 			$facebook = new FacebookAPI(array('appId' =>$wgFacebookSyncAppID,'secret'=>$wgFacebookSyncAppSecret,	'cookie' =>true, ));
 
-			$token_url = 'https://graph.facebook.com/oauth/access_token?client_id=' .$wgFacebookSyncAppID .'&redirect_uri=' .FACEBOOK_REDIRECT_URL .'&client_secret=' .$wgFacebookSyncAppSecret .'&code=' .$wgRequest->getVal( 'code' );
+			// taken from http://trac.wikia-code.com/changeset/34764
+			$fbRedirectUrl = $wgTitle->getFullURL() .'?fbrequest=sent&action=purge';
+
+			$token_url = 'https://graph.facebook.com/oauth/access_token?client_id=' .$wgFacebookSyncAppID .'&redirect_uri=' . urlencode($fbRedirectUrl) .'&client_secret=' .$wgFacebookSyncAppSecret .'&code=' .$wgRequest->getVal( 'code' );
 			$access_token = Http::get($token_url);
 			$graph_url = "https://graph.facebook.com/me?" . $access_token;
 			$user = json_decode(Http::get($graph_url));
@@ -320,6 +324,8 @@ class UserPagesHeaderController extends WikiaController {
 			// error message - no access granted
 			$this->fbAccess = false;
 		}
+
+		wfProfileOut(__METHOD__);
 	}
 
 
@@ -465,7 +471,7 @@ class UserPagesHeaderController extends WikiaController {
 		wfProfileIn(__METHOD__);
 
 		global $wgTitle, $wgOut;
-		
+
 		// "Create blog post" button
 		$this->actionButton = array(
 				'href' => SpecialPage::getTitleFor('CreateBlogPage')->getLocalUrl(),
