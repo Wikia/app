@@ -37,8 +37,10 @@ $(function(){
 					toolbar: toolbar,
 					content: buildContent(currentPoll),
 					classes: 'WikiaPollModal',
-					stopHiding: true
+					stopHiding: true,
 				});
+
+				window.scrollTo(0,1);
 
 				modalWrapper = modal.getWrapper();
 
