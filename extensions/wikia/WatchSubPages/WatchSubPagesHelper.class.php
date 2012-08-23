@@ -33,7 +33,7 @@ class WatchSubPagesHelper {
 	 *
 	 * @author Jakub Kurcek <jakub@wikia-inc.com>
 	 */
-	static public function ClearParentNotification( Article $article ) {
+	static public function ClearParentNotification( Page $article ) {
 		global $wgUser;
 
 		if ( $wgUser->getBoolOption( 'watchlistsubpages' ) ) {
