@@ -20,7 +20,7 @@ public class TestTemplate {
 	
 	public WebDriver driver;
 	
-	@BeforeSuite
+	@BeforeSuite(alwaysRun = true)
 	public void beforeSuite()
 	{
 		CommonUtils.deleteDirectory("."+File.separator+"logs");
@@ -31,7 +31,7 @@ public class TestTemplate {
 		
 	}
 	
-	@AfterSuite
+	@AfterSuite(alwaysRun = true)
 	public void afterSuite()
 	{
 		PageObjectLogging.stopLoggingSuite();
@@ -67,14 +67,14 @@ public class TestTemplate {
 	}
 
 	
-	@BeforeMethod
+	@BeforeMethod(alwaysRun = true)
 	public void start(Method method)
 	{
 		startBrowser();
 		PageObjectLogging.startLoggingMethod(getClass().getSimpleName().toString(), method.getName());
 	}
 	
-	@AfterMethod
+	@AfterMethod(alwaysRun = true)
 	public void stop()
 	{
 		stopBrowser();
