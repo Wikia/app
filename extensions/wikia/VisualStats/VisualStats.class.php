@@ -24,8 +24,10 @@ class VisualStats extends WikiaObject {
 
     public function getDatesFromTwoWeeksOn($hours){
 
-        $date = strtotime($this->getDateTwoWeeksBefore());
+       $arr = array(); 
+       $date = strtotime($this->getDateTwoWeeksBefore());
         if ($hours){
+            $arr2 = array();
             for($hour = 0; $hour <= 23; $hour++){
                 $arr2[$hour] = 0;
                 }
@@ -224,6 +226,8 @@ class VisualStats extends WikiaObject {
         }
         else
         {
+            $userHistogram = array();
+            $wikiaHistogram = array();
             $result = $this->performQuery($username);
             $dbr = $result['db'];
             $userData = $result['user'];

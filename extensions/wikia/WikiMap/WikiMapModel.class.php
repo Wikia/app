@@ -45,7 +45,8 @@ class WikiMapModel extends WikiaObject {
                 'qplimit' => '20'));
             $result = $result['query']['querypage']['results'];
             $i = 0;
-            foreach($result as $item){
+            $res = array();
+           foreach($result as $item){
                 $res[] = array('title' => $item['title'], 'titleNoSpaces' => str_replace(' ', '_', $item['title']));
                 $i++;
             }
@@ -108,12 +109,14 @@ class WikiMapModel extends WikiaObject {
 
         //Preparing arrays to be used as parameters for next method
         $result = $result['query']['categorymembers'];
+        $ids = array();
 
         foreach ($result as $item){
             $ids[] = $item['pageid'];
         }
         $allArticlesCount = count($ids);
         $dbr = $this->getDB();
+        $resultSecondQuery = array();
         $newquery = $dbr->select(
             array( 'revision', 'page' ),
             array( 'page_id',
@@ -186,6 +189,9 @@ class WikiMapModel extends WikiaObject {
         $this->app->wf->profileIn( __METHOD__ );
 
         $dbr = $this->getDB();
+        $keysRev = array();
+        $withoutSpace = array();
+        $keys = array();
         $revertIDs = array();
         for($i = 0; $i < count($item); $i++){
             $withoutSpace[$i] = str_replace(' ', '_', $item[$i]['title']);
