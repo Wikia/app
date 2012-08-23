@@ -10,6 +10,6 @@ public class Global {
 	public static File CONFIG_FILE;
 	public static String DOMAIN;
 	public static String LIVE_DOMAIN;
-	
+	public static File CAPTCHA_FILE;
 
 }

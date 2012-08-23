@@ -31,7 +31,6 @@ public class CreateAWikiTests_latin extends TestTemplate
 	{
 		
 		CommonFunctions.logOut(Properties.userName);
-//		driver.get(Global.LIVE_DOMAIN+"wiki/Special:UserLogout?returnto=User "+Properties.userName);
 		HomePageObject home = new HomePageObject(driver);
 		home.openHomePage();
 		CreateNewWikiPageObjectStep1 createNewWiki1 = home.startAWiki();
@@ -43,7 +42,6 @@ public class CreateAWikiTests_latin extends TestTemplate
 		logInPage.verifyTabTransition();
 		logInPage.verifyFaceBookToolTip();
 		logInPage.verifySignUpText();		
-//		driver.get(Global.LIVE_DOMAIN+"wiki/Special:UserLogout?returnto=User "+Properties.userName);
 		CommonFunctions.logOut(Properties.userName);
 		
 	}

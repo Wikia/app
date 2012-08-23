@@ -19,7 +19,7 @@ public class MailFunctions {
 	
 	
 	
-	public static String getFirstMailContent() throws IOException 
+	public static String getFirstMailContent() 
 	{
 		try {
 			
@@ -42,7 +42,7 @@ public class MailFunctions {
 				messages = inbox.getMessages();
 				counter+=1;
 				System.out.println(counter);
-				if (counter >100)
+				if (counter >1500)
 				{
 					break;
 				}
@@ -79,10 +79,14 @@ public class MailFunctions {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return e.getMessage();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return e.getMessage();
 		}
 	}
 
-	public static void deleteAllMails() throws IOException 
+	public static void deleteAllMails()
 	{
 		try {
 			
@@ -108,6 +112,21 @@ public class MailFunctions {
 			{
 				System.out.println("There is no messages in inbox");
 			}
+			
+			Folder inbox2 = store.getFolder("Important");
+			inbox2.open(Folder.READ_WRITE);
+			Message messages2[] = inbox2.getMessages();
+			if (messages2.length != 0)
+			{
+				for (int i=0; i< messages2.length; i++)
+				{
+					messages2[i].setFlag(Flags.Flag.DELETED, true);
+				}
+			}
+			else
+			{
+				System.out.println("There is no messages in inbox");
+			}
 		} 
 		catch (NoSuchProviderException e) 
 		{
@@ -126,7 +145,26 @@ public class MailFunctions {
 		return lines[6];
 	}
 
+	public static String getActivationLinkFromMailContent(String content)
+	{
+		content = content.replace("=0D","\n" );
+		String [] lines = content.split("\n");
+		return lines[4];
+	}
 	
+	public static String getActivationTextFromMailContent(String content)
+	{
+		content = content.replace("=0D","\n" );
+		String [] lines = content.split("\n");
+		return lines[4];
+	}
+	
+	public static String[] getWelcomeMailContent(String content)
+	{
+		content = content.replace("=0D","\n" );
+		String [] lines = content.split("\n");
+		return lines;
+	}
 	 
 	
 	
