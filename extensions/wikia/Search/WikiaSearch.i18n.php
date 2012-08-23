@@ -20,7 +20,7 @@ $messages['en'] = array(
 	'wikiasearch2-results' => '$1 {{PLURAL:$1|result|results}}',
 	'wikiasearch2-pages' => '$1 {{PLURAL:$1|page|pages}}',
 	'wikiasearch2-search-on-wiki' => 'Search within this wiki',
-	'wikiasearch2-results-count' => 'About $1 {{PLURAL:$1|result|results}} for $2 from {{SITENAME}}',
+	'wikiasearch2-results-count' => '$1 {{PLURAL:$1|result|results}} for $2 from {{SITENAME}}',
 	'wikiasearch2-results-for' => 'Results for $1 from {{SITENAME}}',
 	'wikiasearch2-global-search-headline' => 'Find wikis on Wikia',
 	'wikiasearch2-wiki-search-headline' => 'Search this wiki',
@@ -31,6 +31,10 @@ $messages['en'] = array(
 	'wikiasearch2-spellcheck' => 'No results were found for <em>$1</em>. <strong>Showing results for <em>$2</em>.</strong>',
 	'wikiasearch2-search-all-namespaces' => 'Search all namespaces by default',
 	'wikiasearch2-search-ads-header' => 'Advertisements',
+	'wikiasearch2-tabs-articles' => 'Articles',
+	'wikiasearch2-tabs-photos-and-videos' => 'Photos and Videos',
+	'searchprofile-users' => 'People',
+	'searchprofile-users-tooltip' => 'Search in Users',
 
 	'wikiamobile-wikiasearch2-next' => 'Next',
 	'wikiamobile-wikiasearch2-prev' => 'Previous',
@@ -52,7 +56,12 @@ $messages['qqq'] = array(
 	'wikiasearch2-search-ads-header' => 'Heading displayed above search advertisements.',
 	'wikiamobile-wikiasearch2-next' => 'Message is used to go to next result page',
 	'wikiamobile-wikiasearch2-prev' => 'Message is used to go to previous result page',
-	'wikiamobile-wikiasearch2-results-count-of' => 'Message is used to go to show on which results number user is and whats total result number'
+	'wikiamobile-wikiasearch2-results-count-of' => 'Message is used to go to show on which results number user is and whats total result number',
+	'wikiasearch2-tabs-articles' => 'Name of a tab with articles. This tab is displayed in the right column on search page',
+	'wikiasearch2-tabs-photos-and-videos' => 'Name of a tab with photos and videos. This tab is displayed in the right column on search page',
+	'searchprofile-users' => 'Name of a tab with users. This tab is displayed in the right column on search page',
+	'searchprofile-users-tooltip' => 'Search in UsersTooltip displayed on hover on Blogs Tab in the right column on search page'
+
 );
 
 /** Afrikaans (Afrikaans)

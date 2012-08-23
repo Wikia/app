@@ -237,10 +237,11 @@ class WikiaSolrClient extends WikiaSearchClient {
 										 ),
 					      'spellcheck'   => (object) array( 'suggestions' => (object) array( 'collation' => array() ) ),
 					      'highlighting' => (object) array(),
+			  			  'grouped' => null
 					      );
 		} 
 
-		$docs = $this->isInterWiki ? $response->grouped->host->groups : $response->response->docs;
+		$docs = ( $this->isInterWiki &&  $response->grouped !== null ) ? $response->grouped->host->groups : $response->response->docs;
 
 		// @todo: this is just for automated spelling correction. we should also provide "did you mean"
 		if ( $response instanceOf Apache_Solr_Response &&

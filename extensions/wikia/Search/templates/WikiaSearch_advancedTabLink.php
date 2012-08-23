@@ -1,3 +1,3 @@
-<a href="<?=$href;?>" title="<?=$tooltip;?>" onmousedown="mwSearchHeaderClick(this);" onkeydown="mwSearchHeaderClick(this);">
+<a href="<?=$href;?>" title="<?=$tooltip;?>">
 	<?=$label;?>
 </a>
