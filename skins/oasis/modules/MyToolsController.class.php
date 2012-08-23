@@ -8,7 +8,7 @@ class MyToolsController extends WikiaController {
 		$this->content_actions = $this->app->getSkinTemplateObj()->data['content_actions'];
 		$this->nav_urls = $this->app->getSkinTemplateObj()->data['nav_urls'];
 	}
-	
+
 	public function executeIndex($params) {
 		global $wgUser;
 
@@ -16,7 +16,7 @@ class MyToolsController extends WikiaController {
 			$wgUser->setOption('myTools', json_encode($params['tools']));
 			$wgUser->saveSettings();
 		}
- 
+
 		$this->defaultTools = $this->getDefaultTools();
 		$this->customTools = $this->getCustomTools();
 	}
@@ -30,7 +30,7 @@ class MyToolsController extends WikiaController {
 
 		if(is_array($tools)) {
 			foreach($tools as $tool) {
-				$page = SpecialPage::getPageByAlias($tool);
+				$page = SpecialPageFactory::getPage($tool);
 				if(is_object($page)) {
 					$href = $page->getTitle()->getLocalUrl();
 
