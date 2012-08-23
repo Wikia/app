@@ -253,11 +253,8 @@ class MediaQueryService extends Service {
 		if ( !is_array($videoList) ) {
 			$db = $this->app->wf->GetDB( DB_SLAVE );
 
-			$sqlWhere = "NOT EXISTS ( select 1 from image where img_media_type = 'VIDEO' and img_name = il_to ) AND lower(il_to) != 'placeholder'";
-			$excludeList = array( '.png', '.gif', '.jpg', '.jpeg', '.ogg', '.ico', '.svg', '.mp3', '.wav', '.midi' );
-			foreach( $excludeList as $exclude ) {
-				$sqlWhere .= " AND lower(il_to) not like '%".$exclude."'";
-			}
+			$excludeList = array( 'png', 'gif', 'bmp', 'jpg', 'jpeg', 'ogg', 'ico', 'svg', 'mp3', 'wav', 'midi' );
+			$sqlWhere = implode( "','", $excludeList );
 
 			if ( $onlyPremium ) {
 				$sqlSelect = '';
@@ -280,7 +277,9 @@ SQL;
 			$sql = <<<SQL
 				SELECT  il_to as name $sqlSelect
 				FROM `imagelinks`
-				WHERE $sqlWhere
+				WHERE NOT EXISTS ( SELECT 1 FROM image WHERE img_media_type = 'VIDEO' AND img_name = il_to )
+					AND LOWER(il_to) != 'placeholder'
+					AND LOWER(SUBSTRING_INDEX(il_to, '.', -1)) NOT IN ( '$sqlWhere' )
 				$sqlUnion
 				$sqlOrderBy
 				$sqlLimit
