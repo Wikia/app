@@ -333,6 +333,7 @@
 			$videoList = self::getVideoListViewsByTitleTotal( $periodId, $startDate, $endDate, $wikiId );
 			$hashTitle = md5( $title );
 			$videoViews = ( isset($videoList[$hashTitle]) ) ? $videoList[$hashTitle] : 0;
+
 			return $videoViews;
 		}
 
@@ -385,7 +386,10 @@
 								"time_id between '$startDate' and '$endDate'"
 							),
 							__METHOD__,
-							array( 'GROUP BY' => 'video_title' )
+							array(
+								'GROUP BY' => 'video_title',
+								'LIMIT' => '10000',
+							)
 					);
 
 					while ( $row = $db->fetchObject($result) ) {
