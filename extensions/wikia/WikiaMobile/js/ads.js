@@ -110,7 +110,7 @@ define('ads', ['events'], function (ev) {
 				adSlot.className = adSlot.className.replace(' fixed over', '');
 			} else {
 				adSlot.className = adSlot.className.replace(' over', '');
-				moveSlot(wkFtr.offsetTop);
+				moveSlot(ftr.offsetTop);
 			}
 			fixed = false;
 		}
