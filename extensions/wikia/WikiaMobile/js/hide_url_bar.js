@@ -43,7 +43,7 @@ require(['ads'], function (ads) {
 					//reset to hide addr bar at onload
 					w.scrollTo( 0, scrollTop === 1 ? 0 : 1 );
 
-					ads && ads.moveSlot();
+					ads && ads.fix();
 				}, 0);
 			}
 		});

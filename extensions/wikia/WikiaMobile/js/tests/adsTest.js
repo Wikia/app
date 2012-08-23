@@ -24,7 +24,7 @@ describe("Test ads module", function() {
 		}, 'ad module to be defined', 200);
 	});
 
-	it("does ad module have moveSlot function", function() {
+	it("does ad module have fix function", function() {
 		var ad;
 
 		runs(function(){
@@ -35,14 +35,14 @@ describe("Test ads module", function() {
 
 		waitsFor(function(){
 			if ( ad ){
-				expect(ad.moveSlot).toBeDefined();
-				expect(typeof ad.moveSlot).toEqual('function');
+				expect(ad.fix).toBeDefined();
+				expect(typeof ad.fix).toEqual('function');
 
 				return true;
 			}
 
 
-		}, 'moveSlot to be a function', 200);
+		}, 'fix to be a function', 200);
 	});
 
 	it("ad place is removed (it takes 6s)", function() {
@@ -57,7 +57,6 @@ describe("Test ads module", function() {
 		runs(function(){
 			require('ads', function(ad){
 				ads = ad;
-				ads.init();
 			});
 		});
 

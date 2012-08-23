@@ -290,7 +290,6 @@
 			margin: 0;
 			float: left;
 
-
 			&.anim {
 				-webkit-animation: slideIn .5s ease;
 			}
@@ -313,6 +312,7 @@
 	}
 
 	100% {
+		opacity: 1;
 		-webkit-transform: translate(0);
 	}
 }
