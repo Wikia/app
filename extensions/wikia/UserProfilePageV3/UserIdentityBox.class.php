@@ -34,14 +34,16 @@ class UserIdentityBox {
 	private $title = null;
 	private $topWikisLimit = 5;
 
+	//cache for UserIdentityBox::isUserStaff()
+	protected $isUserStaff = null;
+
 	/**
 	 * Used to compare user rights in UserIdentityBox::sortUserGroups()
 	 * @var array
 	 */
 	protected $groupsRank = array(
-		'authenticated' => 7,
-		'sysop' => 6,
-		'staff' => 5,
+		'authenticated' => 6,
+		'sysop' => 5,
 		'helper' => 4,
 		'vstf' => 3,
 		'council' => 2,
@@ -136,7 +138,7 @@ class UserIdentityBox {
 			}
 
 			//other data operations
-			$this->getUserGroup($data);
+			$this->getUserTags($data);
 			$data = $this->extractBirthDate($data);
 			$data['showZeroStates'] = $this->checkIfDisplayZeroStates($data);
 		}
@@ -485,36 +487,92 @@ class UserIdentityBox {
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 * @author tor
 	 */
-	private function getUserGroup(&$data) {
+	protected function getUserTags(&$data) {
+		$this->app->wf->ProfileIn(__METHOD__);
+
+		$tags = array();
+		if( $this->isBlocked() ) {
+		//blocked user has only one tag displayed "Blocked"
+			$tags[] = $this->app->wf->Msg('user-identity-box-group-blocked');
+		} else {
+			$this->getVerifiedOrStaff($tags);
+
+			if( $this->isFounder() ) {
+				$tags[] = $this->app->wf->Msg('user-identity-box-group-founder');
+			} else {
+				$this->getTagFromGroups($tags);
+			}
+		}
+
+		$data['tags'] = $tags;
+		$this->app->wf->ProfileOut(__METHOD__);
+	}
+
+	/**
+	 * @param Array $tags
+	 * @return string
+	 */
+	protected function getTagFromGroups( &$tags ) {
+		$this->app->wf->ProfileIn(__METHOD__);
+
+		$result = '';
+		$group = $this->getUserGroups($this->user);
+		if( $group ) {
+			$result = $this->app->wf->Msg('user-identity-box-group-' . $group);
+		}
+
+		/* See if user is banned from chat */
+		if (!empty($this->app->wg->EnableChat) && Chat::getBanInformation($this->app->wg->CityId, $this->user) !== false) {
+			$result = wfMsg('user-identity-box-banned-from-chat');
+		}
+
+		if( !empty($result) ) {
+			$tags[] = $result;
+		}
+
+		$this->app->wf->ProfileOut(__METHOD__);
+	}
+
+	protected function isUserStaff() {
+		$this->app->wf->ProfileIn(__METHOD__);
+
+		if( !is_null($this->isUserStaff) ) {
+			$this->app->wf->ProfileOut(__METHOD__);
+			return $this->isUserStaff;
+		} else {
+			$this->app->wf->ProfileOut(__METHOD__);
+			$this->isUserStaff = in_array('staff', $this->user->getEffectiveGroups());
+			return $this->isUserStaff;
+		}
+	}
+
+	protected function isBlocked() {
 		$this->app->wf->ProfileIn(__METHOD__);
 
 		// check if the user is blocked locally, if not, also check if they're blocked globally (via Phalanx)
 		$isBlocked = $this->user->isBlocked() || $this->user->isBlockedGlobally();
 
-		if ($isBlocked && !in_array('staff', $this->user->getEffectiveGroups())) {
-			$data['blocked'] = true;
-			$data['group'] = $this->app->wf->Msg('user-identity-box-group-blocked');
-		} else {
-			$data['blocked'] = false;
-
-			if ($this->isFounder()) {
-				$data['group'] = $this->app->wf->Msg('user-identity-box-group-founder');
-			} else {
-				$group = $this->getUserGroups($this->user);
-				if ($group) {
-					$data['group'] = $this->app->wf->Msg('user-identity-box-group-' . $group);
-				} else {
-					$data['group'] = '';
-				}
-			}
-
-			/* See if user is banned from chat */
-			if (!empty($this->app->wg->EnableChat) && Chat::getBanInformation($this->app->wg->CityId, $this->user) !== false) {
-				$data['group'] = wfMsg('user-identity-box-banned-from-chat');
-			}
+		if( $isBlocked && !$this->isUserStaff() ) {
+			$this->app->wf->ProfileOut(__METHOD__);
+			return true;
 		}
 
 		$this->app->wf->ProfileOut(__METHOD__);
+		return false;
+	}
+
+	/**
+	 * @desc Checks special right for authenticated users. But this kind of authentication is different than in MW -- our staff adds this right if a user is verified by us as our partner employee
+	 *
+	 * @param Array $tags should be an empty array
+	 * @return bool
+	 */
+	protected function getVerifiedOrStaff(&$tags) {
+		if( $this->isUserStaff() ) {
+			$tags[] = $this->app->wf->Msg('user-identity-box-group-staff');
+		} else if( $this->user->isAllowed('consumer-auth') ) {
+			$tags[] = $this->app->wf->Msg('user-identity-box-group-verified');
+		}
 	}
 
 	/**
@@ -583,7 +641,7 @@ class UserIdentityBox {
 	 *
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
-	private function getUserGroups() {
+	protected function getUserGroups() {
 		$this->app->wf->ProfileIn(__METHOD__);
 
 		$userGroups = $this->user->getEffectiveGroups();
@@ -591,12 +649,14 @@ class UserIdentityBox {
 
 		if (isset($userGroups[0]) && in_array($userGroups[0], array_keys($this->groupsRank))) {
 			$this->app->wf->ProfileOut(__METHOD__);
-			return $userGroups[0];
+			$group = $userGroups[0];
+		} else {
+		//just a member
+			$group = false;
 		}
 
 		$this->app->wf->ProfileOut(__METHOD__);
-		//just a member
-		return false;
+		return $group;
 	}
 
 	/**
