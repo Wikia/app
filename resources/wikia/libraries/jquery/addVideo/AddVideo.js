@@ -63,7 +63,8 @@
 				'getAddVideoModal',
 				{
 					title: wgTitle,
-					format: 'html'
+					format: 'html',
+					supressSuggestions: true
 				},
 				function( res ) {
 					if ( res.html ) {
