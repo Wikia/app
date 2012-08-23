@@ -91,12 +91,12 @@ define('ads', ['events'], function (ev) {
 				//the bottom on iOS 5+ (BugzId:38017)
 				setTimeout(
 					function(){
-						adSlot.className += ' fixed over';
+						adSlot.className = 'show fixed over';
 					},
 					100
 				);
 			} else{
-				adSlot.className += ' over';
+				adSlot.className = 'show over';
 				moveSlot();
 			}
 			fixed = true;
