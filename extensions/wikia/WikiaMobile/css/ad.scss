@@ -16,7 +16,6 @@ $slotColor: #666;
 	margin: 0;
 	padding: 0;
 	background-color: $slotColor;
-	z-index: $top-layer-z-index;
 	-webkit-transition: opacity .75s, -webkit-transform .75s;
 
 	& > *:nth-last-child(n+2) {
@@ -38,6 +37,10 @@ $slotColor: #666;
 		height: $slotHeigth + ($slotBorder * 2) !important;
 	}
 
+	&.over {
+		z-index: $top-layer-z-index;
+	}
+
 	&.fixed {
 		position: fixed;
 	}
@@ -56,7 +59,7 @@ $slotColor: #666;
 	top: -20px;
 	display: none;
 
-	//TODO: @Jakub, what is this exactly?
+	//bigger clickable area
 	&:after {
 		content: '';
 		position: absolute;

@@ -5,7 +5,7 @@
  * @author Jakub "Student" Olek
  */
 
-define('topbar', ['querystring', 'loader', 'toc', 'events'], function (qs, loader, toc, events){
+define('topbar', ['querystring', 'loader', 'toc', 'events', 'ads'], function (qs, loader, toc, events, ads){
 	var w = window,
 		d = document,
 		wkPrfTgl = d.getElementById('wkPrfTgl'),
@@ -307,12 +307,16 @@ define('topbar', ['querystring', 'loader', 'toc', 'events'], function (qs, loade
 	}
 
 	function hidePage(){
+		ads && ads.unfix();
+
 		if(d.body.className.indexOf('hidden') == -1) {
 			d.body.className += ' hidden';
 		}
 	}
 
 	function showPage(){
+		ads && ads.fix();
+
 		navBar.className = '';
 		d.body.className = d.body.className.replace(' hidden', '');
 	}

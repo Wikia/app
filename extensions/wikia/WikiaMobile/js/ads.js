@@ -17,31 +17,12 @@ define('ads', ['events'], function (ev) {
 		adSlot,
 		adSlotStyle,
 		w,
-		ftr;
+		ftr,
+		fixed = false,
+		positionfixed = Modernizr.positionfixed;
 
-	function moveSlot(plus) {
-		if (adSlotStyle) {
-			if (Modernizr.positionfixed) {
-				//position fixed needs to be applied after
-				//a delay to avoid the Ad to jump in the
-				//middle of the screen and then back to
-				//the bottom on iOS 5+ (BugzId:38017)
-				setTimeout(
-					function () {
-						adSlot.className += ' fixed';
-					},
-					1000
-				);
-			} else {
-				adSlotStyle.top = Math.min(
-					(w.pageYOffset + w.innerHeight - 50 + ~~plus),
-					ftr.offsetTop + 150
-				) + 'px';
-			}
-		}
-	}
-
-	function init() {
+	//init
+	$(function(){
 		adSlot = d.getElementById('wkAdPlc');
 
 		if (adSlot) {
@@ -51,12 +32,14 @@ define('ads', ['events'], function (ev) {
 
 			var close = d.getElementById('wkAdCls'),
 				i = 0,
-				int,
+				adInt,
 				click = ev.click,
 				adExist = function () {
 					if (adSlot.childElementCount > 3) {
 						close.className = 'show';
 						adSlot.className += ' show';
+
+						fix();
 
 						close.addEventListener(click, function () {
 							//track('ad/close');
@@ -64,12 +47,11 @@ define('ads', ['events'], function (ev) {
 							setTimeout(function () {
 								d.body.removeChild(adSlot);
 							}, 800);
-							w.removeEventListener('scroll', moveSlot);
+							!positionfixed && w.removeEventListener('scroll', moveSlot);
 						}, false);
 
-						if (!Modernizr.positionfixed) {
-							w.addEventListener('scroll', moveSlot);
-						}
+						!positionfixed && w.addEventListener('scroll', moveSlot);
+
 						return true;
 					}
 
@@ -77,20 +59,65 @@ define('ads', ['events'], function (ev) {
 				};
 
 			if (!adExist()) {
-				int = setInterval(function () {
+				adInt = setInterval(function () {
 					if (!adExist() && i < 5) {
 						i += 1;
 					} else {
 						d.body.removeChild(adSlot);
-						clearInterval(int);
+						clearInterval(adInt);
 					}
 				}, 1000);
 			}
 		}
+	});
+
+	//private
+	function moveSlot(plus) {
+		if(fixed) {
+			adSlotStyle.top = Math.min(
+				(w.pageYOffset + w.innerHeight - 50 + ~~plus),
+				ftr.offsetTop + 160
+			) + 'px';
+		}
+	}
+
+	//public
+	function fix(){
+		if(adSlot){
+			if(positionfixed){
+				//position fixed needs to be applied after
+				//a delay to avoid the Ad to jump in the
+				//middle of the screen and then back to
+				//the bottom on iOS 5+ (BugzId:38017)
+				setTimeout(
+					function(){
+						adSlot.className += ' fixed over';
+					},
+					100
+				);
+			} else{
+				adSlot.className += ' over';
+				moveSlot();
+			}
+			fixed = true;
+		}
+	}
+
+	//public
+	function unfix(){
+		if(adSlot){
+			if(positionfixed){
+				adSlot.className = adSlot.className.replace(' fixed over', '');
+			} else {
+				adSlot.className = adSlot.className.replace(' over', '');
+				moveSlot(wkFtr.offsetTop);
+			}
+			fixed = false;
+		}
 	}
 
 	return {
-		init: init,
-		moveSlot: moveSlot
+		fix: fix,
+		unfix: unfix
 	};
 });

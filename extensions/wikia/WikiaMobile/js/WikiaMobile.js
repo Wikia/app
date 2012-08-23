@@ -27,15 +27,12 @@
 
 //init
 $(function(){
-	require(['layout', 'querystring', 'topbar', 'toc', 'events', 'share', 'popover', 'cookies', 'ads'],
-		function(layout, qs, topbar, toc, events, share, popover, cookies, ads){
+	require(['layout', 'querystring', 'topbar', 'toc', 'events', 'share', 'popover', 'cookies'],
+		function(layout, qs, topbar, toc, events, share, popover, cookies){
 			var d = document,
 				clickEvent = events.click;
 
 			toc.init();
-
-			//init ad (removing it if empty and closing in on close button)
-			ads && ads.init();
 
 			//TODO: optimize selectors caching for this file
 			/*body.delegate('#wkMainCnt a', clickEvent, function(){
@@ -73,7 +70,7 @@ $(function(){
 			d.body.insertAdjacentHTML('beforeend', '<div id=wkCurtain></div>');
 
 			//close toc and topbar when 'curtain' is clicked
-			d.getElementById('wkCurtain').addEventListener(clickEvent, function(ev){
+			d.getElementById('wkCurtain').addEventListener(clickEvent, function(){
 				toc.close();
 				topbar.closeDropDown();
 			});

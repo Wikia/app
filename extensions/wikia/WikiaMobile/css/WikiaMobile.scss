@@ -42,6 +42,8 @@ body {
 	word-wrap: break-word;
 	position: relative;
 
+	overflow-x: hidden;
+
 	//avoid webkit's automatic text adjustment
 	-webkit-text-size-adjust: none;
 }
