@@ -14,7 +14,7 @@ public class SignUpTests_account_creation extends TestTemplate
 {
 	private String timeStamp;
 	
-	@Test
+	@Test(groups = {"SignUpTC_001"})
 	public void SignUpTC_001_non_latin_user_name()
 	{
 		SignUpPageObject signUp = new SignUpPageObject(driver);
@@ -39,7 +39,8 @@ public class SignUpTests_account_creation extends TestTemplate
 		userProfile.verifyWelcomeEmail(userNameEnc);
 	}
 	
-	@Test
+
+	@Test(groups = {"SignUpTC_002"})
 	public void SignUpTC_002_fifty_character_user_name()
 	{
 		SignUpPageObject signUp = new SignUpPageObject(driver);
@@ -63,7 +64,8 @@ public class SignUpTests_account_creation extends TestTemplate
 		userProfile.verifyWelcomeEmail(userName);
 	}
 	
-	@Test
+
+	@Test(groups = {"SignUpTC_003"})
 	public void SignUpTC_003_backward_slash_user_name()
 	{
 		SignUpPageObject signUp = new SignUpPageObject(driver);
@@ -89,7 +91,7 @@ public class SignUpTests_account_creation extends TestTemplate
 	}
 	
 	
-	@Test
+	@Test(groups = {"SignUpTC_004"})
 	public void SignUpTC_004_one_char_password()
 	{
 		SignUpPageObject signUp = new SignUpPageObject(driver);
@@ -113,7 +115,8 @@ public class SignUpTests_account_creation extends TestTemplate
 		userProfile.verifyWelcomeEmail(userName);
 	}
 	
-	@Test
+
+	@Test(groups = {"SignUpTC_005"})
 	public void SignUpTC_005_fifty_character_password()
 	{
 		SignUpPageObject signUp = new SignUpPageObject(driver);
@@ -138,7 +141,7 @@ public class SignUpTests_account_creation extends TestTemplate
 	}
 	
 	
-	@Test
+	@Test(groups = {"SignUpTC_006"})
 	public void SignUpTC_006_lap_year()
 	{
 		SignUpPageObject signUp = new SignUpPageObject(driver);

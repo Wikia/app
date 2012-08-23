@@ -26,10 +26,9 @@ public class CreateAWikiTests_latin extends TestTemplate
 	 * Test Case 3.1.01 Create new wiki Have an account? page: Display
 	 * https://internal.wikia-inc.com/wiki/Global_Log_in_and_Sign_up/Test_Cases:_CNW#Test_Case_3.1.01_Create_new_wiki_Have_an_account.3F_page:_Display  
 	 * */
-	@Test
+	@Test(groups = {"CreateNewWiki_latin_001"})
 	public void CreateNewWiki_latin_001_have_an_account()
 	{
-		
 		CommonFunctions.logOut(Properties.userName);
 		HomePageObject home = new HomePageObject(driver);
 		home.openHomePage();
@@ -43,7 +42,6 @@ public class CreateAWikiTests_latin extends TestTemplate
 		logInPage.verifyFaceBookToolTip();
 		logInPage.verifySignUpText();		
 		CommonFunctions.logOut(Properties.userName);
-		
 	}
 	
 	
@@ -52,11 +50,9 @@ public class CreateAWikiTests_latin extends TestTemplate
 	 * https://internal.wikia-inc.com/wiki/Global_Log_in_and_Sign_up/Test_Cases:_CNW#Test_Case_3.1.02_Create_new_wiki:_log_in_field_validation_.28Latin_characters.29  
 	 * Username field validation: username is blank
 	 * */
-	@Test
+	@Test(groups = {"CreateNewWiki_latin_002"})
 	public void CreateNewWiki_latin_TC002_user_name_is_blank()
 	{
-//		startBrowser();
-//		driver.get(Global.LIVE_DOMAIN+"wiki/Special:UserLogout?returnto=User "+Properties.userName);
 		CommonFunctions.logOut(Properties.userName);
 		HomePageObject home = new HomePageObject(driver);
 		home.openHomePage();
@@ -79,10 +75,7 @@ public class CreateAWikiTests_latin extends TestTemplate
 		newWikia.VerifyCongratulationsLightBox();
 		newWikia.closeCongratulationsLightBox();
 		newWikia.vefifyUserLoggedIn(Properties.userName);
-		CommonFunctions.logOut(Properties.userName);
-		//driver.get(Global.LIVE_DOMAIN+"wiki/Special:UserLogout?returnto=User "+Properties.userName);
-//		stopBrowser();
-		
+		CommonFunctions.logOut(Properties.userName);	
 	}
 	
 	
@@ -91,11 +84,9 @@ public class CreateAWikiTests_latin extends TestTemplate
 	 * https://internal.wikia-inc.com/wiki/Global_Log_in_and_Sign_up/Test_Cases:_CNW#Test_Case_3.1.02_Create_new_wiki:_log_in_field_validation_.28Latin_characters.29
 	 * Username field validation: username does not exist  
 	 * */
-	@Test
+	@Test(groups = {"CreateNewWiki_latin_003"})
 	public void CreateNewWiki_latin_TC003_user_name_does_not_exists()
 	{
-//		startBrowser();
-//		driver.get(Global.LIVE_DOMAIN+"wiki/Special:UserLogout?returnto=User "+Properties.userName);
 		CommonFunctions.logOut(Properties.userName);
 		HomePageObject home = new HomePageObject(driver);
 		home.openHomePage();
@@ -121,8 +112,6 @@ public class CreateAWikiTests_latin extends TestTemplate
 		newWikia.vefifyUserLoggedIn(Properties.userName);
 		newWikia.verifyUserToolBar();
 		CommonFunctions.logOut(Properties.userName);
-//		driver.get(Global.LIVE_DOMAIN+"wiki/Special:UserLogout?returnto=User "+Properties.userName);
-//		stopBrowser();
 	}
 	
 	/*
@@ -130,11 +119,9 @@ public class CreateAWikiTests_latin extends TestTemplate
 	 * https://internal.wikia-inc.com/wiki/Global_Log_in_and_Sign_up/Test_Cases:_CNW#Test_Case_3.1.02_Create_new_wiki:_log_in_field_validation_.28Latin_characters.29
 	 * Password field Validation: password is blank
 	 * */
-	@Test
+	@Test(groups = {"CreateNewWiki_latin_004"})
 	public void CreateNewWiki_latin_TC004_password_is_blank()
 	{
-//		startBrowser();
-//		driver.get(Global.LIVE_DOMAIN+"wiki/Special:UserLogout?returnto=User "+Properties.userName);
 		CommonFunctions.logOut(Properties.userName);
 		HomePageObject home = new HomePageObject(driver);
 		home.openHomePage();
@@ -160,8 +147,6 @@ public class CreateAWikiTests_latin extends TestTemplate
 		newWikia.vefifyUserLoggedIn(Properties.userName);
 		newWikia.verifyUserToolBar();
 		CommonFunctions.logOut(Properties.userName);
-//		driver.get(Global.LIVE_DOMAIN+"wiki/Special:UserLogout?returnto=User "+Properties.userName);
-//		stopBrowser();
 	}
 	
 	/*
@@ -169,11 +154,9 @@ public class CreateAWikiTests_latin extends TestTemplate
 	 * https://internal.wikia-inc.com/wiki/Global_Log_in_and_Sign_up/Test_Cases:_CNW#Test_Case_3.1.02_Create_new_wiki:_log_in_field_validation_.28Latin_characters.29
 	 * Password field Validation: password is incorrect
 	 * */
-	@Test
+	@Test(groups = {"CreateNewWiki_latin_005"})
 	public void CreateNewWiki_latin_TC005_password_is_incorrect()
 	{
-//		startBrowser();
-//		driver.get(Global.LIVE_DOMAIN+"wiki/Special:UserLogout?returnto=User "+Properties.userName);
 		HomePageObject home = new HomePageObject(driver);
 		home.openHomePage();
 		CreateNewWikiPageObjectStep1 createNewWiki1 = home.startAWiki();
@@ -199,8 +182,6 @@ public class CreateAWikiTests_latin extends TestTemplate
 		newWikia.vefifyUserLoggedIn(Properties.userName);
 		newWikia.verifyUserToolBar();
 		CommonFunctions.logOut(Properties.userName);
-//		driver.get(Global.LIVE_DOMAIN+"wiki/Special:UserLogout?returnto=User "+Properties.userName);
-//		stopBrowser();
 	}
 	
 	/*
@@ -208,11 +189,9 @@ public class CreateAWikiTests_latin extends TestTemplate
 	 * https://internal.wikia-inc.com/wiki/Global_Log_in_and_Sign_up/Test_Cases:_CNW#Test_Case_3.1.02_Create_new_wiki:_log_in_field_validation_.28Latin_characters.29
 	 * Password field Validation: username and password are correct
 	 * */
-	@Test
+	@Test(groups = {"CreateNewWiki_latin_006"})
 	public void CreateNewWiki_latin_TC006_user_name_and_password_are_correct()
 	{
-//		startBrowser();
-//		driver.get(Global.LIVE_DOMAIN+"wiki/Special:UserLogout?returnto=User "+Properties.userName);
 		HomePageObject home = new HomePageObject(driver);
 		home.openHomePage();
 		CreateNewWikiPageObjectStep1 createNewWiki1 = home.startAWiki();
@@ -234,8 +213,6 @@ public class CreateAWikiTests_latin extends TestTemplate
 		newWikia.vefifyUserLoggedIn(Properties.userName);
 		newWikia.verifyUserToolBar();
 		CommonFunctions.logOut(Properties.userName);
-//		driver.get(Global.LIVE_DOMAIN+"wiki/Special:UserLogout?returnto=User "+Properties.userName);
-//		stopBrowser();
 	}	
 	
 	
