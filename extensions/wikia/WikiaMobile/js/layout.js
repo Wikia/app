@@ -13,8 +13,9 @@ define('layout', ['sections', 'media', 'cache'], function(sections, media, cache
 		processedSections = [],
 		tablesKey = 'wideTables' + wgStyleVersion,
 		ttl = 604800,//7days
+		assets,
 		process = function(res){
-			cache.set(tablesKey, res, ttl);
+			!assets && cache.set(tablesKey, res, ttl);
 
 			var scripts = res.scripts,
 				l = scripts.length,
@@ -45,9 +46,7 @@ define('layout', ['sections', 'media', 'cache'], function(sections, media, cache
 
 	//tables
 	if(tables && tables.length > 0){
-		console.log('load');
-
-		var assets = cache.get(tablesKey);
+		assets = cache.get(tablesKey);
 
 		if(assets){
 			process(assets);
