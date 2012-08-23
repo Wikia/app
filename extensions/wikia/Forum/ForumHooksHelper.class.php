@@ -201,7 +201,7 @@ class ForumHooksHelper {
 				SELECT comment_id as page_id, page_title
 				FROM comments_index
 				LEFT JOIN page ON comment_id = page_id
-				WHERE parent_page_id = $boardId and parent_comment_id = 0 and deleted = 0 and removed = 0 and archived = 0
+				WHERE parent_page_id = $boardId and parent_comment_id = 0 and deleted = 0 and removed = 0
 				ORDER BY comment_id desc
 SQL;
 		}
