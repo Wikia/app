@@ -44,11 +44,5 @@ jQuery(function($) {
 		shrinkWrap($('#SearchAdsBottom ul').html($.mustache(template, {
 			ads: data.slice(3, 6)
 		})));
-
-		// Open ad links in a new window (BugId:38665)
-		$('.WikiaSearchAds').on('click', 'a', function(event) {
-			event.preventDefault();
-			window.open(event.currentTarget.href);
-		});
 	});
 });
