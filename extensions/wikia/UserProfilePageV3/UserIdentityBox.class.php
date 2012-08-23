@@ -37,12 +37,17 @@ class UserIdentityBox {
 	//cache for UserIdentityBox::isUserStaff()
 	protected $isUserStaff = null;
 
+	//cache for UserIdentityBox::isUserAuthenticated()
+	protected $isUserAuthenticated = null;
+
+	const WIKIA_GROUP_STAFF_NAME = 'staff';
+	const WIKIA_GROUP_AUTHENTICATED_NAME = 'authenticated';
+
 	/**
 	 * Used to compare user rights in UserIdentityBox::sortUserGroups()
 	 * @var array
 	 */
 	protected $groupsRank = array(
-		'authenticated' => 6,
 		'sysop' => 5,
 		'helper' => 4,
 		'vstf' => 3,
@@ -146,7 +151,6 @@ class UserIdentityBox {
 		$this->app->wf->ProfileOut(__METHOD__);
 		return $data;
 	}
-
 
 	protected function getInternationalizedRegistrationDate($wikiId, $data) {
 		$this->app->wf->ProfileIn(__METHOD__);
@@ -264,7 +268,6 @@ class UserIdentityBox {
 		return wfSharedMemcKey('user-identity-box-data-masthead-edits0' . $this->user->getId());
 	}
 
-
 	/**
 	 * @brief Sets empty data for a particular wiki
 	 * @param array $data array object
@@ -299,7 +302,6 @@ class UserIdentityBox {
 		$this->app->wf->ProfileIn(__METHOD__);
 
 		$changed = false;
-
 		if (is_object($data)) {
 			foreach ($this->optionsArray as $option) {
 				if (isset($data->$option)) {
@@ -540,9 +542,24 @@ class UserIdentityBox {
 			$this->app->wf->ProfileOut(__METHOD__);
 			return $this->isUserStaff;
 		} else {
+			$this->isUserStaff = in_array(self::WIKIA_GROUP_STAFF_NAME, $this->user->getEffectiveGroups());
+
 			$this->app->wf->ProfileOut(__METHOD__);
-			$this->isUserStaff = in_array('staff', $this->user->getEffectiveGroups());
 			return $this->isUserStaff;
+		}
+	}
+
+	protected function isUserAuthenticated() {
+		$this->app->wf->ProfileIn(__METHOD__);
+
+		if( !is_null($this->isUserAuthenticated) ) {
+			$this->app->wf->ProfileOut(__METHOD__);
+			return $this->isUserAuthenticated;
+		} else {
+			$this->isUserAuthenticated = in_array(self::WIKIA_GROUP_AUTHENTICATED_NAME, $this->user->getEffectiveGroups());
+
+			$this->app->wf->ProfileOut(__METHOD__);
+			return $this->isUserAuthenticated;
 		}
 	}
 
@@ -569,9 +586,9 @@ class UserIdentityBox {
 	 */
 	protected function getVerifiedOrStaff(&$tags) {
 		if( $this->isUserStaff() ) {
-			$tags[] = $this->app->wf->Msg('user-identity-box-group-staff');
-		} else if( $this->user->isAllowed('consumer-auth') ) {
-			$tags[] = $this->app->wf->Msg('user-identity-box-group-verified');
+			$tags[] = $this->app->wf->Msg('user-identity-box-group-' .  self::WIKIA_GROUP_STAFF_NAME);
+		} else if( $this->isUserAuthenticated() ) {
+			$tags[] = $this->app->wf->Msg('user-identity-box-group-' . self::WIKIA_GROUP_AUTHENTICATED_NAME);
 		}
 	}
 
