@@ -11,13 +11,13 @@
  * @author kflorence
  */
 var getResources = (function() {
-	var l, n, matches, remaining,
-		rAssetManagerGroup = /__am\/\d+\/groups?\/.*\/(.*)$/,
+	var rAssetManagerGroup = /__am\/\d+\/groups?\/.*\/(.*)$/,
 		rAssetManagerGroupType = /(js|s?css)/,
 		rExtension = /\.(js|s?css)$/;
 
 	return function( resources, success, failure ) {
-		var dfd = new $.Deferred();
+		var l, n, matches, remaining,
+			dfd = new $.Deferred();
 
 		// This will be called everytime a resource is loaded
 		var complete = function() {
@@ -43,13 +43,8 @@ var getResources = (function() {
 			var resource = resources[ n ],
 				type = typeof resource;
 
-			// "loader" function: $.loadYUI, $.loadJQueryUI
-			if ( type == 'function' ) {
-				resource.call( $, complete );
-				continue;
-
 			// AssetsManager package object (e.g. as passed by JSSnippets)
-			} else if ( type == 'object' ) {
+			if ( type == 'object' ) {
 				if ( resource.type && resource.url ) {
 					type = resource.type;
 					resource = resource.url;
@@ -67,6 +62,10 @@ var getResources = (function() {
 
 			} else if ( type == 'css' || type == 'scss' ) {
 				$.getCSS( resource, complete );
+
+			// Loader function: $.loadYUI, $.loadJQueryUI
+			} else if ( type == 'function' ) {
+				resource.call( $, complete );
 
 			} else {
 				dfd.reject({
