@@ -1,7 +1,7 @@
 <?php
 /**
  * How to run this script:
- * $ cd maintenance/wikia/ImageReview/AdminUpload/upload.php
+ * $ cd maintenance/wikia/ImageReview/PromoteImage/upload.php
  * To upload an image on wikia.com (from wookiepedia [wikiid=147]) as a WikiaBot:
  * $ SERVER_ID=80433 php upload.php --conf /usr/wikia/docroot/wiki.factory/LocalSettings.php --originalimageurl="http://images.nandy.wikia-dev.com/__cb20120524124212/starwars/images/6/6b/Wikia-Visualization-Add-3.jpg" --destimagename="Wikia-Visualization-Add-3,starwars.jpg" --userid=4663069 --wikiid=147
  */

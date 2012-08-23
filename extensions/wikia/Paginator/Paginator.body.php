@@ -62,7 +62,6 @@ class Paginator extends Service{
 	}
 
 	private function setConfig ( $aConfig ){
-	
 		if (!empty($aConfig)){
 			if ( isset( $aConfig['itemsPerPage'] ) && is_int( $aConfig['itemsPerPage'] ) ){
 
@@ -96,17 +95,14 @@ class Paginator extends Service{
 	}
 
 	public function hasContent(){
-
 		return ( $this->pagesCount >= 1 );
 	}
 
 	public function setActivePage( $iPageNumber ){
-
 		$this->activePage = $iPageNumber;
 	}
 
 	public function getPage( $iPageNumber, $bSetToActive = false ){
-
 		$iPageNumber = (int) $iPageNumber;
 		$iPageNumber --;
 		if ( $iPageNumber < $this->pagesCount && $iPageNumber >= 0 ){
@@ -127,23 +123,18 @@ class Paginator extends Service{
 	}
 
 	public function getCurrentPage( ){
-
 		return $this->getPage( $this->activePage );
 	}
 
 	public function getLastPage( ){
-
 		return $this->getPage( $this->pagesCount );
 	}
 
 	public function getFirstPage( ){
-
 		return $this->getPage( 1 );
 	}
 
 	public function getBarData( ){
-
-
 		$aData = array();
 		$aData[] = 1;
 		
@@ -184,9 +175,8 @@ class Paginator extends Service{
 		return $aResult;
 	}
 
-	public function getBarHTML($url, $paginatorId = false ){
-
-		if ( $this->pagesCount <= 1 ){
+	public function getBarHTML($url, $paginatorId = false) {
+		if ( $this->pagesCount <= 1 ) {
 			return '';
 		}
 

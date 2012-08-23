@@ -26,7 +26,7 @@ $(function() {
 		cell.attr('class', 'state-' + stateId);
 	});
 	
-	var images = $('.img-container img');
+	images = $('.img-container img');
 	var imagesMap = {};
 	for(var i = 0; i < images.length; i++ ) {
 		imagesMap[$(images[i]).attr('id')] = false;

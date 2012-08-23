@@ -419,8 +419,8 @@ class SpecialPromoteHelper extends WikiaObject {
 	}
 
 	protected function createRemovalTask($taskDeletionList) {
-		if (!empty($taskDeletionList) && class_exists('AdminUploadReviewTask')) {
-			$task = new AdminUploadReviewTask();
+		if (!empty($taskDeletionList) && class_exists('PromoteImageReviewTask')) {
+			$task = new PromoteImageReviewTask();
 			$task->createTask(
 				array(
 					'deletion_list' => $taskDeletionList,

@@ -19,7 +19,7 @@ class WikiaHomePageController extends WikiaController {
 	 * @var int
 	 */
 	static $seoSamplesNo = 17;
-	static $seoMemcKeyVer = '1.32';
+	static $seoMemcKeyVer = '1.33';
 
 	//images sizes
 	const REMIX_IMG_SMALL_WIDTH = 155;
@@ -29,8 +29,12 @@ class WikiaHomePageController extends WikiaController {
 	const REMIX_IMG_BIG_WIDTH = 320;
 	const REMIX_IMG_BIG_HEIGHT = 320;
 
+	// wiki batches
+	const WIKI_BATCH_SIZE = 10;
+
 	const hubsImgWidth = 320;
 	const hubsImgHeight = 160;
+	const INITIAL_BATCHES_NUMBER = 5;
 
 	//failsafe
 	const FAILSAFE_ARTICLE_TITLE = 'Failsafe';
@@ -44,7 +48,6 @@ class WikiaHomePageController extends WikiaController {
 	protected $source = null;
 	protected $verticalsSlots = array();
 	protected $verticalsWikis = array();
-	protected $currentSlotsNo = 0;
 
 	private $imageServing = null;
 	private $imageSmallServing = null;
@@ -71,9 +74,9 @@ class WikiaHomePageController extends WikiaController {
 
 	public function wikiaMobileIndex() {
 		//$this->response->addAsset('extensions/wikia/WikiaHomePage/css/WikiaHomePageMobile.scss');
-		$response = $this->app->sendRequest( 'WikiaHomePageController', 'getHubImages' );
+		$response = $this->app->sendRequest('WikiaHomePageController', 'getHubImages');
 		$this->lang = $this->wg->contLang->getCode();
-		$this->hubImages = $response->getVal( 'hubImages' , '' );
+		$this->hubImages = $response->getVal('hubImages', '');
 	}
 
 	public function footer() {
@@ -126,29 +129,37 @@ class WikiaHomePageController extends WikiaController {
 	 * get list of wikis
 	 */
 	public function getList() {
-		$this->source = $this->getMediaWikiMessage();
-		$this->imageSmallServing = F::build('ImageServing', array(null, self::REMIX_IMG_SMALL_WIDTH, self::REMIX_IMG_SMALL_HEIGHT));
-		$this->imageMediumServing = F::build('ImageServing', array(null, self::REMIX_IMG_MEDIUM_WIDTH, self::REMIX_IMG_MEDIUM_HEIGHT));
-
-		try {
+		$wikiBatches = $this->helper->getWikiBatches($this->wg->cityId, $this->wg->contLang->getCode(), self::INITIAL_BATCHES_NUMBER);
+		if( !empty($wikiBatches) ) {
+			Wikia::log(__METHOD__, false, ' pulling visualization data from db');
 			$status = 'true';
-			$this->response->setVal(
-				'data',
-				$this->helper->getData($this->wg->CityId, $this->wg->contLang->getCode())
-			);
-		} catch (Exception $e) {
+			$this->response->setVal('initialWikiBatchesForVisualization', json_encode($wikiBatches));
+		} else {
 			try {
+				Wikia::log(__METHOD__, false, ' pulling failover visualization data from message');
 				$status = 'false';
-				$this->response->setVal('failoverData', $this->parseSourceMessage());
-				$this->response->setVal('exception', $e->getMessage());
+				$this->source = $this->getMediaWikiMessage();
+
+				$failoverData = $this->parseSourceMessage();
+				$visualization = F::build('CityVisualization'); /** @var $visualization CityVisualization */
+				$visualization->generateBatches($this->wg->cityId, $this->wg->contLang->getCode(), $failoverData, true);
+				$failoverBatches = $this->helper->getWikiBatches($this->wg->cityId, $this->wg->contLang->getCode(), self::INITIAL_BATCHES_NUMBER);
+
+				$this->response->setVal('initialWikiBatchesForVisualization', json_encode($failoverBatches));
 			} catch (Exception $e) {
+				Wikia::log(__METHOD__,false,' pulling failover visualization data from file');
 				$status = 'false';
-				$this->response->setVal('failoverData', $this->getFailoverWikiList());
+
+				$failoverData = $this->getFailoverWikiList();
+				$visualization = F::build('CityVisualization');
+				$visualization->generateBatches($this->wg->cityId, $this->wg->contLang->getCode(), $failoverData, true);
+				$failoverBatches = $this->helper->getWikiBatches($this->wg->cityId, $this->wg->contLang->getCode(), self::INITIAL_BATCHES_NUMBER);
+
+				$this->response->setVal('initialWikiBatchesForVisualization', json_encode($failoverBatches));
 				$this->response->setVal('exception', $e->getMessage());
 			}
 		}
-
-		$this->response->setVal('status', $status);
+		$this->response->setVal('wgWikiaBatchesStatus', $status);
 	}
 
 	public function getMediaWikiMessage() {
@@ -160,40 +171,57 @@ class WikiaHomePageController extends WikiaController {
 	 * @return array
 	 */
 	public function getSeoList() {
-		$list = $this->app->wg->Memc->get('wikia-home-page-seo-samples' . self::$seoMemcKeyVer);
+		$this->wf->ProfileIn(__METHOD__);
 
-		if (empty($list) && empty($this->verticalsWikis)) {
-			$this->getList();
-		}
+		$list = $this->wg->Memc->get('wikia-home-page-seo-samples' . self::$seoMemcKeyVer);
 
-		if (empty($list) && !empty($this->verticalsWikis)) {
+		if (!is_array($list)) {
 			$list = array();
-			$verticals = array_keys($this->verticalsWikis);
-			foreach ($verticals as $verticalName) {
-				$wikisInVertical = $this->getWikisInVertical($verticalName);
-				$wikiNoPerVertical = $this->getVerticalSlotsForWiki($verticalName);
-				for ($wikiNoPerVertical; $wikiNoPerVertical > 0; $wikiNoPerVertical--) {
-					shuffle($wikisInVertical);
-					$wiki = array_shift($wikisInVertical);
-					if (!is_null($wiki)) {
-						$list[] = array(
-							'title' => $wiki['wikiname'],
-							'url' => $wiki['wikiurl'],
-							'wikiid' => $wiki['wikiid'],
-						);
-					} else {
-						$list[] = array(
-							'title' => $wiki['wikiname'],
-							'url' => '#',
-							'wiki-id' => 0,
-						);
+
+			// get 1 batch for SEO
+			$wikiId = $this->wg->cityId;
+			$langCode = $this->wg->contLang->getCode();
+			$seoBatches = $this->helper->getWikiBatches($wikiId, $langCode, 1);
+
+			// $wikiList is max 17 elements
+			if (!empty($seoBatches)) {
+				$seoBatch = array_pop($seoBatches);
+			}
+
+			if (!empty($seoBatch)) {
+				foreach ($seoBatch as $wikiList) {
+					foreach ($wikiList as $wiki) {
+						if (!empty($wiki['wikiurl'])) {
+							$list[] = array(
+								'title' => $wiki['wikiname'],
+								'url' => $wiki['wikiurl'],
+								'wikiid' => $wiki['wikiid'],
+							);
+						} else {
+							$list[] = array(
+								'title' => $wiki['wikiname'],
+								'url' => '#',
+								'wiki-id' => 0,
+							);
+						}
 					}
+				}
+			} else {
+				for ($i = 0; $i < 17; $i++) {
+					$list[] = array(
+						'title' => '',
+						'url' => '#',
+						'wiki-id' => 0,
+					);
 				}
 			}
 
-			$this->app->wg->Memc->set('wikia-home-page-seo-samples' . self::$seoMemcKeyVer, $list, 48 * 60 * 60);
+			if (!empty($list)) {
+				$this->wg->Memc->set('wikia-home-page-seo-samples' . self::$seoMemcKeyVer, $list, 48 * 60 * 60);
+			}
 		}
 
+		$this->wf->ProfileOut(__METHOD__);
 		return $list;
 	}
 
@@ -216,7 +244,7 @@ class WikiaHomePageController extends WikiaController {
 		if (!empty($this->source)) {
 			$lines = explode("\n", $this->source);
 			$currentVertical = null;
-
+			$data = array();
 			foreach ($lines as $line) {
 				$line = trim($line);
 				if (strpos($line, self::$wikiIndicator) === 0) {
@@ -229,27 +257,11 @@ class WikiaHomePageController extends WikiaController {
 				}
 			}
 
-			if ($this->currentSlotsNo == WikiaHomePageHelper::SLOTS_IN_TOTAL) {
-				$data = array(
-					'slots' => array(),
-					'wikis' => array()
-				);
-				foreach ($this->verticalsWikis as $verticalName => $wikis) {
-					$slots = $this->getVerticalSlotsForWiki($verticalName);
-
-					$data['wikis'][] = array(
-						'vertical' => $verticalName,
-						'slots' => $slots,
-						'wikilist' => $this->getWikisInVertical($verticalName),
-					);
-				}
-				$data['slots']['hotwikis'] = $this->helper->getNumberOfHotWikiSlots();
-				$data['slots']['newwikis'] = $this->helper->getNumberOfNewWikiSlots();
-
-				return $data;
-			} else {
-				throw new Exception(wfMsg('wikia-home-parse-source-invalid-slots-number'));
+			foreach ($this->verticalsWikis as $verticalName => $wikis) {
+				$data[$verticalName] = $this->getWikisInVertical($verticalName);
 			}
+
+			return $data;
 		} else {
 			throw new Exception(wfMsg('wikia-home-parse-source-empty-exception'));
 		}
@@ -257,29 +269,15 @@ class WikiaHomePageController extends WikiaController {
 
 	/**
 	 * @desc Parses vertical data increments/decrements percentages and returns vertical's name
-	 *
 	 * @param String $data line from the media wiki message
-	 *
 	 * @throws Exception
-	 *
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	private function parseVerticalData($data) {
 		$data = explode(self::$dataSeparator, $data);
 
-		if( !empty($data[0]) ) {
+		if (!empty($data[0])) {
 			$verticalName = trim(strtolower(str_replace(self::$verticalIndicator, '', $data[0])));
-			$slots = $this->helper->getNumberOfSlotsForType($verticalName);
-
-			if( isset($this->verticalsSlots[$verticalName]) ) {
-				$prevSlots = $this->verticalsSlots[$verticalName];
-				$this->currentSlotsNo -= $prevSlots;
-
-				$this->verticalsSlots[$verticalName] = $slots;
-			} else {
-				$this->verticalsSlots[$verticalName] = $slots;
-			}
-			$this->currentSlotsNo += $slots;
 
 			return $verticalName;
 		} else {
@@ -308,9 +306,6 @@ class WikiaHomePageController extends WikiaController {
 
 			$wikiImgName = trim($data[2]);
 			$wikiImg = $this->wf->FindFile($wikiImgName);
-			$wikiImgSmall = ($wikiImg !== false) ? $this->helper->getImageUrl($wikiImgName, $wikiImg->getWidth(), $wikiImg->getHeight()) : '';
-			$wikiImgMedium = ($wikiImg !== false) ? $this->helper->getImageUrl($wikiImgName, $wikiImg->getWidth(), $wikiImg->getHeight()) : '';
-			$wikiImgBig = ($wikiImg !== false) ? $wikiImg->transform(array('width' => self::REMIX_IMG_BIG_WIDTH, 'height' => self::REMIX_IMG_BIG_HEIGHT))->getUrl() : '';
 
 			$wikiId = WikiFactory::UrlToID(trim($wikiUrl));
 			if (!$wikiId) {
@@ -322,11 +317,12 @@ class WikiaHomePageController extends WikiaController {
 				'wikiname' => $wikiName,
 				'wikiurl' => $wikiUrl,
 				'wikidesc' => $wikiDesc,
+				'image' => $wikiImgName,
 				'wikinew' => $wikiNew,
 				'wikihot' => $wikiHot,
-				'imagesmall' => $wikiImgSmall,
-				'imagemedium' => $wikiImgMedium,
-				'imagebig' => $wikiImgBig,
+				'wikipromoted' => false,
+				'wikiblocked' => false
+
 			);
 		} else {
 			throw new Exception(wfMsg('wikia-home-parse-wiki-too-few-parameters'));
@@ -357,7 +353,7 @@ class WikiaHomePageController extends WikiaController {
 		)));
 
 		foreach ($this->wg->wikiaHubsPages as $groupId => $hubGroup) {
-			if(!empty($hubGroup[0])) {
+			if (!empty($hubGroup[0])) {
 				$hubName = $hubGroup[0];
 				$hubEngName = $this->getEnglishHubName($groupId);
 				$hubImages[$hubEngName] = $this->getImageUrlForHub($hubName);
@@ -367,7 +363,7 @@ class WikiaHomePageController extends WikiaController {
 	}
 
 	protected function getEnglishHubName($hubId) {
-		switch($hubId) {
+		switch ($hubId) {
 			case 1:
 				return 'Lifestyle';
 				break;
@@ -477,7 +473,6 @@ class WikiaHomePageController extends WikiaController {
 			'seoSample',
 			$this->getSeoList()
 		);
-
 	}
 
 	/**
@@ -502,9 +497,9 @@ class WikiaHomePageController extends WikiaController {
 	final private function getFailoverWikiList() {
 		$this->source = file_get_contents(
 			dirname(__FILE__) .
-			'/text_files/FailOverWikiList_' .
-			strtolower($this->wg->contLang->getCode()) .
-			'.txt'
+				'/text_files/FailOverWikiList_' .
+				strtolower($this->wg->contLang->getCode()) .
+				'.txt'
 		);
 
 		return $this->parseSourceMessage();
@@ -527,13 +522,18 @@ class WikiaHomePageController extends WikiaController {
 			$tempArray[$key] = $this->wg->Lang->formatNum($value);
 		}
 		$this->wikiStats = $tempArray;
-		$this->wikiInfo = $this->helper->getWikiInfoForVisualization($wikiId,$this->wg->contLang->getCode());
+		$this->wikiInfo = $this->helper->getWikiInfoForVisualization($wikiId, $this->wg->contLang->getCode());
 		$images = array();
 
-		foreach($this->wikiInfo['images'] as $image) {
+		foreach ($this->wikiInfo['images'] as $image) {
 			$images[] = $this->helper->getImageDataForSlider($wikiId, $image);
 		}
-		$this->wikiMainImageUrl = $images[0]['image_url'];
+
+		if (!empty($images[0])) {
+			$this->wikiMainImageUrl = $images[0]['image_url'];
+		} else {
+			$this->wikiMainImageUrl = $this->wg->blankImgUrl;
+		}
 
 		$this->imagesSlider = $this->sendRequest('WikiaMediaCarouselController', 'renderSlider', array('data' => $images));
 	}
@@ -555,14 +555,14 @@ class WikiaHomePageController extends WikiaController {
 	public static function onGetHTMLAfterBody($skin, &$html) {
 		$app = F::app();
 
-		if ( $app->checkSkin( 'wikiamobile' ) && $app->wg->EnableWikiaHomePageExt && ArticleAdLogic::isMainPage() ) {
+		if ($app->checkSkin('wikiamobile') && $app->wg->EnableWikiaHomePageExt && ArticleAdLogic::isMainPage()) {
 			$html .= $app->sendRequest('WikiaHomePage', 'wikiaMobileIndex')->toString();
 		}
 		return true;
 	}
 
 	public static function onOutputPageBeforeHTML(&$out, &$text) {
-		if ( ArticleAdLogic::isMainPage() && !( F::app()->checkSkin( 'wikiamobile' ) ) ) {
+		if (ArticleAdLogic::isMainPage() && !(F::app()->checkSkin('wikiamobile'))) {
 			$text = '';
 			$out->clearHTML();
 			$out->addHTML(F::app()->sendRequest('WikiaHomePageController', 'index')->toString());
@@ -577,7 +577,7 @@ class WikiaHomePageController extends WikiaController {
 		return true;
 	}
 
-	public static function onWikiaMobileAssetsPackages( Array &$jsHeadPackages, Array &$jsBodyPackages, Array &$scssPackages ) {
+	public static function onWikiaMobileAssetsPackages(Array &$jsHeadPackages, Array &$jsBodyPackages, Array &$scssPackages) {
 		//this hook is fired only by the WikiaMobile skin, no need to check for what skin is being used
 		if (F::app()->wg->EnableWikiaHomePageExt && ArticleAdLogic::isMainPage()) {
 			$scssPackages[] = 'wikiahomepage_scss_wikiamobile';
@@ -587,15 +587,23 @@ class WikiaHomePageController extends WikiaController {
 	}
 
 	public static function onAfterGlobalHeader(&$menuNodes, $category, $messageName) {
-		if( !empty($menuNodes) && isset($category->cat_id) && $category->cat_id == WikiFactoryHub::CATEGORY_ID_CORPORATE ) {
-			foreach($menuNodes as $key => $node) {
-				if( !empty($node['specialAttr']) ) {
+		if (!empty($menuNodes) && isset($category->cat_id) && $category->cat_id == WikiFactoryHub::CATEGORY_ID_CORPORATE) {
+			foreach ($menuNodes as $key => $node) {
+				if (!empty($node['specialAttr'])) {
 					$menuNodes[$key]['class'] = $node['specialAttr'];
 				}
 			}
 		}
 
 		return true;
+	}
+
+	public function getWikiBatchesForVisualization() {
+		$numberOfBatches = $this->request->getVal('numberOfBatches', self::WIKI_BATCH_SIZE);
+		$wikiId = $this->wg->cityId;
+		$langCode = $this->wg->contLang->getCode();
+
+		$this->wikis = $this->helper->getWikiBatches($wikiId, $langCode, $numberOfBatches);
 	}
 
 }

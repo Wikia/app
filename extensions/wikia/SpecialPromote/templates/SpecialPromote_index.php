@@ -10,9 +10,9 @@
 			<?= $wikiStatus ?>
 		</div>
 	<? endif; ?>
-	<p class='introduction'>
+	<p class='introduction plainlinks'>
 		<strong><?= wfMsg('promote-introduction-header'); ?></strong><br/>
-		<?= wfMsg('promote-introduction-copy'); ?>
+		<?= wfMsgExt('promote-introduction-copy',array('parseinline')); ?>
 	</p>
 	<fieldset>
 		<legend><?= wfMsg('promote-description'); ?></legend>

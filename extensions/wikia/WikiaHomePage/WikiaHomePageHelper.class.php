@@ -18,6 +18,14 @@ class WikiaHomePageHelper extends WikiaModel {
 	const NEW_WIKI_SLOTS_VAR_NAME = 'wgWikiaHomePageNewWikiSlots';
 	const SLOTS_IN_TOTAL = 17;
 
+	const SLOTS_BIG = 2;
+	const SLOTS_MEDIUM = 1;
+	const SLOTS_SMALL = 14;
+
+	const SLOTS_BIG_ARRAY_KEY = 'bigslots';
+	const SLOTS_MEDIUM_ARRAY_KEY = 'mediumslots';
+	const SLOTS_SMALL_ARRAY_KEY = 'smallslots';
+
 	const LIMIT_ADMIN_AVATARS = 3;
 	const LIMIT_TOP_EDITOR_AVATARS = 7;
 
@@ -30,49 +38,50 @@ class WikiaHomePageHelper extends WikiaModel {
 	const INTERSTITIAL_SMALL_IMAGE_HEIGHT = 65;
 
 	const SLIDER_IMAGES_KEY = 'SliderImagesKey';
-
 	const WIKIA_HOME_PAGE_HELPER_MEMC_VERSION = 'v0.5.010.005';
+
+	protected $visualizationModel = null;
 
 	protected $excludeUsersFromInterstitial = array(
 		'Wikia' => true,
 	);
 
-	public function getNumberOfEntertainmentSlots() {
-		return $this->getVarFromWikiFactory(self::ENTERTAINMENT_SLOTS_VAR_NAME);
+	public function getNumberOfEntertainmentSlots($lang) {
+		return $this->getVarFromWikiFactory($this->getCorpWikiIdByLang($lang), self::ENTERTAINMENT_SLOTS_VAR_NAME);
 	}
 
-	public function getNumberOfLifestyleSlots() {
-		return $this->getVarFromWikiFactory(self::LIFESTYLE_SLOTS_VAR_NAME);
+	public function getNumberOfLifestyleSlots($lang) {
+		return $this->getVarFromWikiFactory($this->getCorpWikiIdByLang($lang), self::LIFESTYLE_SLOTS_VAR_NAME);
 	}
 
-	public function getNumberOfVideoGamesSlots() {
-		return $this->getVarFromWikiFactory(self::VIDEO_GAMES_SLOTS_VAR_NAME);
+	public function getNumberOfVideoGamesSlots($lang) {
+		return $this->getVarFromWikiFactory($this->getCorpWikiIdByLang($lang), self::VIDEO_GAMES_SLOTS_VAR_NAME);
 	}
 
-	public function getNumberOfHotWikiSlots() {
-		return $this->getVarFromWikiFactory(self::HOT_WIKI_SLOTS_VAR_NAME);
+	public function getNumberOfHotWikiSlots($lang) {
+		return $this->getVarFromWikiFactory($this->getCorpWikiIdByLang($lang), self::HOT_WIKI_SLOTS_VAR_NAME);
 	}
 
-	public function getNumberOfNewWikiSlots() {
-		return $this->getVarFromWikiFactory(self::NEW_WIKI_SLOTS_VAR_NAME);
+	public function getNumberOfNewWikiSlots($lang) {
+		return $this->getVarFromWikiFactory($this->getCorpWikiIdByLang($lang), self::NEW_WIKI_SLOTS_VAR_NAME);
 	}
 
-	public function getNumberOfSlotsForType($slotTypeName) {
+	public function getNumberOfSlotsForType($wikiId, $slotTypeName) {
 		switch ($slotTypeName) {
 			case 'entertainment':
-				$slots = $this->getNumberOfEntertainmentSlots();
+				$slots = $this->getNumberOfEntertainmentSlots($wikiId);
 				break;
 			case 'video games':
-				$slots = $this->getNumberOfVideoGamesSlots();
+				$slots = $this->getNumberOfVideoGamesSlots($wikiId);
 				break;
 			case 'lifestyle':
-				$slots = $this->getNumberOfLifestyleSlots();
+				$slots = $this->getNumberOfLifestyleSlots($wikiId);
 				break;
 			case 'hot':
-				$slots = $this->getNumberOfHotWikiSlots();
+				$slots = $this->getNumberOfHotWikiSlots($wikiId);
 				break;
 			case 'new':
-				$slots = $this->getNumberOfNewWikiSlots();
+				$slots = $this->getNumberOfNewWikiSlots($wikiId);
 				break;
 			default:
 				$slots = 0;
@@ -83,6 +92,24 @@ class WikiaHomePageHelper extends WikiaModel {
 	}
 
 	/**
+	 * @param string $lang corporate page language
+	 * @return int
+	 */
+	protected function getCorpWikiIdByLang($lang) {
+		return $this->getVisualization()->getTargetWikiId($lang);
+	}
+
+	/**
+	 * @return CityVisualization
+	 */
+	protected function getVisualization() {
+		if (empty($this->visualizationModel)) {
+			$this->visualizationModel = F::build('CityVisualization');
+		}
+		return $this->visualizationModel;
+	}
+
+	/**
 	 * @desc Returns WikiFactory variable's value if not found returns 0 and adds information to logs
 	 *
 	 * @param String $varName variable name in WikiFactory
@@ -90,9 +117,9 @@ class WikiaHomePageHelper extends WikiaModel {
 	 *
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
-	public function getVarFromWikiFactory($varName) {
+	public function getVarFromWikiFactory($wikiId, $varName) {
 		$this->wf->ProfileIn(__METHOD__);
-		$value = WikiFactory::getVarValueByName($varName, $this->wg->cityId);
+		$value = WikiFactory::getVarValueByName($varName, $wikiId);
 
 		if (is_null($value) || $value === false) {
 			Wikia::log(__METHOD__, false, "Variable's value not found in WikiFactory returning 0");
@@ -104,8 +131,8 @@ class WikiaHomePageHelper extends WikiaModel {
 		return $value;
 	}
 
-	public function setWikiFactoryVar($wfVar, $wfVarValue) {
-		return WikiFactory::setVarByName($wfVar, $this->wg->cityId, $wfVarValue, wfMsg('wikia-hone-page-special-wikis-in-slots-change-reason'));
+	public function setWikiFactoryVar($wikiId, $wfVar, $wfVarValue) {
+		return WikiFactory::setVarByName($wfVar, $wikiId, $wfVarValue, wfMsg('wikia-hone-page-special-wikis-in-slots-change-reason'));
 	}
 
 	/**
@@ -529,10 +556,9 @@ class WikiaHomePageHelper extends WikiaModel {
 		$this->wf->ProfileIn(__METHOD__);
 		$reviewStatus = false;
 
-		$visualizationModel = F::build('CityVisualization');
 		$rowAssigner = F::build('WikiImageReviewStatusRowHelper');
-		if( $imageId > 0 ) {
-			$reviewStatus = $visualizationModel->getImageReviewStatus($this->wg->CityId, $imageId, $rowAssigner);
+		if ($imageId > 0) {
+			$reviewStatus = $this->getVisualization()->getImageReviewStatus($this->wg->CityId, $imageId, $rowAssigner);
 		}
 
 		$this->wf->ProfileOut(__METHOD__);
@@ -549,7 +575,7 @@ class WikiaHomePageHelper extends WikiaModel {
 		$imageId = 0;
 
 		$imageTitle = F::build('Title', array($imageName, NS_FILE), 'newFromText');
-		if( $imageTitle instanceof Title ) {
+		if ($imageTitle instanceof Title) {
 			$imageId = $imageTitle->getArticleID();
 		}
 
@@ -583,70 +609,211 @@ class WikiaHomePageHelper extends WikiaModel {
 		return $imageServingParams;
 	}
 
-	public function getWikisList($corpWikiId, $contLang) {
-		$this->wf->ProfileIn(__METHOD__);
+	public function getWikiBatches($wikiId, $langCode, $numberOfBatches) {
+		$visualization = F::build('CityVisualization'); /** @var CityVisualization $visualization */
+		$batches = $visualization->getWikiBatches($wikiId, $langCode, $numberOfBatches);
 
-		if (empty($this->wg->ReadOnly)) {
-			$cityVisualization = F::build('CityVisualization', array());
-			$wikisPerVertical = $cityVisualization->getList($corpWikiId, $contLang);
-
-			if (empty($wikisPerVertical)) {
-				throw new Exception(wfMsg('wikia-home-parse-exception-empty-data-from-database'));
-			}
-
-			$wikis = array();
-			$i = 0;
-			$verticalNameTmp = null;
-			foreach ($wikisPerVertical as $verticalName => $vertical) {
-				if (is_null($verticalNameTmp)) {
-					$verticalNameTmp = $verticalName;
-				}
-				if ($verticalName !== $verticalNameTmp && !is_null($verticalNameTmp)) {
-					$i++;
-				}
-
-				$wikis[$i]['vertical'] = $verticalName;
-				$wikis[$i]['slots'] = $this->getNumberOfSlotsForType($verticalName);
-
-				$wikilist = array();
-				foreach ($vertical as $wikiKey => $wiki) {
-					$wikiMainImgName = $wiki['main_image'];
-					$wikiMainImg = $this->wf->FindFile($wikiMainImgName);
-					unset($wikisPerVertical[$verticalName][$wikiKey]['main_image']);
-
-					$wiki['imagesmall'] = $this->getImageUrl($wikiMainImgName, WikiaHomePageController::REMIX_IMG_SMALL_WIDTH, WikiaHomePageController::REMIX_IMG_SMALL_HEIGHT);
-					$wiki['imagemedium'] = $this->getImageUrl($wikiMainImgName, WikiaHomePageController::REMIX_IMG_MEDIUM_WIDTH, WikiaHomePageController::REMIX_IMG_MEDIUM_HEIGHT);
-					if ($wikiMainImg instanceof File && $wikiMainImg->exists()) {
-						$wiki['imagebig'] = $this->getImageUrl($wikiMainImgName, WikiaHomePageController::REMIX_IMG_BIG_WIDTH, WikiaHomePageController::REMIX_IMG_BIG_HEIGHT);
-					} else {
-						$wiki['imagebig'] = $this->wg->blankImgUrl;
-					}
-
-					$wikilist[] = $wiki;
-				}
-
-				$wikis[$i]['wikilist'] = $wikilist;
-			}
-
-			$this->wf->ProfileOut(__METHOD__);
-			return $wikis;
+		if( !empty($batches) ) {
+			return $this->prepareBatchesForVisualization($batches);
 		} else {
-			$this->wf->ProfileOut(__METHOD__);
-			throw new Exception(wfMsg('wikia-home-parse-exception-read-only'));
+			return array();
 		}
 	}
 
-	public function getData($corpWikiId, $contLang) {
-		$slots = array(
-			'hotwikis' => $this->getVarFromWikiFactory(self::HOT_WIKI_SLOTS_VAR_NAME),
-			'newwikis' => $this->getVarFromWikiFactory(self::NEW_WIKI_SLOTS_VAR_NAME),
-		);
+	public function prepareBatchesForVisualization($batches) {
+		$this->wf->ProfileIn(__METHOD__);
 
-		$wikisPerVertical = $this->getWikisList($corpWikiId, $contLang);
+		$processedBatches = array();
 
-		return array(
-			'slots' => $slots,
-			'wikis' => $wikisPerVertical,
-		);
+		foreach( $batches as $batch ) {
+			$processedBatch = array(
+				self::SLOTS_BIG_ARRAY_KEY => array(),
+				self::SLOTS_MEDIUM_ARRAY_KEY => array(),
+				self::SLOTS_SMALL_ARRAY_KEY => array()
+			);
+
+			if( !empty($batch[CityVisualization::PROMOTED_ARRAY_KEY]) ) {
+			//if there are any promoted wikis they should go firstly to big&medium slots
+				$promotedBatch = $batch[CityVisualization::PROMOTED_ARRAY_KEY];
+
+				$processedBatch[self::SLOTS_BIG_ARRAY_KEY] = $this->getProcessedWikisData($promotedBatch, self::SLOTS_BIG);
+				$processedBatch[self::SLOTS_MEDIUM_ARRAY_KEY] = $this->getProcessedWikisData($promotedBatch, self::SLOTS_MEDIUM);
+			}
+
+			if( empty($batch[CityVisualization::DEMOTED_ARRAY_KEY]) ) {
+				continue;
+			}
+
+			$bigCount = count($processedBatch[self::SLOTS_BIG_ARRAY_KEY]);
+			//if there wasn't enough promoted wikis fill big&medium slots with regural ones
+			if( $bigCount < self::SLOTS_BIG ) {
+				$processedBatch[self::SLOTS_BIG_ARRAY_KEY] = array_merge($processedBatch[self::SLOTS_BIG_ARRAY_KEY], $this->getProcessedWikisData($batch[CityVisualization::DEMOTED_ARRAY_KEY], self::SLOTS_BIG, $bigCount));
+			}
+
+			$mediumCount = count($processedBatch[self::SLOTS_MEDIUM_ARRAY_KEY]);
+			if( $mediumCount < self::SLOTS_MEDIUM ) {
+				$processedBatch[self::SLOTS_MEDIUM_ARRAY_KEY] = array_merge($processedBatch[self::SLOTS_MEDIUM_ARRAY_KEY], $this->getProcessedWikisData($batch[CityVisualization::DEMOTED_ARRAY_KEY], self::SLOTS_MEDIUM, $mediumCount));
+			}
+
+			$this->shufflePromotedWikis($processedBatch);
+
+			//put regular wikis to small slots
+			$processedBatch[self::SLOTS_SMALL_ARRAY_KEY] = $this->getProcessedWikisData($batch[CityVisualization::DEMOTED_ARRAY_KEY], self::SLOTS_SMALL);
+			$processedBatches[] = $processedBatch;
+		}
+
+		$this->wf->ProfileOut(__METHOD__);
+		return $processedBatches;
 	}
+
+	protected function getProcessedWikisData(&$batch, $orgLimit, $curLimit = 0) {
+		$result = array();
+
+		$size = $this->getProcessedWikisImgSizes($orgLimit);
+
+		for( $curLimit; $curLimit < $orgLimit; $curLimit++ ) {
+			$wiki = array_shift($batch);
+			$processedWiki = $this->extractWikiDataForBatch($wiki);
+			$processedWiki['image'] = $this->getImageUrl($processedWiki['main_image'], $size->width, $size->height);
+
+			if( !empty($processedWiki['wikiurl']) ) {
+				$result[] = $processedWiki;
+			}
+		}
+
+		return $result;
+	}
+
+	protected function shufflePromotedWikis(&$processedBatch) {
+		$promotedWikis = array_merge($processedBatch[self::SLOTS_BIG_ARRAY_KEY], $processedBatch[self::SLOTS_MEDIUM_ARRAY_KEY]);
+
+		if( count($promotedWikis) !== (self::SLOTS_BIG + self::SLOTS_MEDIUM) ) {
+			return;
+		}
+
+		$processedBatch[self::SLOTS_BIG_ARRAY_KEY] = array();
+		$processedBatch[self::SLOTS_MEDIUM_ARRAY_KEY] = array();
+
+		shuffle($promotedWikis);
+
+		$processedBatch[self::SLOTS_BIG_ARRAY_KEY] = $this->reassignPromotedWikis($promotedWikis, self::SLOTS_BIG);
+		$processedBatch[self::SLOTS_MEDIUM_ARRAY_KEY] = $this->reassignPromotedWikis($promotedWikis, self::SLOTS_MEDIUM);
+	}
+
+	protected function reassignPromotedWikis(&$promotedWikis, $limit) {
+		$result = array();
+
+		$size = $this->getProcessedWikisImgSizes($limit);
+		for($limit; $limit > 0; $limit--) {
+			$wiki = array_shift($promotedWikis);
+			$wiki['image'] = $this->getImageUrl($wiki['main_image'], $size->width, $size->height);
+			$result[] = $wiki;
+		}
+
+		return $result;
+	}
+
+	/**
+	 * @desc Depends on given slots limit recognize which size it should return
+	 * @param integer $limit one of constants of this class reprezenting amount of slots
+	 * @return StdClass with width&height fields
+	 */
+	public function getProcessedWikisImgSizes($limit) {
+		$result = new StdClass;
+
+		switch($limit) {
+			case self::SLOTS_SMALL:
+				$result->width = WikiaHomePageController::REMIX_IMG_SMALL_WIDTH;
+				$result->height = WikiaHomePageController::REMIX_IMG_SMALL_HEIGHT;
+				break;
+			case self::SLOTS_MEDIUM:
+				$result->width = WikiaHomePageController::REMIX_IMG_MEDIUM_WIDTH;
+				$result->height = WikiaHomePageController::REMIX_IMG_MEDIUM_HEIGHT;
+				break;
+			case self::SLOTS_BIG:
+			default:
+			$result->width = WikiaHomePageController::REMIX_IMG_BIG_WIDTH;
+			$result->height = WikiaHomePageController::REMIX_IMG_BIG_HEIGHT;
+			break;
+		}
+
+		return $result;
+	}
+
+	public function setFlag($wikiId, $flag, $corpWikiId, $langCode) {
+		$this->wf->ProfileIn(__METHOD__);
+
+		/* @var $visualization CityVisualization */
+		$visualization = F::build('CityVisualization');
+		$result = $visualization->setFlag($wikiId, $langCode, $flag);
+
+		if( $result === true ) {
+		//purge cache
+			//wiki cache
+			$visualization->getList($corpWikiId, $langCode, true);
+			$memcKey = $visualization->getWikiDataCacheKey($visualization->getTargetWikiId($langCode), $wikiId, $langCode);
+			$this->wg->Memc->set($memcKey, null);
+
+			//visualization list cache
+			$visualization->purgeVisualizationWikisListCache($corpWikiId, $langCode);
+
+			$this->wf->ProfileOut(__METHOD__);
+			return true;
+		}
+
+		$this->wf->ProfileOut(__METHOD__);
+		return false;
+	}
+
+	public function removeFlag($wikiId, $flag, $corpWikiId, $langCode) {
+		$this->wf->ProfileIn(__METHOD__);
+
+		/* @var $visualization CityVisualization */
+		$visualization = F::build('CityVisualization');
+		$result = $visualization->removeFlag($wikiId, $langCode, $flag);
+
+		if( $result === true ) {
+		//purge cache
+			//wiki cache
+			$visualization->getList($corpWikiId, $langCode, true);
+			$memcKey = $visualization->getWikiDataCacheKey($visualization->getTargetWikiId($langCode), $wikiId, $langCode);
+			$this->wg->Memc->set($memcKey, null);
+
+			//visualization list cache
+			$visualization->purgeVisualizationWikisListCache($corpWikiId, $langCode);
+
+			$this->wf->ProfileOut(__METHOD__);
+			return true;
+		}
+
+		$this->wf->ProfileOut(__METHOD__);
+		return false;
+	}
+
+	protected function extractWikiDataForBatch($wiki) {
+		$processedWiki = array(
+			'wikiid' => $wiki['wikiid'],
+			'wikiname' => $wiki['wikiname'],
+			'wikiurl' => $wiki['wikiurl'],
+			'wikinew' => $wiki['wikinew'],
+			'wikihot' => $wiki['wikihot'],
+			'wikipromoted' => $wiki['wikipromoted'],
+			'wikiblocked' => $wiki['wikiblocked'],
+			'main_image' => !empty($wiki['image']) ? $wiki['image'] : $wiki['main_image']
+		);
+		return $processedWiki;
+	}
+
+	public function getVisualizationWikisData() {
+		return $this->getVisualization()->getVisualizationWikisData();
+	}
+
+	public function getWikisCountForStaffTool($options) {
+		return $this->getVisualization()->getWikisCountForStaffTool($options);
+	}
+
+	public function getWikisForStaffTool($options) {
+		return $this->getVisualization()->getWikisForStaffTool($options);
+	}
+
 }

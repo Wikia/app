@@ -15,7 +15,7 @@ abstract class ImageReviewHelperBase extends WikiaModel {
 
 	public abstract function refetchImageListByTimestamp($timestamp);
 
-	public abstract function getImageList($timestamp, $state = ImageReviewStatuses::STATE_UNREVIEWED, $order = ImageReviewStatuses::ORDER_LATEST);
+	public abstract function getImageList($timestamp, $state = ImageReviewStatuses::STATE_UNREVIEWED, $order = self::ORDER_LATEST);
 
 	protected abstract function getWhitelistedWikis();
 

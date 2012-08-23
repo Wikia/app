@@ -453,6 +453,12 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 		&.toggle2 {
 			@include interstitial-toggle-animation2;
 		}
+		&.overflow-visible {
+			overflow: visible;
+		}
+		&.overflow-hidden {
+			overflow: hidden;
+		}
 	}
 
 	.WikiPreviewInterstitial {

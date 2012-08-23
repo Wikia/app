@@ -1,14 +1,14 @@
 <?php
 
-class AdminUploadReviewSpecialController extends ImageReviewSpecialController {
+class PromoteImageReviewSpecialController extends ImageReviewSpecialController {
 	const DEFAUL_IMAGE_SIZE = 320;
 
 	public function __construct() {
-		WikiaSpecialPageController::__construct('AdminUploadReview', 'adminuploaddirt', false /* $listed */);
+		WikiaSpecialPageController::__construct('PromoteImageReview', 'promoteimagereview', false /* $listed */);
 	}
 
 	protected function getPageTitle() {
-		return 'Admin Upload Review tool';
+		return 'Special:Promote Review tool';
 	}
 
 	public function index() {
@@ -21,11 +21,11 @@ class AdminUploadReviewSpecialController extends ImageReviewSpecialController {
 	}
 
 	protected function getHelper() {
-		return F::build('AdminUploadReviewHelper');
+		return F::build('PromoteImageReviewHelper');
 	}
 
 	protected function getBaseUrl() {
-		return Title::newFromText('AdminUploadReview', NS_SPECIAL)->getFullURL();
+		return Title::newFromText('PromoteImageReview', NS_SPECIAL)->getFullURL();
 	}
 
 	protected function getToolName() {

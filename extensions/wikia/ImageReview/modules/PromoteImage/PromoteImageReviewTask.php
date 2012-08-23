@@ -4,7 +4,7 @@
  * TaskManager task to go through a list of images and delete them.
  */
 
-class AdminUploadReviewTask extends BatchTask {
+class PromoteImageReviewTask extends BatchTask {
 	var $mType,
 		$mVisible,
 		$mArguments,
@@ -22,7 +22,7 @@ class AdminUploadReviewTask extends BatchTask {
 	protected $dbNamesToBeSkipped = array('wikiaglobal', 'dewiki');
 
 	function __construct($params = array()) {
-		$this->mType = 'adminuploadreview';
+		$this->mType = 'promoteimagereview';
 		$this->mVisible = false; // do not show form for this task
 		$this->mParams = $params;
 		$this->mTTL = 86400; // 24 hours
@@ -149,7 +149,7 @@ class AdminUploadReviewTask extends BatchTask {
 		$dbname = WikiFactory::IDtoDB($sourceWikiId);
 		$destinationName = $this->getNameWithWiki($destinationName, $dbname);
 
-		$sCommand = "SERVER_ID={$targetWikiId} php $IP/maintenance/wikia/ImageReview/AdminUpload/upload.php";
+		$sCommand = "SERVER_ID={$targetWikiId} php $IP/maintenance/wikia/ImageReview/PromoteImage/upload.php";
 		$sCommand .= " --originalimageurl=" . escapeshellarg($sourceImageUrl);
 		$sCommand .= " --destimagename=" . escapeshellarg($destinationName);
 		$sCommand .= " --userid=" . escapeshellarg( $this->mUser );
@@ -189,7 +189,7 @@ class AdminUploadReviewTask extends BatchTask {
 
 					if( $result['status'] === 0 || $app->wg->DevelEnvironment ) {
 					//almost all the time on devboxes images aren't removed because of no permissions
-					//when we run maintenance/wikia/ImageReview/AdminUpload/remove.php with sudo it works
+					//when we run maintenance/wikia/ImageReview/PromoteImage/remove.php with sudo it works
 						$removedImages[] = $imageName;
 					}
 				}
@@ -216,6 +216,7 @@ class AdminUploadReviewTask extends BatchTask {
 
 		//since an admin can't delete main image we don't purge visualization list cache
 		//as it happens during uploads
+		return true;
 	}
 
 	function removeSingleImage($targetWikiId, $imageName) {
@@ -223,7 +224,7 @@ class AdminUploadReviewTask extends BatchTask {
 
 		$retval = "";
 
-		$sCommand = "SERVER_ID={$targetWikiId} php $IP/maintenance/wikia/ImageReview/AdminUpload/remove.php";
+		$sCommand = "SERVER_ID={$targetWikiId} php $IP/maintenance/wikia/ImageReview/PromoteImage/remove.php";
 		$sCommand .= " --imagename=" . escapeshellarg($imageName);
 		$sCommand .= " --userid=" . escapeshellarg( $this->mUser );
 		$sCommand .= " --conf {$wgWikiaLocalSettingsPath}";
@@ -305,9 +306,9 @@ class AdminUploadReviewTask extends BatchTask {
 		$data = array();
 
 		$wikiData = $this->model->getWikiData($sourceWikiId, $sourceWikiLang, $this->helper);
-		$currentImages = $wikiData['images'];
+		if(!empty($wikiData['images'])) {
+			$currentImages = $wikiData['images'];
 
-		if( !empty($currentImages) ) {
 			foreach($currentImages as $imageName) {
 				if( $this->getImageType($imageName) === 'additional' && !in_array($imageName, $deletedImages) ) {
 					$data['city_images'][] = $imageName;
