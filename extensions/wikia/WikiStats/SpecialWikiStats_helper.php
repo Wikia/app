@@ -980,6 +980,7 @@ class WikiStats {
 		// Get a list of all months that exist for these stats
 		$months = array_keys($this->mMainStats);
 		sort($months);
+		if (empty($months)) return $months;
 
 		// Get the column names used, eliminate the 'date' field.
 		$columns = array_keys($this->mMainStats[$months[0]]);

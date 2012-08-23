@@ -33,12 +33,12 @@ class WatchSubPagesHelper {
 	 *
 	 * @author Jakub Kurcek <jakub@wikia-inc.com>
 	 */
-	static public function ClearParentNotification( Page $article ) {
+	static public function ClearParentNotification( Page $page ) {
 		global $wgUser;
 
 		if ( $wgUser->getBoolOption( 'watchlistsubpages' ) ) {
-			if ( ! $article->getTitle()->userIsWatching() ) {
-				$tmpDBkey = $article->getTitle()->getDBkey();
+			if ( ! $page->getTitle()->userIsWatching() ) {
+				$tmpDBkey = $page->getTitle()->getDBkey();
 				$arrTitle = explode( '/', $tmpDBkey );
 				if ( count( $arrTitle > 1 ) ) {
 					$parentTitle = Title::newFromDBkey( $arrTitle[0] );
