@@ -327,9 +327,24 @@
 		 * @param string $startDate [YYYY-MM-DD]
 		 * @param string $endDate [YYYY-MM-DD]
 		 * @param integer $wikiId
-		 * @return array $videoviews [ array( 'YYYY-MM-DD' => videoviews ) ]
+		 * @return integer $videoviews
 		 */
 		public static function getVideoViewsByTitleTotal( $title, $periodId = null, $startDate = null, $endDate = null, $wikiId = null ) {
+			$videoList = self::getVideoListViewsByTitleTotal( $periodId, $startDate, $endDate, $wikiId );
+			$hashTitle = md5( $title );
+			$videoViews = ( isset($videoList[$hashTitle]) ) ? $videoList[$hashTitle] : 0;
+			return $videoViews;
+		}
+
+		/**
+		 * get list of total video views by video title
+		 * @param integer $periodId
+		 * @param string $startDate [YYYY-MM-DD]
+		 * @param string $endDate [YYYY-MM-DD]
+		 * @param integer $wikiId
+		 * @return array $videoviews [ array( md5(video_title) => videoviews ) ]
+		 */
+		public static function getVideoListViewsByTitleTotal( $periodId = null, $startDate = null, $endDate = null, $wikiId = null ) {
 			$app = F::app();
 
 			$app->wf->ProfileIn( __METHOD__ );
@@ -354,27 +369,28 @@
 				$periodId = self::PERIOD_ID_MONTHLY;
 			}
 
-			$memKey = $app->wf->SharedMemcKey( 'datamart', 'total_video_views', $wikiId, $periodId, $startDate, $endDate, md5($title) );
+			$memKey = $app->wf->SharedMemcKey( 'datamart', 'total_video_views', $wikiId, $periodId, $startDate, $endDate );
 			$videoViews = $app->wg->Memc->get( $memKey );
-			if ( $videoViews === false ) {
-				$videoViews = 0;
+			if ( !is_array($videoViews) ) {
+				$videoViews = array();
 				if ( !empty($app->wg->StatsDBEnabled) ) {
 					$db = $app->wf->GetDB( DB_SLAVE, array(), $app->wg->DatamartDB );
 
-					$row = $db->selectRow(
+					$result = $db->select(
 							array( 'rollup_wiki_video_views' ),
-							array( 'ifnull(sum(views),0) as cnt' ),
+							array( 'video_title, ifnull(sum(views),0) as cnt' ),
 							array(
 								'period_id'   => $periodId,
 								'wiki_id'     => $wikiId,
-								'video_title' => $title,
 								"time_id between '$startDate' and '$endDate'"
 							),
-							__METHOD__
+							__METHOD__,
+							array( 'GROUP BY' => 'video_title' )
 					);
 
-					if ( $row ) {
-						$videoViews = $row->cnt;
+					while ( $row = $db->fetchObject($result) ) {
+						$hashTitle = md5( $row->video_title );
+						$videoViews[$hashTitle] = $row->cnt;
 					}
 
 					$app->wg->Memc->set( $memKey, $videoViews, 60*60*12 );
