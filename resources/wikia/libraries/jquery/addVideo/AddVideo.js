@@ -8,7 +8,7 @@
 		
 		var self = this;
 
-		self.alreadyLoggedIn = false;	
+		var alreadyLoggedIn = false;	
 
 		var settings = {
 			modalWidth: 666,
@@ -19,12 +19,12 @@
 		
 		var loginWrapper = function ( callback ){
 			var message = 'protected';
-			if(( wgUserName == null ) && ( !self.alreadyLoggedIn )){
+			if(( wgUserName == null ) && ( !alreadyLoggedIn )){
 				if (window.wgComboAjaxLogin) {
 					showComboAjaxForPlaceHolder( false, "", function() {
 						AjaxLogin.doSuccess = function() {
 							$('#AjaxLoginBoxWrapper').closest('.modalWrapper').closeModal();
-							self.alreadyLoggedIn = true;
+							alreadyLoggedIn = true;
 							callback();
 						};
 						AjaxLogin.close = function() {
@@ -37,7 +37,7 @@
 					UserLoginModal.show({
 						callback: function() {
 							$( window ).scrollTop( element.offset().top + 100 );
-							self.alreadyLoggedIn = true;
+							alreadyLoggedIn = true;
 							callback();
 						}
 					});
@@ -57,7 +57,6 @@
 				},
 				'both'
 			);
-			//$(this.rvModule).undelegate( '.addVideo', 'click' );
 			$.nirvana.postJson(
 				'RelatedVideosController', // TODO: abstract this so there's no dependency on Related Videos
 				'getAddVideoModal',
@@ -72,10 +71,6 @@
 							id: 'relatedvideos-add-video',
 							width: settings.modalWidth,
 							callback : function(){
-								//var $rvModule = $(RelatedVideos.rvModule);
-								//$rvModule.undelegate( '.addVideo', 'click' );
-								//$rvModule.delegate( '.addVideo', 'click', addVideoModal );
-								
 								enableVideoSubmit();
 								initModalScroll('.modalContent');
 							}
@@ -137,11 +132,7 @@
 			if( futureState >= 1 && futureState <= this.rvAddMax ) {
 				var scroll_to = (futureState-1) * scroll_by;
 				this.rvAddPos = futureState;
-				//console.log('future state ' + futureState);
-	
-				//$('.container',this.rvAddModal).clearQueue();
-				//RelatedVideos.checkButtonState();
-	
+
 				//scroll
 				$('.container',this.rvAddModal).stop().animate({
 					left: -scroll_to
