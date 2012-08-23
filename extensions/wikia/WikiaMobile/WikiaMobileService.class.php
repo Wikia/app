@@ -203,12 +203,15 @@ class WikiaMobileService extends WikiaService {
 
 		if ( $this->pgExists === null ) {
 			$title = $this->app->wg->Title;
+			$namespace = $title->getNamespace();
 
 			if( !$title->exists() &&
 				//check if title is Category and then if has not articles in it
-				!( $title->getNamespace() == NS_CATEGORY && Category::newFromTitle( $title )->getPageCount() ) &&
+				!( $namespace == NS_CATEGORY && Category::newFromTitle( $title )->getPageCount() ) &&
 				//and then check if it is not existing SpecialPage
-				!( $title->isSpecialPage() && SpecialPageFactory::exists( $title->getText() ) )
+				!( $title->isSpecialPage() && SpecialPageFactory::exists( $title->getText() ) ) &&
+				//dont show for 404 page for user page
+				!( $namespace == NS_USER && !$this->wg->Title->isSubpage() && User::newFromName( $this->wg->Title->getBaseText() )->getId() > 0 )
 			) {
 				$this->pgExists = false;
 			} else {
