@@ -65,16 +65,18 @@ define('tables', ['events'], function(ev){
 			//or taller than the allowed vertical size, then wrap it and/or add it to
 			//the list of handled tables for speeding up successive calls
 			//NOTE: tables with 100% width have the same width of the screen, check the size of the first row instead
-			var firstRowWidth = rows[0].offsetWidth;
+			if(rowsLength > 0) {
+				var firstRowWidth = rows[0].offsetWidth;
 
-			table.computedWidth = firstRowWidth;
-			if(firstRowWidth > realWidth){
-				//remove scripts to avoid re-parsing
-				removeScripts(table);
-				wrap(table);
-				table.wasWrapped = true;
-				table.isWrapped = true;
-				handledTables.push(table);
+				table.computedWidth = firstRowWidth;
+				if(firstRowWidth > realWidth){
+					//remove scripts to avoid re-parsing
+					removeScripts(table);
+					wrap(table);
+					table.wasWrapped = true;
+					table.isWrapped = true;
+					handledTables.push(table);
+				}
 			}
 		}
 
