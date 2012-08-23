@@ -87,7 +87,8 @@
 						<run_mvn>true</run_mvn>
 						<base-address>${base-address}</base-address>
 						<browser>${browser}</browser>
-						<config>c:/config.xml/config.xml</config>
+						<config>c:/wikia-qa/config.xml</config>
+						<captcha>c:/wikia-qa/captcha.txt</captcha>
 					</systemPropertyVariables>
 					<suiteXmlFiles>
 						<suiteXmlFile>src/test/java/com/wikia/webdriver/TestSuites/testSuite.xml</suiteXmlFile>
