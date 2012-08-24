@@ -31,6 +31,11 @@ class WikiaUpdater {
 			array( 'addTable', 'page_visited', $dir . 'patch-create-page_visited.sql', true ),
 			array( 'addTable', 'blog_listing_relation', $dir . 'patch-create-blog_listing_relation.sql', true ),
 			array( 'addTable', 'page_wikia_props', $ext_dir . '/wikia/ImageServing/sql/table.sql', true ),
+			array( 'addTable', 'achievements', $dir . 'patch-create-achievements_user_score.sql', true ),
+			array( 'addTable', 'achievements', $dir . 'patch-create-achievements_user_badges.sql', true ),
+			array( 'addTable', 'achievements', $dir . 'patch-create-achievements_user_counters.sql', true ),
+			array( 'addTable', 'achievements', $dir . 'patch-create-achievements_custom_badges.sql', true ),
+			array( 'addTable', 'achievements', $dir . 'patch-create-achievements_ranking_snapshots.sql', true ),
 			# fields
 			array( 'addField', 'watchlist', 'wl_wikia_addedtimestamp', $dir . 'patch-watchlist-improvements.sql', true ),
 			
@@ -110,7 +115,7 @@ class WikiaUpdater {
 				$res = $db->query( 'SELECT page_id FROM page_wikia_props GROUP BY page_id HAVING count(*) > 1', __METHOD__  );
 				$updater->output( "... removing duplicates first: " );
 				$dups = 0;
-				while( $row = $db->fetchObject( $sth ) ) {
+				while( $row = $db->fetchObject( $res ) ) {
 					$db->delete( 
 						'page_wikia_props', 
 						array( 
