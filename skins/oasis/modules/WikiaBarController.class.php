@@ -13,7 +13,7 @@ class WikiaBarController extends WikiaController {
 		$this->response->addAsset('skins/oasis/js/WikiaBar.js');
 
 		$lang = !empty($params['lang'])?$params['lang']:'en';
-		$vertical = !empty($params['vertical'])?$params['lang']:9;
+		$vertical = !empty($params['vertical'])?$params['vertical']:9;
 
 		/** @var $model WikiaBarModel */
 		$model = F::build('WikiaBarModel');
