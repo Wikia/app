@@ -26,8 +26,8 @@ $USAGE =
 	"\t\t-l          Read settings from external file\n";
 
 $opts = getopt ("l:i:d:f:c:?::");
+if( empty( $opts ) ) die( $USAGE );
 
-if( count($opts) == 0 || in_array( 'help', $opts )) die( $USAGE );
 // Grind through s3 for a bit and figure out what the most recent dump is
 
 $HOME=trim(`echo ~`,"\n");
