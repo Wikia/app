@@ -19,7 +19,7 @@ var GlobalNotification = {
 			GlobalNotification.setUpClose();
 		}
 		if(GlobalNotification.isModal()) {
-			GlobalNotification.modal.prepend( GlobalNotifcation.dom );
+			GlobalNotification.modal.prepend( GlobalNotification.dom );
 		} else {
 			if($('.oasis-split-skin').length) {
 				$('.WikiaHeader').after( GlobalNotification.dom );
