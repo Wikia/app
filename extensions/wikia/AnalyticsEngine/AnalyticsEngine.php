@@ -3,8 +3,6 @@ class AnalyticsEngine {
 
 	const EVENT_PAGEVIEW = 'page_view';
 
-	private $providers = array('GAT', 'GA_Urchin', 'QuantServe', 'MessageQueue', 'GAS');
-
 	static public function track($provider, $event, $eventDetails=array(), $setupParams=array()){
 		global $wgDevelEnvironment;
 		global $wgNoExternals, $wgRequest;

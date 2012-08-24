@@ -75,8 +75,6 @@ class AdProviderGAM implements iAdProvider {
 	 * GA_googleFillSlot is what actually calls the ads.
 	 */
 	public function getBatchCallHtml(){
-		global $wgUser;
-
 		$this->batchHtmlCalled = true;
 
 		$out = "<!-- ## BEGIN " . __CLASS__ . '::' . __METHOD__ . " ## -->\n";
@@ -97,9 +95,7 @@ class AdProviderGAM implements iAdProvider {
 		// Always pass the hub as a key value
 		$out .= $this->getTargetingValue('hub', $this->getHub()) . "\n";
 		// And skin
-		if (is_object($wgUser)){
-			$out .= $this->getTargetingValue('skin_name', $wgUser->getSkin()->getSkinName()) . "\n";
-		}
+		$out .= $this->getTargetingValue('skin_name', RequestContext::getMain()->getSkin()->getSkinName()) . "\n";
 		// And languages
 		$out .= 'GA_googleAddAttr("cont_lang", wgContentLanguage);' . "\n";
 		$out .= 'GA_googleAddAttr("user_lang", wgUserLanguage);' . "\n";
@@ -131,11 +127,7 @@ class AdProviderGAM implements iAdProvider {
 		$channel = $this->getChannel();
 		$out = '';
 
-		global $wgUser;
-		$skin_name = null;
-		if (is_object($wgUser)){
-			$skin_name = $wgUser->getSkin()->getSkinName();
-		}
+		$skin_name = RequestContext::getMain()->getSkin()->getSkinName();
 		if ($channel != "3156555836" && $skin_name == 'monaco' ){
 			// Set the colors to match the wiki, except for "3156555836", which is testing white
 			// This is only available in monaco
