@@ -86,12 +86,12 @@ class ArticleCommentsController extends WikiaController {
 		}
 
 		$this->getCommentsData( $title, $page );
-		$this->wg->Out->tagWithSurrogateKeys( ArticleComment::getSurrogateKey($articleId) );
+		// Commenting out for now because this causes caching for logged in users (BugId:45429)
+		//$this->wg->Out->tagWithSurrogateKeys( ArticleComment::getSurrogateKey($articleId) );
 
-		global $wgArticleCommentsLoadOnDemand;
-		if(!empty($wgArticleCommentsLoadOnDemand)) {
-			// when lazy loading this request shouldn't be cached in the browser
-			$this->response->setCacheValidity(0, 0, array(WikiaResponse::CACHE_TARGET_BROWSER));
+		// When lazy loading this request it shouldn't be cached in the browser
+		if ( !empty($this->wg->ArticleCommentsLoadOnDemand) ) {
+			$this->response->setCacheValidity( 0, 0, array( WikiaResponse::CACHE_TARGET_BROWSER ) );
 		}
 
 		$this->wf->profileOut( __METHOD__ );
