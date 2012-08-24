@@ -152,3 +152,9 @@
 .popover .UserStatsMenu {
 	display: block;
 }
+.ChatWindow .UserStatsMenu {
+	@include box-shadow(0, 0, 12px, $color-body);
+	border: 3px solid $color-body;
+	position: absolute;
+	z-index: 100;
+}
