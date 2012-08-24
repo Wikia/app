@@ -83,16 +83,19 @@ public class Properties {
 	{
 		Global.BROWSER = System.getProperty("browser");
 		Global.CONFIG_FILE = new File(System.getProperty("config"));
+		Global.CAPTCHA_FILE = new File(System.getProperty("captcha"));
 		Global.DOMAIN = System.getProperty("base-address");
 		Global.LIVE_DOMAIN = "http://www.wikia.com/";
+		Global.LOG_VERBOSE = 1;
 	}
 	
 	private static void setPropertiesManually()
 	{
-		Global.BROWSER = "FF";
+		Global.BROWSER = "IE";
 		Global.DOMAIN = "http://mediawiki119.wikia.com/";
 		Global.LIVE_DOMAIN = "http://www.wikia.com/";
 		Global.CONFIG_FILE = new File("c:"+File.separator+"wikia-qa"+File.separator+"config.xml");
 		Global.CAPTCHA_FILE = new File("c:"+File.separator+"wikia-qa"+File.separator+"captcha.txt");
+		Global.LOG_VERBOSE = 1;
 	}
 }
