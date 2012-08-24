@@ -142,6 +142,7 @@ class IgnFeedIngester extends VideoFeedIngester {
 		$categories[] = 'IGN';
 
 		if(!empty($data['gameContent'])) {
+			$categories[] = 'IGN_games';
 			$categories[] = 'Games';
 		} else {
 			$categories[] = 'IGN_entertainment';
