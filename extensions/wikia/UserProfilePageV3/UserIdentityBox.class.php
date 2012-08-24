@@ -34,11 +34,8 @@ class UserIdentityBox {
 	private $title = null;
 	private $topWikisLimit = 5;
 
-	//cache for UserIdentityBox::isUserStaff()
-	protected $isUserStaff = null;
-
-	//cache for UserIdentityBox::isUserAuthenticated()
-	protected $isUserAuthenticated = null;
+	//instance cache for UserIdentityBox::getUsersEffectiveGroups()
+	protected $usersEffectiveGroups = null;
 
 	const WIKIA_GROUP_STAFF_NAME = 'staff';
 	const WIKIA_GROUP_AUTHENTICATED_NAME = 'authenticated';
@@ -120,6 +117,7 @@ class UserIdentityBox {
 			$wikiId = $this->app->wg->CityId;
 
 			if (empty($this->userStats)) {
+				/** @var $userStatsService UserStatsService */
 				$userStatsService = F::build('UserStatsService', array($userId));
 				$this->userStats = $userStatsService->getStats();
 			}
@@ -283,10 +281,18 @@ class UserIdentityBox {
 		return $data;
 	}
 
+	/**
+	 * @desc Informs if the use rhas ever edited masthead
+	 * @return String
+	 */
 	private function hasUserEverEditedMasthead() {
 		return $has = $this->user->getOption(self::USER_EVER_EDITED_MASTHEAD, false);
 	}
 
+	/**
+	 * @param integer $wikiId
+	 * @return String
+	 */
 	private function hasUserEditedMastheadBefore($wikiId) {
 		return $this->user->getOption(self::USER_EDITED_MASTHEAD_PROPERTY . $wikiId, false);
 	}
@@ -484,7 +490,7 @@ class UserIdentityBox {
 	/**
 	 * Gets user group and additionaly sets other user's data (blocked, founder)
 	 *
-	 * @param array reference to user data array
+	 * @param array $data reference to user data array
 	 *
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 * @author tor
@@ -497,7 +503,7 @@ class UserIdentityBox {
 		//blocked user has only one tag displayed "Blocked"
 			$tags[] = $this->app->wf->Msg('user-identity-box-group-blocked');
 		} else {
-			$this->getVerifiedOrStaff($tags);
+			$this->getFirstTag($tags);
 
 			if( $this->isFounder() ) {
 				$tags[] = $this->app->wf->Msg('user-identity-box-group-founder');
@@ -518,7 +524,7 @@ class UserIdentityBox {
 		$this->app->wf->ProfileIn(__METHOD__);
 
 		$result = '';
-		$group = $this->getUserGroups($this->user);
+		$group = $this->getUsersHighestGroup($this->user);
 		if( $group ) {
 			$result = $this->app->wf->Msg('user-identity-box-group-' . $group);
 		}
@@ -535,41 +541,18 @@ class UserIdentityBox {
 		$this->app->wf->ProfileOut(__METHOD__);
 	}
 
-	protected function isUserStaff() {
-		$this->app->wf->ProfileIn(__METHOD__);
-
-		if( !is_null($this->isUserStaff) ) {
-			$this->app->wf->ProfileOut(__METHOD__);
-			return $this->isUserStaff;
-		} else {
-			$this->isUserStaff = in_array(self::WIKIA_GROUP_STAFF_NAME, $this->user->getEffectiveGroups());
-
-			$this->app->wf->ProfileOut(__METHOD__);
-			return $this->isUserStaff;
-		}
-	}
-
-	protected function isUserAuthenticated() {
-		$this->app->wf->ProfileIn(__METHOD__);
-
-		if( !is_null($this->isUserAuthenticated) ) {
-			$this->app->wf->ProfileOut(__METHOD__);
-			return $this->isUserAuthenticated;
-		} else {
-			$this->isUserAuthenticated = in_array(self::WIKIA_GROUP_AUTHENTICATED_NAME, $this->user->getEffectiveGroups());
-
-			$this->app->wf->ProfileOut(__METHOD__);
-			return $this->isUserAuthenticated;
-		}
-	}
-
+	/**
+	 * @desc Returns true if user is not a staff member and is blocked locally/globally
+	 *
+	 * @return bool
+	 */
 	protected function isBlocked() {
 		$this->app->wf->ProfileIn(__METHOD__);
 
 		// check if the user is blocked locally, if not, also check if they're blocked globally (via Phalanx)
 		$isBlocked = $this->user->isBlocked() || $this->user->isBlockedGlobally();
 
-		if( $isBlocked && !$this->isUserStaff() ) {
+		if( $isBlocked && !$this->isUserInGroup(self::WIKIA_GROUP_STAFF_NAME) ) {
 			$this->app->wf->ProfileOut(__METHOD__);
 			return true;
 		}
@@ -579,25 +562,54 @@ class UserIdentityBox {
 	}
 
 	/**
-	 * @desc Checks special right for authenticated users. But this kind of authentication is different than in MW -- our staff adds this right if a user is verified by us as our partner employee
+	 * @desc Puts "Staff" or "Authenticated" at the begining in user's tags
 	 *
 	 * @param Array $tags should be an empty array
 	 * @return bool
 	 */
-	protected function getVerifiedOrStaff(&$tags) {
-		if( $this->isUserStaff() ) {
-			$tags[] = $this->app->wf->Msg('user-identity-box-group-' .  self::WIKIA_GROUP_STAFF_NAME);
-		} else if( $this->isUserAuthenticated() ) {
-			$tags[] = $this->app->wf->Msg('user-identity-box-group-' . self::WIKIA_GROUP_AUTHENTICATED_NAME);
+	protected function getFirstTag(&$tags) {
+		if( $this->isUserInGroup(self::WIKIA_GROUP_STAFF_NAME) ) {
+			array_unshift($tags, $this->app->wf->Msg('user-identity-box-group-' .  self::WIKIA_GROUP_STAFF_NAME));
+		} else if( $this->isUserInGroup(self::WIKIA_GROUP_AUTHENTICATED_NAME) ) {
+			array_unshift($tags, $this->app->wf->Msg('user-identity-box-group-' . self::WIKIA_GROUP_AUTHENTICATED_NAME));
 		}
+	}
+
+	/**
+	 * @desc Returns instance cached version of user's effective groups not to call User::getEffectiveGroups too many times
+	 *
+	 * @return null | array
+	 */
+	protected function getUsersEffectiveGroups() {
+		if( is_null($this->usersEffectiveGroups) ) {
+			$this->usersEffectiveGroups = $this->user->getEffectiveGroups();
+		}
+
+		return $this->usersEffectiveGroups;
+	}
+
+	/**
+	 * @desc Checks if user is in given user group
+	 * @param String $userGroupName user group name in example: 'staff', 'authenticated' etc.
+	 *
+	 * @return bool
+	 */
+	protected function isUserInGroup($userGroupName) {
+		if( !empty($userGroupName) ) {
+			return in_array($userGroupName, $this->getUsersEffectiveGroups());
+		}
+
+		return false;
 	}
 
 	/**
 	 * @brief Returns false if any of "important" fields is not empty -- then it means not to display zero states
 	 *
-	 * @param array reference to user data array
+	 * @param array $data reference to user data array
 	 *
 	 * @author Andrzej 'nAndy' Łukaszewski
+	 *
+	 * @return boolean
 	 */
 	public function checkIfDisplayZeroStates($data) {
 		$this->app->wf->ProfileIn(__METHOD__);
@@ -654,14 +666,14 @@ class UserIdentityBox {
 	/**
 	 * @brief Gets string with user most important group
 	 *
-	 * @return string | false
+	 * @return string | boolean
 	 *
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
-	protected function getUserGroups() {
+	protected function getUsersHighestGroup() {
 		$this->app->wf->ProfileIn(__METHOD__);
 
-		$userGroups = $this->user->getEffectiveGroups();
+		$userGroups = $this->getUsersEffectiveGroups();
 		usort($userGroups, array($this, 'sortUserGroups'));
 
 		if (isset($userGroups[0]) && in_array($userGroups[0], array_keys($this->groupsRank))) {
@@ -678,6 +690,8 @@ class UserIdentityBox {
 
 	/**
 	 * @brief Gets top wikis from DB for devboxes from method UserIdentityBox::getTestData()
+	 *
+	 * @return array
 	 */
 	public function getTopWikisFromDb($limit = null) {
 		$this->app->wf->ProfileIn(__METHOD__);
@@ -716,6 +730,7 @@ class UserIdentityBox {
 				$wikiId = $row->wiki_id;
 				$editCount = $row->edits;
 				$wikiName = F::build('WikiFactory', array('wgSitename', $wikiId), 'getVarValueByName');
+				/** @var $wikiTitle GlobalTitle */
 				$wikiTitle = F::build('GlobalTitle', array($this->user->getName(), NS_USER_TALK, $wikiId), 'newFromText');
 
 				if ($wikiTitle) {
@@ -731,6 +746,8 @@ class UserIdentityBox {
 
 	/**
 	 * @brief Gets top wiki from memc filters them and returns
+	 *
+	 * @return array
 	 */
 	public function getTopWikis($refreshHidden = false) {
 		$this->app->wf->ProfileIn(__METHOD__);
@@ -798,11 +815,13 @@ class UserIdentityBox {
 		$this->app->wf->ProfileIn(__METHOD__);
 
 		$wikiName = F::build('WikiFactory', array('wgSitename', $wikiId), 'getVarValueByName');
+		/** @var $wikiTitle GlobalTitle */
 		$wikiTitle = F::build('GlobalTitle', array($this->user->getName(), NS_USER_TALK, $wikiId), 'newFromText');
 
 		if ($wikiTitle instanceof Title) {
 			$wikiUrl = $wikiTitle->getFullUrl();
 
+			/** @var $userStatsService UserStatsService */
 			$userStatsService = F::build('UserStatsService', array($this->app->wg->User->getId()));
 			$userStats = $userStatsService->getStats();
 
@@ -850,6 +869,8 @@ class UserIdentityBox {
 
 	/**
 	 * @brief Gets memcache id for hidden wikis
+	 *
+	 * @return array
 	 */
 	private function getMemcHiddenWikisId() {
 		return wfSharedMemcKey('user-identity-box-data-top-hidden-wikis-' . $this->user->getId());
@@ -888,6 +909,7 @@ class UserIdentityBox {
 		foreach ($wikis as $wikiId => $editCount) {
 			if (!$this->isTopWikiHidden($wikiId) && ($wikiId != $this->app->wg->CityId)) {
 				$wikiName = F::build('WikiFactory', array('wgSitename', $wikiId), 'getVarValueByName');
+				/** @var $wikiTitle GlobalTitle */
 				$wikiTitle = F::build('GlobalTitle', array($this->user->getName(), NS_USER_TALK, $wikiId), 'newFromText');
 
 				if ($wikiTitle) {
@@ -955,6 +977,7 @@ class UserIdentityBox {
 	/**
 	 * @brief auxiliary method for getting hidden pages/wikis from db
 	 * @author ADi
+	 * @return array
 	 */
 	private function getHiddenFromDb($dbHandler) {
 		$this->app->wf->ProfileIn(__METHOD__);
@@ -1028,7 +1051,7 @@ class UserIdentityBox {
 
 		if (intval($wiki->city_founding_user) === $this->user->GetId()) {
 			// mech: BugId 18248
-			$userGroups = $this->user->getEffectiveGroups();
+			$userGroups = $this->getUsersEffectiveGroups();
 			$founder = in_array('sysop', $userGroups) || in_array('bureaucrat', $userGroups);
 			$this->app->wf->ProfileOut(__METHOD__);
 			return $founder;
@@ -1038,9 +1061,14 @@ class UserIdentityBox {
 		return false;
 	}
 
+	/**
+	 * @brief Returns true if full masthead should be displayed
+	 * @return bool
+	 */
 	public function shouldDisplayFullMasthead() {
 		$userId = $this->user->getId();
 		if (empty($this->userStats)) {
+			/** @var $userStatsService UserStatsService */
 			$userStatsService = F::build('UserStatsService', array($userId));
 			$this->userStats = $userStatsService->getStats();
 		}
@@ -1060,5 +1088,3 @@ class UserIdentityBox {
 	}
 
 }
-
-?>
