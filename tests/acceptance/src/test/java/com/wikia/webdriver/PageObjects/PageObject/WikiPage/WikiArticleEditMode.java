@@ -311,23 +311,9 @@ public class WikiArticleEditMode extends WikiArticlePageObject {
 	 * 	 */
 	public void HoverCursorOverImage(String caption) {
 		waitForElementByElement(iFrame);
-		
-		int headerY = header.getSize().getHeight();
-		int iFrameX = iFrame.getLocation().getX();
-		int iFrameY = iFrame.getLocation().getY();
-		driver.switchTo().frame(iFrame);
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("img[data-rte-meta*='"+caption+"']")));
-		WebElement Image = driver.findElement(By.cssSelector("img[data-rte-meta*='"+caption+"']"));
-		int ImageX = Image.getLocation().getX();
-		int ImageY = Image.getLocation().getY();
-		int ImageWidth = Image.getSize().getWidth();
-		int ImageHeight = Image.getSize().getHeight();
-		
+		CommonFunctions.MoveCursorToIFrameElement(By.cssSelector("img[data-rte-meta*='"+caption+"']"), iFrame);
 		PageObjectLogging.log("HoverCursorOverImage", "Hover your phisical mouse cursor over image.", true, driver);
-		CommonFunctions.MoveCursorTo(iFrameX+ImageX+(ImageWidth/2), iFrameY+headerY+2*ImageY+(ImageHeight/2));
-		driver.switchTo().defaultContent();
-		
-	}
+}
 	
 
 

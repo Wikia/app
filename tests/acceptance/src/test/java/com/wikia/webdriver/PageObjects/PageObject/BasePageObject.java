@@ -12,6 +12,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.interactions.internal.Coordinates;
 import org.openqa.selenium.internal.Locatable;
+import org.openqa.selenium.net.EphemeralPortRangeDetector;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -40,6 +41,8 @@ public class BasePageObject{
 
 	@FindBy(css="a.tools-customize[data-name='customize']")
 	WebElement customizeToolbar_CustomizeButton;
+	@FindBy(css="div.msg")
+	WebElement customizeToolbar_PageWatchlistStatusMessage;
 	@FindBy(css="div.search-box input.search")
 	WebElement customizeToolbar_FindAToolField;
 	@FindBy(css="div.MyToolsRenameItem input.input-box")
@@ -51,7 +54,8 @@ public class BasePageObject{
 	@FindBy(css="span.reset-defaults a")
 	WebElement customizeToolbar_ResetDefaultsButton;
 	
-	private By ToolsList = By.cssSelector("ul.tools li");
+	private By customizeToolbar_ToolsList = By.cssSelector("ul.tools li");
+	
 	
 	public BasePageObject(WebDriver driver)
 	{
@@ -250,6 +254,11 @@ public class BasePageObject{
 		wait.until(CommonExpectedConditions.valueToBePresentInElementsAttribute(By.cssSelector(selector), attribute, value));
 		
 	}
+	public void waitForValueToNotBePresentInElementsAttributeByCss(String selector, String attribute,
+			String value) {
+		wait.until(CommonExpectedConditions.valueToNotBePresentInElementsAttribute(By.cssSelector(selector), attribute, value));
+		
+	}
 
 	public void waitForStringInURL(String givenString) {
 		wait.until(CommonExpectedConditions.givenStringtoBePresentInURL(givenString));
@@ -370,6 +379,45 @@ public class BasePageObject{
 		driver.findElement(By.cssSelector("li.overflow a[data-name='"+Tool_dataname+"']")).click();
 		
 	}
+	
+	/**
+	 * Click on a toolbar tool.
+	 * 
+	 * @param data-name data-name of the toolbar tool. <br> You should check the data-name of the tool you want to click.
+	 * @author Michal Nowierski
+	 */
+	public void customizeToolbar_VerifyPageWatchlistStatusMessage() {
+		PageObjectLogging.log("customizeToolbar_VerifyPageWatchlistStatusMessage", "Verify that the page watchlist status message appeared ", true, driver);
+		waitForElementByElement(customizeToolbar_PageWatchlistStatusMessage);
+		
+	}
+	
+	/**
+	 * Verify that page is followed
+	 * The method should be used only after clicking on "follow" button. Before that, "follow" button does not have 'title' attribute which is necessary in the method
+	 * 
+	 * @author Michal Nowierski
+	 */
+	public void customizeToolbar_VerifyPageFollowed() {
+		PageObjectLogging.log("customizeToolbar_VerifyPageFollowed", "Verify that page is followed", true, driver);
+		waitForElementByCss("a[data-name='follow']");
+		waitForValueToBePresentInElementsAttributeByCss("a[data-name='follow']", "title", "Unfollow");
+	
+	}
+	
+	/**
+	 * Verify that page is unfollowed
+	 * The method should be used only after clicking on "Unfollow" button. Before that, "follow" button does not have 'title' attribute which is necessary in the method
+	 * 
+	 * @author Michal Nowierski
+	 */
+	public void customizeToolbar_VerifyPageUnfollowed() {
+		PageObjectLogging.log("customizeToolbar_VerifyPageUnfollowed", "Verify that page is unfollowed", true, driver);
+		waitForElementByElement(customizeToolbar_PageWatchlistStatusMessage);
+		waitForValueToBePresentInElementsAttributeByCss("a[data-name='follow']", "title", "Follow");
+		
+	}
+	
 	/**
 	 * Look up if Tool appears on Toolbar List
 	 * 
@@ -405,7 +453,7 @@ public class BasePageObject{
 		By By1 = By.cssSelector("ul.options-list li[data-caption='"+Tool+"']");
 		By By2 = By.cssSelector("ul.options-list li[data-caption='"+Tool+"'] img.trash");
 		Point Elem1_location = driver.findElement(By1).getLocation();
-		moveCursorToElem1UntilElem2IsVisible(Elem1_location, By2);
+		CommonFunctions.MoveCursorToElement(Elem1_location);
 		waitForElementByBy(By2);
 		waitForElementClickableByBy(By2);
 		driver.findElement(By2).click();
@@ -422,7 +470,7 @@ public class BasePageObject{
 		By By1 = By.cssSelector("ul.options-list li[data-caption='"+ToolID+"']");
 		By By2 = By.cssSelector("ul.options-list li[data-caption='"+ToolID+"'] img.edit-pencil");
 		Point Elem1_location = driver.findElement(By1).getLocation();
-		moveCursorToElem1UntilElem2IsVisible(Elem1_location, By2);
+		CommonFunctions.MoveCursorToElement(Elem1_location);
 		waitForElementByBy(By2);
 		waitForElementClickableByBy(By2);
 		driver.findElement(By2).click();
@@ -451,10 +499,11 @@ public class BasePageObject{
 	public void customizeToolbar_VerifyToolOnToolbar(String ToolName) {
 		PageObjectLogging.log("customizeToolbar_VerifyToolOnToolbar",
 				"Verify that "+ToolName+" appears in Toolbar.", true, driver);
-		List<WebElement> List = driver.findElements(ToolsList);
+		waitForElementByBy(customizeToolbar_ToolsList);
+		List<WebElement> List = driver.findElements(customizeToolbar_ToolsList);
 		int amountOfToolsOtherThanTheWantedTool = 0;
 		for (int i = 0; i < List.size(); i++) {
-			if (!List.get(i).getText().equals(ToolName)) {
+			if (!driver.findElements(customizeToolbar_ToolsList).get(i).getText().equals(ToolName)) {
 				++amountOfToolsOtherThanTheWantedTool;
 			}
 		}
@@ -466,6 +515,30 @@ public class BasePageObject{
 	}
 	
 	/**
+	 * <p> Verify that wanted Tool appears in Toolbar. <br> 
+	 * The method finds all of Tools appearing in Toolbar (by their name), and checks if there is at least one name which fits the given param (ToolName)
+	 * 
+	 * @param ToolName Tool to be verified (name that should appear on toolbar)
+	 * @author Michal Nowierski
+	 */
+	public void customizeToolbar_UnfollowIfPageIsFollowed() {
+		PageObjectLogging.log("customizeToolbar_UnfollowIfPageIsFollowed",
+				"If the page is Followed, unfollow it (preconditions assurance)", true, driver);
+		List<WebElement> List = driver.findElements(customizeToolbar_ToolsList);
+		for (int i = 0; i < List.size(); i++) {
+			if (List.get(i).getText().equals("Following")) {
+				waitForElementByElement(List.get(i));
+				waitForElementClickableByElement(List.get(i));
+				List.get(i).click();
+				customizeToolbar_VerifyPageWatchlistStatusMessage();
+				wait.until(ExpectedConditions.textToBePresentInElement(customizeToolbar_ToolsList, "Follow"));
+			}
+		}
+
+	}
+	
+	
+	/**
 	 * <p> Verify that wanted Tool does not appear in Toolbar. <br> 
 	 * The method finds all of Tools appearing in Toolbar (by their name), and checks if there is no tool that fits the given param (ToolName)
 	 * 
@@ -475,8 +548,8 @@ public class BasePageObject{
 	public void customizeToolbar_VerifyToolNotOnToolbar(String ToolName){
 		PageObjectLogging.log("customizeToolbar_VerifyToolNotOnToolbar",
 				"Verify that "+ToolName+" tool does not appear in Toolbar.", true, driver);
-		waitForElementByBy(ToolsList);
-		List<WebElement> List = driver.findElements(ToolsList);
+		waitForElementByBy(customizeToolbar_ToolsList);
+		List<WebElement> List = driver.findElements(customizeToolbar_ToolsList);
 		int amountOfToolsOtherThanTheWantedTool = 0;
 		for (int i = 0; i < List.size(); i++) {
 			if (!List.get(i).getText().equals(ToolName)) {
@@ -498,72 +571,7 @@ public class BasePageObject{
 		
 	}
 	
-	/**
-	 * Method moves cursor down from location of Element1 until that action makes the wanted Element2 visible <br> 
-	 * When the cursor reaches bottom of window, it moves to right and starts going down again
-	 * 
-	 * @param location1 Element1Location to start moving cursor from
-	 * @param By2 Element2 to be visible at some point after moving the cursor
-	 * @author Michal Nowierski
-	 */
-	public void moveCursorToElem1UntilElem2IsVisible(Point location1, By By2) {
-			
-		PageObjectLogging.log("moveCursorToEleme1UntilElem2IsVisible",
-				"move cursor down from Element1 until that action makes the wanted Element2 visible", true, driver);
-		location1 = location1.moveBy(15, 0);
-		CommonFunctions.MoveCursorTo(location1.getX(), location1.getY());
-		ChangeLocationUntilElemVisible(location1, location1, By2);		
-		
-	}
 	
-	/**
-	 * The method is engine for moving the cursor <br>
-	 * The method is recursive <br> 
-	 * The method is used by moveCursorToEleme1UntilElem2IsVisible 
-	 *  
-	 * @param location Location of element to start moving cursor from
-	 * @param OriginalLocation The same location, but this parameter won't be changed inside the method
-	 * @param By Element to be visible at some point after moving the cursor
-	 * 
-	 * @author Michal Nowierski
-	 */
-	private boolean ChangeLocationUntilElemVisible(Point location, Point OriginalLocation, By by) {
-	try {
-			if (driver.findElement(by).isDisplayed()) {
-				return true;
-			}
-			else {
-				location = location.moveBy(0, 5);
-				CommonFunctions.MoveCursorTo(location.getX(), location.getY());
-				int WindowHeight = driver.manage().window().getSize().height;
-				int WindowWidth = driver.manage().window().getSize().width;
-				if (location.getX() > WindowWidth) {
-					return false;
-				}
-				if (location.getY() > WindowHeight) {
-					location = OriginalLocation.moveBy(10, 0);
-					ChangeLocationUntilElemVisible(location, location, by);				
-				}
-				return ChangeLocationUntilElemVisible(location, OriginalLocation, by);
-				
-			}
-
-		} 
-		catch (NoSuchElementException e) {
-			location = location.moveBy(0, 5);
-			CommonFunctions.MoveCursorTo(location.getX(), location.getY());
-			int WindowHeight = driver.manage().window().getSize().height;
-			int WindowWidth = driver.manage().window().getSize().width;
-			if (location.getX() > WindowWidth) {
-				return false;
-			}
-			if (location.getY() > WindowHeight) {
-				location = OriginalLocation.moveBy(10, 0);
-				ChangeLocationUntilElemVisible(location, location, by);	
-			}
-			return ChangeLocationUntilElemVisible(location, OriginalLocation, by);
-		}
-	}
 	
 	
 	

@@ -125,17 +125,19 @@ public class CustomizeToolbarTests extends TestTemplate{
 		WikiBasePageObject wiki = new WikiBasePageObject(driver, Global.DOMAIN);
 		WikiArticlePageObject article = wiki.OpenArticle(wikiArticle);
 		CommonFunctions.logIn(Properties.userName2, Properties.password2);
-		article.customizeToolbar_ClickCustomize();
-		article.customizeToolbar_ClickOnResetDefaults();
-		article.customizeToolbar_TypeIntoFindATool("Fo");
-		article.customizeToolbar_ClickOnFoundTool("Follow");
-		article.customizeToolbar_VerifyToolOnToolbarList("Follow");
-		article.customizeToolbar_ClickOnSaveButton();
+		article.customizeToolbar_UnfollowIfPageIsFollowed();
 		article.customizeToolbar_VerifyToolOnToolbar("Follow");
 		article.customizeToolbar_ClickOnTool("follow");
+		article.customizeToolbar_VerifyPageWatchlistStatusMessage();
+		article.customizeToolbar_VerifyPageFollowed();
 		article.customizeToolbar_VerifyToolOnToolbar("Following");
 		article.customizeToolbar_ClickOnTool("follow");
+		article.customizeToolbar_VerifyPageWatchlistStatusMessage();
+		article.customizeToolbar_VerifyPageUnfollowed();
 		article.customizeToolbar_VerifyToolOnToolbar("Follow");
+		article.customizeToolbar_ClickCustomize();
+		article.customizeToolbar_ClickOnResetDefaults();
+		article.customizeToolbar_ClickOnSaveButton();
 		
 	}
 	

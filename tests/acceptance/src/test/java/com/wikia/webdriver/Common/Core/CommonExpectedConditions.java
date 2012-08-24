@@ -48,6 +48,33 @@ public class CommonExpectedConditions {
 	    };
 	  }
 	  
+	 /**
+	   * An expectation for checking if the given text is present in the specified
+	   * element.
+	   * 
+	   * @author Michal Nowierski
+	   */
+	  public static ExpectedCondition<Boolean> valueToNotBePresentInElementsAttribute(
+	      final By locator, final String attribute, final String value) {
+
+	    return new ExpectedCondition<Boolean>() {
+	      public Boolean apply(WebDriver from) {
+	        try {
+	          String elementsAttributeValue = findElement(locator, from).getAttribute(attribute);
+	          return !elementsAttributeValue.contains(value);
+	        } catch (StaleElementReferenceException e) {
+	          return null;
+	        }
+	      }
+
+	      @Override
+	      public String toString() {
+	        return String.format("value ('%s') to be present in element found by %s",
+	        		value, locator);
+	      }
+	    };
+	  }
+	  
 		 /**
 	   * An expectation for checking if the page URL contains givenString
 	   * 
