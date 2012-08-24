@@ -5,6 +5,12 @@
 			<a href="<?= $fullUrl ?>/questionable"><em><?= $imageCount['questionable']?></em> <span>questionable<br>images</span></a>
 		</div>
 <?php } ?>
+<?php if ( $accessRejected ) { ?>
+
+		<div class="tally" style="float: none">
+			<a href="<?= $fullUrl ?>/rejected"><em><?= $imageCount['rejected']?></em> <span>rejected<br>images</span></a>
+		</div>
+<?php } ?>
 	</div>
 	<p>Click on images to mark them for deletion or as questionable (for staff review). When you're done with the batch, click "Review" below to get the next batch.</p>
 	<? if($action == 'questionable') { ?>

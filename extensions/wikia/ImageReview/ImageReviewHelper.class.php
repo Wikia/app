@@ -433,9 +433,7 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 		}
 		
 		$db = $this->getDatawareDB( DB_SLAVE );
-		$where = array(
-			'state' => ImageReviewStatuses::STATE_QUESTIONABLE
-		);
+		$where = array( 'state in (' . ImageReviewStatuses::STATE_QUESTIONABLE . ',' . ImageReviewStatuses::STATE_REJECTED . ')' );
 		
 		$list = $this->getWhitelistedWikis();
 		if ( !empty($list) ) {
@@ -445,19 +443,20 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 		// select by reviewer, state and total count with rollup and then pick the data we want out
 		$result = $db->select(
 			array( 'image_review' ),
-			array( 'count(*) as total' ),
+			array( 'state', 'count(*) as total' ),
 			$where,
 			__METHOD__,
-			array()
+			array( 'GROUP BY' => 'state' )
 		);
 
 		$total = array(
 			'reviewer' => 0, 
 			'unreviewed' => 0, 
-			'questionable' => 0
+			'questionable' => 0,
+			'rejected' => 0,
 		);
 		while( $row = $db->fetchObject($result) ) {
-			$total['questionable'] = $row->total;
+			$total[$row->state] = $row->total;
 
 			// Rollup row with Reviewer total count
 		/*	if ($row->reviewer_id == $reviewer_id && ($row->state > ImageReviewStatuses::STATE_IN_REVIEW)) {
@@ -474,7 +473,12 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 		}
 	//	$total['reviewer'] = $this->wg->Lang->formatNum($total['reviewer']);
 	//	$total['unreviewed'] = $this->wg->Lang->formatNum($total['unreviewed']);
-		$total['questionable'] = $this->wg->Lang->formatNum($total['questionable']);
+		if ( array_key_exists( ImageReviewStatuses::STATE_QUESTIONABLE, $total ) ) {
+			$total['questionable'] = $this->wg->Lang->formatNum($total[ImageReviewStatuses::STATE_QUESTIONABLE]);
+		}
+		if ( array_key_exists( ImageReviewStatuses::STATE_REJECTED, $total ) ) {
+			$total['rejected'] = $this->wg->Lang->formatNum( $total[ImageReviewStatuses::STATE_REJECTED]);
+		}
 		$this->wg->memc->set( $key, $total, 3600 /* 1h */ );
 
 		$this->wf->ProfileOut( __METHOD__ );
