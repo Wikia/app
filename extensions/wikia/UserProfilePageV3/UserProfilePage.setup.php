@@ -29,6 +29,7 @@ $app->registerClass('Masthead', $dir . '/Masthead.class.php');
 /**
  * helper classes (strategies)
  */
+$app->registerClass('UserTagsStrategyBase', $dir . '/strategies/UserTagsStrategyBase.class.php');
 $app->registerClass('UserOneTagStrategy', $dir . '/strategies/UserOneTagStrategy.class.php');
 $app->registerClass('UserTwoTagsStrategy', $dir . '/strategies/UserTwoTagsStrategy.class.php');
 
