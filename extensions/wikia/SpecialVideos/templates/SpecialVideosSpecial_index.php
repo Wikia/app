@@ -25,7 +25,7 @@
 
 <div class="WikiaGrid VideoGrid">
 	<?php $counter = 0 ?>
-	<?php foreach( $videos as $video ) { ?>
+	<?php foreach( $videos as $video ): ?>
 		<?php $alpha = $counter % 3 == 0 ? 'alpha' : ''; ?>
 
 		<div class="grid-2 <?= $alpha ?>" itemprop="video" itemscope itemtype="http://schema.org/VideoObject">
@@ -37,12 +37,16 @@
 			<p><?= $video['byUserMsg'] ?></p>
 			<p itemprop="uploadDate"><?= wfTimeFormatAgo($video['timestamp']) ?></p>
 			<p><?= $video['postedInMsg']; ?></p>
-
 		</div>
 
 		<?php $counter++; ?>
-	<?php } ?>
-	<?php if ( !empty($addVideo) ) { ?>
-	<?php } ?>
+	<?php endforeach; ?>
+	<?php if (!empty($addVideo)): ?>
+		<?php $alpha = $counter % 3 == 0 ? 'alpha' : ''; ?>
+		<div class="grid-2 <?= $alpha ?>">
+			<div class="add-video-placeholder addVideo"></div>
+			<p><a href="#" class="addVideo"><?= wfMsg('special-videos-add-video') ?></a></p>
+		</div>
+	<?php endif; ?>
 </div>
 <?= $pagination ?>

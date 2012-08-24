@@ -5,7 +5,14 @@
 @import "../../../../skins/oasis/css/mixins/bodytext";
 @import "../../../../skins/oasis/css/core/color";
 
-.addVideo {
+$placeholder-bg-img: url(/extensions/wikia/SpecialVideos/images/AddVideoIcons_Dark.png);  /* base64 */
+$placeholder-bg-color: darken($color-page, 10%);
+@if $is-dark-wiki {
+	$placeholder-bg-img: url(/extensions/wikia/SpecialVideos/images/AddVideoIcons_Light.png);  /* base64 */
+	$placeholder-bg-color: lighten($color-page, 10%);
+}
+
+.add-video-button {
 	margin-top: 2px;
 	vertical-align: top;
 	img.sprite {
@@ -62,5 +69,17 @@
 	}
 	.alpha {
 		clear: both;
+	}
+
+	.add-video-placeholder {
+		background-image: $placeholder-bg-img;
+		background-color: $placeholder-bg-color;
+		background-position: 50% 50%;
+		background-repeat: no-repeat;
+		border: 1px solid $color-page-border;
+		cursor: pointer;
+		height: 205px;
+		margin-bottom: 8px;
+		width: 100%;
 	}
 }
