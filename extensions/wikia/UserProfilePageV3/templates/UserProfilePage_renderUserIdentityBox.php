@@ -32,9 +32,6 @@
 					<span class="tag"><?= $tag; ?></span>
 				<?php endforeach; ?>
 			<? endif; ?>
-			<? if(!empty($user['chatBanned'])): ?>
-				<span class="tag"><?= wfMsg('user-identity-box-banned-from-chat'); ?></span>
-			<? endif; ?>
 		</hgroup>
 
 		<? if( $canEditProfile ): ?>
