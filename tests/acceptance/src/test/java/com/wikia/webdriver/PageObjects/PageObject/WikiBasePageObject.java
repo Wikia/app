@@ -1,12 +1,12 @@
-package com.wikia.webdriver.pageObjects.PageObject;
+package com.wikia.webdriver.PageObjects.PageObject;
 
 import org.openqa.selenium.WebDriver;
 
-import com.wikia.webdriver.pageObjects.PageObject.CreateNewWiki.CreateNewWikiPageObjectStep1;
-import com.wikia.webdriver.pageObjects.PageObject.WikiPage.SpecialMultipleUploadPageObject;
-import com.wikia.webdriver.pageObjects.PageObject.WikiPage.SpecialNewFilesPageObject;
-import com.wikia.webdriver.pageObjects.PageObject.WikiPage.SpecialUploadPageObject;
-import com.wikia.webdriver.pageObjects.PageObject.WikiPage.WikiArticlePageObject;
+import com.wikia.webdriver.PageObjects.PageObject.CreateNewWiki.CreateNewWikiPageObjectStep1;
+import com.wikia.webdriver.PageObjects.PageObject.WikiPage.SpecialMultipleUploadPageObject;
+import com.wikia.webdriver.PageObjects.PageObject.WikiPage.SpecialNewFilesPageObject;
+import com.wikia.webdriver.PageObjects.PageObject.WikiPage.SpecialUploadPageObject;
+import com.wikia.webdriver.PageObjects.PageObject.WikiPage.WikiArticlePageObject;
 
 public class WikiBasePageObject extends BasePageObject {
 	protected String Domain;

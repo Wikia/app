@@ -1,13 +1,9 @@
-package com.wikia.webdriver.pageObjects.PageObject.Hubs;
-
-import java.util.List;
+package com.wikia.webdriver.PageObjects.PageObject.Hubs;
 
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-import com.wikia.webdriver.pageObjects.PageObject.HubBasePageObject;
+import com.wikia.webdriver.PageObjects.PageObject.HubBasePageObject;
 
 public class EntertainmentHubPageObject extends HubBasePageObject {
 

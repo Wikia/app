@@ -1,4 +1,4 @@
-package com.wikia.webdriver.pageObjects.PageObject.WikiPage;
+package com.wikia.webdriver.PageObjects.PageObject.WikiPage;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -7,8 +7,8 @@ import org.openqa.selenium.support.PageFactory;
 
 import com.wikia.webdriver.Common.Core.CommonFunctions;
 import com.wikia.webdriver.Common.Logging.PageObjectLogging;
-import com.wikia.webdriver.pageObjects.PageObject.FilePageObject;
-import com.wikia.webdriver.pageObjects.PageObject.WikiBasePageObject;
+import com.wikia.webdriver.PageObjects.PageObject.FilePageObject;
+import com.wikia.webdriver.PageObjects.PageObject.WikiBasePageObject;
 
 public class SpecialUploadPageObject extends WikiBasePageObject {
 
