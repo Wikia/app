@@ -1212,9 +1212,7 @@ class SpecialSearch extends SpecialPage {
 			'a',
 			array(
 				'href' => $this->getTitle()->getLocalURL( $stParams ),
-				'title' => $tooltip,
-				'onmousedown' => 'mwSearchHeaderClick(this);',
-				'onkeydown' => 'mwSearchHeaderClick(this);'
+				'title' => $tooltip
 			),
 			$label
 		);
