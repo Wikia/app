@@ -364,7 +364,7 @@ class Wikia {
 	 *
 	 */
 	static public function log( $method, $sub = false, $message = '', $always = false, $timestamp = false ) {
-	  global $wgDevelEnvironment, $wgErrorLog, $wgDBname, $wgCityId, $wgCommandLineMode;
+	  global $wgDevelEnvironment, $wgErrorLog, $wgDBname, $wgCityId, $wgCommandLineMode, $wgCommandLineSilentMode;
 
 		$method = $sub ? $method . "-" . $sub : $method;
 		if( $wgDevelEnvironment || $wgErrorLog || $always ) {
@@ -374,7 +374,7 @@ class Wikia {
 		/**
 		 * commandline = echo
 		 */
-		if( $wgCommandLineMode ) {
+		if( $wgCommandLineMode && empty( $wgCommandLineSilentMode ) ) {
 			$line = sprintf( "%s:%s/%d: %s\n", $method, $wgDBname, $wgCityId, $message );
 			if( $timestamp ) {
 				$line = wfTimestamp( TS_DB, time() ) . " " . $line;
