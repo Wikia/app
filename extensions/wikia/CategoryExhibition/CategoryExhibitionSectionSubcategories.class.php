@@ -134,7 +134,6 @@ class CategoryExhibitionSectionSubcategories extends CategoryExhibitionSection {
 			$counter = 0;
 			$snippetText = '';
 			$imageUrl = '';
-			$pageIdList = array();
 			foreach( $result as $item ){
 				if ( $counter > F::App()->wg->maxCategoryExhibitionSubcatChecks ){
 					break;
