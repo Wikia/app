@@ -5,21 +5,20 @@
  */
 class WatchSubPagesHelper {
 
-	/**
-	 * Add togglers and translations\
-	 *
-	 * @author Jakub Kurcek <jakub@wikia-inc.com>
-	 */
-	public static function AddToUserMenu( &$extraToggles ) {
-		$extraToggles[] = 'watchlistsubpages';
-		return true;
-	}
+	const PREFERENCES_ENTRY = 'watchsubpages';
 
 	/**
-	 * @static
+	 * Add a checkbox to user preferences
+	 *
+	 * @param $user User current user
+	 * @param $preferences array preferences to modify
 	 */
-	static public function AddUsedToggles( &$obj ) {
-		$obj->mUsedToggles['watchsubpages'] = true;
+	static public function onGetPreferences( User $user, Array &$preferences ) {
+		$preferences[self::PREFERENCES_ENTRY] = array(
+			'type' => 'toggle',
+			'section' => 'watchlist/advancedwatchlist',
+			'label' => wfMsg('tog-watchlistsubpages'),
+		);
 		return true;
 	}
 
@@ -29,14 +28,14 @@ class WatchSubPagesHelper {
 	 * - User is watching parent page
 	 * - User has 'watchlistsubpages' turned on
 	 *
-	 * @param $article Article object ( subpage )
+	 * @param $article WikiPage object ( subpage )
 	 *
 	 * @author Jakub Kurcek <jakub@wikia-inc.com>
 	 */
-	static public function ClearParentNotification( Page $page ) {
+	static public function ClearParentNotification( WikiPage $page ) {
 		global $wgUser;
 
-		if ( $wgUser->getBoolOption( 'watchlistsubpages' ) ) {
+		if ( $wgUser->getBoolOption( self::PREFERENCES_ENTRY ) ) {
 			if ( ! $page->getTitle()->userIsWatching() ) {
 				$tmpDBkey = $page->getTitle()->getDBkey();
 				$arrTitle = explode( '/', $tmpDBkey );
@@ -59,15 +58,18 @@ class WatchSubPagesHelper {
 	 * @param $watchers array of user ID
 	 * @param $title Title object
 	 * @param $editor User object
-	 * @param $notificationTimeoutSql string | timeout to the watchlist
+	 * @param $notificationTimeoutSql string timeout to the watchlist
 	 *
 	 * @author Jakub Kurcek <jakub@wikia-inc.com>
 	 */
 	static public function NotifyOnSubPageChange( $watchers, $title, $editor, $notificationTimeoutSql ) {
+		wfProfileIn(__METHOD__);
+
 		// Gets parent data
 		$arrTitle = explode( '/' , $title->getDBkey() );
 
 		if ( empty($arrTitle) ) {
+			wfProfileOut(__METHOD__);
 			return true;
 		}
 
@@ -94,12 +96,11 @@ class WatchSubPagesHelper {
 		$parentpageWatchers = array();
 
 		while ( $row = $dbw->fetchObject( $res ) ) {
-			$tmpUser = new User();
-			$tmpUser->setId( intval( $row->wl_user ) );
-			$tmpUser->loadFromId();
+			$userId = intval($row->wl_user);
+			$tmpUser = User::newFromId($userId);
 
-			if ( $tmpUser->getBoolOption( 'watchlistsubpages' ) ) {
-				$parentpageWatchers[] = (integer)$row->wl_user;
+			if ($tmpUser->getBoolOption( self::PREFERENCES_ENTRY ) ) {
+				$parentpageWatchers[] = $userId;
 			}
 
 			unset( $tmpUser );
@@ -111,6 +112,7 @@ class WatchSubPagesHelper {
 		$wl = WatchedItem::fromUserTitle( $editor, $newTitle );
 		$wl->updateWatch( $parentOnlyWatchers );
 
+		wfProfileOut(__METHOD__);
 		return true;
 	}
 }
