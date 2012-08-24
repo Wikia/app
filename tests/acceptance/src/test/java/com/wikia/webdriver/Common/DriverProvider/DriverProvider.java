@@ -38,7 +38,6 @@ public class DriverProvider {
 		}
 		else if (Global.BROWSER.equals("FF"))
 		{
-			
 			driver = new EventFiringWebDriver(new FirefoxDriver()).register(listener);
 		}
 		else if (Global.BROWSER.equals("CHROME"))
