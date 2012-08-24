@@ -14,7 +14,8 @@ class WikiaSearchResultSet implements Iterator {
 
 	public function __construct(Array $results = array(), $resultsFound = 0, $resultsStart = 0, $query = null) {
 		$this->setResults($results);
-		$this->setResultsFound($resultsFound);
+		# the max is for if no results found, but we have results (e.g. push to top)
+		$this->setResultsFound(max(array(count($results), $resultsFound)));
 		$this->setResultsStart($resultsStart);
 		$this->setQuery($query);
 	}
