@@ -2,7 +2,7 @@
 /**
  * @desc Class which is handling logic operations connected to users groups and displaying them in user masthead (two "tags" at most)
  */
-class UserTwoTagsStrategy extends UserOneTagStrategy {
+class UserTwoTagsStrategy extends UserTagsStrategyBase {
 	/**
 	 * Used to compare user rights in UserIdentityBox::sortUserGroups()
 	 * @var array
@@ -16,6 +16,8 @@ class UserTwoTagsStrategy extends UserOneTagStrategy {
 	);
 
 	/**
+	 * @desc Returns at most two-elements array
+	 *
 	 * @return array
 	 */
 	public function getUserTags() {
