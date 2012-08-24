@@ -5,10 +5,10 @@ import org.testng.annotations.Test;
 
 import com.wikia.webdriver.Common.Properties.Properties;
 import com.wikia.webdriver.Common.Templates.TestTemplate;
-import com.wikia.webdriver.pageObjects.PageObject.SignUp.AlmostTherePageObject;
-import com.wikia.webdriver.pageObjects.PageObject.SignUp.ConfirmationPageObject;
-import com.wikia.webdriver.pageObjects.PageObject.SignUp.SignUpPageObject;
-import com.wikia.webdriver.pageObjects.PageObject.SignUp.UserProfilePageObject;
+import com.wikia.webdriver.PageObjects.PageObject.SignUp.AlmostTherePageObject;
+import com.wikia.webdriver.PageObjects.PageObject.SignUp.ConfirmationPageObject;
+import com.wikia.webdriver.PageObjects.PageObject.SignUp.SignUpPageObject;
+import com.wikia.webdriver.PageObjects.PageObject.SignUp.UserProfilePageObject;
 
 public class SignUpTests_account_creation extends TestTemplate
 {
