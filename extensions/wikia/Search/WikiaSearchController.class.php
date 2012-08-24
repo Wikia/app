@@ -132,7 +132,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			$resultsFound = $results->getResultsFound();
 
 			if(!empty($resultsFound)) {
-				$paginationLinks = $this->sendSelfRequest( 'pagination', array( 'query' => $query, 'page' => $page, 'count' => $resultsFound, 'crossWikia' => $isInterWiki, 'skipCache' => $skipCache, 'debug' => $debug, 'namespaces' => $namespaces, 'advanced' => $advanced, 'redirs' => $redirs, 'pageCount' => $results->getPageCount() ) );
+				$paginationLinks = $this->sendSelfRequest( 'pagination', array( 'query' => $query, 'page' => $page, 'count' => $resultsFound, 'crossWikia' => $isInterWiki, 'skipCache' => $skipCache, 'debug' => $debug, 'namespaces' => $namespaces, 'advanced' => $advanced, 'redirs' => $redirs) );
 			}
 
 			$this->app->wg->Out->setPageTitle( $this->wf->msg( 'wikiasearch2-page-title-with-query', array(ucwords($query), $wikiName) )  );
@@ -342,7 +342,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$query = $this->getVal('query');
 		$page = $this->getVal( 'page', 1 );
 		$resultsCount = $this->getVal( 'count', 0);
-		$pagesNum = $this->getVal( 'pageCount', 0);
+		$pagesNum = ceil( $resultsCount / self::RESULTS_PER_PAGE );
 
 		$crossWikia = $this->getVal('crossWikia');
 		$debug = $this->getVal('debug');
