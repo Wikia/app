@@ -1,9 +1,10 @@
+@import "../../../../skins/oasis/css/core/color";
+@import "../../../../skins/oasis/css/mixins/bodytext";
 @import "../../../../skins/oasis/css/mixins/border-radius";
-@import "../../../../skins/oasis/css/mixins/gradient";
 @import "../../../../skins/oasis/css/mixins/box-shadow";
 @import "../../../../skins/oasis/css/mixins/clearfix";
-@import "../../../../skins/oasis/css/mixins/bodytext";
-@import "../../../../skins/oasis/css/core/color";
+@import "../../../../skins/oasis/css/mixins/gradient";
+@import "../../../../skins/oasis/css/mixins/opacity";
 
 $placeholder-bg-img: url(/extensions/wikia/SpecialVideos/images/AddVideoIcons_Dark.png);  /* base64 */
 $placeholder-bg-color: darken($color-page, 10%);
@@ -70,8 +71,8 @@ $placeholder-bg-color: darken($color-page, 10%);
 	.alpha {
 		clear: both;
 	}
-
 	.add-video-placeholder {
+		@include opacity(50);
 		background-image: $placeholder-bg-img;
 		background-color: $placeholder-bg-color;
 		background-position: 50% 50%;
@@ -81,5 +82,9 @@ $placeholder-bg-color: darken($color-page, 10%);
 		height: 205px;
 		margin-bottom: 8px;
 		width: 100%;
+		
+		&:hover {
+			@include opacity(65);
+		}
 	}
 }

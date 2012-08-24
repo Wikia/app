@@ -62,10 +62,10 @@ class RelatedVideosData {
 	public function addVideo( $articleId, $url ) {
 
 		wfProfileIn( __METHOD__ );
-		if ( empty( $articleId ) ){
+		/*if ( empty( $articleId ) ){
 			wfProfileOut( __METHOD__ );
 			return wfMsg('related-videos-error-no-article-id');
-		}
+		}*/
 
 		if ( empty( $url ) ){
 			wfProfileOut( __METHOD__ );
