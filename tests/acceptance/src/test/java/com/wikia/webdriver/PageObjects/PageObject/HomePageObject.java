@@ -1,4 +1,4 @@
-package com.wikia.webdriver.pageObjects.PageObject;
+package com.wikia.webdriver.PageObjects.PageObject;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -9,10 +9,10 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import com.wikia.webdriver.Common.Core.Global;
 import com.wikia.webdriver.Common.Logging.PageObjectLogging;
-import com.wikia.webdriver.pageObjects.PageObject.CreateNewWiki.CreateNewWikiPageObjectStep1;
-import com.wikia.webdriver.pageObjects.PageObject.Hubs.EntertainmentHubPageObject;
-import com.wikia.webdriver.pageObjects.PageObject.Hubs.LifestyleHubPageObject;
-import com.wikia.webdriver.pageObjects.PageObject.Hubs.VideoGamesHubPageObject;
+import com.wikia.webdriver.PageObjects.PageObject.CreateNewWiki.CreateNewWikiPageObjectStep1;
+import com.wikia.webdriver.PageObjects.PageObject.Hubs.EntertainmentHubPageObject;
+import com.wikia.webdriver.PageObjects.PageObject.Hubs.LifestyleHubPageObject;
+import com.wikia.webdriver.PageObjects.PageObject.Hubs.VideoGamesHubPageObject;
 
 public class HomePageObject extends BasePageObject{
 

@@ -1,4 +1,4 @@
-package com.wikia.webdriver.pageObjects.PageObject.WikiPage;
+package com.wikia.webdriver.PageObjects.PageObject.WikiPage;
 
 
 
@@ -11,7 +11,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import com.wikia.webdriver.Common.Logging.PageObjectLogging;
-import com.wikia.webdriver.pageObjects.PageObject.WikiBasePageObject;
+import com.wikia.webdriver.PageObjects.PageObject.WikiBasePageObject;
 
 public class SpecialMultipleUploadPageObject extends WikiBasePageObject {
 

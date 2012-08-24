@@ -1,4 +1,4 @@
-package com.wikia.webdriver.pageObjects.PageObject.SignUp;
+package com.wikia.webdriver.PageObjects.PageObject.SignUp;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
@@ -11,8 +11,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import com.wikia.webdriver.Common.Core.CommonFunctions;
 import com.wikia.webdriver.Common.Core.MailFunctions;
 import com.wikia.webdriver.Common.Logging.PageObjectLogging;
-import com.wikia.webdriver.Common.Properties.Properties;
-import com.wikia.webdriver.pageObjects.PageObject.BasePageObject;
+import com.wikia.webdriver.PageObjects.PageObject.BasePageObject;
 
 public class UserProfilePageObject extends BasePageObject{
 

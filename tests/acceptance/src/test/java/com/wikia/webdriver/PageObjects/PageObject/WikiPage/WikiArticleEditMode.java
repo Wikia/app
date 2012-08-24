@@ -1,4 +1,4 @@
-package com.wikia.webdriver.pageObjects.PageObject.WikiPage;
+package com.wikia.webdriver.PageObjects.PageObject.WikiPage;
 
 import java.util.List;
 
