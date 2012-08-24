@@ -112,8 +112,8 @@ class WikiaMobileCategoryViewer extends CategoryViewer{
 		$this->addItem( $title, $sortkey );
 	}
 
-	function addSubcategoryObject( $title, $sortkey, $pageLength ){
-		$this->addItem( $title, $sortkey );
+	function addSubcategoryObject( $cat, $sortkey, $pageLength ){
+		$this->addItem( $cat->getTitle(), $sortkey );
 	}
 
 	private function addItem( $title, $sortkey ){
