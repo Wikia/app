@@ -195,13 +195,19 @@ var WikiaFooterApp = {
 		},
 
 		handleOverflowMenu: function () {
-			var all = this.el.children('li');
-			var moreable = all.filter('.overflow');
-			var where = moreable.last().next();
+			var all = this.el.children('li'),
+				moreable = all.filter('.overflow'),
+				where = moreable.last().next(),
+				width = 0,
+				mwidth = 0,
+				fwidth = this.el.width();
 
-			var width = 0, mwidth = 0, fwidth = this.el.width();
-			all.each(function(i,v){width += $(v).outerWidth(true);});
-			moreable.each(function(i,v){mwidth += $(v).outerWidth(true);});
+			all.each(function(i,v) {
+				width += $(v).outerWidth(true);
+			});
+			moreable.each(function(i,v) {
+				mwidth += $(v).outerWidth(true);
+			});
 
 			if (width < fwidth) {
 				return;
