@@ -11,15 +11,11 @@ $wgExtensionCredits['specialpage'][] = array(
 
 $dir = dirname( __FILE__ ) . '/';
 
-/*	Auto loader setup */
-	$wgAutoloadClasses['WatchSubPagesHelper']  = $dir . 'WatchSubPagesHelper.class.php';
-	$wgExtensionMessagesFiles['WatchSubPages'] = $dir . 'WatchSubPages.i18n.php';
+/* Auto loader setup */
+$wgAutoloadClasses['WatchSubPagesHelper']  = $dir . 'WatchSubPagesHelper.class.php';
+$wgExtensionMessagesFiles['WatchSubPages'] = $dir . 'WatchSubPages.i18n.php';
 
-/*	Hooks setup */
-if ( !empty( $wgEnableWikiaWatchSubPages ) && $wgEnableWikiaWatchSubPages ) {
-
-	$wgHooks['UserToggles'][] = 'WatchSubPagesHelper::AddToUserMenu';
-	$whHooks['getWatchlistPreferencesCustomHtml'][] = 'WatchSubPagesHelper::AddUsedToggles';
-	$wgHooks['NotifyOnSubPageChange'][] = 'WatchSubPagesHelper::NotifyOnSubPageChange';
-	$wgHooks['AfterViewUpdates'][] = 'WatchSubPagesHelper::ClearParentNotification';
-}
+/* Hooks setup */
+$wgHooks['GetPreferences'][] = 'WatchSubPagesHelper::onGetPreferences';
+$wgHooks['NotifyOnSubPageChange'][] = 'WatchSubPagesHelper::NotifyOnSubPageChange';
+$wgHooks['AfterViewUpdates'][] = 'WatchSubPagesHelper::ClearParentNotification';
