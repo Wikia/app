@@ -6,8 +6,8 @@ import com.wikia.webdriver.Common.Core.CommonFunctions;
 import com.wikia.webdriver.Common.Core.Global;
 import com.wikia.webdriver.Common.Properties.Properties;
 import com.wikia.webdriver.Common.Templates.TestTemplate;
-import com.wikia.webdriver.pageObjects.PageObject.WikiBasePageObject;
-import com.wikia.webdriver.pageObjects.PageObject.WikiPage.WikiArticlePageObject;
+import com.wikia.webdriver.PageObjects.PageObject.WikiBasePageObject;
+import com.wikia.webdriver.PageObjects.PageObject.WikiPage.WikiArticlePageObject;
 
 public class CustomizeToolbarTests extends TestTemplate{
 	private String wikiArticle = "QAautoPage";

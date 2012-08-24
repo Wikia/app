@@ -5,12 +5,12 @@ import org.testng.annotations.Test;
 import com.wikia.webdriver.Common.Core.CommonFunctions;
 import com.wikia.webdriver.Common.Properties.Properties;
 import com.wikia.webdriver.Common.Templates.TestTemplate;
-import com.wikia.webdriver.pageObjects.PageObject.HomePageObject;
-import com.wikia.webdriver.pageObjects.PageObject.CreateNewWiki.CreateNewWikiLogInPageObject;
-import com.wikia.webdriver.pageObjects.PageObject.CreateNewWiki.CreateNewWikiPageObjectStep1;
-import com.wikia.webdriver.pageObjects.PageObject.CreateNewWiki.CreateNewWikiPageObjectStep2;
-import com.wikia.webdriver.pageObjects.PageObject.CreateNewWiki.CreateNewWikiPageObjectStep3;
-import com.wikia.webdriver.pageObjects.PageObject.CreateNewWiki.NewWikiaHomePage;
+import com.wikia.webdriver.PageObjects.PageObject.HomePageObject;
+import com.wikia.webdriver.PageObjects.PageObject.CreateNewWiki.CreateNewWikiLogInPageObject;
+import com.wikia.webdriver.PageObjects.PageObject.CreateNewWiki.CreateNewWikiPageObjectStep1;
+import com.wikia.webdriver.PageObjects.PageObject.CreateNewWiki.CreateNewWikiPageObjectStep2;
+import com.wikia.webdriver.PageObjects.PageObject.CreateNewWiki.CreateNewWikiPageObjectStep3;
+import com.wikia.webdriver.PageObjects.PageObject.CreateNewWiki.NewWikiaHomePage;
 
 
 
@@ -40,7 +40,7 @@ public class CreateAWikiTests_latin extends TestTemplate
 		CreateNewWikiLogInPageObject logInPage = createNewWiki1.submitToLogIn();
 		logInPage.verifyTabTransition();
 		logInPage.verifyFaceBookToolTip();
-		logInPage.verifySignUpText();		
+		logInPage.verifySignUpText();
 		CommonFunctions.logOut(Properties.userName);
 	}
 	

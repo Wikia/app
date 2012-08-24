@@ -5,11 +5,11 @@ import org.testng.annotations.Test;
 
 import com.wikia.webdriver.Common.Core.Global;
 import com.wikia.webdriver.Common.Templates.TestTemplate;
-import com.wikia.webdriver.pageObjects.PageObject.HomePageObject;
-import com.wikia.webdriver.pageObjects.PageObject.HubBasePageObject;
-import com.wikia.webdriver.pageObjects.PageObject.Hubs.EntertainmentHubPageObject;
-import com.wikia.webdriver.pageObjects.PageObject.Hubs.LifestyleHubPageObject;
-import com.wikia.webdriver.pageObjects.PageObject.Hubs.VideoGamesHubPageObject;
+import com.wikia.webdriver.PageObjects.PageObject.HomePageObject;
+import com.wikia.webdriver.PageObjects.PageObject.HubBasePageObject;
+import com.wikia.webdriver.PageObjects.PageObject.Hubs.EntertainmentHubPageObject;
+import com.wikia.webdriver.PageObjects.PageObject.Hubs.LifestyleHubPageObject;
+import com.wikia.webdriver.PageObjects.PageObject.Hubs.VideoGamesHubPageObject;
 
 public class HubsTests extends TestTemplate{
 

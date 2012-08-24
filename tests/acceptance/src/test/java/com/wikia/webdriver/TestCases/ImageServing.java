@@ -1,25 +1,19 @@
 package com.wikia.webdriver.TestCases;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-//https://internal.wikia-inc.com/wiki/QA/Core_Features_and_Testing/Manual_Regression_Tests/Image_Serving
 import org.testng.annotations.Test;
 
 import com.wikia.webdriver.Common.Core.CommonFunctions;
 import com.wikia.webdriver.Common.Core.Global;
 import com.wikia.webdriver.Common.Properties.Properties;
 import com.wikia.webdriver.Common.Templates.TestTemplate;
-import com.wikia.webdriver.pageObjects.PageObject.BasePageObject;
-import com.wikia.webdriver.pageObjects.PageObject.FilePageObject;
-import com.wikia.webdriver.pageObjects.PageObject.HomePageObject;
-import com.wikia.webdriver.pageObjects.PageObject.WikiBasePageObject;
-import com.wikia.webdriver.pageObjects.PageObject.Hubs.EntertainmentHubPageObject;
-import com.wikia.webdriver.pageObjects.PageObject.WikiPage.SpecialMultipleUploadPageObject;
-import com.wikia.webdriver.pageObjects.PageObject.WikiPage.SpecialNewFilesPageObject;
-import com.wikia.webdriver.pageObjects.PageObject.WikiPage.SpecialUploadPageObject;
-import com.wikia.webdriver.pageObjects.PageObject.WikiPage.WikiArticleEditMode;
-import com.wikia.webdriver.pageObjects.PageObject.WikiPage.WikiArticlePageObject;
+import com.wikia.webdriver.PageObjects.PageObject.FilePageObject;
+import com.wikia.webdriver.PageObjects.PageObject.WikiBasePageObject;
+import com.wikia.webdriver.PageObjects.PageObject.WikiPage.SpecialMultipleUploadPageObject;
+import com.wikia.webdriver.PageObjects.PageObject.WikiPage.SpecialNewFilesPageObject;
+import com.wikia.webdriver.PageObjects.PageObject.WikiPage.SpecialUploadPageObject;
+import com.wikia.webdriver.PageObjects.PageObject.WikiPage.WikiArticleEditMode;
+import com.wikia.webdriver.PageObjects.PageObject.WikiPage.WikiArticlePageObject;
+//https://internal.wikia-inc.com/wiki/QA/Core_Features_and_Testing/Manual_Regression_Tests/Image_Serving
 
 public class ImageServing extends TestTemplate {
 	private String file = "Image001.jpg";
