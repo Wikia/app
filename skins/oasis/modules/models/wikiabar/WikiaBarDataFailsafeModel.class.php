@@ -102,13 +102,19 @@ line-5-href=http://www.wikia.com
 	);
 
 	public function getData() {
+		$this->wf->profileIn(__METHOD__);
 		if (
 			!empty($this->data[$this->getLang()])
 			&& !empty($this->data[$this->getLang()][$this->getVertical()])
 		) {
 			$message = trim($this->data[$this->getLang()][$this->getVertical()]);
-			return $message;
+		} else {
+			$message = null;
 		}
+		$this->wf->profileOut(__METHOD__);
+
+		return $message;
+
 	}
 }
 

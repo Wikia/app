@@ -9,6 +9,7 @@
 
 class WikiaBarController extends WikiaController {
 	function executeIndex($params) {
+		$this->wf->profileIn(__METHOD__);
 		$this->response->addAsset('skins/oasis/css/modules/WikiaBar.scss');
 		$this->response->addAsset('skins/oasis/js/WikiaBar.js');
 
@@ -20,7 +21,10 @@ class WikiaBarController extends WikiaController {
 		$model->setLang($lang);
 		$model->setVertical($vertical);
 
-		$this->barContents = $model->getBarContents();
+		$barContents = $model->getBarContents();
+		$this->barContents = $barContents['data'];
+		$this->status = $barContents['status'];
+		$this->wf->profileOut(__METHOD__);
 	}
 }
 

@@ -38,18 +38,23 @@ class WikiaBarModel extends WikiaBarModelBase {
 
 
 	public function getBarContents() {
+		$this->wf->profileIn(__METHOD__);
 		$message = $this->getRegularMessage();
 		$parseResult = $this->parseBarConfigurationMessage($message);
-		$this->status = true;
+		$status = true;
 
 		if (!$parseResult) {
 			Wikia::log(__METHOD__, null, 'WikiaBar message ' . implode('', array($this->getVertical(), '/', $this->getLang())) . ' falling back to failsafe');
 			$message = $this->getFailsafeMessage();
 			$parseResult = $this->parseBarConfigurationMessage($message);
-			$this->status = false;
+			$status = false;
 		}
 
-		return $parseResult;
+		$this->wf->profileOut(__METHOD__);
+		return array(
+			'status' => $status,
+			'data' => $parseResult
+		);
 	}
 
 	protected function getRegularMessage() {
@@ -67,10 +72,12 @@ class WikiaBarModel extends WikiaBarModelBase {
 	 * @return string
 	 */
 	protected function getMessageFromModel(WikiaBarModelBase $model) {
+		$this->wf->profileIn(__METHOD__);
 		$model->setLang($this->getLang());
 		$model->setVertical($this->getVertical());
-
-		return $model->getData();
+		$data = $model->getData();
+		$this->wf->profileOut(__METHOD__);
+		return $data;
 	}
 
 	/**
@@ -96,6 +103,7 @@ class WikiaBarModel extends WikiaBarModelBase {
 	 * @return bool|array
 	 */
 	protected function parseBarConfigurationMessage($message) {
+		$this->wf->profileIn(__METHOD__);
 		$data = array();
 		$valid = true;
 
@@ -110,7 +118,7 @@ class WikiaBarModel extends WikiaBarModelBase {
 		if (!empty($lines)) {
 			foreach ($lines as $line) {
 				if (stripos($line, '=') !== false) {
-					list($key, $val) = explode('=', $line);
+					list($key, $val) = explode('=', $line, 2);
 					$val = trim($val);
 					if (empty($val)) {
 						$valid = false;
@@ -125,10 +133,15 @@ class WikiaBarModel extends WikiaBarModelBase {
 			$valid = false;
 		}
 
+		$this->wf->profileOut(__METHOD__);
 		if($valid) {
 			return $data;
 		} else {
 			return $valid;
 		}
+	}
+
+	public function getData() {
+		return $this->getBarContents();
 	}
 }

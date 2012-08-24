@@ -26,5 +26,7 @@ abstract class WikiaBarModelBase extends WikiaModel {
 	public function getVertical() {
 		return $this->vertical;
 	}
+
+	abstract public function getData();
 }
 
