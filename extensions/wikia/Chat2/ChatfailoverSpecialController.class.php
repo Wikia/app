@@ -2,13 +2,11 @@
 
 /**
  * Chat configuration failover
- * 
+ *
  * @author Tomek
  *
  */
 class ChatfailoverSpecialController extends WikiaSpecialPageController {
-	private $businessLogic = null;
-	private $controllerData = array();
 
 	public function __construct() {
 		// standard SpecialPage constructor call
@@ -34,23 +32,23 @@ class ChatfailoverSpecialController extends WikiaSpecialPageController {
 			$this->wg->Out->permissionRequired('chatfailover');
 			$this->skipRendering();
 			wfProfileOut(__METHOD__);
-			return true;	
+			return true;
 		}
-		
+
 		$mode = (bool) ChatHelper::getMode();
 		$this->wg->Out->setPageTitle( wfMsg('Chatfailover') );
 
 		if($this->request->wasPosted()) {
-			$reason = $this->request->getVal('reason'); 
+			$reason = $this->request->getVal('reason');
 			if(!empty($reason) && $mode == ChatHelper::getMode()) { //the mode didn't change
 				$mode = !$mode;
 				StaffLogger::log("chatfo", "switch", $this->wg->User->getID(), $this->wg->User->getName(), $mode, $mode ? 'regular': 'failover', $reason);
-				ChatHelper::changeMode($mode);	
-			} 
+				ChatHelper::changeMode($mode);
+			}
 		}
-		
-		$this->response->setVal("serversList", ChatHelper::getServersList()); 
-		
+
+		$this->response->setVal("serversList", ChatHelper::getServersList());
+
 		$this->response->setVal("mode", $mode ? 'regular': 'failover');
 		$this->response->setVal("modeBool", $mode );
 		wfProfileOut(__METHOD__);

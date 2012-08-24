@@ -10,9 +10,6 @@ class UserRollbackSpecialController extends WikiaSpecialPageController {
 
 	const MANAGER_RIGHT = 'userrollback';
 
-	private $businessLogic = null;
-	private $controllerData = array();
-
 	public function __construct() {
 		// standard SpecialPage constructor call
 		parent::__construct( 'UserRollback', self::MANAGER_RIGHT, false );
