@@ -57,7 +57,7 @@ html>body #WallNotifications .avatars { *float: left; }
 	.notifications-empty { color: $color-text; width: 250px; text-align: center; }
 	li { border: none; margin: 0; padding: 0; }
 	&>li {
-		height: 30px;
+		height: 27px;
 		padding: 6px 10px 0 10px;
 		position: relative;
 		&:hover {
@@ -131,7 +131,7 @@ html>body #WallNotifications .avatars { *float: left; }
 		width: 250px;
 		&.show {
 			right: 0;
-			top: 34px;
+			top: 33px;
 		}
 		li {
 			float: none;
