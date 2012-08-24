@@ -144,9 +144,9 @@ $messages['qqq'] = array(
 
 	'forum-notification-user1-reply-to-your' => 'Notification when someone replies on your thread. Parameters:
 * $1 is a username (GENDER is supported in this message).',
-	'forum-notification-user1-reply-to-your' => "Notification when 2 users reply on the logged in user's thread. Parameters:
+	'forum-notification-user2-reply-to-your' => "Notification when 2 users reply on the logged in user's thread. Parameters:
 * $1 and $2 are names of users that replied (GENDER is supported in this message).",
-	'forum-notification-user1-reply-to-your' => "Notification when 3 or more users reply on the logged in user's thread. Parameters:
+	'forum-notification-user3-reply-to-your' => "Notification when 3 or more users reply on the logged in user's thread. Parameters:
 * $1 is the first user who replied (GENDER is supported in this message).",
 
 	'forum-activity-module-heading' => 'Forum Activity right rail module heading',

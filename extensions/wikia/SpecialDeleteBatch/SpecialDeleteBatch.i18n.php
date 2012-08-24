@@ -22,7 +22,6 @@ $messages["en"] = Array(
 	'deletebatch_from_file' => 'from file list' ,
 	'deletebatch_from_form' => 'from form' ,
 	'deletebatch_success_subtitle' => 'for $1' ,
-	'deletebatch_link_back' => 'You can go back to the extension ' ,
 	'deletebatch_omitting_nonexistant' => 'Omitting non-existing page $1.' ,
 	'deletebatch_omitting_invalid' => 'Omitting invalid page $1.' ,
 	'deletebatch_file_bad_format' => 'The file should be plain text' ,

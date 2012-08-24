@@ -8,7 +8,6 @@ $messages['en'] = array(
 		'landingpage-start-exploring' => 'Ready to start exploring?',
 		'landingpage-start-exploring-text' => 'Search for your favorite topic or browse some community favorites below.',	'landingpage-readfaq' => 'Questions? Read our FAQ &gt;',
 		'landingpage-text' => 'At Wikia you can <strong>connect with people</strong> who share your <strong>passions and interests</strong>. Find your group, make comments and edits, even <strong>start your own website</strong> and community.',
-		'landingpage-buttons-learn-more' => 'Learn more',
 		'landingpage-language-links' => "* English|en\n* Español|es\n* Deutsch|de\n* Français|fr",
 		
 		'landingpage-buttons-about-wikia-url' => 'http://www.community.wikia.com/wiki/About_Wikia',

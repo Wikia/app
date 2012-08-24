@@ -124,7 +124,6 @@ $messages['en'] = array(
 	'sponsorship-dashboard-user-new' => 'Add User',
 	'sponsorship-dashboard-user-name' => 'User Name',
 	'sponsorship-dashboard-user-type' => 'User Type',
-	'sponsorship-dashboard-report-new' => 'Add Group',
 	'sponsorship-dashboard-description' => 'Description',
 	'sponsorship-dashboard-users-user-id' => 'User ID',
 	'sponsorship-dashboard-users-name' => 'Name',

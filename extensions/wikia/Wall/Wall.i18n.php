@@ -372,7 +372,6 @@ $messages['qqq'] = array(
 	'wall-toolbar-history' => 'Link in the toolbar to see the history of the wall or thread',
 	'wall-message-notify' => 'In the remove/delete-message modal box, checkbox for telling the admin about the removal',
 	'wall-message-remove' => 'Menu item to remove a message',
-	'wall-message-close-thread' => 'Menu item to close a thread or message',
 	'wall-message-reopen-thread' => "Menu item to reopen a thread",
 	'wall-message-rev-delete' => 'Dropdown menu for staff, option to revision-delete the message',
 	'wall-message-quote-button' => 'Quote button on messages',
@@ -404,7 +403,6 @@ $messages['qqq'] = array(
 	'wall-message-more' => 'Top of the menu for each message',
 	'wall-message-delete' => 'Menu item to delete a message',
 	'wall-message-close-thread' => 'Menu item to close a thread or message',
-	'wall-message-reopen-thread' => 'Menu item to reopen a thread',
 	'wall-message-removed-thread-because' => 'Summary at the top of a removed thread page. Parameters:
 * $1 is the user who removed the thread (GENDER is supported in this message).',
 	'wall-message-deleted-thread-because' => 'Summary at the top of a deleted thread page. Parameters:
@@ -414,7 +412,6 @@ $messages['qqq'] = array(
 * $1 is the user who removed the reply (GENDER is supported in this message).',
 	'wall-message-deleted-reply-because' => 'Summary at the top of a deleted reply page. Parameters:
 * $1 is the user who deleted the reply (GENDER is supported in this message).',
-	'wall-message-closed-by' => 'message stating thread has been closed.  $1 is username, $2 is userpage title',
 	'wall-message-restore-reply' => 'Button to restore a reply on a removed reply page',
 	'wall-message-closed-by' => 'message stating thread has been closed.  $1 is username, $2 is userpage title',
 	'wall-delete-reason' => 'default user/admin action',
