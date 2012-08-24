@@ -204,7 +204,7 @@ CKEDITOR.spellchecker.prototype = {
 	getSeparators: function() {
 		var i,
 			re = '',
-			str = '\\s!"#$%&()*+,-./:;<=>?@[\]^_{|}\xA7\xA9\xAB\xAE\xB1\xB6\xB7\xB8\xBB\xBC\xBD\xBE\xBF\xD7\xF7\xA4\u201d\u201c';
+			str = '\\s!"#$%&()*+,-./:;<=>?@[]^_{|}\xA7\xA9\xAB\xAE\xB1\xB6\xB7\xB8\xBB\xBC\xBD\xBE\xBF\xD7\xF7\xA4\u201d\u201c';
 
 		// escape for RegExp
 		for (i=0; i<str.length; i++) {
@@ -414,7 +414,7 @@ CKEDITOR.spellchecker.prototype = {
 				subCommands = {},
 				n,
 				word = node.getText(),
-				self = this;
+				self = this,
 				suggestions = this.getSuggestions(word);
 
 			// for some misspelled words there may not be any suggestions
@@ -464,7 +464,11 @@ CKEDITOR.spellchecker.prototype = {
 		var commandName = 'spellcheckerSuggest' + suggestion.replace(/[^\w]/g, '_');
 
 		// register command
-		this.editor.addCommand(commandName, {exec: function() {callback(suggestion)}});
+		this.editor.addCommand(commandName, {
+			exec: function() {
+				callback(suggestion);
+			}
+		});
 		this.editor.addMenuItem(commandName, {
 			command: commandName,
 			group: 'spellchecker',
