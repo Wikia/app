@@ -42,5 +42,7 @@
 
 		<?php $counter++; ?>
 	<?php } ?>
+	<?php if ( !empty($addVideo) ) { ?>
+	<?php } ?>
 </div>
 <?= $pagination ?>

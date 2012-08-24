@@ -21,6 +21,7 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 	 * Videos page
 	 * @requestParam string sort [ recent/popular/trend/premium ]
 	 * @requestParam integer page - page number
+	 * @responseParam integer addVideo [0/1]
 	 * @responseParam string pagination
 	 * @responseParam string sortMsg - selected option (sorting)
 	 * @responseParam array sortingOptions - sorting options
@@ -41,8 +42,14 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 			$page = 1;
 		}
 
+		$addVideo = 1;
+
 		$specialVideos = F::build( 'SpecialVideosHelper' );
 		$videos = $specialVideos->getVideos( $sort );
+
+		// add fake default video
+		$videos[] = array();
+
 		$totalVideos = count( $videos );
 
 		$sortingOptions = array_merge( $specialVideos->getSortingOptions(), $specialVideos->getFilterOptions() );
@@ -54,6 +61,14 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 			$pages = Paginator::newFromArray( $videos, SpecialVideosHelper::VIDEOS_PER_PAGE );
 			$videos = $pages->getPage( $page, true);
 			$pagination = $pages->getBarHTML( $linkToSpecialPage.'?page=%s&sort='.$sort );
+			if ( $page < $pages->getPagesCount() ) {
+				$addVideo = 0;
+			}
+		}
+
+		// remove fake default video
+		if ( !empty($addVideo) ) {
+			array_pop( $videos );
 		}
 
 		foreach ( $videos as &$video ) {
@@ -63,6 +78,7 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 			$video['videoPlayButton'] = F::build( 'WikiaFileHelper', array( SpecialVideosHelper::THUMBNAIL_WIDTH, SpecialVideosHelper::THUMBNAIL_HEIGHT ), 'videoPlayButtonOverlay' );
 		}
 
+		$this->addVideo = $addVideo;
 		$this->pagination = $pagination;
 		$this->sortMsg = $sortingOptions[$sort]; // selected sorting option to display in drop down
 		$this->sortingOptions = $sortingOptions; // populate the drop down 

@@ -154,13 +154,16 @@ class SpecialVideosHelper extends WikiaModel {
 
 	// get message for by user section
 	public function getByUserMsg( $userName, $userUrl ) {
-		$attribs = array(
-			'href' => $userUrl,
-			'class' => 'wikia-gallery-item-user',
-		);
+		$byUserMsg = '';
+		if ( !empty($userName) ) {
+			$attribs = array(
+				'href' => $userUrl,
+				'class' => 'wikia-gallery-item-user',
+			);
 
-		$userLink = Xml::element( 'a', $attribs, $userName, false );
-		$byUserMsg = $this->wf->Msg( 'specialvideos-uploadby', $userLink );
+			$userLink = Xml::element( 'a', $attribs, $userName, false );
+			$byUserMsg = $this->wf->Msg( 'specialvideos-uploadby', $userLink );
+		}
 
 		return $byUserMsg;
 	}

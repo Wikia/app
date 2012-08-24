@@ -188,6 +188,10 @@ class Paginator extends Service{
 		$oTmpl->set_vars( $aData );
 		return $oTmpl->execute( "paginator" );
 	}
-	
+
+	public function getPagesCount() {
+		return $this->pagesCount;
+	}
+
 }
 
