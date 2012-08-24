@@ -322,6 +322,7 @@ class SpecialPromoteHelper extends WikiaObject {
 		/** @var $helper WikiGetDataForVisualizationHelper */
 		$helper = F::build('WikiGetDataForVisualizationHelper');
 		$this->wg->memc->set($helper->getMemcKey($cityId, $langCode),null);
+		$visualizationModel->regenerateBatches($visualizationModel->getTargetWikiId($langCode), $langCode);
 
 		$this->wf->ProfileOut(__METHOD__);
 	}
