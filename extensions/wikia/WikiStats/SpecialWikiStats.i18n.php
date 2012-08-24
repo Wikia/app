@@ -209,7 +209,6 @@ $messages['en'] = array(
 	"wikistats_video_uploads" => "Videos uploaded",
 	"wikistats_per_namespace" => "Per Namespace Data",
 	"wikistats_months_edits" => "Editors this month",
-	"wikistats_main_namespace" => "content<br />namespaces",
 	"wikistats_content" => "content",
 	"wikistats_content_editors" => "Content Editors",
 	"wikistats_userns" => "user",

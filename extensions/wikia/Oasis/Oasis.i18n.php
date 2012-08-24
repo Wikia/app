@@ -20,8 +20,6 @@ $messages['en'] = array(
 	'oasis-button-wiki-activity-watchlist' => ' Followed Pages only',
 	'oasis-activity-watchlist-login' => 'You need to login to see your followed pages only.',
 	'oasis-activity-header' => 'Recent Wiki Activity',
-	'oasis-related-video-header' => 'Related Videos',
-	'oasis-related-video-by-5min' => 'Powered by 5min',
 	'oasis-total-articles-mainpage' => '<em>{{FORMATNUM:$1}}</em><span>{{PLURAL:$1|page on<br /> this wiki|pages on<br /> this wiki}}</span>',
 	'oasis-latest-photos-title' => 'Latest photos',
 	'oasis-latest-photos-header' => '<em>{{FORMATNUM:$1}}</em><span class="$2">{{PLURAL:$1|photo on this wiki|photos on this wiki}}</span>',

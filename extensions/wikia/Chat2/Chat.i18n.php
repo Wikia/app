@@ -14,7 +14,6 @@ $messages['en'] = array(
     'chat-private-messages' => 'Private Messages',
     // Many of these are sent from server.js to the client (which uses $.msg() to translate the message).
     'chat-user-parted' => '$1 has left the chat.',
-    'chat-user-joined' => '$1 has joined the chat.',
     'chat-user-blocked' => '$1 has blocked $2.',
     'chat-user-allow' => '$1 has allowed $2.',
     

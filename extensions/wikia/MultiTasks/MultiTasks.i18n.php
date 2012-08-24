@@ -65,7 +65,6 @@ $messages['en'] = array(
 	'multidelete_title' => 'Multi Delete',
 	'multidelete_both_modes' => 'Please choose either one specified page or a given list of pages.',
 	'multidelete_or' => '<b>OR</b>',
-	'multidelete_reason' => 'Reason',
 	'multidelete_error_empty_selection' => 'Please supply the list of selected wikis',
 	'multidelete_error_empty_pages' => 'Please choose either one specified page or a given list of pages.',
 	'multidelete_error_multi_page' => 'Only one title at a time allowed for multi-wiki deletion.',

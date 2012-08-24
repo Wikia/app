@@ -134,7 +134,6 @@ $messages['en'] = array(
 	'scavengerhunt-label-entry-form-username' => 'User Name',
 	'scavengerhunt-label-progressBarBackgroundSprite' => 'Progress bar background sprite',
 	'scavengerhunt-label-progressBarExitSprite' => 'Exit button sprite coordinates',
-	'scavengerhunt-label-startPopupSprite' => 'Popup image sprite coordinates',
 	'scavengerhunt-label-spriteNotFound' => 'Hunt item sprite coordinates',
 	'scavengerhunt-label-spriteInProgressBar' => 'Progress bar item sprite coordinates',
 	'scavengerhunt-label-spriteInProgressBarHover' => 'Progress bar item on hover sprite coordinates',
