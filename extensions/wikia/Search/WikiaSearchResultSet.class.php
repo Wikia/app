@@ -156,10 +156,4 @@ class WikiaSearchResultSet implements Iterator {
 		return $this->getResultsNum() == 1 && $this->getResultsFound() == 0 && $this->results[0]->getVar('isArticleMatch') == true;
 
 	}
-
-	public function getPageCount() {
-		if (empty($this->results)) return 0;
-		return  ceil($this->getResultsFound() / count($this->results));
-	}
-
 }
