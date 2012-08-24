@@ -12,9 +12,6 @@ if ( !defined( 'MW_NO_OUTPUT_COMPRESSION' ) ) {
 
 class AuthImageSpecialPageController extends WikiaSpecialPageController {
 
-	private $businessLogic = null;
-	private $controllerData = array();
-
 	public function __construct() {
 		parent::__construct( 'AuthImage', '', false );
 	}
@@ -38,12 +35,12 @@ class AuthImageSpecialPageController extends WikiaSpecialPageController {
 			$path = sprintf( "%s/%s/images", substr( $this->wg->DBname, 0, 1 ), $this->wg->DBname );
 			# take thumb request from request
 			$img = $this->getVal( 'image' );
-			
-			if ( preg_match( '/^(\/?)thumb\//', $img ) ) { 
+
+			if ( preg_match( '/^(\/?)thumb\//', $img ) ) {
 				# build proper thumb url for thumbnailer
 				$thumb_url = sprintf( "%s/%s/%s", $this->wg->ThumbnailerService, $path, $img );
-				
-				# call thumbnailer 
+
+				# call thumbnailer
 				$options = array( 'method' => 'GET', 'timeout' => 'default', 'noProxy' => 1 );
 				$thumb_request = MWHttpRequest::factory( $thumb_url, $options );
 				$status = $thumb_request->execute();
@@ -77,7 +74,7 @@ class AuthImageSpecialPageController extends WikiaSpecialPageController {
 					header( sprintf( "Content-Disposition: inline;filename*=utf-8'%s'%s", $this->wg->ContLanguageCode, urlencode( basename( $filename ) ) ) );
 					header( sprintf( "Content-Type: %s", $imageType ) );
 					header( sprintf( "Content-Length: %d" . $stat['size'] ) );
-					
+
 					readfile( $filename );
 				} else {
 					$this->_access_forbidden( 'img-auth-accessdenied', 'img-auth-nopathinfo', $img );
@@ -86,22 +83,22 @@ class AuthImageSpecialPageController extends WikiaSpecialPageController {
 		} else {
 			$this->_access_forbidden( 'img-auth-accessdenied','img-auth-public', '' );
 		}
-		
+
 		$this->wf->profileOut( __METHOD__ );
 		exit;
 	}
-	
+
 	private function _access_forbidden( $msg1, $msg2, $img ) {
 		$msgHdr = htmlspecialchars( $this->wf->Msg( $msg1 ) );
 		$detailMsg = htmlspecialchars( $this->wf->Msg( ( $this->wg->ImgAuthDetails ? $msg2 : 'badaccess-group0'), $img ) );
-		
+
 		$header = $this->wf->MsgExt( $msg1, array('language' => 'en') );
 		$message = $this->wf->MsgExt( $msg2, array('language' => 'en'), $img );
 		$this->wf->DebugLog( __METHOD__, "access forbidden header: $header, Msg: $message");
-				
+
 		header( 'HTTP/1.0 403 Forbidden' );
 		header( 'Cache-Control: no-cache' );
 		header( 'Content-Type: text/html; charset=utf-8' );
 		echo "<html><body><h1>$msgHdr</h1><p>$detailMsg</p></body></html>";
-	}	
+	}
 }
