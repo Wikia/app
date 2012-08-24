@@ -40,18 +40,8 @@ class AdServer {
 		global $wgUser, $wgCurse, $wgForceSkin, $wgAdServingType, $wgMemc, $wgRequest;
 
 		$skin = RequestContext::getMain()->getSkin()->getSkinName();
-
-		if (empty($skin)) {
-			$skin = 'monaco';
-		}
 		$this->skinName = $skin;
 
-		if ($skin == 'quartz') {
-			$skin = 'quartzslate';
-		}
-		if (!empty($wgCurse)) {
-			$skin = 'curse';
-		}
 		if (!empty($wgForceSkin)) {
 			$skin = $wgForceSkin;
 		}
