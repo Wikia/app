@@ -90,7 +90,7 @@ public class AlmostTherePageObject extends BasePageObject
 	{
 		verifyAlmostThereText();
 		verifyEmailSentText();
-		verifyWikiaWordMark();
+//		verifyWikiaWordMark();
 		verifySendAnotherMailText();
 		verifyChangeMyMailText();
 	}

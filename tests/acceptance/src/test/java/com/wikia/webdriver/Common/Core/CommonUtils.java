@@ -41,7 +41,7 @@ public class CommonUtils {
 			out.close();
 			} catch (Exception e) 
 			{
-				System.out.println("ERROR in saveTextToFile(2 args) in Utils.java \n"+ e.getMessage());
+				System.out.println("ERROR in saveTextToFile(2 args) in CommonUtils.java \n"+ e.getMessage());
 			}
 		}
 	
@@ -53,17 +53,27 @@ public class CommonUtils {
 	 * @return captured screen path
 	 * @author Karol Kujawiak
 	 */
-	public static String captureScreenshot(String outputFilePath, WebDriver driver) {
-		if (!outputFilePath.endsWith(".png"))
+	public static String captureScreenshot(String outputFilePath, WebDriver driver) 
+	{
+		if (Global.LOG_VERBOSE == 2)
+		{
+			if (!outputFilePath.endsWith(".png"))
 			outputFilePath = outputFilePath + ".png";
-		File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-		try {
-			FileUtils.copyFile(scrFile, new File(outputFilePath));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+			try {
+				FileUtils.copyFile(scrFile, new File(outputFilePath));
+			} 
+			catch (IOException e) 
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return outputFilePath;
 		}
-		return outputFilePath;
+		else
+		{			
+			return "Switch Global.LOG_VERBOSE to get test screenshots";
+		}
 	}
 	
 	
@@ -91,5 +101,24 @@ public class CommonUtils {
 	{
 		new File(fileName).mkdir();
 	}
+	
+	
+//	public static void createFile(String filePath, String content)
+//	{
+//		try {
+//			File file = new File(filePath);
+//			FileWriter newfile = new FileWriter(file);
+//			BufferedWriter out = new BufferedWriter(newfile);
+//			out.write(content);
+//			out.flush();
+//			out.close();
+//		} 
+//		catch (IOException e) 
+//		{
+//			System.out.println("ERROR in createFile) in CommonUtils.java \n"+ e.getMessage());
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//	}
 
 }
