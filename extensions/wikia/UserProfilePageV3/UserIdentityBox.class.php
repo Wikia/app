@@ -34,24 +34,6 @@ class UserIdentityBox {
 	private $title = null;
 	private $topWikisLimit = 5;
 
-	//instance cache for UserIdentityBox::getUsersEffectiveGroups()
-	protected $usersEffectiveGroups = null;
-
-	const WIKIA_GROUP_STAFF_NAME = 'staff';
-	const WIKIA_GROUP_AUTHENTICATED_NAME = 'authenticated';
-
-	/**
-	 * Used to compare user rights in UserIdentityBox::sortUserGroups()
-	 * @var array
-	 */
-	protected $groupsRank = array(
-		'sysop' => 5,
-		'helper' => 4,
-		'vstf' => 3,
-		'council' => 2,
-		'chatmoderator' => 1,
-	);
-
 	public $optionsArray = array(
 		'location',
 		'occupation',
@@ -302,7 +284,7 @@ class UserIdentityBox {
 	 *
 	 * @param object $data an user data
 	 *
-	 * @return true
+	 * @return boolean
 	 */
 	public function saveUserData($data) {
 		$this->app->wf->ProfileIn(__METHOD__);
@@ -498,108 +480,17 @@ class UserIdentityBox {
 	protected function getUserTags(&$data) {
 		$this->app->wf->ProfileIn(__METHOD__);
 
-		$tags = array();
-		if( $this->isBlocked() ) {
-		//blocked user has only one tag displayed "Blocked"
-			$tags[] = $this->app->wf->Msg('user-identity-box-group-blocked');
+		if( !empty($this->app->wg->EnableTwoTagsInMasthead) ) {
+			/** @var $strategy UserTwoTagsStrategy */
+			$strategy = F::build('UserTwoTagsStrategy', array($this->user));
 		} else {
-			$this->getFirstTag($tags);
-
-			if( $this->isFounder() ) {
-				$tags[] = $this->app->wf->Msg('user-identity-box-group-founder');
-			} else {
-				$this->getTagFromGroups($tags);
-			}
+			/** @var $strategy UserOneTagStrategy */
+			$strategy = F::build('UserOneTagStrategy', array($this->user));
 		}
+		$tags = $strategy->getUserTags();
 
 		$data['tags'] = $tags;
 		$this->app->wf->ProfileOut(__METHOD__);
-	}
-
-	/**
-	 * @param Array $tags
-	 * @return string
-	 */
-	protected function getTagFromGroups( &$tags ) {
-		$this->app->wf->ProfileIn(__METHOD__);
-
-		$result = '';
-		$group = $this->getUsersHighestGroup($this->user);
-		if( $group ) {
-			$result = $this->app->wf->Msg('user-identity-box-group-' . $group);
-		}
-
-		/* See if user is banned from chat */
-		if (!empty($this->app->wg->EnableChat) && Chat::getBanInformation($this->app->wg->CityId, $this->user) !== false) {
-			$result = wfMsg('user-identity-box-banned-from-chat');
-		}
-
-		if( !empty($result) ) {
-			$tags[] = $result;
-		}
-
-		$this->app->wf->ProfileOut(__METHOD__);
-	}
-
-	/**
-	 * @desc Returns true if user is not a staff member and is blocked locally/globally
-	 *
-	 * @return bool
-	 */
-	protected function isBlocked() {
-		$this->app->wf->ProfileIn(__METHOD__);
-
-		// check if the user is blocked locally, if not, also check if they're blocked globally (via Phalanx)
-		$isBlocked = $this->user->isBlocked() || $this->user->isBlockedGlobally();
-
-		if( $isBlocked && !$this->isUserInGroup(self::WIKIA_GROUP_STAFF_NAME) ) {
-			$this->app->wf->ProfileOut(__METHOD__);
-			return true;
-		}
-
-		$this->app->wf->ProfileOut(__METHOD__);
-		return false;
-	}
-
-	/**
-	 * @desc Puts "Staff" or "Authenticated" at the begining in user's tags
-	 *
-	 * @param Array $tags should be an empty array
-	 * @return bool
-	 */
-	protected function getFirstTag(&$tags) {
-		if( $this->isUserInGroup(self::WIKIA_GROUP_STAFF_NAME) ) {
-			array_unshift($tags, $this->app->wf->Msg('user-identity-box-group-' .  self::WIKIA_GROUP_STAFF_NAME));
-		} else if( $this->isUserInGroup(self::WIKIA_GROUP_AUTHENTICATED_NAME) ) {
-			array_unshift($tags, $this->app->wf->Msg('user-identity-box-group-' . self::WIKIA_GROUP_AUTHENTICATED_NAME));
-		}
-	}
-
-	/**
-	 * @desc Returns instance cached version of user's effective groups not to call User::getEffectiveGroups too many times
-	 *
-	 * @return null | array
-	 */
-	protected function getUsersEffectiveGroups() {
-		if( is_null($this->usersEffectiveGroups) ) {
-			$this->usersEffectiveGroups = $this->user->getEffectiveGroups();
-		}
-
-		return $this->usersEffectiveGroups;
-	}
-
-	/**
-	 * @desc Checks if user is in given user group
-	 * @param String $userGroupName user group name in example: 'staff', 'authenticated' etc.
-	 *
-	 * @return bool
-	 */
-	protected function isUserInGroup($userGroupName) {
-		if( !empty($userGroupName) ) {
-			return in_array($userGroupName, $this->getUsersEffectiveGroups());
-		}
-
-		return false;
 	}
 
 	/**
@@ -627,65 +518,6 @@ class UserIdentityBox {
 
 		$this->app->wf->ProfileOut(__METHOD__);
 		return $result;
-	}
-
-	/**
-	 * @brief Sorts user's groups as we want :>
-	 *
-	 * @desc Use this method in usort() to get "the most important" right in our scale. Our rank
-	 * is defined as protected field $groupsRank. The most important has the highest value.
-	 *
-	 * @param string $group1 first user's group right to compare
-	 * @param string $group2 second user's group right to compare
-	 *
-	 * @return int
-	 *
-	 * @author Andrzej 'nAndy' Łukaszewski
-	 */
-	protected function sortUserGroups($group1, $group2) {
-		$this->app->wf->ProfileIn(__METHOD__);
-
-		$result = 0; //means equal here
-
-		if (!isset($this->groupsRank[$group1]) && isset($this->groupsRank[$group2])) {
-			$result = 1;
-		} else {
-			if (isset($this->groupsRank[$group1]) && !isset($this->groupsRank[$group2])) {
-				$result = -1;
-			} else {
-				if (isset($this->groupsRank[$group1]) && isset($this->groupsRank[$group2])) {
-					$result = ($this->groupsRank[$group1] < $this->groupsRank[$group2]) ? 1 : -1;
-				}
-			}
-		}
-
-		$this->app->wf->ProfileOut(__METHOD__);
-		return $result;
-	}
-
-	/**
-	 * @brief Gets string with user most important group
-	 *
-	 * @return string | boolean
-	 *
-	 * @author Andrzej 'nAndy' Łukaszewski
-	 */
-	protected function getUsersHighestGroup() {
-		$this->app->wf->ProfileIn(__METHOD__);
-
-		$userGroups = $this->getUsersEffectiveGroups();
-		usort($userGroups, array($this, 'sortUserGroups'));
-
-		if (isset($userGroups[0]) && in_array($userGroups[0], array_keys($this->groupsRank))) {
-			$this->app->wf->ProfileOut(__METHOD__);
-			$group = $userGroups[0];
-		} else {
-		//just a member
-			$group = false;
-		}
-
-		$this->app->wf->ProfileOut(__METHOD__);
-		return $group;
 	}
 
 	/**
@@ -1035,30 +867,6 @@ class UserIdentityBox {
 
 		$this->app->wf->ProfileOut(__METHOD__);
 		return $out;
-	}
-
-	/**
-	 * Checks if user is the founder
-	 *
-	 * @return boolean
-	 *
-	 * @author Andrzej 'nAndy' Łukaszewski
-	 */
-	private function isFounder() {
-		$this->app->wf->ProfileIn(__METHOD__);
-
-		$wiki = F::build('WikiFactory', array($this->app->wg->CityId), 'getWikiById');
-
-		if (intval($wiki->city_founding_user) === $this->user->GetId()) {
-			// mech: BugId 18248
-			$userGroups = $this->getUsersEffectiveGroups();
-			$founder = in_array('sysop', $userGroups) || in_array('bureaucrat', $userGroups);
-			$this->app->wf->ProfileOut(__METHOD__);
-			return $founder;
-		}
-
-		$this->app->wf->ProfileOut(__METHOD__);
-		return false;
 	}
 
 	/**
