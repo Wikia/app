@@ -37,7 +37,7 @@ class AdServer {
 	}
 
 	private function loadAdsConfig() {
-		global $wgUser, $wgCurse, $wgForceSkin, $wgAdServingType, $wgMemc, $wgRequest;
+		global $wgUser, $wgForceSkin, $wgAdServingType, $wgMemc, $wgRequest;
 
 		$skin = RequestContext::getMain()->getSkin()->getSkinName();
 		$this->skinName = $skin;
