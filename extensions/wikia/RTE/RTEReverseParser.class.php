@@ -8,7 +8,6 @@ class RTEReverseParser {
 	// lists handling
 	private $listLevel;
 	private $listBullets;
-	private $listIndent;
 
 	// node ID counter
 	private $nodeId = 0;
