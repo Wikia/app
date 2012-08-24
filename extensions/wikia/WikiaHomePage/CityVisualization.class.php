@@ -100,6 +100,15 @@ class CityVisualization extends WikiaModel {
 		} else {
 			$resultingBatches = array();
 		}
+		//complexity limited by maximum number of elements ( 5 in $resultingBatches, 2 in $resultingBatch, 17 in $batchPromotedDemoted )
+		foreach($resultingBatches as &$resultingBatch) {
+			foreach($resultingBatch as &$batchPromotedDemoted) {
+				foreach($batchPromotedDemoted as &$batch) {
+					$batch['wikiname'] = htmlspecialchars($batch['wikiname']);
+					$batch['wikidesc'] = htmlspecialchars($batch['wikidesc']);
+				}
+			}
+		}
 		$this->wf->ProfileOut(__METHOD__);
 
 		return $resultingBatches;
