@@ -60,6 +60,12 @@ abstract class ResourceLoaderGlobalWikiModule extends ResourceLoaderWikiModule {
 			}
 			*/
 			$content = $title->getContent();
+		} else if ( $title->getNamespace() === NS_MEDIAWIKI ) {
+			// load contents of an article before falling back to a message refer to bugId 45352
+			$revision = Revision::newFromTitle( $title );
+			if ($revision) {
+				$content = $revision->getRawText();
+			}
 		} else {
 			$content = parent::getContent($title,$options);
 		}
