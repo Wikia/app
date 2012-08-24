@@ -102,7 +102,7 @@ class IgnFeedIngester extends VideoFeedIngester {
 			if ($blacklist_regexp) {
 				foreach(array('keywords', 'titleName', 'description') as $key) {
 					if (preg_match($blacklist_regexp, $clipData[$key])) {
-						echo "Blacklisting video ! ".$clipData['titleName'].", videId ".$clipData['videoId']." (reason $key: ".$clipData[$key].")\n";
+						echo "Blacklisting video ! ".$clipData['titleName'].", videoId ".$clipData['videoId']." (reason $key: ".$clipData[$key].")\n";
 						continue;
 					}
 				}
