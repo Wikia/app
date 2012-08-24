@@ -33,14 +33,13 @@ CREATE TABLE IF NOT EXISTS `ach_custom_badges` (
 	`sponsored` TINYINT(1) NOT NULL DEFAULT 0,
 	`badge_tracking_url` VARCHAR(255) DEFAULT NULL,
 	`hover_tracking_url` VARCHAR(255) DEFAULT NULL,
-	`click_tracking_url` VARCHAR(255) DEFAULT NULL;
+	`click_tracking_url` VARCHAR(255) DEFAULT NULL,
 	KEY `id` (`id`),
 	KEY `type` (`type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
-CREATE TABLE `ach_ranking_snapshots` (
+CREATE TABLE IF NOT EXISTS `ach_ranking_snapshots` (
 	`date` DATETIME NOT NULL ,
 	`data` TEXT NOT NULL
 ) ENGINE = INNODB CHARACTER SET utf8 COLLATE utf8_unicode_ci;
-
