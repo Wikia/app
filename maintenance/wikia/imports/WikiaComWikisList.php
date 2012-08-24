@@ -14,13 +14,13 @@
  * --addimageuploadtask
  */
 require_once("../../commandLine.inc");
-global $wgEnableSpecialPromoteExt;
+global $wgEnableSpecialPromoteExt, $wgEnablePromoteImageReviewExt;
 
 $putItToAmessage = isset($options['message']) ? true : false;
 
 $params = new stdClass();
 $params->csvContent = explode("\n", file_get_contents($options['file']));
-$params->overwrittenLang = isset($options['overwritelang']) ? true : false;
+$params->overwrittenLang = isset($options['overwritelang']) ? $options['overwritelang'] : false;
 $params->skipUpload = isset($options['skipupload']) ? true : false;
 $params->supressFileNames = isset($options['supressfilenames']) ? true : false;
 $params->addImageUploadTask = isset($options['addimageuploadtask']) ? true : false;
@@ -33,8 +33,8 @@ if( true === $params->supressFileNames && empty($wgEnableSpecialPromoteExt) ) {
 	include_once('../../../extensions/wikia/SpecialPromote/UploadVisualizationImageFromFile.class.php');
 }
 
-if( true === $params->addImageUploadTask && empty($wgEnableAdminUploadReviewExt) ) {
-	include_once('../../../extensions/wikia/ImageReview/modules/AdminUpload/AdminUploadReviewTask.php');
+if( true === $params->addImageUploadTask && empty($wgEnablePromoteImageReviewExt) ) {
+	include_once('../../../extensions/wikia/ImageReview/modules/PromoteImage/PromoteImageReviewTask.php');
 }
 
 if( $putItToAmessage ) {
@@ -455,7 +455,7 @@ class WikiaComWikisListImport {
 				$taskAdditionList[$targetWikiId][$wgCityId][] = $image;
 			}
 
-			$task = new AdminUploadReviewTask();
+			$task = new PromoteImageReviewTask();
 			$task->createTask(
 				array(
 					'upload_list' => $taskAdditionList,
