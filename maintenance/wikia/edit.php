@@ -34,6 +34,7 @@ $bot = isset( $options['b'] );
 $autoSummary = isset( $options['a'] );
 $prepend = isset( $options['p'] );
 $noRC = isset( $options['no-rc'] );
+$silent = isset( $options['silent'] );
 
 $wgUser = User::newFromName( $userName );
 if ( !$wgUser ) {
@@ -42,6 +43,10 @@ if ( !$wgUser ) {
 }
 if ( $wgUser->isAnon() ) {
 	$wgUser->addToDatabase();
+}
+
+if ( $silent ) {
+	$wgCommandLineSilentMode = true;
 }
 
 $wgTitle = Title::newFromText( $args[0] );
