@@ -1,10 +1,12 @@
 package com.wikia.webdriver.Common.Core;
 
 import java.awt.AWTException;
+import java.awt.GraphicsEnvironment;
+import java.awt.Rectangle;
 import java.awt.Robot;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -234,6 +236,49 @@ public class CommonFunctions
 			e.printStackTrace();
 		}
 	   robot.mouseMove(x,y);
+	}
+
+	/**
+	 * Move cursor to Element existing in default DOM, by its Location
+	 * 
+	 * @author Michal Nowierski
+	 * @param elem1_location Location of WebElement (getLocation method)
+	 */
+	public static void MoveCursorToElement(Point elem1_location) {
+//		Toolkit toolkit =  Toolkit.getDefaultToolkit ();
+//		Dimension dim = toolkit.getScreenSize();
+//		double ScreenHeight = dim.getHeight();
+	
+//		int FireFoxStatusBarHeight = 20;
+		
+		int elem_Y = elem1_location.getY();
+		int elem_X = elem1_location.getX();
+		
+		Rectangle maxBounds = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
+		int ScreenHeightWithoutTaskBarHeight = maxBounds.height;
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		Object visibleDomHeightJS = js.executeScript("return window.innerHeight");
+		int VisibleDomHeight = Integer.parseInt(visibleDomHeightJS.toString());
+		
+		MoveCursorTo(elem_X+15, elem_Y+ScreenHeightWithoutTaskBarHeight-VisibleDomHeight+3);
+
+	}
+	
+	/**
+	 * Move cursor to Element existing in an IFrame DOM, by its By locator, and the Iframe Webelement
+	 * 
+	 * @author Michal Nowierski
+	 * @param IframeElemBy By selector of element to be hovered over
+	 * @param IFrame IFrame where the element exists
+	 */
+	public static void MoveCursorToIFrameElement(By IframeElemBy, WebElement IFrame){
+		Point IFrameLocation = IFrame.getLocation();
+		driver.switchTo().frame(IFrame);
+		wait.until(ExpectedConditions.visibilityOfElementLocated(IframeElemBy));
+		Point IFrameElemLocation = driver.findElement(IframeElemBy).getLocation();
+		IFrameElemLocation = IFrameElemLocation.moveBy(IFrameLocation.getX(), IFrameLocation.getY());
+		driver.switchTo().defaultContent();
+		MoveCursorToElement(IFrameElemLocation);
 	}
 
 }

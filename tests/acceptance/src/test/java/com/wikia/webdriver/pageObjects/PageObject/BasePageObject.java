@@ -405,7 +405,7 @@ public class BasePageObject{
 		By By1 = By.cssSelector("ul.options-list li[data-caption='"+Tool+"']");
 		By By2 = By.cssSelector("ul.options-list li[data-caption='"+Tool+"'] img.trash");
 		Point Elem1_location = driver.findElement(By1).getLocation();
-		moveCursorToElem1UntilElem2IsVisible(Elem1_location, By2);
+		CommonFunctions.MoveCursorToElement(Elem1_location);
 		waitForElementByBy(By2);
 		waitForElementClickableByBy(By2);
 		driver.findElement(By2).click();
@@ -422,7 +422,7 @@ public class BasePageObject{
 		By By1 = By.cssSelector("ul.options-list li[data-caption='"+ToolID+"']");
 		By By2 = By.cssSelector("ul.options-list li[data-caption='"+ToolID+"'] img.edit-pencil");
 		Point Elem1_location = driver.findElement(By1).getLocation();
-		moveCursorToElem1UntilElem2IsVisible(Elem1_location, By2);
+		CommonFunctions.MoveCursorToElement(Elem1_location);
 		waitForElementByBy(By2);
 		waitForElementClickableByBy(By2);
 		driver.findElement(By2).click();
@@ -498,72 +498,7 @@ public class BasePageObject{
 		
 	}
 	
-	/**
-	 * Method moves cursor down from location of Element1 until that action makes the wanted Element2 visible <br> 
-	 * When the cursor reaches bottom of window, it moves to right and starts going down again
-	 * 
-	 * @param location1 Element1Location to start moving cursor from
-	 * @param By2 Element2 to be visible at some point after moving the cursor
-	 * @author Michal Nowierski
-	 */
-	public void moveCursorToElem1UntilElem2IsVisible(Point location1, By By2) {
-			
-		PageObjectLogging.log("moveCursorToEleme1UntilElem2IsVisible",
-				"move cursor down from Element1 until that action makes the wanted Element2 visible", true, driver);
-		location1 = location1.moveBy(15, 0);
-		CommonFunctions.MoveCursorTo(location1.getX(), location1.getY());
-		ChangeLocationUntilElemVisible(location1, location1, By2);		
-		
-	}
 	
-	/**
-	 * The method is engine for moving the cursor <br>
-	 * The method is recursive <br> 
-	 * The method is used by moveCursorToEleme1UntilElem2IsVisible 
-	 *  
-	 * @param location Location of element to start moving cursor from
-	 * @param OriginalLocation The same location, but this parameter won't be changed inside the method
-	 * @param By Element to be visible at some point after moving the cursor
-	 * 
-	 * @author Michal Nowierski
-	 */
-	private boolean ChangeLocationUntilElemVisible(Point location, Point OriginalLocation, By by) {
-	try {
-			if (driver.findElement(by).isDisplayed()) {
-				return true;
-			}
-			else {
-				location = location.moveBy(0, 5);
-				CommonFunctions.MoveCursorTo(location.getX(), location.getY());
-				int WindowHeight = driver.manage().window().getSize().height;
-				int WindowWidth = driver.manage().window().getSize().width;
-				if (location.getX() > WindowWidth) {
-					return false;
-				}
-				if (location.getY() > WindowHeight) {
-					location = OriginalLocation.moveBy(10, 0);
-					ChangeLocationUntilElemVisible(location, location, by);				
-				}
-				return ChangeLocationUntilElemVisible(location, OriginalLocation, by);
-				
-			}
-
-		} 
-		catch (NoSuchElementException e) {
-			location = location.moveBy(0, 5);
-			CommonFunctions.MoveCursorTo(location.getX(), location.getY());
-			int WindowHeight = driver.manage().window().getSize().height;
-			int WindowWidth = driver.manage().window().getSize().width;
-			if (location.getX() > WindowWidth) {
-				return false;
-			}
-			if (location.getY() > WindowHeight) {
-				location = OriginalLocation.moveBy(10, 0);
-				ChangeLocationUntilElemVisible(location, location, by);	
-			}
-			return ChangeLocationUntilElemVisible(location, OriginalLocation, by);
-		}
-	}
 	
 	
 	
