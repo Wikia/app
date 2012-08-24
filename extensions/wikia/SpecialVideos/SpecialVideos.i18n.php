@@ -18,4 +18,5 @@ $messages['en'] = array(
 	'specialvideos-sort-featured' => 'Source: Wikia Library',
 	'specialvideos-uploadby' => 'by $1',
 	'specialvideos-posted-in' => 'Posted in $1',
+	'special-videos-add-video' => 'Add a Video',
 );
