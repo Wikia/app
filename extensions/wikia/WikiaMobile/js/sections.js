@@ -49,7 +49,7 @@ define('sections', ['events', 'track'], function(ev, track){
 				root = fragment,
 				x,
 				y = contents.length,
-				currentSection = d.createElement('section'),
+				currentSection,
 				node,
 				nodeName,
 				isH2,
