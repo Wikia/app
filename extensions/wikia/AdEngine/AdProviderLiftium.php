@@ -28,7 +28,7 @@ class AdProviderLiftium extends AdProviderIframeFiller implements iAdProvider {
 
 		wfProfileIn(__METHOD__);
 
-		global $wgDBname, $wgLang, $wgUser, $wgTitle, $wgLiftiumDevHosts, $wgDevelEnvironment;
+		global $wgDBname, $wgLang, $wgTitle, $wgLiftiumDevHosts, $wgDevelEnvironment;
 		global $wgDartCustomKeyValues, $wgLoadAdDriverOnLiftiumInit;
 
 		// See Liftium.js for documentation on options
@@ -42,7 +42,7 @@ class AdProviderLiftium extends AdProviderIframeFiller implements iAdProvider {
 		}
 		$cat = AdEngine::getCachedCategory();
 		$options['kv_Hub'] = $cat['name'];
-		$options['kv_skin'] = $wgUser->getSkin()->getSkinName();
+		$options['kv_skin'] = RequestContext::getMain()->getSkin()->getSkinName();
 		$options['kv_user_lang'] = $wgLang->getCode();
 		$options['kv_cont_lang'] = $GLOBALS['wgLanguageCode'];
 		$options['kv_isMainPage'] = ArticleAdLogic::isMainPage();

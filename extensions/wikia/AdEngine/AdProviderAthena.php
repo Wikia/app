@@ -34,7 +34,7 @@ class AdProviderAthena extends AdProviderIframeFiller implements iAdProvider {
                 }
                 $called = true;
 
-		global $wgDBname, $wgLang, $wgUser, $wgTitle, $wgAthenaDevHosts;
+		global $wgDBname, $wgLang, $wgTitle, $wgAthenaDevHosts;
 
 		if (!empty($_GET['athena_dev_hosts']) || !empty($wgAthenaDevHosts)){
 			$base = "http://athena.dev.wikia-inc.com/";
@@ -61,7 +61,7 @@ class AdProviderAthena extends AdProviderIframeFiller implements iAdProvider {
 		$pageVars['isMainPage'] = ArticleAdLogic::isMainPage();
 		$cat = AdEngine::getCachedCategory();
 		$pageVars['hub'] = $cat['name'];
-		$pageVars['skin'] = $wgUser->getSkin()->getSkinName();
+		$pageVars['skin'] = RequestContext::getMain()->getSkin()->getSkinName();
 		$pageVars['user_lang'] = $wgLang->getCode();
 		$pageVars['cont_lang'] = $GLOBALS['wgLanguageCode'];
 

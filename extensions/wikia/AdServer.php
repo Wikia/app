@@ -4,8 +4,8 @@ if(!defined('MEDIAWIKI')) {
 }
 
 $wgExtensionCredits['other'][] = array(
-    'name' => 'AdServer',
-    'author' => 'Inez Korczyński'
+	'name' => 'AdServer',
+	'author' => 'Inez Korczyński'
 );
 
 class AdServer {
@@ -23,33 +23,46 @@ class AdServer {
 	}
 
 	public static function getInstance() {
-		global $wgUser;
-		if(self::$instance == false) {
+		if (self::$instance === false) {
 			self::$instance = new AdServer();
 		}
-		if(($wgUser->getSkin()->getSkinName() != '') && ($wgUser->getSkin()->getSkinName() != self::$instance->skinName)) {
+
+		// New instance if skin changed
+		$skin = RequestContext::getMain()->getSkin()->getSkinName();
+		if ($skin != '' && $skin != self::$instance->skinName) {
 			self::$instance = new AdServer();
 		}
+
 		return self::$instance;
 	}
 
 	private function loadAdsConfig() {
 		global $wgUser, $wgCurse, $wgForceSkin, $wgAdServingType, $wgMemc, $wgRequest;
 
-		$skin = $wgUser->getSkin()->getSkinName();
-		if(empty($skin)) { $skin = 'monaco'; }
+		$skin = RequestContext::getMain()->getSkin()->getSkinName();
+
+		if (empty($skin)) {
+			$skin = 'monaco';
+		}
 		$this->skinName = $skin;
-		if($skin == 'quartz') { $skin = 'quartzslate'; }
-		if(!empty($wgCurse)) { $skin = 'curse'; }
-		if(!empty($wgForceSkin)) { $skin = $wgForceSkin; }
+
+		if ($skin == 'quartz') {
+			$skin = 'quartzslate';
+		}
+		if (!empty($wgCurse)) {
+			$skin = 'curse';
+		}
+		if (!empty($wgForceSkin)) {
+			$skin = $wgForceSkin;
+		}
 
 		$key = wfMemcKey('Dadlist', $skin, $wgAdServingType);
 
-		if($wgRequest->getVal('action') != 'purge') {
+		if ($wgRequest->getVal('action') !== 'purge') {
 			$this->adsConfig = $wgMemc->get($key);
 		}
 
-		if(empty($this->adsConfig) && !is_array($this->adsConfig)) {
+		if (empty($this->adsConfig) && !is_array($this->adsConfig)) {
 			global $wgCityId, $wgExternalSharedDB, $wgDBname, $wgAdServerPath, $wgServer, $wgGoogleAnalyticsID;
 
 			$db = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
@@ -84,7 +97,7 @@ class AdServer {
 						$html = str_replace("ADSERVER_KW_PLACEHOLDER", $row->ad_keywords, $html);
 						$html = str_replace("ADSERVER_URL_PLACEHOLDER", "$wgServer/wiki/" . wfMsgForContent('mainpage'), $html);
 						if($wgGoogleAnalyticsID) {
-      						$html = str_replace("ADSERVER_ANALYTICSID_PLACEHOLDER", $wgGoogleAnalyticsID, $html);
+							$html = str_replace("ADSERVER_ANALYTICSID_PLACEHOLDER", $wgGoogleAnalyticsID, $html);
 						}
 						//$html = preg_replace("/google_page_url(.*)\;/i", "", $html);
 						$this->adsConfig[$row->ad_pos] = $html;

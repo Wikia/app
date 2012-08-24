@@ -202,15 +202,6 @@ class AdEngine {
 
 	protected static $instance = false;
 
-	// Exclude these $wgDBname's from bucket testing
-	private $handsOffWikis = array(
-		'masseffect',
-		'warhammeronline',
-		'starcraft',
-		'diablo',
-		'blind'
-	);
-
 	private $adProviders = array();
 
 	protected function __construct($slots = null) {
@@ -284,15 +275,9 @@ class AdEngine {
 	public function loadConfig() {
 		wfProfileIn(__METHOD__);
 
-		global $wgAdSlots, $wgUser;
+		global $wgAdSlots;
 
-		$skin_name = null;
-		if ( is_object($wgUser)){
-				$skin_name = $wgUser->getSkin()->getSkinName();
-		}
-
-		// sometimes no skin set yet
-		if (empty($skin_name)) $skin_name = substr(get_class($wgUser->getSkin()), 4);
+		$skin_name = RequestContext::getMain()->getSkin()->getSkinName();
 
 		if ($skin_name == 'awesome' || $skin_name == 'answers' || $skin_name == 'monaco' || $skin_name == 'lyricsminimal' ){
 			$skin_name = 'oasis';
@@ -839,7 +824,7 @@ class AdEngine {
 	public static function getLiftiumOptionsScript() {
 		wfProfileIn(__METHOD__);
 
-		global $wgDBname, $wgTitle, $wgUser, $wgLang;
+		global $wgDBname, $wgTitle, $wgLang;
 
 		// See Liftium.js for documentation on options
 		$options = array();
@@ -852,7 +837,7 @@ class AdEngine {
 		}
 		$cat = AdEngine::getCachedCategory();
 		$options['kv_Hub'] = $cat['name'];
-		$options['kv_skin'] = $wgUser->getSkin()->getSkinName();
+		$options['kv_skin'] = RequestContext::getMain()->getSkin()->getSkinName();
 		$options['kv_user_lang'] = $wgLang->getCode();
 		$options['kv_cont_lang'] = $GLOBALS['wgLanguageCode'];
 		$options['kv_isMainPage'] = ArticleAdLogic::isMainPage();
