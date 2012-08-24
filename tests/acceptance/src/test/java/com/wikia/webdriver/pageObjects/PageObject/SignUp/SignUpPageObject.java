@@ -2,6 +2,7 @@ package com.wikia.webdriver.pageObjects.PageObject.SignUp;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,6 +11,7 @@ import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -49,10 +51,12 @@ public class SignUpPageObject extends BasePageObject {
 	private WebElement blurryWordHidden;
 	@FindBy(css = "input.big")
 	private WebElement createAccountButton;
-
-	// @FindBy(css="")
-	// private WebElement;
-	// @FindBy(css="")
+	
+	 @FindBy(xpath="//div[@class='error-msg' and contains(text(), 'Oops, please fill in the username field.')]")
+	 private WebElement emptyUserNameValidationError;
+	 @FindBy(xpath="//div[@class='error-msg' and contains(text(), 'Someone already has this username. Try a different one!')]")
+	 private WebElement occupiedUserNameValidationError;
+//	 @FindBy(css="")
 	// private WebElement;
 	// @FindBy(css="")
 	// private WebElement;
@@ -70,7 +74,7 @@ public class SignUpPageObject extends BasePageObject {
 	 */
 	public void openSignUpPage()
 	{
-		driver.get(Global.LIVE_DOMAIN+"Special:UserSignup");
+		driver.get(Global.DOMAIN+"Special:UserSignup");
 		waitForElementByElement(blurryWordField);
 		PageObjectLogging.log("openSignUpPage ", "Sign up page opened " +driver.getCurrentUrl(), true, driver);
 	}
@@ -82,6 +86,7 @@ public class SignUpPageObject extends BasePageObject {
 	public void typeInUserName(String userName)
 	{
 		userNameField.sendKeys(userName);
+		userNameField.sendKeys(Keys.TAB);
 		PageObjectLogging.log("typeInUserName ", "User name field populated " +userName, true, driver);
 	}
 	
@@ -153,12 +158,30 @@ public class SignUpPageObject extends BasePageObject {
 	/**
 	 * @author Karol Kujawiak
 	 */
+	public void verifyEmptyUserNameValidation()
+	{
+		waitForElementByElement(emptyUserNameValidationError);
+		PageObjectLogging.log("verifyUserNameValidation ", "empty user name validation verified", true);
+	}
+	
+	/**
+	 * @author Karol Kujawiak
+	 */
+	public void verifyOccupiedUserNameValidation()
+	{
+		waitForElementByElement(occupiedUserNameValidationError);
+		PageObjectLogging.log("verifyUserNameValidation ", "occupied user name validation verified", true);
+	}
+	
+	/**
+	 * @author Karol Kujawiak
+	 */
 	private String getWordFromCaptcha() 
 	{
 		try
 		{
 			String captchaId = CommonFunctions.getAttributeValue(blurryWordHidden, "value");
-			String urlAd = Global.LIVE_DOMAIN+ "index.php?title=Special:Captcha/image&wpCaptchaId="+ captchaId;
+			String urlAd = Global.DOMAIN+ "wiki/Special:Captcha/image?wpCaptchaId="+ captchaId;
 			URL url = new URL(urlAd);
 			String md5 = md5(url.openStream());
 			if (md5 == null) 
@@ -185,8 +208,8 @@ public class SignUpPageObject extends BasePageObject {
 		}
 		catch(IOException e)
 		{
-			e.printStackTrace();
 			PageObjectLogging.log("getWordFromCaptcha", e.toString(), false);
+			e.printStackTrace();
 			return null;
 		} 
 		
@@ -217,14 +240,14 @@ public class SignUpPageObject extends BasePageObject {
 		}
 		catch(NoSuchAlgorithmException e)
 		{
-			e.printStackTrace();
 			PageObjectLogging.log("md5", e.toString(), false);
+			e.printStackTrace();
 			return null;
 		}
 		catch(IOException e)
 		{
-			e.printStackTrace();
 			PageObjectLogging.log("md5", e.toString(), false);
+			e.printStackTrace();
 			return null;
 		}
 	}

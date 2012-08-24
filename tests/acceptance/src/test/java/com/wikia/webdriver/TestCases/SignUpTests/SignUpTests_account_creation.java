@@ -14,8 +14,13 @@ public class SignUpTests_account_creation extends TestTemplate
 {
 	private String timeStamp;
 	
-	@Test(groups = {"SignUpTC_001"})
-	public void SignUpTC_001_non_latin_user_name()
+	
+	/*
+	 * 3.30 Test Case 2.3.01 Sign up page: Account creation Non latin username
+	 * https://internal.wikia-inc.com/wiki/Global_Log_in_and_Sign_up/Test_Cases:_Sign_up  
+	 * */
+	@Test(groups = {"SignUp_account_creation_TC_001"})
+	public void SignUp_account_creation_TC_001_non_latin_user_name()
 	{
 		SignUpPageObject signUp = new SignUpPageObject(driver);
 		timeStamp = signUp.getTimeStamp(); 
@@ -40,8 +45,12 @@ public class SignUpTests_account_creation extends TestTemplate
 	}
 	
 
-	@Test(groups = {"SignUpTC_002"})
-	public void SignUpTC_002_fifty_character_user_name()
+	/*
+	 * 3.32 Test Case 2.3.03 Sign up page: Account creation Fifty character Username
+	 * https://internal.wikia-inc.com/wiki/Global_Log_in_and_Sign_up/Test_Cases:_Sign_up  
+	 * */
+	@Test(groups = {"SignUp_account_creation_TC_002"})
+	public void SignUp_account_creation_TC_002_fifty_character_user_name()
 	{
 		SignUpPageObject signUp = new SignUpPageObject(driver);
 		timeStamp = signUp.getTimeStamp(); 
@@ -65,8 +74,12 @@ public class SignUpTests_account_creation extends TestTemplate
 	}
 	
 
-	@Test(groups = {"SignUpTC_003"})
-	public void SignUpTC_003_backward_slash_user_name()
+	/*
+	 * 3.33 Test Case 2.3.04 Sign up page: Account creation Username contains a backward slash
+	 * https://internal.wikia-inc.com/wiki/Global_Log_in_and_Sign_up/Test_Cases:_Sign_up  
+	 * */
+	@Test(groups = {"SignUp_account_creation_TC_003"})
+	public void SignUp_account_creation_TC_003_backward_slash_user_name()
 	{
 		SignUpPageObject signUp = new SignUpPageObject(driver);
 		timeStamp = signUp.getTimeStamp(); 
@@ -90,9 +103,13 @@ public class SignUpTests_account_creation extends TestTemplate
 		userProfile.verifyWelcomeEmail(userNameEnc);
 	}
 	
-	
-	@Test(groups = {"SignUpTC_004"})
-	public void SignUpTC_004_one_char_password()
+	/*
+	 * 3.34 Test Case 2.3.05 Sign up page: Account creation Username contains an underscore
+	 * 3.36 Test Case 2.3.07 Sign up page: Account creation Password is 1 character
+	 * https://internal.wikia-inc.com/wiki/Global_Log_in_and_Sign_up/Test_Cases:_Sign_up  
+	 * */
+	@Test(groups = {"SignUp_account_creation_TC_004"})
+	public void SignUp_account_creation_TC_004_one_char_password()
 	{
 		SignUpPageObject signUp = new SignUpPageObject(driver);
 		timeStamp = signUp.getTimeStamp(); 
@@ -116,8 +133,12 @@ public class SignUpTests_account_creation extends TestTemplate
 	}
 	
 
-	@Test(groups = {"SignUpTC_005"})
-	public void SignUpTC_005_fifty_character_password()
+	/*
+	 * 3.37 Test Case 2.3.08 Sign up page: Account creation Password is 50 characters
+	 * https://internal.wikia-inc.com/wiki/Global_Log_in_and_Sign_up/Test_Cases:_Sign_up  
+	 * */
+	@Test(groups = {"SignUp_account_creation__005"})
+	public void SignUp_account_creation_TC_005_fifty_character_password()
 	{
 		SignUpPageObject signUp = new SignUpPageObject(driver);
 		timeStamp = signUp.getTimeStamp(); 
@@ -140,9 +161,12 @@ public class SignUpTests_account_creation extends TestTemplate
 		userProfile.verifyWelcomeEmail(userName);
 	}
 	
-	
-	@Test(groups = {"SignUpTC_006"})
-	public void SignUpTC_006_lap_year()
+	/*
+	 * 3.38 Test Case 2.3.09 Sign up page: Account creation Birthdate 29-Feb and leap year
+	 * https://internal.wikia-inc.com/wiki/Global_Log_in_and_Sign_up/Test_Cases:_Sign_up  
+	 * */
+	@Test(groups = {"SignUp_account_creation_TC_006"})
+	public void SignUp_account_creation_TC_006_lap_year()
 	{
 		SignUpPageObject signUp = new SignUpPageObject(driver);
 		timeStamp = signUp.getTimeStamp(); 

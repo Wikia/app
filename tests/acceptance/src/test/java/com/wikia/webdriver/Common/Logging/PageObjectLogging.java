@@ -9,6 +9,7 @@ import org.openqa.selenium.support.events.WebDriverEventListener;
 
 import com.google.common.base.Throwables;
 import com.wikia.webdriver.Common.Core.CommonUtils;
+import com.wikia.webdriver.Common.Core.Global;
 
 
 
@@ -18,16 +19,17 @@ public class PageObjectLogging implements WebDriverEventListener{
 	
 	private static long imageCounter;
 	private static String reportPath = "."+File.separator+"logs"+File.separator;
-	private static String screenPath = reportPath + "screenshots"+File.separator+"screenshot";
+	private static String screenDirPath = reportPath + "screenshots"+File.separator;
+	private static String screenPath = screenDirPath+"screenshot";
 	private static String logFileName = "log.html";
 	private static String logPath = reportPath + logFileName;
 	
 	
 	
 	
-	
 	public static void startLoggingSuite()
 	{
+			CommonUtils.createDirectory(screenDirPath);
 			imageCounter = 0; 
 			String l1 = "<html><head><meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\"><style>td { border-top: 1px solid grey; } </style></head><body>";
 			CommonUtils.appendTextToFile(logPath, l1);
@@ -61,8 +63,9 @@ public class PageObjectLogging implements WebDriverEventListener{
 		
 		imageCounter +=1;
 		CommonUtils.captureScreenshot(screenPath+imageCounter, driver);
+		CommonUtils.appendTextToFile(screenPath+imageCounter+".html", driver.getPageSource());
 		String hexColor = success ? "#CCFFCC" : "#FFCCCC";
-		String s = "<tr style=\"background:"+hexColor+";\"><td>"+command+"</td><td>"+description+"</td><td> <br/><a href='screenshots/screenshot"+imageCounter+".png'>Screenshot</a></td></tr>";
+		String s = "<tr style=\"background:"+hexColor+";\"><td>"+command+"</td><td>"+description+"</td><td> <br/><a href='screenshots/screenshot"+imageCounter+".png'>Screenshot</a><br/><a href='screenshots/screenshot"+imageCounter+".html'>HTML Source</a></td></tr>";
 		CommonUtils.appendTextToFile(logPath, s);
 	}
 	
@@ -171,8 +174,9 @@ public class PageObjectLogging implements WebDriverEventListener{
 	public void onException(Throwable throwable, WebDriver driver) 
 	{
 		CommonUtils.captureScreenshot(screenPath+imageCounter, driver);
+		CommonUtils.appendTextToFile(screenPath+imageCounter+".html", driver.getPageSource());
 		String stackTrace = Throwables.getStackTraceAsString(throwable);
-		String s1 = "<tr style=\"background:#FFCCCC;\"><td>error</td><td>"+stackTrace+"</td><td> <br/><a href='screenshots/screenshot"+imageCounter+".png'>Screenshot</a></td></tr>";
+		String s1 = "<tr style=\"background:#FFCCCC;\"><td>error</td><td>"+stackTrace+"</td><td> <br/><a href='screenshots/screenshot"+imageCounter+".png'>Screenshot</a><br/><a href='screenshots/screenshot"+imageCounter+".html'>HTML Source</a></td></tr>";
 				
 		CommonUtils.appendTextToFile(logPath, s1);
 		imageCounter +=1;
