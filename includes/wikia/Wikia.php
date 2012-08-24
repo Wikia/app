@@ -39,6 +39,7 @@ $wgHooks['ResourceLoaderUserOptionsModuleGetOptions'][] = "Wikia::onResourceLoad
 $wgHooks['ResourceLoaderFileModuleConcatenateScripts'][] = 'Wikia::onResourceLoaderFileModuleConcatenateScripts';
 $wgHooks['ResourceLoaderSiteModule::getPages'][] = 'Wikia::onResourceLoaderSiteModuleGetPages';
 $wgHooks['ResourceLoaderUserModule::getPages'][] = 'Wikia::onResourceLoaderUserModuleGetPages';
+$wgHooks['ResourceLoaderCacheControlHeaders'][] = "Wikia::onResourceLoaderCacheControlHeaders";
 
 /**
  * This class have only static methods so they can be used anywhere
@@ -1930,6 +1931,14 @@ class Wikia {
 		}
 
 		// todo: add user-defined user scripts here
+
+		return true;
+	}
+
+
+	public static function onResourceLoaderCacheControlHeaders( $context, $maxage, $smaxage, $exp ) {
+		header( "X-Pass-Cache-Control: public, max-age=$maxage, s-maxage=$smaxage" );
+		header( 'X-Pass-Expires: ' . wfTimestamp( TS_RFC2822, $exp + time() ) );
 
 		return true;
 	}

@@ -596,6 +596,9 @@ class ResourceLoader {
 			header( "Cache-Control: public, max-age=$maxage, s-maxage=$smaxage" );
 			$exp = min( $maxage, $smaxage );
 			header( 'Expires: ' . wfTimestamp( TS_RFC2822, $exp + time() ) );
+			// Wikia - change begin - @author: wladek
+			wfRunHooks('ResourceLoaderCacheControlHeaders',array($context,$maxage,$smaxage,$exp));
+			// Wikia - change end
 		}
 	}
 
