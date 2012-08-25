@@ -1188,9 +1188,12 @@ $messages['ja'] = array(
 	'chat-default-topic' => '「$1 チャット」にようこそ',
 	'chat-user-joined' => '$1 がチャットに参加しました。',
 	'chat-read-only' => 'ウィキが閲覧のみに制限されているためチャットは一時的に無効になっています。',
+	'chat-private-messages' => 'プライベートメッセージ',
 	'chat-user-parted' => '$1 がチャットから退席しました。',
 	'chat-user-blocked' => '$1 が $2 をブロックしました。',
 	'chat-user-allow' => '$1 が $2 に許可を与えました。',
+	'chat-user-was-kicked' => '$2 が $1 を強制退出させました。',
+	'chat-you-were-kicked' => '$1 があなたを強制退出させました。',
 	'chat-user-permanently-disconnected' => '切断されました。インターネット接続を確認し、ブラウザウィンドウを更新してください。',
 	'chat-inlinealert-a-made-b-chatmod' => '$1 が <strong>$2</strong> をチャットモデレータにしました。',
 	'chat-err-connected-from-another-browser' => '他のブラウザからの接続を確認しました。この接続は閉じられます。',
@@ -1207,14 +1210,19 @@ $messages['ja'] = array(
 	'chat-you-are-banned-text' => 'このウィキのチャット機能を利用する権限がありません。もし、これが誤りであるあるいは再考が必要であると考えるのであれば、管理者に連絡を取ってください。',
 	'chat-room-is-not-on-this-wiki' => 'あなたが入ろうとしたチャットルームはこのウィキにはないようです。',
 	'chat-kick-log-reason' => '$1 がこのウィキのチャットから強制退出あるいは追放しました。さらに詳しい情報については、実施者に問い合わせてください。',
+	'chat-live2' => 'Live! チャット',
 	'chat-start-a-chat' => 'チャットに参加',
 	'chat-join-the-chat' => 'チャットに参加',
 	'chat-edit-count' => '編集回数: $1',
 	'chat-member-since' => '利用開始: $1',
 	'chat-great-youre-logged-in' => 'ログインしました。',
+	'chat-user-menu-message-wall' => 'メッセージウォール',
+	'chat-user-menu-talk-page' => '会話ページ',
 	'chat-user-menu-contribs' => '投稿記録',
 	'chat-user-menu-private' => 'プライベートメッセージ',
 	'chat-user-menu-give-chat-mod' => 'モデレータにする',
+	'chat-user-menu-kick' => '強制退出させる',
+	'chat-user-menu-ban' => '追放する',
 	'chat-user-menu-private-block' => 'プライベートメッセージをブロックする',
 	'chat-user-menu-private-allow' => 'プライベートメッセージを許可する',
 	'chat-user-menu-private-close' => 'プライベートチャットを終了する',
@@ -1234,6 +1242,7 @@ $messages['khw'] = array(
 );
 
 /** Korean (한국어)
+ * @author Cafeinlove
  * @author Infinity
  */
 $messages['ko'] = array(
@@ -1252,6 +1261,7 @@ $messages['ko'] = array(
 	'chat-join-the-chat' => '채팅 참가하기',
 	'chat-edit-count' => '$1회 기여',
 	'chat-member-since' => '$1부터 기여',
+	'chat-user-menu-message-wall' => '메시지 담벼락',
 );
 
 /** Luxembourgish (Lëtzebuergesch)

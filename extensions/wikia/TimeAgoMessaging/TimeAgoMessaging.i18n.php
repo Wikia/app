@@ -500,14 +500,15 @@ $messages['uk'] = array(
 );
 
 /** Vietnamese (Tiếng Việt)
+ * @author Minh Nguyen
  * @author Xiao Qiao
  */
 $messages['vi'] = array(
 	'timeagomessaging-desc' => 'Cung cấp i18n cho phần mềm jquery.timeago.js',
-	'timeago-month' => '{{PLURAL:$1|1 tháng|$1 tháng}} trước',
+	'timeago-month' => '$1 tháng trước',
 	'timeago-day' => '{{PLURAL:$1|1 ngày|$1 ngày}} trước',
 	'timeago-hour' => '{{PLURAL:$1|1 giờ|$1 giờ}} trước',
-	'timeago-minute' => '{{PLURAL:$1|1 phút|$1 phút}} trước',
+	'timeago-minute' => '$1 phút trước',
 	'timeago-second' => '1 phút trước',
 );
 

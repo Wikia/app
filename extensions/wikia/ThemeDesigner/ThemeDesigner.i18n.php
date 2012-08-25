@@ -990,6 +990,34 @@ $messages['km'] = array(
 	'themedesigner-unknown-error' => 'មានបញ្ហាកើតឡើង ដោយយើងមិនដឹងថាមកពីមូលហេតុអ្វី។ សូមសាកល្បងម្ដងទៀត',
 );
 
+/** Korean (한국어)
+ * @author Cafeinlove
+ */
+$messages['ko'] = array(
+	'themedesigner-or' => '또는',
+	'themedesigner-desc' => '위키 관리자가 스킨을 디자인할 수 있게 해 줍니다.',
+	'themedesigner-title' => '위키아 테마 디자이너',
+	'themedesigner-background' => '배경',
+	'themedesigner-page' => '문서',
+	'themedesigner-color' => '색상',
+	'themedesigner-graphic' => '그림',
+	'themedesigner-buttons' => '버튼',
+	'themedesigner-links' => '링크',
+	'themedesigner-header' => '상단부',
+	'themedesigner-text-wordmark' => '글자 로고',
+	'themedesigner-graphic-wordmark' => '그림 로고',
+	'themedesigner-tile-background' => '바둑판식',
+	'themedesigner-fix-background' => '고정',
+	'themedesigner-transparency' => '투명도',
+	'themedesigner-tab-theme' => '테마',
+	'themedesigner-tab-customize' => '커스터마이징',
+	'themedesigner-tab-wordmark' => '로고',
+	'themedesigner-preview-mode' => '미리 보기...',
+	'themedesigner-previous-versions' => '이전 버전',
+	'themedesigner-button-save-im-done' => '변경한 테마를 저장하기',
+	'themedesigner-button-cancel' => '취소하기',
+);
+
 /** Kurdish (Latin script) (‪Kurdî (latînî)‬)
  * @author George Animal
  */

@@ -1281,6 +1281,7 @@ $messages['ja'] = array(
 	'cnw-auth-signup-creative' => '続けるにはアカウントを作成する必要があります。<br />アカウントの作成は数分で完了します。',
 	'cnw-auth-facebook-signup' => 'Facebook を利用してアカウントを登録',
 	'cnw-auth-facebook-login' => 'Facebook を利用してログイン',
+	'cnw-userauth-creative' => 'ログイン',
 	'cnw-desc-headline' => 'どんなウィキを作成しますか？',
 	'cnw-desc-creative' => 'このウィキでどんな話題を扱うのかを記入してください',
 	'cnw-desc-placeholder' => 'ここに入力した内容がメインページに表示されます。',

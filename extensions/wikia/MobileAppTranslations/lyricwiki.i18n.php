@@ -948,7 +948,7 @@ $messages['sv'] = array(
 	'about-heading-rate' => 'Betygsätt vår app!',
 	'about-rate-0-android' => 'Om du gillar denna app, ge den fem stjärnor på Android Market!',
 	'about-rate-0-ios' => 'Om du gillar denna app, ge den fem stjärnor på App Store!',
-	'gracenote-takedown' => 'Åh nej! Tyvärr är vi inte licenserade för att visa hela sångtexten för denna sång för tillfället (inträffar för färre än 1% av våra sånger). Vänligen försök igen nästa vecka.',
+	'gracenote-takedown' => '&Aring;h nej! Tyv&auml;rr &auml;r vi inte licenserade f&ouml;r att visa hela s&aring;ngtexten f&ouml;r denna s&aring;ng f&ouml;r tillf&auml;llet (intr&auml;ffar f&ouml;r f&auml;rre &auml;n 1% av v&aring;ra s&aring;nger). V&auml;nligen f&ouml;rs&ouml;k igen n&auml;sta vecka.',
 	'lyrics-artist-byline' => 'av %s',
 	'ringtone-matcher-by-song' => 'Skicka %s som ringsignal till din mobil',
 );

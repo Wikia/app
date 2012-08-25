@@ -177,6 +177,13 @@ $messages['es'] = array(
 	'ajaxpoll-submitting' => 'Por favor, espera, procesando tu voto...',
 );
 
+/** Estonian (eesti)
+ * @author KalmerE.
+ */
+$messages['et'] = array(
+	'ajaxpoll-submit' => 'Hääleta!',
+);
+
 /** Basque (euskara)
  * @author An13sa
  */
@@ -344,6 +351,16 @@ $messages['ja'] = array(
 	'ajaxpoll-submit' => '投票',
 	'ajaxpoll-closed' => '投票は既に終了しています。結果をお楽しみください。',
 	'ajaxpoll-submitting' => '投票を送信しています。お待ちください...',
+);
+
+/** Korean (한국어)
+ * @author Cafeinlove
+ */
+$messages['ko'] = array(
+	'ajaxpoll-thankyou' => '투표해 주셔서 감사합니다!',
+	'ajaxpoll-error' => '투표를 처리하는 도중 문제가 발생했습니다. 다시 시도해 주세요.',
+	'ajaxpoll-summary' => '이 설문조사는 $2 $1에 생성되었으며 지금까지 모두 $3명이 참여했습니다.',
+	'ajaxpoll-closed' => '설문조사가 종료되었습니다. 결과를 비교해 보세요.',
 );
 
 /** Colognian (Ripoarisch)

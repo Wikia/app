@@ -1496,9 +1496,9 @@ $2 debe cliccar sur le ligamine in le message que nos ha inviate pro confirmar s
 	'usersignup-account-creation-email-subject' => 'Un conto ha essite create pro te in Wikia!',
 	'usersignup-account-creation-email-greeting' => 'Salute,',
 	'usersignup-account-creation-email-content' => 'Un conto ha essite create pro te in {{SITENAME}}. Pro acceder a tu conto e cambiar tu contrasigno temporari, clicca sur le ligamine sequente e aperi session con le nomine de usator "$USERNAME" e le contrasigno "$NEWPASSWORD".
-<br /><br />
+
 Per favor aperi session a <a style="color:#2C85D5;" href="{{fullurl:{{ns:special}}:UserLogin}}">{{fullurl:{{ns:special}}:UserLogin}}</a>
-<br /><br />
+
 Si tu non vole que iste conto sia create, tu pote simplemente ignorar iste message o contactar nostre equipa de Supporto Communitari si tu ha questiones.',
 	'usersignup-account-creation-email-signature' => 'Le equipa de Wikia',
 	'usersignup-account-creation-email-body' => 'Salute,
@@ -1519,9 +1519,9 @@ Vole seliger le e-mail que tu recipe? Va a: {{fullurl:{{ns:special}}:Preferences
 	'usersignup-confirmation-reminder-email_subject' => 'Non oblida nos...',
 	'usersignup-confirmation-reminder-email-greeting' => 'Salute $USERNAME,',
 	'usersignup-confirmation-reminder-email-content' => 'Alcun dies ha passate, ma il pare que tu non ha ancora finite le creation de tu conto in Wikia. Es facile. Simplemente clicca sur le ligamine de confirmation sequente:
-<br /><br />
+
 <a style="color:#2C85D5;" href="$CONFIRMURL">$CONFIRMURL</a>
-<br /><br />
+
 Si tu non confirma tu conto in 23 dies, tu nomine de usator $USERNAME devenira disponibile de novo, dunque non tarda!',
 	'usersignup-confirmation-reminder-email-signature' => 'Le equipa de Wikia',
 	'usersignup-confirmation-reminder-email_body' => 'Salute $2,
@@ -1653,20 +1653,61 @@ Vuoi controllare quali email ricevere? Vai a: {{fullurl:{{ns:special}}:Preferenc
 
 /** Japanese (日本語)
  * @author Shirayuki
+ * @author Tommy6
  */
 $messages['ja'] = array(
-	'usersignup-page-title' => 'ウィキアに参加',
+	'usersignup-page-title' => 'ウィキアに参加しましょう',
 	'usersignup-page-captcha-label' => '画像認証',
 	'usersignup-error-invalid-email' => '正しいメール アドレスを入力してください。',
+	'usersignup-error-empty-email' => 'メールアドレスを入力してください。',
+	'usersignup-error-empty-username' => '利用者名を入力してください。',
+	'usersignup-facebook-heading' => 'サインアップを完了する',
 	'usersignup-facebook-create-account' => 'アカウント作成',
+	'usersignup-facebook-email-tooltip' => '他のメールアドレスを使用したい場合は、後でアカウント設定で変更できます。',
 	'usersignup-facebook-have-an-account-heading' => '既にアカウントをお持ちですか？',
+	'usersignup-facebook-have-an-account' => '既にあるウィキアのアカウントを Facebook に接続する。',
+	'usersignup-user-pref-emailconfirmlink' => '新しい認証メールを送信',
+	'usersignup-user-pref-emailauthenticated' => 'メールアドレスは $2 $3 に認証されています。',
+	'usersignup-user-pref-emailnotauthenticated' => 'メールアドレスの変更を完了するには、認証メール中のリンクをクリックしてください: $1',
+	'usersignup-user-pref-noemailprefs' => 'メールアドレスが設定されていません。上の欄にメールアドレスを入力してください。',
+	'usersignup-confirm-email-unconfirmed-emailnotauthenticated' => 'メールアドレスの認証が済んでいません。認証メールを確認し、メール本文中の認証リンクをクリックしてください。',
 	'usersignup-confirm-email-change-email' => 'メールアドレスを変更',
 	'usersignup-confirm-email-update' => '更新',
-	'usersignup-confirmation-email-signature' => 'ウィキア チーム',
-	'usersignup-reconfirmation-email-signature' => 'ウィキア チーム',
-	'usersignup-welcome-email-signature' => 'ウィキア チーム',
-	'usersignup-account-creation-email-signature' => 'ウィキア チーム',
-	'usersignup-confirmation-reminder-email-signature' => 'ウィキア チーム',
+	'usersignup-confirmation-email-greeting' => '$USERNAME さん、',
+	'usersignup-confirmation-email-signature' => 'ウィキアサポートチーム',
+	'usersignup-reconfirmation-email_subject' => 'ウィキアのメールアドレス設定変更に関する認証',
+	'usersignup-reconfirmation-email-greeting' => '$USERNAME さん、',
+	'usersignup-reconfirmation-email-content' => 'ウィキアで変更したメールアドレスを認証するには以下のリンクをクリックしてください。 <br /><br />
+<a style="color:#2C85D5;" href="$CONFIRMURL">$CONFIRMURL</a><br /><br /> 
+認証が完了するまでは、変更前のメールアドレスでメールを受け取り続けられます。',
+	'usersignup-reconfirmation-email-signature' => 'ウィキアサポートチーム',
+	'usersignup-reconfirmation-email_body' => '$2 さん、
+
+ウィキアで変更したメールアドレスを認証するには以下のリンクをクリックしてください。
+
+$3
+
+認証が完了するまでは、変更前のメールアドレスでメールを受け取り続けられます。
+
+ウィキアサポートチーム
+___________________________________________
+
+ウィキアの最新情報は http://ja.wikia.com/ で確認できます。
+メール通知に関する設定は {{fullurl:{{ns:special}}:Preferences}} で行えます。',
+	'usersignup-welcome-email-signature' => 'ウィキアサポートチーム',
+	'usersignup-heading' => 'ウィキアに参加しましょう',
+	'usersignup-marketing-wikia' => 'それぞれが知っていること、好きなことを共有するために世界中から集まった人々と協力して、ウィキを作り上げてきましょう。',
+	'usersignup-marketing-login' => '既にアカウントをお持ちですか？[[Special:UserLogin|ログイン]]',
+	'usersignup-marketing-benefits' => '巨大なウィキ・コミュニティ群の一員として',
+	'usersignup-marketing-community-heading' => '共に作り上げる',
+	'usersignup-marketing-community' => 'ゲームから映画・テレビに至るまで様々な話題の中から興味のあるものを探し、同様の趣向をもつ人々と共にウィキを作り上げていきましょう。',
+	'usersignup-marketing-global-heading' => '創造する',
+	'usersignup-marketing-global' => 'まずはウィキを作りましょう。作成したばかりのウィキは小さなものですが、他の人々の助けをかりて、大きなものへと成長させていきましょう。',
+	'usersignup-marketing-creativity-heading' => '独創的であれ',
+	'usersignup-marketing-creativity' => '投票機能や画像、動画、ギャラリー、各種アプリなどを利用し、あなたの創造力を最大限に発揮しましょう。',
+	'usersignup-account-creation-email-signature' => 'ウィキアサポートチーム',
+	'usersignup-confirmation-reminder-email-signature' => 'ウィキアサポートチーム',
+	'usersignup-facebook-problem' => 'Facebook との通信中に問題が発生しました。しばらくしてからもう一度お試しください。',
 );
 
 /** Macedonian (македонски)
