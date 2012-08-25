@@ -428,6 +428,23 @@ $messages['kn'] = array(
 	'dump-database-info-more' => 'ಹೆಚ್ಚಿನ ಮಾಹಿತಿಗಾಗಿ <a href="http://community.wikia.com/wiki/Help:Database_download">ನೋಡಿ</a>',
 );
 
+/** Korean (한국어)
+ * @author Cafeinlove
+ */
+$messages['ko'] = array(
+	'dump-database' => '데이터베이스 덤프',
+	'dump-database-info' => '데이터베이스 덤프는 개인적인 백업(위키아는 모든 위키의 별도 백업을 자동으로 생성합니다) 혹은 봇 유지 관리를 위해 사용할 수 있습니다.',
+	'dump-database-curr-pages' => '현재 문서들',
+	'dump-database-curr-pages-info' => '(이 버전은 일반적으로 봇에 사용하는 것이 가장 적합합니다)',
+	'dump-database-full-pages' => '현재 문서들 및 역사',
+	'dump-database-full-pages-info' => '(경고: 이 파일은 용량이 매우 클 수 있습니다)',
+	'dump-database-request' => '업데이트 요청',
+	'dump-database-request-info' => '(덤프는 일반적으로 1주일마다 생성됩니다)',
+	'dump-database-request-submit' => '요청하기',
+	'dump-database-request-requested' => '데이터베이스 덤프가 요청되었습니다',
+	'dump-database-info-more' => '구체적인 도움말은 <a href="http://community.wikia.com/wiki/Help:Database_download">이곳에서</a> 참조하시기 바랍니다.',
+);
+
 /** Karachay-Balkar (къарачай-малкъар)
  * @author Къарачайлы
  */

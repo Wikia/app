@@ -662,6 +662,24 @@ Wikia
 </p>',
 );
 
+/** Estonian (eesti)
+ * @author KalmerE.
+ */
+$messages['et'] = array(
+	'article-comments-anonymous' => 'Anonüümne kasutaja',
+	'article-comments-cancel' => 'Tühista',
+	'article-comments-delete' => 'kustuta',
+	'article-comments-edit' => 'redigeeri',
+	'article-comments-history' => 'ajalugu',
+	'article-comments-toc-item' => 'Kommentaarid',
+	'article-comments-reply' => 'Vasta',
+	'article-comments-show-all' => 'Vaata kõiki kommentaare',
+	'article-comments-prev-page' => 'Eelmine',
+	'article-comments-next-page' => 'Järgmine',
+	'wikiamobile-article-comments-none' => 'Kommentaare ei ole',
+	'wikiamobile-article-comments-replies' => 'vastused',
+);
+
 /** Basque (euskara)
  * @author An13sa
  */
@@ -1262,6 +1280,17 @@ $messages['km'] = array(
 	'article-comments-reply' => 'ឆ្លើយតប',
 	'article-comments-prev-page' => 'មុន​',
 	'article-comments-next-page' => 'បន្ទាប់',
+);
+
+/** Korean (한국어)
+ * @author Cafeinlove
+ */
+$messages['ko'] = array(
+	'article-comments-anonymous' => '익명 사용자',
+	'article-comments-cancel' => '취소',
+	'article-comments-delete' => '삭제',
+	'article-comments-edit' => '편집',
+	'article-comments-history' => '역사',
 );
 
 /** Colognian (Ripoarisch)

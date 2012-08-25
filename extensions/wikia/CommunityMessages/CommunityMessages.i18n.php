@@ -100,7 +100,7 @@ $messages['es'] = array(
  */
 $messages['eu'] = array(
 	'communitymessages-desc' => 'Komunitateko Mezuentzako laguntza-luzapena',
-	'communitymessages-notice-msg' => '[[Special:ActivityFeed|Komunitateko Mezuak eguneratu dira]].',
+	'communitymessages-notice-msg' => '[[Special:WikiActivity|Komunitateko Mezuak eguneratu dira]].',
 );
 
 /** Persian (فارسی)

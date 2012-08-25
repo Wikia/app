@@ -947,6 +947,15 @@ $messages['km'] = array(
 	'right-editaccount' => 'កែប្រែចំណង់ចំណូលចិត្តរបស់អ្នកប្រើប្រាស់ដទៃ',
 );
 
+/** Korean (한국어)
+ * @author Cafeinlove
+ */
+$messages['ko'] = array(
+	'editaccount-submit-email' => '저장하고 이메일 주소 인증하기',
+	'editaccount-status-confirmed' => '확인됨',
+	'editaccount-status-unconfirmed' => '확인되지 않음',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */

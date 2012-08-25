@@ -1851,6 +1851,13 @@ $messages['kn'] = array(
 	'myhome-community-corner-edit' => 'ಸಂದೇಶವನ್ನು ಸಂಪಾದಿಸು',
 );
 
+/** Korean (한국어)
+ * @author Cafeinlove
+ */
+$messages['ko'] = array(
+	'myhome-namespace-blog' => '블로그',
+);
+
 /** Colognian (Ripoarisch)
  * @author Purodha
  */

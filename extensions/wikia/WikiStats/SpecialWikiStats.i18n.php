@@ -4233,6 +4233,40 @@ $messages['kn'] = array(
 	'wikistats_title' => 'ಶೀರ್ಷಿಕೆ',
 );
 
+/** Korean (한국어)
+ * @author Cafeinlove
+ * @author 아라
+ */
+$messages['ko'] = array(
+	'wikistats' => '위키아 통계',
+	'wikistats_wikia' => '위키아',
+	'wikistats_pagetitle' => '위키아 통계',
+	'wikistats_showstats_btn' => '통계 보기',
+	'wikiastast_refresh_data' => '데이터 새로고침',
+	'wikistats_pageviews' => '이름공간별 및 월별 페이지 조회수',
+	'wikistats_active_day' => '일',
+	'wikistats_active_month' => '월',
+	'wikistats_active_year' => '년',
+	'wikistats_active_months' => '월',
+	'wikistats_images' => '그림',
+	'wikistats_video' => '도영ㅇ상',
+	'wikistats_media' => '그림 및 동영상',
+	'wikistats_video_embeded' => '내장됨',
+	'wikistats_uploaded_images' => '올려짐',
+	'wikistats_namespace' => '이름공간',
+	'wikistats_wikicreated' => '생성일:',
+	'wikistats_wikilang' => '언어:',
+	'wikistats_blog_created' => '블로그 생성됨',
+	'wikistats_blog_comment' => '블로그 댓글',
+	'wikistats_see_also' => '같이 보기',
+	'wikistats_language_all' => '모든 언어',
+	'wikistats_namespaces_talk' => '토론 (댓글 포함)',
+	'wikistats_namespaces_top10list' => '상위 10개 목록',
+	'wikistats_namespaces_blog' => '블로그 (블로그, 블로그 댓글 포함)',
+	'wikistats_namespaces_user' => '사용자 (사용자토론 포함)',
+	'wikistats_namespaces_maintenance' => '관리 (미디어위키, 틀, 프로젝트)',
+);
+
 /** Karachay-Balkar (къарачай-малкъар)
  * @author Къарачайлы
  */
@@ -5934,7 +5968,7 @@ Bewerkingen op overlegpagina's en dergelijke worden genegeerd.",
 	'wikistats_namespaces' => 'naamruimten',
 	'wikistats_redirects' => 'doorverwijzingen',
 	'wikistats_edited_in_namespace' => 'bewerkt in naamruimte',
-	'wikistats_main_namespace' => 'inhoud<br />naamruimten',
+	'wikistats_main_namespace' => 'hoofdnaamruimte',
 	'wikistats_image_namespace' => 'afbeelding',
 	'wikistats_page_requests' => 'paginaverzoeken',
 	'wikistats_visits' => 'bezoeken',

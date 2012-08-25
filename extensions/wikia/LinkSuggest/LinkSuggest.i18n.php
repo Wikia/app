@@ -282,6 +282,7 @@ $messages['pt-br'] = array(
  */
 $messages['roa-tara'] = array(
 	'tog-disablelinksuggest' => "No fà vedè 'u collegamende suggerite jndr'à 'u mode Sorgende",
+	'tog-redirected-from' => '&ndash; redirezionate da $1',
 );
 
 /** Russian (русский)

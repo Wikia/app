@@ -1854,6 +1854,12 @@ Dit kan niet ongedaan gemaakt worden.',
 	'swm-error-invalid-time' => 'Er is een ongeldige tijd opgegeven.',
 	'swm-lang-other' => 'alle overgebleven talen',
 	'action-messagetool' => 'berichten over de hele site versturen',
+	'swm-label-mode-users-registration' => 'Registratiedatum',
+	'swm-mode-users-registration-after' => 'Na',
+	'swm-mode-users-registration-before' => 'Voor',
+	'swm-mode-users-registration-between' => 'Tussen',
+	'swm-label-mode-users-registration-hint' => '<i>Datums moeten worden ingegeven in de vorm van 2012-04-01 00:00:00</i>',
+	'swm-error-registered-tobeforefrom' => 'De datum van gebruikersregistratie ligt voor de begindatum.',
 );
 
 /** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)

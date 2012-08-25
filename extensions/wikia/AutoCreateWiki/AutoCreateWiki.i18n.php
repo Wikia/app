@@ -2548,6 +2548,24 @@ $messages['km'] = array(
 	'autocreatewiki-set-username' => 'ដាក់អត្តនាមមុន។',
 );
 
+/** Korean (한국어)
+ * @author Cafeinlove
+ */
+$messages['ko'] = array(
+	'autocreatewiki' => '새 위키 만들기',
+	'autocreatewiki-page-title-default' => '새 위키 만들기',
+	'createwiki' => '새 위키 만들기',
+	'autocreatewiki-language-all' => '모든 언어',
+	'autocreatewiki-create-account' => '회원가입',
+	'autocreatewiki-error' => '오류',
+	'autocreatewiki-haveaccount-question' => '위키아에 회원가입하시겠습니까?',
+	'autocreatewiki-success-title-default' => '위키가 생성되었습니다!',
+	'autocreatewiki-success-subtitle' => '다음 링크를 방문해 위키에서 활동을 시작할 수 있습니다.',
+	'autocreatewiki-success-has-been-created' => '생성되었습니다!',
+	'autocreatewiki-success-get-started' => '시작하기',
+	'newwikis' => '새로 만들어진 위키',
+);
+
 /** Colognian (Ripoarisch)
  * @author Purodha
  */
@@ -2862,7 +2880,7 @@ $messages['mk'] = array(
 	'autocreatewiki-step6-error' => 'Не можам да поставам основно-зададени табели во базата на податоци!',
 	'autocreatewiki-step7-error' => 'Не можам да ја ископирам почетната база на податоци за јазик!',
 	'autocreatewiki-protect-reason' => 'Дел од официјалниот посредник',
-	'autocreatewiki-welcomesubject' => '$1 е создадено!',
+	'autocreatewiki-welcomesubject' => 'Создавањето на $1 заврши успешно!',
 	'autocreatewiki-welcomebody' => 'Здраво $2!
 
 Вашето вики е создадено! Погледајте: <$1>

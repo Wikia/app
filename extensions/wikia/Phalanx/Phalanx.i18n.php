@@ -133,9 +133,11 @@ Please [[Special:Contact|contact Wikia]] about the problem.<br />The blocker als
 
 /** Message documentation (Message documentation)
  * @author McDutchie
+ * @author PtM
  */
 $messages['qqq'] = array(
 	'phalanx-add-block' => 'This message is used as a button label (like "Save", "Show preview" and "Show changes" in <code>action=edit</code>). Clicking on the button adds a new block to the Phalanx database. ([[Thread:Support/About_Wikia:Phalanx-add-block/fi/reply|documentation]] by [[User:Jack Phoenix|Jack Phoenix]])',
+	'phalanx-unblock-message' => '$1 is the ID of the block removed.',
 	'phalanx-stats-row' => '$1 is a type of block (e.g. user or title), $2 is a user (name or IP), $3 is the URL of a wiki, $4 is a time and date',
 	'phalanx-stats-row-per-wiki' => '$1 is a type of block (e.g. user or title), $2 is a user (name or IP), $3 is a filter ID, $4 is the URL of a wiki, $4 is a time and date, $5 is a link to stats for that filter ID',
 	'action-phalanx' => '{{doc-action|phalanx}}',

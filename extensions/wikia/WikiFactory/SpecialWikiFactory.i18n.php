@@ -2288,6 +2288,7 @@ $messages['ia'] = array(
 	'wikifactory-label-ezsharedupload' => 'EZIncargamentoCommun',
 	'wikifactory-label-compare' => 'Comparar',
 	'right-wikifactory' => 'Cambiar le configuration interne del wikis',
+	'action-wikifactory' => 'cambiar le configuration interne del wikis',
 	'wikifactory-domain-edit' => 'modificar iste URL',
 	'wikifactory-domain-remove' => 'remover iste URL del wiki',
 	'wikifactory-domain-setmain' => 'poner iste URL in wgServer',

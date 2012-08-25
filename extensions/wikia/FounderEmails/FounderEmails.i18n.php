@@ -3235,7 +3235,9 @@ $messages['ja'] = array(
 	'founderemails-email-user-registered-subject' => 'ウィキでアカウントが登録されました',
 	'founderemails-email-user-registered-body' => '$USERNAME さん、
 
-$EDITORNAME がウィキにアカウントを登録しました。
+$EDITORNAME が $WIKINAME に参加しました。
+
+歓迎のメッセージを送るなどして、編集してもらえるように誘導してきましょう。参加者が多ければ多いほど、ウィキの成長は早まります。
 
 トークページ:
 $EDITORTALKPAGEURL
@@ -3252,6 +3254,8 @@ $EDITORNAME がウィキにアカウントを登録しました。<br /><br />
 -- ウィキアチーム',
 	'founderemails-email-0-days-passed-body-HTML' => '$WIKINAME の作成おめでとうございます。これにより、あなたもウィキアコミュニティの一員となりました！<br /><br />
 -- ウィキアチーム',
+	'founderemails-email-page-edited-reg-user-first-edit-subject' => '$WIKINAME で新しい編集が行われました',
+	'founderemails-email-page-edited-reg-user-subject' => '$WIKINAME で新しい編集が行われました',
 );
 
 /** Kannada (ಕನ್ನಡ)

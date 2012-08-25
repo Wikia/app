@@ -88,6 +88,13 @@ $messages['ce'] = array(
 	'wikifactoryreporter' => 'Хааманча WikiFactory',
 );
 
+/** Sorani Kurdish (کوردی)
+ * @author Muhammed taha
+ */
+$messages['ckb'] = array(
+	'wikifactoryreporter' => 'پەیامنێری WikiFactory',
+);
+
 /** Czech (česky)
  * @author Mr. Richard Bolla
  */
