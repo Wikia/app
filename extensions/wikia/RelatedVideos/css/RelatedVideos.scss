@@ -337,34 +337,12 @@ $color-related-videos-background: darken($color-page, 20%);
 		}
 	}
 
-	.rv-error {
-		display: none;
-	}
-
   .RVSuggestPreviewVideo .preview_video { float:left; width:65%; }
   .RVSuggestPreviewVideo .preview_options { float:left; width:30%; }
   .RVSuggestPreviewVideo .preview_options a { display:block; margin-bottom:15px; }
   .RVSuggestPreviewVideo a.insert { font-weight: bold; }
 
     button.relatedVideosConfirm { height: 24px }
-
-	&.error-mode {
-		.rv-error {
-			@include border-radius(4px);
-			@include border-radius-nw(0px);
-			display: table;
-			_display: block;
-			*display: block;
-			background-color: $color-buttons;
-			color: $color-button-text;
-			font-size: 12px;
-			line-height: 14px;
-			padding: 3px;
-		}
-		input {
-			background-color: #FFEEA6 !important;
-		}
-	}
 
 	.messageHolder {
 		display: none;
