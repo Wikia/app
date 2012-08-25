@@ -189,30 +189,23 @@
 					GlobalNotification.hide();
 					var $relatedVideosAddVideo = $('#relatedvideos-add-video');
 					if ( formRes.error ) {
-						$relatedVideosAddVideo.addClass( 'error-mode' );
 						enableVideoSubmit();
-						injectModalErrorMessage( formRes.error );
+						showError( formRes.error );
 					} else if ( formRes.html ){
-						$relatedVideosAddVideo.removeClass( 'error-mode' );
 						$relatedVideosAddVideo.closest('.modalWrapper').closeModal();
 						// Call success callback
 						if($.isFunction(settings.callback)) {
 							settings.callback(formRes.html);
 						}
 					} else {
-						$relatedVideosAddVideo.addClass( 'error-mode' );
 						enableVideoSubmit();
-						injectModalErrorMessage( $('#relatedvideos-add-video .somethingWentWrong').html() );
+						showError( $('#relatedvideos-add-video .somethingWentWrong').html() );
 					}
 				},
 				function(){
 					showError();
 				}
 			);
-		}
-
-		var injectModalErrorMessage = function( error ){
-			$( '#relatedvideos-add-video .rv-error td' ).html( error );
 		}
 
 	    var previewVideo = function() {
@@ -255,9 +248,11 @@
 			addVideoConfirm(ev);
 		}
 		
-		var showError = function() {
+		var showError = function(error) {
 			// TODO: make this work with Special:Videos - maybe add error message to options
-			GlobalNotification.show( $('.errorWhileLoading').html(), 'error' );		
+			error = error || $('.errorWhileLoading').html();
+			GlobalNotification.dom.stop(true, true);
+			GlobalNotification.show(error, 'error')
 		}
 	
 		var handleClick = function(e) {

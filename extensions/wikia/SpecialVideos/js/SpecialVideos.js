@@ -15,7 +15,7 @@ var SpecialVideos = {
 		$('.addVideo').addVideoButton({
 			gaCat: 'testing',
 			callback: function() {
-				alert('added');
+				window.location.search = "?sort=recent"; // TODO: fix this so it's not hard coded
 			}
 		});
 	}
