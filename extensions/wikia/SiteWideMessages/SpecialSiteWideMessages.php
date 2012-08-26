@@ -231,7 +231,7 @@ function SiteWideMessagesAjaxDismiss($msgId) {
  * @author macbre
  */
 function SiteWideMessagesAddNotifications(&$skim, &$tpl) {
-	global $wgOut, $wgUser;
+	global $wgOut, $wgUser, $wgExtensionsPath;
 	wfProfileIn(__METHOD__);
 
 	if ( F::app()->checkSkin( 'oasis' ) ) {
@@ -250,6 +250,8 @@ function SiteWideMessagesAddNotifications(&$skim, &$tpl) {
 			wfProfileOut( __METHOD__ . '::parse' );
 
 			wfRunHooks( 'SiteWideMessagesNotification', array( $msgs ) );
+
+			$wgOut->addScript( "<script type=\"text/javascript\" src=\"{$wgExtensionsPath}/wikia/SiteWideMessages/js/SiteWideMessages.tracking.js\"></script>" );
 		}
 	}
 
