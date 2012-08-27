@@ -1,5 +1,4 @@
 <?php
-
 /*
  * Wall notifications allows us to manage notifications about new messages
  * and replies on users Walls
@@ -11,7 +10,6 @@
  *    every user who is interested in specific notification
  *
  */
-
 
 class WallNotifications {
 	private $removedEntities;
@@ -36,6 +34,7 @@ class WallNotifications {
 		}
 		$read = array();
 		$unread = array();
+		
 		foreach(array_reverse($list['notification']) as $listval) {
 			if(!empty($listval)) {
 				if(!$countonly) {
@@ -43,6 +42,7 @@ class WallNotifications {
 				} else {
 					$grouped = array();
 				}
+				
 				if(!empty($grouped) || $countonly) {
 					if($list['relation'][ $listval ]['read']){
 						if(count($read) < $readSlice){
@@ -804,14 +804,13 @@ class WallNotifications {
 			'notification' => array(),
 			'relation' => array()
 		);
-
 		//return $data;
 
 		//TODO: solve problem with master slave replication
 		$dbData = $this->getBackupData($userId, $wikiId);
 
 		foreach($dbData as $key => $value) {
-			$this->addNotificationToData($data, $userId, $wikiId, $value['unique_id'], $value['entity_key'], $value['author_id'], $value['is_reply'], $value['is_read'], false);
+			$this->addNotificationToData($data, $userId, $wikiId, $value['unique_id'], $value['entity_key'], $value['author_id'], $value['is_reply'], $value['is_read'], $value['notifyeveryone']);
 		}
 
 		return $data;
@@ -842,7 +841,7 @@ class WallNotifications {
 		$out = array();
 		if(!empty($uniqueIds)) {
 			$res = $db->select('wall_notification',
-				array('id', 'is_read', 'is_reply', 'unique_id', 'entity_key', 'author_id'),
+				array('id', 'is_read', 'is_reply', 'unique_id', 'entity_key', 'author_id', 'notifyeveryone'),
 				//array('id', 'unique_id', 'entity_key', 'author_id'),
 				array(
 					'user_id' => $userId,
@@ -862,7 +861,7 @@ class WallNotifications {
 		return $out;
 	}
 
-	public function storeInDB($userId, $wikiId,$uniqueId, $entityKey, $authorId, $isReply){
+	public function storeInDB($userId, $wikiId,$uniqueId, $entityKey, $authorId, $isReply, $notifyeveryone){
 		$this->getDB(true)->insert( 'wall_notification', array(
 			'user_id' => $userId,
 			'wiki_id' => $wikiId,
@@ -870,6 +869,7 @@ class WallNotifications {
 			'author_id' => $authorId,
 			'entity_key' => $entityKey,
 			'is_read' => 0,
+			'notifyeveryone' => $notifyeveryone,
 			'is_reply' => $isReply,
 			'is_hidden' => 0
 		), __METHOD__ );
