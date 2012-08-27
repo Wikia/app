@@ -280,6 +280,9 @@ abstract class CodeLint {
 			// keep the original number of errors
 			$output['errorsCount'] = count($output['errors']);
 
+			// count important errors
+			$output['importantErrorsCount'] = 0;
+
 			// simplify the report and fold multiple occurances of the same error
 			$errorsFolded = array();
 
@@ -304,6 +307,8 @@ abstract class CodeLint {
 				// mark important errors
 				if ($this->isImportantError($msg)) {
 					$entry['isImportant'] = true;
+
+					$output['importantErrorsCount']++;
 				}
 
 				// svn blame (for the first line)
@@ -314,6 +319,7 @@ abstract class CodeLint {
 		}
 		else {
 			$output['errorsCount'] = 0;
+			$output['importantErrorsCount'] = 0;
 		}
 
 		$output['fileChecked'] = $fileName;
