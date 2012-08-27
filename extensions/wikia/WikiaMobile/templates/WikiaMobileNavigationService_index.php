@@ -1,6 +1,10 @@
 <?php
 	$loggedIn = $wg->User->getId() > 0;
     $searchPage = $wg->Title->isSpecial( 'Search' );
+
+	if($loggedIn){
+		$userName = $wg->User->getName();
+	}
 ?>
 <section id=wkTopNav<?= $searchPage ? ' class="srhOpn"' : ''?>>
 	<div id=wkTopBar>
@@ -14,8 +18,8 @@
 
 	<a href=#wkNavSrh id=wkSrhTgl class=tgl></a>
 	<a href=#wkNavMenu id=wkNavTgl class=tgl></a>
-	<? if($wg->EnableUserLoginExt) : ?>
-		<a href="<?= SpecialPage::getTitleFor('UserLogin')->getLocalURL() ;?>" id=wkPrfTgl class='tgl <?= ($loggedIn ? 'lgdin' : 'lgdout') ?>'></a>
+	<? if ( $wg->EnableUserLoginExt ) : ?>
+		<a href="<?= SpecialPage::getTitleFor( 'UserLogin' )->getLocalURL() ;?>" id=wkPrfTgl class="tgl lgd<?= ($loggedIn ? 'in' : 'out') ?>"><?= ($loggedIn ? AvatarService::renderAvatar( $userName, 25 ) : '') ?></a>
 	<? endif ; ?>
 	</div>
 	<div id=wkSrh>
@@ -31,23 +35,22 @@
 		<header class="wkPrfHead up"><?= $wf->Msg('wikiamobile-menu') ?></header>
 		<nav id=wkWikiNav></nav>
 	</div>
-	<? if($wg->EnableUserLoginExt) : ?>
+	<? if ( $wg->EnableUserLoginExt ) : ?>
 	<div id=wkPrf>
-		<header class="wkPrfHead<?= (!$loggedIn) ? ' up' : '' ?>">
-		<? if($loggedIn) {
-		$userName = $wg->User->getName();
-			echo AvatarService::renderAvatar( $userName, AvatarService::AVATAR_SIZE_SMALL ) . $userName;
+		<header class="wkPrfHead<?= ( !$loggedIn ) ? ' up' : '' ?>">
+		<? if( $loggedIn ) {
+			echo $userName;
 		} else {
-			echo $wf->Msg('userlogin-login-heading');
+			echo $wf->Msg( 'userlogin-login-heading' );
 		}
 		?>
 		</header>
-	<? if($loggedIn) :?>
+	<? if ( $loggedIn ) :?>
 		<ul class=wkLst>
 			<li><a class=chg href="<?= AvatarService::getUrl($userName) ;?>"><?= $wf->Msg('wikiamobile-profile'); ?></a></li>
 			<li><a class=logout href="<?= str_replace( "$1", SpecialPage::getSafeTitleFor('UserLogout')->getPrefixedText() . '?returnto=' . $wg->Title->getPrefixedURL(), $wg->ArticlePath ) ;?>"><?= $wf->Msg('logout'); ?></a></li>
 		</ul>
 	<? endif; ?>
 	</div>
-	<? endif ; ?>
+	<? endif; ?>
 </section>

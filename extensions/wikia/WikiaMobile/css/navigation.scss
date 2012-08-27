@@ -1,5 +1,5 @@
 //dependencies
-@import "variables";
+@import "variables.scss";
 
 //mixins
 @import "mixins/linear-gradient.scss";
@@ -29,13 +29,18 @@
 	background-image:  url('/extensions/wikia/WikiaMobile/images/topbar_menu.png'); /* base64 */
 }
 
-#wkPrfTgl{
-	&.lgdin{
-		background-image:  url('/extensions/wikia/WikiaMobile/images/user_loggedin.png'); /* base64 */
-	}
-
+#wkPrfTgl {
 	&.lgdout{
 		background-image:  url('/extensions/wikia/WikiaMobile/images/user_loggedout.png'); /* base64 */
+	}
+
+	&.lgdin {
+		text-align: center;
+
+		img {
+			margin: 8px;
+			border-radius: 6px;
+		}
 	}
 }
 
@@ -136,6 +141,7 @@
 		background: $searchOpenBackground;
 		line-height: 30px;
 		color: white;
+		padding-left: 10px;
 
 		&.up{
 			text-transform: uppercase;
