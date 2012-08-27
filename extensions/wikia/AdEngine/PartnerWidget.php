@@ -22,7 +22,6 @@ class PartnerWidget {
 				$HOTWHEELS = 'Hot Wheels';
 				$LIST_OF = 'List of ';
 				$CATEGORY_PREFIX_HOTWHEELSBY = 'Hot Wheels by';
-				$CATEGORY_PREFIX_HOTWHEELSBY = 'Hot Wheels by';
 
 				$keywords = $wgTitle->getText();
 
