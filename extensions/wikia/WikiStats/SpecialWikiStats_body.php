@@ -20,6 +20,7 @@ class WikiStatsPage extends IncludableSpecialPage
     var $userIsSpecial;
     var $mFromDate;
     var $mToDate;
+    var $mTitle;
     var $mTab;
     var $mUser;
     var $mSkin;
@@ -45,7 +46,7 @@ class WikiStatsPage extends IncludableSpecialPage
     public function __construct() {
         parent::__construct( "WikiStats", "",  true/*class*/);
         if ( method_exists( 'SpecialPage', 'setGroup' ) ) {
-			parent::setGroup( 'WikiStats', 'wiki' );
+			SpecialPageFactory::setGroup( 'WikiStats', 'wiki' );
 		}
     }
 
@@ -53,8 +54,7 @@ class WikiStatsPage extends IncludableSpecialPage
         global $wgUser, $wgOut, $wgRequest, $wgCityId, $wgDBname, $wgLang;
 
         if ( $wgUser->isBlocked() ) {
-            $wgOut->blockedPage();
-            return;
+			throw new UserBlockedError( $this->getUser()->mBlock );
         }
 
         if ( wfReadOnly() ) {
@@ -143,7 +143,7 @@ class WikiStatsPage extends IncludableSpecialPage
         $this->mStats->setLang($this->mLang);
 
         #---
-        $this->mSkin = $wgUser->getSkin();
+        $this->mSkin = RequestContext::getMain()->getSkin();
         if ( is_object ($this->mSkin) ) {
             $skinname = get_class( $this->mSkin );
             $skinname = strtolower(str_replace("Skin","", $skinname));
@@ -205,7 +205,7 @@ class WikiStatsPage extends IncludableSpecialPage
 	}
 
 	private function showMenu($subpage = '', $namespaces = false) {
-		global $wgOut, $wgDBname;
+		global $wgDBname;
         wfProfileIn( __METHOD__ );
 
 		$aTopLanguages = explode(',', wfMsg('wikistats_language_toplist'));
@@ -469,7 +469,7 @@ class WikiStatsPage extends IncludableSpecialPage
 	}
 
 	private function showNamespaces() {
-        global $wgUser, $wgContLang, $wgLang, $wgStatsExcludedNonSpecialGroup, $wgOut;
+        global $wgUser, $wgContLang, $wgLang, $wgOut;
 		#---
 		$selectedNamespace = array();
 		if ( isset($this->mNS) && isset($this->mNamespaces) && isset($this->mPredefinedNamespaces) ) {
