@@ -40,6 +40,7 @@ $wgHooks['ResourceLoaderFileModuleConcatenateScripts'][] = 'Wikia::onResourceLoa
 $wgHooks['ResourceLoaderSiteModule::getPages'][] = 'Wikia::onResourceLoaderSiteModuleGetPages';
 $wgHooks['ResourceLoaderUserModule::getPages'][] = 'Wikia::onResourceLoaderUserModuleGetPages';
 $wgHooks['ResourceLoaderCacheControlHeaders'][] = "Wikia::onResourceLoaderCacheControlHeaders";
+$wgHooks['AlternateResourceLoaderURL'][] = "Wikia::onAlternateResourceLoaderURL";
 
 /**
  * This class have only static methods so they can be used anywhere
@@ -1935,10 +1936,59 @@ class Wikia {
 		return true;
 	}
 
-
 	public static function onResourceLoaderCacheControlHeaders( $context, $maxage, $smaxage, $exp ) {
 		header( "X-Pass-Cache-Control: public, max-age=$maxage, s-maxage=$smaxage" );
 		header( 'X-Pass-Expires: ' . wfTimestamp( TS_RFC2822, $exp + time() ) );
+
+		return true;
+	}
+
+	public static function onAlternateResourceLoaderURL( &$loadScript, &$query, &$url, $modules ) {
+		global $wgEnableResourceLoaderRewrites, $wgCdnRootUrl;
+
+		static $resourceLoaderInstance;
+		if ( empty($resourceLoaderInstance) ) $resourceLoaderInstance = new ResourceLoader();
+
+		$source = false;
+		foreach ($modules as $moduleName) {
+			$moduleInfo = $resourceLoaderInstance->getModuleInfo($moduleName);
+
+			$moduleSource = 'local';
+			// the module definition may explicitly define the source
+			if ( !empty($moduleInfo['source']) ) {
+				$moduleSource = $moduleInfo['source'];
+			}
+
+			if ($source === false) $source = $moduleSource;
+			elseif ($source !== $moduleSource) {
+				$source = 'local';
+				break;
+			}
+		}
+		if ( empty($source) ) {
+			$source = 'local';
+		}
+
+		if ( !empty($wgEnableResourceLoaderRewrites) ) {
+			$loadScript = str_replace('/load.php','/__load/',$loadScript);
+			$domain = "-";
+			if ( $source != 'local' ) {
+				$loadScript = $wgCdnRootUrl . '/__load/';
+			}
+
+			$loadQuery = $query;
+			$modules = $loadQuery['modules'];
+			unset($loadQuery['modules']);
+
+			$params = urlencode(http_build_query($loadQuery));
+			$url = $loadScript . "$domain/$params/$modules";
+			$url = wfExpandUrl( $url, PROTO_RELATIVE );
+
+			return false;
+		} else {
+			$sources = $resourceLoaderInstance->getSources();
+			$loadScript = $sources[$source]['loadScript'];
+		}
 
 		return true;
 	}
