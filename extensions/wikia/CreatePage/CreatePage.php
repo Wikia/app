@@ -231,7 +231,7 @@ function wfCreatePageAjaxCheckTitle() {
 					$result['result'] = 'error';
 					$result['msg'] = wfMsg( 'createpage-error-article-spam' );
 				}
-				if ( $oTitle->getNamespace() == -1 ) {
+				if ( $oTitle->getNamespace() == NS_SPECIAL ) {
 					$result['result'] = 'error';
 					$result['msg'] = wfMsg( 'createpage-error-invalid-title' );
 				}
