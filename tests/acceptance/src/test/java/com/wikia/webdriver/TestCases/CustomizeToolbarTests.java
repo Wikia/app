@@ -47,10 +47,11 @@ public class CustomizeToolbarTests extends TestTemplate{
 		article.customizeToolbar_VerifyToolOnToolbarList("Edit123");
 		article.customizeToolbar_ClickOnSaveButton();
 		article.customizeToolbar_VerifyToolOnToolbar("Edit123");
+		CommonFunctions.MoveCursorTo(0, 0);
 				
 	}
 	
-//	@Test(groups = {"CustomizeToolbar003"}) 
+	@Test(groups = {"CustomizeToolbar003"}) 
 //	https://internal.wikia-inc.com/wiki/QA/Core_Features_and_Testing/Manual_Regression_Tests/Customize_Toolbar_Moving
 	public void CustomizeToolbar003_Moving()
 	{
@@ -59,8 +60,13 @@ public class CustomizeToolbarTests extends TestTemplate{
 		CommonFunctions.logIn(Properties.userName2, Properties.password2);
 		article.customizeToolbar_ClickCustomize();
 		article.customizeToolbar_ClickOnResetDefaults();
-		
-		
+		article.customizeToolbar_ClickOnSaveButton();
+		article.customizeToolbar_VerifyMyToolsOrder("History", "What links here");
+		article.customizeToolbar_ClickCustomize();
+		article.customizeToolbar_DragElemAndDrop("History", 1);
+		article.customizeToolbar_ClickOnSaveButton();
+		article.customizeToolbar_VerifyMyToolsOrder("What links here", "History");
+		CommonFunctions.MoveCursorTo(0, 0);		
 	}
 	
 	@Test(groups = {"CustomizeToolbar004"}) 
@@ -79,6 +85,7 @@ public class CustomizeToolbarTests extends TestTemplate{
 //		article.customizeToolbar_VerifyToolNotOnToolbarList("Edit");
 		article.customizeToolbar_ClickOnSaveButton();
 		article.customizeToolbar_VerifyToolNotOnToolbar("Edit");
+		CommonFunctions.MoveCursorTo(0, 0);
 	}
 	
 	@Test(groups = {"CustomizeToolbar005"}) 
@@ -138,7 +145,7 @@ public class CustomizeToolbarTests extends TestTemplate{
 		article.customizeToolbar_ClickCustomize();
 		article.customizeToolbar_ClickOnResetDefaults();
 		article.customizeToolbar_ClickOnSaveButton();
-		
+		CommonFunctions.MoveCursorTo(0, 0);		
 	}
 	
 }

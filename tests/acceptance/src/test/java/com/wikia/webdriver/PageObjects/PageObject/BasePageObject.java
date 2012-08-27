@@ -3,16 +3,11 @@ package com.wikia.webdriver.PageObjects.PageObject;
 import java.util.Date;
 import java.util.List;
 
-import org.junit.internal.runners.statements.Fail;
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.interactions.internal.Coordinates;
-import org.openqa.selenium.internal.Locatable;
-import org.openqa.selenium.net.EphemeralPortRangeDetector;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -53,8 +48,13 @@ public class BasePageObject{
 	WebElement customizeToolbar_SaveButton;
 	@FindBy(css="span.reset-defaults a")
 	WebElement customizeToolbar_ResetDefaultsButton;
+	@FindBy(css="li.mytools.menu")
+	WebElement customizeToolbar_MyToolsMenuButton;
+	@FindBy(css="ul[id='my-tools-menu']")
+	WebElement customizeToolbar_MyToolsMenu;
 	
 	private By customizeToolbar_ToolsList = By.cssSelector("ul.tools li");
+	private By customizeToolbar_MyToolsList = By.cssSelector("ul[id='my-tools-menu'] a");
 	
 	
 	public BasePageObject(WebDriver driver)
@@ -474,6 +474,53 @@ public class BasePageObject{
 		waitForElementByBy(By2);
 		waitForElementClickableByBy(By2);
 		driver.findElement(By2).click();
+	}
+	
+	/**
+	 * Drag the wanted Tool
+	 * 
+	 * @param ToolID ID of tool to be dragged. {PageAction:Follow, PageAction:Edit, PageAction:History, (...)}
+	 * @param DragDirection The direction of dragging. e.g -1 is 'drop the tool one item below'
+	 * @author Michal Nowierski
+	 */
+	public void customizeToolbar_DragElemAndDrop(String ToolID, int DragDirection) {
+		PageObjectLogging.log("customizeToolbar_DragElemAndDrop", "Drag element "+ToolID+", by "+DragDirection, true, driver);
+		By By1 = By.cssSelector("ul.options-list li[data-caption='"+ToolID+"']");
+		By By2 = By.cssSelector("ul.options-list li[data-caption='"+ToolID+"'] img.drag");
+		Point Elem1_location = driver.findElement(By1).getLocation();
+		CommonFunctions.MoveCursorToElement(Elem1_location);
+		waitForElementByBy(By2);
+		waitForElementClickableByBy(By2);
+		Point Elem2_location = driver.findElement(By2).getLocation();
+		CommonFunctions.MoveCursorToElement(Elem2_location);
+		WebElement draggable = driver.findElement(By2); 
+		new Actions(driver).dragAndDropBy(draggable, 0, 25*DragDirection+8).perform();   
+		
+	}
+	
+	/**
+	 * Check the order of two first tools on My tools list
+	 * 
+	 * @param tool1 The first tool to appear on My Tools list. {History, What links here, (...)} 
+	 * @param tool2 The second tool to appear on My Tools list. {History, What links here, (...)} 
+	 * @author Michal Nowierski
+	 */
+	public void customizeToolbar_VerifyMyToolsOrder(String tool1, String tool2) {
+		PageObjectLogging.log("customizeToolbar_VerifyMyToolsOrder", "Verify that My Tools list has"+tool2+" appearing after "+tool1, true, driver);
+		waitForElementByElement(customizeToolbar_MyToolsMenuButton);
+		Point location = customizeToolbar_MyToolsMenuButton.getLocation();
+		try {Thread.sleep(1000);} catch (InterruptedException e) {}
+		CommonFunctions.MoveCursorToElement(location);
+		waitForElementByElement(customizeToolbar_MyToolsMenu);
+		List<WebElement> MyToolsList = driver.findElements(customizeToolbar_MyToolsList);
+		String ActualTool1=MyToolsList.get(0).getText();
+		String ActualTool2=MyToolsList.get(1).getText();
+		if (!tool1.equals(ActualTool1)) {
+			PageObjectLogging.log("customizeToolbar_VerifyMyToolsOrder", ActualTool1+" where "+tool1+" should be.", false, driver);
+		}
+		if (!tool2.equals(ActualTool2)) {
+			PageObjectLogging.log("customizeToolbar_VerifyMyToolsOrder", ActualTool2+" where "+tool2+" should be.", false, driver);
+		}
 	}
 
 	/**
