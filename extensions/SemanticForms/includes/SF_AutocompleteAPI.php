@@ -110,7 +110,7 @@ class SFAutocompleteAPI extends ApiBase {
 		return 'Autocompletion call used by the Semantic Forms extension (http://www.mediawiki.org/Extension:Semantic_Forms)';
 	}
 
-	protected function getExamples() {
+	public function getExamples() {
 		return array (
 			'api.php?action=sfautocomplete&substr=te',
 			'api.php?action=sfautocomplete&substr=te&property=Has_author',
