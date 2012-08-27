@@ -58,10 +58,10 @@ var WikiPreviewInterstitial = {
 					$('#carouselContainer').carousel({
 						itemClick: WikiPreviewInterstitial.changeHeroImg
 					});
-					$('.WikiaMediaCarousel .previous').addClass('disabled');
 					$('.WikiaMediaCarousel')
 						.on('click', '.previous', function(e) {e.preventDefault();})
-						.on('click', '.next', function(e) {e.preventDefault();});
+						.on('click', '.next', function(e) {e.preventDefault();})
+						.find('.previous').addClass('disabled');
 				}
 			});
 		}
