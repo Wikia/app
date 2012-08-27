@@ -80,13 +80,13 @@ class ArticleCommentsController extends WikiaController {
 
 		if ( !empty( $articleId ) ) {
 			$title = Title::newFromID( $articleId );
+		}
 
-		} else {
+		if ( !( $title instanceof Title ) ) {
 			$title = $this->wg->title;
 		}
 
 		$this->getCommentsData( $title, $page );
-		// Commenting out for now because this causes caching for logged in users (BugId:45429)
 		//$this->wg->Out->tagWithSurrogateKeys( ArticleComment::getSurrogateKey($articleId) );
 
 		// When lazy loading this request it shouldn't be cached in the browser
