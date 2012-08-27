@@ -225,11 +225,13 @@ class ResourceLoader {
 		$this->addSource( $wgResourceLoaderSources );
 
 		// Register core modules
+		$this->register( include( "$IP/resources/Resources.php" ) );
 		// Wikia - change begin - @author: wladek
-		// add source: common for global modules
-		$this->register( include( "$IP/resources/Resources.php" ), null, /*source*/ 'common' );
 		// add Wikia-specific global modules
-		$this->register( include( "$IP/resources/wikia/Resources.php" ), null, /*source*/ 'common' );
+		$this->register( include( "$IP/resources/wikia/Resources.php" ) );
+		// mark all static modules added so far as coming from shared domain
+		// because they are available everywhere
+		$this->setSourceForStaticModules('common');
 		// Wikia - change end
 		// Register extension modules
 		wfRunHooks( 'ResourceLoaderRegisterModules', array( &$this ) );
@@ -256,7 +258,7 @@ class ResourceLoader {
 	 * @return Boolean: False if there were any errors, in which case one or more modules were not
 	 *     registered
 	 */
-	public function register( $name, $info = null, /* Wikia */ $source = null ) {
+	public function register( $name, $info = null ) {
 		wfProfileIn( __METHOD__ );
 
 		// Allow multiple modules to be registered in one call
@@ -290,9 +292,6 @@ class ResourceLoader {
 				$this->modules[$name] = $info;
 			} else {
 				// New calling convention
-				if ( $source && empty( $info['class'] ) ) {
-					$info['source'] = $source;
-				}
 				$this->moduleInfos[$name] = $info;
 			}
 		}
@@ -1100,30 +1099,17 @@ class ResourceLoader {
 			$only, $printable, $handheld, $extraQuery
 		);
 
-        /* Wikia change - begin - @author: wladek */
-        static $resourceLoaderInstance;
-        if ( empty($resourceLoaderInstance) ) $resourceLoaderInstance = new ResourceLoader();
-        $source = false;
-        foreach ($modules as $moduleName) {
-			// static assets are provided from shared domain
-			$moduleSource = 'common';
-			// while anything with custom logic may use per-wiki data so fall back
-			// to local source
-			if ( !empty($resourceLoaderInstance->moduleInfos[$moduleName]['class']) ) {
-				$moduleSource = 'local';
-			}
-            if ($source === false) $source = $moduleSource;
-            elseif ($source !== $moduleSource) {
-                $source = 'local';
-                break;
-            }
-        }
-        $loadScript = $resourceLoaderInstance->sources[$source]['loadScript'];
+		/* Wikia - change begin - @author: wladek */
+		$loadScript = $wgLoadScript;
+		$url = false;
+		if ( !wfRunHooks('AlternateResourceLoaderURL',array(&$loadScript,&$query,&$url,$modules)) || $url !== false ) {
+			return $url;
+		}
+		/* Wikia - change end */
+
 		// Prevent the IE6 extension check from being triggered (bug 28840)
 		// by appending a character that's invalid in Windows extensions ('*')
-		$url = wfExpandUrl( wfAppendQuery( $loadScript, $query ) . '&*', PROTO_RELATIVE );
-        return $url;
-        /* Wikia change - end */
+		return wfExpandUrl( wfAppendQuery( $loadScript, $query ) . '&*', PROTO_RELATIVE );
 	}
 
 	/**
@@ -1161,18 +1147,41 @@ class ResourceLoader {
 		return $query;
 	}
 
-    /* Wikia change - begin - @author: wladek */
-    public function rebaseModules( $modules, $source ) {
-        if ( $modules === true ) {
-            $modules = array_keys($this->moduleInfos);
-        } elseif ( is_string( $modules ) ) {
-            $modules = array( $modules );
-        }
-        foreach ($modules as $module) {
-            if (isset($this->moduleInfos[$module])) {
-                $this->moduleInfos[$module]['source'] = $source;
-            }
-        }
-    }
-    /* Wikia change - end */
+	/* Wikia change - begin - @author: wladek */
+	protected function setSourceForStaticModules( $source ) {
+		foreach ($this->moduleInfos as $name => $info) {
+			// static modules use the default class
+			if ( empty( $info['class'] ) ) {
+				$this->moduleInfos[$name]['source'] = $source;
+			}
+		}
+	}
+
+	public function rebaseModules( $modules, $source ) {
+		if ( $modules === true ) {
+			$modules = array_keys($this->moduleInfos);
+		} elseif ( is_string( $modules ) ) {
+			$modules = array( $modules );
+		}
+		foreach ($modules as $module) {
+			if (isset($this->moduleInfos[$module])) {
+				$this->moduleInfos[$module]['source'] = $source;
+			}
+		}
+	}
+
+	/**
+	 * Get module definition
+	 *
+	 * @param $name string Module name
+	 * @return array|object|bool
+	 */
+	public function getModuleInfo( $name ) {
+		if ( !isset( $this->moduleInfos[$name] ) ) {
+			// No such module
+			return false;
+		}
+		return $this->moduleInfos[$name];
+	}
+	/* Wikia change - end */
 }
