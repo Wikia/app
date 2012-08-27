@@ -96,7 +96,7 @@
 <body>
 	<table id="show-important" class="report" width="100%">
 		<caption>
-			Code lint report for <?= count($results) ?> file(s) / <?= $stats['errorsCount'] ?> issue(s) found
+			Code lint report for <?= count($results) ?> file(s) / <?= $stats['errorsCount'] ?> issue(s) found (<?= $stats['importantErrorsCount'] ?> important ones)
 			<div>
 				<a href="#show-all">[Show all errors]</a>
 				<a href="#show-important">[Show only important errors]</a>
@@ -134,7 +134,7 @@
 		}
 ?>
 			<tr<?= $importantClass ?>>
-				<th colspan="3"><?= $fileEntry['fileChecked'] ?> (checked in <?= $fileEntry['time'] ?> s)</th>
+				<th colspan="3"><?= $fileEntry['fileChecked'] ?></th>
 				<th><a href="<?= htmlspecialchars($fileEntry['blameUrl']) ?>">Blame</a></th>
 			</tr>
 <?php

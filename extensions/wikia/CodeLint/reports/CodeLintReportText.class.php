@@ -31,8 +31,9 @@ class CodeLintReportText extends CodeLintReport {
 			$report .= $line;
 			$report .= "File: {$fileEntry['fileChecked']}\n";
 			$report .= "Blame: <{$tracUrl}>\n";
-			$report .= sprintf("No. of errors: %d / checked in %.4f s\n",
+			$report .= sprintf("Number of errors: %d (important: %d) / checked in %.4f s\n",
 				$fileEntry['errorsCount'],
+				$fileEntry['importantErrorsCount'],
 				$fileEntry['time']
 			);
 			$report .= $line;

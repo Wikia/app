@@ -32,6 +32,7 @@ class CodeLintReportHtml extends CodeLintReport {
 			'generationDate' => date('r'),
 			'totalTime' => $totalTime,
 			'errorsCount' => 0,
+			'importantErrorsCount' => 0,
 		);
 
 		if ($tool !== '') {
@@ -41,6 +42,7 @@ class CodeLintReportHtml extends CodeLintReport {
 		// count errors reported in all files
 		foreach($results as $entry) {
 			$stats['errorsCount'] += $entry['errorsCount'];
+			$stats['importantErrorsCount'] += $entry['importantErrorsCount'];
 		}
 
 		$tmpl->set('results', $results);
