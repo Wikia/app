@@ -19,4 +19,5 @@ $messages['en'] = array(
 	'specialvideos-uploadby' => 'by $1',
 	'specialvideos-posted-in' => 'Posted in $1',
 	'special-videos-add-video' => 'Add a Video',
+	'special-videos-menu-dropdown-remove' => 'Remove',
 );

@@ -18,7 +18,8 @@ $messages['en'] = array(
 	'videohandler-category' => 'Videos',
     	'videohandler-description' => 'Description',
 	'videohandler-video-views' => '$1 {{PLURAL:$1|view|views}}',
-	'videohandler-non-premium' => 'Non premium videos are disabled on this Wiki.'
+	'videohandler-non-premium' => 'Non premium videos are disabled on this Wiki.',
+	'videohandler-remove' => 'Remove',
 );
 
 /** Message documentation (Message documentation) */
@@ -30,6 +31,7 @@ $messages['qqq'] = array(
 * $1 is a link to the video on its source page, with the label being the original title of the video
 * $2 is a link to the provider's homepage (e.g. [http://youtube.com/ youtube.com])",
 	'videohandler-video-views' => 'video views. $1 is number of video views.',
+	'videohandler-remove' => 'Text for button to click to remove a wikia library video from your wiki.',
 );
 
 /** Afrikaans (Afrikaans)
