@@ -48,7 +48,7 @@ class BodyController extends WikiaController {
 		global $wgArticle;
 		return (get_class ($wgArticle) == "AutoHubsPagesArticle");
 	}
-	
+
 	/**
 	 * Returns if current layout should be applying gridlayout
 	 */
@@ -118,7 +118,7 @@ class BodyController extends WikiaController {
 		$namespace = $wgTitle->getNamespace();
 		$subjectNamespace = MWNamespace::getSubject($namespace);
 		$isDiff = ( !is_null( $wgRequest->getVal('diff', false) ) && $wgRequest->getVal('oldid', false));
-		
+
 		/** @TODO should be done via a hook instead **/
 		if ( !empty($wgEnableWallExt) && $namespace === NS_USER_WALL_MESSAGE && $isDiff ) {
 			$this->wg->SuppressRail = true;
@@ -363,8 +363,7 @@ class BodyController extends WikiaController {
 		}
 
 		// Double-click to edit
-		$skinVars = $this->app->getSkinTemplateObj()->data;
-		$this->body_ondblclick = ''; //$skinVars['body_ondblclick']; // FIXME handling moved to OutputPage::addDefaultModules()
+		$this->body_ondblclick = ''; // FIXME handling moved to OutputPage::addDefaultModules()
 
 		// InfoBox - Testing
 		$this->wg->EnableInfoBoxTest = $wgEnableInfoBoxTest;
@@ -377,10 +376,12 @@ class BodyController extends WikiaController {
 		// this hook allows adding extra HTML just after <body> opening tag
 		// append your content to $html variable instead of echoing
 		// (taken from Monaco skin)
+		$afterBodyHtml = '';
 		wfRunHooks('GetHTMLAfterBody', array ($wgUser->getSkin(), &$afterBodyHtml) );
 		$this->afterBodyHtml = $afterBodyHtml;
 
 		// this hook is needed for SMW's factbox
+		$afterContentHookText = '';
 		wfRunHooks('SkinAfterContent', array( &$afterContentHookText ) );
 		$this->afterContentHookText = $afterContentHookText;
 
@@ -428,7 +429,7 @@ class BodyController extends WikiaController {
 				}
 			}
 		}
-		
+
 		$this->railModulesExist = true;
 
 		// use one column layout for pages with no right rail modules
@@ -437,7 +438,7 @@ class BodyController extends WikiaController {
 			$this->headerModuleParams = array ('showSearchBox' => true);
 			$this->railModulesExist = false;
 		}
-		
+
 		// determine if WikiaGridLayout needs to be enabled
 		$this->isGridLayoutEnabled = self::isGridLayoutEnabled();
 
