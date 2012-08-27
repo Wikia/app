@@ -54,12 +54,14 @@ class WikiaMobileHooks extends WikiaObject{
 								if (
 									//File:name
 									$index == 0 ||
-									//link=url
-									strpos( 'link=', $part ) === 0 ||
-									//caption
-									(
-										( $index == ( $totalParts - 1 ) )  &&
-										!preg_match( '/(?:frame|thumb|right|left|[0-9]+px)/', $part )
+									!empty( $part ) && (
+										//link=url
+										strpos( 'link=', $part ) === 0  ||
+										//caption
+										(
+											( $index == ( $totalParts - 1 ) )  &&
+											!preg_match( '/(?:frame|thumb|right|left|[0-9]+px)/', $part )
+										)
 									)
 								) {
 									$components[] = $part;
