@@ -839,22 +839,24 @@ class WikiaPhotoGalleryHelper {
 	/**
 	 * Return thumbs of images search result
 	 */
-	static public function getSearchResultThumbs($query, $limit = 50) {
+	static public function getSearchResultThumbs( $query, $limit = 50 ) {
 		wfProfileIn(__METHOD__);
 		$images = array();
 
-		if(!empty($query)) {
-			$results = MediaQueryService::searchInTitle($query, 1, $limit);
+		if( !empty( $query ) ) {
+			$results = MediaQueryService::searchInTitle( $query, 1, $limit );
 
-			foreach($results['images'] as $img) {
-				$oImageTitle = Title::newFromText($img['title'], NS_FILE);
+			if( !empty( $results['images'] ) ) {
+				foreach( $results['images'] as $img ) {
+					$oImageTitle = Title::newFromText($img['title'], NS_FILE );
 
-				$thumb = self::getResultsThumbnailUrl($oImageTitle);
-				if ($thumb) {
-					$images[] = array(
-						'name' => $oImageTitle->getText(),
-						'thumb' => $thumb
-					);
+					$thumb = self::getResultsThumbnailUrl( $oImageTitle );
+					if ( $thumb ) {
+						$images[] = array(
+							'name' => $oImageTitle->getText(),
+							'thumb' => $thumb
+						);
+					}
 				}
 			}
 		}
