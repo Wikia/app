@@ -173,6 +173,7 @@
 				'RelatedVideosController',
 				'addVideo',
 				{
+					title: wgTitle,
 					articleId: wgArticleId,
 					url: $('#relatedvideos-add-video input').val()
 				},
