@@ -152,7 +152,7 @@ class QuickStatsController extends WikiaController {
 		} elseif ($number >= 10000 ) {
 			return wfMsg('quickstats-number-shortening', array(round( $number / 1000 , 1)));
 		} else {
-			return $number;
+			return F::app()->wg->Lang->formatNum( $number );
 		}
 	}
 }
