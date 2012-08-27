@@ -88,7 +88,6 @@ $app->registerHook( 'SpecialNewImages::beforeQuery', 'VideoHandlerHooks', 'Wikia
 $app->registerHook( 'Parser::FetchTemplateAndTitle', 'VideoHandlerHooks', 'WikiaVideoFetchTemplateAndTitle');
 $app->registerHook( 'ParserBeforeStrip', 'VideoHandlerHooks', 'WikiaVideoParserBeforeStrip'); // <videogallery>
 
-
 $app->registerHook( 'FileRevertFormBeforeUpload', 'VideoHandlerHooks', 'onFileRevertFormBeforeUpload' );
 $app->registerHook( 'ArticleFromTitle', 'VideoHandlerHooks', 'onArticleFromTitle' );
 $app->registerHook( 'SetupAfterCache', 'VideoHandlerHooks', 'onSetupAfterCache' );
@@ -96,6 +95,8 @@ $app->registerHook( 'BeforePageDisplay', 'VideoHandlerHooks', 'onBeforePageDispl
 $app->registerHook( 'LinkerMakeThumbLink2FileOriginalSize', 'VideoHandlerHooks', 'onLinkerMakeThumbLink2FileOriginalSize' );
 $app->registerHook( 'ParserAfterStrip', 'VideoHandlerHooks', 'convertOldInterwikiToNewInterwiki' );
 $app->registerHook( 'File::checkExtensionCompatibilityResult', 'VideoHandlerHooks', 'checkExtensionCompatibilityResult' );
+
+$app->registerHook( 'SkinTemplateNavigation', 'VideoHandlerHooks', 'onSkinTemplateNavigation' );
 
 if(!empty($wgVideoHandlersVideosMigrated)) {
 	$app->registerHook( 'ParserFirstCallInit', 'VideoHandlerHooks', 'initParserHook' );

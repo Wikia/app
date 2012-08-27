@@ -30,6 +30,7 @@ class PageHeaderController extends WikiaController {
 	 * Use MW core variable to generate action button
 	 */
 	protected function prepareActionButton() {
+
 		global $wgTitle, $wgUser, $wgRequest;
 
 		$isDiff = !is_null($wgRequest->getVal('diff'));
@@ -98,7 +99,7 @@ class PageHeaderController extends WikiaController {
 		$ret = array();
 
 		// items to be added to "edit" dropdown
-		$actions = array('history', 'move', 'protect', 'unprotect', 'delete', 'undelete');
+		$actions = array('history', 'move', 'protect', 'unprotect', 'delete', 'undelete', 'remove');
 
 		// add "edit" to dropdown (if action button is not an edit)
 		if (!in_array($this->actionName, array('edit', 'source'))) {

@@ -215,5 +215,14 @@ class VideoHandlerHooks extends WikiaObject{
 
 		return true;
 	}
+
+	public function onSkinTemplateNavigation($skin, &$tabs) {
+		$tabs['actions']['remove'] = array(
+			'class' => 'remove-video',
+			'text' => wfMsg('videohandler-remove'),
+			'href' => '#',
+		);
+		return true;
+	}
 	
 }
