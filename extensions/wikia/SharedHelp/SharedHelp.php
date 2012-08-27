@@ -348,7 +348,7 @@ function SharedHelpLinkBegin( $skin, $target, &$text, &$customAttribs, &$query, 
 	global $wgTitle;
 
 	// First do simple checks before going to more expensive ones
-	if ( $target->getNamespace() == 12 && isset($wgTitle) && !$wgTitle->isSpecial('Wantedpages') ) {
+	if ( $target->getNamespace() == NS_HELP && isset($wgTitle) && !$wgTitle->isSpecial('Wantedpages') ) {
 		if ( SharedHelpArticleExists($target) ) {
 			// The link is known
 			$options[] = 'known';
