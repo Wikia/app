@@ -97,6 +97,7 @@ class SpecialVideosHelper extends WikiaModel {
 					'truncatedList' => $truncatedList,
 					'isTruncated' => $isTruncated,
 					'timestamp' => $file->getTimestamp(),
+					'embedUrl' => $file->getHandler()->getEmbedUrl(),
 				);
 			}
 		}
