@@ -289,7 +289,7 @@ class LightboxController extends WikiaController {
 			}
 
 			// Don't show embed code for screenplay b/c it's using JW Player
-			if ( $file->getProviderName() == 'screenplay' ) {
+			if ( WikiaFileHelper::isFileTypeVideo($file) && $file->getProviderName() == 'screenplay' ) {
 				$embedMarkup = false;
 			}
 		}
