@@ -71,17 +71,18 @@ class MediaQueryService extends Service {
 			array(
 				'page_wikia_id' => $wgCityId,
 				"page_title_lower $dbquerylike" ,
-				'page_namespace' => 6,
+				'page_namespace' => NS_FILE,
 				'page_status' => 0 ),
 			__METHOD__
 		);
 
 		$row = $dbr->fetchRow($res);
 
-		$results = array();
-		$results['total'] = $row['count'];
-		$results['pages'] = ceil($row['count']/$limit);
-		$results['page'] = $page;
+		$results = array(
+			'total' => $row['count'],
+			'pages' => ceil( $row['count'] / $limit ),
+			'page'=> $page
+		);
 
 		$res = $dbr->select(
 			array( 'pages' ),
@@ -89,7 +90,7 @@ class MediaQueryService extends Service {
 			array(
 				'page_wikia_id' => $wgCityId,
 				"page_title_lower $dbquerylike",
-				'page_namespace' => 6,
+				'page_namespace' => NS_FILE,
 				'page_status' => 0 ),
 			__METHOD__ ,
 			array (
