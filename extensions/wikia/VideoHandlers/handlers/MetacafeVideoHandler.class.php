@@ -10,7 +10,7 @@ class MetacafeVideoHandler extends VideoHandler {
 	public function getEmbed($articleId, $width, $autoplay=false, $isAjax=false, $postOnload = false) {
 		$height =  $this->getHeight( $width );
 		$sAutoPlay = $autoplay  ? 'yes' : 'no';
-		$url = str_replace('$1', $this->videoId,  self::$urlTemplate);
+		$url = $this->getEmbedUrl();
 
 		$embedCode = <<<EOT
 <embed flashVars="playerVars=autoPlay={$sAutoPlay}" src="{$url}" width="{$width}" height="{$height}" wmode="transparent" allowFullScreen="true" allowScriptAccess="always" name="Metacafe_{$articleId}" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash"></embed>
