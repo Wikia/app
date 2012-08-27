@@ -29,6 +29,7 @@ $wgHooks['LinkBegin'][] = 'SharedHelpLinkBegin';
 $wgHooks['WantedPages::getQueryInfo'][] = 'SharedHelpWantedPagesSql';
 
 define( 'NOSHAREDHELP_MARKER', '<!--NOSHAREDHELP-->' );
+define( 'SHAREDHELP_CACHE_VERSION', '1' );
 
 class SharedHttp extends Http {
 	static function get( $url, $timeout = 'default' ) {
@@ -133,7 +134,7 @@ function SharedHelpHook(&$out, &$text) {
 		# Initialize shared and local variables
 		# Canonical namespace is added here in case we ever want to share other namespaces (e.g. Advice)
 		$sharedArticleKey = $wgSharedDB . ':sharedArticles:' . $wgHelpWikiId . ':' .
-			MWNamespace::getCanonicalName( $wgTitle->getNamespace() ) .  ':' . $wgTitle->getDBkey();
+			MWNamespace::getCanonicalName( $wgTitle->getNamespace() ) .  ':' . $wgTitle->getDBkey() . ':' . SHAREDHELP_CACHE_VERSION;
 		$sharedArticle = $wgMemc->get($sharedArticleKey);
 		$sharedServer = WikiFactory::getVarValueByName( 'wgServer', $wgHelpWikiId );
 		$sharedScript = WikiFactory::getVarValueByName( 'wgScript', $wgHelpWikiId );
@@ -381,7 +382,7 @@ function SharedHelpArticleExists($title) {
 		$exists =  true;
 	} else {
 		$sharedArticleKey = $wgSharedDB . ':sharedArticles:' . $wgHelpWikiId . ':' .
-			MWNamespace::getCanonicalName( $title->getNamespace() ) .  ':' . $title->getDBkey();
+			MWNamespace::getCanonicalName( $title->getNamespace() ) .  ':' . $title->getDBkey() . ':' . SHAREDHELP_CACHE_VERSION;
 		$sharedArticle = $wgMemc->get($sharedArticleKey);
 
 		if ( !empty($sharedArticle['timestamp']) ) {
