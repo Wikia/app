@@ -71,7 +71,7 @@ var AdDriverGP = {
 			console.log(obj);
 		}
 	},
-	
+
 	init: function() {
 		this.log('init');
 
@@ -128,5 +128,7 @@ var AdDriverGP = {
 };
 
 //$(document).ready(function() {
+if ( ! window.wgInsideUnitTest ) {
 	AdDriverGP.init();
+}
 //});
