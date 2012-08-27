@@ -237,7 +237,7 @@ public class CommonFunctions
 		}
 	   robot.mouseMove(x,y);
 	}
-
+	
 	/**
 	 * Move cursor to Element existing in default DOM, by its Location
 	 * 
@@ -250,9 +250,13 @@ public class CommonFunctions
 //		double ScreenHeight = dim.getHeight();
 	
 //		int FireFoxStatusBarHeight = 20;
-		
+		int pixDiff = 0;
+		if (Global.BROWSER.equals("FF")) {		
+			pixDiff = 6;
+		}
 		int elem_Y = elem1_location.getY();
 		int elem_X = elem1_location.getX();
+		
 		
 		Rectangle maxBounds = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
 		int ScreenHeightWithoutTaskBarHeight = maxBounds.height;
@@ -260,7 +264,7 @@ public class CommonFunctions
 		Object visibleDomHeightJS = js.executeScript("return window.innerHeight");
 		int VisibleDomHeight = Integer.parseInt(visibleDomHeightJS.toString());
 		
-		MoveCursorTo(elem_X+15, elem_Y+ScreenHeightWithoutTaskBarHeight-VisibleDomHeight+3);
+		MoveCursorTo(elem_X+10, elem_Y+ScreenHeightWithoutTaskBarHeight-VisibleDomHeight-pixDiff+1);
 
 	}
 	
