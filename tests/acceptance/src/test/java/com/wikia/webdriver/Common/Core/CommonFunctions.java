@@ -250,6 +250,7 @@ public class CommonFunctions
 //		double ScreenHeight = dim.getHeight();
 	
 //		int FireFoxStatusBarHeight = 20;
+		driver   = DriverProvider.getWebDriver();
 		int pixDiff = 0;
 		if (Global.BROWSER.equals("FF")) {		
 			pixDiff = 6;
@@ -276,6 +277,7 @@ public class CommonFunctions
 	 * @param IFrame IFrame where the element exists
 	 */
 	public static void MoveCursorToIFrameElement(By IframeElemBy, WebElement IFrame){
+		driver   = DriverProvider.getWebDriver();
 		Point IFrameLocation = IFrame.getLocation();
 		driver.switchTo().frame(IFrame);
 		wait.until(ExpectedConditions.visibilityOfElementLocated(IframeElemBy));

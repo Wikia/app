@@ -31,27 +31,55 @@ public class HubsTests extends TestTemplate{
 	}
 	
 	@Test(dataProvider = "provideHub")
-	public void VideoGamesHubTest(HubBasePageObject Hub, String HubName, String HubURL)
+//	https://internal.wikia-inc.com/wiki/Hubs/QA/Hubs_Test_Cases#Module_1_.28Mosaic_Slider.29_Test_Cases
+	public void VideoGamesHubTest001(HubBasePageObject Hub, String HubName, String HubURL)
 	{
-		startBrowser();
-				
+					
 		home = new HomePageObject(driver);
-		home.openHomePage();
-						
+		home.openHomePage();				
 		Hub = home.OpenHub(HubName);
 		Hub.verifyURL(HubURL);
 		
-		Hub.verifyWikiaMosaicSliderHasImages();
+		Hub.MosaicSliderVerifyHasImages();
+		Hub.MosaicSliderHoverOverImage(5);
+		String CurrentLargeImageDescription = Hub.MosaicSliderGetCurrentLargeImageDescription();
+		Hub.MosaicSliderHoverOverImage(4);
+		CurrentLargeImageDescription = Hub.MosaicSliderVerifyLargeImageChangeAndGetCurrentDescription(CurrentLargeImageDescription);
+		Hub.MosaicSliderHoverOverImage(3);
+		CurrentLargeImageDescription = Hub.MosaicSliderVerifyLargeImageChangeAndGetCurrentDescription(CurrentLargeImageDescription);
+		Hub.MosaicSliderHoverOverImage(2);
+		CurrentLargeImageDescription = Hub.MosaicSliderVerifyLargeImageChangeAndGetCurrentDescription(CurrentLargeImageDescription);
+		Hub.MosaicSliderHoverOverImage(1);
+		CurrentLargeImageDescription = Hub.MosaicSliderVerifyLargeImageChangeAndGetCurrentDescription(CurrentLargeImageDescription);
+			
+			
+		home = Hub.BackToHomePage();		
+		
+		
+	}
+	
+//	@Test(dataProvider = "provideHub")
+	public void VideoGamesHubTest002(HubBasePageObject Hub, String HubName, String HubURL)
+	{
+		
+		
+		home = new HomePageObject(driver);
+		home.openHomePage();
+		
+		Hub = home.OpenHub(HubName);
+		Hub.verifyURL(HubURL);
+		
 		Hub.ClickOnNewsTab(2);
 		Hub.ClickOnNewsTab(3);
 		Hub.ClickOnNewsTab(1);
 		Hub.RelatedVideosScrollRight();
 		Hub.RelatedVideosScrollLeft();
-				
-
+		
+		
 		home = Hub.BackToHomePage();
 		
-		stopBrowser();
+		
 		
 	}
+	
 }
