@@ -29,7 +29,7 @@ class CommunityMessages {
 	 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
 	 */
 	static function onSkinTemplatePageBeforeUserMsg(&$msgs) {
-		global $wgUser, $wgMemc, $wgCityId, $wgCookiePrefix;
+		global $wgUser, $wgMemc, $wgCookiePrefix;
 
 		if (self::$messageSeen) {
 			//user is just seeing the message - hide notification for this session
@@ -164,7 +164,8 @@ class CommunityMessages {
 			}
 		} else {
 			//anon
-			WebResponse::setcookie('CommunityMessages', $communityMessagesTimestamp, time() + 86400 /*24h*/);
+			$req = new WebRequest();
+			$req->response()->setcookie('CommunityMessages', $communityMessagesTimestamp, time() + 86400 /*24h*/);
 		}
 
 		//hide notice in this session [omit need to send cookie back (anon) or slave lag (logged in)]
@@ -179,13 +180,13 @@ class CommunityMessages {
 	 *
 	 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
 	 */
-	private static function getUserTimestamp($user) {
+	private static function getUserTimestamp(User $user) {
 		global $wgCityId, $wgExternalDatawareDB;
 		$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalDatawareDB);
 		$userTimestamp = $dbr->selectField(
 			'user_flags',
 			'data',
-			array('city_id' => $wgCityId, 'user_id' => $user->getID(), 'type' => self::USER_FLAGS_COMMUNITY_MESSAGES),
+			array('city_id' => $wgCityId, 'user_id' => $user->getId(), 'type' => self::USER_FLAGS_COMMUNITY_MESSAGES),
 			__METHOD__
 		);
 		return $userTimestamp ? wfTimestamp(TS_UNIX, $userTimestamp) : false;
