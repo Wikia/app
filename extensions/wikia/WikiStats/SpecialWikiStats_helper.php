@@ -1449,7 +1449,7 @@ class WikiStats {
 	 * list of most visited pages
 	 */
 	public function latestViewPages($namespace = -1) {
-		global $wgStatsDB, $wgStatsDBEnabled;
+		global $wgStatsDB, $wgStatsDBEnabled, $wgLang;
 		wfProfileIn( __METHOD__ );
 
 		$result = array();
@@ -1497,7 +1497,7 @@ class WikiStats {
 
 			foreach ( $ids as $page_id => $position ) {
 				if ( isset( $urls[$page_id] ) ) {
-					$result[] = wfSpecialList( $urls[$page_id], $count[$page_id]. "x" );
+					$result[] = $wgLang->specialList( $urls[$page_id], $count[$page_id]. "x" );
 				}
 			}
 		}
@@ -1515,7 +1515,7 @@ class WikiStats {
 	 * list of most visited pages
 	 */
 	public function userViewPages($hours = 1) {
-		global $wgStatsDB, $wgStatsDBEnabled;
+		global $wgStatsDB, $wgStatsDBEnabled, $wgLang;
 		wfProfileIn( __METHOD__ );
 
 		$result = array();
@@ -1548,7 +1548,7 @@ class WikiStats {
 					if ( $oTitle ) {
 						$oRow->page_title = Xml::element("a", array("href" => $oTitle->getLocalURL()), $oTitle->getFullText()) ;
 					}
-					$result[$oRow->pv_user_id] = wfSpecialList( $oRow->page_title, wfMsgExt("wikistats_latest_userviews_pages", 'parsemag', $oRow->cnt) );
+					$result[$oRow->pv_user_id] = $wgLang->specialList( $oRow->page_title, wfMsgExt("wikistats_latest_userviews_pages", 'parsemag', $oRow->cnt) );
 				}
 			}
 			$dbr->freeResult( $res );
