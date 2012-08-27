@@ -45,9 +45,7 @@ class WikiStatsPage extends IncludableSpecialPage
     #--- constructor
     public function __construct() {
         parent::__construct( "WikiStats", "",  true/*class*/);
-        if ( method_exists( 'SpecialPage', 'setGroup' ) ) {
-			SpecialPageFactory::setGroup( 'WikiStats', 'wiki' );
-		}
+		SpecialPageFactory::setGroup( 'WikiStats', 'wiki' );
     }
 
     public function execute( $subpage ) {
