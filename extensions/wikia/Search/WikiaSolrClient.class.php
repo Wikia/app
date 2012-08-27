@@ -207,7 +207,7 @@ class WikiaSolrClient extends WikiaSearchClient {
 
 		$subQuery = sprintf('_query_:"{!edismax %s}%s"',
 							$paramString,
-							str_replace("\\", "\\\\", $sanitizedQuery));
+							$this->sanitizeQuery($sanitizedQuery));
 
 		$sanitizedQuery = sprintf("(%s AND %s)", implode(' AND ', $queryClauses), $subQuery);
 
