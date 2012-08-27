@@ -1,6 +1,5 @@
 /*
  @test-framework QUnit
- @test-require-asset resources/wikia/modules/cookies.js
  @test-require-asset extensions/wikia/AdEngine/AdDriverGP.js
 
  */
