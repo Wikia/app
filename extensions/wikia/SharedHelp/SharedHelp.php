@@ -40,7 +40,8 @@ class SharedHttp extends Http {
 	}
 
 	static function request( $method, $url, $timeout = 'default' ) {
-		global $wgHTTPTimeout, $wgHTTPProxy, $wgVersion, $wgTitle, $wgDevelEnvironment;
+		global $wgHTTPTimeout, $wgVersion, $wgTitle, $wgDevelEnvironment;
+		wfProfileIn(__METHOD__);
 
 		wfDebug( __METHOD__ . ": $method $url\n" );
 		# Use curl if available
@@ -93,8 +94,9 @@ class SharedHttp extends Http {
 			if ( curl_errno( $c ) != CURLE_OK ) {
 				$text = false;
 			}
-		} else {
 		}
+
+		wfProfileOut(__METHOD__);
 		return array( $text, $c );
 	}
 }
@@ -118,9 +120,12 @@ function SharedHelpHook(&$out, &$text) {
 		return true;
 	}
 
+	wfProfileIn(__METHOD__);
+
 	# Do not process if explicitly told not to
 	$mw = MagicWord::get('MAG_NOSHAREDHELP');
 	if ( $mw->match( $text ) || strpos( $text, NOSHAREDHELP_MARKER ) !== false ) {
+		wfProfileOut(__METHOD__);
 		return true;
 	}
 
@@ -151,6 +156,7 @@ function SharedHelpHook(&$out, &$text) {
 		if ( !empty($sharedArticle['timestamp']) ) {
 			if( (wfTimestamp() - (int) ($sharedArticle['timestamp'])) < 600) {
 				if( isset($sharedArticle['exists']) && $sharedArticle['exists'] == 0 ) {
+					wfProfileOut(__METHOD__);
 					return true;
 				} else if (!empty($sharedArticle['cachekey'])) {
 					wfDebug("SharedHelp: trying parser cache {$sharedArticle['cachekey']}\n");
@@ -213,6 +219,7 @@ function SharedHelpHook(&$out, &$text) {
 			if(strpos($content, '"noarticletext"') > 0) {
 				$sharedArticle = array('exists' => 0, 'timestamp' => wfTimestamp());
 				$wgMemc->set($sharedArticleKey, $sharedArticle);
+				wfProfileOut(__METHOD__);
 				return true;
 			} else {
 				$contentA = explode("\n", $content);
@@ -228,6 +235,7 @@ function SharedHelpHook(&$out, &$text) {
 		}
 
 		if ( empty( $content ) ) {
+			wfProfileOut(__METHOD__);
 			return true;
 		} else {
 			// So we don't return 404s for local requests to these pages as they have content (BugID: 44611)
@@ -310,6 +318,8 @@ function SharedHelpHook(&$out, &$text) {
 			}
 		}
 	}
+
+	wfProfileOut(__METHOD__);
 	return true;
 }
 
@@ -322,7 +332,7 @@ function SharedHelpEditPageHook(&$editpage) {
 	}
 
 	// show message only when editing pages from Help namespace
-	if ( $wgTitle->getNamespace() != 12 ) {
+	if ( !($wgTitle instanceof Title) || ($wgTitle->getNamespace() != NS_HELP) ) {
 		return true;
 	}
 
@@ -358,7 +368,8 @@ function SharedHelpLinkBegin( $skin, $target, &$text, &$customAttribs, &$query, 
  * @see SharedHelpHook
  */
 function SharedHelpArticleExists($title) {
-	global $wgTitle, $wgMemc, $wgSharedDB, $wgHelpWikiId;
+	global $wgMemc, $wgSharedDB, $wgHelpWikiId;
+	wfProfileIn(__METHOD__);
 
 	$exists = false;
 
@@ -376,7 +387,7 @@ function SharedHelpArticleExists($title) {
 		if ( !empty($sharedArticle['timestamp']) ) {
 			$exists =  true;
 		} else {
-			wfProfileIn( __METHOD__ );
+			wfProfileIn( __METHOD__ . '::query');
 
 			$dbr = wfGetDB( DB_SLAVE, array(), WikiFactory::IDtoDB($wgHelpWikiId) );
 			$res = $dbr->select(
@@ -395,12 +406,15 @@ function SharedHelpArticleExists($title) {
 				}
 			}
 
-			wfProfileOut( __METHOD__ );
+			wfProfileOut( __METHOD__ . '::query');
 		}
 
-		if ($exists) $wgMemc->set($sharedLinkKey, true);
+		if ($exists) {
+			$wgMemc->set($sharedLinkKey, true);
+		}
 	}
 
+	wfProfileOut(__METHOD__);
 	return $exists;
 }
 
