@@ -49,8 +49,7 @@ class CreateInCategory extends SpecialPage {
 
 		# If user is blocked, s/he doesn't need to access this page
 		if ( $wgUser->isBlocked() ) {
-			$wgOut->blockedPage();
-			return;
+			throw new UserBlockedError( $this->getUser()->mBlock );
 		}
 
 		$title = $wgRequest->getVal( 'wpTitle' );

@@ -45,8 +45,7 @@ class RegexBlockForm extends SpecialPage
         global $wgUser, $wgOut, $wgRequest, $wgExtensionsPath;
 
         if ( $wgUser->isBlocked() ) {
-            $wgOut->blockedPage();
-            return;
+			throw new UserBlockedError( $this->getUser()->mBlock );
         }
 
         if ( wfReadOnly() ) {

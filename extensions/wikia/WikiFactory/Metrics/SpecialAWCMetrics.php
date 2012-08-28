@@ -89,8 +89,7 @@ class WikiMetrics {
 		global $wgUser, $wgOut, $wgExtensionsPath, $wgJsMimeType, $wgResourceBasePath;
 
 		if( $wgUser->isBlocked() ) {
-			$wgOut->blockedPage();
-			return;
+			throw new UserBlockedError( $this->getUser()->mBlock );
 		}
 
 		if ( wfReadOnly() ) {

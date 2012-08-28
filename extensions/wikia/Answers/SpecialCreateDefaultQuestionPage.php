@@ -14,8 +14,7 @@ class CreateQuestionPage extends UnlistedSpecialPage {
 
                 //don't allow blocked users to ask questions, duh
                 if( $wgUser->isBlocked() ){
-                        $wgOut->blockedPage( false );
-                        return false;
+					throw new UserBlockedError( $this->getUser()->mBlock );
                 }
 
                 if( !$wgUser->isAllowed( 'edit' ) ){

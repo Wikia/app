@@ -25,8 +25,7 @@ class LookupContribsPage extends SpecialPage {
 		global $wgOut, $wgRequest, $wgExtensionsPath, $wgJsMimeType, $wgResourceBasePath, $wgUser;
 
 		if( $wgUser->isBlocked() ) {
-			$wgOut->blockedPage();
-			return;
+			throw new UserBlockedError( $this->getUser()->mBlock );
 		}
 		if( wfReadOnly() ) {
 			$wgOut->readOnlyPage();

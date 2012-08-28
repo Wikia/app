@@ -173,9 +173,8 @@ class AutoCreateWikiPage extends SpecialPage {
 		}
 
 		if ( $wgUser->isBlocked() ) {
-			$wgOut->blockedPage();
 			wfProfileOut( __METHOD__ );
-			return;
+			throw new UserBlockedError( $this->getUser()->mBlock );
 		}
 
 		/**
@@ -228,7 +227,7 @@ class AutoCreateWikiPage extends SpecialPage {
 					if ( $wgUser->isAnon() ) {
 						$this->displayRestrictionError();
 					} elseif ( $wgUser->isBlocked() ) {
-						$wgOut->blockedPage();
+						throw new UserBlockedError( $this->getUser()->mBlock );
 					}
 					if ( isset( $_SESSION['mAllowToCreate'] ) /*&& ( $_SESSION['mAllowToCreate'] >= wfTimestamp() )*/ ) {
 						$this->mNbrUserCreated = $this->countCreatedWikisByUser();
@@ -256,9 +255,8 @@ class AutoCreateWikiPage extends SpecialPage {
 						wfProfileOut( __METHOD__ );
 						return;
 					} elseif ( $wgUser->isBlocked() ) {
-						$wgOut->blockedPage();
 						wfProfileOut( __METHOD__ );
-						return;
+						throw new UserBlockedError( $this->getUser()->mBlock );
 					}
 					if( isset( $_SESSION['mAllowToCreate'] ) ) {
 						/**
@@ -322,9 +320,8 @@ class AutoCreateWikiPage extends SpecialPage {
 
 						#-- restriction
 						if ( $wgUser->isBlocked() ) {
-							$wgOut->blockedPage();
 							wfProfileOut( __METHOD__ );
-							return;
+							throw new UserBlockedError( $this->getUser()->mBlock );
 						} else {
 							#-- user logged in or just create
 							if ( empty( $this->mErrors ) && ( $wgUser->getID() > 0 ) ) {

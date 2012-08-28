@@ -11,13 +11,12 @@ class CommentCSV {
 		}
 
 		if ( !$wgUser->isAllowed( 'commentcsv' ) ) {
-			$wgOut->permissionRequired( 'commentcsv' );	
+			$wgOut->permissionRequired( 'commentcsv' );
 			return false;
 		}
 
 		if ( $wgUser->isBlocked() ) {
-			$wgOut->blockedPage();
-			return false;
+			throw new UserBlockedError( $this->getUser()->mBlock );
 		}
 
 		if ( wfReadOnly() ) {

@@ -11,8 +11,7 @@ class SpecialCreateWikiaQuiz extends SpecialPage {
 
 		// Boilerplate special page permissions
 		if ($wgUser->isBlocked()) {
-			$wgOut->blockedPage();
-			return;
+			throw new UserBlockedError( $this->getUser()->mBlock );
 		}
 		if (!$wgUser->isAllowed('wikiaquiz')) {
 			$this->displayRestrictionError();
