@@ -34,12 +34,14 @@ define('sections', ['events', 'track'], function(ev, track){
 
 	//add class noSect to images outside sections
 	function addNoSectClass(parent){
-		//documentFragment has no support for getElementsByClassName
-		var images = parent.querySelectorAll('.lazy'),
-			i = 0,
-			elm;
+		if(parent){
+			//documentFragment has no support for getElementsByClassName
+			var images = parent.querySelectorAll('.lazy'),
+				i = 0,
+				elm;
 
-		while(elm = images[i++]) elm.className += ' noSect';
+			while(elm = images[i++]) elm.className += ' noSect';
+		}
 	}
 
 	function init(){
@@ -49,12 +51,12 @@ define('sections', ['events', 'track'], function(ev, track){
 				root = fragment,
 				x,
 				y = contents.length,
-				currentSection,
+				currentSection = false,
 				node,
 				nodeName,
 				isH2,
 				addNoSect = true,
-				goBck = '<span class=goBck>&uarr; '+$.msg('wikiamobile-hide-section')+'</span>';
+				goBck = '<span class=goBck>&uarr; ' + $.msg('wikiamobile-hide-section') + '</span>';
 
 			for (x=0; x < y; x++) {
 				node = contents[x];
@@ -64,7 +66,7 @@ define('sections', ['events', 'track'], function(ev, track){
 				if (nodeName != '#comment' && nodeName != 'SCRIPT') {
 					if(node.id == 'WkMainCntFtr' || node.className == 'printfooter' || (node.className && node.className.indexOf('noWrap') > -1)){
 						//do not wrap these elements
-						currentSection.insertAdjacentHTML('beforeend', goBck);
+						currentSection && currentSection.insertAdjacentHTML('beforeend', goBck);
 						root = fragment;
 					}else if (isH2){
 
