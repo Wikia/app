@@ -186,6 +186,16 @@ public class BasePageObject{
 	{
 		wait.until(ExpectedConditions.visibilityOf(element));
 	}
+
+	/**
+	 * Checks if the element is present in DOM
+	 *
+	 * @param element The element to be checked
+	 */
+	public void waitForElementPresenceByBy(By locator)
+	{
+		wait.until(ExpectedConditions.presenceOfElementLocated(locator));
+	}
 	
 	public void waitForElementByCss(String cssSelector)
 	{
@@ -246,23 +256,27 @@ public class BasePageObject{
 	
 	public void waitForElementById(String id)
 	{
-		
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(id)));
 	}
-	public void waitForValueToBePresentInElementsAttributeByCss(String selector, String attribute,
-			String value) {
+
+	public void waitForValueToBePresentInElementsAttributeByCss(String selector, String attribute, String value)
+	{
 		wait.until(CommonExpectedConditions.valueToBePresentInElementsAttribute(By.cssSelector(selector), attribute, value));
-		
-	}
-	public void waitForValueToNotBePresentInElementsAttributeByCss(String selector, String attribute,
-			String value) {
-		wait.until(CommonExpectedConditions.valueToNotBePresentInElementsAttribute(By.cssSelector(selector), attribute, value));
-		
 	}
 
-	public void waitForStringInURL(String givenString) {
+	public void waitForValueToNotBePresentInElementsAttributeByCss(String selector, String attribute, String value)
+	{
+		wait.until(CommonExpectedConditions.valueToNotBePresentInElementsAttribute(By.cssSelector(selector), attribute, value));
+	}
+
+	public void waitForClassRemovedFromElement(WebElement element, String className)
+	{
+		wait.until(CommonExpectedConditions.classRemovedFromElement(element, className));
+	}
+
+	public void waitForStringInURL(String givenString)
+	{
 		wait.until(CommonExpectedConditions.givenStringtoBePresentInURL(givenString));
-		
 	}
 	
 	/**
@@ -270,7 +284,8 @@ public class BasePageObject{
 	 * 
 	 * @author Michal Nowierski
 	 */
-	public void navigateBack() {
+	public void navigateBack()
+	{
 		driver.navigate().back();
 	}
 	

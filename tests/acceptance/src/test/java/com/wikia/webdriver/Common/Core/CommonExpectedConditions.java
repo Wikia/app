@@ -21,13 +21,13 @@ public class CommonExpectedConditions {
 	private static WebDriver driver = DriverProvider.getWebDriver();
 
 	
-	 /**
-	   * An expectation for checking if the given text is present in the specified
-	   * element.
-	   * 
-	   * @author Michal Nowierski
-	   */
-	  public static ExpectedCondition<Boolean> valueToBePresentInElementsAttribute(
+	/**
+	 * An expectation for checking if the given text is present in the specified
+	 * element.
+	 *
+	 * @author Michal Nowierski
+	 */
+	public static ExpectedCondition<Boolean> valueToBePresentInElementsAttribute(
 	      final By locator, final String attribute, final String value) {
 
 	    return new ExpectedCondition<Boolean>() {
@@ -46,15 +46,15 @@ public class CommonExpectedConditions {
 	        		value, locator);
 	      }
 	    };
-	  }
+	}
 	  
-	 /**
-	   * An expectation for checking if the given text is present in the specified
-	   * element.
-	   * 
-	   * @author Michal Nowierski
-	   */
-	  public static ExpectedCondition<Boolean> valueToNotBePresentInElementsAttribute(
+	/**
+	 * An expectation for checking if the given text is present in the specified
+	 * element.
+	 *
+	 * @author Michal Nowierski
+	 */
+	public static ExpectedCondition<Boolean> valueToNotBePresentInElementsAttribute(
 	      final By locator, final String attribute, final String value) {
 
 	    return new ExpectedCondition<Boolean>() {
@@ -74,8 +74,22 @@ public class CommonExpectedConditions {
 	      }
 	    };
 	  }
+
+	public static ExpectedCondition<Boolean> classRemovedFromElement(final WebElement element, final String className)
+	{
+		return new ExpectedCondition<Boolean>() {
+			public Boolean apply(WebDriver from) {
+				String classString = element.getAttribute("class");
+				boolean hasClass = classString.matches("^"   + className + "$")
+								|| classString.matches("\\s" + className + "$")
+								|| classString.matches("^"   + className + "\\s")
+								|| classString.matches("\\s" + className + "\\s");
+				return !hasClass;
+			}
+		};
+	}
 	  
-		 /**
+	  /**
 	   * An expectation for checking if the page URL contains givenString
 	   * 
 	   * @author Michal Nowierski

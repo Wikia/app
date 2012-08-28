@@ -211,6 +211,25 @@ public class CommonFunctions
 	}
 	
 	/**
+	 * Verify actual number is the same as expected number
+	 * @param aNumber
+	 * @param secondNumber
+	 * @author: Piotr Gabryjeluk
+	 */
+	public static void assertNumber(Number expected, Number actual, String message)
+	{
+		try
+		{
+			Assert.assertEquals(expected, actual);
+			PageObjectLogging.log("assertNumber", message + ", expected: " + expected + ", got: " + actual, true);
+		}
+		catch(AssertionError e)
+		{
+			PageObjectLogging.log("assertNumber", message + ", expected: " + expected + ", got: " + actual, false);
+		}
+	}
+
+	/**
 	 * 
 	 * @param attributeName
 	 * @return
