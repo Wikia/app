@@ -271,6 +271,14 @@ define('media', ['modal', 'loader', 'querystring', 'popover', 'track', 'events',
 		return name.replace(imgNameProcessRegEx, '_');
 	}
 
+	function handleError(msg){
+		modal.setCaption(msg || '');
+		modal.showUI();
+		currentImage.style.backgroundImage = '';
+		currentImage.style.backgroundSize = '50%';
+		currentImage.className += ' imgPlcHld';
+	}
+
 	function setupImage(){
 		var image = images[current];
 		loader.hide(currentImage);
@@ -302,8 +310,12 @@ define('media', ['modal', 'loader', 'querystring', 'popover', 'track', 'events',
 						},
 						callback: function(data) {
 							loader.hide(currentImage);
-							videoCache[imgTitle] = data.embedCode;
-							currentImage.innerHTML = '<table id=wkVi><tr><td>' + data.embedCode + '</td></tr></table>';
+							if(!data.error){
+								videoCache[imgTitle] = data.embedCode;
+								currentImage.innerHTML = '<table id=wkVi><tr><td>' + data.embedCode + '</td></tr></table>';
+							}else{
+								handleError(data.error);
+							}
 						}
 					});
 				}
@@ -319,11 +331,7 @@ define('media', ['modal', 'loader', 'querystring', 'popover', 'track', 'events',
 
 					img.onerror = function(){
 						loader.hide(currentImage);
-						modal.setCaption($.msg('wikiamobile-image-not-loaded'));
-						modal.showUI();
-						currentImage.style.backgroundImage = '';
-						currentImage.style.backgroundSize = '50%';
-						currentImage.className += ' imgPlcHld';
+						handleError($.msg('wikiamobile-image-not-loaded'));
 					};
 
 					loader.show(currentImage, {
