@@ -20,18 +20,18 @@ AIC2.init = function() {
 	if ($wikiaMainContent.width() != AIC2.WMCbaseWidth) {
 		AIC2.marginLeft = AIC2.marginLeft + parseInt(($wikiaMainContent.width() - AIC2.WMCbaseWidth) / 2, 10);
 		Liftium.d("AIC2: non standard width, new marginLeft set to " + AIC2.marginLeft, 5);
-		WikiaTracker.track(Liftium.buildTrackUrl([LiftiumOptions.pubid, "AIC2", "wide"]), 'liftium.varia');
+		WikiaTracker.trackAdEvent('liftium.varia', {'ga_category':'AIC2', 'ga_action':'wide'}, 'ga');
 	}
 	if ($('body').hasClass('rtl')) {
 		Liftium.d("AIC2: rtl wiki", 7);
-		WikiaTracker.track(Liftium.buildTrackUrl([LiftiumOptions.pubid, "AIC2", "rtl"]), 'liftium.varia');
+		WikiaTracker.trackAdEvent('liftium.varia', {'ga_category':'AIC2', 'ga_action':'rtl'}, 'ga');
 		AIC2.isRightToLeft = true;
 	}
 
 	// FIXME
 	if ($window.width() < 1010) {
 		Liftium.d("AIC2: window too narrow, bailing out", 3);
-		WikiaTracker.track(Liftium.buildTrackUrl([LiftiumOptions.pubid, "AIC2", "too_narrow"]), 'liftium.varia');
+		WikiaTracker.trackAdEvent('liftium.varia', {'ga_category':'AIC2', 'ga_action':'too narrow'}, 'ga');
 		return;
 	}
 
@@ -45,38 +45,9 @@ AIC2.init = function() {
 			$window.bind("scroll.AIC2", AIC2.onScroll);
 			$window.bind("resize.AIC2", AIC2.onScroll);
 		//}
-
-	/*
-	WikiaTracker.track(Liftium.buildTrackUrl([LiftiumOptions.pubid, 'AIC2', 'test7']), 'liftium.test');
-	if (!Liftium.e(Liftium.debugLevel) || Math.floor(Math.random() * 10) == 7) {
-		//Liftium.trackEvent(Liftium.buildTrackUrl(['AIC2', 'test1']), 'UA-17475676-11');
-		_gaq.push(['liftium._setAccount', 'UA-17475676-11']);
-		_gaq.push(['liftium._setSampleRate', '100']);
-
-		var slot = '300x250_INCONTENT_BOXAD_' + Math.floor(Math.random() * 3);
-		var hub = Liftium.getPageVar("Hub", "unknown");
-		var lang = Liftium.langForTracking(Liftium.getPageVar("cont_lang", "unknown"));
-		var db = Liftium.dbnameForTracking(Liftium.getPageVar("wgDBname", "unknown"));
-		var geo = Liftium.geoForTracking(Liftium.getCountry());
-
-		_gaq.push(['liftium._setCustomVar', 1, 'db',   db,   3]);
-		_gaq.push(['liftium._setCustomVar', 2, 'hub',  hub,  3]);
-		_gaq.push(['liftium._setCustomVar', 3, 'lang', lang, 3]);
-
-		_gaq.push(['liftium._trackEvent', 'slot', 'slot-' + slot,  hub + '/' + lang + '/' + db + '/' + geo]);
-
-		_gaq.push(['liftium._trackEvent',  slot,  'hub-'  + hub,  'lang-' + lang]);
-		_gaq.push(['liftium._trackEvent',  slot,  'lang-' + lang, 'geo-' + geo]);
-		_gaq.push(['liftium._trackEvent',  slot,  'db-'   + db,   'geo-' + geo]);
-		_gaq.push(['liftium._trackEvent',  slot,  'geo-'  + geo]);
-
-		_gaq.push(['liftium._trackPageview', '/999/' + Liftium.buildTrackUrl(['AIC2', 'test2'])]);
-	}
-	*/
-
 	} else {
 		Liftium.d("AIC2: page too short", 3);
-		WikiaTracker.track(Liftium.buildTrackUrl([LiftiumOptions.pubid, "AIC2", "too_short"]), 'liftium.varia');
+		WikiaTracker.trackAdEvent('liftium.varia', {'ga_category':'AIC2', 'ga_action':'too short'}, 'ga');
 	}
 };
 
@@ -90,6 +61,8 @@ AIC2.checkStartStopPosition = function() {
 	Liftium.d("AIC2: check start/stop position", 7);
 
 	if (!$rail.length) {
+		Liftium.d("AIC2: no rail", 3);
+		WikiaTracker.trackAdEvent('liftium.varia', {'ga_category':'AIC2', 'ga_action':'no rail'}, 'ga');
 		// No rail, no ads
 		return false;
 	}
@@ -105,7 +78,7 @@ AIC2.checkStartStopPosition = function() {
 		}
 	} catch (e) {
 		Liftium.d("AIC2: catched in start/stop:", 1, e);
-		WikiaTracker.track(Liftium.buildTrackUrl([LiftiumOptions.pubid, "error", "AIC2", "try_catch"]), 'liftium.errors');
+		WikiaTracker.trackAdEvent('liftium.errors', {'ga_category':'AIC2', 'ga_action':'try-catch'}, 'ga');
 		// bail out - missing elements, broken dom, erroneous cast...
 		return false;
 	}
