@@ -551,6 +551,8 @@ if (ArticleComments.loadOnDemand) {
 		var content,
 			hash = window.location.hash,
 			permalink = /^#comm-/.test(hash),
+			// TODO: we should be able to load it this way
+			//styleAssets.push($.getAssetManagerGroupUrl('articlecomments' + (ArticleComments.miniEditorEnabled ? '_mini_editor' : '') + '_scss'));
 			styleAssets = [$.getSassCommonURL('skins/oasis/css/core/ArticleComments.scss')],
 			$comments = $('#WikiaArticleComments');
 
@@ -558,16 +560,9 @@ if (ArticleComments.loadOnDemand) {
 			return $comments.offset().top >= ($window.scrollTop() + $window.height());
 		};
 
-		if (window.skin == 'oasis') {
-			// TODO: we should be able to load it this way
-			//styleAssets.push($.getAssetManagerGroupUrl('articlecomments' + (ArticleComments.miniEditorEnabled ? '_mini_editor' : '') + '_scss'));
-
-			if (ArticleComments.miniEditorEnabled) {
-				styleAssets = styleAssets.concat([
-					$.getSassCommonURL('extensions/wikia/MiniEditor/css/MiniEditor.scss'),
-					$.getSassCommonURL('extensions/wikia/MiniEditor/css/ArticleComments/ArticleComments.scss')
-				]);
-			}
+		if (ArticleComments.miniEditorEnabled) {
+			styleAssets.push($.getSassCommonURL('extensions/wikia/MiniEditor/css/MiniEditor.scss'));
+			styleAssets.push($.getSassCommonURL('extensions/wikia/MiniEditor/css/ArticleComments/ArticleComments.scss'));
 		}
 
 		var loadAssets = function() {
