@@ -17,9 +17,7 @@ class WidgetFramework {
 	}
 
 	protected function __construct() {
-		global $wgUser;
-
-		switch (get_class($wgUser->getSkin())) {
+		switch (get_class(RequestContext::getMain()->getSkin())) {
 			case "SkinOasis":
 				$this->skinname = 'oasis';
 				break;

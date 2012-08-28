@@ -295,7 +295,7 @@ class TextRegexList {
 	}
 
 	public function showStatsList($regex_id) {
-		global $wgOut, $wgLang, $wgUser;
+		global $wgOut, $wgLang;
 
 		wfProfileIn( __METHOD__ );
 
@@ -326,7 +326,7 @@ class TextRegexList {
 				"pager"         => $pager,
 				"stats_list"    => $regexStats,
 				"lang"          => $wgLang,
-				"skin"          => $wgUser->getSkin(),
+				"skin"          => RequestContext::getMain()->getSkin(),
 				"oTitle"      	=> $this->oTitle,
 				"regexInfo"		=> $regexInfo,
 				"action" 		=> $action,

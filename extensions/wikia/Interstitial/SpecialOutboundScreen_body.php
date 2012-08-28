@@ -40,7 +40,7 @@ class Outbound extends UnlistedSpecialPage {
 			$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 
 			// Need to have the skinname correct before calling Athena.
-			$skin = $wgUser->getSkin();
+			$skin = RequestContext::getMain()->getSkin();
 			$skinName = get_class($skin);
 
 			// this may not be set yet (and needs to be before setupUserCss in order for the right CSS$

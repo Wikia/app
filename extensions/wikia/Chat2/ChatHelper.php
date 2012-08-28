@@ -245,7 +245,7 @@ class ChatHelper {
 	}
 
 	public static function formatLogEntry( $type, $action, $title, $forUI, $params ) {
-		global $wgUser, $wgLang;
+		global $wgLang;
 
 		if(empty($params[0])){
 			return "";
@@ -256,7 +256,7 @@ class ChatHelper {
 			$endon = $wgLang->timeanddate( wfTimestamp( TS_MW, $params[3] ), true );
 		}
 
-		$skin = $wgUser->getSkin();
+		$skin = RequestContext::getMain()->getSkin();
 		$id =  $params[1];
 		$revert = "(" . "<a class='chat-change-ban' data-user-id='{$params[1]}' href='#'>" . wfMsg( 'chat-ban-log-change-ban-link') . "</a>" . ")";
 		$link = $skin->userLink( $id, $title->getText() )

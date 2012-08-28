@@ -19,18 +19,18 @@ $wgWidgets['WidgetRelatedCommunities'] = array(
 
 function WidgetRelatedCommunities($id, $params) {
 	wfProfileIn(__METHOD__);
-	
+
 	if($params['skinname'] != 'monaco') {
 		wfProfileOut(__METHOD__);
 		return '';
 	}
-	
-	global $wgUser;
-	$data = $wgUser->getSkin()->relatedcommunities;
+
+	// FIXME: this member is set only by LyricsMinimal skin - refactor
+	$data = RequestContext::getMain()->getSkin()->relatedcommunities;
 	$links = array();
 
 	if(is_array($data) && count($data) > 0) {
-		foreach($data as $key => $val) {
+		foreach($data as $val) {
 			$links[] = array(
 							'href' => $val['href'],
 							'name' => $val['text'],

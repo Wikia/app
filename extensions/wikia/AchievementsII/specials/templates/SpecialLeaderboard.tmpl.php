@@ -51,12 +51,12 @@
 		<tr>
 			<td class="rank">
 				<span><?= '&nbsp;' . $curRanking ?>
-					<?if($curRanking < $prevRanking):?> 
-						<img src="<?="{$wgExtensionsPath}/wikia/AchievementsII/images/uparrow.png";?>" /> 
-					<?elseif($curRanking > $prevRanking && $prevRanking !== null):?> 
+					<?if($curRanking < $prevRanking):?>
+						<img src="<?="{$wgExtensionsPath}/wikia/AchievementsII/images/uparrow.png";?>" />
+					<?elseif($curRanking > $prevRanking && $prevRanking !== null):?>
 						<img src="<?="{$wgExtensionsPath}/wikia/AchievementsII/images/downarrow.png";?>" />
-					<?endif;?> 
-				</span>	
+					<?endif;?>
+				</span>
 			</td>
 			<td class="user">
 				<img src="<?=$rankedUser->getAvatarUrl();?>" width="35" height="35">
@@ -99,7 +99,7 @@
 
 <?php
 	global $wgUser;
-	if (get_class($wgUser->getSkin()) != 'SkinOasis') {
+	if (get_class(RequestContext::getMain()->getSkin()) != 'SkinOasis') {
 		echo '<div class="article-sidebar">';
 		echo wfRenderModule('LatestEarnedBadges');
 		echo '</div>';

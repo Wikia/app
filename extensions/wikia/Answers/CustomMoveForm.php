@@ -15,8 +15,7 @@ class CustomMovePageForm extends MovePageForm{
 	function showForm( $err ) {
 		global $wgOut, $wgUser, $wgFixDoubleRedirects;
 
-		$skin = $wgUser->getSkin();
-
+		$skin = $this->getSkin();
 		$oldTitleLink = $skin->makeLinkObj( $this->oldTitle );
 
 		$wgOut->setPagetitle( wfMsg( 'move-page', $this->oldTitle->getPrefixedText() ) );

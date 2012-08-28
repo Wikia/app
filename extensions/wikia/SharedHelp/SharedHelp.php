@@ -187,9 +187,10 @@ function SharedHelpHook(&$out, &$text) {
 					$destinationUrl = $dest_url[1];
 				}
 			}
-			global $wgServer, $wgArticlePath, $wgRequest, $wgTitle, $wgUser;
+
+			global $wgServer, $wgArticlePath, $wgRequest, $wgTitle;
 			$helpNs = $wgContLang->getNsText(NS_HELP);
-			$sk = $wgUser->getSkin();
+			$sk = RequestContext::getMain()->getSkin();
 
 			if (!empty ($_SESSION ['SH_redirected'])) {
 				$from_link = Title::newfromText( $helpNs . ":" . $_SESSION ['SH_redirected'] );

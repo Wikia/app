@@ -386,8 +386,7 @@ class BlogTemplateClass {
 		if (!empty($username)) {
 			$oUser = User::newFromName($username);
 			if ( $oUser instanceof User ) {
-				global $wgUser;
-				$sk = $wgUser->getSkin();
+				$sk = RequestContext::getMain()->getSkin();
 				$oUserPage = $oUser->getUserPage();
 				$oUserTalkPage = $oUser->getTalkPage();
 				$aResult = array(
@@ -442,10 +441,8 @@ class BlogTemplateClass {
 	}
 
 	public static function __getVoteCode($iPage) {
-		global $wgUser;
-
 		wfProfileIn( __METHOD__ );
-		if( get_class( $wgUser->getSkin() ) == 'SkinMonaco' ) {
+		if( get_class( RequestContext::getMain()->getSkin() ) == 'SkinMonaco' ) {
 
 			$oFauxRequest = new FauxRequest(array( "action" => "query", "list" => "wkvoteart", "wkpage" => $iPage, "wkuservote" => true ));
 			$oApi = new ApiMain($oFauxRequest);
@@ -1245,7 +1242,7 @@ class BlogTemplateClass {
 									"aRows"			=> $aResult,
 									"aOptions"		=> self::$aOptions,
 									"wgParser"		=> $wgParser,
-									"skin"			=> $wgUser->getSkin(),
+									"skin"			=> RequestContext::getMain()->getSkin(),
 									"wgExtensionsPath" 	=> $wgExtensionsPath,
 									"wgStylePath" 		=> $wgStylePath,
 									"sPager"		=> $sPager,
@@ -1272,7 +1269,7 @@ class BlogTemplateClass {
 						}
 						else {
 							if ( self::$aOptions['type'] != 'array' ) {
-								$sk = $wgUser->getSkin();
+								//$sk = RequestContext::getMain()->getSkin();
 								$result = ""; // RT #69906
 								// $result = wfMsg('blog-nopostfound') . " " . $sk->makeLinkObj(Title::newFromText('CreateBlogPage', NS_SPECIAL), wfMsg('blog-writeone' ) );
 							}

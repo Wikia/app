@@ -335,7 +335,7 @@ class ArticleComment {
 			}
 
 			if ( !$this->mTitle->isNewPage(Title::GAID_FOR_UPDATE) ) {
-				$buttons[] = $wgUser->getSkin()->makeKnownLinkObj( $this->mTitle, wfMsgHtml('article-comments-history'), 'action=history', '', '', 'class="article-comm-history"' );
+				$buttons[] = RequestContext::getMain()->getSkin()->makeKnownLinkObj( $this->mTitle, wfMsgHtml('article-comments-history'), 'action=history', '', '', 'class="article-comm-history"' );
 			}
 
 			$commentId = $this->getTitle()->getArticleId();

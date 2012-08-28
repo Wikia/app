@@ -90,7 +90,7 @@ function CategorySelectInitializeHooks($output, $article, $title, $user, $reques
 
 	// Initialize only for allowed skins
 	$allowedSkins = array( 'SkinMonaco', 'SkinAwesome', 'SkinAnswers', 'SkinOasis' );
-	if ( !in_array( get_class($wgUser->getSkin()), $allowedSkins ) ) {
+	if ( !in_array( get_class(RequestContext::getMain()->getSkin()), $allowedSkins ) ) {
 		wfProfileOut(__METHOD__);
 		return true;
 	}

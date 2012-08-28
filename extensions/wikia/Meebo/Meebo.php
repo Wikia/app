@@ -19,7 +19,7 @@ class Meebo {
 		if ($wgEnableMeeboExt
 		&& !$wgNoExternals
 		&& $wgUser->isAnon()
-		&& $wgUser->getSkin()->getSkinName() == 'oasis'
+		&& RequestContext::getMain()->getSkin()->getSkinName() == 'oasis'
 		&& $wgRequest->getText( 'action', 'view' ) == 'view'
 		&& array_search($wgDBname, self::$PROHIBITED_DBNAMES) === FALSE) {
 			$vars['wgEnableMeeboExt'] = true;

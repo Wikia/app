@@ -217,7 +217,7 @@ class DeleteBatchForm {
 			$wgUser = $OldUser ;
 		}
 
-		$sk = $wgUser->getSkin () ;
+		$sk = RequestContext::getMain()->getSkin();
 		$titleObj = Title::makeTitle( NS_SPECIAL, 'Deletebatch' );
 		$link_back = $sk->makeKnownLinkObj ($titleObj, '<b>here</b>') ;
 		$wgOut->addHtml ("<br/>".wfMsg('deletebatch_link_back')." ".$link_back.".") ;
