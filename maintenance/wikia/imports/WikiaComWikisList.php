@@ -318,7 +318,7 @@ class WikiaComWikisListImport {
 		$user = ($user instanceof User) ? $user : null;
 		$imageData = new stdClass();
 		$imageData->name = $imageName;
-		$imageData->description = $imageData->comment = wfMsg('wikiahome-image-auto-uploaded-comment', array('parseinline'));
+		$imageData->description = $imageData->comment = wfMsg('wikiahome-image-auto-uploaded-comment');
 
 		$result = ImagesService::uploadImageFromUrl($imageUrl, $imageData, $user);
 

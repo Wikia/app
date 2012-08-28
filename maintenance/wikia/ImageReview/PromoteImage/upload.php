@@ -13,10 +13,11 @@ $imageUrl = $options['originalimageurl'];
 $destImageName = $options['destimagename'];
 $sourceWikiId = intval($options['wikiid']);
 
+//fb#45624
 $userId = $options['userid'];
-$user = F::build('User', array($userId), 'newFromId');
-
-if( !($user instanceof User) ) {
+if( !empty($userId) ) {
+	$user = F::build('User', array($userId), 'newFromId');
+} else {
 	$user = F::build('User', array('WikiaBot'), 'newFromName');
 	$user = ($user instanceof User) ? $user : null;
 }
@@ -45,7 +46,7 @@ if( UploadFromUrl::isAllowed($user) !== true ) {
 
 $imageData = new stdClass();
 $imageData->name = $destImageName;
-$imageData->comment = $imageData->description = wfMsgExt('wikiahome-image-auto-uploaded-comment', array('parseinline'));
+$imageData->description = $imageData->comment = wfMsg('wikiahome-image-auto-uploaded-comment');
 
 $result = ImagesService::uploadImageFromUrl($imageUrl, $imageData, $user);
 
