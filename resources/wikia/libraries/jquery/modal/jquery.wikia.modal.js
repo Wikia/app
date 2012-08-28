@@ -236,7 +236,7 @@ $.fn.extend({
 	},
 
 
-	closeModal: function() {
+	closeModal: function(callback) {
 		$(window).unbind(".modal" + this.attr('id'));
 
 		this.animate({
@@ -250,6 +250,9 @@ $.fn.extend({
 		var blackout = $(this).data('blackout');
 		blackout.fadeOut("fast", function() {
 			$(this).remove();
+			if($.isFunction(callback)) {
+				callback();
+			}
 		});
 
 		// BugId:7498
