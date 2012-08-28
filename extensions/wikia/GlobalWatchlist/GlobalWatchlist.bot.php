@@ -629,7 +629,7 @@ class GlobalWatchlistBot {
 		if ( count( $aRemove ) ) {
 			$dbs = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
 			foreach ( $aRemove as $gwa_id ) {
-				$dbs->delete( 'global_watchlist', array( 'gwa_user_id' => $iUserId, 'gwa_id' => $oResultRow->gwa_id ), __METHOD__ );
+				$dbs->delete( 'global_watchlist', array( 'gwa_user_id' => $iUserId, 'gwa_id' => $gwa_id ), __METHOD__ );
 			}
 			$dbs->commit();
 		}
