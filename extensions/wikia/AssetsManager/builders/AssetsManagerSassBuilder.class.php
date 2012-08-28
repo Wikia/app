@@ -10,10 +10,11 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 	const CACHE_VERSION = 1;
 
 	public function __construct(WebRequest $request) {
-		global $wgDevelEnvironment;
-		$wgDevelEnvironment ? $timeStart = microtime( true ) : null;
-
 		parent::__construct($request);
+
+		if ( $this->mForceProfile ) {
+			$timeStart = microtime( true );
+		}
 
 		if (strpos($this->mOid, '..') !== false) {
 			throw new Exception('File path must not contain \'..\'.');
@@ -33,7 +34,9 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 
 		$memc = F::App()->wg->Memc;
 
+		$fromCache = false;
 		if ( $obj = $memc->get( $cacheId ) ) {
+			$fromCache = true;
 			$this->mContent = $obj;
 		} else {
 			$this->processContent();
@@ -45,11 +48,10 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 
 		$this->mContentType = AssetsManager::TYPE_CSS;
 
-		if( $wgDevelEnvironment ) {
-			$timeEnd = microtime( true );
-			$time = intval( ($timeEnd - $timeStart) * 1000 );
-			$contentLen = strlen( $this->mContent);
-			error_log( "{$this->mOid}\t{$time}ms {$contentLen}b" );
+		if ( $this->mForceProfile ) {
+			$this->mProfilerData[] = "Processing time: ". intval( ( microtime( true ) - $timeStart ) * 1000 ) . "ms";
+			$this->mProfilerData[] = "Content Size: " . intval( strlen( $this->mContent ) / 1024 ) . "kb";
+			$this->mProfilerData[] = "Cache Hit: " . ( $fromCache ? "true" : "false" );
 		}
 	}
 

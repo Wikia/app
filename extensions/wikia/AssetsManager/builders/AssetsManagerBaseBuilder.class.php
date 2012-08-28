@@ -11,6 +11,8 @@ class AssetsManagerBaseBuilder {
 	protected $mParams;
 	protected $mCb;
 	protected $mNoExternals;
+	protected $mForceProfile;
+	protected $mProfilerData = array();
 
 	protected $mContent;
 	protected $mContentType;
@@ -25,12 +27,18 @@ class AssetsManagerBaseBuilder {
 		if (!empty($this->mParams['noexternals'])) {
 			$this->mNoExternals = true;
 		}
+
+		if (!empty($this->mParams['forceprofile'])) {
+			$this->mForceProfile = true;
+		}
 	}
 
 	public function getContent() {
-		if((!empty($this->mContent)) && ((!isset($this->mParams['minify'])) || ($this->mParams['minify'] == true))){
-			$start = microtime(true);
+		if ($this->mForceProfile) {
+			$timeStart = microtime(true);
+		}
 
+		if((!empty($this->mContent)) && ((!isset($this->mParams['minify'])) || ($this->mParams['minify'] == true))){
 			if($this->mOid == 'oasis_shared_js' || $this->mOid == 'rte') {
 				$newContent = self::minifyJS($this->mContent, true);
 			} else if($this->mContentType == AssetsManager::TYPE_CSS) {
@@ -38,12 +46,15 @@ class AssetsManagerBaseBuilder {
 			} else if($this->mContentType == AssetsManager::TYPE_JS) {
 				$newContent = self::minifyJS($this->mContent);
 			}
-
-			$stop = microtime(true);
 		}
 
-		if(!empty($newContent)) {
-			$this->mContent = '/* Minify took '.($stop-$start)." */\n\n".$newContent;
+		if (!empty($newContent)) {
+			if ($this->mForceProfile) {
+				$newContent = "/* Minification time: " . intval( ( microtime( true ) - $timeStart ) * 1000 ) . "ms" .
+					( count( $this->mProfilerData ) ? " | " . implode( " | ", $this->mProfilerData ) : "" ) . " */\n\n" . $newContent;
+			}
+
+			$this->mContent = $newContent;
 		}
 
 		return $this->mContent;
