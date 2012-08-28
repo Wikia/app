@@ -215,7 +215,6 @@ define('topbar', ['querystring', 'loader', 'toc', 'events', 'ads'], function (qs
 	}
 	//end navigation setup
 
-
 	//profile/login setup
 	if(wkPrfTgl){
 		//Fix for ios 4.x not respecting fully event.preventDefault()
