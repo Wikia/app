@@ -13,15 +13,14 @@ $imageUrl = $options['originalimageurl'];
 $destImageName = $options['destimagename'];
 $sourceWikiId = intval($options['wikiid']);
 
-/*
 $userId = $options['userid'];
 $user = F::build('User', array($userId), 'newFromId');
 
 if( !($user instanceof User) ) {
-	echo 'ERROR: Could not get user object'."\n";
-	exit(2);
+	$user = F::build('User', array('WikiaBot'), 'newFromName');
+	$user = ($user instanceof User) ? $user : null;
 }
-*/
+
 if( empty($imageUrl) ) {
 	echo 'ERROR: Invalid original image url'."\n";
 	exit(3);
@@ -44,8 +43,11 @@ if( UploadFromUrl::isAllowed($user) !== true ) {
 }
 */
 
-//$result = ImagesService::uploadImageFromUrl($imageUrl, $destImageName, $user);
-$result = ImagesService::uploadImageFromUrl($imageUrl, $destImageName);
+$imageData = new stdClass();
+$imageData->name = $destImageName;
+$imageData->comment = $imageData->description = wfMsgExt('wikiahome-image-auto-uploaded-comment', array('parseinline'));
+
+$result = ImagesService::uploadImageFromUrl($imageUrl, $imageData, $user);
 
 if( $result['status'] === true ) {
 	echo json_encode(array('id' => $result['page_id'], 'name' => $destImageName));
