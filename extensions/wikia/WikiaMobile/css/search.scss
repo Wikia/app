@@ -35,12 +35,15 @@
 	li {
 		font-weight: 800;
 		position: relative;
-		opacity: 0;
+		color: white;
 		padding-right: 40px;
-		-webkit-transition: opacity .2s;
+
+		-webkit-transiton: color .2s;
+		-moz-transiton: color .2s;
+		transiton: color .2s;
 
 		&.show {
-			opacity: 1;
+			color: inherit;
 		}
 	}
 

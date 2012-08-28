@@ -8,6 +8,7 @@
 define('topbar', ['querystring', 'loader', 'toc', 'events', 'ads'], function (qs, loader, toc, events, ads){
 	var w = window,
 		d = document,
+		loc = w.location,
 		wkPrfTgl = d.getElementById('wkPrfTgl'),
 		navBar = d.getElementById('wkTopNav'),
 		wkPrf = d.getElementById('wkPrf'),
@@ -41,25 +42,40 @@ define('topbar', ['querystring', 'loader', 'toc', 'events', 'ads'], function (qs
 		!barSetUp && setupTopBar();
 		!stopScrolling && window.scrollTo(0,0);
 		toc.close();
-		w.location.hash = 'topbar';
+		(loc.hash !== '#topbar') && (loc.hash = 'topbar');
 		hidePage();
 	}
 
 	function openSearch(){
-		closeNav();
 		reset(true);
 		//track('search/toggle/open');
+		//show search
 		navBar.className = 'srhOpn';
 		searchForm.scrollIntoView();
-		searchInput.focus();
+
+		//reset search
+		searchInput.value = '';
+		searchSug.innerHTML = '';
+
+		/*
+			This is needed for iOS 4.x
+			It knows what to do with input element with autofocus attribute
+			but totaly forgets about the rest
+			so I need to cause repaint of the navbar
+
+			comment this out and load a page on iOS 4.x for a reference
+		 */
+		navBar.style.width = 'auto';
+		setTimeout(function(){
+			navBar.style.width = '100%';
+		},50);
+
 	}
 
 	function closeSearch(){
 		if(navBar.className.indexOf('srhOpn') > -1){
-			searchInput.value = '';
 			//track('search/toggle/close');
 			showPage();
-			searchSug.innerHTML = '';
 		}
 	}
 
@@ -178,13 +194,13 @@ define('topbar', ['querystring', 'loader', 'toc', 'events', 'ads'], function (qs
 		!navSetUp && setupNav();
 		reset();
 		//track('nav/open');
+		wkNavMenu.className = 'cur1';
 		navBar.className = 'fllNav';
 	}
 
 	function closeNav(){
 		if(navBar.className.indexOf('fllNav') > -1){
 			//track('nav/close');
-			wkNavMenu.className = 'cur1';
 			showPage();
 		}
 	}
