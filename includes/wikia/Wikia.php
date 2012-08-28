@@ -1298,7 +1298,7 @@ class Wikia {
 		}
 		// Image precedes message text
 		if ($img != null) {
-			$src = $img == 'blank.gif' ? $wgBlankImgUrl : "{$wgStylePath}/common/{$img}";
+			$src = (($img == 'blank.gif') ? $wgBlankImgUrl : "{$wgStylePath}/common/{$img}");
 			$attr = array('src' => $src);
 			if ($img == 'blank.gif') {
 				$attr['height'] = '0';
