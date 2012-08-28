@@ -22,6 +22,7 @@ $messages['en'] = array(
 	'videohandler-remove' => 'Remove',
 	'videohandler-remove-video-modal-title' => 'Are you sure you want to remove this video from your wiki?',
 	'videohandler-remove-video-modal-ok' => 'Remove',
+	'videohandler-remove-video-modal-success' => 'File:$1 has been removed from this wiki',
 	'videohandler-remove-video-modal-cancel' => 'Cancel',
 );
 
@@ -35,6 +36,10 @@ $messages['qqq'] = array(
 * $2 is a link to the provider's homepage (e.g. [http://youtube.com/ youtube.com])",
 	'videohandler-video-views' => 'video views. $1 is number of video views.',
 	'videohandler-remove' => 'Text for button to click to remove a wikia library video from your wiki.',
+	'videohandler-remove-video-modal-title' => 'This is the message to the user confirming they want to remove the video from their wiki.',
+	'videohandler-remove-video-modal-ok' => 'This is the button text to confirm removing a video from a wiki',
+	'videohandler-remove-video-modal-success' => 'This is the confirmation message that a video has been removed from a wiki',
+	'videohandler-remove-video-modal-cancel' => 'This is the button text to cancel removal of a video from a wiki',
 );
 
 /** Afrikaans (Afrikaans)
