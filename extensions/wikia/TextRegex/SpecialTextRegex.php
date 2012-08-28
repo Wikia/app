@@ -184,7 +184,7 @@ class TextRegexList {
 			"action_stats"		=> $action_stats
 		) );
 		#---
-		$wgOut->addHtml($oTmpl->execute("textregex-list"));
+		$wgOut->addHtml($oTmpl->render("textregex-list"));
 		wfProfileOut( __METHOD__ );
 
 		return ;
@@ -332,7 +332,7 @@ class TextRegexList {
 				"action" 		=> $action,
 				"numStatResults"=> $numStatResults
 			) );
-			$wgOut->addHTML( $oTmpl->execute("textregex-stats") );
+			$wgOut->addHTML( $oTmpl->render("textregex-stats") );
 		} else {
 			$wgOut->addHTML( wfMsg('textregex-invalid-regexid') );
 		}
@@ -386,7 +386,7 @@ class TextRegexForm {
 			"err"			=> $err
 		) );
 		#---
-		$wgOut->addHtml($oTmpl->execute("textregex-form"));
+		$wgOut->addHtml($oTmpl->render("textregex-form"));
 		return 1;
 	}
 
@@ -442,7 +442,7 @@ class TextRegexForm {
 			"err"			=> $err
 		) );
 		#---
-		$wgOut->addHtml($oTmpl->execute("textregex-subpages"));
+		$wgOut->addHtml($oTmpl->render("textregex-subpages"));
 		wfProfileOut( __METHOD__ );
 		return 1;
 	}

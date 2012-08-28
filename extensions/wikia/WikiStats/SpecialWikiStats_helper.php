@@ -345,7 +345,7 @@ class WikiStats {
 				"wgContLang" 	=> $wgContLang,
 				"wgLang"		=> $wgLang,
 			));
-			$res = $oTmpl->execute("stats-wikia-info");
+			$res = $oTmpl->render("stats-wikia-info");
 		}
         #---
 		wfProfileOut( __METHOD__ );
@@ -465,7 +465,7 @@ class WikiStats {
         ));
         #---
 		wfProfileOut( __METHOD__ );
-        return $oTmpl->execute("main-table-stats");
+        return $oTmpl->render("main-table-stats");
 	}
 
 	/**
@@ -1429,8 +1429,8 @@ class WikiStats {
 				"anons"			=> $anons
 			));
 			#---
-			$active = $oTmpl->execute("wikians-active-stats");
-			$absent = $oTmpl->execute("wikians-absent-stats");
+			$active = $oTmpl->render("wikians-active-stats");
+			$absent = $oTmpl->render("wikians-absent-stats");
 
 			$data = $active . $absent;
 			#$data = array("code" => 1, "text" => $text);

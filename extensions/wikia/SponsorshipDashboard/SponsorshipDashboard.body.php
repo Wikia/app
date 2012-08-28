@@ -276,7 +276,7 @@ class SponsorshipDashboard extends SpecialPage {
 				"report"		=> $this->currentReport
 			)
 		);
-		$wgOut->addHTML( $oTmpl->execute( "header" ) );
+		$wgOut->addHTML( $oTmpl->render( "header" ) );
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -302,7 +302,7 @@ class SponsorshipDashboard extends SpecialPage {
 		$wgOut = F::app()->getGlobal('wgOut');
 
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
-		$wgOut->addHTML( $oTmpl->execute( self::TEMPLATE_ERROR ) );
+		$wgOut->addHTML( $oTmpl->render( self::TEMPLATE_ERROR ) );
 
 		return false;
 	}
@@ -329,7 +329,7 @@ class SponsorshipDashboard extends SpecialPage {
 		);
 
 		$wgOut->addHTML(
-			$oTmpl->execute( 'admin/adminHeader' )
+			$oTmpl->render( 'admin/adminHeader' )
 		);
 	}
 
@@ -361,7 +361,7 @@ class SponsorshipDashboard extends SpecialPage {
 		);
 
 		$wgOut->addHTML(
-			$oTmpl->execute( 'admin/editReport' )
+			$oTmpl->render( 'admin/editReport' )
 		);
 
 		return false;
@@ -414,7 +414,7 @@ class SponsorshipDashboard extends SpecialPage {
 		$this->HTMLAdminHeader( 'ViewInfo' );
 		$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/SponsorshipDashboard/css/SponsorshipDashboard.scss' ) );
 		$wgOut->addHTML(
-			$oTmpl->execute( 'admin/viewInfo' )
+			$oTmpl->render( 'admin/viewInfo' )
 		);
 
 		return true;
@@ -449,7 +449,7 @@ class SponsorshipDashboard extends SpecialPage {
 		$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/SponsorshipDashboard/css/SponsorshipDashboard.scss' ) );
 		$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/SponsorshipDashboard/css/SponsorshipDashboardEditor.scss' ) );
 		$wgOut->addHTML(
-			$oTmpl->execute( 'admin/editGroup' )
+			$oTmpl->render( 'admin/editGroup' )
 		);
 	}
 
@@ -491,7 +491,7 @@ class SponsorshipDashboard extends SpecialPage {
 		$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/SponsorshipDashboard/css/SponsorshipDashboard.scss' ) );
 		$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/SponsorshipDashboard/css/SponsorshipDashboardEditor.scss' ) );
 		$wgOut->addHTML(
-			$oTmpl->execute( 'admin/editUser' )
+			$oTmpl->render( 'admin/editUser' )
 		);
 	}
 
@@ -518,7 +518,7 @@ class SponsorshipDashboard extends SpecialPage {
 		);
 
 		$wgOut->addHTML(
-			$oTmpl->execute( 'admin/viewReports' )
+			$oTmpl->render( 'admin/viewReports' )
 		);
 
 		return false;
@@ -549,7 +549,7 @@ class SponsorshipDashboard extends SpecialPage {
 		);
 
 		$wgOut->addHTML(
-			$oTmpl->execute( 'admin/viewGroups' )
+			$oTmpl->render( 'admin/viewGroups' )
 		);
 
 		return false;
@@ -583,7 +583,7 @@ class SponsorshipDashboard extends SpecialPage {
 		);
 
 		$wgOut->addHTML(
-			$oTmpl->execute( 'admin/viewUsers' )
+			$oTmpl->render( 'admin/viewUsers' )
 		);
 
 		return false;

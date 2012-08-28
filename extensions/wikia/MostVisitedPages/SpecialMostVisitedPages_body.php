@@ -89,7 +89,7 @@ class MostvisitedpagesPage extends QueryPage {
 				"action"		=> $action,
 				"articleName"	=> $this->mArticle,
 			));
-			$res = $oTmpl->execute("main-form");
+			$res = $oTmpl->render("main-form");
 		}
 		wfProfileOut( __METHOD__ );
         return $res;

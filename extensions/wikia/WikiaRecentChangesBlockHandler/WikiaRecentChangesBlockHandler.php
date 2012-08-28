@@ -66,7 +66,7 @@ class WikiaRecentChangesBlockHandler extends Service {
 						$oTmpl = new EasyTemplate( dirname(__FILE__) . "/templates/" );
 						$oTmpl->set_vars($vars);
 
-						$r = $oTmpl->execute('RecentChangesHeaderBlock');
+						$r = $oTmpl->render('RecentChangesHeaderBlock');
 					}
 				}
 			}

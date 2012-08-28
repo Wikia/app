@@ -277,7 +277,7 @@ class SiteWideMessages extends SpecialPage {
 				'editMsgId' => $editMsgId,
 				'supportedLanguages' => $wgSWMSupportedLanguages
 			));
-		$wgOut->addHTML($oTmpl->execute($template));
+		$wgOut->addHTML($oTmpl->render($template));
 	}
 
 	//DB functions

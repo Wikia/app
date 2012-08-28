@@ -75,7 +75,7 @@ class WikiFactoryPage extends SpecialPage {
 				"body"      => $oPager->getBody(),
 				"nav"       => $oPager->getNavigationBar()
 			));
-			$wgOut->addHTML( $oTmpl->execute("changelog") );
+			$wgOut->addHTML( $oTmpl->render("changelog") );
 		}
 		elseif ( in_array( strtolower($subpage), array( "metrics", "metrics/main", "metrics/monthly", "metrics/daily" ) ) ) {
 			$oAWCMetrics = new WikiMetrics();
@@ -1374,7 +1374,7 @@ class WebmasterToolsAPI {
 
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$oTmpl->set_vars(array( "site" => $this->normalize_site($this->mWiki->city_url)));
-		$xml = $oTmpl->execute("wt-add-request");
+		$xml = $oTmpl->render("wt-add-request");
 
 		$content = Http::post($uri = self::FEED_URI . '/sites/',
 							null,
@@ -1434,7 +1434,7 @@ class WebmasterToolsAPI {
 		// Send the verification request to google
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$oTmpl->set_vars( array( "site_id" => $this->make_site_id()) );
-		$xml = $oTmpl->execute("wt-verify-request");
+		$xml = $oTmpl->render("wt-verify-request");
 
 		if ($this->put_verify($xml)) {
 			return true;

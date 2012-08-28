@@ -58,7 +58,7 @@ class WikiaVideoAddForm extends SpecialPage {
 						"action"	=>	$action,
 						"name"		=> 	$name,
 						) );
-			$wgOut->addHTML( $oTmpl->execute("quickform") );
+			$wgOut->addHTML( $oTmpl->render("quickform") );
 		}
 	}
 

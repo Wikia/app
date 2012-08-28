@@ -78,12 +78,12 @@ function axWFactoryGetVariable() {
 	$city_id = $wgRequest->getVal("wiki");
 
 	$variable = WikiFactory::getVarById( $cv_id, $city_id );
-        
+
         // BugId:3054
         if ( empty( $variable ) ) {
             return json_encode( array( 'error' => true, 'message' => 'No such variable.' ) );
         }
-        
+
 	$related = array();
 	$r_pages = array();
 	if (preg_match("/Related variables:(.*)$/", $variable->cv_description, $matches)) {
@@ -113,7 +113,7 @@ function axWFactoryGetVariable() {
 	));
 
 	return json_encode( array(
-		"div-body" => $oTmpl->execute( "variable" ),
+		"div-body" => $oTmpl->render( "variable" ),
 		"div-name" => "wk-variable-form"
 	));
 }
@@ -159,7 +159,7 @@ function axWFactoryChangeVariable() {
 	$oTmpl->set_vars($vars);
 
 	return json_encode( array(
-		"div-body" => $oTmpl->execute( "change-variable" ),
+		"div-body" => $oTmpl->render( "change-variable" ),
 		"div-name" => "wk-variable-form"
 	));
 }
@@ -240,7 +240,7 @@ function axWFactorySubmitChangeVariable() {
 		$oTmpl->set_vars($vars);
 
 		return json_encode( array(
-			"div-body" => $oTmpl->execute( "change-variable" ),
+			"div-body" => $oTmpl->render( "change-variable" ),
 			"div-name" => "wk-variable-form"
 		));
 	} else {
@@ -259,7 +259,7 @@ function axWFactorySubmitChangeVariable() {
 		$html .= "</div>";
 
 		return json_encode( array(
-			"div-body" => $html . $oTmpl->execute( "variable" ),
+			"div-body" => $html . $oTmpl->render( "variable" ),
 			"div-name" => "wk-variable-form"
 		));
 	}
@@ -518,8 +518,8 @@ function axWFactorySaveVariable() {
 				ob_end_clean(); #--- puts parse error to /dev/null
 		}
 
-                
-                
+
+
                 if( empty( $error ) ) {
                     $varInfo = WikiFactory::getVarById($cv_id, $city_id);
                     if($varInfo->cv_is_unique) {
@@ -531,7 +531,7 @@ function axWFactorySaveVariable() {
                         }
                     }
                 }
-                
+
 		# Save to DB, but only if no errors occurred
 		if ( empty( $error ) ) {
 			if( ! WikiFactory::setVarByID( $cv_id, $city_id, $cv_value, $reason ) ) {
@@ -594,13 +594,13 @@ function axWFactoryDomainQuery() {
 
 	$exact = array( "suggestions" => array(), "data" => array() );
 	$match = array( "suggestions" => array(), "data" => array() );
-	
+
 	// query terms: wik, wiki, wikia take too much memory
 	// and end up with fatal errors
 	if ( substr("wikia",0,strlen((string)$query)) === $query ) {
 		$query = false;
 	}
-	
+
 	if( $query ) {
 		/**
 		 * maybe not very effective but used only by staff anyway
@@ -755,25 +755,25 @@ function axAWCMetrics() {
 	if( $wgUser->isBlocked() ) {
 		return "";
 	}
-		
+
 	$limit = $wgRequest->getVal('awc-limit', WikiMetrics::LIMIT);
 	$offset = $wgRequest->getVal('awc-offset', 0);
-	$loop = $wgRequest->getVal('awc-loop', 1);	
-	
+	$loop = $wgRequest->getVal('awc-loop', 1);
+
 	$aResponse = array();
 	#'nbr_records' => 0, 'limit' => $limit, 'page' => $page, 'order' => $order, 'desc' => $desc);
 
 	$OAWCMetrics = new WikiMetrics();
 	$OAWCMetrics->getRequestParams();
 	list ($res, $count) = $OAWCMetrics->getMainStatsRecords();
-	
+
 	$result = array(
 		'sEcho' => intval($loop),
-		'iTotalRecords' => count($res), 
-		'iTotalDisplayRecords' => $count, 
+		'iTotalRecords' => count($res),
+		'iTotalDisplayRecords' => $count,
 		'sColumns' => 'id,active,wikiid,title,url,db,lang,created,founder,users,regusers,articles,edits,images,pviews,close'
 	);
-	$rows = array();			
+	$rows = array();
 	$loop = 1;
 	if ( !empty($res) ) {
 		foreach ( $res as $row ) {
@@ -781,7 +781,7 @@ function axAWCMetrics() {
 				$loop + $offset, // Id
 				$row['public'],
 				$row['id'],
-				$row['title'],				
+				$row['title'],
 				$row['url'], //url
 				$row['db'], //dbname
 				$row['lang'], // lang,
@@ -794,11 +794,11 @@ function axAWCMetrics() {
 				intval($row['images']),
 				$row['pageviews_txt'],
 				$row['id']
-			);			
-			$loop++;	
-		}			
+			);
+			$loop++;
+		}
 	}
-	$result['aaData'] = $rows;	
+	$result['aaData'] = $rows;
 
 	return json_encode($result);
 }
@@ -830,34 +830,34 @@ function axAWCMetricsCategory() {
 
 	$limit = $wgRequest->getVal('awc-limit', WikiMetrics::LIMIT);
 	$offset = $wgRequest->getVal('awc-offset', 0);
-	$loop = $wgRequest->getVal('awc-loop', 1);	
-	
+	$loop = $wgRequest->getVal('awc-loop', 1);
+
 	$OAWCMetrics = new WikiMetrics();
 	$OAWCMetrics->getRequestParams();
 	list ($res, $count, $categories) = $OAWCMetrics->getCategoriesRecords();
-	
+
 	$result = array(
 		'sEcho' => intval($loop),
-		'iTotalRecords' => count($res), 
+		'iTotalRecords' => count($res),
 		'iTotalDisplayRecords' => $count
 	);
-	$rows = array();			
+	$rows = array();
 	$loop = 1;
 	if ( !empty($res) ) {
 		foreach ( $res as $date => $row ) {
 			$record = array( $date );
-			
+
 			foreach ( $categories as $id => $cat_name ) {
 				$record[] = isset($row['hubs'][$id]['count']) ? intval($row['hubs'][$id]['count']) : 0;
 			}
-			
+
 			$record[] = $row['count'];
-			
+
 			$rows[] = $record;
-			$loop++;	
-		}			
+			$loop++;
+		}
 	}
-	$result['aaData'] = $rows;	
+	$result['aaData'] = $rows;
 
 	return json_encode($result);
 }

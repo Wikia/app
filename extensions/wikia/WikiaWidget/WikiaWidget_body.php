@@ -6,12 +6,12 @@ class WikiaWidget extends SpecialPage {
 
 	function execute( $par ) {
 		global $wgUser, $wgRequest, $wgOut;
- 
+
 		$this->setHeaders();
  		$wgOut->setPageTitle('Configure a Wikia Widget');
 		# Get request data from, e.g.
 		//$param = $wgRequest->getText('param');
- 
+
 		# Do stuff
 		# ...
 
@@ -19,9 +19,9 @@ class WikiaWidget extends SpecialPage {
    			$wgOut->addHTML( 'Sorry, this feature is hidden away for staff only. Once we get it working really nicely, we\'ll open it up for everyone.' );
 			return;
 		}
-		
+
 		$tmpl = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
-		$output = $tmpl->execute('main'); 
+		$output = $tmpl->render('main');
 
 		# Output
 		$wgOut->addHTML( $output );

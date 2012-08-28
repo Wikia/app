@@ -78,7 +78,7 @@ class Interstitial extends UnlistedSpecialPage {
 
 				$athenaInitStuff = AdProviderAthena::getInstance()->getSetupHtml();
 
-				$adCode = $oTmpl->execute($adTemplate);
+				$adCode = $oTmpl->render($adTemplate);
 				$oTmpl->set_vars(
 					array(
 						'adCode' => $adCode,
@@ -91,7 +91,7 @@ class Interstitial extends UnlistedSpecialPage {
 				);
 
 				$wgOut->clearHTML();
-				$wgOut->addHTML( $oTmpl->execute( 'page' ) );
+				$wgOut->addHTML( $oTmpl->render( 'page' ) );
 			} else {
 				return $this->redirectTo($url);
 			}

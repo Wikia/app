@@ -29,16 +29,16 @@ class Crunchyroll extends SpecialPage {
 	 *
 	 * @return void
 	 */
-	
+
 	public function execute( $param = '' ) {
-		
+
 		$wgSupressPageSubtitle = true;
 
 		$params = explode( '/', $param );
 		$this->episodeId = ( isset( $params[ 2 ] ) ) ? (int)$params[ 2 ]: 0;
 		$this->serieId = ( isset( $params[ 1 ] ) ) ? (int)$params[ 1 ]: 0;
 		$this->page = ( isset( $params[ 0 ] ) ) ? (int)$params[ 0 ]: 1;
-		
+
 		$this->showSerie();
 	}
 
@@ -48,14 +48,14 @@ class Crunchyroll extends SpecialPage {
 
 		$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/Crunchyroll/css/Crunchyroll.scss'));
 		if ( ( $this->episodeId ) > 0 && ( !empty( $this->serieId ) ) ){
-	
+
 			$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 			$oTmpl->set_vars(
 				array(
 				    'episodeId'	=> $this->episodeId
 				)
 			);
-			return $oTmpl->execute( "CrunchyrollPlayer" );
+			return $oTmpl->render( "CrunchyrollPlayer" );
 		} else {
 			return '';
 		}
@@ -64,11 +64,11 @@ class Crunchyroll extends SpecialPage {
 	protected function showSerie(){
 
 		global $wgOut;
-		
+
 		$Video = new CrunchyrollVideo();
 		$Video->setSerieId( $this->serieId );
 		$gallery = $Video->getPaginatedGallery( $this->page );
-		
+
 		$wgOut->addHTML( '<h1>'.$Video->title.'</h1>' );
 		$wgOut->addHTML( $this->getPlayer() );
 		$wgOut->addHTML( $gallery ) ;

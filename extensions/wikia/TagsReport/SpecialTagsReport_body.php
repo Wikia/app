@@ -71,12 +71,12 @@ class TagsReportPage extends SpecialPage {
             "mTag"  	=> $this->mTag,
             "timestamp"	=> $timestamp
         ));
-        $wgOut->addHTML( $oTmpl->execute("main-form") );
+        $wgOut->addHTML( $oTmpl->render("main-form") );
         wfProfileOut( __METHOD__ );
 	}
 
 	function showArticleList() {
-		global $wgOut, $wgRequest ;
+		global $wgOut;
 		global $wgCanonicalNamespaceNames;
 		global $wgContLang, $wgUser;
         wfProfileIn( __METHOD__ );
@@ -91,12 +91,11 @@ class TagsReportPage extends SpecialPage {
             "wgContLang" 	=> $wgContLang,
             "skin"			=> $wgUser->getSkin()
         ));
-        $wgOut->addHTML( $oTmpl->execute("tag-activity") );
+        $wgOut->addHTML( $oTmpl->render("tag-activity") );
         wfProfileOut( __METHOD__ );
 	}
 
 	function getResults() {
-		global $wgOut, $wgRequest ;
         wfProfileIn( __METHOD__ );
 
 		/* no list when no user */
