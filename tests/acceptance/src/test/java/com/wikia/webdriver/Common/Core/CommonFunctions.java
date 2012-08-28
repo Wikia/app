@@ -4,6 +4,8 @@ import java.awt.AWTException;
 import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
 import java.awt.Robot;
+import java.awt.event.InputEvent;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Point;
@@ -55,7 +57,51 @@ public class CommonFunctions
 		passwordFieldElem.sendKeys(password);
 		WebElement submitButtonElem = driver.findElement(submitButton);
 		submitButtonElem.click();
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("a[href*='/wiki/User:"+userName+"']")));		
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("a[href*='/User:"+userName+"']")));		
+	}
+	
+	/**
+	 * log in by overlay available from main menu
+	 * @param userName
+	 * @param password
+	 * @author: Karol Kujawiak
+	 */
+	
+	public static void logInDriver(String userName, String password, WebDriver driver)
+	{
+		wait = new WebDriverWait(driver, 30);
+		WebElement logInAjaxElem = driver.findElement(logInAjax);
+		logInAjaxElem.click();
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("input[name='username']")));
+		WebElement userNameFieldElem = driver.findElement(userNameField);
+		userNameFieldElem.sendKeys(userName);
+		WebElement passwordFieldElem = driver.findElement(passwordField);
+		passwordFieldElem.sendKeys(password);
+		WebElement submitButtonElem = driver.findElement(submitButton);
+		submitButtonElem.click();
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("a[href*='/User:"+userName+"']")));		
+	}
+	
+	/**
+	 * log in by overlay available from main menu
+	 * @param userName
+	 * @param password
+	 * @author: Karol Kujawiak
+	 */
+	
+	public static void logIn(String userName, String password, WebDriver driver)
+	{
+		wait = new WebDriverWait(driver, 30);
+		WebElement logInAjaxElem = driver.findElement(logInAjax);
+		logInAjaxElem.click();
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("input[name='username']")));
+		WebElement userNameFieldElem = driver.findElement(userNameField);
+		userNameFieldElem.sendKeys(userName);
+		WebElement passwordFieldElem = driver.findElement(passwordField);
+		passwordFieldElem.sendKeys(password);
+		WebElement submitButtonElem = driver.findElement(submitButton);
+		submitButtonElem.click();
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("a[href*='/User:"+userName+"']")));		
 	}
 	
 	/**
@@ -162,7 +208,6 @@ public class CommonFunctions
 		{
 			PageObjectLogging.log("assertString", "pattern string: "+pattern+" <br/>current string: "+current+"<br/>are different", false);
 		}
-		
 	}
 	
 	/**
@@ -266,7 +311,31 @@ public class CommonFunctions
 		int VisibleDomHeight = Integer.parseInt(visibleDomHeightJS.toString());
 		
 		MoveCursorTo(elem_X+10, elem_Y+ScreenHeightWithoutTaskBarHeight-VisibleDomHeight-pixDiff+1);
-
+	}
+	
+	
+	public static void MoveCursorToElement(Point elem1_location, WebDriver driver) {
+//		Toolkit toolkit =  Toolkit.getDefaultToolkit ();
+//		Dimension dim = toolkit.getScreenSize();
+//		double ScreenHeight = dim.getHeight();
+	
+//		int FireFoxStatusBarHeight = 20;
+		
+		int pixDiff = 0;
+		if (Global.BROWSER.equals("FF")) {		
+			pixDiff = 6;
+		}
+		int elem_Y = elem1_location.getY();
+		int elem_X = elem1_location.getX();
+		
+		
+		Rectangle maxBounds = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
+		int ScreenHeightWithoutTaskBarHeight = maxBounds.height;
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		Object visibleDomHeightJS = js.executeScript("return window.innerHeight");
+		int VisibleDomHeight = Integer.parseInt(visibleDomHeightJS.toString());
+		
+		MoveCursorTo(elem_X+10, elem_Y+ScreenHeightWithoutTaskBarHeight-VisibleDomHeight-pixDiff+1);
 	}
 	
 	/**
@@ -285,6 +354,18 @@ public class CommonFunctions
 		IFrameElemLocation = IFrameElemLocation.moveBy(IFrameLocation.getX(), IFrameLocation.getY());
 		driver.switchTo().defaultContent();
 		MoveCursorToElement(IFrameElemLocation);
+	}
+	
+	public static void ClickElement() 
+	{
+		Robot robot = null;
+		try {
+			robot = new Robot();
+		} catch (AWTException e) {
+			e.printStackTrace();
+		}
+	   robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+	   robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
 	}
 
 }

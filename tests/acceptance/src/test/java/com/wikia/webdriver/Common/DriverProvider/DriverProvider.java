@@ -52,6 +52,21 @@ public class DriverProvider {
 	}
 	
 	/**
+	 * creating webdriver instance based on given browser string
+	 * @return
+	 * @author Karol Kujawiak
+	 */
+	public static DriverProvider getInstanceFF()
+	{
+		
+		PageObjectLogging listener = new PageObjectLogging();
+		driver = new EventFiringWebDriver(new FirefoxDriver()).register(listener);
+		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		Global.BROWSER_HANDLER_2 = driver.getWindowHandle();
+		return instance;
+	}
+	
+	/**
 	 * 
 	 * @return
 	 * @author Karol Kujawiak
