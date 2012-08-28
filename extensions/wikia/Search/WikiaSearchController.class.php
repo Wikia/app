@@ -284,8 +284,8 @@ class WikiaSearchController extends WikiaSpecialPageController {
 				'namespaces' => array( NS_FILE ),
 			),
 			'users' => array(
-				'message' => 'searchprofile-users',
-				'tooltip' => 'searchprofile-users-tooltip',
+				'message' => 'wikiasearch2-users',
+				'tooltip' => 'wikiasearch2-users-tooltip',
 				'namespaces' => array( NS_USER )
 			),
 			'all' => array(

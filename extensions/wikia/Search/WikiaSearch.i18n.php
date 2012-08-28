@@ -33,8 +33,8 @@ $messages['en'] = array(
 	'wikiasearch2-search-ads-header' => 'Advertisements',
 	'wikiasearch2-tabs-articles' => 'Articles',
 	'wikiasearch2-tabs-photos-and-videos' => 'Photos and Videos',
-	'searchprofile-users' => 'People',
-	'searchprofile-users-tooltip' => 'Search in Users',
+	'wikiasearch2-users' => 'People',
+	'wikiasearch2-users-tooltip' => 'Search in Users',
 
 	'wikiamobile-wikiasearch2-next' => 'Next',
 	'wikiamobile-wikiasearch2-prev' => 'Previous',
@@ -59,8 +59,8 @@ $messages['qqq'] = array(
 	'wikiamobile-wikiasearch2-results-count-of' => 'Message is used to go to show on which results number user is and whats total result number',
 	'wikiasearch2-tabs-articles' => 'Name of a tab with articles. This tab is displayed in the right column on search page',
 	'wikiasearch2-tabs-photos-and-videos' => 'Name of a tab with photos and videos. This tab is displayed in the right column on search page',
-	'searchprofile-users' => 'Name of a tab with users. This tab is displayed in the right column on search page',
-	'searchprofile-users-tooltip' => 'Search in UsersTooltip displayed on hover on Blogs Tab in the right column on search page'
+	'wikiasearch2-users' => 'Name of a tab with users. This tab is displayed in the right column on search page',
+	'wikiasearch2-users-tooltip' => 'Search in UsersTooltip displayed on hover on Blogs Tab in the right column on search page'
 
 );
 
@@ -171,6 +171,9 @@ $messages['de'] = array(
 	'wikiasearch2-enable-go-search' => 'Gehe bei einer direkten Übereinstimmung einer Suchanfrage mit einem Seitentitel direkt zur Seite und nicht zuerst zu den Suchergebnissen',
 	'wikiasearch2-noresults' => 'Nichts gefunden.',
 	'wikiasearch2-spellcheck' => 'Es wurde für <em>$1</em> nichts gefunden. <strong>Treffer für <em>$2</em>.</strong>',
+	'wikiasearch2-tabs-articles' => 'Artikel',
+	'wikiasearch2-tabs-photos-and-videos' => 'Fotos und Videos',
+	'wikiasearch2-users' => 'Personen',
 );
 
 /** German (formal address) (‪Deutsch (Sie-Form)‬)
@@ -222,6 +225,9 @@ $messages['es'] = array(
 	'wikiasearch2-enable-go-search' => 'Habilitar la búsqueda Go-Search',
 	'wikiasearch2-noresults' => 'No se han encontrado resultados',
 	'wikiasearch2-spellcheck' => 'No se han encontrado resultados para <em>$1</em>. <strong>Mostrando resultados para <em>$2</em>.</strong>',
+	'wikiasearch2-tabs-articles' => 'Artículos',
+	'wikiasearch2-tabs-photos-and-videos' => 'Fotos y Vídeos',
+	'wikiasearch2-users' => 'Gente',
 );
 
 /** Estonian (eesti)
@@ -658,6 +664,9 @@ $messages['pl'] = array(
 	'wikiasearch2-enable-go-search' => 'Bezpośrednio przekierowuj do wyszukiwanych artykułów',
 	'wikiasearch2-noresults' => 'Brak wyników.',
 	'wikiasearch2-spellcheck' => 'Brak wyników dla zapytania <em>$1</em>. <strong>Wyświetlono wyniki dla <em>$2</em>.</strong>',
+	'wikiasearch2-tabs-articles' => 'Artykuły',
+	'wikiasearch2-tabs-photos-and-videos' => 'Zdjęcia i Filmy',
+	'wikiasearch2-users' => 'Ludzie',
 );
 
 /** Piedmontese (Piemontèis)

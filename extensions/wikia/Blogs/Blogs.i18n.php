@@ -806,6 +806,7 @@ $messages['de'] = array(
 	'blog-movepage-badtitle' => 'Ungültiger Blogeintrags-Titel.',
 	'blog-comment-sending' => 'Sende...',
 	'blog-by' => '$1 von $2',
+	'blogs-searchprofile' => 'Blogs',
 );
 
 /** German (formal address) (‪Deutsch (Sie-Form)‬)
@@ -1004,6 +1005,7 @@ Crea páginas de listas de blogs para categorías como "Obama", "Humor", o varia
 	'blog-movepage-badtitle' => 'Título de post del blog inválido',
 	'blog-comment-sending' => 'Enviando...',
 	'blog-by' => '$1 por $2',
+	'blogs-searchprofile' => 'Blogs',
 );
 
 /** Basque (euskara)
@@ -3119,6 +3121,7 @@ Możesz stworzyć listę dla konkretnej kategorii, np. "Barack Obama", "Gry Komp
 	'blog-movepage-badtitle' => 'Nieprawidłowy tytuł wpisu.',
 	'blog-comment-sending' => 'Wysyłanie...',
 	'blog-by' => '$1 przez $2',
+	'blogs-searchprofile' => 'Blogi',
 );
 
 /** Piedmontese (Piemontèis)
