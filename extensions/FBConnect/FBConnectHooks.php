@@ -107,7 +107,7 @@ class FBConnectHooks {
 			}
 		}
 
-		if( !in_array( get_class( $wgUser->getSkin() ), array( 'SkinWikiaphone', 'SkinWikiaApp' ) ) ){
+		if( !in_array( get_class( $wgUser->getSkin() ), array( 'SkinWikiaApp' ) ) ){
 			// If the user's language is different from the default language, use the correctly localized facebook code.
 			// NOTE: Can't use wgLanguageCode here because the same FBConnect config can run for many wgLanguageCode's on one site (such as Wikia).
 			if($fbScriptEnableLocales){
@@ -199,7 +199,7 @@ STYLE;
 		global $wgJsMimeType, $fbScript, $wgNoExternals, $wgUser;
 		wfProfileIn(__METHOD__);
 
-		if( !empty($fbScript) && empty($wgNoExternals) && ( !in_array( $skin->getSkinName(), array( 'wikiaphone', 'wikiaapp' ) ) ) ){
+		if( !empty($fbScript) && empty($wgNoExternals) && ( !in_array( $skin->getSkinName(), array( 'wikiaapp' ) ) ) ){
 			$js = <<<HTML
 <!-- Facebook integration -->
 <div id="fb-root"></div>
