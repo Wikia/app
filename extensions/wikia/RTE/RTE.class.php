@@ -421,9 +421,9 @@ HTML
 			self::disableEditor('userpreferences');
 		}
 
-		// check current skin - enable RTE only on Monaco
+		// check current skin - enable RTE only on Oasis
 		$skinName = get_class(RequestContext::getMain()->getSkin());
-		if($skinName != 'SkinMonaco' && $skinName != 'SkinOasis') {
+		if($skinName != 'SkinOasis') {
 			RTE::log("editor is disabled because skin {$skinName} is unsupported");
 			self::disableEditor('skin');
 		}
