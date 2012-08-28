@@ -47,7 +47,7 @@ public class CommonExpectedConditions {
 	      }
 	    };
 	}
-	  
+  
 	/**
 	 * An expectation for checking if the given text is present in the specified
 	 * element.
@@ -124,6 +124,40 @@ public class CommonExpectedConditions {
 	        WebElement element = visibilityOfElement.apply(driver);
 	        try {
 	          if (element != null && element.isEnabled()) {
+	            return element;
+	          } else {
+	            return null;
+	          }
+	        } catch (StaleElementReferenceException e) {
+	          return null;
+	        }
+	      }
+
+	      @Override
+	      public String toString() {
+	        return "element to be clickable: " + GivenElement.getTagName();
+	      }
+	    };
+	  }
+	  
+	  /**
+	   * An Expectation for checking an element is visible and not enabled such that you
+	   * can not click it.
+	   * 
+	   * @param GivenElement element to be checked
+	   * @author Michal Nowierski
+	   */
+	  public static ExpectedCondition<WebElement> elementNotToBeClickable(
+	      final WebElement GivenElement) {
+	    return new ExpectedCondition<WebElement>() {
+
+	      public ExpectedCondition<WebElement> visibilityOfElement =
+	          ExpectedConditions.visibilityOf(GivenElement);
+
+	      public WebElement apply(WebDriver driver) {
+	        WebElement element = visibilityOfElement.apply(driver);
+	        try {
+	          if (element != null && !element.isEnabled()) {
 	            return element;
 	          } else {
 	            return null;
