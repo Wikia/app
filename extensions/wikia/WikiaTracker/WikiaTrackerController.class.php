@@ -72,8 +72,8 @@ JS
 	 * spool any calls to WikiaTracker.trackEvent until the code is actually loaded for doing the tracking (at
 	 * which point the calls will be replayed).
 	 */
-	public static function getTrackerSpoolingJs()
-	{
+	public static function getTrackerSpoolingJs() {
+		global $wgCacheBuster, $wgMemc;
 		wfProfileIn( __METHOD__ );
 
 		// This code will spool all of the calls (in the order they were called) and different code will replay them later.
@@ -88,9 +88,17 @@ JS
 		<?php
 		$jsString = ob_get_clean();
 
-		// We're embedding this in every page, so minify it.
-		//@Sean: wrapping this in memcache using the cachebuster as part of the key could save some time?
-		$jsString = AssetsManagerBaseBuilder::minifyJs( $jsString );
+		// We're embedding this in every page, so minify it. Minifying takes a while, so cache it in memcache (BugzId 43421).
+		$memcKey = wfMemcKey( 'tracker_spooling_js', $wgCacheBuster );
+		$jsString = $wgMemc->get( $memcKey );
+		if( !$jsString ){
+			$jsString = AssetsManagerBaseBuilder::minifyJs( $jsString );
+			
+			// This code doesn't look like it should change almost at all, so we give it a long duration (cachebuster also purges it because that's in the key).
+			// Warning: Memcached expirations work strangely around the one-month boundary (if the duration is too long, it interprets it as a timestamp instead of a duration).
+			$TWO_WEEKS = 60*60*24*14; // in seconds.
+			$wgMemc->set( $memcKey, $jsString, $TWO_WEEKS);
+		}
 
 		wfProfileOut( __METHOD__ );
 		return $jsString;
