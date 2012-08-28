@@ -130,7 +130,7 @@ class WikiaComWikisListImport {
 
 		$title = Title::newFromText($this->options->mediaWikiMessage, NS_MEDIAWIKI);
 		$article = new Article($title);
-		$content = parseWikisList(0, $verticals) . parseWikisList(1, $verticals) . parseWikisList(2, $verticals);
+		$content = $this->parseWikisList(0, $verticals) . $this->parseWikisList(1, $verticals) . $this->parseWikisList(2, $verticals);
 		$summary = "automated import";
 		$article->doEdit($content, $summary);
 
