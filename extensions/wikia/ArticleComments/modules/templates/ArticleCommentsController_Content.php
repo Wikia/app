@@ -7,11 +7,11 @@
 <h1 id="article-comments-counter-header"><?= wfMsgExt( 'oasis-comments-header', array( 'parsemag' ), $wg->Lang->FormatNum( $countCommentsNested ) ) ?></h1>
 <div id="article-comments" class="article-comments">
 	<? if ( !$isBlocked && $canEdit && $commentingAllowed ): ?>
-		<? if ( $wg->EnableMiniEditorExtForArticleComments ): ?>
+		<? if ( $isMiniEditorEnabled ): ?>
 			<?= $app->renderView( 'MiniEditorController', 'Setup' ) ?>
 		<? endif ?>
-		<div id="article-comm-info">&nbsp;</div>
-		<? if ( $wg->EnableMiniEditorExtForArticleComments ): ?>
+		<div id="article-comm-info" class="article-comm-info"></div>
+		<? if ( $isMiniEditorEnabled ): ?>
 			<?= $app->getView( 'MiniEditorController', 'Header', array(
 					'attributes' => array(
 						'id' => 'article-comments-minieditor-newpost',
@@ -27,11 +27,11 @@
 		</div>
 		<form action="<?= $title->getFullURL() ?>" method="post" class="article-comm-form" id="article-comm-form">
 			<input type="hidden" name="wpArticleId" value="<?= $title->getArticleId() ?>" />
-			<? if ( $wg->EnableMiniEditorExtForArticleComments ): ?>
+			<? if ( $isMiniEditorEnabled ): ?>
 				<?= $app->getView( 'MiniEditorController', 'Editor_Header' )->render() ?>
 			<? endif ?>
 			<textarea name="wpArticleComment" id="article-comm"></textarea>
-			<? if ( $wg->EnableMiniEditorExtForArticleComments ): ?>
+			<? if ( $isMiniEditorEnabled ): ?>
 				<?= $app->getView( 'MiniEditorController', 'Editor_Footer' )->render() ?>
 			<? endif ?>
 			<? if ( !$isReadOnly ): ?>
@@ -41,7 +41,7 @@
 				</div>
 			<? endif ?>
 		</form>
-		<? if ( $wg->EnableMiniEditorExtForArticleComments ): ?>
+		<? if ( $isMiniEditorEnabled ): ?>
 			<?= $app->getView( 'MiniEditorController', 'Footer' )->render() ?>
 		<? endif ?>
 	<? elseif ( $isBlocked ): ?>

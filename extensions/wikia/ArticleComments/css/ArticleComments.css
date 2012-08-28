@@ -1,221 +1,95 @@
-/* This stylesheet is only used in Monobook.  Oasis styles are in skins/oasis/css/core */
+/* This stylesheet is only used in Monobook. You're probably looking for: /skins/oasis/css/core/ArticleComments.scss */
 
-#article-comments-wrapper {
-/* copied from Monobook.css */
-	clear: both;
-	line-height: 1.5em;
-	margin-top: 30px;
+.skin-monobook .WikiaArticleComments.loading {
+	background: url(/skins/common/images/ajax.gif) no-repeat 50% 50%; /* $wgCdnStylePath */
+	border-top: 1px solid #CCC;
+	height: 48px;
+	margin: 10px;
+	padding-top: 10px;
 }
 
-#article-comments img.throbber{
-	display: none;
-}
-
-#article-comm-form {
-	margin-bottom: 10px;
-}
-
-#article-comments-wrapper h2 {
-	border-top: 1px solid #AAA;
-	margin-bottom: 20px;
-	margin-top: 10px;
-	padding: 4px 10px;
-}
-#article-comments-wrapper a.wikia-button.secondary{
-	color: #333;
-}
-
-.article-helper-links {
-	float: right;
-	margin-top: -44px;
-	margin-right: 10px;
-}
-
-#article-comments-ul, #article-comments-ul ul.sub-comments {
-	list-style: none;
+.skin-monobook .WikiaArticleComments h1 {
+	border: 0;
+	line-height: 25px;
 	margin: 0;
-	padding: 0 10px;
+	padding: 0;
 }
 
-#article-comments-ul ul.sub-comments {
-	margin-left: 54px;
+.skin-monobook .WikiaArticleComments form {
+	margin: 0;
 }
 
-#article-comments .article-comments-li {
-	background: transparent;
-	border-top: 1px solid #AAA;
-	margin-bottom: 5px;
-	padding: 12px 0;
-}
-
-#article-comments blockquote {
-	margin-top: 0px;
+.skin-monobook .WikiaArticleComments .article-comm-form {
+	margin-bottom: 10px;
 	margin-left: 65px;
 }
 
-#article-comments blockquote .buttons{
-	margin-top: 10px;
+.skin-monobook .WikiaArticleComments .article-comm-form textarea,
+.skin-monobook .WikiaArticleComments .article-comm-input textarea {
+	display: block;
+	margin-bottom: 10px;
+	padding: 0;
+	width: 100%;
 }
 
-#article-comments .article-comment-first,
-#article-comments .article-comments-nested {
-	border-top: none;
+.skin-monobook .WikiaArticleComments .comments {
+	margin: 0;
 }
 
-#article-comments > .article-comm-input {
-	padding: 0 10px;
-}
-
-div.article-comm-input-text textarea {
-	height: 100px;
-	margin-bottom: 5px;
-	padding: 3px;
-	width: 450px;
-}
-
-.article-comments .details {
-	float: left;
-	line-height: 1em;
-	overflow: hidden;
-	padding: 0px 4px 4px 10px;
-	width: 100px;
-}
-
-.article-comments span.timestamp {
-	line-height: 2em;
-}
-
-div.article-comment strong {
-	font-size: 10pt;
-	font-weight: 700;
-}
-
-.article-comments .comment strong {
-	font-weight: 700;
-}
-
-div.article-comm-input-avatar {
+.skin-monobook .WikiaArticleComments .speech-bubble-avatar {
 	float: left;
 }
 
-.article-comments .comment,
-div.article-comm-input-text {
-	margin-left: 185px;
+.skin-monobook .WikiaArticleComments .speech-bubble-message {
+	border: 1px solid #CCC;
+	margin: 0 0 15px 65px;
+	padding: 10px;
+	position: relative;
 }
 
-.custom_answers div.article-comm-input-text {
-	margin-left: 80px;
+.skin-monobook .WikiaArticleComments .speech-bubble-message .edited-by .buttons {
+	bottom: 5px;
+	float: right;
+	position: absolute;
+	right: 5px;
+	zoom: 1;
 }
 
-.article-comments span.info {
-	color: green;
-	margin-left: 8px;
-}
-
-.comment div.article-comm-input-text {
-	margin: 0 0 10px;
-}
-
-.rtl #article-comm-form-select select {
-	float: left;
-}
-
-.article-comments-pagination-link {
+.skin-monobook .WikiaArticleComments .speech-bubble-message .edited-by .tools {
 	display: inline-block;
-	height: 16px;
-	line-height: 16px;
-	margin: 0 1px;
-	min-width: 16px;
-	padding: 2px;
-	text-align: center;
-}
-
-#article-comments-pagination-link-prev,
-#article-comments-pagination-link-next {
-	border: none;
-	font-weight: bold;
-	margin: 0 8px;
-	width: auto;
-}
-
-.article-comments-pagination-link:hover {
-	text-decoration: none;
-}
-
-#article-comments-pagination {
-	border-top: 1px solid #AAA;
-	margin: 10px;
-	padding: 15px 0 15px 245px;
-}
-
-#article-comments-login{
-	margin-left: 10px;
-}
-
-.article-comments-nested {
-	margin-left: 67px;
-}
-
-.article-comm-reply {
-	border: 0;
-	background-color: transparent;
-	color: #333;
-	cursor: pointer;
-	display: inline-block;
-	font-size: 12px;
+	float: right;
 	margin-right: 10px;
-	text-decoration: none;
+	margin-top: 3px;
+	visibility: hidden;
 }
 
-.article-comm-reply:hover {
-	text-decoration: underline;
-}
-
-.speech-bubble-message:hover .tools{
+.skin-monobook .WikiaArticleComments .speech-bubble-message:hover .edited-by .tools {
 	visibility: visible;
 }
 
-.tools {
-	visibility: hidden;
+.skin-monobook .WikiaArticleComments .article-comm-input .buttons input {
+	float: right;
+	margin-left: 10px;
 }
 
-.tools .sprite {
-	margin: 0 2px 0 4px;
-}
-
-#article-comments-wrapper .throbber {
-	visibility: hidden;
-}
-
-#article-comments-wrapper .buttons {
-	line-height: 18px;
-}
-
-div#article-comm-fbMonit {
+/* Are these still used? */
+#article-comm-fbMonit {
 	height:100px;
 	margin: 0px 0px 5px 185px;
-	width:450px;
-	padding:6px;
+	width: 450px;
+	padding: 6px;
 	background-color: white;
 	border: 1px solid #999;
 }
 
 #fbCommentMessage {
-	background-color: #EEEEEE;
+	background-color: #EEE;
 	height: 100px;
-	text-align:center;
-	width:450px;
-	display:none;
-}
-
-#fbCommentText{
-	padding-top:38px;
-}
-
-.skin-monobook #article-comments .speech-bubble-avatar {
-	float: left;
-}
-
-.MiniEditorWrapper .loading-indicator {
+	text-align: center;
+	width: 450px;
 	display: none;
+}
+
+#fbCommentText {
+	padding-top: 38px;
 }

@@ -548,25 +548,31 @@ var ArticleComments = {
 
 if (ArticleComments.loadOnDemand) {
 	$(function() {
-		var hash = window.location.hash,
+		var content,
+			hash = window.location.hash,
 			permalink = /^#comm-/.test(hash),
+			styleAssets = [$.getSassCommonURL('skins/oasis/css/core/ArticleComments.scss')],
 			$comments = $('#WikiaArticleComments');
 
 		var belowTheFold = function() {
 			return $comments.offset().top >= ($window.scrollTop() + $window.height());
 		};
 
+		if (window.skin == 'oasis') {
+			// TODO: we should be able to load it this way
+			//styleAssets.push($.getAssetManagerGroupUrl('articlecomments' + (ArticleComments.miniEditorEnabled ? '_mini_editor' : '') + '_scss'));
+
+			if (ArticleComments.miniEditorEnabled) {
+				styleAssets = styleAssets.concat([
+					$.getSassCommonURL('extensions/wikia/MiniEditor/css/MiniEditor.scss'),
+					$.getSassCommonURL('extensions/wikia/MiniEditor/css/ArticleComments/ArticleComments.scss')
+				]);
+			}
+		}
+
 		var loadAssets = function() {
 			$.when(
-				$.getResources(
-					// TODO: we should be able to load it this way
-					//$.getAssetManagerGroupUrl( 'articlecomments' + ( ArticleComments.miniEditorEnabled ? '_mini_editor' : '' ) + '_scss' )
-					[
-						$.getSassCommonURL('skins/oasis/css/core/ArticleComments.scss'),
-						$.getSassCommonURL('extensions/wikia/MiniEditor/css/MiniEditor.scss'),
-						$.getSassCommonURL('extensions/wikia/MiniEditor/css/ArticleComments/ArticleComments.scss')
-					]
-				),
+				$.getResources(styleAssets),
 				$.nirvana.sendRequest({
 					controller: 'ArticleCommentsController',
 					method: 'Content',
@@ -574,13 +580,16 @@ if (ArticleComments.loadOnDemand) {
 					type: 'GET',
 					data: {
 						articleId: window.wgArticleId,
-						page: $comments.data('page')
+						page: $comments.data('page'),
+						skin: true
 					},
-					callback: function(content) {
-						$comments.removeClass('loading').html(content);
+					callback: function(response) {
+						content = response;
 					}
 				})
 			).then(function() {
+				$comments.removeClass('loading').html(content);
+
 				ArticleComments.init();
 
 				if (permalink) {

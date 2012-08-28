@@ -3,6 +3,9 @@
 @import "../mixins/border-radius";
 @import "../mixins/opacity";
 
+// While these styles are used primarily for the Oasis skin,
+// they are also used by Monobook, so please test there also.
+
 .WikiaArticleComments {
 	border-top: 1px solid $color-page-border;
 	margin: 10px;
@@ -55,7 +58,7 @@
 	}
 
 	// Error message container
-	#article-comm-info {
+	.article-comm-info {
 		display: none;
 	}
 
@@ -65,9 +68,34 @@
 		padding-top: 15px;
 	}
 
-	#article-comments-ul {
+	.comments {
+		clear: both;
+		list-style: none;
+
 		&.loading {
 			@include opacity(70);
+		}
+
+		.article-comm-text {
+			padding: 0;
+			min-height: 0;
+			width: 100%;
+		}
+	}
+
+	.sub-comments {
+		list-style: none;
+		margin-bottom: 15px;
+		margin-left: 85px;
+
+		textarea {
+			width: 420px;
+		}
+
+		.article-comm-text {
+			overflow: hidden;
+			padding: 0;
+			width: 100%;
 		}
 	}
 
@@ -87,7 +115,7 @@
 		font-family: "Helvetica", "Arial", sans-serif;
 	}
 
-	#article-comm-form {
+	.article-comm-form {
 		margin-top: 0;
 
 		textarea {
@@ -114,55 +142,28 @@
 	.article-comm-history {
 		padding-left: 10px;
 	}
-}
 
-#article-comments .comments {
-	clear: both;
-	list-style: none;
-
-	.article-comm-text {
-		padding: 0;
-		min-height: 0;
-		width: 100%;
-	}
-}
-
-#article-comments .sub-comments {
-	list-style: none;
-	margin-bottom: 20px;
-	margin-left: 85px;
-
-	textarea {
-		width: 420px;
-	}
-
-	.article-comm-text {
-		overflow: hidden;
-		padding: 0;
-		width: 100%;
-	}
-}
-
-.upper-pagination {
-	padding-top: 15px;
-	margin-bottom: 10px;
-	border-top: 1px solid $color-page-border;
-}
-
-#article-comments-pagination, .article-comments-pagination {
-	margin: 0 auto;
-	text-align: center;
-	color: $color-links;
-
-	a {
+	.article-comments-pagination {
+		margin: 0 auto;
+		text-align: center;
 		color: $color-links;
-		padding: 2px 8px;
-		margin: 0 4px;
 
-		&.accent {
-			color: White;
-			background-color: $color-links;
+		a {
+			color: $color-links;
+			padding: 2px 8px;
+			margin: 0 4px;
+
+			&.accent {
+				color: White;
+				background-color: $color-links;
+			}
 		}
+	}
+
+	.upper-pagination {
+		padding-top: 15px;
+		margin-bottom: 10px;
+		border-top: 1px solid $color-page-border;
 	}
 }
 
