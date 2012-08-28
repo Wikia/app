@@ -25,7 +25,7 @@
 	<div id=wkSrh>
 		<form id=wkSrhFrm action="<?= SpecialPage::getSafeTitleFor( 'Search' )->getLocalURL()?>" method=get>
 			<input type=hidden name=fulltext value=Search>
-			<input class=wkInp id=wkSrhInp type=text name=search placeholder="<?= $wf->Msg( 'wikiamobile-search-this-wiki' ); ?>" required=required autocomplete=off autofocus>
+			<input class=wkInp id=wkSrhInp type=text name=search placeholder="<?= $wf->Msg( 'wikiamobile-search-this-wiki' ); ?>" value="<?= $wg->request->getVal( 'search', '' ); ?>" required=required autocomplete=off autofocus>
 			<div id=wkClear class='clsIco hide'></div>
 			<input id=wkSrhSub class='wkBtn main' type=submit value='<?= $wf->Msg( 'wikiamobile-search' ); ?>'>
 		</form>
@@ -47,7 +47,7 @@
 		</header>
 	<? if ( $loggedIn ) :?>
 		<ul class=wkLst>
-			<li><a class=chg href="<?= AvatarService::getUrl($userName) ;?>"><?= $wf->Msg('wikiamobile-profile'); ?></a></li>
+			<li><a class=chg href="<?= AvatarService::getUrl( $userName ) ;?>"><?= $wf->Msg('wikiamobile-profile'); ?></a></li>
 			<li><a class=logout href="<?= str_replace( "$1", SpecialPage::getSafeTitleFor('UserLogout')->getPrefixedText() . '?returnto=' . $wg->Title->getPrefixedURL(), $wg->ArticlePath ) ;?>"><?= $wf->Msg('logout'); ?></a></li>
 		</ul>
 	<? endif; ?>
