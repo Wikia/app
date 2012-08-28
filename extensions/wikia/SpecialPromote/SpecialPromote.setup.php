@@ -55,6 +55,7 @@ $app->registerHook('UploadVerification','UploadVisualizationImageFromFile','Uplo
 
 // i18n mapping
 $app->registerExtensionMessageFile('SpecialPromote', $dir.'SpecialPromote.i18n.php');
+$app->registerExtensionMessageFile('SpecialPromoteAliases', $dir . 'SpecialPromote.alias.php') ;
 
 F::build('JSMessages')->registerPackage('SpecialPromote', array('promote-*'));
 
