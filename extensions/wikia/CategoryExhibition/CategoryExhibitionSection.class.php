@@ -408,7 +408,7 @@ class CategoryExhibitionSection {
 
 	public function setTouched($title) {
 		global $wgMemc;
-		$wgMemc->get($this->getTouchedKey($title), time() . rand(0,9999), 60*60*24 );
+		$wgMemc->set($this->getTouchedKey($title), time() . rand(0,9999), 60*60*24 );
 	}
 
 	protected function getTouchedKey($title) {
