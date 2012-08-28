@@ -15,12 +15,12 @@ class CategoryPageII extends CategoryPage {
 	var $viewerClass = 'CategoryPageIIViewer';
 
 	function addScripts(){
-		global $wgOut, $wgRequest, $wgExtensionsPath, $wgScriptPath, $wgJsMimeType;
+		global $wgOut, $wgExtensionsPath, $wgJsMimeType;
 		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/CategoryExhibition/js/CategoryExhibition.js\" ></script>\n");
 	}
 
 	function openShowCategory() {
-		global $wgOut, $wgRequest, $wgExtensionsPath, $wgScriptPath, $wgJsMimeType;
+		global $wgOut;
 		$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/CategoryExhibition/css/CategoryExhibition.scss'));
 		$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/CategoryExhibition/css/CategoryExhibition.IE.scss'), '', 'lte IE 8' );
 		$this->addScripts();
@@ -33,7 +33,7 @@ class CategoryPageII extends CategoryPage {
 class CategoryPageIIViewer {
 
 	function getFormHTML() {
-		global $wgTitle, $wgRequest;
+		global $wgTitle;
 
 		$categoryExhibitionSection = new CategoryExhibitionSection( $wgTitle );
 		$categoryExhibitionSection->setSortTypeFromParam();
@@ -47,6 +47,6 @@ class CategoryPageIIViewer {
 				'displayType' => $categoryExhibitionSection->getDisplayType(),
 			)
 		);
-		return $oTmpl->execute( "form" );
+		return $oTmpl->render( "form" );
 	}
 }

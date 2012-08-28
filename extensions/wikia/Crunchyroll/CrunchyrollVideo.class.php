@@ -90,7 +90,7 @@ class CrunchyrollVideo {
 			    'toolbar'	=> ''
 			)
 		);
-		return $oTmpl->execute( "CrunchyrollGallery" );
+		return $oTmpl->render( "CrunchyrollGallery" );
 	}
 
 	public function getPageURL(){
@@ -149,9 +149,9 @@ class CrunchyrollVideo {
 				)
 			);
 			if ( $fromAjax ){
-				return $oTmpl->execute( "CrunchyrollGallery" );
+				return $oTmpl->render( "CrunchyrollGallery" );
 			} else {
-				return $oTmpl->execute( "CrunchyrollPaginatedGallery" );
+				return $oTmpl->render( "CrunchyrollPaginatedGallery" );
 			}
 		} else {
 			return '';

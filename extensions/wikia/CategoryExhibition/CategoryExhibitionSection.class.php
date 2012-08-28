@@ -224,11 +224,11 @@ class CategoryExhibitionSection {
 		$oTmpl->set_vars(array('fromAjax' => $this->isFromAjax));
 			if ( $this->isFromAjax ){
 				return array(
-					'page'	=> $oTmpl->execute( 'page' ),
+					'page'	=> $oTmpl->render( 'page' ),
 					'paginator'	=> $oTmpl->mVars['paginator']
 				);
 			} else {
-				return $oTmpl->execute( $this->templateName );
+				return $oTmpl->render( $this->templateName );
 			}
 		} else {
 			return '';

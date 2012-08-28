@@ -412,7 +412,7 @@ class CloseWikiPage extends SpecialPage {
 		$wgOut->setPageTitle( wfMsg('closed-wiki') );
 		$wgOut->setRobotpolicy( 'noindex,nofollow' );
 		$wgOut->setArticleRelated( false );
-		$wgOut->addHtml($this->mTmpl->execute("close-info"));
+		$wgOut->addHtml($this->mTmpl->render("close-info"));
 
 		wfProfileOut( __METHOD__ );
 	}

@@ -15,7 +15,7 @@ class SponsorshipDashboardOutputTable extends SponsorshipDashboardOutputFormatte
 	public $sourceData;
 
 	protected $actualDate;
-	
+
 	static function newFromReport( $oReport ){
 
 		$obj = new self;
@@ -29,9 +29,9 @@ class SponsorshipDashboardOutputTable extends SponsorshipDashboardOutputFormatte
 
 		$wgOut = $this->App->getGlobal('wgOut');
 		$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/SponsorshipDashboard/css/SponsorshipDashboard.scss' ) );
-			
+
 		$this->report->loadSources();
-		
+
 		$aData = array();
 		$aLabel = array();
 
@@ -62,7 +62,7 @@ class SponsorshipDashboardOutputTable extends SponsorshipDashboardOutputFormatte
 		$this->sourceData = array_reverse( $aData );
 		$this->sourceLabels = array_reverse( $aLabel );
 
-		$oTmpl = F::build( 'EasyTemplate', array( ( dirname( __FILE__ )."/templates/" ) ) );
+		$oTmpl = F::build( 'EasyTemplate', array( ( dirname( __FILE__ )."/templates/" ) ) ); /** @var $oTmpl EasyTemplate */
 		$oTmpl->set_vars(
 			array(
 				'data'			=> $this->sourceData,
@@ -74,7 +74,7 @@ class SponsorshipDashboardOutputTable extends SponsorshipDashboardOutputFormatte
 
 		$this->beforePrint();
 
-		return $oTmpl->execute( '../../templates/output/'.self::TEMPLATE_MAIN );
+		return $oTmpl->render( '../../templates/output/'.self::TEMPLATE_MAIN );
 	}
 
 	function beforePrint(){

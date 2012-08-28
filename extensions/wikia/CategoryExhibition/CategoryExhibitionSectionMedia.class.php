@@ -4,7 +4,7 @@
  * Main Category Gallery class
  */
 class CategoryExhibitionSectionMedia extends CategoryExhibitionSection {
-	
+
 	public $urlParameter = 'media'; // contains section url variable that stores pagination
 	public $templateName = 'media';
 
@@ -28,7 +28,7 @@ class CategoryExhibitionSectionMedia extends CategoryExhibitionSection {
 					// item is image
 					$image = wfFindFile( $itemTitle );
 					$elementClass = 'lightbox';
-					
+
 					if ( !is_object( $image ) || $image->height == 0 || $image->width == 0 ){
 						$imageSrc = '';
 					} else {
@@ -56,7 +56,7 @@ class CategoryExhibitionSectionMedia extends CategoryExhibitionSection {
 						$linkText = '';
 						$linkFullUrl = '';
 					}
-					
+
 					// types casting for proper caching;
 					$aData[] = array(
 						'id'			=> $item['page_id'],
@@ -86,17 +86,17 @@ class CategoryExhibitionSectionMedia extends CategoryExhibitionSection {
 		};
 
 		if ( !empty( $aContent ) && is_array( $aContent )){
-			
+
 			$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 			$oTmpl->set_vars( $aContent );
 			$oTmpl->set_vars(array('fromAjax' => $this->isFromAjax));
 			if ( $this->isFromAjax ){
 				return array(
-				    'page'	=> $oTmpl->execute( $this->templateName ),
+				    'page'	=> $oTmpl->render( $this->templateName ),
 				    'paginator'	=> $oTmpl->mVars['paginator']
 				);
 			} else {
-				return $oTmpl->execute( $this->templateName );
+				return $oTmpl->render( $this->templateName );
 			}
 		}
 	}

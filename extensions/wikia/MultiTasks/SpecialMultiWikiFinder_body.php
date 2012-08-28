@@ -91,7 +91,7 @@ class MultiwikifinderPage {
 		));
 
 		wfProfileOut( __METHOD__ );
-		return $oTmpl->execute("main-finder-form");
+		return $oTmpl->render("main-finder-form");
 	}
 
 	public function getResult() { return $this->data; }

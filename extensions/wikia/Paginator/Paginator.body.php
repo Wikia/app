@@ -9,24 +9,24 @@
  */
 
 class Paginator extends Service{
-	
+
 	// configuration settings
 
 	protected $maxItemsPerPage	= 48;
 	protected $defaultItemsPerPage	= 12;
 	protected $minItemsPerPage	= 4;
-	
+
 	protected $config = array(
 		'itemsPerPage'		=> 8,
 		'displayedNeighbours'	=> 3
 	);
-	
+
 	protected $paginatedData	= array();
 	protected $pagesCount		= 0;
 	protected $activePage		= 0;
 	protected $cacheKey		= '';
 	protected $enableCache		= false;
-	
+
 	/**
 	 * Creates a new Pagination object.
 	 *
@@ -39,7 +39,7 @@ class Paginator extends Service{
 			'displayedNeighbours'	=> $iDisplayedNeighbour,
 			'maxItemsPerPage'	=> $maxItemsPerPage,
 		);
-		
+
 		return new Paginator( $aData, $aConfig, $bCach, $sCacheKey );
 	}
 
@@ -56,7 +56,7 @@ class Paginator extends Service{
 		$this->setConfig( $aConfig );
 		$this->paginate( $aData );
 	}
-	
+
 	private function setMaxItemsPerPage($iMaxItemsPerPage) {
 		$this->maxItemsPerPage = $iMaxItemsPerPage;
 	}
@@ -137,14 +137,14 @@ class Paginator extends Service{
 	public function getBarData( ){
 		$aData = array();
 		$aData[] = 1;
-		
+
 		if ( $this->activePage - $this->config['displayedNeighbours'] > 1 ){
 			$aData[] = '';
 			$beforeIterations = $this->config['displayedNeighbours'];
 		} else {
 			$beforeIterations = $this->activePage - 1;
 		}
-		
+
 		for( $i = $beforeIterations; $i > 0 ; $i-- ){
 			if ( $i == $this->activePage ) break;
 			$aData[] = $this->activePage - $i + 1;
@@ -153,7 +153,7 @@ class Paginator extends Service{
 		if ( $this->activePage != 0 &&  $this->activePage != $this->pagesCount ){
 			$aData[] = $this->activePage + 1;
 		};
-		
+
 		for( $i = 1; $this->pagesCount > ( $this->activePage + $i + 1 ) ; $i++ ){
 			if ( $i > $this->config['displayedNeighbours'] ) break;
 			$aData[] = $this->activePage + $i + 1;
@@ -166,7 +166,7 @@ class Paginator extends Service{
 		if ( $this->pagesCount > $this->activePage + 1 ){
 			$aData[] = $this->pagesCount;
 		}
-		
+
 		$aResult = array(
 			'pages' => $aData,
 			'currentPage' => $this->activePage + 1
@@ -186,8 +186,8 @@ class Paginator extends Service{
 
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$oTmpl->set_vars( $aData );
-		return $oTmpl->execute( "paginator" );
+		return $oTmpl->render( "paginator" );
 	}
-	
+
 }
 

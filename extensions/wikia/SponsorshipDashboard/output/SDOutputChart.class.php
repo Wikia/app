@@ -34,6 +34,9 @@ class SponsorshipDashboardOutputChart extends SponsorshipDashboardOutputFormatte
 	const TEMPLATE_CHART = 'chart';
 	const TEMPLATE_CHART_EMPTY = 'chart_empty';
 
+	/**
+	 * @return EasyTemplate template object
+	 */
 	protected function getTemplate() {
 		// TODO: REFACTOR: Use Nirvana instead of EasyTemplate.
 		return F::build( 'EasyTemplate', array( ( dirname( __FILE__ )."/templates/" ) ) );
@@ -71,7 +74,7 @@ class SponsorshipDashboardOutputChart extends SponsorshipDashboardOutputFormatte
 				)
 			);
 
-			$ret = $oTmpl->execute( '../../templates/output/'.self::TEMPLATE_CHART_INFOONLY );
+			$ret = $oTmpl->render( '../../templates/output/'.self::TEMPLATE_CHART_INFOONLY );
 
 			wfProfileOut( __METHOD__ );
 			return $ret;
@@ -84,7 +87,7 @@ class SponsorshipDashboardOutputChart extends SponsorshipDashboardOutputFormatte
 					'emptyChartMsg' => $this->emptyChartMsg,
 				)
 			);
-			return $oTmpl->execute( '../../templates/output/'.self::TEMPLATE_CHART_EMPTY );
+			return $oTmpl->render( '../../templates/output/'.self::TEMPLATE_CHART_EMPTY );
 		} else {
 			$datasets = isset($aData['serie']) ? $aData['serie'] : array();
 			$ticks = isset($aData['ticks']) ? $aData['ticks'] : array();;
@@ -121,7 +124,7 @@ class SponsorshipDashboardOutputChart extends SponsorshipDashboardOutputFormatte
 			$wgOut->addScript( "<script src=\"{$wgResourceBasePath}/resources/wikia/libraries/jquery/flot/jquery.flot.selection.js\"></script>\n" );
 		}
 
-		$ret = $oTmpl->execute( '../../templates/output/'.self::TEMPLATE_CHART );
+		$ret = $oTmpl->render( '../../templates/output/'.self::TEMPLATE_CHART );
 
 		wfProfileOut( __METHOD__ );
 		return $ret;

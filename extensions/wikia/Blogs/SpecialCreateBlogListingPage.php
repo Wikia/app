@@ -156,7 +156,7 @@ class CreateBlogListingPage extends SpecialPage {
 			'textCategories' => (isset($this->mFormData['listingCategories'])) ? $this->mFormData['listingCategories'] : "" )
 		);
 
-		$sBlogCategoryCloud = $oTmpl->execute("createPostCategoryCloud");
+		$sBlogCategoryCloud = $oTmpl->render("createPostCategoryCloud");
 
 		$oTmpl->set_vars( array(
 			'categoryCloudTitle' => wfMsg('create-blog-listing-page-categories-title'),
@@ -166,7 +166,7 @@ class CreateBlogListingPage extends SpecialPage {
 			'textCategories' => (isset($this->mFormData['listingPageCategories'])) ? $this->mFormData['listingPageCategories'] : "")
 		);
 
-		$sPageCategoryCloud = $oTmpl->execute("createPostCategoryCloud");
+		$sPageCategoryCloud = $oTmpl->render("createPostCategoryCloud");
 
 		$oTmpl->set_vars( array(
 			"title" => $this->mTitle,
@@ -178,7 +178,7 @@ class CreateBlogListingPage extends SpecialPage {
 			"pageCategoryCloud" => $sPageCategoryCloud )
 		);
 
-		$wgOut->addHTML( $oTmpl->execute("createBlogListingForm") );
+		$wgOut->addHTML( $oTmpl->render("createBlogListingForm") );
 
 		return;
 	}
@@ -191,7 +191,7 @@ class CreateBlogListingPage extends SpecialPage {
 				"tagBody" => $this->mTagBody)
 			);
 
-			$wgOut->addHTML( $oTmpl->execute("createListingConfirm") );
+			$wgOut->addHTML( $oTmpl->render("createListingConfirm") );
 		}
 		else {
 			$sPageBody = $this->mTagBody;

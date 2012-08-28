@@ -474,7 +474,7 @@ class BlogTemplateClass {
 				"rating"		=> $iRating,
 				"hidden_star"	=> $sHiddenStar,
 			));
-			$return = $oTmpl->execute("blog-page-voting");
+			$return = $oTmpl->render("blog-page-voting");
 		}
 		else {
 			$return = "";
@@ -1253,13 +1253,13 @@ class BlogTemplateClass {
 								) );
 								#---
 								if ( self::$aOptions['type'] == 'box' ) {
-									$result = $oTmpl->execute("blog-page");
+									$result = $oTmpl->render("blog-page");
 								} else {
-									$page = $oTmpl->execute("blog-post-page");
+									$page = $oTmpl->render("blog-post-page");
 									$oTmpl->set_vars( array(
 										"page" => $page
 									) );
-									$result = $oTmpl->execute("blog-article-page");
+									$result = $oTmpl->render("blog-article-page");
 								}
 							}
 						} else {
@@ -1318,8 +1318,8 @@ class BlogTemplateClass {
 				"wgStyleVersion"	=> $wgStyleVersion,
 			) );
 			#---
-			$sPager = ( NS_BLOG_LISTING == self::$oTitle->getNamespace() ) ? $oTmpl->execute("blog-pager-ajax") :
-					( ( NS_BLOG_ARTICLE == self::$oTitle->getNamespace() ) ? $oTmpl->execute("blog-pager") : "" );
+			$sPager = ( NS_BLOG_LISTING == self::$oTitle->getNamespace() ) ? $oTmpl->render("blog-pager-ajax") :
+					( ( NS_BLOG_ARTICLE == self::$oTitle->getNamespace() ) ? $oTmpl->render("blog-pager") : "" );
 		}
 
 		wfProfileOut( __METHOD__ );

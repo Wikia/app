@@ -95,7 +95,7 @@ class CloseWikiTask extends BatchTask {
             "type" => $this->mType,
             "title" => $title,
         ));
-        return $oTmpl->execute( "form" );
+        return $oTmpl->render( "form" );
     }
 
     function getType()

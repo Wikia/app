@@ -136,7 +136,7 @@ class WikiFactoryReporter extends SpecialPage
 				{
 					$data[] = array('value'=>$cv_value, 'url'=>$city_url, 'city'=>$city_id);
 				}
-				
+
 				$values[] = $nom_value;
 			}
 		}
@@ -199,7 +199,7 @@ class WikiFactoryReporter extends SpecialPage
 			'wie_base'      => $wie_base,
 		));
 
-		$out = $tmpl->execute('reporter');
+		$out = $tmpl->render('reporter');
 		return $out;
 	}
 }

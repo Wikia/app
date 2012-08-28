@@ -136,7 +136,7 @@ class PageImporterTask extends BatchTask {
             "title" => $title,
             "grabbers" => $aGrabbers
 		));
-		return $oTmpl->execute( "form" ) ;
+		return $oTmpl->render( "form" ) ;
 	}
 
 	function getType()

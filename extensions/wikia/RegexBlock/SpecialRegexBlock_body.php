@@ -142,7 +142,7 @@ class RegexBlockForm extends SpecialPage
             "mRegexBlockedExpire"   => $this->mRegexBlockedExpire,
             "mRegexBlockedReason"   => $this->mRegexBlockedReason
         ) );
-        $wgOut->addHTML( $oTmpl->execute("page-form") );
+        $wgOut->addHTML( $oTmpl->render("page-form") );
 
         wfProfileOut( __METHOD__ );
     }
@@ -186,7 +186,7 @@ class RegexBlockForm extends SpecialPage
             "lang"          => $wgLang,
             "skin"          => $mSkin
         ) );
-        $wgOut->addHTML( $oTmpl->execute("page-output") );
+        $wgOut->addHTML( $oTmpl->render("page-output") );
 
         wfProfileOut( __METHOD__ );
     }
@@ -346,7 +346,7 @@ class RegexBlockForm extends SpecialPage
             "blockInfo"     => $blockInfo,
             "titleObj"      => $titleObj,
         ) );
-        $wgOut->addHTML( $oTmpl->execute("page-stats") );
+        $wgOut->addHTML( $oTmpl->render("page-stats") );
 
         wfProfileOut( __METHOD__ );
     }

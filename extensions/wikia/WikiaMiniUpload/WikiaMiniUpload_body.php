@@ -75,7 +75,7 @@ class WikiaMiniUpload {
 				'error'  => $error
 				)
 		);
-		return $tmpl->execute("main");
+		return $tmpl->render("main");
 	}
 
 	// recently uploaded images on that wiki
@@ -87,7 +87,7 @@ class WikiaMiniUpload {
 		wfSpecialWikiaNewFiles(8, $isp);
 		$tmpl = new EasyTemplate(dirname(__FILE__).'/templates/');
 		$tmpl->set_vars(array('data' => $wmu));
-		return $tmpl->execute("results_recently");
+		return $tmpl->render("results_recently");
 	}
 
      function query() {
@@ -107,7 +107,7 @@ class WikiaMiniUpload {
 			$tmpl = new EasyTemplate(dirname(__FILE__).'/templates/');
             $tmpl->set_vars(array('results' => $flickrResult, 'query' => addslashes($query)));
 
-            return $tmpl->execute('results_flickr');
+            return $tmpl->render('results_flickr');
 
         } else if($sourceId == 0) {
 
@@ -117,7 +117,7 @@ class WikiaMiniUpload {
 
 			$tmpl = new EasyTemplate(dirname(__FILE__).'/templates/');
 			$tmpl->set_vars(array('results' => $results, 'query' => addslashes($query)));
-			return $tmpl->execute('results_thiswiki');
+			return $tmpl->render('results_thiswiki');
         }
     }
 
@@ -308,7 +308,7 @@ class WikiaMiniUpload {
 		}
 
 		$tmpl->set_vars(array('props' => $props));
-		return $tmpl->execute('details');
+		return $tmpl->render('details');
 	}
 
 	// this function generates the image for replacing the placeholder after adding the image
@@ -485,7 +485,7 @@ class WikiaMiniUpload {
 									'mwname' => $mwname,
 									'extraId' => $extraId
 								     ));
-						return $tmpl->execute('conflict');
+						return $tmpl->render('conflict');
 					}
 				} else {
 					// is the target protected?
@@ -664,7 +664,7 @@ class WikiaMiniUpload {
 						'message' => $message,
 						'code' => isset($embed_code) ? $embed_code : '',
 					 ));
-		return $tmpl->execute('summary');
+		return $tmpl->render('summary');
 	}
 
 	function clean() {

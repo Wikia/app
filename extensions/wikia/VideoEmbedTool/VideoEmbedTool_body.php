@@ -50,7 +50,7 @@ class VideoEmbedTool {
 				'error'  => $error
 				)
 		);
-		return $tmpl->execute("main");
+		return $tmpl->render("main");
 	}
 
 	function recentlyUploaded() {
@@ -63,7 +63,7 @@ class VideoEmbedTool {
 		wfSpecialNewimages(8, $isp);
 		$tmpl = new EasyTemplate(dirname(__FILE__).'/templates/');
 		$tmpl->set_vars(array('data' => $wmu));
-		return $tmpl->execute("results_recently");
+		return $tmpl->render("results_recently");
 	}
 
 	function editVideo() {
@@ -89,7 +89,7 @@ class VideoEmbedTool {
 		$tmpl = new EasyTemplate(dirname(__FILE__).'/templates/');
 
 		$tmpl->set_vars(array('props' => $props));
-		return $tmpl->execute('edit');
+		return $tmpl->render('edit');
 	}
 
 	function insertVideo() {
@@ -174,7 +174,7 @@ class VideoEmbedTool {
 		$tmpl = new EasyTemplate(dirname(__FILE__).'/templates/');
 
 		$tmpl->set_vars(array('props' => $props));
-		return $tmpl->execute('details');
+		return $tmpl->render('details');
 	}
 
 	function insertFinalVideo() {
@@ -260,15 +260,15 @@ class VideoEmbedTool {
 			'message' => $message,
 			'code' => $embed_code,
 			));
-		return $tmpl->execute('summary');
+		return $tmpl->render('summary');
 	}
-	
+
 	/**
 	 * Upload video using LocalFile framework
 	 * @param mixed $provider string or int from $wgVideoMigrationProviderMap
 	 * @param string $videoId
 	 * @param string $videoName
-	 * @return mixed FileRepoStatus or FALSE on error 
+	 * @return mixed FileRepoStatus or FALSE on error
 	 */
 
 	private function uploadVideoAsFile( $provider, $videoId, $videoName, &$oTitle ) {
@@ -279,5 +279,5 @@ class VideoEmbedTool {
 		return $oUploader->upload( $oTitle );
 
 	}
-	
+
 }

@@ -71,7 +71,7 @@ class MultipleLookupPage extends SpecialPage {
 			"action"	=> $action,
 			"username"  => $this->mUsername,
 		) );
-		$wgOut->addHTML( $oTmpl->execute( "main-form" ) );
+		$wgOut->addHTML( $oTmpl->render( "main-form" ) );
 		wfProfileOut( __METHOD__ );
 	}
 
@@ -97,7 +97,7 @@ class MultipleLookupPage extends SpecialPage {
 			"username"  => $this->mUsername,
 			"wiki"		=> $this->mWiki,
 		));
-		$wgOut->addHTML( $oTmpl->execute("wiki-form") );
+		$wgOut->addHTML( $oTmpl->render("wiki-form") );
 		wfProfileOut( __METHOD__ );
 	}
 

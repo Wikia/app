@@ -216,7 +216,7 @@ class ContactForm extends SpecialPage {
 
 		$screenshot = $wgRequest->getFileTempname( 'wpScreenshot' );
 		$magic = MimeMagic::singleton();
-					
+
 		$screenshots = array();
 		if ( !empty( $screenshot ) ) {
 			foreach ( $screenshot as $image ) {
@@ -337,7 +337,7 @@ class ContactForm extends SpecialPage {
 		);
 
 		$oTmpl->set_vars( $vars );
-		$wgOut->addHTML( $oTmpl->execute("picker") );
+		$wgOut->addHTML( $oTmpl->render("picker") );
 
 		return;
 	}
@@ -468,7 +468,7 @@ class ContactForm extends SpecialPage {
 		$oTmpl->set_vars( $vars );
 
 		if( $this->secDat['form'] === true ) {
-			$wgOut->addHTML( $oTmpl->execute("form") );
+			$wgOut->addHTML( $oTmpl->render("form") );
 		} elseif ( $wgUser->isAnon() && !empty( $this->secDat['reqlogin'] ) ) {
 			$wgOut->showErrorPage( 'loginreqtitle', 'specialcontact-error-logintext' );
 			return;
@@ -476,7 +476,7 @@ class ContactForm extends SpecialPage {
 			$wgOut->showErrorPage( 'specialcontact-error-title', 'specialcontact-error-alreadyrenamed' );
 			return;
 		} else {
-			$wgOut->addHTML( $oTmpl->execute( $this->secDat['form'] ) );
+			$wgOut->addHTML( $oTmpl->render( $this->secDat['form'] ) );
 		}
 		return true;
 	}
@@ -502,7 +502,7 @@ class ContactForm extends SpecialPage {
 
 		$oTmpl->set_vars( $vars );
 
-		$wgOut->addHTML( $oTmpl->execute("noform") );
+		$wgOut->addHTML( $oTmpl->render("noform") );
 
 		return;
 	}

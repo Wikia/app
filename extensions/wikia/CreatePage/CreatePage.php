@@ -188,7 +188,7 @@ function wfCreatePageAjaxGetDialog() {
 		)
 	);
 
-	$body['html'] = $template->execute( 'dialog' );
+	$body['html'] = $template->render( 'dialog' );
 	$body['width'] = $wgCreatePageDialogWidth;
 	$body['defaultOption'] = $defaultLayout;
 	$body['title'] = wfMsg( 'createpage-dialog-title' );

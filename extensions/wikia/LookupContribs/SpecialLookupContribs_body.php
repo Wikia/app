@@ -108,7 +108,7 @@ class LookupContribsPage extends SpecialPage {
 			"view"      => $this->mView,
 			"modes"		=> $this->mShortModes
 		));
-		$wgOut->addHTML( $oTmpl->execute("main-form") );
+		$wgOut->addHTML( $oTmpl->render("main-form") );
 		wfProfileOut( __METHOD__ );
 	}
 
@@ -139,7 +139,7 @@ class LookupContribsPage extends SpecialPage {
 			"nspace"	=> $this->mNSpace,
 			"nspaces"	=> $wgLang->getFormattedNamespaces(),
 		));
-		$wgOut->addHTML( $oTmpl->execute("mode-form") );
+		$wgOut->addHTML( $oTmpl->render("mode-form") );
 		wfProfileOut( __METHOD__ );
 	}
 

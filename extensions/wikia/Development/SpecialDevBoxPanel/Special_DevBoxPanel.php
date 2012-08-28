@@ -93,7 +93,7 @@ class DevBoxPanel extends SpecialPage {
 								"infoHtml"         => getHtmlForInfo(),
 								"footer"           => wfMsg("devbox-footer", __FILE__),
 								));
-			$wgOut->addHTML($tmpl->execute('special-devboxpanel'));
+			$wgOut->addHTML($tmpl->render('special-devboxpanel'));
 		} else {
 			$wgOut->addHTML(wfMsg('devbox-panel-not-enabled'));
 		}
@@ -322,7 +322,7 @@ function getHtmlForSvnTool() {
 						"action"     => $wgTitle->getLocalUrl(),
 						"errors"     => $errors,
 						));
-	return $tmpl->execute('svn-tool');
+	return $tmpl->render('svn-tool');
 }
 
 /**

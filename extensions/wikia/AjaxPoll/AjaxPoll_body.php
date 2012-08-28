@@ -260,7 +260,7 @@ class AjaxPollClass {
 			'created_date'	=> $wgContLang->date( $timestamp ),
 		));
 
-		$before .= $oTmpl->execute( 'poll' );
+		$before .= $oTmpl->render( 'poll' );
 		$out = '';
 		/**
 		 * trim lines to avoid parser false behaviour

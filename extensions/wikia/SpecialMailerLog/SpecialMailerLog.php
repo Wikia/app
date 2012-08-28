@@ -117,7 +117,7 @@ class SpecialMailerLog extends UnlistedSpecialPage {
        						   'query'        => $query,
        						   'filter_roster' => $filter_roster,
    						));
-	    $wgOut->addHtml($oTmpl->execute("wikia-mailer-log"));
+	    $wgOut->addHtml($oTmpl->render("wikia-mailer-log"));
 
 		wfProfileOut( __METHOD__ );
 	}

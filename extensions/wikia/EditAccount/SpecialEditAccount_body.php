@@ -197,7 +197,7 @@ class EditAccount extends SpecialPage {
 		}
 
 		// HTML output
-		$wgOut->addHTML( $oTmpl->execute( $template ) );
+		$wgOut->addHTML( $oTmpl->render( $template ) );
 	}
 
 	/**

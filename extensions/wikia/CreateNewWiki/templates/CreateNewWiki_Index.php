@@ -77,7 +77,7 @@
 			<h2 class="headline signup"><?= wfMsg('cnw-auth-headline2') ?></h2>
 			<p class="creative login"><?= wfMsg('cnw-auth-creative') ?></p>
 			<p class="creative signup"><?= wfMsg('cnw-auth-signup-creative') ?></p>
-			<?= AjaxLoginForm::getTemplateForCombinedForms()->execute('ComboAjaxLogin') ?>
+			<?= AjaxLoginForm::getTemplateForCombinedForms()->render('ComboAjaxLogin') ?>
 			<p class="signup-msg">
 				<?= wfMsg('cnw-signup-prompt') ?> <a href="#"><?= wfMsg('cnw-call-to-signup') ?></a>
 			</p>
