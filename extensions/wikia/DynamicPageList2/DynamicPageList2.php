@@ -2736,7 +2736,7 @@ class ExtDynamicPageList2
 				return $output;
 			}
 
-			$sk =& $wgUser->getSkin();
+			$sk =& RequestContext::getMain()->getSkin();
 			// generate title for Special:Contributions (used if adduser=true)
 			$sSpecContribs = '[[:Special:Contributions|Contributions]]';
 
@@ -3455,7 +3455,7 @@ class DPL2 {
 			return $this->formatCategoryList($iStart, $iCount);
 
 		//other list modes
-		$sk = & $wgUser->getSkin();
+		$sk = & RequestContext::getMain()->getSkin();
 
 		//process results of query, outputing equivalent of <li>[[Article]]</li> for each result,
 		//or something similar if the list uses other startlist/endlist;

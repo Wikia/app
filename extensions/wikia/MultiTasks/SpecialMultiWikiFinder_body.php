@@ -157,7 +157,7 @@ class MultiwikifinderPage {
 			$wgMemc->set( $key, $data, 60 * 60 );
 		}
 
-		$num = $this->outputResults( $wgUser->getSkin(), $data );
+		$num = $this->outputResults( RequestContext::getMain()->getSkin(), $data );
 
         wfProfileOut( __METHOD__ );
 		return $num;

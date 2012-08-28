@@ -60,7 +60,7 @@ function efPiggybackAddToolLinks( $id, $nt, &$tools ) {
 		return true;
 	}
 
-	$sk = $wgUser->getSkin();
+	$sk = RequestContext::getMain()->getSkin();
 
 	$tools[] = $sk->linkKnown(
 		SpecialPage::getTitleFor( 'Piggyback', $nt->getDBkey() ),

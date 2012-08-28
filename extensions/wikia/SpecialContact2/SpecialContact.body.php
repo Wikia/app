@@ -274,11 +274,11 @@ class ContactForm extends SpecialPage {
 	 * @access private
 	 */
 	function ContactFormPicker() {
-		global $wgOut, $wgUser, $SpecialContactSecMap;
+		global $wgOut, $SpecialContactSecMap;
 
 		$wgOut->setPageTitle( wfMsg( 'specialcontact-pagetitle' ) );
 
-		$uskin = $wgUser->getSkin();
+		$uskin = RequestContext::getMain()->getSkin();
 
 		$secDat = array();
 
@@ -294,7 +294,7 @@ class ContactForm extends SpecialPage {
 			);
 
 			#$pages = array('bug', 'feedback', 'account', 'other');
-			foreach($section['links'] as $id => $info)
+			foreach($section['links'] as $info)
 			{
 				if( is_array( $info ) ) {
 					$sub = $info['link'];

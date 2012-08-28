@@ -78,7 +78,7 @@ class TagsReportPage extends SpecialPage {
 	function showArticleList() {
 		global $wgOut;
 		global $wgCanonicalNamespaceNames;
-		global $wgContLang, $wgUser;
+		global $wgContLang;
         wfProfileIn( __METHOD__ );
 
 		$articles = $this->getTagsInfo();
@@ -89,7 +89,7 @@ class TagsReportPage extends SpecialPage {
             "articles" 		=> $articles,
             "wgCanonicalNamespaceNames" => $wgCanonicalNamespaceNames,
             "wgContLang" 	=> $wgContLang,
-            "skin"			=> $wgUser->getSkin()
+            "skin"			=> RequestContext::getMain()->getSkin()
         ));
         $wgOut->addHTML( $oTmpl->render("tag-activity") );
         wfProfileOut( __METHOD__ );

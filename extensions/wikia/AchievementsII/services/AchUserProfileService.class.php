@@ -16,12 +16,12 @@ class AchUserProfileService {
     	wfProfileIn(__METHOD__);
 
     	global $wgTitle, $wgUser, $wgWikiaBotLikeUsers;
-	
+
 		//fix #10881, get correct username from user namespace subpages
     	$this->mUserOwner = F::build('User', array( UserPagesHeaderController::getUserName( $wgTitle, BodyController::getUserPagesNamespaces() ) ), 'newFromName');
 
     	if(
-		in_array( strtolower( $wgUser->getSkin()->getSkinName() ), array( 'monaco', 'oasis' ) ) &&
+		in_array( strtolower( RequestContext::getMain()->getSkin()->getSkinName() ), array( 'monaco', 'oasis' ) ) &&
 		$this->mUserOwner &&
 		AchAwardingService::canEarnBadges( $this->mUserOwner ) &&
 		$this->mUserOwner->isLoggedIn() &&
@@ -155,7 +155,7 @@ class AchUserProfileService {
 				$challenges[$badge_type_id] = AchConfig::getInstance()->isInTrack($badge_type_id) ? 0 : null;
     		}
     	}
-    	
+
     	global $wgEnableAchievementsForSharing;
 
     	foreach($challenges as $badge_type_id => $badge_lap) {
@@ -180,7 +180,7 @@ class AchUserProfileService {
 				if($badge_type_id != BADGE_SHARING) {
 					$to_get .= " ({$eventsCounter}/{$requiredEvents})";
 				} else if(empty($wgEnableAchievementsForSharing)){
-					continue;					
+					continue;
 				}
     		}
 

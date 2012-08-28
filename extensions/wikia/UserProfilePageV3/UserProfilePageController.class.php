@@ -1184,10 +1184,10 @@ class UserProfilePageController extends WikiaController {
 	function addToUserProfile(&$skin, &$tpl) {
 		wfProfileIn(__METHOD__);
 
-		global $wgTitle, $wgOut, $wgRequest, $wgExtensionsPath, $wgUser;
+		global $wgTitle, $wgOut, $wgRequest, $wgExtensionsPath;
 
 		// don't output on Oasis
-		if (get_class($wgUser->getSkin()) == 'SkinOasis') {
+		if (get_class(RequestContext::getMain()->getSkin()) == 'SkinOasis') {
 			wfProfileOut(__METHOD__);
 			return true;
 		}

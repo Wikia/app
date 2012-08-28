@@ -118,9 +118,9 @@ class ArticleCommentInit {
 	}
 
 	static public function ArticleCommentEnable(&$data) {
-		global $wgTitle, $wgUser;
+		global $wgTitle;
 
-		$skin = $wgUser->getSkin();
+		$skin = RequestContext::getMain()->getSkin();
 
 		//use this hook only for skins other than Monaco
 		//update: it's actually only MonoBook since Oasis and WikiaMobile use their own

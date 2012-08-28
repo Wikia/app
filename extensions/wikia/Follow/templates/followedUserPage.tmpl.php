@@ -1,19 +1,19 @@
-<h2 class="dark_text_2" id="userPageFollowedHead"> 
+<h2 class="dark_text_2" id="userPageFollowedHead">
 
 <span>
 	<?php if($isLogin): ?>
 		<a title="<?php echo wfMsg('wikiafollowedpages-userpage-hide-tooltip'); ?>" id="follow_hide_link" href="<?php echo $hideUrl; ?>">(<?php echo wfMsg('wikiafollowedpages-userpage-hide'); ?>)</a>
 	<?php endif; ?>
-</span> 
+</span>
 
 <?php echo wfMsg('wikiafollowedpages-userpage-heading'); ?>
 
 </h2>
 <?php if (!empty($data)): ?>
 	<ul class="followedList followedListFirst" >
-		<?php 
+		<?php
 		global $wgUser;
-		$sk = $wgUser->getSkin();
+		$sk = RequestContext::getMain()->getSkin();
 		foreach($data as $value):
 			$title = Title::newFromText( $value[1], $value['wl_namespace'] );
 			if ( !is_object( $title ) || !$title->exists() ) continue;

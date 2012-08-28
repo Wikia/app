@@ -30,7 +30,7 @@ class Track {
 			'u='.$wgUser->getID().$sep.
 			'ip='.$ip.$sep.
 			'a='.(is_object($wgArticle) ? $wgArticle->getID() : null).$sep.
-			's='.$wgUser->getSkin()->getSkinName().
+			's='.RequestContext::getMain()->getSkin()->getSkinName().
 			($wgTitle && !is_object($wgArticle) ? $sep.'pg='.urlencode($wgTitle->getPrefixedDBkey()) : '').
 			($wgTitle ? $sep.'n='.$wgTitle->getNamespace() : '').
 			(!empty($wgAdServerTest) ? $sep.'db_test=1' : '');
@@ -90,7 +90,7 @@ SCRIPT1;
 		global $wgUser;
 		if ($wgUser->getId() && $wgUser->getId() > 0) {
 			$vars['wgTrackID'] = $wgUser->getId();
-		}		
+		}
 		return true;
 	}
 }

@@ -66,7 +66,7 @@ class LookupContribsPage extends SpecialPage {
 		 * parse request
 		 */
 		if ($this->mUsername != '') {
-			$sk = $wgUser->getSkin();
+			$sk = RequestContext::getMain()->getSkin();
 			$this->mUserPage = Title::makeTitle (NS_USER, $this->mUsername);
 			$this->mUserLink = $sk->makeKnownLinkObj ($this->mUserPage, $this->mUsername);
 			$this->mModeText = ($this->mMode == 'normal') ? wfMsg('lookupcontribsrecentcontributions', $this->mUserLink) : wfMsg('lookupcontribsfinalcontributions', $this->mUserLink);

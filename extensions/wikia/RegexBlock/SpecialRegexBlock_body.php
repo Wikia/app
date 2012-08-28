@@ -171,7 +171,7 @@ class RegexBlockForm extends SpecialPage
         }
 
         /* make link to statistics */
-        $mSkin = $wgUser->getSkin();
+        $mSkin = RequestContext::getMain()->getSkin();
         $oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
         $oTmpl->set_vars( array(
             "pager"         => $pager,
@@ -342,7 +342,7 @@ class RegexBlockForm extends SpecialPage
             "action"        => $action,
             "stats_list"    => $stats_list,
             "lang"          => $wgLang,
-            "skin"          => $wgUser->getSkin(),
+            "skin"          => RequestContext::getMain()->getSkin(),
             "blockInfo"     => $blockInfo,
             "titleObj"      => $titleObj,
         ) );

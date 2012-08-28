@@ -115,7 +115,7 @@ class WikiaVideoAddForm extends SpecialPage {
 					$video->save();
 				}
 
-				$sk = $wgUser->getSkin();
+				$sk = RequestContext::getMain()->getSkin();
 				$link_back = $sk->makeKnownLinkObj( $title );
 
 				if ($replaced) {

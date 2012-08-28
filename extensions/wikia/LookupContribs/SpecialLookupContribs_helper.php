@@ -785,10 +785,10 @@ class LookupContribsCore {
 	}
 
 	public function produceLine($row) {
-		global $wgLang, $wgOut, $wgRequest, $wgUser;
+		global $wgLang;
 
 		$result = array();
-		$sk = $wgUser->getSkin();
+		$sk = RequestContext::getMain()->getSkin();
 		$page_user = Title::makeTitle (NS_USER, $this->mUsername);
 		#---
 		$page_contribs = "";

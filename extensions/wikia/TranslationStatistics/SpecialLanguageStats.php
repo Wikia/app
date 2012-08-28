@@ -172,7 +172,7 @@ class SpecialNewLanguageStats extends IncludableSpecialPage {
 	 * @return string HTML
 	 */
 	function getGroupStats( $code, $suppressComplete = false, $suppressEmpty = false ) {
-		global $wgUser, $wgLang;
+		global $wgLang;
 
 		# fetch the actual stats first
 		$stats = MessageGroupStatistics::forLanguage( $code );
@@ -197,7 +197,7 @@ class SpecialNewLanguageStats extends IncludableSpecialPage {
 		foreach ( $stats as $id => $group ) {
 			$total = $group['gs_total'];
 			$fuzzy = $group['gs_fuzzy'];
-			$translated = $group['gs_translated'];	
+			$translated = $group['gs_translated'];
 
 			// Skip if $suppressEmpty and no translations
 			if ( $suppressEmpty && empty( $translated ) ) {
@@ -215,7 +215,7 @@ class SpecialNewLanguageStats extends IncludableSpecialPage {
 			$translateTitle = SpecialPage::getTitleFor( 'Translate' );
 			$pageParameters = "group=" . $id . "&language=" . $code;
 			$g = MessageGroups::getGroup( $id );
-			$translateGroupLink = $wgUser->getSkin()->makeKnownLinkObj( $translateTitle, $g->getLabel(), $pageParameters );
+			$translateGroupLink = RequestContext::getMain()->getSkin()->makeKnownLinkObj( $translateTitle, $g->getLabel(), $pageParameters );
 
 			$out .= $this->blockstart();
 			$out .= $this->element( $translateGroupLink );

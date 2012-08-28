@@ -12,10 +12,10 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	exit( 1 ) ;
 }
 
-class ListusersData {	
+class ListusersData {
 	var $mCityId;
 	var $mGroups;
-	var $mFilterGroup;	
+	var $mFilterGroup;
 	var $mUserName;
 	var $mEdits;
 	var $mLimit;
@@ -50,7 +50,7 @@ class ListusersData {
 			'loggedin' 	=> '',
 			'dtedit' 	=> 'wiki_editdate_user_edits'
 		);
-						
+
 		if ( $load == 1 ) {
 			$this->load();
 		}
@@ -70,12 +70,12 @@ class ListusersData {
 	function setEdits    	( $edits = Listusers::DEF_EDITS ) { $this->mEdits = $edits; }
 	function setLimit    	( $limit = Listusers::DEF_LIMIT ) { $this->mLimit = $limit; }
 	function setOffset   	( $offset = 0 ) { $this->mOffset = $offset; }
-	function setOrder    	( $orders = array() ) { 
+	function setOrder    	( $orders = array() ) {
 		if ( empty($orders) || !is_array($orders) ) {
 			$orders = array( Listusers::DEF_ORDER );
 		}
 
-		# order by 
+		# order by
 		$this->mOrder = array();
 		if ( !empty($orders) ) {
 			foreach ( $orders as $order ) {
@@ -85,7 +85,7 @@ class ListusersData {
 						$this->mOrder[] = sprintf( $orderStr, $orderDesc );
 					}
 					$this->mUseKey = $this->mUseKeyOptions[$orderName];
-				}			
+				}
 			}
 		}
 		if ( empty($this->mOrder) ) {
@@ -94,7 +94,7 @@ class ListusersData {
 	}
 
 	function getFilterGroup () { return $this->mFilterGroup; }
-	function getGroups   	() { return $this->mGroups; } 
+	function getGroups   	() { return $this->mGroups; }
 	function getUserName	() { return $this->mUserName; }
 	function getEdits    	() { return $this->mEdits; }
 	function getLimit    	() { return $this->mLimit; }
@@ -106,10 +106,10 @@ class ListusersData {
 		wfProfileIn( __METHOD__ );
 
 		/* initial values for result */
-		$data = array( 
+		$data = array(
 			'cnt'	=> 0,
 			'sColumns' => implode(",", array_keys($this->mOrderOptions)),
-			'data' 	=> array() 
+			'data' 	=> array()
 		);
 
 		$orderby = implode(",", $this->mOrder);
@@ -124,8 +124,8 @@ class ListusersData {
 
 		$memkey = wfForeignMemcKey( $this->mCityId, null, "ludata", md5( implode(', ', $subMemkey) ) );
 		$cached = $wgMemc->get($memkey);
-		
-		if ( empty($cached) && !empty($this->mDBEnable) ) { 
+
+		if ( empty($cached) && !empty($this->mDBEnable) ) {
 			/* db handle */
 			$dbs = wfGetDB( DB_SLAVE, array(), $this->mDBh );
 
@@ -137,12 +137,12 @@ class ListusersData {
 				$whereGroup = array();
 				foreach ( $this->mFilterGroup as $group ) {
 					if ( !empty($group) ) {
-						$whereGroup[] = 
-							( $group == Listusers::DEF_GROUP_NAME ) 
-							? " all_groups = '' " 
+						$whereGroup[] =
+							( $group == Listusers::DEF_GROUP_NAME )
+							? " all_groups = '' "
 							: " all_groups " . $dbs->buildLike( $dbs->anyString(), $group, $dbs->anyString() );
 					}
-				} 
+				}
 
 				if ( !empty( $whereGroup ) ) {
 					$where[] = implode( " or ", $whereGroup );
@@ -172,19 +172,19 @@ class ListusersData {
 
 			if ( $data['cnt'] > 0 ) {
 				$userIsBlocked = $wgUser->isBlocked();
-				$sk = $wgUser->getSkin();
+				$sk = RequestContext::getMain()->getSkin();
 				/* select records */
 				$oRes = $dbs->select(
 					array( $this->mTable . ' as e1 ' . ( ($this->mUseKey) ? 'use key('.$this->mUseKey.')' : '' ) , 'user_login_history_summary as ul1' ),
-					array( 
-						'e1.user_id', 
-						'user_name', 
-						'cnt_groups', 
-						'all_groups', 
-						'edits', 
-						'user_is_blocked', 
-						'last_revision', 
-						'editdate', 
+					array(
+						'e1.user_id',
+						'user_name',
+						'cnt_groups',
+						'all_groups',
+						'edits',
+						'user_is_blocked',
+						'last_revision',
+						'editdate',
 						'ul1.ulh_timestamp as ts',
 						'ifnull(unix_timestamp(ul1.ulh_timestamp), 0) as ts',
 						'ifnull(e1.last_revision, 0) as max_rev',
@@ -193,13 +193,13 @@ class ListusersData {
 					$where,
 					__METHOD__,
 					array(
-						'ORDER BY'	=> $orderby, 
-						'LIMIT'		=> $this->mLimit, 
+						'ORDER BY'	=> $orderby,
+						'LIMIT'		=> $this->mLimit,
 						'OFFSET'	=> intval($this->mOffset)
 					),
 					array(
 						'user_login_history_summary as ul1' => array(
-							'LEFT JOIN', 
+							'LEFT JOIN',
 							'ul1.user_id = e1.user_id'
 						)
 					)
@@ -230,13 +230,13 @@ class ListusersData {
 					$links = array (
 						0 => "",
 						1 => $sk->makeLinkObj(
-							Title::newFromText( 'Contributions', NS_SPECIAL ), 
-							$wgLang->ucfirst( wfMsg('contribslink') ), 
+							Title::newFromText( 'Contributions', NS_SPECIAL ),
+							$wgLang->ucfirst( wfMsg('contribslink') ),
 							"target={$oEncUserName}"
 						),
 						2 => $sk->makeLinkObj(
-							Title::newFromText( 'Editcount', NS_SPECIAL ), 
-							$wgLang->ucfirst( wfMsg('listusersedits') ), 
+							Title::newFromText( 'Editcount', NS_SPECIAL ),
+							$wgLang->ucfirst( wfMsg('listusersedits') ),
 							"username={$oEncUserName}"
 						)
 					);
@@ -248,14 +248,14 @@ class ListusersData {
 
 					if ( $wgUser->isAllowed( 'block' ) && ( !$userIsBlocked ) ) {
 						$links[] = $sk->makeLinkObj(
-							Title::newFromText( "BlockIP/{$oUser->getName()}", NS_SPECIAL ), 
+							Title::newFromText( "BlockIP/{$oUser->getName()}", NS_SPECIAL ),
 							$wgLang->ucfirst( wfMsg('blocklink') )
 						);
 					}
 					if ( $wgUser->isAllowed( 'userrights' ) && ( !$userIsBlocked ) ) {
 						$links[] = $sk->makeLinkObj(
-							Title::newFromText( 'UserRights', NS_SPECIAL ), 
-							$wgLang->ucfirst( wfMsg('listgrouprights-rights') ), 
+							Title::newFromText( 'UserRights', NS_SPECIAL ),
+							$wgLang->ucfirst( wfMsg('listgrouprights-rights') ),
 							"user={$oEncUserName}"
 						);
 					};
@@ -275,7 +275,7 @@ class ListusersData {
 						'last_edit_ts'		=> ( !empty($oRow->ts_edit) ) ? $wgLang->timeanddate( $oRow->ts_edit, true ) : ""
 					);
 
-					if ( !empty($oRow->max_rev) ) { 
+					if ( !empty($oRow->max_rev) ) {
 						$oRevision = Revision::newFromId($oRow->max_rev);
 						if ( !is_null($oRevision) ) {
 							$oTitle = $oRevision->getTitle();
@@ -303,12 +303,12 @@ class ListusersData {
 
 	/*
 	 * load all groups for selected Wikis
-	 * 
+	 *
 	 * @access public
 	 *
 	 * @author      Piotr Molski <moli@wikia-inc.com>
 	 * @version     1.0.0
-	 * @param       
+	 * @param
 	 */
 	private function loadGroups() {
 		global $wgContLang, $wgMemc;
@@ -317,7 +317,7 @@ class ListusersData {
 		$memkey = wfForeignMemcKey( $this->mCityId, null, Listusers::TITLE, "groups", $wgContLang->getCode() );
 		$cached = $wgMemc->get($memkey);
 
-		if ( empty ( $cached ) ) { 
+		if ( empty ( $cached ) ) {
 			$this->mGroups[Listusers::DEF_GROUP_NAME] = array(
 				'name' 	=> wfMsg('listusersnogroup'),
 				'count' => 0
@@ -326,7 +326,7 @@ class ListusersData {
 			$groups = User::getAllGroups();
 			if ( is_array ( $groups ) && !empty( $groups ) ) {
 				foreach( $groups as $group ) {
-					$this->mGroups[$group] = array( 
+					$this->mGroups[$group] = array(
 						'name' 	=> User::getGroupName($group),
 						'count' => 0
 					);
@@ -351,12 +351,12 @@ class ListusersData {
 
 	/*
 	 * number of users in groups
-	 * 
+	 *
 	 * @access public
 	 *
 	 * @author      Piotr Molski <moli@wikia-inc.com>
 	 * @version     1.0.0
-	 * @param       
+	 * @param
 	 */
 	private function groupRecords() {
 		global $wgMemc;
@@ -385,8 +385,8 @@ class ListusersData {
 						$where['cnt_groups'] = 0;
 					}
 
-					$unions[] = $dbs->selectSQLText( 
-						array( $this->mTable ), 
+					$unions[] = $dbs->selectSQLText(
+						array( $this->mTable ),
 						array( $dbs->addQuotes($key) . ' as gName', 'count(0) as cnt' ),
 						$where,
 						__METHOD__
@@ -417,7 +417,7 @@ class ListusersData {
 
 	/*
 	 * update user groups (hook)
-	 * 
+	 *
 	 * @access public
 	 *
 	 * @author      Piotr Molski <moli@wikia-inc.com>
@@ -430,34 +430,34 @@ class ListusersData {
 		wfProfileIn( __METHOD__ );
 
 		if ( !$user instanceof User ) {
-			wfProfileOut( __METHOD__ );			
+			wfProfileOut( __METHOD__ );
 			return true;
 		}
 
 		if ( empty($this->mDBEnable) ) {
-			wfProfileOut( __METHOD__ );			
+			wfProfileOut( __METHOD__ );
 			return true;
 		}
 
 		$user_id = $user->getID();
 		$dbr = wfGetDB(DB_SLAVE, array(), $this->mDBh);
-		$where = array( 
+		$where = array(
 			"user_id" 	=> $user_id,
 			"wiki_id" 	=> $this->mCityId
 		);
 
-		$oRow = $dbr->selectRow( 
-			array( $this->mTable ), 
-			array( "all_groups" ), 
+		$oRow = $dbr->selectRow(
+			array( $this->mTable ),
+			array( "all_groups" ),
 			$where,
-			__METHOD__ 
+			__METHOD__
 		);
 		$groups = array();
 		if ( $oRow !== false ) {
 			$tmp = explode( ";", $oRow->all_groups );
 			if ( !empty($tmp) ) {
 				foreach ( $tmp as $g ) {
-					if ( !empty($g) ) { 
+					if ( !empty($g) ) {
 						$groups[] = $g;
 					}
 				}
@@ -484,7 +484,7 @@ class ListusersData {
 			$groups = array_unique( array_merge($groups, $central_groups) );
 		}
 
-		if ( !empty($groups) ) { 
+		if ( !empty($groups) ) {
 			sort( $groups );
 		}
 		$elements = count($groups);
@@ -496,8 +496,8 @@ class ListusersData {
 			$edits = User::edits($user_id);
 
 			$dbr = wfGetDB( DB_SLAVE );
-			$revRow = $dbr->selectRow( 
-				'revision', 
+			$revRow = $dbr->selectRow(
+				'revision',
 				array( 'rev_id', 'rev_timestamp' ),
 				array( 'rev_user' => $user_id ),
 				__METHOD__,
@@ -524,7 +524,7 @@ class ListusersData {
 					"last_revision"  => intval($lastrev),
 					"cnt_groups"	 => $elements,
 					"single_group"   => $singlegroup,
-					"all_groups"	 => $allgroups					
+					"all_groups"	 => $allgroups
 				),
 				__METHOD__
 			);
@@ -540,7 +540,7 @@ class ListusersData {
 				__METHOD__
 			);
 		}
-		wfProfileOut( __METHOD__ );		
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
 }

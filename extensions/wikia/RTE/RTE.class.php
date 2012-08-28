@@ -422,7 +422,7 @@ HTML
 		}
 
 		// check current skin - enable RTE only on Monaco
-		$skinName = get_class($wgUser->getSkin());
+		$skinName = get_class(RequestContext::getMain()->getSkin());
 		if($skinName != 'SkinMonaco' && $skinName != 'SkinOasis') {
 			RTE::log("editor is disabled because skin {$skinName} is unsupported");
 			self::disableEditor('skin');

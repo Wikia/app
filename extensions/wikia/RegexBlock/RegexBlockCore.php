@@ -716,7 +716,7 @@ function wfRegexBlockUnsetKeys($username) {
 function wfLoadRegexBlockLink( $id, $nt, &$links ) {
     global $wgUser;
         if( $wgUser->isAllowed( 'regexblock' ) ) {
-		$links[] = $wgUser->getSkin()->makeKnownLinkObj(
+		$links[] = RequestContext::getMain()->getSkin()->makeKnownLinkObj(
 			            SpecialPage::getTitleFor( 'RegexBlock' ),
 				                wfMsg( 'regexblock' ),
 				                'ip=' . urlencode( $nt->getText() ) );

@@ -51,7 +51,7 @@ class Interstitial extends UnlistedSpecialPage {
 			// Set up the CSS
 			$wgOut->setArticleBodyOnly(true);
 
-			$skin = $wgUser->getSkin();
+			$skin = RequestContext::getMain()->getSkin();
 			$skinName = get_class($skin);
 
 			// this may not be set yet (and needs to be before setupUserCss in order for the right CSS file to be included)

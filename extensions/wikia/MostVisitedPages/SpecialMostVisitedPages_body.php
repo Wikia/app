@@ -21,8 +21,8 @@ class MostvisitedpagesSpecialPage extends SpecialPage {
 		$this->mpp->setPageID( $this->page_id );
 		if (!empty($this->showList)) {
 			$this->setHeaders();
-			global $wgUser, $wgOut, $wgTitle;
-            $sk = $wgUser->getSkin();
+			global $wgOut, $wgTitle;
+            $sk = RequestContext::getMain()->getSkin();
             if ( $this->page_id == 'latest' ) {
             	$wgOut->setSubtitle( $sk->makeLinkObj( $wgTitle, wfMsg('mostvisitedpagesalllink') ) );
 			} else {

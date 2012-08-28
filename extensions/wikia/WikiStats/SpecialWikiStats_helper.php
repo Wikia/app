@@ -129,8 +129,7 @@ class WikiStats {
 
 	private function getSkin() {
 		if ( !isset( $this->mSkin ) ) {
-			global $wgUser;
-			$this->mSkin = $wgUser->getSkin();
+			$this->mSkin = RequestContext::getMain()->getSkin();
 		}
 		return $this->mSkin;
 	}
