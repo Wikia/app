@@ -20,6 +20,9 @@ $messages['en'] = array(
 	'videohandler-video-views' => '$1 {{PLURAL:$1|view|views}}',
 	'videohandler-non-premium' => 'Non premium videos are disabled on this Wiki.',
 	'videohandler-remove' => 'Remove',
+	'videohandler-remove-video-modal-title' => 'Are you sure you want to remove this video from your wiki?',
+	'videohandler-remove-video-modal-ok' => 'Remove',
+	'videohandler-remove-video-modal-cancel' => 'Cancel',
 );
 
 /** Message documentation (Message documentation) */
