@@ -218,6 +218,9 @@ define('topbar', ['querystring', 'loader', 'toc', 'events', 'ads'], function (qs
 
 	//profile/login setup
 	if(wkPrfTgl){
+		//Fix for ios 4.x not respecting fully event.preventDefault()
+		// (it shows url bar for a second (and this is ugly (really)))
+		wkPrfTgl.href = '';
 		wkPrfTgl.addEventListener(clickEvent, function(event){
 			event.preventDefault();
 			if(navBar.className.indexOf('prf') > -1){
@@ -225,7 +228,7 @@ define('topbar', ['querystring', 'loader', 'toc', 'events', 'ads'], function (qs
 			}else{
 				openProfile();
 			}
-		});
+		}, true);
 	}
 	//end profile/login setup
 
@@ -255,7 +258,7 @@ define('topbar', ['querystring', 'loader', 'toc', 'events', 'ads'], function (qs
 	function openProfile(hash){
 		reset();
 
-		if(wgUserName){
+		if(window.wgUserName){
 			//track('profile/open');
 		}else{
 			openLogin(hash);
