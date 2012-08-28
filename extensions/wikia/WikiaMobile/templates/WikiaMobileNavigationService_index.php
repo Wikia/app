@@ -20,9 +20,10 @@
 	<a href=#wkNavMenu id=wkNavTgl class=tgl></a>
 	<? if ( $wg->EnableUserLoginExt ) {
 		if ( $loggedIn ) {
-			echo '<a href=# id=wkPrfTgl class="tgl lgdin">' . AvatarService::renderAvatar( $userName, 25 /* This gives me image 50x50 but adds html attributes width and height with values 25*/ ) . '</a>';
+			// This gives me image 50x50 but adds html attributes width and height with values 25
+			echo '<a id=wkPrfTgl class="tgl lgdin" href=#>' . AvatarService::renderAvatar( $userName, 25 ) . '</a>';
 		} else {
-			echo '<a href="' . SpecialPage::getTitleFor( 'UserLogin' )->getLocalURL() . '" id=wkPrfTgl class="tgl lgdout"></a>';
+			echo '<a id=wkPrfTgl class="tgl lgdout" href="' . SpecialPage::getTitleFor( 'UserLogin' )->getLocalURL() . '#"></a>';
 		}
 	}	?>
 	</div>
