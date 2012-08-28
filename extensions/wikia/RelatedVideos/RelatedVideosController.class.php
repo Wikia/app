@@ -24,7 +24,7 @@ class RelatedVideosController extends WikiaController {
 
 	public function getCarusel(){
 
-		if( Wikia::isMainPage() || ( !$this->app->wg->title instanceof Title ) || !$this->app->wg->title->exists() ) {
+		if( $this->app->checkSkin( 'wikiamobile' ) || Wikia::isMainPage() || ( !$this->app->wg->title instanceof Title ) || !$this->app->wg->title->exists() ) {
 			return false;
 		}
 		$rvs = new RelatedVideosService();

@@ -8,7 +8,7 @@ class RelatedHubsVideosController extends RelatedVideosController {
 	}
 	
 	public function getCarusel() {
-		if( Wikia::isMainPage() || ( !$this->app->wg->title instanceof Title ) || !$this->app->wg->title->exists() ) {
+		if( Wikia::isMainPage() || ( !$this->app->wg->Title instanceof Title ) || !$this->app->wg->Title->exists() ) {
 			return false;
 		}
 		
