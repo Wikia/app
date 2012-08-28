@@ -18,9 +18,13 @@
 
 	<a href=#wkNavSrh id=wkSrhTgl class=tgl></a>
 	<a href=#wkNavMenu id=wkNavTgl class=tgl></a>
-	<? if ( $wg->EnableUserLoginExt ) : ?>
-		<a href="<?= SpecialPage::getTitleFor( 'UserLogin' )->getLocalURL() ;?>" id=wkPrfTgl class="tgl lgd<?= ($loggedIn ? 'in' : 'out') ?>"><?= ($loggedIn ? AvatarService::renderAvatar( $userName, 25 /* This gives me image 50x50 but adds html attributes width and height with values 25*/ ) : '') ?></a>
-	<? endif ; ?>
+	<? if ( $wg->EnableUserLoginExt ) {
+		if ( $loggedIn ) {
+			echo '<a href=# id=wkPrfTgl class="tgl lgdin">' . AvatarService::renderAvatar( $userName, 25 /* This gives me image 50x50 but adds html attributes width and height with values 25*/ ) . '</a>';
+		} else {
+			echo '<a href="' . SpecialPage::getTitleFor( 'UserLogin' )->getLocalURL() . '" id=wkPrfTgl class="tgl lgdout"></a>';
+		}
+	}	?>
 	</div>
 	<div id=wkSrh>
 		<form id=wkSrhFrm action="<?= SpecialPage::getSafeTitleFor( 'Search' )->getLocalURL()?>" method=get>

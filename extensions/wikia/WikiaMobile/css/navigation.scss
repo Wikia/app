@@ -194,14 +194,6 @@
 				span {
 					color: $link-color;
 				}
-
-				&:first-child {
-					border-top: 1px solid $border-color;
-				}
-
-				&:last-child {
-					border-bottom: 1px solid $border-color;
-				}
 			}
 		}
 
