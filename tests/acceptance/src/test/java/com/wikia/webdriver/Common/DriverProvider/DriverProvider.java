@@ -62,7 +62,6 @@ public class DriverProvider {
 		PageObjectLogging listener = new PageObjectLogging();
 		driver = new EventFiringWebDriver(new FirefoxDriver()).register(listener);
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-		Global.BROWSER_HANDLER_2 = driver.getWindowHandle();
 		return instance;
 	}
 	

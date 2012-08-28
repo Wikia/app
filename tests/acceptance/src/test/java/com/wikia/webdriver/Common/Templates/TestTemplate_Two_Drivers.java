@@ -86,9 +86,7 @@ public class TestTemplate_Two_Drivers {
 	public void startBrowsers()
 	{
 		driver = DriverProvider.getInstance().getWebDriver();
-		Global.BROWSER_HANDLER_1 = driver.getWindowHandle();
 		driver2 = DriverProvider.getInstanceFF().getWebDriver();
-		Global.BROWSER_HANDLER_2 = driver2.getWindowHandle();
 	}
 	
 	public void stopBrowsers()
