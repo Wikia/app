@@ -130,8 +130,10 @@ $messages['en'] = array(
 	'wikiahome-footer-interlang-flag-title' => 'Wikia Deutschland',
 
 	'wikiahome-import-script-no-description' => 'No description given',
-);
 
+	//fb#45624
+	'wikiahome-image-auto-uploaded-comment' => 'Auto-generated image to be used on http://wikia.com/ – stay tuned for more info on the Staff Blog: http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog',
+);
 
 $messages['de'] = array(
 	'wikiahome-page-header-heading' => 'Erschaffe. Mach mit. Sei kreativ.',
@@ -243,7 +245,10 @@ $messages['de'] = array(
 
 	'wikiahome-footer-interlang-flag-class' => 'us',
 	'wikiahome-footer-interlang-flag-href' => 'http://www.wikia.com',
-	'wikiahome-footer-interlang-flag-title' => 'Wikia Inc.'
+	'wikiahome-footer-interlang-flag-title' => 'Wikia Inc.',
+
+	//fb#45624
+	'wikiahome-image-auto-uploaded-comment' => 'Automatisch erstelltes Bild für die Nutzung auf http://de.wikia.com – in Kürze dazu mehr Informationen im Wikia-Blog: http://de.community.wikia.com/wiki/Blog:Wikia_Deutschland_News',
 );
 
 $messages['qqq'] = array(

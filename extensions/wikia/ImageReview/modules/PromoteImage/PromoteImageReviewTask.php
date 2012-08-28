@@ -38,7 +38,17 @@ class PromoteImageReviewTask extends BatchTask {
 			$oUser->load();
 			$this->mUser = $oUser->getId();
 		} else {
-			$this->log(__CLASS__ . ' / ' . __METHOD__ . ": Invalid user - id: " . $params->task_user_id);
+		//if task was added by import script it has WikiaBot user's id passed
+			$this->log(__CLASS__ . ' / ' . __METHOD__ . ": Invalid user #1 - task_user_id: " . $params->task_user_id);
+			$oUser = F::build('User', array('WikiaBot'), 'newFromName');
+
+			if( $oUser instanceof User ) {
+				$oUser->load();
+				$this->mUser = $oUser->getId();
+			} else {
+				$this->log(__CLASS__ . ' / ' . __METHOD__ . ": Invalid user #2 - task_user_id: " . $params->task_user_id);
+			}
+
 			return true;
 		}
 
