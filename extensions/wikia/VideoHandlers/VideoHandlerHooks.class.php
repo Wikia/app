@@ -216,12 +216,31 @@ class VideoHandlerHooks extends WikiaObject{
 		return true;
 	}
 
+	/*
+	 * Add "remove" action to MenuButtons on premium video file pages
+	 * This button will remove a video from a wiki but keep it on the Video Wiki. 
+	 */
+	
 	public function onSkinTemplateNavigation($skin, &$tabs) {
-		$tabs['actions']['remove'] = array(
-			'class' => 'remove-video',
-			'text' => wfMsg('videohandler-remove'),
-			'href' => '#',
-		);
+		global $wgTitle, $wgCityId;
+		
+		// Ignore Video Wiki videos
+		if($wgCityId == VIDEO_WIKI) {
+			return true;
+		}
+		
+		if(WikiaFileHelper::isTitleVideo($wgTitle)) {
+			$file = wfFindFile( $wgTitle );
+
+			if(!$file->isLocal()) {
+				$tabs['actions']['remove'] = array(
+					'class' => 'remove',
+					'text' => wfMsg('videohandler-remove'),
+					'href' => '#',
+				);
+
+			}
+		}		
 		return true;
 	}
 	
