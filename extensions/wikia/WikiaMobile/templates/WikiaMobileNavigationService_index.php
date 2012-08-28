@@ -19,13 +19,13 @@
 	<a href=#wkNavSrh id=wkSrhTgl class=tgl></a>
 	<a href=#wkNavMenu id=wkNavTgl class=tgl></a>
 	<? if ( $wg->EnableUserLoginExt ) : ?>
-		<a href="<?= SpecialPage::getTitleFor( 'UserLogin' )->getLocalURL() ;?>" id=wkPrfTgl class="tgl lgd<?= ($loggedIn ? 'in' : 'out') ?>"><?= ($loggedIn ? AvatarService::renderAvatar( $userName, 25 ) : '') ?></a>
+		<a href="<?= SpecialPage::getTitleFor( 'UserLogin' )->getLocalURL() ;?>" id=wkPrfTgl class="tgl lgd<?= ($loggedIn ? 'in' : 'out') ?>"><?= ($loggedIn ? AvatarService::renderAvatar( $userName, 25 /* This gives me image 50x50 but adds html attributes width and height with values 25*/ ) : '') ?></a>
 	<? endif ; ?>
 	</div>
 	<div id=wkSrh>
 		<form id=wkSrhFrm action="<?= SpecialPage::getSafeTitleFor( 'Search' )->getLocalURL()?>" method=get>
 			<input type=hidden name=fulltext value=Search>
-			<input class=wkInp id=wkSrhInp type=text name=search placeholder="<?= $wf->Msg( 'wikiamobile-search-this-wiki' ); ?>" required=required autocomplete=off>
+			<input class=wkInp id=wkSrhInp type=text name=search placeholder="<?= $wf->Msg( 'wikiamobile-search-this-wiki' ); ?>" required=required autocomplete=off autofocus>
 			<div id=wkClear class='clsIco hide'></div>
 			<input id=wkSrhSub class='wkBtn main' type=submit value='<?= $wf->Msg( 'wikiamobile-search' ); ?>'>
 		</form>
