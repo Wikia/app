@@ -1,41 +1,35 @@
 <?php
-$wgHooks['BeforePageDisplay'][] = 'wfGlobalWikiaCSS';
-$wgHooks['BeforePageDisplay'][] = 'wfGlobalWikiaJS';
+$wgHooks['ResourceLoaderUserModule::getPages'][] = 'wfGlobalWikiaCSSJS';
 
 $wgExtensionCredits['other'][] = array(
 	'name' => 'Global CSS/JS',
-	'author' => '[http://www.wikia.com/wiki/User:Datrio Dariusz Siedlecki]',
+	'author' => array(
+		'[http://www.wikia.com/wiki/User:Datrio Dariusz Siedlecki]',
+		'Wladyslaw Bodzek',
+	),
 	'description' => 'Adds global user CSS and JavaScript to a page, fetched from the Central Wikia.',
   	'version' => "1.0"
   );
 
 /**
- * Adds custom user CSS and JavaScript to a page - Dariusz Siedlecki, datrio@wikia.com
- * @param $out Handle to an OutputPage object (presumably $wgOut).
+ * Adds custom user CSS and JavaScript to a page
+ *
+ * @param $module Module instance
+ * @param $context Resource Loader context
+ * @param $userpage User page title text
+ * @param $pages Pages array to operate on
+ * @return bool True (hook handler)
  */
-function wfGlobalWikiaCSS(OutputPage &$out, Skin &$skin ) {
-	global $wgDisableGlobalCSS, $wgUser;
-	if( !empty( $wgDisableGlobalCSS ) ) {
-		return true;
-	}
-
-	if (!$wgUser->isAnon()) {
-		$userName = str_replace(' ', '_', $wgUser->getName());
-		$out->addStyle("http://community.wikia.com/index.php?title=User:{$userName}/global.css&action=raw&ctype=text/css&smaxage=0");
-	}
-
-	return true;
-}
-
-function wfGlobalWikiaJS(OutputPage &$out, Skin &$skin) {
-	global $wgDisableGlobalJS, $wgJsMimeType, $wgUser;
-	if( !empty( $wgDisableGlobalJS ) ) {
-		return true;
-	}
-
-	if (!$wgUser->isAnon()) {
-		$userName = str_replace(' ', '_', $wgUser->getName());
-		$out->addScript("<script type=\"{$wgJsMimeType}\" src=\"http://community.wikia.com/index.php?title=User:{$userName}/global.js&amp;action=raw&amp;ctype={$wgJsMimeType}\"></script>");
+function wfGlobalWikiaCSSJS( $module, $context, $userpage, &$pages ) {
+	$COMMUNITY_ID = 177;
+	$username = substr( $userpage, strpos( $userpage, ':' ) + 1 );
+	if ( $username ) {
+		$pages = array_merge( array(
+			'globalcss' => array( 'type' => 'style', 'city_id' => $COMMUNITY_ID, 'title' => "User:{$username}/global.css",
+				'originalName' => "w:c:User:{$username}/global.css"),
+			'globaljs'  => array( 'type' => 'script', 'city_id' => $COMMUNITY_ID, 'title' => "User:{$username}/global.js",
+				'originalName' => "w:c:User:{$username}/global.js"),
+		), $pages );
 	}
 
 	return true;

@@ -51,6 +51,7 @@ abstract class ResourceLoaderGlobalWikiModule extends ResourceLoaderWikiModule {
 	}
 
 	protected function getContent( $title, $titleText, $options = array() ) {
+		$content = null;
 		if ( $title instanceof GlobalTitle ) {
 			// todo: think of pages like NS_MAIN:Test/code.js that are pulled
 			// from dev.wikia.com
