@@ -15,7 +15,7 @@ var VideoPage = {
 						defaultButton: true, 
 						message: $.msg('videohandler-remove-video-modal-ok'), 
 						handler: function(){
-							alert('ok');
+							//$.nirvana.sendRequest
 						}
 					},
 					{

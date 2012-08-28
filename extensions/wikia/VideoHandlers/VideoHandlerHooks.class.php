@@ -1,6 +1,8 @@
 <?php
 class VideoHandlerHooks extends WikiaObject{
 
+	const VIDEO_WIKI = 298117;
+	
 	function __construct(){
 		parent::__construct();
 		F::setInstance( __CLASS__, $this );
@@ -225,7 +227,7 @@ class VideoHandlerHooks extends WikiaObject{
 		global $wgTitle, $wgCityId;
 		
 		// Ignore Video Wiki videos
-		if($wgCityId == VIDEO_WIKI) {
+		if($wgCityId == self::VIDEO_WIKI) {
 			return true;
 		}
 		
