@@ -3,6 +3,7 @@ package com.wikia.webdriver.TestCases;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import com.wikia.webdriver.Common.Core.CommonFunctions;
 import com.wikia.webdriver.Common.Core.Global;
 import com.wikia.webdriver.Common.Templates.TestTemplate;
 import com.wikia.webdriver.PageObjects.PageObject.HomePageObject;
@@ -24,8 +25,8 @@ public class HubsTests extends TestTemplate{
 	@DataProvider
 	private static final Object[][] provideHub(){
 		return new Object[][] {
-				{VGHub, "VideoGamesHub", Global.LIVE_DOMAIN+"Video_Games"},
-				{EHub, "EntertainmentHub", Global.LIVE_DOMAIN+"Entertainment"},
+//				{VGHub, "VideoGamesHub", Global.LIVE_DOMAIN+"Video_Games"},
+//				{EHub, "EntertainmentHub", Global.LIVE_DOMAIN+"Entertainment"},
 				{LHub, "LifestyleHub", Global.LIVE_DOMAIN+"Lifestyle"}
 		};
 	}
@@ -34,7 +35,7 @@ public class HubsTests extends TestTemplate{
 //	https://internal.wikia-inc.com/wiki/Hubs/QA/Hubs_Test_Cases#Module_1_.28Mosaic_Slider.29_Test_Cases
 	public void VideoGamesHubTest001(HubBasePageObject Hub, String HubName, String HubURL)
 	{
-					
+		CommonFunctions.MoveCursorTo(0, 0);		
 		home = new HomePageObject(driver);
 		home.openHomePage();				
 		Hub = home.OpenHub(HubName);
@@ -51,7 +52,8 @@ public class HubsTests extends TestTemplate{
 		CurrentLargeImageDescription = Hub.MosaicSliderVerifyLargeImageChangeAndGetCurrentDescription(CurrentLargeImageDescription);
 		Hub.MosaicSliderHoverOverImage(1);
 		CurrentLargeImageDescription = Hub.MosaicSliderVerifyLargeImageChangeAndGetCurrentDescription(CurrentLargeImageDescription);
-			
+		CommonFunctions.MoveCursorTo(0, 0);		
+		
 			
 		home = Hub.BackToHomePage();		
 		
