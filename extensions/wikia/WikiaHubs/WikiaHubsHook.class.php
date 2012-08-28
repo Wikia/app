@@ -30,9 +30,9 @@ class WikiaHubsPopularVideos {
 		
 		//get input data
 		$this->pullData($input);
-		
+
 		$returnString = (string) $app->sendRequest(
-			'RelatedHubsVideos', 
+			'RelatedHubsVideos',
 			'getCarusel',
 			array(
 				'data' => $this->data,
