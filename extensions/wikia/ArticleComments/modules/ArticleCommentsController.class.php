@@ -76,13 +76,7 @@ class ArticleCommentsController extends WikiaController {
 
 		$articleId = $this->request->getVal( 'articleId', null );
 		$page = $this->request->getVal( 'page', 1 );
-		$initSkin = $this->request->getVal( 'skin', false );
 		$title = null;
-
-		// We need to initialize the correct skin if called from AJAX
-		if ( $initSkin ) {
-			$this->app->initSkin( $initSkin );
-		}
 
 		if ( !empty( $articleId ) ) {
 			$title = Title::newFromID( $articleId );
