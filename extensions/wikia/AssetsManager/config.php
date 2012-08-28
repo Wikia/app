@@ -40,6 +40,17 @@ $config['liftium_ads_js'] = array(
 	),
 );
 
+$config['adengine2'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/AdEngine/js/Ad.Util.js',
+		'//extensions/wikia/AdEngine/js/Ad.ProviderOldAdDriver.js',
+		'//extensions/wikia/AdEngine/js/Ad.ProviderEvolve.js',
+		'//extensions/wikia/AdEngine/js/Ad.Logic.js',
+		'//extensions/wikia/AdEngine/js/Ad.Loader.js',
+	),
+);
+
 $config['oasis_ads_js'] = array(
     'type' => AssetsManager::TYPE_JS,
     'assets' => array(
@@ -55,12 +66,9 @@ $config['oasis_ads_js'] = array(
 		'//extensions/wikia/AdEngine/ghost/gw-11.6.7/lib/gw.min.js',
 
 		'#group_liftium_ads_js',
+		'#group_adengine2',
 
 		'//extensions/wikia/AdEngine/liftium/AdsInContent.js',
-		'//extensions/wikia/AdEngine/AdProviderAdEngine2.js',
-		'//extensions/wikia/AdEngine/AdProviderEvolve.js',
-		'//extensions/wikia/AdEngine/AdProviderAdDriver2.js',
-		'//extensions/wikia/AdEngine/AdEngine2.js',
 		'//extensions/wikia/AdEngine/AdDriver.js',
 		'//extensions/wikia/AdEngine/AdDriverGP.js',
     )
