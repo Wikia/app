@@ -253,6 +253,10 @@ public class BasePageObject{
 	{
 		wait.until(CommonExpectedConditions.elementToBeClickable(element));
 	}
+	public void waitForElementNotClickableByElement(WebElement element)
+	{
+		wait.until(CommonExpectedConditions.elementNotToBeClickable(element));
+	}
 	
 	public void waitForElementById(String id)
 	{
@@ -267,6 +271,10 @@ public class BasePageObject{
 	public void waitForValueToNotBePresentInElementsAttributeByCss(String selector, String attribute, String value)
 	{
 		wait.until(CommonExpectedConditions.valueToNotBePresentInElementsAttribute(By.cssSelector(selector), attribute, value));
+	}
+	public void waitForTextToBePresentInElementByElement(WebElement element, String text) {
+		wait.until(CommonExpectedConditions.textToBePresentInElement(element, text));
+		
 	}
 
 	public void waitForClassRemovedFromElement(WebElement element, String className)

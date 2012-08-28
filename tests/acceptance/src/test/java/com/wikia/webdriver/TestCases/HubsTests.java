@@ -5,6 +5,7 @@ import org.testng.annotations.Test;
 
 import com.wikia.webdriver.Common.Core.CommonFunctions;
 import com.wikia.webdriver.Common.Core.Global;
+import com.wikia.webdriver.Common.Properties.Properties;
 import com.wikia.webdriver.Common.Templates.TestTemplate;
 import com.wikia.webdriver.PageObjects.PageObject.HomePageObject;
 import com.wikia.webdriver.PageObjects.PageObject.HubBasePageObject;
@@ -25,13 +26,13 @@ public class HubsTests extends TestTemplate{
 	@DataProvider
 	private static final Object[][] provideHub(){
 		return new Object[][] {
-//				{VGHub, "VideoGamesHub", Global.LIVE_DOMAIN+"Video_Games"},
-//				{EHub, "EntertainmentHub", Global.LIVE_DOMAIN+"Entertainment"},
+				{VGHub, "VideoGamesHub", Global.LIVE_DOMAIN+"Video_Games"},
+				{EHub, "EntertainmentHub", Global.LIVE_DOMAIN+"Entertainment"},
 				{LHub, "LifestyleHub", Global.LIVE_DOMAIN+"Lifestyle"}
 		};
 	}
 	
-	@Test(dataProvider = "provideHub")
+	@Test(dataProvider = "provideHub", groups= {"HubsTests001"})
 //	https://internal.wikia-inc.com/wiki/Hubs/QA/Hubs_Test_Cases#Module_1_.28Mosaic_Slider.29_Test_Cases
 	public void VideoGamesHubTest001(HubBasePageObject Hub, String HubName, String HubURL)
 	{
@@ -39,8 +40,7 @@ public class HubsTests extends TestTemplate{
 		home = new HomePageObject(driver);
 		home.openHomePage();				
 		Hub = home.OpenHub(HubName);
-		Hub.verifyURL(HubURL);
-		
+		Hub.verifyURL(HubURL);	
 		Hub.MosaicSliderVerifyHasImages();
 		Hub.MosaicSliderHoverOverImage(5);
 		String CurrentLargeImageDescription = Hub.MosaicSliderGetCurrentLargeImageDescription();
@@ -52,36 +52,73 @@ public class HubsTests extends TestTemplate{
 		CurrentLargeImageDescription = Hub.MosaicSliderVerifyLargeImageChangeAndGetCurrentDescription(CurrentLargeImageDescription);
 		Hub.MosaicSliderHoverOverImage(1);
 		CurrentLargeImageDescription = Hub.MosaicSliderVerifyLargeImageChangeAndGetCurrentDescription(CurrentLargeImageDescription);
-		CommonFunctions.MoveCursorTo(0, 0);		
-		
-			
-		home = Hub.BackToHomePage();		
-		
-		
+		CommonFunctions.MoveCursorTo(0, 0);							
+		home = Hub.BackToHomePage();					
 	}
 	
-//	@Test(dataProvider = "provideHub")
+	@Test(dataProvider = "provideHub", groups= {"HubsTests002"})
+//	https://internal.wikia-inc.com/wiki/Hubs/QA/Hubs_Test_Cases#Module_2_.28News_Tabs.29_Test_Cases
 	public void VideoGamesHubTest002(HubBasePageObject Hub, String HubName, String HubURL)
-	{
-		
-		
+	{	
+		CommonFunctions.MoveCursorTo(0, 0);				
 		home = new HomePageObject(driver);
-		home.openHomePage();
-		
+		home.openHomePage();		
 		Hub = home.OpenHub(HubName);
-		Hub.verifyURL(HubURL);
-		
-		Hub.ClickOnNewsTab(2);
+		Hub.verifyURL(HubURL);	
+		Hub.VerifyNewsTabsPresence(1);	
 		Hub.ClickOnNewsTab(3);
+		Hub.VerifyNewsTabsPresence(3);
+		Hub.ClickOnNewsTab(2);
+		Hub.VerifyNewsTabsPresence(2);
 		Hub.ClickOnNewsTab(1);
+		Hub.VerifyNewsTabsPresence(1);	
+		home = Hub.BackToHomePage();						
+	}
+	
+	@Test(dataProvider = "provideHub", groups= {"HubsTests003"})
+//	https://internal.wikia-inc.com/wiki/Hubs/QA/Hubs_Test_Cases#Module_3_.28Videos_Module.29_Test_Cases
+	public void VideoGamesHubTest003(HubBasePageObject Hub, String HubName, String HubURL)
+	{	
+		CommonFunctions.MoveCursorTo(0, 0);				
+		home = new HomePageObject(driver);
+		home.openHomePage();		
+		Hub = home.OpenHub(HubName);
+		Hub.verifyURL(HubURL);		
+		Hub.VerifyRelatedVideosPresence();	
 		Hub.RelatedVideosScrollRight();
-		Hub.RelatedVideosScrollLeft();
+		Hub.VerifyRelatedVideosPresence();	
+		Hub.RelatedVideosScrollRight();	
+		Hub.VerifyRelatedVideosPresence();	
+		Hub.RelatedVideosScrollLeft();		
+		Hub.VerifyRelatedVideosPresence();	
+		Hub.RelatedVideosScrollLeft();		
+		Hub.VerifyRelatedVideosPresence();			
+		Hub.ClickOnRelatedVideo(1);
+		Hub.VerifyVideoPlayerAppeared();
+		Hub.Click_X_toCloseVideoPlayer();		
+		Hub.RelatedVideosScrollRight();	
+		Hub.VerifyRelatedVideosPresence();	
+		Hub.ClickOnRelatedVideo(2);
+		Hub.VerifyVideoPlayerAppeared();
+		Hub.Click_X_toCloseVideoPlayer();		
+		CommonFunctions.logIn(Properties.userName2, Properties.password2);
+		Hub.ClickSuggestAVideo();
+		Hub.VerifySuggestAVideoModalAppeared();
+		Hub.VerifySuggestAVideoModalTopic("Suggest a Video");
+		Hub.Click_Cancel_toCloseSuggestAVideo();
+		Hub.ClickSuggestAVideo();
+		Hub.VerifySuggestAVideoModalAppeared();
+		Hub.VerifySuggestAVideoModalTopic("Suggest a Video");
+		Hub.Click_X_toCloseSuggestAVideo();
+		Hub.ClickSuggestAVideo();
+		Hub.VerifySuggestAVideoModalAppeared();
+		Hub.VerifySuggestAVideoModalTopic("Suggest a Video");
+		Hub.VerifySuggestVideoButtonNotClickable();
+		Hub.SuggestVideoTypeIntoWhatVideoField("random text");
+		Hub.SuggestVideoTypeIntoWhichWikiField("random text");
+		Hub.VerifySuggestVideoButtonClickable();
 		
-		
-		home = Hub.BackToHomePage();
-		
-		
-		
+		home = Hub.BackToHomePage();						
 	}
 	
 }

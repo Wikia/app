@@ -23,13 +23,37 @@ public class HubBasePageObject extends BasePageObject{
 	private WebElement SearchField;
 	@FindBy(css="form.WikiaSearch button.wikia-button") 
 	private WebElement SearchButton;
-	
+	@FindBy(css="form.WikiaSearch button.wikia-button") 
+	private WebElement NewsTabsNav;
+	@FindBy(css="section.modalWrapper") 
+	private WebElement VideoPlayer;
+	@FindBy(css="button.wikia-chiclet-button img") 
+	private WebElement modalWrapper_X_CloseButton;
+	@FindBy(css="button.cancel") 
+	private WebElement modalWrapper_Cancel_CloseButton;
+	@FindBy(css="button[id='suggestVideo']") 
+	private WebElement suggestVideoButton;
+	@FindBy(css="section.modalWrapper") 
+	private WebElement suggestVideoModal;
+	@FindBy(css="section.modalWrapper h1") 
+	private WebElement suggestVideoModalTopic;
+	@FindBy(css="div.videourl input") 
+	private WebElement suggestVideoWhatVideoInput;
+	@FindBy(css="div.wikiname input") 
+	private WebElement suggestVideoWhichWikiInput;
+	@FindBy(css="button.submit") 
+	private WebElement submitButton;
+		
 	By MosaicSliderLargeImageDescription = By.cssSelector("div.wikia-mosaic-slider-description span.description-more");
+	By NewsTabsList = By.cssSelector("div.tabbertab");
+	By RelatedVideosList = By.cssSelector("div.container div.item");
 	
+	int RVmoduleCurrentVideosSet;
 	
 	public HubBasePageObject(WebDriver driver) {
 		super(driver);
 		PageFactory.initElements(driver, this);
+		RVmoduleCurrentVideosSet = 1;
 	}
 
 	public void ClickOnNewsTab(int TabNumber) {
@@ -41,12 +65,16 @@ public class HubBasePageObject extends BasePageObject{
 	}
 	public void RelatedVideosScrollLeft() {
 		PageObjectLogging.log("RelatedVideosScrollLeft", "RV module: scroll left", true, driver);
+		waitForElementClickableByElement(RelatedVideosScrollLeft);
 		RelatedVideosScrollLeft.click();
+		--RVmoduleCurrentVideosSet;
 		}
 	
 	public void RelatedVideosScrollRight() {
 		PageObjectLogging.log("RelatedVideosScrollRight", "RV module: scroll right", true, driver);
+		waitForElementClickableByElement(RelatedVideosScrollRight);
 		RelatedVideosScrollRight.click();
+		++RVmoduleCurrentVideosSet;
 	}
 	public HomePageObject BackToHomePage() {
 		PageObjectLogging.log("navigate to www.wikia.com", "", true, driver);
@@ -162,6 +190,191 @@ public class HubBasePageObject extends BasePageObject{
 		return CurrentDescription;
 	}
 
+	/**
+	 * Verify that News tabs bar is present and content of newstab number n is present as well
+	 *
+	 * @param  n number of the tab n={1,2,3}
+	 * @author Michal Nowierski
+	 *
+	 */
+	public void VerifyNewsTabsPresence(int n) {
+		PageObjectLogging.log("VerifyNewsTabsPresence", "Verify that News tabs bar is present and content of newstab number '"+n+"' is present as well", true, driver);
+		waitForElementByElement(NewsTabsNav);
+		List<WebElement> NewsTabs = driver.findElements(NewsTabsList);
+		WebElement NewsTab = NewsTabs.get(n-1);
+		waitForElementByElement(NewsTab);
+		
+	}
+
+	/**
+	 * Verify that given  set of videos appears in Related Videos
+	 *
+	 * @param  n number of the tab n={1,2,3,4 (...)}
+	 * @author Michal Nowierski
+	 *
+	 */
+	public void VerifyRelatedVideosPresence() {
+		int n = RVmoduleCurrentVideosSet;
+		PageObjectLogging.log("VerifyRelatedVideosPresence", "Verify that News tabs bar is present and content of newstab number '"+n+"' is present as well", true, driver);
+		waitForElementByBy(RelatedVideosList);
+		List<WebElement> NewsTabs = driver.findElements(RelatedVideosList);
+		WebElement Video1 = NewsTabs.get(3*n-1);
+		waitForElementByElement(Video1);
+		WebElement Video2 = NewsTabs.get(3*n-2);
+		waitForElementByElement(Video2);
+		WebElement Video3 = NewsTabs.get(3*n-3);
+		waitForElementByElement(Video3);				
+	}
+
+	public void ClickOnRelatedVideo(int i) {
+		int n = RVmoduleCurrentVideosSet;
+		PageObjectLogging.log("ClickOnRelatedVideo", "Click on related video number "+i+"' is present as well", true, driver);
+		waitForElementByBy(RelatedVideosList);
+		List<WebElement> NewsTabs = driver.findElements(RelatedVideosList);
+		WebElement Video = NewsTabs.get(3*n-4+i);
+		waitForElementByElement(Video);
+		waitForElementClickableByElement(Video);	
+		Video.click();
+	}
+
+	/**
+	 * Verify that video player appeared
+	 * 
+	 * @author Michal Nowierski
+	 */
+	public void VerifyVideoPlayerAppeared() {
+		PageObjectLogging.log("VerifyVideoPlayerAppeared", "Verify that video player appeared", true, driver);
+		waitForElementByElement(VideoPlayer);
+		
+	}
+
+	/**
+	 * Click on [x] to close video player
+	 * 
+	 * @author Michal Nowierski
+	 */
+	public void Click_X_toCloseVideoPlayer() {
+		PageObjectLogging.log("Click_X_toCloseVideoPlayer", "Click on [x] to close video player", true, driver);
+		closeModalWrapper();		
+	}
+
+	/**
+	 * Click on suggest video button
+	 * 
+	 * @author Michal Nowierski
+	 */
+	public void ClickSuggestAVideo() {
+		PageObjectLogging.log("ClickSuggestAVideo", "Click on suggest video button", true, driver);
+		waitForElementByElement(suggestVideoButton);
+		CommonFunctions.scrollToElement(suggestVideoButton);
+		waitForElementClickableByElement(suggestVideoButton);	
+		suggestVideoButton.click();
+		
+	}
+
+	/**
+	 * Verify that suggest a video modal appeared
+	 * 
+	 * @author Michal Nowierski
+	 */
+	public void VerifySuggestAVideoModalAppeared() {
+		PageObjectLogging.log("VerifyVideoPlayerAppeared", "Verify that suggest a video modal appeared", true, driver);
+		waitForElementByElement(suggestVideoModal);
+		
+	}
+
+	/**
+	 * Verify that suggest a video modal appeared
+	 * 
+	 * @author Michal Nowierski
+	 */
+	public void VerifySuggestAVideoModalTopic(String topic) {
+		PageObjectLogging.log("VerifySuggestAVideoModalTopic", "Verify that suggest a video modal has topic: "+topic, true, driver);
+		waitForElementByElement(suggestVideoModalTopic);
+		waitForTextToBePresentInElementByElement(suggestVideoModalTopic, topic);
+		
+	}
+	
+	/**
+	 * Click on [x] to close suggest a video modal
+	 * 
+	 * @author Michal Nowierski
+	 */
+	public void Click_X_toCloseSuggestAVideo() {
+		PageObjectLogging.log("Click_X_toCloseSuggestAVideo", "Click on [x] to close suggest a video modal", true, driver);
+		closeModalWrapper();		
+	}
+	
+	/**
+	 * Click on Cancel to close suggest a video modal
+	 * 
+	 * @author Michal Nowierski
+	 */
+	public void Click_Cancel_toCloseSuggestAVideo() {
+		PageObjectLogging.log("Click_X_toCloseSuggestAVideo", "Click on Cancel to close suggest a video modal", true, driver);
+		waitForElementByElement(modalWrapper_Cancel_CloseButton);
+		waitForElementClickableByElement(modalWrapper_Cancel_CloseButton);	
+		modalWrapper_Cancel_CloseButton.click();		
+	}
+	
+	/**
+	 * Close modal wrapper. Modal wrapper can be e.g 'video player' or 'suggest a video modal'.
+	 * 
+	 * @author Michal Nowierski
+	 */	
+	private void closeModalWrapper() {
+		waitForElementByElement(modalWrapper_X_CloseButton);
+		waitForElementClickableByElement(modalWrapper_X_CloseButton);	
+		modalWrapper_X_CloseButton.click();
+	}
+
+	/**
+	 * Verify that Suggest Video button is disabled
+	 * 
+	 * @author Michal Nowierski
+	 */	
+	public void VerifySuggestVideoButtonNotClickable() {
+		PageObjectLogging.log("VerifySuggestVideoButtonNotClickable", "Verify that Suggest Video button is disabled", true, driver);
+		waitForElementByElement(submitButton);
+		waitForElementNotClickableByElement(submitButton);
+		
+	}
+	
+	/**
+	 * Verify that Suggest Video button is enabled
+	 * 
+	 * @author Michal Nowierski
+	 */	
+	public void VerifySuggestVideoButtonClickable() {
+		PageObjectLogging.log("VerifySuggestVideoButtonNotClickable", "Verify that Suggest Video button is enabled", true, driver);
+		waitForElementByElement(submitButton);
+		waitForElementClickableByElement(submitButton);
+		
+	}
+
+	/**
+	 * Type text into 'What Video' field on 'Suggest Video Modal'
+	 * 
+	 * @author Michal Nowierski
+	 */	
+	public void SuggestVideoTypeIntoWhatVideoField(String text) {
+		PageObjectLogging.log("SuggestVideoTypeIntoWhatVideoField", "Type '"+text+"' into 'What Video' field on 'Suggest Video Modal'", true, driver);
+		waitForElementByElement(suggestVideoWhatVideoInput);
+		suggestVideoWhatVideoInput.sendKeys(text);
+		
+	}
+	
+	/**
+	 * Type text into 'Which Wiki' field on 'Suggest Video Modal'
+	 * 
+	 * @author Michal Nowierski
+	 */	
+	public void SuggestVideoTypeIntoWhichWikiField(String text) {
+		PageObjectLogging.log("SuggestVideoTypeIntoWhatVideoField", "Type '"+text+"' into 'Which Wiki' field on 'Suggest Video Modal'", true, driver);
+		waitForElementByElement(suggestVideoWhichWikiInput);
+		suggestVideoWhichWikiInput.sendKeys(text);
+		
+	}
 }
 
 

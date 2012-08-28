@@ -74,39 +74,13 @@ public class WikiArticleEditMode extends WikiArticlePageObject {
 	private WebElement ImageOnPreview;
 
 	
-//	private By AddPhotoButton = By.cssSelector("div.details input");	
-//	private By AddThisPhotoLink = By.cssSelector("tr.ImageUploadFindLinks td a");
-//	private By PreviewButton = By.cssSelector("div.module_content nav.buttons nav.wikia-menu-button a");
-//	private By ImageOnPreview = By.cssSelector("section.modalWrapper.preview section.modalContent figure a img");
 	private By CaptionInPreview = By.cssSelector("section.modalWrapper.preview section.modalContent figcaption");
-//	private By PublishButtonPreview = By.cssSelector("div.neutral.modalToolbar a[id='publish']");
-//	private By PublishButtonGeneral = By.cssSelector("input.control-button");
-//	private By SourceModeButton = By.cssSelector("span.cke_button_ModeSource");
-//	private By VisualModeButton = By.cssSelector("span.cke_button_ModeWysiwyg ");
-//	private By ModifyButton = By.cssSelector("span.RTEMediaOverlayEdit");
-//	private By RemoveButton = By.cssSelector("span.RTEMediaOverlayDelete");
-//	private By CancelImageRemovalButton = By.cssSelector("div.RTEConfirmButtons a[id='RTEConfirmCancel'] span");
 	private By RemovePhotoDialog = By.cssSelector("section.modalWrapper.RTEModal");
-//	private By OKbutton = By.cssSelector("a[id='RTEConfirmOk'] span");
 	private By ImageOnArticleEditMode = By.cssSelector("div.WikiaArticle figure a img");
-//	private By ObjectModal = By.cssSelector("section[id='WikiaPhotoGalleryEditor']");
 	private By GalleryDialogPhotosList = By.cssSelector("ul.WikiaPhotoGalleryResults li input");
 	private By GalleryDialogPhotoOrientationsList = By.cssSelector("ul.clearfix[id='WikiaPhotoGalleryOrientation'] li");
 	private By GalleryDialogSlideshowOrientationsList = By.cssSelector("ul.clearfix[id='WikiaPhotoGallerySliderType'] li");
-//	private By GalleryDialogSelectButton = By.cssSelector("a[id='WikiaPhotoGallerySearchResultsSelect']");
-//	private By GalleryDialogFinishButton = By.cssSelector("a[id='WikiaPhotoGalleryEditorSave']");
-//	private By IframeVisualEditor = By.cssSelector("div.cke_wrapper.cke_ltr div.cke_contents iframe");
-//	private By VideoModalInput = By.cssSelector("input[id='VideoEmbedUrl']");
-//	private By VideoNextButton = By.cssSelector("a[id='VideoEmbedUrlSubmit']");
-//	private By VideoAddVideoButton = By.cssSelector("tr.VideoEmbedNoBorder input.wikia-button");
-//	private By VideoReturnToEditing = By.cssSelector("div[id='VideoEmbed'] input[value='Return to editing']");
-//	private By VideoCaptionTextArea = By.cssSelector("input[id='VideoEmbedCaption']");
-//	private By VideoInEditMode = By.cssSelector("img.video");
-//	private By VideoOnPreview = By.cssSelector("div.ArticlePreview span.Wikia-video-play-button");
-	
-//	private String CSS_RemovePhotoDialog = "section.modalWrapper.RTEModal";
-//	private String CSS_ImageOnPage = "div.WikiaArticle figure a img";
-	
+
 	public WikiArticleEditMode(WebDriver driver, String Domain,
 			String articlename) {
 		super(driver, Domain, articlename);
