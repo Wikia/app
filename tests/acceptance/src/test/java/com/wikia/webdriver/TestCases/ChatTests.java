@@ -68,8 +68,8 @@ public class ChatTests extends TestTemplate_Two_Drivers{
     3. If user is an admin there should be also: Give ChatMod status and Kickban (if clicked user is not a chat moderator or admin).
 	 */
 	
-	@Test
-	public void Chat_002_changes_in_drop_down_menu()
+//	@Test
+	public void Chat_002_changes_in_drop_down_menu_1()
 	{
 		//first user opens the chat
 		HomePageObject home = new HomePageObject(driver);
@@ -82,13 +82,38 @@ public class ChatTests extends TestTemplate_Two_Drivers{
 		CommonFunctions.logIn(Properties.userName2, Properties.password2, driver2);
 		ChatPageObject chat2 = new ChatPageObject(driver2);
 		chat2.openChatPage();
-//		chat1.driver.manage().window().
-//		driver.switchTo().window(Global.BROWSER_HANDLER_1);
 		chat1.openChatPage();
 		chat1.verifyChatPage();
 		chat1.clickOnDifferentUser(Properties.userName2, driver);
-		chat1.verifyNormalUserDropdown(chat1.getDropDownListOfElements());
-				
+		chat1.verifyNormalUserDropdown();
+	}
+	
+	/*
+	 *   Test 4: Changes in drop-down menu #2
+	1. There are two users in the chat room: user A and user B. User B private message are blocked by user A.
+    2. User A clicks with a left mouse button on user B name. Drop-down menu appears.
+    3. There are three options to choose: User Profile, Contributions, Allow Private Messages.
+    4. If user A is an admin there should be also Give ChatMod status and Kickban (if clicked user is not a chat moderator or admin). 
+	 */
+	
+	@Test
+	public void Chat_003_changes_in_drop_down_menu_2()
+	{
+		//first user opens the chat
+		HomePageObject home = new HomePageObject(driver);
+		home.openHomePage();
+		CommonFunctions.logIn(Properties.userName, Properties.password, driver);
+		ChatPageObject chat1 = new ChatPageObject(driver);
+		//second user opens the chat		
+		HomePageObject home2 = new HomePageObject(driver2);
+		home2.openHomePage();
+		CommonFunctions.logIn(Properties.userName2, Properties.password2, driver2);
+		ChatPageObject chat2 = new ChatPageObject(driver2);
+		chat2.openChatPage();
+		chat1.openChatPage();
+		chat1.verifyChatPage();
+		chat1.blockPrivateMessageFromUser(Properties.userName2, driver);
+		chat1.verifyBlockedUserDropdown();
 	}
 
 	

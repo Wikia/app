@@ -35,6 +35,10 @@ public class ChatPageObject extends BasePageObject
 	private WebElement userName;
 	@FindBy(css="div.User img")
 	private WebElement userAvatar;
+	@FindBy(css="li.private")
+	private WebElement privateMassageButton;
+	@FindBy(css="li.private-allow")
+	private WebElement allowPrivateMassageButton;
 	
 	By userContextMenu = By.cssSelector("ul.regular-actions li");
 	
@@ -90,19 +94,70 @@ public class ChatPageObject extends BasePageObject
 		PageObjectLogging.log("clickOnDifferentUser", userName+" button clicked", true, driver);
 	}
 	
+	public void selectPrivateMessage(WebDriver driver)
+	{
+		waitForElementByElement(privateMassageButton);
+		Point p = privateMassageButton.getLocation();
+		CommonFunctions.MoveCursorToElement(p, driver);
+		CommonFunctions.ClickElement();
+		PageObjectLogging.log("selectPrivateMessage", "private message selected from dropdown", true, driver);
+	}
+	
+	
+	public void blockPrivateMessageFromUser(String userName, WebDriver driver)
+	{
+		clickOnDifferentUser(userName, driver);
+		selectPrivateMessage(driver);
+		
+		By privateMessagesUserButton = By.xpath("//li[@id='priv-user-"+userName+"']/span");
+		waitForElementByBy(privateMessagesUserButton);
+		WebElement e = driver.findElement(privateMessagesUserButton);
+		Point p = e.getLocation();
+		CommonFunctions.MoveCursorToElement(p, driver);		
+		CommonFunctions.ClickElement();
+		CommonFunctions.ClickElement();
+		waitForElementByBy(userContextMenu);
+		PageObjectLogging.log("blockPrivateMessageFromUser", "private messages from "+userName+" are blocked now", true, driver);
+	}
+	
+	public void allowPrivateMessageFromUser(String userName, WebDriver driver)
+	{
+		Point p = allowPrivateMassageButton.getLocation();
+		CommonFunctions.MoveCursorToElement(p, driver);
+		CommonFunctions.ClickElement();
+		waitForElementByBy(By.xpath("//li[@id='priv-user-"+userName+"']"));
+		PageObjectLogging.log("allowPrivateMessageFromUser", "private messages from "+userName+" are allowed now", true, driver);
+	}
+	
 	/*change to private if public*/
-	public List<WebElement> getDropDownListOfElements()
+	private  List<WebElement> getDropDownListOfElements()
 	{
 		List<WebElement> list = driver.findElements(userContextMenu); 
 		return list;		
 	}
 	
-	public void verifyNormalUserDropdown(List<WebElement> list)
+	public void verifyNormalUserDropdown()
 	{
+		List<WebElement> list = getDropDownListOfElements();
 		for (int i=0; i<list.size(); i++)
 		{
-			System.out.println(list.get(i));	
+			System.out.println(list.get(i).getAttribute("class"));	
 		}
+		CommonFunctions.assertString("message-wall", list.get(0).getAttribute("class"));
+		CommonFunctions.assertString("contribs", list.get(1).getAttribute("class"));
+		CommonFunctions.assertString("private", list.get(2).getAttribute("class"));	
+	}
+	
+	public void verifyBlockedUserDropdown()
+	{
+		List<WebElement> list = getDropDownListOfElements();
+		for (int i=0; i<list.size(); i++)
+		{
+			System.out.println(list.get(i).getAttribute("class"));	
+		}
+		CommonFunctions.assertString("message-wall", list.get(0).getAttribute("class"));
+		CommonFunctions.assertString("contribs", list.get(1).getAttribute("class"));
+		CommonFunctions.assertString("private-allow", list.get(2).getAttribute("class"));	
 	}
 	
 	
