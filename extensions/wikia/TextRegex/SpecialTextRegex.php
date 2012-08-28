@@ -25,8 +25,7 @@ class TextRegex extends SpecialPage {
 		global $wgOut, $wgUser, $wgRequest, $wgLang;
 
 		if ( $wgUser->isBlocked() ) {
-			$wgOut->blockedPage();
-			return;
+			throw new UserBlockedError( $this->getUser()->mBlock );
 		}
 		if ( wfReadOnly() ) {
 			$wgOut->readOnlyPage();
@@ -280,11 +279,11 @@ class TextRegexList {
 	/* init for showprevnext */
 	function showPrevNext( &$out, $display = 1 ) {
 		global $wgLang;
-		$html = $wgLang->viewPrevNext( 
-			SpecialPage::getTitleFor( 'TextRegex/'.$this->subList ), 
-			$this->offset, 
-			$this->limit, 
-			array(), 
+		$html = $wgLang->viewPrevNext(
+			SpecialPage::getTitleFor( 'TextRegex/'.$this->subList ),
+			$this->offset,
+			$this->limit,
+			array(),
 			($this->numResults - $this->offset) <= $this->limit
 		);
 
@@ -311,11 +310,11 @@ class TextRegexList {
 			}
 			$filter = 'action=stats&id=' . urlencode($regex_id);
 
-			$pager = $wgLang->viewPrevNext( 
-				SpecialPage::getTitleFor( 'TextRegex/'.$this->subList ), 
-				$this->offset, 
-				$this->limit, 
-				wfCgiToArray( $filter ), 
+			$pager = $wgLang->viewPrevNext(
+				SpecialPage::getTitleFor( 'TextRegex/'.$this->subList ),
+				$this->offset,
+				$this->limit,
+				wfCgiToArray( $filter ),
 				($numStatResults - $this->offset) <= $this->limit
 			);
 

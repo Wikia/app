@@ -87,9 +87,7 @@ class SpecialBatchUserRights extends SpecialPage {
 
 		// check if user is blocked -- see rt#19111
 		if ( $wgUser->isBlocked() ) {
-			global $wgOut;
-			$wgOut->blockedPage();
-			return;
+			throw new UserBlockedError( $this->getUser()->mBlock );
 		}
 
 		if ( wfReadOnly() ) {

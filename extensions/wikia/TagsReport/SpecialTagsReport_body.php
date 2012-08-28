@@ -24,8 +24,7 @@ class TagsReportPage extends SpecialPage {
 		global $wgUser, $wgOut, $wgRequest;
 
 		if( $wgUser->isBlocked() ) {
-			$wgOut->blockedPage();
-			return;
+			throw new UserBlockedError( $this->getUser()->mBlock );
 		}
 		if( wfReadOnly() ) {
 			$wgOut->readOnlyPage();

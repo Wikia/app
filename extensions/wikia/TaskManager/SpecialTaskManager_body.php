@@ -45,8 +45,7 @@ class TaskManagerPage extends SpecialPage {
 		global $wgUser, $wgOut, $wgRequest, $wgWikiaBatchTasks;
 
 		if ( $wgUser->isBlocked() ) {
-			$wgOut->blockedPage();
-			return;
+			throw new UserBlockedError( $this->getUser()->mBlock );
 		}
 		if ( wfReadOnly() ) {
 			$wgOut->readOnlyPage();

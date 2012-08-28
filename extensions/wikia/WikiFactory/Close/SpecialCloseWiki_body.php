@@ -57,8 +57,7 @@ class CloseWikiPage extends SpecialPage {
 
 		$fail = false;
 		if( $wgUser->isBlocked() ) {
-			$wgOut->blockedPage();
-			$fail = true;
+			throw new UserBlockedError( $this->getUser()->mBlock );
 		}
 
 		if( wfReadOnly() ) {

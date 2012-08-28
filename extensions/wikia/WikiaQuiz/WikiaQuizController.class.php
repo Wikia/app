@@ -153,8 +153,7 @@ class WikiaQuizController extends WikiaController {
 		global $wgUser, $wgOut;
 
 		if ($wgUser->isBlocked()) {
-			$wgOut->blockedPage();
-			return false;
+			throw new UserBlockedError( $this->getUser()->mBlock );
 		}
 		if (!$wgUser->isAllowed('wikiaquiz')) {
 			$wgOut->permissionRequired( "" );

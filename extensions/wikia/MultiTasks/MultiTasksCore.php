@@ -199,8 +199,7 @@ class MultiTask extends SpecialPage {
 		}
 
 		if ( $wgUser->isBlocked() ) {
-			$wgOut->blockedPage();
-			$res = false;
+			throw new UserBlockedError( $this->getUser()->mBlock );
 		}
 
 		if ( !$wgUser->isAllowed( $this->mRights ) ) {

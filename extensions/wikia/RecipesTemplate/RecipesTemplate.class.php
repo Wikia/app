@@ -572,11 +572,9 @@ abstract class RecipesTemplate extends SpecialPage {
 
 		// perform initial checks
 		if ($wgUser->isBlocked()) {
-			$wgOut->blockedPage();
-
 			self::log(__METHOD__, 'user is blocked');
 			wfProfileOut(__METHOD__);
-			return;
+			throw new UserBlockedError( $this->getUser()->mBlock );
 		}
 
 		if (wfReadOnly()) {
