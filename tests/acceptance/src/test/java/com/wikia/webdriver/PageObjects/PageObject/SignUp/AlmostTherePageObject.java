@@ -7,17 +7,15 @@ import org.openqa.selenium.support.PageFactory;
 
 import com.wikia.webdriver.Common.Core.MailFunctions;
 import com.wikia.webdriver.Common.Logging.PageObjectLogging;
+import com.wikia.webdriver.Common.Properties.Properties;
 import com.wikia.webdriver.PageObjects.PageObject.BasePageObject;
 
 public class AlmostTherePageObject extends BasePageObject
 {
 
 	
-//	@FindBy(css="h2:contains('Almost there')")
 	@FindBy(xpath="//h2[contains(text(), 'Almost there')]")
 	private WebElement almostThereText; 
-	@FindBy(xpath="//div[@class='general-messaging']/b[contains(text(), 'webdriverseleniumwikia@gmail.com')]")
-	private WebElement email;
 	@FindBy(css="h1.wordmark a[href='/Wikia']")
 	private WebElement wikiaWordmark;
 	@FindBy(css="input.link[value='Send me another confirmation email']")
@@ -51,7 +49,7 @@ public class AlmostTherePageObject extends BasePageObject
 	 */
 	private void verifyEmailSentText()
 	{
-		waitForElementByElement(email);
+		waitForElementByCss("//div[@class='general-messaging']/b[contains(text(), '"+Properties.email+"");
 		PageObjectLogging.log("verifyEmailSentText", "Email sent text visible", true);
 	}
 	
@@ -99,7 +97,7 @@ public class AlmostTherePageObject extends BasePageObject
 	 */
 	private String getActivationLinkFromMail()
 	{
-		String www = MailFunctions.getActivationLinkFromMailContent(MailFunctions.getFirstMailContent());
+		String www = MailFunctions.getActivationLinkFromMailContent(MailFunctions.getFirstMailContent(Properties.email, Properties.emailPassword));
 		www = www.replace("=", "");
 		PageObjectLogging.log("getActivationLinkFromMail", "activation link is visible in email content: "+www, true);
 		return www;
