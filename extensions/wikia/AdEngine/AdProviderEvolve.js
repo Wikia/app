@@ -5,6 +5,8 @@ var AdProviderEvolve = my.Class(AdProviderAdEngine2, {
 	fillInSlot:function (slot) {
 		this.log('fillInSlot', slot);
 
+		WikiaTracker.trackAdEvent('liftium.slot', {'ga_category':'slot/' + slot[1], 'ga_action':slot[0], 'ga_label':'evolve'}, 'ga');
+
 		var url = this.getUrl(slot[0], slot[1]);
 		var self = this;
 		ghostwriter(
@@ -73,6 +75,8 @@ var AdProviderEvolve = my.Class(AdProviderAdEngine2, {
 		var size = this.slotMap[slotname].size || '0x0';
 		this.log('hop', [slotname, size]);
 
+		WikiaTracker.trackAdEvent('liftium.hop', {'ga_category':'hop/evolve', 'ga_action':'slot ' + slotname, 'ga_label':'9.9' /* FIXME Liftium.formatTrackTime(time, 5) */}, 'ga');
+
 		//LiftiumOptions.placement = slotname;
 		var script = this.getLiftiumCallScript(slotname, size);
 		this.log(script);
@@ -89,6 +93,7 @@ var AdProviderEvolve = my.Class(AdProviderAdEngine2, {
 				}
 			}
 		); // TODO get rid of ghostscript (inject iframe + call liftium)
+		// TODO check AIC2 for an example
 	},
 
 	// dart has problems with sending back scripts based on key-val %p

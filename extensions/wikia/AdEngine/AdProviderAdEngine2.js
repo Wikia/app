@@ -5,6 +5,8 @@ var AdProviderAdEngine2 = my.Class({
 	fillInSlot:function (slot) {
 		this.log('fillInSlot', slot);
 
+		WikiaTracker.trackAdEvent('liftium.slot', {'ga_category':'slot/' + slot[1], 'ga_action':slot[0], 'ga_label':'adengine2'}, 'ga');
+
 		this.log('error, this should be overwritten');
 	},
 

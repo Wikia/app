@@ -96,7 +96,7 @@ AdDriver.isHighValue = function(slotname) {
 		if (AdDriver.country) {
 			return AdConfig.isHighValueCountry(AdDriver.country);
 		}
-		WikiaTracker.trackAdEvent('liftium.errors', {'ga_category':'addriver_no_geo', 'ga_action':'addriver_no_geo'}, 'ga');
+		WikiaTracker.trackAdEvent('liftium.errors', {'ga_category':'errors/addriver_no_geo', 'ga_action':'addriver_no_geo'}, 'ga');
 	}
 
 	return false;
@@ -138,7 +138,7 @@ AdDriver.getNumCall = function(storageName, slotname) {
 		if (window.wgAdDriverUseExpiryStorage && window.wgAdDriverUseCookie) {
 			// compare and report error if they're not equal
 			if (storageNum != cookieNum) {
-				WikiaTracker.trackAdEvent('liftium.errors', {'ga_category':'numcalloutofsync', 'ga_action':slotname, 'ga_label':'storage ' + storageName + ', num ' + storageNum + ', cookie ' + cookieNum}, 'ga');
+				WikiaTracker.trackAdEvent('liftium.errors', {'ga_category':'errors/numcalloutofsync', 'ga_action':slotname, 'ga_label':'storage ' + storageName + ', num ' + storageNum + ', cookie ' + cookieNum}, 'ga');
 				AdDriver.log('Cookie and ExpiryStorage for ' + storageName + ':' + slotname + ' are out of sync!');
 				AdDriver.log('Cookie contents: ' + cookieNum);
 				AdDriver.log('ExpiryStogage contents: ' + storageNum);
@@ -278,7 +278,7 @@ AdDriver.isLastDARTCallNoAd = function(slotname) {
 
 		if (window.wgAdDriverUseExpiryStorage && window.wgAdDriverUseCookie) {
 			if (storageValue != cookieValue) {
-				WikiaTracker.trackAdEvent('liftium.errors', {'ga_category':'lastdartcallnoadoutofsync', 'ga_action':slotname}, 'ga');
+				WikiaTracker.trackAdEvent('liftium.errors', {'ga_category':'errors/lastdartcallnoadoutofsync', 'ga_action':slotname}, 'ga');
 			}
 		}
 	}
@@ -550,6 +550,8 @@ AdDriverDelayedLoader.removeItemsBySlotname = function(slotname) {
 };
 
 AdDriverDelayedLoader.callDART = function() {
+	WikiaTracker.trackAdEvent('liftium.slot', {'ga_category':'slot/' + AdDriverDelayedLoader.currentAd.size, 'ga_action':AdDriverDelayedLoader.currentAd.slotname, 'ga_label':'addriver'}, 'ga');
+
 	AdDriver.log(AdDriverDelayedLoader.currentAd.slotname + ': calling DART...');
 	AdDriver.incrementNumDARTCall(AdDriverDelayedLoader.currentAd.slotname);
 	AdDriver.setLastDARTCallNoAd(AdDriverDelayedLoader.currentAd.slotname, null);
@@ -578,6 +580,8 @@ AdDriverDelayedLoader.callDART = function() {
 				}
 
 				if (nextAdProvider == AdDriver.adProviderLiftium) {
+					WikiaTracker.trackAdEvent('liftium.hop', {'ga_category':'hop/addriver', 'ga_action':'slot ' + AdDriverDelayedLoader.currentAd.slotname, 'ga_label':'9.9' /* FIXME Liftium.formatTrackTime(time, 5) */}, 'ga');
+
 					var liftiumItem = new AdDriverDelayedLoaderItem(AdDriverDelayedLoader.currentAd.slotname, AdDriverDelayedLoader.currentAd.size, AdDriver.adProviderLiftium);
 					AdDriverDelayedLoader.prependItem(liftiumItem);
 				}
@@ -586,7 +590,7 @@ AdDriverDelayedLoader.callDART = function() {
 					// Track only calls that do not fall back to Liftium.
 					// (Those calls will be tracked by Liftium.)
 					// Based on Liftium.callInjectedIframeAd
-					WikiaTracker.trackAdEvent('liftium.slot', {'ga_category':AdDriverDelayedLoader.currentAd.size, 'ga_action':AdDriverDelayedLoader.currentAd.slotname, 'ga_label':'addriver'}, 'ga');
+					//WikiaTracker.trackAdEvent('liftium.slot', {'ga_category':'slot/' + AdDriverDelayedLoader.currentAd.size, 'ga_action':AdDriverDelayedLoader.currentAd.slotname, 'ga_label':'addriver'}, 'ga');
 				}
 				AdDriverDelayedLoader.loadNext();
 			}
