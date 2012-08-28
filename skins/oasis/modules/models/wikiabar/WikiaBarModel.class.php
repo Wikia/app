@@ -10,6 +10,7 @@
 class WikiaBarModel extends WikiaBarModelBase {
 	const WIKIA_BAR_TYPE_DATA_MODEL = 1;
 	const WIKIA_BAR_TYPE_DATA_FAILSAFE_MODEL = 2;
+	const WIKIABAR_MCACHE_VERSION = '0.01';
 
 	protected $requiredFields = array(
 		'button-1-class',
@@ -39,6 +40,20 @@ class WikiaBarModel extends WikiaBarModelBase {
 
 	public function getBarContents() {
 		$this->wf->profileIn(__METHOD__);
+
+		$dataMemcKey = $this->wf->SharedMemcKey('WikiaBar', $this->getLang(), $this->getVertical(), self::WIKIABAR_MCACHE_VERSION );
+		$data = $this->wg->memc->get($dataMemcKey);
+
+		if (!$data) {
+			$data = $this->getParsedBarConfiguration();
+			$this->wg->memc->set($dataMemcKey,$data);
+		}
+
+		$this->wf->profileOut(__METHOD__);
+		return $data;
+	}
+
+	protected function getParsedBarConfiguration() {
 		$message = $this->getRegularMessage();
 		$parseResult = $this->parseBarConfigurationMessage($message);
 		$status = true;
@@ -49,12 +64,33 @@ class WikiaBarModel extends WikiaBarModelBase {
 			$parseResult = $this->parseBarConfigurationMessage($message);
 			$status = false;
 		}
-
-		$this->wf->profileOut(__METHOD__);
-		return array(
-			'status' => $status,
-			'data' => $parseResult
+		$data = array(
+			'data' => $parseResult,
+			'status' => $status
 		);
+		return $data;
+	}
+
+	/**
+	 * @param string $title name of the page changed.
+	 * @param string $text new contents of the page
+	 * @return bool return true
+	 */
+	public function onMessageCacheReplace($title, $text) {
+		$titleParts = explode('/',$title);
+
+		if(
+			!empty($titleParts[0]) // base
+			&& !empty($titleParts[1]) // vertical
+			&& !empty($titleParts[2]) // lang
+			&& empty($titleParts[3]) // and no more
+			&& $titleParts[0] == 'WikiaBar'
+		) {
+			$app = F::app();
+			$dataMemcKey = $app->wf->SharedMemcKey('WikiaBar', $titleParts[1], $titleParts[2], self::WIKIABAR_MCACHE_VERSION );
+			$app->wg->memc->set($dataMemcKey,null);
+		}
+		return true;
 	}
 
 	protected function getRegularMessage() {
@@ -107,11 +143,11 @@ class WikiaBarModel extends WikiaBarModelBase {
 		$data = array();
 		$valid = true;
 
-		if(empty($message)) {
+		if (empty($message)) {
 			$valid = false;
 		}
 
-		if($valid) {
+		if ($valid) {
 			$lines = explode("\n", $message);
 		}
 
@@ -126,7 +162,7 @@ class WikiaBarModel extends WikiaBarModelBase {
 					$data[$key] = $val;
 				}
 			}
-			if(count(array_intersect(array_keys($data),$this->requiredFields)) != count($this->requiredFields)) {
+			if (count(array_intersect(array_keys($data), $this->requiredFields)) != count($this->requiredFields)) {
 				$valid = false;
 			}
 		} else {
@@ -134,7 +170,7 @@ class WikiaBarModel extends WikiaBarModelBase {
 		}
 
 		$this->wf->profileOut(__METHOD__);
-		if($valid) {
+		if ($valid) {
 			return $data;
 		} else {
 			return $valid;
