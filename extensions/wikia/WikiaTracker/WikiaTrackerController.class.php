@@ -73,7 +73,7 @@ JS
 	 * which point the calls will be replayed).
 	 */
 	public static function getTrackerSpoolingJs() {
-		global $wgCacheBuster, $wgMemc;
+		global $wgCacheBuster, $wgMemc, $wgDevelEnvironment;
 		wfProfileIn( __METHOD__ );
 
 		// This code will spool all of the calls (in the order they were called) and different code will replay them later.
@@ -89,15 +89,21 @@ JS
 		$jsString = ob_get_clean();
 
 		// We're embedding this in every page, so minify it. Minifying takes a while, so cache it in memcache (BugzId 43421).
-		$memcKey = wfMemcKey( 'tracker_spooling_js', $wgCacheBuster );
-		$jsString = $wgMemc->get( $memcKey );
-		if( !$jsString ){
+		if(!empty($wgDevelEnvironment)){
+			$memcKey = wfMemcKey( 'tracker_spooling_js' ); // cachebuster changes on every pageview in dev... this will cache on devboxes anyway.
+		} else {
+			$memcKey = wfMemcKey( 'tracker_spooling_js', $wgCacheBuster );
+		}
+		$cachedValue = $wgMemc->get( $memcKey );
+		if( !$cachedValue ){
 			$jsString = AssetsManagerBaseBuilder::minifyJs( $jsString );
 			
 			// This code doesn't look like it should change almost at all, so we give it a long duration (cachebuster also purges it because that's in the key).
 			// Warning: Memcached expirations work strangely around the one-month boundary (if the duration is too long, it interprets it as a timestamp instead of a duration).
 			$TWO_WEEKS = 60*60*24*14; // in seconds.
 			$wgMemc->set( $memcKey, $jsString, $TWO_WEEKS);
+		} else {
+			$jsString = $cachedValue;
 		}
 
 		wfProfileOut( __METHOD__ );
