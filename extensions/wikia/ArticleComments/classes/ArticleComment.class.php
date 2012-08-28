@@ -551,12 +551,13 @@ class ArticleComment {
 		$this->load(true);
 		if ($this->canEdit() && !ArticleCommentInit::isFbConnectionNeeded()) {
 			$vars = array(
-				'canEdit'			=> $this->canEdit(),
-				'comment'			=> ArticleCommentsAjax::getConvertedContent($this->mLastRevision->getText()),
-				'isReadOnly'		=> wfReadOnly(),
-				'stylePath'			=> $wgStylePath,
-				'articleId'			=> $this->mTitle->getArticleId(),
-				'articleFullUrl'	=> $this->mTitle->getFullUrl(),
+				'canEdit'				=> $this->canEdit(),
+				'comment'				=> ArticleCommentsAjax::getConvertedContent($this->mLastRevision->getText()),
+				'isReadOnly'			=> wfReadOnly(),
+				'isMiniEditorEnabled'	=> ArticleComment::isMiniEditorEnabled(),
+				'stylePath'				=> $wgStylePath,
+				'articleId'				=> $this->mTitle->getArticleId(),
+				'articleFullUrl'		=> $this->mTitle->getFullUrl(),
 			);
 			$text = F::app()->getView('ArticleComments', 'Edit', $vars)->render();
 		}
@@ -809,6 +810,8 @@ class ArticleComment {
 				$params[ 'page' ] = $page;
 				$urls[] = $app->wf->AppendQuery( $basePath, $params );
 			}
+
+			$params[ 'skin' ] = true;
 
 			$squidUpdate = new SquidUpdate( $urls );
 			$squidUpdate->doUpdate();
@@ -1285,8 +1288,29 @@ class ArticleComment {
 		return null;
 	}
 
-	static function getSurrogateKey( $articleId ) {
+	static public function getSurrogateKey( $articleId ) {
 		global $wgCityId;
 		return 'Wiki_' . $wgCityId . '_ArticleComments_' . $articleId;
+	}
+
+
+	/**
+	 * Checks if article comments will be loading on demand.
+	 *
+	 * @return boolean
+	 */
+	static public function isLoadingOnDemand() {
+		$app = F::app();
+		return $app->wg->ArticleCommentsLoadOnDemand && !$app->checkSkin( 'wikiamobile' );
+	}
+
+	/**
+	 * Checks if mini editor is enabled for article comments.
+	 *
+	 * @return boolean
+	 */
+	static public function isMiniEditorEnabled() {
+		$app = F::app();
+		return $app->wg->EnableMiniEditorExtForArticleComments && $app->checkSkin( 'oasis' );
 	}
 }
