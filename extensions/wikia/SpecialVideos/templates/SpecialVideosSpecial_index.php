@@ -37,6 +37,7 @@
 			<p><?= $video['byUserMsg'] ?></p>
 			<p itemprop="uploadDate"><?= wfTimeFormatAgo($video['timestamp']) ?></p>
 			<p><?= $video['postedInMsg']; ?></p>
+			<meta itemprop="embedUrl" content="<?= $video['embedUrl'] ?>" />			
 		</div>
 
 		<?php $counter++; ?>
