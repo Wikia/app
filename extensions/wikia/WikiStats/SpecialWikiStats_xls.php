@@ -531,14 +531,14 @@ class WikiStatsXLS {
 	public function makeMostEditPagesStats($city_id, &$statsCount, &$mSourceMetaSpace)
 	{
 		global $wgCanonicalNamespaceNames;
-		global $wgLang, $wgDBname;
+		global $wgLang, $wgDBname, $wgSharedDB;
 
 		$dbname = $this->getXLSCityDBName($city_id);
 		$cur_month = 1;
 		#----
 		#wfMsg('wikistats_filename_other6', $dbname)
 		$this->setXLSHeader();
-		$centralVersion = ($wgDBname == CENTRAL_WIKIA_ID);
+		$centralVersion = ($wgDBname == $wgSharedDB);
 		#----
 		$this->setXLSFileBegin();
 		$this->writeXLSLabel(1,0,ucfirst($dbname). " - " .str_replace("&gt;", ">", wfMsgHtml('wikistats_page_edits')) );
@@ -626,7 +626,7 @@ class WikiStatsXLS {
 	public function makePageViewsXLS($city_id, $statsCount, $mSourceMetaSpace, $otherNspaces)
 	{
 		global $wgCanonicalNamespaceNames;
-		global $wgLang, $wgDBname;
+		global $wgLang, $wgDBname, $wgSharedDB;
 
 		$canonicalNamespace = WikiFactory::getVarValueByName('wgExtraNamespacesLocal', $city_id);
 		if ( is_array($canonicalNamespace) ) {
@@ -640,7 +640,7 @@ class WikiStatsXLS {
 		#----
 		#wfMsg('wikistats_filename_other8', $dbname)
 		$this->setXLSHeader();
-		$centralVersion = ($wgDBname == CENTRAL_WIKIA_ID);
+		$centralVersion = ($wgDBname == $wgSharedDB);
 		#----
 		$this->setXLSFileBegin();
 		$this->writeXLSLabel(1,0,ucfirst($dbname). " - " .wfMsg('wikistats_pageviews') );
@@ -727,14 +727,14 @@ class WikiStatsXLS {
 	public function makeMostEditOtherNspacesStats($city_id, &$statsCount, &$mSourceMetaSpace)
 	{
 		global $wgCanonicalNamespaceNames;
-		global $wgLang, $wgDBname;
+		global $wgLang, $wgDBname, $wgSharedDB;
 
 		$dbname = $this->getXLSCityDBName($city_id);
 		$cur_month = 1;
 		#----
 		#wfMsg('wikistats_filename_other7', $dbname)
 		$this->setXLSHeader();
-		$centralVersion = ($wgDBname == CENTRAL_WIKIA_ID);
+		$centralVersion = ($wgDBname == $wgSharedDB);
 		#----
 		$this->setXLSFileBegin();
 		$this->writeXLSLabel(1,0,ucfirst($dbname). " - " .str_replace("&gt;", ">", wfMsg('wikistats_other_nspaces_edits')) );
@@ -823,10 +823,10 @@ class WikiStatsXLS {
 		$sum = 0;
 		$meanInfo = wfMsg('wikistats_trend_mean_info')." \r\n";
 		$meanInfo .= wfMsg('wikistats_trend_formula'). ": ";
-		for ($i = 1; $i <= STATS_TREND_MONTH; $i++) {
-			$cur_date = mktime(23, 59, 59, (date('m') + 1) - (STATS_TREND_MONTH - $i), 0, date('Y'));
+		for ($i = 1; $i <= WIKISTATS_TREND_MONTH; $i++) {
+			$cur_date = mktime(23, 59, 59, (date('m') + 1) - (WIKISTATS_TREND_MONTH - $i), 0, date('Y'));
 			#---
-			$day = ($i == STATS_TREND_MONTH) ? date("d") : date("d", $cur_date);
+			$day = ($i == WIKISTATS_TREND_MONTH) ? date("d") : date("d", $cur_date);
 			$sum += $day;
 			$month = $wgLang->sprintfDate("M", wfTimestamp(TS_MW, $cur_date));
 			#---
@@ -854,17 +854,17 @@ class WikiStatsXLS {
 		$growthInfo .= wfMsg('wikistats_trend_formula'). ": ";
 		#---
 		$sum = 0;
-		for ($i = 1; $i <= STATS_TREND_MONTH; $i++) {
-			$cur_date = mktime(23, 59, 59, (date('m') + 1) - (STATS_TREND_MONTH - $i), 0, date('Y'));
-			$next_date = mktime(23, 59, 59, (date('m') + 1) - (STATS_TREND_MONTH - $i - 1), 0, date('Y'));
+		for ($i = 1; $i <= WIKISTATS_TREND_MONTH; $i++) {
+			$cur_date = mktime(23, 59, 59, (date('m') + 1) - (WIKISTATS_TREND_MONTH - $i), 0, date('Y'));
+			$next_date = mktime(23, 59, 59, (date('m') + 1) - (WIKISTATS_TREND_MONTH - $i - 1), 0, date('Y'));
 			#---
-			$day = ($i == STATS_TREND_MONTH) ? date("d") : date("d", $next_date);
+			$day = ($i == WIKISTATS_TREND_MONTH) ? date("d") : date("d", $next_date);
 			#---
 			$month = $wgLang->sprintfDate("M", wfTimestamp(TS_MW, $cur_date));
 			#---
 			$next_month = $wgLang->sprintfDate("M", wfTimestamp(TS_MW, $next_date));
 			#---
-			if ($i < STATS_TREND_MONTH) {
+			if ($i < WIKISTATS_TREND_MONTH) {
 				$sum += $day;
 				$variable = "G" . $i ;
 				$growthArray[0][] = $variable;
@@ -1176,8 +1176,8 @@ class WikiStatsXLS {
 				$row++;
 			}
 	
-			if (strpos($date, STATS_COLUMN_PREFIX) !== false) {
-				$date = str_replace(STATS_COLUMN_PREFIX, "", $date);
+			if (strpos($date, WIKISTATS_COLUMN_PREFIX) !== false) {
+				$date = str_replace(WIKISTATS_COLUMN_PREFIX, "", $date);
 				$show_percent = true;
 			}
 			#---
