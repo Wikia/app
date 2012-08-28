@@ -907,7 +907,7 @@ Text should be placed on this page if you wish to explain usage, style and polic
 'hub-Wikia' => 'Wikia',
 'hub-Food_and_Drink' => 'Food and Drink',
 
-# Mobile skin (wikiaphone)
+# Mobile skin
 'oasis-mobile-site' => 'Mobile site',
 'mobile-show' => 'Show',
 'mobile-hide' => 'Hide',

@@ -287,26 +287,6 @@ $config['oasis_user_js'] = array(
 	)
 );
 
-/** Wikiaphone **/
-//TODO: remove when Wikiaphone will be deleted
-
-$config['wikiaphone_js'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => array(
-		//core functionality required early in the process before jQuery
-		'//resources/wikia/modules/cookies.js',
-		'//resources/wikia/modules/querystring.js',
-		'//resources/wikia/modules/log.js',
-
-		'#group_oasis_jquery',
-
-		'//extensions/wikia/AdEngine/AdConfig.js',
-		'//extensions/wikia/WikiaTracker/js/WikiaTracker_config.js',
-		'//extensions/wikia/WikiaTracker/js/WikiaTracker.js',
-		'//skins/wikiaphone/main.js'
-	)
-);
-
 /** WikiaMobile **/
 
 $config['wikiamobile_scss'] = array(
@@ -947,7 +927,7 @@ $config['wikiasearch_scss_wikiamobile'] = array(
 
 /** Places **/
 $config['places_js'] = array(
-		'skin' => array( 'oasis', 'monobook', 'wikiamobile', 'wikiaphone' ),
+		'skin' => array( 'oasis', 'monobook', 'wikiamobile' ),
 		'type' => AssetsManager::TYPE_JS,
 		'assets' => array(
 				'//extensions/wikia/Places/js/Places.js'
@@ -956,7 +936,7 @@ $config['places_js'] = array(
 
 $config['places_css'] = array(
 		'type' => AssetsManager::TYPE_CSS,
-		'skin' => array( 'oasis', 'monobook', 'wikiamobile', 'wikiaphone' ),
+		'skin' => array( 'oasis', 'monobook', 'wikiamobile' ),
 		'assets' => array(
 				'//extensions/wikia/Places/css/Places.css',
 		)
@@ -1002,7 +982,7 @@ $config['imagedrop_scss'] = array(
 // AbTesting
 $config['abtesting'] = array(
 	'type' => AssetsManager::TYPE_JS,
-	'skin' => array( 'monobook', 'oasis', 'wikiamobile', 'wikiaphone' ),
+	'skin' => array( 'monobook', 'oasis', 'wikiamobile' ),
 	'assets' => array(
 		'//extensions/wikia/AbTesting/js/AbTesting.js',
 	)

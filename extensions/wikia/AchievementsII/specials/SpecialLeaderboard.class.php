@@ -40,8 +40,6 @@ class SpecialLeaderboard extends SpecialPage {
 
 			if ($skinName == 'SkinMonoBook') {
 				$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/AchievementsII/css/leaderboard_monobook.css");
-			} else if ($skinName == 'SkinWikiaphone') {
-				$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/AchievementsII/css/leaderboard_wikiaphone.css");
 			}
 		}
 
