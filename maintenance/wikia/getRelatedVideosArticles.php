@@ -31,12 +31,12 @@
 	$total = count( $wikis );
 	echo "Total wikis (wgRelatedVideosPartialRelease = false): ".$total."\n";
 
-	$cnt = 0;
+	$counter = 0;
 	$failed = 0;
 
 	// get number of RelatedVideos articles on the wiki
 	foreach( $wikis as $wikiId => $detail ) {
-		echo "[$cnt of $total] Wiki $wikiId ";
+		echo "[$counter of $total] Wiki $wikiId ";
 		$wiki = WikiFactory::getWikiById( $wikiId );
 		if ( !empty($wiki) && $wiki->city_public == 1 ) {
 			$dbname = $wiki->city_dbname;
@@ -64,7 +64,7 @@
 			$failed++;
 		}
 
-		$cnt++;
+		$counter++;
 	}
 
-	echo "TOTAL: ".$cnt.", SUCCESS: ".($cnt-$failed).", FAILED: $failed\n\n";
+	echo "TOTAL: ".$counter.", SUCCESS: ".($counter-$failed).", FAILED: $failed\n\n";
