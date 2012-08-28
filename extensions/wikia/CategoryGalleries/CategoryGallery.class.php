@@ -135,7 +135,7 @@
 		 * Builds and returns the memcached key
 		 */
 		protected function getMemcKey() {
-			return wfMemcKey('category-gallery-articles',$this->categoryPage->mTitle->getDBkey(),$this->configHash);
+			return wfMemcKey('category-gallery-articles_0',$this->categoryPage->mTitle->getDBkey(),$this->configHash);
 		}
 
 		/**
@@ -205,7 +205,10 @@
 					if (!empty($wgDevelEnvironment)) {
 						$image['url'] = str_replace('http://images.wladek.wikia-dev.com/', 'http://images.wikia.com/', $image['url']);
 					}
+
 					$entry['image_url'] = $image['url'];
+					$entry['image_width'] = $this->confThumbWidth;
+					$entry['image_height'] = $this->confThumbHeight;
 				} else {
 					$entry['snippet'] = $this->getArticleSnippet($id,100);
 				}

@@ -10,7 +10,7 @@
 			<a href="<?=$row['url'] ?>?display=<?=$row['displayType']; ?>&sort=<?=$row['sortType']; ?>" title="<?=htmlspecialchars($row['title']) ?>">
 				<div class="category-gallery-item-image">
 					<?php if (!empty($row['img'])) {?>
-						<img src="<?=$row['img'] ?>" alt="<?=htmlspecialchars($row['title']) ?>" />
+						<img src="<?=$row['img'] ?>" alt="<?=htmlspecialchars($row['title']) ?>" width="<?= $row['width'] ?>" height="<?= $row['height'] ?>" />
 					<?php } elseif( !empty($row['snippet']) ) { ?>
 						<div class="snippet">
 							<span class="quote">&#x201C;</span>

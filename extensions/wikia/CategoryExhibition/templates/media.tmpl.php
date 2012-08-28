@@ -16,14 +16,14 @@
 					<? if( $row['useVideoOverlay'] == true ) {
 						echo WikiaFileHelper::videoPlayButtonOverlay( $row['dimensions']['w'], $row['dimensions']['h'] );
 					} ?>
-					<img src="<?=$row['img'] ?>" alt="<?=htmlspecialchars( $row['title'] ) ?>" style="<?
+					<img src="<?=$row['img'] ?>" alt="<?=htmlspecialchars( $row['title'] ) ?>"<?
 						if(!empty($row['dimensions']['w'])){
-							echo "width:".$row['dimensions']['w']."px; ";
-						};
+							echo ' width="'.$row['dimensions']['w'].'"';
+						}
 						if(!empty($row['dimensions']['h'])){
-							echo "height:".$row['dimensions']['h']."px; ";
-						};
-					?>" />
+							echo ' height="'.$row['dimensions']['h'].'"';
+						}
+					?> />
 					<? if( $row['useVideoOverlay'] == true ) {
 						echo WikiaFileHelper::videoInfoOverlay( $row['dimensions']['w'], $row['data-ref'] );
 					} ?>

@@ -177,7 +177,7 @@ class CategoryExhibitionSection {
 	}
 
 	/**
-	 * main function returning fillet template ready to print.
+	 * main function returning filled template ready to print.
 	 * @param $itemsPerPage int number of articles per page
 	 * @param $namespace mixed: int namespace or array of int for category query
 	 * @return EasyTemplate object
@@ -308,7 +308,7 @@ class CategoryExhibitionSection {
 
 		$oMemCache = F::App()->wg->memc;
 		$sKey = F::App()->wf->sharedMemcKey(
-			'category_exhibition_category_cache',
+			'category_exhibition_category_cache_1',
 			$pageId,
 			F::App()->wg->cityId,
 			$this->isVerify(),
@@ -333,6 +333,8 @@ class CategoryExhibitionSection {
 		$returnData = array(
 			'id'		=> $pageId,
 			'img'		=> $imageUrl,
+			'width'     => $this->thumbWidth,
+			'height'    => $this->thumbHeight,
 			'snippet'	=> $snippetText,
 			'title'		=> $this->getTitleForElement( $oTitle ),
 			'url'		=> $oTitle->getFullURL()
@@ -341,7 +343,7 @@ class CategoryExhibitionSection {
 		// will be purged elsewhere after edit
 		$oMemCache->set( $sKey, $returnData, 60*60*24 );
 
-		return $returnData ;
+		return $returnData;
 	}
 
 	protected function getTitleForElement( $oTitle ){
@@ -385,7 +387,7 @@ class CategoryExhibitionSection {
 	protected function getKey() {
 		global $wgVideoHandlersVideosMigrated;
 		return wfMemcKey(
-			'category_exhibition_section',
+			'category_exhibition_section_0',
 			$this->categoryTitle->getDBKey(),
 			$this->templateName,
 			$this->paginatorPosition,
@@ -400,7 +402,6 @@ class CategoryExhibitionSection {
 	/**
 	 * this method help us to invalidate cache on any change on category, sub cat, page
 	 */
-
 	protected function getTouched($title) {
 		global $wgMemc;
 		return $wgMemc->get($this->getTouchedKey($title), 0);
@@ -439,7 +440,6 @@ class CategoryExhibitionSection {
 	}
 
 	protected function clearCache ( ){
-
 		global $wgMemc;
 		return $wgMemc->delete( $this->getKey( ) );
 	}

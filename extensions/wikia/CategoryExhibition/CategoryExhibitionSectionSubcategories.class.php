@@ -46,7 +46,7 @@ class CategoryExhibitionSectionSubcategories extends CategoryExhibitionSection {
 				
 		$oMemCache = F::App()->wg->memc;
 		$sKey = F::App()->wf->sharedMemcKey(
-			'category_exhibition_article_cache',
+			'category_exhibition_article_cache_0',
 			$pageId,
 			F::App()->wg->cityId,
 			$this->isVerify(),
@@ -79,6 +79,8 @@ class CategoryExhibitionSectionSubcategories extends CategoryExhibitionSection {
 		    'title'		=> $oTitle->getText(),
 		    'url'		=> $oTitle->getFullURL(),
 		    'img'		=> $imageUrl,
+			'width'     => $this->thumbWidth,
+			'height'    => $this->thumbHeight,
 		    'sortType'		=> $this->getSortType(),
 		    'displayType'	=> $this->getDisplayType(),
 		    'snippet'		=> $snippetText
