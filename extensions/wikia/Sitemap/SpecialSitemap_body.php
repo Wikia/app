@@ -33,21 +33,21 @@ class SitemapPage extends UnlistedSpecialPage {
 		$this->mPriorities = array(
 			// MediaWiki standard namespaces
 			NS_MAIN                 => '1.0',
-			NS_TALK                 => '1.0',
-			NS_USER                 => '0.1',
-			NS_USER_TALK            => '1.0',
-			NS_PROJECT              => '1.0',
-			NS_PROJECT_TALK         => '1.0',
+			NS_TALK                 => '0.1',
+			NS_USER                 => '0.2',
+			NS_USER_TALK            => '0.1',
+			NS_PROJECT              => '0.1',
+			NS_PROJECT_TALK         => '0.1',
 			NS_FILE                 => '0.5',
-			NS_FILE_TALK            => '1.0',
-			NS_MEDIAWIKI            => '0.5',
-			NS_MEDIAWIKI_TALK       => '0.5',
-			NS_TEMPLATE             => '0.5',
-			NS_TEMPLATE_TALK        => '0.5',
-			NS_HELP                 => '0.5',
-			NS_HELP_TALK            => '0.5',
+			NS_FILE_TALK            => '0.1',
+			NS_MEDIAWIKI            => '0.1',
+			NS_MEDIAWIKI_TALK       => '0.1',
+			NS_TEMPLATE             => '0.1',
+			NS_TEMPLATE_TALK        => '0.1',
+			NS_HELP                 => '0.1',
+			NS_HELP_TALK            => '0.1',
 			NS_CATEGORY             => '1.0',
-			NS_CATEGORY_TALK        => '1.0',
+			NS_CATEGORY_TALK        => '0.1',
         );
 
 		$this->mSizeLimit = ( pow( 2, 20 ) * 10 ) - 20; // safe margin
@@ -114,6 +114,8 @@ class SitemapPage extends UnlistedSpecialPage {
 			return;
 		}
 
+		$excludeList = array(NS_USER, NS_PROJECT, NS_MEDIAWIKI, NS_TEMPLATE, NS_HELP, 110, 1100, 1200, 1202);
+
 		wfProfileIn( __METHOD__ );
 		$dbr = wfGetDB( DB_SLAVE, "vslow" );
 		$res = $dbr->select(
@@ -127,9 +129,16 @@ class SitemapPage extends UnlistedSpecialPage {
 			)
 		);
 
+
 		while ( $row = $dbr->fetchObject( $res ) ) {
 			if( $row->page_namespace >= 0 ) {
-				$this->mNamespaces[] = $row->page_namespace;
+
+				if ( !in_array($row->page_namespace, $excludeList ) ) {
+					if (  $row->page_namespace%2 != 1 ) {
+						$this->mNamespaces[] = $row->page_namespace;
+					}
+				}
+
 			}
 		}
 		wfProfileOut( __METHOD__ );
@@ -195,9 +204,6 @@ class SitemapPage extends UnlistedSpecialPage {
 
 		wfProfileIn( __METHOD__ );
 
-		$contentNamespaces = array (NS_MAIN, NS_CATEGORY, NS_FILE, NS_USER);
-		$contentNamespaces = array_merge($contentNamespaces, $wgContentNamespaces);
-
 		$timestamp = wfTimestamp( TS_ISO_8601, wfTimestampNow() );
 		$id = wfWikiID();
 
@@ -226,13 +232,12 @@ class SitemapPage extends UnlistedSpecialPage {
 			}
 		}
 		else {
+			$this->getNamespacesList();
 			foreach ( $this->mNamespaces as $namespace ) {
-				if(in_array($namespace, $contentNamespaces)){
-					$out .= "\t<sitemap>\n";
-					$out .= "\t\t<loc>{$wgServer}/sitemap-{$id}-NS_{$namespace}-0.xml.gz</loc>\n";
-					$out .= "\t\t<lastmod>{$timestamp}</lastmod>\n";
-					$out .= "\t</sitemap>\n";
-				}
+				$out .= "\t<sitemap>\n";
+				$out .= "\t\t<loc>{$wgServer}/sitemap-{$id}-NS_{$namespace}-0.xml.gz</loc>\n";
+				$out .= "\t\t<lastmod>{$timestamp}</lastmod>\n";
+				$out .= "\t</sitemap>\n";
 			}
 		}
 
