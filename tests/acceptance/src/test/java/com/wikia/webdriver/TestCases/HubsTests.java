@@ -34,6 +34,7 @@ public class HubsTests extends TestTemplate{
 	
 	@Test(dataProvider = "provideHub", groups= {"HubsTests001"})
 //	https://internal.wikia-inc.com/wiki/Hubs/QA/Hubs_Test_Cases#Module_1_.28Mosaic_Slider.29_Test_Cases
+// The test covers underscored steps from test case documentation - see link above
 	public void VideoGamesHubTest001(HubBasePageObject Hub, String HubName, String HubURL)
 	{
 		CommonFunctions.MoveCursorTo(0, 0);		
@@ -58,6 +59,7 @@ public class HubsTests extends TestTemplate{
 	
 	@Test(dataProvider = "provideHub", groups= {"HubsTests002"})
 //	https://internal.wikia-inc.com/wiki/Hubs/QA/Hubs_Test_Cases#Module_2_.28News_Tabs.29_Test_Cases
+// The test covers underscored steps from test case documentation - see link above
 	public void VideoGamesHubTest002(HubBasePageObject Hub, String HubName, String HubURL)
 	{	
 		CommonFunctions.MoveCursorTo(0, 0);				
@@ -77,6 +79,7 @@ public class HubsTests extends TestTemplate{
 	
 	@Test(dataProvider = "provideHub", groups= {"HubsTests003"})
 //	https://internal.wikia-inc.com/wiki/Hubs/QA/Hubs_Test_Cases#Module_3_.28Videos_Module.29_Test_Cases
+// The test covers underscored steps from test case documentation - see link above
 	public void VideoGamesHubTest003(HubBasePageObject Hub, String HubName, String HubURL)
 	{	
 		CommonFunctions.MoveCursorTo(0, 0);				
@@ -103,22 +106,95 @@ public class HubsTests extends TestTemplate{
 		Hub.Click_X_toCloseVideoPlayer();		
 		CommonFunctions.logIn(Properties.userName2, Properties.password2);
 		Hub.ClickSuggestAVideo();
-		Hub.VerifySuggestAVideoModalAppeared();
-		Hub.VerifySuggestAVideoModalTopic("Suggest a Video");
-		Hub.Click_Cancel_toCloseSuggestAVideo();
+		Hub.VerifySuggestAVideoOrArticleModalAppeared();
+		Hub.VerifySuggestAVideoOrArticleModalTopic("Suggest a Video");
+		Hub.Click_Cancel_toCloseSuggestAVideoOrArticle();
 		Hub.ClickSuggestAVideo();
-		Hub.VerifySuggestAVideoModalAppeared();
-		Hub.VerifySuggestAVideoModalTopic("Suggest a Video");
-		Hub.Click_X_toCloseSuggestAVideo();
+		Hub.VerifySuggestAVideoOrArticleModalAppeared();
+		Hub.VerifySuggestAVideoOrArticleModalTopic("Suggest a Video");
+		Hub.Click_X_toCloseSuggestAVideoOrArticle();
 		Hub.ClickSuggestAVideo();
-		Hub.VerifySuggestAVideoModalAppeared();
-		Hub.VerifySuggestAVideoModalTopic("Suggest a Video");
-		Hub.VerifySuggestVideoButtonNotClickable();
+		Hub.VerifySuggestAVideoOrArticleModalAppeared();
+		Hub.VerifySuggestAVideoOrArticleModalTopic("Suggest a Video");
+		Hub.VerifySuggestVideoOrArticleButtonNotClickable();
 		Hub.SuggestVideoTypeIntoWhatVideoField("random text");
 		Hub.SuggestVideoTypeIntoWhichWikiField("random text");
-		Hub.VerifySuggestVideoButtonClickable();
+		Hub.VerifySuggestVideoOrArticleButtonClickable();
 		
 		home = Hub.BackToHomePage();						
+	}
+	
+	
+	@Test(dataProvider = "provideHub", groups= {"HubsTests004"})
+//	https://internal.wikia-inc.com/wiki/Hubs/QA/Hubs_Test_Cases#Module_3_.28Videos_Module.29_Test_Cases
+// The test covers underscored steps from test case documentation - see link above
+	public void VideoGamesHubTest004(HubBasePageObject Hub, String HubName, String HubURL)
+	{	
+		CommonFunctions.MoveCursorTo(0, 0);				
+		home = new HomePageObject(driver);
+		home.openHomePage();		
+		Hub = home.OpenHub(HubName);
+		Hub.verifyURL(HubURL);		
+		Hub.verifyFromModuleHasImages();
+		Hub.verifyFromModuleHasHeadline();
+		Hub.verifyFromModuleHasUserAndWikiField();
+		Hub.verifyFromModuleHasQuatation();
+		CommonFunctions.logIn(Properties.userName2, Properties.password2);
+		Hub.ClickSuggestAnArticle();
+		Hub.VerifySuggestAVideoOrArticleModalAppeared();
+		Hub.VerifySuggestAVideoOrArticleModalTopic("Suggest an Article");
+		Hub.Click_Cancel_toCloseSuggestAVideoOrArticle();
+		Hub.ClickSuggestAnArticle();
+		Hub.VerifySuggestAVideoOrArticleModalAppeared();
+		Hub.VerifySuggestAVideoOrArticleModalTopic("Suggest an Article");
+		Hub.Click_X_toCloseSuggestAVideoOrArticle();
+		Hub.ClickSuggestAnArticle();
+		Hub.VerifySuggestAVideoOrArticleModalAppeared();
+		Hub.VerifySuggestAVideoOrArticleModalTopic("Suggest an Article");
+		Hub.VerifySuggestVideoOrArticleButtonNotClickable();
+		Hub.SuggestArticleTypeIntoWhatVideoField("random text");
+		Hub.SuggestArticleTypeIntoWhyCoolField("random text");
+		Hub.VerifySuggestVideoOrArticleButtonClickable();
+		
+		home = Hub.BackToHomePage();
+		
+	}
+	
+	@Test(dataProvider = "provideHub", groups= {"HubsTests005"})
+//	https://internal.wikia-inc.com/wiki/Hubs/QA/Hubs_Test_Cases#Module_5_.28The_Pulse.29_Test_Cases
+// The test covers underscored steps from test case documentation - see link above
+	public void VideoGamesHubTest005(HubBasePageObject Hub, String HubName, String HubURL)
+	{	
+		CommonFunctions.MoveCursorTo(0, 0);				
+		home = new HomePageObject(driver);
+		home.openHomePage();		
+		Hub = home.OpenHub(HubName);
+		Hub.verifyURL(HubURL);
+		Hub.verifyPulseModuleAppears();
+		Hub.verifyFacebookButtonAppears();
+		Hub.verifyFacebookButtonIsClickable();
+		Hub.verifyTwitterButtonAppears();
+		Hub.verifyTwitterButtonIsClickable();
+		Hub.verifyGoogleButtonAppears();
+		Hub.verifyGoogleButtonIsClickable();
+		Hub.verifyStatisticsAreDisplayed();
+		Hub.verifyWikiaSearchFieldIsDisplayed();
+		
+	}
+	
+	@Test(dataProvider = "provideHub", groups= {"HubsTests006"})
+//	https://internal.wikia-inc.com/wiki/Hubs/QA/Hubs_Test_Cases#Module_7_.28Top_Wikis.29_Test_Cases
+// The test covers underscored steps from test case documentation - see link above
+	public void VideoGamesHubTest006(HubBasePageObject Hub, String HubName, String HubURL)
+	{	
+		CommonFunctions.MoveCursorTo(0, 0);				
+		home = new HomePageObject(driver);
+		home.openHomePage();		
+		Hub = home.OpenHub(HubName);
+		Hub.verifyURL(HubURL);
+		Hub.verifyTopWikisModuleAppears();
+		Hub.verifyWikisAreListedInTopWikisModule();
+		
 	}
 	
 }
