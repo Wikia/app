@@ -185,6 +185,7 @@ $wgAutoloadClasses['HubService'] = $IP . '/includes/wikia/services/HubService.cl
 $wgAutoloadClasses['ImagesService'] = $IP . '/includes/wikia/services/ImagesService.class.php';
 $wgAutoloadClasses['WikiService'] = $IP . '/includes/wikia/services/WikiService.class.php';
 $wgAutoloadClasses['DataMartService'] = $IP . '/includes/wikia/services/DataMartService.class.php';
+$wgAutoloadClasses['VideoService'] = $IP . '/includes/wikia/services/VideoService.class.php';
 
 // modules
 $wgAutoloadClasses['SimpleSearchService']  =  $IP.'/includes/wikia/services/SimpleSearchService.class.php';

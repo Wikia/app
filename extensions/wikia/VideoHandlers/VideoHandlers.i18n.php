@@ -24,6 +24,10 @@ $messages['en'] = array(
 	'videohandler-remove-video-modal-ok' => 'Remove',
 	'videohandler-remove-video-modal-success' => 'File:$1 has been removed from this wiki',
 	'videohandler-remove-video-modal-cancel' => 'Cancel',
+
+	'videos-error-no-video-url' => 'No video URL provided.',
+	'videos-error-unknown' => 'An unknown error occurred. Code: $1.',
+	'videos-error-old-type-video' => 'Old type of videos no longer supported (VideoPage)',
 );
 
 /** Message documentation (Message documentation) */

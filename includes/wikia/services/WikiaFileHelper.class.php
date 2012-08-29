@@ -396,4 +396,5 @@ class WikiaFileHelper extends Service {
 
 		return array( $truncatedList, $isTruncated );
 	}
+
 }
