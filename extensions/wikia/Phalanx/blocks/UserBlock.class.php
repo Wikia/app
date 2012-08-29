@@ -65,7 +65,7 @@ class UserBlock {
 		return $ret;
 	}
 
-	private static function blockCheckInternal( &$user, $blocksData, $text, $isBlockIP = false, $writeStats = true ) {
+	protected static function blockCheckInternal( &$user, $blocksData, $text, $isBlockIP = false, $writeStats = true ) {
 		global $wgMemc;
 		wfProfileIn( __METHOD__ );
 
@@ -96,7 +96,7 @@ class UserBlock {
 		return true;
 	}
 
-	private static function getCacheKey( $user ) {
+	protected static function getCacheKey( $user ) {
 		return wfSharedMemcKey( 'phalanx', self::CACHE_KEY, $user->getTitleKey() );
 	}
 
