@@ -4,4 +4,4 @@
  * various code-paths, some of which don't load the rest of the MediaWiki stack.
  */
 
-$wgCacheBuster = '58758';
+$wgCacheBuster = '59082';
