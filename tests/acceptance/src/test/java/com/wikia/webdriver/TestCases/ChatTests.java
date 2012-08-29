@@ -41,11 +41,12 @@ public class ChatTests extends TestTemplate_Two_Drivers{
     7. A user can click on the chevron to toggle userlist.
     8. In the message area both users see a message with his name: "user A has joined the chat." or "user B has joined the chat." 
 	 */
-//	@Test
+	@Test
 	public void Chat_001_two_users_open_chat()
 	{
 		//first user opens the chat
 		HomePageObject home = new HomePageObject(driver);
+		CommonFunctions.logOut(Properties.userName, driver);
 		home.openHomePage();
 		CommonFunctions.logIn(Properties.userName, Properties.password, driver);
 		ChatPageObject chat1 = new ChatPageObject(driver);
@@ -53,6 +54,7 @@ public class ChatTests extends TestTemplate_Two_Drivers{
 		chat1.verifyChatPage();
 		//second user opens the chat		
 		HomePageObject home2 = new HomePageObject(driver2);
+		CommonFunctions.logOut(Properties.userName, driver2);
 		home2.openHomePage();
 		CommonFunctions.logIn(Properties.userName2, Properties.password2, driver2);
 		ChatPageObject chat2 = new ChatPageObject(driver2);
@@ -68,16 +70,18 @@ public class ChatTests extends TestTemplate_Two_Drivers{
     3. If user is an admin there should be also: Give ChatMod status and Kickban (if clicked user is not a chat moderator or admin).
 	 */
 	
-//	@Test
+	@Test
 	public void Chat_002_changes_in_drop_down_menu_1()
 	{
 		//first user opens the chat
 		HomePageObject home = new HomePageObject(driver);
+		CommonFunctions.logOut(Properties.userName, driver);
 		home.openHomePage();
 		CommonFunctions.logIn(Properties.userName, Properties.password, driver);
 		ChatPageObject chat1 = new ChatPageObject(driver);
 		//second user opens the chat		
 		HomePageObject home2 = new HomePageObject(driver2);
+		CommonFunctions.logOut(Properties.userName, driver2);
 		home2.openHomePage();
 		CommonFunctions.logIn(Properties.userName2, Properties.password2, driver2);
 		ChatPageObject chat2 = new ChatPageObject(driver2);
@@ -93,7 +97,7 @@ public class ChatTests extends TestTemplate_Two_Drivers{
 	1. There are two users in the chat room: user A and user B. User B private message are blocked by user A.
     2. User A clicks with a left mouse button on user B name. Drop-down menu appears.
     3. There are three options to choose: User Profile, Contributions, Allow Private Messages.
-    4. If user A is an admin there should be also Give ChatMod status and Kickban (if clicked user is not a chat moderator or admin). 
+    4. If user A is an admin there should be also Give ChatMod status and Kickban (if clicked user is not a chat moderator or admin). - to next test case 
 	 */
 	
 	@Test
@@ -101,21 +105,86 @@ public class ChatTests extends TestTemplate_Two_Drivers{
 	{
 		//first user opens the chat
 		HomePageObject home = new HomePageObject(driver);
+		CommonFunctions.logOut(Properties.userName, driver);
 		home.openHomePage();
 		CommonFunctions.logIn(Properties.userName, Properties.password, driver);
 		ChatPageObject chat1 = new ChatPageObject(driver);
 		//second user opens the chat		
 		HomePageObject home2 = new HomePageObject(driver2);
+		CommonFunctions.logOut(Properties.userName, driver2);
 		home2.openHomePage();
 		CommonFunctions.logIn(Properties.userName2, Properties.password2, driver2);
 		ChatPageObject chat2 = new ChatPageObject(driver2);
 		chat2.openChatPage();
 		chat1.openChatPage();
 		chat1.verifyChatPage();
-		chat1.blockPrivateMessageFromUser(Properties.userName2, driver);
-		chat1.verifyBlockedUserDropdown();
+		chat1.clickOnDifferentUser(Properties.userName2, driver);
+		chat1.selectPrivateMessage(driver);
+		chat1.clickPrivateMessageUser(Properties.userName2, driver);
+		chat1.blockPrivateMessage(driver);
+		chat1.clickOnDifferentUser(Properties.userName2, driver);
+		chat1.verifyBlockedUserDropdown(Properties.userName2);
+		chat1.allowPrivateMessageFromUser(Properties.userName2, driver);
 	}
-
 	
-
+	/*
+	 *   Test 4: Changes in drop-down menu #2 - KICKBAN verification
+	1. There are two users in the chat room: user A and user B. User B private message are blocked by user A.
+    2. User A clicks with a left mouse button on user B name. Drop-down menu appears.
+    3. There are three options to choose: User Profile, Contributions, Allow Private Messages.
+    4. If user A is an admin there should be also Give ChatMod status and Kickban (if clicked user is not a chat moderator or admin). 
+	 */
+	
+	@Test
+	public void Chat_004_changes_in_drop_down_menu_staff_2()
+	{
+		//first user opens the chat
+		HomePageObject home = new HomePageObject(driver);
+		CommonFunctions.logOut(Properties.userName, driver);
+		home.openHomePage();
+		CommonFunctions.logIn(Properties.userNameStaff, Properties.passwordStaff, driver);
+		ChatPageObject chat1 = new ChatPageObject(driver);
+		//second user opens the chat		
+		HomePageObject home2 = new HomePageObject(driver2);
+		CommonFunctions.logOut(Properties.userName, driver2);
+		home2.openHomePage();
+		CommonFunctions.logIn(Properties.userName2, Properties.password2, driver2);
+		ChatPageObject chat2 = new ChatPageObject(driver2);
+		chat2.openChatPage();
+		chat1.openChatPage();
+		chat1.verifyChatPage();
+		chat1.clickOnDifferentUser(Properties.userName2, driver);
+		chat1.verifyAdminUserDropdown();
+	}
+	
+	
+	/*
+	 *    Test 5: "Private Messages" bar
+	1. There are two users in the chat room: user A and user B. No "Private Message" bar.
+    2. User B opens a private room with user A.
+    3. The small header labeled "Private Message" appears on user B's userlist. 
+	 */
+	
+	@Test
+	public void Chat_005_private_messages_bar()
+	{
+		//first user opens the chat
+		HomePageObject home = new HomePageObject(driver);
+		CommonFunctions.logOut(Properties.userName, driver);
+		home.openHomePage();
+		CommonFunctions.logIn(Properties.userName, Properties.password, driver);
+		ChatPageObject chat1 = new ChatPageObject(driver);
+		//second user opens the chat		
+		HomePageObject home2 = new HomePageObject(driver2);
+		CommonFunctions.logOut(Properties.userName, driver2);
+		home2.openHomePage();
+		CommonFunctions.logIn(Properties.userName2, Properties.password2, driver2);
+		ChatPageObject chat2 = new ChatPageObject(driver2);
+		chat2.openChatPage();
+		chat1.openChatPage();
+		chat1.verifyChatPage();
+		chat1.clickOnDifferentUser(Properties.userName2, driver);
+		chat1.selectPrivateMessage(driver);
+		chat1.verifyPrivateMessageHeader();
+	}	
 }
