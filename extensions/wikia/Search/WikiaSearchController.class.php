@@ -24,7 +24,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	}
 
 	public function index() {
-		$this->wg->Out->addHTML( F::build('JSSnippets')->addToStack( array( "/extensions/wikia/Search/WikiaSearch.js" ) ) );
+		$this->wg->Out->addHTML( F::build('JSSnippets')->addToStack( array( "/extensions/wikia/Search/js/WikiaSearch.js" ) ) );
 		$this->wg->SuppressRail = true;
 
 		$skin = $this->wg->User->getSkin();
@@ -36,7 +36,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 				// don't show ads in search
 			} elseif ((! $skin instanceof SkinMonoBook) && (! $skin instanceof SkinVector)) {
 				$this->app->registerHook('MakeGlobalVariablesScript', 'WikiaSearchAdsController', 'onMakeGlobalVariablesScript');
-				$this->response->addAsset('extensions/wikia/Search/WikiaSearchAds.js');
+				$this->response->addAsset('extensions/wikia/Search/js/WikiaSearchAds.js');
 				$showSearchAds = true;
 			}
 		}
