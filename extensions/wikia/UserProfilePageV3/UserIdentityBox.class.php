@@ -532,7 +532,10 @@ class UserIdentityBox {
 			$limit = $this->topWikisLimit;
 		}
 
-		if ($this->app->wg->DevelEnvironment) {
+		if ( empty($this->app->wg->CityId) ) {
+			// staff/internal does not have stats db
+			$wikis = array();
+		} else if ($this->app->wg->DevelEnvironment) {
 			//devboxes uses the same database as production
 			//to avoid strange behavior we set test data on devboxes
 			$wikis = $this->getTestData($limit);
