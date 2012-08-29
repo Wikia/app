@@ -28,24 +28,26 @@ define('modal', ['loader', 'track', 'events', 'ads'], function modal(loader, tra
 		caption = d.getElementById('wkMdlFtr');
 
 		//TODO: create better resolution 'finder'
-		var deviceWidth = ($.os.ios) ? 268 : 320,
-			deviceHeight = ($.os.ios) ? 416 : 523;
+		var deviceWidth = ($.os.ios) ? 268 : w.innerWidth,
+			deviceHeight = ($.os.ios) ? 416 : w.innerHeight;
 
 		//close modal on back button
-		d.getElementById('wkMdlClo').addEventListener('click', function(){
+		d.getElementById('wkMdlClo').addEventListener('click', function(ev){
+			ev.stopPropagation();
+			ev.preventDefault();
 			w.history.back();
-			//in case browser don't care about history (:)) call close on click anyway
+			//in case browser doesn't care about history (:)) call close on click anyway
 			close();
-		}, true);
+		});
 
 		w.addEventListener('hashchange', function(ev) {
 			if(isOpen() && w.location.hash == ''){
 				ev.preventDefault();
 				close();
 			}
-		}, true);
+		});
 
-		content.addEventListener('tap', function(){
+		content.addEventListener('click', function(){
 			if(!stopHiding){
 				if(wrapper.className.indexOf('hdn') > -1){
 					showUI();
@@ -53,7 +55,7 @@ define('modal', ['loader', 'track', 'events', 'ads'], function modal(loader, tra
 					hideUI();
 				}
 			}
-		}, true);
+		});
 
 		//hide adress bar on orientation change
 		w.addEventListener('orientationchange', function() {
@@ -143,7 +145,7 @@ define('modal', ['loader', 'track', 'events', 'ads'], function modal(loader, tra
 				!stopScrolling && w.scrollTo(0, position);
 
 				ads && ads.fix();
-			},100);
+			},50);
 		}
 	}
 

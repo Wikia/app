@@ -81,6 +81,6 @@ $(function(){
 			} else if (className.indexOf('pollInput') > -1) {
 				t.parentElement.lastElementChild.className += ' active';
 			}
-		}, true);
+		});
 	});
 });
