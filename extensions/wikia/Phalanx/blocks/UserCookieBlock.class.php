@@ -42,13 +42,14 @@ class UserCookieBlock extends UserBlock {
 			return $cachedState;
 		}
 
-		$hashes = AccountCreationTracker::getHashesByUser( $user );
+		$tracker = F::build( 'AccountCreationTracker' );
+		$hashes = $tracker->getHashesByUser( $user );
 
 		$blocksData = Phalanx::getFromFilter( self::TYPE );
 
-		if ( !empty($blocksData) && !empty($hashes) ) {
+		if ( !empty( $blocksData ) && !empty( $hashes ) ) {
 			foreach ( $hashes as $hash ) {
-				$ret = self::blockCheckInternal( $user, $blocksData, $text, false, $isCurrentUser );
+				$ret = self::blockCheckInternal( $user, $blocksData, $hash, false, $isCurrentUser );
 				if ( !$ret ) {
 					// only check until we get first blocking match
 					break;
@@ -58,6 +59,7 @@ class UserCookieBlock extends UserBlock {
 
 		// populate cache if not done before
 		if ( $ret ) {
+			$cacheKey = self::getCacheKey( $user );
 			$cachedState = array(
 					'timestamp' => wfTimestampNow(),
 					'block' => false,
