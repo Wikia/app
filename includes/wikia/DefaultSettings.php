@@ -253,11 +253,6 @@ $wgAutoloadClasses['ThemeSettings'] = $IP.'/extensions/wikia/ThemeDesigner/Theme
 $wgAutoloadClasses['ThemeDesignerHelper'] = $IP."/extensions/wikia/ThemeDesigner/ThemeDesignerHelper.class.php";//FB#22659 - dependency for ThemeSettings
 $wgAutoloadClasses['ErrorController'] = $IP.'/skins/oasis/modules/ErrorController.class.php';
 $wgAutoloadClasses['WikiaMediaCarouselController'] = $IP.'/skins/oasis/modules/WikiaMediaCarouselController.class.php';
-$wgAutoloadClasses['WikiaBarController'] = $IP.'/skins/oasis/modules/WikiaBarController.class.php';
-$wgAutoloadClasses['WikiaBarModel'] = $IP.'/skins/oasis/modules/models/wikiabar/WikiaBarModel.class.php';
-$wgAutoloadClasses['WikiaBarModelBase'] = $IP.'/skins/oasis/modules/models/wikiabar/WikiaBarModelBase.class.php';
-$wgAutoloadClasses['WikiaBarDataModel'] = $IP.'/skins/oasis/modules/models/wikiabar/WikiaBarDataModel.class.php';
-$wgAutoloadClasses['WikiaBarDataFailsafeModel'] = $IP.'/skins/oasis/modules/models/wikiabar/WikiaBarDataFailsafeModel.class.php';
 
 
 // TODO:move this inclusions to CommonExtensions?
