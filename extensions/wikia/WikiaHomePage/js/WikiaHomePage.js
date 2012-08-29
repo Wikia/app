@@ -82,6 +82,10 @@ var WikiPreviewInterstitial = {
 		} else {
 			WikiPreviewInterstitial.mask.removeClass('hidden');
 		}
+		var maskElement = document.getElementById('WikiPreviewInterstitialMask');
+		if(maskElement) {
+			maskElement.scrollIntoView();
+		}
 	},
 	hide: function () {
 		WikiPreviewInterstitial.mask
