@@ -79,7 +79,7 @@ class RTELinkerHooks extends Linker {
 	 *
 	 * @param $text string link content
 	 * @param $attribs array attributes
-	 * @param $markerType numeric see RTEMarker class for constants definition
+	 * @param $markerType integer see RTEMarker class for constants definition
 	 * @return array attributes
 	 */
 	private static function addDataIdxAttributes(&$text, array $attribs, $markerType) {
