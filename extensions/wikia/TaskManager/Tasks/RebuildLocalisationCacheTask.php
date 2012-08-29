@@ -36,6 +36,10 @@ class RebuildLocalisationCacheTask extends BatchTask {
 			"pdsh -g all_web 'echo {$this->mTaskID} > /tmp/l10n-rebuild'"
 		);
 		$this->log( $out );
+		$out = wfShellExec(
+			"pdsh -g all_web 'chown release.www-data /tmp/l10n-rebuild'"
+		);
+		$this->log( $out );
 		$this->log( 'RebuildLocalisationCacheTask completed.' );
 		return true;
 	}
