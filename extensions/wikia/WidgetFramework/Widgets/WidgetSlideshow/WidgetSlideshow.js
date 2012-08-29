@@ -8,7 +8,12 @@ function WidgetSlideshow_init(id, widget) {
 			.removeAttr('title');
 	});
 
-	// initialize slideshow
+	// jQuery.slideshow has been removed from our repository
+	// as this is the last place it is used and Widget JavaScript
+	// has been disabled. If it ever gets re-enabled, this Widget
+	// will need to be refactored using jQuery.carousel (BugId:42477).
+	// See: /resources/wikia/jquery/carousel/jquery.wikia.carousel.js
+	/*
 	$('#widget_' + id + '_content').slideshow({
 		slidesClass:	'WidgetSlideshowImages',
 		buttonsClass:	'WidgetSlideshowControls',
@@ -19,6 +24,7 @@ function WidgetSlideshow_init(id, widget) {
 		blockedClass:	'blocked',
 		slideWidth:	'186px'
 	});
+	*/
 
 	$().log('#widget_' + id + ' initialized', 'Slideshow');
 }
