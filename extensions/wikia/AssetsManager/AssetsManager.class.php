@@ -37,6 +37,10 @@ class AssetsManager {
 		}
 	}
 
+	/**
+	 * @static
+	 * @return AssetsManager instance
+	 */
 	public static function getInstance() {
 		if( self::$mInstance == false ) {
 			global $wgCdnStylePath, $wgStyleVersion, $wgAllInOne, $wgRequest;
