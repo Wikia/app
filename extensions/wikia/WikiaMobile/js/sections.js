@@ -15,7 +15,8 @@ define('sections', ['events', 'track'], function(ev, track){
 		callbacks = {
 			open: [],
 			close: []
-		};
+		},
+		OPENCLASS = ' open';
 
 	function fireEvent(event, target){
 		var stack = callbacks[event],
@@ -125,25 +126,46 @@ define('sections', ['events', 'track'], function(ev, track){
 	}
 
 	function toggle(h2){
-		var isOpen = (h2.className.indexOf('open') > -1),
-			next = h2.nextElementSibling;
-
-		track(['section', isOpen ? 'close' : 'open']);
-
-		if(isOpen){
-			h2.className = h2.className.replace(' open', '');
-			next.className = next.className.replace(' open', '');
+		if(h2 && isOpen(h2)){
+			close(h2);
 		}else{
-			h2.className += ' open';
-			next.className += ' open';
+			open(h2)
 		}
+	}
 
-		fireEvent((isOpen) ? 'close' : 'open', next);
+	function open(h2) {
+		if(h2 && !isOpen(h2)) {
+			var next = h2.nextElementSibling;
+
+			h2.className += OPENCLASS;
+			next.className += OPENCLASS;
+
+			fireEvent('open', next);
+			track(['section', 'open']);
+		}
+	}
+
+	function close(h2) {
+		if(h2 && isOpen(h2)) {
+			var next = h2.nextElementSibling;
+
+			h2.className = h2.className.replace(OPENCLASS, '');
+			next.className = next.className.replace(OPENCLASS, '');
+
+			fireEvent('close', next)
+			track(['section', 'close']);
+		}
+	}
+
+	function isOpen(h2){
+		return (h2.className.indexOf('open') > -1);
 	}
 
 	return {
 		init: init,
 		toggle: toggle,
+		open: open,
+		close: close,
 		addEventListener: function(event, callback){
 			callbacks[event] && callbacks[event].push(callback);
 		},
