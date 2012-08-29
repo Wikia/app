@@ -118,6 +118,7 @@ function linkSuggestAjaxResponse($out) {
 function getLinkSuggest() {
 	global $wgRequest, $wgContLang, $wgCityId, $wgExternalDatawareDB, $wgContentNamespaces, $wgMemc;
 	wfProfileIn(__METHOD__);
+
 	$isMobile = F::app()->checkSkin( 'wikiamobile' );
 	// trim passed query and replace spaces by underscores
 	// - this is how MediaWiki store article titles in database
@@ -129,8 +130,8 @@ function getLinkSuggest() {
 	} else {
 		$key = wfMemcKey( __METHOD__, md5( $query.'_'.$wgRequest->getText('format') ) );
 	}
-
-	if (strlen($query) < 3) {
+	
+	if (strlen($query) < 3 ) {
 		// enforce minimum character limit on server side
 		$out = $wgRequest->getText('format') == 'json'
 			 ? json_encode(array('suggestions'=>array(),'redirects'=>array()))
@@ -191,64 +192,52 @@ function getLinkSuggest() {
 	$query = addslashes($query);
 
 	$db = wfGetDB(DB_SLAVE, 'search');
-
-	if (count($namespaces) > 0) {
-		$commaJoinedNamespaces = count($namespaces) > 1 ?  array_shift($namespaces) . ', ' . implode(', ', $namespaces) : $namespaces[0];
-	}
-
-	$pageNamespaceClause = isset($commaJoinedNamespaces) ?  'AND page_namespace IN (' . $commaJoinedNamespaces . ')' : '';
-
-	$sql = "SELECT  page_title, rd_title, page_namespace, page_is_redirect
-
-			FROM page IGNORE INDEX (`name_title`)
-
-			LEFT JOIN redirect ON page_is_redirect = 1 AND page_id = rd_from
-
-			WHERE page_title LIKE '{$query}%' {$pageNamespaceClause}
-
-			LIMIT 20
-			";
-
-	$res = $db->query($sql);
-
+	
 	$redirects = array();
 	$results = array();
 	$exactMatchRow = null;
-	while(($row = $db->fetchObject($res)) && count($results < 10)) {
+	
+	$queryLower = strtolower($query);
+			
+	$res = $db->select(
+		array( 'querycache', 'page' ),
+		array( 'page_namespace', 'page_title', 'page_is_redirect' ),
+		array(
+			'qc_title = page_title',
+			'qc_namespace = page_namespace',
+			'page_is_redirect = 0',
+			'qc_type' => 'Mostlinked',
+			"(qc_title LIKE '{$query}%' or LOWER(qc_title) LIKE '{$queryLower}%')",
+			'qc_namespace' => $namespaces
+		),
+		__METHOD__,
+		array( 'ORDER BY' => 'qc_value DESC', 'LIMIT' => 10 )
+	);
 
-		if (strtolower($row->page_title) == $query) {
-			$exactMatchRow = $row;
-			continue;
-		}
-
-		$titleFormatted = wfLinkSuggestFormatTitle($row->page_namespace, $row->page_title);
-
-		if ($row->page_is_redirect == 0) {
-
-			if (!in_array($titleFormatted, $results)) {
-				$results[] = $titleFormatted;
-			}
-
-			$flippedRedirs = array_flip($redirects);
-			if (isset($flippedRedirs[$titleFormatted])) {
-				unset($redirects[$flippedRedirs[$titleFormatted]]);
-			}
-
-		} else {
-
-			$redirTitleFormatted = wfLinkSuggestFormatTitle($row->page_namespace, $row->rd_title);
-
-			if (!in_array($redirTitleFormatted, $results)) {
-
-				$results[] = $redirTitleFormatted;
-				$redirects[$redirTitleFormatted] = $titleFormatted;
-
-			}
-
-		}
-
+	linkSuggestFormatResults($db, $res, $query, $redirects, $results, $exactMatchRow);
+	
+	if (count($namespaces) > 0) {
+		$commaJoinedNamespaces = count($namespaces) > 1 ?  array_shift($namespaces) . ', ' . implode(', ', $namespaces) : $namespaces[0];
 	}
-
+	
+	$pageNamespaceClause = isset($commaJoinedNamespaces) ?  'page_namespace IN (' . $commaJoinedNamespaces . ') AND ' : '';
+	
+	if(count($results) < 10 ) {
+		$sql = "SELECT page_id, page_title, rd_title, page_namespace, page_is_redirect
+	
+				FROM page IGNORE INDEX (`name_title`)
+	
+				LEFT JOIN redirect ON page_is_redirect = 1 AND page_id = rd_from
+	
+				WHERE {$pageNamespaceClause} (page_title LIKE '{$query}%' or LOWER(page_title) LIKE '{$queryLower}%')
+	
+				LIMIT 20 ";
+		
+		$res = $db->query($sql);
+		
+		linkSuggestFormatResults($db, $res, $query, $redirects, $results, $exactMatchRow);
+	}
+	
 	if ($exactMatchRow !== null) {
 
 		$row = $exactMatchRow;
@@ -329,6 +318,43 @@ function getLinkSuggest() {
 
 	wfProfileOut(__METHOD__);
 	return linkSuggestAjaxResponse($out);
+}
+
+function linkSuggestFormatResults($db, $res, $query, &$redirects, &$results, &$exactMatchRow) {
+	while(($row = $db->fetchObject($res)) && count($results < 10)) {
+
+		if (strtolower($row->page_title) == $query) {
+			$exactMatchRow = $row;
+			continue;
+		}
+
+		$titleFormatted = wfLinkSuggestFormatTitle($row->page_namespace, $row->page_title);
+
+		if ($row->page_is_redirect == 0) {
+
+			if (!in_array($titleFormatted, $results)) {
+				$results[] = $titleFormatted;
+			}
+
+			$flippedRedirs = array_flip($redirects);
+			if (isset($flippedRedirs[$titleFormatted])) {
+				unset($redirects[$flippedRedirs[$titleFormatted]]);
+			}
+
+		} else {
+
+			$redirTitleFormatted = wfLinkSuggestFormatTitle($row->page_namespace, $row->rd_title);
+
+			if (!in_array($redirTitleFormatted, $results)) {
+
+				$results[] = $redirTitleFormatted;
+				$redirects[$redirTitleFormatted] = $titleFormatted;
+
+			}
+
+		}
+
+	}
 }
 
 /**
