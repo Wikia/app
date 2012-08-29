@@ -53,8 +53,8 @@ public class SearchPageObject extends BasePageObject
 	public void searchForPhrase(String phrase)
 	{
 		searchInput.sendKeys(phrase);
-		searchButton.click();
 		PageObjectLogging.log("searchForPhrase", "Typed \"" + phrase + "\"", true, driver);
+		searchButton.click();
 	}
 
 	public void verifyTopSponsoredAdBox()

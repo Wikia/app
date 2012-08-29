@@ -12,7 +12,7 @@ public class AdsInSearchTests extends TestTemplate
 	/*
 	 * A search phrase to always get some wiki results and as many ads as possible
 	 */
-	private String popularSearchPhrase = "wiki hotel home page fun";
+	private String popularSearchPhrase = "wiki OR hotel OR home OR page OR fun";
 	private int popularSearchPhraseExpectedTopAdsCount = 3;
 	private int popularSearchPhraseExpectedBottomAdsCount = 3;
 
