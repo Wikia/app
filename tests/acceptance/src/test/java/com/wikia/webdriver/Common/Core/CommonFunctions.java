@@ -109,9 +109,8 @@ public class CommonFunctions
 	 * @param userName
 	 * @author: Karol Kujawiak
 	 */
-	public static void logOut(String userName)
+	public static void logOut(String userName, WebDriver driver)
 	{
-		driver   = DriverProvider.getWebDriver();
 		wait = new WebDriverWait(driver, 30);
 		driver.get(Global.LIVE_DOMAIN+"wiki/Special:UserLogout?returnto=User "+userName);	
 	}

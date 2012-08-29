@@ -6,6 +6,7 @@ import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 
@@ -44,6 +45,10 @@ public class DriverProvider {
 		{
 			setChromeProperties();
 			driver = new EventFiringWebDriver(new ChromeDriver()).register(listener);
+		}
+		else if (Global.BROWSER.equals("HTMLUNIT"))
+		{
+			driver = new EventFiringWebDriver(new HtmlUnitDriver()).register(listener);
 		}
 			
 		
