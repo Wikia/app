@@ -115,7 +115,7 @@ class CodeLintPhp extends CodeLint {
 	 * Parse XML files in resuls directory and return list of problems found
 	 *
 	 * @param string $resultsDir results directory with XML files
-	 * @return array with list of problems
+	 * @return array with list of problems found
 	 * @throws Exception
 	 */
 	private function parseResults($resultsDir) {
@@ -149,6 +149,32 @@ class CodeLintPhp extends CodeLint {
 			}
 			else {
 				throw new Exception("Parsing {$file} failed!");
+			}
+		}
+
+		return $problems;
+	}
+
+	/**
+	 * Performs addiitonal reg-exp based check of a single file
+	 *
+	 * @param $fileName string file name to check
+	 * @return array with list of problems found
+	 */
+	private function additionalFileCheck($fileName) {
+		$problems = array();
+
+		$content = file_get_contents($fileName);
+		$lines = explode("\n", $content);
+
+		foreach($lines as $lineNo => $line) {
+			// check for deprecated skins (BugId:45705)
+			if (preg_match( '#[\'"](monaco|SkinMonaco|quartz|SkinQuartz)[\'"]#', $line) > 0) {
+				$problems[] = array(
+					'file' => $fileName,
+					'line' => $lineNo + 1,
+					'error' => 'Deprecated skin check'
+				);
 			}
 		}
 
@@ -198,13 +224,17 @@ class CodeLintPhp extends CodeLint {
 	 */
 	public function internalCheckFile($fileName) {
 		// run PhpStorm for the whole directory
-		$output = $this->inspectDirectory(dirname($fileName));
+		#$output = $this->inspectDirectory(dirname($fileName));
+		$output = array('tool' => '', 'time' => 0); // debug !!!
 
 		// use the same directory structure as parseResults() method
 		$fileName = realpath($fileName);
 
 		// take issues for just the current file
 		$errors = isset($output['problems'][$fileName]) ? $output['problems'][$fileName] : array();
+
+		// perform additional (reg-exp based) checks
+		$errors  = array_merge($errors , $this->additionalFileCheck($fileName));
 
 		if (!empty($output)) {
 			$output = array(
@@ -230,6 +260,7 @@ class CodeLintPhp extends CodeLint {
 			case 'Unreachable statement':
 			case 'Redundant closing tag':
 			case 'Call-time pass-by-reference has been removed in PHP 5.4':
+			case 'Deprecated skin check':
 				$ret = true;
 				break;
 		}
