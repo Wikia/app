@@ -91,7 +91,7 @@ define('ads', ['events'], function (ev) {
 				//the bottom on iOS 5+ (BugzId:38017)
 				setTimeout(
 					function(){
-						adSlot.className = 'show fixed over';
+						adSlot.className = 'show over fixed';
 					},
 					100
 				);
@@ -105,13 +105,14 @@ define('ads', ['events'], function (ev) {
 
 	//public
 	function unfix(){
+		var classes = ' over';
 		if(adSlot){
 			if(positionfixed){
-				adSlot.className = adSlot.className.replace(' fixed over', '');
+				classes += ' fixed';
 			} else {
-				adSlot.className = adSlot.className.replace(' over', '');
 				moveSlot(ftr.offsetTop);
 			}
+			adSlot.className = adSlot.className.replace(classes, '');
 			fixed = false;
 		}
 	}
