@@ -4,7 +4,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
+import com.wikia.webdriver.Common.Core.Global;
 import com.wikia.webdriver.Common.Logging.PageObjectLogging;
 import com.wikia.webdriver.PageObjects.PageObject.WikiBasePageObject;
 
@@ -44,11 +46,13 @@ public class NewWikiaHomePage extends WikiBasePageObject{
 		PageObjectLogging.log("closeCongratulationsLightBox ", "Congratulations lightbox closed", true, driver);
 	}
 	
-	public void vefifyUserLoggedIn(String userName)
+	public void verifyUserLoggedIn(String userName)
 	{
 		waitForElementByCss("header#WikiaHeader a[href*='/User:"+userName+"']");
 		PageObjectLogging.log("vefifyUserLoggedIn ", "Verified that user: "+userName+" is logged in", true);
 	}
+
+	
 	
 	
 
