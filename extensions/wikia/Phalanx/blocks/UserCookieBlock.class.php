@@ -13,7 +13,12 @@ class UserCookieBlock extends UserBlock {
 	const TYPE = Phalanx::TYPE_COOKIE;
 	const CACHE_KEY = 'user-cookie-status';
 
-	public static function blockCheck(&$user) {
+	/**
+	 * @static
+	 * @param User $user
+	 * @return array|bool|null
+	 */
+	public static function blockCheck(User $user) {
 		global $wgUser, $wgMemc;
 		wfProfileIn( __METHOD__ );
 
@@ -42,7 +47,7 @@ class UserCookieBlock extends UserBlock {
 			return $cachedState;
 		}
 
-		$tracker = F::build( 'AccountCreationTracker' );
+		$tracker = F::build( 'AccountCreationTracker' ); /** @var $tracker AccountCreationTracker */
 		$hashes = $tracker->getHashesByUser( $user );
 
 		$blocksData = Phalanx::getFromFilter( self::TYPE );
@@ -53,7 +58,7 @@ class UserCookieBlock extends UserBlock {
 				if ( !$ret ) {
 					// only check until we get first blocking match
 					break;
-				}	
+				}
 			}
 		}
 
@@ -70,5 +75,5 @@ class UserCookieBlock extends UserBlock {
 
 		wfProfileOut( __METHOD__ );
 		return $ret;
-	}	
+	}
 }
