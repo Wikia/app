@@ -376,12 +376,6 @@ $wgUseAjax                = true;
 $wgValidateUserName       = true;
 $wgAjaxAutoCompleteSearch = true;
 
-$wgAjaxExportList[] = "wfDragAndDropReorder";
-$wgAjaxExportList[] = "getSuggestedArticleURL";
-$wgAjaxExportList[] = "cxValidateUserName";
-$wgAjaxExportList[] = "searchSuggest";
-
-
 /**
  * Wikia custom extensions, enabled sitewide. Pre-required by some skins
  */
