@@ -33,20 +33,42 @@ public class HubBasePageObject extends BasePageObject{
 	private WebElement modalWrapper_Cancel_CloseButton;
 	@FindBy(css="button[id='suggestVideo']") 
 	private WebElement suggestVideoButton;
+	@FindBy(css="button[id='suggestArticle']") 
+	private WebElement suggestArticleButton;
 	@FindBy(css="section.modalWrapper") 
-	private WebElement suggestVideoModal;
+	private WebElement suggestVideoOrArticleModal;
 	@FindBy(css="section.modalWrapper h1") 
-	private WebElement suggestVideoModalTopic;
+	private WebElement suggestVideoOrArticleModalTopic;
 	@FindBy(css="div.videourl input") 
-	private WebElement suggestVideoWhatVideoInput;
+	private WebElement suggestVideoWhatInput;
+	@FindBy(css="div.articleurl input") 
+	private WebElement suggestArticleWhatInput;
 	@FindBy(css="div.wikiname input") 
 	private WebElement suggestVideoWhichWikiInput;
+	@FindBy(css="div.required textarea") 
+	private WebElement suggestArticleWhyCooliInput;
 	@FindBy(css="button.submit") 
 	private WebElement submitButton;
+	@FindBy(css="section.wikiahubs-pulse") 
+	private WebElement pulseModule;
+	@FindBy(css="a[id='facebook']") 
+	private WebElement FacebookButton;
+	@FindBy(css="a[id='twitter']") 
+	private WebElement TwitterButton;
+	@FindBy(css="a[id='google']") 
+	private WebElement GoogleButton;
+	@FindBy(css="div.top-wikis-content") 
+	private WebElement topWikisModule;
 		
 	By MosaicSliderLargeImageDescription = By.cssSelector("div.wikia-mosaic-slider-description span.description-more");
 	By NewsTabsList = By.cssSelector("div.tabbertab");
 	By RelatedVideosList = By.cssSelector("div.container div.item");
+	By FromCommunityImagesList = By.cssSelector("ul.wikiahubs-ftc-list div img");
+	By FromCommunityHeadlinesList = By.cssSelector("ul.wikiahubs-ftc-list div.wikiahubs-ftc-title a");
+	By FromCommunityWikinameAndUsernameFieldsList = By.cssSelector("ul.wikiahubs-ftc-list div.wikiahubs-ftc-subtitle a");
+	By FromCommunityQuatationsList = By.cssSelector("ul.wikiahubs-ftc-list div.wikiahubs-ftc-creative");
+	By PulseStatisticsList = By.cssSelector("div.boxes div");
+	By topWikissList = By.cssSelector("div.boxes div");
 	
 	int RVmoduleCurrentVideosSet;
 	
@@ -105,7 +127,7 @@ public class HubBasePageObject extends BasePageObject{
 	 * @param  SearchString  Specifies what you want to search for
 	 */
 	public void SearchButtonClick() {
-		PageObjectLogging.log("Left click on the WikiaSearch button", "", true, driver);
+		PageObjectLogging.log("SearchButtonClick", "Left click on the WikiaSearch button", true, driver);
 		SearchButton.click();
 		
 		
@@ -130,8 +152,8 @@ public class HubBasePageObject extends BasePageObject{
 	 * @param  URL  Specifies what URL you expect as 100% sure result of searching
 	 */
 	protected void SearchResultsVerifyFoundURL(String URL) {
-		PageObjectLogging.log("Verify if " + URL
-				+ " URL is one of found the results", "", true, driver);
+		PageObjectLogging.log("SearchResultsVerifyFoundURL", "Verify if " + URL
+				+ " URL is one of found the results", true, driver);
 		
 			wait.until(ExpectedConditions.visibilityOfElementLocated(By
 					.cssSelector("li.result a[href='"+URL+"']")));
@@ -146,7 +168,7 @@ public class HubBasePageObject extends BasePageObject{
 	 * @author Michal Nowierski
 	 */
 	public void MosaicSliderHoverOverImage(int n) {
-		PageObjectLogging.log("MosaicSliderHoverOverImage", "MosaicSlider: Hover over image number"+n, true, driver);
+		PageObjectLogging.log("MosaicSliderHoverOverImage", "MosaicSlider: Hover over image number "+n, true, driver);
 		if (n>5) {
 			PageObjectLogging.log("MosaicSliderHoverOverImage", "MosaicSlider: The n parameter must be less than 5. It can not be: n = "+n, false, driver);
 			return;
@@ -166,7 +188,7 @@ public class HubBasePageObject extends BasePageObject{
 	 * @author Michal Nowierski
 	 */
 	public String MosaicSliderGetCurrentLargeImageDescription() {
-		PageObjectLogging.log("MosaicSliderGetCurrentLargeImage", "Get title of current LargeImage on Mosaic Slider", true, driver);
+		PageObjectLogging.log("MosaicSliderGetCurrentLargeImageDescription", "Get description of current LargeImage on Mosaic Slider", true, driver);
 		WebElement MosaicSliderLargeImageDesc = driver.findElement(MosaicSliderLargeImageDescription);
 		waitForElementByElement(MosaicSliderLargeImageDesc);
 		String description = MosaicSliderLargeImageDesc.getText();
@@ -264,54 +286,68 @@ public class HubBasePageObject extends BasePageObject{
 	 * @author Michal Nowierski
 	 */
 	public void ClickSuggestAVideo() {
-		PageObjectLogging.log("ClickSuggestAVideo", "Click on suggest video button", true, driver);
+		PageObjectLogging.log("ClickSuggestAVideo", "Click on a suggest video button", true, driver);
 		waitForElementByElement(suggestVideoButton);
 		CommonFunctions.scrollToElement(suggestVideoButton);
 		waitForElementClickableByElement(suggestVideoButton);	
 		suggestVideoButton.click();
 		
 	}
-
+	
 	/**
-	 * Verify that suggest a video modal appeared
+	 * Click on suggest an article button
 	 * 
 	 * @author Michal Nowierski
 	 */
-	public void VerifySuggestAVideoModalAppeared() {
-		PageObjectLogging.log("VerifyVideoPlayerAppeared", "Verify that suggest a video modal appeared", true, driver);
-		waitForElementByElement(suggestVideoModal);
+	public void ClickSuggestAnArticle() {
+		PageObjectLogging.log("ClickSuggestAnArticle", "Click on suggest an article button", true, driver);
+		waitForElementByElement(suggestArticleButton);
+		CommonFunctions.scrollToElement(suggestArticleButton);
+		waitForElementClickableByElement(suggestArticleButton);	
+		suggestArticleButton.click();
 		
 	}
 
 	/**
-	 * Verify that suggest a video modal appeared
+	 * Verify that suggest a video or article modal appeared
 	 * 
 	 * @author Michal Nowierski
 	 */
-	public void VerifySuggestAVideoModalTopic(String topic) {
-		PageObjectLogging.log("VerifySuggestAVideoModalTopic", "Verify that suggest a video modal has topic: "+topic, true, driver);
-		waitForElementByElement(suggestVideoModalTopic);
-		waitForTextToBePresentInElementByElement(suggestVideoModalTopic, topic);
+	public void VerifySuggestAVideoOrArticleModalAppeared() {
+		PageObjectLogging.log("VerifySuggestAVideoOrArticleModalAppeared", "Verify that suggest a video modal appeared", true, driver);
+		waitForElementByElement(suggestVideoOrArticleModal);
+		
+	}
+
+	/**
+	 * Verify that suggest a video or an article modal has topic: 
+	 * 
+	 * @author Michal Nowierski
+	 */
+	public void VerifySuggestAVideoOrArticleModalTopic(String topic) {
+		PageObjectLogging.log("VerifySuggestAVideoOrArticleModalTopic", "Verify that suggest a video or an article modal has topic: "+topic, true, driver);
+		waitForElementByElement(suggestVideoOrArticleModalTopic);
+		waitForTextToBePresentInElementByElement(suggestVideoOrArticleModalTopic, topic);
 		
 	}
 	
 	/**
-	 * Click on [x] to close suggest a video modal
+	 * Click on [x] to close suggest a video or article modal
 	 * 
 	 * @author Michal Nowierski
 	 */
-	public void Click_X_toCloseSuggestAVideo() {
-		PageObjectLogging.log("Click_X_toCloseSuggestAVideo", "Click on [x] to close suggest a video modal", true, driver);
+	public void Click_X_toCloseSuggestAVideoOrArticle() {
+		PageObjectLogging.log("Click_X_toCloseSuggestAVideoOrArticle", "Click on [x] to close suggest a video or article modal", true, driver);
 		closeModalWrapper();		
 	}
 	
 	/**
-	 * Click on Cancel to close suggest a video modal
+	 * Click on Cancel to close suggest a video or article modal
 	 * 
 	 * @author Michal Nowierski
 	 */
-	public void Click_Cancel_toCloseSuggestAVideo() {
-		PageObjectLogging.log("Click_X_toCloseSuggestAVideo", "Click on Cancel to close suggest a video modal", true, driver);
+	public void Click_Cancel_toCloseSuggestAVideoOrArticle() {
+		PageObjectLogging.log("Click_Cancel_toCloseSuggestAVideoOrArticle", "Click on Cancel to close suggest a video or article modal", true, driver);
 		waitForElementByElement(modalWrapper_Cancel_CloseButton);
 		waitForElementClickableByElement(modalWrapper_Cancel_CloseButton);	
 		modalWrapper_Cancel_CloseButton.click();		
@@ -329,24 +365,24 @@ public class HubBasePageObject extends BasePageObject{
 	}
 
 	/**
-	 * Verify that Suggest Video button is disabled
+	 * Verify that Suggest Video or Article submit button is disabled
 	 * 
 	 * @author Michal Nowierski
 	 */	
-	public void VerifySuggestVideoButtonNotClickable() {
-		PageObjectLogging.log("VerifySuggestVideoButtonNotClickable", "Verify that Suggest Video button is disabled", true, driver);
+	public void VerifySuggestVideoOrArticleButtonNotClickable() {
+		PageObjectLogging.log("VerifySuggestVideoOrArticleButtonNotClickable", "Verify that 'Suggest Video' or 'Article' submit button button is disabled", true, driver);
 		waitForElementByElement(submitButton);
 		waitForElementNotClickableByElement(submitButton);
 		
 	}
 	
 	/**
-	 * Verify that Suggest Video button is enabled
+	 * Verify that Suggest Video or Article submit button is enabled
 	 * 
 	 * @author Michal Nowierski
 	 */	
-	public void VerifySuggestVideoButtonClickable() {
-		PageObjectLogging.log("VerifySuggestVideoButtonNotClickable", "Verify that Suggest Video button is enabled", true, driver);
+	public void VerifySuggestVideoOrArticleButtonClickable() {
+		PageObjectLogging.log("VerifySuggestVideoOrArticleButtonClickable", "Verify that Suggest Video or Article submit button is enabled", true, driver);
 		waitForElementByElement(submitButton);
 		waitForElementClickableByElement(submitButton);
 		
@@ -359,8 +395,20 @@ public class HubBasePageObject extends BasePageObject{
 	 */	
 	public void SuggestVideoTypeIntoWhatVideoField(String text) {
 		PageObjectLogging.log("SuggestVideoTypeIntoWhatVideoField", "Type '"+text+"' into 'What Video' field on 'Suggest Video Modal'", true, driver);
-		waitForElementByElement(suggestVideoWhatVideoInput);
-		suggestVideoWhatVideoInput.sendKeys(text);
+		waitForElementByElement(suggestVideoWhatInput);
+		suggestVideoWhatInput.sendKeys(text);
+		
+	}
+	
+	/**
+	 * Type text into 'What Video' field on 'Suggest Video Modal'
+	 * 
+	 * @author Michal Nowierski
+	 */	
+	public void SuggestArticleTypeIntoWhatVideoField(String text) {
+		PageObjectLogging.log("SuggestArticleTypeIntoWhatVideoField", "Type '"+text+"' into 'What Video' field on 'Suggest Article Modal'", true, driver);
+		waitForElementByElement(suggestArticleWhatInput);
+		suggestArticleWhatInput.sendKeys(text);
 		
 	}
 	
@@ -374,6 +422,203 @@ public class HubBasePageObject extends BasePageObject{
 		waitForElementByElement(suggestVideoWhichWikiInput);
 		suggestVideoWhichWikiInput.sendKeys(text);
 		
+	}
+	
+	/**
+	 * Type text into 'Why cool' field on 'Suggest Video Modal'
+	 * 
+	 * @author Michal Nowierski
+	 */	
+	public void SuggestArticleTypeIntoWhyCoolField(String text) {
+		PageObjectLogging.log("SuggestArticleTypeIntoWhyCoolField", "Type '"+text+"' into 'Why cool' field on 'Suggest Video Modal'", true, driver);
+		waitForElementByElement(suggestArticleWhyCooliInput);
+		suggestArticleWhyCooliInput.sendKeys(text);
+		
+	}
+
+	/**
+	 * Verify that from the community module has images
+	 * 
+	 * @author Michal Nowierski
+	 */	
+	public void verifyFromModuleHasImages() {
+		PageObjectLogging.log("verifyFromModuleHasImages", "Verify that from the community module has images", true, driver);
+		List<WebElement> List = driver.findElements(FromCommunityImagesList);
+		for (int i = 0; i < List.size(); i++) {
+			PageObjectLogging.log("verifyFromModuleHasImages", "Checking image number "+(i+1), true, driver);
+			CommonFunctions.scrollToElement(List.get(i));
+			waitForElementByElement(List.get(i));		
+		}
+		
+	}
+	/**
+	 * Verify that from the communitz module has headline
+	 * 
+	 * @author Michal Nowierski
+	 */	
+	public void verifyFromModuleHasHeadline() {
+		PageObjectLogging.log("verifyFromModuleHasHeadline", "Verify that from the community module has headline", true, driver);
+		List<WebElement> List = driver.findElements(FromCommunityHeadlinesList);
+		for (int i = 0; i < List.size(); i++) {
+			PageObjectLogging.log("verifyFromModuleHasHeadline", "Checking headline number "+(i+1), true, driver);
+			CommonFunctions.scrollToElement(List.get(i));
+			waitForElementByElement(List.get(i));		
+		}
+		
+	}
+	/**
+	 * Verify that from the community module has username field
+	 * 
+	 * @author Michal Nowierski
+	 */	
+	public void verifyFromModuleHasUserAndWikiField() {
+		PageObjectLogging.log("verifyFromModuleHasUserAndWikiField", "Verify that from the community module has username field", true, driver);
+		List<WebElement> List = driver.findElements(FromCommunityWikinameAndUsernameFieldsList);
+		for (int i = 0; i < List.size(); i++) {
+			PageObjectLogging.log("verifyFromModuleHasUserAndWikiField", "Checking field number "+(i+1), true, driver);
+			CommonFunctions.scrollToElement(List.get(i));
+			waitForElementByElement(List.get(i));		
+		}
+	}
+
+	/**
+	 * Verify that from the communitz module has a quatation
+	 * 
+	 * @author Michal Nowierski
+	 */	
+	public void verifyFromModuleHasQuatation() {
+		PageObjectLogging.log("verifyFromModuleHasQuatation", "Verify that from the community module has a quatation", true, driver);
+		List<WebElement> List = driver.findElements(FromCommunityQuatationsList);
+		for (int i = 0; i < List.size(); i++) {
+			PageObjectLogging.log("verifyFromModuleHasQuatation", "Checking quotation number "+(i+1), true, driver);
+			CommonFunctions.scrollToElement(List.get(i));
+			waitForElementByElement(List.get(i));		
+		}
+		
+	}
+
+	/**
+	 * Verify that Pulse module appears
+	 * 
+	 * @author Michal Nowierski
+	 */	
+	public void verifyPulseModuleAppears() {
+		PageObjectLogging.log("verifyPulseModuleAppears", "Verify that Pulse module appears", true, driver);
+		waitForElementByElement(pulseModule);		
+	}
+	
+	/**
+	 * Verify that top wikis module appears
+	 * 
+	 * @author Michal Nowierski
+	 */	
+	public void verifyTopWikisModuleAppears() {
+		PageObjectLogging.log("verifyTopWikisModuleAppears", "Verify that top wikis module appears", true, driver);
+		waitForElementByElement(topWikisModule);		
+	}
+	
+	
+	/**
+	 * Verify that facebook button is displayed
+	 * 
+	 * @author Michal Nowierski
+	 */	
+	public void verifyFacebookButtonAppears() {
+		PageObjectLogging.log("verifyFacebookButtonAppears", "Verify that facebook button is displayed", true, driver);
+		waitForElementByElement(FacebookButton);		
+	}
+	
+	/**
+	 * Verify that twitter button is displayed
+	 * 
+	 * @author Michal Nowierski
+	 */	
+	public void verifyTwitterButtonAppears() {
+		PageObjectLogging.log("verifyTwitterButtonAppears", "Verify that twitter button is displayed", true, driver);
+		waitForElementByElement(TwitterButton);		
+	}
+	
+	/**
+	 * Verify that google button is displayed
+	 * 
+	 * @author Michal Nowierski
+	 */	
+	public void verifyGoogleButtonAppears() {
+		PageObjectLogging.log("verifyGoogleButtonAppears", "Verify that google button is displayed", true, driver);
+		waitForElementByElement(GoogleButton);		
+	}
+	
+	/**
+	 * verify that facebook button is clickable
+	 * 
+	 * @author Michal Nowierski
+	 */	
+	public void verifyFacebookButtonIsClickable() {
+		PageObjectLogging.log("verifyFacebookButtonIsClickable", "verify that facebook button is clickable", true, driver);
+		waitForElementClickableByElement(FacebookButton);		
+	}
+	
+	/**
+	 * verify that twitter button is clickable
+	 * 
+	 * @author Michal Nowierski
+	 */	
+	public void verifyTwitterButtonIsClickable() {
+		PageObjectLogging.log("verifyTwitterButtonIsClickable", "verify that twitter button is clickable", true, driver);
+		waitForElementClickableByElement(TwitterButton);		
+	}
+	
+	/**
+	 * verify that google button is clickable
+	 * 
+	 * @author Michal Nowierski
+	 */	
+	public void verifyGoogleButtonIsClickable() {
+		PageObjectLogging.log("verifyGoogleButtonIsClickable", "verify that google button is clickable", true, driver);
+		waitForElementClickableByElement(GoogleButton);		
+	}
+	
+	
+	/**
+	 * verify that statistics are displayed
+	 * 
+	 * @author Michal Nowierski
+	 */	
+	public void verifyStatisticsAreDisplayed() {
+		PageObjectLogging.log("verifyStatisticsAreDisplayed", "verify that statistics are displayed", true, driver);
+		List<WebElement> List = driver.findElements(PulseStatisticsList);
+		for (int i = 0; i < List.size(); i++) {
+			PageObjectLogging.log("verifyStatisticsAreDisplayed", "Checking statistics box number "+(i+1), true, driver);
+			CommonFunctions.scrollToElement(List.get(i));
+			waitForElementByElement(List.get(i));		
+		}
+	}
+	
+	/**
+	 * verify that wikis are listed in 'Top Wikis' module
+	 * 
+	 * @author Michal Nowierski
+	 */	
+	public void verifyWikisAreListedInTopWikisModule() {
+		PageObjectLogging.log("verifyWikisAreListedInTopWikisModule", "verify that wikis are listed in 'Top Wikis' module", true, driver);
+		List<WebElement> List = driver.findElements(topWikissList);
+		for (int i = 0; i < List.size(); i++) {
+			PageObjectLogging.log("verifyWikisAreListedInTopWikisModule", "Checking  top wiki number "+(i+1), true, driver);
+			CommonFunctions.scrollToElement(List.get(i));
+			waitForElementByElement(List.get(i));		
+		}
+	}
+	
+
+	
+	/**
+	 * 
+	 * 
+	 * @author Michal Nowierski
+	 */	
+	public void templateMethod() {
+		PageObjectLogging.log("", "", true, driver);
+	
 	}
 }
 

@@ -30,7 +30,8 @@ public class ImageServing extends TestTemplate {
 //	https://internal.wikia-inc.com/wiki/QA/Core_Features_and_Testing/Manual_Regression_Tests/Image_Serving
 	public void ImageServing001_SpecialNewFilesTest()
 	{
-	
+
+	CommonFunctions.MoveCursorTo(0, 0);
 	WikiBasePageObject wiki = new WikiBasePageObject(driver, Global.DOMAIN);
 	SpecialNewFilesPageObject wikiSpecialNF = wiki.OpenSpecialNewFiles();
 	
@@ -51,6 +52,7 @@ public class ImageServing extends TestTemplate {
 //	https://internal.wikia-inc.com/wiki/QA/Core_Features_and_Testing/Manual_Regression_Tests/Image_Serving
 	public void ImageServing002_SpecialUploadTest()
 	{
+		CommonFunctions.MoveCursorTo(0, 0);
 		WikiBasePageObject wiki = new WikiBasePageObject(driver, Global.DOMAIN);
 		SpecialUploadPageObject wikiSpecialU = wiki.OpenSpecialUpload();
 		CommonFunctions.logIn(Properties.userName2, Properties.password2);
@@ -65,6 +67,7 @@ public class ImageServing extends TestTemplate {
 //	https://internal.wikia-inc.com/wiki/QA/Core_Features_and_Testing/Manual_Regression_Tests/Image_Serving
 	public void ImageServing003_SpecialMultipleUploadTest()
 	{
+		CommonFunctions.MoveCursorTo(0, 0);
 		WikiBasePageObject wiki = new WikiBasePageObject(driver, Global.DOMAIN);
 		SpecialMultipleUploadPageObject wikiSpecialMU = wiki.OpenSpecialMultipleUpload();
 		CommonFunctions.logIn(Properties.userName2, Properties.password2);
@@ -79,6 +82,7 @@ public class ImageServing extends TestTemplate {
 	// Test Case 004 Adding images to an article in edit mode
 	public void ImageServing004_AddingImages()
 	{
+//		CommonFunctions.MoveCursorTo(0, 0);
 		WikiBasePageObject wiki = new WikiBasePageObject(driver, Global.DOMAIN);
 		WikiArticlePageObject article = wiki.OpenArticle(wikiArticle);
 		CommonFunctions.logIn(Properties.userName2, Properties.password2);
@@ -104,6 +108,7 @@ public class ImageServing extends TestTemplate {
 	// Test Case 005 Modifying images in an article in edit mode
 	public void ImageServing005_ModifyingImages()
 	{
+		CommonFunctions.MoveCursorTo(0, 0);
 		WikiBasePageObject wiki = new WikiBasePageObject(driver, Global.DOMAIN);
 		WikiArticlePageObject article = wiki.OpenArticle(wikiArticle);
 		CommonFunctions.logIn(Properties.userName2, Properties.password2);
@@ -133,6 +138,7 @@ public class ImageServing extends TestTemplate {
 	// Test Case 006  Removing images in an article in edit mode
 	public void ImageServing006_RemovingImages()
 	{
+		CommonFunctions.MoveCursorTo(0, 0);
 		WikiBasePageObject wiki = new WikiBasePageObject(driver, Global.DOMAIN);
 		WikiArticlePageObject article = wiki.OpenArticle(wikiArticle);
 		CommonFunctions.logIn(Properties.userName2, Properties.password2);
@@ -162,6 +168,7 @@ public class ImageServing extends TestTemplate {
 	// Test Case 007  Adding galleries to an article in edit mode
 	public void ImageServing007_AddingGalleries()
 	{
+		CommonFunctions.MoveCursorTo(0, 0);
 		WikiBasePageObject wiki = new WikiBasePageObject(driver, Global.DOMAIN);
 		WikiArticlePageObject article = wiki.OpenArticle(wikiArticle);
 		CommonFunctions.logIn(Properties.userName2, Properties.password2);
@@ -190,6 +197,7 @@ public class ImageServing extends TestTemplate {
 	// Test Case 008 Adding slideshows to an article in edit mode
 	public void ImageServing008_AddingSlideshow()
 	{
+		CommonFunctions.MoveCursorTo(0, 0);
 		WikiBasePageObject wiki = new WikiBasePageObject(driver, Global.DOMAIN);
 		WikiArticlePageObject article = wiki.OpenArticle(wikiArticle);
 		CommonFunctions.logIn(Properties.userName2, Properties.password2);
@@ -217,6 +225,7 @@ public class ImageServing extends TestTemplate {
 	// Test Case 009 Adding sliders to an article in edit mode
 	public void ImageServing009_AddingSliders()
 	{
+		CommonFunctions.MoveCursorTo(0, 0);
 		WikiBasePageObject wiki = new WikiBasePageObject(driver, Global.DOMAIN);
 		WikiArticlePageObject article = wiki.OpenArticle(wikiArticle);
 		CommonFunctions.logIn(Properties.userName2, Properties.password2);
@@ -244,6 +253,7 @@ public class ImageServing extends TestTemplate {
 	// Test Case 010 Adding videos to an article in edit mode
 	public void ImageServing010_AddingVideo()
 	{
+		CommonFunctions.MoveCursorTo(0, 0);
 		WikiBasePageObject wiki = new WikiBasePageObject(driver, Global.DOMAIN);
 		WikiArticlePageObject article = wiki.OpenArticle(wikiArticle);
 		CommonFunctions.logIn(Properties.userName2, Properties.password2);
@@ -272,6 +282,7 @@ public class ImageServing extends TestTemplate {
 	// Test Case 011 Adding related videos through Related Video (RV) module
 	public void ImageServing011_AddingVideoThroughRV()
 	{
+		CommonFunctions.MoveCursorTo(0, 0);
 		//delete all videos from RV module on QAAutopage using RelatedVideos:QAautoPage (message article)
 		WikiBasePageObject wiki = new WikiBasePageObject(driver, Global.DOMAIN);
 		WikiArticlePageObject RVmoduleMessage = wiki.OpenArticle("RelatedVideos:"+wikiArticle);

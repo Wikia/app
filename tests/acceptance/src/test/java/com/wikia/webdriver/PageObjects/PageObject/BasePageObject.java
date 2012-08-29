@@ -53,6 +53,9 @@ public class BasePageObject{
 	@FindBy(css="ul[id='my-tools-menu']")
 	WebElement customizeToolbar_MyToolsMenu;
 	
+	@FindBy(css="form.WikiaSearch")
+	WebElement wikiaSearch_searchForm;
+	
 	private By customizeToolbar_ToolsList = By.cssSelector("ul.tools li");
 	private By customizeToolbar_MyToolsList = By.cssSelector("ul[id='my-tools-menu'] a");
 	
@@ -631,6 +634,17 @@ public class BasePageObject{
 					ToolName+" Tool appears on toolbar (Not all of tools are other than the wanted one).", false, driver);
 				fail();
 		}
+		
+	}
+	
+	/**
+	 * verify that wikia search field is displayed
+	 * 
+	 * @author Michal Nowierski
+	 */	
+	public void verifyWikiaSearchFieldIsDisplayed() {
+		PageObjectLogging.log("verifyWikiaSearchFieldIsDisplayed", "verify that wikia search field is displayed", true, driver);
+		waitForElementByElement(wikiaSearch_searchForm);
 	}
 	
 	public String getTimeStamp()
