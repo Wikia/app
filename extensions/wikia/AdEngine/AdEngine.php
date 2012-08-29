@@ -14,7 +14,7 @@ $wgExtensionFunctions[] = 'wfAdEngineInit';
 
 function wfAdEngineInit() {
 	global $wgRequest, $wgUser;
-	global $wgNoExternals, $wgShowAds, $wgEnableAdsInContent, $wgEnableAdMeldAPIClient;
+	global $wgNoExternals, $wgShowAds, $wgEnableAdsInContent, $wgEnableAdMeldAPIClient, $wgEnableKruxTargeting;
 
 	if ($wgRequest->getBool('noexternals', $wgNoExternals)) {
 		$wgShowAds = false;
@@ -28,6 +28,7 @@ function wfAdEngineInit() {
 	if (empty($wgShowAds)) {
 		$wgEnableAdsInContent = false;
 		$wgEnableAdMeldAPIClient = false;
+		$wgEnableKruxTargeting = false;
 	}
 
 	if ($wgUser->isLoggedIn() && !$wgUser->getOption('showAds')) {
