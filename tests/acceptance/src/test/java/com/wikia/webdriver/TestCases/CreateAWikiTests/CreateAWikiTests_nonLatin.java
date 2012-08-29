@@ -30,7 +30,7 @@ public class CreateAWikiTests_nonLatin extends TestTemplate
 	@Test(groups = {"CreateNewWiki_nonLatin_TC001"})
 	public void CreateNewWiki_nonLatin_TC001_user_name_does_not_exists()
 	{
-		CommonFunctions.logOut(Properties.userNameNonLatinEncoded);
+		CommonFunctions.logOut(Properties.userNameNonLatinEncoded, driver);
 		HomePageObject home = new HomePageObject(driver);
 		home.openHomePage();
 		CreateNewWikiPageObjectStep1 createNewWiki1 = home.startAWiki();
@@ -52,9 +52,9 @@ public class CreateAWikiTests_nonLatin extends TestTemplate
 		NewWikiaHomePage newWikia = createNewWiki3.submit(wikiName);
 		newWikia.VerifyCongratulationsLightBox();
 		newWikia.closeCongratulationsLightBox();
-		newWikia.vefifyUserLoggedIn(Properties.userNameNonLatinEncoded);
+		newWikia.verifyUserLoggedIn(Properties.userNameNonLatinEncoded);
 		newWikia.verifyUserToolBar();
-		CommonFunctions.logOut(Properties.userNameNonLatinEncoded);
+		CommonFunctions.logOut(Properties.userNameNonLatinEncoded, driver);
 	}
 	
 	/*
@@ -65,7 +65,7 @@ public class CreateAWikiTests_nonLatin extends TestTemplate
 	@Test(groups = {"CreateNewWiki_nonLatin_TC002"})
 	public void CreateNewWiki_nonLatin_TC002_password_is_blank()
 	{
-		CommonFunctions.logOut(Properties.userNameNonLatinEncoded);
+		CommonFunctions.logOut(Properties.userNameNonLatinEncoded, driver);
 		HomePageObject home = new HomePageObject(driver);
 		home.openHomePage();
 		CreateNewWikiPageObjectStep1 createNewWiki1 = home.startAWiki();
@@ -87,9 +87,9 @@ public class CreateAWikiTests_nonLatin extends TestTemplate
 		NewWikiaHomePage newWikia = createNewWiki3.submit(wikiName);
 		newWikia.VerifyCongratulationsLightBox();
 		newWikia.closeCongratulationsLightBox();
-		newWikia.vefifyUserLoggedIn(Properties.userNameNonLatinEncoded);
+		newWikia.verifyUserLoggedIn(Properties.userNameNonLatinEncoded);
 		newWikia.verifyUserToolBar();
-		CommonFunctions.logOut(Properties.userNameNonLatinEncoded);
+		CommonFunctions.logOut(Properties.userNameNonLatinEncoded, driver);
 	}
 	
 	/*
@@ -100,7 +100,7 @@ public class CreateAWikiTests_nonLatin extends TestTemplate
 	@Test(groups = {"CreateNewWiki_nonLatin_TC003"})
 	public void CreateNewWiki_nonLatin_TC003_password_is_incorrect()
 	{
-		CommonFunctions.logOut(Properties.userNameNonLatinEncoded);
+		CommonFunctions.logOut(Properties.userNameNonLatinEncoded, driver);
 		HomePageObject home = new HomePageObject(driver);
 		home.openHomePage();
 		CreateNewWikiPageObjectStep1 createNewWiki1 = home.startAWiki();
@@ -123,9 +123,9 @@ public class CreateAWikiTests_nonLatin extends TestTemplate
 		NewWikiaHomePage newWikia = createNewWiki3.submit(wikiName);
 		newWikia.VerifyCongratulationsLightBox();
 		newWikia.closeCongratulationsLightBox();
-		newWikia.vefifyUserLoggedIn(Properties.userNameNonLatinEncoded);
+		newWikia.verifyUserLoggedIn(Properties.userNameNonLatinEncoded);
 		newWikia.verifyUserToolBar();
-		CommonFunctions.logOut(Properties.userNameNonLatinEncoded);
+		CommonFunctions.logOut(Properties.userNameNonLatinEncoded, driver);
 	}
 	
 	/*
@@ -136,7 +136,7 @@ public class CreateAWikiTests_nonLatin extends TestTemplate
 	@Test(groups = {"CreateNewWiki_nonLatin_TC004"})
 	public void CreateNewWiki_nonLatin_TC004_user_name_and_password_are_correct()
 	{
-		CommonFunctions.logOut(Properties.userNameNonLatinEncoded);
+		CommonFunctions.logOut(Properties.userNameNonLatinEncoded, driver);
 		HomePageObject home = new HomePageObject(driver);
 		home.openHomePage();
 		CreateNewWikiPageObjectStep1 createNewWiki1 = home.startAWiki();
@@ -155,8 +155,8 @@ public class CreateAWikiTests_nonLatin extends TestTemplate
 		NewWikiaHomePage newWikia = createNewWiki3.submit(wikiName);
 		newWikia.VerifyCongratulationsLightBox();
 		newWikia.closeCongratulationsLightBox();
-		newWikia.vefifyUserLoggedIn(Properties.userNameNonLatinEncoded);
+		newWikia.verifyUserLoggedIn(Properties.userNameNonLatinEncoded);
 		newWikia.verifyUserToolBar();
-		CommonFunctions.logOut(Properties.userNameNonLatinEncoded);
+		CommonFunctions.logOut(Properties.userNameNonLatinEncoded, driver);
 	}	
 }
