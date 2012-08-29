@@ -25,7 +25,7 @@ class CategoryExhibitionSection {
 
 	public function __construct( $oCategoryTitle ){
 
-		global $wgRequest, $wgUser;
+		global $wgUser;
 
 		$this->categoryTitle = $oCategoryTitle;
 
@@ -44,7 +44,6 @@ class CategoryExhibitionSection {
 
 	protected function fetchSectionItems( $mNamespace = NS_MAIN, $negative = false ) {
 
-		global $wgDevelEnvironment;
 		$sCategoryDBKey = $this->categoryTitle->getDBkey();
 
 		// Check if page is a redirect
@@ -86,7 +85,7 @@ class CategoryExhibitionSection {
 
 	public function getSortType(){
 
-		global $wgUser, $wgCookiePrefix;
+		global $wgUser;
 
 		if ( in_array( $this->sortOption, $this->allowedSortOptions ) ) {
 			return $this->sortOption;
@@ -156,12 +155,12 @@ class CategoryExhibitionSection {
 
 	public function getDisplayType(){
 
-		global $wgUser, $wgCookiePrefix;
+		global $wgUser;
 
 		if ( !empty( $this->displayOption ) && in_array( $this->displayOption, $this->allowedDisplayOptions ) ){
 			return $this->displayOption;
 		}
-		$cookieName = $wgCookiePrefix . 'CategoryExhibitionDisplayType';
+
 		if ( $wgUser->isAnon() ){
 			$this->setDisplayTypeFromParam();
 			$return = $this->displayOption;
@@ -185,7 +184,6 @@ class CategoryExhibitionSection {
 
 	protected function getTemplateForNameSpace( $namespace, $itemsPerPage = 16, $negative = false ){
 
-		global $wgTitle;
 		$cachedContent = $this->getFromCache();
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		if( empty( $cachedContent ) ){
