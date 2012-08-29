@@ -173,7 +173,7 @@ class CodeLintPhp extends CodeLint {
 				$problems[] = array(
 					'file' => $fileName,
 					'line' => $lineNo + 1,
-					'error' => 'Deprecated skin check'
+					'error' => 'Check for no longer existing skin found'
 				);
 			}
 		}
@@ -259,7 +259,7 @@ class CodeLintPhp extends CodeLint {
 			case 'Unreachable statement':
 			case 'Redundant closing tag':
 			case 'Call-time pass-by-reference has been removed in PHP 5.4':
-			case 'Deprecated skin check':
+			case 'Check for no longer existing skin found':
 				$ret = true;
 				break;
 		}
