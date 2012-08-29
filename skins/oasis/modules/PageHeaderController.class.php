@@ -180,7 +180,7 @@ class PageHeaderController extends WikiaController {
 		/** end of wikia changes */
 
 		// currently used skin
-		$skin = $wgUser->getSkin();
+		$skin = RequestContext::getMain()->getSkin();
 
 		// action button (edit / view soruce) and dropdown for it
 		$this->prepareActionButton();

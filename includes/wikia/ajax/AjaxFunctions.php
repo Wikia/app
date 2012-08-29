@@ -52,7 +52,7 @@ function GetUserMenu($userName = '') {
 			'href' => Title::newFromText("Following", NS_SPECIAL )->getLocalUrl()
 			);
 	}
-	
+
 	$userContribs = Title::newFromText('Contributions/'.$userName, NS_SPECIAL);
 
 	if (!empty($userContribs)) {
@@ -63,8 +63,7 @@ function GetUserMenu($userName = '') {
 			);
 	}
 
-	global $wgUser;
-        $skin_name = $wgUser->getSkin()->getSkinName();
+	$skin_name = RequestContext::getMain()->getSkin()->getSkinName();
 	if ($skin_name != 'answers'){
 	  $links['widgets'] = array(
 		'text' => wfMsg('manage_widgets'),

@@ -376,8 +376,9 @@ class BodyController extends WikiaController {
 		// this hook allows adding extra HTML just after <body> opening tag
 		// append your content to $html variable instead of echoing
 		// (taken from Monaco skin)
+		$skin = RequestContext::getMain()->getSkin();
 		$afterBodyHtml = '';
-		wfRunHooks('GetHTMLAfterBody', array ($wgUser->getSkin(), &$afterBodyHtml) );
+		wfRunHooks('GetHTMLAfterBody', array($skin, &$afterBodyHtml));
 		$this->afterBodyHtml = $afterBodyHtml;
 
 		// this hook is needed for SMW's factbox
