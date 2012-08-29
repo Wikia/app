@@ -224,8 +224,7 @@ class CodeLintPhp extends CodeLint {
 	 */
 	public function internalCheckFile($fileName) {
 		// run PhpStorm for the whole directory
-		#$output = $this->inspectDirectory(dirname($fileName));
-		$output = array('tool' => '', 'time' => 0); // debug !!!
+		$output = $this->inspectDirectory(dirname($fileName));
 
 		// use the same directory structure as parseResults() method
 		$fileName = realpath($fileName);
