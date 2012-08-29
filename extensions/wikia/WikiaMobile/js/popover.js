@@ -15,12 +15,12 @@
 (function(){
 	if(define){
 		//AMD
-		define('popover', ['loader', 'events'], popover);//late binding
+		define('popover', ['loader'], popover);//late binding
 	}else{
-		window.Popover = popover(Loader, Events);//late binding
+		window.Popover = popover(Loader);//late binding
 	}
 
-	function popover(loader, events){
+	function popover(loader){
 		return function(options){
 			options = options || {};
 
@@ -30,7 +30,7 @@
 				cnt;
 
 			if(elm){
-				elm.addEventListener(events.click, function(event){
+				elm.addEventListener('tap', function(event){
 					if(this.className.indexOf('on') > -1){
 						close(event);
 					}else{

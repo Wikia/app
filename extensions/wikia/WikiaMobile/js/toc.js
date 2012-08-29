@@ -2,12 +2,11 @@
 
 //init toc
 
-define('toc', ['track', 'events', 'sections'], function toc(track, events, sections){
+define('toc', ['track', 'sections'], function toc(track, sections){
 	//private
 	var d = document,
 		table,
-		conStyle,
-		click = events.click;
+		conStyle;
 
 	function open(){
 		if(table){
@@ -36,7 +35,7 @@ define('toc', ['track', 'events', 'sections'], function toc(track, events, secti
 			d.body.className += ' hasToc';
 			conStyle = d.getElementById('mw-content-text').style;
 
-			table.addEventListener(click, function(ev){
+			table.addEventListener('click', function(ev){
 				ev.preventDefault();
 
 				var node = ev.target,

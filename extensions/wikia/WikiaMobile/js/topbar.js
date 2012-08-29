@@ -68,6 +68,7 @@ define('topbar', ['querystring', 'loader', 'toc', 'events', 'ads'], function (qs
 		navBar.style.width = 'auto';
 		setTimeout(function(){
 			navBar.style.width = '100%';
+			searchInput.focus();
 		},50);
 
 	}
@@ -87,7 +88,7 @@ define('topbar', ['querystring', 'loader', 'toc', 'events', 'ads'], function (qs
 		}
 	});
 
-	d.getElementById('wkSrhTgl').addEventListener(clickEvent, function(event){
+	d.getElementById('wkSrhTgl').addEventListener('click', function(event){
 		event.preventDefault();
 		if(navBar.className.indexOf('srhOpn') > -1){
 			closeDropDown();
@@ -119,7 +120,7 @@ define('topbar', ['querystring', 'loader', 'toc', 'events', 'ads'], function (qs
 			uls[--i].parentElement.className += ' cld';
 		}
 
-		d.getElementById('lvl1').addEventListener(clickEvent, function(event) {
+		d.getElementById('lvl1').addEventListener('click', function(event) {
 			var t = event.target;
 
 			if(t.className.indexOf('cld') > -1) {
@@ -151,7 +152,7 @@ define('topbar', ['querystring', 'loader', 'toc', 'events', 'ads'], function (qs
 			}
 		});
 
-		d.getElementById('wkNavBack').addEventListener(clickEvent, function() {
+		d.getElementById('wkNavBack').addEventListener('click', function() {
 			if(wkNavMenu.className == 'cur2') {
 				setTimeout(function(){
 					wkNavMenu.querySelector('.lvl2.cur').className = 'lvl2';
@@ -181,7 +182,7 @@ define('topbar', ['querystring', 'loader', 'toc', 'events', 'ads'], function (qs
 		navSetUp = true;
 	}
 
-	d.getElementById('wkNavTgl').addEventListener(clickEvent, function(event){
+	d.getElementById('wkNavTgl').addEventListener('click', function(event){
 		event.preventDefault();
 		if(navBar.className.indexOf('fllNav') > -1){
 			closeDropDown();
