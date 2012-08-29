@@ -2,16 +2,16 @@
 class LatestPhotosController extends WikiaController {
 
 	const BLACKLIST_MESSAGE = 'Photosblacklist';
-	
+
 	/**
 	 * The widht&height of cropped thumbnail fb#22163
-	 * 
+	 *
 	 * @var int
-	 * 
+	 *
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	const THUMB_SIZE = 82;
-	
+
 	/**
 	 * Just a string concatanated with other in creation of Memc Key
 	 * @var String
@@ -93,7 +93,7 @@ class LatestPhotosController extends WikiaController {
 		$thumb_url = array_pop($thumb_url);
 		$thumb_url = $thumb_url['url'];
 		$userName = $file->user_text;
-		
+
 		$retval = array (
 			"file_url" => $element['url'],
 			"image_url" => $file->getUrl(),
@@ -190,7 +190,7 @@ class LatestPhotosController extends WikiaController {
 	}
 
 	private function getLinkedFiles ( $name ) {
-		global $wgUser, $wgMemc;
+		global $wgMemc;
 
 		wfProfileIn( __METHOD__ );
 		$cacheKey = wfMemcKey( __METHOD__, $name );
@@ -221,9 +221,9 @@ class LatestPhotosController extends WikiaController {
 
 		$links = array();
 		if ( !empty( $data ) ) {
-			$sk = $wgUser->getSkin();
+			$sk = RequestContext::getMain()->getSkin();
 
-			foreach ( $data as $inx => $row ) {
+			foreach ( $data as $row ) {
 				$Title = Title::makeTitle( $row['ns'], $row['title'] );
 
 				if ( $row['title'] == $name && $row['ns'] == NS_FILE ) {

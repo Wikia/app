@@ -1,5 +1,5 @@
 <?php
- 
+
 class OasisController extends WikiaController {
 
 	private static $extraBodyClasses = array();
@@ -127,7 +127,7 @@ class OasisController extends WikiaController {
 
 		wfProfileIn(__METHOD__ . ' - skin Operations');
 		// add skin theme name
-		$skin = $wgUser->getSkin();
+		$skin = RequestContext::getMain()->getSkin();
 		if(!empty($skin->themename)) {
 			$bodyClasses[] = "oasis-{$skin->themename}";
 		}
@@ -136,12 +136,12 @@ class OasisController extends WikiaController {
 		if (SassUtil::isThemeDark()) {
 			$bodyClasses[] = 'oasis-dark-theme';
 		}
-		
+
 		// support for oasis split skin
 		if (!empty($this->wg->GlobalHeaderFullWidth)) {
 			$bodyClasses[] = 'oasis-split-skin';
 		}
-		
+
 		$this->bodyClasses = $bodyClasses;
 
     	//reset, this ensures no duplication in CSS links
@@ -358,7 +358,7 @@ class OasisController extends WikiaController {
 
 	// TODO: implement as a separate module?
 	private function loadJs() {
-		global $wgTitle, $wgOut, $wgJsMimeType, $wgUser, $wgSpeedBox, $wgDevelEnvironment, $wgEnableAbTesting, $wgAllInOne;
+		global $wgJsMimeType, $wgUser, $wgSpeedBox, $wgDevelEnvironment, $wgEnableAbTesting, $wgAllInOne;
 		wfProfileIn(__METHOD__);
 
 		$assetsManager = F::build( 'AssetsManager', array(), 'getInstance' );
@@ -404,7 +404,7 @@ class OasisController extends WikiaController {
 		*/
 
 		// move JS files added to OutputPage to list of files to be loaded using WSL
-		$scripts = $wgUser->getSkin()->getScripts();
+		$scripts = RequestContext::getMain()->getSkin()->getScripts();
 
 		foreach ( $scripts as $s ) {
 			//add inline scripts to jsFiles and move non-inline to WSL queue

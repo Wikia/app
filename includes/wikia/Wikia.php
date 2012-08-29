@@ -884,9 +884,8 @@ class Wikia {
 	 */
 	public static function isOasis(){
 		wfProfileIn( __METHOD__ );
-		global $wgUser;
 
-		$isOasis = (get_class($wgUser->getSkin()) == 'SkinOasis');
+		$isOasis = (get_class(RequestContext::getMain()->getSkin()) == 'SkinOasis');
 
 		wfProfileOut( __METHOD__ );
 		return $isOasis;

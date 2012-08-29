@@ -527,7 +527,7 @@ class WikiMetrics {
 					$oFounder = User::newFromId($oRow->city_founding_user);
 					$sFounderLink = $sFounderName = "";
 					if ($oFounder instanceof User) {
-						$sk = $oFounder->getSkin();
+						$sk = RequestContext::getMain()->getSkin();
 						$sFounderLink = $sk->makeLinkObj( Title::newFromText($oFounder->getName(), NS_USER), $oFounder->getName());
 						$sFounderName = $oFounder->getName();
 					}

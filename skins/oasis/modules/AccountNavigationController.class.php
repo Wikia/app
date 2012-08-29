@@ -9,7 +9,7 @@ class AccountNavigationController extends WikiaController {
 
 	// This one really is a local class variable
 	var $personal_urls;
-	
+
 	/**
 	 * Render personal URLs item as HTML link
 	 */
@@ -47,7 +47,7 @@ class AccountNavigationController extends WikiaController {
 			$ret.= $personalUrl['afterText'];
 		}
 		$ret.= Xml::closeElement('a');
-		
+
 		wfProfileOut(__METHOD__);
 		return $ret;
 	}
@@ -57,12 +57,12 @@ class AccountNavigationController extends WikiaController {
 	 */
 	private function setupPersonalUrls() {
 		global $wgUser, $wgComboAjaxLogin;
-		
+
 		// Import the starting set of urls from the skin template
 		$this->personal_urls = F::app()->getSkinTemplateObj()->data['personal_urls'];
 		if ($wgUser->isAnon()) {
 			// add login and register links for anons
-			$skin = $wgUser->getSkin();
+			//$skin = RequestContext::getMain()->getSkin();
 
 			// where to redirect after login
 			$returnto = wfGetReturntoParam();
@@ -80,7 +80,7 @@ class AccountNavigationController extends WikiaController {
 					'src' => $this->wg->BlankImgUrl,
 					'class' => 'chevron',
 					'width' => '0',
-					'height' => '0', 	
+					'height' => '0',
 				), ''),
 			);
 
