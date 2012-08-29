@@ -1,0 +1,8 @@
+@import "../../../../skins/oasis/css/core/color";
+@import "../../../../skins/oasis/css/core/layout";
+
+.WikiaBar {
+	background-color: blue;
+	padding: 10px;
+	z-index: $zTop;
+}
