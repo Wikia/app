@@ -59,7 +59,7 @@ public class ImageServing extends TestTemplate {
 		wikiSpecialU.CheckIgnoreAnyWarnings();
 		FilePageObject filePage = wikiSpecialU.ClickOnUploadFile(file);
 		filePage.VerifyCorrectFilePage();
-		CommonFunctions.logOut(Properties.userName2);
+		CommonFunctions.logOut(Properties.userName2, driver);
 	}
 	@Test(groups = {"ImageServing003"}) 
 //	https://internal.wikia-inc.com/wiki/QA/Core_Features_and_Testing/Manual_Regression_Tests/Image_Serving
@@ -72,7 +72,7 @@ public class ImageServing extends TestTemplate {
 		wikiSpecialMU.CheckIgnoreAnyWarnings();
 		wikiSpecialMU.ClickOnUploadFile();
 		wikiSpecialMU.VerifySuccessfulUpload(ListOfFiles);
-		CommonFunctions.logOut(Properties.userName2);
+		CommonFunctions.logOut(Properties.userName2, driver);
 	}
 	@Test(groups = {"ImageServing004"}) 
 //	https://internal.wikia-inc.com/wiki/QA/Core_Features_and_Testing/Manual_Regression_Tests/Image_Serving
@@ -96,7 +96,7 @@ public class ImageServing extends TestTemplate {
 		editArticle = article.Edit();
 		editArticle.deleteArticleContent();
 		article = editArticle.ClickOnPublishButton();
-		CommonFunctions.logOut(Properties.userName2);
+		CommonFunctions.logOut(Properties.userName2, driver);
 	}
 	
 	@Test(groups = {"ImageServing005"}) 
@@ -124,7 +124,7 @@ public class ImageServing extends TestTemplate {
 		editArticle = article.Edit();
 		editArticle.deleteArticleContent();
 		article = editArticle.ClickOnPublishButton();
-		CommonFunctions.logOut(Properties.userName2);
+		CommonFunctions.logOut(Properties.userName2, driver);
 		CommonFunctions.MoveCursorTo(0, 0);
 	}
 	
@@ -153,7 +153,7 @@ public class ImageServing extends TestTemplate {
 		article = editArticle.ClickOnPublishButton();
 //		article.VerifyTheImageNotOnThePage();
 		
-		CommonFunctions.logOut(Properties.userName2);
+		CommonFunctions.logOut(Properties.userName2, driver);
 		CommonFunctions.MoveCursorTo(0, 0);
 	}
 
@@ -181,7 +181,7 @@ public class ImageServing extends TestTemplate {
 		editArticle = article.Edit();
 		editArticle.deleteArticleContent();
 		article = editArticle.ClickOnPublishButton();
-		CommonFunctions.logOut(Properties.userName2);
+		CommonFunctions.logOut(Properties.userName2, driver);
 		CommonFunctions.MoveCursorTo(0, 0);
 	}
 	
@@ -208,7 +208,7 @@ public class ImageServing extends TestTemplate {
 		editArticle = article.Edit();
 		editArticle.deleteArticleContent();
 		article = editArticle.ClickOnPublishButton();
-		CommonFunctions.logOut(Properties.userName2);
+		CommonFunctions.logOut(Properties.userName2, driver);
 	
 	}
 	
@@ -235,7 +235,7 @@ public class ImageServing extends TestTemplate {
 		editArticle = article.Edit();
 		editArticle.deleteArticleContent();
 		article = editArticle.ClickOnPublishButton();
-		CommonFunctions.logOut(Properties.userName2);
+		CommonFunctions.logOut(Properties.userName2, driver);
 		
 	}
 	
@@ -263,7 +263,7 @@ public class ImageServing extends TestTemplate {
 		editArticle = article.Edit();
 		editArticle.deleteArticleContent();
 		article = editArticle.ClickOnPublishButton();
-		CommonFunctions.logOut(Properties.userName2);
+		CommonFunctions.logOut(Properties.userName2, driver);
 		
 	}
 	
@@ -288,7 +288,7 @@ public class ImageServing extends TestTemplate {
 //		article.WaitForProcessingToFinish();
 		article.VerifyVideoAddedToRVModule(videoURL2name);
 	
-		CommonFunctions.logOut(Properties.userName2);
+		CommonFunctions.logOut(Properties.userName2, driver);
 		
 	}
 	
