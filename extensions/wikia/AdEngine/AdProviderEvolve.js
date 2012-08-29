@@ -42,13 +42,14 @@ var AdProviderEvolve = my.Class(AdProviderAdEngine2, {
 			'n4403ad' +
 			'.doubleclick.net/' +
 			'adj' + '/' +
-			'wikia' + '/' +
-			(window.adLogicPageType ? window.adLogicPageType : 'article') + ';' +
-			//'sect=' + 'home' + ';' +
+			'gn.wikia4.com' + '/' +
+			'home;' + // (window.adLogicPageType ? window.adLogicPageType : 'article') + ';' +
+			'sect=' + 'home' + ';' +
 			'mtfInline=true;' +
 			'pos=' + slotname + ';' +
 			'sz=' + size + ';' +
 			(this.slotMap[slotname].dcopt ? 'dcopt=' + this.slotMap[slotname].dcopt + ';' : '') +
+			'type=pop;type=int;' + // TODO remove?
 			'tile=' + this.slotMap[slotname].tile + ';' +
 			'ord=' + this.ord + '?';
 
