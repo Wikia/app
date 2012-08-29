@@ -106,9 +106,9 @@ class AdminDashboardSpecialPageController extends WikiaSpecialPageController {
 		}
 		$page = $this->getVal('page', '');
 		if(empty($page)) {
-			$headerText = $this->getVal('headerText', '');
+			$headerText = SpecialPage::getLocalNameFor($this->getVal('headerText', ''));
 		} else {
-			$headerText = SpecialPage::getTitleFor($page)->getText();
+			$headerText = SpecialPage::getLocalNameFor($page);
 		}
 		$this->headerText = $headerText;
 	}
