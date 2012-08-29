@@ -33,11 +33,17 @@ define('modal', ['loader', 'track', 'events', 'ads'], function modal(loader, tra
 
 		//close modal on back button
 		d.getElementById('wkMdlClo').addEventListener('click', function(){
-			if(w.location.hash == '#Modal'){
-				w.history.back();
-			}
+			w.history.back();
+			//in case browser don't care about history (:)) call close on click anyway
 			close();
-		});
+		}, true);
+
+		w.addEventListener('hashchange', function(ev) {
+			if(isOpen() && w.location.hash == ''){
+				ev.preventDefault();
+				close();
+			}
+		}, true);
 
 		content.addEventListener('tap', function(){
 			if(!stopHiding){
@@ -47,17 +53,11 @@ define('modal', ['loader', 'track', 'events', 'ads'], function modal(loader, tra
 					hideUI();
 				}
 			}
-		});
+		}, true);
 
 		//hide adress bar on orientation change
 		w.addEventListener('orientationchange', function() {
 			if(w.pageYOffset == 0) setTimeout(function() {w.scrollTo( 0, 1 );},10);
-		});
-
-		w.addEventListener('hashchange', function() {
-			if(w.location.hash == '' && isOpen()){
-				close();
-			}
 		});
 
 		d.head.insertAdjacentHTML('beforeend', '<style>#wkMdlWrp{min-height: ' + deviceHeight + 'px}@media only screen and (orientation:landscape) and (min-width: 321px){#wkMdlWrp{min-height:' + deviceWidth + 'px;}}</style>');
@@ -125,17 +125,25 @@ define('modal', ['loader', 'track', 'events', 'ads'], function modal(loader, tra
 
 			content.innerHTML = '';
 			caption.innerHTML = '';
-			wrapper.className = caption.className = topBar.className = '';
-			ads && ads.fix();
+			wrapper.className = '';
+			caption.className = '';
+			topBar.className = '';
 
 			if(typeof onClose === 'function'){
 				onClose();
 			}
 
-			!stopScrolling && w.scrollTo(0, position);
-
 			track('modal/close');
 			opened = false;
+
+			//scroll to where user was before
+			//in setTimout because ios4.x has to do this after everything has to do now
+			//otherwise it forgets to scroll...
+			setTimeout(function(){
+				!stopScrolling && w.scrollTo(0, position);
+
+				ads && ads.fix();
+			},100);
 		}
 	}
 
