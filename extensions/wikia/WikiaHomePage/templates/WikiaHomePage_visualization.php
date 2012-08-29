@@ -1,5 +1,5 @@
 <?php $seocounter = 0; ?>
-<div class="WikiPreviewInterstitialMask hidden">
+<div id="WikiPreviewInterstitialMask" class="WikiPreviewInterstitialMask hidden">
 	<section class="WikiPreviewInterstitial" class="hidden">
 		<div class="content-area">
 			<!-- Content area hook for javascript and css -->
