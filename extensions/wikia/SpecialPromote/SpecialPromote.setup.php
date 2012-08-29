@@ -52,6 +52,7 @@ $app->registerClass('CityVisualization', $wikiaHomePageExtDir . 'CityVisualizati
 
 // hooks
 $app->registerHook('UploadVerification','UploadVisualizationImageFromFile','UploadVerification');
+$app->registerHook('CityVisualization::wikiDataInserted', 'CityVisualization', 'onWikiDataUpdated');
 
 // i18n mapping
 $app->registerExtensionMessageFile('SpecialPromote', $dir.'SpecialPromote.i18n.php');

@@ -90,6 +90,7 @@ class PromoteImageReviewTask extends BatchTask {
 		foreach($wikis as $sourceWikiId => $images) {
 			$sourceWikiLang = WikiFactory::getVarValueByName('wgLanguageCode', $sourceWikiId);
 
+			$uploadedImages = array();
 			foreach($images as $image) {
 				$result = $this->uploadSingleImage($image['id'], $image['name'], $targetWikiId, $sourceWikiId);
 

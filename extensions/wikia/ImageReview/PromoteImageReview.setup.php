@@ -37,7 +37,6 @@ $app->registerSpecialPage('PromoteImageReview', 'PromoteImageReviewSpecialContro
 
 // hooks
 $app->registerHook('WikiFactory::onPostChangesApplied', 'CityVisualization', 'onWikiDataUpdated');
-$app->registerHook('CityVisualization::wikiDataInserted', 'CityVisualization', 'onWikiDataUpdated');
 
 // rights
 $wgAvailableRights[] = 'promoteimagereview';
