@@ -39,7 +39,7 @@ public class CreateAWikiTests_logInFieldValidation extends TestTemplate{
 	
 	public void CreateNewWiki_LogInFieldValidation(String userName, String userNameEnc, String password)
 	{
-		CommonFunctions.logOut(userNameEnc);
+		CommonFunctions.logOut(userNameEnc, driver);
 		HomePageObject home = new HomePageObject(driver);
 		home.openHomePage();
 		CreateNewWikiPageObjectStep1 createNewWiki1 = home.startAWiki();
@@ -58,8 +58,8 @@ public class CreateAWikiTests_logInFieldValidation extends TestTemplate{
 		NewWikiaHomePage newWikia = createNewWiki3.submit(wikiName);
 		newWikia.VerifyCongratulationsLightBox();
 		newWikia.closeCongratulationsLightBox();
-		newWikia.vefifyUserLoggedIn(userNameEnc);
+		newWikia.verifyUserLoggedIn(userNameEnc);
 		newWikia.verifyUserToolBar();
-		CommonFunctions.logOut(userNameEnc);
+		CommonFunctions.logOut(userNameEnc, driver);
 	}
 }
