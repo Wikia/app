@@ -13,3 +13,10 @@ test('sanitizeSlotname', function() {
     equal(ap.sanitizeSlotname('TOP_LEADERBOARD'), 'TOP_LEADERBOARD', 'TOP_LEADERBOARD');
     equal(ap.sanitizeSlotname('=TOP_LEADERBOARD;ord=1'), 'TOP_LEADERBOARD', '=TOP_LEADERBOARD;ord=1');
 });
+
+test('getUrl', function() {
+	var ap = new AdProviderEvolve;
+	ap.ord = 1;
+
+	equal(ap.getUrl('TOP_LEADERBOARD', '728x90'), 'http://n4403ad.doubleclick.net/adj/gn.wikia4.com/home;sect=home;mtfInline=true;pos=TOP_LEADERBOARD;sz=728x90;dcopt=ist;type=pop;type=int;tile=1;ord=1?', 'TOP_LEADERBOARD');
+});
