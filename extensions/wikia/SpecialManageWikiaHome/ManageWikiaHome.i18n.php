@@ -9,7 +9,6 @@ $messages = array();
 
 $messages['en'] = array(
 	'managewikiahome' => 'Manage Wikia Home',
-	'manage-wikia-home-title' => 'Manage Wikia Home',
 	'manage-wikia-home-wrong-rights' => "You are probably logged-out or you don't have permissions to use this special page.",
 
 	'manage-wikia-home-wikis-in-slots-heading' => 'Slots setup',
