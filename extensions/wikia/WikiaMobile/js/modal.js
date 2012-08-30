@@ -17,7 +17,8 @@ define('modal', ['loader', 'track', 'events', 'ads'], function modal(loader, tra
 		topBar,
 		position,
 		onClose,
-		stopHiding;
+		stopHiding,
+		positionfixed = Modernizr.positionfixed;
 
 	/* private */
 	function setup(){
@@ -59,7 +60,7 @@ define('modal', ['loader', 'track', 'events', 'ads'], function modal(loader, tra
 
 		//hide adress bar on orientation change
 		w.addEventListener('orientationchange', function() {
-			if(w.pageYOffset == 0) setTimeout(function() {w.scrollTo( 0, 1 );},10);
+			!w.pageYOffset && w.scrollTo(0, 1);
 		});
 
 		d.head.insertAdjacentHTML('beforeend', '<style>#wkMdlWrp{min-height: ' + deviceHeight + 'px}@media only screen and (orientation:landscape) and (min-width: 321px){#wkMdlWrp{min-height:' + deviceWidth + 'px;}}</style>');
@@ -76,11 +77,15 @@ define('modal', ['loader', 'track', 'events', 'ads'], function modal(loader, tra
 		wrapper.className = wrapper.className.replace(' hdn', '');
 	}
 
+	function fixTopBar(){
+		topBar.style.top = w.pageYOffset + 'px';
+	}
+
 	/* public */
 	function open(options){
 		options = options || {};
 
-		if(!created) {setup();}
+		!created && setup();
 
 		var con = options.content,
 			tool = options.toolbar,
@@ -92,13 +97,16 @@ define('modal', ['loader', 'track', 'events', 'ads'], function modal(loader, tra
 		onClose = options.onClose;
 
 		if(!opened){
-			position = window.pageYOffset;
+			position = w.pageYOffset;
 			d.documentElement.className += ' modal';
 			wrapper.className = 'open';
 
 			//needed for closing modal on back button
 			w.location.hash = "Modal";
 		}
+
+		//move topbar along with scroll manually for browsers with no support for position fixed
+		!positionfixed && w.addEventListener('scroll', fixTopBar);
 
 		loader.show(content, {center: true});
 
@@ -137,6 +145,12 @@ define('modal', ['loader', 'track', 'events', 'ads'], function modal(loader, tra
 
 			track('modal/close');
 			opened = false;
+
+			//remove event listner since it is not needed outside modal
+			if(!positionfixed){
+				w.removeEventListener('scroll', fixTopBar);
+				topBar.style.top = '';
+			}
 
 			//scroll to where user was before
 			//in setTimout because ios4.x has to do this after everything has to do now

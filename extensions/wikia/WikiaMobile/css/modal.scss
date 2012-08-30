@@ -44,7 +44,7 @@ html.modal{
 	left: 0;
 	z-index: 20;
 	background-color: rgba(0,0,0,.8);
-	@include transition(top .3s ease-in);
+	@include transition(top .2s ease);
 
 	.hdn & {
 		top: -100%;
