@@ -22,6 +22,10 @@ class AdServer {
 		$this->loadAdsConfig();
 	}
 
+	/**
+	 * @static
+	 * @return AdServer instance
+	 */
 	public static function getInstance() {
 		if (self::$instance === false) {
 			self::$instance = new AdServer();
