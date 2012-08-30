@@ -585,7 +585,7 @@ function wfWaitForSlavesExt( $maxLag, $cluster = null ) {
  * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
  * @access public
  *
- * @param boolean as_string default false -- return url as string not array
+ * @param boolean $s_string default false -- return url as string not array
  *
  * @return array	parts of current url
  */
@@ -903,8 +903,8 @@ function wfMsgHTMLwithLanguageAndAlternative($key, $keyAlternative, $lang, $opti
 /**
  * Build returnto parameter with new returntoquery from MW 1.16
  *
- * @param customReturnto
- * @param extraReturntoquery is a string which will be urlencoded and appended to the returntoquery. eg: "action=edit".
+ * @param string $customReturnto
+ * @param string $extraReturntoquery a string which will be urlencoded and appended to the returntoquery. eg: "action=edit".
  *
  * @author Marooned
  * @return string
