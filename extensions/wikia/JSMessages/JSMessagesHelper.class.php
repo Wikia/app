@@ -16,7 +16,7 @@ class JSMessagesHelper {
 	private $app;
 
 	function __construct() {
-		$this->app = WF::build('App');
+		$this->app = F::app();
 	}
 
 	/**

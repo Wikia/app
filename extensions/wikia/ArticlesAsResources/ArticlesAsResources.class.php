@@ -23,7 +23,7 @@ class ArticlesAsResources {
 	const WIKIA_DEFAULT_DOMAIN_SUFFIX = '.wikia.com';
 
 	function __construct() {
-		$this->app = WF::build('App');
+		$this->app = F::app();
 	}
 
 	/**

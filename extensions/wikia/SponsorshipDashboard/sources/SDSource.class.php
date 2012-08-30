@@ -63,7 +63,7 @@ abstract class SponsorshipDashboardSource {
 
 	public function __construct( $id = 0 ) {
 
-		$this->App = WF::build('App');
+		$this->App = F::app();
 		$this->cityId = $this->App->getGlobal('wgCityId');
 		$this->setId( $id );
 

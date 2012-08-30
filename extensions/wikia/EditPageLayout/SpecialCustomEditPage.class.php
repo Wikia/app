@@ -40,7 +40,7 @@ class SpecialCustomEditPage extends SpecialPage {
 	public function __construct( $name = '', $restriction = '', $listed = true, $function = false, $file = 'default', $includable = false ) {
 		parent::__construct( $name, $restriction, $listed, $function, $file, $includable );
 
-		$this->app = WF::build('App');
+		$this->app = F::app();
 		$this->out = $this->app->getGlobal('wgOut');
 		$this->request = $this->app->getGlobal('wgRequest');
 		$this->user = $this->app->getGlobal('wgUser');

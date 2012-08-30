@@ -5,7 +5,7 @@ class SpellCheckerAjax {
 	static function checkWords() {
 		wfProfileIn(__METHOD__);
 
-		$app = WF::build('App');
+		$app = F::app();
 		$request = $app->getGlobal('wgRequest');
 
 		// get request params
