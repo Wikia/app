@@ -52,6 +52,15 @@ var AdEngine2 = {
 	getProvider:function (slot) {
 		this.log('getProvider', slot);
 
+		var providers = {
+			'GamePro':true,
+			'Evolve':true,
+			'AdDriver2':true
+		}
+		if (slot[2] != 'AdEngine2' && typeof providers[slot[2]] != 'undefined') {
+			return slot[2];
+		}
+
 		if (this.isSlotGamePro(slot[0], window.wgContentLanguage)) {
 			return 'GamePro';
 		}
@@ -73,7 +82,7 @@ var AdEngine2 = {
 			'LEFT_SKYSCRAPER_2':true,
 			'PREFOOTER_LEFT_BOXAD':true,
 			'TOP_LEADERBOARD':true,
-			'TOP_RIGHT_BOXAD':true,
+			'TOP_RIGHT_BOXAD':true
 		};
 		if (city_lang == 'de' && typeof slotMap[slotname] != 'undefined') {
 			return true;
@@ -91,7 +100,7 @@ var AdEngine2 = {
 			'HOME_TOP_RIGHT_BOXAD':true,
 			'LEFT_SKYSCRAPER_2':true,
 			'TOP_LEADERBOARD':true,
-			'TOP_RIGHT_BOXAD':true,
+			'TOP_RIGHT_BOXAD':true
 		};
 		if ((country == 'AU' || country == 'CA') && typeof slotMap[slotname] != 'undefined') {
 			return true;

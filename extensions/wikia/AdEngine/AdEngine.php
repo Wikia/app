@@ -193,6 +193,7 @@ class AdEngine {
 		'11' => 'LiftDNA',
 		'12' => 'DARTGP',
 		'13' => 'AdEngine2',
+		'14' => 'GamePro',
  		'-1' => 'Null'
 	);
 
@@ -518,6 +519,7 @@ class AdEngine {
 			case 'liftdna': return AdProviderLiftDNA::getInstance();
 			case 'dartgp': return AdProviderDARTGP::getInstance();
 			case 'adengine2': return AdProviderAdEngine2::getInstance();
+			case 'gamepro': return AdProviderGamePro::getInstance();
 			case 'null': return new AdProviderNull('Slot disabled in WF', false);
 			default: return new AdProviderNull('Unrecognized provider id', true);
 		}
