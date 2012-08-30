@@ -480,7 +480,10 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	public function videoSearch()
 	{
 		$query = $this->getVal('q');
-		$results = $this->wikiaSearch->searchVideos($query);
+
+		$params = array('cityId' => $this->wg->cityId);
+
+		$results = $this->wikiaSearch->searchVideos($query, $params);
 		
 		// up to whoever's using this service as to what they want from here. I'm just going to return JSON.
 		// if you just want to search for only videos in the traditional video interface, then you should 
@@ -489,8 +492,8 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		foreach ($results as $result) {
 			$processedResultArray[] = (array) $result;
 		}
-		
-		echo json_encode($result);
+		$this->getResponse()->setFormat('json');
+		$this->getResponse()->setData( $processedResultArray );
 		
 	}
 	
