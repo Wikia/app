@@ -14,8 +14,12 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 	protected $helper;
 
 	public function __construct() {
-		parent::__construct('ManageWikiaHome', 'staff', false);
+		parent::__construct('ManageWikiaHome', 'managewikiahome', true);
 		$this->helper = F::build('WikiaHomePageHelper');
+	}
+
+	public function isRestricted() {
+		return true;
 	}
 
 	public function init() {
@@ -130,7 +134,7 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 		$options->offset = (($this->currentPage - 1) * self::WHST_WIKIS_PER_PAGE);
 
 		$specialPage = F::build('Title', array('ManageWikiaHome', NS_SPECIAL), 'newFromText');
-		$url = $specialPage->getLocalUrl() . '?page=%s';
+		$url = $specialPage->getLocalUrl() . '?vl=' . $visualizationLang . '&page=%s';
 
 		if( $count > self::WHST_WIKIS_PER_PAGE ) {
 			/** @var $paginator Paginator */

@@ -26,7 +26,7 @@ $wgExtensionCredits['specialpage'][] = array(
 $app->registerController('ManageWikiaHomeController', $dir.'ManageWikiaHomeController.class.php');
 
 //special page
-$app->registerSpecialPage('ManageWikiaHome', 'ManageWikiaHomeController');
+$app->registerSpecialPage('ManageWikiaHome', 'ManageWikiaHomeController', 'wikia');
 
 //message files
 $app->registerExtensionMessageFile('ManageWikiaHome', $dir.'ManageWikiaHome.i18n.php');
