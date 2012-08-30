@@ -56,6 +56,12 @@ class EditPageLayoutHelper {
 		*/
 		$this->out->addModules('wikia.yui');
 
+		// Disable custom JS while loading the edit page on MediaWiki JS pages (BugID: 41449)
+		if ( $editedArticle->getTitle()->getNamespace() === NS_MEDIAWIKI
+			&& substr( $editedArticle->getTitle()->getText(), -3 ) === '.js' ) {
+			$this->out->disallowUserJs();
+		}
+
 		// initialize custom edit page
 		$this->editPage = new EditPageLayout($editedArticle);
 		$editedTitle = $this->editPage->getEditedTitle();
