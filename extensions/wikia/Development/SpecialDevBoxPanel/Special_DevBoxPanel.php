@@ -68,7 +68,7 @@ class DevBoxPanel extends SpecialPage {
 	 * The main function of the SpecialPage.  Adds the content for the page
 	 * to the wgOut global.
 	 */
-	function execute() {
+	function execute($par) {
 		global $wgOut,$wgHooks,$wgDevelEnvironment,$wgUser;
 
 		if( !$wgUser->isAllowed( 'devboxpanel' ) ) {
