@@ -11,16 +11,10 @@ var AIC2 = {
 };
 
 AIC2.init = function() {
-	var $wikiaMainContent = $("#WikiaMainContent")
-		, $window = $(window);
+	var $window = $(window);
 
 	Liftium.d("AIC2: init", 5);
 
-	if ($wikiaMainContent.width() != AIC2.WMCbaseWidth) {
-		AIC2.marginLeft = AIC2.marginLeft + parseInt(($wikiaMainContent.width() - AIC2.WMCbaseWidth) / 2, 10);
-		Liftium.d("AIC2: non standard width, new marginLeft set to " + AIC2.marginLeft, 5);
-		WikiaTracker.trackAdEvent('liftium.varia', {'ga_category':'varia/AIC2', 'ga_action':'wide'}, 'ga');
-	}
 	if ($('body').hasClass('rtl')) {
 		Liftium.d("AIC2: rtl wiki", 7);
 		WikiaTracker.trackAdEvent('liftium.varia', {'ga_category':'varia/AIC2', 'ga_action':'rtl'}, 'ga');
