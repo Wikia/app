@@ -804,11 +804,17 @@ class CityVisualization extends WikiaModel {
 	public function getWikisCountForStaffTool($opt) {
 	//todo: reuse getWikisForStaffTool
 		$db = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
-		$table = array('city_visualization');
+		$table = array('city_visualization','city_list');
 		$fields = array('count( city_visualization.city_id ) as count');
 		$conds = $this->getConditionsForStaffTool($opt);
 		$options = $this->getOptionsForStaffTool($opt);
-		$results = $db->select($table, $fields, $conds, __METHOD__, $options);
+		$joinConds = array(
+			'city_list' => array(
+				'join',
+				'city_list.city_id = city_visualization.city_id'
+			)
+		);
+		$results = $db->select($table, $fields, $conds, __METHOD__, $options, $joinConds);
 		$row = $results->fetchRow();
 
 		return isset($row['count']) ? $row['count'] : 0;
@@ -853,7 +859,7 @@ class CityVisualization extends WikiaModel {
 		}
 
 		if( !empty($options->wikiHeadline) ) {
-			$sqlOptions[] = 'city_visualization.city_headline like "%' . $options->wikiHeadline . '%"';
+			$sqlOptions[] = 'city_list.city_title like "%' . mysql_real_escape_string($options->wikiHeadline) . '%"';
 		}
 
 		return $sqlOptions;
