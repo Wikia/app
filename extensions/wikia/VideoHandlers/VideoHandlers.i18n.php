@@ -25,6 +25,13 @@ $messages['en'] = array(
 	'videohandler-remove-video-modal-success' => 'File:$1 has been removed from this wiki',
 	'videohandler-remove-video-modal-cancel' => 'Cancel',
 
+	'videos-add-video-to-this-wiki' => 'Add a video to this wiki',
+	'videod-add-video-label-name' => 'Enter the full URL, from any of the supported sites.',
+	'videod-add-video-label-all' => 'See all',
+	'videod-add-video-ok' => 'Add',
+	'videos-notify' => 'Please wait while we process this video',
+	'videos-something-went-wrong' => 'We are sorry, but something went wrong with the upload.',
+	'videos-error-not-logged-in' => 'Please log in first.',
 	'videos-error-no-video-url' => 'No video URL provided.',
 	'videos-error-unknown' => 'An unknown error occurred. Code: $1.',
 	'videos-error-old-type-video' => 'Old type of videos no longer supported (VideoPage)',

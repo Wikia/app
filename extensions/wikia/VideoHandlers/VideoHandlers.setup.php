@@ -73,6 +73,9 @@ $app->registerClass( 'WikiaNoArticleLocalFile',	$dir . '/filerepo/WikiaNoArticle
 // handler
 $app->registerClass( 'VideoHandler',		$dir . '/handlers/VideoHandler.class.php' );
 
+// video controller
+$app->registerClass( 'VideosController', $dir . '/VideosController.class.php' );
+
 /**
  * messages
  */

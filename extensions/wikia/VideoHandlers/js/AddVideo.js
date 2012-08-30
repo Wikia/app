@@ -14,9 +14,14 @@
 			modalWidth: 666,
 			gaCat: null
 		}
-		
+
 		var settings = $.extend(settings, options);
-		
+
+		var controllerName = 'VideosController';
+		if ( wgIsArticle == true ) {
+			controllerName = 'RelatedVideosController';
+		}
+
 		var loginWrapper = function ( callback ){
 			var message = 'protected';
 			if(( wgUserName == null ) && ( !alreadyLoggedIn )){
@@ -58,7 +63,7 @@
 				'both'
 			);
 			$.nirvana.postJson(
-				'RelatedVideosController', // TODO: abstract this so there's no dependency on Related Videos
+				controllerName, // TODO: abstract this so there's no dependency on Related Videos
 				'getAddVideoModal',
 				{
 					title: wgTitle,
@@ -170,10 +175,10 @@
 			GlobalNotification.show( $('#relatedvideos-add-video .notifyHolder').html(), 'notify' );
 			preventVideoSubmit();
 			$.nirvana.postJson(
-				'RelatedVideosController',
+				controllerName,
 				'addVideo',
 				{
-					title: wgTitle,
+					title: wgPageName,
 					articleId: wgArticleId,
 					url: $('#relatedvideos-add-video input').val()
 				},
