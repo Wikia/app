@@ -188,7 +188,7 @@ class WikiFactoryLoader {
 	 *
 	 * @todo change new Database to LoadBalancer factory
 	 *
-	 * @return object Database	database handler
+	 * @return Database	database handler
 	 */
 	public function getDB( $type = DB_SLAVE ) {
 		global $wgDBserver, $wgDBuser, $wgDBpassword;
