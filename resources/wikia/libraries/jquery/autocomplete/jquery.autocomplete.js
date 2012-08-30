@@ -53,8 +53,8 @@
       selectedClass: 'selected',
       appendTo: 'body',
       /* Wikia changes */
-	  queryParamName: 'query',
-	  fnPreprocessResults: null,
+      queryParamName: 'query',
+      fnPreprocessResults: null,
       skipBadQueries: false
     };
     if (options) {
