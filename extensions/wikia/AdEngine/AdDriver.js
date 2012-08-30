@@ -550,7 +550,7 @@ AdDriverDelayedLoader.removeItemsBySlotname = function(slotname) {
 };
 
 AdDriverDelayedLoader.callDART = function() {
-	WikiaTracker.trackAdEvent('liftium.slot', {'ga_category':'slot/' + AdDriverDelayedLoader.currentAd.size, 'ga_action':AdDriverDelayedLoader.currentAd.slotname, 'ga_label':'addriver'}, 'ga');
+	WikiaTracker.trackAdEvent('liftium.slot2', {'ga_category':'slot2/' + AdDriverDelayedLoader.currentAd.size, 'ga_action':AdDriverDelayedLoader.currentAd.slotname, 'ga_label':'addriver'}, 'ga');
 
 	AdDriver.log(AdDriverDelayedLoader.currentAd.slotname + ': calling DART...');
 	AdDriver.incrementNumDARTCall(AdDriverDelayedLoader.currentAd.slotname);
@@ -580,7 +580,7 @@ AdDriverDelayedLoader.callDART = function() {
 				}
 
 				if (nextAdProvider == AdDriver.adProviderLiftium) {
-					WikiaTracker.trackAdEvent('liftium.hop', {'ga_category':'hop/addriver', 'ga_action':'slot ' + AdDriverDelayedLoader.currentAd.slotname, 'ga_label':'9.9' /* FIXME Liftium.formatTrackTime(time, 5) */}, 'ga');
+					WikiaTracker.trackAdEvent('liftium.hop2', {'ga_category':'hop2/addriver', 'ga_action':'slot ' + AdDriverDelayedLoader.currentAd.slotname, 'ga_label':'9.9' /* FIXME Liftium.formatTrackTime(time, 5) */}, 'ga');
 
 					var liftiumItem = new AdDriverDelayedLoaderItem(AdDriverDelayedLoader.currentAd.slotname, AdDriverDelayedLoader.currentAd.size, AdDriver.adProviderLiftium);
 					AdDriverDelayedLoader.prependItem(liftiumItem);
