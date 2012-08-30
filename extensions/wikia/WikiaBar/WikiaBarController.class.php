@@ -17,7 +17,7 @@ class WikiaBarController extends WikiaController {
 
 		$lang = !empty($params['lang']) ? $params['lang'] : self::DEFAULT_LANG_CODE;
 		//$vertical = !empty($params['vertical'])? $params['vertical'] : WikiFactoryHub::CATEGORY_ID_LIFESTYLE;
-		$vertical = !empty($params['vertical'])? $params['vertical'] : HubService::getComscoreCategory($this->wg->cityId);
+		$vertical = !empty($params['vertical'])? $params['vertical'] : HubService::getComscoreCategory($this->wg->cityId)->cat_id;
 
 		/** @var $model WikiaBarModel */
 		$model = F::build('WikiaBarModel');

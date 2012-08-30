@@ -144,3 +144,5 @@
 		<?= wfRenderModule('CorporateFooter') ?>
 	</div>
 </section><!--WikiaPage-->
+
+<? if(!empty($wg->EnableWikiaBarExt) && $wg->user->isAnon()) echo F::App()->renderView('WikiaBar', 'index'); ?>
