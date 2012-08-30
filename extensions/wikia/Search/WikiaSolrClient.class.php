@@ -60,7 +60,9 @@ class WikiaSolrClient extends WikiaSearchClient {
 
 	/**
 	 *  $methodOptions supports the following possible values:
-	 *  $start=0, $size=20, $cityId = 0, $skipBoostFunctions=false, $namespaces, $isInterWiki, $includeRedirects = false, $solrDebugWikiId = false, $hub, $spellCheckHappened
+	 *  	$start=0, $size=20, $cityId = 0, $skipBoostFunctions=false, $namespaces, 
+	 *  	$isInterWiki, $includeRedirects = false, $solrDebugWikiId = false, $hub, 
+	 *  	$spellCheckHappened, $videoSearch=false
 	 **/
 	public function search( $query,  array $methodOptions = array() ) {
 		wfProfileIn(__METHOD__);
@@ -78,6 +80,7 @@ class WikiaSolrClient extends WikiaSearchClient {
 		$solrDebugWikiId    = isset($solrDebugWikiId)    ? $solrDebugWikiId    : false;
 		$hub				= isset($hub)				 ? $hub				   : false;
 		$spellCheckHappened = isset($spellCheckHappened) ? $spellCheckHappened : false;
+		$videoSearch 		= isset($videoSearch) 		 ? $videoSearch 	   : false;
 
 		if (!isset($namespaces)) {
 			$namespaces = $this->namespaces ?: SearchEngine::DefaultNamespaces();
@@ -173,6 +176,12 @@ class WikiaSolrClient extends WikiaSearchClient {
 			$params['fq'] = "wid:{$onWikiId}";
 
 			$nsQuery = '';
+			
+			if ($videoSearch) {
+				$this->namespaces = array(NS_FILE);
+			    $queryClauses[] = "is_video:true";
+			}
+			
 			foreach($this->namespaces as $namespace) {
 				$nsQuery .= ( !empty($nsQuery) ? ' OR ' : '' ) . 'ns:' . $namespace;
 			}
