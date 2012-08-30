@@ -3,11 +3,14 @@
 class ApiWrapperFactory {
 	protected $videoId;
 	protected $classname;
-	
-	protected static $instance = null;
-		
-	public static function getInstance() {
 
+	protected static $instance = null;
+
+	/**
+	 * @static
+	 * @return ApiWrapperFactory
+	 */
+	public static function getInstance() {
 		wfProfileIn( __METHOD__ );
 
 		if (self::$instance == null) {
@@ -15,10 +18,9 @@ class ApiWrapperFactory {
 		}
 
 		wfProfileOut( __METHOD__ );
-
 		return self::$instance;
 	}
-	
+
 	/**
 	 * Get provider name from id
 	 * @param int $id
@@ -38,7 +40,7 @@ class ApiWrapperFactory {
 		wfProfileOut( __METHOD__ );
 		return null;
 	}
-	
+
 	public function getApiWrapper( $url ) {
 		wfProfileIn( __METHOD__ );
 
@@ -56,7 +58,7 @@ class ApiWrapperFactory {
 			wfProfileOut( __METHOD__ );
 			return false;
 		}
-		
+
 		$fixed_url = str_replace( "http://", "", $fixed_url );
 		$fixed_parts = explode( "/", $fixed_url );
 		$hostname = $fixed_parts[0];
@@ -71,5 +73,5 @@ class ApiWrapperFactory {
 		wfProfileOut( __METHOD__ );
 		return null;
 	}
-	
+
 }
