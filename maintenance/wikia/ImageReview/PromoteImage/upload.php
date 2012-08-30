@@ -14,12 +14,11 @@ $destImageName = $options['destimagename'];
 $sourceWikiId = intval($options['wikiid']);
 
 //fb#45624
-$userId = $options['userid'];
-if( !empty($userId) ) {
-	$user = F::build('User', array($userId), 'newFromId');
-} else {
-	$user = F::build('User', array('WikiaBot'), 'newFromName');
-	$user = ($user instanceof User) ? $user : null;
+$user = F::build('User', array('WikiaBot'), 'newFromName');
+
+if( !($user instanceof User) ) {
+	echo 'ERROR: Could not get bot user object'."\n";
+	exit(2);
 }
 
 if( empty($imageUrl) ) {
@@ -36,13 +35,6 @@ if( $sourceWikiId <= 0 ) {
 	echo 'ERROR: Invalid source wiki id'."\n";
 	exit(5);
 }
-
-/*
-if( UploadFromUrl::isAllowed($user) !== true ) {
-	echo 'ERROR: You do not have right permissions'."\n";
-	exit(6);
-}
-*/
 
 $imageData = new stdClass();
 $imageData->name = $destImageName;
