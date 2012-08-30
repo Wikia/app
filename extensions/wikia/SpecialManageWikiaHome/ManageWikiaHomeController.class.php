@@ -14,7 +14,7 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 	protected $helper;
 
 	public function __construct() {
-		parent::__construct('ManageWikiaHome', false);
+		parent::__construct('ManageWikiaHome', 'staff', false);
 		$this->helper = F::build('WikiaHomePageHelper');
 	}
 
