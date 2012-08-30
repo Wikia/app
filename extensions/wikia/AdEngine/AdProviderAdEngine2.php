@@ -4,6 +4,7 @@ class AdProviderAdEngine2 extends AdProviderIframeFiller implements iAdProvider 
 
 	public $enable_lazyload = true;
 	private $isMainPage, $useIframe = false;
+	public $name = 'AdEngine2';
 
 	protected static $instance = false;
 
@@ -30,16 +31,15 @@ class AdProviderAdEngine2 extends AdProviderIframeFiller implements iAdProvider 
 	public function getAd($slotname, $slot, $params = null) {
 		wfProfileIn(__METHOD__);
 
-		$out = '';
-		$out .= '<div id="' . htmlspecialchars($slotname) . '" class="wikia-ad noprint default-height">';
-		$out .= '<script type="text/javascript">';
+		$out = <<<EOT
+<div id="{$slotname}" class="wikia-ad noprint default-height">
+<script type="text/javascript">
+	window.adslots2 = window.adslots2 || [];
+	window.adslots2.push(['{$slotname}', '{$slot['size']}', '{$this->name}', '{$slot['load_priority']}']);
+</script>
+</div>
+EOT;
 
-		$out .= 'if (!window.adslots2) { window.adslots2 = []; }';
-		$out .= 'window.adslots2.push(["' . $slotname . '", "' . $slot['size'] . '", "AdEngine2", "' . $slot['load_priority'] . '"]);';
-
-		$out .= '</script>';
-		$out .= '</div>';
-		
 		wfProfileOut(__METHOD__);
 		
 		return $out;
