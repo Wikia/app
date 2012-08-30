@@ -381,12 +381,24 @@ class ArticleComment {
 		return $comment;
 	}
 
-	public function metadataParserInit( Parser &$parser ) {
+	/**
+	 * @static
+	 * @param Parser $parser
+	 * @return bool
+	 */
+	static public function metadataParserInit( Parser $parser ) {
 		$parser->setHook('ac_metadata', 'ArticleComment::parserTag');
 		return true;
 	}
 
-	public  static function parserTag( $content, $attributes, Parser $self ) {
+	/**
+	 * @static
+	 * @param string $content parser tag content
+	 * @param Array $attributes attribs
+	 * @param Parser $self
+	 * @return string
+	 */
+	public static function parserTag( $content, $attributes, Parser $self ) {
 		$self->ac_metadata = $attributes;
 		return '';
 	}
