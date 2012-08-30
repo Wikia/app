@@ -42,7 +42,7 @@
 				<ul class="list loading"></ul>
 			</div>
 		<?php else: // regular ads ?>
-			<?php wfRenderModule('Ad', 'Index', array('slotname' => 'TOP_RIGHT_BOXAD')); ?>
+			<?= wfRenderModule('Ad', 'Index', array('slotname' => 'TOP_RIGHT_BOXAD')); ?>
 			<div id="WikiaAdInContentPlaceHolder"></div>
 		<?php endif; ?>
 	<?php endif; ?>
