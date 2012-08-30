@@ -45,8 +45,7 @@ class EditAccount extends SpecialPage {
 
 		# If the user isn't permitted to access this special page, display an error
 		if ( !$wgUser->isAllowed( 'editaccount' ) ) {
-			$wgOut->permissionRequired( 'editaccount' );
-			return;
+			throw new PermissionsError( 'editaccount' );
 		}
 
 		# Show a message if the database is in read-only mode

@@ -142,8 +142,7 @@ class SiteWideMessages extends SpecialPage {
 		}
 
 		if($action != 'dismiss' && $action != 'cleanDB' && !$wgUser->isAllowed('messagetool')) {
-			$wgOut->permissionRequired('messagetool');
-			return;
+			throw new PermissionsError('messagetool');
 		}
 
 		switch ($action) {

@@ -20,12 +20,10 @@ class ListIncludedFiles extends SpecialPage{
 	}
 
 	function execute(){
-		global $wgOut;
-		global $wgRequest, $wgUser;
+		global $wgOut, $wgUser;
 
 		if( !$wgUser->isAllowed( 'listincludedfilesright' ) ) {
-			$wgOut->permissionRequired( 'listincludedfilesright' );
-			return;
+			throw new PermissionsError( 'listincludedfilesright' );
 		}
 
 		ob_start();

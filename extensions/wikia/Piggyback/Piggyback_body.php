@@ -13,8 +13,7 @@ class Piggyback extends SpecialPage {
 		global $wgRequest, $wgOut, $wgUser;
 
 		if( !$wgUser->isAllowed( 'piggyback' ) ) {
-			$wgOut->permissionRequired( 'piggyback' );
-			return;
+			throw new PermissionsError( 'piggyback' );
 		}
 
 		if( PBLoginForm::isPiggyback() ) {
@@ -58,7 +57,7 @@ class PBLoginForm extends LoginForm {
 
 		$this->mOtherName = $request->getVal( 'wpOtherName' );
 		parent::load();
-		
+
 		$this->exTemplate->set("link", "");
 		$this->exTemplate->set("usedomain", "");
 		$this->exTemplate->set("canremember", "");
@@ -86,7 +85,7 @@ class PBLoginForm extends LoginForm {
 		$u = User::newFromName( $this->mOtherName );
 
 		$cu = User::newFromName( $this->mUsername );
-		
+
 		if (!$cu->checkPassword( $this->mPassword )) {
 			if( $retval = '' == $this->mPassword ) {
 				$this->mainLoginForm( wfMsg( 'wrongpasswordempty' ) );
@@ -95,7 +94,7 @@ class PBLoginForm extends LoginForm {
 			}
 			return ;
 		}
-		
+
 		if ( !is_object( $u ) || $u->getId()  == 0 ) {
 			$this->mainLoginForm( wfMsg( 'piggyback-nosuchuser', htmlspecialchars( $this->mOtherName ) ) );
 			return ;
@@ -162,12 +161,12 @@ class PBLoginForm extends LoginForm {
 
 	function render() {
 		global $wgOut, $wgExtensionsPath;
-		
+
 		if ( !LoginForm::getLoginToken() ) {
 			LoginForm::setLoginToken();
 		}
 		$this->exTemplate->set("loginToken", LoginForm::getLoginToken());
-		
+
 		$this->exTemplate->set( "header", $this->plugin );
 		$wgOut->addStyle( "$wgExtensionsPath/wikia/Piggyback/Piggyback.css" );
 		$wgOut->addTemplate( $this->exTemplate );
