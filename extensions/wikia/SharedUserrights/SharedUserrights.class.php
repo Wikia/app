@@ -17,7 +17,7 @@
 */
 
 class UserRights {
-	private static $globalGroup, $sharedDBname;
+	private static $globalGroup;
 
 	/**
 	 * data provider
@@ -75,7 +75,7 @@ class UserRights {
 	 *
 	 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
 	 */
-	function showEditUserGroupsForm(&$user, &$groups) {
+	static function showEditUserGroupsForm(&$user, &$groups) {
 		//if not on central, block changing global rights
 		if (!self::isCentralWiki()) {
 			$groups = array_unique(array_merge($groups, self::getGlobalGroups($user)));
@@ -88,7 +88,7 @@ class UserRights {
 	 *
 	 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
 	 */
-	function groupCheckboxes($group, &$disabled, &$irreversible) {
+	static function groupCheckboxes($group, &$disabled, &$irreversible) {
 		global $wgWikiaGlobalUserGroups;
 
 		if (!self::isCentralWiki() && in_array($group, $wgWikiaGlobalUserGroups)) {
