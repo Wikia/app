@@ -157,7 +157,8 @@ class AdController extends WikiaController {
 				$this->ad = AdEngine::getInstance()->getPlaceHolderDiv($this->slotname);
 			}
 			elseif (AdEngine::getInstance()->getProviderNameForSlotname($this->slotname) == 'DARTGP' ||
-					AdEngine::getInstance()->getProviderNameForSlotname($this->slotname) == 'AdEngine2') {
+					AdEngine::getInstance()->getProviderNameForSlotname($this->slotname) == 'AdEngine2' ||
+					AdEngine::getInstance()->getProviderNameForSlotname($this->slotname) == 'GamePro') {
 				$this->ad = AdEngine::getInstance()->getAd($this->slotname);
 			}
 			else {
