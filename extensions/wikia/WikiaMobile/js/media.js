@@ -614,8 +614,8 @@ define('media', ['modal', 'loader', 'querystring', 'popover', 'track', 'events',
 
 			//handling next/previous image
 			if(imagesLength > 1){
-				document.getElementById('nxtImg').addEventListener('tap', tap);
-				document.getElementById('prvImg').addEventListener('tap', tap);
+				document.getElementById('nxtImg').addEventListener('click', tap);
+				document.getElementById('prvImg').addEventListener('click', tap);
 			}
 
 			//setupImage and get references to currentImage and it's style property
