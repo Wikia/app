@@ -166,9 +166,6 @@ class CustomMovePageForm extends MovePageForm{
 			);
 		}
 
-		// FIXME: $this->watch shows up as undefined since it's a private variable in MovePageForm.
-		$watchChecked = $this->watch || $wgUser->getBoolOption( 'watchmoves' )
-			|| $this->oldTitle->userIsWatching();
 		$wgOut->addHTML( "
 				{$confirm}
 			<tr>
