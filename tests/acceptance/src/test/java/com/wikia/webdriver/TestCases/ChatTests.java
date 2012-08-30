@@ -18,7 +18,7 @@ public class ChatTests extends TestTemplate_Two_Drivers{
 	
 	
 	/*
-	 *  Test 1: One user opens chat Edit
+	 *  Test 1: One user opens chat
 
     1. A user opens Special:Chat. He is the only person on-line.
     2. The main chat room is opened for him and he can see: message area, userlist and entry field.
@@ -32,7 +32,7 @@ public class ChatTests extends TestTemplate_Two_Drivers{
 
 
 	/*
-	 *  Test 2: Two users open chat Edit
+	 *  Test 2: Two users open chat
 
     1. There are two users: user A and user B.
     2. Both open Special:Chat on the same wiki.
@@ -178,7 +178,7 @@ public class ChatTests extends TestTemplate_Two_Drivers{
     4. Click on main room changes the highlighting. 
 	 */
 	/*
-	 *  Test 7: Current chat title changes Edit
+	 *  Test 7: Current chat title changes
     1. There are two users in the chat room: user A and user B.
     2. User B opens a drop-down menu and click on "Private message" with user A.
     3. New room is opened and the title is changed to "Private chat with user A".
@@ -287,12 +287,8 @@ public class ChatTests extends TestTemplate_Two_Drivers{
 		chat2.verifyUserJoinToChat(Properties.userName);
 		chat2.verifyUserIsVisibleOnContactsList(Properties.userName);
 		chat1.verifyUserIsVisibleOnContactsList(Properties.userName2);
-		try {
-			Thread.sleep(15000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		chat2.writeOnChat("test message");
+		chat1.verifyMessageOnChat("test message");
 		chat2.clickOnDifferentUser(Properties.userName, driver2);
 		chat2.selectPrivateMessage(driver2);
 		chat2.writeOnChat("This is private message from "+Properties.userName2);
