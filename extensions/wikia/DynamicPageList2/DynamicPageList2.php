@@ -2816,7 +2816,7 @@ class ExtDynamicPageList2
 					$sTitleText = substr($sTitleText, 0, $iTitleMaxLen) . '...';
 				if ($bShowNamespace)
 					//Adapted from Title::getPrefixedText()
-					$sTitleText = str_replace( '_', ' ', $title->prefix($sTitleText) );
+					$sTitleText = $title->getPrefixedText($sTitleText);
 				if ($bEscapeLinks && ($pageNamespace==14 || $pageNamespace==6) ) {
 					// links to categories or images need an additional ":"
 					$articleLink = '[[:'.$title->getPrefixedText().'|'.$wgContLang->convert( $sTitleText ).']]';
