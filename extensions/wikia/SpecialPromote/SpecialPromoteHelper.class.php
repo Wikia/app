@@ -51,8 +51,8 @@ class SpecialPromoteHelper extends WikiaObject {
 	}
 
 	public function getWikiHeadline() {
-		if (!empty($this->wikiInfo['name'])) {
-			return $this->wikiInfo['name'];
+		if (!empty($this->wikiInfo['headline'])) {
+			return $this->wikiInfo['headline'];
 		} else {
 			return false;
 		}
