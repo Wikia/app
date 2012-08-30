@@ -97,7 +97,11 @@ function efOpenGraphMetaPageHook( &$out, &$sk ) {
 	}
 	$meta["og:url"] = $title->getFullURL();
 	if ( $egFacebookAppId ) {
-		$meta["fb:app_id"] = $egFacebookAppId;
+		/* begin wikia change */
+		// $meta["fb:app_id"] = $egFacebookAppId;
+		// fb:app_id needs a prefix property declaring the namespace, so just add it directly
+		$out->addHeadItem("meta:property:fb:app_id", "	".Html::element( 'meta', array( 'property' => 'fb:app_id', 'content' => $egFacebookAppId, 'prefix' => "fb: http://www.facebook.com/2008/fbml" ) )."\n");
+		/* end wikia change */
 	}
 	if ( $egFacebookAdmins ) {
 		$meta["fb:admins"] = $egFacebookAdmins;
