@@ -41,10 +41,17 @@ public class ChatPageObject extends BasePageObject
 	private WebElement allowPrivateMassageButton;
 	@FindBy(css="li.private-block")
 	private WebElement blockPrivateMassageButton;
+	@FindBy(css="div#Rail img.wordmark")
+	private WebElement mainChatButton;
+	@FindBy(css="h1[class='public wordmark selected']")
+	private WebElement mainChatSelection;
+	@FindBy(css="ul.PrivateChatList span.splotch")
+	private WebElement privateMessageNotificator;
 	
 	By userContextMenu = By.cssSelector("ul.regular-actions li");
 	By adminContextMenu = By.cssSelector("ul.admin-actions li");
 	By privateMessageHeader = By.xpath("//h1[@class='private' and contains(text(), 'Private Messages')]");
+	
 	
 	
 	public ChatPageObject(WebDriver driver) 
@@ -93,6 +100,12 @@ public class ChatPageObject extends BasePageObject
 		PageObjectLogging.log("writeOnChat", "Message: "+message+" is visible on chat board", true, driver);
 	}
 	
+	public void verifyMessageOnChat(String message)
+	{
+		waitForElementByBy(By.xpath("//span[@class='message' and contains(text(), '"+message+"')]"));
+		PageObjectLogging.log("writeOnChat", "Message: "+message+" is visible on chat board", true, driver);
+	}
+	
 	/**
 	 * @author Karol
 	 * @param userName
@@ -102,6 +115,12 @@ public class ChatPageObject extends BasePageObject
 	{
 		waitForElementByXPath("//div[@class='Chat']/ul/li[contains(text(), '"+userName+" has joined the chat.')]");
 		PageObjectLogging.log("verifyUserJoinToChat", userName+" has joined the chat.", true, driver);
+	}
+	
+	public void verifyUserIsVisibleOnContactsList(String userName)
+	{
+		waitForElementByXPath("//li[@id='user-"+userName+"']");
+		PageObjectLogging.log("verifyUserIsVisibleOnContactsList", userName+" is visible on contacts list", true, driver);
 	}
 	
 	/**
@@ -138,6 +157,12 @@ public class ChatPageObject extends BasePageObject
 		CommonFunctions.MoveCursorToElement(p, driver);
 		CommonFunctions.ClickElement();
 		PageObjectLogging.log("selectPrivateMessage", "private message selected from dropdown", true, driver);
+		try {
+			Thread.sleep(1500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	/**
@@ -151,6 +176,48 @@ public class ChatPageObject extends BasePageObject
 		PageObjectLogging.log("verifyPrivateMessageHeader", "private message header is visible", true, driver);
 	}
 	
+	public void verifyPrivateMessageNotification()
+	{
+		waitForElementByElement(privateMessageNotificator);
+		PageObjectLogging.log("verifyPrivateMessageNotification", "private message notification is visible", true, driver);
+	}
+	
+	public void verifyPrivateMessageIsHighLighted(String user)
+	{
+		//li[@class='User selected' and @id='priv-user-QATestsUser']
+		waitForElementByXPath("//li[@class='User selected' and @id='priv-user-"+user+"']");
+		PageObjectLogging.log("verifyPrivateMessageIsHighLighted", "private message section is highlighted", true, driver);
+	}
+	
+	public void verifyPrivateChatTitle(String userName)
+	{
+		waitForElementByXPath("//h1[@class='private' and contains(text(), 'Private chat with "+userName+"')]");
+		PageObjectLogging.log("verifyPrivateChatTitle", "private chat title is correct", true, driver);
+	}
+	
+	public void clickOnMainChat(WebDriver driver)
+	{
+		Point p = mainChatButton.getLocation();
+		CommonFunctions.MoveCursorToElement(p, driver);
+		CommonFunctions.ClickElement();
+		PageObjectLogging.log("clickOnMainChat", "main chat is clicked", true, driver);
+	}
+	
+	public void verifyMainChatIsHighLighted()
+	{
+		waitForElementByElement(mainChatSelection);
+		PageObjectLogging.log("verifyPrivateMessageIsHighLighted", "private message section is highlighted", true, driver);
+	}
+	
+	public void clickOnPrivateChat(String user, WebDriver driver)
+	{
+		By privateChatUserButton = By.xpath("//li[@id='priv-user-"+user+"']");
+		Point p = driver.findElement(privateChatUserButton).getLocation();
+		CommonFunctions.MoveCursorToElement(p, driver);
+		CommonFunctions.ClickElement();
+		verifyPrivateMessageIsHighLighted(user);
+		PageObjectLogging.log("clickOnPrivateChat", "private chat is clicked", true, driver);
+	}
 	/**
 	 * @author Karol Kujawiak
 	 * @param userName
