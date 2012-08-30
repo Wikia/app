@@ -121,7 +121,7 @@ class CodeLintPhp extends CodeLint {
 	private function parseResults($resultsDir) {
 		global $IP;
 
-		$files = glob($resultsDir . '/Php*.xml');
+		$files = glob($resultsDir . '/*.xml');
 		$problems = array();
 
 		foreach($files as $file) {
@@ -130,6 +130,10 @@ class CodeLintPhp extends CodeLint {
 			if ($xml instanceof SimpleXMLElement) {
 				/* @var $xml SimpleXMLElement */
 				$nodes = $xml->xpath('//problem');
+
+				if ($nodes === false) {
+					continue;
+				}
 
 				foreach($nodes as $node) {
 					$entry = array(
@@ -269,6 +273,10 @@ class CodeLintPhp extends CodeLint {
 		}
 
 		if (startsWith($errorMsg, 'Undefined constant')) {
+			$ret = true;
+		}
+
+		if (startsWith($errorMsg, 'Member has private access')) {
 			$ret = true;
 		}
 
