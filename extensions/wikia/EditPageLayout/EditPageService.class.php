@@ -11,7 +11,7 @@ class EditPageService extends Service {
 	private $mTitle;
 
 	function __construct(Title $title) {
-		$this->app = WF::build('App');
+		$this->app = F::app();
 		$this->mTitle = $title;
 	}
 

@@ -2,7 +2,7 @@
 
 /**
  * Adds support for MW messages in JS code
- * 
+ *
  * Provides a way to register and use packages of messages in JavaScript via $.msg() function
  *
  * @see https://internal.wikia-inc.com/wiki/JSMessages
@@ -19,7 +19,7 @@ $wgExtensionCredits['other'][] = array(
 $dir = dirname(__FILE__);
 
 // WikiaApp
-$app = WF::build('App');
+$app = F::app();
 
 // classes
 $app->registerClass('JSMessages', $dir . '/JSMessages.class.php');

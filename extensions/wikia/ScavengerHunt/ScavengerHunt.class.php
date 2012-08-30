@@ -413,13 +413,13 @@ class ScavengerHunt {
 	}
 
 	protected function getCache() {
-		return WF::build('App')->getGlobal('wgMemc');
+		return F::app()->getGlobal('wgMemc');
 	}
 
 	protected function getMemcKey( $arguments = null ) {
 		$args = func_get_args();
 		array_unshift($args, 'wfMemcKey');
-		return call_user_func_array(array(WF::build('App'), 'runFunction'), $args);
+		return call_user_func_array(array(F::app(), 'runFunction'), $args);
 	}
 
 	public function parse( $text ) {

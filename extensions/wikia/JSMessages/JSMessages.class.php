@@ -28,7 +28,7 @@ class JSMessages {
 	private $allMessages = null;
 
 	function __construct() {
-		$this->app = WF::build('App');
+		$this->app = F::app();
 		$this->helper = F::build('JSMessagesHelper');
 
 		$this->queue = array(
@@ -270,7 +270,7 @@ class JSMessages {
 		$this->app->wf->ProfileOut(__METHOD__);
 		return true;
 	}
-	
+
 	/**
 	 * Return the URL of the ajax-call to load all of the JS messages packages (enqueued as "external")
 	 *

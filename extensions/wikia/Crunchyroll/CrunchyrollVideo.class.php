@@ -52,7 +52,7 @@ class CrunchyrollVideo {
 	}
 
 	public function __construct() {
-		$this->app = WF::build('App');
+		$this->app = F::app();
 	}
 
 	protected function getRSSData(){
