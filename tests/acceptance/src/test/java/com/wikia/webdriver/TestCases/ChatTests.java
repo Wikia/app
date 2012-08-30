@@ -1,11 +1,13 @@
 package com.wikia.webdriver.TestCases;
 
+
+
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.WebDriver;
 import org.testng.annotations.Test;
 
 import com.wikia.webdriver.Common.Core.CommonFunctions;
-import com.wikia.webdriver.Common.Core.Global;
 import com.wikia.webdriver.Common.Properties.Properties;
-import com.wikia.webdriver.Common.Templates.TestTemplate;
 import com.wikia.webdriver.Common.Templates.TestTemplate_Two_Drivers;
 import com.wikia.webdriver.PageObjects.PageObject.HomePageObject;
 import com.wikia.webdriver.PageObjects.PageObject.ChatPageObject.ChatPageObject;
@@ -60,6 +62,7 @@ public class ChatTests extends TestTemplate_Two_Drivers{
 		ChatPageObject chat2 = new ChatPageObject(driver2);
 		chat2.openChatPage();
 		chat2.verifyChatPage();
+		//Test	
 		chat1.verifyUserJoinToChat(Properties.userName2);		
 	}
 	
@@ -87,6 +90,7 @@ public class ChatTests extends TestTemplate_Two_Drivers{
 		ChatPageObject chat2 = new ChatPageObject(driver2);
 		chat2.openChatPage();
 		chat1.openChatPage();
+		//Test	
 		chat1.verifyChatPage();
 		chat1.clickOnDifferentUser(Properties.userName2, driver);
 		chat1.verifyNormalUserDropdown();
@@ -117,6 +121,7 @@ public class ChatTests extends TestTemplate_Two_Drivers{
 		ChatPageObject chat2 = new ChatPageObject(driver2);
 		chat2.openChatPage();
 		chat1.openChatPage();
+		//Test
 		chat1.verifyChatPage();
 		chat1.clickOnDifferentUser(Properties.userName2, driver);
 		chat1.selectPrivateMessage(driver);
@@ -136,7 +141,7 @@ public class ChatTests extends TestTemplate_Two_Drivers{
 	 */
 	
 	@Test
-	public void Chat_004_changes_in_drop_down_menu_staff_2()
+	public void Chat_004_changes_in_drop_down_menu_staff()
 	{
 		//first user opens the chat
 		HomePageObject home = new HomePageObject(driver);
@@ -152,6 +157,7 @@ public class ChatTests extends TestTemplate_Two_Drivers{
 		ChatPageObject chat2 = new ChatPageObject(driver2);
 		chat2.openChatPage();
 		chat1.openChatPage();
+		//Test
 		chat1.verifyChatPage();
 		chat1.clickOnDifferentUser(Properties.userName2, driver);
 		chat1.verifyAdminUserDropdown();
@@ -164,9 +170,24 @@ public class ChatTests extends TestTemplate_Two_Drivers{
     2. User B opens a private room with user A.
     3. The small header labeled "Private Message" appears on user B's userlist. 
 	 */
+	/*
+	 * Test 6: Current chat is highlighted
+	1. There are two users in the chat room: user A and user B.
+    2. User B opens a drop-down menu and click on "Private message" with user A.
+    3. New room is opened and highlighted.
+    4. Click on main room changes the highlighting. 
+	 */
+	/*
+	 *  Test 7: Current chat title changes Edit
+    1. There are two users in the chat room: user A and user B.
+    2. User B opens a drop-down menu and click on "Private message" with user A.
+    3. New room is opened and the title is changed to "Private chat with user A".
+    4. Click on main room changes the title to wiki's wordmark/name. 
+	 */
+	/*Above test cases are covered by below script */
 	
 	@Test
-	public void Chat_005_private_messages_bar()
+	public void Chat_005_private_chat_validation()
 	{
 		//first user opens the chat
 		HomePageObject home = new HomePageObject(driver);
@@ -182,9 +203,111 @@ public class ChatTests extends TestTemplate_Two_Drivers{
 		ChatPageObject chat2 = new ChatPageObject(driver2);
 		chat2.openChatPage();
 		chat1.openChatPage();
+		//Test
 		chat1.verifyChatPage();
 		chat1.clickOnDifferentUser(Properties.userName2, driver);
 		chat1.selectPrivateMessage(driver);
 		chat1.verifyPrivateMessageHeader();
+		chat1.verifyPrivateMessageIsHighLighted(Properties.userName2);
+		chat1.verifyPrivateChatTitle(Properties.userName2);
+		chat1.clickOnMainChat(driver);
+		chat1.verifyMainChatIsHighLighted();
+		chat1.clickOnPrivateChat(Properties.userName2);
+		chat1.verifyPrivateMessageIsHighLighted(Properties.userName2);
 	}	
+	
+	/*
+	 *  Test 8: Current chat messages area changes
+	1. There are two users in the chat room: user A and user B.
+    2. User A sends a string 'abc' to the main room. It is now displayed on chat messages area.
+    3. User B opens a drop-down menu and click on "Private message" with user A.
+    4. New room is opened and chat messages area is empty.
+    5. Click on main room changes chat messages area so there is 'abc' message displayed now.  
+	 */
+	
+	@Test
+	public void Chat_006_private_chat_validation()
+	{
+		//first user opens the chat
+		HomePageObject home = new HomePageObject(driver);
+		CommonFunctions.logOut(Properties.userName, driver);
+		home.openHomePage();
+		CommonFunctions.logIn(Properties.userName, Properties.password, driver);
+		ChatPageObject chat1 = new ChatPageObject(driver);
+		//second user opens the chat		
+		HomePageObject home2 = new HomePageObject(driver2);
+		CommonFunctions.logOut(Properties.userName, driver2);
+		home2.openHomePage();
+		CommonFunctions.logIn(Properties.userName2, Properties.password2, driver2);
+		ChatPageObject chat2 = new ChatPageObject(driver2);
+		chat2.openChatPage();
+		chat1.openChatPage();
+		//test
+		chat2.writeOnChat("Hello this is user "+Properties.userName2);
+		chat1.verifyMessageOnChat("Hello this is user "+Properties.userName2);
+		chat1.clickOnDifferentUser(Properties.userName2, driver);
+		chat1.selectPrivateMessage(driver);
+		chat1.verifyPrivateMessageHeader();
+		chat1.clickOnMainChat(driver);
+		chat1.verifyMainChatIsHighLighted();
+		chat1.verifyMessageOnChat("Hello this is user "+Properties.userName2);
+	}
+	
+	/*
+	 *  Test 9: Private chat window is opened for target user after a message is sent
+
+    1. There are two users in the chat room: user A and user B.
+    2. User B opens a drop-down menu and click on "Private message" with user A.
+    3. New room is opened for user B. User A doesn't notice anything yet.
+    4. User B types and sends string 'abc' in the private chat with user A window.
+    5. Private chat with user B appears in user A's userlist area. 
+	 */
+	@Test
+	public void Chat_007_send_private_message()
+	{
+		//first user opens the chat
+		switchToWindow(driver);
+		HomePageObject home = new HomePageObject(driver);
+		CommonFunctions.logOut(Properties.userName, driver);
+		home.openHomePage();
+		CommonFunctions.logIn(Properties.userName, Properties.password, driver);
+		ChatPageObject chat1 = new ChatPageObject(driver);
+		//second user opens the chat		
+		switchToWindow(driver2);
+		HomePageObject home2 = new HomePageObject(driver2);
+		CommonFunctions.logOut(Properties.userName, driver2);
+		home2.openHomePage();
+		CommonFunctions.logIn(Properties.userName2, Properties.password2, driver2);
+		ChatPageObject chat2 = new ChatPageObject(driver2);
+		chat2.openChatPage();
+		switchToWindow(driver);
+		chat1.openChatPage();
+		//test
+		switchToWindow(driver2);
+		chat2.verifyUserJoinToChat(Properties.userName);
+		chat2.verifyUserIsVisibleOnContactsList(Properties.userName);
+		chat1.verifyUserIsVisibleOnContactsList(Properties.userName2);
+		try {
+			Thread.sleep(15000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		chat2.clickOnDifferentUser(Properties.userName, driver2);
+		chat2.selectPrivateMessage(driver2);
+		chat2.writeOnChat("This is private message from "+Properties.userName2);
+		switchToWindow(driver);
+		chat1.verifyPrivateMessageHeader();
+		chat1.verifyPrivateMessageNotification();
+		chat1.clickOnPrivateChat(Properties.userName2, driver);
+		chat1.verifyMessageOnChat("This is private message from "+Properties.userName2);
+	}
+
+	private void switchToWindow(WebDriver maximized)
+	{
+		Dimension min = new Dimension(10,10);
+		driver.manage().window().setSize(min);
+		driver2.manage().window().setSize(min);
+		maximized.manage().window().maximize();
+	}
 }

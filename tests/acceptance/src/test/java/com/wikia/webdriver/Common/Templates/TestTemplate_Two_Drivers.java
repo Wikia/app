@@ -83,13 +83,13 @@ public class TestTemplate_Two_Drivers {
 	}
 	
 	
-	public void startBrowsers()
+	private void startBrowsers()
 	{
 		driver = DriverProvider.getInstance().getWebDriver();
 		driver2 = DriverProvider.getInstanceFF().getWebDriver();
 	}
 	
-	public void stopBrowsers()
+	private void stopBrowsers()
 	{
 		if (driver != null)
 		{

@@ -294,8 +294,12 @@ public class CommonFunctions
 	{
 		Robot robot = null;
 		try {
+			Thread.sleep(1000);
 			robot = new Robot();
 		} catch (AWTException e) {
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	   robot.mouseMove(x,y);
@@ -378,12 +382,18 @@ public class CommonFunctions
 	{
 		Robot robot = null;
 		try {
+			Thread.sleep(300);
 			robot = new Robot();
 		} catch (AWTException e) {
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	   robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
 	   robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
 	}
+	
+	
 
 }
