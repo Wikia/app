@@ -276,7 +276,7 @@ class CodeLintPhp extends CodeLint {
 			$ret = true;
 		}
 
-		if (startsWith($errorMsg, 'Member has private access')) {
+		if (startsWith($errorMsg, 'Member has private access') || startsWith($errorMsg, 'Member has protected access')) {
 			$ret = true;
 		}
 
