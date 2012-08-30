@@ -19,7 +19,7 @@ class UserBlock {
 	 * @desc blockCheck() will return false if user is blocked. The reason why it was
 	 * written in such way is below when you look at method UserBlock::onUserCanSendEmail().
 	 */
-	public static function blockCheck(&$user) {
+	public static function blockCheck(User $user) {
 		global $wgUser, $wgMemc, $wgRequest;
 		wfProfileIn( __METHOD__ );
 
@@ -65,7 +65,7 @@ class UserBlock {
 		return $ret;
 	}
 
-	protected static function blockCheckInternal( &$user, $blocksData, $text, $isBlockIP = false, $writeStats = true ) {
+	protected static function blockCheckInternal( User $user, $blocksData, $text, $isBlockIP = false, $writeStats = true ) {
 		global $wgMemc;
 		wfProfileIn( __METHOD__ );
 
@@ -96,11 +96,11 @@ class UserBlock {
 		return true;
 	}
 
-	protected static function getCacheKey( $user ) {
+	protected static function getCacheKey( User $user ) {
 		return wfSharedMemcKey( 'phalanx', self::CACHE_KEY, $user->getTitleKey() );
 	}
 
-	protected static function getBlockFromCache( $user, $isCurrentUser ) {
+	protected static function getBlockFromCache( User $user, $isCurrentUser ) {
 		global $wgMemc;
 		wfProfilein( __METHOD__ );
 
@@ -124,7 +124,7 @@ class UserBlock {
 	}
 
 	//moved from RegexBlockCore.php
-	private static function setUserData(&$user, $blockData, $address /* not used at all */, $isBlockIP = false) {
+	private static function setUserData(User $user, $blockData, $address /* not used at all */, $isBlockIP = false) {
 		wfProfileIn( __METHOD__ );
 		$user->mBlockedby = $blockData['author_id'];
 
