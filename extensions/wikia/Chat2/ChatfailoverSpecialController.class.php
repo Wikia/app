@@ -27,12 +27,9 @@ class ChatfailoverSpecialController extends WikiaSpecialPageController {
 	 */
 
 	public function index() {
-		wfProfileIn(__METHOD__);
 		if(!$this->wg->User->isAllowed('chatfailover')) {
-			$this->wg->Out->permissionRequired('chatfailover');
 			$this->skipRendering();
-			wfProfileOut(__METHOD__);
-			return true;
+			throw new PermissionsError('chatfailover');
 		}
 
 		$mode = (bool) ChatHelper::getMode();
@@ -51,6 +48,5 @@ class ChatfailoverSpecialController extends WikiaSpecialPageController {
 
 		$this->response->setVal("mode", $mode ? 'regular': 'failover');
 		$this->response->setVal("modeBool", $mode );
-		wfProfileOut(__METHOD__);
 	}
 }

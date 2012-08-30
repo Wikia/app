@@ -9,12 +9,11 @@ class PowerTools {
 		}
 
 		if ( !$wgUser->isAllowed( 'delete' ) || !$wgUser->isAllowed( 'powerdelete' ) ) {
-			$wgOut->permissionRequired( 'powerdelete' );
-			return false;
+			throw new PermissionsError( 'powerdelete' );
 		}
 
 		if ( $wgUser->isBlocked() ) {
-			throw new UserBlockedError( $this->getUser()->mBlock );
+			throw new UserBlockedError( $wgUser>-mBlock );
 		}
 
 		if ( wfReadOnly() ) {

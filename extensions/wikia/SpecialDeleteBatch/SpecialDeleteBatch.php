@@ -31,8 +31,7 @@ class Deletebatch extends SpecialPage{
 		global $wgOut, $wgUser, $wgRequest ;
 
 		if( !$wgUser->isAllowed( 'deletebatch' ) ) {
-			$wgOut->permissionRequired( 'deletebatch' );
-			return;
+			throw new PermissionsError( 'deletebatch' );
 		}
 
 		$wgOut->setPageTitle (wfMsg('deletebatch_title'));

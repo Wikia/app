@@ -8,21 +8,20 @@ class SpecialAbTestingController extends WikiaSpecialPageController {
 
 	function index() {
 		if ( !$this->wg->User->isAllowed( 'abtestpanel' ) ) {
-			$this->wg->Out->permissionRequired( 'abtestpanel' );
 			$this->skipRendering();
-			return;
+			throw new PermissionsError( 'abtestpanel' );
 		}
 
 		$this->setHeaders();
 
 		// TODO: Set up other variables for the template.
-		
+
 	}
-	
+
 	function createExperiment() {
-	
+
 		$this->expName = 'test name';
-		
-	
+
+
 	}
 }
