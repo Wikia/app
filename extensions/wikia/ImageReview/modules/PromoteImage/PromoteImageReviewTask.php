@@ -187,13 +187,13 @@ class PromoteImageReviewTask extends BatchTask {
 	public function removeImages($corpWikiLang, $wikis) {
 		$app = F::app();
 		$corpWikiId = $this->model->getTargetWikiId($corpWikiLang);
-		$removedImages = array();
 
 		foreach($wikis as $sourceWikiId => $images) {
 			$sourceWikiLang = WikiFactory::getVarValueByName('wgLanguageCode', $sourceWikiId);
 			$sourceWikiDbName = WikiFactory::IDtoDB($sourceWikiId);
 
 			if( !empty($images) ) {
+				$removedImages = array();
 				foreach($images as $image) {
 					$imageName = $this->getNameWithWiki($image['name'], $sourceWikiDbName);
 					$result = $this->removeSingleImage($corpWikiId, $imageName);
@@ -233,7 +233,7 @@ class PromoteImageReviewTask extends BatchTask {
 	function removeSingleImage($targetWikiId, $imageName) {
 		global $IP, $wgWikiaLocalSettingsPath;
 
-		$retval = "";
+		$retval = -1;
 
 		$sCommand = "SERVER_ID={$targetWikiId} php $IP/maintenance/wikia/ImageReview/PromoteImage/remove.php";
 		$sCommand .= " --imagename=" . escapeshellarg($imageName);
@@ -241,19 +241,20 @@ class PromoteImageReviewTask extends BatchTask {
 		$sCommand .= " --conf {$wgWikiaLocalSettingsPath}";
 
 		$output = wfShellExec($sCommand, $retval);
-
 		$city_url = WikiFactory::getVarValueByName("wgServer", $targetWikiId);
+
 		if( empty($city_url) ) {
 			$this->log('Apparently the server is not available via WikiFactory');
 			return array('status' => 1);
 		}
 
 		$city_path = WikiFactory::getVarValueByName("wgScript", $targetWikiId);
-		if( $retval ) {
+		if( $retval != 0 ) {
 			$this->log('Remove error! (' . $city_url . '). Error code returned: ' . $retval . ' Error was: ' . $output);
+		} else {
+			$this->log('Removal successful: <a href="' . $city_url . $city_path . '?title=' . wfEscapeWikiText($output) . '">' . $city_url . $city_path . '?title=' . $output . '</a>');
 		}
 
-		$this->log('Removal successful: <a href="' . $city_url . $city_path . '?title=' . wfEscapeWikiText($output) . '">' . $city_url . $city_path . '?title=' . $output . '</a>');
 		return array(
 			'status' => $retval,
 			'title' => $output,
