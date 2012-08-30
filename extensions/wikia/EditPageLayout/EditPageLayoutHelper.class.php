@@ -14,7 +14,7 @@ class EditPageLayoutHelper {
 	public $editPage;
 
 	function __construct() {
-		$this->app = WF::build('App');
+		$this->app = F::app();
 		$this->out = $this->app->getGlobal('wgOut');
 		$this->request = $this->app->getGlobal('wgRequest');
 	}
