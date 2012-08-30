@@ -169,7 +169,7 @@ class CodeLintPhp extends CodeLint {
 
 		foreach($lines as $lineNo => $line) {
 			// check for deprecated skins (BugId:45705)
-			if (preg_match( '#[\'"](monaco|SkinMonaco|quartz|SkinQuartz)[\'"]#', $line) > 0) {
+			if (preg_match( '#[\'"](awesome|SkinAwesome|monaco|SkinMonaco|quartz|SkinQuartz)[\'"]#', $line) > 0) {
 				$problems[] = array(
 					'file' => $fileName,
 					'line' => $lineNo + 1,
