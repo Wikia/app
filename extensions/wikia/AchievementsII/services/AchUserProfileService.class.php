@@ -15,13 +15,13 @@ class AchUserProfileService {
     public function getHTML() {
     	wfProfileIn(__METHOD__);
 
-    	global $wgTitle, $wgUser, $wgWikiaBotLikeUsers;
+    	global $wgTitle, $wgUser;
 
 		//fix #10881, get correct username from user namespace subpages
     	$this->mUserOwner = F::build('User', array( UserPagesHeaderController::getUserName( $wgTitle, BodyController::getUserPagesNamespaces() ) ), 'newFromName');
 
     	if(
-		in_array( strtolower( RequestContext::getMain()->getSkin()->getSkinName() ), array( 'monaco', 'oasis' ) ) &&
+		in_array( strtolower( RequestContext::getMain()->getSkin()->getSkinName() ), array( 'oasis' ) ) &&
 		$this->mUserOwner &&
 		AchAwardingService::canEarnBadges( $this->mUserOwner ) &&
 		$this->mUserOwner->isLoggedIn() &&
@@ -66,7 +66,7 @@ class AchUserProfileService {
     	return $out;
     }
 
-	/*
+	/**
 	 * Service method to get the most recently earned badge for a list of users
 	 * This is used in the new Leaderboard special page
 	 *
@@ -79,7 +79,6 @@ class AchUserProfileService {
 	 *			[2] => AchBadge Object
 	 *		)
 	 */
-
 	public function getMostRecentUserBadge($user_ids) {
 		global $wgCityId, $wgExternalSharedDB;
     	wfProfileIn(__METHOD__);

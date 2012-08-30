@@ -51,7 +51,7 @@ class AchConfig {
 	public function __construct() {
 		//$this->mLoadedData = array();
 		$this->reset();
-		
+
 		$this->mNotInTrackStatic = array(
 			BADGE_WELCOME => array('level' => BADGE_LEVEL_BRONZE, 'infinite' => false),
 			BADGE_INTRODUCTION => array('level' => BADGE_LEVEL_BRONZE, 'infinite' => false),
@@ -149,6 +149,10 @@ class AchConfig {
 		$this->mNotInTrackCommunityPlatinum = array();
 	}
 
+	/**
+	 * @static
+	 * @return AchConfig instance
+	 */
 	static public function getInstance() {
 		if (!isset(self::$mInstance))
 			self::$mInstance = new self();
@@ -321,7 +325,7 @@ class AchConfig {
 			$badgeTypeId = BADGE_EDIT;
 			$badgeType = BADGE_TYPE_INTRACKSTATIC;
 		}
-		
+
 		$ret = false;
 
 		if ($badgeType == BADGE_TYPE_NOTINTRACKSTATIC) {
@@ -545,7 +549,7 @@ class AchConfig {
 		return false;
 	}
 
-	public function getBadgeTrackingUrl( $badgeTypeId ) {		
+	public function getBadgeTrackingUrl( $badgeTypeId ) {
 		if ( $this->isSponsored( $badgeTypeId ) ) {
 			return $this->mNotInTrackCommunityPlatinum[ $badgeTypeId ][ 'badge_tracking_url' ];
 		}
