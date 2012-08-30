@@ -51,17 +51,27 @@ var WikiaSearchApp = {
 		).then($.proxy(function() {
 			this.searchField.autocomplete({
 				serviceUrl: wgServer + wgScript + '?action=ajax&rs=getLinkSuggest&format=json',
-				onSelect: $.proxy(function(value, data) {
-					var valueEncoded = encodeURIComponent(value.replace(/ /g, '_'));
+				onSelect: $.proxy(function(value, data, event) {
+					var valueEncoded = encodeURIComponent(value.replace(/ /g, '_')),
+						// slashes can't be urlencoded because they break routing
+						location = wgArticlePath.
+							replace(/\$1/, valueEncoded).
+							replace(encodeURIComponent('/'), '/');
 
 					this.trackInternal('search_start_suggest', {
 						'sterm': valueEncoded,
 						'rver': 0
 					});
-					// slashes can't be urlencoded because they break routing
-					window.location.href = wgArticlePath.
-						replace(/\$1/, valueEncoded).
-						replace(encodeURIComponent('/'), '/');
+
+					// Respect modifier keys to allow opening in a new window (BugId:29401)
+					if (event.button === 1 || event.metaKey || event.ctrlKey) {
+						window.open(location);
+
+						// Prevents hiding the container
+						return false;
+					} else {
+						window.location.href = location;
+					}
 				}, this),
 				appendTo: '#WikiaSearch',
 				deferRequestBy: 2000,
