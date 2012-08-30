@@ -19,7 +19,7 @@ define('modal', ['loader', 'track', 'events', 'ads'], function modal(loader, tra
 		position,
 		onClose,
 		stopHiding,
-		positionfixed = Modernizr.positionfixed;
+		positionfixed = Features.positionfixed;
 
 	/* private */
 	function setup(){

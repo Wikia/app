@@ -52,7 +52,7 @@ define('layout', ['sections', 'media', 'cache'], function(sections, media, cache
 			process(assets);
 		}else{
 			Wikia.getMultiTypePackage({
-				scripts: 'wikiamobile_tables_js' + (!Modernizr.overflow ? ',wikiamobile_scroll_js' : ''),
+				scripts: 'wikiamobile_tables_js' + (!Features.overflow ? ',wikiamobile_scroll_js' : ''),
 				styles: '/extensions/wikia/WikiaMobile/css/tables.scss',
 				ttl: ttl,
 				callback: process
