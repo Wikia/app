@@ -41,6 +41,9 @@
 				<h3 class="subtle"><?= wfMsg( 'wikiasearch2-search-ads-header' );?></h3>
 				<ul class="list loading"></ul>
 			</div>
+		<?php else: // regular ads ?>
+			<?php wfRenderModule('Ad', 'Index', array('slotname' => 'TOP_RIGHT_BOXAD')); ?>
+			<div id="WikiaAdInContentPlaceHolder"></div>
 		<?php endif; ?>
 	<?php endif; ?>
 	
@@ -138,6 +141,9 @@
 				<h3 class="subtle"><?= wfMsg( 'wikiasearch2-search-ads-header' );?></h3>
 				<ul class="list loading"></ul>
 			</div>
+		<?php else: // regular ads ?>
+			<?= wfRenderModule('Ad', 'Index', array('slotname' => 'TOP_RIGHT_BOXAD')); ?>
+			<div id="WikiaAdInContentPlaceHolder"></div>
 		<?php endif; ?>
 		</div>
 	<?php endif; ?>
