@@ -203,7 +203,7 @@ class WikiaHomePageHelper extends WikiaModel {
 
 	/**
 	 * get stats from article
-	 * @param string articleName
+	 * @param string $articleName
 	 * @return integer stats
 	 */
 	public function getStatsFromArticle($articleName) {
@@ -382,6 +382,7 @@ class WikiaHomePageHelper extends WikiaModel {
 				$userInfo['avatarUrl'] = F::build('AvatarService', array($user, self::AVATAR_SIZE), 'getAvatarUrl');
 				$userInfo['edits'] = 0;
 				$userInfo['name'] = $username;
+				/** @var $userProfileTitle GlobalTitle */
 				$userProfileTitle = F::build('GlobalTitle', array($username, NS_USER, $wikiId), 'newFromText');
 				$userInfo['userPageUrl'] = ($userProfileTitle instanceof Title) ? $userProfileTitle->getFullURL() : '#';
 				$userContributionsTitle = F::build('GlobalTitle', array('Contributions/' . $username, NS_SPECIAL, $wikiId), 'newFromText');
@@ -644,6 +645,8 @@ class WikiaHomePageHelper extends WikiaModel {
 
 			if( empty($batch[CityVisualization::DEMOTED_ARRAY_KEY]) ) {
 				continue;
+			} else {
+				shuffle($batch[CityVisualization::DEMOTED_ARRAY_KEY]);
 			}
 
 			$bigCount = count($processedBatch[self::SLOTS_BIG_ARRAY_KEY]);
