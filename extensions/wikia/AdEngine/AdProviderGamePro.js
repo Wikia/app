@@ -2,6 +2,26 @@ var AdProviderGamePro = my.Class(AdProviderAdEngine2, {
 	// core stuff, should be overwritten
 	name:'AdProviderGamePro',
 
+	fillInSlot: function(s) {
+		this.log('fillInSlot', s);
+
+		WikiaTracker.trackAdEvent('liftium.slot2', {'ga_category':'slot2/' + s[1], 'ga_action':s[0], 'ga_label':'gamepro'}, 'ga');
+
+		var url = this.getUrl(s[0], s[1]);
+		var self = this;
+		ghostwriter(
+			document.getElementById(s[0]),
+			{
+				insertType: "append",
+				script: { src: url },
+				done: function() {
+					self.log('ghostwriter done', [s[0], url]);
+					ghostwriter.flushloadhandlers();
+				}
+			}
+		);
+	},
+
 	// private stuff
 	ord: Math.round(Math.random() * 23456787654),
 	slotMap: {
@@ -34,8 +54,6 @@ var AdProviderGamePro = my.Class(AdProviderAdEngine2, {
 		return url;
 	},
 
-	// from: egnre=action;egnre=adventure;egnre=drama;egnre=scifi;media=tv
-	// to: egnre=action,adventure,drama,scifi;media=tv
 	// TODO: cache it
 	rebuildKV: function(kv) {
 		this.log('rebuildKV', kv);
@@ -61,26 +79,6 @@ var AdProviderGamePro = my.Class(AdProviderAdEngine2, {
 		out = out.substring(1);
 		this.log(out);
 		return out;
-	},
-
-	fillInSlot: function(s) {
-		this.log('fillInSlot', s);
-		
-		WikiaTracker.trackAdEvent('liftium.slot2', {'ga_category':'slot2/' + s[1], 'ga_action':s[0], 'ga_label':'gamepro'}, 'ga');
-
-		var url = this.getUrl(s[0], s[1]);
-		var self = this;
-		ghostwriter(
-			document.getElementById(s[0]),
-			{
-				insertType: "append",
-				script: { src: url },
-				done: function() {
-					self.log('ghostwriter done', [s[0], url]);
-					ghostwriter.flushloadhandlers();
-				}
-			}
-		);
 	}
 });
 
