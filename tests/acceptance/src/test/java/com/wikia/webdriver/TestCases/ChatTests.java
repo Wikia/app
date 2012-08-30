@@ -212,7 +212,7 @@ public class ChatTests extends TestTemplate_Two_Drivers{
 		chat1.verifyPrivateChatTitle(Properties.userName2);
 		chat1.clickOnMainChat(driver);
 		chat1.verifyMainChatIsHighLighted();
-		chat1.clickOnPrivateChat(Properties.userName2);
+		chat1.clickOnPrivateChat(Properties.userName2, driver);
 		chat1.verifyPrivateMessageIsHighLighted(Properties.userName2);
 	}	
 	
