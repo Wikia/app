@@ -432,6 +432,7 @@ class WikiaHomePageHelper extends WikiaModel {
 
 		$wikiInfo = array(
 			'name' => '',
+			'headline' => '',
 			'description' => '',
 			'url' => '',
 			'new' => 0,
@@ -451,7 +452,8 @@ class WikiaHomePageHelper extends WikiaModel {
 			$wikiData = $dataGetter->getWikiData($wikiId, $langCode);
 
 			if (!empty($wikiData)) {
-				$wikiInfo['name'] = $wikiData['headline'];
+				$wikiInfo['name'] = $wikiData['title'];
+				$wikiInfo['headline'] = $wikiData['headline'];
 				$wikiInfo['description'] = $wikiData['description'];
 
 				// wiki status

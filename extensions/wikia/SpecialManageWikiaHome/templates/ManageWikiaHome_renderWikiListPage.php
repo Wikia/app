@@ -18,7 +18,7 @@
 				<?= $wiki->city_vertical ?>
 			</td>
 			<td>
-				<?= $wiki->city_headline ?>
+				<?= $wiki->city_title ?>
 			</td>
 			<td>
 				<a href="#" class="status-blocked" data-id="<?= $wiki->city_id; ?>" data-vertical="<?= $wiki->city_vertical ?>" data-flags="<?= CityVisualization::isBlockedWiki($wiki->city_flags) ?>">

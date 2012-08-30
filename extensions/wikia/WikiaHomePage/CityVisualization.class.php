@@ -10,7 +10,7 @@ class CityVisualization extends WikiaModel {
 	const GERMAN_CORPORATE_SITE_ID = 111264;
 	const ENGLISH_CORPORATE_SITE_ID = 80433;
 
-	const CITY_VISUALIZATION_MEMC_VERSION = 'v0.65';
+	const CITY_VISUALIZATION_MEMC_VERSION = 'v0.70';
 	const WIKI_STANDARD_BATCH_SIZE_MULTIPLIER = 100;
 
 	const PROMOTED_SLOTS = 3;
@@ -225,6 +225,7 @@ class CityVisualization extends WikiaModel {
 			'city_visualization.city_main_image',
 			'city_visualization.city_description',
 			'city_visualization.city_headline',
+			'city_list.city_title',
 			'city_list.city_url',
 			'city_visualization.city_flags',
 		);
@@ -250,7 +251,8 @@ class CityVisualization extends WikiaModel {
 
 			$wikiData = array(
 				'wikiid' => $row->city_id,
-				'wikiname' => $row->city_headline,
+				'wikiname' => $row->city_title,
+				'wikiheadline' => $row->city_headline,
 				'wikiurl' => $row->city_url . '?redirect=no',
 				'wikidesc' => $row->city_description,
 				'main_image' => $row->city_main_image,
@@ -449,22 +451,31 @@ class CityVisualization extends WikiaModel {
 			$wikiData = array();
 			$db = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
 			$row = $db->selectRow(
-				array('city_visualization'),
+				array('city_visualization','city_list'),
 				array(
-					'city_headline',
-					'city_description',
-					'city_main_image',
-					'city_flags',
-					'city_images',
+					'city_title',
+					'city_visualization.city_headline',
+					'city_visualization.city_description',
+					'city_visualization.city_main_image',
+					'city_visualization.city_flags',
+					'city_visualization.city_images',
 				),
 				array(
-					'city_id' => $wikiId,
-					'city_lang_code' => $langCode
+					'city_visualization.city_id' => $wikiId,
+					'city_visualization.city_lang_code' => $langCode
 				),
-				__METHOD__
+				__METHOD__,
+				array(),
+				array(
+					'city_list' => array(
+						'join',
+						'city_visualization.city_id = city_list.city_id'
+					)
+				)
 			);
 
 			if ($row) {
+				$wikiData['name'] = $row->city_title;
 				$wikiData['headline'] = $row->city_headline;
 				$wikiData['description'] = $row->city_description;
 				$wikiData['flags'] = $row->city_flags;
@@ -807,16 +818,23 @@ class CityVisualization extends WikiaModel {
 	//todo: implement memc and purge it once admin changes data or main image is approved
 	//todo: add sql join and instead of headline provide wiki name
 		$db = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
-		$table = array('city_visualization');
+		$table = array('city_visualization','city_list');
 		$fields = array(
 			'city_visualization.city_id',
 			'city_visualization.city_vertical',
-			'city_visualization.city_headline',
+			'city_list.city_title',
 			'city_visualization.city_flags',
 		);
 		$conds = $this->getConditionsForStaffTool($opt);
 		$options = $this->getOptionsForStaffTool($opt);
-		$results = $db->select($table, $fields, $conds, __METHOD__, $options);
+		$joinConds = array(
+			'city_list' => array(
+				'join',
+				'city_list.city_id = city_visualization.city_id'
+			)
+		);
+
+		$results = $db->select($table, $fields, $conds, __METHOD__, $options, $joinConds);
 		$wikis = array();
 		while( $row = $db->fetchObject($results) ) {
 			$category = HubService::getComscoreCategory($row->city_id);
