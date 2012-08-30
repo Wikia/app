@@ -9,6 +9,10 @@ class WidgetFramework {
 	protected $skinname = null;
 	private $config;
 
+	/**
+	 * @static
+	 * @return WidgetFramework
+	 */
 	public static function getInstance() {
 		if(self::$instance == false) {
 			self::$instance = new WidgetFramework();

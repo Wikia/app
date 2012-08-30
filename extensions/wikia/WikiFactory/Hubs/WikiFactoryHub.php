@@ -79,7 +79,7 @@ class WikiFactoryHub {
 	 * @access public
 	 * @author Krzysztof Krzyżaniak <eloy@wikia.com>
 	 *
-	 * @return object	WikiFactoryHub object
+	 * @return WikiFactoryHub object
 	 */
 	public static function getInstance() {
 		if( self::$mInstance === false ) {

@@ -18,6 +18,10 @@ class AttributionCache {
 
 	private function __clone() { }
 
+	/**
+	 * @static
+	 * @return AttributionCache
+	 */
 	static public function getInstance() {
 		if(self::$instance == null) {
 			self::$instance = new AttributionCache;
