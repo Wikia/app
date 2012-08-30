@@ -89,7 +89,7 @@ class WikiMetrics {
 		global $wgUser, $wgOut, $wgExtensionsPath, $wgJsMimeType, $wgResourceBasePath;
 
 		if( $wgUser->isBlocked() ) {
-			throw new UserBlockedError( $this->getUser()->mBlock );
+			throw new UserBlockedError( $wgUser->mBlock );
 		}
 
 		if ( wfReadOnly() ) {
