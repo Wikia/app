@@ -31,7 +31,7 @@ $wgHooks['WantedPages::getQueryInfo'][] = 'SharedHelpWantedPagesSql';
 define( 'NOSHAREDHELP_MARKER', '<!--NOSHAREDHELP-->' );
 define( 'SHAREDHELP_CACHE_VERSION', '1' );
 
-class SharedHttp extends Http {
+class SharedHttp {
 	static function get( $url, $timeout = 'default' ) {
 		return self::request( "GET", $url, $timeout );
 	}

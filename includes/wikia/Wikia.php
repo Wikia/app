@@ -1197,11 +1197,12 @@ class Wikia {
 	 * Sleep until wgDBLightMode is enable. This variable is used to disable (sleep) all
 	 * maintanance scripts while something is wrong with performance
 	 *
+	 * @static
 	 * @author Piotr Molski (moli) <moli at wikia-inc.com>
 	 * @param int $maxSleep
 	 * @return null
 	 */
-	function switchDBToLightMode( $WFLoader ) {
+	static function switchDBToLightMode( $WFLoader ) {
 		// commandline scripts only
 		if ( $WFLoader->mCommandLine ) {
 			// switch db to light mode
