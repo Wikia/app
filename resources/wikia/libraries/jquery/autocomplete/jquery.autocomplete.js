@@ -15,10 +15,10 @@
       return new Autocomplete(this, options);
     });
   };
-  
+
   // BugId: 10153 fix required after jquery-ui update in r40266.
   $.fn.pluginAutocomplete = $.fn.autocomplete;
-  
+
   var reEscape = new RegExp('(\\' + ['/', '.', '*', '+', '?', '|', '(', ')', '[', ']', '{', '}', '\\'].join('|\\') + ')', 'g');
 
   var fnFormatResult = function(value, data, currentValue) {
@@ -53,15 +53,15 @@
       selectedClass: 'selected',
       appendTo: 'body',
       /* Wikia changes */
-	 queryParamName: 'query',
-	 fnPreprocessResults: null,
-     skipBadQueries: false
+	  queryParamName: 'query',
+	  fnPreprocessResults: null,
+      skipBadQueries: false
     };
-    if (options) { 
+    if (options) {
 		// since we're using an old version of this plugin with minChars instead of minLength,
 		// this will help us be forwards-compatible
 		this.options.minChars = options.minLength || options.minChars || 1;
-		$.extend(this.options, options); 
+		$.extend(this.options, options);
 	}
     if(this.options.lookup){
       this.isLocal = true;
@@ -233,7 +233,7 @@
         this.suggest();
       } else if (!this.isBadQuery(q)) {
         me = this;
-       
+
 		/* Wikia change - allow custom param name */
 		//me.options.params.query = q;
 		var requestParams = me.options.params;
@@ -279,7 +279,9 @@
         	+ '</div>');
         // wikia change - end
         div.mouseover((function(xi) { return function() { me.activate(xi); }; })(i));
-        div.click((function(xi) { return function() { me.select(xi); }; })(i));
+        // wikia change - start
+        div.click((function(xi) { return function(e) { me.select(xi, e); }; })(i));
+        // wikia change - end
         this.container.append(div);
       }
       this.enabled = true;
@@ -294,7 +296,7 @@
       try {
         response = eval('(' + text + ')');
       } catch (err) { return; }
-	  
+
 	  /* Wikia change - allow function to preprocess result data into a format this plugin understands*/
 	  if(this.options.fnPreprocessResults != null){
 		response = this.options.fnPreprocessResults(response);
@@ -328,7 +330,7 @@
       if (this.selectedIndex === index) { this.selectedIndex = -1; }
     },
 
-    select: function(i) {
+    select: function(i, e /* wikia change */) {
       var selectedValue, f;
       selectedValue = this.suggestions[i];
       if (selectedValue) {
@@ -338,8 +340,11 @@
           if (f.length > 0) { f.get(0).submit(); }
         }
         this.ignoreValueChange = true;
-        this.hide();
-        this.onSelect(i);
+        // wikia change - start
+        if (this.onSelect(i, e) !== false) {
+	        this.hide();
+        }
+        // wikia change - end
       }
     },
 
@@ -372,7 +377,7 @@
       }
     },
 
-    onSelect: function(i) {
+    onSelect: function(i, e /* wikia change */) {
       var me, onSelect, getValue, s, d;
       me = this;
       onSelect = me.options.onSelect;
@@ -388,7 +393,9 @@
       s = me.suggestions[i];
       d = me.data[i];
       me.el.val(getValue(s));
-      if ($.isFunction(onSelect)) { onSelect(s, d); }
+      // wikia change - start
+      if ($.isFunction(onSelect)) { return onSelect(s, d, e); }
+      // wikia change - end
     }
 
   };
