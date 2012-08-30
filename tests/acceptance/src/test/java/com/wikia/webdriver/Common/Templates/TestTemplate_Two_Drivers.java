@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
 
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
@@ -103,7 +104,11 @@ public class TestTemplate_Two_Drivers {
 		}
 	}
 	
-	
-	
-
+	protected void switchToWindow(WebDriver maximized)
+	{
+		Dimension min = new Dimension(10,10);
+		driver.manage().window().setSize(min);
+		driver2.manage().window().setSize(min);
+		maximized.manage().window().maximize();
+	}
 }
