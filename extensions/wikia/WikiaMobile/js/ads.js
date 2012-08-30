@@ -8,7 +8,7 @@
  * @author Jakub Olek
  */
 /*global window, document, define, setTimeout,
-setInterval, clearInterval, Modernizr*/
+setInterval, clearInterval*/
 
 define('ads', ['events'], function (ev) {
 	'use strict';
@@ -19,7 +19,7 @@ define('ads', ['events'], function (ev) {
 		w,
 		ftr,
 		fixed = false,
-		positionfixed = Modernizr.positionfixed;
+		positionfixed = Features.positionfixed;
 
 	//init
 	$(function(){
@@ -35,6 +35,7 @@ define('ads', ['events'], function (ev) {
 				adInt,
 				click = ev.click,
 				adExist = function () {
+					//maybe this would be better ?: adSlot.querySelectorAll('*:not(script)').length > 2
 					if (adSlot.childElementCount > 3) {
 						close.className = 'show';
 						adSlot.className += ' show';

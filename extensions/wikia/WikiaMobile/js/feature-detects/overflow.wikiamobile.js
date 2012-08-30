@@ -4,7 +4,8 @@
  *
  * @see http://filamentgroup.github.com/Overthrow/
  */
-Modernizr.addTest('overflow', function(){
+
+Features.addTest('overflow', function(){
 	// Features-first. iOS5 overflow scrolling property check - no UA needed here. thanks Apple :)
 	return "WebkitOverflowScrolling" in document.documentElement.style ||
 	// Touch events aren't supported and screen width is greater than X
