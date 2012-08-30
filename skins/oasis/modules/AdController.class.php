@@ -84,6 +84,9 @@ class AdController extends WikiaController {
 						self::$config['TOP_RIGHT_BOXAD'] = true;
 						self::$config['TEST_TOP_RIGHT_BOXAD'] = true;
 						self::$config['TOP_BUTTON'] = true;
+						self::$config['LEFT_SKYSCRAPER_3'] = true;
+						self::$config['PREFOOTER_LEFT_BOXAD'] = true;
+						self::$config['PREFOOTER_RIGHT_BOXAD'] = true;
 					}
 				} else if($wgTitle->isSpecial('Leaderboard')) {
 					self::$config['TOP_LEADERBOARD'] = true;

@@ -9,5 +9,6 @@
 			echo wfRenderModule($callSpec[0], $callSpec[1], $callSpec[2]);
 		}
 	?>
+	<div id="WikiaAdInContentPlaceHolder"></div>
 
 </div>

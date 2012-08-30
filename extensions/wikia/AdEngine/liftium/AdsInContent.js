@@ -1,12 +1,11 @@
 // AdsInContent2 a.k.a. AIC2
 var AIC2 = {
+	$placeHolder    : $('#WikiaAdInContentPlaceHolder'),
 	fingerprint     : 'b',
 	called          : false,
 	startPosition   : 0,
 	stopPosition    : 0,
 	magicNumber     : 800,
-	WMCbaseWidth    : 680,
-	marginLeft      : 190,
 	isRightToLeft   : false,
 	visible         : false
 };
@@ -39,7 +38,7 @@ AIC2.init = function() {
 
 	if (AIC2.startPosition + AIC2.magicNumber < AIC2.stopPosition) {
 		Liftium.d("AIC2: page long enough", 7);
-		$('#WikiaRail').append('<div id="INCONTENT_BOXAD_1" class="noprint" style="height: 250px; width: 300px; position: relative;"><div id="Liftium_300x250_99"><iframe width="300" height="250" id="INCONTENT_BOXAD_1_iframe" class="" noresize="true" scrolling="no" frameborder="0" marginheight="0" marginwidth="0" style="border:none" target="_blank"></iframe></div></div><!-- END SLOTNAME: INCONTENT_BOXAD_1 -->');
+		AIC2.$placeHolder.append('<div id="INCONTENT_BOXAD_1" class="noprint" style="height: 250px; width: 300px; position: relative;"><div id="Liftium_300x250_99"><iframe width="300" height="250" id="INCONTENT_BOXAD_1_iframe" class="" noresize="true" scrolling="no" frameborder="0" marginheight="0" marginwidth="0" style="border:none" target="_blank"></iframe></div></div><!-- END SLOTNAME: INCONTENT_BOXAD_1 -->');
 		
 		//if (!AIC2.checkFooterAd()) {
 			$window.bind("scroll.AIC2", AIC2.onScroll);
@@ -53,14 +52,13 @@ AIC2.init = function() {
 
 AIC2.checkStartStopPosition = function() {
 	var startPosition, stopPosition, adHeight
-		, $rail = $('#WikiaRail')
 		, $footer = $('#WikiaFooter')
 		, $leftSkyScraper = $('#LEFT_SKYSCRAPER_3')
 		, $incontentBoxAd = $('#INCONTENT_BOXAD_1');
 
 	Liftium.d("AIC2: check start/stop position", 7);
 
-	if (!$rail.length) {
+	if (!AIC2.$placeHolder.length) {
 		Liftium.d("AIC2: no rail", 3);
 		WikiaTracker.trackAdEvent('liftium.varia', {'ga_category':'varia/AIC2', 'ga_action':'no rail'}, 'ga');
 		// No rail, no ads
@@ -69,7 +67,7 @@ AIC2.checkStartStopPosition = function() {
 
 	try {
 		adHeight = parseInt($incontentBoxAd.height(), 10) || 0;
-		startPosition = parseInt($rail.offset().top, 10) + parseInt($rail.height(), 10) - adHeight;
+		startPosition = parseInt(AIC2.$placeHolder.offset().top, 10);
 		stopPosition = parseInt($footer.offset().top, 10) - 10 - adHeight;
 
 		if ($leftSkyScraper.length && $leftSkyScraper.height() > 50) {
@@ -128,18 +126,10 @@ AIC2.onScroll = function() {
 				}
 				$('#INCONTENT_BOXAD_1').css({
 					'position': 'fixed',
-					'top': '10px',
-					'bottom': '',
-					'left': '50%',
-					'margin-left': AIC2.marginLeft + 'px'
+					'top': '10px'
 				});
-				if (AIC2.isRightToLeft) {
-					$('#INCONTENT_BOXAD_1').css({
-						'left': ''
-					});
-				}
 				$('#INCONTENT_BOXAD_1').css('visibility', 'visible');
-				
+
 				AIC2.visible = true;
 			//}
 		}
@@ -165,10 +155,7 @@ AIC2.glueAd = function() {
 		// bottom
 		$('#INCONTENT_BOXAD_1').css({
 			'position': 'relative',
-			'top': bigSpace + 'px',
-			'bottom': '',
-			'left': '',
-			'margin-left': ''
+			'top': bigSpace + 'px'
 		});
 	} else {
 		Liftium.d("AIC2: glue at the top", 7);
@@ -176,10 +163,7 @@ AIC2.glueAd = function() {
 		// top
 		$('#INCONTENT_BOXAD_1').css({
 			'position': 'relative',
-			'top': '10px',
-			'bottom': '',
-			'left': '',
-			'margin-left': ''
+			'top': '10px'
 		});
 	}
 
@@ -200,7 +184,8 @@ AIC2.checkFooterAd = function() {
 if (
 	window.top === window.self
 	&& window.wgEnableAdsInContent
-	&& window.wgIsContentNamespace && !window.wgIsMainpage
+	&& !window.wgIsMainpage
+	&& (window.wgIsContentNamespace || window.adLogicPageType === 'search')
 ) {
 	wgAfterContentAndJS.push(function() {
 		if (!AIC2.called) {
