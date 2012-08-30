@@ -14,6 +14,7 @@ define('modal', ['loader', 'track', 'events', 'ads'], function modal(loader, tra
 		content,
 		caption,
 		wrapper,
+		closeButton,
 		topBar,
 		position,
 		onClose,
@@ -27,44 +28,44 @@ define('modal', ['loader', 'track', 'events', 'ads'], function modal(loader, tra
 		topBar = d.getElementById('wkMdlTB');
 		toolbar = d.getElementById('wkMdlTlBar');
 		caption = d.getElementById('wkMdlFtr');
+		closeButton = d.getElementById('wkMdlClo');
 
 		//TODO: create better resolution 'finder'
-		var deviceWidth = ($.os.ios) ? 268 : w.innerWidth,
-			deviceHeight = ($.os.ios) ? 416 : w.innerHeight;
-
-		//close modal on back button
-		d.getElementById('wkMdlClo').addEventListener('click', function(ev){
-			ev.stopPropagation();
-			ev.preventDefault();
-			w.history.back();
-			//in case browser doesn't care about history (:)) call close on click anyway
-			close();
-		});
-
-		w.addEventListener('hashchange', function(ev) {
-			if(isOpen() && w.location.hash == ''){
-				ev.preventDefault();
-				close();
-			}
-		});
-
-		content.addEventListener('click', function(){
-			if(!stopHiding){
-				if(wrapper.className.indexOf('hdn') > -1){
-					showUI();
-				}else{
-					hideUI();
-				}
-			}
-		});
-
-		//hide adress bar on orientation change
-		w.addEventListener('orientationchange', function() {
-			!w.pageYOffset && w.scrollTo(0, 1);
-		});
+		var ios = $.os.ios,
+			deviceWidth = (ios) ? 268 : w.innerWidth,
+			deviceHeight = (ios) ? 416 : w.innerHeight;
 
 		d.head.insertAdjacentHTML('beforeend', '<style>#wkMdlWrp{min-height: ' + deviceHeight + 'px}@media only screen and (orientation:landscape) and (min-width: 321px){#wkMdlWrp{min-height:' + deviceWidth + 'px;}}</style>');
 		created = true;
+	}
+
+	function onContentClick(){
+		if(!stopHiding){
+			if(wrapper.className.indexOf('hdn') > -1){
+				showUI();
+			}else{
+				hideUI();
+			}
+		}
+	}
+
+	function onCloseClick(ev){
+		ev.stopPropagation();
+		ev.preventDefault();
+		w.history.back();
+		//in case browser doesn't care about history (:)) call close on click anyway
+		close();
+	}
+
+	function onHashChange(ev){
+		if(isOpen() && w.location.hash == ''){
+			ev.preventDefault();
+			close();
+		}
+	}
+
+	function onOrientationChange(){
+		!w.pageYOffset && w.scrollTo(0, 1);
 	}
 
 	function hideUI(){
@@ -125,6 +126,18 @@ define('modal', ['loader', 'track', 'events', 'ads'], function modal(loader, tra
 		setToolbar(tool);
 		setCaption(cap);
 
+		//hide adress bar on orientation change
+		w.addEventListener('orientationchange', onOrientationChange);
+
+		//handle close on back button
+		w.addEventListener('hashchange', onHashChange);
+
+		//close modal on back button
+		closeButton.addEventListener('click', onCloseClick);
+
+		//handle hiding ui of modal on click
+		content.addEventListener('click', onContentClick);
+
 		track('modal/open');
 		opened = true;
 	}
@@ -146,11 +159,16 @@ define('modal', ['loader', 'track', 'events', 'ads'], function modal(loader, tra
 			track('modal/close');
 			opened = false;
 
-			//remove event listner since it is not needed outside modal
+			//remove event listners since they are not needed outside modal
 			if(!positionfixed){
 				w.removeEventListener('scroll', fixTopBar);
 				topBar.style.top = '';
 			}
+
+			w.removeEventListener('orientationchange', onOrientationChange);
+			w.removeEventListener('hashchange', onHashChange);
+			closeButton.removeEventListener('click', onCloseClick);
+			content.removeEventListener('click', onContentClick);
 
 			//scroll to where user was before
 			//in setTimout because ios4.x has to do this after everything has to do now
