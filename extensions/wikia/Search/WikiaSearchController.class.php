@@ -1,6 +1,6 @@
 <?php
-
 class WikiaSearchController extends WikiaSpecialPageController {
+
 
 	const RESULTS_PER_PAGE = 25;
 	const PAGES_PER_WINDOW = 5;
@@ -126,6 +126,8 @@ class WikiaSearchController extends WikiaSpecialPageController {
 							'groupResults'=>$isInterWiki,
 							'rank'=>$rank,
 							'hub'=>$hub);
+			
+			$params['videoSearch'] = $this->getVal('videoSearch', false);
 
 			$results = $this->wikiaSearch->doSearch( $query, $params );
 
@@ -475,4 +477,21 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		return true;
 	}
 
+	public function videoSearch()
+	{
+		$query = $this->getVal('q');
+		$results = $this->wikiaSearch->searchVideos($query);
+		
+		// up to whoever's using this service as to what they want from here. I'm just going to return JSON.
+		// if you just want to search for only videos in the traditional video interface, then you should 
+		// be setting 'videoSearch' in the query string of the search index page
+		$processedResultArray = array();
+		foreach ($results as $result) {
+			$processedResultArray[] = (array) $result;
+		}
+		
+		echo json_encode($result);
+		
+	}
+	
 }
