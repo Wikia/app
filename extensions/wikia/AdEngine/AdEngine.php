@@ -226,6 +226,11 @@ class AdEngine {
 		wfProfileOut(__METHOD__);
 	}
 
+	/**
+	 * @static
+	 * @param null $slots
+	 * @return AdEngine instance
+	 */
 	public static function getInstance($slots = null) {
 		wfProfileIn(__METHOD__);
 
@@ -234,7 +239,6 @@ class AdEngine {
 		}
 
 		wfProfileOut(__METHOD__);
-
 		return self::$instance;
 	}
 
