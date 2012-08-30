@@ -375,7 +375,7 @@ class WikiaSearch extends WikiaObject {
 	{
 		$this->namespaces = array(NS_FILE);
 		$methodParams['videoSearch'] = true;
-		
+
 		return $this->doSearch($query, $methodParams);
 	}
 
