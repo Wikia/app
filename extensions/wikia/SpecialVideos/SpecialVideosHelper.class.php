@@ -35,28 +35,49 @@ class SpecialVideosHelper extends WikiaModel {
 	public function getVideos( $sort ) {
 		$this->wf->ProfileIn( __METHOD__ );
 
-		$mediaService = F::build( 'MediaQueryService' );
-		if ( $sort == 'premium' ) {
-			$videoList = $mediaService->getVideoList( true );
-			$sort = 'recent';
-		} else {
-			$videoList = $mediaService->getVideoList();
-		}
-
-		$videos = array();
-		foreach ( $videoList as $video ) {
-			$videoDetail = $this->getVideoDetail( $video['name'] );
-			if ( !empty($videoDetail) ) {
-				$videos[] = $videoDetail;
+		$memKey = $this->getMemKeySortedVideos( $sort );
+		$videos = $this->wg->Memc->get( $memKey );
+		if ( !is_array($videos) ) {
+			$mediaService = F::build( 'MediaQueryService' );
+			if ( $sort == 'premium' ) {
+				$videoList = $mediaService->getVideoList( true );
+				$sort = 'recent';
+			} else {
+				$videoList = $mediaService->getVideoList();
 			}
-		}
 
-		// sort video list
-		$this->sortVideoList( $videos, $sort );
+			$videos = array();
+			foreach ( $videoList as $video ) {
+				$videoDetail = $this->getVideoDetail( $video['name'] );
+				if ( !empty($videoDetail) ) {
+					$videos[] = $videoDetail;
+				}
+			}
+
+			// sort video list
+			$this->sortVideoList( $videos, $sort );
+
+			$this->wg->Memc->set( $memKey, $videos, 60*60*2 );
+		}
 
 		$this->wf->ProfileOut( __METHOD__ );
 
 		return $videos;
+	}
+
+	protected function getMemKeySortedVideos( $sort ) {
+		return $this->wf->MemcKey( 'videos', 'sorted_videos', $sort );
+	}
+
+	public function clearCacheSortedVideos() {
+		$sortingOptions = array_keys( $this->getSortingOptions() );
+		foreach( $sortingOptions as $option ) {
+			$this->wg->Memc->delete( $this->getMemKeySortedVideos( $option ) );
+		}
+	}
+
+	public function clearCacheSortedPremiumVideos() {
+		$this->wg->Memc->delete( $this->getMemKeySortedVideos( 'premium' ) );
 	}
 
 	/**
