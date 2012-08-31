@@ -36,7 +36,13 @@ class SpecialEditTopList extends SpecialPage {
 			throw new UserBlockedError( $wgUser->getBlock() );
 		}
 
-		if( !$this->userCanExecute( $wgUser )  || !( F::app()->checkSkin( 'oasis' ) ) ) {
+		if ( !( F::app()->checkSkin( 'oasis' ) ) ) {
+			$this->getOutput()->showErrorPage( 'error', 'toplists-oasis-only' );
+			wfProfileOut( __METHOD__ );
+			return;
+		}
+
+		if( !$this->userCanExecute( $wgUser ) ) {
 			$this->displayRestrictionError();
 			wfProfileOut( __METHOD__ );
 			return;
