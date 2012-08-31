@@ -12,8 +12,6 @@ class WikiaBarController extends WikiaController {
 
 	function executeIndex($params) {
 		$this->wf->profileIn(__METHOD__);
-		$this->response->addAsset('skins/oasis/css/modules/WikiaBar.scss');
-		$this->response->addAsset('skins/oasis/js/WikiaBar.js');
 
 		$lang = !empty($params['lang']) ? $params['lang'] : self::DEFAULT_LANG_CODE;
 		//$vertical = !empty($params['vertical'])? $params['vertical'] : WikiFactoryHub::CATEGORY_ID_LIFESTYLE;
