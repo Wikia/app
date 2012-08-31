@@ -12,7 +12,7 @@ class SpecialCreateTopList extends SpecialPage {
 
 		wfProfileIn( __METHOD__ );
 
-		global $wgExtensionsPath, $wgStylePath , $wgJsMimeType, $wgSupressPageSubtitle, $wgRequest, $wgOut, $wgUser;
+		global $wgExtensionsPath, $wgStylePath, $wgJsMimeType, $wgSupressPageSubtitle, $wgRequest, $wgOut, $wgUser;
 
 		// set basic headers
 		$this->setHeaders();
@@ -51,7 +51,7 @@ class SpecialCreateTopList extends SpecialPage {
 		$errors = array();
 		$listName = null;
 		$relatedArticleName = null;
-        $description = null;
+		$description = null;
 		$selectedPictureName = null;
 		$selectedImage = null;
 		$imageTitle = null;
@@ -62,7 +62,7 @@ class SpecialCreateTopList extends SpecialPage {
 			$listName = $wgRequest->getText( 'list_name' );
 			$relatedArticleName = $wgRequest->getText( 'related_article_name' );
 			$selectedPictureName = $wgRequest->getText( 'selected_picture_name' );
-            $description = $wgRequest->getText( 'description' );
+			$description = $wgRequest->getText( 'description' );
 			$itemsNames = array_filter(
 				$wgRequest->getArray( 'items_names', array() ),
 				'purgeInput'
@@ -130,9 +130,9 @@ class SpecialCreateTopList extends SpecialPage {
 					}
 				}
 
-                if ( !empty( $description ) ) {
-                    $list->setDescription( $description );
-                }
+				if ( !empty( $description ) ) {
+					$list->setDescription( $description );
+				}
 
 				$checkResult = $list->checkForProcessing( TOPLISTS_SAVE_CREATE );
 
@@ -245,7 +245,7 @@ class SpecialCreateTopList extends SpecialPage {
 			'mode' => 'create',
 			'listName' => $listName,
 			'relatedArticleName' => $relatedArticleName,
-            'description' => $description,
+			'description' => $description,
 			'selectedImage' => $selectedImage,
 			'errors' => $errors,
 			//always add an empty item at the beginning to create the clonable template
