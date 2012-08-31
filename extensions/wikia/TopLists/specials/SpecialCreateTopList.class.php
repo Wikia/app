@@ -12,7 +12,7 @@ class SpecialCreateTopList extends SpecialPage {
 
 		wfProfileIn( __METHOD__ );
 
-		global $wgExtensionsPath, $wgStylePath, $wgJsMimeType, $wgSupressPageSubtitle, $wgRequest, $wgOut, $wgUser;
+		global $wgExtensionsPath, $wgJsMimeType, $wgSupressPageSubtitle, $wgRequest, $wgOut, $wgUser;
 
 		// set basic headers
 		$this->setHeaders();
@@ -25,6 +25,7 @@ class SpecialCreateTopList extends SpecialPage {
 
 		//Check blocks
 		if( $wgUser->isBlocked() ) {
+			wfProfileOut( __METHOD__ );
 			throw new UserBlockedError( $wgUser->getBlock() );
 		}
 
@@ -36,6 +37,7 @@ class SpecialCreateTopList extends SpecialPage {
 
 		if ( !$this->userCanExecute( $wgUser ) ) {
 			$this->displayRestrictionError();
+			wfProfileOut( __METHOD__ );
 			return;
 		}
 
