@@ -18,11 +18,11 @@
 		<fieldset>
 			<label><input type="checkbox" name="crossWikia" value="1" <?= ( $isInterWiki ? 'checked' : '' ); ?>/> <?= wfMsg( 'wikiasearch2-search-all-wikia' ); ?></label>
 			<label><input type="checkbox" name="debug" value="1" <?= ( $debug ? 'checked' : '' ); ?>/> Debug mode</label>
-
-			<?php if($isInterWiki) : ?>
-				<?php echo $app->renderView('WikiaSearchController', 'boostSettings'); ?>
-		    <?php endif; ?>
 		</fieldset>
+		<?php endif; ?>
+		<?php if ($debug): ?>
+			<br/>
+			<i>Query Time: <?=$results->getQueryTime();?></i>
 		<?php endif; ?>
 
 		<?php if(!empty($advancedSearchBox)) : ?>
@@ -64,7 +64,6 @@
 						|
 						<a href="<?=preg_replace('/&hub=[^&]+/', '', $_SERVER['REQUEST_URI'])?>"><?= wfMsg('wikiasearch2-search-all-wikia') ?></a>
 					<?php endif ?>
-	
 				</p>
 	
 				<? if ($results->getQuery() && $query != $results->getQuery()) : ?>

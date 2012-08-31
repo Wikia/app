@@ -27,10 +27,10 @@ class WikiaSolrClient extends WikiaSearchClient {
 
 	private static $multiValuedFields = array('categories', 'redirect_titles', 'headings');
 
+	//@TODO determine what fields are needed in production and what in debug,
+	// 		only add fields only needed in debug when debug invoked
 	private static $requestedFields = array('id',
 											'wikiarticles',
-											'bytes',
-											'words',
 											'wikititle',
 											'wikipages',
 											'pageid',
@@ -46,6 +46,8 @@ class WikiaSolrClient extends WikiaSearchClient {
 											'title',
 											'score',
 											'created',
+											'views',
+											'categories',
 											);
 
 	const DEFAULT_RESULTSET_START = 0;
@@ -137,7 +139,7 @@ class WikiaSolrClient extends WikiaSearchClient {
 
 		$boostFunctions = array();
 
-		$queryFields = array('html'=>1.5, 'title'=>5, 'redirect_titles'=>4);
+		$queryFields = array('html'=>1.5, 'title'=>5, 'redirect_titles'=>4, 'categories'=>1);
 
 		if( $this->isInterWiki ) {
 			$queryClauses += $this->getInterWikiQueryClauses($hub);
@@ -187,7 +189,9 @@ class WikiaSolrClient extends WikiaSearchClient {
 			}
 		  
 			$queryClauses[] = "({$nsQuery})";
-
+			
+			$boostFunctions = array('log(views)^0.66', 'log(backlinks)');
+			
 			array_unshift($queryClauses, "wid:{$onWikiId}");
 		}
 
@@ -211,7 +215,7 @@ class WikiaSolrClient extends WikiaSearchClient {
 		if (!empty($boostFunctions) && !$skipBoostFunctions) {
 			$dismaxParams['bf'] = sprintf("'%s'", implode(' ', $boostFunctions));
 		}
-
+		
 		array_walk($dismaxParams, function($val,$key) use (&$paramString) {$paramString .= "{$key}={$val} "; });
 
 		$subQuery = sprintf('_query_:"{!edismax %s}%s"',
@@ -314,7 +318,8 @@ class WikiaSolrClient extends WikiaSearchClient {
 				 array( 'results'      => $results, 
 						'resultsFound' => $numFound,
 						'resultsStart' => $start,
-						'query'        => $this->query 
+						'query'        => $this->query,
+				 		'queryTime'	   => $response->responseHeader->QTime, 
 					  ) 
 				 );
 	}
@@ -368,6 +373,7 @@ class WikiaSolrClient extends WikiaSearchClient {
 										   'resultsFound' => $groupedSolrDoc->doclist->numFound,
 										   'resultsStart' => 0,
 										   'query'        => $this->query,
+										   'queryTime'	  => 0,
 										   'score'		  => $groupedSolrDoc->doclist->maxScore
 										 ) 
 								  );
@@ -398,7 +404,7 @@ class WikiaSolrClient extends WikiaSearchClient {
 			extract($articleMatch);
 			$title = $article->getTitle();
 			if (in_array($title->getNamespace(), $this->namespaces)) {
-			  $articleMatchId = 'c'.$wgCityId.'p'.$article->getID();
+			  $articleMatchId = $wgCityId.'_'.$article->getID();
 			  $result = F::build( 'WikiaSearchResult', array( 'id' => $articleMatchId) );
 			  $articleService = new ArticleService($article->getID());
 			  $result->setCityId($wgCityId);
@@ -407,6 +413,7 @@ class WikiaSolrClient extends WikiaSearchClient {
 			  $result->setUrl(urldecode($title->getFullUrl()));
 			  $result->score = '100%';
 			  $result->setVar('position', $position);
+			  $result->setVar('score', 'PTT');
 			  $result->setVar('isArticleMatch', true);
 			  $result->setVar('ns', $title->getNamespace());
 			  $result->setVar('pageId', $article->getID());
@@ -446,12 +453,11 @@ class WikiaSolrClient extends WikiaSearchClient {
 	{
 			global $wgLang;
 
-			$id = 'c'.$doc->wid.'p'.$doc->pageid;
-			if ($this->articleMatchId == $id) {
+			if ($this->articleMatchId == $doc->id) {
 			  return false;
 			}
 
-			$result = F::build( 'WikiaSearchResult', array( 'id' => $id ) );
+			$result = F::build( 'WikiaSearchResult', array( 'id' => $doc->id ) );
 			$result->setCityId($doc->wid);
 
 			$titleKey = self::field('title');
@@ -466,6 +472,8 @@ class WikiaSolrClient extends WikiaSearchClient {
 			$result->setScore(($doc->score) ?: 0);
 			$result->setVar('ns', $doc->ns);
 			$result->setVar('pageId', $doc->pageid);
+			$result->setVar('score', sprintf('%.4f', $doc->score));
+			$result->setVar('views', $doc->views);
 
 			$result->setVar('indexed', $doc->indexed);
 
@@ -480,7 +488,11 @@ class WikiaSolrClient extends WikiaSearchClient {
 			if(!empty($doc->canonical)) {
 				$result->setCanonical($doc->canonical);
 			}
-
+			$cats = self::field('categories');
+			if (isset($doc->{$cats})) {
+				$resultCategories = is_array($doc->{$cats}) ? $doc->{$cats} : array($doc->{$cats});
+			}
+			$result->setVar('categories', empty($doc->{$cats}) ? array("NONE") : $resultCategories);
 			$result->setVar('backlinks', $doc->backlinks);
 			$result->setVar('cityArticlesNum', $doc->wikiarticles);
 			$result->setVar('position', $position);

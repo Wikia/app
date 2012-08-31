@@ -8,16 +8,18 @@ class WikiaSearchResultSet implements Iterator {
 	protected $header = null;
 	protected $results = array();
 	protected $query;
+	protected $queryTime = 0;
 
 	public $totalScore;
-	public $score = 0;
 
-	public function __construct(Array $results = array(), $resultsFound = 0, $resultsStart = 0, $query = null) {
+	public function __construct(Array $results = array(), $resultsFound = 0, $resultsStart = 0, $query = null, $queryTime=0, $score = 0) {
 		$this->setResults($results);
 		# the max is for if no results found, but we have results (e.g. push to top)
 		$this->setResultsFound(max(array(count($results), $resultsFound)));
 		$this->setResultsStart($resultsStart);
 		$this->setQuery($query);
+		$this->setQueryTime($queryTime);
+		$this->totalScore = $score;
 	}
 
 	/**
@@ -123,6 +125,14 @@ class WikiaSearchResultSet implements Iterator {
 
 	public function setQuery($query) {
 		$this->query = $query;
+	}
+	
+	public function getQueryTime() {
+		return $this->queryTime;
+	}
+	
+	public function setQueryTime($val) {
+		$this->queryTime = $val;
 	}
 
 	/**
