@@ -21,8 +21,8 @@
 @import 'image_placeholder';
 
 //mixins
-@import "mixins/transition";
-@import "mixins/box-shadow";
+@import "mixins/transition.scss";
+@import "mixins/box-shadow.scss";
 
 html {
 	border: none;
@@ -172,7 +172,6 @@ blockquote {
 }
 
 .wkShr {
-    z-index: 5;
 	display: none;
 	position: relative;
 	width: 50px;
@@ -184,6 +183,7 @@ blockquote {
 	background-size: 50%;
 
 	&.on {
+		z-index: 5;
 		background-image:  url('/extensions/wikia/WikiaMobile/images/share_blue.png'); /* base64 */
 
 		&::before {

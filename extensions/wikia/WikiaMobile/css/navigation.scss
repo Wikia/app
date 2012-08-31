@@ -83,7 +83,6 @@
 
 #wkTopNav {
 	position: relative;
-	z-index: $highest-z-index+1;
 	height: 40px;
 	background-color: white;
 	-webkit-tap-highlight-color: rgba( 0,0,0,0 );
@@ -91,6 +90,7 @@
 	@include box-shadow(0 0 5px black);
 
 	&.fllNav {
+		z-index: $highest-z-index+1;
 		background-color: white;
 
 		#wkTopBar{
@@ -106,6 +106,8 @@
 	}
 
 	&.prf {
+		z-index: $highest-z-index+1;
+
 		#wkTopBar{
 			border-bottom: 1px solid white;
 		}
