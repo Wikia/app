@@ -593,7 +593,7 @@ class CityVisualization extends WikiaModel {
 
 			$imageIndex = 0;
 			$matches = array();
-			if (preg_match('/Wikia-Visualization-Add-([0-9])\.jpg/', $image, $matches)) {
+			if (preg_match('/Wikia-Visualization-Add-([0-9])\.png/', $image, $matches)) {
 				$imageIndex = intval($matches[1]);
 			}
 
