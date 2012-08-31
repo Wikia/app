@@ -1,11 +1,6 @@
 package com.wikia.webdriver.TestCases;
 
-
-
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.WebDriver;
 import org.testng.annotations.Test;
-
 import com.wikia.webdriver.Common.Core.CommonFunctions;
 import com.wikia.webdriver.Common.Properties.Properties;
 import com.wikia.webdriver.Common.Templates.TestTemplate_Two_Drivers;
@@ -14,9 +9,6 @@ import com.wikia.webdriver.PageObjects.PageObject.ChatPageObject.ChatPageObject;
 
 public class ChatTests extends TestTemplate_Two_Drivers{
 
-	
-	
-	
 	/*
 	 *  Test 1: One user opens chat
 
@@ -47,6 +39,7 @@ public class ChatTests extends TestTemplate_Two_Drivers{
 	public void Chat_001_two_users_open_chat()
 	{
 		//first user opens the chat
+		switchToWindow(driver);
 		HomePageObject home = new HomePageObject(driver);
 		CommonFunctions.logOut(Properties.userName, driver);
 		home.openHomePage();
@@ -54,7 +47,8 @@ public class ChatTests extends TestTemplate_Two_Drivers{
 		ChatPageObject chat1 = new ChatPageObject(driver);
 		chat1.openChatPage();
 		chat1.verifyChatPage();
-		//second user opens the chat		
+		//second user opens the chat
+		switchToWindow(driver2);
 		HomePageObject home2 = new HomePageObject(driver2);
 		CommonFunctions.logOut(Properties.userName, driver2);
 		home2.openHomePage();
@@ -63,6 +57,7 @@ public class ChatTests extends TestTemplate_Two_Drivers{
 		chat2.openChatPage();
 		chat2.verifyChatPage();
 		//Test	
+		switchToWindow(driver);
 		chat1.verifyUserJoinToChat(Properties.userName2);		
 	}
 	
@@ -77,18 +72,21 @@ public class ChatTests extends TestTemplate_Two_Drivers{
 	public void Chat_002_changes_in_drop_down_menu_1()
 	{
 		//first user opens the chat
+		switchToWindow(driver);
 		HomePageObject home = new HomePageObject(driver);
 		CommonFunctions.logOut(Properties.userName, driver);
 		home.openHomePage();
 		CommonFunctions.logIn(Properties.userName, Properties.password, driver);
 		ChatPageObject chat1 = new ChatPageObject(driver);
 		//second user opens the chat		
+		switchToWindow(driver2);
 		HomePageObject home2 = new HomePageObject(driver2);
 		CommonFunctions.logOut(Properties.userName, driver2);
 		home2.openHomePage();
 		CommonFunctions.logIn(Properties.userName2, Properties.password2, driver2);
 		ChatPageObject chat2 = new ChatPageObject(driver2);
 		chat2.openChatPage();
+		switchToWindow(driver);
 		chat1.openChatPage();
 		//Test	
 		chat1.verifyChatPage();
@@ -108,18 +106,21 @@ public class ChatTests extends TestTemplate_Two_Drivers{
 	public void Chat_003_changes_in_drop_down_menu_2()
 	{
 		//first user opens the chat
+		switchToWindow(driver);
 		HomePageObject home = new HomePageObject(driver);
 		CommonFunctions.logOut(Properties.userName, driver);
 		home.openHomePage();
 		CommonFunctions.logIn(Properties.userName, Properties.password, driver);
 		ChatPageObject chat1 = new ChatPageObject(driver);
 		//second user opens the chat		
+		switchToWindow(driver2);
 		HomePageObject home2 = new HomePageObject(driver2);
 		CommonFunctions.logOut(Properties.userName, driver2);
 		home2.openHomePage();
 		CommonFunctions.logIn(Properties.userName2, Properties.password2, driver2);
 		ChatPageObject chat2 = new ChatPageObject(driver2);
 		chat2.openChatPage();
+		switchToWindow(driver);
 		chat1.openChatPage();
 		//Test
 		chat1.verifyChatPage();
@@ -144,18 +145,21 @@ public class ChatTests extends TestTemplate_Two_Drivers{
 	public void Chat_004_changes_in_drop_down_menu_staff()
 	{
 		//first user opens the chat
+		switchToWindow(driver);
 		HomePageObject home = new HomePageObject(driver);
 		CommonFunctions.logOut(Properties.userName, driver);
 		home.openHomePage();
 		CommonFunctions.logIn(Properties.userNameStaff, Properties.passwordStaff, driver);
 		ChatPageObject chat1 = new ChatPageObject(driver);
-		//second user opens the chat		
+		//second user opens the chat	
+		switchToWindow(driver2);
 		HomePageObject home2 = new HomePageObject(driver2);
 		CommonFunctions.logOut(Properties.userName, driver2);
 		home2.openHomePage();
 		CommonFunctions.logIn(Properties.userName2, Properties.password2, driver2);
 		ChatPageObject chat2 = new ChatPageObject(driver2);
 		chat2.openChatPage();
+		switchToWindow(driver);
 		chat1.openChatPage();
 		//Test
 		chat1.verifyChatPage();
@@ -190,18 +194,21 @@ public class ChatTests extends TestTemplate_Two_Drivers{
 	public void Chat_005_private_chat_validation()
 	{
 		//first user opens the chat
+		switchToWindow(driver);
 		HomePageObject home = new HomePageObject(driver);
 		CommonFunctions.logOut(Properties.userName, driver);
 		home.openHomePage();
 		CommonFunctions.logIn(Properties.userName, Properties.password, driver);
 		ChatPageObject chat1 = new ChatPageObject(driver);
 		//second user opens the chat		
+		switchToWindow(driver2);
 		HomePageObject home2 = new HomePageObject(driver2);
 		CommonFunctions.logOut(Properties.userName, driver2);
 		home2.openHomePage();
 		CommonFunctions.logIn(Properties.userName2, Properties.password2, driver2);
 		ChatPageObject chat2 = new ChatPageObject(driver2);
 		chat2.openChatPage();
+		switchToWindow(driver);
 		chat1.openChatPage();
 		//Test
 		chat1.verifyChatPage();
@@ -229,21 +236,26 @@ public class ChatTests extends TestTemplate_Two_Drivers{
 	public void Chat_006_private_chat_validation()
 	{
 		//first user opens the chat
+		switchToWindow(driver);
 		HomePageObject home = new HomePageObject(driver);
 		CommonFunctions.logOut(Properties.userName, driver);
 		home.openHomePage();
 		CommonFunctions.logIn(Properties.userName, Properties.password, driver);
 		ChatPageObject chat1 = new ChatPageObject(driver);
-		//second user opens the chat		
+		//second user opens the chat	
+		switchToWindow(driver2);
 		HomePageObject home2 = new HomePageObject(driver2);
 		CommonFunctions.logOut(Properties.userName, driver2);
 		home2.openHomePage();
 		CommonFunctions.logIn(Properties.userName2, Properties.password2, driver2);
 		ChatPageObject chat2 = new ChatPageObject(driver2);
 		chat2.openChatPage();
+		switchToWindow(driver);
 		chat1.openChatPage();
 		//test
+		switchToWindow(driver2);
 		chat2.writeOnChat("Hello this is user "+Properties.userName2);
+		switchToWindow(driver);
 		chat1.verifyMessageOnChat("Hello this is user "+Properties.userName2);
 		chat1.clickOnDifferentUser(Properties.userName2, driver);
 		chat1.selectPrivateMessage(driver);
@@ -298,12 +310,126 @@ public class ChatTests extends TestTemplate_Two_Drivers{
 		chat1.clickOnPrivateChat(Properties.userName2, driver);
 		chat1.verifyMessageOnChat("This is private message from "+Properties.userName2);
 	}
-
-	private void switchToWindow(WebDriver maximized)
+	
+	/*
+	 *  Test 10: Notifications
+    1. There are two users in the chat room: user A and user B.
+    2. User B opens private chat room with user A.
+    3. New room is opened for user B. User A doesn't notice anything yet.
+    4. User B types and sends string 'abc' in the private chat with user A window.
+    5. Private chat with user B appears in user A's userlist area with red dot with number of unread messages (1).
+    6. User B types and sends another two strings: 'def' and 'ghi'.
+    7. User A notices that red dot counter is now with number 3 on it.
+    8. User A clicks on private chat with user B item from his userlist area and red dot is gone.  
+	 */
+	@Test
+	public void Chat_008_notifications()
 	{
-		Dimension min = new Dimension(10,10);
-		driver.manage().window().setSize(min);
-		driver2.manage().window().setSize(min);
-		maximized.manage().window().maximize();
+		//first user opens the chat
+		switchToWindow(driver);
+		HomePageObject home = new HomePageObject(driver);
+		CommonFunctions.logOut(Properties.userName, driver);
+		home.openHomePage();
+		CommonFunctions.logIn(Properties.userName, Properties.password, driver);
+		ChatPageObject chat1 = new ChatPageObject(driver);
+		//second user opens the chat		
+		switchToWindow(driver2);
+		HomePageObject home2 = new HomePageObject(driver2);
+		CommonFunctions.logOut(Properties.userName, driver2);
+		home2.openHomePage();
+		CommonFunctions.logIn(Properties.userName2, Properties.password2, driver2);
+		ChatPageObject chat2 = new ChatPageObject(driver2);
+		chat2.openChatPage();
+		switchToWindow(driver);
+		chat1.openChatPage();
+		//test
+		switchToWindow(driver2);
+		chat2.verifyUserJoinToChat(Properties.userName);
+		chat2.verifyUserIsVisibleOnContactsList(Properties.userName);
+		chat1.verifyUserIsVisibleOnContactsList(Properties.userName2);
+		chat2.writeOnChat("test message");
+		chat1.verifyMessageOnChat("test message");
+		chat2.clickOnDifferentUser(Properties.userName, driver2);
+		chat2.selectPrivateMessage(driver2);
+		chat2.writeOnChat("This is private message from "+Properties.userName2);
+		switchToWindow(driver);
+		chat1.verifyPrivateMessageHeader();
+		chat1.verifyPrivateMessageNotification(1);
+		chat2.writeOnChat("This is private message from "+Properties.userName2);
+		chat1.verifyPrivateMessageNotification(2);
+		chat2.writeOnChat("This is private message from "+Properties.userName2);
+		chat1.verifyPrivateMessageNotification(3);
+		chat2.writeOnChat("This is private message from "+Properties.userName2);
+		chat1.verifyPrivateMessageNotification(4);
+		chat2.writeOnChat("This is private message from "+Properties.userName2);
+		chat1.verifyPrivateMessageNotification(5);
+		chat2.writeOnChat("This is private message from "+Properties.userName2);
+		chat1.verifyPrivateMessageNotification(6);
+		chat2.writeOnChat("This is private message from "+Properties.userName2);
+		chat1.verifyPrivateMessageNotification(7);
+		chat2.writeOnChat("This is private message from "+Properties.userName2);
+		chat1.verifyPrivateMessageNotification(8);
+		chat2.writeOnChat("This is private message from "+Properties.userName2);
+		chat1.verifyPrivateMessageNotification(9);
+
+	}
+	
+	/*
+	 *  Test 12: Disconnections
+    1. There are two users in the chat room: user A and user B.
+    2. User B opens private chat room with user A.
+    3. User B sends few messages.
+    4. User A opens private chat with user B and sends few messages too.
+    5. User B closes the chat window and logs out.
+    6. User A still have the private chat window with user B opened but he notices user B has status "Offline" and is grayed out.
+    7. User A can not type and send anything in the private chat window with user B. The entry field in that room grays out.
+    8. After awhile user B comes back and user A is still there. User B's "Offline" status is gone and both of them can chat again in the private room. 
+	 */
+	
+	@Test
+	public void Chat_010_disconnections()
+	{
+		//first user opens the chat
+		switchToWindow(driver);
+		HomePageObject home = new HomePageObject(driver);
+		CommonFunctions.logOut(Properties.userName, driver);
+		home.openHomePage();
+		CommonFunctions.logIn(Properties.userName, Properties.password, driver);
+		ChatPageObject chat1 = new ChatPageObject(driver);
+		//second user opens the chat		
+		switchToWindow(driver2);
+		HomePageObject home2 = new HomePageObject(driver2);
+		CommonFunctions.logOut(Properties.userName, driver2);
+		home2.openHomePage();
+		CommonFunctions.logIn(Properties.userName2, Properties.password2, driver2);
+		ChatPageObject chat2 = new ChatPageObject(driver2);
+		chat2.openChatPage();
+		switchToWindow(driver);
+		chat1.openChatPage();
+		//test
+		switchToWindow(driver2);
+		chat2.verifyUserJoinToChat(Properties.userName);
+		chat2.verifyUserIsVisibleOnContactsList(Properties.userName);
+		chat1.verifyUserIsVisibleOnContactsList(Properties.userName2);
+		chat2.writeOnChat("test message");
+		chat1.verifyMessageOnChat("test message");
+		chat2.clickOnDifferentUser(Properties.userName, driver2);
+		chat2.selectPrivateMessage(driver2);
+		chat2.writeOnChat("This is private message from "+Properties.userName2);
+		switchToWindow(driver);
+		chat1.verifyPrivateMessageHeader();
+		chat1.verifyPrivateMessageNotification(1);
+		chat2.writeOnChat("This is private message from "+Properties.userName2);
+		chat1.verifyPrivateMessageNotification(2);
+		chat2.writeOnChat("This is private message from "+Properties.userName2);
+		chat1.verifyPrivateMessageNotification(3);
+		chat1.clickOnPrivateChat(Properties.userName2, driver);
+		switchToWindow(driver2);
+		chat2.disconnectFromChat();
+		switchToWindow(driver);
+		chat1.verifyUserIsGreyedOut();
+		chat1.verifyWritingAreaIsBlocked();	
+		chat1.clickOnMainChat(driver);
+		chat1.verifyUserLeftFromChatMessage(Properties.userName2);
 	}
 }
