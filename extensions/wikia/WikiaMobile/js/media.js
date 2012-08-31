@@ -305,7 +305,7 @@ define('media', ['modal', 'loader', 'querystring', 'popover', 'track', 'events',
 						method: 'getEmbedCode',
 						data: {
 							articleId: wgArticleId,
-							title: imgTitle,
+							fileTitle: imgTitle,
 							width: window.innerWidth - 100
 						},
 						callback: function(data) {
