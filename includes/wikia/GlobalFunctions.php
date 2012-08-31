@@ -689,10 +689,13 @@ function getMenu() {
 
 function getMenuHelper($name, $limit = 7) {
 	global $wgMemc;
+	wfProfileIn(__METHOD__);
+
 	$key = wfMemcKey('popular-art');
 	$data = $wgMemc->get($key);
 
 	if(!empty($data) && isset($data[$name])) {
+		wfProfileOut(__METHOD__);
 		return $data[$name];
 	}
 
@@ -717,6 +720,8 @@ function getMenuHelper($name, $limit = 7) {
 	}
 	$data[$name] = $result;
 	$wgMemc->set($key, $data, 60 * 60 * 6);
+
+	wfProfileOut(__METHOD__);
 	return $result;
 }
 
