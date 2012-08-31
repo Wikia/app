@@ -358,9 +358,11 @@ public class CommonFunctions
 		int ScreenHeightWithoutTaskBarHeight = maxBounds.height;
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		Object visibleDomHeightJS = js.executeScript("return window.innerHeight");
-		int VisibleDomHeight = Integer.parseInt(visibleDomHeightJS.toString());
+		int VisibleDomHeight = Integer.parseInt(visibleDomHeightJS.toString());	
+		Object invisibileUpperDomHeightJS = js.executeScript("return window.pageYOffset");
+		int invisibileUpperDomHeight = Integer.parseInt(invisibileUpperDomHeightJS.toString());
 		
-		MoveCursorTo(elem_X+10, elem_Y+ScreenHeightWithoutTaskBarHeight-VisibleDomHeight-pixDiff+1);
+		MoveCursorTo(elem_X+10, elem_Y+ScreenHeightWithoutTaskBarHeight-VisibleDomHeight-invisibileUpperDomHeight-pixDiff+1);
 	}
 	
 	/**
