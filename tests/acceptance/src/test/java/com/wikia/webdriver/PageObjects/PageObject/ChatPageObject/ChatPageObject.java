@@ -85,21 +85,6 @@ public class ChatPageObject extends BasePageObject
 		PageObjectLogging.log("verifyChatPage", "Chat page verified", true, driver);
 	}
 	
-	/**
-	 * @author Karol Kujawiak
-	 * @param message
-	 * writes on chat and submits message, 
-	 * verifies if message is visible in chat area 
-	 */
-	public void writeOnChat(String message)
-	{
-		messageWritingArea.sendKeys(message);
-		messageWritingArea.sendKeys(Keys.ENTER);
-		PageObjectLogging.log("writeOnChat", "Message: "+message+" written", true, driver);
-		waitForElementByBy(By.xpath("//span[@class='message' and contains(text(), '"+message+"')]"));
-		PageObjectLogging.log("writeOnChat", "Message: "+message+" is visible on chat board", true, driver);
-	}
-	
 	public void verifyMessageOnChat(String message)
 	{
 		waitForElementByBy(By.xpath("//span[@class='message' and contains(text(), '"+message+"')]"));
@@ -122,6 +107,119 @@ public class ChatPageObject extends BasePageObject
 		waitForElementByXPath("//li[@id='user-"+userName+"']");
 		PageObjectLogging.log("verifyUserIsVisibleOnContactsList", userName+" is visible on contacts list", true, driver);
 	}
+	
+	/**
+	 * @author Karol Kujawiak
+	 * verifies if there is private message header in right hand sidebar
+	 * method should be executed after selectPrivateMeaage()
+	 */
+	public void verifyPrivateMessageHeader()
+	{
+		waitForElementByBy(privateMessageHeader);
+		PageObjectLogging.log("verifyPrivateMessageHeader", "private message header is visible", true, driver);
+	}
+	
+	public void verifyPrivateMessageNotification()
+	{
+		waitForElementByElement(privateMessageNotificator);
+		PageObjectLogging.log("verifyPrivateMessageNotification", "private message notification is visible", true, driver);
+	}
+	
+	public void verifyPrivateMessageNotification(int notificationNumber)
+	{
+		waitForElementByXPath("//span[@class='splotch' and contains(text(), '"+notificationNumber+"')]");
+		PageObjectLogging.log("verifyPrivateMessageNotification", "private message notification number "+notificationNumber+" is visible", true, driver);
+	}
+	
+	public void verifyPrivateMessageIsHighLighted(String user)
+	{
+		//li[@class='User selected' and @id='priv-user-QATestsUser']
+		waitForElementByXPath("//li[@class='User selected' and @id='priv-user-"+user+"']");
+		PageObjectLogging.log("verifyPrivateMessageIsHighLighted", "private message section is highlighted", true, driver);
+	}
+	
+	public void verifyPrivateChatTitle(String userName)
+	{
+		waitForElementByXPath("//h1[@class='private' and contains(text(), 'Private chat with "+userName+"')]");
+		PageObjectLogging.log("verifyPrivateChatTitle", "private chat title is correct", true, driver);
+	}
+	
+	public void verifyMainChatIsHighLighted()
+	{
+		waitForElementByElement(mainChatSelection);
+		PageObjectLogging.log("verifyPrivateMessageIsHighLighted", "private message section is highlighted", true, driver);
+	}
+	
+	/**
+	 * @author Karol Kujawiak
+	 * verifies user drop-down content, should be executed after clickOnDifferentUser() execution
+	 */
+	public void verifyNormalUserDropdown()
+	{
+		List<WebElement> list = getDropDownListOfElements();
+		for (int i=0; i<list.size(); i++)
+		{
+			System.out.println(list.get(i).getAttribute("class"));	
+		}
+		CommonFunctions.assertString("message-wall", list.get(0).getAttribute("class"));
+		CommonFunctions.assertString("contribs", list.get(1).getAttribute("class"));
+		CommonFunctions.assertString("private", list.get(2).getAttribute("class"));
+	}
+
+	/**
+	 * @author Karol Kujawiak
+	 * verifies blocked user drop-down content, should be executed after clickOnDifferentUser() execution
+	 */
+	public void verifyBlockedUserDropdown(String userName)
+	{
+		List<WebElement> list = getDropDownListOfElements();
+		for (int i=0; i<list.size(); i++)
+		{
+			System.out.println(list.get(i).getAttribute("class"));	
+		}
+		CommonFunctions.assertString("message-wall", list.get(0).getAttribute("class"));
+		CommonFunctions.assertString("contribs", list.get(1).getAttribute("class"));
+		CommonFunctions.assertString("private-allow", list.get(2).getAttribute("class"));	
+	}
+
+	/**
+	 * @author Karol Kujawiak
+	 * verifies admin user drop-down content, should be executed after clickOnDifferentUser() execution
+	 */
+	public void verifyAdminUserDropdown()
+	{
+		List<WebElement> list = getDropDownListOfElements();
+		for (int i=0; i<list.size(); i++)
+		{
+			System.out.println(list.get(i).getAttribute("class"));	
+		}
+		CommonFunctions.assertString("message-wall", list.get(0).getAttribute("class"));
+		CommonFunctions.assertString("contribs", list.get(1).getAttribute("class"));
+		
+		list = getAdminDropDownListOfElements();
+		CommonFunctions.assertString("give-chat-mod", list.get(0).getAttribute("class"));
+		CommonFunctions.assertString("kick", list.get(1).getAttribute("class"));
+		CommonFunctions.assertString("ban", list.get(2).getAttribute("class"));
+	}
+
+	
+	/**
+	 * @author Karol Kujawiak
+	 * @param message
+	 * writes on chat and submits message, 
+	 * verifies if message is visible in chat area 
+	 */
+	public void writeOnChat(String message)
+	{
+		messageWritingArea.sendKeys(message);
+		messageWritingArea.sendKeys(Keys.ENTER);
+		PageObjectLogging.log("writeOnChat", "Message: "+message+" written", true, driver);
+		waitForElementByBy(By.xpath("//span[@class='message' and contains(text(), '"+message+"')]"));
+		PageObjectLogging.log("writeOnChat", "Message: "+message+" is visible on chat board", true, driver);
+	}
+	
+	
+	
 	
 	/**
 	 * @author Karol Kujawiak
@@ -165,35 +263,7 @@ public class ChatPageObject extends BasePageObject
 		}
 	}
 	
-	/**
-	 * @author Karol Kujawiak
-	 * verifies if there is private message header in right hand sidebar
-	 * method should be executed after selectPrivateMeaage()
-	 */
-	public void verifyPrivateMessageHeader()
-	{
-		waitForElementByBy(privateMessageHeader);
-		PageObjectLogging.log("verifyPrivateMessageHeader", "private message header is visible", true, driver);
-	}
 	
-	public void verifyPrivateMessageNotification()
-	{
-		waitForElementByElement(privateMessageNotificator);
-		PageObjectLogging.log("verifyPrivateMessageNotification", "private message notification is visible", true, driver);
-	}
-	
-	public void verifyPrivateMessageIsHighLighted(String user)
-	{
-		//li[@class='User selected' and @id='priv-user-QATestsUser']
-		waitForElementByXPath("//li[@class='User selected' and @id='priv-user-"+user+"']");
-		PageObjectLogging.log("verifyPrivateMessageIsHighLighted", "private message section is highlighted", true, driver);
-	}
-	
-	public void verifyPrivateChatTitle(String userName)
-	{
-		waitForElementByXPath("//h1[@class='private' and contains(text(), 'Private chat with "+userName+"')]");
-		PageObjectLogging.log("verifyPrivateChatTitle", "private chat title is correct", true, driver);
-	}
 	
 	public void clickOnMainChat(WebDriver driver)
 	{
@@ -203,11 +273,7 @@ public class ChatPageObject extends BasePageObject
 		PageObjectLogging.log("clickOnMainChat", "main chat is clicked", true, driver);
 	}
 	
-	public void verifyMainChatIsHighLighted()
-	{
-		waitForElementByElement(mainChatSelection);
-		PageObjectLogging.log("verifyPrivateMessageIsHighLighted", "private message section is highlighted", true, driver);
-	}
+
 	
 	public void clickOnPrivateChat(String user, WebDriver driver)
 	{
@@ -291,55 +357,4 @@ public class ChatPageObject extends BasePageObject
 		return list;		
 	}
 	
-	/**
-	 * @author Karol Kujawiak
-	 * verifies user drop-down content, should be executed after clickOnDifferentUser() execution
-	 */
-	public void verifyNormalUserDropdown()
-	{
-		List<WebElement> list = getDropDownListOfElements();
-		for (int i=0; i<list.size(); i++)
-		{
-			System.out.println(list.get(i).getAttribute("class"));	
-		}
-		CommonFunctions.assertString("message-wall", list.get(0).getAttribute("class"));
-		CommonFunctions.assertString("contribs", list.get(1).getAttribute("class"));
-		CommonFunctions.assertString("private", list.get(2).getAttribute("class"));
-	}
-
-	/**
-	 * @author Karol Kujawiak
-	 * verifies blocked user drop-down content, should be executed after clickOnDifferentUser() execution
-	 */
-	public void verifyBlockedUserDropdown(String userName)
-	{
-		List<WebElement> list = getDropDownListOfElements();
-		for (int i=0; i<list.size(); i++)
-		{
-			System.out.println(list.get(i).getAttribute("class"));	
-		}
-		CommonFunctions.assertString("message-wall", list.get(0).getAttribute("class"));
-		CommonFunctions.assertString("contribs", list.get(1).getAttribute("class"));
-		CommonFunctions.assertString("private-allow", list.get(2).getAttribute("class"));	
-	}
-
-	/**
-	 * @author Karol Kujawiak
-	 * verifies admin user drop-down content, should be executed after clickOnDifferentUser() execution
-	 */
-	public void verifyAdminUserDropdown()
-	{
-		List<WebElement> list = getDropDownListOfElements();
-		for (int i=0; i<list.size(); i++)
-		{
-			System.out.println(list.get(i).getAttribute("class"));	
-		}
-		CommonFunctions.assertString("message-wall", list.get(0).getAttribute("class"));
-		CommonFunctions.assertString("contribs", list.get(1).getAttribute("class"));
-		
-		list = getAdminDropDownListOfElements();
-		CommonFunctions.assertString("give-chat-mod", list.get(0).getAttribute("class"));
-		CommonFunctions.assertString("kick", list.get(1).getAttribute("class"));
-		CommonFunctions.assertString("ban", list.get(2).getAttribute("class"));
-	}
 }
