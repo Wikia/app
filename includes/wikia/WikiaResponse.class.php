@@ -452,7 +452,7 @@ class WikiaResponse {
 	 * Add an asset to the current response
 	 * 
 	 * @param mixed $assetName the name of a configured package or path to an asset file or an array of them
-	 * @param bool $local [OPTIONAL] wether to fetch per-wiki local URL's,
+	 * @param bool $local [OPTIONAL] whether to fetch per-wiki local URLs,
 	 * (false by default, i.e. the method returns a shared host URL's for our network);
 	 * please note that this parameter has no effect on SASS assets, those will always produce shared host URL's.
 	 */
@@ -478,6 +478,26 @@ class WikiaResponse {
 		}
 
 		$app->wf->profileOut( __METHOD__ );
+	}
+
+	public function addModules( $modules ) {
+		$app = F::app();
+		$app->wg->Out->addModules($modules);
+	}
+
+	public function addModuleStyles( $modules ) {
+		$app = F::app();
+		$app->wg->Out->addModuleStyles($modules);
+	}
+
+	public function addModuleScripts( $modules ) {
+		$app = F::app();
+		$app->wg->Out->addModuleScripts($modules);
+	}
+
+	public function addModuleMessages( $modules ) {
+		$app = F::app();
+		$app->wg->Out->addModuleMessages($modules);
 	}
 
 	private function isStandardHTTPCode($code){

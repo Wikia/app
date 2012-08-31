@@ -50,14 +50,9 @@ class AssetsManager {
 	}
 
 	public static function onMakeGlobalVariablesScript(&$vars) {
-		global $wgOasisHD, $wgOasisFluid, $wgCdnRootUrl, $wgAssetsManagerQuery;
+		global $wgCdnRootUrl, $wgAssetsManagerQuery;
 
-		$params = SassUtil::getOasisSettings();
-		if($wgOasisHD) {
-			$params['hd'] = 1;
-		} else if($wgOasisFluid) {
-			$params['hd'] = 2;
-		}
+		$params = SassUtil::getSassSettings();
 
 		$vars['sassParams'] = $params;
 		$vars['wgAssetsManagerQuery'] = $wgAssetsManagerQuery;
@@ -211,17 +206,8 @@ class AssetsManager {
 	 */
 	private function getSassURL( $scssFilePath, $prefix, $minify = null ) {
 		wfProfileIn( __METHOD__ );
-		global $wgOasisHD, $wgOasisFluid;
 
-		$params = SassUtil::getOasisSettings();
-
-		if ( $wgOasisHD ) {
-			$params['hd'] = 1;
-		}
-
-		if ( $wgOasisFluid ) {
-			$params['hd'] = 2;
-		}
+		$params = SassUtil::getSassSettings();
 
 		if ( $minify !== null ? !$minify : !$this->mMinify ) {
 			$params['minify'] = false;

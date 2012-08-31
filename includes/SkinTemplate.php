@@ -158,9 +158,7 @@ class SkinTemplate extends Skin {
 		$title = $this->getTitle();
 
 		// Wikia change - begin - @author: wladek
-		if ( method_exists( $this, 'getTopScripts' ) ) {
-			$out->topScripts = $this->getTopScripts();
-		}
+		$this->beforeOutputPage($out);
 		// Wikia change - end
 
 		wfProfileIn( __METHOD__ . '-init' );
@@ -1306,6 +1304,10 @@ class SkinTemplate extends Skin {
 
 	public function commonPrintStylesheet() {
 		return false;
+	}
+
+	protected function beforeOutputPage() {
+		// stub, to be overwritten by descendants
 	}
 }
 

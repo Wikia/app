@@ -40,6 +40,9 @@ class ResourceLoaderContext {
 	protected $version;
 	protected $hash;
 
+	/* Added by Wikia */
+	protected $sassParams;
+
 	/* Methods */
 
 	/**
@@ -62,6 +65,15 @@ class ResourceLoaderContext {
 		$this->debug     = $request->getFuzzyBool( 'debug', $wgResourceLoaderDebug );
 		$this->only      = $request->getVal( 'only' );
 		$this->version   = $request->getVal( 'version' );
+		// Wikia - change begin - @author: wladek
+		$this->sassParams = array();
+		foreach ($request->getValues() as $key => $value) {
+			if ( startsWith( $key, 'sass_' ) ) {
+				$this->sassParams[ substr($key, strlen( 'sass_' ) ) ] = $value;
+			}
+		}
+		ksort($this->sassParams);
+		// Wikia - change end
 
 		$skinnames = Skin::getSkinNames();
 		// If no skin is specified, or we don't recognize the skin, use the default skin
@@ -226,7 +238,10 @@ class ResourceLoaderContext {
 		if ( !isset( $this->hash ) ) {
 			$this->hash = implode( '|', array(
 				$this->getLanguage(), $this->getDirection(), $this->skin, $this->user,
-				$this->debug, $this->only, $this->version
+				$this->debug, $this->only, $this->version,
+				// Wikia - change begin - @author: wladek
+				serialize($this->sassParams)
+				// Wikia - change end
 			) );
 		}
 		return $this->hash;
