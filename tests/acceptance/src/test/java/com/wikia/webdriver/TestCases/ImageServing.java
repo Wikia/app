@@ -283,12 +283,12 @@ public class ImageServing extends TestTemplate {
 	public void ImageServing011_AddingVideoThroughRV()
 	{
 		CommonFunctions.MoveCursorTo(0, 0);
-		//delete all videos from RV module on QAAutopage using RelatedVideos:QAautoPage (message article)
+		//delete the given video from RV module on QAAutopage using MediaWiki:RelatedVideosGlobalList (message article), by its name (videoURL2name variable)
 		WikiBasePageObject wiki = new WikiBasePageObject(driver, Global.DOMAIN);
-		WikiArticlePageObject RVmoduleMessage = wiki.OpenArticle("RelatedVideos:"+wikiArticle);
-		CommonFunctions.logIn(Properties.userName2, Properties.password2);
-		WikiArticleEditMode RVmoduleMessageEdit = RVmoduleMessage.Edit();
-		RVmoduleMessageEdit.deleteArticleContent();
+		WikiArticlePageObject RVmoduleMessage = wiki.OpenArticle("MediaWiki:RelatedVideosGlobalList");
+		CommonFunctions.logIn(Properties.userNameStaff, Properties.passwordStaff);
+		WikiArticleEditMode RVmoduleMessageEdit = RVmoduleMessage.Edit();		
+		RVmoduleMessageEdit.deleteUnwantedVideoFromMessage(videoURL2name);
 		RVmoduleMessage = RVmoduleMessageEdit.ClickOnPublishButton();
 		// after deletion start testing
 		WikiArticlePageObject article = RVmoduleMessage.OpenArticle(wikiArticle);

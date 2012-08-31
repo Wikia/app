@@ -317,10 +317,10 @@ public class BasePageObject{
 	 * @author Michal Nowierski
 	 */
 	public void customizeToolbar_ClickCustomize() {
-		PageObjectLogging.log("customizeToolbar_ClickCustomize", "Clicks on 'Customize' button.", true, driver);
 		waitForElementByElement(customizeToolbar_CustomizeButton);
 		waitForElementClickableByElement(customizeToolbar_CustomizeButton);
 		customizeToolbar_CustomizeButton.click();
+		PageObjectLogging.log("customizeToolbar_ClickCustomize", "Clicks on 'Customize' button.", true, driver);
 		
 	}
 	
@@ -330,10 +330,10 @@ public class BasePageObject{
 	 * @author Michal Nowierski
 	 */
 	public void customizeToolbar_ClickOnResetDefaults() {
-		PageObjectLogging.log("customizeToolbar_ClickOnResetDefaults", "Click on 'ResetDefaults' button.", true, driver);
 		waitForElementByElement(customizeToolbar_ResetDefaultsButton);
 		waitForElementClickableByElement(customizeToolbar_ResetDefaultsButton);
 		customizeToolbar_ResetDefaultsButton.click();
+		PageObjectLogging.log("customizeToolbar_ClickOnResetDefaults", "Click on 'ResetDefaults' button.", true, driver);
 		
 	}
 	
@@ -344,11 +344,11 @@ public class BasePageObject{
 	 * @author Michal Nowierski
 	 */
 	public void customizeToolbar_TypeIntoFindATool(String GivenString) {
-		PageObjectLogging.log("customizeToolbar_TypeIntoFindATool", "Type "+GivenString+" into Find A Tool field", true, driver);
 		waitForElementByElement(customizeToolbar_FindAToolField);
 		waitForElementClickableByElement(customizeToolbar_FindAToolField);
 		customizeToolbar_FindAToolField.clear();
 		customizeToolbar_FindAToolField.sendKeys(GivenString);
+		PageObjectLogging.log("customizeToolbar_TypeIntoFindATool", "Type "+GivenString+" into Find A Tool field", true, driver);
 		
 	}
 	
@@ -359,11 +359,11 @@ public class BasePageObject{
 	 * @author Michal Nowierski
 	 */
 	public void customizeToolbar_TypeIntoRenameItemDialog(String GivenString) {
-		PageObjectLogging.log("customizeToolbar_TypeIntoRenameItemDialog", "Type "+GivenString+" into rename item input", true, driver);
 		waitForElementByElement(customizeToolbar_RenameItemDialogInput);
 		waitForElementClickableByElement(customizeToolbar_RenameItemDialogInput);
 		customizeToolbar_RenameItemDialogInput.clear();
 		customizeToolbar_RenameItemDialogInput.sendKeys(GivenString);
+		PageObjectLogging.log("customizeToolbar_TypeIntoRenameItemDialog", "Type "+GivenString+" into rename item input", true, driver);
 	}
 	
 	/**
@@ -372,10 +372,10 @@ public class BasePageObject{
 	 * @author Michal Nowierski
 	 */
 	public void customizeToolbar_saveInRenameItemDialog() {
-		PageObjectLogging.log("customizeToolbar_saveInRenameItemDialog", "Click on 'save' button on Rename Item dialog.", true, driver);
 		waitForElementByElement(customizeToolbar_SaveItemDialogInput);
 		waitForElementClickableByElement(customizeToolbar_SaveItemDialogInput);
 		customizeToolbar_SaveItemDialogInput.click();
+		PageObjectLogging.log("customizeToolbar_saveInRenameItemDialog", "Click on 'save' button on Rename Item dialog.", true, driver);
 		
 	}
 	
@@ -386,10 +386,10 @@ public class BasePageObject{
 	 * @author Michal Nowierski
 	 */
 	public void customizeToolbar_ClickOnFoundTool(String Tool) {
-		PageObjectLogging.log("customizeToolbar_ClickOnFoundTool", "Click on "+Tool, true, driver);
 		waitForElementByCss("div.autocomplete div[title='"+Tool+"']");
 		waitForElementClickableByCss("div.autocomplete div[title='"+Tool+"']");
 		driver.findElement(By.cssSelector("div.autocomplete div[title='"+Tool+"']")).click();
+		PageObjectLogging.log("customizeToolbar_ClickOnFoundTool", "Click on "+Tool, true, driver);
 		
 	}
 	
@@ -400,7 +400,6 @@ public class BasePageObject{
 	 * @author Michal Nowierski
 	 */
 	public void customizeToolbar_ClickOnTool(String Tool_dataname) {
-		PageObjectLogging.log("customizeToolbar_ClickOnFoundTool", "Click on "+Tool_dataname, true, driver);
 		waitForElementByCss("li.overflow a[data-name='"+Tool_dataname+"']");
 		WebElement element = driver.findElement(By.cssSelector("li.overflow a[data-name='"+Tool_dataname+"']"));
 		if (Global.BROWSER.equals("IE")) {
@@ -414,6 +413,7 @@ public class BasePageObject{
 			waitForElementClickableByElement(element);
 			element.click();
 		}
+		PageObjectLogging.log("customizeToolbar_ClickOnFoundTool", "Click on "+Tool_dataname, true, driver);
 	}
 	
 	/**
@@ -423,8 +423,8 @@ public class BasePageObject{
 	 * @author Michal Nowierski
 	 */
 	public void customizeToolbar_VerifyPageWatchlistStatusMessage() {
-		PageObjectLogging.log("customizeToolbar_VerifyPageWatchlistStatusMessage", "Verify that the page watchlist status message appeared ", true, driver);
 		waitForElementByElement(customizeToolbar_PageWatchlistStatusMessage);
+		PageObjectLogging.log("customizeToolbar_VerifyPageWatchlistStatusMessage", "Verify that the page watchlist status message appeared ", true, driver);
 		
 	}
 	
@@ -435,9 +435,9 @@ public class BasePageObject{
 	 * @author Michal Nowierski
 	 */
 	public void customizeToolbar_VerifyPageFollowed() {
-		PageObjectLogging.log("customizeToolbar_VerifyPageFollowed", "Verify that page is followed", true, driver);
 		waitForElementByCss("a[data-name='follow']");
 		waitForValueToBePresentInElementsAttributeByCss("a[data-name='follow']", "title", "Unfollow");
+		PageObjectLogging.log("customizeToolbar_VerifyPageFollowed", "Verify that page is followed", true, driver);
 	
 	}
 	
@@ -448,9 +448,9 @@ public class BasePageObject{
 	 * @author Michal Nowierski
 	 */
 	public void customizeToolbar_VerifyPageUnfollowed() {
-		PageObjectLogging.log("customizeToolbar_VerifyPageUnfollowed", "Verify that page is unfollowed", true, driver);
 		waitForElementByElement(customizeToolbar_PageWatchlistStatusMessage);
 		waitForValueToBePresentInElementsAttributeByCss("a[data-name='follow']", "title", "Follow");
+		PageObjectLogging.log("customizeToolbar_VerifyPageUnfollowed", "Verify that page is unfollowed", true, driver);
 		
 	}
 	
@@ -461,8 +461,8 @@ public class BasePageObject{
 	 * @author Michal Nowierski
 	 */
 	public void customizeToolbar_VerifyToolOnToolbarList(String Tool) {
-		PageObjectLogging.log("customizeToolbar_VerifyToolOnToolbarList", "Check if "+Tool+" appears on list", true, driver);
 		waitForElementByCss("ul.options-list li[data-caption='"+Tool+"']");
+		PageObjectLogging.log("customizeToolbar_VerifyToolOnToolbarList", "Check if "+Tool+" appears on list", true, driver);
 	
 	}
 	
@@ -473,9 +473,9 @@ public class BasePageObject{
 	 * @author Michal Nowierski
 	 */
 	public void customizeToolbar_VerifyToolNotOnToolbarList(String Tool) {
-		PageObjectLogging.log("customizeToolbar_VerifyToolNotOnToolbarList", "Check if "+Tool+" does not appear on Toolbar list", true, driver);
 		waitForElementByCss("ul.options-list li");
 		waitForElementNotVisibleByCss("ul.options-list li[data-caption='"+Tool+"']");
+		PageObjectLogging.log("customizeToolbar_VerifyToolNotOnToolbarList", "Check if "+Tool+" does not appear on Toolbar list", true, driver);
 	}
 	
 	/**
@@ -485,7 +485,6 @@ public class BasePageObject{
 	 * @author Michal Nowierski
 	 */
 	public void customizeToolbar_ClickOnToolRemoveButton(String Tool) {
-		PageObjectLogging.log("customizeToolbar_ClickOnToolRemoveButton", "Remove Tool with id "+Tool+" from Toolbar List", true, driver);
 		By By1 = By.cssSelector("ul.options-list li[data-caption='"+Tool+"']");
 		By By2 = By.cssSelector("ul.options-list li[data-caption='"+Tool+"'] img.trash");
 		Point Elem1_location = driver.findElement(By1).getLocation();
@@ -493,6 +492,7 @@ public class BasePageObject{
 		waitForElementByBy(By2);
 		waitForElementClickableByBy(By2);
 		driver.findElement(By2).click();
+		PageObjectLogging.log("customizeToolbar_ClickOnToolRemoveButton", "Remove Tool with id "+Tool+" from Toolbar List", true, driver);
 	}
 	
 	/**
@@ -502,7 +502,6 @@ public class BasePageObject{
 	 * @author Michal Nowierski
 	 */
 	public void customizeToolbar_ClickOnToolRenameButton(String ToolID) {
-		PageObjectLogging.log("customizeToolbar_ClickOnToolRenameButton", "Rename the "+ToolID+" Tool", true, driver);
 		By By1 = By.cssSelector("ul.options-list li[data-caption='"+ToolID+"']");
 		By By2 = By.cssSelector("ul.options-list li[data-caption='"+ToolID+"'] img.edit-pencil");
 		Point Elem1_location = driver.findElement(By1).getLocation();
@@ -510,6 +509,7 @@ public class BasePageObject{
 		waitForElementByBy(By2);
 		waitForElementClickableByBy(By2);
 		driver.findElement(By2).click();
+		PageObjectLogging.log("customizeToolbar_ClickOnToolRenameButton", "Rename the "+ToolID+" Tool", true, driver);
 	}
 	
 	/**
@@ -520,7 +520,6 @@ public class BasePageObject{
 	 * @author Michal Nowierski
 	 */
 	public void customizeToolbar_DragElemAndDrop(String ToolID, int DragDirection) {
-		PageObjectLogging.log("customizeToolbar_DragElemAndDrop", "Drag element "+ToolID+", by "+DragDirection, true, driver);
 		By By1 = By.cssSelector("ul.options-list li[data-caption='"+ToolID+"']");
 		By By2 = By.cssSelector("ul.options-list li[data-caption='"+ToolID+"'] img.drag");
 		Point Elem1_location = driver.findElement(By1).getLocation();
@@ -539,6 +538,7 @@ public class BasePageObject{
 			new Actions(driver).dragAndDropBy(draggable, 0, 25*DragDirection+8).perform();  
 			
 		}
+		PageObjectLogging.log("customizeToolbar_DragElemAndDrop", "Drag element "+ToolID+", by "+DragDirection, true, driver);
 	}
 	
 	/**
@@ -549,7 +549,6 @@ public class BasePageObject{
 	 * @author Michal Nowierski
 	 */
 	public void customizeToolbar_VerifyMyToolsOrder(String tool1, String tool2) {
-		PageObjectLogging.log("customizeToolbar_VerifyMyToolsOrder", "Verify that My Tools list has"+tool2+" appearing after "+tool1, true, driver);
 		CommonFunctions.MoveCursorTo(0, 100);		
 		CommonFunctions.MoveCursorTo(0, 0);		
 		waitForElementByElement(customizeToolbar_MyToolsMenuButton);
@@ -566,6 +565,7 @@ public class BasePageObject{
 		if (!tool2.equals(ActualTool2)) {
 			PageObjectLogging.log("customizeToolbar_VerifyMyToolsOrder", ActualTool2+" where "+tool2+" should be. Drag & drop action (from previous step) must hadn't been succesful", false, driver);
 		}
+		PageObjectLogging.log("customizeToolbar_VerifyMyToolsOrder", "Verify that My Tools list has"+tool2+" appearing after "+tool1, true, driver);
 	}
 
 	/**
@@ -574,10 +574,10 @@ public class BasePageObject{
 	 * @author Michal Nowierski
 	 */
 	public void customizeToolbar_ClickOnSaveButton() {
-		PageObjectLogging.log("customizeToolbar_ClickOnSaveButton", "Click on 'save' button.", true, driver);
 		waitForElementByElement(customizeToolbar_SaveButton);
 		waitForElementClickableByElement(customizeToolbar_SaveButton);
 		customizeToolbar_SaveButton.click();
+		PageObjectLogging.log("customizeToolbar_ClickOnSaveButton", "Click on 'save' button.", true, driver);
 		
 	}
 	
@@ -589,8 +589,6 @@ public class BasePageObject{
 	 * @author Michal Nowierski
 	 */
 	public void customizeToolbar_VerifyToolOnToolbar(String ToolName) {
-		PageObjectLogging.log("customizeToolbar_VerifyToolOnToolbar",
-				"Verify that "+ToolName+" appears in Toolbar.", true, driver);
 		try {Thread.sleep(500);} catch (InterruptedException e) {e.printStackTrace();}
 		waitForElementByBy(customizeToolbar_ToolsList);
 		List<WebElement> List = driver.findElements(customizeToolbar_ToolsList);
@@ -605,6 +603,8 @@ public class BasePageObject{
 					ToolName+" does not appear on toolbar. All of tools are other than the wanted one.", false, driver);
 				fail();
 		}
+		PageObjectLogging.log("customizeToolbar_VerifyToolOnToolbar",
+				"Verify that "+ToolName+" appears in Toolbar.", true, driver);
 	}
 	
 	/**
@@ -615,8 +615,6 @@ public class BasePageObject{
 	 * @author Michal Nowierski
 	 */
 	public void customizeToolbar_UnfollowIfPageIsFollowed() {
-		PageObjectLogging.log("customizeToolbar_UnfollowIfPageIsFollowed",
-				"If the page is Followed, unfollow it (preconditions assurance)", true, driver);
 		List<WebElement> List = driver.findElements(customizeToolbar_ToolsList);
 		for (int i = 0; i < List.size(); i++) {
 			if (List.get(i).getText().equals("Following")) {
@@ -626,6 +624,8 @@ public class BasePageObject{
 			
 			}
 		}
+		PageObjectLogging.log("customizeToolbar_UnfollowIfPageIsFollowed",
+				"If the page is Followed, unfollow it (preconditions assurance)", true, driver);
 
 	}
 	
@@ -638,8 +638,6 @@ public class BasePageObject{
 	 * @author Michal Nowierski
 	 */
 	public void customizeToolbar_VerifyToolNotOnToolbar(String ToolName){
-		PageObjectLogging.log("customizeToolbar_VerifyToolNotOnToolbar",
-				"Verify that "+ToolName+" tool does not appear in Toolbar.", true, driver);
 		try {Thread.sleep(500);} catch (InterruptedException e) {e.printStackTrace();}
 		waitForElementByBy(customizeToolbar_ToolsList);
 		List<WebElement> List = driver.findElements(customizeToolbar_ToolsList);
@@ -654,6 +652,8 @@ public class BasePageObject{
 					ToolName+" Tool appears on toolbar (Not all of tools are other than the wanted one).", false, driver);
 				fail();
 		}
+		PageObjectLogging.log("customizeToolbar_VerifyToolNotOnToolbar",
+				"Verify that "+ToolName+" tool does not appear in Toolbar.", true, driver);
 		
 	}
 	
@@ -663,8 +663,8 @@ public class BasePageObject{
 	 * @author Michal Nowierski
 	 */	
 	public void verifyWikiaSearchFieldIsDisplayed() {
-		PageObjectLogging.log("verifyWikiaSearchFieldIsDisplayed", "verify that wikia search field is displayed", true, driver);
 		waitForElementByElement(wikiaSearch_searchForm);
+		PageObjectLogging.log("verifyWikiaSearchFieldIsDisplayed", "verify that wikia search field is displayed", true, driver);
 	}
 	
 	public String getTimeStamp()

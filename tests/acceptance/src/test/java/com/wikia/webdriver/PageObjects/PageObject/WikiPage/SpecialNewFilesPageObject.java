@@ -36,27 +36,27 @@ public class SpecialNewFilesPageObject extends WikiBasePageObject{
 
 	
 	public void ClickOnAddaPhoto() {
-		PageObjectLogging.log("ClickOnAddaPhoto", "Click on add a photo button", true, driver);
 		waitForElementByElement(AddAphotoButton);
 		AddAphotoButton.click();
+		PageObjectLogging.log("ClickOnAddaPhoto", "Click on add a photo button", true, driver);
 	}
 	
 	public void ClickOnUploadaPhoto() {
-		PageObjectLogging.log("ClickOnUploadaPhoto", "Click on upload a photo button", true, driver);
 		waitForElementByElement(UploadFileInput);
 		UploadFileInput.click();
+		PageObjectLogging.log("ClickOnUploadaPhoto", "Click on upload a photo button", true, driver);
 	}
 	
 	public void ClickOnMoreOrFewerOptions() {
-		PageObjectLogging.log("ClickOnMoreOrFewerOptions", "Click on More or Fewer options (depends on which of those two is currently visible)", true, driver);
 		waitForElementByElement(MoreOrFewerOptions);
 		MoreOrFewerOptions.click();
+		PageObjectLogging.log("ClickOnMoreOrFewerOptions", "Click on More or Fewer options (depends on which of those two is currently visible)", true, driver);
 		
 	}
 	public void CheckIgnoreAnyWarnings() {
-		PageObjectLogging.log("CheckIgnoreAnyWarnings", "Check 'Ignore Any Warnings' option", true, driver);
 		waitForElementByElement(IgnoreAnyWarnings);
 		IgnoreAnyWarnings.click();
+		PageObjectLogging.log("CheckIgnoreAnyWarnings", "Check 'Ignore Any Warnings' option", true, driver);
 		
 	}
 
@@ -72,8 +72,8 @@ public class SpecialNewFilesPageObject extends WikiBasePageObject{
 	}
 
 	public void waitForFile(String FileName) {
-		PageObjectLogging.log("waitForFile", "Verify if "+FileName+" has been succesfully uploaded", true, driver);
 		waitForValueToBePresentInElementsAttributeByCss(WikiaPreviewImgCssSelector, "src", FileName);
+		PageObjectLogging.log("waitForFile", "Verify if "+FileName+" has been succesfully uploaded", true, driver);
 
 		
 	}
