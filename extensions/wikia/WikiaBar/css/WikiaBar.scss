@@ -1,8 +1,20 @@
 @import "../../../../skins/oasis/css/core/color";
 @import "../../../../skins/oasis/css/core/layout";
+@import "../../../../skins/oasis/css/mixins/box-shadow";
+@import "../../../../skins/oasis/css/mixins/gradient";
+
+body {
+	margin-bottom: 25px;
+}
 
 .WikiaBar {
 	background-color: blue;
-	padding: 10px;
+	bottom: -30px;
+	height: 25px;
+	margin: auto;
+	position: fixed;
+	width: 98%;
 	z-index: $zTop;
+	@include box-shadow(0, 0, 10px, $color-page-shadow);
+	@include linear-gradient($color-header, left, $color-header-alt, 0, $color-header, 50%, $color-header-alt, 100%);
 }
