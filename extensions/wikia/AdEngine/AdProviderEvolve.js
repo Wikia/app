@@ -3,7 +3,7 @@ var AdProviderEvolve = my.Class(AdProviderAdEngine2, {
 	name:'AdProviderEvolve',
 
 	fillInSlot:function (slot) {
-		this.log('fillInSlot', slot);
+		this.log('fillInSlot', 5, slot);
 
 		WikiaTracker.trackAdEvent('liftium.slot2', {'ga_category':'slot2/' + slot[1], 'ga_action':slot[0], 'ga_label':'evolve'}, 'ga');
 
@@ -15,7 +15,7 @@ var AdProviderEvolve = my.Class(AdProviderAdEngine2, {
 				insertType:"append",
 				script:{ src:url },
 				done:function () {
-					self.log('(fillInSlot) ghostwriter done', [slot[0], url]);
+					self.log('(fillInSlot) ghostwriter done', 5, [slot[0], url]);
 					ghostwriter.flushloadhandlers();
 				}
 			}
@@ -36,7 +36,7 @@ var AdProviderEvolve = my.Class(AdProviderAdEngine2, {
 	getUrl:function (slotname, size) {
 //return this.getDevboxUrl(slotname, size); // TODO remove, this is a test measure only!
 
-		this.log('getUrl', [slotname, size]);
+		this.log('getUrl', 5, [slotname, size]);
 
 		var url = 'http://' +
 			'n4403ad' +
@@ -53,34 +53,35 @@ var AdProviderEvolve = my.Class(AdProviderAdEngine2, {
 			'tile=' + this.slotMap[slotname].tile + ';' +
 			'ord=' + this.ord + '?';
 
-		this.log(url);
+		this.log(url, 7);
 		return url;
 	},
 
 	// TODO remove, this is a test measure only!
 	getDevboxUrl:function (slotname, size) {
-		this.log('getUrl', [slotname, size]);
+		this.log('getUrl', 5, [slotname, size]);
 
 		var url = 'http://ad.doubleclick.net/adj/wka.gaming/_starcraft/article;s0=gaming;s1=_starcraft;dmn=wikia-devcom;' +
 			'pos=' + slotname + ';' +
 			'src=evolve;' +
 			'ord=' + this.ord + '?';
 
-		this.log(url);
+		this.log(url, 7);
 		return url;
 	},
 
 	// adapted for Evolve + simplified copy of AdDriverDelayedLoader.callLiftium
 	hop:function (slotname) {
+		this.log('hop', 5, slotname);
+
 		slotname = this.sanitizeSlotname(slotname);
 		var size = this.slotMap[slotname].size || '0x0';
-		this.log('hop', [slotname, size]);
+		this.log('hop in:', 7, [slotname, size]);
 
 		WikiaTracker.trackAdEvent('liftium.hop2', {'ga_category':'hop2/evolve', 'ga_action':'slot ' + slotname, 'ga_label':'9.9' /* FIXME Liftium.formatTrackTime(time, 5) */}, 'ga');
 
 		//LiftiumOptions.placement = slotname;
 		var script = this.getLiftiumCallScript(slotname, size);
-		this.log(script);
 		var self = this;
 		ghostwriter(
 			document.getElementById(slotname),
@@ -88,7 +89,7 @@ var AdProviderEvolve = my.Class(AdProviderAdEngine2, {
 				insertType:"append",
 				script:{text:script},
 				done:function () {
-					self.log('(hop) ghostwriter done', [slotname, script]);
+					self.log('(hop) ghostwriter done', 5, [slotname, script]);
 					ghostwriter.flushloadhandlers();
 					AdDriver.adjustSlotDisplay(slotname);
 				}
@@ -102,24 +103,24 @@ var AdProviderEvolve = my.Class(AdProviderAdEngine2, {
 	// yields window.AdEngine2.hop('=TOP_LEADERBOARD;ord=7121786175');
 	// instead of window.AdEngine2.hop('TOP_LEADERBOARD');
 	sanitizeSlotname:function (slotname) {
-		this.log('sanitizeSlotname', slotname);
+		this.log('sanitizeSlotname', 5, slotname);
 
 		var re = new RegExp('[A-Z1-9_]+');
 		var out = re.exec(slotname);
 		this.log(out);
 
 		if (typeof this.slotMap[out] == 'undefined') {
-			this.log('error, unknown slotname');
+			this.log('error, unknown slotname', 1);
 			out = '';
 		}
 
-		this.log(out);
+		this.log(out, 7);
 		return out;
 	},
 
 	// adapted for Evolve + simplified copy of AdDriverDelayedLoader.getLiftiumCallScript
 	getLiftiumCallScript:function(slotname, size) {
-		this.log('getLiftiumCallScript', [slotname, size]);
+		this.log('getLiftiumCallScript', 5, [slotname, size]);
 
 		// TODO move AdDriverDelayedLoader.adNum to something global
 		var dims = size.split('x');
@@ -129,6 +130,7 @@ var AdProviderEvolve = my.Class(AdProviderAdEngine2, {
 		script += 'LiftiumOptions.placement = "'+slotname+'";';
 		script += 'Liftium.callInjectedIframeAd("'+size+'", document.getElementById("'+slotname+'_iframe"));';
 
+		this.log(script, 7);
 		return script;
 	}
 });

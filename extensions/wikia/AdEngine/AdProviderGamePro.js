@@ -2,20 +2,20 @@ var AdProviderGamePro = my.Class(AdProviderAdEngine2, {
 	// core stuff, should be overwritten
 	name:'AdProviderGamePro',
 
-	fillInSlot: function(s) {
-		this.log('fillInSlot', s);
+	fillInSlot: function(slot) {
+		this.log('fillInSlot', 5, slot);
 
-		WikiaTracker.trackAdEvent('liftium.slot2', {'ga_category':'slot2/' + s[1], 'ga_action':s[0], 'ga_label':'gamepro'}, 'ga');
+		WikiaTracker.trackAdEvent('liftium.slot2', {'ga_category':'slot2/' + slot[1], 'ga_action':slot[0], 'ga_label':'gamepro'}, 'ga');
 
-		var url = this.getUrl(s[0], s[1]);
+		var url = this.getUrl(slot[0], slot[1]);
 		var self = this;
 		ghostwriter(
-			document.getElementById(s[0]),
+			document.getElementById(slot[0]),
 			{
 				insertType: "append",
 				script: { src: url },
 				done: function() {
-					self.log('ghostwriter done', [s[0], url]);
+					self.log('ghostwriter done', 5, [slot[0], url]);
 					ghostwriter.flushloadhandlers();
 				}
 			}
@@ -35,7 +35,7 @@ var AdProviderGamePro = my.Class(AdProviderAdEngine2, {
 
 	// adapted for GP + simplified copy of AdConfig.DART.getUrl
 	getUrl: function(slotname, size) {
-		this.log('getUrl', [slotname, size]);
+		this.log('getUrl', 5, [slotname, size]);
 
 		var url = 'http://' +
 			'ad-emea' +
@@ -50,13 +50,13 @@ var AdProviderGamePro = my.Class(AdProviderAdEngine2, {
 			'sz=' + size + ';' +
 			'ord=' + this.ord + '?';
 
-		this.log(url);
+		this.log(url, 7);
 		return url;
 	},
 
 	// TODO: cache it
 	rebuildKV: function(kv) {
-		this.log('rebuildKV', kv);
+		this.log('rebuildKV', 5, kv);
 
 		if (kv.indexOf(';') === -1) {
 			return kv;
@@ -77,7 +77,7 @@ var AdProviderGamePro = my.Class(AdProviderAdEngine2, {
 		}
 
 		out = out.substring(1);
-		this.log(out);
+		this.log(out, 7);
 		return out;
 	}
 });

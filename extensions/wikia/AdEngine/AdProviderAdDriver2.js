@@ -3,7 +3,7 @@ var AdProviderAdDriver2 = my.Class(AdProviderAdEngine2, {
 	name:'AdProviderAdDriver2',
 
 	fillInSlot:function (slot) {
-		this.log('fillInSlot', slot);
+		this.log('fillInSlot', 5, slot);
 
 		if(!window.adslots) {
 			window.adslots = [];

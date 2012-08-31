@@ -1,46 +1,41 @@
 var AdEngine2 = {
 	_cache_geo:null,
-	debug:true,
 
-	log:function (msg, obj) {
-		if (typeof console == 'undefined') return;
+	log:function (msg, level, obj) {
+		Wikia.log(msg, level, 'AdEngine2');
 
-		// FIXME WikiaLogger...
-		if (!this.debug) return;
-
-		console.log('AdEngine2: ' + msg);
 		if (typeof obj != 'undefined') {
-			console.log(obj);
+			Wikia.log(obj, level, 'AdEngine2');
 		}
 	},
 
 	init:function () {
-		this.log('init');
+		this.log('init', 5);
 
 		this.moveQueue();
 	},
 
 	fillInSlot:function (slot) {
-		this.log('fillInSlot', slot);
+		this.log('fillInSlot', 5, slot);
 
 		var provider = this.getProvider(slot);
-		this.log(provider);
+		this.log('calling ' + provider + ' for ' + slot[0], 3);
 		slot[2] = provider;
 		window['adProvider' + provider].fillInSlot(slot);
 	},
 
 	// based on WikiaTrackerQueue by macbre
 	moveQueue:function () {
-		this.log('moveQueue');
+		this.log('moveQueue', 5);
 
 		var slots = window.adslots2 || [], slot;
-		this.log('slots', slots);
+		this.log('queue', 7, slots);
 		while ((slot = slots.shift()) !== undefined) {
 			this.fillInSlot(slot);
 		}
 
 		slots.push = this.proxy(this.fillInSlot, this);
-		this.log('ad queue moved');
+		this.log('queue moved', 6);
 	},
 
 	proxy:function (fn, scope) {
@@ -50,7 +45,7 @@ var AdEngine2 = {
 	},
 
 	getProvider:function (slot) {
-		this.log('getProvider', slot);
+		this.log('getProvider', 5, slot);
 
 		var providers = {
 			'GamePro':true,
@@ -74,7 +69,7 @@ var AdEngine2 = {
 
 	// TODO refactor to adProviderGamePro
 	isSlotGamePro:function (slotname, city_lang) {
-		this.log('isSlotGamePro', [slotname, city_lang]);
+		this.log('isSlotGamePro', 5, [slotname, city_lang]);
 
 		var slotMap = {
 			'HOME_TOP_LEADERBOARD':true,
@@ -93,7 +88,7 @@ var AdEngine2 = {
 
 	// TODO refactor to adProviderEvolve ?
 	isSlotEvolve:function (slotname, country) {
-		this.log('isSlotEvolve', [slotname, country]);
+		this.log('isSlotEvolve', 5, [slotname, country]);
 
 		var slotMap = {
 			'HOME_TOP_LEADERBOARD':true,

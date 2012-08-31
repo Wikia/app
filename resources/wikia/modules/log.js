@@ -88,7 +88,7 @@
 
 			outputLevel = qs.getVal('log_level') || cookies.get('log_level') || outputLevel;
 
-			if(typeof outputLevel == 'string')
+			if(typeof outputLevel == 'string' && parseInt(outputLevel) != outputLevel)
 				outputLevel = levels[outputLevel];
 
 			selectedGroups = (qs.getVal('log_group') || cookies.get('log_group') || '').replace(' ', '').replace('|', ',').split(',');
