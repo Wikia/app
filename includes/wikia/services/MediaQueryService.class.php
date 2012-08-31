@@ -357,7 +357,36 @@ SQL;
 		$this->app->wg->Memc->delete( $this->getMemKeyTotalVideos() );
 	}
 
-	// Hook: clear cache after file upload
+	public function clearCacheSortedVideos() {
+		if ( !empty($this->app->wg->EnableSpecialVideosExt) ) {
+			$specialVideos = F::build( 'SpecialVideosHelper' );
+			$videos = $specialVideos->clearCacheSortedVideos();
+		}
+	}
+
+	public function clearCacheSortedPremiumVideos() {
+		if ( !empty($this->app->wg->EnableSpecialVideosExt) ) {
+			$specialVideos = F::build( 'SpecialVideosHelper' );
+			$videos = $specialVideos->clearCacheSortedPremiumVideos();
+		}
+	}
+
+	public function clearAllCacheVideos() {
+		$this->clearCacheVideoList();
+		$this->clearCacheTotalVideos();
+		$this->clearCacheSortedVideos();
+	}
+
+	public function invalidateAllCacheVideos( $title ) {
+		if ( $title->getNamespace() == NS_FILE ) {
+			$file = wfFindFile( $title );
+			if ( $file instanceof File && $file->exists() && F::build( 'WikiaFileHelper', array( $file ), 'isFileTypeVideo' ) ) {
+				$this->clearAllCacheVideos();
+			}
+		}
+	}
+
+	// Hook: clear cache when file is uploaded
 	public static function onFileUpload( $file, $reupload, $hasDescription ) {
 		$title = $file->getTitle();
 		if ( $title instanceof Title && F::build( 'WikiaFileHelper', array( $file ), 'isFileTypeVideo' ) ) {
@@ -369,8 +398,11 @@ SQL;
 			}
 
 			if ( !$reupload ) {
+				$mediaService->clearCacheVideoList();
 				$mediaService->clearCacheTotalVideos();
 			}
+
+			$mediaService->clearCacheSortedVideos();
 		}
 
 		return true;
@@ -394,11 +426,42 @@ SQL;
 					&& F::build( 'WikiaFileHelper', array( $file ), 'isFileTypeVideo' ) ) {
 					$mediaService = F::build( __CLASS__ );
 					$mediaService->clearCachePremiumVideoList();
+					$mediaService->clearCacheVideoList();
 					$mediaService->clearCacheTotalVideos();
+					$mediaService->clearCacheSortedPremiumVideos();
 					break;
 				}
 			}
 		}
+
+		return true;
+	}
+
+	// Hook: clear cache when file is deleted
+	public static function onFileDeleteComplete( &$file, $oldimage, $article, $user, $reason ) {
+		$title = $file->getTitle();
+		if ( $title instanceof Title && F::build( 'WikiaFileHelper', array( $file ), 'isFileTypeVideo' ) ) {
+			$mediaService = F::build( __CLASS__ );
+			if ( $file->isLocal() ) {
+				$mediaService->clearAllCacheVideos();
+			}
+		}
+
+		return true;
+	}
+
+	// Hook: clear cache when file is restored
+	public static function onFileUndeleteComplete( $title, $versions, $user, $comment ) {
+		$mediaService = F::build( __CLASS__ );
+		$mediaService->invalidateAllCacheVideos( $title );
+
+		return true;
+	}
+
+	// Hook: clear cache when file is renamed
+	public static function onFileRenameComplete( &$form , &$oldTitle , &$newTitle ) {
+		$mediaService = F::build( __CLASS__ );
+		$mediaService->invalidateAllCacheVideos( $newTitle );
 
 		return true;
 	}
