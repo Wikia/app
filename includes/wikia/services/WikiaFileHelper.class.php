@@ -195,8 +195,7 @@ class WikiaFileHelper extends Service {
 		$attribs = array(
 			'class' => 'info-overlay-views',
 		);
-
-		$views = $app->wf->Msg( 'videohandler-video-views', $app->wg->Lang->formatNum($views) );
+		$views = $app->wf->MsgForContent( 'videohandler-video-views', $app->wg->Lang->formatNum($views) );
 
 		return Xml::element( 'span', $attribs, $views, false );
 	}
