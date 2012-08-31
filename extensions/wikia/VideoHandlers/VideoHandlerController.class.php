@@ -17,7 +17,8 @@ class VideoHandlerController extends WikiaController {
 				$error = $this->wf->msgForContent('videohandler-error-missing-parameter', 'width');
 			}
 			else {
-				$file = wfFindFile($title);
+				$title = Title::newFromText($title, NS_FILE);
+				$file = ($title instanceof Title) ? wfFindFile($title) : false;
 				if ($file === false) {
 					$error = $this->wf->msgForContent('videohandler-error-video-no-exist');
 				}
