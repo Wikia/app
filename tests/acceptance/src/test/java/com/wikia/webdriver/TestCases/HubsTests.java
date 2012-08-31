@@ -35,7 +35,7 @@ public class HubsTests extends TestTemplate{
 	@Test(dataProvider = "provideHub", groups= {"HubsTests001"})
 //	https://internal.wikia-inc.com/wiki/Hubs/QA/Hubs_Test_Cases#Module_1_.28Mosaic_Slider.29_Test_Cases
 // The test covers underscored steps from test case documentation - see link above
-	public void VideoGamesHubTest001(HubBasePageObject Hub, String HubName, String HubURL)
+	public void HubsTest001(HubBasePageObject Hub, String HubName, String HubURL)
 	{
 		CommonFunctions.MoveCursorTo(0, 0);		
 		home = new HomePageObject(driver);
@@ -60,7 +60,7 @@ public class HubsTests extends TestTemplate{
 	@Test(dataProvider = "provideHub", groups= {"HubsTests002"})
 //	https://internal.wikia-inc.com/wiki/Hubs/QA/Hubs_Test_Cases#Module_2_.28News_Tabs.29_Test_Cases
 // The test covers underscored steps from test case documentation - see link above
-	public void VideoGamesHubTest002(HubBasePageObject Hub, String HubName, String HubURL)
+	public void HubsTest002(HubBasePageObject Hub, String HubName, String HubURL)
 	{	
 		CommonFunctions.MoveCursorTo(0, 0);				
 		home = new HomePageObject(driver);
@@ -80,7 +80,7 @@ public class HubsTests extends TestTemplate{
 	@Test(dataProvider = "provideHub", groups= {"HubsTests003"})
 //	https://internal.wikia-inc.com/wiki/Hubs/QA/Hubs_Test_Cases#Module_3_.28Videos_Module.29_Test_Cases
 // The test covers underscored steps from test case documentation - see link above
-	public void VideoGamesHubTest003(HubBasePageObject Hub, String HubName, String HubURL)
+	public void HubsTest003(HubBasePageObject Hub, String HubName, String HubURL)
 	{	
 		CommonFunctions.MoveCursorTo(0, 0);				
 		home = new HomePageObject(driver);
@@ -128,7 +128,7 @@ public class HubsTests extends TestTemplate{
 	@Test(dataProvider = "provideHub", groups= {"HubsTests004"})
 //	https://internal.wikia-inc.com/wiki/Hubs/QA/Hubs_Test_Cases#Module_3_.28Videos_Module.29_Test_Cases
 // The test covers underscored steps from test case documentation - see link above
-	public void VideoGamesHubTest004(HubBasePageObject Hub, String HubName, String HubURL)
+	public void HubsTest004(HubBasePageObject Hub, String HubName, String HubURL)
 	{	
 		CommonFunctions.MoveCursorTo(0, 0);				
 		home = new HomePageObject(driver);
@@ -163,7 +163,7 @@ public class HubsTests extends TestTemplate{
 	@Test(dataProvider = "provideHub", groups= {"HubsTests005"})
 //	https://internal.wikia-inc.com/wiki/Hubs/QA/Hubs_Test_Cases#Module_5_.28The_Pulse.29_Test_Cases
 // The test covers underscored steps from test case documentation - see link above
-	public void VideoGamesHubTest005(HubBasePageObject Hub, String HubName, String HubURL)
+	public void HubsTest005(HubBasePageObject Hub, String HubName, String HubURL)
 	{	
 		CommonFunctions.MoveCursorTo(0, 0);				
 		home = new HomePageObject(driver);
@@ -185,7 +185,7 @@ public class HubsTests extends TestTemplate{
 	@Test(dataProvider = "provideHub", groups= {"HubsTests006"})
 //	https://internal.wikia-inc.com/wiki/Hubs/QA/Hubs_Test_Cases#Module_7_.28Top_Wikis.29_Test_Cases
 // The test covers underscored steps from test case documentation - see link above
-	public void VideoGamesHubTest006(HubBasePageObject Hub, String HubName, String HubURL)
+	public void HubsTest006(HubBasePageObject Hub, String HubName, String HubURL)
 	{	
 		CommonFunctions.MoveCursorTo(0, 0);				
 		home = new HomePageObject(driver);

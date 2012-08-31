@@ -11,6 +11,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import com.wikia.webdriver.Common.Core.CommonFunctions;
+import com.wikia.webdriver.Common.Core.Global;
 import com.wikia.webdriver.Common.Logging.PageObjectLogging;
 
 public class HubBasePageObject extends BasePageObject{
@@ -62,7 +63,7 @@ public class HubBasePageObject extends BasePageObject{
 		
 	By MosaicSliderLargeImageDescription = By.cssSelector("div.wikia-mosaic-slider-description span.description-more");
 	By NewsTabsList = By.cssSelector("div.tabbertab");
-	By RelatedVideosList = By.cssSelector("div.container div.item");
+	By RelatedVideosList = By.cssSelector("div.wikiahubs-popular-videos div.container div.item");
 	By FromCommunityImagesList = By.cssSelector("ul.wikiahubs-ftc-list div img");
 	By FromCommunityHeadlinesList = By.cssSelector("ul.wikiahubs-ftc-list div.wikiahubs-ftc-title a");
 	By FromCommunityWikinameAndUsernameFieldsList = By.cssSelector("ul.wikiahubs-ftc-list div.wikiahubs-ftc-subtitle a");
@@ -174,7 +175,6 @@ public class HubBasePageObject extends BasePageObject{
 			return;
 		}
 		waitForElementByBy(By.cssSelector("ul.wikia-mosaic-thumb-region img"));
-		List<WebElement> WikiaMosaicSliderPanoramaImages = driver.findElements(By.cssSelector("div.wikia-mosaic-slider-panorama"));
 		List<WebElement> WikiaMosaicSliderThumbRegionImages = driver.findElements(By.cssSelector("ul.wikia-mosaic-thumb-region img"));
 		waitForElementByElement(WikiaMosaicSliderThumbRegionImages.get(n-1));
 		Point ImageLocation = WikiaMosaicSliderThumbRegionImages.get(n-1).getLocation();
@@ -239,24 +239,31 @@ public class HubBasePageObject extends BasePageObject{
 		int n = RVmoduleCurrentVideosSet;
 		PageObjectLogging.log("VerifyRelatedVideosPresence", "Verify that News tabs bar is present and content of newstab number '"+n+"' is present as well", true, driver);
 		waitForElementByBy(RelatedVideosList);
-		List<WebElement> NewsTabs = driver.findElements(RelatedVideosList);
-		WebElement Video1 = NewsTabs.get(3*n-1);
-		waitForElementByElement(Video1);
-		WebElement Video2 = NewsTabs.get(3*n-2);
-		waitForElementByElement(Video2);
-		WebElement Video3 = NewsTabs.get(3*n-3);
-		waitForElementByElement(Video3);				
+		List<WebElement> List = driver.findElements(RelatedVideosList);
+		int size = List.size();
+		WebElement Video1 = List.get(3*n-3);
+		waitForElementByElement(Video1);	
+		//the below 'if' statements prevents situations when driver wants to verify presence of 3 videos in RV module, when there are only 2 videos (or 1 video) in the module. (The situation when there are only 2 or 1 videos is correct)	
+		if (size%3==0 | size%3==2) {	
+			WebElement Video2 = List.get(3*n-2);
+			waitForElementByElement(Video2);
+		}
+		if (size%3==0) {	
+			WebElement Video3 = List.get(3*n-1);
+			waitForElementByElement(Video3);				
+		}
 	}
 
 	public void ClickOnRelatedVideo(int i) {
 		int n = RVmoduleCurrentVideosSet;
 		PageObjectLogging.log("ClickOnRelatedVideo", "Click on related video number "+i+"' is present as well", true, driver);
 		waitForElementByBy(RelatedVideosList);
-		List<WebElement> NewsTabs = driver.findElements(RelatedVideosList);
-		WebElement Video = NewsTabs.get(3*n-4+i);
+		List<WebElement> NewsTabs = driver.findElements(RelatedVideosList);	
+		WebElement Video = NewsTabs.get(3*n-4+i).findElement(By.cssSelector("div.playButton"));
 		waitForElementByElement(Video);
-		waitForElementClickableByElement(Video);	
-		Video.click();
+		CommonFunctions.scrollToElement(Video);
+		Video.click();	
+		
 	}
 
 	/**

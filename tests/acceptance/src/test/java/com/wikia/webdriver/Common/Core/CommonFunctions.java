@@ -282,6 +282,7 @@ public class CommonFunctions
 		driver   = DriverProvider.getWebDriver();
 		wait = new WebDriverWait(driver, 30);
 		int y = element.getLocation().getY();
+			((JavascriptExecutor)driver).executeScript("window.scrollBy(0,-3000);");
 			((JavascriptExecutor)driver).executeScript("window.scrollBy(0,"+y+");");
 		}
 	/**
