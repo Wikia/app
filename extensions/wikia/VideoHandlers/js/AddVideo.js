@@ -178,7 +178,6 @@
 				controllerName,
 				'addVideo',
 				{
-					title: wgPageName,
 					articleId: wgArticleId,
 					url: $('#relatedvideos-add-video input').val()
 				},

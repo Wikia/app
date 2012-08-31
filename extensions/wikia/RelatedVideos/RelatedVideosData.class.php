@@ -63,6 +63,11 @@ class RelatedVideosData {
 
 		wfProfileIn( __METHOD__ );
 
+		if ( empty( $articleId ) ) {
+			wfProfileOut( __METHOD__ );
+			return wfMsg('related-videos-error-no-article-id');
+		}
+
 		/*
 		$targetTitle = F::build('Title', array($articleId), 'newFromId');
 		if (!$targetTitle->exists()) {
