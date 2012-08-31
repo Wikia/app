@@ -95,6 +95,8 @@ class UserIdentityBox {
 		if ($this->user->isAnon()) {
 			//if user doesn't exist
 			$data = $this->populateAnonData($data, $userName);
+
+			$this->getUserTags( $data );
 		} else {
 			$wikiId = $this->app->wg->CityId;
 
