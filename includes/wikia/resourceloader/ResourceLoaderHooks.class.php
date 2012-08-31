@@ -3,9 +3,23 @@
  * Groups all Wikia-specific hook handlers called by Resource Loader
  *
  * @package Wikia
+ * @author macbre
  * @author Wladyslaw Bodzek
  */
 class ResourceLoaderHooks {
+
+	static protected $resourceLoaderInstance;
+
+	/**
+	 * @static
+	 * @return ResourceLoader
+	 */
+	static protected function getResourceLoaderInstance() {
+		if ( empty( self::$resourceLoaderInstance ) ) {
+			self::$resourceLoaderInstance = new ResourceLoader();
+		}
+		return self::$resourceLoaderInstance;
+	}
 
 	/**
 	 * Configure Wikia-specific settings in ResourceLoader
@@ -39,10 +53,6 @@ class ResourceLoaderHooks {
 			'loadScript' => $scriptUri,
 			'apiScript' => $apiUri,
 		));
-
-		// Rebase all modules except startup to "common" source
-//        $resourceLoader->rebaseModules(true,'common');
-//        $resourceLoader->rebaseModules('startup','local');
 
 		return true;
 	}
@@ -136,21 +146,20 @@ class ResourceLoaderHooks {
 	public static function onAlternateResourceLoaderURL( &$loadScript, &$query, &$url, $modules ) {
 		global $wgEnableResourceLoaderRewrites, $wgCdnRootUrl;
 
-		static $resourceLoaderInstance;
-		if ( empty($resourceLoaderInstance) ) $resourceLoaderInstance = new ResourceLoader();
+		$resourceLoaderInstance = self::getResourceLoaderInstance();
 
 		$source = false;
 		foreach ($modules as $moduleName) {
-			$moduleInfo = $resourceLoaderInstance->getModuleInfo($moduleName);
+			$module = $resourceLoaderInstance->getModule($moduleName);
 
-			$moduleSource = 'local';
-			// the module definition may explicitly define the source
-			if ( !empty($moduleInfo['source']) ) {
-				$moduleSource = $moduleInfo['source'];
-			}
+			$moduleSource = $module->getSource();
 
-			if ($source === false) $source = $moduleSource;
-			elseif ($source !== $moduleSource) {
+			if ($source === false) {
+				// first module is being inspected
+				$source = $moduleSource;
+			} elseif ($source !== $moduleSource) {
+				// if there are at least two different sources used just fall back
+				// to use local source
 				$source = 'local';
 				break;
 			}
@@ -178,6 +187,31 @@ class ResourceLoaderHooks {
 		} else {
 			$sources = $resourceLoaderInstance->getSources();
 			$loadScript = $sources[$source]['loadScript'];
+		}
+
+		return true;
+	}
+
+	public static function onResourceLoaderMakeQuery( $modules, &$query ) {
+		$only = isset($query['only']) ? $query['only'] : null;
+
+		if ( empty( $only ) || $only == 'styles' ) {
+			$resourceLoaderInstance = self::getResourceLoaderInstance();
+			$requireSass = false;
+			foreach ($modules as $moduleName) {
+				$module = $resourceLoaderInstance->getModule($moduleName);
+				if ( $module->getRuntimeInfo('require_sass') ) {
+					$requireSass = true;
+					break;
+				}
+			}
+
+			if ( $requireSass ) {
+				$sassParams = SassUtil::getSassSettings();
+				foreach ($sassParams as $key => $value) {
+					$query['sass_'.$key] = (string)$value;
+				}
+			}
 		}
 
 		return true;

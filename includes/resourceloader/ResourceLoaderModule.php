@@ -434,4 +434,11 @@ abstract class ResourceLoaderModule {
 		return self::$jsParser;
 	}
 
+	/**
+	 * Get a named runtime information
+	 */
+	public function getRuntimeInfo( $name ) {
+		return null;
+	}
+
 }

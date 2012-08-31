@@ -116,6 +116,10 @@ class OasisController extends WikiaController {
 			wfProfileOut(__METHOD__ . ' - renderBody');
 		}
 
+		// this is bad but some extensions could have added some scripts to bottom queue
+		// todo: make it not run twice during each request
+		$this->bottomscripts = $wgOut->getBottomScripts();
+
 		// generate list of CSS classes for <body> tag
 		$bodyClasses = array('mediawiki', $this->dir, $this->pageclass);
 		$bodyClasses = array_merge($bodyClasses, self::$extraBodyClasses);

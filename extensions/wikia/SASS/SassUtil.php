@@ -8,6 +8,28 @@ class SassUtil {
 	const DEFAULT_OASIS_THEME = 'oasis';
 
 	/**
+	 * Returns complete set of sass parameters including theme settings
+	 * and wide wiki indicator if it's the case
+	 */
+	public static function getSassSettings() {
+		global $wgOasisHD, $wgOasisFluid;
+
+		$params = self::getOasisSettings();
+
+		if ( $wgOasisHD ) {
+			$params['hd'] = 1;
+		}
+
+		if ( $wgOasisFluid ) {
+			$params['hd'] = 2;
+		}
+
+		ksort( $params );
+
+		return $params;
+	}
+
+	/**
 	 * Gets theme settings from following places:
 	 *  - theme designer ($wgOasisThemeSettings)
 	 *  - theme chosen using usetheme URL param
