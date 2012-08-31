@@ -284,7 +284,8 @@ WikiaHomePageRemix.prototype = {
 			currentslot.data('wiki-id', listslot.wikiid);
 			wikinamehtml.append(listslot.wikiname);
 			var previewDiv = $('<div class="preview-pane"></div>');
-			var previewDivWrapper = $('<div class="preview-pane-wrapper"></div>');
+			var previewDivWrapperClass = 'preview-pane-wrapper';
+			var previewDivWrapper = $('<div class="'+previewDivWrapperClass+'"></div>');
 			var previewVisitHtml;
 			if (currentslot.hasClass('slot-small')) {
 				previewVisitHtml = $('<span class="previewVisit"><a href="#" class="goPreview"><img src="' + wgBlankImgUrl + '" class="previcon" /></a><a href="' + listslot.wikiurl + '" class="goVisit"><img src="' + wgBlankImgUrl + '" class="visicon" /></span></a>');
@@ -293,7 +294,12 @@ WikiaHomePageRemix.prototype = {
 			}
 			previewDiv.append(wikinamehtml.clone()).append($('<span class="hotNewSeparator"></span>')).append(previewVisitHtml);
 			previewDivWrapper.append(previewDiv);
-			currentslot.append(wikinamehtml).append(previewDivWrapper);
+			currentslot
+				.find('.'+previewDivWrapperClass)
+				.remove()
+				.end()
+				.append(wikinamehtml)
+				.append(previewDivWrapper);
 		});
 	},
 	addWikiToStack: function() {
