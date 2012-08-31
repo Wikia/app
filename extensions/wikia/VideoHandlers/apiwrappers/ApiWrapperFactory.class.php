@@ -50,22 +50,18 @@ class ApiWrapperFactory {
 			throw new WikiaException(wfMsg("videohandler-non-premium"));
 		}
 
-		$map = F::app()->wg->videoMigrationProviderMap;
 		$url = trim($url);
-		$fixed_url = strtolower( $url );
-		$test = strpos( $fixed_url, "http://" );
-		if( !false === $test ) {
+		$parsed = parse_url( strtolower( $url ) );
+
+		if ( ( FALSE === $parsed ) || ( !in_array( $parsed['scheme'], array( 'http', 'https' ) ) ) ) {
 			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
-		$fixed_url = str_replace( "http://", "", $fixed_url );
-		$fixed_parts = explode( "/", $fixed_url );
-		$hostname = $fixed_parts[0];
-
-		foreach( $map as $id => $name ) {
+		$map = F::app()->wg->videoMigrationProviderMap;
+		foreach( $map as $name ) {
 			$class_name = $name . 'ApiWrapper';
-			if ( $class_name::isMatchingHostname( $hostname ) ) {
+			if ( $class_name::isMatchingHostname(  $parsed['host'] ) ) {
 				wfProfileOut( __METHOD__ );
 				return $class_name::newFromUrl( $url );
 			}
