@@ -42,7 +42,7 @@ abstract class ResourceLoaderGlobalWikiModule extends ResourceLoaderWikiModule {
 			if ( $text !== false ) {
 				$title = GlobalTitle::newFromText($text, $namespace, $options['city_id']);
 			}
-		} else if ( !isset( $options['city_id'] ) ) {
+		} else {
 			$title = Title::newFromText( $titleText );
 		}
 
