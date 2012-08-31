@@ -171,25 +171,15 @@ class RelatedVideosController extends WikiaController {
 	}
 
 	public function getAddVideoModal(){
-
-		$pgTitle = $this->request->getVal('title', '');
-		$supressSuggestions = $this->request->getVal('supressSuggestions', false);
-		$this->setVal( 'pageTitle', $pgTitle );
-		$this->setVal( 'html', $this->app->renderView( 'RelatedVideos', 'addVideoModalText', array('pageTitle'=>$pgTitle, 'supressSuggestions' => $supressSuggestions) ) );
-		$this->setVal( 'title',	wfMsg('related-videos-add-video-to-this-wiki') );
+		$this->forward( 'VideosController', 'getAddVideoModal' );
 	}
 
-	public function addVideoModalText(){
-
-		$this->setVal( 'supressSuggestions', $this->request->getVal('supressSuggestions', false) );
-		$this->setVal( 'pageTitle', $this->request->getVal('pageTitle', '') );
-	}
-	
 	public function addVideo() {
 		global $wgRelatedVideosOnRail;
 
 		$url = urldecode( $this->getVal( 'url', '' ) );
 		$articleId = $this->getVal( 'articleId', '' );
+
 		$rvd = F::build( 'RelatedVideosData' );
 		$retval = $rvd->addVideo( $articleId, $url );
 		if ( is_array( $retval ) ) {

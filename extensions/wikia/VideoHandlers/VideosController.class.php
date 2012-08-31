@@ -37,7 +37,7 @@ class VideosController extends WikiaController {
 		$retval = $videoService->addVideo( $url );
 
 		if ( is_array($retval) ) {
-			$this->html = '';
+			$this->html = '<div></div>';
 			$this->error = null;
 		} else {
 			$this->html = null;
