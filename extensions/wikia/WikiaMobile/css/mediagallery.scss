@@ -1,4 +1,4 @@
-@import 'mixins/transition';
+@import 'mixins/transition.scss';
 
 #wkGal {
 	width: 100%;
@@ -52,6 +52,7 @@
 	&.loaded {
 		background-size: cover;
 		opacity: 1;
+		background-color: transparent;
 		-webkit-transform: scale(1);
 	}
 }

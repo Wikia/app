@@ -7,7 +7,7 @@
 	width: 100%;
 	border: 1px solid $border-color;
 	border-radius: 0 0 5px 5px;
-	@include box-shadow(0 0 15px $shadow-color);
+	@include box-shadow(0 7px 15px -5px $shadow-color);
 
 	.chev{
 		width: 100%;
@@ -84,10 +84,5 @@
 	#wkMainCnt{
 		margin-top: 40px;
 		position: relative;
-	}
-
-	#wkMainCntHdr{
-		z-index: 2;
-		background-color: white;
 	}
 }

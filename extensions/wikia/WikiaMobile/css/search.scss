@@ -93,6 +93,8 @@
 }
 
 .srhOpn {
+	z-index: $highest-z-index+1;
+
 	#wkTopBar{
 		border-bottom: 1px solid white;
 	}
