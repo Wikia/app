@@ -104,17 +104,18 @@ class WikiaMobileCategoryService extends WikiaService {
 						));
 					$this->response->setVal( 'itemsBatch', $data[$index]->getItems( $batch ) );
 				} else {
-					$err = true;
+					$err = "No Data for given index or batch";
 				}
 			} else {
-				$err = true;
+				$err = "Wrong category";
 			}
 		} else {
-			$err = true;
+			$err = "Wrong values given";
 		}
 
 		if ( $err ) {
-			throw new WikiaException( "Error loading batch {$batch} for index {$index} in Category {$categoryName}" );
+			Wikia::log(__METHOD__, false, "Error loading batch {$batch} for index {$index} in Category {$categoryName}. Msg: {$err}" );
+			header( 'Status: 404 Not Found', true, 404 );
 		}
 	}
 }
