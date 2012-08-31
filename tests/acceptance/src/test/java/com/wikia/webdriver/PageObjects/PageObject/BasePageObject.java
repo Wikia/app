@@ -15,6 +15,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.wikia.webdriver.Common.Core.CommonExpectedConditions;
 import com.wikia.webdriver.Common.Core.CommonFunctions;
+import com.wikia.webdriver.Common.Core.Global;
 import com.wikia.webdriver.Common.Logging.PageObjectLogging;
 import static org.testng.AssertJUnit.fail;
 
@@ -358,7 +359,7 @@ public class BasePageObject{
 	 * @author Michal Nowierski
 	 */
 	public void customizeToolbar_TypeIntoRenameItemDialog(String GivenString) {
-		PageObjectLogging.log("customizeToolbar_TypeIntoRenameItemDialog", "Type "+GivenString+" into Find A Tool field", true, driver);
+		PageObjectLogging.log("customizeToolbar_TypeIntoRenameItemDialog", "Type "+GivenString+" into rename item input", true, driver);
 		waitForElementByElement(customizeToolbar_RenameItemDialogInput);
 		waitForElementClickableByElement(customizeToolbar_RenameItemDialogInput);
 		customizeToolbar_RenameItemDialogInput.clear();
@@ -401,9 +402,18 @@ public class BasePageObject{
 	public void customizeToolbar_ClickOnTool(String Tool_dataname) {
 		PageObjectLogging.log("customizeToolbar_ClickOnFoundTool", "Click on "+Tool_dataname, true, driver);
 		waitForElementByCss("li.overflow a[data-name='"+Tool_dataname+"']");
-		waitForElementClickableByCss("li.overflow a[data-name='"+Tool_dataname+"']");
-		driver.findElement(By.cssSelector("li.overflow a[data-name='"+Tool_dataname+"']")).click();
-		
+		WebElement element = driver.findElement(By.cssSelector("li.overflow a[data-name='"+Tool_dataname+"']"));
+		if (Global.BROWSER.equals("IE")) {
+			// clicking on parent element of the above 'a' element, because IE couldn't click on the above 'a' element
+			// Unfortunately Firefox can't click on this parent element, so the code must be browser-dependent
+			WebElement parent = element.findElement(By.xpath(".."));
+			waitForElementClickableByElement(parent);
+			parent.click();
+		}
+		else {
+			waitForElementClickableByElement(element);
+			element.click();
+		}
 	}
 	
 	/**
@@ -451,7 +461,7 @@ public class BasePageObject{
 	 * @author Michal Nowierski
 	 */
 	public void customizeToolbar_VerifyToolOnToolbarList(String Tool) {
-		PageObjectLogging.log("customizeToolbar_VerifyToolOnToolbarList", "Check if "+Tool+" appears", true, driver);
+		PageObjectLogging.log("customizeToolbar_VerifyToolOnToolbarList", "Check if "+Tool+" appears on list", true, driver);
 		waitForElementByCss("ul.options-list li[data-caption='"+Tool+"']");
 	
 	}
@@ -492,7 +502,7 @@ public class BasePageObject{
 	 * @author Michal Nowierski
 	 */
 	public void customizeToolbar_ClickOnToolRenameButton(String ToolID) {
-		PageObjectLogging.log("customizeToolbar_ClickOnToolRenameButton", "Rename the wanted "+ToolID+" Tool", true, driver);
+		PageObjectLogging.log("customizeToolbar_ClickOnToolRenameButton", "Rename the "+ToolID+" Tool", true, driver);
 		By By1 = By.cssSelector("ul.options-list li[data-caption='"+ToolID+"']");
 		By By2 = By.cssSelector("ul.options-list li[data-caption='"+ToolID+"'] img.edit-pencil");
 		Point Elem1_location = driver.findElement(By1).getLocation();
@@ -519,9 +529,16 @@ public class BasePageObject{
 		waitForElementClickableByBy(By2);
 		Point Elem2_location = driver.findElement(By2).getLocation();
 		CommonFunctions.MoveCursorToElement(Elem2_location);
-		WebElement draggable = driver.findElement(By2); 
-		new Actions(driver).dragAndDropBy(draggable, 0, 25*DragDirection+8).perform();   
-		
+		if (Global.BROWSER.equals("FF")) {
+			// Firefox is unable to drag and drop customize toolbar elements using actions class. Able to do it with robot class
+			CommonFunctions.DragFromCurrentCursorPositionAndDrop(0, 25*DragDirection+8);
+		}
+		else {		
+			// Chrome is unable to drag and drop customize toolbar elements using robot class. Able to do it with actions class
+			WebElement draggable = driver.findElement(By2); 
+			new Actions(driver).dragAndDropBy(draggable, 0, 25*DragDirection+8).perform();  
+			
+		}
 	}
 	
 	/**
@@ -533,6 +550,8 @@ public class BasePageObject{
 	 */
 	public void customizeToolbar_VerifyMyToolsOrder(String tool1, String tool2) {
 		PageObjectLogging.log("customizeToolbar_VerifyMyToolsOrder", "Verify that My Tools list has"+tool2+" appearing after "+tool1, true, driver);
+		CommonFunctions.MoveCursorTo(0, 100);		
+		CommonFunctions.MoveCursorTo(0, 0);		
 		waitForElementByElement(customizeToolbar_MyToolsMenuButton);
 		Point location = customizeToolbar_MyToolsMenuButton.getLocation();
 		try {Thread.sleep(1000);} catch (InterruptedException e) {}
@@ -542,10 +561,10 @@ public class BasePageObject{
 		String ActualTool1=MyToolsList.get(0).getText();
 		String ActualTool2=MyToolsList.get(1).getText();
 		if (!tool1.equals(ActualTool1)) {
-			PageObjectLogging.log("customizeToolbar_VerifyMyToolsOrder", ActualTool1+" where "+tool1+" should be.", false, driver);
+			PageObjectLogging.log("customizeToolbar_VerifyMyToolsOrder", ActualTool1+" where "+tool1+" should be. Drag & drop action (from previous step) must hadn't been succesful", false, driver);
 		}
 		if (!tool2.equals(ActualTool2)) {
-			PageObjectLogging.log("customizeToolbar_VerifyMyToolsOrder", ActualTool2+" where "+tool2+" should be.", false, driver);
+			PageObjectLogging.log("customizeToolbar_VerifyMyToolsOrder", ActualTool2+" where "+tool2+" should be. Drag & drop action (from previous step) must hadn't been succesful", false, driver);
 		}
 	}
 
@@ -555,7 +574,7 @@ public class BasePageObject{
 	 * @author Michal Nowierski
 	 */
 	public void customizeToolbar_ClickOnSaveButton() {
-		PageObjectLogging.log("customizeToolbar_ClickOnSaveButton", "Click on save button on customize toolbar.", true, driver);
+		PageObjectLogging.log("customizeToolbar_ClickOnSaveButton", "Click on 'save' button.", true, driver);
 		waitForElementByElement(customizeToolbar_SaveButton);
 		waitForElementClickableByElement(customizeToolbar_SaveButton);
 		customizeToolbar_SaveButton.click();
@@ -572,6 +591,7 @@ public class BasePageObject{
 	public void customizeToolbar_VerifyToolOnToolbar(String ToolName) {
 		PageObjectLogging.log("customizeToolbar_VerifyToolOnToolbar",
 				"Verify that "+ToolName+" appears in Toolbar.", true, driver);
+		try {Thread.sleep(500);} catch (InterruptedException e) {e.printStackTrace();}
 		waitForElementByBy(customizeToolbar_ToolsList);
 		List<WebElement> List = driver.findElements(customizeToolbar_ToolsList);
 		int amountOfToolsOtherThanTheWantedTool = 0;
@@ -600,11 +620,10 @@ public class BasePageObject{
 		List<WebElement> List = driver.findElements(customizeToolbar_ToolsList);
 		for (int i = 0; i < List.size(); i++) {
 			if (List.get(i).getText().equals("Following")) {
-				waitForElementByElement(List.get(i));
-				waitForElementClickableByElement(List.get(i));
-				List.get(i).click();
+				customizeToolbar_ClickOnTool("follow");
 				customizeToolbar_VerifyPageWatchlistStatusMessage();
 				wait.until(ExpectedConditions.textToBePresentInElement(customizeToolbar_ToolsList, "Follow"));
+			
 			}
 		}
 
@@ -621,6 +640,7 @@ public class BasePageObject{
 	public void customizeToolbar_VerifyToolNotOnToolbar(String ToolName){
 		PageObjectLogging.log("customizeToolbar_VerifyToolNotOnToolbar",
 				"Verify that "+ToolName+" tool does not appear in Toolbar.", true, driver);
+		try {Thread.sleep(500);} catch (InterruptedException e) {e.printStackTrace();}
 		waitForElementByBy(customizeToolbar_ToolsList);
 		List<WebElement> List = driver.findElements(customizeToolbar_ToolsList);
 		int amountOfToolsOtherThanTheWantedTool = 0;

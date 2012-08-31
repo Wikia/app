@@ -2,6 +2,7 @@ package com.wikia.webdriver.Common.Core;
 
 import java.awt.AWTException;
 import java.awt.GraphicsEnvironment;
+import java.awt.MouseInfo;
 import java.awt.Rectangle;
 import java.awt.Robot;
 import java.awt.event.InputEvent;
@@ -332,7 +333,9 @@ public class CommonFunctions
 		Object visibleDomHeightJS = js.executeScript("return window.innerHeight");
 		int VisibleDomHeight = Integer.parseInt(visibleDomHeightJS.toString());
 		
-		MoveCursorTo(elem_X+10, elem_Y+ScreenHeightWithoutTaskBarHeight-VisibleDomHeight-pixDiff+1);
+		Object invisibleUpperDomHeightJS = js.executeScript("return window.pageYOffset");
+		int invisibleUpperDomHeight = Integer.parseInt(invisibleUpperDomHeightJS.toString());
+		MoveCursorTo(elem_X+10, elem_Y+ScreenHeightWithoutTaskBarHeight-VisibleDomHeight-pixDiff+1-invisibleUpperDomHeight);
 	}
 	
 	
@@ -387,11 +390,32 @@ public class CommonFunctions
 		} catch (AWTException e) {
 			e.printStackTrace();
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	   robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
 	   robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+	}
+
+	/**
+	 * Move cursor to from current position by given x and y
+	 * 
+	 * @author Michal Nowierski
+	 * @param x horrizontal move
+	 * @param y	vertical move
+	 */
+	public static void DragFromCurrentCursorPositionAndDrop(int x, int y) {
+		Robot robot = null;
+		try {
+			robot = new Robot();
+		} catch (AWTException e) {
+			e.printStackTrace();
+		}
+		java.awt.Point CurrentCursorPosition = MouseInfo.getPointerInfo().getLocation();
+		int currentX = (int) CurrentCursorPosition.getX();
+		int currentY = (int) CurrentCursorPosition.getY();
+		robot.mousePress(InputEvent.BUTTON1_MASK);
+		robot.mouseMove(currentX+x, currentY+y);
+		robot.mouseRelease(InputEvent.BUTTON1_MASK);
 	}
 	
 	
