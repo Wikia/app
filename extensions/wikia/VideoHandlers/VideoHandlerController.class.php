@@ -4,7 +4,7 @@ class VideoHandlerController extends WikiaController {
 
 	public function getEmbedCode() {
 		$articleId = $this->getVal('articleId', '');
-		$title = $this->getVal('title', '');
+		$title = $this->getVal('fileTitle', '');
 		$width = $this->getVal('width', '');
 		$autoplay = $this->getVal('autoplay', false);
 
