@@ -142,13 +142,29 @@ class PromoteImageReviewTask extends BatchTask {
 
 		$retval = "";
 
-		$sourceImageUrl = ImagesService::getImageSrc($sourceWikiId, $imageId, WikiaHomePageHelper::INTERSTITIAL_LARGE_IMAGE_WIDTH);
+		$dbname = WikiFactory::IDtoDB($sourceWikiId);
+		$imageTitle = F::build('GlobalTitle',array($imageId,$sourceWikiId),'newFromId');
 
-		if( empty($sourceImageUrl['src']) ) {
+		$sourceImageUrl = null;
+		if($imageTitle instanceof GlobalTitle) {
+			$param = array(
+				'action' => 'query',
+				'titles' => $imageTitle->getPrefixedText(),
+				'prop' => 'imageinfo',
+				'iiprop' => 'url',
+			);
+
+			$response = ApiService::foreignCall($dbname, $param);
+
+			if(!empty($response["query"]["pages"][$imageId])
+				&&(!empty($response["query"]["pages"][$imageId]["imageinfo"][0]["url"]))) {
+				$sourceImageUrl = wfReplaceImageServer($response["query"]["pages"][$imageId]["imageinfo"][0]["url"]);
+			}
+		}
+
+		if( empty($sourceImageUrl) ) {
 			$this->log('Apparently the image is unaccessible');
 			return array('status' => 1);
-		} else {
-			$sourceImageUrl = $sourceImageUrl['src'];
 		}
 
 		$city_url = WikiFactory::getVarValueByName("wgServer", $targetWikiId);
