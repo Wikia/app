@@ -182,7 +182,7 @@ class OasisController extends WikiaController {
 
 		wfProfileOut(__METHOD__ . ' - skin Operations');
 
-		$this->topScripts = $this->wg->user->getSkin()->getTopScripts();
+		$this->topScripts = $wgOut->topScripts;
 
 		// printable CSS (to be added at the bottom of the page)
 		// FIXME: move to renderPrintCSS() method

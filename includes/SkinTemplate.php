@@ -158,10 +158,8 @@ class SkinTemplate extends Skin {
 		$title = $this->getTitle();
 
 		// Wikia change - begin - @author: wladek
-		if ( !( F::app()->checkSkin( 'oasis' ) ) ){
-			if ( method_exists( $this, 'getTopScripts' ) ) {
-				$out->topScripts = $this->getTopScripts();
-			}
+		if ( method_exists( $this, 'getTopScripts' ) ) {
+			$out->topScripts = $this->getTopScripts();
 		}
 		// Wikia change - end
 
