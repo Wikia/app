@@ -2,10 +2,12 @@
 
 class ResourceLoaderCustomWikiModule extends ResourceLoaderGlobalWikiModule {
 
+	protected $id;
 	protected $type;
 	protected $articles;
 
 	public function __construct( $info ) {
+		$this->id = 0;
 		$this->type = $info['type'];
 		$this->articles = $info['articles'];
 	}
@@ -15,7 +17,6 @@ class ResourceLoaderCustomWikiModule extends ResourceLoaderGlobalWikiModule {
 		$missingCallback = $context->getRequest()->getVal('missingCallback');
 
 		if ( $this->type ) {
-			$id = 1;
 			foreach ($this->articles as $article) {
 				$pageKey = $article['title'];
 				$type = isset($article['type']) ? $article['type'] : $this->type;
@@ -32,7 +33,7 @@ class ResourceLoaderCustomWikiModule extends ResourceLoaderGlobalWikiModule {
 				}
 
 				if ( !empty( $article['cityId'] ) ) {
-					$pageIndex = 'fakename' . ( $id++ );
+					$pageIndex = 'fakename' . ( $this->id++ );
 					$pageInfo['city_id'] = intval($article['cityId']);
 					$pageInfo['title'] = $article['title'];
 
