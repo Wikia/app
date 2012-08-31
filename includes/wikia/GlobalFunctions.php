@@ -197,15 +197,6 @@ function wfGetReviewReason($max = 5) {
 }
 
 /**
- * @deprecated Use wfShortenText
- */
-function shortenText( $text, $chars=25 ) {
-    wfDeprecated( __METHOD__, '1.19' );
-
-    return wfShortenText($text, $chars);
-}
-
-/**
  * Function to shorten / truncate a string of text into a specific number of
  * characters and add three dots (...) to the end. This will also round the
  * text to the nearest whole word instead of cutting off part way through a
