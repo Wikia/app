@@ -1,7 +1,6 @@
 var AdConfig = {
 	adSlotsRequiringJSInvocation: { HOME_INVISIBLE_TOP:1, INVISIBLE_TOP:1, INVISIBLE_1:1, INVISIBLE_2:1 },
 	geo: null,
-	geoCookieName: 'Geo',
 
 	isHighValueCountry: function(country) {
 		country = country.toUpperCase();
@@ -46,23 +45,9 @@ var AdConfig = {
 		return Wikia.Cookies.get(name);
 	},
 
-	/* Pull the geo data from cookie */
-	pullGeo: function (){
-		if (AdConfig.geo) {
-			return;
-		}
-
-		var cookie = decodeURIComponent(AdConfig.cookie(AdConfig.geoCookieName));
-		if (typeof cookie != 'undefined' && cookie) {
-			try {
-				AdConfig.geo = JSON.parse(cookie);
-			} catch (e) {
-			}
-		}
-	},
-
 	init: function() {
-		AdConfig.pullGeo();
+		// Pull the geo data from cookie
+		AdConfig.geo = Wikia.geo.getGeoData();
 	}
 };
 

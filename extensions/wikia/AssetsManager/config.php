@@ -46,7 +46,8 @@ $config['oasis_ads_js'] = array(
 		'#group_oasis_tracker_js',
 
 		// ads
-		'//extensions/wikia/Geo/geo.js',
+		'//resources/wikia/modules/geo.js',
+
 		'//extensions/wikia/AdEngine/AdMeldAPIClient.js',
 		'//extensions/wikia/AdEngine/AdConfig.js',
 		'//extensions/wikia/AdEngine/AdEngine.js',
@@ -83,7 +84,7 @@ $config['oasis_noads_extensions_js'] = array(
 		'//extensions/wikia/MiniEditor/js/MiniEditor.js',
 		'#group_articlecomments_js', // needs to load after MiniEditor
 		'//extensions/FBConnect/fbconnect.js',
-		'//extensions/wikia/Meebo/meebo.js',
+		'//extensions/wikia/Meebo/meebo.js', // depends on geo.js from #oasis_ads_js
 		'//extensions/wikia/GlobalNotification/GlobalNotification.js',
 		'//skins/oasis/js/GlobalModal.js',  // This needs to load last after all common extensions, please keep this last.
 		'//extensions/wikia/UserLogin/js/UserLogin.js',
