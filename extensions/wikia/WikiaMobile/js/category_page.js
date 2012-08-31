@@ -30,7 +30,7 @@ require(['events', 'loader', 'track'], function(events, loader, track){
 			data:{
 				category: wgTitle,
 				batch: batch,
-				index: encodeURIComponent(id.substr(-1, 1))
+				index: id.slice(8)
 			},
 			callback: function(result){
 				container.parentElement.removeChild(container);

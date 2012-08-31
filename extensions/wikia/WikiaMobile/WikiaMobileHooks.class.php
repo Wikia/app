@@ -150,24 +150,30 @@ class WikiaMobileHooks extends WikiaObject{
 		$this->wf->profileIn( __METHOD__ );
 
 		if ( $this->app->checkSkin( 'wikiamobile' ) ) {
+			//lets do some local caching
+			$out = $this->wg->Out;
+			$title = $categoryPage->getTitle();
+			$text = $title->getText();
+
 			//converting categoryArticle to Article to avoid circular reference in CategoryPage::view
-			F::build( 'Article', array( $categoryPage->getTitle() ) )->view();
+			F::build( 'Article', array( $title ) )->view();
 
-			$scripts = F::build( 'AssetsManager' ,array(), 'getInstance')->getURL( array( 'wikiamobile_categorypage_js' ) );
-
-			$this->wg->Out->setPageTitle( $categoryPage->getTitle()->getText() . ' <span id=catTtl>' . $this->wf->MsgForContent( 'wikiamobile-categories-tagline' ) . '</span>');
-
-			$this->wg->Out->setHTMLTitle( $categoryPage->getTitle()->getText() );
-
-			$params = array( 'categoryPage' => $categoryPage );
-
-			$this->wg->Out->addHTML( $this->app->renderView( 'WikiaMobileCategoryService', 'categoryExhibition', $params ) );
-			$this->wg->Out->addHTML( $this->app->renderView( 'WikiaMobileCategoryService', 'alphabeticalList', $params ) );
+			//add scripts that belongs only to category pages
+			$scripts = F::build( 'AssetsManager', array(), 'getInstance' )->getURL( array( 'wikiamobile_categorypage_js' ) );
 
 			//this is going to be additional call but at least it won't be loaded on every page
 			foreach ( $scripts as $s ) {
-				$this->wg->Out->addScript( '<script src=' . $s . '>' );
+				$out->addScript( '<script src="' . $s . '"></script>' );
 			}
+
+			//set proper titles for a page
+			$out->setPageTitle( $text . ' <span id=catTtl>' . $this->wf->MsgForContent( 'wikiamobile-categories-tagline' ) . '</span>');
+			$out->setHTMLTitle( $text );
+
+			//render lists: exhibition and alphabetical
+			$params = array( 'categoryPage' => $categoryPage );
+			$out->addHTML( $this->app->renderView( 'WikiaMobileCategoryService', 'categoryExhibition', $params ) );
+			$out->addHTML( $this->app->renderView( 'WikiaMobileCategoryService', 'alphabeticalList', $params ) );
 
 			$this->wf->profileOut( __METHOD__ );
 			return false;
