@@ -45,8 +45,8 @@ $messages['en'] = array(
 	'toplists-editor-title-placeholder' => 'Enter a name for the list',
 	'toplists-editor-related-article-label' => 'Related page <small>(optional, but selects an image)</small>',
 	'toplists-editor-related-article-placeholder' => 'Enter an existing page name',
-    'toplists-editor-description-label' => 'A short description of your Top 10 List',
-    'toplists-editor-description-placeholder' => 'Enter a description',
+	'toplists-editor-description-label' => 'A short description of your Top 10 List',
+	'toplists-editor-description-placeholder' => 'Enter a description',
 	'toplists-editor-image-browser-tooltip' => 'Add a picture',
 	'toplists-editor-remove-item-tooltip' => 'Remove item',
 	'toplists-editor-drag-item-tooltip' => 'Drag to change order',
@@ -114,7 +114,9 @@ Head to Wikia to check out the changes! $1
 
 	//Create list call to action
 	'toplists-create-heading' => '<em>New!</em> Create Your Own Top Ten',
-	'toplists-create-button-msg' => 'Create a list'
+	'toplists-create-button-msg' => 'Create a list',
+
+	'toplists-oasis-only' => 'Creating and editing Top 10 lists is not available in Monobook. If you would like to use this feature, please switch your preference to the Wikia skin.',
 );
 
 /** Message documentation (Message documentation)
@@ -127,6 +129,7 @@ $messages['qqq'] = array(
 	'action-toplists-create-edit-list' => '{{doc-action|toplists-create-edit}}',
 	'toplits-image-browser-selected-picture' => '$1 is the title of the image page.',
 	'toplists-list-vote-up' => 'Keep this as short as possible. Everything exceeding allowed lenght will be cutted out!',
+	'toplists-oasis-only' => 'Displayed to users who try to edit or create Top 10 lists in a skin other than the Wikia skin.',
 );
 
 /** Arabic (العربية)
