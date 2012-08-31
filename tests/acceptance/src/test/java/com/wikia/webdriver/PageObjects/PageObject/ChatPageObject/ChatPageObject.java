@@ -25,28 +25,45 @@ public class ChatPageObject extends BasePageObject
 	 */
 	@FindBy(css="textarea[name='message']")
 	private WebElement messageWritingArea;
+	
+	@FindBy(css="form[class='Write blocked']")
+	private WebElement messageWriteAreaBlocked;//when user is disconnected
+	
 	@FindBy(xpath="//div[@class='Chat']//li[contains(text(), 'Welcome to the Mediawiki 1.19 test Wiki chat')]")
 	private WebElement welcomeMessage;
+	
 	@FindBy(css="div.Rail")
 	private WebElement sideBar;
+	
 	@FindBy(css="h1[class=public wordmark''] img")
 	private WebElement wordmark;
+	
 	@FindBy(css="div.User span.username")
 	private WebElement userName;
+	
 	@FindBy(css="div.User img")
 	private WebElement userAvatar;
+	
 	@FindBy(css="li.private")
 	private WebElement privateMassageButton;
+	
 	@FindBy(css="li.private-allow")
 	private WebElement allowPrivateMassageButton;
+	
 	@FindBy(css="li.private-block")
 	private WebElement blockPrivateMassageButton;
+	
 	@FindBy(css="div#Rail img.wordmark")
 	private WebElement mainChatButton;
+	
 	@FindBy(css="h1[class='public wordmark selected']")
 	private WebElement mainChatSelection;
+	
 	@FindBy(css="ul.PrivateChatList span.splotch")
 	private WebElement privateMessageNotificator;
+	
+	@FindBy(css="li[class='User selected blocked']")
+	private WebElement userDisconnectedButton;
 	
 	By userContextMenu = By.cssSelector("ul.regular-actions li");
 	By adminContextMenu = By.cssSelector("ul.admin-actions li");
@@ -200,6 +217,30 @@ public class ChatPageObject extends BasePageObject
 		CommonFunctions.assertString("give-chat-mod", list.get(0).getAttribute("class"));
 		CommonFunctions.assertString("kick", list.get(1).getAttribute("class"));
 		CommonFunctions.assertString("ban", list.get(2).getAttribute("class"));
+	}
+	
+	public void verifyUserIsGreyedOut()
+	{
+		waitForElementByElement(userDisconnectedButton);
+		PageObjectLogging.log("verifyUserIsGreyedOut", "Verified user disconnected from the chat", true, driver);
+	}
+	
+	public void verifyWritingAreaIsBlocked()
+	{
+		waitForElementByElement(messageWriteAreaBlocked);
+		PageObjectLogging.log("verifyWritingAreaIsBlocked", "Verified user writing area is blocked", true, driver);
+	}
+	
+	public void verifyUserLeftFromChatMessage(String userName)
+	{
+		waitForElementByXPath("//li[@class='inline-alert' and contains(text(), '"+userName+" has left the chat.')]");
+		PageObjectLogging.log("verifyUserLeftFromChatMessage", "Verified user left message is visible", true, driver);
+	}
+	
+	public void disconnectFromChat()
+	{
+		driver.get(Global.DOMAIN);
+		PageObjectLogging.log("disconnectFromChat", "User is disconnected from the chat", true, driver);
 	}
 
 	
