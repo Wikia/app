@@ -344,6 +344,18 @@ $messages['de-formal'] = array(
  * @author Erdemaslancan
  */
 $messages['diq'] = array(
+	'founderprogressbar-task-completed' => 'Temamyayo',
+	'founderprogressbar-list-task-label' => 'Wezifey',
+	'founderprogressbar-photo-add10-action' => 'Fotraf deke',
+	'founderprogressbar-category-add3-action' => 'Kategorî deke',
+	'founderprogressbar-photo-add20-action' => 'Fotraf deke',
+	'founderprogressbar-total-edit75-action' => 'Pele deke',
+	'founderprogressbar-page-add20-action' => 'Pele deke',
+	'founderprogressbar-category-add5-action' => 'Kategorî deke',
+	'founderprogressbar-commcorner-edit-label' => 'Kışta Cemaeti bıvurne',
+	'founderprogressbar-commcorner-edit-action' => 'Şo ri kışta cemaeti',
+	'founderprogressbar-video-add-label' => 'Video deke',
+	'founderprogressbar-video-add-action' => 'Video deke',
 	'founderprogressbar-fb-likes3-action' => 'Şo Pela Seri',
 	'founderprogressbar-browse-page-name' => 'Çımpawe',
 );

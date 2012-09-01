@@ -2694,9 +2694,12 @@ $messages['kn'] = array(
 );
 
 /** Korean (한국어)
+ * @author Cafeinlove
  * @author 아라
  */
 $messages['ko'] = array(
+	'wf_city_lang' => '언어',
+	'wf_cc_name' => '분류',
 	'closewiki-unknown' => '알 수 없음',
 );
 
@@ -3820,6 +3823,7 @@ $messages['pms'] = array(
 	'wikifactory-label-ezsharedupload' => 'EZSharedUpload',
 	'wikifactory-label-compare' => 'Confronta',
 	'right-wikifactory' => 'Cangia ampostassion anterne për wiki',
+	'action-wikifactory' => "modifiché j'ampostassion anterne dle wiki",
 	'wikifactory-domain-edit' => "modìfica st'anliura",
 	'wikifactory-domain-remove' => "gava st'anliura da la wiki",
 	'wikifactory-domain-setmain' => "buta st'anliura an wgServer",

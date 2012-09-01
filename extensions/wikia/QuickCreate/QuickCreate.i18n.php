@@ -244,7 +244,7 @@ $messages['pl'] = array(
  * @author Dragonòt
  */
 $messages['pms'] = array(
-	'quickcreate-desc' => "A gionta un boton për creé dle pàgina neuve con la possibilità d'intré ant ël sistema për j'utent anònim",
+	'quickcreate-desc' => "A gionta un boton për creé dle pàgina neuve con l'arcesta d'intré ant ël sistema për j'utent anònim",
 	'quickcreate' => "ch'a manda soa arseta",
 );
 

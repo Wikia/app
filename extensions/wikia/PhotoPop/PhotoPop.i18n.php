@@ -204,7 +204,21 @@ $messages['de'] = array(
  * @author Erdemaslancan
  */
 $messages['diq'] = array(
+	'photopop-setup-category-label' => 'Kategoriye',
 	'photopop-setup-submit-label' => 'Noroc resn',
+	'photopop-game-round' => 'Round',
+	'photopop-game-month-0' => 'Çel',
+	'photopop-game-month-1' => 'Şbt',
+	'photopop-game-month-2' => 'Adr',
+	'photopop-game-month-3' => 'Nsn',
+	'photopop-game-month-4' => 'Gln',
+	'photopop-game-month-5' => 'Hzr',
+	'photopop-game-month-6' => 'Tmz',
+	'photopop-game-month-7' => 'Tbx',
+	'photopop-game-month-8' => 'Kşk',
+	'photopop-game-month-9' => 'Tşv',
+	'photopop-game-month-10' => 'Tşp',
+	'photopop-game-month-11' => 'Kan',
 );
 
 /** Spanish (español)
@@ -563,6 +577,40 @@ $messages['ia'] = array(
 	'photopop-game-download-progress-text' => 'Discarga joco…',
 	'photopop-game-update-progress-text' => 'Actualisa joco…',
 	'photopop-game-download-error-text' => 'Un error ha occurrite durante le discarga del datos del joco. Per favor reproba.',
+);
+
+/** Italian (italiano)
+ * @author Lexaeus 94
+ */
+$messages['it'] = array(
+	'photopop-image-preview' => 'Anteprima delle immagini:',
+	'photopop-game-correct' => 'Correggi',
+	'photopop-game-points' => 'punti',
+	'photopop-game-total' => 'totale',
+	'photopop-game-score' => 'punteggio',
+	'photopop-game-wiki' => 'wiki',
+	'photopop-game-date' => 'Data',
+	'photopop-game-please-wait' => 'Attendi per favore...',
+	'photopop-game-loading' => 'Caricamento...',
+	'photopop-game-month-0' => 'Gen',
+	'photopop-game-month-1' => 'Feb',
+	'photopop-game-month-2' => 'Mar',
+	'photopop-game-month-3' => 'Apr',
+	'photopop-game-month-4' => 'Mag',
+	'photopop-game-month-5' => 'Giu',
+	'photopop-game-month-6' => 'Lu',
+	'photopop-game-month-7' => 'Ago',
+	'photopop-game-month-8' => 'Set',
+	'photopop-game-month-9' => 'Ott',
+	'photopop-game-month-10' => 'Nov',
+	'photopop-game-month-11' => 'Dic',
+);
+
+/** Korean (한국어)
+ * @author Cafeinlove
+ */
+$messages['ko'] = array(
+	'photopop-game-date' => '날짜',
 );
 
 /** Kurdish (Latin script) (‪Kurdî (latînî)‬)

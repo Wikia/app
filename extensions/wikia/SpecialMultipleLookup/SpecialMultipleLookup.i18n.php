@@ -241,6 +241,7 @@ $messages['diq'] = array(
 	'multilookupnext' => 'bahdoyên',
 	'multilookupprevious' => 'verên',
 	'multilookupwiki' => 'Wiki',
+	'multilookupwikidbname' => 'DB name',
 	'multilookupwikiurl' => 'URL',
 	'multilookupwikititle' => 'Sername',
 	'multilookupwikioptions' => 'Weçinegi',
@@ -707,6 +708,7 @@ $messages['pms'] = array(
 	'multilookuplastedithdr' => 'Ùltima modìfica',
 	'multilookuprecordspager' => "Visualisassion dj'argistrassion da '''$1''' a '''$2''' ëd '''$3'''.",
 	'right-multilookup' => "Arserca dj'anformassion an sj'utent su vàire wiki",
+	'action-multilookup' => "arserca dj'anformassion an sj'utent su vàire wiki",
 );
 
 /** Pashto (پښتو)

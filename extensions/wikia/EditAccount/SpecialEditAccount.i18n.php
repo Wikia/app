@@ -860,6 +860,7 @@ $messages['id'] = array(
 /** Italian (italiano)
  * @author HalphaZ
  * @author Leviathan 89
+ * @author Lexaeus 94
  * @author Pietrodn
  */
 $messages['it'] = array(
@@ -894,6 +895,14 @@ $messages['it'] = array(
 	'editaccount-error-close' => "Si è verificato un problema alla chiusura dell'account. Riprova o contatta il Team Tecnico.",
 	'editaccount-invalid-email' => '"$1" non è un indirizzo e-mail valido!',
 	'editaccount-nouser' => 'L\'account "$1" non esiste!',
+	'editaccount-remove-avatar-fail' => "Problema  sull'autorimozione dell'avatar.",
+	'editaccount-requested' => "NOTA: l'utente ha richiesto la chiusura dell'account",
+	'editaccount-not-requested' => "ATTENZIONE: l'utente non ha richiesto la chiusura dell'account",
+	'editaccount-labal-account-status' => "Stato dell'account",
+	'editaccount-labal-email-status' => "Stato dell'email",
+	'editaccount-status-confirmed' => 'Confermato',
+	'editaccount-status-unconfirmed' => 'Non confermato',
+	'editaccount-status-realuser' => 'Utente attivo',
 	'editaccount-log' => 'Registro account utente',
 	'editaccount-log-header' => 'Questa pagina elenca le modifiche alle preferenze utente effettuate dallo Staff Wikia.',
 	'editaccount-log-entry-email' => "E-mail dell'utente $2 cambiata",

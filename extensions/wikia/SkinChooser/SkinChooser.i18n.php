@@ -125,7 +125,7 @@ $messages['it'] = array(
  */
 $messages['ja'] = array(
 	'skinchooser-desc' => '利用者の個人設定での外装選択を可能にします。',
-	'new-look' => 'ウィキアの新しい外装',
+	'new-look' => 'ウィキア',
 	'site-layout' => 'サイトの外装',
 );
 
@@ -181,7 +181,7 @@ $messages['pl'] = array(
  */
 $messages['pms'] = array(
 	'skinchooser-desc' => "A përmët a j'utent ëd serne dle pel ant ij Sò Gust",
-	'new-look' => 'Neuva presentassion ëd Wikia',
+	'new-look' => 'Wikia',
 	'site-layout' => 'Presentassion dël sit',
 );
 
@@ -222,10 +222,11 @@ $messages['sr-ec'] = array(
 
 /** Swedish (svenska)
  * @author Tobulos1
+ * @author WikiPhoenix
  */
 $messages['sv'] = array(
 	'skinchooser-desc' => 'Tillåter användare att välja utseende i deras inställningar',
-	'new-look' => 'Wikias nya utseende',
+	'new-look' => 'Wikia',
 	'site-layout' => 'Layouter för webbplatsen',
 );
 

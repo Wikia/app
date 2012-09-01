@@ -261,10 +261,17 @@ $messages['it'] = array(
  */
 $messages['ja'] = array(
 	'timeagomessaging-desc' => 'jquery.timeago.js プラグインを国際化する',
+	'timeago-year' => '$1年前',
+	'timeago-month' => '$1ヶ月前',
 	'timeago-day' => '$1日前',
 	'timeago-hour' => '$1時間前',
 	'timeago-minute' => '$1分前',
 	'timeago-second' => '1分前',
+	'timeago-day-from-now' => '$1日前',
+	'timeago-hour-from-now' => '$1時間前',
+	'timeago-minute-from-now' => '$1分前',
+	'timeago-month-from-now' => '$1ヶ月前',
+	'timeago-second-from-now' => '1分前',
 );
 
 /** Macedonian (македонски)

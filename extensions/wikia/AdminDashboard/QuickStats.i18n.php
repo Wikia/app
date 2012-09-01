@@ -210,9 +210,12 @@ $messages['et'] = array(
 
 /** Persian (فارسی)
  * @author Reza1615
+ * @author جواد
  */
 $messages['fa'] = array(
 	'quickstats-header-date' => 'تاریخ',
+	'quickstats-header-views' => 'بازدیدها',
+	'quickstats-header-edits' => 'ویرایش‌ها',
 	'quickstats-header-photos' => 'عکس‌ها',
 	'quickstats-totals-label' => 'مجموع',
 );

@@ -397,6 +397,7 @@ Oznamování změn seznamu si můžete <a href="$4">odhlásit</a>.',
 /** German (Deutsch)
  * @author Avatar
  * @author LWChris
+ * @author Metalhead64
  * @author PtM
  */
 $messages['de'] = array(
@@ -482,6 +483,7 @@ Du kannst die Änderungsbenachrichtigungen zu dieser Liste <a href="$4">abbestel
 	'toplists-msg-fb-OnRateArticle-short' => 'hat bei einer Top 10 Liste abgestimmt ($WIKINAME)!',
 	'toplists-create-heading' => '<em>Neu!</em> Erstelle deine eigene Top 10 Liste',
 	'toplists-create-button-msg' => 'Liste erstellen',
+	'toplists-oasis-only' => 'Das Erstellen und Bearbeiten von Top-10-Listen ist im Monobook-Skin nicht verfügbar. Wenn du diese Funktion nutzen willst, wechsele in deinen Einstellungen zum Wikia-Skin.',
 );
 
 /** Zazaki (Zazaki)
@@ -1524,6 +1526,7 @@ U kunt <a href="$4">uitschrijven</a> van wijzigingen op deze lijst.',
 	'toplists-msg-fb-OnRateArticle-short' => 'heeft gestemd op een Top 10 lijst op $WIKINAME!',
 	'toplists-create-heading' => '<em>Nieuw!</em> Maak uw eigen Top 10 aan',
 	'toplists-create-button-msg' => 'Lijst aanmaken',
+	'toplists-oasis-only' => 'Het aanmaken en bewerken van Top 10-lijsten is niet mogelijk in deze vormgeving. Als u deze optie wilt gebruiken, kan dat alleen in de vormgeving "Wikia", die u kunt instelling in uw voorkeuren.',
 );
 
 /** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)

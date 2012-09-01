@@ -1051,7 +1051,10 @@ ___________________________________________<br />
 	'wall-votes-vote-tooltip' => 'Diesen Beitrag loben',
 	'wall-votes-voted-tooltip' => 'Beitrag gelobt!',
 	'wall-quote-author' => '$1 schrieb:',
-	'wall-quote-reply-to' => 'auf $1 antworten',
+	'wall-quote-reply-to' => 'auf Nr. $1 antworten',
+	'wall-preview-modal-title' => 'Vorschau',
+	'wall-preview-modal-button-back' => 'Zurück',
+	'wall-preview-modal-button-publish' => 'Veröffentlichen',
 );
 
 /** Zazaki (Zazaki)
@@ -1071,7 +1074,7 @@ $messages['diq'] = array(
 	'wall-message-remove' => 'Hewad',
 	'wall-message-elseswall' => "Dêsê $1'i",
 	'wall-thread-removed' => 'Hewadeya',
-	'wall-thread-deleted' => 'Besterneya',
+	'wall-thread-deleted' => 'Esteriya',
 	'wall-default-title' => "$1'i ra mesac",
 	'wall-button-to-preview-comment' => 'Verqayt',
 	'wall-button-to-cancel-preview' => 'Timar ke',
@@ -1390,6 +1393,9 @@ ___________________________________________<br />
 	'wall-votes-voted-tooltip' => '¡Te gusta este mensaje!',
 	'wall-quote-author' => '$1 escribió:',
 	'wall-quote-reply-to' => 'responder a #$1',
+	'wall-preview-modal-title' => 'Previsualizar',
+	'wall-preview-modal-button-back' => 'Volver',
+	'wall-preview-modal-button-publish' => 'Publicar',
 );
 
 /** Finnish (suomi)
@@ -1816,7 +1822,10 @@ modifier vos préférence de courriel ici : http://communaute.wikia.com/Special:
 	'wall-votes-vote-tooltip' => 'Sélectionner ce message',
 	'wall-votes-voted-tooltip' => 'Vous avez sélectionné ce message !',
 	'wall-quote-author' => '$1 a écrit :',
-	'wall-quote-reply-to' => 'répondre à $1',
+	'wall-quote-reply-to' => 'réponse à #$1',
+	'wall-preview-modal-title' => 'Aperçu',
+	'wall-preview-modal-button-back' => 'Retour',
+	'wall-preview-modal-button-publish' => 'Publier',
 );
 
 /** Galician (galego)
@@ -2096,7 +2105,10 @@ as preferencias de correo electrónico aquí: http://community.wikia.com/Special
 	'wall-votes-vote-tooltip' => 'Dea o seu eloxio a esta mensaxe',
 	'wall-votes-voted-tooltip' => 'Deu o seu eloxio a esta mensaxe!',
 	'wall-quote-author' => '$1 escribiu:',
-	'wall-quote-reply-to' => 'resposta ao $1',
+	'wall-quote-reply-to' => 'resposta ao nº$1',
+	'wall-preview-modal-title' => 'Vista previa',
+	'wall-preview-modal-button-back' => 'Volver',
+	'wall-preview-modal-button-publish' => 'Publicar',
 );
 
 /** Hungarian (magyar)
@@ -2240,7 +2252,7 @@ Az eredeti üzenet és az indoklásod megmarad a wiki történetében.',
 	'wall-recentchanges-deleted-reply' => 'törölt egy választ a(z) "[[$1|$2]]" beszélgetésfolyamból [[$3|$4 üzenőfalán]]',
 	'wall-recentchanges-deleted-reply-title' => 'Egy válasz az üzenőfalon',
 	'wall-recentchanges-namespace-selector-message-wall' => 'Üzenőfal',
-	'wall-recentchanges-thread-group' => '$1 <a href="$2">$3 üzenőfalán</a>',
+	'wall-recentchanges-thread-group' => '"$1" <a href="$2">$3 üzenőfalán</a>',
 	'wall-recentchanges-history-link' => 'üzenőfal laptörténete',
 	'wall-recentchanges-thread-history-link' => 'beszélgetésfolyam laptörténete',
 	'wall-contributions-wall-line' => '$5 ($6 | $7) $8 <a href="$1">$2</a> <a href="$3">$4 üzenőfalán</a>',
@@ -2284,6 +2296,8 @@ Az eredeti üzenet és az indoklásod megmarad a wiki történetében.',
 	'wall-thread-history-thread-deleted' => '$1 $2 törölte ezt a beszélgetésfolyamot',
 	'wall-thread-history-thread-edited' => '$1 $2 szerkesztette $3 üzenetét ($5)',
 	'wall-thread-history-reply-edited' => '$1 $2 szerkesztette $3 üzenetét ($5)',
+	'wall-thread-history-thread-closed' => '$2 lezárta ezt a beszélgetésfolyamot',
+	'wall-thread-history-thread-reopened' => '$2 újra megnyitotta ezt a beszélgetésfolyamot',
 	'wall-history-action-restore-reply' => 'Válasz visszaállítása',
 	'wall-history-action-restore-thread' => 'Beszélgetésfolyam visszaállítása',
 	'wall-message-not-found-in-db' => 'Nem találtuk meg ezt az üzenetet az adatbázisunkban, sajnáljuk.',
@@ -2592,7 +2606,10 @@ tue preferentias de e-mail: http://community.wikia.com/Special:Preferences',
 	'wall-votes-vote-tooltip' => 'Dar complimentos a iste message',
 	'wall-votes-voted-tooltip' => 'Tu ha date complimentos a iste message!',
 	'wall-quote-author' => '$1 scribeva:',
-	'wall-quote-reply-to' => 'responsa a $1',
+	'wall-quote-reply-to' => 'responsa a №$1',
+	'wall-preview-modal-title' => 'Previsualisation',
+	'wall-preview-modal-button-back' => 'Retornar',
+	'wall-preview-modal-button-publish' => 'Publicar',
 );
 
 /** Italian (italiano)
@@ -2619,7 +2636,7 @@ $messages['it'] = array(
  */
 $messages['ja'] = array(
 	'wall-no-title' => 'タイトルなし',
-	'wall-message-loadmore' => '$1件の返信をすべて表示',
+	'wall-message-loadmore' => '<span class="count">$1件</span>の返信を全てを見る',
 	'wall-message-wall' => 'メッセージウォール',
 	'wall-message-wall-shorten' => 'ウォール',
 	'wall-message-unfollow' => 'フォローを解除',
@@ -2630,10 +2647,13 @@ $messages['ja'] = array(
 	'wall-message-notify' => '管理者に知らせる',
 	'wall-message-remove' => '削除',
 	'wall-message-rev-delete' => '版指定削除',
+	'wall-message-quote-button' => '引用',
 	'wall-message-elseswall' => '$1 のウォール',
 	'wall-message-no-permission' => 'メッセージに対してこの操作を行う権限がありません',
 	'wall-thread-removed' => '削除済',
+	'wall-thread-isnotifyeveryone' => 'ハイライト',
 	'wall-thread-deleted' => '削除済',
+	'wall-thread-closed' => '閉鎖',
 	'wall-default-title' => '$1 からのメッセージ',
 	'wall-no-title-warning' => '← タイトルが未入力です',
 	'wall-desc' => '利用者会話ページを置き換える',
@@ -2653,11 +2673,14 @@ $messages['ja'] = array(
 	'wall-message-edit' => '編集',
 	'wall-message-more' => 'その他',
 	'wall-message-delete' => '削除',
+	'wall-message-close-thread' => 'このスレッドを閉じる',
+	'wall-message-reopen-thread' => 'このスレッドを再開',
 	'wall-message-removed-thread-because' => 'このスレッドは $1 が以下の理由により除去しました:',
 	'wall-message-deleted-thread-because' => 'このスレッドは $1 が以下の理由により削除しました:',
 	'wall-message-restore-thread' => 'スレッドを復帰',
 	'wall-message-removed-reply-because' => 'この返信は $1 が以下の理由により除去しました:',
 	'wall-message-deleted-reply-because' => 'この返信は $1 が以下の理由により削除しました:',
+	'wall-message-closed-by' => '[[$2|$1]] がこのスレッドを閉じました',
 	'wall-message-restore-reply' => '返信を復帰',
 	'wall-delete-reason' => '利用者・管理者の操作',
 	'wall-user-talk-page-archive-anchor' => '会話ページのアーカイブを見る',
@@ -2803,6 +2826,8 @@ $messages['ja'] = array(
 	'wall-thread-history-thread-deleted' => '$1 $2 がこのスレッドを削除しました',
 	'wall-thread-history-thread-edited' => '$1 $2 が $3 のメッセージ $5 を編集しました',
 	'wall-thread-history-reply-edited' => '$1 $2 が $3 のメッセージ $5 を編集しました',
+	'wall-thread-history-thread-closed' => '$2 がこのスレッドを閉じました',
+	'wall-thread-history-thread-reopened' => '$2 がこのスレッドを再開しました',
 	'wall-history-action-restore-reply' => '返信を復帰',
 	'wall-history-action-restore-thread' => 'スレッドを復帰',
 	'wall-message-not-found-in-db' => 'データベースからこのウォールメッセージを見つけられませんでした。',
@@ -2850,6 +2875,21 @@ http://ja.wikia.com/wiki/Special:Following</p>',
 	'wallshowsource-toggle-v2' => 'メッセージウォールで「{{int:user-action-menu-view-source}}」オプションを有効にする',
 	'wallshowsource-toggle' => 'メッセージウォールで「{{int:user-action-menu-view-source}}」オプションを有効にする',
 	'walldelete-toggle' => 'メッセージウォール上のメッセージに対する版指定削除を有効にする',
+	'wall-notifications-notifyeveryone' => '$1 がハイライトしました',
+	'wall-message-notifyeveryone' => 'このスレッドをハイライトする',
+	'wall-message-unnotifyeveryone' => 'このスレッドのハイライトを解除',
+	'wall-message-notifyeveryone-tooltip' => 'このウィキを閲覧している全ての登録利用者に対してこのスレッドに関する通知が行われます',
+	'wall-votes-modal-title' => 'いいね',
+	'wall-votes-modal-title-desc' => '$1人の利用者がこのメッセージに「いいね」を付けました。',
+	'wall-votes-number' => '$1 いいね',
+	'wall-votes-number-tooltip' => '誰がこのメッセージに「いいね」を付けたのかをみる。',
+	'wall-votes-vote-tooltip' => 'このメッセージに「いいね」を付ける',
+	'wall-votes-voted-tooltip' => 'このメッセージには既に「いいね」を付けています',
+	'wall-quote-author' => '$1 曰く:',
+	'wall-quote-reply-to' => '#$1 への返信',
+	'wall-preview-modal-title' => 'プレビュー',
+	'wall-preview-modal-button-back' => '戻る',
+	'wall-preview-modal-button-publish' => '発行',
 );
 
 /** Korean (한국어)
@@ -3213,7 +3253,10 @@ ___________________________________________<br />
 	'wall-votes-vote-tooltip' => 'Дај ѝ кудос на поракава',
 	'wall-votes-voted-tooltip' => 'На поракава ѝ дадовте кудос!',
 	'wall-quote-author' => '$1 напиша:',
-	'wall-quote-reply-to' => 'одговори на $1',
+	'wall-quote-reply-to' => 'одговори на бр. $1',
+	'wall-preview-modal-title' => 'Преглед',
+	'wall-preview-modal-button-back' => 'Назад',
+	'wall-preview-modal-button-publish' => 'Објави',
 );
 
 /** Malay (Bahasa Melayu)
@@ -3493,7 +3536,10 @@ ubah keutamaan e-mel anda di sini: http://community.wikia.com/Special:Preference
 	'wall-votes-vote-tooltip' => 'Puji pesanan ini',
 	'wall-votes-voted-tooltip' => 'Anda telah memuji pesanan ini!',
 	'wall-quote-author' => '$1 menulis:',
-	'wall-quote-reply-to' => 'balasan kepada $1',
+	'wall-quote-reply-to' => 'balasan kepada #$1',
+	'wall-preview-modal-title' => 'Pralihat',
+	'wall-preview-modal-button-back' => 'Kembali',
+	'wall-preview-modal-button-publish' => 'Siarkan',
 );
 
 /** Norwegian Bokmål (‪norsk (bokmål)‬)
@@ -3756,7 +3802,10 @@ endre e-post-innstillingene dine her: http://community.wikia.com/Special:Prefere
 	'wall-votes-vote-tooltip' => 'Gi ros til denne meldingen',
 	'wall-votes-voted-tooltip' => 'Du har gitt denne meldingen ros!',
 	'wall-quote-author' => '$1 skrev:',
-	'wall-quote-reply-to' => 'svar til $1',
+	'wall-quote-reply-to' => 'svar til #$1',
+	'wall-preview-modal-title' => 'Forhåndsvis',
+	'wall-preview-modal-button-back' => 'Tilbake',
+	'wall-preview-modal-button-publish' => 'Publiser',
 );
 
 /** Dutch (Nederlands)
@@ -4328,6 +4377,9 @@ ___________________________________________<br />
 	'wall-votes-voted-tooltip' => 'Przyznano OKejkę tej wiadomości!',
 	'wall-quote-author' => '$1 napisał(a):',
 	'wall-quote-reply-to' => 'odpowiedź na #$1',
+	'wall-preview-modal-title' => 'Podgląd',
+	'wall-preview-modal-button-back' => 'Wstecz',
+	'wall-preview-modal-button-publish' => 'Publikuj',
 );
 
 /** Pashto (پښتو)
@@ -4997,7 +5049,10 @@ ___________________________________________<br />
 	'wall-votes-vote-tooltip' => 'Мне нравится это сообщение',
 	'wall-votes-voted-tooltip' => 'Вам понравилось это сообщение!',
 	'wall-quote-author' => 'От $1:',
-	'wall-quote-reply-to' => 'ответ на $1',
+	'wall-quote-reply-to' => 'ответ на #$1',
+	'wall-preview-modal-title' => 'Предпросмотр',
+	'wall-preview-modal-button-back' => 'Назад',
+	'wall-preview-modal-button-publish' => 'Сохранить',
 );
 
 /** Swedish (svenska)
@@ -5016,11 +5071,13 @@ $messages['sv'] = array(
 	'wall-message-notify' => 'Meddela admin',
 	'wall-message-remove' => 'Ta bort',
 	'wall-message-rev-delete' => 'Revisionsradering',
+	'wall-message-quote-button' => 'Citera',
 	'wall-message-elseswall' => '$1s vägg',
 	'wall-message-no-permission' => 'Du har inte behörighet att utföra denna åtgärd på meddelandet',
 	'wall-thread-removed' => 'Togs bort',
 	'wall-thread-isnotifyeveryone' => 'Belys',
 	'wall-thread-deleted' => 'Raderades',
+	'wall-thread-closed' => 'Stängd',
 	'wall-default-title' => 'Meddelande från $1',
 	'wall-no-title-warning' => '← Du inte angav någon titel',
 	'wall-desc' => 'Ersättning av användardiskussionssida',
@@ -5040,11 +5097,14 @@ $messages['sv'] = array(
 	'wall-message-edit' => 'Redigera',
 	'wall-message-more' => 'Mer',
 	'wall-message-delete' => 'Radera',
+	'wall-message-close-thread' => 'Stäng denna tråd',
+	'wall-message-reopen-thread' => 'Återställ denna tråd',
 	'wall-message-removed-thread-because' => '$1 tog bort denna tråd eftersom:',
 	'wall-message-deleted-thread-because' => '$1 raderade denna tråd eftersom:',
 	'wall-message-restore-thread' => 'Återställ tråd',
 	'wall-message-removed-reply-because' => '$1 tog bort detta svar eftersom:',
 	'wall-message-deleted-reply-because' => '$1 raderade detta svar eftersom:',
+	'wall-message-closed-by' => '[[$2|$1]] stängde denna tråd',
 	'wall-message-restore-reply' => 'Återställ svar',
 	'wall-delete-reason' => 'Användare/administratörsåtgärd',
 	'wall-user-talk-page-archive-anchor' => 'Se arkiverad diskussionssida',
@@ -5192,6 +5252,8 @@ Originalinlägget och din sammanfattning kommer fortfarande att visas i wikins h
 	'wall-thread-history-thread-deleted' => '$1 $2 raderade denna tråd',
 	'wall-thread-history-thread-edited' => '$1 $2 redigerade $3s meddelande $5',
 	'wall-thread-history-reply-edited' => '$1 $2 redigerade $3s meddelande $5',
+	'wall-thread-history-thread-closed' => '$2 stängde denna tråd',
+	'wall-thread-history-thread-reopened' => '$2 återställde denna tråd',
 	'wall-history-action-restore-reply' => 'återställ svar',
 	'wall-history-action-restore-thread' => 'återställ tråd',
 	'wall-message-not-found-in-db' => 'Vi kunde inte hitta denna meddelandevägg i vår databas, beklagar.',
@@ -5269,6 +5331,11 @@ dina e-postinställningar här: http://community.wikia.com/Special:Preferences',
 	'wall-votes-number-tooltip' => 'Se vem som gav beröm till detta meddelande',
 	'wall-votes-vote-tooltip' => 'Ge beröm till detta meddelande',
 	'wall-votes-voted-tooltip' => 'Du har givit beröm till detta meddelande!',
+	'wall-quote-author' => '$1 skrev:',
+	'wall-quote-reply-to' => 'svar till #$1',
+	'wall-preview-modal-title' => 'Förhandsgranskning',
+	'wall-preview-modal-button-back' => 'Tillbaka',
+	'wall-preview-modal-button-publish' => 'Publicera',
 );
 
 /** Tamil (தமிழ்)
@@ -5573,7 +5640,10 @@ ang iyong mga kanaisan ng elektronikong liham dito: http://community.wikia.com/S
 	'wall-votes-vote-tooltip' => 'Magbigay ng Kudos sa mensaheng ito',
 	'wall-votes-voted-tooltip' => 'Binigyan mo ng Kudos ang mensaheng ito!',
 	'wall-quote-author' => 'Isinulat ni $1 ang:',
-	'wall-quote-reply-to' => 'tumugon kay $1',
+	'wall-quote-reply-to' => 'tumugon kay #$1',
+	'wall-preview-modal-title' => 'Paunang patanaw',
+	'wall-preview-modal-button-back' => 'Bumalik',
+	'wall-preview-modal-button-publish' => 'Ilathala',
 );
 
 /** толышә зывон (толышә зывон)

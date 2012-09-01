@@ -992,6 +992,7 @@ $messages['km'] = array(
 
 /** Korean (한국어)
  * @author Cafeinlove
+ * @author 아라
  */
 $messages['ko'] = array(
 	'themedesigner-or' => '또는',
@@ -1015,7 +1016,7 @@ $messages['ko'] = array(
 	'themedesigner-preview-mode' => '미리 보기...',
 	'themedesigner-previous-versions' => '이전 버전',
 	'themedesigner-button-save-im-done' => '변경한 테마를 저장하기',
-	'themedesigner-button-cancel' => '취소하기',
+	'themedesigner-button-cancel' => '취소',
 );
 
 /** Kurdish (Latin script) (‪Kurdî (latînî)‬)

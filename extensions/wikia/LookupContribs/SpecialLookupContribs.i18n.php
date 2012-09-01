@@ -278,9 +278,14 @@ Bitte überprüfen Sie den angegebenen Benutzernamen auf mögliche Tippfehler.</
  * @author Erdemaslancan
  */
 $messages['diq'] = array(
+	'lookupcontribswiki' => 'Wiki',
+	'lookupcontribswikidbname' => 'DB name',
+	'lookupcontribswikiurl' => 'GRE',
+	'lookupcontribswikititle' => 'Sername',
 	'lookupcontribswikioptions' => 'Weçinegi',
 	'lookupcontribsrecordspager' => "'''$1''' , '''$2''' u '''$3''' basnı",
 	'lookupcontribsprevious' => 'verên',
+	'lookupcontribspageremoved' => 'Wedariya:',
 );
 
 /** Spanish (español)
@@ -621,11 +626,18 @@ $messages['inh'] = array(
 	'lookupcontribswiki' => 'ВIикIи',
 );
 
-/** Italian (italiano) */
+/** Italian (italiano)
+ * @author Lexaeus 94
+ */
 $messages['it'] = array(
 	'lookupcontribsgo' => 'Vai',
+	'lookupcontribsinvalidresults' => 'Risultati non validi!',
+	'lookupcontribswiki' => 'Wiki',
 	'lookupcontribswikiurl' => 'URL',
 	'lookupcontribswikititle' => 'Titolo',
+	'lookupcontribswikioptions' => 'Opzioni',
+	'lookupcontribsdetails' => 'Vedi dettagli per:',
+	'lookupcontribslastedited' => 'Ultima modifica',
 	'lookupcontribsnext' => 'succ',
 	'lookupcontribsprevious' => 'precedenti',
 	'lookupcontribscontribs' => 'contributi',

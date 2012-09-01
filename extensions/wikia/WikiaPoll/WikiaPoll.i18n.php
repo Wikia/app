@@ -453,7 +453,7 @@ $messages['mk'] = array(
 	'wikiapoll-question' => '$1?',
 	'wikiapoll-thanks-for-vote' => 'Благодариме!',
 	'wikiapoll-vote' => 'Гласај!',
-	'wikiapoll-votes' => '{{PLURAL:$1|$1 глас|$1 гласови}}',
+	'wikiapoll-votes' => '{{PLURAL:$1|$1 глас|$1 гласа}}',
 	'wikiapoll-question-mark-after' => '?',
 	'wikiapoll-createpoll-headline' => 'Создај анкета',
 	'wikiapoll-editpoll-headline' => 'Уреди анкета',
@@ -467,6 +467,18 @@ $messages['mk'] = array(
 	'wikiamobile-wikiapoll-thanks-voting' => 'Ви благодариме што гласавте!',
 	'wikiamobile-wikiapoll-poll' => 'Анкета',
 	'wikiamobile-wikiapoll-user-voted' => 'Гласавте за $1',
+);
+
+/** Marathi (मराठी)
+ * @author Sau6402
+ */
+$messages['mr'] = array(
+	'wikiapoll-thanks-for-vote' => 'धन्यवाद!',
+	'wikiapoll-vote' => 'मत!',
+	'wikiapoll-question-label' => 'प्रश्न',
+	'wikiapoll-addnewitem-label' => 'नवीन टिप्पणी वाढवा',
+	'wikiapoll-cancel-label' => 'रद्द करा',
+	'wikiapoll-publish-label' => 'प्रकाशित करा',
 );
 
 /** Malay (Bahasa Melayu)
@@ -739,6 +751,10 @@ $messages['sv'] = array(
 	'wikiapoll-publish-label' => 'Publicera',
 	'wikiapoll-error-duplicate' => 'En omröstning med det namnet finns redan.',
 	'wikiapoll-error-invalid-title' => 'Frågetexten är ogiltig.',
+	'wikiamobile-wikiapoll-open-poll' => 'Vad tycker du?',
+	'wikiamobile-wikiapoll-thanks-voting' => 'Tack för att du röstar!',
+	'wikiamobile-wikiapoll-poll' => 'Omröstning',
+	'wikiamobile-wikiapoll-user-voted' => 'Du röstade på $1',
 );
 
 /** Tamil (தமிழ்)

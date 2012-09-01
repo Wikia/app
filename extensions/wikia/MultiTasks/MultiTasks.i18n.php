@@ -1326,7 +1326,9 @@ $messages['ig'] = array(
 	'multidelete_button' => 'Kàcha',
 );
 
-/** Italian (italiano) */
+/** Italian (italiano)
+ * @author Lexaeus 94
+ */
 $messages['it'] = array(
 	'multitasks-link-back-label' => 'qui',
 	'multiwikiedit_button' => 'MODIFICA',
@@ -1334,6 +1336,9 @@ $messages['it'] = array(
 	'multidelete_button' => 'CANCELLA',
 	'multidelete_or' => '<b>O</b>',
 	'multidelete_reason' => 'Motivazione per la cancellazione',
+	'multidelete_this_wiki' => 'questa wiki',
+	'multidelete_all_wikis' => 'Tutte le wiki',
+	'multidelete_selected_wikis' => 'wiki selezionate',
 );
 
 /** Japanese (日本語)
