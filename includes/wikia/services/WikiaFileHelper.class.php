@@ -142,7 +142,19 @@ class WikiaFileHelper extends Service {
 				$content = self::videoOverlayTitle( $videoTitle, $width );
 
 				// video duration
-				$duration = $file->getHandler()->getFormattedDuration();
+				$duration = '';
+				$fileMetadata = $file->getMetadata();
+				if ( $fileMetadata ) {
+					$fileMetadata = unserialize( $fileMetadata );
+					if ( array_key_exists('duration', $fileMetadata) ) {
+						$duration = self::formatDuration( $fileMetadata['duration'] );
+					}
+				}
+
+				if ( empty($duration) ) {
+					$duration = $file->getHandler()->getFormattedDuration();
+				}
+
 				$content .= self::videoOverlayDuration( $duration );
 				$content .= '<br />';
 
@@ -392,5 +404,22 @@ class WikiaFileHelper extends Service {
 		}
 
 		return array( $truncatedList, $isTruncated );
+	}
+
+	// format duration from second to h:m:s
+	public static function formatDuration( $sec ) {
+		$hms = "";
+		$hours = intval(intval($sec) / 3600);
+		if ($hours > 0) {
+			$hms .= str_pad($hours, 2, "0", STR_PAD_LEFT). ":";
+		}
+
+		$minutes = intval(($sec / 60) % 60);
+		$hms .= str_pad($minutes, 2, "0", STR_PAD_LEFT). ":";
+
+		$seconds = intval($sec % 60);
+		$hms .= str_pad($seconds, 2, "0", STR_PAD_LEFT);
+
+		return $hms;
 	}
 }
