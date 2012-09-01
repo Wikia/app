@@ -317,6 +317,7 @@ $messages['pms'] = array(
 	'right-taskmanager' => "A peul mosté j'operassion an slë sfond",
 	'right-taskmanager-action' => "A peul gestì j'operassion an slë sfond",
 	'taskmanager-invert' => 'Anvertì la selession',
+	'action-taskmanager' => "visualisé e gestì j'atività an slë sfond",
 );
 
 /** Portuguese (português)

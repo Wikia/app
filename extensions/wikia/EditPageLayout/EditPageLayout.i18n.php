@@ -1060,9 +1060,16 @@ $messages['inh'] = array(
 );
 
 /** Italian (italiano)
+ * @author Lexaeus 94
  * @author Minerva Titani
  */
 $messages['it'] = array(
+	'editpagelayout-less' => 'meno',
+	'editpagelayout-edit-info' => 'Modifica info',
+	'editpagelayout-diff-header-url' => 'Help:Diff',
+	'editpagelayout-pageControls-pageLink' => 'Ritorna alla pagina',
+	'editpagelayout-blocked-user' => 'Il tuo nome utente o indirizzo IP è stato bloccato',
+	'editpagelayout-edit-summary-label' => 'Riassunto della modifica',
 	'prefs-general' => 'Generale',
 	'prefs-starting-an-edit' => 'Opzioni di modifica',
 	'prefs-editing-experience' => 'Opzioni di modifica avanzate',

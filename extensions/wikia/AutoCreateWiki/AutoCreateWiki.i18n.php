@@ -1151,6 +1151,38 @@ Esto es un nuevo proyecto de wiki, así que por favor, ¡escríbenos si tienes c
 	'autocreatewiki-subname-answers' => 'Respuestas',
 );
 
+/** Estonian (eesti)
+ * @author KalmerE.
+ */
+$messages['et'] = array(
+	'autocreatewiki' => 'Loo uus viki',
+	'autocreatewiki-desc' => 'Loo uus viki WikiFactorysse kasutaja taotluse soovil',
+	'autocreatewiki-page-title-default' => 'Loo uus viki',
+	'autocreatewiki-page-title-answers' => 'Loo uus Vastuste sait',
+	'createwiki' => 'Loo uus viki',
+	'autocreatewiki-chooseone' => 'Vali üks',
+	'autocreatewiki-required' => '$1= kohustuslik',
+	'autocreatewiki-web-address' => 'Veebiaadress',
+	'autocreatewiki-category-select' => 'Vali üks',
+	'autocreatewiki-language-top' => 'Keelte esitabel $1',
+	'autocreatewiki-language-all' => 'Kõik keeled',
+	'autocreatewiki-birthdate' => 'Sünnikuupäev:',
+	'autocreatewiki-blurry-word' => 'Ebaselge sõna:',
+	'autocreatewiki-remember' => 'Pea mind meeles',
+	'autocreatewiki-create-account' => 'Loo konto',
+	'autocreatewiki-done' => 'valmis',
+	'autocreatewiki-error' => 'tõrge',
+	'autocreatewiki-haveaccount-question' => 'Kas sul on juba Wikias konto?',
+	'autocreatewiki-success-title-default' => 'Sinu viki on loodud!',
+	'autocreatewiki-success-title-answers' => 'Sinu küsimuste sait on loodud!',
+	'autocreatewiki-success-subtitle' => 'Võid alustada tööd isiklikul viki saidil, minnes lehele:',
+	'autocreatewiki-success-has-been-created' => 'on loodud!',
+	'autocreatewiki-success-get-started' => 'Alusta',
+	'autocreatewiki-info-domain' => 'Soovituslik on kasutada sõna, mis oleks sinu teema otsingu võtmesõna.',
+	'autocreatewiki-info-topic' => 'Lisa lühike kirjeldus, näiteks "Star Warsist" või "Telesaadetest".',
+	'autocreatewiki-info-category-default' => 'See aitab leida külastajatel sinu vikit.',
+);
+
 /** Basque (euskara)
  * @author An13sa
  */
@@ -1173,6 +1205,7 @@ $messages['eu'] = array(
  * @author Ebraminio
  * @author Huji
  * @author Wayiran
+ * @author جواد
  */
 $messages['fa'] = array(
 	'autocreatewiki' => 'ایجاد ویکی جدید',
@@ -1180,6 +1213,7 @@ $messages['fa'] = array(
 	'autocreatewiki-page-title-answers' => 'ایجاد یک تارنمای جدید پاسخ‌ها',
 	'createwiki' => 'ایجاد ویکی جدید',
 	'autocreatewiki-chooseone' => 'یکی را انتخاب کنید',
+	'autocreatewiki-required' => '$1= مورد نیاز',
 	'autocreatewiki-web-address' => 'نشانی اینترنتی:',
 	'autocreatewiki-category-select' => 'یکی را انتخاب کنید',
 	'autocreatewiki-language-top' => '$1 زبان برتر',
@@ -1690,7 +1724,7 @@ $messages['gl'] = array(
 	'autocreatewiki-step6-error' => 'Non se poden definir as táboas por defecto na base de datos!',
 	'autocreatewiki-step7-error' => 'Non se pode copiar o iniciador da base de datos para esta lingua!',
 	'autocreatewiki-protect-reason' => 'Parte da interface oficial',
-	'autocreatewiki-welcomesubject' => '$1 foi creado!',
+	'autocreatewiki-welcomesubject' => 'Creouse $1!',
 	'autocreatewiki-welcomebody' => 'Boas, $2!
 
 Creouse o seu wiki! Bótelle unha ollada: <$1>.

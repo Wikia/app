@@ -238,6 +238,17 @@ $messages['ia'] = array(
 	'places-category-switch-off' => 'Activar geo-etiquettage',
 );
 
+/** Italian (italiano)
+ * @author Lexaeus 94
+ */
+$messages['it'] = array(
+	'places-editor-search' => 'Cerca',
+	'places-editor-geoposition' => 'Ubicazione attuale:',
+	'places-geolocation-button-label' => 'Aggiungi posizione',
+	'places-geolocation-modal-add-title' => 'Aggiungi posizione',
+	'places-geolocation-modal-error-title' => 'Errore',
+);
+
 /** Macedonian (македонски)
  * @author Bjankuloski06
  */
@@ -454,6 +465,7 @@ $messages['sv'] = array(
 	'places-geolocation-modal-add-title' => 'Lägg till plats',
 	'places-geolocation-modal-error-title' => 'Fel',
 	'places-geolocation-modal-error' => 'Ett fel uppstod när din position skulle bestämmas:<br />$1',
+	'places-geolocation-modal-not-available' => 'Hoppsan! Denna funktion är endast tillgänglig på mobila enheter.<br /><br />Vill du prova? Det är bara att besöka sidan med din föredragna mobilenhet.',
 	'places-error-no-article' => 'Du måste ange en sida',
 	'places-error-place-already-exists' => 'Denna sida är redan geotaggad',
 	'places-updated-geolocation' => 'Geotagga denna sida',

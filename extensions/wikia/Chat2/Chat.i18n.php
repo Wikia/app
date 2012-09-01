@@ -538,7 +538,15 @@ $messages['de-formal'] = array(
  * @author Erdemaslancan
  */
 $messages['diq'] = array(
+	'chat' => 'Mıhebet',
+	'chat-desc' => '[[Special:Chat|Live chat]]',
 	'chat-ban-modal-label-reason' => 'Sebeb',
+	'chat-log-reason-undo' => 'peyser bia',
+	'chat-ban-undolink' => 'peyser bia',
+	'chat-ban-modal-button-cancel' => 'Bıterkne',
+	'chat-live2' => 'Live! Chat',
+	'chat-edit-count' => '{{PLURAL:$1|$1 vurnayışt|$1 vurnayışi}}',
+	'chat-user-menu-kick' => 'Kick',
 );
 
 /** Spanish (español)
@@ -1178,6 +1186,7 @@ $1 è stato bannato da $2 $3.',
 );
 
 /** Japanese (日本語)
+ * @author Shirayuki
  * @author Tommy6
  */
 $messages['ja'] = array(
@@ -1186,6 +1195,7 @@ $messages['ja'] = array(
 	'chat-no-login' => 'ログインする必要があります。',
 	'chat-no-login-text' => 'チャット機能を利用するにはログインする必要があります。',
 	'chat-default-topic' => '「$1 チャット」にようこそ',
+	'chat-welcome-message' => '「$1 チャット」にようこそ',
 	'chat-user-joined' => '$1 がチャットに参加しました。',
 	'chat-read-only' => 'ウィキが閲覧のみに制限されているためチャットは一時的に無効になっています。',
 	'chat-private-messages' => 'プライベートメッセージ',
@@ -1198,6 +1208,9 @@ $messages['ja'] = array(
 	'chat-inlinealert-a-made-b-chatmod' => '$1 が <strong>$2</strong> をチャットモデレータにしました。',
 	'chat-err-connected-from-another-browser' => '他のブラウザからの接続を確認しました。この接続は閉じられます。',
 	'chat-err-communicating-with-mediawiki' => 'MediaWiki サーバとの通信でエラーが発生しました。',
+	'chat-ban-modal-label-reason' => '理由',
+	'chat-log-reason-undo' => '取り消す',
+	'chat-ban-undolink' => '取り消す',
 	'chat-ban-cant-ban-moderator' => '他のチャットモデレータを強制退出させるあるいは追放することはできません。',
 	'chat-ban-already-banned' => '$1 は既にこのウィキのチャットから追放されています。',
 	'chat-ban-you-need-permission' => 'ユーザを強制退出させるあるいは追放するのに必要な$1権限がありません。',

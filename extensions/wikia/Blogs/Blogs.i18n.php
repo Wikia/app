@@ -690,6 +690,7 @@ $messages['cs'] = array(
 /** German (Deutsch)
  * @author Kghbln
  * @author LWChris
+ * @author Metalhead64
  * @author PtM
  * @author The Evil IP address
  */
@@ -807,6 +808,7 @@ $messages['de'] = array(
 	'blog-comment-sending' => 'Sende...',
 	'blog-by' => '$1 von $2',
 	'blogs-searchprofile' => 'Blogs',
+	'blogs-searchprofile-tooltip' => 'In Blogartikeln und Bloglisten suchen',
 );
 
 /** German (formal address) (‪Deutsch (Sie-Form)‬)
@@ -1006,6 +1008,7 @@ Crea páginas de listas de blogs para categorías como "Obama", "Humor", o varia
 	'blog-comment-sending' => 'Enviando...',
 	'blog-by' => '$1 por $2',
 	'blogs-searchprofile' => 'Blogs',
+	'blogs-searchprofile-tooltip' => 'Buscar en artículos de blog y listas de blog',
 );
 
 /** Basque (euskara)
@@ -1209,6 +1212,7 @@ Luo blogilistalle sivuja luokkiin, kuten "Barack Obama", "Fanifiktiot" tai voit 
 );
 
 /** French (français)
+ * @author Gomoko
  * @author IAlex
  * @author Peter17
  * @author Urhixidur
@@ -1329,6 +1333,8 @@ Créez des pages de liste de blogs pour des catégories comme, par exemple, « B
 	'blog-movepage-badtitle' => 'Titre du billet de blog invalide.',
 	'blog-comment-sending' => 'Envoi en cours...',
 	'blog-by' => '$1 par $2',
+	'blogs-searchprofile' => 'Blogs',
+	'blogs-searchprofile-tooltip' => 'Rechercher dans les articles et les listes de blog',
 );
 
 /** Galician (galego)
@@ -1448,6 +1454,8 @@ Cree páxinas de listas de blogues para categorías como "Barack Obama", "Galici
 	'blog-movepage-badtitle' => 'O título da entrada de blogue non é válido.',
 	'blog-comment-sending' => 'Enviando...',
 	'blog-by' => '$1 por $2',
+	'blogs-searchprofile' => 'Blogues',
+	'blogs-searchprofile-tooltip' => 'Procurar nos artigos e listas de blogue',
 );
 
 /** Hausa (هَوُسَ) */
@@ -1809,6 +1817,8 @@ Tu pote crear listas de blogs pro categorias como "Barack Obama", "libros", o me
 	'blog-movepage-badtitle' => 'Invalide titulo de articulo de blog.',
 	'blog-comment-sending' => 'Invio in curso...',
 	'blog-by' => '$1 per $2',
+	'blogs-searchprofile' => 'Blogs',
+	'blogs-searchprofile-tooltip' => 'Cercar in articulos e listas de blog',
 );
 
 /** Indonesian (Bahasa Indonesia)
@@ -2189,6 +2199,7 @@ $messages['ja'] = array(
 	'blog-movepage-badtitle' => '無効なタイトルです',
 	'blog-comment-sending' => '送信中...',
 	'blog-by' => '$1 by $2',
+	'blogs-searchprofile' => 'ブログ',
 );
 
 /** Khmer (ភាសាខ្មែរ)
@@ -2555,6 +2566,8 @@ $messages['mk'] = array(
 	'blog-movepage-badtitle' => 'Неважечки наслов на блог-запис.',
 	'blog-comment-sending' => 'Испраќам...',
 	'blog-by' => '$1 од $2',
+	'blogs-searchprofile' => 'Блогови',
+	'blogs-searchprofile-tooltip' => 'Пребарување во Блоговски написи и Списоци на блогови',
 );
 
 /** Malayalam (മലയാളം)
@@ -2696,6 +2709,8 @@ Cipta laman senarai blog untuk kategori-kategori seperti "Barack Obama", "Cereka
 	'blog-movepage-badtitle' => 'Tajuk kiriman blog tidak sah.',
 	'blog-comment-sending' => 'Menghantar...',
 	'blog-by' => '$1 daripada $2',
+	'blogs-searchprofile' => 'Blog',
+	'blogs-searchprofile-tooltip' => 'Cari dalam Rencana Blog dan Senarai Blog',
 );
 
 /** Norwegian Bokmål (‪norsk (bokmål)‬)
@@ -2816,6 +2831,8 @@ Opprett bloggoppføringssider for å kategorier som «Barack Obama», «Fan Fict
 	'blog-movepage-badtitle' => 'Ugyldig blogginnleggtittel.',
 	'blog-comment-sending' => 'Sender ...',
 	'blog-by' => '$1 av $2',
+	'blogs-searchprofile' => 'Blogger',
+	'blogs-searchprofile-tooltip' => 'Søk i bloggartikler og blogglister',
 );
 
 /** Nepali (नेपाली)
@@ -3122,6 +3139,7 @@ Możesz stworzyć listę dla konkretnej kategorii, np. "Barack Obama", "Gry Komp
 	'blog-comment-sending' => 'Wysyłanie...',
 	'blog-by' => '$1 przez $2',
 	'blogs-searchprofile' => 'Blogi',
+	'blogs-searchprofile-tooltip' => 'Szukaj na blogach i listach blogów',
 );
 
 /** Piedmontese (Piemontèis)
@@ -3691,6 +3709,8 @@ $messages['ru'] = array(
 	'blog-movepage-badtitle' => 'Неверное название записи в блоге.',
 	'blog-comment-sending' => 'Отправка…',
 	'blog-by' => '$1 от $2',
+	'blogs-searchprofile' => 'Блоги',
+	'blogs-searchprofile-tooltip' => 'Поиск в блогах и в списках блогов',
 );
 
 /** Slovenian (slovenščina)
@@ -3889,6 +3909,8 @@ Skapa blogglistor för kategorier som "Barack Obama", "Fan Fiction", eller kombi
 	'blog-movepage-badtitle' => 'Ogiltig titel för blogginlägget.',
 	'blog-comment-sending' => 'Skickar...',
 	'blog-by' => '$1 av $2',
+	'blogs-searchprofile' => 'Bloggar',
+	'blogs-searchprofile-tooltip' => 'Sök i bloggartiklar och blogglistor',
 );
 
 /** Swahili (Kiswahili)
@@ -4189,6 +4211,8 @@ $messages['tl'] = array(
 	'blog-movepage-badtitle' => 'Hindi tanggap na pamagat ng paskil na pamblog.',
 	'blog-comment-sending' => 'Ipinapadala...',
 	'blog-by' => '$1 ni $2',
+	'blogs-searchprofile' => 'Mga blog',
+	'blogs-searchprofile-tooltip' => 'Maghanap sa loob ng Mga Artikulong Blog at Mga Kalistahan ng Blog',
 );
 
 /** толышә зывон (толышә зывон)

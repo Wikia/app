@@ -700,11 +700,13 @@ $messages['eu'] = array(
 /** Persian (فارسی)
  * @author BlueDevil
  * @author Wayiran
+ * @author جواد
  */
 $messages['fa'] = array(
 	'article-comments-anonymous' => 'کاربر گمنام',
 	'article-comments-comments' => '($1) نظرات',
 	'article-comments-post' => 'ارسال نظر',
+	'article-comments-cancel' => 'انصراف',
 	'article-comments-delete' => 'حذف',
 	'article-comments-edit' => 'ویرایش',
 	'article-comments-history' => 'تاریخچه',
@@ -725,6 +727,8 @@ $messages['fa'] = array(
 	'article-comments-page-spacer' => '&#160...&#160',
 	'article-comments-delete-reason' => 'مقالهٔ مادر / نظر مادر حذف شده است.',
 	'article-comments-empty-comment' => "شما نمی‌توانید یک نظر خالی بفرستید. <a href='$1'>به‌جایش حذف شود؟</a>",
+	'wikiamobile-article-comments-replies' => 'پاسخ‌ها',
+	'wikiamobile-article-comments-show' => 'نمایش',
 );
 
 /** Finnish (suomi)
@@ -1217,7 +1221,9 @@ Wikia
 );
 
 /** Japanese (日本語)
+ * @author 2nd-player
  * @author Schu
+ * @author Shirayuki
  * @author Tommy6
  */
 $messages['ja'] = array(
@@ -1247,6 +1253,10 @@ $messages['ja'] = array(
 	'article-comments-page-spacer' => '&#160...&#160',
 	'article-comments-delete-reason' => '親記事/親コメントが削除されました',
 	'article-comments-empty-comment' => "空コメントを投稿することはできません。<a href='$1'>コメントを削除しますか？</a>",
+	'wikiamobile-article-comments-post-reply' => '返信を投稿',
+	'wikiamobile-article-comments-post' => '投稿',
+	'wikiamobile-article-comments-placeholder' => 'コメントを投稿',
+	'wikiamobile-article-comments-show' => '表示',
 	'enotif_subject_article_comment' => '{{SITENAME}} のページ「$PAGETITLE」に $PAGEEDITOR がコメントを投稿しました',
 	'enotif_body_article_comment' => '$WATCHINGUSERNAMEさん、
 

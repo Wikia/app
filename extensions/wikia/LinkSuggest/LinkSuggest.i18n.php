@@ -250,9 +250,11 @@ $messages['pl'] = array(
 
 /** Piedmontese (Piemontèis)
  * @author Borichèt
+ * @author Dragonòt
  */
 $messages['pms'] = array(
 	'tog-disablelinksuggest' => "Nen ësmon-e ij sugeriment ëd j'anliure an modalità Sorgiss",
+	'tog-redirected-from' => '&ndash; ridiressionà da $1',
 );
 
 /** Pashto (پښتو)
