@@ -151,10 +151,6 @@ class WikiaFileHelper extends Service {
 					}
 				}
 
-				if ( empty($duration) ) {
-					$duration = $file->getHandler()->getFormattedDuration();
-				}
-
 				$content .= self::videoOverlayDuration( $duration );
 				$content .= '<br />';
 
