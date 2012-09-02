@@ -755,8 +755,15 @@ $config['forum_js'] = array(
 //		'#group_wall_js',
 		'//extensions/wikia/Forum/js/Forum.js',
 		'//extensions/wikia/Forum/js/ForumNewMessageForm.js',
-		'//extensions/wikia/Forum/js/ForumSortingBar.js',
-		'//extensions/wikia/Forum/js/ForumReplyMessageForm.js'
+		'//extensions/wikia/Forum/js/ForumSortingBar.js'
+	)
+);
+
+/** Wall MessageTopic (certain parts of Wall and Forum uses this) **/
+$config['wall_topic_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/Wall/js/MessageTopic.js',
 	)
 );
 

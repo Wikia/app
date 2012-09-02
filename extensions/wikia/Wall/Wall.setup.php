@@ -36,6 +36,7 @@ $app->registerClass('WallHelper', $dir . '/WallHelper.class.php');
 $app->registerClass('WallHistory', $dir . '/WallHistory.class.php');
 $app->registerClass('WallBaseController', $dir . '/WallBaseController.class.php');
 $app->registerClass('VoteHelper', $dir . '/VoteHelper.class.php');
+$app->registerClass('WallRelatedPages', $dir . '/WallRelatedPages.class.php');
 
 
 // register task in task manager

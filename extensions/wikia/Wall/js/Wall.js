@@ -2,6 +2,10 @@
 
 var Wall = $.createClass(Object, {
 	constructor: function(element, settings) {
+		if(Wall.initialized) {
+			return;
+		}
+		Wall.initialized = true;
 		this.wall = $(element);
 		this.settings = $.extend(true, {}, Wall.settings, settings);
 		this.hoverTimer = {};
@@ -44,6 +48,7 @@ var Wall = $.createClass(Object, {
 			.on('mouseenter', '.follow', this.proxy(this.hoverFollow))
 			.on('mouseleave', '.follow', this.proxy(this.unhoverFollow))
 			.on('click', '.load-more a', this.proxy(this.loadMore))
+			.on('click', '.related-topics .edit-topic-link', this.proxy(this.handleEditTopics))
 
 			// Fix FireFox bug where textareas remain disabled on page reload
 			.find('textarea').removeAttr('disabled');
@@ -347,7 +352,8 @@ var Wall = $.createClass(Object, {
 
 		var isreply = target.closest('.SpeechBubble').attr('data-is-reply');
 
-		var wallMsg = target.closest('li.message');
+		var wallMsg = target.closest('li.message, .message-restore');
+
 		var id = wallMsg.attr('data-id');
 
 		var type = isreply ? 'reply':'thread';
@@ -571,6 +577,61 @@ var Wall = $.createClass(Object, {
 		});
 		
 		reply.data('quotedFrom', quotedFrom);
+	},
+	
+	handleEditTopics: function(e) {
+		e.preventDefault();
+		var rootMessageId = $(e.target).closest('.message').data('id');
+		if(!window.wgUserName) {
+			UserLoginModal.show({
+				callback: this.proxy(function() {
+					this.editTopics(rootMessageId);
+				})
+			});
+		} else {
+			this.editTopics(rootMessageId);
+		}
+	},
+	
+	editTopics: function(rootMessageId) {
+		var relatedTopics = $('.related-topics'),
+			messageTopicEditSection = $('.message-topic-edit'),
+			messageTopicSection = messageTopicEditSection.find('.message-topic'),
+			topics = [], 
+			model = this.model;
+
+		relatedTopics.hide();
+		messageTopicEditSection.show();
+		
+		relatedTopics.find('.related-topic').each(function() {
+			topics.push($(this).data('topic'));
+		});
+		
+		var messageTopic = messageTopicSection.data('messageTopic');
+		
+		if(messageTopic) {
+			messageTopic.resetSelections(topics);
+		} else {
+			messageTopic = messageTopicSection.messageTopic({'topics':topics}).data('messageTopic');
+			messageTopicEditSection
+				.on('click.MessageTopic', '.save-button', function() {
+					var buttons = messageTopicEditSection.find('button');
+					buttons.attr('disabled', true);
+					var topics = messageTopic.getTopics();
+					model.updateTopics(rootMessageId, topics, function(json) {
+						buttons.attr('disabled', false);
+						relatedTopics.find('.related-topic').remove();
+						relatedTopics.prepend($('#RelatedTopicTemplate').mustache({topics: json.topics}));
+						relatedTopics.show();
+						messageTopicEditSection.hide();
+					});
+				})
+				.on('click.MessageTopic', '.cancel-button', function() {
+					relatedTopics.show();
+					messageTopicEditSection.hide();
+				});
+		}
+		
 	},
 
 	proxy: function(func) {

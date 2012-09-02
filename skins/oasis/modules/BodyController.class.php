@@ -56,7 +56,14 @@ class BodyController extends WikiaController {
 		$app = F::app();
 		/* temporarily removing this
 		*/
-		if( in_array( MWNamespace::getSubject($app->wg->Title->getNamespace()), $app->wg->WallNS) ) {
+		
+		$ns = $app->wg->Title->getNamespace();
+		
+		if( in_array( MWNamespace::getSubject($ns), $app->wg->WallNS) ) {
+			return true;
+		}
+		
+		if( defined("NS_WIKIA_FORUM_TOPIC_BOARD") && $ns == NS_WIKIA_FORUM_TOPIC_BOARD ) {
 			return true;
 		}
 		return false;
@@ -137,6 +144,7 @@ class BodyController extends WikiaController {
 		// Forum Extension
 		if (!empty($this->wg->EnableForumExt) && !empty($this->wg->IsForum)) {
 			$railModuleList = array (
+				1002 => array('Forum', 'forumRelatedThreads', null),
 				1001 => array('Forum', 'forumActivityModule', null),
 				1000 => array('Forum', 'forumParticipationModule', null),
 			);

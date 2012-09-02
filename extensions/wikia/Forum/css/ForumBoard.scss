@@ -13,6 +13,10 @@
 	border-bottom: 1px solid $color-wall-border;
 	border-top: 1px solid $color-wall-border;
 	padding: 10px 0;
+	
+	&.Topic {
+		border-top: 0px; 	
+	}
 
 	.activity {
 		float: left;

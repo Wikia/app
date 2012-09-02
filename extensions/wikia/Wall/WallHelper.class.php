@@ -584,4 +584,14 @@ class WallHelper {
 		}
 		return false;
 	}
+	
+	public static function getTopicPageURL($topic) {
+		if(empty($topic)) {
+			return "#";
+		}
+		//TODO:generalize this, this should be part of forum
+		$topicTitle = Title::newFromText($topic->getPrefixedText(), NS_WIKIA_FORUM_TOPIC_BOARD);
+		return $topicTitle->getFullURL();
+	}
+	
 }

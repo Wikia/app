@@ -29,6 +29,12 @@ class WikiaApp {
 	private $hookDispatcher = null;
 
 	/**
+	 * namespace Registry
+	 * @var list of namespaces Registered by nirvana framework
+	 */
+	private $namespaceRegistry = array();
+	
+	/**
 	 * dispatcher
 	 * @var WikiaDispatcher
 	 */
@@ -332,6 +338,54 @@ class WikiaApp {
 		$this->wg->append( 'wgHooks', $this->hookDispatcher->registerHook( $className, $methodName, $options, $alwaysRebuild, $object ), $hookName );
 	}
 
+	/**
+	 * registerNamespaceControler
+	 * if the namespace is registered using registerNamespaceControler  
+	 * $className, $methodName will be exexuted instead of regular article path
+	 * 
+	 * title is passed as a request attribute. ($app->renderView($className, $methodName, array( 'title' => $wgTitle ) )  
+	 *  
+	 * @param integer $namespace
+	 * @param string $className
+	 * @param string $methodName
+	 * @param string $exists - Controler will be only executed if wgTitle exists 
+	 */
+
+	public function registerNamespaceControler( $namespace, $className, $methodName, $exists ) {
+		if(empty($this->namespaceRegistry)) {
+			$this->registerHook( 'ArticleViewHeader', 'WikiaApp', 'onArticleViewHeader', array(), false, $this );
+		}	
+		
+		$this->namespaceRegistry[$namespace] =  array( 
+			'className' => $className, 
+			'methodName' => $methodName,
+		  	'exists' => $exists
+		);
+	}
+	
+	/**
+	 * 
+	 * onArticleViewHeader
+	 * 
+	 * This is a hook which serves the needs of registerNamespaceControler
+	 * 
+	 * @param $article
+	 * @param $outputDone
+	 * @param $useParserCache
+	 */
+	
+	public function onArticleViewHeader(&$article, &$outputDone, &$useParserCache) {
+		$title = $article->getTitle();
+		
+		$namespace = $title->getNamespace();
+		if( !empty($this->namespaceRegistry[$namespace]) && (empty($this->namespaceRegistry['exists']) || $title->exists()) ) {
+			$this->wg->Out->addHTML($this->renderView($this->namespaceRegistry[$namespace]['className'], $this->namespaceRegistry[$namespace]['methodName'], array( 'title' => $article->getTitle() ) ));	
+			$outputDone = true;
+		}
+		
+		return true;
+	}
+	
 	/**
 	 * register class
 	 * @param mixed $className the name of the class or a list of classes contained in the same file passed as an array

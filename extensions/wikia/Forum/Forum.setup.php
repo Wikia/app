@@ -32,7 +32,6 @@ $app->registerSpecialPage( 'Forum', 'ForumSpecialController' );
 
 // hooks
 $app->registerHook( 'AfterWallWikiActivityFilter', 'ForumHooksHelper', 'onAfterWallWikiActivityFilter' );
-$app->registerHook( 'ArticleViewHeader', 'ForumHooksHelper', 'onArticleViewHeader' );
 $app->registerHook( 'NotificationGetNotificationMessage', 'ForumNotificationPlugin', 'onGetNotificationMessage' );
 $app->registerHook( 'WallContributionsLine', 'ForumHooksHelper', 'onWallContributionsLine' ); 
 $app->registerHook( 'getUserPermissionsErrors', 'ForumHooksHelper', 'getUserPermissionsErrors' );
@@ -45,10 +44,8 @@ $app->registerHook( 'WallNewMessage', 'ForumHooksHelper', 'onWallNewMessage' );
 $app->registerHook( 'EditCommentsIndex', 'ForumHooksHelper', 'onEditCommentsIndex' );
 $app->registerHook( 'ArticleInsertComplete', 'ForumHooksHelper', 'onArticleInsertComplete' );
 $app->registerHook( 'WallBeforeRenderThread', 'ForumHooksHelper', 'onWallBeforeRenderThread' );
-$app->registerHook( 'WallLoadThreadListFromDB', 'ForumHooksHelper', 'onWallLoadThreadListFromDB' );
 $app->registerHook( 'WallPreloadThreadsGrouped', 'ForumHooksHelper', 'onWallPreloadThreadsGrouped' );
 $app->registerHook( 'WallThreadLoadReplyIdsFromDB', 'ForumHooksHelper', 'onWallThreadLoadReplyIdsFromDB');
-
 $app->registerHook( 'AfterBuildNewMessageAndPost', 'ForumHooksHelper', 'onAfterBuildNewMessageAndPost');
 
 include( $dir . '/Forum.namespace.setup.php' );

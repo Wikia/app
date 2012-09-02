@@ -348,7 +348,14 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
 
 	'wall-preview-modal-title' => 'Preview',
 	'wall-preview-modal-button-back' => 'Back',
-	'wall-preview-modal-button-publish' => 'Publish'
+	'wall-preview-modal-button-publish' => 'Publish',
+	
+	'wall-topic-input-heading' => 'Topic',
+	'wall-topic-input-placeholder' => 'Add a Topic (optional)',
+	'wall-topic-input-error' => 'There is no article named "$1". Please use an existing article name as a Topic.',
+	'wall-topic-input-error-limit' => 'A thread can only have $1 Topics maximum.',
+	'wall-topic-heading' => 'Topics for this thread:',
+	'wall-topic-edit' => 'Edit Topics',
 );
 
 /** Message documentation (Message documentation)
@@ -719,6 +726,13 @@ This message follows after http://messaging.wikia.com/wiki/MediaWiki:Prefs-email
 	'wall-preview-modal-title' => 'Title of preview modal',
 	'wall-preview-modal-button-back' => 'buton on preview modal',
 	'wall-preview-modal-button-publish' => 'buton on preview modal',
+	
+	'wall-topic-input-heading' => 'Topic input label',
+	'wall-topic-input-placeholder' => 'Adding topic instruction and call to action.  State that it is optional',
+	'wall-topic-input-error' => 'Error message saying article is not on the wiki.  Topic is a wiki article, therefore, state that there is no article.',
+	'wall-topic-input-error-limit' => 'Error message saying user has reached the maximum amount of topics.  $1 is the max such as 4',
+	'wall-topic-heading' => 'Related Topics section heading',
+	'wall-topic-edit' => 'Edit Topics call to action that brings up modal',
 );
 
 /** Bulgarian (български)
