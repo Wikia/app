@@ -17,8 +17,10 @@ class WallBaseController extends ArticleCommentsController {
 		wfProfileIn( __METHOD__ );
 		F::build('JSMessages')->enqueuePackage('Wall', JSMessages::EXTERNAL);
 
+		$this->response->addAsset('wall_topic_js');	// need to load on thread only
 		$this->response->addAsset('wall_js');
 		$this->response->addAsset('extensions/wikia/Wall/css/Wall.scss');
+		$this->response->addAsset('extensions/wikia/Wall/css/MessageTopic.scss');	// need to load on thread only
 
 		// Load MiniEditor assets, if enabled
 		if ($this->wg->EnableMiniEditorExtForWall && $this->app->checkSkin( 'oasis' )) {
@@ -97,7 +99,7 @@ class WallBaseController extends ArticleCommentsController {
 		$this->response->setVal('itemsPerPage', $wallMessagesPerPage);
 		$this->response->setVal('showPager', ($this->countComments > $wallMessagesPerPage) );
 		$this->response->setVal('currentPage', $page );
-//$this->isArchive()
+
 		if($this->wg->User->getId() > 0 && empty($filterid) ) {
 			//THIS hack will be removed after runing script with will clear all notification copy
 			$dbw = wfGetDB( DB_SLAVE, array() );
@@ -116,7 +118,6 @@ class WallBaseController extends ArticleCommentsController {
 		}
 		wfProfileOut( __METHOD__ );
 	}
-	
 	
 	public function reply() {
 		$this->response->setVal('username', $this->wg->User->getName() );
@@ -188,7 +189,9 @@ class WallBaseController extends ArticleCommentsController {
 			
 			$this->response->setVal('linkid', '1');
 			
-			$this->response->setVal( 'showReplyForm', (!$wallMessage->isRemove() && !$wallMessage->isAdminDelete() && !$wallMessage->isArchive() )); 
+			$this->response->setVal( 'showReplyForm', (!$wallMessage->isRemove() && !$wallMessage->isAdminDelete() && !$wallMessage->isArchive() ));
+
+			$this->response->setVal( 'relatedTopics',  $wallMessage->getRelatedTopics() );
 		} else {
 			$showFrom = $this->request->getVal('repliesNumber', 0) - $this->request->getVal('showRepliesNumber', 0);
 			//$current = $this->request->getVal('current', false);
@@ -289,6 +292,8 @@ class WallBaseController extends ArticleCommentsController {
 			$this->response->setVal('showVotes', false);
 		}
 		
+		$this->response->setVal('showTopics', $wallMessage->showTopics());
+		
 		$this->response->setVal( 'user_author_url',  $url );
 
 		$this->response->setVal( 'quote_of',  false );
@@ -353,20 +358,25 @@ class WallBaseController extends ArticleCommentsController {
 		}		
 	}
 	
+	public function getWallForIndexPage($title) {
+		$wall = F::build('Wall', array(($title)), 'newFromTitle');
+		return $wall; 
+	}
+	
 	public function getThreads($title, $page, $perPage = null) {
 		wfProfileIn(__METHOD__);
 
-		$wall = F::build('Wall', array(($title)), 'newFromTitle');
+		$this->wall = $this->getWallForIndexPage($title);
 				
 		if(!empty($perPage)) {
-			$wall->setMaxPerPage($perPage);
+			$this->wall->setMaxPerPage($perPage);
 		}
 		
-		$wall->setSorting($this->getSortingSelected() );
+		$this->wall->setSorting($this->getSortingSelected() );
 		
-		$this->threads = $wall->getThreads($page);
+		$this->threads = $this->wall->getThreads($page);
 		
-		$this->countComments = $wall->getThreadCount();
+		$this->countComments = $this->wall->getThreadCount();
 		
 		$this->title = $this->wg->Title;
 		

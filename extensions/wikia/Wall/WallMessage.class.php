@@ -58,7 +58,7 @@ class WallMessage {
 		return $title;
 	}
 
-	static public function buildNewMessageAndPost( $body, $page, $user, $metaTitle = '', $parent = false, $notify = true, $notifyEveryone = false) {
+	static public function buildNewMessageAndPost( $body, $page, $user, $metaTitle = '', $parent = false, $relatedTopics = array(), $notify = true, $notifyEveryone = false) {
 		wfProfileIn(__METHOD__);
 		if($page instanceof Title ) {
 			$userPageTitle = $page;
@@ -78,8 +78,12 @@ class WallMessage {
 
 		if( $parent === false ) {
 			$metaData = array('title' => $metaTitle );
-			if($notifyEveryone) {
+			if( $notifyEveryone ) {
 				$metaData['notify_everyone'] = time();
+			}
+			
+			if( !empty($relatedTopics) ) {
+				$metaData['related_topics'] = implode('|', $relatedTopics); 
 			}
 			
 			$acStatus = F::build( 'ArticleComment', array( $body, $user, $userPageTitle, false , $metaData ), 'doPost' );
@@ -102,11 +106,11 @@ class WallMessage {
 			wfProfileOut(__METHOD__);
 			return false;
 		}
-
 		// after successful posting invalidate Wall cache
 		$class = F::build( 'WallMessage', array( $ac->getTitle(), $ac ) );
-
+		
 		if($parent === false) {//$db = DB_SLAVE
+			$class->storeRelatedTopicsInDB( $relatedTopics );
 			$class->setOrderId( 1 );
 			$class->getWall()->invalidateCache();
 		} else {
@@ -150,7 +154,6 @@ class WallMessage {
 		return $class;
 	}
 
-
 	//TODO: add some cache
 	public function setOrderId($val = 1) {
 		wfProfileIn( __METHOD__ );
@@ -183,6 +186,16 @@ class WallMessage {
 		$out = self::buildNewMessageAndPost($body, $this->getWallTitle(), $user, '', $this );
 		wfProfileOut( __METHOD__ );
 		return $out; 
+	}
+	
+	public function storeRelatedTopicsInDB($relatedTopicURLs) {
+		$rp = new WallRelatedPages();
+		$rp->setWithURLs($this->getId(), $relatedTopicURLs);
+	}
+	
+	public function getRelatedTopics() {
+		$rp = new WallRelatedPages();
+		return $rp->getMessagesRelatedArticleTitles($this->getId());
 	}
 
 	public function canEdit(User $user){
@@ -334,10 +347,19 @@ class WallMessage {
 	
 	public function setMetaTitle($title) {
 		if($this->isMain()) {
-				$this->getArticleComment()->setMetaData('title', $title);				
+			$this->getArticleComment()->setMetaData('title', $title);				
 		} 
 		return false;
 	}
+	
+	public function setRelatedTopics($relatedTopics) {
+		if($this->isMain()) {
+			$this->getArticleComment()->setMetaData('related_topics', implode('|', $relatedTopics));
+			$this->storeRelatedTopicsInDB($relatedTopics);				
+		} 
+		return false;
+	}
+	
 
 	public function getWallOwnerName() {
 		$parts = explode( '/', $this->getWallTitle()->getText() );
@@ -1222,6 +1244,10 @@ class WallMessage {
 	
 	public function showVotes() {
 		return in_array(MWNamespace::getSubject($this->title->getNamespace()), F::App()->wg->WallVotesNS);	
+	}
+	
+	public function showTopics() {
+		return in_array(MWNamespace::getSubject($this->title->getNamespace()), F::App()->wg->WallTopicsNS);
 	}
 
 	public function canVotes(User $user) {

@@ -89,6 +89,8 @@ class WallExternalController extends WikiaController {
 	public function postNewMessage() {
 		$this->app->wf->ProfileIn(__METHOD__);
 		
+		$relatedTopics = $this->request->getVal('relatedTopics', array());
+		
 		$this->response->setVal('status', true);
 
 		$titleMeta = $this->request->getVal('messagetitle', null);
@@ -110,7 +112,7 @@ class WallExternalController extends WikiaController {
 		}
 		
 		$title = F::build('Title', array($this->request->getVal('pagetitle'), $this->request->getVal('pagenamespace')), 'newFromText');  
-		$wallMessage = F::build('WallMessage', array($body, $title, $this->wg->User, $titleMeta, false, true, $notifyEveryone), 'buildNewMessageAndPost');
+		$wallMessage = F::build('WallMessage', array($body, $title, $this->wg->User, $titleMeta, false, $relatedTopics, true, $notifyEveryone), 'buildNewMessageAndPost');
 		
 		if( $wallMessage === false ) {
 			error_log('WALL_NOAC_ON_POST');
@@ -292,7 +294,6 @@ class WallExternalController extends WikiaController {
 		}
 
 	}
-
 
 	public function editMessage() {
 		//TODO: remove call to ac !!!
@@ -507,5 +508,45 @@ class WallExternalController extends WikiaController {
 		
 		$this->response->setVal('markup', $markup);
 		$this->response->setVal('status', $status);
+	}
+	
+	/**
+	 * Updates topics list to given message id.  It will completely override.
+	 * @param string messageId - numeric id
+	 * @param array relatedTopics - list of topics (article names)
+	 * @return string status - success/failure
+	 */
+	public function updateTopics() {
+		$messageId = $this->request->getVal('msgid', '');
+		$relatedTopics = $this->request->getVal('relatedTopics', array());
+		$status = 'failure';
+			// place holder data, replace this with magic
+		$status = 'success';
+		$topics = array();
+		
+		if(!is_array($relatedTopics)) {
+			$relatedTopics = array();
+		}
+		
+		// cut more then 4
+		$relatedTopics = array_slice( $relatedTopics , 0, 4 );
+				
+		// save 
+		$mw =  F::build('WallMessage', array($messageId), 'newFromId');
+		
+		if(!empty($mw)) {
+			$mw->load();
+			$mw->setRelatedTopics($relatedTopics);
+			$mw->doSaveMetadata($this->wg->User);
+		}
+
+		foreach($relatedTopics as $topic) {
+			$topicTitle = Title::newFromURL($topic);
+			$topics[] = array( 'topic' => $topic, 'url' => WallHelper::getTopicPageURL($topicTitle) );	// I have no idea what the url will be, just a placeholder for now
+		}
+		// end place holder
+		
+		$this->response->setVal('status', $status);
+		$this->response->setVal('topics', $topics);
 	}
 }

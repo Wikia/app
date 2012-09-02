@@ -1,25 +1,6 @@
 <?php
 
 class ForumHooksHelper {
-
-	/**
-	 * Render the wall on board page
-	 */
-
-	public function onArticleViewHeader(&$article, &$outputDone, &$useParserCache) {
-		$app = F::App();
-		$title = $article->getTitle();
-		if( $title->getNamespace() === NS_WIKIA_FORUM_BOARD && $title->exists()
-		) {
-			//message wall index
-			$outputDone = true;
-			$app->wg->SuppressPageHeader = true;
-			$app->wg->WallBrickHeader = true;
-			$app->wg->Out->addHTML($app->renderView('ForumController', 'board', array( 'title' => $article->getTitle() ) ));
-		}
-		return true;
-	}
-
 	/**
 	 * Render the alternative version of thread page
 	 */

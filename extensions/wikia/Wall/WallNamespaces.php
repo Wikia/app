@@ -11,3 +11,4 @@ $wgWallNS = array(NS_USER_WALL);
 $wgWallVotesNS = array();
 $wgWallNotifyEveryoneNS = array();
 $wgWallThreadCloseNS = array();
+$wgWallTopicsNS = array();

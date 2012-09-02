@@ -3,7 +3,7 @@
 		<?= AvatarService::renderAvatar($username, 50) ?>
 		<blockquote class="message">
 			<div class="message-container">
-				<h4 class="heading">Start a Discussion</h4>
+				<h4 class="heading"><?= wfMsg('forum-board-new-message-heading') ?></h4>
 				<? if ($wg->EnableMiniEditorExtForWall): ?>
 					<?= $app->getView('MiniEditorController', 'Header', array(
 						'attributes' => array(
@@ -32,17 +32,18 @@
 						<?php endif; ?>
 						
 						<button disabled="disabled" class="submit<?=
-							$loginToEditProtectedPage ? ' require-login" data="' . $ajaxLoginUrl .'"' : '"'
+							$loginToEditProtectedPage ? ' wall-require-login" data="' . $ajaxLoginUrl .'"' : '"'
 						?>><?= wfMsg('forum-discussion-post') ?></button>
 						
 						<button disabled="disabled" class="preview secondary<?=
-							$loginToEditProtectedPage ? ' require-login" data="' . $ajaxLoginUrl .'"' : '"'
+							$loginToEditProtectedPage ? ' wall-require-login" data="' . $ajaxLoginUrl .'"' : '"'
 						?>><?= wfMsg('wall-button-to-preview-comment') ?></button>
 					</div>
 				</div>
 				<? if ($wg->EnableMiniEditorExtForWall): ?>
 					<?= $app->getView('MiniEditorController', 'Footer')->render() ?>
 				<? endif ?>
+				<?= F::app()->renderPartialCached( 'Wall', 'messageTopic', array() ) ?>
 			</div>
 			<div class="throbber"></div>
 		</blockquote>
