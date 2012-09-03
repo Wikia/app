@@ -87,9 +87,9 @@ class ImageReviewTask extends BatchTask {
 
 			$this->flagUser( $imageId, $wikiId );
 			$this->flagWiki( $wikiId );
-
-			return true;
 		}
+
+		return true;
 	}
 
 	function flagUser( $imageId, $wikiId ) {
