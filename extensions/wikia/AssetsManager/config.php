@@ -322,6 +322,7 @@ $config['wikiamobile_js_head'] = array(
 		'//resources/wikia/modules/cookies.js',
 		'//resources/wikia/modules/querystring.js',
 		'//resources/wikia/modules/log.js',
+		'//resources/wikia/modules/geo.js',
 
 		//feature detection (it's here since it's required by advertisement core)
 		'//extensions/wikia/WikiaMobile/js/features.js',
