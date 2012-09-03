@@ -201,6 +201,12 @@ class AssetsConfig {
 		return $assets;
 	}
 
+	public function getGroupNames() {
+		$this->load();
+
+		return array_keys( $this->mConfig );
+	}
+
 	static public function isUserDependent( $oid ) {
 		return in_array( $oid, array(
 			'site_user_css',

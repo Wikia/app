@@ -7,7 +7,6 @@ $config['oasis_jquery_ads_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'#group_oasis_jquery',
-		'#group_oasis_wikia_js',
 		'#group_oasis_ads_js'
 	)
 );
@@ -135,6 +134,8 @@ $config['jquery'] = array(
 $config['oasis_jquery'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
+		// Wikia plugins
+		'#group_oasis_wikia_js',
 
 		// 3rd party plugins
 		'//resources/wikia/libraries/jquery/getcss/jquery.getcss.js',
@@ -206,7 +207,6 @@ $config['oasis_shared_js'] = array(
 	'assets' => array(
 		// shared libraries
 		'#group_oasis_jquery',
-		'#group_oasis_wikia_js',
 		'#group_oasis_nojquery_shared_js',
 		'#group_oasis_extensions_js',
 	)
@@ -235,11 +235,6 @@ $config['oasis_nojquery_shared_js'] = array(
 	'assets' => array(
 
 		// shared libraries
-		'//resources/wikia/libraries/my.class/my.class.js',
-		'//resources/wikia/modules/querystring.js',
-		'//resources/wikia/modules/cookies.js',
-		'//resources/wikia/modules/log.js',
-		'//resources/wikia/libraries/jquery/modal/jquery.wikia.modal.js',
 		'//extensions/wikia/AssetsManager/js/AssetsManager.js',
 		'//extensions/wikia/JSMessages/js/JSMessages.js',
 		'//extensions/wikia/CategorySelect/CategorySelect.view.js',
@@ -483,11 +478,6 @@ $config['wikiaapp_js'] = array(
 $config['monobook_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
-		//core functionality required early in the process before jQuery
-		'//resources/wikia/modules/cookies.js',
-		'//resources/wikia/modules/querystring.js',
-		'//resources/wikia/modules/log.js',
-
 		'#group_oasis_jquery',
 		'#group_articlecomments_js',
 
@@ -504,7 +494,6 @@ $config['monobook_js'] = array(
 //		'//resources/mediawiki/mediawiki.util.js', # instead of //skins/common/wikibits.js'
 //		'//skins/common/ajax.js',
 		'//skins/monobook/main.js',
-		'//resources/wikia/libraries/my.class/my.class.js',
 		'//extensions/wikia/JSMessages/js/JSMessages.js',
 		'//extensions/wikia/AjaxLogin/AjaxLoginBindings.js',
 		'//extensions/wikia/ImageLazyLoad/js/ImageLazyLoad.js',
@@ -650,7 +639,6 @@ $config['chat_js2'] = array(
 	'assets' => array(
 		'#group_oasis_shared_js',
 		'//extensions/wikia/Chat2/js/lib/socket.io.client.js',
-		'//extensions/wikia/JSMessages/js/JSMessages.js',
 		'//extensions/wikia/Chat2/js/emoticons.js', // must be before controllers.js
 		'//extensions/wikia/Chat2/js/lib/underscore.js',
 		'//extensions/wikia/Chat2/js/lib/backbone.js',
@@ -673,11 +661,6 @@ $config['chat_ban_js'] = array(
 $config['theme_designer_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
-		//core functionality required early in the process before jQuery
-		'//resources/wikia/modules/cookies.js',
-		'//resources/wikia/modules/querystring.js',
-		'//resources/wikia/modules/log.js',
-
 		'#group_oasis_jquery',
 
 		'#group_oasis_tracker_js',
