@@ -142,11 +142,12 @@ class BodyController extends WikiaController {
 		$huluVideoPanelKey = $wgUser->isAnon() ? 1390 : 1280;
 
 		// Forum Extension
-		if (!empty($this->wg->EnableForumExt) && !empty($this->wg->IsForum)) {
+		if (ArticleAdLogic::isForum()) {
 			$railModuleList = array (
 				1002 => array('Forum', 'forumRelatedThreads', null),
 				1001 => array('Forum', 'forumActivityModule', null),
 				1000 => array('Forum', 'forumParticipationModule', null),
+				1490 => array('Ad', 'Index', array('slotname' => 'TOP_RIGHT_BOXAD')),
 			);
 			return $railModuleList;
 		}
