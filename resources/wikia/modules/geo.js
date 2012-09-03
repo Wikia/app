@@ -1,5 +1,5 @@
 /**
- * Geo-location utulity
+ * Geo-location utility
  *
  * Depends on: cookies module
  *
