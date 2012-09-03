@@ -43,7 +43,7 @@ var AdProviderEvolve = my.Class(AdProviderAdEngine2, {
 			'.doubleclick.net/' +
 			'adj' + '/' +
 			'gn.wikia4.com' + '/' +
-			'home;' + // (window.adLogicPageType ? window.adLogicPageType : 'article') + ';' +
+			'home;' + // (window.wikiaPageType ? window.wikiaPageType : 'article') + ';' +
 			'sect=' + 'home' + ';' +
 			'mtfInline=true;' +
 			'pos=' + slotname + ';' +

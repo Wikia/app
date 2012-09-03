@@ -310,7 +310,7 @@ AdConfig.DART.initSiteAndZones = function() {
 		DART.zone1 = DART.getZone1(window.wgDBname);
 	}
 	if (!DART.zone2) {
-		DART.zone2 = DART.getZone2(window.adLogicPageType);
+		DART.zone2 = DART.getZone2(window.wikiaPageType);
 	}
 };
 

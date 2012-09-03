@@ -1,6 +1,6 @@
 <?
 global $wgTitle, $wgArticle, $wgOut;
-//if ($wgTitle->isContentPage() && !ArticleAdLogic::isMainPage()) {
+//if ($wgTitle->isContentPage() && !WikiaPageType::isMainPage()) {
 if ( $wgTitle->exists() && $wgTitle->isContentPage() && !$wgTitle->isTalkPage() && $wgOut->isArticle() ) {
 
 ?>

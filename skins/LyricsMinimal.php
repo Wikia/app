@@ -731,7 +731,7 @@ class LyricsMinimalTemplate extends QuickTemplate {
 <?php
 wfProfileIn( __METHOD__ . '-body'); ?>
 <?php
-	if (ArticleAdLogic::isMainPage()){
+	if (WikiaPageType::isMainPage()){
 		$isMainpage = ' mainpage';
 	} else {
 		$isMainpage = null;
@@ -759,10 +759,10 @@ wfProfileIn( __METHOD__ . '-body'); ?>
 	// This sucks to have a blocking call at the top of the page, but they promised
 	// to only do it if they needed. Only use DART or Google (fast Ad Providers with good infrastructure)
 	global $wgOut;
-	if (ArticleAdLogic::isMainPage()){
+	if (WikiaPageType::isMainPage()){
 		echo '<script type="text/javascript" src="/extensions/wikia/AdEngine/AdEngine.js"></script>' . "\n";
 		echo AdEngine::getInstance()->getAd('HOME_INVISIBLE_TOP');
-	} else if ($wgOut->isArticle() && ArticleAdLogic::isContentPage()){
+	} else if ($wgOut->isArticle() && WikiaPageType::isContentPage()){
 		echo '<script type="text/javascript" src="/extensions/wikia/AdEngine/AdEngine.js"></script>' . "\n";
 		echo AdEngine::getInstance()->getAd('INVISIBLE_TOP');
 	}
@@ -830,29 +830,6 @@ if(empty($wgEnableRecipesTweaksExt) || !RecipesTweaks::isHeaderStripeShown()) {
 					<?php
 					// Display content
 					$this->printContent();
-
-					// Display additional ads before categories and footer on long pages
-					global $wgEnableAdsPrefooter, $wgDBname;
-					if ( !empty( $wgEnableAdsPrefooter ) &&
-					$wgOut->isArticle() &&
-					ArticleAdLogic::isContentPage() &&
-					ArticleAdLogic::isLongArticle($this->data['bodytext'])) {
-
-
-						global $wgEnableAdsFooter600x250;
-
-						if (!empty($wgEnableAdsFooter600x250)){
-							echo AdEngine::getInstance()->getPlaceHolderIframe("PREFOOTER_BIG", true);
-						} else {
-							echo  '<table style="margin-top: 1em; width: 100%; clear: both"><tr>' .
-							'<td style="text-align: center">' .
-							AdEngine::getInstance()->getPlaceHolderIframe("PREFOOTER_LEFT_BOXAD", true) .
-							'</td><td style="text-align: center">' .
-							AdEngine::getInstance()->getPlaceHolderIframe("PREFOOTER_RIGHT_BOXAD", true) .
-							"</td></tr>\n</table>";
-						}
-					}
-
 					$this->printCategories();
 					?>
 					<!-- end content -->
@@ -913,13 +890,13 @@ $this->printCustomFooter();
 <?php
 /* Put two "invisible" ad slots here. These are for loading ads that just load javascript,
 but it isn't positioned at any particular part of a page, such as a slider or a interstitial */
-if ($wgOut->isArticle() && ArticleAdLogic::isContentPage()){
+if ($wgOut->isArticle() && WikiaPageType::isContentPage()){
 	echo AdEngine::getInstance()->getAd('INVISIBLE_1');
 }
 
 echo AdEngine::getInstance()->getDelayedIframeLoadingCode();
 
-if ($wgOut->isArticle() && ArticleAdLogic::isContentPage()){
+if ($wgOut->isArticle() && WikiaPageType::isContentPage()){
 	echo AdEngine::getInstance()->getAd('INVISIBLE_2');
 }
 
@@ -973,34 +950,18 @@ wfProfileOut( __METHOD__ . '-body');
 	function getTopAdCode(){
 	        echo AdEngine::getInstance()->getSetupHtml();
 
-		global $wgOut, $wgAdsForceLeaderboards, $wgEnableIframeAds, $wgEnableTandemAds, $wgEnableFAST_HOME2;
+		global $wgOut, $wgEnableIframeAds, $wgEnableTandemAds, $wgEnableFAST_HOME2;
 		$topAdCode = '';
 		if ($wgOut->isArticle()){
-			if (ArticleAdLogic::isMainPage()){
+			if (WikiaPageType::isMainPage()){
 				$topAdCode .= AdEngine::getInstance()->getPlaceHolderIframe('HOME_TOP_LEADERBOARD');
 				if ($wgEnableFAST_HOME2) {
 					$topAdCode .= AdEngine::getInstance()->getPlaceHolderIframe('HOME_TOP_RIGHT_BOXAD');
 				}
-			} else if ( ArticleAdLogic::isContentPage()){
-
-				if (!empty($wgAdsForceLeaderboards)){
-					$topAdCode = AdEngine::getInstance()->getPlaceHolderIframe('TOP_LEADERBOARD');
-					if (!empty($wgEnableTandemAds) && ArticleAdLogic::isBoxAdArticle($this->data['bodytext'])) {
-						$topAdCode .= AdEngine::getInstance()->getPlaceHolderIframe('TOP_RIGHT_BOXAD');
-					}
-				} else {
-					// Let the collision detection decide
-					if ( ArticleAdLogic::isStubArticle($this->data['bodytext'])){
-						$topAdCode = AdEngine::getInstance()->getPlaceHolderIframe('TOP_LEADERBOARD');
-					} else if (ArticleAdLogic::isBoxAdArticle($this->data['bodytext'])) {
-						$topAdCode = AdEngine::getInstance()->getPlaceHolderIframe('TOP_RIGHT_BOXAD');
-					} else {
-						// Long article, but a collision
-						$topAdCode = AdEngine::getInstance()->getPlaceHolderIframe('TOP_LEADERBOARD');
-					}
-				}
+			} else if ( WikiaPageType::isContentPage()){
+				$topAdCode = AdEngine::getInstance()->getPlaceHolderIframe('TOP_LEADERBOARD');
 			}
-		} elseif (ArticleAdLogic::isSearch()) {
+		} elseif (WikiaPageType::isSearch()) {
 			$topAdCode .= AdEngine::getInstance()->getPlaceHolderIframe('TOP_LEADERBOARD');
 			$topAdCode .= AdEngine::getInstance()->getPlaceHolderIframe('TOP_RIGHT_BOXAD');
 		}

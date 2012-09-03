@@ -555,14 +555,14 @@ class WikiaHomePageController extends WikiaController {
 	public static function onGetHTMLAfterBody($skin, &$html) {
 		$app = F::app();
 
-		if ($app->checkSkin('wikiamobile') && $app->wg->EnableWikiaHomePageExt && ArticleAdLogic::isMainPage()) {
+		if ($app->checkSkin('wikiamobile') && $app->wg->EnableWikiaHomePageExt && WikiaPageType::isMainPage()) {
 			$html .= $app->sendRequest('WikiaHomePage', 'wikiaMobileIndex')->toString();
 		}
 		return true;
 	}
 
 	public static function onOutputPageBeforeHTML(&$out, &$text) {
-		if (ArticleAdLogic::isMainPage() && !(F::app()->checkSkin('wikiamobile'))) {
+		if (WikiaPageType::isMainPage() && !(F::app()->checkSkin('wikiamobile'))) {
 			$text = '';
 			$out->clearHTML();
 			$out->addHTML(F::app()->sendRequest('WikiaHomePageController', 'index')->toString());
@@ -571,7 +571,7 @@ class WikiaHomePageController extends WikiaController {
 	}
 
 	public static function onArticleCommentCheck($title) {
-		if (ArticleAdLogic::isMainPage()) {
+		if (WikiaPageType::isMainPage()) {
 			return false;
 		}
 		return true;
@@ -579,7 +579,7 @@ class WikiaHomePageController extends WikiaController {
 
 	public static function onWikiaMobileAssetsPackages(Array &$jsHeadPackages, Array &$jsBodyPackages, Array &$scssPackages) {
 		//this hook is fired only by the WikiaMobile skin, no need to check for what skin is being used
-		if (F::app()->wg->EnableWikiaHomePageExt && ArticleAdLogic::isMainPage()) {
+		if (F::app()->wg->EnableWikiaHomePageExt && WikiaPageType::isMainPage()) {
 			$scssPackages[] = 'wikiahomepage_scss_wikiamobile';
 		}
 

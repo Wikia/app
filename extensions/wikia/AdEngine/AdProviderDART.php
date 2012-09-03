@@ -8,7 +8,7 @@ class AdProviderDART extends AdProviderIframeFiller implements iAdProvider {
 	protected static $instance = false;
 
 	protected function __construct() {
-		$this->isMainPage = ArticleAdLogic::isMainPage();
+		$this->isMainPage = WikiaPageType::isMainPage();
 	}
 
 	public static function getInstance() {
@@ -209,7 +209,7 @@ EOT;
 	function getZone2(){
 		if($this->isMainPage) {
 			return 'home';
-		} elseif (ArticleAdLogic::isSearch()) {
+		} elseif (WikiaPageType::isSearch()) {
 			return 'search';
 		} else {
 			return 'article';

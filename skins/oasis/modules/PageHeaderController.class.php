@@ -253,7 +253,7 @@ class PageHeaderController extends WikiaController {
 			$this->revisions = $this->getRecentRevisions();
 
 			// mainpage?
-			if (ArticleAdLogic::isMainPage()) {
+			if (WikiaPageType::isMainPage()) {
 				$this->isMainPage = true;
 			}
 
@@ -325,7 +325,7 @@ class PageHeaderController extends WikiaController {
 		}
 
 		// mainpage
-		if (ArticleAdLogic::isMainPage()) {
+		if (WikiaPageType::isMainPage()) {
 			// change page title to just "Home"
 			$this->title = wfMsg('oasis-home');
 			// hide revisions / categories bar
@@ -630,7 +630,7 @@ class PageHeaderController extends WikiaController {
 			$this->displaytitle = false;
 		}
 
-		if (ArticleAdLogic::isMainPage()) {
+		if (WikiaPageType::isMainPage()) {
 			$this->title = '';
 			$this->subtitle = '';
 		}

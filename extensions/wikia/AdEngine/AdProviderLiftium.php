@@ -45,8 +45,8 @@ class AdProviderLiftium extends AdProviderIframeFiller implements iAdProvider {
 		$options['kv_skin'] = RequestContext::getMain()->getSkin()->getSkinName();
 		$options['kv_user_lang'] = $wgLang->getCode();
 		$options['kv_cont_lang'] = $GLOBALS['wgLanguageCode'];
-		$options['kv_isMainPage'] = ArticleAdLogic::isMainPage();
-		$options['kv_page_type'] = ArticleAdLogic::getPageType();
+		$options['kv_isMainPage'] = WikiaPageType::isMainPage();
+		$options['kv_page_type'] = WikiaPageType::getPageType();
 		$options['geoUrl'] = "http://geoiplookup.wikia.com/";
 		if (!empty($wgDartCustomKeyValues)) {
 			$options['kv_dart'] = $wgDartCustomKeyValues;
