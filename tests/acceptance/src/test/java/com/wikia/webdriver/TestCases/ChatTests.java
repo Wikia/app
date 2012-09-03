@@ -101,6 +101,14 @@ public class ChatTests extends TestTemplate_Two_Drivers{
     3. There are three options to choose: User Profile, Contributions, Allow Private Messages.
     4. If user A is an admin there should be also Give ChatMod status and Kickban (if clicked user is not a chat moderator or admin). - to next test case 
 	 */
+	/*
+	  Test 11: Private room dropdown menu Edit
+
+    1. There are two users in the chat room: user A and user B.
+    2. User B opens private chat room with user A.
+    3. Clicks on user A item under "Private messages" bar displays drop-down menu similar to main chat's drop-down menu except one new element: "Block Private Messages" 
+	 * */
+	
 	
 	@Test
 	public void Chat_003_changes_in_drop_down_menu_2()
@@ -127,9 +135,10 @@ public class ChatTests extends TestTemplate_Two_Drivers{
 		chat1.clickOnDifferentUser(Properties.userName2, driver);
 		chat1.selectPrivateMessage(driver);
 		chat1.clickPrivateMessageUser(Properties.userName2, driver);
+		chat1.verifyPrivateUserDropdown();
 		chat1.blockPrivateMessage(driver);
 		chat1.clickOnDifferentUser(Properties.userName2, driver);
-		chat1.verifyBlockedUserDropdown(Properties.userName2);
+		chat1.verifyBlockedUserDropdown();
 		chat1.allowPrivateMessageFromUser(Properties.userName2, driver);
 	}
 	
@@ -233,7 +242,7 @@ public class ChatTests extends TestTemplate_Two_Drivers{
 	 */
 	
 	@Test
-	public void Chat_006_private_chat_validation()
+	public void Chat_006_current_chat_messages_area_changes()
 	{
 		//first user opens the chat
 		switchToWindow(driver);
