@@ -64,6 +64,7 @@ function wfOasisSetup() {
 	$wgHooks['ArticleViewHeader'][]  = 'UserPagesHeaderController::saveFacebookConnectProfile';
 	$wgHooks['ArticlePurge'][] = 'ArticleService::onArticlePurge';
 	$wgHooks['ArticleSaveComplete'][] = 'ArticleService::onArticleSaveComplete';
+	$wgHooks['SkinCopyrightFooter'][] = 'CorporateFooterController::onSkinCopyrightFooter';
 
 	// support "noexternals" URL param
 	global $wgNoExternals, $wgRequest;
