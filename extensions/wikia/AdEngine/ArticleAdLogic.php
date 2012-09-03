@@ -641,6 +641,8 @@ class ArticleAdLogic {
 			$type = "home";
 		} elseif (self::isSearch()) {
 			$type = "search";
+		} elseif (self::isForum()) {
+			$type = "forum";
 		} elseif (self::isExtra()) {
 			$type = 'extra';
 		} else {
