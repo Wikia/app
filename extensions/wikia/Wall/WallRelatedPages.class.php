@@ -13,8 +13,12 @@ class WallRelatedPages extends WikiaModel {
 			$db = $this->wf->GetDB( DB_MASTER );
 			if ( !$db->tableExists('wall_related_pages') ) {
 				$db->sourceFile( $dir . '/sql/wall_related_pages.sql' );
+				return true;
 			}
 		}
+		
+		return false;
+		
 		wfProfileOut( __METHOD__ );
 	}
 	
@@ -107,6 +111,10 @@ class WallRelatedPages extends WikiaModel {
 		//Loading from cache 
 		$db = $this->wf->GetDB( DB_SLAVE );
 		
+		if($this->createTable()) {
+			$db = $this->wf->GetDB( DB_MASTER );	
+		}
+		
 		$result = $db->select(
 			array( 'wall_related_pages' ),
 			array( 'page_id, count(*) as cnt' ),
@@ -164,7 +172,13 @@ class WallRelatedPages extends WikiaModel {
 		}
 		
 		$messgesIds = array();
+		
+		//Loading from cache 
 		$db = $this->wf->GetDB( DB_SLAVE );
+		
+		if($this->createTable()) {
+			$db = $this->wf->GetDB( DB_MASTER );	
+		}
 		
 		//Loading from cache 
 		$result = $db->select(
