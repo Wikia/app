@@ -9,11 +9,11 @@ class SpecialThemeDesignerPreview extends UnlistedSpecialPage {
 	public function execute() {
 		wfProfileIn( __METHOD__ );
 		global $wgOut, $wgExtensionsPath, $wgCacheBuster;
-		
+
 		$wgOut->allowClickjacking();
 
 		$this->setHeaders();
-		
+
 		$wgOut->setPageTitle('Example Page Title');
 
 		$wgOut->addScript('<script src="'. $wgExtensionsPath .'/wikia/ThemeDesigner/js/ThemeDesignerPreview.js?'. $wgCacheBuster .'"></script>');
@@ -24,7 +24,7 @@ class SpecialThemeDesignerPreview extends UnlistedSpecialPage {
 			)
 		);
 
-		$wgOut->addHtml(wfRenderModule('ThemeDesigner', 'Preview'));
+		$wgOut->addHtml(F::app()->renderView('ThemeDesigner', 'Preview'));
 
 		// page header: use static date
 		global $wgHooks;

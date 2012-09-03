@@ -2,7 +2,7 @@
 <section<? if (!empty($sectionId)) { ?> id="<?= $sectionId ?>"<? } ?>>
 	<div class="header-container">
 		<h1><?= wfMsg($titleMsg) ?></h1>
-		<?= wfRenderModule('RandomWiki') ?>
+		<?= F::app()->renderView('RandomWiki', 'Index') ?>
 	</div>
 	<?= AdEngine::getInstance()->getLazyLoadableAdGroup($adGroupName, $adslots) ?>
 	<ul<? if (!empty($adGroupName)) { ?> id="<?= $adGroupName ?>"<? if ($useLazyLoadAdClass) { ?> class="<?= AdEngine::lazyLoadAdClass ?><?= $wg->EnableSpotlightsV2_Footer ? ' SPOTLIGHT_FOOTER' : '' ?>"<? } } ?>>

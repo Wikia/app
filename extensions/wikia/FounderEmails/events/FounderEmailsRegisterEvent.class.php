@@ -9,7 +9,7 @@ class FounderEmailsRegisterEvent extends FounderEmailsEvent {
 	public function enabled ( $wgCityId, $user ) {
 		if (self::isAnswersWiki())
 			return false;
- 		
+
 		// If digest mode is enabled, do not create user registration event notifications
 		if ( $user->getOption( "founderemails-complete-digest-$wgCityId" ) ) {
 			return false;
@@ -19,7 +19,7 @@ class FounderEmailsRegisterEvent extends FounderEmailsEvent {
 		}
 		return false;
 	}
-	
+
 	public function process( Array $events ) {
 		global $wgEnableAnswers, $wgCityId;
 		wfProfileIn( __METHOD__ );
@@ -32,7 +32,7 @@ class FounderEmailsRegisterEvent extends FounderEmailsEvent {
 			$wikiService = F::build( 'WikiService' );
 			$user_ids = $wikiService->getWikiAdminIds();
 			$foundingWiki = WikiFactory::getWikiById($wgCityId);
-			
+
 			$emailParams = array(
 				'$EDITORNAME' => $eventData['data']['userName'],
 				'$EDITORPAGEURL' => $eventData['data']['userPageUrl'],
@@ -54,18 +54,18 @@ class FounderEmailsRegisterEvent extends FounderEmailsEvent {
 				$langCode = $user->getOption( 'language' );
 				$mailSubject = strtr(wfMsgExt('founderemails' . $wikiType . '-email-user-registered-subject', array('content')), $emailParams);
 				$mailBody = strtr(wfMsgExt('founderemails' . $wikiType . '-email-user-registered-body', array('content')), $emailParams);
-			
+
 				if(empty( $wgEnableAnswers )) { // FounderEmailv2.1
 					$links = array(
 						'$EDITORNAME' => $emailParams['$EDITORPAGEURL'],
 						'$WIKINAME' => $emailParams['$WIKIURL'],
 					);
-					$mailBodyHTML = wfRenderModule("FounderEmails", "GeneralUpdate", array_merge($emailParams, array('language' => 'en', 'type' => 'user-registered')));
+					$mailBodyHTML = F::app()->renderView("FounderEmails", "GeneralUpdate", array_merge($emailParams, array('language' => 'en', 'type' => 'user-registered')));
 					$mailBodyHTML = strtr($mailBodyHTML, FounderEmails::addLink($emailParams,$links));
 				} else {
 					$mailBodyHTML = $this->getLocalizedMsg( 'founderemails' . $wikiType . '-email-user-registered-body-HTML', $emailParams );
 				}
-			
+
 				$mailCategory = FounderEmailsEvent::CATEGORY_REGISTERED.(!empty($langCode) && $langCode == 'en' ? 'EN' : 'INT');
 
 				wfProfileOut( __METHOD__ );

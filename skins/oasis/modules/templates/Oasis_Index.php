@@ -93,9 +93,9 @@
 
 <?php
 	if (empty($wg->SuppressAds)) {
-		echo wfRenderModule('Ad', 'Index', array('slotname' => 'INVISIBLE_1'));
+		echo F::app()->renderView('Ad', 'Index', array('slotname' => 'INVISIBLE_1'));
 		if (!$wg->EnableCorporatePageExt) {
-			echo wfRenderModule('Ad', 'Index', array('slotname' => 'INVISIBLE_2'));
+			echo F::app()->renderView('Ad', 'Index', array('slotname' => 'INVISIBLE_2'));
 		}
 	}
 ?>
@@ -126,5 +126,5 @@
 
 <?= wfReportTime()."\n" ?>
 </body>
-<?= wfRenderModule('Ad', 'Config') ?>
+<?= F::app()->renderView('Ad', 'Config') ?>
 </html>

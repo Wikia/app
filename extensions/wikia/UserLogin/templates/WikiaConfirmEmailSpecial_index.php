@@ -40,6 +40,6 @@
 	$form['isInvalid'] = !empty($result) && empty($errParam) && !empty($msg);
 	$form['errorMsg'] = !empty($msg) ? $msg : '';
 
-	echo wfRenderModule('WikiaForm', 'Index', array('form' => $form));
+	echo F::app()->renderView('WikiaForm', 'Index', array('form' => $form));
 ?>
 </div>

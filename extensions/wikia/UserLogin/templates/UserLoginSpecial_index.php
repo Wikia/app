@@ -65,7 +65,7 @@
 
 	$form['isInvalid'] = !empty($result) && empty($errParam) && !empty($msg);
 	$form['errorMsg'] = !empty($msg) ? $msg : '';
-	
+
 	if(!empty($returnto)) {
 		$form['inputs'][] = array(
 			'type' => 'hidden',
@@ -73,7 +73,7 @@
 			'value' => $returnto
 		);
 	}
-	
+
 	if(!empty($returntoquery)) {
 		$form['inputs'][] = array(
 			'type' => 'hidden',
@@ -82,7 +82,7 @@
 		);
 	}
 
-	echo wfRenderModule('WikiaForm', 'Index', array('form' => $form));
+	echo $app->renderView('WikiaForm', 'Index', array('form' => $form));
 
 	// 3rd party providers buttons
 	if (!$isMonobookOrUncyclo) echo $app->renderView('UserLoginSpecial', 'Providers');

@@ -1,5 +1,5 @@
 <?php
-	echo wfRenderModule('MenuButton', 'Index', array(
+	echo F::app()->renderView('MenuButton', 'Index', array(
 		'name' => 'facebook',
 		'action' => array(
 			'text' => $text,

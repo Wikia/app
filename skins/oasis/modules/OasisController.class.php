@@ -108,11 +108,11 @@ class OasisController extends WikiaController {
 		}
 
 		if($renderContentOnly) {
-			$this->body = wfRenderModule('BodyContentOnly');
+			$this->body = F::app()->renderView('BodyContentOnly', 'Index');
 		} else {
 			// macbre: let extensions modify content of the page (e.g. EditPageLayout)
 			wfProfileIn(__METHOD__ . ' - renderBody');
-			$this->body = !empty($params['body']) ? $params['body'] : wfRenderModule('Body');
+			$this->body = !empty($params['body']) ? $params['body'] : F::app()->renderView('Body', 'Index');
 			wfProfileOut(__METHOD__ . ' - renderBody');
 		}
 

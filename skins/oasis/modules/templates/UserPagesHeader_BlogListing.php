@@ -2,7 +2,7 @@
 <?php
 	// render edit button / dropdown menu
 	if (!empty($actionButton)) {
-	echo wfRenderModule('MenuButton', 'Index', array(
+	echo F::app()->renderView('MenuButton', 'Index', array(
 				'action' => $actionButton,
 				'image' => MenuButtonController::BLOG_ICON,
 				'name' => 'createblogpost',

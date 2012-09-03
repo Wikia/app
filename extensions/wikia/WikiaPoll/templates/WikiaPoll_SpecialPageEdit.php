@@ -1,5 +1,5 @@
 <?php if (! isset($poll)) {
-	echo wfRenderModule('Error', 'Index', array('Poll does not exist'));
+	echo F::app()->renderView('Error', 'Index', array('Poll does not exist'));
 } else { ?>
 <section class="CreateWikiaPoll" id="CreateWikiaPoll" data-pollId="<?=$poll->getID()?>">
 

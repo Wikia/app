@@ -18,12 +18,12 @@ class WikiaQuizAjax {
 		if (is_object ($title_object) && $title_object->exists() ) {
 			$res = array (
 				'success' => false,
-				'error' => wfRenderModule('Error', 'Index', array(wfMsg('wikiaquiz-error-duplicate-quiz')))
+				'error' => F::app()->renderView('Error', 'Index', array(wfMsg('wikiaquiz-error-duplicate-quiz')))
 				);
 		} else if ($title_object == null) {
 			$res = array (
 				'success' => false,
-				'error' => wfRenderModule('Error', 'Index', array(wfMsg('wikiaquiz-error-invalid-quiz')))
+				'error' => F::app()->renderView('Error', 'Index', array(wfMsg('wikiaquiz-error-invalid-quiz')))
 				);
 		} else {	// create questions
 			$error = null;
@@ -31,7 +31,7 @@ class WikiaQuizAjax {
 			if ($error) {
 				$res = array (
 					'success' => false,
-					'error' => wfRenderModule('Error', 'Index', array($error))
+					'error' => F::app()->renderView('Error', 'Index', array($error))
 					);
 			}
 			else {
@@ -71,7 +71,7 @@ class WikiaQuizAjax {
 		if (empty($quiz) || !$quiz->exists()) {
 			$res = array (
 				'success' => false,
-				'error' => wfRenderModule('Error', 'Index', array(wfMsg('wikiaquiz-error-invalid-quiz')))
+				'error' => F::app()->renderView('Error', 'Index', array(wfMsg('wikiaquiz-error-invalid-quiz')))
 				);
 		} else {
 			$error = null;
@@ -79,7 +79,7 @@ class WikiaQuizAjax {
 			if ($error) {
 				$res = array (
 					'success' => false,
-					'error' => wfRenderModule('Error', 'Index', array($error))
+					'error' => F::app()->renderView('Error', 'Index', array($error))
 					);
 			}
 			else {
@@ -118,12 +118,12 @@ class WikiaQuizAjax {
 		if (is_object ($title_object) && $title_object->exists() ) {
 			$res = array (
 				'success' => false,
-				'error' => wfRenderModule('Error', 'Index', array(wfMsg('wikiaquiz-error-duplicate-question')))
+				'error' => F::app()->renderView('Error', 'Index', array(wfMsg('wikiaquiz-error-duplicate-question')))
 				);
 		} else if ($title_object == null) {
 			$res = array (
 				'success' => false,
-				'error' => wfRenderModule('Error', 'Index', array(wfMsg('wikiaquiz-error-invalid-question')))
+				'error' => F::app()->renderView('Error', 'Index', array(wfMsg('wikiaquiz-error-invalid-question')))
 				);
 		} else {
 			$error = null;
@@ -131,7 +131,7 @@ class WikiaQuizAjax {
 			if ($error) {
 				$res = array (
 					'success' => false,
-					'error' => wfRenderModule('Error', 'Index', array($error))
+					'error' => F::app()->renderView('Error', 'Index', array($error))
 					);
 			}
 			else {
@@ -179,12 +179,12 @@ class WikiaQuizAjax {
 //		&& $newArticle->getID() != $quizElementId) {
 //			$res = array (
 //				'success' => false,
-//				'error' => wfRenderModule('Error', 'Index', array(wfMsg('wikiaquiz-error-duplicate-question')))
+//				'error' => F::app()->renderView('Error', 'Index', array(wfMsg('wikiaquiz-error-duplicate-question')))
 //				);
 //		} else if ($newTitleObject == null) {
 //			$res = array (
 //				'success' => false,
-//				'error' => wfRenderModule('Error', 'Index', array(wfMsg('wikiaquiz-error-invalid-question')))
+//				'error' => F::app()->renderView('Error', 'Index', array(wfMsg('wikiaquiz-error-invalid-question')))
 //				);
 //		} else {
 //
@@ -192,7 +192,7 @@ class WikiaQuizAjax {
 		if (empty($quizElement) || !$quizElement->exists()) {
 			$res = array (
 				'success' => false,
-				'error' => wfRenderModule('Error', 'Index', array(wfMsg('wikiaquiz-error-invalid-article')))
+				'error' => F::app()->renderView('Error', 'Index', array(wfMsg('wikiaquiz-error-invalid-article')))
 				);
 		} else {
 			$error = null;
@@ -200,7 +200,7 @@ class WikiaQuizAjax {
 			if ($error) {
 				$res = array (
 					'success' => false,
-					'error' => wfRenderModule('Error', 'Index', array($error))
+					'error' => F::app()->renderView('Error', 'Index', array($error))
 					);
 			}
 			else {

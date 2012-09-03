@@ -1,6 +1,6 @@
 <header id="WikiaPageHeader" class="WikiaPageHeader<?= (empty($revisions) && empty($categories)) ? ' separator' : '' ?>">
 	<? if ($isMainPage) { ?>
-		<?= wfRenderModule('CommentsLikes', 'Index', array('comments' => $comments, 'likes' => $likes)); ?>
+		<?= F::app()->renderView('CommentsLikes', 'Index', array('comments' => $comments, 'likes' => $likes)); ?>
 		<?php
 			if( empty( $wg->EnableWikiAnswers ) && empty( $wg->OasisNavV2 ) ) {
 		?>
@@ -19,7 +19,7 @@
 	<?php
 	// comments & like button
 	if( empty($isMainPage) && !$isWallEnabled ) {
-		echo wfRenderModule('CommentsLikes', 'Index', array('comments' => $comments, 'likes' => $likes));
+		echo F::app()->renderView('CommentsLikes', 'Index', array('comments' => $comments, 'likes' => $likes));
 	}
 	?>
 
@@ -28,7 +28,7 @@
 <?php
 	// edit button with actions dropdown
 	if (!empty($action)) {
-		echo wfRenderModule('MenuButton', 'Index', array('action' => $action, 'image' => $actionImage, 'dropdown' => $dropdown, 'name' => $actionName));
+		echo F::app()->renderView('MenuButton', 'Index', array('action' => $action, 'image' => $actionImage, 'dropdown' => $dropdown, 'name' => $actionName));
 	}
 
 	// "Add a photo" button
@@ -53,7 +53,7 @@
 
 	// render search box
 	if ($showSearchBox) {
-		echo wfRenderModule('Search');
+		echo F::app()->renderView('Search', 'Index');
 	}
 ?>
 </header>

@@ -41,7 +41,7 @@ class WikiaQuizPlayArticle extends Article {
 
 		// render quiz page
 		$wgOut->clearHtml();
-		$wgOut->addHtml(wfRenderModule('WikiaQuiz', 'PlayQuiz', array('data'=>$this->mQuiz->getData())));
+		$wgOut->addHtml(F::app()->renderView('WikiaQuiz', 'PlayQuiz', array('data'=>$this->mQuiz->getData())));
 		$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/WikiaQuiz/css/WikiaPlayQuiz.scss'));
 		$wgOut->addScript('<script src="'.AssetsManager::getInstance()->getOneCommonURL('resources/wikia/libraries/modernizr/modernizr-2.0.6.js').'"></script>');
 		$wgOut->addScript('<script src="'.$wgExtensionsPath.'/wikia/WikiaQuiz/js/WikiaPlayQuiz.js"></script>');

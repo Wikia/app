@@ -82,10 +82,10 @@ $dropdown = array(array(
 	"text" => "Second Item"
 ));
 ?>
-<?= wfRenderModule('MenuButton', 
-	'Index', 
+<?= F::app()->renderView('MenuButton',
+	'Index',
 	array(
-		'action' => array("href" => "#", "text" => "Visible Part", "id" => "UISGMenuButton"), 
+		'action' => array("href" => "#", "text" => "Visible Part", "id" => "UISGMenuButton"),
 		'name' => 'foobar',
 		'dropdown' => $dropdown
 	)
@@ -99,10 +99,10 @@ $dropdown = array(array(
 	"id" => "UISGMenuButtonSecond",
 	"text" => "Second Item"
 ));
-echo wfRenderModule('MenuButton', 
-	'Index', 
+echo F::app()->renderView('MenuButton',
+	'Index',
 	array(
-		'action' => array("href" => "#", "text" => "Visible Part", "id" => "UISGMenuButton"), 
+		'action' => array("href" => "#", "text" => "Visible Part", "id" => "UISGMenuButton"),
 		'name' => 'foobar',
 		'dropdown' => $dropdown
 	)
@@ -116,7 +116,7 @@ echo wfRenderModule('MenuButton',
 // TODO
 ?>
 <script>
-	
+
 </script>
 <h3>Normal Dropdown Sample Code</h3>
 <pre>
@@ -178,7 +178,7 @@ $("#UISGPersistentModalButton").click(function() {
 $(function() {
 	$("#UISGAjaxModalShortcutButton").click(function() {
 		$().getModal(
-			'/wikia.php?controller=WikiaStyleGuideSpecial&method=ajaxModalSample&format=html', 
+			'/wikia.php?controller=WikiaStyleGuideSpecial&method=ajaxModalSample&format=html',
 			'#UISGAjaxModalSample',
 			{width:400});
 	});
@@ -188,7 +188,7 @@ $(function() {
 <pre>
 $("#UISGAjaxModalShortcutButton").click(function() {
 	$().getModal(
-		'/wikia.php?controller=WikiaStyleGuideSpecial&method=ajaxModalSample&format=html', 
+		'/wikia.php?controller=WikiaStyleGuideSpecial&method=ajaxModalSample&format=html',
 		'#UISGAjaxModalSample',
 		{width:400});
 });
@@ -243,7 +243,7 @@ $uisgSampleForm = array (
         ),
     )
 );
-echo wfRenderModule('WikiaForm', 'Index', array('form' => $uisgSampleForm));
+echo F::app()->renderView('WikiaForm', 'Index', array('form' => $uisgSampleForm));
 ?>
 
 <h2>System Notification (aka Global Notification)</h2>

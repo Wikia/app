@@ -138,7 +138,7 @@ class GamingCalendarSpecialPageController extends WikiaSpecialPageController {
 		if (empty($type)) {
 			$res = array (
 				'success' => false,
-				'error' => wfRenderModule('Error', 'Index', array(wfMsg('gamingcalendar-error-missing-type')))
+				'error' => F::app()->renderView('Error', 'Index', array(wfMsg('gamingcalendar-error-missing-type')))
 				);
 			$this->setVal('res', $res);
 			return;

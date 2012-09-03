@@ -40,7 +40,7 @@
 		'method' => 'post',
 	);
 
-	echo wfRenderModule('WikiaForm', 'Index', array('form' => $form));
+	echo F::app()->renderView('WikiaForm', 'Index', array('form' => $form));
 ?>
 		</section>
 
@@ -86,6 +86,6 @@
 		'method' => 'post',
 	);
 
-	echo wfRenderModule('WikiaForm', 'Index', array('form' => $formFb))
+	echo F::app()->renderView('WikiaForm', 'Index', array('form' => $formFb))
 ?>
 </div>

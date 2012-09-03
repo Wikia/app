@@ -9,7 +9,7 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 	public function enabled ( $wgCityId, $user ) {
 		if (self::isAnswersWiki())
 			return false;
- 		
+
 		// If digest mode is enabled, do not create edit event notifications
 		if ( $user->getOption( "founderemails-complete-digest-$wgCityId" ) ) {
 			return false;
@@ -19,7 +19,7 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 		}
 		return false;
 	}
-	
+
 	public function process( Array $events ) {
 		global $wgCityId, $wgEnableAnswers, $wgMemc;
 		wfProfileIn( __METHOD__ );
@@ -33,7 +33,7 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 			if ($wgMemc->get($memcKey) == "1") {
 				return true;
 			}
-			
+
 			$foundingWiki = WikiFactory::getWikiById($wgCityId);
 			$founderEmailObj = FounderEmails::getInstance();
 			$wikiService = F::build( 'WikiService' );
@@ -55,12 +55,12 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 
 			foreach($user_ids as $user_id) {
 				$user = User::newFromId($user_id);
-				
+
 				// skip if not enable
 				if (!$this->enabled($wgCityId, $user)) {
 					continue;
 				}
-				
+
 				// skip if reciever is the editor
 				if ($user->getName() == $eventData['data']['editorName']) {
 					continue;
@@ -76,10 +76,10 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 					$aAllCounter = array();
 				}
 
-				// quit if the Founder has recieved enough emails today			
+				// quit if the Founder has recieved enough emails today
 
 				$aWikiCounter = empty( $aAllCounter[$wgCityId] ) ? array() : $aAllCounter[$wgCityId];
-				
+
 				if ( !empty( $aWikiCounter[0] ) && $aWikiCounter[0] == $today && $aWikiCounter[1] === 'full' ) {
 					return true;
 				}
@@ -120,7 +120,7 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 
 				// Set flag so this user won't generate edit notifications for 1 hour
 				$wgMemc->set($memcKey, "1", 3600);
-				
+
 				// Increment counter for daily notification limit
 				$aWikiCounter[1] = ( $aWikiCounter[1] === 15 ) ? 'full' : $aWikiCounter[1] + 1;
 				$aAllCounter[$wgCityId] = $aWikiCounter;
@@ -139,7 +139,7 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 						'$PAGETITLE' => $emailParams['$PAGEURL'],
 						'$WIKINAME' => $emailParams['$WIKIURL'],
 					);
-					$mailBodyHTML = wfRenderModule("FounderEmails", "GeneralUpdate", array_merge($emailParams, array('language' => 'en', 'type' => $mailKey)));
+					$mailBodyHTML = F::app()->renderView("FounderEmails", "GeneralUpdate", array_merge($emailParams, array('language' => 'en', 'type' => $mailKey)));
 					$mailBodyHTML = strtr($mailBodyHTML, FounderEmails::addLink($emailParams,$links));
 				} else {	// old emails
 					$mailBodyHTML = $this->getLocalizedMsg( $msgKeys['body-html'], $emailParams );

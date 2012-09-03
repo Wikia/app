@@ -12,7 +12,7 @@
 			$title = Title::newFromText($post['title'], $post['namespace']);
 		?>
 			<li class="WikiaBlogListingPost">
-				<?= wfRenderModule('CommentsLikes', 'Index', array('comments' => $post['comments'], 'bubble' => true, 'title' => $title, 'accesskey' => false)); ?>
+				<?= F::app()->renderView('CommentsLikes', 'Index', array('comments' => $post['comments'], 'bubble' => true, 'title' => $title, 'accesskey' => false)); ?>
 
 				<?= $post['avatar'] ?>
 				<div class="author-details">

@@ -3,7 +3,7 @@
 			<button class="quote-button secondary"><?= wfMsg('wall-message-quote-button') ?></button>
 			<?php
 				$dropdown = array();
-				
+
 				if($canEdit) {
 					$dropdown[] = array(
 						'class' => 'edit-message',
@@ -11,13 +11,13 @@
 						'text' => wfMsg('wall-message-edit'),
 					);
 				}
-				
+
 				$dropdown[] = array(
 					'class' => 'thread-history',
 					'href' => $threadHistoryLink,
 					'text' => wfMsg('history_short')
 				);
-				
+
 				if($canAdminDelete) {
 					$dropdown[] = array(
 						'attr' => 'data-mode="admin"',
@@ -26,7 +26,7 @@
 						'text' => wfMsg('wall-message-delete'),
 					);
 				}
-				
+
 				if($showViewSource) {
 					$dropdown[] = array(
 						'class' => 'source-message',
@@ -34,7 +34,7 @@
 						'text' => wfMsg('user-action-menu-view-source'),
 					);
 				}
-				
+
 				if($canRemove) {
 					$dropdown[] = array(
 						'attr' => 'data-mode="remove"',
@@ -43,7 +43,7 @@
 						'text' => wfMsg('wall-message-remove'),
 					);
 				}
-				
+
 				if($canDelete) {
 					$dropdown[] = array(
 						'attr' => 'data-mode="rev"',
@@ -70,7 +70,7 @@
 						'text' => wfMsg('wall-message-unnotifyeveryone'),
 					);
 				}
-				
+
 				if($canClose) {
 					$dropdown[] = array(
 						'class' => 'close-thread',
@@ -78,7 +78,7 @@
 						'text' => wfMsg('wall-message-close-thread'),
 					);
 				}
-						
+
 				if($canReopen) {
 					$dropdown[] = array(
 						'class' => 'reopen-thread',
@@ -87,28 +87,28 @@
 					);
 				}
 			?>
-			<?= wfRenderModule('MenuButton', 
-				'Index', 
+			<?= F::app()->renderView('MenuButton',
+				'Index',
 				array(
-					'action' => array("text" => wfMsg('wall-message-more'), "id" => ""), 
+					'action' => array("text" => wfMsg('wall-message-more'), "id" => ""),
 					'class' => 'secondary',
 					'dropdown' => $dropdown
 				)
 			) ?>
 		</div>
-		<?php //TODO: This is hack for now unification buttons for all skins ASAP!!! ?> 
-		<div class="buttons-monobook"> 
-			<!-- only show this if it's user's own message -->  
-			<span class="tools"> 
+		<?php //TODO: This is hack for now unification buttons for all skins ASAP!!! ?>
+		<div class="buttons-monobook">
+			<!-- only show this if it's user's own message -->
+			<span class="tools">
 				<a href="#" class="quote-button"><?= wfMsg('wall-message-quote-button') ?></a>
 				<? if( $showViewSource ): ?>
 					<a href="#" class="source-message"> <?= wfMsg('user-action-menu-view-source'); ?> </a>
 				<? endif; ?>
 
-				<?php if( $canEdit ): ?> 
-					<img src="<?= $wgBlankImgUrl ?>" class="sprite edit-pencil"><a href="#" class="edit-message"><?= wfMsg('wall-message-edit'); ?></a> 
-				<?php endif; ?> 
-				 
+				<?php if( $canEdit ): ?>
+					<img src="<?= $wgBlankImgUrl ?>" class="sprite edit-pencil"><a href="#" class="edit-message"><?= wfMsg('wall-message-edit'); ?></a>
+				<?php endif; ?>
+
 				<? if( $canRemove ): ?>
 					<img src="<?= $wgBlankImgUrl ?>" class="sprite-small delete"><a href="#" class="remove-message" data-mode="remove"><?= wfMsg('wall-message-remove'); ?> </a>
 				<? endif; ?>
@@ -117,9 +117,9 @@
 					<img src="<?= $wgBlankImgUrl ?>" class="sprite-small delete"><a href="#" class="admin-delete-message" data-mode="admin"><?= wfMsg('wall-message-delete'); ?> </a>
 				<?php endif;?>
 
-				<?php if( $canDelete ): ?> 
-					<img src="<?= $wgBlankImgUrl ?>" class="sprite-small delete"><a href="#" class="delete-message"><?= wfMsg('wall-message-delete'); ?></a> 
-				<?php endif; ?> 
+				<?php if( $canDelete ): ?>
+					<img src="<?= $wgBlankImgUrl ?>" class="sprite-small delete"><a href="#" class="delete-message"><?= wfMsg('wall-message-delete'); ?></a>
+				<?php endif; ?>
 
 
 				 <? if( $canNotifyeveryone ): ?>
@@ -129,6 +129,6 @@
 				 	<a href="#" class="edit-notifyeveryone" data-mode="0"> <?= wfMsg('wall-message-unnotifyeveryone'); ?> </a>
 				 <? endif; ?>
 
-			</span> 
-		</div> 
-<?php endif; ?> 
+			</span>
+		</div>
+<?php endif; ?>

@@ -11,7 +11,7 @@
 	else if (isset($comments)) {
 		$text = wfMsgExt($commentsEnabled ? 'oasis-page-header-comments' : 'oasis-page-header-talk', array('parsemag'), $comments);
 
-		echo wfRenderModule('MenuButton', 'Index', array(
+		echo F::app()->renderView('MenuButton', 'Index', array(
 			'action' => array(
 				'text' => $text,
 				'html' => '<span class="commentsbubble">'.$formattedComments.'</span>',

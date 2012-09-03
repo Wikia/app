@@ -257,14 +257,14 @@ class WikiaPoll {
 	 * Render HTML for Poll page
 	 */
 	public function render() {
-		return wfRenderModule('WikiaPoll', 'Index', array('poll' => $this));
+		return F::app()->renderView('WikiaPoll', 'Index', array('poll' => $this));
 	}
 
 	/**
 	 * Render HTML for embedded poll
 	 */
 	public function renderEmbedded() {
-		return wfRenderModule('WikiaPoll', 'Index', array('poll' => $this, 'embedded' => true));
+		return F::app()->renderView('WikiaPoll', 'Index', array('poll' => $this, 'embedded' => true));
 	}
 
 	/**

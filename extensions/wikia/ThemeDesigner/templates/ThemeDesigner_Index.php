@@ -53,9 +53,9 @@
 				</li>
 			</ul>
 		</nav>
-		<?= wfRenderModule('ThemeDesigner', 'ThemeTab') ?>
-		<?= wfRenderModule('ThemeDesigner', 'CustomizeTab') ?>
-		<?= wfRenderModule('ThemeDesigner', 'WordmarkTab') ?>
+		<?= F::app()->renderView('ThemeDesigner', 'ThemeTab') ?>
+		<?= F::app()->renderView('ThemeDesigner', 'CustomizeTab') ?>
+		<?= F::app()->renderView('ThemeDesigner', 'WordmarkTab') ?>
 		<div id="Toolbar" class="Toolbar">
 			<div class="inner">
 				<span class="mode"><?= wfMsg('themedesigner-preview-mode') ?></span>
@@ -88,7 +88,7 @@
 		</div>
 	</div>
 
-	<?= wfRenderModule('ThemeDesigner', 'Picker') ?>
+	<?= F::app()->renderView('ThemeDesigner', 'Picker') ?>
 
 	<iframe frameborder=0 id="PreviewFrame" class="PreviewFrame" src="<?= str_replace('$1', 'Special:ThemeDesignerPreview', $wg->ArticlePath) ?>?noexternals=1"></iframe>
 

@@ -1,5 +1,5 @@
 <header id="WikiaHeader" class="WikiaHeader">
-	<? if ( !empty($isGameStarLogoEnabled )) echo wfRenderModule('GameStarLogo'); ?>
+	<? if ( !empty($isGameStarLogoEnabled )) echo F::app()->renderView('GameStarLogo', 'Index'); ?>
 	<div class="wikia-header-mask">
 		<div class="page-width-container">
 			<nav>
@@ -26,8 +26,8 @@
 					</li>
 				</ul>
 			</nav>
-			<?= wfRenderModule('AccountNavigation') ?>
-			<? echo wfRenderModule('WallNotifications'); ?>
+			<?= F::app()->renderView('AccountNavigation', 'Index') ?>
+			<?= F::app()->renderView('WallNotifications', 'Index'); ?>
 			<img src="<?= $wg->BlankImgUrl ?>" class="banner-corner-left" width="0" height="0">
 			<img src="<?= $wg->BlankImgUrl ?>" class="banner-corner-right" width="0" height="0">
 		</div>
