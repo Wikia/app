@@ -98,6 +98,12 @@ public class CommonFunctions
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("input[name='username']")));
 		WebElement userNameFieldElem = driver.findElement(userNameField);
 		userNameFieldElem.sendKeys(userName);
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		WebElement passwordFieldElem = driver.findElement(passwordField);
 		passwordFieldElem.sendKeys(password);
 		WebElement submitButtonElem = driver.findElement(submitButton);
