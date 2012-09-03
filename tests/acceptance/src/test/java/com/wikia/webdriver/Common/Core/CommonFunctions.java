@@ -429,5 +429,17 @@ public class CommonFunctions
 	}
 	
 	
+	public static void removeChatModeratorRights(String userName, WebDriver driver)
+	{
+		driver.get(Global.DOMAIN + "wiki/Special:UserRights?user="+userName);
+		PageObjectLogging.log("enterUserRightsPage", "user rights page opened", true);
+		WebElement chatModeratorChkbox = driver.findElement((By.cssSelector("input#wpGroup-chatmoderator")));
+		WebElement submitButton = driver.findElement((By.cssSelector("input[title='[alt-shift-s]']")));
+		chatModeratorChkbox.click();
+		submitButton.click();
+	}
+	
+	
+	
 
 }

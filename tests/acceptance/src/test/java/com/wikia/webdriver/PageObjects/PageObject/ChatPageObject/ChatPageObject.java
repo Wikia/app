@@ -65,6 +65,9 @@ public class ChatPageObject extends BasePageObject
 	@FindBy(css="li[class='User selected blocked']")
 	private WebElement userDisconnectedButton;
 	
+	@FindBy(css="li.give-chat-mod span.label")
+	private WebElement giveChatModStatusButton;
+	
 	By userContextMenu = By.cssSelector("ul.regular-actions li");
 	By adminContextMenu = By.cssSelector("ul.admin-actions li");
 	By privateMessageHeader = By.xpath("//h1[@class='private' and contains(text(), 'Private Messages')]");
@@ -174,9 +177,10 @@ public class ChatPageObject extends BasePageObject
 	public void verifyNormalUserDropdown()
 	{
 		List<WebElement> list = getDropDownListOfElements();
+		CommonFunctions.assertNumber(3, list.size(), "Checking number of elements in the drop-down");
 		for (int i=0; i<list.size(); i++)
 		{
-			System.out.println(list.get(i).getAttribute("class"));	
+			PageObjectLogging.log("verifyNormalUserDropdown", i+" item in drop-down is "+ list.get(i).getAttribute("class"), true);
 		}
 		CommonFunctions.assertString("message-wall", list.get(0).getAttribute("class"));
 		CommonFunctions.assertString("contribs", list.get(1).getAttribute("class"));
@@ -187,16 +191,39 @@ public class ChatPageObject extends BasePageObject
 	 * @author Karol Kujawiak
 	 * verifies blocked user drop-down content, should be executed after clickOnDifferentUser() execution
 	 */
-	public void verifyBlockedUserDropdown()
+	public void verifyBlockingUserDropdown()
 	{
 		List<WebElement> list = getDropDownListOfElements();
+		CommonFunctions.assertNumber(3, list.size(), "Checking number of elements in the drop-down");
 		for (int i=0; i<list.size(); i++)
 		{
-			System.out.println(list.get(i).getAttribute("class"));	
+			PageObjectLogging.log("verifyBlockingUserDropdown", i+" item in drop-down is "+ list.get(i).getAttribute("class"), true);
 		}
 		CommonFunctions.assertString("message-wall", list.get(0).getAttribute("class"));
 		CommonFunctions.assertString("contribs", list.get(1).getAttribute("class"));
 		CommonFunctions.assertString("private-allow", list.get(2).getAttribute("class"));	
+	}
+	
+	/**
+	 * @author Karol Kujawiak
+	 * verifies blocked user drop-down content, should be executed after clickOnDifferentUser() execution
+	 */
+	public void verifyBlockedUserDropdown()
+	{
+		List<WebElement> list = getDropDownListOfElements();
+		CommonFunctions.assertNumber(2, list.size(), "Checking number of elements in the drop-down");
+		for (int i=0; i<list.size(); i++)
+		{
+			PageObjectLogging.log("verifyBlockedUserDropdown", i+" item in drop-down is "+ list.get(i).getAttribute("class"), true);	
+		}
+		CommonFunctions.assertString("message-wall", list.get(0).getAttribute("class"));
+		CommonFunctions.assertString("contribs", list.get(1).getAttribute("class"));	
+	}
+	
+	public void verifyBlockedUserMessage(String blockingUserName, String blockedUserName)
+	{
+		waitForElementByXPath("//li[@class='inline-alert' and contains(text(), '"+blockingUserName+" has blocked "+blockedUserName+".')]");
+		PageObjectLogging.log("verifyBlockedUserMessage", "user is blocked message is visible: "+blockingUserName+" has blocked "+blockedUserName, true, driver);
 	}
 	
 	/**
@@ -206,9 +233,10 @@ public class ChatPageObject extends BasePageObject
 	public void verifyPrivateUserDropdown()
 	{
 		List<WebElement> list = getDropDownListOfElements();
+		CommonFunctions.assertNumber(3, list.size(), "Checking number of elements in the drop-down");
 		for (int i=0; i<list.size(); i++)
 		{
-			System.out.println(list.get(i).getAttribute("class"));	
+			PageObjectLogging.log("verifyPrivateUserDropdown", i+" item in drop-down is "+ list.get(i).getAttribute("class"), true);
 		}
 		CommonFunctions.assertString("message-wall", list.get(0).getAttribute("class"));
 		CommonFunctions.assertString("contribs", list.get(1).getAttribute("class"));
@@ -222,17 +250,45 @@ public class ChatPageObject extends BasePageObject
 	public void verifyAdminUserDropdown()
 	{
 		List<WebElement> list = getDropDownListOfElements();
+		CommonFunctions.assertNumber(2, list.size(), "Checking number of elements in the drop-down");
 		for (int i=0; i<list.size(); i++)
 		{
-			System.out.println(list.get(i).getAttribute("class"));	
+			PageObjectLogging.log("verifyAdminUserDropdown", i+" item in drop-down is "+ list.get(i).getAttribute("class"), true);
 		}
 		CommonFunctions.assertString("message-wall", list.get(0).getAttribute("class"));
 		CommonFunctions.assertString("contribs", list.get(1).getAttribute("class"));
 		
 		list = getAdminDropDownListOfElements();
+		CommonFunctions.assertNumber(3, list.size(), "Checking number of elements in the drop-down");
+		for (int i=0; i<list.size(); i++)
+		{
+			PageObjectLogging.log("verifyAdminUserDropdown", i+" item in drop-down is "+ list.get(i).getAttribute("class"), true);
+		}
 		CommonFunctions.assertString("give-chat-mod", list.get(0).getAttribute("class"));
 		CommonFunctions.assertString("kick", list.get(1).getAttribute("class"));
 		CommonFunctions.assertString("ban", list.get(2).getAttribute("class"));
+	}
+	
+	public void verifyChatModUserDropdown()
+	{
+		List<WebElement> list = getDropDownListOfElements();
+		CommonFunctions.assertNumber(3, list.size(), "Checking number of elements in the drop-down");
+		for (int i=0; i<list.size(); i++)
+		{
+			PageObjectLogging.log("verifyAdminUserDropdown", i+" item in drop-down is "+ list.get(i).getAttribute("class"), true);
+		}
+		CommonFunctions.assertString("message-wall", list.get(0).getAttribute("class"));
+		CommonFunctions.assertString("contribs", list.get(1).getAttribute("class"));
+		CommonFunctions.assertString("private", list.get(2).getAttribute("class"));
+		
+		list = getAdminDropDownListOfElements();
+		CommonFunctions.assertNumber(2, list.size(), "Checking number of elements in the drop-down");
+		for (int i=0; i<list.size(); i++)
+		{
+			PageObjectLogging.log("verifyAdminUserDropdown", i+" item in drop-down is "+ list.get(i).getAttribute("class"), true);
+		}
+		CommonFunctions.assertString("kick", list.get(0).getAttribute("class"));
+		CommonFunctions.assertString("ban", list.get(1).getAttribute("class"));
 	}
 	
 	public void verifyUserIsGreyedOut()
@@ -251,6 +307,12 @@ public class ChatPageObject extends BasePageObject
 	{
 		waitForElementByXPath("//li[@class='inline-alert' and contains(text(), '"+userName+" has left the chat.')]");
 		PageObjectLogging.log("verifyUserLeftFromChatMessage", "Verified user left message is visible", true, driver);
+	}
+	
+	public void verifyChatModMessage(String userStaff, String userName)
+	{
+		waitForElementByXPath("//li[contains(text(), '"+userStaff+" has made')]");
+		waitForElementByXPath("//li/strong[contains(text(), '"+userName+"')]");
 	}
 	
 	public void disconnectFromChat()
@@ -277,26 +339,7 @@ public class ChatPageObject extends BasePageObject
 	
 	
 	
-	
-	/**
-	 * @author Karol Kujawiak
-	 * @param userName
-	 * @param driver
-	 * clicks on user button which is placed in right hand sidebar, should trigger user drop-down occurrence
-	 * method should be launched if another user has joined the chat
-	 */
-	public void clickOnDifferentUser(String userName, WebDriver driver)
-	{
-		By userButton = By.xpath("//div[@class='Rail']//li[@id='user-"+userName+"']/img");
-		waitForElementByBy(userButton);
-		
-		WebElement e = driver.findElement(userButton);
-		Point p = e.getLocation();
-		CommonFunctions.MoveCursorToElement(p, driver);
-		CommonFunctions.ClickElement();
-		
-		PageObjectLogging.log("clickOnDifferentUser", userName+" button clicked", true, driver);
-	}
+
 	
 	
 	/**
@@ -312,6 +355,21 @@ public class ChatPageObject extends BasePageObject
 		CommonFunctions.MoveCursorToElement(p, driver);
 		CommonFunctions.ClickElement();
 		PageObjectLogging.log("selectPrivateMessage", "private message selected from dropdown", true, driver);
+		try {
+			Thread.sleep(1500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void selectChatModStatus(WebDriver driver)
+	{
+		waitForElementByElement(giveChatModStatusButton);
+		Point p = giveChatModStatusButton.getLocation();
+		CommonFunctions.MoveCursorToElement(p, driver);
+		CommonFunctions.ClickElement();
+		PageObjectLogging.log("selectChatModStatus", "chat mod status is clicked", true, driver);
 		try {
 			Thread.sleep(1500);
 		} catch (InterruptedException e) {
@@ -359,6 +417,27 @@ public class ChatPageObject extends BasePageObject
 		CommonFunctions.ClickElement();
 		waitForElementByBy(userContextMenu);
 		PageObjectLogging.log("clickPrivateMessageUser", "private messages user "+userName+" is clicked", true, driver);
+	}
+	
+	
+	/**
+	 * @author Karol Kujawiak
+	 * @param userName
+	 * @param driver
+	 * clicks on user button which is placed in right hand sidebar, should trigger user drop-down occurrence
+	 * method should be launched if another user has joined the chat
+	 */
+	public void clickOnDifferentUser(String userName, WebDriver driver)
+	{
+		By userButton = By.xpath("//div[@class='Rail']//li[@id='user-"+userName+"']/img");
+		waitForElementByBy(userButton);
+		
+		WebElement e = driver.findElement(userButton);
+		Point p = e.getLocation();
+		CommonFunctions.MoveCursorToElement(p, driver);
+		CommonFunctions.ClickElement();
+		
+		PageObjectLogging.log("clickOnDifferentUser", userName+" button clicked", true, driver);
 	}
 	
 	
