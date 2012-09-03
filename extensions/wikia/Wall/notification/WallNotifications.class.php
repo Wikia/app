@@ -26,15 +26,17 @@ class WallNotifications {
 	public function getWikiNotifications($userId, $wikiId, $readSlice = 5, $countonly = false, $notifyeveryone = false ) {
 		/* if since == null, get all notifications */
 		/* possibly ignore $wiki at one point and fetch notifications from all wikis */
+		wfProfileIn(__METHOD__);
 
 		$memcSync = $this->getCache($userId, $wikiId);
 		$list = $this->getData($memcSync, $userId, $wikiId);
 		if(empty($list)) {
+			wfProfileOut(__METHOD__);
 			return array();
 		}
 		$read = array();
 		$unread = array();
-		
+
 		foreach(array_reverse($list['notification']) as $listval) {
 			if(!empty($listval)) {
 				if(!$countonly) {
@@ -42,7 +44,7 @@ class WallNotifications {
 				} else {
 					$grouped = array();
 				}
-				
+
 				if(!empty($grouped) || $countonly) {
 					if($list['relation'][ $listval ]['read']){
 						if(count($read) < $readSlice){
@@ -94,6 +96,8 @@ class WallNotifications {
 			'read' => $read,
 			'read_count' => count($read)
 		);
+
+		wfProfileOut(__METHOD__);
 		return $out;
 	}
 
@@ -104,7 +108,7 @@ class WallNotifications {
 		$total = 0;
 		foreach($wikiList as $wiki) {
 			$wiki['unread'] = $this->getCount($userId, $wiki['id'], $wiki['id'] == $this->app->wg->CityId);
-			$total += $wiki['unread']; 
+			$total += $wiki['unread'];
 			// show only Wikis with unread notifications
 			// current Wiki is an exception (show always)
 			if( $wiki['unread'] > 0 || $wiki['id'] == $this->app->wg->CityId )
@@ -749,11 +753,11 @@ class WallNotifications {
 			$data['relation'][ $uniqueId ]['count'] += 1;
 			$data['relation'][ $uniqueId ]['notifyeveryone'] = $notifyeveryone;
 		}
-		
+
 		$data['relation'][ $uniqueId ]['read'] = $read;
 
 	}
- 
+
 	protected function cleanEntitiesFromDB() {
 		foreach( $this->removedEntities as $val ) {
 			$this->getDB(true)->delete('wall_notification' , $val, __METHOD__ );
