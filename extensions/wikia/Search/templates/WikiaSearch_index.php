@@ -42,8 +42,7 @@
 				<ul class="list loading"></ul>
 			</div>
 		<?php else: // regular ads ?>
-			<?= wfRenderModule('Ad', 'Index', array('slotname' => 'TOP_RIGHT_BOXAD')); ?>
-			<div id="WikiaAdInContentPlaceHolder"></div>
+			<?php // Regular right-hand ads not compatible with corporate search ?>
 		<?php endif; ?>
 	<?php endif; ?>
 	
@@ -105,19 +104,16 @@
 	
 				<?php if(!$isCorporateWiki): ?>
 					<?= $paginationLinks; ?>
-					<?php if ($showSearchAds): ?>
-						<div id="SearchAdsBottom" class="WikiaSearchAds SearchAdsBottom">
-							<h3 class="subtle"><?= wfMsg( 'wikiasearch2-search-ads-header' );?></h3>
-							<ul class="list loading"></ul>
-						</div>
-					<?php endif; ?>	
-				<?php else: ?>
-					<?php if ($showSearchAds): ?>
-						<div id="SearchAdsBottom" class="WikiaSearchAds SearchAdsBottom">
-							<h3 class="subtle"><?= wfMsg( 'wikiasearch2-search-ads-header' );?></h3>
-							<ul class="list loading"></ul>
-						</div>
-					<?php endif; ?>
+				<?php endif; ?>
+
+				<?php if ($showSearchAds): ?>
+					<div id="SearchAdsBottom" class="WikiaSearchAds SearchAdsBottom">
+						<h3 class="subtle"><?= wfMsg( 'wikiasearch2-search-ads-header' );?></h3>
+						<ul class="list loading"></ul>
+					</div>
+				<?php endif; ?>
+
+				<?php if($isCorporateWiki): ?>
 					<?= $paginationLinks; ?>
 				<?php endif; ?>
 
