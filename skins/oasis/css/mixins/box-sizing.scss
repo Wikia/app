@@ -1,6 +1,6 @@
 $value: border-box;
 
-@mixin box-sizing ($value){
+@mixin box-sizing ($value: $value){
 	-moz-box-sizing: $value;
 	-webkit-box-sizing: $value;
 	box-sizing: $value;	
