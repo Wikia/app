@@ -277,6 +277,9 @@
 
 		a {
 			-webkit-transition: opacity .5s;
+			-moz-transition: opacity .5s;
+			-o-transition: opacity .5s;
+			transition: opacity .5s;
 		}
 
 		h1 {
@@ -291,14 +294,17 @@
 
 			&.anim {
 				-webkit-animation: slideIn .5s ease;
+				-moz-animation: slideIn .5s ease;
 			}
 
 			&.animNext {
 				-webkit-animation: slide .5s ease;
+				-moz-animation: slide .5s ease;
 			}
 
 			&.animBack {
 				-webkit-animation: slideBack .5s ease;
+				-moz-animation: slideBack .5s ease;
 			}
 		}
 	}
@@ -334,6 +340,52 @@
 }
 
 @-webkit-keyframes slideBack {
+	0% {
+		-webkit-transform: translate(0);
+	}
+	50%{
+		opacity: 0;
+		-webkit-transform: translate(30%);
+	}
+	51%{
+		opacity: 0;
+		-webkit-transform: translate(-30%);
+	}
+	100% {
+		-webkit-transform: translate(0);
+	}
+}
+
+@-moz-keyframes slideIn {
+	0% {
+		opacity: 0;
+		-webkit-transform: translate(30%);
+	}
+
+	100% {
+		opacity: 1;
+		-webkit-transform: translate(0);
+	}
+}
+
+@-moz-keyframes slide {
+	0% {
+		-webkit-transform: translate(0);
+	}
+	50%{
+		opacity: 0;
+		-webkit-transform: translate(-30%);
+	}
+	51%{
+		opacity: 0;
+		-webkit-transform: translate(30%);
+	}
+	100% {
+		-webkit-transform: translate(0);
+	}
+}
+
+@-moz-keyframes slideBack {
 	0% {
 		-webkit-transform: translate(0);
 	}

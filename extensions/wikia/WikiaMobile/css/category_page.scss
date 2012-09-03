@@ -1,5 +1,7 @@
-@import 'variables';
-@import 'mixins/linear-gradient';
+@import 'variables.scss';
+
+@import 'mixins/linear-gradient.scss';
+@import 'mixins/box-shadow.scss';
 
 #wkCatExh {
 	margin: 20px auto;
@@ -86,6 +88,9 @@
 		background-color: $border-color;
 		padding: 5px 0;
 		-webkit-transition: background-color .5s;
+		-moz-transition: background-color .5s;
+		-o-transition: background-color .5s;
+		transition: background-color .5s;
 
 		//hide the text and make it take no space without adding
 		//yet another wrapping element...

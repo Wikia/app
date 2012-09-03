@@ -17,6 +17,8 @@ $slotColor: #666;
 	padding: 0;
 	background-color: $slotColor;
 	-webkit-transition: opacity .75s, -webkit-transform .75s;
+	-moz-transition: opacity .75s, -moz-transform .75s;
+	-o-transition: opacity .75s, transform .75s;
 
 	& > *:nth-last-child(n+2) {
 		width: 320px;
@@ -30,7 +32,9 @@ $slotColor: #666;
 
 	&.anim{
 	    opacity: 0;
-	 	-webkit-transform: translate3d(0,75px,0);
+	 	-webkit-transform: translateY(75px);
+		-moz-transform: translate3d(0,75px,0);
+		transform: translateY(75px);
 	}
 
 	&.show {
