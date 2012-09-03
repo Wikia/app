@@ -834,7 +834,6 @@ class AdEngine {
 
 		if (!empty($wgEnableWikiaHubsExt) && !empty($wgHubsAdsEnabled)) {
 			if (in_array($wgTitle->getDBkey(), $wgHubsAdsEnabled)) {
-				wfProfileOut(__METHOD__);
 				return true;
 			}
 		}

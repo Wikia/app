@@ -21,12 +21,12 @@ class WikiaPageType {
 	}
 
 	public static function isMainPage() {
-		$wgTitle = F::app()->wg->Title;
+		$title = F::app()->wg->Title;
 
 		$isMainPage = (
-			is_object($wgTitle)
-			&& $wgTitle->getArticleId() == Title::newMainPage()->getArticleId()
-			&& $wgTitle->getArticleId() != 0 # caused problems on central due to NS_SPECIAL main page
+			is_object($title)
+			&& $title->getArticleId() == Title::newMainPage()->getArticleId()
+			&& $title->getArticleId() != 0 # caused problems on central due to NS_SPECIAL main page
 			&& !self::isActionPage()
 		);
 
@@ -34,30 +34,27 @@ class WikiaPageType {
 	}
 
 	public static function isSearch() {
-		$wgTitle = F::app()->wg->Title;
+		$title = F::app()->wg->Title;
 
 		$searchPageNames = array('Search', 'WikiaSearch');
 
-		return !empty($wgTitle) && -1 == $wgTitle->getNamespace()
-			&& in_array(array_shift(SpecialPageFactory::resolveAlias($wgTitle->getDBkey())), $searchPageNames);
+		return !empty($title) && -1 == $title->getNamespace()
+			&& in_array(array_shift(SpecialPageFactory::resolveAlias($title->getDBkey())), $searchPageNames);
 	}
 
 	public static function isForum() {
-		$wgEnableForumExt = F::app()->wg->EnableForumExt;
-		$wgIsForum = F::app()->wg->IsForum;
-
-		return (!empty($wgEnableForumExt) && !empty($wgIsForum));
+		return (F::app()->wg->EnableForumExt && F::app()->wg->IsForum);
 	}
 
 	public static function isExtra() {
-		$wgTitle = F::app()->wg->Title;
-		$wgExtraNamespaces = F::app()->wg->ExtraNamespaces;
+		$title = F::app()->wg->Title;
+		$extraNamespaces = F::app()->wg->ExtraNamespaces;
 
-		return array_key_exists($wgTitle->getNamespace(), $wgExtraNamespaces);
+		return array_key_exists($title->getNamespace(), $extraNamespaces);
 	}
 
 	public static function isContentPage() {
-		$wgTitle = F::app()->wg->Title;
+		$title = F::app()->wg->Title;
 
 		$contentNamespaces = array_merge(
 			F::app()->wg->ContentNamespaces,
@@ -71,7 +68,7 @@ class WikiaPageType {
 
 		// actual content namespace checked along with hardcoded override (main, image & category)
 		// note this is NOT used in isMainPage() since that is to ignore content namespaces
-		return (is_object($wgTitle) && in_array($wgTitle->getNamespace(), $contentNamespaces));
+		return (is_object($title) && in_array($title->getNamespace(), $contentNamespaces));
 	}
 
 	/**
