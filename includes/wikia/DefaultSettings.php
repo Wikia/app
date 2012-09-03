@@ -130,6 +130,7 @@ $wgAutoloadClasses[ 'PayflowAPI'                      ] = "$IP/includes/wikia/Pa
 $wgAutoloadClasses[ 'Curl'                            ] = "$IP/includes/wikia/Curl.php";
 $wgAutoloadClasses[ 'WikiaException'                  ] = "$IP/includes/wikia/WikiaException.php";
 $wgAutoloadClasses[ 'WikiaDispatchedException'        ] = "$IP/includes/wikia/WikiaDispatchedException.class.php";
+$wgAutoloadClasses[ 'WikiaPageType'                   ] = "$IP/includes/wikia/WikiaPageType.class.php";
 $wgAutoloadClasses[ 'WikiaSkinMonoBook'               ] = "$IP/skins/wikia/WikiaMonoBook.php";
 $wgAutoloadClasses[ 'PaginationController'            ] = "$IP/includes/wikia/services/PaginationController.class.php";
 $wgAutoloadClasses[ 'MemcacheSync'                    ] = "$IP/includes/wikia/MemcacheSync.class.php";

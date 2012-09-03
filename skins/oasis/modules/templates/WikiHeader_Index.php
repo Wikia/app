@@ -48,7 +48,7 @@ if( is_array($menuNodes) && isset($menuNodes[0]) && $showMenu) {
 	</nav>
 	<div class="buttons">
 <?php if ($wg->EnableCorporatePageExt) {
-		if (ArticleAdLogic::isMainPage()) echo F::app()->renderView('Search', 'Index');
+		if (WikiaPageType::isMainPage()) echo F::app()->renderView('Search', 'Index');
 		echo F::app()->renderView('RandomWiki', 'Index');
 } else { ?>
 		<?= Wikia::specialPageLink('Random', 'oasis-button-random-page', array('accesskey' => 'x', 'class' => 'wikia-button secondary', 'data-id' => 'randompage', 'title' => wfMsg('oasis-button-random-page-tooltip')), 'blank.gif', null, 'sprite random') ?>

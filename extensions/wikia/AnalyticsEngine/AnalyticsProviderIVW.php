@@ -47,7 +47,7 @@ class AnalyticsProviderIVW implements iAnalyticsProvider {
 			if (strpos($title, 'Mobil') === 0) return 'RC_WIKIA_MOBIL';
 			if (in_array($title, array('Videospiele', 'Entertainment', 'Lifestyle'))) return 'RC_WIKIA_START';
 			
-			if (ArticleAdLogic::getPageType() == 'search') return 'RC_WIKIA_SEARCH';
+			if (WikiaPageType::getPageType() == 'search') return 'RC_WIKIA_SEARCH';
 
 			return 'RC_WIKIA_SVCE';
 		}

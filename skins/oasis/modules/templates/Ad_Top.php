@@ -1,11 +1,11 @@
 <?php
 echo '<div class="WikiaTopAds'.$topAdsExtraClasses.'" id="WikiaTopAds">';
 
-if (ArticleAdLogic::isWikiaHub()) {
+if (WikiaPageType::isWikiaHub()) {
 	echo F::app()->renderView('Ad', 'Index', array('slotname' => 'HUB_TOP_LEADERBOARD'));
 }
 elseif ($wg->EnableCorporatePageExt) {
-	if (ArticleAdLogic::isSearch()) {
+	if (WikiaPageType::isSearch()) {
 		echo F::app()->renderView('Ad', 'Index', array('slotname' => 'TOP_LEADERBOARD'));
 	}
 	else {

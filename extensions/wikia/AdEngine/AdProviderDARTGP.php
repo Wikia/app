@@ -9,7 +9,7 @@ class AdProviderDARTGP extends AdProviderIframeFiller implements iAdProvider {
 	private $slotsToCall = array();
 
 	protected function __construct() {
-		$this->isMainPage = ArticleAdLogic::isMainPage();
+		$this->isMainPage = WikiaPageType::isMainPage();
 	}
 
 	public static function getInstance() {

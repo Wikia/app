@@ -2,7 +2,7 @@
 global $wgTitle;
 global $wgGoogleAdClient;
 
-if ($wgTitle->isContentPage() && !ArticleAdLogic::isMainPage()) {
+if ($wgTitle->isContentPage() && !WikiaPageType::isMainPage()) {
 
 $AnswersGoogleHint = '';
 foreach ($wgTitle->getParentCategories() as $key=>$val) {

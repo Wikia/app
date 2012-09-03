@@ -9,7 +9,7 @@ class AdProviderAdEngine2 extends AdProviderIframeFiller implements iAdProvider 
 	protected static $instance = false;
 
 	protected function __construct() {
-		$this->isMainPage = ArticleAdLogic::isMainPage();
+		$this->isMainPage = WikiaPageType::isMainPage();
 	}
 
 	public static function getInstance() {

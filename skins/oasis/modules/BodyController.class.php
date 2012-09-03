@@ -142,7 +142,7 @@ class BodyController extends WikiaController {
 		$huluVideoPanelKey = $wgUser->isAnon() ? 1390 : 1280;
 
 		// Forum Extension
-		if (ArticleAdLogic::isForum()) {
+		if (WikiaPageType::isForum()) {
 			$railModuleList = array (
 				1002 => array('Forum', 'forumRelatedThreads', null),
 				1001 => array('Forum', 'forumActivityModule', null),
@@ -153,7 +153,7 @@ class BodyController extends WikiaController {
 		}
 
 		if($namespace == NS_SPECIAL) {
-			if (ArticleAdLogic::isSearch()) {
+			if (WikiaPageType::isSearch()) {
 				if (empty($this->wg->EnableWikiaHomePageExt)) {
 					$railModuleList = array(
 						$latestActivityKey => array('LatestActivity', 'Index', null),
@@ -270,7 +270,7 @@ class BodyController extends WikiaController {
 				1500 => array('Search', 'Index', null),
 			);
 			// No rail on main page or edit page for corporate skin
-			if ( BodyController::isEditPage() || ArticleAdLogic::isMainPage() ) {
+			if ( BodyController::isEditPage() || WikiaPageType::isMainPage() ) {
 				$railModuleList = array();
 			}
 			else if (self::isHubPage()) {
@@ -300,7 +300,7 @@ class BodyController extends WikiaController {
 			$isEditPage = BodyController::isEditPage();
 		}
 
-		if ( $isEditPage || ArticleAdLogic::isMainPage() ) {
+		if ( $isEditPage || WikiaPageType::isMainPage() ) {
 			$modules = array();
 			wfRunHooks( 'GetEditPageRailModuleList', array( &$modules ) );
 			wfProfileOut(__METHOD__);
@@ -376,7 +376,7 @@ class BodyController extends WikiaController {
 
 		// InfoBox - Testing
 		$this->wg->EnableInfoBoxTest = $wgEnableInfoBoxTest;
-		$this->isMainPage = ArticleAdLogic::isMainPage();
+		$this->isMainPage = WikiaPageType::isMainPage();
 
 		// Replaces ContentDisplayModule->index()
 		$this->bodytext = $this->app->getSkinTemplateObj()->data['bodytext'];
@@ -416,7 +416,7 @@ class BodyController extends WikiaController {
 			}
 
 			// FIXME: move to separate module
-			if ( $wgEnableWikiaHomePageExt && ArticleAdLogic::isMainPage() ) {
+			if ( $wgEnableWikiaHomePageExt && WikiaPageType::isMainPage() ) {
 				$this->wg->SuppressFooter = true;
 				$this->wg->SuppressArticleCategories = true;
 				$this->wg->SuppressPageHeader = true;
@@ -432,7 +432,7 @@ class BodyController extends WikiaController {
 
 				// $this->wgSuppressFooter = true;
 				$this->wgSuppressArticleCategories = true;
-				if (ArticleAdLogic::isMainPage()) {
+				if (WikiaPageType::isMainPage()) {
 					$this->wg->SuppressPageHeader = true;
 				} else {
 					$this->headerModuleAction = 'Corporate';

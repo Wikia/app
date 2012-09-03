@@ -179,7 +179,7 @@ if (
 	window.top === window.self
 	&& window.wgEnableAdsInContent
 	&& !window.wgIsMainpage
-	&& (window.wgIsContentNamespace || window.adLogicPageType === 'search')
+	&& (window.wgIsContentNamespace || window.wikiaPageType === 'search')
 ) {
 	wgAfterContentAndJS.push(function() {
 		if (!AIC2.called) {
