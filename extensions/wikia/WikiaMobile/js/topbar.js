@@ -40,7 +40,7 @@ define('topbar', ['querystring', 'loader', 'toc', 'events', 'ads'], function (qs
 
 	function reset(stopScrolling){
 		!barSetUp && setupTopBar();
-		!stopScrolling && window.scrollTo(0,0);
+		!stopScrolling && wkPrfTgl.scrollIntoView();
 		toc.close();
 		(loc.hash !== '#topbar') && (loc.hash = 'topbar');
 		hidePage();

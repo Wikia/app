@@ -3,14 +3,19 @@
 }
 
 #wkSrhFrm{
-	padding: 10px;
-	height: 55px;
-	background: $searchOpenBackground;
-	box-shadow: 0 5px 15px $shadow-color;
 	display: -webkit-box;
 	display: -moz-box;
 	display: box;
+
+	padding: 10px;
+	margin: 0;
+
+	height: 55px;
+
+	background: $searchOpenBackground;
+	box-shadow: 0 5px 15px $shadow-color;
 }
+
 
 #wkSrhSub {
 	margin: 0 0 0 -27px;
