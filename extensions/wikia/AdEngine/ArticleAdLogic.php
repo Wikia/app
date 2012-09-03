@@ -623,6 +623,11 @@ class ArticleAdLogic {
 			&& in_array(array_shift(SpecialPageFactory::resolveAlias($wgTitle->getDBkey())), $searchPageNames);
 	}
 
+	public static function isForum() {
+		global $wgEnableForumExt, $wgIsForum;
+		return (!empty($wgEnableForumExt) && !empty($wgIsForum));
+	}
+
 	public static function isExtra() {
 		wfProfileIn(__METHOD__);
 		global $wgExtraNamespaces, $wgTitle;
