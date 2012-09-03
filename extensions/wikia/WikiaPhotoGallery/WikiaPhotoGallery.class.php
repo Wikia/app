@@ -1219,6 +1219,7 @@ class WikiaPhotoGallery extends ImageGallery {
 
 		$slideshowHtml .= F::build('JSSnippets')->addToStack(
 			array(
+				'/resources/wikia/libraries/jquery/slideshow/jquery-slideshow-0.4.js',
 				'/extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.slideshow.js'
 			),
 			array(),
@@ -1800,6 +1801,7 @@ class WikiaPhotoGallery extends ImageGallery {
 
 		$html .= F::build('JSSnippets')->addToStack(
 			array(
+				'/resources/wikia/libraries/jquery/slideshow/jquery-slideshow-0.4.js',
 				'/extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.slideshow.js'
 			),
 			array(),
