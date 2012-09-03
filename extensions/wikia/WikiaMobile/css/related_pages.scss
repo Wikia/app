@@ -1,9 +1,9 @@
 //dependencies
-@import "variables";
+@import "variables.scss";
 
 //mixins
-@import "mixins/linear-gradient";
-@import "mixins/box-sizing";
+@import "mixins/linear-gradient.scss";
+@import "mixins/box-sizing.scss";
 
 $itemHeight: 50px;
 $itemPadding: 6px;

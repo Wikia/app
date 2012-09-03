@@ -93,9 +93,10 @@ a {
 	padding-top: 10px;
 }
 //for browsers that don't know that these should be block
-section, article, header, footer, aside, figure, figcaption {
-	display: block;
-}
+//all our browsers support these (Removed by Jakub Olek according to: http://caniuse.com/#search=figu)
+//section, article, header, footer, aside, figure, figcaption {
+//	display: block;
+//}
 
 #wkMainCnt{
 	padding: $page-padding;
@@ -269,7 +270,9 @@ blockquote {
 	font-weight: 100;
 	background-color: white;
 	-webkit-transition: opacity .5s ease-out, -webkit-transform .5s;
-	-webkit-transform: translate3d(0px,0px,0px);
+	-moz-transition: opacity .5s ease-out, -moz-transform .5s;
+	transition: opacity .5s ease-out, transform .5s;
+	-webkit-transform: translateZ(0);
 	@include box-shadow(0 0 30px -10px $shadowColor);
 	text-align: center;
 	border: 1px solid grey;
@@ -287,6 +290,9 @@ blockquote {
 		pointer-events: none;
 		opacity: 0;
 		-webkit-transform: translateY(20px);
+		-moz-transform: translateY(20px);
+		-o-transform: translateY(20px);
+		transform: translateY(20px);
 	}
 
 	&.err{
