@@ -162,6 +162,19 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 			__METHOD__
 		);
 
+		// for STATE_REJECTED
+		$db->update(
+			'image_review',
+			array( 'state' => ImageReviewStatuses::STATE_REJECTED ),
+			array(
+				"review_start < '{$review_start}'",
+				"review_end = '0000-00-00 00:00:00'",
+				'reviewer_id' => $this->user_id,
+				'state' => ImageReviewStatuses::STATE_REJECTED,
+			),
+			__METHOD__
+		);
+
 		$db->commit();
 
 		$this->wf->ProfileOut( __METHOD__ );
