@@ -26,8 +26,7 @@ function WidgetNeedHelp($id, $params) {
 	} else {
 		$parser = &$wgParser;
 	}
-	$parser->mOptions = new ParserOptions();
-	$parser->mOptions->initialiseFromUser( $wgUser );
+	$parser->mOptions = ParserOptions::newFromUser( $wgUser );
 
 	$ret = $parser->parse(wfMsg('Needhelp'), $wgTitle, $parser->mOptions)->getText();
 	wfProfileOut(__METHOD__);
