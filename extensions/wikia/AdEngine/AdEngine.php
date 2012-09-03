@@ -286,7 +286,7 @@ class AdEngine {
 
 		$skin_name = RequestContext::getMain()->getSkin()->getSkinName();
 
-		if ($skin_name == 'awesome' || $skin_name == 'answers' || $skin_name == 'monaco' || $skin_name == 'lyricsminimal' ){
+		if ($skin_name === 'answers' || $skin_name === 'lyricsminimal' ){
 			$skin_name = 'oasis';
 		}
 
