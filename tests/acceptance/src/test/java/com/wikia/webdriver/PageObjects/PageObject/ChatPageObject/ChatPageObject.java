@@ -187,7 +187,7 @@ public class ChatPageObject extends BasePageObject
 	 * @author Karol Kujawiak
 	 * verifies blocked user drop-down content, should be executed after clickOnDifferentUser() execution
 	 */
-	public void verifyBlockedUserDropdown(String userName)
+	public void verifyBlockedUserDropdown()
 	{
 		List<WebElement> list = getDropDownListOfElements();
 		for (int i=0; i<list.size(); i++)
@@ -197,6 +197,22 @@ public class ChatPageObject extends BasePageObject
 		CommonFunctions.assertString("message-wall", list.get(0).getAttribute("class"));
 		CommonFunctions.assertString("contribs", list.get(1).getAttribute("class"));
 		CommonFunctions.assertString("private-allow", list.get(2).getAttribute("class"));	
+	}
+	
+	/**
+	 * @author Karol Kujawiak
+	 * verifies private message user drop-down content, should be executed after clickPrivateMessageUser() execution
+	 */
+	public void verifyPrivateUserDropdown()
+	{
+		List<WebElement> list = getDropDownListOfElements();
+		for (int i=0; i<list.size(); i++)
+		{
+			System.out.println(list.get(i).getAttribute("class"));	
+		}
+		CommonFunctions.assertString("message-wall", list.get(0).getAttribute("class"));
+		CommonFunctions.assertString("contribs", list.get(1).getAttribute("class"));
+		CommonFunctions.assertString("private-block", list.get(2).getAttribute("class"));	
 	}
 
 	/**
@@ -342,6 +358,7 @@ public class ChatPageObject extends BasePageObject
 		CommonFunctions.ClickElement();
 		CommonFunctions.ClickElement();
 		waitForElementByBy(userContextMenu);
+		PageObjectLogging.log("clickPrivateMessageUser", "private messages user "+userName+" is clicked", true, driver);
 	}
 	
 	
@@ -357,7 +374,7 @@ public class ChatPageObject extends BasePageObject
 		CommonFunctions.MoveCursorToElement(p, driver);		
 		CommonFunctions.ClickElement();
 		CommonFunctions.ClickElement();
-		PageObjectLogging.log("blockPrivateMessageFromUser", "private messages from "+userName+" are blocked now", true, driver);
+		PageObjectLogging.log("blockPrivateMessageFromUser", "private messages are blocked now", true, driver);
 	}
 	
 	/**
