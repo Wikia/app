@@ -142,6 +142,7 @@
 			</div>
 		<?php else: // regular ads ?>
 			<?= wfRenderModule('Ad', 'Index', array('slotname' => 'TOP_RIGHT_BOXAD')); ?>
+			<?= wfRenderModule('Ad', 'Index', array('slotname' => 'LEFT_SKYSCRAPER_2')); ?>
 			<div id="WikiaAdInContentPlaceHolder"></div>
 		<?php endif; ?>
 		</div>
