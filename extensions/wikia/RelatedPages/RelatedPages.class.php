@@ -105,7 +105,7 @@ class RelatedPages {
 	}
 
 	protected function afterGet( $pages, $limit ){
-		
+
 		global $wgContentNamespaces, $wgEnableRelatedPagesUnionSelectQueries, $wgUser;
 		wfProfileIn( __METHOD__ );
 
@@ -116,7 +116,7 @@ class RelatedPages {
 		// TMP: always remove last article to get a text snippeting working example
 		// macbre: removed as requested by Angie
 		//$images = array_slice($images, 0, $limit-1, true);
-			
+
 		foreach( $pages as $pageId => $data ) {
 			if( isset( $images[$pageId] ) ) {
 				$image = $images[$pageId][0];
@@ -180,7 +180,7 @@ class RelatedPages {
 		}
 
 		$wgMemc->set( $cacheKey, $pages, ( $this->categoryCacheTTL * 3600 ) );
-		
+
 		wfProfileOut( __METHOD__ );
 		return $pages;
 	}
@@ -199,7 +199,7 @@ class RelatedPages {
 			$cacheKey = wfMemcKey( $this->memcKeyPrefix, __METHOD__, $articleId);
 		}
 		$cache =  $wgMemc->get($cacheKey);
-		
+
 		if (is_array($cache)) {
 			wfProfileOut(__METHOD__);
 			return $cache;
@@ -241,7 +241,7 @@ class RelatedPages {
 				);
 			}
 		}
-		
+
 		$wgMemc->set($cacheKey, $pages, ( $this->categoryCacheTTL * 3600));
 		wfProfileOut(__METHOD__);
 		return $pages;
@@ -357,10 +357,10 @@ class RelatedPages {
 		return true;
 	}
 
-	public static function onOutputPageBeforeHTML( &$out, &$text ) {
+	public static function onOutputPageBeforeHTML( OutputPage $out, &$text ) {
 		global $wgRequest;
 		if ( $out->isArticle() && $wgRequest->getVal( 'diff' ) === null && !( F::app()->checkSkin( 'wikiamobile' ) ) ) {
-			$text .= wfRenderModule( 'RelatedPages' );
+			$text .= F::app()->renderView( 'RelatedPages', 'Index' );
 		}
 		return true;
 	}

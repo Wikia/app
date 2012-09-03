@@ -4,8 +4,8 @@
 $form = array(
 	'inputs' => array(),
 );
-	
-// cach shared html strings 
+
+// cach shared html strings
 $optionsHtml = '';
 foreach($options as $label => $value) {
 	$optionsHtml .= "<option value='".$value."'>".$label."</option>";
@@ -46,4 +46,4 @@ $reasonRow = array(
 array_push($form['inputs'], $reasonRow);
 
 // return the form HTML
-echo wfRenderModule('WikiaForm', 'Index', array('form' => $form));
+echo F::app()->renderView('WikiaForm', 'Index', array('form' => $form));

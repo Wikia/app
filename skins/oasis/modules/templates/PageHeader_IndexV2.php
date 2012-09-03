@@ -4,7 +4,7 @@
 <?php
 	// edit button with actions dropdown
 	if (!empty($action)) {
-		echo wfRenderModule('MenuButton', 'Index', array('action' => $action, 'image' => $actionImage, 'dropdown' => $dropdown, 'name' => $actionName));
+		echo F::app()->renderView('MenuButton', 'Index', array('action' => $action, 'image' => $actionImage, 'dropdown' => $dropdown, 'name' => $actionName));
 	}
 
 	// "Add a photo" button
@@ -19,7 +19,7 @@
 
 	// comments & like button
 	if( !$isWallEnabled ) {
-		echo wfRenderModule('CommentsLikes', 'Index', array('comments' => $comments, 'likes' => $likes));
+		echo F::app()->renderView('CommentsLikes', 'Index', array('comments' => $comments, 'likes' => $likes));
 	}
 	foreach( $extraButtons as $button ){
 		echo $button;
@@ -55,7 +55,7 @@
 	if ($showSearchBox) {
 ?>
 <section id="WikiaSearchHeader" class="WikiaSearchHeader">
-	<?=  wfRenderModule('Search') ?>
+	<?=  F::app()->renderView('Search', 'Index') ?>
 </section>
 <?php
 	}

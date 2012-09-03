@@ -101,7 +101,7 @@
 	global $wgUser;
 	if (get_class(RequestContext::getMain()->getSkin()) != 'SkinOasis') {
 		echo '<div class="article-sidebar">';
-		echo wfRenderModule('LatestEarnedBadges');
+		echo F::app()->renderView('LatestEarnedBadges', 'Index');
 		echo '</div>';
 	}
 ?>

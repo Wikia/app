@@ -29,9 +29,9 @@ class SpecialCreateWikiaQuizArticle extends SpecialPage {
 
 		if( $subpage != '' ) {
 			// We came here from the edit link, go into edit mode
-			$wgOut->addHtml(wfRenderModule('WikiaQuiz', 'EditQuizArticle', array('title' => $subpage)));
+			$wgOut->addHtml(F::app()->renderView('WikiaQuiz', 'EditQuizArticle', array('title' => $subpage)));
 		} else {
-			$wgOut->addHtml(wfRenderModule('WikiaQuiz', 'CreateQuizArticle'));
+			$wgOut->addHtml(F::app()->renderView('WikiaQuiz', 'CreateQuizArticle'));
 		}
 	}
 }

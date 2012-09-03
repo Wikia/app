@@ -56,13 +56,13 @@ class BodyController extends WikiaController {
 		$app = F::app();
 		/* temporarily removing this
 		*/
-		
+
 		$ns = $app->wg->Title->getNamespace();
-		
+
 		if( in_array( MWNamespace::getSubject($ns), $app->wg->WallNS) ) {
 			return true;
 		}
-		
+
 		if( defined("NS_WIKIA_FORUM_TOPIC_BOARD") && $ns == NS_WIKIA_FORUM_TOPIC_BOARD ) {
 			return true;
 		}
@@ -456,7 +456,7 @@ class BodyController extends WikiaController {
 		if($wgTitle && $wgTitle->isSpecial( 'Search' ) && !$this->wg->WikiaSearchIsDefault) {
 			$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL("skins/oasis/css/modules/SpecialSearch.scss"));
 			$this->headerModuleName = null;
-			$this->bodytext = wfRenderModule('Search') . $this->bodytext;
+			$this->bodytext = F::app()->renderView('Search', "Index'") . $this->bodytext;
 		}
 
 		// Inter-wiki search
@@ -508,7 +508,7 @@ class BodyController extends WikiaController {
 					$comments = $service->getCommentsCount();
 
 					// render comments bubble
-					$bubble = wfRenderModule('CommentsLikes', 'Index', array('comments' => $comments, 'bubble' => true));
+					$bubble = F::app()->renderView('CommentsLikes', 'Index', array('comments' => $comments, 'bubble' => true));
 
 					$this->subtitle .= ' | ';
 					$this->subtitle .= $bubble;

@@ -1,17 +1,17 @@
 <header id="WikiHeader" class="WikiHeaderRestyle">
-	<?= wfRenderModule('WikiHeader', 'Wordmark') ?> 
+	<?= F::app()->renderView('WikiHeader', 'Wordmark') ?>
 	<nav>
 		<h1><?= wfMsg( 'oasis-wiki-navigation', $wordmarkText ); ?></h1>
 		<?php
 			// render wiki navigation
-			echo wfRenderModule('WikiNavigation');
+			echo F::app()->renderView('WikiNavigation', 'Index');
 		?>
 	</nav>
 	<div class="buttons">
 		<?php
 			// render "Contribute" menu
-			echo wfRenderModule('ContributeMenu');
-			echo wfRenderModule('SharingToolbar', 'ShareButton');
+			echo F::app()->renderView('ContributeMenu', 'Index');
+			echo F::app()->renderView('SharingToolbar', 'ShareButton');
 		?>
 	</div>
 
@@ -22,6 +22,6 @@
 	?></div>
 	<img class="shadow-mask" src="<?= $wg->BlankImgUrl ?>" width="0" height="0">
 
-	<? echo wfRenderModule('SharingToolbar'); ?>
+	<? echo F::app()->renderView('SharingToolbar', 'Index'); ?>
 </header>
-<?= $displaySearch ? '<div class="adm-dash-search">'.wfRenderModule('Search').'</div>' : '' ?>
+<?= $displaySearch ? '<div class="adm-dash-search">'.F::app()->renderView('Search', 'Index').'</div>' : '' ?>

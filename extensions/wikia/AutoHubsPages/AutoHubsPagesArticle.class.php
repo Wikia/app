@@ -83,8 +83,8 @@ class AutoHubsPagesArticle extends Article {
 		if ( F::app()->checkSkin( 'oasis' ) ) {
 			$hubName = $wgTitle->getText();
 
-			$wgOut->addHTML(wfRenderModule('BlogsInHubs', 'HotNews', array('hubName' => $hubName)));
-			$wgOut->addHTML(wfRenderModule('CorporateSite', 'TopHubWikis'));
+			$wgOut->addHTML(F::app()->renderView('BlogsInHubs', 'HotNews', array('hubName' => $hubName)));
+			$wgOut->addHTML(F::app()->renderView('CorporateSite', 'TopHubWikis'));
 			parent::view();
 		} else {
 			$wgOut->addHTML( $oTmpl->render("article") );

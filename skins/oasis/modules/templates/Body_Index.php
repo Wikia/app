@@ -7,44 +7,44 @@
 <?= $afterBodyHtml ?>
 
 <div id="ad-skin" class="wikia-ad noprint"></div>
-<?= wfRenderModule('Ad', 'Index', array('slotname' => 'INVISIBLE_TOP')) ?>
-<?= wfRenderModule('Ad', 'Index', array('slotname' => 'HOME_INVISIBLE_TOP')) ?>
-<?= wfRenderModule('GlobalHeader') ?>
+<?= F::app()->renderView('Ad', 'Index', array('slotname' => 'INVISIBLE_TOP')) ?>
+<?= F::app()->renderView('Ad', 'Index', array('slotname' => 'HOME_INVISIBLE_TOP')) ?>
+<?= F::app()->renderView('GlobalHeader', 'Index') ?>
 
-<?= empty($wg->GlobalHeaderFullWidth) ? '' : wfRenderModule('Notifications', 'Confirmation') ?>
+<?= empty($wg->GlobalHeaderFullWidth) ? '' : F::app()->renderView('Notifications', 'Confirmation') ?>
 
-<?= empty($wg->GlobalHeaderFullWidth) ? '' : wfRenderModule('Ad', 'Top') ?>
+<?= empty($wg->GlobalHeaderFullWidth) ? '' : F::app()->renderView('Ad', 'Top') ?>
 
 <section id="WikiaPage" class="WikiaPage<?= empty( $wg->OasisNavV2 ) ? '' : ' V2' ?><?= !empty($isGridLayoutEnabled) && $railModulesExist ? ' WikiaGrid' : '' ?>">
 	<div id="WikiaPageBackground" class="WikiaPageBackground"></div>
 	<div class="WikiaPageContentWrapper">
-		<?= empty($wg->GlobalHeaderFullWidth) ? wfRenderModule('Notifications', 'Confirmation') : '' ?>
+		<?= empty($wg->GlobalHeaderFullWidth) ? F::app()->renderView('Notifications', 'Confirmation') : '' ?>
 
-		<?= empty($wg->GlobalHeaderFullWidth) ? wfRenderModule('Ad', 'Top') : '' ?>
+		<?= empty($wg->GlobalHeaderFullWidth) ? F::app()->renderView('Ad', 'Top') : '' ?>
 
 		<?php
 			if ( empty( $wg->SuppressWikiHeader ) ) {
 				echo empty( $wg->OasisNavV2  )
-					? wfRenderModule( 'WikiHeader' )
-					: wfRenderModule( 'WikiHeaderV2' );
+					? F::app()->renderView( 'WikiHeader', 'Index' )
+					: F::app()->renderView( 'WikiHeaderV2', 'Index' );
 			}
 		?>
 
 		<?php
 			if (!empty($wg->EnableWikiAnswers)) {
-				echo wfRenderModule('WikiAnswers', 'QuestionBox');
+				echo F::app()->renderView('WikiAnswers', 'QuestionBox');
 			}
 		?>
 
 		<?php
 		if (!empty( $wg->InterlangOnTop ) ) {
-			echo wfRenderModule('ArticleInterlang');
+			echo F::app()->renderView('ArticleInterlang', 'Index');
 		}
 		?>
 
 		<?php
 		if ($headerModuleName == 'UserPagesHeader' && ($headerModuleAction != 'BlogPost' && $headerModuleAction != 'BlogListing') ) {
-			echo wfRenderModule($headerModuleName, $headerModuleAction, $headerModuleParams);
+			echo F::app()->renderView($headerModuleName, $headerModuleAction, $headerModuleParams);
 		}
 		?>
 
@@ -56,7 +56,7 @@
 			<?php
 				// Needs to be above page header so it can suppress page header
 				if ($displayAdminDashboard) {
-					echo wfRenderModule('AdminDashboard', 'Chrome');
+					echo F::app()->renderView('AdminDashboard', 'Chrome');
 				}
 				// render UserPagesHeader or PageHeader or nothing...
 				if (empty($wg->SuppressPageHeader) && $headerModuleName) {
@@ -69,7 +69,7 @@
 							echo F::app()->renderView( 'UserProfilePage', 'renderActionButton', array() );
 						}
 					} else {
-						echo wfRenderModule($headerModuleName, $headerModuleAction, $headerModuleParams);
+						echo F::app()->renderView($headerModuleName, $headerModuleAction, $headerModuleParams);
 					}
 				}
 			?>
@@ -86,12 +86,12 @@
 				<div class="home-top-right-ads">
 				<?php
 					if (in_array('leaderboard', $wg->ABTests)) {
-						echo wfRenderModule('Ad', 'Index', array('slotname' => 'TEST_HOME_TOP_RIGHT_BOXAD'));
+						echo F::app()->renderView('Ad', 'Index', array('slotname' => 'TEST_HOME_TOP_RIGHT_BOXAD'));
 					} else {
-						echo wfRenderModule('Ad', 'Index', array('slotname' => 'HOME_TOP_RIGHT_BOXAD'));
+						echo F::app()->renderView('Ad', 'Index', array('slotname' => 'HOME_TOP_RIGHT_BOXAD'));
 					}
 
-					echo wfRenderModule('Ad', 'Index', array('slotname' => 'HOME_TOP_RIGHT_BUTTON'));
+					echo F::app()->renderView('Ad', 'Index', array('slotname' => 'HOME_TOP_RIGHT_BUTTON'));
 				?>
 				</div>
 
@@ -99,11 +99,11 @@
 				<?php
 				// for InfoBox-Testing
 				if ($wg->EnableInfoBoxTest) {
-					echo wfRenderModule('ArticleInfoBox');
+					echo F::app()->renderView('ArticleInfoBox', 'Index');
 				}
 
 				if ($wg->EnableCorporatePageExt && empty($wg->SuppressSlider)) {
-					echo wfRenderModule('CorporateSite', 'Slider');
+					echo F::app()->renderView('CorporateSite', 'Slider');
 				} ?>
 
 				<?= $bodytext ?>
@@ -112,11 +112,11 @@
 
 			<?php
 			if (empty($wg->SuppressArticleCategories)) {
-				echo wfRenderModule('ArticleCategories');
+				echo F::app()->renderView('ArticleCategories', 'Index');
 			} ?>
 			<?php
 			if (empty( $wg->InterlangOnTop ) ) {
-				 echo wfRenderModule('ArticleInterlang');
+				 echo F::app()->renderView('ArticleInterlang', 'Index');
 			}
 			?>
 
@@ -127,21 +127,21 @@
 			<?php } ?>
 
 			<div id="WikiaArticleBottomAd" class="noprint">
-				<?= wfRenderModule('Ad', 'Index', array('slotname' => 'PREFOOTER_LEFT_BOXAD')) ?>
-				<?= wfRenderModule('Ad', 'Index', array('slotname' => 'PREFOOTER_RIGHT_BOXAD')) ?>
+				<?= F::app()->renderView('Ad', 'Index', array('slotname' => 'PREFOOTER_LEFT_BOXAD')) ?>
+				<?= F::app()->renderView('Ad', 'Index', array('slotname' => 'PREFOOTER_RIGHT_BOXAD')) ?>
 			</div>
 
 		</article><!-- WikiaMainContent -->
 
 	<?php
 		if ($railModulesExist) {
-			echo wfRenderModule('Rail', 'Index', array('railModuleList' => $railModuleList));
+			echo F::app()->renderView('Rail', 'Index', array('railModuleList' => $railModuleList));
 		}
 	?>
 
-		<?= empty($wg->SuppressFooter) ? wfRenderModule('Footer') : '' ?>
+		<?= empty($wg->SuppressFooter) ? F::app()->renderView('Footer', 'Index') : '' ?>
 		<? if(!empty($wg->EnableWikiaHomePageExt)) echo F::App()->renderView('WikiaHomePage', 'footer') ?>
-		<?= wfRenderModule('CorporateFooter') ?>
+		<?= F::app()->renderView('CorporateFooter', 'Index') ?>
 	</div>
 </section><!--WikiaPage-->
 

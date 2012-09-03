@@ -167,7 +167,7 @@
 		<li id="ThemeWiki" class="step">
 			<h2><?= wfMsg('cnw-theme-headline') ?></h2>
 			<p class="creative"><?= wfMsg('cnw-theme-creative') ?></p>
-			<?= wfRenderModule('ThemeDesigner', 'ThemeTab') ?>
+			<?= F::app()->renderView('ThemeDesigner', 'ThemeTab') ?>
 			<p class="instruction creative"><?= wfMsg('cnw-theme-instruction') ?></p>
 			<nav class="next-controls">
 				<span class="submit-error finish-status"></span>

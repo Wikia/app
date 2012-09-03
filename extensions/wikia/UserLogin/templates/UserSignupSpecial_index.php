@@ -5,7 +5,7 @@
 	</h2>
 	<h3 class="subheading"></h3>
 	<div class="wiki-info">
-		<?= wfRenderModule('WikiHeader', 'Wordmark') ?>
+		<?= F::app()->renderView('WikiHeader', 'Wordmark') ?>
 		<p><?= wfMsgExt('usersignup-marketing-wikia', 'parseinline') ?></p>
 		<?= wfMsgExt('usersignup-marketing-login', 'parseinline') ?>
 	</div>
@@ -128,7 +128,7 @@
 		);
 	}
 
-	echo wfRenderModule('WikiaForm', 'Index', array('form' => $form));
+	echo F::app()->renderView('WikiaForm', 'Index', array('form' => $form));
 ?>
 	</div>
 </section>

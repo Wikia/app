@@ -96,7 +96,7 @@ class WikiNavigationController extends WikiaController {
 
 		if (self::isWikiNavMessage($title) && !empty($wgOasisNavV2)) {
 			// render a preview
-			$html = wfRenderModule('WikiNavigation', 'Index', array(
+			$html = F::app()->renderView('WikiNavigation', 'Index', array(
 				'msgName' => $title->getText(),
 				'wikitext' => $wikitext,
 			));

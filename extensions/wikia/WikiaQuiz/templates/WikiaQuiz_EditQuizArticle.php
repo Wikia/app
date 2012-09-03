@@ -1,38 +1,38 @@
 <?php if (! isset($quizElement)) {
-	echo wfRenderModule('Error', 'Index', array('Quiz Question and Answers do not exist'));
+	echo F::app()->renderView('Error', 'Index', array('Quiz Question and Answers do not exist'));
 } else { ?>
 <section class="CreateWikiaQuizArticle" id="CreateWikiaQuizArticle" data-quizelementid="<?=$quizElement->getID()?>">
 
 	<h1><?= wfMsg('wikiaquiz-editquizarticle-headline') ?></h1>
-	
+
 	<form>
-	<label><?= wfMsg('wikiaquiz-question-label') ?></label>	
+	<label><?= wfMsg('wikiaquiz-question-label') ?></label>
 	<div class="question">
 		<p><?= htmlspecialchars($data['question']) ?></p>
 	</div>
-	
-	<label><?= wfMsg('wikiaquiz-image-label') ?></label>	
+
+	<label><?= wfMsg('wikiaquiz-image-label') ?></label>
 	<div class="image">
 		<input type="text" name="image" value="<?= htmlspecialchars($data['imageShort']) ?>">
 	</div>
 
-	<label><?= wfMsg('wikiaquiz-video-label') ?></label>	
+	<label><?= wfMsg('wikiaquiz-video-label') ?></label>
 	<div class="video">
 		<input type="text" name="video" value="<?= htmlspecialchars($data['videoName']) ?>">
 	</div>
 
-	<label><?= wfMsg('wikiaquiz-explanation-label') ?></label>	
+	<label><?= wfMsg('wikiaquiz-explanation-label') ?></label>
 	<div class="explanation">
 		<textarea name="explanation"><?= htmlspecialchars($data['explanation']) ?></textarea>
 	</div>
 
-	<label><?= wfMsg('wikiaquiz-quiz-label') ?></label>	
+	<label><?= wfMsg('wikiaquiz-quiz-label') ?></label>
 	<div class="quiz">
 		<p><?= htmlspecialchars($data['quiz']) ?></p>
 		<p>Order: <?=$data['order'] ?></p>
 	</div>
 
-	<label><?= wfMsg('wikiaquiz-answers-label') ?></label>	
+	<label><?= wfMsg('wikiaquiz-answers-label') ?></label>
 	<ul>
 	<li class="new-item">
 		<label class="order">#0</label>
@@ -49,16 +49,16 @@
 	</li>
 	<?php } ?>
 	</ul>
-	
+
 	<div class="add-new">
 		<a href="#" class="wikia-button secondary">+</a><?= wfMsg('wikiaquiz-addnewitem-label') ?>
 	</div>
-	
+
 	<div class="toolbar">
 		<input type="button" value="<?= wfMsg('wikiaquiz-cancel-label') ?>" class="cancel secondary">
 		<input type="button" value="<?= wfMsg('wikiaquiz-publish-label') ?>" class="create">
 	</div>
-	
+
 	<input type="hidden" name ="quizElementId" value="<?=$quizElement->getID()?>">
 
 	</form>

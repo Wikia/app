@@ -15,7 +15,7 @@ class PlacesHooks extends WikiaObject{
 	public function onPageHeaderIndexExtraButtons( $response ){
 		$app = F::app();
 		$extraButtons = $response->getVal('extraButtons');
-		
+
 		if (	( $app->wg->title->getNamespace() == NS_CATEGORY ) &&
 			$app->wg->user->isAllowed('places-enable-category-geolocation') ){
 
@@ -27,7 +27,7 @@ class PlacesHooks extends WikiaObject{
 				)->isGeoTaggingEnabled();
 
 			$commonClasses = 'secondary geoEnableButton';
-			$extraButtons[] = wfRenderModule( 'MenuButton',
+			$extraButtons[] = F::app()->renderView( 'MenuButton',
 				'Index',
 				array(
 					'action' => array(
@@ -38,7 +38,7 @@ class PlacesHooks extends WikiaObject{
 					'name' => 'places-category-switch-on'
 				)
 			);
-			$extraButtons[] = wfRenderModule('MenuButton',
+			$extraButtons[] = F::app()->renderView('MenuButton',
 				'Index',
 				array(
 					'action' => array(
