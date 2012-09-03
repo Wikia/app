@@ -87,11 +87,7 @@ $gradient-color-second: rgb(17,105,178);
 	#wkMdlCnt {
 		background-color: white;
 		color: rgb(58, 58, 58);
-<<<<<<< HEAD
-		margin: 40px 0;
-=======
 		padding: 40px 0;
->>>>>>> WikiaMobile: design tweaks to Polls, and removing hardcoded message (Sooorrrryyy Tor)
 	}
 
 	.pollHeader {
@@ -135,12 +131,8 @@ $gradient-color-second: rgb(17,105,178);
 		display: block;
 		padding: 10px;
 		pointer-events: none;
-<<<<<<< HEAD
 		//gradeint here is to make iphone to restyle button
 		@include linear-gradient(#EEE, #EEE);
-=======
-		background: #AAA;
->>>>>>> WikiaMobile: design tweaks to Polls, and removing hardcoded message (Sooorrrryyy Tor)
 		color: #A1A1A1;
 		font-weight: 800;
 		-webkit-transition: background .2s;
