@@ -440,46 +440,6 @@ class BlogTemplateClass {
 		return $aCategories;
 	}
 
-	public static function __getVoteCode($iPage) {
-		wfProfileIn( __METHOD__ );
-		if( get_class( RequestContext::getMain()->getSkin() ) == 'SkinMonaco' ) {
-
-			$oFauxRequest = new FauxRequest(array( "action" => "query", "list" => "wkvoteart", "wkpage" => $iPage, "wkuservote" => true ));
-			$oApi = new ApiMain($oFauxRequest);
-			$oApi->execute();
-			$aResult =& $oApi->GetResultData();
-
-			if(count($aResult['query']['wkvoteart']) > 0) {
-				if (!empty($aResult['query']['wkvoteart'][$iPage]['uservote'])) {
-					$voted = true;
-				} else {
-					$voted = false;
-				}
-				$rating = $aResult['query']['wkvoteart'][$iPage]['votesavg'];
-			} else {
-				$voted = false;
-				$rating = 0;
-			}
-			$sHiddenStar = $voted ? ' style="display: none;"' : '';
-			$iRating = round($rating * 2)/2;
-			$iRatingPx = round($rating * 17);
-
-			/* run template */
-			$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
-			$oTmpl->set_vars( array(
-				"ratingPx"		=> $iRatingPx,
-				"rating"		=> $iRating,
-				"hidden_star"	=> $sHiddenStar,
-			));
-			$return = $oTmpl->render("blog-page-voting");
-		}
-		else {
-			$return = "";
-		}
-		wfProfileOut( __METHOD__ );
-		return $return;
-	}
-
 	private static function __parseXMLTag($string) {
 		wfProfileIn( __METHOD__ );
 		$aResult = array();
@@ -963,7 +923,7 @@ class BlogTemplateClass {
 				"text"			=> self::__getRevisionText($oRow->page_id, $oRevision),
 				"revision"		=> $oRow->rev_id,
 				"comments"		=> $iCount,
-				"votes"			=> self::__getVoteCode($oRow->page_id),
+				"votes"			=> '',
 				"props"			=> BlogArticle::getProps($oRow->page_id),
 			);
 			// Sort by comment count for popular blog posts module
