@@ -79,7 +79,7 @@ $app->wg->set( 'wgAutoloadClasses', "{$dir}/WikiaMobileController.class.php", 'W
  */
 $app->wg->set( 'wgExtensionMessagesFiles', "{$dir}/WikiaMobile.i18n.php", 'WikiaMobile' );
 
-F::build('JSMessages')->registerPackage( 'WkMbl', array(
+F::build( 'JSMessages' )->registerPackage( 'WkMbl', array(
 	'wikiamobile-hide-section',
 	'wikiamobile-sharing-media-image',
 	'wikiamobile-sharing-page-text',
@@ -98,6 +98,10 @@ $app->registerHook( 'MakeHeadline', 'WikiaMobileHooks', 'onMakeHeadline' );
 $app->registerHook( 'LinkBegin', 'WikiaMobileHooks', 'onLinkBegin' );
 $app->registerHook( 'CategoryPageView', 'WikiaMobileHooks', 'onCategoryPageView' );
 $app->registerHook( 'ArticlePurge', 'WikiaMobileHooks', 'onArticlePurge' );
+
+//404 Pages
+$app->registerHook( 'BeforeDisplayNoArticleText', 'WikiaMobileHooks', 'onBeforeDisplayNoArticleText' );
+
 
 /*
  * settings

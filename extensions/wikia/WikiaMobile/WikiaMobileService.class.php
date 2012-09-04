@@ -11,8 +11,14 @@ class WikiaMobileService extends WikiaService {
 	const LYRICSWIKI_ID = 43339;
 
 	static protected $initialized = false;
-	private $pgExists = null;
+	/**
+	* @var $skin WikiaSkin
+	*/
 	private $skin;
+
+	/**
+	 * @var $templateObject SkinTemplate
+	 */
 	private $templateObject;
 
 	function __construct(){
@@ -27,7 +33,7 @@ class WikiaMobileService extends WikiaService {
 
 	function init(){
 		$this->wf->LoadExtensionMessages( 'WikiaMobile' );
-		$this->skin = $this->wg->User->getSkin();
+		$this->skin = RequestContext::getMain()->getSkin();
 		$this->templateObject = $this->app->getSkinTemplateObj();
 	}
 
@@ -42,37 +48,28 @@ class WikiaMobileService extends WikiaService {
 		$jsHeadFiles = '';
 		$styles = null;
 		$scripts = null;
-		$pageExists = $this->pageExists();
 		$assetsManager = F::build( 'AssetsManager', array(), 'getInstance' );
 		$advert = '';
-		$nav = '';
-		$footer = '';
 
-		if ( $pageExists ) {
-			F::build('JSMessages')->enqueuePackage('WkMbl', JSMessages::INLINE);
+		F::build( 'JSMessages' )->enqueuePackage( 'WkMbl', JSMessages::INLINE );
 
-			$jsBodyPackages[] = 'wikiamobile_js_body_full';
-			$scssPackages[] = 'wikiamobile_scss';
-			$styles = $this->skin->getStyles();
-			$scripts = $this->skin->getScripts();
+		$jsBodyPackages[] = 'wikiamobile_js_body_full';
+		$scssPackages[] = 'wikiamobile_scss';
+		$styles = $this->skin->getStyles();
+		$scripts = $this->skin->getScripts();
 
-			//show ads only for anon users
-			if ( $this->wg->user->isAnon() ) {
-				$jsBodyPackages[] = 'wikiamobile_js_ads';
-				$advert = $this->app->renderView( 'WikiaMobileAdService', 'index' );
-			}
-
-			$nav = $this->app->renderView( 'WikiaMobileNavigationService', 'index' );
-			$pageContent = $this->app->renderView( 'WikiaMobileBodyService', 'index', array(
-				'bodyText' => $this->templateObject->get( 'bodytext' ),
-				'categoryLinks' => $this->templateObject->get( 'catlinks')
-			) );
-			$footer = $this->app->renderView( 'WikiaMobileFooterService', 'index' );
-		} else {
-			$scssPackages[] = 'wikiamobile_404_scss';
-			$jsBodyPackages[] = 'wikiamobile_js_body_minimal';
-			$pageContent = $this->app->renderView( 'WikiaMobileErrorService', 'pageNotFound' );
+		//show ads only for anon users
+		if ( $this->wg->user->isAnon() ) {
+			$jsBodyPackages[] = 'wikiamobile_js_ads';
+			$advert = $this->app->renderView( 'WikiaMobileAdService', 'index' );
 		}
+
+		$nav = $this->app->renderView( 'WikiaMobileNavigationService', 'index' );
+		$pageContent = $this->app->renderView( 'WikiaMobileBodyService', 'index', array(
+			'bodyText' => $this->templateObject->get( 'bodytext' ),
+			'categoryLinks' => $this->templateObject->get( 'catlinks')
+		) );
+		$footer = $this->app->renderView( 'WikiaMobileFooterService', 'index' );
 
 		//let extensions manipulate the asset packages (e.g. ArticleComments,
 		//this is done to cut down the number or requests)
@@ -138,7 +135,7 @@ class WikiaMobileService extends WikiaService {
 		//$this->appCacheManifestPath = ( $this->wg->DevelEnvironment && !$this->wg->Request->getBool( 'appcache' ) ) ? null : self::CACHE_MANIFEST_PATH . "&{$this->wg->StyleVersion}";
 		$this->response->setVal( 'jsHeadFiles', $jsHeadFiles );
 		$this->response->setVal( 'topScripts', $this->skin->getTopScripts() );
-		$this->response->setVal( 'allowRobots', ( !$this->wg->DevelEnvironment && $pageExists ) );
+		$this->response->setVal( 'allowRobots', ( !$this->wg->DevelEnvironment ) );
 		$this->response->setVal( 'cssLinks', $cssLinks );
 		$this->response->setVal( 'mimeType', $this->templateObject->get( 'mimetype' ) );
 		$this->response->setVal( 'charSet', $this->templateObject->get( 'charset' ) );
@@ -169,7 +166,7 @@ class WikiaMobileService extends WikiaService {
 		//tracking
 		$trackingCode = '';
 
-		if(!in_array( $this->wg->request->getVal( 'action' ), array( 'edit', 'submit' ) ) ) {
+		if(!in_array( $this->wg->Request->getVal( 'action' ), array( 'edit', 'submit' ) ) ) {
 			$trackingCode .= AnalyticsEngine::track(
 				'QuantServe',
 				AnalyticsEngine::EVENT_PAGEVIEW,
@@ -196,30 +193,5 @@ class WikiaMobileService extends WikiaService {
 		$this->response->setVal( 'trackingCode', $trackingCode );
 
 		$this->wf->profileOut( __METHOD__ );
-	}
-
-	private function pageExists(){
-		$this->wf->profileIn( __METHOD__ );
-
-		if ( $this->pgExists === null ) {
-			$title = $this->app->wg->Title;
-			$namespace = $title->getNamespace();
-
-			if( !$title->exists() &&
-				//check if title is Category and then if has not articles in it
-				!( $namespace == NS_CATEGORY && Category::newFromTitle( $title )->getPageCount() ) &&
-				//and then check if it is not existing SpecialPage
-				!( $title->isSpecialPage() && SpecialPageFactory::exists( $title->getText() ) ) &&
-				//dont show for 404 page for user page
-				!( $namespace == NS_USER && !$this->wg->Title->isSubpage() && User::newFromName( $this->wg->Title->getBaseText() )->getId() > 0 )
-			) {
-				$this->pgExists = false;
-			} else {
-				$this->pgExists = true;
-			}
-		}
-
-		$this->wf->profileOut( __METHOD__ );
-		return $this->pgExists;
 	}
 }

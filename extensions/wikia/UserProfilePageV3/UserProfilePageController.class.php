@@ -28,10 +28,12 @@ class UserProfilePageController extends WikiaController {
 	public function index() {
 		$this->app->wf->ProfileIn(__METHOD__);
 
+		/**
+		 * @var $user User
+		 */
 		$user = $this->getVal('user');
 
 		$pageBody = $this->getVal('userPageBody');
-		$wikiId = $this->getVal('wikiId');
 
 		if ($this->title instanceof Title) {
 			$namespace = $this->title->getNamespace();
@@ -85,7 +87,9 @@ class UserProfilePageController extends WikiaController {
 
 		$this->setRequest(new WikiaRequest($this->app->wg->Request->getValues()));
 		$user = $this->getUserFromTitle();
-
+		/**
+		 * @var $userIdentityBox UserIdentityBox
+		 */
 		$userIdentityBox = F::build('UserIdentityBox', array($this->app, $user, self::MAX_TOP_WIKIS));
 		$isUserPageOwner = (!$user->isAnon() && $user->getId() == $sessionUser->getId()) ? true : false;
 
@@ -149,6 +153,9 @@ class UserProfilePageController extends WikiaController {
 		$this->setRequest(new WikiaRequest($this->app->wg->Request->getValues()));
 		$user = $this->getUserFromTitle();
 
+		/**
+		 * @var $sessionUser User
+		 */
 		$sessionUser = $this->wg->User;
 		$canRename = $sessionUser->isAllowed('renameprofilev3');
 		$canProtect = $sessionUser->isAllowed('protect');
@@ -158,7 +165,7 @@ class UserProfilePageController extends WikiaController {
 		$editQuery = array('action' => 'edit');
 
 		// check if this is an older version of the page
-		$oldid = $this->app->wg->request->getInt('oldid', 0);
+		$oldid = $this->app->wg->Request->getInt('oldid', 0);
 		if ($oldid) {
 			$editQuery['oldid'] = $oldid;
 		}
@@ -177,12 +184,15 @@ class UserProfilePageController extends WikiaController {
 		} else {
 			if ($namespace == NS_USER_TALK && empty($this->app->wg->EnableWallExt)) {
 				//talk page
+				/**
+				 * @var $title Title
+				 */
 				$title = F::build('Title', array($user->getName(), NS_USER_TALK), 'newFromText');
 
 				if ($title instanceof Title) {
 					//sometimes title isn't created, i've tried to reproduce it on my devbox and i couldn't
 					//checking if $title is instance of Title is a quick fix -- if it isn't no action button will be shown
-					if ($isUserPageOwner || $this->app->wg->request->getVal('oldid')) {
+					if ($isUserPageOwner || $this->app->wg->Request->getVal('oldid')) {
 						$actionButtonArray = array(
 							'action' => array(
 								'href' => $this->title->getLocalUrl($editQuery),
@@ -228,7 +238,11 @@ class UserProfilePageController extends WikiaController {
 		if (in_array($namespace, array(NS_USER, NS_USER_TALK))) {
 			//profile & talk page
 			if ($canRename) {
-				$renameUrl = F::build('SpecialPage', array('MovePage'), 'getTitleFor')->getLocalUrl() . '/' . $this->title->__toString();
+				/**
+				 * @var $specialMovePage Title
+				 */
+				$specialMovePage = F::build('SpecialPage', array('MovePage'), 'getTitleFor');
+				$renameUrl = $specialMovePage->getLocalUrl() . '/' . $this->title->__toString();
 				$actionButtonArray['dropdown']['rename'] = array(
 					'href' => $renameUrl,
 					'text' => $this->wf->Msg('user-action-menu-rename'),
@@ -279,7 +293,6 @@ class UserProfilePageController extends WikiaController {
 
 		$selectedTab = $this->getVal('tab');
 		$userId = $this->getVal('userId');
-		$wikiId = $this->wg->CityId;
 		$sessionUser = $this->wg->User;
 		$canEditProfile = $sessionUser->isAllowed('editprofilev3');
 
@@ -384,6 +397,9 @@ class UserProfilePageController extends WikiaController {
 		$errorMsg = $this->wf->msg('user-identity-box-saving-internal-error');
 
 		if ($isAllowed && is_object($userData)) {
+			/**
+			 * @var $userIdentityBox UserIdentityBox
+			 */
 			$userIdentityBox = F::build('UserIdentityBox', array($this->app, $user, self::MAX_TOP_WIKIS));
 
 			if (!empty($userData->website) && 0 !== strpos($userData->website, 'http')) {
@@ -525,12 +541,12 @@ class UserProfilePageController extends WikiaController {
 
 		if (!$user->isAnon() && $this->request->wasPosted()) {
 			$avatarUploadFiled = 'UPPLightboxAvatar';
-			$uploadError = $this->app->wg->request->getUploadError($avatarUploadFiled);
+			$uploadError = $this->app->wg->Request->getUploadError($avatarUploadFiled);
 
 			if ($uploadError != 0) {
 				$thumbnail = $uploadError;
 			} else {
-				$fileName = $this->app->wg->request->getFileTempName($avatarUploadFiled);
+				$fileName = $this->app->wg->Request->getFileTempName($avatarUploadFiled);
 				$fileuploader = new WikiaTempFilesUpload();
 
 				$thumbnail = $this->storeInTempImage($fileName, $fileuploader);
@@ -645,7 +661,7 @@ class UserProfilePageController extends WikiaController {
 	private function uploadFile($request, $userData, $input, &$errorMsg = '') {
 		$this->app->wf->ProfileIn(__METHOD__);
 
-		$errorNo = $this->wg->request->getUploadError($input);
+		$errorNo = $this->wg->Request->getUploadError($input);
 
 		if ($errorNo != UPLOAD_ERR_OK) {
 			$this->app->wf->ProfileOut(__METHOD__);
@@ -655,8 +671,11 @@ class UserProfilePageController extends WikiaController {
 		$errorMsg = "";
 
 		if (class_exists('Masthead')) {
+			/**
+			 * @var $oAvatarObj Masthead
+			 */
 			$oAvatarObj = F::build('Masthead', array($userData['user']), 'newFromUser');
-			$errorNo = $oAvatarObj->uploadFile($this->wg->request, 'UPPLightboxAvatar', $errorMsg);
+			$errorNo = $oAvatarObj->uploadFile($this->wg->Request, 'UPPLightboxAvatar', $errorMsg);
 
 
 		} else {
@@ -684,10 +703,16 @@ class UserProfilePageController extends WikiaController {
 		$errorNo = UPLOAD_ERR_OK;
 		$user = $userData['user'];
 		if (class_exists('Masthead')) {
+			/**
+			 * @var $oAvatarObj Masthead
+			 */
 			$oAvatarObj = F::build('Masthead', array($user), 'newFromUser');
 			$oAvatarObj->purgeUrl();
 			$localPath = $this->getLocalPath($user);
 			$errorNo = $oAvatarObj->uploadByUrl($url);
+			/**
+			 * @var $userIdentityBox UserIdentityBox
+			 */
 			$userIdentityBox = F::build('UserIdentityBox', array($this->app, $user, self::MAX_TOP_WIKIS));
 			$userData = $userIdentityBox->getFullData();
 			$userData['avatar'] = $localPath;
@@ -890,7 +915,7 @@ class UserProfilePageController extends WikiaController {
 	public function onBeforeDisplayNoArticleText($article) {
 		$this->setRequest( new WikiaRequest( $this->app->wg->Request->getValues() ) );
 		$user = $this->getUserFromTitle();
-		if ( $user instanceof User ) {
+		if ( $user instanceof User && $user->getId() > 0) {
 			$userIdentityBox = F::build('UserIdentityBox', array( $this->app, $user, self::MAX_TOP_WIKIS ) );
 			$userData = $userIdentityBox->getFullData();
 			if ( is_array( $userData ) && array_key_exists( 'showZeroStates', $userData ) ) {
@@ -910,10 +935,9 @@ class UserProfilePageController extends WikiaController {
 
 		$this->setRequest(new WikiaRequest($this->app->wg->Request->getValues()));
 
-		$title = $this->app->wg->Title;
 		$user = $this->getUserFromTitle();
 
-		if ($user instanceof User) {
+		if ($user instanceof User && $user->getId() > 0 ) {
 			$response = $this->app->sendRequest(
 				'UserProfilePage',
 				'index',
@@ -1095,6 +1119,9 @@ class UserProfilePageController extends WikiaController {
 		$isAllowed = ($this->app->wg->User->isAllowed('editprofilev3') || intval($user->getId()) === intval($this->app->wg->User->getId()));
 
 		if ($isAllowed && $wikiId > 0) {
+			/**
+			 * @var $userIdentityBox UserIdentityBox
+			 */
 			$userIdentityBox = F::build('UserIdentityBox', array($this->app, $user, self::MAX_TOP_WIKIS));
 			$success = $userIdentityBox->hideWiki($wikiId);
 
@@ -1110,11 +1137,13 @@ class UserProfilePageController extends WikiaController {
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	public function onRefreshFavWikis() {
-		$result = array('success' => false);
 		$userId = intval($this->getVal('userId'));
 
 		$user = F::build('User', array($userId), 'newFromId');
 
+		/**
+		 * @var $userIdentityBox UserIdentityBox
+		 */
 		$userIdentityBox = F::build('UserIdentityBox', array($this->app, $user, self::MAX_TOP_WIKIS));
 		$result = array('success' => true, 'wikis' => $userIdentityBox->getTopWikis(true));
 
@@ -1168,6 +1197,9 @@ class UserProfilePageController extends WikiaController {
 			$wikiId = intval($this->app->wg->CityId);
 
 			if ($user instanceof User && $wikiId > 0) {
+				/**
+				 * @var $userIdentityBox UserIdentityBox
+				 */
 				$userIdentityBox = F::build('UserIdentityBox', array($this->app, $user, self::MAX_TOP_WIKIS));
 				$userIdentityBox->addTopWiki($wikiId);
 			}
