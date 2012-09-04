@@ -16,10 +16,6 @@ class PerformanceMetricsPhantom extends PerformanceMetricsProvider {
 	 * @return mixed report
 	 */
 	public function getReport($url, Array $options = array()) {
-		$report = array(
-			'metrics' => array(),
-		);
-
 		// form command to be executed
 		$dir = dirname(__FILE__);
 		$cookiesFile = escapeshellcmd(tempnam(wfTempDir(), 'phantom'));
