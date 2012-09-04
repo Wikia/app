@@ -10,7 +10,7 @@ class HubService extends Service {
 	 *
 	 * @param integer    $city_id        wikia identifier in city_list
 	 *
-	 * @return StdObject ($row->cat_id $row->cat_name) or false
+	 * @return StdClass ($row->cat_id $row->cat_name) or false
 	 */
 	public static function getComscoreCategory($cityId) {
 		$catInfo = null;
@@ -103,6 +103,7 @@ class HubService extends Service {
 
 		$hubsPages = F::app()->wg->wikiaHubsPages;
 		if (!empty($hubsPages) && $title instanceof Title) {
+			/* @var $title Title */
 			$textTitle = $title->getDBKey();
 
 			foreach ($hubsPages as $hubPageId => $hubGroup) {
@@ -124,6 +125,7 @@ class HubService extends Service {
 		$title = F::build('Title', array($vertical), 'newFromText');
 
 		if ($title instanceof Title) {
+			/* @var $title Title */
 			$hubName = $title->getDbKey();
 
 			if ($hubName) {
@@ -140,6 +142,8 @@ class HubService extends Service {
 	}
 
 	private static function initCategoryInfo($id, $name) {
+		$catInfo = new StdClass();
+
 		$catInfo->cat_id = $id;
 		$catInfo->cat_name = $name;
 
