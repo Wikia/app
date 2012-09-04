@@ -73,6 +73,8 @@ var getResources = (function() {
 				resource.call( $, complete );
 
 			} else {
+				$().log('getResources: unknown type ' + resource);
+
 				dfd.reject({
 					error: 'Unknown type',
 					resource: resource
