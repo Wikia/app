@@ -23,7 +23,7 @@ function WidgetCommunity($id, $params) {
 	if(empty($wgEnableCommunityWidget)) {
 		return '';
 	}
-	if($params['skinname'] != 'monaco') {
+	if($params['skinname'] != 'oasis') {
 		return '';
 	}
 	if (!class_exists('ActivityFeedHelper')) {

@@ -20,7 +20,7 @@ $wgHooks['EditPage::showEditForm:initial2'][] = 'WMUSetup';
 function WMUSetup($editform) {
 	global $wgOut, $wgExtensionsPath, $wgHooks;
 
-	if( in_array(get_class(RequestContext::getMain()->getSkin()), array('SkinMonaco', 'SkinOasis')) ) {
+	if( get_class(RequestContext::getMain()->getSkin()) === 'SkinOasis' ) {
 		$wgHooks['MakeGlobalVariablesScript'][] = 'WMUSetupVars';
 		$wgOut->addScript('<script type="text/javascript" src="'.$wgExtensionsPath.'/wikia/WikiaMiniUpload/js/WMU.js?"></script>');
 		$wgOut->addScript('<link rel="stylesheet" type="text/css" href="'.$wgExtensionsPath.'/wikia/WikiaMiniUpload/css/WMU.css" />');
