@@ -43,6 +43,9 @@ class UserLoginForm extends LoginForm {
 		}
 
 		$this->wpUserBirthDay = strtotime( $this->wpBirthYear . '-' . $this->wpBirthMonth . '-' . $this->wpBirthDay );
+
+		// set marketing email to true
+		$this->mMarketingOptIn = true;
 	}
 
 	// add new account
