@@ -3,14 +3,24 @@
  * WikiaMobile Hooks handlers
  *
  * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
+ *
  */
 class WikiaMobileHooks extends WikiaObject{
+	/**
+	 * @var null
+	 */
 	static private $mediaNsString = null;
 
-	public function onParserBeforeStrip( &$parser, &$text, &$strip_state ) {
+	/**
+	 * @param $parser Parser
+	 * @param $text String
+	 * @param $strip_state
+	 * @return bool
+	 */
+	public function onParserBeforeStrip( Parser &$parser, &$text, &$strip_state ) {
 		$this->wf->profileIn( __METHOD__ );
 
-		if ( empty( $this->wg->WikiaMobileDisableMediaGrouping ) && $this->app->checkSkin( 'wikiamobile', $parser->getOptions()->getSkin() ) ) {
+		if ( empty( $this->wg->WikiaMobileDisableMediaGrouping ) && $this->app->checkSkin( 'wikiamobile' ) ) {
 			$matches = array();
 			$translatedNs = $this->getLocalizedMediaNsString();
 
@@ -90,6 +100,11 @@ class WikiaMobileHooks extends WikiaObject{
 		return true;
 	}
 
+	/**
+	 * @param $parser Parser
+	 * @param $text String
+	 * @return bool
+	 */
 	public function onParserAfterTidy( &$parser, &$text ){
 		$this->wf->profileIn( __METHOD__ );
 
@@ -107,6 +122,11 @@ class WikiaMobileHooks extends WikiaObject{
 		return true;
 	}
 
+	/**
+	 * @param $parser Parser
+	 * @param $limitReport
+	 * @return bool
+	 */
 	public function onParserLimitReport( $parser, &$limitReport ){
 		$this->wf->profileIn( __METHOD__ );
 
@@ -119,7 +139,18 @@ class WikiaMobileHooks extends WikiaObject{
 		return true;
 	}
 
-	public function onMakeHeadline( $skin, $level, $attribs, $anchor, $text, $link, $legacyAnchor, $ret ){
+	/**
+	 * @param $skin
+	 * @param $level
+	 * @param $attribs
+	 * @param $anchor
+	 * @param $text
+	 * @param $link
+	 * @param $legacyAnchor
+	 * @param $ret
+	 * @return bool
+	 */
+	public function onMakeHeadline( $skin, $level, $attribs, $anchor, $text, $link, $legacyAnchor, &$ret ){
 		$this->wf->profileIn( __METHOD__ );
 
 		if ( $this->app->checkSkin( 'wikiamobile', $skin ) ) {
@@ -128,13 +159,23 @@ class WikiaMobileHooks extends WikiaObject{
 
 			//$link contains the section edit link, add it to the next line to put it back
 			//ATM editing is not allowed in WikiaMobile
-			$ret = "<h{$level} id=\"{$anchor}\"{$attribs}{$text}</h{$level}>";
+			$ret = "<h{$level} id=\"{$anchor}\" {$attribs}{$text}</h{$level}>";
 		}
 
 		$this->wf->profileOut( __METHOD__ );
 		return true;
 	}
 
+	/**
+	 * @param $skin
+	 * @param $target
+	 * @param $text
+	 * @param $customAttribs
+	 * @param $query
+	 * @param $options
+	 * @param $ret
+	 * @return bool
+	 */
 	public function onLinkBegin( $skin, $target, &$text, &$customAttribs, &$query, &$options, &$ret ){
 		$this->wf->profileIn( __METHOD__ );
 		if ( $this->app->checkSkin( 'wikiamobile', $skin ) && in_array( 'broken', $options ) ) {
@@ -146,11 +187,19 @@ class WikiaMobileHooks extends WikiaObject{
 		return true;
 	}
 
+	/**
+	 * @param CategoryPage $categoryPage
+	 * @return bool
+	 */
+
 	public function onCategoryPageView( CategoryPage &$categoryPage ) {
 		$this->wf->profileIn( __METHOD__ );
 
 		if ( $this->app->checkSkin( 'wikiamobile' ) ) {
 			//lets do some local caching
+			/**
+			 * @var $out OutputPage
+			 */
 			$out = $this->wg->Out;
 			$title = $categoryPage->getTitle();
 			$text = $title->getText();
@@ -183,13 +232,24 @@ class WikiaMobileHooks extends WikiaObject{
 		return true;
 	}
 
+	/**
+	 * @param WikiPage $page
+	 * @return bool
+	 */
 	public function onArticlePurge( WikiPage &$page ) {
 		$this->wf->profileIn( __METHOD__ );
 
 		$title = $page->getTitle();
 
 		if ( $title->getNamespace() == NS_CATEGORY ) {
+			/**
+			 * @var $category Category
+			 */
 			$category = F::build( 'Category', array( $title ), 'newFromTitle' );
+
+			/**
+			 * @var $model WikiaMobileCategoryModel
+			 */
 			$model = F::build( 'WikiaMobileCategoryModel' );
 
 			$model->purgeItemsCollectionCache( $category->getName() );
@@ -200,6 +260,60 @@ class WikiaMobileHooks extends WikiaObject{
 		return true;
 	}
 
+	/**
+	 * @param $article Article
+	 *
+	 * @return bool
+	 */
+	public function onBeforeDisplayNoArticleText( $article ){
+		$this->wf->profileIn( __METHOD__ );
+
+		if( $this->app->checkSkin( 'wikiamobile' )  ) {
+			$title = $article->getTitle();
+			$ns = $title->getNamespace();
+
+			/**
+			 * @var $out OutputPage
+			 */
+			$out = $this->wg->Out;
+
+			switch( $ns ){
+				case NS_USER:
+
+					//if user exists display masthead
+					//otherwise show 404 page
+					$user = User::newFromName( $title->getBaseText() );
+
+					if ( ($user instanceof User && $user->getId() > 0) && !$title->isSubpage()) {
+						$this->wf->profileOut( __METHOD__ );
+						return true;
+					}
+
+				default:
+					$out->clearHTML();
+
+					//add styles that belongs only to 404 page
+					$styles = F::build( 'AssetsManager', array(), 'getInstance' )->getURL( array( 'wikiamobile_404_scss' ) );
+
+					//this is going to be additional call but at least it won't be loaded on every page
+					foreach ( $styles as $s ) {
+						$out->addStyle( $s  );
+					}
+
+					$out->addHTML( $this->app->renderView( 'WikiaMobileErrorService', 'pageNotFound' ) );
+
+					$this->wf->profileOut( __METHOD__ );
+					return false;
+			}
+		}
+
+		$this->wf->profileOut( __METHOD__ );
+		return true;
+	}
+
+	/**
+	 * @return null
+	 */
 	private function getLocalizedMediaNsString() {
 		$this->wf->profileIn( __METHOD__ );
 
