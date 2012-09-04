@@ -146,7 +146,7 @@ class ResourceLoaderStartUpModule extends ResourceLoaderModule {
 				$mtime = max( $moduleMtime, wfTimestamp( TS_UNIX, $wgCacheEpoch ) );
 				// Modules without dependencies, a group or a foreign source pass two arguments (name, timestamp) to
 				// mw.loader.register()
-				if ( !count( $module->getDependencies() && $module->getGroup() === null && $module->getSource() === 'local' ) ) {
+				if ( !count( $module->getDependencies() ) && $module->getGroup() === null && $module->getSource() === 'local' ) {
 					$registrations[] = array( $name, $mtime );
 				}
 				// Modules with dependencies but no group or foreign source pass three arguments
