@@ -272,6 +272,10 @@ class CodeLintPhp extends CodeLint {
 			$ret = true;
 		}
 
+		if (startsWith($errorMsg, 'Undefined function')) {
+			$ret = true;
+		}
+
 		if (startsWith($errorMsg, 'Undefined constant')) {
 			$ret = true;
 		}
