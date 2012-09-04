@@ -6,7 +6,11 @@
 $wgHooks['MakeGlobalVariablesScript'][] = 'wfMakeGlobalVariablesScript';
 $wgHooks['WikiaSkinTopScripts'][] = 'wfJSVariablesTopScripts';
 
-function wfJSVariablesTopScripts(Array $vars) {
+/**
+ * @param array $vars JS variables to be added at the top of the page
+ * @return bool return true - it's a hook
+ */
+function wfJSVariablesTopScripts(Array &$vars) {
 	global $wgWikiFactoryTags, $wgDBname, $wgCityId, $wgMedusaSlot;
 
 	// ads need it
@@ -24,12 +28,12 @@ function wfJSVariablesTopScripts(Array $vars) {
 	}
 
 	// c&p from OutputPage::getJSVars with an old 1.16 name
-	$title = F::app()->wg->Title;
-	$lang = $title->getPageLanguage();
+	$title = F::app()->wg->Title; /** @var $title Title */
+	$lang = $title->getPageLanguage(); /** @var $lang Language */
 	$vars['wgContentLanguage'] = $lang->getCode();
 
 	// c&p from OutputPage::getJSVars, it's needed earlier
-	$user = F::app()->wg->User;
+	$user = F::app()->wg->User; /** @var $user User */
 	if (!$user->isAnon()) {
 		$vars['wgUserName'] = $user->getName();
 	}
@@ -41,7 +45,12 @@ function wfJSVariablesTopScripts(Array $vars) {
 	return true;
 }
 
-function wfMakeGlobalVariablesScript(Array $vars, OutputPage $out) {
+/**
+ * @param array $vars JS variables to be added at the bottom of the page
+ * @param OutputPage $out
+ * @return bool return true - it's a hook
+ */
+function wfMakeGlobalVariablesScript(Array &$vars, OutputPage $out) {
 	wfProfileIn(__METHOD__);
 	global $wgMemc, $wgEnableAjaxLogin, $wgPrivateTracker, $wgExtensionsPath,
 		$wgArticle, $wgStyleVersion, $wgSitename, $wgDisableAnonymousEditing,
@@ -88,6 +97,8 @@ function wfMakeGlobalVariablesScript(Array $vars, OutputPage $out) {
 	}
 
 	$vars['wgStyleVersion'] = isset($wgStyleVersion) ? $wgStyleVersion : '' ;
+
+	// TODO: is this one really needed?
 	if(isset($skin->themename)) {
 		$vars['themename'] = $skin->themename;
 	}
@@ -98,12 +109,6 @@ function wfMakeGlobalVariablesScript(Array $vars, OutputPage $out) {
 
 	// Set the JavaScript variable which is used by AJAX request to make data caching possible - Inez
 	$vars['wgMWrevId'] = $wgMemc->get(wfMemcKey('wgMWrevId'));
-
-	// not used anymore - we use ResourceLoader to load YUI - @author: wladek
-	// TODO: remove after confirmation
-	// RT #21084: get URL to YUI package
-//	$yuiUrl = array_pop(AssetsManager::getInstance()->getGroupCommonURL('yui', array(), true /* $combine */, true /* $minify */));
-//	$vars['wgYUIPackageURL'] = $yuiUrl;
 
 	// macbre: get revision ID of current article
 	if ( ( $title->isContentPage() || $title->isTalkPage() ) && !is_null($wgArticle)) {

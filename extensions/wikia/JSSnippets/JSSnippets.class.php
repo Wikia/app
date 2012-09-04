@@ -1,13 +1,19 @@
 <?php
 
-class JSSnippets extends WikiaObject{
+/**
+ * JS Snippets main class
+ *
+ * @author macbre
+ */
+class JSSnippets extends WikiaObject {
 	const resourceRegex = '/\.(css|scss|js)$/i';
 	const urlRegex = '/^http[s]?:\/\//i';
 	const cbRegex = '/\?cb=[0-9]+$/i';
+
 	/**
 	 * @brief Returns inline JS snippet
 	 *
-	 * @param mixes $dependencies a string containing an asset path or an AssetsManager package name
+	 * @param mixed $dependencies a string containing an asset path or an AssetsManager package name
 	 * or list of of them as an array, to be loaded (using $.getResources)
 	 * @param array $loaders list of required JS loader functions ($.loadYUI, $.loadJQueryUI, ...)
 	 * @param string $callback name of the JS function to be called when dependencies will be loaded
@@ -27,7 +33,7 @@ class JSSnippets extends WikiaObject{
 	 * ), 'Feature.init');
 	 *
 	 */
-	
+
 	public function addToStack( $dependencies, $loaders = array(), $callback = null, $options = null ) {
 		$this->wf->profileIn( __METHOD__ );
 		$js = "";
@@ -113,7 +119,7 @@ class JSSnippets extends WikiaObject{
 	 *
 	 * @param array $vars list of JS variables in <head> section
 	 */
-	public function onMakeGlobalVariablesScript($vars) {
+	public function onMakeGlobalVariablesScript(Array &$vars) {
 		$vars['JSSnippetsStack'] = array();
 		return true;
 	}
