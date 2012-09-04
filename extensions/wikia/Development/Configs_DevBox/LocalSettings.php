@@ -7,7 +7,7 @@
 // INSTEAD, MODIFY THE DevBoxSettings.php WHICH IS IN THE DOCROOT DIRECTORY. IT IS DESIGNED FOR MAKING CHANGES JUST ON YOUR
 // DEVBOX.
 
-error_reporting(E_ALL);
+error_reporting(E_ALL & ~ E_STRICT);
 ini_set('display_errors', '1');
 $wgShowExceptionDetails = true;
 
