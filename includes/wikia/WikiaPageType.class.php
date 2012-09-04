@@ -85,7 +85,7 @@ class WikiaPageType {
 	}
 
 	public static function isWikiaHub() {
-		// TODO: make this better!
+		// TODO: make this better in cooperation with HubService :-)
 		global $wgEnableWikiaHubsExt, $wgWikiaHubsPages, $wgTitle;
 
 		$titleParts = explode('/', $wgTitle->getDBkey());
