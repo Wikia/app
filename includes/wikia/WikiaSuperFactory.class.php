@@ -80,7 +80,7 @@ abstract class WikiaSuperFactory {
 	 * @param string $className class name
 	 * @param array $params array of parameters for constructor or factory method ( param name => value )
 	 * @param string $constructorMethod constructor or factory method to call
-	 * @return object
+	 * @return JSMessages|Title|User|Article|AssetsManager|WikiaGlobalRegistry|WikiaLocalRegistry|WikiaFunctionWrapper|WikiaHookDispatcher|WikiaRequest|WikiaResponse|object
 	 */
 	public static function build($className, Array $params = array(), $constructorMethod = '__construct') {
 		if(isset(self::$constructors[$className]) && array_key_exists('INSTANCE', self::$constructors[$className])) {
