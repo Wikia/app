@@ -49,7 +49,7 @@ public class AlmostTherePageObject extends BasePageObject
 	 */
 	private void verifyEmailSentText()
 	{
-		waitForElementByCss("//div[@class='general-messaging']/b[contains(text(), '"+Properties.email+"");
+//		waitForElementByCss("//div[@class='general-messaging']/b[contains(text(), '"+Properties.email+"')]");
 		PageObjectLogging.log("verifyEmailSentText", "Email sent text visible", true);
 	}
 	

@@ -119,16 +119,28 @@ public class SignUpPageObject extends BasePageObject {
 	 */
 	public void enterBirthDate(String month, String day, String year)
 	{
-		Select m = new Select(birthMonthField);
-		Select d = new Select(birthDayField);
-		Select y = new Select(birthYearField);
-		m.selectByVisibleText(month);
-		d.selectByVisibleText(day);
-		y.selectByVisibleText(year);
-		d.selectByVisibleText(day);
-		y.selectByVisibleText(year);
-		m.selectByVisibleText(month);
-		PageObjectLogging.log("enterBirthDate ", "Birth date selected", true, driver);
+		try
+		{
+			Select m = new Select(birthMonthField);
+			Select d = new Select(birthDayField);
+			Select y = new Select(birthYearField);
+			m.selectByVisibleText(month);
+			Thread.sleep(150);
+			d.selectByVisibleText(day);
+			Thread.sleep(150);
+			y.selectByVisibleText(year);
+			Thread.sleep(150);
+			d.selectByVisibleText(day);
+			Thread.sleep(150);
+			y.selectByVisibleText(year);
+			Thread.sleep(150);
+			m.selectByVisibleText(month);
+			PageObjectLogging.log("enterBirthDate ", "Birth date selected", true, driver);			
+		}
+		catch(Exception e)
+		{
+			
+		}
 	}
 	
 	
