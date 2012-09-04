@@ -277,15 +277,15 @@ class ScavengerHunt {
 		);
 	}
 
-	/*
+	/**
 	 * hook handler - add JS vars to starting page
 	 *
 	 * @author Marooned
 	 */
-	public function onMakeGlobalVariablesScript( &$vars ) {
+	public function onMakeGlobalVariablesScript( Array &$vars ) {
 		wfProfileIn(__METHOD__);
 
-		$games = F::build( 'ScavengerHuntGames' );
+		$games = F::build( 'ScavengerHuntGames' ); /** @var $games ScavengerHuntGames  */
 
 		$params = $games->getJSParamsForCurrent();
 		if( !empty( $params ) ){
