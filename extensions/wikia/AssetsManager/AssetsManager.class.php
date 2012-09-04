@@ -49,7 +49,7 @@ class AssetsManager {
 		return self::$mInstance;
 	}
 
-	public static function onMakeGlobalVariablesScript(&$vars) {
+	public static function onMakeGlobalVariablesScript(Array &$vars) {
 		global $wgCdnRootUrl, $wgAssetsManagerQuery;
 
 		$params = SassUtil::getSassSettings();

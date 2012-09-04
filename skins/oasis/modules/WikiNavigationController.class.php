@@ -123,7 +123,7 @@ HEADER;
 	 * @param Array $vars list of global JS variables
 	 * @return bool return true
 	 */
-	public static function onEditPageMakeGlobalVariablesScript(Array $vars) {
+	public static function onEditPageMakeGlobalVariablesScript(Array &$vars) {
 		global $wgTitle, $wgOasisNavV2;
 
 		if (self::isWikiNavMessage($wgTitle) && !empty($wgOasisNavV2)) {

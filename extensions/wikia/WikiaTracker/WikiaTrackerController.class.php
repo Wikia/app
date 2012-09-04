@@ -1,5 +1,8 @@
 <?php
 
+/**
+ *
+ */
 class WikiaTrackerController extends WikiaController {
 
 	/**
@@ -10,7 +13,7 @@ class WikiaTrackerController extends WikiaController {
 	 * @param string $scripts inline JS scripts
 	 * @return boolean return true
 	 */
-	public function onWikiaSkinTopScripts( &$vars, &$scripts, $skin ) {
+	public function onWikiaSkinTopScripts( Array &$vars, &$scripts, $skin ) {
 		$this->onMakeGlobalVariablesScript($vars);
 		$this->onSkinGetHeadScripts($scripts);
 		return true;
@@ -22,9 +25,8 @@ class WikiaTrackerController extends WikiaController {
 	 * @param array $vars global variables list
 	 * @return boolean return true
 	 */
-	public function onMakeGlobalVariablesScript(&$vars) {
+	public function onMakeGlobalVariablesScript(Array &$vars) {
 		$vars['wikiaTrackingSpool'] = array();
-
 
 		// TODO: REMOVE? (PERFORMANCE?) We probably won't need these queues once the new system is done (since all calls will use wikiaTrackingSpool).
 		// There are a few usages around the code-base that would need to be removed if they really aren't needed & migrated otherwise.
@@ -97,7 +99,7 @@ JS
 		$cachedValue = $wgMemc->get( $memcKey );
 		if( !$cachedValue ){
 			$jsString = AssetsManagerBaseBuilder::minifyJs( $jsString );
-			
+
 			// This code doesn't look like it should change almost at all, so we give it a long duration (cachebuster also purges it because that's in the key).
 			// Warning: Memcached expirations work strangely around the one-month boundary (if the duration is too long, it interprets it as a timestamp instead of a duration).
 			$TWO_WEEKS = 60*60*24*14; // in seconds.

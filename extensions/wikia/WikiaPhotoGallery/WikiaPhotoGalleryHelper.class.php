@@ -104,7 +104,7 @@ class WikiaPhotoGalleryHelper {
 	/**
 	 * Add message for MW toolbar button tooltip
 	 */
-	static public function makeGlobalVariablesScript(&$vars) {
+	static public function makeGlobalVariablesScript(Array &$vars) {
 		$vars['WikiaPhotoGalleryAddGallery'] = wfMsg('wikiaPhotoGallery-add-gallery');
 		return true;
 	}

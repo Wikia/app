@@ -1,6 +1,6 @@
-<?php 
+<?php
 
-class WallNotificationsHooksHelper { 
+class WallNotificationsHooksHelper {
 	/**
 	 * @brief Adds Wall Notifications script to Monobook pages
 	 *
@@ -25,7 +25,7 @@ class WallNotificationsHooksHelper {
 	 *
 	 **/
 
-	public function onMakeGlobalVariablesScript( &$vars ){
+	public function onMakeGlobalVariablesScript( Array &$vars ){
 		$user =	F::app()->wg->User;
 		if( $user->isLoggedIn() ) {
 			$response = F::app()->sendRequest( 'WallNotificationsExternalController', 'getUpdateCounts', array() );
@@ -33,5 +33,5 @@ class WallNotificationsHooksHelper {
 		}
 		return true;
 	}
-	
+
 }

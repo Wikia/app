@@ -42,7 +42,7 @@ function wfLatestQuestionsAddModule( &$railModuleList ) {
 	return true;
 }
 
-function wfLatestQuestionsJSVariables( &$vars ) {
+function wfLatestQuestionsJSVariables( Array &$vars ) {
 	global $wgAnswersServer, $wgAnswersScript;
 	$vars['wgAnswersServer'] = $wgAnswersServer;
 	$vars['wgAnswersScript'] = $wgAnswersScript;

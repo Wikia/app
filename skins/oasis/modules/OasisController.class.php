@@ -48,7 +48,7 @@ class OasisController extends WikiaController {
 	 * @param array $vars global variables list
 	 * @return boolean return true
 	 */
-	public function onMakeGlobalVariablesScript($vars) {
+	public function onMakeGlobalVariablesScript(Array &$vars) {
 		$vars['wgJsAtBottom'] = self::JsAtBottom();
 		return true;
 	}

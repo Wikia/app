@@ -67,7 +67,7 @@ function TOCimprovementsAddBodyClass(&$classes) {
  *
  * @author Maciej Błaszkowski <marooned at wikia-inc.com>
  */
-function TOCimprovementsSetupVars($vars) {
+function TOCimprovementsSetupVars(Array &$vars) {
 	//used in wikibits.js to enable anon handling
 	$vars['TOCimprovementsEnabled'] = '1';
 

@@ -4,19 +4,19 @@ class ChatController extends WikiaController {
 	const CHAT_WORDMARK_WIDTH = 115;
 	const CHAT_WORDMARK_HEIGHT = 30;
 	const CHAT_AVATAR_DIMENSION = 41;
-	
+
 	public function executeIndex() {
 		global $wgUser, $wgDevelEnvironment, $wgRequest, $wgCityId, $wgFavicon, $wgOut;
 		wfProfileIn( __METHOD__ );
 
 		// String replacement logic taken from includes/Skin.php
 		$this->wgFavicon = str_replace('images.wikia.com', 'images1.wikia.nocookie.net', $wgFavicon);
-		
+
 		$this->mainPageURL = Title::newMainPage()->getLocalURL();
-		
+
 		// add messages (fetch them using <script> tag)
 		F::build('JSMessages')->enqueuePackage('Chat', JSMessages::EXTERNAL); // package defined in Chat_setup.php
-		
+
 		$this->jsMessagePackagesUrl = F::build('JSMessages')->getExternalPackagesUrl();
 		// Variables for this user
 		$this->username = $wgUser->getName();
@@ -27,18 +27,18 @@ class ChatController extends WikiaController {
 		$this->roomId = (int) NodeApiClient::getDefaultRoomId($roomName, $roomTopic);
 		$this->roomName = $roomName;
 		$this->roomTopic = $roomTopic;
-		
+
 		// Set the hostname of the node server that the page will connect to.
 
 		$server = ChatHelper::getServer('Main');
-		
+
 		$this->nodePort = $server['port'];
 		$this->nodeHostname = $server['host'];
 
 		// Some building block for URLs that the UI needs.
 		$this->pathToProfilePage = Title::makeTitle( !empty($this->wg->EnableWallExt) ? NS_USER_WALL : NS_USER_TALK, '$1' )->getFullURL();
 		$this->pathToContribsPage = SpecialPage::getTitleFor( 'Contributions', '$1' )->getFullURL();
-		
+
 		$this->bodyClasses = "";
 		if ($wgUser->isAllowed( 'chatmoderator' )) {
 			$this->isChatMod = 1;
@@ -52,11 +52,11 @@ class ChatController extends WikiaController {
 		if (in_array('chatmoderator', $userChangeableGroups['add'])) {
 			$this->bodyClasses .= ' can-give-chat-mod ';
 		}
-		
+
 		$this->app->registerHook('MakeGlobalVariablesScript', 'ChatController', 'onMakeGlobalVariablesScript', array(), false, $this);
-			
-		$wgOut->getResourceLoader()->getModule( 'mediawiki' ); 
-		
+
+		$wgOut->getResourceLoader()->getModule( 'mediawiki' );
+
 		$ret = implode( "\n", array(
 			$wgOut->getHeadLinks( null, true ),
 			$wgOut->buildCssLinks(),
@@ -65,7 +65,7 @@ class ChatController extends WikiaController {
 		) );
 
 		$this->globalVariablesScript = $ret;
-		
+
 		//Theme Designer stuff
 		$themeSettingObj = new ThemeSettings();
 		$themeSettings = $themeSettingObj->getSettings();
@@ -80,18 +80,18 @@ class ChatController extends WikiaController {
 				}
 			}
 			if ( empty( $this->wordmarkThumbnailUrl ) ) {
-				$this->wordmarkThumbnailUrl = WikiFactory::getLocalEnvURL($themeSettings['wordmark-image-url']);			
+				$this->wordmarkThumbnailUrl = WikiFactory::getLocalEnvURL($themeSettings['wordmark-image-url']);
 			}
 		}
-		
+
 		wfProfileOut( __METHOD__ );
 	}
-	
+
 	/**
 	 * adding js variable
 	 */
-	
-	function onMakeGlobalVariablesScript($vars) {
+
+	function onMakeGlobalVariablesScript(Array &$vars) {
 		global $wgLang;
 		$vars['roomId'] = $this->roomId;
 		$vars['wgChatMod'] = $this->isChatMod;
@@ -99,18 +99,18 @@ class ChatController extends WikiaController {
 		$vars['WIKIA_NODE_PORT'] = $this->nodePort;
 		$vars['WEB_SOCKET_SWF_LOCATION'] = $this->wg->ExtensionsPath.'/wikia/Chat/swf/WebSocketMainInsecure.swf?'.$this->wg->StyleVersion;
 		$vars['EMOTICONS'] = wfMsgForContent('emoticons');
-		
+
 		$vars['pathToProfilePage'] = $this->pathToProfilePage;
 		$vars['pathToContribsPage'] = $this->pathToContribsPage;
 		$vars['wgAvatarUrl'] = $this->avatarUrl;
-		
+
 		$vars['wgChatKey'] = Chat::echoCookies();
-		
+
 		$months = array();
 		for($i = 1; $i < 13; $i++ ) {
 			$months[$i] =  $wgLang->getMonthAbbreviation($i);
 		}
-		
+
 		$vars['wgLangtMonthAbbreviation'] = $months;
 
 		return true;

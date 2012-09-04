@@ -75,7 +75,7 @@ function wfCreatePageOnBeforeInitialize(&$title, &$article, &$output, &$user, $r
 	return true;
 }
 
-function wfCreatePageSetupVars( $vars ) {
+function wfCreatePageSetupVars(Array &$vars ) {
 	global $wgWikiaEnableNewCreatepageExt,
 		$wgWikiaDisableDynamicLinkCreatePagePopup,
 		$wgContentNamespaces,

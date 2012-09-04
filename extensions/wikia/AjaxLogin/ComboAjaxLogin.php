@@ -113,8 +113,8 @@ function getRegisterJS(){
 	return $response;
 }
 
-function comboAjaxLoginVars($vars) {
-	global $wgUser,$wgWikiaEnableConfirmEditExt, $wgRequest, $wgEnableAPI;
+function comboAjaxLoginVars(Array &$vars) {
+	global $wgUser,$wgRequest, $wgEnableAPI;
 
 	$vars['wgReturnTo'] = $wgRequest->getVal('returnto', '');
 	$vars['wgReturnToQuery'] = $wgRequest->getVal('returntoquery', '');
