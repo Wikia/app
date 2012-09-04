@@ -57,7 +57,6 @@ public class WikiArticlePageObject extends WikiBasePageObject {
 	public void VerifyTheImageOnThePage() {
 		waitForElementByBy(ImageOnWikiaArticle);
 		PageObjectLogging.log("VerifyTheImageOnThePage", "Verify that the image appears on the page", true, driver);
-				
 	}
 	
 	/**
@@ -91,7 +90,6 @@ public class WikiArticlePageObject extends WikiBasePageObject {
 	public void VerifyTheVideoOnThePage() {
 		waitForElementByBy(VideoOnWikiaArticle);
 		PageObjectLogging.log("VerifyTheVideoOnThePage", "Verify that the Video appears on the page", true, driver);
-				
 	}
 	
 	/**
