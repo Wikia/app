@@ -965,6 +965,17 @@ var mw = ( function ( $, undefined ) {
 							l = currReqBaseLength + 9; // '&modules='.length == 9
 		
 							moduleMap = {}; // { prefix: [ suffixes ] }
+
+							// Wikia - change begin - @author: wladek
+							var wikiaOrigCurrReqBase = $.extend({},currReqBase),
+								wikiaReqSass = false,
+								wikiaSassParamsAdded = false,
+								wikiaSassParams = {},
+								wikiaSassParamsLength = $.param( wikiaSassParams ) + 1;
+							$.each(mw.config.get('wgSassParams'),function(k,v){
+								wikiaSassParams['sass_'+k] = v;
+							});
+							// Wikia - change end - @author: wladek
 		
 							for ( i = 0; i < modules.length; i += 1 ) {
 								// Determine how many bytes this module would add to the query string
@@ -975,7 +986,15 @@ var mw = ( function ( $, undefined ) {
 								bytesAdded = moduleMap[prefix] !== undefined
 									? suffix.length + 3 // '%2C'.length == 3
 									: modules[i].length + 3; // '%7C'.length == 3
-		
+
+								// Wikia - change begin - @author: wladek
+								wikiaReqSass = $.inArray('sass',registry[modules[i]].flags || []) != -1;
+								mw.log('ResourceLoader',modules[i],wikiaReqSass);
+								if ( wikiaReqSass && !wikiaSassParamsAdded ) {
+									bytesAdded += wikiaSassParamsLength;
+								}
+								// Wikia - change end
+
 								// If the request would become too long, create a new one,
 								// but don't create empty requests
 								if ( maxQueryLength > 0 && !$.isEmptyObject( moduleMap ) && l + bytesAdded > maxQueryLength ) {
@@ -985,7 +1004,19 @@ var mw = ( function ( $, undefined ) {
 									moduleMap = {};
 									async = true;
 									l = currReqBaseLength + 9;
+									// Wikia - change begin - @author: wladek
+									wikiaSassParamsAdded = false;
+									currReqBase = wikiaOrigCurrReqBase;
+									// Wikia - change end
 								}
+
+								// Wikia - change begin - @author: wladek
+								if ( wikiaReqSass && !wikiaSassParamsAdded ) {
+									wikiaSassParamsAdded = true;
+									currReqBase = $.extend( currReqBase, wikiaSassParams );
+								}
+								// Wikia - change end
+
 								if ( moduleMap[prefix] === undefined ) {
 									moduleMap[prefix] = [];
 								}
