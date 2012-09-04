@@ -366,7 +366,7 @@ var mw = ( function ( $, undefined ) {
 				ready = false,
 				// Selector cache for the marker element. Use getMarker() to get/use the marker!
 				$marker = null;
-	
+
 			/* Cache document ready status */
 	
 			$(document).ready( function () {
@@ -1044,7 +1044,7 @@ var mw = ( function ( $, undefined ) {
 				 * @param group {String}: Group which the module is in (optional, defaults to null)
 				 * @param source {String}: Name of the source. Defaults to local.
 				 */
-				register: function ( module, version, dependencies, group, source ) {
+				register: function ( module, version, dependencies, group, source, /* Wikia */ flags ) {
 					var m;
 					// Allow multiple registration
 					if ( typeof module === 'object' ) {
@@ -1073,6 +1073,9 @@ var mw = ( function ( $, undefined ) {
 						'group': typeof group === 'string' ? group : null,
 						'source': typeof source === 'string' ? source: 'local',
 						'state': 'registered'
+						// Wikia - change begin - @author: wladek
+						,'flags': flags || []
+						// Wikia - change end
 					};
 					if ( typeof dependencies === 'string' ) {
 						// Allow dependencies to be given as a single module name
@@ -1083,7 +1086,7 @@ var mw = ( function ( $, undefined ) {
 						registry[module].dependencies = dependencies;
 					}
 				},
-		
+
 				/**
 				 * Implements a module, giving the system a course of action to take
 				 * upon loading. Results of a request for one or more modules contain

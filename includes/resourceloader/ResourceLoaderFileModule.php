@@ -720,13 +720,17 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 		}
 	}
 
+	public function getFlagNames() {
+		return array_merge( parent:: getFlagNames(), array( 'sass' ) );
+	}
+
 	/**
-	 * Get a named runtime information
+	 * Get flag value
 	 *
 	 * @param $name string Parameter name
 	 */
-	public function getRuntimeInfo( $name ) {
-		if ( $name == 'require_sass' ) {
+	protected function reallyGetFlag( $name ) {
+		if ( $name == 'sass' ) {
 			$styles = array();
 			if ( !empty( $this->styles ) ) {
 				$styles = array_merge( $styles, (array)$this->styles );
@@ -738,8 +742,12 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 					}
 				}
 			}
+
 			$requireSass = false;
-			foreach ($styles as $style) {
+			foreach ($styles as $k => $style) {
+				if ( is_array( $style ) ) {
+					$style = $k;
+				}
 				if ( self::getFileType($style) == self::FILE_TYPE_SASS ) {
 					$requireSass = true;
 				}
@@ -747,7 +755,7 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 
 			return $requireSass;
 		}
-		return parent::getRuntimeInfo($name);
+		return parent::reallyGetFlag($name);
 	}
 	/* Wikia - change end */
 }

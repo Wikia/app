@@ -144,6 +144,15 @@ class ResourceLoaderStartUpModule extends ResourceLoaderModule {
 				// seem to do that, and custom implementations might forget. Coerce it to TS_UNIX
 				$moduleMtime = wfTimestamp( TS_UNIX, $module->getModifiedTime( $context ) );
 				$mtime = max( $moduleMtime, wfTimestamp( TS_UNIX, $wgCacheEpoch ) );
+				// Wikia - change begin - @author: wladek
+				$flags = $module->getFlag( $module->getFlagNames() );
+				if ( !empty( $flags ) ) {
+					$registrations[] = array(
+						$name, $mtime, $module->getDependencies(), $module->getGroup(), $module->getSource(),
+						$flags
+					);
+				} else
+				// Wikia - change end
 				// Modules without dependencies, a group or a foreign source pass two arguments (name, timestamp) to
 				// mw.loader.register()
 				if ( !count( $module->getDependencies() ) && $module->getGroup() === null && $module->getSource() === 'local' ) {
