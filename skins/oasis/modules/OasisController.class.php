@@ -56,12 +56,16 @@ class OasisController extends WikiaController {
 	/**
 	 * Business-logic for determining if the javascript should be at the bottom of the page (it usually should be
 	 * at the bottom for performance reasons, but there are some exceptions for engineering reasons).
+	 *
+	 * TODO: make sure JavaScripts can be always loaded on bottom
 	 */
 	public static function JsAtBottom(){
 		global $wgTitle;
 
 		// decide where JS should be placed (only add JS at the top for non-search Special and edit pages)
 		if (WikiaPageType::isSearch() || WikiaPageType::isForum()) {
+			// Remove this whole condition when AdDriver2.js is fully implemented and deployed
+
 			$jsAtBottom = true;	// Liftium.js (part of AssetsManager) must be loaded after LiftiumOptions variable is set in page source
 		}
 		elseif ($wgTitle->getNamespace() == NS_SPECIAL || BodyController::isEditPage()) {
