@@ -250,7 +250,7 @@ class WikiaApp {
 	 *
 	 * @param SkinTemplate $skinTemplate 
 	 */
-	public function setSkinTemplateObj(SkinTemplate &$skinTemplate) {
+	public function setSkinTemplateObj( &$skinTemplate ) {
 		$this->skinTemplateObj = $skinTemplate;
 	}
 
