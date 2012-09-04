@@ -61,7 +61,7 @@ class OasisController extends WikiaController {
 		global $wgTitle;
 
 		// decide where JS should be placed (only add JS at the top for non-search Special and edit pages)
-		if (WikiaPageType::isSearch()) {
+		if (WikiaPageType::isSearch() || WikiaPageType::isForum()) {
 			$jsAtBottom = true;	// Liftium.js (part of AssetsManager) must be loaded after LiftiumOptions variable is set in page source
 		}
 		elseif ($wgTitle->getNamespace() == NS_SPECIAL || BodyController::isEditPage()) {
