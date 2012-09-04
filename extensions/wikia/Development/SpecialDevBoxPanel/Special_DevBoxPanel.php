@@ -242,8 +242,8 @@ function getDevBoxOverrideDatabases($db){
 
 	$info = $db->getLBInfo();
 	$connection = mysql_connect($info['host'], $info['user'], $info['password']);
-	$db_list = mysql_list_dbs($connection);
-	while ($row = mysql_fetch_object($db_list)) {
+	$res = mysql_query('SHOW DATABASES', $connection);
+	while ($row = mysql_fetch_object($res)) {
 		$retval[] = $row->Database;
 	}
 
