@@ -19,7 +19,7 @@ $wgWidgets['WidgetAdvertiser'] = array(
 
 function WidgetAdvertiser($id, $params) {
     wfProfileIn(__METHOD__);
-    global $wgUser, $wgShowAds, $wgUseAdServer, $wgAdCalled, $wgRequest, $wgEnableLeftNavWidget;
+    global $wgShowAds, $wgUseAdServer, $wgRequest, $wgEnableLeftNavWidget;
 
 	if(!$wgShowAds || !$wgUseAdServer || !empty( $wgEnableLeftNavWidget ) ) {
 		wfProfileOut(__METHOD__);
@@ -31,11 +31,7 @@ function WidgetAdvertiser($id, $params) {
 		return '';
 	}
 
-	if(get_class(RequestContext::getMain()->getSkin()) == 'SkinMonaco') {
-		$ret = AdEngine::getInstance()->getAd('LEFT_SPOTLIGHT_1');
-	} else {
-		$ret = str_replace('&','&amp;',WidgetAdvertiserWrapAd('tr', $id)) . str_replace('&','&amp;',WidgetAdvertiserWrapAd('l', $id));
-	}
+	$ret = str_replace('&','&amp;',WidgetAdvertiserWrapAd('tr', $id)) . str_replace('&','&amp;',WidgetAdvertiserWrapAd('l', $id));
 
 	wfProfileOut(__METHOD__);
 	return $ret;
