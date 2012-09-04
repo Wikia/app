@@ -16,10 +16,10 @@ class Interstitial extends UnlistedSpecialPage {
 		parent::__construct( INTERSTITIALS_SP /*class*/ );
 	}
 
-	function execute(){
+	function execute($par){
 		global $wgRequest, $wgOut;
 		global $wgAdsInterstitialsEnabled;
-		global $wgUser, $wgCityId;
+		global $wgUser;
 
 		$url = trim($wgRequest->getVal( 'u' ));
 		$noAutoRedirect = ( $wgRequest->getText( 'noredirect' ) == 1 ) ? true : false;
