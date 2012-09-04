@@ -11,13 +11,20 @@ body {
 	bottom: 0;
 	position: fixed;
 	width: 100%;
+	z-index: $zTop;
+	@include linear-gradient($color-header, left, $color-header-alt, 0, $color-header, 50%, $color-header-alt, 100%);
 	.wikia-bar {
-		background-color: blue;
+		background-image: url(/skins/oasis/images/checkers.png); /* base64 */
 		height: 25px;
 		margin: auto;
-		width: 98%;
-		z-index: $zTop;
+	  	text-align: center;
+		width: 100%;
 		@include box-shadow(0, 0, 10px, $color-page-shadow);
-		@include linear-gradient($color-header, left, $color-header-alt, 0, $color-header, 50%, $color-header-alt, 100%);
+		.buttons li {
+			display: inline-block;
+			background-color: #303030;
+		  	padding: 5px;
+		  	color: #fff;
+		}
 	}
 }
