@@ -1,5 +1,6 @@
 package com.wikia.webdriver.PageObjects.PageObject;
 
+import java.lang.reflect.Method;
 import java.util.Date;
 import java.util.List;
 
@@ -135,8 +136,15 @@ public class BasePageObject{
 
 	public void click(WebElement pageElem)
 	{
-		CommonFunctions.scrollToElement(pageElem);
-		pageElem.click();
+		try
+		{
+			CommonFunctions.scrollToElement(pageElem);
+			pageElem.click();
+		}
+		catch(Exception e)
+		{
+			PageObjectLogging.log("click", e.toString(), false);
+		}
 	}
 	/**
 	 * Send keys to WebElement
@@ -144,7 +152,14 @@ public class BasePageObject{
 
 	public void sendKeys(WebElement pageElem, String KeysToSend)
 	{
-		pageElem.sendKeys(KeysToSend);
+		try
+		{
+			pageElem.sendKeys(KeysToSend);			
+		}
+		catch(Exception e)
+		{
+			PageObjectLogging.log("sendKeys", e.toString(), false);			
+		}
 	}
 	
 	/**
@@ -155,10 +170,16 @@ public class BasePageObject{
 	 */
 	public void clickActions(WebElement pageElem)
 	{
-		Actions builder = new Actions(driver);
-		Actions click = builder.click(pageElem);
-		click.perform();
-		
+		try
+		{
+			Actions builder = new Actions(driver);
+			Actions click = builder.click(pageElem);
+			click.perform();				
+		}
+		catch(Exception e)
+		{
+			PageObjectLogging.log("clickActions", e.toString(), false);			
+		}
 	}
 	
 	/**
@@ -167,9 +188,17 @@ public class BasePageObject{
 	 * @author Michal Nowierski
 	 * ** @param Selector  
 	 */
-	public List<WebElement> getListOfElementsByCss(String Selector) {
-	
-		return driver.findElements(By.cssSelector(Selector));
+	public List<WebElement> getListOfElementsByCss(String Selector) 
+	{
+		try
+		{
+			return driver.findElements(By.cssSelector(Selector));						
+		}
+		catch(Exception e)
+		{
+			PageObjectLogging.log("getListOfElementsByCss", e.toString(), false);
+			return null;
+		}
 	}
 	/**
 	 * Checks if the element is visible on browser
@@ -178,7 +207,14 @@ public class BasePageObject{
 	 */
 	public void waitForElementByBy(By by)
 	{
-		wait.until(ExpectedConditions.visibilityOfElementLocated(by));
+		try
+		{
+			wait.until(ExpectedConditions.visibilityOfElementLocated(by));						
+		}
+		catch(Exception e)
+		{
+			PageObjectLogging.log("clickActions", e.toString(), false);			
+		}
 	}
 	
 	/**
@@ -188,7 +224,14 @@ public class BasePageObject{
 	 */
 	public void waitForElementByElement(WebElement element)
 	{
-		wait.until(ExpectedConditions.visibilityOf(element));
+		try
+		{
+			wait.until(ExpectedConditions.visibilityOf(element));								
+		}
+		catch(Exception e)
+		{
+			PageObjectLogging.log("waitForElementByElement", e.toString(), false);			
+		}
 	}
 
 	/**
@@ -198,97 +241,221 @@ public class BasePageObject{
 	 */
 	public void waitForElementPresenceByBy(By locator)
 	{
-		wait.until(ExpectedConditions.presenceOfElementLocated(locator));
+		try
+		{			
+			wait.until(ExpectedConditions.presenceOfElementLocated(locator));
+		}
+		catch(Exception e)
+		{
+			PageObjectLogging.log("waitForElementPresenceByBy", e.toString(), false);			
+		}
 	}
 	
 	public void waitForElementByCss(String cssSelector)
 	{
+		try
+		{						
+			wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(cssSelector)));
+		}
+		catch(Exception e)
+		{
+			PageObjectLogging.log("waitForElementByCss", e.toString(), false);			
+		}
 		
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(cssSelector)));
 	}
 	
 	public void waitForElementByClassName(String className)
 	{
-		
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className(className)));
+		try
+		{								
+			wait.until(ExpectedConditions.visibilityOfElementLocated(By.className(className)));
+		}
+		catch(Exception e)
+		{
+			PageObjectLogging.log("waitForElementByClassName", e.toString(), false);			
+		}
 	}
 	
 	public void waitForElementByClass(String id)
 	{
-		
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(id)));
+		try
+		{								
+			wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(id)));
+		}
+		catch(Exception e)
+		{
+			PageObjectLogging.log("waitForElementByClass", e.toString(), false);			
+		}
 	}
 	
 	public void waitForElementByXPath(String xPath)
 	{
-		
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xPath)));
+		try
+		{
+			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xPath)));								
+		}
+		catch(Exception e)
+		{
+			PageObjectLogging.log("waitForElementByXpath", e.toString(), false);			
+		}
 	}
-	
-	
 	
 	public void waitForElementNotVisibleByCss(String css)
 	{
-
-		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(css)));
+		try
+		{
+			wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(css)));								
+		}
+		catch(Exception e)
+		{
+			PageObjectLogging.log("waitForElementNotVisibleByCss", e.toString(), false);			
+		}
 	}
 	
 	public void waitForElementNotVisibleByBy(By by)
 	{
-		wait.until(ExpectedConditions.invisibilityOfElementLocated(by));
+		try
+		{
+			wait.until(ExpectedConditions.invisibilityOfElementLocated(by));								
+		}
+		catch(Exception e)
+		{
+			PageObjectLogging.log("waitForElementNotVisibleByBy", e.toString(), false);			
+		}
 	}
 	
 	public void waitForElementClickableByClassName(String className)
 	{
-		wait.until(ExpectedConditions.elementToBeClickable(By.className(className)));
+		try
+		{
+			wait.until(ExpectedConditions.elementToBeClickable(By.className(className)));								
+		}
+		catch(Exception e)
+		{
+			PageObjectLogging.log("waitForElementClickableByClassName", e.toString(), false);			
+		}
 	}
 	
 	public void waitForElementClickableByCss(String css)
 	{
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(css)));
+		try
+		{
+			wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(css)));								
+		}
+		catch(Exception e)
+		{
+			PageObjectLogging.log("waitForElementClickAbleByCss", e.toString(), false);			
+		}
 	}
 	
 	public void waitForElementClickableByBy(By by)
 	{
-		wait.until(ExpectedConditions.elementToBeClickable(by));
+		try
+		{
+			wait.until(ExpectedConditions.elementToBeClickable(by));								
+		}
+		catch(Exception e)
+		{
+			PageObjectLogging.log("waitForElementClickableByBy", e.toString(), false);			
+		}
 	}
 	
 	public void waitForElementClickableByElement(WebElement element)
 	{
-		wait.until(CommonExpectedConditions.elementToBeClickable(element));
+		try
+		{
+			wait.until(CommonExpectedConditions.elementToBeClickable(element));								
+		}
+		catch(Exception e)
+		{
+			PageObjectLogging.log("waitForElementClickableByElement", e.toString(), false);			
+		}
 	}
 	public void waitForElementNotClickableByElement(WebElement element)
 	{
-		wait.until(CommonExpectedConditions.elementNotToBeClickable(element));
+		try
+		{
+			wait.until(CommonExpectedConditions.elementNotToBeClickable(element));								
+		}
+		catch(Exception e)
+		{
+			PageObjectLogging.log("waitForElementNotClickableByElement", e.toString(), false);			
+		}
 	}
 	
 	public void waitForElementById(String id)
 	{
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(id)));
+		try
+		{
+			wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(id)));								
+		}
+		catch(Exception e)
+		{
+			PageObjectLogging.log("waitForElementById", e.toString(), false);			
+		}
 	}
 
+	
+	
 	public void waitForValueToBePresentInElementsAttributeByCss(String selector, String attribute, String value)
 	{
-		wait.until(CommonExpectedConditions.valueToBePresentInElementsAttribute(By.cssSelector(selector), attribute, value));
+		try
+		{
+			wait.until(CommonExpectedConditions.valueToBePresentInElementsAttribute(By.cssSelector(selector), attribute, value));								
+		}
+		catch(Exception e)
+		{
+			PageObjectLogging.log("waitForValueToBePresentInElementsAttributeByCss", e.toString(), false);			
+		}
 	}
 
 	public void waitForValueToNotBePresentInElementsAttributeByCss(String selector, String attribute, String value)
 	{
-		wait.until(CommonExpectedConditions.valueToNotBePresentInElementsAttribute(By.cssSelector(selector), attribute, value));
+		try
+		{
+			wait.until(CommonExpectedConditions.valueToNotBePresentInElementsAttribute(By.cssSelector(selector), attribute, value));								
+		}
+		catch(Exception e)
+		{
+			PageObjectLogging.log("waitForValueToNotBePresentInElementsAttributeByCss", e.toString(), false);			
+		}
 	}
-	public void waitForTextToBePresentInElementByElement(WebElement element, String text) {
-		wait.until(CommonExpectedConditions.textToBePresentInElement(element, text));
+	
+	public void waitForTextToBePresentInElementByElement(WebElement element, String text)
+	{
+		try
+		{
+			wait.until(CommonExpectedConditions.textToBePresentInElement(element, text));								
+		}
+		catch(Exception e)
+		{
+			PageObjectLogging.log("waitForTextToBePresentInElementByElement", e.toString(), false);			
+		}
 		
 	}
 
 	public void waitForClassRemovedFromElement(WebElement element, String className)
 	{
-		wait.until(CommonExpectedConditions.classRemovedFromElement(element, className));
+		try
+		{
+			wait.until(CommonExpectedConditions.classRemovedFromElement(element, className));								
+		}
+		catch(Exception e)
+		{
+			PageObjectLogging.log("waitForClassRemovedFromElement", e.toString(), false);			
+		}
 	}
 
 	public void waitForStringInURL(String givenString)
 	{
-		wait.until(CommonExpectedConditions.givenStringtoBePresentInURL(givenString));
+		try
+		{								
+			wait.until(CommonExpectedConditions.givenStringtoBePresentInURL(givenString));
+		}
+		catch(Exception e)
+		{
+			PageObjectLogging.log("waitForStringInURL", e.toString(), false);			
+		}
 	}
 	
 	/**
@@ -298,7 +465,14 @@ public class BasePageObject{
 	 */
 	public void navigateBack()
 	{
-		driver.navigate().back();
+		try
+		{								
+			driver.navigate().back();
+		}
+		catch(Exception e)
+		{
+			PageObjectLogging.log("navigateBack", e.toString(), false);			
+		}
 	}
 	
 	/**
@@ -672,14 +846,5 @@ public class BasePageObject{
 		Date time = new Date();
 		long timeCurrent = time.getTime();
 		return String.valueOf(timeCurrent);
-		
-	}
-	
-	
-	
-	
-	
-
-	
-    
+	} 
 } 
