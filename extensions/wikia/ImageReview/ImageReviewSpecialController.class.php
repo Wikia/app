@@ -109,7 +109,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 
 		if ( count($this->imageList) == 0 ) {
 			$do = array( 
-				self::ACTION_QUESTIONABLE	=> ImageReviewStatuses::STATE_REJECTED,
+				self::ACTION_QUESTIONABLE	=> ImageReviewStatuses::STATE_QUESTIONABLE,
 				self::ACTION_REJECTED		=> ImageReviewStatuses::STATE_REJECTED,
 				'default'			=> ImageReviewStatuses::STATE_UNREVIEWED
 			);
