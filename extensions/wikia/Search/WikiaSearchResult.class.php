@@ -59,12 +59,53 @@ class WikiaSearchResult {
 				if ($val == $parsed['scheme'].':' || $val == $parsed['host']) {
 					continue;
 				}
-				$exploded[$key] = Parser::replaceUnusualEscapes(urlencode($val));
+				$exploded[$key] = self::replaceUnusualEscapes(rawurlencode($val));
 			}
 			$this->linkUrl = implode('/', $exploded);
 		}
 
 		return $this->linkUrl;
+	}
+	
+	// The following two methods have been copied over from Parser. We need to copy over the 
+	// first method because it refers to the callback that follows it.
+	
+	/**
+	 * Replace unusual URL escape codes with their equivalent characters
+	 *
+	 * @param $url String
+	 * @return String
+	 *
+	 * @todo  This can merge genuinely required bits in the path or query string,
+	 *        breaking legit URLs. A proper fix would treat the various parts of
+	 *        the URL differently; as a workaround, just use the output for
+	 *        statistical records, not for actual linking/output.
+	 */
+	static function replaceUnusualEscapes( $url ) {
+	    return preg_replace_callback( '/%[0-9A-Fa-f]{2}/',
+	            array( __CLASS__, 'replaceUnusualEscapesCallback' ), $url );
+	}
+	
+	/**
+	 * Callback function used in replaceUnusualEscapes().
+	 * Replaces unusual URL escape codes with their equivalent character
+	 *
+	 * @param $matches array
+	 *
+	 * @return string
+	 */
+	private static function replaceUnusualEscapesCallback( $matches ) {
+	    $char = urldecode( $matches[0] );
+	    $ord = ord( $char );
+	    # Is it an unsafe or HTTP reserved character according to RFC 1738?
+	    # Or, according to bugid 46673, will it create a bad request if left in a URL?
+	    if ( $ord > 32 && $ord < 127 && strpos( '<>"#{}|\^~[]`;%/?', $char ) === false ) {
+	        # No, shouldn't be escaped
+	        return $char;
+	    } else {
+	        # Yes, leave it escaped
+	        return $matches[0];
+	    }
 	}
 
 	public function setUrl($value) {
