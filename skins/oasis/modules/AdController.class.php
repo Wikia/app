@@ -13,8 +13,10 @@ class AdController extends WikiaController {
 
 		$runAds = $wgOut->isArticle()
 			|| WikiaPageType::isSearch()
-			|| WikiaPageType::isForum()
-			|| $wgTitle->isSpecial('Leaderboard');
+			|| WikiaPageType::isForum();
+
+			// Can be re-enabled after AdDriver2.js is implemented:
+			// || $wgTitle->isSpecial('Leaderboard');
 
 		if (!$runAds) {
 			return;
