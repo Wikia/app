@@ -200,7 +200,7 @@ class ResourceLoaderHooks {
 			$requireSass = false;
 			foreach ($modules as $moduleName) {
 				$module = $resourceLoaderInstance->getModule($moduleName);
-				if ( $module->getRuntimeInfo('require_sass') ) {
+				if ( $module->getFlag('sass') ) {
 					$requireSass = true;
 					break;
 				}
