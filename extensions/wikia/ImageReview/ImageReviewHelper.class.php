@@ -125,8 +125,8 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 	 * reset state in abandoned work
 	 * note: this is run via a cron script
 	 */
-	public static function resetAbandonedWork() {
-		F::app()->wf->ProfileIn( __METHOD__ );
+	public function resetAbandonedWork() {
+		wfProfileIn( __METHOD__ );
 		
 		$db = $this->getDatawareDB( DB_MASTER );
 		
@@ -174,7 +174,7 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 
 		$db->commit();
 
-		F::app()->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 
 	/**
