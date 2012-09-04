@@ -34,7 +34,6 @@ class AdProviderAdEngine2 extends AdProviderIframeFiller implements iAdProvider 
 		$out = <<<EOT
 <div id="{$slotname}" class="wikia-ad noprint default-height">
 <script type="text/javascript">
-	window.adslots2 = window.adslots2 || [];
 	window.adslots2.push(['{$slotname}', '{$slot['size']}', '{$this->name}', '{$slot['load_priority']}']);
 </script>
 </div>
