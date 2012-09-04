@@ -46,7 +46,7 @@ class AdProviderGAM implements iAdProvider {
 		return true;
 	}
 
-        public function getSetupHtml(){
+	public function getSetupHtml(){
 		if ($this->setupHtmlCalled){
 			return false;
 		}
@@ -68,7 +68,7 @@ class AdProviderGAM implements iAdProvider {
 		}
 		$out .= "<!-- ## END " . __CLASS__ . '::' . __METHOD__ . " ## -->\n";
 		return $out;
-        }
+	}
 
 
 	/* This function batches all of the ads to be called into one round trip. 
@@ -127,17 +127,6 @@ class AdProviderGAM implements iAdProvider {
 		$channel = $this->getChannel();
 		$out = '';
 
-		$skin_name = RequestContext::getMain()->getSkin()->getSkinName();
-		if ($channel != "3156555836" && $skin_name == 'monaco' ){
-			// Set the colors to match the wiki, except for "3156555836", which is testing white
-			// This is only available in monaco
-			$out .= 'GA_googleAddAdSensePageAttr("google_color_border", AdEngine.getAdColor("text"));' . "\n";
-			$out .= 'GA_googleAddAdSensePageAttr("google_color_bg", AdEngine.getAdColor("bg"));' . "\n";
-			$out .= 'GA_googleAddAdSensePageAttr("google_color_link", AdEngine.getAdColor("link"));' . "\n";
-			$out .= 'GA_googleAddAdSensePageAttr("google_color_text", AdEngine.getAdColor("text"));' . "\n";
-			$out .= 'GA_googleAddAdSensePageAttr("google_color_url", AdEngine.getAdColor("url"));' . "\n";
-		}
-
 		$out .= 'GA_googleAddAdSensePageAttr("google_ad_channel", "' . $channel . '");' . "\n";
 		// Pass the page url. This proved to help eCPM in bucket tests.
 		$out .= 'GA_googleAddAdSensePageAttr("google_page_url", "' . addslashes(AdProviderGoogle::getPageUrl()) . '");' . "\n";
@@ -146,42 +135,40 @@ class AdProviderGAM implements iAdProvider {
 
 		// Bucket testing of different params based on channel
 		switch ($channel){
-		  case '1089383293': break; //control
-		  case '3156555836': break; // Testing white backgrounds 
-		  case '9000659297': break; // Unused
-		  case '4441240368': break; // Unused
-		  case '7102419657': break; // Unused
-		  case '7297263620': break; // Unused
-		  case '5796745449': break; // Unused
-		  default: trigger_error("Unrecognized Google Channel ($channel)", E_USER_WARNING);
-                }
+			case '1089383293': break; // control
+			case '3156555836': break; // Testing white backgrounds
+			case '9000659297': break; // Unused
+			case '4441240368': break; // Unused
+			case '7102419657': break; // Unused
+			case '7297263620': break; // Unused
+			case '5796745449': break; // Unused
+			default: trigger_error("Unrecognized Google Channel ($channel)", E_USER_WARNING);
+		}
 
 		return $out;
 	}
 
-        public function getChannel(){
-                // Channel is a way to do bucket testing.
-                static $channel;
-                if (!empty($channel)){
-                        return $channel;
-                }
+	public function getChannel(){
+		// Channel is a way to do bucket testing.
+		static $channel;
+		if (!empty($channel)){
+		        return $channel;
+		}
 
 		$rand = mt_rand(0, sizeof($this->channels)-1);
 		$channel = $this->channels[$rand];
-                return $channel;
-        }
-
-
+		return $channel;
+    }
 
 	public function getAd($slotname, $slot, $params = null){
 		$out = "";
 		// First time the ad is called, call all the batch code, if it hasn't already been called.
 		if (! $this->setupHtmlCalled){
 			$out .= $this->getSetupHtml();
-		} 
+		}
 		if (! $this->batchHtmlCalled){
 			$out .= $this->getBatchCallHtml();
-		} 
+		}
 
 		$dim = AdEngine::getHeightWidthFromSize($slot['size']);
 
@@ -194,12 +181,10 @@ class AdProviderGAM implements iAdProvider {
 		}
 	}
 
-
 	private function getHub(){
 		$cat=AdEngine::getCachedCategory();
-				return $cat['short'];
+		return $cat['short'];
 	}
-
 
 	private function getProviderValues($slot){
 		if(empty($slot['provider_values']) || !is_array($slot['provider_values'])){
@@ -236,4 +221,3 @@ class AdProviderGAM implements iAdProvider {
 	}
 
 }
-
