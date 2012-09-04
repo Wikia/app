@@ -286,7 +286,8 @@ class JSMessages {
 		$url = '';
 
 		if (!empty($packages)) {
-			sort(array_unique($packages));
+			$packages = array_unique($packages);
+			sort($packages);
 
 			// /wikia.php?controller=HelloWorld&method=index&format=html
 			$url = $this->app->wf->AppendQuery($this->app->wg->ScriptPath . '/wikia.php', array(
