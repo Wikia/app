@@ -51,7 +51,7 @@ function wfEmailTag( $parser ) {
 }
 
 function wfEmailTagDoit($string="") {
-  global $wgScript, $wgEmailImage;
+  global $wgEmailImage;
 
   $sp = Title::newFromText("Special:Email");
   $url = $sp->getLocalURL();
@@ -79,14 +79,14 @@ function wfEmailSpecialpage() {
 
   class Email extends SpecialPage {
 
-    function Email() {
+    function __construct() {
       parent::__construct( 'Email' );
-      $this->includable(true);
+      $this->mIncludable = true;
       $this->listed(false);
     }
 
-    function execute() {
-      global $wgOut, $wgRequest, $wgEmailImage;
+    function execute($par) {
+      global $wgRequest, $wgEmailImage;
       $size=4;
 
       $text = $wgRequest->getText('img');
