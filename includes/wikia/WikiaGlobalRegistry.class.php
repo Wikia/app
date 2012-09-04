@@ -12,8 +12,8 @@
  *
  * @property User $User
  * @property Title $Title
- * @property WikiaRequest $Request
- * @property WikiaResponse $Response
+ * @property WebRequest $Request
+ * @property WebResponse $Response
  *
  *
  */
@@ -60,7 +60,7 @@ class WikiaGlobalRegistry extends WikiaRegistry {
 			if ( $this->checkPropertyMapping( $propertyName ) ) {
 				$this->processPropertyMapping( $propertyName, true, $value );
 			}
- 
+
 			$GLOBALS[$propertyName] = $value;
 		} else {
 			$GLOBALS[$propertyName][$key] = $value;
@@ -94,11 +94,11 @@ class WikiaGlobalRegistry extends WikiaRegistry {
 	public function __set($propertyName, $value) {
 		$this->set( ( 'wg' . ucfirst($propertyName) ), $value );
 	}
-	
+
 	public function __isset( $propertyName ) {
 		return $this->has( 'wg' . ucfirst($propertyName) );
 	}
-	
+
 	public function __unset( $propertyName ) {
 		return $this->remove( 'wg' . ucfirst($propertyName) );
 	}
