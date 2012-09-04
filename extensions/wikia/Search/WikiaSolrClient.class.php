@@ -599,36 +599,43 @@ class WikiaSolrClient extends WikiaSearchClient {
 
 	public function getSimilarPages($query = false, array $params = array())
 	{
-	      if (!$query && !isset($params['stream.body']) && !isset($params['stream.url'])) {
-		return json_code(array('success'=>1, 'message'=>'No query or stream provided'));
-	      }
-
-	      if (isset($params['start'])) {
-		  $start = $params['start'];
-		  unset($params['start']);
-	      } else {
-		  $start = 0;
-	      }
-
-	      if (isset($params['size'])) {
-		  $size = $params['size'];
-		  unset($params['size']);
-	      } else {
-		  $size = 10;
-	      }
-
-	      $params = array('mlt.match.include' => 'false',
-			      'mlt.fl' => 'title,html',
-				  'mlt.qf' => 'title^10 html^5',
-			     ) + $params;
-
-	      try {
-		$response = $this->solrClient->moreLikeThis($query, $start, $size, $params);
-	      } catch (Exception $e) {
-		return json_encode(array('success'=>0,'message'=>'Exception: '.$e));
-	      }
-
-	      return $response;
+		if (! $query && ! isset ( $params ['stream.body'] ) && ! isset ( $params ['stream.url'] )) {
+			return json_encode ( array (
+					'success' => 1,
+					'message' => 'No query or stream provided' 
+			) );
+		}
+		
+		if (isset ( $params ['start'] )) {
+			$start = $params ['start'];
+			unset ( $params ['start'] );
+		} else {
+			$start = 0;
+		}
+		
+		if (isset ( $params ['size'] )) {
+			$size = $params ['size'];
+			unset ( $params ['size'] );
+		} else {
+			$size = 10;
+		}
+		
+		$params = array (
+				'mlt.match.include' => 'false',
+				'mlt.fl' => 'title,html',
+				'mlt.qf' => 'title^10 html^5' 
+		) + $params;
+		
+		try {
+			$response = $this->solrClient->moreLikeThis ( $query, $start, $size, $params );
+		} catch ( Exception $e ) {
+			return json_encode ( array (
+					'success' => 0,
+					'message' => 'Exception: ' . $e 
+			) );
+		}
+		
+		return $response;
 	}
 
 	public function setNamespaces(array $namespaces) {
