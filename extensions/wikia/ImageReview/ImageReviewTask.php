@@ -69,13 +69,13 @@ class ImageReviewTask extends BatchTask {
 			$city_lang = WikiFactory::getVarValueByName( "wgLanguageCode", $wikiId );
 			$reason = wfMsgExt( 'imagereview-reason', array( 'language' => $city_lang ) );
 
-			$sCommand  = "SERVER_ID={$wikiId} php $IP/maintenance/wikia/deleteOn.php ";
+			$sCommand  = "perl /usr/wikia/backend/bin/run_maintenance --id={$wikiId} --script=\"wikia/deleteOn.php ";
 			$sCommand .= "-u " . escapeshellarg( $this->mUser ) . " ";
 			$sCommand .= "-t " . escapeshellarg( $title->getPrefixedText() ) . " ";
 			if ( $reason ) {
 				$sCommand .= "-r " . escapeshellarg( $reason ) . " ";
 			}
-			$sCommand .= "--conf {$wgWikiaLocalSettingsPath}";
+			$sCommand .= "\"";
 
 			$actual_title = wfShellExec($sCommand, $retval);
 
