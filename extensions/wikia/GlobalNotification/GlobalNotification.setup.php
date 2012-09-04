@@ -15,7 +15,7 @@ $wgExtensionMessagesFiles['GlobalNotification'] = $dir . 'GlobalNotification.i18
 
 $wgHooks["MakeGlobalVariablesScript"][] = "wfGlobalNotificationJSVars";
 
-function wfGlobalNotificationJSVars($vars) {
+function wfGlobalNotificationJSVars(Array &$vars) {
 	$vars['wgAjaxFailureMsg'] = wfMsg('globalnotification-general-ajax-failure');
 	return true;
 }

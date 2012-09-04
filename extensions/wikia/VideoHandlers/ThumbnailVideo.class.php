@@ -65,7 +65,7 @@ class ThumbnailVideo extends ThumbnailImage {
 				"path" => $this->getPath(),
 				"page" => $this->getPage()
 			)
-		);
+		); /** @var $thumb ThumbnailImage  */
 
 		// make sure to replace 'image' css class whith 'video' css class
 		// in order to make thumbnail be handled correctly by RTE
@@ -89,6 +89,11 @@ class ThumbnailVideo extends ThumbnailImage {
 		return $thumb->toHtml( array('img-class' => $options['img-class']) );
 	}
 
+	/**
+	 * @param array $options
+	 * @return mixed|string
+	 * @throws MWException
+	 */
 	function toHtml( $options = array() ) {
 		if ( count( func_get_args() ) == 2 ) {
 			throw new MWException( __METHOD__ .' called in the old style' );
@@ -144,7 +149,7 @@ class ThumbnailVideo extends ThumbnailImage {
 		}
 
 		$linkAttribs['class'] = empty($linkAttribs['class']) ? 'video' : $linkAttribs['class'].' video';
-		
+
 		$linkAttribs['itemprop'] = 'video';
 		$linkAttribs['itemscope'] = '';
 		$linkAttribs['itemtype'] = 'http://schema.org/VideoObject';

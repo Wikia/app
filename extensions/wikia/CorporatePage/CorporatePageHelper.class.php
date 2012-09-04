@@ -56,7 +56,7 @@ class CorporatePageHelper{
 		return wfMemcKey( "hp_msg_parser", $msg, $lang, $contentString, self::CACHE_VERSION );
 	}
 
-	static function jsVars($vars){
+	static function jsVars(Array &$vars){
 		global $wgUser;
 		if ($wgUser->isAllowed( 'corporatepagemanager' )){
 			$vars['corporatepage_hide_confirm'] = wfMsg('corporatepage-hide-confirm');
@@ -353,7 +353,7 @@ class CorporatePageHelper{
  	public static function getHotNews($hubName) {
  		return null;
  	}
- 	
+
  	public static function onArticleCommentCheck($title) {
  		return false;
  	}

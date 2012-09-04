@@ -86,7 +86,12 @@ SCRIPT1;
 		}
 	}
 
-	public static function addGlobalVars($vars) {
+	/**
+	 * @static
+	 * @param array $vars
+	 * @return bool
+	 */
+	public static function addGlobalVars(Array &$vars) {
 		global $wgUser;
 		if ($wgUser->getId() && $wgUser->getId() > 0) {
 			$vars['wgTrackID'] = $wgUser->getId();

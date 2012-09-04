@@ -64,14 +64,14 @@ function wfAdEngineSetupTopVars($vars) {
 	return true;
 }
 
-function wfAdEngineSetupJSVars($vars) {
+function wfAdEngineSetupJSVars(Array &$vars) {
 	wfProfileIn(__METHOD__);
 
 	global $wgRequest, $wgNoExternals, $wgEnableAdsInContent, $wgEnableOpenXSPC,
 		$wgAdDriverCookieLifetime, $wgHighValueCountries, $wgDartCustomKeyValues,
 		$wgUser, $wgEnableWikiAnswers, $wgAdDriverUseCookie, $wgAdDriverUseExpiryStorage,
 		$wgEnableAdMeldAPIClient, $wgEnableAdMeldAPIClientPixels,
-		$wgEnableKruxTargeting, $wgLoadAdDriverOnLiftiumInit;
+		$wgLoadAdDriverOnLiftiumInit;
 
 	$wgNoExternals = $wgRequest->getBool('noexternals', $wgNoExternals);
 

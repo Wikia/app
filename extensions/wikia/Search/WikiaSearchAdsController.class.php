@@ -1,15 +1,26 @@
 <?php
 
+/**
+ *
+ */
 class WikiaSearchAdsController extends WikiaController {
-	public function onMakeGlobalVariablesScript($vars) {
+
+	/**
+	 * @param array $vars
+	 * @return bool
+	 */
+	public function onMakeGlobalVariablesScript(Array &$vars) {
 		$vars['wgEnableAdsInContent'] = 0;
 
 		return true;
 	}
 
+	/**
+	 *
+	 */
 	public function getAds() {
 		$query = $this->request->getVal('query');
-		$ip = $this->app->wg->request->getIP();
+		$ip = $this->app->wg->Request->getIP();
 		$header = $this->request->getVal('header');
 
 		$url = self::getUrl($query, $ip, $header);
@@ -19,6 +30,10 @@ class WikiaSearchAdsController extends WikiaController {
 		$this->response->setVal('ads', $ads);
 	}
 
+	/**
+	 * @param $url
+	 * @return string
+	 */
 	protected function getSearchResults($url) {
 		$xml = '';
 
@@ -31,6 +46,10 @@ class WikiaSearchAdsController extends WikiaController {
 		return $xml;
 	}
 
+	/**
+	 * @param $xml
+	 * @return array
+	 */
 	private function parseXml($xml) {
 		$results = array();
 
@@ -44,7 +63,14 @@ class WikiaSearchAdsController extends WikiaController {
 
 		return $results;
 	}
-	
+
+	/**
+	 * @static
+	 * @param null $query
+	 * @param null $ip
+	 * @param null $header
+	 * @return string
+	 */
 	public static function getURL($query = null, $ip = null, $header = null) {
 		$url = '';
 

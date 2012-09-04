@@ -526,10 +526,10 @@ class FollowHelper {
 	 * @return bool
 	 */
 
-	static public function jsVars($vars) {
+	static public function jsVars(Array &$vars) {
 		$vars[ 'wgEnableWikiaFollowedPages' ] = true;
-                $vars[ 'wgFollowedPagesPagerLimit' ] = FollowModel::$specialPageListLimit;
-                $vars[ 'wgFollowedPagesPagerLimitAjax' ] = FollowModel::$ajaxListLimit;
+		$vars[ 'wgFollowedPagesPagerLimit' ] = FollowModel::$specialPageListLimit;
+		$vars[ 'wgFollowedPagesPagerLimitAjax' ] = FollowModel::$ajaxListLimit;
 		return true;
 	}
 

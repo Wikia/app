@@ -57,7 +57,7 @@ function wfAutoPageCreateIsAnonUserpage( $title  ) {
 	return false;
 }
 
-function wfAutoPageCreateSetupVars( $vars ) {
+function wfAutoPageCreateSetupVars( Array &$vars ) {
 	global $wgWikiaEnableAutoPageCreateExt;
 
 	$vars['WikiaEnableAutoPageCreate'] = $wgWikiaEnableAutoPageCreateExt;

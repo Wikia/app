@@ -275,7 +275,7 @@ $wgHooks['ExtendJSGlobalVars'][] = 'fnAddAnswerJSGlobalVariables';
 
 //1.14 version
 $wgHooks['MakeGlobalVariablesScript'][] = 'fnAddAnswerJSGlobalVariables';
-function fnAddAnswerJSGlobalVariables(&$vars){
+function fnAddAnswerJSGlobalVariables(Array &$vars){
 
 	global $wgTitle, $wgContLang;
 	$vars['wgAskFormTitle'] = wfMsgForContent("ask_a_question");

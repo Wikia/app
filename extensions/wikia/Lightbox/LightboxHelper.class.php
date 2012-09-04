@@ -7,9 +7,13 @@
  *
  */
 class LightboxHelper extends WikiaModel {
-	
-	public function onMakeGlobalVariablesScript(&$vars) {
+
+	/**
+	 * @param array $vars
+	 * @return bool
+	 */
+	public function onMakeGlobalVariablesScript(Array &$vars) {
 		$vars['wgEnableLightboxExt'] = true;
 		return true;
-	}	
+	}
 }

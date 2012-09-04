@@ -64,7 +64,7 @@ function AddLinkSuggest($a, $b, $c, $d) {
 	return true;
 }
 
-function wfLinkSuggestSetupVars( $vars ) {
+function wfLinkSuggestSetupVars( Array &$vars ) {
 	global $wgContLang;
 	$vars['ls_template_ns'] = $wgContLang->getFormattedNsText( NS_TEMPLATE );
 	$vars['ls_file_ns'] = $wgContLang->getFormattedNsText( NS_FILE );
@@ -130,7 +130,7 @@ function getLinkSuggest() {
 	} else {
 		$key = wfMemcKey( __METHOD__, md5( $query.'_'.$wgRequest->getText('format') ) );
 	}
-	
+
 	if (strlen($query) < 3 ) {
 		// enforce minimum character limit on server side
 		$out = $wgRequest->getText('format') == 'json'
@@ -192,13 +192,13 @@ function getLinkSuggest() {
 	$query = addslashes($query);
 
 	$db = wfGetDB(DB_SLAVE, 'search');
-	
+
 	$redirects = array();
 	$results = array();
 	$exactMatchRow = null;
-	
+
 	$queryLower = strtolower($query);
-			
+
 	$res = $db->select(
 		array( 'querycache', 'page' ),
 		array( 'page_namespace', 'page_title', 'page_is_redirect' ),
@@ -215,29 +215,29 @@ function getLinkSuggest() {
 	);
 
 	linkSuggestFormatResults($db, $res, $query, $redirects, $results, $exactMatchRow);
-	
+
 	if (count($namespaces) > 0) {
 		$commaJoinedNamespaces = count($namespaces) > 1 ?  array_shift($namespaces) . ', ' . implode(', ', $namespaces) : $namespaces[0];
 	}
-	
+
 	$pageNamespaceClause = isset($commaJoinedNamespaces) ?  'page_namespace IN (' . $commaJoinedNamespaces . ') AND ' : '';
-	
+
 	if(count($results) < 10 ) {
 		$sql = "SELECT page_id, page_title, rd_title, page_namespace, page_is_redirect
-	
+
 				FROM page IGNORE INDEX (`name_title`)
-	
+
 				LEFT JOIN redirect ON page_is_redirect = 1 AND page_id = rd_from
-	
+
 				WHERE {$pageNamespaceClause} (page_title LIKE '{$query}%' or LOWER(page_title) LIKE '{$queryLower}%')
-	
+
 				LIMIT 20 ";
-		
+
 		$res = $db->query($sql);
-		
+
 		linkSuggestFormatResults($db, $res, $query, $redirects, $results, $exactMatchRow);
 	}
-	
+
 	if ($exactMatchRow !== null) {
 
 		$row = $exactMatchRow;

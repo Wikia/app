@@ -2,7 +2,7 @@
 
 $wgHooks["MakeGlobalVariablesScript"][] = "wfPartnerWidgetJSVars";
 
-function wfPartnerWidgetJSVars($vars) {
+function wfPartnerWidgetJSVars(Array &$vars) {
 	global $wgEnablePartnerWidget;
 	if ($wgEnablePartnerWidget) {
 		$vars['partnerKeywords'] = PartnerWidget::getPartnerWidgetKeywords();

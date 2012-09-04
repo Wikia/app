@@ -152,7 +152,7 @@ class EditPageLayoutHelper {
 		if($this->jsVarsPrinted) {
 			throw new Exception('addJsVariable: too late to add js var' );
 		}
-		$this->jsVars[$name] = & $value;
+		$this->jsVars[$name] = $value;
 	}
 
 	function onAlternateEditPageClass(&$editPage) {
@@ -172,7 +172,7 @@ class EditPageLayoutHelper {
 	/**
 	 * Add wgIsEditPage global JS variable on edit pages
 	 */
-	function onMakeGlobalVariablesScript($vars) {
+	function onMakeGlobalVariablesScript(Array &$vars) {
 		$this->app->wf->RunHooks('EditPageMakeGlobalVariablesScript', array(&$vars));
 
 		foreach( $this->jsVars as $key => $value ) {
