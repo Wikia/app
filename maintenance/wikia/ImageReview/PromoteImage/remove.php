@@ -40,7 +40,7 @@ if( $file instanceof File && $file->exists() ) {
 	$status = $file->delete('automated deletion');
 } else {
 	$status->ok = false;
-	$status->errors = array('ERROR: File does not exist');
+	$status->errors = array('ERROR: File does not exist ('.$imageTitle.')');
 }
 
 if( $status->ok === true ) {
