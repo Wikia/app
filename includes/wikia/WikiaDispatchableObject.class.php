@@ -13,19 +13,19 @@ abstract class WikiaDispatchableObject extends WikiaObject {
 	
 	/**
 	 * Mediawiki RequestContext object
-	 * @var RequestContext 
+	 * @var $context RequestContext
 	 */
 	protected $context = null;
 
 	/**
 	 * request object
-	 * @var WikiaRequest
+	 * @var $request WikiaRequest
 	 */
 	protected $request = null;
 	
 	/**
 	 * response object
-	 * @var WikiaResponse
+	 * @var $response WikiaResponse
 	 */
 	protected $response = null;
 	

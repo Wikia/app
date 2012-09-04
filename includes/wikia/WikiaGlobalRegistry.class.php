@@ -8,6 +8,14 @@
  * @author Adrian 'ADi' Wieczorek <adi(at)wikia-inc.com>
  * @author Owen Davis <owen(at)wikia-inc.com>
  * @author Wojciech Szela <wojtek(at)wikia-inc.com>
+ *
+ *
+ * @property User $User
+ * @property Title $Title
+ * @property WikiaRequest $Request
+ * @property WikiaResponse $Response
+ *
+ *
  */
 class WikiaGlobalRegistry extends WikiaRegistry {
 	/* mapping for MW 1.19+ compatibility, new code should use RequestContext instances to access those globals */

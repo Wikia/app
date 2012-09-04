@@ -8,6 +8,12 @@
  * @author Adrian 'ADi' Wieczorek <adi(at)wikia-inc.com>
  * @author Owen Davis <owen(at)wikia-inc.com>
  * @author Wojciech Szela <wojtek(at)wikia-inc.com>
+ *
+ * //helpers for PHP Lint
+ * @method MsgForContent
+ * @method LoadExtensionMessages
+ * @method RenderModule
+ * @method RunHooks
  */
 class WikiaFunctionWrapper {
 
