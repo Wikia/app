@@ -120,9 +120,10 @@ class OasisController extends WikiaController {
 			wfProfileOut(__METHOD__ . ' - renderBody');
 		}
 
+		$skin = RequestContext::getMain()->getSkin();
 		// this is bad but some extensions could have added some scripts to bottom queue
 		// todo: make it not run twice during each request
-//		$this->bottomscripts = $wgOut->getBottomScripts();
+		$this->bottomscripts = $skin->bottomScripts();
 
 		// generate list of CSS classes for <body> tag
 		$bodyClasses = array('mediawiki', $this->dir, $this->pageclass);
@@ -135,7 +136,6 @@ class OasisController extends WikiaController {
 
 		wfProfileIn(__METHOD__ . ' - skin Operations');
 		// add skin theme name
-		$skin = RequestContext::getMain()->getSkin();
 		if(!empty($skin->themename)) {
 			$bodyClasses[] = "oasis-{$skin->themename}";
 		}

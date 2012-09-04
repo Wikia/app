@@ -868,6 +868,20 @@ var mw = ( function ( $, undefined ) {
 					currReqBase
 				);
 				request = sortQuery( request );
+
+				// Wikia - change begin - @author: wladek
+				// @see $wgEnableResourceLoaderRewrites
+//				mw.log('ResourceLoader',sourceLoadScript,moduleMap,sourceLoadScript.substr(sourceLoadScript.length-1));
+				if ( sourceLoadScript.substr(sourceLoadScript.length-1) == '/' ) {
+					var modules = request.modules;
+					delete request.modules
+					request = sortQuery( request );
+					var params = encodeURIComponent( $.param(request) );
+					addScript( sourceLoadScript + params + '/' + modules, null, async );
+					return;
+				}
+				// Wikia - change end
+
 				// Asynchronously append a script tag to the end of the body
 				// Append &* to avoid triggering the IE6 extension check
 				addScript( sourceLoadScript + '?' + $.param( request ) + '&*', null, async );
@@ -971,7 +985,7 @@ var mw = ( function ( $, undefined ) {
 								wikiaReqSass = false,
 								wikiaSassParamsAdded = false,
 								wikiaSassParams = {},
-								wikiaSassParamsLength = $.param( wikiaSassParams ) + 1;
+								wikiaSassParamsLength = $.param( wikiaSassParams).length + 1;
 							$.each(mw.config.get('wgSassParams'),function(k,v){
 								wikiaSassParams['sass_'+k] = v;
 							});

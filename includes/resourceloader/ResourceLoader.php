@@ -1161,6 +1161,19 @@ class ResourceLoader {
 		}
 	}
 
+	public function setSource( $id, $properties = null ) {
+		// Allow multiple sources to be registered in one call
+		if ( is_array( $id ) ) {
+			foreach ( $id as $key => $value ) {
+				$this->addSource( $key, $value );
+			}
+			return;
+		}
+
+		unset($this->sources[$id]);
+		$this->addSource($id,$properties);
+	}
+
 	public function rebaseModules( $modules, $source ) {
 		if ( $modules === true ) {
 			$modules = array_keys($this->moduleInfos);
