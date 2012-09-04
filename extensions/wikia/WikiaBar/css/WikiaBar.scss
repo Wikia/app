@@ -7,14 +7,17 @@ body {
 	margin-bottom: 25px;
 }
 
-.WikiaBar {
-	background-color: blue;
-	bottom: -30px;
-	height: 25px;
-	margin: auto;
+.WikiaBarWrapper {
+	bottom: 0;
 	position: fixed;
-	width: 98%;
-	z-index: $zTop;
-	@include box-shadow(0, 0, 10px, $color-page-shadow);
-	@include linear-gradient($color-header, left, $color-header-alt, 0, $color-header, 50%, $color-header-alt, 100%);
+	width: 100%;
+	.wikia-bar {
+		background-color: blue;
+		height: 25px;
+		margin: auto;
+		width: 98%;
+		z-index: $zTop;
+		@include box-shadow(0, 0, 10px, $color-page-shadow);
+		@include linear-gradient($color-header, left, $color-header-alt, 0, $color-header, 50%, $color-header-alt, 100%);
+	}
 }
