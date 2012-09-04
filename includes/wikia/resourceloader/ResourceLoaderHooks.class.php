@@ -30,17 +30,19 @@ class ResourceLoaderHooks {
 	 */
 	static public function onResourceLoaderRegisterModules( ResourceLoader $resourceLoader ) {
 		global $wgScriptPath, $wgScriptExtension, $wgMedusaHostPrefix, $wgCdnRootUrl, $wgDevelEnvironment,
-			   $wgStagingEnvironment, $wgCityId;
+			   $wgStagingEnvironment, $wgCityId, $wgEnableResourceLoaderRewrites;
+
+		$sources = $resourceLoader->getSources();
 
 		// staff and internal special case
 		if ( $wgCityId === null ) {
-			$sources = $resourceLoader->getSources();
 			$resourceLoader->addSource('common',$sources['local']);
 			return true;
 		}
 
 		// Determine the shared domain name
-		if ( empty($wgDevelEnvironment) && empty($wgStagingEnvironment) ) {
+		$isProduction = empty($wgDevelEnvironment) && empty($wgStagingEnvironment);
+		if ( $isProduction ) {
 			$host = 'http://' . (empty($wgMedusaHostPrefix) ? 'community.' : $wgMedusaHostPrefix) . 'wikia.com';
 		} else {
 			$host = $wgCdnRootUrl;
@@ -49,10 +51,27 @@ class ResourceLoaderHooks {
 		// Feed RL with the "common" source
 		$scriptUri = "$host{$wgScriptPath}/load{$wgScriptExtension}";
 		$apiUri = "$host{$wgScriptPath}/api{$wgScriptExtension}";
-		$resourceLoader->addSource('common',array(
+		$sources['common'] = array(
 			'loadScript' => $scriptUri,
-			'apiScript' => $apiUri,
-		));
+			'apiScript' => $sources['local']['apiScript'],
+		);
+
+		if ( !empty( $wgEnableResourceLoaderRewrites ) ) {
+			// rewrite local source
+			$url = $sources['local']['loadScript'];
+			$url = str_replace("/load{$wgScriptExtension}","/__load/-/",$url);
+			$sources['local']['loadScript'] = $url;
+			// rewrite common source
+			$url = $sources['common']['loadScript'];
+			$url = str_replace("/load{$wgScriptExtension}","/__load/-/",$url);
+			if ( $isProduction ) {
+				$url = str_replace($host,$wgCdnRootUrl,$url);
+			}
+			$sources['common']['loadScript'] = $url;
+		}
+
+		$resourceLoader->setSource('local',$sources['local']);
+		$resourceLoader->addSource('common',$sources['common']);
 
 		return true;
 	}
@@ -144,8 +163,6 @@ class ResourceLoaderHooks {
 	}
 
 	public static function onAlternateResourceLoaderURL( &$loadScript, &$query, &$url, $modules ) {
-		global $wgEnableResourceLoaderRewrites, $wgCdnRootUrl;
-
 		$resourceLoaderInstance = self::getResourceLoaderInstance();
 
 		$source = false;
@@ -168,25 +185,20 @@ class ResourceLoaderHooks {
 			$source = 'local';
 		}
 
-		if ( !empty($wgEnableResourceLoaderRewrites) ) {
-			$loadScript = str_replace('/load.php','/__load/',$loadScript);
-			$domain = "-";
-			if ( $source != 'local' ) {
-				$loadScript = $wgCdnRootUrl . '/__load/';
-			}
+		$sources = $resourceLoaderInstance->getSources();
+		$loadScript = $sources[$source]['loadScript'];
 
+		// this is triggered only when $wgEnableResourceLoaderRewrites is set
+		if ( substr($loadScript,-1) == '/' ) {
 			$loadQuery = $query;
 			$modules = $loadQuery['modules'];
 			unset($loadQuery['modules']);
 
 			$params = urlencode(http_build_query($loadQuery));
-			$url = $loadScript . "$domain/$params/$modules";
+			$url = $loadScript . "$params/$modules";
 			$url = wfExpandUrl( $url, PROTO_RELATIVE );
 
 			return false;
-		} else {
-			$sources = $resourceLoaderInstance->getSources();
-			$loadScript = $sources[$source]['loadScript'];
 		}
 
 		return true;
