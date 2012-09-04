@@ -2,4 +2,5 @@
 
 require( '../../../maintenance/commandLine.inc' );
 
-ImageReviewHelper::resetAbandonedWork();
+$irh = new ImageReviewHelper();
+$irh->resetAbandonedWork();
