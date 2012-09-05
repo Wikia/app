@@ -78,76 +78,58 @@ test('cookie', function() {
   ok( !AdConfig.cookie(testCookieName), 'cookie not set' );
 });
 
-test('pullGeo', function() {
-  AdConfig.geo = null;
-
-  AdConfig.cookie('Geo', '{"city":"San Francisco","country":"US","continent":"NA"}');
-  AdConfig.pullGeo();
-  equal( AdConfig.geo.continent, 'NA', 'continent: NA' );
-  equal( AdConfig.geo.country, 'US', 'country: US' );
-
-  AdConfig.geo = null;
-  AdConfig.cookie('Geo', '{"city":"Brisbane","country":"AU","continent":"OC"}');
-  AdConfig.pullGeo();
-  equal( AdConfig.geo.continent, 'OC', 'continent: OC' );
-  equal( AdConfig.geo.country, 'AU', 'country: AU' );
-
-  AdConfig.geo = null;
-  AdConfig.cookie('Geo', null);
-});
-
 module('AdConfig.DART');
 
 test('getSubdomain', function() {
-  AdConfig.geo = null; AdConfig.cookie('Geo', '{"country":"DE","continent":"EU"}'); AdConfig.pullGeo();
+  AdConfig.geo = {"country":"DE","continent":"EU"};
   equal( AdConfig.DART.getSubdomain(), 'ad-emea', 'DE' );
-  AdConfig.geo = null; AdConfig.cookie('Geo', '{"country":"ZA","continent":"AF"}'); AdConfig.pullGeo();
+  AdConfig.geo = {"country":"ZA","continent":"AF"};
   equal( AdConfig.DART.getSubdomain(), 'ad-emea', 'ZA' );
-  AdConfig.geo = null; AdConfig.cookie('Geo', '{"country":"AE","continent":"AS"}'); AdConfig.pullGeo();
+  AdConfig.geo = {"country":"AE","continent":"AS"};
   equal( AdConfig.DART.getSubdomain(), 'ad-emea', 'AE' );
-  AdConfig.geo = null; AdConfig.cookie('Geo', '{"country":"CY","continent":"AS"}'); AdConfig.pullGeo();
+  AdConfig.geo = {"country":"CY","continent":"AS"};
   equal( AdConfig.DART.getSubdomain(), 'ad-emea', 'CY' );
-  AdConfig.geo = null; AdConfig.cookie('Geo', '{"country":"BH","continent":"AS"}'); AdConfig.pullGeo();
+  AdConfig.geo = {"country":"BH","continent":"AS"};
   equal( AdConfig.DART.getSubdomain(), 'ad-emea', 'BH' );
-  AdConfig.geo = null; AdConfig.cookie('Geo', '{"country":"IL","continent":"AS"}'); AdConfig.pullGeo();
+  AdConfig.geo = {"country":"IL","continent":"AS"};
   equal( AdConfig.DART.getSubdomain(), 'ad-emea', 'IL' );
-  AdConfig.geo = null; AdConfig.cookie('Geo', '{"country":"IQ","continent":"AS"}'); AdConfig.pullGeo();
+  AdConfig.geo = {"country":"IQ","continent":"AS"};
   equal( AdConfig.DART.getSubdomain(), 'ad-emea', 'IQ' );
-  AdConfig.geo = null; AdConfig.cookie('Geo', '{"country":"IR","continent":"AS"}'); AdConfig.pullGeo();
+  AdConfig.geo = {"country":"IR","continent":"AS"};
   equal( AdConfig.DART.getSubdomain(), 'ad-emea', 'IR' );
-  AdConfig.geo = null; AdConfig.cookie('Geo', '{"country":"JO","continent":"AS"}'); AdConfig.pullGeo();
+  AdConfig.geo = {"country":"JO","continent":"AS"};
   equal( AdConfig.DART.getSubdomain(), 'ad-emea', 'JO' );
-  AdConfig.geo = null; AdConfig.cookie('Geo', '{"country":"KW","continent":"AS"}'); AdConfig.pullGeo();
+  AdConfig.geo = {"country":"KW","continent":"AS"};
   equal( AdConfig.DART.getSubdomain(), 'ad-emea', 'KW' );
-  AdConfig.geo = null; AdConfig.cookie('Geo', '{"country":"LB","continent":"AS"}'); AdConfig.pullGeo();
+  AdConfig.geo = {"country":"LB","continent":"AS"};
   equal( AdConfig.DART.getSubdomain(), 'ad-emea', 'LB' );
-  AdConfig.geo = null; AdConfig.cookie('Geo', '{"country":"OM","continent":"AS"}'); AdConfig.pullGeo();
+  AdConfig.geo = {"country":"OM","continent":"AS"};
   equal( AdConfig.DART.getSubdomain(), 'ad-emea', 'OM' );
-  AdConfig.geo = null; AdConfig.cookie('Geo', '{"country":"PS","continent":"AS"}'); AdConfig.pullGeo();
+  AdConfig.geo = {"country":"PS","continent":"AS"};
   equal( AdConfig.DART.getSubdomain(), 'ad-emea', 'PS' );
-  AdConfig.geo = null; AdConfig.cookie('Geo', '{"country":"QA","continent":"AS"}'); AdConfig.pullGeo();
+  AdConfig.geo = {"country":"QA","continent":"AS"};
   equal( AdConfig.DART.getSubdomain(), 'ad-emea', 'QA' );
-  AdConfig.geo = null; AdConfig.cookie('Geo', '{"country":"SA","continent":"AS"}'); AdConfig.pullGeo();
+  AdConfig.geo = {"country":"SA","continent":"AS"};
   equal( AdConfig.DART.getSubdomain(), 'ad-emea', 'SA' );
-  AdConfig.geo = null; AdConfig.cookie('Geo', '{"country":"SY","continent":"AS"}'); AdConfig.pullGeo();
+  AdConfig.geo = {"country":"SY","continent":"AS"};
   equal( AdConfig.DART.getSubdomain(), 'ad-emea', 'SY' );
-  AdConfig.geo = null; AdConfig.cookie('Geo', '{"country":"TR","continent":"AS"}'); AdConfig.pullGeo();
+  AdConfig.geo = {"country":"TR","continent":"AS"};
   equal( AdConfig.DART.getSubdomain(), 'ad-emea', 'TR' );
-  AdConfig.geo = null; AdConfig.cookie('Geo', '{"country":"YE","continent":"AS"}'); AdConfig.pullGeo();
+  AdConfig.geo = {"country":"YE","continent":"AS"};
   equal( AdConfig.DART.getSubdomain(), 'ad-emea', 'YE' );
-  AdConfig.geo = null; AdConfig.cookie('Geo', '{"country":"IN","continent":"AS"}'); AdConfig.pullGeo();
+  AdConfig.geo = {"country":"IN","continent":"AS"};
   equal( AdConfig.DART.getSubdomain(), 'ad-apac', 'IN' );
-  AdConfig.geo = null; AdConfig.cookie('Geo', '{"country":"JP","continent":"AS"}'); AdConfig.pullGeo();
+  AdConfig.geo = {"country":"JP","continent":"AS"};
   equal( AdConfig.DART.getSubdomain(), 'ad-apac', 'JP' );
-  AdConfig.geo = null; AdConfig.cookie('Geo', '{"country":"AU","continent":"OC"}'); AdConfig.pullGeo();
+  AdConfig.geo = {"country":"AU","continent":"OC"};
   equal( AdConfig.DART.getSubdomain(), 'ad-apac', 'AU' );
-  AdConfig.geo = null; AdConfig.cookie('Geo', '{"country":"US","continent":"NA"}'); AdConfig.pullGeo();
+  AdConfig.geo = {"country":"US","continent":"NA"};
   equal( AdConfig.DART.getSubdomain(), 'ad', 'US' );
-  AdConfig.geo = null; AdConfig.cookie('Geo', '{"country":"AR","continent":"SA"}'); AdConfig.pullGeo();
+  AdConfig.geo = {"country":"AR","continent":"SA"};
   equal( AdConfig.DART.getSubdomain(), 'ad', 'AR' );
 
   AdConfig.geo = null;
-  AdConfig.cookie('Geo', null);
+  //AdConfig.cookie('Geo', null);
 });
 
 test('getAdType', function() {
@@ -417,7 +399,7 @@ test('getUrl', function() {
 
   AdConfig.DART.tile = 1;
   AdConfig.DART.site = AdConfig.DART.zone1 = AdConfig.DART.zone2 = null;
-  AdConfig.geo = null; AdConfig.cookie('Geo', '{"country":"US","continent":"NA"}'); AdConfig.pullGeo();
+  AdConfig.geo = {"country":"US","continent":"NA"};
   window.cityShort = 'ent';
   window.wgDBname = 'muppet';
   window.wikiaPageType = 'article';
@@ -435,7 +417,7 @@ test('getUrl', function() {
   + AdConfig.DART.getDomainKV(window.location.hostname)
   + AdConfig.DART.getHostnamePrefix(window.location.hostname)
   + 'pos=TOP_LEADERBOARD;wpage='
-  + encodeURIComponent(window.wgPageName)
+  + encodeURIComponent(window.wgPageName.toLowerCase())
   + ';lang=en;'
   + AdConfig.DART.getResolution() + AdConfig.DART.getPrefooterStatus()
   + AdConfig.DART.getImpressionCount('TOP_LEADERBOARD') + AdConfig.DART.getCategories()
@@ -444,7 +426,7 @@ test('getUrl', function() {
 
   AdConfig.DART.tile = 1;
   AdConfig.DART.site = AdConfig.DART.zone1 = AdConfig.DART.zone2 = null;
-  AdConfig.geo = null; AdConfig.cookie('Geo', '{"country":"LB","continent":"AS"}'); AdConfig.pullGeo();
+  AdConfig.geo = {"country":"LB","continent":"AS"};
   window.cityShort = 'life';
   window.wgDBname = 'healthyrecipes';
   window.wikiaPageType = 'home';
@@ -462,7 +444,7 @@ test('getUrl', function() {
   + AdConfig.DART.getDomainKV(window.location.hostname)
   + AdConfig.DART.getHostnamePrefix(window.location.hostname)
   + 'pos=HOME_TOP_RIGHT_BOXAD;wpage='
-  + encodeURIComponent(window.wgPageName)
+  + encodeURIComponent(window.wgPageName.toLowerCase())
   + ';lang=en;'
   + AdConfig.DART.getResolution() + AdConfig.DART.getPrefooterStatus()
   + AdConfig.DART.getImpressionCount('HOME_TOP_RIGHT_BOXAD')
@@ -471,7 +453,7 @@ test('getUrl', function() {
 
   AdConfig.DART.tile = 1;
   AdConfig.DART.site = AdConfig.DART.zone1 = AdConfig.DART.zone2 = null;
-  AdConfig.geo = null; AdConfig.cookie('Geo', '{"country":"AU","continent":"OC"}'); AdConfig.pullGeo();
+  AdConfig.geo = {"country":"AU","continent":"OC"};
   window.cityShort = 'gaming';
   window.wgDBname = 'wowwiki';
   window.wikiaPageType = 'article';
@@ -490,7 +472,7 @@ test('getUrl', function() {
   + AdConfig.DART.getDomainKV(window.location.hostname)
   + AdConfig.DART.getHostnamePrefix(window.location.hostname)
   + 'pos=LEFT_SKYSCRAPER_2;wpage='
-  + encodeURIComponent(window.wgPageName)
+  + encodeURIComponent(window.wgPageName.toLowerCase())
   + ';lang=en;'
   + AdConfig.DART.getResolution() + AdConfig.DART.getPrefooterStatus()
   + AdConfig.DART.getImpressionCount('LEFT_SKYSCRAPER_2')
