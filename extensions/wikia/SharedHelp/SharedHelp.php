@@ -302,8 +302,7 @@ function SharedHelpHook(&$out, &$text) {
 				$articleLink =  MWNamespace::getCanonicalName(NS_HELP_TALK) . ':' . $wgTitle->getDBkey();
 				$apiUrl = $sharedServer."/api.php?action=query&redirects&format=json&titles=".$articleLink;
 				$file = @file_get_contents($apiUrl, FALSE );
-				$json = new Services_JSON();
-				$APIOut = $json->decode($file);
+				$APIOut = json_decode($file);
 				if (isset($APIOut->query) && isset($APIOut->query->redirects) && (count($APIOut->query->redirects) > 0) ){
 					$articleLink =  str_replace(" ", "_", $APIOut->query->redirects[0]->to);
 				}

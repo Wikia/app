@@ -897,12 +897,7 @@ function axAWCMetricsAllWikis() {
 		$aResponse['nbr_records'] = count($res);
 	}
 
-	if (!function_exists('json_encode'))  {
-		$oJson = new Services_JSON();
-		return $oJson->encode($aResponse);
-	} else {
-		return json_encode($aResponse);
-	}
+	return json_encode($aResponse);
 }
 
 
