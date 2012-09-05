@@ -207,7 +207,7 @@ class SpecialVideosHelper extends WikiaModel {
 		}
 
 		if ( !empty($articleLinks) ) {
-			$postedInMsg = $this->wf->Msg( 'specialvideos-posted-in', implode($articleLinks, ',') );
+			$postedInMsg = $this->wf->Msg( 'specialvideos-posted-in', implode($articleLinks, ', ') );
 		}
 
 		return $postedInMsg;

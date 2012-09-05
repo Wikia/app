@@ -63,4 +63,10 @@
 	.alpha {
 		clear: both;
 	}
+	.posted-in {
+		overflow: hidden;
+		padding-right: 5px;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
 }
