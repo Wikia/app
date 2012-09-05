@@ -830,14 +830,13 @@ class AdEngine {
 	}
 
 	public static function isAdsEnabledOnWikiaHub() {
-		global $wgHubsAdsEnabled, $wgEnableWikiaHubsExt, $wgTitle;
+		global $wgHubsAdsEnabled, $wgTitle;
 
-		if (!empty($wgEnableWikiaHubsExt) && !empty($wgHubsAdsEnabled)) {
-			if (in_array($wgTitle->getDBkey(), $wgHubsAdsEnabled)) {
+		if (WikiaPageType::isWikiaHub() && !empty($wgHubsAdsEnabled)) {
+			if (in_array($wgTitle->getBaseText(), $wgHubsAdsEnabled)) {
 				return true;
 			}
 		}
-
 		return false;
 	}
 
