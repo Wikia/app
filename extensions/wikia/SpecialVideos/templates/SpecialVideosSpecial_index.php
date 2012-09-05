@@ -36,7 +36,7 @@
 			</a>
 			<p><?= $video['byUserMsg'] ?></p>
 			<p itemprop="uploadDate"><?= wfTimeFormatAgo($video['timestamp']) ?></p>
-			<p><?= $video['postedInMsg']; ?></p>
+			<p class="posted-in"><?= $video['postedInMsg']; ?></p>
 
 		</div>
 
