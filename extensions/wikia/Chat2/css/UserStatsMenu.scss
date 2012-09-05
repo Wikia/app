@@ -9,7 +9,7 @@
 	background: $color-page;
 	display: none;
 	font-size: 12px;
-	
+
 	.info {
 		@include clearfix;
 		background: $color-menu-highlight;
@@ -18,7 +18,7 @@
 		position: relative;
 
 		img {
-			@extend ._avatar;
+			border: 1px solid $color-page-border;
 			float: left;
 		}
 
