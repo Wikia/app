@@ -9,10 +9,10 @@ class RebuildLocalisationCacheTask extends BatchTask {
 	public $mVisible;
 	public $mData;
 	public $mParams;
-	
+
 	/**
 	 * Contructor
-	 * 
+	 *
 	 * @access public
          */
 	public function  __construct() {
@@ -22,9 +22,9 @@ class RebuildLocalisationCacheTask extends BatchTask {
 	}
 	/**
 	 * execute
-	 * 
+	 *
 	 * Main entry point. TaskManagerExecutor runs this method.
-	 * 
+	 *
 	 * @param mixed $params the data for a particular task
 	 * @return boolean true on success
 	 * @access public
@@ -45,11 +45,11 @@ class RebuildLocalisationCacheTask extends BatchTask {
 	}
 	/**
 	 * getForm
-	 * 
+	 *
 	 * Does nothing.  We don't need that.  Created just for the sake of compatibility.
-	 * 
+	 *
 	 * @access public
-	 * @param $title mixed - Title object
+	 * @param Title $title
 	 * @param $data array default null - unserialized arguments for task
 	 * @return boolean false
 	 */
@@ -68,9 +68,9 @@ class RebuildLocalisationCacheTask extends BatchTask {
 	}
 	/**
 	 * getType
-	 * 
+	 *
 	 * Returns the type of the task.
-	 * 
+	 *
 	 * @return string the type of the task
 	 * @access public
 	 */
@@ -79,27 +79,27 @@ class RebuildLocalisationCacheTask extends BatchTask {
 	}
 	/**
 	 * isVisible
-	 * 
+	 *
 	 * Returns visibility of the task.
-	 * 
+	 *
 	 * @return boolean visibility of the task
-	 * @access public 
+	 * @access public
 	 */
 	function isVisible() {
 		return $this->mVisible;
 	}
 	/**
 	 * submitForm
-	 * 
+	 *
 	 * Creates the corresponding entry in the TaskManager queue.
-	 * 
+	 *
 	 * @return boolean true
 	 * @access public
 	 */
 	function submitForm() {
-		global $wgOut, $wgUser;
+		global $wgOut;
 		$this->mTaskID = $this->createTask( array() );
 		$wgOut->addHTML( Wikia::successbox( 'Task added' ) );
 		return true;
-        }
+	}
 };
