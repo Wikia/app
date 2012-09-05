@@ -60,6 +60,9 @@ class WikiaMobileMediaService extends WikiaService {
 		//separate linked items from normal ones and select the first one
 		//which will be rendered in the page
 		foreach ( $items as $item ) {
+			/**
+			 * @var $file File
+			 */
 			$file = $this->wf->FindFile( $item['title'] );
 
 			if ( $file instanceof File ) {

@@ -11,10 +11,16 @@
  *
  *
  * @property User $User
+ * @property User $user
  * @property OutputPage $Out
+ * @property OutputPage $out
  * @property Title $Title
+ * @property Title $title
  * @property WebRequest $Request
+ * @property WebRequest $request
  * @property WebResponse $Response
+ * @property WebResponse $response
+ * @property MemCache memc
  *
  *
  */
@@ -122,5 +128,6 @@ class WikiaGlobalRegistry extends WikiaRegistry {
 		if ( !$setValue ) {
 			return $res;
 		}
+		return null;
 	}
 }

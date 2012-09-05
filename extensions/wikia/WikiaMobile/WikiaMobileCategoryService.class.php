@@ -6,6 +6,9 @@
  * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
  */
 class WikiaMobileCategoryService extends WikiaService {
+	/**
+	 * @var $model WikiaMobileCategoryModel
+	 */
 	private $model;
 
 	//3 hours
@@ -32,6 +35,9 @@ class WikiaMobileCategoryService extends WikiaService {
 	public function categoryExhibition() {
 		$this->wf->profileIn(__METHOD__);
 
+		/**
+		 * @var $categoryPage CategoryPage
+		 */
 		$categoryPage = $this->getVal( 'categoryPage' );
 
 		if ( $categoryPage instanceof CategoryPage ) {
@@ -53,10 +59,15 @@ class WikiaMobileCategoryService extends WikiaService {
 		}
 
 		$this->wf->profileOut( __METHOD__ );
+		return null;
 	}
 
 	public function alphabeticalList() {
 		$this->wf->profileIn( __METHOD__ );
+
+		/**
+		 * @var $categoryPage CategoryPage
+		 */
 
 		$categoryPage = $this->getVal( 'categoryPage' );
 
@@ -65,6 +76,9 @@ class WikiaMobileCategoryService extends WikiaService {
 
 			$title = $categoryPage->getTitle();
 			$category = F::build( 'Category', array( $title ),  'newFromTitle' );
+			/**
+			 * @var $data WikiaMobileCategoryContents
+			 */
 			$data = $this->model->getItemsCollection( $category );
 
 			$this->response->setVal( 'total', $data->getCount() );
@@ -91,7 +105,11 @@ class WikiaMobileCategoryService extends WikiaService {
 			$category = F::build( 'Category', array ( F::build( 'Title' , array ( $categoryName, NS_CATEGORY ), 'newFromText' ) ), 'newFromTitle' );
 
 			if ( $category instanceof Category ) {
-				$data = F::build( 'WikiaMobileCategoryModel' )->getItemsCollection( $category );
+				/**
+				 * @var $categoryModel WikiaMobileCategoryModel
+				 */
+				$categoryModel = F::build( 'WikiaMobileCategoryModel' );
+				$data = $categoryModel->getItemsCollection( $category );
 				
 				if ( !empty( $data[$index] ) && $batch > 0) {
 					//cache response for 3 hours in varnish and browser
@@ -114,7 +132,7 @@ class WikiaMobileCategoryService extends WikiaService {
 		}
 
 		if ( $err ) {
-			Wikia::log(__METHOD__, false, "Error loading batch {$batch} for index {$index} in Category {$categoryName}. Msg: {$err}" );
+			Wikia::log( __METHOD__, false, "Error loading batch {$batch} for index {$index} in Category {$categoryName}. Msg: {$err}" );
 			header( 'Status: 404 Not Found', true, 404 );
 		}
 	}

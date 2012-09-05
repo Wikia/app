@@ -19,7 +19,11 @@ class WikiaMobileErrorService extends WikiaService {
 	 *
 	 */
 	function pageNotFound(){
-		$ret = F::build('WikiaMobileStatsModel')->getRandomPopularPage();
+		/**
+		 * @var $wikiaMobileStatsModel WikiaMobileStatsModel
+		 */
+		$wikiaMobileStatsModel = F::build( 'WikiaMobileStatsModel' );
+		$ret = $wikiaMobileStatsModel->getRandomPopularPage();
 		$this->response->setVal( 'title', $this->wg->Out->getHTMLTitle() );
 		$this->response->setVal( 'link', $ret[0] );
 		$this->response->setVal( 'img', $ret[1] );
