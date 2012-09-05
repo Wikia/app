@@ -98,7 +98,8 @@ class WikiaValidatorsSet extends  WikiaValidatorListBase
 
 	public function getErrorsFlat(){
 		$output = array();
-		array_walk_recursive($this->getError(), 'WikiaValidatorsSet::arrayWalk', &$output);
+		$input = $this->getError();
+		array_walk_recursive($input, 'WikiaValidatorsSet::arrayWalk', $output);
 		return $output;
 	}
 }
