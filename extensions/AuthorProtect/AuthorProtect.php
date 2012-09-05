@@ -40,7 +40,7 @@ class AuthorProtect {
 	 * Extensions like ConfirmAccount do some weird stuff to $wgTitle during the UserGetRights hook
 	 * So this delays the hook's execution to a point where $wgTitle is set
 	 */
-	public static function AuthorProtectDelay( $title, &$user, $action, $result ) {
+	public static function AuthorProtectDelay( $title, &$user, $action, &$result ) {
 		global $wgAuthorProtectDelayRun;
 		if ( $wgAuthorProtectDelayRun ) {
 			$user->mRights = null;
@@ -216,7 +216,7 @@ class AuthorProtect {
 		if ( !$title instanceOf Title ) {
 			return false; // quick hack to prevent the API from messing up.
 		}
-		
+
 		if ( $wgUser->getID() === 0 ) {
 			return false; // don't allow anons, they shouldn't even get this far but just in case...
 		}
