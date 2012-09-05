@@ -10,6 +10,7 @@ class SpecialVideosHelper extends WikiaModel {
 	const VIDEOS_PER_PAGE = 24;
 	const THUMBNAIL_WIDTH = 320;
 	const THUMBNAIL_HEIGHT = 205;
+	const POSTED_IN_ARTICLES = 5;
 
 	// get list of sorting options
 	public function getSortingOptions() {
@@ -106,7 +107,7 @@ class SpecialVideosHelper extends WikiaModel {
 				// get article list
 				$mediaQuery =  F::build( 'ArticlesUsingMediaQuery' , array( $title ) );
 				$articleList = $mediaQuery->getArticleList();
-				list( $truncatedList, $isTruncated ) = F::build( 'WikiaFileHelper', array( $articleList ), 'truncateArticleList' );
+				list( $truncatedList, $isTruncated ) = F::build( 'WikiaFileHelper', array( $articleList, self::POSTED_IN_ARTICLES ), 'truncateArticleList' );
 
 				// video details
 				$videoDetail = array(
@@ -207,9 +208,6 @@ class SpecialVideosHelper extends WikiaModel {
 
 		if ( !empty($articleLinks) ) {
 			$postedInMsg = $this->wf->Msg( 'specialvideos-posted-in', implode($articleLinks, ',') );
-			if ( $isTruncated ) {
-				$postedInMsg .= '...';
-			}
 		}
 
 		return $postedInMsg;
