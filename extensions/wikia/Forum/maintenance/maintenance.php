@@ -120,9 +120,7 @@ if ( is_null($fromId) || is_null($toId) ) {
 			if(!feof($handle)) {
 				echo fgets($handle);
 				$working = true;
-			} else {
-				pclose($handle);
-			}		
+			}
 		}
 	}
 
@@ -171,13 +169,12 @@ foreach ( $commentList as $comment ) {
 	$articleComment->load();
 
 	// parent page id
-	$parentPage = getParentPage( $articleComment );
-	if ( !$parentPage instanceof ArticleComment ) {
+	$parentPageId = getParentPage( $articleComment );
+	if ( empty($parentPageId) ) {
 		echo ".....Parent page NOT found.\n";
 		$failed++;
 		continue;
 	}
-	$parentPageId = $parentPage->getTitle()->getArticleID();
 
 	// get parent comment id
 	$parentCommentObj = $articleComment->getTopParentObj();

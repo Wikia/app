@@ -13,17 +13,16 @@ function getParentPage( $articleComment ) {
 	$namespace = MWNamespace::getSubject( $articleComment->getTitle()->getNamespace() );
 	$title = Title::newFromText( $titleText, $namespace );
 
-	$parentPage = null;
 	if( $title instanceof Title ) {
 		// create message wall if not exist
 		if ( !$title->exists() && $namespace == NS_USER_WALL ) {
 			$title = WallMessage::addMessageWall( $title );
 			echo ".....Wall message NOT found.\n\tAdded wall message '$titleText' (".$title->getArticleID().")";
+			return $title->getArticleId();
 		}
-		$parentPage = ArticleComment::newFromTitle( $title );
 	}
 
-	return $parentPage;
+	return 	$title->getArticleID();
 }
 
 // get comment properties
