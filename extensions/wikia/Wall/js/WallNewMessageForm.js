@@ -85,14 +85,10 @@ Wall.NewMessageForm = $.createClass(Wall.MessageForm, {
 			return;
 		}
 
-		if (this.messageSubmit.hasClass('wall-require-login')) {
-			this.loginBeforeAction(this.proxy(function() {
-				this.doPostNewMessage(title);
-				this.reload = true;
-			}));
-		} else {
+		this.loginBeforeSubmit(this.proxy(function(isAlreadyLogged) {
 			this.doPostNewMessage(title);
-		}
+			this.reload = !isAlreadyLogged;
+		}));
 	},
 
 	getMessageBody: function() {

@@ -112,14 +112,9 @@ Wall.ReplyMessageForm = $.createClass(Wall.MessageForm, {
 
 		this.disable(reply);
 
-		if (target.hasClass('wall-require-login'))  {
-			this.loginBeforeAction(this.proxy(function() {
-				this.doReplyToMessage(thread, reply, true);
-			}));
-
-		} else {
-			this.doReplyToMessage(thread, reply, false);
-		}
+		this.loginBeforeSubmit(this.proxy(function(isAlreadyLogged) {
+			this.doReplyToMessage(thread, reply, !isAlreadyLogged);
+		}));
 	},
 
 	showPreview: function(e) {
