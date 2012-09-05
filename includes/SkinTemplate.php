@@ -157,10 +157,6 @@ class SkinTemplate extends Skin {
 		$user = $this->getUser();
 		$title = $this->getTitle();
 
-		// Wikia change - begin - @author: wladek
-		$this->beforeOutputPage($out);
-		// Wikia change - end
-
 		wfProfileIn( __METHOD__ . '-init' );
 		$this->initPage( $out );
 
@@ -1304,10 +1300,6 @@ class SkinTemplate extends Skin {
 
 	public function commonPrintStylesheet() {
 		return false;
-	}
-
-	protected function beforeOutputPage() {
-		// stub, to be overwritten by descendants
 	}
 }
 
