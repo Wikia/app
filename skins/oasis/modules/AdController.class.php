@@ -13,7 +13,8 @@ class AdController extends WikiaController {
 
 		$runAds = $wgOut->isArticle()
 			|| WikiaPageType::isSearch()
-			|| WikiaPageType::isForum();
+			|| WikiaPageType::isForum()
+			|| WikiaPageType::isWikiaHub();
 
 			// Can be re-enabled after AdDriver2.js is implemented:
 			// || $wgTitle->isSpecial('Leaderboard');
@@ -23,7 +24,8 @@ class AdController extends WikiaController {
 		}
 
 		if(WikiaPageType::isWikiaHub() && AdEngine::isAdsEnabledOnWikiaHub()) {
-			self::$config['HUB_TOP_LEADERBOARD'] = true;
+			self::$config['HOME_TOP_LEADERBOARD'] = true;
+			self::$config['TOP_BUTTON'] = true;
 			return;
 		}
 		// Ads on corporate hub pages only
