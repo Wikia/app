@@ -42,7 +42,7 @@ class WikiaSearch extends WikiaObject {
 		$methodParams['groupResults'] = isset($methodParams['groupResults']) ? $methodParams['groupResults'] : false;
 		$methodParams['rank'] = isset($methodParams['rank']) ? $methodParams['rank'] : 'default';
 		$methodParams['hub'] = isset($methodParams['hub']) ? $methodParams['hub'] : false;
-		$methodParams['videoSearch'] = isset($methodParams['videoSearch']) ? $methodParams['videoSearch'] : fase; 
+		$methodParams['videoSearch'] = isset($methodParams['videoSearch']) ? $methodParams['videoSearch'] : false;
 		
 		extract($methodParams);
 
