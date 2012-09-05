@@ -155,7 +155,8 @@ class RelatedVideosController extends WikiaController {
 					'duration' => true,
 					'src' => $preloaded ? false : wfBlankImgUrl(),
 					'constHeight' => RelatedVideosService::$height,
-					'usePreloading' => true
+					'usePreloading' => true,
+					'disableRDF' => true
 				)
 			);
 

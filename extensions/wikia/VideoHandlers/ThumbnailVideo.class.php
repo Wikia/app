@@ -109,6 +109,13 @@ class ThumbnailVideo extends ThumbnailImage {
 
 		$useThmbnailInfoBar = false;
 
+		/*
+		 * in order to disable RDF metadata in video thumbnails
+		 * pass disableRDF parameter to toHtml method
+		 */
+		$useRDFData = ( !empty( $options['disableRDF'] ) && $options['disableRDF'] == true ) ? false : true;
+
+
 		/**
 		 * Note: if title is empty and alt is not, make the title empty, don't
 		 * use alt; only use alt if title is not set
@@ -150,9 +157,11 @@ class ThumbnailVideo extends ThumbnailImage {
 
 		$linkAttribs['class'] = empty($linkAttribs['class']) ? 'video' : $linkAttribs['class'].' video';
 
-		$linkAttribs['itemprop'] = 'video';
-		$linkAttribs['itemscope'] = '';
-		$linkAttribs['itemtype'] = 'http://schema.org/VideoObject';
+		if ( $useRDFData ) { // bugId: #46621
+			$linkAttribs['itemprop'] = 'video';
+			$linkAttribs['itemscope'] = '';
+			$linkAttribs['itemtype'] = 'http://schema.org/VideoObject';
+		}
 
 		$attribs = array(
 			'alt' => $alt,
@@ -160,8 +169,11 @@ class ThumbnailVideo extends ThumbnailImage {
 			'width' => $this->width,
 			'height' => $this->height,
 			'data-video' => $this->file->getTitle()->getText(),
-			'itemprop' => 'thumbnail',
 		);
+
+		if ( $useRDFData ) {
+			$attribs['itemprop'] = 'thumbnail';
+		}
 
 	        if ( !empty($options['usePreloading']) ) {
 	            $attribs['data-src'] = $this->url;
@@ -209,7 +221,11 @@ class ThumbnailVideo extends ThumbnailImage {
 		$html = ( $linkAttribs && isset($linkAttribs['href']) ) ? Xml::openElement( 'a', $linkAttribs ) : '';
 
 			if ( isset( $duration ) && !empty( $duration ) ) {
-				$html .= Xml::element( 'div', array('class'=>'timer', 'itemprop'=>'duration'),  $duration );
+				$timerProp = array( 'class'=>'timer' );
+				if ( $useRDFData ) {
+					$timerProp['itemprop'] = 'duration';
+				}
+				$html .= Xml::element( 'div', $timerProp,  $duration );
 			}
 			$playButtonHeight =  ( isset( $options['constHeight'] ) && $this->height > $options['constHeight'] ) ? $options['constHeight'] : $this->height;
 			if ( !empty( $extraBorder ) ) $playButtonHeight += ( $extraBorder*2 );
@@ -263,7 +279,7 @@ class ThumbnailVideo extends ThumbnailImage {
 
 		//give extensions a chance to modify the markup
 		wfRunHooks( 'ThumbnailVideoHTML', array( $options, $linkAttribs, $attribs, $this->file,  &$html ) );
-        wfProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 
 		return $html;
 	}
