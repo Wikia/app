@@ -84,7 +84,7 @@ var WikiBuilder = {
 		WikiBuilder.wikiName.keyup(function() {
 			WikiBuilder.nameAjax = true;
 			var name = $(this).val();
-			name = name.replace(/[^a-zA-Z0-9]+/g, '').replace(/ /g, '');
+			name = $.trim(name.replace(/[^a-zA-Z0-9 ]+/g, '')).replace(/ +/g, '-');
 			WikiBuilder.wikiDomain.val(name.toLowerCase()).trigger('keyup');
 			if(WikiBuilder.wntimer) {
 				clearTimeout(WikiBuilder.wntimer);
