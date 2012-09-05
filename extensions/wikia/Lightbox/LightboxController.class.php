@@ -173,14 +173,9 @@ class LightboxController extends WikiaController {
 
 		$articles = $data['articles'];
 		$isPostedIn = false; // Bool to tell mustache to print "posted in" section
-		$readableTitles = array();
 
 		if( !empty($articles) ) {
 			$isPostedIn = true;
-			foreach( $articles as $article ) {
-				$article = str_replace( "_", " ", $article );
-				$readableTitles[] = $article;
-			}
 		}
 
 		list( $smallerArticleList, $articleListIsSmaller ) = F::build( 'WikiaFileHelper', array( $articles, self::POSTED_IN_ARTICLES ), 'truncateArticleList' );
@@ -197,7 +192,7 @@ class LightboxController extends WikiaController {
 		$this->userThumbUrl = $data['userThumbUrl'];
 		$this->userName = $data['userName'];
 		$this->userPageUrl = $data['userPageUrl'];
-		$this->articles = $readableTitles;
+		$this->articles = $articles;
 		$this->isPostedIn = $isPostedIn;
 		$this->smallerArticleList = $smallerArticleList;
 		$this->articleListIsSmaller = $articleListIsSmaller;

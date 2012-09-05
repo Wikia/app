@@ -69,7 +69,7 @@
 			<?= wfMsg('lightbox-header-added-by', '<a href="{{userPageUrl}}" target="_blank">{{userName}}</a>') ?>
 			{{#isPostedIn}}
 				<span class="posted-in">
-					<?= wfMsg('lightbox-header-posted-in', '{{#smallerArticleList}}<span class="posted-in-article"><a href="{{url}}" target="_blank">{{title}}</a></span>{{/smallerArticleList}}{{#articleListIsSmaller}}&hellip;{{/articleListIsSmaller}}') ?>
+					<?= wfMsg('lightbox-header-posted-in', '{{#smallerArticleList}}<span class="posted-in-article"><a href="{{url}}" target="_blank">{{titleText}}</a></span>{{/smallerArticleList}}{{#articleListIsSmaller}}&hellip;{{/articleListIsSmaller}}') ?>
 				</span>
 			{{/isPostedIn}}
 		</div>
@@ -116,7 +116,7 @@
 				<h2><?= wfMsg('lightbox-more-info-filelinks-heading') ?></h2>
 				<ul>
 				{{#articles}}
-					<li><a href="{{url}}" target="_blank">{{title}}</a></li>
+					<li><a href="{{url}}" target="_blank">{{titleText}}</a></li>
 				{{/articles}}
 				</ul>
 			</div>

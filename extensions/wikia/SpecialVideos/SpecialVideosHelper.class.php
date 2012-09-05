@@ -193,7 +193,7 @@ class SpecialVideosHelper extends WikiaModel {
 			'href' => $article['url'],
 		);
 
-		$articleLink = Xml::element( 'a', $attribs, $article['title'], false );
+		$articleLink = Xml::element( 'a', $attribs, $article['titleText'], false );
 
 		return $articleLink;
 	}
