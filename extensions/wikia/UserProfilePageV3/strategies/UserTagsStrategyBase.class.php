@@ -2,8 +2,7 @@
 /**
  * @desc Base class for handling user "tags" logic in user masthead
  */
-//TODO: make class abstract
-class UserTagsStrategyBase {
+abstract class UserTagsStrategyBase {
 	protected $app;
 	/** @var User */
 	protected $user;
@@ -11,7 +10,7 @@ class UserTagsStrategyBase {
 	//instance cache for UserTwoTagsStrategy::getUsersEffectiveGroups()
 	protected $usersEffectiveGroups = null;
 
-	//TODO: reuse consts
+	//TODO: reuse consts -- are there substitutes?
 	const WIKIA_GROUP_STAFF_NAME = 'staff';
 	const WIKIA_GROUP_AUTHENTICATED_NAME = 'authenticated';
 	const WIKIA_GROUP_SYSOP_NAME = 'sysop';
@@ -129,11 +128,9 @@ class UserTagsStrategyBase {
 	}
 
 	/**
-	 * @param Array $tags
 	 * @return string
 	 */
-	//TODO: make this into a 'get' returning value without changing argument
-	protected function getTagFromGroups( &$tags ) {
+	protected function getTagFromGroups() {
 		$this->app->wf->ProfileIn(__METHOD__);
 
 		$result = '';
@@ -147,11 +144,8 @@ class UserTagsStrategyBase {
 			$result = wfMsg('user-identity-box-banned-from-chat');
 		}
 
-		if( !empty($result) ) {
-			$tags[] = $result;
-		}
-
 		$this->app->wf->ProfileOut(__METHOD__);
+		return $result;
 	}
 
 	/**
