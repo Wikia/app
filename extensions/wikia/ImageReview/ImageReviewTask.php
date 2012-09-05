@@ -58,7 +58,7 @@ class ImageReviewTask extends BatchTask {
 
 			if ( !is_object( $title ) ) {
 				$this->log( 'Apparently the article does not exist anymore' );
-				return false;
+				continue;
 			}
 
 			$city_url = WikiFactory::getVarValueByName( "wgServer", $wikiId );
