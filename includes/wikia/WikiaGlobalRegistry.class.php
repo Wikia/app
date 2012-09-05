@@ -20,7 +20,10 @@
  * @property WebRequest $request
  * @property WebResponse $Response
  * @property WebResponse $response
+ * @property MemCache Memc
  * @property MemCache memc
+ * @property Language ContLang
+ * @property String ArticlePath
  *
  *
  */

@@ -1,3 +1,9 @@
+<?
+/**
+ * @var $itemsBatch array
+ * @var $item WikiaMobileCategoryItem
+ */
+?>
 <? if( isset( $itemsBatch ) && is_array( $itemsBatch ) ) : ?>
 <ul class=wkLst>
 <? foreach ( $itemsBatch['items'] as $item ) :?>
