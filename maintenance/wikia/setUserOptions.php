@@ -101,7 +101,7 @@ while ($row = $dbr->fetchObject($res)) {
 				if (isset($row->city_id))
 					$key = str_replace('%', $row->city_id, $key);
 				$old_val = $user->getOption($key, null);
-				if ( $force || $old_val === null || $old_val !== $val ) {
+				if ( ($force && $old_val !== $val) || $old_val === null ) {
 					$user->setOption($key, $val);
 					$optionsChanged++;
 					if (!$quiet) {
