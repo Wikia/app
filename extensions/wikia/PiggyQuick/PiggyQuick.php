@@ -42,7 +42,7 @@ $wgExtensionMessagesFiles['PiggyQuick'] = __DIR__ . '/PiggyQuick.i18n.php';
  * @brief Hooks PiggyQuick feature into the Oasis toolbar.
  */
 function wfPiggyQuickExecute( $oController ) {
-	global $wgEnablePiggybackExt, $wgUser;
+	global $wgEnablePiggybackExt, $wgUser, $wgTitle;
 	// First, make sure the original Piggyback extension is enabled and available.
 	$bDependenciesMet = $wgEnablePiggybackExt // true, if the original Piggyback extension is enabled in the config
 		&& class_exists( 'Piggyback' ) // true, if the Piggyback's classes are available
