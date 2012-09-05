@@ -20,6 +20,9 @@ class TopListHelper {
 	 * @author Federico "Lox" Lucignano
 	 *
 	 * Callback for the ArticleFromTitle hook
+	 *
+	 * @param $title Title
+	 * @param $article Article
 	 */
 	public static function onArticleFromTitle( &$title, &$article ) {
 		if ( $title->getNamespace() == NS_TOPLIST ) {
@@ -32,6 +35,8 @@ class TopListHelper {
 	 * @author Federico "Lox" Lucignano
 	 *
 	 * Callback for the AlternateEdit hook
+	 *
+	 * @param $editPage EditPage
 	 */
 	public static function onAlternateEdit( $editPage ) {
 		global $wgOut;
@@ -55,6 +60,8 @@ class TopListHelper {
 	 * @author Federico "Lox" Lucignano
 	 *
 	 * Callback for the UserGetRights hook
+	 *
+	 * @param $user User
 	 */
 	public static function onUserGetRights( $user, &$rights ) {
 		global $wgTitle;
@@ -74,6 +81,9 @@ class TopListHelper {
 	 * @author Federico "Lox" Lucignano
 	 *
 	 * Callback for the getUserPermissionsErrors hook
+	 *
+	 * @param $title Title
+	 * @param $user User
 	 */
 	public static function onGetUserPermissionsErrors( &$title, &$user, $action, &$result ) {
 		if( $user->isAnon() && $title instanceof Title && $title->getNamespace() == NS_TOPLIST ) {
@@ -115,6 +125,9 @@ class TopListHelper {
 	 * @author Federico "Lox" Lucignano
 	 *
 	 * Callback for the ArticleSaveComplete hook
+	 *
+	 * @param $article Article
+	 *
 	 */
 	public static function onArticleSaveComplete( &$article, &$user, $text, $summary, $flag, $fake1, $fake2, &$flags, $revision, &$status, $baseRevId ) {
 		$title = $article->getTitle();
@@ -126,6 +139,14 @@ class TopListHelper {
 		return true;
 	}
 
+	/**
+	 * @static
+	 * @param $title Title
+	 * @param $keys
+	 * @param $subject
+	 * @param $editor
+	 * @return bool
+	 */
 	static public function onComposeCommonSubjectMail( $title, &$keys, &$subject, $editor ) {
 		wfProfileIn( __METHOD__ );
 
@@ -137,6 +158,16 @@ class TopListHelper {
 		return true;
 	}
 
+	/**
+	 * @static
+	 * @param $title Title
+	 * @param $keys
+	 * @param $body
+	 * @param $editor
+	 * @param $bodyHTML
+	 * @param $postTransformKeys
+	 * @return bool
+	 */
 	static public function onComposeCommonBodyMail( $title, &$keys, &$body, $editor, &$bodyHTML, &$postTransformKeys ) {
 		wfProfileIn( __METHOD__ );
 
@@ -157,7 +188,7 @@ class TopListHelper {
 	 * Callback for the CreatePage::FetchOptions hook
 	 */
 	static public function onCreatePageFetchOptions(&$standardOptions, &$options ) {
-		global $wgCdnStylePath, $wgScript, $wgShowTopListsInCreatePage;
+		global $wgCdnStylePath, $wgShowTopListsInCreatePage;
 
 		if( !empty( $wgShowTopListsInCreatePage ) && F::app()->checkSkin( 'oasis' ) ) {
 
@@ -180,6 +211,9 @@ class TopListHelper {
 	 * @author Federico "Lox" Lucignano
 	 *
 	 * Callback for the BeforePageDisplay hook
+	 *
+	 * @param $out OutputPage
+	 * @param $skin Skin
 	 */
 	public static function onBeforePageDisplay( &$out, &$skin) {
 		global $wgTitle, $wgJsMimeType, $wgExtensionsPath;
@@ -192,6 +226,14 @@ class TopListHelper {
 		return true;
 	}
 
+	/**
+	 * @static
+	 * @param $article Article
+	 * @param $user User
+	 * @param $reason String
+	 * @param $id Integer
+	 * @return bool
+	 */
 	public static function onArticleDeleteComplete( &$article, &$user, $reason, $id ) {
 		$title = $article->getTitle();
 
@@ -203,6 +245,13 @@ class TopListHelper {
 		return true;
 	}
 
+	/**
+	 * @static
+	 * @param $title Title
+	 * @param $revision
+	 * @param $oldPageId
+	 * @return bool
+	 */
 	public static function onArticleRevisionUndeleted( &$title, $revision, $oldPageId ) {
 		if( ( $title->getNamespace() == NS_TOPLIST ) && !$title->isSubpage() ) {
 			$list = TopList::newFromTitle( $title );
@@ -211,6 +260,15 @@ class TopListHelper {
 		return true;
 	}
 
+	/**
+	 * @static
+	 * @param $title Title
+	 * @param $nt Title
+	 * @param $user User
+	 * @param $pageId
+	 * @param $redirId
+	 * @return bool
+	 */
 	public static function onTitleMoveComplete( &$title, &$nt, &$user, $pageId, $redirId ) {
 		if( ( $title->getNamespace() == NS_TOPLIST ) && !$title->isSubpage() ) {
 			$title->moveSubpages( $nt, false );
@@ -385,8 +443,13 @@ class TopListHelper {
 		return $response;
 	}
 
+	/**
+	 * @static
+	 * @return AjaxResponse
+	 * @throws MWException
+	 */
 	static public function uploadImage() {
-		global $wgRequest, $wgUser, $wgFileExtensions, $wgLang, $wgOut;
+		global $wgRequest, $wgUser, $wgFileExtensions, $wgLang;
 
 		if ( $wgRequest->wasPosted() ) {
 
@@ -528,6 +591,10 @@ class TopListHelper {
 		}
 	}
 
+	/**
+	 * @static
+	 * @return AjaxResponse
+	 */
 	static public function getImageData() {
 		global $wgRequest;
 
@@ -626,8 +693,14 @@ class TopListHelper {
 		return $response;
 	}
 
+	/**
+	 * @static
+	 * @return AjaxResponse
+	 *
+	 * @var
+	 */
 	public static function addItem() {
-		global $wgRequest, $wgUser, $wgScript;
+		global $wgRequest, $wgUser;
 
 		$result = array( 'result' => false );
 		$errors = array();
@@ -701,6 +774,10 @@ class TopListHelper {
 		return $response;
 	}
 
+	/**
+	 * @static
+	 * @param Title $title
+	 */
 	static public function fixCategorySortKey( Title $title ) {
 
 		if( $title->exists() ) {

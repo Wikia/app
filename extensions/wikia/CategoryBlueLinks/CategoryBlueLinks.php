@@ -26,6 +26,16 @@ $wgExtensionCredits['other'][] = array(
 
 $wgHooks['LinkBegin'][] = 'efCategoryBlueLinks';
 
+/**
+ * @param $skin DummyLinker
+ * @param $target Title
+ * @param $text String
+ * @param $customAttribs array
+ * @param $query array
+ * @param $options string|array
+ * @param $ret
+ * @return bool
+ */
 function efCategoryBlueLinks( $skin, $target, &$text, &$customAttribs, &$query, &$options, &$ret ) {
 	// paranoia
 	if ( is_null( $target ) ) {

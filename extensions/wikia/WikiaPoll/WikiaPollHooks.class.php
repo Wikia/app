@@ -2,11 +2,13 @@
 
 class WikiaPollHooks {
 
-	private static $pollMarkers = array();
 	private static $alreadyAddedCSSJS = false;
 
 	/**
 	 * Use WikiaPollArticle class to render Poll namespace pages
+	 *
+	 * @param $title Title
+	 * @param $article Article
 	 */
 	public static function onArticleFromTitle(&$title, &$article) {
 		wfProfileIn(__METHOD__);
@@ -41,6 +43,8 @@ class WikiaPollHooks {
 
 	/**
 	 * Override the edit button to point to the special page instead of the normal editor
+	 *
+	 * @param $editPage EditPage
 	 */
 
 	public static function onAlternateEdit( $editPage ) {
@@ -122,6 +126,10 @@ class WikiaPollHooks {
 	/**
 	 * Return XML object for parser when RTE enabled
 	 * called from Parser::replaceInternalLinks2
+	 *
+	 * @param $poll WikiaPoll
+	 * @param $nt Title
+	 * @param $RTE_wikitextIdx
 	 */
 	public static function generateRTE($poll, $nt, $RTE_wikitextIdx) {
 		global $wgBlankImgUrl;
@@ -158,6 +166,8 @@ class WikiaPollHooks {
 
 	/**
 	 * Purge poll after an edit
+	 *
+	 * @param $article Article
 	 */
 	public static function onArticleSaveComplete(&$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
 		wfProfileIn(__METHOD__);

@@ -5,9 +5,13 @@ class UserProfilePageController extends WikiaController {
 	const AVATAR_MAX_SIZE = 512000;
 	const MAX_TOP_WIKIS = 4;
 
+	/**
+	 * @var $profilePage UserProfilePage
+	 */
 	protected $profilePage = null;
 	protected $allowedNamespaces = null;
 	protected $title = null;
+	protected $user = null;
 
 	protected $defaultAvatars = null;
 	protected $defaultAvatarPath = 'http://images.wikia.com/messaging/images/';
@@ -433,6 +437,7 @@ class UserProfilePageController extends WikiaController {
 		}
 
 		$this->app->wf->ProfileOut(__METHOD__);
+		return null;
 	}
 
 	/**
@@ -459,7 +464,7 @@ class UserProfilePageController extends WikiaController {
 		}
 
 		$errorMsg = $this->app->wf->msg('userprofilepage-interview-save-internal-error');
-		$result = array('success' => true, 'error' => $errorMsg);
+		//$result = array('success' => true, 'error' => $errorMsg);
 
 		if ($isAllowed && isset($data->source) && isset($data->file)) {
 			switch ($data->source) {
@@ -472,8 +477,8 @@ class UserProfilePageController extends WikiaController {
 					$user->setOption('avatar', $avatar);
 					break;
 				default:
-					$result = array('success' => false, 'error' => $errorMsg);
-					$errorMsg = $this->app->wf->msg('userprofilepage-interview-save-internal-error');
+					//$result = array('success' => false, 'error' => $errorMsg);
+					//$errorMsg = $this->app->wf->msg('userprofilepage-interview-save-internal-error');
 					break;
 			}
 
@@ -572,6 +577,11 @@ class UserProfilePageController extends WikiaController {
 		return;
 	}
 
+	/**
+	 * @param $fileName String
+	 * @param $fileuploader WikiaTempFilesUpload
+	 * @return bool|int|MediaTransformOutput
+	 */
 	protected function storeInTempImage($fileName, $fileuploader) {
 		$this->app->wf->ProfileIn(__METHOD__);
 
@@ -583,6 +593,9 @@ class UserProfilePageController extends WikiaController {
 		$title = Title::makeTitle(NS_FILE, $tempName);
 		$localRepo = RepoGroup::singleton()->getLocalRepo();
 
+		/**
+		 * @var $ioh ImageOperationsHelper
+		 */
 		$ioh = F::build('ImageOperationsHelper');
 
 		$out = $ioh->postProcessFile($fileName);
@@ -642,6 +655,9 @@ class UserProfilePageController extends WikiaController {
 	 * @brief get Local Path to avatar
 	 */
 	private function getLocalPath($user) {
+		/**
+		 * @var $oAvatarObj Masthead
+		 */
 		$oAvatarObj = F::build('Masthead', array($user), 'newFromUser');
 		return $oAvatarObj->getLocalPath();
 	}
@@ -649,10 +665,10 @@ class UserProfilePageController extends WikiaController {
 	/**
 	 * @brief Saves the file on the server
 	 *
-	 * @param Request $request    WebRequest instance
+	 * @param WebRequest $request    WebRequest instance
 	 * @param array $userData     user data array; contains: user id (key: userId), full page url (fullPageUrl), user name (username)
 	 * @param String $input       name of file input in form
-	 * @param $errorMsg           optional string containing details on what went wrong if there is an UPLOAD_ERR_EXTENSION
+	 * @param String $errorMsg           optional string containing details on what went wrong if there is an UPLOAD_ERR_EXTENSION
 	 *
 	 * @return Integer an error code of operation
 	 *
@@ -693,14 +709,14 @@ class UserProfilePageController extends WikiaController {
 	 *
 	 * @param String $url        the full URL of an image to download and apply as the user's Avatar i.e. user's facebook avatar
 	 * @param array $userData    user data array; contains: user id (key: userId), full page url (fullPageUrl), user name (username)
-	 * @param $errorMsg          optional string containing details on what went wrong if there is an UPLOAD_ERR_EXTENSION
+	 * @param String $errorMsg          optional string containing details on what went wrong if there is an UPLOAD_ERR_EXTENSION
 	 *
 	 * @return Integer error code of operation
 	 */
 	public function uploadByUrl($url, $userData, &$errorMsg = '') {
 		$this->app->wf->ProfileIn(__METHOD__);
 		//start by presuming there is no error
-		$errorNo = UPLOAD_ERR_OK;
+		//$errorNo = UPLOAD_ERR_OK;
 		$user = $userData['user'];
 		if (class_exists('Masthead')) {
 			/**
@@ -791,6 +807,9 @@ class UserProfilePageController extends WikiaController {
 
 		$user = F::build('User', array($userId), 'newFromId');
 
+		/**
+		 * @var $userIdentityBox UserIdentityBox
+		 */
 		$userIdentityBox = F::build('UserIdentityBox', array($this->app, $user, self::MAX_TOP_WIKIS));
 
 		$userData = $userIdentityBox->getFullData();
@@ -916,6 +935,9 @@ class UserProfilePageController extends WikiaController {
 		$this->setRequest( new WikiaRequest( $this->app->wg->Request->getValues() ) );
 		$user = $this->getUserFromTitle();
 		if ( $user instanceof User && $user->getId() > 0) {
+			/**
+			 * @var $userIdentityBox UserIdentityBox
+			 */
 			$userIdentityBox = F::build('UserIdentityBox', array( $this->app, $user, self::MAX_TOP_WIKIS ) );
 			$userData = $userIdentityBox->getFullData();
 			if ( is_array( $userData ) && array_key_exists( 'showZeroStates', $userData ) ) {
@@ -969,6 +991,9 @@ class UserProfilePageController extends WikiaController {
 		$this->setVal('result', $result);
 
 		if (!$user->isAnon()) {
+			/**
+			 * @var $fbConnectAPI FBConnectAPI
+			 */
 			$fbConnectAPI = F::build('FBConnectAPI');
 			$fbUserId = $fbConnectAPI->user();
 
@@ -977,6 +1002,9 @@ class UserProfilePageController extends WikiaController {
 				array('pic_big')
 			);
 
+			/**
+			 * @var $oAvatarObj Masthead
+			 */
 			$oAvatarObj = F::build('Masthead', array($user), 'newFromUser');
 			$tmpFile = '';
 			$oAvatarObj->uploadByUrlToTempFile($userFbData['pic_big'], $tmpFile);
@@ -1003,10 +1031,16 @@ class UserProfilePageController extends WikiaController {
 		$this->app->wf->ProfileIn(__METHOD__);
 
 		$user = $this->app->wg->User;
-		$result = array('success' => false);
+		//$result = array('success' => false);
 
 		if (!$user->isAnon()) {
+			/**
+			 * @var $fb_ids FBConnectDB
+			 */
 			$fb_ids = F::build('FBConnectDB', array($user), 'getFacebookIDs');
+			/**
+			 * @var $fbConnectAPI FBConnectAPI
+			 */
 			$fbConnectAPI = F::build('FBConnectAPI');
 
 			if (count($fb_ids) > 0) {
@@ -1177,6 +1211,8 @@ class UserProfilePageController extends WikiaController {
 	 * @brief remove User:: from back link
 	 *
 	 * @author Tomek Odrobny
+	 *
+	 * @param $title Title
 	 */
 
 	public function onSkinSubPageSubtitleAfterTitle($title, &$ptext) {

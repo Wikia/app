@@ -133,6 +133,7 @@ function SiteWideMessagesEmptyTalkPageWithMessages(&$out, &$text) {
 /**
  * Adds content of messages to the user talk page
  *
+ * @param $out OutputPage
  */
 function SiteWideMessagesGetUserMessages(&$out, $parseroutput) {
 	global $wgUser;
@@ -146,6 +147,7 @@ function SiteWideMessagesGetUserMessages(&$out, $parseroutput) {
 /**
  * Grab information about new messages and if they exist - add notification for specified wikis
  *
+ * @param $user User
  */
 function SiteWideMessagesUserNewTalks(&$user, &$talks) {
 	global $wgExternalSharedDB, $wgMemc, $wgUser;
