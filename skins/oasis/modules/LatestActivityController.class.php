@@ -8,6 +8,8 @@ class LatestActivityController extends WikiaController {
 	var $userName = '';
 	*/
 	
+	const CACHE_DURATION = 30; // in seconds
+	
 	public function init() {
 		$this->userName = '';
 	}
@@ -99,6 +101,10 @@ class LatestActivityController extends WikiaController {
 				$wgMemc->set($mKeyTimes, $this->changeList, 60);
 			}
 		}
+		
+		// Cache the latest activity call in varnish (and browser).
+		$this->response->setCacheValidity(self::CACHE_DURATION, self::CACHE_DURATION, array(WikiaResponse::CACHE_TARGET_BROWSER, WikiaResponse::CACHE_TARGET_VARNISH));
+		
 		wfProfileOut( __METHOD__ );
 	}
 
