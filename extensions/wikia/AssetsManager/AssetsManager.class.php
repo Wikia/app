@@ -21,6 +21,9 @@ class AssetsManager {
 	private $mCombine;
 	private $mMinify;
 	private $mCommonHost;
+	/**
+	 * @var $mAssetsConfig AssetsConfig
+	 */
 	private $mAssetsConfig;
 	private $mAllowedAssetExtensions = array( 'js', 'css', 'scss' );
 	private static $mInstance = false;
@@ -96,7 +99,7 @@ class AssetsManager {
 		}
 
 		$combineable = count( $assetName ) > 1;
-		$isGroup = $checkType = $checkGroup = null;
+		$checkType = $checkGroup = null;
 		$urls = array();
 
 		foreach ( $assetName as $asset ) {

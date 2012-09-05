@@ -46,7 +46,7 @@ abstract class WikiaSuperFactory {
 	 * get predefined instance of given class (useful for mocks or singletons)
 	 * @param string $className class name
 	 *
-	 * @return mixed the class instance or null if one has not been registered
+	 * @return JSMessages|mixed the class instance or null if one has not been registered
 	 */
 	public static function getInstance($className) {
 		if(isset(self::$constructors[$className]) && array_key_exists('INSTANCE', self::$constructors[$className])) {
