@@ -12,7 +12,20 @@ class WallMessage {
 	protected static $permissionsCache = array(); //permissions cache
 	protected static $wallURLCache = array(); 
 	protected static $topObjectCache;
-	protected $commentIndex;
+	/**
+	 * @var $commentsIndex CommentsIndex
+	 */
+	public $commentsIndex;
+	/**
+	 * @var $helper WallHelper
+	 */
+	public $helper;
+
+	/**
+	 * @var $mActionReason array
+	 */
+	public $mActionReason;
+
 	function __construct(Title $title, $articleComment = null) {
 		wfProfileIn(__METHOD__);
 		$this->title = $title;
@@ -58,6 +71,18 @@ class WallMessage {
 		return $title;
 	}
 
+	/**
+	 * @static
+	 * @param $body
+	 * @param $page
+	 * @param $user
+	 * @param string $metaTitle
+	 * @param bool|WallMessage $parent
+	 * @param array $relatedTopics
+	 * @param bool $notify
+	 * @param bool $notifyEveryone
+	 * @return WallMessage|Bool
+	 */
 	static public function buildNewMessageAndPost( $body, $page, $user, $metaTitle = '', $parent = false, $relatedTopics = array(), $notify = true, $notifyEveryone = false) {
 		wfProfileIn(__METHOD__);
 		if($page instanceof Title ) {
@@ -107,6 +132,9 @@ class WallMessage {
 			return false;
 		}
 		// after successful posting invalidate Wall cache
+		/**
+		 * @var $class WallMessage
+		 */
 		$class = F::build( 'WallMessage', array( $ac->getTitle(), $ac ) );
 		
 		if($parent === false) {//$db = DB_SLAVE
@@ -484,6 +512,9 @@ class WallMessage {
 		return $this->getArticleComment()->getArticleTitle()->getFullUrl();
 	}
 
+	/**
+	 * @return null|ArticleComment
+	 */
 	public function getTopParentObj(){
 		wfProfileIn(__METHOD__);
 		
@@ -1061,7 +1092,10 @@ class WallMessage {
 			return false;
 		}
 		
-		$msgParent = $this->getTopParentObj();		
+		$msgParent = $this->getTopParentObj();
+		/**
+		 * @var $quotedMsg WallMessage
+		 */
 		$quotedMsg = F::build('WallMessage', array($id, true), 'newFromId');
 
 		if(empty($quotedMsg)) {
@@ -1222,6 +1256,9 @@ class WallMessage {
 		return 0;
 	}
 
+	/**
+	 * @return null|ArticleComment
+	 */
 	protected function getArticleComment() {
 		if( empty($this->articleComment) ) {
 			$this->articleComment = ArticleComment::newFromTitle($this->title);

@@ -111,6 +111,10 @@ class WikiaPhotoGalleryHelper {
 
 	/**
 	 * Render gallery placeholder for RTE
+	 *
+	 * @param $gallery WikiaPhotoGallery
+	 * @param $width Integer
+	 * $param $height Integer
 	 */
 	static public function renderGalleryPlaceholder($gallery, $width, $height) {
 		wfProfileIn(__METHOD__);
@@ -205,6 +209,13 @@ class WikiaPhotoGalleryHelper {
 
 	/**
 	 * Return dimensions for thumbnail of given image to fit given area (handle "crop" attribute)
+	 *
+	 * @param $img File
+	 * @param $maxWidth Integer
+	 * @param $maxHeight Integer
+	 * @param $crop Bool
+	 *
+	 * @return array
 	 */
 	static public function getThumbnailDimensions($img, $maxWidth, $maxHeight, $crop = false) {
 		wfProfileIn(__METHOD__);
@@ -817,6 +828,9 @@ class WikiaPhotoGalleryHelper {
 		$ret = array();
 
 		// get list of images linked with given article
+		/**
+		 * @var $mediaQuery MediaQueryService
+		 */
 		$mediaQuery =  F::build( 'MediaQueryService' );
 		$images = $mediaQuery->getMediaFromArticle($title, MediaQueryService::MEDIA_TYPE_IMAGE, $limit);
 
@@ -1030,6 +1044,9 @@ class WikiaPhotoGalleryHelper {
 	/**
 	 * Hook handler
 	 * @author Marooned
+	 *
+	 * @param $parser Parser
+	 * @param $ig ImageGallery
 	 */
 	static public function beforeParserrenderImageGallery($parser, $ig) {
 		wfProfileIn(__METHOD__);

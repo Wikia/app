@@ -14,7 +14,7 @@
  * @method LoadExtensionMessages
  * @method RenderModule
  * @method RunHooks
- * @method FindFile
+ * @method LocalFile FindFile
  * @method ReplaceImageServer
  * @method BlankImgUrl
  * @method memcKey

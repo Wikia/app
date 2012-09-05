@@ -77,6 +77,8 @@ class WikiaPhotoGallery extends ImageGallery {
 
 	/**
 	 * List of external images - have to be different from mImages as it has different type of data
+	 *
+	 * @var $mExternalImages array
 	 */
 	private $mExternalImages = false;
 
@@ -512,6 +514,8 @@ class WikiaPhotoGallery extends ImageGallery {
 	public function toHTML() {
 		global $wgRTEParserEnabled;
 
+		$out = '';
+
 		wfProfileIn(__METHOD__);
 
 		// render as placeholder in RTE
@@ -593,6 +597,7 @@ class WikiaPhotoGallery extends ImageGallery {
 		$fileObjectsCache = array();
 		$heights = array();
 		$widths = array();
+		$thumbParams = array();
 
 		if( F::app()->checkSkin( 'wikiamobile' ) ) {
 			$html =  $this->renderWikiaMobileMediaGroup();
@@ -752,6 +757,10 @@ class WikiaPhotoGallery extends ImageGallery {
 				$image = array();
 
 				// let's properly scale image (don't make it bigger than original size)
+				/**
+				 * @var $imageTitle Title
+				 * @var $fileObject LocalFile
+				 */
 				$imageTitle = $imageData[0];
 				$fileObject = $fileObjectsCache[$index];
 
@@ -1034,6 +1043,9 @@ class WikiaPhotoGallery extends ImageGallery {
 		$index = 0;
 
 		foreach ($this->mImages as $p => $pair) {
+			/**
+			 * @var $nt Title
+			 */
 			$nt = $pair[0];
 			$text = $pair[1];
 			$link = $pair[2];
@@ -1287,6 +1299,11 @@ class WikiaPhotoGallery extends ImageGallery {
 		$sliderImageLimit = $orientation == 'mosaic' ? 5 : 4;
 
 		foreach ( $this->mImages as $p => $pair ) {
+			/**
+			 * @var $nt Title
+			 * @var $text String
+			 * @var $link String
+			 */
 			$nt = $pair[0];
 			$text = $pair[1];
 			$link = $pair[2];
@@ -1428,7 +1445,7 @@ class WikiaPhotoGallery extends ImageGallery {
 
 		$thumbSize = $this->mWidths;
 		$orientation = $this->getParam('orientation');
-		$ratio = WikiaPhotoGalleryHelper::getRatioFromOption($orientation);
+
 		if ($orientation == 'none') {
 			$this->enableCropping(false);
 		}
@@ -1817,6 +1834,8 @@ class WikiaPhotoGallery extends ImageGallery {
 	 * Get object for given image (and call hook)
 	 *
 	 * @param $title Title object of the image
+	 *
+	 * @return LocalFile|Bool
 	 */
 	private function getImage($nt) {
 		wfProfileIn(__METHOD__);
@@ -1837,10 +1856,9 @@ class WikiaPhotoGallery extends ImageGallery {
 	 */
 	private function renderWikiaMobileMediaGroup() {
 		$media = array();
-		$count = 0;
 		$result = '';
 
-		foreach( $this->mImages as $v=>$val ) {
+		foreach( $this->mImages as $val ) {
 			$item = wfFindFile( $val[0] );
 
 			if( !empty( $item ) ) {
