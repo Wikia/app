@@ -9,6 +9,7 @@ body {
 
 .WikiaBarWrapper {
 	bottom: 0;
+	height: 25px;
 	position: fixed;
 	width: 100%;
 	z-index: $zTop;
@@ -20,11 +21,31 @@ body {
 	  	text-align: center;
 		width: 100%;
 		@include box-shadow(0, 0, 10px, $color-page-shadow);
-		.buttons li {
-			display: inline-block;
-			background-color: #303030;
-		  	padding: 5px;
-		  	color: #fff;
+	  	.ad {
+			background-color: green;
+			float: left;
+			margin-right: 5px;
+			width: 320px;
+		}
+		.buttons {
+		  	float: left;
+			li {
+				background-color: #303030;
+				color: #fff;
+				display: inline-block;
+				padding: 5px;
+			}
+		}
+	  	.message {
+			background-color: blue;
+			float: right;
+			margin-left: 50px;
+			width: 420px;
+		}
+	  	.arrow {
+			background-color: red;
+			float: right;
+			width: 24px;
 		}
 	}
 }
