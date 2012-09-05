@@ -272,15 +272,12 @@ class WikiaMobileHooks extends WikiaObject{
 			$title = $article->getTitle();
 			$ns = $title->getNamespace();
 
-			/**
-			 * @var $out OutputPage
-			 */
 			$out = $this->wg->Out;
 
+			//Special treatment for some namespaces
 			switch( $ns ){
 				case NS_USER:
-
-					//if user exists display masthead
+					//if user exists display masthead and it is not subpage
 					//otherwise show 404 page
 					$user = User::newFromName( $title->getBaseText() );
 
@@ -288,23 +285,22 @@ class WikiaMobileHooks extends WikiaObject{
 						$this->wf->profileOut( __METHOD__ );
 						return true;
 					}
-
-				default:
-					$out->clearHTML();
-
-					//add styles that belongs only to 404 page
-					$styles = F::build( 'AssetsManager', array(), 'getInstance' )->getURL( array( 'wikiamobile_404_scss' ) );
-
-					//this is going to be additional call but at least it won't be loaded on every page
-					foreach ( $styles as $s ) {
-						$out->addStyle( $s  );
-					}
-
-					$out->addHTML( $this->app->renderView( 'WikiaMobileErrorService', 'pageNotFound' ) );
-
-					$this->wf->profileOut( __METHOD__ );
-					return false;
 			}
+
+			$out->clearHTML();
+
+			//add styles that belongs only to 404 page
+			$styles = F::build( 'AssetsManager', array(), 'getInstance' )->getURL( array( 'wikiamobile_404_scss' ) );
+
+			//this is going to be additional call but at least it won't be loaded on every page
+			foreach ( $styles as $s ) {
+				$out->addStyle( $s  );
+			}
+
+			$out->addHTML( $this->app->renderView( 'WikiaMobileErrorService', 'pageNotFound' ) );
+
+			$this->wf->profileOut( __METHOD__ );
+			return false;
 		}
 
 		$this->wf->profileOut( __METHOD__ );
