@@ -1,3 +1,13 @@
+<?
+/**
+ * @var $wg WikiaGlobalRegistry
+ * @var $wf WikiaFunctionWrapper
+ * @var $parseErrors array
+ * @var $wikiaMenuNodes array
+ * @var $wikiMenuNodes array
+ * @var $blacklist
+ */
+?>
 <nav class=cur1 id=wkNavMenu<? if ( !empty( $parseErrors ) ) :?> data-error="<?= implode( '; ', $parseErrors ) ;?>"<? endif ;?>>
 	<header>
 		<button id=wkNavBack class=wkBtn><?= $wf->MsgExt( 'wikiamobile-back', array( 'parseinline' ) );?></button>

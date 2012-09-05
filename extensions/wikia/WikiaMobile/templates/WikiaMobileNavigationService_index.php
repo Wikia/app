@@ -1,5 +1,15 @@
 <?php
-	$loggedIn = $wg->User->getId() > 0;
+/**
+ * @var $wg WikiaGlobalRegistry
+ * @var $wf WikiaFunctionWrapper
+ * @var $searchPage Bool
+ * @var $wordmarkType String
+ * @var $wordmarkUrl String
+ * @var $wikiName String
+ * @var $userName String
+ */
+
+$loggedIn = $wg->User->getId() > 0;
     $searchPage = $wg->Title->isSpecial( 'Search' );
 
 	if($loggedIn){
@@ -15,7 +25,6 @@
 			<div id=wkWrdMrk><?= $wikiName ;?></div>
 		<? endif ;?>
 		</a>
-
 	<a href=#wkNavSrh id=wkSrhTgl class=tgl></a>
 	<a href=#wkNavMenu id=wkNavTgl class=tgl></a>
 	<? if ( $wg->EnableUserLoginExt ) {
@@ -52,8 +61,8 @@
 		</header>
 	<? if ( $loggedIn ) :?>
 		<ul class=wkLst>
-			<li><a class=chg href="<?= AvatarService::getUrl( $userName ) ;?>"><?= $wf->Msg('wikiamobile-profile'); ?></a></li>
-			<li><a class=logout href="<?= str_replace( "$1", SpecialPage::getSafeTitleFor('UserLogout')->getPrefixedText() . '?returnto=' . $wg->Title->getPrefixedURL(), $wg->ArticlePath ) ;?>"><?= $wf->Msg('logout'); ?></a></li>
+			<li><a class=chg href="<?= AvatarService::getUrl( $userName ) ;?>"><?= $wf->Msg( 'wikiamobile-profile' ); ?></a></li>
+			<li><a class=logout href="<?= str_replace( "$1", SpecialPage::getSafeTitleFor( 'UserLogout' )->getPrefixedText() . '?returnto=' . $wg->Title->getPrefixedURL(), $wg->ArticlePath ) ;?>"><?= $wf->Msg('logout'); ?></a></li>
 		</ul>
 	<? endif; ?>
 	</div>
