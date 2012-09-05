@@ -42,17 +42,25 @@ class AchAwardingService {
 		wfProfileIn(__METHOD__);
 
 		global $wgExternalSharedDB;
+		global $wgEnableAchievementsStoreLocalData;
 
 		$this->mUser = $user;
 
 		if( self::canEarnBadges( $this->mUser ) ) {
 
-			$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
+			$where = array('badge_type_id' => $badge_type_id, 'user_id' => $this->mUser->getId());
+
+			if(empty($wgEnableAchievementsStoreLocalData)) {
+				$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
+				$where['wiki_id'] = $this->mCityId;
+			} else {
+				$dbr = wfGetDB(DB_SLAVE);
+			}
 
 			$badge = $dbr->selectField(
 				'ach_user_badges',
 				'badge_type_id',
-				array('badge_type_id' => $badge_type_id, 'user_id' => $this->mUser->getId(), 'wiki_id' => $this->mCityId),
+				$where,
 				__METHOD__);
 
 			if($badge === false) {
@@ -234,8 +242,15 @@ class AchAwardingService {
 			}
 
 			global $wgExternalSharedDB;
-			$dbw = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
-			$dbw->replace('ach_user_score', null, array('user_id' => $this->mUser->getId(), 'wiki_id' => $this->mCityId, 'score' => $score), __METHOD__);
+			global $wgEnableAchievementsStoreLocalData;
+			$where = array('user_id' => $this->mUser->getId(), 'score' => $score);
+			if(empty($wgEnableAchievementsStoreLocalData)) {
+				$dbw = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
+				$where['wiki_id'] = $this->mCityId;
+			} else {
+				$dbw = wfGetDB(DB_MASTER);
+			}
+			$dbw->replace('ach_user_score', null, $where, __METHOD__);
 			$dbw->commit();
 		}
 
@@ -247,11 +262,19 @@ class AchAwardingService {
 
 		if(count($this->mNewBadges) > 0) {
 			global $wgExternalSharedDB;
-			$dbw = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
+			global $wgEnableAchievementsStoreLocalData;
+
+			if(empty($wgEnableAchievementsStoreLocalData)) {
+				$dbw = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
+			} else {
+				$dbw = wfGetDB(DB_MASTER);
+			}
 			// Doing replace instead of insert prevents dupes in case of slave lag or other errors
 			foreach($this->mNewBadges as $key => $val) {
 				$this->mNewBadges[$key]['user_id'] = $this->mUser->getId();
-				$this->mNewBadges[$key]['wiki_id'] = $this->mCityId;
+				if(empty($wgEnableAchievementsStoreLocalData)) {
+					$this->mNewBadges[$key]['wiki_id'] = $this->mCityId;
+				}
 				$dbw->replace('ach_user_badges', null, $this->mNewBadges[$key], __METHOD__);
 			}
 
@@ -485,11 +508,19 @@ class AchAwardingService {
 
 		// BADGE_LUCKYEDIT
 		if($this->mRevision->getId() % 1000 == 0) {
-			$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
+			global $wgEnableAchievementsStoreLocalData;
+			$where = array('badge_type_id' => BADGE_LUCKYEDIT);
+			if(empty($wgEnableAchievementsStoreLocalData)) {
+				$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
+				$where['wiki_id'] = $this->mCityId;
+			} else {
+				$dbr = wfGetDB(DB_SLAVE);
+			}
+
 			$maxLap = $dbr->selectField(
 				'ach_user_badges',
 				'max(badge_lap) as cnt',
-				array('badge_type_id' => BADGE_LUCKYEDIT, 'wiki_id' => $this->mCityId),
+				$where,
 				__METHOD__);
 			$this->awardNotInTrackBadge(BADGE_LUCKYEDIT, $maxLap + 1);
 		}
@@ -638,13 +669,20 @@ class AchAwardingService {
 	private function loadUserBadges() {
 		wfProfileIn(__METHOD__);
 		global $wgExternalSharedDB;
+		global $wgEnableAchievementsStoreLocalData;
 
-		$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
+		$where = array('user_id' => $this->mUser->getId());
+		if(empty($wgEnableAchievementsStoreLocalData)) {
+			$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
+			$where['wiki_id'] = $this->mCityId;
+		} else {
+			$dbr = wfGetDB(DB_SLAVE);
+		}
 
 		$res = $dbr->select(
 			'ach_user_badges',
 			'badge_type_id, badge_lap',
-			array('user_id' => $this->mUser->getId(), 'wiki_id' => $this->mCityId),
+			$where,
 			__METHOD__,
 			array('ORDER BY' => 'badge_type_id, badge_lap')
 		);

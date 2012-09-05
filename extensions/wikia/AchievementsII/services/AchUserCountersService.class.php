@@ -11,10 +11,15 @@ class AchUserCountersService {
 		wfProfileIn(__METHOD__);
 
 		global $wgExternalSharedDB;
+		global $wgEnableAchievementsStoreLocalData;
 
 		$this->mUserId = $user_id;
 
-		$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
+		if(empty($wgEnableAchievementsStoreLocalData)) {
+			$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
+		} else {
+			$dbr = wfGetDB(DB_SLAVE);
+		}
 
 		$this->mCounters = $dbr->selectField('ach_user_counters', 'data', array('user_id' => $this->mUserId), __METHOD__);
 
@@ -49,7 +54,12 @@ class AchUserCountersService {
 	public function save() {
 		wfProfileIn(__METHOD__);
 		global $wgExternalSharedDB;
-		$dbw = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
+		global $wgEnableAchievementsStoreLocalData;
+		if(empty($wgEnableAchievementsStoreLocalData)) {
+			$dbw = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
+		} else {
+			$dbw = wfGetDB(DB_MASTER);
+		}
 		$dbw->replace('ach_user_counters', null, array('user_id' => $this->mUserId, 'data' => serialize($this->mCounters)), __METHOD__);
 		$dbw->commit();
 		wfProfileOut(__METHOD__);

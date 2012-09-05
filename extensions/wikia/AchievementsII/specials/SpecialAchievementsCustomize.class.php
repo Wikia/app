@@ -9,6 +9,7 @@ class SpecialAchievementsCustomize extends SpecialPage {
 	function execute($user_id) {
 		wfProfileIn(__METHOD__);
 		global $wgUser, $wgOut, $wgExtensionsPath, $wgResourceBasePath, $wgSupressPageTitle, $wgRequest, $wgJsMimeType, $wgCityId, $wgExternalSharedDB;
+		global $wgEnableAchievementsStoreLocalData;
 
 		// set basic headers
 		$this->setHeaders();
@@ -49,12 +50,19 @@ class SpecialAchievementsCustomize extends SpecialPage {
 				}
 			}
 
-			$dbw = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
+			$cond = array();
+			if(empty($wgEnableAchievementsStoreLocalData)) {
+				$dbw = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
+				$cond['wiki_id'] = $wgCityId;
+			} else {
+				$dbw = wfGetDB(DB_MASTER);
+			}
 
 			if(count($jsonObj->statusFlags)) {
 				foreach($jsonObj->statusFlags as $mKey => $mVal) {
 					$tokens = explode('_', $mKey);
-					$dbw->update('ach_custom_badges', array('enabled' => (int)$mVal), array('wiki_id' => $wgCityId, 'id' => $tokens[1]));
+					$where = array_merge(array('id' => $tokens[1]), $cond);
+					$dbw->update('ach_custom_badges', array('enabled' => (int)$mVal), $where);
 				}
 			}
 
