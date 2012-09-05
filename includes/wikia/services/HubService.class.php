@@ -125,6 +125,16 @@ class HubService extends Service {
 
 		return $categoryId;
 	}
+
+	/**
+	 * Check if current page is a Wikia hub
+	 *
+	 * @return bool
+	 */
+	public static function isCurrentPageAWikiaHub() {
+		return (self::isCorporatePage(F::app()->wg->CityId) && self::getHubIdForCurrentPage());
+	}
+
 	/**
 	 * Check if given city is Wikia corporate city
 	 */
