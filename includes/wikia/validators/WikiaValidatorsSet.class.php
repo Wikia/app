@@ -88,7 +88,7 @@ class WikiaValidatorsSet extends  WikiaValidatorListBase
 		return parent::isValid($value);
 	}
 
-	static public  function arrayWalk($val, $key, $obj) {
+	static public  function arrayWalk($val, $key, Array &$obj) {
 		array_push($obj, $val);
 	}
 
