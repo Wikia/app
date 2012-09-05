@@ -12,9 +12,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	exit( 1 ) ;
 }
 
-class ListusersAjax {	
-
-	function __construct() { /* not used */ }
+class ListusersAjax {
 
 	/**
 	 * ajax response for request params
@@ -22,9 +20,9 @@ class ListusersAjax {
 	 * @author      Piotr Molski <moli@wikia-inc.com>
 	 * @version     1.0.0
 	 * @param       Array   $list
-	 */	
+	 */
 	public static function axShowUsers ( ) {
-		global $wgRequest, $wgUser,	$wgCityId, $wgDBname, $wgContLang;
+		global $wgRequest, $wgUser,	$wgCityId;
 
 		wfProfileIn( __METHOD__ );
 
@@ -42,9 +40,9 @@ class ListusersAjax {
 		}
 
 		$result = array(
-			'sEcho' => intval($loop), 
-			'iTotalRecords' => 0, 
-			'iTotalDisplayRecords' => 0, 
+			'sEcho' => intval($loop),
+			'iTotalRecords' => 0,
+			'iTotalDisplayRecords' => 0,
 			'sColumns' => '',
 			'aaData' => array()
 		);
@@ -89,41 +87,35 @@ class ListusersAjax {
 						$last_edited  = "-";
 						if ( $data['last_edit_ts'] && $data['last_edit_page'] ) {
 							$last_edited  = Xml::openElement( 'div' );
-							$last_edited .= Xml::tags( 'span', 
-								array( 'style' => 'font-size:90%;' ), 
-								Xml::element('a', array( 'href' => $data['last_edit_page'] ), $data['last_edit_ts'] ) 
+							$last_edited .= Xml::tags( 'span',
+								array( 'style' => 'font-size:90%;' ),
+								Xml::element('a', array( 'href' => $data['last_edit_page'] ), $data['last_edit_ts'] )
 							);
-							$last_edited .= Xml::tags( 'span', 
-								array( 'style' => 'font-size:77%; padding-left:8px;' ), 
+							$last_edited .= Xml::tags( 'span',
+								array( 'style' => 'font-size:77%; padding-left:8px;' ),
 								Xml::element('a', array( 'href' => $data['last_edit_diff'] ), wfMsg('diff') )
 							);
 							$last_edited .= Xml::closeElement('div');
-						} 
+						}
 
 						$rows[] = array(
-							$username, //User name 
+							$username, //User name
 							$groups, //Groups
 							$edits,//Revisions (edits)
 							$last_logged,//Last logged in
 							$last_edited//Last edited
-						);						
+						);
 					}
 				}
 				$result['aaData'] = $rows;
 				#$result['nbr_records'] = ( isset( $records['cnt'] ) ) ? intval( $records['cnt'] ) : 0;
 				#$result['data'] = ( isset($records['data'] ) ) ? $records['data'] : '';
 			}
-		} 
+		}
 
 		#return '{"sEcho": 1, "iTotalRecords": 57, "iTotalDisplayRecords": 57, "sColumns": "platform,engine,browser,grade,version","aaData": [ ["-","Other browsers","All others","U","-"],["Win XP","Trident","AOL browser (AOL desktop)","A","6"],["OSX.2+","Gecko","Camino 1.0","A","1.8"],["OSX.3+","Gecko","Camino 1.5","A","1.8"],["Embedded devices","Misc","Dillo 0.8","X","-"],["Gnome","Gecko","Epiphany 2.20","A","1.8"],["Win 98+ / OSX.2+","Gecko","Firefox 1.0","A","1.7"],["Win 98+ / OSX.2+","Gecko","Firefox 1.5","A","1.8"],["Win 98+ / OSX.2+","Gecko","Firefox 2.0","A","1.8"],["Win 2k+ / OSX.3+","Gecko","Firefox 3.0","A","1.9"]] }';
 
 		wfProfileOut( __METHOD__ );
-
-		if (!function_exists('json_encode')) {
-			$oJson = new Services_JSON();
-			return $oJson->encode($result);
-		} else {
-			return json_encode($result);
-		}
+		return json_encode($result);
 	}
 }
