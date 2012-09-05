@@ -225,8 +225,8 @@ abstract class WikiaSkin extends SkinTemplate {
 		}
 	}
 
-	protected function beforeOutputPage() {
-		parent::beforeOutputPage();
-		$this->getOutput()->topScripts = $this->getTopScripts();
+	public function initPage( OutputPage $out ) {
+		$out->topScripts = $this->getTopScripts();
+		parent::initPage($out);
 	}
 }
