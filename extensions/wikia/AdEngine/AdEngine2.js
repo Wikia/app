@@ -129,7 +129,3 @@ var AdEngine2 = {
 		return this._cache_geo.country;
 	}
 };
-
-if (!window.wgInsideUnitTest) {
-	AdEngine2.init();
-}
