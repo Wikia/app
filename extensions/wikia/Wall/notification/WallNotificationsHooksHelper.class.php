@@ -4,11 +4,11 @@ class WallNotificationsHooksHelper {
 	/**
 	 * @brief Adds Wall Notifications script to Monobook pages
 	 *
-	 * @return true
+	 * @return boolean
 	 *
 	 * @author Liz Lee
 	 */
-	public function onSkinAfterBottomScripts($skin, $text) {
+	public function onSkinAfterBottomScripts(Skin $skin, &$text) {
 		$app = F::App();
 		$user = $app->wg->User;
 
