@@ -316,6 +316,8 @@ class PromoteImageReviewTask extends BatchTask {
 		}
 
 		if( !empty($data['city_images']) ) {
+            asort($data['city_images']);
+            $data['city_images'] = array_unique($data['city_images']);
 			$data['city_images'] = json_encode($data['city_images']);
 		}
 
