@@ -21,17 +21,14 @@ class UserOneTagStrategy extends UserTagsStrategyBase {
 	public function getUserTags() {
 		$this->app->wf->ProfileIn(__METHOD__);
 
-		$tags = array();
 		if( $this->isBlocked() ) {
-			//blocked user has only one tag displayed "Blocked"
-			$tags[] = $this->app->wf->Msg('user-identity-box-group-blocked');
+			$tag = $this->app->wf->Msg('user-identity-box-group-blocked');
+		} elseif( $this->isFounder() ) {
+			$tag = $this->app->wf->Msg('user-identity-box-group-founder');
 		} else {
-			if( $this->isFounder() ) {
-				$tags[] = $this->app->wf->Msg('user-identity-box-group-founder');
-			} else {
-				$this->getTagFromGroups($tags);
-			}
+			$tag = $this->getTagFromGroups();
 		}
+		$tags = !empty($tag) ? array($tag) : array();
 
 		$this->app->wf->ProfileOut(__METHOD__);
 		return $tags;
