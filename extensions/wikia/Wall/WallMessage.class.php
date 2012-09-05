@@ -12,6 +12,7 @@ class WallMessage {
 	protected static $permissionsCache = array(); //permissions cache
 	protected static $wallURLCache = array(); 
 	protected static $topObjectCache;
+	protected $commentIndex;
 	/**
 	 * @var $commentsIndex CommentsIndex
 	 */

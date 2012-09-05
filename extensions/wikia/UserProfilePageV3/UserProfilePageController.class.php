@@ -11,7 +11,6 @@ class UserProfilePageController extends WikiaController {
 	protected $profilePage = null;
 	protected $allowedNamespaces = null;
 	protected $title = null;
-	protected $user = null;
 
 	protected $defaultAvatars = null;
 	protected $defaultAvatarPath = 'http://images.wikia.com/messaging/images/';
@@ -464,7 +463,7 @@ class UserProfilePageController extends WikiaController {
 		}
 
 		$errorMsg = $this->app->wf->msg('userprofilepage-interview-save-internal-error');
-		//$result = array('success' => true, 'error' => $errorMsg);
+		$result = array('success' => true, 'error' => $errorMsg);
 
 		if ($isAllowed && isset($data->source) && isset($data->file)) {
 			switch ($data->source) {
@@ -477,8 +476,8 @@ class UserProfilePageController extends WikiaController {
 					$user->setOption('avatar', $avatar);
 					break;
 				default:
-					//$result = array('success' => false, 'error' => $errorMsg);
-					//$errorMsg = $this->app->wf->msg('userprofilepage-interview-save-internal-error');
+					$result = array('success' => false, 'error' => $errorMsg);
+					$errorMsg = $this->app->wf->msg('userprofilepage-interview-save-internal-error');
 					break;
 			}
 
