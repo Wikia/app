@@ -375,7 +375,7 @@ class WikiaFileHelper extends Service {
 	}
 
 	// truncate article list
-	public static function truncateArticleList( $articles, $limit = 2 )  {
+	public static function truncateArticleList( $articles, $limit = 2 ) {
 		$app = F::app();
 
 		$isTruncated = 0;
@@ -385,17 +385,15 @@ class WikiaFileHelper extends Service {
 				$article = str_replace( "_", " ", $article );
 
 				// Create truncated list
-				if ( count($truncatedList) <= $limit ) {
+				if ( count($truncatedList) < $limit ) {
 					if ( $article['ns'] == NS_MAIN
 						|| ( (!empty($app->wg->ContentNamespace)) && in_array($article['ns'], $app->wg->ContentNamespace) ) ) {
 							$truncatedList[] = $article;
 					}
+				} else {
+					$isTruncated = 1;
+					break;
 				}
-			}
-
-			if ( count($truncatedList) > $limit ) {
-				array_pop( $truncatedList );
-				$isTruncated = 1;
 			}
 		}
 

@@ -11,6 +11,7 @@ class LightboxController extends WikiaController {
 
 	const THUMBNAIL_WIDTH = 90;
 	const THUMBNAIL_HEIGHT = 55;
+	const POSTED_IN_ARTICLES = 7;
 	static $imageserving;
 
 	public function __construct() {
@@ -172,31 +173,17 @@ class LightboxController extends WikiaController {
 
 		$articles = $data['articles'];
 		$isPostedIn = false; // Bool to tell mustache to print "posted in" section
-		$smallerArticleList = array();
-		$articleListIsSmaller = 0;
 		$readableTitles = array();
 
 		if( !empty($articles) ) {
 			$isPostedIn = true;
-
 			foreach( $articles as $article ) {
 				$article = str_replace( "_", " ", $article );
 				$readableTitles[] = $article;
-
-				// Create truncated list for lightbox header
-				if ( count($smallerArticleList) < 3 ) {
-					if ( $article['ns'] == NS_MAIN
-						|| ( (!empty($this->wg->ContentNamespace)) && in_array($article['ns'], $this->wg->ContentNamespace) ) ) {
-							$smallerArticleList[] = $article;
-					}
-				}
-			}
-
-			if ( count($smallerArticleList) > 2 ) {
-				array_pop( $smallerArticleList );
-				$articleListIsSmaller = 1;
 			}
 		}
+
+		list( $smallerArticleList, $articleListIsSmaller ) = F::build( 'WikiaFileHelper', array( $articles, self::POSTED_IN_ARTICLES ), 'truncateArticleList' );
 
 		// file details
 		$this->views = $this->wf->Msg( 'lightbox-video-views', $this->wg->Lang->formatNum($data['videoViews']) );
