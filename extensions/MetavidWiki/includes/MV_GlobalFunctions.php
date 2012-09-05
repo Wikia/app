@@ -312,7 +312,7 @@ function mvAddGlobalJSVariables( $values ){
 	global $mvGlobalJSVariables;
 	$mvGlobalJSVariables = array_merge($mvGlobalJSVariables, $values); ;
 }
-function mvGlobalJSVariables( $vars ){
+function mvGlobalJSVariables( &$vars ){
 	global $mvGlobalJSVariables;
 	$vars = array_merge($vars, $mvGlobalJSVariables);
 	return true;

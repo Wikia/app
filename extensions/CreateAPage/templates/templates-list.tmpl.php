@@ -98,7 +98,7 @@ CreateAPage.toolbarButtons[<?php echo $tool_num ?>]['key'] = '<?php echo $single
 	}
 
 	global $wgHooks;
-	$wgHooks['MakeGlobalVariablesScript'][] = function( $vars ) {
+	$wgHooks['MakeGlobalVariablesScript'][] = function( &$vars ) {
 		global $wgCreateAPageElementsForJavaScript;
 		$vars['wgCreateAPageElementsForJavaScript'] = $wgCreateAPageElementsForJavaScript;
 		return true;

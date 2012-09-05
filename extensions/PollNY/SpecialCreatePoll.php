@@ -154,7 +154,7 @@ class CreatePoll extends SpecialPage {
 	 * @param $vars Array: array of pre-existing JS globals
 	 * @return Boolean: true
 	 */
-	public static function addJSGlobals( $vars ) {
+	public static function addJSGlobals( &$vars ) {
 		$vars['_POLL_CREATEPOLL_ERROR'] = wfMsg( 'poll-createpoll-error-nomore' );
 		$vars['_POLL_UPLOAD_NEW'] = wfMsg( 'poll-upload-new-image' );
 		$vars['_POLL_AT_LEAST'] = wfMsg( 'poll-atleast' );
