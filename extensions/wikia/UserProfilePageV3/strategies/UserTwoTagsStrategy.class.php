@@ -28,8 +28,10 @@ class UserTwoTagsStrategy extends UserTagsStrategyBase {
 			//blocked user has only one tag displayed "Blocked"
 			$tags[] = $this->app->wf->Msg('user-identity-box-group-blocked');
 		} else {
+			//TODO: assign values returned by modyfied getters
 			$this->getFirstTag($tags);
 
+			//TODO: extract method
 			if( $this->isFounder() ) {
 				$tags[] = $this->app->wf->Msg('user-identity-box-group-founder');
 			} else {
@@ -47,9 +49,10 @@ class UserTwoTagsStrategy extends UserTagsStrategyBase {
 	 * @param Array $tags should be an empty array
 	 * @return bool
 	 */
+	//TODO: make this into a 'get' returning value without changing argument
 	protected function getFirstTag(&$tags) {
 		if( $this->isUserInGroup(self::WIKIA_GROUP_STAFF_NAME) ) {
-			array_unshift($tags, $this->app->wf->Msg('user-identity-box-group-' .  self::WIKIA_GROUP_STAFF_NAME));
+			array_unshift($tags, $this->app->wf->Msg('user-identity-box-group-' . self::WIKIA_GROUP_STAFF_NAME));
 		} else if( $this->isUserInGroup(self::WIKIA_GROUP_AUTHENTICATED_NAME) ) {
 			array_unshift($tags, $this->app->wf->Msg('user-identity-box-group-' . self::WIKIA_GROUP_AUTHENTICATED_NAME));
 		}
