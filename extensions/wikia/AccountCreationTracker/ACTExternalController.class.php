@@ -59,7 +59,7 @@ class AccountCreationTrackerExternalController extends WikiaSpecialPageControlle
 		}
 		
 		$msg = '';
-		$act = AccountCreationTracker();
+		$act = new AccountCreationTracker();
 		$ret = $act->rollbackPage( $article, $user->getName(), 'mass rollback', $msg);
 		
 		$status = $ret ? 'OK' : 'ERROR';
