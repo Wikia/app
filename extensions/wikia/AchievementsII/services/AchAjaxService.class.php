@@ -48,7 +48,16 @@ class AchAjaxService {
 
 		// update a badge
 		if($ret['errors'] == null) {
-			$dbw = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
+			global $wgEnableAchievementsStoreLocalData;
+			$where = array(
+				'id' => $badge_type_id
+			);
+			if(empty($wgEnableAchievementsStoreLocalData)) {
+				$dbw = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
+				$where['wiki_id'] = $wgCityId;
+			} else {
+				$dbw = wfGetDB(DB_MASTER);
+			}
 			$dbw->update(
 				'ach_custom_badges',
 				array(
@@ -58,10 +67,7 @@ class AchAjaxService {
 					'hover_tracking_url' => $wgRequest->getText( 'hover_impression_pixel_url' ),
 					'click_tracking_url' => $wgRequest->getText( 'badge_redirect_url' )
 				),
-				array(
-					'id' => $badge_type_id,
-					'wiki_id' => $wgCityId
-				)
+				$where
 			);
 
 			// edit/create MW articles
@@ -137,22 +143,29 @@ class AchAjaxService {
 
 	public static function addPlatinumBadge() {
 		global $wgCityId, $wgRequest, $wgExternalSharedDB;
+		global $wgEnableAchievementsStoreLocalData;
 
 		$ret = array('errors' => null);
 		$isSponsored = $wgRequest->getBool( 'is_sponsored' );
-		
+
+		$where = array(
+			'type' => BADGE_TYPE_NOTINTRACKCOMMUNITYPLATINUM,
+			'sponsored' => $isSponsored,
+			'badge_tracking_url' => $wgRequest->getText( 'badge_impression_pixel_url' ),
+			'hover_tracking_url' => $wgRequest->getText( 'hover_impression_pixel_url' ),
+			'click_tracking_url' => $wgRequest->getText( 'badge_redirect_url' )
+		);
+
+		if(empty($wgEnableAchievementsStoreLocalData)) {
+			$dbw = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
+			$where['wiki_id'] = $wgCityId;
+		} else {
+			$dbw = wfGetDB(DB_MASTER);
+		}
 		// create a badge
-		$dbw = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
 		$dbw->insert(
 			'ach_custom_badges',
-			array(
-				'wiki_id' => $wgCityId,
-				'type' => BADGE_TYPE_NOTINTRACKCOMMUNITYPLATINUM,
-				'sponsored' => $isSponsored,
-				'badge_tracking_url' => $wgRequest->getText( 'badge_impression_pixel_url' ),
-				'hover_tracking_url' => $wgRequest->getText( 'hover_impression_pixel_url' ),
-				'click_tracking_url' => $wgRequest->getText( 'badge_redirect_url' )
-			)
+			$where
 		);
 
 		$badge_type_id = $dbw->insertId();

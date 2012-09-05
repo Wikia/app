@@ -40,11 +40,19 @@ class AchNotificationService {
 		wfProfileIn(__METHOD__);
 
 		global $wgCityId, $wgExternalSharedDB;
+		global $wgEnableAchievementsStoreLocalData;
+
 		$badge = null;
 		$badges = array();
 
-		$dbw = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
-		$res = $dbw->select('ach_user_badges', array('badge_type_id', 'badge_lap', 'badge_level'), array('wiki_id' => $wgCityId, 'user_id' => $userId, 'notified' => 0), __METHOD__);
+		$where = array('user_id' => $userId, 'notified' => 0);
+		if(empty($wgEnableAchievementsStoreLocalData)) {
+			$dbw = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
+			$where['wiki_id'] = $this->mCityId;
+		} else {
+			$dbw = wfGetDB(DB_MASTER);
+		}
+		$res = $dbw->select('ach_user_badges', array('badge_type_id', 'badge_lap', 'badge_level'), $where, __METHOD__);
 
 		while($row = $dbw->fetchObject($res)) {
 			if(!isset($badges[$row->badge_level])) {

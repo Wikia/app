@@ -5,12 +5,15 @@ class AchPlatinumService {
 	public static function getAwardedUserNames($badge_type_id, $master = false) {
 		wfProfileIn(__METHOD__);
 
-		global $wgCityId, $wgExternalSharedDB;
-
+		global $wgExternalSharedDB;
+		global $wgEnableAchievementsStoreLocalData;
 		$userNames = array();
 
-		$db = wfGetDB($master ? DB_MASTER : DB_SLAVE, array(), $wgExternalSharedDB);
-
+		if(empty($wgEnableAchievementsStoreLocalData)) {
+			$db = wfGetDB($master ? DB_MASTER : DB_SLAVE, array(), $wgExternalSharedDB);
+		} else {
+			$db = wfGetDB($master ? DB_MASTER : DB_SLAVE);
+		}
 		$res = $db->select(
 			'ach_user_badges',
 			array('user_id'),
@@ -46,39 +49,45 @@ class AchPlatinumService {
 		wfProfileIn(__METHOD__);
 
 		global $wgCityId, $wgExternalSharedDB;
+		global $wgEnableAchievementsStoreLocalData;
+		$badges = array();
 
-			$badges = array();
-
+		$where = array('type' => BADGE_TYPE_NOTINTRACKCOMMUNITYPLATINUM);
+		if(empty($wgEnableAchievementsStoreLocalData)) {
 			$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
+			$where['wiki_id'] = $wgCityId;
+		} else {
+			$dbr = wfGetDB(DB_SLAVE);
+		}
 
-			$res = $dbr->select(
-				'ach_custom_badges',
-				array('id', 'enabled', 'sponsored', 'badge_tracking_url', 'hover_tracking_url', 'click_tracking_url'),
-				array('wiki_id' => $wgCityId, 'type' => BADGE_TYPE_NOTINTRACKCOMMUNITYPLATINUM),
-				__METHOD__,
-				array('ORDER BY' => 'id DESC'));
+		$res = $dbr->select(
+			'ach_custom_badges',
+			array('id', 'enabled', 'sponsored', 'badge_tracking_url', 'hover_tracking_url', 'click_tracking_url'),
+			$where,
+			__METHOD__,
+			array('ORDER BY' => 'id DESC'));
 
-			while($row = $dbr->fetchObject($res)) {
-				$badge = array();
+		while($row = $dbr->fetchObject($res)) {
+			$badge = array();
 
-				$image = wfFindFile(AchConfig::getInstance()->getBadgePictureName($row->id));
+			$image = wfFindFile(AchConfig::getInstance()->getBadgePictureName($row->id));
 
-				if($image) {
-					$hoverImage = wfFindFile( AchConfig::getInstance()->getHoverPictureName( $row->id ) );
+			if($image) {
+				$hoverImage = wfFindFile( AchConfig::getInstance()->getHoverPictureName( $row->id ) );
 
-					$badge['type_id'] = $row->id;
-					$badge['enabled'] = $row->enabled;
-					$badge['thumb_url'] = $image->createThumb( 90 );
-					$badge['awarded_users'] = AchPlatinumService::getAwardedUserNames($row->id);
-					$badge[ 'is_sponsored' ] = $row->sponsored;
-					$badge[ 'badge_tracking_url' ] = $row->badge_tracking_url;
-					$badge[ 'hover_tracking_url' ] = $row->hover_tracking_url;
-					$badge[ 'click_tracking_url' ] = $row->click_tracking_url;
-					$badge[ 'hover_content_url' ] = ( is_object( $hoverImage ) ) ? wfReplaceImageServer( $hoverImage->getFullUrl() ) : null;
+				$badge['type_id'] = $row->id;
+				$badge['enabled'] = $row->enabled;
+				$badge['thumb_url'] = $image->createThumb( 90 );
+				$badge['awarded_users'] = AchPlatinumService::getAwardedUserNames($row->id);
+				$badge[ 'is_sponsored' ] = $row->sponsored;
+				$badge[ 'badge_tracking_url' ] = $row->badge_tracking_url;
+				$badge[ 'hover_tracking_url' ] = $row->hover_tracking_url;
+				$badge[ 'click_tracking_url' ] = $row->click_tracking_url;
+				$badge[ 'hover_content_url' ] = ( is_object( $hoverImage ) ) ? wfReplaceImageServer( $hoverImage->getFullUrl() ) : null;
 
-					$badges[] = $badge;
-				}
+				$badges[] = $badge;
 			}
+		}
 
 		wfProfileOut(__METHOD__);
 		return $badges;
@@ -87,41 +96,46 @@ class AchPlatinumService {
 	public static function getBadge( $badgeTypeId ) {
 		wfProfileIn(__METHOD__);
 
-		global $wgCityId, $wgExternalSharedDB;
+		global $wgExternalSharedDB;
+		global $wgEnableAchievementsStoreLocalData;
 
-			$badges = array();
+		$badges = array();
 
+		if(empty($wgEnableAchievementsStoreLocalData)) {
 			$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
+		} else {
+			$dbr = wfGetDB(DB_SLAVE);
+		}
 
-			$res = $dbr->select(
-				'ach_custom_badges',
-				array('id', 'enabled', 'sponsored', 'badge_tracking_url', 'hover_tracking_url', 'click_tracking_url'),
-				array('id' => $badgeTypeId ),
-				__METHOD__
-			);
+		$res = $dbr->select(
+			'ach_custom_badges',
+			array('id', 'enabled', 'sponsored', 'badge_tracking_url', 'hover_tracking_url', 'click_tracking_url'),
+			array('id' => $badgeTypeId ),
+			__METHOD__
+		);
 
-			if($row = $dbr->fetchObject($res)) {
-				$badge = array();
+		if($row = $dbr->fetchObject($res)) {
+			$badge = array();
 
-				$image = wfFindFile(AchConfig::getInstance()->getBadgePictureName($row->id));
+			$image = wfFindFile(AchConfig::getInstance()->getBadgePictureName($row->id));
 
-				if($image) {
-					$hoverImage = wfFindFile( AchConfig::getInstance()->getHoverPictureName( $row->id ) );
+			if($image) {
+				$hoverImage = wfFindFile( AchConfig::getInstance()->getHoverPictureName( $row->id ) );
 
-					$badge['type_id'] = $row->id;
-					$badge['enabled'] = $row->enabled;
-					$badge['thumb_url'] = $image->createThumb( 90 );
-					$badge['awarded_users'] = AchPlatinumService::getAwardedUserNames($row->id);
-					$badge[ 'is_sponsored' ] = $row->sponsored;
-					$badge[ 'badge_tracking_url' ] = $row->badge_tracking_url;
-					$badge[ 'hover_tracking_url' ] = $row->hover_tracking_url;
-					$badge[ 'click_tracking_url' ] = $row->click_tracking_url;
-					$badge[ 'hover_content_url' ] = ( is_object( $hoverImage ) ) ? wfReplaceImageServer( $hoverImage->getFullUrl() ) : null;
+				$badge['type_id'] = $row->id;
+				$badge['enabled'] = $row->enabled;
+				$badge['thumb_url'] = $image->createThumb( 90 );
+				$badge['awarded_users'] = AchPlatinumService::getAwardedUserNames($row->id);
+				$badge[ 'is_sponsored' ] = $row->sponsored;
+				$badge[ 'badge_tracking_url' ] = $row->badge_tracking_url;
+				$badge[ 'hover_tracking_url' ] = $row->hover_tracking_url;
+				$badge[ 'click_tracking_url' ] = $row->click_tracking_url;
+				$badge[ 'hover_content_url' ] = ( is_object( $hoverImage ) ) ? wfReplaceImageServer( $hoverImage->getFullUrl() ) : null;
 
-					wfProfileOut(__METHOD__);
-					return $badge;
-				}
+				wfProfileOut(__METHOD__);
+				return $badge;
 			}
+		}
 
 		wfProfileOut(__METHOD__);
 		return false;
