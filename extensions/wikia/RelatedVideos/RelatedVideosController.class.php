@@ -171,6 +171,7 @@ class RelatedVideosController extends WikiaController {
 	}
 
 	public function getAddVideoModal(){
+		$this->request->setVal( 'suppressSuggestions', false );
 		$this->forward( 'VideosController', 'getAddVideoModal' );
 	}
 
