@@ -33,7 +33,7 @@ $messages = array();$messages['en'] = array(
 	'article-comments-page-spacer' => '&#160...&#160',
 	'article-comments-delete-reason' => 'The parent article / parent comment has been deleted.',
 	'article-comments-empty-comment' => "You can't post an empty comment. <a href='$1'>Delete it instead?</a>",
-	
+
 	'wikiamobile-article-comments-header' => 'comments <span class=cnt id=wkArtCnt>$1</span>',
 	'wikiamobile-article-comments-more' => 'Load more',
 	'wikiamobile-article-comments-prev' => 'Load previous',
@@ -45,30 +45,27 @@ $messages = array();$messages['en'] = array(
 	'wikiamobile-article-comments-placeholder' => 'Post a comment',
 	'wikiamobile-article-comments-show' => 'Show',
 	'wikiamobile-article-comments-login-post' => 'Please log in to post a comment.',
-	
+
 	'enotif_subject_article_comment' => '$PAGEEDITOR has commented on "$PAGETITLE" on {{SITENAME}}',
-	'enotif_body_article_comment' => 'Dear $WATCHINGUSERNAME,
+	'enotif_body_article_comment' => 'Hi $WATCHINGUSERNAME,
 
-$PAGEEDITOR made a comment on "$PAGETITLE".
+There\'s a new comment at $PAGETITLE on {{SITENAME}}. Use this link to see all of the comments: $PAGETITLE_URL#WikiaArticleComments
 
-To see the comment thread, follow the link below:
-$PAGETITLE_URL
+- Wikia Community Support
 
-Please visit and edit often...
-
-Wikia',
-	'enotif_body_article_comment-HTML' => '<p>Dear $WATCHINGUSERNAME,
+___________________________________________
+* Find help and advice on Community Central: http://community.wikia.com
+* Want to receive fewer messages from us? You can unsubscribe or change your email preferences here: http://community.wikia.com/Special:Preferences',
+	'enotif_body_article_comment-HTML' => '<p>Hi $WATCHINGUSERNAME,
 <br /><br />
-$PAGEEDITOR made a comment on "$PAGETITLE".
+There\'s a new comment at $PAGETITLE on {{SITENAME}}. Use this link to see all of the comments: $PAGETITLE_URL#WikiaArticleComments
 <br /><br />
-To see the comment thread, follow this link: <a href="$PAGETITLE_URL">$PAGETITLE</a>
+- Wikia Community Support
 <br /><br />
-Please visit and edit often...
-<br /><br />
-Wikia
-<br /><hr />
+___________________________________________
 <ul>
-<li>Want to control which emails you receive? <a href="{{fullurl:Special:Preferences}}">Update your Preferences<a>.</li>
+<li>Find help and advice on Community Central: <a href="http://community.wikia.com">http://community.wikia.com</a><li>
+<li>Want to receive fewer messages from us? You can unsubscribe or change your email preferences here: <a href="http://community.wikia.com/Special:Preferences">http://community.wikia.com/Special:Preferences</a></li>
 </ul>
 </p>',
 );
