@@ -68,7 +68,6 @@
 				{
 					title: wgTitle,
 					format: 'html',
-					supressSuggestions: true
 				},
 				function( res ) {
 					if ( res.html ) {
