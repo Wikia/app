@@ -1,6 +1,9 @@
 /*
 @test-framework QUnit
-@test-require-asset extensions/wikia/AdEngine/AdEngine2.js
+ @test-require-asset resources/wikia/modules/querystring.js
+ @test-require-asset resources/wikia/modules/cookies.js
+ @test-require-asset resources/wikia/modules/log.js
+ @test-require-asset extensions/wikia/AdEngine/AdEngine2.js
 */
 module('AdEngine2');
 
