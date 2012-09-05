@@ -31,9 +31,24 @@ body {
 		  	float: left;
 			li {
 				background-color: #303030;
+				border: 1px solid #231f20;
 				color: #fff;
 				display: inline-block;
-				padding: 5px;
+			 	font-size: 11px;
+				height: 14px;
+				line-height: 13px;
+				margin: 1px 0;
+				padding: 4px 5px 3px 5px;
+			 	img {
+					background-image: url(/extensions/wikia/WikiaBar/images/wikiabarIcon.png); /* base64 */
+					float: left;
+					height: 14px;
+					margin-right: 5px;
+					width: 12px;
+				}
+				span {
+					float: right;
+				}
 			}
 		}
 	  	.message {

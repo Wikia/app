@@ -4,9 +4,18 @@
 		<div class="arrow">Arr</div>
 		<div class="message">message</div>
 		<ul class="buttons">
-			<li>temp_button_1</li>
-			<li>temp_button_2</li>
-			<li>temp_button_3</li>
+			<li>
+				<img src="<?= $wg->BlankImgUrl ?>" class="icon" />
+				<span>temp_button_1</span>
+			</li>
+			<li>
+				<img src="<?= $wg->BlankImgUrl ?>" class="icon" />
+				<span>temp_button_2</span>
+			</li>
+			<li>
+				<img src="<?= $wg->BlankImgUrl ?>" class="icon" />
+				<span>temp_button_3</span>
+			</li>
 		</ul>
 	</div>
 </div>
