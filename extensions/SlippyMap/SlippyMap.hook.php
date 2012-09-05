@@ -87,7 +87,7 @@ class SlippyMapHook {
 	/**
 	 * Hook to add JS variables to <head>
 	 */
-	public function jsVariables( $vars ) {
+	public function jsVariables( &$vars ) {
 		global $wgContLang, $wgSlippyMapAutoLoadMaps;
 
 		$vars['wgSlippyMapCode'] = wfMsg( 'slippymap_code' );

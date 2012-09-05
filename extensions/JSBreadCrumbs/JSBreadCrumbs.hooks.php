@@ -17,7 +17,7 @@ class JSBreadCrumbsHooks {
 	/**
 	 * MakeGlobalVariablesScript hook
 	 */
-	public static function addJSVars( $vars ) {
+	public static function addJSVars( &$vars ) {
 		global $wgJSBreadCrumbsSeparator, $wgJSBreadCrumbsCookiePath;
 		global $wgUser;
 
@@ -25,7 +25,7 @@ class JSBreadCrumbsHooks {
 			return true;
 		}
 
-		
+
 
 		// Allow localized separator to be overriden
 		if ( $wgJSBreadCrumbsSeparator !== '' ) {
@@ -49,7 +49,7 @@ class JSBreadCrumbsHooks {
 
 	/**
 	 * GetPreferences hook
-	 * 
+	 *
 	 * Add module-releated items to the preferences
 	 */
 	public static function addPreferences( $user, $defaultPreferences ) {

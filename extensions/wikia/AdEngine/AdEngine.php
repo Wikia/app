@@ -40,7 +40,7 @@ function wfAdEngineInit() {
 //$wgHooks["WikiaSkinTopScripts"][] = "wfAdEngineSetupJSVars";
 //$wgHooks['WikiaSkinTopScripts'][] = 'wfAdEngineSetupTopVars';
 
-function wfAdEngineSetupTopVars($vars) {
+function wfAdEngineSetupTopVars(&$vars) {
 	global $wgCityId, $wgEnableKruxTargeting, $wgNoExternals;
 
 	wfProfileIn(__METHOD__);

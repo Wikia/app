@@ -44,7 +44,7 @@ class QuizGameHooks {
 			$content_actions[$wgTitle->getNamespaceKey()] = array(
 				'class' => 'selected',
 				'text' => wfMsg( 'nstab-special' ),
-				'href' => $quiz->getFullURL( 'questionGameAction=renderPermalink&permalinkID=' . $wgQuizID ), 
+				'href' => $quiz->getFullURL( 'questionGameAction=renderPermalink&permalinkID=' . $wgQuizID ),
 			);
 		}
 
@@ -59,7 +59,7 @@ class QuizGameHooks {
 	 * @param $vars Array: array of pre-existing JS globals
 	 * @return Boolean: true
 	 */
-	public static function addJSGlobals( $vars ) {
+	public static function addJSGlobals( &$vars ) {
 		global $wgUserStatsPointValues;
 		$vars['__quiz_js_points_value__'] = $wgUserStatsPointValues['quiz_points'];
 		return true;

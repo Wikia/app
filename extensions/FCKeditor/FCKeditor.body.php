@@ -205,7 +205,7 @@ class FCKeditor_MediaWiki {
 	 * @param $vars Array: array of JS global variables
 	 * @return true
 	 */
-	public static function onMakeGlobalVariablesScript( $vars ){
+	public static function onMakeGlobalVariablesScript( Array &$vars ){
 		global $wgFCKEditorDir, $wgFCKEditorExtDir, $wgFCKEditorToolbarSet, $wgFCKEditorHeight;
 
 		$vars['wgFCKEditorDir'] = $wgFCKEditorDir;

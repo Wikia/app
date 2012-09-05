@@ -1731,7 +1731,7 @@ class PictureGameHome extends UnlistedSpecialPage {
 		// Anonymous functions are fun :) Too bad for you, PHP <= 5.2.x users!
 		// @see http://php.net/manual/en/functions.anonymous.php
 		global $wgHooks;
-		$wgHooks['MakeGlobalVariablesScript'][] = function( $vars ) {
+		$wgHooks['MakeGlobalVariablesScript'][] = function( &$vars ) {
 			// for the upload form (see PictureGame.js, the uploadComplete
 			// functions)
 			$vars['__picturegame_edit__'] = wfMsg( 'picturegame-js-edit' );
@@ -1818,7 +1818,7 @@ class PictureGameHome extends UnlistedSpecialPage {
 	 * @param $vars Array: array of pre-existing JavaScript globals
 	 * @return Boolean: true
 	 */
-	public static function addJSGlobals( $vars ) {
+	public static function addJSGlobals( &$vars ) {
 		$vars['__picturegame_edit__'] = wfMsg( 'picturegame-js-edit' );
 		$vars['__picturegame_error_title__'] = wfMsg( 'picturegame-js-error-title' );
 		$vars['__picturegame_upload_imgone__'] = wfMsg( 'picturegame-js-error-upload-imgone' );
