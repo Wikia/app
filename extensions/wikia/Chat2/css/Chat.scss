@@ -20,10 +20,6 @@
 @import "ChatSprite";
 @import "UserStatsMenu";
 
-._avatar {
-	border: 1px solid $color-page-border;
-}
-
 body {
 	background: $color-body;
 	color: $color-text;
@@ -139,7 +135,7 @@ a {
 		}
 	}
 	img {
-		@extend ._avatar;
+		border: 1px solid $color-page-border;
 		height: 22px;
 		position: absolute;
 		left: 5px;
@@ -178,7 +174,7 @@ a {
 		display: none;
 	}
 	.UserStatsMenu {
-		display: none;	
+		display: none;
 	}
 }
 
@@ -230,7 +226,7 @@ a {
 		}
 	}
 	.avatar {
-		@extend ._avatar;
+		border: 1px solid $color-page-border;
 		left: 15px;
 		position: absolute;
 		top: 20px;
@@ -263,7 +259,7 @@ a {
 		&:after {
 			content: " ~";
 		}
-	}	
+	}
 	.you {
 		background: $color-chat-you;
 	}
@@ -281,7 +277,7 @@ a {
 	   opacity: 0.3;
 	}
 	img {
-		@extend ._avatar;
+		border: 1px solid $color-page-border;
 		left: 7px;
 		position: absolute;
 	}
@@ -352,7 +348,7 @@ a {
 			&.closed {
 				border-color: transparent transparent transparent black;
 				left: 6px;
-				top: 17px;				
+				top: 17px;
 			}
 		}
 		.wordmark {
@@ -373,7 +369,7 @@ a {
 		background: $color-menu-highlight;
 		.splotch {
 			display:none;
-		}	
+		}
 	}
 	.unread {
 		.splotch {
