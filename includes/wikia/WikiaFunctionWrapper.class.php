@@ -14,6 +14,11 @@
  * @method LoadExtensionMessages
  * @method RenderModule
  * @method RunHooks
+ * @method FindFile
+ * @method ReplaceImageServer
+ * @method BlankImgUrl
+ * @method memcKey
+ * @method PaginateArray
  */
 class WikiaFunctionWrapper {
 

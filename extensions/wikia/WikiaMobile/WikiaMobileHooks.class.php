@@ -109,7 +109,7 @@ class WikiaMobileHooks extends WikiaObject{
 		$this->wf->profileIn( __METHOD__ );
 
 		//cleanup page output from unwanted stuff
-		if ( $this->app->checkSkin( 'wikiamobile', $parser->getOptions()->getSkin() ) ) {
+		if ( $this->app->checkSkin( 'wikiamobile' ) ) {
 			//remove inline styling to avoid weird results and optimize the output size
 			$text = preg_replace(
 				'/\s+(style|color|bgcolor|border|align|cellspacing|cellpadding|hspace|vspace)=(\'|")[^"\']*(\'|")/im',
@@ -140,7 +140,7 @@ class WikiaMobileHooks extends WikiaObject{
 	}
 
 	/**
-	 * @param $skin
+	 * @param $skin Skin
 	 * @param $level
 	 * @param $attribs
 	 * @param $anchor
@@ -197,9 +197,6 @@ class WikiaMobileHooks extends WikiaObject{
 
 		if ( $this->app->checkSkin( 'wikiamobile' ) ) {
 			//lets do some local caching
-			/**
-			 * @var $out OutputPage
-			 */
 			$out = $this->wg->Out;
 			$title = $categoryPage->getTitle();
 			$text = $title->getText();
@@ -242,9 +239,6 @@ class WikiaMobileHooks extends WikiaObject{
 		$title = $page->getTitle();
 
 		if ( $title->getNamespace() == NS_CATEGORY ) {
-			/**
-			 * @var $category Category
-			 */
 			$category = F::build( 'Category', array( $title ), 'newFromTitle' );
 
 			/**
