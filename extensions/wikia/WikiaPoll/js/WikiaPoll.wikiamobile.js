@@ -7,18 +7,6 @@ $(function(){
 			vote = $.msg('wikiapoll-vote'),
 			currentPoll,
 			modalWrapper,
-<<<<<<< HEAD
-=======
-			// send AJAX request to extension's ajax dispatcher in MW
-			ajax = function(method, params, callback) {
-				$.ajax({
-					url: wgScript + '?action=ajax&rs=WikiaPollAjax&method=' + method,
-					data: params,
-					dataType: 'json',
-					success: callback
-				});
-			},
->>>>>>> WikiaMobile: design tweaks to Polls, and removing hardcoded message (Sooorrrryyy Tor)
 			pollId,
 			buildContent = function(elm){
 				var answers = elm.getElementsByClassName('answer'),
