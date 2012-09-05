@@ -2966,11 +2966,16 @@ class User {
 	 * @todo Only rarely do all these fields need to be set!
 	 */
 	public function saveSettings() {
+		global $wgAuth;
+
 		$this->load();
 		if ( wfReadOnly() ) { return; }
 		if ( 0 == $this->mId ) { return; }
 
 		$this->mTouched = self::newTouchedTimestamp();
+		if ( !$wgAuth->allowSetLocalPassword() ) {
+			$this->mPassword = '';
+		}
 
 		/**
 		 * @author Krzysztof Krzyżaniak (eloy)
