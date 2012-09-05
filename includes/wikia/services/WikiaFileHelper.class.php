@@ -382,8 +382,6 @@ class WikiaFileHelper extends Service {
 		$truncatedList = array();
 		if( !empty($articles) ) {
 			foreach( $articles as $article ) {
-				$article = str_replace( "_", " ", $article );
-
 				// Create truncated list
 				if ( count($truncatedList) < $limit ) {
 					if ( $article['ns'] == NS_MAIN
