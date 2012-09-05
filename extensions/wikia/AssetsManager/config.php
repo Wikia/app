@@ -61,6 +61,7 @@ $config['oasis_ads_js'] = array(
 		'//extensions/wikia/AdEngine/AdProviderGamePro.js',
 		'//extensions/wikia/AdEngine/AdProviderEvolve.js',
 		'//extensions/wikia/AdEngine/AdProviderAdDriver2.js',
+		'//extensions/wikia/AdEngine/AdConfig2.js',
 		'//extensions/wikia/AdEngine/AdEngine2.js',
 		'//extensions/wikia/AdEngine/AdEngine2.run.js',
 		'//extensions/wikia/AdEngine/AdDriver.js',
