@@ -1,9 +1,14 @@
 <?php
 
 /**
- * Utility class to check types of pages
+ * Utility class to check types of currently rendered page
  */
 class WikiaPageType {
+	/**
+	 * Get type of page as string
+	 *
+	 * @return string one of home, search, forum, article or extra
+	 */
 	public static function getPageType() {
 		if (self::isMainPage()) {
 			$type = 'home';
@@ -20,6 +25,11 @@ class WikiaPageType {
 		return $type;
 	}
 
+	/**
+	 * Check if current page is main page
+	 *
+	 * @return bool
+	 */
 	public static function isMainPage() {
 		$title = F::app()->wg->Title;
 
@@ -33,6 +43,11 @@ class WikiaPageType {
 		return $isMainPage;
 	}
 
+	/**
+	 * Check if current page is search page
+	 *
+	 * @return bool
+	 */
 	public static function isSearch() {
 		$title = F::app()->wg->Title;
 
@@ -42,10 +57,20 @@ class WikiaPageType {
 			&& in_array(array_shift(SpecialPageFactory::resolveAlias($title->getDBkey())), $searchPageNames);
 	}
 
+	/**
+	 * Check if current page is forum page (Special:Forum or forum board or forum thread)
+	 *
+	 * @return bool
+	 */
 	public static function isForum() {
 		return (F::app()->wg->EnableForumExt && F::app()->wg->IsForum);
 	}
 
+	/**
+	 * Check if current page is extra page -- i.e. in one of namespaces defined in wgExtraNamespaces
+	 *
+	 * @return bool
+	 */
 	public static function isExtra() {
 		$title = F::app()->wg->Title;
 		$extraNamespaces = F::app()->wg->ExtraNamespaces;
@@ -53,6 +78,11 @@ class WikiaPageType {
 		return array_key_exists($title->getNamespace(), $extraNamespaces);
 	}
 
+	/**
+	 * Check if current page is content page -- i.e. in one of namespaces defined in wgContentNamespaces
+	 *
+	 * @return bool
+	 */
 	public static function isContentPage() {
 		$title = F::app()->wg->Title;
 
@@ -84,20 +114,12 @@ class WikiaPageType {
 		);
 	}
 
+	/**
+	 * Check if page is Wikia hub page, for example http://www.wikia.com/Video_games
+	 *
+	 * @return bool
+	 */
 	public static function isWikiaHub() {
-		// TODO: make this better in cooperation with HubService :-)
-		global $wgEnableWikiaHubsExt, $wgWikiaHubsPages, $wgTitle;
-
-		$titleParts = explode('/', $wgTitle->getDBkey());
-		$hub = false;
-		if(!empty($wgEnableWikiaHubsExt)) {
-			foreach($wgWikiaHubsPages as $hubGroup) {
-				if(in_array($titleParts[0], $hubGroup)) {
-					$hub = true;
-				}
-			}
-		}
-
-		return $hub;
+		return HubService::isCurrentPageAWikiaHub();
 	}
 }
