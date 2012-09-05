@@ -10,6 +10,10 @@ class WikiaMobileHooks extends WikiaObject{
 	 * @var null
 	 */
 	static private $mediaNsString = null;
+	/**
+	 * @var bool
+	 */
+	static private $displayErrorPage = false;
 
 	/**
 	 * @param $parser Parser
@@ -17,7 +21,7 @@ class WikiaMobileHooks extends WikiaObject{
 	 * @param $strip_state
 	 * @return bool
 	 */
-	public function onParserBeforeStrip( Parser &$parser, &$text, &$strip_state ) {
+	public function onParserBeforeStrip( &$parser, &$text, &$strip_state ) {
 		$this->wf->profileIn( __METHOD__ );
 
 		if ( empty( $this->wg->WikiaMobileDisableMediaGrouping ) && $this->app->checkSkin( 'wikiamobile' ) ) {
@@ -264,23 +268,34 @@ class WikiaMobileHooks extends WikiaObject{
 
 		if( $this->app->checkSkin( 'wikiamobile' )  ) {
 			$title = $article->getTitle();
-			$ns = $title->getNamespace();
 
-			$out = $this->wg->Out;
+			if( $title->getNamespace() == NS_USER ) {
+				//if user exists and it is not subpage display masthead
+				//otherwise show 404 page
+				$user = User::newFromName( $title->getBaseText() );
 
-			//Special treatment for some namespaces
-			switch( $ns ){
-				case NS_USER:
-					//if user exists display masthead and it is not subpage
-					//otherwise show 404 page
-					$user = User::newFromName( $title->getBaseText() );
-
-					if ( ($user instanceof User && $user->getId() > 0) && !$title->isSubpage()) {
-						$this->wf->profileOut( __METHOD__ );
-						return true;
-					}
+				if ( ( $user instanceof User && $user->getId() > 0) && !$title->isSubpage() ) {
+					$this->wf->profileOut( __METHOD__ );
+					return true;
+				}
 			}
 
+			self::$displayErrorPage = true;
+		}
+
+		$this->wf->profileOut( __METHOD__ );
+		return true;
+	}
+
+	/**
+	 * Used to display 404 page whenever $displayErrorPage flag is set to true by onBeforeDisplayNoArticleText hook
+	 *
+	 * @param $out OutputPage
+	 * @param $skin Skin
+	 * @return bool
+	 */
+	public function onBeforePageDisplay( &$out, &$skin ){
+		if( $this->app->checkSkin( 'wikiamobile', $skin ) && self::$displayErrorPage ) {
 			$out->clearHTML();
 
 			//add styles that belongs only to 404 page
@@ -292,12 +307,9 @@ class WikiaMobileHooks extends WikiaObject{
 			}
 
 			$out->addHTML( $this->app->renderView( 'WikiaMobileErrorService', 'pageNotFound' ) );
-
-			$this->wf->profileOut( __METHOD__ );
 			return false;
 		}
 
-		$this->wf->profileOut( __METHOD__ );
 		return true;
 	}
 

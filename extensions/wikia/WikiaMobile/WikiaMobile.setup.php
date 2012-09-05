@@ -101,6 +101,7 @@ $app->registerHook( 'ArticlePurge', 'WikiaMobileHooks', 'onArticlePurge' );
 
 //404 Pages
 $app->registerHook( 'BeforeDisplayNoArticleText', 'WikiaMobileHooks', 'onBeforeDisplayNoArticleText' );
+$app->registerHook( 'BeforePageDisplay', 'WikiaMobileHooks', 'onBeforePageDisplay' );
 
 
 /*

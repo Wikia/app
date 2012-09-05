@@ -68,7 +68,8 @@ class WikiaMobileStatsModel extends WikiaModel {
 	 *
 	 * @author Jakub Olek <jakubolek@wikia-inc.com>
 	 *
-	 * @return Array An array with the 0th element being the link to the page
+	 * @return array
+	 * An array with the 0th element being the link to the page
 	 * and the 1st element being the URL of the thumbnail
 	 */
 	public function getRandomPopularPage(){
@@ -131,9 +132,7 @@ class WikiaMobileStatsModel extends WikiaModel {
 		//then get the link to the main page and show no image
 		if ( $useMainPage ) {
 			$link = Title::newMainPage()->getLocalUrl();
-			//@TODO: Jakub, I think we agreed to use "mr pickle" as the fallback eventually?
-			//true I'll ask for an asset
-			$imgUrl = '';
+			$imgUrl = "/extensions/wikia/WikiaMobile/images/404_default.png";
 		}
 
 		$this->wf->profileOut( __METHOD__ );
