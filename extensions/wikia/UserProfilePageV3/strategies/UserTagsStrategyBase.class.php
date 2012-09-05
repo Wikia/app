@@ -2,6 +2,7 @@
 /**
  * @desc Base class for handling user "tags" logic in user masthead
  */
+//TODO: make class abstract
 class UserTagsStrategyBase {
 	protected $app;
 	/** @var User */
@@ -10,6 +11,7 @@ class UserTagsStrategyBase {
 	//instance cache for UserTwoTagsStrategy::getUsersEffectiveGroups()
 	protected $usersEffectiveGroups = null;
 
+	//TODO: reuse consts
 	const WIKIA_GROUP_STAFF_NAME = 'staff';
 	const WIKIA_GROUP_AUTHENTICATED_NAME = 'authenticated';
 	const WIKIA_GROUP_SYSOP_NAME = 'sysop';
@@ -113,16 +115,13 @@ class UserTagsStrategyBase {
 		$this->app->wf->ProfileIn(__METHOD__);
 
 		$result = 0; //means equal here
+		//TODO: use elseif
 		if (!isset($this->groupsRank[$group1]) && isset($this->groupsRank[$group2])) {
 			$result = 1;
+		} elseif (isset($this->groupsRank[$group1]) && !isset($this->groupsRank[$group2])) {
+			$result = -1;
 		} else {
-			if (isset($this->groupsRank[$group1]) && !isset($this->groupsRank[$group2])) {
-				$result = -1;
-			} else {
-				if (isset($this->groupsRank[$group1]) && isset($this->groupsRank[$group2])) {
-					$result = ($this->groupsRank[$group1] < $this->groupsRank[$group2]) ? 1 : -1;
-				}
-			}
+			$result = ($this->groupsRank[$group1] < $this->groupsRank[$group2]) ? 1 : -1;
 		}
 
 		$this->app->wf->ProfileOut(__METHOD__);
@@ -133,6 +132,7 @@ class UserTagsStrategyBase {
 	 * @param Array $tags
 	 * @return string
 	 */
+	//TODO: make this into a 'get' returning value without changing argument
 	protected function getTagFromGroups( &$tags ) {
 		$this->app->wf->ProfileIn(__METHOD__);
 
@@ -167,12 +167,11 @@ class UserTagsStrategyBase {
 		$userGroups = $this->getUsersEffectiveGroups();
 		usort($userGroups, array($this, 'sortUserGroups'));
 
+		//just a regular member by default
+		$group = false;
+
 		if (isset($userGroups[0]) && in_array($userGroups[0], array_keys($this->groupsRank))) {
-			$this->app->wf->ProfileOut(__METHOD__);
 			$group = $userGroups[0];
-		} else {
-			//just a member
-			$group = false;
 		}
 
 		$this->app->wf->ProfileOut(__METHOD__);
