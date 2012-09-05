@@ -11,6 +11,7 @@
  *
  *
  * @property User $User
+ * @property OutputPage $Out
  * @property Title $Title
  * @property WebRequest $Request
  * @property WebResponse $Response
