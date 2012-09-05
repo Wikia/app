@@ -13,7 +13,7 @@ var AdMeldAPIClient = {
 };
 
 // TODO: can we do it better?
-if (window.cscoreCat === 'Gaming' || window.cscoreCat === 'Video_Games') {
+if (window.cscoreCat === 'Gaming') {
 	AdMeldAPIClient.siteHub = 'gaming';
 } else if (window.cscoreCat === 'Entertainment') {
 	AdMeldAPIClient.siteHub = 'entertainment';
