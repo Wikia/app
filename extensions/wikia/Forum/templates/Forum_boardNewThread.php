@@ -31,13 +31,8 @@
 							</label>
 						<?php endif; ?>
 						
-						<button disabled="disabled" class="submit<?=
-							$loginToEditProtectedPage ? ' wall-require-login" data="' . $ajaxLoginUrl .'"' : '"'
-						?>><?= wfMsg('forum-discussion-post') ?></button>
-						
-						<button disabled="disabled" class="preview secondary<?=
-							$loginToEditProtectedPage ? ' wall-require-login" data="' . $ajaxLoginUrl .'"' : '"'
-						?>><?= wfMsg('wall-button-to-preview-comment') ?></button>
+						<button disabled="disabled" class="submit"><?= wfMsg('forum-discussion-post') ?></button>
+						<button disabled="disabled" class="preview secondary"><?= wfMsg('wall-button-to-preview-comment') ?></button>
 					</div>
 				</div>
 				<? if ($wg->EnableMiniEditorExtForWall): ?>

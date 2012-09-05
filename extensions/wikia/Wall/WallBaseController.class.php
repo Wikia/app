@@ -122,7 +122,6 @@ class WallBaseController extends ArticleCommentsController {
 	public function reply() {
 		$this->response->setVal('username', $this->wg->User->getName() );
 		$this->response->setVal('showReplyForm', $this->request->getVal('showReplyForm', true) );
-		$this->checkAndSetAnonsEditing();
 		$this->checkAndSetUserBlockedStatus( $this->helper->getUser() );
 	}
 	
@@ -568,24 +567,8 @@ class WallBaseController extends ArticleCommentsController {
 			$this->response->setVal('wall_message', $wall_message);
 		}
 
-		$this->checkAndSetAnonsEditing();
 		$this->checkAndSetUserBlockedStatus( $this->helper->getUser() );
 	}
-	
-	/**
-	 * @brief Checks if $wgDisableAnonymousEditing is not empty and and if user is logged-in
-	 * 
-	 * @desc If $wgDisableAnonymousEditing is not empty and user is not logged-in it sets two vars and passes it to the templates
-	 */
-	protected function checkAndSetAnonsEditing() {
-		if( !empty($this->app->wg->DisableAnonymousEditing) && !$this->app->wg->User->isLoggedIn() ) {
-			$this->response->setVal('loginToEditProtectedPage', true);
-			$this->response->setVal('ajaxLoginUrl', $this->app->wg->Title->getLocalUrl());
-		} else {
-			$this->response->setVal('loginToEditProtectedPage', false);
-		}
-	}
-	
 
 	protected function checkAndSetUserBlockedStatus($wallOwner = null) {
 		$user = $this->app->wg->User;
@@ -594,7 +577,6 @@ class WallBaseController extends ArticleCommentsController {
 			if(	!empty($wallOwner) &&
 				$wallOwner->getName() == $this->wg->User->getName() &&
 				!(empty($user->mAllowUsertalk)) ) {
-					
 				// user is blocked, but this is his wall and he was not blocked
 				// from user talk page	
 				$this->response->setVal('userBlocked', false);

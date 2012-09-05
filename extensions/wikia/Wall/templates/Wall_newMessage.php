@@ -32,13 +32,9 @@
 				<label class="highlight">
 					<input type="checkbox" class="notify-everyone" name="notifyEveryone" value="1" />
 				</label>
-				<button id="WallMessageSubmit" disabled="disabled"<?
-					if ( $loginToEditProtectedPage ): ?> class="wall-require-login" data="<?= $ajaxLoginUrl; ?>"<? endif;
-				?>><?= wfMsg('wall-button-to-submit-comment') ?></button>
+				<button id="WallMessageSubmit" disabled="disabled"><?= wfMsg('wall-button-to-submit-comment') ?></button>
 				
-				<button class="secondary" id="WallMessagePreview" disabled="disabled"<?
-					if ( $loginToEditProtectedPage ): ?> class="wall-require-login" data="<?= $ajaxLoginUrl; ?>"<? endif;
-				?>><?= wfMsg('wall-button-to-preview-comment') ?></button>
+				<button class="secondary" id="WallMessagePreview" disabled="disabled"><?= wfMsg('wall-button-to-preview-comment') ?></button>
 				
 				<div class="loadingAjax"></div>
 			</div>

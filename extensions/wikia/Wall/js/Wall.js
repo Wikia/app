@@ -582,7 +582,7 @@ var Wall = $.createClass(Object, {
 	handleEditTopics: function(e) {
 		e.preventDefault();
 		var rootMessageId = $(e.target).closest('.message').data('id');
-		if(!window.wgUserName) {
+		if(window.wgDisableAnonymousEditing  && !window.wgUserName) {
 			UserLoginModal.show({
 				callback: this.proxy(function() {
 					this.editTopics(rootMessageId);

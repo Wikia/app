@@ -62,13 +62,18 @@ Wall.MessageForm = $.createClass(Observable, {
 		return msg.find('.editarea').width();
 	},
 	
-	loginBeforeAction: function(action) {
-		UserLoginModal.show({
-			callback: this.proxy(function() {
-				action();
-				return true;
-			})
-		});
+	loginBeforeSubmit: function(action) {
+		if(window.wgDisableAnonymousEditing  && !window.wgUserName) {
+			UserLoginModal.show({
+				callback: this.proxy(function() {
+					action(false);
+					return true;
+				})
+			});
+		} else {
+			action(true);
+			return true;
+		}
 	},
 
 	reloadAfterLogin: function() {
