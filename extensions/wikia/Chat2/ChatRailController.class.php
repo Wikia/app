@@ -4,6 +4,8 @@ class ChatRailController extends WikiaController {
 	const MAX_CHATTERS = 6;
 	const AVATAR_SIZE = 50;
 	const CHAT_WINDOW_FEATURES = 'width=600,height=600,menubar=no,status=no,location=no,toolbar=no,scrollbars=no,resizable=yes';
+	
+	const CACHE_DURATION = 5; // in seconds
 
 	/**
 	 * Render placeholder. Content will be ajax-loaded for freshness
@@ -93,6 +95,10 @@ class ChatRailController extends WikiaController {
 
 			$this->chatters = $chatters;
 		}
+		
+		// Cache the entire call in varnish (and browser).
+		$this->response->setCacheValidity(self::CACHE_DURATION, self::CACHE_DURATION, array(WikiaResponse::CACHE_TARGET_BROWSER, WikiaResponse::CACHE_TARGET_VARNISH));
+		
 		wfProfileOut( __METHOD__ );
 	}
 
