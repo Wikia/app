@@ -114,11 +114,11 @@ class UserTagsStrategyBase {
 	protected function sortUserGroups($group1, $group2) {
 		$this->app->wf->ProfileIn(__METHOD__);
 
-		if (!isset($this->groupsRank[$group1]) && !isset($this->groupsRank[$group2])) {
+		if( !isset($this->groupsRank[$group1]) && !isset($this->groupsRank[$group2]) ) {
 			$result = 0;
-		} elseif (!isset($this->groupsRank[$group1]) && isset($this->groupsRank[$group2])) {
+		} elseif( !isset($this->groupsRank[$group1]) && isset($this->groupsRank[$group2]) ) {
 			$result = 1;
-		} elseif (!isset($this->groupsRank[$group2]) && isset($this->groupsRank[$group1])) {
+		} elseif( !isset($this->groupsRank[$group2]) && isset($this->groupsRank[$group1]) ) {
 			$result = -1;
 		} else {
 			$result = ($this->groupsRank[$group1] < $this->groupsRank[$group2]) ? 1 : -1;

@@ -572,6 +572,14 @@ class WikiaPhotoGalleryHelper {
 
 				$image['isFileTypeVideo'] = WikiaFileHelper::isFileTypeVideo($img);
 
+				//need to use parse() - see RT#44270
+				$image['caption'] = $wgParser->parse($image['caption'], $wgTitle, $parserOptions)->getText();
+
+				// remove <p> tags from parser caption
+				if (preg_match('/^<p>(.*)\n?<\/p>\n?$/sU', $image['caption'], $m)) {
+					$image['caption'] = $m[1];
+				}
+
 				if (empty($imageTitle) || empty($img)) {
 					continue;
 				}
@@ -580,17 +588,8 @@ class WikiaPhotoGalleryHelper {
 					// render thumbnail
 					$dimensions = self::getThumbnailDimensions($img, $maxWidth, $maxHeight, $crop);
 					$image['thumbnailBg'] = self::getThumbnailUrl($imageTitle, $dimensions['width'], $dimensions['height']);
-				}
-				else {
+				} else {
 					$image[ 'pageTitle' ] = $imageTitle->getText();
-				}
-
-				//need to use parse() - see RT#44270
-				$image['caption'] = $wgParser->parse($image['caption'], $wgTitle, $parserOptions)->getText();
-
-				// remove <p> tags from parser caption
-				if (preg_match('/^<p>(.*)\n?<\/p>\n?$/sU', $image['caption'], $m)) {
-					$image['caption'] = $m[1];
 				}
 			}
 
