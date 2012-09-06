@@ -104,7 +104,9 @@ var WikiaScriptLoader = {};
 			urls = [urls];
 
 		for(var x = 0, y = urls.length; x < y; x++){
-			output += '<scr' + 'ipt src="' + urls[x] + '" type="text/javascript"></scr' + 'ipt>';
+			if (typeof urls[x] === 'string') {
+				output += '<scr' + 'ipt src="' + urls[x] + '" type="text/javascript"></scr' + 'ipt>';
+			}
 		}
 		return output;
 	}
