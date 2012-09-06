@@ -25,16 +25,12 @@ class UserTwoTagsStrategy extends UserTagsStrategyBase {
 
 		$tags = array();
 		if( $this->isBlocked() ) {
-			//blocked user has only one tag displayed "Blocked"
+		//blocked user has only one tag displayed "Blocked"
 			$tags[] = $this->app->wf->Msg('user-identity-box-group-blocked');
 		} else {
-			$this->getFirstTag($tags);
-
-			if( $this->isFounder() ) {
-				$tags[] = $this->app->wf->Msg('user-identity-box-group-founder');
-			} else {
-				$this->getTagFromGroups($tags);
-			}
+			$firstTag = $this->getFirstTag();
+			$secondTag = $this->getSecondTag();
+			$tags = $this->getMergedTags($firstTag, $secondTag);
 		}
 
 		$this->app->wf->ProfileOut(__METHOD__);
@@ -42,16 +38,55 @@ class UserTwoTagsStrategy extends UserTagsStrategyBase {
 	}
 
 	/**
-	 * @desc Puts "Staff" or "Authenticated" at the begining in user's tags
+	 * @desc Returns "Staff", "Authenticated" or empty string for given user
 	 *
-	 * @param Array $tags should be an empty array
-	 * @return bool
+	 * @return string
 	 */
-	protected function getFirstTag(&$tags) {
+	protected function getFirstTag() {
+		$tag = '';
 		if( $this->isUserInGroup(self::WIKIA_GROUP_STAFF_NAME) ) {
-			array_unshift($tags, $this->app->wf->Msg('user-identity-box-group-' .  self::WIKIA_GROUP_STAFF_NAME));
+			$tag = $this->app->wf->Msg('user-identity-box-group-' . self::WIKIA_GROUP_STAFF_NAME);
 		} else if( $this->isUserInGroup(self::WIKIA_GROUP_AUTHENTICATED_NAME) ) {
-			array_unshift($tags, $this->app->wf->Msg('user-identity-box-group-' . self::WIKIA_GROUP_AUTHENTICATED_NAME));
+			$tag = $this->app->wf->Msg('user-identity-box-group-' . self::WIKIA_GROUP_AUTHENTICATED_NAME);
 		}
+
+		return $tag;
+	}
+
+	/**
+	 * @desc Returns "Founder" or one of other rights from $groupRank
+	 *
+	 * @return string
+	 */
+	protected function getSecondTag() {
+		if( $this->isFounder() ) {
+			$tag = $this->app->wf->Msg('user-identity-box-group-founder');
+		} else {
+			$tag = $this->getTagFromGroups();
+		}
+
+		return $tag;
+	}
+
+	/**
+	 * @desc Returns array with none, one or two string elements ;)
+	 *
+	 * @param string $first
+	 * @param string $second
+	 *
+	 * @return array
+	 */
+	protected function getMergedTags($first, $second) {
+		if( !empty($first) && !empty($second) ) {
+			$result = array($first, $second);
+		} elseif( empty($first) && !empty($second) ) {
+			$result = array($second);
+		} elseif( !empty($first) && empty($second) ) {
+			$result = array($first);
+		} else {
+			$result = array();
+		}
+
+		return $result;
 	}
 }

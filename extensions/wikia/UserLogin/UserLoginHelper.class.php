@@ -187,8 +187,8 @@ class UserLoginHelper extends WikiaModel {
 	 * @requestParam string returnUrl
 	 */
 	public function doRedirect(){
-		$returnUrl = $this->wg->request->getVal( 'returnto', '' );
-		$returnToQuery = $this->wg->request->getVal('returntoquery', '');
+		$returnUrl = $this->wg->Request->getVal( 'returnto', '' );
+		$returnToQuery = $this->wg->Request->getVal('returntoquery', '');
 		$titleObj = Title::newFromText( $returnUrl );
 		if ( (!$titleObj instanceof Title) ||
 				$titleObj->isSpecial("Userlogout") ||
@@ -201,7 +201,7 @@ class UserLoginHelper extends WikiaModel {
 
 	/**
 	 * send email
-	 * @param user object $user
+	 * @param User object $user
 	 * @param string $category
 	 * @param string $msgSubject
 	 * @param string $msgBody
@@ -209,7 +209,7 @@ class UserLoginHelper extends WikiaModel {
 	 * @param string $templateType
 	 * @return Status object
 	 */
-	public function sendEmail( $user, $category, $msgSubject, $msgBody, $emailParams, $templateType, $template='GeneralMail', $priority=0 ) {
+	public function sendEmail( User $user, $category, $msgSubject, $msgBody, $emailParams, $templateType, $template='GeneralMail', $priority=0 ) {
 		$subject = strtr( $this->wf->Msg($msgSubject), $emailParams );
 		$body = strtr( $this->wf->Msg($msgBody), $emailParams );
 		if ( empty($this->wg->EnableRichEmails) ) {
@@ -492,7 +492,11 @@ class UserLoginHelper extends WikiaModel {
 		}
 	}
 
-	public function onMakeGlobalVariablesScript(&$vars) {
+	/**
+	 * @param array $vars
+	 * @return bool
+	 */
+	public function onMakeGlobalVariablesScript(Array &$vars) {
 		$vars['wgEnableUserLoginExt'] = true;
 		return true;
 	}

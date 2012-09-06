@@ -6,11 +6,20 @@
  */
 
 abstract class TopListBase {
+	/**
+	 * @var $mTitle Title
+	 */
 	protected $mTitle = null;
+	/**
+	 * @var $mArticle Article
+	 */
 	protected $mArticle = null;
 	protected $mAuthor = null;
 	protected $mCreationTimestamp = null;
 	protected $mDataLoaded = false;
+	/**
+	 * @var $mEditor User
+	 */
 	protected $mEditor = null;
 
 	/**
@@ -156,7 +165,7 @@ abstract class TopListBase {
 	 *
 	 * Returns an Article instance for this list
 	 *
-	 * @return Aricle an Article instance, null if none is set for this list
+	 * @return Article|null an Article instance, null if none is set for this list
 	 */
 	public function getArticle() {
 		if( !empty( $this->mTitle ) && empty( $this->mArticle ) ) {

@@ -1545,7 +1545,7 @@ class SMWSQLStore2 extends SMWStore {
 		}
 
 		// update by internal SMW id --> make sure we get all objects in SMW
-		$db = wfGetDB( DB_SLAVE, 'smw' );
+		$db = wfGetDB( DB_MASTER, 'smw' );
 		$res = $db->select( 'smw_ids', array( 'smw_id', 'smw_title', 'smw_namespace', 'smw_iw', 'smw_subobject' ),
 				"smw_id >= $index AND smw_id < " . $db->addQuotes( $index + $count ), __METHOD__ );
 

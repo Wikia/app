@@ -6,6 +6,7 @@ import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 
@@ -45,8 +46,26 @@ public class DriverProvider {
 			setChromeProperties();
 			driver = new EventFiringWebDriver(new ChromeDriver()).register(listener);
 		}
+		else if (Global.BROWSER.equals("HTMLUNIT"))
+		{
+			driver = new EventFiringWebDriver(new HtmlUnitDriver()).register(listener);
+		}
 			
 		
+		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		return instance;
+	}
+	
+	/**
+	 * creating webdriver instance based on given browser string
+	 * @return
+	 * @author Karol Kujawiak
+	 */
+	public static DriverProvider getInstanceFF()
+	{
+		
+		PageObjectLogging listener = new PageObjectLogging();
+		driver = new EventFiringWebDriver(new FirefoxDriver()).register(listener);
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		return instance;
 	}

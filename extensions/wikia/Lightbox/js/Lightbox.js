@@ -260,7 +260,7 @@ var Lightbox = {
 						'line-height': (dimensions.imageContainerHeight - 3) + 'px' // -3 hack to remove white line in chrome
 					}).html(renderedResult);
 
-				//$(window).trigger('resize'); // firefox image loading hack (BugId:32477)
+				$(window).trigger('resize'); // firefox image loading hack (BugId:32477)
 
 				Lightbox.updateArrows();
 

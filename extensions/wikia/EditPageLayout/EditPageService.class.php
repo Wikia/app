@@ -11,7 +11,7 @@ class EditPageService extends Service {
 	private $mTitle;
 
 	function __construct(Title $title) {
-		$this->app = WF::build('App');
+		$this->app = F::app();
 		$this->mTitle = $title;
 	}
 
@@ -32,7 +32,7 @@ class EditPageService extends Service {
                 # (or is in MW namespace, because that has default content)
                 if( !in_array( $title->getNamespace(), array( NS_SPECIAL, NS_FILE ) ) ) {
                         $lang = ( $title->exists() ) ? $title->getPageLanguage() : $wgContLang;
-			
+
                         $realBodyAttribs['lang'] = $lang->getHtmlCode();
                         $realBodyAttribs['dir'] = $lang->getDir();
                        	$realBodyAttribs['class'] = 'mw-content-'.$lang->getDir();
@@ -99,12 +99,12 @@ class EditPageService extends Service {
 	}
 
 	protected function renderCategoryBoxFromParserOutput($parserOutput) {
-		global $wgOut, $wgUser;
+		global $wgOut;
 
 		wfProfileIn(__METHOD__);
 
 		$wgOut->addParserOutput($parserOutput);
-		$skin = $wgUser->getSkin();
+		$skin = RequestContext::getMain()->getSkin();
 		$categories = $wgOut->getCategories();
 
 		$catbox = '';
@@ -118,12 +118,12 @@ class EditPageService extends Service {
 	}
 
 	protected function renderInterlangBoxFromParserOutput($parserOutput) {
-		global $wgOut, $wgUser, $wgContLang, $wgHideInterlanguageLinks;
+		global $wgOut, $wgContLang, $wgHideInterlanguageLinks;
 
 		wfProfileIn(__METHOD__);
 
 		$wgOut->addParserOutput($parserOutput);
-		$skin = $wgUser->getSkin();
+		$skin = RequestContext::getMain()->getSkin();
 		$languagelinks= $wgOut->getLanguageLinks();
 
 		$language_urls = array();

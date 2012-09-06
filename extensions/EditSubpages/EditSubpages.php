@@ -27,7 +27,7 @@ $dir = dirname(__FILE__) . '/';
 $wgExtensionMessagesFiles['EditSubpages'] = $dir .'EditSubpages.i18n.php';
 $evEditSubpagesCache = array();
 
-function EditSubpages($title, $user, $action, $result) {
+function EditSubpages($title, $user, $action, &$result) {
 	global $evEditSubpagesCache;
 	$pagename = $title->getText(); //name of page w/ spaces, not underscores
 	if(!array_key_exists('pagename', $evEditSubpagesCache) || $pagename != $evEditSubpagesCache['pagename']) {
@@ -119,7 +119,7 @@ function EditSubpages($title, $user, $action, $result) {
 			}
 			if(!$found)
 				continue;
-				
+
 			if(!$flags['u'] && $evEditSubpagesCache['loggedin'])
 				return true;
 			//the page matches, now process it and let the software know whether or not to allow the user to do this action

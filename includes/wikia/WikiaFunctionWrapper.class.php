@@ -8,6 +8,20 @@
  * @author Adrian 'ADi' Wieczorek <adi(at)wikia-inc.com>
  * @author Owen Davis <owen(at)wikia-inc.com>
  * @author Wojciech Szela <wojtek(at)wikia-inc.com>
+ *
+ * //helpers for PHP Lint
+ * @method MsgForContent
+ * @method LoadExtensionMessages
+ * @method RenderModule
+ * @method RunHooks
+ * @method LocalFile FindFile
+ * @method ReplaceImageServer
+ * @method BlankImgUrl
+ * @method memcKey
+ * @method sharedMemcKey
+ * @method SharedMemcKey
+ * @method PaginateArray
+ * @method debug
  */
 class WikiaFunctionWrapper {
 
@@ -25,6 +39,11 @@ class WikiaFunctionWrapper {
 		}
 	}
 
+	/**
+	 * @param $funcName
+	 * @param $funcArgs
+	 * @return mixed
+	 */
 	public function __call( $funcName, $funcArgs ) {
 		$funcName = ( 'wf' . ucfirst( $funcName ) );
 		return $this->run( $funcName, $funcArgs );

@@ -45,8 +45,8 @@ class AdProviderLiftium extends AdProviderIframeFiller implements iAdProvider {
 		$options['kv_skin'] = RequestContext::getMain()->getSkin()->getSkinName();
 		$options['kv_user_lang'] = $wgLang->getCode();
 		$options['kv_cont_lang'] = $GLOBALS['wgLanguageCode'];
-		$options['kv_isMainPage'] = ArticleAdLogic::isMainPage();
-		$options['kv_page_type'] = ArticleAdLogic::getPageType();
+		$options['kv_isMainPage'] = WikiaPageType::isMainPage();
+		$options['kv_page_type'] = WikiaPageType::getPageType();
 		$options['geoUrl'] = "http://geoiplookup.wikia.com/";
 		if (!empty($wgDartCustomKeyValues)) {
 			$options['kv_dart'] = $wgDartCustomKeyValues;
@@ -103,7 +103,7 @@ class AdProviderLiftium extends AdProviderIframeFiller implements iAdProvider {
 		return self::$instance;
 	}
 
-        public function getAd($slotname, $slot, $params = null){
+	public function getAd($slotname, $slot, $params = null){
 		wfProfileIn(__METHOD__);
 
 		$out = $this->getSetupHtml();
@@ -111,30 +111,30 @@ class AdProviderLiftium extends AdProviderIframeFiller implements iAdProvider {
 			'LiftiumOptions.placement = "' . $slotname . '";' . "\n" . 
 			'LiftiumDART.placement = "' . $slotname . '";' . "\n";
 		if ($params['ghostwriter']) {
-		$out .= <<<EOT
-		var slot = document.getElementById('$slotname');
-		ghostwriter(
-			slot,
-			{
-				insertType: "append",
-				script: { text: "Liftium.callAd(\"{$slot['size']}\");" },
-				done: function() {
-					ghostwriter.flushloadhandlers();
+			$out .= <<<EOT
+			var slot = document.getElementById('$slotname');
+			ghostwriter(
+				slot,
+				{
+					insertType: "append",
+					script: { text: "Liftium.callAd(\"{$slot['size']}\");" },
+					done: function() {
+						ghostwriter.flushloadhandlers();
+					}
 				}
-			}
-		);
+			);
 EOT;
 		}
 		else {
 			$out .= 'Liftium.callAd("' . $slot['size'] . '");';
-		}	
-		
+		}
+
 		$out .= '</script>' . "\n";
-			
+
 		wfProfileOut(__METHOD__);
 
 		return $out;
-        }
+	}
 
 	protected function getIframeFillFunctionDefinition($function_name, $slotname, $slot) {
 		wfProfileIn(__METHOD__);
@@ -172,10 +172,10 @@ EOT;
                 return $out;
 	}
 
-        function getProviderValues($slot) {
+	function getProviderValues($slot) {
 		wfProfileIn(__METHOD__);
 
-                global $wgLanguageCode;
+		global $wgLanguageCode;
 		$out = "lang=" . preg_replace("/-.*/", "", $wgLanguageCode);
 
 		global $wgDartCustomKeyValues;
@@ -185,6 +185,6 @@ EOT;
 
 		wfProfileOut(__METHOD__);
 
-                return $out;
-        }
+		return $out;
+	}
 }

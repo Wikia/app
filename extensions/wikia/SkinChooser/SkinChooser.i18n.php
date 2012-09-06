@@ -50,10 +50,11 @@ $messages['de'] = array(
 
 /** Spanish (español)
  * @author Bola
+ * @author VegaDark
  */
 $messages['es'] = array(
 	'skinchooser-desc' => 'Permite a los usuarios escoger la apariencia del wiki en sus preferencias',
-	'new-look' => 'Nuevo Aspecto de Wikia',
+	'new-look' => 'Wikia',
 	'site-layout' => 'Diseños del sitio',
 );
 
@@ -69,13 +70,14 @@ $messages['fi'] = array(
 );
 
 /** French (français)
+ * @author Gomoko
  * @author Iketsi
  * @author Verdy p
  * @author Wyz
  */
 $messages['fr'] = array(
 	'skinchooser-desc' => 'Permet aux utilisateurs de choisir des habillages dans leurs préférences',
-	'new-look' => 'Nouvelle apparence de Wikia',
+	'new-look' => 'Wikia',
 	'site-layout' => 'Apparences du site',
 );
 
@@ -84,16 +86,17 @@ $messages['fr'] = array(
  */
 $messages['gl'] = array(
 	'skinchooser-desc' => 'Permite aos usuarios seleccionar a aparencia nas súas preferencias',
-	'new-look' => 'Nova aparencia de Wika',
+	'new-look' => 'Wikia',
 	'site-layout' => 'Deseño do sitio',
 );
 
 /** Hungarian (magyar)
+ * @author Dj
  * @author TK-999
  */
 $messages['hu'] = array(
 	'skinchooser-desc' => 'Lehetővé teszi a felhasználóknak a felület kiválasztását beállításaik között',
-	'new-look' => 'Új Wikia megjelenés',
+	'new-look' => 'Wikia',
 	'site-layout' => 'Oldalelrendezések',
 );
 
@@ -102,16 +105,17 @@ $messages['hu'] = array(
  */
 $messages['ia'] = array(
 	'skinchooser-desc' => 'Permitte al usatores de seliger apparentias in lor preferentias',
-	'new-look' => 'Nove aspecto de Wikia',
+	'new-look' => 'Wikia',
 	'site-layout' => 'Designos del sito',
 );
 
 /** Italian (italiano)
+ * @author Darth Kule
  * @author Pietrodn
  */
 $messages['it'] = array(
 	'skinchooser-desc' => 'Consente agli utenti di scegliere la skin nelle loro preferenze',
-	'new-look' => 'Nuovo look di Wikia',
+	'new-look' => 'Wikia',
 	'site-layout' => 'Layout del sito',
 );
 
@@ -121,7 +125,7 @@ $messages['it'] = array(
  */
 $messages['ja'] = array(
 	'skinchooser-desc' => '利用者の個人設定での外装選択を可能にします。',
-	'new-look' => 'ウィキアの新しい外装',
+	'new-look' => 'ウィキア',
 	'site-layout' => 'サイトの外装',
 );
 
@@ -130,7 +134,7 @@ $messages['ja'] = array(
  */
 $messages['mk'] = array(
 	'skinchooser-desc' => 'Им овозможува на корисниците да изберат руво во нагодувањата',
-	'new-look' => 'Нов изглед',
+	'new-look' => 'Викија',
 	'site-layout' => 'Распореди на страницата',
 );
 
@@ -139,7 +143,7 @@ $messages['mk'] = array(
  */
 $messages['ms'] = array(
 	'skinchooser-desc' => 'Membolehkan pengguna memilih kulit pada keutamaan mereka',
-	'new-look' => 'Wajah Baru Wikia',
+	'new-look' => 'Wikia',
 	'site-layout' => 'Tataletak Tapak',
 );
 
@@ -148,7 +152,7 @@ $messages['ms'] = array(
  */
 $messages['nb'] = array(
 	'skinchooser-desc' => 'Lar brukere velge utseende i innstillingene sine',
-	'new-look' => 'Wikias nye utseende',
+	'new-look' => 'Wikia',
 	'site-layout' => 'Sideoppsett',
 );
 
@@ -157,7 +161,7 @@ $messages['nb'] = array(
  */
 $messages['nl'] = array(
 	'skinchooser-desc' => 'Maakt het mogelijk voor gebruikers in hun voorkeuren een vormgeving te kiezen',
-	'new-look' => 'Nieuw Wikia-uiterlijk',
+	'new-look' => 'Wikia',
 	'site-layout' => 'Sitevormgevingen',
 );
 
@@ -167,7 +171,7 @@ $messages['nl'] = array(
  */
 $messages['pl'] = array(
 	'skinchooser-desc' => 'Pozwala użytkownikom wybrać skórkę w swoich preferencjach',
-	'new-look' => 'Wikia/Oasis',
+	'new-look' => 'Wikia',
 	'site-layout' => 'Skórka',
 );
 
@@ -177,7 +181,7 @@ $messages['pl'] = array(
  */
 $messages['pms'] = array(
 	'skinchooser-desc' => "A përmët a j'utent ëd serne dle pel ant ij Sò Gust",
-	'new-look' => 'Neuva presentassion ëd Wikia',
+	'new-look' => 'Wikia',
 	'site-layout' => 'Presentassion dël sit',
 );
 
@@ -205,7 +209,7 @@ $messages['pt-br'] = array(
  */
 $messages['ru'] = array(
 	'skinchooser-desc' => 'Позволяет участникам выбирать оболочки в личных настройках',
-	'new-look' => 'New Wikia Look',
+	'new-look' => 'Викия',
 	'site-layout' => 'Оформления сайта',
 );
 
@@ -218,10 +222,11 @@ $messages['sr-ec'] = array(
 
 /** Swedish (svenska)
  * @author Tobulos1
+ * @author WikiPhoenix
  */
 $messages['sv'] = array(
 	'skinchooser-desc' => 'Tillåter användare att välja utseende i deras inställningar',
-	'new-look' => 'Wikias nya utseende',
+	'new-look' => 'Wikia',
 	'site-layout' => 'Layouter för webbplatsen',
 );
 
@@ -230,7 +235,7 @@ $messages['sv'] = array(
  */
 $messages['tl'] = array(
 	'skinchooser-desc' => 'Nagpapahintulot sa mga tagagamit na pumili ng mga pabalat sa loob ng kanilang mga nais',
-	'new-look' => 'Bagong Wangis ng Wikia',
+	'new-look' => 'Wikia',
 	'site-layout' => 'Mga Latag ng Pook',
 );
 

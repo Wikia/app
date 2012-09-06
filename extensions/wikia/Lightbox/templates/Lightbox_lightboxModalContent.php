@@ -4,7 +4,7 @@
 	<!-- Keep media at the top so everything stacks on top of this, without the need to mess with z-index -->
 	<div class="media">
 	</div>
-	
+
 	<header class="LightboxHeader">
 	</header>
 
@@ -12,13 +12,13 @@
 		<span id="LightboxNext" class="arrow next"></span>
 		<span id="LightboxPrevious" class="arrow previous"></span>
 	</div>
-	
+
 	<? if($showAds) { ?>
 		<div id="MODAL_INTERSTITIAL" class="wikia-ad noprint modal_interstitial">
 			<?= AdEngine::getInstance()->getAd('MODAL_INTERSTITIAL', array('ghostwriter'=>true)); ?>
 		</div>
 	<? } ?>
-	
+
 	<div id="LightboxCarousel" class="LightboxCarousel">
 		<div id="LightboxCarouselInner" class="LightboxCarouselInner">
 			<div class="content">
@@ -34,7 +34,7 @@
 	 					</ul>
 	 				</div>
 	 			</div>
-			</div>		
+			</div>
 		</div>
 		<? if($showAds) { ?>
 			<div id="MODAL_RECTANGLE" class="wikia-ad noprint">
@@ -42,21 +42,21 @@
 			</div>
 		<? } ?>
 	</div>
-	
+
 	<div class="more-info">
 	</div>
-	
+
 	<div class="share">
 	</div>
 
 	<script id="LightboxPhotoTemplate" class="template" type="text/template">
 		<img src="{{imageUrl}}" height="{{imageHeight}}" >
 	</script>
-	
+
 	<script id="LightboxVideoTemplate" class="template" type="text/template">
 		{{{videoEmbedCode}}}
 	</script>
-	
+
 	<script id="LightboxHeaderTemplate" class="template" type="text/template">
 		<button class="share-button secondary"><?= wfMsg('lightbox-header-share-button') ?></button>
 		<button class="more-info-button secondary"><?= wfMsg('lightbox-header-more-info-button') ?></button>
@@ -69,12 +69,12 @@
 			<?= wfMsg('lightbox-header-added-by', '<a href="{{userPageUrl}}" target="_blank">{{userName}}</a>') ?>
 			{{#isPostedIn}}
 				<span class="posted-in">
-					<?= wfMsg('lightbox-header-posted-in', '{{#smallerArticleList}}<span class="posted-in-article"><a href="{{url}}" target="_blank">{{title}}</a></span>{{/smallerArticleList}}{{#articleListIsSmaller}}&hellip;{{/articleListIsSmaller}}') ?>
+					<?= wfMsg('lightbox-header-posted-in', '{{#smallerArticleList}}<span class="posted-in-article"><a href="{{url}}" target="_blank">{{titleText}}</a></span>{{/smallerArticleList}}{{#articleListIsSmaller}}&hellip;{{/articleListIsSmaller}}') ?>
 				</span>
 			{{/isPostedIn}}
 		</div>
 	</script>
-	
+
 	<script id="LightboxHeaderAdTemplate" class="template" type="text/template">
 		<h1><?= wfMsg('Fast-adv') ?></h1>
 	</script>
@@ -87,17 +87,17 @@
 			</li>
 		{{/thumbs}}
 	</script>
-	
+
 	<script id="LightboxCarouselMore" type="text/template">
 		<li class="more-items disabled">
 			<p class="subtle">{{{text}}}</p>
 		</li>
 	</script>
-	
+
 	<script id="LightboxCarouselProgressTemplate" type="text/template">
 		<?= wfMsg('lightbox-carousel-progress', array("{{idx1}}", "{{idx2}}", "{{{total}}}")); ?>
 	</script>
-	
+
 	<script id="LightboxMoreInfoTemplate" type="text/template">
 		<button class="more-info-close secondary"><?= wfMsg('lightbox-more-info-back-button') ?></button>
 		<div class="content">
@@ -116,7 +116,7 @@
 				<h2><?= wfMsg('lightbox-more-info-filelinks-heading') ?></h2>
 				<ul>
 				{{#articles}}
-					<li><a href="{{url}}" target="_blank">{{title}}</a></li>
+					<li><a href="{{url}}" target="_blank">{{titleText}}</a></li>
 				{{/articles}}
 				</ul>
 			</div>
@@ -133,7 +133,7 @@
 			</div>
 			<div class="share-form">
 				<h1><a href="{{fileUrl}}" target="_blank">{{fileTitle}}</a></h1>
-				<?php 
+				<?php
 					$form = array (
 					    'inputs' => array (
 					        array(
@@ -148,7 +148,7 @@
 					    )
 					);
 				?>
-				<?= wfRenderModule('WikiaForm', 'Index', array('form' => $form)); ?>
+				<?= F::app()->renderView('WikiaForm', 'Index', array('form' => $form)); ?>
 				<div class="social-links">
 					<ul>
 						{{#networks}}
@@ -159,7 +159,7 @@
 			</div>
 			<div class="bottom-forms">
 				<div class="more-links">
-					<?php 
+					<?php
 						$formHeader = array (
 						    'inputs' => array (
 						    	array(
@@ -169,7 +169,7 @@
 						    ),
 						);
 					?>
-					<?php 
+					<?php
 						$formEmbed = array (
 							'inputs' => array (
 						        array(
@@ -181,7 +181,7 @@
 						    ),
 						);
 					?>
-					<?php 
+					<?php
 						$formFilePage = array (
 							'inputs' => array (
 						        array(
@@ -193,14 +193,14 @@
 						    )
 						);
 					?>
-					<?= wfRenderModule('WikiaForm', 'Index', array('form' => $formHeader)); ?>
+					<?= F::app()->renderView('WikiaForm', 'Index', array('form' => $formHeader)); ?>
 					{{#embedMarkup}}
-						<?= wfRenderModule('WikiaForm', 'Index', array('form' => $formEmbed)); ?>
+						<?= F::app()->renderView('WikiaForm', 'Index', array('form' => $formEmbed)); ?>
 					{{/embedMarkup}}
-					<?= wfRenderModule('WikiaForm', 'Index', array('form' => $formFilePage)); ?>
+					<?= F::app()->renderView('WikiaForm', 'Index', array('form' => $formFilePage)); ?>
 				</div>
 				<div class="email">
-					<?php 
+					<?php
 						$form = array (
 							'id' => 'shareEmailForm',
 						    'inputs' => array (
@@ -226,7 +226,7 @@
 							)
 						);
 					?>
-					<?= wfRenderModule('WikiaForm', 'Index', array('form' => $form)); ?>
+					<?= F::app()->renderView('WikiaForm', 'Index', array('form' => $form)); ?>
 				</div>
 			</div>
 		</div>

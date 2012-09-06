@@ -599,7 +599,7 @@ $messages['ca'] = array(
 	'createbloglistingpage' => 'Crear una llista de blocs',
 	'create-blog-spam' => 'Sembla spam',
 	'create-blog-cant-edit' => "No s'ha pogut realitzar l'edició",
-	'create-blog-post-category' => 'Entrades',
+	'create-blog-post-category' => 'Entrades de bloc',
 	'create-blog-post-category-body' => 'Aquesta llista de blocs es genera automàticament',
 	'create-blog-post-category-log' => "Categoria d'articles per entrades de bloc",
 	'create-blog-post-recent-listing' => 'Entrades recents',
@@ -609,9 +609,29 @@ $messages['ca'] = array(
 	'create-blog-post-title-edit' => "Editar l'entrada de bloc",
 	'create-blog-form-title' => 'Què és una entrada de bloc?',
 	'create-blog-form-post-text' => 'Text de bloc',
-	'right-blog-comments-toggle' => 'Activar comentaris en articles del bloc',
+	'blog-added' => 'afegit',
+	'blog-edited' => 'editat',
+	'blog-page' => 'Bloc',
+	'blog-zero-comments' => 'Encara no hi ha comentaris!',
+	'blog-comment-post' => 'Publicar comentari',
+	'blog-comments' => 'Comentaris',
+	'blog-rc-comments' => 'Comentaris del bloc',
+	'blog-comments-new' => 'Nou comentari al bloc',
+	'blog-comments-save' => 'Guardar comentari al bloc',
+	'blog-comment-delete' => 'eliminar',
+	'blog-comment-hide' => 'amagar',
+	'blog-comment-unhide' => 'mostrar',
+	'blog-comment-history' => 'historial',
+	'blog-comment-edit' => 'editar',
+	'blog-comment-error' => "El comentari no s'ha pogut guardar",
+	'blog-comment-cannot-add' => 'No pots afegir un comentari al bloc.',
+	'blogs-comment-hidden' => 'Comentari amagat',
+	'right-blog-comments-toggle' => 'Activar comentaris a articles del bloc',
 	'right-blog-comments-delete' => 'Esborrar comentaris en articles de bloc',
 	'right-blog-articles-move' => 'Moure articles del bloc',
+	'blogs-recent-url-text' => 'Entrades de Bloc recents',
+	'blog-comment-sending' => 'Enviant...',
+	'blog-by' => '$1 per $2',
 );
 
 /** Sorani Kurdish (کوردی) */
@@ -670,6 +690,7 @@ $messages['cs'] = array(
 /** German (Deutsch)
  * @author Kghbln
  * @author LWChris
+ * @author Metalhead64
  * @author PtM
  * @author The Evil IP address
  */
@@ -786,6 +807,8 @@ $messages['de'] = array(
 	'blog-movepage-badtitle' => 'Ungültiger Blogeintrags-Titel.',
 	'blog-comment-sending' => 'Sende...',
 	'blog-by' => '$1 von $2',
+	'blogs-searchprofile' => 'Blogs',
+	'blogs-searchprofile-tooltip' => 'In Blogartikeln und Bloglisten suchen',
 );
 
 /** German (formal address) (‪Deutsch (Sie-Form)‬)
@@ -984,6 +1007,8 @@ Crea páginas de listas de blogs para categorías como "Obama", "Humor", o varia
 	'blog-movepage-badtitle' => 'Título de post del blog inválido',
 	'blog-comment-sending' => 'Enviando...',
 	'blog-by' => '$1 por $2',
+	'blogs-searchprofile' => 'Blogs',
+	'blogs-searchprofile-tooltip' => 'Buscar en artículos de blog y listas de blog',
 );
 
 /** Basque (euskara)
@@ -1187,6 +1212,7 @@ Luo blogilistalle sivuja luokkiin, kuten "Barack Obama", "Fanifiktiot" tai voit 
 );
 
 /** French (français)
+ * @author Gomoko
  * @author IAlex
  * @author Peter17
  * @author Urhixidur
@@ -1307,6 +1333,8 @@ Créez des pages de liste de blogs pour des catégories comme, par exemple, « B
 	'blog-movepage-badtitle' => 'Titre du billet de blog invalide.',
 	'blog-comment-sending' => 'Envoi en cours...',
 	'blog-by' => '$1 par $2',
+	'blogs-searchprofile' => 'Blogs',
+	'blogs-searchprofile-tooltip' => 'Rechercher dans les articles et les listes de blog',
 );
 
 /** Galician (galego)
@@ -1426,6 +1454,8 @@ Cree páxinas de listas de blogues para categorías como "Barack Obama", "Galici
 	'blog-movepage-badtitle' => 'O título da entrada de blogue non é válido.',
 	'blog-comment-sending' => 'Enviando...',
 	'blog-by' => '$1 por $2',
+	'blogs-searchprofile' => 'Blogues',
+	'blogs-searchprofile-tooltip' => 'Procurar nos artigos e listas de blogue',
 );
 
 /** Hausa (هَوُسَ) */
@@ -1787,6 +1817,8 @@ Tu pote crear listas de blogs pro categorias como "Barack Obama", "libros", o me
 	'blog-movepage-badtitle' => 'Invalide titulo de articulo de blog.',
 	'blog-comment-sending' => 'Invio in curso...',
 	'blog-by' => '$1 per $2',
+	'blogs-searchprofile' => 'Blogs',
+	'blogs-searchprofile-tooltip' => 'Cercar in articulos e listas de blog',
 );
 
 /** Indonesian (Bahasa Indonesia)
@@ -1928,6 +1960,7 @@ $messages['inh'] = array(
 
 /** Italian (italiano)
  * @author Beta16
+ * @author Darth Kule
  * @author Leviathan 89
  * @author Minerva Titani
  */
@@ -1993,7 +2026,7 @@ Crea una lista blog per categorie come "Barack Obama", "Fan Fiction" o combina p
 	'blog-readfullpost' => 'Leggi di più',
 	'blog-olderposts' => 'Post più vecchi.',
 	'blog-newerposts' => 'Post più recenti.',
-	'blog-nbrcomments' => '$1 commenti',
+	'blog-nbrcomments' => '{{PLURAL:$1|Un commento|$1 commenti}}',
 	'blog-nopostfound' => 'Nessun post trovato.',
 	'blog-writeone' => 'Aggiungine uno!',
 	'blog-empty-user-blog' => 'Questo utente non ancora ha scritto nessun post!',
@@ -2166,6 +2199,7 @@ $messages['ja'] = array(
 	'blog-movepage-badtitle' => '無効なタイトルです',
 	'blog-comment-sending' => '送信中...',
 	'blog-by' => '$1 by $2',
+	'blogs-searchprofile' => 'ブログ',
 );
 
 /** Khmer (ភាសាខ្មែរ)
@@ -2183,10 +2217,26 @@ $messages['kn'] = array(
 );
 
 /** Korean (한국어)
+ * @author Cafeinlove
  * @author Cwt96
  */
 $messages['ko'] = array(
 	'createblogpage' => '블로그 만들기',
+	'createbloglistingpage' => '블로그 목록 만들기',
+	'create-blog-post-category' => '블로그 글',
+	'create-blog-post-title-edit' => '블로그 글 편집하기',
+	'create-blog-form-title' => '블로그 글이란?',
+	'create-blog-form-post-title' => '블로그 글 제목',
+	'blog-defaulttitle' => '블로그',
+	'blog-added' => '추가됨',
+	'blog-edited' => '편집됨',
+	'blog-page' => '블로그',
+	'blog-comment-post' => '댓글 남기기',
+	'blog-comments' => '댓글',
+	'blog-rc-comments' => '블로그 댓글',
+	'blog-avatar-preferences-title' => '아바타',
+	'blog-refresh-label' => '새로고침',
+	'blogs-reportproblem' => '문제점 신고하기',
 );
 
 /** Colognian (Ripoarisch)
@@ -2516,6 +2566,8 @@ $messages['mk'] = array(
 	'blog-movepage-badtitle' => 'Неважечки наслов на блог-запис.',
 	'blog-comment-sending' => 'Испраќам...',
 	'blog-by' => '$1 од $2',
+	'blogs-searchprofile' => 'Блогови',
+	'blogs-searchprofile-tooltip' => 'Пребарување во Блоговски написи и Списоци на блогови',
 );
 
 /** Malayalam (മലയാളം)
@@ -2657,6 +2709,8 @@ Cipta laman senarai blog untuk kategori-kategori seperti "Barack Obama", "Cereka
 	'blog-movepage-badtitle' => 'Tajuk kiriman blog tidak sah.',
 	'blog-comment-sending' => 'Menghantar...',
 	'blog-by' => '$1 daripada $2',
+	'blogs-searchprofile' => 'Blog',
+	'blogs-searchprofile-tooltip' => 'Cari dalam Rencana Blog dan Senarai Blog',
 );
 
 /** Norwegian Bokmål (‪norsk (bokmål)‬)
@@ -2777,6 +2831,8 @@ Opprett bloggoppføringssider for å kategorier som «Barack Obama», «Fan Fict
 	'blog-movepage-badtitle' => 'Ugyldig blogginnleggtittel.',
 	'blog-comment-sending' => 'Sender ...',
 	'blog-by' => '$1 av $2',
+	'blogs-searchprofile' => 'Blogger',
+	'blogs-searchprofile-tooltip' => 'Søk i bloggartikler og blogglister',
 );
 
 /** Nepali (नेपाली)
@@ -2906,6 +2962,8 @@ Gebruik alstublieft een van de beschikbare parameters: <code>$2</code>.',
 	'blog-movepage-badtitle' => 'Ongeldige titel voor blogbericht.',
 	'blog-comment-sending' => 'Bezig met opslaan...',
 	'blog-by' => '$1 door $2',
+	'blogs-searchprofile' => 'Blogs',
+	'blogs-searchprofile-tooltip' => 'In blogberichten en bloglijsten zoeken',
 );
 
 /** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
@@ -3080,6 +3138,8 @@ Możesz stworzyć listę dla konkretnej kategorii, np. "Barack Obama", "Gry Komp
 	'blog-movepage-badtitle' => 'Nieprawidłowy tytuł wpisu.',
 	'blog-comment-sending' => 'Wysyłanie...',
 	'blog-by' => '$1 przez $2',
+	'blogs-searchprofile' => 'Blogi',
+	'blogs-searchprofile-tooltip' => 'Szukaj na blogach i listach blogów',
 );
 
 /** Piedmontese (Piemontèis)
@@ -3649,6 +3709,8 @@ $messages['ru'] = array(
 	'blog-movepage-badtitle' => 'Неверное название записи в блоге.',
 	'blog-comment-sending' => 'Отправка…',
 	'blog-by' => '$1 от $2',
+	'blogs-searchprofile' => 'Блоги',
+	'blogs-searchprofile-tooltip' => 'Поиск в блогах и в списках блогов',
 );
 
 /** Slovenian (slovenščina)
@@ -3847,6 +3909,8 @@ Skapa blogglistor för kategorier som "Barack Obama", "Fan Fiction", eller kombi
 	'blog-movepage-badtitle' => 'Ogiltig titel för blogginlägget.',
 	'blog-comment-sending' => 'Skickar...',
 	'blog-by' => '$1 av $2',
+	'blogs-searchprofile' => 'Bloggar',
+	'blogs-searchprofile-tooltip' => 'Sök i bloggartiklar och blogglistor',
 );
 
 /** Swahili (Kiswahili)
@@ -4147,6 +4211,8 @@ $messages['tl'] = array(
 	'blog-movepage-badtitle' => 'Hindi tanggap na pamagat ng paskil na pamblog.',
 	'blog-comment-sending' => 'Ipinapadala...',
 	'blog-by' => '$1 ni $2',
+	'blogs-searchprofile' => 'Mga blog',
+	'blogs-searchprofile-tooltip' => 'Maghanap sa loob ng Mga Artikulong Blog at Mga Kalistahan ng Blog',
 );
 
 /** толышә зывон (толышә зывон)

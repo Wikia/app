@@ -177,6 +177,16 @@ $messages['ia'] = array(
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Error: Texto de pagina es requirite',
 );
 
+/** Italian (italiano)
+ * @author Rippitippi
+ */
+$messages['it'] = array(
+	'contentfeeds-firstfewarticles-tag-title' => 'Titolo',
+	'contentfeeds-firstfewarticles-tag-next' => 'Successivo',
+	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'Errore: Il titolo della pagina è necessario',
+	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Errore: Il contenuto della pagina è necessario',
+);
+
 /** Colognian (Ripoarisch)
  * @author Purodha
  */

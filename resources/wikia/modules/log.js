@@ -34,7 +34,7 @@
 			},
 			outputLevel = 0,
 			groups = {},
-			groupsString = '';
+			groupsString = '',
 			groupsCount = 0,
 			enabled = false,
 			levelsMap = [];
@@ -76,7 +76,7 @@
 
 		function printMessage(msg, level, group){
 			if(typeof console != 'undefined')
-				console.log((typeof msg != 'object' ? '%s [%s]: %s' : '%s [%s]: %o'), group, level, msg);
+				console.log((typeof msg != 'object' ? '%s: %s' : '%s: %o'), group, msg);
 			else if(typeof opera != 'undefined')
 				opera.postError(group + ': ' + msg);
 		}
@@ -88,7 +88,7 @@
 
 			outputLevel = qs.getVal('log_level') || cookies.get('log_level') || outputLevel;
 
-			if(typeof outputLevel == 'string')
+			if(typeof outputLevel == 'string' && parseInt(outputLevel) != outputLevel)
 				outputLevel = levels[outputLevel];
 
 			selectedGroups = (qs.getVal('log_group') || cookies.get('log_group') || '').replace(' ', '').replace('|', ',').split(',');
@@ -104,7 +104,7 @@
 			}
 
 			if (outputLevel > 0) {
-				printMessage('initialized at level ' + levelsMap[outputLevel] + ((groupsCount > 0) ? ' for ' + groupsString : ''), 'info', 'Wikia.log');
+				printMessage('initialized at level ' + outputLevel + ((groupsCount > 0) ? ' for ' + groupsString : ''), 'info', 'Wikia.log');
 				enabled = true;
 			}
 		}

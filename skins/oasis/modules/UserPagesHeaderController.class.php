@@ -377,7 +377,7 @@ class UserPagesHeaderController extends WikiaController {
 			return true;
 		}
 
-		$fbContent = wfRenderModule('UserPagesHeader', 'FacebookConnectArticle');
+		$fbContent = F::app()->renderView('UserPagesHeader', 'FacebookConnectArticle');
 
 		if ($fbContent) {
 			// getting users page url, not the clean way?

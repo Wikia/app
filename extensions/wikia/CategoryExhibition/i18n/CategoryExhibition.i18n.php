@@ -430,6 +430,7 @@ $messages['pt-br'] = array(
 );
 
 /** Romanian (română)
+ * @author Minisarm
  * @author Stelistcristi
  */
 $messages['ro'] = array(
@@ -437,7 +438,7 @@ $messages['ro'] = array(
 	'category-exhibition-alphabetical' => 'Alfabetic',
 	'category-exhibition-mostvisited' => 'Cel mai vizitat',
 	'category-exhibition-recentedits' => 'Modificat recent',
-	'category-exhibition-page-header' => 'Pagini în categoria "$1"',
+	'category-exhibition-page-header' => 'Pagini din categoria „$1”',
 	'category-exhibition-subcategories-header' => 'Subcategorii',
 	'category-exhibition-blogs-header' => 'Postări pe blog',
 );

@@ -608,6 +608,7 @@ $messages['cy'] = array(
  * @author Kghbln
  * @author LWChris
  * @author Laximilian scoken
+ * @author Metalhead64
  * @author PtM
  * @author The Evil IP address
  */
@@ -683,6 +684,12 @@ $messages['de'] = array(
 	'swm-error-invalid-time' => 'Ungültige Zeitangabe',
 	'swm-lang-other' => 'alle verbleibenden Sprachen',
 	'action-messagetool' => 'wiki-weite Nachrichten versenden',
+	'swm-label-mode-users-registration' => 'Anmeldedatum',
+	'swm-mode-users-registration-after' => 'Nach',
+	'swm-mode-users-registration-before' => 'Vor',
+	'swm-mode-users-registration-between' => 'Zwischen',
+	'swm-label-mode-users-registration-hint' => '<i>Daten müssen das Format 2012-04-01 00:00:00 aufweisen</i>',
+	'swm-error-registered-tobeforefrom' => 'Das Enddatum der Benutzeranmeldung liegt vor dem Anfangsdatum.',
 );
 
 /** German (formal address) (‪Deutsch (Sie-Form)‬)
@@ -848,6 +855,12 @@ $messages['es'] = array(
 	'swm-error-invalid-time' => 'La fecha y hora suministrada no es válida.',
 	'swm-lang-other' => 'Todos los idiomas restantes',
 	'action-messagetool' => 'Mensajes de amplia difusión',
+	'swm-label-mode-users-registration' => 'Fecha de registro',
+	'swm-mode-users-registration-after' => 'Después',
+	'swm-mode-users-registration-before' => 'Antes',
+	'swm-mode-users-registration-between' => 'Entre',
+	'swm-label-mode-users-registration-hint' => '<i>Las fechas deben estar en el formato aaaa/mm/dd  2012-04-01 00:00:00</i>',
+	'swm-error-registered-tobeforefrom' => 'La fecha final del registro de usuario está antes de la fecha de inicio.',
 );
 
 /** Basque (euskara)
@@ -1023,6 +1036,12 @@ $messages['fr'] = array(
 	'swm-error-invalid-time' => 'Durée fournie non valide.',
 	'swm-lang-other' => 'toutes les langues restantes',
 	'action-messagetool' => 'envoyer des messages à tout le site',
+	'swm-label-mode-users-registration' => "Date d'enregistrement",
+	'swm-mode-users-registration-after' => 'Après',
+	'swm-mode-users-registration-before' => 'Avant',
+	'swm-mode-users-registration-between' => 'Entre',
+	'swm-label-mode-users-registration-hint' => '<i>Les dates doivent être au format 2012-04-01 00:00:00</i>',
+	'swm-error-registered-tobeforefrom' => "La date de fin d'inscription de l'utilisateur est antérieure à sa date de début.",
 );
 
 /** Galician (galego)
@@ -1100,6 +1119,12 @@ $messages['gl'] = array(
 	'swm-error-invalid-time' => 'A hora proporcionada non é válida.',
 	'swm-lang-other' => 'todas as linguas restantes',
 	'action-messagetool' => 'enviar a mensaxe global do sitio',
+	'swm-label-mode-users-registration' => 'Data de rexistro',
+	'swm-mode-users-registration-after' => 'Despois',
+	'swm-mode-users-registration-before' => 'Antes',
+	'swm-mode-users-registration-between' => 'Entre',
+	'swm-label-mode-users-registration-hint' => '<i>As datas deben seguir o formato 2012-04-01 00:00:00</i>',
+	'swm-error-registered-tobeforefrom' => 'A data de fin de rexistro de usuario é anterior á data de inicio.',
 );
 
 /** Ancient Greek (Ἀρχαία ἑλληνικὴ)
@@ -1242,6 +1267,12 @@ $messages['ia'] = array(
 	'swm-error-invalid-time' => 'Le hora fornite es invalide.',
 	'swm-lang-other' => 'tote le linguas restante',
 	'action-messagetool' => 'inviar messages a tote le sito',
+	'swm-label-mode-users-registration' => 'Data de registration',
+	'swm-mode-users-registration-after' => 'Post',
+	'swm-mode-users-registration-before' => 'Ante',
+	'swm-mode-users-registration-between' => 'Inter',
+	'swm-label-mode-users-registration-hint' => '<i>Le datas debe esser in forma 2012-04-01 00:00:00</i>',
+	'swm-error-registered-tobeforefrom' => 'Le data de fin del registration del usator es ante le data de initio.',
 );
 
 /** Indonesian (Bahasa Indonesia)
@@ -1363,6 +1394,7 @@ $messages['it'] = array(
 
 /** Japanese (日本語)
  * @author Fryed-peach
+ * @author Shirayuki
  */
 $messages['ja'] = array(
 	'sitewidemessages' => 'サイト横断メッセージ',
@@ -1377,9 +1409,13 @@ $messages['ja'] = array(
 	'swm-label-sent' => '送信しました',
 	'swm-label-list' => 'リスト',
 	'swm-label-recipient' => '宛先',
+	'swm-label-recipient-wikis' => 'ウィキ',
+	'swm-label-recipient-users' => '利用者',
 	'swm-label-expiration' => '期限',
+	'swm-label-mode-wikis-wiki' => '指定したウィキ',
 	'swm-label-content' => '内容',
 	'swm-label-comment' => 'コメント',
+	'swm-label-language' => '言語',
 	'swm-button-preview' => '[ プレビュー ]',
 	'swm-button-send' => '[ 送信 ]',
 	'swm-button-save' => '[ 保存 ]',
@@ -1400,6 +1436,8 @@ $messages['ja'] = array(
 	'swm-list-table-removed' => '削除済',
 	'swm-list-table-content' => '内容',
 	'swm-list-table-tools' => '作業',
+	'swm-list-table-lang' => '言語',
+	'swm-yes' => 'はい',
 	'swm-no' => 'いいえ',
 	'swm-error-no-such-wiki' => 'そのようなウィキは存在しません。',
 	'swm-error-no-such-user' => '指定された利用者が存在していません。',
@@ -1415,9 +1453,11 @@ $messages['kn'] = array(
 );
 
 /** Korean (한국어)
+ * @author Cafeinlove
  * @author 아라
  */
 $messages['ko'] = array(
+	'swm-label-language' => '언어',
 	'swm-button-save' => '[ 저장 ]',
 );
 
@@ -1564,6 +1604,12 @@ $messages['mk'] = array(
 	'swm-error-invalid-time' => 'Наведено е неважечко време.',
 	'swm-lang-other' => 'сите преостанати јазици',
 	'action-messagetool' => 'испрати пораки ширум викито',
+	'swm-label-mode-users-registration' => 'Датум на регистрација',
+	'swm-mode-users-registration-after' => 'По',
+	'swm-mode-users-registration-before' => 'Пред',
+	'swm-mode-users-registration-between' => 'Помеѓу',
+	'swm-label-mode-users-registration-hint' => '<i>Датумот мора да биде од обликот 2012-04-01 00:00:00</i>',
+	'swm-error-registered-tobeforefrom' => 'Завршниот датум мора да биде пред почетниот.',
 );
 
 /** Mongolian (монгол)
@@ -1651,6 +1697,12 @@ $messages['ms'] = array(
 	'swm-error-invalid-time' => 'Waktu yang dinyatakan tidak sah.',
 	'swm-lang-other' => 'semua bahasa yang tinggal',
 	'action-messagetool' => 'hantar pesanan ke seluruh tapak sesawang',
+	'swm-label-mode-users-registration' => 'Tarikh pendaftaran',
+	'swm-mode-users-registration-after' => 'Selepas',
+	'swm-mode-users-registration-before' => 'Sebelum',
+	'swm-mode-users-registration-between' => 'Antara',
+	'swm-label-mode-users-registration-hint' => '<i>Tarikh mesti mengikut format 2012-04-01 00:00:00</i>',
+	'swm-error-registered-tobeforefrom' => 'Tarikh tutup pendaftaran pengguna adalah sebelum tarikh bermula.',
 );
 
 /** Burmese (မြန်မာဘာသာ)
@@ -1764,6 +1816,12 @@ $messages['nb'] = array(
 	'swm-error-invalid-time' => 'Ugyldig tidspunkt oppgitt.',
 	'swm-lang-other' => 'alle gjenværende språk',
 	'action-messagetool' => 'send sideomfattende meldinger',
+	'swm-label-mode-users-registration' => 'Registreringsdato',
+	'swm-mode-users-registration-after' => 'Etter',
+	'swm-mode-users-registration-before' => 'Før',
+	'swm-mode-users-registration-between' => 'Mellom',
+	'swm-label-mode-users-registration-hint' => '<i>Datoer må være i formatet 2012-04-01 00:00:00</i>',
+	'swm-error-registered-tobeforefrom' => 'Brukerregistreringens sluttdato er før startdatoen.',
 );
 
 /** Nepali (नेपाली)
@@ -1854,6 +1912,12 @@ Dit kan niet ongedaan gemaakt worden.',
 	'swm-error-invalid-time' => 'Er is een ongeldige tijd opgegeven.',
 	'swm-lang-other' => 'alle overgebleven talen',
 	'action-messagetool' => 'berichten over de hele site versturen',
+	'swm-label-mode-users-registration' => 'Registratiedatum',
+	'swm-mode-users-registration-after' => 'Na',
+	'swm-mode-users-registration-before' => 'Voor',
+	'swm-mode-users-registration-between' => 'Tussen',
+	'swm-label-mode-users-registration-hint' => '<i>Datums moeten worden ingegeven in de vorm van 2012-04-01 00:00:00</i>',
+	'swm-error-registered-tobeforefrom' => 'De datum van gebruikersregistratie ligt voor de begindatum.',
 );
 
 /** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
@@ -1967,6 +2031,12 @@ $messages['pl'] = array(
 	'swm-error-invalid-time' => 'Niewłaściwy format czasu.',
 	'swm-lang-other' => 'wszystkie pozostałe języki',
 	'action-messagetool' => 'wyślij komunikaty globalne',
+	'swm-label-mode-users-registration' => 'Data rejestracji',
+	'swm-mode-users-registration-after' => 'Po',
+	'swm-mode-users-registration-before' => 'Przed',
+	'swm-mode-users-registration-between' => 'Pomiędzy',
+	'swm-label-mode-users-registration-hint' => '<i>Daty muszą być w formacie 2012-04-01 00:00:00</i>',
+	'swm-error-registered-tobeforefrom' => 'Wybrana końcowa data rejestracji sprzed wybranej daty początkowej.',
 );
 
 /** Piedmontese (Piemontèis)
@@ -2308,6 +2378,12 @@ $messages['ru'] = array(
 	'swm-error-invalid-time' => 'Недопустимое время.',
 	'swm-lang-other' => 'все остальные языки',
 	'action-messagetool' => 'send site wide messages',
+	'swm-label-mode-users-registration' => 'Дата регистрации',
+	'swm-mode-users-registration-after' => 'После',
+	'swm-mode-users-registration-before' => 'До',
+	'swm-mode-users-registration-between' => 'Между',
+	'swm-label-mode-users-registration-hint' => '<i>Даты должны быть в форме 2012-04-01 00:00:00</i>',
+	'swm-error-registered-tobeforefrom' => 'Дата последней регистрации не может быть больше даты первой регистрации',
 );
 
 /** Slovenian (slovenščina)
@@ -2390,8 +2466,10 @@ $messages['sv'] = array(
 	'swm-label-recipient-wikis' => 'Wikis',
 	'swm-label-recipient-users' => 'Användare',
 	'swm-label-expiration' => 'Förfallotid',
+	'swm-label-expiration-hint' => '<i>Välj en utgångstid från rullgardinsmenyn eller skriv en tid för hand om du vill skriva över rullgardinsvalet. Tid som skrivs manuellt måste vara i formuläret 2012-04-01 00:00:00</i>',
 	'swm-label-mode-wikis-all' => 'Alla wikis',
 	'swm-label-mode-wikis-hub' => 'Valda hubbar',
+	'swm-label-mode-wikis-cluster' => 'Markerat kluster',
 	'swm-label-mode-wikis-wiki' => 'Vald wiki',
 	'swm-label-mode-users-all' => 'Alla användare',
 	'swm-label-mode-users-active' => 'Aktiva användare',
@@ -2400,6 +2478,7 @@ $messages['sv'] = array(
 	'swm-label-mode-users-user' => 'Vald användare',
 	'swm-label-mode-users-user-hint' => '<i>Det här alternativet ignorerar markeringen i gruppen "Wikis".</i>',
 	'swm-label-mode-users-user-multi' => 'Lista över användare',
+	'swm-label-mode-users-anon' => 'Alla anonyma användare',
 	'swm-label-content' => 'Innehåll',
 	'swm-label-comment' => 'Kommentera',
 	'swm-label-dismissed' => 'Avvisad',
@@ -2435,7 +2514,14 @@ $messages['sv'] = array(
 	'swm-error-empty-message' => 'Ange innehållet i meddelandet.',
 	'swm-error-long-message' => 'Meddelanden är begränsade till 500 tecken.',
 	'swm-error-empty-group' => 'Ange namnet på gruppen.',
+	'swm-error-invalid-time' => 'Ogiltig tid angiven.',
 	'swm-lang-other' => 'alla återstående språk',
+	'swm-label-mode-users-registration' => 'Registreringsdatum',
+	'swm-mode-users-registration-after' => 'Efter',
+	'swm-mode-users-registration-before' => 'Innan',
+	'swm-mode-users-registration-between' => 'Mellan',
+	'swm-label-mode-users-registration-hint' => '<i>Datumen måste vara i formuläret 2012-04-01 00:00:00</i>',
+	'swm-error-registered-tobeforefrom' => 'Användarregistreringens slutdatum är innan startdatumet.',
 );
 
 /** Swahili (Kiswahili)
@@ -2571,6 +2657,12 @@ $messages['tl'] = array(
 	'swm-error-invalid-time' => 'Hindi katanggap-tanggap ang oras na ibinigay.',
 	'swm-lang-other' => 'lahat ng natitirang mga wika',
 	'action-messagetool' => 'magpadala ng mga mensahe na pangkabuuan ng pook',
+	'swm-label-mode-users-registration' => 'Petsa ng pagpapatala',
+	'swm-mode-users-registration-after' => 'Pagkalipas ng',
+	'swm-mode-users-registration-before' => 'Bago ang',
+	'swm-mode-users-registration-between' => 'Sa pagitan ng',
+	'swm-label-mode-users-registration-hint' => '<i>Ang mga petsa ay dapat na nasa anyong 2012-04-01 00:00:00</i>',
+	'swm-error-registered-tobeforefrom' => 'Ang petsa ng pagwawakas ng pagkakapatala ng tagagamit ay bago ang petsa ng pagsisimula.',
 );
 
 /** толышә зывон (толышә зывон)

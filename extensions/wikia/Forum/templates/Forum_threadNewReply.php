@@ -18,9 +18,7 @@
 				<?= $app->getView('MiniEditorController', 'Editor_Footer')->render() ?>
 			<? endif ?>
 			<div class="buttons" data-space-type="buttons">
-				<button class="submit replyButton<?=
-					$loginToEditProtectedPage ? ' require-login" data="' . $ajaxLoginUrl .'"' : '"'
-				?>><?= wfMsg('forum-thread-reply-post') ?></button>
+				<button class="submit replyButton"><?= wfMsg('forum-thread-reply-post') ?></button>
 			</div>
 			<? if ($wg->EnableMiniEditorExtForWall): ?>
 				<?= $app->getView('MiniEditorController', 'Footer')->render() ?>

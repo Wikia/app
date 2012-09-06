@@ -1,5 +1,5 @@
 <?php
- 
+
 class OasisController extends WikiaController {
 
 	private static $extraBodyClasses = array();
@@ -49,7 +49,7 @@ class OasisController extends WikiaController {
 	 * @param array $vars global variables list
 	 * @return boolean return true
 	 */
-	public function onMakeGlobalVariablesScript($vars) {
+	public function onMakeGlobalVariablesScript(Array &$vars) {
 		$vars['wgJsAtBottom'] = self::JsAtBottom();
 		return true;
 	}
@@ -57,12 +57,16 @@ class OasisController extends WikiaController {
 	/**
 	 * Business-logic for determining if the javascript should be at the bottom of the page (it usually should be
 	 * at the bottom for performance reasons, but there are some exceptions for engineering reasons).
+	 *
+	 * TODO: make sure JavaScripts can be always loaded on bottom
 	 */
 	public static function JsAtBottom(){
 		global $wgTitle;
 
 		// decide where JS should be placed (only add JS at the top for non-search Special and edit pages)
-		if (ArticleAdLogic::isSearch()) {
+		if (WikiaPageType::isSearch() || WikiaPageType::isForum()) {
+			// Remove this whole condition when AdDriver2.js is fully implemented and deployed
+
 			$jsAtBottom = true;	// Liftium.js (part of AssetsManager) must be loaded after LiftiumOptions variable is set in page source
 		}
 		elseif ($wgTitle->getNamespace() == NS_SPECIAL || BodyController::isEditPage()) {
@@ -110,15 +114,20 @@ class OasisController extends WikiaController {
 		}
 
 		if($renderContentOnly) {
-			$this->body = wfRenderModule('BodyContentOnly');
+			$this->body = F::app()->renderView('BodyContentOnly', 'Index');
 		} else {
 			// macbre: let extensions modify content of the page (e.g. EditPageLayout)
 			wfProfileIn(__METHOD__ . ' - renderBody');
-			$this->body = !empty($params['body']) ? $params['body'] : wfRenderModule('Body');
+			$this->body = !empty($params['body']) ? $params['body'] : F::app()->renderView('Body', 'Index');
 			wfProfileOut(__METHOD__ . ' - renderBody');
 		}
 		// get microdata for body tag
 		$this->itemType = self::getItemType();
+
+		$skin = RequestContext::getMain()->getSkin();
+		// this is bad but some extensions could have added some scripts to bottom queue
+		// todo: make it not run twice during each request
+		$this->bottomscripts = $skin->bottomScripts();
 
 		// generate list of CSS classes for <body> tag
 		$bodyClasses = array('mediawiki', $this->dir, $this->pageclass);
@@ -131,7 +140,6 @@ class OasisController extends WikiaController {
 
 		wfProfileIn(__METHOD__ . ' - skin Operations');
 		// add skin theme name
-		$skin = $wgUser->getSkin();
 		if(!empty($skin->themename)) {
 			$bodyClasses[] = "oasis-{$skin->themename}";
 		}
@@ -140,12 +148,12 @@ class OasisController extends WikiaController {
 		if (SassUtil::isThemeDark()) {
 			$bodyClasses[] = 'oasis-dark-theme';
 		}
-		
+
 		// support for oasis split skin
 		if (!empty($this->wg->GlobalHeaderFullWidth)) {
 			$bodyClasses[] = 'oasis-split-skin';
 		}
-		
+
 		$this->bodyClasses = $bodyClasses;
 
     	//reset, this ensures no duplication in CSS links
@@ -186,7 +194,7 @@ class OasisController extends WikiaController {
 
 		wfProfileOut(__METHOD__ . ' - skin Operations');
 
-		$this->topScripts = $this->wg->user->getSkin()->getTopScripts();
+		$this->topScripts = $wgOut->topScripts;
 
 		// printable CSS (to be added at the bottom of the page)
 		// FIXME: move to renderPrintCSS() method
@@ -362,7 +370,7 @@ class OasisController extends WikiaController {
 
 	// TODO: implement as a separate module?
 	private function loadJs() {
-		global $wgTitle, $wgOut, $wgJsMimeType, $wgUser, $wgSpeedBox, $wgDevelEnvironment, $wgEnableAbTesting, $wgAllInOne;
+		global $wgJsMimeType, $wgUser, $wgSpeedBox, $wgDevelEnvironment, $wgEnableAbTesting, $wgAllInOne;
 		wfProfileIn(__METHOD__);
 
 		$assetsManager = F::build( 'AssetsManager', array(), 'getInstance' );
@@ -408,7 +416,7 @@ class OasisController extends WikiaController {
 		*/
 
 		// move JS files added to OutputPage to list of files to be loaded using WSL
-		$scripts = $wgUser->getSkin()->getScripts();
+		$scripts = RequestContext::getMain()->getSkin()->getScripts();
 
 		foreach ( $scripts as $s ) {
 			//add inline scripts to jsFiles and move non-inline to WSL queue

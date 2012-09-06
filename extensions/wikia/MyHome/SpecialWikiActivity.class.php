@@ -14,7 +14,7 @@ class SpecialWikiActivity extends UnlistedSpecialPage {
 
 	function execute($par) {
 		wfProfileIn(__METHOD__);
-		global $wgOut, $wgUser, $wgTitle, $wgBlankImgUrl;
+		global $wgOut, $wgUser, $wgBlankImgUrl;
 		$this->setHeaders();
 
 		// not available for skins different than Oasis
@@ -41,7 +41,7 @@ class SpecialWikiActivity extends UnlistedSpecialPage {
 
 			// not available for anons
 			if($wgUser->isAnon()) {
-				if (get_class($wgUser->getSkin()) == 'SkinOasis') {
+				if (get_class(RequestContext::getMain()->getSkin()) == 'SkinOasis') {
 					$wgOut->wrapWikiMsg( '<div class="latest-activity-watchlist-login" >$1</div>', array('oasis-activity-watchlist-login', wfGetReturntoParam()) );
 				}
 				else {

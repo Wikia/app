@@ -24,13 +24,13 @@ class SponsorshipDashboardSourceMobile extends SponsorshipDashboardSource {
 	const SD_OS_ANDROID = 'android';
 	const SD_OS_IPHONE = 'iphone';
 	const SD_OS_UNDEFINED = 'undefined';
-	
+
 	const SD_APP_GAMEGUIDES = 'GameGuides';
 
-	static $allowedActions = array( 
+	static $allowedActions = array(
 		self::SD_ACTION_CATEGORY,
 		self::SD_ACTION_GAMES,
-		self::SD_ACTION_CONTENTS, 
+		self::SD_ACTION_CONTENTS,
 		self::SD_ACTION_SEARCH,
 		self::SD_EMPTY
 	);
@@ -56,15 +56,15 @@ class SponsorshipDashboardSourceMobile extends SponsorshipDashboardSource {
 
 	protected $startDate;
 	protected $endDate;
-	
+
 	// ============================
 
 	public function __construct() {
 
 		$this->iNumberOfXGuideLines = 7;
-		$this->App = WF::build('App');
+		$this->App = F::app();
 		$this->frequency = SponsorshipDashboardDateProvider::getProvider();
-		
+
 	}
 
 	/*
@@ -99,7 +99,7 @@ class SponsorshipDashboardSourceMobile extends SponsorshipDashboardSource {
 		$aKey[] = $this->startDate;
 		$aKey[] = $this->endDate;
 		$aKey[] = $this->serieName;
-		
+
 		return $this->serieName.':'.self::SD_MC_KEY_PREFIX.':'.self::SD_SOURCE_TYPE.':'.md5(implode( ':', $aKey ));
 	}
 
@@ -132,11 +132,11 @@ class SponsorshipDashboardSourceMobile extends SponsorshipDashboardSource {
 			if ( empty( $wgStatsDBEnabled  ) ) {
 				return false;
 			}
-			
+
 			$wgStatsDB = $this->App->getGlobal('wgStatsDB');
 
 			$this->recalculateDateVariables();
-			
+
 			$sql = "SELECT count(url) as number, {$this->frequency->getMobileDateString()} as mobile_date
 				FROM mobile_apps
 				WHERE
@@ -152,7 +152,7 @@ class SponsorshipDashboardSourceMobile extends SponsorshipDashboardSource {
 
 			$dbr = wfGetDB( DB_SLAVE, array(), $wgStatsDB );
 			$res = $dbr->query( $sql, __METHOD__ );
-			
+
 			while ( $row = $res->fetchObject( $res ) ) {
 				$sDate = $row->mobile_date;
 				$this->dataAll[ $sDate ][ 'date' ] = $sDate;
@@ -199,7 +199,7 @@ class SponsorshipDashboardSourceMobile extends SponsorshipDashboardSource {
 		$aData[ self::SD_OS ] = $this->operatingsystem;
 		$aData[ self::SD_WIKI_APP_ID ] = $this->wikiAppId;
 		$aData[ self::SD_SERIE_NAME ] = $this->serieName;
-		
+
 		return $aData;
 	}
 
@@ -207,7 +207,7 @@ class SponsorshipDashboardSourceMobile extends SponsorshipDashboardSource {
 
 		return '../../templates/editor/addNewMobile';
 	}
-	
+
 	/*
 	 * Fills object from array. Used when creating object from form results.
 	 *

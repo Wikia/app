@@ -1,5 +1,5 @@
 //dependencies
-@import "variables";
+@import "variables.scss";
 
 //mixins
 @import "mixins/linear-gradient.scss";
@@ -29,13 +29,18 @@
 	background-image:  url('/extensions/wikia/WikiaMobile/images/topbar_menu.png'); /* base64 */
 }
 
-#wkPrfTgl{
-	&.lgdin{
-		background-image:  url('/extensions/wikia/WikiaMobile/images/user_loggedin.png'); /* base64 */
-	}
-
+#wkPrfTgl {
 	&.lgdout{
 		background-image:  url('/extensions/wikia/WikiaMobile/images/user_loggedout.png'); /* base64 */
+	}
+
+	&.lgdin {
+		text-align: center;
+
+		img {
+			margin: 8px;
+			border-radius: 3px;
+		}
 	}
 }
 
@@ -78,8 +83,6 @@
 
 #wkTopNav {
 	position: relative;
-	z-index: $highest-z-index+1;
-	width: 100%;
 	height: 40px;
 	background-color: white;
 	-webkit-tap-highlight-color: rgba( 0,0,0,0 );
@@ -87,6 +90,7 @@
 	@include box-shadow(0 0 5px black);
 
 	&.fllNav {
+		z-index: $highest-z-index+1;
 		background-color: white;
 
 		#wkTopBar{
@@ -102,6 +106,8 @@
 	}
 
 	&.prf {
+		z-index: $highest-z-index+1;
+
 		#wkTopBar{
 			border-bottom: 1px solid white;
 		}
@@ -136,6 +142,7 @@
 		background: $searchOpenBackground;
 		line-height: 30px;
 		color: white;
+		padding-left: 10px;
 
 		&.up{
 			text-transform: uppercase;
@@ -188,14 +195,6 @@
 
 				span {
 					color: $link-color;
-				}
-
-				&:first-child {
-					border-top: 1px solid $border-color;
-				}
-
-				&:last-child {
-					border-bottom: 1px solid $border-color;
 				}
 			}
 		}
@@ -278,6 +277,9 @@
 
 		a {
 			-webkit-transition: opacity .5s;
+			-moz-transition: opacity .5s;
+			-o-transition: opacity .5s;
+			transition: opacity .5s;
 		}
 
 		h1 {
@@ -292,14 +294,17 @@
 
 			&.anim {
 				-webkit-animation: slideIn .5s ease;
+				-moz-animation: slideIn .5s ease;
 			}
 
 			&.animNext {
 				-webkit-animation: slide .5s ease;
+				-moz-animation: slide .5s ease;
 			}
 
 			&.animBack {
 				-webkit-animation: slideBack .5s ease;
+				-moz-animation: slideBack .5s ease;
 			}
 		}
 	}
@@ -335,6 +340,52 @@
 }
 
 @-webkit-keyframes slideBack {
+	0% {
+		-webkit-transform: translate(0);
+	}
+	50%{
+		opacity: 0;
+		-webkit-transform: translate(30%);
+	}
+	51%{
+		opacity: 0;
+		-webkit-transform: translate(-30%);
+	}
+	100% {
+		-webkit-transform: translate(0);
+	}
+}
+
+@-moz-keyframes slideIn {
+	0% {
+		opacity: 0;
+		-webkit-transform: translate(30%);
+	}
+
+	100% {
+		opacity: 1;
+		-webkit-transform: translate(0);
+	}
+}
+
+@-moz-keyframes slide {
+	0% {
+		-webkit-transform: translate(0);
+	}
+	50%{
+		opacity: 0;
+		-webkit-transform: translate(-30%);
+	}
+	51%{
+		opacity: 0;
+		-webkit-transform: translate(30%);
+	}
+	100% {
+		-webkit-transform: translate(0);
+	}
+}
+
+@-moz-keyframes slideBack {
 	0% {
 		-webkit-transform: translate(0);
 	}

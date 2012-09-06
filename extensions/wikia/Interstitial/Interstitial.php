@@ -21,7 +21,7 @@ define('INTERSTITIAL_DEFAULT_DURATION_IN_SECONDS', 10);
 /**
  * If interstitials are enabled, add the JS for them.
  */
-function interstitialAddJs( &$out, &$sk ){
+function interstitialAddJs( OutputPage $out, Skin $sk ){
 	global $wgAdsInterstitialsEnabled;
 
 	if (!empty($wgAdsInterstitialsEnabled)) {
@@ -34,9 +34,10 @@ function interstitialAddJs( &$out, &$sk ){
 
 /**
  * Adds the WikiFactory settings for interstitials into the global JS.
- * @return true to allow subsequent functions for same hook to run.
+ * @param array $vars
+ * @return boolean to allow subsequent functions for same hook to run.
  */
-function interstitialsJsGlobalVariables(&$vars){
+function interstitialsJsGlobalVariables(Array &$vars){
 	global $wgAdsInterstitialsEnabled, $wgAdsInterstitialsPagesBeforeFirstAd, $wgAdsInterstitialsPagesBetweenAds, $wgEnableOutboundScreenExt;
 
 	// TODO: load the following on-demand

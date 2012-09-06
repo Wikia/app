@@ -294,7 +294,7 @@ var WallNotifications = $.createClass(Object, {
 	},
 
 	updateWikiFetch: function(wikiId) {
-		var isCrossWiki = (wikiId == this.currentWikiId) ? '0' : '1';
+		var isCrossWiki = (wikiId == wgCityId) ? '0' : '1';
 		$.nirvana.sendRequest({
 			controller: 'WallNotificationsExternalController',
 			method: 'getUpdateWiki',

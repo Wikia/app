@@ -202,12 +202,13 @@ $messages['gl'] = array(
 
 /** Hungarian (magyar)
  * @author Dani
+ * @author Dj
  * @author TK-999
  */
 $messages['hu'] = array(
 	'unsubscribe' => 'Leiratkozás',
 	'unsubscribe-badaccess' => 'Sajnáljuk, ez a lap nem érhető el közvetlenül. Kérlek, használd az e-mailben küldött hivatkozást.',
-	'unsubscribe-badtoken' => 'Sajnáljuk, de probléma történt a biztonsági kapocssal.',
+	'unsubscribe-badtoken' => 'Sajnáljuk, de probléma történt a biztonsági tokennel.',
 	'unsubscribe-bademail' => 'Sajnáljuk, de probléma volt az e-maillel.',
 	'unsubscribe-badtime' => 'Sajnáljuk, de a hivatkozás lejárt. Kérlek, hogy hét napnál frissebb hivatkozást használj.',
 	'unsubscribe-nousers' => 'Nem található a megadott e-mail címmel rendelkező felhasználó',
@@ -216,7 +217,7 @@ $messages['hu'] = array(
 	'unsubscribe-confirm-button' => 'Igen, biztos vagyok benne',
 	'unsubscribe-working' => '$1 felhasználó leiratkoztatása $2-nek',
 	'unsubscribe-working-problem' => 'hiba történt $1 felhasználói adatainak betöltése közben',
-	'unsubscribe-working-done' => 'Kész!',
+	'unsubscribe-working-done' => 'Kész.',
 	'unsubscribe-preferences-toggle' => 'Leiratkozás az összes Wikia e-mailról (töröld a lenti beállítások eléréséhez)',
 	'unsubscribe-preferences-notice' => 'A felhasználói fiókodnak szánt e-mailek le lettek tiltva. Bekapcsolásukhoz látogass el a "Felhasználói profil" fülre.',
 );
@@ -257,6 +258,13 @@ $messages['it'] = array(
 $messages['ja'] = array(
 	'unsubscribe-confirm-legend' => '確認',
 	'unsubscribe-working-done' => '完了しました。',
+);
+
+/** Korean (한국어)
+ * @author Cafeinlove
+ */
+$messages['ko'] = array(
+	'unsubscribe-confirm-legend' => '인증하기',
 );
 
 /** Colognian (Ripoarisch)

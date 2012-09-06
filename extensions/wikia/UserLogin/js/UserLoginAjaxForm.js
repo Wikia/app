@@ -63,6 +63,7 @@ UserLoginAjaxForm.prototype.submitLoginHandler = function(json) {
 		callback;
 
 	if(result === 'ok') {
+		window.wgUserName = json['wgUserName'];
 		callback = this.options['callback'] || '';
 		if(callback && typeof callback === 'function') {
 			callback(json);

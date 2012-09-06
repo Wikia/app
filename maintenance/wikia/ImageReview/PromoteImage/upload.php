@@ -13,15 +13,14 @@ $imageUrl = $options['originalimageurl'];
 $destImageName = $options['destimagename'];
 $sourceWikiId = intval($options['wikiid']);
 
-/*
-$userId = $options['userid'];
-$user = F::build('User', array($userId), 'newFromId');
+//fb#45624
+$user = F::build('User', array('WikiaBot'), 'newFromName');
 
 if( !($user instanceof User) ) {
-	echo 'ERROR: Could not get user object'."\n";
+	echo 'ERROR: Could not get bot user object'."\n";
 	exit(2);
 }
-*/
+
 if( empty($imageUrl) ) {
 	echo 'ERROR: Invalid original image url'."\n";
 	exit(3);
@@ -37,15 +36,11 @@ if( $sourceWikiId <= 0 ) {
 	exit(5);
 }
 
-/*
-if( UploadFromUrl::isAllowed($user) !== true ) {
-	echo 'ERROR: You do not have right permissions'."\n";
-	exit(6);
-}
-*/
+$imageData = new stdClass();
+$imageData->name = $destImageName;
+$imageData->description = $imageData->comment = wfMsg('wikiahome-image-auto-uploaded-comment');
 
-//$result = ImagesService::uploadImageFromUrl($imageUrl, $destImageName, $user);
-$result = ImagesService::uploadImageFromUrl($imageUrl, $destImageName);
+$result = ImagesService::uploadImageFromUrl($imageUrl, $imageData, $user);
 
 if( $result['status'] === true ) {
 	echo json_encode(array('id' => $result['page_id'], 'name' => $destImageName));

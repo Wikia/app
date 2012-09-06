@@ -3,6 +3,7 @@
 $messages = array();
 
 $messages['en'] = array(
+	'oasis-global-page-header' => 'Wikia',
 	'oasis-home' => 'Home',
 	'oasis-more' => 'See more >',
 	'oasis-mytools' => 'My Tools',
@@ -21,7 +22,7 @@ $messages['en'] = array(
 	'oasis-activity-watchlist-login' => 'You need to login to see your followed pages only.',
 	'oasis-activity-header' => 'Recent Wiki Activity',
 	'oasis-total-articles-mainpage' => '<em>{{FORMATNUM:$1}}</em><span>{{PLURAL:$1|page on<br /> this wiki|pages on<br /> this wiki}}</span>',
-	'oasis-latest-photos-title' => 'Latest photos',
+	'oasis-latest-photos-title' => 'Latest Photos',
 	'oasis-latest-photos-header' => '<em>{{FORMATNUM:$1}}</em><span class="$2">{{PLURAL:$1|photo on this wiki|photos on this wiki}}</span>',
 	'oasis-latest-photos-more' => 'See more >',
 	'oasis-latest-photos-inner-message' => 'See all photos',
@@ -30,6 +31,7 @@ $messages['en'] = array(
 	'oasis-latest-photos-by' => 'by',
 	'oasis-latest-photos-posted-in' => 'Posted in',
 	'oasis-latest-photos-more-dotdotdot' => 'more...',
+	'oasis-global-nav-header' => 'Wikia Navigation',
 	'oasis-global-nav-create-wiki' => 'Start a wiki',
 	'oasis-page-header-no-comments-tooltip' => 'Be the first to discuss this page',
 	'oasis-page-header-comments' => '{{PLURAL:$1|Comment|Comments}}',
@@ -156,7 +158,8 @@ $messages['en'] = array(
 	'oasis-upload-photos-fewer-options' => 'Fewer Options',
 	'oasis-upload-photos-force' => 'Upload anyway',
 	'oasis-upload-photos-caption' => 'Caption',
-
+	
+	'oasis-corporatefooter-navigation-header' => 'Wikia Inc Navigation',
 	'oasis-corporatefooter-hub-Entertainment-link' => 'http://www.wikia.com/Entertainment',
 	'oasis-corporatefooter-hub-Gaming-link' => 'http://www.wikia.com/Video_Games',
 	'oasis-corporatefooter-hub-Video_Games-link' => 'http://www.wikia.com/Video_Games',
@@ -284,6 +287,9 @@ Example output: edited by Avatar 3 hours ago',
 Example output: deleted by Avatar 3 hours ago',
 	'oasis-wiki-navigation' => '[[Thread:Support/About Wikia:Oasis-wiki-navigation/en|Parameter $1 is the name of the wiki, e.g. "Muppet Wiki".]]',
 	'oasis-on-the-wiki' => 'Name of the first tab of wiki navigation menu',
+	'oasis-global-nav-header' => 'Global Wikia navigation header',
+	'oasis-corporatefooter-navigation-header' => 'Corporate Footer navigation header',
+	'oasis-global-page-header' => 'Global (corporate) header for whole HTML page - first <h1> in <body>'
 );
 
 /** Afrikaans (Afrikaans)

@@ -24,7 +24,7 @@ class ContentDisplayController extends WikiaController {
 	/**
 	 * Modify edit section link markup (for Oasis only)
 	 */
-	public static function onDoEditSectionLink( $skin, $title, $section, $tooltip, $result, $lang = false ) {
+	public static function onDoEditSectionLink( $skin, Title $title, $section, $tooltip, &$result, $lang = false ) {
 		global $wgBlankImgUrl, $wgUser;
 		wfProfileIn(__METHOD__);
 
@@ -65,7 +65,7 @@ class ContentDisplayController extends WikiaController {
 	/**
 	 * Modify section headline markup (for Oasis only)
 	 */
-	public function onMakeHeadline( $skin, $level, $attribs, $anchor, $text, $link, $legacyAnchor, $ret ) {
+	static public function onMakeHeadline( $skin, $level, $attribs, $anchor, $text, $link, $legacyAnchor, &$ret ) {
 		global $wgRTEParserEnabled;
 		wfProfileIn(__METHOD__);
 

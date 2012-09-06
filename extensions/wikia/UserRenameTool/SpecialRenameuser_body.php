@@ -26,8 +26,7 @@ class SpecialRenameuser extends SpecialPage {
 	public function execute( $par ) {
 		wfProfileIn(__METHOD__);
 
-		global $wgOut, $wgUser, $wgTitle, $wgRequest, $wgContLang, $wgLang;
-		global $wgVersion, $wgMaxNameChars, $wgCapitalLinks, $wgStatsDBEnabled;
+		global $wgOut, $wgUser, $wgTitle, $wgRequest, $wgStatsDBEnabled;
 
 		$this->setHeaders();
 
@@ -38,13 +37,9 @@ class SpecialRenameuser extends SpecialPage {
 			return;
 		}
 
-
-
 		if( !$wgUser->isAllowed( 'renameuser' ) ) {
-			$wgOut->permissionRequired( 'renameuser' );
-
 			wfProfileOut(__METHOD__);
-			return;
+			throw new PermissionsError( 'renameuser' );
 		}
 
 		// Get the request data

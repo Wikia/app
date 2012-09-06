@@ -85,14 +85,10 @@ Wall.NewMessageForm = $.createClass(Wall.MessageForm, {
 			return;
 		}
 
-		if (this.messageSubmit.hasClass('wall-require-login')) {
-			this.loginBeforeAction(this.proxy(function() {
-				this.doPostNewMessage(title, true);
-			}));
-
-		} else {
+		this.loginBeforeSubmit(this.proxy(function(isAlreadyLogged) {
 			this.doPostNewMessage(title);
-		}
+			this.reload = !isAlreadyLogged;
+		}));
 	},
 
 	getMessageBody: function() {
@@ -105,15 +101,13 @@ Wall.NewMessageForm = $.createClass(Wall.MessageForm, {
 		}));
 	},
 	
-	doPostNewMessage: function(title, reload) {
-		this.model.postNew(this.page, title ? this.messageTitle.val() : '', this.getMessageBody(), this.getFormat(), this.notifyEveryone.is(':checked') ? '1':'0');
+	doPostNewMessage: function(title) {
+		var topics = this.messageTopic ? this.messageTopic.data('messageTopic').getTopics() : [];
+	
+		this.model.postNew(this.page, title ? this.messageTitle.val() : '', this.getMessageBody(), this.getFormat(), this.notifyEveryone.is(':checked') ? '1':'0', topics);
 
 		this.clearNewMessageTitle();
 		this.disableNewMessage();
-
-		if (reload) {
-			this.reloadAfterLogin();
-		}
 	},
 
 	clearNewMessageBody: function() {
@@ -147,6 +141,10 @@ Wall.NewMessageForm = $.createClass(Wall.MessageForm, {
 		}
 
 		this.fire('afterNewMessagePost', newmsg);
+		
+		if(this.reload) {
+			this.reloadAfterLogin();
+		}
 	},
 
 	postNewMessage_ChangeText_pre: function(e) {

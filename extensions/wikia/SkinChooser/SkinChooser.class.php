@@ -3,7 +3,7 @@
 class SkinChooser {
 
 	public static function onGetPreferences($user, &$defaultPreferences) {
-		global $wgEnableAnswers, $wgForceSkin, $wgAdminSkin, $wgDefaultSkin, $wgDefaultSkin, $wgSkinPreviewPage, $wgSkipSkins, $wgSkipOldSkins, $wgEnableUserPreferencesV2Ext;
+		global $wgEnableAnswers, $wgForceSkin, $wgAdminSkin, $wgDefaultSkin, $wgSkinPreviewPage, $wgSkipSkins, $wgSkipOldSkins, $wgEnableUserPreferencesV2Ext;
 
 		// hide default MediaWiki skin fieldset
 		unset($defaultPreferences['skin']);
@@ -177,8 +177,7 @@ class SkinChooser {
 	 * Select proper skin and theme based on user preferences / default settings
 	 */
 	public static function onGetSkin(RequestContext $context, &$skin) {
-		global $wgCookiePrefix, $wgCookieExpiration, $wgCookiePath, $wgCookieDomain, $wgCookieSecure, $wgDefaultSkin, $wgDefaultTheme,
-			$wgSkinTheme, $wgOut, $wgForceSkin, $wgAdminSkin, $wgSkipSkins, $wgArticle, $wgDevelEnvironment, $wgEnableWikiaPhone, $wgEnableAnswers;
+		global $wgDefaultSkin, $wgDefaultTheme, $wgSkinTheme, $wgForceSkin, $wgAdminSkin, $wgSkipSkins, $wgEnableAnswers;
 
 		$isOasisPublicBeta = $wgDefaultSkin == 'oasis';
 
@@ -188,9 +187,6 @@ class SkinChooser {
 		$title = $context->getTitle();
 		$user = $context->getUser();
 
-		//Allow showing wikiaphone on wikis where WikiaMobile
-		$wikiaPhoneEnabled = !empty( $wgEnableWikiaPhone );
-
 		/**
 		 * check headers sent by varnish, if X-Skin is send force skin
 		 * @author eloy, requested by artur
@@ -198,12 +194,6 @@ class SkinChooser {
 		if( function_exists( 'apache_request_headers' ) ) {
 			$headers = apache_request_headers();
 			if( isset( $headers[ "X-Skin" ] ) && in_array( $headers[ "X-Skin" ], array( "monobook", "oasis", "wikia", "wikiamobile", "wikiaapp" ) ) ) {
-				//FB#16417 - for the first release bind wikiaphone to wikiamobile via a WF variable
-				//TODO: remove after Ad performance test ends and WikiaMobile will be the default (FB#16582)
-				if ( $headers[ "X-Skin" ] == 'wikiamobile' && $wikiaPhoneEnabled ) {
-					$headers[ "X-Skin" ] = 'wikiaphone';
-				}
-
 				$skin = Skin::newFromKey( $headers[ "X-Skin" ] );
 				wfProfileOut(__METHOD__);
 				return false;

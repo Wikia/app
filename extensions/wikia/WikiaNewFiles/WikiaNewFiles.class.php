@@ -7,7 +7,7 @@
 
 class WikiaNewFiles extends SpecialNewFiles {
 	function execute( $par ) {
-		$this->name( 'WikiaNewFiles' );
+		$this->mName  = 'WikiaNewFiles';
 		$this->setHeaders();
 
 		wfSpecialWikiaNewFiles( $par, $this );

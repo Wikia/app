@@ -123,10 +123,10 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 
 	/**
 	 * reset state in abandoned work
-	 * @todo remove this this (cron worker to take over)
+	 * note: this is run via a cron script
 	 */
 	public function resetAbandonedWork() {
-		$this->wf->ProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 		
 		$db = $this->getDatawareDB( DB_MASTER );
 		
@@ -143,7 +143,6 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 			array(
 				"review_start < '{$review_start}'",
 				"review_end = '0000-00-00 00:00:00'",
-				'reviewer_id' => $this->user_id,
 				'state' => ImageReviewStatuses::STATE_IN_REVIEW,
 			),
 			__METHOD__
@@ -156,15 +155,26 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 			array(
 				"review_start < '{$review_start}'",
 				"review_end = '0000-00-00 00:00:00'",
-				'reviewer_id' => $this->user_id,
 				'state' => ImageReviewStatuses::STATE_QUESTIONABLE_IN_REVIEW,
+			),
+			__METHOD__
+		);
+
+		// for STATE_REJECTED
+		$db->update(
+			'image_review',
+			array( 'state' => ImageReviewStatuses::STATE_REJECTED ),
+			array(
+				"review_start < '{$review_start}'",
+				"review_end = '0000-00-00 00:00:00'",
+				'state' => ImageReviewStatuses::STATE_REJECTED_IN_REVIEW,
 			),
 			__METHOD__
 		);
 
 		$db->commit();
 
-		$this->wf->ProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 
 	/**
@@ -232,9 +242,6 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 	public function getImageList( $timestamp, $state = ImageReviewStatuses::STATE_UNREVIEWED, $order = self::ORDER_LATEST ) {
 		$this->wf->ProfileIn( __METHOD__ );
 
-		// for testing
-		$this->resetAbandonedWork();
-
 		// get images
 		$db = $this->getDatawareDB( DB_MASTER );
 		$result = $db->query('
@@ -266,15 +273,27 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 		# update records
 		if ( count($updateWhere) > 0) {
 			$review_start = wfTimestamp( TS_DB, $timestamp );
+
+			switch ( $state ) {
+				case ImageReviewStatuses::STATE_QUESTIONABLE:
+					$target_state = ImageReviewStatuses::STATE_QUESTIONABLE_IN_REVIEW;
+					break;
+				case ImageReviewStatuses::STATE_REJECTED:
+					$target_state = ImageReviewStatuses::STATE_REJECTED_IN_REVIEW;
+					break;
+				default:
+					$target_state = ImageReviewStatuses::STATE_IN_REVIEW;
+			}
+
 			$values = array (
 				'reviewer_id' => $this->user_id,
 				'review_start' => $review_start,
-				'state' => ( $state == ImageReviewStatuses::STATE_QUESTIONABLE ) ? ImageReviewStatuses::STATE_QUESTIONABLE_IN_REVIEW : ImageReviewStatuses::STATE_IN_REVIEW
+				'state' => $target_state
 			);
 			
-			if ( $state == ImageReviewStatuses::STATE_QUESTIONABLE ) {
+			if ( $state == ImageReviewStatuses::STATE_QUESTIONABLE || $state == ImageReviewStatuses::STATE_REJECTED ) {
 				$values[] = "review_end = '0000-00-00 00:00:00'";
-			} 
+			}
 			
 			$db->update(
 				'image_review',

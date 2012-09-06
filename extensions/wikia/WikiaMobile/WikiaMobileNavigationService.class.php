@@ -6,6 +6,9 @@
  * @authore Federico "Lox" Lucignano <federico(at)wikia-inc.com>
  */
 class  WikiaMobileNavigationService extends WikiaService {
+	/**
+	 * @var $navService WikiNavigationService
+	 */
 	private $navService = null;
 
 	function init(){
@@ -13,7 +16,10 @@ class  WikiaMobileNavigationService extends WikiaService {
 	}
 
 	public function index() {
-		$themeSettings = F::build('ThemeSettings');
+		/**
+		 * @var $themeSettings ThemeSettings
+		 */
+		$themeSettings = F::build( 'ThemeSettings' );
 		$settings = $themeSettings->getSettings();
 
 		$this->response->setVal( 'wordmarkText', $settings["wordmark-text"] );

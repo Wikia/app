@@ -44,8 +44,8 @@ class FooterController extends WikiaController {
 	}
 
 	public function executeToolbarConfiguration() {
-		$this->configurationHtml = wfRenderModule('Footer','ToolbarConfigurationPopup',array('format' => 'html'));
-		$this->renameItemHtml = wfRenderModule('Footer','ToolbarConfigurationRenameItemPopup',array('format' => 'html'));
+		$this->configurationHtml = F::app()->renderView('Footer','ToolbarConfigurationPopup',array('format' => 'html'));
+		$this->renameItemHtml = F::app()->renderView('Footer','ToolbarConfigurationRenameItemPopup',array('format' => 'html'));
 
 		$service = $this->getToolbarService();
 		$this->defaultOptions = $service->listToJson($service->getDefaultList());
@@ -64,7 +64,7 @@ class FooterController extends WikiaController {
 				$this->status = $service->save($data);
 			}
 		}
-		$this->toolbar = wfRenderModule('Footer','Toolbar',array('format' => 'html'));
+		$this->toolbar = F::app()->renderView('Footer','Toolbar',array('format' => 'html'));
 	}
 
 	public function executeToolbarGetList() {

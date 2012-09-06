@@ -292,7 +292,7 @@ class AdminPoll extends SpecialPage {
 	 * @param $vars Array: array of pre-existing JS globals
 	 * @return Boolean: true
 	 */
-	public static function addJSGlobals( $vars ) {
+	public static function addJSGlobals( &$vars ) {
 		$vars['_POLL_OPEN_MESSAGE'] = wfMsg( 'poll-open-message' );
 		$vars['_POLL_CLOSE_MESSAGE'] = wfMsg( 'poll-close-message' );
 		$vars['_POLL_FLAGGED_MESSAGE'] = wfMsg( 'poll-flagged-message' );

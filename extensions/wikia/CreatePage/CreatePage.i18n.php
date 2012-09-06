@@ -472,9 +472,10 @@ Escribe aquí la segunda sección de tu artículo.',
  * @author An13sa
  */
 $messages['eu'] = array(
+	'createpage-desc' => 'Wikiako WYSIWYG editatzailea erabiliz orrialde berriak sortzea ahalbidetzen du',
 	'createpage-sp-title' => 'Artikulu berri bat sortu',
 	'createpage_title' => 'Artikulu berri bat sortu',
-	'createpage_title_caption' => 'Izenburua:',
+	'createpage_title_caption' => 'Izenburua',
 	'createpage_enter_text' => 'Testua:',
 	'createpage_empty_title_error' => 'Izenburua beharrezkoa',
 	'createpage_empty_article_body_error' => 'Artikuluaren testua beharrezkoa',
@@ -499,7 +500,7 @@ An article with that title already exists.
 Mesedez erabili izenburu ezberdin bat.',
 	'createpage-error-article-blocked' => 'Barkatu, ezin duzu une honetan artikulu hori sortu.',
 	'tog-createpagedefaultblank' => 'Erabili orrialde txuria lehenetsiz orrialde berri bat sortzean',
-	'tog-createpagepopupdisabled' => 'Orriak Sortu pop-up ezgaitu',
+	'tog-createpagepopupdisabled' => '"Artikulu berria sortu" prozesua ezgaitu (ez gomendatua)',
 	'newpagelayout' => '[[File:Placeholder|right|300px]]
 Hemen zure artikuluaren lehen parrafoa idatz ezazu.
 

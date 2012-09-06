@@ -13,15 +13,16 @@ Forum.NewMessageForm = $.createClass(Wall.settings.classBindings.newMessageForm,
 		this.notifyEveryone = this.message.find('.notify-everyone');
 		this.loading = this.message.find('.loadingAjax');
 		this.messageTitle.on('focus', this.proxy(this.messageTitleFocus));
+		this.messageTopic = this.message.find('.message-topic').messageTopic({});
 	},
 	afterPost: function(newmsg) {
-
 		// TODO: this is a hack. We should just be getting the ID back
 		window.location = newmsg.find('.msg-title a').attr('href');
 	},
 	messageTitleFocus: function(event) {
 		if (this.messageBodyContainer.is(':hidden')) {
 			this.messageBodyContainer.fadeIn();
+			this.messageTopic.fadeIn();
 		}
 	}
 });

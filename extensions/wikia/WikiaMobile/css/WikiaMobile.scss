@@ -21,8 +21,8 @@
 @import 'image_placeholder';
 
 //mixins
-@import "mixins/transition";
-@import "mixins/box-shadow";
+@import "mixins/transition.scss";
+@import "mixins/box-shadow.scss";
 
 html {
 	border: none;
@@ -66,13 +66,13 @@ body {
 
 #wkMainCntHdr {
 	border-bottom: 1px solid $border-color;
-	padding: $page-padding;
+	padding: $page-padding 50px $page-padding $page-padding;
 	position: relative;
 
 	h1{
 		float: left;
-		margin:0 50px 0 0;
-		padding:0;
+		max-width: 100%;
+		margin: 0;
 	}
 
 	.wkShr{
@@ -93,9 +93,10 @@ a {
 	padding-top: 10px;
 }
 //for browsers that don't know that these should be block
-section, article, header, footer, aside, figure, figcaption {
-	display: block;
-}
+//all our browsers support these (Removed by Jakub Olek according to: http://caniuse.com/#search=figu)
+//section, article, header, footer, aside, figure, figcaption {
+//	display: block;
+//}
 
 #wkMainCnt{
 	padding: $page-padding;
@@ -122,7 +123,7 @@ blockquote {
 	width: 100%;
 	height: 100%;
 
-	&.center {
+	&.cntr {
 		text-align: center;
 
 		&:before {
@@ -172,7 +173,6 @@ blockquote {
 }
 
 .wkShr {
-    z-index: 5;
 	display: none;
 	position: relative;
 	width: 50px;
@@ -184,6 +184,7 @@ blockquote {
 	background-size: 50%;
 
 	&.on {
+		z-index: 5;
 		background-image:  url('/extensions/wikia/WikiaMobile/images/share_blue.png'); /* base64 */
 
 		&::before {
@@ -269,7 +270,9 @@ blockquote {
 	font-weight: 100;
 	background-color: white;
 	-webkit-transition: opacity .5s ease-out, -webkit-transform .5s;
-	-webkit-transform: translate3d(0px,0px,0px);
+	-moz-transition: opacity .5s ease-out, -moz-transform .5s;
+	transition: opacity .5s ease-out, transform .5s;
+	-webkit-transform: translateZ(0);
 	@include box-shadow(0 0 30px -10px $shadowColor);
 	text-align: center;
 	border: 1px solid grey;
@@ -287,6 +290,9 @@ blockquote {
 		pointer-events: none;
 		opacity: 0;
 		-webkit-transform: translateY(20px);
+		-moz-transform: translateY(20px);
+		-o-transform: translateY(20px);
+		transform: translateY(20px);
 	}
 
 	&.err{

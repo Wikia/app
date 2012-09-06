@@ -5,22 +5,26 @@
 	<section id="Forum" class="Forum Board .comments">
 		<?= $app->renderView('ForumController', 'breadCrumbs') ?>
 		<div class="greeting"><?= $greeting ?></div>
-		<? if ($showNewMessage): ?>
+		<? if( !$isTopicPage): ?>
 			<?= $app->renderView('ForumController', 'boardNewThread') ?>
-			<div class="ContentHeader">
-				<div class="activity"><?= $wf->MsgExt(('forum-active-threads'), array('parsemag'), $activeThreads) ?></div>
-				<div class="sorting">
-					<span class="selected"><?= $sortingSelected ?><img class="arrow" src="<?= $wg->BlankImgUrl ?>" /></span>
-					<ul class="menu">
-						<? foreach($sortingOptions as $option): ?>
-							<li class="<?= $option['id'] ?><?= !empty($option['selected']) ? ' current' : '' ?>">
-								<a href="<?= $option['href'] ?>" class="option"><?= $option['text'] ?></a>
-							</li>
-						<? endforeach ?>
-					</ul>
-				</div>
-			</div>
 		<? endif ?>
+		<div class="ContentHeader <?php if($isTopicPage): ?> Topic<?php endif; ?>">
+			<?php if($isTopicPage): ?>
+				<div class="activity"><?= $wf->MsgExt(('forum-active-threads-on-topic'), array('parsemag'), $activeThreads, '<b>'.$topicText.'</b>') ?></div>
+			<?php else: ?>
+				<div class="activity"><?= $wf->MsgExt(('forum-active-threads'), array('parsemag'), $activeThreads) ?></div>
+			<?php endif; ?>
+			<div class="sorting">
+				<span class="selected"><?= $sortingSelected ?><img class="arrow" src="<?= $wg->BlankImgUrl ?>" /></span>
+				<ul class="menu">
+					<? foreach($sortingOptions as $option): ?>
+						<li class="<?= $option['id'] ?><?= !empty($option['selected']) ? ' current' : '' ?>">
+							<a href="<?= $option['href'] ?>" class="option"><?= $option['text'] ?></a>
+						</li>
+					<? endforeach ?>
+				</ul>
+			</div>
+		</div>
 		<ul class="ThreadList">
 			<? foreach( $threads as $thread ): ?>
 				<?= $app->renderView('ForumController', 'boardThread', array(

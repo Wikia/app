@@ -7,7 +7,6 @@ $config['oasis_jquery_ads_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'#group_oasis_jquery',
-		'#group_oasis_wikia_js',
 		'#group_oasis_ads_js'
 	)
 );
@@ -46,7 +45,8 @@ $config['oasis_ads_js'] = array(
 		'#group_oasis_tracker_js',
 
 		// ads
-		'//extensions/wikia/Geo/geo.js',
+		'//resources/wikia/modules/geo.js',
+
 		'//extensions/wikia/AdEngine/AdMeldAPIClient.js',
 		'//extensions/wikia/AdEngine/AdConfig.js',
 		'//extensions/wikia/AdEngine/AdEngine.js',
@@ -57,6 +57,13 @@ $config['oasis_ads_js'] = array(
 		'#group_liftium_ads_js',
 
 		'//extensions/wikia/AdEngine/liftium/AdsInContent.js',
+		'//extensions/wikia/AdEngine/AdProviderAdEngine2.js',
+		'//extensions/wikia/AdEngine/AdProviderGamePro.js',
+		'//extensions/wikia/AdEngine/AdProviderEvolve.js',
+		'//extensions/wikia/AdEngine/AdProviderAdDriver2.js',
+		'//extensions/wikia/AdEngine/AdConfig2.js',
+		'//extensions/wikia/AdEngine/AdEngine2.js',
+		'//extensions/wikia/AdEngine/AdEngine2.run.js',
 		'//extensions/wikia/AdEngine/AdDriver.js',
 		'//extensions/wikia/AdEngine/AdDriverGP.js',
     )
@@ -78,7 +85,7 @@ $config['oasis_noads_extensions_js'] = array(
 		'//extensions/wikia/MiniEditor/js/MiniEditor.js',
 		'#group_articlecomments_js', // needs to load after MiniEditor
 		'//extensions/FBConnect/fbconnect.js',
-		'//extensions/wikia/Meebo/meebo.js',
+		'//extensions/wikia/Meebo/meebo.js', // depends on geo.js from #oasis_ads_js
 		'//extensions/wikia/GlobalNotification/GlobalNotification.js',
 		'//skins/oasis/js/GlobalModal.js',  // This needs to load last after all common extensions, please keep this last.
 		'//extensions/wikia/UserLogin/js/UserLogin.js',
@@ -129,6 +136,8 @@ $config['jquery'] = array(
 $config['oasis_jquery'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
+		// Wikia plugins
+		'#group_oasis_wikia_js',
 
 		// 3rd party plugins
 		'//resources/wikia/libraries/jquery/getcss/jquery.getcss.js',
@@ -136,7 +145,6 @@ $config['oasis_jquery'] = array(
 		'//resources/wikia/libraries/jquery/timeago/jquery.timeago.js',
 		'//resources/wikia/libraries/jquery/store/jquery.store.js',
 		'//resources/wikia/libraries/jquery/throttle-debounce/jquery.throttle-debounce.js',
-		'//resources/wikia/libraries/jquery/slideshow/jquery-slideshow-0.4.js',
 
 		// polyfills
 		'//resources/wikia/polyfills/jquery.wikia.placeholder.js',
@@ -201,7 +209,6 @@ $config['oasis_shared_js'] = array(
 	'assets' => array(
 		// shared libraries
 		'#group_oasis_jquery',
-		'#group_oasis_wikia_js',
 		'#group_oasis_nojquery_shared_js',
 		'#group_oasis_extensions_js',
 	)
@@ -230,11 +237,6 @@ $config['oasis_nojquery_shared_js'] = array(
 	'assets' => array(
 
 		// shared libraries
-		'//resources/wikia/libraries/my.class/my.class.js',
-		'//resources/wikia/modules/querystring.js',
-		'//resources/wikia/modules/cookies.js',
-		'//resources/wikia/modules/log.js',
-		'//resources/wikia/libraries/jquery/modal/jquery.wikia.modal.js',
 		'//extensions/wikia/AssetsManager/js/AssetsManager.js',
 		'//extensions/wikia/JSMessages/js/JSMessages.js',
 		'//extensions/wikia/CategorySelect/CategorySelect.view.js',
@@ -283,26 +285,6 @@ $config['oasis_user_js'] = array(
 	)
 );
 
-/** Wikiaphone **/
-//TODO: remove when Wikiaphone will be deleted
-
-$config['wikiaphone_js'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => array(
-		//core functionality required early in the process before jQuery
-		'//resources/wikia/modules/cookies.js',
-		'//resources/wikia/modules/querystring.js',
-		'//resources/wikia/modules/log.js',
-
-		'#group_oasis_jquery',
-
-		'//extensions/wikia/AdEngine/AdConfig.js',
-		'//extensions/wikia/WikiaTracker/js/WikiaTracker_config.js',
-		'//extensions/wikia/WikiaTracker/js/WikiaTracker.js',
-		'//skins/wikiaphone/main.js'
-	)
-);
-
 /** WikiaMobile **/
 
 $config['wikiamobile_scss'] = array(
@@ -334,16 +316,9 @@ $config['wikiamobile_js_head'] = array(
 		'//resources/wikia/libraries/modil/modil.js',
 
 		//core modules
-		'//resources/wikia/modules/cookies.js',
 		'//resources/wikia/modules/querystring.js',
-		'//resources/wikia/modules/log.js',
-
-		//feature detection (it's here since it's required by advertisement core)
-		'//resources/wikia/libraries/modernizr/modernizr.wikiamobile.js',
-		'//resources/wikia/libraries/modernizr/feature-detects/positionfixed.wikiamobile.js',
-
-		//advertisement core
-		'//extensions/wikia/AdEngine/AdConfig.js'
+		'//resources/wikia/modules/cookies.js',
+		'//resources/wikia/modules/log.js'//depends on querystring.js and cookies.js
 	)
 );
 
@@ -352,8 +327,9 @@ $config['wikiamobile_js_body_minimal'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'wikiamobile',
 	'assets' => array(
-		//modules
-		'//resources/wikia/modules/cache.js',
+		//feature detection
+		'//extensions/wikia/WikiaMobile/js/features.js',
+		'//extensions/wikia/WikiaMobile/js/feature-detects/positionfixed.wikiamobile.js',
 
 		// deferred.js - jQuery-free implementation (BugId:34943)
 		'//resources/wikia/libraries/deferred/deferred.js',
@@ -362,6 +338,9 @@ $config['wikiamobile_js_body_minimal'] = array(
 		//tracker
 		'//extensions/wikia/WikiaTracker/js/WikiaTracker_config.js',
 		'//extensions/wikia/WikiaTracker/js/WikiaTracker.js',
+
+		//modules
+		'//resources/wikia/modules/cache.js'
 	)
 );
 
@@ -373,7 +352,7 @@ $config['wikiamobile_js_body_full'] = array(
 		'#group_wikiamobile_js_body_minimal',
 
 		//feature detection
-		'//resources/wikia/libraries/modernizr/feature-detects/overflow.wikiamobile.js',
+		'//extensions/wikia/WikiaMobile/js/feature-detects/overflow.wikiamobile.js',
 
 		//polyfills
 		'//resources/wikia/polyfills/outerhtml.js',
@@ -422,7 +401,15 @@ $config['wikiamobile_js_ads'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'wikiamobile',
 	'assets' => array(
-		'//extensions/wikia/WikiaMobile/js/ads.js'
+		//libraries
+		'//resources/wikia/libraries/DOMwriter/domwriter.js',
+
+		//modules
+		'//resources/wikia/modules/geo.js',
+		'//extensions/wikia/WikiaMobile/js/ads.js',
+
+		//advertisement core, depends on geo.js
+		'//extensions/wikia/AdEngine/AdConfig.js'
 	)
 );
 
@@ -497,11 +484,6 @@ $config['wikiaapp_js'] = array(
 $config['monobook_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
-		//core functionality required early in the process before jQuery
-		'//resources/wikia/modules/cookies.js',
-		'//resources/wikia/modules/querystring.js',
-		'//resources/wikia/modules/log.js',
-
 		'#group_oasis_jquery',
 		'#group_articlecomments_js',
 
@@ -518,7 +500,6 @@ $config['monobook_js'] = array(
 //		'//resources/mediawiki/mediawiki.util.js', # instead of //skins/common/wikibits.js'
 //		'//skins/common/ajax.js',
 		'//skins/monobook/main.js',
-		'//resources/wikia/libraries/my.class/my.class.js',
 		'//extensions/wikia/JSMessages/js/JSMessages.js',
 		'//extensions/wikia/AjaxLogin/AjaxLoginBindings.js',
 		'//extensions/wikia/ImageLazyLoad/js/ImageLazyLoad.js',
@@ -664,7 +645,6 @@ $config['chat_js2'] = array(
 	'assets' => array(
 		'#group_oasis_shared_js',
 		'//extensions/wikia/Chat2/js/lib/socket.io.client.js',
-		'//extensions/wikia/JSMessages/js/JSMessages.js',
 		'//extensions/wikia/Chat2/js/emoticons.js', // must be before controllers.js
 		'//extensions/wikia/Chat2/js/lib/underscore.js',
 		'//extensions/wikia/Chat2/js/lib/backbone.js',
@@ -687,11 +667,6 @@ $config['chat_ban_js'] = array(
 $config['theme_designer_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
-		//core functionality required early in the process before jQuery
-		'//resources/wikia/modules/cookies.js',
-		'//resources/wikia/modules/querystring.js',
-		'//resources/wikia/modules/log.js',
-
 		'#group_oasis_jquery',
 
 		'#group_oasis_tracker_js',
@@ -770,8 +745,15 @@ $config['forum_js'] = array(
 //		'#group_wall_js',
 		'//extensions/wikia/Forum/js/Forum.js',
 		'//extensions/wikia/Forum/js/ForumNewMessageForm.js',
-		'//extensions/wikia/Forum/js/ForumSortingBar.js',
-		'//extensions/wikia/Forum/js/ForumReplyMessageForm.js'
+		'//extensions/wikia/Forum/js/ForumSortingBar.js'
+	)
+);
+
+/** Wall MessageTopic (certain parts of Wall and Forum uses this) **/
+$config['wall_topic_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/Wall/js/MessageTopic.js',
 	)
 );
 
@@ -944,7 +926,7 @@ $config['wikiasearch_scss_wikiamobile'] = array(
 
 /** Places **/
 $config['places_js'] = array(
-		'skin' => array( 'oasis', 'monobook', 'wikiamobile', 'wikiaphone' ),
+		'skin' => array( 'oasis', 'monobook', 'wikiamobile' ),
 		'type' => AssetsManager::TYPE_JS,
 		'assets' => array(
 				'//extensions/wikia/Places/js/Places.js'
@@ -953,7 +935,7 @@ $config['places_js'] = array(
 
 $config['places_css'] = array(
 		'type' => AssetsManager::TYPE_CSS,
-		'skin' => array( 'oasis', 'monobook', 'wikiamobile', 'wikiaphone' ),
+		'skin' => array( 'oasis', 'monobook', 'wikiamobile' ),
 		'assets' => array(
 				'//extensions/wikia/Places/css/Places.css',
 		)
@@ -999,7 +981,7 @@ $config['imagedrop_scss'] = array(
 // AbTesting
 $config['abtesting'] = array(
 	'type' => AssetsManager::TYPE_JS,
-	'skin' => array( 'monobook', 'oasis', 'wikiamobile', 'wikiaphone' ),
+	'skin' => array( 'monobook', 'oasis', 'wikiamobile' ),
 	'assets' => array(
 		'//extensions/wikia/AbTesting/js/AbTesting.js',
 	)

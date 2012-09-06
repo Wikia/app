@@ -21,9 +21,7 @@
 			endif; ?>
 		</blockquote>
 		<div class="speech-bubble-buttons" data-space-type="buttons">
-			<button disabled="disabled" class="replyButton<?
-				if ( $loginToEditProtectedPage ): ?> wall-require-login" data="<?= $ajaxLoginUrl; ?><? endif;
-			?>"><?= wfMsg('wall-button-to-submit-reply') ?></button>
+			<button disabled="disabled" class="replyButton"><?= wfMsg('wall-button-to-submit-reply') ?></button>
 			
 			<button class="previewButton secondary" disabled="disabled" >
 				<?= wfMsg('wall-button-to-preview-comment') ?>

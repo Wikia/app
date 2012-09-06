@@ -52,9 +52,11 @@ $app->registerClass('CityVisualization', $wikiaHomePageExtDir . 'CityVisualizati
 
 // hooks
 $app->registerHook('UploadVerification','UploadVisualizationImageFromFile','UploadVerification');
+$app->registerHook('CityVisualization::wikiDataInserted', 'CityVisualization', 'onWikiDataUpdated');
 
 // i18n mapping
 $app->registerExtensionMessageFile('SpecialPromote', $dir.'SpecialPromote.i18n.php');
+$app->registerExtensionMessageFile('SpecialPromoteAliases', $dir . 'SpecialPromote.alias.php') ;
 
 F::build('JSMessages')->registerPackage('SpecialPromote', array('promote-*'));
 
@@ -66,7 +68,3 @@ $wgGroupPermissions['*']['promote'] = false;
 $wgGroupPermissions['staff']['promote'] = true;
 $wgGroupPermissions['sysop']['promote'] = true;
 $wgGroupPermissions['bureaucrat']['promote'] = true;
-
-$wgLogTypes[] = 'promote';
-$wgLogNames['promote'] = 'promote-log-name';
-$wgLogHeaders['promote'] = 'promote-log-header';

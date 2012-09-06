@@ -32,23 +32,22 @@ class WallHelper {
 	 * @author Andrzej 'nAndy' Åukaszewski
 	 */
 	public function getTitle($namespace = null, $subpage = null, $user = null) {
-		$app = F::App();
-
 		if( empty($user) ) {
 			$user = $this->getUser();
 		}
 
+
 		if( empty($namespace) ) {
 			$namespace2 = $this->getVal('namespace');
-			$this->title = F::build('Title', array($user->getName(), $namespace2), 'newFromText');
+			$this->title = F::build( 'Title', array( $user->getName(), $namespace2 ), 'newFromText' );
 
 			return $this->title;
 		}
 
 		if( empty($subpage) ) {
-			return F::build('Title', array($user->getName(), $namespace), 'newFromText');
+			return F::build( 'Title', array( $user->getName(), $namespace ), 'newFromText' );
 		} else {
-			return F::build('Title', array($user->getName().'/'.$subpage, $namespace), 'newFromText');
+			return F::build( 'Title', array( $user->getName().'/'.$subpage, $namespace ), 'newFromText' );
 		}
 	}
 
@@ -70,9 +69,15 @@ class WallHelper {
         $user = null;
 
         if( $ns == NS_USER_WALL ) {
+			/**
+			 * @var $w Wall
+			 */
 			$w = F::build( 'Wall', array( $title ), 'newFromTitle' );
 			$user = $w->getUser();
 		} else if( $ns == NS_USER_WALL_MESSAGE) {
+			/**
+			 * @var $wm WallMessage
+			 */
 			$wm = F::build( 'WallMessage', array( $title ), 'newFromTitle' );
             $user = $wm->getWallOwner();
 		}
@@ -584,4 +589,14 @@ class WallHelper {
 		}
 		return false;
 	}
+	
+	public static function getTopicPageURL($topic) {
+		if(empty($topic)) {
+			return "#";
+		}
+		//TODO:generalize this, this should be part of forum
+		$topicTitle = Title::newFromText($topic->getPrefixedText(), NS_WIKIA_FORUM_TOPIC_BOARD);
+		return $topicTitle->getFullURL();
+	}
+	
 }

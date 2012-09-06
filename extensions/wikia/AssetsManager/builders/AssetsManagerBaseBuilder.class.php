@@ -11,6 +11,8 @@ class AssetsManagerBaseBuilder {
 	protected $mParams;
 	protected $mCb;
 	protected $mNoExternals;
+	protected $mForceProfile;
+	protected $mProfilerData = array();
 
 	protected $mContent;
 	protected $mContentType;
@@ -18,32 +20,57 @@ class AssetsManagerBaseBuilder {
 
 	public function __construct(WebRequest $request) {
 		$this->mType = $request->getText('type');
-		$this->mOid = $request->getText('oid');
+		$this->mOid = preg_replace( '/\?.*$/', '', $request->getText('oid') );
 		parse_str(urldecode($request->getText('params')), $this->mParams);
 		$this->mCb = $request->getInt('cb');
 
 		if (!empty($this->mParams['noexternals'])) {
 			$this->mNoExternals = true;
 		}
+
+		if (!empty($this->mParams['forceprofile'])) {
+			$this->mForceProfile = true;
+		}
 	}
 
-	public function getContent() {
-		if((!empty($this->mContent)) && ((!isset($this->mParams['minify'])) || ($this->mParams['minify'] == true))){
-			$start = microtime(true);
+	public function getContent( $processingTimeStart = null ) {
+		$minifyTimeStart = null;
 
-			if($this->mOid == 'oasis_shared_js' || $this->mOid == 'rte') {
-				$newContent = self::minifyJS($this->mContent, true);
-			} else if($this->mContentType == AssetsManager::TYPE_CSS) {
-				$newContent = $this->minifyCSS($this->mContent);
-			} else if($this->mContentType == AssetsManager::TYPE_JS) {
-				$newContent = self::minifyJS($this->mContent);
+		if ( !empty( $this->mContent ) && ( !isset( $this->mParams['minify'] ) || $this->mParams['minify'] == true ) ) {
+			if ( $this->mForceProfile ) {
+				$minifyTimeStart = microtime( true );
 			}
 
-			$stop = microtime(true);
+			if ( $this->mContentType == AssetsManager::TYPE_CSS ) {
+				$newContent = $this->minifyCSS( $this->mContent );
+
+			} else if ( $this->mContentType == AssetsManager::TYPE_JS ) {
+				$newContent = self::minifyJS( $this->mContent, ( $this->mOid == 'oasis_shared_js' || $this->mOid == 'rte' ) ? true : false );
+			}
 		}
 
-		if(!empty($newContent)) {
-			$this->mContent = '/* Minify took '.($stop-$start)." */\n\n".$newContent;
+		if ( !empty( $newContent ) ) {
+			if ( $this->mForceProfile ) {
+				$timeEnd = microtime( true );
+
+				if ( $processingTimeStart ) {
+					$this->mProfilerData[] = "Processing time: " . intval( ( $timeEnd - $processingTimeStart ) * 1000 ) . "ms";
+				}
+
+				if ( $minifyTimeStart ) {
+					$this->mProfilerData[] = "Minification time: " . intval( ( $timeEnd - $minifyTimeStart ) * 1000 ) . "ms";
+				}
+
+				$oldSize = intval( strlen( $this->mContent ) / 1024 );
+				$newSize = intval( strlen( $newContent ) / 1024 );
+
+				$this->mProfilerData[] = "Compressed Size: " . $newSize . "kb";
+				$this->mProfilerData[] = "Compression Ratio: " . intval( ( 1 - ( $newSize / $oldSize ) ) * 100 ) . "%";
+
+				$newContent = "/* " . implode( " | ", $this->mProfilerData ) . " */\n\n" . $newContent;
+			}
+
+			$this->mContent = $newContent;
 		}
 
 		return $this->mContent;

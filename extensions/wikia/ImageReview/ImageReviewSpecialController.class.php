@@ -111,7 +111,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 			$do = array( 
 				self::ACTION_QUESTIONABLE	=> ImageReviewStatuses::STATE_QUESTIONABLE,
 				self::ACTION_REJECTED		=> ImageReviewStatuses::STATE_REJECTED,
-				'default'					=> ImageReviewStatuses::STATE_UNREVIEWED
+				'default'			=> ImageReviewStatuses::STATE_UNREVIEWED
 			);
 			$this->imageList = $helper->getImageList( $ts, isset( $do[ $action ] ) ? $do[ $action ] : $do['default'], $order );
 		}

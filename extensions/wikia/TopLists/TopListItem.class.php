@@ -21,7 +21,7 @@ class TopListItem extends TopListBase {
 	 *
 	 * @param string $name a string representation of the article title
 	 *
-	 * @return mixed a TopListItem instance, false in case $name represents a title not in the NS_TOPLIST namespace
+	 * @return TopListItem|Bool|mixed a TopListItem instance, false in case $name represents a title not in the NS_TOPLIST namespace
 	 */
 	static public function newFromText( $name ) {
 		$title = Title::newFromText( $name, NS_TOPLIST );

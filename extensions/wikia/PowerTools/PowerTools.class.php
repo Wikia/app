@@ -1,6 +1,18 @@
 <?php
 
+/**
+ *
+ */
 class PowerTools {
+
+	/**
+	 * @static
+	 * @param string $action
+	 * @param Article $article
+	 * @return bool
+	 * @throws UserBlockedError
+	 * @throws PermissionsError
+	 */
 	static function onPowerDelete( $action, $article ) {
 		global $wgOut, $wgUser, $wgRequest;
 
@@ -9,13 +21,11 @@ class PowerTools {
 		}
 
 		if ( !$wgUser->isAllowed( 'delete' ) || !$wgUser->isAllowed( 'powerdelete' ) ) {
-			$wgOut->permissionRequired( 'powerdelete' );
-			return false;
+			throw new PermissionsError( 'powerdelete' );
 		}
 
 		if ( $wgUser->isBlocked() ) {
-			$wgOut->blockedPage();
-			return false;
+			throw new UserBlockedError( $wgUser->mBlock );
 		}
 
 		if ( wfReadOnly() ) {

@@ -1,6 +1,9 @@
 <?php
 
 class ImagesService extends Service {
+	const FILE_DATA_COMMENT_OPION_NAME = 'comment';
+	const FILE_DATA_DESC_OPION_NAME = 'description';
+
 	/**
 	 * get image thumbnail
 	 * @param integer wikiId
@@ -60,7 +63,17 @@ class ImagesService extends Service {
 		return $imagePage;
 	}
 
-	public static function uploadImageFromUrl($imageUrl, $dstImageName, $user = null) {
+	/**
+	 * @desc Uploads an image on a wki
+	 *
+	 * @static
+	 * @param string $imageUrl url address to original file
+	 * @param Object $oImageData an object with obligatory field "name" and optional fields: "comment", "description"
+	 * @param User | null $user optional User's class instance (the file will be "uploaded" by this user)
+	 *
+	 * @return array
+	 */
+	public static function uploadImageFromUrl($imageUrl, $oImageData, $user = null) {
 		// disable recentchange hooks
 		global $wgHooks;
 		$wgHooks['RecentChange_save'] = array();
@@ -73,13 +86,20 @@ class ImagesService extends Service {
 			'wpUploadFileURL' => $imageUrl
 		);
 
+		//validate of optional image data
+		foreach( array(self::FILE_DATA_COMMENT_OPION_NAME, self::FILE_DATA_DESC_OPION_NAME) as $option ) {
+			if( !isset($oImageData->$option) ) {
+				$oImageData->$option = $oImageData->name;
+			}
+		}
+
 		$upload = F::build('UploadFromUrl');
 		$upload->initializeFromRequest(F::build('FauxRequest', array($data, true)));
 		$upload->fetchFile();
 		$upload->verifyUpload();
 
 		// create destination file
-		$title = Title::newFromText($dstImageName, NS_FILE);
+		$title = Title::newFromText($oImageData->name, NS_FILE);
 		$file = F::build(
 			'WikiaLocalFile',
 			array(
@@ -91,8 +111,8 @@ class ImagesService extends Service {
 		/* real upload */
 		$result = $file->upload(
 			$upload->getTempPath(),
-			$dstImageName,
-			$dstImageName,
+			$oImageData->comment,
+			$oImageData->description,
 			File::DELETE_SOURCE,
 			false,
 			false,

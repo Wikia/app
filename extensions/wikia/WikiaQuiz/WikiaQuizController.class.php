@@ -36,7 +36,7 @@ class WikiaQuizController extends WikiaController {
 	}
 
 	public function executePlayQuiz($params) {
-		global $wgUser, $wgOut, $wgRequest, $wgSiteName, $wgTitle;
+		global $wgUser, $wgOut, $wgRequest, $wgSiteName;
 
 		$this->data = $params['data'];
 
@@ -153,12 +153,10 @@ class WikiaQuizController extends WikiaController {
 		global $wgUser, $wgOut;
 
 		if ($wgUser->isBlocked()) {
-			$wgOut->blockedPage();
-			return false;
+			throw new UserBlockedError( $wgUser->mBlock );
 		}
 		if (!$wgUser->isAllowed('wikiaquiz')) {
-			$wgOut->permissionRequired( "" );
-			return false;
+			throw new PermissionsError( "" );
 		}
 		if (wfReadOnly() && !wfAutomaticReadOnly()) {
 			$wgOut->readOnlyPage();

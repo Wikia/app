@@ -1,8 +1,8 @@
 <header id="WikiaUserPagesHeader" class="WikiaUserPagesHeader WikiaBlogPostHeader">
-	<?= wfRenderModule('CommentsLikes', 'Index', array('comments' => $comments, 'likes' => $likes)); ?>
+	<?= F::app()->renderView('CommentsLikes', 'Index', array('comments' => $comments, 'likes' => $likes)); ?>
 	<?php
 		if (!empty($actionMenu['action'])) {
-			echo wfRenderModule('MenuButton', 'Index', array(
+			echo F::app()->renderView('MenuButton', 'Index', array(
 				'action' => $actionMenu['action'],
 				'dropdown' => $actionMenu['dropdown'],
 				'image' => MenuButtonController::EDIT_ICON,

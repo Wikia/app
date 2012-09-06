@@ -168,11 +168,13 @@ class ChatHelper {
 			}
 		}
 
-		// TODO: move these to asset manager when we release chat globally
-		$out->addScriptFile($wgResourceBasePath . '/resources/wikia/libraries/bootstrap/popover.js');
-		$out->addScriptFile($wgExtensionsPath . '/wikia/Chat2/js/ChatEntryPoint.js');
-		$out->addStyle(AssetsManager::getInstance()->getSassCommonURL('resources/wikia/libraries/bootstrap/popover.scss'));
-		$out->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/Chat2/css/ChatEntryPoint.scss'));
+		if ( F::app()->checkSkin( 'oasis' ) ){
+			// TODO: move these to asset manager when we release chat globally
+			$out->addScriptFile($wgResourceBasePath . '/resources/wikia/libraries/bootstrap/popover.js');
+			$out->addScriptFile($wgExtensionsPath . '/wikia/Chat2/js/ChatEntryPoint.js');
+			$out->addStyle(AssetsManager::getInstance()->getSassCommonURL('resources/wikia/libraries/bootstrap/popover.scss'));
+			$out->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/Chat2/css/ChatEntryPoint.scss'));
+		}
 
 		wfProfileOut(__METHOD__);
 		return true;
@@ -219,13 +221,33 @@ class ChatHelper {
 			if(!empty($user) && Chat::getBanInformation($wgCityId, $user) !== false && $wgUser->isAllowed( 'chatmoderator' ) ) {
 				$revert = "(" . "<a class='chat-change-ban' data-user-id='{$paramArray[1]}' href='#'>" . wfMsg( 'chat-ban-log-change-ban-link') . "</a>" . ")";
 			}
+		} elseif ( $logaction === 'chatconnect' ) {
+			$ipLinks = array();
+			if ( $wgUser->isAllowed( 'multilookup' ) ) {
+				$mlTitle = GlobalTitle::newFromText( 'MultiLookup', NS_SPECIAL, 177 );
+				// Need to make the link manually for this as Linker's normaliseSpecialPage
+				// makes the link local if the special page exists locally, rather than
+				// keeping the global title
+				$ipLinks[] = Xml::tags(
+					'a',
+					array( 'href' => $mlTitle->getFullURL( 'target=' . urlencode( $paramArray[0] ) ) ),
+					wfMessage( 'multilookup' )->escaped()
+				);
+				$ipLinks[] = Linker::makeKnownLinkObj(
+					GlobalTitle::newFromText( 'Phalanx', NS_SPECIAL, 177 ),
+					wfMessage( 'phalanx' )->escaped(),
+					wfArrayToCGI( array( 'type' => '8', 'target' => $paramArray[0], 'wpPhalanxCheckBlocker' => $paramArray[0] ) )
+				);
+				$ipLinks[] = Linker::blockLink( 0, $paramArray[0] );
+				$revert = '(' . implode( wfMessage( 'pipe-separator' )->plain(), $ipLinks ) . ')';
+			}
 		}
 
 		return true;
 	}
 
 	public static function formatLogEntry( $type, $action, $title, $forUI, $params ) {
-		global $wgUser, $wgLang;
+		global $wgLang;
 
 		if(empty($params[0])){
 			return "";
@@ -236,7 +258,7 @@ class ChatHelper {
 			$endon = $wgLang->timeanddate( wfTimestamp( TS_MW, $params[3] ), true );
 		}
 
-		$skin = $wgUser->getSkin();
+		$skin = RequestContext::getMain()->getSkin();
 		$id =  $params[1];
 		$revert = "(" . "<a class='chat-change-ban' data-user-id='{$params[1]}' href='#'>" . wfMsg( 'chat-ban-log-change-ban-link') . "</a>" . ")";
 		$link = $skin->userLink( $id, $title->getText() )

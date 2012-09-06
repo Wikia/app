@@ -194,7 +194,7 @@ class AssetsManagerController extends WikiaController {
 	/**
 	 * Get raw content of mustache templates
 	 *
-	 * @param array relative paths to mustache templates
+	 * @param array String relative paths to mustache templates
 	 * @return array templates content
 	 * @throws WikiaException 
 	 */

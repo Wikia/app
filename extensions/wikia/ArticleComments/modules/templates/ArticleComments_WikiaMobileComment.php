@@ -6,7 +6,7 @@
 		<div class=by>
 			<?= $comment['sig'] ;?>
 			<? if( !empty( $comment['isStaff'] ) ) :?>
-			<img class=staff src=http://images.wikia.com/wikia/images/e/e9/WikiaStaff.png alt=@wikia/></span>
+			<img class=staff src=<?=$wf->ReplaceImageServer('/extensions/wikia/StaffSig/images/WikiaStaff.png')?> alt=@wikia/></span>
 			<? endif ;?>
 		</div>
 		<div class=txt><?= $comment['text'] ?></div>

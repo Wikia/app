@@ -6,13 +6,9 @@
  */
 
 class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
-
-	const CACHE_VERSION = 1;
+	const CACHE_VERSION = 2;
 
 	public function __construct(WebRequest $request) {
-		global $wgDevelEnvironment;
-		$wgDevelEnvironment ? $timeStart = microtime( true ) : null;
-
 		parent::__construct($request);
 
 		if (strpos($this->mOid, '..') !== false) {
@@ -25,32 +21,43 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 
 		//remove slashes at the beginning of the string, we need a pure relative path to open the file
 		$this->mOid = preg_replace( '/^[\/]+/', '', $this->mOid );
+		$this->mContentType = AssetsManager::TYPE_CSS;
+	}
+
+	public function getContent() {
+		wfProfileIn(__METHOD__);
+
+		$processingTimeStart = null;
+
+		if ( $this->mForceProfile ) {
+			$processingTimeStart = microtime( true );
+		}
 
 		$hash = wfAssetManagerGetSASShash( $this->mOid );
-		$inputHash = md5(urldecode(http_build_query($this->mParams, '', ' ')));
-
-		$cacheId = "/Sass-$inputHash-$hash-" . self::CACHE_VERSION;
+		$paramsHash = md5( urldecode( http_build_query( $this->mParams, '', ' ' ) ) );
+		$cacheId = "/Sass-{$paramsHash}-{$hash}-" . self::CACHE_VERSION;
 
 		$memc = F::App()->wg->Memc;
+		$cachedContent = $memc->get( $cacheId );
 
-		if ( $obj = $memc->get( $cacheId ) ) {
-			$this->mContent = $obj;
+		if ( $cachedContent ) {
+			$this->mContent = $cachedContent;
+
 		} else {
 			$this->processContent();
+
+			// This is the final pass on contents which, among other things, performs minification
+			parent::getContent( $processingTimeStart );
+
 			// Prevent cache poisoning if we are serving sass from preview server
-			if (getHostPrefix() == null) {
+			if ( getHostPrefix() == null && !$this->mForceProfile ) {
 				$memc->set( $cacheId, $this->mContent );
 			}
 		}
 
-		$this->mContentType = AssetsManager::TYPE_CSS;
+		wfProfileOut(__METHOD__);
 
-		if( $wgDevelEnvironment ) {
-			$timeEnd = microtime( true );
-			$time = intval( ($timeEnd - $timeStart) * 1000 );
-			$contentLen = strlen( $this->mContent);
-			error_log( "{$this->mOid}\t{$time}ms {$contentLen}b" );
-		}
+		return $this->mContent;
 	}
 
 	private function processContent() {
@@ -75,7 +82,7 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 		$tempDir = str_replace('\\', '/', $tempDir);
 		$params = urldecode(http_build_query($this->mParams, '', ' '));
 
-		$cmd = "{$wgSassExecutable} {$IP}/{$this->mOid} {$tempOutFile} --cache-location {$tempDir}/sass --style compact -r {$IP}/extensions/wikia/SASS/wikia_sass.rb {$params}";
+		$cmd = "{$wgSassExecutable} {$IP}/{$this->mOid} {$tempOutFile} --cache-location {$tempDir}/sass -r {$IP}/extensions/wikia/SASS/wikia_sass.rb {$params}";
 		$escapedCmd = escapeshellcmd($cmd) . " 2>&1";
 
 		$sassResult = shell_exec($escapedCmd);

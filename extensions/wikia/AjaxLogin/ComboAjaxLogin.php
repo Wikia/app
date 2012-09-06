@@ -77,7 +77,7 @@ function onGetConfirmEditMessage( $captcha, &$message ) {
 function GetComboAjaxLogin() {
 	$tmpl = AjaxLoginForm::getTemplateForCombinedForms();
 
-	$response = new AjaxResponse($tmpl->execute('ComboAjaxLogin'));
+	$response = new AjaxResponse($tmpl->render('ComboAjaxLogin'));
 	$response->setContentType('text/html; charset=utf-8');
 
 	return $response;
@@ -113,8 +113,8 @@ function getRegisterJS(){
 	return $response;
 }
 
-function comboAjaxLoginVars($vars) {
-	global $wgUser,$wgWikiaEnableConfirmEditExt, $wgRequest, $wgEnableAPI;
+function comboAjaxLoginVars(Array &$vars) {
+	global $wgUser,$wgRequest, $wgEnableAPI;
 
 	$vars['wgReturnTo'] = $wgRequest->getVal('returnto', '');
 	$vars['wgReturnToQuery'] = $wgRequest->getVal('returntoquery', '');
@@ -344,7 +344,7 @@ class AjaxLoginForm extends LoginForm {
 			}
 		}
 
-		$tmpl->set("ajaxLoginComponent", $tmpl->execute('AjaxLoginComponent'));
+		$tmpl->set("ajaxLoginComponent", $tmpl->render('AjaxLoginComponent'));
 
 		return $tmpl;
 	}
@@ -367,8 +367,8 @@ class AjaxLoginForm extends LoginForm {
 		if( $this->authenticateStatus == self::RESET_PASS ) {
 			return ;
 		}
-		$wgOut->addHTML( $tmpl->execute( 'ComboAjaxLogin' ) );
-		$wgOut->addHTML( $tmpl->execute( 'ComboPageFooter' ) );
+		$wgOut->addHTML( $tmpl->render( 'ComboAjaxLogin' ) );
+		$wgOut->addHTML( $tmpl->render( 'ComboPageFooter' ) );
 	}
 
 	public static function getRegisterJS(){

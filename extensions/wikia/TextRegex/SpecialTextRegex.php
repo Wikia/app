@@ -25,8 +25,7 @@ class TextRegex extends SpecialPage {
 		global $wgOut, $wgUser, $wgRequest, $wgLang;
 
 		if ( $wgUser->isBlocked() ) {
-			$wgOut->blockedPage();
-			return;
+			throw new UserBlockedError( $this->getUser()->mBlock );
 		}
 		if ( wfReadOnly() ) {
 			$wgOut->readOnlyPage();
@@ -185,7 +184,7 @@ class TextRegexList {
 			"action_stats"		=> $action_stats
 		) );
 		#---
-		$wgOut->addHtml($oTmpl->execute("textregex-list"));
+		$wgOut->addHtml($oTmpl->render("textregex-list"));
 		wfProfileOut( __METHOD__ );
 
 		return ;
@@ -280,11 +279,11 @@ class TextRegexList {
 	/* init for showprevnext */
 	function showPrevNext( &$out, $display = 1 ) {
 		global $wgLang;
-		$html = $wgLang->viewPrevNext( 
-			SpecialPage::getTitleFor( 'TextRegex/'.$this->subList ), 
-			$this->offset, 
-			$this->limit, 
-			array(), 
+		$html = $wgLang->viewPrevNext(
+			SpecialPage::getTitleFor( 'TextRegex/'.$this->subList ),
+			$this->offset,
+			$this->limit,
+			array(),
 			($this->numResults - $this->offset) <= $this->limit
 		);
 
@@ -296,7 +295,7 @@ class TextRegexList {
 	}
 
 	public function showStatsList($regex_id) {
-		global $wgOut, $wgLang, $wgUser;
+		global $wgOut, $wgLang;
 
 		wfProfileIn( __METHOD__ );
 
@@ -311,11 +310,11 @@ class TextRegexList {
 			}
 			$filter = 'action=stats&id=' . urlencode($regex_id);
 
-			$pager = $wgLang->viewPrevNext( 
-				SpecialPage::getTitleFor( 'TextRegex/'.$this->subList ), 
-				$this->offset, 
-				$this->limit, 
-				wfCgiToArray( $filter ), 
+			$pager = $wgLang->viewPrevNext(
+				SpecialPage::getTitleFor( 'TextRegex/'.$this->subList ),
+				$this->offset,
+				$this->limit,
+				wfCgiToArray( $filter ),
 				($numStatResults - $this->offset) <= $this->limit
 			);
 
@@ -327,13 +326,13 @@ class TextRegexList {
 				"pager"         => $pager,
 				"stats_list"    => $regexStats,
 				"lang"          => $wgLang,
-				"skin"          => $wgUser->getSkin(),
+				"skin"          => RequestContext::getMain()->getSkin(),
 				"oTitle"      	=> $this->oTitle,
 				"regexInfo"		=> $regexInfo,
 				"action" 		=> $action,
 				"numStatResults"=> $numStatResults
 			) );
-			$wgOut->addHTML( $oTmpl->execute("textregex-stats") );
+			$wgOut->addHTML( $oTmpl->render("textregex-stats") );
 		} else {
 			$wgOut->addHTML( wfMsg('textregex-invalid-regexid') );
 		}
@@ -387,7 +386,7 @@ class TextRegexForm {
 			"err"			=> $err
 		) );
 		#---
-		$wgOut->addHtml($oTmpl->execute("textregex-form"));
+		$wgOut->addHtml($oTmpl->render("textregex-form"));
 		return 1;
 	}
 
@@ -443,7 +442,7 @@ class TextRegexForm {
 			"err"			=> $err
 		) );
 		#---
-		$wgOut->addHtml($oTmpl->execute("textregex-subpages"));
+		$wgOut->addHtml($oTmpl->render("textregex-subpages"));
 		wfProfileOut( __METHOD__ );
 		return 1;
 	}

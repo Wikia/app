@@ -2736,7 +2736,7 @@ class ExtDynamicPageList2
 				return $output;
 			}
 
-			$sk =& $wgUser->getSkin();
+			$sk =& RequestContext::getMain()->getSkin();
 			// generate title for Special:Contributions (used if adduser=true)
 			$sSpecContribs = '[[:Special:Contributions|Contributions]]';
 
@@ -2816,7 +2816,7 @@ class ExtDynamicPageList2
 					$sTitleText = substr($sTitleText, 0, $iTitleMaxLen) . '...';
 				if ($bShowNamespace)
 					//Adapted from Title::getPrefixedText()
-					$sTitleText = str_replace( '_', ' ', $title->prefix($sTitleText) );
+					$sTitleText = $title->getPrefixedText($sTitleText);
 				if ($bEscapeLinks && ($pageNamespace==14 || $pageNamespace==6) ) {
 					// links to categories or images need an additional ":"
 					$articleLink = '[[:'.$title->getPrefixedText().'|'.$wgContLang->convert( $sTitleText ).']]';
@@ -3455,7 +3455,7 @@ class DPL2 {
 			return $this->formatCategoryList($iStart, $iCount);
 
 		//other list modes
-		$sk = & $wgUser->getSkin();
+		$sk = & RequestContext::getMain()->getSkin();
 
 		//process results of query, outputing equivalent of <li>[[Article]]</li> for each result,
 		//or something similar if the list uses other startlist/endlist;

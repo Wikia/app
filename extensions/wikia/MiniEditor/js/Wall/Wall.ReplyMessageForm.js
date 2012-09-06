@@ -1,7 +1,7 @@
 (function($) {
 
 MiniEditor.Wall = MiniEditor.Wall || {};
-MiniEditor.Wall.ReplyMessageForm = $.createClass(Wall.settings.classBindings.replyMessageForm, {
+MiniEditor.Wall.ReplyMessageForm = $.createClass(Wall.ReplyMessageForm, {
 	constructor: function(page, model) {
 		MiniEditor.Wall.ReplyMessageForm.superclass.constructor.apply(this,arguments);
 	},

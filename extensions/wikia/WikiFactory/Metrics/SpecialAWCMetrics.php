@@ -89,8 +89,7 @@ class WikiMetrics {
 		global $wgUser, $wgOut, $wgExtensionsPath, $wgJsMimeType, $wgResourceBasePath;
 
 		if( $wgUser->isBlocked() ) {
-			$wgOut->blockedPage();
-			return;
+			throw new UserBlockedError( $wgUser->mBlock );
 		}
 
 		if ( wfReadOnly() ) {
@@ -143,7 +142,7 @@ class WikiMetrics {
 			"mAction"			=> $this->mAction,
             "mTitle"			=> $this->mTitle,
         ));
-        $wgOut->addHTML( $oTmpl->execute("tabs") );
+        $wgOut->addHTML( $oTmpl->render("tabs") );
         wfProfileOut( __METHOD__ );
 	}
 
@@ -179,7 +178,7 @@ class WikiMetrics {
 			"params"			=> $params,
 			"obj"				=> $this,
         ));
-        $wgOut->addHTML( $oTmpl->execute("metrics-main-form") );
+        $wgOut->addHTML( $oTmpl->render("metrics-main-form") );
         wfProfileOut( __METHOD__ );
 	}
 
@@ -199,7 +198,7 @@ class WikiMetrics {
 			"aCategories"		=> $aCategories,
 			"obj"				=> $this,
         ));
-        $wgOut->addHTML( $oTmpl->execute("metrics-monthly-form") );
+        $wgOut->addHTML( $oTmpl->render("metrics-monthly-form") );
         wfProfileOut( __METHOD__ );
 	}
 
@@ -219,7 +218,7 @@ class WikiMetrics {
 			"aCategories"		=> $aCategories,
 			"obj"				=> $this,
         ));
-        $wgOut->addHTML( $oTmpl->execute("metrics-daily-form") );
+        $wgOut->addHTML( $oTmpl->render("metrics-daily-form") );
         wfProfileOut( __METHOD__ );
 	}
 
@@ -528,7 +527,7 @@ class WikiMetrics {
 					$oFounder = User::newFromId($oRow->city_founding_user);
 					$sFounderLink = $sFounderName = "";
 					if ($oFounder instanceof User) {
-						$sk = $oFounder->getSkin();
+						$sk = RequestContext::getMain()->getSkin();
 						$sFounderLink = $sk->makeLinkObj( Title::newFromText($oFounder->getName(), NS_USER), $oFounder->getName());
 						$sFounderName = $oFounder->getName();
 					}

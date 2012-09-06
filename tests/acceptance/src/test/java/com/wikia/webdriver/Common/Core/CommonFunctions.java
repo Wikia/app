@@ -2,8 +2,11 @@ package com.wikia.webdriver.Common.Core;
 
 import java.awt.AWTException;
 import java.awt.GraphicsEnvironment;
+import java.awt.MouseInfo;
 import java.awt.Rectangle;
 import java.awt.Robot;
+import java.awt.event.InputEvent;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Point;
@@ -51,11 +54,73 @@ public class CommonFunctions
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("input[name='username']")));
 		WebElement userNameFieldElem = driver.findElement(userNameField);
 		userNameFieldElem.sendKeys(userName);
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		WebElement passwordFieldElem = driver.findElement(passwordField);
 		passwordFieldElem.sendKeys(password);
 		WebElement submitButtonElem = driver.findElement(submitButton);
 		submitButtonElem.click();
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("a[href*='/wiki/User:"+userName+"']")));		
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("a[href*='/User:"+userName+"']")));		
+	}
+	
+	/**
+	 * log in by overlay available from main menu
+	 * @param userName
+	 * @param password
+	 * @author: Karol Kujawiak
+	 */
+	
+	public static void logInDriver(String userName, String password, WebDriver driver)
+	{
+		wait = new WebDriverWait(driver, 30);
+		WebElement logInAjaxElem = driver.findElement(logInAjax);
+		logInAjaxElem.click();
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("input[name='username']")));
+		WebElement userNameFieldElem = driver.findElement(userNameField);
+		userNameFieldElem.sendKeys(userName);
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		WebElement passwordFieldElem = driver.findElement(passwordField);
+		passwordFieldElem.sendKeys(password);
+		WebElement submitButtonElem = driver.findElement(submitButton);
+		submitButtonElem.click();
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("a[href*='/User:"+userName+"']")));		
+	}
+	
+	/**
+	 * log in by overlay available from main menu
+	 * @param userName
+	 * @param password
+	 * @author: Karol Kujawiak
+	 */
+	
+	public static void logIn(String userName, String password, WebDriver driver)
+	{
+		wait = new WebDriverWait(driver, 30);
+		WebElement logInAjaxElem = driver.findElement(logInAjax);
+		logInAjaxElem.click();
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("input[name='username']")));
+		WebElement userNameFieldElem = driver.findElement(userNameField);
+		userNameFieldElem.sendKeys(userName);
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		WebElement passwordFieldElem = driver.findElement(passwordField);
+		passwordFieldElem.sendKeys(password);
+		WebElement submitButtonElem = driver.findElement(submitButton);
+		submitButtonElem.click();
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("a[href*='/User:"+userName+"']")));		
 	}
 	
 	/**
@@ -63,9 +128,8 @@ public class CommonFunctions
 	 * @param userName
 	 * @author: Karol Kujawiak
 	 */
-	public static void logOut(String userName)
+	public static void logOut(String userName, WebDriver driver)
 	{
-		driver   = DriverProvider.getWebDriver();
 		wait = new WebDriverWait(driver, 30);
 		driver.get(Global.LIVE_DOMAIN+"wiki/Special:UserLogout?returnto=User "+userName);	
 	}
@@ -162,9 +226,27 @@ public class CommonFunctions
 		{
 			PageObjectLogging.log("assertString", "pattern string: "+pattern+" <br/>current string: "+current+"<br/>are different", false);
 		}
-		
 	}
 	
+	/**
+	 * Verify actual number is the same as expected number
+	 * @param aNumber
+	 * @param secondNumber
+	 * @author: Piotr Gabryjeluk
+	 */
+	public static void assertNumber(Number expected, Number actual, String message)
+	{
+		try
+		{
+			Assert.assertEquals(expected, actual);
+			PageObjectLogging.log("assertNumber", message + ", expected: " + expected + ", got: " + actual, true);
+		}
+		catch(AssertionError e)
+		{
+			PageObjectLogging.log("assertNumber", message + ", expected: " + expected + ", got: " + actual, false);
+		}
+	}
+
 	/**
 	 * 
 	 * @param attributeName
@@ -218,6 +300,8 @@ public class CommonFunctions
 		driver   = DriverProvider.getWebDriver();
 		wait = new WebDriverWait(driver, 30);
 		int y = element.getLocation().getY();
+			//firstly make sure that window scroll is set at the top of browser (if not method will scroll up)
+			((JavascriptExecutor)driver).executeScript("window.scrollBy(0,-3000);");
 			((JavascriptExecutor)driver).executeScript("window.scrollBy(0,"+y+");");
 		}
 	/**
@@ -231,13 +315,17 @@ public class CommonFunctions
 	{
 		Robot robot = null;
 		try {
+			Thread.sleep(1000);
 			robot = new Robot();
 		} catch (AWTException e) {
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	   robot.mouseMove(x,y);
 	}
-
+	
 	/**
 	 * Move cursor to Element existing in default DOM, by its Location
 	 * 
@@ -250,9 +338,14 @@ public class CommonFunctions
 //		double ScreenHeight = dim.getHeight();
 	
 //		int FireFoxStatusBarHeight = 20;
-		
+		driver   = DriverProvider.getWebDriver();
+		int pixDiff = 0;
+		if (Global.BROWSER.equals("FF")) {		
+			pixDiff = 6;
+		}
 		int elem_Y = elem1_location.getY();
 		int elem_X = elem1_location.getX();
+		
 		
 		Rectangle maxBounds = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
 		int ScreenHeightWithoutTaskBarHeight = maxBounds.height;
@@ -260,8 +353,36 @@ public class CommonFunctions
 		Object visibleDomHeightJS = js.executeScript("return window.innerHeight");
 		int VisibleDomHeight = Integer.parseInt(visibleDomHeightJS.toString());
 		
-		MoveCursorTo(elem_X+15, elem_Y+ScreenHeightWithoutTaskBarHeight-VisibleDomHeight+3);
-
+		Object invisibleUpperDomHeightJS = js.executeScript("return window.pageYOffset");
+		int invisibleUpperDomHeight = Integer.parseInt(invisibleUpperDomHeightJS.toString());
+		MoveCursorTo(elem_X+10, elem_Y+ScreenHeightWithoutTaskBarHeight-VisibleDomHeight-pixDiff+1-invisibleUpperDomHeight);
+	}
+	
+	
+	public static void MoveCursorToElement(Point elem1_location, WebDriver driver) {
+//		Toolkit toolkit =  Toolkit.getDefaultToolkit ();
+//		Dimension dim = toolkit.getScreenSize();
+//		double ScreenHeight = dim.getHeight();
+	
+//		int FireFoxStatusBarHeight = 20;
+		
+		int pixDiff = 0;
+		if (Global.BROWSER.equals("FF")) {		
+			pixDiff = 6;
+		}
+		int elem_Y = elem1_location.getY();
+		int elem_X = elem1_location.getX();
+		
+		
+		Rectangle maxBounds = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
+		int ScreenHeightWithoutTaskBarHeight = maxBounds.height;
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		Object visibleDomHeightJS = js.executeScript("return window.innerHeight");
+		int VisibleDomHeight = Integer.parseInt(visibleDomHeightJS.toString());	
+		Object invisibileUpperDomHeightJS = js.executeScript("return window.pageYOffset");
+		int invisibileUpperDomHeight = Integer.parseInt(invisibileUpperDomHeightJS.toString());
+		
+		MoveCursorTo(elem_X+10, elem_Y+ScreenHeightWithoutTaskBarHeight-VisibleDomHeight-invisibileUpperDomHeight-pixDiff+1);
 	}
 	
 	/**
@@ -272,6 +393,7 @@ public class CommonFunctions
 	 * @param IFrame IFrame where the element exists
 	 */
 	public static void MoveCursorToIFrameElement(By IframeElemBy, WebElement IFrame){
+		driver   = DriverProvider.getWebDriver();
 		Point IFrameLocation = IFrame.getLocation();
 		driver.switchTo().frame(IFrame);
 		wait.until(ExpectedConditions.visibilityOfElementLocated(IframeElemBy));
@@ -280,5 +402,56 @@ public class CommonFunctions
 		driver.switchTo().defaultContent();
 		MoveCursorToElement(IFrameElemLocation);
 	}
+	
+	public static void ClickElement() 
+	{
+		Robot robot = null;
+		try {
+			Thread.sleep(300);
+			robot = new Robot();
+		} catch (AWTException e) {
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	   robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+	   robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+	}
+
+	/**
+	 * Move cursor to from current position by given x and y
+	 * 
+	 * @author Michal Nowierski
+	 * @param x horrizontal move
+	 * @param y	vertical move
+	 */
+	public static void DragFromCurrentCursorPositionAndDrop(int x, int y) {
+		Robot robot = null;
+		try {
+			robot = new Robot();
+		} catch (AWTException e) {
+			e.printStackTrace();
+		}
+		java.awt.Point CurrentCursorPosition = MouseInfo.getPointerInfo().getLocation();
+		int currentX = (int) CurrentCursorPosition.getX();
+		int currentY = (int) CurrentCursorPosition.getY();
+		robot.mousePress(InputEvent.BUTTON1_MASK);
+		robot.mouseMove(currentX+x, currentY+y);
+		robot.mouseRelease(InputEvent.BUTTON1_MASK);
+	}
+	
+	
+	public static void removeChatModeratorRights(String userName, WebDriver driver)
+	{
+		driver.get(Global.DOMAIN + "wiki/Special:UserRights?user="+userName);
+		PageObjectLogging.log("enterUserRightsPage", "user rights page opened", true);
+		WebElement chatModeratorChkbox = driver.findElement((By.cssSelector("input#wpGroup-chatmoderator")));
+		WebElement submitButton = driver.findElement((By.cssSelector("input[title='[alt-shift-s]']")));
+		chatModeratorChkbox.click();
+		submitButton.click();
+	}
+	
+	
+	
 
 }

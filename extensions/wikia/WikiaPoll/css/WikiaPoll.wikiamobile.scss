@@ -87,7 +87,7 @@ $gradient-color-second: rgb(17,105,178);
 	#wkMdlCnt {
 		background-color: white;
 		color: rgb(58, 58, 58);
-		padding: 40px 0;
+		margin: 40px 0;
 	}
 
 	.pollHeader {
@@ -102,10 +102,7 @@ $gradient-color-second: rgb(17,105,178);
 }
 
 .wkPollForm {
-	position: relative;
-
 	label {
-		position: relative;
 		display: block;
 		border-top: 1px solid $poll-border-color;
 		padding: 12px 35px 12px 15px;
@@ -134,6 +131,7 @@ $gradient-color-second: rgb(17,105,178);
 		display: block;
 		padding: 10px;
 		pointer-events: none;
+
 		//gradeint here is to make iphone to restyle button
 		@include linear-gradient(#EEE, #EEE);
 		color: #A1A1A1;

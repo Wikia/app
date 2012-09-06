@@ -45,13 +45,13 @@ function TOCimprovementsInit() {
  *
  * @author Maciej Błaszkowski <marooned at wikia-inc.com>
  */
-function TOCimprovementsAddBodyClass($classes) {
+function TOCimprovementsAddBodyClass(&$classes) {
 	global $wgHooks, $wgUser;
 
-	// do not touch skins other than Monaco (this condition must not be in TOCimprovementsInit() as it expand stub object too fast and ?usetheme does not work)
+	// do not touch skins other than Oasis (this condition must not be in TOCimprovementsInit() as it expand stub object too fast and ?usetheme does not work)
 	// init only for anons
-	$skinName = get_class($wgUser->getSkin());
-	if (!in_array($skinName, array('SkinMonaco', 'SkinOasis')) || !$wgUser->isAnon()) {
+	$skinName = get_class(RequestContext::getMain()->getSkin());
+	if ($skinName !== 'SkinOasis' || !$wgUser->isAnon()) {
 		return true;
 	}
 	$wgHooks['MakeGlobalVariablesScript'][] = 'TOCimprovementsSetupVars';
@@ -67,7 +67,7 @@ function TOCimprovementsAddBodyClass($classes) {
  *
  * @author Maciej Błaszkowski <marooned at wikia-inc.com>
  */
-function TOCimprovementsSetupVars($vars) {
+function TOCimprovementsSetupVars(Array &$vars) {
 	//used in wikibits.js to enable anon handling
 	$vars['TOCimprovementsEnabled'] = '1';
 

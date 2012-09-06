@@ -384,6 +384,8 @@ $messages['ru'] = array(
 	'piggyback-itisyou' => 'Вы не можете использоватьpiggyback на себе.',
 	'piggyback-issysopto' => 'Вы не можете использовать piggyback на участниках с доступом к piggyback.',
 	'action-piggyback' => 'войти как другой участник',
+	'log-name-piggyback' => 'Журнал Piggyback',
+	'log-description-piggyback' => 'Этот журнал активности piggyback.',
 );
 
 /** Swedish (svenska)

@@ -241,7 +241,7 @@ class WikiaQuiz {
 	 * Render HTML for Quiz page
 	 */
 	public function render() {
-		return wfRenderModule('WikiaQuiz', 'Index', array('quiz' => $this));
+		return F::app()->renderView('WikiaQuiz', 'Index', array('quiz' => $this));
 	}
 
 	/**

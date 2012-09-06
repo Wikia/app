@@ -8,6 +8,24 @@
  * @author Adrian 'ADi' Wieczorek <adi(at)wikia-inc.com>
  * @author Owen Davis <owen(at)wikia-inc.com>
  * @author Wojciech Szela <wojtek(at)wikia-inc.com>
+ *
+ *
+ * @property User $User
+ * @property User $user
+ * @property OutputPage $Out
+ * @property OutputPage $out
+ * @property Title $Title
+ * @property Title $title
+ * @property WebRequest $Request
+ * @property WebRequest $request
+ * @property WebResponse $Response
+ * @property WebResponse $response
+ * @property MemCache Memc
+ * @property MemCache memc
+ * @property Language ContLang
+ * @property String ArticlePath
+ *
+ *
  */
 class WikiaGlobalRegistry extends WikiaRegistry {
 	/* mapping for MW 1.19+ compatibility, new code should use RequestContext instances to access those globals */
@@ -52,7 +70,7 @@ class WikiaGlobalRegistry extends WikiaRegistry {
 			if ( $this->checkPropertyMapping( $propertyName ) ) {
 				$this->processPropertyMapping( $propertyName, true, $value );
 			}
- 
+
 			$GLOBALS[$propertyName] = $value;
 		} else {
 			$GLOBALS[$propertyName][$key] = $value;
@@ -86,11 +104,11 @@ class WikiaGlobalRegistry extends WikiaRegistry {
 	public function __set($propertyName, $value) {
 		$this->set( ( 'wg' . ucfirst($propertyName) ), $value );
 	}
-	
+
 	public function __isset( $propertyName ) {
 		return $this->has( 'wg' . ucfirst($propertyName) );
 	}
-	
+
 	public function __unset( $propertyName ) {
 		return $this->remove( 'wg' . ucfirst($propertyName) );
 	}
@@ -113,5 +131,6 @@ class WikiaGlobalRegistry extends WikiaRegistry {
 		if ( !$setValue ) {
 			return $res;
 		}
+		return null;
 	}
 }

@@ -9,12 +9,12 @@ class CreateBlogListingPage extends SpecialPage {
 
 	private $mTagBody = '';
 	private $mRenderedPreview;
-	
+
 	protected $mFormData = array();
 	protected $mFormErrors = array();
 	protected $mPreviewTitle = '';
 	protected $mPostArticle = null;
-	
+
 	const defaultListingCount = 10;
 
 	public function __construct() {
@@ -33,8 +33,7 @@ class CreateBlogListingPage extends SpecialPage {
 		}
 
 		if( $wgUser->isBlocked() ) {
-			$wgOut->blockedPage();
-			return;
+			throw new UserBlockedError( $this->getUser()->mBlock );
 		}
 
 		if( wfReadOnly() ) {
@@ -78,12 +77,12 @@ class CreateBlogListingPage extends SpecialPage {
 
 		return $sText;
 	}
-	
+
 
 	public function setFormData($sKey, $value) {
 		$this->mFormData[$sKey] = $value;
 	}
-	
+
 	protected function parseFormData() {
 		global $wgUser, $wgRequest, $wgOut, $wgParser;
 
@@ -100,10 +99,10 @@ class CreateBlogListingPage extends SpecialPage {
 		}
 		else {
 			$oPostTitle = Title::newFromText( $this->mFormData['listingTitle'], NS_BLOG_LISTING );
-			
+
 			if(!($oPostTitle instanceof Title)) {
 				$this->mFormErrors[] = wfMsg('create-blog-invalid-title-error');
-			} 
+			}
 			elseif ( $oPostTitle->isProtected( 'edit' ) && !$oPostTitle->userCan( 'edit' ) ) {
 				if ( $oPostTitle->isSemiProtected() ) {
 					$this->mFormErrors[] = wfMsgExt('semiprotectedpagewarning', array('parse'));
@@ -157,7 +156,7 @@ class CreateBlogListingPage extends SpecialPage {
 			'textCategories' => (isset($this->mFormData['listingCategories'])) ? $this->mFormData['listingCategories'] : "" )
 		);
 
-		$sBlogCategoryCloud = $oTmpl->execute("createPostCategoryCloud");
+		$sBlogCategoryCloud = $oTmpl->render("createPostCategoryCloud");
 
 		$oTmpl->set_vars( array(
 			'categoryCloudTitle' => wfMsg('create-blog-listing-page-categories-title'),
@@ -167,7 +166,7 @@ class CreateBlogListingPage extends SpecialPage {
 			'textCategories' => (isset($this->mFormData['listingPageCategories'])) ? $this->mFormData['listingPageCategories'] : "")
 		);
 
-		$sPageCategoryCloud = $oTmpl->execute("createPostCategoryCloud");
+		$sPageCategoryCloud = $oTmpl->render("createPostCategoryCloud");
 
 		$oTmpl->set_vars( array(
 			"title" => $this->mTitle,
@@ -179,7 +178,7 @@ class CreateBlogListingPage extends SpecialPage {
 			"pageCategoryCloud" => $sPageCategoryCloud )
 		);
 
-		$wgOut->addHTML( $oTmpl->execute("createBlogListingForm") );
+		$wgOut->addHTML( $oTmpl->render("createBlogListingForm") );
 
 		return;
 	}
@@ -192,7 +191,7 @@ class CreateBlogListingPage extends SpecialPage {
 				"tagBody" => $this->mTagBody)
 			);
 
-			$wgOut->addHTML( $oTmpl->execute("createListingConfirm") );
+			$wgOut->addHTML( $oTmpl->render("createListingConfirm") );
 		}
 		else {
 			$sPageBody = $this->mTagBody;
@@ -207,7 +206,7 @@ class CreateBlogListingPage extends SpecialPage {
 
 			$aListingCategories = explode('|', $this->mFormData['listingCategories']);
 			$aListingAuthors = explode(',', $this->mFormData['listingAuthors']);
-			
+
 			wfRunHooks( 'BlogListingSave', array( $this->mFormData['listingTitle'], $aListingCategories, $aListingAuthors ) );
 
 			$wgOut->redirect($this->mPostArticle->getTitle()->getFullUrl());

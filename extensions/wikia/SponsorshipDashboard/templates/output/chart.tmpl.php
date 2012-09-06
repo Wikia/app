@@ -9,14 +9,14 @@ if( !empty( $showActionsButton ) ){ ?>
 	<div class="sponsorship-dashboard-actions">
 		<?
 			$dropdown = array(
-				array("href" => "#", "text" => wfMsg('sponsorship-dashboard-download-chart')), 
+				array("href" => "#", "text" => wfMsg('sponsorship-dashboard-download-chart')),
 				array("href" => $path, "text" => wfMsg('sponsorship-dashboard-download-csv'))
-			); 
+			);
 		?>
-		<?= wfRenderModule('MenuButton', 
-				'Index', 
+		<?= F::app()->renderView('MenuButton',
+				'Index',
 				array(
-					'action' => array("href" => "#", "text" => wfMsg('sponsorship-dashboard-download')), 
+					'action' => array("href" => "#", "text" => wfMsg('sponsorship-dashboard-download')),
 					'dropdown' => $dropdown
 				)
 			) ?>

@@ -8,7 +8,7 @@
 		<?php
 			// render UserPagesHeader or PageHeader or nothing...
 			if (empty($wgSuppressPageHeader) && $headerModuleName) {
-				echo wfRenderModule($headerModuleName, $headerModuleAction, $headerModuleParams);
+				echo F::app()->renderView($headerModuleName, $headerModuleAction, $headerModuleParams);
 			}
 		?>
 		<div id="WikiaArticle" class="WikiaArticle">
@@ -18,11 +18,11 @@
 
 		<?php
 		if (empty($wgSuppressArticleCategories)) {
-			echo wfRenderModule('CampfireCategories');
+			echo F::app()->renderView('CampfireCategories', 'Index');
 		} ?>
-		<?= wfRenderModule('ArticleInterlang') ?>
+		<?= F::app()->renderView('ArticleInterlang', 'Index') ?>
 
 	</article><!-- WikiaMainContent -->
 </section><!--WikiaPage-->
 
-<?= wfRenderModule( 'CampfireFooter' ) ?>
+<?= F::app()->renderView( 'CampfireFooter', 'Index' ) ?>

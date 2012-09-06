@@ -52,7 +52,7 @@ class CategoryDataService extends Service {
 		return self::tableFromResult( $res );
 	}
 
-	public function getMostVisited( $sCategoryDBKey, $mNamespace = false, $limit = false, $negative = false ){
+	public static function getMostVisited( $sCategoryDBKey, $mNamespace = false, $limit = false, $negative = false ){
 
 		global $wgStatsDB, $wgCityId, $wgStatsDBEnabled;
 

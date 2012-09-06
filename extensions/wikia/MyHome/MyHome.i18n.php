@@ -781,6 +781,7 @@ Wenn Sie der Gründer oder ein Admin dieses Wikis sind, können Sie diese Nachri
 $messages['diq'] = array(
 	'myhome' => 'Keyey me',
 	'myhome-watchlist-feed' => 'Lista seyr-kerdışi',
+	'myhome-user-contributions-feed' => 'Pêşteni',
 	'prefs-myhome' => 'Keyey me',
 	'myhome-feed-edit' => 'bıvurne',
 	'myhome-feed-created-by' => "$1'i vıraşt",
@@ -793,6 +794,7 @@ $messages['diq'] = array(
 	'myhome-feed-article-comment-created-by' => '$1 ra yew vatışo newe ame',
 	'myhome-feed-article-comment-edited-by' => "$1' xulasa vurne",
 	'myhome-feed-by' => '$1 kerden ra',
+	'myhome-feed-summary-details' => 'Xulasa',
 	'myhome-feed-new-blog-comment-details' => 'Vatış',
 	'myhome-feed-new-article-comment-details' => 'Mışewre',
 	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|Resime ke debyay|Resime ke debyay}}',
@@ -1849,6 +1851,13 @@ $messages['kn'] = array(
 	'myhome-feed-categorization' => 'ವರ್ಗೀಕರಣ',
 	'myhome-hot-spots-number-of-editors' => 'ಸಂಪಾದಕರು',
 	'myhome-community-corner-edit' => 'ಸಂದೇಶವನ್ನು ಸಂಪಾದಿಸು',
+);
+
+/** Korean (한국어)
+ * @author Cafeinlove
+ */
+$messages['ko'] = array(
+	'myhome-namespace-blog' => '블로그',
 );
 
 /** Colognian (Ripoarisch)

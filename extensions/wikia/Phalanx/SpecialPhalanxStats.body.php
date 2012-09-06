@@ -298,7 +298,7 @@ class PhalanxStatsPager extends ReverseChronologicalPager {
 
 class PhalanxWikiStatsPager extends ReverseChronologicalPager {
 	public function __construct( $id ) {
-		global $wgExternalDatawareDB, $wgUser;
+		global $wgExternalDatawareDB;
 
 		parent::__construct();
 		$this->mDb = wfGetDB( DB_SLAVE, array(), $wgExternalDatawareDB );
@@ -306,7 +306,7 @@ class PhalanxWikiStatsPager extends ReverseChronologicalPager {
 		$this->mWikiId = (int) $id;
 		$this->mTitle = Title::newFromText( 'Phalanx', NS_SPECIAL );
 		$this->mTitleStats = Title::newFromText( 'PhalanxStats', NS_SPECIAL );
-		$this->mSkin = $wgUser->getSkin();
+		$this->mSkin = RequestContext::getMain()->getSkin();
 	}
 
 	function getQueryInfo() {

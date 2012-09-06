@@ -38,7 +38,7 @@ class CampfireController extends WikiaController {
 		$allInOne = $wgAllInOne;
 
 		// macbre: let extensions modify content of the page (e.g. EditPageLayout)
-		$this->body = !empty($params['body']) ? $params['body'] : wfRenderModule('CampfireBody');
+		$this->body = !empty($params['body']) ? $params['body'] : F::app()->renderView('CampfireBody', 'Index');
 
 		// generate list of CSS classes for <body> tag
 		$this->bodyClasses = array('mediawiki', $this->dir, $this->pageclass);

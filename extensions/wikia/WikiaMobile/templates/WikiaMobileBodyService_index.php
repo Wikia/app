@@ -1,3 +1,15 @@
+<?
+/**
+ * @var $pageHeaderContent String
+ * @var $bodyContent String
+ * @var $navMenu String
+ * @var $relatedPages String
+ * @var $categoryLinks String
+ * @var $afterContentHookText String
+ * @var $afterBodyContent String
+ * @var $afterBodyContent String
+ */
+?>
 <section id=wkPage>
 	<?= $pageHeaderContent ;?>
 	<article id=wkMainCnt>

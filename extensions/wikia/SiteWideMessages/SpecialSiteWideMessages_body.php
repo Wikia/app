@@ -142,8 +142,7 @@ class SiteWideMessages extends SpecialPage {
 		}
 
 		if($action != 'dismiss' && $action != 'cleanDB' && !$wgUser->isAllowed('messagetool')) {
-			$wgOut->permissionRequired('messagetool');
-			return;
+			throw new PermissionsError('messagetool');
 		}
 
 		switch ($action) {
@@ -277,7 +276,7 @@ class SiteWideMessages extends SpecialPage {
 				'editMsgId' => $editMsgId,
 				'supportedLanguages' => $wgSWMSupportedLanguages
 			));
-		$wgOut->addHTML($oTmpl->execute($template));
+		$wgOut->addHTML($oTmpl->render($template));
 	}
 
 	//DB functions

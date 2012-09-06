@@ -11,8 +11,7 @@ class SpecialCreateWikiaQuiz extends SpecialPage {
 
 		// Boilerplate special page permissions
 		if ($wgUser->isBlocked()) {
-			$wgOut->blockedPage();
-			return;
+			throw new UserBlockedError( $this->getUser()->mBlock );
 		}
 		if (!$wgUser->isAllowed('wikiaquiz')) {
 			$this->displayRestrictionError();
@@ -30,9 +29,9 @@ class SpecialCreateWikiaQuiz extends SpecialPage {
 
 		if( $subpage != '' ) {
 			// We came here from the edit link, go into edit mode
-			$wgOut->addHtml(wfRenderModule('WikiaQuiz', 'EditQuiz', array('title' => $subpage)));
+			$wgOut->addHtml(F::app()->renderView('WikiaQuiz', 'EditQuiz', array('title' => $subpage)));
 		} else {
-			$wgOut->addHtml(wfRenderModule('WikiaQuiz', 'CreateQuiz'));
+			$wgOut->addHtml(F::app()->renderView('WikiaQuiz', 'CreateQuiz'));
 		}
 	}
 }

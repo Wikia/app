@@ -24,7 +24,7 @@ public class CreateAWikiTests_misc extends TestTemplate
 //	@Test
 	public void CreateNewWiki_misc_001_log_in_browser_back_button()
 	{
-		CommonFunctions.logOut(Properties.userName);
+		CommonFunctions.logOut(Properties.userName, driver);
 		HomePageObject home = new HomePageObject(driver);
 		home.openHomePage();
 		CommonFunctions.logIn();
@@ -53,7 +53,7 @@ public class CreateAWikiTests_misc extends TestTemplate
 	@Test
 	public void CreateNewWiki_misc_002_log_in_facebook_button_logged_out()
 	{
-		CommonFunctions.logOut(Properties.userName);
+		CommonFunctions.logOut(Properties.userName, driver);
 		HomePageObject home = new HomePageObject(driver);
 		home.openHomePage();
 		CreateNewWikiPageObjectStep1 createNewWiki1 = home.startAWiki();
@@ -68,7 +68,7 @@ public class CreateAWikiTests_misc extends TestTemplate
 		WebElement email = driver.findElement(By.cssSelector("input[id='email']"));
 		WebElement pass = driver.findElement(By.cssSelector("input[id='pass']"));
 		
-		CommonFunctions.logOut(Properties.userName);
+		CommonFunctions.logOut(Properties.userName, driver);
 		
 		
 		

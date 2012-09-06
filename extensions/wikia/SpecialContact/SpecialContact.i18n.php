@@ -467,6 +467,15 @@ $messages['ja'] = array(
 	'specialcontact-submitcomplete' => 'ウィキアへご連絡いただきありがとうございます。',
 );
 
+/** Korean (한국어)
+ * @author Cafeinlove
+ */
+$messages['ko'] = array(
+	'contact' => '위키아에 문의',
+	'specialcontact-wikia' => '위키아에 문의',
+	'specialcontact-pagetitle' => '위키아에 문의',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */

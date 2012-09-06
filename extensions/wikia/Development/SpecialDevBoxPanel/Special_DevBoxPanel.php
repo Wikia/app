@@ -68,12 +68,11 @@ class DevBoxPanel extends SpecialPage {
 	 * The main function of the SpecialPage.  Adds the content for the page
 	 * to the wgOut global.
 	 */
-	function execute() {
+	function execute($par) {
 		global $wgOut,$wgHooks,$wgDevelEnvironment,$wgUser;
 
 		if( !$wgUser->isAllowed( 'devboxpanel' ) ) {
-			$wgOut->permissionRequired( 'devboxpanel' );
-			return;
+			throw new PermissionsError( 'devboxpanel' );
 		}
 
 		$wgHooks['BeforePageDisplay'][] = 'devBoxPanelAdditionalScripts';
@@ -93,7 +92,7 @@ class DevBoxPanel extends SpecialPage {
 								"infoHtml"         => getHtmlForInfo(),
 								"footer"           => wfMsg("devbox-footer", __FILE__),
 								));
-			$wgOut->addHTML($tmpl->execute('special-devboxpanel'));
+			$wgOut->addHTML($tmpl->render('special-devboxpanel'));
 		} else {
 			$wgOut->addHTML(wfMsg('devbox-panel-not-enabled'));
 		}
@@ -243,8 +242,8 @@ function getDevBoxOverrideDatabases($db){
 
 	$info = $db->getLBInfo();
 	$connection = mysql_connect($info['host'], $info['user'], $info['password']);
-	$db_list = mysql_list_dbs($connection);
-	while ($row = mysql_fetch_object($db_list)) {
+	$res = mysql_query('SHOW DATABASES', $connection);
+	while ($row = mysql_fetch_object($res)) {
 		$retval[] = $row->Database;
 	}
 
@@ -322,7 +321,7 @@ function getHtmlForSvnTool() {
 						"action"     => $wgTitle->getLocalUrl(),
 						"errors"     => $errors,
 						));
-	return $tmpl->execute('svn-tool');
+	return $tmpl->render('svn-tool');
 }
 
 /**

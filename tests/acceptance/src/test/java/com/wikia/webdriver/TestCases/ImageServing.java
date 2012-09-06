@@ -30,8 +30,8 @@ public class ImageServing extends TestTemplate {
 //	https://internal.wikia-inc.com/wiki/QA/Core_Features_and_Testing/Manual_Regression_Tests/Image_Serving
 	public void ImageServing001_SpecialNewFilesTest()
 	{
-	
-//		startBrowser();
+
+	CommonFunctions.MoveCursorTo(0, 0);
 	WikiBasePageObject wiki = new WikiBasePageObject(driver, Global.DOMAIN);
 	SpecialNewFilesPageObject wikiSpecialNF = wiki.OpenSpecialNewFiles();
 	
@@ -45,68 +45,62 @@ public class ImageServing extends TestTemplate {
 	wikiSpecialNF.TypeInFileToUploadPath(file);
 	wikiSpecialNF.ClickOnUploadaPhoto();
 	wikiSpecialNF.waitForFile(file); 
-//	stopBrowser();
+
 	}
 	
 	@Test(groups = {"ImageServing002"}) 
 //	https://internal.wikia-inc.com/wiki/QA/Core_Features_and_Testing/Manual_Regression_Tests/Image_Serving
 	public void ImageServing002_SpecialUploadTest()
 	{
-//		startBrowser();
+		CommonFunctions.MoveCursorTo(0, 0);
 		WikiBasePageObject wiki = new WikiBasePageObject(driver, Global.DOMAIN);
 		SpecialUploadPageObject wikiSpecialU = wiki.OpenSpecialUpload();
-//		driver.get(Global.DOMAIN+"Special:Upload");
 		CommonFunctions.logIn(Properties.userName2, Properties.password2);
 		wikiSpecialU.TypeInFileToUploadPath(file);
 		wikiSpecialU.verifyFilePreviewAppeared(file);
 		wikiSpecialU.CheckIgnoreAnyWarnings();
 		FilePageObject filePage = wikiSpecialU.ClickOnUploadFile(file);
 		filePage.VerifyCorrectFilePage();
-		CommonFunctions.logOut(Properties.userName2);
-//		stopBrowser();
+		CommonFunctions.logOut(Properties.userName2, driver);
 	}
 	@Test(groups = {"ImageServing003"}) 
 //	https://internal.wikia-inc.com/wiki/QA/Core_Features_and_Testing/Manual_Regression_Tests/Image_Serving
 	public void ImageServing003_SpecialMultipleUploadTest()
 	{
-//		startBrowser();
+		CommonFunctions.MoveCursorTo(0, 0);
 		WikiBasePageObject wiki = new WikiBasePageObject(driver, Global.DOMAIN);
 		SpecialMultipleUploadPageObject wikiSpecialMU = wiki.OpenSpecialMultipleUpload();
-//		driver.get(Global.DOMAIN+"Special:MultipleUpload");
 		CommonFunctions.logIn(Properties.userName2, Properties.password2);
 		wikiSpecialMU.TypeInFilesToUpload(ListOfFiles);
 		wikiSpecialMU.CheckIgnoreAnyWarnings();
 		wikiSpecialMU.ClickOnUploadFile();
 		wikiSpecialMU.VerifySuccessfulUpload(ListOfFiles);
-		CommonFunctions.logOut(Properties.userName2);
-//		stopBrowser();
+		CommonFunctions.logOut(Properties.userName2, driver);
 	}
 	@Test(groups = {"ImageServing004"}) 
 //	https://internal.wikia-inc.com/wiki/QA/Core_Features_and_Testing/Manual_Regression_Tests/Image_Serving
 	// Test Case 004 Adding images to an article in edit mode
 	public void ImageServing004_AddingImages()
 	{
-//		startBrowser();
+//		CommonFunctions.MoveCursorTo(0, 0);
 		WikiBasePageObject wiki = new WikiBasePageObject(driver, Global.DOMAIN);
 		WikiArticlePageObject article = wiki.OpenArticle(wikiArticle);
-//		driver.get(Global.DOMAIN+"wiki/"+wikiArticle);
 		CommonFunctions.logIn(Properties.userName2, Properties.password2);
 		WikiArticleEditMode editArticle = article.Edit();
-		editArticle.ClickOnAddObjectButton("Image");
-		editArticle.WaitForModalAndClickAddThisPhoto();
-		editArticle.TypeCaption(Caption);
-		editArticle.ClickOnAddPhotoButton2();
-		editArticle.VerifyThatThePhotoAppears(Caption);
-		editArticle.ClickOnPreviewButton();
-		editArticle.VerifyTheImageOnThePreview();
-		editArticle.VerifyTheCaptionOnThePreview(Caption);
-		article = editArticle.ClickOnPublishButtonInPreviewMode();
+		editArticle.clickOnAddObjectButton("Image");
+		editArticle.waitForModalAndClickAddThisPhoto();
+		editArticle.typePhotoCaption(Caption);
+		editArticle.clickOnAddPhotoButton2();
+		editArticle.verifyThatThePhotoAppears(Caption);
+		editArticle.clickOnPreviewButton();
+		editArticle.verifyTheImageOnThePreview();
+		editArticle.verifyTheCaptionOnThePreview(Caption);
+		article = editArticle.clickOnPublishButtonInPreviewMode();
 		article.VerifyTheImageOnThePage();
 		editArticle = article.Edit();
 		editArticle.deleteArticleContent();
-		article = editArticle.ClickOnPublishButton();
-		CommonFunctions.logOut(Properties.userName2);
-//		stopBrowser();
+		article = editArticle.clickOnPublishButton();
+		CommonFunctions.logOut(Properties.userName2, driver);
 	}
 	
 	@Test(groups = {"ImageServing005"}) 
@@ -114,31 +108,29 @@ public class ImageServing extends TestTemplate {
 	// Test Case 005 Modifying images in an article in edit mode
 	public void ImageServing005_ModifyingImages()
 	{
-//		startBrowser();
+		CommonFunctions.MoveCursorTo(0, 0);
 		WikiBasePageObject wiki = new WikiBasePageObject(driver, Global.DOMAIN);
 		WikiArticlePageObject article = wiki.OpenArticle(wikiArticle);
-//		driver.get(Global.DOMAIN+"wiki/"+wikiArticle);
 		CommonFunctions.logIn(Properties.userName2, Properties.password2);
 		WikiArticleEditMode editArticle = article.Edit();
-		editArticle.ClickOnAddObjectButton("Image");
-		editArticle.WaitForModalAndClickAddThisPhoto();
-		editArticle.TypeCaption(Caption);
-		editArticle.ClickOnAddPhotoButton2();
-		editArticle.ClickModifyButtonOfImage(Caption);
-		editArticle.TypeCaption(Caption2);
-		editArticle.ClickOnAddPhotoButton2();
-		editArticle.VerifyThatThePhotoAppears(Caption2);
-		editArticle.ClickOnPreviewButton();
-		editArticle.VerifyTheImageOnThePreview();
-		editArticle.VerifyTheCaptionOnThePreview(Caption2);
-		article = editArticle.ClickOnPublishButtonInPreviewMode();
+		editArticle.clickOnAddObjectButton("Image");
+		editArticle.waitForModalAndClickAddThisPhoto();
+		editArticle.typePhotoCaption(Caption);
+		editArticle.clickOnAddPhotoButton2();
+		editArticle.clickModifyButtonOfImage(Caption);
+		editArticle.typePhotoCaption(Caption2);
+		editArticle.clickOnAddPhotoButton2();
+		editArticle.verifyThatThePhotoAppears(Caption2);
+		editArticle.clickOnPreviewButton();
+		editArticle.verifyTheImageOnThePreview();
+		editArticle.verifyTheCaptionOnThePreview(Caption2);
+		article = editArticle.clickOnPublishButtonInPreviewMode();
 		article.VerifyTheImageOnThePage();
 		editArticle = article.Edit();
 		editArticle.deleteArticleContent();
-		article = editArticle.ClickOnPublishButton();
-		CommonFunctions.logOut(Properties.userName2);
-//		stopBrowser();
-		
+		article = editArticle.clickOnPublishButton();
+		CommonFunctions.logOut(Properties.userName2, driver);
+		CommonFunctions.MoveCursorTo(0, 0);
 	}
 	
 	@Test(groups = {"ImageServing006"}) 
@@ -146,30 +138,29 @@ public class ImageServing extends TestTemplate {
 	// Test Case 006  Removing images in an article in edit mode
 	public void ImageServing006_RemovingImages()
 	{
-//		startBrowser();
+		CommonFunctions.MoveCursorTo(0, 0);
 		WikiBasePageObject wiki = new WikiBasePageObject(driver, Global.DOMAIN);
 		WikiArticlePageObject article = wiki.OpenArticle(wikiArticle);
-//		driver.get(Global.DOMAIN+"wiki/"+wikiArticle);
 		CommonFunctions.logIn(Properties.userName2, Properties.password2);
 		WikiArticleEditMode editArticle = article.Edit();
-		editArticle.ClickOnAddObjectButton("Image");
-		editArticle.WaitForModalAndClickAddThisPhoto();
-		editArticle.TypeCaption(Caption);
-		editArticle.ClickOnAddPhotoButton2();
-		editArticle.HoverCursorOverImage(Caption);
-		editArticle.ClickRemoveButtonOfImage(Caption);
-		editArticle.LeftClickCancelButton();
+		editArticle.clickOnAddObjectButton("Image");
+		editArticle.waitForModalAndClickAddThisPhoto();
+		editArticle.typePhotoCaption(Caption);
+		editArticle.clickOnAddPhotoButton2();
+		editArticle.hoverCursorOverImage(Caption);
+		editArticle.clickRemoveButtonOfImage(Caption);
+		editArticle.leftClickCancelButton();
 //		editArticle.VerifyModalDisappeared();  
-		editArticle.HoverCursorOverImage(Caption);
-		editArticle.ClickRemoveButtonOfImage(Caption);
-		editArticle.LeftClickOkButton();
+		editArticle.hoverCursorOverImage(Caption);
+		editArticle.clickRemoveButtonOfImage(Caption);
+		editArticle.leftClickOkButton();
 //		editArticle.VerifyModalDisappeared();
 //		editArticle.VerifyTheImageNotOnTheArticleEditMode();
-		article = editArticle.ClickOnPublishButton();
+		article = editArticle.clickOnPublishButton();
 //		article.VerifyTheImageNotOnThePage();
 		
-		CommonFunctions.logOut(Properties.userName2);
-//		stopBrowser();
+		CommonFunctions.logOut(Properties.userName2, driver);
+		CommonFunctions.MoveCursorTo(0, 0);
 	}
 
 	@Test(groups = {"ImageServing007"}) 
@@ -177,30 +168,28 @@ public class ImageServing extends TestTemplate {
 	// Test Case 007  Adding galleries to an article in edit mode
 	public void ImageServing007_AddingGalleries()
 	{
-//		startBrowser();
+		CommonFunctions.MoveCursorTo(0, 0);
 		WikiBasePageObject wiki = new WikiBasePageObject(driver, Global.DOMAIN);
 		WikiArticlePageObject article = wiki.OpenArticle(wikiArticle);
-//		driver.get(Global.DOMAIN+"wiki/"+wikiArticle);
 		CommonFunctions.logIn(Properties.userName2, Properties.password2);
 		WikiArticleEditMode editArticle = article.Edit();
-		editArticle.ClickOnAddObjectButton("Gallery");
-		editArticle.WaitForObjectModalAndClickAddAphoto("Gallery");
-		editArticle.GalleryCheckImageInputs(4);
-		editArticle.GalleryClickOnSelectButton();
-		editArticle.GallerySetPosition("Gallery", "Center");
-		editArticle.GallerySetPhotoOrientation(2);
-		editArticle.GalleryClickOnFinishButton();
-		editArticle.VerifyObjectInEditMode("gallery");
-		editArticle.ClickOnPreviewButton();
-		editArticle.VerifyTheObjectOnThePreview("gallery");
-		article = editArticle.ClickOnPublishButtonInPreviewMode();
+		editArticle.clickOnAddObjectButton("Gallery");
+		editArticle.waitForObjectModalAndClickAddAphoto("Gallery");
+		editArticle.galleryCheckImageInputs(4);
+		editArticle.galleryClickOnSelectButton();
+		editArticle.gallerySetPosition("Gallery", "Center");
+		editArticle.gallerySetPhotoOrientation(2);
+		editArticle.galleryClickOnFinishButton();
+		editArticle.verifyObjectInEditMode("gallery");
+		editArticle.clickOnPreviewButton();
+		editArticle.verifyTheObjectOnThePreview("gallery");
+		article = editArticle.clickOnPublishButtonInPreviewMode();
 		article.VerifyTheObjetOnThePage("gallery");
 		editArticle = article.Edit();
 		editArticle.deleteArticleContent();
-		article = editArticle.ClickOnPublishButton();
-		CommonFunctions.logOut(Properties.userName2);
-//		stopBrowser();
-		
+		article = editArticle.clickOnPublishButton();
+		CommonFunctions.logOut(Properties.userName2, driver);
+		CommonFunctions.MoveCursorTo(0, 0);
 	}
 	
 	@Test(groups = {"ImageServing008"}) 
@@ -208,29 +197,27 @@ public class ImageServing extends TestTemplate {
 	// Test Case 008 Adding slideshows to an article in edit mode
 	public void ImageServing008_AddingSlideshow()
 	{
-//		startBrowser();
+		CommonFunctions.MoveCursorTo(0, 0);
 		WikiBasePageObject wiki = new WikiBasePageObject(driver, Global.DOMAIN);
 		WikiArticlePageObject article = wiki.OpenArticle(wikiArticle);
-//		driver.get(Global.DOMAIN+"wiki/"+wikiArticle);
 		CommonFunctions.logIn(Properties.userName2, Properties.password2);
 		WikiArticleEditMode editArticle = article.Edit();
-		editArticle.ClickOnAddObjectButton("Slideshow");
-		editArticle.WaitForObjectModalAndClickAddAphoto("GallerySlideshow");
-		editArticle.GalleryCheckImageInputs(4);
-		editArticle.GalleryClickOnSelectButton();
-		editArticle.GallerySetPosition("Slideshow", "Center");
-		editArticle.GalleryClickOnFinishButton();
-		editArticle.VerifyObjectInEditMode("slideshow");
-		editArticle.ClickOnPreviewButton();
-		editArticle.VerifyTheObjectOnThePreview("slideshow");
-		article = editArticle.ClickOnPublishButtonInPreviewMode();
+		editArticle.clickOnAddObjectButton("Slideshow");
+		editArticle.waitForObjectModalAndClickAddAphoto("GallerySlideshow");
+		editArticle.galleryCheckImageInputs(4);
+		editArticle.galleryClickOnSelectButton();
+		editArticle.gallerySetPosition("Slideshow", "Center");
+		editArticle.galleryClickOnFinishButton();
+		editArticle.verifyObjectInEditMode("slideshow");
+		editArticle.clickOnPreviewButton();
+		editArticle.verifyTheObjectOnThePreview("slideshow");
+		article = editArticle.clickOnPublishButtonInPreviewMode();
 		article.VerifyTheObjetOnThePage("slideshow");
 		editArticle = article.Edit();
 		editArticle.deleteArticleContent();
-		article = editArticle.ClickOnPublishButton();
-		CommonFunctions.logOut(Properties.userName2);
-//		stopBrowser();
-		
+		article = editArticle.clickOnPublishButton();
+		CommonFunctions.logOut(Properties.userName2, driver);
+	
 	}
 	
 	@Test(groups = {"ImageServing009"}) 
@@ -238,28 +225,26 @@ public class ImageServing extends TestTemplate {
 	// Test Case 009 Adding sliders to an article in edit mode
 	public void ImageServing009_AddingSliders()
 	{
-//		startBrowser();
+		CommonFunctions.MoveCursorTo(0, 0);
 		WikiBasePageObject wiki = new WikiBasePageObject(driver, Global.DOMAIN);
 		WikiArticlePageObject article = wiki.OpenArticle(wikiArticle);
-//		driver.get(Global.DOMAIN+"wiki/"+wikiArticle);
 		CommonFunctions.logIn(Properties.userName2, Properties.password2);
 		WikiArticleEditMode editArticle = article.Edit();
-		editArticle.ClickOnAddObjectButton("Slider");
-		editArticle.WaitForObjectModalAndClickAddAphoto("GallerySlider");
-		editArticle.GalleryCheckImageInputs(4);
-		editArticle.GalleryClickOnSelectButton();
-		editArticle.GallerySetSliderPosition(2);
-		editArticle.GalleryClickOnFinishButton();
-		editArticle.VerifyObjectInEditMode("gallery-slider");
-		editArticle.ClickOnPreviewButton();
-		editArticle.VerifyTheObjectOnThePreview("slider");
-		article = editArticle.ClickOnPublishButtonInPreviewMode();
+		editArticle.clickOnAddObjectButton("Slider");
+		editArticle.waitForObjectModalAndClickAddAphoto("GallerySlider");
+		editArticle.galleryCheckImageInputs(4);
+		editArticle.galleryClickOnSelectButton();
+		editArticle.gallerySetSliderPosition(2);
+		editArticle.galleryClickOnFinishButton();
+		editArticle.verifyObjectInEditMode("gallery-slider");
+		editArticle.clickOnPreviewButton();
+		editArticle.verifyTheObjectOnThePreview("slider");
+		article = editArticle.clickOnPublishButtonInPreviewMode();
 		article.VerifyTheObjetOnThePage("slider");
 		editArticle = article.Edit();
 		editArticle.deleteArticleContent();
-		article = editArticle.ClickOnPublishButton();
-		CommonFunctions.logOut(Properties.userName2);
-//		stopBrowser();
+		article = editArticle.clickOnPublishButton();
+		CommonFunctions.logOut(Properties.userName2, driver);
 		
 	}
 	
@@ -268,29 +253,27 @@ public class ImageServing extends TestTemplate {
 	// Test Case 010 Adding videos to an article in edit mode
 	public void ImageServing010_AddingVideo()
 	{
-//		startBrowser();
+		CommonFunctions.MoveCursorTo(0, 0);
 		WikiBasePageObject wiki = new WikiBasePageObject(driver, Global.DOMAIN);
 		WikiArticlePageObject article = wiki.OpenArticle(wikiArticle);
-//		driver.get(Global.DOMAIN+"wiki/"+wikiArticle);
 		CommonFunctions.logIn(Properties.userName2, Properties.password2);
 		WikiArticleEditMode editArticle = article.Edit();
-		editArticle.ClickOnAddObjectButton("Video");
-		editArticle.WaitForVideoModalAndTypeVideoURL(videoURL);
-		editArticle.ClickVideoNextButton();
-		editArticle.WaitForVideoDialog();
-		editArticle.TypeVideoCaption(Caption);
-		editArticle.ClickAddAvideo();
-		editArticle.WaitForSuccesDialogAndReturnToEditing();
-		editArticle.VerifyVideoInEditMode();
-		editArticle.ClickOnPreviewButton();
-		editArticle.VerifyTheVideoOnThePreview();
-		article = editArticle.ClickOnPublishButtonInPreviewMode();
+		editArticle.clickOnAddObjectButton("Video");
+		editArticle.waitForVideoModalAndTypeVideoURL(videoURL);
+		editArticle.clickVideoNextButton();
+		editArticle.waitForVideoDialog();
+		editArticle.typeVideoCaption(Caption);
+		editArticle.clickAddAvideo();
+		editArticle.waitForSuccesDialogAndReturnToEditing();
+		editArticle.verifyVideoInEditMode();
+		editArticle.clickOnPreviewButton();
+		editArticle.verifyTheVideoOnThePreview();
+		article = editArticle.clickOnPublishButtonInPreviewMode();
 		article.VerifyTheVideoOnThePage();
 		editArticle = article.Edit();
 		editArticle.deleteArticleContent();
-		article = editArticle.ClickOnPublishButton();
-		CommonFunctions.logOut(Properties.userName2);
-//		stopBrowser();
+		article = editArticle.clickOnPublishButton();
+		CommonFunctions.logOut(Properties.userName2, driver);
 		
 	}
 	
@@ -299,17 +282,16 @@ public class ImageServing extends TestTemplate {
 	// Test Case 011 Adding related videos through Related Video (RV) module
 	public void ImageServing011_AddingVideoThroughRV()
 	{
-//		startBrowser();
-		//delete all videos from RV module on QAAutopage using RelatedVideos:QAautoPage (message article)
+		CommonFunctions.MoveCursorTo(0, 0);
+		//delete the given video from RV module on QAAutopage using MediaWiki:RelatedVideosGlobalList (message article), by its name (videoURL2name variable)
 		WikiBasePageObject wiki = new WikiBasePageObject(driver, Global.DOMAIN);
-		WikiArticlePageObject RVmoduleMessage = wiki.OpenArticle("RelatedVideos:"+wikiArticle);
-		CommonFunctions.logIn(Properties.userName2, Properties.password2);
-		WikiArticleEditMode RVmoduleMessageEdit = RVmoduleMessage.Edit();
-		RVmoduleMessageEdit.deleteArticleContent();
-		RVmoduleMessage = RVmoduleMessageEdit.ClickOnPublishButton();
+		WikiArticlePageObject RVmoduleMessage = wiki.OpenArticle("MediaWiki:RelatedVideosGlobalList");
+		CommonFunctions.logIn(Properties.userNameStaff, Properties.passwordStaff);
+		WikiArticleEditMode RVmoduleMessageEdit = RVmoduleMessage.Edit();		
+		RVmoduleMessageEdit.deleteUnwantedVideoFromMessage(videoURL2name);
+		RVmoduleMessage = RVmoduleMessageEdit.clickOnPublishButton();
 		// after deletion start testing
 		WikiArticlePageObject article = RVmoduleMessage.OpenArticle(wikiArticle);
-//		driver.get(Global.DOMAIN+"wiki/"+wikiArticle);
 		article.VerifyRVModulePresence();
 		article.ClickOnAddVideoRVModule();
 		article.TypeInVideoURL(videoURL2);
@@ -317,8 +299,7 @@ public class ImageServing extends TestTemplate {
 //		article.WaitForProcessingToFinish();
 		article.VerifyVideoAddedToRVModule(videoURL2name);
 	
-		CommonFunctions.logOut(Properties.userName2);
-//		stopBrowser();
+		CommonFunctions.logOut(Properties.userName2, driver);
 		
 	}
 	

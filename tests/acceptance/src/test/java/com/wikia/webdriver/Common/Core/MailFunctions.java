@@ -19,7 +19,7 @@ public class MailFunctions {
 	
 	
 	
-	public static String getFirstMailContent() 
+	public static String getFirstMailContent(String userName, String password) 
 	{
 		try {
 			
@@ -29,7 +29,8 @@ public class MailFunctions {
 			Session session = Session.getDefaultInstance(props, null);
 			session.setDebug(true);
 			Store store = session.getStore("imaps");
-			store.connect("imap.googlemail.com", "webdriverseleniumwikia@gmail.com", "!@#QWEASD");
+			
+			store.connect("imap.googlemail.com", userName, password);
 			//getInbox
 			Folder inbox = store.getFolder("Inbox");
 			inbox.open(Folder.READ_ONLY);
@@ -86,7 +87,7 @@ public class MailFunctions {
 		}
 	}
 
-	public static void deleteAllMails()
+	public static void deleteAllMails(String userName, String password)
 	{
 		try {
 			
@@ -96,7 +97,7 @@ public class MailFunctions {
 			Session session = Session.getDefaultInstance(props, null);
 			session.setDebug(true);
 			Store store = session.getStore("imaps");
-			store.connect("imap.googlemail.com", "webdriverseleniumwikia@gmail.com", "!@#QWEASD");
+			store.connect("imap.googlemail.com", userName, password);
 			//getInbox
 			Folder inbox = store.getFolder("Inbox");
 			inbox.open(Folder.READ_WRITE);
@@ -165,19 +166,5 @@ public class MailFunctions {
 		String [] lines = content.split("\n");
 		return lines;
 	}
-	 
-	
-	
-	@Test
-	public void bbb() throws IOException
-	{
-		String aaa = getFirstMailContent();
-//		
-//		String bbb = aaa.replace("\"", "\n\"\n");
-//		System.out.println(bbb);
-//		String [] lines = bbb.split("\n");
-//		int i = lines.length;
-//		System.out.println(lines[6]);
-//		deleteAllMails();
-	}
+
 }

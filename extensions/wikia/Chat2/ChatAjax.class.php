@@ -3,12 +3,12 @@
 class ChatAjax {
 	const INTERNAL_POLLING_DELAY_MICROSECONDS = 500000;
 	const CHAT_AVATAR_DIMENSION = 28;
-	
-	
+
+
 	static protected function getUserIPMemcKey($userId, $address, $date) {
 		return $userId . '_' .  $address . '_' . $date . '_v1';
 	}
-	
+
 	/**
 	 * This is the ajax-endpoint that the node server will connect to in order to get the currently logged-in user's info.
 	 * The node server will pass the same cookies that the client has set, and this will allow this ajax request to be
@@ -34,25 +34,25 @@ class ChatAjax {
 		if( empty($data) ) {
 			return array( 'errorMsg' => wfMsg('chat-room-is-not-on-this-wiki'));
 		}
-		
+
 		$user = User::newFromId( $data['user_id'] );
 		if( empty($user) || !$user->isLoggedIn() || $user->getName() != $wgRequest->getVal('name', '') ) {
 			wfProfileOut( __METHOD__ );
 			return array( 'errorMsg' => wfMsg('chat-room-is-not-on-this-wiki'));
 		}
-		
+
 		$isCanGiveChatMode = false;
 		$userChangeableGroups = $user->changeableGroups();
 		if (in_array('chatmoderator', $userChangeableGroups['add'])) {
 			$isCanGiveChatMode = true;
 		}
-		
+
 		// First, check if they can chat on this wiki.
 		$retVal = array(
 			'canChat' => Chat::canChat($user),
 			'isLoggedIn' => $user->isLoggedIn(),
 			'isChatMod' => $user->isAllowed( 'chatmoderator' ),
-			'isCanGiveChatMode' => $isCanGiveChatMode, 
+			'isCanGiveChatMode' => $isCanGiveChatMode,
 			'isStaff' => $user->isAllowed( 'chatstaff' ),
 			'username' => $user->getName(),
 			'avatarSrc' => AvatarService::getAvatarUrl($user->getName(), self::CHAT_AVATAR_DIMENSION),
@@ -98,24 +98,24 @@ class ChatAjax {
 				// this results goes to chat server, which obiously has no user lang
 				// so we just return a short month name key - it has to be translated on client side
 				$date = getdate( wfTimestamp( TS_UNIX, $stats['date'] ) );
-				$retVal['since'] =  $date;							
+				$retVal['since'] =  $date;
 			}
 
 			$retVal['editCount'] = $stats['edits'];
 		}
-		
+
 		if ($retVal['isLoggedIn'] && $retVal['canChat']) {
 			// record the IP of the connecting user.
 			// use memcache so we order only one (user, ip) pair each day
 			$ip = $wgRequest->getVal('address');
 			$memcKey = self::getUserIPMemcKey($data['user_id'], $ip, date("Y-m-d"));
 			$entry = $wgMemc->get( $memcKey, false );
-			
+
 			if ( empty($entry) ) {
 				$wgMemc->set($memcKey, true, 86400 /*24h*/);
 				$log = WF::build( 'LogPage', array( 'chatconnect', false, false ) );
 				$log->addEntry( 'chatconnect', SpecialPage::getTitleFor('Chat'), '', array($ip), $user);
-				
+
 				$dbw = wfGetDB( DB_MASTER );
 				$cuc_id = $dbw->nextSequenceValue( 'cu_changes_cu_id_seq' );
 				$rcRow = array(
@@ -139,51 +139,51 @@ class ChatAjax {
 				);
 				$dbw->insert( 'cu_changes', $rcRow, __METHOD__ );
 				$dbw->commit();
-			}			
+			}
 		}
-		
+
 		wfProfileOut( __METHOD__ );
 		return $retVal;
 	} // end getUserInfo()
 
 	/**
-	 *  injecting data from chat to memcache 
+	 *  injecting data from chat to memcache
 	 */
-	
+
 	static public function setUsersList() {
 		global $wgRequest;
 		wfProfileIn( __METHOD__ );
-		
+
 		if(ChatHelper::getChatCommunicationToken() != $wgRequest->getVal('token')) {
 			wfProfileOut( __METHOD__ );
 			return array('status' => false);
 		}
-		
-		NodeApiClient::setChatters($wgRequest->getArray('users')); 
-		
+
+		NodeApiClient::setChatters($wgRequest->getArray('users'));
+
 		wfProfileOut( __METHOD__ );
 		return array('status' => $wgRequest->getArray('users') );
 	}
-	
+
 	/**
-	 * Ajax endpoint for createing / accessing  private rooms  
+	 * Ajax endpoint for createing / accessing  private rooms
 	 */
-		
+
 	static public function getPrivateRoomID() {
 		global $wgRequest;
 		wfProfileIn( __METHOD__ );
-		
+
 		// TODO: change this
 		$roomName = 'private room name';
 		$roomTopic = 'private room topic';
 
 		$users = explode( ',', $wgRequest->getVal('users'));
 		$roomId = NodeApiClient::getDefaultRoomId($roomName, $roomTopic, 'private', $users );
-		
+
 		wfProfileOut( __METHOD__ );
 		return array("id" => $roomId);
-	} 
-	
+	}
+
 	/**
  	 * Ajax endpoint for blocking privata chat with user.
 	 */
@@ -191,20 +191,20 @@ class ChatAjax {
 	static public function blockOrBanChat(){
 		global $wgRequest, $wgUser, $wgMemc;
 		wfProfileIn( __METHOD__ );
-		
+
 		$kickingUser = $wgUser;
 
 		$retVal = array();
 		$userToBan = $wgRequest->getVal('userToBan');
 		$userToBanId = $wgRequest->getVal('userToBanId', 0);
-		
+
 		if(!empty($userToBanId)) {
 			$userToBan = User::newFromId($userToBanId);
 			if(!empty($userToBanId)) {
-				$userToBan = $userToBan->getName(); 
-			}	
+				$userToBan = $userToBan->getName();
+			}
 		}
-		
+
 		$mode = $wgRequest->getVal('mode', 'private');
 
 		if(empty($userToBan)){
@@ -212,7 +212,7 @@ class ChatAjax {
 		} else {
 			$dir = $wgRequest->getVal('dir', 'add');
 			if($mode == 'private') {
-				$result = Chat::blockPrivate($userToBan, $dir, $kickingUser);	
+				$result = Chat::blockPrivate($userToBan, $dir, $kickingUser);
 			} else if($mode == 'global') {
 				$time = (int)  $wgRequest->getVal('time', 0);
 				$result = Chat::banUser($userToBan, $kickingUser, $time, $wgRequest->getVal('reason') );
@@ -228,7 +228,7 @@ class ChatAjax {
 		return $retVal;
 	} // end kickBan()
 
-		
+
 	static public function getListOfBlockedPrivate() {
 		return Chat::getListOfBlockedPrivate();
 	}
@@ -242,9 +242,9 @@ class ChatAjax {
 	static public function giveChatMod() {
 		global $wgRequest, $wgUser, $wgMemc;
 		wfProfileIn( __METHOD__ );
-		
+
 		$promottingUser = $wgUser;
-		
+
 		$retVal = array();
 		$PARAM_NAME = "userToPromote";
 		$userToPromote = $wgRequest->getVal( $PARAM_NAME );
@@ -270,11 +270,11 @@ class ChatAjax {
 		$tmpl = new EasyTemplate(dirname(__FILE__).'/templates/');
 
 		$userId = $wgRequest->getVal('userId', 0);
-		
+
 		$isChangeBan = false;
 		$isoTime = "";
 		$fmtTime = "";
-		
+
 		if(!empty($userId) && $user = User::newFromID($userId)) {
 			 $ban = Chat::getBanInformation($wgCityId, $user);
 			 if($ban !== false)  {
@@ -283,7 +283,7 @@ class ChatAjax {
 				$fmtTime = $wgLang->timeanddate( wfTimestamp( TS_MW, $ban->end_date ), true );
 			 }
 		}
-			
+
 		$tmpl->set_vars(array(
 				'options' => Chat::GetBanOptions(),
 				'isChangeBan' => $isChangeBan,
@@ -292,7 +292,7 @@ class ChatAjax {
 			)
 		);
 		$retVal = array();
-		$retVal['template'] = $tmpl->execute("banModal");
+		$retVal['template'] = $tmpl->render("banModal");
 		$retVal['isChangeBan'] = $isChangeBan;
 		wfProfileOut( __METHOD__ );
 		return $retVal;

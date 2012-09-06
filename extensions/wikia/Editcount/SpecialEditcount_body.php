@@ -255,7 +255,7 @@ class EditcountHTML extends Editcount {
 			"username"			=> $username,
 			"editcounttable" 	=> $editcounttable
 		));
-		$wgOut->addHTML( $oTmpl->execute("main-form") );
+		$wgOut->addHTML( $oTmpl->render("main-form") );
 		wfProfileOut( __METHOD__ );
 	}
 
@@ -291,7 +291,7 @@ class EditcountHTML extends Editcount {
             "nstotalall"	=> $this->totalall,
             "wgLang"		=> $wgLang,
         ));
-        $res = $oTmpl->execute("table");
+        $res = $oTmpl->render("table");
         wfProfileOut( __METHOD__ );
         return $res;
 	}

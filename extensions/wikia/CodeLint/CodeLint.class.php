@@ -37,6 +37,7 @@ abstract class CodeLint {
 	 * Return an instance of given type of lint class
 	 *
 	 * @param string $mode type of lint class
+	 * @throws Exception
 	 * @return CodeLint lint class instance
 	 */
 	public static function factory($mode) {
@@ -88,6 +89,7 @@ abstract class CodeLint {
 	 *
 	 * @param string $scriptName file to run
 	 * @param array $params parameters to pass to nodejs
+	 * @throws Exception
 	 * @return array output from nodejs
 	 */
 	protected function runUsingNodeJs($scriptName, Array $params = array()) {
@@ -187,7 +189,7 @@ abstract class CodeLint {
 	 * Get blame data (author and revision ID) for given file and line
 	 *
 	 * @param string $fileName file to generate blame for
-	 * @param $line file line number
+	 * @param integer $line file line number
 	 * @return mixed blame data
 	 */
 	protected function getBlameInfo($fileName, $line) {
@@ -280,6 +282,9 @@ abstract class CodeLint {
 			// keep the original number of errors
 			$output['errorsCount'] = count($output['errors']);
 
+			// count important errors
+			$output['importantErrorsCount'] = 0;
+
 			// simplify the report and fold multiple occurances of the same error
 			$errorsFolded = array();
 
@@ -304,6 +309,8 @@ abstract class CodeLint {
 				// mark important errors
 				if ($this->isImportantError($msg)) {
 					$entry['isImportant'] = true;
+
+					$output['importantErrorsCount']++;
 				}
 
 				// svn blame (for the first line)
@@ -314,6 +321,7 @@ abstract class CodeLint {
 		}
 		else {
 			$output['errorsCount'] = 0;
+			$output['importantErrorsCount'] = 0;
 		}
 
 		$output['fileChecked'] = $fileName;
@@ -325,7 +333,7 @@ abstract class CodeLint {
 	/**
 	 * Check given list of files and return list of warnings
 	 *
-	 * @param string $fileNames files to be checked
+	 * @param array $fileNames files to be checked
 	 * @param array $blacklist list of patterns to match against directories
 	 * @return array list of reported warnings
 	 */
@@ -397,7 +405,7 @@ abstract class CodeLint {
 	/**
 	 * Check given list of directories and return list of warnings
 	 *
-	 * @param string $directoryNames directories to be checked
+	 * @param array $directoryNames directories to be checked
 	 * @param array $blacklist list of patterns to match against directories
 	 * @return array list of reported warnings
 	 */

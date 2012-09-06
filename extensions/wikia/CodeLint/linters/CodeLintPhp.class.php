@@ -115,13 +115,13 @@ class CodeLintPhp extends CodeLint {
 	 * Parse XML files in resuls directory and return list of problems found
 	 *
 	 * @param string $resultsDir results directory with XML files
-	 * @return array with list of problems
+	 * @return array with list of problems found
 	 * @throws Exception
 	 */
 	private function parseResults($resultsDir) {
 		global $IP;
 
-		$files = glob($resultsDir . '/Php*.xml');
+		$files = glob($resultsDir . '/*.xml');
 		$problems = array();
 
 		foreach($files as $file) {
@@ -130,6 +130,10 @@ class CodeLintPhp extends CodeLint {
 			if ($xml instanceof SimpleXMLElement) {
 				/* @var $xml SimpleXMLElement */
 				$nodes = $xml->xpath('//problem');
+
+				if ($nodes === false) {
+					continue;
+				}
 
 				foreach($nodes as $node) {
 					$entry = array(
@@ -149,6 +153,32 @@ class CodeLintPhp extends CodeLint {
 			}
 			else {
 				throw new Exception("Parsing {$file} failed!");
+			}
+		}
+
+		return $problems;
+	}
+
+	/**
+	 * Performs addiitonal reg-exp based check of a single file
+	 *
+	 * @param $fileName string file name to check
+	 * @return array with list of problems found
+	 */
+	private function additionalFileCheck($fileName) {
+		$problems = array();
+
+		$content = file_get_contents($fileName);
+		$lines = explode("\n", $content);
+
+		foreach($lines as $lineNo => $line) {
+			// check for deprecated skins (BugId:45705)
+			if (preg_match( '#[\'"](awesome|SkinAwesome|monaco|SkinMonaco|quartz|SkinQuartz)[\'"]#', $line) > 0) {
+				$problems[] = array(
+					'file' => $fileName,
+					'line' => $lineNo + 1,
+					'error' => 'Check for no longer existing skin found'
+				);
 			}
 		}
 
@@ -206,6 +236,9 @@ class CodeLintPhp extends CodeLint {
 		// take issues for just the current file
 		$errors = isset($output['problems'][$fileName]) ? $output['problems'][$fileName] : array();
 
+		// perform additional (reg-exp based) checks
+		$errors  = array_merge($errors , $this->additionalFileCheck($fileName));
+
 		if (!empty($output)) {
 			$output = array(
 				'errors' => $errors,
@@ -230,6 +263,7 @@ class CodeLintPhp extends CodeLint {
 			case 'Unreachable statement':
 			case 'Redundant closing tag':
 			case 'Call-time pass-by-reference has been removed in PHP 5.4':
+			case 'Check for no longer existing skin found':
 				$ret = true;
 				break;
 		}
@@ -238,7 +272,20 @@ class CodeLintPhp extends CodeLint {
 			$ret = true;
 		}
 
+		if (startsWith($errorMsg, 'Undefined function')) {
+			$ret = true;
+		}
+
 		if (startsWith($errorMsg, 'Undefined constant')) {
+			$ret = true;
+		}
+
+		if (startsWith($errorMsg, 'Member has private access') || startsWith($errorMsg, 'Member has protected access')) {
+			$ret = true;
+		}
+
+		// Constant 'INSERT' not found in class
+		if (startsWith($errorMsg, 'Constant ') || startsWith($errorMsg, 'not found in class')) {
 			$ret = true;
 		}
 

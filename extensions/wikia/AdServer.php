@@ -22,6 +22,10 @@ class AdServer {
 		$this->loadAdsConfig();
 	}
 
+	/**
+	 * @static
+	 * @return AdServer instance
+	 */
 	public static function getInstance() {
 		if (self::$instance === false) {
 			self::$instance = new AdServer();
@@ -118,27 +122,11 @@ class AdServer {
 			return "<!-- {$ad_pos} -->".'<div id="adSpace'.(count($this->adsDisplayed) - 1).'"'.(($ad_pos == 'HOME_TOP_LEADERBOARD' || $ad_pos == 'HOME_TOP_RIGHT_BOXAD') ? ' class="'.$ad_pos.'"' : '').'>&nbsp;</div>';
 		}
 
-		if($this->skinName == 'monaco') {
-			if($ad_pos == 'b' && !isset($this->adsConfig[$ad_pos])) {
-				$ad_pos = 'bb';
-			} else if($ad_pos == 'bb2' && !isset($this->adsConfig[$ad_pos])) {
-				$ad_pos = 'bb3';
-			} else if($ad_pos == 'bb4' && !isset($this->adsConfig[$ad_pos])) {
-				$ad_pos = 'bb5';
-			} else if($ad_pos == 'r' && !isset($this->adsConfig[$ad_pos])) {
-				$ad_pos = 'bl';
-			}
-		}
-
 		if(isset($this->adsConfig[$ad_pos]) && !empty($wgShowAds) && !empty($wgUseAdServer)) {
 			$ad = $this->adsConfig[$ad_pos];
 			if(is_array($ad)) {
 				if($ad['server'] == 'L') {
-					if($this->skinName == 'monaco' && $wgAdServingType == 1) {
-						$this->adsDisplayed[] = array($ad['zone'], $ad_pos);
-						return "<!-- adserver={$ad['server']} {$ad_pos} {$ad['zone']} -->".'<div id="adSpace'.(count($this->adsDisplayed) - 1).'"'.(($ad_pos == 'FAST_HOME1' || $ad_pos == 'FAST_HOME2') ? ' class="'.$ad_pos.'"' : '').'>&nbsp;</div>';
-					} else {
-						return "<!-- adserver={$ad['server']} {$ad_pos} {$ad['zone']} -->
+					return "<!-- adserver={$ad['server']} {$ad_pos} {$ad['zone']} -->
 <script type='text/javascript'><!--//<![CDATA[
 var m3_u = 'http://wikia-ads.wikia.com/www/delivery/ajs.php';
 var m3_r = Math.floor(Math.random()*99999999999);
@@ -153,7 +141,6 @@ if(document.context) document.write(\"&context=\" + escape(document.context));
 if(document.mmm_fo) document.write(\"&amp;mmm_fo=1\");
 document.write(\"'><\/scr\"+\"ipt>\");
 //]]>--></script>";
-					}
 				} else if($ad['server'] == 'H') {
 					return "<!-- adserver={$ad['server']} {$ad_pos} {$ad['zone']} -->
 <script type='text/javascript'><!--//<![CDATA[

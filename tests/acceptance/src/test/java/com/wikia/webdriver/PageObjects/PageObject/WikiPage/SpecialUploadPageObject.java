@@ -38,29 +38,29 @@ public class SpecialUploadPageObject extends WikiBasePageObject {
 	 *  */ 
 	
 	public void TypeInFileToUploadPath(String file){
-		PageObjectLogging.log("TypeInFileToUploadPath", "Type file "+file+" to Special:Upload upload path", true, driver);
 		sendKeys(BrowseForFileInput, System.getProperty("user.dir")+"\\src\\test\\resources\\ImagesForUploadTests\\"+file);
+		PageObjectLogging.log("TypeInFileToUploadPath", "Type file "+file+" to Special:Upload upload path", true, driver);
 	
 	}
 
 	public void verifyFilePreviewAppeared(String string) {
-		PageObjectLogging.log("verifyFilePreviewAppeared", "Verify that file preview appeared", true, driver);
 		waitForElementByElement(FilePreview);
+		PageObjectLogging.log("verifyFilePreviewAppeared", "Verify that file preview appeared", true, driver);
 	}
 
 	public void CheckIgnoreAnyWarnings() {
-		PageObjectLogging.log("CheckIgnoreAnyWarnings", "Check 'Ignore Any Warnings' option", true, driver);
 		waitForElementByElement(IgnoreAnyWarnings);
 		CommonFunctions.scrollToElement(IgnoreAnyWarnings);
 //		CommonFunctions.scrollToElement(IgnoreAnyWarnings);
 		IgnoreAnyWarnings.click();
+		PageObjectLogging.log("CheckIgnoreAnyWarnings", "Check 'Ignore Any Warnings' option", true, driver);
 		
 	}
 
 	public FilePageObject ClickOnUploadFile(String file) {
-		PageObjectLogging.log("ClickOnUploadFile", "Click on Upload file button. The method returns FilePageObject", true, driver);
 		waitForElementByElement(UploadFileInput);
 		UploadFileInput.click();
+		PageObjectLogging.log("ClickOnUploadFile", "Click on Upload file button. The method returns FilePageObject", true, driver);
 		return new FilePageObject(driver, file);
 	}
 

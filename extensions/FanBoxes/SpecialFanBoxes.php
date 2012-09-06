@@ -464,7 +464,7 @@ class FanBoxes extends SpecialPage {
 	 * @param $vars Array: array of pre-existing JS globals
 	 * @return Boolean: true
 	 */
-	public static function addJSGlobals( $vars ) {
+	public static function addJSGlobals( Array &$vars ) {
 		$vars['__FANBOX_MUSTENTER_LEFT__'] = wfMsg( 'fanbox-mustenter-left' );
 		$vars['__FANBOX_MUSTENTER_RIGHT__'] = wfMsg( 'fanbox-mustenter-right' );
 		$vars['__FANBOX_MUSTENTER_RIGHT_OR__'] = wfMsg( 'fanbox-mustenter-right-or' );

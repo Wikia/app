@@ -16,7 +16,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 }
 
 function axACWRequestCheckWikiName() {
-	global $wgRequest, $wgDBname, $wgContLang, $wgLang, $wgOut;
+	global $wgRequest;
 
 	$sName = $wgRequest->getVal('name');
 	$sLang = $wgRequest->getVal('lang');
@@ -29,7 +29,7 @@ function axACWRequestCheckWikiName() {
 }
 
 function axACWRequestCheckName() {
-	global $wgRequest, $wgDBname, $wgContLang, $wgOut;
+	global $wgRequest;
 
 	$sName = $wgRequest->getVal( "name" );
 	$sLang = $wgRequest->getVal( "lang" );
@@ -76,7 +76,7 @@ function axACWRequestCheckName() {
 }
 
 function axACWRequestCheckAccount() {
-	global $wgRequest, $wgDBname, $wgContLang, $wgOut;
+	global $wgRequest;
 
 	$sName = $wgRequest->getVal('name');
 	$sLang = $wgRequest->getVal('lang');
@@ -87,23 +87,23 @@ function axACWRequestCheckAccount() {
 	$sResponse = "";
 	$errDiv = 'wiki-username-error' ;
 	switch ($sName) {
-		case "username" : {
+		case "username" :
 			$sResponse = AutoCreateWiki::checkUsernameIsCorrect($sValue);
 			break;
-		}
-		case "email" : {
+
+		case "email" :
 			$sResponse = AutoCreateWiki::checkEmailIsCorrect($sValue);
 			break;
-		}
-		case "password" : {
+
+		case "password" :
 			$sUsername = urldecode( $wgRequest->getText('username') );
 			$sResponse = AutoCreateWiki::checkPasswordIsCorrect($sUsername, $sValue);
 			break;
-		}
-		case "retype-password" : {
+
+		case "retype-password" :
 			$sResponse = AutoCreateWiki::checkRetypePasswordIsCorrect($sPass, $sValue);
 			break;
-		}
+
 	}
 	$errDiv = "wiki-{$sName}-error";
 
@@ -114,7 +114,7 @@ function axACWRequestCheckAccount() {
 }
 
 function axACWRequestCheckBirthday() {
-	global $wgRequest, $wgDBname, $wgContLang, $wgOut;
+	global $wgRequest;
 
 	$sYear = $wgRequest->getVal('year');
 	$sMonth = $wgRequest->getVal('month');
@@ -125,17 +125,11 @@ function axACWRequestCheckBirthday() {
 
 	$isError = (!empty($sResponse)) ? true : false;
 	$aResponse = array( 'div-body' => $sResponse, 'div-name' => $errDiv, 'div-error' => $isError );
-	if (!function_exists('json_encode'))  {
-		$oJson = new Services_JSON();
-		return $oJson->encode($aResponse);
-	} else {
-		return json_encode($aResponse);
-	}
+
+	return json_encode($aResponse);
 }
 
 function axACWRequestCheckLog() {
-	global $wgUser;
-
 	$sInfo = "";
 	if ( !empty($_SESSION) && isset($_SESSION['awcName']) ) {
 		$sInfo = AutoCreateWiki::logMemcKey (

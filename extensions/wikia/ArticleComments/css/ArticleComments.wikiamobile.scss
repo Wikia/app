@@ -1,6 +1,6 @@
 //mixins
-@import "../../WikiaMobile/css/mixins/box-shadow";
-@import "../../WikiaMobile/css/variables";
+@import "../../WikiaMobile/css/mixins/box-shadow.scss";
+@import "../../WikiaMobile/css/variables.scss";
 
 //vars
 $comment-left-margin: $page-padding + 60px;
@@ -81,7 +81,6 @@ $commentBg: rgb(246,246,246);
 	line-height: 40px;
 	font-weight: 100;
 	padding-left: 5px;
-	width: 100%;
 	display: none;
 	position: relative;
 
@@ -94,7 +93,7 @@ $commentBg: rgb(246,246,246);
 	&::after, &::before {
 		border-style: solid;
 		border-width: 10px;
-		content: "";
+		content: '';
 		height: 0;
 		position: absolute;
 		left: 10px;
@@ -185,17 +184,13 @@ $commentBg: rgb(246,246,246);
 
 #commMore, #commPrev{
 	display: none;
-	border-top: 1px solid $border-color;
-	color: $link-color;
-	font-size: medium;
-	height: 50px;
+	border-top: 1px solid rgb(227, 227, 227);
 	line-height: 50px;
-	left: -$page-padding;
-	position: relative;
 	text-align: center;
-	vertical-align: middle;
-	width: 110%;
+	margin: 0 -10px;
 	-webkit-transition: background-color .5s;
+	-moz-transition: background-color .5s;
+	transition: background-color .5s;
 
 	&.pag{
 		display: block;
@@ -228,7 +223,6 @@ $commentBg: rgb(246,246,246);
    		padding-left: 10px;
 		text-transform: uppercase;
 		font-size: 0.9em;
-		position: absolute;
    	}
 
     #wkMdlCnt{

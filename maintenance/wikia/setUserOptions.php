@@ -17,7 +17,7 @@ require_once('commandLine.inc');
 $clearcache = isset($options['clearcache']);
 
 // get preferences
-$default_keys = array('conf', 'help', 'force', 'quiet', 'from', 'to', 'founder', 'clearcache');
+$default_keys = array('conf', 'help', 'force', 'quiet', 'from', 'to', 'founder', 'clearcache', 'memory-limit');
 $preferences = array();	//pairs key=value
 foreach($options as $key => $value) {
 	if (!in_array($key, $default_keys))
@@ -87,7 +87,8 @@ $count = 0;
 
 while ($row = $dbr->fetchObject($res)) {
 	$user = User::newFromId($row->user_id);
-	if ($user) {
+	$user->load();
+	if ( $user instanceof User and $user->getId() > 0 ) {
 		if ($clearcache) {
 			$user->invalidateCache();
 			$count++;
@@ -100,7 +101,7 @@ while ($row = $dbr->fetchObject($res)) {
 				if (isset($row->city_id))
 					$key = str_replace('%', $row->city_id, $key);
 				$old_val = $user->getOption($key, null);
-				if ($force || $old_val === null) {
+				if ( ($force && $old_val !== $val) || $old_val === null ) {
 					$user->setOption($key, $val);
 					$optionsChanged++;
 					if (!$quiet) {

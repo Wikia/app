@@ -56,6 +56,17 @@ class SkinMonoBook extends WikiaSkinMonoBook {
  */
 // Wikia change - begin - @author: wladek
 class MonoBookTemplate extends WikiaMonoBookTemplate {
+	/*
+	 * added here because of BugzId:45526
+	 * but frankly, I have no idea why or when this stopped working
+	 * @TODO additional investigation, possibly remove the part below
+	 *
+	 * @author tor
+	 */
+	function __construct() {
+		parent::__construct();
+		$this->translator = new MediaWiki_I18n();
+	}
 // Wikia change - end
 
 

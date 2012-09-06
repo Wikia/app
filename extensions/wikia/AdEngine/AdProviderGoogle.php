@@ -41,18 +41,6 @@ class AdProviderGoogle implements iAdProvider {
 				google_ad_type   = "text";
 				google_ad_region = "region";' . "\n";
 
-		$skin_name = RequestContext::getMain()->getSkin()->getSkinName();
-		if ( $skin_name == 'monaco' ){
-			// getAdColor only works in monaco
-			$out .= '
-				google_color_border = AdEngine.getAdColor("text");
-				google_color_bg	    = AdEngine.getAdColor("bg");
-				google_color_link   = AdEngine.getAdColor("link");
-				google_color_text   = AdEngine.getAdColor("text");
-				google_color_url    = AdEngine.getAdColor("url");
-			';
-		}
-
 		$channel = $this->getChannel();
 		$out .= 'google_ad_channel = "' . addslashes($channel) . '";' . "\n";
 		/* Channel is how we do bucket tests.

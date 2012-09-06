@@ -4,7 +4,7 @@ class VideoHandlerController extends WikiaController {
 
 	public function getEmbedCode() {
 		$articleId = $this->getVal('articleId', '');
-		$title = $this->getVal('title', '');
+		$title = $this->getVal('fileTitle', '');
 		$width = $this->getVal('width', '');
 		$autoplay = $this->getVal('autoplay', false);
 
@@ -17,7 +17,8 @@ class VideoHandlerController extends WikiaController {
 				$error = $this->wf->msgForContent('videohandler-error-missing-parameter', 'width');
 			}
 			else {
-				$file = wfFindFile($title);
+				$title = Title::newFromText($title, NS_FILE);
+				$file = ($title instanceof Title) ? wfFindFile($title) : false;
 				if ($file === false) {
 					$error = $this->wf->msgForContent('videohandler-error-video-no-exist');
 				}

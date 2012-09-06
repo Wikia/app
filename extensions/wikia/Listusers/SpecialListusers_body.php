@@ -139,7 +139,7 @@ class Listusers extends SpecialRedirectToSpecial {
 			"wgUser"			=> $wgUser,
 			"title"				=> self::TITLE
 		));
-		$wgOut->addHTML( $oTmpl->execute("main-form") );
+		$wgOut->addHTML( $oTmpl->render("main-form") );
 		wfProfileOut( __METHOD__ );
 	}
 }

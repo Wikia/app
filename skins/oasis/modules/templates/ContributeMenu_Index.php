@@ -1,7 +1,7 @@
 <?php
 
 // render "Contribute" menu
-echo wfRenderModule('MenuButton', 'Index', array(
+echo F::app()->renderView('MenuButton', 'Index', array(
 	'action' => array(
 		'text' => wfMsg('oasis-button-contribute-tooltip'),
 	),

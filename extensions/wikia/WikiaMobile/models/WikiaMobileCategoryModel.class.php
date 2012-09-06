@@ -9,6 +9,11 @@ class WikiaMobileCategoryModel extends WikiaModel{
 	const CACHE_TTL_EXHIBITION = 21600;//6h
 	const EXHIBITION_ITEMS_LIMIT = 4;//maximum number of items in Category Exhibition to display
 
+	/**
+	 * @param Category $category
+	 * @return WikiaMobileCategoryViewer
+	 */
+
 	public function getItemsCollection( Category $category ){
 		$this->wf->profileIn( __METHOD__ );
 
@@ -17,7 +22,11 @@ class WikiaMobileCategoryModel extends WikiaModel{
 
 
 		if ( empty( $contents ) ) {
-			$contents = F::build( 'WikiaMobileCategoryViewer', array( $category ) )->getContents();
+			/**
+			 * @var $wikiaMobileCategoryViewer WikiaMobileCategoryViewer
+			 */
+			$wikiaMobileCategoryViewer = F::build( 'WikiaMobileCategoryViewer', array( $category ) );
+			$contents = $wikiaMobileCategoryViewer->getContents();
 			$this->wg->memc->set( $cacheKey, $contents, self::CACHE_TTL_ITEMSCOLLECTION );
 		}
 
@@ -133,7 +142,7 @@ class WikiaMobileCategoryViewer extends CategoryViewer{
 	/**
 	 * Executes CategoryViewer::doCategoryQuery() and returns the contents wrapped in a DTO
 	 *
-	 * @return WikiaMobileCategoryContents The contents of the category
+	 * @return $ret WikiaMobileCategoryContents The contents of the category
 	 */
 	public function getContents(){
 		parent::doCategoryQuery();

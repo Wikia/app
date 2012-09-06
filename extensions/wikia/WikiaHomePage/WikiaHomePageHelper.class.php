@@ -43,7 +43,8 @@ class WikiaHomePageHelper extends WikiaModel {
 	protected $visualizationModel = null;
 
 	protected $excludeUsersFromInterstitial = array(
-		'Wikia' => true,
+		22439, //Wikia
+		1458396, //Abuse filter
 	);
 
 	public function getNumberOfEntertainmentSlots($lang) {
@@ -203,7 +204,7 @@ class WikiaHomePageHelper extends WikiaModel {
 
 	/**
 	 * get stats from article
-	 * @param string articleName
+	 * @param string $articleName
 	 * @return integer stats
 	 */
 	public function getStatsFromArticle($articleName) {
@@ -372,30 +373,45 @@ class WikiaHomePageHelper extends WikiaModel {
 		$user = F::build('User', array($userId), 'newFromId');
 
 
-		if ($user instanceof User) {
+		if ($user instanceof User && $this->isValidUserForInterstitial($user) ) {
 			$username = $user->getName();
 
-			if (!$user->isIP($username)
-				&& empty($this->excludeUsersFromInterstitial[$username])
-				&& !in_array('bot', $user->getRights())
-			) {
-				$userInfo['avatarUrl'] = F::build('AvatarService', array($user, self::AVATAR_SIZE), 'getAvatarUrl');
-				$userInfo['edits'] = 0;
-				$userInfo['name'] = $username;
-				$userProfileTitle = F::build('GlobalTitle', array($username, NS_USER, $wikiId), 'newFromText');
-				$userInfo['userPageUrl'] = ($userProfileTitle instanceof Title) ? $userProfileTitle->getFullURL() : '#';
-				$userContributionsTitle = F::build('GlobalTitle', array('Contributions/' . $username, NS_SPECIAL, $wikiId), 'newFromText');
-				$userInfo['userContributionsUrl'] = ($userContributionsTitle instanceof Title) ? $userContributionsTitle->getFullURL() : '#';
+			$userInfo['avatarUrl'] = F::build('AvatarService', array($user, self::AVATAR_SIZE), 'getAvatarUrl');
+			$userInfo['edits'] = 0;
+			$userInfo['name'] = $username;
+			/** @var $userProfileTitle GlobalTitle */
+			$userProfileTitle = F::build('GlobalTitle', array($username, NS_USER, $wikiId), 'newFromText');
+			$userInfo['userPageUrl'] = ($userProfileTitle instanceof Title) ? $userProfileTitle->getFullURL() : '#';
+			$userContributionsTitle = F::build('GlobalTitle', array('Contributions/' . $username, NS_SPECIAL, $wikiId), 'newFromText');
+			$userInfo['userContributionsUrl'] = ($userContributionsTitle instanceof Title) ? $userContributionsTitle->getFullURL() : '#';
 
-				$userStatsService = F::build('UserStatsService', array($userId));
-				$stats = $userStatsService->getGlobalStats($wikiId);
+			$userStatsService = F::build('UserStatsService', array($userId));
+			$stats = $userStatsService->getGlobalStats($wikiId);
 
-				$date = getdate(strtotime($stats['date']));
-				$userInfo['since'] = F::App()->wg->Lang->getMonthAbbreviation($date['mon']) . ' ' . $date['year'];
-			}
+			$date = getdate(strtotime($stats['date']));
+			$userInfo['since'] = F::App()->wg->Lang->getMonthAbbreviation($date['mon']) . ' ' . $date['year'];
 		}
 
 		return $userInfo;
+	}
+
+	/**
+	 * @desc Returns true if user isn't: an IP address, excluded from interstitial, bot, blocked locally and globally
+	 *
+	 * @param User $user
+	 * @return bool
+	 */
+	protected function isValidUserForInterstitial(User $user) {
+		$userId = $user->getId();
+		$userName = $user->getName();
+
+		return (
+			!$user->isIP($userName)
+			&& !in_array($userId, $this->excludeUsersFromInterstitial)
+			&& !in_array('bot', $user->getRights())
+			&& !$user->isBlocked()
+			&& !$user->isBlockedGlobally()
+		);
 	}
 
 	public function getWikiInfoForSpecialPromote($wikiId, $langCode) {
@@ -432,6 +448,7 @@ class WikiaHomePageHelper extends WikiaModel {
 
 		$wikiInfo = array(
 			'name' => '',
+			'headline' => '',
 			'description' => '',
 			'url' => '',
 			'new' => 0,
@@ -451,7 +468,8 @@ class WikiaHomePageHelper extends WikiaModel {
 			$wikiData = $dataGetter->getWikiData($wikiId, $langCode);
 
 			if (!empty($wikiData)) {
-				$wikiInfo['name'] = $wikiData['headline'];
+				$wikiInfo['name'] = $wikiData['name'];
+				$wikiInfo['headline'] = $wikiData['headline'];
 				$wikiInfo['description'] = $wikiData['description'];
 
 				// wiki status
@@ -465,6 +483,8 @@ class WikiaHomePageHelper extends WikiaModel {
 				if (!empty($wikiData['main_image'])) {
 					$wikiInfo['images'][] = $wikiData['main_image'];
 				}
+
+                $wikiData['images'] = (array)$wikiData['images'];
 
 				// wiki images
 				if (!empty($wikiData['images'])) {
@@ -587,14 +607,21 @@ class WikiaHomePageHelper extends WikiaModel {
 		$requestedRatio = $requestedWidth / $requestedHeight;
 		$originalRatio = $originalWidth / $originalHeight;
 
+		$requestedCropHeight = $requestedHeight;
+		$requestedCropWidth = $requestedWidth;
+
 		if ($originalHeight < $requestedHeight || $originalWidth < $requestedWidth) {
 			// we will be unable to extend image, so we will just crop it to fit requested ratio
-			if ($originalRatio > $requestedRatio) {
+			if ($originalRatio < $requestedRatio) {
+				// result should have more 'horizontal' orientation, cropping top and bottom
 				$requestedWidth = $originalWidth / $requestedRatio;
-				$requestedHeight = $originalHeight;
+				$requestedCropWidth = $requestedWidth;
+				$requestedCropHeight = $requestedCropWidth / $requestedRatio;
 			} else {
-				$requestedHeight = $originalHeight / $requestedRatio;
-				$requestedWidth = $originalWidth;
+				// result should have more 'vertical' orientation, cropping left and right
+				$requestedWidth = $originalWidth / $originalRatio;
+				$requestedCropWidth = $requestedWidth;
+				$requestedCropHeight = $requestedCropWidth / $requestedRatio;
 			}
 		}
 
@@ -602,18 +629,19 @@ class WikiaHomePageHelper extends WikiaModel {
 			null,
 			floor($requestedWidth),
 			array(
-				'h' => floor($requestedHeight),
-				'w' => floor($requestedWidth)
+				'h' => floor($requestedCropHeight),
+				'w' => floor($requestedCropWidth)
 			)
 		);
 		return $imageServingParams;
 	}
 
 	public function getWikiBatches($wikiId, $langCode, $numberOfBatches) {
-		$visualization = F::build('CityVisualization'); /** @var CityVisualization $visualization */
+		$visualization = F::build('CityVisualization');
+		/** @var CityVisualization $visualization */
 		$batches = $visualization->getWikiBatches($wikiId, $langCode, $numberOfBatches);
 
-		if( !empty($batches) ) {
+		if (!empty($batches)) {
 			return $this->prepareBatchesForVisualization($batches);
 		} else {
 			return array();
@@ -625,33 +653,35 @@ class WikiaHomePageHelper extends WikiaModel {
 
 		$processedBatches = array();
 
-		foreach( $batches as $batch ) {
+		foreach ($batches as $batch) {
 			$processedBatch = array(
 				self::SLOTS_BIG_ARRAY_KEY => array(),
 				self::SLOTS_MEDIUM_ARRAY_KEY => array(),
 				self::SLOTS_SMALL_ARRAY_KEY => array()
 			);
 
-			if( !empty($batch[CityVisualization::PROMOTED_ARRAY_KEY]) ) {
-			//if there are any promoted wikis they should go firstly to big&medium slots
+			if (!empty($batch[CityVisualization::PROMOTED_ARRAY_KEY])) {
+				//if there are any promoted wikis they should go firstly to big&medium slots
 				$promotedBatch = $batch[CityVisualization::PROMOTED_ARRAY_KEY];
 
 				$processedBatch[self::SLOTS_BIG_ARRAY_KEY] = $this->getProcessedWikisData($promotedBatch, self::SLOTS_BIG);
 				$processedBatch[self::SLOTS_MEDIUM_ARRAY_KEY] = $this->getProcessedWikisData($promotedBatch, self::SLOTS_MEDIUM);
 			}
 
-			if( empty($batch[CityVisualization::DEMOTED_ARRAY_KEY]) ) {
+			if (empty($batch[CityVisualization::DEMOTED_ARRAY_KEY])) {
 				continue;
+			} else {
+				shuffle($batch[CityVisualization::DEMOTED_ARRAY_KEY]);
 			}
 
 			$bigCount = count($processedBatch[self::SLOTS_BIG_ARRAY_KEY]);
 			//if there wasn't enough promoted wikis fill big&medium slots with regural ones
-			if( $bigCount < self::SLOTS_BIG ) {
+			if ($bigCount < self::SLOTS_BIG) {
 				$processedBatch[self::SLOTS_BIG_ARRAY_KEY] = array_merge($processedBatch[self::SLOTS_BIG_ARRAY_KEY], $this->getProcessedWikisData($batch[CityVisualization::DEMOTED_ARRAY_KEY], self::SLOTS_BIG, $bigCount));
 			}
 
 			$mediumCount = count($processedBatch[self::SLOTS_MEDIUM_ARRAY_KEY]);
-			if( $mediumCount < self::SLOTS_MEDIUM ) {
+			if ($mediumCount < self::SLOTS_MEDIUM) {
 				$processedBatch[self::SLOTS_MEDIUM_ARRAY_KEY] = array_merge($processedBatch[self::SLOTS_MEDIUM_ARRAY_KEY], $this->getProcessedWikisData($batch[CityVisualization::DEMOTED_ARRAY_KEY], self::SLOTS_MEDIUM, $mediumCount));
 			}
 
@@ -671,12 +701,12 @@ class WikiaHomePageHelper extends WikiaModel {
 
 		$size = $this->getProcessedWikisImgSizes($orgLimit);
 
-		for( $curLimit; $curLimit < $orgLimit; $curLimit++ ) {
+		for ($curLimit; $curLimit < $orgLimit; $curLimit++) {
 			$wiki = array_shift($batch);
 			$processedWiki = $this->extractWikiDataForBatch($wiki);
 			$processedWiki['image'] = $this->getImageUrl($processedWiki['main_image'], $size->width, $size->height);
 
-			if( !empty($processedWiki['wikiurl']) ) {
+			if (!empty($processedWiki['wikiurl'])) {
 				$result[] = $processedWiki;
 			}
 		}
@@ -687,7 +717,7 @@ class WikiaHomePageHelper extends WikiaModel {
 	protected function shufflePromotedWikis(&$processedBatch) {
 		$promotedWikis = array_merge($processedBatch[self::SLOTS_BIG_ARRAY_KEY], $processedBatch[self::SLOTS_MEDIUM_ARRAY_KEY]);
 
-		if( count($promotedWikis) !== (self::SLOTS_BIG + self::SLOTS_MEDIUM) ) {
+		if (count($promotedWikis) !== (self::SLOTS_BIG + self::SLOTS_MEDIUM)) {
 			return;
 		}
 
@@ -704,7 +734,7 @@ class WikiaHomePageHelper extends WikiaModel {
 		$result = array();
 
 		$size = $this->getProcessedWikisImgSizes($limit);
-		for($limit; $limit > 0; $limit--) {
+		for ($limit; $limit > 0; $limit--) {
 			$wiki = array_shift($promotedWikis);
 			$wiki['image'] = $this->getImageUrl($wiki['main_image'], $size->width, $size->height);
 			$result[] = $wiki;
@@ -721,7 +751,7 @@ class WikiaHomePageHelper extends WikiaModel {
 	public function getProcessedWikisImgSizes($limit) {
 		$result = new StdClass;
 
-		switch($limit) {
+		switch ($limit) {
 			case self::SLOTS_SMALL:
 				$result->width = WikiaHomePageController::REMIX_IMG_SMALL_WIDTH;
 				$result->height = WikiaHomePageController::REMIX_IMG_SMALL_HEIGHT;
@@ -732,9 +762,9 @@ class WikiaHomePageHelper extends WikiaModel {
 				break;
 			case self::SLOTS_BIG:
 			default:
-			$result->width = WikiaHomePageController::REMIX_IMG_BIG_WIDTH;
-			$result->height = WikiaHomePageController::REMIX_IMG_BIG_HEIGHT;
-			break;
+				$result->width = WikiaHomePageController::REMIX_IMG_BIG_WIDTH;
+				$result->height = WikiaHomePageController::REMIX_IMG_BIG_HEIGHT;
+				break;
 		}
 
 		return $result;
@@ -747,8 +777,8 @@ class WikiaHomePageHelper extends WikiaModel {
 		$visualization = F::build('CityVisualization');
 		$result = $visualization->setFlag($wikiId, $langCode, $flag);
 
-		if( $result === true ) {
-		//purge cache
+		if ($result === true) {
+			//purge cache
 			//wiki cache
 			$visualization->getList($corpWikiId, $langCode, true);
 			$memcKey = $visualization->getWikiDataCacheKey($visualization->getTargetWikiId($langCode), $wikiId, $langCode);
@@ -772,8 +802,8 @@ class WikiaHomePageHelper extends WikiaModel {
 		$visualization = F::build('CityVisualization');
 		$result = $visualization->removeFlag($wikiId, $langCode, $flag);
 
-		if( $result === true ) {
-		//purge cache
+		if ($result === true) {
+			//purge cache
 			//wiki cache
 			$visualization->getList($corpWikiId, $langCode, true);
 			$memcKey = $visualization->getWikiDataCacheKey($visualization->getTargetWikiId($langCode), $wikiId, $langCode);

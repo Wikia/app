@@ -140,7 +140,7 @@ class PageGrabberTask extends BatchTask {
 					"title" => $title ,
 					"desc" => wfMsg ("pagegrabbertask_add")
 				       ));
-		return $oTmpl->execute( "form" ) ;
+		return $oTmpl->render( "form" ) ;
 	}
 
 	function getType() {
@@ -162,7 +162,7 @@ class PageGrabberTask extends BatchTask {
 	 * @author eloy@wikia
 	 *
 	 * @return boolean: status of operation; true if success, false otherwise
-	 */ 
+	 */
 	public function submitForm() {
 		global $wgRequest, $wgOut;
 

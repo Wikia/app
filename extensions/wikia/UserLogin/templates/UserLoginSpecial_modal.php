@@ -55,7 +55,7 @@
 	//$form['isInvalid'] = true;
 	//$form['errorMsg'] = '';
 
-	echo wfRenderModule('WikiaForm', 'Index', array('form' => $form));
+	echo $app->renderView('WikiaForm', 'Index', array('form' => $form));
 	echo $app->renderView('UserLoginSpecial', 'Providers');
 ?>
 </div>

@@ -1,0 +1,102 @@
+@import "../../../../skins/oasis/css/core/color";
+@import "../../../../skins/oasis/css/mixins/box-shadow";
+@import "../../../../skins/oasis/css/mixins/box-sizing";
+@import "../../../../skins/oasis/css/mixins/clearfix";
+@import "../../../../skins/oasis/css/mixins/menus";
+@import "../../../../skins/oasis/css/mixins/opacity";
+@import "../../../../skins/oasis/css/mixins/transform";
+
+@import "../../Wall/css/WallColors";
+
+.message-topic {
+	display: none;
+	margin-top: 5px;
+	position: relative;
+	label {
+		display: block;
+		margin-bottom: 5px;
+	}
+	input[type=text] {
+		@include box-sizing;
+		background-color: $color-wall-input-new;
+		border: 1px solid $color-page-border;
+		color: $color-text;
+		
+		// Chrome needs this to get rid of empty space below textarea
+		display: block;
+		font-size: 13px;
+		line-height: 20px;
+		outline: none;
+		overflow: hidden;
+		padding: 5px 10px;
+		resize: none;
+		width: 100%;
+		&:focus {
+			@include box-shadow(0px, 0px, 4px, $color-wall-input-focus-shadow);
+			background-color: $color-wall-input-focus;
+			color: $color-text;
+		}
+		// These have to be separated to work
+		&:-moz-placeholder {
+			color: $color-wall-text-placeholder;
+		}
+
+		&::-webkit-input-placeholder {
+			color: $color-wall-text-placeholder;
+		}
+	}
+	.autocomplete {
+		@include menu-regular;
+		@include box-shadow(3px, 3px, 6px, darken($color-page, 9%));
+		background-color: $color-wall-input-new;
+		color: $color-text;
+		position: inherit;
+		>div {
+			cursor: pointer;
+			padding: 5px 10px;
+			&.selected {
+				background: $color-menu-highlight;
+			}
+		}
+	}
+	.message-topic-error {
+		padding-top: 3px;
+	}
+	.message-topic-list {
+		@include clearfix;
+		font-size: 11px;
+		list-style: none;
+		padding: 0;
+		margin: 5px 0 0;
+		.topic {
+			@include opacity(80);
+			float: left;
+			margin-right: 10px;
+			padding-right: 15px;
+			position: relative;
+			
+			&:hover {
+				@include opacity(100);
+				.remove-swatch {
+					background-color: $color-text;
+				}
+			}
+			.remove-swatch {
+				$color-remove-swatch: lighten($color-text, 20%);
+				@if $is-dark-wiki {
+					$color-remove-swatch: darken($color-text, 20%);
+				}
+				@include transform(scale(0.8));
+				background-color: $color-remove-swatch;
+				background-image: url('/skins/oasis/images/icon_close.png'); /* $base64 */
+				background-position: -2px -2px;
+				cursor: pointer;
+				height: 12px;
+				position: absolute;
+				right: 0;
+				top: 3px;
+				width: 11px;
+			}
+		}
+	}
+}

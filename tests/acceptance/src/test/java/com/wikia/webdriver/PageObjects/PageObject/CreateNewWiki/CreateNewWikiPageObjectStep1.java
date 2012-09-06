@@ -42,6 +42,12 @@ public class CreateNewWikiPageObjectStep1 extends BasePageObject{
 	public void typeInWikiName(String name)
 	{
 		wikiName.sendKeys(name);
+		try {
+			Thread.sleep(100);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		PageObjectLogging.log("typeInWikiName ", "Typed wiki name" +name, true, driver);
 	}
 	

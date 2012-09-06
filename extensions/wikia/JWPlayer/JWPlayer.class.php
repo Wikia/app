@@ -11,8 +11,6 @@ class JWPlayer {
 	private static $JWPLAYER_DIR = '/wikia/JWPlayer/';
 	private static $JWPLAYER_JS = 'jwplayer.min.js';
 	private static $JWPLAYER_SWF = 'player.swf';
-	private static $JWPLAYER_JS_PLUGINS_DIR = 'plugins/js/';
-	private static $JWPLAYER_PLUGIN_HD_JS = 'hd-2.1.min.js';
 	private static $JWPLAYER_PLUGIN_HD_SWF = 'hd-2.1.swf';
 	private static $BLANK_MP4 = 'blank.mp4';
 
@@ -109,6 +107,8 @@ EOT;
 	}
 
 	protected function getScript($mode='normal') {
+		$script = '';
+
 		switch ($mode) {
 			case 'normal':
 				$jwplayerConfigJSON = json_encode_jsfunc( $this->getPlayerConfig($this->url, $mode) );

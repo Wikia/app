@@ -8,12 +8,26 @@ class Wall {
 	private $mThreadsHistory = null;
 	private $mMaxPerPage = false;
 	private $mSorting = false;
+	public $mRelatedPageId = false; 
+	private $cacheable = true;
 
 	static public function newFromTitle( Title $title ) {
 		wfProfileIn(__METHOD__);
 		$wall = new Wall();
 		$wall->mTitle = $title;
 		$wall->mCityId = F::app()->wg->CityId;
+		wfProfileOut(__METHOD__);
+		return $wall;
+	} 
+	
+	static public function newFromRelatedPages( Title $title, $relatedPageId ) {
+		wfProfileIn(__METHOD__);
+		
+		$wall = new Wall();
+		$wall->mTitle = $title;
+		$wall->mCityId = F::app()->wg->CityId;
+		$wall->mRelatedPageId = (int) $relatedPageId;
+		
 		wfProfileOut(__METHOD__);
 		return $wall;
 	} 
@@ -26,8 +40,24 @@ class Wall {
 		return $parts[0] . '/@' . $parts[1];
 	}
 	
+	public function getId() {
+		return $this->mTitle->getArticleId();
+	}
+	
+	public function getTitle() {
+		return $this->mTitle;
+	}
+	
+	public function getRelatedPageId() {
+		return $this->mRelatedPageId;
+	}
+	
 	public function getUser() {
 		return User::newFromName($this->mTitle->getBaseText(), false);
+	}
+	
+	public function disableCache() {
+		$this->cacheable = false;
 	}
 	
 	public function getUrl() {
@@ -223,8 +253,7 @@ class Wall {
 		wfProfileIn(__METHOD__);
 		$cache = $this->getCache();
 		$key = $this->getWallThreadListKey();
-		
-		if( $forceReload === false ) {
+		if( $this->cacheable && $forceReload === false ) {
 			$val = $cache->get( $key );
 		}
 
@@ -250,8 +279,28 @@ class Wall {
 		$dbr = wfGetDB( $master ? DB_MASTER : DB_SLAVE );
 		
 		$query = '';
-		wfRunHooks( 'WallLoadThreadListFromDB', array( $this->mTitle, &$query ) );
-		if ( empty($query) ) {
+
+		if ( $this->mTitle->getNamespace() == NS_WIKIA_FORUM_BOARD || 
+			 $this->mTitle->getNamespace() == NS_WIKIA_FORUM_TOPIC_BOARD ||  
+			 !empty($app->wg->EnableCommentsIndex) 
+		) {
+		//	TODO: after runing migation all wikis will use this part of code 
+			$boardId = $this->mTitle->getArticleID();
+			
+			$where = "parent_page_id = $boardId ";
+			
+			if( !empty($this->mRelatedPageId) ) {
+				$where = "comment_id in (select comment_id from wall_related_pages where page_id = {$this->mRelatedPageId})";
+			}
+			
+			$query = "
+				SELECT comment_id as page_id, page_title
+				FROM comments_index
+				LEFT JOIN page ON comment_id = page_id
+				WHERE $where and parent_comment_id = 0 and deleted = 0 and removed = 0 and archived = 0
+				ORDER BY comment_id desc";
+
+		} else {
 			// page_latest condition is for BugId:22821
 			$query = "
 				select page.page_id, page.page_title from page

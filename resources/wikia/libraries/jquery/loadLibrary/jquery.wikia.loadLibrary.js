@@ -108,7 +108,10 @@ $.loadGoogleMaps = function(callback) {
 
 		// load GoogleMaps main JS and provide a name of the callback to be called when API is fully initialized
 		$.loadLibrary('GoogleMaps',
-			'http://maps.googleapis.com/maps/api/js?sensor=false&callback=onGoogleMapsLoaded',
+			[{
+				url: 'http://maps.googleapis.com/maps/api/js?sensor=false&callback=onGoogleMapsLoaded',
+				type: 'js'
+			}],
 			typeof (window.google && window.google.maps)
 		).
 		// error handling

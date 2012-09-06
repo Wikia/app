@@ -9,7 +9,7 @@
  */
 
 class PageGrabberDumpTask extends BatchTask {
-    
+
 	public $mSourceWikiUrl, $mErrors, $mParams, $mPrevWorkDir, $mWorkDir, $mPrevTaskId ;
 
 	/* constructor */
@@ -45,7 +45,7 @@ class PageGrabberDumpTask extends BatchTask {
 			foreach ( $batch as $page ) {
 				$postData .= urlencode( $page . "\n" );
 			}
-			
+
 			$this->addLog("Getting {$sUrl} with {$postData}");
 			curl_setopt( $curl, CURLOPT_POSTFIELDS, $postData );
 			$fileName = sprintf( "%s/%03d_dump.xml", $this->mWorkDir, $batchID );
@@ -89,7 +89,7 @@ class PageGrabberDumpTask extends BatchTask {
 		$oPreviousTask = BatchTask::newFromID($this->mSourceTaskId);
 		$this->mPrevWorkDir = $oPreviousTask->getTaskDirectory();
 		$this->addLog("Opening previous task directory {$this->mWorkDir}");
-		
+
 		$this->mWorkDir = $this->getTaskDirectory();
 		$this->mSourceWikiUrl = $this->mSourceUrl;
 		if($this->exportPageList()) {
@@ -123,7 +123,7 @@ class PageGrabberDumpTask extends BatchTask {
 				}
 			}
 		}
-				
+
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/PageGrabberDumpTask/" );
 		$oTmpl->set_vars( array(
 			"pageGrabbers" => $pageGrabbers,
@@ -131,7 +131,7 @@ class PageGrabberDumpTask extends BatchTask {
 			"type" => $this->mType,
 			"title" => $title
 		));
-		return $oTmpl->execute( "form" ) ;
+		return $oTmpl->render( "form" ) ;
 	}
 
 	function getType() {

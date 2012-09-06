@@ -18,7 +18,7 @@
 				<?php if($resultSet->getHeader('cityRank')): ?>
 					<li>(1st pos: <?=$resultSet->getHeader('1stResultPos');?>) <font color="red">WikiRank: <?=$resultSet->getHeader('cityRank');?></font></li>
 				<?php endif; ?>
-				<li>Total Score: <?=sprintf('%.3f',  $resultSet->totalScore)?></li>
+				<li>Max Score: <?=sprintf('%.3f',  $resultSet->totalScore)?></li>
 			<?php endif;?>
 		</ul>
 		<?php for($i = 1; $i < 5; $i++): ?>

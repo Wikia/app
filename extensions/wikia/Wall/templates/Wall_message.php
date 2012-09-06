@@ -115,6 +115,9 @@
 				<? endforeach; ?>
 			<? endif; ?>
 			<?= $app->renderViewCached( 'WallController', 'reply', 'Wall_message'.$showReplyForm, array('showReplyForm' => $showReplyForm )); ?>
+			<?php if($showTopics): ?>
+				<?= F::app()->renderPartial( 'Wall', 'relatedTopics', array('relatedTopics' => $relatedTopics) ) ?>
+			<?php endif; ?>
 		</ul>
 	<? endif; ?>
 </li>

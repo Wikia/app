@@ -52,6 +52,7 @@ class ArticlesUsingMediaQuery
 			$title = Title::makeTitle($s->page_namespace, $s->page_title);
 			$data[] = array( 'ns' => $s->page_namespace,
 			                 'title' => $s->page_title,
+			                 'titleText' => $title->getText(),
 			                 'url' => $title->getLocalURL()
 			);
 
@@ -68,7 +69,7 @@ class ArticlesUsingMediaQuery
 
 		$key = '';
 		$key .= $this->app->wg->cityId;
-		$key .= 'ArticlesUsingMediaQuery';
+		$key .= 'ArticlesUsingMediaQuery_v2_';
 		$key .= $this->fileTitle->getDBKey();
 
 		return $key;
@@ -95,7 +96,7 @@ class ArticlesUsingMediaQuery
 			if ( !empty( $title ) ) {
 				$mq = new self( $title );
 				$mq->unsetCache();
-			}						
+			}
 		}
 		wfProfileOut(__METHOD__);
 		return true;

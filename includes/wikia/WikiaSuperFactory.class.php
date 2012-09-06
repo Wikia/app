@@ -46,7 +46,7 @@ abstract class WikiaSuperFactory {
 	 * get predefined instance of given class (useful for mocks or singletons)
 	 * @param string $className class name
 	 *
-	 * @return mixed the class instance or null if one has not been registered
+	 * @return JSMessages|mixed the class instance or null if one has not been registered
 	 */
 	public static function getInstance($className) {
 		if(isset(self::$constructors[$className]) && array_key_exists('INSTANCE', self::$constructors[$className])) {
@@ -80,7 +80,7 @@ abstract class WikiaSuperFactory {
 	 * @param string $className class name
 	 * @param array $params array of parameters for constructor or factory method ( param name => value )
 	 * @param string $constructorMethod constructor or factory method to call
-	 * @return object
+	 * @return JSMessages|JSSnippets|Title|User|Article|Category|AssetsManager|WikiaRequest|WikiaResponse|object
 	 */
 	public static function build($className, Array $params = array(), $constructorMethod = '__construct') {
 		if(isset(self::$constructors[$className]) && array_key_exists('INSTANCE', self::$constructors[$className])) {

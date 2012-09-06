@@ -77,8 +77,8 @@ $messages['de'] = array(
 	'landingpage-start-exploring-text' => 'Suche dein Lieblings-Thema oder durchstöbere unten einige Favoriten der Community.',
 	'landingpage-readfaq' => 'Fragen? Lies unsere FAQ &gt;',
 	'landingpage-text' => 'Bei Wikia kannst du dich <strong>mit den Menschen treffen</strong>, die deine <strong>Leidenschaften und Interessen</strong> teilen. Finde deine Gruppe, kommentiere und bearbeite, <strong>starte sogar deine eigene Website</strong> und Community.',
-	'landingpage-buttons-learn-more' => 'Mehr erfahren &gt;',
 	'landingpage-buttons-about-wikia-url' => 'http://de.community.wikia.com/wiki/Was_ist_Wikia',
+	'landingpage-buttons-learn-more' => 'Mehr erfahren &gt;',
 );
 
 /** Spanish (español)
@@ -92,12 +92,12 @@ $messages['es'] = array(
 	'landingpage-start-exploring-text' => 'Busca por tu tema favorito o navega por algunos favoritos de la comunidad más abajo.',
 	'landingpage-readfaq' => '¿Preguntas? Lee nuestro FAW &gt;',
 	'landingpage-text' => 'En Wikia puedes <strong>conectarte con personas</strong> quienes comparten tus <strong>pasiones e intereses</strong>. Encuentra tu grupo, haz comentarios y ediciones, incluso <strong>comienza tu propio sitio web</strong> y la comunidad.',
-	'landingpage-buttons-learn-more' => 'Aprende más &gt;',
 	'landingpage-language-links' => '* English|en
 * Español|es
 * Deutsch|de
 * Français|fr',
 	'landingpage-buttons-about-wikia-url' => 'http://es.wikia.com/wiki/Acerca_de_Wikia',
+	'landingpage-buttons-learn-more' => 'Aprende más &gt;',
 );
 
 /** Persian (فارسی)
@@ -130,7 +130,6 @@ $messages['fr'] = array(
 	'landingpage-start-exploring-text' => 'Recherchez le sujet qui vous intéresse ou parcourez les favoris de la communauté ci-dessous.',
 	'landingpage-readfaq' => 'Des questions ? Lisez notre FAQ &gt;',
 	'landingpage-text' => "Chez Wikia vous pouvez <strong>communiquer avec des gens</strong> qui partagent vos <strong>centres d'intérêt</strong>. Trouvez votre groupe, commentez et éditez, vous pouvez même <strong>démarrer votre propre site</strong> et communauté.",
-	'landingpage-buttons-learn-more' => 'En savoir plus &gt;',
 	'landingpage-language-links' => '* Français|fr
 * English|en
 * Dansk|da
@@ -151,6 +150,7 @@ $messages['fr'] = array(
 * עברית|he
 * العربية|ar',
 	'landingpage-buttons-about-wikia-url' => 'http://www.community.wikia.com/wiki/About_Wikia?uselang=fr',
+	'landingpage-buttons-learn-more' => 'En savoir plus &gt;',
 );
 
 /** Galician (galego)
@@ -247,12 +247,12 @@ $messages['mk'] = array(
 	'landingpage-start-exploring-text' => 'Пребарајте ги вашите омилени теми, или пак прелистајте ги долунаведените омилени теми на заедницата.',
 	'landingpage-readfaq' => 'Имате прашања? Прочитајте ја страницата за ЧПП &gt;',
 	'landingpage-text' => 'На Викија можете да <strong>се поврзете со луѓето</strong> што имаат исти <strong>страсти и интереси</strong> како вас. Пронајдете си група, давајте коментари, правете уредувања; можете дури и да <strong>започнете сопствена страница</strong> и заедница.',
-	'landingpage-buttons-learn-more' => 'Дознајте повеќе &gt;',
 	'landingpage-language-links' => '* English|en
 * Español|es
 * Deutsch|de
 * Français|fr',
 	'landingpage-buttons-about-wikia-url' => 'http://community.wikia.com/wiki/About_Wikia?uselang=mk',
+	'landingpage-buttons-learn-more' => 'Дознајте повеќе &gt;',
 );
 
 /** Malayalam (മലയാളം)
@@ -297,12 +297,12 @@ $messages['nl'] = array(
 	'landingpage-start-exploring-text' => 'Zoeken naar uw favoriete onderwerp of hieronder door uitgelichte gemeenschappen bladeren.',
 	'landingpage-readfaq' => 'Hebt u vragen? Lees onze FAQ &gt;',
 	'landingpage-text' => 'Bij Wikia kunt u <strong>verbinden met mensen</strong> die uw <strong>passies en interesses</strong> delen. Vind uw groep, maak opmerkingen en bewerkingen, of begin zelfs <strong>uw eigen website</strong> en gemeenschap.',
-	'landingpage-buttons-learn-more' => 'Meer informatie >',
 	'landingpage-language-links' => '* English|en
 * Nederlands|nl
 * Español|es
 * Deutsch|de
 * Français|fr',
+	'landingpage-buttons-learn-more' => 'Meer informatie >',
 );
 
 /** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
@@ -323,8 +323,8 @@ $messages['pl'] = array(
 	'landingpage-start-exploring-text' => 'Poszukaj wybranego tematu lub przejrzyj najczęściej wyszukiwane.',
 	'landingpage-readfaq' => 'Masz pytania? Przejrzyj nasz FAQ &gt;',
 	'landingpage-text' => 'Na Wikii można <strong>komunikować się z innymi osobami</strong> dzielącymi Twoje <strong>pasje i zainteresowania</strong>. Znajdź swoją społeczność, komentuj i edytuj, a nawet <strong>utwórz własną stronę</strong> i społeczność.',
-	'landingpage-buttons-learn-more' => 'Dowiedz się więcej &gt;',
 	'landingpage-buttons-about-wikia-url' => 'http://www.community.wikia.com/wiki/About_Wikia?uselang=pl',
+	'landingpage-buttons-learn-more' => 'Dowiedz się więcej &gt;',
 );
 
 /** Piedmontese (Piemontèis)
@@ -421,12 +421,12 @@ $messages['tl'] = array(
 	'landingpage-start-exploring-text' => 'Hanapin ang paborito mong paksa o tumingin-tingin ng ilang mga paborito ng pamayanan na nasa ibaba.',
 	'landingpage-readfaq' => 'May mga katanungan? Basahin ang aming Mga Malimit Itanong &gt;',
 	'landingpage-text' => "Sa Wikia ay maaari kang <strong>makipag-ugnayan sa mga tao</strong> na makikisalamuha sa iyong mga <strong>mga kahumalingan at mga kinawiwilihan</strong>. Hanapin ang pangkat mo, gumawa ng mga puna at mga pamamatnugot, kahi't na ang <strong>magsimula ng sarili mong pook sa sangkasaputan</strong> at pamayanan.",
-	'landingpage-buttons-learn-more' => 'Umalam ng marami pa &gt;',
 	'landingpage-language-links' => '* English|en
 * Español|es
 * Deutsch|de
 * Français|fr',
 	'landingpage-buttons-about-wikia-url' => 'http://www.community.wikia.com/wiki/About_Wikia',
+	'landingpage-buttons-learn-more' => 'Umalam ng marami pa &gt;',
 );
 
 /** Tatar (Cyrillic script) (татарча)
@@ -438,12 +438,12 @@ $messages['tt-cyrl'] = array(
 	'landingpage-start-exploring-text' => 'Үзегез яраткан темаларны эзләгез яки катнашучылар арасында популяр булганнарын карагыз.',
 	'landingpage-readfaq' => 'Сораулар бармы? Безнең FAQ &gt; карагыз',
 	'landingpage-text' => 'Викияда сез <strong>кызыксыну һәм шөгыльләрегез</strong> уртак булган <strong>кешеләр белән аралаша алырсыз.</strong>.  Үзегезнең төркемегезне табыгыз, фикерләр һәм төзәтүләр калдырыгыз яки  <strong>үз веб-сайтыгызны ясагыз</strong> һәм җәмгыять туплагыз.',
-	'landingpage-buttons-learn-more' => 'Тулырак &gt;',
 	'landingpage-language-links' => '* English|en
 * Español|es
 * Deutsch|de
 * Français|fr',
 	'landingpage-buttons-about-wikia-url' => 'http://www.community.wikia.com/wiki/About_Wikia',
+	'landingpage-buttons-learn-more' => 'Тулырак &gt;',
 );
 
 /** Ukrainian (українська) */

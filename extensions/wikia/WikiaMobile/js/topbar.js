@@ -8,6 +8,7 @@
 define('topbar', ['querystring', 'loader', 'toc', 'events', 'ads'], function (qs, loader, toc, events, ads){
 	var w = window,
 		d = document,
+		loc = w.location,
 		wkPrfTgl = d.getElementById('wkPrfTgl'),
 		navBar = d.getElementById('wkTopNav'),
 		wkPrf = d.getElementById('wkPrf'),
@@ -39,27 +40,43 @@ define('topbar', ['querystring', 'loader', 'toc', 'events', 'ads'], function (qs
 
 	function reset(stopScrolling){
 		!barSetUp && setupTopBar();
-		!stopScrolling && window.scrollTo(0,0);
+		!stopScrolling && wkPrfTgl.scrollIntoView();
 		toc.close();
-		w.location.hash = 'topbar';
+		(loc.hash !== '#topbar') && (loc.hash = 'topbar');
 		hidePage();
 	}
 
 	function openSearch(){
-		closeNav();
 		reset(true);
 		//track('search/toggle/open');
+		//show search
 		navBar.className = 'srhOpn';
 		searchForm.scrollIntoView();
-		searchInput.focus();
+
+		//reset search
+		searchInput.value = '';
+		searchSug.innerHTML = '';
+
+		/*
+			This is needed for iOS 4.x
+			It knows what to do with input element with autofocus attribute
+			but totaly forgets about the rest
+			so I need to cause repaint of the navbar
+
+			comment this out and load a page on iOS 4.x for a reference
+		 */
+		navBar.style.width = 'auto';
+		setTimeout(function(){
+			navBar.style.width = '100%';
+			searchInput.focus();
+		},50);
+
 	}
 
 	function closeSearch(){
 		if(navBar.className.indexOf('srhOpn') > -1){
-			searchInput.value = '';
 			//track('search/toggle/close');
 			showPage();
-			searchSug.innerHTML = '';
 		}
 	}
 
@@ -71,7 +88,7 @@ define('topbar', ['querystring', 'loader', 'toc', 'events', 'ads'], function (qs
 		}
 	});
 
-	d.getElementById('wkSrhTgl').addEventListener(clickEvent, function(event){
+	d.getElementById('wkSrhTgl').addEventListener('click', function(event){
 		event.preventDefault();
 		if(navBar.className.indexOf('srhOpn') > -1){
 			closeDropDown();
@@ -103,7 +120,7 @@ define('topbar', ['querystring', 'loader', 'toc', 'events', 'ads'], function (qs
 			uls[--i].parentElement.className += ' cld';
 		}
 
-		d.getElementById('lvl1').addEventListener(clickEvent, function(event) {
+		d.getElementById('lvl1').addEventListener('click', function(event) {
 			var t = event.target;
 
 			if(t.className.indexOf('cld') > -1) {
@@ -135,7 +152,7 @@ define('topbar', ['querystring', 'loader', 'toc', 'events', 'ads'], function (qs
 			}
 		});
 
-		d.getElementById('wkNavBack').addEventListener(clickEvent, function() {
+		d.getElementById('wkNavBack').addEventListener('click', function() {
 			if(wkNavMenu.className == 'cur2') {
 				setTimeout(function(){
 					wkNavMenu.querySelector('.lvl2.cur').className = 'lvl2';
@@ -165,7 +182,7 @@ define('topbar', ['querystring', 'loader', 'toc', 'events', 'ads'], function (qs
 		navSetUp = true;
 	}
 
-	d.getElementById('wkNavTgl').addEventListener(clickEvent, function(event){
+	d.getElementById('wkNavTgl').addEventListener('click', function(event){
 		event.preventDefault();
 		if(navBar.className.indexOf('fllNav') > -1){
 			closeDropDown();
@@ -178,13 +195,13 @@ define('topbar', ['querystring', 'loader', 'toc', 'events', 'ads'], function (qs
 		!navSetUp && setupNav();
 		reset();
 		//track('nav/open');
+		wkNavMenu.className = 'cur1';
 		navBar.className = 'fllNav';
 	}
 
 	function closeNav(){
 		if(navBar.className.indexOf('fllNav') > -1){
 			//track('nav/close');
-			wkNavMenu.className = 'cur1';
 			showPage();
 		}
 	}
@@ -199,9 +216,11 @@ define('topbar', ['querystring', 'loader', 'toc', 'events', 'ads'], function (qs
 	}
 	//end navigation setup
 
-
 	//profile/login setup
 	if(wkPrfTgl){
+		//Fix for ios 4.x not respecting fully event.preventDefault()
+		// (it shows url bar for a second (and this is ugly (really)))
+		wkPrfTgl.href = '';
 		wkPrfTgl.addEventListener(clickEvent, function(event){
 			event.preventDefault();
 			if(navBar.className.indexOf('prf') > -1){
@@ -209,7 +228,7 @@ define('topbar', ['querystring', 'loader', 'toc', 'events', 'ads'], function (qs
 			}else{
 				openProfile();
 			}
-		});
+		}, true);
 	}
 	//end profile/login setup
 
@@ -239,7 +258,7 @@ define('topbar', ['querystring', 'loader', 'toc', 'events', 'ads'], function (qs
 	function openProfile(hash){
 		reset();
 
-		if(wgUserName){
+		if(window.wgUserName){
 			//track('profile/open');
 		}else{
 			openLogin(hash);

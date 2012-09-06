@@ -33,7 +33,7 @@ $messages = array();$messages['en'] = array(
 	'article-comments-page-spacer' => '&#160...&#160',
 	'article-comments-delete-reason' => 'The parent article / parent comment has been deleted.',
 	'article-comments-empty-comment' => "You can't post an empty comment. <a href='$1'>Delete it instead?</a>",
-	
+
 	'wikiamobile-article-comments-header' => 'comments <span class=cnt id=wkArtCnt>$1</span>',
 	'wikiamobile-article-comments-more' => 'Load more',
 	'wikiamobile-article-comments-prev' => 'Load previous',
@@ -45,30 +45,27 @@ $messages = array();$messages['en'] = array(
 	'wikiamobile-article-comments-placeholder' => 'Post a comment',
 	'wikiamobile-article-comments-show' => 'Show',
 	'wikiamobile-article-comments-login-post' => 'Please log in to post a comment.',
-	
+
 	'enotif_subject_article_comment' => '$PAGEEDITOR has commented on "$PAGETITLE" on {{SITENAME}}',
-	'enotif_body_article_comment' => 'Dear $WATCHINGUSERNAME,
+	'enotif_body_article_comment' => 'Hi $WATCHINGUSERNAME,
 
-$PAGEEDITOR made a comment on "$PAGETITLE".
+There\'s a new comment at $PAGETITLE on {{SITENAME}}. Use this link to see all of the comments: $PAGETITLE_URL#WikiaArticleComments
 
-To see the comment thread, follow the link below:
-$PAGETITLE_URL
+- Wikia Community Support
 
-Please visit and edit often...
-
-Wikia',
-	'enotif_body_article_comment-HTML' => '<p>Dear $WATCHINGUSERNAME,
+___________________________________________
+* Find help and advice on Community Central: http://community.wikia.com
+* Want to receive fewer messages from us? You can unsubscribe or change your email preferences here: http://community.wikia.com/Special:Preferences',
+	'enotif_body_article_comment-HTML' => '<p>Hi $WATCHINGUSERNAME,
 <br /><br />
-$PAGEEDITOR made a comment on "$PAGETITLE".
+There\'s a new comment at $PAGETITLE on {{SITENAME}}. Use this link to see all of the comments: $PAGETITLE_URL#WikiaArticleComments
 <br /><br />
-To see the comment thread, follow this link: <a href="$PAGETITLE_URL">$PAGETITLE</a>
+- Wikia Community Support
 <br /><br />
-Please visit and edit often...
-<br /><br />
-Wikia
-<br /><hr />
+___________________________________________
 <ul>
-<li>Want to control which emails you receive? <a href="{{fullurl:Special:Preferences}}">Update your Preferences<a>.</li>
+<li>Find help and advice on Community Central: <a href="http://community.wikia.com">http://community.wikia.com</a><li>
+<li>Want to receive fewer messages from us? You can unsubscribe or change your email preferences here: <a href="http://community.wikia.com/Special:Preferences">http://community.wikia.com/Special:Preferences</a></li>
 </ul>
 </p>',
 );
@@ -662,6 +659,24 @@ Wikia
 </p>',
 );
 
+/** Estonian (eesti)
+ * @author KalmerE.
+ */
+$messages['et'] = array(
+	'article-comments-anonymous' => 'Anonüümne kasutaja',
+	'article-comments-cancel' => 'Tühista',
+	'article-comments-delete' => 'kustuta',
+	'article-comments-edit' => 'redigeeri',
+	'article-comments-history' => 'ajalugu',
+	'article-comments-toc-item' => 'Kommentaarid',
+	'article-comments-reply' => 'Vasta',
+	'article-comments-show-all' => 'Vaata kõiki kommentaare',
+	'article-comments-prev-page' => 'Eelmine',
+	'article-comments-next-page' => 'Järgmine',
+	'wikiamobile-article-comments-none' => 'Kommentaare ei ole',
+	'wikiamobile-article-comments-replies' => 'vastused',
+);
+
 /** Basque (euskara)
  * @author An13sa
  */
@@ -682,11 +697,13 @@ $messages['eu'] = array(
 /** Persian (فارسی)
  * @author BlueDevil
  * @author Wayiran
+ * @author جواد
  */
 $messages['fa'] = array(
 	'article-comments-anonymous' => 'کاربر گمنام',
 	'article-comments-comments' => '($1) نظرات',
 	'article-comments-post' => 'ارسال نظر',
+	'article-comments-cancel' => 'انصراف',
 	'article-comments-delete' => 'حذف',
 	'article-comments-edit' => 'ویرایش',
 	'article-comments-history' => 'تاریخچه',
@@ -707,6 +724,8 @@ $messages['fa'] = array(
 	'article-comments-page-spacer' => '&#160...&#160',
 	'article-comments-delete-reason' => 'مقالهٔ مادر / نظر مادر حذف شده است.',
 	'article-comments-empty-comment' => "شما نمی‌توانید یک نظر خالی بفرستید. <a href='$1'>به‌جایش حذف شود؟</a>",
+	'wikiamobile-article-comments-replies' => 'پاسخ‌ها',
+	'wikiamobile-article-comments-show' => 'نمایش',
 );
 
 /** Finnish (suomi)
@@ -1199,7 +1218,9 @@ Wikia
 );
 
 /** Japanese (日本語)
+ * @author 2nd-player
  * @author Schu
+ * @author Shirayuki
  * @author Tommy6
  */
 $messages['ja'] = array(
@@ -1229,6 +1250,10 @@ $messages['ja'] = array(
 	'article-comments-page-spacer' => '&#160...&#160',
 	'article-comments-delete-reason' => '親記事/親コメントが削除されました',
 	'article-comments-empty-comment' => "空コメントを投稿することはできません。<a href='$1'>コメントを削除しますか？</a>",
+	'wikiamobile-article-comments-post-reply' => '返信を投稿',
+	'wikiamobile-article-comments-post' => '投稿',
+	'wikiamobile-article-comments-placeholder' => 'コメントを投稿',
+	'wikiamobile-article-comments-show' => '表示',
 	'enotif_subject_article_comment' => '{{SITENAME}} のページ「$PAGETITLE」に $PAGEEDITOR がコメントを投稿しました',
 	'enotif_body_article_comment' => '$WATCHINGUSERNAMEさん、
 
@@ -1262,6 +1287,17 @@ $messages['km'] = array(
 	'article-comments-reply' => 'ឆ្លើយតប',
 	'article-comments-prev-page' => 'មុន​',
 	'article-comments-next-page' => 'បន្ទាប់',
+);
+
+/** Korean (한국어)
+ * @author Cafeinlove
+ */
+$messages['ko'] = array(
+	'article-comments-anonymous' => '익명 사용자',
+	'article-comments-cancel' => '취소',
+	'article-comments-delete' => '삭제',
+	'article-comments-edit' => '편집',
+	'article-comments-history' => '역사',
 );
 
 /** Colognian (Ripoarisch)

@@ -1,6 +1,6 @@
 var MeeboBar = {
 	network: '',
-	
+
 	init: function () {
 		switch (window.cscoreCat) {
 			case 'Entertainment':
@@ -35,7 +35,7 @@ Meebo('domReady');
 				setTimeout(MeeboBar.checkVisibility, 1000);
 			});
 			MeeboBar.checkVisibility();
-		});	
+		});
 	},
 
 	checkVisibility: function() {
@@ -48,7 +48,7 @@ Meebo('domReady');
 };
 
 if (window.wgEnableMeeboExt
-	&& Geo.getGeoData().country === 'US'
+	&& Wikia.geo.getGeoData().country === 'US'
 ) {
 	MeeboBar.init();
 }

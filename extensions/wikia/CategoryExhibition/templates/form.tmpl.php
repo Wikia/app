@@ -14,8 +14,8 @@
 			$dropdown[] = $el;
 		}
 	?>
-	<?= wfRenderModule('MenuButton', 
-			'Index', 
+	<?= F::app()->renderView('MenuButton',
+			'Index',
 			array(
 				'action' => array( "href" => $path, "text" => wfMsg('category-exhibition-'.$current), "id" => "category-exhibition-form-current" ),
 				'class' => 'secondary',

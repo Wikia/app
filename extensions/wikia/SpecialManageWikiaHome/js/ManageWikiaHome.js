@@ -64,7 +64,7 @@ ManageWikiaHome.prototype = {
 				format: 'html',
 				type: 'get',
 				data: {
-					lang: vl,
+					visualizationLang: vl,
 					wikiHeadline: input
 				},
 				callback: $.proxy( function(response) {

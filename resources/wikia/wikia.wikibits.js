@@ -22,8 +22,7 @@
  * });
  *
  * @param {...Object} Any number of modules to load.
- * @returns {Array} An array of DOM nodes used to inject the
- *                  content into the page.
+ * @returns {Array} An array of DOM nodes used for injection.
  */
 var importArticle = (function() {
 	var baseUri = mw.config.get( 'wgLoadScript' ) + '?=',

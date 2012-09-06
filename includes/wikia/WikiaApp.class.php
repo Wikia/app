@@ -18,43 +18,49 @@ class WikiaApp {
 
 	/**
 	 * localRegistry
-	 * @var WikiaLocalRegistry
+	 * @var $localRegistry WikiaLocalRegistry
 	 */
 	private $localRegistry = null;
 
 	/**
 	 * hook dispatcher
-	 * @var WikiaHookDispatcher
+	 * @var $hookDispatcher WikiaHookDispatcher
 	 */
 	private $hookDispatcher = null;
 
 	/**
+	 * namespace Registry
+	 * @var $namespaceRegistry array list of namespaces Registered by nirvana framework
+	 */
+	private $namespaceRegistry = array();
+	
+	/**
 	 * dispatcher
-	 * @var WikiaDispatcher
+	 * @var $dispatcher WikiaDispatcher
 	 */
 	private $dispatcher = null;
 
 	/**
 	 * flag for Skin initializationn
-	 * @var Bool
+	 * @var $skinInitialized Bool
 	 */
 	private $skinInitialized = null;
 
 	/**
 	 * This reference is necessary for some Controllers that need access to Skin $data
-	 * @var SkinTemplate
+	 * @var $skinTemplateObj SkinTemplate
 	 */
 	protected $skinTemplateObj = null;
 
 	/**
 	 * global MW variables helper accessor
-	 * @var WikiaGlobalRegistry
+	 * @var $wg WikiaGlobalRegistry
 	 */
 	public $wg = null;
 
 	/**
 	 * global MW functions helper accessor
-	 * @var WikiaFunctionWrapper
+	 * @var $wf WikiaFunctionWrapper
 	 */
 	public $wf = null;
 
@@ -66,21 +72,21 @@ class WikiaApp {
 	
 	/**
 	 * constructor
-	 * @param WikiaGlobalRegistry $globalRegistry
-	 * @param WikiaLocalRegistry $localRegistry
-	 * @param WikiaHookDispatcher $hookDispatcher
+	 * @param $globalRegistry WikiaGlobalRegistry
+	 * @param $localRegistry WikiaLocalRegistry
+	 * @param $hookDispatcher WikiaHookDispatcher
 	 */
 	
 	public function __construct(WikiaGlobalRegistry $globalRegistry = null, WikiaLocalRegistry $localRegistry = null, WikiaHookDispatcher $hookDispatcher = null, WikiaFunctionWrapper $functionWrapper = null) {
 
 		if(!is_object($globalRegistry)) {
 			F::setInstance('WikiaGlobalRegistry', new WikiaGlobalRegistry());
-			$globalRegistry = F::build('WikiaGlobalRegistry');
+			$globalRegistry = F::build( 'WikiaGlobalRegistry' );
 		}
 		
 		if(!is_object($localRegistry)) {
 			F::setInstance('WikiaLocalRegistry', new WikiaLocalRegistry());
-			$localRegistry = F::build('WikiaLocalRegistry');
+			$localRegistry = F::build( 'WikiaLocalRegistry' );
 		}
 		
 		if(!is_object($hookDispatcher)) {
@@ -244,9 +250,13 @@ class WikiaApp {
 	 *
 	 * @param SkinTemplate $skinTemplate 
 	 */
-	public function setSkinTemplateObj(&$skinTemplate) {
+	public function setSkinTemplateObj( &$skinTemplate ) {
 		$this->skinTemplateObj = $skinTemplate;
 	}
+
+	/**
+	 * @return SkinTemplate
+	 */
 
 	public function getSkinTemplateObj() {
 		return $this->skinTemplateObj;
@@ -332,6 +342,54 @@ class WikiaApp {
 		$this->wg->append( 'wgHooks', $this->hookDispatcher->registerHook( $className, $methodName, $options, $alwaysRebuild, $object ), $hookName );
 	}
 
+	/**
+	 * registerNamespaceControler
+	 * if the namespace is registered using registerNamespaceControler  
+	 * $className, $methodName will be exexuted instead of regular article path
+	 * 
+	 * title is passed as a request attribute. ($app->renderView($className, $methodName, array( 'title' => $wgTitle ) )  
+	 *  
+	 * @param integer $namespace
+	 * @param string $className
+	 * @param string $methodName
+	 * @param string $exists - Controler will be only executed if wgTitle exists 
+	 */
+
+	public function registerNamespaceControler( $namespace, $className, $methodName, $exists ) {
+		if(empty($this->namespaceRegistry)) {
+			$this->registerHook( 'ArticleViewHeader', 'WikiaApp', 'onArticleViewHeader', array(), false, $this );
+		}	
+		
+		$this->namespaceRegistry[$namespace] =  array( 
+			'className' => $className, 
+			'methodName' => $methodName,
+		  	'exists' => $exists
+		);
+	}
+	
+	/**
+	 * 
+	 * onArticleViewHeader
+	 * 
+	 * This is a hook which serves the needs of registerNamespaceControler
+	 * 
+	 * @param $article Article
+	 * @param $outputDone Bool
+	 * @param $useParserCache
+	 */
+	
+	public function onArticleViewHeader(&$article, &$outputDone, &$useParserCache) {
+		$title = $article->getTitle();
+		
+		$namespace = $title->getNamespace();
+		if( !empty($this->namespaceRegistry[$namespace]) && (empty($this->namespaceRegistry['exists']) || $title->exists()) ) {
+			$this->wg->Out->addHTML($this->renderView($this->namespaceRegistry[$namespace]['className'], $this->namespaceRegistry[$namespace]['methodName'], array( 'title' => $article->getTitle() ) ));	
+			$outputDone = true;
+		}
+		
+		return true;
+	}
+	
 	/**
 	 * register class
 	 * @param mixed $className the name of the class or a list of classes contained in the same file passed as an array
@@ -429,7 +487,7 @@ class WikiaApp {
 	 * how to use:
 	 *  list( $wgTitle, $wgUser ) = $app->getGlobals( 'wgTitle', 'wgUser' );
 	 *
-	 * @param list of global's names, comma separated
+	 * @params list of global's names, comma separated
 	 * @return array
 	 */
 	public function getGlobals() {
@@ -589,6 +647,9 @@ class WikiaApp {
 	 */
 	public function commit(){
 		if ( $this->wg->Request->wasPosted() ) {
+			/**
+			 * @var $factory LBFactory
+			 */
 			$factory = $this->wf->GetLBFactory();
 			$factory->commitMasterChanges();  // commits only if writes were done on connection
 		}

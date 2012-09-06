@@ -326,7 +326,7 @@ class SpecialViewUserBoard extends SpecialPage {
 	 * @param $vars Array: array of pre-existing JS global variables
 	 * @return Boolean: true
 	 */
-	public static function addJSGlobals( $vars ) {
+	public static function addJSGlobals( &$vars ) {
 		$vars['_DELETE_CONFIRM'] = wfMsg( 'userboard_confirmdelete' );
 		return true;
 	}

@@ -188,7 +188,7 @@ class WikiFactoryLoader {
 	 *
 	 * @todo change new Database to LoadBalancer factory
 	 *
-	 * @return object Database	database handler
+	 * @return Database	database handler
 	 */
 	public function getDB( $type = DB_SLAVE ) {
 		global $wgDBserver, $wgDBuser, $wgDBpassword;
@@ -792,7 +792,8 @@ class WikiFactoryLoader {
 				: "DEFAULT";
 
 			if( isset( $wgLBFactoryConf[ "sectionLoads" ][ $cluster ] )) {
-				$db = array_shift( array_keys( $wgLBFactoryConf[ "sectionLoads" ][ $cluster ] ) );
+				$keys = array_keys( $wgLBFactoryConf[ "sectionLoads" ][ $cluster ] );
+				$db = array_shift( $keys );
 				if( isset( $wgLBFactoryConf[ "hostsByName" ][ $db ] ) ) {
 					$wgDBserver = $wgLBFactoryConf[ "hostsByName" ][ $db ];
 					$this->debug( "wgDBserver for cluster {$cluster} set to {$wgDBserver}" );

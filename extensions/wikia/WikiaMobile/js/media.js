@@ -271,6 +271,14 @@ define('media', ['modal', 'loader', 'querystring', 'popover', 'track', 'events',
 		return name.replace(imgNameProcessRegEx, '_');
 	}
 
+	function handleError(msg){
+		modal.setCaption(msg || '');
+		modal.showUI();
+		currentImage.style.backgroundImage = '';
+		currentImage.style.backgroundSize = '50%';
+		currentImage.className += ' imgPlcHld';
+	}
+
 	function setupImage(){
 		var image = images[current];
 		loader.hide(currentImage);
@@ -297,13 +305,17 @@ define('media', ['modal', 'loader', 'querystring', 'popover', 'track', 'events',
 						method: 'getEmbedCode',
 						data: {
 							articleId: wgArticleId,
-							title: imgTitle,
+							fileTitle: imgTitle,
 							width: window.innerWidth - 100
 						},
 						callback: function(data) {
 							loader.hide(currentImage);
-							videoCache[imgTitle] = data.embedCode;
-							currentImage.innerHTML = '<table id=wkVi><tr><td>' + data.embedCode + '</td></tr></table>';
+							if(!data.error){
+								videoCache[imgTitle] = data.embedCode;
+								currentImage.innerHTML = '<table id=wkVi><tr><td>' + data.embedCode + '</td></tr></table>';
+							}else{
+								handleError(data.error);
+							}
 						}
 					});
 				}
@@ -319,11 +331,7 @@ define('media', ['modal', 'loader', 'querystring', 'popover', 'track', 'events',
 
 					img.onerror = function(){
 						loader.hide(currentImage);
-						modal.setCaption($.msg('wikiamobile-image-not-loaded'));
-						modal.showUI();
-						currentImage.style.backgroundImage = '';
-						currentImage.style.backgroundSize = '50%';
-						currentImage.className += ' imgPlcHld';
+						handleError($.msg('wikiamobile-image-not-loaded'));
 					};
 
 					loader.show(currentImage, {
@@ -606,8 +614,8 @@ define('media', ['modal', 'loader', 'querystring', 'popover', 'track', 'events',
 
 			//handling next/previous image
 			if(imagesLength > 1){
-				document.getElementById('nxtImg').addEventListener('tap', tap);
-				document.getElementById('prvImg').addEventListener('tap', tap);
+				document.getElementById('nxtImg').addEventListener('click', tap);
+				document.getElementById('prvImg').addEventListener('click', tap);
 			}
 
 			//setupImage and get references to currentImage and it's style property

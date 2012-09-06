@@ -3,7 +3,7 @@
 /**
  * SponsorshipDashboard
  * @author Jakub "Szeryf" Kurcek
- * 
+ *
  * Mother class for managing input sources.
  */
 
@@ -63,7 +63,7 @@ abstract class SponsorshipDashboardSource {
 
 	public function __construct( $id = 0 ) {
 
-		$this->App = WF::build('App');
+		$this->App = F::app();
 		$this->cityId = $this->App->getGlobal('wgCityId');
 		$this->setId( $id );
 
@@ -78,7 +78,7 @@ abstract class SponsorshipDashboardSource {
 	 */
 
 	public function setId( $id ) {
-		
+
 		$this->sourceId = (int)$id;
 	}
 
@@ -87,7 +87,7 @@ abstract class SponsorshipDashboardSource {
 	 *
 	 * @param void.
 	 *
-	 * @return int 
+	 * @return int
 	 */
 
 	public function getFromYear() {
@@ -180,7 +180,7 @@ abstract class SponsorshipDashboardSource {
 		if ( $this->sourceType == self::SD_SOURCE_GLOBAL ) {
 			return 0;
 		}
-		
+
 		if ( empty( $this->cityId ) ) {
 			$this->setCityId();
 		}
@@ -228,7 +228,7 @@ abstract class SponsorshipDashboardSource {
 	 */
 
 	public function setLastDateUnits( $number ) {
-		
+
 		if ( (int)$number <= 0 ) {
 			$this->lastDateUnits = 0;
 		} else {
@@ -248,11 +248,11 @@ abstract class SponsorshipDashboardSource {
 	public function save( $reportId ) {
 		Wikia::log( __METHOD__, 'JKU', 'saveMe');
 		$this->setReportId( $reportId );
-		
+
 		if ( $this->saveable && !empty( $this->reportId ) ) {
 
 			$db = wfGetDB( DB_MASTER, array(), SponsorshipDashboardService::getDatabase() );
-			
+
 			if ( !is_null( $db ) ) {
 				$array = array(
 						'wmso_type' => $this->getSourceKey(),
@@ -296,7 +296,7 @@ abstract class SponsorshipDashboardSource {
 	protected function saveParams() {
 
 		$db = wfGetDB( DB_MASTER, array(), SponsorshipDashboardService::getDatabase() );
-		
+
 		if ( !is_null( $db ) ) {
 			$db->delete(
 				'specials.wmetrics_source_params',
@@ -338,7 +338,7 @@ abstract class SponsorshipDashboardSource {
 	 */
 
 	protected function getGeneralParamsArray() {
-		
+
 		$aData = array();
 
 		$aData[ self::SD_PARAMS_REP_CITYID ] = implode( ',', $this->repeatFromList );
@@ -431,7 +431,7 @@ abstract class SponsorshipDashboardSource {
 		$aVars['data'] = $this->getParamsArray();
 		$oTmpl->set_vars( $aVars );
 
-		return $oTmpl->execute( $this->getMenuTemplateLink() );
+		return $oTmpl->render( $this->getMenuTemplateLink() );
 	}
 
 	/*

@@ -15,8 +15,7 @@ class CustomMovePageForm extends MovePageForm{
 	function showForm( $err ) {
 		global $wgOut, $wgUser, $wgFixDoubleRedirects;
 
-		$skin = $wgUser->getSkin();
-
+		$skin = $this->getSkin();
 		$oldTitleLink = $skin->makeLinkObj( $this->oldTitle );
 
 		$wgOut->setPagetitle( wfMsg( 'move-page', $this->oldTitle->getPrefixedText() ) );
@@ -167,9 +166,6 @@ class CustomMovePageForm extends MovePageForm{
 			);
 		}
 
-		// FIXME: $this->watch shows up as undefined since it's a private variable in MovePageForm.
-		$watchChecked = $this->watch || $wgUser->getBoolOption( 'watchmoves' )
-			|| $this->oldTitle->userIsWatching();
 		$wgOut->addHTML( "
 				{$confirm}
 			<tr>

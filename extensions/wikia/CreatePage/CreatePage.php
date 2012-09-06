@@ -75,7 +75,7 @@ function wfCreatePageOnBeforeInitialize(&$title, &$article, &$output, &$user, $r
 	return true;
 }
 
-function wfCreatePageSetupVars( $vars ) {
+function wfCreatePageSetupVars(Array &$vars ) {
 	global $wgWikiaEnableNewCreatepageExt,
 		$wgWikiaDisableDynamicLinkCreatePagePopup,
 		$wgContentNamespaces,
@@ -188,7 +188,7 @@ function wfCreatePageAjaxGetDialog() {
 		)
 	);
 
-	$body['html'] = $template->execute( 'dialog' );
+	$body['html'] = $template->render( 'dialog' );
 	$body['width'] = $wgCreatePageDialogWidth;
 	$body['defaultOption'] = $defaultLayout;
 	$body['title'] = wfMsg( 'createpage-dialog-title' );
@@ -231,7 +231,7 @@ function wfCreatePageAjaxCheckTitle() {
 					$result['result'] = 'error';
 					$result['msg'] = wfMsg( 'createpage-error-article-spam' );
 				}
-				if ( $oTitle->getNamespace() == -1 ) {
+				if ( $oTitle->getNamespace() == NS_SPECIAL ) {
 					$result['result'] = 'error';
 					$result['msg'] = wfMsg( 'createpage-error-invalid-title' );
 				}

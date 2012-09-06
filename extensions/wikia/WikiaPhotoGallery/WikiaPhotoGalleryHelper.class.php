@@ -104,13 +104,17 @@ class WikiaPhotoGalleryHelper {
 	/**
 	 * Add message for MW toolbar button tooltip
 	 */
-	static public function makeGlobalVariablesScript(&$vars) {
+	static public function makeGlobalVariablesScript(Array &$vars) {
 		$vars['WikiaPhotoGalleryAddGallery'] = wfMsg('wikiaPhotoGallery-add-gallery');
 		return true;
 	}
 
 	/**
 	 * Render gallery placeholder for RTE
+	 *
+	 * @param $gallery WikiaPhotoGallery
+	 * @param $width Integer
+	 * $param $height Integer
 	 */
 	static public function renderGalleryPlaceholder($gallery, $width, $height) {
 		wfProfileIn(__METHOD__);
@@ -205,6 +209,13 @@ class WikiaPhotoGalleryHelper {
 
 	/**
 	 * Return dimensions for thumbnail of given image to fit given area (handle "crop" attribute)
+	 *
+	 * @param $img File
+	 * @param $maxWidth Integer
+	 * @param $maxHeight Integer
+	 * @param $crop Bool
+	 *
+	 * @return array
 	 */
 	static public function getThumbnailDimensions($img, $maxWidth, $maxHeight, $crop = false) {
 		wfProfileIn(__METHOD__);
@@ -561,6 +572,14 @@ class WikiaPhotoGalleryHelper {
 
 				$image['isFileTypeVideo'] = WikiaFileHelper::isFileTypeVideo($img);
 
+				//need to use parse() - see RT#44270
+				$image['caption'] = $wgParser->parse($image['caption'], $wgTitle, $parserOptions)->getText();
+
+				// remove <p> tags from parser caption
+				if (preg_match('/^<p>(.*)\n?<\/p>\n?$/sU', $image['caption'], $m)) {
+					$image['caption'] = $m[1];
+				}
+
 				if (empty($imageTitle) || empty($img)) {
 					continue;
 				}
@@ -569,17 +588,8 @@ class WikiaPhotoGalleryHelper {
 					// render thumbnail
 					$dimensions = self::getThumbnailDimensions($img, $maxWidth, $maxHeight, $crop);
 					$image['thumbnailBg'] = self::getThumbnailUrl($imageTitle, $dimensions['width'], $dimensions['height']);
-				}
-				else {
+				} else {
 					$image[ 'pageTitle' ] = $imageTitle->getText();
-				}
-
-				//need to use parse() - see RT#44270
-				$image['caption'] = $wgParser->parse($image['caption'], $wgTitle, $parserOptions)->getText();
-
-				// remove <p> tags from parser caption
-				if (preg_match('/^<p>(.*)\n?<\/p>\n?$/sU', $image['caption'], $m)) {
-					$image['caption'] = $m[1];
 				}
 			}
 
@@ -817,6 +827,9 @@ class WikiaPhotoGalleryHelper {
 		$ret = array();
 
 		// get list of images linked with given article
+		/**
+		 * @var $mediaQuery MediaQueryService
+		 */
 		$mediaQuery =  F::build( 'MediaQueryService' );
 		$images = $mediaQuery->getMediaFromArticle($title, MediaQueryService::MEDIA_TYPE_IMAGE, $limit);
 
@@ -839,22 +852,24 @@ class WikiaPhotoGalleryHelper {
 	/**
 	 * Return thumbs of images search result
 	 */
-	static public function getSearchResultThumbs($query, $limit = 50) {
+	static public function getSearchResultThumbs( $query, $limit = 50 ) {
 		wfProfileIn(__METHOD__);
 		$images = array();
 
-		if(!empty($query)) {
-			$results = MediaQueryService::searchInTitle($query, 1, $limit);
+		if( !empty( $query ) ) {
+			$results = MediaQueryService::searchInTitle( $query, 1, $limit );
 
-			foreach($results['images'] as $img) {
-				$oImageTitle = Title::newFromText($img['title'], NS_FILE);
+			if( !empty( $results['images'] ) ) {
+				foreach( $results['images'] as $img ) {
+					$oImageTitle = Title::newFromText($img['title'], NS_FILE );
 
-				$thumb = self::getResultsThumbnailUrl($oImageTitle);
-				if ($thumb) {
-					$images[] = array(
-						'name' => $oImageTitle->getText(),
-						'thumb' => $thumb
-					);
+					$thumb = self::getResultsThumbnailUrl( $oImageTitle );
+					if ( $thumb ) {
+						$images[] = array(
+							'name' => $oImageTitle->getText(),
+							'thumb' => $thumb
+						);
+					}
 				}
 			}
 		}
@@ -1028,6 +1043,9 @@ class WikiaPhotoGalleryHelper {
 	/**
 	 * Hook handler
 	 * @author Marooned
+	 *
+	 * @param $parser Parser
+	 * @param $ig ImageGallery
 	 */
 	static public function beforeParserrenderImageGallery($parser, $ig) {
 		wfProfileIn(__METHOD__);

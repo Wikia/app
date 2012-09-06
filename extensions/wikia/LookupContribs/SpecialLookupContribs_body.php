@@ -25,8 +25,7 @@ class LookupContribsPage extends SpecialPage {
 		global $wgOut, $wgRequest, $wgExtensionsPath, $wgJsMimeType, $wgResourceBasePath, $wgUser;
 
 		if( $wgUser->isBlocked() ) {
-			$wgOut->blockedPage();
-			return;
+			throw new UserBlockedError( $this->getUser()->mBlock );
 		}
 		if( wfReadOnly() ) {
 			$wgOut->readOnlyPage();
@@ -67,7 +66,7 @@ class LookupContribsPage extends SpecialPage {
 		 * parse request
 		 */
 		if ($this->mUsername != '') {
-			$sk = $wgUser->getSkin();
+			$sk = RequestContext::getMain()->getSkin();
 			$this->mUserPage = Title::makeTitle (NS_USER, $this->mUsername);
 			$this->mUserLink = $sk->makeKnownLinkObj ($this->mUserPage, $this->mUsername);
 			$this->mModeText = ($this->mMode == 'normal') ? wfMsg('lookupcontribsrecentcontributions', $this->mUserLink) : wfMsg('lookupcontribsfinalcontributions', $this->mUserLink);
@@ -109,7 +108,7 @@ class LookupContribsPage extends SpecialPage {
 			"view"      => $this->mView,
 			"modes"		=> $this->mShortModes
 		));
-		$wgOut->addHTML( $oTmpl->execute("main-form") );
+		$wgOut->addHTML( $oTmpl->render("main-form") );
 		wfProfileOut( __METHOD__ );
 	}
 
@@ -140,7 +139,7 @@ class LookupContribsPage extends SpecialPage {
 			"nspace"	=> $this->mNSpace,
 			"nspaces"	=> $wgLang->getFormattedNamespaces(),
 		));
-		$wgOut->addHTML( $oTmpl->execute("mode-form") );
+		$wgOut->addHTML( $oTmpl->render("mode-form") );
 		wfProfileOut( __METHOD__ );
 	}
 

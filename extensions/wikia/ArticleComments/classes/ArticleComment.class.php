@@ -9,21 +9,46 @@ class ArticleComment {
 	const AVATAR_BIG_SIZE = 50;
 	const AVATAR_SMALL_SIZE = 30;
 
-	public
-		$mProps,	//blogs only
-		$mTitle,
+	/**
+	 * @var $mProps Bool blogs only
+	 */
+	public $mProps,
 		$mLastRevId,
 		$mFirstRevId,
-		$mLastRevision,  ### for displaying text
-		$mFirstRevision, ### for author & time
-		$mUser,          ### comment creator
-		$mArticle,
 		$mNamespace,
 		$mMetadata,
 		$mText,
 		$mRawtext,
 		$mNamespaceTalk;
 
+	/**
+	 * @var $mTitle Title
+	 */
+	public $mTitle;
+
+	/**
+	 * @var $mUser User comment creator
+	 */
+	public $mUser;
+
+	/**
+	 * @var $mArticle Article
+	 */
+	public $mArticle;
+
+	/**
+	 * @var $mLastRevision Revision for author & time
+	 */
+	public $mLastRevision;
+
+	/**
+	 * @var $mFirstRevId Revision for displaying text
+	 */
+	public $mFirstRevision;
+
+	/**
+	 * @param $title Title
+	 */
 	public function __construct( $title ) {
 		$this->mTitle = $title;
 		$this->mNamespace = $title->getNamespace();
@@ -124,7 +149,7 @@ class ArticleComment {
 	 *
 	 */
 	public function load($master = false) {
-		global $wgMemc, $wgParser, $wgOut;
+		global $wgMemc;
 		wfProfileIn( __METHOD__ );
 
 		$result = true;
@@ -180,7 +205,7 @@ class ArticleComment {
 					} else {
 						$this->mLastRevision = Revision::newFromId( $this->mLastRevId );
 						if ( empty( $this->mLastRevision ) || !is_object( $this->mLastRevision ) || !( $this->mLastRevision instanceof Revision ) ) {
-							$return = false;
+							$result = false;
 						}
 					}
 				} else {
@@ -227,8 +252,6 @@ class ArticleComment {
 		$wgEnableParserCache = false;
 
 		$wgParser->ac_metadata = array();
-
-		global $wgUser;
 
 		$this->mText = $wgParser->parse( $rawtext, $this->mTitle, $wgOut->parserOptions())->getText();
 		if( isset($wgParser->ac_metadata) ) {
@@ -278,7 +301,7 @@ class ArticleComment {
 	}
 
 	public function getData($master = false, $title = null) {
-		global $wgLang, $wgContLang, $wgUser, $wgParser, $wgOut, $wgTitle, $wgBlankImgUrl, $wgMemc, $wgArticleCommentsEnableVoting;
+		global $wgUser, $wgTitle, $wgBlankImgUrl, $wgMemc, $wgArticleCommentsEnableVoting;
 
 		wfProfileIn( __METHOD__ );
 
@@ -335,7 +358,7 @@ class ArticleComment {
 			}
 
 			if ( !$this->mTitle->isNewPage(Title::GAID_FOR_UPDATE) ) {
-				$buttons[] = $wgUser->getSkin()->makeKnownLinkObj( $this->mTitle, wfMsgHtml('article-comments-history'), 'action=history', '', '', 'class="article-comm-history"' );
+				$buttons[] = RequestContext::getMain()->getSkin()->makeKnownLinkObj( $this->mTitle, wfMsgHtml('article-comments-history'), 'action=history', '', '', 'class="article-comm-history"' );
 			}
 
 			$commentId = $this->getTitle()->getArticleId();
@@ -369,7 +392,7 @@ class ArticleComment {
 				$comment['votes'] = $this->getVotesCount();
 			}
 
-			$data = $wgMemc->set( $articleDataKey, $comment, 60*60 );
+			$wgMemc->set( $articleDataKey, $comment, 60*60 );
 
 			if(!($comment['title'] instanceof Title)) {
 				$comment['title'] = F::build('Title',array($comment['title'],NS_TALK),'newFromText');
@@ -381,12 +404,24 @@ class ArticleComment {
 		return $comment;
 	}
 
-	public function metadataParserInit( Parser &$parser ) {
+	/**
+	 * @static
+	 * @param Parser $parser
+	 * @return bool
+	 */
+	static public function metadataParserInit( Parser $parser ) {
 		$parser->setHook('ac_metadata', 'ArticleComment::parserTag');
 		return true;
 	}
 
-	public  static function parserTag( $content, $attributes, Parser $self ) {
+	/**
+	 * @static
+	 * @param string $content parser tag content
+	 * @param Array $attributes attribs
+	 * @param Parser $self
+	 * @return string
+	 */
+	public static function parserTag( $content, $attributes, Parser $self ) {
 		$self->ac_metadata = $attributes;
 		return '';
 	}
@@ -425,7 +460,7 @@ class ArticleComment {
 	 */
 
 	public function doDeleteComment( $reason, $suppress = false ){
-		global $wgMemc, $wgUser;
+		global $wgUser;
 		if(empty($this->mArticle)) {
 			$this->mArticle = new Article($this->mTitle, 0);
 		}
@@ -434,7 +469,7 @@ class ArticleComment {
 		//we need to run all the hook manual :/
 		if ( wfRunHooks( 'ArticleDelete', array( &$this->mArticle, &$wgUser, &$reason, &$error ) ) ) {
 			if( $this->mArticle->doDeleteArticle( $reason, $suppress ) ) {
-				$deleted = $this->mTitle->getPrefixedText();
+				$this->mTitle->getPrefixedText();
 				wfRunHooks( 'ArticleDeleteComplete', array( &$this->mArticle, &$wgUser, $reason, $id) );
 				return true;
 			}
@@ -461,6 +496,11 @@ class ArticleComment {
 		return $title;
 	}
 
+	/**
+	 * @static
+	 * @param $title Title
+	 * @return bool
+	 */
 	public static function isTitleComment($title) {
 		if (!($title instanceof Title)) {
 			return false;
@@ -510,7 +550,6 @@ class ArticleComment {
 	public function canEdit() {
 		global $wgUser;
 
-		$res = false;
 		$isAuthor = false;
 
 		if ( $this->mFirstRevision ) {
@@ -529,6 +568,10 @@ class ArticleComment {
 		return $res;
 	}
 
+	/**
+	 * @param $user User
+	 * @return bool
+	 */
 	public function isAuthor($user) {
 		if ( $this->mUser ) {
 			return $this->mUser->getId() == $user->getId() && !$user->isAnon();
@@ -544,19 +587,20 @@ class ArticleComment {
 	 * @return String
 	 */
 	public function editPage() {
-		global $wgUser, $wgTitle, $wgStylePath;
+		global $wgStylePath;
 		wfProfileIn( __METHOD__ );
 
 		$text = '';
 		$this->load(true);
 		if ($this->canEdit() && !ArticleCommentInit::isFbConnectionNeeded()) {
 			$vars = array(
-				'canEdit'			=> $this->canEdit(),
-				'comment'			=> ArticleCommentsAjax::getConvertedContent($this->mLastRevision->getText()),
-				'isReadOnly'		=> wfReadOnly(),
-				'stylePath'			=> $wgStylePath,
-				'articleId'			=> $this->mTitle->getArticleId(),
-				'articleFullUrl'	=> $this->mTitle->getFullUrl(),
+				'canEdit'				=> $this->canEdit(),
+				'comment'				=> ArticleCommentsAjax::getConvertedContent($this->mLastRevision->getText()),
+				'isReadOnly'			=> wfReadOnly(),
+				'isMiniEditorEnabled'	=> ArticleComment::isMiniEditorEnabled(),
+				'stylePath'				=> $wgStylePath,
+				'articleId'				=> $this->mTitle->getArticleId(),
+				'articleFullUrl'		=> $this->mTitle->getFullUrl(),
 			);
 			$text = F::app()->getView('ArticleComments', 'Edit', $vars)->render();
 		}
@@ -577,7 +621,6 @@ class ArticleComment {
 		global $wgMemc, $wgTitle;
 		wfProfileIn( __METHOD__ );
 
-		$res = array();
 		$this->load(true);
 		if ( $force || ($this->canEdit() && !ArticleCommentInit::isFbConnectionNeeded()) ) {
 
@@ -607,7 +650,7 @@ class ArticleComment {
 			 * add article using EditPage class (for hooks)
 			 */
 
-			$article  = new Article( $commentTitle, intval($this->mLastRevId) );
+			$article = new Article( $commentTitle, intval($this->mLastRevId) );
 			$retval = self::doSaveAsArticle($text, $article, $user, $this->mMetadata );
 			if(!empty($title)) {
 				$key = $title->getPrefixedDBkey();
@@ -635,10 +678,13 @@ class ArticleComment {
 	/**
 	 * doSaveAsArticle store comment as article
 	 *
-	 * @access protected
-	 * @return TODO: DOCUMENT
-	 **/
-
+	 * @static
+	 * @param $text String
+	 * @param $article Article
+	 * @param $user User
+	 * @param array $metadata
+	 * @return Status TODO: Document
+	 */
 	static protected function doSaveAsArticle($text, $article, $user, $metadata = array() ) {
 		$result = null;
 
@@ -654,11 +700,17 @@ class ArticleComment {
 			//this function calls Article::onArticleCreate which clears cache for article and it's talk page - TODO: is this comment still valid? Does it refer to the line above or to something that got deleted?
 		$retval = $editPage->internalAttemptSave( $result, $bot );
 
+		//Just for transition time
 		if( $retval->value == EditPage::AS_SUCCESS_UPDATE ) {
+			/**
+			 * @var $commentsIndex CommentsIndex
+			 */
 			$commentsIndex = F::build( 'CommentsIndex', array( $article->getID() ), 'newFromId' );
-			if ( $commentsIndex instanceof CommentsIndex ) {
+		/*	if ( $commentsIndex instanceof CommentsIndex ) {
 				$commentsIndex->updateLastRevId( $article->getTitle()->getLatestRevID(Title::GAID_FOR_UPDATE) );
 			}
+			
+		*/
 		}
 		return $retval;
 	}
@@ -689,7 +741,7 @@ class ArticleComment {
 	 * @return Article -- newly created article
 	 */
 	static public function doPost( $text, $user, $title, $parentId = false, $metadata = array() ) {
-		global $wgMemc, $wgTitle;
+		global $wgTitle;
 		wfProfileIn( __METHOD__ );
 
 		if ( !$text || !strlen( $text ) ) {
@@ -762,11 +814,17 @@ class ArticleComment {
 				'firstRevId' => $revId,
 				'lastRevId' => $revId,
 			);
+
+			/**
+			 * @var $commentsIndex CommentsIndex
+			 *
+			 */
 			$commentsIndex = F::build( 'CommentsIndex', array($data) );
-			$commentsIndex->addToDatabase();
+			//commented out for a transition time
+/*			$commentsIndex->addToDatabase();
 
 			// set last child comment id
-			$commentsIndex->updateParentLastCommentId( $data['commentId'] );
+			$commentsIndex->updateParentLastCommentId( $data['commentId'] ); */
 
 			wfRunHooks( 'EditCommentsIndex', array($article->getTitle(), $commentsIndex) );
 		}
@@ -780,6 +838,11 @@ class ArticleComment {
 		return array( $retval, $article, $res );
 	}
 
+	/**
+	 * @static
+	 * @param $title Title
+	 * @param $commentTitle Title
+	 */
 	static public function doPurge($title, $commentTitle) {
 		wfProfileIn( __METHOD__ );
 
@@ -809,6 +872,8 @@ class ArticleComment {
 				$params[ 'page' ] = $page;
 				$urls[] = $app->wf->AppendQuery( $basePath, $params );
 			}
+
+			$params[ 'skin' ] = true;
 
 			$squidUpdate = new SquidUpdate( $urls );
 			$squidUpdate->doUpdate();
@@ -840,6 +905,14 @@ class ArticleComment {
 
 		wfProfileOut( __METHOD__ );
 	}
+
+	/**
+	 * @static
+	 * @param $status
+	 * @param $article Article
+	 * @param int $parentId
+	 * @return array
+	 */
 
 	static public function doAfterPost( $status, $article, $parentId = 0 ) {
 		global $wgUser, $wgDBname;
@@ -894,6 +967,11 @@ class ArticleComment {
 		return $res;
 	}
 
+	/**
+	 * @static
+	 * @param $comment ArticleComment
+	 * @return bool
+	 */
 	static public function addArticlePageToWatchlist( $comment ) {
 		global $wgUser, $wgEnableArticleWatchlist, $wgBlogsEnableStaffAutoFollow;
 
@@ -938,7 +1016,7 @@ class ArticleComment {
 	 * @static
 	 * @access public
 	 *
-	 * @return true -- because it's a hook
+	 * @return Bool true -- because it's a hook
 	 */
 	static public function watchlistNotify(RecentChange &$oRC) {
 		global $wgEnableGroupedArticleCommentsRC;
@@ -980,11 +1058,12 @@ class ArticleComment {
 	 * @param Title $title -- instance of EmailNotification class
 	 * @param Array $keys -- array of all special variables like $PAGETITLE etc
 	 * @param String $message (subject or body)
+	 * @param $editor User
 	 *
 	 * @static
 	 * @access public
 	 *
-	 * @return true -- because it's a hook
+	 * @return Bool true -- because it's a hook
 	 */
 	static public function ComposeCommonMail( $title, &$keys, &$message, $editor ) {
 		global $wgEnotifUseRealName;
@@ -1009,6 +1088,9 @@ class ArticleComment {
 	 *
 	 * @access public
 	 * @static
+	 *
+	 * @param $oCommentTitle Title
+	 * @param $oNewTitle Title
 	 */
 	static private function addMoveTask( $oCommentTitle, &$oNewTitle, $taskParams ) {
 		wfProfileIn( __METHOD__ );
@@ -1040,6 +1122,9 @@ class ArticleComment {
 	 *
 	 * @access public
 	 * @static
+	 *
+	 * @param $oCommentTitle Title
+	 * @param $oNewTitle title
 	 */
 	static private function moveComment( $oCommentTitle, &$oNewTitle, $reason = '' ) {
 		global $wgUser;
@@ -1074,6 +1159,10 @@ class ArticleComment {
 	 *
 	 * @access public
 	 * @static
+	 *
+	 * @param $form MovePageForm
+	 * @param $oOldTitle Title
+	 * @param $oNewTitle Title
 	 */
 	static public function moveComments( /*MovePageForm*/ &$form , /*Title*/ &$oOldTitle , /*Title*/ &$oNewTitle ) {
 		global $wgUser, $wgRC2UDPEnabled, $wgMaxCommentsToMove, $wgEnableMultiDeleteExt, $wgCityId;
@@ -1103,6 +1192,9 @@ class ArticleComment {
 			$finish = $moved = 0;
 			$comments = array_values($comments);
 			foreach ($comments as $id => $aCommentArr) {
+				/**
+				 * @var $oCommentTitle Title
+				 */
 				$oCommentTitle = $aCommentArr['level1']->getTitle();
 
 				# move comment level #1
@@ -1118,6 +1210,10 @@ class ArticleComment {
 
 				if (isset($aCommentArr['level2'])) {
 					foreach ($aCommentArr['level2'] as $oComment) {
+						/**
+						 * @var $oComment ArticleComment
+						 * @var $oCommentTitle Title
+						 */
 						$oCommentTitle = $oComment->getTitle();
 
 						# move comment level #2
@@ -1232,7 +1328,6 @@ class ArticleComment {
 
 	public function userCanVote() {
 		$pageId = $this->mTitle->getArticleId();
-		$result = true;
 
 		$oFauxRequest = new FauxRequest(array( "action" => "query", "list" => "wkvoteart", "wkpage" => $pageId, "wkuservote" => 1 ));
 		$oApi = new ApiMain($oFauxRequest);
@@ -1285,8 +1380,29 @@ class ArticleComment {
 		return null;
 	}
 
-	static function getSurrogateKey( $articleId ) {
+	static public function getSurrogateKey( $articleId ) {
 		global $wgCityId;
 		return 'Wiki_' . $wgCityId . '_ArticleComments_' . $articleId;
+	}
+
+
+	/**
+	 * Checks if article comments will be loading on demand.
+	 *
+	 * @return boolean
+	 */
+	static public function isLoadingOnDemand() {
+		$app = F::app();
+		return $app->wg->ArticleCommentsLoadOnDemand && !$app->checkSkin( 'wikiamobile' );
+	}
+
+	/**
+	 * Checks if mini editor is enabled for article comments.
+	 *
+	 * @return boolean
+	 */
+	static public function isMiniEditorEnabled() {
+		$app = F::app();
+		return $app->wg->EnableMiniEditorExtForArticleComments && $app->checkSkin( 'oasis' );
 	}
 }

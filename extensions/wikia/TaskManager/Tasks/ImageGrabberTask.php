@@ -188,7 +188,7 @@ class ImageGrabberTask extends BatchTask {
 			"title" => $title ,
 			"desc" => wfMsg ("imagegrabbertask_add")
 		));
-		return $oTmpl->execute( "form" ) ;
+		return $oTmpl->render( "form" ) ;
 	}
 
 	function getType()
@@ -211,7 +211,7 @@ class ImageGrabberTask extends BatchTask {
 	 * @author eloy@wikia
 	 *
 	 * @return boolean: status of operation; true if success, false otherwise
-	 */ 
+	 */
 	function submitForm()
 	{
 		global $wgRequest, $wgOut, $IP, $wgUser ;

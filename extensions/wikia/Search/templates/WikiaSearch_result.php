@@ -21,10 +21,6 @@
 		<p class="redirect-title">&mdash; redirected from <a href="<?=$redirectTitle->getFullUrl()?>" <?=$trackingData?>><?= $redirectTitle->getText() ?></a></p>
 	<? endif; ?>
 	
-	<?php if($debug): ?>
-		<i>[<?php if(!empty($rank)): ?><font color="red">WikiRank: <?=$rank;?></font> | <?php endif; ?>Score: <?=$result->score?>]</i>
-	<?php endif; ?>
-	
 	<? if ($result->getVar('ns') == NS_FILE): ?>
 		<? if (!$result->getVar('created_30daysago')) : ?>
 		<span class="timeago abstimeago subtle" title="<?= $result->getVar('fmt_timestamp') ?>" alt="<?= $result->getVar('fmt_timestamp') ?>">&nbsp;</span>
@@ -44,7 +40,8 @@
 	<?php endif; ?>
 	
 	<?php if($debug): ?>
-		<i>[id: <?=$result->getId();?>, text_relevance: <?=$result->getVar('text_relevance', '?');?>, backlinks: <?=$result->getVar('backlinks', '?');?>]</i><br />
+		<i>[id: <?=$result->getId();?>, score: <?=$result->getVar('score', '?');?>, backlinks: <?=$result->getVar('backlinks', '?');?>, views: <?=$result->getVar('views', '?');?>]</i><br />
+		<i>Categories: <?=implode(" | ", $result->getVar('categories', array("NONE")))?></i><br/>
 	<?php endif; //debug ?>
 
 </article>

@@ -386,8 +386,7 @@ class BlogTemplateClass {
 		if (!empty($username)) {
 			$oUser = User::newFromName($username);
 			if ( $oUser instanceof User ) {
-				global $wgUser;
-				$sk = $wgUser->getSkin();
+				$sk = RequestContext::getMain()->getSkin();
 				$oUserPage = $oUser->getUserPage();
 				$oUserTalkPage = $oUser->getTalkPage();
 				$aResult = array(
@@ -439,48 +438,6 @@ class BlogTemplateClass {
 		#---
 		wfProfileOut( __METHOD__ );
 		return $aCategories;
-	}
-
-	public static function __getVoteCode($iPage) {
-		global $wgUser;
-
-		wfProfileIn( __METHOD__ );
-		if( get_class( $wgUser->getSkin() ) == 'SkinMonaco' ) {
-
-			$oFauxRequest = new FauxRequest(array( "action" => "query", "list" => "wkvoteart", "wkpage" => $iPage, "wkuservote" => true ));
-			$oApi = new ApiMain($oFauxRequest);
-			$oApi->execute();
-			$aResult =& $oApi->GetResultData();
-
-			if(count($aResult['query']['wkvoteart']) > 0) {
-				if (!empty($aResult['query']['wkvoteart'][$iPage]['uservote'])) {
-					$voted = true;
-				} else {
-					$voted = false;
-				}
-				$rating = $aResult['query']['wkvoteart'][$iPage]['votesavg'];
-			} else {
-				$voted = false;
-				$rating = 0;
-			}
-			$sHiddenStar = $voted ? ' style="display: none;"' : '';
-			$iRating = round($rating * 2)/2;
-			$iRatingPx = round($rating * 17);
-
-			/* run template */
-			$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
-			$oTmpl->set_vars( array(
-				"ratingPx"		=> $iRatingPx,
-				"rating"		=> $iRating,
-				"hidden_star"	=> $sHiddenStar,
-			));
-			$return = $oTmpl->execute("blog-page-voting");
-		}
-		else {
-			$return = "";
-		}
-		wfProfileOut( __METHOD__ );
-		return $return;
 	}
 
 	private static function __parseXMLTag($string) {
@@ -966,7 +923,7 @@ class BlogTemplateClass {
 				"text"			=> self::__getRevisionText($oRow->page_id, $oRevision),
 				"revision"		=> $oRow->rev_id,
 				"comments"		=> $iCount,
-				"votes"			=> self::__getVoteCode($oRow->page_id),
+				"votes"			=> '',
 				"props"			=> BlogArticle::getProps($oRow->page_id),
 			);
 			// Sort by comment count for popular blog posts module
@@ -1245,7 +1202,7 @@ class BlogTemplateClass {
 									"aRows"			=> $aResult,
 									"aOptions"		=> self::$aOptions,
 									"wgParser"		=> $wgParser,
-									"skin"			=> $wgUser->getSkin(),
+									"skin"			=> RequestContext::getMain()->getSkin(),
 									"wgExtensionsPath" 	=> $wgExtensionsPath,
 									"wgStylePath" 		=> $wgStylePath,
 									"sPager"		=> $sPager,
@@ -1253,13 +1210,13 @@ class BlogTemplateClass {
 								) );
 								#---
 								if ( self::$aOptions['type'] == 'box' ) {
-									$result = $oTmpl->execute("blog-page");
+									$result = $oTmpl->render("blog-page");
 								} else {
-									$page = $oTmpl->execute("blog-post-page");
+									$page = $oTmpl->render("blog-post-page");
 									$oTmpl->set_vars( array(
 										"page" => $page
 									) );
-									$result = $oTmpl->execute("blog-article-page");
+									$result = $oTmpl->render("blog-article-page");
 								}
 							}
 						} else {
@@ -1272,7 +1229,7 @@ class BlogTemplateClass {
 						}
 						else {
 							if ( self::$aOptions['type'] != 'array' ) {
-								$sk = $wgUser->getSkin();
+								//$sk = RequestContext::getMain()->getSkin();
 								$result = ""; // RT #69906
 								// $result = wfMsg('blog-nopostfound') . " " . $sk->makeLinkObj(Title::newFromText('CreateBlogPage', NS_SPECIAL), wfMsg('blog-writeone' ) );
 							}
@@ -1318,8 +1275,8 @@ class BlogTemplateClass {
 				"wgStyleVersion"	=> $wgStyleVersion,
 			) );
 			#---
-			$sPager = ( NS_BLOG_LISTING == self::$oTitle->getNamespace() ) ? $oTmpl->execute("blog-pager-ajax") :
-					( ( NS_BLOG_ARTICLE == self::$oTitle->getNamespace() ) ? $oTmpl->execute("blog-pager") : "" );
+			$sPager = ( NS_BLOG_LISTING == self::$oTitle->getNamespace() ) ? $oTmpl->render("blog-pager-ajax") :
+					( ( NS_BLOG_ARTICLE == self::$oTitle->getNamespace() ) ? $oTmpl->render("blog-pager") : "" );
 		}
 
 		wfProfileOut( __METHOD__ );

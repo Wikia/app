@@ -117,6 +117,13 @@ $messages['pl'] = array(
 	'staffpowers-ipblock-abort' => 'Blokowanie pracowników, helperów czy członków VSTF nie jest możliwe. Użyj [[Special:Contact|formularza kontaktowego]] aby zgłosić problem związany z użytkownikiem posiadającym takie uprawnienia.',
 );
 
+/** Piedmontese (Piemontèis)
+ * @author Borichèt
+ */
+$messages['pms'] = array(
+	'staffpowers-ipblock-abort' => "A l'é pa possìbil bloché l'Echip ëd Wikia, j'Assistent ëd Wikia, o ij mèmber ëd nostra Formassion ëd Volontari contra la rumenta. Për piasì, ch'a deuvra ël [[Special:Contact|formolari ëd contat]] për arporté qualsëssìa eror o problema con nòstra echip.",
+);
+
 /** Portuguese (português)
  * @author SandroHc
  */

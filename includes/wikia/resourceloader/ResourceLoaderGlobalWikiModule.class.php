@@ -35,22 +35,22 @@ abstract class ResourceLoaderGlobalWikiModule extends ResourceLoaderWikiModule {
 
 	protected function createTitle( $titleText, $options = array() ) {
 		global $wgCityId;
-
 		$title = null;
+		$realTitleText = isset($options['title']) ? $options['title'] : $titleText;
 		if ( !empty( $options['city_id'] ) && $wgCityId != $options['city_id'] ) {
-			$realTitleText = isset($options['title']) ? $options['title'] : $titleText;
 			list( $text, $namespace ) = $this->parseTitle($realTitleText);
 			if ( $text !== false ) {
-				$title = GlobalTitle::newFromText($text,$namespace,$options['city_id']);
+				$title = GlobalTitle::newFromText($text, $namespace, $options['city_id']);
 			}
 		} else {
-			$title = Title::newFromText( $titleText );
+			$title = Title::newFromText( $realTitleText );
 		}
 
 		return $title;
 	}
 
 	protected function getContent( $title, $titleText, $options = array() ) {
+		$content = null;
 		if ( $title instanceof GlobalTitle ) {
 			// todo: think of pages like NS_MAIN:Test/code.js that are pulled
 			// from dev.wikia.com
@@ -60,19 +60,35 @@ abstract class ResourceLoaderGlobalWikiModule extends ResourceLoaderWikiModule {
 			}
 			*/
 			$content = $title->getContent();
+
+		// Try to load the contents of an article before falling back to a message (BugId:45352)
 		} else {
-			$content = parent::getContent($title,$options);
+			$revision = Revision::newFromTitle( $title );
+			if ($revision) {
+				$content = $revision->getRawText();
+			}
 		}
 
-        if ( ($content === false || $content === null)
-                && isset($options['missingCallback']) ) {
-            $missingCallback = $options['missingCallback'];
-            $missingArticle = $this->getResourceName($title,$titleText,$options);
-            $missingArticle = json_encode((string)$missingArticle);
-            $content = "window.{$missingCallback} && {$missingCallback}({$missingArticle});";
-        }
+		// Fall back to parent logic
+		if ( !$content ) {
+			$content = parent::getContent( $title, $options );
+		}
 
-        return $content;
+		// Failed to get contents
+		if ( ( $content === false || $content === null || isset( $options['missing'] ) ) ) {
+			$missingArticle = $this->getResourceName( $title, $titleText, $options );
+
+			if ( $options['type'] == 'script' && isset( $options['missingCallback'] ) ) {
+				$missingCallback = $options['missingCallback'];
+				$missingArticle = json_encode( (string) $missingArticle );
+				$content = "window.{$missingCallback} && window.{$missingCallback}({$missingArticle});";
+
+			} else if ( $options['type'] == 'style' ) {
+				$content = "/* Not found (requested by user-supplied javascript) */";
+			}
+		}
+
+		return $content;
 	}
 
 	protected function reallyGetTitleMtimes( ResourceLoaderContext $context ) {
@@ -143,9 +159,9 @@ abstract class ResourceLoaderGlobalWikiModule extends ResourceLoaderWikiModule {
 	}
 
 	protected function getResourceName( $title, $titleText, $options ) {
-        if ( isset( $options['originalName'] ) ) {
-            return $options['originalName'];
-        }
+		if ( isset( $options['originalName'] ) ) {
+			return $options['originalName'];
+		}
 		if ( $title instanceof GlobalTitle ) {
 			$name = "[city_id=".$title->getCityId()."]:";
 			$name .= isset($options['title']) ? $options['title'] : $titleText;
@@ -154,5 +170,4 @@ abstract class ResourceLoaderGlobalWikiModule extends ResourceLoaderWikiModule {
 			return parent::getResourceName($title,$titleText,$options);
 		}
 	}
-
 }

@@ -30,7 +30,8 @@ require(['events', 'loader', 'track'], function(events, loader, track){
 			data:{
 				category: wgTitle,
 				batch: batch,
-				index: encodeURIComponent(id.substr(-1, 1))
+				//this is already encoded and $.ajax encode all data
+				index: decodeURIComponent(id.slice(8))
 			},
 			callback: function(result){
 				container.parentElement.removeChild(container);

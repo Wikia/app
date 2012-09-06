@@ -24,7 +24,7 @@ var getResources = (function() {
 			remaining--;
 
 			// All files have been downloaded
-			if ( remaining === 0 ) {
+			if ( remaining < 1 ) {
 				if ( typeof success == 'function' ) {
 					success();
 				}
@@ -39,7 +39,12 @@ var getResources = (function() {
 			resources = [ resources ];
 		}
 
-		for ( n = 0, l = remaining = resources.length; n < l; n++ ) {
+		// Nothing to load
+		if ( !( l = remaining = resources.length ) ) {
+			complete();
+		}
+
+		for ( n = 0; n < l; n++ ) {
 			var resource = resources[ n ],
 				type = typeof resource;
 
@@ -68,6 +73,8 @@ var getResources = (function() {
 				resource.call( $, complete );
 
 			} else {
+				$().log('getResources: unknown type ' + resource);
+
 				dfd.reject({
 					error: 'Unknown type',
 					resource: resource

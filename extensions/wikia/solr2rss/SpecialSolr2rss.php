@@ -72,7 +72,7 @@ class solr2rss extends UnlistedSpecialPage {
 			$wgRequest->response()->header('Cache-Control: max-age=60');
 			$wgRequest->response()->header('Content-Type: application/xml');
 
-			echo $oTmpl->execute( 'results' );
+			echo $oTmpl->render( 'results' );
 			exit;
 		}
 	}

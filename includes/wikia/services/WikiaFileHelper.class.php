@@ -142,11 +142,18 @@ class WikiaFileHelper extends Service {
 				$content = self::videoOverlayTitle( $videoTitle, $width );
 
 				// video duration
-				$duration = $file->getHandler()->getFormattedDuration();
-				$isoDuration = $file->getHandler()->getISO8601Duration();
+				$duration = '';
+				$fileMetadata = $file->getMetadata();
+				if ( $fileMetadata ) {
+					$fileMetadata = unserialize( $fileMetadata );
+					if ( array_key_exists('duration', $fileMetadata) ) {
+						$duration = self::formatDuration( $fileMetadata['duration'] );
+					}
+				}
+
 				$content .= self::videoOverlayDuration( $duration );
 				$content .= '<br />';
-				$content .= '<meta itemprop="duration" content="'.$isoDuration.'">';
+				//$content .= '<meta itemprop="duration" content="'.$isoDuration.'">';
 
 				// video views
 				$views = DataMartService::getVideoViewsByTitleTotal( $videoTitle );
@@ -197,8 +204,7 @@ class WikiaFileHelper extends Service {
 		$attribs = array(
 			'class' => 'info-overlay-views',
 		);
-
-		$views = $app->wf->Msg( 'videohandler-video-views', $app->wg->Lang->formatNum($views) );
+		$views = $app->wf->MsgForContent( 'videohandler-video-views', $app->wg->Lang->formatNum($views) );
 
 		return Xml::element( 'span', $attribs, $views, false );
 	}
@@ -370,31 +376,43 @@ class WikiaFileHelper extends Service {
 	}
 
 	// truncate article list
-	public static function truncateArticleList( $articles, $limit = 2 )  {
+	public static function truncateArticleList( $articles, $limit = 2 ) {
 		$app = F::app();
 
 		$isTruncated = 0;
 		$truncatedList = array();
 		if( !empty($articles) ) {
 			foreach( $articles as $article ) {
-				$article = str_replace( "_", " ", $article );
-
 				// Create truncated list
-				if ( count($truncatedList) <= $limit ) {
+				if ( count($truncatedList) < $limit ) {
 					if ( $article['ns'] == NS_MAIN
 						|| ( (!empty($app->wg->ContentNamespace)) && in_array($article['ns'], $app->wg->ContentNamespace) ) ) {
 							$truncatedList[] = $article;
 					}
+				} else {
+					$isTruncated = 1;
+					break;
 				}
-			}
-
-			if ( count($truncatedList) > $limit ) {
-				array_pop( $truncatedList );
-				$isTruncated = 1;
 			}
 		}
 
 		return array( $truncatedList, $isTruncated );
 	}
 
+	// format duration from second to h:m:s
+	public static function formatDuration( $sec ) {
+		$hms = "";
+		$hours = intval(intval($sec) / 3600);
+		if ($hours > 0) {
+			$hms .= str_pad($hours, 2, "0", STR_PAD_LEFT). ":";
+		}
+
+		$minutes = intval(($sec / 60) % 60);
+		$hms .= str_pad($minutes, 2, "0", STR_PAD_LEFT). ":";
+
+		$seconds = intval($sec % 60);
+		$hms .= str_pad($seconds, 2, "0", STR_PAD_LEFT);
+
+		return $hms;
+	}
 }

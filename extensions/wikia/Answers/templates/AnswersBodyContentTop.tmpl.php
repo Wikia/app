@@ -1,7 +1,7 @@
 <?php
 global $wgTitle, $wgArticle, $wgOut, $wgRequest, $wgUser;
 
-//if ($wgTitle->isContentPage() && !ArticleAdLogic::isMainPage()) {
+//if ($wgTitle->isContentPage() && !WikiaPageType::isMainPage()) {
 if ( $wgTitle->exists() && $wgTitle->isContentPage() && !$wgTitle->isTalkPage() && $wgOut->isArticle()) {
 
 	if( $wgTitle->getArticleID() == Title::newMainPage()->getArticleId() )return;

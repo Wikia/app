@@ -256,7 +256,7 @@ class ContentFeeds {
 			$wgRequest->response()->header('Cache-Control: max-age=60');
 			$wgRequest->response()->header('Content-Type: application/xml');
 
-			echo $oTmpl->execute( 'newImagesRss' );
+			echo $oTmpl->render( 'newImagesRss' );
 			exit;
 		}
 		return true;
@@ -278,7 +278,7 @@ class ContentFeeds {
 		$emptyBodyErrorMsg = wfMsg( 'contentfeeds-firstfewarticles-tag-empty-body-error' );
 
 		// TODO: refactor using JS snippets (see wikiTweetsParserHook and userTweetsParserHook methods)
-		$jsBody .= <<<SCRIPT
+		$jsBody = <<<SCRIPT
 <script type="text/javascript">/*<![CDATA[*/
 	wgAfterContentAndJS.push(function() {
 		$.getScript('{$wgExtensionsPath}/wikia/JavascriptAPI/Mediawiki.js', function() {
@@ -298,7 +298,7 @@ SCRIPT;
 		$template = new EasyTemplate( dirname( __FILE__ )."/templates/" );
 		$template->set_vars( array() );
 
-		$tagBody = $template->execute( 'firstFewArticlesTag' );
+		$tagBody = $template->render( 'firstFewArticlesTag' );
 
 		return $tagBody . $jsBody;
 	}

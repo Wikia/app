@@ -14,7 +14,7 @@ class EditPageLayoutHelper {
 	public $editPage;
 
 	function __construct() {
-		$this->app = WF::build('App');
+		$this->app = F::app();
 		$this->out = $this->app->getGlobal('wgOut');
 		$this->request = $this->app->getGlobal('wgRequest');
 	}
@@ -55,6 +55,12 @@ class EditPageLayoutHelper {
 		}
 		*/
 		$this->out->addModules('wikia.yui');
+
+		// Disable custom JS while loading the edit page on MediaWiki JS pages (BugID: 41449)
+		if ( $editedArticle->getTitle()->getNamespace() === NS_MEDIAWIKI
+			&& substr( $editedArticle->getTitle()->getText(), -3 ) === '.js' ) {
+			$this->out->disallowUserJs();
+		}
 
 		// initialize custom edit page
 		$this->editPage = new EditPageLayout($editedArticle);
@@ -146,7 +152,7 @@ class EditPageLayoutHelper {
 		if($this->jsVarsPrinted) {
 			throw new Exception('addJsVariable: too late to add js var' );
 		}
-		$this->jsVars[$name] = & $value;
+		$this->jsVars[$name] = $value;
 	}
 
 	function onAlternateEditPageClass(&$editPage) {
@@ -166,7 +172,7 @@ class EditPageLayoutHelper {
 	/**
 	 * Add wgIsEditPage global JS variable on edit pages
 	 */
-	function onMakeGlobalVariablesScript($vars) {
+	function onMakeGlobalVariablesScript(Array &$vars) {
 		$this->app->wf->RunHooks('EditPageMakeGlobalVariablesScript', array(&$vars));
 
 		foreach( $this->jsVars as $key => $value ) {

@@ -51,25 +51,26 @@ public class SpecialMultipleUploadPageObject extends WikiBasePageObject {
 			PageObjectLogging.log("TypeInFilesToUpload", "You can upload from 1 to 10 files using MultipleUpload. "+FilesNamesList.length+" files is unaccpetable", false, driver);
 					}
 		else {
-			PageObjectLogging.log("TypeInFilesToUpload", "Upload "+FilesNamesList.length+" files, specified in FilesNamesList", true, driver);
 		waitForElementByElement(MultipleUploadForm);
 		List<WebElement> FileInputsLits = driver.findElements(FileInputs);
 		for (int i = 0; i < FilesNamesList.length; i++) {
 			FileInputsLits.get(i).sendKeys(System.getProperty("user.dir")+"\\src\\test\\resources\\ImagesForUploadTests\\"+FilesNamesList[i]);
-		}}
+		}
+		PageObjectLogging.log("TypeInFilesToUpload", "Upload "+FilesNamesList.length+" files, specified in FilesNamesList", true, driver);	
+		}
 	}
 
 	public void CheckIgnoreAnyWarnings() {
-		PageObjectLogging.log("CheckIgnoreAnyWarnings", "Check 'Ignore Any Warnings' option", true, driver);
 		waitForElementByElement(IgnoreAnyWarnings);
 		click(IgnoreAnyWarnings);
+		PageObjectLogging.log("CheckIgnoreAnyWarnings", "Check 'Ignore Any Warnings' option", true, driver);
 		
 	}
 
 	public void ClickOnUploadFile() {
-		PageObjectLogging.log("ClickOnUploadFile", "Click on Upload File button", true, driver);
 		waitForElementByElement(UploadFileButton);
 		click(UploadFileButton);
+		PageObjectLogging.log("ClickOnUploadFile", "Click on Upload File button", true, driver);
 		
 	}
 
@@ -82,7 +83,6 @@ public class SpecialMultipleUploadPageObject extends WikiBasePageObject {
 	 */
 	public void VerifySuccessfulUpload(String[] FilesNamesList) {
 		waitForElementByBy(UploadedFilesListContener);
-		PageObjectLogging.log("VerifySuccessfulUpload", "Verify that the upload was succesful by checking the list of uploaded files", true, driver);
 		
 		List<WebElement> UploadedFileslist = driver.findElements(UploadedFilesList);
 		for (int i = 0; i < FilesNamesList.length; i++) {
@@ -90,6 +90,7 @@ public class SpecialMultipleUploadPageObject extends WikiBasePageObject {
 				PageObjectLogging.log("VerifySuccessfulUpload", "the uploaded list element number "+(i+1)+"does not contain expected string: "+FilesNamesList[i]+"<br> The element Text is: "+UploadedFileslist.get(i).getText(), false, driver);
 							}
 		}
+		PageObjectLogging.log("VerifySuccessfulUpload", "Verify that the upload was succesful by checking the list of uploaded files", true, driver);
 		
 	}
 

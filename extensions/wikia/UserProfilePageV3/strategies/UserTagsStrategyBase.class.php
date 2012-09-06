@@ -2,7 +2,7 @@
 /**
  * @desc Base class for handling user "tags" logic in user masthead
  */
-class UserTagsStrategyBase {
+abstract class UserTagsStrategyBase {
 	protected $app;
 	/** @var User */
 	protected $user;
@@ -10,6 +10,7 @@ class UserTagsStrategyBase {
 	//instance cache for UserTwoTagsStrategy::getUsersEffectiveGroups()
 	protected $usersEffectiveGroups = null;
 
+	//TODO: reuse consts -- are there substitutes?
 	const WIKIA_GROUP_STAFF_NAME = 'staff';
 	const WIKIA_GROUP_AUTHENTICATED_NAME = 'authenticated';
 	const WIKIA_GROUP_SYSOP_NAME = 'sysop';
@@ -112,17 +113,14 @@ class UserTagsStrategyBase {
 	protected function sortUserGroups($group1, $group2) {
 		$this->app->wf->ProfileIn(__METHOD__);
 
-		$result = 0; //means equal here
-		if (!isset($this->groupsRank[$group1]) && isset($this->groupsRank[$group2])) {
+		if( !isset($this->groupsRank[$group1]) && !isset($this->groupsRank[$group2]) ) {
+			$result = 0;
+		} elseif( !isset($this->groupsRank[$group1]) && isset($this->groupsRank[$group2]) ) {
 			$result = 1;
+		} elseif( !isset($this->groupsRank[$group2]) && isset($this->groupsRank[$group1]) ) {
+			$result = -1;
 		} else {
-			if (isset($this->groupsRank[$group1]) && !isset($this->groupsRank[$group2])) {
-				$result = -1;
-			} else {
-				if (isset($this->groupsRank[$group1]) && isset($this->groupsRank[$group2])) {
-					$result = ($this->groupsRank[$group1] < $this->groupsRank[$group2]) ? 1 : -1;
-				}
-			}
+			$result = ($this->groupsRank[$group1] < $this->groupsRank[$group2]) ? 1 : -1;
 		}
 
 		$this->app->wf->ProfileOut(__METHOD__);
@@ -130,10 +128,9 @@ class UserTagsStrategyBase {
 	}
 
 	/**
-	 * @param Array $tags
 	 * @return string
 	 */
-	protected function getTagFromGroups( &$tags ) {
+	protected function getTagFromGroups() {
 		$this->app->wf->ProfileIn(__METHOD__);
 
 		$result = '';
@@ -147,11 +144,8 @@ class UserTagsStrategyBase {
 			$result = wfMsg('user-identity-box-banned-from-chat');
 		}
 
-		if( !empty($result) ) {
-			$tags[] = $result;
-		}
-
 		$this->app->wf->ProfileOut(__METHOD__);
+		return $result;
 	}
 
 	/**
@@ -167,12 +161,11 @@ class UserTagsStrategyBase {
 		$userGroups = $this->getUsersEffectiveGroups();
 		usort($userGroups, array($this, 'sortUserGroups'));
 
+		//just a regular member by default
+		$group = false;
+
 		if (isset($userGroups[0]) && in_array($userGroups[0], array_keys($this->groupsRank))) {
-			$this->app->wf->ProfileOut(__METHOD__);
 			$group = $userGroups[0];
-		} else {
-			//just a member
-			$group = false;
 		}
 
 		$this->app->wf->ProfileOut(__METHOD__);

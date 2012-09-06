@@ -187,11 +187,6 @@ class CommentsIndex extends WikiaModel {
 	 */
 	public function addToDatabase() {
 		$this->wf->ProfileIn( __METHOD__ );
-		
-		//Just for transition time
-		if(empty($this->wg->EnableForumExt)) {
-			return true;
-		}
 
 		if ( !$this->wf->ReadOnly() ) {
 			$this->createTableCommentsIndex();
@@ -210,7 +205,7 @@ class CommentsIndex extends WikiaModel {
 					'parent_page_id' => $this->parentPageId,
 					'comment_id' => $this->commentId,
 					'parent_comment_id' => $this->parentCommentId,
-					'last_child_comment_id' => $this->lastChildCommentId,
+					'last_child_comment_id' => $this->lastChildCommentId == 0 ? $this->commentId:$this->lastChildCommentId,
 					'archived' => $this->archived,
 					'deleted' => $this->deleted,
 					'removed' => $this->removed,

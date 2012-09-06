@@ -71,8 +71,8 @@ function VETArticleSave( $article, $user, $text, $summary) {
 }
 
 function VETSetup($editform) {
-	global $wgOut, $wgExtensionsPath, $wgHooks, $wgUser;
-	if( in_array(get_class($wgUser->getSkin()), array('SkinMonaco', 'SkinOasis')) ) {
+	global $wgOut, $wgExtensionsPath, $wgHooks;
+	if( get_class(RequestContext::getMain()->getSkin()) === 'SkinOasis' ) {
 		$wgHooks['MakeGlobalVariablesScript'][] = 'VETSetupVars';
 		$wgOut->addScript('<script type="text/javascript" src="'.$wgExtensionsPath.'/wikia/VideoEmbedTool/js/VET.js"></script>');
 		$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/VideoEmbedTool/css/VET.scss'));
@@ -80,7 +80,7 @@ function VETSetup($editform) {
 	return true;
 }
 
-function VETSetupVars(&$vars) {
+function VETSetupVars(Array &$vars) {
 	global $wgFileBlacklist, $wgCheckFileExtensions, $wgStrictFileExtensions, $wgFileExtensions;
 
 	$vars['vet_back'] = wfMsg('vet-back');

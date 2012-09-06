@@ -18,8 +18,6 @@ $wikiaheader-width: $width-outside + 14px;
 		display: none;
 	}
 	nav {
-		background-image: url(/skins/oasis/images/checkers.png); /* base64 */
-		border-bottom: 1px solid mix(#000, $color-header, 80%);
 		font-size: 20px;
 		height: 34px;
 		>ul>li:last-child {
@@ -51,6 +49,9 @@ $wikiaheader-width: $width-outside + 14px;
 	}
 	.chevron {
 		border-top-color: mix($color-header-text, $color-header);
+	}
+	.wikia-header-mask {
+		background-image: url(/skins/oasis/images/checkers.png); /* base64 */
 	}
 	.WikiaLogo {
 		padding-left: 25px;
@@ -99,7 +100,7 @@ $wikiaheader-width: $width-outside + 14px;
 	//top level navigation list
 	li {
 		border: 0;
-		height: 30px;
+		height: 29px;
 		margin-top: -7px;
 		padding: 5px 0 0;
 	}
@@ -147,7 +148,7 @@ $wikiaheader-width: $width-outside + 14px;
 		width: $width-outside - 20px;
 		&.show {
 			display: block;
-			top: 35px;
+			top: 34px;
 		}
 		li {
 			display: inline;

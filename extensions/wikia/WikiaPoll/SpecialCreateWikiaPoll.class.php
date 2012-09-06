@@ -11,8 +11,7 @@ class SpecialCreateWikiaPoll extends SpecialPage {
 
 		// Boilerplate special page permissions
 		if ($wgUser->isBlocked()) {
-			$wgOut->blockedPage();
-			return;
+			throw new UserBlockedError( $this->getUser()->mBlock );
 		}
 		if (wfReadOnly() && !wfAutomaticReadOnly()) {
 			$wgOut->readOnlyPage();
@@ -30,9 +29,9 @@ class SpecialCreateWikiaPoll extends SpecialPage {
 
 		if( $subpage != '' ) {
 			// We came here from the edit link, go into edit mode
-			$wgOut->addHtml(wfRenderModule('WikiaPoll', 'SpecialPageEdit', array('title' => $subpage)));
+			$wgOut->addHtml(F::app()->renderView('WikiaPoll', 'SpecialPageEdit', array('title' => $subpage)));
 		} else {
-			$wgOut->addHtml(wfRenderModule('WikiaPoll', 'SpecialPage'));
+			$wgOut->addHtml(F::app()->renderView('WikiaPoll', 'SpecialPage'));
 		}
 	}
 }

@@ -12,7 +12,6 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  * @version 0.1
  */
-
 if ( !defined( 'MEDIAWIKI' ) ) {
 	echo( "This is an extension to the MediaWiki package and cannot be run standalone.\n" );
 	die( -1 );
@@ -33,13 +32,23 @@ $wgExtensionMessagesFiles['CentralHelpSearch'] = $dir . 'CentralHelpSearch.i18n.
 
 $wgHooks['ParserFirstCallInit'][] = 'efCentralHelpSearchSetup';
 
-
-function efCentralHelpSearchSetup( &$parser ) {
+/**
+ * Register "centralhelpsearch" parser tag
+ *
+ * @param Parser $parser
+ * @return bool
+ */
+function efCentralHelpSearchSetup( Parser &$parser ) {
 	$parser->setHook( 'centralhelpsearch', 'efCreateSearchForm' );
 
 	return true;
 }
 
+/**
+ * Render "centralhelpsearch" parser tag
+ *
+ * @return string
+ */
 function efCreateSearchForm() {
 
 	$htmlOut = Xml::openElement( 'form',

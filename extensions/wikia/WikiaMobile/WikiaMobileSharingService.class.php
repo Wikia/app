@@ -9,7 +9,13 @@ class WikiaMobileSharingService extends WikiaService{
 	public function index(){
 		$this->wf->profileIn( __METHOD__ );
 
-		$this->setVal( 'networks', F::build( 'SocialSharingService' )->getNetworks( array(
+
+		/**
+		 * @var $socialSharingService SocialSharingService
+		 */
+		$socialSharingService = F::build( 'SocialSharingService' );
+
+		$this->setVal( 'networks', $socialSharingService->getNetworks( array(
 			'facebook',
 			'twitter',
 			'plusone',
@@ -20,7 +26,7 @@ class WikiaMobileSharingService extends WikiaService{
 	}
 
 	public function button(){
-		if ( $this->wg->title->getNamespace() == NS_SPECIAL ) {
+		if ( $this->wg->Title->getNamespace() == NS_SPECIAL ) {
 			$this->skipRendering();
 		}
 	}

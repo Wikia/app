@@ -9,13 +9,12 @@
 
 // TODO: extend SpecialNewFiles class instead of using a function
 function wfSpecialWikiaNewFiles ( $par, $specialPage ) {
-	global $wgUser, $wgOut, $wgLang, $wgRequest, $wgMiserMode, $wgUseWikiaNewFiles;
-	global $wgJsMimeType, $wgExtensionsPath;
+	global $wgOut, $wgLang, $wgRequest, $wgMiserMode;
 	global $wmu, $wgOasisHD;
 
 	$wpIlMatch = $wgRequest->getText( 'wpIlMatch' );
 	$dbr = wfGetDB( DB_SLAVE );
-	$sk = $wgUser->getSkin();
+	$sk = RequestContext::getMain()->getSkin();
 	$shownav = !$specialPage->including();
 	$hidebots = $wgRequest->getBool( 'hidebots', 1 );
 
@@ -252,7 +251,7 @@ function wfSpecialWikiaNewFiles ( $par, $specialPage ) {
 }
 
 function getLinkedFiles ( $image ) {
-	global $wgUser, $wgMemc;
+	global $wgMemc;
 
 	wfProfileIn( __METHOD__ );
 	$cacheKey = wfMemcKey( __METHOD__, $image->img_name );
@@ -279,7 +278,7 @@ function getLinkedFiles ( $image ) {
 	$links = array();
 
 	if ( !empty($data) ) {
-		$sk = $wgUser->getSkin();
+		$sk = RequestContext::getMain()->getSkin();
 		foreach ( $data as $row ) {
 			$name = Title::makeTitle( $row['ns'], $row['title'] );
 			$links[] = $sk->link( $name, null, array( 'class' => 'wikia-gallery-item-posted' ) );

@@ -16,8 +16,7 @@ class WikiaVideoAddForm extends SpecialPage {
 		global $wgOut, $wgRequest, $wgUser;
 
 		if( $wgUser->isBlocked() ) {
-			$wgOut->blockedPage();
-			return;
+			throw new UserBlockedError( $this->getUser()->mBlock );
 		}
 
 		$this->mTitle = Title::makeTitle( NS_SPECIAL, 'WikiaVideoAdd' );
@@ -59,7 +58,7 @@ class WikiaVideoAddForm extends SpecialPage {
 						"action"	=>	$action,
 						"name"		=> 	$name,
 						) );
-			$wgOut->addHTML( $oTmpl->execute("quickform") );
+			$wgOut->addHTML( $oTmpl->render("quickform") );
 		}
 	}
 
@@ -72,12 +71,12 @@ class WikiaVideoAddForm extends SpecialPage {
 				$replaced = true;
 			} else {
 				$this->mName = '';
-			}			
+			}
 		} else {
 			$this->mName = $wgRequest->getVal( 'wpWikiaVideoAddName' );
 		}
 
-		( '' != $wgRequest->getVal( 'wpWikiaVideoAddUrl' ) ) ? $this->mUrl = $wgRequest->getVal( 'wpWikiaVideoAddUrl' ) : $this->mUrl = '';	
+		( '' != $wgRequest->getVal( 'wpWikiaVideoAddUrl' ) ) ? $this->mUrl = $wgRequest->getVal( 'wpWikiaVideoAddUrl' ) : $this->mUrl = '';
 
 		if ( ( '' != $this->mName ) && ( '' != $this->mUrl ) ) {
 			$this->mName = ucfirst($this->mName);
@@ -116,7 +115,7 @@ class WikiaVideoAddForm extends SpecialPage {
 					$video->save();
 				}
 
-				$sk = $wgUser->getSkin();
+				$sk = RequestContext::getMain()->getSkin();
 				$link_back = $sk->makeKnownLinkObj( $title );
 
 				if ($replaced) {

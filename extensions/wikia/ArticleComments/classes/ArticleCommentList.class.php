@@ -831,7 +831,7 @@ class ArticleCommentList {
 	 */
 
 	public function render() {
-		return wfRenderModule('ArticleComments', 'Index');
+		return F::app()->renderView('ArticleComments', 'Index');
  	}
 
 	/**

@@ -1,6 +1,5 @@
 <?php
 
-require_once dirname(__FILE__) . '/ArticleAdLogic.php';
 require_once dirname(__FILE__) . '/PartnerWidget.php';
 
 $wgExtensionCredits['other'][] = array(
@@ -14,7 +13,7 @@ $wgExtensionFunctions[] = 'wfAdEngineInit';
 
 function wfAdEngineInit() {
 	global $wgRequest, $wgUser;
-	global $wgNoExternals, $wgShowAds, $wgEnableAdsInContent, $wgEnableAdMeldAPIClient;
+	global $wgNoExternals, $wgShowAds, $wgEnableAdsInContent, $wgEnableAdMeldAPIClient, $wgEnableKruxTargeting;
 
 	if ($wgRequest->getBool('noexternals', $wgNoExternals)) {
 		$wgShowAds = false;
@@ -28,6 +27,7 @@ function wfAdEngineInit() {
 	if (empty($wgShowAds)) {
 		$wgEnableAdsInContent = false;
 		$wgEnableAdMeldAPIClient = false;
+		$wgEnableKruxTargeting = false;
 	}
 
 	if ($wgUser->isLoggedIn() && !$wgUser->getOption('showAds')) {
@@ -40,13 +40,13 @@ function wfAdEngineInit() {
 //$wgHooks["WikiaSkinTopScripts"][] = "wfAdEngineSetupJSVars";
 //$wgHooks['WikiaSkinTopScripts'][] = 'wfAdEngineSetupTopVars';
 
-function wfAdEngineSetupTopVars($vars) {
+function wfAdEngineSetupTopVars(&$vars) {
 	global $wgCityId, $wgEnableKruxTargeting, $wgNoExternals;
 
 	wfProfileIn(__METHOD__);
 
-	// ArticleAdLogic
-	$vars['adLogicPageType'] = ArticleAdLogic::getPageType();
+	// generic type of page: forum/search/article/home/...
+	$vars['wikiaPageType'] = WikiaPageType::getPageType();
 
 	// category/hub
 	$catInfo = HubService::getComscoreCategory($wgCityId);
@@ -64,14 +64,14 @@ function wfAdEngineSetupTopVars($vars) {
 	return true;
 }
 
-function wfAdEngineSetupJSVars($vars) {
+function wfAdEngineSetupJSVars(Array &$vars) {
 	wfProfileIn(__METHOD__);
 
 	global $wgRequest, $wgNoExternals, $wgEnableAdsInContent, $wgEnableOpenXSPC,
 		$wgAdDriverCookieLifetime, $wgHighValueCountries, $wgDartCustomKeyValues,
 		$wgUser, $wgEnableWikiAnswers, $wgAdDriverUseCookie, $wgAdDriverUseExpiryStorage,
 		$wgEnableAdMeldAPIClient, $wgEnableAdMeldAPIClientPixels,
-		$wgEnableKruxTargeting, $wgLoadAdDriverOnLiftiumInit;
+		$wgLoadAdDriverOnLiftiumInit;
 
 	$wgNoExternals = $wgRequest->getBool('noexternals', $wgNoExternals);
 
@@ -191,6 +191,8 @@ class AdEngine {
 		'10' => 'AdDriver',
 		'11' => 'LiftDNA',
 		'12' => 'DARTGP',
+		'13' => 'AdEngine2',
+		'14' => 'GamePro',
  		'-1' => 'Null'
 	);
 
@@ -223,6 +225,11 @@ class AdEngine {
 		wfProfileOut(__METHOD__);
 	}
 
+	/**
+	 * @static
+	 * @param null $slots
+	 * @return AdEngine instance
+	 */
 	public static function getInstance($slots = null) {
 		wfProfileIn(__METHOD__);
 
@@ -231,7 +238,6 @@ class AdEngine {
 		}
 
 		wfProfileOut(__METHOD__);
-
 		return self::$instance;
 	}
 
@@ -279,7 +285,7 @@ class AdEngine {
 
 		$skin_name = RequestContext::getMain()->getSkin()->getSkinName();
 
-		if ($skin_name == 'awesome' || $skin_name == 'answers' || $skin_name == 'monaco' || $skin_name == 'lyricsminimal' ){
+		if ($skin_name === 'answers' || $skin_name === 'lyricsminimal' ){
 			$skin_name = 'oasis';
 		}
 
@@ -466,15 +472,15 @@ class AdEngine {
 			$this->adProviders[$slotname] = new AdProviderNull("Slot is disabled", false);
 
 		// As long as they are enabled via config, spotlights are always displayed...
-		} else if ( AdEngine::getInstance()->getAdType($slotname) == 'spotlight' ){
+		} else if ( $this->getAdType($slotname) == 'spotlight' ){
 			$this->adProviders[$slotname] = $this->getProviderFromId($this->slots[$slotname]['provider_id']);
 
 		// Now some toggles based on preferences and logged in/out
-		} else if (! ArticleAdLogic::isMandatoryAd($slotname) &&
+		} else if (! $this->isMandatoryAd($slotname) &&
 			     empty($_GET['showads']) && $wgShowAds == false ){
 			$this->adProviders[$slotname] = new AdProviderNull('$wgShowAds set to false', false);
 
-		} else if (! ArticleAdLogic::isMandatoryAd($slotname) && empty($_GET['showads']) &&
+		} else if (! $this->isMandatoryAd($slotname) && empty($_GET['showads']) &&
 			   is_object($wgUser) && $wgUser->isLoggedIn() && !$wgUser->getOption('showAds') ){
 			$this->adProviders[$slotname] = new AdProviderNull('User is logged in', false);
 
@@ -515,6 +521,8 @@ class AdEngine {
 			case 'addriver': return AdProviderAdDriver::getInstance();
 			case 'liftdna': return AdProviderLiftDNA::getInstance();
 			case 'dartgp': return AdProviderDARTGP::getInstance();
+			case 'adengine2': return AdProviderAdEngine2::getInstance();
+			case 'gamepro': return AdProviderGamePro::getInstance();
 			case 'null': return new AdProviderNull('Slot disabled in WF', false);
 			default: return new AdProviderNull('Unrecognized provider id', true);
 		}
@@ -821,6 +829,33 @@ class AdEngine {
 			: '';
 	}
 
+	public static function isAdsEnabledOnWikiaHub() {
+		global $wgHubsAdsEnabled, $wgTitle;
+
+		if (WikiaPageType::isWikiaHub() && !empty($wgHubsAdsEnabled)) {
+			if (in_array($wgTitle->getBaseText(), $wgHubsAdsEnabled)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private function isMandatoryAd($slotname) {
+		/* Ads that always display, even if user is logged in, etc.
+		 * See http://staff.wikia-inc.com/wiki/DART_Implementation#When_to_show_ads */
+		$mandatoryAds = array(
+			'HOME_TOP_LEADERBOARD',
+			'HOME_TOP_RIGHT_BOXAD',
+			'LEFT_NAV_205x400'
+		);
+
+		// Certain ads always display
+		return (
+			$this->getAdType($slotname) == 'spotlight'
+			|| in_array($slotname, $mandatoryAds)
+		);
+	}
+
 	public static function getLiftiumOptionsScript() {
 		wfProfileIn(__METHOD__);
 
@@ -840,8 +875,8 @@ class AdEngine {
 		$options['kv_skin'] = RequestContext::getMain()->getSkin()->getSkinName();
 		$options['kv_user_lang'] = $wgLang->getCode();
 		$options['kv_cont_lang'] = $GLOBALS['wgLanguageCode'];
-		$options['kv_isMainPage'] = ArticleAdLogic::isMainPage();
-		$options['kv_page_type'] = ArticleAdLogic::getPageType();
+		$options['kv_isMainPage'] = WikiaPageType::isMainPage();
+		$options['kv_page_type'] = WikiaPageType::getPageType();
 		$options['geoUrl'] = "http://geoiplookup.wikia.com/";
 		if (!empty($wgDartCustomKeyValues)) {
 			$options['kv_dart'] = $wgDartCustomKeyValues;
@@ -849,7 +884,7 @@ class AdEngine {
 		$options['kv_domain'] = $_SERVER['HTTP_HOST'];
 
 		$js = "LiftiumOptions = " . json_encode($options) . ";\n";
-		if (ArticleAdLogic::isSearch() || (!$wgTitle->getNamespace() == NS_SPECIAL && !BodyController::isEditPage())) {
+		if (WikiaPageType::isSearch() || (!$wgTitle->getNamespace() == NS_SPECIAL && !BodyController::isEditPage())) {
 			$js .= <<<EOT
 				if (typeof EXP_AD_LOAD_TIMING == 'undefined' || (!window.wgLoadAdDriverOnLiftiumInit && window.getTreatmentGroup && (getTreatmentGroup(EXP_AD_LOAD_TIMING) == TG_ONLOAD))) {
 					LiftiumOptions['hasMoreCalls'] = true;

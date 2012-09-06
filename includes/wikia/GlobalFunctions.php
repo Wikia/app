@@ -8,9 +8,11 @@ if ( !defined( 'MEDIAWIKI' ) ) {
  * Global functions used everywhere for Wikia purposes.
  */
 
+/**
+ * @FIXME: use classes autoloader instead
+ */
 require( "$IP/extensions/wikia/AdServer.php" );
 require_once( "$IP/extensions/wikia/AdEngine/AdEngine.php" );
-require_once( "$IP/includes/wikia/ajax/AjaxFunctions.php" );
 
 /**
  * Author: Inez Korczyński
@@ -92,7 +94,7 @@ function print_pre($param, $return = 0)
 {
 	global $wgDisablePrintPre;
 	if ( isset ( $wgDisablePrintPre ) && $wgDisablePrintPre == true ) {
-		return;
+		return '';
 	}
 	$retval = "<pre>".print_r( $param, 1 )."</pre>";
 	if  (empty( $return )) {
@@ -172,7 +174,7 @@ function wfReplaceImageServer( $url, $timestamp = false ) {
 	return $url;
 }
 
-/*
+/**
  * 	@author Krzysztof Zmudziński <kaz3t@wikia.com>
  *	Returns array of review reason id
  */
@@ -192,15 +194,6 @@ function wfGetReviewReason($max = 5) {
 		$wgMemc->set($key, $result, 60);
 	}
 	return $result;
-}
-
-/**
- * @deprecated Use wfShortenText
- */
-function shortenText( $text, $chars=25 ) {
-    wfDeprecated( __METHOD__, '1.19' );
-
-    return wfShortenText($text, $chars);
 }
 
 /**
@@ -420,6 +413,7 @@ function wfStringToArray( $string, $delimiter = ",", $parts = 0 )
  * @author Inez Korczynski <inez@wikia.com>
  */
 function parseItem($line) {
+	wfProfileIn(__METHOD__);
 
 	$href = $specialCanonicalName = false;
 
@@ -432,7 +426,6 @@ function parseItem($line) {
 		$line = trim($line_temp[0]);
 		$link = trim($line_temp[0]);
 	}
-
 
 	$descText = null;
 
@@ -469,7 +462,14 @@ function parseItem($line) {
 		}
 	}
 
-	return array('text' => $text, 'href' => $href, 'org' => $line_temp[0], 'desc' => $descText, 'specialCanonicalName' => $specialCanonicalName);
+	wfProfileOut(__METHOD__);
+	return array(
+		'text' => $text,
+		'href' => $href,
+		'org' => $line_temp[0],
+		'desc' => $descText,
+		'specialCanonicalName' => $specialCanonicalName
+	);
 }
 
 /**
@@ -576,12 +576,11 @@ function wfWaitForSlavesExt( $maxLag, $cluster = null ) {
  * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
  * @access public
  *
- * @param boolean as_string default false -- return url as string not array
+ * @param boolean $s_string default false -- return url as string not array
  *
  * @return array	parts of current url
  */
 function wfGetCurrentUrl( $as_string = false ) {
-	$arr = array();
 	$uri = $_SERVER['REQUEST_URI'];
 
 	/**
@@ -614,10 +613,13 @@ function wfGetCurrentUrl( $as_string = false ) {
 	return ( $as_string ) ? $arr[ "url" ]: $arr ;
 }
 
+/**
+ * @TODO: remove?
+ */
 global $wgAjaxExportList;
 $wgAjaxExportList[] = 'getMenu';
 function getMenu() {
-	global $wgRequest, $wgMemc, $wgCityId, $wgScript;
+	global $wgRequest, $wgMemc, $wgScript;
 	$content = '';
 
 	$id = $wgRequest->getVal('id');
@@ -687,10 +689,13 @@ function getMenu() {
 
 function getMenuHelper($name, $limit = 7) {
 	global $wgMemc;
+	wfProfileIn(__METHOD__);
+
 	$key = wfMemcKey('popular-art');
 	$data = $wgMemc->get($key);
 
 	if(!empty($data) && isset($data[$name])) {
+		wfProfileOut(__METHOD__);
 		return $data[$name];
 	}
 
@@ -715,6 +720,8 @@ function getMenuHelper($name, $limit = 7) {
 	}
 	$data[$name] = $result;
 	$wgMemc->set($key, $data, 60 * 60 * 6);
+
+	wfProfileOut(__METHOD__);
 	return $result;
 }
 
@@ -726,8 +733,8 @@ function isMsgEmpty($key) {
 	return wfEmptyMsg($key, trim(wfMsg($key)));
 }
 
-/*
- * get a list of language names available for wiki request
+/**
+ * Get a list of language names available for wiki request
  * (possibly filter some)
  *
  * @author nef@wikia-inc.com
@@ -770,7 +777,7 @@ function wfSharedMemcKey( /*... */ ) {
 	return $key;
 }
 
-/*
+/**
  * Get provided message in plain and HTML versions using language as priority
  *
  * @author Inez, Marooned
@@ -782,6 +789,7 @@ function wfSharedMemcKey( /*... */ ) {
  */
 function wfMsgHTMLwithLanguage($key, $lang, $options = array(), $params = array(), $wantHTML = true) {
 	global $wgContLanguageCode;
+	wfProfileIn(__METHOD__);
 
 	//remove 'content' option and pick proper language
 	if (isset($options['content'])) {
@@ -866,10 +874,11 @@ function wfMsgHTMLwithLanguage($key, $lang, $options = array(), $params = array(
 		$msgRich = null;
 	}
 
+	wfProfileOut(__METHOD__);
 	return array($msgPlain, $msgRich, $msgPlainFallbacked, $msgRichFallbacked);
 }
 
-/*
+/**
  * Get more accurate message in plain and HTML versions using language as priority
  *
  * @author Marooned
@@ -887,11 +896,11 @@ function wfMsgHTMLwithLanguageAndAlternative($key, $keyAlternative, $lang, $opti
 	return array($msgPlain, $msgRich);
 }
 
-/*
+/**
  * Build returnto parameter with new returntoquery from MW 1.16
  *
- * @param customReturnto
- * @param extraReturntoquery is a string which will be urlencoded and appended to the returntoquery. eg: "action=edit".
+ * @param string $customReturnto
+ * @param string $extraReturntoquery a string which will be urlencoded and appended to the returntoquery. eg: "action=edit".
  *
  * @author Marooned
  * @return string
@@ -924,7 +933,7 @@ function wfGetReturntoParam($customReturnto = null, $extraReturntoquery=null) {
 	return $returnto;
 }
 
-/*
+/**
  * Fixed urlencode url
  * @author moli
  * @return string
@@ -943,7 +952,7 @@ function wfUrlencodeExt($s_url) {
 	return $s_url;
 }
 
-/*
+/**
  * Given a timestamp, converts it to the "x minutes/hours/days ago" format.
  *
  * @author Maciej Brencz <macbre@wikia-inc.com>, Sean Colombo
@@ -956,6 +965,8 @@ function wfTimeFormatAgo($stamp){
 	$stamptime = strtotime($stamp);
 	$ago = time() - strtotime($stamp) + 1;
 	$sameyear = date('Y',$currenttime) == date('Y',$stamptime);
+
+	$res = '';
 
 	if ($ago > 365 * 86400 || !$sameyear) {
 		// Over 365 days
@@ -985,12 +996,11 @@ function wfTimeFormatAgo($stamp){
 		$res = $wgLang->sprintfDate($format, wfTimestamp(TS_MW, $stamp));
 	}
 
-
 	wfProfileOut(__METHOD__);
 	return $res;
 } // end wfTimeFormatAgo()
 
-/*
+/**
  * Returns the text from wfTimeFormatAgo only if the text is recent.
  * This can be used in places that we don't want to show glaringly stale timestamps.
  *
@@ -998,7 +1008,6 @@ function wfTimeFormatAgo($stamp){
   */
 function wfTimeFormatAgoOnlyRecent($stamp){
 	wfProfileIn(__METHOD__);
-	global $wgContLang;
 
 	$ago = time() - strtotime($stamp) + 1;
 
@@ -1014,7 +1023,9 @@ function wfTimeFormatAgoOnlyRecent($stamp){
 } // end wfTimeFormatAgoOnlyRecent()
 
 
-/* this is an ugly hack. DO NOT use unless absolutely necessary */
+/**
+ * This is an ugly hack. DO NOT use unless absolutely necessary
+ */
 function wfMsgWithFallback( $key ) {
 	$msg = wfMsgForContent( $key );
 
@@ -1025,7 +1036,16 @@ function wfMsgWithFallback( $key ) {
 	return $msg;
 }
 
-// TODO: remove this
+/**
+ * @deprecated
+ *
+ * TODO: remove this
+ *
+ * @param $name module name
+ * @param string $action method name
+ * @param null $params
+ * @return string rendered module's response
+ */
 function wfRenderModule($name, $action = 'Index', $params = null) {
 	return F::app()->renderView( $name, $action, $params);
 }
@@ -1142,10 +1162,9 @@ function &wfGetSolidCacheStorage( $bucket = false ) {
 }
 
 
-/*
- * set value of wikia article prop list of type is define in
+/**
+ * Set value of wikia article prop list of type is define in
  */
-
 function wfSetWikiaPageProp($type, $pageID, $value, $dbname = '') {
 	if(empty($dbname)) {
 		$db = wfGetDB(DB_MASTER, array());
@@ -1153,21 +1172,20 @@ function wfSetWikiaPageProp($type, $pageID, $value, $dbname = '') {
 		$db = wfGetDB(DB_MASTER, array(), $dbname);
 	}
 
-	$db = wfGetDB(DB_MASTER, array());
 	$db->replace('page_wikia_props','',
 		array(
 			'page_id' =>  $pageID,
 			'propname' => $type,
 			'props' => serialize($value)
-		)
+		),
+		__METHOD__
 	);
 }
 
 
-/*
- * get value of wikia article prop list of type is define in
+/**
+ * Get value of wikia article prop list of type is define in
  */
-
 function wfGetWikiaPageProp($type, $pageID, $db = DB_SLAVE, $dbname = '') {
 	if(empty($dbname)) {
 		$db = wfGetDB($db, array());
@@ -1192,10 +1210,9 @@ function wfGetWikiaPageProp($type, $pageID, $db = DB_SLAVE, $dbname = '') {
 }
 
 
-/*
- * delete value of wikia article prop
+/**
+ * Delete value of wikia article prop
  */
-
 function wfDeleteWikiaPageProp($type, $pageID, $dbname = '') {
 	if(empty($dbname)) {
 		$db = wfGetDB(DB_MASTER, array());
@@ -1203,7 +1220,7 @@ function wfDeleteWikiaPageProp($type, $pageID, $dbname = '') {
 		$db = wfGetDB(DB_MASTER, array(), $dbname);
 	}
 
-	$res = $db->delete('page_wikia_props',
+	$db->delete('page_wikia_props',
 		array(
 			'page_id' =>  $pageID,
 			'propname' => $type,
@@ -1338,7 +1355,6 @@ function wfIsDBLightMode() {
  * return status code if the last failure was due to the database being read-only.
  *
  * @author Piotr Molski (moli) <moli at wikia-inc.com>
- *
  */
 function wfDBReadOnlyFailed( ) {
 	global $wgOut, $wgDBReadOnlyStatusCode;
@@ -1444,7 +1460,6 @@ function wfPaginateArray( $data, $limit, $batch = 1 ){
 	$ret = Array();
 	$next = 0;
 	$batches = 1;
-	$currentBatch = 1;
 
 	if ( $batch < 1 ) {
 		$batch = 1;
@@ -1626,7 +1641,6 @@ function wfAssetManagerGetSASShashCB( $file, &$processedFiles, &$hash ) {
  *
  * @author Tomasz Odrobny <tomek@wikia-inc.com>
  */
-
 function getHostPrefix(){
 	global $wgStagingList, $wgServer;
 	static $cache;
@@ -1660,9 +1674,11 @@ function wfWikiaErrorHandler($errno, $errstr, $errfile, $errline) {
 	return false;
 }
 
+set_error_handler('wfWikiaErrorHandler');
+
 /**
  * get namespaces
- * @global type $wgContLang
+ * @global $wgContLang
  * @return array $namespaces
  */
 function wfGetNamespaces() {
@@ -1673,5 +1689,3 @@ function wfGetNamespaces() {
 
 	return $namespaces;
 }
-
-set_error_handler('wfWikiaErrorHandler');

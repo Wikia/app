@@ -173,7 +173,7 @@ class TaskManagerExecutor {
 			$oRes = $dbr->select(
 			array( "wikia_tasks" ),
 				array( "*" ),
-				array( 
+				array(
 					"task_status" => TASK_STARTED,
 					"task_type" => !empty($this->mTasksClasses) ? array_keys($this->mTasksClasses) : ''
 				),
@@ -298,7 +298,7 @@ class TaskManagerExecutor {
 	private function alarmMail( $task ) {
 		$Template = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$Template->set_vars( array( "task" => $task ));
-		$alarm = $Template->execute( "alarm" );
+		$alarm = $Template->render( "alarm" );
 		$to = array();
 
 		foreach( $this->mAlarmMails as $email ) {
