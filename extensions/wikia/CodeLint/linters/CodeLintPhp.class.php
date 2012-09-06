@@ -284,6 +284,11 @@ class CodeLintPhp extends CodeLint {
 			$ret = true;
 		}
 
+		// Constant 'INSERT' not found in class
+		if (startsWith($errorMsg, 'Constant ') || startsWith($errorMsg, 'not found in class')) {
+			$ret = true;
+		}
+
 		// Non-static method Foo::bar() should not be called statically
 		if (startsWith($errorMsg, 'Non-static method')) {
 			$ret = true;
