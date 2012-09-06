@@ -295,6 +295,8 @@ class WikiaMobileHooks extends WikiaObject{
 	 * @return bool
 	 */
 	public function onBeforePageDisplay( &$out, &$skin ){
+		$this->wf->profileIn( __METHOD__ );
+
 		if( $this->app->checkSkin( 'wikiamobile', $skin ) && self::$displayErrorPage ) {
 			$out->clearHTML();
 
@@ -307,9 +309,11 @@ class WikiaMobileHooks extends WikiaObject{
 			}
 
 			$out->addHTML( $this->app->renderView( 'WikiaMobileErrorService', 'pageNotFound' ) );
+			$this->wf->profileOut( __METHOD__ );
 			return false;
 		}
 
+		$this->wf->profileOut( __METHOD__ );
 		return true;
 	}
 
