@@ -51,3 +51,4 @@
 	<?php endif; ?>
 </div>
 <?= $pagination ?>
+<div class="errorWhileLoading messageHolder"><?=wfMsg('videos-error-while-loading');?></div>
