@@ -1,6 +1,7 @@
 package com.wikia.webdriver.PageObjects.PageObject.WikiPage;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -8,6 +9,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import com.wikia.webdriver.Common.Core.CommonFunctions;
+import com.wikia.webdriver.Common.Core.Global;
 import com.wikia.webdriver.Common.Logging.PageObjectLogging;
 import com.wikia.webdriver.PageObjects.PageObject.WikiBasePageObject;
 
@@ -21,6 +23,19 @@ public class WikiArticlePageObject extends WikiBasePageObject {
 	private WebElement RVModule;
 	@FindBy(css="input.videoUrl")
 	private WebElement VideoRVmodalInput;
+	@FindBy(css="div[class='editarea']")
+	private WebElement editCommentTrigger;
+	@FindBy(css="body[id='bodyContent']")
+	private WebElement editCommentArea;
+	@FindBy(css="div.cke_contents iframe")
+	private WebElement iframe;
+	@FindBy(css="input[id='article-comm-submit']")
+	private WebElement submitCommentButton;
+	@FindBy(css="a.article-comm-delete")
+	private WebElement deleteCommentButton;
+	@FindBy(css="span.edit-link")
+	private WebElement editCommentButton;
+	
 	
 	private By ImageOnWikiaArticle = By.cssSelector("div.WikiaArticle figure a img");
 	private By VideoOnWikiaArticle = By.cssSelector("div.WikiaArticle span.Wikia-video-play-button");
@@ -36,7 +51,103 @@ public class WikiArticlePageObject extends WikiBasePageObject {
 		this.articlename = wikiArticle;
 		PageFactory.initElements(driver, this);
 	}
-
+	
+	public void triggerCommentArea()
+	{
+		Point p = editCommentTrigger.getLocation();
+		CommonFunctions.MoveCursorToElement(p);
+		CommonFunctions.ClickElement();
+//		waitForElementByElement(editCommentArea);
+	}
+	
+	public void writeOnCommentArea(String comment)
+	{
+		driver.switchTo().frame(iframe);
+		waitForElementByElement(editCommentArea);
+		editCommentArea.clear();
+		editCommentArea.sendKeys(comment);
+		driver.switchTo().defaultContent();
+	}
+	
+	public WikiArticlePageObject clickSubmitButton()
+	{
+		submitCommentButton.click();
+		PageObjectLogging.log("clickSubmitButton", "submit article button clicked", true, driver);
+		return new WikiArticlePageObject(driver, Domain, articlename);
+	}
+	
+	public WikiArticlePageObject clickSubmitButton(String userName)
+	{		
+		driver.findElement(By.xpath("//a[contains(text(), '"+userName+"')]/../../..//input[@class='actionButton']")).click();//submit button taken by username which edited comment
+		PageObjectLogging.log("clickSubmitButton", "submit article button clicked", true, driver);
+		return new WikiArticlePageObject(driver, Domain, articlename);
+	}
+	
+	public void verifyComment(String message, String userName)
+	{
+		waitForElementByXPath("//blockquote//p[contains(text(), '"+message+"')]");
+		waitForElementByXPath("//div[@class='edited-by']//a[contains(text(), '"+userName+"')]");
+		PageObjectLogging.log("verifyComment", "comment: "+message+" is visible", true, driver);
+	}
+	
+	private void hoverMouseOverCommentArea(String commentContent)
+	{
+		WebElement commentArea = driver.findElement(By.xpath("//p[contains(text(), '"+commentContent+"')]"));
+		Point p = commentArea.getLocation();
+		CommonFunctions.MoveCursorToElement(p, driver);
+		PageObjectLogging.log("hoverMouseOverCommentArea", "mouse moved to comment area", true, driver);
+	}
+	
+	private void clickDeleteCommentButton()
+	{
+		waitForElementByElement(deleteCommentButton);
+		deleteCommentButton.click();
+		PageObjectLogging.log("clickDeleteCommentButton", "delete comment button clicked", true, driver);
+	}
+	
+	private void clickEditCommentButton()
+	{
+		waitForElementByElement(editCommentButton);
+		editCommentButton.click();
+		waitForElementByElement(iframe);
+		PageObjectLogging.log("clickEditCommentButton", "edit comment button clicked", true, driver);
+	}
+	
+	public void deleteComment(String comment)
+	{
+		hoverMouseOverCommentArea(comment);
+		clickDeleteCommentButton();
+		clickDeleteConfirmationButton();
+		PageObjectLogging.log("deleteComment", "comment deleted", true, driver);
+	}
+	
+	public void editComment(String comment)
+	{
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		driver.navigate().refresh();
+		hoverMouseOverCommentArea(comment);
+		clickEditCommentButton();
+	}
+	
+	public void verifyPageTitle(String title)
+	{
+		title = title.replace("_", " ");
+		waitForElementByXPath("//h1[contains(text(), '"+title+"')]");
+		PageObjectLogging.log("verifyPageTitle", "page title is verified", true, driver);
+	}
+	
+	public void verifyArticleText(String content)
+	{
+		waitForElementByXPath("//div[@id='mw-content-text']//*[contains(text(), '"+content+"')]");
+		PageObjectLogging.log("verifyArticleText", "article text is verified", true, driver);
+	}
+	
+	
 	/**
 	 * Click Edit button on a wiki article
 	 *  

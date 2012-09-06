@@ -302,11 +302,7 @@ public class WikiArticleEditMode extends WikiArticlePageObject {
 		PageObjectLogging.log("typeInContent", "content type into article body", true, driver);
 	}
 	
-	public void verifyPageTitle(String title)
-	{
-		waitForElementByXPath("//h1[contains(text(), '"+title+"')]");
-		PageObjectLogging.log("verifyPageTitle", "page title is verified", true);
-	}
+
 	
 
 

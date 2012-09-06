@@ -5,14 +5,14 @@
 			<!-- Base functionality tests -->
 			<class name="com.wikia.webdriver.TestCases.CreateAWikiTests.CreateAWikiTests_latin"/>
 			<class name="com.wikia.webdriver.TestCases.CreateAWikiTests.CreateAWikiTests_nonLatin"/>
-			<class name="com.wikia.webdriver.TestCases.CreateAWikiTests.CreateAWikiTests_logInFieldValidation"/>
+			<class name="com.wikia.webdriver.TestCases.CreateAWikiTests.CreateAWikiTests_logInFieldValidation"/>>
 			<class name="com.wikia.webdriver.TestCases.ImageServing"/>
 			<class name="com.wikia.webdriver.TestCases.HubsTests"/>
 			<class name="com.wikia.webdriver.TestCases.CustomizeToolbarTests"/>
 			<class name="com.wikia.webdriver.TestCases.SignUpTests.SignUpTests_account_creation"/>
-
-			<!-- Ads tests -->
-			<class name="com.wikia.webdriver.TestCases.AdTests.AdsInSearchTests"/>
+			<class name="com.wikia.webdriver.TestCases.ChatTests"/>
+			<class name="com.wikia.webdriver.TestCases.ArticleCRUDTests.ArticleTests"/> 
+			<class name="com.wikia.webdriver.TestCases.AdTests.AdsInSearchTests"/> 
 		</classes>
 	</test>
 </suite>

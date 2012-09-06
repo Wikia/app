@@ -35,7 +35,7 @@ public class CreateAWikiTests_logInFieldValidation extends TestTemplate{
 				};
 	}
 			
-	@Test(dataProvider="getUserName",groups={"CreateNewWiki_LogInFieldValidation"})
+	@Test(dataProvider="getUserName",groups={"CreateNewWiki_LogInFieldValidation","CNW"})
 	
 	public void CreateNewWiki_LogInFieldValidation(String userName, String userNameEnc, String password)
 	{

@@ -8,6 +8,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import com.wikia.webdriver.Common.Core.CommonFunctions;
+import com.wikia.webdriver.Common.Core.Global;
 import com.wikia.webdriver.Common.Logging.PageObjectLogging;
 import com.wikia.webdriver.PageObjects.PageObject.CreateNewWiki.CreateNewWikiPageObjectStep1;
 import com.wikia.webdriver.PageObjects.PageObject.WikiPage.SpecialMultipleUploadPageObject;
@@ -39,6 +41,12 @@ public class WikiBasePageObject extends BasePageObject {
 	
 	@FindBy(css="input#wpConfirmB")
 	private WebElement deleteConfirmationButton;
+	
+	@FindBy(css="a#ca-edit")
+	private WebElement editButton;
+	
+	@FindBy(css="a[data-canonical='random']")
+	private WebElement randomPageButton;
 	
 	private By layoutList = By.cssSelector("ul#CreatePageDialogChoices li");
 	
@@ -74,21 +82,56 @@ public class WikiBasePageObject extends BasePageObject {
 		return new WikiArticlePageObject(driver, Domain, wikiArticle);
 	}
 	
+	
 	public void openWikiPage()
 	{
 		driver.get(Domain);
 	}
 	
+	public void openRandomArticle()
+	{
+		randomPageButton.click();
+		PageObjectLogging.log("openRandomArticle", "random page button clicked", true);
+	}
+	
+	public void verifyEditDropDownAnonymous()
+	{
+		List<WebElement> list = driver.findElements(By.cssSelector("header#WikiaPageHeader ul.WikiaMenuElement li"));
+		CommonFunctions.assertNumber(1, list.size(), "Edit drop-down number of items for anonymous user");
+		CommonFunctions.assertString("history", list.get(0).findElement(By.cssSelector("a")).getAttribute("data-id"));
+	}
+	public void verifyEditDropDownLoggedInUser()
+	{
+		List<WebElement> list = driver.findElements(By.cssSelector("header#WikiaPageHeader ul.WikiaMenuElement li"));
+		CommonFunctions.assertNumber(2, list.size(), "Edit drop-down number of items for admin user");
+		CommonFunctions.assertString("history", list.get(0).findElement(By.cssSelector("a")).getAttribute("data-id"));
+		CommonFunctions.assertString("move", list.get(1).findElement(By.cssSelector("a")).getAttribute("data-id"));	
+	}
+	public void verifyEditDropDownAdmin()
+	{
+		List<WebElement> list = driver.findElements(By.cssSelector("header#WikiaPageHeader ul.WikiaMenuElement li"));
+		CommonFunctions.assertNumber(4, list.size(), "Edit drop-down number of items for admin user");
+		CommonFunctions.assertString("history", list.get(0).findElement(By.cssSelector("a")).getAttribute("data-id"));
+		CommonFunctions.assertString("move", list.get(1).findElement(By.cssSelector("a")).getAttribute("data-id"));
+		CommonFunctions.assertString("protect", list.get(2).findElement(By.cssSelector("a")).getAttribute("data-id"));
+		CommonFunctions.assertString("delete", list.get(3).findElement(By.cssSelector("a")).getAttribute("data-id"));	
+	}
+	
+	
 	private void clickContributeButton()
 	{
-		click(contributeButton);
+//		contributeButton.click();
+		clickRobot(contributeButton);
 		waitForElementByElement(createArticleButton);
 		PageObjectLogging.log("clickOnContributeButton", "contribute button clicked", true);
 	}
 	
 	private void clickCreateArticleButton()
 	{
-		click(createArticleButton);
+		waitForElementByElement(createArticleButton);
+		waitForElementClickableByElement(createArticleButton);
+		clickRobot(createArticleButton);
+//		createArticleButton.click();
 		waitForElementByElement(driver.findElement(layoutList));
 		PageObjectLogging.log("clickCreateArticleButton", "create article button clicked", true);
 	}
@@ -118,26 +161,37 @@ public class WikiBasePageObject extends BasePageObject {
 	
 	public void verifyDeletedArticlePage(String pageName)
 	{
+		pageName = pageName.replace("_", " ");
 		waitForElementByXPath("//h1[contains(text(), '"+pageName+"')]");
 		waitForElementByXPath("//p[contains(text(), 'This page has been deleted.')]");
 		waitForElementByXPath("//b[contains(text(), 'This page needs content. You can help by adding a sentence or a photo!')]");
 		PageObjectLogging.log("verifyDeletedArticlePage", "deleted article page verified", true);
 	}
 	
-	private void clickEditDropDown()
+	public void clickEditDropDown()
 	{
+		waitForElementByElement(editDropDown);
+//		clickActions(editDropDown);
 		editDropDown.click();
 		PageObjectLogging.log("clickEditDropDown", "edit drop-down clicked", true);
 	}
 	
-	private void clickDeleteButtonInDropDown()
+	public WikiArticleEditMode clickEditButton(String pageName)
+	{
+		editButton.click();
+		PageObjectLogging.log("clickEditButton", "edit button clicked", true);
+		return new WikiArticleEditMode(driver, Domain, pageName);
+	}
+	
+	protected void clickDeleteButtonInDropDown()
 	{
 		waitForElementByElement(deleteButton);
-		deleteButton.click();
+		clickActions(deleteButton);
+//		deleteButton.click();
 		PageObjectLogging.log("clickDeleteButtonInDropDown", "delete button in drop-down clicked", true);
 	}
 	
-	private void clickDeleteConfirmationButton()
+	protected void clickDeleteConfirmationButton()
 	{
 		waitForElementByElement(deleteConfirmationButton);
 		deleteConfirmationButton.click();
@@ -145,8 +199,8 @@ public class WikiBasePageObject extends BasePageObject {
 	
 	public void deleteArticle()
 	{
-		clickEditDropDown();
-		clickDeleteButtonInDropDown();
+		driver.get(driver.getCurrentUrl()+"?action=delete");
+//		clickDeleteButtonInDropDown();
 		clickDeleteConfirmationButton();
 		PageObjectLogging.log("deleteArticle", "article has been deleted", true, driver);
 	}
@@ -158,7 +212,8 @@ public class WikiBasePageObject extends BasePageObject {
 		typeInArticleName(pageName);
 		selectPageLayout(layoutNumber);
 		clickAddPageButton();
-		waitForElementByElement(driver.findElement(By.cssSelector("a[title='"+pageName+"']")));
+		String pageNameEnc = pageName.replace("_", " ");
+		waitForElementByElement(driver.findElement(By.cssSelector("a[title='"+pageNameEnc+"']")));
 		return new WikiArticleEditMode(driver, Domain, pageName);
 	}
 	
