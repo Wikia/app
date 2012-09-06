@@ -466,7 +466,9 @@ class WallMessage {
 			$id = $topParent->getArticleId();
 		}
 		
-		$postFix = '#'.$this->getPageUrlPostFix();
+		
+		$postFix = $this->getPageUrlPostFix();
+		$postFix = empty($postFix) ? "":('#'.$postFix);
 		$title = Title::newFromText($id, NS_USER_WALL_MESSAGE);
 
 		$this->messagePageUrl = array();
