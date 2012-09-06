@@ -4,8 +4,11 @@
  *
  * @define ads
  * @require events
+ * @require domwriter
+ * @require cookies
  *
  * @author Jakub Olek
+ * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
  */
 /*global window, document, define, setTimeout,
 setInterval, clearInterval*/
