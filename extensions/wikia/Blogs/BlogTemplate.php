@@ -270,6 +270,7 @@ class BlogTemplateClass {
 	private static $aCategoryNames = array( );
 
 	private static $dbr 		= null;
+	private static $catparser	= null;
 
 	private static $search 		= array (
 		//'/<table[^>]*>.*<\/table>/siU',
@@ -301,6 +302,7 @@ class BlogTemplateClass {
 
 	private static $skipStrinBeforeParse	= "<br><br/><p><div><a><b><del><i><ins><u><font><big><small><sub><sup><cite><code><em><s><strike><strong><tt><var><center><blockquote><ol><ul><dl><u><q><abbr><acronym><li><dt><dd><span>";
 	private static $skipStrinAfterParse		= "<br><br/><p><b><del><i><ins><u><font><big><small><sub><sup><cite><code><em><s><strike><strong><tt><var><center><blockquote><ol><ul><dl><u><q><abbr><acronym><li><dt><dd><span>";
+	private static $parseTagTruncateText	= "/<(p|a(.*))>(.*)<\/(p|a)>/siU";
 
 	private static $pageOffsetName 			= "page";
 	private static $oTitle 					= null;
@@ -321,17 +323,14 @@ class BlogTemplateClass {
 		"/<(inputbox|widget|googlemap|imagemap|poll|rss|math|googlespreadsheet|gallery)(.*)>(.*)<\/(inputbox|widget|googlemap|imagemap|poll|rss|math|googlespreadsheet|gallery)>/siU",
 	);
 
-	/**
-	 * @static
-	 * @param Parser $parser
-	 * @return bool
-	 */
-	public static function setParserHook( $parser ) {
+	public static function setParserHook( &$parser ) {
+		wfProfileIn( __METHOD__ );
 		$parser->setHook( BLOGTPL_TAG, array( __CLASS__, 'parseTagForParser' ) );
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
-	/**
+	/*
 	 * This method is used by MW parser to parse blog listing tag
 	 *
 	 * @author macbre
@@ -346,7 +345,7 @@ class BlogTemplateClass {
 		return $res;
 	}
 
-	/**
+	/*
 	 * This method can be used by extensions to render blog listing
 	 */
 	public static function parseTag( $input, $params, &$parser, $frame = null, $returnPlainData = false) {

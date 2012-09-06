@@ -32,12 +32,7 @@ $wgAjaxExportList[] = 'AutoHubsPagesHelper::hideFeed';
 
 //@TODO remove wfAdProviderDARTFirstChunkForHubs, duplicated in /extensions/wikia/AdEngine/AdConfig.js
 $wgHooks["AdProviderDARTFirstChunk"][] = "wfAdProviderDARTFirstChunkForHubs";
-
-/**
- * @param string $first_chunk
- * @return bool
- */
-function wfAdProviderDARTFirstChunkForHubs(&$first_chunk) {
+function wfAdProviderDARTFirstChunkForHubs($first_chunk) {
 	global $wgTitle;
 
 	if( !AutoHubsPagesHelper::isHubsPage( $wgTitle ) ) {

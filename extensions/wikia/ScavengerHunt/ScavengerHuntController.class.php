@@ -39,9 +39,9 @@ class ScavengerHuntController extends WikiaController {
 
 		$articleIndex = $helper->articleHuntIndex( $this->getVal( 'currentArticleId' ) );
 		$this->setVal( 'currentArticleIndex', $articleIndex );
-
+		
 		$huntData['foundArticlesIndexes'] = $helper->getFoundIndexes();
-
+		
 		$this->setVal( 'huntData', $huntData );
 	}
 
@@ -67,7 +67,7 @@ class ScavengerHuntController extends WikiaController {
 		}
 
 		$huntData['foundArticlesIndexes'] = $helper->getFoundIndexes();
-
+		
 		$this->setVal( 'huntData', $huntData );
 	}
 
