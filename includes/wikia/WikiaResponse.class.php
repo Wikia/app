@@ -33,12 +33,12 @@ class WikiaResponse {
 	const FORMAT_INVALID = 'invalid';
 
 	/**
-	 * template engine 
+	 * template engine
 	 */
-	
+
 	const TEMPLATE_ENGINE_PHP = 'php';
 	const TEMPLATE_ENGINE_MUSTACHE = 'mustache';
-	
+
 	/**
 	 * Cache targets
 	 */
@@ -49,7 +49,7 @@ class WikiaResponse {
 	 * View object
 	 * @var WikiaView
 	 */
-	
+
 	private $view = null;
 	private $body = null;
 	private $code = null;
@@ -330,7 +330,7 @@ class WikiaResponse {
 		$this->data[$key] = $value;
 	}
 
-	/* getVal can be called directly via $this->response->getVal() 
+	/* getVal can be called directly via $this->response->getVal()
 	 * or by __get on WikiaDispatchable, which is frequently a "get" right before a "set"
 	 * Returning a reference here allows us to use a pattern like:
 	 * $this->foo = array();
@@ -344,7 +344,7 @@ class WikiaResponse {
 		}
 		return $default;
 	}
-	
+
 	public function unsetVal( $key ) {
 		unset ( $this->data[$key] );
 	}
@@ -353,6 +353,9 @@ class WikiaResponse {
 		return ( $this->exception == null ) ? false : true;
 	}
 
+	/**
+	 * @return WikiaException
+	 */
 	public function getException() {
 		return $this->exception;
 	}
@@ -375,13 +378,13 @@ class WikiaResponse {
 		}
 		return $this->body;
 	}
-	
+
 	public function setTemplateEngine($engine) {
 		if(in_array( $engine, array(self::TEMPLATE_ENGINE_PHP, self::TEMPLATE_ENGINE_MUSTACHE))) {
 			$this->templateEngine = $engine;
 		}
 	}
-	
+
 	public function getTemplateEngine() {
 		return $this->templateEngine;
 	}
@@ -436,21 +439,21 @@ class WikiaResponse {
 	public function redirect( $url ){
 		$this->sendHeader( "Location: " . $url, true );
 	}
-	
+
 	/**
-	 * @brief Add js var to script tag on top of the page 
-	 * THIS MUST BE CALLED BEFORE SKIN RENDERING 
-	 * 
+	 * @brief Add js var to script tag on top of the page
+	 * THIS MUST BE CALLED BEFORE SKIN RENDERING
+	 *
 	 * @param string $name, mix $val
-	 */	
+	 */
 	public function setJsVar($name, $val) {
 		//FIXME: is this global request context always valid? What about special pages?
 		RequestContext::getMain()->getOutput()->addJsConfigVars($name, $val);
 	}
-	
+
 	/**
 	 * Add an asset to the current response
-	 * 
+	 *
 	 * @param mixed $assetName the name of a configured package or path to an asset file or an array of them
 	 * @param bool $local [OPTIONAL] whether to fetch per-wiki local URLs,
 	 * (false by default, i.e. the method returns a shared host URL's for our network);
