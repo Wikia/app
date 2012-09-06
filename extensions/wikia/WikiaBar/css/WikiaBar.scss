@@ -55,10 +55,14 @@ body {
 			float: right;
 			height: 25px;
 			margin-left: 50px;
+			text-align: left;
 			width: 420px;
 		}
 	  	.arrow {
-			background-color: red;
+			background-image: url(/extensions/wikia/WikiaBar/images/arrowDown.png); /* base64 */
+			background-position: center;
+			background-repeat: no-repeat;
+			display: block;
 			float: right;
 			height: 25px;
 			width: 24px;
