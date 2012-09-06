@@ -1,4 +1,4 @@
-<form class="rv-add-form WikiaForm" action="#">
+<form class="add-form WikiaForm" action="#">
 <fieldset>
 <div class="addRelatedVideos input-group required">
 	<label>
