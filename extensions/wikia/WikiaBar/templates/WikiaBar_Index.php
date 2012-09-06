@@ -3,19 +3,17 @@
 		<div class="ad">Ad slot</div>
 		<div class="arrow">Arr</div>
 		<div class="message">message</div>
-		<ul class="buttons">
-			<li>
+			<a class="wikiabar-button" href="#">
 				<img src="<?= $wg->BlankImgUrl ?>" class="icon" />
 				<span>temp_button_1</span>
-			</li>
-			<li>
+			</a>
+			<a class="wikiabar-button" href="#">
 				<img src="<?= $wg->BlankImgUrl ?>" class="icon" />
 				<span>temp_button_2</span>
-			</li>
-			<li>
+			</a>
+			<a class="wikiabar-button" href="#">
 				<img src="<?= $wg->BlankImgUrl ?>" class="icon" />
 				<span>temp_button_3</span>
-			</li>
-		</ul>
+			</a>
 	</div>
 </div>
