@@ -18,6 +18,8 @@
  * @method ReplaceImageServer
  * @method BlankImgUrl
  * @method memcKey
+ * @method sharedMemcKey
+ * @method SharedMemcKey
  * @method PaginateArray
  */
 class WikiaFunctionWrapper {
@@ -36,6 +38,11 @@ class WikiaFunctionWrapper {
 		}
 	}
 
+	/**
+	 * @param $funcName
+	 * @param $funcArgs
+	 * @return mixed
+	 */
 	public function __call( $funcName, $funcArgs ) {
 		$funcName = ( 'wf' . ucfirst( $funcName ) );
 		return $this->run( $funcName, $funcArgs );

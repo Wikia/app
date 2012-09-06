@@ -15,14 +15,26 @@ class WikiaDispatcher {
 
 	const DEFAULT_METHOD_NAME = 'index';
 
+	/**
+	 * @param WikiaRequest $request
+	 * @return mixed
+	 */
 	protected function getMethodName( WikiaRequest $request ) {
 		return $request->getVal( 'method', self::DEFAULT_METHOD_NAME );
 	}
 
+	/**
+	 * @param WikiaRequest $request
+	 * @return mixed
+	 */
 	protected function getControllerName( WikiaRequest $request ) {
 		return $request->getVal( 'controller' );
 	}
 
+	/**
+	 * @param $controllerName
+	 * @return null|string
+	 */
 	protected function getControllerClassName( $controllerName ) {
 		return !empty( $controllerName ) ? ( "{$controllerName}Controller" ) : null;
 	}
@@ -85,17 +97,17 @@ class WikiaDispatcher {
 					throw new WikiaException( "Controller does not exist: {$controllerClassName}" );
 				}
 
-				$controller = F::build( $controllerClassName );
+				$controller = F::build( $controllerClassName ); /* @var $controller WikiaController */
 
 				// Temporary remap of executeX methods for modules
 				if (!method_exists($controller, $method)) {
 					$method = ucfirst( $method );
 					$moduleTemplatePath = dirname( $autoloadClasses[$controllerClassName] ) . "/templates/{$controllerName}_{$method}.php";
 					$response->getView()->setTemplatePath( $moduleTemplatePath );
-					
+
 					$method = "execute{$method}";
-					$params = $request->getParams();				
-				}				
+					$params = $request->getParams();
+				}
 
 				if (
 					( !$request->isInternal() && !$controller->allowsExternalRequests() ) ||
@@ -118,8 +130,8 @@ class WikiaDispatcher {
 				// Initialize the RequestContext object if it is not already set
 				// SpecialPageController context is already set by SpecialPageFactory::execute by the time it gets here
 				if ($controller->getContext() === null) {
-					$controller->setContext( RequestContext::getMain() );					
-				}				
+					$controller->setContext( RequestContext::getMain() );
+				}
 
 				// If a SpecialPageController is dispatching a request to itself, preserve the original request context
 				// TODO: come up with a better fix for this (it's because of the setInstance call in WikiaSpecialPageController)
