@@ -55,6 +55,8 @@ $wgSpecialPages['CreateQuestionPage'] = 'CreateQuestionPage';
 $wgAutoloadClasses['GetQuestionWidget'] = dirname( __FILE__ ) . "/SpecialGetQuestionWidget.php";
 $wgSpecialPages['GetQuestionWidget'] = 'GetQuestionWidget';
 
+require_once(dirname(__FILE__) . '/customUserCreateForm.php');
+
 /*
 $wgHooks["GetHTMLAfterBody"][] = "wfAlterQuestionTitle";
 function wfAlterQuestionTitle( &$tpl ){
@@ -68,6 +70,12 @@ function wfAlterQuestionTitle( &$tpl ){
 	return true;
 }
 */
+
+$wgHooks['AddNewAccount'][] = 'fnAutoFriendAdmin';
+function fnAutoFriendAdmin( $user ){
+	// This was only used for the social code which has been removed.
+	return true;
+}
 
 $wgHooks['AddNewAccount'][] = 'fnQuestionAttributionRegister';
 function fnQuestionAttributionRegister( $user ){
@@ -117,12 +125,8 @@ function fnWatchHeldPage( $user ){
 	}
 }
 
-/**
- * @param User $user
- * @return bool
- */
 function fnQuestionAttribution( $user ){
-	global $wgMemc;
+	global $wgOut, $wgMemc;
 
 	$dbw = wfGetDB( DB_MASTER );
 
@@ -133,43 +137,39 @@ function fnQuestionAttribution( $user ){
 	$user->addWatch( $title );
 
 	//get first revisionID
-	$s = $dbw->selectRow( 'revision',
-		array( 'rev_id' ),
-		array( 'rev_page' =>  $page_title_id ),
-		__METHOD__,
-		array( "ORDER BY" => "rev_id ASC", "LIMIT" => 1 )
+	$s = $dbw->selectRow( 'revision', array( 'rev_id' ),
+			array( 'rev_page' =>  $page_title_id ),
+			__METHOD__, array( "ORDER BY" => "rev_id ASC", "LIMIT" => 1 )
 	);
 	$revision_id = $s->rev_id;
 
 	//change neccessary tables
 	$dbw->update( 'revision',
 		array( /* SET */ 'rev_user' => $user->getID(), 'rev_user_text' => $user->getName()),
-		array( /* WHERE */ 'rev_id' => $revision_id),
-		__METHOD__
+		array( /* WHERE */ 'rev_id' => $revision_id), ""
 	);
-	$dbw->commit(__METHOD__);
+	$dbw->commit();
 
 	$dbw->update( 'recentchanges',
 		array( /* SET */ 'rc_user' => $user->getID(), 'rc_user_text' => $user->getName()),
-		array( /* WHERE */ 'rc_cur_id ' => $page_title_id, 'rc_new' => 1),
-		__METHOD__
+		array( /* WHERE */ 'rc_cur_id ' => $page_title_id, 'rc_new' => 1), ""
 	);
-	$dbw->commit(__METHOD__);
+	$dbw->commit();
 
 	//if the page happens to get deleted in between the anon asking a question
 	//and registration, we have to also update the archive
 	$dbw->update( 'archive',
 		array( /* SET */ 'ar_user' => $user->getID(), 'ar_user_text' => $user->getName()),
-		array( /* WHERE */ 'ar_title ' => $title->getDBKey() ),
-		__METHOD__
+		array( /* WHERE */ 'ar_title ' => $title->getDBKey() ), ""
 	);
-	$dbw->commit(__METHOD__);
+	$dbw->commit();
 
 	//clear cache
 	$title->invalidateCache();
 	$title->purgeSquid();
 	$key = wfMemcKey( 'answer_author', $page_title_id );
 	$wgMemc->delete( $key );
+
 
 	return true;
 }

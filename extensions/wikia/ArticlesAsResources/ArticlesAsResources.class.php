@@ -8,7 +8,10 @@
  * @author Sean Colombo
  * @author Wladyslaw Bodzek
  */
-class ArticlesAsResources extends WikiaObject {
+class ArticlesAsResources {
+
+	// application
+	private $app;
 
 	// Cached (hard-coded) IDs of popular wikis
 	// (may be we should not do it)
@@ -19,6 +22,10 @@ class ArticlesAsResources extends WikiaObject {
 	// by its domain name
 	const WIKIA_DEFAULT_DOMAIN_SUFFIX = '.wikia.com';
 
+	function __construct() {
+		$this->app = F::app();
+	}
+
 	/**
 	 * Debug logging
 	 *
@@ -26,7 +33,7 @@ class ArticlesAsResources extends WikiaObject {
 	 * @param string $msg - log message to be added
 	 */
 	private function log($method, $msg) {
-		$this->wf->debug($method  . ": {$msg}\n");
+		$this->app->wf->debug($method  . ": {$msg}\n");
 	}
 
 	/**

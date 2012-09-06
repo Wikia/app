@@ -1,11 +1,11 @@
 <?php
 /**
  * ArticleMetaDescription - adding meta-description tag containing snippet of the Article
- *
+ * 
  * Puts the snippet from the ArticleService into <meta description="..." /> tag inside
  * page header section. It's possible to set predefined description for main
  * page (configured in MediaWiki:Mainpage) by putting desired text
- * into the MediaWiki:Description message.
+ * into the MediaWiki:Description message. 
  *
  * @author Adrian 'ADi' Wieczorek <adi@wikia.com>
  * @author Sean Colombo <sean@wikia.com>
@@ -26,15 +26,10 @@ $wgExtensionCredits['other'][] = array(
 
 $wgHooks['OutputPageBeforeHTML'][] = 'wfArticleMetaDescription';
 
-/**
- * @param OutputPage $out
- * @param string $text
- * @return bool
- */
 function wfArticleMetaDescription(&$out, &$text) {
 	global $wgTitle;
 	wfProfileIn( __METHOD__ );
-
+		
 	$sMessage = null;
 	$sMainPage = wfMsgForContent('Mainpage');
 	if(strpos($sMainPage, ':') !== false) {
@@ -43,12 +38,12 @@ function wfArticleMetaDescription(&$out, &$text) {
 	else {
 	    $sTitle = $wgTitle->getText();
 	}
-
+	
 	if(strcmp($sTitle, $sMainPage) == 0) {
 		// we're on Main Page, check MediaWiki:Description message
 		$sMessage = wfMsg("Description");
 	}
-
+	
 	if(($sMessage == null) || wfEmptyMsg("Description", $sMessage)) {
 		$DESC_LENGTH = 100;
 		$articleId = $wgTitle->getArticleID();
@@ -58,7 +53,7 @@ function wfArticleMetaDescription(&$out, &$text) {
 		// MediaWiki:Description message found, use it
 		$description = $sMessage;
 	}
-
+	
 	if(!empty($description)) {
 		$out->addMeta('description', htmlspecialchars($description));
 	}

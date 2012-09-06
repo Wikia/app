@@ -16,20 +16,15 @@ $wgExtensionCredits['specialpage'][] = array(
 );
 
 $wgHooks['BeforePageDisplay'][] = 'wfCanonicalHref';
-/**
- * @param OutputPage $out
- * @param $sk
- * @return bool
- */
 function wfCanonicalHref(&$out, &$sk) {
 	global $wgTitle;
 
 	if ( !($wgTitle instanceof Title) ) {
 		return true;
 	}
-
+	
 	$canonicalUrl = $wgTitle->getFullURL();
-
+	
 	// Allow hooks to change the canonicalUrl that will be used in the page.
 	wfRunHooks( 'WikiaCanonicalHref', array( &$canonicalUrl ) );
 

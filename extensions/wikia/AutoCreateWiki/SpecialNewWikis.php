@@ -41,11 +41,7 @@ $wgAvailableRights[] = 'newwikislist';
 $wgGroupPermissions['*']['newwikislist'] = false;
 $wgGroupPermissions['staff']['newwikislist'] = true;
 
-/**
- * @param array $queryPages
- * @return bool
- */
-function wfSetupNewWikis( &$queryPages ) {
+function wfSetupNewWikis( $queryPages = array() ) {
     $queryPages[] = array( 'NewWikisPage', 'Newwikis');
     return true;
 }
