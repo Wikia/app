@@ -187,11 +187,6 @@ class CommentsIndex extends WikiaModel {
 	 */
 	public function addToDatabase() {
 		$this->wf->ProfileIn( __METHOD__ );
-		
-		//Just for transition time
-		if(empty($this->wg->EnableForumExt)) {
-			return true;
-		}
 
 		if ( !$this->wf->ReadOnly() ) {
 			$this->createTableCommentsIndex();

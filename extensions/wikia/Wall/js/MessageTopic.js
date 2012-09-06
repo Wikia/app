@@ -21,13 +21,22 @@
 	};
 	
 	MessageTopic.prototype = {
-	
 		addSelection: function(selection) {
+			if(this.getTopics().length === this.inputMax) {
+				this.error.html(this.errorLimitTemplate.mustache({limit: this.inputMax}));
+				return false;
+			} else {
+				this.error.html('');
+			}
+		
 			if(!this.selectedEntries[selection]) {
 				this.selectedEntries[selection] = true;
 				var topic = this.topicTemplate.mustache({articleTitle:selection});
 				this.topicList.append(topic);
+				return true;
 			}
+			
+			return false;
 		},
 				
 		removeSelection: function(selection) {
@@ -63,11 +72,8 @@
 				query = this.input.val();
 			if (code == 13 && query) {
 				var self = this;
-				self.error.html('');
 				$.when(this.getSuggestions(query)).done(function(suggestions) {
-					if(self.getTopics().length === self.inputMax) {
-						self.error.html(self.errorLimitTemplate.mustache({limit: self.inputMax}));
-					} else if(suggestions && suggestions.length) {
+					if(suggestions && suggestions.length) {
 						self.addSelection(suggestions[0]);
 					} else {
 						self.error.html(self.errorTemplate.mustache({query: query}));
@@ -109,6 +115,7 @@
 				messageTopic.autocomplete = messageTopic.input.autocomplete({
 					serviceUrl: wgServer + wgScript + '?action=ajax&rs=getLinkSuggest&format=json',
 					onSelect: function(value, data) {
+						$().log("on select");
 						messageTopic.addSelection(value);
 						messageTopic.input.val('');
 					},

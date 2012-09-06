@@ -125,6 +125,7 @@ $app->registerHook('ArticleBeforeVote', 'WallHooksHelper', 'onArticleBeforeVote'
 $app->registerHook('BlockIpComplete', 'WallHooksHelper', 'onBlockIpComplete');
 $app->registerHook('UnBlockIpComplete', 'WallHooksHelper', 'onBlockIpComplete');
 
+$app->registerHook('CategoryViewer::beforeCategoryData', 'WallHooksHelper', 'onBeforeCategoryData');
 
 F::build('JSMessages')->registerPackage('Wall', array(
 	'wall-notifications',
