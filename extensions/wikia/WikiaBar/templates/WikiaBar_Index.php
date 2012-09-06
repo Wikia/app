@@ -1,7 +1,7 @@
 <div class="WikiaBarWrapper">
 	<div class="wikia-bar">
 		<div class="ad">Ad slot</div>
-		<div class="arrow">Arr</div>
+		<a href="#" class="arrow"></a>
 		<div class="message">message</div>
 			<a class="wikiabar-button" href="#">
 				<img src="<?= $wg->BlankImgUrl ?>" class="icon" />
