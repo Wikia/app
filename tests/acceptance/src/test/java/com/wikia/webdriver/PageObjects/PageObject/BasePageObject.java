@@ -187,6 +187,20 @@ public class BasePageObject{
 		}
 	}
 	
+	public void clickRobot(WebElement pageElem)
+	{
+		try
+		{
+			Point p = pageElem.getLocation();
+			CommonFunctions.MoveCursorToElement(p);
+			CommonFunctions.ClickElement();
+		}
+		catch(Exception e)
+		{
+			PageObjectLogging.log("clickRobot", e.toString(), false);			
+		}
+	}
+	
 	/**
 	 * Returns List of WebElements by CssSelector
 	 * 
