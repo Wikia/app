@@ -19,6 +19,9 @@ $app->registerClass('WikiaBarModel', $dir . 'models/WikiaBarModel.class.php');
 $app->registerClass('WikiaBarModelBase', $dir . 'models/WikiaBarModelBase.class.php');
 $app->registerClass('WikiaBarDataModel', $dir . 'models/WikiaBarDataModel.class.php');
 $app->registerClass('WikiaBarDataFailsafeModel', $dir . 'models/WikiaBarDataFailsafeModel.class.php');
+$app->registerClass('WikiaBarDataValidator', $dir . 'models/WikiaBarDataValidator.class.php');
+$app->registerClass('WikiaBarMessageDataValidator', $dir . 'models/WikiaBarMessageDataValidator.class.php');
+$app->registerClass('WikiaBarFailsafeDataValidator', $dir . 'models/WikiaBarFailsafeDataValidator.class.php');
 
 /**
  * hooks
