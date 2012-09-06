@@ -16,7 +16,7 @@ class WikiaMobileStatsModel extends WikiaModel {
 	 *
 	 * @author Jakub Olek <jakubolek@wikia-inc.com>
 	 *
-	 * @return Array The array of results
+	 * @return Array[] The array of results
 	 */
 	public function getPopularPages(){
 		$this->wf->profileIn( __METHOD__ );
@@ -68,7 +68,7 @@ class WikiaMobileStatsModel extends WikiaModel {
 	 *
 	 * @author Jakub Olek <jakubolek@wikia-inc.com>
 	 *
-	 * @return array
+	 * @return String[]
 	 * An array with the 0th element being the link to the page
 	 * and the 1st element being the URL of the thumbnail
 	 */
