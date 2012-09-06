@@ -140,14 +140,17 @@ class ArticleCommentInit {
 		return true;
 	}
 
+	/**
+	 * @static
+	 * @param OutputPage $out
+	 * @param Skin $sk
+	 * @return bool
+	 */
 	static public function ArticleCommentAddJS( &$out, &$sk ){
-		global $wgJsMimeType, $wgExtensionsPath;
+		global $wgExtensionsPath;
 		wfProfileIn( __METHOD__ );
 
 		if ( self::ArticleCommentCheck() ) {
-			global $wgUser;
-			$app = F::app();
-
 			//FB#21244 this should run only for MonoBook, Oasis and WikiaMobile have their own SASS-based styling
 			if ( $sk instanceof SkinMonoBook ) {
 				$out->addExtensionStyle("$wgExtensionsPath/wikia/ArticleComments/css/ArticleComments.css");
@@ -174,7 +177,7 @@ class ArticleCommentInit {
 	/**
 	 * Hook
 	 *
-	 * @param Parser $rc -- instance of Parser class
+	 * @param Parser $parser -- instance of Parser class
 	 * @param Skin $sk -- instance of Skin class
 	 * @param string $toc -- HTML for TOC
 	 * @param array $sublevelCount -- last used numbers for each indentation
@@ -183,7 +186,7 @@ class ArticleCommentInit {
 	 * @access public
 	 * @todo TODO: not working - check
 	 *
-	 * @return true -- because it's a hook
+	 * @return Bool true -- because it's a hook
 	 */
 	static function InjectTOCitem($parser, &$toc, &$sublevelCount) {
 		if ( self::ArticleCommentCheck() && !( F::app()->checkSkin( 'wikiamobile' ) ) ) {
@@ -220,6 +223,13 @@ class ArticleCommentInit {
 
 	/**
 	 * Hook handler
+	 *
+	 * @static
+	 * @param Title $title
+	 * @param User $user
+	 * @param $action
+	 * @param $result
+	 * @return bool
 	 */
 	public static function userCan( $title, $user, $action, &$result ) {
 		$namespace = $title->getNamespace();

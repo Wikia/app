@@ -35,7 +35,7 @@ class AutomaticWikiAdoptionHelper {
 	const REASON_USER_NOT_ELIGIBLE = 8;
 	//used as type in user_flags table
 	const USER_FLAGS_AUTOMATIC_WIKI_ADOPTION = 1;
-	
+
 	/**
 	 * check if user is allowed to adopt particular wiki
 	 *
@@ -46,7 +46,7 @@ class AutomaticWikiAdoptionHelper {
 	static function isAllowedToAdopt($wikiId, $user) {
 		global $wgMemc;
 		wfProfileIn(__METHOD__);
-		
+
 		//uncachable tests
 		//DB in read only mode
 		if (wfReadOnly()) {
@@ -127,7 +127,7 @@ class AutomaticWikiAdoptionHelper {
 		wfProfileOut(__METHOD__);
 		return $allowed;
 	}
-	
+
 	/**
 	 * adopt a wiki - set admin rights for passed user and remove bureacrat rights for current users
 	 *
@@ -150,7 +150,7 @@ class AutomaticWikiAdoptionHelper {
 		$removedGroup = 'bureaucrat';
 		//groups to add
 		$addGroups = array('sysop', 'bureaucrat');
-		
+
 		$wiki_name = WikiFactory::IDtoDB($wikiId);
 
 		//remove bureacrat for current admins
@@ -169,7 +169,7 @@ class AutomaticWikiAdoptionHelper {
 					//remove group
 					$admin->removeGroup($removedGroup);
 					wfRunHooks( 'UserRights', array( &$admin, array(), array($removedGroup) ) );
-					
+
 					// get email params
 					$magicwords = array('#WIKINAME' => $wiki_name);
 					$admin_name = $admin->getName();
@@ -177,7 +177,7 @@ class AutomaticWikiAdoptionHelper {
 					$specialUserRightsUrl = $globalTitleUserRights->getFullURL();
 					$globalTitlePreferences = GlobalTitle::newFromText('Preferences', -1, $wikiId);
 					$specialPreferencesUrl = $globalTitlePreferences->getFullURL();
-					
+
 					//sent e-mail
 					$admin->sendMail(
 						strtr(wfMsgForContent("wikiadoption-mail-adoption-subject"), $magicwords),
@@ -213,7 +213,7 @@ class AutomaticWikiAdoptionHelper {
 		//set date of adoption - this will be used to check when next adoption is possible
 		$user->setOption('LastAdoptionDate', time());
 		//Set preference for receiving future adoption emails
-		$user->setOption("adoptionmails-$wikiId", 1);		
+		$user->setOption("adoptionmails-$wikiId", 1);
 		$user->saveSettings();
 
 		// Block user from seeing the adoption page again or adopting another wiki
@@ -222,11 +222,11 @@ class AutomaticWikiAdoptionHelper {
 		$wgMemc->set($memcKey, $allowed, 3600);
 		// Block the wiki from being adopted again for 14 days
 		$wgMemc->set( wfMemcKey("AutomaticWikiAdoption-WikiAdopted"), $allowed, 60*60*24*14 );
-		
+
 		//Reset the flags for this wiki
 		self::dismissNotification();
 		$flags = WikiFactory::FLAG_ADOPTABLE | WikiFactory::FLAG_ADOPT_MAIL_FIRST | WikiFactory::FLAG_ADOPT_MAIL_SECOND;
-		WikiFactory::resetFlags($wikiId, $flags);		
+		WikiFactory::resetFlags($wikiId, $flags);
 		wfProfileOut(__METHOD__);
 		//TODO: log on central that wiki has been adopted (by who)
 		//TODO: is there a way to check if user got sysop rights to return true/false as a result?
@@ -251,7 +251,7 @@ class AutomaticWikiAdoptionHelper {
 			wfProfileOut(__METHOD__);
 			return false;
 		}
-		
+
 		$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
 		$row = $dbr->selectRow(
 			'city_list',
@@ -338,9 +338,9 @@ class AutomaticWikiAdoptionHelper {
 		if ( F::app()->checkSkin( 'oasis' ) && (self::isAllowedToAdopt($wgCityId, $wgUser) == self::USER_ALLOWED )  && !self::getDismissNotificationState($wgUser)) {
 
 			NotificationsController::addNotification(
-				wfMsg('wikiadoption-notification', 
-						$wgSitename, 
-						Wikia::SpecialPageLink('WikiAdoption','wikiadoption-adopt-inquiry')), 
+				wfMsg('wikiadoption-notification',
+						$wgSitename,
+						Wikia::SpecialPageLink('WikiAdoption','wikiadoption-adopt-inquiry')),
 				array(
 					'name' => 'AutomaticWikiAdoption',
 					'dismissUrl' => $wgScript . '?action=ajax&rs=AutomaticWikiAdoptionAjax&method=dismiss',
@@ -353,6 +353,8 @@ class AutomaticWikiAdoptionHelper {
 
 	/**
 	 * Hook handler
+	 *
+	 * @param User $user
 	 *
 	 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
 	 * @author Hyun Lim
@@ -369,7 +371,7 @@ class AutomaticWikiAdoptionHelper {
 				$section = 'emailv2/wikiemail';
 				$prefVersion = '-v2';
 			}
-			
+
 			$defaultPreferences["adoptionmails-label-$wgCityId"] = array(
 				'type' => 'info',
 				'label' => '',
@@ -389,12 +391,25 @@ class AutomaticWikiAdoptionHelper {
 
 	/**
 	 * Hook handler
-	 * 
+	 *
 	 * If a sysop makes an edit, unset any flags that have been set so far
 	 * because the adoption clock starts over again
 	 * @author Owen Davis
+	 *
+	 * @static
+	 * @param Article $article
+	 * @param User $user
+	 * @param $text
+	 * @param $summary
+	 * @param $minoredit
+	 * @param $watchthis
+	 * @param $sectionanchor
+	 * @param $flags
+	 * @param $revision
+	 * @param $status
+	 * @param $baseRevId
+	 * @return bool
 	 */
-	
 	static function onArticleSaveComplete(&$article, &$user, $text, $summary,
 		$minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
 		global $wgCityId;
@@ -402,7 +417,8 @@ class AutomaticWikiAdoptionHelper {
 			WikiFactory::resetFlags($wgCityId, WikiFactory::FLAG_ADOPTABLE | WikiFactory::FLAG_ADOPT_MAIL_FIRST | WikiFactory::FLAG_ADOPT_MAIL_SECOND, true);
 		}
 		return true;
-	}	
+	}
+
 	/**
 	 * Dismisses notification about wiki adoption
 	 *
@@ -434,6 +450,8 @@ class AutomaticWikiAdoptionHelper {
 
 	/**
 	 * Get dismiss state of notification about wiki adoption
+	 *
+	 * @param User $user
 	 *
 	 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
 	 */
