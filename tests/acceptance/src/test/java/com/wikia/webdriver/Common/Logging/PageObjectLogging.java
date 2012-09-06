@@ -31,7 +31,7 @@ public class PageObjectLogging implements WebDriverEventListener{
 	{
 		CommonUtils.createDirectory(screenDirPath);
 		imageCounter = 0; 
-		String l1 = "<html><style>table {margin:0 auto;}td:first-child {width:200px;}td:nth-child(2) {width:660px;}td:nth-child(3) {width:100px;}tr.success{color:black;background-color:#CCFFCC;}tr.error{color:black;background-color:#FFCCCC;}</style><head><meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\"><style>td { border-top: 1px solid grey; } </style></head><body>";
+		String l1 = "<html><style>table {margin:0 auto;}td:first-child {width:200px;}td:nth-child(2) {width:660px;}td:nth-child(3) {width:100px;}tr.success{color:black;background-color:#CCFFCC;}tr.error{color:black;background-color:#FFCCCC;}tr.step{color:white;background:grey}</style><head><meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\"><style>td { border-top: 1px solid grey; } </style></head><body>";
 		CommonUtils.appendTextToFile(logPath, l1);	
 	}
 	
@@ -45,15 +45,19 @@ public class PageObjectLogging implements WebDriverEventListener{
 	{
 		String l1 = "<h1>Class: <em>"+className+"."+methodName+"</em></h1>";
 		String l2 = "<table>";
+		String l3 = "<tr class=\"step\"><td>&nbsp</td><td>START LOGGING METHOD</td><td> <br/> &nbsp;</td></tr>";
 		CommonUtils.appendTextToFile(logPath, l1);
 		CommonUtils.appendTextToFile(logPath, l2);
+		CommonUtils.appendTextToFile(logPath, l3);
 	}
 	
 	
 	public static void stopLoggingMethod()
 	{ 
-		String l1 = "</table>";
+		String l1 = "<tr class=\"step\"><td>&nbsp</td><td>STOP LOGGING METHOD</td><td> <br/> &nbsp;</td></tr>";
+		String l2 = "</table>";
 		CommonUtils.appendTextToFile(logPath, l1);
+		CommonUtils.appendTextToFile(logPath, l2);
 	}
 	
 	public static void log(String command, String description, boolean success, WebDriver driver)
