@@ -36,7 +36,7 @@
 	//this depends on cookies.js and will fail if window.Wikia.Cookies is not defined
 	context.Geo = context.Wikia.geo = geo(context.Wikia.Cookies);
 
-	if (define && define.amd) {
+	if (typeof define != 'undefined' && define.amd) {
 		//AMD
 		define('geo', function () {
 			return context.Wikia.geo;

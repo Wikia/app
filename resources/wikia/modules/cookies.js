@@ -132,7 +132,7 @@
 	//namespace
 	context.Wikia.Cookies = cookies();
 
-	if (define && define.amd) {
+	if (typeof define != 'undefined' && define.amd) {
 		//AMD
 		define('cookies', function () {
 			return context.Wikia.Cookies;
