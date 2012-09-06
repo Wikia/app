@@ -20,7 +20,7 @@
 				if(ldr) {
 					ldr.style.display = 'block';
 				} else {
-					elm.insertAdjacentHTML('beforeend', '<div class="wkMblLdr' + (options.center?' cntr':'') +'"><span ' +
+					elm.insertAdjacentHTML('beforeend', '<div class="wkMblLdr' + (options.center?' center':'') +'"><span ' +
 						(options.size?'style="width:' + options.size + ';height:'+options.size+'"':'') + '></span></div>');
 				}
 			},
