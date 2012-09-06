@@ -43,7 +43,8 @@ class WikiaHomePageHelper extends WikiaModel {
 	protected $visualizationModel = null;
 
 	protected $excludeUsersFromInterstitial = array(
-		'Wikia' => true,
+		22439, //Wikia
+		1458396, //Abuse filter
 	);
 
 	public function getNumberOfEntertainmentSlots($lang) {
@@ -372,31 +373,45 @@ class WikiaHomePageHelper extends WikiaModel {
 		$user = F::build('User', array($userId), 'newFromId');
 
 
-		if ($user instanceof User) {
+		if ($user instanceof User && $this->isValidUserForInterstitial($user) ) {
 			$username = $user->getName();
 
-			if (!$user->isIP($username)
-				&& empty($this->excludeUsersFromInterstitial[$username])
-				&& !in_array('bot', $user->getRights())
-			) {
-				$userInfo['avatarUrl'] = F::build('AvatarService', array($user, self::AVATAR_SIZE), 'getAvatarUrl');
-				$userInfo['edits'] = 0;
-				$userInfo['name'] = $username;
-				/** @var $userProfileTitle GlobalTitle */
-				$userProfileTitle = F::build('GlobalTitle', array($username, NS_USER, $wikiId), 'newFromText');
-				$userInfo['userPageUrl'] = ($userProfileTitle instanceof Title) ? $userProfileTitle->getFullURL() : '#';
-				$userContributionsTitle = F::build('GlobalTitle', array('Contributions/' . $username, NS_SPECIAL, $wikiId), 'newFromText');
-				$userInfo['userContributionsUrl'] = ($userContributionsTitle instanceof Title) ? $userContributionsTitle->getFullURL() : '#';
+			$userInfo['avatarUrl'] = F::build('AvatarService', array($user, self::AVATAR_SIZE), 'getAvatarUrl');
+			$userInfo['edits'] = 0;
+			$userInfo['name'] = $username;
+			/** @var $userProfileTitle GlobalTitle */
+			$userProfileTitle = F::build('GlobalTitle', array($username, NS_USER, $wikiId), 'newFromText');
+			$userInfo['userPageUrl'] = ($userProfileTitle instanceof Title) ? $userProfileTitle->getFullURL() : '#';
+			$userContributionsTitle = F::build('GlobalTitle', array('Contributions/' . $username, NS_SPECIAL, $wikiId), 'newFromText');
+			$userInfo['userContributionsUrl'] = ($userContributionsTitle instanceof Title) ? $userContributionsTitle->getFullURL() : '#';
 
-				$userStatsService = F::build('UserStatsService', array($userId));
-				$stats = $userStatsService->getGlobalStats($wikiId);
+			$userStatsService = F::build('UserStatsService', array($userId));
+			$stats = $userStatsService->getGlobalStats($wikiId);
 
-				$date = getdate(strtotime($stats['date']));
-				$userInfo['since'] = F::App()->wg->Lang->getMonthAbbreviation($date['mon']) . ' ' . $date['year'];
-			}
+			$date = getdate(strtotime($stats['date']));
+			$userInfo['since'] = F::App()->wg->Lang->getMonthAbbreviation($date['mon']) . ' ' . $date['year'];
 		}
 
 		return $userInfo;
+	}
+
+	/**
+	 * @desc Returns true if user isn't: an IP address, excluded from interstitial, bot, blocked locally and globally
+	 *
+	 * @param User $user
+	 * @return bool
+	 */
+	protected function isValidUserForInterstitial(User $user) {
+		$userId = $user->getId();
+		$userName = $user->getName();
+
+		return (
+			!$user->isIP($userName)
+			&& !in_array($userId, $this->excludeUsersFromInterstitial)
+			&& !in_array('bot', $user->getRights())
+			&& !$user->isBlocked()
+			&& !$user->isBlockedGlobally()
+		);
 	}
 
 	public function getWikiInfoForSpecialPromote($wikiId, $langCode) {
