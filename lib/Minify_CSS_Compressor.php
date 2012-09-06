@@ -102,7 +102,8 @@ class Minify_CSS_Compressor {
             /x', 'url($1)', $css);
 
         // remove ws between rules and colons
-        $css = preg_replace('/
+        // Wikia Change - Start
+        $css = preg_replace_callback('/
                 \\s*
                 ([{;])              # 1 = beginning of block or rule separator
                 \\s*
@@ -110,8 +111,9 @@ class Minify_CSS_Compressor {
                 \\s*
                 :
                 \\s*
-                (\\b|[#\'"])        # 3 = first character of a value
-            /x', '$1$2:$3', $css);
+                ([^;}]+)            # 3 = the value
+            /x', array($this, '_argumentsCB'), $css);
+        // Wikia Change - End
 
         // remove ws in selectors
         $css = preg_replace_callback('/
@@ -156,6 +158,18 @@ class Minify_CSS_Compressor {
         $css = preg_replace('/:first-l(etter|ine)\\{/', ':first-l$1 {', $css);
 
         return trim($css);
+    }
+
+    /**
+     * Replace whitespace in arguments list
+     *
+     * @param array $m regex matches
+     *
+     * @return string
+     */
+    protected function _argumentsCB($m)
+    {
+        return $m[1].$m[2].':'.preg_replace('/\\s*\,\\s*/', ',', $m[3]);
     }
 
     /**
