@@ -1,6 +1,6 @@
 <div class="RelatedVideos RelatedVideosHidden RelatedHubsVideos noprint" id="RelatedVideos" data-count="<?=ceil(count($videos)/3);?>">
 	<div class="embedCodeTooltip messageHolder"><?=wfMsg('related-videos-tooltip-embed');?></div>
-	<div class="errorWhileLoading messageHolder"><?=wfMsg('related-videos-error-while-loading');?></div>
+	<div class="errorWhileLoading messageHolder"><?=wfMsg('videos-error-while-loading');?></div>
 	<div class="RVBody">
 		<div class="button vertical secondary scrollleft" >
 			<img src="<?=wfBlankImgUrl();?>" class="chevron" />

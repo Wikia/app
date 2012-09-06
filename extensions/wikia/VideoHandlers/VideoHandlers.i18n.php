@@ -35,6 +35,7 @@ $messages['en'] = array(
 	'videos-error-no-video-url' => 'No video URL provided.',
 	'videos-error-unknown' => 'An unknown error occurred. Code: $1.',
 	'videos-error-old-type-video' => 'Old type of videos no longer supported (VideoPage)',
+	'videos-error-while-loading' => 'Error occurred while loading data. Please recheck your connection and refesh the page.',
 );
 
 /** Message documentation (Message documentation) */
@@ -139,6 +140,7 @@ $messages['de'] = array(
 	'videohandler-video-details' => '$1 (Provider: $2)',
 	'videohandler-category' => 'Videos',
 	'videohandler-description' => 'Beschreibung',
+	'videos-error-while-loading' => 'Fehler beim laden von Daten. Überprüfen Sie bitte Ihre Verbindung und laden sie die Seite erneut.',
 );
 
 /** German (formal address) (‪Deutsch (Sie-Form)‬)
@@ -168,6 +170,7 @@ $messages['es'] = array(
 	'videohandler-video-details' => '$1 (proveedor: $2)',
 	'videohandler-category' => 'Vídeos',
 	'videohandler-description' => 'Descripción',
+	'videos-error-while-loading' => 'Error al cargar los datos. Por favor vuelve a comprobar tu conexión a internet y refresca la página.',
 );
 
 /** Basque (euskara)
@@ -207,6 +210,7 @@ $messages['fr'] = array(
 	'videohandler-video-details' => '$1 (hébergeur : $2)',
 	'videohandler-category' => 'Vidéos',
 	'videohandler-description' => 'Description',
+	'videos-error-while-loading' => 'Une erreur est survenue lors du chargement des données. Veuillez vérifier votre connexion et rafraîchir la page.',
 );
 
 /** Galician (galego)
@@ -225,6 +229,7 @@ $messages['gl'] = array(
 	'videohandler-video-details' => '$1 (provedor: $2)',
 	'videohandler-category' => 'Vídeos',
 	'videohandler-description' => 'Descrición',
+	'videos-error-while-loading' => 'Houbo un erro ao cargar os datos. Volva comprobar a súa conexión e recargue a páxina.',
 );
 
 /** Hebrew (עברית)
@@ -249,6 +254,7 @@ $messages['hu'] = array(
 	'videohandler-video-details' => '$1 (szolgáltató: $2 )',
 	'videohandler-category' => 'Videók',
 	'videohandler-description' => 'Leírás',
+	'videos-error-while-loading' => 'Hiba történt az adatok betöltése közben. Kérlek, ellenőrizd az internetkapcsolatodat és frissítsd az oldalt.',
 );
 
 /** Armenian (Հայերեն)
@@ -272,6 +278,7 @@ $messages['ia'] = array(
 	'videohandler-video-details' => '$1 (fornitor: $2)',
 	'videohandler-category' => 'Videos',
 	'videohandler-description' => 'Description',
+	'videos-error-while-loading' => 'Un error occurreva durante le cargamento del datos. Per favor re-verifica tu connexion e refresca le pagina.',
 );
 
 /** Indonesian (Bahasa Indonesia)
@@ -335,6 +342,7 @@ $messages['mk'] = array(
 	'videohandler-category' => 'Видеоснимки',
 	'videohandler-description' => 'Опис',
 	'videohandler-video-views' => '$1 {{PLURAL:$1|преглед|прегледи}}',
+	'videos-error-while-loading' => 'Не појави грешка при вчитувањето на податоците. Проверете си ја врската со интернет и превчитајте ја страницата.',
 );
 
 /** Malay (Bahasa Melayu)
@@ -352,6 +360,7 @@ $messages['ms'] = array(
 	'videohandler-video-details' => '$1 (penyedia: $2)',
 	'videohandler-category' => 'Video',
 	'videohandler-description' => 'Keterangan',
+	'videos-error-while-loading' => 'Berlakunya ralat ketika memuatkan data. Sila semak semula sambungan anda dan muatkan semula laman ini.',
 );
 
 /** Norwegian Bokmål (‪norsk (bokmål)‬)
@@ -371,6 +380,7 @@ $messages['nb'] = array(
 	'videohandler-video-details' => '$1 (leverandør: $2)',
 	'videohandler-category' => 'Videoer',
 	'videohandler-description' => 'Beskrivelse',
+	'videos-error-while-loading' => 'Det oppstod en feil under lasting av data. Vennligst sjekk din netttilkobling og oppdater siden.',
 );
 
 /** Dutch (Nederlands)
@@ -385,6 +395,7 @@ $messages['nl'] = array(
 	'videohandler-video-details' => '$1 (provider: $2)',
 	'videohandler-category' => "Video's",
 	'videohandler-description' => 'Beschrijving',
+	'videos-error-while-loading' => 'Fout is opgetreden tijdens het laden van gegevens. Controleer alstublieft uw verbinding en ververs de pagina.',
 );
 
 /** Punjabi (ਪੰਜਾਬੀ)
@@ -413,6 +424,7 @@ $messages['pl'] = array(
 	'videohandler-video-details' => '$1 (z $2)',
 	'videohandler-category' => 'Filmy',
 	'videohandler-description' => 'Opis',
+	'videos-error-while-loading' => 'Wystąpił błąd podczas ładowania danych. Sprawdź ponownie połączenie i odśwież stronę.',
 );
 
 /** Piedmontese (Piemontèis)
@@ -472,6 +484,7 @@ $messages['ru'] = array(
 	'videohandler-video-details' => '$1 (источник: $2)',
 	'videohandler-category' => 'Видео',
 	'videohandler-description' => 'Описание',
+	'videos-error-while-loading' => 'Ошибка при загрузке данных. Пожалуйста, проверьте Ваше соединение и обновите страницу.',
 );
 
 /** Sinhala (සිංහල)
@@ -512,6 +525,7 @@ $messages['sv'] = array(
 	'videohandler-video-details' => '$1 (leverantör: $2)',
 	'videohandler-category' => 'Videoklipp',
 	'videohandler-description' => 'Beskrivning',
+	'videos-error-while-loading' => 'Ett fel uppstod när data skulle läses in. Var god kontrollera din anslutning och uppdatera sidan.',
 );
 
 /** Tagalog (Tagalog)
@@ -530,6 +544,7 @@ $messages['tl'] = array(
 	'videohandler-video-details' => '$1 (tagapagbigay: $2)',
 	'videohandler-category' => 'Mga bidyo',
 	'videohandler-description' => 'Paglalarawan',
+	'videos-error-while-loading' => 'Naganap ang kamalian habang ikinakarga ang dato. Pakisuring muli ang pagkakakunekta mo at sariwain ang pahina.',
 );
 
 /** Turkish (Türkçe)
