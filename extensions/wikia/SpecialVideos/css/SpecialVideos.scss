@@ -13,7 +13,7 @@ $placeholder-bg-color: darken($color-page, 10%);
 	$placeholder-bg-color: lighten($color-page, 10%);
 }
 
-.add-video-button {
+.addVideo {
 	margin-top: 2px;
 	vertical-align: top;
 	img.sprite {
@@ -45,7 +45,7 @@ $placeholder-bg-color: darken($color-page, 10%);
 	.WikiaDropdown {
 		float:left;
 		.dropdown {
-			@include box-shadow(0, 0, 0, transparent);
+			@include box-shadow(0, 0, 0, transparent, 0, 0);
 			width: 215px;
 		}
 		strong {

@@ -502,7 +502,7 @@ $color-related-videos-background: darken($color-page, 20%);
     				&:hover {
     				    border: none;
     					padding: 1px;
-    					@include box-shadow( 0, 0, 0, #ffffff );
+    					@include box-shadow( 0, 0, 0, #ffffff, 0, 0 );
     					background: none;
     					.addVideo {
     						@include opacity(50);
