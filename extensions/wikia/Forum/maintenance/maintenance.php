@@ -191,5 +191,7 @@ foreach ( $commentList as $comment ) {
 	echo ".....DONE.\n";
 }
 
+WikiFactory::setVarByName("wgWallIndexed", $wgCityId, true );
+
 echo "TOTAL: ".$cnt.", SUCCESS: ".($cnt-$failed).", FAILED: $failed\n\n";
-echo "#DONE !!!";
+echo "#DONE !!!\n";
