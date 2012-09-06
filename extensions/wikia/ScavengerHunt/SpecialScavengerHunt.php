@@ -169,7 +169,7 @@ class SpecialScavengerHunt extends SpecialPage {
 						} else {
 							NotificationsController::addConfirmation(
 								wfMsg('scavengerhunt-game-has-not-been-saved'),
-								NotificationsController::CONFIRMATION_PREVIEW
+								NotificationsController::CONFIRMATION_NOTIFY
 							);
 						}
 					}
