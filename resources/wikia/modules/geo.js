@@ -21,7 +21,7 @@
 		function getGeoData() {
 			if (geoData === false) {
 				var jsonData = decodeURIComponent(Wikia.Cookies.get(cookieName));
-				geoData = JSON.parse(jsonData);
+				geoData = JSON.parse(jsonData) || {};
 			}
 			return geoData;
 		}
