@@ -34,7 +34,7 @@
 			},
 			outputLevel = 0,
 			groups = {},
-			groupsString = '';
+			groupsString = '',
 			groupsCount = 0,
 			enabled = false,
 			levelsMap = [];
@@ -76,7 +76,7 @@
 
 		function printMessage(msg, level, group){
 			if(typeof console != 'undefined')
-				console.log((typeof msg != 'object' ? '%s [%s]: %s' : '%s [%s]: %o'), group, level, msg);
+				console.log((typeof msg != 'object' ? '%s: %s' : '%s: %o'), group, msg);
 			else if(typeof opera != 'undefined')
 				opera.postError(group + ': ' + msg);
 		}
@@ -104,7 +104,7 @@
 			}
 
 			if (outputLevel > 0) {
-				printMessage('initialized at level ' + levelsMap[outputLevel] + ((groupsCount > 0) ? ' for ' + groupsString : ''), 'info', 'Wikia.log');
+				printMessage('initialized at level ' + outputLevel + ((groupsCount > 0) ? ' for ' + groupsString : ''), 'info', 'Wikia.log');
 				enabled = true;
 			}
 		}
