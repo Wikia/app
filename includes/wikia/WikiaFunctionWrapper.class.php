@@ -21,6 +21,7 @@
  * @method sharedMemcKey
  * @method SharedMemcKey
  * @method PaginateArray
+ * @method debug
  */
 class WikiaFunctionWrapper {
 
