@@ -341,6 +341,8 @@ class AttributionCache {
 
 	/**
 	 * hook: ArticleSaveComplete
+	 *
+	 * @param Article $article
 	 */
 	public static function purgeArticleContribs(&$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
 		if(count($status->errors) == 0) {
