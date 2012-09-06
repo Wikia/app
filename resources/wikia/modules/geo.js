@@ -1,34 +1,45 @@
 /**
- * Geo-location utility
- *
- * Depends on: cookies module
- *
- * TODO: migrate to true AMD
+ * Geo-location utility used mainly for advertisement (e.g. Meebo, AdConfig)
  */
-(function(){
-	// this module needs to be also available via a namespace for access early in the process
-	if(!window.Wikia) window.Wikia = {};//namespace
-	window.Wikia.geo = geo();//late binding
 
-	// backward compat with /extensions/wikia/Geo/geo.js (used only by Meebo toolbar)
-	// TODO:remove
-	window.Geo = window.Wikia.geo;
+/*global define*/
+(function (context) {
+	'use strict';
 
-	function geo() {
+	/**
+	 * @private
+	 */
+	function geo(cookies) {
 		var cookieName = 'Geo',
 			geoData = false;
 
+		/**
+		 * @public
+		 *
+		 * @return {Object}
+		 */
 		function getGeoData() {
 			if (geoData === false) {
-				var jsonData = decodeURIComponent(Wikia.Cookies.get(cookieName));
+				var jsonData = decodeURIComponent(cookies.get(cookieName));
 				geoData = JSON.parse(jsonData) || {};
 			}
+
 			return geoData;
 		}
 
-		// public module API
 		return {
 			getGeoData: getGeoData
-		}
+		};
 	}
-}());
+
+	//namespace, window.Geo is legacy support for Meebo, see /extensions/wikia/Geo/geo.js
+	//this depends on cookies.js and will fail if window.Wikia.Cookies is not defined
+	context.Geo = context.Wikia.geo = geo(context.Wikia.Cookies);
+
+	if (define && define.amd) {
+		//AMD
+		define('geo', function () {
+			return context.Wikia.geo;
+		});
+	}
+}(this));

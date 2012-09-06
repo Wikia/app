@@ -43,10 +43,10 @@
 </head>
 <body class="<?= implode(' ', $bodyClasses) ?>">
 	<?= $trackingCode ;?>
-	<?= $advertisement ;?>
 	<?= $wikiaNavigation ;?>
 	<?= $pageContent ;?>
 	<?= $wikiaFooter ;?>
 	<?= $jsBodyFiles ;?>
+	<?= $advertisement ;?>
 </body>
 </html>
