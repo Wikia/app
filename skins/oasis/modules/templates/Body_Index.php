@@ -1,4 +1,4 @@
-<h1>Wikia</h1>
+<h1><?= wfMsg('oasis-global-page-header'); ?></h1>
 <div class="skiplinkcontainer">
 <a class="skiplink" rel="nofollow" href="#WikiaArticle"><?= wfMsg( 'oasis-skip-to-content' ); ?></a>
 <a class="skiplink wikinav" rel="nofollow" href="#WikiHeader"><?= wfMsg( 'oasis-skip-to-wiki-navigation' ); ?></a>

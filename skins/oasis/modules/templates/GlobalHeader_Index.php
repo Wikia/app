@@ -3,7 +3,7 @@
 	<div class="wikia-header-mask">
 		<div class="page-width-container">
 			<nav>
-				<h1>Wikia Navigation</h1>
+				<h1><?= wfMsgHtml('oasis-global-nav-header'); ?></h1>
 				<ul>
 					<li class="WikiaLogo">
 						<a href="<?= htmlspecialchars($centralUrl) ?>" rel="nofollow"><img src="<?= $wg->BlankImgUrl ?>" class="sprite logo" height="23" width="91" alt="Wikia"></a>
