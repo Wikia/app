@@ -36,14 +36,14 @@ abstract class ResourceLoaderGlobalWikiModule extends ResourceLoaderWikiModule {
 	protected function createTitle( $titleText, $options = array() ) {
 		global $wgCityId;
 		$title = null;
+		$realTitleText = isset($options['title']) ? $options['title'] : $titleText;
 		if ( !empty( $options['city_id'] ) && $wgCityId != $options['city_id'] ) {
-			$realTitleText = isset($options['title']) ? $options['title'] : $titleText;
 			list( $text, $namespace ) = $this->parseTitle($realTitleText);
 			if ( $text !== false ) {
 				$title = GlobalTitle::newFromText($text, $namespace, $options['city_id']);
 			}
 		} else {
-			$title = Title::newFromText( $titleText );
+			$title = Title::newFromText( $realTitleText );
 		}
 
 		return $title;
