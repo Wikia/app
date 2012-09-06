@@ -316,17 +316,9 @@ $config['wikiamobile_js_head'] = array(
 		'//resources/wikia/libraries/modil/modil.js',
 
 		//core modules
-		'//resources/wikia/modules/cookies.js',
 		'//resources/wikia/modules/querystring.js',
-		'//resources/wikia/modules/log.js',
-		'//resources/wikia/modules/geo.js',
-
-		//feature detection (it's here since it's required by advertisement core)
-		'//extensions/wikia/WikiaMobile/js/features.js',
-		'//extensions/wikia/WikiaMobile/js/feature-detects/positionfixed.wikiamobile.js',
-
-		//advertisement core
-		'//extensions/wikia/AdEngine/AdConfig.js'
+		'//resources/wikia/modules/cookies.js',
+		'//resources/wikia/modules/log.js'//depends on querystring.js and cookies.js
 	)
 );
 
@@ -335,8 +327,9 @@ $config['wikiamobile_js_body_minimal'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'wikiamobile',
 	'assets' => array(
-		//modules
-		'//resources/wikia/modules/cache.js',
+		//feature detection
+		'//extensions/wikia/WikiaMobile/js/features.js',
+		'//extensions/wikia/WikiaMobile/js/feature-detects/positionfixed.wikiamobile.js',
 
 		// deferred.js - jQuery-free implementation (BugId:34943)
 		'//resources/wikia/libraries/deferred/deferred.js',
@@ -345,6 +338,9 @@ $config['wikiamobile_js_body_minimal'] = array(
 		//tracker
 		'//extensions/wikia/WikiaTracker/js/WikiaTracker_config.js',
 		'//extensions/wikia/WikiaTracker/js/WikiaTracker.js',
+
+		//modules
+		'//resources/wikia/modules/cache.js'
 	)
 );
 
@@ -405,7 +401,15 @@ $config['wikiamobile_js_ads'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'wikiamobile',
 	'assets' => array(
-		'//extensions/wikia/WikiaMobile/js/ads.js'
+		//libraries
+		'//resources/wikia/libraries/DOMwriter/domwriter.js',
+
+		//modules
+		'//resources/wikia/modules/geo.js',
+		'//extensions/wikia/WikiaMobile/js/ads.js',
+
+		//advertisement core, depends on geo.js
+		'//extensions/wikia/AdEngine/AdConfig.js'
 	)
 );
 

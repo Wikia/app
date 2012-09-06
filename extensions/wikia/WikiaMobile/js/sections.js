@@ -169,16 +169,19 @@ define('sections', ['events', 'track'], function(ev, track){
 		addEventListener: function(event, callback){
 			callbacks[event] && callbacks[event].push(callback);
 		},
-		removeEventListener: function(event, callback){
-			var stack = callbacks[event];
+		removeEventListener: function (event, callback) {
+			var stack = callbacks[event],
+				len;
 
-			if(stack){
-				var len = stack.length;
+			if (stack instanceof Array) {
+				len = stack.length;
 
-				while(len--){
-					if(stack[len] === callback){
+				while (len > 0) {
+					len -= 1;
+
+					if (stack[len] === callback) {
 						stack.splice(len, 1);
-						return;
+						break;
 					}
 				}
 			}
