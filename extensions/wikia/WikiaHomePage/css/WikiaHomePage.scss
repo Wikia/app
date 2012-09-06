@@ -766,7 +766,11 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 			background-color: #1c629b;
 		}
 		.official {
-			@include linear-gradient(#D0A800, top, #D0A800, 0%, #8E6719, 100%);
+			background-image: url("/extensions/wikia/WikiaHomePage/images/OfficialTag.png");	/* base64 */
+			display: block;
+			height: 28px;
+			padding: 0;
+			width: 70px;
 		}
 	}
 }
