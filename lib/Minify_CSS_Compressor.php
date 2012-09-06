@@ -169,7 +169,7 @@ class Minify_CSS_Compressor {
      */
     protected function _argumentsCB($m)
     {
-        return $m[1].$m[2].':'.preg_replace('/\\s*\,\\s*/', ',', $m[3]);
+        return $m[1].$m[2].':'.preg_replace('/\s*\,\s*/', ',', $m[3]);
     }
 
     /**
