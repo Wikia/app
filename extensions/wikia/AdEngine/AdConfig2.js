@@ -62,7 +62,7 @@ var AdConfig2 = {
 			'TOP_LEADERBOARD':true,
 			'TOP_RIGHT_BOXAD':true
 		};
-		if ((country == 'AU' || country == 'CA') && typeof slotMap[slotname] != 'undefined') {
+		if ((country == 'AU' || country == 'NZ' || country == 'CA') && typeof slotMap[slotname] != 'undefined') {
 			return true;
 		}
 
