@@ -495,6 +495,13 @@ $messages['ja'] = array(
 	'comboajaxlogin-ajaxerror' => 'ウィキアからの応答がありません。ネットワーク接続を確認してください。',
 );
 
+/** Korean (한국어)
+ * @author Cafeinlove
+ */
+$messages['ko'] = array(
+	'comboajaxlogin-createlog' => '로그인 혹은 회원가입',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */

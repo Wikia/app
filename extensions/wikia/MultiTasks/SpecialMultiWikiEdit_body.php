@@ -6,8 +6,8 @@
  * @version: 1.0
  */
 
-if ( !defined( 'MEDIAWIKI' ) ) { 
-	echo "This is MediaWiki extension and cannot be used standalone.\n"; exit( 1 ) ; 
+if ( !defined( 'MEDIAWIKI' ) ) {
+	echo "This is MediaWiki extension and cannot be used standalone.\n"; exit( 1 ) ;
 }
 
 class Multiwikiedit extends MultiTask {
@@ -22,10 +22,10 @@ class Multiwikiedit extends MultiTask {
 		$this->mMainForm = "main-edit";
 		$this->mPreviewForm = "confirm-form";
 		$this->mFinishForm = "row-list";
-		
+
 		$this->mTaskClass = "MultiWikiEditTask";
 	}
-	
+
 	/**
 	 * execute
 	 *
@@ -42,21 +42,21 @@ class Multiwikiedit extends MultiTask {
 			return;
 		}
 
-		/* */		
+		/* */
 		$this->mTitle = Title::makeTitle( NS_SPECIAL, $this->mType );
 		$this->parseParams();
 
 		$wgOut->setPageTitle( wfMsg('multiwikiedit_title') );
 		$wgOut->setRobotpolicy( 'noindex,nofollow' );
 		$wgOut->setArticleRelated( false );
-		
+
 		if ( $this->mAction == 'success' ) {
 			// do something?
-		} 
+		}
 		else if ( ( $wgRequest->wasPosted() ) && ( $this->mAction == 'submit' ) && ( $wgUser->matchEditToken( $this->mEditToken ) ) ) {
 			if ( !$this->mPage ) {
 				$this->showForm( wfMsg('multiwikiedit_no_page') );
-			} 
+			}
 			elseif ( $this->mText == '' ) {
 				$this->showForm( wfMsg('multiwikiedit_add_text') ) ;
 			}
@@ -64,11 +64,11 @@ class Multiwikiedit extends MultiTask {
 				$wgOut->setSubTitle ( wfMsg('multiwikiedit_processing') . wfMsg( 'word-separator' ) . wfMsg ('multiwikiedit_from_form') );
 				$this->doSubmit(0);
 			}
-		} 
+		}
 		else if ( ( $wgRequest->wasPosted() ) && ( $this->mAction == 'addTask' ) && ( $wgUser->matchEditToken( $this->mEditToken ) ) ) {
 			if ( !$this->mPage ) {
 				$this->showForm( wfMsg('multiwikiedit_no_page') );
-			} 
+			}
 			elseif ( $this->mText == '' ) {
 				$this->showForm( wfMsg('multiwikiedit_add_text') ) ;
 			}
@@ -93,7 +93,7 @@ class Multiwikiedit extends MultiTask {
 	 */
 	protected function makeDefaultTaskParams($lang = '', $cat = '', $city_id = 0) {
 		global $wgUser;
-		
+
 		$this->mTaskParams['mode'] = $this->mMode;
 		$this->mTaskParams['page'] = $this->mPage;
 		$this->mTaskParams['wikis'] = $this->mWikiInbox;
@@ -101,11 +101,11 @@ class Multiwikiedit extends MultiTask {
 		$this->mTaskParams['text'] = $this->mText;
 		$this->mTaskParams['summary'] = $this->mSummary;
 		$this->mTaskParams['lang'] = $lang;
-		$this->mTaskParams['cat'] = $cat;		
+		$this->mTaskParams['cat'] = $cat;
 		$this->mTaskParams['selwikia'] = $city_id;
 
 		$this->mTaskParams['flags'] = array(
-			$this->mMinorEdit, 
+			$this->mMinorEdit,
 			$this->mBotEdit,
 			$this->mAutoSummary,
 			$this->mNoRecentChanges,
@@ -113,11 +113,11 @@ class Multiwikiedit extends MultiTask {
 		);
 		$this->mTaskParams['edittoken'] = $this->mEditToken;
 		$this->mTaskParams['user'] = $this->mUser;
-		
+
 		$this->mTaskParams['admin'] = $wgUser->getName();
-		
+
 		$this->mTaskParams['page'] = array();
-		
+
 		$this->explodePages();
 	}
 
@@ -131,8 +131,7 @@ class Multiwikiedit extends MultiTask {
 	 * @return string
 	 */
 	protected function getBackUrl() {
-		global $wgUser;
-		$sk = $wgUser->getSkin();
+		$sk = RequestContext::getMain()->getSkin();
 		return "<br/><br/>". wfMsg('multiwikiedit_link_back', $sk->makeKnownLinkObj($this->mTitle, '<b>' . wfMsg( 'multitasks-link-back-label' ) . '</b>') );
 	}
 }

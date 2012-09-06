@@ -31,8 +31,7 @@ class Deletebatch extends SpecialPage{
 		global $wgOut, $wgUser, $wgRequest ;
 
 		if( !$wgUser->isAllowed( 'deletebatch' ) ) {
-			$wgOut->permissionRequired( 'deletebatch' );
-			return;
+			throw new PermissionsError( 'deletebatch' );
 		}
 
 		$wgOut->setPageTitle (wfMsg('deletebatch_title'));
@@ -217,7 +216,7 @@ class DeleteBatchForm {
 			$wgUser = $OldUser ;
 		}
 
-		$sk = $wgUser->getSkin () ;
+		$sk = RequestContext::getMain()->getSkin();
 		$titleObj = Title::makeTitle( NS_SPECIAL, 'Deletebatch' );
 		$link_back = $sk->makeKnownLinkObj ($titleObj, '<b>here</b>') ;
 		$wgOut->addHtml ("<br/>".wfMsg('deletebatch_link_back')." ".$link_back.".") ;

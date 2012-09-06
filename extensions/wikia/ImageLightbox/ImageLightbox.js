@@ -194,11 +194,10 @@ var ImageLightbox = {
 		}
 
         if (target.hasClass('video-hubs-video')) {
-            if(target[0] && target[0].dataset['wiki']) {
-                if(typeof target[0].dataset['wiki'] !== 'undefined') {
-                    this.wikiAddress = target[0].dataset['wiki'];
-                    this.showEmbedCodeInstantly = true;
-                }
+			var wikiData = target.data('wiki');
+            if(wikiData) {
+				this.wikiAddress = wikiData;
+				this.showEmbedCodeInstantly = true;
             }
         }
 

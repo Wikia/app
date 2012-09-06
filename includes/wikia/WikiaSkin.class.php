@@ -145,6 +145,7 @@ abstract class WikiaSkin extends SkinTemplate {
 
 				if ( !empty( $hrefMatch[1] ) && $am->checkAssetUrlForSkin( $hrefMatch[1], $this ) ) {
 					//fix HTML::element's expansion of ampersands in the src attribute
+					// todo: do we really need this trick? I notice URLs that are not properly encoded in the head element
 					$res[] = array( 'url' => str_replace( '&amp;', '&', $hrefMatch[1] ), 'tag' => str_replace( '&amp;', '&', $m ) );
 				} elseif ( empty( $hrefMatch[1] ) && !$this->strictAssetUrlCheck ) {
 					$res[] = array( 'url' => null, 'tag' => $m );
@@ -222,5 +223,10 @@ abstract class WikiaSkin extends SkinTemplate {
 			$wf->profileOut(__METHOD__ );
 			return '';
 		}
+	}
+
+	public function initPage( OutputPage $out ) {
+		$out->topScripts = $this->getTopScripts();
+		parent::initPage($out);
 	}
 }

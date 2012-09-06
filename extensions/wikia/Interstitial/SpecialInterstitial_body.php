@@ -16,10 +16,10 @@ class Interstitial extends UnlistedSpecialPage {
 		parent::__construct( INTERSTITIALS_SP /*class*/ );
 	}
 
-	function execute(){
+	function execute($par){
 		global $wgRequest, $wgOut;
 		global $wgAdsInterstitialsEnabled;
-		global $wgUser, $wgCityId;
+		global $wgUser;
 
 		$url = trim($wgRequest->getVal( 'u' ));
 		$noAutoRedirect = ( $wgRequest->getText( 'noredirect' ) == 1 ) ? true : false;
@@ -51,7 +51,7 @@ class Interstitial extends UnlistedSpecialPage {
 			// Set up the CSS
 			$wgOut->setArticleBodyOnly(true);
 
-			$skin = $wgUser->getSkin();
+			$skin = RequestContext::getMain()->getSkin();
 			$skinName = get_class($skin);
 
 			// this may not be set yet (and needs to be before setupUserCss in order for the right CSS file to be included)
@@ -78,7 +78,7 @@ class Interstitial extends UnlistedSpecialPage {
 
 				$athenaInitStuff = AdProviderAthena::getInstance()->getSetupHtml();
 
-				$adCode = $oTmpl->execute($adTemplate);
+				$adCode = $oTmpl->render($adTemplate);
 				$oTmpl->set_vars(
 					array(
 						'adCode' => $adCode,
@@ -91,7 +91,7 @@ class Interstitial extends UnlistedSpecialPage {
 				);
 
 				$wgOut->clearHTML();
-				$wgOut->addHTML( $oTmpl->execute( 'page' ) );
+				$wgOut->addHTML( $oTmpl->render( 'page' ) );
 			} else {
 				return $this->redirectTo($url);
 			}

@@ -7,7 +7,7 @@
 <?php endif; ?>
 <?php
 	global $wgServer,$wgScript, $wgUser;
-	$sk = $wgUser->getSkin();
+	$sk = RequestContext::getMain()->getSkin();
 ?>
 <?php foreach ($data as $key => $value): ?>
 	<?php if(empty($more)): ?>

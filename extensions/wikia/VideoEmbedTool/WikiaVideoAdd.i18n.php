@@ -405,6 +405,7 @@ $messages['ja'] = array(
 	'wva-notlogged' => '動画を追加するにはログインするかアカウントを作成する必要があります。',
 	'wva-notallowed' => 'このウィキでは動画を追加できません。',
 	'wva-protected' => 'この動画は保護されています。',
+	'wva-thumbnail-upload-failed' => '動画の埋め込みに失敗しました。適切なサムネイルを取得できません。',
 );
 
 /** Khmer (ភាសាខ្មែរ)

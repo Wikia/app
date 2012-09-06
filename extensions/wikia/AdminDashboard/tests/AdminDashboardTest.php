@@ -233,7 +233,7 @@
 
 		public function shortenNumberDecoratorDataProvider() {
 				return array(
-					array(1234,'1234'),
+					array(1234,'1,234'), // note: this only works for EN
 					array(56000,'56K'),
 					array(56710,'56.7K'),
 					array(56756,'56.8K'),

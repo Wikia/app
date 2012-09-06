@@ -45,8 +45,7 @@ class EditAccount extends SpecialPage {
 
 		# If the user isn't permitted to access this special page, display an error
 		if ( !$wgUser->isAllowed( 'editaccount' ) ) {
-			$wgOut->permissionRequired( 'editaccount' );
-			return;
+			throw new PermissionsError( 'editaccount' );
 		}
 
 		# Show a message if the database is in read-only mode
@@ -57,8 +56,7 @@ class EditAccount extends SpecialPage {
 
 		# If user is blocked, s/he doesn't need to access this page
 		if ( $wgUser->isBlocked() ) {
-			$wgOut->blockedPage();
-			return;
+			throw new UserBlockedError( $this->getUser()->mBlock );
 		}
 
 		$action = $wgRequest->getVal( 'wpAction' );
@@ -198,7 +196,7 @@ class EditAccount extends SpecialPage {
 		}
 
 		// HTML output
-		$wgOut->addHTML( $oTmpl->execute( $template ) );
+		$wgOut->addHTML( $oTmpl->render( $template ) );
 	}
 
 	/**

@@ -19,8 +19,7 @@ $wgWidgets['WidgetLanguages'] = array(
 
 function WidgetLanguages($id, $params) {
 	wfProfileIn( __METHOD__ );
-	global $wgUser;
-	$skin = $wgUser->getSkin();
+	$skin = RequestContext::getMain()->getSkin();
 
 	$list = array();
 
@@ -28,7 +27,7 @@ function WidgetLanguages($id, $params) {
 	if(!empty($skin->language_urls) && is_array($skin->language_urls)) {
 		foreach($skin->language_urls as $val) {
 			$list[] = array(
-				'href'  => $val['href'], 
+				'href'  => $val['href'],
 				'name'  => $val['text'],
 			);
 		}

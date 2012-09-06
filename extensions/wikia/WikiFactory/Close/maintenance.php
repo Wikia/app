@@ -135,7 +135,7 @@ class CloseWikiMaintenance {
 				/**
 				 * reset flag
 				 */
-				$newFlags = $newFlags | WikiFactory::FLAG_CREATE_DB_DUMP | FLAG_HIDE_DB_IMAGES;
+				$newFlags = $newFlags | WikiFactory::FLAG_CREATE_DB_DUMP | WikiFactory::FLAG_HIDE_DB_IMAGES;
 			}
 			if( $row->city_flags & WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE ) {
 				if( $dbname && $folder ) {
@@ -182,7 +182,7 @@ class CloseWikiMaintenance {
 									/**
 									 * reset flag
 									 */
-									$newFlags = $newFlags | WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE | FLAG_HIDE_DB_IMAGES;
+									$newFlags = $newFlags | WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE | WikiFactory::FLAG_HIDE_DB_IMAGES;
 								}
 							}
 							else {
@@ -196,7 +196,7 @@ class CloseWikiMaintenance {
 						else {
 							$this->log( "{$source} copied to {$target}" );
 							unlink( $source );
-							$newFlags = $newFlags | WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE | FLAG_HIDE_DB_IMAGES;
+							$newFlags = $newFlags | WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE | WikiFactory::FLAG_HIDE_DB_IMAGES;
 						}
 					}
 					else {

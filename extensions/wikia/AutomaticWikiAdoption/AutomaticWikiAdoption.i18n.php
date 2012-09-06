@@ -288,6 +288,13 @@ $messages['de-formal'] = array(
 	'wikiadoption-notification' => '{{SITENAME}} kann adoptiert werden. Möchten Sie hier Leiter werden? Adoptieren Sie dieses Wiki, um anzufangen! $2',
 );
 
+/** Zazaki (Zazaki)
+ * @author Erdemaslancan
+ */
+$messages['diq'] = array(
+	'wikiadoption-log-reason' => 'Otomatik  Adaptasyonê Wiki',
+);
+
 /** Spanish (español)
  * @author Armando-Martin
  * @author VegaDark

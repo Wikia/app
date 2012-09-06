@@ -13,6 +13,20 @@ class WallMessage {
 	protected static $wallURLCache = array(); 
 	protected static $topObjectCache;
 	protected $commentIndex;
+	/**
+	 * @var $commentsIndex CommentsIndex
+	 */
+	public $commentsIndex;
+	/**
+	 * @var $helper WallHelper
+	 */
+	public $helper;
+
+	/**
+	 * @var $mActionReason array
+	 */
+	public $mActionReason;
+
 	function __construct(Title $title, $articleComment = null) {
 		wfProfileIn(__METHOD__);
 		$this->title = $title;
@@ -58,7 +72,19 @@ class WallMessage {
 		return $title;
 	}
 
-	static public function buildNewMessageAndPost( $body, $page, $user, $metaTitle = '', $parent = false, $notify = true, $notifyEveryone = false) {
+	/**
+	 * @static
+	 * @param $body
+	 * @param $page
+	 * @param $user
+	 * @param string $metaTitle
+	 * @param bool|WallMessage $parent
+	 * @param array $relatedTopics
+	 * @param bool $notify
+	 * @param bool $notifyEveryone
+	 * @return WallMessage|Bool
+	 */
+	static public function buildNewMessageAndPost( $body, $page, $user, $metaTitle = '', $parent = false, $relatedTopics = array(), $notify = true, $notifyEveryone = false) {
 		wfProfileIn(__METHOD__);
 		if($page instanceof Title ) {
 			$userPageTitle = $page;
@@ -78,8 +104,12 @@ class WallMessage {
 
 		if( $parent === false ) {
 			$metaData = array('title' => $metaTitle );
-			if($notifyEveryone) {
+			if( $notifyEveryone ) {
 				$metaData['notify_everyone'] = time();
+			}
+			
+			if( !empty($relatedTopics) ) {
+				$metaData['related_topics'] = implode('|', $relatedTopics); 
 			}
 			
 			$acStatus = F::build( 'ArticleComment', array( $body, $user, $userPageTitle, false , $metaData ), 'doPost' );
@@ -102,11 +132,14 @@ class WallMessage {
 			wfProfileOut(__METHOD__);
 			return false;
 		}
-
 		// after successful posting invalidate Wall cache
+		/**
+		 * @var $class WallMessage
+		 */
 		$class = F::build( 'WallMessage', array( $ac->getTitle(), $ac ) );
-
+		
 		if($parent === false) {//$db = DB_SLAVE
+			$class->storeRelatedTopicsInDB( $relatedTopics );
 			$class->setOrderId( 1 );
 			$class->getWall()->invalidateCache();
 		} else {
@@ -150,7 +183,6 @@ class WallMessage {
 		return $class;
 	}
 
-
 	//TODO: add some cache
 	public function setOrderId($val = 1) {
 		wfProfileIn( __METHOD__ );
@@ -183,6 +215,16 @@ class WallMessage {
 		$out = self::buildNewMessageAndPost($body, $this->getWallTitle(), $user, '', $this );
 		wfProfileOut( __METHOD__ );
 		return $out; 
+	}
+	
+	public function storeRelatedTopicsInDB($relatedTopicURLs) {
+		$rp = new WallRelatedPages();
+		$rp->setWithURLs($this->getId(), $relatedTopicURLs);
+	}
+	
+	public function getRelatedTopics() {
+		$rp = new WallRelatedPages();
+		return $rp->getMessagesRelatedArticleTitles($this->getId());
 	}
 
 	public function canEdit(User $user){
@@ -334,10 +376,19 @@ class WallMessage {
 	
 	public function setMetaTitle($title) {
 		if($this->isMain()) {
-				$this->getArticleComment()->setMetaData('title', $title);				
+			$this->getArticleComment()->setMetaData('title', $title);				
 		} 
 		return false;
 	}
+	
+	public function setRelatedTopics($relatedTopics) {
+		if($this->isMain()) {
+			$this->getArticleComment()->setMetaData('related_topics', implode('|', $relatedTopics));
+			$this->storeRelatedTopicsInDB($relatedTopics);				
+		} 
+		return false;
+	}
+	
 
 	public function getWallOwnerName() {
 		$parts = explode( '/', $this->getWallTitle()->getText() );
@@ -415,7 +466,9 @@ class WallMessage {
 			$id = $topParent->getArticleId();
 		}
 		
-		$postFix = '#'.$this->getPageUrlPostFix();
+		
+		$postFix = $this->getPageUrlPostFix();
+		$postFix = empty($postFix) ? "":('#'.$postFix);
 		$title = Title::newFromText($id, NS_USER_WALL_MESSAGE);
 
 		$this->messagePageUrl = array();
@@ -462,6 +515,9 @@ class WallMessage {
 		return $this->getArticleComment()->getArticleTitle()->getFullUrl();
 	}
 
+	/**
+	 * @return null|ArticleComment
+	 */
 	public function getTopParentObj(){
 		wfProfileIn(__METHOD__);
 		
@@ -1039,7 +1095,10 @@ class WallMessage {
 			return false;
 		}
 		
-		$msgParent = $this->getTopParentObj();		
+		$msgParent = $this->getTopParentObj();
+		/**
+		 * @var $quotedMsg WallMessage
+		 */
 		$quotedMsg = F::build('WallMessage', array($id, true), 'newFromId');
 
 		if(empty($quotedMsg)) {
@@ -1200,6 +1259,9 @@ class WallMessage {
 		return 0;
 	}
 
+	/**
+	 * @return null|ArticleComment
+	 */
 	protected function getArticleComment() {
 		if( empty($this->articleComment) ) {
 			$this->articleComment = ArticleComment::newFromTitle($this->title);
@@ -1222,6 +1284,10 @@ class WallMessage {
 	
 	public function showVotes() {
 		return in_array(MWNamespace::getSubject($this->title->getNamespace()), F::App()->wg->WallVotesNS);	
+	}
+	
+	public function showTopics() {
+		return in_array(MWNamespace::getSubject($this->title->getNamespace()), F::App()->wg->WallTopicsNS);
 	}
 
 	public function canVotes(User $user) {

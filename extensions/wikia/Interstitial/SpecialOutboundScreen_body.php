@@ -40,7 +40,7 @@ class Outbound extends UnlistedSpecialPage {
 			$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 
 			// Need to have the skinname correct before calling Athena.
-			$skin = $wgUser->getSkin();
+			$skin = RequestContext::getMain()->getSkin();
 			$skinName = get_class($skin);
 
 			// this may not be set yet (and needs to be before setupUserCss in order for the right CSS$
@@ -85,7 +85,7 @@ class Outbound extends UnlistedSpecialPage {
 
 			$athenaInitStuff = AdProviderAthena::getInstance()->getSetupHtml();
 
-			$adCode = $oTmpl->execute($adTemplate);
+			$adCode = $oTmpl->render($adTemplate);
 			$loginMsg = wfMsgExt('outbound-screen-login-text', array('parseinline', 'content'));
 			$pageBarMsg = wfMsg('outbound-screen-you-are-leaving');
 			$oTmpl->set_vars(
@@ -103,7 +103,7 @@ class Outbound extends UnlistedSpecialPage {
 
 			// just output content of template
 			$wgOut->clearHTML();
-			$wgOut->addHTML( $oTmpl->execute('page') );
+			$wgOut->addHTML( $oTmpl->render('page') );
 		}
 	}
 }

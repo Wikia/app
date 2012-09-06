@@ -20,7 +20,7 @@ class TopList extends TopListBase {
 	 *
 	 * @param string $name a string representation of the article title
 	 *
-	 * @return mixed a TopList instance, false in case $name represents a title not in the NS_TOPLIST namespace
+	 * @return TopList|Bool|mixed a TopList instance, false in case $name represents a title not in the NS_TOPLIST namespace
 	 */
 	static public function newFromText( $name ) {
 		$title = Title::newFromText( $name, NS_TOPLIST );
@@ -40,7 +40,7 @@ class TopList extends TopListBase {
 	 * @param Title $title a Title class instance for the article
 	 * @param boolean $skipPhalanxCheck a flag informs to check Phalanx or not
 	 *
-	 * @return mixed a TopList instance, false in case $title is not in the NS_TOPLIST namespace
+	 * @return TopList|bool|mixed a TopList instance, false in case $title is not in the NS_TOPLIST namespace
 	 */
 	static public function newFromTitle( Title $title, $skipPhalanxCheck = false ) {
 		global $wgMemc;
@@ -246,7 +246,7 @@ class TopList extends TopListBase {
 	 *
 	 * Creates and returns a new TopListItem for this list (saving the item is done per item, see TopListItem::save)
 	 *
-	 * @return mixed an instance of the TopListItem class representing the new item, false in case of errors
+	 * @return TopListItem|Bool|mixed an instance of the TopListItem class representing the new item, false in case of errors
 	 */
 	public function createItem() {
 		if( !empty( $this->mTitle ) ) {
@@ -268,7 +268,7 @@ class TopList extends TopListBase {
 	 *
 	 * @param bool $forceReload if set to true the local cache will be refreshed
 	 *
-	 * @return Array an array of TopListItem instances
+	 * @return TopListItem[] an array of TopListItem instances
 	 */
 	public function getItems( $forceReload = false ) {
 			global $wgMemc;

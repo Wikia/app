@@ -3,14 +3,19 @@
 }
 
 #wkSrhFrm{
-	padding: 10px;
-	height: 55px;
-	background: $searchOpenBackground;
-	box-shadow: 0 5px 15px $shadow-color;
 	display: -webkit-box;
 	display: -moz-box;
 	display: box;
+
+	padding: 10px;
+	margin: 0;
+
+	height: 55px;
+
+	background: $searchOpenBackground;
+	box-shadow: 0 5px 15px $shadow-color;
 }
+
 
 #wkSrhSub {
 	margin: 0 0 0 -27px;
@@ -35,12 +40,15 @@
 	li {
 		font-weight: 800;
 		position: relative;
-		opacity: 0;
+		color: white;
 		padding-right: 40px;
-		-webkit-transition: opacity .2s;
+
+		-webkit-transiton: color .2s;
+		-moz-transiton: color .2s;
+		transiton: color .2s;
 
 		&.show {
-			opacity: 1;
+			color: inherit;
 		}
 	}
 
@@ -90,6 +98,8 @@
 }
 
 .srhOpn {
+	z-index: $highest-z-index+1;
+
 	#wkTopBar{
 		border-bottom: 1px solid white;
 	}

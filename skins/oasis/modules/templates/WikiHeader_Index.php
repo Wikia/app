@@ -1,5 +1,5 @@
 <header id="WikiHeader" class="WikiHeader">
-	<?= wfRenderModule('WikiHeader', 'Wordmark') ?> 
+	<?= F::app()->renderView('WikiHeader', 'Wordmark') ?>
 	<nav>
 		<h1><?= wfMsg( 'oasis-wiki-navigation', (!empty($wordmarkText)?$wordmarkText:null) ); ?></h1>
 		<ul>
@@ -48,8 +48,8 @@ if( is_array($menuNodes) && isset($menuNodes[0]) && $showMenu) {
 	</nav>
 	<div class="buttons">
 <?php if ($wg->EnableCorporatePageExt) {
-		if (ArticleAdLogic::isMainPage()) echo wfRenderModule('Search');
-		echo wfRenderModule('RandomWiki');
+		if (WikiaPageType::isMainPage()) echo F::app()->renderView('Search', 'Index');
+		echo F::app()->renderView('RandomWiki', 'Index');
 } else { ?>
 		<?= Wikia::specialPageLink('Random', 'oasis-button-random-page', array('accesskey' => 'x', 'class' => 'wikia-button secondary', 'data-id' => 'randompage', 'title' => wfMsg('oasis-button-random-page-tooltip')), 'blank.gif', null, 'sprite random') ?>
 		<?= Wikia::specialPageLink('WikiActivity', 'oasis-button-wiki-activity', array('accesskey' => 'g', 'class' => 'wikia-button secondary', 'data-id' => 'wikiactivity', 'title' => wfMsg('oasis-button-wiki-activity-tooltip')), 'blank.gif', null, 'sprite activity') ?>
@@ -59,6 +59,6 @@ if( is_array($menuNodes) && isset($menuNodes[0]) && $showMenu) {
 		<?= Wikia::specialPageLink('Watchlist', 'watchlist', array('accesskey' => 'l')) ?>
 		<?= Wikia::specialPageLink('RecentChanges', 'recentchanges', array('accesskey' => 'r')) ?>
 	</div>
-	<?= $displaySearch ? wfRenderModule('Search') : '' ?>
+	<?= $displaySearch ? F::app()->renderView('Search', 'Index') : '' ?>
 	<img class="shadow-mask" src="<?= $wg->BlankImgUrl ?>" width="0" height="0">
 </header>

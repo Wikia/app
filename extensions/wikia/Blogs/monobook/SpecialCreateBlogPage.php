@@ -28,15 +28,14 @@ class CreateBlogPage extends SpecialBlogPage {
 		}
 
 		if( $wgUser->isBlocked() ) {
-			$wgOut->blockedPage();
-			return;
+			throw new UserBlockedError( $this->getUser()->mBlock );
 		}
 
 		if( wfReadOnly() ) {
 			$wgOut->readOnlyPage();
 			return;
 		}
-		
+
 		//nAndy: bugId:9804
 		$pageId = intval($wgRequest->getVal('pageId'));
 		$this->mTitle = ($pageId > 0) ? Title::newFromId($pageId) : Title::makeTitle( NS_SPECIAL, 'CreateBlogPage' );
@@ -48,7 +47,7 @@ class CreateBlogPage extends SpecialBlogPage {
 			CategorySelectInit(true);
 			CategorySelectInitializeHooks(null, null, $this->mTitle, null, null, null);
 		}
-		
+
 		$wgOut->setPageTitle( wfMsg("create-blog-post-title") );
 
 		if($wgRequest->wasPosted()) {

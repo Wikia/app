@@ -11,6 +11,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import com.wikia.webdriver.Common.Core.CommonFunctions;
 import com.wikia.webdriver.Common.Core.MailFunctions;
 import com.wikia.webdriver.Common.Logging.PageObjectLogging;
+import com.wikia.webdriver.Common.Properties.Properties;
 import com.wikia.webdriver.PageObjects.PageObject.BasePageObject;
 
 public class UserProfilePageObject extends BasePageObject{
@@ -73,7 +74,7 @@ public class UserProfilePageObject extends BasePageObject{
 	public void verifyWelcomeEmail(String userName)
 	{
 		PageObjectLogging.log("verifyWelcomeEmail ", "start of email verification", true);
-		String[] mailContent = MailFunctions.getWelcomeMailContent(MailFunctions.getFirstMailContent());
+		String[] mailContent = MailFunctions.getWelcomeMailContent(MailFunctions.getFirstMailContent(Properties.email, Properties.emailPassword));
 		CommonFunctions.assertString("We're happy to welcome you to Wikia and Wikia! Here are some things you can= do to get started.", mailContent[2]);
 		CommonFunctions.assertString("Edit your profile.", mailContent[4]);
 		CommonFunctions.assertString("Add a profile photo and a few quick facts about yourself on your Wikia prof=ile.", mailContent[6]);

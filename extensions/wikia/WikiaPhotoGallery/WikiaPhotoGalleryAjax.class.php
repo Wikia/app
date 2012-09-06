@@ -118,20 +118,19 @@ class WikiaPhotoGalleryAjax {
 	 * Return HTML with search results
 	 */
 	static public function getSearchResult() {
-		global $wgRequest;
-		wfProfileIn(__METHOD__);
+		$app = F::app();
+		$app->wf->ProfileIn( __METHOD__ );
 
-		$query = $wgRequest->getVal('query');
-		$results = WikiaPhotoGalleryHelper::getSearchResultThumbs($query);
+		$query = $app->wg->Request->getVal( 'query' );
+		$results = WikiaPhotoGalleryHelper::getSearchResultThumbs( $query );
 
-		if (!empty($results)) {
-			$html = WikiaPhotoGalleryHelper::renderImagesList('results', $results);
-		}
-		else {
+		if ( !empty( $results ) ) {
+			$html = WikiaPhotoGalleryHelper::renderImagesList( 'results', $results );
+		} else {
 			$html = false;
 		}
 
-		wfProfileOut(__METHOD__);
+		$app->wf->ProfileOut( __METHOD__ );
 
 		return array(
 			'html' => $html,

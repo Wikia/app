@@ -197,11 +197,25 @@ $messages['es'] = array(
 	'quickstats-number-shortening-billions' => '$1B',
 );
 
+/** Estonian (eesti)
+ * @author KalmerE.
+ */
+$messages['et'] = array(
+	'quickstats-header-date' => 'Kuupäev',
+	'quickstats-header-views' => 'Vaatamisi',
+	'quickstats-header-edits' => 'Muudatusi',
+	'quickstats-header-photos' => 'Fotod',
+	'quickstats-totals-label' => 'Kokku',
+);
+
 /** Persian (فارسی)
  * @author Reza1615
+ * @author جواد
  */
 $messages['fa'] = array(
 	'quickstats-header-date' => 'تاریخ',
+	'quickstats-header-views' => 'بازدیدها',
+	'quickstats-header-edits' => 'ویرایش‌ها',
 	'quickstats-header-photos' => 'عکس‌ها',
 	'quickstats-totals-label' => 'مجموع',
 );

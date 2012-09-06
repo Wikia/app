@@ -16,9 +16,9 @@ class SponsorshipDashboardSourceDatabase extends SponsorshipDashboardSource {
 
 		$this->sName = $name;
 		$this->iNumberOfXGuideLines = 7;
-		$this->App = WF::build('App');
+		$this->App = F::app();
 		$this->frequency = SponsorshipDashboardDateProvider::getProvider();
-		
+
 	}
 
 	public function setDatabase( $dbr ) {
@@ -90,11 +90,11 @@ class SponsorshipDashboardSourceDatabase extends SponsorshipDashboardSource {
 			$this->recalculateDateVariables();
 
 			$sql = sprintf( $this->sQuery, $this->startDate, $this->endDate );
-			
+
 			$dbr = $this->getDatabase();
 
 			$res = $dbr->query( $sql, __METHOD__ );
-			
+
 			while ( $row = $res->fetchObject( $res ) ) {
 				$sDate = $row->creation_date;
 				$sDate = $this->frequency->formatDateByString( $sDate );
@@ -122,10 +122,10 @@ class SponsorshipDashboardSourceDatabase extends SponsorshipDashboardSource {
 		$aData = array();
 
 		$aData[ self::SD_SERIE_NAME ] = $this->serieName;
-		
+
 		return $aData;
 	}
-	
+
 	/*
 	 * Fills object from array. Used when creating object from form results.
 	 *

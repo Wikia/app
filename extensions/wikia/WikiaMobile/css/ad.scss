@@ -2,39 +2,26 @@
 @import 'mixins/transition';
 
 //variables
-$slotHeigth: 50px;
-$slotBorder: 2px;
-$slotColor: #666;
+$slotFooterWidth: 300px;//some networks use this instead of 320
+$slotFooterWidthMax: 320px;
+$slotFooterHeight: 50px;
+$slotFooterMargin: 2px;
+$slotFooterColor: #666;
 
 #wkAdPlc {
-	-webkit-tap-highlight-color: rgba( 0,0,0,0 );
-	-webkit-focus-ring-color: rgba( 0,0,0,0 );
-	position: absolute;
-	bottom: 0;
-	height: 0;
-	width: 100%;
-	margin: 0;
-	padding: 0;
-	background-color: $slotColor;
-	-webkit-transition: opacity .75s, -webkit-transform .75s;
-
-	& > *:nth-last-child(n+2) {
-		width: 320px;
-		height: $slotHeigth;
-		max-height: $slotHeigth;
-		position: absolute !important;
-		margin-left: -160px !important;
-		bottom: $slotBorder;
-		left: 50%;
-	}
+	position: relative;
 
 	&.anim{
 	    opacity: 0;
-	 	-webkit-transform: translate3d(0,75px,0);
+	 	-webkit-transform: translateY(75px);
+		-moz-transform: translate3d(0,75px,0);
+		transform: translateY(75px);
 	}
 
 	&.show {
-		height: $slotHeigth + ($slotBorder * 2) !important;
+		-webkit-transition: opacity .75s, -webkit-transform .75s;
+		-webkit-tap-highlight-color: rgba( 0,0,0,0 );
+		-webkit-focus-ring-color: rgba( 0,0,0,0 );
 	}
 
 	&.over {
@@ -42,12 +29,21 @@ $slotColor: #666;
 	}
 
 	&.fixed {
+		background-color: $slotFooterColor;
+		bottom: 0;
+		margin: 0;
+		padding: 0;
 		position: fixed;
+		width: 100%;
+	}
+
+	&.jsfix {
+		position: absolute;
 	}
 }
 
 #wkAdCls {
-	background-color: $slotColor;
+	background-color: $slotFooterColor;
 	border-radius: 5px 0 0 0;
 	color: white;
 	text-transform: uppercase;
@@ -56,7 +52,7 @@ $slotColor: #666;
 	padding: 0 8px;
 	position: absolute;
 	right: 0;
-	top: -20px;
+	top: -19px;
 	display: none;
 
 	//bigger clickable area
@@ -69,7 +65,26 @@ $slotColor: #666;
 		width: 100%;
 	}
 
-	&.show {
+	//close button shows only when the Ad has position fixed
+	//ATM the close button is only for the footer Ad
+	//since interstitials should have it in the creative itself
+	.footer.fixed.show & {
 		display: block;
 	}
+}
+
+#wkAdWrp {
+	.footer & {
+		//Footer Ad
+		//force Ad content to stick in place
+		//and don't exceed allowed dimensions
+		margin: $slotFooterMargin auto;
+		max-width: $slotFooterWidthMax;
+		max-height: $slotFooterHeight;
+	}
+
+	//.interstitial & {
+		//interstitial ad
+		//uncomment and complete when/if needed
+	//}
 }

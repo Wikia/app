@@ -88,7 +88,7 @@ class WikiaValidatorsSet extends  WikiaValidatorListBase
 		return parent::isValid($value);
 	}
 
-	static public  function arrayWalk($val, $key, $obj) {
+	static public  function arrayWalk($val, $key, Array &$obj) {
 		array_push($obj, $val);
 	}
 
@@ -98,7 +98,8 @@ class WikiaValidatorsSet extends  WikiaValidatorListBase
 
 	public function getErrorsFlat(){
 		$output = array();
-		array_walk_recursive($this->getError(), 'WikiaValidatorsSet::arrayWalk', &$output);
+		$input = $this->getError();
+		array_walk_recursive($input, 'WikiaValidatorsSet::arrayWalk', $output);
 		return $output;
 	}
 }

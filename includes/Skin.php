@@ -14,6 +14,11 @@ if ( !defined( 'MEDIAWIKI' ) ) {
  * See docs/skin.txt for more information.
  *
  * @ingroup Skins
+ *
+ * //Wikia Change - Jakub (Helps PHP Lint)
+ * @method get
+ * @method set
+ * //Wikia Change End
  */
 abstract class Skin extends ContextSource {
 	protected $skinname = 'standard';
@@ -22,7 +27,7 @@ abstract class Skin extends ContextSource {
 
 	/**
 	 * Fetch the set of available skins.
-	 * @return associative array of strings
+	 * @return array associative of strings
 	 */
 	static function getSkinNames() {
 		global $wgValidSkinNames;

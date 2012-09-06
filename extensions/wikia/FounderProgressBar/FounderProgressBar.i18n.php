@@ -344,6 +344,18 @@ $messages['de-formal'] = array(
  * @author Erdemaslancan
  */
 $messages['diq'] = array(
+	'founderprogressbar-task-completed' => 'Temamyayo',
+	'founderprogressbar-list-task-label' => 'Wezifey',
+	'founderprogressbar-photo-add10-action' => 'Fotraf deke',
+	'founderprogressbar-category-add3-action' => 'Kategorî deke',
+	'founderprogressbar-photo-add20-action' => 'Fotraf deke',
+	'founderprogressbar-total-edit75-action' => 'Pele deke',
+	'founderprogressbar-page-add20-action' => 'Pele deke',
+	'founderprogressbar-category-add5-action' => 'Kategorî deke',
+	'founderprogressbar-commcorner-edit-label' => 'Kışta Cemaeti bıvurne',
+	'founderprogressbar-commcorner-edit-action' => 'Şo ri kışta cemaeti',
+	'founderprogressbar-video-add-label' => 'Video deke',
+	'founderprogressbar-video-add-action' => 'Video deke',
 	'founderprogressbar-fb-likes3-action' => 'Şo Pela Seri',
 	'founderprogressbar-browse-page-name' => 'Çımpawe',
 );
@@ -954,13 +966,17 @@ $messages['ia'] = array(
  */
 $messages['ja'] = array(
 	'founderprogressbar-widget-label' => '{{SITENAME}} のウィキ作成進行状況',
+	'founderprogressbar-progress-label' => '達成済みのタスク',
 	'founderprogressbar-progress-see-full-list' => '完全な一覧を見る',
 	'founderprogressbar-progress-hide-full-list' => '完全な一覧を隠す',
+	'founderprogressbar-skip-for-now' => 'とりあえずスキップ',
 	'founderprogressbar-list-label' => '{{SITENAME}} のタスク',
-	'founderprogressbar-list-task-label' => '課題',
+	'founderprogressbar-list-task-label' => 'タスク',
+	'founderprogressbar-list-skipped-task-label' => 'スキップしたタスク',
 	'founderprogressbar-task-call-to-action' => '課題に移動',
 	'founderprogressbar-page-add10-label' => '記事数を$1件にする',
 	'founderprogressbar-page-add10-action' => 'ページを追加',
+	'founderprogressbar-page-add10-description' => '新しいウィキがよいスタートを切れるようにするのに最も効果的な方法は、そのウィキが扱おうとしている話題に関するページを作成していくことです。1つもしくは2つ以上の段落があり、他のページへのリンクがあるページが、良いページと言えるでしょう。',
 	'founderprogressbar-themedesigner-visit-label' => '自分のテーマをカスタマイズ',
 	'founderprogressbar-mainpage-edit-action' => 'メイン ページを編集',
 	'founderprogressbar-photo-add10-action' => '画像を追加',

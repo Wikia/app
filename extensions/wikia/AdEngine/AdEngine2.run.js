@@ -1,0 +1,1 @@
+AdEngine2.init();

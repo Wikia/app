@@ -11,6 +11,7 @@ $messages['en'] = array(
 	'forum-forum-title' => 'Forum',
 	'forum-total-threads' => '{{FORMATNUM:$1}} {{PLURAL:$1|Discussion in this Forum|Threads in this Discussions}}',
 	'forum-active-threads' => '{{FORMATNUM:$1}} {{PLURAL:$1|Active Discussion|Active Discussions}}',
+	'forum-active-threads-on-topic' => '{{FORMATNUM:$1}} {{PLURAL:$1|Active Discussion|Active Discussions}} about: $2',
 
 	/* Heading Bar */
 	'forum-header-total-threads' => '<em>{{FORMATNUM:$1}}</em><span>{{PLURAL:$1|Thread<br> in this Forum|Threads<br> in this Forum}}</span>',
@@ -25,11 +26,13 @@ $messages['en'] = array(
 
 	/* Forum Board */
 	'forum-board-title' => '$1 board',
+	'forum-board-topics' => 'Topics',
 	'forum-board-thread-follow' => 'Follow',
 	'forum-board-thread-following' => 'Following',
 	'forum-board-thread-kudos' => '$1 Kudos',
 	'forum-board-thread-replies' => '$1 Replies',
 	'forum-board-thread-unfollow' => 'Unfollow',
+	'forum-board-new-message-heading' => 'Start a Discussion',
 
 	/* Forum Thread */
 	'forum-thread-title' => '$1 board',
@@ -100,8 +103,9 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
 	'forum-wiki-activity-msg' => 'on the $1',
 	'forum-wiki-activity-msg-name' => '$1 board',
 	
-	/* Forum Activity Module */
+	/* Forum Activity and Related Module */
 	'forum-activity-module-heading' => 'Forum Activity',
+	'forum-related-module-heading' => 'Related Threads',
 	'forum-activity-module-posted' => '$1 posted a reply $2',
 	'forum-activity-module-started' => '$1 started a discussion $2',
 

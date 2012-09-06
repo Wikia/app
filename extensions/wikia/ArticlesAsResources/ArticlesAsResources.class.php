@@ -23,7 +23,7 @@ class ArticlesAsResources {
 	const WIKIA_DEFAULT_DOMAIN_SUFFIX = '.wikia.com';
 
 	function __construct() {
-		$this->app = WF::build('App');
+		$this->app = F::app();
 	}
 
 	/**
@@ -60,14 +60,14 @@ class ArticlesAsResources {
 	 * Get wiki ID by its db name
 	 *
 	 * @param $dbName string Database name
-	 * @return int Wiki ID
+	 * @return int Wiki ID (or null)
 	 */
 	protected function getCityIdByDbName( $dbName ) {
-		$id = false;
+		$id = null;
 		if ( $dbName === 'c' ) {
 			$id = self::COMMUNITY_WIKI_ID;
 		}
-		if ( $id === false ) {
+		if ( $id === null ) {
 			$id = WikiFactory::DBtoID($dbName);
 		}
 		return $id;
@@ -78,7 +78,7 @@ class ArticlesAsResources {
 	 * (in the second pass it appends ".wikia.com" at the end of the supplied value).
 	 *
 	 * @param $url string
-	 * @return int Wiki ID
+	 * @return int Wiki ID (or null)
 	 */
 	protected function getCityIdByUrl( $url ) {
 		$id = null;
@@ -90,9 +90,6 @@ class ArticlesAsResources {
 		}
 		if ( $id === null ) {
 			$id = WikiFactory::DomainToID($url . self::WIKIA_DEFAULT_DOMAIN_SUFFIX );
-		}
-		if ( $id === null ) {
-			$id = false;
 		}
 
 		return $id;
@@ -119,27 +116,39 @@ class ArticlesAsResources {
 		$articles = array();
 		foreach ($list as $k => $name) {
 			$matches = array();
-			if (preg_match("/^(?:l|local):(.*)\$/",$name,$matches)) {
+			if (preg_match('/^(?:l|local):(.*)$/', $name, $matches)) {
 				$articles[] = array(
-                    'originalName' => $name,
+					'originalName' => $name,
 					'title' => $matches[1],
 				);
-			} elseif (preg_match("/^(?:w|remote|external):(?:c:)?([^:]+):(.*)\$/",$name,$matches)) {
+			} elseif (preg_match('/^(?:w|remote|external):(c:)?([^:]+):(.*)$/', $name, $matches)) {
+				$cityId = null;
+
+				// Special case for "w:c:" interwiki style links (BugId:45853)
+				if ( $matches[1] ) {
+					$cityId = $this->getCityIdByUrl( $matches[2] );
+				}
+
+				// Fall back to dbName lookup
+				if ( $cityId === null ) {
+					$cityId = $this->getCityIdByDbName( $matches[2] );
+				}
+
 				$articles[] = array(
-                    'originalName' => $name,
-                    'cityId' => $this->getCityIdByDbName( $matches[1] ),
-					'title' => $matches[2],
+					'originalName' => $name,
+					'cityId' => $cityId,
+					'title' => $matches[3],
 				);
-			} elseif (preg_match("/^(?:u|url):([^:]+):(.*)\$/",$name,$matches)) {
+			} elseif (preg_match('/^(?:u|url):([^:]+):(.*)$/', $name, $matches)) {
 				$articles[] = array(
-                    'originalName' => $name,
-                    'cityId' => $this->getCityIdByUrl( $matches[1] ),
+					'originalName' => $name,
+					'cityId' => $this->getCityIdByUrl( $matches[1] ),
 					'title' => $matches[2],
 				);
 			} else {
 				$articles[] = array(
-                    'originalName' => $name,
-                    'title' => $name,
+					'originalName' => $name,
+					'title' => $name,
 				);
 			}
 		}

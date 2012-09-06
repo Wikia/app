@@ -4,27 +4,27 @@ class FounderEmailsController extends WikiaController {
 	// This function is only used for testing / previewing / debugging the FounderEmails templates
 	public function executeIndex() {
 		global $wgRequest, $wgContLang;
-		
+
 		$day = $wgRequest->getVal('day');
 		$type = $wgRequest->getVal('type');
 		$lang = $wgRequest->getVal('lang', 'en');
-		
+
 		if ($type != 'views-digest' && $type != 'complete-digest') {
 			$wgContLang = wfGetLangObj($lang);
 		}
-		
+
 		if(!empty($day)){
-			$this->previewBody = wfRenderModule("FounderEmails", $day, array('language' => $lang));
-			$this->previewBody = strtr($this->previewBody, 
+			$this->previewBody = F::app()->renderView("FounderEmails", $day, array('language' => $lang));
+			$this->previewBody = strtr($this->previewBody,
 				array('$USERNAME' => 'UserName',
 					'$WIKINAME' => '<a href="#" style="color:#2C85D5;">WikiName</a>',
 					'$HDWIKINAME' => '<a href="#" style="color:#fa5c1f;">WikiName</a>',
 					'$UNIQUEVIEWS' => '6')
 			);
 		} else if(!empty($type)) {
-			$this->previewBody = wfRenderModule("FounderEmails", 'GeneralUpdate', 
-				array('type' => $type, 
-					'language' => $lang, 
+			$this->previewBody = F::app()->renderView("FounderEmails", 'GeneralUpdate',
+				array('type' => $type,
+					'language' => $lang,
 					'$PAGEURL' => 'http://www.wikia.com',
 					'$MYHOMEURL' => 'http://www.wikia.com',
 					'$UNIQUEVIEWS' => '1',
@@ -33,7 +33,7 @@ class FounderEmailsController extends WikiaController {
 					'$EDITORTALKPAGEURL' => 'http://www.wikia.com',
 					)
 				);
-			$this->previewBody = strtr($this->previewBody, 
+			$this->previewBody = strtr($this->previewBody,
 				array('$USERNAME' => 'UserName',
 					'$WIKINAME' => '<a href="#" style="color:#2C85D5;">WikiName</a>',
 					'$PAGETITLE' => '<a href="#" style="color:#2C85D5;">PageTitle</a>',
@@ -47,21 +47,21 @@ class FounderEmailsController extends WikiaController {
 		// FIXME: I think this language var is not used
 		$this->language = $params['language'];
 	}
-	
+
 	public function executeDayThree($params) {
 		$this->language = $params['language'];
 	}
-	
+
 	public function executeDayTen($params) {
 		$this->language = $params['language'];
 	}
-	
+
 	/**
 	 * General Entry point for Event emails
-	 * 
+	 *
 	 * @requestParam String type which set of messages to use
-	 * 
-	 * types so far are: 
+	 *
+	 * types so far are:
 	 * user-registered
 	 * anon-edit
 	 * general-edit
@@ -69,7 +69,7 @@ class FounderEmailsController extends WikiaController {
 	 * lot-happening
 	 * views-digest
 	 * complete-digest
-	 * 
+	 *
 	 */
 	public function executeGeneralUpdate($params) {
 		$this->type = $params['type'];

@@ -37,18 +37,21 @@ $wgExtensionMessagesFiles['OpenGraphMetaMagic'] = $dir . '/OpenGraphMeta.magic.p
 $wgExtensionMessagesFiles['OpenGraphMeta'] = $dir . '/OpenGraphMeta.i18n.php';
 
 $wgHooks['ParserFirstCallInit'][] = 'efOpenGraphMetaParserInit';
-function efOpenGraphMetaParserInit( $parser ) {
+function efOpenGraphMetaParserInit( Parser $parser ) {
 	$parser->setFunctionHook( 'setmainimage', 'efSetMainImagePF' );
 	return true;
 }
 
-function efSetMainImagePF( $parser, $mainimage ) {
+function efSetMainImagePF( Parser $parser, $mainimage ) {
 	$parserOutput = $parser->getOutput();
 	if ( isset($parserOutput->eHasMainImageAlready) && $parserOutput->eHasMainImageAlready )
 		return $mainimage;
 	$file = Title::newFromText( $mainimage, NS_FILE );
-	$parserOutput->addOutputHook( 'setmainimage', array( 'dbkey' => $file->getDBkey() ) );
-	$parserOutput->eHasMainImageAlready = true;
+
+	if ($file instanceof Title) {
+		$parserOutput->addOutputHook( 'setmainimage', array( 'dbkey' => $file->getDBkey() ) );
+		$parserOutput->eHasMainImageAlready = true;
+	}
 
 	return $mainimage;
 }
@@ -59,7 +62,7 @@ function efSetMainImagePH( $out, $parserOutput, $data ) {
 }
 
 $wgHooks['BeforePageDisplay'][] = 'efOpenGraphMetaPageHook';
-function efOpenGraphMetaPageHook( &$out, &$sk ) {
+function efOpenGraphMetaPageHook( OutputPage &$out, &$sk ) {
 	global $wgLogo, $wgSitename, $wgXhtmlNamespaces, $egFacebookAppId, $egFacebookAdmins;
 	$wgXhtmlNamespaces["og"] = "http://opengraphprotocol.org/schema/";
 	$title = $out->getTitle();
@@ -97,7 +100,11 @@ function efOpenGraphMetaPageHook( &$out, &$sk ) {
 	}
 	$meta["og:url"] = $title->getFullURL();
 	if ( $egFacebookAppId ) {
-		$meta["fb:app_id"] = $egFacebookAppId;
+		/* begin wikia change */
+		// $meta["fb:app_id"] = $egFacebookAppId;
+		// fb:app_id needs a prefix property declaring the namespace, so just add it directly
+		$out->addHeadItem("meta:property:fb:app_id", "	".Html::element( 'meta', array( 'property' => 'fb:app_id', 'content' => $egFacebookAppId, 'prefix' => "fb: http://www.facebook.com/2008/fbml" ) )."\n");
+		/* end wikia change */
 	}
 	if ( $egFacebookAdmins ) {
 		$meta["fb:admins"] = $egFacebookAdmins;

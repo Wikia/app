@@ -142,7 +142,7 @@
 							);
 					$emailParams_new = FounderEmails::addLink($emailParams, $links);
 					$emailParams_new['$HDWIKINAME'] = str_replace('#2C85D5', '#fa5c1f', $emailParams_new['$WIKINAME']);	// header color = #fa5c1f
-					$mailBodyHTML = wfRenderModule("FounderEmails", $html_template, array_merge($emailParams_new, $params));
+					$mailBodyHTML = F::app()->renderView("FounderEmails", $html_template, array_merge($emailParams_new, $params));
 					$mailBodyHTML = strtr($mailBodyHTML, $emailParams_new);
 				} else {	// old emails
 					$mailBodyHTML = strtr(wfMsgExt($msg_key_body_html, array('content', 'parseinline')), $emailParams);

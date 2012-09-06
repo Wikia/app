@@ -16,7 +16,7 @@ import com.wikia.webdriver.PageObjects.PageObject.Hubs.VideoGamesHubPageObject;
 
 public class HomePageObject extends BasePageObject{
 
-	@FindBy(className="create-wiki") 
+	@FindBy(css="header.wikiahomepage-header a.button") 
 	private WebElement startWikiButton;
 	@FindBy(css="section.grid-2.videogames a img") 
 	private WebElement OpenVideoGamesHub;

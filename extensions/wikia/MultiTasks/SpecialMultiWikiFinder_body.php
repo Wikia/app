@@ -13,8 +13,7 @@ class MultiwikifinderSpecialPage extends SpecialPage {
 		global $wgRequest, $wgUser, $wgOut;
 
 		if( $wgUser->isBlocked() ) {
-			$wgOut->blockedPage();
-			return;
+			throw new UserBlockedError( $this->getUser()->mBlock );
 		}
 
 		if( !$wgUser->isAllowed( 'multiwikifinder' ) ) {
@@ -92,7 +91,7 @@ class MultiwikifinderPage {
 		));
 
 		wfProfileOut( __METHOD__ );
-		return $oTmpl->execute("main-finder-form");
+		return $oTmpl->render("main-finder-form");
 	}
 
 	public function getResult() { return $this->data; }
@@ -158,7 +157,7 @@ class MultiwikifinderPage {
 			$wgMemc->set( $key, $data, 60 * 60 );
 		}
 
-		$num = $this->outputResults( $wgUser->getSkin(), $data );
+		$num = $this->outputResults( RequestContext::getMain()->getSkin(), $data );
 
         wfProfileOut( __METHOD__ );
 		return $num;
@@ -234,14 +233,14 @@ class MultiwikifinderPage {
 			if( $num > 0 ) {
 				$wgOut->addHTML( '<p>' . wfShowingResults( $this->offset, $num ) . '</p>' );
 				# Disable the "next" link when we reach the end
-				$paging = $wgLang->viewPrevNext( 
-					SpecialPage::getTitleFor( $this->mName ), 
-					$this->offset, 
-					$this->limit, 
-					$this->linkParameters(), 
-					( $num < $this->limit ) 
+				$paging = $wgLang->viewPrevNext(
+					SpecialPage::getTitleFor( $this->mName ),
+					$this->offset,
+					$this->limit,
+					$this->linkParameters(),
+					( $num < $this->limit )
 				);
-			
+
 				$wgOut->addHTML( '<p>' . $paging . '</p>' );
 			} else {
 				$wgOut->addHTML( XML::closeElement( 'div' ) );

@@ -189,6 +189,7 @@ body {
 	textarea {
 		@include epl-editorarea;
 		border: 0;
+		line-height: 140%;
 	}
 
 	#diff {

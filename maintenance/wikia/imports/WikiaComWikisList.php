@@ -51,7 +51,6 @@ if( $putItToAmessage ) {
 class WikiaComWikisListImport {
 	const SPREADSHEET_FIRST_ADD_IMG_IDX = 6;
 	const SPREADSHEET_LAST_ADD_IMG_IDX = 6;
-	const NANDY_USER_ID = 4020602;
 
 	protected $options = null;
 	protected $verticalsNames = array('Video Games', 'Entertainment', 'Lifestyle');
@@ -131,7 +130,7 @@ class WikiaComWikisListImport {
 
 		$title = Title::newFromText($this->options->mediaWikiMessage, NS_MEDIAWIKI);
 		$article = new Article($title);
-		$content = parseWikisList(0, $verticals) . parseWikisList(1, $verticals) . parseWikisList(2, $verticals);
+		$content = $this->parseWikisList(0, $verticals) . $this->parseWikisList(1, $verticals) . $this->parseWikisList(2, $verticals);
 		$summary = "automated import";
 		$article->doEdit($content, $summary);
 
@@ -313,7 +312,15 @@ class WikiaComWikisListImport {
 		wfProfileIn(__METHOD__);
 
 		$success = false;
-		$result = ImagesService::uploadImageFromUrl($imageUrl, $imageName);
+
+		//fb#45624
+		$user = F::build('User', array('WikiaBot'), 'newFromName');
+		$user = ($user instanceof User) ? $user : null;
+		$imageData = new stdClass();
+		$imageData->name = $imageName;
+		$imageData->description = $imageData->comment = wfMsg('wikiahome-image-auto-uploaded-comment');
+
+		$result = ImagesService::uploadImageFromUrl($imageUrl, $imageData, $user);
 
 		if( $isSliderImage ) {
 			$statusArrayKey = 'slider-images';
@@ -459,7 +466,6 @@ class WikiaComWikisListImport {
 			$task->createTask(
 				array(
 					'upload_list' => $taskAdditionList,
-					'user_id' => self::NANDY_USER_ID
 				),
 				TASK_QUEUED
 			);

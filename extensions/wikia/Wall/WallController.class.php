@@ -142,21 +142,6 @@ class WallController extends WallBaseController {
 		return $this->parserText($text);
 	}
 
-
-	/**
-	 * @brief Checks if $wgDisableAnonymousEditing is not empty and and if user is logged-in
-	 *
-	 * @desc If $wgDisableAnonymousEditing is not empty and user is not logged-in it sets two vars and passes it to the templates
-	 */
-	protected function checkAndSetAnonsEditing() {
-		if( !empty($this->app->wg->DisableAnonymousEditing) && !$this->app->wg->User->isLoggedIn() ) {
-			$this->response->setVal('loginToEditProtectedPage', true);
-			$this->response->setVal('ajaxLoginUrl', $this->app->wg->Title->getLocalUrl());
-		} else {
-			$this->response->setVal('loginToEditProtectedPage', false);
-		}
-	}
-
 	protected function checkAndSetUserBlockedStatus($wallOwner = null) {
 		$user = $this->app->wg->User;
 

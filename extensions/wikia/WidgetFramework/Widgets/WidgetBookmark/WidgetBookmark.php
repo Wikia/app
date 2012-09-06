@@ -45,7 +45,7 @@ function WidgetBookmark($id) {
 			}
         	}
 	}
-	
+
 	if ($pages == false) {
 		$pages = WidgetBookmarkGetPages();
 	}
@@ -56,7 +56,7 @@ function WidgetBookmark($id) {
 	if ( !empty($pages) ) {
 
 		// the newest bookmarks on top
-		$pages = array_reverse($pages);	
+		$pages = array_reverse($pages);
 
 		$list = '<ul><!-- '.count($pages).' bookmarks -->';
 
@@ -64,14 +64,14 @@ function WidgetBookmark($id) {
 			// filter the list by cityId
 			if (isset($page['city']) && $page['city'] == $wgCityId) {
 				$list .= '<li><a href="'.$page['href'].'" title="'.htmlspecialchars($page['title']).'">'.
-					htmlspecialchars(shortenText($page['title'], 25)).'</a>'.
+					htmlspecialchars(wfShortenText($page['title'], 25)).'</a>'.
 					'<a class="WidgetBookmarkRemove" onclick="WidgetBookmarkDo('.$id.', \'remove\', \''.$page_id.'\')">x</a></li>';
 				$count++;
 			}
 		}
 		$list .= '</ul>';
 	}
-	
+
 	if ($count == 0) {
 		$list = wfMsg('widget-bookmark-empty');
 	}
@@ -98,7 +98,7 @@ function WidgetBookmarkSavePages($pages) {
 
 	wfProfileIn(__METHOD__);
 
-	global $wgUser;        
+	global $wgUser;
 
 	$wgUser->setOption('widget_bookmark_pages', serialize($pages));
         $wgUser->saveSettings();

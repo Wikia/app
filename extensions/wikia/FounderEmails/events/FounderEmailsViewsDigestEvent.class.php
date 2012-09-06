@@ -8,7 +8,7 @@ class FounderEmailsViewsDigestEvent extends FounderEmailsEvent {
 	public function enabled ( $wgCityId, $user ) {
 		if (self::isAnswersWiki())
 			return false;
-		
+
 		// If complete digest mode is enabled, do not send views only digest
 		if ( $user->getOption( "founderemails-complete-digest-$wgCityId" ) ) {
 			return false;
@@ -18,7 +18,7 @@ class FounderEmailsViewsDigestEvent extends FounderEmailsEvent {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Called from maintenance script only.  Send Digest emails for any founders with that preference enabled
 	 *
@@ -33,7 +33,7 @@ class FounderEmailsViewsDigestEvent extends FounderEmailsEvent {
 		// Get list of founders with digest mode turned on
 		$cityList = $founderEmailObj->getFoundersWithPreference('founderemails-views-digest');
 		$wikiService = F::build( 'WikiService' );
-		
+
 		// Gather daily page view stats for each wiki requesting views digest
 		foreach ($cityList as $cityID) {
 			$user_ids = $wikiService->getWikiAdminIds( $cityID );
@@ -44,12 +44,12 @@ class FounderEmailsViewsDigestEvent extends FounderEmailsEvent {
 				'$WIKINAME' => $foundingWiki->city_title,
 				'$WIKIURL' => $foundingWiki->city_url,
 				'$PAGEURL' => $page_url,
-				'$UNIQUEVIEWS' => $founderEmailObj->getPageViews( $cityID ),				
+				'$UNIQUEVIEWS' => $founderEmailObj->getPageViews( $cityID ),
 			);
-			
+
 			foreach ($user_ids as $user_id) {
 				$user = User::newFromId($user_id);
-				
+
 				// skip if not enable
 				if (!$this->enabled($cityID, $user)) {
 					continue;
@@ -57,14 +57,14 @@ class FounderEmailsViewsDigestEvent extends FounderEmailsEvent {
 				self::addParamsUser($cityID, $user->getName(), $emailParams);
 
 				$langCode = $user->getOption( 'language' );
-				// Only send digest emails for English users until translation is done 
+				// Only send digest emails for English users until translation is done
 				if ($langCode == 'en') {
 					$links = array(
 						'$WIKINAME' => $emailParams['$WIKIURL'],
 					);
 					$mailSubject = strtr(wfMsgExt('founderemails-email-views-digest-subject', array('content')), $emailParams);
 					$mailBody = strtr(wfMsgExt('founderemails-email-views-digest-body', array('content','parsemag'), $emailParams['$UNIQUEVIEWS']), $emailParams);
-					$mailBodyHTML = wfRenderModule("FounderEmails", "GeneralUpdate", array_merge($emailParams, array('language' => 'en', 'type' => 'views-digest')));
+					$mailBodyHTML = F::app()->renderView("FounderEmails", "GeneralUpdate", array_merge($emailParams, array('language' => 'en', 'type' => 'views-digest')));
 					$mailBodyHTML = strtr($mailBodyHTML, FounderEmails::addLink($emailParams,$links));
 					$mailCategory = FounderEmailsEvent::CATEGORY_VIEWS_DIGEST.(!empty($langCode) && $langCode == 'en' ? 'EN' : 'INT');
 

@@ -7,13 +7,12 @@ class SpecialUserManagementController extends WikiaSpecialPageController {
         }
 
 	function index() {
-                 
+
 		if ( !$this->wg->User->isAllowed( 'usermanagement' ) ) {
-			$this->wg->Out->permissionRequired( 'usermanagement' );
 			$this->skipRendering();
-		   return;
+			throw new PermissionsError( 'usermanagement' );
 		}
-		
+
 		$this->setHeaders();
 
 		$par = $this->getPar();
@@ -62,7 +61,7 @@ class SpecialUserManagementController extends WikiaSpecialPageController {
 		$this->emailChangeUrl = GlobalTitle::newFromText( 'EditAccount', NS_SPECIAL, 177 )->getFullUrl() . '/' . $par;
 		$this->emailChangeSubscriptionUrl = $this->emailChangeUrl;
          }
-	
+
 
 
 	private function getLastEmailDelivery() {

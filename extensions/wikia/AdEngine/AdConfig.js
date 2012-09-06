@@ -1,7 +1,6 @@
 var AdConfig = {
 	adSlotsRequiringJSInvocation: { HOME_INVISIBLE_TOP:1, INVISIBLE_TOP:1, INVISIBLE_1:1, INVISIBLE_2:1 },
 	geo: null,
-	geoCookieName: 'Geo',
 
 	isHighValueCountry: function(country) {
 		country = country.toUpperCase();
@@ -46,23 +45,9 @@ var AdConfig = {
 		return Wikia.Cookies.get(name);
 	},
 
-	/* Pull the geo data from cookie */
-	pullGeo: function (){
-		if (AdConfig.geo) {
-			return;
-		}
-
-		var cookie = decodeURIComponent(AdConfig.cookie(AdConfig.geoCookieName));
-		if (typeof cookie != 'undefined' && cookie) {
-			try {
-				AdConfig.geo = JSON.parse(cookie);
-			} catch (e) {
-			}
-		}
-	},
-
 	init: function() {
-		AdConfig.pullGeo();
+		// Pull the geo data from cookie
+		AdConfig.geo = Wikia.geo.getGeoData();
 	}
 };
 
@@ -144,12 +129,16 @@ AdConfig.DART = {
 };
 
 AdConfig.DART.getUrl = function(slotname, size, useIframe, adProvider) {
-	if (AdConfig.DART.sizeMap[size]) {
-		size = AdConfig.DART.sizeMap[size];
+	var mtfIFPath = '',
+		src = '',
+		DART = AdConfig.DART,
+		hostname = window.location.hostname;
+
+	if (DART.sizeMap[size]) {
+		size = DART.sizeMap[size];
 	}
 
-	var mtfIFPath = '';
-	var src = '';
+
 	switch (adProvider) {
 		case 'AdDriver':
 			src = 'driver';
@@ -164,87 +153,82 @@ AdConfig.DART.getUrl = function(slotname, size, useIframe, adProvider) {
 			break;
 	}
 
-	AdConfig.DART.initSiteAndZones();
+	DART.initSiteAndZones();
 
-	var url = 'http://' +
-		AdConfig.DART.getSubdomain() +
+	return 'http://' +
+		DART.getSubdomain() +
 		'.doubleclick.net/' +
-		AdConfig.DART.getAdType(useIframe) + '/' +
-		AdConfig.DART.site + '/' + AdConfig.DART.zone1 + '/' + AdConfig.DART.zone2 + ';' +
-		's0=' + AdConfig.DART.site.replace(/wka\./, '') + ';' +
-		's1=' + AdConfig.DART.zone1 + ';' +
-		's2=' + AdConfig.DART.zone2 + ';' +
-		AdConfig.DART.getCustomKeyValues() +
-		AdConfig.DART.getArticleKV() +
-		AdConfig.DART.getDomainKV(window.location.hostname) +
-		AdConfig.DART.getHostnamePrefix(window.location.hostname) +
+		DART.getAdType(useIframe) + '/' +
+		DART.site + '/' + DART.zone1 + '/' + DART.zone2 + ';' +
+		's0=' + DART.site.replace(/wka\./, '') + ';' +
+		's1=' + DART.zone1 + ';' +
+		's2=' + DART.zone2 + ';' +
+		DART.getCustomKeyValues() +
+		DART.getArticleKV() +
+		DART.getDomainKV(hostname) +
+		DART.getHostnamePrefix(hostname) +
 		'pos=' + slotname + ';' +
-		AdConfig.DART.getTitle() +
-		AdConfig.DART.getLanguage() +
+		DART.getTitle() +
+		DART.getLanguage() +
 		// TODO when we get better at search, support "kw" key-value
-		AdConfig.DART.getResolution() +
-		AdConfig.DART.getPrefooterStatus() +
+		DART.getResolution() +
+		DART.getPrefooterStatus() +
 		(window.wgEnableKruxTargeting && window.Krux && window.Krux.dartKeyValues ? window.Krux.dartKeyValues : '') +
-		AdConfig.DART.getImpressionCount(slotname) +
-		AdConfig.DART.getPartnerKeywords() +
-		AdConfig.DART.getCategories() +
-		AdConfig.DART.getLocKV(slotname) +
-		AdConfig.DART.getDcoptKV(slotname) +
+		DART.getImpressionCount(slotname) +
+		DART.getPartnerKeywords() +
+		DART.getCategories() +
+		DART.getLocKV(slotname) +
+		DART.getDcoptKV(slotname) +
 		((typeof window.top.wgEnableAdMeldAPIClient != 'undefined' && window.top.wgEnableAdMeldAPIClient) ? window.top.AdMeldAPIClient.getParamForDART(slotname) : '') +
-		AdConfig.DART.getCustomVarAB() +
+		DART.getCustomVarAB() +
 		mtfIFPath +
 		'src=' + src + ';' +
 		'sz=' + size + ';' +
 		'mtfInline=true;' +	// http://www.google.com/support/richmedia/bin/answer.py?hl=en&answer=182220
-		AdConfig.DART.getTileKV(slotname, adProvider) +
+		DART.getTileKV(slotname, adProvider) +
 		'endtag=$;' +
-		'ord=' + AdConfig.DART.ord + '?';
-
-	return url;
+		'ord=' + DART.ord + '?';
 };
 
 AdConfig.DART.getMobileUrl = function(slotname, size, useIframe, adProvider) {
 		size = '5x5';
 
-	var mtfIFPath = '';
-	var src = 'mobile';
+	var DART = AdConfig.DART,
+		hostname = window.location.hostname;
 
-	AdConfig.DART.initSiteAndZones();
+	DART.initSiteAndZones();
 
-	var url = 'http://' +
+	return 'http://' +
 		'ad.mo' +
 		'.doubleclick.net/' +
 		'DARTProxy/mobile.handler?k=' +
-		AdConfig.DART.site + '/' + AdConfig.DART.zone1 + '/' + AdConfig.DART.zone2 + ';' +
-		's0=' + AdConfig.DART.site.replace(/wka\./, '') + ';' +
-		's1=' + AdConfig.DART.zone1 + ';' +
-		's2=' + AdConfig.DART.zone2 + ';' +
-		AdConfig.DART.getCustomKeyValues() +
-		AdConfig.DART.getArticleKV() +
-		AdConfig.DART.getDomainKV(window.location.hostname) +
-		AdConfig.DART.getHostnamePrefix(window.location.hostname) +
+		DART.site + '/' + DART.zone1 + '/' + DART.zone2 + ';' +
+		's0=' + DART.site.replace(/wka\./, '') + ';' +
+		's1=' + DART.zone1 + ';' +
+		's2=' + DART.zone2 + ';' +
+		DART.getCustomKeyValues() +
+		DART.getArticleKV() +
+		DART.getDomainKV(hostname) +
+		DART.getHostnamePrefix(hostname) +
 		'pos=' + slotname + ';' +
-		AdConfig.DART.getTitle() +
-		AdConfig.DART.getLanguage() +
+		DART.getTitle() +
+		DART.getLanguage() +
 		// TODO when we get better at search, support "kw" key-value
-		AdConfig.DART.getResolution() +
-		AdConfig.DART.getPrefooterStatus() +
-		AdConfig.DART.getImpressionCount(slotname) +
-		AdConfig.DART.getPartnerKeywords() +
-		AdConfig.DART.getCategories() +
-		AdConfig.DART.getLocKV(slotname) +
-		AdConfig.DART.getDcoptKV(slotname) +
-		'positionfixed=' + ((Modernizr.positionfixed) ? 'css' : 'js') + ';' +
-		mtfIFPath +
-		'src=' + src + ';' +
-		'ord=' + AdConfig.DART.ord + ';' +
+		DART.getResolution() +
+		DART.getPrefooterStatus() +
+		DART.getImpressionCount(slotname) +
+		DART.getPartnerKeywords() +
+		DART.getCategories() +
+		DART.getLocKV(slotname) +
+		DART.getDcoptKV(slotname) +
+		'positionfixed=' + (Features.positionfixed ? 'css' : 'js') + ';' +
+		'src=mobile;' +
+		'ord=' + DART.ord + ';' +
 		'sz=' + size + ';' +
 		'mtfInline=true;' +	// http://www.google.com/support/richmedia/bin/answer.py?hl=en&answer=182220
-		AdConfig.DART.getTileKV(slotname, adProvider) +
+		DART.getTileKV(slotname, adProvider) +
 		'&dw=1' +
-		'&u=' + AdConfig.DART.getUniqueId();
-
-	return url;
+		'&u=' + DART.getUniqueId();
 };
 
 AdConfig.DART.getSubdomain = function() {
@@ -305,34 +289,33 @@ AdConfig.DART.getAdType = function(useIframe) {
 };
 
 AdConfig.DART.initSiteAndZones = function() {
-	if (AdConfig.DART.isWikiaHub()) {
-		AdConfig.DART.site = AdConfig.DART.getSite('hub');
-		AdConfig.DART.zone1 = AdConfig.DART.getZone1(window.wgWikiaHubType+'_hub');
-		AdConfig.DART.zone2 = 'hub';
+	var DART = AdConfig.DART;
+
+	if (DART.isWikiaHub()) {
+		DART.site = DART.getSite('hub');
+		DART.zone1 = DART.getZone1(window.wgWikiaHubType+'_hub');
+		DART.zone2 = 'hub';
 	}
-	else if (AdConfig.DART.isAutoHub()) {
-		AdConfig.DART.site = AdConfig.DART.getSite(window.wgHubsPages[wgPageName.toLowerCase()]['site']);
-		AdConfig.DART.zone1 = AdConfig.DART.getZone1(window.wgHubsPages[wgPageName.toLowerCase()]['name']);
-		AdConfig.DART.zone2 = 'hub';
+	else if (DART.isAutoHub()) {
+		var hubsPages = window.wgHubsPages[wgPageName.toLowerCase()];
+		DART.site = DART.getSite(hubsPages['site']);
+		DART.zone1 = DART.getZone1(hubsPages['name']);
+		DART.zone2 = 'hub';
 	}
 
-	if (!AdConfig.DART.site) {
-		AdConfig.DART.site = AdConfig.DART.getSite(window.cityShort);
+	if (!DART.site) {
+		DART.site = DART.getSite(window.cityShort);
 	}
-	if (!AdConfig.DART.zone1) {
-		AdConfig.DART.zone1 = AdConfig.DART.getZone1(window.wgDBname);
+	if (!DART.zone1) {
+		DART.zone1 = DART.getZone1(window.wgDBname);
 	}
-	if (!AdConfig.DART.zone2) {
-		AdConfig.DART.zone2 = AdConfig.DART.getZone2(window.adLogicPageType);
+	if (!DART.zone2) {
+		DART.zone2 = DART.getZone2(window.wikiaPageType);
 	}
 };
 
 AdConfig.DART.isWikiaHub = function() {
-	if (window.wgWikiaHubType) {	// defined in source of hub article
-		return true;
-	}
-
-	return false;
+	return !!window.wgWikiaHubType;	// defined in source of hub article
 };
 
 AdConfig.DART.isAutoHub = function() {
@@ -381,7 +364,7 @@ AdConfig.DART.getZone2 = function(pageType){
 };
 
 AdConfig.DART.getCustomKeyValues = function(){
-	if (typeof wgDartCustomKeyValues != 'undefined' && wgDartCustomKeyValues) {
+	if (window.wgDartCustomKeyValues) {
 		return wgDartCustomKeyValues + ';';
 	}
 
@@ -389,7 +372,7 @@ AdConfig.DART.getCustomKeyValues = function(){
 };
 
 AdConfig.DART.getArticleKV = function(){
-	if (typeof wgArticleId != 'undefined' && wgArticleId) {
+	if (window.wgArticleId) {
 		return "artid=" + wgArticleId + ';';
 	} else {
 		return '';
@@ -426,7 +409,7 @@ AdConfig.DART.getHostnamePrefix = function (hostname) {
 	}
 
 	return '';
-}
+};
 
 AdConfig.DART.getTitle = function(){
 	if (window.wgPageName) {
@@ -445,11 +428,13 @@ AdConfig.DART.getLanguage = function(){
 };
 
 AdConfig.DART.getResolution = function () {
-	if (!AdConfig.DART.width || !AdConfig.DART.height) {
-		AdConfig.DART.width = document.documentElement.clientWidth || document.body.clientWidth;
-		AdConfig.DART.height = document.documentElement.clientHeight || document.body.clientHeight;
+	var DART = AdConfig.DART;
+
+	if (!DART.width || !DART.height) {
+		DART.width = document.documentElement.clientWidth || document.body.clientWidth;
+		DART.height = document.documentElement.clientHeight || document.body.clientHeight;
 	}
-	if (AdConfig.DART.width > AdConfig.DART.largeWidth) {
+	if (DART.width > DART.largeWidth) {
 		return 'dis=large;';
 	} else {
 		return '';
@@ -600,7 +585,7 @@ AdConfig.DART.getUniqueId = function () {
 	}
 
 //console.log('unique id not available');
-	return '';
+	//return '';
 };
 
 AdConfig.init();

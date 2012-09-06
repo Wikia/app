@@ -39,6 +39,19 @@ var WikiaNotificationsApp = {
 
 					$.post(wgScript, {title: 'Special:SiteWideMessages', action: 'dismiss', mID: messageId}, WikiaNotificationsApp.purgeCurrentPage);
 
+					// SWM click tracking (BugID: 45402)
+					var trackObj = {
+						ga_category: 'sitewidemessages',
+						ga_action: WikiaTracker.ACTIONS.CLICK_LINK_BUTTON,
+						ga_label: 'swm-dismiss',
+						ga_value: messageId
+					};
+					WikiaTracker.trackEvent(
+						'trackingevent',
+						trackObj,
+						'internal'
+					);
+
 					// remove <div>
 					notification.remove();
 					nextNotification.css("display", "block");

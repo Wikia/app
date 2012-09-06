@@ -6,6 +6,9 @@
  * In typical use, a Wall will only load a subset of Bricks because there will be a TON of bricks as time goes on.
  */
 class WallExternalController extends WikiaController {
+	/**
+	 * @var $helper WallHelper
+	 */
 	var $helper;
 	public function __construct() {
 		$this->app = F::app();
@@ -24,6 +27,9 @@ class WallExternalController extends WikiaController {
 	}
 	
 	public function votersModal() {
+		/**
+		 * @var $mw WallMessage
+		 */
 		$mw =  F::build('WallMessage', array($this->request->getVal('id')), 'newFromId');
 		
 		$this->response->setVal('list', 
@@ -36,7 +42,10 @@ class WallExternalController extends WikiaController {
 	
 	public function votersListItems() {
 		//TODO: imaplmant load more button
-		
+
+		/**
+		 * @var $mw WallMessage
+		 */
 		$mw = $this->request->getVal('mw');
 		if(empty($mw)) {
 			$mw =  F::build('WallMessage', array($this->request->getVal('id')), 'newFromId');
@@ -72,6 +81,10 @@ class WallExternalController extends WikiaController {
 	public function switchWatch() {
 		$this->response->setVal('status', false);
 		$isWatched = $this->request->getVal('isWatched');
+		/**
+		 * @var $title Title
+		 * @var $wallMessage WallMessage
+		 */
 		$title = F::build('Title', array( $this->request->getVal('commentId') ), 'newFromId');
 		$wallMessage = F::build('WallMessage', array($title), 'newFromTitle');
 		
@@ -89,6 +102,8 @@ class WallExternalController extends WikiaController {
 	public function postNewMessage() {
 		$this->app->wf->ProfileIn(__METHOD__);
 		
+		$relatedTopics = $this->request->getVal('relatedTopics', array());
+		
 		$this->response->setVal('status', true);
 
 		$titleMeta = $this->request->getVal('messagetitle', null);
@@ -97,6 +112,9 @@ class WallExternalController extends WikiaController {
 		
 		$body = $this->getConvertedContent($this->request->getVal('body'));
 
+		/**
+		 * @var $helper WallHelper
+		 */
 		$helper = F::build('WallHelper', array());
 		
 		if( empty($titleMeta) ) {
@@ -110,7 +128,7 @@ class WallExternalController extends WikiaController {
 		}
 		
 		$title = F::build('Title', array($this->request->getVal('pagetitle'), $this->request->getVal('pagenamespace')), 'newFromText');  
-		$wallMessage = F::build('WallMessage', array($body, $title, $this->wg->User, $titleMeta, false, true, $notifyEveryone), 'buildNewMessageAndPost');
+		$wallMessage = F::build('WallMessage', array($body, $title, $this->wg->User, $titleMeta, false, $relatedTopics, true, $notifyEveryone), 'buildNewMessageAndPost');
 		
 		if( $wallMessage === false ) {
 			error_log('WALL_NOAC_ON_POST');
@@ -126,6 +144,9 @@ class WallExternalController extends WikiaController {
 	
 	public function deleteMessage() {
 		$result = false;
+		/**
+		 * @var $mw WallMessage
+		 */
 		$mw =  F::build('WallMessage', array($this->request->getVal('msgid')), 'newFromId');
 		if( empty($mw) ) {
 			$this->response->setVal('status', false);
@@ -181,7 +202,7 @@ class WallExternalController extends WikiaController {
 
 		if($isDeleteOrRemove) {
 			$this->response->setVal('html', $this->app->renderView( 'WallController', 'messageRemoved', array('showundo' => true , 'comment' => $mw)));
-			$reason = $mw->getLastActionReason();
+			$mw->getLastActionReason();
 			$this->response->setVal('deleteInfoBox', 'INFO BOX');
 		}
 		
@@ -192,6 +213,9 @@ class WallExternalController extends WikiaController {
 	public function changeThreadStatus() {
 		$result = false;
 		$newState = $this->request->getVal('newState', false);
+		/**
+		 * @var $mw WallMessage
+		 */
 		$mw =  F::build('WallMessage', array($this->request->getVal('msgid')), 'newFromId');
 
 		if( empty($mw) || empty($newState) ) {
@@ -216,8 +240,15 @@ class WallExternalController extends WikiaController {
 		
 		$this->response->setVal('status', $result);
 	}
-	
+
+	/**
+	 * @param $request WebRequest
+	 * @return array
+	 */
 	protected function processModalForm($request) {
+		/**
+		 * @var $formdata array
+		 */
 		$formdata = $request->getVal('formdata');
 		
 		$formassoc = array();
@@ -230,8 +261,10 @@ class WallExternalController extends WikiaController {
 	}
 	
 	public function undoAction() {
-		$result = false;
-		$mw =  F::build('WallMessage', array($this->request->getVal('msgid')), 'newFromId');
+		/**
+		 * @var $mw WallMessage
+		 */
+		$mw = F::build('WallMessage', array($this->request->getVal('msgid')), 'newFromId');
 		if( empty($mw) ) {
 			$this->response->setVal('status', false);
 			return true;
@@ -249,9 +282,11 @@ class WallExternalController extends WikiaController {
 			return true;
 		}
 	}
-		
+
 	public function restoreMessage() {
-		$result = false;
+		/**
+		 * @var $mw WallMessage
+		 */
 		$mw =  F::build('WallMessage', array($this->request->getVal('msgid')), 'newFromId');
 		if( empty($mw) ) {
 			$this->response->setVal('status', false);
@@ -278,7 +313,10 @@ class WallExternalController extends WikiaController {
 	public function vote() {
 		$id = $this->request->getVal('id');
 		$dir  = $this->request->getVal('dir');
-		
+
+		/**
+		 * @var $mw WallMessage
+		 */
 		$mw =  F::build('WallMessage', array($id), 'newFromId');
 	
 		if(!empty($mw)) {
@@ -293,10 +331,12 @@ class WallExternalController extends WikiaController {
 
 	}
 
-
 	public function editMessage() {
 		//TODO: remove call to ac !!!
 		$msgid = $this->request->getVal('msgid');
+		/**
+		 * @var $mw WallMessage
+		 */
 		$mw =  F::build('WallMessage', array($msgid), 'newFromId');
 		
 		if(empty($mw)) {
@@ -319,6 +359,9 @@ class WallExternalController extends WikiaController {
 	public function notifyEveryoneSave() {
 		$msgid = $this->request->getVal('msgid');
 		$dir = $this->request->getVal('dir');
+		/**
+		 * @var $mw WallMessage
+		 */
 		$mw =  F::build('WallMessage', array($msgid), 'newFromId');
 		
 		if($dir == 1) {
@@ -333,6 +376,9 @@ class WallExternalController extends WikiaController {
 	}
 	
 	public function editMessageSave() {
+		/**
+		 * @var $helper WallHelper
+		 */
 		$helper = F::build('WallHelper', array());
 		
 		$msgid = $this->request->getVal('msgid');
@@ -352,7 +398,9 @@ class WallExternalController extends WikiaController {
 			$this->response->setVal( 'msgContent', wfMsg( 'wall-deleted-msg-text' ) );
 			return true;
 		}
-		
+		/**
+		 * @var $wallMessage WallMessage
+		 */
 		$wallMessage = F::build( 'WallMessage', array( $title ), 'newFromTitle' );
 		
 		$wallMessage->load();
@@ -396,7 +444,10 @@ class WallExternalController extends WikiaController {
 			$this->response->setVal('status', false);
 			return true;
 		}
-	
+
+		/**
+		 * @var $wallMessage WallMessage
+		 */
 		$wallMessage = F::build('WallMessage', array($parentTitle), 'newFromTitle');
 		$body = $this->getConvertedContent($this->request->getVal('body'));
 		$reply = $wallMessage->addNewReply($body, $this->wg->User);
@@ -416,6 +467,9 @@ class WallExternalController extends WikiaController {
 		
 		// after successfully posting a reply		
 		// remove notification for this thread (if user is following it)
+		/**
+		 * @var $wn WallNotifications
+		 */
 		$wn = F::build('WallNotifications', array());
 		$wn->markRead( $this->wg->User->getId(), $this->wg->CityId, $this->request->getVal('parent'));		
 		
@@ -476,19 +530,20 @@ class WallExternalController extends WikiaController {
 	
 	/**
 	 * Returns formatted quote wiki text given message id
-	 * @param string messageId - numeric id
-	 * @param string convertToFormat - 'wikitext' or 'richtext'.  'wikitext' if unspecified
+	 * @param string $messageId - numeric id
+	 * @param string $convertToFormat - 'wikitext' or 'richtext'.  'wikitext' if unspecified
 	 * @return string markup - formatted markup (escaped)
 	 * @return string status - success/failure
 	 */
 	public function getFormattedQuoteText() {
 		$messageId = $this->request->getVal('messageId', '');
-		$mode = $this->request->getVal('convertToFormat', 'wikitext');
 		$markup = '';
 		$status = 'failure';
 
-		$msgid = $this->request->getVal('msgid');
-		$mw =  F::build('WallMessage', array($messageId), 'newFromId');
+		/**
+		 * @var $mw WallMessage
+		 */
+		$mw = F::build('WallMessage', array($messageId), 'newFromId');
 		$mw->load();
 		
 		if(!empty($mw)) {
@@ -507,5 +562,47 @@ class WallExternalController extends WikiaController {
 		
 		$this->response->setVal('markup', $markup);
 		$this->response->setVal('status', $status);
+	}
+	
+	/**
+	 * Updates topics list to given message id.  It will completely override.
+	 * @param string $messageId - numeric id
+	 * @param array $relatedTopics - list of topics (article names)
+	 * @return string status - success/failure
+	 */
+	public function updateTopics() {
+		$messageId = $this->request->getVal('msgid', '');
+		$relatedTopics = $this->request->getVal('relatedTopics', array());
+			// place holder data, replace this with magic
+		$status = 'success';
+		$topics = array();
+		
+		if(!is_array($relatedTopics)) {
+			$relatedTopics = array();
+		}
+		
+		// cut more then 4
+		$relatedTopics = array_slice( $relatedTopics , 0, 4 );
+				
+		// save
+		/**
+		 * @var $mw WallMessage
+		 */
+		$mw =  F::build('WallMessage', array($messageId), 'newFromId');
+		
+		if(!empty($mw)) {
+			$mw->load();
+			$mw->setRelatedTopics($relatedTopics);
+			$mw->doSaveMetadata($this->wg->User);
+		}
+
+		foreach($relatedTopics as $topic) {
+			$topicTitle = Title::newFromURL($topic);
+			$topics[] = array( 'topic' => $topic, 'url' => WallHelper::getTopicPageURL($topicTitle) );	// I have no idea what the url will be, just a placeholder for now
+		}
+		// end place holder
+		
+		$this->response->setVal('status', $status);
+		$this->response->setVal('topics', $topics);
 	}
 }

@@ -95,6 +95,9 @@ class ResourceLoaderStartUpModule extends ResourceLoaderModule {
 			'wgCookiePrefix' => $wgCookiePrefix,
 			'wgResourceLoaderMaxQueryLength' => $wgResourceLoaderMaxQueryLength,
 			'wgCaseSensitiveNamespaces' => $caseSensitiveNamespaces,
+			// Wikia - change begin - @author: wladek
+			'wgSassParams' => SassUtil::getSassSettings(),
+			// Wikia - change end
 		);
 		if ( $wgUseAjax && $wgEnableMWSuggest ) {
 			$vars['wgMWSuggestTemplate'] = SearchEngine::getMWSuggestTemplate();
@@ -141,9 +144,18 @@ class ResourceLoaderStartUpModule extends ResourceLoaderModule {
 				// seem to do that, and custom implementations might forget. Coerce it to TS_UNIX
 				$moduleMtime = wfTimestamp( TS_UNIX, $module->getModifiedTime( $context ) );
 				$mtime = max( $moduleMtime, wfTimestamp( TS_UNIX, $wgCacheEpoch ) );
+				// Wikia - change begin - @author: wladek
+				$flags = $module->getFlag( $module->getFlagNames() );
+				if ( !empty( $flags ) ) {
+					$registrations[] = array(
+						$name, $mtime, $module->getDependencies(), $module->getGroup(), $module->getSource(),
+						$flags
+					);
+				} else
+				// Wikia - change end
 				// Modules without dependencies, a group or a foreign source pass two arguments (name, timestamp) to
 				// mw.loader.register()
-				if ( !count( $module->getDependencies() && $module->getGroup() === null && $module->getSource() === 'local' ) ) {
+				if ( !count( $module->getDependencies() ) && $module->getGroup() === null && $module->getSource() === 'local' ) {
 					$registrations[] = array( $name, $mtime );
 				}
 				// Modules with dependencies but no group or foreign source pass three arguments
@@ -232,7 +244,7 @@ class ResourceLoaderStartUpModule extends ResourceLoaderModule {
 					$query['skin'], null, $query['version'], $context->getDebug(), 'scripts') )
 			);
 			$scriptTag = <<<ENDSCRIPT
-( (window.wsl && window.getJqueryUrl) ? (wsl.buildScript(window.getJqueryUrl()) + $scriptTagNoJquery) : ($scriptTagJquery) )
+( (window.wsl && window.getJqueryUrl && window.wgJqueryUrl) ? (wsl.buildScript(window.getJqueryUrl()) + $scriptTagNoJquery) : ($scriptTagJquery) )
 ENDSCRIPT;
 			$scriptTag = new XmlJsCode($scriptTag);
 			// Wikia change - end

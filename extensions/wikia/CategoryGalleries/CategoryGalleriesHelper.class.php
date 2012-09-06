@@ -29,11 +29,10 @@
 		static private $categoryProcessed = false;
 
 		static protected function checkEnabled() {
-			global $wgUser;
-
 			// Enable in Oasis
-			if (get_class($wgUser->getSkin()) == 'SkinOasis')
+			if (get_class(RequestContext::getMain()->getSkin()) == 'SkinOasis') {
 				return true;
+			}
 
 			return false;
 		}

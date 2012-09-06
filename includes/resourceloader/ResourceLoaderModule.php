@@ -434,4 +434,32 @@ abstract class ResourceLoaderModule {
 		return self::$jsParser;
 	}
 
+	protected $flags = array();
+
+	public function getFlagNames() {
+		return array();
+	}
+
+	public function getFlag( $flag ) {
+		if ( is_array( $flag ) ) {
+			$flags = array();
+			foreach ($flag as $name) {
+				if ($this->getFlag($name)) {
+					$flags[] = $name;
+				}
+			}
+			return $flags;
+		}
+
+		if ( !array_key_exists($flag,$this->flags) ) {
+			$this->flags[$flag] = $this->reallyGetFlag( $flag );
+		}
+
+		return $this->flags[$flag];
+	}
+
+	protected function reallyGetFlag( $flag ) {
+		return false;
+	}
+
 }

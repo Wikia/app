@@ -27,7 +27,7 @@ Wall.BackendBridge = $.createClass(Observable, {
 		});
 	},
 
-	postNew: function(page, title, body, convertToFormat, notifyEveryone, callback) {
+	postNew: function(page, title, body, convertToFormat, notifyEveryone, relatedTopics, callback) {
 		$.nirvana.sendRequest({
 			controller: this.pageController,
 			method: 'postNewMessage',
@@ -37,7 +37,8 @@ Wall.BackendBridge = $.createClass(Observable, {
 				notifyeveryone: notifyEveryone,
 				pagetitle: page['title'],
 				pagenamespace: page['namespace'],
-				convertToFormat: convertToFormat
+				convertToFormat: convertToFormat,
+				relatedTopics: relatedTopics
 			},
 			callback: this.proxy(function(data) {
 				var newmsg = $(data.message);
@@ -173,6 +174,24 @@ Wall.BackendBridge = $.createClass(Observable, {
 
 				this.fire('notifyEveryoneSaved', data);
 			})
+		});
+	},
+	
+	updateTopics: function(msgid, relatedTopics, callback) {
+		$.nirvana.sendRequest({
+			controller: this.pageController,
+			method: 'updateTopics',
+			format: 'json',
+			data: {
+				msgid: msgid,
+				relatedTopics: relatedTopics
+			},
+			type: 'post',
+			callback: function(json) {
+				if ($.isFunction(callback)) {
+					callback(json);
+				}
+			}
 		});
 	}
 });

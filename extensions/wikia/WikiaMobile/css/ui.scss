@@ -1,4 +1,4 @@
-@import 'variables';
+@import 'variables.scss';
 @import 'mixins/linear-gradient.scss';
 @import 'mixins/box-sizing.scss';
 
@@ -7,7 +7,6 @@
 *{
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
-	-o-box-sizing: border-box;
 	box-sizing: border-box;
 }
 
@@ -134,7 +133,7 @@
 
 //chevrons
 .chg:before, .link .thumbcaption:before {
-	content:"";
+	content:'';
 	background-image: url('/extensions/wikia/WikiaMobile/images/chevron-grey-down.png'); /* base64 */
 	background-repeat: no-repeat;
 }

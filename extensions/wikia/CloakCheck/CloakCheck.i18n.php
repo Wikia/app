@@ -310,6 +310,14 @@ $messages['ja'] = array(
 	'cloakcheck-process-edits-no' => '編集回数が不足しています。',
 );
 
+/** Korean (한국어)
+ * @author Cafeinlove
+ */
+$messages['ko'] = array(
+	'cloakcheck-process-emailconf-yes' => '이메일 주소가 인증되었습니다.',
+	'cloakcheck-process-emailconf-no' => '이메일 주소가 인증되지 않았습니다.',
+);
+
 /** Kurdish (Latin script) (‪Kurdî (latînî)‬)
  * @author George Animal
  */

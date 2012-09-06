@@ -58,10 +58,10 @@ var WikiPreviewInterstitial = {
 					$('#carouselContainer').carousel({
 						itemClick: WikiPreviewInterstitial.changeHeroImg
 					});
-					$('.WikiaMediaCarousel .previous').addClass('disabled');
 					$('.WikiaMediaCarousel')
 						.on('click', '.previous', function(e) {e.preventDefault();})
-						.on('click', '.next', function(e) {e.preventDefault();});
+						.on('click', '.next', function(e) {e.preventDefault();})
+						.find('.previous').addClass('disabled');
 				}
 			});
 		}
@@ -82,6 +82,10 @@ var WikiPreviewInterstitial = {
 		} else {
 			WikiPreviewInterstitial.mask.removeClass('hidden');
 		}
+		var maskElement = document.getElementById('WikiPreviewInterstitialMask');
+		if(maskElement) {
+			maskElement.scrollIntoView();
+		}
 	},
 	hide: function () {
 		WikiPreviewInterstitial.mask
@@ -101,31 +105,38 @@ WikiPreview.prototype = {
 	AVATAR_HOVER_TIMEOUT: 750,
 
 	init: function () {
-		this.avatars = this.el.find('.users .user');
-		this.avatars.bind('mouseenter.wikipreview',
-			function (e) {
-				var node = $(this);	// dom node context, not object
-				var timeoutHandle = node.data('timeoutHandle');
-				clearTimeout(timeoutHandle);
-				timeoutHandle = setTimeout(function () {
-					node.find('.details').fadeIn('fast');
-				}, this.AVATAR_HOVER_TIMEOUT);
-				node.data('timeoutHandle', timeoutHandle);
-				WikiPreviewInterstitial.mask
-					.addClass('overflow-visible')
-					.removeClass('overflow-hidden'); //reference WikiaPreviewInterstitial global and unmask for hover outside the mask
-			}).bind('mouseleave.wikipreview', function (e) {
-				var node = $(this);	// dom node context, not object
-				var timeoutHandle = node.data('timeoutHandle');
-				clearTimeout(timeoutHandle);
-				timeoutHandle = setTimeout(function () {
-					node.find('.details').fadeOut('fast');
-				}, this.AVATAR_HOVER_TIMEOUT);
-				node.data('timeoutHandle', timeoutHandle);
+		var avatars = this.el.find('.users .user');
+
+		var popoverTimeout = 0;
+
+		function setPopoverTimeout(elem) {
+			popoverTimeout = setTimeout(function() {
+				elem.popover('hide');
+			}, 300);
+		}
+
+		avatars.popover({
+			trigger: "manual",
+			placement: "top",
+			content: function() {
+				return $(this).find('.details').clone().wrap('<div>').parent().html();
+			}
+		}).on('mouseenter', function() {
+			clearTimeout(popoverTimeout);
+			$('.popover').remove();
+			$(this).popover('show');
+		}).on('mouseleave', function() {
+			var $this = $(this);
+			setPopoverTimeout($this);
+			$('.popover').mouseenter(function() {
+				$().log("mouse re-entering");
+				clearTimeout(popoverTimeout);
+			}).mouseleave(function() {
+					setPopoverTimeout($this);
 			});
+		});
 	}
 };
-
 
 WikiaHomePageRemix.prototype = {
 	init: function () {
@@ -273,7 +284,8 @@ WikiaHomePageRemix.prototype = {
 			currentslot.data('wiki-id', listslot.wikiid);
 			wikinamehtml.append(listslot.wikiname);
 			var previewDiv = $('<div class="preview-pane"></div>');
-			var previewDivWrapper = $('<div class="preview-pane-wrapper"></div>');
+			var previewDivWrapperClass = 'preview-pane-wrapper';
+			var previewDivWrapper = $('<div class="'+previewDivWrapperClass+'"></div>');
 			var previewVisitHtml;
 			if (currentslot.hasClass('slot-small')) {
 				previewVisitHtml = $('<span class="previewVisit"><a href="#" class="goPreview"><img src="' + wgBlankImgUrl + '" class="previcon" /></a><a href="' + listslot.wikiurl + '" class="goVisit"><img src="' + wgBlankImgUrl + '" class="visicon" /></span></a>');
@@ -282,7 +294,12 @@ WikiaHomePageRemix.prototype = {
 			}
 			previewDiv.append(wikinamehtml.clone()).append($('<span class="hotNewSeparator"></span>')).append(previewVisitHtml);
 			previewDivWrapper.append(previewDiv);
-			currentslot.append(wikinamehtml).append(previewDivWrapper);
+			currentslot
+				.find('.'+previewDivWrapperClass)
+				.remove()
+				.end()
+				.append(wikinamehtml)
+				.append(previewDivWrapper);
 		});
 	},
 	addWikiToStack: function() {

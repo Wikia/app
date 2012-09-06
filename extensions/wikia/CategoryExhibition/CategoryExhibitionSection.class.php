@@ -25,7 +25,7 @@ class CategoryExhibitionSection {
 
 	public function __construct( $oCategoryTitle ){
 
-		global $wgRequest, $wgUser;
+		global $wgUser;
 
 		$this->categoryTitle = $oCategoryTitle;
 
@@ -44,7 +44,6 @@ class CategoryExhibitionSection {
 
 	protected function fetchSectionItems( $mNamespace = NS_MAIN, $negative = false ) {
 
-		global $wgDevelEnvironment;
 		$sCategoryDBKey = $this->categoryTitle->getDBkey();
 
 		// Check if page is a redirect
@@ -86,7 +85,7 @@ class CategoryExhibitionSection {
 
 	public function getSortType(){
 
-		global $wgUser, $wgCookiePrefix;
+		global $wgUser;
 
 		if ( in_array( $this->sortOption, $this->allowedSortOptions ) ) {
 			return $this->sortOption;
@@ -156,12 +155,12 @@ class CategoryExhibitionSection {
 
 	public function getDisplayType(){
 
-		global $wgUser, $wgCookiePrefix;
+		global $wgUser;
 
 		if ( !empty( $this->displayOption ) && in_array( $this->displayOption, $this->allowedDisplayOptions ) ){
 			return $this->displayOption;
 		}
-		$cookieName = $wgCookiePrefix . 'CategoryExhibitionDisplayType';
+
 		if ( $wgUser->isAnon() ){
 			$this->setDisplayTypeFromParam();
 			$return = $this->displayOption;
@@ -177,7 +176,7 @@ class CategoryExhibitionSection {
 	}
 
 	/**
-	 * main function returning fillet template ready to print.
+	 * main function returning filled template ready to print.
 	 * @param $itemsPerPage int number of articles per page
 	 * @param $namespace mixed: int namespace or array of int for category query
 	 * @return EasyTemplate object
@@ -185,7 +184,6 @@ class CategoryExhibitionSection {
 
 	protected function getTemplateForNameSpace( $namespace, $itemsPerPage = 16, $negative = false ){
 
-		global $wgTitle;
 		$cachedContent = $this->getFromCache();
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		if( empty( $cachedContent ) ){
@@ -224,11 +222,11 @@ class CategoryExhibitionSection {
 		$oTmpl->set_vars(array('fromAjax' => $this->isFromAjax));
 			if ( $this->isFromAjax ){
 				return array(
-					'page'	=> $oTmpl->execute( 'page' ),
+					'page'	=> $oTmpl->render( 'page' ),
 					'paginator'	=> $oTmpl->mVars['paginator']
 				);
 			} else {
-				return $oTmpl->execute( $this->templateName );
+				return $oTmpl->render( $this->templateName );
 			}
 		} else {
 			return '';
@@ -308,7 +306,7 @@ class CategoryExhibitionSection {
 
 		$oMemCache = F::App()->wg->memc;
 		$sKey = F::App()->wf->sharedMemcKey(
-			'category_exhibition_category_cache',
+			'category_exhibition_category_cache_1',
 			$pageId,
 			F::App()->wg->cityId,
 			$this->isVerify(),
@@ -333,6 +331,8 @@ class CategoryExhibitionSection {
 		$returnData = array(
 			'id'		=> $pageId,
 			'img'		=> $imageUrl,
+			'width'     => $this->thumbWidth,
+			'height'    => $this->thumbHeight,
 			'snippet'	=> $snippetText,
 			'title'		=> $this->getTitleForElement( $oTitle ),
 			'url'		=> $oTitle->getFullURL()
@@ -341,7 +341,7 @@ class CategoryExhibitionSection {
 		// will be purged elsewhere after edit
 		$oMemCache->set( $sKey, $returnData, 60*60*24 );
 
-		return $returnData ;
+		return $returnData;
 	}
 
 	protected function getTitleForElement( $oTitle ){
@@ -385,7 +385,7 @@ class CategoryExhibitionSection {
 	protected function getKey() {
 		global $wgVideoHandlersVideosMigrated;
 		return wfMemcKey(
-			'category_exhibition_section',
+			'category_exhibition_section_0',
 			$this->categoryTitle->getDBKey(),
 			$this->templateName,
 			$this->paginatorPosition,
@@ -400,7 +400,6 @@ class CategoryExhibitionSection {
 	/**
 	 * this method help us to invalidate cache on any change on category, sub cat, page
 	 */
-
 	protected function getTouched($title) {
 		global $wgMemc;
 		return $wgMemc->get($this->getTouchedKey($title), 0);
@@ -408,7 +407,7 @@ class CategoryExhibitionSection {
 
 	public function setTouched($title) {
 		global $wgMemc;
-		$wgMemc->get($this->getTouchedKey($title), time() . rand(0,9999), 60*60*24 );
+		$wgMemc->set($this->getTouchedKey($title), time() . rand(0,9999), 60*60*24 );
 	}
 
 	protected function getTouchedKey($title) {
@@ -439,7 +438,6 @@ class CategoryExhibitionSection {
 	}
 
 	protected function clearCache ( ){
-
 		global $wgMemc;
 		return $wgMemc->delete( $this->getKey( ) );
 	}

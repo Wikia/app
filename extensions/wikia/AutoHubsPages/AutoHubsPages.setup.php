@@ -45,7 +45,7 @@ function wfAdProviderDARTFirstChunkForHubs($first_chunk) {
 }
 
 $wgHooks['MakeGlobalVariablesScript'][] = 'wfAutoHubsPagesSetupJSVars';
-function wfAutoHubsPagesSetupJSVars($vars) {
+function wfAutoHubsPagesSetupJSVars(Array &$vars) {
 	global $wgHubsPages, $wgContLanguageCode;
 
 	$vars['wgHubsPages'] = $wgHubsPages[$wgContLanguageCode];

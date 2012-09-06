@@ -96,6 +96,13 @@ $messages['de'] = array(
 	'feed-title-recentchanges' => 'Letzte Änderungen',
 );
 
+/** Zazaki (Zazaki)
+ * @author Erdemaslancan
+ */
+$messages['diq'] = array(
+	'feed-title-blogcomments' => 'Vatışê - ($1)',
+);
+
 /** Spanish (español)
  * @author VegaDark
  */

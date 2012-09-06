@@ -261,10 +261,17 @@ $messages['it'] = array(
  */
 $messages['ja'] = array(
 	'timeagomessaging-desc' => 'jquery.timeago.js プラグインを国際化する',
+	'timeago-year' => '$1年前',
+	'timeago-month' => '$1ヶ月前',
 	'timeago-day' => '$1日前',
 	'timeago-hour' => '$1時間前',
 	'timeago-minute' => '$1分前',
 	'timeago-second' => '1分前',
+	'timeago-day-from-now' => '$1日前',
+	'timeago-hour-from-now' => '$1時間前',
+	'timeago-minute-from-now' => '$1分前',
+	'timeago-month-from-now' => '$1ヶ月前',
+	'timeago-second-from-now' => '1分前',
 );
 
 /** Macedonian (македонски)
@@ -500,14 +507,15 @@ $messages['uk'] = array(
 );
 
 /** Vietnamese (Tiếng Việt)
+ * @author Minh Nguyen
  * @author Xiao Qiao
  */
 $messages['vi'] = array(
 	'timeagomessaging-desc' => 'Cung cấp i18n cho phần mềm jquery.timeago.js',
-	'timeago-month' => '{{PLURAL:$1|1 tháng|$1 tháng}} trước',
+	'timeago-month' => '$1 tháng trước',
 	'timeago-day' => '{{PLURAL:$1|1 ngày|$1 ngày}} trước',
 	'timeago-hour' => '{{PLURAL:$1|1 giờ|$1 giờ}} trước',
-	'timeago-minute' => '{{PLURAL:$1|1 phút|$1 phút}} trước',
+	'timeago-minute' => '$1 phút trước',
 	'timeago-second' => '1 phút trước',
 );
 

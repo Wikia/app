@@ -2,7 +2,7 @@
 <? if(!$isMonobookOrUncyclo) { ?>
 	<h2 class="pageheading"><?= $heading ?></h2>
 	<h3 class="subheading"><?= $subheading ?></h3>
-	<?= wfRenderModule('WikiHeader', 'Wordmark') ?>
+	<?= F::app()->renderView('WikiHeader', 'Wordmark') ?>
 <? } ?>
 	<div class="general-messaging">
 		<?= $msg ?>
@@ -60,7 +60,7 @@
 		)
 	);
 
-	echo wfRenderModule('WikiaForm', 'Index', array('form' => $form));
+	echo F::app()->renderView('WikiaForm', 'Index', array('form' => $form));
 
 } //$isMonobookOrUncyclo
 

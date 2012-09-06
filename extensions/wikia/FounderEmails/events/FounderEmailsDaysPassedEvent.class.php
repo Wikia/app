@@ -10,12 +10,12 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 		// This type of email cannot be disabled or avoided without unsubscribing from all email
 		return true;
 	}
-	
+
 	public function process( Array $events ) {
 		global $wgExternalSharedDB, $wgEnableAnswers, $wgTitle, $wgContLang;
 		wfProfileIn( __METHOD__ );
 
-		$wgTitle = Title::newMainPage();		
+		$wgTitle = Title::newMainPage();
 		$founderEmailObj = FounderEmails::getInstance();
 		$wikiService = F::build( 'WikiService' );
 		foreach ( $events as $event ) {
@@ -39,17 +39,17 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 				);
 
 				$wikiType = !empty( $wgEnableAnswers ) ? '-answers' : '';
-				
+
 				foreach ($user_ids as $user_id) {
 					$user = User::newFromId($user_id);
-					
+
 					// skip if not enable
 					if (!$this->enabled($wikiId, $user)) {
 						continue;
 					}
 					self::addParamsUser($wikiId, $user->getName(), $emailParams);
 					$emailParams['$USERPAGEEDITURL'] = $user->getUserPage()->getFullUrl(array('action' => 'edit'));
-					
+
 					$langCode = $user->getOption( 'language' );
 					// force loading messages for given languege, to make maintenance script works properly
 					$wgContLang = wfGetLangObj($langCode);
@@ -65,19 +65,19 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 						$mailCategory = FounderEmailsEvent::CATEGORY_0_DAY;
 					}
 					$mailCategory .= (!empty($langCode) && $langCode == 'en' ? 'EN' : 'INT');
-				
+
 					if (empty( $wgEnableAnswers )) {
 						$links = array(
 							'$WIKINAME' => $emailParams['$WIKIURL'],
 						);
 						$emailParams_new = FounderEmails::addLink($emailParams,$links);
 						$emailParams_new['$HDWIKINAME'] = str_replace('#2C85D5', '#fa5c1f', $emailParams_new['$WIKINAME']);	// header color = #fa5c1f
-						$mailBodyHTML = wfRenderModule("FounderEmails", $event['data']['dayName'], array('language' => 'en'));
+						$mailBodyHTML = F::app()->renderView("FounderEmails", $event['data']['dayName'], array('language' => 'en'));
 						$mailBodyHTML = strtr($mailBodyHTML, $emailParams_new);
 					} else {
 						$mailBodyHTML = $this->getLocalizedMsg( 'founderemails' . $wikiType . '-email-' . $activateDays . '-days-passed-body-HTML', $emailParams );
 					}
-					
+
 					$founderEmailObj->notifyFounder( $user, $this, $mailSubject, $mailBody, $mailBodyHTML, $wikiId, $mailCategory );
 				}
 
@@ -103,7 +103,7 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 //		$wikiFounder->setOption( 'founderemailsenabled', true );
 		$wikiFounder->setOption("founderemails-joins-$wgCityId", true);
 		$wikiFounder->setOption("founderemails-edits-$wgCityId", true);
-		
+
 		$wikiFounder->saveSettings();
 
 		foreach ( $wgFounderEmailsExtensionConfig['events']['daysPassed']['days'] as $daysToActivate ) {
@@ -124,7 +124,7 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 					$dayName = 'DayZero';
 					$doProcess = true;
 			}
-			
+
 			$mainPage = wfMsgForContent( 'mainpage' );
 
 			$eventData = array(

@@ -21,6 +21,9 @@ class AssetsManager {
 	private $mCombine;
 	private $mMinify;
 	private $mCommonHost;
+	/**
+	 * @var $mAssetsConfig AssetsConfig
+	 */
 	private $mAssetsConfig;
 	private $mAllowedAssetExtensions = array( 'js', 'css', 'scss' );
 	private static $mInstance = false;
@@ -37,6 +40,10 @@ class AssetsManager {
 		}
 	}
 
+	/**
+	 * @static
+	 * @return AssetsManager instance
+	 */
 	public static function getInstance() {
 		if( self::$mInstance == false ) {
 			global $wgCdnStylePath, $wgStyleVersion, $wgAllInOne, $wgRequest;
@@ -45,15 +52,10 @@ class AssetsManager {
 		return self::$mInstance;
 	}
 
-	public static function onMakeGlobalVariablesScript(&$vars) {
-		global $wgOasisHD, $wgOasisFluid, $wgCdnRootUrl, $wgAssetsManagerQuery;
+	public static function onMakeGlobalVariablesScript(Array &$vars) {
+		global $wgCdnRootUrl, $wgAssetsManagerQuery;
 
-		$params = SassUtil::getOasisSettings();
-		if($wgOasisHD) {
-			$params['hd'] = 1;
-		} else if($wgOasisFluid) {
-			$params['hd'] = 2;
-		}
+		$params = SassUtil::getSassSettings();
 
 		$vars['sassParams'] = $params;
 		$vars['wgAssetsManagerQuery'] = $wgAssetsManagerQuery;
@@ -97,7 +99,7 @@ class AssetsManager {
 		}
 
 		$combineable = count( $assetName ) > 1;
-		$isGroup = $checkType = $checkGroup = null;
+		$checkType = $checkGroup = null;
 		$urls = array();
 
 		foreach ( $assetName as $asset ) {
@@ -207,17 +209,8 @@ class AssetsManager {
 	 */
 	private function getSassURL( $scssFilePath, $prefix, $minify = null ) {
 		wfProfileIn( __METHOD__ );
-		global $wgOasisHD, $wgOasisFluid;
 
-		$params = SassUtil::getOasisSettings();
-
-		if ( $wgOasisHD ) {
-			$params['hd'] = 1;
-		}
-
-		if ( $wgOasisFluid ) {
-			$params['hd'] = 2;
-		}
+		$params = SassUtil::getSassSettings();
 
 		if ( $minify !== null ? !$minify : !$this->mMinify ) {
 			$params['minify'] = false;

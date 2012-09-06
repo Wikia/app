@@ -89,8 +89,8 @@ function CategorySelectInitializeHooks($output, $article, $title, $user, $reques
 	}
 
 	// Initialize only for allowed skins
-	$allowedSkins = array( 'SkinMonaco', 'SkinAwesome', 'SkinAnswers', 'SkinOasis' );
-	if ( !in_array( get_class($wgUser->getSkin()), $allowedSkins ) ) {
+	$allowedSkins = array('SkinAnswers', 'SkinOasis');
+	if ( !in_array( get_class(RequestContext::getMain()->getSkin()), $allowedSkins ) ) {
 		wfProfileOut(__METHOD__);
 		return true;
 	}
@@ -178,7 +178,7 @@ function CategorySelectSetupVars(Array &$vars) {
  * @author Inez Korczyński
  */
 function CategorySelectGetCategories() {
-	global $wgMemc, $wgCityId, $wgRequest;
+	global $wgMemc, $wgRequest;
 	wfProfileIn(__METHOD__);
 
 	$key = wfMemcKey('CategorySelectGetCategories', 1);
@@ -450,7 +450,7 @@ function CategorySelectImportFormData($editPage, $request) {
  *
  * @author Maciej Błaszkowski <marooned at wikia-inc.com>
  */
-function CategorySelectDiffArticle($editPage, $newtext) {
+function CategorySelectDiffArticle($editPage, &$newtext) {
 	global $wgCategorySelectCategoriesInWikitext;
 	//add categories only for whole article editing
 	if ($editPage->section == '' && isset($wgCategorySelectCategoriesInWikitext)) {
@@ -465,7 +465,7 @@ function CategorySelectDiffArticle($editPage, $newtext) {
  * @author Maciej Błaszkowski <marooned at wikia-inc.com>
  */
 function CategorySelectDisplayCategoryBox($rows, $cols, $ew, $textbox) {
-	global $wgCategorySelectMetaData, $wgRequest, $wgOut;
+	global $wgRequest, $wgOut;
 
 	$action = $wgRequest->getVal('action', 'view');
 	if ($action != 'view' && $action != 'purge') {
@@ -498,7 +498,7 @@ function CategorySelectGetCategoryLinksBegin(&$categoryLinks) {
  */
 function CategorySelectGetCategoryLinksEnd(&$categoryLinks) {
 	wfProfileIn(__METHOD__);
-	global $wgRequest, $wgExtensionsPath, $wgOut, $wgStylePath;
+	global $wgRequest;
 
 	if (!wfRunHooks ('CategorySelect:beforeDisplayingView', array () )) {
 		wfProfileOut(__METHOD__);

@@ -129,8 +129,7 @@ class WikiStats {
 
 	private function getSkin() {
 		if ( !isset( $this->mSkin ) ) {
-			global $wgUser;
-			$this->mSkin = $wgUser->getSkin();
+			$this->mSkin = RequestContext::getMain()->getSkin();
 		}
 		return $this->mSkin;
 	}
@@ -345,7 +344,7 @@ class WikiStats {
 				"wgContLang" 	=> $wgContLang,
 				"wgLang"		=> $wgLang,
 			));
-			$res = $oTmpl->execute("stats-wikia-info");
+			$res = $oTmpl->render("stats-wikia-info");
 		}
         #---
 		wfProfileOut( __METHOD__ );
@@ -465,7 +464,7 @@ class WikiStats {
         ));
         #---
 		wfProfileOut( __METHOD__ );
-        return $oTmpl->execute("main-table-stats");
+        return $oTmpl->render("main-table-stats");
 	}
 
 	/**
@@ -1429,8 +1428,8 @@ class WikiStats {
 				"anons"			=> $anons
 			));
 			#---
-			$active = $oTmpl->execute("wikians-active-stats");
-			$absent = $oTmpl->execute("wikians-absent-stats");
+			$active = $oTmpl->render("wikians-active-stats");
+			$absent = $oTmpl->render("wikians-absent-stats");
 
 			$data = $active . $absent;
 			#$data = array("code" => 1, "text" => $text);
@@ -1449,7 +1448,7 @@ class WikiStats {
 	 * list of most visited pages
 	 */
 	public function latestViewPages($namespace = -1) {
-		global $wgStatsDB, $wgStatsDBEnabled;
+		global $wgStatsDB, $wgStatsDBEnabled, $wgLang;
 		wfProfileIn( __METHOD__ );
 
 		$result = array();
@@ -1497,7 +1496,7 @@ class WikiStats {
 
 			foreach ( $ids as $page_id => $position ) {
 				if ( isset( $urls[$page_id] ) ) {
-					$result[] = wfSpecialList( $urls[$page_id], $count[$page_id]. "x" );
+					$result[] = $wgLang->specialList( $urls[$page_id], $count[$page_id]. "x" );
 				}
 			}
 		}
@@ -1515,7 +1514,7 @@ class WikiStats {
 	 * list of most visited pages
 	 */
 	public function userViewPages($hours = 1) {
-		global $wgStatsDB, $wgStatsDBEnabled;
+		global $wgStatsDB, $wgStatsDBEnabled, $wgLang;
 		wfProfileIn( __METHOD__ );
 
 		$result = array();
@@ -1548,7 +1547,7 @@ class WikiStats {
 					if ( $oTitle ) {
 						$oRow->page_title = Xml::element("a", array("href" => $oTitle->getLocalURL()), $oTitle->getFullText()) ;
 					}
-					$result[$oRow->pv_user_id] = wfSpecialList( $oRow->page_title, wfMsgExt("wikistats_latest_userviews_pages", 'parsemag', $oRow->cnt) );
+					$result[$oRow->pv_user_id] = $wgLang->specialList( $oRow->page_title, wfMsgExt("wikistats_latest_userviews_pages", 'parsemag', $oRow->cnt) );
 				}
 			}
 			$dbr->freeResult( $res );

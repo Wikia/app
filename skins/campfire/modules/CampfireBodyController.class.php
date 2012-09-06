@@ -64,7 +64,7 @@ class CampfireBodyController extends WikiaController {
 	public function executeIndex() {
 		global $wgOut, $wgTitle, $wgSitename, $wgUser, $wgEnableBlog, $wgEnableCorporatePageExt, $wgEnableInfoBoxTest, $wgEnableWikiAnswers, $wgRequest, $wgMaximizeArticleAreaArticleIds;
 
-		$this->isMainPage = ArticleAdLogic::isMainPage();
+		$this->isMainPage = WikiaPageType::isMainPage();
 
 		// Replaces ContentDisplayModule->index()
 		$this->bodytext = $this->app->getSkinTemplateObj()->data['bodytext'];

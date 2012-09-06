@@ -28,8 +28,7 @@ class SpecialCreatePage extends SpecialEditPage {
 		$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/CreatePage/js/focus.js\" ></script>\n" );
 
 		if ( $wgUser->isBlocked() ) {
-			$wgOut->blockedPage();
-			return;
+			throw new UserBlockedError( $this->getUser()->mBlock );
 		}
 
 		if ( wfReadOnly() ) {

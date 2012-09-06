@@ -20,6 +20,7 @@ class WikiStatsPage extends IncludableSpecialPage
     var $userIsSpecial;
     var $mFromDate;
     var $mToDate;
+    var $mTitle;
     var $mTab;
     var $mUser;
     var $mSkin;
@@ -44,17 +45,14 @@ class WikiStatsPage extends IncludableSpecialPage
     #--- constructor
     public function __construct() {
         parent::__construct( "WikiStats", "",  true/*class*/);
-        if ( method_exists( 'SpecialPage', 'setGroup' ) ) {
-			parent::setGroup( 'WikiStats', 'wiki' );
-		}
+		SpecialPageFactory::setGroup( 'WikiStats', 'wiki' );
     }
 
     public function execute( $subpage ) {
         global $wgUser, $wgOut, $wgRequest, $wgCityId, $wgDBname, $wgLang;
 
         if ( $wgUser->isBlocked() ) {
-            $wgOut->blockedPage();
-            return;
+			throw new UserBlockedError( $this->getUser()->mBlock );
         }
 
         if ( wfReadOnly() ) {
@@ -143,7 +141,7 @@ class WikiStatsPage extends IncludableSpecialPage
         $this->mStats->setLang($this->mLang);
 
         #---
-        $this->mSkin = $wgUser->getSkin();
+        $this->mSkin = RequestContext::getMain()->getSkin();
         if ( is_object ($this->mSkin) ) {
             $skinname = get_class( $this->mSkin );
             $skinname = strtolower(str_replace("Skin","", $skinname));
@@ -176,7 +174,7 @@ class WikiStatsPage extends IncludableSpecialPage
 		# main page
         $oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 
-		$wgOut->setSubtitle( $oTmpl->execute("subtitle") );
+		$wgOut->setSubtitle( $oTmpl->render("subtitle") );
 
         $oTmpl->set_vars( array(
         	"mTitle"			=> $this->mTitle,
@@ -198,14 +196,14 @@ class WikiStatsPage extends IncludableSpecialPage
 			"mLang"				=> $this->mLang,
 			"mAllWikis"			=> $this->mAllWikis
         ));
-        $wgOut->addHTML( $oTmpl->execute("main-form") );
+        $wgOut->addHTML( $oTmpl->render("main-form") );
 
         wfProfileOut( __METHOD__ );
         return 1;
 	}
 
 	private function showMenu($subpage = '', $namespaces = false) {
-		global $wgOut, $wgDBname;
+		global $wgDBname;
         wfProfileIn( __METHOD__ );
 
 		$aTopLanguages = explode(',', wfMsg('wikistats_language_toplist'));
@@ -254,9 +252,9 @@ class WikiStatsPage extends IncludableSpecialPage
         $oTmpl->set_vars( $params );
 
         if ( $this->userIsSpecial == 1 && $wgDBname == WIKISTATS_CENTRAL_ID ) {
-			$res = $oTmpl->execute("select");
+			$res = $oTmpl->render("select");
 		} else {
-			$res = $oTmpl->execute("select_user");
+			$res = $oTmpl->render("select_user");
 		}
 
         wfProfileOut( __METHOD__ );
@@ -286,14 +284,14 @@ class WikiStatsPage extends IncludableSpecialPage
 			$wgOut->addHTML( $this->showMenu() );
 			if  ( $this->mFromDate <= $this->mToDate ) {
 				$wgOut->addHTML( $this->mStats->getBasicInformation() );
-				$wgOut->addHTML( $oTmpl->execute("main-table-stats") );
+				$wgOut->addHTML( $oTmpl->render("main-table-stats") );
 
 				$oTmpl->set_vars( array(
 					"columns" 		=> $this->mStats->getRangeColumns(),
 					"userIsSpecial"	=> $this->userIsSpecial,
 					"wgStatsExcludedNonSpecialGroup" => $wgStatsExcludedNonSpecialGroup
 				));
-				$wgOut->addHTML( $oTmpl->execute("main-stats-definitions") );
+				$wgOut->addHTML( $oTmpl->render("main-stats-definitions") );
 			}
 			wfProfileOut( __METHOD__ );
 		} else {
@@ -320,17 +318,15 @@ class WikiStatsPage extends IncludableSpecialPage
 
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$oTmpl->set_vars( array(
-				'data' => $this->mStats->rollupStats($wiki_id, $period == "monthly", $period != "monthly"),
-				'wiki_name'	  => $this->mCityDomain,
-				'wiki_select' => ( $this->userIsSpecial == 1 && $wgDBname == WIKISTATS_CENTRAL_ID ),
-				'mTitle'	  => $this->mTitle,
-	        	'mAction'	  => $this->mAction,
-	        	'wsperiod'    => $period
-			) );
+			'data' => $this->mStats->rollupStats($wiki_id, $period == "monthly", $period != "monthly"),
+			'wiki_name'	  => $this->mCityDomain,
+			'wiki_select' => ( $this->userIsSpecial == 1 && $wgDBname == WIKISTATS_CENTRAL_ID ),
+			'mTitle'	  => $this->mTitle,
+			'mAction'	  => $this->mAction,
+			'wsperiod'    => $period
+		) );
 
-		$wgOut->addHTML( $oTmpl->execute("rollup") );
-
-
+		$wgOut->addHTML( $oTmpl->render("rollup") );
 		return 1;
 	}
 
@@ -364,7 +360,7 @@ class WikiStatsPage extends IncludableSpecialPage
 				"anons"			=> $anons,
 				"data"			=> $out
 			) );
-			$wgOut->addHTML( $oTmpl->execute("activity") );
+			$wgOut->addHTML( $oTmpl->render("activity") );
 			wfProfileOut( __METHOD__ );
 		} else {
 /*			$data = $this->mStats->loadStatsFromDB();
@@ -390,7 +386,7 @@ class WikiStatsPage extends IncludableSpecialPage
 			"wgLang"		=> $wgLang,
 			"data"			=> $rows,
 		) );
-		$wgOut->addHTML( $oTmpl->execute("latestview") );
+		$wgOut->addHTML( $oTmpl->render("latestview") );
 		wfProfileOut( __METHOD__ );
 	}
 
@@ -407,7 +403,7 @@ class WikiStatsPage extends IncludableSpecialPage
 			"wgLang"		=> $wgLang,
 			"data"			=> $rows,
 		) );
-		$wgOut->addHTML( $oTmpl->execute("user_activity") );
+		$wgOut->addHTML( $oTmpl->render("user_activity") );
 		wfProfileOut( __METHOD__ );
 	}
 
@@ -464,12 +460,12 @@ class WikiStatsPage extends IncludableSpecialPage
         	"plang"			=> ( !empty($plang) ) ? $plang : $wgLang->getCode(),
         	"pcat"			=> $pcat
 		) );
-		$wgOut->addHTML( $oTmpl->execute("wiki_activity") );
+		$wgOut->addHTML( $oTmpl->render("wiki_activity") );
 		wfProfileOut( __METHOD__ );
 	}
 
 	private function showNamespaces() {
-        global $wgUser, $wgContLang, $wgLang, $wgStatsExcludedNonSpecialGroup, $wgOut;
+        global $wgUser, $wgContLang, $wgLang, $wgOut;
 		#---
 		$selectedNamespace = array();
 		if ( isset($this->mNS) && isset($this->mNamespaces) && isset($this->mPredefinedNamespaces) ) {
@@ -501,7 +497,7 @@ class WikiStatsPage extends IncludableSpecialPage
 			) );
 			$wgOut->addHTML( $menu );
 			if  ( $this->mFromDate <= $this->mToDate ) {
-				$wgOut->addHTML( $oTmpl->execute("ns-table-stats") );
+				$wgOut->addHTML( $oTmpl->render("ns-table-stats") );
 			}
 			wfProfileOut( __METHOD__ );
 		} else {

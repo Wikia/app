@@ -4,6 +4,7 @@
 @import "../../../../skins/oasis/css/mixins/box-sizing";
 @import "../../../../skins/oasis/css/mixins/clearfix";
 @import "../../../../skins/oasis/css/mixins/opacity";
+@import "../../../../skins/oasis/css/mixins/menus";
 
 // TODO: all of these should be consolidated and put into oasis
 @import "../../Wall/css/WallColors";
@@ -32,13 +33,14 @@
 
 	.DiscussionBox {
 		margin: 15px 0 20px 0;
-
+		
+		input[type=text],
 		textarea {
 			@include box-sizing;
 			background-color: $color-wall-input-new;
 			border: 0;
 			color: $color-text;
-
+			
 			// Chrome needs this to get rid of empty space below textarea
 			display: block;
 			font-size: 13px;
@@ -48,21 +50,11 @@
 			padding: 5px 10px;
 			resize: none;
 			width: 100%;
-
-			&.body {
-				height: 70px;
-			}
-
-			&.title {
-				height: 30px;
-			}
-
 			&:focus {
 				@include box-shadow(0px, 0px, 4px, $color-wall-input-focus-shadow);
 				background-color: $color-wall-input-focus;
 				color: $color-text;
 			}
-
 			// These have to be separated to work
 			&:-moz-placeholder {
 				color: $color-wall-text-placeholder;
@@ -70,6 +62,16 @@
 
 			&::-webkit-input-placeholder {
 				color: $color-wall-text-placeholder;
+			}
+		}
+
+		textarea {
+			&.body {
+				height: 70px;
+			}
+
+			&.title {
+				height: 30px;
 			}
 		}
 
@@ -134,7 +136,7 @@
 				}
 			}
 		}
-
+		
 		.notify-everyone {
 			margin: 0 5px 0 0;
 		}

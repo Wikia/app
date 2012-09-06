@@ -39,7 +39,7 @@ class SponsorshipDashboardReport {
 
 	public function __construct( $id = 0 ){
 
-		$this->App = WF::build('App');
+		$this->App = F::app();
 		$this->setId( $id );
 	}
 
@@ -84,7 +84,7 @@ class SponsorshipDashboardReport {
 		Wikia::log( __METHOD__, 'Depreciated?' );
 
 		$deserializedData = unserialize( $serializedData );
-		
+
 		parse_str( $deserializedData[0], $mainSerie );
 		if ( isset( $mainSerie[ SponsorshipDashboardSource::SD_PARAMS_LASTUNITDATE ] ) ){
 			$this->setLastDateUnits( ( int )$mainSerie[ SponsorshipDashboardSource::SD_PARAMS_LASTUNITDATE ] );
@@ -93,7 +93,7 @@ class SponsorshipDashboardReport {
 		if ( isset( $mainSerie['mainTitle'] ) ){
 			$this->name = stripslashes( $mainSerie['mainTitle'] );
 		}
-		
+
 		if ( isset( $mainSerie['mainDescription'] ) ){
 			$this->description = stripslashes( $mainSerie['mainDescription'] );
 		}
@@ -194,7 +194,7 @@ class SponsorshipDashboardReport {
 
 	// builds array with filled forms;
 	public function getMenuItemsHTML(){
-		
+
 		$this->loadSources();
 		$returnArray = '';
 
@@ -236,7 +236,7 @@ class SponsorshipDashboardReport {
 	}
 
 	public function setLastDateUnits( $number ){
-		
+
 		if ( (int)$number <= 0 ){
 			$this->dateUnits = 0;
 		} else {
@@ -245,7 +245,7 @@ class SponsorshipDashboardReport {
 	}
 
 	public function addSource( $objSource ){
-		
+
 		if ( is_object( $objSource ) && $objSource instanceof SponsorshipDashboardSource ){
 			$objSource->setLastDateUnits( $this->dateUnits );
 			$newObject = clone $objSource;

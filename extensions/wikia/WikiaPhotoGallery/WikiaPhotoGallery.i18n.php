@@ -2951,6 +2951,7 @@ $messages['ja'] = array(
 	'wikiaPhotoGallery-edit-summary' => 'ギャラリーを編集',
 	'wikiaPhotoGallery-error-caption' => 'エラー',
 	'wikiaPhotoGallery-error-outdated' => 'ページの表示中にギャラリーが編集されました。ページを再読み込みしてやり直してください。',
+	'wikiaPhotoGallery-error-wrong-title' => '指定したページIDに対応するページ名が存在しません',
 	'wikiaPhotoGallery-error-user-rights' => '利用者権限エラー',
 	'wikiaPhotoGallery-upload-title' => '画像の検索とアップロード',
 	'wikiaPhotoGallery-upload-info-choose-list' => '次から画像を選択できます:',

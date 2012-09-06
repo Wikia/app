@@ -23,7 +23,7 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 	protected $verticalName;
 
 	public function __construct() {
-		parent::__construct('WikiaHubsV2');
+		parent::__construct('WikiaHubsV2','',false);
 	}
 
 	public function index() {

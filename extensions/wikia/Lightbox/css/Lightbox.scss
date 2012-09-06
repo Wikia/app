@@ -504,6 +504,9 @@ $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 		}
 		.user-details {
 			clear: left;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
 			width: 650px;
 		}
 	}

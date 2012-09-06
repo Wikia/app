@@ -75,7 +75,7 @@ class MyToolsController extends WikiaController {
 		// what links here link
 		if(isset($this->nav_urls['whatlinkshere'])) {
 			$out[] = array(
-				'text' => SpecialPage::getPageByAlias('whatlinkshere')->getDescription(),
+				'text' => SpecialPageFactory::getPage('whatlinkshere')->getDescription(),
 				'href' => $this->nav_urls['whatlinkshere']['href'],
 				'name' => 'whatlinkshere',
 			);
@@ -92,7 +92,7 @@ class MyToolsController extends WikiaController {
 
 		// theme designer
 		if($wgUser->isAllowed('themedesigner')) {
-			$page = SpecialPage::getPageByAlias('ThemeDesigner');
+			$page = SpecialPageFactory::getPage('ThemeDesigner');
 
 			$out[] = array(
 				'text' => $page->getDescription(),
@@ -118,7 +118,7 @@ class MyToolsController extends WikiaController {
 
 		if(is_array($tools)) {
 			foreach($tools as $tool) {
-				$page = SpecialPage::getPageByAlias($tool);
+				$page = SpecialPageFactory::getPage($tool);
 				if(is_object($page)) {
 					$out[] = array('name' => $tool, 'desc' => $page->getDescription());
 				}
@@ -144,7 +144,7 @@ class MyToolsController extends WikiaController {
 		$tools = array();
 
 		foreach($toolsNames as $toolName) {
-			$page = SpecialPage::getPageByAlias($toolName);
+			$page = SpecialPageFactory::getPage($toolName);
 			if(is_object($page)) {
 				$toolDesc = $page->getDescription();
 				if(strpos(strtolower($toolDesc), $query) === 0 || strpos(strtolower($toolName), $query) === 0) {

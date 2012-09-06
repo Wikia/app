@@ -211,7 +211,7 @@ class CorporateSiteController extends WikiaController {
 			$this->sliderHtml = $slider->toHTML();
 		}
 
-		if (ArticleAdLogic::isMainPage()) {
+		if (WikiaPageType::isMainPage()) {
 			$this->isMainPage = true;
 			$this->slider_class = "big";
 			$this->slider = CorporatePageHelper::parseMsgImg('corporatepage-slider',true);

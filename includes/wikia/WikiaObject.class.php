@@ -16,19 +16,19 @@ abstract class WikiaObject {
 
 	/**
 	 * application object
-	 * @var WikiaApp
+	 * @var $app WikiaApp
 	 */
 	protected $app = null;
 
 	/**
 	 * global registry object
-	 * @var WikiaGlobalRegistry
+	 * @var $wg WikiaGlobalRegistry
 	 */
 	protected $wg = null;
 
 	/**
 	 * function wrapper object
-	 * @var WikiaFunctionWrapper
+	 * @var $wf WikiaFunctionWrapper
 	 */
 	protected $wf = null;
 

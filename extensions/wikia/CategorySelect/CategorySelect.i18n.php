@@ -604,11 +604,23 @@ $messages['kn'] = array(
 );
 
 /** Korean (한국어)
+ * @author Cafeinlove
  * @author 아라
  */
 $messages['ko'] = array(
+	'categoryselect-code-view' => '코드 보기',
+	'categoryselect-code-view-placeholder' => '여기에 분류를 추가하세요. 예를 들어 [[Category:이름]]',
+	'categoryselect-visual-view' => '시각적 보기',
+	'categoryselect-infobox-caption' => '분류 옵션',
+	'categoryselect-addcategory-button' => '분류 추가',
+	'categoryselect-addcategory-edit' => '분류 추가',
+	'categoryselect-edit-summary' => '분류 추가',
+	'categoryselect-empty-name' => '분류 이름 제공 (| 전에 부분)',
 	'categoryselect-button-save' => '저장',
 	'categoryselect-button-cancel' => '취소',
+	'categoryselect-error-not-exist' => '문서 [id=$1]가 존재하지 않습니다.',
+	'categoryselect-error-user-rights' => '사용자 권한 오류입니다.',
+	'categoryselect-error-db-locked' => '데이터베이스가 잠겨 있습니다.',
 );
 
 /** Kurdish (Latin script) (‪Kurdî (latînî)‬)

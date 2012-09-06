@@ -283,6 +283,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 					$this->userLoginHelper->clearPasswordThrottle( $loginForm->mUsername );
 
 					$this->result = 'ok';
+					$this->wgUserName = $this->wg->User->getName();
 				break;
 
 			case LoginForm::NEED_TOKEN:

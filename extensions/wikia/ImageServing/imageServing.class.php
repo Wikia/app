@@ -7,20 +7,36 @@
  * or specific dimensions.
  */
 class ImageServing {
-	private $maxCount = 10;
-	private $minSize = 75;
-	private $queryLimit = 50;
+	//private $maxCount = 10;
+	//private $minSize = 75;
+	//private $queryLimit = 50;
 	private $articles = array();
 	private $width;
 	private $proportion;
 	private $deltaY = null;
 	private $db;
 	private $proportionString;
+	/**
+	 * @var $tmpDeltaY Integer
+	 */
+	private $tmpDeltaY;
+	/**
+	 * @var $articlesByNS array
+	 */
+	private $articlesByNS;
+	/**
+	 * @var $imageServingDrivers ImageServingDriverBase
+	 */
+	private $imageServingDrivers;
+	/**
+	 * @var $memc MemCache
+	 */
+	private $memc;
 
 	/**
-	 * @param $articles \type{\arrayof{\int}} List of articles ids to get images
+	 * @param $articles Integer[] List of articles ids to get images
 	 * @param $width \int image width
-	 * @param $proportionOrHight can by array with proportion(example: array("w" => 1, "h" => 1)) or just height in pixels (example: 100)  proportion will be
+	 * @param $proportionOrHight array|Integer can by array with proportion(example: array("w" => 1, "h" => 1)) or just height in pixels (example: 100)  proportion will be
 	 * calculated automatically
 	 */
 	function __construct( $articles = null, $width = 100, $proportionOrHeight = array( "w" => 1, "h" => 1 ), $db = null ){
@@ -55,14 +71,12 @@ class ImageServing {
 	 *
 	 * @access public
 	 *
-	 * @param $n \type{\arrayof{\int}} number of images to get for each article
-	 * @param $driver \ImageServingDriver allow to force driver
+	 * @param $n Integer[] number of images to get for each article
+	 * @param $driver ImageServingDriverBase allow to force driver
 	 *
-	 * @return  \type{\arrayof{\topImage}}
+	 * @return  File[]
 	 */
 	public function getImages( $n = 5, $driver = null) {
-		global $wgMemc;
-
 		wfProfileIn( __METHOD__ );
 		$articles = $this->articles;
 		$out = array();
@@ -171,6 +185,9 @@ class ImageServing {
 
 		$imagesIds = array();
 		if( !empty( $fileNames ) ) {
+			/**
+			 * @var $fileName LocalFile
+			 */
 			foreach ( $fileNames as $fileName ) {
 				if(!($fileName instanceof LocalFile)) {
 					$title = Title::newFromText( $fileName, NS_FILE );
@@ -248,12 +265,12 @@ class ImageServing {
 	/**
 	 * getUrl - generate cut frame for Thumb
 	 *
-	 * @param $width \int
-	 * @param $height \int
-	 * @param $align \string "center", "origin"
+	 * @param $width int
+	 * @param $height int
+	 * @param $align string "center", "origin"
 	 *
 	 *
-	 * @return \string prefix for thumb image
+	 * @return string prefix for thumb image
 	 */
 	public function getCut( $width, $height, $align = "center", $issvg = false  ) {
 		wfProfileIn( __METHOD__ );

@@ -50,7 +50,7 @@ class WallNotificationsExternalController extends WikiaController {
 		return true;
 	}
 
-	private function getUpdateCountsInternal($wn) {
+	private function getUpdateCountsInternal(WallNotifications $wn) {
 		wfProfileIn(__METHOD__);
 
 		$app = F::app();
@@ -80,7 +80,7 @@ class WallNotificationsExternalController extends WikiaController {
 		wfProfileOut(__METHOD__);
 	}
 
-	private function getUpdateWikiInternal($wn, $wikiId, $isCrossWiki = false) {
+	private function getUpdateWikiInternal(WallNotifications $wn, $wikiId, $isCrossWiki = false) {
 		if ( $isCrossWiki ) {
 			$all = $wn->getWikiNotifications( $this->wg->User->getId(), $wikiId, 0 );
 		} else {

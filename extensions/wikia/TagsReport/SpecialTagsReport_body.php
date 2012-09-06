@@ -24,8 +24,7 @@ class TagsReportPage extends SpecialPage {
 		global $wgUser, $wgOut, $wgRequest;
 
 		if( $wgUser->isBlocked() ) {
-			$wgOut->blockedPage();
-			return;
+			throw new UserBlockedError( $this->getUser()->mBlock );
 		}
 		if( wfReadOnly() ) {
 			$wgOut->readOnlyPage();
@@ -72,14 +71,14 @@ class TagsReportPage extends SpecialPage {
             "mTag"  	=> $this->mTag,
             "timestamp"	=> $timestamp
         ));
-        $wgOut->addHTML( $oTmpl->execute("main-form") );
+        $wgOut->addHTML( $oTmpl->render("main-form") );
         wfProfileOut( __METHOD__ );
 	}
 
 	function showArticleList() {
-		global $wgOut, $wgRequest ;
+		global $wgOut;
 		global $wgCanonicalNamespaceNames;
-		global $wgContLang, $wgUser;
+		global $wgContLang;
         wfProfileIn( __METHOD__ );
 
 		$articles = $this->getTagsInfo();
@@ -90,14 +89,13 @@ class TagsReportPage extends SpecialPage {
             "articles" 		=> $articles,
             "wgCanonicalNamespaceNames" => $wgCanonicalNamespaceNames,
             "wgContLang" 	=> $wgContLang,
-            "skin"			=> $wgUser->getSkin()
+            "skin"			=> RequestContext::getMain()->getSkin()
         ));
-        $wgOut->addHTML( $oTmpl->execute("tag-activity") );
+        $wgOut->addHTML( $oTmpl->render("tag-activity") );
         wfProfileOut( __METHOD__ );
 	}
 
 	function getResults() {
-		global $wgOut, $wgRequest ;
         wfProfileIn( __METHOD__ );
 
 		/* no list when no user */

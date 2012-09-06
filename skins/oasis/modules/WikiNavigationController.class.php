@@ -96,7 +96,7 @@ class WikiNavigationController extends WikiaController {
 
 		if (self::isWikiNavMessage($title) && !empty($wgOasisNavV2)) {
 			// render a preview
-			$html = wfRenderModule('WikiNavigation', 'Index', array(
+			$html = F::app()->renderView('WikiNavigation', 'Index', array(
 				'msgName' => $title->getText(),
 				'wikitext' => $wikitext,
 			));
@@ -123,7 +123,7 @@ HEADER;
 	 * @param Array $vars list of global JS variables
 	 * @return bool return true
 	 */
-	public static function onEditPageMakeGlobalVariablesScript(Array $vars) {
+	public static function onEditPageMakeGlobalVariablesScript(Array &$vars) {
 		global $wgTitle, $wgOasisNavV2;
 
 		if (self::isWikiNavMessage($wgTitle) && !empty($wgOasisNavV2)) {

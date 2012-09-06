@@ -81,7 +81,7 @@ class ArticleCommentsAjax {
 	 * @return String -- html -> textarea
 	 */
 	static public function axEdit() {
-		global $wgEnableMiniEditorExtForArticleComments, $wgRequest;
+		global $wgRequest;
 
 		$articleId = $wgRequest->getVal( 'article', false );
 		$commentId = $wgRequest->getVal( 'id', false );
@@ -112,7 +112,7 @@ class ArticleCommentsAjax {
 				$result['show'] = true;
 				$result['text'] = $comment->editPage();
 
-				if ($wgEnableMiniEditorExtForArticleComments) {
+				if (ArticleComment::isMiniEditorEnabled()) {
 					$result['edgeCases'] = MiniEditorHelper::getEdgeCases();
 				}
 
@@ -151,8 +151,10 @@ class ArticleCommentsAjax {
 
 			$vars = array (
 				'commentId' => $commentId,
+				'isMiniEditorEnabled' => ArticleComment::isMiniEditorEnabled(),
 				'stylePath' => $wgStylePath
 			);
+
 			$result['html'] = F::app()->getView('ArticleComments', 'Reply', $vars)->render();
 		}
 
@@ -194,8 +196,6 @@ class ArticleCommentsAjax {
 		$response = ArticleComment::doPost( self::getConvertedContent($wgRequest->getVal('wpArticleComment')), $wgUser, $title, $parentId );
 
 		if ( $response !== false ) {
-/**/
-			//RT#44830
 			if (
 				$title->getNamespace() == NS_USER_TALK &&
 				$response[0] == EditPage::AS_SUCCESS_NEW_ARTICLE &&
@@ -219,11 +219,6 @@ class ArticleCommentsAjax {
 			}
 
 			return $result;
-/**/
-
-/*				    'header' =>		wfMsg('oasis-comments-header', $countAll),
-				    'recent' =>		wfMsg('oasis-comments-showing-most-recent', $countDisplayed)
-*/
 		}
 
 		return $result;

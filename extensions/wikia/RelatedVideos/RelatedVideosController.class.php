@@ -24,7 +24,7 @@ class RelatedVideosController extends WikiaController {
 
 	public function getCarusel(){
 
-		if( Wikia::isMainPage() || ( !$this->app->wg->title instanceof Title ) || !$this->app->wg->title->exists() ) {
+		if( $this->app->checkSkin( 'wikiamobile' ) || Wikia::isMainPage() || ( !$this->app->wg->title instanceof Title ) || !$this->app->wg->title->exists() ) {
 			return false;
 		}
 		$rvs = new RelatedVideosService();
@@ -155,7 +155,8 @@ class RelatedVideosController extends WikiaController {
 					'duration' => true,
 					'src' => $preloaded ? false : wfBlankImgUrl(),
 					'constHeight' => RelatedVideosService::$height,
-					'usePreloading' => true
+					'usePreloading' => true,
+					'disableRDF' => true
 				)
 			);
 

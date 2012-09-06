@@ -51,7 +51,7 @@ class AchConfig {
 	public function __construct() {
 		//$this->mLoadedData = array();
 		$this->reset();
-		
+
 		$this->mNotInTrackStatic = array(
 			BADGE_WELCOME => array('level' => BADGE_LEVEL_BRONZE, 'infinite' => false),
 			BADGE_INTRODUCTION => array('level' => BADGE_LEVEL_BRONZE, 'infinite' => false),
@@ -149,6 +149,10 @@ class AchConfig {
 		$this->mNotInTrackCommunityPlatinum = array();
 	}
 
+	/**
+	 * @static
+	 * @return AchConfig instance
+	 */
 	static public function getInstance() {
 		if (!isset(self::$mInstance))
 			self::$mInstance = new self();
@@ -160,10 +164,18 @@ class AchConfig {
 		wfProfileIn(__METHOD__);
 
 		global $wgCityId, $wgExternalSharedDB;
+		global $wgEnableAchievementsStoreLocalData;
+
 
 		if(!$this->mAllDataFetched) {
-			$dbr = wfGetDB(($useMasterDb) ? DB_MASTER : DB_SLAVE, array(), $wgExternalSharedDB);
-			$res = $dbr->select('ach_custom_badges', 'id, type, enabled, cat, sponsored, badge_tracking_url, hover_tracking_url, click_tracking_url', array('wiki_id' => $wgCityId), __METHOD__);
+			if(empty($wgEnableAchievementsStoreLocalData)) {
+				$dbr = wfGetDB(($useMasterDb) ? DB_MASTER : DB_SLAVE, array(), $wgExternalSharedDB);
+				$where = array('wiki_id' => $wgCityId);
+			} else {
+				$dbr = wfGetDB(($useMasterDb) ? DB_MASTER : DB_SLAVE);
+				$where = array();
+			}
+			$res = $dbr->select('ach_custom_badges', 'id, type, enabled, cat, sponsored, badge_tracking_url, hover_tracking_url, click_tracking_url', $where, __METHOD__);
 
 			while($row = $dbr->fetchObject($res)) {
 				//WARNING: if DB schema changes array will change too, it's efficient but can turn to being dangerous
@@ -214,11 +226,16 @@ class AchConfig {
 	}
 
 	private function fetchOne($badgeTypeId) {
+		global $wgEnableAchievementsStoreLocalData;
 		wfProfileIn(__METHOD__);
 
 		if(!isset($this->mLoadedData[$badgeTypeId])) {
 			global $wgExternalSharedDB;
-			$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
+			if(empty($wgEnableAchievementsStoreLocalData)) {
+				$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
+			} else {
+				$dbr = wfGetDB(DB_SLAVE);
+			}
 
 			if($row = $dbr->selectRow('ach_custom_badges', 'type, enabled, cat, sponsored, badge_tracking_url, hover_tracking_url, click_tracking_url', array('id' => $badgeTypeId), __METHOD__)) {
 				if($row->type == BADGE_TYPE_NOTINTRACKCOMMUNITYPLATINUM) {
@@ -321,7 +338,7 @@ class AchConfig {
 			$badgeTypeId = BADGE_EDIT;
 			$badgeType = BADGE_TYPE_INTRACKSTATIC;
 		}
-		
+
 		$ret = false;
 
 		if ($badgeType == BADGE_TYPE_NOTINTRACKSTATIC) {
@@ -545,7 +562,7 @@ class AchConfig {
 		return false;
 	}
 
-	public function getBadgeTrackingUrl( $badgeTypeId ) {		
+	public function getBadgeTrackingUrl( $badgeTypeId ) {
 		if ( $this->isSponsored( $badgeTypeId ) ) {
 			return $this->mNotInTrackCommunityPlatinum[ $badgeTypeId ][ 'badge_tracking_url' ];
 		}

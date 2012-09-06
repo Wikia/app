@@ -261,7 +261,7 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 	 */
 	public function getScript( ResourceLoaderContext $context ) {
 		$files = $this->getScriptFiles( $context );
-		return $this->readScriptFiles( $files );
+		return $this->readScriptFiles( $files, /* Wikia */ $context );
 	}
 
 	/**
@@ -292,7 +292,7 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 		if ( count( $this->loaderScripts ) == 0 ) {
 			return false;
 		}
-		return $this->readScriptFiles( $this->loaderScripts );
+		return $this->readScriptFiles( $this->loaderScripts, /* Wikia */ ResourceLoaderContext::newDummyContext() );
 	}
 
 	/**
@@ -304,7 +304,8 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 	public function getStyles( ResourceLoaderContext $context ) {
 		$styles = $this->readStyleFiles(
 			$this->getStyleFiles( $context ),
-			$this->getFlip( $context )
+			$this->getFlip( $context ),
+			/* Wikia */ $context
 		);
 		// Collect referenced files
 		$this->localFileRefs = array_unique( $this->localFileRefs );
@@ -319,6 +320,9 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 				)
 			);
 		}
+		// Wikia - change begin - @author: wladek
+		wfRunHooks( 'ResourceLoaderFileModuleConcatenateStyles', array( &$styles, $this ) );
+		// Wikia - change end
 		return $styles;
 	}
 
@@ -546,7 +550,7 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 	 * @param $scripts Array: List of file paths to scripts to read, remap and concetenate
 	 * @return String: Concatenated and remapped JavaScript data from $scripts
 	 */
-	protected function readScriptFiles( array $scripts ) {
+	protected function readScriptFiles( array $scripts, /* Wikia */ ResourceLoaderContext $context ) {
 		global $wgResourceLoaderValidateStaticJS;
 		if ( empty( $scripts ) ) {
 			return '';
@@ -557,7 +561,9 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 			if ( !file_exists( $localPath ) ) {
 				throw new MWException( __METHOD__.": script file not found: \"$localPath\"" );
 			}
-			$contents = file_get_contents( $localPath );
+			// Wikia - change begin - @author: wladek
+			$contents = self::getFileContents( $localPath, $context );
+			// Wikia - change end
 			if ( $wgResourceLoaderValidateStaticJS ) {
 				// Static files don't really need to be checked as often; unlike
 				// on-wiki module they shouldn't change unexpectedly without
@@ -566,7 +572,9 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 			}
 			$js .= $contents . "\n";
 		}
+		// Wikia - change begin - @author: wladek
 		wfRunHooks( 'ResourceLoaderFileModuleConcatenateScripts', array( &$js, $this ) );
+		// Wikia - change end
 		return $js;
 	}
 
@@ -581,7 +589,7 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 	 * @return Array: List of concatenated and remapped CSS data from $styles,
 	 *     keyed by media type
 	 */
-	protected function readStyleFiles( array $styles, $flip ) {
+	protected function readStyleFiles( array $styles, $flip, /* Wikia */ ResourceLoaderContext $context ) {
 		if ( empty( $styles ) ) {
 			return array();
 		}
@@ -592,7 +600,8 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 				array_map(
 					array( $this, 'readStyleFile' ),
 					$uniqueFiles,
-					array_fill( 0, count( $uniqueFiles ), $flip )
+					array_fill( 0, count( $uniqueFiles ), $flip ),
+					/* Wikia */ array_fill( 0, count( $uniqueFiles ), $context )
 				)
 			);
 		}
@@ -611,12 +620,14 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 	 * @return String: CSS data in script file
 	 * @throws MWException if the file doesn't exist
 	 */
-	protected function readStyleFile( $path, $flip ) {
+	protected function readStyleFile( $path, $flip, /* Wikia */ ResourceLoaderContext $context ) {
 		$localPath = $this->getLocalPath( $path );
 		if ( !file_exists( $localPath ) ) {
 			throw new MWException( __METHOD__.": style file not found: \"$localPath\"" );
 		}
-		$style = file_get_contents( $localPath );
+		// Wikia - change begin - @author: wladek
+		$style = self::getFileContents( $localPath, $context );
+		// Wikia - change end
 		if ( $flip ) {
 			$style = CSSJanus::transform( $style, true, false );
 		}
@@ -632,7 +643,7 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 			$this->localFileRefs,
 			CSSMin::getLocalFileReferences( $style, $dir ) );
 		return CSSMin::remap(
-			$style, $dir, $remoteDir, true
+			$style, $dir, $remoteDir, true, /* Wikia */ $this->localBasePath
 		);
 	}
 
@@ -644,7 +655,7 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 	 */
 	protected static function safeFilemtime( $filename ) {
 		if ( file_exists( $filename ) ) {
-			return filemtime( $filename );
+			return self::getFileModificationTime( $filename );
 		} else {
 			// We only ever map this function on an array if we're gonna call max() after,
 			// so return our standard minimum timestamps here. This is 1, not 0, because
@@ -665,4 +676,86 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 	public function getSource() {
 		return $this->source;
 	}
+
+	/* Wikia - change begin - @author: wladek */
+	const FILE_TYPE_REGULAR = 'regular';
+	const FILE_TYPE_SASS = 'sass';
+
+	protected function getFileType( $fileName ) {
+		$extension = strrchr($fileName,'.');
+		switch ($extension) {
+			case '.scss':
+			case '.sass':
+				return self::FILE_TYPE_SASS;
+				break;
+			default:
+				return self::FILE_TYPE_REGULAR;
+		}
+	}
+
+	protected function getFileContents( $fileName, ResourceLoaderContext $context ) {
+		switch (self::getFileType($fileName)) {
+			case self::FILE_TYPE_REGULAR:
+				return file_get_contents($fileName);
+				break;
+			case self::FILE_TYPE_SASS:
+				$sass = new SassService($fileName);
+				$params = $context->getRequest()->getVal('sass_params');
+				$params = !empty($params) ? FormatJson::decode($params,true) : array();
+				return $sass->getContents($params);
+				break;
+		}
+	}
+
+	protected function getFileModificationTime( $fileName ) {
+		switch (self::getFileType($fileName)) {
+			case self::FILE_TYPE_REGULAR:
+				return filemtime($fileName);
+				break;
+			case self::FILE_TYPE_SASS:
+				$sass = new SassService($fileName);
+				return $sass->getModificationTime();
+				break;
+
+		}
+	}
+
+	public function getFlagNames() {
+		return array_merge( parent:: getFlagNames(), array( 'sass' ) );
+	}
+
+	/**
+	 * Get flag value
+	 *
+	 * @param $name string Parameter name
+	 */
+	protected function reallyGetFlag( $name ) {
+		if ( $name == 'sass' ) {
+			$styles = array();
+			if ( !empty( $this->styles ) ) {
+				$styles = array_merge( $styles, (array)$this->styles );
+			}
+			if ( !empty( $this->skinStyles ) ) {
+				foreach ($this->skinStyles as $skin => $skinStyles) {
+					if ( !empty( $skinStyles ) ) {
+						$styles = array_merge( $styles, (array)$skinStyles );
+					}
+				}
+			}
+
+			$requireSass = false;
+			foreach ($styles as $k => $style) {
+				if ( is_array( $style ) ) {
+					$style = $k;
+				}
+				if ( self::getFileType($style) == self::FILE_TYPE_SASS ) {
+					$requireSass = true;
+				}
+			}
+
+			return $requireSass;
+		}
+		return parent::reallyGetFlag($name);
+	}
+	/* Wikia - change end */
 }

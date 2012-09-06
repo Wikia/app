@@ -7,6 +7,10 @@ class WidgetTagRenderer extends WidgetFramework {
 
 	protected static $instanceTagRenderer = false;
 
+	/**
+	 * @static
+	 * @return WidgetTagRenderer
+	 */
 	public static function getInstance() {
 		if( !(self::$instanceTagRenderer instanceof WidgetTagRenderer) ) {
 	        self::$instanceTagRenderer = new WidgetTagRenderer();

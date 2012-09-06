@@ -15,7 +15,8 @@ define('sections', ['events', 'track'], function(ev, track){
 		callbacks = {
 			open: [],
 			close: []
-		};
+		},
+		OPENCLASS = ' open';
 
 	function fireEvent(event, target){
 		var stack = callbacks[event],
@@ -34,12 +35,14 @@ define('sections', ['events', 'track'], function(ev, track){
 
 	//add class noSect to images outside sections
 	function addNoSectClass(parent){
-		//documentFragment has no support for getElementsByClassName
-		var images = parent.querySelectorAll('.lazy'),
-			i = 0,
-			elm;
+		if(parent){
+			//documentFragment has no support for getElementsByClassName
+			var images = parent.querySelectorAll('.lazy'),
+				i = 0,
+				elm;
 
-		while(elm = images[i++]) elm.className += ' noSect';
+			while(elm = images[i++]) elm.className += ' noSect';
+		}
 	}
 
 	function init(){
@@ -49,12 +52,12 @@ define('sections', ['events', 'track'], function(ev, track){
 				root = fragment,
 				x,
 				y = contents.length,
-				currentSection,
+				currentSection = false,
 				node,
 				nodeName,
 				isH2,
 				addNoSect = true,
-				goBck = '<span class=goBck>&uarr; '+$.msg('wikiamobile-hide-section')+'</span>';
+				goBck = '<span class=goBck>&uarr; ' + $.msg('wikiamobile-hide-section') + '</span>';
 
 			for (x=0; x < y; x++) {
 				node = contents[x];
@@ -64,7 +67,7 @@ define('sections', ['events', 'track'], function(ev, track){
 				if (nodeName != '#comment' && nodeName != 'SCRIPT') {
 					if(node.id == 'WkMainCntFtr' || node.className == 'printfooter' || (node.className && node.className.indexOf('noWrap') > -1)){
 						//do not wrap these elements
-						currentSection.insertAdjacentHTML('beforeend', goBck);
+						currentSection && currentSection.insertAdjacentHTML('beforeend', goBck);
 						root = fragment;
 					}else if (isH2){
 
@@ -123,38 +126,62 @@ define('sections', ['events', 'track'], function(ev, track){
 	}
 
 	function toggle(h2){
-		var isOpen = (h2.className.indexOf('open') > -1),
-			next = h2.nextElementSibling;
-
-		track(['section', isOpen ? 'close' : 'open']);
-
-		if(isOpen){
-			h2.className = h2.className.replace(' open', '');
-			next.className = next.className.replace(' open', '');
+		if(h2 && isOpen(h2)){
+			close(h2);
 		}else{
-			h2.className += ' open';
-			next.className += ' open';
+			open(h2)
 		}
+	}
 
-		fireEvent((isOpen) ? 'close' : 'open', next);
+	function open(h2) {
+		if(h2 && !isOpen(h2)) {
+			var next = h2.nextElementSibling;
+
+			h2.className += OPENCLASS;
+			next.className += OPENCLASS;
+
+			fireEvent('open', next);
+			track(['section', 'open']);
+		}
+	}
+
+	function close(h2) {
+		if(h2 && isOpen(h2)) {
+			var next = h2.nextElementSibling;
+
+			h2.className = h2.className.replace(OPENCLASS, '');
+			next.className = next.className.replace(OPENCLASS, '');
+
+			fireEvent('close', next)
+			track(['section', 'close']);
+		}
+	}
+
+	function isOpen(h2){
+		return (h2.className.indexOf('open') > -1);
 	}
 
 	return {
 		init: init,
 		toggle: toggle,
+		open: open,
+		close: close,
 		addEventListener: function(event, callback){
 			callbacks[event] && callbacks[event].push(callback);
 		},
-		removeEventListener: function(event, callback){
-			var stack = callbacks[event];
+		removeEventListener: function (event, callback) {
+			var stack = callbacks[event],
+				len;
 
-			if(stack){
-				var len = stack.length;
+			if (stack instanceof Array) {
+				len = stack.length;
 
-				while(len--){
-					if(stack[len] === callback){
+				while (len > 0) {
+					len -= 1;
+
+					if (stack[len] === callback) {
 						stack.splice(len, 1);
-						return;
+						break;
 					}
 				}
 			}

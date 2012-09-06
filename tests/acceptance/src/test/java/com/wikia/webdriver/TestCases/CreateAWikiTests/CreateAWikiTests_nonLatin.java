@@ -27,10 +27,10 @@ public class CreateAWikiTests_nonLatin extends TestTemplate
 	 * https://internal.wikia-inc.com/wiki/Global_Log_in_and_Sign_up/Test_Cases:_CNW#Test_Case_3.1.02_Create_new_wiki:_log_in_field_validation_.28Latin_characters.29
 	 * Username field validation: username does not exist  
 	 * */
-	@Test(groups = {"CreateNewWiki_nonLatin_TC001"})
+	@Test(groups = {"CreateNewWiki_nonLatin_TC001","CNW"})
 	public void CreateNewWiki_nonLatin_TC001_user_name_does_not_exists()
 	{
-		CommonFunctions.logOut(Properties.userNameNonLatinEncoded);
+		CommonFunctions.logOut(Properties.userNameNonLatinEncoded, driver);
 		HomePageObject home = new HomePageObject(driver);
 		home.openHomePage();
 		CreateNewWikiPageObjectStep1 createNewWiki1 = home.startAWiki();
@@ -52,9 +52,9 @@ public class CreateAWikiTests_nonLatin extends TestTemplate
 		NewWikiaHomePage newWikia = createNewWiki3.submit(wikiName);
 		newWikia.VerifyCongratulationsLightBox();
 		newWikia.closeCongratulationsLightBox();
-		newWikia.vefifyUserLoggedIn(Properties.userNameNonLatinEncoded);
+		newWikia.verifyUserLoggedIn(Properties.userNameNonLatinEncoded);
 		newWikia.verifyUserToolBar();
-		CommonFunctions.logOut(Properties.userNameNonLatinEncoded);
+		CommonFunctions.logOut(Properties.userNameNonLatinEncoded, driver);
 	}
 	
 	/*
@@ -62,10 +62,10 @@ public class CreateAWikiTests_nonLatin extends TestTemplate
 	 * https://internal.wikia-inc.com/wiki/Global_Log_in_and_Sign_up/Test_Cases:_CNW#Test_Case_3.1.02_Create_new_wiki:_log_in_field_validation_.28Latin_characters.29
 	 * Password field Validation: password is blank
 	 * */
-	@Test(groups = {"CreateNewWiki_nonLatin_TC002"})
+	@Test(groups = {"CreateNewWiki_nonLatin_TC002","CNW"})
 	public void CreateNewWiki_nonLatin_TC002_password_is_blank()
 	{
-		CommonFunctions.logOut(Properties.userNameNonLatinEncoded);
+		CommonFunctions.logOut(Properties.userNameNonLatinEncoded, driver);
 		HomePageObject home = new HomePageObject(driver);
 		home.openHomePage();
 		CreateNewWikiPageObjectStep1 createNewWiki1 = home.startAWiki();
@@ -87,9 +87,9 @@ public class CreateAWikiTests_nonLatin extends TestTemplate
 		NewWikiaHomePage newWikia = createNewWiki3.submit(wikiName);
 		newWikia.VerifyCongratulationsLightBox();
 		newWikia.closeCongratulationsLightBox();
-		newWikia.vefifyUserLoggedIn(Properties.userNameNonLatinEncoded);
+		newWikia.verifyUserLoggedIn(Properties.userNameNonLatinEncoded);
 		newWikia.verifyUserToolBar();
-		CommonFunctions.logOut(Properties.userNameNonLatinEncoded);
+		CommonFunctions.logOut(Properties.userNameNonLatinEncoded, driver);
 	}
 	
 	/*
@@ -97,10 +97,10 @@ public class CreateAWikiTests_nonLatin extends TestTemplate
 	 * https://internal.wikia-inc.com/wiki/Global_Log_in_and_Sign_up/Test_Cases:_CNW#Test_Case_3.1.02_Create_new_wiki:_log_in_field_validation_.28Latin_characters.29
 	 * Password field Validation: password is incorrect
 	 * */
-	@Test(groups = {"CreateNewWiki_nonLatin_TC003"})
+	@Test(groups = {"CreateNewWiki_nonLatin_TC003","CNW"})
 	public void CreateNewWiki_nonLatin_TC003_password_is_incorrect()
 	{
-		CommonFunctions.logOut(Properties.userNameNonLatinEncoded);
+		CommonFunctions.logOut(Properties.userNameNonLatinEncoded, driver);
 		HomePageObject home = new HomePageObject(driver);
 		home.openHomePage();
 		CreateNewWikiPageObjectStep1 createNewWiki1 = home.startAWiki();
@@ -123,9 +123,9 @@ public class CreateAWikiTests_nonLatin extends TestTemplate
 		NewWikiaHomePage newWikia = createNewWiki3.submit(wikiName);
 		newWikia.VerifyCongratulationsLightBox();
 		newWikia.closeCongratulationsLightBox();
-		newWikia.vefifyUserLoggedIn(Properties.userNameNonLatinEncoded);
+		newWikia.verifyUserLoggedIn(Properties.userNameNonLatinEncoded);
 		newWikia.verifyUserToolBar();
-		CommonFunctions.logOut(Properties.userNameNonLatinEncoded);
+		CommonFunctions.logOut(Properties.userNameNonLatinEncoded, driver);
 	}
 	
 	/*
@@ -133,10 +133,10 @@ public class CreateAWikiTests_nonLatin extends TestTemplate
 	 * https://internal.wikia-inc.com/wiki/Global_Log_in_and_Sign_up/Test_Cases:_CNW#Test_Case_3.1.02_Create_new_wiki:_log_in_field_validation_.28Latin_characters.29
 	 * Password field Validation: username and password are correct
 	 * */
-	@Test(groups = {"CreateNewWiki_nonLatin_TC004"})
+	@Test(groups = {"CreateNewWiki_nonLatin_TC004","CNW"})
 	public void CreateNewWiki_nonLatin_TC004_user_name_and_password_are_correct()
 	{
-		CommonFunctions.logOut(Properties.userNameNonLatinEncoded);
+		CommonFunctions.logOut(Properties.userNameNonLatinEncoded, driver);
 		HomePageObject home = new HomePageObject(driver);
 		home.openHomePage();
 		CreateNewWikiPageObjectStep1 createNewWiki1 = home.startAWiki();
@@ -155,8 +155,8 @@ public class CreateAWikiTests_nonLatin extends TestTemplate
 		NewWikiaHomePage newWikia = createNewWiki3.submit(wikiName);
 		newWikia.VerifyCongratulationsLightBox();
 		newWikia.closeCongratulationsLightBox();
-		newWikia.vefifyUserLoggedIn(Properties.userNameNonLatinEncoded);
+		newWikia.verifyUserLoggedIn(Properties.userNameNonLatinEncoded);
 		newWikia.verifyUserToolBar();
-		CommonFunctions.logOut(Properties.userNameNonLatinEncoded);
+		CommonFunctions.logOut(Properties.userNameNonLatinEncoded, driver);
 	}	
 }

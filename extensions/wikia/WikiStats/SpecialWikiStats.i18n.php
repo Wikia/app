@@ -1533,6 +1533,7 @@ $messages['cy'] = array(
  * @author Kghbln
  * @author LWChris
  * @author MF-Warburg
+ * @author Metalhead64
  * @author The Evil IP address
  * @author Umherirrender
  */
@@ -1632,7 +1633,7 @@ $messages['de'] = array(
 	'wikistats_namespaces' => 'Namensräume',
 	'wikistats_redirects' => 'Weiterleitungen',
 	'wikistats_edited_in_namespace' => 'bearbeitet im Namespace',
-	'wikistats_main_namespace' => 'Artikel-<br />namensräume',
+	'wikistats_main_namespace' => 'Seiten',
 	'wikistats_image_namespace' => 'Bild',
 	'wikistats_page_requests' => 'Seitenaufrufe',
 	'wikistats_visits' => 'Besuche',
@@ -2030,7 +2031,7 @@ $messages['es'] = array(
 	'wikistats_namespaces' => 'Espacios de nombre',
 	'wikistats_redirects' => 'redirecciones',
 	'wikistats_edited_in_namespace' => 'editado en espacios de nombre',
-	'wikistats_main_namespace' => 'contenido <br /> espacios de nombre',
+	'wikistats_main_namespace' => 'principal',
 	'wikistats_image_namespace' => 'imagen',
 	'wikistats_page_requests' => 'solicitudes de página',
 	'wikistats_visits' => 'visitas',
@@ -2490,8 +2491,7 @@ $messages['fr'] = array(
 	'wikistats_namespaces' => 'espaces de noms',
 	'wikistats_redirects' => 'redirections',
 	'wikistats_edited_in_namespace' => "modifié dans l'espace de noms",
-	'wikistats_main_namespace' => 'espaces de noms<br />
-de contenu',
+	'wikistats_main_namespace' => 'principal',
 	'wikistats_image_namespace' => 'image',
 	'wikistats_page_requests' => 'requêtes de pages',
 	'wikistats_visits' => 'visites',
@@ -2733,7 +2733,7 @@ $messages['gl'] = array(
 	'wikistats_namespaces' => 'espazos de nomes',
 	'wikistats_redirects' => 'redireccións',
 	'wikistats_edited_in_namespace' => 'editado no espazo de nomes',
-	'wikistats_main_namespace' => 'espazos de nomes<br />de contido',
+	'wikistats_main_namespace' => 'principal',
 	'wikistats_image_namespace' => 'imaxe',
 	'wikistats_page_requests' => 'solicitudes de páxinas',
 	'wikistats_visits' => 'visitas',
@@ -3255,7 +3255,7 @@ $messages['ia'] = array(
 	'wikistats_namespaces' => 'spatios de nomines',
 	'wikistats_redirects' => 'redirectiones',
 	'wikistats_edited_in_namespace' => 'modificate in spatio de nomines',
-	'wikistats_main_namespace' => 'spatios de nomines<br />a contento',
+	'wikistats_main_namespace' => 'principal',
 	'wikistats_image_namespace' => 'imagine',
 	'wikistats_page_requests' => 'requestas de paginas',
 	'wikistats_visits' => 'visitas',
@@ -3397,6 +3397,7 @@ Per favor [[Special:UserLogin|aperi un session, o crea un conto]] si tu non jam 
 
 /** Indonesian (Bahasa Indonesia)
  * @author Aldnonymous
+ * @author Anakmalaysia
  * @author Farras
  * @author Irwangatot
  * @author Kenrick95
@@ -3736,6 +3737,7 @@ $messages['is'] = array(
 );
 
 /** Italian (italiano)
+ * @author Lexaeus 94
  * @author Minerva Titani
  * @author Rippitippi
  */
@@ -3813,6 +3815,7 @@ $messages['it'] = array(
 	'wikistats_user_talk_edits' => 'Modifiche a Discussioni utente',
 	'wikistats_per_namespace' => 'Dati per namespace',
 	'wikistats_content' => 'contenuto',
+	'wikistats_namespace_top' => 'Namespace predefiniti',
 );
 
 /** Japanese (日本語)
@@ -3848,6 +3851,7 @@ $messages['ja'] = array(
 	'wikistats_latest_pageviews' => '最終訪問ページ',
 	'wikistats_latest_userviews' => 'アクティブな利用者（ページビュー）',
 	'wikistats_active_useredits' => '言語の活動',
+	'wikistats_latest_pageviews_subtitle' => '直近$1分間',
 	'wikistats_pageviews' => '名前空間別の月ごとのページビュー',
 	'wikistats_article_one_link' => '最低一つの内部リンクを含む記事',
 	'wikistats_recently_active_wikians' => '$1人の活発な登録利用者を投稿数順に並べています',
@@ -4007,6 +4011,7 @@ $messages['ja'] = array(
 	'wikistats_current_month' => '今月',
 	'wikistats_language_top' => '上位$1言語',
 	'wikistats_language_all' => 'すべての言語',
+	'wikistats_title' => 'タイトル',
 );
 
 /** Khowar (کھوار)
@@ -4231,6 +4236,52 @@ $messages['kn'] = array(
 	'wikistats_statistics_information' => 'ಅಂಕಿಅಂಶಗಳ ಮಾಹಿತಿ',
 	'wikistats_current_month' => 'ಪ್ರಸ್ತಕ ತಿಂಗಳು',
 	'wikistats_title' => 'ಶೀರ್ಷಿಕೆ',
+);
+
+/** Korean (한국어)
+ * @author Cafeinlove
+ * @author 아라
+ */
+$messages['ko'] = array(
+	'wikistats' => '위키아 통계',
+	'wikistats_wikia' => '위키아',
+	'wikistats_pagetitle' => '위키아 통계',
+	'wikistats_comparision' => '비교',
+	'wikistats_showstats_btn' => '통계 보기',
+	'wikistats_wikia_information' => '위키아 정보',
+	'wikiastast_refresh_data' => '데이터 새로고침',
+	'wikistats_active_useredits' => '언어별 활동 내역',
+	'wikistats_pageviews' => '이름공간별 및 월별 페이지 조회수',
+	'wikistats_active_day' => '일',
+	'wikistats_active_month' => '월',
+	'wikistats_active_year' => '년',
+	'wikistats_active_months' => '월',
+	'wikistats_articles_text' => '문서 수',
+	'wikistats_database' => '데이터베이스',
+	'wikistats_links' => '링크',
+	'wikistats_images' => '그림',
+	'wikistats_video' => '도영ㅇ상',
+	'wikistats_media' => '그림 및 동영상',
+	'wikistats_video_embeded' => '내장됨',
+	'wikistats_uploaded_images' => '올려짐',
+	'wikistats_namespace' => '이름공간',
+	'wikistats_edits' => '편집횟수',
+	'wikistats_unique_users' => '편집 참여자',
+	'wikistats_first_edit' => '최초의 편집',
+	'wikistats_last_edit' => '가장 최근의 편집',
+	'wikistats_wikicreated' => '생성일:',
+	'wikistats_wikilang' => '언어:',
+	'wikistats_blog_created' => '블로그 생성됨',
+	'wikistats_blog_comment' => '블로그 댓글',
+	'wikistats_see_also' => '같이 보기',
+	'wikistats_language_all' => '모든 언어',
+	'wikistats_recordspager' => "'''$3'''개의 항목 중 '''$1'''부터 '''$2'''까지",
+	'wikistats_summary_data' => '데이터 요약',
+	'wikistats_namespaces_talk' => '토론 (댓글 포함)',
+	'wikistats_namespaces_top10list' => '상위 10개 목록',
+	'wikistats_namespaces_blog' => '블로그 (블로그, 블로그 댓글 포함)',
+	'wikistats_namespaces_user' => '사용자 (사용자토론 포함)',
+	'wikistats_namespaces_maintenance' => '관리 (미디어위키, 틀, 프로젝트)',
 );
 
 /** Karachay-Balkar (къарачай-малкъар)
@@ -5022,7 +5073,7 @@ $messages['mk'] = array(
 	'wikistats_namespaces' => 'именски простори',
 	'wikistats_redirects' => 'пренасочувања',
 	'wikistats_edited_in_namespace' => 'уредено во именски простор',
-	'wikistats_main_namespace' => 'именски простори<br/ >за содржина',
+	'wikistats_main_namespace' => 'главен',
 	'wikistats_image_namespace' => 'слика',
 	'wikistats_page_requests' => 'барања за страници',
 	'wikistats_visits' => 'посети',
@@ -5287,6 +5338,10 @@ $messages['mr'] = array(
 	'wikistats_main_statistics_legend' => 'प्रमुख सांख्यिकी',
 	'wikistats_ns_statistics_legend' => 'नामविश्वे',
 	'wikistats_search_text' => 'शोध:',
+	'wikistats_sort_list_alphabet' => 'यादी अक्षरांप्रमाणे वेचा',
+	'wikistats_lifetime_editors' => 'एकूण संपादक',
+	'wikistats_article_total' => 'एकूण लेख',
+	'wikistats_article_created' => 'बनवलेले लेख',
 	'wikistats_photo_new' => 'नवीन चित्रे',
 	'wikistats_video_new' => 'नवीन ध्वनीचित्रे',
 	'wikistats_user_page_edits' => 'सदस्य:पान संपादने',
@@ -5421,7 +5476,7 @@ $messages['ms'] = array(
 	'wikistats_namespaces' => 'ruang nama',
 	'wikistats_redirects' => 'lencongan',
 	'wikistats_edited_in_namespace' => 'disunting dalam ruang nama',
-	'wikistats_main_namespace' => 'ruang nama<br />kandungan',
+	'wikistats_main_namespace' => 'utama',
 	'wikistats_image_namespace' => 'gambar',
 	'wikistats_page_requests' => 'permintaan laman',
 	'wikistats_visits' => 'kunjungan',
@@ -5693,7 +5748,7 @@ $messages['nb'] = array(
 	'wikistats_namespaces' => 'navnerom',
 	'wikistats_redirects' => 'omdirigeringer',
 	'wikistats_edited_in_namespace' => 'redigert i navnerommet',
-	'wikistats_main_namespace' => 'innhold<br />navnerom',
+	'wikistats_main_namespace' => 'hoved',
 	'wikistats_image_namespace' => 'bilde',
 	'wikistats_page_requests' => 'sideforespørsler',
 	'wikistats_visits' => 'besøk',
@@ -5934,7 +5989,7 @@ Bewerkingen op overlegpagina's en dergelijke worden genegeerd.",
 	'wikistats_namespaces' => 'naamruimten',
 	'wikistats_redirects' => 'doorverwijzingen',
 	'wikistats_edited_in_namespace' => 'bewerkt in naamruimte',
-	'wikistats_main_namespace' => 'inhoud<br />naamruimten',
+	'wikistats_main_namespace' => 'hoofdnaamruimte',
 	'wikistats_image_namespace' => 'afbeelding',
 	'wikistats_page_requests' => 'paginaverzoeken',
 	'wikistats_visits' => 'bezoeken',
@@ -6296,7 +6351,7 @@ $messages['pl'] = array(
 	'wikistats_namespaces' => 'przestrzenie nazw',
 	'wikistats_redirects' => 'przekierowania',
 	'wikistats_edited_in_namespace' => 'edytowanych w przestrzeni nazw',
-	'wikistats_main_namespace' => 'główne<br />przestrzenie nazw',
+	'wikistats_main_namespace' => 'główna',
 	'wikistats_image_namespace' => 'obraz',
 	'wikistats_page_requests' => 'żądania stron',
 	'wikistats_visits' => 'wizyty',
@@ -7275,7 +7330,7 @@ $messages['ru'] = array(
 	'wikistats_namespaces' => 'пространства имён',
 	'wikistats_redirects' => 'перенаправления',
 	'wikistats_edited_in_namespace' => 'отредактировано в пространстве имён',
-	'wikistats_main_namespace' => 'пространства имён<br />содержания',
+	'wikistats_main_namespace' => 'Основное',
 	'wikistats_image_namespace' => 'изображение',
 	'wikistats_page_requests' => 'запросов страниц',
 	'wikistats_visits' => 'посещений',
@@ -7804,7 +7859,7 @@ $messages['sv'] = array(
 	'wikistats_namespaces' => 'namnrymder',
 	'wikistats_redirects' => 'omdirigeringar',
 	'wikistats_edited_in_namespace' => 'redigeras i namnrymden',
-	'wikistats_main_namespace' => 'innehålls<br />namnrymder',
+	'wikistats_main_namespace' => 'huvud',
 	'wikistats_image_namespace' => 'bild',
 	'wikistats_page_requests' => 'sidförfrågningar',
 	'wikistats_visits' => 'besök',
@@ -8147,7 +8202,7 @@ $messages['tl'] = array(
 	'wikistats_namespaces' => 'Mga puwang ng pangalan',
 	'wikistats_redirects' => 'mga pamalit ng kapupuntahan',
 	'wikistats_edited_in_namespace' => 'binago sa puwang na pampangalan',
-	'wikistats_main_namespace' => 'nilalamang<br />mga puwang na pampangalan',
+	'wikistats_main_namespace' => 'pangunahin',
 	'wikistats_image_namespace' => 'larawan',
 	'wikistats_page_requests' => 'mga hiniling na pahina',
 	'wikistats_visits' => 'mga pagdalaw',

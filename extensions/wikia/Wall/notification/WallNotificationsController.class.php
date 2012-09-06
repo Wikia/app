@@ -3,6 +3,7 @@
  * in here we render Notifications in top-right corner of Wikia interface
  */
 
+
 class WallNotificationsController extends WikiaController {
 
 	const NOTIFICATION_TITLE_LIMIT = 48;

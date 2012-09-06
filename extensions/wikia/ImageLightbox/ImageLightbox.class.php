@@ -7,7 +7,7 @@ class ImageLightbox {
 	/**
 	 * Add global JS variable indicating this extension is enabled (RT #47665)
 	 */
-	static public function addJSVariable(&$vars) {
+	static public function addJSVariable(Array &$vars) {
 		$vars['wgEnableImageLightboxExt'] = true;
 		return true;
 	}
@@ -27,18 +27,18 @@ class ImageLightbox {
 
 
 		$image = wfFindFile($wgTitle);
-		
+
 		if (empty($image)) {
 			wfProfileOut(__METHOD__);
 			return array();
 		}
-		
+
 		if ( F::build( 'WikiaFileHelper' )->isFileTypeVideo( $image ) ) {
 			if ( !empty($wgTitle) ) {
 				return self::videoLightbox($image);
 			}
-		}			
-		
+		}
+
 		// get original dimensions of an image
 		$width = $image->getWidth();
 		$height = $image->getHeight();
@@ -123,7 +123,7 @@ class ImageLightbox {
 		));
 
 		$html = $tmpl->render('ImageLightbox');
-		
+
 		$res = array(
 			'html' => $html,
 			'title' => $wgTitle->getText(),
@@ -134,31 +134,31 @@ class ImageLightbox {
 		return $res;
 	}
 
-	
+
 	function videoLightbox($img) {
-		
+
 		global $wgTitle, $wgRequest, $wgExtensionsPath, $wgBlankImgUrl;
-		
+
 		if ( !empty($wgTitle) ) {
 			wfProfileIn(__METHOD__);
-			
+
 			$revisionTimestamp = $wgRequest->getInt('t', 0);
 
 			if ( $revisionTimestamp > 0 ) { // support for old video revision
-				
+
 				$image = wfFindFile( $wgTitle, $revisionTimestamp );
 				if ( !($image instanceof LocalFile && $image->exists()) ) {
 					wfProfileOut( __METHOD__ );
 					return array();
 				}
 			} else {
-				
+
 				$image = $img;
 			}
 
 
 			$maxWidth = $wgRequest->getInt('maxwidth', 500);
-			
+
 			$embedCode = $image->getEmbedCode( $maxWidth, true, true );
 			$asset = $image->getPlayerAssetUrl();
 
@@ -196,7 +196,7 @@ class ImageLightbox {
 				'subHeaderLinkAnchor' => $subHeaderLinkAnchor,
 				'showEmbedCodeInstantly' => $wgRequest->getVal('showEmbedCodeInstantly')
 			));
-			
+
 			$htmlUnderPlayer = $tmpl->render('VideoLightbox');
 			$html .= $htmlUnderPlayer;
 
@@ -206,14 +206,14 @@ class ImageLightbox {
 				'title' => $wgTitle->getText(),
 				'width' => $maxWidth,
 				'asset' => $asset
-			);		
-			
+			);
+
 			wfProfileOut(__METHOD__);
-			return $res;			
+			return $res;
 		}
 	}
-	
-	
+
+
 	/**
  	 * AJAX function for sending share e-mails
 	 *

@@ -1931,6 +1931,18 @@ class WallHooksHelper {
 		}
 		return true;
 	}
+	
+	public function onBeforeCategoryData( &$extraConds ) {
+		$app = F::App();
+		
+		$excludedNS = $app->wg->WallNS;
+		foreach($app->wg->WallNS as $ns) {
+			$excludedNS[] = MWNamespace::getTalk( $ns );
+		}
+		
+		$extraConds[] = 'page_namespace not in('.implode(',', $excludedNS).')';
+		return true;
+	}
 
 }
 

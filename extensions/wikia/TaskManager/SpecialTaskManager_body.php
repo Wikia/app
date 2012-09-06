@@ -45,8 +45,7 @@ class TaskManagerPage extends SpecialPage {
 		global $wgUser, $wgOut, $wgRequest, $wgWikiaBatchTasks;
 
 		if ( $wgUser->isBlocked() ) {
-			$wgOut->blockedPage();
-			return;
+			throw new UserBlockedError( $this->getUser()->mBlock );
 		}
 		if ( wfReadOnly() ) {
 			$wgOut->readOnlyPage();
@@ -195,7 +194,7 @@ class TaskManagerPage extends SpecialPage {
 						$oTmpl->set_vars( array(
 							"events" => $oTask->getLog( true /*wantarray*/ )
 						));
-						$wgOut->addHTML( $oTmpl->execute( "log" ) );
+						$wgOut->addHTML( $oTmpl->render( "log" ) );
 					}
 					$this->loadTaskForm();
 					$this->loadPager();
@@ -336,7 +335,7 @@ class TaskManagerPage extends SpecialPage {
 			"types" => $aTypes,
 			"title" => $this->mTitle
 		));
-		$wgOut->addHTML( $oTmpl->execute( "taskform" ) );
+		$wgOut->addHTML( $oTmpl->render( "taskform" ) );
 	}
 
 	/**
@@ -358,7 +357,7 @@ class TaskManagerPage extends SpecialPage {
 			"body"      => $oPager->getBody(),
 			"nav"       => $oPager->getNavigationBar()
 		));
-		$wgOut->addHTML( $oTmpl->execute("pager") );
+		$wgOut->addHTML( $oTmpl->render("pager") );
 	}
 }
 
@@ -634,6 +633,6 @@ class TaskManagerPager extends TablePager {
 			"current" => $this->mQueryConds,
 			"statuses" => BatchTask::getStatuses(),
 		));
-		return $oTmpl->execute( "form" );
+		return $oTmpl->render( "form" );
 	}
 }

@@ -36,7 +36,7 @@ class WikiFactoryHub {
 	const CATEGORY_ID_AUTO = 18;
 	const CATEGORY_ID_GREEN = 19;
 	const CATEGORY_ID_ANSWERS = 20;
-	
+
 	private static $mCategoryKruxMap = array(
 	    self::CATEGORY_ID_HUMOR		=> 'Hixwr2ar',
 	    self::CATEGORY_ID_GAMING		=> 'Hi0kJsuv',
@@ -79,7 +79,7 @@ class WikiFactoryHub {
 	 * @access public
 	 * @author Krzysztof Krzyżaniak <eloy@wikia.com>
 	 *
-	 * @return object	WikiFactoryHub object
+	 * @return WikiFactoryHub object
 	 */
 	public static function getInstance() {
 		if( self::$mInstance === false ) {
@@ -147,7 +147,7 @@ class WikiFactoryHub {
 			"categories" 	=> self::$mCategories
 		));
 
-		return $oTmpl->execute("categories");
+		return $oTmpl->render("categories");
 	}
 
 	/**
@@ -162,7 +162,7 @@ class WikiFactoryHub {
 			"categories" 	=> self::$mCategories
 		));
 
-		return $oTmpl->execute("categories");
+		return $oTmpl->render("categories");
 	}
 
 	/**
@@ -351,17 +351,17 @@ class WikiFactoryHub {
 
 		return;
 	}
-	
+
 	/**
 	 * Get Krux id for given category
 	 * @param int $categoryId
-	 * @return string Krux category id 
+	 * @return string Krux category id
 	 */
 	public function getKruxId($categoryId) {
 		if (isset(self::$mCategoryKruxMap[$categoryId])) {
 			return self::$mCategoryKruxMap[$categoryId];
 		}
-		
+
 		return '';
 	}
 }

@@ -161,9 +161,16 @@ function Ach_MastheadEditCounter(&$editCounter, $user) {
 
 		if(!($wgUser->getId() == $user->getId() && $wgUser->getOption('hidepersonalachievements'))) {
 			global $wgCityId, $wgExternalSharedDB;
+            global $wgEnableAchievementsStoreLocalData;
 
-			$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
-			$editCounter = $dbr->selectField('ach_user_score', 'score', array('wiki_id' => $wgCityId, 'user_id' => $user->getId()), __METHOD__);
+            if(empty($wgEnableAchievementsStoreLocalData)) {
+                $dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
+                $editCounter = $dbr->selectField('ach_user_score', 'score', array('wiki_id' => $wgCityId, 'user_id' => $user->getId()), __METHOD__);
+            } else {
+                $dbr = wfGetDB(DB_SLAVE);
+                $editCounter = $dbr->selectField('ach_user_score', 'score', array('user_id' => $user->getId()), __METHOD__);
+            }
+
 			$editCounter = '<div id="masthead-achievements">' . wfMsg('achievements-masthead-points', number_format($editCounter)) . '</div>';
 		}
 	} else {
@@ -209,7 +216,7 @@ function Ach_GetHTMLAfterBody($skin, &$html) {
 			$awardingService->awardCustomNotInTrackBadge($wgUser, BADGE_WELCOME);
 		}
 
-		if((!empty($_SESSION['achievementsNewBadges']) || 5 == rand(1, 20)) && get_class($wgUser->getSkin()) != 'SkinMonobook') {
+		if((!empty($_SESSION['achievementsNewBadges']) || 5 == rand(1, 20)) && get_class(RequestContext::getMain()->getSkin()) != 'SkinMonobook') {
 			// this works only for Wikia and only in current varnish configuration
 			if (!headers_sent()) {
 				header('X-Pass-Cache-Control: no-store, private, no-cache, must-revalidate');

@@ -1,14 +1,14 @@
 <?php
 
 class CorporateFooterController extends WikiaController {
-	
+
 	public function index() {
-		global $wgCityId, $wgUser, $wgLang, $wgMemc;
+		global $wgCityId, $wgLang, $wgMemc;
 		$catId = WikiFactoryHub::getInstance()->getCategoryId( $wgCityId );
 		$mKey = wfSharedMemcKey( 'mOasisFooterLinks', $wgLang->getCode(), $catId );
 
 		$this->footer_links = $wgMemc->get( $mKey );
-		$this->copyright = $wgUser->getSkin()->getCopyright();
+		$this->copyright = RequestContext::getMain()->getSkin()->getCopyright();
 
 		if ( empty( $this->footer_links ) ) {
 			$this->footer_links = $this->getWikiaFooterLinks();
@@ -37,7 +37,7 @@ class CorporateFooterController extends WikiaController {
 	/**
 	 * @author Inez Korczynski <inez@wikia.com>
 	 */
-	 private function getWikiaFooterLinks() {
+	private function getWikiaFooterLinks() {
 		wfProfileIn( __METHOD__ );
 
 		global $wgCityId;
@@ -61,5 +61,16 @@ class CorporateFooterController extends WikiaController {
 
 		wfProfileOut( __METHOD__ );
 		return $nodes;
+	}
+
+	/**
+	 * Make the license message in the footer be based on user language rather
+	 * than content language
+	 *
+	 * @author grunny
+	 */
+	public static function onSkinCopyrightFooter( $title, $type, &$msg, &$link, &$forContent ) {
+		$forContent = false;
+		return true;
 	}
 }

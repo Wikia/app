@@ -58,7 +58,7 @@ class ImageReviewTask extends BatchTask {
 
 			if ( !is_object( $title ) ) {
 				$this->log( 'Apparently the article does not exist anymore' );
-				return false;
+				continue;
 			}
 
 			$city_url = WikiFactory::getVarValueByName( "wgServer", $wikiId );
@@ -69,13 +69,13 @@ class ImageReviewTask extends BatchTask {
 			$city_lang = WikiFactory::getVarValueByName( "wgLanguageCode", $wikiId );
 			$reason = wfMsgExt( 'imagereview-reason', array( 'language' => $city_lang ) );
 
-			$sCommand  = "SERVER_ID={$wikiId} php $IP/maintenance/wikia/deleteOn.php ";
+			$sCommand  = "perl /usr/wikia/backend/bin/run_maintenance --id={$wikiId} --script=wikia/deleteOn.php ";
+			$sCommand .= "-- ";
 			$sCommand .= "-u " . escapeshellarg( $this->mUser ) . " ";
 			$sCommand .= "-t " . escapeshellarg( $title->getPrefixedText() ) . " ";
 			if ( $reason ) {
 				$sCommand .= "-r " . escapeshellarg( $reason ) . " ";
 			}
-			$sCommand .= "--conf {$wgWikiaLocalSettingsPath}";
 
 			$actual_title = wfShellExec($sCommand, $retval);
 
@@ -87,9 +87,9 @@ class ImageReviewTask extends BatchTask {
 
 			$this->flagUser( $imageId, $wikiId );
 			$this->flagWiki( $wikiId );
-
-			return true;
 		}
+
+		return true;
 	}
 
 	function flagUser( $imageId, $wikiId ) {

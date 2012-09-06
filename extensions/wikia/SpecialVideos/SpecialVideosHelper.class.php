@@ -10,6 +10,7 @@ class SpecialVideosHelper extends WikiaModel {
 	const VIDEOS_PER_PAGE = 24;
 	const THUMBNAIL_WIDTH = 320;
 	const THUMBNAIL_HEIGHT = 205;
+	const POSTED_IN_ARTICLES = 5;
 
 	// get list of sorting options
 	public function getSortingOptions() {
@@ -35,28 +36,49 @@ class SpecialVideosHelper extends WikiaModel {
 	public function getVideos( $sort ) {
 		$this->wf->ProfileIn( __METHOD__ );
 
-		$mediaService = F::build( 'MediaQueryService' );
-		if ( $sort == 'premium' ) {
-			$videoList = $mediaService->getVideoList( true );
-			$sort = 'recent';
-		} else {
-			$videoList = $mediaService->getVideoList();
-		}
-
-		$videos = array();
-		foreach ( $videoList as $video ) {
-			$videoDetail = $this->getVideoDetail( $video['name'] );
-			if ( !empty($videoDetail) ) {
-				$videos[] = $videoDetail;
+		$memKey = $this->getMemKeySortedVideos( $sort );
+		$videos = $this->wg->Memc->get( $memKey );
+		if ( !is_array($videos) ) {
+			$mediaService = F::build( 'MediaQueryService' );
+			if ( $sort == 'premium' ) {
+				$videoList = $mediaService->getVideoList( true );
+				$sort = 'recent';
+			} else {
+				$videoList = $mediaService->getVideoList();
 			}
-		}
 
-		// sort video list
-		$this->sortVideoList( $videos, $sort );
+			$videos = array();
+			foreach ( $videoList as $video ) {
+				$videoDetail = $this->getVideoDetail( $video['name'] );
+				if ( !empty($videoDetail) ) {
+					$videos[] = $videoDetail;
+				}
+			}
+
+			// sort video list
+			$this->sortVideoList( $videos, $sort );
+
+			$this->wg->Memc->set( $memKey, $videos, 60*60*2 );
+		}
 
 		$this->wf->ProfileOut( __METHOD__ );
 
 		return $videos;
+	}
+
+	protected function getMemKeySortedVideos( $sort ) {
+		return $this->wf->MemcKey( 'videos', 'sorted_videos', $sort );
+	}
+
+	public function clearCacheSortedVideos() {
+		$sortingOptions = array_keys( $this->getSortingOptions() );
+		foreach( $sortingOptions as $option ) {
+			$this->wg->Memc->delete( $this->getMemKeySortedVideos( $option ) );
+		}
+	}
+
+	public function clearCacheSortedPremiumVideos() {
+		$this->wg->Memc->delete( $this->getMemKeySortedVideos( 'premium' ) );
 	}
 
 	/**
@@ -85,7 +107,7 @@ class SpecialVideosHelper extends WikiaModel {
 				// get article list
 				$mediaQuery =  F::build( 'ArticlesUsingMediaQuery' , array( $title ) );
 				$articleList = $mediaQuery->getArticleList();
-				list( $truncatedList, $isTruncated ) = F::build( 'WikiaFileHelper', array( $articleList ), 'truncateArticleList' );
+				list( $truncatedList, $isTruncated ) = F::build( 'WikiaFileHelper', array( $articleList, self::POSTED_IN_ARTICLES ), 'truncateArticleList' );
 
 				// video details
 				$videoDetail = array(
@@ -175,7 +197,7 @@ class SpecialVideosHelper extends WikiaModel {
 			'href' => $article['url'],
 		);
 
-		$articleLink = Xml::element( 'a', $attribs, $article['title'], false );
+		$articleLink = Xml::element( 'a', $attribs, $article['titleText'], false );
 
 		return $articleLink;
 	}
@@ -189,10 +211,7 @@ class SpecialVideosHelper extends WikiaModel {
 		}
 
 		if ( !empty($articleLinks) ) {
-			$postedInMsg = $this->wf->Msg( 'specialvideos-posted-in', implode($articleLinks, ',') );
-			if ( $isTruncated ) {
-				$postedInMsg .= '...';
-			}
+			$postedInMsg = $this->wf->Msg( 'specialvideos-posted-in', implode($articleLinks, ', ') );
 		}
 
 		return $postedInMsg;

@@ -3,7 +3,7 @@
 <script type="text/javascript" charset="utf-8">
 
 function __makeParamValue() {
-	var f = document.getElementById('lu-form');	
+	var f = document.getElementById('lu-form');
 	var target = "";
 	if (f.lu_target && f.lu_target.length > 0) {
 		for ( i = 0; i < f.lu_target.length; i++ ) {
@@ -16,7 +16,7 @@ function __makeParamValue() {
 
 $(document).ready(function() {
 	var baseurl = wgScript + "?action=ajax&rs=ListusersAjax::axShowUsers";
-				
+
 	var oTable = $('#lu-table').dataTable( {
 		"oLanguage": {
 			"sLengthMenu": "<?=wfMsg('table_pager_limit', '_MENU_');?>",
@@ -54,19 +54,19 @@ $(document).ready(function() {
 		},*/
 		"fnServerData": function ( sSource, aoData, fnCallback ) {
 			var limit		= 30;
-			var offset 		= 0;		
+			var offset 		= 0;
 			var groups	 	= __makeParamValue();
 			var loop		= 1;
 			var order 		= '';
-			
+
 			var sortingCols = 0;
 			var _tmp = new Array();
-			var _tmpDesc = new Array();			
+			var _tmpDesc = new Array();
 			var columns		= new Array();
 			var sortColumns = new Array();
 			var sortOrder	= new Array();
 			var iColumns	= 0;
-			
+
 			for ( i in aoData ) {
 				switch ( aoData[i].name ) {
 					case 'iDisplayLength'	: limit = aoData[i].value; break;
@@ -76,14 +76,14 @@ $(document).ready(function() {
 					case 'iColumns'			: iColumns = aoData[i].value; break;
 					case 'iSortingCols'		: sortingCols = aoData[i].value; break;
 				}
-				
-				if ( aoData[i].name.indexOf( 'iSortCol_', 0) !== -1 ) 
+
+				if ( aoData[i].name.indexOf( 'iSortCol_', 0) !== -1 )
 					sortColumns.push(aoData[i].value);
-				
-				if ( aoData[i].name.indexOf( 'sSortDir_', 0) !== -1 ) 
+
+				if ( aoData[i].name.indexOf( 'sSortDir_', 0) !== -1 )
 					sortOrder.push(aoData[i].value);
 			}
-				
+
 			if ( sortingCols > 0 ) {
 				for ( i = 0; i < sortingCols; i++ ) {
 					var info = columns[sortColumns[i]] + ":" + sortOrder[i];
@@ -93,9 +93,9 @@ $(document).ready(function() {
 			}
 
 			$.ajax( {
-				"dataType": 'json', 
-				"type": "POST", 
-				"url": sSource, 
+				"dataType": 'json',
+				"type": "POST",
+				"url": sSource,
 				"data": [
 					{ 'name' : 'groups', 	'value' : groups },
 					{ 'name' : 'username',	'value' : ( $('#lu_search').exists() ) ? $('#lu_search').val() : '<?=addslashes($defUser)?>' },
@@ -105,12 +105,12 @@ $(document).ready(function() {
 					{ 'name' : 'loop', 		'value' : loop },
 					{ 'name' : 'numOrder',	'value' : sortingCols },
 					{ 'name' : 'order',		'value' : order }
-				], 
+				],
 				"success": fnCallback
 			} );
-		}		
+		}
 	} );
-	
+
 	var toolbar = '<div class="lu_filter">';
 	toolbar += '<span class="lu_filter lu_first"><?= wfMsg('listusersstartingtext') ?></span>';
 	toolbar += '<span class="lu_filter"><input type="text" name="lu_search" id="lu_search" size="5" value="<?=$defUser?>"></span>';
@@ -121,7 +121,7 @@ $(document).ready(function() {
 	<? } ?>
 	toolbar += '</select></span>';
 	toolbar += '<span class="lu_filter"><input type="button" value="<?=wfMsg('listusersdetails')?>" id="lu-showusers"></span></div>';
-	
+
 	$("div.dttoolbar").html( toolbar );
 	$('#lu-showusers').click( function() { oTable.fnDraw(); } );
 } );
@@ -136,16 +136,16 @@ $(document).ready(function() {
 <fieldset class="lu_fieldset">
 <legend><?=wfMsg('listusers-groups')?></legend>
 	<table><tr>
-<? 
-	$i = 0; 
+<?
+	$i = 0;
 	foreach ($obj->mGroups as $groupName => $group) {
-		if ( $i > 0 && $i % 4 == 0) { ?> </tr><tr> <? } 
+		if ( $i > 0 && $i % 4 == 0) { ?> </tr><tr> <? }
 
 		$found += ( isset($group['cnt']) ) ? intval($group['cnt']) : 0;
 		$groupLink = wfMsgExt("Grouppage-{$groupName}", array('parseinline') );
 		$link = "";
 		if ( !wfEmptyMsg("Grouppage-{$groupName}", $groupLink) ) {
-			$sk = $wgUser->getSkin();
+			$sk = RequestContext::getMain()->getSkin();
 			$link = $sk->link($groupLink, $wgContLang->ucfirst($group['name']), "");
 		} else {
 			$groupLink = "";
@@ -156,9 +156,9 @@ $(document).ready(function() {
 			<span style="vertical-align:middle"><input type="checkbox" name="lu_target" id="lu_target" value="<?=$groupName?>" <?=(in_array($groupName, $obj->mDefGroups))?"checked=\"checked\"":''?>></span>
 			<span style="padding-bottom:5px;"><?=$link?> <small>(<?=wfMsg('listuserscount', ( isset( $group['count'] ) ) ? intval($group['count']) : 0 )?>)</small></span>
 		</td>
-<? 		
-		$i++; 
-	} 
+<?
+		$i++;
+	}
 ?>
 		</tr>
 	</table>

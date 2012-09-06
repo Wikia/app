@@ -14,8 +14,12 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 	protected $helper;
 
 	public function __construct() {
-		parent::__construct('ManageWikiaHome', false);
+		parent::__construct('ManageWikiaHome', 'managewikiahome', true);
 		$this->helper = F::build('WikiaHomePageHelper');
+	}
+
+	public function isRestricted() {
+		return true;
 	}
 
 	public function init() {
@@ -35,7 +39,7 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 
 	public function index() {
 		$this->wf->ProfileIn(__METHOD__);
-		$this->wg->Out->setPageTitle(wfMsg('manage-wikia-home-title'));
+		$this->wg->Out->setPageTitle(wfMsg('managewikiahome'));
 
 		if( !$this->checkAccess() ) {
 			$this->forward('ManageWikiaHome', 'onWrongRights');
@@ -130,7 +134,8 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 		$options->offset = (($this->currentPage - 1) * self::WHST_WIKIS_PER_PAGE);
 
 		$specialPage = F::build('Title', array('ManageWikiaHome', NS_SPECIAL), 'newFromText');
-		$url = $specialPage->getLocalUrl() . '?page=%s';
+		//todo: getLocalUrl(array('vl' => $visualizationLang, 'page' => '%s')) doesn't work here because % sign is being escaped
+		$url = $specialPage->getLocalUrl() . '?vl=' . $visualizationLang . '&page=%s';
 
 		if( $count > self::WHST_WIKIS_PER_PAGE ) {
 			/** @var $paginator Paginator */

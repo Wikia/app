@@ -1400,7 +1400,7 @@ class QuizGameHome extends UnlistedSpecialPage {
 	 * @param $vars Array: array of pre-existing JS globals
 	 * @return Boolean: true
 	 */
-	public static function addJSGlobalsForRenderWelcomePage( $vars ) {
+	public static function addJSGlobalsForRenderWelcomePage( &$vars ) {
 		$vars['__quiz_max_answers__'] = 8; // there's no way to retrieve this so we just hardcode it here
 		$vars['__quiz_create_error_numanswers__'] = wfMsg( 'quiz-create-error-numanswers' );
 		$vars['__quiz_create_error_noquestion__'] = wfMsg( 'quiz-create-error-noquestion' );
@@ -1417,7 +1417,7 @@ class QuizGameHome extends UnlistedSpecialPage {
 	 * @param $vars Array: array of pre-existing JS globals
 	 * @return Boolean: true
 	 */
-	public static function addJSGlobals( $vars ) {
+	public static function addJSGlobals( &$vars ) {
 		$vars['__quiz_js_reloading__'] = wfMsg( 'quiz-js-reloading' );
 		$vars['__quiz_js_errorwas__'] = wfMsg( 'quiz-js-errorwas' );
 		$vars['__quiz_js_timesup__'] = wfMsg( 'quiz-js-timesup' );

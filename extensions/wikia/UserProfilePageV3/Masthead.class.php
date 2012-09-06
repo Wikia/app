@@ -280,7 +280,8 @@ class Masthead {
 		 * - get last part of path
 		 * - add it as thumbnail file prefixed with widthpx
 		 */
-		$file = array_pop( explode( "/", $url ) );
+		$parts = explode( "/", $url );
+		$file = array_pop( $parts );
 		return sprintf( "%s/%dpx-%s", $url, $width, $file );
 	}
 

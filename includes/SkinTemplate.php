@@ -157,12 +157,6 @@ class SkinTemplate extends Skin {
 		$user = $this->getUser();
 		$title = $this->getTitle();
 
-		// Wikia change - begin - @author: wladek
-		if ( method_exists( $this, 'getTopScripts' ) ) {
-			$out->topScripts = $this->getTopScripts();
-		}
-		// Wikia change - end
-
 		wfProfileIn( __METHOD__ . '-init' );
 		$this->initPage( $out );
 

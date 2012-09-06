@@ -133,6 +133,7 @@ function SiteWideMessagesEmptyTalkPageWithMessages(&$out, &$text) {
 /**
  * Adds content of messages to the user talk page
  *
+ * @param $out OutputPage
  */
 function SiteWideMessagesGetUserMessages(&$out, $parseroutput) {
 	global $wgUser;
@@ -146,6 +147,7 @@ function SiteWideMessagesGetUserMessages(&$out, $parseroutput) {
 /**
  * Grab information about new messages and if they exist - add notification for specified wikis
  *
+ * @param $user User
  */
 function SiteWideMessagesUserNewTalks(&$user, &$talks) {
 	global $wgExternalSharedDB, $wgMemc, $wgUser;
@@ -231,7 +233,7 @@ function SiteWideMessagesAjaxDismiss($msgId) {
  * @author macbre
  */
 function SiteWideMessagesAddNotifications(&$skim, &$tpl) {
-	global $wgOut, $wgUser;
+	global $wgOut, $wgUser, $wgExtensionsPath;
 	wfProfileIn(__METHOD__);
 
 	if ( F::app()->checkSkin( 'oasis' ) ) {
@@ -250,6 +252,8 @@ function SiteWideMessagesAddNotifications(&$skim, &$tpl) {
 			wfProfileOut( __METHOD__ . '::parse' );
 
 			wfRunHooks( 'SiteWideMessagesNotification', array( $msgs ) );
+
+			$wgOut->addScript( "<script type=\"text/javascript\" src=\"{$wgExtensionsPath}/wikia/SiteWideMessages/js/SiteWideMessages.tracking.js\"></script>" );
 		}
 	}
 

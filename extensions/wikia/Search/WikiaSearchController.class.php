@@ -1,6 +1,6 @@
 <?php
-
 class WikiaSearchController extends WikiaSpecialPageController {
+
 
 	const RESULTS_PER_PAGE = 25;
 	const PAGES_PER_WINDOW = 5;
@@ -24,7 +24,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	}
 
 	public function index() {
-		$this->wg->Out->addHTML( F::build('JSSnippets')->addToStack( array( "/extensions/wikia/Search/WikiaSearch.js" ) ) );
+		$this->wg->Out->addHTML( F::build('JSSnippets')->addToStack( array( "/extensions/wikia/Search/js/WikiaSearch.js" ) ) );
 		$this->wg->SuppressRail = true;
 
 		$skin = $this->wg->User->getSkin();
@@ -36,7 +36,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 				// don't show ads in search
 			} elseif ((! $skin instanceof SkinMonoBook) && (! $skin instanceof SkinVector)) {
 				$this->app->registerHook('MakeGlobalVariablesScript', 'WikiaSearchAdsController', 'onMakeGlobalVariablesScript');
-				$this->response->addAsset('extensions/wikia/Search/WikiaSearchAds.js');
+				$this->response->addAsset('extensions/wikia/Search/js/WikiaSearchAds.js');
 				$showSearchAds = true;
 			}
 		}
@@ -126,6 +126,8 @@ class WikiaSearchController extends WikiaSpecialPageController {
 							'groupResults'=>$isInterWiki,
 							'rank'=>$rank,
 							'hub'=>$hub);
+			
+			$params['videoSearch'] = $this->getVal('videoSearch', false);
 
 			$results = $this->wikiaSearch->doSearch( $query, $params );
 
@@ -284,8 +286,8 @@ class WikiaSearchController extends WikiaSpecialPageController {
 				'namespaces' => array( NS_FILE ),
 			),
 			'users' => array(
-				'message' => 'searchprofile-users',
-				'tooltip' => 'searchprofile-users-tooltip',
+				'message' => 'wikiasearch2-users',
+				'tooltip' => 'wikiasearch2-users-tooltip',
 				'namespaces' => array( NS_USER )
 			),
 			'all' => array(
@@ -475,4 +477,24 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		return true;
 	}
 
+	public function videoSearch()
+	{
+		$query = $this->getVal('q');
+
+		$params = array('cityId' => $this->wg->cityId);
+
+		$results = $this->wikiaSearch->searchVideos($query, $params);
+		
+		// up to whoever's using this service as to what they want from here. I'm just going to return JSON.
+		// if you just want to search for only videos in the traditional video interface, then you should 
+		// be setting 'videoSearch' in the query string of the search index page
+		$processedResultArray = array();
+		foreach ($results as $result) {
+			$processedResultArray[] = (array) $result;
+		}
+		$this->getResponse()->setFormat('json');
+		$this->getResponse()->setData( $processedResultArray );
+		
+	}
+	
 }

@@ -18,3 +18,4 @@ CREATE TABLE wall_notification (
 // ALTER TABLE wall_notification MODIFY unique_id INT(11) NOT NULL;
 // ALTER TABLE wall_notification ADD is_hidden INT(11) NOT NULL DEFAULT 0;
 // ALTER TABLE wall_notification ADD KEY `user_wiki_unique` (user_id,wiki_id,unique_id);
+// alter table wall_notification add notifyeveryone  INT(1) NOT NULL DEFAULT 0;

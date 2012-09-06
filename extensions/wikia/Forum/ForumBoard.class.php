@@ -1,5 +1,7 @@
 <?php
 
+//TODO: move this to wall class php
+
 /**
  * Forum Board
  * @author Kyle Florence, Saipetch Kongkatong, Tomasz Odrobny
@@ -71,19 +73,25 @@ class ForumBoard extends WikiaModel {
 	 * get number of active threads (exclude deleted and removed threads)
 	 * @return integer activeThreads
 	 */
-	public function getTotalActiveThreads() {
+	public function getTotalActiveThreads($relatedPageId = 0) {
 		$this->wf->ProfileIn( __METHOD__ );
 
 		$memKey = $this->getMemKeyTotalActiveThreads();
 		$activeThreads = $this->wg->Memc->get( $memKey );
-		if ( $activeThreads === false ) {
+		if ( !empty($relatedPageId) || $activeThreads === false ) {
 			$db = $this->wf->GetDB( DB_SLAVE );
+
+			$filter = 'parent_page_id ='.((int) $this->boardId);
+			
+			if(!empty($relatedPageId)) {
+				$filter = "comment_id in (select comment_id from wall_related_pages where page_id = {$relatedPageId})";	
+			}
 
 			$activeThreads = $db->selectField(
 				array( 'comments_index' ),
 				array( 'count(*) cnt' ),
 				array(
-					'parent_page_id' => $this->boardId,
+					$filter,
 					'parent_comment_id' => 0,
 					'deleted' => 0,
 					'removed' => 0,

@@ -264,7 +264,7 @@ EOT
 				'username' => $name,
 				'isUsernameGloballyBlocked' => $user->isBlockedGlobally(),
 			));
-			$wgOut->addHTML( $oTmpl->execute('contribution.table') );
+			$wgOut->addHTML( $oTmpl->render('contribution.table') );
 		} else {
 			$wgOut->addWikiText( '*' . wfMsg('lookupuser-table-cannot-be-displayed') );
 		}

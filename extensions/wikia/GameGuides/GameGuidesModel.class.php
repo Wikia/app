@@ -207,6 +207,9 @@ class GameGuidesModel{
 			$ret = $this->loadFromCache( $cacheKey );
 
 			if ( empty( $ret ) ) {
+				/**
+				 * @var $wikiaSearch WikiaSearch
+				 */
 				$wikiaSearch = F::build('WikiaSearch');
 
 				//only articles

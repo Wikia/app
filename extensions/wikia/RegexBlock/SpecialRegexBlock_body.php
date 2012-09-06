@@ -45,8 +45,7 @@ class RegexBlockForm extends SpecialPage
         global $wgUser, $wgOut, $wgRequest, $wgExtensionsPath;
 
         if ( $wgUser->isBlocked() ) {
-            $wgOut->blockedPage();
-            return;
+			throw new UserBlockedError( $this->getUser()->mBlock );
         }
 
         if ( wfReadOnly() ) {
@@ -143,7 +142,7 @@ class RegexBlockForm extends SpecialPage
             "mRegexBlockedExpire"   => $this->mRegexBlockedExpire,
             "mRegexBlockedReason"   => $this->mRegexBlockedReason
         ) );
-        $wgOut->addHTML( $oTmpl->execute("page-form") );
+        $wgOut->addHTML( $oTmpl->render("page-form") );
 
         wfProfileOut( __METHOD__ );
     }
@@ -172,7 +171,7 @@ class RegexBlockForm extends SpecialPage
         }
 
         /* make link to statistics */
-        $mSkin = $wgUser->getSkin();
+        $mSkin = RequestContext::getMain()->getSkin();
         $oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
         $oTmpl->set_vars( array(
             "pager"         => $pager,
@@ -187,7 +186,7 @@ class RegexBlockForm extends SpecialPage
             "lang"          => $wgLang,
             "skin"          => $mSkin
         ) );
-        $wgOut->addHTML( $oTmpl->execute("page-output") );
+        $wgOut->addHTML( $oTmpl->render("page-output") );
 
         wfProfileOut( __METHOD__ );
     }
@@ -343,11 +342,11 @@ class RegexBlockForm extends SpecialPage
             "action"        => $action,
             "stats_list"    => $stats_list,
             "lang"          => $wgLang,
-            "skin"          => $wgUser->getSkin(),
+            "skin"          => RequestContext::getMain()->getSkin(),
             "blockInfo"     => $blockInfo,
             "titleObj"      => $titleObj,
         ) );
-        $wgOut->addHTML( $oTmpl->execute("page-stats") );
+        $wgOut->addHTML( $oTmpl->render("page-stats") );
 
         wfProfileOut( __METHOD__ );
     }

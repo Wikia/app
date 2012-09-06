@@ -48,7 +48,7 @@ class BodyController extends WikiaController {
 		global $wgArticle;
 		return (get_class ($wgArticle) == "AutoHubsPagesArticle");
 	}
-	
+
 	/**
 	 * Returns if current layout should be applying gridlayout
 	 */
@@ -56,7 +56,14 @@ class BodyController extends WikiaController {
 		$app = F::app();
 		/* temporarily removing this
 		*/
-		if( in_array( MWNamespace::getSubject($app->wg->Title->getNamespace()), $app->wg->WallNS) ) {
+
+		$ns = $app->wg->Title->getNamespace();
+
+		if( in_array( MWNamespace::getSubject($ns), $app->wg->WallNS) ) {
+			return true;
+		}
+
+		if( defined("NS_WIKIA_FORUM_TOPIC_BOARD") && $ns == NS_WIKIA_FORUM_TOPIC_BOARD ) {
 			return true;
 		}
 		return false;
@@ -118,7 +125,7 @@ class BodyController extends WikiaController {
 		$namespace = $wgTitle->getNamespace();
 		$subjectNamespace = MWNamespace::getSubject($namespace);
 		$isDiff = ( !is_null( $wgRequest->getVal('diff', false) ) && $wgRequest->getVal('oldid', false));
-		
+
 		/** @TODO should be done via a hook instead **/
 		if ( !empty($wgEnableWallExt) && $namespace === NS_USER_WALL_MESSAGE && $isDiff ) {
 			$this->wg->SuppressRail = true;
@@ -135,16 +142,18 @@ class BodyController extends WikiaController {
 		$huluVideoPanelKey = $wgUser->isAnon() ? 1390 : 1280;
 
 		// Forum Extension
-		if (!empty($this->wg->EnableForumExt) && !empty($this->wg->IsForum)) {
+		if (WikiaPageType::isForum()) {
 			$railModuleList = array (
+				1002 => array('Forum', 'forumRelatedThreads', null),
 				1001 => array('Forum', 'forumActivityModule', null),
 				1000 => array('Forum', 'forumParticipationModule', null),
+				1490 => array('Ad', 'Index', array('slotname' => 'TOP_RIGHT_BOXAD')),
 			);
 			return $railModuleList;
 		}
 
 		if($namespace == NS_SPECIAL) {
-			if (ArticleAdLogic::isSearch()) {
+			if (WikiaPageType::isSearch()) {
 				if (empty($this->wg->EnableWikiaHomePageExt)) {
 					$railModuleList = array(
 						$latestActivityKey => array('LatestActivity', 'Index', null),
@@ -261,7 +270,7 @@ class BodyController extends WikiaController {
 				1500 => array('Search', 'Index', null),
 			);
 			// No rail on main page or edit page for corporate skin
-			if ( BodyController::isEditPage() || ArticleAdLogic::isMainPage() ) {
+			if ( BodyController::isEditPage() || WikiaPageType::isMainPage() ) {
 				$railModuleList = array();
 			}
 			else if (self::isHubPage()) {
@@ -291,7 +300,7 @@ class BodyController extends WikiaController {
 			$isEditPage = BodyController::isEditPage();
 		}
 
-		if ( $isEditPage || ArticleAdLogic::isMainPage() ) {
+		if ( $isEditPage || WikiaPageType::isMainPage() ) {
 			$modules = array();
 			wfRunHooks( 'GetEditPageRailModuleList', array( &$modules ) );
 			wfProfileOut(__METHOD__);
@@ -363,12 +372,11 @@ class BodyController extends WikiaController {
 		}
 
 		// Double-click to edit
-		$skinVars = $this->app->getSkinTemplateObj()->data;
-		$this->body_ondblclick = ''; //$skinVars['body_ondblclick']; // FIXME handling moved to OutputPage::addDefaultModules()
+		$this->body_ondblclick = ''; // FIXME handling moved to OutputPage::addDefaultModules()
 
 		// InfoBox - Testing
 		$this->wg->EnableInfoBoxTest = $wgEnableInfoBoxTest;
-		$this->isMainPage = ArticleAdLogic::isMainPage();
+		$this->isMainPage = WikiaPageType::isMainPage();
 
 		// Replaces ContentDisplayModule->index()
 		$this->bodytext = $this->app->getSkinTemplateObj()->data['bodytext'];
@@ -377,10 +385,13 @@ class BodyController extends WikiaController {
 		// this hook allows adding extra HTML just after <body> opening tag
 		// append your content to $html variable instead of echoing
 		// (taken from Monaco skin)
-		wfRunHooks('GetHTMLAfterBody', array ($wgUser->getSkin(), &$afterBodyHtml) );
+		$skin = RequestContext::getMain()->getSkin();
+		$afterBodyHtml = '';
+		wfRunHooks('GetHTMLAfterBody', array($skin, &$afterBodyHtml));
 		$this->afterBodyHtml = $afterBodyHtml;
 
 		// this hook is needed for SMW's factbox
+		$afterContentHookText = '';
 		wfRunHooks('SkinAfterContent', array( &$afterContentHookText ) );
 		$this->afterContentHookText = $afterContentHookText;
 
@@ -405,7 +416,7 @@ class BodyController extends WikiaController {
 			}
 
 			// FIXME: move to separate module
-			if ( $wgEnableWikiaHomePageExt && ArticleAdLogic::isMainPage() ) {
+			if ( $wgEnableWikiaHomePageExt && WikiaPageType::isMainPage() ) {
 				$this->wg->SuppressFooter = true;
 				$this->wg->SuppressArticleCategories = true;
 				$this->wg->SuppressPageHeader = true;
@@ -421,14 +432,14 @@ class BodyController extends WikiaController {
 
 				// $this->wgSuppressFooter = true;
 				$this->wgSuppressArticleCategories = true;
-				if (ArticleAdLogic::isMainPage()) {
+				if (WikiaPageType::isMainPage()) {
 					$this->wg->SuppressPageHeader = true;
 				} else {
 					$this->headerModuleAction = 'Corporate';
 				}
 			}
 		}
-		
+
 		$this->railModulesExist = true;
 
 		// use one column layout for pages with no right rail modules
@@ -437,7 +448,7 @@ class BodyController extends WikiaController {
 			$this->headerModuleParams = array ('showSearchBox' => true);
 			$this->railModulesExist = false;
 		}
-		
+
 		// determine if WikiaGridLayout needs to be enabled
 		$this->isGridLayoutEnabled = self::isGridLayoutEnabled();
 
@@ -445,7 +456,7 @@ class BodyController extends WikiaController {
 		if($wgTitle && $wgTitle->isSpecial( 'Search' ) && !$this->wg->WikiaSearchIsDefault) {
 			$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL("skins/oasis/css/modules/SpecialSearch.scss"));
 			$this->headerModuleName = null;
-			$this->bodytext = wfRenderModule('Search') . $this->bodytext;
+			$this->bodytext = F::app()->renderView('Search', "Index'") . $this->bodytext;
 		}
 
 		// Inter-wiki search
@@ -497,7 +508,7 @@ class BodyController extends WikiaController {
 					$comments = $service->getCommentsCount();
 
 					// render comments bubble
-					$bubble = wfRenderModule('CommentsLikes', 'Index', array('comments' => $comments, 'bubble' => true));
+					$bubble = F::app()->renderView('CommentsLikes', 'Index', array('comments' => $comments, 'bubble' => true));
 
 					$this->subtitle .= ' | ';
 					$this->subtitle .= $bubble;

@@ -1,18 +1,14 @@
 package com.wikia.webdriver.PageObjects.PageObject;
 
+import java.lang.reflect.Method;
 import java.util.Date;
 import java.util.List;
 
-import org.junit.internal.runners.statements.Fail;
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.interactions.internal.Coordinates;
-import org.openqa.selenium.internal.Locatable;
-import org.openqa.selenium.net.EphemeralPortRangeDetector;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -20,6 +16,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.wikia.webdriver.Common.Core.CommonExpectedConditions;
 import com.wikia.webdriver.Common.Core.CommonFunctions;
+import com.wikia.webdriver.Common.Core.Global;
 import com.wikia.webdriver.Common.Logging.PageObjectLogging;
 import static org.testng.AssertJUnit.fail;
 
@@ -53,8 +50,16 @@ public class BasePageObject{
 	WebElement customizeToolbar_SaveButton;
 	@FindBy(css="span.reset-defaults a")
 	WebElement customizeToolbar_ResetDefaultsButton;
+	@FindBy(css="li.mytools.menu")
+	WebElement customizeToolbar_MyToolsMenuButton;
+	@FindBy(css="ul[id='my-tools-menu']")
+	WebElement customizeToolbar_MyToolsMenu;
+	
+	@FindBy(css="form.WikiaSearch")
+	WebElement wikiaSearch_searchForm;
 	
 	private By customizeToolbar_ToolsList = By.cssSelector("ul.tools li");
+	private By customizeToolbar_MyToolsList = By.cssSelector("ul[id='my-tools-menu'] a");
 	
 	
 	public BasePageObject(WebDriver driver)
@@ -122,6 +127,11 @@ public class BasePageObject{
 		
 	}
 	
+	public String getCurrentUrl()
+	{
+		System.out.println(driver.getCurrentUrl());
+		return driver.getCurrentUrl();
+	}
 	
 	
 	
@@ -131,8 +141,15 @@ public class BasePageObject{
 
 	public void click(WebElement pageElem)
 	{
-		CommonFunctions.scrollToElement(pageElem);
-		pageElem.click();
+		try
+		{
+			CommonFunctions.scrollToElement(pageElem);
+			pageElem.click();
+		}
+		catch(Exception e)
+		{
+			PageObjectLogging.log("click", e.toString(), false);
+		}
 	}
 	/**
 	 * Send keys to WebElement
@@ -140,7 +157,14 @@ public class BasePageObject{
 
 	public void sendKeys(WebElement pageElem, String KeysToSend)
 	{
-		pageElem.sendKeys(KeysToSend);
+		try
+		{
+			pageElem.sendKeys(KeysToSend);			
+		}
+		catch(Exception e)
+		{
+			PageObjectLogging.log("sendKeys", e.toString(), false);			
+		}
 	}
 	
 	/**
@@ -151,10 +175,30 @@ public class BasePageObject{
 	 */
 	public void clickActions(WebElement pageElem)
 	{
-		Actions builder = new Actions(driver);
-		Actions click = builder.click(pageElem);
-		click.perform();
-		
+		try
+		{
+			Actions builder = new Actions(driver);
+			Actions click = builder.click(pageElem);
+			click.perform();				
+		}
+		catch(Exception e)
+		{
+			PageObjectLogging.log("clickActions", e.toString(), false);			
+		}
+	}
+	
+	public void clickRobot(WebElement pageElem)
+	{
+		try
+		{
+			Point p = pageElem.getLocation();
+			CommonFunctions.MoveCursorToElement(p);
+			CommonFunctions.ClickElement();
+		}
+		catch(Exception e)
+		{
+			PageObjectLogging.log("clickRobot", e.toString(), false);			
+		}
 	}
 	
 	/**
@@ -163,9 +207,17 @@ public class BasePageObject{
 	 * @author Michal Nowierski
 	 * ** @param Selector  
 	 */
-	public List<WebElement> getListOfElementsByCss(String Selector) {
-	
-		return driver.findElements(By.cssSelector(Selector));
+	public List<WebElement> getListOfElementsByCss(String Selector) 
+	{
+		try
+		{
+			return driver.findElements(By.cssSelector(Selector));						
+		}
+		catch(Exception e)
+		{
+			PageObjectLogging.log("getListOfElementsByCss", e.toString(), false);
+			return null;
+		}
 	}
 	/**
 	 * Checks if the element is visible on browser
@@ -174,7 +226,14 @@ public class BasePageObject{
 	 */
 	public void waitForElementByBy(By by)
 	{
-		wait.until(ExpectedConditions.visibilityOfElementLocated(by));
+		try
+		{
+			wait.until(ExpectedConditions.visibilityOfElementLocated(by));						
+		}
+		catch(Exception e)
+		{
+			PageObjectLogging.log("clickActions", e.toString(), false);			
+		}
 	}
 	
 	/**
@@ -184,85 +243,238 @@ public class BasePageObject{
 	 */
 	public void waitForElementByElement(WebElement element)
 	{
-		wait.until(ExpectedConditions.visibilityOf(element));
+		try
+		{
+			wait.until(ExpectedConditions.visibilityOf(element));								
+		}
+		catch(Exception e)
+		{
+			PageObjectLogging.log("waitForElementByElement", e.toString(), false);			
+		}
+	}
+
+	/**
+	 * Checks if the element is present in DOM
+	 *
+	 * @param element The element to be checked
+	 */
+	public void waitForElementPresenceByBy(By locator)
+	{
+		try
+		{			
+			wait.until(ExpectedConditions.presenceOfElementLocated(locator));
+		}
+		catch(Exception e)
+		{
+			PageObjectLogging.log("waitForElementPresenceByBy", e.toString(), false);			
+		}
 	}
 	
 	public void waitForElementByCss(String cssSelector)
 	{
+		try
+		{						
+			wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(cssSelector)));
+		}
+		catch(Exception e)
+		{
+			PageObjectLogging.log("waitForElementByCss", e.toString(), false);			
+		}
 		
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(cssSelector)));
 	}
 	
 	public void waitForElementByClassName(String className)
 	{
-		
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className(className)));
+		try
+		{								
+			wait.until(ExpectedConditions.visibilityOfElementLocated(By.className(className)));
+		}
+		catch(Exception e)
+		{
+			PageObjectLogging.log("waitForElementByClassName", e.toString(), false);			
+		}
 	}
 	
 	public void waitForElementByClass(String id)
 	{
-		
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(id)));
+		try
+		{								
+			wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(id)));
+		}
+		catch(Exception e)
+		{
+			PageObjectLogging.log("waitForElementByClass", e.toString(), false);			
+		}
 	}
 	
 	public void waitForElementByXPath(String xPath)
 	{
-		
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xPath)));
+		try
+		{
+			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xPath)));								
+		}
+		catch(Exception e)
+		{
+			PageObjectLogging.log("waitForElementByXpath", e.toString(), false);			
+		}
 	}
-	
-	
 	
 	public void waitForElementNotVisibleByCss(String css)
 	{
-
-		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(css)));
+		try
+		{
+			wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(css)));								
+		}
+		catch(Exception e)
+		{
+			PageObjectLogging.log("waitForElementNotVisibleByCss", e.toString(), false);			
+		}
 	}
 	
 	public void waitForElementNotVisibleByBy(By by)
 	{
-		wait.until(ExpectedConditions.invisibilityOfElementLocated(by));
+		try
+		{
+			wait.until(ExpectedConditions.invisibilityOfElementLocated(by));								
+		}
+		catch(Exception e)
+		{
+			PageObjectLogging.log("waitForElementNotVisibleByBy", e.toString(), false);			
+		}
 	}
 	
 	public void waitForElementClickableByClassName(String className)
 	{
-		wait.until(ExpectedConditions.elementToBeClickable(By.className(className)));
+		try
+		{
+			wait.until(ExpectedConditions.elementToBeClickable(By.className(className)));								
+		}
+		catch(Exception e)
+		{
+			PageObjectLogging.log("waitForElementClickableByClassName", e.toString(), false);			
+		}
 	}
 	
 	public void waitForElementClickableByCss(String css)
 	{
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(css)));
+		try
+		{
+			wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(css)));								
+		}
+		catch(Exception e)
+		{
+			PageObjectLogging.log("waitForElementClickAbleByCss", e.toString(), false);			
+		}
 	}
 	
 	public void waitForElementClickableByBy(By by)
 	{
-		wait.until(ExpectedConditions.elementToBeClickable(by));
+		try
+		{
+			wait.until(ExpectedConditions.elementToBeClickable(by));								
+		}
+		catch(Exception e)
+		{
+			PageObjectLogging.log("waitForElementClickableByBy", e.toString(), false);			
+		}
 	}
 	
 	public void waitForElementClickableByElement(WebElement element)
 	{
-		wait.until(CommonExpectedConditions.elementToBeClickable(element));
+		try
+		{
+			wait.until(CommonExpectedConditions.elementToBeClickable(element));								
+		}
+		catch(Exception e)
+		{
+			PageObjectLogging.log("waitForElementClickableByElement", e.toString(), false);			
+		}
+	}
+	public void waitForElementNotClickableByElement(WebElement element)
+	{
+		try
+		{
+			wait.until(CommonExpectedConditions.elementNotToBeClickable(element));								
+		}
+		catch(Exception e)
+		{
+			PageObjectLogging.log("waitForElementNotClickableByElement", e.toString(), false);			
+		}
 	}
 	
 	public void waitForElementById(String id)
 	{
-		
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(id)));
+		try
+		{
+			wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(id)));								
+		}
+		catch(Exception e)
+		{
+			PageObjectLogging.log("waitForElementById", e.toString(), false);			
+		}
 	}
-	public void waitForValueToBePresentInElementsAttributeByCss(String selector, String attribute,
-			String value) {
-		wait.until(CommonExpectedConditions.valueToBePresentInElementsAttribute(By.cssSelector(selector), attribute, value));
-		
+
+	
+	
+	public void waitForValueToBePresentInElementsAttributeByCss(String selector, String attribute, String value)
+	{
+		try
+		{
+			wait.until(CommonExpectedConditions.valueToBePresentInElementsAttribute(By.cssSelector(selector), attribute, value));								
+		}
+		catch(Exception e)
+		{
+			PageObjectLogging.log("waitForValueToBePresentInElementsAttributeByCss", e.toString(), false);			
+		}
 	}
-	public void waitForValueToNotBePresentInElementsAttributeByCss(String selector, String attribute,
-			String value) {
-		wait.until(CommonExpectedConditions.valueToNotBePresentInElementsAttribute(By.cssSelector(selector), attribute, value));
+
+	public void waitForValueToNotBePresentInElementsAttributeByCss(String selector, String attribute, String value)
+	{
+		try
+		{
+			wait.until(CommonExpectedConditions.valueToNotBePresentInElementsAttribute(By.cssSelector(selector), attribute, value));								
+		}
+		catch(Exception e)
+		{
+			PageObjectLogging.log("waitForValueToNotBePresentInElementsAttributeByCss", e.toString(), false);			
+		}
+	}
+	
+	public void waitForTextToBePresentInElementByElement(WebElement element, String text)
+	{
+		try
+		{
+			wait.until(CommonExpectedConditions.textToBePresentInElement(element, text));								
+		}
+		catch(Exception e)
+		{
+			PageObjectLogging.log("waitForTextToBePresentInElementByElement", e.toString(), false);			
+		}
 		
 	}
 
-	public void waitForStringInURL(String givenString) {
-		wait.until(CommonExpectedConditions.givenStringtoBePresentInURL(givenString));
-		
+	public void waitForClassRemovedFromElement(WebElement element, String className)
+	{
+		try
+		{
+			wait.until(CommonExpectedConditions.classRemovedFromElement(element, className));								
+		}
+		catch(Exception e)
+		{
+			PageObjectLogging.log("waitForClassRemovedFromElement", e.toString(), false);			
+		}
+	}
+
+	public void waitForStringInURL(String givenString)
+	{
+		try
+		{								
+			wait.until(CommonExpectedConditions.givenStringtoBePresentInURL(givenString));
+		}
+		catch(Exception e)
+		{
+			PageObjectLogging.log("waitForStringInURL", e.toString(), false);			
+		}
 	}
 	
 	/**
@@ -270,8 +482,16 @@ public class BasePageObject{
 	 * 
 	 * @author Michal Nowierski
 	 */
-	public void navigateBack() {
-		driver.navigate().back();
+	public void navigateBack()
+	{
+		try
+		{								
+			driver.navigate().back();
+		}
+		catch(Exception e)
+		{
+			PageObjectLogging.log("navigateBack", e.toString(), false);			
+		}
 	}
 	
 	/**
@@ -290,10 +510,10 @@ public class BasePageObject{
 	 * @author Michal Nowierski
 	 */
 	public void customizeToolbar_ClickCustomize() {
-		PageObjectLogging.log("customizeToolbar_ClickCustomize", "Clicks on 'Customize' button.", true, driver);
 		waitForElementByElement(customizeToolbar_CustomizeButton);
 		waitForElementClickableByElement(customizeToolbar_CustomizeButton);
 		customizeToolbar_CustomizeButton.click();
+		PageObjectLogging.log("customizeToolbar_ClickCustomize", "Clicks on 'Customize' button.", true, driver);
 		
 	}
 	
@@ -303,10 +523,10 @@ public class BasePageObject{
 	 * @author Michal Nowierski
 	 */
 	public void customizeToolbar_ClickOnResetDefaults() {
-		PageObjectLogging.log("customizeToolbar_ClickOnResetDefaults", "Click on 'ResetDefaults' button.", true, driver);
 		waitForElementByElement(customizeToolbar_ResetDefaultsButton);
 		waitForElementClickableByElement(customizeToolbar_ResetDefaultsButton);
 		customizeToolbar_ResetDefaultsButton.click();
+		PageObjectLogging.log("customizeToolbar_ClickOnResetDefaults", "Click on 'ResetDefaults' button.", true, driver);
 		
 	}
 	
@@ -317,11 +537,11 @@ public class BasePageObject{
 	 * @author Michal Nowierski
 	 */
 	public void customizeToolbar_TypeIntoFindATool(String GivenString) {
-		PageObjectLogging.log("customizeToolbar_TypeIntoFindATool", "Type "+GivenString+" into Find A Tool field", true, driver);
 		waitForElementByElement(customizeToolbar_FindAToolField);
 		waitForElementClickableByElement(customizeToolbar_FindAToolField);
 		customizeToolbar_FindAToolField.clear();
 		customizeToolbar_FindAToolField.sendKeys(GivenString);
+		PageObjectLogging.log("customizeToolbar_TypeIntoFindATool", "Type "+GivenString+" into Find A Tool field", true, driver);
 		
 	}
 	
@@ -332,11 +552,11 @@ public class BasePageObject{
 	 * @author Michal Nowierski
 	 */
 	public void customizeToolbar_TypeIntoRenameItemDialog(String GivenString) {
-		PageObjectLogging.log("customizeToolbar_TypeIntoRenameItemDialog", "Type "+GivenString+" into Find A Tool field", true, driver);
 		waitForElementByElement(customizeToolbar_RenameItemDialogInput);
 		waitForElementClickableByElement(customizeToolbar_RenameItemDialogInput);
 		customizeToolbar_RenameItemDialogInput.clear();
 		customizeToolbar_RenameItemDialogInput.sendKeys(GivenString);
+		PageObjectLogging.log("customizeToolbar_TypeIntoRenameItemDialog", "Type "+GivenString+" into rename item input", true, driver);
 	}
 	
 	/**
@@ -345,10 +565,10 @@ public class BasePageObject{
 	 * @author Michal Nowierski
 	 */
 	public void customizeToolbar_saveInRenameItemDialog() {
-		PageObjectLogging.log("customizeToolbar_saveInRenameItemDialog", "Click on 'save' button on Rename Item dialog.", true, driver);
 		waitForElementByElement(customizeToolbar_SaveItemDialogInput);
 		waitForElementClickableByElement(customizeToolbar_SaveItemDialogInput);
 		customizeToolbar_SaveItemDialogInput.click();
+		PageObjectLogging.log("customizeToolbar_saveInRenameItemDialog", "Click on 'save' button on Rename Item dialog.", true, driver);
 		
 	}
 	
@@ -359,10 +579,10 @@ public class BasePageObject{
 	 * @author Michal Nowierski
 	 */
 	public void customizeToolbar_ClickOnFoundTool(String Tool) {
-		PageObjectLogging.log("customizeToolbar_ClickOnFoundTool", "Click on "+Tool, true, driver);
 		waitForElementByCss("div.autocomplete div[title='"+Tool+"']");
 		waitForElementClickableByCss("div.autocomplete div[title='"+Tool+"']");
 		driver.findElement(By.cssSelector("div.autocomplete div[title='"+Tool+"']")).click();
+		PageObjectLogging.log("customizeToolbar_ClickOnFoundTool", "Click on "+Tool, true, driver);
 		
 	}
 	
@@ -373,11 +593,20 @@ public class BasePageObject{
 	 * @author Michal Nowierski
 	 */
 	public void customizeToolbar_ClickOnTool(String Tool_dataname) {
-		PageObjectLogging.log("customizeToolbar_ClickOnFoundTool", "Click on "+Tool_dataname, true, driver);
 		waitForElementByCss("li.overflow a[data-name='"+Tool_dataname+"']");
-		waitForElementClickableByCss("li.overflow a[data-name='"+Tool_dataname+"']");
-		driver.findElement(By.cssSelector("li.overflow a[data-name='"+Tool_dataname+"']")).click();
-		
+		WebElement element = driver.findElement(By.cssSelector("li.overflow a[data-name='"+Tool_dataname+"']"));
+		if (Global.BROWSER.equals("IE")) {
+			// clicking on parent element of the above 'a' element, because IE couldn't click on the above 'a' element
+			// Unfortunately Firefox can't click on this parent element, so the code must be browser-dependent
+			WebElement parent = element.findElement(By.xpath(".."));
+			waitForElementClickableByElement(parent);
+			parent.click();
+		}
+		else {
+			waitForElementClickableByElement(element);
+			element.click();
+		}
+		PageObjectLogging.log("customizeToolbar_ClickOnFoundTool", "Click on "+Tool_dataname, true, driver);
 	}
 	
 	/**
@@ -387,8 +616,8 @@ public class BasePageObject{
 	 * @author Michal Nowierski
 	 */
 	public void customizeToolbar_VerifyPageWatchlistStatusMessage() {
-		PageObjectLogging.log("customizeToolbar_VerifyPageWatchlistStatusMessage", "Verify that the page watchlist status message appeared ", true, driver);
 		waitForElementByElement(customizeToolbar_PageWatchlistStatusMessage);
+		PageObjectLogging.log("customizeToolbar_VerifyPageWatchlistStatusMessage", "Verify that the page watchlist status message appeared ", true, driver);
 		
 	}
 	
@@ -399,9 +628,9 @@ public class BasePageObject{
 	 * @author Michal Nowierski
 	 */
 	public void customizeToolbar_VerifyPageFollowed() {
-		PageObjectLogging.log("customizeToolbar_VerifyPageFollowed", "Verify that page is followed", true, driver);
 		waitForElementByCss("a[data-name='follow']");
 		waitForValueToBePresentInElementsAttributeByCss("a[data-name='follow']", "title", "Unfollow");
+		PageObjectLogging.log("customizeToolbar_VerifyPageFollowed", "Verify that page is followed", true, driver);
 	
 	}
 	
@@ -412,9 +641,9 @@ public class BasePageObject{
 	 * @author Michal Nowierski
 	 */
 	public void customizeToolbar_VerifyPageUnfollowed() {
-		PageObjectLogging.log("customizeToolbar_VerifyPageUnfollowed", "Verify that page is unfollowed", true, driver);
 		waitForElementByElement(customizeToolbar_PageWatchlistStatusMessage);
 		waitForValueToBePresentInElementsAttributeByCss("a[data-name='follow']", "title", "Follow");
+		PageObjectLogging.log("customizeToolbar_VerifyPageUnfollowed", "Verify that page is unfollowed", true, driver);
 		
 	}
 	
@@ -425,8 +654,8 @@ public class BasePageObject{
 	 * @author Michal Nowierski
 	 */
 	public void customizeToolbar_VerifyToolOnToolbarList(String Tool) {
-		PageObjectLogging.log("customizeToolbar_VerifyToolOnToolbarList", "Check if "+Tool+" appears", true, driver);
 		waitForElementByCss("ul.options-list li[data-caption='"+Tool+"']");
+		PageObjectLogging.log("customizeToolbar_VerifyToolOnToolbarList", "Check if "+Tool+" appears on list", true, driver);
 	
 	}
 	
@@ -437,9 +666,9 @@ public class BasePageObject{
 	 * @author Michal Nowierski
 	 */
 	public void customizeToolbar_VerifyToolNotOnToolbarList(String Tool) {
-		PageObjectLogging.log("customizeToolbar_VerifyToolNotOnToolbarList", "Check if "+Tool+" does not appear on Toolbar list", true, driver);
 		waitForElementByCss("ul.options-list li");
 		waitForElementNotVisibleByCss("ul.options-list li[data-caption='"+Tool+"']");
+		PageObjectLogging.log("customizeToolbar_VerifyToolNotOnToolbarList", "Check if "+Tool+" does not appear on Toolbar list", true, driver);
 	}
 	
 	/**
@@ -449,7 +678,6 @@ public class BasePageObject{
 	 * @author Michal Nowierski
 	 */
 	public void customizeToolbar_ClickOnToolRemoveButton(String Tool) {
-		PageObjectLogging.log("customizeToolbar_ClickOnToolRemoveButton", "Remove Tool with id "+Tool+" from Toolbar List", true, driver);
 		By By1 = By.cssSelector("ul.options-list li[data-caption='"+Tool+"']");
 		By By2 = By.cssSelector("ul.options-list li[data-caption='"+Tool+"'] img.trash");
 		Point Elem1_location = driver.findElement(By1).getLocation();
@@ -457,6 +685,7 @@ public class BasePageObject{
 		waitForElementByBy(By2);
 		waitForElementClickableByBy(By2);
 		driver.findElement(By2).click();
+		PageObjectLogging.log("customizeToolbar_ClickOnToolRemoveButton", "Remove Tool with id "+Tool+" from Toolbar List", true, driver);
 	}
 	
 	/**
@@ -466,7 +695,6 @@ public class BasePageObject{
 	 * @author Michal Nowierski
 	 */
 	public void customizeToolbar_ClickOnToolRenameButton(String ToolID) {
-		PageObjectLogging.log("customizeToolbar_ClickOnToolRenameButton", "Rename the wanted "+ToolID+" Tool", true, driver);
 		By By1 = By.cssSelector("ul.options-list li[data-caption='"+ToolID+"']");
 		By By2 = By.cssSelector("ul.options-list li[data-caption='"+ToolID+"'] img.edit-pencil");
 		Point Elem1_location = driver.findElement(By1).getLocation();
@@ -474,6 +702,63 @@ public class BasePageObject{
 		waitForElementByBy(By2);
 		waitForElementClickableByBy(By2);
 		driver.findElement(By2).click();
+		PageObjectLogging.log("customizeToolbar_ClickOnToolRenameButton", "Rename the "+ToolID+" Tool", true, driver);
+	}
+	
+	/**
+	 * Drag the wanted Tool
+	 * 
+	 * @param ToolID ID of tool to be dragged. {PageAction:Follow, PageAction:Edit, PageAction:History, (...)}
+	 * @param DragDirection The direction of dragging. e.g -1 is 'drop the tool one item below'
+	 * @author Michal Nowierski
+	 */
+	public void customizeToolbar_DragElemAndDrop(String ToolID, int DragDirection) {
+		By By1 = By.cssSelector("ul.options-list li[data-caption='"+ToolID+"']");
+		By By2 = By.cssSelector("ul.options-list li[data-caption='"+ToolID+"'] img.drag");
+		Point Elem1_location = driver.findElement(By1).getLocation();
+		CommonFunctions.MoveCursorToElement(Elem1_location);
+		waitForElementByBy(By2);
+		waitForElementClickableByBy(By2);
+		Point Elem2_location = driver.findElement(By2).getLocation();
+		CommonFunctions.MoveCursorToElement(Elem2_location);
+		if (Global.BROWSER.equals("FF")) {
+			// Firefox is unable to drag and drop customize toolbar elements using actions class. Able to do it with robot class
+			CommonFunctions.DragFromCurrentCursorPositionAndDrop(0, 25*DragDirection+8);
+		}
+		else {		
+			// Chrome is unable to drag and drop customize toolbar elements using robot class. Able to do it with actions class
+			WebElement draggable = driver.findElement(By2); 
+			new Actions(driver).dragAndDropBy(draggable, 0, 25*DragDirection+8).perform();  
+			
+		}
+		PageObjectLogging.log("customizeToolbar_DragElemAndDrop", "Drag element "+ToolID+", by "+DragDirection, true, driver);
+	}
+	
+	/**
+	 * Check the order of two first tools on My tools list
+	 * 
+	 * @param tool1 The first tool to appear on My Tools list. {History, What links here, (...)} 
+	 * @param tool2 The second tool to appear on My Tools list. {History, What links here, (...)} 
+	 * @author Michal Nowierski
+	 */
+	public void customizeToolbar_VerifyMyToolsOrder(String tool1, String tool2) {
+		CommonFunctions.MoveCursorTo(0, 100);		
+		CommonFunctions.MoveCursorTo(0, 0);		
+		waitForElementByElement(customizeToolbar_MyToolsMenuButton);
+		Point location = customizeToolbar_MyToolsMenuButton.getLocation();
+		try {Thread.sleep(1000);} catch (InterruptedException e) {}
+		CommonFunctions.MoveCursorToElement(location);
+		waitForElementByElement(customizeToolbar_MyToolsMenu);
+		List<WebElement> MyToolsList = driver.findElements(customizeToolbar_MyToolsList);
+		String ActualTool1=MyToolsList.get(0).getText();
+		String ActualTool2=MyToolsList.get(1).getText();
+		if (!tool1.equals(ActualTool1)) {
+			PageObjectLogging.log("customizeToolbar_VerifyMyToolsOrder", ActualTool1+" where "+tool1+" should be. Drag & drop action (from previous step) must hadn't been succesful", false, driver);
+		}
+		if (!tool2.equals(ActualTool2)) {
+			PageObjectLogging.log("customizeToolbar_VerifyMyToolsOrder", ActualTool2+" where "+tool2+" should be. Drag & drop action (from previous step) must hadn't been succesful", false, driver);
+		}
+		PageObjectLogging.log("customizeToolbar_VerifyMyToolsOrder", "Verify that My Tools list has"+tool2+" appearing after "+tool1, true, driver);
 	}
 
 	/**
@@ -482,10 +767,10 @@ public class BasePageObject{
 	 * @author Michal Nowierski
 	 */
 	public void customizeToolbar_ClickOnSaveButton() {
-		PageObjectLogging.log("customizeToolbar_ClickOnSaveButton", "Click on save button on customize toolbar.", true, driver);
 		waitForElementByElement(customizeToolbar_SaveButton);
 		waitForElementClickableByElement(customizeToolbar_SaveButton);
 		customizeToolbar_SaveButton.click();
+		PageObjectLogging.log("customizeToolbar_ClickOnSaveButton", "Click on 'save' button.", true, driver);
 		
 	}
 	
@@ -497,8 +782,7 @@ public class BasePageObject{
 	 * @author Michal Nowierski
 	 */
 	public void customizeToolbar_VerifyToolOnToolbar(String ToolName) {
-		PageObjectLogging.log("customizeToolbar_VerifyToolOnToolbar",
-				"Verify that "+ToolName+" appears in Toolbar.", true, driver);
+		try {Thread.sleep(500);} catch (InterruptedException e) {e.printStackTrace();}
 		waitForElementByBy(customizeToolbar_ToolsList);
 		List<WebElement> List = driver.findElements(customizeToolbar_ToolsList);
 		int amountOfToolsOtherThanTheWantedTool = 0;
@@ -512,6 +796,8 @@ public class BasePageObject{
 					ToolName+" does not appear on toolbar. All of tools are other than the wanted one.", false, driver);
 				fail();
 		}
+		PageObjectLogging.log("customizeToolbar_VerifyToolOnToolbar",
+				"Verify that "+ToolName+" appears in Toolbar.", true, driver);
 	}
 	
 	/**
@@ -522,18 +808,17 @@ public class BasePageObject{
 	 * @author Michal Nowierski
 	 */
 	public void customizeToolbar_UnfollowIfPageIsFollowed() {
-		PageObjectLogging.log("customizeToolbar_UnfollowIfPageIsFollowed",
-				"If the page is Followed, unfollow it (preconditions assurance)", true, driver);
 		List<WebElement> List = driver.findElements(customizeToolbar_ToolsList);
 		for (int i = 0; i < List.size(); i++) {
 			if (List.get(i).getText().equals("Following")) {
-				waitForElementByElement(List.get(i));
-				waitForElementClickableByElement(List.get(i));
-				List.get(i).click();
+				customizeToolbar_ClickOnTool("follow");
 				customizeToolbar_VerifyPageWatchlistStatusMessage();
 				wait.until(ExpectedConditions.textToBePresentInElement(customizeToolbar_ToolsList, "Follow"));
+			
 			}
 		}
+		PageObjectLogging.log("customizeToolbar_UnfollowIfPageIsFollowed",
+				"If the page is Followed, unfollow it (preconditions assurance)", true, driver);
 
 	}
 	
@@ -546,8 +831,7 @@ public class BasePageObject{
 	 * @author Michal Nowierski
 	 */
 	public void customizeToolbar_VerifyToolNotOnToolbar(String ToolName){
-		PageObjectLogging.log("customizeToolbar_VerifyToolNotOnToolbar",
-				"Verify that "+ToolName+" tool does not appear in Toolbar.", true, driver);
+		try {Thread.sleep(500);} catch (InterruptedException e) {e.printStackTrace();}
 		waitForElementByBy(customizeToolbar_ToolsList);
 		List<WebElement> List = driver.findElements(customizeToolbar_ToolsList);
 		int amountOfToolsOtherThanTheWantedTool = 0;
@@ -561,6 +845,19 @@ public class BasePageObject{
 					ToolName+" Tool appears on toolbar (Not all of tools are other than the wanted one).", false, driver);
 				fail();
 		}
+		PageObjectLogging.log("customizeToolbar_VerifyToolNotOnToolbar",
+				"Verify that "+ToolName+" tool does not appear in Toolbar.", true, driver);
+		
+	}
+	
+	/**
+	 * verify that wikia search field is displayed
+	 * 
+	 * @author Michal Nowierski
+	 */	
+	public void verifyWikiaSearchFieldIsDisplayed() {
+		waitForElementByElement(wikiaSearch_searchForm);
+		PageObjectLogging.log("verifyWikiaSearchFieldIsDisplayed", "verify that wikia search field is displayed", true, driver);
 	}
 	
 	public String getTimeStamp()
@@ -568,14 +865,5 @@ public class BasePageObject{
 		Date time = new Date();
 		long timeCurrent = time.getTime();
 		return String.valueOf(timeCurrent);
-		
-	}
-	
-	
-	
-	
-	
-
-	
-    
+	} 
 } 

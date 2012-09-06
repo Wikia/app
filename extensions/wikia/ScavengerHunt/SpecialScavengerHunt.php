@@ -29,7 +29,7 @@ class SpecialScavengerHunt extends SpecialPage {
 	private $optionalSprites = array('finishPopupSprite', 'startPopupSprite');
 
 	public function __construct() {
-		$this->app = WF::build('App');
+		$this->app = F::app();
 		$this->out = $this->app->getGlobal('wgOut');
 		$this->request = $this->app->getGlobal('wgRequest');
 		$this->user = $this->app->getGlobal('wgUser');
@@ -169,7 +169,7 @@ class SpecialScavengerHunt extends SpecialPage {
 						} else {
 							NotificationsController::addConfirmation(
 								wfMsg('scavengerhunt-game-has-not-been-saved'),
-								NotificationsController::CONFIRMATION_PREVIEW
+								NotificationsController::CONFIRMATION_NOTIFY
 							);
 						}
 					}
@@ -553,7 +553,7 @@ class ScavengerHuntGamesPager extends AlphabeticPager {
 	}
 
 	public function getQueryInfo() {
-		$wikiId = WF::build('App')->getGlobal('wgCityId');
+		$wikiId = F::app()->getGlobal('wgCityId');
 		return array(
 			'tables' => ScavengerHuntGames::GAMES_TABLE_NAME,
 			'fields' => '*',

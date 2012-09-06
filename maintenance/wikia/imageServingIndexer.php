@@ -100,7 +100,6 @@ if (empty($options['do']) || $options['do'] != 1) {
 		runIndexer( $out, $total_count, $total_num );
 	}
 	Wikia::log( __METHOD__, 'imageServingIndexer', 'end for:'.$wgCityId. " total time:".(Time() - $startTime) );
-//	WikiFactory::setVarByName("wgImagesIndexed", $wgCityId, true );
 }
 
 function runIndexer( $out, $total_count, $total_num  ) {

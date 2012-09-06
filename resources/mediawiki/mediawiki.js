@@ -366,7 +366,7 @@ var mw = ( function ( $, undefined ) {
 				ready = false,
 				// Selector cache for the marker element. Use getMarker() to get/use the marker!
 				$marker = null;
-	
+
 			/* Cache document ready status */
 	
 			$(document).ready( function () {
@@ -868,6 +868,20 @@ var mw = ( function ( $, undefined ) {
 					currReqBase
 				);
 				request = sortQuery( request );
+
+				// Wikia - change begin - @author: wladek
+				// @see $wgEnableResourceLoaderRewrites
+//				mw.log('ResourceLoader',sourceLoadScript,moduleMap,sourceLoadScript.substr(sourceLoadScript.length-1));
+				if ( sourceLoadScript.substr(sourceLoadScript.length-1) == '/' ) {
+					var modules = request.modules;
+					delete request.modules
+					request = sortQuery( request );
+					var params = encodeURIComponent( $.param(request) );
+					addScript( sourceLoadScript + params + '/' + modules, null, async );
+					return;
+				}
+				// Wikia - change end
+
 				// Asynchronously append a script tag to the end of the body
 				// Append &* to avoid triggering the IE6 extension check
 				addScript( sourceLoadScript + '?' + $.param( request ) + '&*', null, async );
@@ -965,6 +979,17 @@ var mw = ( function ( $, undefined ) {
 							l = currReqBaseLength + 9; // '&modules='.length == 9
 		
 							moduleMap = {}; // { prefix: [ suffixes ] }
+
+							// Wikia - change begin - @author: wladek
+							var wikiaOrigCurrReqBase = $.extend({},currReqBase),
+								wikiaReqSass = false,
+								wikiaSassParamsAdded = false,
+								wikiaSassParams = {},
+								wikiaSassParamsLength = $.param( wikiaSassParams).length + 1;
+							$.each(mw.config.get('wgSassParams'),function(k,v){
+								wikiaSassParams['sass_'+k] = v;
+							});
+							// Wikia - change end - @author: wladek
 		
 							for ( i = 0; i < modules.length; i += 1 ) {
 								// Determine how many bytes this module would add to the query string
@@ -975,7 +1000,15 @@ var mw = ( function ( $, undefined ) {
 								bytesAdded = moduleMap[prefix] !== undefined
 									? suffix.length + 3 // '%2C'.length == 3
 									: modules[i].length + 3; // '%7C'.length == 3
-		
+
+								// Wikia - change begin - @author: wladek
+								wikiaReqSass = $.inArray('sass',registry[modules[i]].flags || []) != -1;
+								mw.log('ResourceLoader',modules[i],wikiaReqSass);
+								if ( wikiaReqSass && !wikiaSassParamsAdded ) {
+									bytesAdded += wikiaSassParamsLength;
+								}
+								// Wikia - change end
+
 								// If the request would become too long, create a new one,
 								// but don't create empty requests
 								if ( maxQueryLength > 0 && !$.isEmptyObject( moduleMap ) && l + bytesAdded > maxQueryLength ) {
@@ -985,7 +1018,19 @@ var mw = ( function ( $, undefined ) {
 									moduleMap = {};
 									async = true;
 									l = currReqBaseLength + 9;
+									// Wikia - change begin - @author: wladek
+									wikiaSassParamsAdded = false;
+									currReqBase = wikiaOrigCurrReqBase;
+									// Wikia - change end
 								}
+
+								// Wikia - change begin - @author: wladek
+								if ( wikiaReqSass && !wikiaSassParamsAdded ) {
+									wikiaSassParamsAdded = true;
+									currReqBase = $.extend( currReqBase, wikiaSassParams );
+								}
+								// Wikia - change end
+
 								if ( moduleMap[prefix] === undefined ) {
 									moduleMap[prefix] = [];
 								}
@@ -1044,7 +1089,7 @@ var mw = ( function ( $, undefined ) {
 				 * @param group {String}: Group which the module is in (optional, defaults to null)
 				 * @param source {String}: Name of the source. Defaults to local.
 				 */
-				register: function ( module, version, dependencies, group, source ) {
+				register: function ( module, version, dependencies, group, source, /* Wikia */ flags ) {
 					var m;
 					// Allow multiple registration
 					if ( typeof module === 'object' ) {
@@ -1073,6 +1118,9 @@ var mw = ( function ( $, undefined ) {
 						'group': typeof group === 'string' ? group : null,
 						'source': typeof source === 'string' ? source: 'local',
 						'state': 'registered'
+						// Wikia - change begin - @author: wladek
+						,'flags': flags || []
+						// Wikia - change end
 					};
 					if ( typeof dependencies === 'string' ) {
 						// Allow dependencies to be given as a single module name
@@ -1083,7 +1131,7 @@ var mw = ( function ( $, undefined ) {
 						registry[module].dependencies = dependencies;
 					}
 				},
-		
+
 				/**
 				 * Implements a module, giving the system a course of action to take
 				 * upon loading. Results of a request for one or more modules contain

@@ -1,37 +1,30 @@
 // AdsInContent2 a.k.a. AIC2
 var AIC2 = {
+	$placeHolder    : $('#WikiaAdInContentPlaceHolder'),
 	fingerprint     : 'b',
 	called          : false,
 	startPosition   : 0,
 	stopPosition    : 0,
 	magicNumber     : 800,
-	WMCbaseWidth    : 680,
-	marginLeft      : 190,
 	isRightToLeft   : false,
 	visible         : false
 };
 
 AIC2.init = function() {
-	var $wikiaMainContent = $("#WikiaMainContent")
-		, $window = $(window);
+	var $window = $(window);
 
 	Liftium.d("AIC2: init", 5);
 
-	if ($wikiaMainContent.width() != AIC2.WMCbaseWidth) {
-		AIC2.marginLeft = AIC2.marginLeft + parseInt(($wikiaMainContent.width() - AIC2.WMCbaseWidth) / 2, 10);
-		Liftium.d("AIC2: non standard width, new marginLeft set to " + AIC2.marginLeft, 5);
-		WikiaTracker.track(Liftium.buildTrackUrl([LiftiumOptions.pubid, "AIC2", "wide"]), 'liftium.varia');
-	}
 	if ($('body').hasClass('rtl')) {
 		Liftium.d("AIC2: rtl wiki", 7);
-		WikiaTracker.track(Liftium.buildTrackUrl([LiftiumOptions.pubid, "AIC2", "rtl"]), 'liftium.varia');
+		WikiaTracker.trackAdEvent('liftium.varia', {'ga_category':'varia/AIC2', 'ga_action':'rtl'}, 'ga');
 		AIC2.isRightToLeft = true;
 	}
 
 	// FIXME
 	if ($window.width() < 1010) {
 		Liftium.d("AIC2: window too narrow, bailing out", 3);
-		WikiaTracker.track(Liftium.buildTrackUrl([LiftiumOptions.pubid, "AIC2", "too_narrow"]), 'liftium.varia');
+		WikiaTracker.trackAdEvent('liftium.varia', {'ga_category':'varia/AIC2', 'ga_action':'too narrow'}, 'ga');
 		return;
 	}
 
@@ -39,64 +32,36 @@ AIC2.init = function() {
 
 	if (AIC2.startPosition + AIC2.magicNumber < AIC2.stopPosition) {
 		Liftium.d("AIC2: page long enough", 7);
-		$('#WikiaRail').append('<div id="INCONTENT_BOXAD_1" class="noprint" style="height: 250px; width: 300px; position: relative;"><div id="Liftium_300x250_99"><iframe width="300" height="250" id="INCONTENT_BOXAD_1_iframe" class="" noresize="true" scrolling="no" frameborder="0" marginheight="0" marginwidth="0" style="border:none" target="_blank"></iframe></div></div><!-- END SLOTNAME: INCONTENT_BOXAD_1 -->');
-		
+		AIC2.$placeHolder.append('<div id="INCONTENT_BOXAD_1" class="noprint" style="height: 250px; width: 300px; position: relative;"><div id="Liftium_300x250_99"><iframe width="300" height="250" id="INCONTENT_BOXAD_1_iframe" class="" noresize="true" scrolling="no" frameborder="0" marginheight="0" marginwidth="0" style="border:none" target="_blank"></iframe></div></div><!-- END SLOTNAME: INCONTENT_BOXAD_1 -->');
+
 		//if (!AIC2.checkFooterAd()) {
-			$window.bind("scroll.AIC2", AIC2.onScroll);
-			$window.bind("resize.AIC2", AIC2.onScroll);
+			$window.bind("scroll.AIC2", $.throttle( 250, AIC2.onScroll ));
+			$window.bind("resize.AIC2", $.throttle( 250, AIC2.onScroll ));
 		//}
-
-	/*
-	WikiaTracker.track(Liftium.buildTrackUrl([LiftiumOptions.pubid, 'AIC2', 'test7']), 'liftium.test');
-	if (!Liftium.e(Liftium.debugLevel) || Math.floor(Math.random() * 10) == 7) {
-		//Liftium.trackEvent(Liftium.buildTrackUrl(['AIC2', 'test1']), 'UA-17475676-11');
-		_gaq.push(['liftium._setAccount', 'UA-17475676-11']);
-		_gaq.push(['liftium._setSampleRate', '100']);
-
-		var slot = '300x250_INCONTENT_BOXAD_' + Math.floor(Math.random() * 3);
-		var hub = Liftium.getPageVar("Hub", "unknown");
-		var lang = Liftium.langForTracking(Liftium.getPageVar("cont_lang", "unknown"));
-		var db = Liftium.dbnameForTracking(Liftium.getPageVar("wgDBname", "unknown"));
-		var geo = Liftium.geoForTracking(Liftium.getCountry());
-
-		_gaq.push(['liftium._setCustomVar', 1, 'db',   db,   3]);
-		_gaq.push(['liftium._setCustomVar', 2, 'hub',  hub,  3]);
-		_gaq.push(['liftium._setCustomVar', 3, 'lang', lang, 3]);
-
-		_gaq.push(['liftium._trackEvent', 'slot', 'slot-' + slot,  hub + '/' + lang + '/' + db + '/' + geo]);
-
-		_gaq.push(['liftium._trackEvent',  slot,  'hub-'  + hub,  'lang-' + lang]);
-		_gaq.push(['liftium._trackEvent',  slot,  'lang-' + lang, 'geo-' + geo]);
-		_gaq.push(['liftium._trackEvent',  slot,  'db-'   + db,   'geo-' + geo]);
-		_gaq.push(['liftium._trackEvent',  slot,  'geo-'  + geo]);
-
-		_gaq.push(['liftium._trackPageview', '/999/' + Liftium.buildTrackUrl(['AIC2', 'test2'])]);
-	}
-	*/
-
 	} else {
 		Liftium.d("AIC2: page too short", 3);
-		WikiaTracker.track(Liftium.buildTrackUrl([LiftiumOptions.pubid, "AIC2", "too_short"]), 'liftium.varia');
+		WikiaTracker.trackAdEvent('liftium.varia', {'ga_category':'varia/AIC2', 'ga_action':'too short'}, 'ga');
 	}
 };
 
 AIC2.checkStartStopPosition = function() {
 	var startPosition, stopPosition, adHeight
-		, $rail = $('#WikiaRail')
 		, $footer = $('#WikiaFooter')
 		, $leftSkyScraper = $('#LEFT_SKYSCRAPER_3')
 		, $incontentBoxAd = $('#INCONTENT_BOXAD_1');
 
 	Liftium.d("AIC2: check start/stop position", 7);
 
-	if (!$rail.length) {
+	if (!AIC2.$placeHolder.length) {
+		Liftium.d("AIC2: no rail", 3);
+		WikiaTracker.trackAdEvent('liftium.varia', {'ga_category':'varia/AIC2', 'ga_action':'no rail'}, 'ga');
 		// No rail, no ads
 		return false;
 	}
 
 	try {
 		adHeight = parseInt($incontentBoxAd.height(), 10) || 0;
-		startPosition = parseInt($rail.offset().top, 10) + parseInt($rail.height(), 10) - adHeight;
+		startPosition = parseInt(AIC2.$placeHolder.offset().top, 10);
 		stopPosition = parseInt($footer.offset().top, 10) - 10 - adHeight;
 
 		if ($leftSkyScraper.length && $leftSkyScraper.height() > 50) {
@@ -105,7 +70,7 @@ AIC2.checkStartStopPosition = function() {
 		}
 	} catch (e) {
 		Liftium.d("AIC2: catched in start/stop:", 1, e);
-		WikiaTracker.track(Liftium.buildTrackUrl([LiftiumOptions.pubid, "error", "AIC2", "try_catch"]), 'liftium.errors');
+		WikiaTracker.trackAdEvent('liftium.errors', {'ga_category':'errors/AIC2', 'ga_action':'try-catch'}, 'ga');
 		// bail out - missing elements, broken dom, erroneous cast...
 		return false;
 	}
@@ -139,41 +104,34 @@ AIC2.isAlmostEqual = function(a, b) {
 };
 
 AIC2.onScroll = function() {
-	var $window = $(window);
+	var $window = $(window),
+		$incontentBoxAd = $('#INCONTENT_BOXAD_1');
 
 	Liftium.d("AIC2: onScroll", 9);
-		
+
 	if (($window.scrollTop() > AIC2.startPosition) && ($window.scrollTop() < AIC2.stopPosition)) {
 		if (!AIC2.visible) {
 			Liftium.d("AIC2.showAd", 5);
 			if (!AIC2.checkStartStopPosition()) { return; }
 			//if (!AIC2.checkFooterAd()) {
-				if ($('#INCONTENT_BOXAD_1').hasClass('wikia-ad') == false) {
+				if ($incontentBoxAd.hasClass('wikia-ad') == false) {
 					LiftiumOptions.placement = "INCONTENT_BOXAD_1";
 					Liftium.callInjectedIframeAd("300x250", document.getElementById("INCONTENT_BOXAD_1_iframe"));
-					$('#INCONTENT_BOXAD_1').addClass('wikia-ad');
+					$incontentBoxAd.addClass('wikia-ad');
 				}
-				$('#INCONTENT_BOXAD_1').css({
+				$incontentBoxAd.css({
 					'position': 'fixed',
 					'top': '10px',
-					'bottom': '',
-					'left': '50%',
-					'margin-left': AIC2.marginLeft + 'px'
+					'visibility': 'visible'
 				});
-				if (AIC2.isRightToLeft) {
-					$('#INCONTENT_BOXAD_1').css({
-						'left': ''
-					});
-				}
-				$('#INCONTENT_BOXAD_1').css('visibility', 'visible');
-				
+
 				AIC2.visible = true;
 			//}
 		}
 	} else {
 		if (AIC2.visible) {
 			Liftium.d("AIC2.hideAd", 5);
-			$('#INCONTENT_BOXAD_1').css('visibility', 'hidden');
+			$incontentBoxAd.css('visibility', 'hidden');
 			AIC2.glueAd();
 
 			AIC2.visible = false;
@@ -184,33 +142,29 @@ AIC2.onScroll = function() {
 AIC2.glueAd = function() {
 	Liftium.d("AIC2: glueAd", 9);
 
-	var adPosition = parseInt($('#INCONTENT_BOXAD_1').offset().top);
+	var $incontentBoxAd = $('#INCONTENT_BOXAD_1'),
+		adPosition = parseInt($incontentBoxAd.offset().top);
+
 	if (adPosition > AIC2.stopPosition) {
 		Liftium.d("AIC2: glue at the bottom", 7);
 
 		var bigSpace = parseInt(AIC2.stopPosition - AIC2.startPosition + 10);
 		// bottom
-		$('#INCONTENT_BOXAD_1').css({
+		$incontentBoxAd.css({
 			'position': 'relative',
-			'top': bigSpace + 'px',
-			'bottom': '',
-			'left': '',
-			'margin-left': ''
+			'top': bigSpace + 'px'
 		});
 	} else {
 		Liftium.d("AIC2: glue at the top", 7);
 
 		// top
-		$('#INCONTENT_BOXAD_1').css({
+		$incontentBoxAd.css({
 			'position': 'relative',
-			'top': '10px',
-			'bottom': '',
-			'left': '',
-			'margin-left': ''
+			'top': '10px'
 		});
 	}
 
-	$('#INCONTENT_BOXAD_1').css('visibility', 'visible');
+	$incontentBoxAd.css('visibility', 'visible');
 };
 
 AIC2.checkFooterAd = function() {
@@ -227,7 +181,8 @@ AIC2.checkFooterAd = function() {
 if (
 	window.top === window.self
 	&& window.wgEnableAdsInContent
-	&& window.wgIsContentNamespace && !window.wgIsMainpage
+	&& !window.wgIsMainpage
+	&& (window.wgIsContentNamespace || window.wikiaPageType === 'search')
 ) {
 	wgAfterContentAndJS.push(function() {
 		if (!AIC2.called) {

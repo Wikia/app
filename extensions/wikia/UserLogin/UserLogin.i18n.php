@@ -514,7 +514,7 @@ $messages['gl'] = array(
 	'userlogin-error-unconfirmed-user' => 'Aínda non confirmou o seu enderezo de correo electrónico. Confirme o enderezo primeiro.',
 	'userlogin-password-page-title' => 'Cambiar o seu contrasinal',
 	'userlogin-oldpassword' => 'Contrasinal antigo',
-	'userlogin-newpassword' => 'Novo contrasinal',
+	'userlogin-newpassword' => 'Contrasinal novo',
 	'userlogin-retypenew' => 'Insira outra vez o novo contrasinal',
 	'userlogin-password-email-subject' => 'Solicitude de contrasinal esquecido',
 	'userlogin-password-email-greeting' => 'Boas, $USERNAME:',
@@ -773,6 +773,76 @@ Vuoi controllare quali email ricevi? Vai alle tue <a href="{{fullurl:{{ns:specia
 	'userlogin-changepassword-needlogin' => '$1 per cambiare la tua password.',
 	'wikiamobile-sendpassword-label' => 'Invia nuova password',
 	'wikiamobile-facebook-connect-fail' => 'Siamo spiacenti, il tuo account di Facebook non è attualmente collegato ad un account di Wikia.',
+);
+
+/** Japanese (日本語)
+ * @author Tommy6
+ */
+$messages['ja'] = array(
+	'userlogin-login-heading' => 'ログイン',
+	'userlogin-forgot-password' => 'パスワードを忘れた',
+	'userlogin-remembermypassword' => 'ログイン状態を維持する',
+	'userlogin-error-noname' => '利用者名を入力してください。',
+	'userlogin-error-sessionfailure' => 'ログインセッションがタイムアウトしました。もう一度ログインしてください。',
+	'userlogin-error-nosuchuser' => 'この名前の利用者は存在しません。利用者名は大文字小文字を区別することにご注意ください。',
+	'userlogin-error-wrongpassword' => 'パスワードが間違っています。Caps lock がオフになっているか確認し再入力してください。',
+	'userlogin-error-wrongpasswordempty' => 'パスワードを入力してください。',
+	'userlogin-error-resetpass_announce' => '仮パスワードを使用しました。こちらに新しいパスワードを入力してログインしてください。',
+	'userlogin-error-login-throttled' => '誤ったパスワードでログインを試みた回数が多すぎます。しばらく待ってから再度お試しください。',
+	'userlogin-error-login-userblocked' => 'この利用者名はブロックされておりログインに使用できません。',
+	'userlogin-error-edit-account-closed-flag' => 'このアカウントはウィキアによって無効化されています。',
+	'userlogin-error-cantcreateaccount-text' => 'お使いのIPアドレスからのアカウント作成は許可されていません。',
+	'userlogin-error-userexists' => 'この名前の利用者は既に存在します。他の利用者名をお試しください。',
+	'userlogin-error-invalidemailaddress' => '有効なメールアドレスを入力してください。',
+	'userlogin-get-account' => 'まだアカウントを取得していませんか？[[Special:UserSignup|アカウントを作成するにはこちら]]',
+	'userlogin-error-invalid-username' => '無効な利用者名です',
+	'userlogin-error-userlogin-unable-info' => '申し訳ありません。現在アカウントを登録できません。',
+	'userlogin-error-user-not-allowed' => 'この利用者名は許可されていません。',
+	'userlogin-error-captcha-createaccount-fail' => '入力したワードが枠内のワードと一致しません。もう一度入力してください。',
+	'userlogin-error-userlogin-bad-birthday' => '年、月、日を選択してください。',
+	'userlogin-error-externaldberror' => '申し訳ありません。現在サイトで問題が発生しています。しばらくしてからもう一度お試しください。',
+	'userlogin-error-noemailtitle' => '有効なメールアドレスを入力してください。',
+	'userlogin-error-acct_creation_throttle_hit' => 'お使いのIPアドレスからのアカウント作成が多すぎます。しばらくしてからお試しください。',
+	'userlogin-error-resetpass_forbidden' => 'パスワードは変更できません。',
+	'userlogin-error-blocked-mailpassword' => 'お使いのIPアドレスがウィキアによってブロックされているため、新しいパスワードを請求できません。',
+	'userlogin-error-throttled-mailpassword' => '$1時間前に既にこのアカウントのパスワード復旧に関するメールを送信しました。メールを確認してください。',
+	'userlogin-error-mail-error' => 'メールの送信で問題が発生しました。[[Special:Contact/general|サポート]]までご連絡ください。',
+	'userlogin-password-email-sent' => '「$1」のメールアドレス宛に新しいパスワードを送信しました。',
+	'userlogin-error-unconfirmed-user' => 'メールアドレスの認証が行われていません。まずはじめにメールアドレスの認証を行ってください。',
+	'userlogin-password-page-title' => 'パスワードを変更',
+	'userlogin-oldpassword' => '古いパスワード',
+	'userlogin-newpassword' => '新しいパスワード',
+	'userlogin-retypenew' => '新しいパスワードを再入力',
+	'userlogin-password-email-subject' => '新規パスワードのリクエスト',
+	'userlogin-password-email-greeting' => '$USERNAME さん、',
+	'userlogin-password-email-content' => 'ウィキアにログインするには、以下の仮パスワードを使用してください: $NEWPASSWORD<br /><br />
+新しいパスワードをリクエストした覚えがない場合でも、心配しないでください。アカウントの安全性は保たれています。このメールを無視し、これまで使用していたパスワードでウィキアにログインし続けることができます。<br /><br />
+質問や気になることがあれば、遠慮なくお問い合わせください。',
+	'userlogin-password-email-signature' => 'ウィキアコミュニティサポート',
+	'userlogin-password-email-body' => '$2 さん、
+
+ウィキアにログインするには、以下の仮パスワードを使用してください: $3
+
+新しいパスワードをリクエストした覚えがない場合でも、心配しないでください。アカウントの安全性は保たれています。このメールを無視し、これまで使用していたパスワードでウィキアにログインし続けることができます。
+
+質問や気になることがあれば、遠慮なくお問い合わせください。
+
+ウィキアサポートチーム
+___________________________________________
+
+ウィキアの最新情報は http://ja.wikia.com/ で確認できます。
+メール通知に関する設定は {{fullurl:{{ns:special}}:Preferences}} で行えます。',
+	'userlogin-email-footer-line1' => 'ウィキアの最新情報は <a style="color:#2a87d5;text-decoration:none;" href="http://ja.wikia.com/">http://ja.wikia.com/</a> で確認できます。',
+	'userlogin-email-footer-line2' => 'メール通知に関する設定は<a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">個人設定</a>のページで行えます。',
+	'userlogin-provider-or' => 'または',
+	'userlogin-provider-tooltip-facebook' => 'Facebook を利用してログインするにはボタンをクリック',
+	'userlogin-provider-tooltip-facebook-signup' => 'Facebook を利用してサインアップするにはボタンをクリック',
+	'userlogin-facebook-show-preferences' => 'Facebook フィードに関する設定を表示',
+	'userlogin-facebook-hide-preferences' => 'Facebook フィードに関する設定を隠す',
+	'userlogin-loginreqlink' => 'ログイン',
+	'userlogin-changepassword-needlogin' => 'パスワードを変更するには$1する必要があります。',
+	'wikiamobile-sendpassword-label' => '新しいパスワードを送信',
+	'wikiamobile-facebook-connect-fail' => 'あなたの Facebook アカウントは現在ウィキアのアカウントとリンクされていません。',
 );
 
 /** Macedonian (македонски)

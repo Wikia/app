@@ -16,20 +16,48 @@ class ForumController extends WallBaseController {
 
 	public function board() {
 		parent::index();
-
+			
 		F::build('JSMessages')->enqueuePackage('Wall', JSMessages::EXTERNAL);
 
 		$this->response->addAsset('forum_js');
 		$this->response->addAsset('extensions/wikia/Forum/css/ForumBoard.scss');
+		$this->response->addAsset('extensions/wikia/Forum/css/MessageTopic.scss');
 		$this->addMiniEditorAssets();
 
-		$boardId = $this->wg->title->getArticleID();
-		$board = F::build( 'ForumBoard', array( $boardId ), 'newFromId' );
-		$this->response->setVal( 'activeThreads', $board->getTotalActiveThreads() );
+		if($this->wall->getTitle()->getNamespace() == NS_WIKIA_FORUM_TOPIC_BOARD) {
+			$board = F::build( 'ForumBoard', array( 0 ), 'newFromId' );
+			$this->response->setVal( 'activeThreads', $board->getTotalActiveThreads($this->wall->getRelatedPageId()) );
+			$this->response->setVal( 'isTopicPage', true );
+		} else {
+			$boardId = $this->wall->getId();
+			$board = F::build( 'ForumBoard', array( $boardId ), 'newFromId' );
+			$this->response->setVal( 'activeThreads', $board->getTotalActiveThreads() );
+			$this->response->setVal( 'isTopicPage', false );			
+		}
 		
+		$this->app->wg->SuppressPageHeader = true;
+		$this->app->wg->WallBrickHeader = true;
 		$this->app->wg->Out->setPageTitle( wfMsg('forum-board-title', $this->wg->title->getBaseText()) );
 	}
 
+	public function getWallForIndexPage($title) {
+		if($title->getNamespace() == NS_WIKIA_FORUM_TOPIC_BOARD) {
+			$topicTitle = F::build('Title', array($title->getText()), 'newFromURL');
+			
+			if(!empty($topicTitle)) {
+				$wall = F::build('Wall', array($title, $topicTitle->getArticleId()), 'newFromRelatedPages');
+				$this->response->setVal( 'topicText', $topicTitle->getPrefixedText() );
+				$wall->disableCache();		
+			} else {
+				$wall = F::build('Wall', array($title), 'newFromTitle');	
+			}		
+		} else {
+		 	$wall = F::build('Wall', array(($title)), 'newFromTitle');
+		}
+		
+		return $wall; 
+	}
+	
 	public function boardNewThread() {
 		parent::newMessage();
 	}
@@ -90,7 +118,30 @@ class ForumController extends WallBaseController {
 	}
 
 	public function breadCrumbs() {
-		parent::brickHeader();
+		if($this->app->wg->Title->getNamespace() == NS_WIKIA_FORUM_TOPIC_BOARD) {
+			$indexPage = F::build('Title', array('Forum', NS_SPECIAL), 'newFromText' );
+			$path = array();
+			$path[] = array(
+				'title' => wfMsg( 'forum-forum-title', $this->app->wg->sitename ),
+				'url' => $indexPage->getFullUrl()
+			);
+
+			$path[] = array(
+				'title' => wfMsg( 'forum-board-topics'  )
+			);
+			
+			$topicTitle = F::build('Title', array($this->app->wg->Title->getText()), 'newFromURL');
+			
+			if(!empty($topicTitle)) {
+				$path[] = array(
+					'title' => $topicTitle->getPrefixedText()
+				);
+			}
+			
+			$this->response->setVal( 'path', $path );
+		} else {
+			parent::brickHeader();	
+		}
 	}
 
 	public function header() {
@@ -212,5 +263,53 @@ class ForumController extends WallBaseController {
 		$out = $wallHistory->getLastUsers(NS_WIKIA_FORUM_BOARD);
 		
 		$this->response->setVal( 'participants', $out );		
+	}
+	
+	public function forumRelatedThreads() {
+		$title = F::build( 'Title', array( $this->app->wg->Title->getText() ), 'newFromId' );
+		$this->response->setVal( 'showModule', false );
+		if(!empty($title) && $title->getNamespace() == NS_WIKIA_FORUM_BOARD_THREAD) {
+		
+			$rp = new WallRelatedPages();
+			$out = $rp->getMessageRelatetMessageIds(array($title->getArticleId()));
+			$messages = array();
+			$count = 0;
+			foreach($out as $key => $val) {				
+				if($title->getArticleId() == $val['comment_id']) {
+					continue;
+				}
+				
+				$msg = WallMessage::newFromId($val['comment_id']);
+				if(!empty($msg)) {
+					$msg->load();
+					
+					$message = array(
+						'message' => $msg
+					);
+					
+					if(!empty($val['last_child'])) {
+						$childMsg = WallMessage::newFromId($val['last_child']);
+						
+						if(!empty($childMsg)) {
+							$childMsg->load();
+							$message['reply'] = $childMsg;
+						}
+					}
+					
+					$messages[] = $message;
+					$count++;
+					if($count == 5) {
+						break;
+					}
+				}
+			}
+	
+			$this->response->setVal( 'showModule', !empty($messages) );	
+			$this->response->setVal( 'messages', $messages );	
+		}
+	}
+	
+	public function messageTopic() {
+		// stub function
 	}
 }

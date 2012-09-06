@@ -44,8 +44,8 @@ $messages['en'] = array(
 
 	'promote-upload-submit-button' => 'Submit',
 
-	'promote-error-less-characters-than-minimum' => 'Oops! Your headline needs to be at least $2 characters.',
-	'promote-error-more-characters-than-maximum' => 'Oops! Your headline needs to be $2 characters or less.',
+	'promote-error-less-characters-than-minimum' => 'Oops! Your text needs to be at least $2 characters.',
+	'promote-error-more-characters-than-maximum' => 'Oops! Your text needs to be $2 characters or less.',
 	'promote-error-upload-unknown-error' => 'Unknown upload error',
 	'promote-error-upload-filetype-error' => 'Make sure your file is saved as a ".png"',
 	'promote-error-upload-dimensions-error' => 'Wrong file dimensions - file should be at least 480x320px',
@@ -103,7 +103,7 @@ $messages['de'] = array(
 
 	'promote-upload-submit-button' => 'Los geht\'s',
 
-	'promote-error-less-characters-than-minimum' => 'Ups! Deine Überschrift muss mindestens {{PLURAL:$2|einen Buchstaben|$2 Buchstaben}} lang sein.',
+	'promote-error-less-characters-than-minimum' => 'Ups! Dein Text muss mindestens $2 Buchstaben lang sein.',
 	'promote-error-more-characters-than-maximum' => 'Ups! Deine Überschrift darf nicht länger als $2 Buchstaben sein.',
 	'promote-error-upload-unknown-error' => 'Unbekannter Fehler beim Hochladen',
 	'promote-error-upload-filetype-error' => 'Stelle sicher, dass du deine Datei im \".png\"-Format speicherst.',

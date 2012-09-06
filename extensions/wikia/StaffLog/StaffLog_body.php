@@ -24,8 +24,7 @@ class StaffLog extends SpecialPage
 		$this->setHeaders();
 
 		if( !$wgUser->isAllowed( 'stafflog' ) ) {
-			$wgOut->permissionRequired( 'stafflog' );
-			return;
+			throw new PermissionsError( 'stafflog' );
 		}
 
 		$pager = new StaffLoggerPager( "" );

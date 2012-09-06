@@ -277,15 +277,15 @@ class ScavengerHunt {
 		);
 	}
 
-	/*
+	/**
 	 * hook handler - add JS vars to starting page
 	 *
 	 * @author Marooned
 	 */
-	public function onMakeGlobalVariablesScript( &$vars ) {
+	public function onMakeGlobalVariablesScript( Array &$vars ) {
 		wfProfileIn(__METHOD__);
 
-		$games = F::build( 'ScavengerHuntGames' );
+		$games = F::build( 'ScavengerHuntGames' ); /** @var $games ScavengerHuntGames  */
 
 		$params = $games->getJSParamsForCurrent();
 		if( !empty( $params ) ){
@@ -413,13 +413,13 @@ class ScavengerHunt {
 	}
 
 	protected function getCache() {
-		return WF::build('App')->getGlobal('wgMemc');
+		return F::app()->getGlobal('wgMemc');
 	}
 
 	protected function getMemcKey( $arguments = null ) {
 		$args = func_get_args();
 		array_unshift($args, 'wfMemcKey');
-		return call_user_func_array(array(WF::build('App'), 'runFunction'), $args);
+		return call_user_func_array(array(F::app(), 'runFunction'), $args);
 	}
 
 	public function parse( $text ) {

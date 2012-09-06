@@ -199,8 +199,7 @@ class MultiTask extends SpecialPage {
 		}
 
 		if ( $wgUser->isBlocked() ) {
-			$wgOut->blockedPage();
-			$res = false;
+			throw new UserBlockedError( $this->getUser()->mBlock );
 		}
 
 		if ( !$wgUser->isAllowed( $this->mRights ) ) {
@@ -335,7 +334,7 @@ class MultiTask extends SpecialPage {
             "err"			=> $err
         ));
 
-        $wgOut->addHTML( $oTmpl->execute($this->mMainForm) );
+        $wgOut->addHTML( $oTmpl->render($this->mMainForm) );
 		return true;
 	}
 
@@ -405,7 +404,7 @@ class MultiTask extends SpecialPage {
 						"submit_id"		=> $submit_id,
 						"error"			=> ($submit_id === false),
 					) );
-					$wgOut->addHTML( $oTmpl->execute($this->mFinishForm) );
+					$wgOut->addHTML( $oTmpl->render($this->mFinishForm) );
 				}
 			}
 		}
@@ -436,7 +435,7 @@ class MultiTask extends SpecialPage {
 			"cat"			=> $cat,
 			"obj"			=> $this,
 		) );
-		$wgOut->addHTML( $oTmpl->execute( $this->mPreviewForm ) );
+		$wgOut->addHTML( $oTmpl->render( $this->mPreviewForm ) );
 
 		$wgOut->addHtml( $this->getBackUrl() );
 	}

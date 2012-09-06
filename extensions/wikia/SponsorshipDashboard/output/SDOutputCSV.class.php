@@ -58,7 +58,7 @@ class SponsorshipDashboardOutputCSV extends SponsorshipDashboardOutputTable {
 		$this->sourceData = array_reverse( $aData );
 		$this->sourceLabels = array_reverse( $aLabel );
 
-		$oTmpl = F::build( 'EasyTemplate', array( ( dirname( __FILE__ )."/templates/" ) ) );
+		$oTmpl = F::build( 'EasyTemplate', array( ( dirname( __FILE__ )."/templates/" ) ) ); /** @var $oTmpl EasyTemplate */
 		$oTmpl->set_vars(
 			array(
 				'data'			=> $this->sourceData,
@@ -70,7 +70,7 @@ class SponsorshipDashboardOutputCSV extends SponsorshipDashboardOutputTable {
 
 		$this->beforePrint();
 
-		return $oTmpl->execute( '../../templates/output/'.self::TEMPLATE_MAIN );
+		return $oTmpl->render( '../../templates/output/'.self::TEMPLATE_MAIN );
 	}
 
 	function beforePrint(){

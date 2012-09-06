@@ -4,6 +4,9 @@ class ArticleService extends WikiaService {
 	const MAX_CACHED_TEXT_LENGTH = 500;
 	const CACHE_KEY = 'article_service_cache';
 
+	/**
+	 * @var $mArticle Article
+	 */
 	private $mArticle = null;
 
 	private $mTagsToRemove = array(
@@ -155,6 +158,9 @@ class ArticleService extends WikiaService {
 	 * Clear the snippet cache when the page is purged
 	 */
 	static public function onArticlePurge( WikiPage $page ) {
+		/**
+		 * @var $service ArticleService
+		 */
 		$service = F::build( 'ArticleService', array( $page->getId() ) );
 
 		if ( !is_null( $service->mArticle ) ) {
@@ -168,6 +174,9 @@ class ArticleService extends WikiaService {
 	 * Clear the cache when the page is edited
 	 */
 	static public function onArticleSaveComplete( WikiPage &$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId ) {
+		/**
+		 * @var $service ArticleService
+		 */
 		$service = F::build( 'ArticleService', array( $article->getId() ) );
 
 		if ( !is_null( $service->mArticle ) ) {

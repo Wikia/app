@@ -152,7 +152,7 @@ function SpecialStatusDelete( $id ) {
 
 $wgHooks['MakeGlobalVariablesScript'][] = 'wfUserStatusAddJSGlobals';
 
-function wfUserStatusAddJSGlobals( $vars ) {
+function wfUserStatusAddJSGlobals( &$vars ) {
 	$vars['_US_LETTERS'] = wfMsg( 'userstatus-letters-left' );
 	return true;
 }

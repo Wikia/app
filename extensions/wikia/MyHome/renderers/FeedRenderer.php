@@ -607,8 +607,7 @@ class FeedRenderer {
 
 		// edit summary (don't show auto summary and summaries added by tools using edit from view mode)
 		if (isset($row['comment']) && trim($row['comment']) != '' && !isset($row['autosummaryType']) && !isset($row['viewMode'])) {
-			global $wgUser;
-			$html .= self::formatDetailsRow('summary', $wgUser->getSkin()->formatComment($row['comment']), false);
+			$html .= self::formatDetailsRow('summary', RequestContext::getMain()->getSkin()->formatComment($row['comment']), false);
 		}
 
 		// added categories

@@ -58,7 +58,7 @@ class AdProviderAthena extends AdProviderIframeFiller implements iAdProvider {
                 if (is_object($wgTitle)){
                        $pageVars['article_id'] = $wgTitle->getArticleID();
 		}
-		$pageVars['isMainPage'] = ArticleAdLogic::isMainPage();
+		$pageVars['isMainPage'] = WikiaPageType::isMainPage();
 		$cat = AdEngine::getCachedCategory();
 		$pageVars['hub'] = $cat['name'];
 		$pageVars['skin'] = RequestContext::getMain()->getSkin()->getSkinName();

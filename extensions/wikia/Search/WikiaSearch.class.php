@@ -42,9 +42,9 @@ class WikiaSearch extends WikiaObject {
 		$methodParams['groupResults'] = isset($methodParams['groupResults']) ? $methodParams['groupResults'] : false;
 		$methodParams['rank'] = isset($methodParams['rank']) ? $methodParams['rank'] : 'default';
 		$methodParams['hub'] = isset($methodParams['hub']) ? $methodParams['hub'] : false;
+		$methodParams['videoSearch'] = isset($methodParams['videoSearch']) ? $methodParams['videoSearch'] : false;
 		
 		extract($methodParams);
-
 
 		$length = !empty($length) ? $length : self::RESULTS_PER_PAGE;
 		$groupResults = ( empty($cityId) && $groupResults );
@@ -58,7 +58,7 @@ class WikiaSearch extends WikiaObject {
 									'size' => $length,
 									'cityId' =>  $cityId,
 									'isInterWiki' => true,
-									'start' => $length * ($page - 1)
+									'start' => $length * ($page - 1),
 								  );
 			$results = $this->client->search( $query, $methodOptions );
 		}
@@ -72,7 +72,8 @@ class WikiaSearch extends WikiaObject {
 					       'size' => $length, 
 					       'cityId' => $cityId, 
 					       'includeRedirects' => $this->includeRedirects,
-					       'rank' => $rank
+					       'rank' => $rank,
+						   'videoSearch' => $videoSearch,
 					       );
 			$results = $this->client->search( $query, $methodOptions);
 
@@ -238,6 +239,12 @@ class WikiaSearch extends WikiaObject {
 		$result['is_video'] = $isVideo ? 'true' : 'false';
 		$result['is_image'] = $isImage ? 'true' : 'false';
 
+
+		if ( $this->wg->EnableBacklinksExt && $this->wg->IndexBacklinks ) {
+			$result['backlink_text'] = Backlinks::getForArticle($page);
+		}
+
+
 		if( $withMetaData ) {
 			$result = array_merge($result, $this->getPageMetaData($page));
 		}
@@ -370,6 +377,13 @@ class WikiaSearch extends WikiaObject {
 		return $row;
 	}
 
+	public function searchVideos( $query, array $methodParams = array() )
+	{
+		$this->namespaces = array(NS_FILE);
+		$methodParams['videoSearch'] = true;
+
+		return $this->doSearch($query, $methodParams);
+	}
 
 	public function getRelatedVideos(array $params = array('start'=>0, 'size'=>20)) {
 	        wfProfileIn(__METHOD__);
@@ -381,7 +395,7 @@ class WikiaSearch extends WikiaObject {
 	        } else {
 		        $params['fq'] = '(wid:' . $this->wg->cityId . ' OR wid:' . self::VIDEO_WIKI_ID . '^2) ';
 	        }
-		$params['fq'] .= 'AND ns:6 AND -title:(jpg gif png jpeg svg ico ogg pdf)';
+		$params['fq'] .= 'AND is_video:true';
 
 		$query = sprintf('wid:%d', $this->wg->cityId);
 		if (isset($params['pageId'])) {

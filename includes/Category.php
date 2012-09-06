@@ -203,7 +203,9 @@ class Category {
 	 * category sort key $offset.
 	 * @param $limit integer
 	 * @param $offset string
-	 * @return TitleArray object for category members.
+	 * //Wikia Change - Jakub Olek - PHP Lint Helpers
+	 * @return Title[] object for category members.
+	 * //Wikia Change End
 	 */
 	public function getMembers( $limit = false, $offset = '' ) {
 		$dbr = wfGetDB( DB_SLAVE );

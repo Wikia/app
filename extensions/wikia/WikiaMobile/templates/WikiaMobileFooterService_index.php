@@ -1,3 +1,12 @@
+<?
+/**
+ * @var $links String[]
+ * @var $defaultSkin String
+ * @var $wf WikiaFunctionWrapper
+ * @var $copyrightLink String
+ * @var $feedbackLink String
+ */
+?>
 <footer id=wkFtr>
 	<a id=wkLogo href=http://wikia.com></a>
 	<? if( !empty( $links ) ) :?>

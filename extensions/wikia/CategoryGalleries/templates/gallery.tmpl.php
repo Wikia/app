@@ -4,7 +4,7 @@
 <div class="category-gallery-item category-gallery-item-<?= !empty($item['image_url'])?'image':'text'; ?>">
 <a href="<?= $item['article_url']; ?>" title="<?= htmlspecialchars($item['title']);?>">
 <?php if (!empty($item['image_url'])) {?>
-<img src="<?= $item['image_url']; ?>" alt="<?= htmlspecialchars($item['title']); ?>"/>
+<img src="<?= $item['image_url']; ?>" alt="<?= htmlspecialchars($item['title']); ?>" width="<?= $item['image_width'] ?>" height="<?= $item['image_height'] ?>" />
 <?php } else { ?>
 <div class="snippet"><span class="quote">&#x201C;</span><span class="text"><?= $item['snippet']; ?></span></div>
 <?php } ?>

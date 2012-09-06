@@ -114,7 +114,7 @@ $wgHooks['ContributionsToolLinks'][] = 'efLoadPhalanxLink';
 function efLoadPhalanxLink( $id, $nt, &$links ) {
 	global $wgUser;
 	if( $wgUser->isAllowed( 'phalanx' ) ) {
-		$links[] = $wgUser->getSkin()->makeKnownLinkObj(
+		$links[] = RequestContext::getMain()->getSkin()->makeKnownLinkObj(
 			GlobalTitle::newFromText('Phalanx', NS_SPECIAL, 177),
 			'PhalanxBlock',
 			wfArrayToCGI( array('type'=>'8', 'target'=>$nt->getText(), 'wpPhalanxCheckBlocker'=>$nt->getText() ) )

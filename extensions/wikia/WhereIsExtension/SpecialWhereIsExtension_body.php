@@ -114,12 +114,12 @@ class WhereIsExtension extends SpecialPage {
 
 		$oTmpl = new EasyTemplate(dirname( __FILE__ ) . '/templates/');
 		$oTmpl->set_vars( array(
-				'formData' => $formData,
-				'tagResultInfo' => $tagResultInfo,
-                                // pass the pager to the template
-                                'sPager' => $sPager
-			));
-		$wgOut->addHTML($oTmpl->execute('list'));
+			'formData' => $formData,
+			'tagResultInfo' => $tagResultInfo,
+			// pass the pager to the template
+			'sPager' => $sPager
+		));
+		$wgOut->addHTML($oTmpl->render('list'));
 	}
 
 	//fetching variable list from 'extension' group

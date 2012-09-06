@@ -3,7 +3,7 @@
 <?php
         // edit button with actions dropdown
         if ( !empty($action) && $canAct ) {
-                echo wfRenderModule('MenuButton', 'Index', array('action' => $action, 'image' => $actionImage, 'dropdown' => $dropdown, 'name' => $actionName));
+                echo F::app()->renderView('MenuButton', 'Index', array('action' => $action, 'image' => $actionImage, 'dropdown' => $dropdown, 'name' => $actionName));
         }
 ?>
 	<p><?= $subtitle ?></p>

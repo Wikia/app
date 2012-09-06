@@ -8,6 +8,7 @@
 @import "WallColors";
 @import "WallDimensions";
 @import "WallSortingBar";
+@import "RelatedTopics";
 
 /* IE7 targeted hacks */
 html>body #Wall textarea { *width: 96%; }
@@ -663,7 +664,6 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 		.message .message .speech-bubble-message {
 			margin-left: 50px;
 		}
-		.comments .message li { &:before, &:after { display: none; } }
 		.buttons-monobook{
 			display: block;
 		}

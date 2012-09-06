@@ -1,15 +1,25 @@
 var AdMeldAPIClient = {
 	sizes:[], // filled in by init() based on slots
 	slots:{
-		'TOP_RIGHT_BOXAD':      {size:'300x250', placement:'test_atf',       ad:null, pixels: null},
-		//'HOME_TOP_RIGHT_BOXAD': {                                                               }, use s/HOME_// instead
-		'TOP_LEADERBOARD':      {size:'728x90',  placement:'test_atf',       ad:null, pixels: null},
-		//'HOME_TOP_LEADERBOARD': {                                                               }, use s/HOME_// instead
-		'LEFT_SKYSCRAPER_2':    {size:'160x600', placement:'test_btf_right', ad:null, pixels: null},
-		'PREFOOTER_LEFT_BOXAD': {size:'300x250', placement:'test_btf',       ad:null, pixels: null},
-		'PREFOOTER_RIGHT_BOXAD':{size:'300x250', placement:'test_btf_right', ad:null, pixels: null}
+		'TOP_RIGHT_BOXAD':      {size:'300x250', placement:'%%HUB%%-atf',       ad:null, pixels: null},
+		//'HOME_TOP_RIGHT_BOXAD': {                                                                  }, use s/HOME_// instead
+		'TOP_LEADERBOARD':      {size:'728x90',  placement:'%%HUB%%-atf',       ad:null, pixels: null},
+		//'HOME_TOP_LEADERBOARD': {                                                                  }, use s/HOME_// instead
+		'LEFT_SKYSCRAPER_2':    {size:'160x600', placement:'%%HUB%%-btf',       ad:null, pixels: null},
+		'PREFOOTER_LEFT_BOXAD': {size:'300x250', placement:'%%HUB%%-btf-left',  ad:null, pixels: null},
+		'PREFOOTER_RIGHT_BOXAD':{size:'300x250', placement:'%%HUB%%-btf-right', ad:null, pixels: null}
+		// %%HUB%% is replaced with AdMeldAPIClient.siteHub
 	}
 };
+
+// TODO: can we do it better?
+if (window.cscoreCat === 'Gaming') {
+	AdMeldAPIClient.siteHub = 'gaming';
+} else if (window.cscoreCat === 'Entertainment') {
+	AdMeldAPIClient.siteHub = 'entertainment';
+} else {
+	AdMeldAPIClient.siteHub = 'lifestyle';
+}
 
 AdMeldAPIClient.log = function(msg, level) {
 	if (typeof window.top.Wikia !== 'undefined' && typeof window.top.Wikia.log === 'function') {
@@ -79,7 +89,7 @@ AdMeldAPIClient.init = function() {
 		this.log(s, 'trace_l3');
 		var url = 'http://tag.admeld.com/ad/json?publisher_id=' + 525 +
 					'&site_id=' + 'wikia' +
-					'&placement=' + s.placement +
+					'&placement=' + s.placement.replace('%%HUB%%', this.siteHub) +
 					'&size=' + s.size +
 					'&url=' + page +
 					'&callback=' + 'AdMeldAPIClient.callback' + 

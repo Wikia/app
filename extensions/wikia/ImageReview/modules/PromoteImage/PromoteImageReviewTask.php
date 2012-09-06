@@ -38,7 +38,17 @@ class PromoteImageReviewTask extends BatchTask {
 			$oUser->load();
 			$this->mUser = $oUser->getId();
 		} else {
-			$this->log(__CLASS__ . ' / ' . __METHOD__ . ": Invalid user - id: " . $params->task_user_id);
+		//if task was added by import script it has WikiaBot user's id passed
+			$this->log(__CLASS__ . ' / ' . __METHOD__ . ": Invalid user #1 - task_user_id: " . $params->task_user_id);
+			$oUser = F::build('User', array('WikiaBot'), 'newFromName');
+
+			if( $oUser instanceof User ) {
+				$oUser->load();
+				$this->mUser = $oUser->getId();
+			} else {
+				$this->log(__CLASS__ . ' / ' . __METHOD__ . ": Invalid user #2 - task_user_id: " . $params->task_user_id);
+			}
+
 			return true;
 		}
 
@@ -80,6 +90,7 @@ class PromoteImageReviewTask extends BatchTask {
 		foreach($wikis as $sourceWikiId => $images) {
 			$sourceWikiLang = WikiFactory::getVarValueByName('wgLanguageCode', $sourceWikiId);
 
+			$uploadedImages = array();
 			foreach($images as $image) {
 				$result = $this->uploadSingleImage($image['id'], $image['name'], $targetWikiId, $sourceWikiId);
 
@@ -131,13 +142,29 @@ class PromoteImageReviewTask extends BatchTask {
 
 		$retval = "";
 
-		$sourceImageUrl = ImagesService::getImageSrc($sourceWikiId, $imageId, WikiaHomePageHelper::INTERSTITIAL_LARGE_IMAGE_WIDTH);
+		$dbname = WikiFactory::IDtoDB($sourceWikiId);
+		$imageTitle = F::build('GlobalTitle',array($imageId,$sourceWikiId),'newFromId');
 
-		if( empty($sourceImageUrl['src']) ) {
+		$sourceImageUrl = null;
+		if($imageTitle instanceof GlobalTitle) {
+			$param = array(
+				'action' => 'query',
+				'titles' => $imageTitle->getPrefixedText(),
+				'prop' => 'imageinfo',
+				'iiprop' => 'url',
+			);
+
+			$response = ApiService::foreignCall($dbname, $param);
+
+			if(!empty($response["query"]["pages"][$imageId])
+				&&(!empty($response["query"]["pages"][$imageId]["imageinfo"][0]["url"]))) {
+				$sourceImageUrl = wfReplaceImageServer($response["query"]["pages"][$imageId]["imageinfo"][0]["url"]);
+			}
+		}
+
+		if( empty($sourceImageUrl) ) {
 			$this->log('Apparently the image is unaccessible');
 			return array('status' => 1);
-		} else {
-			$sourceImageUrl = $sourceImageUrl['src'];
 		}
 
 		$city_url = WikiFactory::getVarValueByName("wgServer", $targetWikiId);
@@ -176,13 +203,13 @@ class PromoteImageReviewTask extends BatchTask {
 	public function removeImages($corpWikiLang, $wikis) {
 		$app = F::app();
 		$corpWikiId = $this->model->getTargetWikiId($corpWikiLang);
-		$removedImages = array();
 
 		foreach($wikis as $sourceWikiId => $images) {
 			$sourceWikiLang = WikiFactory::getVarValueByName('wgLanguageCode', $sourceWikiId);
 			$sourceWikiDbName = WikiFactory::IDtoDB($sourceWikiId);
 
 			if( !empty($images) ) {
+				$removedImages = array();
 				foreach($images as $image) {
 					$imageName = $this->getNameWithWiki($image['name'], $sourceWikiDbName);
 					$result = $this->removeSingleImage($corpWikiId, $imageName);
@@ -222,7 +249,7 @@ class PromoteImageReviewTask extends BatchTask {
 	function removeSingleImage($targetWikiId, $imageName) {
 		global $IP, $wgWikiaLocalSettingsPath;
 
-		$retval = "";
+		$retval = -1;
 
 		$sCommand = "SERVER_ID={$targetWikiId} php $IP/maintenance/wikia/ImageReview/PromoteImage/remove.php";
 		$sCommand .= " --imagename=" . escapeshellarg($imageName);
@@ -230,19 +257,20 @@ class PromoteImageReviewTask extends BatchTask {
 		$sCommand .= " --conf {$wgWikiaLocalSettingsPath}";
 
 		$output = wfShellExec($sCommand, $retval);
-
 		$city_url = WikiFactory::getVarValueByName("wgServer", $targetWikiId);
+
 		if( empty($city_url) ) {
 			$this->log('Apparently the server is not available via WikiFactory');
 			return array('status' => 1);
 		}
 
 		$city_path = WikiFactory::getVarValueByName("wgScript", $targetWikiId);
-		if( $retval ) {
+		if( $retval != 0 ) {
 			$this->log('Remove error! (' . $city_url . '). Error code returned: ' . $retval . ' Error was: ' . $output);
+		} else {
+			$this->log('Removal successful: <a href="' . $city_url . $city_path . '?title=' . wfEscapeWikiText($output) . '">' . $city_url . $city_path . '?title=' . $output . '</a>');
 		}
 
-		$this->log('Removal successful: <a href="' . $city_url . $city_path . '?title=' . wfEscapeWikiText($output) . '">' . $city_url . $city_path . '?title=' . $output . '</a>');
 		return array(
 			'status' => $retval,
 			'title' => $output,
@@ -288,6 +316,8 @@ class PromoteImageReviewTask extends BatchTask {
 		}
 
 		if( !empty($data['city_images']) ) {
+            asort($data['city_images']);
+            $data['city_images'] = array_unique($data['city_images']);
 			$data['city_images'] = json_encode($data['city_images']);
 		}
 

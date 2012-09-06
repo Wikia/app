@@ -133,15 +133,21 @@ class AchBadge {
 		$memkey = sprintf( "achbadge:earned:%d:%d:%d", $wgCityId, $this->mBadgeTypeId, $this->mBadgeLap );
 		$value = $wgMemc->get( $memkey );
 		if ( empty($value) ) {
-			$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
+            global $wgEnableAchievementsStoreLocalData;
+            $where = array(
+                'badge_type_id' => $this->mBadgeTypeId,
+                'badge_lap' => $this->mBadgeLap
+            );
+            if(empty($wgEnableAchievementsStoreLocalData)) {
+                $dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
+                $where[ 'wiki_id' ] = $wgCityId;
+            } else {
+                $dbr = wfGetDB(DB_SLAVE);
+            }
 			$value = $dbr->selectField(
 				'ach_user_badges',
 				'count(distinct(user_id))',
-				array(
-					'badge_type_id' => $this->mBadgeTypeId,
-					'badge_lap' => $this->mBadgeLap,
-					'wiki_id' => $wgCityId
-				),
+                $where,
 				__METHOD__,
 				array(
 					'USE INDEX' => 'user_wiki_badge'

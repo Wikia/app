@@ -77,7 +77,7 @@
 			<h2 class="headline signup"><?= wfMsg('cnw-auth-headline2') ?></h2>
 			<p class="creative login"><?= wfMsg('cnw-auth-creative') ?></p>
 			<p class="creative signup"><?= wfMsg('cnw-auth-signup-creative') ?></p>
-			<?= AjaxLoginForm::getTemplateForCombinedForms()->execute('ComboAjaxLogin') ?>
+			<?= AjaxLoginForm::getTemplateForCombinedForms()->render('ComboAjaxLogin') ?>
 			<p class="signup-msg">
 				<?= wfMsg('cnw-signup-prompt') ?> <a href="#"><?= wfMsg('cnw-call-to-signup') ?></a>
 			</p>
@@ -167,7 +167,7 @@
 		<li id="ThemeWiki" class="step">
 			<h2><?= wfMsg('cnw-theme-headline') ?></h2>
 			<p class="creative"><?= wfMsg('cnw-theme-creative') ?></p>
-			<?= wfRenderModule('ThemeDesigner', 'ThemeTab') ?>
+			<?= F::app()->renderView('ThemeDesigner', 'ThemeTab') ?>
 			<p class="instruction creative"><?= wfMsg('cnw-theme-instruction') ?></p>
 			<nav class="next-controls">
 				<span class="submit-error finish-status"></span>

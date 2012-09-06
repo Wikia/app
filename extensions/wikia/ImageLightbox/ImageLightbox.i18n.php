@@ -398,6 +398,14 @@ $1
 	'lightbox-visit-the-wiki' => 'ウィキに移動:',
 );
 
+/** Korean (한국어)
+ * @author Cafeinlove
+ */
+$messages['ko'] = array(
+	'lightbox-share-button-email' => '이메일',
+	'lightbox-share-email-page-label-address' => '이메일 주소',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */

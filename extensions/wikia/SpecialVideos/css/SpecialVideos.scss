@@ -87,4 +87,10 @@ $placeholder-bg-color: darken($color-page, 10%);
 			@include opacity(65);
 		}
 	}
+	.posted-in {
+		overflow: hidden;
+		padding-right: 5px;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
 }

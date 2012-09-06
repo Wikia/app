@@ -2,7 +2,6 @@
 <inspections version="1.0" is_locked="false">
   <option name="myName" value="phplint" />
   <option name="myLocal" value="true" />
-  <inspection_tool class="Annotator" enabled="false" level="ERROR" enabled_by_default="false" />
   <inspection_tool class="BadExpressionStatementJS" enabled="false" level="WARNING" enabled_by_default="false" />
   <inspection_tool class="CallerJS" enabled="false" level="WARNING" enabled_by_default="false" />
   <inspection_tool class="CheckDtdRefs" enabled="false" level="ERROR" enabled_by_default="false" />
@@ -150,7 +149,6 @@
     <option name="processLiterals" value="true" />
     <option name="processComments" value="true" />
   </inspection_tool>
-  <inspection_tool class="SyntaxError" enabled="false" level="ERROR" enabled_by_default="false" />
   <inspection_tool class="ThisExpressionReferencesGlobalObjectJS" enabled="false" level="WARNING" enabled_by_default="false" />
   <inspection_tool class="ThrowFromFinallyBlockJS" enabled="false" level="WARNING" enabled_by_default="false" />
   <inspection_tool class="TrivialConditionalJS" enabled="false" level="WARNING" enabled_by_default="false" />

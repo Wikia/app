@@ -154,7 +154,7 @@ class ImageImporterTask extends BatchTask {
 			"desc" => wfMsg ("imageimportertask_add")
 		));
 
-		return $oTmpl->execute( "form" ) ;
+		return $oTmpl->render( "form" ) ;
 	}
 
 	function getType()

@@ -21,16 +21,11 @@ require(['loader', 'events', 'topbar'], function(loader, events, topbar){
             query = wkResultUl.getAttribute('data-query'),
             currentPage = ~~wkResultUl.getAttribute('data-page'),
             resultsPerPage = ~~wkResultUl.getAttribute('data-results-per-page'),
-            totalResults = ~~wkResultUl.getAttribute('data-total-results'),
-            ajaxUrl = wgServer +
-                "/wikia.php?controller=WikiaSearchAjaxController&method=getNextResults&format=json&useskin=" +
-                skin +
-                "&query=" +
-                query;
+            totalResults = ~~wkResultUl.getAttribute('data-total-results');
     }
 
     if(wkSrhInp){
-        wkSrhInp.addEventListener(clickEvent, function(event){
+        wkSrhInp.addEventListener(clickEvent, function(){
             topbar.initAutocomplete();
         });
     }
@@ -53,28 +48,39 @@ require(['loader', 'events', 'topbar'], function(loader, events, topbar){
             elm.className += ' active';
             loader.show(elm, {size: '30px'});
 
-            $.getJSON(ajaxUrl + '&page=' + pageIndex, function(result){
-                var finished;
+            $.nirvana.sendRequest({
+				controller: 'WikiaSearchAjaxController',
+				method: 'getNextResults',
+				format: 'json',
+				type: 'GET',
+				data: {
+					useskin: skin,
+					query: encodeURIComponent(query),
+					page: pageIndex
+				},
+				callback: function(result){
+					var finished;
 
-                currentPage = pageIndex;
-                finished = (forward) ? (currentPage == totalPages) : (currentPage == 1);
+					currentPage = pageIndex;
+					finished = (forward) ? (currentPage == totalPages) : (currentPage == 1);
 
-                wkResultUl.innerHTML = result.text;
+					wkResultUl.innerHTML = result.text;
 
-                currentResultFrom = resultsPerPage*currentPage+1-resultsPerPage;
-                currentResultTo = (currentPage == totalPages) ? totalResults :resultsPerPage*currentPage;
-                wkResCntAct.innerHTML = currentResultFrom+'-'+currentResultTo;
+					currentResultFrom = resultsPerPage*currentPage+1-resultsPerPage;
+					currentResultTo = (currentPage == totalPages) ? totalResults :resultsPerPage*currentPage;
+					wkResCntAct.innerHTML = currentResultFrom+'-'+currentResultTo;
 
-                elm.className = elm.className.replace(' active', '');
-                loader.hide(elm);
+					elm.className = elm.className.replace(' active', '');
+					loader.hide(elm);
 
-                if(finished) {
-                    elm.style.display = 'none';
-                }
+					if(finished) {
+						elm.style.display = 'none';
+					}
 
-                ((forward) ? wkResultPrev : wkResultNext).style.display = 'block';
+					((forward) ? wkResultPrev : wkResultNext).style.display = 'block';
 
-                window.scrollTo(0, wkMainCnt.offsetTop);
+					window.scrollTo(0, wkMainCnt.offsetTop);
+				}
             });
         }
     }
@@ -83,6 +89,4 @@ require(['loader', 'events', 'topbar'], function(loader, events, topbar){
         wkResultNext.addEventListener(clickEvent, clickHandler, true);
         wkResultPrev.addEventListener(clickEvent, clickHandler, true);
     }
-
-
 });

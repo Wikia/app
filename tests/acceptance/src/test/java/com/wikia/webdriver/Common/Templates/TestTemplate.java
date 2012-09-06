@@ -82,13 +82,13 @@ public class TestTemplate {
 	}
 	
 	
-	public void startBrowser()
+	private void startBrowser()
 	{
 		DriverProvider.getInstance();
 		driver = DriverProvider.getWebDriver();
 	}
 	
-	public void stopBrowser()
+	private void stopBrowser()
 	{
 		if (driver != null)
 		{

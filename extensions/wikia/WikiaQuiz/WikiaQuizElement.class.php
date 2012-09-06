@@ -283,7 +283,7 @@ class WikiaQuizElement {
 	 * Render HTML for QuizElement page
 	 */
 	public function render() {
-		return wfRenderModule('WikiaQuiz', 'ArticleIndex', array('quizElement' => $this));
+		return F::app()->renderView('WikiaQuiz', 'ArticleIndex', array('quizElement' => $this));
 	}
 
 	/**

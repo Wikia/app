@@ -261,6 +261,10 @@ $messages['es'] = array(
 	'wikiapoll-publish-label' => 'Publicar',
 	'wikiapoll-error-duplicate' => 'Ya existe una encuesta con ese nombre.',
 	'wikiapoll-error-invalid-title' => 'El texto de la pregunta es inválido.',
+	'wikiamobile-wikiapoll-open-poll' => '¿Qué opinas?',
+	'wikiamobile-wikiapoll-thanks-voting' => '¡Gracias por tu voto!',
+	'wikiamobile-wikiapoll-poll' => 'Encuesta',
+	'wikiamobile-wikiapoll-user-voted' => 'Votaste por $1',
 );
 
 /** Basque (euskara)
@@ -305,6 +309,7 @@ $messages['fi'] = array(
 );
 
 /** French (français)
+ * @author Gomoko
  * @author IAlex
  * @author Verdy p
  * @author Wyz
@@ -325,6 +330,10 @@ $messages['fr'] = array(
 	'wikiapoll-publish-label' => 'Publier',
 	'wikiapoll-error-duplicate' => 'Un sondage portant ce nom existe déjà.',
 	'wikiapoll-error-invalid-title' => 'L’intitulé de la question n’est pas valide.',
+	'wikiamobile-wikiapoll-open-poll' => "Qu'en pensez-vous ?",
+	'wikiamobile-wikiapoll-thanks-voting' => "Merci d'avoir voté !",
+	'wikiamobile-wikiapoll-poll' => 'Sondage',
+	'wikiamobile-wikiapoll-user-voted' => 'Vous avez voté pour $1',
 );
 
 /** Galician (galego)
@@ -390,6 +399,10 @@ $messages['ia'] = array(
 	'wikiapoll-publish-label' => 'Publicar',
 	'wikiapoll-error-duplicate' => 'Existe ja un sondage con iste nomine.',
 	'wikiapoll-error-invalid-title' => 'Le texto del question es invalide.',
+	'wikiamobile-wikiapoll-open-poll' => 'Que pensa tu?',
+	'wikiamobile-wikiapoll-thanks-voting' => 'Gratias pro votar!',
+	'wikiamobile-wikiapoll-poll' => 'Sondage',
+	'wikiamobile-wikiapoll-user-voted' => 'Tu votava pro $1',
 );
 
 /** Italian (italiano)
@@ -440,7 +453,7 @@ $messages['mk'] = array(
 	'wikiapoll-question' => '$1?',
 	'wikiapoll-thanks-for-vote' => 'Благодариме!',
 	'wikiapoll-vote' => 'Гласај!',
-	'wikiapoll-votes' => '{{PLURAL:$1|$1 глас|$1 гласови}}',
+	'wikiapoll-votes' => '{{PLURAL:$1|$1 глас|$1 гласа}}',
 	'wikiapoll-question-mark-after' => '?',
 	'wikiapoll-createpoll-headline' => 'Создај анкета',
 	'wikiapoll-editpoll-headline' => 'Уреди анкета',
@@ -450,6 +463,22 @@ $messages['mk'] = array(
 	'wikiapoll-publish-label' => 'Објави',
 	'wikiapoll-error-duplicate' => 'Веќе постои анкета со тоа име.',
 	'wikiapoll-error-invalid-title' => 'Текстот за прашањето е неважечки.',
+	'wikiamobile-wikiapoll-open-poll' => 'Што мислите?',
+	'wikiamobile-wikiapoll-thanks-voting' => 'Ви благодариме што гласавте!',
+	'wikiamobile-wikiapoll-poll' => 'Анкета',
+	'wikiamobile-wikiapoll-user-voted' => 'Гласавте за $1',
+);
+
+/** Marathi (मराठी)
+ * @author Sau6402
+ */
+$messages['mr'] = array(
+	'wikiapoll-thanks-for-vote' => 'धन्यवाद!',
+	'wikiapoll-vote' => 'मत!',
+	'wikiapoll-question-label' => 'प्रश्न',
+	'wikiapoll-addnewitem-label' => 'नवीन टिप्पणी वाढवा',
+	'wikiapoll-cancel-label' => 'रद्द करा',
+	'wikiapoll-publish-label' => 'प्रकाशित करा',
 );
 
 /** Malay (Bahasa Melayu)
@@ -470,6 +499,10 @@ $messages['ms'] = array(
 	'wikiapoll-publish-label' => 'Terbitkan',
 	'wikiapoll-error-duplicate' => 'Nama itu sudah dipakai oleh pantauan lain.',
 	'wikiapoll-error-invalid-title' => 'Teks soalan tidak sah.',
+	'wikiamobile-wikiapoll-open-poll' => 'Apakah pendapat anda?',
+	'wikiamobile-wikiapoll-thanks-voting' => 'Terima kasih kerana mengundi!',
+	'wikiamobile-wikiapoll-poll' => 'Tinjauan',
+	'wikiamobile-wikiapoll-user-voted' => 'Anda mengundi $1',
 );
 
 /** Burmese (မြန်မာဘာသာ)
@@ -502,6 +535,10 @@ $messages['nb'] = array(
 	'wikiapoll-publish-label' => 'Publiser',
 	'wikiapoll-error-duplicate' => 'En avstemning med det navnet eksisterer allerede.',
 	'wikiapoll-error-invalid-title' => 'Spørsmålsteksten er ugyldig.',
+	'wikiamobile-wikiapoll-open-poll' => 'Hva synes du?',
+	'wikiamobile-wikiapoll-thanks-voting' => 'Takk for din stemme!',
+	'wikiamobile-wikiapoll-poll' => 'Avstemning',
+	'wikiamobile-wikiapoll-user-voted' => 'Du stemte på $1',
 );
 
 /** Dutch (Nederlands)
@@ -522,6 +559,10 @@ $messages['nl'] = array(
 	'wikiapoll-publish-label' => 'Publiceren',
 	'wikiapoll-error-duplicate' => 'Er bestaat al een peiling met die naam.',
 	'wikiapoll-error-invalid-title' => 'De vraagtekst is ongeldig.',
+	'wikiamobile-wikiapoll-open-poll' => 'Wat vindt u?',
+	'wikiamobile-wikiapoll-thanks-voting' => 'Bedankt voor uw stem!',
+	'wikiamobile-wikiapoll-poll' => 'Peiling',
+	'wikiamobile-wikiapoll-user-voted' => 'U hebt gestemd voor "$1"',
 );
 
 /** Polish (polski)
@@ -543,6 +584,10 @@ $messages['pl'] = array(
 	'wikiapoll-publish-label' => 'Publikuj',
 	'wikiapoll-error-duplicate' => 'Ankieta o tej nazwie już istnieje.',
 	'wikiapoll-error-invalid-title' => 'Tekst pytania jest nieprawidłowy.',
+	'wikiamobile-wikiapoll-open-poll' => 'Co myślisz?',
+	'wikiamobile-wikiapoll-thanks-voting' => 'Dziękujemy za oddanie głosu!',
+	'wikiamobile-wikiapoll-poll' => 'Ankieta',
+	'wikiamobile-wikiapoll-user-voted' => 'Oddano głos na $1',
 );
 
 /** Pashto (پښتو)
@@ -625,6 +670,7 @@ $messages['ro'] = array(
 
 /** Russian (русский)
  * @author DCamer
+ * @author Kuzura
  */
 $messages['ru'] = array(
 	'wikiapoll-desc' => 'Предоставляет простой способ для создания и управления опросами',
@@ -641,6 +687,10 @@ $messages['ru'] = array(
 	'wikiapoll-publish-label' => 'Опубликовать',
 	'wikiapoll-error-duplicate' => 'Опрос с таким названием уже существует.',
 	'wikiapoll-error-invalid-title' => 'Текст вопроса является недопустимым.',
+	'wikiamobile-wikiapoll-open-poll' => 'Что вы думаете об этом?',
+	'wikiamobile-wikiapoll-thanks-voting' => 'Спасибо за ваш голос!',
+	'wikiamobile-wikiapoll-poll' => 'Опрос',
+	'wikiamobile-wikiapoll-user-voted' => 'Вы проголосовали за $1',
 );
 
 /** Slovak (slovenčina)
@@ -701,6 +751,10 @@ $messages['sv'] = array(
 	'wikiapoll-publish-label' => 'Publicera',
 	'wikiapoll-error-duplicate' => 'En omröstning med det namnet finns redan.',
 	'wikiapoll-error-invalid-title' => 'Frågetexten är ogiltig.',
+	'wikiamobile-wikiapoll-open-poll' => 'Vad tycker du?',
+	'wikiamobile-wikiapoll-thanks-voting' => 'Tack för att du röstar!',
+	'wikiamobile-wikiapoll-poll' => 'Omröstning',
+	'wikiamobile-wikiapoll-user-voted' => 'Du röstade på $1',
 );
 
 /** Tamil (தமிழ்)
@@ -770,6 +824,10 @@ $messages['tl'] = array(
 	'wikiapoll-publish-label' => 'Ilathala',
 	'wikiapoll-error-duplicate' => 'Umiiral na ang ganyang botohan na may ganyang pangalan.',
 	'wikiapoll-error-invalid-title' => 'Hindi katanggap-tanggap ang teksto ng katanungan.',
+	'wikiamobile-wikiapoll-open-poll' => 'Ano ba sa tingin mo?',
+	'wikiamobile-wikiapoll-thanks-voting' => 'Salamat sa pagboto!',
+	'wikiamobile-wikiapoll-poll' => 'Botohan',
+	'wikiamobile-wikiapoll-user-voted' => 'Bumoto ka para kay $1',
 );
 
 /** Tatar (Cyrillic script) (татарча)

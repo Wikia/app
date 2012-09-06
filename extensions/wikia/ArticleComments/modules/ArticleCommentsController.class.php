@@ -8,7 +8,6 @@ class ArticleCommentsController extends WikiaController {
 
 		if (class_exists('ArticleCommentInit') && ArticleCommentInit::ArticleCommentCheck()) {
 			$isMobile = $this->app->checkSkin( 'wikiamobile' );
-			$isLoadingOnDemand = !empty( $this->wg->ArticleCommentsLoadOnDemand ) && !$isMobile;
 
 			// for non-JS version !!! (used also for Monobook and WikiaMobile)
 			if ($this->wg->Request->wasPosted()) {
@@ -47,8 +46,10 @@ class ArticleCommentsController extends WikiaController {
 			}
 
 			$this->page = $this->wg->request->getVal( 'page', 1 );
+			$this->isLoadingOnDemand = ArticleComment::isLoadingOnDemand();
+			$this->isMiniEditorEnabled = ArticleComment::isMiniEditorEnabled();
 
-			if ( $isLoadingOnDemand ) {
+			if ( $this->isLoadingOnDemand ) {
 				$this->response->setJsVar( 'wgArticleCommentsLoadOnDemand', true );
 
 			} else {
@@ -57,10 +58,8 @@ class ArticleCommentsController extends WikiaController {
 				if ( $isMobile ) {
 					$this->forward( __CLASS__, 'WikiaMobileIndex', false );
 
-				// Required style assets
-				} else {
-					$this->response->addAsset( 'articlecomments' .
-						( !empty( $this->wg->EnableMiniEditorExtForArticleComments ) ? '_mini_editor' : '' ) . '_scss' );
+				} else if ( $this->app->checkSkin( 'oasis' ) ) {
+					$this->response->addAsset( 'articlecomments' . ( $this->isMiniEditorEnabled ? '_mini_editor' : '' ) . '_scss' );
 				}
 			}
 		}
@@ -77,21 +76,25 @@ class ArticleCommentsController extends WikiaController {
 
 		$articleId = $this->request->getVal( 'articleId', null );
 		$page = $this->request->getVal( 'page', 1 );
+		$title = null;
 
 		if ( !empty( $articleId ) ) {
 			$title = Title::newFromID( $articleId );
+		}
 
-		} else {
+		if ( !( $title instanceof Title ) ) {
 			$title = $this->wg->title;
 		}
 
 		$this->getCommentsData( $title, $page );
-		$this->wg->Out->tagWithSurrogateKeys( ArticleComment::getSurrogateKey($articleId) );
+		$this->isMiniEditorEnabled = ArticleComment::isMiniEditorEnabled();
 
-		global $wgArticleCommentsLoadOnDemand;
-		if(!empty($wgArticleCommentsLoadOnDemand)) {
-			// when lazy loading this request shouldn't be cached in the browser
-			$this->response->setCacheValidity(0, 0, array(WikiaResponse::CACHE_TARGET_BROWSER));
+		// Uncomment this when surrogate key purging works
+		//$this->wg->Out->tagWithSurrogateKeys( ArticleComment::getSurrogateKey($articleId) );
+
+		// When lazy loading this request it shouldn't be cached in the browser
+		if ( !empty( $this->wg->ArticleCommentsLoadOnDemand ) ) {
+			$this->response->setCacheValidity( 0, 0, array( WikiaResponse::CACHE_TARGET_BROWSER ) );
 		}
 
 		$this->wf->profileOut( __METHOD__ );
@@ -222,10 +225,10 @@ class ArticleCommentsController extends WikiaController {
 			// This is the actual entry point for Article Comment generation
 			self::$content = $app->sendRequest( 'ArticleComments', 'index' );
 
-			// Load MiniEditor assets (except for mobile)
-			if ( $app->wg->EnableMiniEditorExtForArticleComments && !$app->checkSkin( 'wikiamobile' ) ) {
+			// Load MiniEditor assets (oasis skin only)
+			if ( ArticleComment::isMiniEditorEnabled() ) {
 				$app->sendRequest( 'MiniEditor', 'loadAssets', array(
-					'loadStyles' => !$app->wg->ArticleCommentsLoadOnDemand,
+					'loadStyles' => !ArticleComment::isLoadingOnDemand(),
 					'loadOnDemand' => true,
 					'loadOnDemandAssets' => array(
 						'/extensions/wikia/MiniEditor/js/Wall/Wall.Animations.js'

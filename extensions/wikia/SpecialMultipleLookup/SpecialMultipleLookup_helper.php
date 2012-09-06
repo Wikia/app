@@ -278,8 +278,8 @@ class MultipleLookupCore {
 	}
 
 	public function produceLine( $row ) {
-		global $wgLang, $wgOut, $wgRequest, $wgUser;
-		$sk = $wgUser->getSkin();
+		global $wgLang;
+		$sk = RequestContext::getMain()->getSkin();
 		$page_user = Title::makeTitle ( NS_USER, $row->user_name );
 		$page_contribs = Title::makeTitle ( NS_SPECIAL, "Contributions/{$row->user_name}" );
 

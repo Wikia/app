@@ -33,7 +33,7 @@ class DefaultQuestion {
 	}
 
 	function create() {
-		global $wgOut, $wgUser, $wgContLang;
+		global $wgUser, $wgContLang;
 
 		if ( wfReadOnly() ) {
 			return false;
@@ -111,6 +111,7 @@ class DefaultQuestion {
 			$swear_content = wfMsgExt( 'BadWords', array( 'language' => 'en' ) );
 		}
 
+		$swear_words = array();
 		$swear_list = explode( "\n", $swear_content );
 		foreach ( $swear_list as $swear ) {
 			if ( $swear ) {
@@ -122,8 +123,6 @@ class DefaultQuestion {
 
 	// don't allow swear words when creating new question / generating list of recenlty asked questions (via HPL)
 	function badWordsTest() {
-		global $wgOut;
-
 		// TODO: temporary check for Phalanx (don't perform additional filtering when enabled)
 		global $wgEnablePhalanxExt;
 		if (!empty($wgEnablePhalanxExt)) {
@@ -163,8 +162,6 @@ class DefaultQuestion {
 
 	// don't allow swear words when generating list of recenlty asked questions (via HPL)
 	function filterWordsTest() {
-		global $wgOut;
-
 		if ( !wfRunHooks( 'DefaultQuestion::filterWordsTest' , array($this->question)) ) {
 			wfDebug(__METHOD__ . ": question '{$this->question}' filtered out by hook\n");
 			return true;

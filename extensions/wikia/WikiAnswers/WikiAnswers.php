@@ -31,7 +31,7 @@ function wfWikiAnswersAddStyle( &$out, &$skin ) {
 }
 
 function wfWikiAnswersFooterMenu( &$moduleObject, &$params ) {
-	if( ArticleAdLogic::isMainPage() ) {
+	if( WikiaPageType::isMainPage() ) {
 		foreach( $moduleObject->items as $idx=>$item ) {
 			if( $item['type'] == 'follow' ) {
 				unset( $moduleObject->items[$idx] );
@@ -54,7 +54,7 @@ function wfWikiAnswersGlobalHeaderIndex( &$moduleObject, &$params) {
 function wfWikiAnswersActionDropdown( &$moduleObject, &$params) {
 	global $wgTitle;
 	$answerObj = Answer::newFromTitle( $wgTitle );
-	if( ArticleAdLogic::isMainPage() ) {
+	if( WikiaPageType::isMainPage() ) {
 		$moduleObject->action = null;
 	} elseif( $answerObj->isQuestion() && !$answerObj->isArticleAnswered() ) {
 		if( isset( $moduleObject->dropdown['move'] ) ) {

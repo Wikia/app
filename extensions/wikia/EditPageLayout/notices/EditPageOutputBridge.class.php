@@ -30,7 +30,7 @@ class EditPageOutputBridge {
 	public function open() {
 		$this->notices->clear();
 
-		$this->outputPage = WF::build('App')->getGlobal('wgOut');
+		$this->outputPage = F::app()->getGlobal('wgOut');
 		$this->tracer = WF::build('ObjectTracer',array($this->outputPage,self::$methods));
 		$this->outputPageMock = $this->tracer->begin();
 		$this->editPage->customOutputPage = $this->outputPageMock;

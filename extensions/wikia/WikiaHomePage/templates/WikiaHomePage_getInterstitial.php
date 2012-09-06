@@ -2,7 +2,7 @@
 <header class="preview-header">
 	<span class="hotNew">
 		<? if($wikiInfo['official'] == 1): ?>
-			<strong class="official"><?= wfMsg('wikia-home-page-official') ?></strong>
+			<strong class="official"></strong>
 		<? endif; ?>
 		<? if($wikiInfo['hot'] == 1): ?>
 			<strong class="hot"><?= wfMsg('wikia-home-page-hot') ?></strong>
@@ -26,7 +26,7 @@
 </header>
 <div class="preview-aside">
 	<div class="wiki-description">
-		<h2 class="wiki-welcome-title"><?= wfMsg('wikiahome-preview-description-heading', htmlspecialchars($wikiInfo['name'])) ?></h2>
+		<h2 class="wiki-welcome-title"><?= wfMsg('wikiahome-preview-description-heading', htmlspecialchars($wikiInfo['headline'])) ?></h2>
 		<?= htmlspecialchars($wikiInfo['description']) ?>
 	</div>
 	<a href="<?= $wikiInfo['url'] ?>" class="button secondary big visit">

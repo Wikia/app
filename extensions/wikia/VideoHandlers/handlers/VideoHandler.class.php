@@ -239,17 +239,7 @@ abstract class VideoHandler extends BitmapHandler {
 
 			if ( (int)$sec == $sec ) {
 
-				$hms = "";
-				$hours = intval(intval($sec) / 3600);
-				if ($hours > 0) {
-					$hms .= str_pad($hours, 2, "0", STR_PAD_LEFT). ":";
-				}
-
-				$minutes = intval(($sec / 60) % 60);
-				$hms .= str_pad($minutes, 2, "0", STR_PAD_LEFT). ":";
-
-				$seconds = intval($sec % 60);
-				$hms .= str_pad($seconds, 2, "0", STR_PAD_LEFT);
+				$hms = F::build( 'WikiaFileHelper', array($sec), 'formatDuration' );
 
 				return $hms;
 

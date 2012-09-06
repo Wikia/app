@@ -1300,11 +1300,18 @@ Das Wikia-Team',
  */
 $messages['diq'] = array(
 	'founderemails-email-user-registered-greeting' => 'Merheba Bırayo $USERNAME,',
+	'founderemails-email-user-registered-signature' => 'Taxıma Wikia',
 	'founderemails-email-first-edit-greeting' => 'Merheba Bırayo $USERNAME,',
+	'founderemails-email-first-edit-signature' => 'Taxıma Wikia',
 	'founderemails-email-general-edit-greeting' => 'Merheba Bırayo $USERNAME,',
+	'founderemails-email-general-edit-signature' => 'Taxıma Wikia',
 	'founderemails-email-anon-edit-greeting' => 'Merheba Bırayo $USERNAME,',
+	'founderemails-email-anon-edit-signature' => 'Taxıma Wikia',
 	'founderemails-email-lot-happening-greeting' => 'Merheba Bırayo $USERNAME,',
-	'founderemails-email-views-digest-greeting' => 'selam bırayo delal $USERNAME,',
+	'founderemails-email-lot-happening-signature' => 'Taxıma Wikia',
+	'founderemails-email-views-digest-greeting' => 'Merheba $USERNAME,',
+	'founderemails-email-views-digest-signature' => 'Taxıma Wikia',
+	'founderemails-email-complete-digest-signature' => 'Taxıma Wikia',
 );
 
 /** Spanish (español)
@@ -2925,9 +2932,11 @@ $messages['it'] = array(
 	'founderemails-email-user-registered-subject' => 'Un nuovo utente ha visitato $WIKINAME',
 	'founderemails-email-user-registered-body' => 'Ciao $USERNAME,
 
-Congratulazioni! $EDITORNAME ha appena visitato $WIKINAME.
+Congratulazioni! $EDITORNAME si è appena registrato su $WIKINAME.
 
 Cogli l\'occasione per dargli/le il benvenuto nella tua wiki e incoraggiarlo/la a fare modifiche. Più siete meglio è, e più velocemente la tua wiki crescerà.
+
+$EDITORPAGEURL
 
 Il Team di Wikia',
 	'founderemails-email-user-registered-greeting' => 'Ciao $USERNAME,',
@@ -2941,7 +2950,7 @@ Sembra che $EDITORNAME si sia registrato nella tua wiki! Perché non fai un salt
 	'founderemails-email-0-days-passed-subject' => 'Benvenuto su Wikia!',
 	'founderemails-email-0-days-passed-body' => 'Piacere di conoscerti $USERNAME, 
 
-Complimenti per la creazione di $WIKINAME!
+Complimenti per la creazione di $WIKINAME, $WIKIURL.
 
 Eccoti alcuni suggerimenti utili per iniziare:
 
@@ -2951,7 +2960,7 @@ Aggiungi immagini. Le pagine hanno un aspetto migliore quando sono presenti elem
 
 Personalizza il tema. Personalizza il tema della tua wiki e il suo logo per far sì che la tua wiki si distingua dalle altre! Utilizza il Theme Designer per aggiungere colori personalizzati alla tua wiki e renderla adatta al tuo argomento.
 
-Noi ti lasceremo da solo. Siamo qui per aiutarti a rendere $WIKINAME una wiki di successo passo dopo passo. Visita it.community.wikia.com per usare il forum, ottenere consigli e aiuti, o per inviarci le tue domande!
+Noi ti lasceremo da solo. Siamo qui per aiutarti a rendere $WIKINAME una wiki di successo passo dopo passo. Visita http://it.community.wikia.com per usare il forum, ottenere consigli e aiuti, o per inviarci le tue domande!
 
 Buon lavoro con la tua wiki! Il Team di Wikia
 
@@ -2964,7 +2973,7 @@ Fai clic sul seguente link per annullare l\'iscrizione a tutte le email di Wikia
 	'founderemails-email-3-days-passed-subject' => 'Come sta andando la tua wiki',
 	'founderemails-email-3-days-passed-body' => 'Ciao $USERNAME,
 
-Siamo curiosi di sapere come vanno le cose su $WIKINAME.
+Siamo curiosi di sapere come vanno le cose su $WIKINAME, $WIKIURL.
 
 È da 3 giorni che hai iniziato e abbiamo pensato di darti alcuni suggerimenti su come costruire la tua wiki:
 
@@ -2989,11 +2998,11 @@ Ora che son passati alcuni giorni da quando hai creato la tua wiki, abbiamo pens
 	'founderemails-email-10-days-passed-subject' => 'Buon anniversario dei 10 giorni!',
 	'founderemails-email-10-days-passed-body' => 'Come sta andando $USERNAME?
 
-Wow, il tempo vola!  È da 10 giorni che hai creato $WIKINAME.  
+Wow, il tempo vola!  È da 10 giorni che hai creato $WIKINAME, $WIKIURL.  
 
 Cerca di coinvolgere altre persone nel tuo progetto e mostra loro tutto il lavoro impressionante che hai fatto!  Ecco alcuni modi per spargere parola:
 
-Non lo sai che è giusto condividere? Usa il pulsante Condividi nella barra degli strumenti, nelle pagine e nelle immagini per mostrarli ai tuoi amici e seguaci su Facebook, Twitter o altri siti popolari.
+Non lo sai che è giusto condividere? Usa il pulsante Condividi nella pagina principale, nelle pagine e nelle immagini per mostrarle ai tuoi amici e follower su Facebook, Twitter o altri siti popolari.
 
 Sfrutta la potenza delle e-mail.  Scrivi e-mail ad altre persone che sai che sono interessate al tuo argomento o a collaborare con te, come un amico di scuola o un collega.  È possibile anche mandare per e-mail immagini specifiche dalla tua wiki utilizzando il pulsante e-mail.
 
@@ -3015,6 +3024,8 @@ Ottimo! $EDITORNAME ha appena effettuato la sua prima modifica su $WIKINAME.
 
 Controlla $PAGETITLE per scoprire che cosa ha modificato.
 
+$PAGEURL
+
 Il Team di Wikia',
 	'founderemails-email-first-edit-greeting' => 'Ciao $USERNAME,',
 	'founderemails-email-first-edit-headline' => 'Ottimo! $EDITORNAME ha appena effettuato la sua prima modifica su $WIKINAME.',
@@ -3031,6 +3042,8 @@ $EDITORNAME ha appena fatto un\'altra modifica su $WIKINAME in $PAGETITLE.
 
 Controlla $PAGETITLE per vedere che cosa ha modificato.
 
+$PAGEURL
+
 Il Team di Wikia',
 	'founderemails-email-general-edit-greeting' => 'Ciao $USERNAME,',
 	'founderemails-email-general-edit-headline' => '$EDITORNAME ha appena effettuato un\'altra modifica su $WIKINAME in $PAGETITLE.',
@@ -3046,6 +3059,8 @@ Sembra che l\'utente registrato $EDITORNAME abbia modificato la tua wiki! Perch�
 Un collaboratore di Wikia ha appena fatto una modifica a $PAGETITLE su $WIKINAME.
 
 I collaboratori di Wikia sono persone che apportano modifiche senza effettuare il login con un account di Wikia. Vai a vedere che cosa ha modificato questo misterioso amico!
+
+$PAGEURL
 
 Il Team di Wikia',
 	'founderemails-email-anon-edit-greeting' => 'Ciao $USERNAME,',
@@ -3235,7 +3250,9 @@ $messages['ja'] = array(
 	'founderemails-email-user-registered-subject' => 'ウィキでアカウントが登録されました',
 	'founderemails-email-user-registered-body' => '$USERNAME さん、
 
-$EDITORNAME がウィキにアカウントを登録しました。
+$EDITORNAME が $WIKINAME に参加しました。
+
+歓迎のメッセージを送るなどして、編集してもらえるように誘導してきましょう。参加者が多ければ多いほど、ウィキの成長は早まります。
 
 トークページ:
 $EDITORTALKPAGEURL
@@ -3252,6 +3269,8 @@ $EDITORNAME がウィキにアカウントを登録しました。<br /><br />
 -- ウィキアチーム',
 	'founderemails-email-0-days-passed-body-HTML' => '$WIKINAME の作成おめでとうございます。これにより、あなたもウィキアコミュニティの一員となりました！<br /><br />
 -- ウィキアチーム',
+	'founderemails-email-page-edited-reg-user-first-edit-subject' => '$WIKINAME で新しい編集が行われました',
+	'founderemails-email-page-edited-reg-user-subject' => '$WIKINAME で新しい編集が行われました',
 );
 
 /** Kannada (ಕನ್ನಡ)
