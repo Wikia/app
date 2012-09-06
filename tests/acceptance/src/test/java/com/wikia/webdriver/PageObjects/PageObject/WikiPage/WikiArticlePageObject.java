@@ -123,12 +123,6 @@ public class WikiArticlePageObject extends WikiBasePageObject {
 	
 	public void editComment(String comment)
 	{
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		driver.navigate().refresh();
 		hoverMouseOverCommentArea(comment);
 		clickEditCommentButton();
