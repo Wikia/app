@@ -12,42 +12,61 @@ class WikiaBarModel extends WikiaBarModelBase {
 	const WIKIA_BAR_TYPE_DATA_FAILSAFE_MODEL = 2;
 	const WIKIABAR_MCACHE_VERSION = '0.01';
 
+	const BUTTON_1_CLASS = 'button-1-class';
+	const BUTTON_1_TEXT = 'button-1-text';
+	const BUTTON_1_HREF = 'button-1-href';
+	const BUTTON_2_CLASS = 'button-2-class';
+	const BUTTON_2_TEXT = 'button-2-text';
+	const BUTTON_2_HREF = 'button-2-href';
+	const BUTTON_3_CLASS = 'button-3-class';
+	const BUTTON_3_TEXT = 'button-3-text';
+	const BUTTON_3_HREF = 'button-3-href';
+	const LINE_1_TEXT = 'line-1-text';
+	const LINE_1_HREF = 'line-1-href';
+	const LINE_2_TEXT = 'line-2-text';
+	const LINE_2_HREF = 'line-2-href';
+	const LINE_3_TEXT = 'line-3-text';
+	const LINE_3_HREF = 'line-3-href';
+	const LINE_4_TEXT = 'line-4-text';
+	const LINE_4_HREF = 'line-4-href';
+	const LINE_5_TEXT = 'line-5-text';
+	const LINE_5_HREF = 'line-5-href';
+
 	protected $requiredFields = array(
-		'button-1-class',
-		'button-1-text',
-		'button-1-href',
-		'button-2-class',
-		'button-2-text',
-		'button-2-href',
-		'button-3-class',
-		'button-3-text',
-		'button-3-href',
-		'button-4-class',
-		'button-4-text',
-		'button-4-href',
-		'line-1-text',
-		'line-1-href',
-		'line-2-text',
-		'line-2-href',
-		'line-3-text',
-		'line-3-href',
-		'line-4-text',
-		'line-4-href',
-		'line-5-text',
-		'line-5-href'
+		self::BUTTON_1_CLASS,
+		self::BUTTON_1_TEXT,
+		self::BUTTON_1_HREF,
+		self::BUTTON_2_CLASS,
+		self::BUTTON_2_TEXT,
+		self::BUTTON_2_HREF,
+		self::BUTTON_3_CLASS,
+		self::BUTTON_3_TEXT,
+		self::BUTTON_3_HREF,
+		self::LINE_1_TEXT,
+		self::LINE_1_HREF,
+		self::LINE_2_TEXT,
+		self::LINE_2_HREF,
+		self::LINE_3_TEXT,
+		self::LINE_3_HREF,
+		self::LINE_4_TEXT,
+		self::LINE_4_HREF,
+		self::LINE_5_TEXT,
+		self::LINE_5_HREF
 	);
 
 
 	public function getBarContents() {
 		$this->wf->profileIn(__METHOD__);
 
-		$dataMemcKey = $this->wf->SharedMemcKey('WikiaBar', $this->getLang(), $this->getVertical(), self::WIKIABAR_MCACHE_VERSION );
+		$dataMemcKey = $this->wf->SharedMemcKey('WikiaBar', $this->getLang(), $this->getVertical(), self::WIKIABAR_MCACHE_VERSION);
 		$data = $this->wg->memc->get($dataMemcKey);
 
 		if (!$data) {
 			$data = $this->getParsedBarConfiguration();
-			$this->wg->memc->set($dataMemcKey,$data);
+			$this->wg->memc->set($dataMemcKey, $data);
 		}
+
+		$data['data'] = $this->structureData($data['data']);
 
 		$this->wf->profileOut(__METHOD__);
 		return $data;
@@ -55,13 +74,15 @@ class WikiaBarModel extends WikiaBarModelBase {
 
 	protected function getParsedBarConfiguration() {
 		$message = $this->getRegularMessage();
-		$parseResult = $this->parseBarConfigurationMessage($message);
+		$validator = F::build('WikiaBarMessageDataValidator');
+		$parseResult = $this->parseBarConfigurationMessage($message, $validator);
 		$status = true;
 
 		if (!$parseResult) {
 			Wikia::log(__METHOD__, null, 'WikiaBar message ' . implode('', array($this->getVertical(), '/', $this->getLang())) . ' falling back to failsafe');
 			$message = $this->getFailsafeMessage();
-			$parseResult = $this->parseBarConfigurationMessage($message);
+			$validator = F::build('WikiaBarFailsafeDataValidator');
+			$parseResult = $this->parseBarConfigurationMessage($message, $validator);
 			$status = false;
 		}
 		$data = array(
@@ -116,34 +137,38 @@ class WikiaBarModel extends WikiaBarModelBase {
 	 * @param string $message
 	 * @return bool|array
 	 */
-	protected function parseBarConfigurationMessage($message) {
+	protected function parseBarConfigurationMessage($message, WikiaBarDataValidator $validator) {
 		$this->wf->profileIn(__METHOD__);
 		$data = array();
 		$valid = true;
 
-		if (empty($message)) {
+		if (!$validator->isNotEmpty($message)) {
 			$valid = false;
-		}
-
-		if ($valid) {
+		} else {
 			$lines = explode("\n", $message);
 		}
 
-		if (!empty($lines)) {
-			foreach ($lines as $line) {
-				if (stripos($line, '=') !== false) {
-					list($key, $val) = explode('=', $line, 2);
-					$val = trim($val);
-					if (empty($val)) {
-						$valid = false;
-					}
-					$data[$key] = $val;
-				}
-			}
-			if (count(array_intersect(array_keys($data), $this->requiredFields)) != count($this->requiredFields)) {
+		if (empty($lines)) {
+			$lines = array();
+			$valid = false;
+		}
+
+		foreach ($lines as $line) {
+			if (stripos($line, '=') === false) {
 				$valid = false;
+				break;
 			}
-		} else {
+
+			if (!$validator->validateLine($line)) {
+				$valid = false;
+				break;
+			}
+
+			list($key, $val) = explode('=', $line, 2);
+			$data[$key] = trim($val);
+		}
+
+		if (count(array_intersect(array_keys($data), $this->requiredFields)) != count($this->requiredFields)) {
 			$valid = false;
 		}
 
@@ -153,6 +178,53 @@ class WikiaBarModel extends WikiaBarModelBase {
 		} else {
 			return $valid;
 		}
+	}
+
+	protected function structureData($data) {
+		$data = array(
+			'buttons' =>
+			array(
+				array(
+					'class' => $data[self::BUTTON_1_CLASS],
+					'text' => $data[self::BUTTON_1_TEXT],
+					'href' => $data[self::BUTTON_1_HREF]
+				),
+				array(
+					'class' => $data[self::BUTTON_2_CLASS],
+					'text' => $data[self::BUTTON_2_TEXT],
+					'href' => $data[self::BUTTON_2_HREF]
+				),
+				array(
+					'class' => $data[self::BUTTON_3_CLASS],
+					'text' => $data[self::BUTTON_3_TEXT],
+					'href' => $data[self::BUTTON_3_HREF]
+				)
+			),
+			'messages' =>
+			array(
+				array(
+					'text' => $data[self::LINE_1_TEXT],
+					'href' => $data[self::LINE_1_HREF],
+				),
+				array(
+					'text' => $data[self::LINE_2_TEXT],
+					'href' => $data[self::LINE_2_HREF],
+				),
+				array(
+					'text' => $data[self::LINE_3_TEXT],
+					'href' => $data[self::LINE_3_HREF],
+				),
+				array(
+					'text' => $data[self::LINE_4_TEXT],
+					'href' => $data[self::LINE_4_HREF],
+				),
+				array(
+					'text' => $data[self::LINE_5_TEXT],
+					'href' => $data[self::LINE_5_HREF],
+				)
+			)
+		);
+		return $data;
 	}
 
 	public function getData() {
