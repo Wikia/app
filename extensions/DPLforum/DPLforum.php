@@ -64,7 +64,7 @@ function wfDPLinit( &$parser ) {
 
 function parseForum( $input, $argv, $parser ) {
 	$f = new DPLForum();
-	return $js . $f->parse( $input, $parser );
+	return $f->parse( $input, $parser );
 }
 
 /**
