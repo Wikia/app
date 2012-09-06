@@ -14,52 +14,53 @@ body {
 	width: 100%;
 	z-index: $zTop;
 	@include linear-gradient($color-header, left, $color-header-alt, 0, $color-header, 50%, $color-header-alt, 100%);
+	@include box-shadow(0, 0, 10px, $color-page-shadow);
 	.wikia-bar {
 		background-image: url(/skins/oasis/images/checkers.png); /* base64 */
 		height: 25px;
 		margin: auto;
 	  	text-align: center;
 		width: 100%;
-		@include box-shadow(0, 0, 10px, $color-page-shadow);
 	  	.ad {
 			background-color: green;
 			float: left;
-			margin-right: 5px;
+			margin: 0 5px;
 			width: 320px;
+			height: 25px;
 		}
-		.buttons {
-		  	float: left;
-			li {
-				background-color: #303030;
-				border: 1px solid #231f20;
-				color: #fff;
-				display: inline-block;
-			 	font-size: 11px;
+		.wikiabar-button {
+			background-color: #303030;
+			border: 1px solid #231f20;
+			color: #fff;
+			display: inline-block;
+			float: left;
+			font-size: 11px;
+			height: 14px;
+			line-height: 13px;
+			margin: 1px 0 1px 3px;
+			padding: 4px 5px 3px 5px;
+			img {
+				background-image: url(/extensions/wikia/WikiaBar/images/wikiabarIcon.png); /* base64 */
+				float: left;
 				height: 14px;
-				line-height: 13px;
-				margin: 1px 0;
-				padding: 4px 5px 3px 5px;
-			 	img {
-					background-image: url(/extensions/wikia/WikiaBar/images/wikiabarIcon.png); /* base64 */
-					float: left;
-					height: 14px;
-					margin-right: 5px;
-					width: 12px;
-				}
-				span {
-					float: right;
-				}
+				margin-right: 5px;
+				width: 12px;
+			}
+			span {
+				float: right;
 			}
 		}
 	  	.message {
 			background-color: blue;
 			float: right;
+			height: 25px;
 			margin-left: 50px;
 			width: 420px;
 		}
 	  	.arrow {
 			background-color: red;
 			float: right;
+			height: 25px;
 			width: 24px;
 		}
 	}
