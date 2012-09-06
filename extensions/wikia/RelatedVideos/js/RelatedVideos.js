@@ -350,7 +350,7 @@ var RelatedVideos = {
 	},*/
 
 	injectCaruselElement: function( html ){
-		$( '#relatedvideos-add-video' ).closest('.modalWrapper').closeModal();
+		$( '#add-video-modal' ).closest('.modalWrapper').closeModal();
 		var scrollLength = -1 * ( RelatedVideos.currentRoom - 1 );
 		RelatedVideos.scroll(
 			scrollLength,

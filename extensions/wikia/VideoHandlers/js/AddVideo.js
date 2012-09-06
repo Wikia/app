@@ -63,7 +63,7 @@
 				'both'
 			);
 			$.nirvana.postJson(
-				controllerName, // TODO: abstract this so there's no dependency on Related Videos
+				controllerName,
 				'getAddVideoModal',
 				{
 					title: wgTitle,
@@ -71,12 +71,13 @@
 				},
 				function( res ) {
 					if ( res.html ) {
-						self.modal = $.showModal( res.title, res.html, {
-							id: 'relatedvideos-add-video',
+						$.showModal( res.title, res.html, {
+							id: 'add-video-modal',
 							width: settings.modalWidth,
 							callback : function(){
+								self.rvAddModal = $('#add-video-modal');
 								enableVideoSubmit();
-								initModalScroll('.modalContent');
+								initModalScroll();
 							}
 						});
 					}
@@ -88,29 +89,28 @@
 		}
 
 		var initModalScroll = function( modal ) {
-			this.rvAddModal = modal;
-			this.rvAddPos = 1;
-			this.rvAddMax = Math.ceil(($('.item',this.rvAddModal).length)/3);
-			var $rvAddModal = $(this.rvAddModal);
-			$rvAddModal.delegate( '.scrollleft', 'click', modalScrollLeft );
-			$rvAddModal.delegate( '.scrollright', 'click', modalScrollRight );
-			$rvAddModal.delegate( '.add-this-video', 'click', modalAddVideo );
-	        $rvAddModal.delegate( 'a.video', 'click', previewVideo );
+			debugger;
+			self.rvAddPos = 1;
+			self.rvAddMax = Math.ceil(($('.item',self.rvAddModal).length)/3);
+			self.rvAddModal.delegate( '.scrollleft', 'click', modalScrollLeft );
+			self.rvAddModal.delegate( '.scrollright', 'click', modalScrollRight );
+			self.rvAddModal.delegate( '.add-this-video', 'click', modalAddVideo );
+	        self.rvAddModal.delegate( 'a.video', 'click', previewVideo );
 	        updateModalScrollButtons();
 		}
 
 		var updateModalScrollButtons = function() {
 	
-	        if ( this.rvAddPos == 1 ) {
-	            $('.scrollleft', this.rvAddModal).addClass("inactive");
+	        if ( self.rvAddPos == 1 ) {
+	            $('.scrollleft', self.rvAddModal).addClass("inactive");
 	        } else {
-	            $('.scrollleft',this.rvAddModal).removeClass("inactive");
+	            $('.scrollleft', self.rvAddModal).removeClass("inactive");
 	        }
 	
-	        if ( this.rvAddPos == this.rvAddMax ) {
-	            $('.scrollright', this.rvAddModal).addClass("inactive");
+	        if ( self.rvAddPos == self.rvAddMax ) {
+	            $('.scrollright', self.rvAddModal).addClass("inactive");
 	        } else {
-	            $('.scrollright', this.rvAddModal).removeClass("inactive");
+	            $('.scrollright', self.rvAddModal).removeClass("inactive");
 	        }
 	    }
 	
@@ -127,18 +127,18 @@
 		var modalScroll = function( param, callback ) {
 			//setup variables
 	
-			var scroll_by = parseInt( $('.item',this.rvAddModal).outerWidth(true) * 3 );
+			var scroll_by = parseInt( $('.item', self.rvAddModal).outerWidth(true) * 3 );
 			var anim_time = 500;
 	
 			// button vertical secondary left
-			var futureState = this.rvAddPos + param;
+			var futureState = self.rvAddPos + param;
 	
-			if( futureState >= 1 && futureState <= this.rvAddMax ) {
+			if( futureState >= 1 && futureState <= self.rvAddMax ) {
 				var scroll_to = (futureState-1) * scroll_by;
-				this.rvAddPos = futureState;
+				self.rvAddPos = futureState;
 
 				//scroll
-				$('.container',this.rvAddModal).stop().animate({
+				$('.container', self.rvAddModal).stop().animate({
 					left: -scroll_to
 				}, anim_time, function(){
 					//hide description
@@ -146,21 +146,19 @@
 						callback();
 					}
 				});
-			} else if (futureState == 0 && this.rvAddMax == 1) {
-				$('.page',this.rvAddModal).text(1);
+			} else if (futureState == 0 && self.rvAddMax == 1) {
+				$('.page', self.rvAddModal).text(1);
 			}
 		}
 
 		var enableVideoSubmit = function(){
-			var $relatedVideosAddVideo = $('#relatedvideos-add-video');
-			$relatedVideosAddVideo.undelegate( '.rv-add-form', 'submit').removeClass('loading');
-			$relatedVideosAddVideo.delegate( '.rv-add-form', 'submit', addVideoConfirm );
+			self.rvAddModal.undelegate( '.rv-add-form', 'submit').removeClass('loading');
+			self.rvAddModal.delegate( '.rv-add-form', 'submit', addVideoConfirm );
 		}
 
 		var preventVideoSubmit = function(){
-			var $relatedVideosAddVideo = $('#relatedvideos-add-video');
-			$relatedVideosAddVideo.undelegate( '.rv-add-form', 'submit').addClass('loading');
-			$relatedVideosAddVideo.delegate(
+			self.rvAddModal.undelegate( '.rv-add-form', 'submit').addClass('loading');
+			self.rvAddModal.delegate(
 				'.rv-add-form',
 				'submit',
 				function( e ){
@@ -171,14 +169,14 @@
 
 		var addVideoConfirm = function( e ){
 			e.preventDefault();
-			GlobalNotification.show( $('#relatedvideos-add-video .notifyHolder').html(), 'notify' );
+			GlobalNotification.show( self.rvAddModal.find('.notifyHolder').html(), 'notify' );
 			preventVideoSubmit();
 			$.nirvana.postJson(
 				controllerName,
 				'addVideo',
 				{
 					articleId: wgArticleId,
-					url: $('#relatedvideos-add-video input').val()
+					url: self.rvAddModal.find('input').val()
 				},
 				function( formRes ) {
 					WikiaTracker.trackEvent(
@@ -191,19 +189,18 @@
 						'both'
 					);
 					GlobalNotification.hide();
-					var $relatedVideosAddVideo = $('#relatedvideos-add-video');
 					if ( formRes.error ) {
 						enableVideoSubmit();
 						showError( formRes.error );
 					} else if ( formRes.html ){
-						$relatedVideosAddVideo.closest('.modalWrapper').closeModal();
+						self.rvAddModal.closest('.modalWrapper').closeModal();
 						// Call success callback
 						if($.isFunction(settings.callback)) {
 							settings.callback(formRes.html);
 						}
 					} else {
 						enableVideoSubmit();
-						showError( $('#relatedvideos-add-video .somethingWentWrong').html() );
+						showError( self.rvAddModal.find('.somethingWentWrong').html() );
 					}
 				},
 				function(){
@@ -236,13 +233,13 @@
 	
 	    var bindPreviewActions = function() {
 	
-	        $( this.rvAddModal ).delegate( '.preview_back', 'click', function() {
+	        self.rvAddModal.delegate( '.preview_back', 'click', function() {
 	
 	            $("div.RVSuggestPreviewVideo .preview_container", self.rvAddModal).remove();
 	            $("div.RVSuggestionCont", self.rvAddModal).show();
 	            return false;
 	        } );
-	        $( self.rvAddModal ).delegate( '.insert', 'click', modalAddVideo );
+	        self.rvAddModal.delegate( '.insert', 'click', modalAddVideo );
 	
 	    }
 	
