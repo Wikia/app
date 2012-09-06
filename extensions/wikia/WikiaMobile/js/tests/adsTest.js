@@ -1,7 +1,9 @@
 /*
  @test-framework Jasmine
  @test-require-asset /resources/wikia/libraries/modil/modil.js
+ @test-require-asset /resources/wikia/libraries/zepto/zepto-0.8.js
  @test-require-asset /extensions/wikia/WikiaMobile/js/events.js
+ @test-require-asset /extensions/wikia/WikiaMobile/js/features.js
  @test-require-asset /extensions/wikia/WikiaMobile/js/ads.js
  */
 
@@ -61,7 +63,7 @@ describe("Test ads module", function() {
 		});
 
 		waitsFor(function(){
-			if(ads && document.getElementById('wkAdPlc') === null){
+			if(ads){
 				expect( document.getElementById('wkAdPlc') ).toBe(null);
 				expect( document.getElementById('wkAdCls') ).toBe(null);
 				expect( document.getElementById('wkFtr') ).toBeDefined();
