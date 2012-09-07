@@ -1,9 +1,15 @@
 <?php
 
-global $wgHooks;
 $wgHooks["NormalizeMessageKey"][] = "wfFakeAnswersMessaging";
 
-function wfFakeAnswersMessaging($key, $useDB, $langCode, $transform) {
+/**
+ * @param $key
+ * @param $useDB
+ * @param $langCode
+ * @param $transform
+ * @return bool
+ */
+function wfFakeAnswersMessaging(&$key, &$useDB, &$langCode, &$transform) {
 	$mask = "-answers2";
 
 	if (!preg_match("/{$mask}$/", $key, $matches)) {
