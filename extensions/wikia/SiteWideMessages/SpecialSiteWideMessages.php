@@ -36,6 +36,7 @@ $wgExtensionCredits['specialpage'][] = array(
 $wgAvailableRights[] = 'messagetool';
 $wgGroupPermissions['*']['messagetool'] = false;
 $wgGroupPermissions['staff']['messagetool'] = true;
+$wgGroupPermissions['util']['messagetool'] = true;
 
 $wgExtensionFunctions[] = 'SiteWideMessagesInit';
 $wgExtensionMessagesFiles['SpecialSiteWideMessages'] = dirname(__FILE__) . '/SpecialSiteWideMessages.i18n.php';
