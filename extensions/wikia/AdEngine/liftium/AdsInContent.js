@@ -35,8 +35,8 @@ AIC2.init = function() {
 		AIC2.$placeHolder.append('<div id="INCONTENT_BOXAD_1" class="noprint" style="height: 250px; width: 300px; position: relative;"><div id="Liftium_300x250_99"><iframe width="300" height="250" id="INCONTENT_BOXAD_1_iframe" class="" noresize="true" scrolling="no" frameborder="0" marginheight="0" marginwidth="0" style="border:none" target="_blank"></iframe></div></div><!-- END SLOTNAME: INCONTENT_BOXAD_1 -->');
 
 		//if (!AIC2.checkFooterAd()) {
-			$window.bind("scroll.AIC2", $.throttle( 250, AIC2.onScroll ));
-			$window.bind("resize.AIC2", $.throttle( 250, AIC2.onScroll ));
+			$window.bind("scroll.AIC2", AIC2.onScroll ); // FIXME: throttle
+			$window.bind("resize.AIC2", AIC2.onScroll ); // FIXME: throttle
 		//}
 	} else {
 		Liftium.d("AIC2: page too short", 3);
