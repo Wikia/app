@@ -25,9 +25,12 @@ class SpecialVideosHelper extends WikiaModel {
 
 	// get list of filter options
 	public function getFilterOptions() {
-		$options = array(
-			'premium' => $this->wf->Msg( 'specialvideos-sort-featured' ),
-		);
+		$options = array();
+		
+		$premiumVideos = $this->premiumVideosExist();
+		if ( $premiumVideos ) {
+			$options['premium'] = $this->wf->Msg( 'specialvideos-sort-featured' );
+		}
 
 		return $options;
 	}
@@ -215,6 +218,15 @@ class SpecialVideosHelper extends WikiaModel {
 		}
 
 		return $postedInMsg;
+	}
+	
+	/**
+	 * get video detail
+	 * @return int number of premium videos on a wiki
+	 */
+	public function premiumVideosExist() {
+		// saipetch will fill this in
+		return false;
 	}
 
 }
