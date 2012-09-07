@@ -4,6 +4,12 @@ var WikiaBar = {
 		//folding the bar
 		$('.WikiaBarWrapper .arrow').click(function (e) {
 			$('.WikiaBarWrapper').addClass('hidden');
+			$('.WikiaBarCollapseWrapper').removeClass('hidden');
+			e.preventDefault();
+		});
+		$('.WikiaBarCollapseWrapper .wikia-bar-collapse').click(function (e) {
+			$('.WikiaBarWrapper').removeClass('hidden');
+			$('.WikiaBarCollapseWrapper').addClass('hidden');
 			e.preventDefault();
 		});
 		//getting the ad
