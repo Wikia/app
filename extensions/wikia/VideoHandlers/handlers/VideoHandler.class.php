@@ -252,26 +252,6 @@ abstract class VideoHandler extends BitmapHandler {
 		return '';
 	}
 	
-	/** 
-	 * Get the duration in ISO 8601 format for meta tag
-	 * @return string
-	 */
-	public function getISO8601Duration() {
-		$formattedDruation = $this->getFormattedDuration();
-		if (!empty($formattedDruation)) {
-			$segments = explode(':', $formattedDruation);
-			$ret = "PT";
-			if(count($segments) == 3) {
-				$ret .= array_shift($segments) . 'H';
-			} 
-			$ret .= array_shift($segments) . 'M';
-			$ret .= array_shift($segments) . 'S';
-			
-			return $ret;
-		}		
-		return '';		
-	}
-
 	/**
 	 * Get the video id that is used for embed code
 	 * @return string
