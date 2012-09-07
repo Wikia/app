@@ -1,16 +1,9 @@
-var AdConfig2 = {
-	_cache_geo:null,
+window.AdConfig2 = window.AdConfig2 || (function (log, Wikia, window) {
+	var _cache_geo = null;
 
-	log:function (msg, level, obj) {
-		Wikia.log(msg, level, 'AdConfig2');
-
-		if (typeof obj != 'undefined') {
-			Wikia.log(obj, level, 'AdConfig2');
-		}
-	},
-
-	getProvider:function (slot) {
-		this.log('getProvider', 5, slot);
+	function getProvider(slot) {
+		log('getProvider', 5, 'AdConfig2');
+		log(slot, 5, 'AdConfig2');
 
 		var providers = {
 			'GamePro':true,
@@ -21,20 +14,21 @@ var AdConfig2 = {
 			return slot[2];
 		}
 
-		if (this.isSlotGamePro(slot[0], window.wgContentLanguage)) {
+		if (isSlotGamePro(slot[0], window.wgContentLanguage)) {
 			return 'GamePro';
 		}
 
-		if (this.isSlotEvolve(slot[0], this.getCountry())) {
+		if (isSlotEvolve(slot[0], this.getCountry())) {
 			return 'Evolve';
 		}
 
 		return 'AdDriver2';
-	},
+	}
 
 	// TODO refactor to adProviderGamePro
-	isSlotGamePro:function (slotname, city_lang) {
-		this.log('isSlotGamePro', 5, [slotname, city_lang]);
+	function isSlotGamePro(slotname, city_lang) {
+		log('isSlotGamePro', 5, 'AdConfig2');
+		log([slotname, city_lang], 5, 'AdConfig2');
 
 		var slotMap = {
 			'HOME_TOP_LEADERBOARD':true,
@@ -49,11 +43,12 @@ var AdConfig2 = {
 		}
 
 		return false;
-	},
+	}
 
 	// TODO refactor to adProviderEvolve ?
-	isSlotEvolve:function (slotname, country) {
-		this.log('isSlotEvolve', 5, [slotname, country]);
+	function isSlotEvolve(slotname, country) {
+		log('isSlotEvolve', 5, 'AdConfig2');
+		log([slotname, country], 5, 'AdConfig2');
 
 		var slotMap = {
 			'HOME_TOP_LEADERBOARD':true,
@@ -67,30 +62,33 @@ var AdConfig2 = {
 		}
 
 		return false;
-	},
+	}
 
 	// TODO refactor when fb:45432 is done
-	getCountry: function () {
-		if (this._cache_geo) {
-			return this._cache_geo.country;
+	function getCountry() {
+		if (_cache_geo) {
+			return _cache_geo.country;
 		}
 
 		var qs = new Wikia.Querystring;
 		var country = qs.getVal('usegeo', null);
 		if (country) {
-			this._cache_geo = {country:country};
+			_cache_geo = {country:country};
 			return country;
 		}
 
 		var cookie = decodeURIComponent(Wikia.Cookies.get('Geo'));
 		if (typeof cookie != 'undefined' && cookie) {
 			try {
-				this._cache_geo = JSON.parse(cookie);
+				_cache_geo = JSON.parse(cookie);
 			} catch (e) {
-				this._cache_geo = {country:'error'};
+				_cache_geo = {country:'error'};
 			}
 		}
 
-		return this._cache_geo.country;
+		return _cache_geo.country;
 	}
-};
+
+	return {getProvider:getProvider};
+
+})(Wikia.log, Wikia, window);
