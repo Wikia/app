@@ -602,7 +602,7 @@ class Masthead {
 	 * @param $errorNo -- optional initial error-code state.
 	 * @param $errorMsg -- optional string containing details on what went wrong if there is an UPLOAD_ERR_EXTENSION.
 	 */
-	private function postProcessImageInternal($sTmpFile, $errorNo = UPLOAD_ERR_OK, &$errorMsg=''){
+	private function postProcessImageInternal($sTmpFile, &$errorNo = UPLOAD_ERR_OK, &$errorMsg=''){
 		wfProfileIn(__METHOD__);
 		$aImgInfo = getimagesize($sTmpFile);
 

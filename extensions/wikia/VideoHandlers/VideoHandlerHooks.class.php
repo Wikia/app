@@ -127,7 +127,7 @@ class VideoHandlerHooks extends WikiaObject{
 		return true;
 	}
 
-	public function onLinkerMakeThumbLink2FileOriginalSize ( $file, $width ){
+	public function onLinkerMakeThumbLink2FileOriginalSize ( $file, &$width ){
 		if ( WikiaFileHelper::isVideoFile( $file ) ){
 			$width = WikiaFileHelper::maxWideoWidth;
 		};
@@ -215,5 +215,5 @@ class VideoHandlerHooks extends WikiaObject{
 
 		return true;
 	}
-	
+
 }
