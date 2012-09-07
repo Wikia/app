@@ -54,7 +54,7 @@ class ImageServingHelper{
 	 *  return boolean
 	 */
 
-	public static function replaceImages( $skin, $title, $file, $frameParams, $handlerParams, $time, $res ) {
+	public static function replaceImages( $skin, $title, $file, $frameParams, $handlerParams, $time, &$res ) {
 		if (!self::$hookOnOff) {
 			return true;
 		}
