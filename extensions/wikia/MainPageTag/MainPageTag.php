@@ -19,7 +19,7 @@ $wfMainPageTag_lcs_called = false;
 
 /**
  * Set hooks for each of the three parser tags
- * @param parser reference to MediaWiki Parser object
+ * @param Parser $parser reference to MediaWiki Parser object
  */
 function wfMainPageTag( &$parser ) {
 	$parser->setHook( 'mainpage-rightcolumn-start', 'wfMainPageTag_rcs' );
@@ -31,9 +31,9 @@ function wfMainPageTag( &$parser ) {
 /**
  * Inserts the necessary HTML to start the right column
  *
- * @param input Input between the <sample> and </sample> tags, or null if the tag is "closed", i.e. <sample />
- * @param args Tag arguments, which are entered like HTML tag attributes; this is an associative array indexed by attribute name.
- * @param parser The parent parser (a Parser object); more advanced extensions use this to obtain the contextual Title, parse wiki text, expand braces, register link relationships and dependencies, etc.
+ * @param string $input Input between the <sample> and </sample> tags, or null if the tag is "closed", i.e. <sample />
+ * @param array $args Tag arguments, which are entered like HTML tag attributes; this is an associative array indexed by attribute name.
+ * @param Parser $parser The parent parser (a Parser object); more advanced extensions use this to obtain the contextual Title, parse wiki text, expand braces, register link relationships and dependencies, etc.
  */
 function wfMainPageTag_rcs( $input, $args, $parser ) {
 	global $wfMainPageTag_rcs_called, $wfMainPageTag_lcs_called;
@@ -47,9 +47,9 @@ function wfMainPageTag_rcs( $input, $args, $parser ) {
 /**
  * Inserts the necessary HTML to start the left column
  *
- * @param input Input between the <sample> and </sample> tags, or null if the tag is "closed", i.e. <sample />
- * @param args Tag arguments, which are entered like HTML tag attributes; this is an associative array indexed by attribute name.
- * @param parser The parent parser (a Parser object); more advanced extensions use this to obtain the contextual Title, parse wiki text, expand braces, register link relationships and dependencies, etc.
+ * @param string $input Input between the <sample> and </sample> tags, or null if the tag is "closed", i.e. <sample />
+ * @param array $args Tag arguments, which are entered like HTML tag attributes; this is an associative array indexed by attribute name.
+ * @param array $parser The parent parser (a Parser object); more advanced extensions use this to obtain the contextual Title, parse wiki text, expand braces, register link relationships and dependencies, etc.
  */
 function wfMainPageTag_lcs( $input, $args, $parser ) {
 	global $wfMainPageTag_rcs_called, $wfMainPageTag_lcs_called;

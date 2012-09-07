@@ -42,7 +42,7 @@ $wgSpecialPageGroups['Mostpopularcategories'] = 'highuse';
 // macbre: fix fatal when accessing this special page via API
 $wgAutoloadClasses['MostpopularcategoriesPage'] = dirname(__FILE__) . '/SpecialMostPopularCategories_body.php';
 
-function wfSetupMostPopularCategories( $queryPages = array() ) {
+function wfSetupMostPopularCategories( &$queryPages = array() ) {
     $queryPages[] = array( 'MostpopularcategoriesPage', 'Mostpopularcategories');
     return true;
 }
