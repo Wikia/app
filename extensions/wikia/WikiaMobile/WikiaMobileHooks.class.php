@@ -300,15 +300,8 @@ class WikiaMobileHooks extends WikiaObject{
 		if( $this->app->checkSkin( 'wikiamobile', $skin ) && self::$displayErrorPage ) {
 			$out->clearHTML();
 
-			//add styles that belongs only to 404 page
-			$styles = F::build( 'AssetsManager', array(), 'getInstance' )->getURL( array( 'wikiamobile_404_scss' ) );
+			$out->addHTML( $this->app->renderView( 'WikiaMobileErrorService', 'pageNotFound', array( 'out' => &$out) ) );
 
-			//this is going to be additional call but at least it won't be loaded on every page
-			foreach ( $styles as $s ) {
-				$out->addStyle( $s  );
-			}
-
-			$out->addHTML( $this->app->renderView( 'WikiaMobileErrorService', 'pageNotFound' ) );
 			$this->wf->profileOut( __METHOD__ );
 			return false;
 		}
