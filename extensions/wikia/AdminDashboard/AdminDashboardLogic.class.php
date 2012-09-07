@@ -28,8 +28,9 @@ class AdminDashboardLogic {
 
 	/**
 	 * @brief Helper function which determines whether to display the Admin Dashboard Chrome in the Oasis Skin
-	 * @param type $title Title of page we are on
-	 * @return type boolean
+	 * @param WikiaApp $app
+	 * @param Title $title Title of page we are on
+	 * @return boolean
 	 */
 	public static function displayAdminDashboard($app, $title) {
 		// Admin Dashboard is only for logged in plus a list of groups
@@ -109,10 +110,9 @@ class AdminDashboardLogic {
 		}
 		return false;
 	}
-	
+
 	/**
 	 *  @brief hook to add toolbar item for admin dashboard
-	 *  
 	 */
 	function onBeforeToolbarMenu(&$items) {
 		if( F::app()->wg->User->isAllowed('admindashboard') ) {
@@ -120,17 +120,17 @@ class AdminDashboardLogic {
 				'type' => 'html',
 				'html' => Wikia::specialPageLink('AdminDashboard', 'admindashboard-toolbar-link', array('data-tracking' => 'admindashboard/toolbar/admin') )
 			);
-			
+
 			if( is_array($items) ) {
 				$isMenuSubElPresent = false;
-				
+
 				foreach($items as $el) {
 					if( isset($el['type']) && $el['type'] === 'menu' ) {
 						$isMenuSubElPresent = true;
 						break;
 					}
 				}
-				
+
 				if( $isMenuSubElPresent ) {
 					$items[] = $item;
 				}
