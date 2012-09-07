@@ -81,6 +81,7 @@ class CommunityMessages {
 		}
 
 		// render message
+		$msg = '';
 		if( SpecialPageFactory::exists( 'WikiActivity' ) ) {
 			$msg = wfMsgExt('communitymessages-notice-msg', array( 'parseinline', 'content' ));
 		}
@@ -94,6 +95,8 @@ class CommunityMessages {
 	/**
 	 * hook handler
 	 * update timestamp of newest message
+	 *
+	 * @param WikiPage $article
 	 *
 	 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
 	 */

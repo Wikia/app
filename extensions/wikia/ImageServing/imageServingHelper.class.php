@@ -23,13 +23,18 @@ class ImageServingHelper{
 		return true;
 	}
 
+	/**
+	 * @static
+	 * @param $article
+	 * @param bool $ignoreEmpty
+	 * @return mixed
+	 */
 	public static function buildAndGetIndex($article, $ignoreEmpty = false ) {
 		if(!($article instanceof Article)) {
 			return;
 		}
 		wfProfileIn(__METHOD__);
-		global $wgHooks;
-		$startTime = Time();
+
 		$articleText = $article->getRawText();
 		$title = $article->getTitle();
 		$content = $article->getContent();
@@ -69,7 +74,7 @@ class ImageServingHelper{
 	 *  return boolean
 	 */
 
-	public static function replaceGallery( $parser, $ig) {
+	public static function replaceGallery( $parser, &$ig) {
 		global $wgEnableWikiaPhotoGalleryExt;
 
 		if ((!self::$hookOnOff) || empty($wgEnableWikiaPhotoGalleryExt)) {
@@ -138,7 +143,8 @@ class ImageServingHelper{
 			$db->delete( 'page_wikia_props',
 				array(
 					'page_id' =>  $articleId,
-					'propname' => "0")
+					'propname' => "0"),
+				__METHOD__
 			);
 			wfProfileOut(__METHOD__);
 			return true;
@@ -146,7 +152,8 @@ class ImageServingHelper{
 		$db->delete( 'page_wikia_props',
 			array(
 				'page_id' =>  $articleId,
-				'propname' => "imageOrder")
+				'propname' => "imageOrder"),
+			__METHOD__
 		);
 
 		$db->replace('page_wikia_props','',
@@ -154,7 +161,8 @@ class ImageServingHelper{
 				'page_id' =>  $articleId,
 				'propname' => "0",
 				'props' => serialize($images)
-			)
+			),
+			__METHOD__
 		);
 
 		$db->commit();

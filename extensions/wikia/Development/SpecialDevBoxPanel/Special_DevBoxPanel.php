@@ -55,13 +55,13 @@ require_once($IP . '/includes/SpecialPage.php');
 $wgSpecialPages['DevBoxPanel'] = 'DevBoxPanel';
 
 class DevBoxPanel extends SpecialPage {
-	public function DevBoxPanel(){
+	public function __construct(){
 		// macbre: don't run code below when running in command line mode (memcache starts to act strange) - NOTE: This macbre code was in a different spot... this may be fixed implicitly now.
 		if (!empty($wgCommandLineMode)) {
 			return true;
 		}
 
-		SpecialPage::SpecialPage('DevBoxPanel');
+		parent::__construct('DevBoxPanel');
 	}
 
 	/**
@@ -102,7 +102,7 @@ class DevBoxPanel extends SpecialPage {
 } // end class DevBoxPanel
 
 
-function devBoxPanelAdditionalScripts( &$out, &$sk ){
+function devBoxPanelAdditionalScripts( OutputPage &$out, &$sk ){
 	global $wgExtensionsPath;
 	$out->addStyle( "$wgExtensionsPath/wikia/Development/SpecialDevBoxPanel/DevBoxPanel.css" );
 	$out->addScript("<script type='text/javascript' src='$wgExtensionsPath/wikia/Development/SpecialDevBoxPanel/DevBoxPanel.js'></script>");
@@ -188,9 +188,8 @@ function wfDevBoxSeparateParserCache(&$hash) {
 
 
 /**
- * @return Parts of host. used to set $wgDevelEnvironmentName;
+ * @return array Parts of host. used to set $wgDevelEnvironmentName;
  */
-
 function getHostParts() {
 	if (!isset($_SERVER['HTTP_HOST'])) return null;
 	if (count (explode(".", $_SERVER['HTTP_HOST'])) == 3) return null;

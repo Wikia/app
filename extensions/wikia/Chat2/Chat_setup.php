@@ -146,15 +146,14 @@ define( 'CUC_TYPE_CHAT', 128);	// for CheckUser operation type
 
 $wgHooks['UserGetRights'][] = 'chatAjaxonUserGetRights';
 
-/*
- * Add read right to ChatAjax am reqest. 
- * That is solving problems with private wikis and chat (communitycouncil.wikia.com) 
+/**
+ * Add read right to ChatAjax am reqest.
+ * That is solving problems with private wikis and chat (communitycouncil.wikia.com)
  */
-
 function chatAjaxonUserGetRights( $user, &$aRights ) {
 	global $wgRequest;
 	if ( $wgRequest->getVal('action') === 'ajax' && $wgRequest->getVal('rs') === 'ChatAjax' ) {
-		$aRights[] = 'read';	
+		$aRights[] = 'read';
 	}
 	return true;
 }

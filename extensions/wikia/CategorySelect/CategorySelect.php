@@ -154,6 +154,7 @@ function CategorySelectInitializeHooks($output, $article, $title, $user, $reques
  * @author Maciej Błaszkowski <marooned at wikia-inc.com>
  */
 function CategorySelectSetupVars(Array &$vars) {
+	/* @var $wgParser Parser */
 	global $wgParser, $wgContLang;
 
 	$vars['csAddCategoryButtonText'] = wfMsg('categoryselect-addcategory-button');
@@ -385,21 +386,27 @@ function CategorySelectChangeFormat($categories, $from, $to) {
 /**
  * Add hidden field with category metadata
  *
+ * @param EditPage $editPage
+ * @param OutputPage $out
+ *
  * @author Maciej Błaszkowski <marooned at wikia-inc.com>
  */
-function CategorySelectAddFormFields($editPage, $wgOut) {
+function CategorySelectAddFormFields($editPage, $out) {
 	global $wgCategorySelectMetaData;
 	$categories = '';
 	if (!empty($wgCategorySelectMetaData)) {
 		$categories = htmlspecialchars(CategorySelectChangeFormat($wgCategorySelectMetaData['categories'], 'array', 'json'));
 	}
-	$wgOut->addHTML("<input type=\"hidden\" value=\"$categories\" name=\"wpCategorySelectWikitext\" id=\"wpCategorySelectWikitext\" />");
-	$wgOut->addHTML('<input type="hidden" value="wiki" id="wpCategorySelectSourceType" name="wpCategorySelectSourceType" />');
+	$out->addHTML("<input type=\"hidden\" value=\"$categories\" name=\"wpCategorySelectWikitext\" id=\"wpCategorySelectWikitext\" />");
+	$out->addHTML('<input type="hidden" value="wiki" id="wpCategorySelectSourceType" name="wpCategorySelectSourceType" />');
 	return true;
 }
 
 /**
  * Concatenate categories on EditPage POST
+ *
+ * @param EditPage $editPage
+ * @param WebRequest $request
  *
  * @author Maciej Błaszkowski <marooned at wikia-inc.com>
  * @author Lucas Garczewski <tor@wikia-inc.com>

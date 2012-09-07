@@ -96,7 +96,7 @@ class InterwikiDispatcher extends UnlistedSpecialPage {
 		return WikiFactory::getVarValueByName('wgServer', $iCityId);
 	}
 
-	public static function getInterWikiaURL(&$title, &$url, $query) {
+	public static function getInterWikiaURL(Title &$title, &$url, $query) {
 		global $wgArticlePath, $wgScriptPath;
 
 		if (in_array($title->mInterwiki, array('w', 'wikia', 'wikicities'))) {

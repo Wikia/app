@@ -17,7 +17,7 @@ $wgExtensionCredits['other'][] = array(
  * @param $module Module instance
  * @param $context Resource Loader context
  * @param $userpage User page title text
- * @param $pages Pages array to operate on
+ * @param $pages array array to operate on
  * @return bool True (hook handler)
  */
 function wfGlobalWikiaCSSJS( $module, $context, $userpage, &$pages ) {

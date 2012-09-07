@@ -13,7 +13,7 @@ class CorporatePageHelper{
 	* Hook for clear parsed message cache
 	*/
 	static function clearMessageCache(&$article){
-		global $wgMemc, $wgContLang;
+		global $wgMemc;
 
 		if ( $article->getTitle()->getNamespace() != NS_MEDIAWIKI ) {
 			return true;
@@ -269,15 +269,15 @@ class CorporatePageHelper{
 		return true;
 	}
 
-	/*
+	/**
 	 * ArticleFromTitle
 	 *
 	 * hook handler for redirecting pages from old central to new community wiki
 	 *
 	 * @author Marooned
 	 */
-	static function ArticleFromTitle(&$title, &$article) {
-		global $wgRequest,$wgTitle, $wgCorporatePageRedirectWiki;
+	static function ArticleFromTitle(Title &$title, &$article) {
+		global $wgRequest, $wgCorporatePageRedirectWiki;
 		//do not redirect for action different than view (allow creating, deleting, etc)
 		if ($wgRequest->getVal('action', 'view') != 'view') {
 			return true;
@@ -346,7 +346,7 @@ class CorporatePageHelper{
 	/**
  	 * Get hot blog post for a given hub
 	 *
-	 * @param string hub name to get blog post for
+	 * @param string $hubName hub name to get blog post for
 	 * @return mixed blog post data or false when there's no blog post chosen
 	 * this method is not yet implemented
  	 */

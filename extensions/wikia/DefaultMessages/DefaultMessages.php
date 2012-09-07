@@ -34,4 +34,3 @@ function efGetDefaultMessage( $lckey, $lang, &$message, $useDB ) {
 	}
 	return true;
 }
-

@@ -9,6 +9,8 @@ class FounderProgressBarHooks {
 
 	/**
 	 * @desc Counts actions involve adding or editing articles
+	 *
+	 * @param Article $article
 	 */
 	function onArticleSaveComplete (&$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
 

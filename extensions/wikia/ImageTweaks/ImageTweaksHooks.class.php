@@ -105,7 +105,7 @@ class ImageTweaksHooks extends WikiaObject {
 		return true;
 	}
 
-	public function onThumbnailImageHTML( $options, $linkAttribs, $imageAttribs, $file, &$html ){
+	public function onThumbnailImageHTML( $options, $linkAttribs, $imageAttribs, File $file, &$html ){
 		$this->wf->profileIn( __METHOD__ );
 
 
@@ -231,7 +231,7 @@ class ImageTweaksHooks extends WikiaObject {
 		return true;
 	}
 
-	public function onThumbnailVideoHTML( $options, $linkAttribs, $imageAttribs, $file, &$html ){
+	public function onThumbnailVideoHTML( $options, $linkAttribs, $imageAttribs, File $file, &$html ){
 		$this->wf->profileIn( __METHOD__ );
 
 		if ( self::$isWikiaMobile ) {

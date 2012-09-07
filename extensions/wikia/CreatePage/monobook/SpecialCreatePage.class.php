@@ -107,12 +107,16 @@ class SpecialCreatePage extends SpecialEditPage {
 	}
 
 	// invoked from hook 'EditPage::showEditForm:beforeToolbar' when Captcha fires up [RT#21902] - Marooned
-	public function renderFormHeaderWrapper( $editPage, $wgOut ) {
-		$this->renderFormHeader( $wgOut );
+	public function renderFormHeaderWrapper( $editPage, $out ) {
+		$this->renderFormHeader( $out );
 		return true;
 	}
 
-	// print extra field for 'title'
+	/**
+	 * Print extra field for 'title'
+	 *
+	 * @param OutputPage $wgOut
+	 */
 	public function renderFormHeader( $wgOut ) {
 		global $wgRequest;
 
@@ -179,10 +183,19 @@ class SpecialCreatePage extends SpecialEditPage {
 		}
 	}
 
-	// handle ConfirmEdit captcha, only for CreatePage, which will be treated a bit differently (edits in special page)
-	// this function is based on Bartek's solution for CreateAPage done in t:r6990 [RT#21902] - Marooned
+	/**
+	 * handle ConfirmEdit captcha, only for CreatePage, which will be treated a bit differently (edits in special page)
+	 * this function is based on Bartek's solution for CreateAPage done in t:r6990 [RT#21902] - Marooned
+	 * @param SimpleCaptcha $captcha
+	 * @param $editPage
+	 * @param $newtext
+	 * @param $section
+	 * @param $merged
+	 * @param $result
+	 * @return bool
+	 */
 	public function wfCreatePageOnConfirmEdit( &$captcha, &$editPage, $newtext, $section, $merged, &$result ) {
-		global $wgTitle, $wgCreatePageCoverRedLinks, $wgOut, $wgRequest;
+		global $wgTitle;
 		$canonspname = array_shift(SpecialPageFactory::resolveAlias( $wgTitle->getDBkey() ));
 		if ( $canonspname != 'CreatePage' ) {
 			return true;
