@@ -80,7 +80,7 @@ class ScavengerHuntGame {
 	}
 
 	public function resetLandingParams( $landingTitle ) {
-		$aExplodedURL = F::build( 'GlobalTitle', array( $landingTitle ), 'explodeURL' );
+		$aExplodedURL = (array) F::build( 'GlobalTitle', array( $landingTitle ), 'explodeURL' );
 		$this->landingArticleWikiId = $aExplodedURL['wikiId'];
 		$this->landingArticleName = $aExplodedURL['articleName'];
 	}

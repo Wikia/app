@@ -39,6 +39,11 @@ class LandingPagesParser {
 		return true;
 	}
 
+	/**
+	 * @param Title $title
+	 * @param WikiPage $article
+	 * @return bool
+	 */
 	public function onArticleFromTitle( Title &$title, &$article ) {
 		if( $title->exists() &&  $title->getNamespace() !=  NS_FILE && $title->getNamespace() !=  NS_CATEGORY ){
 			$key = $this->generateCacheKey( $title->getArticleId() );
@@ -62,12 +67,31 @@ class LandingPagesParser {
 		return true;
 	}
 
+	/**
+	 * @param WikiPage $article
+	 * @return bool
+	 */
 	public function onArticlePurge( &$article ) {
 		$this->purgeCache( $article->getID() );
 
 		return true;
 	}
 
+	/**
+	 * @param WikiPage $article
+	 * @param $user
+	 * @param $text
+	 * @param $summary
+	 * @param $minoredit
+	 * @param $watchthis
+	 * @param $sectionanchor
+	 * @param $flags
+	 * @param $revision
+	 * @param $status
+	 * @param $baseRevId
+	 * @param null $redirect
+	 * @return bool
+	 */
 	public function onArticleSaveComplete( &$article, &$user, $text, $summary,
 		$minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status,
 		$baseRevId, &$redirect = null ) {
