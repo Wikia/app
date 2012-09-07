@@ -65,6 +65,12 @@ function wfAutoPageCreateSetupVars( Array &$vars ) {
 	return true;
 }
 
+/**
+ * @param Article $article
+ * @param OutputPage $out
+ * @param string $text
+ * @return bool
+ */
 function wfAutoPageCreateViewPage( $article, $out, &$text  ) {
 	wfProfileIn(__METHOD__);
 
@@ -82,7 +88,6 @@ function wfAutoPageCreateViewPage( $article, $out, &$text  ) {
 		case NS_MEDIAWIKI:
 		// BugId:15387 - Let's skip user pages too.
 		case NS_USER:
-			$retval = false;
 		case NS_CATEGORY:
 		case NS_HELP:
 			$text = "<div class=\"noarticletext\">\n$text\n</div>";
@@ -90,7 +95,6 @@ function wfAutoPageCreateViewPage( $article, $out, &$text  ) {
 			break;
 
 		default:
-
 			$text = $title->isContentPage() ? wfMsgForContent( "newpagelayout" ) : '';
 			$overlayMsgKey = "autopagecreate-newpage-notice-other";
 

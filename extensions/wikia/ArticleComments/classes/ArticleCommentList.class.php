@@ -594,7 +594,7 @@ class ArticleCommentList {
 	 * @static
 	 * @access public
 	 *
-	 * @return true -- because it's a hook
+	 * @return boolean -- because it's a hook
 	 */
 	static public function articleDeleteComplete( &$article, &$user, $reason, $id ) {
 		global $wgOut, $wgRC2UDPEnabled, $wgMaxCommentsToDelete, $wgCityId, $wgUser, $wgEnableMultiDeleteExt;
@@ -661,9 +661,10 @@ class ArticleCommentList {
 					'admin'		=> $wgUser->getName()
 				);
 
-				foreach (self::$mArticlesToDelete as $page_id => $oComment) {
+				foreach (self::$mArticlesToDelete as $oComment) {
 					$oCommentTitle = $oComment->getTitle();
 					if ( $oCommentTitle instanceof Title ) {
+						/* @var $oCommentTitle Title */
 						$data = $taskParams;
 						$data['page'] = $oCommentTitle->getFullText();
 						$thisTask = new MultiDeleteTask( $data );
@@ -688,7 +689,7 @@ class ArticleCommentList {
 	 * @static
 	 * @access public
 	 *
-	 * @return true -- because it's a hook
+	 * @return boolean -- because it's a hook
 	 */
 	static public function undeleteComments( &$oTitle, $revision, $old_page_id ) {
 		global $wgRC2UDPEnabled;
@@ -725,22 +726,23 @@ class ArticleCommentList {
 	 *
 	 * @desc Changes $secureName in MW ChangesList.php #L815 so Article Comments and extensions which are based on AC (as long as those extensions doesn't have their own hook)
 	 *
-	 * @param ChangeList $oChangeList -- instance of ChangeList class
+	 * @param ChangesList $oChangeList -- instance of ChangeList class
 	 * @param String $currentName    -- current value of RC key
 	 * @param RCCacheEntry $oRCCacheEntry  -- instance of RCCacheEntry class
 	 *
 	 * @static
 	 * @access public
 	 *
-	 * @return true -- because it's a hook
+	 * @return boolean -- because it's a hook
 	 */
 	static public function makeChangesListKey( $oChangeList, &$currentName, $oRCCacheEntry ) {
-		global $wgEnableGroupedArticleCommentsRC, $wgEnableBlogArticles;
-		wfProfileIn( __METHOD__ );
+		global $wgEnableGroupedArticleCommentsRC;
 
 		if ( empty($wgEnableGroupedArticleCommentsRC) ) {
 			return true;
 		}
+
+		wfProfileIn( __METHOD__ );
 
 		$oTitle = $oRCCacheEntry->getTitle();
 		$namespace = $oTitle->getNamespace();
@@ -759,7 +761,7 @@ class ArticleCommentList {
 	/**
 	 * Hook
 	 *
-	 * @param ChangeList $oChangeList -- instance of ChangeList class
+	 * @param ChangesList $oChangeList -- instance of ChangeList class
 	 * @param String $header    -- current value of RC key
 	 * @param Array of RCCacheEntry $oRCCacheEntryArray  -- array of instance of RCCacheEntry classes
 	 * @param boolean $changeRecentChangesHeader a flag saying Wikia's hook if we want to change header or not
@@ -837,6 +839,9 @@ class ArticleCommentList {
 	/**
 	 * static entry point for hook
 	 *
+	 * @param Title $title
+	 * @param Article $article
+	 *
 	 * @static
 	 * @access public
 	 */
@@ -859,7 +864,7 @@ class ArticleCommentList {
 
 					if ( $permalink || $commentId !== 0 ) {
 						if( $commentId !== 0 ) {
-						/** bugId:11179 @author: nAndy */
+							/** bugId:11179 @author: nAndy */
 							$permalink = $commentId;
 						}
 
@@ -969,7 +974,7 @@ class ArticleCommentList {
 	 *
 	 * @return true -- because it's hook
 	 */
-	static public function undeleteComplete($oTitle, $oUser, $reason) {
+	static public function undeleteComplete($oTitle, $oUser, &$reason) {
 		wfProfileIn( __METHOD__ );
 		if ($oTitle instanceof Title) {
 			if ( in_array($oTitle->getNamespace(), array(NS_BLOG_ARTICLE, NS_BLOG_ARTICLE_TALK)) ) {

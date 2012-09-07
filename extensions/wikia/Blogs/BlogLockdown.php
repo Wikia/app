@@ -23,6 +23,14 @@ $wgHooks['userCan'][] = 'BlogLockdown::userCan';
 
 class BlogLockdown {
 
+	/**
+	 * @static
+	 * @param Title $title
+	 * @param User $user
+	 * @param $action
+	 * @param $result
+	 * @return bool
+	 */
 	public static function userCan( $title, $user, $action, &$result ) {
 
 		$namespace = $title->getNamespace();
