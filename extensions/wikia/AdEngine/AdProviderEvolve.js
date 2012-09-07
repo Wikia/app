@@ -23,10 +23,10 @@ window.AdProviderEvolve = window.AdProviderEvolve || (function (WikiaTracker, lo
 	var ord = Math.round(Math.random() * 23456787654);
 	var slotMap = {
 		'HOME_TOP_LEADERBOARD':{'tile':1, 'size':'728x90', 'dcopt':'ist'},
-		'HOME_TOP_RIGHT_BOXAD':{'tile':2, 'size':'300x250'},
+		'HOME_TOP_RIGHT_BOXAD':{'tile':2, 'size':'300x250,300x600'},
 		'LEFT_SKYSCRAPER_2':{'tile':3, 'size':'160x600'},
 		'TOP_LEADERBOARD':{'tile':1, 'size':'728x90', 'dcopt':'ist'},
-		'TOP_RIGHT_BOXAD':{'tile':2, 'size':'300x250'}
+		'TOP_RIGHT_BOXAD':{'tile':2, 'size':'300x250,300x600'}
 	};
 
 	// adapted for Evolve + simplified copy of AdConfig.DART.getUrl
@@ -34,16 +34,17 @@ window.AdProviderEvolve = window.AdProviderEvolve || (function (WikiaTracker, lo
 		log('getUrl', 5, 'AdProviderEvolve');
 		log([slotname, size], 5, 'AdProviderEvolve');
 
+		var sect = getSect();
 		var url = 'http://' +
 			'n4403ad' +
 			'.doubleclick.net/' +
 			'adj' + '/' +
 			'gn.wikia4.com' + '/' +
-			'home;' + // (window.wikiaPageType ? window.wikiaPageType : 'article') + ';' +
-			'sect=' + 'home' + ';' +
+			 sect + ';' +
+			'sect=' + sect + ';' +
 			'mtfInline=true;' +
 			'pos=' + slotname + ';' +
-			'sz=' + size + ';' +
+			'sz=' + slotMap[slotname].size + ';' +
 			(slotMap[slotname].dcopt ? 'dcopt=' + slotMap[slotname].dcopt + ';' : '') +
 			'type=pop;type=int;' + // TODO remove?
 			'tile=' + slotMap[slotname].tile + ';' +
@@ -51,6 +52,29 @@ window.AdProviderEvolve = window.AdProviderEvolve || (function (WikiaTracker, lo
 
 		log(url, 7, 'AdProviderEvolve');
 		return url;
+	}
+
+	function getSect() {
+		log('getSect', 5, 'AdProviderEvolve');
+
+		var sect;
+		// TODO criteria...
+		if (true) {
+			sect = 'home';
+		} else if (false) {
+			sect = 'entertainment';
+		} else if (false) {
+			sect = 'gaming';
+		} else if (false) {
+			sect = 'movies';
+		} else if (false) {
+			sect = 'tv';
+		} else {
+			sect = 'ros';
+		}
+
+		log(sect, 7, 'AdProviderEvolve');
+		return sect;
 	}
 
 	// adapted for Evolve + simplified copy of AdDriverDelayedLoader.callLiftium
