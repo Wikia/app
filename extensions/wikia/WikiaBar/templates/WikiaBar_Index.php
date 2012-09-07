@@ -19,3 +19,6 @@
 			</a>
 	</div>
 </div>
+<div class="WikiaBarCollapseWrapper hidden">
+	<a href="#" class="wikia-bar-collapse"></a>
+</div>
