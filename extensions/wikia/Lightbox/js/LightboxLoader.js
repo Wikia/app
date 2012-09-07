@@ -15,6 +15,7 @@ var LightboxLoader = {
 	inlineVideoLinks: $(),	// jquery array of inline video links
 	lightboxLoading: false,
 	inlineVideoTrackingTimeout: 0,
+	inlineVideoLoading: [],
 	pageAds: $('#TOP_RIGHT_BOXAD'), // if more ads start showing up over lightbox, add them here
 	defaults: {
 		// start with default modal options
@@ -246,6 +247,11 @@ var LightboxLoader = {
 
 	},
 	displayInlineVideo: function(target, targetChildImg, mediaTitle) {
+		if($.inArray(mediaTitle, LightboxLoader.inlineVideoLoading) > -1) {
+			return;
+		}
+		LightboxLoader.inlineVideoLoading.push(mediaTitle);
+		
 		LightboxLoader.getMediaDetail({
 			fileTitle: mediaTitle,
 			height: targetChildImg.height(),
@@ -268,6 +274,7 @@ var LightboxLoader = {
 				LightboxLoader.track(WikiaTracker.ACTIONS.VIEW, 'video-inline', null, {title:json.fileTitle, provider: json.providerName});
 			}, 5000);
 
+			LightboxLoader.inlineVideoLoading.splice($.inArray(mediaTitle, LightboxLoader.inlineVideoLoading), 1)
 		});
 	},
 	removeInlineVideos: function() {
