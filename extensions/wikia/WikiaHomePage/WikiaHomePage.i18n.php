@@ -82,34 +82,34 @@ $messages['en'] = array(
 *[http://www.wikia.com/Special:Contact Contact Wikia]
 *[http://www.wikia.com/Careers Careers]
 *[http://www.wikia.com/Press Press]
-__NOEDITSCTION__',
+__NOEDITSECTION__',
 	'wikiahome-footer-get-started-heading' => '===Get Started===
-__NOEDITSCTION__',
+__NOEDITSECTION__',
 	'wikiahome-footer-get-started-creative' => 'Find your community,<br />start something epic.',
 	'wikiahome-footer-get-started-button' => 'http://www.wikia.com/Special:CreateNewWiki', // FIXME: why is this in a message?!
 	'wikiahome-footer-follow-us' => '===Follow Us===
 *[http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog Wikia Blog]
 *[http://www.facebook.com/Wikia Facebook]
 *[http://www.twitter.com/Wikia Twitter]
-__NOEDITSCTION__',
+__NOEDITSECTION__',
 	'wikiahome-footer-community' => '===Community===
 *[http://www.community.wikia.com Community Central]
 *[http://community.wikia.com/wiki/Admin_Central:Main_Page Founders & Admins]
 *[http://www.wikia.com/Special:Contact Contact Support]
 *[http://help.wikia.com/wiki/Help:Contents Help]
-__NOEDITSCTION__',
+__NOEDITSECTION__',
 	'wikiahome-footer-everywhere' => '===Wikia Everywhere===
 *[http://www.wikia.com/Mobile Wikia Mobile]
 *[http://www.wikia.com/Mobile/GameGuides Video Game Apps]
 *[http://www.wikia.com/Mobile/PhotoPop Entertainment Apps]
 *[http://api.wikia.com/wiki/Wikia_API_Wiki API]
-__NOEDITSCTION__',
+__NOEDITSECTION__',
 	'wikiahome-footer-advertise' => '===[http://www.mediakit.wikia.com/ Advertise]===
 *[http://mediakit.wikia.com/Solutions/Audience Audience]
 *[http://mediakit.wikia.com/Solutions Solutions]
 *[http://mediakit.wikia.com/Advertising-Products Ad products]
 *[https://wikia.sl.advertising.com/admin/advertisers/indexPl.jsp Self Service]
-__NOEDITSCTION__',
+__NOEDITSECTION__',
 
 	'wikia-home-page-hot' => 'Hot',
 	'wikia-home-page-new' => 'New',
