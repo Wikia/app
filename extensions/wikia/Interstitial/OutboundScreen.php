@@ -39,8 +39,8 @@ $wgOutboundScreenConfig = array(
 /**
  * This function makes all of the outbound links in the page re-written to go through Special:Outbound.
  */
-function efOutboundScreen ( $url, $text, $link, $attribs, $linktype ) {
-	global $wgCityId, $wgUser, $wgOutboundScreenConfig, $wgOut, $wgTitle;
+function efOutboundScreen ( $url, $text, &$link, $attribs, $linktype ) {
+	global $wgCityId, $wgUser, $wgOutboundScreenConfig, $wgTitle;
 	static $whiteList;
 
 	// skip logic when in FCK
@@ -86,7 +86,7 @@ function efOutboundScreen ( $url, $text, $link, $attribs, $linktype ) {
 		}
 
 		// Devboxes run on different domains than just what is in WikiFactory.
-		global $wgDevelEnvironment, $wgServer;
+		global $wgDevelEnvironment;
 		if($wgDevelEnvironment){
 			array_unshift($whiteList, empty($_SERVER['SERVER_NAME']) ? "":$_SERVER['SERVER_NAME'] );
 		}

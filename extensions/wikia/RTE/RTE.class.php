@@ -735,7 +735,7 @@ HTML
 	/**
 	 * Modify values returned by User::getOption() when wysiwyg is enabled
 	 */
-	static public function userGetOption($options, $name, $value) {
+	static public function userGetOption($options, $name, &$value) {
 		wfProfileIn(__METHOD__);
 
 		// do not continue if user didn't turn on wysiwyg in preferences

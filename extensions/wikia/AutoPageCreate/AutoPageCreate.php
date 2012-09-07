@@ -22,7 +22,7 @@ function wfAutoPageCreateInit() {
 	$wgOut->addExtensionStyle( "$wgExtensionsPath/wikia/AutoPageCreate/AutoPageCreate.css" );
 }
 
-function wfAutoPageCreateTextForImagePlaceholder( $title, $text ) {
+function wfAutoPageCreateTextForImagePlaceholder( Title $title, &$text ) {
 	// this was for RT#45568 - Bartek
 	// basic idea is to load the template for ImagePlaceholder to work when the article does not yet exist
 	// but on view, not on article edit (on preview the placeholder is blocked by default)
