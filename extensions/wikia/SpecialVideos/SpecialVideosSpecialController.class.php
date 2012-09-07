@@ -47,10 +47,7 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 		$specialVideos = F::build( 'SpecialVideosHelper' );
 		$videos = $specialVideos->getVideos( $sort );
 
-		// add fake default video
-		$videos[] = array();
-
-		$totalVideos = count( $videos );
+		$totalVideos = count( $videos ) + 1; // plus one for 'add video' placeholder
 
 		$sortingOptions = array_merge( $specialVideos->getSortingOptions(), $specialVideos->getFilterOptions() );
 
@@ -58,17 +55,15 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 		$pagination = '';
 		$linkToSpecialPage = SpecialPage::getTitleFor("Videos")->escapeLocalUrl();
 		if( $totalVideos > SpecialVideosHelper::VIDEOS_PER_PAGE ) {
-			$pages = Paginator::newFromArray( $videos, SpecialVideosHelper::VIDEOS_PER_PAGE );
-			$videos = $pages->getPage( $page, true);
+			$pages = Paginator::newFromArray( array_fill( 0, $totalVideos, '' ), SpecialVideosHelper::VIDEOS_PER_PAGE );
+			$pages->setActivePage( $page - 1 );
+
 			$pagination = $pages->getBarHTML( $linkToSpecialPage.'?page=%s&sort='.$sort );
+			// check if we're on the last page
 			if ( $page < $pages->getPagesCount() ) {
+				// we're not so don't show the add video placeholder
 				$addVideo = 0;
 			}
-		}
-
-		// remove fake default video
-		if ( !empty($addVideo) ) {
-			array_pop( $videos );
 		}
 
 		foreach ( $videos as &$video ) {
