@@ -28,6 +28,8 @@ class RTE {
 
 	/**
 	 * Perform "reverse" parsing of HTML to wikitext when saving / doing preview from wysiwyg mode
+	 *
+	 * @param EditPage $form
 	 */
 	public static function reverse($form,  $out = null) {
 		global $wgRequest;
@@ -115,7 +117,7 @@ class RTE {
 	 * @author Inez KorczyDski, Macbre
 	 */
 	public static function init(&$form) {
-		global $wgOut, $wgJsMimeType, $wgExtensionsPath, $wgHooks, $wgAllInOne, $wgRequest;
+		global $wgOut, $wgHooks, $wgAllInOne, $wgRequest;
 
 		wfProfileIn(__METHOD__);
 
@@ -169,7 +171,7 @@ class RTE {
 	/**
 	 * Parse wikitext of edited article, so CK can be provided with HTML
 	 */
-	public static function init2(&$form, &$out) {
+	public static function init2(&$form, OutputPage &$out) {
 		wfProfileIn(__METHOD__);
 
 		// add hidden edit form field
@@ -339,7 +341,7 @@ HTML
 	/**
 	 * Add fields to perform temporary save
 	 */
-	private static function addTemporarySaveFields($out) {
+	private static function addTemporarySaveFields(OutputPage $out) {
 		$out->addHtml(
 			"\n".
 			Xml::element('input', array('type' => 'hidden', 'id' => 'RTETemporarySaveType', 'name' => 'RTETemporarySaveType')).
@@ -499,7 +501,7 @@ HTML
 	 * Parse given wikitext to HTML for CK
 	 */
 	public static function WikitextToHtml($wikitext) {
-		global $wgTitle, $wgParser;
+		global $wgTitle;
 
 		wfProfileIn(__METHOD__);
 
@@ -614,7 +616,7 @@ HTML
 		return $ret;
 	}
 
-	/*
+	/**
 	 * Return list of templates to be placed in dropdown menu on CK toolbar
 	 * (moved to TemplateService)
 	 */
@@ -622,7 +624,7 @@ HTML
 		return TemplateService::getPromotedTemplates();
 	}
 
-	/*
+	/**
 	 * Return list of magic words ({{PAGENAME}}) and double underscores (__TOC__)
 	 */
 	public static function getMagicWords() {
@@ -673,6 +675,7 @@ HTML
 	 * Get messages to be used in JS code
 	 */
 	static private function getMessages() {
+		/* @var $wgLang Language */
 		global $wgLang;
 
 		wfProfileIn(__METHOD__);
@@ -824,7 +827,6 @@ HTML
 		}
 		else if ( preg_match( "|AppleWebKit/(\d+)|i", $sAgent, $matches ) )
 		{
-			$iVersion = $matches[1] ;
 			$ret = ( $matches[1] >= 522 ) ;
 		}
 
