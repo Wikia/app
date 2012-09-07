@@ -34,6 +34,9 @@ window.WikiaTracker = (function(){
 		// Generic paginate
 		PAGINATE: 'paginate',
 
+		// Sharing view email, social network, etc
+		SHARE: 'share',
+
 		// Form submit, usually a post method
 		SUBMIT: 'submit',
 
@@ -41,10 +44,7 @@ window.WikiaTracker = (function(){
 		TAKE_SURVEY: 'take-survey',
 
 		// View
-		VIEW: 'view',
-		
-		// Sharing view email, social network, etc
-		SHARE: 'share'
+		VIEW: 'view'
 	},
 	mainEventName = "trackingevent",
 	actionsReverse = {};
@@ -81,8 +81,10 @@ window.WikiaTracker = (function(){
 
 		// If clicking a link that will unload the page before tracking can happen,
 		// let's stop the default event and delay 100ms changing location (at the bottom)
-		if(data && data.href)
+		// FIXME: this doesn't work in Firefox (there is no global event object there).
+		if (data && data.href && typeof event != 'undefined') {
 			event.preventDefault();
+		}
 
 		var ga_category = data['ga_category'],
 			ga_action = data['ga_action'],
@@ -130,7 +132,7 @@ window.WikiaTracker = (function(){
 		}
 
 		//delay at the end to make sure all of the above was at least invoked
-		if(data && data.href){
+		if (data && data.href) {
 			setTimeout(function() {
 				document.location = data.href;
 			}, 100);
