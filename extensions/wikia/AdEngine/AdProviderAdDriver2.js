@@ -1,9 +1,7 @@
-var AdProviderAdDriver2 = my.Class(AdProviderAdEngine2, {
-	// core stuff, should be overwritten
-	name:'AdProviderAdDriver2',
-
-	fillInSlot:function (slot) {
-		this.log('fillInSlot', 5, slot);
+window.AdProviderAdDriver2 = window.AdProviderAdDriver2 || (function (log, window) {
+	function fillInSlot(slot) {
+		log('fillInSlot', 5, 'AdProviderAdDriver2');
+		log(slot, 5, 'AdProviderAdDriver2');
 
 		if(!window.adslots) {
 			window.adslots = [];
@@ -11,12 +9,11 @@ var AdProviderAdDriver2 = my.Class(AdProviderAdEngine2, {
 		window.adslots.push([slot[0], slot[1], 'DART', slot[3]]);
 		if (window.wgLoadAdDriverOnLiftiumInit || true /*(window.getTreatmentGroup && (getTreatmentGroup(EXP_AD_LOAD_TIMING) == TG_AS_WRAPPERS_ARE_RENDERED))*/) {
 			if (window.adDriverCanInit) {
-				AdDriverDelayedLoader.prepareSlots(AdDriverDelayedLoader.highLoadPriorityFloor);
+				window.AdDriverDelayedLoader.prepareSlots(window.AdDriverDelayedLoader.highLoadPriorityFloor);
 			}
 		}
 	}
 
-	// private stuff
-});
+	return {fillInSlot:fillInSlot};
 
-var adProviderAdDriver2 = new AdProviderAdDriver2;
+})(Wikia.log, window);

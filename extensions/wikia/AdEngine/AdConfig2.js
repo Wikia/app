@@ -18,7 +18,7 @@ window.AdConfig2 = window.AdConfig2 || (function (log, Wikia, window) {
 			return 'GamePro';
 		}
 
-		if (isSlotEvolve(slot[0], this.getCountry())) {
+		if (isSlotEvolve(slot[0], getCountry())) {
 			return 'Evolve';
 		}
 
