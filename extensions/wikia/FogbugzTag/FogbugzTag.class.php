@@ -2,9 +2,9 @@
 
 /*
  * @author: Piotr Pawlowski
- * 
+ *
  * This class uses some functionality of FogbugzService class and provides usage
- * of special tags: <fogbugz_tck id="ticket_id"></fogbugz_tck> 
+ * of special tags: <fogbugz_tck id="ticket_id"></fogbugz_tck>
  * Putting these tags in article will result in loading info about particular fogbugz case
  * and all it's subcases.
  * TO DO: add possibility of showing comments for each of displayed cases and hide them.
@@ -19,7 +19,6 @@ class FogbugzTag {
 	//private static $frame;
 
 	public function onFogbugzTagInit(Parser $parser) {
-		//$this->frame = new PPFrame();
 		$parser->setHook('fogbugz_tck', 'FogbugzTag::renderTag');
 		return true;
 	}

@@ -15,7 +15,7 @@ $wgExtensionCredits['other'][] = array(
 
 $wgHooks['getUserPermissionsErrors'][] = 'fnForumIndexProtector';
 
-function fnForumIndexProtector( &$title, &$user, $action, &$result) {
+function fnForumIndexProtector( Title &$title, User &$user, $action, &$result) {
 
 	if( $user->isLoggedIn() ) {
 		#this doesnt apply to logged in users, bail, but keep going
@@ -26,25 +26,23 @@ function fnForumIndexProtector( &$title, &$user, $action, &$result) {
 		#only kill editing actions (what else can anons even do?), bail, but keep going
 		return true;
 	}
-	
+
 	#this only applies to Forum:Index and Forum_talk:Index
-	
+
 	#check pagename
 	if( $title->getText() != 'Index' ) {
 		#wrong pagename, bail, but keep going
 		return true;
 	}
-	
+
 	$ns = $title->getNamespace();
-	
+
 	#check namespace(s)
-	# TODO: find out if we ever define a NS_FORUM anywhere that we can use?
-	if($ns == 110 || $ns == 111 )
-	{
+	if($ns == NS_FORUM || $ns == NS_FORUM_TALK ) {
 		#bingo bango, its a match!
 		$result = array('protectedpagetext');
 		Wikia::log(__METHOD__, __LINE__, "anon trying to edit forum:index, killing request");
-		
+
 		#bail, and stop the request
 		return false;
 	}

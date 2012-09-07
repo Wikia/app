@@ -36,7 +36,7 @@ $wgHooks['ParserBeforeStrip'][] = 'ImagePlaceholderParserBeforeStrip';
 $wgHooks['BeforeParserMakeImageLinkObjOptions'][] = 'ImagePlaceholderBeforeParserMakeImageLinkObjOptions';
 $wgHooks['ParserShouldAddTrackingCategory'][] = 'ImagePlaceholderParserShouldAddTrackingCategory';
 
-function ImagePlaceholderFetchTemplateAndTitle( $text, $finalTitle ) {
+function ImagePlaceholderFetchTemplateAndTitle( &$text, &$finalTitle ) {
         global $wgContLang, $wgWikiaImagesFoundInTemplates;
         $img_tag = $wgContLang->getFormattedNsText( NS_FILE ) . ':' . wfMsg( 'imgplc-placeholder' );
 
@@ -64,7 +64,7 @@ function ImagePlaceholderTranslateNsImage() {
 	}
 }
 
-function ImagePlaceholderParserShouldAddTrackingCategory( Parser $parser, Title $title, $file, $shouldAddTrackingCategory ) {
+function ImagePlaceholderParserShouldAddTrackingCategory( Parser $parser, Title $title, $file, &$shouldAddTrackingCategory ) {
 
 	if( ImagePlaceholderIsPlaceholder( $title->getText() ) ){
 		$shouldAddTrackingCategory = false;
@@ -74,7 +74,7 @@ function ImagePlaceholderParserShouldAddTrackingCategory( Parser $parser, Title 
 
 // this function is to bypass the default MW parameter handling, because it assumes we have an actual file on the way
 // it passes $params array by reference to be used later
-function ImagePlaceholderBeforeParserMakeImageLinkObjOptions( Parser $parser, Title $title, $parts, $params, $time, $descQuery, $options ) {
+function ImagePlaceholderBeforeParserMakeImageLinkObjOptions( Parser $parser, Title $title, $parts, &$params, $time, $descQuery, $options ) {
 	// we have to ready the parameters and then fire up makeLink, heh
 	// other way parameters are mangled
 
@@ -127,11 +127,11 @@ function ImagePlaceholderParserBeforeStrip($parser, $text, $strip_state) {
 }
 
 // function that calls our custom placeholder maker and bypasses default MW image construction functionality
-function ImagePlaceholderImageBeforeProduceHTML( $skin, $title, $file, $frameParams, $handlerParams, $time, $res ) {
-        if( ImagePlaceholderIsPlaceholder( $title->getText() ) ) {
-                $res = ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams );
-                return false;
-        }
+function ImagePlaceholderImageBeforeProduceHTML( $skin, Title $title, $file, $frameParams, $handlerParams, $time, &$res ) {
+	if( ImagePlaceholderIsPlaceholder( $title->getText() ) ) {
+		$res = ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams );
+		return false;
+	}
 	return true;
 }
 
@@ -310,8 +310,7 @@ function ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams ) 
 	}
 
 	wfProfileOut(__METHOD__);
-
-        return $out;
+	return $out;
 }
 
 // check if this is or not a placeholder

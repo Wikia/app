@@ -10,7 +10,7 @@
 //Avoid unstubbing $wgParser on setHook() too early on modern (1.12+) MW versions, as per r35980
 $wgHooks['ParserFirstCallInit'][] = 'efHideTagsSetup';
 
-function efHideTagsSetup(&$parser) {
+function efHideTagsSetup(Parser $parser) {
 	$parser->setHook( 'vote', 'efHideTags' );
 	$parser->setHook( 'comments', 'efHideTags' );
 	$parser->setHook( 'rhtml', 'efHideTags' );

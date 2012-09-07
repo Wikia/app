@@ -23,7 +23,7 @@ $wgExtensionCredits['parserhook'][] = array(
 	'author' => "[http://www.wikia.com/wiki/User:TOR Lucas 'TOR' Garczewski]"
 );
 
-function wfGoogleDocs( $parser ) {
+function wfGoogleDocs( Parser $parser ) {
 	$parser->setHook( "googlespreadsheet", "renderGoogleSpreadsheet" );
 	return true;
 }

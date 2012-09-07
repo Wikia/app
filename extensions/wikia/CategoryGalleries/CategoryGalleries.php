@@ -30,7 +30,6 @@ $wgExtensionMessagesFiles['CategoryGalleries'] = $dir . '/CategoryGalleries.i18n
 
 // Set up hooks for embedding gallery into category page
 $wgHooks['CategoryPageView'][] = 'CategoryGalleriesHelper::onCategoryPageView';
-$wgHooks['CategoryViewer::addPage'][] = 'CategoryGalleriesHelper::onCategoryViewerAddPage';
 $wgHooks['CategoryPage::getCategoryTop'][] = 'CategoryGalleriesHelper::onCategoryPageGetCategoryTop';
 $wgHooks['CategoryService::invalidateTopArticles'][] = 'CategoryGalleriesHelper::onCategoryServiceInvalidateTopArticles';
 $wgHooks['ArticlePurge'][] = 'CategoryGalleriesHelper::onArticlePurge';

@@ -163,9 +163,10 @@ class CodeLintPhp extends CodeLint {
 	 * Performs addiitonal reg-exp based check of a single file
 	 *
 	 * @param $fileName string file name to check
+	 * @param $errors array already reported errors
 	 * @return array with list of problems found
 	 */
-	private function additionalFileCheck($fileName) {
+	private function additionalFileCheck($fileName, Array $errors) {
 		$problems = array();
 
 		$content = file_get_contents($fileName);
@@ -180,6 +181,34 @@ class CodeLintPhp extends CodeLint {
 					'error' => 'Check for no longer existing skin found'
 				);
 			}
+		}
+
+		// create a list of unused local variables and parameters (BugId:46888)
+		$unusedParams = array();
+		$unusedVars = array();
+		$linesVars = array(); // mapping of variable to line number
+
+		foreach($errors as $error) {
+			if (startsWith($error['error'], 'Unused parameter ')) {
+				$var = trim(substr($error['error'], strlen('Unused parameter ')));
+				$unusedParams[] = $var;
+				$linesVars[$var] = $error['line'];
+			}
+
+			if (startsWith($error['error'], 'Unused local variable ')) {
+				$unusedVars[] = trim(substr($error['error'], strlen('Unused local variable ')));
+			}
+		}
+
+		// add error reports
+		$intersect = array_intersect($unusedParams, $unusedVars);
+
+		foreach($intersect as $var) {
+			$problems[] = array(
+				'file' => $fileName,
+				'line' => $linesVars[$var],
+				'error' => "{$var} parameter should be marked as a reference in function definition"
+			);
 		}
 
 		return $problems;
@@ -237,7 +266,8 @@ class CodeLintPhp extends CodeLint {
 		$errors = isset($output['problems'][$fileName]) ? $output['problems'][$fileName] : array();
 
 		// perform additional (reg-exp based) checks
-		$errors  = array_merge($errors , $this->additionalFileCheck($fileName));
+		// add a check for parameters not being marked as a reference (Bugid:46888)
+		$errors  = array_merge($errors , $this->additionalFileCheck($fileName, $errors));
 
 		if (!empty($output)) {
 			$output = array(
@@ -296,6 +326,10 @@ class CodeLintPhp extends CodeLint {
 
 		// Method foo is deprecated
 		if (endsWith($errorMsg, ' is deprecated')) {
+			$ret = true;
+		}
+
+		if (endsWith($errorMsg, ' parameter should be marked as a reference in function definition')) {
 			$ret = true;
 		}
 
