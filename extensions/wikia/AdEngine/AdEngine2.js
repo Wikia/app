@@ -1,39 +1,33 @@
-window.AdEngine2 = window.AdEngine2 || (function (Wikia, AdConfig2, window) {
-	function log(msg, level, obj) {
-		Wikia.log(msg, level, 'AdEngine2');
-
-		if (typeof obj != 'undefined') {
-			Wikia.log(obj, level, 'AdEngine2');
-		}
-	}
-
+window.AdEngine2 = window.AdEngine2 || (function (AdConfig2, log, window) {
 	function init() {
-		log('init', 5);
+		log('init', 5, 'AdEngine2');
 
 		moveQueue();
 	}
 
 	function fillInSlot(slot) {
-		log('fillInSlot', 5, slot);
+		log('fillInSlot', 5, 'AdEngine2');
+		log(slot, 5, 'AdEngine2');
 
 		var provider = AdConfig2.getProvider(slot);
-		log('calling ' + provider + ' for ' + slot[0], 3);
+		log('calling ' + provider + ' for ' + slot[0], 3, 'AdEngine2');
 		slot[2] = provider;
 		window['adProvider' + provider].fillInSlot(slot);
 	}
 
 	// based on WikiaTrackerQueue by macbre
 	function moveQueue() {
-		log('moveQueue', 5);
+		log('moveQueue', 5, 'AdEngine2');
 
 		var slots = window.adslots2 || [], slot;
-		log('queue', 7, slots);
+		log('queue', 7, 'AdEngine2');
+		log(slots, 7, 'AdEngine2');
 		while ((slot = slots.shift()) !== undefined) {
 			fillInSlot(slot);
 		}
 
 		slots.push = proxy(fillInSlot, this);
-		log('queue moved', 6);
+		log('queue moved', 6, 'AdEngine2');
 	}
 
 	function proxy(fn, scope) {
@@ -44,4 +38,4 @@ window.AdEngine2 = window.AdEngine2 || (function (Wikia, AdConfig2, window) {
 
 	return {init: init};
 
-}(Wikia, AdConfig2, window));
+}(AdConfig2, Wikia.log, window));
