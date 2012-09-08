@@ -517,7 +517,7 @@ $messages['diq'] = array(
 	'user-identity-box-group-staff' => 'Emegdar',
 	'user-identity-box-group-helper' => 'Peştidar',
 	'user-identity-box-zero-state-location' => 'Lokasyon',
-	'user-identity-box-zero-state-birthday' => 'Rocbiyayış',
+	'user-identity-box-zero-state-birthday' => 'Roc biyayen',
 	'user-identity-box-zero-state-gender' => 'Cinsiyet',
 	'user-identity-box-zero-state-twitter' => "Twitter'ê me",
 	'user-identity-box-zero-state-website' => 'Websitey me',
@@ -2431,6 +2431,13 @@ $messages['tl'] = array(
 	'blog-avatar-alt' => 'Mga talaan ng mga pagdaragdag o pagtatanggal ng abatar ng tagagamit',
 	'user-identity-remove-confirmation' => 'Talaga bang gusto mong tanggalin ang abatar?',
 	'user-identity-remove-fail' => 'Mayroong ilang suliranin noong tinatanggal ang abatar!',
+);
+
+/** толышә зывон (толышә зывон)
+ * @author Гусейн
+ */
+$messages['tly'] = array(
+	'user-identity-box-about-fav-wikis-refresh' => 'Тожә кардеј',
 );
 
 /** Turkish (Türkçe)

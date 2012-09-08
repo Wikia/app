@@ -286,6 +286,7 @@ $messages['diq'] = array(
 	'lookupcontribsrecordspager' => "'''$1''' , '''$2''' u '''$3''' basnı",
 	'lookupcontribsprevious' => 'verên',
 	'lookupcontribspageremoved' => 'Wedariya:',
+	'lookupcontribsall' => 'pêro',
 );
 
 /** Spanish (español)

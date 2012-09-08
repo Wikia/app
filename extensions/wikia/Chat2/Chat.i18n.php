@@ -424,6 +424,53 @@ $messages['ca'] = array(
 	'chat-status-away' => 'Absent',
 );
 
+/** Czech (česky)
+ * @author Chmee2
+ */
+$messages['cs'] = array(
+	'chat' => 'Chat',
+	'chat-desc' => '[[Special:Chat|Chat na živo]]',
+	'chat-no-login' => 'Musíte být přihlášen, pokud chcete použít chat.',
+	'chat-no-login-text' => 'Přihlaste se k chatu.',
+	'chat-default-topic' => 'Vítejte na $1 chatu',
+	'chat-user-joined' => '$1 se připojil k chatu.',
+	'chat-private-messages' => 'Soukromé zprávy',
+	'chat-user-parted' => '$1 opustil chat.',
+	'chat-user-blocked' => '$1 zablokoval  $2 .',
+	'chat-kick-you-need-permission' => 'Nemáte oprávnění vykopnout uživatele.',
+	'chat-kick-cant-kick-moderator' => 'Nemůžete vykopnout dalšího moderátora chatu.',
+	'chat-user-was-kicked' => '$2 vyhodil $1 z chatu.',
+	'chat-ban-contributions-heading' => 'Zablokovat na chatu',
+	'chat-ban-modal-heading' => 'Zablokuj tohoto uživatele na chatu',
+	'chat-ban-modal-label-expires' => 'Vyprší',
+	'chat-ban-modal-label-reason' => 'Důvod',
+	'chat-log-reason-undo' => 'zpět',
+	'chat-ban-undolink' => 'zpět',
+	'chat-ban-modal-button-ok' => 'Zablokovat tohoto uživatele',
+	'chat-ban-modal-button-change-ban' => 'Změnit blok',
+	'chat-ban-modal-button-cancel' => 'Zrušit',
+	'chat-ban-modal-change-ban-heading' => 'Změnit zablokování tohoto uživatele na chatu',
+	'chat-ban-modal-change-ban-label' => 'Změnit na',
+	'chat-ban-modal-end-ban' => 'Ukončit zablokování',
+	'chat-log-reason-banchange' => 'Bez udání důvodu',
+	'chat-log-reason-banremove' => 'Bez udání důvodu',
+	'chat-ban-cant-ban-moderator' => 'Nemůžete vykopnout/zablokovat dalšího moderátora chatu.',
+	'chat-start-a-chat' => 'Zahájit chat',
+	'chat-join-the-chat' => 'Připojit se k chatu',
+	'chat-edit-count' => '{{PLURAL:$1|$1 editace|$1 editací}}',
+	'chat-member-since' => 'Členem od $1',
+	'chat-great-youre-logged-in' => 'Skvělé! Jste přihlášeni.',
+	'chat-user-menu-talk-page' => 'Diskusní stránka',
+	'chat-user-menu-contribs' => 'Příspěvky',
+	'chat-user-menu-private' => 'Soukromá zpráva',
+	'chat-user-menu-kick' => 'Vykopnout',
+	'chat-user-menu-ban' => 'Ban',
+	'chat-user-menu-private-block' => 'Zablokovat soukromé zprávy',
+	'chat-user-menu-private-allow' => 'Povolit soukromé zprávy',
+	'chat-user-menu-private-close' => 'Uzavřít soukromý chat',
+	'chat-status-away' => 'Pryč',
+);
+
 /** German (Deutsch)
  * @author Claudia Hattitten
  * @author DaSch

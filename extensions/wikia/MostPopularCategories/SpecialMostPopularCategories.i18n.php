@@ -26,7 +26,7 @@ $messages['ar'] = array(
 	'mostpopularcategories' => 'أكثر التصانيف شهرة',
 );
 
-/** Araucanian (mapudungun)
+/** Mapuche (mapudungun)
  * @author Kaniw
  */
 $messages['arn'] = array(

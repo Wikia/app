@@ -669,7 +669,7 @@ $messages['gl'] = array(
 	'phalanx-label-lang' => 'Lingua:',
 	'phalanx-view-type' => 'Tipo de bloqueo...',
 	'phalanx-view-blocker' => 'Procurar por texto de filtro:',
-	'phalanx-view-blocks' => 'Filtros de procura',
+	'phalanx-view-blocks' => 'Procurar nos filtros',
 	'phalanx-view-id' => 'Obter o filtro por ID:',
 	'phalanx-view-id-submit' => 'Obter o filtro',
 	'phalanx-format-text' => 'texto simple',
@@ -991,6 +991,46 @@ Per favor [[Special:Contact|contacta Wikia]] a proposito de iste problema.<br />
 	'right-phalanx' => 'Pote gerer global blocadas e filtros anti-spam',
 	'right-phalanxexempt' => 'Exempte de regulas de Phalanx',
 	'right-phalanxemailblock' => 'Pote submitter, vider e gerer blocadas a base de e-mail',
+);
+
+/** Icelandic (íslenska)
+ * @author Snævar
+ */
+$messages['is'] = array(
+	'phalanx-type-content' => 'Innihald síðu',
+	'phalanx-type-title' => 'Titill síðu',
+	'phalanx-type-user' => 'notandi',
+	'phalanx-type-user-email' => 'tölvupóstur',
+	'phalanx-type-answers-question-title' => 'spurninga titill',
+	'phalanx-type-answers-recent-questions' => 'síðustu spurningar',
+	'phalanx-edit-block' => 'Vista bann',
+	'phalanx-label-filter' => 'Sía:',
+	'phalanx-label-reason' => 'Ástæða:',
+	'phalanx-label-expiry' => 'Rennur út:',
+	'phalanx-label-type' => 'Gerð:',
+	'phalanx-label-lang' => 'Tungumál:',
+	'phalanx-view-type' => 'Gerð banns...',
+	'phalanx-view-id-submit' => 'Sækja síu',
+	'phalanx-format-regex' => 'regluleg segð',
+	'phalanx-format-exact' => 'nákvæm',
+	'phalanx-tab-main' => 'Stjórna síum',
+	'phalanx-tab-secondary' => 'Prófa síur',
+	'phalanx-modify-success' => 'Banninu var breytt',
+	'phalanx-modify-failure' => 'Mistókst að breyta banninu',
+	'phalanx-test-submit' => 'Prófun',
+	'phalanx-display-row-blocks' => 'bönn: $1',
+	'phalanx-display-row-created' => "búið til af '''$1''' á $2",
+	'phalanx-link-unblock' => 'afbanna',
+	'phalanx-link-modify' => 'breyta',
+	'phalanx-link-stats' => 'tölfræði',
+	'phalanx-reset-form' => 'Endursetja eyðublað',
+	'phalanx-legend-input' => 'Búa til eða breyta síu',
+	'phalanx-unblock-message' => 'Banni með auðkennið #$1 var fjarlægt',
+	'phalanx-help-type-content' => 'Þessi sía kemur í veg fyrir að breyting sé vistuð, ef innihald hennar passar við eitthvert af setningunum á bannlistanum.',
+	'phalanx-help-type-title' => 'Þessi sía kemur í veg fyrir að síða sé stofnuð, ef titill hennar passar við eitthvert af setningunum á bannlistanum.
+
+Sían kemur ekki í veg fyrir breytingar á síðu sem er þegar til.',
+	'phalanx-help-type-user' => 'Þessi sía kemur í veg fyrir notanda (nákvæmlega það sama og bann), ef nafn eða vistfang passar við eitt af eitthvert af setningunum á banlistanum.',
 );
 
 /** Japanese (日本語)

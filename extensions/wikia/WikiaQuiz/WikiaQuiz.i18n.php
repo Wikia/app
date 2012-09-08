@@ -235,11 +235,46 @@ $messages['ca'] = array(
 );
 
 /** Czech (česky)
+ * @author Chmee2
  * @author Vks
  */
 $messages['cs'] = array(
 	'wikiaquiz-createquiz-headline' => 'Vytvořit kvíz',
 	'wikiaquiz-editquiz-headline' => 'Upravit kvíz',
+	'wikiaquiz-title-label' => 'Název',
+	'wikiaquiz-moreinfoarticle-label' => 'Článek',
+	'wikiaquiz-question-label' => 'Otázka',
+	'wikiaquiz-image-label' => 'Obrázek (volitelné)',
+	'wikiaquiz-video-label' => 'Video (volitelné, nahrazuje obraz)',
+	'wikiaquiz-quiz-label' => 'Kvíz',
+	'wikiaquiz-questions-label' => 'Otázky',
+	'wikiaquiz-answers-label' => 'Odpovědi',
+	'wikiaquiz-answer-label' => 'Odpověď',
+	'wikiaquiz-correct-label' => 'Správně?',
+	'wikiaquiz-cancel-label' => 'Zrušit',
+	'wikiaquiz-publish-label' => 'Zveřejnit',
+	'wikiaquiz-error-invalid-image' => 'Obrazek je neplatný: $1',
+	'wikiaquiz-error-invalid-video' => 'Video je neplatné: $1',
+	'wikiaquiz-error-missing-answers' => 'Je třeba zadat alespoň jednu odpověď.',
+	'wikiaquiz-error-invalid-quiz' => 'Jméno kvízu je neplatné.',
+	'wikiaquiz-error-invalid-article' => 'ID článku je neplatný.',
+	'wikiaquiz-error-invalid-article-with-details' => 'Článek je neplatný: $1',
+	'wikiaquiz-game-start-button' => 'Spustit hru',
+	'wikiaquiz-game-cadence-3' => 'Připraven',
+	'wikiaquiz-game-cadence-2' => 'Nastavit',
+	'wikiaquiz-game-cadence-1' => 'Jdi!',
+	'wikiaquiz-game-question-label' => 'OTÁZKA',
+	'wikiaquiz-game-next-button' => 'Další otázka',
+	'wikiaquiz-game-finish-button' => 'Dokončit',
+	'wikiaquiz-game-correct-label' => 'Správně! Ty válíš.',
+	'wikiaquiz-game-incorrect-label' => 'ŠPATNĚ. Bůů.',
+	'wikiaquiz-game-congratulations' => 'Skvělá práce, $1!',
+	'wikiaquiz-game-congratulations-anon' => 'Skvělá práce!',
+	'wikiaquiz-game-your-score' => 'VAŠE SKÓRE JE',
+	'wikiaquiz-game-continue-button' => 'Pokračovat',
+	'wikiaquiz-game-thanks' => 'Díky za hru!',
+	'wikiaquiz-game-email-placeholder' => 'yourname@youremail.com',
+	'wikiaquiz-game-email-subject' => 'Děkujeme za vložení.',
 );
 
 /** German (Deutsch)
