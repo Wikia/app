@@ -560,8 +560,8 @@ var Lightbox = {
 				caption = Lightbox.openModal.carousel.find('li').eq(idx).find('img').data('caption');
 			data['caption'] = caption || false;*/
 			Lightbox[type].updateLightbox(data);		
-			Lightbox.showOverlay();
-			Lightbox.hideOverlay();
+			//Lightbox.showOverlay();
+			//Lightbox.hideOverlay();
 		});
 		
 	},
@@ -664,6 +664,7 @@ var Lightbox = {
 		Lightbox.openModal.progress = $('#LightboxCarouselProgress');
 		Lightbox.openModal.data('overlayactive', true);
 
+		$(document).off('keydown.Lightbox');
 		$(document).on('keydown.Lightbox', function(e) {
 			if(e.keyCode == 37) {
 				$('#LightboxPrevious').click();

@@ -66,7 +66,7 @@ $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 	}
 	&.pinned-mode {
 		.media {
-			margin: 110px 0;
+			margin: 90px 0;
 		}
 		.LightboxCarousel,
 		.LightboxHeader {
@@ -212,7 +212,7 @@ $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 	}
 	.video-media {
 		height: auto;
-		margin-top: 115px;
+		margin-top: 90px;
 		embed, object, > div {
 			display: block;
 			margin: 0 auto;
@@ -457,8 +457,8 @@ $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 	
 	.LightboxHeader {
 		border-bottom: 1px solid $color-lightbox-border;
-		height: 70px;
-		padding: 20px;
+		height: 50px;
+		padding: 20px 20px 10px;
 		top: 0;
 		width: 960px;
 		h1 {
