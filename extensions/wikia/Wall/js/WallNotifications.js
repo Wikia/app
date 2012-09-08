@@ -2,20 +2,33 @@ $(function() {
 	var wall_notifications = new WallNotifications();
 });
 
+var $window = $(window);
 var WallNotifications = $.createClass(Object, {
 	constructor: function() {
 		this.wikisUrls = {};
+		this.isMonobook = false;
 		this.updateInProgress = false; // we only want 1 update simultaneously
 		this.notificationsCache = {}; // HTML for "trays" for different Wiki ids
 		this.wikiShown = {}; // all open "trays" (Wiki Notifications) - list of Wiki ids
 		this.fetchedCurrent = false; // we only want to force-fetch notifications for current Wiki once
 		this.currentWikiId = 0; // updated after fetching Notification counts for the 1st time
 		setTimeout( this.proxy( this.updateCounts ), 300);
-		
-		//setInterval( this.proxy( this.updateLoop ), 15000);
+
+		this.$bubblesCount = $('#bubbles_count');
+		this.$wallNotifications = $('#WallNotifications');
+		this.$wallNotificationsReminder = $('#WallNotificationsReminder');
+		this.$wallNotificationsSubnav = this.$wallNotifications.find('.subnav');
+
+		// Used by notifications reminder
+		this.reminderTimer = null;
+		this.reminderOffsetTop = 100;
+		this.unreadCount = parseInt(this.$bubblesCount.html());
 
 		var $wallNotificationsMonobook = $('.wall-notifications-monobook');
-		if($wallNotificationsMonobook.length > 0) {
+
+		this.isMonobook = $wallNotificationsMonobook.length > 0;
+
+		if (this.isMonobook) {
 			$wallNotificationsMonobook.first()
 				.append('<span class="count">(?)</span>')
 				.click( this.proxy( this.clickNotificationsMonobook ) )
@@ -32,30 +45,28 @@ var WallNotifications = $.createClass(Object, {
 			}
 
 			$('#wall-notifications-dropdown')
-				.css('background-color',bgcolor)
+				.css('background-color', bgcolor)
 				.mouseleave( this.proxy( this.dropdownHide ) );
-
-			this.monobook = true;
 		} else {
-			$('#WallNotifications')
+			this.$wallNotifications
 				.mouseenter( this.proxy( this.updateCounts ) )
-				.mouseenter( this.proxy( this.fetchForCurrentWiki ) );
+				.mouseenter( this.proxy( this.fetchForCurrentWiki ) )
+				.one( 'mouseenter', this.proxy( this.hideReminder ) );
 
-			// notifications reminder
-			$(document).scroll( this.proxy( this.documentScroll ) );
-			$('#WallNotificationsReminder a').click( function() {
-				var destination = 0;
+			$window.on( 'scroll.WallNotificationsReminder', $.throttle( 100, this.proxy( this.showReminder )));
+
+			this.$wallNotificationsReminder.on( 'click', 'a', this.proxy(function() {
 				if($.browser.msie) { /* JSlint ignore */
-					$("html:not(:animated),body:not(:animated)").css({ scrollTop: destination-20});
+					$("html:not(:animated),body:not(:animated)").css({ scrollTop: 0 });
 				} else {
-					$("html:not(:animated),body:not(:animated)").animate({ scrollTop: destination-20}, 500 );
+					$("html:not(:animated),body:not(:animated)").animate({ scrollTop: 0 }, 500 );
 				}
-				$('#WallNotificationsReminder').stop().fadeOut(200);
-			});
 
-			this.monobook = false;
+				this.$wallNotificationsReminder.stop().fadeOut( 200 );
+			}));
 		}
-		$('#WallNotifications, #pt-wall-notifications')
+
+		this.$wallNotifications.add( $('#pt-wall-notifications') )
 			.on('click', '#wall-notifications-markasread-sub', this.proxy( this.markAllAsReadPrompt ))
 			.on('click', '#wall-notifications-markasread-this-wiki', this.proxy( this.markAllAsRead ))
 			.on('click', '#wall-notifications-markasread-all-wikis', this.proxy( this.markAllAsReadAllWikis ));
@@ -70,20 +81,21 @@ var WallNotifications = $.createClass(Object, {
 			return results[1] || 0;
 		}
 		if(urlParam('showNotifications')) {
-			$('#WallNotifications').trigger('mouseenter');
-			$('#WallNotifications .subnav').addClass('show');
+			this.$wallNotifications.trigger('mouseenter');
+			this.$wallNotificationsSubnav.addClass('show');
 		}
 	},
 
 	updateCounts: function() {
 		var callback = this.proxy(function(data) {
-			if(data.status != true || data.html == '') {
+			if (data.status != true || data.html == '') {
 				return;
 			}
-			if(data.count) {
-				$('#WallNotifications').show();
+
+			if (data.count) {
+				this.$wallNotifications.show();
 			}
-			
+
 			this.updateCountsHtml(data);
 
 			// if we already have data for some Wikis, show it
@@ -97,10 +109,12 @@ var WallNotifications = $.createClass(Object, {
 			this.checkIfFromMessageBubble();
 
 			// do not update for next 10s
-			setTimeout( this.proxy( function() {this.updateInProgress = false; } ), 10000 );
+			setTimeout( this.proxy(function() {
+				this.updateInProgress = false;
+			}), 10000 );
 		});
 
-		if( this.updateInProgress == false ) {
+		if ( this.updateInProgress == false ) {
 			this.updateInProgress = true;
 
 			$.nirvana.sendRequest({
@@ -111,25 +125,21 @@ var WallNotifications = $.createClass(Object, {
 					username: wgTitle
 				},
 				callback: callback
-			});				
+			});
 		}
 	},
 
 	fetchForCurrentWiki: function() {
-		if( this.fetchedCurrent == false ) {
-			if(this.monobook) {
-				var wikiEl = $('#wall-notifications-inner li.notifications-for-wiki').first();
-			} else {
-				var wikiEl = $('#WallNotifications .subnav li.notifications-for-wiki').first();
-			}
+		if ( this.fetchedCurrent == false ) {
+			var wikiEl = ( this.isMonobook ? $('#wall-notifications-inner') : this.$wallNotifications ).find('.notifications-for-wiki').first(),
+				firstWikiId = wikiEl.attr('data-wiki-id');
 
-			var first_wiki_id = wikiEl.attr('data-wiki-id');
-			if (first_wiki_id != undefined) {
-				this.fetchedCurrent = true;
+			if ( firstWikiId != undefined ) {
 				wikiEl.addClass('show');
-				this.currentWikiId = first_wiki_id;
-				this.wikiShown[ first_wiki_id ] = true;
-				this.updateWiki( first_wiki_id );
+				this.fetchedCurrent = true;
+				this.currentWikiId = firstWikiId;
+				this.wikiShown[ firstWikiId ] = true;
+				this.updateWiki( firstWikiId );
 			}
 		}
 	},
@@ -138,8 +148,9 @@ var WallNotifications = $.createClass(Object, {
 		// after updating counts we update DOM, so all notifications are empty
 		// we update them from cache for all those that still have the same
 		// amount of unread notifications and fetch all the others
-		for(var wikiId in this.notificationsCache)
+		for (var wikiId in this.notificationsCache) {
 			this.updateWiki( wikiId );
+		}
 	},
 
 	clickNotificationsMonobook: function(e) {
@@ -159,7 +170,6 @@ var WallNotifications = $.createClass(Object, {
 		$('#wall-notifications-dropdown').hide();
 	},
 
-
 	markAllAsReadRequest: function(forceAll) {
 		$.nirvana.sendRequest({
 			controller: 'WallNotificationsExternalController',
@@ -170,7 +180,10 @@ var WallNotifications = $.createClass(Object, {
 				forceAll: forceAll
 			},
 			callback: this.proxy(function(data) {
-				if(data.status != true) return;
+				if (data.status != true) {
+					return;
+				}
+
 				this.updateCountsHtml(data);
 
 				// if we already have data for some Wikis, show it
@@ -210,46 +223,40 @@ var WallNotifications = $.createClass(Object, {
 	},
 
 	showFirst: function() {
-		if(this.monobook) {
-			var wikiEl = $('#wall-notifications-inner li.notifications-for-wiki');
-		} else {
-			var wikiEl = $('#WallNotifications .subnav li.notifications-for-wiki');
-		}
-		if( wikiEl.count <= 1 ) {
-			wikiEl.first().addClass('show');
+		var wikiEl = ( this.isMonobook ? $('#wall-notifications-inner') : this.$wallNotifications ).find('.notifications-for-wiki').first(),
+			firstWikiId = wikiEl.attr('data-wiki-id');
+
+		if ( firstWikiId != undefined ) {
+			wikiEl.addClass('show');
 			this.wikiShown = {};
-			this.wikiShown[wikiEl.first().attr('data-wiki-id')] = true;
+			this.wikiShown[ firstWikiId ] = true;
 		}
 	},
 
 	updateCountsHtml: function(data) {
-		if(this.monobook) {
-			$('.wall-notifications-monobook .count')
-				.html('(' + data.count + ')');
+		if (this.isMonobook) {
+			$('.wall-notifications-monobook .count').html('(' + data.count + ')');
 			$('#wall-notifications-inner').html(data.html);
 			$('#wall-notifications-inner .notifications-wiki-header').click( this.proxy( this.wikiClick ) );
 		} else {
-			var subnav = $('#WallNotifications .subnav');
-			subnav.html(data.html);
-			if(data.count > 0) {
-				$('#bubbles_count').html(data.count);
-				$('.bubbles').addClass('reddot');
-			}
-			else {
-				$('#bubbles_count').html('');
-				$('.bubbles').removeClass('reddot');
-			}
-			$('#WallNotificationsReminder a').html(data.reminder);
+			this.$wallNotificationsSubnav.html(data.html);
+			this.unreadCount = data.count;
+			if (data.count > 0) {
+				this.$bubblesCount.html(data.count).parent().addClass('reddot');
 
-			var wikis = $('li.notifications-for-wiki');
+			} else {
+				this.$bubblesCount.empty().parent().removeClass('reddot');
+			}
+
+			this.$wallNotificationsReminder.find('a').html(data.reminder);
 
 			var self = this;
-			wikis.each(function(index) {
+			this.$wallNotificationsSubnav.find('.notifications-for-wiki').each(function() {
 				var element = $(this);
-				self.wikisUrls[element.attr('data-wiki-id')] = element.attr('data-wiki-path');
+				self.wikisUrls[ element.attr('data-wiki-id') ] = element.attr('data-wiki-path');
 			});
 
-			$('.notifications-wiki-header',subnav).click( this.proxy( this.wikiClick ) );
+			this.$wallNotificationsSubnav.find('.notifications-wiki-header').click( this.proxy( this.wikiClick ) );
 		}
 
 	},
@@ -277,17 +284,16 @@ var WallNotifications = $.createClass(Object, {
 			return;
 		}
 		var data = this.notificationsCache[ wikiId ];
-		if(this.monobook) {
-			wikiCount = $('#wall-notifications-inner li[data-wiki-id='+wikiId+'] .notifications-wiki-count').text();
-		} else {
-			wikiCount = $('#WallNotifications .subnav li[data-wiki-id='+wikiId+'] .notifications-wiki-count').text();
-		}
-		if( wikiCount == data['unread'] ) {
-			// no change in notifications, update from cache
+		var wikiCount =  ( this.isMonobook ? $('#wall-notifications-inner') : this.$wallNotificationsSubnav )
+			.find('li[data-wiki-id=' + wikiId + '] .notifications-wiki-count').text();
+
+		// no change in notifications, update from cache
+		if ( wikiCount == data[ 'unread' ] ) {
 			this.updateWikiHtml( wikiId, data );
+
+		// different number of unread, fetch from server
+		// in the meantime, show old data
 		} else {
-			// different number of unread, fetch from server
-			// in the meantime, show old data
 			this.updateWikiHtml( wikiId, data );
 			this.updateWikiFetch( wikiId );
 		}
@@ -319,65 +325,59 @@ var WallNotifications = $.createClass(Object, {
 				}
 			})
 		});
-
 	},
 
-	updateWikiHtml: function(wikiId, data) {
-		var wikiEl = null;
-		var wikiLi = null;
-		if(this.monobook) {
-			wikiEl = $('#wall-notifications-inner li[data-wiki-id='+wikiId+']');
-			wikiLi = $('#wall-notifications-inner li[data-wiki-id='+wikiId+'] .notifications-for-wiki-list');
-		} else {
-			wikiEl = $('#WallNotifications .subnav li[data-wiki-id='+wikiId+']');
-			wikiLi = $('#WallNotifications .subnav li[data-wiki-id='+wikiId+'] .notifications-for-wiki-list');
-		}
+	updateWikiHtml: function( wikiId, data ) {
+		var wikiEl = ( this.isMonobook ? $('#wall-notifications-inner') : this.$wallNotificationsSubnav ).find('li[data-wiki-id=' + wikiId + ']');
+		var wikiLi = wikiEl.find('.notifications-for-wiki-list');
 
 		wikiLi.html(data.html);
-		if( wikiId in this.wikiShown ) {
+
+		if ( this.wikiShown[ wikiId ] ) {
 			wikiEl.addClass('show');
 		}
-		$('.timeago',wikiLi).timeago();
+
+		wikiLi.find('.timeago').timeago();
 
 		// hijack links for other wikis - open them in new window
-		if( wikiId != this.currentWikiId ) {
-			$('a', wikiEl).attr('target', '_blank');
-			$('.read_notification', wikiEl).remove(); // temporary fix, should be changed on server side
+		if ( wikiId != this.currentWikiId ) {
+			wikiEl.find('a').attr('target', '_blank');
+
+			// temporary fix, should be changed on server side
+			wikiEl.find('.read_notification').remove();
 		}
 	},
 
-	documentScroll: function() {
-		var reminderVisible = $('#WallNotificationsReminder').is(':visible');
-		var notificationsVisible = $('#WallNotifications .subnav').hasClass('show');
-		if( !reminderVisible && !notificationsVisible ) {
-			var unreadCount = parseInt($('#bubbles_count').html());
-			var lastCount = this.getLastSeenCount()
-			if( $(document).scrollTop() > 100 && lastCount != unreadCount ) {
-				this.setLastSeenCount(unreadCount);
-				if( unreadCount > 0 && lastCount == 0 ) {
-					$('#WallNotificationsReminder')
-						.fadeIn(500)
-						.animate({'opacity':1}, 3000)
-						.fadeOut(500);
-				}
+	showReminder: function() {
+		var showReminder = $window.scrollTop() > this.reminderOffsetTop;
+
+		if ( !this.reminderTimer && showReminder ) {
+			if ( this.unreadCount > this.getLastSeenCount() ) {
+				this.setLastSeenCount( this.unreadCount );
+				this.reminderTimer = setTimeout( this.proxy( this.hideReminder ), 3000 );
+				this.$wallNotificationsReminder.fadeIn();
 			}
-		} else if( reminderVisible && $(document).scrollTop() == 0) {
-			$('#WallNotificationsReminder').hide();
+
+		} else if ( this.reminderTimer && !showReminder ) {
+			this.hideReminder( true );
 		}
+	},
+
+	hideReminder: function( hide ) {
+		clearTimeout( this.reminderTimer );
+		$window.off( 'scroll.WallNotificationsReminder' );
+		this.$wallNotificationsReminder[ hide ? 'hide' : 'fadeOut' ]();
 	},
 
 	getLastSeenCount: function() {
-		var val = $.cookies.get( 'wall_notifications_last_count' );
-		if(val != undefined && parseInt(val) > 0)
-			return val;
-		return 0;
-	},
-	setLastSeenCount: function(val) {
-		$.cookies.set( 'wall_notifications_last_count', val);
+		return $.cookies.get( 'WallUnreadCount' ) || 0;
 	},
 
-	proxy: function(func) {
-		return $.proxy(func, this);
+	setLastSeenCount: function( val ) {
+		$.cookies.set( 'WallUnreadCount', val );
+	},
+
+	proxy: function( func ) {
+		return $.proxy( func, this );
 	}
 });
-
