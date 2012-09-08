@@ -3481,11 +3481,30 @@ $messages['vi'] = array(
 
 /** Simplified Chinese (‪中文（简体）‬)
  * @author Hydra
+ * @author Sam Wang
  */
 $messages['zh-hans'] = array(
+	'rte-ck-bucket-textAppearance' => '文本外观',
+	'rte-ck-bucket-insert' => '插入',
+	'rte-ck-bucket-controls' => '控件',
+	'rte-ck-commentEditor-title' => '评论编辑',
 	'rte-ck-errorPopupTitle' => '出现问题！',
+	'rte-ck-hoverPreview-codedElement-intro' => '请切换模式编辑',
+	'rte-ck-hoverPreview-codedElement-title' => '编码元素',
+	'rte-ck-hoverPreview-comment-intro' => '仅编辑时可见',
+	'rte-ck-hoverPreview-comment-title' => '评论',
+	'rte-ck-hoverPreview-confirmDelete' => '确定从此页中删除？',
 	'rte-ck-hoverPreview-delete' => '删除',
+	'rte-ck-hoverPreview-edit' => '编辑',
+	'rte-ck-hoverPreview-media-notExisting' => '该图片不或文件不存在！',
+	'rte-ck-hoverPreview-template-intro' => '这是一个模版',
+	'rte-ck-hoverPreview-template-notExisting' => '该模版不存在！',
+	'rte-ck-hoverPreview-video-notExisting' => '此视频不存在！',
 	'rte-ck-image-add' => '添加一个照片',
+	'rte-ck-image-photo' => '图片',
+	'rte-ck-image-confirmDelete' => '确定从此页中删除图片?',
+	'rte-ck-image-confirmDeleteTitle' => '删除此图片？',
+	'rte-ck-imagePlaceholder-confirmDelete' => '确定从此页中删除图像位置？',
 	'rte-ck-link-error-title' => '问题',
 	'rte-ck-link-external-url' => 'URL',
 	'rte-ck-link-internal-pageName' => '页面名字',
@@ -3493,8 +3512,17 @@ $messages['zh-hans'] = array(
 	'rte-ck-link-label-internal' => '至一个维基页面',
 	'rte-ck-link-status-exists' => '页面存在',
 	'rte-ck-link-status-notexists' => '页面不存在',
+	'rte-ck-media-delete' => '删除',
 	'rte-ck-signature-add' => '添加您的签名',
 	'rte-ck-signature-label' => '签名',
+	'rte-ck-templateEditor-dialog-insert' => '插入',
+	'rte-ck-templateEditor-editor-previewButton' => '预览',
+	'rte-ck-templateEditor-editor-previewTitle' => '预览',
+	'rte-ck-video-video' => '视频',
+	'rte-ck-format-tag_h2' => '标题2',
+	'rte-ck-format-tag_h3' => '标题3',
+	'rte-ck-format-tag_h4' => '标题4',
+	'rte-ck-format-tag_h5' => '标题5',
 );
 
 /** Chinese (Taiwan) (‪中文（台灣）‬)

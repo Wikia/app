@@ -46,6 +46,15 @@ $messages['af'] = array(
 	'timeago-second' => "'n minuut gelede",
 );
 
+/** Arabic (العربية)
+ * @author Mutarjem horr
+ */
+$messages['ar'] = array(
+	'timeagomessaging-desc' => 'يزود بـi18n لــjquery.timeago.js plugin',
+	'timeago-second' => 'قبل دقيقة',
+	'timeago-second-from-now' => 'دقيقة من الآن',
+);
+
 /** Bulgarian (български)
  * @author DCLXVI
  */

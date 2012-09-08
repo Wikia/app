@@ -190,6 +190,13 @@ $messages['ce'] = array(
 	'multilookuplink' => 'Къинхьегаме хьажориг',
 );
 
+/** Czech (česky)
+ * @author Chmee2
+ */
+$messages['cs'] = array(
+	'multilookupnext' => 'další',
+);
+
 /** German (Deutsch)
  * @author Kghbln
  * @author LWChris

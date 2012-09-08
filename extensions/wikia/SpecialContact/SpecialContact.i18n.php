@@ -46,6 +46,7 @@ If you prefer to use regular e-mail or have attachments, you can contact us at [
 );
 
 /** Arabic (العربية)
+ * @author Mutarjem horr
  * @author OsamaK
  */
 $messages['ar'] = array(
@@ -53,12 +54,24 @@ $messages['ar'] = array(
 	'specialcontact-wikia' => 'اتصل بويكيا',
 	'specialcontact-pagetitle' => 'اتصل بويكيا',
 	'specialcontact-username' => 'اسم المستخدم',
+	'specialcontact-wikiname' => 'أي ويكي',
 	'specialcontact-realname' => 'اسمك',
 	'specialcontact-yourmail' => 'عنوان البريد الإلكتروني',
 	'specialcontact-problem' => 'الموضوع',
 	'specialcontact-problemdesc' => 'الرسالة',
 	'specialcontact-mail' => 'أرسل لويكيا',
 	'specialcontact-ccme' => 'أرسل لي نسخة من هذه الرسالة',
+	'specialcontact-ccdisabled' => 'معطل: الرجاء تأكيد صلاحية بريدك الأغلكتروني لإستعمال هذه الوظيفة',
+	'specialcontact-notyou' => 'ألست أنت؟',
+	'specialcontact-captchainfo' => 'الرجاء إدخال النص في الصورة.',
+	'specialcontact-captchatitle' => 'كلمة غامضة',
+	'specialcontact-formtitle' => 'اتصل بموظفي الدعم ويكيا',
+	'specialcontact-nomessage' => 'الرجاء إملاء رسالة',
+	'specialcontact-captchafail' => 'رمز تأكيد غير صحيح أو مفقود.',
+	'specialcontact-mailsub' => 'بريد الاتصال ويكيا',
+	'specialcontact-mailsubcc' => 'نسخة بريد الاتصال ويكيا',
+	'specialcontact-ccheader' => 'هذه هي نسخة الرسالة التي تم إرسالها إلى الدعم ويكيا',
+	'specialcontact-submitcomplete' => 'شكرا لكم على الاتصال بــويكيا.',
 );
 
 /** Azerbaijani (azərbaycanca)

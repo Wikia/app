@@ -179,6 +179,7 @@ $messages['ca'] = array(
 );
 
 /** Czech (česky)
+ * @author Chmee2
  * @author Dontlietome7
  * @author Reaperman
  */
@@ -197,6 +198,10 @@ $messages['cs'] = array(
 	'wikiapoll-publish-label' => 'Publikovat',
 	'wikiapoll-error-duplicate' => 'Anketa s tímto názvem již existuje.',
 	'wikiapoll-error-invalid-title' => 'Text otázky je neplatný.',
+	'wikiamobile-wikiapoll-open-poll' => 'Co si myslíš?',
+	'wikiamobile-wikiapoll-thanks-voting' => 'Díky za hlasování!',
+	'wikiamobile-wikiapoll-poll' => 'Průzkum',
+	'wikiamobile-wikiapoll-user-voted' => 'Hlasoval jste pro $1',
 );
 
 /** German (Deutsch)

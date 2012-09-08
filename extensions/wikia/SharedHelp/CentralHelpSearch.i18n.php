@@ -13,6 +13,20 @@ $messages['en'] = array(
 	'centralhelpsearch-placeholder' => 'Search Help...'
 );
 
+/** Arabic (العربية)
+ * @author Mutarjem horr
+ */
+$messages['ar'] = array(
+	'centralhelpsearch-placeholder' => 'مساعدة على البحث...',
+);
+
+/** Czech (česky)
+ * @author Chmee2
+ */
+$messages['cs'] = array(
+	'centralhelpsearch-placeholder' => 'Hledat v nápovědě',
+);
+
 /** German (Deutsch)
  * @author PtM
  * @author Quedel

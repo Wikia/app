@@ -48,6 +48,31 @@ $messages['en'] = array(
 	'error-json-parse' => 'There was a problem with the data returned from our servers, sorry.\\nPlease try again.'
 );
 
+/** Arabic (العربية)
+ * @author Mutarjem horr
+ */
+$messages['ar'] = array(
+	'activityindicator-message' => 'جاري التحميل...',
+	'window-wikis-title' => 'أدلة لعبة ويكيا',
+	'window-wikis-wikilist-search-hint' => 'إبحث عن ألعابنا الأكثر نجاحاً...',
+	'window-category-load-batch' => 'المزيد',
+	'window-article-button-close' => 'أغلق',
+	'window-article-button-back' => 'رجوع',
+	'window-article-menu-search-label' => 'إبحث',
+	'window-article-menu-dashboard-label' => 'محتويات الدليل',
+	'window-article-menu-cancel-label' => 'ألغِ',
+	'searchview-no-results' => 'لا يوجد نتائج لـ"%s"',
+	'searchview-button-back-list' => 'الرجوع إلى القائمة',
+	'searchview-button-back-article' => 'الرجوع إلى المقالة',
+	'searchbar-hint' => 'البحث  %s ...',
+	'alert-download-updated-wikis-message' => 'سيتم تحديث قائمة الأدلة المتوفرة.',
+	'alert-download-updated-wikis-button-ok' => 'موافق',
+	'error-update-required' => 'يوجد تحديث لهذا التطبيق و هو موجود و مطلوب.',
+	'error-no-connection' => 'لا يوجد اتصال إنترنت متوفر.\\n الرجاء المحاولة مرة أخرى.',
+	'error-server' => 'خدامنا ردّت بخطأ، عذرا.\\n الرجاء المحاولة مرة أخرى.',
+	'error-json-parse' => 'كانت هناك مشكلة مع البيانات التي تم إرجاعها من خدامنا، عذرا.\\n الرجاء المحاولة مرة أخرى.',
+);
+
 /** Azerbaijani (azərbaycanca)
  * @author Cekli829
  */

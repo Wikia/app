@@ -451,6 +451,7 @@ Hizivait dre PayPal evit kaout ur wiki nevez ouzhpenn evit $4.95 ar miz nemetken
 );
 
 /** Czech (česky)
+ * @author Chmee2
  * @author Jezevec
  * @author Reaperman
  */
@@ -459,12 +460,31 @@ $messages['cs'] = array(
 	'cnw-back' => 'Zpět',
 	'cnw-or' => 'nebo',
 	'cnw-title' => 'Vytvořit novou Wiki',
+	'cnw-name-wiki-headline' => 'Vytvořit Wiki',
 	'cnw-name-wiki-label' => 'Název vaší wiki',
+	'cnw-name-wiki-wiki' => 'Wiki',
+	'cnw-login' => 'Přihlásit se',
+	'cnw-signup' => 'Vytvořit účet',
+	'cnw-signup-prompt' => 'Potřebujete účet?',
+	'cnw-call-to-signup' => 'Zaregistrujte se zde',
+	'cnw-login-prompt' => 'Máte již účet?',
+	'cnw-call-to-login' => 'Přihlaste se zde',
+	'cnw-auth-headline' => 'Přihlásit se',
+	'cnw-auth-headline2' => 'Zaregistrovat se',
+	'cnw-auth-facebook-signup' => 'Registrovat se prostřednictvím Facebooku',
+	'cnw-auth-facebook-login' => 'Přihlásit se prostřednictvím Facebooku',
 	'cnw-userauth-headline' => 'Máte účet?',
+	'cnw-userauth-creative' => 'Přihlásit se',
+	'cnw-userauth-marketing-heading' => 'Nemáte účet?',
 	'cnw-desc-tip1' => 'Tip',
+	'cnw-desc-tip2' => 'Pššt',
 	'cnw-desc-choose' => 'Zvolte kategorii',
 	'cnw-desc-select-one' => 'Jeden vyberte',
+	'cnw-desc-change-lang' => 'změnit',
 	'cnw-desc-lang' => 'Jazyk',
+	'cnw-error-database' => 'Chyba databáze: $1',
+	'cnw-error-wiki-limit-header' => 'Dosažen limit Wiki',
+	'cnw-error-blocked-header' => 'Účet zablokován',
 );
 
 /** German (Deutsch)
@@ -564,11 +584,12 @@ $messages['de-formal'] = array(
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
+ * @author Mirzali
  */
 $messages['diq'] = array(
 	'createnewwiki-desc' => '[[Special:CreateNewWiki|Wikiyo newe vırazdar]]',
 	'cnw-next' => 'Ver şo',
-	'cnw-back' => 'Peyd şo',
+	'cnw-back' => 'Peyser',
 	'cnw-or' => 'ya na',
 	'cnw-title' => 'Wikiyo newe vıraze',
 	'cnw-name-wiki-headline' => 'Wikiyo newe pêkerdış',

@@ -121,6 +121,7 @@ $messages['ca'] = array(
 );
 
 /** Czech (česky)
+ * @author Chmee2
  * @author Darth Daron
  */
 $messages['cs'] = array(
@@ -133,6 +134,8 @@ $messages['cs'] = array(
 	'quickstats-totals-label' => 'Celkem',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Další statistiky]]',
 	'quickstats-number-shortening' => '$1K',
+	'quickstats-number-shortening-millions' => '$1M',
+	'quickstats-number-shortening-billions' => '$1B',
 );
 
 /** German (Deutsch)

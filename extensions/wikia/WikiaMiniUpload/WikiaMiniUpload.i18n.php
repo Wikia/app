@@ -560,11 +560,13 @@ $messages['ce'] = array(
 );
 
 /** Czech (česky)
+ * @author Chmee2
  * @author Dontlietome7
  * @author Mr. Richard Bolla
  */
 $messages['cs'] = array(
 	'wmu-upload-image' => 'Nahrát obrázek',
+	'wmu-title' => 'Nahrát obrázek',
 	'wmu-upload' => 'Nahrát soubor',
 	'wmu-notlogged' => 'Abyste mohli nahrávat soubory ze svého počítače, musíte se přihlásit nebo zaregistrovat',
 	'wmu-find' => 'Najít',
@@ -601,7 +603,7 @@ $messages['cs'] = array(
 	'wmu-success' => '<h1>Úspěch</h1>Váš obrázek byl vložen.',
 	'wmu-success-placeholder' => '<h1>Úspěch</h1>',
 	'wmu-return' => 'Zpět k editaci',
-	'wmu-back' => 'zpět',
+	'wmu-back' => 'Vyberte další fotografii',
 	'wmu-close' => 'zavřít',
 	'wmu-warn1' => 'Musíte nejprve zadat dotaz!',
 	'wmu-warn2' => 'Musíte nejprve vybrat soubor!',
@@ -634,6 +636,7 @@ $messages['cs'] = array(
 	'wmu-replace-default-caption' => 'nahradit výchozí popisek',
 	'wmu-appearance-in-article' => 'Vzhled v článku',
 	'wmu-alignment' => 'Zarovnání',
+	'wmu-file-protected' => 'Tento obrázek je chráněn',
 );
 
 /** Welsh (Cymraeg)
@@ -863,6 +866,7 @@ $messages['de-formal'] = array(
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
+ * @author Mirzali
  */
 $messages['diq'] = array(
 	'wmu-upload-image' => 'Resim Barke',
@@ -886,6 +890,7 @@ $messages['diq'] = array(
 	'wmu-link' => 'Link',
 	'wmu-prev' => "8'ê verêni",
 	'wmu-next' => "8'ê peyêni",
+	'wmu-back' => 'Peyser',
 	'wmu-close' => 'racnê',
 	'wmu-imagebutton' => 'Resım deke',
 	'wmu-hide-license-msg' => 'nuşteya lisansi bınımne',
