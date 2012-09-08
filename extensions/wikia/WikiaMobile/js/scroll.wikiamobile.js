@@ -8,15 +8,14 @@
  *
  */
 
-(function(){
+(function(w){
 	var m = Math,
-		w = window,
 		vendor = (/webkit/i).test(navigator.appVersion) ? 'webkit' :
 			(/firefox/i).test(navigator.userAgent) ? 'Moz' :
-				'opera' in window ? 'O' : '',
+				'opera' in w ? 'O' : '',
 
 		// Browser capabilities
-		has3d = 'WebKitCSSMatrix' in window && 'm11' in new WebKitCSSMatrix(),
+		has3d = 'WebKitCSSMatrix' in w && 'm11' in new WebKitCSSMatrix(),
 		hasTransform = vendor + 'Transform' in document.documentElement.style,
 		hasTransitionEnd = (/iphone|ipad/gi).test(navigator.appVersion) || (/playbook/gi).test(navigator.appVersion),
 
@@ -312,5 +311,5 @@
 		}
 	};
 
-	window.iScroll = iScroll;
-})();
+	w.iScroll = iScroll;
+})(window);

@@ -12,7 +12,7 @@
  */
 
 /*global window, document, define, require, setTimeout, setInterval, clearInterval, Features, $, AdConfig*/
-define('ads', ['events', 'domwriter', 'cookies'], function (ev, dw, ck) {
+define('ads', ['events', 'domwriter', 'cookies', 'track'], function (ev, dw, ck, track) {
 	'use strict';
 
 	var AD_TYPES = {
@@ -62,7 +62,7 @@ define('ads', ['events', 'domwriter', 'cookies'], function (ev, dw, ck) {
 			.trim();
 	}
 
-		/**
+	/**
 	 * Stops ads requests from being made for a specific amount of time
 	 *
 	 * @private
@@ -74,7 +74,7 @@ define('ads', ['events', 'domwriter', 'cookies'], function (ev, dw, ck) {
 	}
 
 	function shouldRequestAd() {
-		return (~~(ck.get(STOP_COOKIE_NAME)) ) !== 1;
+		return (~~(ck.get(STOP_COOKIE_NAME))) !== 1;
 	}
 
 	/**
@@ -302,7 +302,7 @@ define('ads', ['events', 'domwriter', 'cookies'], function (ev, dw, ck) {
 
 				if (type === AD_TYPES.footer) {
 					close.addEventListener(click, function () {
-						//track('ad/close');
+						track.event('ad', track.CLICK, {label: 'close'});
 						addClass(adSlot, ['anim']);
 
 						setTimeout(function () {

@@ -3,8 +3,9 @@
  * Handling of Gallery view of images on a page in a Lighbox
  *
  * @author Jakub "Student" Olek
+ *
  */
-define('mediagallery', ['media', 'modal', 'pager', 'thumbnailer', 'lazyload'], function(med, mod, pag, thumbnailer, lazyload) {
+define('mediagallery', ['media', 'modal', 'pager', 'thumbnailer', 'lazyload', 'track'], function(med, mod, pag, thumbnailer, lazyload, track) {
 	var
 		MAX_THUMB_SIZE = 140,
 		width,
@@ -39,10 +40,11 @@ define('mediagallery', ['media', 'modal', 'pager', 'thumbnailer', 'lazyload'], f
 			//open specific image chosen from gallery
 		} else if (target.className.indexOf('galPlc img') > -1) {
 			goBackToImgModal(~~target.id.slice(3));
-
+			if(target.className.indexOf('video')) track.event('video', track.CLICK, {label: 'gallery'});
 			//open/close gallery
 		} else if (target.id === 'wkGalTgl') {
 			if(modalWrapper.className.indexOf('wkMedGal') > -1) {
+				track.event('gallery', track.CLICK, {label: 'close'});
 				goBackToImgModal(goToImg);
 			} else {
 				open();
@@ -164,6 +166,9 @@ define('mediagallery', ['media', 'modal', 'pager', 'thumbnailer', 'lazyload'], f
 			center: true,
 			onEnd: function(currPageNum){
 				if(current != currPageNum){
+					track.event('gallery', track.PAGINATE, {
+						label: (current < currPageNum ? 'next' : 'previous')
+					});
 					current = currPageNum;
 					loadImages();
 					updateDots();
@@ -182,8 +187,9 @@ define('mediagallery', ['media', 'modal', 'pager', 'thumbnailer', 'lazyload'], f
 		});
 
 		loadImages();
-
 		mod.addClass('wkMedGal');
+
+		track.event('gallery', track.CLICK, {label: 'open'});
 	}
 
 	return {

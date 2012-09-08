@@ -1,3 +1,4 @@
+/* global RelatedVideos */
 var ImageLightbox = {
 	// store element which was clicked to trigger lightbox - custom event will be fired when lightbox will be shown
 	target: false,

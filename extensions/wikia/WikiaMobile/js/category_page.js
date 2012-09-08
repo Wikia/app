@@ -1,7 +1,61 @@
-require(['events', 'loader', 'track'], function(events, loader, track){
-	var clickEvent = events.click;
+/**
+ * module used to handle category pages pagination
+ *
+ * @param events.js events
+ * @param loader.js loader
+ * @param track.js track
+ */
+/* global $, wgTitle */
+require(['events', 'loader', 'track'], function (events, loader, track) {
+	'use strict';
 
-	$('.pagMore, .pagLess').bind(clickEvent, function(event) {
+	var clickEvent = events.click,
+		expAll = document.getElementById('expAll'),
+		elements,
+		wkCatExh = document.getElementById('wkCatExh'),
+		categorySection = document.getElementsByClassName('alphaSec')[0];
+
+	if (expAll) {
+		elements = $('.alphaSec .artSec, .alphaSec .collSec');
+		expAll.addEventListener(clickEvent, function () {
+			if ($(this).toggleClass('exp').hasClass('exp')) {
+				elements.addClass('open');
+			} else {
+				elements.removeClass('open');
+			}
+		});
+	}
+
+	if (wkCatExh) {
+		wkCatExh.addEventListener(clickEvent, function (ev) {
+			var t = ev.target;
+			if (t.tagName == 'A') {
+				track.event('category', track.IMAGE_LINK, {
+					label: 'exhibition',
+					href: t.href
+				});
+			}
+
+		});
+	}
+
+	if (categorySection) {
+		categorySection.addEventListener(clickEvent, function (ev) {
+			var t = ev.target;
+			ev.preventDefault();
+			if (t.tagName == 'A' && t.parentElement.className.indexOf('cld') > -1) {
+				track.event('category', track.TEXT_LINK, {
+					label: 'category',
+					href: t.href
+				});
+			}
+		});
+	}
+
+	/**
+	 * @param MouseEvent event
+	 */
+	$('.pagMore, .pagLess').bind(clickEvent, function (event) {
 		event.preventDefault();
 		var self = this,
 			forward = (self.className.indexOf('pagMore') > -1),
@@ -27,21 +81,21 @@ require(['events', 'loader', 'track'], function(events, loader, track){
 			method: 'getCategoryBatch',
 			format: 'html',
 			type: 'GET',
-			data:{
+			data: {
 				category: wgTitle,
 				batch: batch,
 				//this is already encoded and $.ajax encode all data
 				index: decodeURIComponent(id.slice(8))
 			},
-			callback: function(result){
+			callback: function (result) {
 				container.parentElement.removeChild(container);
 				next.insertAdjacentHTML('beforebegin', result);
 
-				if(forward) {
+				if (forward) {
 					parent.previousElementSibling.scrollIntoView();
-					track('category/next');
-				}else{
-					track('category/prev');
+					track.event('category', track.PAGINATE, {label: 'next'});
+				} else {
+					track.event('category', track.PAGINATE, {label: 'previous'});
 				}
 
 				loader.hide(self);
@@ -51,26 +105,4 @@ require(['events', 'loader', 'track'], function(events, loader, track){
 			}
 		});
 	});
-
-	var expAll = document.getElementById('expAll'),
-		wkCatExh = document.getElementById('wkCatExh');
-
-	if(expAll){
-		var elements = $('.alphaSec .artSec, .alphaSec .collSec');
-		expAll.addEventListener(clickEvent, function() {
-			if($(this).toggleClass('exp').hasClass('exp')){
-				elements.addClass('open');
-				track('category/expandAll');
-			}else{
-				elements.removeClass('open');
-				track('category/collapseAll');
-			}
-		});
-	}
-
-	if(wkCatExh){
-		wkCatExh.addEventListener(clickEvent, function() {
-			track('category/exhibition/click');
-		});
-	}
 });

@@ -4,7 +4,7 @@
  * @author Artur Klajnerok<arturk(at)wikia-inc.com>
  **/
 
-require(['loader', 'events', 'topbar'], function(loader, events, topbar){
+require(['loader', 'events', 'topbar', 'track'], function(loader, events, topbar, track){
 
     var d = document,
         wkSrhInp = d.getElementById('wkSrhInp'),
@@ -22,6 +22,20 @@ require(['loader', 'events', 'topbar'], function(loader, events, topbar){
             currentPage = ~~wkResultUl.getAttribute('data-page'),
             resultsPerPage = ~~wkResultUl.getAttribute('data-results-per-page'),
             totalResults = ~~wkResultUl.getAttribute('data-total-results');
+
+		//lets add some tracking to global search
+		wkResultUl.addEventListener(clickEvent, function(ev){
+			var t = ev.target,
+				className = t.className,
+				label = (className.indexOf('url') > -1) ? 'label' :
+					(className.indexOf('groupTitle') > -1) ? 'wikiname' :
+					(className.indexOf('searchGroup') > -1) ? 'icon' : '';
+
+			if (label) track.event('search', track.CLICK, {
+				label: label,
+				href: t.href
+			});
+		});
     }
 
     if(wkSrhInp){
@@ -47,6 +61,10 @@ require(['loader', 'events', 'topbar'], function(loader, events, topbar){
         if(condition){
             elm.className += ' active';
             loader.show(elm, {size: '30px'});
+
+			track.event('search', track.PAGINATE, {
+				label: forward ? 'next' : 'previous'
+			});
 
             $.nirvana.sendRequest({
 				controller: 'WikiaSearchAjaxController',

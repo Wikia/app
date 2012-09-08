@@ -10,6 +10,9 @@ function Observe(obj){
 
 	/**
 	 * @public
+	 *
+	 * @param event
+	 * @param data
 	 */
 	obj.fire = function (event, data){
 		event = this.getEventName(event);
@@ -49,15 +52,17 @@ function Observe(obj){
 
 		if(this._callbacks[event]) {
 			for(x = 0, y = this._callbacks[event].length; x < y; x++){
-				if(this._callbacks[event][x] === callback)
+				if(this._callbacks[event][x] === callback) {
 					this._callbacks[event].splice(x, 1);
+				}
 			}
 		}
 
 		if(this._oneTimeCallbacks[event]) {
 			for(x = 0, y = this._oneTimeCallbacks[event].length; x < y; x++){
-				if(this._oneTimeCallbacks[event][x] === callback)
+				if(this._oneTimeCallbacks[event][x] === callback) {
 					this._oneTimeCallbacks[event].splice(x, 1);
+				}
 			}
 		}
 

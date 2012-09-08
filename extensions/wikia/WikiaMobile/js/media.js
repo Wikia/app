@@ -262,6 +262,8 @@ define('media', ['modal', 'loader', 'querystring', 'popover', 'track', 'events',
 
 				!inited && setup();
 
+				if(className.indexOf('Wikia-video-thumb') > -1) track.event('video', track.CLICK, {label: 'article'});
+
 				openModal(~~t.getAttribute('data-num'));
 			}
 		}, true);
@@ -281,7 +283,9 @@ define('media', ['modal', 'loader', 'querystring', 'popover', 'track', 'events',
 
 	function setupImage(){
 		var image = images[current];
-		loader.hide(currentImage);
+		loader.remove(currentImage);
+
+		modal.setCaption(getCaption(current));
 
 		//inject the content only if it was not already there in the page
 		//to avoid refresh the contents (it triggers a full
@@ -309,7 +313,8 @@ define('media', ['modal', 'loader', 'querystring', 'popover', 'track', 'events',
 							width: window.innerWidth - 100
 						},
 						callback: function(data) {
-							loader.hide(currentImage);
+							loader.remove(currentImage);
+
 							if(!data.error){
 								videoCache[imgTitle] = data.embedCode;
 								currentImage.innerHTML = '<table id=wkVi><tr><td>' + data.embedCode + '</td></tr></table>';
@@ -340,8 +345,6 @@ define('media', ['modal', 'loader', 'querystring', 'popover', 'track', 'events',
 				}
 			}
 		}
-
-		modal.setCaption(getCaption(current));
 	}
 
 	function getCaption(num){
@@ -378,13 +381,6 @@ define('media', ['modal', 'loader', 'querystring', 'popover', 'track', 'events',
 		touched = false;
 		ev.preventDefault();
 
-	/*	var trackObj = {
-			ga_category: 'wikiamobile-modal',
-			tracking_method: 'both',
-			ga_action: WikiaTracker.ACTIONS.DOUBLETAP,
-			ga_label: ''
-		}
-	*/
 		if(zoomed){
 			resetZoom();
 			//trackObj.ga_label = 'zoom-out';
@@ -392,8 +388,6 @@ define('media', ['modal', 'loader', 'querystring', 'popover', 'track', 'events',
 			currentImageStyle.backgroundSize = 'cover';
 			//trackObj.ga_label = 'zoom-in';
 		}
-
-		//WikiaTracker.trackEvent(trackObj);
 
 		onZoom();
 	}
@@ -492,12 +486,6 @@ define('media', ['modal', 'loader', 'querystring', 'popover', 'track', 'events',
 
 	function onEnd(){
 		if(zooming){
-			/*WikiaTracker.trackEvent({
-				ga_category: 'wikiamobile-modal',
-				tracking_method: 'both',
-				ga_action: WikiaTracker.ACTIONS.PINCH,
-				ga_label: zooming
-			});*/
 			zooming = '';
 		}
 	}
@@ -584,7 +572,6 @@ define('media', ['modal', 'loader', 'querystring', 'popover', 'track', 'events',
 		heightFll = wkMdlImages.offsetHeight;
 
 		require('pager', function(pg){
-
 			pager = pg({
 				wrapper: wrapper,
 				container: wkMdlImages,
@@ -594,9 +581,15 @@ define('media', ['modal', 'loader', 'querystring', 'popover', 'track', 'events',
 					return (zoomed || zooming);
 				},
 				onEnd: function(n){
-					current = n;
-					sharePopOver.close();
-					refresh();
+					//make sure user changed page
+					if(current != n) {
+						track.event('modal', track.PAGINATE, {
+							label: current > n ? 'previous' : 'next'
+						});
+						current = n;
+						sharePopOver.close();
+						refresh();
+					}
 				},
 				circle: true
 			});
@@ -628,16 +621,20 @@ define('media', ['modal', 'loader', 'querystring', 'popover', 'track', 'events',
 			style: 'left:3px;',
 			create: function(cnt){
 				$(cnt).delegate('li', clickEvent, function(){
-					track('modal/share/' + this.className.replace('Shr',''));
+					track.event('share', track.CLICK, 'file');
 				});
 			},
 			open: function(ev){
 				ev.stopPropagation();
 				sharePopOver.changeContent(share(images[current].name));
-				//track('modal/share/open');
+				track.event('share', track.CLICK, {
+					label: 'open'
+				});
 			},
 			close: function(){
-				//track('modal/share/close');
+				track.event('share', track.CLICK, {
+					label: 'close'
+				});
 			}
 		});
 	}

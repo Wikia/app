@@ -5,7 +5,7 @@
 /* global $ */
 (function (w) {
 	'use strict';
-	var onload = function () {
+	var onload = function onload() {
 		require(['lazyload', 'sections'], function (lazyLoad, sections) {
 			var processedSections = {};
 
@@ -43,6 +43,7 @@ $(function () {
 				wkFtr = d.getElementById('wkFtr'),
 				topBar = d.getElementById('wkTopBar'),
 				fllSite = d.getElementById('wkFllSite'),
+				categoryLinks = d.getElementById('catlinks'),
 				wordmark;
 
 			while (i--) {
@@ -52,9 +53,18 @@ $(function () {
 			toc.init();
 
 			if (relPage) {
-				relPage.addEventListener(clickEvent, function () {
-					if (relPage.children[0].className.indexOf('open') > -1) {
-						//track.event('read-more', track.CLICK, {label: 'close'});
+				relPage.addEventListener(clickEvent, function (ev) {
+					var t = ev.target;
+					ev.preventDefault();
+
+					if(t.tagName == 'A') {
+						track.event('read-more', track.IMAGE_LINK, {
+							href: t.href
+						})
+					} else {
+						if (relPage.children[0].className.indexOf('open') > -1) {
+							track.event('read-more', track.CLICK, {label: 'close'});
+						}
 					}
 				});
 			}
@@ -62,7 +72,6 @@ $(function () {
 			if (fllSite) {
 				fllSite.addEventListener(clickEvent, function(event){
 					event.preventDefault();
-					//track('link/fullsite');
 					cookies.set('mobilefullsite', 'true');
 
 					var url = new qs();
@@ -85,12 +94,17 @@ $(function () {
 			if (wkShrPag) {
 				popover({
 					on: wkShrPag,
-					create: share(),
-					open: function () {
-						//track.event('share', track.CLICK, {label: 'open'});
+					create: function(cnt){
+						$(cnt).delegate('li', clickEvent, function(){
+							track.event('share', track.CLICK, {label: 'page'});
+						});
+						return share()(cnt);
 					},
-					close: function () {
-						//track.event('share', track.CLICK, {label: 'close'});
+					open: function () {
+						track.event('share', track.CLICK, {label: 'open'});
+					},
+					close: function (ev) {
+						if(ev.target.tagName != 'A') track.event('share', track.CLICK, {label: 'close'});
 					},
 					style: 'right:0;'
 				});
@@ -100,24 +114,34 @@ $(function () {
 				wkFtr.addEventListener(clickEvent, function (ev) {
 					var t = ev.target;
 					if (t.tagName == 'A') {
-						//track.event('footer', track.TEXT_LINK, {
-						//	label: 'link',
-						//	href: t.href
-						//});
+						track.event('footer', track.TEXT_LINK, {
+							label: 'link',
+							href: t.href
+						});
 					}
 				});
 			}
 
 			if (topBar) {
 				if (wordmark = topBar.children[0]) {
-					wordmark.addEventListener(clickEvent, function(ev){
-						ev.preventDefault();
-						//track.event('wordmark', track.CLICK, {
-						//	href: this.href
-						//});
+					wordmark.addEventListener(clickEvent, function () {
+						track.event('wordmark', track.CLICK, {
+							href: this.href
+						});
 					});
 				}
+			}
 
+			if (categoryLinks) {
+				categoryLinks.addEventListener(clickEvent, function (ev) {
+					var t = ev.target;
+					if (t.tagName == 'A') {
+						track.event('category', track.TEXT_LINK, {
+							label: 'article',
+							href: t.href
+						});
+					}
+				});
 			}
 		}
 	);
