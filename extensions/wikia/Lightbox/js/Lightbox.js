@@ -664,6 +664,7 @@ var Lightbox = {
 		Lightbox.openModal.progress = $('#LightboxCarouselProgress');
 		Lightbox.openModal.data('overlayactive', true);
 
+		$(document).off('keydown.Lightbox');
 		$(document).on('keydown.Lightbox', function(e) {
 			if(e.keyCode == 37) {
 				$('#LightboxPrevious').click();
