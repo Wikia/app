@@ -250,7 +250,7 @@ EOT
 		//Begin: Small Stuff Week - adding table from Special:LookupContribs --nAndy
 		if( !empty($wgEnableLookupContribsExt) ) {
 			$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/LookupContribs/css/table.css");
-			$wgOut->addExtensionStyle("{$wgExtensionsPath}/LookupUser/css/lookupuser.css");
+			$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/LookupUser/css/lookupuser.css");
 			$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgResourceBasePath}/resources/wikia/libraries/jquery/datatables/jquery.dataTables.min.js\"></script>\n");
 
 			//checking and setting User::mBlockedGlobally if needed
