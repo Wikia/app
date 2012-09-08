@@ -107,16 +107,23 @@
 	}
 }
 
+//counter displayed mainly in lists or on ArticleComments seaction
 .cnt {
-	font-size: small;
-	padding: 1px 4px;
-	border-radius: 3px;
-	color: #999;
-	background: #F2F2F2;
-	font-weight:100;
-	margin: 0 10px;
 	position: relative;
 	bottom: 1px;
+
+	margin: 0 10px;
+	padding: 1px 4px;
+
+	color: #999;
+	font-size: small;
+	font-weight:100;
+
+	background: #F2F2F2;
+
+	border-radius: 3px;
+
+	pointer-events: none;
 }
 
 //classes with images to avoid loading them more than once

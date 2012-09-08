@@ -302,6 +302,14 @@ $config['wikiamobile_404_scss'] = array(
 	)
 );
 
+$config['wikiamobile_404_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => 'wikiamobile',
+	'assets' => array(
+		'//extensions/wikia/WikiaMobile/js/404.js',
+	)
+);
+
 //loaded at the top of the page in the head section
 $config['wikiamobile_js_head'] = array(
 	'type' => AssetsManager::TYPE_JS,
@@ -942,7 +950,7 @@ $config['places_css'] = array(
 /** WikiaPhotoGallery **/
 
 $config['wikiaphotogallery_slider_js_wikiamobile'] = array(
-		'skin' => array( 'wikiamobile' ),
+		'skin' => 'wikiamobile',
 		'type' => AssetsManager::TYPE_JS,
 		'assets' => array(
 				'//extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.slider.wikiamobile.js'

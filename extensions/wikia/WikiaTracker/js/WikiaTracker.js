@@ -40,6 +40,9 @@ window.WikiaTracker = (function(){
 		// Form submit, usually a post method
 		SUBMIT: 'submit',
 
+		// General swipe event
+		SWIPE: 'swipe',
+
 		// Action to take a survey
 		TAKE_SURVEY: 'take-survey',
 

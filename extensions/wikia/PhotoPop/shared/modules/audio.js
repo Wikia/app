@@ -1,3 +1,4 @@
+/* global Wikia, Audio, Titanium*/
 var exports = exports || {};
 
 define.call(exports, [
