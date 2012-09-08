@@ -1,3 +1,5 @@
+/*global showComboAjaxForPlaceHolder, UserLoginModal*/
+
 /*
  * Function for adding a video via video modal 
  *
@@ -15,9 +17,10 @@
 			gaCat: null
 		}
 
-		var settings = $.extend(settings, options);
+		settings = $.extend(settings, options);
 
 		var controllerName = 'VideosController';
+		
 		if ( wgIsArticle == true ) {
 			controllerName = 'RelatedVideosController';
 		}
@@ -37,8 +40,7 @@
 							$( window ).scrollTop( element.offset().top + 100 );
 						}
 					}, false, message );
-				}
-				else {
+				} else {
 					UserLoginModal.show({
 						callback: function() {
 							$( window ).scrollTop( element.offset().top + 100 );
@@ -50,7 +52,7 @@
 			} else {
 				callback();
 			}
-		}
+		};
 
 		var addVideoModal = function(){
 			WikiaTracker.trackEvent(
@@ -67,7 +69,7 @@
 				'getAddVideoModal',
 				{
 					title: wgTitle,
-					format: 'html',
+					format: 'html'
 				},
 				function( res ) {
 					if ( res.html ) {
@@ -86,7 +88,7 @@
 					showError();
 				}
 			);
-		}
+		};
 
 		var initModalScroll = function( modal ) {
 			self.addPos = 1;
@@ -96,7 +98,7 @@
 			self.addModal.delegate( '.add-this-video', 'click', modalAddVideo );
 	        self.addModal.delegate( 'a.video', 'click', previewVideo );
 	        updateModalScrollButtons();
-		}
+		};
 
 		var updateModalScrollButtons = function() {
 	
@@ -111,17 +113,17 @@
 	        } else {
 	            $('.scrollright', self.addModal).removeClass("inactive");
 	        }
-	    }
+	    };
 	
 		var modalScrollLeft = function() {
 			modalScroll(-1);
 	        updateModalScrollButtons();
-		}
+		};
 	
 		var modalScrollRight = function() {
 			modalScroll(1);
 	        updateModalScrollButtons();
-		}
+		};
 	
 		var modalScroll = function( param, callback ) {
 			//setup variables
@@ -148,12 +150,12 @@
 			} else if (futureState == 0 && self.addMax == 1) {
 				$('.page', self.addModal).text(1);
 			}
-		}
+		};
 
 		var enableVideoSubmit = function(){
 			self.addModal.undelegate( '.add-form', 'submit').removeClass('loading');
 			self.addModal.delegate( '.add-form', 'submit', addVideoConfirm );
-		}
+		};
 
 		var preventVideoSubmit = function(){
 			self.addModal.undelegate( '.add-form', 'submit').addClass('loading');
@@ -164,7 +166,7 @@
 					e.preventDefault();
 				}
 			);
-		}
+		};
 
 		var addVideoConfirm = function( e ){
 			e.preventDefault();
@@ -206,7 +208,7 @@
 					showError();
 				}
 			);
-		}
+		};
 
 	    // Only used on article pages in related videos module
 	    var previewVideo = function() {
@@ -229,7 +231,7 @@
 	            }
 	        );
 	        return false;
-	    }
+	    };
 	
 	    var bindPreviewActions = function() {
 	
@@ -241,29 +243,29 @@
 	        } );
 	        self.addModal.delegate( '.insert', 'click', modalAddVideo );
 	
-	    }
+	    };
 	
 		var modalAddVideo = function(ev) {
 			var video = 'File:'+$(ev.target).closest('.item').children('.item-title').attr('data-dbkey');
 			$('.videoUrl', self.addModal).val(video);
 			addVideoConfirm(ev);
-		}
+		};
 		
 		var showError = function(error) {
 			// TODO: make this work with Special:Videos - maybe add error message to options
 			error = error || $('.errorWhileLoading').html();
 			GlobalNotification.dom.stop(true, true);
-			GlobalNotification.show(error, 'error')
-		}
+			GlobalNotification.show(error, 'error');
+		};
 	
 		var handleClick = function(e) {
 			e.preventDefault();
 			loginWrapper(addVideoModal);
-		}		
+		};	
 
 		element.on('click', handleClick);
 
-	}
+	};
 
 	$.fn.addVideoButton = function(options) {
 	
