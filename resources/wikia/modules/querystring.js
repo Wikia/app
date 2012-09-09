@@ -56,18 +56,17 @@
 				link = l.host;
 				path = l.pathname;
 				srh = l.search.substr(1);
-				hash = l.hash.substr(1)
+				hash = l.hash.substr(1);
 			}
 
 			if(srh){
-				var tmpQuery = srh.split('&').filter(
-					function(elm){
-						if(elm) return true;
-					});
+				var tmpQuery = srh.split('&');
 
 				for(var i = 0; i < tmpQuery.length; i++){
-					tmp = tmpQuery[i].split('=');
-					cache[tmp[0]] = decodeURIComponent(tmp[1]) || '';
+					if(tmpQuery[i]) {
+						tmp = tmpQuery[i].split('=');
+						cache[tmp[0]] = decodeURIComponent(tmp[1]) || '';
+					}
 				}
 			}
 
