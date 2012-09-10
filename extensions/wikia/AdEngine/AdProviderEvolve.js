@@ -145,6 +145,9 @@ window.AdProviderEvolve = window.AdProviderEvolve || (function (WikiaTracker, lo
 		return script;
 	}
 
+	// TODO @mech rethink
+	if (wgInsideUnitTest) return {fillInSlot:fillInSlot, hop:hop, sanitizeSlotname:sanitizeSlotname, getUrl:getUrl}
+
 	return {fillInSlot:fillInSlot, hop:hop};
 
 })(WikiaTracker, Wikia.log, window, ghostwriter, document);
