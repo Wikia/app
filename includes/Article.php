@@ -1822,7 +1822,8 @@ class Article extends Page {
 	 *
 	 * //Wikia Change (helping PHP Lint do its job)- Jakub Olek
 	 * @method Integer getId
-	 * @methdo Title getTitle
+	 * @method Title getTitle
+	 * @method Bool exists
 	 * //Wikia Change end
 	 */
 	public function __call( $fname, $args ) {
