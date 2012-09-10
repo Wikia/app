@@ -66,6 +66,8 @@ window.AdConfig2 = window.AdConfig2 || (function (log, Wikia, window) {
 
 	// TODO refactor when fb:45432 is done
 	function getCountry() {
+		if (window.testUseCountry) return window.testUseCountry;
+
 		if (_cache_geo) {
 			return _cache_geo.country;
 		}
