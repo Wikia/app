@@ -241,6 +241,7 @@ $config['oasis_nojquery_shared_js'] = array(
 		'//extensions/wikia/CategorySelect/CategorySelect.view.js',
 
 		// oasis specific files
+		'//resources/wikia/libraries/bootstrap/tooltip.js',
 		'//skins/oasis/js/hoverMenu.js',
 		'//skins/oasis/js/PageHeader.js',
 		'//skins/oasis/js/Search.js',
@@ -257,7 +258,6 @@ $config['oasis_nojquery_shared_js'] = array(
 		'//skins/oasis/js/tabs.js',
 		'//skins/oasis/js/SharingToolbar.js',
 		'//skins/oasis/js/WikiaForm.js',
-		'//resources/wikia/libraries/bootstrap/tooltip.js',
 	)
 );
 

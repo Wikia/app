@@ -1,7 +1,3 @@
-$(function() {
-	var wall_notifications = new WallNotifications();
-});
-
 var $window = $(window);
 var WallNotifications = $.createClass(Object, {
 	constructor: function() {
@@ -380,4 +376,8 @@ var WallNotifications = $.createClass(Object, {
 	proxy: function( func ) {
 		return $.proxy( func, this );
 	}
+});
+
+$(function() {
+	var wall_notifications = new WallNotifications();
 });
