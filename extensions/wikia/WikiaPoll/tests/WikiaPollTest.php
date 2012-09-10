@@ -32,7 +32,8 @@ class WikiaPollTest extends WikiaBaseTest {
 	public function testWikiaPollAjax() {
 //		global $wgUser, $wgTitle;
 
-		$poll = WF::build('WikiaPollAjax'); /* @var $poll WikiaPollAjax */
+		/* @var $poll WikiaPollAjax */
+		$poll = WF::build('WikiaPollAjax');
 
 		// Sometimes the tear down doesn't execute?  Delete any old data before running create...
 		$title = Title::newFromText ("Unit Testing", NS_WIKIA_POLL) ;
@@ -149,6 +150,7 @@ class WikiaPollTest extends WikiaBaseTest {
 
 	function testDuplicateCreate() {
 
+		/**  @var $poll WikiaPollAjax */
 		$poll = WF::build('WikiaPollAjax');
 
 		$wgRequest = $this->getMock('WebRequest', array('getVal', 'getArray'));
