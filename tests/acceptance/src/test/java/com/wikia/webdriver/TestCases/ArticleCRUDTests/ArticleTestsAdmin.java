@@ -11,31 +11,15 @@ import com.wikia.webdriver.PageObjects.PageObject.WikiBasePageObject;
 import com.wikia.webdriver.PageObjects.PageObject.WikiPage.WikiArticleEditMode;
 import com.wikia.webdriver.PageObjects.PageObject.WikiPage.WikiArticlePageObject;
 
-public class ArticleTests extends TestTemplate{
+public class ArticleTestsAdmin extends TestTemplate{
 	
 	private String pageName;
 	private String articleText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
 	private String articleTextEdit = "Brand new content";
 	private String commentText = "Lorem ipsum dolor sit amet, comment";
 	private String commentTextEdit = "Brand new comment";
+	private String replyText = "Brand new reply";
 	
-	
-	/*
-	 * TestCase001
-	 * Open random wiki page as anonymous user
-	 * Click edit drop-down
-	 * Verify available edit options for anonymous user (history item)
-	 */
-	@Test(groups={"ArticleCRUD_001", "ArticleCRUD"})
-	public void ArticleCRUD_001_VerifyEditDropDown_AnonymousUser()
-	{
-		CommonFunctions.logOut(Properties.userName, driver);
-		WikiBasePageObject wiki = new WikiBasePageObject(driver, Global.DOMAIN);
-		wiki.openWikiPage();
-		wiki.openRandomArticle();
-		wiki.clickEditDropDown();
-		wiki.verifyEditDropDownAnonymous();
-	}
 	
 	/*
 	 * TestCase002
@@ -43,8 +27,8 @@ public class ArticleTests extends TestTemplate{
 	 * Click edit drop-down
 	 * Verify available edit options for logged in user (history and rename)
 	 */
-	@Test(groups={"ArticleCRUD_002", "ArticleCRUD"})
-	public void ArticleCRUD_002_VerifyEditDropDown_LoggedInUser()
+	@Test(groups={"ArticleCRUDAdmin_002", "ArticleCRUDAdmin"})
+	public void ArticleCRUDAdmin_002_VerifyEditDropDown_LoggedInUser()
 	{
 		CommonFunctions.logOut(Properties.userName, driver);
 		CommonFunctions.logIn(Properties.userName, Properties.password);
@@ -62,8 +46,8 @@ public class ArticleTests extends TestTemplate{
 	 * Click edit drop-down
 	 * Verify available edit options for admin user (history, rename, protect, delete)
 	 */
-	@Test(groups={"ArticleCRUD_003", "ArticleCRUD"})
-	public void ArticleCRUD_003_VerifyEditDropDown_AdminUser()
+	@Test(groups={"ArticleCRUDAdmin_003", "ArticleCRUDAdmin"})
+	public void ArticleCRUDAdmin_003_VerifyEditDropDown_AdminUser()
 	{
 		CommonFunctions.logOut(Properties.userNameStaff, driver);
 		CommonFunctions.logIn(Properties.userNameStaff, Properties.passwordStaff);
@@ -87,9 +71,9 @@ public class ArticleTests extends TestTemplate{
 	 * 	made from digits:123123123123
 	 * Delete article
 	 */
-		
-	@Test(groups={"ArticleCRUD_004", "ArticleCRUD"})
-	public void ArticleCRUD_004_CreateArticle_Admin(String articleName)
+			
+	@Test(dataProvider="getArticleName", groups={"ArticleCRUDAdmin_004", "ArticleCRUDAdmin"})
+	public void ArticleCRUDAdmin_004_CreateArticle_Admin(String articleName)
 	{
 		CommonFunctions.logOut(Properties.userName, driver);
 		CommonFunctions.logIn(Properties.userNameStaff, Properties.passwordStaff);
@@ -114,8 +98,8 @@ public class ArticleTests extends TestTemplate{
 	 * Edit article
 	 * Delete article
 	 */
-	@Test(groups={"ArticleCRUD_005", "ArticleCRUD"})
-	public void ArticleCRUD_005_CreateEditArticle_Admin()
+	@Test(groups={"ArticleCRUDAdmin_005", "ArticleCRUDAdmin"})
+	public void ArticleCRUDAdmin_005_CreateEditArticle_Admin()
 	{
 		CommonFunctions.logOut(Properties.userName, driver);
 		CommonFunctions.logIn(Properties.userNameStaff, Properties.passwordStaff);
@@ -149,8 +133,8 @@ public class ArticleTests extends TestTemplate{
 	 * Delete comment
 	 * Delete article
 	 */
-	@Test(groups={"ArticleCRUD_006", "ArticleCRUD"})
-	public void ArticleCRUD_006_CreateArticleComment_Admin()
+	@Test(groups={"ArticleCRUDAdmin_006", "ArticleCRUDAdmin"})
+	public void ArticleCRUDAdmin_006_CreateArticleComment_Admin()
 	{
 		CommonFunctions.logOut(Properties.userName, driver);
 		CommonFunctions.logIn(Properties.userNameStaff, Properties.passwordStaff);
@@ -181,8 +165,8 @@ public class ArticleTests extends TestTemplate{
 	 * Delete comment
 	 * Delete article
 	 */
-	@Test(groups={"ArticleCRUD_007", "ArticleCRUD"}) //P2 issue raised: https://wikia.fogbugz.com/default.asp?46789 article comments aren't visible in IE9
-	public void ArticleCRUD_007_CreateArticleEditComment_007()
+	@Test(groups={"ArticleCRUDAdmin_007", "ArticleCRUDAdmin"}) //P2 issue raised: https://wikia.fogbugz.com/default.asp?46789 article comments aren't visible in IE9
+	public void ArticleCRUDAdmin_007_CreateArticleEditComment_007()
 	{
 		CommonFunctions.logOut(Properties.userName, driver);
 		CommonFunctions.logIn(Properties.userNameStaff, Properties.passwordStaff);
@@ -216,18 +200,97 @@ public class ArticleTests extends TestTemplate{
 	 * Delete article
 	 * Undelete article
 	 */
+	
+	@Test(groups={"ArticleCRUDAdmin_008", "ArticleCRUDAdmin"})
+	public void ArticleCRUDAdmin_008_CreateArticleUndeleteDelete_Admin()
+	{
+		CommonFunctions.logOut(Properties.userName, driver);
+		CommonFunctions.logIn(Properties.userNameStaff, Properties.passwordStaff);
+		WikiBasePageObject wiki = new WikiBasePageObject(driver, Global.DOMAIN);
+		pageName = "QAarticle"+wiki.getTimeStamp();
+		wiki.openWikiPage();
+		WikiArticleEditMode edit = wiki.createNewArticle(pageName, 1);
+		edit.deleteArticleContent();
+		edit.clickOnVisualButton();
+		edit.typeInContent(articleText);
+		WikiArticlePageObject article = edit.clickOnPublishButton();
+		article.verifyPageTitle(pageName);
+		article.verifyArticleText(articleText);
+		article.deleteArticle();
+		article.undeleteArticle();
+		article.openArticle(pageName);
+		article.verifyPageTitle(pageName);
+		article.verifyArticleText(articleText);
+		article.deleteArticle();
+		article.openArticle(pageName);
+		article.verifyDeletedArticlePage(pageName);
+		CommonFunctions.logOut(Properties.userNameStaff, driver);
+	}
 	/*
 	 * TestCase006
 	 * Add article
 	 * Move-rename article
 	 * Delete article
 	 */
-	/*
-	 * verification of available options in edit drop-down for logged in user
+	
+	@Test(groups={"ArticleCRUDAdmin_009", "ArticleCRUDAdmin"})
+	public void ArticleCRUDAdmin_009_CreateArticleMoveDelete_Admin()
+	{
+		CommonFunctions.logOut(Properties.userName, driver);
+		CommonFunctions.logIn(Properties.userNameStaff, Properties.passwordStaff);
+		WikiBasePageObject wiki = new WikiBasePageObject(driver, Global.DOMAIN);
+		pageName = "QAarticle"+wiki.getTimeStamp();
+		wiki.openWikiPage();
+		WikiArticleEditMode edit = wiki.createNewArticle(pageName, 1);
+		edit.deleteArticleContent();
+		edit.clickOnVisualButton();
+		edit.typeInContent(articleText);
+		WikiArticlePageObject article = edit.clickOnPublishButton();
+		article.verifyPageTitle(pageName);
+		article.verifyArticleText(articleText);
+		article.renameArticle(pageName, pageName+"moved");
+		article.verifyPageTitle(pageName+"moved");
+		article.verifyArticleText(articleText);
+		article.deleteArticle();
+		article.openArticle(pageName+"moved");
+		article.verifyDeletedArticlePage(pageName+"moved");
+		CommonFunctions.logOut(Properties.userNameStaff, driver);
+	}
+	
+	/* 
+	 * TestCase010
+	 * Add article as admin
+	 * Add comment
+	 * Reply comment
+	 * Delete comment
+	 * Delete article
 	 */
-	/*
-	 * verification of available options in edit drop-down for logged out user
-	 */
+	@Test(groups={"ArticleCRUDAdmin_010", "ArticleCRUDAdmin"})
+	public void ArticleCRUDAdmin_010_CreateArticleCommentReply_Admin()
+	{
+		CommonFunctions.logOut(Properties.userName, driver);
+		CommonFunctions.logIn(Properties.userNameStaff, Properties.passwordStaff);
+		WikiBasePageObject wiki = new WikiBasePageObject(driver, Global.DOMAIN);
+		pageName = "QAarticle"+wiki.getTimeStamp();
+		wiki.openWikiPage();
+		WikiArticleEditMode edit = wiki.createNewArticle(pageName, 1);
+		edit.deleteArticleContent();
+		edit.clickOnVisualButton();
+		edit.typeInContent(articleText);
+		WikiArticlePageObject article = edit.clickOnPublishButton();
+		edit.verifyPageTitle(pageName);
+		article.triggerCommentArea();
+		article.writeOnCommentArea(commentText);
+		article.clickSubmitButton();
+		article.verifyComment(commentText, Properties.userNameStaff);
+		article.replyComment(commentText, replyText);
+		article.deleteComment(commentText);
+		edit.deleteArticle();
+		edit.openArticle(pageName);
+		edit.verifyDeletedArticlePage(pageName);
+		CommonFunctions.logOut(Properties.userNameStaff, driver);
+	}
+
 	
 	@DataProvider
 	private static final Object[][] getArticleName()

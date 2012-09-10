@@ -19,7 +19,7 @@ public class SignUpTests_account_creation extends TestTemplate
 	 * 3.30 Test Case 2.3.01 Sign up page: Account creation Non latin username
 	 * https://internal.wikia-inc.com/wiki/Global_Log_in_and_Sign_up/Test_Cases:_Sign_up  
 	 * */
-	@Test(groups = {"SignUp_account_creation_TC_001"})
+	@Test(groups = {"SignUp_account_creation_TC_001", "SignUp"})
 	public void SignUp_account_creation_TC_001_non_latin_user_name()
 	{
 		SignUpPageObject signUp = new SignUpPageObject(driver);
@@ -49,7 +49,7 @@ public class SignUpTests_account_creation extends TestTemplate
 	 * 3.32 Test Case 2.3.03 Sign up page: Account creation Fifty character Username
 	 * https://internal.wikia-inc.com/wiki/Global_Log_in_and_Sign_up/Test_Cases:_Sign_up  
 	 * */
-	@Test(groups = {"SignUp_account_creation_TC_002"})
+	@Test(groups = {"SignUp_account_creation_TC_002", "SignUp"})
 	public void SignUp_account_creation_TC_002_fifty_character_user_name()
 	{
 		SignUpPageObject signUp = new SignUpPageObject(driver);
@@ -78,7 +78,7 @@ public class SignUpTests_account_creation extends TestTemplate
 	 * 3.33 Test Case 2.3.04 Sign up page: Account creation Username contains a backward slash
 	 * https://internal.wikia-inc.com/wiki/Global_Log_in_and_Sign_up/Test_Cases:_Sign_up  
 	 * */
-	@Test(groups = {"SignUp_account_creation_TC_003"})
+	@Test(groups = {"SignUp_account_creation_TC_003", "SignUp"})
 	public void SignUp_account_creation_TC_003_backward_slash_user_name()
 	{
 		SignUpPageObject signUp = new SignUpPageObject(driver);
@@ -108,7 +108,7 @@ public class SignUpTests_account_creation extends TestTemplate
 	 * 3.36 Test Case 2.3.07 Sign up page: Account creation Password is 1 character
 	 * https://internal.wikia-inc.com/wiki/Global_Log_in_and_Sign_up/Test_Cases:_Sign_up  
 	 * */
-	@Test(groups = {"SignUp_account_creation_TC_004"})
+	@Test(groups = {"SignUp_account_creation_TC_004", "SignUp"})
 	public void SignUp_account_creation_TC_004_one_char_password()
 	{
 		SignUpPageObject signUp = new SignUpPageObject(driver);
@@ -137,7 +137,7 @@ public class SignUpTests_account_creation extends TestTemplate
 	 * 3.37 Test Case 2.3.08 Sign up page: Account creation Password is 50 characters
 	 * https://internal.wikia-inc.com/wiki/Global_Log_in_and_Sign_up/Test_Cases:_Sign_up  
 	 * */
-	@Test(groups = {"SignUp_account_creation__005"})
+	@Test(groups = {"SignUp_account_creation__005", "SignUp"})
 	public void SignUp_account_creation_TC_005_fifty_character_password()
 	{
 		SignUpPageObject signUp = new SignUpPageObject(driver);
@@ -165,7 +165,7 @@ public class SignUpTests_account_creation extends TestTemplate
 	 * 3.38 Test Case 2.3.09 Sign up page: Account creation Birthdate 29-Feb and leap year
 	 * https://internal.wikia-inc.com/wiki/Global_Log_in_and_Sign_up/Test_Cases:_Sign_up  
 	 * */
-	@Test(groups = {"SignUp_account_creation_TC_006"})
+	@Test(groups = {"SignUp_account_creation_TC_006", "SignUp"})
 	public void SignUp_account_creation_TC_006_lap_year()
 	{
 		SignUpPageObject signUp = new SignUpPageObject(driver);
