@@ -80,6 +80,9 @@ window.AdProviderGamePro = window.AdProviderGamePro || (function(WikiaTracker, l
 		return out;
 	}
 
+	// TODO @mech rethink
+	if (wgInsideUnitTest) return {fillInSlot:fillInSlot, rebuildKV:rebuildKV}
+
 	return {fillInSlot:fillInSlot};
 
 })(WikiaTracker, Wikia.log, window, ghostwriter, document);
