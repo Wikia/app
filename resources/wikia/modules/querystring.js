@@ -5,18 +5,20 @@
  */
 
 (function(){
+	'use strict';
+
 	if(window.define){
 		//AMD
 		define('querystring', querystring);//late binding
 	}else{
 		//namespace
-		if(!window.Wikia) window.Wikia = {};
+		if(!window.Wikia) {window.Wikia = {};}
 
 		window.Wikia.Querystring = querystring();//late binding
 	}
 
 	function isEmpty(o) {
-		for(var k in o) return false;
+		for(var k in o) {return false;}
 		return true;
 	}
 
@@ -60,9 +62,10 @@
 			}
 
 			if(srh){
-				var tmpQuery = srh.split('&');
+				var tmpQuery = srh.split('&'),
+					i = tmpQuery.length;
 
-				for(var i = 0; i < tmpQuery.length; i++){
+				while(i--){
 					if(tmpQuery[i]) {
 						tmp = tmpQuery[i].split('=');
 						cache[tmp[0]] = decodeURIComponent(tmp[1]) || '';
