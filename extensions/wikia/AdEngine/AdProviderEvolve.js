@@ -57,18 +57,20 @@ window.AdProviderEvolve = window.AdProviderEvolve || (function (WikiaTracker, lo
 	function getSect() {
 		log('getSect', 5, 'AdProviderEvolve');
 
+		var kv = window.wgWikiFactoryTagNames || [];
+		var hub = window.cscoreCat || '';
+
 		var sect;
-		// TODO criteria...
-		if (true) {
+		if (window.wgDBname == 'wikiaglobal') {
 			sect = 'home';
-		} else if (false) {
-			sect = 'entertainment';
-		} else if (false) {
-			sect = 'gaming';
-		} else if (false) {
+		} else if (kv.indexOf('movies') != -1) {
 			sect = 'movies';
-		} else if (false) {
+		} else if (kv.indexOf('tv') != -1) {
 			sect = 'tv';
+		} else if (hub == 'Entertainment') {
+			sect = 'entertainment';
+		} else if (hub == 'Gaming') {
+			sect = 'gaming';
 		} else {
 			sect = 'ros';
 		}

@@ -20,7 +20,12 @@ test('sanitizeSlotname', function() {
 });
 
 test('getUrl', function() {
-	var expected = 'http://n4403ad.doubleclick.net/adj/gn.wikia4.com/home;sect=home;mtfInline=true;pos=TOP_LEADERBOARD;sz=728x90;dcopt=ist;type=pop;type=int;tile=1;ord=1234567890?';
+	// setup
+	window.wgDBname = null;
+	window.wgWikiFactoryTagNames = null;
+	window.cscoreCat = null;
+
+	var expected = 'http://n4403ad.doubleclick.net/adj/gn.wikia4.com/ros;sect=ros;mtfInline=true;pos=TOP_LEADERBOARD;sz=728x90;dcopt=ist;type=pop;type=int;tile=1;ord=1234567890?';
 	expected = expected.replace(/;ord=[0-9]+\?$/, ''); // ord is random cb
 
 	var actual = AdProviderEvolve.getUrl('TOP_LEADERBOARD', '728x90');
@@ -30,5 +35,20 @@ test('getUrl', function() {
 });
 
 test('getSect', function() {
-	equal(AdProviderEvolve.getSect(), 'home', 'home');
+	// setup
+	window.wgDBname = null;
+	window.wgWikiFactoryTagNames = null;
+	window.cscoreCat = null;
+
+	equal(AdProviderEvolve.getSect(), 'ros', 'ros');
+
+	window.wgWikiFactoryTagNames = ['tv'];
+	window.cscoreCat = 'Entertainment';
+
+	equal(AdProviderEvolve.getSect(), 'tv', 'tv entertainment');
+
+	window.wgWikiFactoryTagNames = ['foo'];
+	window.cscoreCat = 'Entertainment';
+
+	equal(AdProviderEvolve.getSect(), 'entertainment', 'foo entertainment');
 });
