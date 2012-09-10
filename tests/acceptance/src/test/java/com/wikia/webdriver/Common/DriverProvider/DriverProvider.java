@@ -3,11 +3,17 @@ package com.wikia.webdriver.Common.DriverProvider;
 import java.io.File;
 import java.util.concurrent.TimeUnit;
 
+import org.browsermob.core.har.Har;
+import org.browsermob.proxy.ProxyServer;
+import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.remote.CapabilityType;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 
 import com.wikia.webdriver.Common.Core.Global;
@@ -20,7 +26,7 @@ public class DriverProvider {
 	
 	private static final DriverProvider instance = new DriverProvider();
 	private static WebDriver driver;
-	
+	private static ProxyServer server;
 
 	/**
 	 * creating webdriver instance based on given browser string
@@ -29,7 +35,6 @@ public class DriverProvider {
 	 */
 	public static DriverProvider getInstance()
 	{
-		
 		PageObjectLogging listener = new PageObjectLogging();
 		
 		if (Global.BROWSER.equals("IE"))
@@ -40,6 +45,36 @@ public class DriverProvider {
 		else if (Global.BROWSER.equals("FF"))
 		{
 			driver = new EventFiringWebDriver(new FirefoxDriver()).register(listener);
+		}
+		else if (Global.BROWSER.equals("FFPROXY"))
+		{
+			server = new ProxyServer(4569);
+			try
+			{
+				server.start();
+				server.setCaptureHeaders(true);
+				server.setCaptureContent(true);
+				server.newHar("test");
+				DesiredCapabilities caps = new DesiredCapabilities();
+				Proxy proxy = server.seleniumProxy();
+				FirefoxProfile profile = new FirefoxProfile();
+				profile.setAcceptUntrustedCertificates(true);
+				profile.setAssumeUntrustedCertificateIssuer(true);
+				profile.setPreference("network.proxy.http", "localhost");
+		        profile.setPreference("network.proxy.http_port", 4569);
+		        profile.setPreference("network.proxy.ssl", "localhost");
+		        profile.setPreference("network.proxy.ssl_port", 4569);
+		        profile.setPreference("network.proxy.type", 1);
+		        profile.setPreference("network.proxy.no_proxies_on", "");
+		        profile.setProxyPreferences(proxy);
+		        caps.setCapability(FirefoxDriver.PROFILE,profile);
+		        caps.setCapability(CapabilityType.PROXY, proxy);
+		        driver = new EventFiringWebDriver(new FirefoxDriver(caps)).register(listener);
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+			}
 		}
 		else if (Global.BROWSER.equals("CHROME"))
 		{
@@ -80,6 +115,10 @@ public class DriverProvider {
 		return driver;
 	}
 	
+	public static ProxyServer getServer()
+	{
+		return server;
+	}
 	/**
 	 * @author Karol Kujawiak
 	 */
