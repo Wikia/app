@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
 
+import org.browsermob.proxy.ProxyServer;
+import org.browsermob.proxy.jetty.jetty.Server;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
@@ -19,6 +21,7 @@ import com.wikia.webdriver.Common.Properties.Properties;
 public class TestTemplate {
 	
 	public WebDriver driver;
+	public ProxyServer server;
 	
 	@BeforeSuite(alwaysRun = true)
 	public void beforeSuite()
@@ -86,6 +89,7 @@ public class TestTemplate {
 	{
 		DriverProvider.getInstance();
 		driver = DriverProvider.getWebDriver();
+		server = DriverProvider.getServer();
 	}
 	
 	private void stopBrowser()
