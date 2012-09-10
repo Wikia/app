@@ -48,6 +48,18 @@ public class WikiBasePageObject extends BasePageObject {
 	@FindBy(css="a[data-canonical='random']")
 	private WebElement randomPageButton;
 	
+	@FindBy(css="div.msg a")
+	private WebElement undeleteButton;
+	
+	@FindBy(css="input#mw-undelete-submit")
+	private WebElement restoreButton;
+	
+	@FindBy(css="input#wpNewTitleMain")
+	private WebElement renameArticleField;
+	
+	@FindBy(css="input[name='wpMove']")
+	private WebElement confirmRenamePageButton;
+	
 	private By layoutList = By.cssSelector("ul#CreatePageDialogChoices li");
 	
 	public WikiBasePageObject(WebDriver driver, String Domain) {
@@ -203,6 +215,39 @@ public class WikiBasePageObject extends BasePageObject {
 //		clickDeleteButtonInDropDown();
 		clickDeleteConfirmationButton();
 		PageObjectLogging.log("deleteArticle", "article has been deleted", true, driver);
+	}
+	
+	public void renameArticle(String articleName, String articleNewName)
+	{
+		driver.get(Global.DOMAIN+"wiki/Special:MovePage/"+articleName);
+		waitForElementByElement(renameArticleField);
+		waitForElementByElement(confirmRenamePageButton);
+		renameArticleField.clear();
+		renameArticleField.sendKeys(articleNewName);
+		confirmRenamePageButton.click();
+		waitForElementByXPath("//b[contains(text(), '\""+articleName+"\" has been renamed \""+articleNewName+"\"')]");
+	}
+	
+	private void clickUndeleteArticle()
+	{
+		waitForElementByElement(undeleteButton);
+		undeleteButton.click();
+		waitForElementByElement(restoreButton);
+		PageObjectLogging.log("clickUndeleteArticle", "undelete article button clicked", true, driver);
+	}
+	
+	private void clickRestoreArticleButton()
+	{
+		waitForElementByElement(restoreButton);
+		restoreButton.click();
+		waitForElementByXPath("//div[@class='msg' and contains(text(), 'This page has been restored.')]");
+		PageObjectLogging.log("clickUndeleteArticle", "undelete article button clicked", true, driver);
+	}
+	
+	public void undeleteArticle()
+	{
+		clickUndeleteArticle();
+		clickRestoreArticleButton();
 	}
 	
 	public WikiArticleEditMode createNewArticle(String pageName, int layoutNumber)

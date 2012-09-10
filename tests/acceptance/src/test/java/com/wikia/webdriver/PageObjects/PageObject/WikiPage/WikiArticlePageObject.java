@@ -1,6 +1,7 @@
 package com.wikia.webdriver.PageObjects.PageObject.WikiPage;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -33,8 +34,10 @@ public class WikiArticlePageObject extends WikiBasePageObject {
 	private WebElement submitCommentButton;
 	@FindBy(css="a.article-comm-delete")
 	private WebElement deleteCommentButton;
-	@FindBy(css="span.edit-link")
+	@FindBy(css="span.edit-link a")
 	private WebElement editCommentButton;
+	@FindBy(css="input[id*='article-comm-reply']")
+	private WebElement submitReplyButton;
 	
 	
 	private By ImageOnWikiaArticle = By.cssSelector("div.WikiaArticle figure a img");
@@ -78,7 +81,7 @@ public class WikiArticlePageObject extends WikiBasePageObject {
 	
 	public WikiArticlePageObject clickSubmitButton(String userName)
 	{		
-		driver.findElement(By.xpath("//a[contains(text(), '"+userName+"')]/../../..//input[@class='actionButton']")).click();//submit button taken by username which edited comment
+		click(driver.findElement(By.xpath("//a[contains(text(), '"+userName+"')]/../../..//input[@class='actionButton']")));//submit button taken by username which edited comment
 		PageObjectLogging.log("clickSubmitButton", "submit article button clicked", true, driver);
 		return new WikiArticlePageObject(driver, Domain, articlename);
 	}
@@ -88,6 +91,35 @@ public class WikiArticlePageObject extends WikiBasePageObject {
 		waitForElementByXPath("//blockquote//p[contains(text(), '"+message+"')]");
 		waitForElementByXPath("//div[@class='edited-by']//a[contains(text(), '"+userName+"')]");
 		PageObjectLogging.log("verifyComment", "comment: "+message+" is visible", true, driver);
+	}
+	
+	private void clickReplyCommentButton(String comment)
+	{
+		waitForElementByXPath("//p[contains(text(), '"+comment+"')]//..//..//button[contains(text(), 'Reply')]");
+		click(driver.findElement(By.xpath("//p[contains(text(), '"+comment+"')]//..//..//button[contains(text(), 'Reply')]")));
+		waitForElementByElement(iframe);
+		PageObjectLogging.log("clickReplyCommentButton", "reply comment button clicked", true);
+	}
+	
+	
+	private void writeReply(String reply)
+	{
+		waitForElementByElement(iframe);
+		driver.switchTo().frame(iframe);
+		editCommentArea.sendKeys(reply);
+		driver.switchTo().defaultContent();
+		click(submitReplyButton);
+		waitForElementByXPath("//p[contains(text(), '"+reply+"')]");
+		PageObjectLogging.log("writeReply", "reply comment written", true);
+	}
+	
+	
+	public void replyComment(String comment, String reply)
+	{
+		driver.navigate().refresh();
+		clickReplyCommentButton(comment);
+		writeReply(reply);
+		PageObjectLogging.log("reply comment", "reply comment written and checked", true, driver);
 	}
 	
 	private void hoverMouseOverCommentArea(String commentContent)
@@ -108,6 +140,7 @@ public class WikiArticlePageObject extends WikiBasePageObject {
 	private void clickEditCommentButton()
 	{
 		waitForElementByElement(editCommentButton);
+//		clickRobot(editCommentButton);
 		editCommentButton.click();
 		waitForElementByElement(iframe);
 		PageObjectLogging.log("clickEditCommentButton", "edit comment button clicked", true, driver);
@@ -115,6 +148,7 @@ public class WikiArticlePageObject extends WikiBasePageObject {
 	
 	public void deleteComment(String comment)
 	{
+		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,0)");
 		hoverMouseOverCommentArea(comment);
 		clickDeleteCommentButton();
 		clickDeleteConfirmationButton();
