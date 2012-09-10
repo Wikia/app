@@ -81,7 +81,7 @@ window.AdProviderGamePro = window.AdProviderGamePro || (function(WikiaTracker, l
 	}
 
 	// TODO @mech rethink
-	if (wgInsideUnitTest) return {fillInSlot:fillInSlot, rebuildKV:rebuildKV}
+	if (window.wgInsideUnitTest) return {fillInSlot:fillInSlot, rebuildKV:rebuildKV}
 
 	return {fillInSlot:fillInSlot};
 
