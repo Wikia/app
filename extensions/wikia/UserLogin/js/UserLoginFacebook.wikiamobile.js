@@ -19,7 +19,6 @@ require(['track', 'events', 'querystring', 'toast'], function(track, events, qs,
 				});
 
 				btn.addEventListener(events.click, function(){
-					track('facebook/connect/login');
 					UserLoginFacebook.login();
 				});
 				btn.disabled = false;
