@@ -11,8 +11,8 @@ module('AdEngine2');
 test('moveQueue', function() {
 	// setup
 	var slots_done = [];
-	adProviderDummy = {};
-	adProviderDummy.fillInSlot = function(slot) {
+	AdProviderDummy = {};
+	AdProviderDummy.fillInSlot = function(slot) {
 		slots_done.push(slot);
 	};
 
@@ -31,13 +31,13 @@ test('moveQueue', function() {
 test('moveQueue empty', function() {
 	// setup
 	var slots_done = [];
-	window.adProviderDummy = {};
-	window.adProviderDummy.fillInSlot = function(slot) {
+	AdProviderDummy = {};
+	AdProviderDummy.fillInSlot = function(slot) {
 		slots_done.push(slot);
 	};
 
 	window.adslots2 = [];
-	window.AdEngine2.init();
+	AdEngine2.init();
 
 	equal(slots_done.length, 0, 'pre move');
 
@@ -49,13 +49,13 @@ test('moveQueue empty', function() {
 test('moveQueue null', function() {
 	// setup
 	var slots_done = [];
-	window.adProviderDummy = {};
-	window.adProviderDummy.fillInSlot = function(slot) {
+	AdProviderDummy = {};
+	AdProviderDummy.fillInSlot = function(slot) {
 		slots_done.push(slot);
 	};
 
 	//window.adslots2 = [];
-	window.AdEngine2.init();
+	AdEngine2.init();
 
 	equal(slots_done.length, 0, 'pre move');
 
