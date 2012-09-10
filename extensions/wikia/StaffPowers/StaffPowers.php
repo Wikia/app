@@ -15,6 +15,11 @@ $wgGroupPermissions['staff']['unblockable'] = true;
 $wgGroupPermissions['helper']['unblockable'] = true;
 $wgGroupPermissions['vstf']['unblockable'] = true;
 
+/**
+ * @param Block $block
+ * @param $user
+ * @return bool
+ */
 function efPowersMakeUnblockable( $block, $user ) {
 	$blockedUser = User::newFromName( $block->getRedactedName() );
 
@@ -22,15 +27,13 @@ function efPowersMakeUnblockable( $block, $user ) {
 		return true;
 	}
 
-	/* $wgMessageCache was removed in ME 1.18 
+	/* $wgMessageCache was removed in ME 1.18
 	global $wgMessageCache;
 	// hack to get IpBlock to display the message we want -- hardcoded in core code
 	$replacement = wfMsgExt( 'staffpowers-ipblock-abort', array('parseinline') );
 	$wgMessageCache->addMessages( array( 'hookaborted' => $replacement ) );
 	*/
-	
+
 	wfRunHooks('BlockIpStaffPowersCancel', array($block, $user));
 	return false;
 }
-
-

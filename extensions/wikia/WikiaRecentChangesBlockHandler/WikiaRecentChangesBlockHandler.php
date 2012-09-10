@@ -4,7 +4,7 @@ class WikiaRecentChangesBlockHandler extends Service {
 	/**
 	 * @brief Adjusting title of a block group on RecentChanges page
 	 *
-	 * @param ChangeList $oChangeList
+	 * @param ChangesList $oChangeList
 	 * @param string $r
 	 * @param array $oRCCacheEntryArray an array of RCCacheEntry instances
 	 *

@@ -561,7 +561,7 @@ class WikiaHomePageController extends WikiaController {
 		return true;
 	}
 
-	public static function onOutputPageBeforeHTML(&$out, &$text) {
+	public static function onOutputPageBeforeHTML(OutputPage &$out, &$text) {
 		if (WikiaPageType::isMainPage() && !(F::app()->checkSkin('wikiamobile'))) {
 			$text = '';
 			$out->clearHTML();

@@ -5,12 +5,12 @@ class WikiaPollTest extends WikiaBaseTest {
 		$this->setupFile =  dirname(__FILE__) . '/../WikiaPoll_setup.php';
 		parent::setUp();
 	}
-	
+
 	// Create a poll for all the other functions to use
 	public static function setUpBeforeClass() {
 		$user = User::newFromName('WikiaStaff');
 		F::setInstance( 'User', $user);
-		
+
 		// Really bad style, but this test currently depends on the global title object
 		global $wgTitle;
 		$wgTitle = Title::newFromText ("Unit Testing", NS_WIKIA_POLL) ;
@@ -32,7 +32,7 @@ class WikiaPollTest extends WikiaBaseTest {
 	public function testWikiaPollAjax() {
 //		global $wgUser, $wgTitle;
 
-		$poll = WF::build('WikiaPollAjax');
+		$poll = WF::build('WikiaPollAjax'); /* @var $poll WikiaPollAjax */
 
 		// Sometimes the tear down doesn't execute?  Delete any old data before running create...
 		$title = Title::newFromText ("Unit Testing", NS_WIKIA_POLL) ;
@@ -60,7 +60,7 @@ class WikiaPollTest extends WikiaBaseTest {
 				->method('getIP')
 				->will($this->returnValue('127.0.0.1'));
 		$this->mockGlobalVariable('wgRequest', $wgRequest);
-		
+
 		$this->mockApp();
 
 		$result = $poll->create();
@@ -73,7 +73,7 @@ class WikiaPollTest extends WikiaBaseTest {
 		$title = Title::newFromText("Unit Testing", NS_WIKIA_POLL);
 		$this->assertNotNull($title);
 		$this->assertEquals($title->getText(), 'Unit Testing');
-		
+
 		// Second part of test is to see if we can "get" the same poll we created
 		$pollId = $result['pollId'];
 
@@ -144,7 +144,7 @@ class WikiaPollTest extends WikiaBaseTest {
 		// clean up
 		if ($article->exists())
 			$article->doDelete("Unit Testing", true);
-		
+
 	}
 
 	function testDuplicateCreate() {
@@ -163,10 +163,10 @@ class WikiaPollTest extends WikiaBaseTest {
 		$wgRequest->expects($this->any())
 				->method('getIP')
 				->will($this->returnValue('127.0.0.1'));
-		
+
 		$this->mockGlobalVariable('wgRequest', $wgRequest);
 		$this->mockApp();
-		
+
 		// Create the same poll twice
 		$result = $poll->create();
 		$result = $poll->create();
@@ -174,7 +174,7 @@ class WikiaPollTest extends WikiaBaseTest {
 		$this->assertType("array", $result, "Create duplicate result is array");
 		$this->assertEquals(false, $result["success"], "Create duplicate Poll success flag is false");
 		$this->assertType("string", $result["error"], "Create duplicate Poll results in an error");
-		
+
 		// clean up
 		$title = Title::newFromText ("Unit Testing", NS_WIKIA_POLL) ;
 		$article = new Article($title, NS_WIKIA_POLL);

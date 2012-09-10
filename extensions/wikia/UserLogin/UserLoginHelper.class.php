@@ -112,7 +112,7 @@ class UserLoginHelper extends WikiaModel {
 		return $wikiUsers;
 	}
 
-	/*
+	/**
 	 * add user who has avatar to the user list
 	 * @param integer $userId
 	 * @param array $userList
@@ -289,6 +289,10 @@ class UserLoginHelper extends WikiaModel {
 		return $result;
 	}
 
+	/**
+	 * @param User $user
+	 * @return string
+	 */
 	public function getReconfirmationEmailTempalte( $user ) {
 		$emailTextTemplate = $this->app->renderView( "UserLogin", "GeneralMail", array('language' => $user->getOption('language'), 'type' => 'reconfirmation-email') );
 		return $emailTextTemplate;
@@ -296,6 +300,7 @@ class UserLoginHelper extends WikiaModel {
 
 	/**
 	 * send reconfirmation email to the email address without saving that email address
+	 * @param User $user
 	 * @param string $email
 	 * @return Status object
 	 */
@@ -317,7 +322,7 @@ class UserLoginHelper extends WikiaModel {
 
 	/**
 	 * send reminder email
-	 * @param object $user
+	 * @param User $user
 	 * @return Status object
 	 */
 	public function sendConfirmationReminderEmail( &$user ) {
@@ -331,7 +336,7 @@ class UserLoginHelper extends WikiaModel {
 
 	/**
 	 * check if password throttled
-	 * @param string username
+	 * @param string $username
 	 * @return boolean passwordThrottled
 	 */
 	public function isPasswordThrottled( $username ) {
@@ -386,6 +391,8 @@ class UserLoginHelper extends WikiaModel {
 
 	/**
 	 * Add a newuser log entry for the user
+	 *
+	 * @param User $user
 	 * @param $byEmail Boolean: account made by email?
 	 */
 	public function addNewUserLogEntry( $user, $byEmail = false ) {
@@ -447,8 +454,8 @@ class UserLoginHelper extends WikiaModel {
 	 * original function: showRequestForm() in EmailConfirmation class (Special:Confirmemail page)
 	 */
 	public function showRequestFormConfirmEmail( $pageObj ) {
-		$user = $pageObj->getUser();
-		$out = $pageObj->getOutput();
+		$user = $pageObj->getUser(); /* @var $user User */
+		$out = $pageObj->getOutput(); /* @var $out OutputPage */
 		$optionNewEmail = $user->getOption( 'new_email' );
 		if( $pageObj->getRequest()->wasPosted() && $user->matchEditToken( $pageObj->getRequest()->getText( 'token' ) ) ) {
 			// Wikia change -- only allow one email confirmation attempt per hour

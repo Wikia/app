@@ -25,8 +25,6 @@ class UploadInfo {
 	 * @param UploadForm $uploadForm -- uploadForm object
 	 */
 	static public function uploadComplete( $uploadForm ) {
-		global $wgRequest, $wgCityId, $wgExternalDatawareDB, $wgWikiaDatacenter;
-
 		if( !($uploadForm->getLocalFile() instanceof LocalFile) ) {
 			return true;
 		}

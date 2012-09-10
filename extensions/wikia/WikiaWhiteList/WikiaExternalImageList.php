@@ -2,9 +2,9 @@
 
 /**
  * Parse external images white-list addresses
- * use 
+ * use
  * 	- $wgExtImagesWhitelistFiles - to define files with regexes file
- * 	- $wgWhiteListCacheTime - to define memcache expiry time 
+ * 	- $wgWhiteListCacheTime - to define memcache expiry time
  *
  * @author Piotr Molski <moli@wikia.com>
  */
@@ -27,10 +27,10 @@ function wfParserExternalImagesWhiteList( &$url ) {
         wfProfileOut( __METHOD__ );
         return false;
     }
-    
+
 	$res = wfExtImageLinksToImage($url);
-    $is_allowed = (empty($res)) ? false : ($res == $url) ? true : false; 
-	
+    $is_allowed = (empty($res)) ? false : ($res == $url) ? true : false;
+
     wfProfileOut( __METHOD__ );
     return $is_allowed;
 }
@@ -39,14 +39,14 @@ function wfParserExternalImagesWhiteList( &$url ) {
 function wfExtImagesWhiteListSetup() {
     global $wgExtImagesWhitelistFiles, $wgWhiteListCacheTime;
     $whiteListSetupImage = array();
-    if ( empty($wgExtImagesWhitelistFiles) ) { # default values 
+    if ( empty($wgExtImagesWhitelistFiles) ) { # default values
         $whiteListSetupImage['files'] = null;
     } else {
         $whiteListSetupImage['files'] = $wgExtImagesWhitelistFiles;
     }
     if ( empty($wgWhiteListCacheTime) ) { # default values
         $whiteListSetupImage['expiryTime'] = 900;
-    } else { 
+    } else {
         $whiteListSetupImage['expiryTime'] = $wgWhiteListCacheTime;
     }
     return $whiteListSetupImage;
@@ -87,12 +87,12 @@ function wfExtImagesWhiteListParse($text) {
                     }
                 }
             }
-        } 
-    } 
-    
+        }
+    }
+
     return false;
 }
-	
+
 function wfExtImageLinksToImage(&$str) {
     return preg_replace_callback('#http://(.*?).(jpg|jpeg|png|gif)#i', create_function('$matches', 'return wfExtImagesWhiteListParse($matches[0]);'), $str);
 }
@@ -105,11 +105,11 @@ class WikiaExtImagesWhitelist
     private $spamList = null;
     private $settings = array();
     private static $_oInstance = null;
-    
+
     function __construct( $settings ) {
         global $wgDBname;
         $use_prefix = 0;
-       
+
         foreach ( $settings as $name => $value ) {
             $this->$name = $value;
         }
@@ -146,7 +146,12 @@ class WikiaExtImagesWhitelist
 		$this->regexes = $this->spamList->getRegexes();
     }
 
-    public static function Instance($settings = array()) {
+	/**
+	 * @static
+	 * @param array $settings
+	 * @return WikiaExtImagesWhitelist
+	 */
+	public static function Instance($settings = array()) {
         if(!self::$_oInstance instanceof self) {
             wfDebug("New instance of WikiaExtImagesWhitelist class \n");
             self::$_oInstance = new self($settings);
@@ -158,5 +163,3 @@ class WikiaExtImagesWhitelist
 	public function getSpamList() { return $this->spamList; }
 	public function getRegexes()  { return $this->regexes; }
 }
-
-?>

@@ -6,16 +6,16 @@ class UserPreferencesV2 {
 	/**
 	 * @brief This function change user preferences special page
 	 *
-	 * @param user reference to the current user
-	 * @param defaultPreferences reference to the default preferences array
+	 * @param User $user reference to the current user
+	 * @param array $defaultPreferences reference to the default preferences array
 	 *
 	 * @return Bool
 	 */
-
-	public function onGetPreferences($user, $defaultPreferences) {
+	public function onGetPreferences($user, &$defaultPreferences) {
 		global $wgEnableWallExt, $wgOut, $wgScriptPath, $wgUser, $wgAuth;
 
 		//add javascript
+		// TODO: use $wgExtensionsPath instead
 		$wgOut->addScriptFile($wgScriptPath . '/extensions/wikia/UserPreferencesV2/js/UserPreferencesV2.js');
 
 		// remove Appearance tab (custom css/js)
@@ -377,6 +377,7 @@ class UserPreferencesV2 {
 	 * Before resetting the options, save the masthead info so we can restore it in onSpecialPreferencesAfterResetUserOptions
 	 *
 	 * @param $storage - storage in which we can save some options, it will be passed in onSpecialPreferencesAfterResetUserOptions hook call
+	 * @param User $user
 	 */
 	public function onSpecialPreferencesBeforeResetUserOptions($preferences, &$user, &$storage) {
 		//user identity box/masthead
@@ -427,6 +428,8 @@ class UserPreferencesV2 {
 
 	public function onPreferencesTrySetUserEmail( $user, $newEmail, &$result ) {
 		list( $status, $info ) = Preferences::trySetUserEmail( $user, $newEmail );
+
+		/* @var $status Status */
 		if ( $status instanceof Status && !$status->isGood() ) {
 			$result = $status->getWikiText( $info );
 			return false;
@@ -441,6 +444,10 @@ class UserPreferencesV2 {
 		return array_merge($array, $temp);
 	}
 
+	/**
+	 * @param User $user
+	 * @param $options
+	 */
 	protected function setUserOptionByNameAndValue($user, $options) {
 		foreach($options as $optionName => $optionValue) {
 			if(!is_array($optionValue)) {
@@ -448,5 +455,4 @@ class UserPreferencesV2 {
 			}
 		}
 	}
-
 }

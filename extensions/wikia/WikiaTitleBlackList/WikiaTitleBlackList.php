@@ -22,7 +22,6 @@ $wgHooks['CreateDefaultQuestionPageFilter'][] = 'wfSpamBlacklistTitleGenericTitl
 // other functions
 function wfBlackTitleListParseSetup() {
 	global $wgBlackTitleListFiles, $wgBlackListCacheTime;
-	global $useSpamRegexNoHttp;
 
 	$blackTitleListSetup = array();
 
@@ -41,7 +40,7 @@ function wfBlackTitleListParseSetup() {
 }#
 
 function wfSpamBlackTitleListCallback( $editPage, $text, $section, &$hookError, $summary ) {
-	global $IP, $useSpamRegexNoHttp;
+	global $useSpamRegexNoHttp;
 	#---
 	wfProfileIn( __METHOD__ );
 	$useSpamRegexNoHttp = 1;
@@ -62,7 +61,7 @@ function wfSpamBlackTitleListCallback( $editPage, $text, $section, &$hookError, 
 }
 
 function wfSpamBlackTitleBeforeMove( &$move ) {
-	global $IP, $useSpamRegexNoHttp;
+	global $useSpamRegexNoHttp;
 	$useSpamRegexNoHttp = 1;
 	wfProfileIn( __METHOD__ );
 
@@ -118,7 +117,6 @@ function wfSpamBlackTitleNewWikiBuilder( $api, $titleObj, $category, $text ) {
 	global $useSpamRegexNoHttp;
 	wfProfileIn( __METHOD__ );
 	$useSpamRegexNoHttp = true;
-	$retVal = true;
 
 	// titleObj is already verified as object earlier in NWB
 	$retVal = wfBlackListTitleParse($titleObj);
@@ -143,6 +141,10 @@ function wfSpamBlacklistTitleGenericTitleCheck( $titleObj ) {
 	return $retVal;
 }
 
+/**
+ * @param Title $title
+ * @return bool
+ */
 function wfBlackListTitleParse($title) {
 	wfProfileIn( __METHOD__ );
 
@@ -157,7 +159,7 @@ function wfBlackListTitleParse($title) {
 	}
 	if (!empty($aBlackListRegexes) && is_array($aBlackListRegexes)) {
 		wfDebug( "Checking text against " . count( $aBlackListRegexes ) . " regexes: " . implode( ', ', $aBlackListRegexes ) . "\n" );
-		
+
 		$html_errors = ini_get( 'html_errors' );
 		ini_set( 'html_errors', '0' );
 		set_error_handler( array( 'WikiaTitleBlackList', 'errorHandler' ) );
@@ -177,7 +179,7 @@ function wfBlackListTitleParse($title) {
 			}
 		}
 		restore_error_handler();
-		ini_set( 'html_errors', $html_errors );		
+		ini_set( 'html_errors', $html_errors );
 	}
 
 	if ($retVal) {
@@ -254,6 +256,11 @@ class WikiaTitleBlackList {
 		}
 	}
 
+	/**
+	 * @static
+	 * @param array $settings
+	 * @return WikiaTitleBlackList
+	 */
 	public static function Instance($settings = array()) {
 		if(!self::$_oInstance instanceof self) {
 			wfDebug("New instamce of WikiaTitleBlackList class \n");
@@ -265,7 +272,7 @@ class WikiaTitleBlackList {
 	public function getSettings() { return $this->settings; }
 	public function getSpamList() { return $this->spamList; }
 	public function getRegexes()  { return $this->regexes; 	}
-	
+
 	static function errorHandler( $errno, $errstr, $errfile, $errline ) {
 		global $wgDBname;
 
@@ -281,7 +288,7 @@ class WikiaTitleBlackList {
 			default:
 				$error = "";
 		}
-			
+
 		if ( $error ) {
 			error_log(sprintf("MOLI: PHP %s (%s):  %s in %s on line %d", $error, $wgDBname, $errstr, $errfile, $errline));
 		}

@@ -27,11 +27,23 @@ class StaffLogger {
 		$wgHooks['WikiFactoryPublicStatusChange'][] = 'StaffLogger::eventlogWFPublicStatusChange';
 	}
 
+	/**
+	 * @static
+	 * @param User $user
+	 * @param User $userdst
+	 * @return bool
+	 */
 	static public function eventlogPiggybackLogIn($user, $userdst) {
 		self::log("piggyback", "login", $user->getID(), $user->getName(), $userdst->getID(), $userdst->getName());
 		return true;
 	}
 
+	/**
+	 * @static
+	 * @param User $user
+	 * @param User $userdst
+	 * @return bool
+	 */
 	static public function eventlogPiggybackLogOut($user, $userdst) {
 		self::log("piggyback", "logout", $user->getID(), $user->getName(), $userdst->getID(), $userdst->getName());
 		return true;

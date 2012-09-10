@@ -1,6 +1,6 @@
 <?PHP
 
-/* 
+/*
 	this practically does one thing: unsets memcached keys on article save
 */
 
@@ -11,6 +11,14 @@ global $wgHooks;
 $wgHooks['ContributionsToolLinks'][] = 'MultiLookupHooks::ContributionsToolLinks';
 
 class MultiLookupHooks {
+
+	/**
+	 * @static
+	 * @param $id
+	 * @param Title $nt
+	 * @param $links
+	 * @return bool
+	 */
 	static public function ContributionsToolLinks( $id, $nt, &$links ) {
 		global $wgUser;
 		if ( $id == 0 && $wgUser->isAllowed( 'multilookup' ) ) {

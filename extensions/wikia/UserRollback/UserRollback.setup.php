@@ -1,18 +1,7 @@
 <?php
 
-
 $app = F::app();
 $dir = dirname(__FILE__) . '/';
-
-/**
- * classes
- */
-//$app->registerClass('HelloWorld', $dir . 'HelloWorld.class.php');
-
-/**
- * hooks
- */
-//$app->registerHook('OutputPageBeforeHTML', 'HelloWorld', 'onOutputPageBeforeHTML');
 
 /**
  * controllers
@@ -37,21 +26,7 @@ $wgAvailableRights[] = 'userrollback';
 $wgGroupPermissions['*']['userrollback'] = false;
 $wgGroupPermissions['util']['userrollback'] = true;
 
-
 /**
  * task manager
  */
 extAddBatchTask( dirname(__FILE__)."/UserRollbackTask.class.php", "userrollback", "UserRollbackTask" );
-
-/**
- * setup functions
- */
-/*
-$app->registerExtensionFunction('wfExtensionInit');
-
-function wfExtensionInit() {
-	// place extension init stuff here
-	
-	return true; // needed so that other extension initializations continue
-}
-*/
