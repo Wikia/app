@@ -1,5 +1,5 @@
 <?php
- 
+
  /**
   * SearchDigest
   *
@@ -32,13 +32,17 @@ $wgSpecialPages['SearchDigest'] = 'SpecialSearchDigest';
 
 $wgHooks['SpecialSearchNogomatch'][] = 'efSearchDigestRecordMiss';
 
+/**
+ * @param Title $title
+ * @return bool
+ */
 function efSearchDigestRecordMiss( $title ) {
 	global $wgEnableScribeReport, $wgCityId;
 
 	if ( empty( $wgEnableScribeReport ) ) {
 		return true;
 	}
-	
+
 	if ( !is_object( $title ) ) {
 		return true;
 	}

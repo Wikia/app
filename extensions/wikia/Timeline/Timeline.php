@@ -1,14 +1,22 @@
 <?php
 $wgHooks['ParserFirstCallInit'][] = "wfTimeline";
 
+/**
+ * @param Parser $parser
+ * @return bool
+ */
 function wfTimeline( $parser ) {
     $parser->setHook( "timeline", "TimelineConstruct" );
     return true;
 }
 
+/**
+ * @param string $input
+ * @param Array $args
+ * @param Parser $parser
+ * @return string
+ */
 function TimelineConstruct( $input, $args, &$parser ){
-	global $wgUser, $wgTitle, $wgOut;
-
 	$lines = explode("\n", $input);
 
 	foreach( $lines as $line ){
@@ -88,6 +96,3 @@ function TimelineSort($x, $y){
 		return 1;
 	}
 }
-
-
-?>

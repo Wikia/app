@@ -5,6 +5,12 @@ Author: Piotr Molski (moli@wikia.com)
 
 $wgHooks['NotifyOnPageChangeComplete'][] = 'wfNotifyOnPageChangeComplete';
 
+/**
+ * @param Title $title
+ * @param $timestamp
+ * @param User $watcher
+ * @return bool
+ */
 function wfNotifyOnPageChangeComplete($title, $timestamp, $watcher) {
 	global $wgCityId, $wgDBname, $wgUser, $wgCityId, $wgDefaultExternalStore, $wgExternalDatawareDB;
     wfProfileIn( __METHOD__ );

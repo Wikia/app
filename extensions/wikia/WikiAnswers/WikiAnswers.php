@@ -24,6 +24,11 @@ $wgHooks['OutputPageParserOutput'][] = 'wfWikiAnswersPageTitle';
 // show the answer box
 $wgHooks['OutputPageBeforeHTML'][] = 'wfWikiAnswersAnswerBox';
 
+/**
+ * @param OutputPage $out
+ * @param $skin
+ * @return bool
+ */
 function wfWikiAnswersAddStyle( &$out, &$skin ) {
 	global $wgExtensionsPath;
 	$out->addExtensionStyle( "$wgExtensionsPath/wikia/WikiAnswers/WikiAnswers.css" );
@@ -43,6 +48,7 @@ function wfWikiAnswersFooterMenu( &$moduleObject, &$params ) {
 }
 
 function wfWikiAnswersGlobalHeaderIndex( &$moduleObject, &$params) {
+	/* @var $wgLang Language */
 	global $wgLang;
 	$userlang = $wgLang->getCode();
 	$userlang = $userlang == 'en' ? '' : "?uselang=$userlang";
@@ -66,6 +72,11 @@ function wfWikiAnswersActionDropdown( &$moduleObject, &$params) {
 	return true;
 }
 
+/**
+ * @param OutputPage $out
+ * @param ParserOutput $parserOutput
+ * @return bool
+ */
 function wfWikiAnswersPageTitle( &$out, $parserOutput ) {
 	$answerObj = Answer::newFromTitle( $out->getTitle() );
 	if( $answerObj->isQuestion() ) {
@@ -74,6 +85,11 @@ function wfWikiAnswersPageTitle( &$out, $parserOutput ) {
 	return true;
 }
 
+/**
+ * @param OutputPage $out
+ * @param string $html
+ * @return bool
+ */
 function wfWikiAnswersAnswerBox( &$out, &$html ) {
 
 	$answerObj = Answer::newFromTitle( $out->getTitle() );

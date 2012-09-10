@@ -11,6 +11,10 @@
 //Avoid unstubbing $wgParser on setHook() too early on modern (1.12+) MW versions, as per r35980
 $wgHooks['ParserFirstCallInit'][] = 'wfXBCardTagSetup';
 
+/**
+ * @param Parser $parser
+ * @return bool
+ */
 function wfXBCardTagSetup(&$parser) {
 	$parser->setHook( 'xboxcard', 'wfMakeXboxCard' );
 	return true;
@@ -19,7 +23,7 @@ function wfXBCardTagSetup(&$parser) {
 function wfMakeXboxCard( $contents, $attributes, $parser ) {
 
 	$style = array();
-	
+
 	if( !empty($attributes['align']) )
 	{
 		if( $attributes['align'] == 'left' )
@@ -31,7 +35,7 @@ function wfMakeXboxCard( $contents, $attributes, $parser ) {
 			$style['float'] = 'right';
 		}
 	}
-	
+
 		$style_string = '';
 	if( !empty($style) )
 	{
@@ -41,10 +45,10 @@ function wfMakeXboxCard( $contents, $attributes, $parser ) {
 		}
 		$style_string = " style=\"{$style_string}\"";
 	}
-	
-	
+
+
 	$out = "<div class=\"xboxcard-container\" {$style_string} >\n";
-	
+
 	$xbox_id = $contents;
 	if( 0 == preg_match("/^[A-Za-z][A-Za-z0-9 ]*$/", $xbox_id) )
 	{
@@ -55,7 +59,7 @@ function wfMakeXboxCard( $contents, $attributes, $parser ) {
 		$xbox_id_e = rawurlencode($xbox_id); #we use raw version because microsoft no longer accepts spaces as +, MUST be %20
 		$out .= "<iframe src=\"http://gamercard.xbox.com/{$xbox_id_e}.card\" scrolling=\"no\" frameBorder=\"0\" height=\"140\" width=\"204\">{$xbox_id}</iframe>";
 	}
-	
+
 	$out .= "</div>\n";
 
 	return $out;

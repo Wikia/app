@@ -58,6 +58,10 @@ function wfParserFunction_magic(&$magicWords, $langCode){
 	return true;
 }
 
+/**
+ * @param Parser $parser
+ * @return bool
+ */
 function wfYouTube( $parser )
 {
 	$parser->setHook('youtube', 'embedYouTube');

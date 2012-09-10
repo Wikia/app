@@ -755,7 +755,6 @@ class WikiaPhotoGalleryHelper {
 	 * @author Marooned
 	 */
 	static public function renderFeedSlideshowPreview($slideshow) {
-		global $wgTitle, $wgParser;
 		wfProfileIn(__METHOD__);
 
 		$data = WikiaPhotoGalleryRSS::parseFeed($slideshow['params']['rssfeed']);
@@ -883,7 +882,7 @@ class WikiaPhotoGalleryHelper {
 	 * @author Marooned
 	 */
 	static public function saveGalleryDataByHash($hash, $wikitext, $starttime) {
-		global $wgHooks, $wgTitle, $wgUser;
+		global $wgTitle, $wgUser;
 
 		wfProfileIn(__METHOD__);
 
@@ -925,8 +924,6 @@ class WikiaPhotoGalleryHelper {
 
 			//saving
 			if($wgTitle->userCan('edit') && !$wgUser->isBlocked()) {
-				global $wgOut;
-
 				$result = null;
 				$article = new Article($wgTitle);
 				$editPage = new EditPage($article);
@@ -1045,7 +1042,7 @@ class WikiaPhotoGalleryHelper {
 	 * @author Marooned
 	 *
 	 * @param $parser Parser
-	 * @param $ig ImageGallery
+	 * @param $ig WikiaPhotoGallery
 	 */
 	static public function beforeParserrenderImageGallery($parser, $ig) {
 		wfProfileIn(__METHOD__);
@@ -1071,7 +1068,7 @@ class WikiaPhotoGalleryHelper {
 	 * Hook handler
 	 * @author Marooned
 	 */
-	static public function fetchTemplateAndTitle($text, $finalTitle) {
+	static public function fetchTemplateAndTitle(&$text, $finalTitle) {
 		if( $text !== false ) {
 			$text = str_replace('<gallery ', "<gallery source=\"template\x7f\" ", $text);
 		}

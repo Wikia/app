@@ -12,6 +12,20 @@ if(!defined('MEDIAWIKI')) {
 
 $wgHooks['ArticleSaveComplete'][] = 'efSharedHelpArticleCreation';
 
+/**
+ * @param WikiPage $article
+ * @param $user
+ * @param $text
+ * @param $summary
+ * @param $minoredit
+ * @param $watchthis
+ * @param $sectionanchor
+ * @param $flags
+ * @param $revision
+ * @param Status $status
+ * @param $baseRevId
+ * @return bool
+ */
 function efSharedHelpArticleCreation( &$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId ) {
 	global $wgCityId, $wgHelpWikiId;
 

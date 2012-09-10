@@ -203,7 +203,7 @@ function SiteWideMessagesUserNewTalks(&$user, &$talks) {
  * Add messages without class, dismiss links etc to the content for diff engine
  *
  */
-function SiteWideMessagesDiff($oTitle, $uMessages) {
+function SiteWideMessagesDiff($oTitle, &$uMessages) {
 	global $wgUser, $wgTitle, $wgRequest;
 	if ($wgTitle->getNamespace() == NS_USER_TALK &&                      //user talk page?
 		$wgUser->getTitleKey() == $wgTitle->getPartialURL() &&           //*my* user talk page?
@@ -247,7 +247,7 @@ function SiteWideMessagesAddNotifications(&$skim, &$tpl) {
 
 		if ( !empty( $msgs ) ) {
 			wfProfileIn( __METHOD__ . '::parse' );
-			foreach ( $msgs as $msgId => &$data ) {
+			foreach ( $msgs as &$data ) {
 				$data['text'] = $wgOut->parse( $data['text'] );
 			}
 			wfProfileOut( __METHOD__ . '::parse' );

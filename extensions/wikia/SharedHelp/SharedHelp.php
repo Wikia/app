@@ -102,6 +102,11 @@ class SharedHttp {
 	}
 }
 
+/**
+ * @param OutputPage $out
+ * @param $text
+ * @return bool
+ */
 function SharedHelpHook(&$out, &$text) {
 	global $wgTitle, $wgMemc, $wgSharedDB, $wgCityId, $wgHelpWikiId, $wgContLang, $wgLanguageCode, $wgArticlePath;
 
@@ -447,7 +452,8 @@ function SharedHelpWantedPagesSql( $page, $sql ) {
 				__METHOD__
 			);
 
-			$helpArticles = array(); while ( $oRow = $dbr->fetchObject( $oRes ) ) {
+			$helpArticles = array();
+			while ( $oRow = $dbr->fetchObject( $oRes ) ) {
 				$helpArticles[] = $oRow->page_title;
 			}
 			$helpPages = $dbr->makeList($helpArticles);

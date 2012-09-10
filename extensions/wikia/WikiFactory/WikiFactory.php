@@ -2642,10 +2642,9 @@ class WikiFactory {
 	 * @static
 	 * @access public
 	 *
-	 * @param update description in city list base on msg in city
+	 * @param WikiPage $article
 	 *
 	 */
-
 	static public function updateCityDescription (&$article, &$user ) {
 		global $wgCityId;
 
@@ -2842,7 +2841,7 @@ class WikiFactory {
 		wfProfileOut( __METHOD__ );
 		return $clusters;
 	}
-	
+
 	/**
 	 * fetching wiki list with selected variable set to $val
 	 * @param unknown_type $varId
@@ -2850,11 +2849,11 @@ class WikiFactory {
 	 * @param unknown_type $val
 	 * @param unknown_type $likeVal
 	 */
-	
+
 	static public function getListOfWikisWithVar($varId, $type, $selectedCond ,$val, $likeVal = '', $offset = null, $limit = null) {
 		global $wgExternalSharedDB;
 		$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
-		
+
 		$aWikis = array();
 		$selectedVal = serialize($val);
 
@@ -2864,23 +2863,23 @@ class WikiFactory {
 		);
 		$varId = mysql_real_escape_string($varId);
 		$aWhere = array('city_id = cv_city_id');
-                
+
                 $aOptions = array( 'ORDER BY' => 'city_sitename' );
-                
+
                 if ( isset( $limit ) ) {
                     $aOptions['LIMIT'] = $limit;
                 }
-                
+
                 if ( isset( $offset ) ) {
                     $aOptions['OFFSET'] = $offset;
-                } 
-		
+                }
+
 		if( $type == "full" ) {
 			$aWhere[] = "cv_value " . $dbr->buildLike( $dbr->anyString(), $likeVal, $dbr->anyString() );
 		} else {
-			$aWhere[] = "cv_value $selectedCond '$selectedVal'";	
+			$aWhere[] = "cv_value $selectedCond '$selectedVal'";
 		}
-		
+
 		$aWhere[] = "cv_variable_id = '$varId'";
 
 
@@ -2899,19 +2898,19 @@ class WikiFactory {
 
 		return $aWikis;
 	}
-        
+
         /**
          * fetching a number of wikis with select variable set to $val
          * @param integer $varId
          * @param string $type
          * @param mixed $val
-         * @param string $likeVal 
+         * @param string $likeVal
          */
 
         static public function getCountOfWikisWithVar( $varId, $type, $selectedCond ,$val, $likeVal = '' ) {
             global $wgExternalSharedDB;
             $dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
-            
+
             $selectedVal = serialize( $val );
             $aTables = array( 'city_variables', 'city_list' );
             $varId = mysql_real_escape_string( $varId );
@@ -2919,15 +2918,15 @@ class WikiFactory {
                 'city_id = cv_city_id',
                 "cv_variable_id = '$varId'"
             );
-            
+
             if( 'full' == $type ) {
                 $aWhere[] = "cv_value " . $dbr->buildLike( $dbr->anyString(), $likeVal, $dbr->anyString() );
             } else {
                 $aWhere[] = "cv_value $selectedCond '$selectedVal'";
             }
-            
+
             $oRow = $dbr->selectRow( $aTables, 'COUNT(1) AS cnt', $aWhere, __METHOD__ );
-            
+
             return $oRow->cnt;
         }
 };
