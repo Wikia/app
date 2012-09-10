@@ -144,7 +144,7 @@ window.AdProviderEvolve = window.AdProviderEvolve || (function (WikiaTracker, lo
 	}
 
 	// TODO @mech rethink
-	if (wgInsideUnitTest) return {fillInSlot:fillInSlot, hop:hop, sanitizeSlotname:sanitizeSlotname, getUrl:getUrl, getSect:getSect}
+	if (window.wgInsideUnitTest) return {fillInSlot:fillInSlot, hop:hop, sanitizeSlotname:sanitizeSlotname, getUrl:getUrl, getSect:getSect}
 
 	return {fillInSlot:fillInSlot, hop:hop};
 
