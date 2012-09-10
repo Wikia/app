@@ -107,10 +107,6 @@ window.AdProviderEvolve = window.AdProviderEvolve || (function (WikiaTracker, lo
 		// TODO check AIC2 for an example
 	}
 
-	// dart has problems with sending back scripts based on key-val %p
-	// http://ad.doubleclick.net/adj/wka.gaming/_starcraft/article;s0=gaming;s1=_starcraft;dmn=wikia-devcom;pos=TOP_LEADERBOARD;ord=7121786175
-	// yields window.AdEngine2.hop('=TOP_LEADERBOARD;ord=7121786175');
-	// instead of window.AdEngine2.hop('TOP_LEADERBOARD');
 	function sanitizeSlotname(slotname) {
 		log('sanitizeSlotname', 5, 'AdProviderEvolve');
 		log(slotname, 5, 'AdProviderEvolve');
@@ -146,7 +142,7 @@ window.AdProviderEvolve = window.AdProviderEvolve || (function (WikiaTracker, lo
 	}
 
 	// TODO @mech rethink
-	if (wgInsideUnitTest) return {fillInSlot:fillInSlot, hop:hop, sanitizeSlotname:sanitizeSlotname, getUrl:getUrl}
+	if (wgInsideUnitTest) return {fillInSlot:fillInSlot, hop:hop, sanitizeSlotname:sanitizeSlotname, getUrl:getUrl, getSect:getSect}
 
 	return {fillInSlot:fillInSlot, hop:hop};
 
