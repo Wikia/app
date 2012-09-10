@@ -43,21 +43,14 @@ class WikiaHubsHelper {
 		return true;
 	}
 
+
 	public function onWikiaAssetsPackages(&$out, &$jsPackages, &$scssPackages) {
-		$baseText = $out->getContext()->getTitle()->getBaseText();
-
-
-
-		/** @var $tmpTitle Title */
-		$tmpTitle = F::build('Title', array($baseText), 'newFromText');
-		$dbKey = $tmpTitle->getDBKey();
-
-		foreach (F::app()->wg->WikiaHubsPages as $hubsPages) {
-			if (in_array($dbKey, $hubsPages)) {
-				$jsPackages[] = 'wikia/WikiaHubs/js/WikiaHubs.js';
-				$scssPackages[] = 'wikia/WikiaHubs/css/WikiaHubs.scss';
-			}
+		if (HubService::isCurrentPageAWikiaHub()) {
+			$jsPackages[] = 'wikia/WikiaHubs/js/WikiaHubs.js';
+			$scssPackages[] = 'wikia/WikiaHubs/css/WikiaHubs.scss';
 		}
+
 		return true;
 	}
 }
+
