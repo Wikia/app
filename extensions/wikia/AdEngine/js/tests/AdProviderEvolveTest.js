@@ -9,6 +9,10 @@
 */
 module('AdProviderEvolve');
 
+// dart has problems with sending back scripts based on key-val %p
+// http://ad.doubleclick.net/adj/wka.gaming/_starcraft/article;s0=gaming;s1=_starcraft;dmn=wikia-devcom;pos=TOP_LEADERBOARD;ord=7121786175
+// yields window.AdEngine2.hop('=TOP_LEADERBOARD;ord=7121786175');
+// instead of window.AdEngine2.hop('TOP_LEADERBOARD');
 test('sanitizeSlotname', function() {
     equal(AdProviderEvolve.sanitizeSlotname('foo'), '', 'foo');
     equal(AdProviderEvolve.sanitizeSlotname('TOP_LEADERBOARD'), 'TOP_LEADERBOARD', 'TOP_LEADERBOARD');
@@ -17,10 +21,14 @@ test('sanitizeSlotname', function() {
 
 test('getUrl', function() {
 	var expected = 'http://n4403ad.doubleclick.net/adj/gn.wikia4.com/home;sect=home;mtfInline=true;pos=TOP_LEADERBOARD;sz=728x90;dcopt=ist;type=pop;type=int;tile=1;ord=1234567890?';
-	expected = expected.replace(/;ord=[0-9]+\?$/, '');
+	expected = expected.replace(/;ord=[0-9]+\?$/, ''); // ord is random cb
 
 	var actual = AdProviderEvolve.getUrl('TOP_LEADERBOARD', '728x90');
-	actual = actual.replace(/;ord=[0-9]+\?$/, '');
+	actual = actual.replace(/;ord=[0-9]+\?$/, ''); // ord is random cb
 
 	equal(actual, expected, 'TOP_LEADERBOARD');
+});
+
+test('getSect', function() {
+	equal(AdProviderEvolve.getSect(), 'home', 'home');
 });
