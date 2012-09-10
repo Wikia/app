@@ -11,7 +11,8 @@
 			<class name="com.wikia.webdriver.TestCases.CustomizeToolbarTests"/>
 			<class name="com.wikia.webdriver.TestCases.SignUpTests.SignUpTests_account_creation"/>
 			<class name="com.wikia.webdriver.TestCases.ChatTests"/>
-			<class name="com.wikia.webdriver.TestCases.ArticleCRUDTests.ArticleTests"/> 
+			<class name="com.wikia.webdriver.TestCases.ArticleCRUDTests.ArticleTestsAdmin"/> 
+			<class name="com.wikia.webdriver.TestCases.ArticleCRUDTests.ArticleTestsAnonymous"/> 
 			<class name="com.wikia.webdriver.TestCases.AdTests.AdsInSearchTests"/> 
 		</classes>
 	</test>
