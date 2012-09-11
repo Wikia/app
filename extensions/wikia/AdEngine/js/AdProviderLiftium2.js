@@ -147,10 +147,22 @@ window.AdProviderLiftium2 = window.AdProviderLiftium2 || (function (WikiaTracker
 		return script;
 	}
 
-	// TODO @mech rethink
-	if (window.wgInsideUnitTest) return {fillInSlot:fillInSlot, hop:hop, sanitizeSlotname:sanitizeSlotname, getUrl:getUrl, getSect:getSect}
+	var iface = {
+		name: 'Liftium2',
+		fillInSlot: fillInSlot,
+		hop: hop
+	};
 
-	return {fillInSlot:fillInSlot, hop:hop};
+	// TODO: @mech rethink
+	// TODO: @rychu change tests
+	if (window.wgInsideUnitTest) {
+		iface.rebuildKV = rebuildKV;
+		iface.sanitizeSlotname = sanitizeSlotname;
+		iface.getUrl = getUrl;
+		iface.getSect = getSect;
+	}
+
+	return iface;
 
 })(WikiaTracker, Wikia.log, window, ghostwriter, document);
 

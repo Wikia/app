@@ -147,10 +147,21 @@ window.AdProviderEvolve = window.AdProviderEvolve || (function (WikiaTracker, lo
 		return script;
 	}
 
-	// TODO @mech rethink
-	if (window.wgInsideUnitTest) return {fillInSlot:fillInSlot, hop:hop, sanitizeSlotname:sanitizeSlotname, getUrl:getUrl, getSect:getSect}
+	var iface = {
+		name: 'Evolve',
+		fillInSlot: fillInSlot,
+		hop: hop
+	};
 
-	return {fillInSlot:fillInSlot, hop:hop};
+	// TODO: @mech rethink
+	// TODO: @rychu change tests
+	if (window.wgInsideUnitTest) {
+		iface.sanitizeSlotname = sanitizeSlotname;
+		iface.getUrl = getUrl;
+		iface.getSect = getSect;
+	}
+
+	return iface;
 
 })(WikiaTracker, Wikia.log, window, ghostwriter, document);
 
