@@ -71,9 +71,9 @@ $config['oasis_ads_js'] = array(
 
 		'//extensions/wikia/AdEngine/liftium/AdsInContent.js',
 
-		'//extensions/wikia/AdEngine/AdDriver.js',
 		'#group_adengine2_js',
 
+		'//extensions/wikia/AdEngine/AdDriver.js',
 		'//extensions/wikia/AdEngine/AdDriverGP.js',
     ),
 );
