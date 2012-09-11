@@ -33,6 +33,34 @@ abstract class ResourceLoaderGlobalWikiModule extends ResourceLoaderWikiModule {
 		return array( $text, $namespace );
 	}
 
+	/**
+	 * Get target title if the current title is a redirect.
+	 * It doesn't handle
+	 *
+	 * @param $title Title|GlobalTitle
+	 * @return Title|GlobalTitle
+	 */
+	protected function resolveRedirect( $title ) {
+		$origTitle = $title;
+		if ( $title instanceof GlobalTitle ) {
+			if ( $title->isRedirect() ) {
+				$target = $title->getRedirectTarget();
+				if ( $target ) {
+					$title = $target;
+				}
+			}
+		} else if ( $title instanceof Title ) {
+			if ( $title->isRedirect() ) {
+				$page = new WikiPage( $title );
+				$target = $page->getRedirectTarget();
+				if ( $target->exists() ) {
+					$title = $target;
+				}
+			}
+		}
+		return $title;
+	}
+
 	protected function createTitle( $titleText, $options = array() ) {
 		global $wgCityId;
 		$title = null;
@@ -42,8 +70,10 @@ abstract class ResourceLoaderGlobalWikiModule extends ResourceLoaderWikiModule {
 			if ( $text !== false ) {
 				$title = GlobalTitle::newFromText($text, $namespace, $options['city_id']);
 			}
+			$title = $this->resolveRedirect($title);
 		} else {
 			$title = Title::newFromText( $realTitleText );
+			$title = $this->resolveRedirect($title);
 		}
 
 		return $title;
@@ -67,11 +97,10 @@ abstract class ResourceLoaderGlobalWikiModule extends ResourceLoaderWikiModule {
 			if ($revision) {
 				$content = $revision->getRawText();
 			}
-		}
-
-		// Fall back to parent logic
-		if ( !$content ) {
-			$content = parent::getContent( $title, $options );
+			// Fall back to parent logic
+			if ( !$content ) {
+				$content = parent::getContent( $title, $options );
+			}
 		}
 
 		// Failed to get contents
