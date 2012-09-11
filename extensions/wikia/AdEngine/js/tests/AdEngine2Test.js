@@ -3,10 +3,20 @@
  @test-require-asset resources/wikia/modules/querystring.js
  @test-require-asset resources/wikia/modules/cookies.js
  @test-require-asset resources/wikia/modules/log.js
- @test-require-asset extensions/wikia/AdEngine/js/tests/AdConfig2.js
+ @test-require-asset extensions/wikia/AdEngine/AdConfig2.js
  @test-require-asset extensions/wikia/AdEngine/AdEngine2.js
 */
-module('AdEngine2');
+module('AdEngine2', {
+	setup: function() {
+		this.getProvider = AdConfig2.getProvider;
+		AdConfig2.getProvider = function() {
+			return "Dummy";
+		}
+	},
+	teardown: function() {
+		AdConfig2.getProvider = this.getProvider;
+	}
+});
 
 test('moveQueue', function() {
 	// setup
