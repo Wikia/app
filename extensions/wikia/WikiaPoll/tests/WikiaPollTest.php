@@ -30,6 +30,8 @@ class WikiaPollTest extends WikiaBaseTest {
 	/* These are all part of one giant test call because the $pollId variable is shared */
 
 	public function testWikiaPollAjax() {
+		$this->markTestSkipped('This test fails randomly'); // see BugId:47403
+
 //		global $wgUser, $wgTitle;
 
 		/* @var $poll WikiaPollAjax */
