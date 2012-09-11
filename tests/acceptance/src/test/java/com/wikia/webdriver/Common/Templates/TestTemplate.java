@@ -12,6 +12,7 @@ import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 
+import com.wikia.webdriver.Common.Core.CommonFunctions;
 import com.wikia.webdriver.Common.Core.CommonUtils;
 import com.wikia.webdriver.Common.Core.Global;
 import com.wikia.webdriver.Common.DriverProvider.DriverProvider;
@@ -74,6 +75,7 @@ public class TestTemplate {
 	public void start(Method method)
 	{
 		startBrowser();
+		CommonFunctions.MoveCursorTo(0, 0);
 		PageObjectLogging.startLoggingMethod(getClass().getSimpleName().toString(), method.getName());
 	}
 	
@@ -81,6 +83,7 @@ public class TestTemplate {
 	public void stop()
 	{
 		stopBrowser();
+		CommonFunctions.MoveCursorTo(0, 0);
 		PageObjectLogging.stopLoggingMethod();
 	}
 	

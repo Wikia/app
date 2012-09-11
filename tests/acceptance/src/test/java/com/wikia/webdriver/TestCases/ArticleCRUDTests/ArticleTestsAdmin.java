@@ -294,7 +294,7 @@ public class ArticleTestsAdmin extends TestTemplate{
 	@Test(groups={"ArticleCRUDAdmin_011", "ArticleCRUDAdmin"}) 
 //	https://internal.wikia-inc.com/wiki/QA/Core_Features_and_Testing/Manual_Regression_Tests/Image_Serving	
 	// Test Case 007  Adding galleries to an article in edit mode
-	public void ArticleCRUDAdmin_011_AddingGalleries_Admin()
+	public void ArticleCRUDAdmin_011_AddingGallery_Admin()
 	{
 		CommonFunctions.logOut(Properties.userName, driver);
 		CommonFunctions.logIn(Properties.userNameStaff, Properties.passwordStaff);
@@ -324,6 +324,39 @@ public class ArticleTestsAdmin extends TestTemplate{
 		article.verifyDeletedArticlePage(pageName);
 		CommonFunctions.logOut(Properties.userName2, driver);
 		CommonFunctions.MoveCursorTo(0, 0);
+	}
+	
+	@Test(groups={"ArticleCRUDAdmin_012", "ArticleCRUDAdmin"}) 
+//	https://internal.wikia-inc.com/wiki/QA/Core_Features_and_Testing/Manual_Regression_Tests/Image_Serving	
+	// Test Case 008 Adding slideshows to an article in edit mode
+	public void ArticleCRUDAdmin_012_AddingSlideshow_Admin()
+	{
+		CommonFunctions.logOut(Properties.userName, driver);
+		CommonFunctions.logIn(Properties.userNameStaff, Properties.passwordStaff);
+		WikiBasePageObject wiki = new WikiBasePageObject(driver, Global.DOMAIN);
+		pageName = "QAarticle"+wiki.getTimeStamp();
+		wiki.openWikiPage();
+		WikiArticleEditMode edit = wiki.createNewArticle(pageName, 1);
+		edit.deleteArticleContent();
+		edit.clickOnVisualButton();
+		edit.clickOnAddObjectButton("Slideshow");
+		edit.waitForObjectModalAndClickAddAphoto("GallerySlideshow");
+		edit.galleryCheckImageInputs(4);
+		edit.galleryClickOnSelectButton();
+		edit.gallerySetPositionSlideshow("Center");
+		edit.galleryClickOnFinishButton();
+		edit.verifyObjectInEditMode("slideshow");
+		edit.clickOnPreviewButton();
+		edit.verifyTheObjectOnThePreview("slideshow");
+		WikiArticlePageObject article = edit.clickOnPublishButtonInPreviewMode();
+		article.VerifyTheObjectOnThePage("slideshow");
+		edit = article.Edit();
+		edit.deleteArticleContent();
+		article = edit.clickOnPublishButton();
+		article.deleteArticle();
+		article.openArticle(pageName);
+		article.verifyDeletedArticlePage(pageName);
+		CommonFunctions.logOut(Properties.userNameStaff, driver);
 	}
 	
 	@DataProvider
