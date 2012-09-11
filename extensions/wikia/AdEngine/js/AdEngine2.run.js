@@ -1,13 +1,25 @@
-(function() {
-	var adConfig = AdConfig2(
+(function(log, WikiaTracker, window, ghostwriter, document) {
+	var adConfig
+		, adEngine
+		, adProviderEvolve
+		, adProviderGamePro
+		, adProviderAdDriver2;
+
+	adProviderGamePro = AdProviderGamePro(WikiaTracker, log, window, ghostwriter, document);
+	adProviderEvolve = AdProviderEvolve(WikiaTracker, log, window, ghostwriter, document);
+	adProviderAdDriver2 = AdProviderAdDriver2(log, window);
+
+	adConfig = AdConfig2(
 		// regular dependencies:
 		Wikia.log, Wikia, window,
 
 		// AdProviders:
-		AdProviderGamePro,
-		AdProviderEvolve,
-		AdProviderAdDriver2
+		adProviderGamePro,
+		adProviderEvolve,
+		adProviderAdDriver2
 	);
 
-	AdEngine2(adConfig, Wikia.log, window).run();
-}());
+	adEngine = AdEngine2(adConfig, log, window);
+
+	adEngine.run();
+}(Wikia.log, WikiaTracker, window, ghostwriter, document));

@@ -1,4 +1,4 @@
-window.AdProviderGamePro = window.AdProviderGamePro || (function(WikiaTracker, log, window, ghostwriter, document) {
+window.AdProviderGamePro = function(WikiaTracker, log, window, ghostwriter, document) {
 	function fillInSlot(slot) {
 		log('fillInSlot', 5, 'AdProviderGamePro');
 		log(slot, 5, 'AdProviderGamePro');
@@ -93,4 +93,4 @@ window.AdProviderGamePro = window.AdProviderGamePro || (function(WikiaTracker, l
 
 	return iface;
 
-})(WikiaTracker, Wikia.log, window, ghostwriter, document);
+};

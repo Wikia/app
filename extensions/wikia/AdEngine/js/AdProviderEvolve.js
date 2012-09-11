@@ -1,4 +1,4 @@
-window.AdProviderEvolve = window.AdProviderEvolve || (function (WikiaTracker, log, window, ghostwriter, document) {
+window.AdProviderEvolve = function (WikiaTracker, log, window, ghostwriter, document) {
 	function fillInSlot(slot) {
 		log('fillInSlot', 5, 'AdProviderEvolve');
 		log(slot, 5, 'AdProviderEvolve');
@@ -163,7 +163,7 @@ window.AdProviderEvolve = window.AdProviderEvolve || (function (WikiaTracker, lo
 
 	return iface;
 
-})(WikiaTracker, Wikia.log, window, ghostwriter, document);
+};
 
 function evolve_hop(slotname) {
 	window.AdProviderEvolve.hop(slotname);
