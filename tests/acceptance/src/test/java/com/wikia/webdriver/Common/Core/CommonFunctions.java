@@ -353,7 +353,7 @@ public class CommonFunctions
 		Object visibleDomHeightJS = js.executeScript("return $(window).height()");
 		int VisibleDomHeight = Integer.parseInt(visibleDomHeightJS.toString());
 		
-		Object invisibleUpperDomHeightJS = js.executeScript("return window.pageYOffset");
+		Object invisibleUpperDomHeightJS = js.executeScript("return document.documentElement.scrollTop");
 		int invisibleUpperDomHeight = Integer.parseInt(invisibleUpperDomHeightJS.toString());
 		MoveCursorTo(elem_X+10, elem_Y+ScreenHeightWithoutTaskBarHeight-VisibleDomHeight-pixDiff+1-invisibleUpperDomHeight);
 	}
