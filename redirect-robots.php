@@ -224,6 +224,10 @@ function getLangSpecificNamespace( &$lang, $code, $bot='' ){
 		$r .= "Allow: /wiki/Special:Sitemap*\n";
 		$r .= sprintf( "Allow: /%s:Sitemap*\n", urlencode( $ns[NS_SPECIAL] ) );
 		$r .= sprintf( "Allow: /wiki/%s:Sitemap*\n", urlencode( $ns[NS_SPECIAL] ) );
+		$r .= sprintf( "Allow: /%s:CreateNewWiki*\n", urlencode( $ns[NS_SPECIAL] ) );
+		$r .= sprintf( "Allow: /wiki/%s:CreateNewWiki*\n", urlencode( $ns[NS_SPECIAL] ) );
+		$r .= sprintf( "Allow: /%s:CreateWiki*\n", urlencode( $ns[NS_SPECIAL] ) );
+		$r .= sprintf( "Allow: /wiki/%s:CreateWiki*\n", urlencode( $ns[NS_SPECIAL] ) );
 		$r .= 'Disallow: /wiki/' . urlencode( $ns[NS_SPECIAL] ) .":*\n";
 		$r .= 'Disallow: /' . urlencode( $ns[NS_SPECIAL] ) .":*\n";
 		$r .= 'Disallow: /*title=' . urlencode( $ns[NS_SPECIAL] ) .":*\n";
@@ -243,6 +247,10 @@ function getLangSpecificNamespace( &$lang, $code, $bot='' ){
 		$r .= "Allow: /wiki/Special:Sitemap*\n";
 		$r .= sprintf( "Allow: /%s:Sitemap*\n", urlencode( $ns[NS_SPECIAL] ) );
 		$r .= sprintf( "Allow: /wiki/%s:Sitemap*\n", urlencode( $ns[NS_SPECIAL] ) );
+		$r .= sprintf( "Allow: /%s:CreateNewWiki*\n", urlencode( $ns[NS_SPECIAL] ) );
+		$r .= sprintf( "Allow: /wiki/%s:CreateNewWiki*\n", urlencode( $ns[NS_SPECIAL] ) );
+		$r .= sprintf( "Allow: /%s:CreateWiki*\n", urlencode( $ns[NS_SPECIAL] ) );
+		$r .= sprintf( "Allow: /wiki/%s:CreateWiki*\n", urlencode( $ns[NS_SPECIAL] ) );
 		$r .= 'Disallow: /wiki/' . urlencode( $ns[NS_SPECIAL] ) .":*\n";
 		$r .= 'Disallow: /' . urlencode( $ns[NS_SPECIAL] ) .":*\n";
 		$r .= 'Disallow: /*title=' . urlencode( $ns[NS_SPECIAL] ) .":*\n";
@@ -258,7 +266,7 @@ function getLangSpecificNamespace( &$lang, $code, $bot='' ){
  */
 function deny( ) {
 	header("Content-Type: text/plain");
-	echo "User-agent: *\n";
+	echo "User-agent: **\n";
 	echo "Disallow: /\n";
 }
 
