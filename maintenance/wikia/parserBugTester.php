@@ -22,7 +22,7 @@ if ( defined( 'MW_SUPPORTS_PARSERFIRSTCALLINIT' ) ) {
 	$wgExtensionFunctions[] = 'efSampleParserInit';
 }
 
-function efSampleParserInit( $parser ) {
+function efSampleParserInit( Parser $parser ) {
 	$parser->setHook( 'stest', 'efSampleRender' );
 	$parser->setHook( 'fb:like-box', 'efSampleRender' );
 	return true;

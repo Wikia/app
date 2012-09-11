@@ -6,8 +6,8 @@ class ImagesService extends Service {
 
 	/**
 	 * get image thumbnail
-	 * @param integer wikiId
-	 * @param integer pageId
+	 * @param integer $wikiId
+	 * @param integer $pageId
 	 * @return string imageUrl
 	 */
 	public static function getImageSrc($wikiId, $pageId, $imgSize = 250) {
@@ -48,8 +48,8 @@ class ImagesService extends Service {
 
 	/**
 	 * get image page url
-	 * @param integer wikiId
-	 * @param integer pageId
+	 * @param integer $wikiId
+	 * @param integer $pageId
 	 * @return string image page URL
 	 */
 	public static function getImagePage($wikiId, $pageId) {
@@ -93,7 +93,7 @@ class ImagesService extends Service {
 			}
 		}
 
-		$upload = F::build('UploadFromUrl');
+		$upload = F::build('UploadFromUrl'); /* @var $upload UploadFromUrl */
 		$upload->initializeFromRequest(F::build('FauxRequest', array($data, true)));
 		$upload->fetchFile();
 		$upload->verifyUpload();
@@ -106,7 +106,7 @@ class ImagesService extends Service {
 				$title,
 				RepoGroup::singleton()->getLocalRepo()
 			)
-		);
+		); /* @var $file WikiaLocalFile */
 
 		/* real upload */
 		$result = $file->upload(
