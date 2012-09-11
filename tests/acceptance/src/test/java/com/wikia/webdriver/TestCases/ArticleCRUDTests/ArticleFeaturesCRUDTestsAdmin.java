@@ -16,10 +16,10 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 	private String Caption = "QAcaption1";
 	private String pageName;
 	
-	@Test(groups={"ArticleCRUDAdmin_011", "ArticleCRUDAdmin"}) 
+	@Test(groups={"ArticleFeaturesCRUDAdmin_001", "ArticleCRUDAdmin"}) 
 //	https://internal.wikia-inc.com/wiki/QA/Core_Features_and_Testing/Manual_Regression_Tests/Image_Serving	
 	// Test Case 007  Adding galleries to an article in edit mode
-	public void ArticleCRUDAdmin_011_AddingGallery_Admin()
+	public void ArticleCRUDAdmin_001_AddingGallery()
 	{
 		CommonFunctions.logOut(Properties.userName, driver);
 		CommonFunctions.logIn(Properties.userNameStaff, Properties.passwordStaff);
@@ -51,10 +51,10 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		CommonFunctions.MoveCursorTo(0, 0);
 	}
 	
-	@Test(groups={"ArticleCRUDAdmin_012", "ArticleCRUDAdmin"}) 
+	@Test(groups={"ArticleFeaturesCRUDAdmin_002", "ArticleCRUDAdmin"})
 //	https://internal.wikia-inc.com/wiki/QA/Core_Features_and_Testing/Manual_Regression_Tests/Image_Serving	
 	// Test Case 008 Adding slideshows to an article in edit mode
-	public void ArticleCRUDAdmin_012_AddingSlideshow_Admin()
+	public void ArticleCRUDAdmin_002_AddingSlideshow()
 	{
 		CommonFunctions.logOut(Properties.userName, driver);
 		CommonFunctions.logIn(Properties.userNameStaff, Properties.passwordStaff);
@@ -84,10 +84,10 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		CommonFunctions.logOut(Properties.userNameStaff, driver);
 	}
 	
-	@Test(groups={"ArticleCRUDAdmin_013", "ArticleCRUDAdmin"})
+	@Test(groups={"ArticleFeaturesCRUDAdmin_003", "ArticleCRUDAdmin"})
 //	https://internal.wikia-inc.com/wiki/QA/Core_Features_and_Testing/Manual_Regression_Tests/Image_Serving	
 	// Test Case 009 Adding sliders to an article in edit mode
-	public void ArticleCRUDAdmin_013_AddingSlider_Admin()
+	public void ArticleCRUDAdmin_003_AddingSlider()
 	{
 		CommonFunctions.logOut(Properties.userName, driver);
 		CommonFunctions.logIn(Properties.userNameStaff, Properties.passwordStaff);
@@ -117,10 +117,10 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		CommonFunctions.logOut(Properties.userName, driver);	
 	}
 	
-	@Test(groups={"ArticleCRUDAdmin_014", "ArticleCRUDAdmin"}) 
+	@Test(groups={"ArticleFeaturesCRUDAdmin_004", "ArticleCRUDAdmin"})
 //	https://internal.wikia-inc.com/wiki/QA/Core_Features_and_Testing/Manual_Regression_Tests/Image_Serving	
 	// Test Case 010 Adding videos to an article in edit mode
-	public void ArticleCRUDAdmin_014_AddingVideo_Admin()
+	public void ArticleCRUDAdmin_004_AddingVideo()
 	{
 		CommonFunctions.logOut(Properties.userName, driver);
 		CommonFunctions.logIn(Properties.userNameStaff, Properties.passwordStaff);
@@ -150,6 +150,36 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		article.verifyDeletedArticlePage(pageName);
 		CommonFunctions.logOut(Properties.userName2, driver);
 	}	
-
-
+	
+	@Test(groups={"ArticleFeaturesCRUDAdmin_005", "ArticleCRUDAdmin"}) 
+//	https://internal.wikia-inc.com/wiki/QA/Core_Features_and_Testing/Manual_Regression_Tests/Image_Serving
+	// Test Case 004 Adding images to an article in edit mode
+	public void ArticleCRUDAdmin_005_AddingPhoto()
+	{
+		CommonFunctions.logOut(Properties.userName, driver);
+		CommonFunctions.logIn(Properties.userNameStaff, Properties.passwordStaff);
+		WikiBasePageObject wiki = new WikiBasePageObject(driver, Global.DOMAIN);
+		pageName = "QAarticle"+wiki.getTimeStamp();
+		wiki.openWikiPage();
+		WikiArticleEditMode edit = wiki.createNewArticle(pageName, 1);
+		edit.deleteArticleContent();
+		edit.clickOnVisualButton();
+		edit.clickOnAddObjectButton("Image");
+		edit.waitForModalAndClickAddThisPhoto();
+		edit.typePhotoCaption(Caption);
+		edit.clickOnAddPhotoButton2();
+		edit.verifyThatThePhotoAppears(Caption);
+		edit.clickOnPreviewButton();
+		edit.verifyTheImageOnThePreview();
+		edit.verifyTheCaptionOnThePreview(Caption);
+		WikiArticlePageObject article = edit.clickOnPublishButtonInPreviewMode();
+		article.VerifyTheImageOnThePage();
+		edit = article.Edit();
+		edit.deleteArticleContent();
+		article = edit.clickOnPublishButton();
+		article.deleteArticle();
+		article.openArticle(pageName);
+		article.verifyDeletedArticlePage(pageName);
+		CommonFunctions.logOut(Properties.userName2, driver);
+	}
 }

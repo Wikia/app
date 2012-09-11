@@ -57,6 +57,8 @@ public class BasePageObject{
 	
 	@FindBy(css="form.WikiaSearch")
 	WebElement wikiaSearch_searchForm;
+	@FindBy(css="section.modalContent div.UserLoginModal form")
+	WebElement modalLoginForm;
 	
 	private By customizeToolbar_ToolsList = By.cssSelector("ul.tools li");
 	private By customizeToolbar_MyToolsList = By.cssSelector("ul[id='my-tools-menu'] a");
@@ -866,4 +868,10 @@ public class BasePageObject{
 		long timeCurrent = time.getTime();
 		return String.valueOf(timeCurrent);
 	} 
+	
+	public void verifyModalLogin()
+	{
+		waitForElementByElement(modalLoginForm);
+		PageObjectLogging.log("verifyModalLogin", "verify modal login form is displayed", true, driver);
+	}
 } 

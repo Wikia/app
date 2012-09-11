@@ -6,6 +6,7 @@ import com.wikia.webdriver.Common.Core.CommonFunctions;
 import com.wikia.webdriver.Common.Properties.Properties;
 import com.wikia.webdriver.Common.Templates.TestTemplate;
 import com.wikia.webdriver.PageObjects.PageObject.HomePageObject;
+import com.wikia.webdriver.PageObjects.PageObject.SpecialFactoryPageObject;
 import com.wikia.webdriver.PageObjects.PageObject.CreateNewWiki.CreateNewWikiLogInPageObject;
 import com.wikia.webdriver.PageObjects.PageObject.CreateNewWiki.CreateNewWikiPageObjectStep1;
 import com.wikia.webdriver.PageObjects.PageObject.CreateNewWiki.CreateNewWikiPageObjectStep2;
@@ -55,6 +56,9 @@ public class CreateAWikiTests_nonLatin extends TestTemplate
 		newWikia.verifyUserLoggedIn(Properties.userNameNonLatinEncoded);
 		newWikia.verifyUserToolBar();
 		CommonFunctions.logOut(Properties.userNameNonLatinEncoded, driver);
+		SpecialFactoryPageObject factory = new SpecialFactoryPageObject(driver);
+		factory.openWikiFactoryPage();
+		factory.deleteWiki(wikiName);
 	}
 	
 	/*
@@ -90,6 +94,9 @@ public class CreateAWikiTests_nonLatin extends TestTemplate
 		newWikia.verifyUserLoggedIn(Properties.userNameNonLatinEncoded);
 		newWikia.verifyUserToolBar();
 		CommonFunctions.logOut(Properties.userNameNonLatinEncoded, driver);
+		SpecialFactoryPageObject factory = new SpecialFactoryPageObject(driver);
+		factory.openWikiFactoryPage();
+		factory.deleteWiki(wikiName);
 	}
 	
 	/*
@@ -126,6 +133,9 @@ public class CreateAWikiTests_nonLatin extends TestTemplate
 		newWikia.verifyUserLoggedIn(Properties.userNameNonLatinEncoded);
 		newWikia.verifyUserToolBar();
 		CommonFunctions.logOut(Properties.userNameNonLatinEncoded, driver);
+		SpecialFactoryPageObject factory = new SpecialFactoryPageObject(driver);
+		factory.openWikiFactoryPage();
+		factory.deleteWiki(wikiName);
 	}
 	
 	/*
@@ -158,5 +168,8 @@ public class CreateAWikiTests_nonLatin extends TestTemplate
 		newWikia.verifyUserLoggedIn(Properties.userNameNonLatinEncoded);
 		newWikia.verifyUserToolBar();
 		CommonFunctions.logOut(Properties.userNameNonLatinEncoded, driver);
+		SpecialFactoryPageObject factory = new SpecialFactoryPageObject(driver);
+		factory.openWikiFactoryPage();
+		factory.deleteWiki(wikiName);
 	}	
 }

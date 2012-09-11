@@ -6,6 +6,7 @@ import com.wikia.webdriver.Common.Core.CommonFunctions;
 import com.wikia.webdriver.Common.Properties.Properties;
 import com.wikia.webdriver.Common.Templates.TestTemplate;
 import com.wikia.webdriver.PageObjects.PageObject.HomePageObject;
+import com.wikia.webdriver.PageObjects.PageObject.SpecialFactoryPageObject;
 import com.wikia.webdriver.PageObjects.PageObject.CreateNewWiki.CreateNewWikiLogInPageObject;
 import com.wikia.webdriver.PageObjects.PageObject.CreateNewWiki.CreateNewWikiPageObjectStep1;
 import com.wikia.webdriver.PageObjects.PageObject.CreateNewWiki.CreateNewWikiPageObjectStep2;
@@ -76,6 +77,10 @@ public class CreateAWikiTests_latin extends TestTemplate
 		newWikia.closeCongratulationsLightBox();
 		newWikia.verifyUserLoggedIn(Properties.userName);
 		CommonFunctions.logOut(Properties.userName, driver);
+		CommonFunctions.logIn(Properties.userNameStaff, Properties.passwordStaff);
+		SpecialFactoryPageObject factory = new SpecialFactoryPageObject(driver);
+		factory.openWikiFactoryPage();
+		factory.deleteWiki(wikiName);
 	}
 	
 	
@@ -112,6 +117,9 @@ public class CreateAWikiTests_latin extends TestTemplate
 		newWikia.verifyUserLoggedIn(Properties.userName);
 		newWikia.verifyUserToolBar();
 		CommonFunctions.logOut(Properties.userName, driver);
+		SpecialFactoryPageObject factory = new SpecialFactoryPageObject(driver);
+		factory.openWikiFactoryPage();
+		factory.deleteWiki(wikiName);
 	}
 	
 	/*
@@ -147,6 +155,9 @@ public class CreateAWikiTests_latin extends TestTemplate
 		newWikia.verifyUserLoggedIn(Properties.userName);
 		newWikia.verifyUserToolBar();
 		CommonFunctions.logOut(Properties.userName, driver);
+		SpecialFactoryPageObject factory = new SpecialFactoryPageObject(driver);
+		factory.openWikiFactoryPage();
+		factory.deleteWiki(wikiName);
 	}
 	
 	/*
@@ -182,6 +193,9 @@ public class CreateAWikiTests_latin extends TestTemplate
 		newWikia.verifyUserLoggedIn(Properties.userName);
 		newWikia.verifyUserToolBar();
 		CommonFunctions.logOut(Properties.userName, driver);
+		SpecialFactoryPageObject factory = new SpecialFactoryPageObject(driver);
+		factory.openWikiFactoryPage();
+		factory.deleteWiki(wikiName);
 	}
 	
 	/*
@@ -213,6 +227,9 @@ public class CreateAWikiTests_latin extends TestTemplate
 		newWikia.verifyUserLoggedIn(Properties.userName);
 		newWikia.verifyUserToolBar();
 		CommonFunctions.logOut(Properties.userName, driver);
+		SpecialFactoryPageObject factory = new SpecialFactoryPageObject(driver);
+		factory.openWikiFactoryPage();
+		factory.deleteWiki(wikiName);
 	}	
 	
 	

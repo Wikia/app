@@ -7,6 +7,7 @@ import com.wikia.webdriver.Common.Core.CommonFunctions;
 import com.wikia.webdriver.Common.Properties.Properties;
 import com.wikia.webdriver.Common.Templates.TestTemplate;
 import com.wikia.webdriver.PageObjects.PageObject.HomePageObject;
+import com.wikia.webdriver.PageObjects.PageObject.SpecialFactoryPageObject;
 import com.wikia.webdriver.PageObjects.PageObject.CreateNewWiki.CreateNewWikiLogInPageObject;
 import com.wikia.webdriver.PageObjects.PageObject.CreateNewWiki.CreateNewWikiPageObjectStep1;
 import com.wikia.webdriver.PageObjects.PageObject.CreateNewWiki.CreateNewWikiPageObjectStep2;
@@ -61,5 +62,8 @@ public class CreateAWikiTests_logInFieldValidation extends TestTemplate{
 		newWikia.verifyUserLoggedIn(userNameEnc);
 		newWikia.verifyUserToolBar();
 		CommonFunctions.logOut(userNameEnc, driver);
+		SpecialFactoryPageObject factory = new SpecialFactoryPageObject(driver);
+		factory.openWikiFactoryPage();
+		factory.deleteWiki(wikiName);
 	}
 }
