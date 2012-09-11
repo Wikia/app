@@ -29,7 +29,7 @@ public class ArticleCRUDTestsAdmin extends TestTemplate{
 	 * Verify available edit options for logged in user (history and rename)
 	 */
 	@Test(groups={"ArticleCRUDAdmin_002", "ArticleCRUDAdmin"})
-	public void ArticleCRUDAdmin_002_VerifyEditDropDown_LoggedInUser()
+	public void ArticleCRUDAdmin_002_VerifyEditDropDown()
 	{
 		CommonFunctions.logOut(Properties.userName, driver);
 		CommonFunctions.logIn(Properties.userName, Properties.password);
@@ -48,7 +48,7 @@ public class ArticleCRUDTestsAdmin extends TestTemplate{
 	 * Verify available edit options for admin user (history, rename, protect, delete)
 	 */
 	@Test(groups={"ArticleCRUDAdmin_003", "ArticleCRUDAdmin"})
-	public void ArticleCRUDAdmin_003_VerifyEditDropDown_AdminUser()
+	public void ArticleCRUDAdmin_003_VerifyEditDropDown()
 	{
 		CommonFunctions.logOut(Properties.userNameStaff, driver);
 		CommonFunctions.logIn(Properties.userNameStaff, Properties.passwordStaff);
@@ -87,7 +87,7 @@ public class ArticleCRUDTestsAdmin extends TestTemplate{
 	}	
 	
 	@Test(dataProvider="getArticleName", groups={"ArticleCRUDAdmin_004", "ArticleCRUDAdmin"})
-	public void ArticleCRUDAdmin_004_CreateArticle_Admin(String articleName)
+	public void ArticleCRUDAdmin_004_CreateArticle(String articleName)
 	{
 		CommonFunctions.logOut(Properties.userName, driver);
 		CommonFunctions.logIn(Properties.userNameStaff, Properties.passwordStaff);
@@ -113,7 +113,7 @@ public class ArticleCRUDTestsAdmin extends TestTemplate{
 	 * Delete article
 	 */
 	@Test(groups={"ArticleCRUDAdmin_005", "ArticleCRUDAdmin"})
-	public void ArticleCRUDAdmin_005_CreateEditArticle_Admin()
+	public void ArticleCRUDAdmin_005_CreateEditArticle()
 	{
 		CommonFunctions.logOut(Properties.userName, driver);
 		CommonFunctions.logIn(Properties.userNameStaff, Properties.passwordStaff);
@@ -148,7 +148,7 @@ public class ArticleCRUDTestsAdmin extends TestTemplate{
 	 * Delete article
 	 */
 	@Test(groups={"ArticleCRUDAdmin_006", "ArticleCRUDAdmin"})
-	public void ArticleCRUDAdmin_006_CreateArticleComment_Admin()
+	public void ArticleCRUDAdmin_006_CreateArticleComment()
 	{
 		CommonFunctions.logOut(Properties.userName, driver);
 		CommonFunctions.logIn(Properties.userNameStaff, Properties.passwordStaff);
@@ -180,7 +180,7 @@ public class ArticleCRUDTestsAdmin extends TestTemplate{
 	 * Delete article
 	 */
 	@Test(groups={"ArticleCRUDAdmin_007", "ArticleCRUDAdmin"}) //P2 issue raised: https://wikia.fogbugz.com/default.asp?46789 article comments aren't visible in IE9
-	public void ArticleCRUDAdmin_007_CreateArticleEditComment_007()
+	public void ArticleCRUDAdmin_007_CreateArticleEditComment()
 	{
 		CommonFunctions.logOut(Properties.userName, driver);
 		CommonFunctions.logIn(Properties.userNameStaff, Properties.passwordStaff);
@@ -216,7 +216,7 @@ public class ArticleCRUDTestsAdmin extends TestTemplate{
 	 */
 	
 	@Test(groups={"ArticleCRUDAdmin_008", "ArticleCRUDAdmin"})
-	public void ArticleCRUDAdmin_008_CreateArticleUndeleteDelete_Admin()
+	public void ArticleCRUDAdmin_008_CreateArticleUndeleteDelete()
 	{
 		CommonFunctions.logOut(Properties.userName, driver);
 		CommonFunctions.logIn(Properties.userNameStaff, Properties.passwordStaff);
@@ -248,7 +248,7 @@ public class ArticleCRUDTestsAdmin extends TestTemplate{
 	 */
 	
 	@Test(groups={"ArticleCRUDAdmin_009", "ArticleCRUDAdmin"})
-	public void ArticleCRUDAdmin_009_CreateArticleMoveDelete_Admin()
+	public void ArticleCRUDAdmin_009_CreateArticleMoveDelete()
 	{
 		CommonFunctions.logOut(Properties.userName, driver);
 		CommonFunctions.logIn(Properties.userNameStaff, Properties.passwordStaff);
@@ -280,7 +280,7 @@ public class ArticleCRUDTestsAdmin extends TestTemplate{
 	 * Delete article
 	 */
 	@Test(groups={"ArticleCRUDAdmin_010", "ArticleCRUDAdmin"})
-	public void ArticleCRUDAdmin_010_CreateArticleCommentReply_Admin()
+	public void ArticleCRUDAdmin_010_CreateArticleCommentReply()
 	{
 		CommonFunctions.logOut(Properties.userName, driver);
 		CommonFunctions.logIn(Properties.userNameStaff, Properties.passwordStaff);
