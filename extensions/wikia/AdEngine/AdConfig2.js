@@ -66,9 +66,17 @@ window.AdConfig2 = window.AdConfig2 || (function (log, Wikia, window) {
 
 	// TODO refactor when fb:45432 is done
 	function getCountry() {
-		if (window.testUseCountry) return window.testUseCountry;
+		log('getCountry', 5, 'AdConfig2');
+
+		if (window.testUseCountry) {
+			log('test', 7, 'AdConfig2');
+			log(window.testUseCountry, 7, 'AdConfig2');
+			return window.testUseCountry;
+		}
 
 		if (_cache_geo) {
+			log('cache', 7, 'AdConfig2');
+			log(_cache_geo.country, 7, 'AdConfig2');
 			return _cache_geo.country;
 		}
 
@@ -76,6 +84,9 @@ window.AdConfig2 = window.AdConfig2 || (function (log, Wikia, window) {
 		var country = qs.getVal('usegeo', null);
 		if (country) {
 			_cache_geo = {country:country};
+
+			log('querystring', 7, 'AdConfig2');
+			log(country, 7, 'AdConfig2');
 			return country;
 		}
 
@@ -86,6 +97,8 @@ window.AdConfig2 = window.AdConfig2 || (function (log, Wikia, window) {
 			} catch (e) {
 				_cache_geo = {country:'error'};
 			}
+			log('cookie', 7, 'AdConfig2');
+			log(_cache_geo.country, 7, 'AdConfig2');
 		}
 
 		return _cache_geo.country;
