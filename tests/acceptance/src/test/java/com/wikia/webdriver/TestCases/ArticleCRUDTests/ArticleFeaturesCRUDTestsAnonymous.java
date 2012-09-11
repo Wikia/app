@@ -17,7 +17,7 @@ public class ArticleFeaturesCRUDTestsAnonymous extends TestTemplate
 	@Test(groups={"ArticleFeatureCRUDAnonymous_001", "ArticleCRUDAnonymous"}) 
 //	https://internal.wikia-inc.com/wiki/QA/Core_Features_and_Testing/Manual_Regression_Tests/Image_Serving
 	// Test Case 004 Adding images to an article in edit mode
-	public void ArticleCRUDAdmin_001_AddingPhoto()
+	public void ArticleCRUDAnonymous_001_AddingPhoto()
 	{
 		CommonFunctions.logOut(Properties.userName, driver);
 		WikiBasePageObject wiki = new WikiBasePageObject(driver, Global.DOMAIN);
@@ -34,7 +34,7 @@ public class ArticleFeaturesCRUDTestsAnonymous extends TestTemplate
 	@Test(groups={"ArticleFeatureCRUDAnonymous_002", "ArticleCRUDAnonymous"}) 
 //	https://internal.wikia-inc.com/wiki/QA/Core_Features_and_Testing/Manual_Regression_Tests/Image_Serving	
 	// Test Case 007  Adding galleries to an article in edit mode
-	public void ArticleCRUDAdmin_002_AddingGallery_Anonymous()
+	public void ArticleCRUDAnonymous_002_AddingGallery()
 	{
 		CommonFunctions.logOut(Properties.userName, driver);
 		WikiBasePageObject wiki = new WikiBasePageObject(driver, Global.DOMAIN);
@@ -51,7 +51,7 @@ public class ArticleFeaturesCRUDTestsAnonymous extends TestTemplate
 	@Test(groups={"ArticleFeatureCRUDAnonymous_003", "ArticleCRUDAnonymous"}) 
 //	https://internal.wikia-inc.com/wiki/QA/Core_Features_and_Testing/Manual_Regression_Tests/Image_Serving	
 	// Test Case 008 Adding slideshows to an article in edit mode
-	public void ArticleCRUDAdmin_003_AddingSlideshow_Anonymous()
+	public void ArticleCRUDAnonymous_003_AddingSlideshow()
 	{
 		CommonFunctions.logOut(Properties.userName, driver);
 		WikiBasePageObject wiki = new WikiBasePageObject(driver, Global.DOMAIN);
@@ -68,7 +68,7 @@ public class ArticleFeaturesCRUDTestsAnonymous extends TestTemplate
 	@Test(groups={"ArticleFeatureCRUDAnonymous_004", "ArticleCRUDAnonymous"})
 //	https://internal.wikia-inc.com/wiki/QA/Core_Features_and_Testing/Manual_Regression_Tests/Image_Serving	
 	// Test Case 009 Adding sliders to an article in edit mode
-	public void ArticleCRUDAdmin_004_AddingSlider_Anonymous()
+	public void ArticleCRUDAnonymous_004_AddingSlider()
 	{
 		CommonFunctions.logOut(Properties.userName, driver);
 		WikiBasePageObject wiki = new WikiBasePageObject(driver, Global.DOMAIN);
@@ -85,7 +85,7 @@ public class ArticleFeaturesCRUDTestsAnonymous extends TestTemplate
 	@Test(groups={"ArticleFeatureCRUDAnonymous_005", "ArticleCRUDAnonymous"}) 
 //	https://internal.wikia-inc.com/wiki/QA/Core_Features_and_Testing/Manual_Regression_Tests/Image_Serving	
 	// Test Case 010 Adding videos to an article in edit mode
-	public void ArticleCRUDAdmin_005_AddingVideo_Anonymous()
+	public void ArticleCRUDAnonymous_005_AddingVideo()
 	{
 		CommonFunctions.logOut(Properties.userName, driver);
 		WikiBasePageObject wiki = new WikiBasePageObject(driver, Global.DOMAIN);

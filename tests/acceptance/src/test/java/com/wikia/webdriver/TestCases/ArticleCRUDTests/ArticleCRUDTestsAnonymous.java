@@ -27,7 +27,7 @@ public class ArticleCRUDTestsAnonymous extends TestTemplate{
 	 * Verify available edit options for anonymous user (history item)
 	 */
 	@Test(groups={"ArticleCRUDAnon_001", "ArticleCRUDAnon"})
-	public void ArticleCRUDAnon_001_VerifyEditDropDown_AnonymousUser()
+	public void ArticleCRUDAnon_001_VerifyEditDropDown()
 	{
 		CommonFunctions.logOut(Properties.userName, driver);
 		WikiBasePageObject wiki = new WikiBasePageObject(driver, Global.DOMAIN);
@@ -51,7 +51,7 @@ public class ArticleCRUDTestsAnonymous extends TestTemplate{
 	 */
 			
 	@Test(dataProvider="getArticleName", groups={"ArticleCRUDAnon_002", "ArticleCRUDAnon"})
-	public void ArticleCRUDAnon_002_CreateArticle_Anonymous(String articleName)
+	public void ArticleCRUDAnon_002_CreateArticle(String articleName)
 	{
 		CommonFunctions.logOut(Properties.userName, driver);
 		WikiBasePageObject wiki = new WikiBasePageObject(driver, Global.DOMAIN);
@@ -78,7 +78,7 @@ public class ArticleCRUDTestsAnonymous extends TestTemplate{
 	 * Delete article
 	 */
 	@Test(groups={"ArticleCRUDAnon_003", "ArticleCRUDAnon"})
-	public void ArticleCRUDAnon_003_CreateEditArticle_Anonymous()
+	public void ArticleCRUDAnon_003_CreateEditArticle()
 	{
 		CommonFunctions.logOut(Properties.userName, driver);
 		WikiBasePageObject wiki = new WikiBasePageObject(driver, Global.DOMAIN);
@@ -114,7 +114,7 @@ public class ArticleCRUDTestsAnonymous extends TestTemplate{
 	 * Delete article
 	 */
 	@Test(groups={"ArticleCRUDAnon_004", "ArticleCRUDAnon"})
-	public void ArticleCRUDAnon_004_CreateArticleComment_Anonymous()
+	public void ArticleCRUDAnon_004_CreateArticleComment()
 	{
 		CommonFunctions.logOut(Properties.userName, driver);
 		WikiBasePageObject wiki = new WikiBasePageObject(driver, Global.DOMAIN);
@@ -146,7 +146,7 @@ public class ArticleCRUDTestsAnonymous extends TestTemplate{
 	 * Delete article
 	 */
 	@Test(groups={"ArticleCRUDAnon_005", "ArticleCRUDAnon"})
-	public void ArticleCRUDAnon_005_CreateArticleCommentReply_Anonymous()
+	public void ArticleCRUDAnon_005_CreateArticleCommentReply()
 	{
 		CommonFunctions.logOut(Properties.userName, driver);
 		WikiBasePageObject wiki = new WikiBasePageObject(driver, Global.DOMAIN);
@@ -171,107 +171,107 @@ public class ArticleCRUDTestsAnonymous extends TestTemplate{
 		CommonFunctions.logOut(Properties.userNameStaff, driver);
 	}	
 	
-//	/*
-//	 * TestCase007
-//	 * Add article
-//	 * Add comment
-//	 * Edit comment
-//	 * Delete comment
-//	 * Delete article
-//	 */
-//	@Test(groups={"ArticleCRUDAnon_007", "ArticleCRUDAnon"}) //P2 issue raised: https://wikia.fogbugz.com/default.asp?46789 article comments aren't visible in IE9
-//	public void ArticleCRUDAnon_007_CreateArticleEditComment_Anonymous()
-//	{
-//		CommonFunctions.logOut(Properties.userName, driver);
-//		CommonFunctions.logIn(Properties.userNameStaff, Properties.passwordStaff);
-//		WikiBasePageObject wiki = new WikiBasePageObject(driver, Global.DOMAIN);
-//		pageName = "QAarticle"+wiki.getTimeStamp();
-//		wiki.openWikiPage();
-//		WikiArticleEditMode edit = wiki.createNewArticle(pageName, 1);
-//		edit.deleteArticleContent();
-//		edit.clickOnVisualButton();
-//		edit.typeInContent(articleText);
-//		WikiArticlePageObject article = edit.clickOnPublishButton();
-//		edit.verifyPageTitle(pageName);
-//		article.triggerCommentArea();
-//		article.writeOnCommentArea(commentText);
-//		article.clickSubmitButton();
-//		article.verifyComment(commentText, Properties.userNameStaff);
-//		article.editComment(commentText);
-//		article.writeOnCommentArea(commentTextEdit);
-//		article.clickSubmitButton(Properties.userNameStaff);
-//		article.verifyComment(commentTextEdit, Properties.userNameStaff);
-//		article.deleteComment(commentTextEdit);
-//		edit.deleteArticle();
-//		edit.openArticle(pageName);
-//		edit.verifyDeletedArticlePage(pageName);
-//		CommonFunctions.logOut(Properties.userNameStaff, driver);
-//	}
-//	
-//	/*
-//	 * TestCase005
-//	 * Add article
-//	 * Delete article
-//	 * Undelete article
-//	 */
-//	
-//	@Test(groups={"ArticleCRUDAnon_008", "ArticleCRUDAnon"})
-//	public void ArticleCRUDAnon_008_CreateArticleUndeleteDelete_Anonymous()
-//	{
-//		CommonFunctions.logOut(Properties.userName, driver);
-//		CommonFunctions.logIn(Properties.userNameStaff, Properties.passwordStaff);
-//		WikiBasePageObject wiki = new WikiBasePageObject(driver, Global.DOMAIN);
-//		pageName = "QAarticle"+wiki.getTimeStamp();
-//		wiki.openWikiPage();
-//		WikiArticleEditMode edit = wiki.createNewArticle(pageName, 1);
-//		edit.deleteArticleContent();
-//		edit.clickOnVisualButton();
-//		edit.typeInContent(articleText);
-//		WikiArticlePageObject article = edit.clickOnPublishButton();
-//		article.verifyPageTitle(pageName);
-//		article.verifyArticleText(articleText);
-//		article.deleteArticle();
-//		article.undeleteArticle();
-//		article.openArticle(pageName);
-//		article.verifyPageTitle(pageName);
-//		article.verifyArticleText(articleText);
-//		article.deleteArticle();
-//		article.openArticle(pageName);
-//		article.verifyDeletedArticlePage(pageName);
-//		CommonFunctions.logOut(Properties.userNameStaff, driver);
-//	}
-//	/*
-//	 * TestCase006
-//	 * Add article
-//	 * Move-rename article
-//	 * Delete article
-//	 */
-//	
-//	@Test(groups={"ArticleCRUDAnon_009", "ArticleCRUDAnon"})
-//	public void ArticleCRUDAnon_009_CreateArticleMoveDelete_Anonymous()
-//	{
-//		CommonFunctions.logOut(Properties.userName, driver);
-//		CommonFunctions.logIn(Properties.userNameStaff, Properties.passwordStaff);
-//		WikiBasePageObject wiki = new WikiBasePageObject(driver, Global.DOMAIN);
-//		pageName = "QAarticle"+wiki.getTimeStamp();
-//		wiki.openWikiPage();
-//		WikiArticleEditMode edit = wiki.createNewArticle(pageName, 1);
-//		edit.deleteArticleContent();
-//		edit.clickOnVisualButton();
-//		edit.typeInContent(articleText);
-//		WikiArticlePageObject article = edit.clickOnPublishButton();
-//		article.verifyPageTitle(pageName);
-//		article.verifyArticleText(articleText);
-//		article.renameArticle(pageName, pageName+"moved");
-//		article.verifyPageTitle(pageName+"moved");
-//		article.verifyArticleText(articleText);
-//		article.deleteArticle();
-//		article.openArticle(pageName+"moved");
-//		article.verifyDeletedArticlePage(pageName+"moved");
-//		CommonFunctions.logOut(Properties.userNameStaff, driver);
-//	}
-//
-//	
+	/*
+	 * TestCase007
+	 * Add article
+	 * Add comment
+	 * Edit comment
+	 * Delete comment
+	 * Delete article
+	 */
+	@Test(groups={"ArticleCRUDAnon_007", "ArticleCRUDAnon"}) //P2 issue raised: https://wikia.fogbugz.com/default.asp?46789 article comments aren't visible in IE9
+	public void ArticleCRUDAnon_007_CreateArticleEditComment_Anonymous()
+	{
+		CommonFunctions.logOut(Properties.userName, driver);
+		CommonFunctions.logIn(Properties.userNameStaff, Properties.passwordStaff);
+		WikiBasePageObject wiki = new WikiBasePageObject(driver, Global.DOMAIN);
+		pageName = "QAarticle"+wiki.getTimeStamp();
+		wiki.openWikiPage();
+		WikiArticleEditMode edit = wiki.createNewArticle(pageName, 1);
+		edit.deleteArticleContent();
+		edit.clickOnVisualButton();
+		edit.typeInContent(articleText);
+		WikiArticlePageObject article = edit.clickOnPublishButton();
+		edit.verifyPageTitle(pageName);
+		article.triggerCommentArea();
+		article.writeOnCommentArea(commentText);
+		article.clickSubmitButton();
+		article.verifyComment(commentText, Properties.userNameStaff);
+		article.editComment(commentText);
+		article.writeOnCommentArea(commentTextEdit);
+		article.clickSubmitButton(Properties.userNameStaff);
+		article.verifyComment(commentTextEdit, Properties.userNameStaff);
+		article.deleteComment(commentTextEdit);
+		edit.deleteArticle();
+		edit.openArticle(pageName);
+		edit.verifyDeletedArticlePage(pageName);
+		CommonFunctions.logOut(Properties.userNameStaff, driver);
+	}
+	
+	/*
+	 * TestCase005
+	 * Add article
+	 * Delete article
+	 * Undelete article
+	 */
+	
+	@Test(groups={"ArticleCRUDAnon_008", "ArticleCRUDAnon"})
+	public void ArticleCRUDAnon_008_CreateArticleUndeleteDelete_Anonymous()
+	{
+		CommonFunctions.logOut(Properties.userName, driver);
+		CommonFunctions.logIn(Properties.userNameStaff, Properties.passwordStaff);
+		WikiBasePageObject wiki = new WikiBasePageObject(driver, Global.DOMAIN);
+		pageName = "QAarticle"+wiki.getTimeStamp();
+		wiki.openWikiPage();
+		WikiArticleEditMode edit = wiki.createNewArticle(pageName, 1);
+		edit.deleteArticleContent();
+		edit.clickOnVisualButton();
+		edit.typeInContent(articleText);
+		WikiArticlePageObject article = edit.clickOnPublishButton();
+		article.verifyPageTitle(pageName);
+		article.verifyArticleText(articleText);
+		article.deleteArticle();
+		article.undeleteArticle();
+		article.openArticle(pageName);
+		article.verifyPageTitle(pageName);
+		article.verifyArticleText(articleText);
+		article.deleteArticle();
+		article.openArticle(pageName);
+		article.verifyDeletedArticlePage(pageName);
+		CommonFunctions.logOut(Properties.userNameStaff, driver);
+	}
+	/*
+	 * TestCase006
+	 * Add article
+	 * Move-rename article
+	 * Delete article
+	 */
+	
+	@Test(groups={"ArticleCRUDAnon_009", "ArticleCRUDAnon"})
+	public void ArticleCRUDAnon_009_CreateArticleMoveDelete_Anonymous()
+	{
+		CommonFunctions.logOut(Properties.userName, driver);
+		CommonFunctions.logIn(Properties.userNameStaff, Properties.passwordStaff);
+		WikiBasePageObject wiki = new WikiBasePageObject(driver, Global.DOMAIN);
+		pageName = "QAarticle"+wiki.getTimeStamp();
+		wiki.openWikiPage();
+		WikiArticleEditMode edit = wiki.createNewArticle(pageName, 1);
+		edit.deleteArticleContent();
+		edit.clickOnVisualButton();
+		edit.typeInContent(articleText);
+		WikiArticlePageObject article = edit.clickOnPublishButton();
+		article.verifyPageTitle(pageName);
+		article.verifyArticleText(articleText);
+		article.renameArticle(pageName, pageName+"moved");
+		article.verifyPageTitle(pageName+"moved");
+		article.verifyArticleText(articleText);
+		article.deleteArticle();
+		article.openArticle(pageName+"moved");
+		article.verifyDeletedArticlePage(pageName+"moved");
+		CommonFunctions.logOut(Properties.userNameStaff, driver);
+	}
+
+	
 	@DataProvider
 	private static final Object[][] getArticleName()
 	{
