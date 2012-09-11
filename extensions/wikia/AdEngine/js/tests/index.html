@@ -7,14 +7,14 @@
 		<script>
 		/**
 		 * AdProviders behaves significantly different based on this variable which it set to true
-		 * in test environemnt, and is not set at all in production environment. It is very wrong
+		 * in test environment, and is not set at all in production environment. It is very wrong
 		 * and should be solved ASAP.
 		 */
 		wgInsideUnitTest = true;
 
 		/**
 		 * AdConfig.js have a strong dependency on Wikia.geo.getGeoData function which is not
-		 * available in test environemnt so we are mocking it here. It can't be defined in module
+		 * available in test environment so we are mocking it here. It can't be defined in module
 		 * setup because it is too late (AdConfig.js calls that function just after it is loaded).
 		 * This problem should be solved in a better way.
 		 */
@@ -30,15 +30,15 @@
 		<script src="../../../../../resources/wikia/modules/querystring.js"></script>
 		<script src="../../../../../resources/wikia/modules/cookies.js"></script>
 		<script src="../../../../../resources/wikia/modules/log.js"></script>
-		<script src="../../AdConfig2.js"></script>
+		<script src="../AdConfig2.js"></script>
 		<script src="../../AdDriverGP.js"></script>
 		<script src="../../AdConfig.js"></script>
-		<script src="../../AdEngine2.js"></script>
+		<script src="../AdEngine2.js"></script>
 		<script src="../../../WikiaTracker/js/WikiaTracker.js"></script>
 		<script src="../../ghost/gw-11.6.7/lib/gw.js"></script>
-		<script src="../../AdProviderEvolve.js"></script>
-		<script src="../../AdProviderGamePro.js"></script>
-		<script src="../../AdProviderAdDriver2.js"></script>
+		<script src="../AdProviderEvolve.js"></script>
+		<script src="../AdProviderGamePro.js"></script>
+		<script src="../AdProviderAdDriver2.js"></script>
 
 		<!-- Load test suites -->
 		<script src="AdConfig2Test.js"></script>

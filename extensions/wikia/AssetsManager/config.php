@@ -39,6 +39,19 @@ $config['liftium_ads_js'] = array(
 	),
 );
 
+$config['adengine2_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/AdEngine/js/AdProviderGamePro.js',
+		'//extensions/wikia/AdEngine/js/AdProviderLiftium2.js',
+		'//extensions/wikia/AdEngine/js/AdProviderEvolve.js',
+		'//extensions/wikia/AdEngine/js/AdProviderAdDriver2.js',
+		'//extensions/wikia/AdEngine/js/AdConfig2.js',
+		'//extensions/wikia/AdEngine/js/AdEngine2.js',
+		'//extensions/wikia/AdEngine/js/AdEngine2.run.js',
+	),
+);
+
 $config['oasis_ads_js'] = array(
     'type' => AssetsManager::TYPE_JS,
     'assets' => array(
@@ -57,16 +70,12 @@ $config['oasis_ads_js'] = array(
 		'#group_liftium_ads_js',
 
 		'//extensions/wikia/AdEngine/liftium/AdsInContent.js',
-		'//extensions/wikia/AdEngine/AdProviderGamePro.js',
-		'//extensions/wikia/AdEngine/AdProviderLiftium2.js',
-		'//extensions/wikia/AdEngine/AdProviderEvolve.js',
-		'//extensions/wikia/AdEngine/AdProviderAdDriver2.js',
-		'//extensions/wikia/AdEngine/AdConfig2.js',
-		'//extensions/wikia/AdEngine/AdEngine2.js',
-		'//extensions/wikia/AdEngine/AdEngine2.run.js',
+
+		'#group_adengine2_js',
+
 		'//extensions/wikia/AdEngine/AdDriver.js',
 		'//extensions/wikia/AdEngine/AdDriverGP.js',
-    )
+    ),
 );
 
 $config['oasis_noads_extensions_js'] = array(
