@@ -60,7 +60,7 @@ you should definitely check this out:
 	'wikiamobile-image-not-loaded' => 'Image is not available',
 
 	//404 page
-	'wikiamobile-page-not-found' => "Oops! <b>$1</b> does not exist."
+	'wikiamobile-page-not-found' => "Oops! <b>$1</b> does not exist.<br>Tap what's hiding behind the crack to see one that does."
 );
 
 /** Message documentation (Message documentation) */
