@@ -1,1 +1,1 @@
-AdEngine2.init();
+AdEngine2(AdConfig2, Wikia.log, window).run();
