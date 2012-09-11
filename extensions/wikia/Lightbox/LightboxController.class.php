@@ -182,6 +182,7 @@ class LightboxController extends WikiaController {
 
 		// file details
 		$this->views = $this->wf->Msg( 'lightbox-video-views', $this->wg->Lang->formatNum($data['videoViews']) );
+		$this->title = $title->getDBKey();
 		$this->fileTitle = $title->getText();
 		$this->mediaType = $data['mediaType'];
 		$this->videoEmbedCode = $data['videoEmbedCode'];

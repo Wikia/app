@@ -67,7 +67,7 @@ class SpecialVideosHelper extends WikiaModel {
 	}
 
 	protected function getMemKeySortedVideos( $sort ) {
-		return $this->wf->MemcKey( 'videos', 'sorted_videos', $sort );
+		return $this->wf->MemcKey( 'videos', 'sorted_videos', 'v2', $sort );
 	}
 
 	public function clearCacheSortedVideos() {
@@ -111,6 +111,7 @@ class SpecialVideosHelper extends WikiaModel {
 
 				// video details
 				$videoDetail = array(
+					'title' => $title->getDBKey(),
 					'fileTitle' => $title->getText(),
 					'fileUrl' => $title->getLocalUrl(),
 					'thumbUrl' => $thumbUrl,
@@ -147,8 +148,8 @@ class SpecialVideosHelper extends WikiaModel {
 
 	// sort by most popular
 	protected function sortByMostPopular( $a, $b ) {
-		$aViews = F::build( 'DataMartService', array( $a['fileTitle'] ), 'getVideoViewsByTitleTotal' );
-		$bViews = F::build( 'DataMartService', array( $b['fileTitle'] ), 'getVideoViewsByTitleTotal' );
+		$aViews = F::build( 'DataMartService', array( $a['title'] ), 'getVideoViewsByTitleTotal' );
+		$bViews = F::build( 'DataMartService', array( $b['title'] ), 'getVideoViewsByTitleTotal' );
 		if ( $aViews < $bViews ) {
 			$result = 1;
 		} else if ( $aViews > $bViews ) {
@@ -162,8 +163,8 @@ class SpecialVideosHelper extends WikiaModel {
 	// sort by trending
 	protected function sortByTrending( $a, $b ) {
 		$startDate = date( 'Y-m-d', strtotime('-30 day') );
-		$aViews = F::build( 'DataMartService', array( $a['fileTitle'], DataMartService::PERIOD_ID_DAILY, $startDate ), 'getVideoViewsByTitleTotal' );
-		$bViews = F::build( 'DataMartService', array( $b['fileTitle'], DataMartService::PERIOD_ID_DAILY, $startDate ), 'getVideoViewsByTitleTotal' );
+		$aViews = F::build( 'DataMartService', array( $a['title'], DataMartService::PERIOD_ID_DAILY, $startDate ), 'getVideoViewsByTitleTotal' );
+		$bViews = F::build( 'DataMartService', array( $b['title'], DataMartService::PERIOD_ID_DAILY, $startDate ), 'getVideoViewsByTitleTotal' );
 		if ( $aViews < $bViews ) {
 			$result = 1;
 		} else if ( $aViews > $bViews ) {
