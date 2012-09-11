@@ -3,8 +3,13 @@
  @test-require-asset resources/wikia/modules/querystring.js
  @test-require-asset resources/wikia/modules/cookies.js
  @test-require-asset resources/wikia/modules/log.js
- @test-require-asset extensions/wikia/AdEngine/AdConfig2.js
- @test-require-asset extensions/wikia/AdEngine/AdEngine2.js
+ @test-require-asset extensions/wikia/AdEngine/ghost/gw-11.6.7/lib/gw.js
+ @test-require-asset extensions/wikia/WikiaTracker/js/WikiaTracker.js
+ @test-require-asset extensions/wikia/AdEngine/js/AdProviderEvolve.js
+ @test-require-asset extensions/wikia/AdEngine/js/AdProviderGamePro.js
+ @test-require-asset extensions/wikia/AdEngine/js/AdProviderAdDriver2.js
+ @test-require-asset extensions/wikia/AdEngine/js/AdConfig2.js
+ @test-require-asset extensions/wikia/AdEngine/js/AdEngine2.js
 */
 
 // Sorry for that
