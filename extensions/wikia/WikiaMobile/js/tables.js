@@ -1,4 +1,6 @@
 define('tables', ['events', 'track'], function(ev, track){
+	'use strict';
+
 	var w = window,
 		realWidth = w.innerWidth || w.clientWidth,
 		inited = false,

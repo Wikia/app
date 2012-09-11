@@ -1,4 +1,4 @@
-/*global  */
+/*global define  */
 /**
  * Handling of Gallery view of images on a page in a Lighbox
  *
@@ -6,8 +6,9 @@
  *
  */
 define('mediagallery', ['media', 'modal', 'pager', 'thumbnailer', 'lazyload', 'track'], function(med, mod, pag, thumbnailer, lazyload, track) {
-	var
-		MAX_THUMB_SIZE = 140,
+	'use strict';
+
+	var MAX_THUMB_SIZE = 140,
 		width,
 		imagesize,
 		d = document,
@@ -40,7 +41,7 @@ define('mediagallery', ['media', 'modal', 'pager', 'thumbnailer', 'lazyload', 't
 			//open specific image chosen from gallery
 		} else if (target.className.indexOf('galPlc img') > -1) {
 			goBackToImgModal(~~target.id.slice(3));
-			if(target.className.indexOf('video')) track.event('video', track.CLICK, {label: 'gallery'});
+			if(target.className.indexOf('video')) {track.event('video', track.CLICK, {label: 'gallery'});}
 			//open/close gallery
 		} else if (target.id === 'wkGalTgl') {
 			if(modalWrapper.className.indexOf('wkMedGal') > -1) {
@@ -94,7 +95,7 @@ define('mediagallery', ['media', 'modal', 'pager', 'thumbnailer', 'lazyload', 't
 
 		imgsPerPage = cols * ~~((gal.offsetHeight - 50)/imagesize);
 		pagesNum = 0;
-		dots = '<div class="dot' + ((current == 0) ? ' curr':'') + '" id=dot0><div></div></div>';
+		dots = '<div class="dot' + ((current === 0) ? ' curr':'') + '" id=dot0><div></div></div>';
 		pages.length = 0;
 		pages[pagesNum] = '<div>';
 
@@ -102,7 +103,7 @@ define('mediagallery', ['media', 'modal', 'pager', 'thumbnailer', 'lazyload', 't
 			if(i > 0 && (i%imgsPerPage) === 0){
 				pages[pagesNum++] += '</div>';
 				pages[pagesNum] = '<div>';
-				dots += '<div class="dot'+((current == pagesNum) ? ' curr':'')+'" id=dot'+pagesNum+'><div></div></div>';
+				dots += '<div class="dot'+((current === pagesNum) ? ' curr':'')+'" id=dot'+pagesNum+'><div></div></div>';
 			}
 
 			img = images[i];
@@ -112,17 +113,16 @@ define('mediagallery', ['media', 'modal', 'pager', 'thumbnailer', 'lazyload', 't
 
 			//no thumb available, generate one
 			if (!thumb) {
-				//TODO: remove after 2 weeks images[i].image
-				thumb = thumbnailer.getThumbURL(img.url || img.image, (isVideo ? 'video' : 'image'), MAX_THUMB_SIZE, MAX_THUMB_SIZE);
+				thumb = thumbnailer.getThumbURL(img.url, (isVideo ? 'video' : 'image'), MAX_THUMB_SIZE, MAX_THUMB_SIZE);
 			}
 
 			pages[pagesNum] += '<div class="galPlc img' +
 				(isVideo ? ' video' : '') +
-				((goToImg == i) ? ' this' : '') + '" data-src="' + thumb + '" id=img' + i + '></div>';
+				((goToImg === i) ? ' this' : '') + '" data-src="' + thumb + '" id=img' + i + '></div>';
 		}
 
 		//add placeholders
-		while(x--) pages[pagesNum] += '<div class=galPlc></div>';
+		while(x--) {pages[pagesNum] += '<div class=galPlc></div>';}
 
 		pages[pagesNum] += '</div>';
 
@@ -140,7 +140,7 @@ define('mediagallery', ['media', 'modal', 'pager', 'thumbnailer', 'lazyload', 't
 	function updateDots(){
 		var curr;
 
-		if(curr = pagination.getElementsByClassName('curr')[0]) curr.className = 'dot';
+		if(curr = pagination.getElementsByClassName('curr')[0]) {curr.className = 'dot';}
 		d.getElementById('dot'+ current).className += ' curr';
 		paginationStyle.webkitTransform = 'translate3d(' + Math.min(Math.max((~~(dotsPerWidth/2) - current) * 18, (-paginationWidth+width)), 0) + 'px,0,0)';
 	}
@@ -165,7 +165,7 @@ define('mediagallery', ['media', 'modal', 'pager', 'thumbnailer', 'lazyload', 't
 			pageNumber: current,
 			center: true,
 			onEnd: function(currPageNum){
-				if(current != currPageNum){
+				if(current !== currPageNum){
 					track.event('gallery', track.PAGINATE, {
 						label: (current < currPageNum ? 'next' : 'previous')
 					});
