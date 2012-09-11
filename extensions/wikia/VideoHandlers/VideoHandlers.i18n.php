@@ -25,6 +25,7 @@ $messages['en'] = array(
 	'videohandler-remove-video-modal-success' => 'File:$1 has been removed from this wiki',
 	'videohandler-remove-video-modal-cancel' => 'Cancel',
 
+	'videos-add-video' => 'Add a video',
 	'videos-add-video-to-this-wiki' => 'Add a video to this wiki',
 	'videod-add-video-label-name' => 'Enter the full URL, from any of the supported sites.',
 	'videod-add-video-label-all' => 'See all',

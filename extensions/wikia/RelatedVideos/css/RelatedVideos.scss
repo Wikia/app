@@ -327,16 +327,6 @@ $color-related-videos-background: darken($color-page, 20%);
 
 #add-video-modal {
 
-	&.loading {
-		cursor: busy;
-	}
-
-	fieldset {
-		input {
-			width: 400px;
-		}
-	}
-
   .RVSuggestPreviewVideo .preview_video { float:left; width:65%; }
   .RVSuggestPreviewVideo .preview_options { float:left; width:30%; }
   .RVSuggestPreviewVideo .preview_options a { display:block; margin-bottom:15px; }
@@ -344,9 +334,6 @@ $color-related-videos-background: darken($color-page, 20%);
 
     button.relatedVideosConfirm { height: 24px }
 
-	.messageHolder {
-		display: none;
-	}
 }
 
 #relatedvideos-video-player {
