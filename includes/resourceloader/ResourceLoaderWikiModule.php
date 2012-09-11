@@ -73,7 +73,7 @@ abstract class ResourceLoaderWikiModule extends ResourceLoaderModule {
 	protected function getContent( $title, $titleText, $options = array() ) {
 		if ( $title->getNamespace() === NS_MEDIAWIKI ) {
 			$message = wfMessage( $title->getDBkey() )->inContentLanguage();
-			return $message->exists() ? $message->plain() : '';
+			return $message->exists() ? $message->plain() : null;
 		}
 		if ( !$title->isCssJsSubpage() && !$title->isCssOrJsPage() ) {
 			return null;
