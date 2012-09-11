@@ -163,62 +163,8 @@ public class ImageServing extends TestTemplate {
 		CommonFunctions.MoveCursorTo(0, 0);
 	}
 
-	@Test(groups = {"ImageServing007"}) 
-//	https://internal.wikia-inc.com/wiki/QA/Core_Features_and_Testing/Manual_Regression_Tests/Image_Serving	
-	// Test Case 007  Adding galleries to an article in edit mode
-	public void ImageServing007_AddingGalleries()
-	{
-		CommonFunctions.MoveCursorTo(0, 0);
-		WikiBasePageObject wiki = new WikiBasePageObject(driver, Global.DOMAIN);
-		WikiArticlePageObject article = wiki.OpenArticle(wikiArticle);
-		CommonFunctions.logIn(Properties.userName2, Properties.password2);
-		WikiArticleEditMode editArticle = article.Edit();
-		editArticle.clickOnAddObjectButton("Gallery");
-		editArticle.waitForObjectModalAndClickAddAphoto("Gallery");
-		editArticle.galleryCheckImageInputs(4);
-		editArticle.galleryClickOnSelectButton();
-		editArticle.gallerySetPositionGallery("Center");
-		editArticle.gallerySetPhotoOrientation(2);
-		editArticle.galleryClickOnFinishButton();
-		editArticle.verifyObjectInEditMode("gallery");
-		editArticle.clickOnPreviewButton();
-		editArticle.verifyTheObjectOnThePreview("gallery");
-		article = editArticle.clickOnPublishButtonInPreviewMode();
-		article.VerifyTheObjectOnThePage("gallery");
-		editArticle = article.Edit();
-		editArticle.deleteArticleContent();
-		article = editArticle.clickOnPublishButton();
-		CommonFunctions.logOut(Properties.userName2, driver);
-		CommonFunctions.MoveCursorTo(0, 0);
-	}
 	
-	@Test(groups = {"ImageServing008"}) 
-//	https://internal.wikia-inc.com/wiki/QA/Core_Features_and_Testing/Manual_Regression_Tests/Image_Serving	
-	// Test Case 008 Adding slideshows to an article in edit mode
-	public void ImageServing008_AddingSlideshow()
-	{
-		CommonFunctions.MoveCursorTo(0, 0);
-		WikiBasePageObject wiki = new WikiBasePageObject(driver, Global.DOMAIN);
-		WikiArticlePageObject article = wiki.OpenArticle(wikiArticle);
-		CommonFunctions.logIn(Properties.userName2, Properties.password2);
-		WikiArticleEditMode editArticle = article.Edit();
-		editArticle.clickOnAddObjectButton("Slideshow");
-		editArticle.waitForObjectModalAndClickAddAphoto("GallerySlideshow");
-		editArticle.galleryCheckImageInputs(4);
-		editArticle.galleryClickOnSelectButton();
-		editArticle.gallerySetPositionSlideshow("Center");
-		editArticle.galleryClickOnFinishButton();
-		editArticle.verifyObjectInEditMode("slideshow");
-		editArticle.clickOnPreviewButton();
-		editArticle.verifyTheObjectOnThePreview("slideshow");
-		article = editArticle.clickOnPublishButtonInPreviewMode();
-		article.VerifyTheObjectOnThePage("slideshow");
-		editArticle = article.Edit();
-		editArticle.deleteArticleContent();
-		article = editArticle.clickOnPublishButton();
-		CommonFunctions.logOut(Properties.userName2, driver);
-	
-	}
+
 	
 	@Test(groups = {"ImageServing009"}) 
 //	https://internal.wikia-inc.com/wiki/QA/Core_Features_and_Testing/Manual_Regression_Tests/Image_Serving	

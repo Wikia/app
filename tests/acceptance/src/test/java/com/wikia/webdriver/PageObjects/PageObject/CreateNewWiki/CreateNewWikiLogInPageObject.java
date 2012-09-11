@@ -125,8 +125,8 @@ public class CreateNewWikiLogInPageObject extends BasePageObject{
 	
 	public void verifyEmptyUserNameValidation()
 	{
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div.UserLoginModal div.input-group div.error-msg")));
-		wait.until(ExpectedConditions.visibilityOf(usernameValidationText));
+		waitForElementByBy(By.cssSelector("div.UserLoginModal div.input-group div.error-msg"));
+		waitForElementByElement(usernameValidationText);
 		String text = usernameValidationText.getText();
 		CommonFunctions.assertString("Oops, please fill in the username field.", text);
 		userNameField.clear();
