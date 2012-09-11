@@ -101,6 +101,13 @@ $messages['en'] = array(
 	'swm-mode-users-registration-between' => 'Between',
 	'swm-label-mode-users-registration-hint' => '<i>Dates must be in the form 2012-04-01 00:00:00</i>',
 	'swm-error-registered-tobeforefrom' => 'User registration end date is before start date.',
+
+	'swm-label-mode-users-editcount' => 'Edit count',
+	'swm-mode-users-editcount-more' => 'More',
+	'swm-mode-users-editcount-less' => 'Less',
+	'swm-mode-users-editcount-between' => 'Between',
+	'swm-error-editcount-tolessthanfrom' => 'User editcount upper limit is less than lower limit.',
+	'swm-error-editcount-notnumber' => 'Editcount must be a valid number.',
 );
 
 /** Message documentation (Message documentation)

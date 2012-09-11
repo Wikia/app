@@ -73,6 +73,9 @@ class SiteWideMessages extends SpecialPage {
 		$formData['registrationDateOption'] = $wgRequest->getVal( 'mRegistrationS' );
 		$formData['registrationDateOne'] = $wgRequest->getVal( 'mRegistrationDateOne' );
 		$formData['registrationDateTwo'] = $wgRequest->getVal( 'mRegistrationDateTwo' );
+		$formData['editCountOption'] = $wgRequest->getVal( 'mEditCountS' );
+		$formData['editCountOne'] = $wgRequest->getVal( 'mEditCountOne' );
+		$formData['editCountTwo'] = $wgRequest->getVal( 'mEditCountTwo' );
 		$formData['mLang'] = $wgRequest->getArray('mLang');
 
 		//fetching hub list
@@ -199,8 +202,13 @@ class SiteWideMessages extends SpecialPage {
 					'datefrom' => $formData['registrationDateOne'],
 					'dateto' => $formData['registrationDateTwo']
 				);
+				$editCountArr = array(
+					'option' => $formData['editCountOption'],
+					'ecfrom' => $formData['editCountOne'],
+					'ecto' => $formData['editCountTwo']
+				);
 				$result = $this->sendMessage( $wgUser, $mRecipientId, $mText, $expiryArr, $formData['wikiName'],
-					$formData['userName'], $formData['listUserNames'], $groupName, $registrationArr, $formData['sendModeWikis'],
+					$formData['userName'], $formData['listUserNames'], $groupName, $registrationArr, $editCountArr, $formData['sendModeWikis'],
 					$formData['sendModeUsers'], $formData['hubId'], $formData['mLang'], $formData['clusterId'] );
 
 				if (is_null($result['msgId'])) {	//we have an error
@@ -281,7 +289,7 @@ class SiteWideMessages extends SpecialPage {
 
 	//DB functions
 	// TODO: refactor most of these parameters into a single array parameter
-	private function sendMessage( $mSender, $mRecipientId, $mText, $mExpireArray, $mWikiName, $mRecipientName, $mUserNames, $mGroupName, $mRegistrationArr, $mSendModeWikis, $mSendModeUsers, $mHubId, $mLang, $mClusterId ) {
+	private function sendMessage( $mSender, $mRecipientId, $mText, $mExpireArray, $mWikiName, $mRecipientName, $mUserNames, $mGroupName, $mRegistrationArr, $mEditCountArr, $mSendModeWikis, $mSendModeUsers, $mHubId, $mLang, $mClusterId ) {
 		global $wgExternalSharedDB, $wgStatsDB;
 		$result = array('msgId' => null, 'errMsg' => null);
 		$dbInsertResult = false;
@@ -338,6 +346,11 @@ class SiteWideMessages extends SpecialPage {
 				$mUserNames = '';
 				break;
 			case 'REGISTRATION':
+				$mRecipientName = '';
+				$mGroupName = '';
+				$mUserNames = '';
+				break;
+			case 'EDITCOUNT':
 				$mRecipientName = '';
 				$mGroupName = '';
 				$mUserNames = '';
@@ -411,6 +424,17 @@ class SiteWideMessages extends SpecialPage {
 			&& ( $mRegistrationArr['dateto'] <= $mRegistrationArr['datefrom'] )
 		) {
 			$result['errMsg'] = wfMsg( 'swm-error-registered-tobeforefrom' );
+		} elseif ( $mSendModeUsers === 'EDITCOUNT'
+			&& ( !is_numeric( $mEditCountArr['ecfrom'] )
+			|| ( $mEditCountArr['option'] === 'between'
+			&& !is_numeric( $mEditCountArr['ecto'] ) ) )
+		) {
+			$result['errMsg'] = wfMsg( 'swm-error-editcount-notnumber' );
+		} elseif ( $mSendModeUsers === 'EDITCOUNT'
+			&& $mEditCountArr['option'] === 'between'
+			&& ( $mEditCountArr['ecto'] <= $mEditCountArr['ecfrom'] )
+		) {
+			$result['errMsg'] = wfMsg( 'swm-error-editcount-tolessthanfrom' );
 		} else {
 			global $wgParser, $wgUser;
 			$title = Title::newFromText(uniqid('tmp'));
@@ -536,6 +560,28 @@ class SiteWideMessages extends SpecialPage {
 										TASK_QUEUED
 									);
 									break;
+
+								case 'EDITCOUNT':
+									//add task to TaskManager
+									$oTask = new SWMSendToGroupTask();
+									$oTask->createTask(
+										array(
+											'messageId'			=> $result['msgId'],
+											'sendModeWikis'		=> $mSendModeWikis,
+											'sendModeUsers'		=> $mSendModeUsers,
+											'wikiName'			=> $mWikiName,
+											'groupName'			=> $mGroupName,
+											'editCountOption'	=> $mEditCountArr['option'],
+											'editCountStart'	=> $mEditCountArr['ecfrom'],
+											'editCountEnd'		=> $mEditCountArr['ecto'],
+											'senderId'			=> $mSender->getID(),
+											'senderName'		=> $mSender->getName(),
+											'hubId'				=> $mHubId,
+											'clusterId'     	=> $mClusterId,
+										),
+										TASK_QUEUED
+									);
+									break;
 							}
 							break;
 
@@ -644,6 +690,28 @@ class SiteWideMessages extends SpecialPage {
 											'senderName'	=> $mSender->GetName(),
 											'hubId'			=> $mHubId,
 											'clusterId'     => $mClusterId,
+										),
+										TASK_QUEUED
+									);
+									break;
+
+								case 'EDITCOUNT':
+									//add task to TaskManager
+									$oTask = new SWMSendToGroupTask();
+									$oTask->createTask(
+										array(
+											'messageId'			=> $result['msgId'],
+											'sendModeWikis'		=> $mSendModeWikis,
+											'sendModeUsers'		=> $mSendModeUsers,
+											'wikiName'			=> $mWikiName,
+											'groupName'			=> $mGroupName,
+											'editCountOption'	=> $mEditCountArr['option'],
+											'editCountStart'	=> $mEditCountArr['ecfrom'],
+											'editCountEnd'		=> $mEditCountArr['ecto'],
+											'senderId'			=> $mSender->getID(),
+											'senderName'		=> $mSender->getName(),
+											'hubId'				=> $mHubId,
+											'clusterId'     	=> $mClusterId,
 										),
 										TASK_QUEUED
 									);
