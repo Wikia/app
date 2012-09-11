@@ -216,6 +216,8 @@ class LightboxController extends WikiaController {
 	 */
 	public function getShareCodes() {
 		$fileTitle = $this->request->getVal('fileTitle', '');
+		$fileTitle = urldecode($fileTitle);
+
 		$file = wfFindFile($fileTitle);
 
 		$shareUrl = '';
@@ -229,6 +231,7 @@ class LightboxController extends WikiaController {
 
 		if(!empty($file)) {
 			$fileTitleObj =  F::build('Title', array($fileTitle, NS_FILE), 'newFromText');
+			$fileTitle = $fileTitleObj->getText();
 			$articleTitle = $this->request->getVal('articleTitle');
 			$articleTitleObj = F::build('Title', array($articleTitle), 'newFromText');
 
@@ -250,7 +253,7 @@ class LightboxController extends WikiaController {
 			$shareUrl = !empty($articleUrl) && in_array($articleNS, $sharingNamespaces) ? $articleUrl : $fileUrl;
 			$thumb = $file->transform(array('width'=>300, 'height'=>250));
 			$thumbUrl = $thumb->getUrl();
-			$linkDescription = wfMsg('lightbox-share-description', empty($articleUrl) ? $fileTitleObj->getText() : $articleTitleText, $this->wg->Sitename);
+			$linkDescription = wfMsg('lightbox-share-description', empty($articleUrl) ? $fileTitle : $articleTitleText, $this->wg->Sitename);
 			if(WikiaFileHelper::isFileTypeVideo( $file )) {
 				$embedMarkup = $file->getEmbedCode(300, true, false);
 			} else {
@@ -275,6 +278,7 @@ class LightboxController extends WikiaController {
 			if ( WikiaFileHelper::isFileTypeVideo($file) && $file->getProviderName() == 'screenplay' ) {
 				$embedMarkup = false;
 			}
+
 		}
 
 		$this->shareUrl = $shareUrl;
@@ -282,7 +286,7 @@ class LightboxController extends WikiaController {
 		$this->articleUrl = $articleUrl;
 		$this->fileUrl = $fileUrl;
 		$this->networks = $networks;
-		$this->fileTitle = str_replace("_"," ",$fileTitle);
+		$this->fileTitle = $fileTitle;
 		$this->imageUrl = $thumbUrl;
 
 		// set cache control to 1 day
