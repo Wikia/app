@@ -147,7 +147,7 @@ class ThemeSettings {
 
 			$imageServing = new ImageServing(null, 120, array("w"=>"120", "h"=>"100"));
 			$settings['user-background-image'] = $file->getURL();
-			$settings['user-background-image-thumb'] = wfReplaceImageServer($file->getThumbUrl( $imageServing->getCut($file->width, $file->height, "origin")."-".$file->name));
+			$settings['user-background-image-thumb'] = wfReplaceImageServer($file->getThumbUrl( $imageServing->getCut($file->width(), $file->height(), "origin")."-".$file->getName()));
 
 			$history = $file->getHistory(1);
 			if(count($history) == 1) {
