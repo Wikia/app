@@ -3,6 +3,7 @@
  * SEOTweaks setup
  *
  * @author mech
+ * @author ADi
  *
  */
 $dir = dirname(__FILE__) . '/';
@@ -13,3 +14,4 @@ $app->registerClass('SEOTweaksHooksHelper', $dir . 'SEOTweaksHooksHelper.class.p
 
 // hooks
 $app->registerHook('BeforePageDisplay', 'SEOTweaksHooksHelper', 'onBeforePageDisplay');
+$app->registerHook('ArticleFromTitle', 'SEOTweaksHooksHelper', 'onArticleFromTitle');
