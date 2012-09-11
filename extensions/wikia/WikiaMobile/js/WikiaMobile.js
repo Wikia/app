@@ -95,16 +95,16 @@ $(function () {
 				popover({
 					on: wkShrPag,
 					create: function(cnt){
-						$(cnt).delegate('li', clickEvent, function(){
-							track.event('share', track.CLICK, {label: 'page'});
-						});
+						cnt.addEventListener(clickEvent, function(){
+							track.event('share', track.CLICK, 'page');
+						}, true);
 						return share()(cnt);
 					},
 					open: function () {
 						track.event('share', track.CLICK, {label: 'open'});
 					},
 					close: function (ev) {
-						if(ev.target.tagName != 'A') track.event('share', track.CLICK, {label: 'close'});
+						if(ev.target.tagName != 'A') {track.event('share', track.CLICK, {label: 'close'});}
 					},
 					style: 'right:0;'
 				});
