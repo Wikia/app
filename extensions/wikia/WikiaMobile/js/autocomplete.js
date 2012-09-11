@@ -55,29 +55,27 @@ var reEscape = /(\/|\.|\*|\+|\?|\||\(|\)|\[|\]|\{|\}|\\)/g,
 			for (var i = 0; i < len; i++) {
 				sug = suggestions[i];
                 li = '<li><span title="'+sug+'">' + sug.replace(regExp, '<em>$1</em>') + '<span class=copySrh>+</span></span></li>';
-				lis = lis + li;
+				lis += li;
 			}
 
 			list.insertAdjacentHTML('afterbegin', lis);
 
 			var li = list.getElementsByTagName('li'),
-				cur = 0,
-				l = li.length;
+				cur = 0;
 
 			a = setInterval(function(){
 				if(li[cur]){
-					li[cur].className = 'show';
-					cur = cur+1;
+					li[cur++].className = 'show';
 				}else{
 					clearInterval(a);
 				}
-			}, 70)
+			}, 70);
 		}
-	};
+	}
 
 	return function (options) {
 		input = options.input;
-		list = options.list,
+		list = options.list;
 		serviceUrl = options.url;
 
 		var clear = options.clear;
@@ -108,7 +106,7 @@ var reEscape = /(\/|\.|\*|\+|\?|\||\(|\)|\[|\]|\{|\}|\\)/g,
 			list.innerHTML = '';
 			clear.className = 'clsIco hide';
 			input.focus();
-		})
+		});
 
 		list.addEventListener('click', function(ev){
 			var target = ev.target,
