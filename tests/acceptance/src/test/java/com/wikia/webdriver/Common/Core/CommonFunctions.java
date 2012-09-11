@@ -350,7 +350,7 @@ public class CommonFunctions
 		Rectangle maxBounds = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
 		int ScreenHeightWithoutTaskBarHeight = maxBounds.height;
 		JavascriptExecutor js = (JavascriptExecutor) driver;
-		Object visibleDomHeightJS = js.executeScript("return window.innerHeight");
+		Object visibleDomHeightJS = js.executeScript("return $(window).height()");
 		int VisibleDomHeight = Integer.parseInt(visibleDomHeightJS.toString());
 		
 		Object invisibleUpperDomHeightJS = js.executeScript("return window.pageYOffset");
