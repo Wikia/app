@@ -47,7 +47,7 @@ class WikiFactoryLoader {
 	public $mSaveDefaults = false;
 	public $mBeta = false;
 	public $mCacheAnyway = array( "wgArticlePath" );
-	public $mCheckUpgrade = true;
+	public $mCheckUpgrade = false;
 
 	private $mDBhandler, $mDBname;
 
