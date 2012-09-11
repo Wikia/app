@@ -80,9 +80,17 @@ window.AdProviderGamePro = window.AdProviderGamePro || (function(WikiaTracker, l
 		return out;
 	}
 
-	// TODO @mech rethink
-	if (window.wgInsideUnitTest) return {fillInSlot:fillInSlot, rebuildKV:rebuildKV}
+	var iface = {
+		name: 'GamePro',
+		fillInSlot: fillInSlot
+	};
 
-	return {fillInSlot:fillInSlot};
+	// TODO: @mech rethink
+	// TODO: @rychu change tests
+	if (window.wgInsideUnitTest) {
+		iface.rebuildKV = rebuildKV;
+	}
+
+	return iface;
 
 })(WikiaTracker, Wikia.log, window, ghostwriter, document);

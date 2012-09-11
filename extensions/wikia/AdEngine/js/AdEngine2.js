@@ -10,9 +10,10 @@ window.AdEngine2 = window.AdEngine2 || (function (AdConfig2, log, window) {
 		log(slot, 5, 'AdEngine2');
 
 		var provider = AdConfig2.getProvider(slot);
-		log('calling ' + provider + ' for ' + slot[0], 3, 'AdEngine2');
-		slot[2] = provider;
-		window['AdProvider' + provider].fillInSlot(slot);
+		log('calling ' + provider.name + ' for ' + slot[0], 3, 'AdEngine2');
+
+		slot[2] = provider.name;
+		provider.fillInSlot(slot);
 	}
 
 	// based on WikiaTrackerQueue by macbre

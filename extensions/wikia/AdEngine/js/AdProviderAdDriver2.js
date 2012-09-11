@@ -14,6 +14,9 @@ window.AdProviderAdDriver2 = window.AdProviderAdDriver2 || (function (log, windo
 		}
 	}
 
-	return {fillInSlot:fillInSlot};
+	return {
+		name: 'AdDriver2',
+		fillInSlot: fillInSlot
+	};
 
 })(Wikia.log, window);

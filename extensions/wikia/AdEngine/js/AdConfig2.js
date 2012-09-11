@@ -1,28 +1,39 @@
-window.AdConfig2 = window.AdConfig2 || (function (log, Wikia, window) {
+window.AdConfig2 = window.AdConfig2 || (function (
+	// regular dependencies
+	log, Wikia, window,
+
+	// AdProviders
+	AdProviderGamePro,
+	AdProviderEvolve,
+	AdProviderAdDriver2
+) {
 	var _cache_geo = null;
 
 	function getProvider(slot) {
 		log('getProvider', 5, 'AdConfig2');
 		log(slot, 5, 'AdConfig2');
 
-		var providers = {
-			'GamePro':true,
-			'Evolve':true,
-			'AdDriver2':true
+
+		// To be removed later:
+		if (slot[2] === 'GamePro') {
+			return AdProviderGamePro;
 		}
-		if (slot[2] != 'AdEngine2' && typeof providers[slot[2]] != 'undefined') {
-			return slot[2];
+		if (slot[2] === 'Evolve') {
+			return AdProviderEvolve;
+		}
+		if (slot[2] === 'AdDriver2') {
+			return AdProviderAdDriver2;
 		}
 
 		if (isSlotGamePro(slot[0], window.wgContentLanguage)) {
-			return 'GamePro';
+			return AdProviderGamePro;
 		}
 
 		if (isSlotEvolve(slot[0], getCountry())) {
-			return 'Evolve';
+			return AdProviderEvolve;
 		}
 
-		return 'AdDriver2';
+		return AdProviderAdDriver2;
 	}
 
 	// TODO refactor to adProviderGamePro
@@ -106,4 +117,12 @@ window.AdConfig2 = window.AdConfig2 || (function (log, Wikia, window) {
 
 	return {getProvider:getProvider};
 
-})(Wikia.log, Wikia, window);
+})(
+	// regular dependencies:
+	Wikia.log, Wikia, window,
+
+	// AdProviders:
+	AdProviderGamePro,
+	AdProviderEvolve,
+	AdProviderAdDriver2
+);

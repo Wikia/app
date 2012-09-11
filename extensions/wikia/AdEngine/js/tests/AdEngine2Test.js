@@ -6,12 +6,16 @@
  @test-require-asset extensions/wikia/AdEngine/AdConfig2.js
  @test-require-asset extensions/wikia/AdEngine/AdEngine2.js
 */
+
+// Sorry for that
+AdProviderDummy = {};
+
 module('AdEngine2', {
 	setup: function() {
 		this.getProvider = AdConfig2.getProvider;
 		AdConfig2.getProvider = function() {
-			return "Dummy";
-		}
+			return AdProviderDummy;
+		};
 	},
 	teardown: function() {
 		AdConfig2.getProvider = this.getProvider;
