@@ -1371,7 +1371,7 @@ class Wikia {
 	 * @param RecentChange $oRC
 	 *
 	 * @author Piotr Molski (MoLi)
-	 * @return true
+	 * @return bool true
 	 */
 	static public function recentChangesSave( $oRC ) {
 		global $wgCityId, $wgDBname, $wgEnableScribeReport;
@@ -1701,7 +1701,7 @@ class Wikia {
 	 * TODO: allow disabling specific keys?
 	 */
 
-	static public function onPerformActionMemcachePurge($output, $article, $title, $user, $request, $wiki ) {
+	static public function onPerformActionMemcachePurge($output, $article, $title, $user, WebRequest $request, $wiki ) {
 		global $wgAllowMemcacheDisable, $wgAllowMemcacheReads, $wgAllowMemcacheWrites;
 		$mcachePurge = $request->getVal("mcache", null);
 
@@ -1727,7 +1727,7 @@ class Wikia {
 	}
 
 	// Hook to Construct a tag for newrelic
-	static public function onPerformActionNewrelicNameTransaction($output, $article, $title, $user, $request, $wiki ) {
+	static public function onPerformActionNewrelicNameTransaction($output, $article, $title, User $user, $request, $wiki ) {
 		global $wgVersion;
 		if( function_exists( 'newrelic_name_transaction' ) ) {
 			$loggedin = $user->isLoggedIn() ? 'user' : 'anon';
@@ -1752,7 +1752,7 @@ class Wikia {
 		return true;
 	}
 
-	/*
+	/**
 	* FIX FOR bugId:42480 File rename is not completed when replacement is required
 	* "When moving a file to a file name that already belongs to an existing file,
 	* it gives you the option to delete the existing file to make way for the move.
@@ -1761,6 +1761,8 @@ class Wikia {
 	*
 	* That is because $nt (NewTitle) -> getArticleId() returns value that is cached
 	* (after delete it should be 0)
+	 *
+	 * @param WikiPage $page
 	*/
 	public static function onArticleDeleteComplete( $page, $user, $reason, $id ) {
 
@@ -1785,7 +1787,7 @@ class Wikia {
 	 * global during ajax requests. It uses title URL param to keep backward compatibility.
 	 *
 	 * @static
-	 * @param $request
+	 * @param WebRequest $request
 	 * @return Title
 	 */
 	public static function createTitleFromRequest( $request ) {
@@ -1809,5 +1811,4 @@ class Wikia {
 
 		return $newArray;
 	}
-
 }

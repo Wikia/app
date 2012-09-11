@@ -476,8 +476,8 @@ class UserProfilePageController extends WikiaController {
 					$user->setOption('avatar', $avatar);
 					break;
 				default:
-					$result = array('success' => false, 'error' => $errorMsg);
-					$errorMsg = $this->app->wf->msg('userprofilepage-interview-save-internal-error');
+					array('success' => false, 'error' => $errorMsg);
+					$this->app->wf->msg('userprofilepage-interview-save-internal-error');
 					break;
 			}
 

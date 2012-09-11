@@ -54,8 +54,8 @@ abstract class WikiaSkinMonoBook extends WikiaSkin {
 		$out->addStyle('wikia/css/IE80Fixes.css', 'screen', 'IE 8');
 	}
 
-	public function addWikiaVars(&$obj, &$tpl) {
-		global $wgStyleVersion, $wgStylePath, $wgOut, $wgHooks, $wgUser;
+	public function addWikiaVars(&$obj, SkinTemplate &$tpl) {
+		global $wgUser;
 		wfProfileIn(__METHOD__);
 
 		// ads
@@ -118,7 +118,7 @@ abstract class WikiaSkinMonoBook extends WikiaSkin {
 	/**
 	 * Setup ads handling
 	 */
-	protected function setupAds(&$tpl) {
+	protected function setupAds(SkinTemplate &$tpl) {
 		AdEngine::getInstance()->setLoadType('inline');
 
 		// BugId:26735 We want spotlights regardless of whether ads have been enabled.

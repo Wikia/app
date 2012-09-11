@@ -107,6 +107,13 @@ class ResourceLoaderHooks {
 		return true;
 	}
 
+	/**
+	 * @static
+	 * @param $module
+	 * @param ResourceLoaderContext $context
+	 * @param $pages
+	 * @return bool
+	 */
 	public static function onResourceLoaderSiteModuleGetPages( $module, $context, &$pages ) {
 		global $wgResourceLoaderAssetsSkinMapping;
 
@@ -134,6 +141,14 @@ class ResourceLoaderHooks {
 		return true;
 	}
 
+	/**
+	 * @static
+	 * @param $module
+	 * @param ResourceLoaderContext $context
+	 * @param $userpage
+	 * @param $pages
+	 * @return bool
+	 */
 	public static function onResourceLoaderUserModuleGetPages( $module, $context, $userpage, &$pages ) {
 		global $wgResourceLoaderAssetsSkinMapping;
 
