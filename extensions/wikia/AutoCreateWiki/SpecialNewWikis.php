@@ -25,7 +25,7 @@ $wgExtensionCredits['specialpage'][] = array(
 );
 
 $wgHooks['wgQueryPages'][] = 'wfSetupNewWikis';
-$wgExtensionFunctions[] = 'wfSetupNewWikis';
+
 #--- messages file
 $wgExtensionMessagesFiles["Newwikis"] = dirname(__FILE__) . '/AutoCreateWiki.i18n.php';
 
