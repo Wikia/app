@@ -75,6 +75,10 @@ class SWMSendToGroupTask extends BatchTask {
 					case 'REGISTRATION':
 						$result = $this->sendMessageToRegistered( $args );
 						break;
+
+					case 'EDITCOUNT':
+						$result = $this->sendMessageByEditcountGlobal( $args );
+						break;
 				}
 				break;
 
@@ -108,6 +112,10 @@ class SWMSendToGroupTask extends BatchTask {
 				switch ($args['sendModeUsers']) {
 					case 'GROUP':
 						$result = $this->sendMessageToWiki($args);
+						break;
+
+					case 'EDITCOUNT':
+						$result = $this->sendMessageByEditcountLocal( $args );
 						break;
 				}
 				break;
@@ -251,6 +259,18 @@ class SWMSendToGroupTask extends BatchTask {
 									$args['senderId']
 								);
 								break;
+
+							case 'EDITCOUNT':
+								$desc = sprintf('SiteWideMessages :: Send to users by editcount on all wikis<br/>' .
+									'Option: %s, From: %s, TO: %s, Wiki: <i>ALL</i><br/>' .
+									'Sender: %s [id: %d]',
+									$args['editCountOption'],
+									$args['editCountStart'],
+									( $args['editCountEnd'] === false ? '' : $args['editCountEnd'] ),
+									$args['senderName'],
+									$args['senderId']
+								);
+								break;
 						}
 						break;
 
@@ -313,6 +333,19 @@ class SWMSendToGroupTask extends BatchTask {
 									'Group: %s, Wiki: %s<br/>' .
 									'Sender: %s [id: %d]',
 									$args['groupName'],
+									$args['wikiName'],
+									$args['senderName'],
+									$args['senderId']
+								);
+								break;
+
+							case 'EDITCOUNT':
+								$desc = sprintf('SiteWideMessages :: Send to users by editcount on a wiki<br/>' .
+									'Option: %s, From: %s, TO: %s, Wiki: %s<br/>' .
+									'Sender: %s [id: %d]',
+									$args['editCountOption'],
+									$args['editCountStart'],
+									( $args['editCountEnd'] === false ? '' : $args['editCountEnd'] ),
 									$args['wikiName'],
 									$args['senderName'],
 									$args['senderId']
@@ -451,6 +484,151 @@ class SWMSendToGroupTask extends BatchTask {
 
 		unset( $sqlValues );
 
+		return $result;
+	}
+
+	/**
+	 * sendMessageByEditcountGlobal
+	 *
+	 * sends a message to specified group of users
+	 *
+	 * @access private
+	 * @author Daniel Grunwell (grunny)
+	 *
+	 * @param mixed $params - task arguments
+	 *
+	 * @return boolean: result of sending
+	 */
+	private function sendMessageByEditcountGlobal( $params ) {
+		global $wgStatsDB;
+		$result = true;
+		$sqlValues = array();
+		$having = '';
+
+		$dbr = wfGetDB( DB_SLAVE, array(), $wgStatsDB );
+
+		switch ( $params['editCountOption'] ) {
+			case 'more':
+				$having = "editcnt > {$dbr->addQuotes( $params['editCountStart'] )}";
+				break;
+
+			case 'less':
+				$having = "editcnt < {$dbr->addQuotes( $params['editCountStart'] )}";
+				break;
+
+			case 'between':
+				$having = "editcnt BETWEEN {$dbr->addQuotes( $params['editCountStart'] )} AND {$dbr->addQuotes( $params['editCountEnd'] )}";
+				break;
+		}
+
+		$this->addLog( "Step 1 of 2: make list of user ids from users who have a specific editcount. [operator = {$params['editCountOption']}, from = {$params['editCountStart']}, to = {$params['editCountEnd']}]." );
+		$res = $dbr->select(
+			array( 'events' ),
+			array( 'user_id', 'count(*) as editcnt' ),
+			array( ' ( event_type = 1 ) or ( event_type = 2 ) ' ),
+			__METHOD__,
+			array(
+				'GROUP BY' => 'user_id',
+				'HAVING' => $having
+			)
+		);
+		while ( $row = $dbr->fetchObject( $res ) ) {
+			$sqlValues[] = "(NULL, {$row->user_id}, {$params['messageId']}, " . MSG_STATUS_UNSEEN . ')';
+		}
+		$dbr->freeResult( $res );
+
+		$this->addLog( 'Step 2 of 2: add records about new message to right users [number of users = ' . count( $sqlValues ) . ']' );
+		$result = $this->sendMessageHelperToUsers( $sqlValues );
+
+		unset( $sqlValues );
+
+		return $result;
+	}
+
+	/**
+	 * sendMessageByEditcountLocal
+	 *
+	 * sends a message to specified group of users
+	 *
+	 * @access private
+	 * @author Daniel Grunwell (grunny)
+	 *
+	 * @param mixed $params - task arguments
+	 *
+	 * @return boolean: result of sending
+	 */
+	private function sendMessageByEditcountLocal( $params ) {
+		global $wgExternalSharedDB;
+		$result = true;
+		$sqlValues = array();
+		$having = '';
+
+		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
+
+		switch ( $params['editCountOption'] ) {
+			case 'more':
+				$having = "editcnt > {$dbr->addQuotes( $params['editCountStart'] )}";
+				break;
+
+			case 'less':
+				$having = "editcnt < {$dbr->addQuotes( $params['editCountStart'] )}";
+				break;
+
+			case 'between':
+				$having = "editcnt BETWEEN {$dbr->addQuotes( $params['editCountStart'] )} AND {$dbr->addQuotes( $params['editCountEnd'] )}";
+				break;
+		}
+
+		$wikiID = null;
+		$wikiDomains = array( '', '.wikia.com', '.sjc.wikia-inc.com' );
+		foreach( $wikiDomains as $wikiDomain ) {
+			if( !is_null( $wikiID = WikiFactory::DomainToID( $params['wikiName'] . $wikiDomain ) ) ) {
+				break;
+			}
+		}
+		if ( is_null( $wikiID ) ) {
+			return false;
+		}
+
+		$dbResult = $dbr->select(
+			array( 'city_list' ),
+			array( 'city_useshared' ),
+			array( 'city_id' => $wikiID ),
+			__METHOD__
+		);
+
+		if( $row = $dbr->fetchObject( $dbResult ) ) {
+			if ( $row->city_useshared != '1' ) {
+				$this->addLog("Wiki [wiki_id = $wikiID] does not use shared database. Message was not sent.");
+				return false;
+			}
+		}
+		$dbr->freeResult( $dbResult );
+
+		$wikiDB = WikiFactory::IDtoDB($wikiID);
+		$this->addLog("Look into selected wiki for users that have a specific editcount [operator = {$params['editCountOption']}, from = {$params['editCountStart']}, to = {$params['editCountEnd']}, wiki_id = $wikiID, wiki_db = $wikiDB]");
+		$dbr = wfGetDB( DB_SLAVE );
+		$dbr->selectDB( $wikiDB );
+		$res = $dbr->select(
+			array( 'revision' ),
+			array( 'rev_user', 'count(*) as editcnt' ),
+			'',
+			__METHOD__,
+			array(
+				'GROUP BY' => 'rev_user',
+				'HAVING' => $having
+			)
+		);
+
+		while ( $row = $dbr->fetchObject( $res ) ) {
+			$sqlValues[] = "($wikiID, {$row->rev_user}, {$params['messageId']}, " . MSG_STATUS_UNSEEN . ')';
+		}
+		$dbr->freeResult( $res );
+		$this->addLog("Add records about new message to right users [wiki_id = $wikiID, wiki_db = $wikiDB, number of users = " . count( $sqlValues ) . "]");
+		if ( count( $sqlValues ) ) {
+			$result = $this->sendMessageHelperToUsers( $sqlValues );
+		}
+		unset( $sqlValues );
 		return $result;
 	}
 
