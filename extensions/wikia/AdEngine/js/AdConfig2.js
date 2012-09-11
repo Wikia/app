@@ -1,4 +1,4 @@
-window.AdConfig2 = window.AdConfig2 || (function (
+window.AdConfig2 = function (
 	// regular dependencies
 	log, Wikia, window,
 
@@ -105,6 +105,7 @@ window.AdConfig2 = window.AdConfig2 || (function (
 		if (typeof cookie != 'undefined' && cookie) {
 			try {
 				_cache_geo = JSON.parse(cookie);
+				_cache_geo.country;
 			} catch (e) {
 				_cache_geo = {country:'error'};
 			}
@@ -117,12 +118,4 @@ window.AdConfig2 = window.AdConfig2 || (function (
 
 	return {getProvider:getProvider};
 
-})(
-	// regular dependencies:
-	Wikia.log, Wikia, window,
-
-	// AdProviders:
-	AdProviderGamePro,
-	AdProviderEvolve,
-	AdProviderAdDriver2
-);
+};
