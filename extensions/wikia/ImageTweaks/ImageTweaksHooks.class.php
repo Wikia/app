@@ -275,12 +275,13 @@ class ImageTweaksHooks extends WikiaObject {
 			);
 
 			if ( $file instanceof File ) {
-				$title = $file->getTitle()->getText();
+				$title = $file->getTitle()->getDBKey();
+				$titleText = $file->getTitle()->getText();
 
 				$data['content'] = Xml::element(
 					'span',
 					array( 'class' => 'videoInfo' ),
-					"{$title} (" . $file->getHandler()->getFormattedDuration() .
+					"{$titleText} (" . $file->getHandler()->getFormattedDuration() .
 						", " . $this->wf->MsgForContent( 'wikiamobile-video-views-counter', DataMartService::getVideoViewsByTitleTotal( $title ) ) .
 						')'
 				);
