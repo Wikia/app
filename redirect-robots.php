@@ -270,7 +270,7 @@ function getLangSpecificNamespace( &$lang, $code, $bot='' ){
  */
 function deny( ) {
 	header("Content-Type: text/plain");
-	echo "User-agent: **\n";
+	echo "User-agent: *\n";
 	echo "Disallow: /\n";
 }
 
