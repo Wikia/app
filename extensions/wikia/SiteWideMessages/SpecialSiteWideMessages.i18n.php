@@ -106,8 +106,8 @@ $messages['en'] = array(
 	'swm-mode-users-editcount-more' => 'More',
 	'swm-mode-users-editcount-less' => 'Less',
 	'swm-mode-users-editcount-between' => 'Between',
-	'swm-error-editcount-tolessthanfrom' => 'User editcount upper limit is less than lower limit.',
-	'swm-error-editcount-notnumber' => 'Editcount must be a valid number.',
+	'swm-error-editcount-tolessthanfrom' => 'User edit count upper limit is less than lower limit.',
+	'swm-error-editcount-notnumber' => 'Edit count must be a valid number.',
 );
 
 /** Message documentation (Message documentation)
@@ -148,6 +148,12 @@ $messages['qqq'] = array(
 	'swm-mode-users-registration-between' => 'Option to select if user wants to send message to users who registered between two given dates.',
 	'swm-label-mode-users-registration-hint' => 'Message that lets the user know that dates must be in the form 2012-04-01 00:00:00.',
 	'swm-error-registered-tobeforefrom' => 'Error message when given user registration end date is before start date.',
+	'swm-label-mode-users-editcount' => 'Label for option to select users by edit count',
+	'swm-mode-users-editcount-more' => 'Option to select if user wants to send message to users who have an edit count greater than the given number.',
+	'swm-mode-users-editcount-less' => 'Option to select if user wants to send message to users who have an edit count less than the given number.',
+	'swm-mode-users-editcount-between' => 'Option to select if user wants to send message to users who have an edit count between two given numbers.',
+	'swm-error-editcount-tolessthanfrom' => 'Error message when given edit count upper limit is less than lower limit.',
+	'swm-error-editcount-notnumber' => 'Error message when given edit count is not a valid number.',
 );
 
 /** Afrikaans (Afrikaans)
