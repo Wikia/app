@@ -1,4 +1,4 @@
-window.AdProviderEvolve = window.AdProviderEvolve || (function (WikiaTracker, log, window, ghostwriter, document) {
+window.AdProviderLiftium2 = window.AdProviderLiftium2 || (function (WikiaTracker, log, window, ghostwriter, document) {
 	function fillInSlot(slot) {
 		log('fillInSlot', 5, 'AdProviderEvolve');
 		log(slot, 5, 'AdProviderEvolve');
