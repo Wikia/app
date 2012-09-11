@@ -110,7 +110,8 @@ var Lightbox = {
 			/* lightbox loading ends here */ // TODO: this comment might not be accurate now due to asynchronus backfill content loading - liz
 			
 			/* tracking after lightbox has fully loaded */
-			LightboxLoader.track(WikiaTracker.ACTIONS.IMPRESSION, '', Lightbox.current.placeholderIdx, {title: Lightbox.current.title, 'carousel-type': Lightbox.trackingCarouselType});
+			var trackingTitle = Lightbox.getTitleForTracking();
+			LightboxLoader.track(WikiaTracker.ACTIONS.IMPRESSION, '', Lightbox.current.placeholderIdx, {title: trackingTitle, 'carousel-type': Lightbox.trackingCarouselType});
 		};
 
 		// Update modal with main image/video content								
@@ -157,14 +158,16 @@ var Lightbox = {
 					})
 					.filter('.share-input')
 					.click();
-				LightboxLoader.track(WikiaTracker.ACTIONS.CLICK, null, null, {title:Lightbox.current.title, type: Lightbox.current.type});
+				
+				var trackingTitle = Lightbox.getTitleForTracking();
+				LightboxLoader.track(WikiaTracker.ACTIONS.CLICK, null, null, {title: trackingTitle, type: Lightbox.current.type});
 				
 				Lightbox.openModal.share.shareUrl = json.shareUrl; // cache shareUrl for email share
 				Lightbox.setupShareEmail();
 				
 				Lightbox.openModal.share.find('.social-links').on('click', 'a', function() {
 					var shareType = $(this).attr('class');
-					LightboxLoader.track(WikiaTracker.ACTIONS.SHARE, shareType, null, {title:Lightbox.current.title, type: Lightbox.current.type});
+					LightboxLoader.track(WikiaTracker.ACTIONS.SHARE, shareType, null, {title: trackingTitle, type: Lightbox.current.type});
 				});
 
 			});
@@ -272,9 +275,9 @@ var Lightbox = {
 				
 				Lightbox.clearTrackingTimeouts();
 
-				var thisTitle = Lightbox.current.title; // prevent race conditions from timeout
+				var trackingTitle = Lightbox.getTitleForTracking(); // prevent race conditions from timeout
 				Lightbox.image.trackingTimeout = setTimeout(function() {
-					LightboxLoader.track(WikiaTracker.ACTIONS.VIEW, 'image', Lightbox.openModal.aggregateViewCount, {title:thisTitle});			
+					LightboxLoader.track(WikiaTracker.ACTIONS.VIEW, 'image', Lightbox.openModal.aggregateViewCount, {title: trackingTitle});			
 				}, 500);
 	
 			});
@@ -395,10 +398,10 @@ var Lightbox = {
 			
 			Lightbox.clearTrackingTimeouts();
 
-			var thisTitle = Lightbox.current.title; // prevent race conditions from timeout
+			var trackingTitle = Lightbox.getTitleForTracking(); // prevent race conditions from timeout
 			Lightbox.video.trackingTimeout = setTimeout(function() {
 				Lightbox.openModal.aggregateViewCount++;
-				LightboxLoader.track(WikiaTracker.ACTIONS.VIEW, 'video', Lightbox.openModal.aggregateViewCount, {title:thisTitle, provider: data.providerName});		
+				LightboxLoader.track(WikiaTracker.ACTIONS.VIEW, 'video', Lightbox.openModal.aggregateViewCount, {title: trackingTitle, provider: data.providerName});		
 			}, 1000);
 
 		}
@@ -837,7 +840,8 @@ var Lightbox = {
 					}
 					shareEmailForm.find('input[type=text]').val('');
 					
-					LightboxLoader.track(WikiaTracker.ACTIONS.SHARE, 'email', null, {title:Lightbox.current.title, type: Lightbox.current.type});
+					var trackingTitle = Lightbox.getTitleForTracking(); // prevent race conditions from timeout
+					LightboxLoader.track(WikiaTracker.ACTIONS.SHARE, 'email', null, {title: trackingTitle, type: Lightbox.current.type});
 				}
 			});
 		}
@@ -1131,6 +1135,11 @@ var Lightbox = {
 		 */
 		return $.thumbUrl2ThumbUrl(url, type, 90, 55);
 
+	},
+
+	getTitleForTracking: function() {
+		return LightboxLoader.cache.details[Lightbox.current.title].title; // get dbkey title for tracking (BugId:47644)	
 	}
+
 };
 
