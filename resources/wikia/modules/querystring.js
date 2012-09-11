@@ -81,13 +81,13 @@
 		}
 
 		p.toString = function(){
-			var ret = (this.protocol ? this.protocol + '//' : '') + this.link + this.path + (!isEmpty(this.cache) ? '?' : ''),
+			var ret = (this.protocol ? this.protocol + '//' : '') + this.link + this.path + (isEmpty(this.cache) ? '' : '?'),
 				attr, val,
 				tmpArr = [];
 
 			for(attr in this.cache){
 				val = this.cache[attr];
-				tmpArr.push(attr + (val != u ? '=' + val : ''));
+				tmpArr.push(attr + (val === u ? '' : '=' + val));
 			}
 			return ret + tmpArr.join('&') + (this.hash ? '#' + this.hash : '');
 		};
@@ -97,10 +97,10 @@
 		};
 
 		p.setVal = function(name, val){
-			if(val != u){
-				this.cache[name] = encodeURIComponent(val);
-			}else{
+			if(val === u){
 				delete this.cache[name];
+			}else{
+				this.cache[name] = encodeURIComponent(val);
 			}
 		};
 
@@ -126,7 +126,7 @@
 
 		p.goTo = function(){
 			//TODO: We don't want these to be in url on load, this should be refactored as is valid only for WikiaMobile
-			if(this.hash == 'topbar' || this.hash == 'Modal'){
+			if(this.hash === 'topbar' || this.hash === 'Modal'){
 				this.hash = '';
 			}
 
