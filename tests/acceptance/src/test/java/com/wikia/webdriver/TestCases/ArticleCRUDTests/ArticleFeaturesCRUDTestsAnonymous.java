@@ -17,7 +17,7 @@ public class ArticleFeaturesCRUDTestsAnonymous extends TestTemplate
 	@Test(groups={"ArticleFeatureCRUDAnonymous_001", "ArticleCRUDAnonymous"}) 
 //	https://internal.wikia-inc.com/wiki/QA/Core_Features_and_Testing/Manual_Regression_Tests/Image_Serving
 	// Test Case 004 Adding images to an article in edit mode
-	public void ArticleCRUDAnonymous_001_AddingPhoto()
+	public void ArticleCRUDAnonymous_001_AddingImage()
 	{
 		CommonFunctions.logOut(Properties.userName, driver);
 		WikiBasePageObject wiki = new WikiBasePageObject(driver, Global.DOMAIN);
