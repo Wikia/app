@@ -14,12 +14,16 @@ module('AdProviderEvolve');
 // yields window.AdEngine2.hop('=TOP_LEADERBOARD;ord=7121786175');
 // instead of window.AdEngine2.hop('TOP_LEADERBOARD');
 test('sanitizeSlotname', function() {
-    equal(AdProviderEvolve.sanitizeSlotname('foo'), '', 'foo');
-    equal(AdProviderEvolve.sanitizeSlotname('TOP_LEADERBOARD'), 'TOP_LEADERBOARD', 'TOP_LEADERBOARD');
-    equal(AdProviderEvolve.sanitizeSlotname('=TOP_LEADERBOARD;ord=1'), 'TOP_LEADERBOARD', '=TOP_LEADERBOARD;ord=1');
+	var adProviderEvolve = AdProviderEvolve(WikiaTracker, Wikia.log, window, ghostwriter, document);
+
+    equal(adProviderEvolve.sanitizeSlotname('foo'), '', 'foo');
+    equal(adProviderEvolve.sanitizeSlotname('TOP_LEADERBOARD'), 'TOP_LEADERBOARD', 'TOP_LEADERBOARD');
+    equal(adProviderEvolve.sanitizeSlotname('=TOP_LEADERBOARD;ord=1'), 'TOP_LEADERBOARD', '=TOP_LEADERBOARD;ord=1');
 });
 
 test('getUrl', function() {
+	var adProviderEvolve = AdProviderEvolve(WikiaTracker, Wikia.log, window, ghostwriter, document);
+
 	// setup
 	window.wgDBname = null;
 	window.wgWikiFactoryTagNames = null;
@@ -28,7 +32,7 @@ test('getUrl', function() {
 	var expected = 'http://n4403ad.doubleclick.net/adj/gn.wikia4.com/ros;sect=ros;mtfInline=true;pos=TOP_LEADERBOARD;sz=728x90;dcopt=ist;type=pop;type=int;tile=1;ord=1234567890?';
 	expected = expected.replace(/;ord=[0-9]+\?$/, ''); // ord is random cb
 
-	var actual = AdProviderEvolve.getUrl('TOP_LEADERBOARD', '728x90');
+	var actual = adProviderEvolve.getUrl('TOP_LEADERBOARD', '728x90');
 	actual = actual.replace(/;ord=[0-9]+\?$/, ''); // ord is random cb
 
 	equal(actual, expected, 'TOP_LEADERBOARD');
@@ -36,19 +40,21 @@ test('getUrl', function() {
 
 test('getSect', function() {
 	// setup
+	var adProviderEvolve = AdProviderEvolve(WikiaTracker, Wikia.log, window, ghostwriter, document);
+
 	window.wgDBname = null;
 	window.wgWikiFactoryTagNames = null;
 	window.cscoreCat = null;
 
-	equal(AdProviderEvolve.getSect(), 'ros', 'ros');
+	equal(adProviderEvolve.getSect(), 'ros', 'ros');
 
 	window.wgWikiFactoryTagNames = ['tv'];
 	window.cscoreCat = 'Entertainment';
 
-	equal(AdProviderEvolve.getSect(), 'tv', 'tv entertainment');
+	equal(adProviderEvolve.getSect(), 'tv', 'tv entertainment');
 
 	window.wgWikiFactoryTagNames = ['foo'];
 	window.cscoreCat = 'Entertainment';
 
-	equal(AdProviderEvolve.getSect(), 'entertainment', 'foo entertainment');
+	equal(adProviderEvolve.getSect(), 'entertainment', 'foo entertainment');
 });

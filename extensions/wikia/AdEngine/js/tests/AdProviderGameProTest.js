@@ -10,5 +10,7 @@
 module('AdProviderGamePro');
 
 test('rebuildKV', function() {
-    equal(AdProviderGamePro.rebuildKV('egnre=action;egnre=adventure;egnre=drama;egnre=scifi;media=tv'), 'egnre=action,adventure,drama,scifi;media=tv', 'egnre=action;egnre=adventure;egnre=drama;egnre=scifi;media=tv');
+	var adProviderGamePro = AdProviderGamePro(WikiaTracker, Wikia.log, window, ghostwriter, document);
+
+    equal(adProviderGamePro.rebuildKV('egnre=action;egnre=adventure;egnre=drama;egnre=scifi;media=tv'), 'egnre=action,adventure,drama,scifi;media=tv', 'egnre=action;egnre=adventure;egnre=drama;egnre=scifi;media=tv');
 });

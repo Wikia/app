@@ -1,4 +1,4 @@
-window.AdProviderAdDriver2 = window.AdProviderAdDriver2 || (function (log, window) {
+window.AdProviderAdDriver2 = function (log, window) {
 	function fillInSlot(slot) {
 		log('fillInSlot', 5, 'AdProviderAdDriver2');
 		log(slot, 5, 'AdProviderAdDriver2');
@@ -19,5 +19,4 @@ window.AdProviderAdDriver2 = window.AdProviderAdDriver2 || (function (log, windo
 		name: 'AdDriver2',
 		fillInSlot: fillInSlot
 	};
-
-})(Wikia.log, window);
+};
