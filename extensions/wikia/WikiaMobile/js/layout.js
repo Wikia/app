@@ -1,3 +1,4 @@
+/* global wgStyleVersion*/
 /**
  * @define layout
  * @requires section, media, cache
@@ -61,9 +62,5 @@ define('layout', ['sections', 'media', 'cache'], function(sections, media, cache
 	}
 
 	//init media
-	if(images.length === 0 && !document.querySelector('figure.link')){
-		media.oldInit();
-	}else{
-		media.init(images);
-	}
+	media.init(images);
 });
