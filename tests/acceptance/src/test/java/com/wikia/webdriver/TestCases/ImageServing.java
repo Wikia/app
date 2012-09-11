@@ -21,7 +21,6 @@ public class ImageServing extends TestTemplate {
 	private String wikiArticle = "QAautoPage";
 	private String Caption = "QAcaption1";
 	private String Caption2 = "QAcaption2";
-	private String videoURL = "http://www.youtube.com/watch?v=pZB6Dg1RJ_o";
 	private String videoURL2 = "http://www.youtube.com/watch?v=TTchckhECwE";
 	private String videoURL2name = "What is love (?) - on piano (Haddway)";
 	
@@ -161,66 +160,6 @@ public class ImageServing extends TestTemplate {
 		
 		CommonFunctions.logOut(Properties.userName2, driver);
 		CommonFunctions.MoveCursorTo(0, 0);
-	}
-
-	
-
-	
-	@Test(groups = {"ImageServing009"}) 
-//	https://internal.wikia-inc.com/wiki/QA/Core_Features_and_Testing/Manual_Regression_Tests/Image_Serving	
-	// Test Case 009 Adding sliders to an article in edit mode
-	public void ImageServing009_AddingSliders()
-	{
-		CommonFunctions.MoveCursorTo(0, 0);
-		WikiBasePageObject wiki = new WikiBasePageObject(driver, Global.DOMAIN);
-		WikiArticlePageObject article = wiki.OpenArticle(wikiArticle);
-		CommonFunctions.logIn(Properties.userName2, Properties.password2);
-		WikiArticleEditMode editArticle = article.Edit();
-		editArticle.clickOnAddObjectButton("Slider");
-		editArticle.waitForObjectModalAndClickAddAphoto("GallerySlider");
-		editArticle.galleryCheckImageInputs(4);
-		editArticle.galleryClickOnSelectButton();
-		editArticle.gallerySetSliderPosition(2);
-		editArticle.galleryClickOnFinishButton();
-		editArticle.verifyObjectInEditMode("gallery-slider");
-		editArticle.clickOnPreviewButton();
-		editArticle.verifyTheObjectOnThePreview("slider");
-		article = editArticle.clickOnPublishButtonInPreviewMode();
-		article.VerifyTheObjectOnThePage("slider");
-		editArticle = article.Edit();
-		editArticle.deleteArticleContent();
-		article = editArticle.clickOnPublishButton();
-		CommonFunctions.logOut(Properties.userName2, driver);
-		
-	}
-	
-	@Test(groups = {"ImageServing010"}) 
-//	https://internal.wikia-inc.com/wiki/QA/Core_Features_and_Testing/Manual_Regression_Tests/Image_Serving	
-	// Test Case 010 Adding videos to an article in edit mode
-	public void ImageServing010_AddingVideo()
-	{
-		CommonFunctions.MoveCursorTo(0, 0);
-		WikiBasePageObject wiki = new WikiBasePageObject(driver, Global.DOMAIN);
-		WikiArticlePageObject article = wiki.OpenArticle(wikiArticle);
-		CommonFunctions.logIn(Properties.userName2, Properties.password2);
-		WikiArticleEditMode editArticle = article.Edit();
-		editArticle.clickOnAddObjectButton("Video");
-		editArticle.waitForVideoModalAndTypeVideoURL(videoURL);
-		editArticle.clickVideoNextButton();
-		editArticle.waitForVideoDialog();
-		editArticle.typeVideoCaption(Caption);
-		editArticle.clickAddAvideo();
-		editArticle.waitForSuccesDialogAndReturnToEditing();
-		editArticle.verifyVideoInEditMode();
-		editArticle.clickOnPreviewButton();
-		editArticle.verifyTheVideoOnThePreview();
-		article = editArticle.clickOnPublishButtonInPreviewMode();
-		article.VerifyTheVideoOnThePage();
-		editArticle = article.Edit();
-		editArticle.deleteArticleContent();
-		article = editArticle.clickOnPublishButton();
-		CommonFunctions.logOut(Properties.userName2, driver);
-		
 	}
 	
 	@Test(groups = {"ImageServing011"}) 

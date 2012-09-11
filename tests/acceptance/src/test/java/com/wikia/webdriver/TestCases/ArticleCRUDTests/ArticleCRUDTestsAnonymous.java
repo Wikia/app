@@ -11,7 +11,7 @@ import com.wikia.webdriver.PageObjects.PageObject.WikiBasePageObject;
 import com.wikia.webdriver.PageObjects.PageObject.WikiPage.WikiArticleEditMode;
 import com.wikia.webdriver.PageObjects.PageObject.WikiPage.WikiArticlePageObject;
 
-public class ArticleTestsAnonymous extends TestTemplate{
+public class ArticleCRUDTestsAnonymous extends TestTemplate{
 	
 	private String pageName;
 	private String articleText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
