@@ -18,12 +18,12 @@ public class WikiArticlePageObject extends WikiBasePageObject {
 	
 	protected String articlename;
 	
-	@FindBy(css="a[accesskey='e']")
-	private WebElement EditButton;
+//	@FindBy(css="a[accesskey='e']")
+//	private WebElement editButton;
 	@FindBy(css="section.RelatedVideosModule")
-	private WebElement RVModule;
+	private WebElement rVModule;
 	@FindBy(css="input.videoUrl")
-	private WebElement VideoRVmodalInput;
+	private WebElement videoRVmodalInput;
 	@FindBy(css="div[class='editarea']")
 	private WebElement editCommentTrigger;
 	@FindBy(css="body[id='bodyContent']")
@@ -182,8 +182,8 @@ public class WikiArticlePageObject extends WikiBasePageObject {
 	 * @author Michal Nowierski
 	 */
 	public WikiArticleEditMode Edit() {
-		waitForElementByElement(EditButton);
-		EditButton.click();
+		waitForElementByElement(editButton);
+		editButton.click();
 		PageObjectLogging.log("Edit", "Edit Article: "+articlename+", on wiki: "+Domain+"", true, driver);
 		return new WikiArticleEditMode(driver, Domain, articlename);
 	}
@@ -215,7 +215,7 @@ public class WikiArticlePageObject extends WikiBasePageObject {
 	 * @author Michal Nowierski
 	 * @param Object Object = {gallery, slideshow}
 	 * 	 */
-	public void VerifyTheObjetOnThePage(String Object) {
+	public void VerifyTheObjectOnThePage(String Object) {
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div.WikiaArticle div[id*='"+Object+"']")));
 		PageObjectLogging.log("VerifyTheObjetOnThePage", "Verify that the "+Object+" appears on the page", true, driver);
 		
@@ -237,7 +237,7 @@ public class WikiArticlePageObject extends WikiBasePageObject {
 	 * @author Michal Nowierski
 	 * 	 */
 	public void VerifyRVModulePresence() {
-		waitForElementByElement(RVModule);
+		waitForElementByElement(rVModule);
 		PageObjectLogging.log("VerifyRVModulePresence", "Verify that the RV Module Is Present", true, driver);
 		
 	}
@@ -263,9 +263,9 @@ public class WikiArticlePageObject extends WikiBasePageObject {
 	 * @param videoURL URL of the video to be added
 	 * 	 */
 	public void TypeInVideoURL(String videoURL) {
-		waitForElementByElement(VideoRVmodalInput);		
-		VideoRVmodalInput.clear();
-		VideoRVmodalInput.sendKeys(videoURL);
+		waitForElementByElement(videoRVmodalInput);		
+		videoRVmodalInput.clear();
+		videoRVmodalInput.sendKeys(videoURL);
 		PageObjectLogging.log("TypeInVideoURL", "Type given URL into RV modal", true, driver);
 	}
 

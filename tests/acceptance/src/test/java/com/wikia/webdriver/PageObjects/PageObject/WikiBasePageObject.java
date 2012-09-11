@@ -43,7 +43,7 @@ public class WikiBasePageObject extends BasePageObject {
 	private WebElement deleteConfirmationButton;
 	
 	@FindBy(css="a#ca-edit")
-	private WebElement editButton;
+	protected WebElement editButton;
 	
 	@FindBy(css="a[data-canonical='random']")
 	private WebElement randomPageButton;
