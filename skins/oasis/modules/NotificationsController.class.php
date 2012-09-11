@@ -70,7 +70,7 @@ class NotificationsController extends WikiaController {
 		self::addNotification('test test test test test test test test test test test test test test test test test test test test');
 		self::addNotification('new talk page', array(), self::NOTIFICATION_TALK_PAGE_MESSAGE);
 		self::addNotification('test test <a href="#">test</a> test', array(), self::NOTIFICATION_COMMUNITY_MESSAGE);
-		self::addNotification('test test test test test <details>test <a href="#">test</a> test</details>', array('points' => 10, 'picture' => '', 'name' => 'awesome'), self::NOTIFICATION_NEW_ACHIEVEMENTS_BADGE);
+		self::addNotification('test test test test test <details>test <a href="#">test</a> test</details>', array('points' => 10, 'picture' => '', 'name' => 'foo bar'), self::NOTIFICATION_NEW_ACHIEVEMENTS_BADGE);
 		self::addNotification('custom notifiation', array(
 			'name' => 'foo-bar',
 			'dismissUrl' => '/index.php?action=test',
