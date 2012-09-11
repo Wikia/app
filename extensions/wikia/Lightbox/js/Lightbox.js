@@ -128,7 +128,7 @@ var Lightbox = {
 				Lightbox.eventTimers.lastMouseUpdated = time; 
 				var target = $(evt.target);
 				Lightbox.showOverlay();
-				if(!(target.closest('.arrow, .LightboxHeader, .LightboxCarousel')).exists()) {
+				if(!(target.closest('.LightboxHeader, .LightboxCarousel')).exists()) {
 					Lightbox.hideOverlay();
 				}
 			}
