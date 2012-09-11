@@ -59,7 +59,7 @@ var LightboxLoader = {
 		}
 		
 		var trackParams = $.extend({}, data || {}, ga_params);
-		
+
 		WikiaTracker.trackEvent(null, trackParams, 'internal');
 	},
 	init: function() {
@@ -271,7 +271,7 @@ var LightboxLoader = {
 			LightboxLoader.inlineVideos = videoReference.add(LightboxLoader.inlineVideos);
 			
 			LightboxLoader.inlineVideoTrackingTimeout = setTimeout(function() {
-				LightboxLoader.track(WikiaTracker.ACTIONS.VIEW, 'video-inline', null, {title:json.fileTitle, provider: json.providerName});
+				LightboxLoader.track(WikiaTracker.ACTIONS.VIEW, 'video-inline', null, {title:json.title, provider: json.providerName});
 			}, 5000);
 
 			LightboxLoader.inlineVideoLoading.splice($.inArray(mediaTitle, LightboxLoader.inlineVideoLoading), 1)
@@ -325,7 +325,7 @@ var LightboxLoader = {
 		} else {
 			callback(json);
 		}
-	}
+	}	
 };
 
 $(function() {
