@@ -249,6 +249,7 @@ public class WikiArticleEditMode extends WikiArticlePageObject {
 		waitForElementByElement(visualModeButton);
 		waitForElementClickableByElement(visualModeButton);
 		visualModeButton.click();
+		waitForElementByElement(iFrame);
 		PageObjectLogging.log("ClickOnVisualButton", "Click on 'Visual' button", true, driver);
 		
 	}
@@ -275,8 +276,18 @@ public class WikiArticleEditMode extends WikiArticlePageObject {
 		waitForElementByElement(publishButtonGeneral);
 		waitForElementClickableByElement(publishButtonGeneral);
 		publishButtonGeneral.click();
+		waitForElementByElement(editButton);
 		PageObjectLogging.log("ClickOnPublishButton", "Click on 'Publish' button", true, driver);
 	
+		return new WikiArticlePageObject(driver, Domain, articlename);
+	}
+	
+	public WikiArticlePageObject clickOnPublishButtonPreview() {
+		waitForElementByElement(publishButtonPreview);
+		waitForElementClickableByElement(publishButtonPreview);
+		publishButtonPreview.click();
+		PageObjectLogging.log("ClickOnPublishButtonPreview", "Click on 'Publish' button in preview", true, driver);
+		
 		return new WikiArticlePageObject(driver, Domain, articlename);
 	}
 	
@@ -561,9 +572,9 @@ public class WikiArticleEditMode extends WikiArticlePageObject {
 	 * @param Object {Gallery, Slideshow} 
 	 * @param WantedPosition = {Left, Center, Right} !CASE SENSITIVITY!
 	 * 	 * 	 */
-	public void gallerySetPosition(String Object, String WantedPosition) {
+	public void gallerySetPositionGallery(String WantedPosition) {
 				
-		Select select = new Select(driver.findElement(By.cssSelector("select[id*='WikiaPhotoGalleryEditor"+Object+"']")));
+		Select select = new Select(driver.findElement(By.cssSelector("select[id='WikiaPhotoGalleryEditorGalleryPosition']")));
 		select.selectByVisibleText(WantedPosition);
 		// below code will make sure that proper position is selected
 		String category_name = select.getAllSelectedOptions().get(0).getText();
@@ -572,7 +583,21 @@ public class WikiArticleEditMode extends WikiArticlePageObject {
 			category_name = select.getAllSelectedOptions().get(0).getText();
 		
 	}
-		PageObjectLogging.log("GallerySetPosition", "Set "+Object+" position to "+WantedPosition, true, driver);
+		PageObjectLogging.log("GallerySetPosition", "Set gallery position to "+WantedPosition, true, driver);
+		}
+	
+	public void gallerySetPositionSlideshow(String WantedPosition) {
+		
+		Select select = new Select(driver.findElement(By.cssSelector("select[id='WikiaPhotoGalleryEditorSlideshowAlign']")));
+		select.selectByVisibleText(WantedPosition);
+		// below code will make sure that proper position is selected
+		String category_name = select.getAllSelectedOptions().get(0).getText();
+		while (!category_name.equalsIgnoreCase(WantedPosition)) {
+			select.selectByVisibleText(WantedPosition);
+			category_name = select.getAllSelectedOptions().get(0).getText();
+		
+	}
+		PageObjectLogging.log("GallerySetPosition", "Set slideshow position to "+WantedPosition, true, driver);
 		}
 
 	/**
