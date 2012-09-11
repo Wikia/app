@@ -8,29 +8,57 @@
 
 
 Class WikiFactoryChangedHooks {
-	static public function achievements( $cv_name, $city_id, $value ) {
-		wfProfileIn( __METHOD__ );
+	static public function achievements($cv_name, $city_id, $value) {
+		wfProfileIn(__METHOD__);
 
-		if ( $cv_name == 'wgEnableAchievementsExt' && $value == true ) {
+		if ($cv_name == 'wgEnableAchievementsExt' && $value == true) {
 
-                    $wiki = WikiFactory::getWikiById( $city_id );
+			$wiki = WikiFactory::getWikiById($city_id);
 
-                    // Force WikiFactory::getWikiById() to query DB_MASTER if needed.
-                    if ( !is_object( $wiki ) ) {
-                        $wiki = WikiFactory::getWikiById( $city_id, true );
-                    }
+			// Force WikiFactory::getWikiById() to query DB_MASTER if needed.
+			if (!is_object($wiki)) {
+				$wiki = WikiFactory::getWikiById($city_id, true);
+			}
 
-                    $user = User::newFromId( $wiki->city_founding_user );
-                    $user->load();
+			$user = User::newFromId($wiki->city_founding_user);
+			$user->load();
 
-                    $achService = new AchAwardingService( $city_id );
-                    $achService->awardCustomNotInTrackBadge( $user, BADGE_CREATOR );
-                }
+			$achService = new AchAwardingService($city_id);
+			$achService->awardCustomNotInTrackBadge($user, BADGE_CREATOR);
+		}
 
-		wfProfileOut( __METHOD__ );
+		wfProfileOut(__METHOD__);
 
 		return true;
 	}
+
+	static public function oasisnav2($cv_name, $city_id, $value) {
+		wfProfileIn(__METHOD__);
+		Wikia::log(__METHOD__, $city_id, $cv_name . ' = ' . intval($value));
+
+		if ($cv_name == 'wgOasisNavV2') {
+			Wikia::log(__METHOD__, '', 'Started purging wgOasisNav2');
+			/* @var $navService WikiNavigationService */
+			$navService = F::build('WikiNavigationService');
+			$memCacheKey = $navService->getMemcKey(WikiNavigationService::WIKI_LOCAL_MESSAGE);
+			F::app()->wg->memc->set($memCacheKey, null);
+
+			$title = F::build('Title', array(WikiNavigationService::WIKI_LOCAL_MESSAGE, NS_MEDIAWIKI), 'newFromText');
+
+			if ($title instanceof Title) {
+				$article = Article::newFromID($title->getArticleID());
+				if ($article instanceof Article) {
+					$article->doPurge();
+				}
+			}
+			WikiFactory::clearCache($city_id);
+			Wikia::log(__METHOD__, '', 'Finished purging wgOasisNav2');
+		}
+		wfProfileOut(__METHOD__);
+
+		return true;
+	}
+
 
 	/**
 	 * Hook handler - will install the datbase and messaging changes for recipes sites with RecipesTweaks.
@@ -38,10 +66,10 @@ Class WikiFactoryChangedHooks {
 	 * @access public
 	 * @static
 	 */
-	static public function recipesTweaks( $cv_name, $city_id, $value ) {
-		wfProfileIn( __METHOD__ );
-		Wikia::log( __METHOD__, $city_id, "{$cv_name} = {$value}" );
-		if( $cv_name == "wgEnableRecipesTweaksExt" && $value == true ) {
+	static public function recipesTweaks($cv_name, $city_id, $value) {
+		wfProfileIn(__METHOD__);
+		Wikia::log(__METHOD__, $city_id, "{$cv_name} = {$value}");
+		if ($cv_name == "wgEnableRecipesTweaksExt" && $value == true) {
 
 			// Detect if this is a recipes site...
 			$isAlreadyRecipes = false;
@@ -49,19 +77,19 @@ Class WikiFactoryChangedHooks {
 			$dbr = &wfGetDB(DB_MASTER, 'wikifactory', $dbName);
 			$queryString = "SHOW COLUMNS FROM watchlist";
 			$res = $dbr->query($queryString, __METHOD__);
-			foreach( $res as $row ) {
-				if($row->Field == "wl_wikia_addedtimestamp"){
+			foreach ($res as $row) {
+				if ($row->Field == "wl_wikia_addedtimestamp") {
 					$isAlreadyRecipes = true;
 				}
 			}
 
-			if(!$isAlreadyRecipes){
+			if (!$isAlreadyRecipes) {
 				$numErrors = 0;
 				// Perform database alterations. - For the moment, these will throw exceptions if they don't work.  To change that, pass 'true' as third parameter.
-				if(!$dbr->query("ALTER TABLE `watchlist` ADD `wl_wikia_addedtimestamp` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP", __METHOD__)){
+				if (!$dbr->query("ALTER TABLE `watchlist` ADD `wl_wikia_addedtimestamp` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP", __METHOD__)) {
 					$numErrors++;
 				}
-				if(!$dbr->query("ALTER TABLE `watchlist` ADD INDEX ( `wl_wikia_addedtimestamp` )", __METHOD__)){
+				if (!$dbr->query("ALTER TABLE `watchlist` ADD INDEX ( `wl_wikia_addedtimestamp` )", __METHOD__)) {
 					$numErrors++;
 				}
 
@@ -85,7 +113,7 @@ Class WikiFactoryChangedHooks {
 			}
 		}
 
-		wfProfileOut( __METHOD__ );
+		wfProfileOut(__METHOD__);
 		return true;
 	}
 
@@ -95,21 +123,21 @@ Class WikiFactoryChangedHooks {
 	 *
 	 * Returns an integer that is the number of errors (so 0 on success and one on failure).
 	 */
-	private static function setMessage($msgName, $content){
+	private static function setMessage($msgName, $content) {
 		global $wgOut;
 		$numErrors = 0;
-		$wgTitle = Title::newFromText( $msgName );
-		if ( !$wgTitle ) {
+		$wgTitle = Title::newFromText($msgName);
+		if (!$wgTitle) {
 			$wgOut->addHTML("ERROR: Invalid title: \"$msgName\"<br/>\n");
 			$numErrors++;
 		} else {
-			$wgArticle = new Article( $wgTitle );
+			$wgArticle = new Article($wgTitle);
 
 			# Do the edit
 			$flags = 0;
 			$summary = "Switching to Recipes messaging.";
-			$success = $wgArticle->doEdit( $content, $summary, $flags);
-			if ( $success ) {
+			$success = $wgArticle->doEdit($content, $summary, $flags);
+			if ($success) {
 				$wgOut->addHTML("Sucessfully updated \"$msgName\".<br/>\n");
 			} else {
 				$wgOut->addHTML("ERROR: Unable to update \"$msgName\".<br/>\n");
@@ -127,17 +155,17 @@ Class WikiFactoryChangedHooks {
 	 * the wgEnableAbuseFilterExtension value is set to true
 	 * via WikiFactory (as requested in #56866)
 	 */
-	static public function onAbuseFilterEnabled( $varName, $wikiId, $value ) {
-		wfProfileIn( __METHOD__ );
+	static public function onAbuseFilterEnabled($varName, $wikiId, $value) {
+		wfProfileIn(__METHOD__);
 
-		if ( $varName == 'wgEnableAbuseFilterExtension' && $value == true ) {
+		if ($varName == 'wgEnableAbuseFilterExtension' && $value == true) {
 			global $wgDBtype;
-			$dir = dirname( __FILE__ ) . '/../../AbuseFilter';
+			$dir = dirname(__FILE__) . '/../../AbuseFilter';
 			$dbName = WikiFactory::IDtoDB($wikiId);
 			$dbw = wfGetDB(DB_MASTER, 'wikifactory', $dbName);
 
 			//not really interested in the Postgres variant, add the case if needed (take a look at onLoadExtensionSchemaUpdates)
-			if( $wgDBtype == 'mysql' ) {
+			if ($wgDBtype == 'mysql') {
 				$sqlSources = array(
 					"{$dir}/abusefilter.tables.sql",
 					"{$dir}/db_patches/patch-abuse_filter_history.sql",
@@ -146,13 +174,13 @@ Class WikiFactoryChangedHooks {
 					"{$dir}/db_patches/patch-af_actions.sql"
 				);
 
-				foreach( $sqlSources as $path ) {
+				foreach ($sqlSources as $path) {
 					Wikia::log(__METHOD__, null, "Running {$path} on {$dbName} database", true);
 
 					try {
-						$error = $dbw->sourceFile( $path );
+						$error = $dbw->sourceFile($path);
 
-						if ( $error !== true ) {
+						if ($error !== true) {
 							Wikia::log(__METHOD__, null, "Error running {$path}: {$error}", true);
 						}
 
@@ -164,48 +192,47 @@ Class WikiFactoryChangedHooks {
 			}
 		}
 
-		wfProfileOut( __METHOD__ );
+		wfProfileOut(__METHOD__);
 
 		return true;
 	}
 
 	// Initialize schema if not already initialized
-	static public function FounderProgressBar( $cv_name, $wiki_id, $value ) {
+	static public function FounderProgressBar($cv_name, $wiki_id, $value) {
 
-		Wikia::log( __METHOD__, $wiki_id, "{$cv_name} = {$value}" );
+		Wikia::log(__METHOD__, $wiki_id, "{$cv_name} = {$value}");
 		// Initialize data if extension is enabled. Safe to do multiple times, just gives a warning
-		if( $cv_name == 'wgEnableFounderProgressBarExt' && $value == true ){
+		if ($cv_name == 'wgEnableFounderProgressBarExt' && $value == true) {
 			$app = F::app();
 			$dbw = $app->wf->GetDB(DB_MASTER, array(), $app->wg->ExternalSharedDB);
 
 			// FIXME: right now this has to be updated when new tasks are added
-			for($task_id = 10; $task_id <= 300; $task_id+=10) {
+			for ($task_id = 10; $task_id <= 300; $task_id += 10) {
 				$sql = "INSERT IGNORE INTO founder_progress_bar_tasks SET wiki_id=$wiki_id, task_id=$task_id";
-				$dbw->query ($sql);
+				$dbw->query($sql);
 			}
 			// also clear out any lingering memcache keys
 			$memc = $app->wg->Memc;
-			$memc->delete( $app->wf->MemcKey('FounderLongTaskList') );
-			$memc->delete( $app->wf->MemcKey('FounderTasksComplete') );
+			$memc->delete($app->wf->MemcKey('FounderLongTaskList'));
+			$memc->delete($app->wf->MemcKey('FounderTasksComplete'));
 		}
 		return true;
 	}
 
 
-	static public function BlogArticle( $cv_name, $city_id, $value ) {
-		Wikia::log( __METHOD__, $city_id, "{$cv_name} = {$value}" );
-		if( $cv_name == "wgEnableBlogArticles" && $value == true ) {
+	static public function BlogArticle($cv_name, $city_id, $value) {
+		Wikia::log(__METHOD__, $city_id, "{$cv_name} = {$value}");
+		if ($cv_name == "wgEnableBlogArticles" && $value == true) {
 			/**
 			 * add task to TaskManager
 			 */
 			if (!class_exists('BlogTask')) {
 				global $IP;
-				extAddBatchTask( "$IP/extensions/wikia/Blogs/BlogTask.php", "blog", "BlogTask" );
+				extAddBatchTask("$IP/extensions/wikia/Blogs/BlogTask.php", "blog", "BlogTask");
 			}
 			$Task = new BlogTask();
-			$Task->createTask( array( "city_id" => $city_id ), TASK_QUEUED );
+			$Task->createTask(array("city_id" => $city_id), TASK_QUEUED);
 		}
 		return true;
 	}
-
 }
