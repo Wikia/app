@@ -31,21 +31,8 @@ class WikiaApiQueryCategoryIntersection extends ApiQueryGeneratorBase {
 	public function executeGenerator( $resultPageSet ) {
 		global $wgUser;
 
-		switch ($this->getActionName()) {
-			case parent::INSERT:
-				// to do - is it needed?
-				break;
-			case parent::UPDATE:
-				// to do - is it needed?
-				break;
-			case parent::DELETE:
-				// to do - is it needed?
-				break;
-			case parent::QUERY:
-			default:
-				$this->getCategoryIntersection( $resultPageSet );
-				break;
-		}
+		$this->getCategoryIntersection( $resultPageSet );
+
 	} // end execute()
 
 	/**
