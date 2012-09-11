@@ -475,7 +475,7 @@ define('media', ['modal', 'loader', 'querystring', 'popover', 'track', 'events',
 			on: shareBtn,
 			style: 'left:3px;',
 			create: function(cnt){
-				$(cnt).delegate('li', clickEvent, function(){
+				cnt.addEventListener(clickEvent, function(){
 					track.event('share', track.CLICK, 'file');
 				});
 			},
