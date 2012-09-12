@@ -308,7 +308,7 @@ test('getPartnerKeywords', function() {
 });
 
 test('getCategories', function() {
-  var expectedResult = 'cat=all_businesses,businesses_in_gta_iii,businesses_in_gta_liberty_city_stories,food';
+  var expectedResult = 'cat=all_businesses,businesses_in_gta_iii,businesses_in_gta_liberty_city_stories,food;';
 
   window.wgCategories = ['All Businesses', 'Businesses in GTA III', 'Businesses in GTA Liberty City Stories', 'Food'];
   AdConfig.DART.initCategories();
@@ -415,7 +415,8 @@ test('getUrl', function() {
   + encodeURIComponent(window.wgPageName.toLowerCase())
   + ';lang=en;'
   + AdConfig.DART.getResolution() + AdConfig.DART.getPrefooterStatus()
-  + AdConfig.DART.getImpressionCount('TOP_LEADERBOARD') + AdConfig.DART.getCategories()
+  + AdConfig.DART.getImpressionCount('TOP_LEADERBOARD')
+  + AdConfig.DART.getCategories()
   + 'loc=top;dcopt=ist;src=driver;sz=728x90,468x60,980x130,980x65;mtfInline=true;tile=1;endtag=$;ord='+AdConfig.DART.ord+'?';
   equal( AdConfig.DART.getUrl('TOP_LEADERBOARD', '728x90', false, 'AdDriver'), expectedResult, 'AdDriver, TOP_LEADERBOARD' );
 
