@@ -376,17 +376,18 @@ class OasisController extends WikiaController {
 		// load WikiaScriptLoader, AbTesting files, anything that's so mandatory that we're willing to make a blocking request to load it.
 		$this->wikiaScriptLoader = '';
 
-		$packages = array( 'oasis_blocking' );
+		$jsAssetGroups = array( 'oasis_blocking' );
 
 		if ( !empty( $wgEnableAbTesting ) ) {
 			$pkg = F::build('AbTesting')->getJsPackage();
 
 			if(!empty($pkg)){
-				$packages[] = $pkg;
+				$jsAssetGroups[] = $pkg;
 			}
 		}
 
-		$blockingScripts = $this->assetsManager->getURL( $packages );
+		wfRunHooks('OasisSkinAssetGroupsBlocking', array(&$jsAssetGroups));
+		$blockingScripts = $this->assetsManager->getURL($jsAssetGroups);
 
 		foreach($blockingScripts as $blockingFile) {
 			if( $wgSpeedBox && $wgDevelEnvironment ) {
@@ -460,10 +461,19 @@ class OasisController extends WikiaController {
 			wfProfileOut(__METHOD__ . '::checkForEmptyUserJS');
 		}
 
+		// Load the combined JS
+		$jsAssetGroups = array(
+			'oasis_shared_core', 'oasis_shared_js',
+		);
+		if ($wgUser->isLoggedIn()) {
+			$jsAssetGroups[] = 'oasis_user_js';
+		} else {
+			$jsAssetGroups[] = 'oasis_anon_js';
+		}
+		wfRunHooks('OasisSkinAssetGroups', array(&$jsAssetGroups));
 		$assets = array();
 
-		// Load the combined JS
-		$assets['oasis_shared_js'] = $this->assetsManager->getURL( ( $wgUser->isLoggedIn() ) ? 'oasis_shared_js_user' : 'oasis_shared_js_anon' );
+		$assets['oasis_shared_js'] = $this->assetsManager->getURL($jsAssetGroups);
 
 		// jQueryless version - appears only to be used by the ad-experiment at the moment.
 		$assets['oasis_nojquery_shared_js'] = $this->assetsManager->getURL( ( $wgUser->isLoggedIn() ) ? 'oasis_nojquery_shared_js_user' : 'oasis_nojquery_shared_js_anon' );

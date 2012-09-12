@@ -11,6 +11,25 @@ $wgHooks['MakeGlobalVariablesScript'][] = 'wfAdEngineSetupJSVars';
 $wgHooks['WikiaSkinTopScripts'][] = 'wfAdEngineSetupTopVars';
 $wgExtensionFunctions[] = 'wfAdEngineInit';
 
+// Decide where to load JavaScript files:
+if (!empty($wgLoadAdsInHead)) {
+	/*
+	 * At the top. Here is what we do:
+	 *
+	 * Remove oasis_shared_core from OasisSkinAssetGroups
+	 * Add oasis_shared_core and adengine2_js to OasisSkinAssetGroupsBlocking
+	 */
+	$wgHooks['OasisSkinAssetGroupsBlocking'][] = 'wfAdEngineAddAssetGroupBlocking';
+	$wgHooks['OasisSkinAssetGroups'][] = 'wfAdEngineRemoveCoreAssetGroup';
+} else {
+	/*
+	 * At the bottom. Here is what we do:
+	 *
+	 * Add adengine2_js just after oasis_shared_core in OasisSkinAssetGroupsBlocking
+	 */
+	$wgHooks['OasisSkinAssetGroups'][] = 'wfAdEngineAddAssetGroup';
+}
+
 function wfAdEngineInit() {
 	global $wgRequest, $wgUser;
 	global $wgNoExternals, $wgShowAds, $wgEnableAdsInContent, $wgEnableAdMeldAPIClient, $wgEnableKruxTargeting;
@@ -61,6 +80,45 @@ function wfAdEngineSetupTopVars(&$vars) {
 
 	wfProfileOut(__METHOD__);
 
+	return true;
+}
+
+/**
+ * Add ad asset to JavaScripts loaded on bottom (with regular JavaScripts)
+ */
+function wfAdEngineAddAssetGroup(&$jsAssets) {
+	$coreGroupIndex = array_search('oasis_shared_core', $jsAssets);
+	if ($coreGroupIndex !== false) {
+		// Adding 'adengine2_js' group after 'oasis_shared_core'
+		array_splice($jsAssets, $coreGroupIndex + 1, 0, 'adengine2_js');
+	} else {
+		// Do nothing. oasis_shared_core must be present for ads to work
+		// return false?
+	}
+	return true;
+}
+
+/**
+ * Add ad assets and oasis_shared_core to JavaScripts at the top
+ */
+function wfAdEngineAddAssetGroupBlocking(&$jsAssets) {
+	$jsAssets[] = 'oasis_shared_core';
+	$jsAssets[] = 'adengine2_js';
+	return true;
+}
+
+/**
+ * Remove oasis_shared_core asset (because we added it to the scripts in HEAD)
+ */
+function wfAdEngineRemoveCoreAssetGroup(&$jsAssets) {
+	$coreGroupIndex = array_search('oasis_shared_core', $jsAssets);
+	if ($coreGroupIndex !== false) {
+		// Removing 'oasis_shared_core' asset group
+		array_splice($jsAssets, $coreGroupIndex, 1);
+	} else {
+		// Do nothing. oasis_shared_core must be present for ads to work
+		// return false?
+	}
 	return true;
 }
 
