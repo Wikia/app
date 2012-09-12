@@ -267,8 +267,8 @@ public class WikiBasePageObject extends BasePageObject {
 	{
 		clickContributeButton();
 		clickCreateArticleButton();
-		typeInArticleName(pageName);
 		selectPageLayout(layoutNumber);
+		typeInArticleName(pageName);
 		clickAddPageButton();
 		String pageNameEnc = pageName.replace("_", " ");
 		waitForElementByElement(driver.findElement(By.cssSelector("a[title='"+pageNameEnc+"']")));
