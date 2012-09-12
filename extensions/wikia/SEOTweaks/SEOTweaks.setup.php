@@ -3,8 +3,9 @@
  * SEOTweaks setup
  *
  * @author mech
- * @author ADi
- *
+ * @author ADi  
+ * @author Jacek Jursza <jacek at wikia-inc.com>
+ * 
  */
 $dir = dirname(__FILE__) . '/';
 $app = F::app();
@@ -15,3 +16,8 @@ $app->registerClass('SEOTweaksHooksHelper', $dir . 'SEOTweaksHooksHelper.class.p
 // hooks
 $app->registerHook('BeforePageDisplay', 'SEOTweaksHooksHelper', 'onBeforePageDisplay');
 $app->registerHook('ArticleFromTitle', 'SEOTweaksHooksHelper', 'onArticleFromTitle');
+$app->registerHook('ImagePageAfterImageLinks', 'SEOTweaksHooksHelper', 'onImagePageAfterImageLinks');
+
+
+// messages
+$app->registerExtensionMessageFile('SEOTweaks', $dir . 'SEOTweaks.i18n.php');
