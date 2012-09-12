@@ -22,4 +22,9 @@
 	adEngine = AdEngine2(adConfig, log, window);
 
 	adEngine.run();
+
+	window.evolve_hop = function(slotname) {
+		adProviderEvolve.hop(slotname);
+	};
+
 }(Wikia.log, WikiaTracker, window, ghostwriter, document));

@@ -164,7 +164,3 @@ window.AdProviderEvolve = function (WikiaTracker, log, window, ghostwriter, docu
 	return iface;
 
 };
-
-function evolve_hop(slotname) {
-	window.AdProviderEvolve.hop(slotname);
-}
