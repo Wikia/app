@@ -370,7 +370,7 @@
 				$periodId = self::PERIOD_ID_MONTHLY;
 			}
 
-			$memKey = $app->wf->SharedMemcKey( 'datamart', 'total_video_views', $wikiId, $periodId, $startDate, $endDate );
+			$memKey = $app->wf->SharedMemcKey( 'datamart', 'total_video_views', 'v2', $wikiId, $periodId, $startDate, $endDate );
 			$videoViews = $app->wg->Memc->get( $memKey );
 			if ( !is_array($videoViews) ) {
 				$videoViews = array();
