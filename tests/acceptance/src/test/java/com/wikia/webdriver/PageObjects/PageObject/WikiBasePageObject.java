@@ -166,6 +166,12 @@ public class WikiBasePageObject extends BasePageObject {
 	private void typeInArticleName(String name)
 	{
 		waitForElementByElement(articleNameField);
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		articleNameField.sendKeys(name);
 	}
 	
