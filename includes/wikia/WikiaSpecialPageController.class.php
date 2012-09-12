@@ -8,6 +8,9 @@
  * @author Adrian 'ADi' Wieczorek <adi(at)wikia-inc.com>
  * @author Owen Davis <owen(at)wikia-inc.com>
  * @author Wojciech Szela <wojtek(at)wikia-inc.com>
+ *
+ * Methods automagically called from SpecialPage class via __call method:
+ * @method setHeaders
  */
 class WikiaSpecialPageController extends WikiaController {
 	protected $specialPage = null;
@@ -53,7 +56,7 @@ class WikiaSpecialPageController extends WikiaController {
 	 * Any functions that we do not implement, call directly on our specialPage object
 	 * @param type $method
 	 * @param type $args
-	 * @return type 
+	 * @return type
 	 */
 	public function __call( $method, $args ) {
 		return call_user_func_array( array( $this->specialPage, $method ), $args );
