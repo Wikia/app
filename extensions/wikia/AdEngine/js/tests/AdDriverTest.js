@@ -306,22 +306,15 @@ test('getPartnerKeywords', function() {
 });
 
 test('getCategories', function() {
+  var expectedResult = 'cat=all_businesses,businesses_in_gta_iii,businesses_in_gta_liberty_city_stories,food';
+
   window.wgCategories = ['All Businesses', 'Businesses in GTA III', 'Businesses in GTA Liberty City Stories', 'Food'];
   AdConfig.DART.initCategories();
-  var expectedResult = '';
-  for (var i=0; i < window.wgCategories.length; i++) {
-  	expectedResult += 'cat='+encodeURIComponent(window.wgCategories[i].toLowerCase().replace(/ /g, '_'))+';';
-  }
   equal( AdConfig.DART.getCategories(), expectedResult, window.wgCategories);
 
   window.wgCategories = ['All Businesses', 'Businesses in GTA III', 'Businesses in GTA Liberty City Stories', 'Food', 'blahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblahhhhhhhhhhhhhhhhhhhhhhhhhhhh'];
   AdConfig.DART.initCategories();
   var actualResult = AdConfig.DART.getCategories();
-  window.wgCategories = ['All Businesses', 'Businesses in GTA III', 'Businesses in GTA Liberty City Stories', 'Food'];
-  var expectedResult = '';
-  for (var i=0; i < window.wgCategories.length; i++) {
-  	expectedResult += 'cat='+encodeURIComponent(window.wgCategories[i].toLowerCase().replace(/ /g, '_'))+';';
-  }
   equal( actualResult, expectedResult, 'over character limit');
 
   window.wgCategories = null;

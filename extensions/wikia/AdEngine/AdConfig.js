@@ -503,11 +503,13 @@ AdConfig.DART.initCategories = function() {
 	var categories = '';
 
 	for (var i=0; i < wgCategories.length; i++) {
-		categoryStr = 'cat=' + encodeURIComponent(wgCategories[i].toLowerCase().replace(/ /g, '_')) + ';';
+		categoryStr = ',' + encodeURIComponent(wgCategories[i].toLowerCase().replace(/ /g, '_'));
 		if (categories.length + categoryStr.length <= AdConfig.DART.categoryStrMaxLength) {
 			categories += categoryStr;
 		}
 	}
+
+	categories = 'cat=' + categories.substring(1);
 
 	AdConfig.DART.categories = categories;
 };
