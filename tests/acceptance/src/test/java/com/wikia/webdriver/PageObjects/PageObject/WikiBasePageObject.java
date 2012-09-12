@@ -3,6 +3,7 @@ package com.wikia.webdriver.PageObjects.PageObject;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -59,6 +60,9 @@ public class WikiBasePageObject extends BasePageObject {
 	
 	@FindBy(css="input[name='wpMove']")
 	private WebElement confirmRenamePageButton;
+	
+	@FindBy(css="input#wpReason")
+	private WebElement deleteCommentReasonField;
 	
 	private By layoutList = By.cssSelector("ul#CreatePageDialogChoices li");
 	
@@ -132,8 +136,8 @@ public class WikiBasePageObject extends BasePageObject {
 	
 	private void clickContributeButton()
 	{
-//		contributeButton.click();
-		clickRobot(contributeButton);
+		executeScript("document.querySelectorAll(\".wikia-menu-button\")[0].click()");
+		executeScript("document.querySelectorAll(\".wikia-menu-button\")[0].click()");
 		waitForElementByElement(createArticleButton);
 		PageObjectLogging.log("clickOnContributeButton", "contribute button clicked", true);
 	}
@@ -142,8 +146,7 @@ public class WikiBasePageObject extends BasePageObject {
 	{
 		waitForElementByElement(createArticleButton);
 		waitForElementClickableByElement(createArticleButton);
-		clickRobot(createArticleButton);
-//		createArticleButton.click();
+		executeScript("document.querySelectorAll('.createpage')[0].click()");
 		waitForElementByElement(driver.findElement(layoutList));
 		PageObjectLogging.log("clickCreateArticleButton", "create article button clicked", true);
 	}
@@ -206,6 +209,10 @@ public class WikiBasePageObject extends BasePageObject {
 	protected void clickDeleteConfirmationButton()
 	{
 		waitForElementByElement(deleteConfirmationButton);
+		waitForElementByElement(deleteCommentReasonField);
+		deleteCommentReasonField.clear();
+		deleteCommentReasonField.sendKeys("QAReason");
+//		executeScript("document.querySelectorAll('#wpConfirmB')[0].click()");
 		deleteConfirmationButton.click();
 	}
 	

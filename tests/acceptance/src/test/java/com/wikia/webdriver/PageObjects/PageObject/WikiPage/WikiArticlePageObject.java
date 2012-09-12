@@ -30,7 +30,7 @@ public class WikiArticlePageObject extends WikiBasePageObject {
 	private WebElement editCommentArea;
 	@FindBy(css="div.cke_contents iframe")
 	private WebElement iframe;
-	@FindBy(css="input[id='article-comm-submit']")
+	@FindBy(css="input[id*='article-comm-submit']")
 	private WebElement submitCommentButton;
 	@FindBy(css="a.article-comm-delete")
 	private WebElement deleteCommentButton;
@@ -57,9 +57,11 @@ public class WikiArticlePageObject extends WikiBasePageObject {
 	
 	public void triggerCommentArea()
 	{
-		Point p = editCommentTrigger.getLocation();
-		CommonFunctions.MoveCursorToElement(p);
-		CommonFunctions.ClickElement();
+//		Point p = editCommentTrigger.getLocation();
+//		CommonFunctions.MoveCursorToElement(p);
+//		CommonFunctions.ClickElement();
+//		waitForElementByElement(editCommentArea);
+		editCommentTrigger.click();
 //		waitForElementByElement(editCommentArea);
 	}
 	
@@ -72,18 +74,19 @@ public class WikiArticlePageObject extends WikiBasePageObject {
 		driver.switchTo().defaultContent();
 	}
 	
-	public WikiArticlePageObject clickSubmitButton()
+	public void clickSubmitButton()
 	{
-		submitCommentButton.click();
+//		submitCommentButton.click();
+		executeScript("document.querySelectorAll('#article-comm-submit')[0].click()");
 		PageObjectLogging.log("clickSubmitButton", "submit article button clicked", true, driver);
-		return new WikiArticlePageObject(driver, Domain, articlename);
+//		return new WikiArticlePageObject(driver, Domain, articlename);
 	}
 	
-	public WikiArticlePageObject clickSubmitButton(String userName)
+	public void clickSubmitButton(String userName)
 	{		
 		click(driver.findElement(By.xpath("//a[contains(text(), '"+userName+"')]/../../..//input[@class='actionButton']")));//submit button taken by username which edited comment
 		PageObjectLogging.log("clickSubmitButton", "submit article button clicked", true, driver);
-		return new WikiArticlePageObject(driver, Domain, articlename);
+//		return new WikiArticlePageObject(driver, Domain, articlename);
 	}
 	
 	public void verifyComment(String message, String userName)
@@ -122,26 +125,27 @@ public class WikiArticlePageObject extends WikiBasePageObject {
 		PageObjectLogging.log("reply comment", "reply comment written and checked", true, driver);
 	}
 	
-	private void hoverMouseOverCommentArea(String commentContent)
-	{
-		WebElement commentArea = driver.findElement(By.xpath("//p[contains(text(), '"+commentContent+"')]"));
-		Point p = commentArea.getLocation();
-		CommonFunctions.MoveCursorToElement(p, driver);
-		PageObjectLogging.log("hoverMouseOverCommentArea", "mouse moved to comment area", true, driver);
-	}
+//	private void hoverMouseOverCommentArea(String commentContent)
+//	{
+//		WebElement commentArea = driver.findElement(By.xpath("//p[contains(text(), '"+commentContent+"')]"));
+//		Point p = commentArea.getLocation();
+//		CommonFunctions.MoveCursorToElement(p, driver);
+//		PageObjectLogging.log("hoverMouseOverCommentArea", "mouse moved to comment area", true, driver);
+//	}
 	
 	private void clickDeleteCommentButton()
 	{
-		waitForElementByElement(deleteCommentButton);
-		deleteCommentButton.click();
+		executeScript("document.querySelectorAll('.article-comm-delete')[0].click()");
+//		deleteCommentButton.click();
 		PageObjectLogging.log("clickDeleteCommentButton", "delete comment button clicked", true, driver);
 	}
 	
 	private void clickEditCommentButton()
 	{
-		waitForElementByElement(editCommentButton);
+//		waitForElementByElement(editCommentButton);
 //		clickRobot(editCommentButton);
-		editCommentButton.click();
+//		editCommentButton.click();
+		executeScript("document.querySelectorAll('.article-comm-edit')[0].click()");
 		waitForElementByElement(iframe);
 		PageObjectLogging.log("clickEditCommentButton", "edit comment button clicked", true, driver);
 	}
@@ -149,7 +153,7 @@ public class WikiArticlePageObject extends WikiBasePageObject {
 	public void deleteComment(String comment)
 	{
 		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,0)");
-		hoverMouseOverCommentArea(comment);
+//		hoverMouseOverCommentArea(comment);
 		clickDeleteCommentButton();
 		clickDeleteConfirmationButton();
 		PageObjectLogging.log("deleteComment", "comment deleted", true, driver);
@@ -158,7 +162,7 @@ public class WikiArticlePageObject extends WikiBasePageObject {
 	public void editComment(String comment)
 	{
 		driver.navigate().refresh();
-		hoverMouseOverCommentArea(comment);
+//		hoverMouseOverCommentArea(comment);
 		clickEditCommentButton();
 	}
 	

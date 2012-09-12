@@ -1,10 +1,12 @@
 package com.wikia.webdriver.PageObjects.PageObject;
 
-import java.lang.reflect.Method;
+import static org.testng.AssertJUnit.fail;
+
 import java.util.Date;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -18,7 +20,6 @@ import com.wikia.webdriver.Common.Core.CommonExpectedConditions;
 import com.wikia.webdriver.Common.Core.CommonFunctions;
 import com.wikia.webdriver.Common.Core.Global;
 import com.wikia.webdriver.Common.Logging.PageObjectLogging;
-import static org.testng.AssertJUnit.fail;
 
 /**
  * 
@@ -202,6 +203,13 @@ public class BasePageObject{
 //		{
 //			PageObjectLogging.log("clickRobot", e.toString(), false);			
 //		}
+	}
+	
+	
+	protected void executeScript(String script)
+	{
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		js.executeScript(script);
 	}
 	
 	/**

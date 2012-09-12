@@ -75,7 +75,7 @@ public class TestTemplate {
 	public void start(Method method)
 	{
 		startBrowser();
-		CommonFunctions.MoveCursorTo(0, 0);
+//		CommonFunctions.MoveCursorTo(0, 0);
 		PageObjectLogging.startLoggingMethod(getClass().getSimpleName().toString(), method.getName());
 	}
 	
@@ -83,7 +83,7 @@ public class TestTemplate {
 	public void stop()
 	{
 		stopBrowser();
-		CommonFunctions.MoveCursorTo(0, 0);
+//		CommonFunctions.MoveCursorTo(0, 0);
 		PageObjectLogging.stopLoggingMethod();
 	}
 	
