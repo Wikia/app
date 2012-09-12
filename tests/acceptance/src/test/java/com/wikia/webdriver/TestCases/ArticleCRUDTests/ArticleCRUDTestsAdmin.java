@@ -22,44 +22,44 @@ public class ArticleCRUDTestsAdmin extends TestTemplate{
 	private String videoURL = "http://www.youtube.com/watch?v=pZB6Dg1RJ_o";
 	private String Caption = "QAcaption1";
 	
-//	/*
-//	 * TestCase002
-//	 * Open random wiki page as logged in user
-//	 * Click edit drop-down
-//	 * Verify available edit options for logged in user (history and rename)
-//	 */
-//	@Test(groups={"ArticleCRUDAdmin_002", "ArticleCRUDAdmin"})
-//	public void ArticleCRUDAdmin_002_VerifyEditDropDown()
-//	{
-//		CommonFunctions.logOut(Properties.userName, driver);
-//		CommonFunctions.logIn(Properties.userName, Properties.password);
-//		WikiBasePageObject wiki = new WikiBasePageObject(driver, Global.DOMAIN);
-//		wiki.openWikiPage();
-//		wiki.openRandomArticle();
-//		wiki.clickEditDropDown();
-//		wiki.verifyEditDropDownLoggedInUser();
-//		CommonFunctions.logOut(Properties.userName, driver);
-//	}
-//	
-//	/*
-//	 * TestCase003
-//	 * Open random wiki page as admin user
-//	 * Click edit drop-down
-//	 * Verify available edit options for admin user (history, rename, protect, delete)
-//	 */
-//	@Test(groups={"ArticleCRUDAdmin_003", "ArticleCRUDAdmin"})
-//	public void ArticleCRUDAdmin_003_VerifyEditDropDown()
-//	{
-//		CommonFunctions.logOut(Properties.userNameStaff, driver);
-//		CommonFunctions.logIn(Properties.userNameStaff, Properties.passwordStaff);
-//		WikiBasePageObject wiki = new WikiBasePageObject(driver, Global.DOMAIN);
-//		wiki.openWikiPage();
-//		wiki.openRandomArticle();
-//		wiki.clickEditDropDown();
-//		wiki.verifyEditDropDownAdmin();
-//		CommonFunctions.logOut(Properties.userNameStaff, driver);
-//	}
-//	
+	/*
+	 * TestCase002
+	 * Open random wiki page as logged in user
+	 * Click edit drop-down
+	 * Verify available edit options for logged in user (history and rename)
+	 */
+	@Test(groups={"ArticleCRUDAdmin_002", "ArticleCRUDAdmin"})
+	public void ArticleCRUDAdmin_002_VerifyEditDropDown()
+	{
+		CommonFunctions.logOut(Properties.userName, driver);
+		CommonFunctions.logIn(Properties.userName, Properties.password);
+		WikiBasePageObject wiki = new WikiBasePageObject(driver, Global.DOMAIN);
+		wiki.openWikiPage();
+		wiki.openRandomArticle();
+		wiki.clickEditDropDown();
+		wiki.verifyEditDropDownLoggedInUser();
+		CommonFunctions.logOut(Properties.userName, driver);
+	}
+	
+	/*
+	 * TestCase003
+	 * Open random wiki page as admin user
+	 * Click edit drop-down
+	 * Verify available edit options for admin user (history, rename, protect, delete)
+	 */
+	@Test(groups={"ArticleCRUDAdmin_003", "ArticleCRUDAdmin"})
+	public void ArticleCRUDAdmin_003_VerifyEditDropDown()
+	{
+		CommonFunctions.logOut(Properties.userNameStaff, driver);
+		CommonFunctions.logIn(Properties.userNameStaff, Properties.passwordStaff);
+		WikiBasePageObject wiki = new WikiBasePageObject(driver, Global.DOMAIN);
+		wiki.openWikiPage();
+		wiki.openRandomArticle();
+		wiki.clickEditDropDown();
+		wiki.verifyEditDropDownAdmin();
+		CommonFunctions.logOut(Properties.userNameStaff, driver);
+	}
+	
 	/*
 	 * TestCase004
 	 * Create article as admin user with following names:
