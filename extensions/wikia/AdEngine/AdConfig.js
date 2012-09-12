@@ -174,7 +174,7 @@ AdConfig.DART.getUrl = function(slotname, size, useIframe, adProvider) {
 		// TODO when we get better at search, support "kw" key-value
 		DART.getResolution() +
 		DART.getPrefooterStatus() +
-		(window.wgEnableKruxTargeting && window.Krux && window.Krux.dartKeyValues ? window.Krux.dartKeyValues : '') +
+		(window.wgEnableKruxTargeting && window.Krux && window.Krux.dartKeyValues ? DART._rebuildKruxKV(window.Krux.dartKeyValues) : '') +
 		DART.getImpressionCount(slotname) +
 		DART.getPartnerKeywords() +
 		DART.getCategories() +
@@ -533,7 +533,7 @@ AdConfig.DART.initCategories = function() {
 		}
 	}
 
-	categories = 'cat=' + categories.substring(1);
+	categories = 'cat=' + categories.substring(1) + ';';
 
 	AdConfig.DART.categories = categories;
 };
@@ -588,6 +588,10 @@ AdConfig.DART.getTileKV = function (slotname, adProvider){
 	}
 
 	return '';
+};
+
+AdConfig.DART._rebuildKruxKV = function(kruxkv) {
+	return kruxkv;
 };
 
 AdConfig.DART.getUniqueId = function () {
