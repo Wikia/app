@@ -3,6 +3,17 @@ $config = array();
 
 /******** Shared libraries and assets *******/
 
+$config['oasis_shared_core'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'#group_oasis_wikia_js',
+		'#group_oasis_tracker_js',
+
+		// The following should go to adengine2_js group later
+		'//extensions/wikia/AdEngine/ghost/gw-11.6.7/lib/gw.min.js',
+	),
+);
+
 $config['oasis_jquery_ads_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
@@ -55,23 +66,16 @@ $config['adengine2_js'] = array(
 $config['oasis_ads_js'] = array(
     'type' => AssetsManager::TYPE_JS,
     'assets' => array(
-		'#group_oasis_tracker_js',
-
 		// ads
-		'//resources/wikia/modules/geo.js',
-
 		'//extensions/wikia/AdEngine/AdMeldAPIClient.js',
 		'//extensions/wikia/AdEngine/AdConfig.js',
 		'//extensions/wikia/AdEngine/AdEngine.js',
 		'//extensions/wikia/AdEngine/AdProviderOpenX.js',
 		'//extensions/wikia/AdEngine/LazyLoadAds.js',
-		'//extensions/wikia/AdEngine/ghost/gw-11.6.7/lib/gw.min.js',
 
 		'#group_liftium_ads_js',
 
 		'//extensions/wikia/AdEngine/liftium/AdsInContent.js',
-
-		'#group_adengine2_js',
 
 		'//extensions/wikia/AdEngine/AdDriver.js',
 		'//extensions/wikia/AdEngine/AdDriverGP.js',
@@ -149,9 +153,6 @@ $config['oasis_jquery'] = array(
 		'//resources/wikia/polyfills/jquery.wikia.placeholder.js',
 		'//resources/wikia/polyfills/array.js',
 
-		// Wikia plugins
-		'#group_oasis_wikia_js',
-
 		// 3rd party plugins
 		'//resources/wikia/libraries/jquery/getcss/jquery.getcss.js',
 		'//resources/wikia/libraries/jquery/cookies/jquery.cookies.2.1.0.js',
@@ -184,31 +185,14 @@ $config['oasis_wikia_js'] = array(
 		'//resources/wikia/modules/querystring.js',
 		'//resources/wikia/modules/cookies.js',
 		'//resources/wikia/modules/log.js',
-		'//resources/wikia/modules/thumbnailer.js'
+		'//resources/wikia/modules/thumbnailer.js',
+		'//resources/wikia/modules/geo.js',
 	)
 );
 
 /******** Skins *******/
 
 /** Oasis **/
-
-// The main combined file for logged-in users.
-$config['oasis_shared_js_user'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => array(
-		'#group_oasis_shared_js',
-		'#group_oasis_user_js',
-	)
-);
-
-// The main combined file for logged-out (anonymous) users.
-$config['oasis_shared_js_anon'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => array(
-		'#group_oasis_shared_js',
-		'#group_oasis_anon_js',
-	)
-);
 
 // core shared JS - used as part of oasis_shared_js_anon or oasis_shared_js_user.
 // See BugzId 38541 for details on why it's better to have these 2 different packages!
