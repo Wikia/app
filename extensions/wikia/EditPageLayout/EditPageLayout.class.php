@@ -32,9 +32,11 @@ class EditPageLayout extends EditPage {
 	protected $mSummaryBox = array();
 
 	// HTML for dismissable notices (from MW)
+	/* @var $mCoreEditNotices EditPageNotices */
 	protected $mCoreEditNotices = null;
 
 	// custom notices from extensions
+	/* @var $mEditNotices EditPageNotices */
 	protected $mEditNotices = null;
 
 	// HTML rendered by form callbck
