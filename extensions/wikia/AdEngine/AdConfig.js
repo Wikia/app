@@ -228,6 +228,9 @@ AdConfig.DART.getMobileUrl = function(slotname, size, useIframe, adProvider) {
 		'sz=' + size + ';' +
 		'mtfInline=true;' +	// http://www.google.com/support/richmedia/bin/answer.py?hl=en&answer=182220
 		DART.getTileKV(slotname, adProvider) +
+		//force pixel tracking to happen on the client-side
+		//FB#47681
+		'&csit=1' +
 		'&dw=1' +
 		'&u=' + DART.getUniqueId();
 };
