@@ -366,10 +366,34 @@ AdConfig.DART.getZone2 = function(pageType){
 
 AdConfig.DART.getCustomKeyValues = function(){
 	if (window.wgDartCustomKeyValues) {
-		return wgDartCustomKeyValues + ';';
+		var kv = AdConfig.DART._rebuildKV(window.wgDartCustomKeyValues);
+		return kv + ';';
 	}
 
 	return '';
+};
+
+AdConfig.DART._rebuildKV = function(kv) {
+	if (kv.indexOf(';') === -1) {
+		return kv;
+	}
+
+	kv = kv.split(';');
+	kv.sort();
+
+	var out = '', last_k = '';
+	for (var i = 0; i < kv.length; i++) {
+		var k_v = kv[i].split('=');
+		if (k_v[0] == last_k) {
+			out = out + ',' + k_v[1];
+		} else {
+			out = out + ';' + k_v[0] + '=' + k_v[1];
+			last_k = k_v[0];
+		}
+	}
+
+	out = out.substring(1);
+	return out;
 };
 
 AdConfig.DART.getArticleKV = function(){

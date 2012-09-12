@@ -246,8 +246,10 @@ test('getZone2', function() {
 });
 
 test('getCustomKeyValues', function() {
+  var expectedResult = 'age=adult,yadult;egnre=comedy,comic,family;media=movie,tv;mom=mom;women=women-mom;';
+
   window.wgDartCustomKeyValues = "age=adult;age=yadult;egnre=comedy;egnre=comic;egnre=family;media=movie;media=tv;mom=mom;women=women-mom";
-  equal( AdConfig.DART.getCustomKeyValues(), window.wgDartCustomKeyValues+';', 'custom key-values set' );
+  equal( AdConfig.DART.getCustomKeyValues(), expectedResult, 'custom key-values set' );
   window.wgDartCustomKeyValues = null;
   equal( AdConfig.DART.getCustomKeyValues(), '', 'custom key-values not set');
 });
@@ -405,7 +407,7 @@ test('getUrl', function() {
   window.wgCategories = ['All Businesses', 'Businesses in GTA III', 'Businesses in GTA Liberty City Stories', 'Food'];
   window.wgUserName = null;
   var expectedResult = 'http://ad.doubleclick.net/adj/wka.ent/_muppet/article;s0=ent;s1=_muppet;s2=article;'
-  + window.wgDartCustomKeyValues
+  + 'age=adult,yadult;egnre=comedy,comic,family;media=movie,tv;mom=mom;women=women-mom'
   + ';artid=37414;'
   + AdConfig.DART.getDomainKV(window.location.hostname)
   + AdConfig.DART.getHostnamePrefix(window.location.hostname)
@@ -460,7 +462,7 @@ test('getUrl', function() {
   AdConfig.DART.initCategories();
   window.wgUserName = null;
   var expectedResult = 'http://ad-apac.doubleclick.net/adi/wka.gaming/_wowwiki/article;s0=gaming;s1=_wowwiki;s2=article;'
-  + window.wgDartCustomKeyValues
+  + 'aff=hardware,tech;age=13-17,18-34,teen,yadult;dev=blizzard;edu=college;egnre=fantasy;esrb=teen;eth=cauc;gnre=mmo,rpg;hhi=0-30,30-60;kids=0-2;pform=pc;pub=blizzard;sex=m;sub=elves,orcs,wizards;volum=l'
   + ';artid=119514;'
   + AdConfig.DART.getDomainKV(window.location.hostname)
   + AdConfig.DART.getHostnamePrefix(window.location.hostname)
@@ -471,4 +473,22 @@ test('getUrl', function() {
   + AdConfig.DART.getImpressionCount('LEFT_SKYSCRAPER_2')
   + 'loc=middle;mtfIFPath=/extensions/wikia/AdEngine/;src=direct;sz=160x600,120x600;mtfInline=true;tile=3;endtag=$;ord='+AdConfig.DART.ord+'?';
   equal( AdConfig.DART.getUrl('LEFT_SKYSCRAPER_2', '160x600', true, 'DART'), expectedResult, 'DART, LEFT_SKYSCRAPER_2' );
+});
+
+test('_rebuildKV', function() {
+	var input = 'age=adult;age=yadult;egnre=comedy;egnre=comic;egnre=family;media=movie;media=tv;mom=mom;women=women-mom';
+	var expected = 'age=adult,yadult;egnre=comedy,comic,family;media=movie,tv;mom=mom;women=women-mom';
+	var actual = AdConfig.DART._rebuildKV(input);
+	equal(actual, expected, input);
+
+	var input = '';
+	var expected = '';
+	var actual = AdConfig.DART._rebuildKV(input);
+	equal(actual, expected, input);
+
+	var input = 'age=13-17;age=18-34;eth=cauc;kids=0-2;hhi=0-30;hhi=30-60;edu=college;age=teen;age=yadult;esrb=teen;gnre=mmo;gnre=rpg;pform=pc;sex=m;volum=l;pub=blizzard;dev=blizzard;sub=wizards;sub=orcs;sub=elves;egnre=fantasy;aff=tech;aff=hardware';
+	var expected = 'aff=hardware,tech;age=13-17,18-34,teen,yadult;dev=blizzard;edu=college;egnre=fantasy;esrb=teen;eth=cauc;gnre=mmo,rpg;hhi=0-30,30-60;kids=0-2;pform=pc;pub=blizzard;sex=m;sub=elves,orcs,wizards;volum=l';
+	var actual = AdConfig.DART._rebuildKV(input);
+
+	equal(actual, expected, input);
 });
