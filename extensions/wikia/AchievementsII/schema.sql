@@ -26,6 +26,14 @@ CREATE TABLE IF NOT EXISTS `ach_user_counters` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
+DROP TABLE IF EXISTS `ach_user_counters_refs`;
+CREATE TABLE IF NOT EXISTS `ach_user_counters_refs` (
+	`wiki_id` int(9) signed NOT NULL,
+	`user_id` int(5) unsigned NOT NULL,
+	UNIQUE KEY `wiki_id` (`wiki_id`,`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
 DROP TABLE IF EXISTS `ach_user_badges`;
 CREATE TABLE IF NOT EXISTS `ach_user_badges` (
 	`wiki_id` int(9) signed NOT NULL,
