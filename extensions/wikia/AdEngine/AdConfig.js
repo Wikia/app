@@ -174,7 +174,7 @@ AdConfig.DART.getUrl = function(slotname, size, useIframe, adProvider) {
 		// TODO when we get better at search, support "kw" key-value
 		DART.getResolution() +
 		DART.getPrefooterStatus() +
-		(window.wgEnableKruxTargeting && window.Krux && window.Krux.dartKeyValues ? DART._rebuildKruxKV(window.Krux.dartKeyValues) : '') +
+		(window.wgEnableKruxTargeting && window.Krux && window.Krux.dartKeyValues ? DART._rebuildKruxKV(window.Krux.dartKeyValues) + ';' : '') +
 		DART.getImpressionCount(slotname) +
 		DART.getPartnerKeywords() +
 		DART.getCategories() +
@@ -376,6 +376,7 @@ AdConfig.DART.getCustomKeyValues = function(){
 	return '';
 };
 
+// adapted copy of AdProviderGamePro.rebuildKV
 AdConfig.DART._rebuildKV = function(kv) {
 	if (kv.indexOf(';') === -1) {
 		return kv;
@@ -593,8 +594,32 @@ AdConfig.DART.getTileKV = function (slotname, adProvider){
 	return '';
 };
 
-AdConfig.DART._rebuildKruxKV = function(kruxkv) {
-	return kruxkv;
+// adapted copy of AdProviderGamePro.rebuildKV
+AdConfig.DART._rebuildKruxKV = function(kv) {
+	kv = kv.replace(/;$/, '');
+
+	if (kv.indexOf(';') === -1) {
+		return kv;
+	}
+
+	kv = kv.split(';');
+	//kv.sort();
+
+	var out = '', last_k = '';
+	for (var i = 0; i < kv.length; i++) {
+		var k_v = kv[i].split('=');
+		if (k_v[0] == last_k) {
+			out = out + ',' + k_v[1];
+		} else {
+			out = out + ';' + k_v[0] + '=' + k_v[1];
+			last_k = k_v[0];
+		}
+
+		if (out.length > AdConfig.DART.categoryStrMaxLength) break;
+	}
+
+	out = out.substring(1);
+	return out;
 };
 
 AdConfig.DART.getUniqueId = function () {

@@ -493,3 +493,26 @@ test('_rebuildKV', function() {
 
 	equal(actual, expected, input);
 });
+
+test('_rebuildKruxKV', function() {
+	var input = 'u=H14RBw22;ksgmnt=mc3n9p17i;ksgmnt=mhu7kdyz5;ksgmnt=mhu6g41xv;ksgmnt=md0rid1k6;ksgmnt=mh1w1yv7r;ksgmnt=mh1x5fzgz;';
+	var expected = 'u=H14RBw22;ksgmnt=mc3n9p17i,mhu7kdyz5,mhu6g41xv,md0rid1k6,mh1w1yv7r,mh1x5fzgz';
+	var actual = AdConfig.DART._rebuildKruxKV(input);
+	equal(actual, expected, input);
+
+	var input = '';
+	var expected = '';
+	var actual = AdConfig.DART._rebuildKruxKV(input);
+	equal(actual, expected, input);
+
+	var input = 'u=H14RBw22;';
+	var expected = 'u=H14RBw22';
+	var actual = AdConfig.DART._rebuildKruxKV(input);
+	equal(actual, expected, input);
+
+	var input = 'u=H14RBw22;ksgmnt=mc3n9p17i;ksgmnt=mhu7kdyz5;ksgmnt=mhu6g41xv;ksgmnt=md0rid1k6;ksgmnt=mh1w1yv7r;ksgmnt=mh1x5fzgz;ksgmnt=mdq2wjhdi;ksgmnt=l7wynpgnl;ksgmnt=l7kt8r02u;ksgmnt=l65e7q72q;ksgmnt=mczlqdo8q;ksgmnt=miqlt2xrx;ksgmnt=l7tjfzchg;ksgmnt=l64tpoveg;ksgmnt=md0socy4l;ksgmnt=l5ejdqcaa;ksgmnt=l9cvrsbl4;ksgmnt=l4w5i2lte;ksgmnt=l6czhl6h4;ksgmnt=l70mnpbta;ksgmnt=mce246keb;ksgmnt=l9b29oqlp;ksgmnt=l7drxohb5;ksgmnt=l4ml7tc6y;ksgmnt=l5pqy5y87;ksgmnt=l4ipfweef;ksgmnt=mhu6miy43;ksgmnt=l6wzg5l0u;ksgmnt=l6e62in33;ksgmnt=l5h9g8s81;ksgmnt=mh1xf2h44;ksgmnt=mjdpm83vl;ksgmnt=mlhkv0y2u;ksgmnt=l98c7mtek;ksgmnt=md6z9csde;ksgmnt=l9cyd00wd;ksgmnt=l65gcbg79;ksgmnt=mfia735jn;ksgmnt=mkcdphvyq;ksgmnt=l555eyz3i;ksgmnt=mh1w7bwvc;ksgmnt=mdv3k2a3w;ksgmnt=l6dwvwk4q;ksgmnt=l6dw08y3a;ksgmnt=l6g84eoki;ksgmnt=l5eaw5w2w;ksgmnt=l60oj8o6a;ksgmnt=l51i9y6sb;ksgmnt=l6886827n;ksgmnt=l557ki65o;ksgmnt=mhu60s0zh;ksgmnt=l6sy2oz2g;ksgmnt=l8cvx4q0q;ksgmnt=l85bjt8dm;ksgmnt=mgdqsrp7j;ksgmnt=l55a043ml;ksgmnt=l6s4rzsar;ksgmnt=mkwaoxp2x;ksgmnt=l5hoxac0q;ksgmnt=l8gj0qxti;ksgmnt=l64xyo7a0;ksgmnt=mdq3gtpva;ksgmnt=l5h9zxgiw;ksgmnt=l5hpnos2g;ksgmnt=l6cuxmuio;ksgmnt=l9cy36qsl;ksgmnt=l978u56l0;ksgmnt=md6wc664y;ksgmnt=l9cwgqxmx;ksgmnt=mhu6jt32u;ksgmnt=l5hqg89ks;ksgmnt=mh1xzu4ar;ksgmnt=mfagngs4v;ksgmnt=l68jly1dg;ksgmnt=mh1xpz9gv;';
+	var expected = 'u=H14RBw22;ksgmnt=mc3n9p17i,mhu7kdyz5,mhu6g41xv,md0rid1k6,mh1w1yv7r,mh1x5fzgz,mdq2wjhdi,l7wynpgnl,l7kt8r02u,l65e7q72q,mczlqdo8q,miqlt2xrx,l7tjfzchg,l64tpoveg,md0socy4l,l5ejdqcaa,l9cvrsbl4,l4w5i2lte,l6czhl6h4,l70mnpbta,mce246keb,l9b29oqlp,l7drxohb5,l4ml7tc6y,l5pqy5y87,l4ipfweef,mhu6miy43,l6wzg5l0u,l6e62in33,l5h9g8s81,mh1xf2h44,mjdpm83vl,mlhkv0y2u,l98c7mtek,md6z9csde,l9cyd00wd,l65gcbg79,mfia735jn,mkcdphvyq,l555eyz3i,mh1w7bwvc,mdv3k2a3w,l6dwvwk4q,l6dw08y3a,l6g84eoki,l5eaw5w2w,l60oj8o6a,l51i9y6sb,l6886827n';
+	var actual = AdConfig.DART._rebuildKruxKV(input);
+
+	equal(actual, expected, input);
+});
