@@ -24,11 +24,15 @@ class AccountCreationTracker extends WikiaObject {
 		if( !empty( $hash ) ) {
 			$dbw = $this->getDb( DB_MASTER );
 
-			$dbw->insert( 'user_tracker', array(
-				 'utr_user_id' => $user->getId(),
-				 'utr_user_hash' => $hash,
-				 'utr_source' => AccountCreationTracker::TRACKING_USER_CREATION ) );
-			$dbw->commit();
+			$dbw->insert( 'user_tracker',
+				array(
+					'utr_user_id' => $user->getId(),
+					'utr_user_hash' => $hash,
+					'utr_source' => AccountCreationTracker::TRACKING_USER_CREATION
+				),
+				__METHOD__
+			);
+			$dbw->commit(__METHOD__);
 		}
 		wfProfileOut( __METHOD__ );
 	}
@@ -38,11 +42,14 @@ class AccountCreationTracker extends WikiaObject {
 		if( !empty( $hash ) ) {
 			$dbw = $this->getDb( DB_MASTER );
 
-			$dbw->insert( 'user_tracker', array(
-				 'utr_user_id' => $user->getId(),
-				 'utr_user_hash' => $hash,
-				 'utr_source' => AccountCreationTracker::TRACKING_USER_LOGIN ) );
-			$dbw->commit();
+			$dbw->insert( 'user_tracker',
+				array(
+					'utr_user_id' => $user->getId(),
+					'utr_user_hash' => $hash,
+					'utr_source' => AccountCreationTracker::TRACKING_USER_LOGIN
+				),
+				__METHOD__);
+			$dbw->commit(__METHOD__);
 		}
 		wfProfileOut( __METHOD__ );
 	}
@@ -55,7 +62,7 @@ class AccountCreationTracker extends WikiaObject {
 		$results_hash_set = array();
 
 		$dbr = $this->getDb( DB_SLAVE );
-		$res = $dbr->query( "SELECT utr_user_id, utr_user_hash, utr_source FROM user_tracker WHERE utr_user_hash IN ( SELECT utr_user_hash FROM user_tracker WHERE utr_user_id = '" . $user->getId() . "' )");
+		$res = $dbr->query( "SELECT utr_user_id, utr_user_hash, utr_source FROM user_tracker WHERE utr_user_hash IN ( SELECT utr_user_hash FROM user_tracker WHERE utr_user_id = '" . $user->getId() . "' )", __METHOD__);
 
 
 		while( $row = $dbr->fetchObject($res) ) {
@@ -134,7 +141,7 @@ class AccountCreationTracker extends WikiaObject {
 
 		$dbr = $this->getDb();
 
-		$res = $dbr->query( "SELECT utr_user_hash FROM user_tracker WHERE utr_user_id = '" . $user->getId() . "'");
+		$res = $dbr->query( "SELECT utr_user_hash FROM user_tracker WHERE utr_user_id = '" . $user->getId() . "'", __METHOD__);
 
 		while( $row = $dbr->fetchObject($res) ) {
 			$results[ $row['utr_user_hash'] ] = true;
@@ -152,7 +159,8 @@ class AccountCreationTracker extends WikiaObject {
 		$res = $dbr->select(
 			'city_list',
 			'city_id',
-			array( $dbr->makeList( array( 'city_founding_user' => $users), LIST_OR ) )
+			array( $dbr->makeList( array( 'city_founding_user' => $users), LIST_OR ) ),
+			__METHOD__
 		);
 
 		while ( $row = $dbr->fetchObject( $res ) ) {
@@ -163,6 +171,13 @@ class AccountCreationTracker extends WikiaObject {
 		return $wikis;
 	}
 
+	/**
+	 * @param WikiPage $article
+	 * @param $user_name
+	 * @param $summary
+	 * @param string $messages
+	 * @return bool
+	 */
 	public function rollbackPage( $article, $user_name, $summary, &$messages = '' ) {
 		wfProfileIn( __METHOD__ );
 
@@ -229,6 +244,13 @@ class AccountCreationTracker extends WikiaObject {
 		return false;
 	}
 
+	/**
+	 * @param WikiPage $article
+	 * @param $reason
+	 * @param bool $suppress
+	 * @param string $error
+	 * @return bool
+	 */
 	private function deleteArticle( $article, $reason, $suppress = false, &$error = '' ) {
 		wfProfileIn( __METHOD__ );
 
@@ -246,5 +268,4 @@ class AccountCreationTracker extends WikiaObject {
 		wfProfileOut( __METHOD__ );
 		return false;
 	}
-
 }
