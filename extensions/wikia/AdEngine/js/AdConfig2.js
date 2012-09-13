@@ -6,7 +6,8 @@ window.AdConfig2 = function (
 	AdProviderGamePro,
 	AdProviderEvolve,
 	AdProviderEvolveRS,
-	AdProviderAdDriver2
+	AdProviderAdDriver2,
+	AdProviderLiftium2
 ) {
 	var _cache_geo = null;
 
@@ -24,6 +25,9 @@ window.AdConfig2 = function (
 		}
 		if (slot[2] === 'AdDriver2') {
 			return AdProviderAdDriver2;
+		}
+		if (slot[2] === 'Liftium2') {
+			return AdProviderLiftium2;
 		}
 
 		if (isSlotGamePro(slot[0], window.wgContentLanguage)) {

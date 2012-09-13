@@ -4,12 +4,14 @@
 		, adProviderEvolve
 		, adProviderEvolveRS
 		, adProviderGamePro
-		, adProviderAdDriver2;
+		, adProviderAdDriver2
+		, adProviderLiftium2;
 
 	adProviderGamePro = AdProviderGamePro(WikiaTracker, log, window, ghostwriter, document);
 	adProviderEvolve = AdProviderEvolve(WikiaTracker, log, window, ghostwriter, document);
 	adProviderEvolveRS = AdProviderEvolveRS(WikiaTracker, log, window, ghostwriter, document);
 	adProviderAdDriver2 = AdProviderAdDriver2(log, window);
+	adProviderLiftium2 = AdProviderLiftium2(WikiaTracker, log, window, ghostwriter, document);
 
 	adConfig = AdConfig2(
 		// regular dependencies:
@@ -19,7 +21,8 @@
 		adProviderGamePro,
 		adProviderEvolve,
 		adProviderEvolveRS,
-		adProviderAdDriver2
+		adProviderAdDriver2,
+		adProviderLiftium2
 	);
 
 	adEngine = AdEngine2(adConfig, log, window);

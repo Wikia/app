@@ -93,8 +93,8 @@ window.AdProviderEvolve = function (WikiaTracker, log, window, ghostwriter, docu
 		WikiaTracker.trackAdEvent('liftium.hop2', {'ga_category':'hop2/evolve', 'ga_action':'slot ' + slotname, 'ga_label':'9.9' /* FIXME Liftium.formatTrackTime(time, 5) */}, 'ga');
 
 		// TODO work in progress
-		//window.adslots2.push([slotname, size, 'Liftium', '99']);
-		//return;
+		window.adslots2.push([slotname, size, 'Liftium2', '0']);
+		return;
 
 		//LiftiumOptions.placement = slotname;
 		var script = getLiftiumCallScript(slotname, size);
