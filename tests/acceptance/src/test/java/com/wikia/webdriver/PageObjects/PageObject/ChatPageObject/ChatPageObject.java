@@ -257,7 +257,7 @@ public class ChatPageObject extends BasePageObject
 		}
 		CommonFunctions.assertString("message-wall", list.get(0).getAttribute("class"));
 		CommonFunctions.assertString("contribs", list.get(1).getAttribute("class"));
-		CommonFunctions.assertString("private", list.get(1).getAttribute("class"));
+		CommonFunctions.assertString("private", list.get(2).getAttribute("class"));
 		
 		list = getAdminDropDownListOfElements();
 		CommonFunctions.assertNumber(3, list.size(), "Checking number of elements in the drop-down");
