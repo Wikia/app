@@ -26,6 +26,11 @@ public class testing extends TestTemplate{
 //		
 		((JavascriptExecutor)driver).executeScript("$('.Video_Games').mouseenter()");
 		((JavascriptExecutor)driver).executeScript("$('.Video_Games').mouseenter()");
+		((JavascriptExecutor)driver).executeScript("$('.Video_Games').mouseenter()");
+		((JavascriptExecutor)driver).executeScript("$('.Video_Games').mouseenter()");
+		((JavascriptExecutor)driver).executeScript("$('.Video_Games').mouseenter()");
+		((JavascriptExecutor)driver).executeScript("$('.Video_Games').mouseenter()");
+		((JavascriptExecutor)driver).executeScript("$('.Video_Games').mouseenter()");
 
 //		b.executeScript("$('.Video_Games').mouseenter()");
 //		b.executeScript("$('.Video_Games').mouseenter()");
