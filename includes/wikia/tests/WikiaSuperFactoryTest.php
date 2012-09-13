@@ -108,7 +108,7 @@ class WikiaSuperFactoryTest extends PHPUnit_Framework_TestCase {
 
 	public function testUnknownConstructorCall() {
 		$this->setExpectedException('WikiaException');
-		$object = WikiaSuperFactory::build('WikiaSuperFactoryTestClass', array(), 'nonExistentFactoryMethod');
+		WikiaSuperFactory::build('WikiaSuperFactoryTestClass', array(), 'nonExistentFactoryMethod');
 	}
 
 	public function testAddingConstructorWithInstancePredefined() {
@@ -120,7 +120,7 @@ class WikiaSuperFactoryTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testNoArgsConstructor() {
-		$bar = WikiaSuperFactory::build('WikiaSuperFactoryTestClass2');
+		$bar = WikiaSuperFactory::build('WikiaSuperFactoryTestClass2'); /* @var $bar WikiaSuperFactoryTestClass2 */
 		$this->assertEquals(self::TEST_HELLO_WORLD, $bar->helloWorld());
 	}
 
