@@ -42,6 +42,10 @@ window.AdConfig2 = function (
 			return AdProviderEvolveRS;
 		}
 
+		if (isWikiLiftiumOnly()) {
+			return AdProviderLiftium2;
+		}
+
 		return AdProviderAdDriver2;
 	}
 
@@ -137,6 +141,10 @@ window.AdConfig2 = function (
 		return _cache_geo.country;
 	}
 
+	function isWikiLiftiumOnly() {
+		return false;
+	}
+	
 	return {getProvider:getProvider};
 
 };
