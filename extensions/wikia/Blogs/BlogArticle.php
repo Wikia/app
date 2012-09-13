@@ -293,6 +293,7 @@ class BlogArticle extends Article {
 		global $wgContLang;
 		wfProfileIn(__METHOD__);
 
+		/* @var $catView CategoryViewer */
 		if( !isset( $catView->blogs ) ) {
 			wfProfileOut(__METHOD__);
 			return true;
@@ -721,16 +722,19 @@ class BlogArticle extends Article {
 			return true;
 		}
 
+		/* @var $oUser User */
 		if ( !$oUser instanceof User ) {
 			wfProfileOut( __METHOD__ );
 			return true;
 		}
 
+		/* @var $oArticle WikiPage */
 		if ( !$oArticle instanceof Article ) {
 			wfProfileOut( __METHOD__ );
 			return true;
 		}
 
+		/* @var $oTitle Title */
 		$oTitle = $oArticle->getTitle();
 		if ( !$oTitle instanceof Title ) {
 			wfProfileOut( __METHOD__ );
@@ -773,7 +777,7 @@ class BlogArticle extends Article {
 
 	/* hook used to redirect to custom edit page */
 
-	public static function alternateEditHook($oEditPage) {
+	public static function alternateEditHook(EditPage $oEditPage) {
 		global $wgOut, $wgRequest;
 		$oTitle = $oEditPage->mTitle;
 		if($oTitle->getNamespace() == NS_BLOG_LISTING) {

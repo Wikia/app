@@ -27,6 +27,7 @@ class ScavengerHunt {
 	const HUNT_ID = 'ScavengerHuntInProgress';
 	const VISITED_ART_KEY = 'visitedArticleIdentifiers';
 
+	/* @var $parser Parser */
 	protected $parser = null;
 	protected $parserOptions = null;
 	protected $fakeTitle = null;
@@ -35,7 +36,7 @@ class ScavengerHunt {
 	protected $game = null;
 
 	public function __construct(){
-		 $this->app = F::build('App');
+		 $this->app = F::app();
 	}
 
 	/*
@@ -43,7 +44,7 @@ class ScavengerHunt {
 	 *
 	 * @author Marooned
 	 */
-	public function onBeforePageDisplay( $out, $skin ) {
+	public function onBeforePageDisplay( OutputPage $out, $skin ) {
 		global $wgExtensionsPath;
 
 		wfProfileIn(__METHOD__);
@@ -60,20 +61,23 @@ class ScavengerHunt {
 		$this->game = $game;
 	}
 
+	/**
+	 * @return ScavengerHuntGame
+	 */
 	public function getActiveGame() {
 		if ( empty( $this->game ) ) {
 			$huntId = $this->getHuntId();
 			if ( empty( $huntId ) ) {
 				return 0;
 			}
-			$games = WF::build('ScavengerHuntGames');
+			$games = WF::build('ScavengerHuntGames'); /* @var $games ScavengerHuntGames */
 			$this->game = $games->findEnabledById((int)$huntId);
 		}
 		return $this->game;
 	}
 
 	protected function generateHunterId() {
-		return md5( session_id() + self::HASH_SALT );
+		return md5( session_id() . self::HASH_SALT );
 	}
 
 	public function getHuntId() {
@@ -90,7 +94,7 @@ class ScavengerHunt {
 		$oTitle = F::build( 'Title', array( $articleTitle ), 'newFromText' );
 		$huntId = $this->getHuntId();
 		if ( $oTitle->exists() && !empty( $huntId ) ){
-			$games = WF::build('ScavengerHuntGames');
+			$games = WF::build('ScavengerHuntGames'); /* @var $games ScavengerHuntGames */
 			$game = $games->findEnabledById((int)$huntId);
 			if ( empty($game) ){
 				return false;
@@ -206,7 +210,7 @@ class ScavengerHunt {
 		$game = $this->getActiveGame();
 
 		if ( $this->isGameCompleated() ){
-			$template = WF::build('EasyTemplate', array(dirname( __FILE__ ) . '/templates/'));
+			$template = WF::build('EasyTemplate', array(dirname( __FILE__ ) . '/templates/')); /** @var $template EasyTemplate  */
 			$template->set_vars( array(
 				'game' => $game
 			));
@@ -315,7 +319,7 @@ class ScavengerHunt {
 	}
 
 	public function getDataFromCache() {
-		$wgMemc = $this->app->getGlobal('wgMemc');
+		$wgMemc = $this->getCache();
 		$memcData = $wgMemc->get( $this->getCacheKey() );
 		$return = false;
 		if ( !empty( $memcData ) && isset( $memcData['gameId'] ) ){
@@ -328,7 +332,7 @@ class ScavengerHunt {
 	}
 
 	public function saveDataToCache( $visitedArticlesId ) {
-		$wgMemc = $this->app->getGlobal('wgMemc');
+		$wgMemc = $this->getCache();
 		$value = array(
 				'gameId' => $this->getHuntId(),
 				self::VISITED_ART_KEY => $visitedArticlesId,
@@ -412,6 +416,9 @@ class ScavengerHunt {
 		return $result;
 	}
 
+	/**
+	 * @return MemCachedClientforWiki
+	 */
 	protected function getCache() {
 		return F::app()->getGlobal('wgMemc');
 	}
@@ -446,7 +453,7 @@ class ScavengerHunt {
 
 	public function getGoodbyeHtml( ScavengerHuntGame $game ) {
 		// build entry form html
-		$template = WF::build('EasyTemplate', array(dirname( __FILE__ ) . '/templates/'));
+		$template = WF::build('EasyTemplate', array(dirname( __FILE__ ) . '/templates/')); /* @var $template EasyTemplate */
 		$template->set_vars(array(
 			'title' => $game->getGoodbyeTitle(),
 			'text' => $this->parseCached( $game->getGoodbyeText() ),
@@ -462,7 +469,7 @@ class ScavengerHunt {
 	}
 
 	public function onOpenGraphMetaBeforeCustomFields( $articleId, &$titleImage, &$titleDescription) {
-		$games = F::build( 'ScavengerHuntGames' );
+		$games = F::build( 'ScavengerHuntGames' ); /* @var $games ScavengerHuntGames */
 		$elements = $games->getOpenGraphMetaElements();
 		if (
 			!empty( $elements ) &&

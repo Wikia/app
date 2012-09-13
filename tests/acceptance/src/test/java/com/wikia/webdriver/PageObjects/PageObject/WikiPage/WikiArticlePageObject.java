@@ -1,6 +1,7 @@
 package com.wikia.webdriver.PageObjects.PageObject.WikiPage;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -17,24 +18,26 @@ public class WikiArticlePageObject extends WikiBasePageObject {
 	
 	protected String articlename;
 	
-	@FindBy(css="a[accesskey='e']")
-	private WebElement EditButton;
+//	@FindBy(css="a[accesskey='e']")
+//	private WebElement editButton;
 	@FindBy(css="section.RelatedVideosModule")
-	private WebElement RVModule;
+	private WebElement rVModule;
 	@FindBy(css="input.videoUrl")
-	private WebElement VideoRVmodalInput;
+	private WebElement videoRVmodalInput;
 	@FindBy(css="div[class='editarea']")
 	private WebElement editCommentTrigger;
 	@FindBy(css="body[id='bodyContent']")
 	private WebElement editCommentArea;
 	@FindBy(css="div.cke_contents iframe")
 	private WebElement iframe;
-	@FindBy(css="input[id='article-comm-submit']")
+	@FindBy(css="input[id*='article-comm-submit']")
 	private WebElement submitCommentButton;
 	@FindBy(css="a.article-comm-delete")
 	private WebElement deleteCommentButton;
-	@FindBy(css="span.edit-link")
+	@FindBy(css="span.edit-link a")
 	private WebElement editCommentButton;
+	@FindBy(css="input[id*='article-comm-reply']")
+	private WebElement submitReplyButton;
 	
 	
 	private By ImageOnWikiaArticle = By.cssSelector("div.WikiaArticle figure a img");
@@ -54,9 +57,11 @@ public class WikiArticlePageObject extends WikiBasePageObject {
 	
 	public void triggerCommentArea()
 	{
-		Point p = editCommentTrigger.getLocation();
-		CommonFunctions.MoveCursorToElement(p);
-		CommonFunctions.ClickElement();
+//		Point p = editCommentTrigger.getLocation();
+//		CommonFunctions.MoveCursorToElement(p);
+//		CommonFunctions.ClickElement();
+//		waitForElementByElement(editCommentArea);
+		editCommentTrigger.click();
 //		waitForElementByElement(editCommentArea);
 	}
 	
@@ -69,18 +74,19 @@ public class WikiArticlePageObject extends WikiBasePageObject {
 		driver.switchTo().defaultContent();
 	}
 	
-	public WikiArticlePageObject clickSubmitButton()
+	public void clickSubmitButton()
 	{
-		submitCommentButton.click();
+//		submitCommentButton.click();
+		executeScript("document.querySelectorAll('#article-comm-submit')[0].click()");
 		PageObjectLogging.log("clickSubmitButton", "submit article button clicked", true, driver);
-		return new WikiArticlePageObject(driver, Domain, articlename);
+//		return new WikiArticlePageObject(driver, Domain, articlename);
 	}
 	
-	public WikiArticlePageObject clickSubmitButton(String userName)
+	public void clickSubmitButton(String userName)
 	{		
-		driver.findElement(By.xpath("//a[contains(text(), '"+userName+"')]/../../..//input[@class='actionButton']")).click();//submit button taken by username which edited comment
+		click(driver.findElement(By.xpath("//a[contains(text(), '"+userName+"')]/../../..//input[@class='actionButton']")));//submit button taken by username which edited comment
 		PageObjectLogging.log("clickSubmitButton", "submit article button clicked", true, driver);
-		return new WikiArticlePageObject(driver, Domain, articlename);
+//		return new WikiArticlePageObject(driver, Domain, articlename);
 	}
 	
 	public void verifyComment(String message, String userName)
@@ -90,32 +96,64 @@ public class WikiArticlePageObject extends WikiBasePageObject {
 		PageObjectLogging.log("verifyComment", "comment: "+message+" is visible", true, driver);
 	}
 	
-	private void hoverMouseOverCommentArea(String commentContent)
+	private void clickReplyCommentButton(String comment)
 	{
-		WebElement commentArea = driver.findElement(By.xpath("//p[contains(text(), '"+commentContent+"')]"));
-		Point p = commentArea.getLocation();
-		CommonFunctions.MoveCursorToElement(p, driver);
-		PageObjectLogging.log("hoverMouseOverCommentArea", "mouse moved to comment area", true, driver);
+		waitForElementByXPath("//p[contains(text(), '"+comment+"')]//..//..//button[contains(text(), 'Reply')]");
+		click(driver.findElement(By.xpath("//p[contains(text(), '"+comment+"')]//..//..//button[contains(text(), 'Reply')]")));
+		waitForElementByElement(iframe);
+		PageObjectLogging.log("clickReplyCommentButton", "reply comment button clicked", true);
 	}
+	
+	
+	private void writeReply(String reply)
+	{
+		waitForElementByElement(iframe);
+		driver.switchTo().frame(iframe);
+		editCommentArea.sendKeys(reply);
+		driver.switchTo().defaultContent();
+		click(submitReplyButton);
+		waitForElementByXPath("//p[contains(text(), '"+reply+"')]");
+		PageObjectLogging.log("writeReply", "reply comment written", true);
+	}
+	
+	
+	public void replyComment(String comment, String reply)
+	{
+		driver.navigate().refresh();
+		clickReplyCommentButton(comment);
+		writeReply(reply);
+		PageObjectLogging.log("reply comment", "reply comment written and checked", true, driver);
+	}
+	
+//	private void hoverMouseOverCommentArea(String commentContent)
+//	{
+//		WebElement commentArea = driver.findElement(By.xpath("//p[contains(text(), '"+commentContent+"')]"));
+//		Point p = commentArea.getLocation();
+//		CommonFunctions.MoveCursorToElement(p, driver);
+//		PageObjectLogging.log("hoverMouseOverCommentArea", "mouse moved to comment area", true, driver);
+//	}
 	
 	private void clickDeleteCommentButton()
 	{
-		waitForElementByElement(deleteCommentButton);
-		deleteCommentButton.click();
+		executeScript("document.querySelectorAll('.article-comm-delete')[0].click()");
+//		deleteCommentButton.click();
 		PageObjectLogging.log("clickDeleteCommentButton", "delete comment button clicked", true, driver);
 	}
 	
 	private void clickEditCommentButton()
 	{
-		waitForElementByElement(editCommentButton);
-		editCommentButton.click();
+//		waitForElementByElement(editCommentButton);
+//		clickRobot(editCommentButton);
+//		editCommentButton.click();
+		executeScript("document.querySelectorAll('.article-comm-edit')[0].click()");
 		waitForElementByElement(iframe);
 		PageObjectLogging.log("clickEditCommentButton", "edit comment button clicked", true, driver);
 	}
 	
 	public void deleteComment(String comment)
 	{
-		hoverMouseOverCommentArea(comment);
+		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,0)");
+//		hoverMouseOverCommentArea(comment);
 		clickDeleteCommentButton();
 		clickDeleteConfirmationButton();
 		PageObjectLogging.log("deleteComment", "comment deleted", true, driver);
@@ -124,7 +162,7 @@ public class WikiArticlePageObject extends WikiBasePageObject {
 	public void editComment(String comment)
 	{
 		driver.navigate().refresh();
-		hoverMouseOverCommentArea(comment);
+//		hoverMouseOverCommentArea(comment);
 		clickEditCommentButton();
 	}
 	
@@ -148,8 +186,8 @@ public class WikiArticlePageObject extends WikiBasePageObject {
 	 * @author Michal Nowierski
 	 */
 	public WikiArticleEditMode Edit() {
-		waitForElementByElement(EditButton);
-		EditButton.click();
+		waitForElementByElement(editButton);
+		editButton.click();
 		PageObjectLogging.log("Edit", "Edit Article: "+articlename+", on wiki: "+Domain+"", true, driver);
 		return new WikiArticleEditMode(driver, Domain, articlename);
 	}
@@ -181,7 +219,7 @@ public class WikiArticlePageObject extends WikiBasePageObject {
 	 * @author Michal Nowierski
 	 * @param Object Object = {gallery, slideshow}
 	 * 	 */
-	public void VerifyTheObjetOnThePage(String Object) {
+	public void VerifyTheObjectOnThePage(String Object) {
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div.WikiaArticle div[id*='"+Object+"']")));
 		PageObjectLogging.log("VerifyTheObjetOnThePage", "Verify that the "+Object+" appears on the page", true, driver);
 		
@@ -203,7 +241,7 @@ public class WikiArticlePageObject extends WikiBasePageObject {
 	 * @author Michal Nowierski
 	 * 	 */
 	public void VerifyRVModulePresence() {
-		waitForElementByElement(RVModule);
+		waitForElementByElement(rVModule);
 		PageObjectLogging.log("VerifyRVModulePresence", "Verify that the RV Module Is Present", true, driver);
 		
 	}
@@ -229,9 +267,9 @@ public class WikiArticlePageObject extends WikiBasePageObject {
 	 * @param videoURL URL of the video to be added
 	 * 	 */
 	public void TypeInVideoURL(String videoURL) {
-		waitForElementByElement(VideoRVmodalInput);		
-		VideoRVmodalInput.clear();
-		VideoRVmodalInput.sendKeys(videoURL);
+		waitForElementByElement(videoRVmodalInput);		
+		videoRVmodalInput.clear();
+		videoRVmodalInput.sendKeys(videoURL);
 		PageObjectLogging.log("TypeInVideoURL", "Type given URL into RV modal", true, driver);
 	}
 

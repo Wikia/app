@@ -1,6 +1,6 @@
 <?PHP
 
-/* 
+/*
 	this practically does one thing: unsets memcached keys on article save
 */
 
@@ -14,7 +14,7 @@ if (!LOOKUPCONTRIBS_NO_CACHE) {
 $wgHooks['ContributionsToolLinks'][] = 'LookupContribsHooks::ContributionsToolLinks';
 
 class LookupContribsHooks {
-	static public function ArticleSaveComplete ($article, $user) {
+	static public function ArticleSaveComplete ($article, User $user) {
 		global $wgDBname, $wgMemc, $wgSharedDB, $wgUser ;
 		/* unset the key for this user on this database */
 		$username = $user->getName () ;
@@ -23,6 +23,13 @@ class LookupContribsHooks {
 		return true ;
 	}
 
+	/**
+	 * @static
+	 * @param $id
+	 * @param Title $nt
+	 * @param $links
+	 * @return bool
+	 */
 	static public function ContributionsToolLinks( $id, $nt, &$links ) {
 		global $wgUser;
 		if( $id != 0 && $wgUser->isAllowed( 'lookupcontribs' ) ) {

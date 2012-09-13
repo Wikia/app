@@ -50,7 +50,11 @@ $wgHooks['ContributionsToolLinks'][] = 'efLoadLookupUserLink';
 /**
  * Add a link to Special:LookupUser from Special:Contributions/USERNAME
  * if the user has 'lookupuser' permission
- * @return true
+ *
+ * @param integer $id
+ * @param Title $nt
+ *
+ * @return bool true
  */
 function efLoadLookupUserLink( $id, $nt, &$links ) {
 	global $wgUser;

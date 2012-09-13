@@ -3,6 +3,17 @@ $config = array();
 
 /******** Shared libraries and assets *******/
 
+$config['oasis_shared_core_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'#group_oasis_wikia_js',
+		'#group_oasis_tracker_js',
+
+		// The following should go to adengine2_js group later
+		'//extensions/wikia/AdEngine/ghost/gw-11.6.7/lib/gw.min.js',
+	),
+);
+
 $config['oasis_jquery_ads_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
@@ -39,34 +50,40 @@ $config['liftium_ads_js'] = array(
 	),
 );
 
+$config['adengine2_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/AdEngine/AdConfig.js', // TODO refactor out
+		'#group_liftium_ads_js', // TODO refactor out
+
+		'//extensions/wikia/AdEngine/js/AdProviderGamePro.js',
+		'//extensions/wikia/AdEngine/js/AdProviderLiftium2.js',
+		'//extensions/wikia/AdEngine/js/AdProviderEvolve.js',
+		'//extensions/wikia/AdEngine/js/AdProviderEvolveRS.js',
+		'//extensions/wikia/AdEngine/js/AdProviderAdDriver2.js',
+		'//extensions/wikia/AdEngine/js/AdConfig2.js',
+		'//extensions/wikia/AdEngine/js/AdEngine2.js',
+		'//extensions/wikia/AdEngine/js/AdEngine2.run.js',
+	),
+);
+
 $config['oasis_ads_js'] = array(
     'type' => AssetsManager::TYPE_JS,
     'assets' => array(
-		'#group_oasis_tracker_js',
-
 		// ads
-		'//resources/wikia/modules/geo.js',
-
 		'//extensions/wikia/AdEngine/AdMeldAPIClient.js',
-		'//extensions/wikia/AdEngine/AdConfig.js',
+		//'//extensions/wikia/AdEngine/AdConfig.js', TODO refactor back here
 		'//extensions/wikia/AdEngine/AdEngine.js',
 		'//extensions/wikia/AdEngine/AdProviderOpenX.js',
 		'//extensions/wikia/AdEngine/LazyLoadAds.js',
-		'//extensions/wikia/AdEngine/ghost/gw-11.6.7/lib/gw.min.js',
 
-		'#group_liftium_ads_js',
+		//'#group_liftium_ads_js', TODO refactor back here
 
 		'//extensions/wikia/AdEngine/liftium/AdsInContent.js',
-		'//extensions/wikia/AdEngine/AdProviderAdEngine2.js',
-		'//extensions/wikia/AdEngine/AdProviderGamePro.js',
-		'//extensions/wikia/AdEngine/AdProviderEvolve.js',
-		'//extensions/wikia/AdEngine/AdProviderAdDriver2.js',
-		'//extensions/wikia/AdEngine/AdConfig2.js',
-		'//extensions/wikia/AdEngine/AdEngine2.js',
-		'//extensions/wikia/AdEngine/AdEngine2.run.js',
+
 		'//extensions/wikia/AdEngine/AdDriver.js',
 		'//extensions/wikia/AdEngine/AdDriverGP.js',
-    )
+    ),
 );
 
 $config['oasis_noads_extensions_js'] = array(
@@ -136,8 +153,9 @@ $config['jquery'] = array(
 $config['oasis_jquery'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
-		// Wikia plugins
-		'#group_oasis_wikia_js',
+		// polyfills
+		'//resources/wikia/polyfills/jquery.wikia.placeholder.js',
+		'//resources/wikia/polyfills/array.js',
 
 		// 3rd party plugins
 		'//resources/wikia/libraries/jquery/getcss/jquery.getcss.js',
@@ -145,10 +163,6 @@ $config['oasis_jquery'] = array(
 		'//resources/wikia/libraries/jquery/timeago/jquery.timeago.js',
 		'//resources/wikia/libraries/jquery/store/jquery.store.js',
 		'//resources/wikia/libraries/jquery/throttle-debounce/jquery.throttle-debounce.js',
-
-		// polyfills
-		'//resources/wikia/polyfills/jquery.wikia.placeholder.js',
-		'//resources/wikia/polyfills/array.js',
 
 		// Wikia plugins
 		'//resources/wikia/jquery.wikia.js',
@@ -175,31 +189,14 @@ $config['oasis_wikia_js'] = array(
 		'//resources/wikia/modules/querystring.js',
 		'//resources/wikia/modules/cookies.js',
 		'//resources/wikia/modules/log.js',
-		'//resources/wikia/modules/thumbnailer.js'
+		'//resources/wikia/modules/thumbnailer.js',
+		'//resources/wikia/modules/geo.js',
 	)
 );
 
 /******** Skins *******/
 
 /** Oasis **/
-
-// The main combined file for logged-in users.
-$config['oasis_shared_js_user'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => array(
-		'#group_oasis_shared_js',
-		'#group_oasis_user_js',
-	)
-);
-
-// The main combined file for logged-out (anonymous) users.
-$config['oasis_shared_js_anon'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => array(
-		'#group_oasis_shared_js',
-		'#group_oasis_anon_js',
-	)
-);
 
 // core shared JS - used as part of oasis_shared_js_anon or oasis_shared_js_user.
 // See BugzId 38541 for details on why it's better to have these 2 different packages!
@@ -242,6 +239,7 @@ $config['oasis_nojquery_shared_js'] = array(
 		'//extensions/wikia/CategorySelect/CategorySelect.view.js',
 
 		// oasis specific files
+		'//resources/wikia/libraries/bootstrap/tooltip.js',
 		'//skins/oasis/js/hoverMenu.js',
 		'//skins/oasis/js/PageHeader.js',
 		'//skins/oasis/js/Search.js',
@@ -258,7 +256,6 @@ $config['oasis_nojquery_shared_js'] = array(
 		'//skins/oasis/js/tabs.js',
 		'//skins/oasis/js/SharingToolbar.js',
 		'//skins/oasis/js/WikiaForm.js',
-		'//resources/wikia/libraries/bootstrap/tooltip.js',
 	)
 );
 
@@ -300,6 +297,14 @@ $config['wikiamobile_404_scss'] = array(
 	'skin' => 'wikiamobile',
 	'assets' => array(
 		'//extensions/wikia/WikiaMobile/css/404.scss',
+	)
+);
+
+$config['wikiamobile_404_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => 'wikiamobile',
+	'assets' => array(
+		'//extensions/wikia/WikiaMobile/js/404.js',
 	)
 );
 
@@ -944,7 +949,7 @@ $config['places_css'] = array(
 /** WikiaPhotoGallery **/
 
 $config['wikiaphotogallery_slider_js_wikiamobile'] = array(
-		'skin' => array( 'wikiamobile' ),
+		'skin' => 'wikiamobile',
 		'type' => AssetsManager::TYPE_JS,
 		'assets' => array(
 				'//extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.slider.wikiamobile.js'

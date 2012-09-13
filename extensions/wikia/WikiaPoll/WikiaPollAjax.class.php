@@ -110,7 +110,7 @@ class WikiaPollAjax {
 		$id = $wgRequest->getInt ('pollId', 0);
 		if ($id != 0) {
 			$article_object = F::build('Article', array($id), 'newFromID');
-			$title_object = $article_object->getTitle();
+			$title_object = $article_object instanceof Article ? $article_object->getTitle() : false;
 		}
 
 		if (is_object ($title_object) && $title_object->exists() ) {

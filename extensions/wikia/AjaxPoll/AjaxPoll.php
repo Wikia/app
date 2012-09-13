@@ -45,11 +45,13 @@ $wgHooks['LoadExtensionSchemaUpdates'][] = "AjaxPollClass::schemaUpdate";
  * the second parameter is the callback function for
  * processing the text between the tags
  *
+ * @param Parser $parser
+ *
  * @access public
  * @author eloy
  * @global
  */
-function wfAjaxPollTag( &$parser ) {
+function wfAjaxPollTag( $parser ) {
 	$parser->setHook( "poll", array( "AjaxPollClass", "renderFromTag" ) );
 	return true;
 }

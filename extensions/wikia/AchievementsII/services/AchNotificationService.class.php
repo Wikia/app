@@ -48,7 +48,7 @@ class AchNotificationService {
 		$where = array('user_id' => $userId, 'notified' => 0);
 		if(empty($wgEnableAchievementsStoreLocalData)) {
 			$dbw = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
-			$where['wiki_id'] = $this->mCityId;
+			$where['wiki_id'] = $wgCityId;
 		} else {
 			$dbw = wfGetDB(DB_MASTER);
 		}

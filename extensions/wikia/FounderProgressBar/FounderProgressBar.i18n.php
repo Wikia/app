@@ -180,6 +180,14 @@ $messages['br'] = array(
 	'founderprogressbar-total-edit300-action' => 'Ouzhpennañ ur bajenn',
 );
 
+/** Czech (česky)
+ * @author Chmee2
+ */
+$messages['cs'] = array(
+	'founderprogressbar-skip-for-now' => 'Pro teď přeskočit',
+	'founderprogressbar-task-completed' => 'Dokončeno',
+);
+
 /** German (Deutsch)
  * @author ChrisiPK
  * @author Geitost

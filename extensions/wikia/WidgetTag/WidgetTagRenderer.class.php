@@ -18,6 +18,12 @@ class WidgetTagRenderer extends WidgetFramework {
         return self::$instanceTagRenderer;
 	}
 
+	/**
+	 * @param $input
+	 * @param $args
+	 * @param Parser $parser
+	 * @return string
+	 */
 	public function renderTag( $input, $args, Parser $parser ) {
 		wfProfileIn(__METHOD__);
 
@@ -89,6 +95,10 @@ class WidgetTagRenderer extends WidgetFramework {
 		return $marker;
 	}
 
+	/**
+	 * @param $text
+	 * @return string
+	 */
 	function replaceMarkers($text) {
 		return strtr($text, $this->markers);
 	}

@@ -43,11 +43,12 @@ class SimpleCloseWikiMaintenance {
 		global $wgUploadDirectory, $wgDBname, $wgSolrIndexer;
 
 		if ( !isset( $this->mOptions['wiki_id'] ) ) {
-			wfDie( "Wiki Id is not valid" );
+			echo "Wiki Id is not valid";
+			die( 1 );
 		}
 
 		$where = array( "city_id" => intval( $this->mOptions['wiki_id'] ) );
-		
+
 		$dbr = WikiFactory::db( DB_SLAVE );
 		$row = $dbr->selectRow(
 			array( "city_list" ),
@@ -78,7 +79,8 @@ class SimpleCloseWikiMaintenance {
 				array( "GROUP BY" => "city_dbname" )
 			);
 			if( $check->count > 1 ) {
-				wfDie( "{$dbname} is not unique. Check city_list and rerun script" );
+				echo "{$dbname} is not unique. Check city_list and rerun script";
+				die( 1 );
 			}
 			Wikia::log( __CLASS__, "info", "city_id={$row->city_id} city_url={$row->city_url} city_dbname={$dbname} city_flags={$row->city_flags} city_public={$row->city_public}");
 

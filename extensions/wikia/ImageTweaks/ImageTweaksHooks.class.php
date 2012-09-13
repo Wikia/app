@@ -105,7 +105,7 @@ class ImageTweaksHooks extends WikiaObject {
 		return true;
 	}
 
-	public function onThumbnailImageHTML( $options, $linkAttribs, $imageAttribs, $file, &$html ){
+	public function onThumbnailImageHTML( $options, $linkAttribs, $imageAttribs, File $file, &$html ){
 		$this->wf->profileIn( __METHOD__ );
 
 
@@ -231,7 +231,7 @@ class ImageTweaksHooks extends WikiaObject {
 		return true;
 	}
 
-	public function onThumbnailVideoHTML( $options, $linkAttribs, $imageAttribs, $file, &$html ){
+	public function onThumbnailVideoHTML( $options, $linkAttribs, $imageAttribs, File $file, &$html ){
 		$this->wf->profileIn( __METHOD__ );
 
 		if ( self::$isWikiaMobile ) {
@@ -275,12 +275,13 @@ class ImageTweaksHooks extends WikiaObject {
 			);
 
 			if ( $file instanceof File ) {
-				$title = $file->getTitle()->getText();
+				$title = $file->getTitle()->getDBKey();
+				$titleText = $file->getTitle()->getText();
 
 				$data['content'] = Xml::element(
 					'span',
 					array( 'class' => 'videoInfo' ),
-					"{$title} (" . $file->getHandler()->getFormattedDuration() .
+					"{$titleText} (" . $file->getHandler()->getFormattedDuration() .
 						", " . $this->wf->MsgForContent( 'wikiamobile-video-views-counter', DataMartService::getVideoViewsByTitleTotal( $title ) ) .
 						')'
 				);

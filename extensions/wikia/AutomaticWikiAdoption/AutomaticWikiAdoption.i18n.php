@@ -172,10 +172,18 @@ $messages['bs'] = array(
 );
 
 /** Czech (česky)
+ * @author Chmee2
  * @author Jezevec
  */
 $messages['cs'] = array(
+	'wikiadoption-header' => 'Přijmout tuto wiki',
+	'wikiadoption-button-adopt' => 'Ano, chci přijmout {{SITENAME}}!',
+	'wikiadoption-adopt-inquiry' => 'Zjistěte více!',
+	'wikiadoption-know-more-header' => 'Chcete vědět více?',
 	'wikiadoption-adoption-successed' => 'Blahopřejeme! Pro tento okamžik jste správce této wiki.',
+	'wikiadoption-log-reason' => 'Automatické přijetí Wiki',
+	'wikiadoption-mail-first-subject' => 'Chvíli jsme vás zde neviděli',
+	'wikiadoption-mail-adoption-subject' => '#WIKINAME byla přijata',
 );
 
 /** German (Deutsch)

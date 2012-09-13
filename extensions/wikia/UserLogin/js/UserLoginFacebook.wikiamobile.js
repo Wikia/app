@@ -4,7 +4,7 @@ require(['track', 'events', 'querystring', 'toast'], function(track, events, qs,
 	/** @private **/
 
 	//init
-	$(function(){
+	$(function () {
 		var btn = document.getElementById('ssoFbBtn');
 		$.getResources(
 			['http://connect.facebook.net/en_US/all.js'],
@@ -19,7 +19,6 @@ require(['track', 'events', 'querystring', 'toast'], function(track, events, qs,
 				});
 
 				btn.addEventListener(events.click, function(){
-					track('facebook/connect/login');
 					UserLoginFacebook.login();
 				});
 				btn.disabled = false;
@@ -37,7 +36,10 @@ require(['track', 'events', 'querystring', 'toast'], function(track, events, qs,
 						// now check FB account (is it connected with Wikia account?)
 						$.nirvana.postJson('FacebookSignupController', 'index', null, function(resp){
 							if(resp.loggedIn){
-								track('facebook/connect/success');
+								track.event('login', track.CLICK, {
+									label: 'facebook',
+									value: 1
+								});
 
 								var reload = new qs(),
 									returnto = reload.getVal('returnto', (wgCanonicalSpecialPageName && (wgCanonicalSpecialPageName.match(/Userlogin|Userlogout/))) ? wgMainPageTitle : '');
@@ -51,14 +53,17 @@ require(['track', 'events', 'querystring', 'toast'], function(track, events, qs,
 								reload.goTo();
 
 							}else{
-								track('facebook/connect/fail');
+								track.event('login', track.CLICK, {
+									label: 'facebook',
+									value: 0
+								});
 								toast.show($.msg('wikiamobile-facebook-connect-fail'), {error: true});
 							}
 						});
 					}
 				},
-				{scope:'email'}
+				{scope: 'email'}
 			);
 		}
-	}
+	};
 });

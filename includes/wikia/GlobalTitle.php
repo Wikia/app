@@ -37,6 +37,8 @@ class GlobalTitle extends Title {
 	private $mLastEdit = false;
 	private $mExists = null;
 	private $mContent = false;
+	private $mIsRedirect = null;
+	private $mRedirectTarget = null;
 	private $mDbName = null;
 
 	/**
@@ -346,11 +348,80 @@ class GlobalTitle extends Title {
 	}
 
 	/**
-	 * @stub
-	 * @return Bool
+	 * Get redirect target
+	 *
+	 * @return GlobalTitle|false
+	 */
+	public function getRedirectTarget() {
+		$this->loadAll();
+
+		if ( !is_null( $this->mRedirectTarget ) ) {
+			return $this->mRedirectTarget;
+		}
+
+		$this->mRedirectTarget = false;
+		if( WikiFactory::isPublic($this->mCityId) ) {
+			$dbName = WikiFactory::IDtoDB($this->mCityId);
+
+			$dbr = wfGetDB( DB_SLAVE, array(), $dbName );
+
+			$id = $dbr->selectField(
+				array( 'page' ),
+				array( 'page_id' ),
+				array(
+					'page_title' => $this->mDbkeyform,
+					'page_namespace' => $this->mNamespace,
+				),
+				__METHOD__
+			);
+
+			if ( $id ) {
+				$row = $dbr->selectRow( 'redirect',
+					array( 'rd_namespace', 'rd_title', 'rd_fragment', 'rd_interwiki' ),
+					array( 'rd_from' => $id ),
+					__METHOD__
+				);
+
+				if ( $row ) {
+					$this->mRedirectTarget = GlobalTitle::newFromText($row->rd_title,$row->rd_namespace,$this->mCityId);
+				}
+			}
+		}
+
+		return $this->mRedirectTarget;
+	}
+
+	/**
+	 * Is this title a redirect?
+	 *
+	 * @return bool
 	 */
 	public function isRedirect() {
-		return false;
+		$this->loadAll();
+
+		if ( !is_null( $this->mIsRedirect ) ) {
+			return $this->mIsRedirect;
+		}
+
+		if( WikiFactory::isPublic($this->mCityId) ) {
+			$dbName = WikiFactory::IDtoDB($this->mCityId);
+
+			$dbr = wfGetDB( DB_SLAVE, array(), $dbName );
+
+			$this->mIsRedirect = (bool)$dbr->selectField(
+				array( 'page' ),
+				array( 'page_is_redirect' ),
+				array(
+					'page_title' => $this->mDbkeyform,
+					'page_namespace' => $this->mNamespace,
+				),
+				__METHOD__
+			);
+		} else {
+			$this->mIsRedirect = false;
+		}
+
+		return $this->mIsRedirect;
 	}
 
 	/*

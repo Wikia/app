@@ -342,7 +342,7 @@ class FollowHelper {
 	 */
 
 
-	static public function renderFollowPrefs($user, &$defaultPreferences) {
+	static public function renderFollowPrefs(User $user, &$defaultPreferences) {
 		global $wgUseRCPatrol, $wgEnableAPI, $wgJsMimeType, $wgExtensionsPath, $wgOut, $wgUser;
 		wfProfileIn(__METHOD__);
 

@@ -69,7 +69,7 @@ class DeleteBatchForm {
 	function showForm ($err = '') {
 		global $wgOut, $wgUser, $wgRequest ;
 
-		$token = htmlspecialchars( $wgUser->editToken() );
+		$token = htmlspecialchars( $wgUser->getEditToken() );
 		$titleObj = Title::makeTitle( NS_SPECIAL, 'deletebatch' );
 		$action = $titleObj->escapeLocalURL( "action=submit" ) ;
 
@@ -251,24 +251,22 @@ class DeleteBatchForm {
 
 		$db->begin ();
 		if( NS_MEDIA == $page->getNamespace () ) {
-               		$page = Title::makeTitle (NS_IMAGE, $page->getDBkey ());
-                }
+			$page = Title::makeTitle (NS_IMAGE, $page->getDBkey ());
+		}
 
-		/* this stuff goes like articleFromTitle in Wiki.php */
-        	if( $page->getNamespace () == NS_IMAGE ) {
-                	$art = new ImagePage ($page);
-			/*	this is absolutely required - creating a new ImagePage object does not automatically
-				provide it with image  */
-			$art->img = new Image( $art->mTitle );
+		/* this stuff goes like Article::newFromTitle() */
+		if( $page->getNamespace () == NS_IMAGE ) {
+			$art = new ImagePage ($page);
 		} else {
-                	$art = new Article ($page);
-        	}
+			$art = new Article ($page);
+		}
 
 		/* 	what is the generic reason for page deletion?
-                	something about the content, I guess...
+			something about the content, I guess...
 		*/
-        	$art->doDelete ($reason);
-        	$db->immediateCommit();
+		$art->doDelete ($reason);
+		$db->immediateCommit();
+
 		return true ;
 	}
 

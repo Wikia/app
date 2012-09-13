@@ -1,10 +1,12 @@
 package com.wikia.webdriver.PageObjects.PageObject;
 
-import java.lang.reflect.Method;
+import static org.testng.AssertJUnit.fail;
+
 import java.util.Date;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -18,7 +20,6 @@ import com.wikia.webdriver.Common.Core.CommonExpectedConditions;
 import com.wikia.webdriver.Common.Core.CommonFunctions;
 import com.wikia.webdriver.Common.Core.Global;
 import com.wikia.webdriver.Common.Logging.PageObjectLogging;
-import static org.testng.AssertJUnit.fail;
 
 /**
  * 
@@ -57,6 +58,8 @@ public class BasePageObject{
 	
 	@FindBy(css="form.WikiaSearch")
 	WebElement wikiaSearch_searchForm;
+	@FindBy(css="section.modalContent div.UserLoginModal form")
+	WebElement modalLoginForm;
 	
 	private By customizeToolbar_ToolsList = By.cssSelector("ul.tools li");
 	private By customizeToolbar_MyToolsList = By.cssSelector("ul[id='my-tools-menu'] a");
@@ -187,17 +190,43 @@ public class BasePageObject{
 		}
 	}
 	
-	public void clickRobot(WebElement pageElem)
+//	public void clickRobot(WebElement pageElem)
+//	{
+////		try
+////		{
+//			Point p = pageElem.getLocation();
+////			PageObjectLogging.log(p.toString(),p.toString(),p.toString());
+//			CommonFunctions.MoveCursorToElement(p);
+//			CommonFunctions.ClickElement();
+////		}
+////		catch(Exception e)
+////		{
+////			PageObjectLogging.log("clickRobot", e.toString(), false);			
+////		}
+//	}
+	
+	
+	protected void executeScript(String script)
 	{
-		try
-		{
-			Point p = pageElem.getLocation();
-			CommonFunctions.MoveCursorToElement(p);
-			CommonFunctions.ClickElement();
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		js.executeScript(script);
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		catch(Exception e)
-		{
-			PageObjectLogging.log("clickRobot", e.toString(), false);			
+	}
+	
+	protected void executeScript(String script, WebDriver driver)
+	{
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		js.executeScript(script);
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	
@@ -866,4 +895,10 @@ public class BasePageObject{
 		long timeCurrent = time.getTime();
 		return String.valueOf(timeCurrent);
 	} 
+	
+	public void verifyModalLogin()
+	{
+		waitForElementByElement(modalLoginForm);
+		PageObjectLogging.log("verifyModalLogin", "verify modal login form is displayed", true, driver);
+	}
 } 

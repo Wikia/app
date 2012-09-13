@@ -640,11 +640,13 @@ $messages['ckb'] = array(
 );
 
 /** Czech (česky)
+ * @author Chmee2
  * @author Jezevec
  * @author Vks
  */
 $messages['cs'] = array(
 	'createblogpage' => 'Vytvořit blog',
+	'createbloglistingpage' => 'Vytvořit výpis blogu',
 	'create-blog-spam' => 'Vypadá jako spam',
 	'create-blog-cant-edit' => 'Nelze editovat',
 	'create-blog-post-category' => 'Příspěvky do blogu',
@@ -670,21 +672,52 @@ $messages['cs'] = array(
 	'create-blog-updated' => 'Příspěvek do blogu byl vytvořen nebo změněn.',
 	'create-blog-listing-preview' => 'Náhled',
 	'create-blog-listing-sortby' => 'Řadit dle',
+	'create-blog-listing-sortby-date' => 'Nejnovější',
 	'create-blog-listing-sortby-author' => 'Autor',
 	'create-blog-listing-sortby-comments' => 'Počet komentářů',
+	'blog-defaulttitle' => 'Blogy',
+	'blog-readfullpost' => 'Čtěte více',
+	'blog-olderposts' => 'Starší příspěvky',
+	'blog-newerposts' => 'Novější příspěvky',
+	'blog-nbrcomments' => '{{PLURAL:$1|Jeden komentář|$1 komentáře}}',
+	'blog-nopostfound' => 'Nalezeny žádné příspěvky.',
+	'blog-writeone' => 'Napiš ho!',
 	'blog-added' => 'přidáno',
 	'blog-edited' => 'upraveno',
+	'blog-page' => 'Blog',
+	'blog-zero-comments' => 'Zatím žádné komentáře!',
 	'blog-comment-post' => 'Odeslat komentář',
 	'blog-comments' => 'Komentáře',
+	'blog-rc-comments' => 'Komentáře blogu',
+	'blog-comments-new' => 'Nový komentář v blogu',
+	'blog-comments-save' => 'Uložit komentář na blog',
 	'blog-comments-label' => 'Komentování',
+	'blog-voting-label' => 'Hlasování',
+	'blog-comments-dsc' => 'Nejnovější nejdříve',
+	'blog-comments-asc' => 'Nejnovější poslední',
+	'blog-comments-anonymous' => 'Anonymní uživatel',
+	'blog-comment-delete' => 'odstranit',
 	'blog-comment-hide' => 'skrýt',
 	'blog-comment-unhide' => 'odkrýt',
 	'blog-comment-history' => 'historie',
 	'blog-comment-edit' => 'upravit',
 	'blog-comment-error' => 'Komentář nemohl být uložen',
 	'blog-comment-cannot-add' => 'Nemůžete přidat komentář do blogu.',
+	'blog-avatar-preferences-title' => 'Ikona uživatele:',
+	'blog-page-rate' => 'Ohodnoťte tento článek:',
+	'blog-create-post-label' => 'Vytvořit položku blogu',
+	'blog-create-label' => 'Vytvoření článku na blogu',
+	'blog-create-next-label' => 'Vytvořit nový článek blogu',
 	'blog-refresh-label' => 'Obnovit',
+	'blog-fromsitename' => 'Z $1',
+	'blogs-reportproblem' => 'Odeslat zprávu o chybách',
+	'blogs-comment-hidden' => 'Komentář ukrytý.',
+	'right-blog-articles-edit' => 'Upravit článek',
+	'right-blog-articles-move' => 'Přesunout článek',
+	'blog-desc' => 'Články blogu',
 	'blog-comment-sending' => 'Odesílá se…',
+	'blog-by' => '$1 z $2',
+	'blogs-searchprofile' => 'Blogy',
 );
 
 /** German (Deutsch)
@@ -4231,6 +4264,7 @@ $messages['tly'] = array(
 	'blog-comment-hide' => 'нијо кардеј',
 	'blog-comment-unhide' => 'нишо дој',
 	'blog-comment-edit' => 'сәрост кардеј',
+	'blog-refresh-label' => 'Тожә кардеј',
 	'blog-comment-sending' => 'Вығандејдә…',
 );
 

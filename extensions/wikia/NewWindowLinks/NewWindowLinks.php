@@ -7,26 +7,26 @@
  * @date Friday, 30 December 2012 (created)
  * @date Friday, 25 May 2012 (MediaWiki 1.19 merge)
  */
- 
+
 /**
  * Usage:
- * 
+ *
  * general: {{ #NewWindowLink: linked resource | link text }}
- * 
+ *
  * local links: {{ #NewWindowLink: Special:Version | software and installed extensions }}
  * external links: {{ #NewWindowLink: http://mediawiki.org/ | MediaWiki }}
  * interwiki links: {{ #NewWindowLink: Wikipedia:MediaWiki | Wikipedia article about MediaWiki }}
  * mailto links: {{ #NewWindowLink: mailto:john@example.com | mail John }}
- * 
+ *
  * The second parameter - link text - is optional.  If not given, the link to the resource will be used as a link text.
- * 
+ *
  * general: {{ #NewWindowLink: linked resource }}
- * 
+ *
  * local links: {{ #NewWindowLink: Special:Version }}
  * external links: {{ #NewWindowLink: http://mediawiki.org/ }}
  * interwiki links: {{ #NewWindowLink: Wikipedia:MediaWiki }}
  * mailto links: {{ #NewWindowLink: mailto:john@example.com }}
- * 
+ *
  */
 
 /**
@@ -43,13 +43,13 @@ $wgExtensionCredits['parserhook'][] = array(
 );
 
 /**
- * Extension functions 
+ * Extension functions
  */
 
 /**
  * Creates a HTML link that will open in a new browser window or tab.
- * 
- * @param object $parser Parser being used
+ *
+ * @param Parser $parser Parser being used
  * @param string $target literal URI or a MediaWiki link for linked resource
  * @param string $label link text
  * @return string HTML
@@ -67,7 +67,7 @@ function efParserCreateLink( $parser, $target, $label = null ) {
     $attributes = array( 'target' => '_blank' );
 
     // WARNING: the order of the statements below does matter!
-    // 
+    //
     // Also, the Parser::insertStripItem is used to render the HTML inline.
     // See: http://www.mediawiki.org/wiki/Manual:Parser_functions#Parser_interface
 
@@ -100,11 +100,11 @@ function efParserCreateLink( $parser, $target, $label = null ) {
 
 /**
  * Registers a new parser function.
- * 
+ *
  * @param object $parser Parser being initialised
  * @return boolean
  */
-function efHookParserFirstCallInit( &$parser ) {
+function efHookParserFirstCallInit( Parser &$parser ) {
     // associate the "NewWindowLink" magic word with the NewWindowLinks::parserCreateLink method.
     $parser->setFunctionHook( 'NewWindowLink', 'efParserCreateLink' );
     // return true so the MediaWiki continues to load extensions.

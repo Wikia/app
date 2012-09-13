@@ -9,14 +9,13 @@ class BlogListingController extends WikiaController {
 	static function getResults(&$results) {
 		wfProfileIn(__METHOD__);
 
+		/* @var $wgLang Language */
 		global $wgLang;
 
 		// get message for "read more" link
 		$cutSign = wfMsg('blug-cut-sign');
 
 		foreach($results as &$result) {
-			$service = new PageStatsService($result['page']);
-
 			$result['likes'] = false;
 			$result['avatar'] = AvatarService::renderAvatar($result['username'], 48);
 			$result['userpage'] = AvatarService::getUrl($result['username']);
@@ -41,7 +40,6 @@ class BlogListingController extends WikiaController {
 	 */
 	static function renderBlogListing(&$html, $posts, $aOptions, $sPager = null) {
 		wfProfileIn(__METHOD__);
-		global $wgTitle, $wgStylePath;
 
 		// macbre: prevent PHP warnings and try to find the reason of them
 		if (!is_array($posts)) {

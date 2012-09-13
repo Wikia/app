@@ -8,9 +8,7 @@ class VideoHandlerHooks extends WikiaObject{
 		F::setInstance( __CLASS__, $this );
 	}
 
-
-	public function  WikiaVideoNewImagesBeforeQuery( $where ) {
-
+	public function  WikiaVideoNewImagesBeforeQuery( &$where ) {
 		$where[] = 'img_media_type != \'VIDEO\'';
 		$where[] = 'img_major_mime != \'video\'';
 		$where[] = 'img_media_type != \'swf\'';
@@ -22,6 +20,8 @@ class VideoHandlerHooks extends WikiaObject{
 	}
 
 	/**
+	 * @param Title $oTitle
+	 *
 	 * @return WikiaVideoPage if file is video
 	 */
 	public function onArticleFromTitle( &$oTitle, &$oArticle ){
@@ -36,7 +36,7 @@ class VideoHandlerHooks extends WikiaObject{
 		return true;
 	}
 
-	public function WikiaVideoFetchTemplateAndTitle( $text, $finalTitle ) {
+	public function WikiaVideoFetchTemplateAndTitle( &$text, $finalTitle ) {
 
 		global $wgContLang, $wgWikiaVideosFoundInTemplates;
 
@@ -51,7 +51,7 @@ class VideoHandlerHooks extends WikiaObject{
 		return true;
 	}
 
-	public function WikiaVideoParserBeforeStrip($parser, $text, $strip_state) {
+	public function WikiaVideoParserBeforeStrip($parser, &$text, $strip_state) {
 
 		global $wgWikiaVideoGalleryId, $wgWikiaVideoPlaceholderId, $wgRTEParserEnabled;
 
@@ -80,8 +80,11 @@ class VideoHandlerHooks extends WikiaObject{
 	}
 
 
-	/*
+	/**
 	 * Preserves video mime types. Needed to fix MW 1.16 bug
+	 *
+	 * @param WikiaLocalFileShared $oFile
+	 * @param WikiaLocalFileShared $oOldFile
 	 */
 	public function onFileRevertFormBeforeUpload( $oFile, $oOldFile ){
 
@@ -92,6 +95,11 @@ class VideoHandlerHooks extends WikiaObject{
 		return true;
 	}
 
+	/**
+	 * @param OutputPage $out
+	 * @param $skin
+	 * @return bool
+	 */
 	public function onBeforePageDisplay( $out, $skin ) {
 		wfProfileIn(__METHOD__);
 
@@ -106,10 +114,10 @@ class VideoHandlerHooks extends WikiaObject{
 	}
 
 	public function onSetupAfterCache() {
-		global	$wgLocalFileRepo, $wgUploadDirectory, $wgUploadBaseUrl,
+		global $wgUploadDirectory, $wgUploadBaseUrl,
 			$wgUploadPath, $wgHashedUploadDirectory,
 			$wgThumbnailScriptPath, $wgGenerateThumbnailOnParse,
-			$wgLocalFileRepo, $wgDeletedDirectory, $wgScriptPath, $wgScriptExtension;
+			$wgLocalFileRepo, $wgDeletedDirectory;
 
 		$wgLocalFileRepo = array(
 			'class' => 'WikiaLocalRepo',
@@ -129,19 +137,23 @@ class VideoHandlerHooks extends WikiaObject{
 		return true;
 	}
 
-	public function onLinkerMakeThumbLink2FileOriginalSize ( $file, $width ){
+	public function onLinkerMakeThumbLink2FileOriginalSize ( $file, &$width ){
 		if ( WikiaFileHelper::isVideoFile( $file ) ){
 			$width = WikiaFileHelper::maxWideoWidth;
 		};
 		return true;
 	}
 
+	/**
+	 * @param Parser $parser
+	 * @return bool
+	 */
 	public function initParserHook(&$parser) {
 		$parser->setHook('videogallery', array($parser, 'renderImageGallery'));
 		return true;
 	}
 
-	/*
+	/**
 	 *  hack for old format interwiki videos
 	 *  examples of input:
 	 *  {{:wikiavideo:Titanic 3-D Re-Release (1997) - Theatrical Trailer for Titanic 3D/width=220px&align=}}

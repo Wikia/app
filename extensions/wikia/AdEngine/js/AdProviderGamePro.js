@@ -1,41 +1,39 @@
-var AdProviderGamePro = my.Class(AdProviderAdEngine2, {
-	// core stuff, should be overwritten
-	name:'AdProviderGamePro',
-
-	fillInSlot: function(slot) {
-		this.log('fillInSlot', 5, slot);
+window.AdProviderGamePro = function(WikiaTracker, log, window, ghostwriter, document) {
+	function fillInSlot(slot) {
+		log('fillInSlot', 5, 'AdProviderGamePro');
+		log(slot, 5, 'AdProviderGamePro');
 
 		WikiaTracker.trackAdEvent('liftium.slot2', {'ga_category':'slot2/' + slot[1], 'ga_action':slot[0], 'ga_label':'gamepro'}, 'ga');
 
-		var url = this.getUrl(slot[0], slot[1]);
-		var self = this;
+		var url = getUrl(slot[0], slot[1]);
 		ghostwriter(
 			document.getElementById(slot[0]),
 			{
 				insertType: "append",
 				script: { src: url },
 				done: function() {
-					self.log('ghostwriter done', 5, [slot[0], url]);
+					log('ghostwriter done', 5, 'AdProviderGamePro');
+					log([slot[0], url], 5, 'AdProviderGamePro');
 					ghostwriter.flushloadhandlers();
 				}
 			}
 		);
-	},
+	}
 
-	// private stuff
-	ord: Math.round(Math.random() * 23456787654),
-	slotMap: {
+	var ord = Math.round(Math.random() * 23456787654);
+	var slotMap = {
 	   'HOME_TOP_LEADERBOARD': {'tile': 1, 'pos': "leadfull", 'dcopt': "ist"},
 	   'HOME_TOP_RIGHT_BOXAD': {'tile': 3, 'pos': "mpu"},
 	   'LEFT_SKYSCRAPER_2': {'tile': 2, 'pos': "sky"},
 	   'PREFOOTER_LEFT_BOXAD': {'tile': 4, 'pos': "mpu2"},
 	   'TOP_LEADERBOARD': {'tile': 1, 'pos': "leadfull", 'dcopt': "ist"},
 	   'TOP_RIGHT_BOXAD': {'tile': 3, 'pos': "mpu"}
-	},
+	};
 
 	// adapted for GP + simplified copy of AdConfig.DART.getUrl
-	getUrl: function(slotname, size) {
-		this.log('getUrl', 5, [slotname, size]);
+	function getUrl(slotname, size) {
+		log('getUrl', 5, 'AdProviderGamePro');
+		log([slotname, size], 5, 'AdProviderGamePro');
 
 		var url = 'http://' +
 			'ad-emea' +
@@ -43,20 +41,21 @@ var AdProviderGamePro = my.Class(AdProviderAdEngine2, {
 			'adj' + '/' +
 			'ow-wikia.com' + '/' + 'wka.' + window.cityShort + ';' +
 			's1=' + '_' + window.wgDBname + ';' +
-			'pos=' + this.slotMap[slotname].pos + ';' +
-			(window.wgDartCustomKeyValues ? this.rebuildKV(window.wgDartCustomKeyValues) + ';' : '' ) +
-			'tile=' + this.slotMap[slotname].tile + ';' +
-			(this.slotMap[slotname].dcopt ? 'dcopt=' + this.slotMap[slotname].dcopt + ';' : '') +
+			'pos=' + slotMap[slotname].pos + ';' +
+			(window.wgDartCustomKeyValues ? rebuildKV(window.wgDartCustomKeyValues) + ';' : '' ) +
+			'tile=' + slotMap[slotname].tile + ';' +
+			(slotMap[slotname].dcopt ? 'dcopt=' + slotMap[slotname].dcopt + ';' : '') +
 			'sz=' + size + ';' +
-			'ord=' + this.ord + '?';
+			'ord=' + ord + '?';
 
-		this.log(url, 7);
+		log(url, 7, 'AdProviderGamePro');
 		return url;
-	},
+	}
 
 	// TODO: cache it
-	rebuildKV: function(kv) {
-		this.log('rebuildKV', 5, kv);
+	function rebuildKV(kv) {
+		log('rebuildKV', 5, 'AdProviderGamePro');
+		log(kv, 5, 'AdProviderGamePro');
 
 		if (kv.indexOf(';') === -1) {
 			return kv;
@@ -77,9 +76,21 @@ var AdProviderGamePro = my.Class(AdProviderAdEngine2, {
 		}
 
 		out = out.substring(1);
-		this.log(out, 7);
+		log(out, 7, 'AdProviderGamePro');
 		return out;
 	}
-});
 
-var adProviderGamePro = new AdProviderGamePro;
+	var iface = {
+		name: 'GamePro',
+		fillInSlot: fillInSlot
+	};
+
+	// TODO: @mech rethink
+	// TODO: @rychu change tests
+	if (window.wgInsideUnitTest) {
+		iface.rebuildKV = rebuildKV;
+	}
+
+	return iface;
+
+};

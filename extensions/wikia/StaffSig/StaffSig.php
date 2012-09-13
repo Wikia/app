@@ -9,6 +9,10 @@
 //Avoid unstubbing $wgParser on setHook() too early on modern (1.12+) MW versions, as per r35980
 $wgHooks['ParserFirstCallInit'][] = 'wfSigSetup';
 
+/**
+ * @param Parser $parser
+ * @return bool
+ */
 function wfSigSetup(&$parser) {
 	$parser->setHook( 'staff', 'wfMakeStaffSignature' );
 	$parser->setHook( 'helper', 'wfMakeHelperSignature' );

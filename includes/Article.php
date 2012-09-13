@@ -1819,6 +1819,12 @@ class Article extends Page {
 	 *
 	 * @param $fname String Name of called method
 	 * @param $args Array Arguments to the method
+	 *
+	 * //Wikia Change (helping PHP Lint do its job)- Jakub Olek
+	 * @method Integer getId
+	 * @method Title getTitle
+	 * @method Bool exists
+	 * //Wikia Change end
 	 */
 	public function __call( $fname, $args ) {
 		if ( is_callable( array( $this->mPage, $fname ) ) ) {

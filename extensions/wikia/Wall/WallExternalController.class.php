@@ -348,9 +348,19 @@ class WallExternalController extends WikiaController {
 			$this->response->setVal('forcereload', true);
 			return true;
 		}
-		
-		$rawtext = $mw->getRawText();
-		$this->response->setVal('htmlorwikitext', $this->getConvertedContent($rawtext));
+
+		$text = $mw->getRawText();
+
+		//WallMessage getRawText returns wikitext
+		//so convert it to richtext only if needed as
+		//RTE::HtmlToWikitext will fail if wikitext is passed as content
+		//(BugId: 32591)
+		$convertToFormat = $this->request->getVal('convertToFormat', '');
+		if($convertToFormat == 'richtext'){
+			$text = $this->getConvertedContent($text);
+		}
+
+		$this->response->setVal('htmlorwikitext', $text);
 		$this->response->setVal('status', true);
 		
 		return true;

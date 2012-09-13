@@ -391,3 +391,11 @@ body {
 .plb-edit-page-make-layout {
 	display: none;
 }
+
+#EditPageHeader h1 {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 300px;
+
+}

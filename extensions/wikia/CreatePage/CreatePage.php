@@ -58,7 +58,7 @@ function wfCreatePageInit() {
 }
 
 // use different code for Special:CreatePage when using monobook (BugId:6601)
-function wfCreatePageOnBeforeInitialize(&$title, &$article, &$output, &$user, $request, $mediaWiki) {
+function wfCreatePageOnBeforeInitialize(&$title, &$article, &$output, User &$user, $request, $mediaWiki) {
 	global $wgAutoloadClasses;
 
 	// this line causes initialization of the skin

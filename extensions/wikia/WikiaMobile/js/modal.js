@@ -5,7 +5,7 @@
  * @author Jakub "Student" Olek
  */
 
-define('modal', ['loader', 'track', 'events', 'ads'], function modal(loader, track, events, ads){
+define('modal', ['loader', 'events', 'ads'], function modal(loader, events, ads){
 	var d = document,
 		w = window,
 		opened,
@@ -138,7 +138,7 @@ define('modal', ['loader', 'track', 'events', 'ads'], function modal(loader, tra
 		//handle hiding ui of modal on click
 		content.addEventListener('click', onContentClick);
 
-		track('modal/open');
+		//track('modal/open');
 		opened = true;
 	}
 
@@ -156,7 +156,7 @@ define('modal', ['loader', 'track', 'events', 'ads'], function modal(loader, tra
 				onClose();
 			}
 
-			track('modal/close');
+			//track('modal/close');
 			opened = false;
 
 			//remove event listners since they are not needed outside modal

@@ -558,6 +558,7 @@ $messages['ckb'] = array(
 );
 
 /** Czech (česky)
+ * @author Chmee2
  * @author Jezevec
  * @author Jkjk
  * @author Reaperman
@@ -593,6 +594,7 @@ $messages['cs'] = array(
 	'autocreatewiki-info-email-address' => 'Vaše e-mailová adresa se nikdy nikomu na Wikia nezobrazuje.',
 	'autocreatewiki-info-birthdate' => 'Wikia vyžaduje od všech uživatelů datum jejich narození z bezpečnostních důvodu a jako prostředek k zachování integrity webu v souladu se zákony.',
 	'autocreatewiki-info-blurry-word' => 'Z důvodu ochrany před strojovým zakládáním účtů napiště slovo, které vidíte rozmazané v tomto poli.',
+	'autocreatewiki-title-template' => '$1 Wiki',
 	'autocreatewiki-empty-field' => 'Vyplňte, prosím, toto pole.',
 	'autocreatewiki-bad-name' => 'Název nesmí obsahovat speciální znaky (jako $ nebo @) a musí to být jedno slovo malými písmeny bez mezer.',
 	'autocreatewiki-invalid-wikiname' => 'Název nesmí obsahovat speciální znaky (jako $ nebo @) a nemůže být prázdný.',
@@ -603,6 +605,7 @@ $messages['cs'] = array(
 	'autocreatewiki-invalid-username' => 'Toto uživatelské jméno je neplatné.',
 	'autocreatewiki-busy-username' => 'Toto uživatelské jméno je již obsazené.',
 	'autocreatewiki-blocked-username' => 'Nemůžete vytvořit účet.',
+	'autocreatewiki-user-notloggedin' => 'Váš účet byl vytvořen, ale nejste přihlášeni.',
 	'autocreatewiki-empty-language' => 'Prosím, vyberte jazyk pro wiki.',
 	'autocreatewiki-empty-category' => 'Prosím, vyberte kategorii.',
 	'autocreatewiki-empty-wikiname' => 'Jméno wiki nemůže být prázdné.',
@@ -630,9 +633,16 @@ Prosím, vyberte hodnotu ze seznamu.',
 	'autocreatewiki-step5' => 'Nastavování výchozích proměnných v databázi ...',
 	'autocreatewiki-step6' => 'Vytváření tabulek v databázi ...',
 	'autocreatewiki-step11' => 'Odesílání e-mailu uživateli ...',
+	'autocreatewiki-redirect' => 'Přesměrování na novou wiki: $1  ...',
 	'autocreatewiki-congratulation' => 'Blahopřejeme!',
 	'autocreatewiki-welcometalk-log' => 'Uvítací zpráva',
+	'autocreatewiki-regex-error-comment' => 'použito na wiki $1 (celý text: $2)',
 	'autocreatewiki-step2-error' => 'Databáze existuje!',
+	'autocreatewiki-step3-error' => 'Nelze nastavit výchozí informace v databázi!',
+	'autocreatewiki-step6-error' => 'Nelze nastavit výchozí tabulky v databázi!',
+	'autocreatewiki-protect-reason' => 'Součást oficiálního rozhraní',
+	'autocreatewiki-welcomesubject' => '$1 bylo vytvořeno!',
+	'newwikis' => 'Nová wiki',
 	'autocreatewiki-subname-answers' => 'Odpovědi',
 );
 

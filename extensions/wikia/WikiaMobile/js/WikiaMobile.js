@@ -2,23 +2,24 @@
 //needs to run ASAP (before onload actually happens)
 //so it's processed separately from the rest
 //to avoid delays
-(function(w){
-	var onload = function() {
-		require(['lazyload', 'sections'], function(lazyLoad, sections){
+/* global $ */
+(function (w) {
+	'use strict';
+	var onload = function onload() {
+		require(['lazyload', 'sections'], function (lazyLoad, sections) {
 			var processedSections = {};
 
 			lazyLoad(document.getElementsByClassName('noSect'));
 
 			sections.addEventListener('open', function () {
-				var self = this,
-					id = self.getAttribute('data-index');
+				var id = this.getAttribute('data-index');
 
 				if (id && !processedSections[id]) {
-					lazyLoad(self.getElementsByClassName('lazy'));
+					lazyLoad(this.getElementsByClassName('lazy'));
 
 					processedSections[id] = true;
 				}
-			}, true);
+			});
 		});
 	};
 
@@ -26,45 +27,60 @@
 })(window);
 
 //init
-$(function(){
-	require(['layout', 'querystring', 'topbar', 'toc', 'events', 'share', 'popover', 'cookies'],
-		function(layout, qs, topbar, toc, events, share, popover, cookies){
+$(function () {
+	'use strict';
+	require(['layout', 'querystring', 'topbar', 'toc', 'events', 'share', 'popover', 'cookies', 'track'],
+		function (layout, qs, topbar, toc, events, share, popover, cookies, track) {
 			var d = document,
-				clickEvent = events.click;
+				clickEvent = events.click,
+				//add chevrons to elements that need it
+				addChevs = d.getElementsByClassName('addChev'),
+				i = addChevs.length,
+				//used to handle close tracking on Read More section
+				relPage = d.getElementById('wkRelPag'),
+				//used to add sharing menu to a page
+				wkShrPag = d.getElementById('wkShrPag'),
+				wkFtr = d.getElementById('wkFtr'),
+				topBar = d.getElementById('wkTopBar'),
+				fllSite = d.getElementById('wkFllSite'),
+				categoryLinks = d.getElementById('catlinks'),
+				wordmark;
+
+			while (i--) {
+				addChevs[i].insertAdjacentHTML('beforeend', '<span class=chev></span>');
+			}
 
 			toc.init();
 
-			//TODO: optimize selectors caching for this file
-			/*body.delegate('#wkMainCnt a', clickEvent, function(){
-			 track('link/content');
-			 });
+			if (relPage) {
+				relPage.addEventListener(clickEvent, function (ev) {
+					var t = ev.target;
+					ev.preventDefault();
 
-			 $(d.getElementById('wkRelPag')).delegate('a', clickEvent, function(){
-			 track('link/related-page');
-			 });
-
-			 $(d.getElementById('wkArtCat')).delegate('a', clickEvent, function(){
-			 track('link/category');
-			 });*/
-
-			d.getElementById('wkFllSite').addEventListener(clickEvent, function(event){
-				event.preventDefault();
-				//track('link/fullsite');
-				cookies.set('mobilefullsite', 'true');
-
-				var url = new qs();
-				url.setVal('useskin', this.getAttribute('data-skin'));
-				url.addCb();
-				url.goTo();
-			});
-
-			//add chevrons to elements that need it
-			var addChevs = d.getElementsByClassName('addChev'),
-				i = addChevs.length;
-
-			while(i--){
-				addChevs[i].insertAdjacentHTML('beforeend', '<span class=chev></span>');
+					if(t.tagName == 'A') {
+						track.event('read-more', track.IMAGE_LINK, {
+							href: t.href
+						})
+					} else {
+						if (relPage.children[0].className.indexOf('open') > -1) {
+							track.event('read-more', track.CLICK, {label: 'close'});
+						}
+					}
+				});
 			}
+
+			if (fllSite) {
+				fllSite.addEventListener(clickEvent, function(event){
+					event.preventDefault();
+					cookies.set('mobilefullsite', 'true');
+
+					var url = new qs();
+					url.setVal('useskin', this.getAttribute('data-skin'));
+					url.addCb();
+					url.goTo();
+				});
+			}
+
 
 			//add curtain
 			d.body.insertAdjacentHTML('beforeend', '<div id=wkCurtain></div>');
@@ -75,19 +91,56 @@ $(function(){
 				topbar.closeDropDown();
 			});
 
-			var wkShrPag = d.getElementById('wkShrPag');
-
-			if(wkShrPag){
+			if (wkShrPag) {
 				popover({
 					on: wkShrPag,
-					create: share(),
-					open: function(){
-						//track('share/page/open');
+					create: function(cnt){
+						cnt.addEventListener(clickEvent, function(){
+							track.event('share', track.CLICK, 'page');
+						}, true);
+						return share()(cnt);
 					},
-					close: function(){
-						//track('share/page/close');
+					open: function () {
+						track.event('share', track.CLICK, {label: 'open'});
+					},
+					close: function (ev) {
+						if(ev.target.tagName != 'A') {track.event('share', track.CLICK, {label: 'close'});}
 					},
 					style: 'right:0;'
+				});
+			}
+
+			if (wkFtr) {
+				wkFtr.addEventListener(clickEvent, function (ev) {
+					var t = ev.target;
+					if (t.tagName == 'A') {
+						track.event('footer', track.TEXT_LINK, {
+							label: 'link',
+							href: t.href
+						});
+					}
+				});
+			}
+
+			if (topBar) {
+				if (wordmark = topBar.children[0]) {
+					wordmark.addEventListener(clickEvent, function () {
+						track.event('wordmark', track.CLICK, {
+							href: this.href
+						});
+					});
+				}
+			}
+
+			if (categoryLinks) {
+				categoryLinks.addEventListener(clickEvent, function (ev) {
+					var t = ev.target;
+					if (t.tagName == 'A') {
+						track.event('category', track.TEXT_LINK, {
+							label: 'article',
+							href: t.href
+						});
+					}
 				});
 			}
 		}

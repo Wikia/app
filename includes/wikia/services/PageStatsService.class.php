@@ -13,6 +13,11 @@ class PageStatsService extends Service {
 		$this->pageId = intval($pageId);
 	}
 
+	/**
+	 * @static
+	 * @param Title $title
+	 * @return PageStatsService
+	 */
 	public static function newFromTitle( $title ) {
 		$service = new self( $title->getArticleId() );
 		$service->mTitle = $title;
@@ -29,6 +34,8 @@ class PageStatsService extends Service {
 
 	/**
 	 * Refresh cache when article is edited
+	 *
+	 * @param WikiPage $article
 	 */
 	static function onArticleSaveComplete(&$article, &$user, $text, $summary,
 		$minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {

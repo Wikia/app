@@ -26,7 +26,7 @@ $messages['ar'] = array(
 	'wikiawidget' => 'خاصيات ويكيا',
 );
 
-/** Araucanian (mapudungun)
+/** Mapuche (mapudungun)
  * @author Kaniw
  */
 $messages['arn'] = array(

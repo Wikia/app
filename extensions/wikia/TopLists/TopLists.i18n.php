@@ -596,6 +596,7 @@ Puedes <a href="$4">cancelar</a>  tu subscripción de los cambios a la lista.',
 	'toplists-msg-fb-OnRateArticle-short' => 'ha votado en una lista en $WIKINAME!',
 	'toplists-create-heading' => '<em>¡Nuevo!</em> Crea tus 10 mejores',
 	'toplists-create-button-msg' => 'Crear una lista',
+	'toplists-oasis-only' => 'La creación y edición de las listas "Top 10" no está disponible en Monobook. Si deseas utilizar esta función, cambia tus preferencias a la piel Wikia.',
 );
 
 /** Persian (فارسی)
@@ -698,6 +699,7 @@ Voit <a href="$4">perua päivitykset</a> luettelon muutoksista.',
 );
 
 /** French (français)
+ * @author Boniface
  * @author Gomoko
  * @author Jean-Frédéric
  * @author McDutchie
@@ -788,6 +790,7 @@ Vous pouvez <a href="$4">vous désinscrire</a> des modifications de cette liste.
 	'toplists-msg-fb-OnRateArticle-short' => 'a voté sur une liste de top 10 sur $WIKINAME !',
 	'toplists-create-heading' => '<em>Nouveau !</em> Créez votre propre top dix',
 	'toplists-create-button-msg' => 'Créer une liste',
+	'toplists-oasis-only' => "Créer et modifier les listes Top 10 n'est pas possible dans Monobook. Si vous désirez utiliser cette fonctionnalité, changez plutôt votre préférence pour l'apparence Wikia.",
 );
 
 /** Galician (galego)
@@ -877,6 +880,7 @@ Pode <a href="$4">cancelar a subscrición</a> dos cambios feitos na lista.',
 	'toplists-msg-fb-OnRateArticle-short' => 'votou nunha lista dos 10 mellores en $WIKINAME!',
 	'toplists-create-heading' => '<em>Novo!</em> Cree a súa propia lista dos 10 mellores',
 	'toplists-create-button-msg' => 'Crear unha lista',
+	'toplists-oasis-only' => 'A creación e edición das listas dos 10 mellores non está dispoñible en Monobook. Se quere facer uso desta característica, cambie á aparencia de Wikia nas preferencias.',
 );
 
 /** Hungarian (magyar)
@@ -1250,6 +1254,7 @@ $messages['mk'] = array(
 	'toplists-msg-fb-OnRateArticle-short' => 'гласаше на списокот на 10 најкотирани на $WIKINAME!',
 	'toplists-create-heading' => '<em>Ново!</em> Создајте свои „10 најкотирани“',
 	'toplists-create-button-msg' => 'Создај список',
+	'toplists-oasis-only' => 'Создавањето на списоци на 10 предводници не е достапно во рувото „Монобук“. Оваа функција работи само со рувото „Викија“.',
 );
 
 /** Malay (Bahasa Melayu)
@@ -1338,6 +1343,7 @@ Anda boleh <a href="$4">berhenti melanggan</a> perubahan dalam senarai.',
 	'toplists-msg-fb-OnRateArticle-short' => 'telah mengundi pada senarai 10 Teratas di $WIKINAME!',
 	'toplists-create-heading' => '<em>Baru!</em> Buatlah Sepuluh Teratas Anda Sendiri',
 	'toplists-create-button-msg' => 'Cipta senarai',
+	'toplists-oasis-only' => 'Kulit Monobook tidak boleh dipakai untuk membuat dan menyunting senarai 10 Teratas. Jika anda ingin menggunakan ciri ini, sila tukar kepada kulit Wikia.',
 );
 
 /** Burmese (မြန်မာဘာသာ)
@@ -1438,6 +1444,7 @@ Du kan <a href="$4">slette abbonementet</a> på endringer i listen.',
 	'toplists-msg-fb-OnRateArticle-short' => 'har stemt på en Topp 10-liste på $WIKINAME!',
 	'toplists-create-heading' => '<em>Nyhet!</em> Lag din egen Topp ti',
 	'toplists-create-button-msg' => 'Opprett en liste',
+	'toplists-oasis-only' => 'Oppretting og redigering av topp 10-lister er ikke tilgjengelig for Monobook. Hvis du ønsker å benytte deg av denne funksjonen, vennligst bytt over til Wikia-utseendet i innstillingene dine.',
 );
 
 /** Dutch (Nederlands)
@@ -1639,6 +1646,7 @@ Możesz <a href="$4">anulować subskrypcję</a> zmian na liście.',
 	'toplists-msg-fb-OnRateArticle-short' => 'zagłosował(a) na liście Top 10 na $WIKINAME!',
 	'toplists-create-heading' => '<em>Nowość!</em> Utwórz własną Listę Top 10',
 	'toplists-create-button-msg' => 'Utwórz listę',
+	'toplists-oasis-only' => 'Tworzenie i edytowanie list Top 10 nie jest dostępne w Monobooku. Jeśli chcesz korzystać z tej funkcjonalności, zmień skórkę na Wikia w swoich preferencjach.',
 );
 
 /** Piedmontese (Piemontèis)
@@ -2099,6 +2107,7 @@ $messages['te'] = array(
 
 /** Tagalog (Tagalog)
  * @author AnakngAraw
+ * @author TheSleepyhollow02
  */
 $messages['tl'] = array(
 	'toplists-desc' => 'Mga talaan ng pinakamatataas na 10',
@@ -2183,6 +2192,7 @@ Tumungo sa Wikia upang suriin ang mga pagbabago! $1
 	'toplists-msg-fb-OnRateArticle-short' => 'ay bumoto sa isang talaan ng Pinakamataas na 10 sa $WIKINAME!',
 	'toplists-create-heading' => '<em>Bago!</em> Lumikha Ng Sarili Mong Nangungunang Sampu',
 	'toplists-create-button-msg' => 'Lumikha ng isang talaan',
+	'toplists-oasis-only' => 'Ang paggawa at pagmamatnugot ng nangungunang 10 listahan ay hindi maari sa Monobook. Kung gusto mo na magamit ang katangian na ito, manyaring ilipat ang iyong mga nais sa pabalat ng Wikia.',
 );
 
 /** Ukrainian (українська)

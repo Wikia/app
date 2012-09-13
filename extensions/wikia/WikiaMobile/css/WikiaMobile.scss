@@ -1,5 +1,5 @@
 //dependencies
-@import "variables";
+@import "variables.scss";
 @import "main_page";
 @import "infobox";
 @import "sections";
@@ -73,6 +73,8 @@ body {
 		float: left;
 		max-width: 100%;
 		margin: 0;
+		//default 25px looks cramped
+		line-height: 30px;
 	}
 
 	.wkShr{

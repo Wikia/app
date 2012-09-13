@@ -1417,7 +1417,8 @@ class WikiaPhotoGallery extends ImageGallery {
 			//load WikiaMobile resources if needed using JSSnippets filtering mechanism
 			$html .= F::build('JSSnippets')->addToStack(
 				array(
-					'wikiaphotogallery_slider_scss_wikiamobile'
+					'wikiaphotogallery_slider_scss_wikiamobile',
+					'wikiaphotogallery_slider_js_wikiamobile'
 				)
 			);
 		}

@@ -27,6 +27,10 @@ $wgExtensionCredits['parserhook'][] = array(
 $wgExtensionMessagesFiles['WikiaIrcGateway'] = dirname( __FILE__ ) . '/WikiaIrcGateway.i18n.php';
 $wgHooks['ParserFirstCallInit'][] = "wfWikiaIrcGateway";
 
+/**
+ * @param Parser $parser
+ * @return bool
+ */
 function wfWikiaIrcGateway( $parser ) {
 	$parser->setHook( "irclogin", "printWikiaIrcGatewayLoginForm" );
 	return true;

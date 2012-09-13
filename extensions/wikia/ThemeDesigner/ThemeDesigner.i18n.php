@@ -457,7 +457,7 @@ $messages['de'] = array(
  */
 $messages['diq'] = array(
 	'themedesigner-or' => 'ya na',
-	'themedesigner-page' => 'Pele',
+	'themedesigner-page' => 'Per',
 	'themedesigner-color' => 'dawte',
 	'themedesigner-graphic' => 'grafik',
 	'themedesigner-buttons' => 'makiy',
@@ -1846,6 +1846,13 @@ $messages['tl'] = array(
 	'themedesigner-manual-upload-error' => 'Gamitin ang Tagapagdisenyo ng Tema upang makapagkargang papaitaas ng marka ng salita o panlikuran ng wiki',
 	'themedesigner-favicon-heading' => 'Favicon',
 	'themedesigner-wodmark-preview' => 'Paunang tingin',
+);
+
+/** толышә зывон (толышә зывон)
+ * @author Erdemaslancan
+ */
+$messages['tly'] = array(
+	'themedesigner-page' => 'Сәһифә',
 );
 
 /** Ukrainian (українська)

@@ -31,19 +31,23 @@ $wgHooks['MakeGlobalVariablesScript'][] = 'AssetsManager::onMakeGlobalVariablesS
 $wgHooks['UserLoadFromSession'][] = 'AssetsManagerClearCookie';
 $wgHooks['UserGetRights'][] = 'onUserGetRights';
 
-/*
- * Add read right to all am reqest. 
- * That is solving problems with Loading Assets  
+/**
+ * Add read right to all am reqest.
+ * That is solving problems with Loading Assets
  */
-
 function onUserGetRights( $user, &$aRights ) {
 	global $wgRequest;
 	if ( $wgRequest->getVal('action') === 'ajax' && $wgRequest->getVal('rs') === 'AssetsManagerEntryPoint' ) {
-		$aRights[] = 'read';	
+		$aRights[] = 'read';
 	}
 	return true;
 }
 
+/**
+ * @param User $user
+ * @param $result
+ * @return bool
+ */
 function AssetsManagerClearCookie( $user, &$result ) {
 	global $wgRequest;
 	if ( $wgRequest->getVal('action') === 'ajax' && $wgRequest->getVal('rs') === 'AssetsManagerEntryPoint'

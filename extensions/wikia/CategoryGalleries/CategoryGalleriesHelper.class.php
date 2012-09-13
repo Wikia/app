@@ -42,7 +42,7 @@
 		 */
 		static public function setupScripts() {
 			if (!self::$initialized) {
-				global $wgOut, $wgExtensionsPath;
+				global $wgOut;
 				$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/CategoryGalleries/css/CategoryGalleries.scss'));
 				$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/CategoryGalleries/css/CategoryGalleries.IE.scss'),
 					'', /*condition*/ 'lte IE 8' );
@@ -82,28 +82,6 @@
 				self::$categoryPage = null;
 				self::$categoryProcessed = false;
 			}
-			return true;
-		}
-
-		/**
-		 * Hook entry for old method of injecting HTML output
-		 * @deprecated
-		 */
-		static public function onCategoryViewerAddPage( $viewer, $title, $row ) {
-			/*
-			if (self::$categoryPage && !self::$categoryProcessed) {
-				self::$categoryProcessed = true;
-
-				$gallery = new CategoryGallery(self::$categoryPage);
-				$output = $gallery->render();
-
-				if (!empty($output)) {
-					global $wgOut;
-					self::setupScripts();
-					$wgOut->addHTML($output);
-				}
-			}
-			*/
 			return true;
 		}
 

@@ -5,6 +5,7 @@ class AccountCreationTrackerController extends WikiaSpecialPageController {
 	const TRACKING_COOKIE_TTL = 365; // in days
 	const CLOSE_WIKI_REASON = 'wiki closed via AccountTracker';
 
+	/* @var $tracker AccountCreationTracker */
 	protected $tracker = null;
 
 	public function __construct() {
@@ -15,7 +16,7 @@ class AccountCreationTrackerController extends WikiaSpecialPageController {
 
 	public function index() {
 		wfProfileIn( __METHOD__ );
-		
+
 		if( !$this->wg->User->isAllowed( 'accounttracker' ) ) {
 			$this->displayRestrictionError($this->user);
 			$this->skipRendering();
@@ -73,13 +74,13 @@ class AccountCreationTrackerController extends WikiaSpecialPageController {
 		} else {
 			$this->setVal( 'wikis_created', 0 );
 		}
-		
+
 		wfProfileOut( __METHOD__ );
 	}
 
 	public function actionBlockAccountGroup( $groupId ) {
 		wfProfileIn( __METHOD__ );
-		
+
 		if ( !$this->wg->User->isAllowed( 'phalanx' ) ) {
 			$this->displayRestrictionError($this->user);
 			$this->skipRendering();

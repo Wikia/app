@@ -64,6 +64,11 @@ function wfSetWikiaNewtalk( &$article ) {
 	return false;
 }
 
+/**
+ * @param User $user
+ * @param $talks
+ * @return bool
+ */
 function wfGetWikiaNewtalk( &$user, &$talks ) {
 	global $wgMemc, $wgWikiaNewtalkExpiry, $wgExternalSharedDB;
 

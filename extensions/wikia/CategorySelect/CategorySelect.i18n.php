@@ -275,11 +275,12 @@ $messages['de-formal'] = array(
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
+ * @author Mirzali
  */
 $messages['diq'] = array(
 	'categoryselect-code-view' => 'Kodi bıvin',
 	'categoryselect-button-save' => 'Star ke',
-	'categoryselect-button-cancel' => 'Bıterkne',
+	'categoryselect-button-cancel' => 'Bıtexelne',
 );
 
 /** Greek (Ελληνικά)

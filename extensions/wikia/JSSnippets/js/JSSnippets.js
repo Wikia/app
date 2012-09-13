@@ -29,7 +29,7 @@ var JSSnippets = (function(){
 
 		for(x = 0; x < origLen; x++){
 			found = undefined;
-			elm = (origArr[x].url ? origArr[x].url : origArr[x]);
+			elm = origArr[x].url || origArr[x];
 
 			for(y = 0, l = newArr.length; y < l; y++){
 				if(elm === (newArr[y].url ? newArr[y].url : newArr[y])){
@@ -63,7 +63,7 @@ var JSSnippets = (function(){
 			var dependencies = [],
 				callbacks = {},
 				options = {},
-				debugMode = window.mw ? mw.config.get('debug') : debug,
+				debugMode = window.mw ? mw.config.get('debug') : window.debug,
 				entry,
 				dependency,
 				ext,

@@ -23,7 +23,7 @@ class ImageServing {
 	/**
 	 * @var $articlesByNS array
 	 */
-	private $articlesByNS;
+	public $articlesByNS;
 	/**
 	 * @var $imageServingDrivers ImageServingDriverBase
 	 */

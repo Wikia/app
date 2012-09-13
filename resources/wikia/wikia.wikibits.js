@@ -25,7 +25,7 @@
  * @returns {Array} An array of DOM nodes used for injection.
  */
 var importArticle = (function() {
-	var baseUri = mw.config.get( 'wgLoadScript' ) + '?=',
+	var baseUri = mw.config.get( 'wgLoadScript' ) + '?',
 		defaults = {
 			debug: mw.config.get( 'debug' ),
 			lang: mw.config.get( 'wgUserLanguage' ),

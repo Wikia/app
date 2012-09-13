@@ -70,7 +70,7 @@ class NotificationsController extends WikiaController {
 		self::addNotification('test test test test test test test test test test test test test test test test test test test test');
 		self::addNotification('new talk page', array(), self::NOTIFICATION_TALK_PAGE_MESSAGE);
 		self::addNotification('test test <a href="#">test</a> test', array(), self::NOTIFICATION_COMMUNITY_MESSAGE);
-		self::addNotification('test test test test test <details>test <a href="#">test</a> test</details>', array('points' => 10, 'picture' => '', 'name' => 'awesome'), self::NOTIFICATION_NEW_ACHIEVEMENTS_BADGE);
+		self::addNotification('test test test test test <details>test <a href="#">test</a> test</details>', array('points' => 10, 'picture' => '', 'name' => 'foo bar'), self::NOTIFICATION_NEW_ACHIEVEMENTS_BADGE);
 		self::addNotification('custom notifiation', array(
 			'name' => 'foo-bar',
 			'dismissUrl' => '/index.php?action=test',
@@ -183,6 +183,9 @@ class NotificationsController extends WikiaController {
 
 	/**
 	 * Handle confirmations when the page is moved
+	 *
+	 * @param $ot Title
+	 * @param $nt Title
 	 */
 	public static function addPageMovedConfirmation(&$form, &$ot, &$nt) {
 		wfProfileIn(__METHOD__);
@@ -210,6 +213,8 @@ class NotificationsController extends WikiaController {
 
 	/**
 	 * Handle confirmations when page is deleted
+	 *
+	 * @param WikiPage $article
 	 */
 	public static function addPageDeletedConfirmation(&$article, &$user, $reason, $articleId) {
 		wfProfileIn(__METHOD__);
@@ -239,6 +244,8 @@ class NotificationsController extends WikiaController {
 
 	/**
 	 * Handle confirmations when page is undeleted
+	 *
+	 * @param $title Title
 	 */
 	public static function addPageUndeletedConfirmation($title, $create) {
 		wfProfileIn(__METHOD__);
@@ -383,6 +390,9 @@ class NotificationsController extends WikiaController {
 
 	/**
 	 * Handle notifications about new badges
+	 *
+	 * @param $user User
+	 * @param $badge AchBadge
 	 */
 	public static function addBadgeNotification($user, $badge, &$html) {
 		wfProfileIn(__METHOD__);

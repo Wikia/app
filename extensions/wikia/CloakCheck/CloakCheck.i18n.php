@@ -97,6 +97,21 @@ $messages['br'] = array(
 	'cloakcheck-process-edits-no' => "N'eus ket trawalc'h a zegasadennoù gant an implijer-mañ.",
 );
 
+/** Czech (česky)
+ * @author Chmee2
+ */
+$messages['cs'] = array(
+	'cloakcheck-form-username' => 'Uživatelské jméno:',
+	'cloakcheck-process-notexist' => 'Uživatelské jméno neexistuje.',
+	'cloakcheck-process-username' => 'Uživatelské jméno:$1',
+	'cloakcheck-process-accountage-yes' => 'Účet je aktivní dostatečně dlouho.',
+	'cloakcheck-process-accountage-no' => 'Účet je příliš nový.',
+	'cloakcheck-process-emailconf-yes' => 'E-mailová adresa byla potvrzena.',
+	'cloakcheck-process-emailconf-no' => 'E-mailová adresa nebyla potvrzena.',
+	'cloakcheck-process-edits-yes' => 'Uživatel má dostatek editací.',
+	'cloakcheck-process-edits-no' => 'Uživatel nemá dostatek editací.',
+);
+
 /** German (Deutsch)
  * @author Diebuche
  * @author George Animal

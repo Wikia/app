@@ -25,7 +25,7 @@ $wgExtensionCredits['specialpage'][] = array(
 );
 
 $wgHooks['wgQueryPages'][] = 'wfSetupNewWikis';
-$wgExtensionFunctions[] = 'wfSetupNewWikis';
+
 #--- messages file
 $wgExtensionMessagesFiles["Newwikis"] = dirname(__FILE__) . '/AutoCreateWiki.i18n.php';
 
@@ -41,7 +41,11 @@ $wgAvailableRights[] = 'newwikislist';
 $wgGroupPermissions['*']['newwikislist'] = false;
 $wgGroupPermissions['staff']['newwikislist'] = true;
 
-function wfSetupNewWikis( $queryPages = array() ) {
+/**
+ * @param array $queryPages
+ * @return bool
+ */
+function wfSetupNewWikis( &$queryPages ) {
     $queryPages[] = array( 'NewWikisPage', 'Newwikis');
     return true;
 }

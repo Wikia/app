@@ -387,6 +387,23 @@ $messages['af'] = array(
 	'founderemails-email-3-day-heading' => 'Hallo $USERNAME!',
 );
 
+/** Arabic (العربية)
+ * @author Mutarjem horr
+ */
+$messages['ar'] = array(
+	'founderemails-email-first-edit-greeting' => 'مرحباً $USERNAME,',
+	'founderemails-email-first-edit-signature' => 'طاقم ويكيا',
+	'founderemails-email-general-edit-greeting' => 'مرحباً $USERNAME,',
+	'founderemails-email-anon-edit-greeting' => 'مرحباً $USERNAME,',
+	'founderemails-email-anon-edit-signature' => 'طاقم ويكيا',
+	'founderemails-email-lot-happening-greeting' => 'مرحباً $USERNAME,',
+	'founderemails-email-0-day-addpages-button' => 'أضف صفحة',
+	'founderemails-email-0-day-addphotos-button' => 'أضف صورة',
+	'founderemails-email-3-day-addphotos-button' => 'أضف صور',
+	'founderemails-email-views-digest-button' => 'أضف المزيد من الصفحات',
+	'founderemails-email-complete-digest-greeting' => 'مرحباً $USERNAME,',
+);
+
 /** Bulgarian (български)
  * @author DCLXVI
  */
@@ -774,6 +791,27 @@ Sembla que l\'usuari registrat $EDITORNAME ha editat el teu wiki per primera veg
 Sembla que l\'usuari registrat $EDITORNAME ha editat el teu wiki per primera vegada! Per què no vas a la seva <a href="$EDITORTALKPAGEURL">pàgina de discussió</a> i li dius hola?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- L\'equip de Wikia</div>',
 	'founderemails-answers-email-page-edited-reg-user-subject' => 'Un usuari registrat va fer canvis al teu lloc!',
+);
+
+/** Czech (česky)
+ * @author Chmee2
+ */
+$messages['cs'] = array(
+	'founderemails-email-user-registered-greeting' => 'Ahoj $USERNAME,',
+	'founderemails-email-0-days-passed-subject' => 'Vítejte na Wikii!',
+	'founderemails-email-3-days-passed-subject' => 'Jak to jde na vaší wiki',
+	'founderemails-email-first-edit-greeting' => 'Ahoj $USERNAME,',
+	'founderemails-email-general-edit-greeting' => 'Ahoj $USERNAME,',
+	'founderemails-email-anon-edit-greeting' => 'Ahoj $USERNAME,',
+	'founderemails-email-0-day-addpages-heading' => 'Přidat stránky.',
+	'founderemails-email-0-day-addphotos-heading' => 'Přidat obrázky.',
+	'founderemails-email-0-day-addphotos-button' => 'Přidat obrázek',
+	'founderemails-email-3-day-heading' => 'Vítej $USERNAME,',
+	'founderemails-email-3-day-addphotos-button' => 'Přidat obrázky',
+	'founderemails-email-3-day-explore-heading' => 'Najděte inspiraci.',
+	'founderemails-email-views-digest-greeting' => 'Ahoj $USERNAME,',
+	'founderemails-email-views-digest-button' => 'Přidej více stránek',
+	'founderemails-email-complete-digest-greeting' => 'Ahoj $USERNAME,',
 );
 
 /** German (Deutsch)
@@ -1661,10 +1699,12 @@ $messages['fa'] = array(
 
 /** Finnish (suomi)
  * @author Centerlink
+ * @author Kalakuh
  * @author Nike
  * @author Tofu II
  */
 $messages['fi'] = array(
+	'founderemails-email-user-registered-subject' => 'Joku on liittynyt $WIKINAME',
 	'founderemails-email-user-registered-body' => 'Hei $USERNAME,
 
 Näyttää siltä, että $EDITORNAME on rekisteröitynyt wikiisi! Miksi et sano hänen keskustelusivullaan $EDITORTALKPAGEURL hei?
@@ -1695,6 +1735,8 @@ Näyttää siltä, että rekisteröitynyt käyttäjä $EDITORNAME on muokannut w
 	'founderemails-email-views-digest-greeting' => 'Hei $USERNAME,',
 	'founderemails-email-views-digest-signature' => 'Wikia-ryhmä',
 	'founderemails-email-views-digest-button' => 'Lisää sivuja',
+	'founderemails-pref-joins-v2' => '...joku liittyy Wikiin.',
+	'founderemails-pref-edits-v2' => '...joku muokkaa Wikissä.',
 );
 
 /** French (français)
