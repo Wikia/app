@@ -61,10 +61,8 @@ class VideoInfoHooksHelper {
 		$changedImages = $imageDeletes;
 		foreach( $insertedImages as $img ) {
 			$changedImages[ $img['il_to'] ] = true;
-
-			
 		}
-		
+
 		foreach( $changedImages as $imageDBName => $dummy ) {
 			$title = F::build( 'Title', array( NS_FILE, $imageDBName ), 'makeTitle' );
 			if ( $title instanceof Title ) {

@@ -79,6 +79,7 @@ $app->registerClass( 'VideosController', $dir . '/VideosController.class.php' );
 // video info
 $app->registerClass( 'VideoInfo', $dir . '/videoInfo/VideoInfo.class.php' );
 $app->registerClass( 'VideoInfoHelper', $dir . '/videoInfo/VideoInfoHelper.class.php' );
+$app->registerClass( 'VideoInfoHooksHelper', $dir . '/videoInfo/VideoInfoHooksHelper.class.php' );
 
 /**
  * messages
@@ -104,6 +105,12 @@ $app->registerHook( 'ParserAfterStrip', 'VideoHandlerHooks', 'convertOldInterwik
 $app->registerHook( 'File::checkExtensionCompatibilityResult', 'VideoHandlerHooks', 'checkExtensionCompatibilityResult' );
 
 $app->registerHook( 'SkinTemplateNavigation', 'VideoHandlerHooks', 'onSkinTemplateNavigation' );
+
+$app->registerHook( 'FileUpload', 'VideoInfoHooksHelper', 'onFileUpload' );
+$app->registerHook( 'ArticleSaveComplete', 'VideoInfoHooksHelper', 'onArticleSaveComplete' );
+$app->registerHook( 'FileDeleteComplete', 'VideoInfoHooksHelper', 'onFileDeleteComplete' );
+$app->registerHook( 'FileUndeleteComplete', 'VideoInfoHooksHelper', 'onFileUndeleteComplete' );
+$app->registerHook( 'SpecialMovepageAfterMove', 'VideoInfoHooksHelper', 'onFileRenameComplete' );
 
 if(!empty($wgVideoHandlersVideosMigrated)) {
 	$app->registerHook( 'ParserFirstCallInit', 'VideoHandlerHooks', 'initParserHook' );
