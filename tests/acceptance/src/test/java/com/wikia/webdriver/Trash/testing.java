@@ -25,11 +25,18 @@ public class testing extends TestTemplate{
 //		driver.findElement(By.cssSelector("#article-comm")).click();
 //		WebElement a = driver.findElement(By.cssSelector("nav[class='wikia-menu-button contribute secondary combined']"));
 //		
-		
-		((JavascriptExecutor)driver).executeScript("$('.Video_Games').mouseleave()");
-		((JavascriptExecutor)driver).executeScript("$('.Video_Games').mouseenter()");
-		((JavascriptExecutor)driver).executeScript("$('.Video_Games').mouseleave()");
-		((JavascriptExecutor)driver).executeScript("$('.Video_Games').mouseenter()");
+		for (int i=0; i<3; i++)
+		{
+			((JavascriptExecutor)driver).executeScript("$('.Video_Games').mouseenter()");
+			((JavascriptExecutor)driver).executeScript("$('.Video_Games').mouseenter()");
+			((JavascriptExecutor)driver).executeScript("$('.Video_Games').mouseenter()");
+			((JavascriptExecutor)driver).executeScript("$('.Video_Games').mouseenter()");
+			((JavascriptExecutor)driver).executeScript("$('.Video_Games').mouseleave()");
+		}
+//		((JavascriptExecutor)driver).executeScript("$('.Video_Games').mouseleave()");
+//		((JavascriptExecutor)driver).executeScript("$('.Video_Games').mouseenter()");
+//		((JavascriptExecutor)driver).executeScript("$('.Video_Games').mouseleave()");
+//		((JavascriptExecutor)driver).executeScript("$('.Video_Games').mouseenter()");
 //		((JavascriptExecutor)driver).executeScript("$('.Video_Games').mouseenter()");
 //		((JavascriptExecutor)driver).executeScript("$('.Video_Games').mouseenter()");
 //		((JavascriptExecutor)driver).executeScript("$('.Video_Games').mouseleave()");
