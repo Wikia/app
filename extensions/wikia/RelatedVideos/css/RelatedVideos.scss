@@ -10,8 +10,10 @@ $color-inactive-button: darken($color-secondary-button, 50%);
 	$color-inactive-button: lighten($color-secondary-button, 50%);
 }
 
+$color-see-more-videos-placeholder: darken($color-page, 5%);
 $color-related-videos-background: darken($color-page, 20%);
 @if lightness($color-page) < 50 {
+	$color-see-more-videos-placeholder: lighten($color-page, 5%);
 	$color-inactive-button: lighten($color-page, 20%);
 }
 
@@ -456,12 +458,14 @@ $color-related-videos-background: darken($color-page, 20%);
 						float: none;
 					}*/
 					.see-more-videos-placeholder {
-						background: darken($color-page, 5%);
+						background: $color-see-more-videos-placeholder;
 						border: 1px solid $color-page-border;
 						color: $color-text;
 						display: block;
+						font-size: 14px;
 						font-weight: bold;
-						line-height: 90px;
+						height: 53px;
+						padding-top: 35px;
 						outline: none;
 						text-align: center;
 						width: 150px;
