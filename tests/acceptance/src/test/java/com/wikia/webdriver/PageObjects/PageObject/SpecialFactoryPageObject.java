@@ -16,9 +16,9 @@ public class SpecialFactoryPageObject extends BasePageObject
 	private WebElement getConfigButton;
 	@FindBy(css="a[href*=close]")
 	private WebElement closeWikiButton;
-	@FindBy(css="form#wk-wf-variables-select ul:nth-child(1) li:nth-child(1) input")
+	@FindBy(css="#flag_1")
 	private WebElement dumpCheckBox;
-	@FindBy(css="form#wk-wf-variables-select ul:nth-child(1) li:nth-child(2) input")
+	@FindBy(css="#flag_2")
 	private WebElement imageArchiveCheckBox;
 	@FindBy(css="input[name='close_saveBtn']")
 	private WebElement confirmCloseButton;
