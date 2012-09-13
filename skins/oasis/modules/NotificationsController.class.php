@@ -183,6 +183,9 @@ class NotificationsController extends WikiaController {
 
 	/**
 	 * Handle confirmations when the page is moved
+	 *
+	 * @param $ot Title
+	 * @param $nt Title
 	 */
 	public static function addPageMovedConfirmation(&$form, &$ot, &$nt) {
 		wfProfileIn(__METHOD__);
@@ -210,6 +213,8 @@ class NotificationsController extends WikiaController {
 
 	/**
 	 * Handle confirmations when page is deleted
+	 *
+	 * @param WikiPage $article
 	 */
 	public static function addPageDeletedConfirmation(&$article, &$user, $reason, $articleId) {
 		wfProfileIn(__METHOD__);
@@ -239,6 +244,8 @@ class NotificationsController extends WikiaController {
 
 	/**
 	 * Handle confirmations when page is undeleted
+	 *
+	 * @param $title Title
 	 */
 	public static function addPageUndeletedConfirmation($title, $create) {
 		wfProfileIn(__METHOD__);
@@ -383,6 +390,9 @@ class NotificationsController extends WikiaController {
 
 	/**
 	 * Handle notifications about new badges
+	 *
+	 * @param $user User
+	 * @param $badge AchBadge
 	 */
 	public static function addBadgeNotification($user, $badge, &$html) {
 		wfProfileIn(__METHOD__);

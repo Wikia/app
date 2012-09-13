@@ -7,10 +7,16 @@
 class EditPageLayoutHelper {
 
 	private $app;
+
+	/* @var $request OutputPage */
 	private $out;
+
+	/* @var $request WebRequest */
 	private $request;
 	private $jsVars = array();
 	private $jsVarsPrinted = false;
+
+	/* @var $editPage EditPageLayout */
 	public $editPage;
 
 	function __construct() {
@@ -331,6 +337,12 @@ class EditPageLayoutHelper {
 		return true;
 	}
 
+	/**
+	 * Get static assets for AssetsManager group
+	 *
+	 * @static
+	 * @return array
+	 */
 	static public function getAssets() {
 		return array(
 			// >> 3rd party libraries
