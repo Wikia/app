@@ -1,1 +1,1 @@
-<div class="GameStarLogo"></div>
+<div class="GameStarLogo<?= !empty($wg->GlobalHeaderFullWidth) ? ' full-width' : '' ?>"></div>
