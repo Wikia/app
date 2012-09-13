@@ -6,6 +6,12 @@
 
 /* FILE: LatestPhotos.scss */
 
+
+$color-see-more-images-placeholder: darken($color-page, 5%);
+@if $is-dark-wiki {
+	$color-see-more-images-placeholder: lighten($color-page, 5%);
+}
+
 @mixin arrow-style {
 	border-style: solid;
 	border-width: 9px;
@@ -243,21 +249,14 @@
 		.see-all {
 			text-align: center;
 			a {
-				border: 3px solid #FFF;
+				background: $color-see-more-images-placeholder;
+				color: $color-text;
+				display: block;
 				font-size: 14px;
 				font-weight: bold;
-				height: 55px;
-				*left: 0;
+				height: 61px;
 				padding-top: 21px;
-				position: absolute;
-				width: 76px;
 				z-index: 1;
-			}
-			img {
-				left: 0;
-				@include opacity(100);
-				position: absolute;
-				top: 0;
 			}
 		}
 		.add-more {
