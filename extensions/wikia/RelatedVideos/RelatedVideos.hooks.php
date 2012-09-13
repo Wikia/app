@@ -4,9 +4,7 @@ class RelatedVideosHookHandler {
 
 	const RELATED_VIDEOS_POSITION = 2;
 
-	private $count = 0;
-
-	public function onOutputPageBeforeHTML( &$out, &$text ) {
+	public function onOutputPageBeforeHTML( OutputPage &$out, &$text ) {
 		wfProfileIn(__METHOD__);
 
 		if( $out->isArticle() && F::app()->wg->request->getVal( 'diff' ) === null && ( F::app()->wg->title->getNamespace() == NS_MAIN ) ) {
@@ -17,7 +15,7 @@ class RelatedVideosHookHandler {
 		return true;
 	}
 
-	public function onBeforePageDisplay( $out, $skin ) {
+	public function onBeforePageDisplay( OutputPage $out, $skin ) {
 		wfProfileIn(__METHOD__);
 
 		if( F::app()->checkSkin( 'oasis', $skin ) ) {
@@ -39,8 +37,10 @@ class RelatedVideosHookHandler {
 	}
 
 	 /**
-	 * Purge RelatedVideos namespace article after an edit
-	 */
+	  * Purge RelatedVideos namespace article after an edit
+	  *
+	  * @param WikiPage $article
+	  */
 	public static function onArticleSaveComplete(&$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
 		wfProfileIn(__METHOD__);
 
@@ -83,7 +83,6 @@ class RelatedVideosHookHandler {
 	 * Entry for removing the magic words from displayed text
 	 */
 	static public function onInternalParseBeforeLinks( &$parser, &$text, &$strip_state ) {
-		global $wgRelatedVideosOnRail;
 		wfProfileIn(__METHOD__);
 
 		if ( empty( F::app()->wg->RTEParserEnabled ) ) {
@@ -103,7 +102,7 @@ class RelatedVideosHookHandler {
 		$title = $app->wg->Title;
 		$namespace = $title->getNamespace();
 
-		if( $title->exists() && $app->wg->request->getVal( 'diff' ) === null 
+		if( $title->exists() && $app->wg->request->getVal( 'diff' ) === null
 			&& ( $namespace == NS_MAIN || $namespace == NS_FILE || $namespace == NS_CATEGORY
 				|| ( (!empty($app->wg->ContentNamespace)) && in_array($namespace, $app->wg->ContentNamespace) ) ) ) {
 			$pos = $app->wg->User->isAnon() ? 1301 : 1281;
@@ -113,7 +112,4 @@ class RelatedVideosHookHandler {
 		$app->wf->ProfileOut(__METHOD__);
 		return true;
 	}
-
-
-
 }

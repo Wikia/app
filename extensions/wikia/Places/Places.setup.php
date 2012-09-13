@@ -21,9 +21,6 @@ $wgExtensionCredits['specialpage'][] = array(
 	'descriptionmsg' => 'places-desc'
 );
 
-/**
- * @var WikiaApp
- */
 $app = F::app();
 $dir = dirname( __FILE__ );
 

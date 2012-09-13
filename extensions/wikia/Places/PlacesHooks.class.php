@@ -51,7 +51,7 @@ class PlacesHooks extends WikiaObject{
 			);
 		}
 		$response->setVal('extraButtons', $extraButtons);
-		// do hook logic;
+
 		return true;
 	}
 
@@ -68,8 +68,8 @@ class PlacesHooks extends WikiaObject{
 		$title = $out->getTitle();
 
 		if ($title instanceof Title && $title->isContentPage()) {
-			$storage = F::build('PlaceStorage', array($out->getTitle()), 'newFromTitle');
-			$model = $storage->getModel();
+			$storage = F::build('PlaceStorage', array($out->getTitle()), 'newFromTitle'); /* @var $storage PlaceStorage */
+			$model = $storage->getModel(); /* @var $model PlaceModel */
 
 			if ($model instanceof PlaceModel && !$model->isEmpty()) {
 				$out->addMeta( 'geo.position', implode( ',', $model->getLatLon() ) );
@@ -91,7 +91,7 @@ class PlacesHooks extends WikiaObject{
 		$this->wf->Debug( __METHOD__ . "\n" );
 
 		// store queued model or clear data for the article (if no model was passed)
-		$storage = F::build( 'PlaceStorage', array( $article ), 'newFromArticle' );
+		$storage = F::build( 'PlaceStorage', array( $article ), 'newFromArticle' ); /* @var $storage PlaceStorage */
 
 		if ( self::$modelToSave instanceof PlaceModel ) {
 			// use model from parser hook
@@ -126,7 +126,7 @@ class PlacesHooks extends WikiaObject{
 	 * Initialize edit page - load JS file and messages
 	 *
 	 * @param EditPage $editpage edit page instance
-	 * @return true it's a hook
+	 * @return bool true it's a hook
 	 */
 	public function onShowEditForm( EditPage $editpage ){
 		// add edit toolbar button for adding places

@@ -37,6 +37,11 @@ function MagicLinksInit() {
 	$wgHooks['OutputPageBeforeHTML'][] = 'MagicLinksReplaceLinks';
 }
 
+/**
+ * @param OutputPage $out
+ * @param string $text
+ * @return bool true
+ */
 function MagicLinksReplaceLinks(&$out, &$text) {
 	$aSearch = array(
 		'/(?<=^|[[(<>\s])(t:r(\d+))/mi',	//new svn
