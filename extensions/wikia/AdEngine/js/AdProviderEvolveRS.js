@@ -16,48 +16,35 @@ window.AdProviderEvolveRS = function (WikiaTracker, log, window, ghostwriter, do
 					log([slot[0], url], 5, 'AdProviderEvolveRS');
 					ghostwriter.flushloadhandlers();
 
-					var script = "getTrigger('8057');";
-					ghostwriter(
-						document.getElementById(slot[0]),
-						{
-							insertType:"append",
-							script:{text:script},
-							done:function () {
-								log('(invisible getTrigger) ghostwriter done', 5, 'AdProviderEvolveRS');
-								log([slot[0], script], 5, 'AdProviderEvolveRS');
-								ghostwriter.flushloadhandlers();
-
-								var script2 = getReskinAndSilverScript();
+								var script = getReskinAndSilverScript();
 								ghostwriter(
 									document.getElementById(slot[0]),
 									{
 										insertType:"append",
-										script:{text:script2},
+										script:{text:script},
 										done:function () {
 											log('(invisible reskin/silver) ghostwriter done', 5, 'AdProviderEvolveRS');
-											log([slot[0], script2], 5, 'AdProviderEvolveRS');
+											log([slot[0], script], 5, 'AdProviderEvolveRS');
 											ghostwriter.flushloadhandlers();
 										}
 									}
 								);
-
-							}
-						}
-					);
 
 				}
 			}
 		);
 	}
 
-	var slotMap = {
-		'INVISIBLE_1':{}
-	};
-
 	function getReskinAndSilverScript() {
 		log('getReskinSilverScript', 5, 'AdProviderEvolveRS');
 
 		var script = '';
+
+		//<!-- BEGIN TRIGGER TAG INITIALIZATION -->
+		//script += '<script type="text/javascript" src="http://cdn.triggertag.gorillanation.com/js/triggertag.js"></script>' + '\n';
+		//script += '<script type="text/javascript">' + '\n';
+		script += "getTrigger('8057');" + '\n';
+		//script += '</script>' + '\n';
 
 		//<!-- BEGIN GN Ad Tag for Wikia 1000x1000 entertainment -->
 		//script += '<script type="text/javascript">' + '\n';
