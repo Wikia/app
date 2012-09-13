@@ -1,7 +1,7 @@
 <header id="WikiaHeader" class="WikiaHeader">
-	<? if ( !empty($isGameStarLogoEnabled )) echo F::app()->renderView('GameStarLogo', 'Index'); ?>
 	<div class="wikia-header-mask">
 		<div class="page-width-container">
+			<? if ( !empty($isGameStarLogoEnabled )) echo F::app()->renderView('GameStarLogo', 'Index'); ?>
 			<nav>
 				<h1><?= wfMsgHtml('oasis-global-nav-header'); ?></h1>
 				<ul>
