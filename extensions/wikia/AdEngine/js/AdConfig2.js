@@ -5,6 +5,7 @@ window.AdConfig2 = function (
 	// AdProviders
 	AdProviderGamePro,
 	AdProviderEvolve,
+	AdProviderEvolveRS,
 	AdProviderAdDriver2
 ) {
 	var _cache_geo = null;
@@ -31,6 +32,10 @@ window.AdConfig2 = function (
 
 		if (isSlotEvolve(slot[0], getCountry())) {
 			return AdProviderEvolve;
+		}
+
+		if (isSlotEvolveRS(slot[0], getCountry())) {
+			return AdProviderEvolveRS;
 		}
 
 		return AdProviderAdDriver2;
@@ -69,6 +74,18 @@ window.AdConfig2 = function (
 			'TOP_RIGHT_BOXAD':true
 		};
 		if ((country == 'AU' || country == 'NZ' || country == 'CA') && typeof slotMap[slotname] != 'undefined') {
+			return true;
+		}
+
+		return false;
+	}
+
+	// TODO refactor to adProviderEvolveRS ?
+	function isSlotEvolveRS(slotname, country) {
+		log('isSlotEvolveRS', 5, 'AdConfig2');
+		log([slotname, country], 5, 'AdConfig2');
+
+		if ((country == 'AU' || country == 'NZ' || country == 'CA') && slotname == 'INVISIBLE_1') {
 			return true;
 		}
 
