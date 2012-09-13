@@ -135,7 +135,7 @@
 					<? endif; ?>
 				<? endif; ?>
 				
-				<? if( !empty($user['birthday']) ): ?>
+				<? if( !empty($user['birthday']) && intval( $user['birthday']['month'] ) > 0 && intval( $user['birthday']['month'] ) < 13 ): ?>
 					<li><?= wfMsg('user-identity-box-was-born-on', array( '$1' => F::app()->wg->Lang->getMonthName( intval($user['birthday']['month']) ), '$2' => $user['birthday']['day'] )); ?></li>
 				<? else: ?>
 					<? if( $user['showZeroStates'] && ($isUserPageOwner || $canEditProfile) ): ?>

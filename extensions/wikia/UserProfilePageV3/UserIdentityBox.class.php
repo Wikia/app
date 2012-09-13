@@ -331,9 +331,14 @@ class UserIdentityBox {
 				}
 			}
 
-			if (isset($data->month) && isset($data->day)) {
-				$this->user->setOption(self::USER_PROPERTIES_PREFIX . 'birthday', $data->month . '-' . $data->day);
-				$changed = true;
+			if ( isset($data->month) && isset($data->day) ) {
+				if ( checkdate( intval( $data->month ), intval( $data->day ), 2000 ) ) {
+					$this->user->setOption( self::USER_PROPERTIES_PREFIX . 'birthday', intval( $data->month ) . '-' . intval( $data->day ) );
+					$changed = true;
+				} elseif ( $data->month === '0' && $data->day === '0' ) {
+					$this->user->setOption( self::USER_PROPERTIES_PREFIX . 'birthday', null );
+					$changed = true;
+				}
 			}
 
 			if (isset($data->name)) {
@@ -425,7 +430,7 @@ class UserIdentityBox {
 		}
 
 		if (is_object($data)) {
-			if (isset($data->month) && isset($data->day)) {
+			if ( isset($data->month) && isset($data->day) && checkdate( intval( $data->month ), intval( $data->day ), 2000 ) ) {
 				$memcData['birthday'] = $data->month . '-' . $data->day;
 			}
 
