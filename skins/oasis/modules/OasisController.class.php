@@ -463,7 +463,7 @@ class OasisController extends WikiaController {
 
 		// Load the combined JS
 		$jsAssetGroups = array(
-			'oasis_shared_core', 'oasis_shared_js',
+			'oasis_shared_core_js', 'oasis_shared_js',
 		);
 		if ($wgUser->isLoggedIn()) {
 			$jsAssetGroups[] = 'oasis_user_js';
