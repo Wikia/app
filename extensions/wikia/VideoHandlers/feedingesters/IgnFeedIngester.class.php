@@ -120,7 +120,7 @@ class IgnFeedIngester extends VideoFeedIngester {
 				}
 			}
 			$tags = array_keys( $tags );
-			$addlCategories = array_merge( $addlCategories, $tags );
+			//$addlCategories = array_merge( $addlCategories, $tags );
 			$clipData['tags'] = implode(", ", $tags );
 
 			$createParams = array('addlCategories'=>$addlCategories, 'debug'=>$debug);
