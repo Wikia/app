@@ -350,7 +350,7 @@ public class ChatPageObject extends BasePageObject
 	 */
 	public void selectPrivateMessage(WebDriver driver)
 	{
-//		waitForElementByElement(privateMassageButton);
+		waitForElementByElement(privateMassageButton);
 //		Point p = privateMassageButton.getLocation();
 //		CommonFunctions.MoveCursorToElement(p, driver);
 //		CommonFunctions.ClickElement();
