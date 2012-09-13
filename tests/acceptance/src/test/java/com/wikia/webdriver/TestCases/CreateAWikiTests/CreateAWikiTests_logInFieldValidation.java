@@ -62,8 +62,10 @@ public class CreateAWikiTests_logInFieldValidation extends TestTemplate{
 		newWikia.verifyUserLoggedIn(userNameEnc);
 		newWikia.verifyUserToolBar();
 		CommonFunctions.logOut(userNameEnc, driver);
+		CommonFunctions.logIn(Properties.userNameStaff, Properties.passwordStaff);
 		SpecialFactoryPageObject factory = new SpecialFactoryPageObject(driver);
 		factory.openWikiFactoryPage();
 		factory.deleteWiki(wikiName);
+		CommonFunctions.logOut(Properties.userNameStaff, driver);
 	}
 }
