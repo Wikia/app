@@ -241,6 +241,7 @@ function Ach_AddToUserProfile(&$out) {
 
 	if($html) {
 		$out['achievementsII'] = $html;
+		// TODO: use CDN path
 		$wgOut->addStyle('../..' . $wgScriptPath . '/extensions/wikia/AchievementsII/css/achievements_sidebar.css');
 	}
 

@@ -55,20 +55,6 @@ $wgSpecialPages['CreateQuestionPage'] = 'CreateQuestionPage';
 $wgAutoloadClasses['GetQuestionWidget'] = dirname( __FILE__ ) . "/SpecialGetQuestionWidget.php";
 $wgSpecialPages['GetQuestionWidget'] = 'GetQuestionWidget';
 
-/*
-$wgHooks["GetHTMLAfterBody"][] = "wfAlterQuestionTitle";
-function wfAlterQuestionTitle( &$tpl ){
-	global $wgTitle;
-	if( $wgTitle->getNamespace() != NS_MAIN ) return true;
-
-	$title = $tpl->data['title'];
-	if( $title[strlen($title)-1] != "?" ){
-		$tpl->set('title', $title . "?");
-	}
-	return true;
-}
-*/
-
 $wgHooks['AddNewAccount'][] = 'fnQuestionAttributionRegister';
 function fnQuestionAttributionRegister( $user ){
 	global $wgOut;
