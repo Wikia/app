@@ -3,6 +3,7 @@ package com.wikia.webdriver.Trash;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.internal.seleniumemulation.WaitForCondition;
 import org.testng.annotations.Test;
 
 import com.wikia.webdriver.Common.Templates.TestTemplate;
@@ -24,10 +25,11 @@ public class testing extends TestTemplate{
 //		driver.findElement(By.cssSelector("#article-comm")).click();
 //		WebElement a = driver.findElement(By.cssSelector("nav[class='wikia-menu-button contribute secondary combined']"));
 //		
-		((JavascriptExecutor)driver).executeScript("$('.Video_Games').mouseenter()");
+		
+		((JavascriptExecutor)driver).executeScript("$('.Video_Games').mouseleave()");
 		((JavascriptExecutor)driver).executeScript("$('.Video_Games').mouseenter()");
 		((JavascriptExecutor)driver).executeScript("$('.Video_Games').mouseleave()");
-		((JavascriptExecutor)driver).executeScript("$('.Video_Games').mouseleave()");
+		((JavascriptExecutor)driver).executeScript("$('.Video_Games').mouseenter()");
 //		((JavascriptExecutor)driver).executeScript("$('.Video_Games').mouseenter()");
 //		((JavascriptExecutor)driver).executeScript("$('.Video_Games').mouseenter()");
 //		((JavascriptExecutor)driver).executeScript("$('.Video_Games').mouseleave()");
