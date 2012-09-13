@@ -27,17 +27,22 @@ public class testing extends TestTemplate{
 		((JavascriptExecutor)driver).executeScript("$('.Video_Games').mouseenter()");
 		((JavascriptExecutor)driver).executeScript("$('.Video_Games').mouseenter()");
 		((JavascriptExecutor)driver).executeScript("$('.Video_Games').mouseleave()");
-		((JavascriptExecutor)driver).executeScript("$('.Video_Games').mouseenter()");
-		((JavascriptExecutor)driver).executeScript("$('.Video_Games').mouseenter()");
 		((JavascriptExecutor)driver).executeScript("$('.Video_Games').mouseleave()");
 		((JavascriptExecutor)driver).executeScript("$('.Video_Games').mouseenter()");
 		((JavascriptExecutor)driver).executeScript("$('.Video_Games').mouseenter()");
 		((JavascriptExecutor)driver).executeScript("$('.Video_Games').mouseleave()");
-		((JavascriptExecutor)driver).executeScript("$('.Video_Games').mouseenter()");
-		((JavascriptExecutor)driver).executeScript("$('.Video_Games').mouseenter()");
 		((JavascriptExecutor)driver).executeScript("$('.Video_Games').mouseleave()");
 		((JavascriptExecutor)driver).executeScript("$('.Video_Games').mouseenter()");
 		((JavascriptExecutor)driver).executeScript("$('.Video_Games').mouseenter()");
+		((JavascriptExecutor)driver).executeScript("$('.Video_Games').mouseleave()");
+		((JavascriptExecutor)driver).executeScript("$('.Video_Games').mouseleave()");
+		((JavascriptExecutor)driver).executeScript("$('.Video_Games').mouseenter()");
+		((JavascriptExecutor)driver).executeScript("$('.Video_Games').mouseenter()");
+		((JavascriptExecutor)driver).executeScript("$('.Video_Games').mouseleave()");
+		((JavascriptExecutor)driver).executeScript("$('.Video_Games').mouseleave()");
+		((JavascriptExecutor)driver).executeScript("$('.Video_Games').mouseenter()");
+		((JavascriptExecutor)driver).executeScript("$('.Video_Games').mouseenter()");
+		((JavascriptExecutor)driver).executeScript("$('.Video_Games').mouseleave()");
 		((JavascriptExecutor)driver).executeScript("$('.Video_Games').mouseleave()");
 
 //		b.executeScript("$('.Video_Games').mouseenter()");
