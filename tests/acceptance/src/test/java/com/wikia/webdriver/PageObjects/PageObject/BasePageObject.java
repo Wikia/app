@@ -210,12 +210,24 @@ public class BasePageObject{
 	{
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		js.executeScript(script);
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	protected void executeScript(String script, WebDriver driver)
 	{
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		js.executeScript(script);
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	/**
