@@ -66,7 +66,12 @@ $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 	}
 	&.pinned-mode {
 		.media {
-			margin: 90px 0;
+			margin: 81px 0;
+		}
+		&.video-lightbox {
+			.media {
+				margin: 90px 0;
+			}		
 		}
 		.LightboxCarousel,
 		.LightboxHeader {

@@ -334,7 +334,7 @@ var Lightbox = {
 				
 				var imageContainerHeight = modalHeight;
 				if(Lightbox.openModal.hasClass('pinned-mode')) {
-					imageContainerHeight -= 220;
+					imageContainerHeight -= 190;
 					if(imageHeight > imageContainerHeight ) {
 						imageHeight = imageContainerHeight;
 					}
