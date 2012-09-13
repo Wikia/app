@@ -4,6 +4,9 @@ window.AdProviderLiftium2 = function (WikiaTracker, log, window, ghostwriter, do
 		log('fillInSlot', 5, 'AdProviderLiftium2');
 		log(slot, 5, 'AdProviderLiftium2');
 
+		slot[1] = slotMap[slot[0]].size || slot[1];
+		log([slot[0], slot[1]], 7, 'AdProviderLiftium2');
+
 		// this is *NOT* needed, liftium has it's own slot tracking
 		//WikiaTracker.trackAdEvent('liftium.slot2', {'ga_category':'slot2/' + slot[1], 'ga_action':slot[0], 'ga_label':'liftium'}, 'ga');
 
@@ -26,6 +29,13 @@ window.AdProviderLiftium2 = function (WikiaTracker, log, window, ghostwriter, do
 		// TODO check AIC2 for an example
 	}
 
+	var slotMap = {
+		'HOME_TOP_LEADERBOARD':{'size':'728x90'},
+		'HOME_TOP_RIGHT_BOXAD':{'size':'300x250'},
+		'LEFT_SKYSCRAPER_2':{'size':'160x600'},
+		'TOP_LEADERBOARD':{'size':'728x90'},
+		'TOP_RIGHT_BOXAD':{'size':'300x250'}
+	};
 	var adNum = 100; // TODO global-ize it!
 
 	// adapted for Evolve + simplified copy of AdDriverDelayedLoader.getLiftiumCallScript
