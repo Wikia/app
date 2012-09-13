@@ -350,17 +350,12 @@ public class ChatPageObject extends BasePageObject
 	 */
 	public void selectPrivateMessage(WebDriver driver)
 	{
-		waitForElementByElement(privateMassageButton);
-		Point p = privateMassageButton.getLocation();
-		CommonFunctions.MoveCursorToElement(p, driver);
-		CommonFunctions.ClickElement();
+//		waitForElementByElement(privateMassageButton);
+//		Point p = privateMassageButton.getLocation();
+//		CommonFunctions.MoveCursorToElement(p, driver);
+//		CommonFunctions.ClickElement();
+		executeScript("document.querySelectorAll('.private')[2].click()", driver);
 		PageObjectLogging.log("selectPrivateMessage", "private message selected from dropdown", true, driver);
-		try {
-			Thread.sleep(1500);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 	
 	public void selectChatModStatus(WebDriver driver)
@@ -410,11 +405,12 @@ public class ChatPageObject extends BasePageObject
 	{
 		By privateMessagesUserButton = By.xpath("//li[@id='priv-user-"+userName+"']/span");
 		waitForElementByBy(privateMessagesUserButton);
-		WebElement e = driver.findElement(privateMessagesUserButton);
-		Point p = e.getLocation();
-		CommonFunctions.MoveCursorToElement(p, driver);		
-		CommonFunctions.ClickElement();
-		CommonFunctions.ClickElement();
+//		WebElement e = driver.findElement(privateMessagesUserButton);
+//		Point p = e.getLocation();
+//		CommonFunctions.MoveCursorToElement(p, driver);		
+//		CommonFunctions.ClickElement();
+//		CommonFunctions.ClickElement();
+		executeScript("document.querySelectorAll('#priv-user-"+userName+"')[0].click()", driver);
 		waitForElementByBy(userContextMenu);
 		PageObjectLogging.log("clickPrivateMessageUser", "private messages user "+userName+" is clicked", true, driver);
 	}
@@ -431,7 +427,8 @@ public class ChatPageObject extends BasePageObject
 	{
 		By userButton = By.xpath("//div[@class='Rail']//li[@id='user-"+userName+"']/img");
 		waitForElementByBy(userButton);
-		executeScript("document.querySelectorAll('#user-KarolK1')[0].click()");
+		executeScript("document.querySelectorAll('#user-"+userName+"')[0].click()", driver);
+		executeScript("document.querySelectorAll('#user-"+userName+"')[0].click()", driver);
 		PageObjectLogging.log("clickOnDifferentUser", userName+" button clicked", true, driver);
 	}
 	
@@ -443,11 +440,13 @@ public class ChatPageObject extends BasePageObject
 	 */
 	public void blockPrivateMessage(WebDriver driver)
 	{
-		waitForElementByElement(blockPrivateMassageButton);
-		Point p = blockPrivateMassageButton.getLocation();
-		CommonFunctions.MoveCursorToElement(p, driver);		
-		CommonFunctions.ClickElement();
-		CommonFunctions.ClickElement();
+//		waitForElementByElement(blockPrivateMassageButton);
+//		Point p = blockPrivateMassageButton.getLocation();
+//		CommonFunctions.MoveCursorToElement(p, driver);		
+//		CommonFunctions.ClickElement();
+//		CommonFunctions.ClickElement();
+		executeScript("document.querySelectorAll('.private-block')[0].click()", driver);
+		executeScript("document.querySelectorAll('.private-block')[0].click()", driver);
 		PageObjectLogging.log("blockPrivateMessageFromUser", "private messages are blocked now", true, driver);
 	}
 	
@@ -460,9 +459,10 @@ public class ChatPageObject extends BasePageObject
 	public void allowPrivateMessageFromUser(String userName, WebDriver driver)
 	{
 		
-		Point p = allowPrivateMassageButton.getLocation();
-		CommonFunctions.MoveCursorToElement(p, driver);
-		CommonFunctions.ClickElement();
+//		Point p = allowPrivateMassageButton.getLocation();
+//		CommonFunctions.MoveCursorToElement(p, driver);
+//		CommonFunctions.ClickElement();
+		executeScript("document.querySelectorAll('.private-allow')[0].click()", driver);
 		waitForElementByBy(By.xpath("//li[@id='priv-user-"+userName+"']"));
 		PageObjectLogging.log("allowPrivateMessageFromUser", "private messages from "+userName+" are allowed now", true, driver);
 	}
