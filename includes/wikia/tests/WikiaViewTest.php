@@ -54,7 +54,7 @@ class WikiaViewTest extends PHPUnit_Framework_TestCase {
 	 * @dataProvider setTemplateDataProvider
 	 */
 	public function testSetTemplate( $classExists, $controllerName ) {
-		$appMock = $this->getMock( 'WikiaApp', array('ajax') );
+		$appMock = $this->getMock( 'WikiaApp', array('ajax') ); /* @var $appMock WikiaApp */
 		$registryMock = $this->getMock( 'WikiaGlobalRegistry', array('get') );
 		$registryMock->expects( $this->any() )
 		        ->method( 'get' )
@@ -78,7 +78,7 @@ class WikiaViewTest extends PHPUnit_Framework_TestCase {
 	 * @expectedException WikiaException
 	 */
 	public function testSetNonExistentTemplate() {
-		$appMock = $this->getMock( 'WikiaApp', array( 'ajax' ) );
+		$appMock = $this->getMock( 'WikiaApp', array( 'ajax' ) ); /* @var $appMock WikiaApp */
 		$registryMock = $this->getMock( 'WikiaGlobalRegistry', array('get') );
 		$registryMock->expects( $this->any() )
 		        ->method( 'get' )
@@ -109,7 +109,7 @@ class WikiaViewTest extends PHPUnit_Framework_TestCase {
 	public function testRenderingFormatsDataProvider() {
 		$responseValueName = 'result';
 		$responseValueData = array( 1, 2, 3 );
-		
+
 		return array(
 			array( WikiaResponse::FORMAT_RAW, $responseValueName, $responseValueData, '<pre>' . var_export( array( $responseValueName => $responseValueData ), true ) .'</pre>' ),
 			array( WikiaResponse::FORMAT_JSON, $responseValueName, $responseValueData, json_encode( array( $responseValueName => $responseValueData ) ) ),
@@ -124,20 +124,20 @@ class WikiaViewTest extends PHPUnit_Framework_TestCase {
 		$response = F::build( 'WikiaResponse', array( $format ) );
 		$response->setVal( $responseValueName, $responseValueData );
 		$this->object->setResponse( $response );
-		
+
 		if ( $format == WikiaResponse::FORMAT_HTML ) {
-			$appMock = $this->getMock( 'WikiaApp', array('ajax') );
+			$appMock = $this->getMock( 'WikiaApp', array('ajax') ); /* @var $appMock WikiaApp */
 			$registryMock = $this->getMock( 'WikiaGlobalRegistry', array('get') );
 			$registryMock->expects( $this->any() )
 				->method( 'get' )
 				->with( $this->equalTo( 'wgAutoloadClasses' ) )
 				->will( $this->returnValue( array( 'Test' . 'Controller' => dirname( __FILE__  ) . '/_fixtures/TestController.php' ) ) );
 			$appMock->setGlobalRegistry($registryMock);
-	
+
 			F::setInstance( 'App', $appMock );
 			$this->object->setTemplate( 'Test', 'formatHTML' );
 		}
-		
+
 		$this->assertEquals( $expectedResult, $this->object->render() );
 	}
 }
