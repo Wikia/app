@@ -57,6 +57,7 @@ if ( !$wgUser ) {
 if ( $wgUser->isAnon() ) {
 //	$wgUser->addToDatabase();
 }
+$wgUser->load();
 
 $providersVideoFeed = array();
 $provider = !empty($args[0]) ? strtolower($args[0]) : '';
