@@ -212,6 +212,12 @@ public class BasePageObject{
 		js.executeScript(script);
 	}
 	
+	protected void executeScript(String script, WebDriver driver)
+	{
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		js.executeScript(script);
+	}
+	
 	/**
 	 * Returns List of WebElements by CssSelector
 	 * 
