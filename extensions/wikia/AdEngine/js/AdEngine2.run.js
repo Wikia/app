@@ -5,12 +5,14 @@
 		, adProviderEvolveRS
 		, adProviderGamePro
 		, adProviderAdDriver2
+		, adProviderAdDriver
 		, adProviderLiftium2;
 
 	adProviderGamePro = AdProviderGamePro(WikiaTracker, log, window, ghostwriter, document);
 	adProviderEvolve = AdProviderEvolve(WikiaTracker, log, window, ghostwriter, document);
 	adProviderEvolveRS = AdProviderEvolveRS(WikiaTracker, log, window, ghostwriter, document);
 	adProviderAdDriver2 = AdProviderAdDriver2(log, window);
+	adProviderAdDriver = AdProviderAdDriver(log, window);
 	adProviderLiftium2 = AdProviderLiftium2(WikiaTracker, log, window, ghostwriter, document);
 
 	adConfig = AdConfig2(
@@ -22,6 +24,7 @@
 		adProviderEvolve,
 		adProviderEvolveRS,
 		adProviderAdDriver2,
+		adProviderAdDriver,
 		adProviderLiftium2
 	);
 
