@@ -45,16 +45,16 @@ function efConfirmEmailPrompt( &$msg ) {
 	}
 
 	$message = wfMsgExt(
-			'confirmemailprompt-error',
-			array( 'parseinline' ),
-			array(
-				$wgUser->getEmail(),
-				SpecialPage::getTitleFor( 'ConfirmEmail' )->getPrefixedText(),
-				SpecialPage::getTitleFor( 'Preferences' )->getPrefixedText()
-			)
+		'confirmemailprompt-error',
+		array( 'parseinline' ),
+		array(
+			$wgUser->getEmail(),
+			SpecialPage::getTitleFor( 'ConfirmEmail' )->getPrefixedText(),
+			SpecialPage::getTitleFor( 'Preferences' )->getPrefixedText()
+		)
 	);
 
 	NotificationsController::addConfirmation( $message, NotificationsController::CONFIRMATION_ERROR );
 
-	return true;	
+	return true;
 }

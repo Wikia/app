@@ -174,7 +174,7 @@ class ContentFeeds {
 	 * nifty "parser hook" for <recentimages> tag
 	 * @return string tag body
 	 */
-	public static function recentImagesParserHook( $parser, $text, $strip_state ) {
+	public static function recentImagesParserHook( Parser $parser, $text, $strip_state ) {
 		global $wgRTEParserEnabled;
 
 		if (!empty($wgRTEParserEnabled)) {
@@ -229,6 +229,7 @@ class ContentFeeds {
 			foreach( array_slice( $images, 0, $limit ) as $image ) {
 				$imageFile = wfFindFile( $image->img_name );
 				if( is_object( $imageFile ) ) {
+					/* @var $imageFile LocalFile */
 					$imageType = $imageFile->minor_mime;
 					$imageSize = $imageFile->size;
 
