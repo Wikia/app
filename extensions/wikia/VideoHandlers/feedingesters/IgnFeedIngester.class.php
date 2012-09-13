@@ -31,10 +31,9 @@ class IgnFeedIngester extends VideoFeedIngester {
 
 	/**
 	 * @param $keywords string with comma-separated keywords
-	 * @return regexp string or null if no valid keywords were specified
+	 * @return string regexp or null if no valid keywords were specified
 	 */
-	private function prepare_blackist_regexp($keywords) {
-		$blacklist = F::app()->wg->Msg->IgnVideoBlacklist;
+	private function prepare_blacklist_regexp($keywords) {
 		if ($keywords) {
 			$keywords = explode(',', $keywords);
 			$blacklist = array();
@@ -98,7 +97,7 @@ class IgnFeedIngester extends VideoFeedIngester {
 			$addlCategories = array_merge( $addlCategories, $keywords );
 			$clipData['keywords'] = implode(", ", $keywords );
 
-			$blacklist_regexp = $this->prepare_blackist_regexp(F::app()->wg->IgnVideoBlacklist);
+			$blacklist_regexp = $this->prepare_blacklist_regexp(F::app()->wg->IgnVideoBlacklist);
 			if ($blacklist_regexp) {
 				foreach(array('keywords', 'titleName', 'description') as $key) {
 					if (preg_match($blacklist_regexp, $clipData[$key])) {
@@ -109,7 +108,7 @@ class IgnFeedIngester extends VideoFeedIngester {
 			}
 
 			$tags = array();
-			$blacklist_regexp = $this->prepare_blackist_regexp(F::app()->wg->IgnKeywordsBlacklist);
+			$blacklist_regexp = $this->prepare_blacklist_regexp(F::app()->wg->IgnKeywordsBlacklist);
 			foreach( $video['tags'] as $obj ) {
 				if (array_key_exists('slug', $obj)) {
 					if ($blacklist_regexp && preg_match($blacklist_regexp, $obj['slug'])) {
