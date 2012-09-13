@@ -64,7 +64,7 @@
 		$video = F::build( 'VideoInfo' );
 		$video->createTableVideos();
 
-		echo "Create videos table.\n";
+		echo "Create video_info table.\n";
 	}
 
 	$videoList = array();
