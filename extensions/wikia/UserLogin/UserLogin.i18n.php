@@ -173,6 +173,27 @@ $messages['qqq'] = array(
 	'wikiamobile-facebook-connect-fail' => "Shown when a user tries to log in via FBConnect but there's no matching account in our DB, please keep the message as short as possible as the space at disposal is really limited",
 );
 
+/** Arabic (العربية)
+ * @author Mutarjem horr
+ */
+$messages['ar'] = array(
+	'userlogin-login-heading' => 'سجّل الدخول',
+	'userlogin-forgot-password' => 'هل نسيت كلمتك للمرور؟',
+	'userlogin-remembermypassword' => 'إبقى مسجلاً الدخول',
+	'userlogin-error-invalidemailaddress' => 'الرجاء إدخال عنوان بريد إلكتروني صالح.',
+	'userlogin-error-noemailtitle' => 'الرجاء إدخال عنوان بريد إلكتروني صالح.',
+	'userlogin-error-resetpass_forbidden' => 'كلمات المرور لا يمكن تغييرها',
+	'userlogin-oldpassword' => 'كلمة السر القديمة',
+	'userlogin-newpassword' => 'كلمة السر الجديدة',
+	'userlogin-retypenew' => 'أعد كتابة كلمة المرور الجديدة',
+	'userlogin-password-email-subject' => 'طلب كلمة مرور منسية',
+	'userlogin-password-email-greeting' => 'مرحباً $USERNAME,',
+	'userlogin-provider-or' => 'أو',
+	'userlogin-loginreqlink' => 'تسجيل الدخول',
+	'userlogin-changepassword-needlogin' => 'أنت بحاجة إلى $1 لكي تغيّر كلمتك للمرور.',
+	'wikiamobile-sendpassword-label' => 'أرسل كلمة المرور الجديدة',
+);
+
 /** Bikol Central (Bikol Central)
  * @author Filipinayzd
  */
@@ -1742,19 +1763,38 @@ Muốn kiểm soát email mà bạn nhận được? Đi đến: {{fullurl:{{ns:
 
 /** Simplified Chinese (‪中文（简体）‬)
  * @author Dimension
+ * @author Sam Wang
  */
 $messages['zh-hans'] = array(
 	'userlogin-login-heading' => '登录',
 	'userlogin-forgot-password' => '忘记密码？',
 	'userlogin-remembermypassword' => '保持登录状态',
+	'userlogin-error-noname' => '请输入用户名',
+	'userlogin-error-sessionfailure' => '登陆超时，请重新登录。',
+	'userlogin-error-nosuchuser' => '用户名出错，请确保大小写锁定处于关闭状态并且重试。',
+	'userlogin-error-wrongpassword' => '错误密码。请确保大小写锁定处于关闭状态并且重试。',
+	'userlogin-error-wrongpasswordempty' => '请输入密码',
+	'userlogin-error-resetpass_announce' => '看来您在使用临时密码。请选择新的密码以继续登录。',
 	'userlogin-error-login-throttled' => '密码输入错误次数过多。请稍后再试。',
+	'userlogin-error-login-userblocked' => '您的用户名已被禁止使用。',
 	'userlogin-error-edit-account-closed-flag' => '您的帐户已被Wikia禁用。',
+	'userlogin-error-cantcreateaccount-text' => '您的IP地址不能再次新建帐户。',
+	'userlogin-error-userexists' => '该用户名已使用，请选择其他用户名。',
 	'userlogin-error-invalidemailaddress' => '请输入有效的电子邮件地址。',
+	'userlogin-get-account' => '没有账户？[[Special:UserSignup|新建帐户]]',
 	'userlogin-error-invalid-username' => '用户名无效',
+	'userlogin-error-userlogin-unable-info' => '抱歉，我们不能在这时等级您的帐户。',
 	'userlogin-error-user-not-allowed' => '该用户名禁用。',
+	'userlogin-error-userlogin-bad-birthday' => '请填写年、月、和日。',
+	'userlogin-error-externaldberror' => '抱歉，目前系统出错，请稍后再试。',
+	'userlogin-error-noemailtitle' => '请输入有效的邮箱地址',
+	'userlogin-error-acct_creation_throttle_hit' => '抱歉，该IP地址今天新建帐户过多，请稍后再试。',
 	'userlogin-error-resetpass_forbidden' => '无法更改密码',
+	'userlogin-error-blocked-mailpassword' => '该IP地址已被Wikia限制使用。不能申请新密码。',
+	'userlogin-error-throttled-mailpassword' => '密码提醒已在{{PLURAL:$1|小时|$1小时}}内发送到该帐户，请查收您的电子邮件。',
 	'userlogin-password-email-sent' => '我们已将新密码寄至该邮箱$1。',
 	'userlogin-oldpassword' => '旧密码',
+	'userlogin-newpassword' => '新密码',
 	'userlogin-password-email-greeting' => '嗨！$USERNAME，',
 	'userlogin-loginreqlink' => '登录',
 );

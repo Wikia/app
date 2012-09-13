@@ -93,6 +93,8 @@ SCRIPT1;
 	 */
 	public static function addGlobalVars(Array &$vars) {
 		global $wgUser;
+
+		// TODO: consider using $wgUser->isLoggedIn() instead
 		if ($wgUser->getId() && $wgUser->getId() > 0) {
 			$vars['wgTrackID'] = $wgUser->getId();
 		}

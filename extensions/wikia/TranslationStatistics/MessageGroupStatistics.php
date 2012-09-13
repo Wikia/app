@@ -17,6 +17,7 @@ class MessageGroupStatistics {
 		$groups = MessageGroups::singleton()->getGroups();
 
 		foreach ( $groups as $group ) {
+			/* @var $group MessageGroup */
 			$id = $group->getId();
 			if ( !empty( $stats[$id] ) ) {
 				continue;
@@ -31,7 +32,7 @@ class MessageGroupStatistics {
 
 		return $stats;
   	}
- 
+
 	public static function forGroup( $id ) {
 		# Fetch from database
 		$dbr = wfGetDB( DB_SLAVE );
@@ -55,7 +56,7 @@ class MessageGroupStatistics {
 
 		return $stats;
 	}
- 
+
 	// Used by the two function above to fill missing entries
 	public static function forItem( $groupId, $code ) {
 		# Check again if already in db ( to avoid overload in big clusters )
@@ -99,9 +100,10 @@ class MessageGroupStatistics {
 		$dbw = wfGetDB( DB_MASTER );
 
 		$dbw->insert(
-				'groupstats',
-				$data
-			    );
+			'groupstats',
+			$data,
+			__METHOD__
+		);
 
 		return $data;
 	}
@@ -118,6 +120,7 @@ class MessageGroupStatistics {
 
 		// iterate over all groups
 		foreach ( $groups as $g ) {
+			/* @var $g MessageGroup */
 			echo "Populating " . $g->getId() . "...\n";
 			self::forGroup( $g->getId() );
 		}
@@ -126,7 +129,7 @@ class MessageGroupStatistics {
 	}
 
 	// attaches to ArticleSaveComplete
-	public static function invalidateCache( &$article, &$user, $text, $summary, $minoredit, &$watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId ) {	
+	public static function invalidateCache( &$article, &$user, $text, $summary, $minoredit, &$watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId ) {
 		$ids = array();
 
 		$name = $article->mTitle->getText();
@@ -145,6 +148,7 @@ class MessageGroupStatistics {
 		}
 
 		foreach ( $groups as $group ) {
+			/* @var $group MessageGroup */
 			$ids[] = $group->getId();
 		}
 
@@ -156,7 +160,7 @@ class MessageGroupStatistics {
 		$dbw = wfGetDB( DB_MASTER );
 
 		// @TODO maybe update instaed of delete
-		$dbw->delete( 'groupstats', $conds );
+		$dbw->delete( 'groupstats', $conds, __METHOD__ );
 
 		return true;
 	}

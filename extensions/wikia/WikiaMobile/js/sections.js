@@ -7,7 +7,7 @@
  * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
  */
 
-define('sections', ['events', 'track'], function(ev, track){
+define('sections', ['events'], function(ev){
 	var d = document,
 		article = d.getElementById('mw-content-text'),
 		fragment = d.createDocumentFragment(),
@@ -115,7 +115,7 @@ define('sections', ['events', 'track'], function(ev, track){
 				var parent = t.parentElement,
 					prev = parent.previousElementSibling;
 
-				track('section/close');
+				//track('section/close');
 
 				parent.className = parent.className.replace(' open', '');
 				prev.className = prev.className.replace(' open', '');
@@ -141,7 +141,7 @@ define('sections', ['events', 'track'], function(ev, track){
 			next.className += OPENCLASS;
 
 			fireEvent('open', next);
-			track(['section', 'open']);
+			//track(['section', 'open']);
 		}
 	}
 
@@ -153,7 +153,7 @@ define('sections', ['events', 'track'], function(ev, track){
 			next.className = next.className.replace(OPENCLASS, '');
 
 			fireEvent('close', next)
-			track(['section', 'close']);
+			//track(['section', 'close']);
 		}
 	}
 

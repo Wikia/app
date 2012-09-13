@@ -602,7 +602,7 @@ class Masthead {
 	 * @param $errorNo -- optional initial error-code state.
 	 * @param $errorMsg -- optional string containing details on what went wrong if there is an UPLOAD_ERR_EXTENSION.
 	 */
-	private function postProcessImageInternal($sTmpFile, $errorNo = UPLOAD_ERR_OK, &$errorMsg=''){
+	private function postProcessImageInternal($sTmpFile, &$errorNo = UPLOAD_ERR_OK, &$errorMsg=''){
 		wfProfileIn(__METHOD__);
 		$aImgInfo = getimagesize($sTmpFile);
 
@@ -759,6 +759,20 @@ class Masthead {
 		return $result;
 	}
 
+	/**
+	 * @param $article
+	 * @param User $user
+	 * @param $text
+	 * @param $summary
+	 * @param $minoredit
+	 * @param $watchthis
+	 * @param $sectionanchor
+	 * @param $flags
+	 * @param $revision
+	 * @param $status
+	 * @param $baseRevId
+	 * @return bool
+	 */
 	public function userMastheadInvalidateCache(&$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
 		if (!$user->isAnon()) {
 			if(count($status->errors) == 0) {

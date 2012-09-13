@@ -1,6 +1,12 @@
 <?php
 
 class UnsubscribePreferences {
+
+	/**
+	 * @param User $user
+	 * @param Array $defaultPreferences
+	 * @return bool
+	 */
 	function onGetPreferences( $user, &$defaultPreferences ) {
 		global $wgOut, $wgJsMimeType, $wgExtensionsPath, $wgCityId;
 		$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"$wgExtensionsPath/wikia/SpecialUnsubscribe/UnsubscribePreferences.js\"></script>" );
@@ -54,7 +60,6 @@ class UnsubscribePreferences {
 	 * @param array $contents the stuff to insert
 	 * @param bool $direction insert after key if true, before if false
 	 */
-
 	private function insert( $subject, $key, $content, $direction = true ) {
 		$displacedContent = array( $key => $subject[$key] );
 

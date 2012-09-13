@@ -137,7 +137,7 @@ public class ChatTests extends TestTemplate_Two_Drivers{
 		chat1.clickPrivateMessageUser(Properties.userName2, driver);
 		chat1.verifyPrivateUserDropdown();
 		chat1.blockPrivateMessage(driver);
-		chat1.clickOnDifferentUser(Properties.userName2, driver);
+		chat1.clickOnBlockedDifferentUser(Properties.userName2, driver);
 		chat1.verifyBlockingUserDropdown();
 		chat1.allowPrivateMessageFromUser(Properties.userName2, driver);
 	}

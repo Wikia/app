@@ -1,4 +1,6 @@
-define('tables', ['events'], function(ev){
+define('tables', ['events', 'track'], function(ev, track){
+	'use strict';
+
 	var w = window,
 		realWidth = w.innerWidth || w.clientWidth,
 		inited = false,
@@ -81,8 +83,8 @@ define('tables', ['events'], function(ev){
 		}
 
 		if(handledTables.length > 0 && !inited){
-			w.addEventListener('orientationchange', function(){
-				setTimeout(function(){
+			w.addEventListener('resize', function(){
+				//setTimeout(function(){
 					var table, isWrapped, isBig, wasWrapped,
 						maxWidth = w.innerWidth || w.clientWidth;
 
@@ -106,16 +108,17 @@ define('tables', ['events'], function(ev){
 							table.isWrapped = false;
 						}
 					}
-				},200);
 			});
 
-			if(!Modernizr.overflow){
+			if(!Features.overflow){
 				document.body.addEventListener(ev.touch, function(ev){
 					var t = ev.target;
 
 					if(t.className.indexOf('bigTable') > -1){
 						if(!t.wkScroll) {
-							new iScroll(t);
+							new iScroll(t, function(){
+								track.event('tables', track.SWIPE);
+							});
 							t.wkScroll = true;
 							t.className += ' active';
 						}

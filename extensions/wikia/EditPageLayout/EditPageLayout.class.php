@@ -32,9 +32,11 @@ class EditPageLayout extends EditPage {
 	protected $mSummaryBox = array();
 
 	// HTML for dismissable notices (from MW)
+	/* @var $mCoreEditNotices EditPageNotices */
 	protected $mCoreEditNotices = null;
 
 	// custom notices from extensions
+	/* @var $mEditNotices EditPageNotices */
 	protected $mEditNotices = null;
 
 	// HTML rendered by form callbck
@@ -64,8 +66,11 @@ class EditPageLayout extends EditPage {
 	//hide title on special CreateBlogPage
 	public $hideTitle = false;
 
+	/**
+	 * @param Article $article
+	 */
 	function __construct(Article $article) {
-		$this->app = F::build('App');
+		$this->app = F::app();
 		$this->out = $this->app->wg->Out;
 		$this->request = $this->app->wg->Request;
 
@@ -88,6 +93,9 @@ class EditPageLayout extends EditPage {
 		$this->app->wf->ProfileOut(__METHOD__);
 	}
 
+	/**
+	 * @param EditPageLayoutHelper $helper
+	 */
 	public function setHelper( EditPageLayoutHelper $helper ) {
 		$this->helper = $helper;
 	}
@@ -158,7 +166,7 @@ class EditPageLayout extends EditPage {
 
 		$this->out->clearHTML();
 
-		$bridge = WF::build('EditPageOutputBridge',array($this,$this->mCoreEditNotices));
+		$bridge = WF::build('EditPageOutputBridge',array($this,$this->mCoreEditNotices)); /* @var $bridge EditPageOutputBridge */
 		parent::showHeader();
 
 		// handle notices related to edit undo
@@ -183,7 +191,7 @@ class EditPageLayout extends EditPage {
 		$this->helper->addJsVariable( 'wgEditPageIsReadOnly', true );
 		$first = $this->firsttime || ( !$this->save && $this->textbox1 == '' );
 
-		$bridge = F::build('EditPageOutputBridge',array($this,$this->mCoreEditNotices));
+		$bridge = F::build('EditPageOutputBridge',array($this,$this->mCoreEditNotices)); /* @var $bridge EditPageOutputBridge */
 		parent::blockedPage();
 		$bridge->close();
 
@@ -300,7 +308,7 @@ class EditPageLayout extends EditPage {
 	 * Override importFormData  to add possibility to prevent save during post request
 	 */
 	function importFormData( &$request ) {
-		$out = parent::importFormData($request);
+		parent::importFormData($request);
 		if( $this->mPreventSave ) {
 			$this->save = false;
 		}
@@ -313,6 +321,9 @@ class EditPageLayout extends EditPage {
 		$this->mCustomHandlerTitle = $title;
 	}
 
+	/**
+	 * @return Title
+	 */
 	public function getCustomFormHandler() {
 		return $this->mCustomHandlerTitle;
 	}
@@ -528,7 +539,7 @@ class EditPageLayout extends EditPage {
 		$this->mIsReadOnlyPage = true;
 		$this->helper->addJsVariable( 'wgEditPageIsReadOnly', true );
 
-		$bridge = F::build('EditPageOutputBridge',array($this,$this->mCoreEditNotices));
+		$bridge = F::build('EditPageOutputBridge',array($this,$this->mCoreEditNotices)); /* @var $bridge EditPageOutputBridge */
 		parent::readOnlyPage($source, $protected, $reasons, $action);
 		$bridge->close();
 

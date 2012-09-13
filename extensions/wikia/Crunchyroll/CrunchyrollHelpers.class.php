@@ -14,7 +14,7 @@ class CrunchyrollHelpers {
 	static public function makeCrunchyrollGallery( $contents, $attributes, $parser ) {
 
 		$crunchyRollVideo = new CrunchyrollVideo();
-			
+
 		if ( isset( $attributes['serie'] ) ){
 			$crunchyRollVideo->setSerie( $attributes['serie'] );
 		}
@@ -28,12 +28,12 @@ class CrunchyrollHelpers {
 		} else {
 			$crunchyRollVideo->setNumber( 6 );
 		}
-		
+
 		return $crunchyRollVideo->getGallery();
 
 	}
 
-	static public function crunchyrollSetup( &$parser ) {
+	static public function crunchyrollSetup( Parser &$parser ) {
 
 		$parser->setHook( 'crunchyroll', 'CrunchyrollHelpers::makeCrunchyrollGallery' );
 

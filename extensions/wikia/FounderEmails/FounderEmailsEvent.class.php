@@ -27,6 +27,11 @@ abstract class FounderEmailsEvent {
 		$this->mType = $type;
 	}
 
+	/**
+	 * @static
+	 * @param $eventType
+	 * @return FounderEmailsEvent
+	 */
 	static public function newFromType( $eventType ) {
 		global $wgFounderEmailsExtensionConfig;
 
@@ -81,14 +86,14 @@ abstract class FounderEmailsEvent {
 
 	public static function isAnswersWiki() {
 		global $wgEnableAnswers;
-		
+
 		if (empty($wgEnableAnswers)) {
 			return false;
 		} else {
 			return true;
 		}
 	}
-	
+
 	abstract public function process( Array $events );
 
 	public static function register() {
@@ -131,24 +136,24 @@ abstract class FounderEmailsEvent {
 	/**
 	 * Wrapper for wfMsgExt that also does simple template replacements of params in message
 	 * This used to allow for a language override, but we should send FounderEmails in the wiki "content" language
-	 * 
+	 *
 	 * @param String $sMsgKey mediawiki message name
 	 * @param type $params FounderEmail specific string replacements for $XYZ
 	 * @return String The message text
 	 */
-	
+
 	protected function getLocalizedMsg( $sMsgKey, $params = array() ) {
 
 		$sBody = wfMsgExt( $sMsgKey, array( 'content') );
 		return strtr( $sBody, $params );
 	}
-	
+
 	protected static function addParamsUser($wiki_id, $user_name, &$params) {
 		$hash_url = Wikia::buildUserSecretKey($user_name, 'sha256');
-		$unsubscribe_url = GlobalTitle::newFromText('Unsubscribe', NS_SPECIAL, $wiki_id)->getFullURL(array('key' => $hash_url));		
-		
+		$unsubscribe_url = GlobalTitle::newFromText('Unsubscribe', NS_SPECIAL, $wiki_id)->getFullURL(array('key' => $hash_url));
+
 		$params['$USERNAME'] = $user_name;
 		$params['$UNSUBSCRIBEURL'] = $unsubscribe_url;
 	}
-	
+
 }

@@ -32,6 +32,21 @@ $messages['en'] = array(
 	'browser-loading-message' => 'Loading...'
 );
 
+/** Arabic (العربية)
+ * @author Mutarjem horr
+ */
+$messages['ar'] = array(
+	'main-tab-discover' => 'إكتشف',
+	'main-tab-search' => 'إبحث',
+	'main-tab-offline' => 'غير متصل',
+	'tab-discover-loading-message' => 'جاري التحميل...',
+	'tab-discover-no-network-dialog-title' => 'شبكة الاتصال غير متوفرة',
+	'tab-discover-no-network-dialog-message' => 'لم يتم الكشف عن إتصال شبكة.',
+	'tab-discover-no-network-dialog-close-button' => 'موافق',
+	'tab-search-loading-message' => 'جاري البحث...',
+	'browser-loading-message' => 'جاري التحميل...',
+);
+
 /** Azerbaijani (azərbaycanca)
  * @author Cekli829
  */

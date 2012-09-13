@@ -5,7 +5,8 @@
  * @author Jakub "Student" Olek
  */
 
-define('topbar', ['querystring', 'loader', 'toc', 'events', 'ads'], function (qs, loader, toc, events, ads){
+define('topbar', ['querystring', 'loader', 'toc', 'events', 'ads', 'track'], function (qs, loader, toc, events, ads, track) {
+	'use strict';
 	var w = window,
 		d = document,
 		loc = w.location,
@@ -25,11 +26,11 @@ define('topbar', ['querystring', 'loader', 'toc', 'events', 'ads'], function (qs
 		navSetUp = false,
 		searchInit = false;
 
-	function setupTopBar(){
+	function setupTopBar() {
 		//close WikiNav on back button
-		if('onhashchange' in w) {
+		if ('onhashchange' in w) {
 			w.addEventListener('hashchange', function() {
-				if(w.location.hash == '' && navBar.className){
+				if (!loc.hash && navBar.className) {
 					closeDropDown();
 				}
 			}, false);
@@ -48,7 +49,6 @@ define('topbar', ['querystring', 'loader', 'toc', 'events', 'ads'], function (qs
 
 	function openSearch(){
 		reset(true);
-		//track('search/toggle/open');
 		//show search
 		navBar.className = 'srhOpn';
 		searchForm.scrollIntoView();
@@ -57,14 +57,14 @@ define('topbar', ['querystring', 'loader', 'toc', 'events', 'ads'], function (qs
 		searchInput.value = '';
 		searchSug.innerHTML = '';
 
-		/*
-			This is needed for iOS 4.x
-			It knows what to do with input element with autofocus attribute
-			but totaly forgets about the rest
-			so I need to cause repaint of the navbar
+	/*
+		This is needed for iOS 4.x
+		It knows what to do with input element with autofocus attribute
+		but totaly forgets about the rest
+		so I need to cause repaint of the navbar
 
-			comment this out and load a page on iOS 4.x for a reference
-		 */
+		comment this out and load a page on iOS 4.x for a reference
+	*/
 		navBar.style.width = 'auto';
 		setTimeout(function(){
 			navBar.style.width = '100%';
@@ -75,7 +75,6 @@ define('topbar', ['querystring', 'loader', 'toc', 'events', 'ads'], function (qs
 
 	function closeSearch(){
 		if(navBar.className.indexOf('srhOpn') > -1){
-			//track('search/toggle/close');
 			showPage();
 		}
 	}
@@ -84,7 +83,9 @@ define('topbar', ['querystring', 'loader', 'toc', 'events', 'ads'], function (qs
 		if(searchInput.value === '') {
 			ev.preventDefault();
 		}else{
-			//track('search/submit');
+			track.event('search', track.SUBMIT, {
+				label: window.wgCanonicalSpecialPageName == 'Search' ? 'search' : 'article'
+			});
 		}
 	});
 
@@ -136,11 +137,15 @@ define('topbar', ['querystring', 'loader', 'toc', 'events', 'ads'], function (qs
 				if(wkNavMenu.className == 'cur1'){
 					wikiNavH1.innerText = element.innerText;
 					lvl2Link = href;
-					//track('nav/level-2');
+					track.event('wikinav', track.CLICK, {
+						label: 'level-2'
+					});
 					wkNavMenu.className = 'cur2';
 					wikiNavH1.className = 'anim';
 				}else{
-					//track('nav/level-3');
+					track.event('wikinav', track.CLICK, {
+						label: 'level-3'
+					});
 
 					wkNavMenu.className = 'cur3';
 					wikiNavH1.className = 'animNext';
@@ -157,7 +162,9 @@ define('topbar', ['querystring', 'loader', 'toc', 'events', 'ads'], function (qs
 				setTimeout(function(){
 					wkNavMenu.querySelector('.lvl2.cur').className = 'lvl2';
 				}, 501);
-				//track('nav/level-1');
+				track.event('wikinav', track.CLICK, {
+					label: 'level-1'
+				});
 				wkNavMenu.className = 'cur1';
 				wikiNavH1.className = 'animBack';
 			} else {
@@ -174,9 +181,17 @@ define('topbar', ['querystring', 'loader', 'toc', 'events', 'ads'], function (qs
 
 				handleHeaderLink(lvl2Link);
 
-				//track('nav/level-2');
+				track.event('wikinav', track.CLICK, {
+					label: 'level-2'
+				});
 				wkNavMenu.className = 'cur2';
 			}
+		});
+
+		wikiNavLink.addEventListener('click', function(){
+			track.event('wikinav', track.CLICK, {
+				label: 'header-' + wkNavMenu.className.slice(3)
+			});
 		});
 
 		navSetUp = true;
@@ -194,7 +209,9 @@ define('topbar', ['querystring', 'loader', 'toc', 'events', 'ads'], function (qs
 	function openNav(){
 		!navSetUp && setupNav();
 		reset();
-		//track('nav/open');
+		track.event('wikinav', track.CLICK, {
+			label: 'level-1'
+		});
 		wkNavMenu.className = 'cur1';
 		navBar.className = 'fllNav';
 	}
@@ -246,7 +263,7 @@ define('topbar', ['querystring', 'loader', 'toc', 'events', 'ads'], function (qs
                             list: searchSug,
                             clear: d.getElementById('wkClear')
                         });
-                    })
+                    });
                 }
             });
             searchInit = true;

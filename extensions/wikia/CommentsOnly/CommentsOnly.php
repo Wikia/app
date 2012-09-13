@@ -29,7 +29,7 @@ $wgArticleCommentsNamespaces[] = NS_FORUM;
 
 // where to hide article contents and show only comments
 $wgCommentsOnlyNamespaces[] = NS_FORUM;
-function wfCOArticleCommentCheck($title) {
+function wfCOArticleCommentCheck(Title $title) {
 	global $wgCommentsOnlyNamespaces;
 	if ((in_array($title->getNamespace(), $wgCommentsOnlyNamespaces))
 		&& (($title->getText() == 'Index') || $title->equals(Title::newMainPage()))
@@ -59,7 +59,7 @@ function wfCOArticleViewHeader(&$article, &$outputDone, $useParserCache) {
 }
 
 // add css
-function wfCOBeforePageDisplay(&$out, &$sk) {
+function wfCOBeforePageDisplay(OutputPage &$out, &$sk) {
 	global $wgExtensionsPath;
 	if (wfCOCheck()) {
 		$out->addExtensionStyle("$wgExtensionsPath/wikia/CommentsOnly/CommentsOnly.css");
@@ -72,12 +72,12 @@ function wfCOCategorySelectBeforeDisplayingView() {
 	return !wfCOCheck();
 }
 
-function wfCOQuestionBox(&$parser) {
+function wfCOQuestionBox(Parser &$parser) {
 	$parser->setHook('questionbox', 'wfCOQuestionBoxRender');
 	return true;
 }
 
-function wfCOQuestionBoxRender($input, $argv, $parser) {
+function wfCOQuestionBoxRender($input, $argv, Parser $parser) {
 	global $wgUser;
 
 	if (wfReadOnly() || !$wgUser->isAllowed('edit') || $wgUser->isBlocked()) {

@@ -13,6 +13,13 @@ $messages['qqq'] = array(
 	'healthcheck-desc' => '{{desc}}',
 );
 
+/** Arabic (العربية)
+ * @author Mutarjem horr
+ */
+$messages['ar'] = array(
+	'healthcheck-desc' => ' [[Special:HealthCheck|special page]] لفحص حالة الخادم',
+);
+
 /** Asturian (asturianu)
  * @author Xuacu
  */

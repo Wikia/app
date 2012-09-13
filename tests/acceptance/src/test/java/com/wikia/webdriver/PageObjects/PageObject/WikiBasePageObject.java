@@ -3,6 +3,7 @@ package com.wikia.webdriver.PageObjects.PageObject;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -43,10 +44,25 @@ public class WikiBasePageObject extends BasePageObject {
 	private WebElement deleteConfirmationButton;
 	
 	@FindBy(css="a#ca-edit")
-	private WebElement editButton;
+	protected WebElement editButton;
 	
 	@FindBy(css="a[data-canonical='random']")
 	private WebElement randomPageButton;
+	
+	@FindBy(css="div.msg a")
+	private WebElement undeleteButton;
+	
+	@FindBy(css="input#mw-undelete-submit")
+	private WebElement restoreButton;
+	
+	@FindBy(css="input#wpNewTitleMain")
+	private WebElement renameArticleField;
+	
+	@FindBy(css="input[name='wpMove']")
+	private WebElement confirmRenamePageButton;
+	
+	@FindBy(css="input#wpReason")
+	private WebElement deleteCommentReasonField;
 	
 	private By layoutList = By.cssSelector("ul#CreatePageDialogChoices li");
 	
@@ -120,8 +136,8 @@ public class WikiBasePageObject extends BasePageObject {
 	
 	private void clickContributeButton()
 	{
-//		contributeButton.click();
-		clickRobot(contributeButton);
+		executeScript("document.querySelectorAll(\".wikia-menu-button\")[0].click()");
+		executeScript("document.querySelectorAll(\".wikia-menu-button\")[0].click()");
 		waitForElementByElement(createArticleButton);
 		PageObjectLogging.log("clickOnContributeButton", "contribute button clicked", true);
 	}
@@ -130,8 +146,7 @@ public class WikiBasePageObject extends BasePageObject {
 	{
 		waitForElementByElement(createArticleButton);
 		waitForElementClickableByElement(createArticleButton);
-		clickRobot(createArticleButton);
-//		createArticleButton.click();
+		executeScript("document.querySelectorAll('.createpage')[0].click()");
 		waitForElementByElement(driver.findElement(layoutList));
 		PageObjectLogging.log("clickCreateArticleButton", "create article button clicked", true);
 	}
@@ -151,6 +166,12 @@ public class WikiBasePageObject extends BasePageObject {
 	private void typeInArticleName(String name)
 	{
 		waitForElementByElement(articleNameField);
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		articleNameField.sendKeys(name);
 	}
 	
@@ -194,6 +215,10 @@ public class WikiBasePageObject extends BasePageObject {
 	protected void clickDeleteConfirmationButton()
 	{
 		waitForElementByElement(deleteConfirmationButton);
+		waitForElementByElement(deleteCommentReasonField);
+		deleteCommentReasonField.clear();
+		deleteCommentReasonField.sendKeys("QAReason");
+//		executeScript("document.querySelectorAll('#wpConfirmB')[0].click()");
 		deleteConfirmationButton.click();
 	}
 	
@@ -205,12 +230,45 @@ public class WikiBasePageObject extends BasePageObject {
 		PageObjectLogging.log("deleteArticle", "article has been deleted", true, driver);
 	}
 	
+	public void renameArticle(String articleName, String articleNewName)
+	{
+		driver.get(Global.DOMAIN+"wiki/Special:MovePage/"+articleName);
+		waitForElementByElement(renameArticleField);
+		waitForElementByElement(confirmRenamePageButton);
+		renameArticleField.clear();
+		renameArticleField.sendKeys(articleNewName);
+		confirmRenamePageButton.click();
+		waitForElementByXPath("//b[contains(text(), '\""+articleName+"\" has been renamed \""+articleNewName+"\"')]");
+	}
+	
+	private void clickUndeleteArticle()
+	{
+		waitForElementByElement(undeleteButton);
+		undeleteButton.click();
+		waitForElementByElement(restoreButton);
+		PageObjectLogging.log("clickUndeleteArticle", "undelete article button clicked", true, driver);
+	}
+	
+	private void clickRestoreArticleButton()
+	{
+		waitForElementByElement(restoreButton);
+		restoreButton.click();
+		waitForElementByXPath("//div[@class='msg' and contains(text(), 'This page has been restored.')]");
+		PageObjectLogging.log("clickUndeleteArticle", "undelete article button clicked", true, driver);
+	}
+	
+	public void undeleteArticle()
+	{
+		clickUndeleteArticle();
+		clickRestoreArticleButton();
+	}
+	
 	public WikiArticleEditMode createNewArticle(String pageName, int layoutNumber)
 	{
 		clickContributeButton();
 		clickCreateArticleButton();
-		typeInArticleName(pageName);
 		selectPageLayout(layoutNumber);
+		typeInArticleName(pageName);
 		clickAddPageButton();
 		String pageNameEnc = pageName.replace("_", " ");
 		waitForElementByElement(driver.findElement(By.cssSelector("a[title='"+pageNameEnc+"']")));

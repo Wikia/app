@@ -32,7 +32,7 @@ $messages['ar'] = array(
 	'wikifactoryreporter' => 'مراسل WikiFactory',
 );
 
-/** Araucanian (mapudungun)
+/** Mapuche (mapudungun)
  * @author Kaniw
  */
 $messages['arn'] = array(

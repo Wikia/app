@@ -700,17 +700,14 @@ class ArticleComment {
 			//this function calls Article::onArticleCreate which clears cache for article and it's talk page - TODO: is this comment still valid? Does it refer to the line above or to something that got deleted?
 		$retval = $editPage->internalAttemptSave( $result, $bot );
 
-		//Just for transition time
 		if( $retval->value == EditPage::AS_SUCCESS_UPDATE ) {
 			/**
 			 * @var $commentsIndex CommentsIndex
 			 */
 			$commentsIndex = F::build( 'CommentsIndex', array( $article->getID() ), 'newFromId' );
-		/*	if ( $commentsIndex instanceof CommentsIndex ) {
+			if ( $commentsIndex instanceof CommentsIndex ) {
 				$commentsIndex->updateLastRevId( $article->getTitle()->getLatestRevID(Title::GAID_FOR_UPDATE) );
 			}
-			
-		*/
 		}
 		return $retval;
 	}
@@ -814,17 +811,14 @@ class ArticleComment {
 				'firstRevId' => $revId,
 				'lastRevId' => $revId,
 			);
-
 			/**
 			 * @var $commentsIndex CommentsIndex
-			 *
 			 */
 			$commentsIndex = F::build( 'CommentsIndex', array($data) );
-			//commented out for a transition time
-/*			$commentsIndex->addToDatabase();
+			$commentsIndex->addToDatabase();
 
 			// set last child comment id
-			$commentsIndex->updateParentLastCommentId( $data['commentId'] ); */
+			$commentsIndex->updateParentLastCommentId( $data['commentId'] );
 
 			wfRunHooks( 'EditCommentsIndex', array($article->getTitle(), $commentsIndex) );
 		}

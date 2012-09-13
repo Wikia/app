@@ -1,17 +1,13 @@
 <?php
 
 /**
- * Supports and implements ResourceLoader enhancement to
- * combine and minify contents of articles coming from
- * local wiki as well as other wikis.
+ * ResourceLoader enhancement that allows combining
+ * content of articles from local and external wikis.
  *
  * @author Sean Colombo
  * @author Wladyslaw Bodzek
  */
-class ArticlesAsResources {
-
-	// application
-	private $app;
+class ArticlesAsResources extends WikiaObject {
 
 	// Cached (hard-coded) IDs of popular wikis
 	// (may be we should not do it)
@@ -22,10 +18,6 @@ class ArticlesAsResources {
 	// by its domain name
 	const WIKIA_DEFAULT_DOMAIN_SUFFIX = '.wikia.com';
 
-	function __construct() {
-		$this->app = F::app();
-	}
-
 	/**
 	 * Debug logging
 	 *
@@ -33,7 +25,7 @@ class ArticlesAsResources {
 	 * @param string $msg - log message to be added
 	 */
 	private function log($method, $msg) {
-		$this->app->wf->debug($method  . ": {$msg}\n");
+		$this->wf->debug($method  . ": {$msg}\n");
 	}
 
 	/**
@@ -99,15 +91,15 @@ class ArticlesAsResources {
 	 * Parse user-supplied list of articles in various formats
 	 * to the other one that is understood by ResourceLoaderCustomWikiModule.
 	 *
-	 * Supported forms are:
+	 * Supported formats are:
 	 * - (l|local):<page> - page from local wiki
 	 * - (w|remote|external):<dbname>:<page> - search by wiki dbname
 	 * - (u|url):<url_or_its_part>:<page> - search by wiki exact url or that one suffixed by ".wikia.com"
 	 * - <page> - page from local wiki
 	 *
 	 * Output format is:
-	 * - local wiki: array( 'title' => '<page>' )
-	 * - other wiki: array( 'cityId' => <numeric_id>, 'title' => '<page>' )
+	 * - local wiki: array( 'title' => '<page>', 'originalName' => '<input>' )
+	 * - other wiki: array( 'cityId' => <numeric_id>, 'title' => '<page>', 'originalName' => '<input>' )
 	 *
 	 * @param $list array
 	 * @return array

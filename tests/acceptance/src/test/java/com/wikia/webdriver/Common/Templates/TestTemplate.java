@@ -4,12 +4,15 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
 
+import org.browsermob.proxy.ProxyServer;
+import org.browsermob.proxy.jetty.jetty.Server;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 
+import com.wikia.webdriver.Common.Core.CommonFunctions;
 import com.wikia.webdriver.Common.Core.CommonUtils;
 import com.wikia.webdriver.Common.Core.Global;
 import com.wikia.webdriver.Common.DriverProvider.DriverProvider;
@@ -19,6 +22,7 @@ import com.wikia.webdriver.Common.Properties.Properties;
 public class TestTemplate {
 	
 	public WebDriver driver;
+	public ProxyServer server;
 	
 	@BeforeSuite(alwaysRun = true)
 	public void beforeSuite()
@@ -71,6 +75,7 @@ public class TestTemplate {
 	public void start(Method method)
 	{
 		startBrowser();
+//		CommonFunctions.MoveCursorTo(0, 0);
 		PageObjectLogging.startLoggingMethod(getClass().getSimpleName().toString(), method.getName());
 	}
 	
@@ -78,6 +83,7 @@ public class TestTemplate {
 	public void stop()
 	{
 		stopBrowser();
+//		CommonFunctions.MoveCursorTo(0, 0);
 		PageObjectLogging.stopLoggingMethod();
 	}
 	
@@ -86,6 +92,7 @@ public class TestTemplate {
 	{
 		DriverProvider.getInstance();
 		driver = DriverProvider.getWebDriver();
+		server = DriverProvider.getServer();
 	}
 	
 	private void stopBrowser()

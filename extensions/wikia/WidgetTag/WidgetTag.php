@@ -20,7 +20,12 @@ $wgHooks['ParserFirstCallInit'][] = 'efWidgetTagSetup';
 
 $wgAutoloadClasses['WidgetTagRenderer'] = dirname(__FILE__) . '/WidgetTagRenderer.class.php';
 
-// setup parser hook
+/**
+ * Setup parser hook
+ *
+ * @param Parser $parser
+ * @return bool
+ */
 function efWidgetTagSetup(Parser $parser) {
 	global $wgHooks;
 	$parser->setHook( 'widget', 'efWidgetTagRender' );

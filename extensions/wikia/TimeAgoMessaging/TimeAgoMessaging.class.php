@@ -17,6 +17,7 @@ class TimeAgoMessaging {
 	 * Get timeago messages (for user language)
 	 */
 	private static function getMessages() {
+		/* @var $wgLang Language */
 		global $wgLang, $wgMemc;
 		wfProfileIn(__METHOD__);
 

@@ -2,6 +2,12 @@
 
 class SkinChooser {
 
+	/**
+	 * @static
+	 * @param User $user
+	 * @param Array $defaultPreferences
+	 * @return bool
+	 */
 	public static function onGetPreferences($user, &$defaultPreferences) {
 		global $wgEnableAnswers, $wgForceSkin, $wgAdminSkin, $wgDefaultSkin, $wgSkinPreviewPage, $wgSkipSkins, $wgSkipOldSkins, $wgEnableUserPreferencesV2Ext;
 
@@ -38,8 +44,6 @@ class SkinChooser {
 			}
 		}
 		asort($validSkinNames);
-
-		$validSkinNames2 = $validSkinNames;
 
 		$previewtext = wfMsg('skin-preview');
 		if(isset($wgSkinPreviewPage) && is_string($wgSkinPreviewPage)) {
@@ -94,8 +98,6 @@ class SkinChooser {
 
 		return true;
 	}
-
-	static private $wgAllowUserSkinOriginal;
 
 	/**
 	 * Generate proper key for user option
@@ -161,7 +163,15 @@ class SkinChooser {
 		wfProfileOut(__METHOD__);
 	}
 
+	/**
+	 * @static
+	 * @param $tname
+	 * @param bool $trailer
+	 * @param bool $disabled
+	 * @return string
+	 */
 	private static function getToggle( $tname, $trailer = false, $disabled = false ) {
+		/* @var $wgLang Language */
 		global $wgLang;
 
 		$ttext = $wgLang->getUserToggle( $tname );
@@ -309,6 +319,11 @@ class SkinChooser {
 		return false;
 	}
 
+	/**
+	 * @static
+	 * @param $method
+	 * @param $msg
+	 */
 	private static function log($method, $msg) {
 		wfDebug("{$method}: {$msg}\n");
 	}

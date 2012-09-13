@@ -29,7 +29,7 @@
 			<? if( !empty($user['location']) ): ?>
 				<li class=mstSectLi itemprop=address><?= wfMsg('user-identity-box-location', array( '$1' => $user['location'] )); ?></li>
 			<? endif; ?>
-			<? if( !empty($user['birthday']) ): ?>
+			<? if( !empty($user['birthday']) && intval( $user['birthday']['month'] ) > 0 && intval( $user['birthday']['month'] ) < 13 ): ?>
 				<li class=mstSectLi><?= wfMsg('user-identity-box-was-born-on', array( '$1' => F::app()->wg->Lang->getMonthName( intval($user['birthday']['month']) ), '$2' => $user['birthday']['day'] )); ?></li>
 			<? endif; ?>
 			<? if( !empty($user['occupation']) ): ?>

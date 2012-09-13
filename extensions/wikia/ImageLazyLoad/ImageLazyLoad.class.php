@@ -73,7 +73,7 @@ class ImageLazyLoad extends WikiaObject {
 		return true;
 	}
 
-	function onBeforePageDisplay( &$out, &$skin ) {
+	function onBeforePageDisplay( OutputPage &$out, &$skin ) {
 		if ( self::$enabled ) {
 			$out->addHtml( '<noscript><link rel="stylesheet" href="' . $this->app->wg->ExtensionsPath . '/wikia/ImageLazyLoad/css/ImageLazyLoadNoScript.css" /></noscript>' );
 		}

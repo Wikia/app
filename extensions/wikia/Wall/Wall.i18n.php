@@ -726,7 +726,6 @@ This message follows after http://messaging.wikia.com/wiki/MediaWiki:Prefs-email
 	'wall-preview-modal-title' => 'Title of preview modal',
 	'wall-preview-modal-button-back' => 'buton on preview modal',
 	'wall-preview-modal-button-publish' => 'buton on preview modal',
-	
 	'wall-topic-input-heading' => 'Topic input label',
 	'wall-topic-input-placeholder' => 'Adding topic instruction and call to action.  State that it is optional',
 	'wall-topic-input-error' => 'Error message saying article is not on the wiki.  Topic is a wiki article, therefore, state that there is no article.',
@@ -765,9 +764,18 @@ $messages['br'] = array(
 );
 
 /** Czech (česky)
+ * @author Chmee2
  * @author Vks
  */
 $messages['cs'] = array(
+	'wall-no-title' => 'Bez názvu',
+	'wall-message-undoremove' => 'Vrátit',
+	'wall-message-mywall' => 'Moje zeď',
+	'wall-toolbar-history' => 'Historie',
+	'wall-message-remove' => 'Odstranit',
+	'wall-thread-deleted' => 'Odstraněno',
+	'wall-thread-closed' => 'Zavřeno',
+	'wall-default-title' => 'Zpráva od $1',
 	'wall-placeholder-reply' => 'Odpovědět',
 	'wall-button-to-preview-comment' => 'Náhled',
 	'wall-button-to-cancel-preview' => 'Upravit',
@@ -780,13 +788,19 @@ $messages['cs'] = array(
 	'wall-message-edit' => 'Upravit',
 	'wall-message-more' => 'Více',
 	'wall-message-delete' => 'Smazat',
+	'wall-message-close-thread' => 'Uzavřít toto vlákno',
 	'wall-message-removed-thread-because' => '$1 odstranil vlákno, protože:',
 	'wall-message-deleted-thread-because' => '$1 smazal vlákno, protože:',
 	'wall-message-restore-thread' => 'Obnovit vlákno',
 	'wall-message-removed-reply-because' => '$1 odstranil vlákno, protože:',
 	'wall-message-deleted-reply-because' => '$1 smazal vlákno, protože:',
 	'wall-message-restore-reply' => 'Obnovit odpověď',
+	'wall-action-all-confirm-cancel' => 'Zrušit',
+	'wall-action-all-confirm-notify' => 'Upozornit správce',
 	'wall-delete-error-title' => 'Chyba',
+	'wall-action-remove-confirm-ok' => 'Odstranit',
+	'wall-action-admin-thread-title' => 'Odstranit toto vlákno',
+	'wall-action-admin-reply-title' => 'Odstranit odpověď',
 	'wall-action-admin-confirm-ok' => 'Smazat',
 	'wall-action-restore-confirm-ok' => 'Obnovit',
 	'wall-action-rev-confirm-ok' => 'Ano, smazat',
@@ -796,7 +810,17 @@ $messages['cs'] = array(
 	'wall-notifications-markasread-all-wikis' => 'Všechny wiki',
 	'wall-notifications-markasread-this-wiki' => 'Tato wiki',
 	'wall-notifications-empty' => 'Nemáte žádná upozornění',
+	'wall-sorting-newest-threads' => 'Nejnovější vlákna',
+	'wall-sorting-oldest-threads' => 'Nejstarší vlákna',
+	'wall-sorting-newest-replies' => 'Nejnovější odpovědi',
+	'wall-sorting-most-active' => 'Nejaktivnější',
+	'wall-deleted-msg-pagetitle' => 'Zpráva byla odstraněna',
 	'wall-history' => 'Historie',
+	'mail-notification-html-greeting' => 'Ahoj $1,',
+	'wall-quote-reply-to' => 'odpověď na #$1',
+	'wall-preview-modal-title' => 'Náhled',
+	'wall-preview-modal-button-back' => 'Zpět',
+	'wall-preview-modal-button-publish' => 'Publikovat',
 );
 
 /** German (Deutsch)
@@ -1069,6 +1093,12 @@ ___________________________________________<br />
 	'wall-preview-modal-title' => 'Vorschau',
 	'wall-preview-modal-button-back' => 'Zurück',
 	'wall-preview-modal-button-publish' => 'Veröffentlichen',
+	'wall-topic-input-heading' => 'Thema',
+	'wall-topic-input-placeholder' => 'Ein Thema hinzufügen (optional)',
+	'wall-topic-input-error' => 'Es gibt keinen Artikel namens „$1“. Bitte wähle einen vorhandenen Artikeltitel als Thema aus.',
+	'wall-topic-input-error-limit' => 'Ein Thread kann nur maximal $1 Themen haben.',
+	'wall-topic-heading' => 'Themen für diesen Thread:',
+	'wall-topic-edit' => 'Themen bearbeiten',
 );
 
 /** Zazaki (Zazaki)
@@ -4401,7 +4431,7 @@ ___________________________________________<br />
  */
 $messages['ps'] = array(
 	'wall-no-title' => 'بې سرليکه',
-	'wall-message-loadmore' => '$1 {{PLURAL:$1|ځواب|ځوابونه}} کتل',
+	'wall-message-loadmore' => '<span class="count">{{PLURAL:$1|$1 ځواب|ټول $1 ځوابونه}}</span> کتل',
 	'wall-message-wall' => 'پيغام دېوال',
 	'wall-message-wall-shorten' => 'دېوال',
 	'wall-message-undoremove' => 'ناکړل',

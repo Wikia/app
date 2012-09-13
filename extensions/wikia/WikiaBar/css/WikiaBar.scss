@@ -2,6 +2,10 @@
 @import "../../../../skins/oasis/css/core/layout";
 @import "../../../../skins/oasis/css/mixins/box-shadow";
 @import "../../../../skins/oasis/css/mixins/gradient";
+@import "../../../../skins/oasis/css/mixins/transition";
+@import "../../../../skins/oasis/css/mixins/transform";
+
+$animationSpeed: 200ms;
 
 body {
 	margin-bottom: 25px;
@@ -15,18 +19,27 @@ body {
 	z-index: $zTop;
 	@include linear-gradient($color-header, left, $color-header-alt, 0, $color-header, 50%, $color-header-alt, 100%);
 	@include box-shadow(0, 0, 10px, $color-page-shadow);
+	@include transition-shorthand(all $animationSpeed ease-in $animationSpeed);
+	&.hidden {
+		bottom: -25px;
+		@include transition-shorthand(all $animationSpeed ease-in);
+		.ad {
+			opacity: 0;
+			@include transition-shorthand(all $animationSpeed ease-in);
+		}
+	}
 	.wikia-bar {
 		background-image: url(/skins/oasis/images/checkers.png); /* base64 */
 		height: 25px;
 		margin: auto;
-	  	text-align: center;
+		text-align: center;
 		width: 100%;
-	  	.ad {
-			background-color: green;
+		.ad {
 			float: left;
 			margin: 0 5px;
 			width: 320px;
 			height: 25px;
+			@include transition-shorthand(all $animationSpeed ease-in $animationSpeed);
 		}
 		.wikiabar-button {
 			background-color: #303030;
@@ -67,5 +80,28 @@ body {
 			height: 25px;
 			width: 24px;
 		}
+	}
+}
+
+.WikiaBarCollapseWrapper {
+	background-color: $color-header-alt;
+	background-image: url(/extensions/wikia/WikiaBar/images/arrowUp.png); /* base64 */
+	background-position: center;
+	background-repeat: no-repeat;
+	bottom: 0;
+	position: fixed;
+	right: 0;
+	@include box-shadow(0, 0, 10px, $color-page-shadow);
+	@include transition-shorthand(all $animationSpeed ease-in $animationSpeed);
+	&.hidden {
+		bottom: -25px;
+		@include transition-shorthand(all $animationSpeed ease-in);
+	}
+	.wikia-bar-collapse {
+		display: block;
+		float: right;
+		height: 25px;
+		width: 23px;
+		background-image: url(/skins/oasis/images/checkers.png); /* base64 */
 	}
 }

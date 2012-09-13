@@ -238,16 +238,10 @@
 			// BugId:2823
 			$(window).trigger('editTitleUpdated', [window.wgEditedTitle]);
 
-			if (window.wgEditedTitle.substring(0, 30) == window.wgEditedTitle) {
-				var shortText = $.htmlentities(window.wgEditedTitle);
-			} else {
-				var shortText = $.htmlentities(window.wgEditedTitle.substring(0, 30)) + '&hellip;';
-			}
-
 			this.titleNode.children('a').
 				attr('href', wgArticlePath.replace('$1', window.wgEditedTitle)).
 				attr('title', $.htmlentities(window.wgEditedTitle)).
-				html(shortText);
+				html(window.wgEditedTitle);
 				$('#EditPageHeader .hiddenTitle').show();
 		},
 

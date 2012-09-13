@@ -23,22 +23,28 @@ $wgHooks['ArticleDeleteComplete'][] = "WikiaEditStatistics::deleteComplete";
 $wgHooks['UndeleteComplete'][] = "WikiaEditStatistics::undeleteComplete";
 
 /*
- * update statistics 
+ * update statistics
  */
 
 class WikiaEditStatistics {
-	private 
-		$mPageId, 
-		$mPageNs, 
+	private
+		$mPageId,
+		$mPageNs,
 		$mIsContent,
 		$mDate,
 		$mText;
 	const updateWithToday = false;
-		
+
+	/**
+	 * @param Title $Title
+	 * @param User $User
+	 * @param int $articleId
+	 * @param string $text
+	 */
 	public function __construct( $Title, $User, $articleId = 0, $text = '' ) {
 		global $wgEnableBlogArticles;
 		/**
-		 * initialization	
+		 * initialization
 		 */
 		$this->mPageNs = $Title->getNamespace();
 		if ( empty($articleId) ) {
@@ -55,11 +61,11 @@ class WikiaEditStatistics {
 		} else {
 			$this->mUserId = intval($User);
 		}
-		$this->mIsContent = 
-			( $Title->isContentPage() ) && 
-			( 
-				($wgEnableBlogArticles) && 
-				(!in_array($this->mPageNs, array(NS_BLOG_ARTICLE, NS_BLOG_ARTICLE_TALK, NS_BLOG_LISTING, NS_BLOG_LISTING_TALK))) 
+		$this->mIsContent =
+			( $Title->isContentPage() ) &&
+			(
+				($wgEnableBlogArticles) &&
+				(!in_array($this->mPageNs, array(NS_BLOG_ARTICLE, NS_BLOG_ARTICLE_TALK, NS_BLOG_LISTING, NS_BLOG_LISTING_TALK)))
 			);
 
 		$this->mDate = date('Y-m-d');
@@ -71,7 +77,7 @@ class WikiaEditStatistics {
 	public function setPageId($page_id) { $this->mPageId = $page_id; }
 	public function setUserId($user_id) { $this->mUserId = $user_id; }
 	public function setDate($date) { $this->mDate = $date; }
-		
+
 	/**
 	 * increase -- update stats
 	 *
@@ -82,24 +88,24 @@ class WikiaEditStatistics {
 	public function increase( $inc = 1 ) {
 		global $wgExternalDatawareDB, $wgCityId;
 		wfProfileIn( __METHOD__ );
-		
+
 		$return = 0;
 		if ( !empty($this->mPageId) ) {
 			$numberWords = $this->numberWords();
 			$newWords = str_word_count($this->mText);
 
-			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );			
+			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
 			$dbw->begin( __METHOD__ );
 			try {
-				# number of edits 
-				$conditions = array( 
+				# number of edits
+				$conditions = array(
 					'pe_wikia_id'	=> $wgCityId,
 					'pe_page_id'	=> $this->mPageId,
 					'pe_page_ns'	=> $this->mPageNs,
 					'pe_date'		=> $this->mDate,
 				);
 
-				$oRow = $dbw->selectRow( 
+				$oRow = $dbw->selectRow(
 					array( 'page_edits' ),
 					array( 'pe_page_id, pe_all_count, pe_anon_count, pe_words' ),
 					$conditions,
@@ -108,7 +114,7 @@ class WikiaEditStatistics {
 
 				if ( $oRow ) {
 					# update edits count
-					$data = array( 
+					$data = array(
 						'pe_all_count' 	=> intval($oRow->pe_all_count + $inc),
 						'pe_is_content' => intval($this->mIsContent),
 						'pe_diff_words'	=> intval($newWords - $oRow->pe_words),
@@ -118,7 +124,7 @@ class WikiaEditStatistics {
 						$data['pe_anon_count'] = intval($oRow->pe_anon_count + $inc);
 					}
 					$dbw->update( 'page_edits', $data, $conditions, __METHOD__ );
-				} 
+				}
 				else {
 					# insert edits count
 					$conditions['pe_all_count'] = $inc;
@@ -132,9 +138,9 @@ class WikiaEditStatistics {
 					}
 					$dbw->insert( 'page_edits', $conditions, __METHOD__ );
 				}
-				
+
 				#editor stats
-				$conditions = array( 
+				$conditions = array(
 					'pc_wikia_id'	=> $wgCityId,
 					'pc_page_id'	=> $this->mPageId,
 					'pc_page_ns'	=> $this->mPageNs,
@@ -142,7 +148,7 @@ class WikiaEditStatistics {
 					'pc_user_id'	=> $this->mUserId,
 				);
 
-				$oRow = $dbw->selectRow( 
+				$oRow = $dbw->selectRow(
 					array( 'page_editors' ),
 					array( 'pc_all_count' ),
 					$conditions,
@@ -151,12 +157,12 @@ class WikiaEditStatistics {
 
 				if ( $oRow ) {
 					# update edits count
-					$data = array( 
+					$data = array(
 						'pc_all_count' 	=> intval($oRow->pc_all_count + $inc),
 						'pc_is_content' => intval($this->mIsContent)
 					);
 					$dbw->update( 'page_editors', $data, $conditions, __METHOD__ );
-				} 
+				}
 				else {
 					# insert edits count
 					$conditions['pc_all_count'] = $inc;
@@ -172,38 +178,38 @@ class WikiaEditStatistics {
 				Wikia::log( __METHOD__, "info", "cannot update stats for Wikia: $wgCityId");
 			}
 		}
-		
+
 		wfProfileOut( __METHOD__ );
 		return $return;
 	}
 
 	/*
-	 * get number of words for article 
-	 *  
+	 * get number of words for article
+	 *
 	 * @access private
-	 * 
+	 *
 	 * return integer
 	 */
 	private function numberWords() {
 		global $wgExternalDatawareDB, $wgCityId;
 		wfProfileIn( __METHOD__ );
-		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalDatawareDB );	
+		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalDatawareDB );
 
-		# number of edits 
-		$conditions = array( 
+		# number of edits
+		$conditions = array(
 			'pe_wikia_id'	=> $wgCityId,
 			'pe_page_id'	=> $this->mPageId,
 			'pe_page_ns'	=> $this->mPageNs
 		);
 
-		$oRow = $dbr->selectRow( 
+		$oRow = $dbr->selectRow(
 			array( 'page_edits' ),
 			array( 'pe_words' ),
 			$conditions,
 			__METHOD__,
 			array('ORDER BY' => 'pe_date desc', 'LIMIT' => 1)
 		);
-		
+
 		wfProfileOut( __METHOD__ );
 		return (isset($oRow->pe_words)) ? intval( $oRow->pe_words ) : 0;
 	}
@@ -217,21 +223,21 @@ class WikiaEditStatistics {
 	 */
 	public function increaseRevision( $inc = 1 ) {
 		wfProfileIn( __METHOD__ );
-		
+
 		$return = 0;
-		# after undelete function we have to check number of restored revisions 
+		# after undelete function we have to check number of restored revisions
 		$dbr = wfGetDB( DB_SLAVE );
-		$res = $dbr->select( 
-			'revision', 
-			array( 'rev_user', 'cast(rev_timestamp as date) as rev_date' ), 
-			array( 
+		$res = $dbr->select(
+			'revision',
+			array( 'rev_user', 'cast(rev_timestamp as date) as rev_date' ),
+			array(
 				'rev_page'		=> $this->mPageId,
 				'rev_deleted'	=> 0
-			), 
-			__METHOD__ 
+			),
+			__METHOD__
 		);
-		
-		if ( $dbr->numRows($res) ) { 
+
+		if ( $dbr->numRows($res) ) {
 			while( $oRow = $dbr->fetchObject($res) ) {
 				$this->setUserId($oRow->rev_user);
 				if ( self::updateWithToday == false ) {
@@ -242,7 +248,7 @@ class WikiaEditStatistics {
 			}
 			$dbr->freeResult($res);
 		}
-		
+
 		wfProfileOut( __METHOD__ );
 		return $return;
 	}
@@ -261,17 +267,17 @@ class WikiaEditStatistics {
 		$return = 0;
 		if ( !empty($this->mPageId) ) {
 			#edits
-			$conditions = array( 
+			$conditions = array(
 				'pe_wikia_id'	=> $wgCityId,
 				'pe_page_id'	=> $this->mPageId,
 				'pe_page_ns'	=> $this->mPageNs,
 				'pe_date'		=> $this->mDate
 			);
-			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );			
+			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
 			$dbw->delete( 'page_edits', $conditions, __METHOD__ );
 
 			#editors
-			$conditions = array( 
+			$conditions = array(
 				'pc_wikia_id'	=> $wgCityId,
 				'pc_page_id'	=> $this->mPageId,
 				'pc_page_ns'	=> $this->mPageNs,
@@ -279,19 +285,19 @@ class WikiaEditStatistics {
 			);
 			$dbw->delete( 'page_editors', $conditions, __METHOD__ );
 		}
-		
+
 		wfProfileOut( __METHOD__ );
 		return $return;
 	}
 
 	/**
-	 * saveComplete -- hook 
+	 * saveComplete -- hook
 	 *
 	 * @static
 	 * @access public
 	 *
-	 * @param Article $Article,
-	 * @param User $User,
+	 * @param WikiPage $Article
+	 * @param User $User
 	 *
 	 * @return true
 	 */
@@ -303,16 +309,16 @@ class WikiaEditStatistics {
 			$oEdits->increase();
 		}
 		wfProfileOut( __METHOD__ );
-		return true;		
+		return true;
 	}
 
 	/**
-	 * deleteComplete -- hook 
+	 * deleteComplete -- hook
 	 *
 	 * @static
 	 * @access public
 	 *
-	 * @param Article $Article,
+	 * @param WikiPage $Article,
 	 * @param User $User,
 	 * @param String $reason,
 	 * @param String $articleId,
@@ -329,16 +335,16 @@ class WikiaEditStatistics {
 		wfProfileOut( __METHOD__ );
 		return true;
 	}
-	
+
 	/**
-	 * undeleteComplete -- hook 
+	 * undeleteComplete -- hook
 	 *
 	 * @static
 	 * @access public
 	 *
 	 * @param Title $Title,
 	 * @param User $User,
-	 * @param String reason
+	 * @param String $reason
 	 *
 	 * @return true
 	 */
@@ -361,18 +367,18 @@ class WikiaEditStatistics {
 }
 
 /*
- * per hub statistics 
+ * per hub statistics
  */
 class WikiaHubStats {
 	const PV_MONTHS = 12;
-	private 
+	private
 		$mCityId,
 		$mWFHub,
 		$mName;
-	
+
 	/**
 	 * initialization
-	 * 
+	 *
 	 * @access public
 	 *
 	 * @param String or Integer $cat,
@@ -383,15 +389,15 @@ class WikiaHubStats {
 		$this->mName = $hubName;
 		if ( empty($this->mName) ) {
 			$this->mName = $this->mWFHub->getCategoryName($this->mCityId);
-		} 
+		}
 	}
-	
+
 	/**
-	 * newFromId 
-	 * 
+	 * newFromId
+	 *
 	 * @access public
 	 *
-	 * @param Integer $catid 
+	 * @param Integer $catid
 	 */
 	public function newFromId( $cityId ) {
 		return new WikiaHubStats($cityId);
@@ -399,7 +405,7 @@ class WikiaHubStats {
 
 	/**
 	 * newFromHub
-	 * 
+	 *
 	 * @access public
 	 *
 	 * @param String $hubName
@@ -410,8 +416,8 @@ class WikiaHubStats {
 	}
 
 	/**
-	 * getTopPVWikis 
-	 * 
+	 * getTopPVWikis
+	 *
 	 * @access public
 	 *
 	 * @param Array $data - list of Top Wikis (by PV) in hub
@@ -419,14 +425,14 @@ class WikiaHubStats {
 	public function getTopPVWikis( $limit = 20 ) {
 		global $wgMemc, $wgStatsDB, $wgStatsDBEnabled;
 		wfProfileIn( __METHOD__ );
-		
+
 		$data = array();
 		$cities = $this->getCities();
-		
+
 		if ( is_array($cities) && !empty($cities) ) {
 			$memkey = wfMemcKey( __METHOD__, $this->mName, $limit );
 			$data = $wgMemc->get( $memkey );
-			
+
 			if ( empty($data) && !empty( $wgStatsDBEnabled ) ) {
 				$dbr = wfGetDB( DB_SLAVE, array(), $wgStatsDB );
 				$oRes = $dbr->select(
@@ -443,7 +449,7 @@ class WikiaHubStats {
 					)
 				);
 
-				$order = $data = array(); 
+				$order = $data = array();
 				while ( $oRow = $dbr->fetchObject( $oRes ) ) {
 					$order[$oRow->pv_city_id] = $oRow->views;
 				}
@@ -467,10 +473,10 @@ class WikiaHubStats {
 		wfProfileOut( __METHOD__ );
 		return $data;
 	}
-	
+
 	/**
 	 * getCities
-	 * 
+	 *
 	 * @access private
 	 *
 	 * @param Array $data - list of Wikis in hub
@@ -483,7 +489,7 @@ class WikiaHubStats {
 		$data = $wgMemc->get( $memkey );
 		if ( empty($data) ) {
 			$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
-			
+
 			$oRes = $dbr->select(
 				array( "city_cats_view" ),
 				array( "cc_city_id" ),
@@ -503,7 +509,7 @@ class WikiaHubStats {
 }
 
 /*
- * global edits statistics 
+ * global edits statistics
  */
 class WikiaGlobalStats {
 	private static $excludeNames 			= array('un', 'fanon', 'sex');
@@ -517,19 +523,19 @@ class WikiaGlobalStats {
 	public static function getEditedArticles( $days = 7, $limit = 5, $onlyContent = true, $from_db = false ) {
     	global $wgStatsDB, $wgMemc, $wgStatsDBEnabled;
 		wfProfileIn( __METHOD__ );
-    	
+
 		$date_diff = date('Y-m-d', time() - $days * 60 * 60 * 24);
 		$memkey = wfMemcKey( "WS:getEditedArticles", intval($days), intval($onlyContent), intval($limit) );
 		$result = ( $from_db === true ) ? "" : $wgMemc->get( $memkey );
 		if ( empty($result) && !empty( $wgStatsDBEnabled ) ) {
 			$data = array();
 			$dbr = wfGetDB( DB_SLAVE, 'blobs', $wgStatsDB );
-			
+
 			$conditions = array("editdate >= '$date_diff'");
 			if ( $onlyContent === true ) {
 				$conditions['is_content'] = 'Y';
 			}
-			
+
 			$oRes = $dbr->select(
 				array( "edits_daily_pages" ),
 				array( "wiki_id, page_id, sum(edits) as all_count" ),
@@ -541,7 +547,7 @@ class WikiaGlobalStats {
 					'LIMIT'		=> self::$defaultLimit
 				)
 			);
-			
+
 			while ( $oRow = $dbr->fetchObject( $oRes ) ) {
 				$data[] = array(
 					'wikia'		=> $oRow->wiki_id,
@@ -558,16 +564,16 @@ class WikiaGlobalStats {
 					# check results
 					$res = self::allowResultsForEditedArticles( $row );
 					if ( $res === false ) continue;
-					
+
 					list( $wikiaTitle, $db, $hub, $wikia_ul, $page_url, $count ) = array_values($res);
 					if ( !isset( $values[$hub] ) ) $values[$hub] = 0;
-					
+
 					# limit results
-					$hubLimit = ( isset( self::$limitWikiHubs[ $hub ] ) ) 
+					$hubLimit = ( isset( self::$limitWikiHubs[ $hub ] ) )
 						? self::$limitWikiHubs[ $hub ]
 						: self::$limitWikiHubs[ '_default_' ];
 					if ( $values[$hub] == $hubLimit ) continue;
-					
+
 					# add to array
 					$result[] = $res;
 					# increase counter
@@ -584,7 +590,7 @@ class WikiaGlobalStats {
 	public static function getPagesEditors( $days = 7, $limit = 5, $onlyContent = true, $recalculateLimit = false, $noHubDepe = false, $from_db = false ) {
     	global $wgStatsDB, $wgTTCache, $wgStatsDBEnabled;
 		wfProfileIn( __METHOD__ );
-    	
+
 		$dbLimit = self::$defaultLimit;
 		$date_diff = date('Ymd', time() - $days * 60 * 60 * 24);
 
@@ -595,12 +601,12 @@ class WikiaGlobalStats {
 		if ( empty($result) && !empty( $wgStatsDBEnabled ) ) {
 			$data = array();
 			$dbr = wfGetDB( DB_SLAVE, 'blobs', $wgStatsDB );
-			
+
 			$conditions = array("editdate >= '$date_diff'");
 			if ( $onlyContent === true ) {
 				$conditions['is_content'] = 'Y';
 			}
-			
+
 			$oRes = $dbr->select(
 				array( "edits_daily_users" ),
 				array( "wiki_id, page_id, count(user_id) as all_count" ),
@@ -624,9 +630,9 @@ class WikiaGlobalStats {
 
 			$result = $values = array();
 			$servers = array();
-			$loop = 0; 
+			$loop = 0;
 			if ( !empty( $data ) ) {
-				# recalculate limit 
+				# recalculate limit
 				$limitWikiHubs = self::$limitWikiHubs;
 				if ( $recalculateLimit ){
 					$factor = $limit/5;
@@ -645,18 +651,18 @@ class WikiaGlobalStats {
 					# check additional conditions
 					$res = self::allowResultsForEditedArticles( $row, $from_db );
 					if ( $res === false ) continue;
-					
+
 					$res['count'] = $row['count'];
 
 					list( $wikiaTitle, $db, $hub, $page_name, $wikia_url, $page_url, $count ) = array_values($res);
-					
+
 					if ( !$noHubDepe ) {
 						# limit results
 						if ( isset( $limitWikiHubs[ $hub ] ) ) {
 							$hubLimit = $limitWikiHubs[ $hub ];
 							$hubCounter = $hub;
 						} else {
-							$hubLimit = $limitWikiHubs[ '_default_' ];	
+							$hubLimit = $limitWikiHubs[ '_default_' ];
 							$hubCounter = '_default_';
 						}
 						if ( !isset( $values[$hubCounter] ) ) $values[$hubCounter] = 0;
@@ -665,10 +671,10 @@ class WikiaGlobalStats {
 					# increase counter
 					$values[$hubCounter]++; $loop++;
 					$servers[$row['wikia']] = 1;
-					
+
 					# add to array
 					if ($values[$hubCounter] > self::$limitWikiHubs[$hubCounter]){
-						$res['out_of_limit'] = 1;			
+						$res['out_of_limit'] = 1;
 					}
 					$result[] = $res;
 				}
@@ -676,14 +682,14 @@ class WikiaGlobalStats {
 			unset($data);
 			unset($servers);
 			$wgTTCache->set( $memkey, $result );
-			
-	
+
+
 
 		}
 		wfProfileOut( __METHOD__ );
 		return $result;
 	}
-	
+
 	public static function excludeArticle($text) {
 		$oRegexCore = new TextRegexCore(self::$excludeWikiArticles, 0);
 		$res = false;
@@ -704,15 +710,15 @@ class WikiaGlobalStats {
 
 	/*
 	 * allowResultsForEditedArticles
-	 * 
-	 * check: 
-	 * 	- Wikia is enabled 
+	 *
+	 * check:
+	 * 	- Wikia is enabled
 	 * 	- check city_lang doesn't exist in allowedLanguages array
 	 * 	- check name of Wikia doesn't exist in excludeNames array
 	 * 	- check name of Wikia doesn't exist in excludeNames array
 	 * 	- check domain doesn't exist in excludeWikiDomainsKey list (textRegex)
 	 * 	- check article doesn't exist in excludeWikiArticles list (textRegex)
-	 */ 
+	 */
 	private static function allowResultsForEditedArticles ( $row, $from_db = false ) {
 		global $wgTTCache;
 		wfProfileIn( __METHOD__ );
@@ -720,7 +726,7 @@ class WikiaGlobalStats {
 
 		$memkey = wfMemcKey( __METHOD__, 'oWikia', intval($row['wikia']) );
 		$oWikia = $wgTTCache->get( $memkey );
-		
+
 		if ( !isset($oWikia) ) {
 			$allowed = true;
 			/*
@@ -728,12 +734,12 @@ class WikiaGlobalStats {
 			 */
 			$oWikia = WikiFactory::getWikiByID($row['wikia']);
 			if ( !$oWikia ) $allowed = false;
-			
+
 			/*
 			 * check city lang
-			 */ 
+			 */
 			if ( $allowed && !in_array( $oWikia->city_lang, self::$allowedLanguages ) ) $allowed = false;
-			
+
 			/*
 			 * check sitename
 			 */
@@ -741,7 +747,7 @@ class WikiaGlobalStats {
 				$siteName = WikiFactory::getVarByName('wgSitename', $row['wikia']);
 				if ( !$siteName ) $allowed = false;
 			}
-			
+
 			/*
 			 * check wikiname
 			 */
@@ -759,23 +765,23 @@ class WikiaGlobalStats {
 					}
 				}
 			}
-			
+
 			if ( !$allowed ) $oWikia = 'ERROR';
 			# set in memc
 			if ( $oWikia != 'ERROR' ) {
 				$wgTTCache->set( $memkey, $oWikia, 60*60 );
 			}
 		}
-		
+
 		if ( $oWikia == 'ERROR' ) {
 			wfProfileOut( __METHOD__ );
 			return false;
-		} 
+		}
 
 		/* check article */
 		$memkey = wfMemcKey( __METHOD__, 'article', intval($row['wikia']), intval($row['page']), $oWikia->city_dbname );
 		$result = ( $from_db === true ) ? null : $wgTTCache->get( $memkey );
-	
+
 		if ( !isset($result) ) {
 			$allowedPage = true;
 			/*
@@ -784,7 +790,7 @@ class WikiaGlobalStats {
 			$oGTitle = GlobalTitle::newFromId( $row['page'], $row['wikia'], $oWikia->city_dbname );
 			if ( !is_object($oGTitle) ) $allowedPage = false;
 
-			if ( $allowedPage ) { 
+			if ( $allowedPage ) {
 				$wikiaUrl = $oGTitle->getServer();
 				$pageUrl = $oGTitle->getFullURL();
 				$articleName = $oGTitle->getArticleName();
@@ -795,7 +801,7 @@ class WikiaGlobalStats {
 					if ( !$allowed ) $allowedPage = false;
 				}
 			}
-			
+
 			/*
 			 * check hub name
 			 */
@@ -805,7 +811,7 @@ class WikiaGlobalStats {
 			}
 
 			/*
-			 * check article name 
+			 * check article name
 			 */
 			if ( $allowedPage ) {
 				$oRegexArticles = new TextRegexCore( self::$excludeWikiArticles, 0 );
@@ -822,7 +828,7 @@ class WikiaGlobalStats {
 				/*
 				 * ok
 				 */
-				$result = array( 
+				$result = array(
 					'wikia'		=> $oWikia->city_sitename,
 					'db'		=> $oWikia->city_dbname,
 					'hub' 		=> $hubName,
@@ -835,11 +841,11 @@ class WikiaGlobalStats {
 				$wgTTCache->set( $memkey, $result, 60*30 );
 			}
 		}
-		
+
 		if ( $result == 'ERROR' ) {
 			$result = false;
-		} 
-		
+		}
+
 		wfProfileOut( __METHOD__ );
 		return $result;
 	}
@@ -847,7 +853,7 @@ class WikiaGlobalStats {
 	public static function getCountEditedPages( $days = 7, $onlyContent = false ) {
     	global $wgStatsDB, $wgTTCache, $wgStatsDBEnabled;
 		wfProfileIn( __METHOD__ );
-    	
+
 		$memkey = wfMemcKey( __METHOD__, $days, intval($onlyContent) );
 		$count = $wgTTCache->get( $memkey );
 		if ( empty($count) && !empty( $wgStatsDBEnabled ) ) {
@@ -867,11 +873,11 @@ class WikiaGlobalStats {
 			if ( $onlyContent === true ) {
 				$conditions['is_content'] = 'Y';
 			}
-			
+
 			$oRes = $dbr->select (
 				array( "edits_daily_pages" ),
 				array( "count(page_id)" ),
-				$conditions, 
+				$conditions,
 				__METHOD__
 			);
 			while ( $oRow = $dbr->fetchObject( $oRes ) ) {
@@ -889,15 +895,15 @@ class WikiaGlobalStats {
 	public static function getCountAverageDayCreatePages( $month ) {
 		global $wgStatsDB, $wgTTCache, $wgStatsDBEnabled;
 		wfProfileIn( __METHOD__ );
-    	
+
     	$month = str_replace("-", "", $month);
 		$memkey = wfMemcKey( __METHOD__, $month );
 		$count = $wgTTCache->get( $memkey );
 		if ( empty($count) && !empty( $wgStatsDBEnabled ) ) {
 			$dbr = wfGetDB( DB_SLAVE, array(), $wgStatsDB );
-			
+
 			$conditions = array( "stats_date" => $month );
-			
+
 			$oRow = $dbr->selectRow(
 				array( "summary_monthly_stats" ),
 				array( "articles_daily as all_count" ),
@@ -917,15 +923,15 @@ class WikiaGlobalStats {
 	public static function getCountWordsInMonth( $month ) {
 		global $wgStatsDB, $wgTTCache, $wgStatsDBEnabled;
 		wfProfileIn( __METHOD__ );
-    	
+
     	$month = str_replace("-", "", $month);
 		$memkey = wfMemcKey( __METHOD__, $month );
 		$count = $wgTTCache->get( $memkey );
 		if ( empty($count) && !empty( $wgStatsDBEnabled ) ) {
 			$dbr = wfGetDB( DB_SLAVE, array(), $wgStatsDB );
-			
+
 			$conditions = array( "editdate >= '{$month}01' and editdate <= '{$month}31'" );
-			
+
 			$oRow = $dbr->selectRow(
 				array( "edits_daily_pages" ),
 				array( "sum(total_words) as all_count" ),
@@ -941,11 +947,11 @@ class WikiaGlobalStats {
 		wfProfileOut( __METHOD__ );
 		return $count;
 	}
-	
+
 	public static function countWordsInLastDaysFromPageEdits( $days = 7, $from_db = 0 ) {
 		global $wgExternalDatawareDB, $wgTTCache;
 		wfProfileIn( __METHOD__ );
-		
+
 		$result = 0;
 		$memkey = wfMemcKey( "WS:countWordsLastDaysPageEdits", $days );
 		if ( $from_db ) {
@@ -954,16 +960,16 @@ class WikiaGlobalStats {
 				$date = date( 'Y-m-d', time() - $i * 24 * 60 * 60 );
 				$queries[] = "select pe_wikia_id, pe_page_id, pe_diff_words from page_edits where pe_date = '". $date . "'";
 			}
-			
+
 			$q = "";
-			if ( count($queries) ) { 
+			if ( count($queries) ) {
 				$q  = "select sum(pe_diff_words) as cnt_words from ( ";
 				$q .= implode( " union distinct ", $queries );
 				$q .= ") as c";
 			}
-			
+
 			if ( $q ) {
-				$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalDatawareDB );	
+				$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalDatawareDB );
 				$res = $dbr->query($q, __METHOD__);
 				if ( $oRow = $dbr->fetchObject($res) ) {
 					$result = $oRow->cnt_words;
@@ -973,35 +979,35 @@ class WikiaGlobalStats {
 		} else {
 			$result = $wgTTCache->get($memkey);
 		}
-		
+
 		return $result;
 	}
-	
+
 	public static function countWordsInLastDays( $days = 7, $from_db = 0 ) {
 		global $wgStatsDB, $wgTTCache, $wgStatsDBEnabled;
 		wfProfileIn( __METHOD__ );
-		
+
 		$result = 0;
 		$memkey = wfMemcKey( "WS:countWordsLastDays", $days );
 		if ( $from_db && !empty( $wgStatsDBEnabled ) ) {
 
 			$date = date( 'Y-m-d', time() - $days * 24 * 60 * 60 );
 			$conditions = array( "editdate >= '{$date}'" );
-			
+
 			$dbr = wfGetDB( DB_SLAVE, array(), $wgStatsDB );
-			
+
 			$oRow = $dbr->selectRow(
 				array( "edits_daily_pages" ),
 				array( "sum(total_words) as cnt_words" ),
 				$conditions,
 				__METHOD__
-			);			
-			
+			);
+
 			$wgTTCache->set($memkey, $oRow->cnt_words);
 		} else {
 			$result = $wgTTCache->get($memkey);
 		}
-		
+
 		return $result;
-	}	
+	}
 }

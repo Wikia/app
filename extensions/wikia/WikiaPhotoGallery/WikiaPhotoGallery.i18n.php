@@ -1463,9 +1463,10 @@ Beschreiben Sie dieses Foto.",
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
+ * @author Mirzali
  */
 $messages['diq'] = array(
-	'wikiaPhotoGallery-back' => 'Peyd bê',
+	'wikiaPhotoGallery-back' => 'Peyser',
 	'wikiaPhotoGallery-finish' => 'Qediya',
 	'wikiaPhotoGallery-feed-caption' => '$1, sera <a href="$2">$3</a>',
 	'wikiaPhotoGallery-lightbox-caption' => "$1'i sera",

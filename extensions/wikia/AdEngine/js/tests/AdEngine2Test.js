@@ -3,23 +3,34 @@
  @test-require-asset resources/wikia/modules/querystring.js
  @test-require-asset resources/wikia/modules/cookies.js
  @test-require-asset resources/wikia/modules/log.js
- @test-require-asset extensions/wikia/AdEngine/js/tests/AdConfig2.js
- @test-require-asset extensions/wikia/AdEngine/AdEngine2.js
+ @test-require-asset extensions/wikia/AdEngine/js/AdEngine2.js
 */
-module('AdEngine2');
 
-test('moveQueue', function() {
+// Sorry for that
+
+test('run with something in queue', function() {
 	// setup
-	var slots_done = [];
-	adProviderDummy = {};
-	adProviderDummy.fillInSlot = function(slot) {
-		slots_done.push(slot);
+	var slots_done = []
+		, AdConfigMock;
+
+	AdConfigMock = {
+		getProvider: function(slot) {
+			// AdProviderMock:
+			return {
+				name: 'Mock',
+				fillInSlot: function(slot) {
+					slots_done.push(slot);
+				}
+			};
+		}
 	};
 
 	window.adslots2 = [];
 	window.adslots2.push(['foo']);
 	window.adslots2.push(['bar']);
-	AdEngine2.init();
+
+	// Mock Wikia.log and window as well!
+	AdEngine2(AdConfigMock, Wikia.log, window).run();
 
 	equal(slots_done.length, 2, 'pre move');
 
@@ -28,16 +39,27 @@ test('moveQueue', function() {
 	equal(slots_done.length, 3, 'post move');
 });
 
-test('moveQueue empty', function() {
+test('run with empty queue', function() {
 	// setup
-	var slots_done = [];
-	window.adProviderDummy = {};
-	window.adProviderDummy.fillInSlot = function(slot) {
-		slots_done.push(slot);
+	var slots_done = []
+		, AdConfigMock;
+
+	AdConfigMock = {
+		getProvider: function(slot) {
+			// AdProviderMock:
+			return {
+				name: 'Mock',
+				fillInSlot: function(slot) {
+					slots_done.push(slot);
+				}
+			};
+		}
 	};
 
 	window.adslots2 = [];
-	window.AdEngine2.init();
+
+	// Mock Wikia.log and window as well!
+	AdEngine2(AdConfigMock, Wikia.log, window).run();
 
 	equal(slots_done.length, 0, 'pre move');
 
@@ -46,16 +68,26 @@ test('moveQueue empty', function() {
 	equal(slots_done.length, 1, 'post move');
 });
 
-test('moveQueue null', function() {
+test('run with null queue', function() {
 	// setup
-	var slots_done = [];
-	window.adProviderDummy = {};
-	window.adProviderDummy.fillInSlot = function(slot) {
-		slots_done.push(slot);
+	// setup
+	var slots_done = []
+		, AdConfigMock;
+
+	AdConfigMock = {
+		getProvider: function(slot) {
+			// AdProviderMock:
+			return {
+				name: 'Mock',
+				fillInSlot: function(slot) {
+					slots_done.push(slot);
+				}
+			};
+		}
 	};
 
-	//window.adslots2 = [];
-	window.AdEngine2.init();
+	// Mock Wikia.log and window as well!
+	AdEngine2(AdConfigMock, Wikia.log, window).run();
 
 	equal(slots_done.length, 0, 'pre move');
 

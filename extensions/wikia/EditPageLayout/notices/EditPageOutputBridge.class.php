@@ -163,6 +163,9 @@ class EditPageOutputBridge {
 	}
 
 
+	/**
+	 * @return OutputPage
+	 */
 	public function getMockObject() {
 		return $this->outputPageMock;
 	}

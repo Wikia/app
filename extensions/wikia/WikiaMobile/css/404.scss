@@ -1,13 +1,21 @@
 body {
-
+	background-color: rgb(37, 37, 37);
 }
 
 #wkPage, #wkMainCnt {
 	padding: 0;
 }
 
-#wkMainCntHdr{
-	display: none;
+#wkLnk {
+	display: block;
+	height: 30px;
+	margin: 10px auto;
+
+	background-image: url('/extensions/wikia/WikiaMobile/images/wikia-grey.png'); /* base64 */
+	background-position: 50%;
+	background-repeat: no-repeat;
+	background-size: contain;
+
 }
 
 #mw-content-text {
@@ -32,23 +40,23 @@ body {
 	display: block;
 	margin: 0 auto;
 	height: 330px;
+	max-width: 400px;
 
 	background-position: center 35%;
 	background-size: 50%;
+	background-repeat: no-repeat;
 }
 
 #wk404::after {
 	content: '';
+
+	position: absolute;
+
 	width: 100%;
 	height: 100%;
-	position: absolute;
+
 	background: url('/extensions/wikia/WikiaMobile/images/404_mask.png'); /* base64 */
 	background-size: 100%;
 	background-position: center 60%;
-}
-
-@media screen and (orientation:landscape) and (min-width:321px) {
-	#wk404{
-		width: 320px;
-	}
+	background-repeat: no-repeat;
 }

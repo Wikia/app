@@ -318,11 +318,13 @@ $messages['ca'] = array(
 	'wikia-editor-media-slideshow' => 'Slideshow',
 	'wikia-editor-media-slider' => 'Slider',
 	'wikia-editor-media-video' => 'Vídeo',
+	'wikia-editor-media-mut' => 'Vídeo',
 	'wikia-editor-media-image-tooltip' => 'Afegeix una Foto',
 	'wikia-editor-media-gallery-tooltip' => 'Afegeix una Galeria',
 	'wikia-editor-media-slideshow-tooltip' => 'Afegeix un Slideshow',
 	'wikia-editor-media-slider-tooltip' => 'Afegeix un Slider',
 	'wikia-editor-media-video-tooltip' => 'Afegeix un Vídeo',
+	'wikia-editor-media-mut-tooltip' => 'Afegeix un Vídeo (beta)',
 	'wikia-editor-source-bold-tooltip' => 'Negreta',
 	'wikia-editor-source-italic-tooltip' => 'Cursiva',
 	'wikia-editor-source-link-tooltip' => 'Afegeix un enllaç',
@@ -363,17 +365,24 @@ $messages['ca'] = array(
 	'prefs-editarea-size' => "Mida de la finestra d'edició (només disseny MonoBook)",
 	'tog-editsection' => 'Activa la modificació de seccions mitjançant els enllaços modifica',
 	'tog-editwidth' => "Ampliar la caixa d'edició del Code Font per omplir tota la pantalla",
-	'tog-minordefault' => 'Maraca totes les edicions com a "menors" per defete',
+	'tog-minordefault' => 'Marca totes les edicions com a "menors" per defete',
 	'tog-forceeditsummary' => "Pregunta'm si deixo en blanc el resum d'edició",
 );
 
 /** Czech (česky)
+ * @author Chmee2
  * @author Jezevec
  * @author Vks
  */
 $messages['cs'] = array(
 	'editpagelayout-more' => 'více',
 	'editpagelayout-less' => 'méně',
+	'editpagelayout-helpLink-url' => 'Help:Jak editovat stránku',
+	'editpagelayout-captcha-title' => 'Captcha',
+	'editpagelayout-pageControls-minorEdit' => 'Malá editace',
+	'editpagelayout-pageControls-back' => 'Zpět do editoru',
+	'editpagelayout-pageControls-changes' => 'Změny',
+	'editpagelayout-edit-summary-label' => 'Shrnutí editace',
 	'wikia-editor-media-image' => 'Obrázek',
 	'wikia-editor-media-gallery' => 'Galerie',
 	'wikia-editor-media-slideshow' => 'Prezentace',
@@ -390,7 +399,10 @@ $messages['cs'] = array(
 	'wikia-editor-source-italic-tooltip' => 'Kurzíva',
 	'wikia-editor-source-link-tooltip' => 'Přidat odkaz',
 	'wikia-editor-modules-templates-title' => 'Šablony',
+	'wikia-editor-modules-categories-title' => 'Kategorie',
+	'wikia-editor-loadingStates-loading' => 'Načítám editor',
 	'wikia-editor-edittools-caption' => 'více',
+	'wikia-editor-preview-editSummary' => 'Shrnutí editace: $1',
 );
 
 /** German (Deutsch)

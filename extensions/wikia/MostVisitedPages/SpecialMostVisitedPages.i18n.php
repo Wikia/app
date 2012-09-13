@@ -33,6 +33,18 @@ $messages['af'] = array(
 	'mostvisitedpagessearchbtn' => 'soek',
 );
 
+/** Arabic (العربية)
+ * @author Mutarjem horr
+ */
+$messages['ar'] = array(
+	'mostvisitedpages' => 'الصفحات الأكثر مشاهدة',
+	'mostvisitedpagessearchtext' => 'اسم المقالة:',
+	'mostvisitedpagessearchbtn' => 'إبحث',
+	'mostvisitedpageslatest' => 'في آخر  $1  دقائق',
+	'mostvisitedpageslatestlink' => 'شاهد الصفحات التي تمت زيارتها مؤخراً',
+	'mostvisitedpagesalllink' => 'شاهد الصفحات الأكثر مشاهدة',
+);
+
 /** Asturian (asturianu)
  * @author Xuacu
  */

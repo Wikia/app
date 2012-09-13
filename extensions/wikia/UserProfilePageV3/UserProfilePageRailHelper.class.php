@@ -27,6 +27,7 @@ class UserProfilePageRailHelper {
 			)
 		);
 
+		/* @var $pageOwner User */
 		$pageOwner = $response->getVal('user');
 		if( !$pageOwner->getOption('hidefollowedpages') && !$title->isSpecial('Following') && !$title->isSpecial('Contributions') ) {
 			$modules[1101] = array('FollowedPages', 'Index', array('showDeletedPages' => false));

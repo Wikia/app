@@ -100,7 +100,8 @@ class CloseWikiMaintenance {
 				array( "GROUP BY" => "city_dbname" )
 			);
 			if( $check->count > 1 ) {
-				wfDie( "{$dbname} is not unique. Check city_list and rerun script" );
+				echo "{$dbname} is not unique. Check city_list and rerun script";
+				die( 1 );
 			}
 			$this->log( "city_id={$row->city_id} city_url={$row->city_url} city_dbname={$dbname} city_flags={$row->city_flags} city_public={$row->city_public}" );
 
@@ -190,7 +191,8 @@ class CloseWikiMaintenance {
 								 * actually it's better to die than remove
 								 * images later without backup
 								 */
-								wfDie( "Can't copy images to remote host. Please, fix that and rerun" );
+								echo "Can't copy images to remote host. Please, fix that and rerun";
+								die( 1 );
 							}
 						}
 						else {
@@ -204,7 +206,8 @@ class CloseWikiMaintenance {
 						 * actually it's better to die than remove
 						 * images later without backup
 						 */
-						wfDie( "Can't copy images to remote host. Source {$source} and target {$target} is not defined" );
+						echo "Can't copy images to remote host. Source {$source} and target {$target} is not defined";
+						die( 1 );
 					}
 				}
 			}
@@ -338,7 +341,8 @@ class CloseWikiMaintenance {
 
 		if( ! $tar ) {
 			$this->log( "Cannot open {$tarfile}" );
-			wfDie( "Cannot open {$tarfile}" );
+			echo "Cannot open {$tarfile}";
+			die( 1 );
 		}
 		$files = $this->getDirTree( $directory );
 

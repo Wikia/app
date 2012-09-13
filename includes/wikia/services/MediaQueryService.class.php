@@ -109,7 +109,7 @@ class MediaQueryService extends Service {
 		$this->app = F::app();
 	}
 
-	protected function getArticleMediaMemcKey($title) {
+	protected function getArticleMediaMemcKey(Title $title) {
 		return $this->app->wf->MemcKey( 'MQSArticleMedia', '1.0', $title->getDBkey() );
 	}
 
@@ -117,6 +117,13 @@ class MediaQueryService extends Service {
 		$this->app->wg->memc->delete( $this->getArticleMediaMemcKey( $title ) );
 	}
 
+	/**
+	 * @static
+	 * @param WikiPage $article
+	 * @param $editInfo
+	 * @param $changed
+	 * @return bool
+	 */
 	public static function onArticleEditUpdates( &$article, &$editInfo, $changed ) {
 		// article links are updated, so we invalidate the cache
 		$title = $article->getTitle();
@@ -435,12 +442,12 @@ SQL;
 	public static function onArticleSaveComplete( $article, $user, $revision, $status ) {
 		$insertedImages = Wikia::getVar( 'imageInserts' );
 		$imageDeletes = Wikia::getVar( 'imageDeletes' );
-		
+
 		$changedImages = $imageDeletes;
 		foreach( $insertedImages as $img ) {
 			$changedImages[ $img['il_to'] ] = true;
 		}
-		
+
 		foreach( $changedImages as $imageDBName => $dummy ) {
 			$title = F::build( 'Title', array( NS_FILE, $imageDBName ), 'makeTitle' );
 			if ( $title instanceof Title ) {
@@ -463,8 +470,9 @@ SQL;
 		return true;
 	}
 
-	// Hook: clear cache when file is deleted
 	/**
+	 * Clear cache when file is deleted
+	 *
 	 * @static
 	 * @param $file LocalFile
 	 * @param $oldimage

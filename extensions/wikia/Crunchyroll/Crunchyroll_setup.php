@@ -78,7 +78,3 @@ function CrunchyrollAjax() {
 	wfProfileOut(__METHOD__);
 	return $response;
 }
-
-
-
-

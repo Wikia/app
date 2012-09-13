@@ -1074,6 +1074,7 @@ $messages['ckb'] = array(
 );
 
 /** Czech (česky)
+ * @author Chmee2
  * @author Darth Daron
  * @author Dontlietome7
  * @author Mr. Richard Bolla
@@ -1200,6 +1201,8 @@ $messages['cs'] = array(
 	'closed-reason' => 'Důvod:',
 	'newwikisgraph' => 'Nový graf wiki',
 	'newwikisgraph-report-title' => 'Wiki tvorba po dnech',
+	'newwikisgraph-param-all' => 'Vše',
+	'newwikisgraph-param-other' => 'Ostatní',
 );
 
 /** Kashubian (kaszëbsczi) */
@@ -4929,6 +4932,13 @@ $messages['tl'] = array(
 	'newwikisgraph-wikis-created' => 'nalikhang mga wiki',
 	'newwikisgraph-param-all' => 'Lahat',
 	'newwikisgraph-param-other' => 'Iba Pa',
+);
+
+/** толышә зывон (толышә зывон)
+ * @author Erdemaslancan
+ */
+$messages['tly'] = array(
+	'closed-reason' => 'Сәбәб:',
 );
 
 /** Tatar (Cyrillic script) (татарча)

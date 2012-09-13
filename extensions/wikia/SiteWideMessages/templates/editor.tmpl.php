@@ -189,6 +189,23 @@
 								<?= wfMsg( 'swm-label-mode-users-registration-hint' ) ?>
 							</td>
 						</tr>
+						<tr>
+							<td>
+								<input name="mSendModeUsers" id="mSendModeUsersEC" type="radio" value="EDITCOUNT"<?= $formData['sendModeUsers'] == 'EDITCOUNT' ? ' checked="checked"' : ''; ?>/>
+							</td>
+							<td>
+								<label for="mSendModeUsersEC"><?= wfMsg( 'swm-label-mode-users-editcount' ) ?></label>
+							</td>
+							<td colspan="2">
+								<select name="mEditCountS" id="mEditCountS">
+									<option value="more"<?= $formData['editCountOption'] == 'more' ? ' selected="selected"' : ''; ?>><?= wfMsg( 'swm-mode-users-editcount-more' ) ?></option>
+									<option value="less"<?= $formData['editCountOption'] == 'less' ? ' selected="selected"' : ''; ?>><?= wfMsg( 'swm-mode-users-editcount-less' ) ?></option>
+									<option value="between"<?= $formData['editCountOption'] == 'between' ? ' selected="selected"' : ''; ?>><?= wfMsg( 'swm-mode-users-editcount-between' ) ?></option>
+								</select>
+								<input name="mEditCountOne" id="mEditCountOne" type="text" size="20" value="<?= $formData['editCountOne'] ?>" />
+								<input name="mEditCountTwo" id="mEditCountTwo" type="text" size="20" value="<?= $formData['editCountTwo'] ?>" style="display: <?= $formData['editCountOption'] == 'between' ? 'inline' : 'none' ?>" />
+							</td>
+						</tr>
 					</table>
 				</fieldset>
 			</fieldset>
@@ -310,6 +327,13 @@ jQuery( document ).ready( function ( $ ) {
 				$( '#mSendModeWikisW' ).prop( 'disabled', true );
 				$( 'input.swm-lang-checkbox' ).prop( 'disabled', false );
 				break;
+			case 'mSendModeUsersEC':
+				$( '#mSendModeWikisA' ).prop( 'disabled', false );
+				$( '#mSendModeWikisC' ).prop( 'disabled', true );
+				$( '#mSendModeWikisH' ).prop( 'disabled', true );
+				$( '#mSendModeWikisW' ).prop( 'disabled', false );
+				$( 'input.swm-lang-checkbox' ).prop( 'disabled', false );
+				break;
 			default:
 				if ( $( '#mSendModeWikisA' ).prop( 'checked' ) ) {
 					$( '#mSendModeUsersA' ).prop( 'disabled', false );
@@ -323,13 +347,20 @@ jQuery( document ).ready( function ( $ ) {
 	$( '#mSendModeWikisA' ).add( '#mSendModeWikisH' ).add( '#mSendModeWikisC' )
 		.add( '#mSendModeWikisW' ).add( '#mSendModeUsersA' ).add( '#mSendModeUsersC' )
 		.add( '#mSendModeUsersG' ).add( '#mSendModeUsersU' ).add( '#mSendModeUsersM' )
-		.add( '#mSendModeUsersIP' ).add( '#mSendModeUsersReg' ).bind( 'click', grayOut );
+		.add( '#mSendModeUsersIP' ).add( '#mSendModeUsersReg' ).add( '#mSendModeUsersEC' ).bind( 'click', grayOut );
 
 	$( '#mRegistrationS' ).change( function () {
 		if ( $( this ).val() === 'between' ) {
 			$( '#mRegistrationDateTwo' ).show();
 		} else {
 			$( '#mRegistrationDateTwo' ).hide();
+		}
+	} );
+	$( '#mEditCountS' ).change( function () {
+		if ( $( this ).val() === 'between' ) {
+			$( '#mEditCountTwo' ).show();
+		} else {
+			$( '#mEditCountTwo' ).hide();
 		}
 	} );
 } );

@@ -21,7 +21,7 @@ class ScavengerHuntGameArticle {
 	protected $clueButtonText = '';
 	protected $clueButtonTarget = '';
 	protected $congrats = '';
-	
+
 	protected $spriteNotFound = array();
 	protected $spriteInProgressBar = array();
 	protected $spriteInProgressBarHover = array();
@@ -45,7 +45,7 @@ class ScavengerHuntGameArticle {
 	public function getCongrats(){
 		return $this->congrats;
 	}
-	
+
 	public function getSpriteInProgressBar(){
 		return $this->spriteInProgressBar;
 	}
@@ -76,7 +76,7 @@ class ScavengerHuntGameArticle {
 
 	public function setTitle( $title ) {
 		$this->title = $title;
-		$globalTitleObj = F::build('GlobalTitle', array( $this->title ), 'explodeURL');
+		$globalTitleObj = (array) F::build('GlobalTitle', array( $this->title ), 'explodeURL');
 		$this->setArticleName( $globalTitleObj['articleName'] );
 		$this->setWikiId( $globalTitleObj['wikiId'] );
 	}
@@ -160,8 +160,8 @@ class ScavengerHuntGameArticle {
 	public function setClueButtonText( $clueButtonText ) {
 		$this->clueButtonText = $clueButtonText;
 	}
-	
-	public function setClueButtonTarget( $clueButtonTarget ) { 
+
+	public function setClueButtonTarget( $clueButtonTarget ) {
 		$this->clueButtonTarget = $clueButtonTarget;
 	}
 
@@ -193,7 +193,7 @@ class ScavengerHuntGameArticle {
 		return $this->hiddenImageLeftOffset;
 	}
 
-	public function getClueTitle() { 
+	public function getClueTitle() {
 		return $this->clueTitle;
 	}
 
@@ -232,8 +232,8 @@ class ScavengerHuntGameArticle {
 	public function getWikiId() {
 		return $this->wikiId;
 	}
-	
-	public function getClueButtonTarget() { 
+
+	public function getClueButtonTarget() {
 		return $this->clueButtonTarget;
 	}
 

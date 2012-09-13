@@ -38,8 +38,8 @@ $messages['en'] = array(
 	'wikiahome-hubs-videogames-more-heading' => 'More in Video Games',
 	'wikiahome-hubs-videogames-more-list' => '
 *[http://www.wikia.com/Video_Games Game Guides]
-*[http://www.wikia.com/Video_Games What\'s Hot]
-*[http://www.wikia.com/Video_Games Best of 2011]',
+*[http://gaming.wikia.com/wiki/Portal:Kickstarter_Games Kickstarter Portal]
+*[http://gaming.wikia.com/wiki/Encyclopedia_Gamia Encylopedia Gamia]',
 
 	'wikiahome-hubs-entertainment-heading' => 'Entertainment',
 	'wikiahome-hubs-entertainment-url' => 'http://www.wikia.com/Entertainment',
@@ -81,29 +81,35 @@ $messages['en'] = array(
 *[http://www.wikia.com/About_Us About Us]
 *[http://www.wikia.com/Special:Contact Contact Wikia]
 *[http://www.wikia.com/Careers Careers]
-*[http://www.wikia.com/Press Press]',
-	'wikiahome-footer-get-started-heading' => '===Get Started===',
+*[http://www.wikia.com/Press Press]
+__NOEDITSECTION__',
+	'wikiahome-footer-get-started-heading' => '===Get Started===
+__NOEDITSECTION__',
 	'wikiahome-footer-get-started-creative' => 'Find your community,<br />start something epic.',
-	'wikiahome-footer-get-started-button' => 'http://www.wikia.com/Special:CreateNewWiki',
+	'wikiahome-footer-get-started-button' => 'http://www.wikia.com/Special:CreateNewWiki', // FIXME: why is this in a message?!
 	'wikiahome-footer-follow-us' => '===Follow Us===
 *[http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog Wikia Blog]
 *[http://www.facebook.com/Wikia Facebook]
-*[http://www.twitter.com/Wikia Twitter]',
+*[http://www.twitter.com/Wikia Twitter]
+__NOEDITSECTION__',
 	'wikiahome-footer-community' => '===Community===
 *[http://www.community.wikia.com Community Central]
 *[http://community.wikia.com/wiki/Admin_Central:Main_Page Founders & Admins]
 *[http://www.wikia.com/Special:Contact Contact Support]
-*[http://help.wikia.com/wiki/Help:Contents Help]',
+*[http://help.wikia.com/wiki/Help:Contents Help]
+__NOEDITSECTION__',
 	'wikiahome-footer-everywhere' => '===Wikia Everywhere===
 *[http://www.wikia.com/Mobile Wikia Mobile]
 *[http://www.wikia.com/Mobile/GameGuides Video Game Apps]
 *[http://www.wikia.com/Mobile/PhotoPop Entertainment Apps]
-*[http://api.wikia.com/wiki/Wikia_API_Wiki API]',
+*[http://api.wikia.com/wiki/Wikia_API_Wiki API]
+__NOEDITSECTION__',
 	'wikiahome-footer-advertise' => '===[http://www.mediakit.wikia.com/ Advertise]===
 *[http://mediakit.wikia.com/Solutions/Audience Audience]
 *[http://mediakit.wikia.com/Solutions Solutions]
 *[http://mediakit.wikia.com/Advertising-Products Ad products]
-*[https://wikia.sl.advertising.com/admin/advertisers/indexPl.jsp Self Service]',
+*[https://wikia.sl.advertising.com/admin/advertisers/indexPl.jsp Self Service]
+__NOEDITSECTION__',
 
 	'wikia-home-page-hot' => 'Hot',
 	'wikia-home-page-new' => 'New',

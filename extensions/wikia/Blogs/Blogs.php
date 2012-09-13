@@ -112,7 +112,7 @@ $wgAutoloadClasses['BlogsHelper'] = $dir . '/BlogsHelper.class.php';
 // initialize blogs special pages (BugId:7604)
 $wgHooks['BeforeInitialize'][] = 'wfBlogsOnBeforeInitialize';
 
-function wfBlogsOnBeforeInitialize(&$title, &$article, &$output, &$user, $request, $mediaWiki) {
+function wfBlogsOnBeforeInitialize(&$title, &$article, &$output, User $user, $request, $mediaWiki) {
 	global $wgAutoloadClasses;
 
 	// this line causes initialization of the skin

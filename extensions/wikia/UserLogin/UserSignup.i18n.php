@@ -374,9 +374,11 @@ $messages['br'] = array(
 );
 
 /** Czech (česky)
+ * @author Chmee2
  * @author Vks
  */
 $messages['cs'] = array(
+	'usersignup-facebook-create-account' => 'Vytvořit účet',
 	'usersignup-confirm-page-title' => 'Potvrzení e-mailu',
 	'usersignup-confirm-email-resend-email' => 'Pošlete mi další potvrzovací e-mail',
 	'usersignup-confirm-email-change-email-content' => 'Chci použít jinou e-mailovou adresu.',
@@ -391,6 +393,14 @@ $messages['cs'] = array(
 	'usersignup-confirmation-subheading' => 'Zkontrolujte si e-maily',
 	'usersignup-confirmation-email_subject' => 'Už to skoro je! Ověřte si účet na Wikia',
 	'usersignup-confirmation-email-signature' => 'Wikia Tým',
+	'usersignup-reconfirmation-email-greeting' => 'Ahoj $USERNAME',
+	'usersignup-welcome-email-greeting' => 'Ahoj $USERNAME',
+	'usersignup-welcome-email-learn-basic-heading' => 'Naučte se základy.',
+	'usersignup-marketing-global-heading' => 'Vytvořit',
+	'usersignup-marketing-creativity-heading' => 'Buď originální',
+	'usersignup-account-creation-heading' => 'Úspěch!',
+	'usersignup-account-creation-email-greeting' => 'Ahoj,',
+	'usersignup-confirmation-reminder-email-greeting' => 'Ahoj $USERNAME',
 );
 
 /** German (Deutsch)

@@ -533,197 +533,164 @@ function albumResult($artist, $album, $year){
 
 		$client = strtolower(getVal($_GET, 'client'));
 
-		if(($client == "cantopod") || ($client == "cantophone")){
-			// TODO: SEE IF WE CAN REMOVE cantopod/cantophone hacks
+		$lyricsTagFound = false; // will be modified by reference
+		$doHyphens = true; $ns = NS_MAIN; $isOuterRequest = true; // optional parameters which we need to hardcode to get to the last parameter
+		$result = getSong($artist, $songName, $doHyphens, $ns, $isOuterRequest, $debugMode, $lyricsTagFound);
 
-			// Kind of a custom format
-			header('Content-Type: application/xml', true);
-			print "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
-			print "<item>\n";
-
-			$result = getSong($artist, $songName);
-			die( var_dump( $result) );
-
-			if($client == "cantophone"){
-				$link = getVal($result, 'url');
-				$link = str_replace("http://lyricwiki.org/", "http://www.staylazy.net/canto/online/x/lyricwiki/rss_lyrics.php?artist=", $link);
-				$link = preg_replace("/^(.*?):\/\/(.*?):/", "$1://$2&songtitle=", $link);
-
-				print "\t<link>".htmlspecialchars($link, ENT_QUOTES, "UTF-8")."</link>\n";
-				print "\t<artist>".htmlspecialchars(getVal($result, 'artist'), ENT_QUOTES, "UTF-8")."</artist>\n";
-				print "\t<song>".htmlspecialchars(getVal($result, 'song'), ENT_QUOTES, "UTF-8")."</song>\n";
-//				print "\t<lyrics>".htmlspecialchars(getVal($result, 'lyrics'), ENT_QUOTES, "UTF-8")."</lyrics>\n";
-			} else {
-				foreach($result as $keyName=>$val){
-					if($keyName == "url"){
-						$keyName = "link";
-						$val = str_replace("http://lyricwiki.org/", "http://www.staylazy.net/canto/online/x/lyricwiki/rss_lyrics.php?artist=", $val);
-						$val = preg_replace("/^(.*?):\/\/(.*?):/", "$1://$2&songtitle=", $val);
-					}
-					print "\t<$keyName>".htmlspecialchars($val, ENT_QUOTES, "UTF-8")."</$keyName>\n";
-				}
-			}
-			print "</item>\n";
-
+		// Special case: if there was no lyrics tag found, attempt to parse the returned wikitext to look for a tracklisting.
+		if( (!$lyricsTagFound) && (0<preg_match("/\[\[.*\]\]/", getVal($result, 'lyrics'))) ){
+			// The result wasn't lyrics, but was some other page which appears to contain a tracklisting. Pass off processing to handle that.
+			$this->rest_printListing($result['artist'].":".$result['song'], $result['lyrics'], $fmt);
 		} else {
-			$lyricsTagFound = false; // will be modified by reference
-			$doHyphens = true; $ns = NS_MAIN; $isOuterRequest = true; // optional parameters which we need to hardcode to get to the last parameter
-			$result = getSong($artist, $songName, $doHyphens, $ns, $isOuterRequest, $debugMode, $lyricsTagFound);
+			switch($fmt){
+			case 'php':
+				print serialize($result);
+				break;
+			case "text":
+				print utf8_decode($result['lyrics']);
+				//print "\n\n".$result['url'];
+				break;
+			case "js":
+				$this->writeJS($result);
+				break;
+			case "json":
+				$this->writeJSON_deprecated($result);
+				break;
+			case "realjson":
+				/**
+				 * Add Comscore reporting (BugzId:33112),
+				 * unfortunately we can't repackage the app ATM,
+				 * this is hacky but we need to get that reporting now.
+				 *
+				 * @TODO remove when we'll get to v2 of the app
+				 * @author Jakub Olek
+				 */
+				$fullApiAuth = $wgRequest->getVal('fullApiAuth');
+				if( !empty( $fullApiAuth ) ) {
+					$result['lyrics'] .= self::COMSCORE_TAG_PLACEHOLDER;
+				}
 
-			// Special case: if there was no lyrics tag found, attempt to parse the returned wikitext to look for a tracklisting.
-			if( (!$lyricsTagFound) && (0<preg_match("/\[\[.*\]\]/", getVal($result, 'lyrics'))) ){
-				// The result wasn't lyrics, but was some other page which appears to contain a tracklisting. Pass off processing to handle that.
-				$this->rest_printListing($result['artist'].":".$result['song'], $result['lyrics'], $fmt);
-			} else {
-				switch($fmt){
-				case 'php':
-					print serialize($result);
-					break;
-				case "text":
-					print utf8_decode($result['lyrics']);
-					//print "\n\n".$result['url'];
-					break;
-				case "js":
-					$this->writeJS($result);
-					break;
-				case "json":
-					$this->writeJSON_deprecated($result);
-					break;
-				case "realjson":
-					/**
-					 * Add Comscore reporting (BugzId:33112),
-					 * unfortunately we can't repackage the app ATM,
-					 * this is hacky but we need to get that reporting now.
-					 *
-					 * @TODO remove when we'll get to v2 of the app
-					 * @author Jakub Olek
-					 */
-					$fullApiAuth = $wgRequest->getVal('fullApiAuth');
-					if( !empty( $fullApiAuth ) ) {
-						$result['lyrics'] .= self::COMSCORE_TAG_PLACEHOLDER;
+				$this->writeRealJSON($result);
+				break;
+			case "xml":
+				header('Content-Type: application/xml', true);
+				print "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
+				print "<LyricsResult>\n";
+
+				// TODO: Would probably be best to extract this whole XMLing function and make it recursive for inner-arrays (look into dumpXml_hacky() and why that's not being used here).
+				foreach($result as $keyName=>$val){
+					if(is_array($val)){
+						print "\t<$keyName>\n";
+						$innerTagName = $keyName."_value"; // standard name of inner-tag
+
+						// If wrapping tag is plural, make inner-tag the singular if that's straightforward.
+						$matches = array();
+						if(0 < preg_match("/^(.*?)e?s$/i", $keyName, $matches)){
+							$innerTagName = $matches[1];
+						}
+
+						foreach($val as $innerVal){
+							print "\t\t<$innerTagName>".utf8_decode(htmlspecialchars($innerVal, ENT_QUOTES, "UTF-8"))."</$innerTagName>\n";
+						}
+						print "\t</$keyName>\n";
+					} else {
+						print "\t<$keyName>".utf8_decode(htmlspecialchars($val, ENT_QUOTES, "UTF-8"))."</$keyName>\n";
 					}
+				}
 
-					$this->writeRealJSON($result);
-					break;
-				case "xml":
-					header('Content-Type: application/xml', true);
-					print "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
-					print "<LyricsResult>\n";
+				print "</LyricsResult>\n";
+				break;
+			case "html":
+			default:
+				// Link to the song & artist pages as a heading.
+				$this->htmlHead($result['artist']." ".$result['song']." lyrics");
+				print Xml::openElement( 'h3' );
+				print Xml::openElement( 'a',
+					array(
+						'href' => $this->root.$this->linkEncode( $result['artist'].":".$result['song'] )
+					)
+				);
+				print utf8_decode( htmlspecialchars( $result['song'], ENT_QUOTES, "UTF-8" ) );
+				print Xml::closeElement( 'a' );
+				print ' by ';
+				print Xml::openElement( 'a',
+					array(
+						'href' => $this->root.$this->linkEncode( $result['artist'] )
+					)
+				);
+				print utf8_decode( htmlspecialchars( $result['artist'] , ENT_QUOTES, "UTF-8" ));
+				print Xml::closeElement( 'a' );
+				print Xml::closeElement( 'h3' );
+				print "\n";
 
-					// TODO: Would probably be best to extract this whole XMLing function and make it recursive for inner-arrays (look into dumpXml_hacky() and why that's not being used here).
+				print Xml::openElement( 'pre' );
+					print "\n";
+					$lyricsHtml = utf8_decode(htmlspecialchars( $result['lyrics'], ENT_QUOTES, "UTF-8" ));
+
+					// Special case to make sure the gracenote copyright symbol gets parsed correctly when needed.
+					$lyricsHtml = str_replace("&amp;copy;", "&copy;", $lyricsHtml);
+
+					print $lyricsHtml;
+				print Xml::closeElement( 'pre' );
+
+				// Make it extensible by displaying any extra data in a UL.
+				unset($result['artist']);
+				unset($result['song']);
+				unset($result['lyrics']);
+				if( count($result) > 0 ){
+					print "<hr/> Additional Info:\n";
+					print Xml::openElement('ul');
+					print "\n";
 					foreach($result as $keyName=>$val){
 						if(is_array($val)){
-							print "\t<$keyName>\n";
-							$innerTagName = $keyName."_value"; // standard name of inner-tag
+							print Xml::openElement( 'li');
+							print Xml::openElement( 'strong' );
+							print htmlspecialchars( $keyName, ENT_QUOTES, "UTF-8" ).": ";
+								print Xml::openElement( 'ul' );
+									foreach($val as $innerVal){
+										print Xml::openElement( 'li' );
 
-							// If wrapping tag is plural, make inner-tag the singular if that's straightforward.
-							$matches = array();
-							if(0 < preg_match("/^(.*?)e?s$/i", $keyName, $matches)){
-								$innerTagName = $matches[1];
-							}
+										// TODO: IF keyName == "searchResults", MAKE THESE INTO LINKS TO WIKI PAGES INSTEAD OF JUST PLAINTEXT.
 
-							foreach($val as $innerVal){
-								print "\t\t<$innerTagName>".utf8_decode(htmlspecialchars($innerVal, ENT_QUOTES, "UTF-8"))."</$innerTagName>\n";
-							}
-							print "\t</$keyName>\n";
+										print $innerVal;
+										print Xml::closeElement( 'li' );
+									}
+								print Xml::closeElement( 'ul' );
+							print Xml::closeElement( 'strong' );
+							print Xml::closeElement( 'li' );
+						} else if(0 < preg_match("/^http:\/\//", $val)){
+							print Xml::openElement( 'a',
+								array(
+									'href' => $val,
+									'title' => $keyName
+								)
+							);
+							print utf8_decode( htmlspecialchars( $val, ENT_QUOTES, "UTF-8" ) );
+							print Xml::closeElement( 'a' );
+							print "\n";
+							print Xml::openElement( 'li' );
+							print Xml::openElement( 'strong' );
+							print htmlspecialchars( $keyName, ENT_QUOTES, "UTF-8" ).": ";
+							print Xml::closeElement( 'strong' );
+							print htmlspecialchars( $val, ENT_QUOTES, "UTF-8" );
+							print Xml::closeElement( 'li');
 						} else {
-							print "\t<$keyName>".utf8_decode(htmlspecialchars($val, ENT_QUOTES, "UTF-8"))."</$keyName>\n";
+							print Xml::openElement( 'li');
+							print Xml::openElement( 'strong' );
+							print htmlspecialchars( $keyName, ENT_QUOTES, "UTF-8" ).": ";
+							print Xml::closeElement( 'strong' );
+							print utf8_decode( htmlspecialchars( $val, ENT_QUOTES, "UTF-8" ) );
+							print Xml::closeElement( 'li' );
+							print "\n";
 						}
 					}
-
-					print "</LyricsResult>\n";
-					break;
-				case "html":
-				default:
-					// Link to the song & artist pages as a heading.
-					$this->htmlHead($result['artist']." ".$result['song']." lyrics");
-					print Xml::openElement( 'h3' );
-					print Xml::openElement( 'a',
-						array(
-							'href' => $this->root.$this->linkEncode( $result['artist'].":".$result['song'] )
-						)
-					);
-					print utf8_decode( htmlspecialchars( $result['song'], ENT_QUOTES, "UTF-8" ) );
-					print Xml::closeElement( 'a' );
-					print ' by ';
-					print Xml::openElement( 'a',
-						array(
-							'href' => $this->root.$this->linkEncode( $result['artist'] )
-						)
-					);
-					print utf8_decode( htmlspecialchars( $result['artist'] , ENT_QUOTES, "UTF-8" ));
-					print Xml::closeElement( 'a' );
-					print Xml::closeElement( 'h3' );
-					print "\n";
-
-					print Xml::openElement( 'pre' );
-						print "\n";
-						$lyricsHtml = utf8_decode(htmlspecialchars( $result['lyrics'], ENT_QUOTES, "UTF-8" ));
-
-						// Special case to make sure the gracenote copyright symbol gets parsed correctly when needed.
-						$lyricsHtml = str_replace("&amp;copy;", "&copy;", $lyricsHtml);
-
-						print $lyricsHtml;
-					print Xml::closeElement( 'pre' );
-
-					// Make it extensible by displaying any extra data in a UL.
-					unset($result['artist']);
-					unset($result['song']);
-					unset($result['lyrics']);
-					if( count($result) > 0 ){
-						print "<hr/> Additional Info:\n";
-						print Xml::openElement('ul');
-						print "\n";
-						foreach($result as $keyName=>$val){
-							if(is_array($val)){
-								print Xml::openElement( 'li');
-								print Xml::openElement( 'strong' );
-								print htmlspecialchars( $keyName, ENT_QUOTES, "UTF-8" ).": ";
-									print Xml::openElement( 'ul' );
-										foreach($val as $innerVal){
-											print Xml::openElement( 'li' );
-
-											// TODO: IF keyName == "searchResults", MAKE THESE INTO LINKS TO WIKI PAGES INSTEAD OF JUST PLAINTEXT.
-
-											print $innerVal;
-											print Xml::closeElement( 'li' );
-										}
-									print Xml::closeElement( 'ul' );
-								print Xml::closeElement( 'strong' );
-								print Xml::closeElement( 'li' );
-							} else if(0 < preg_match("/^http:\/\//", $val)){
-								print Xml::openElement( 'a',
-									array(
-										'href' => $val,
-										'title' => $keyName
-									)
-								);
-								print utf8_decode( htmlspecialchars( $val, ENT_QUOTES, "UTF-8" ) );
-								print Xml::closeElement( 'a' );
-								print "\n";
-								print Xml::openElement( 'li' );
-								print Xml::openElement( 'strong' );
-								print htmlspecialchars( $keyName, ENT_QUOTES, "UTF-8" ).": ";
-								print Xml::closeElement( 'strong' );
-								print htmlspecialchars( $val, ENT_QUOTES, "UTF-8" );
-								print Xml::closeElement( 'li');
-							} else {
-								print Xml::openElement( 'li');
-								print Xml::openElement( 'strong' );
-								print htmlspecialchars( $keyName, ENT_QUOTES, "UTF-8" ).": ";
-								print Xml::closeElement( 'strong' );
-								print utf8_decode( htmlspecialchars( $val, ENT_QUOTES, "UTF-8" ) );
-								print Xml::closeElement( 'li' );
-								print "\n";
-							}
-						}
-						print Xml::closeElement( 'ul' )."\n";
-					}
-					print Xml::closeElement( 'body' )."\n".Xml::closeElement( 'html' )."\n";
-					break;
-				} // end switch
-			}
+					print Xml::closeElement( 'ul' )."\n";
+				}
+				print Xml::closeElement( 'body' )."\n".Xml::closeElement( 'html' )."\n";
+				break;
+			} // end switch
 		}
+
 		wfProfileOut( __METHOD__ );
 	} // end rest_getSong()
 

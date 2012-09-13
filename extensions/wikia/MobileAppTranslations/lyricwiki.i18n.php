@@ -67,6 +67,36 @@ $messages['qqq'] = array(
 	'app-tab-sotd' => 'SotD = Song of the Day',
 );
 
+/** Arabic (العربية)
+ * @author Mutarjem horr
+ */
+$messages['ar'] = array(
+	'app-loading' => 'جاري التحميل...',
+	'app-tab-search' => 'إبحث',
+	'app-tab-about' => 'حول',
+	'app-tab-browse' => 'أ..ج',
+	'app-tab-sotd' => 'أغنية اليوم',
+	'app-async-error-title' => 'آه!',
+	'app-async-error-message' => 'مشكلة اتصال مؤقتة. الرجاء المحاولة مرة أخرى لاحقاً.',
+	'app-nonetwork-dialog-title' => 'شبكة الاتصال غير متوفرة',
+	'app-nonetwork-dialog-message' => 'لم يتم الكشف عن إتصال شبكة.',
+	'app-nonetwork-dialog-close-button' => 'موافق',
+	'search-go' => 'إنطلق!',
+	'search-hint-text' => "مثل 'John Lennon:Imagine'",
+	'search-no-match-found' => 'لم يتم العثور على مطابق.',
+	'search-no-match-found-query' => 'بحثت عن: %s',
+	'search-results-title' => 'نتائج البحث عن: %s',
+	'login-label' => 'تسجيل الدخول إلى LyricWiki',
+	'login-username-hint' => 'اسم المستخدم',
+	'login-password-hint' => 'كلمة المرور',
+	'login-submit-button' => 'تسجيل الدخول',
+	'about-credits' => 'من %s',
+	'about-heading-tips' => 'أبحث',
+	'about-feedback-0' => 'تريد أن تقول لنا شيئا عن التطبيق؟ أرسل إلي بريداً إلكترونياً: %s',
+	'lyrics-artist-byline' => 'من %s',
+	'ringtone-matcher-by-song' => 'أرسل %s رنة إلى هاتفك الخلوي',
+);
+
 /** Azerbaijani (azərbaycanca)
  * @author Cekli829
  */

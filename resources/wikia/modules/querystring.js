@@ -5,18 +5,20 @@
  */
 
 (function(){
+	'use strict';
+
 	if(window.define){
 		//AMD
 		define('querystring', querystring);//late binding
 	}else{
 		//namespace
-		if(!window.Wikia) window.Wikia = {};
+		if(!window.Wikia) {window.Wikia = {};}
 
 		window.Wikia.Querystring = querystring();//late binding
 	}
 
 	function isEmpty(o) {
-		for(var k in o) return false;
+		for(var k in o) {return false;}
 		return true;
 	}
 
@@ -56,18 +58,18 @@
 				link = l.host;
 				path = l.pathname;
 				srh = l.search.substr(1);
-				hash = l.hash.substr(1)
+				hash = l.hash.substr(1);
 			}
 
 			if(srh){
-				var tmpQuery = srh.split('&').filter(
-					function(elm){
-						if(elm) return true;
-					});
+				var tmpQuery = srh.split('&'),
+					i = tmpQuery.length;
 
-				for(var i = 0; i < tmpQuery.length; i++){
-					tmp = tmpQuery[i].split('=');
-					cache[tmp[0]] = decodeURIComponent(tmp[1]) || '';
+				while(i--){
+					if(tmpQuery[i]) {
+						tmp = tmpQuery[i].split('=');
+						cache[tmp[0]] = decodeURIComponent(tmp[1]) || '';
+					}
 				}
 			}
 
@@ -79,13 +81,13 @@
 		}
 
 		p.toString = function(){
-			var ret = (this.protocol ? this.protocol + '//' : '') + this.link + this.path + (!isEmpty(this.cache) ? '?' : ''),
+			var ret = (this.protocol ? this.protocol + '//' : '') + this.link + this.path + (isEmpty(this.cache) ? '' : '?'),
 				attr, val,
 				tmpArr = [];
 
 			for(attr in this.cache){
 				val = this.cache[attr];
-				tmpArr.push(attr + (val != u ? '=' + val : ''));
+				tmpArr.push(attr + (val === u ? '' : '=' + val));
 			}
 			return ret + tmpArr.join('&') + (this.hash ? '#' + this.hash : '');
 		};
@@ -95,10 +97,10 @@
 		};
 
 		p.setVal = function(name, val){
-			if(val != u){
-				this.cache[name] = encodeURIComponent(val);
-			}else{
+			if(val === u){
 				delete this.cache[name];
+			}else{
+				this.cache[name] = encodeURIComponent(val);
 			}
 		};
 
@@ -124,7 +126,7 @@
 
 		p.goTo = function(){
 			//TODO: We don't want these to be in url on load, this should be refactored as is valid only for WikiaMobile
-			if(this.hash == 'topbar' || this.hash == 'Modal'){
+			if(this.hash === 'topbar' || this.hash === 'Modal'){
 				this.hash = '';
 			}
 

@@ -5,6 +5,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import com.wikia.webdriver.Common.Core.CommonFunctions;
 import com.wikia.webdriver.Common.Logging.PageObjectLogging;
 
 public class SpecialFactoryPageObject extends BasePageObject
@@ -13,11 +14,11 @@ public class SpecialFactoryPageObject extends BasePageObject
 	private WebElement domainField;
 	@FindBy(css="form[id='WikiFactoryDomainSelector'] button")
 	private WebElement getConfigButton;
-	@FindBy(css="ul#wiki-factory-tabs li:nth-child(8)")
+	@FindBy(css="a[href*=close]")
 	private WebElement closeWikiButton;
-	@FindBy(css="form#wk-wf-variables-select ul:nth-child(1) li:nth-child(1) input")
+	@FindBy(css="#flag_1")
 	private WebElement dumpCheckBox;
-	@FindBy(css="form#wk-wf-variables-select ul:nth-child(1) li:nth-child(2) input")
+	@FindBy(css="#flag_2")
 	private WebElement imageArchiveCheckBox;
 	@FindBy(css="input[name='close_saveBtn']")
 	private WebElement confirmCloseButton;
@@ -26,60 +27,79 @@ public class SpecialFactoryPageObject extends BasePageObject
 	
 	public SpecialFactoryPageObject(WebDriver driver) {
 		super(driver);
-		driver.get(wikiFactoryLiveDomain);
 		PageFactory.initElements(driver, this);
 		// TODO Auto-generated constructor stub
 	}
 	
 	
 	
-	public void typeInDomainName(String name)
+	public SpecialFactoryPageObject openWikiFactoryPage()
+	{
+		driver.get(wikiFactoryLiveDomain);
+		PageObjectLogging.log("openWikiFactoryPage ", "Wiki factory page opened", true, driver);
+		return new SpecialFactoryPageObject(driver);
+	}
+	
+	private void typeInDomainName(String name)
 	{
 		domainField.sendKeys(name);		
 		PageObjectLogging.log("typeInDomainName ", "Typed domain name " +name, true, driver);
 	}
 	
-	public void getConfiguration()
+	private void getConfiguration()
 	{
 		getConfigButton.click();
 		PageObjectLogging.log("getConfiguration ", "Get configuration button clicked", true, driver);
 	}
 	
-	public void clickCloseWikiButton()
+	private void clickCloseWikiButton()
 	{
 		closeWikiButton.click();
 		PageObjectLogging.log("clickCloseWikiButton ", "Close wiki button clicked", true, driver);
 	}
 	
-	public void deselectCreateDumpCheckBox()
+	private void deselectCreateDumpCheckBox()
 	{
 		dumpCheckBox.click();
 		PageObjectLogging.log("deselectCreateDumpCheckBox ", "Create dump checkbox deselected", true, driver);
 	}
 	
-	public void deselectImageArchiveCheckBox()
+	private void deselectImageArchiveCheckBox()
 	{
 		imageArchiveCheckBox.click();
 		PageObjectLogging.log("deselectImageArchiveCheckBox ", "Create image archive checkbox deselected", true, driver);
 	}
 	
-	public void confirmClose()
+	private void confirmClose()
 	{
 		confirmCloseButton.click();
 		PageObjectLogging.log("confirmClose ", "Close confirmation button clicked", true, driver);
 	}
 	
-	public void clickClosedWikiaLink()
+	private void clickClosedWikiaLink()
 	{
 		closedWikiaLink.click();
 		PageObjectLogging.log("clickClosedWikiaLink ", "Closed wikia link clicked", true, driver);
 	}
 	
-	public void verifyWikiaClosed()
+	private void verifyWikiaClosed()
 	{
 		waitForElementById("close-title");
 		waitForElementById("close-info");
 		PageObjectLogging.log("verifyWikiaClosed ", "Closed wikia verified", true, driver);
+	}
+	
+	public void deleteWiki(String wikiName)
+	{
+		typeInDomainName(wikiName);
+		getConfiguration();
+		clickCloseWikiButton();
+		deselectCreateDumpCheckBox();
+		deselectImageArchiveCheckBox();
+		confirmClose();
+		confirmClose();
+		clickClosedWikiaLink();
+		verifyWikiaClosed();
 	}
 			
 }

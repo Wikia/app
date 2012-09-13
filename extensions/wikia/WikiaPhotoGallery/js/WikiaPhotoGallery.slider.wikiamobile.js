@@ -1,47 +1,17 @@
 /*global WikiaMobile: true */
-/*
+
 $(function(){
 	var sliders = document.getElementsByClassName('wkSlider'),
-		width = window.innerWidth,
-		height = window.innerHeight,
-		slider,
-		size = 'big',
-		i = 0;
+		i = sliders.length;
 
-	width = (height > width) ? width : height
-
-	function onLoad(plc){
-		return function(){
-			var url = this.src;
-			plc.className += ' fade';
-			setTimeout(function(){
-				plc.style.backgroundImage = 'url(' + url + ')';
-				plc.className += 'In';
-			}, 100 + ~~(Math.random() * 400));
-		}
-	}
-
-	while(slider = sliders[i++]){
-
-		var imgs = slider.getElementsByClassName('img'),
-			l = imgs.length,
-			j = 0;
-
-		if(l == 5 || width <= 480){
-			size = 'small';
-		}else if(width <= 680){
-			size = 'med';
-		}
-
-		slider.className += size + ' on';
-
-		for(; j < l; j++){
-			var img = new Image(),
-				src = imgs[j].getAttribute('data-src-' + size);
-
-			img.onload = onLoad(imgs[j]);
-			img.src = src;
-		}
+	if (i) {
+		require(['track'], function(track){
+			var click = function(ev){
+				if(ev.target.tagName == 'IMG') {
+					track.event('slider', track.CLICK);
+				}
+			};
+			while (i--) sliders[i].addEventListener('tap', click, true);
+		});
 	}
 });
-*/

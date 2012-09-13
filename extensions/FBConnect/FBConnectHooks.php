@@ -37,9 +37,12 @@ class FBConnectHooks {
 	/**
 	 * Hook is called whenever an article is being viewed... Currently, figures
 	 * out the Facebook ID of the user that the userpage belongs to.
+	 *
+	 * @param $article Article
+	 *
+	 * @return Bool
 	 */
 	public static function ArticleViewHeader( &$article, &$outputDone, &$pcache ) {
-		global $wgOut;
 		// Get the article title
 		$nt = $article->getTitle();
 		// If the page being viewed is a user page
@@ -87,11 +90,14 @@ class FBConnectHooks {
 
 	/**
 	 * Injects some important CSS and Javascript into the <head> of the page.
+	 *
+	 * @param $out OutputPage
+	 * @param $sk Skin
 	 */
 	public static function BeforePageDisplay( &$out, &$sk ) {
 		global $wgVersion, $fbLogo, $fbScript, $fbExtensionScript,
 			$fbIncludeJquery, $fbScriptEnableLocales, $wgJsMimeType,
-			$wgStyleVersion, $wgScriptPath, $wgUser, $wgTitle, $wgNoExternals;
+			$wgStyleVersion, $wgTitle, $wgNoExternals;
 
 		$pageId = $wgTitle->getArticleId();
 		if($pageId > 0) {
@@ -107,7 +113,7 @@ class FBConnectHooks {
 			}
 		}
 
-		if( !in_array( get_class( $wgUser->getSkin() ), array( 'SkinWikiaApp' ) ) ){
+		if( !F::app()->checkSkin( array( 'wikiamobile', 'wikiaapp' ), $sk ) ){
 			// If the user's language is different from the default language, use the correctly localized facebook code.
 			// NOTE: Can't use wgLanguageCode here because the same FBConnect config can run for many wgLanguageCode's on one site (such as Wikia).
 			if($fbScriptEnableLocales){
@@ -134,7 +140,7 @@ class FBConnectHooks {
 			}
 
 			// macbre: lazy load JavaScript Facebook API
-			if (empty($wgNoExternals)) {
+			if ( empty( $wgNoExternals ) ) {
 				$out->addHTML(
 					F::build('JSSnippets')->addToStack(
 						array(),
@@ -194,9 +200,12 @@ STYLE;
 	 * Add Facebook SDK loading code at the bottom of the page
 	 *
 	 * Fixes IE issue (RT #140425)
+	 *
+	 * @param $skin Skin
+	 * @param $scripts
 	 */
 	static function SkinAfterBottomScripts( $skin, &$scripts ) {
-		global $wgJsMimeType, $fbScript, $wgNoExternals, $wgUser;
+		global $fbScript, $wgNoExternals;
 		wfProfileIn(__METHOD__);
 
 		if( !empty($fbScript) && empty($wgNoExternals) && ( !in_array( $skin->getSkinName(), array( 'wikiaapp' ) ) ) ){
@@ -298,6 +307,8 @@ HTML;
 	 * Installs a parser hook for every tag reported by FBConnectXFBML::availableTags().
 	 * Accomplishes this by asking FBConnectXFBML to create a hook function that then
 	 * redirects to FBConnectXFBML::parserHook().
+	 *
+	 * @param $parser Parser
 	 */
 	public static function ParserFirstCallInit( &$parser ) {
 		$pHooks = FBConnectXFBML::availableTags();
@@ -310,10 +321,13 @@ HTML;
 	/**
 	 * Modify the user's persinal toolbar (in the upper right).
 	 *
+	 *
+	 * @param $personal_urls
+	 * @param $wgTitle Title
 	 * TODO: Better 'returnto' code
 	 */
 	public static function PersonalUrls( &$personal_urls, &$wgTitle ) {
-		global $wgUser, $wgLang, $wgShowIPinHeader, $fbPersonalUrls, $fbConnectOnly, $wgBlankImgUrl, $wgSkin, $wgEnableUserLoginExt;
+		global $wgUser, $fbPersonalUrls, $fbConnectOnly, $wgEnableUserLoginExt;
 		$skinName = get_class($wgUser->getSkin());
 
 		// Get the logged-in user from the Facebook API
@@ -419,6 +433,8 @@ HTML;
 	 * Modify the preferences form. At the moment, we simply turn the user name
 	 * into a link to the user's facebook profile.
 	 *
+	 * @param $form
+	 * @param $output OutputPage
 	 * TODO!
 	 */
 	public static function RenderPreferencesForm( $form, $output ) {
@@ -475,7 +491,7 @@ HTML;
 	 * Adds some info about the governing Facebook group to the header form of Special:ListUsers.
 	 */
 	static function SpecialListusersHeaderForm( $pager, &$out ) {
-		global $fbUserRightsFromGroup, $fbLogo;
+		global $fbUserRightsFromGroup;
 		if (!$fbUserRightsFromGroup) {
 			return true;
 		}
@@ -625,11 +641,12 @@ HTML;
 	/**
 	 * Create disconnect button and other things in pref
 	 *
+	 * @param $user User
 	 */
 	static function GetPreferences( $user, &$preferences ){
 		global $wgOut, $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion, $wgBlankImgUrl;
 		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/FBConnect/prefs.js?{$wgStyleVersion}\"></script>\n");
-		$prefsection = 'fbconnect-prefstext';
+		//$prefsection = 'fbconnect-prefstext';
 
 		$id = FBConnectDB::getFacebookIDs($user, DB_MASTER);
 		if( count($id) > 0 ) {

@@ -15,6 +15,7 @@
 	<article id=wkMainCnt>
 		<?= $bodyContent ;?>
 		<?= $navMenu ;?>
+		<? /*TODO: This check is weird*/if(!empty( $relatedPages ) || !empty( $categoryLinks ) || !empty( $afterContentHookText ) || !empty( $afterBodyContent )) :?>
 		<footer id=wkMainCntFtr>
 			<nav id=wkRltdCnt>
 			<?= $relatedPages ;?>
@@ -27,6 +28,7 @@
 			</aside>
 			<? endif ;?>
 		</footer>
+		<? endif; ?>
 	</article>
 </section>
 <div id=wkMdlWrp>

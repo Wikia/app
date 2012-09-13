@@ -350,10 +350,10 @@ public class CommonFunctions
 		Rectangle maxBounds = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
 		int ScreenHeightWithoutTaskBarHeight = maxBounds.height;
 		JavascriptExecutor js = (JavascriptExecutor) driver;
-		Object visibleDomHeightJS = js.executeScript("return window.innerHeight");
+		Object visibleDomHeightJS = js.executeScript("return $(window).height()");
 		int VisibleDomHeight = Integer.parseInt(visibleDomHeightJS.toString());
 		
-		Object invisibleUpperDomHeightJS = js.executeScript("return window.pageYOffset");
+		Object invisibleUpperDomHeightJS = js.executeScript("return document.documentElement.scrollTop");
 		int invisibleUpperDomHeight = Integer.parseInt(invisibleUpperDomHeightJS.toString());
 		MoveCursorTo(elem_X+10, elem_Y+ScreenHeightWithoutTaskBarHeight-VisibleDomHeight-pixDiff+1-invisibleUpperDomHeight);
 	}
@@ -414,8 +414,8 @@ public class CommonFunctions
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-	   robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
-	   robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+	   robot.mousePress(InputEvent.BUTTON1_MASK);
+	   robot.mouseRelease(InputEvent.BUTTON1_MASK);
 	}
 
 	/**

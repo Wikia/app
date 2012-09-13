@@ -7,10 +7,16 @@
 class EditPageLayoutHelper {
 
 	private $app;
+
+	/* @var $request OutputPage */
 	private $out;
+
+	/* @var $request WebRequest */
 	private $request;
 	private $jsVars = array();
 	private $jsVarsPrinted = false;
+
+	/* @var $editPage EditPageLayout */
 	public $editPage;
 
 	function __construct() {
@@ -270,7 +276,7 @@ class EditPageLayoutHelper {
 	 * @param $types String or Array
 	 * @param $page String The page title to show log entries for
 	 * @param $user String The user who made the log entries
-	 * @param $param Associative Array with the following additional options:
+	 * @param $param array Associative Array with the following additional options:
 	 * - lim Integer Limit of items to show, default is 50
 	 * - conds Array Extra conditions for the query (e.g. "log_action != 'revision'")
 	 * - showIfEmpty boolean Set to false if you don't want any output in case the loglist is empty
@@ -331,6 +337,12 @@ class EditPageLayoutHelper {
 		return true;
 	}
 
+	/**
+	 * Get static assets for AssetsManager group
+	 *
+	 * @static
+	 * @return array
+	 */
 	static public function getAssets() {
 		return array(
 			// >> 3rd party libraries

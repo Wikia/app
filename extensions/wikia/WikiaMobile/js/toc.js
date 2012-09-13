@@ -12,16 +12,16 @@ define('toc', ['track', 'sections'], function toc(track, sections){
 		if(table){
 			table.className += ' open';
 			d.body.className += ' hidden';
-			track('/toc/open');
+			track.event('toc', track.CLICK, {label: 'open'});
 			conStyle.minHeight = (table.offsetHeight - 40) + 'px';
 		}
 	}
 
 	function close(a){
-		if(table){
+		if(table && table.className.indexOf('open') > -1){
 			table.className = table.className.replace(' open', '');
 			d.body.className =  d.body.className.replace(' hidden', '');
-			if(!a) {track('/toc/close');}
+			if(!a) {track.event('toc', track.CLICK, {label: 'close'});}
 			conStyle.minHeight = '0';
 		}
 	}
@@ -41,10 +41,10 @@ define('toc', ['track', 'sections'], function toc(track, sections){
 				var node = ev.target,
 					a = (node.nodeName == 'A');
 
-				(table.className.indexOf('open') > -1) ? close(a) : open(a);
+				(table.className.indexOf('open') > -1 ? close : open)(a);
 
 				if(a){
-					track('/toc/go');
+					track.event('toc', track.CLICK, {label: 'element'});
 
 					var elm = d.getElementById(node.getAttribute('href').substr(1)),
 						h2 = elm;

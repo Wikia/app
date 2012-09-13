@@ -42,7 +42,9 @@ require(['loader', 'toast', 'modal', 'events', 'track'], function(loader, toast,
 			firstPage = commsUl.innerHTML;
 		}
 
-		track(['comment', 'page', (forward) ? 'next' : 'previous']);
+		track.event('article-comments', track.PAGINATE, {
+			label: (forward) ? 'next' : 'previous'
+		});
 
 		if(condition){
 			elm.className += ' active';
@@ -137,10 +139,14 @@ require(['loader', 'toast', 'modal', 'events', 'track'], function(loader, toast,
 
 						if(parentId){
 							updateUI(json.text, parent);
-							track('comment/reply/submit');
+							track.event('article-comments', track.SUBMIT, {
+								label: 'reply'
+							});
 						}else{
 							commsUl.insertAdjacentHTML('afterbegin', json.text);
-							track('comment/new/submit');
+							track.event('article-comments', track.SUBMIT, {
+								label: 'new'
+							});
 						}
 						d.getElementById('wkArtCnt').innerText = json.counter;
 					}
@@ -205,16 +211,23 @@ require(['loader', 'toast', 'modal', 'events', 'track'], function(loader, toast,
 	$(wkArtCom).on(clickEvent, '.viewAll', function(){
 		openModal(this);
 		window.scroll(0,0);
-		track('comment/modal/open');
+		track.event('article-comments', track.CLICK, {
+			label: 'open'
+		});
 	})
 	.on(clickEvent, '.cmnRpl', function(ev){
 		if(!loginRequired(ev)){
 			openModal(this, true);
-			track('comment/modal/open/reply');
+			track.event('article-comments', track.CLICK, {
+				label: 'open'
+			});
 		}
 	})
-	.on(clickEvent, '.collSec', function(){
-		track(['comment',(this.className.indexOf('open')>-1?'close':'open')]);
+	.on(clickEvent, '.avatar', function(){
+		track.event('article-comments', track.IMAGE_LINK, {
+			label: 'avatar',
+			href: this.parentElement.href
+		});
 	});
 
 	$(d.body).on('submit', '.commFrm', post)

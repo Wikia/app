@@ -17,7 +17,7 @@ class SpellChecker extends WikiaObject {
 	/**
 	 * Add JavaScript variable with path to be used by AJAX requests sent by RTE plugin
 	 */
-	public function onRTEAddGlobalVariablesScript(Array $vars) {
+	public function onRTEAddGlobalVariablesScript(Array &$vars) {
 		wfProfileIn(__METHOD__);
 
 		// check user preferences (enabled by default)

@@ -13,7 +13,7 @@ class MyHome {
 	// name of section edited
 	private static $editedSectionName = false;
 
-	/*
+	/**
 	 * Store custom data in rc_params field as JSON encoded table prefixed with extra string.
 	 * To pass in extra key-value pairs, pass in 'data' as an associative array.
 	 *
@@ -23,6 +23,8 @@ class MyHome {
 	 */
 	public static function storeInRecentChanges(RecentChange $rc, $data = array()) {
 		wfProfileIn(__METHOD__);
+
+		/* @var $wgParser Parser */
 		global $wgParser;
 
 		// If we have existing data packed into rc_params, make sure it is preserved.
@@ -121,7 +123,7 @@ class MyHome {
 		return true;
 	}
 
-	/*
+	/**
 	 * Check if it's section edit, then try to get section name
 	 *
 	 * @see http://www.mediawiki.org/wiki/Manual:Hooks/EditFilter
@@ -131,6 +133,7 @@ class MyHome {
 	public static function getSectionName($editor, $text, $section, &$error) {
 		wfProfileIn(__METHOD__);
 
+		/* @var $wgParser Parser */
 		global $wgParser;
 
 		// make sure to properly init this variable
@@ -150,7 +153,7 @@ class MyHome {
 		return true;
 	}
 
-	/*
+	/**
 	 * Return page user is redirected to when title is not specified in URL
 	 *
 	 * http://muppet.wikia.com -> http://muppet.wikia.com/wiki/Special:WikiActivity (happens for logged-in only)
@@ -183,7 +186,7 @@ class MyHome {
 		return true;
 	}
 
-	/*
+	/**
 	 * Store list of images, videos and categories added to an article
 	 */
 	public static function getInserts($linksUpdate) {
@@ -232,6 +235,7 @@ class MyHome {
 			$rc = Wikia::getVar('rc');
 		}
 		if ($rc instanceof RecentChange) {
+			/* @var $rc RecentChange */
 			$rc_id = $rc->getAttribute('rc_id');
 
 			$dbw = wfGetDB( DB_MASTER );
@@ -250,21 +254,19 @@ class MyHome {
 		wfProfileOut( __METHOD__ );
 	}
 
-	/*
+	/**
 	 * Return encoded (serialized/jsonized) data with extra prefix which can be stored in rc_params
 	 *
 	 * @author Maciej Brencz <macbre@wikia-inc.com>
 	 */
 	public static function packData($data) {
-		wfProfileIn(__METHOD__);
 		$packed = json_encode($data);
 
-		wfProfileOut(__METHOD__);
 		// store encoded data with our custom prefix
 		return self::customDataPrefix . $packed;
 	}
 
-	/*
+	/**
 	 * Return decoded (unserialized/unjsonized) data stored in rc_params
 	 *
 	 * @author Maciej Brencz <macbre@wikia-inc.com>
@@ -301,7 +303,7 @@ class MyHome {
 		return $data;
 	}
 
-	/*
+	/**
 	 * Add "Disable my redirect to My Home" switch to Special:Preferences (Misc tab)
 	 *
 	 * @author Maciej Brencz <macbre@wikia-inc.com>
@@ -316,7 +318,7 @@ class MyHome {
 		return true;
 	}
 
-	/*
+	/**
 	 * Save default view in user preferences (can be either "watchlist" or "activity")
 	 *
 	 * @author Maciej Brencz <macbre@wikia-inc.com>
@@ -345,7 +347,7 @@ class MyHome {
 		return false;
 	}
 
-	/*
+	/**
 	 * Get default view from user preferences (can be either "watchlist" or "activity")
 	 *
 	 * @author Maciej Brencz <macbre@wikia-inc.com>
@@ -373,6 +375,9 @@ class MyHome {
 	 * function is called, then this function will load that RC by id.  If this function gets
 	 * called before any RCs have been recorded, then a serialized copy of the badge is stored
 	 * and can be inserted later (when the RC actually does get saved).
+	 *
+	 * @param User $user
+	 * @param AchBadge $badge
 	 */
 	public static function attachAchievementToRc($user, $badge ){
 		global $wgWikiaForceAIAFdebug;
