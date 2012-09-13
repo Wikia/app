@@ -76,6 +76,10 @@ $app->registerClass( 'VideoHandler',		$dir . '/handlers/VideoHandler.class.php' 
 // video controller
 $app->registerClass( 'VideosController', $dir . '/VideosController.class.php' );
 
+// video info
+$app->registerClass( 'VideoInfo', $dir . '/videoInfo/VideoInfo.class.php' );
+$app->registerClass( 'VideoInfoHelper', $dir . '/videoInfo/VideoInfoHelper.class.php' );
+
 /**
  * messages
  */
