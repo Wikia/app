@@ -378,9 +378,10 @@ public class ChatPageObject extends BasePageObject
 	
 	public void clickOnMainChat(WebDriver driver)
 	{
-		Point p = mainChatButton.getLocation();
-		CommonFunctions.MoveCursorToElement(p, driver);
-		CommonFunctions.ClickElement();
+//		Point p = mainChatButton.getLocation();
+//		CommonFunctions.MoveCursorToElement(p, driver);
+//		CommonFunctions.ClickElement();
+		executeScript("document.querySelectorAll('.public.wordmark img.wordmark')[0].click()", driver);
 		PageObjectLogging.log("clickOnMainChat", "main chat is clicked", true, driver);
 	}
 	
@@ -388,10 +389,11 @@ public class ChatPageObject extends BasePageObject
 	
 	public void clickOnPrivateChat(String user, WebDriver driver)
 	{
-		By privateChatUserButton = By.xpath("//li[@id='priv-user-"+user+"']");
-		Point p = driver.findElement(privateChatUserButton).getLocation();
-		CommonFunctions.MoveCursorToElement(p, driver);
-		CommonFunctions.ClickElement();
+//		By privateChatUserButton = By.xpath("//li[@id='priv-user-"+user+"']");
+//		Point p = driver.findElement(privateChatUserButton).getLocation();
+//		CommonFunctions.MoveCursorToElement(p, driver);
+//		CommonFunctions.ClickElement();
+		executeScript("document.querySelectorAll('#priv-user-"+user+"')[0].click()", driver);
 		verifyPrivateMessageIsHighLighted(user);
 		PageObjectLogging.log("clickOnPrivateChat", "private chat is clicked", true, driver);
 	}
