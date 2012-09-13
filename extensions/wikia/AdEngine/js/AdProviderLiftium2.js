@@ -18,7 +18,7 @@ window.AdProviderLiftium2 = function (WikiaTracker, log, window, ghostwriter, do
 				insertType:"append",
 				script:{text:script},
 				done:function () {
-					log('(hop) ghostwriter done', 5, 'AdProviderLiftium2');
+					log('ghostwriter done', 5, 'AdProviderLiftium2');
 					log([slot[0], script], 5, 'AdProviderLiftium2');
 					ghostwriter.flushloadhandlers();
 					// TODO un-comment this
