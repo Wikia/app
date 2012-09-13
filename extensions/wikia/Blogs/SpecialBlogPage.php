@@ -31,7 +31,8 @@ abstract class SpecialBlogPage extends SpecialPage {
 		$this->mFormData[$sKey] = $value;
 	}
 
-
-
+	public function setFormErrors($sKey, $value) {
+		$this->mFormErrors[$sKey] = $value;
+	}
 
 }
