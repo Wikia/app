@@ -81,6 +81,7 @@ public class CreateAWikiTests_latin extends TestTemplate
 		SpecialFactoryPageObject factory = new SpecialFactoryPageObject(driver);
 		factory.openWikiFactoryPage();
 		factory.deleteWiki(wikiName);
+		CommonFunctions.logOut(Properties.userNameStaff, driver);
 	}
 	
 	
@@ -117,9 +118,11 @@ public class CreateAWikiTests_latin extends TestTemplate
 		newWikia.verifyUserLoggedIn(Properties.userName);
 		newWikia.verifyUserToolBar();
 		CommonFunctions.logOut(Properties.userName, driver);
+		CommonFunctions.logIn(Properties.userNameStaff, Properties.passwordStaff);
 		SpecialFactoryPageObject factory = new SpecialFactoryPageObject(driver);
 		factory.openWikiFactoryPage();
 		factory.deleteWiki(wikiName);
+		CommonFunctions.logOut(Properties.userNameStaff, driver);
 	}
 	
 	/*
@@ -155,9 +158,11 @@ public class CreateAWikiTests_latin extends TestTemplate
 		newWikia.verifyUserLoggedIn(Properties.userName);
 		newWikia.verifyUserToolBar();
 		CommonFunctions.logOut(Properties.userName, driver);
+		CommonFunctions.logIn(Properties.userNameStaff, Properties.passwordStaff);
 		SpecialFactoryPageObject factory = new SpecialFactoryPageObject(driver);
 		factory.openWikiFactoryPage();
 		factory.deleteWiki(wikiName);
+		CommonFunctions.logOut(Properties.userNameStaff, driver);
 	}
 	
 	/*
@@ -193,9 +198,11 @@ public class CreateAWikiTests_latin extends TestTemplate
 		newWikia.verifyUserLoggedIn(Properties.userName);
 		newWikia.verifyUserToolBar();
 		CommonFunctions.logOut(Properties.userName, driver);
+		CommonFunctions.logIn(Properties.userNameStaff, Properties.passwordStaff);
 		SpecialFactoryPageObject factory = new SpecialFactoryPageObject(driver);
 		factory.openWikiFactoryPage();
 		factory.deleteWiki(wikiName);
+		CommonFunctions.logOut(Properties.userNameStaff, driver);
 	}
 	
 	/*
@@ -227,9 +234,11 @@ public class CreateAWikiTests_latin extends TestTemplate
 		newWikia.verifyUserLoggedIn(Properties.userName);
 		newWikia.verifyUserToolBar();
 		CommonFunctions.logOut(Properties.userName, driver);
+		CommonFunctions.logIn(Properties.userNameStaff, Properties.passwordStaff);
 		SpecialFactoryPageObject factory = new SpecialFactoryPageObject(driver);
 		factory.openWikiFactoryPage();
 		factory.deleteWiki(wikiName);
+		CommonFunctions.logOut(Properties.userNameStaff, driver);
 	}	
 	
 	
