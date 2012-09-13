@@ -431,12 +431,7 @@ public class ChatPageObject extends BasePageObject
 	{
 		By userButton = By.xpath("//div[@class='Rail']//li[@id='user-"+userName+"']/img");
 		waitForElementByBy(userButton);
-		
-		WebElement e = driver.findElement(userButton);
-		Point p = e.getLocation();
-		CommonFunctions.MoveCursorToElement(p, driver);
-		CommonFunctions.ClickElement();
-		
+		executeScript("document.querySelectorAll('#user-KarolK1')[0].click()");
 		PageObjectLogging.log("clickOnDifferentUser", userName+" button clicked", true, driver);
 	}
 	
@@ -479,6 +474,7 @@ public class ChatPageObject extends BasePageObject
 	 */
 	private  List<WebElement> getDropDownListOfElements()
 	{
+		waitForElementByBy(userContextMenu);
 		List<WebElement> list = driver.findElements(userContextMenu); 
 		return list;		
 	}
