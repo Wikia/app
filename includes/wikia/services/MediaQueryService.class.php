@@ -395,127 +395,15 @@ SQL;
 	}
 
 	/**
-	 * @param $title Title
+	 * @param Title $title
 	 */
 	public function invalidateAllCacheVideos( $title ) {
-		if ( $title->getNamespace() == NS_FILE ) {
+		if ( $title instanceof Title && $title->getNamespace() == NS_FILE ) {
 			$file = wfFindFile( $title );
 			if ( $file instanceof File && $file->exists() && F::build( 'WikiaFileHelper', array( $file ), 'isFileTypeVideo' ) ) {
 				$this->clearAllCacheVideos();
 			}
 		}
-	}
-
-	// Hook: clear cache when file is uploaded
-	/**
-	 * @static
-	 * @param $file LocalFile
-	 * @param $reupload
-	 * @param $hasDescription
-	 * @return bool
-	 */
-	public static function onFileUpload( $file, $reupload, $hasDescription ) {
-		$title = $file->getTitle();
-		if ( $title instanceof Title && F::build( 'WikiaFileHelper', array( $file ), 'isFileTypeVideo' ) ) {
-			/**
-			 * @var $mediaService MediaQueryService
-			 */
-			$mediaService = F::build( __CLASS__ );
-			if ( $file->isLocal() ) {
-				$mediaService->clearCacheVideoList();
-			} else {
-				$mediaService->clearCachePremiumVideoList();
-			}
-
-			if ( !$reupload ) {
-				$mediaService->clearCacheVideoList();
-				$mediaService->clearCacheTotalVideos();
-			}
-
-			$mediaService->clearCacheSortedVideos();
-		}
-
-		return true;
-	}
-
-	// Hook: clear cache for premium videos
-	public static function onArticleSaveComplete( $article, $user, $revision, $status ) {
-		$insertedImages = Wikia::getVar( 'imageInserts' );
-		$imageDeletes = Wikia::getVar( 'imageDeletes' );
-
-		$changedImages = $imageDeletes;
-		foreach( $insertedImages as $img ) {
-			$changedImages[ $img['il_to'] ] = true;
-		}
-
-		foreach( $changedImages as $imageDBName => $dummy ) {
-			$title = F::build( 'Title', array( NS_FILE, $imageDBName ), 'makeTitle' );
-			if ( $title instanceof Title ) {
-				$file = wfFindFile( $title );
-				if ( $file instanceof File && $file->exists() && !$file->isLocal()
-					&& F::build( 'WikiaFileHelper', array( $file ), 'isFileTypeVideo' ) ) {
-					/**
-					 * @var $mediaService MediaQueryService
-					 */
-					$mediaService = F::build( __CLASS__ );
-					$mediaService->clearCachePremiumVideoList();
-					$mediaService->clearCacheVideoList();
-					$mediaService->clearCacheTotalVideos();
-					$mediaService->clearCacheSortedPremiumVideos();
-					break;
-				}
-			}
-		}
-
-		return true;
-	}
-
-	/**
-	 * Clear cache when file is deleted
-	 *
-	 * @static
-	 * @param $file LocalFile
-	 * @param $oldimage
-	 * @param $article
-	 * @param $user User
-	 * @param $reason
-	 * @return bool
-	 */
-	public static function onFileDeleteComplete( &$file, $oldimage, $article, $user, $reason ) {
-		$title = $file->getTitle();
-		if ( $title instanceof Title && F::build( 'WikiaFileHelper', array( $file ), 'isFileTypeVideo' ) ) {
-			/**
-			 * @var $mediaService MediaQueryService
-			 */
-			$mediaService = F::build( __CLASS__ );
-			if ( $file->isLocal() ) {
-				$mediaService->clearAllCacheVideos();
-			}
-		}
-
-		return true;
-	}
-
-	// Hook: clear cache when file is restored
-	public static function onFileUndeleteComplete( $title, $versions, $user, $comment ) {
-		/**
-		 * @var $mediaService MediaQueryService
-		 */
-		$mediaService = F::build( __CLASS__ );
-		$mediaService->invalidateAllCacheVideos( $title );
-
-		return true;
-	}
-
-	// Hook: clear cache when file is renamed
-	public static function onFileRenameComplete( &$form , &$oldTitle , &$newTitle ) {
-		/**
-		 * @var $mediaService MediaQueryService
-		 */
-		$mediaService = F::build( __CLASS__ );
-		$mediaService->invalidateAllCacheVideos( $newTitle );
-
-		return true;
 	}
 
 }
