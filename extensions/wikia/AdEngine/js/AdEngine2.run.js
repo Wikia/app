@@ -2,11 +2,13 @@
 	var adConfig
 		, adEngine
 		, adProviderEvolve
+		, adProviderEvolveRS
 		, adProviderGamePro
 		, adProviderAdDriver2;
 
 	adProviderGamePro = AdProviderGamePro(WikiaTracker, log, window, ghostwriter, document);
 	adProviderEvolve = AdProviderEvolve(WikiaTracker, log, window, ghostwriter, document);
+	adProviderEvolveRS = AdProviderEvolveRS(WikiaTracker, log, window, ghostwriter, document);
 	adProviderAdDriver2 = AdProviderAdDriver2(log, window);
 
 	adConfig = AdConfig2(
@@ -16,6 +18,7 @@
 		// AdProviders:
 		adProviderGamePro,
 		adProviderEvolve,
+		adProviderEvolveRS,
 		adProviderAdDriver2
 	);
 
