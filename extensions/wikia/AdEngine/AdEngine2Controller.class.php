@@ -19,6 +19,12 @@ class AdEngine2Controller extends WikiaController {
 
 		$vars['adslots2'] = array();
 
+		// TODO remove? dev only?
+		global $wgHighValueCountries2;
+		if ($wgHighValueCountries2) {
+			$vars['wgHighValueCountries2'] = $wgHighValueCountries2;
+		}
+
 		wfProfileOut(__METHOD__);
 
 		return true;

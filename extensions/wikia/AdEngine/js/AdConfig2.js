@@ -7,6 +7,7 @@ window.AdConfig2 = function (
 	AdProviderEvolve,
 	AdProviderEvolveRS,
 	AdProviderAdDriver2,
+	AdProviderAdDriver,
 	AdProviderLiftium2
 ) {
 	var _cache_geo = null;
@@ -42,7 +43,12 @@ window.AdConfig2 = function (
 			return AdProviderEvolveRS;
 		}
 
-		return AdProviderAdDriver2;
+		if (isSlotHighValue(slot[0], getCountry())) {
+			return AdProviderAdDriver2;
+		}
+
+		// TODO should be AdProviderLiftium2 eventually
+		return AdProviderAdDriver;
 	}
 
 	// TODO refactor to adProviderGamePro
@@ -90,6 +96,56 @@ window.AdConfig2 = function (
 		log([slotname, country], 5, 'AdConfig2');
 
 		if ((country == 'AU' || country == 'NZ' || country == 'CA') && slotname == 'INVISIBLE_1') {
+			return true;
+		}
+
+		return false;
+	}
+
+	// TODO unit test!
+	function isSlotHighValue(slotname, country) {
+		log('isSlotHighValue', 5, 'AdConfig2');
+		log([slotname, country], 5, 'AdConfig2');
+
+		// copy of AdConfig.isHighValueSlot
+		var slotMap = {
+			'CORP_TOP_LEADERBOARD':true,
+			'CORP_TOP_RIGHT_BOXAD':true,
+			'EXIT_STITIAL_BOXAD_1':true,
+			'HOME_INVISIBLE_TOP':true,
+			'HOME_TOP_LEADERBOARD':true,
+			'HOME_TOP_RIGHT_BOXAD':true,
+			'HUB_TOP_LEADERBOARD':true,
+			'INVISIBLE_MODAL':true,
+			'INVISIBLE_TOP':true,
+			'LEFT_SKYSCRAPER_2':true,
+			'MIDDLE_RIGHT_BOXAD':true,
+			'MODAL_RECTANGLE':true,
+			'MODAL_INTERSTITIAL':true,
+			'MODAL_VERTICAL_BANNER':true,
+			'TEST_HOME_TOP_RIGHT_BOXAD':true,
+			'TEST_TOP_RIGHT_BOXAD':true,
+			'TOP_LEADERBOARD':true,
+			'TOP_RIGHT_BOXAD':true
+		};
+		// copy of CommonSettings wgHighValueCountries
+		// TODO remove? dev only?
+		var countryMap = window.wgHighValueCountries2 || window.wgHighValueCountries || {
+			'CA':true,
+			'DE':true,
+			'DK':true,
+			'ES':true,
+			'FI':true,
+			'FR':true,
+			'GB':true,
+			'IT':true,
+			'NL':true,
+			'NO':true,
+			'SE':true,
+			'UK':true,
+			'US':true
+		};
+		if (typeof countryMap[country] != 'undefined' && typeof slotMap[slotname] != 'undefined') {
 			return true;
 		}
 

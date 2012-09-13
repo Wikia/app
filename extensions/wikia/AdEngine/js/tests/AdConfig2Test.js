@@ -13,6 +13,7 @@ test('getProvider failsafe', function() {
 		, AdProviderEvolveMock = {name: 'EvolveMock'}
 		, AdProviderEvolveRSMock = {name: 'EvolveRSMock'}
 		, AdProviderAdDriver2Mock = {name: 'AdDriver2Mock'}
+		, AdProviderAdDriverMock = {name: 'AdDriverMock'}
 		, AdProviderLiftium2Mock = {name: 'Liftium2Mock'}
 		, adConfig;
 
@@ -26,10 +27,11 @@ test('getProvider failsafe', function() {
 		AdProviderEvolveMock,
 		AdProviderEvolveRSMock,
 		AdProviderAdDriver2Mock,
+		AdProviderAdDriverMock,
 		AdProviderLiftium2Mock
 	);
 
-	equal(adConfig.getProvider(['foo']).name, 'AdDriver2Mock', 'AdDriver2Mock');
+	equal(adConfig.getProvider(['foo']).name, 'AdDriverMock', 'AdDriverMock');
 });
 
 // TODO may be refactored to AdProviderEvolve
@@ -39,6 +41,7 @@ test('getProvider evolve AU', function() {
 		, AdProviderEvolveMock = {name: 'EvolveMock'}
 		, AdProviderEvolveRSMock = {name: 'EvolveRSMock'}
 		, AdProviderAdDriver2Mock = {name: 'AdDriver2Mock'}
+		, AdProviderAdDriverMock = {name: 'AdDriverMock'}
 		, AdProviderLiftium2Mock = {name: 'Liftium2Mock'}
 		, adConfig;
 
@@ -51,6 +54,7 @@ test('getProvider evolve AU', function() {
 		AdProviderEvolveMock,
 		AdProviderEvolveRSMock,
 		AdProviderAdDriver2Mock,
+		AdProviderAdDriverMock,
 		AdProviderLiftium2Mock
 	);
 
@@ -70,6 +74,7 @@ test('getProvider evolve not AU', function() {
 		, AdProviderEvolveMock = {name: 'EvolveMock'}
 		, AdProviderEvolveRSMock = {name: 'EvolveRSMock'}
 		, AdProviderAdDriver2Mock = {name: 'AdDriver2Mock'}
+		, AdProviderAdDriverMock = {name: 'AdDriverMock'}
 		, AdProviderLiftium2Mock = {name: 'Liftium2Mock'}
 		, adConfig;
 
@@ -82,6 +87,7 @@ test('getProvider evolve not AU', function() {
 		AdProviderEvolveMock,
 		AdProviderEvolveRSMock,
 		AdProviderAdDriver2Mock,
+		AdProviderAdDriverMock,
 		AdProviderLiftium2Mock
 	);
 
@@ -97,6 +103,7 @@ test('getProvider GamePro de', function() {
 		, AdProviderEvolveMock = {name: 'EvolveMock'}
 		, AdProviderEvolveRSMock = {name: 'EvolveRSMock'}
 		, AdProviderAdDriver2Mock = {name: 'AdDriver2Mock'}
+		, AdProviderAdDriverMock = {name: 'AdDriverMock'}
 		, AdProviderLiftium2Mock = {name: 'Liftium2Mock'}
 		, adConfig;
 
@@ -109,6 +116,7 @@ test('getProvider GamePro de', function() {
 		AdProviderEvolveMock,
 		AdProviderEvolveRSMock,
 		AdProviderAdDriver2Mock,
+		AdProviderAdDriverMock,
 		AdProviderLiftium2Mock
 	);
 
@@ -128,6 +136,7 @@ test('getProvider GamePro not de', function() {
 		, AdProviderEvolveMock = {name: 'EvolveMock'}
 		, AdProviderEvolveRSMock = {name: 'EvolveRSMock'}
 		, AdProviderAdDriver2Mock = {name: 'AdDriver2Mock'}
+		, AdProviderAdDriverMock = {name: 'AdDriverMock'}
 		, AdProviderLiftium2Mock = {name: 'Liftium2Mock'}
 		, adConfig;
 
@@ -140,6 +149,7 @@ test('getProvider GamePro not de', function() {
 		AdProviderEvolveMock,
 		AdProviderEvolveRSMock,
 		AdProviderAdDriver2Mock,
+		AdProviderAdDriverMock,
 		AdProviderLiftium2Mock
 	);
 
