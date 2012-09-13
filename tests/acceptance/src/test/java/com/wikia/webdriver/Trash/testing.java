@@ -24,10 +24,11 @@ public class testing extends TestTemplate{
 //		driver.findElement(By.cssSelector("#article-comm")).click();
 //		WebElement a = driver.findElement(By.cssSelector("nav[class='wikia-menu-button contribute secondary combined']"));
 //		
-//		((JavascriptExecutor)driver).executeScript("$('.Video_Games').mouseenter()");
+		((JavascriptExecutor)driver).executeScript("$('.Video_Games').mouseenter()");
+		((JavascriptExecutor)driver).executeScript("$('.Video_Games').mouseenter()");
 
-		b.executeScript("$('.Video_Games').mouseenter()");
-		b.executeScript("$('.Video_Games').mouseenter()");
+//		b.executeScript("$('.Video_Games').mouseenter()");
+//		b.executeScript("$('.Video_Games').mouseenter()");
 //		a.click();
 //		b.aaa();
 		
