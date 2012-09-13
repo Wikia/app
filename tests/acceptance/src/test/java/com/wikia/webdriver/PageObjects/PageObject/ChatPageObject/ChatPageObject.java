@@ -411,6 +411,7 @@ public class ChatPageObject extends BasePageObject
 //		CommonFunctions.ClickElement();
 //		CommonFunctions.ClickElement();
 		executeScript("document.querySelectorAll('#priv-user-"+userName+"')[0].click()", driver);
+		executeScript("document.querySelectorAll('#priv-user-"+userName+"')[0].click()", driver);
 		waitForElementByBy(userContextMenu);
 		PageObjectLogging.log("clickPrivateMessageUser", "private messages user "+userName+" is clicked", true, driver);
 	}
@@ -424,6 +425,15 @@ public class ChatPageObject extends BasePageObject
 	 * method should be launched if another user has joined the chat
 	 */
 	public void clickOnDifferentUser(String userName, WebDriver driver)
+	{
+		By userButton = By.xpath("//div[@class='Rail']//li[@id='user-"+userName+"']/img");
+		waitForElementByBy(userButton);
+		executeScript("document.querySelectorAll('#user-"+userName+"')[0].click()", driver);
+//		executeScript("document.querySelectorAll('#user-"+userName+"')[0].click()", driver);
+		PageObjectLogging.log("clickOnDifferentUser", userName+" button clicked", true, driver);
+	}
+	
+	public void clickOnBlockedDifferentUser(String userName, WebDriver driver)
 	{
 		By userButton = By.xpath("//div[@class='Rail']//li[@id='user-"+userName+"']/img");
 		waitForElementByBy(userButton);
@@ -446,7 +456,7 @@ public class ChatPageObject extends BasePageObject
 //		CommonFunctions.ClickElement();
 //		CommonFunctions.ClickElement();
 		executeScript("document.querySelectorAll('.private-block')[0].click()", driver);
-		executeScript("document.querySelectorAll('.private-block')[0].click()", driver);
+//		executeScript("document.querySelectorAll('.private-block')[0].click()", driver);
 		PageObjectLogging.log("blockPrivateMessageFromUser", "private messages are blocked now", true, driver);
 	}
 	
