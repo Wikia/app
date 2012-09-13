@@ -190,20 +190,20 @@ public class BasePageObject{
 		}
 	}
 	
-	public void clickRobot(WebElement pageElem)
-	{
-//		try
-//		{
-			Point p = pageElem.getLocation();
-//			PageObjectLogging.log(p.toString(),p.toString(),p.toString());
-			CommonFunctions.MoveCursorToElement(p);
-			CommonFunctions.ClickElement();
-//		}
-//		catch(Exception e)
-//		{
-//			PageObjectLogging.log("clickRobot", e.toString(), false);			
-//		}
-	}
+//	public void clickRobot(WebElement pageElem)
+//	{
+////		try
+////		{
+//			Point p = pageElem.getLocation();
+////			PageObjectLogging.log(p.toString(),p.toString(),p.toString());
+//			CommonFunctions.MoveCursorToElement(p);
+//			CommonFunctions.ClickElement();
+////		}
+////		catch(Exception e)
+////		{
+////			PageObjectLogging.log("clickRobot", e.toString(), false);			
+////		}
+//	}
 	
 	
 	protected void executeScript(String script)

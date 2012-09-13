@@ -49,7 +49,6 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		article.openArticle(pageName);
 		article.verifyDeletedArticlePage(pageName);
 		CommonFunctions.logOut(Properties.userName2, driver);
-		CommonFunctions.MoveCursorTo(0, 0);
 	}
 	
 	@Test(groups={"ArticleFeaturesCRUDAdmin_002", "ArticleCRUDAdmin"})
