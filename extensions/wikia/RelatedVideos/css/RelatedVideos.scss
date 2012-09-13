@@ -455,6 +455,17 @@ $color-related-videos-background: darken($color-page, 20%);
 						position: absolute;
 						float: none;
 					}*/
+					.see-more-videos-placeholder {
+						background: darken($color-page, 5%);
+						border: 1px solid $color-page-border;
+						color: $color-text;
+						display: block;
+						font-weight: bold;
+						line-height: 90px;
+						outline: none;
+						text-align: center;
+						width: 150px;
+					}
 				}
 				div.action {
 				    cursor: pointer;

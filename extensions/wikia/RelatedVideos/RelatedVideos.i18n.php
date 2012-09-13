@@ -47,6 +47,7 @@ $messages['en'] = array(
 	'related-videos-back' => 'Back to the list',
 	'related-videos-empty' => 'Be the first to add a video',
 	'related-videos-video-views' => '$1 {{PLURAL:$1|view|views}}',
+	'related-videos-see-all' => 'See all videos',
 
 	//popular videos on hubs
 	'related-videos-hubs-suggested-by' => 'Suggested by $1',
@@ -61,6 +62,7 @@ $messages['qqq'] = array(
 	'related-videos-embed-text' => 'This is a label for an input field holding the embed (HTML) code for the currently displayed video.',
 	'related-videos-hubs-suggested-by' => 'This is suffix text displayed after a video title in "Popular Videos" module on a hub page. Parameters:
 * $1 is a username which can be linked to a user page',
+	'releted-videos-see-all' => 'This text comes at the end of the list of related videos.  Clicking on it takes you to a larger list of wiki videos.',
 );
 
 /** Breton (brezhoneg)

@@ -19,6 +19,9 @@
 			<div class="container">
 				<? $i = 0;
 				if( isset($videos) && is_array($videos) ){
+					$videos[] = array(
+						"seeMorePlaceholder" => true,
+					);
 					$videosGrouped = array();
 					$j = -1;
 					foreach( $videos as $id => $video ){
@@ -34,14 +37,22 @@
 						$i++; 
 						echo '<div class="group">';
 						foreach( $videos as $id => $video ){
-							echo F::app()->renderView(
-								'RelatedVideos',
-								'getCaruselElementRL',
-								array(
-									'video' => $video,
-									'preloaded' => ( $i <= 2 )
-								)
-							);
+							if( array_key_exists( "seeMorePlaceholder", $video ) ) {
+								?>
+								<div class="item">
+									<a href="<?= $linkToSeeMore ?>" class="see-more-videos-placeholder"><?= wfMsg('related-videos-see-all') ?></a>
+								</div>
+								<?
+							} else {
+								echo F::app()->renderView(
+									'RelatedVideos',
+									'getCaruselElementRL',
+									array(
+										'video' => $video,
+										'preloaded' => ( $i <= 2 )
+									)
+								);
+							}
 						}
 						echo '</div>';
 					}
