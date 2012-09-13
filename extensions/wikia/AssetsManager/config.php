@@ -53,6 +53,9 @@ $config['liftium_ads_js'] = array(
 $config['adengine2_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
+		'//extensions/wikia/AdEngine/AdConfig.js', // TODO refactor out
+		'#group_liftium_ads_js', // TODO refactor out
+
 		'//extensions/wikia/AdEngine/js/AdProviderGamePro.js',
 		'//extensions/wikia/AdEngine/js/AdProviderLiftium2.js',
 		'//extensions/wikia/AdEngine/js/AdProviderEvolve.js',
@@ -68,12 +71,12 @@ $config['oasis_ads_js'] = array(
     'assets' => array(
 		// ads
 		'//extensions/wikia/AdEngine/AdMeldAPIClient.js',
-		'//extensions/wikia/AdEngine/AdConfig.js',
+		//'//extensions/wikia/AdEngine/AdConfig.js', TODO refactor back here
 		'//extensions/wikia/AdEngine/AdEngine.js',
 		'//extensions/wikia/AdEngine/AdProviderOpenX.js',
 		'//extensions/wikia/AdEngine/LazyLoadAds.js',
 
-		'#group_liftium_ads_js',
+		//'#group_liftium_ads_js', TODO refactor back here
 
 		'//extensions/wikia/AdEngine/liftium/AdsInContent.js',
 
