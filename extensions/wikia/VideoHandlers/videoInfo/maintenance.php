@@ -2,6 +2,7 @@
 
 	/**
 	* Maintenance script to collect video data (local and premium videos) and insert into video_info table
+	* Note: video data come from embedded premium videos, local videos, and related videos (related videos list and global list)
 	* @author Liz Lee, Saipetch Kongkatong
 	*/
 
@@ -73,7 +74,7 @@
 	$invalid = 0;
 	$duplicate = 0;
 
-	// get embedded videos
+	// get embedded videos (premium)
 	$excludeList = array( 'png', 'gif', 'bmp', 'jpg', 'jpeg', 'ogg', 'ico', 'svg', 'mp3', 'wav', 'midi' );
 	$sqlWhere = implode( "','", $excludeList );
 
@@ -89,6 +90,20 @@ SQL;
 
 	while( $row = $db->fetchObject($result) ) {
 		echo "Embedded Video: $row->name";
+		addVideo( $videoList, $row->name );
+		$total++;
+	}
+
+	// get local videos
+	$result = $db->select(
+		array( 'image' ),
+		array( 'img_name as name' ),
+		array( 'img_media_type' => 'VIDEO' ),
+		__METHOD__
+	);
+
+	while( $row = $db->fetchObject($result) ) {
+		echo "Local Video: $row->name";
 		addVideo( $videoList, $row->name );
 		$total++;
 	}
