@@ -53,4 +53,3 @@ class WikiaApiBlogs extends ApiBase {
 		return __CLASS__ . ': $Id: WikiaApiBlogs.php 17065 2006-10-17 02:11:29Z yurik $';
 	}
 }
-?>
