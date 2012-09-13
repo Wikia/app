@@ -250,13 +250,14 @@ public class ChatPageObject extends BasePageObject
 	public void verifyAdminUserDropdown()
 	{
 		List<WebElement> list = getDropDownListOfElements();
-		CommonFunctions.assertNumber(2, list.size(), "Checking number of elements in the drop-down");
+		CommonFunctions.assertNumber(3, list.size(), "Checking number of elements in the drop-down");
 		for (int i=0; i<list.size(); i++)
 		{
 			PageObjectLogging.log("verifyAdminUserDropdown", i+" item in drop-down is "+ list.get(i).getAttribute("class"), true);
 		}
 		CommonFunctions.assertString("message-wall", list.get(0).getAttribute("class"));
 		CommonFunctions.assertString("contribs", list.get(1).getAttribute("class"));
+		CommonFunctions.assertString("private", list.get(1).getAttribute("class"));
 		
 		list = getAdminDropDownListOfElements();
 		CommonFunctions.assertNumber(3, list.size(), "Checking number of elements in the drop-down");
