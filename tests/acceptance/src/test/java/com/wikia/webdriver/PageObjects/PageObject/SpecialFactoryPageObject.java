@@ -14,7 +14,7 @@ public class SpecialFactoryPageObject extends BasePageObject
 	private WebElement domainField;
 	@FindBy(css="form[id='WikiFactoryDomainSelector'] button")
 	private WebElement getConfigButton;
-	@FindBy(css="ul#wiki-factory-tabs li:nth-child(8)")
+	@FindBy(css="a[href*=close]")
 	private WebElement closeWikiButton;
 	@FindBy(css="form#wk-wf-variables-select ul:nth-child(1) li:nth-child(1) input")
 	private WebElement dumpCheckBox;
