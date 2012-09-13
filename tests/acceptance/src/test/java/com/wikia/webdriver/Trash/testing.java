@@ -32,6 +32,12 @@ public class testing extends TestTemplate{
 			((JavascriptExecutor)driver).executeScript("$('.Video_Games').mouseenter()");
 			((JavascriptExecutor)driver).executeScript("$('.Video_Games').mouseenter()");
 			((JavascriptExecutor)driver).executeScript("$('.Video_Games').mouseleave()");
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 //		((JavascriptExecutor)driver).executeScript("$('.Video_Games').mouseleave()");
 //		((JavascriptExecutor)driver).executeScript("$('.Video_Games').mouseenter()");
