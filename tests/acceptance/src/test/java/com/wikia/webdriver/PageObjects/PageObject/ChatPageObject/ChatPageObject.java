@@ -26,6 +26,9 @@ public class ChatPageObject extends BasePageObject
 	@FindBy(css="textarea[name='message']")
 	private WebElement messageWritingArea;
 	
+	@FindBy(css="form.Write")
+	private WebElement messageForm;
+	
 	@FindBy(css="form[class='Write blocked']")
 	private WebElement messageWriteAreaBlocked;//when user is disconnected
 	
@@ -332,16 +335,11 @@ public class ChatPageObject extends BasePageObject
 	public void writeOnChat(String message)
 	{
 		messageWritingArea.sendKeys(message);
-		messageWritingArea.submit();
+		messageForm.submit();
 		PageObjectLogging.log("writeOnChat", "Message: "+message+" written", true, driver);
 		waitForElementByBy(By.xpath("//span[@class='message' and contains(text(), '"+message+"')]"));
 		PageObjectLogging.log("writeOnChat", "Message: "+message+" is visible on chat board", true, driver);
 	}
-	
-	
-	
-
-	
 	
 	/**
 	 * @author Karol Kujawiak
