@@ -1,21 +1,28 @@
-define('tables', ['events', 'track'], function(ev, track){
+define('tables', ['events', 'track', 'layout'], function(ev, track, layout){
 	'use strict';
 
 	var w = window,
-		realWidth = w.innerWidth || w.clientWidth,
+		realWidth = layout.getPageWidth(),
 		inited = false,
 		handledTables = [];
 
 	function wrap(elm){
-		var wrapper = document.createElement('div');
+		var wrapper = document.createElement('div'),
+			parent = elm.parentElement;
+
 		wrapper.className = 'bigTable';
 		wrapper.appendChild(elm.cloneNode(true));
-		elm.parentNode.replaceChild(wrapper, elm);
+
+		elm.parentElement.replaceChild(wrapper, elm);
+		//keep references to parent and wrapper as cloning nodes does not copy parentElement properties
+		elm.parent = parent;
+		elm.wrapper = wrapper;
+		elm.isWrapped = true;
 	}
 
 	function unwrap(elm){
-		var parent = elm.parentNode;
-		parent.parentNode.replaceChild(elm, parent);
+		elm.parent.replaceChild(elm, elm.wrapper);
+		elm.isWrapped = false;
 	}
 
 	function removeScripts(elm){
@@ -29,7 +36,7 @@ define('tables', ['events', 'track'], function(ev, track){
 	}
 
 	function process(tables){
-		var l = tables.length,
+		var	l = tables.length,
 			i = 0;
 
 		for(; i < l; i++){
@@ -59,7 +66,6 @@ define('tables', ['events', 'track'], function(ev, track){
 
 				if(correctRows > Math.floor(rowsLength/2)) {
 					table.className += ' infobox';
-					break;
 				}
 			}
 
@@ -76,38 +82,36 @@ define('tables', ['events', 'track'], function(ev, track){
 					removeScripts(table);
 					wrap(table);
 					table.wasWrapped = true;
-					table.isWrapped = true;
-					handledTables.push(table);
 				}
 			}
+
+			handledTables.push(table);
 		}
 
-		if(handledTables.length > 0 && !inited){
+		if(!inited && handledTables.length > 0){
+			inited = true;
 			w.addEventListener('resize', function(){
-				//setTimeout(function(){
-					var table, isWrapped, isBig, wasWrapped,
-						maxWidth = w.innerWidth || w.clientWidth;
+				var table, isWrapped, isBig, wasWrapped,
+					maxWidth = layout.getPageWidth();
 
-					for(var x = 0, y = handledTables.length; x < y; x++){
-						table = handledTables[x];
-						isWrapped = table.isWrapped;
-						wasWrapped = table.wasWrapped;
-						isBig = (table.computedWidth > maxWidth);
+				for(var x = 0, y = handledTables.length; x < y; x++){
+					table = handledTables[x];
+					isWrapped = table.isWrapped;
+					wasWrapped = table.wasWrapped;
+					isBig = (table.computedWidth > maxWidth);
 
-						if(!isWrapped && isBig){
-							if(!wasWrapped){
-								table.wasWrapped = true;
-								//remove scripts to avoid re-parsing
-								removeScripts(table);
-							}
-
-							wrap(table);
-							table.isWrapped = true;
-						}else if(isWrapped && !isBig){
-							unwrap(table);
-							table.isWrapped = false;
+					if(!isWrapped && isBig){
+						if(!wasWrapped){
+							table.wasWrapped = true;
+							//remove scripts to avoid re-parsing
+							removeScripts(table);
 						}
+
+						wrap(table);
+					}else if(isWrapped && !isBig){
+						unwrap(table);
 					}
+				}
 			});
 
 			if(!Features.overflow){
@@ -126,12 +130,10 @@ define('tables', ['events', 'track'], function(ev, track){
 
 				}, true);
 			}
-
-			inited = true;
 		}
 	}
 
 	return {
 		process: process
-	}
+	};
 });
