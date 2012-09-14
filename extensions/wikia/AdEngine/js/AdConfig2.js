@@ -31,7 +31,7 @@ window.AdConfig2 = function (
 			return AdProviderLiftium2;
 		}
 
-		if (isSlotGamePro(slot[0], window.wgContentLanguage)) {
+		if (AdProviderGamePro.canHandleSlot(slot)) {
 			return AdProviderGamePro;
 		}
 
@@ -52,24 +52,6 @@ window.AdConfig2 = function (
 	}
 
 	// TODO refactor to adProviderGamePro
-	function isSlotGamePro(slotname, city_lang) {
-		log('isSlotGamePro', 5, 'AdConfig2');
-		log([slotname, city_lang], 5, 'AdConfig2');
-
-		var slotMap = {
-			'HOME_TOP_LEADERBOARD':true,
-			'HOME_TOP_RIGHT_BOXAD':true,
-			'LEFT_SKYSCRAPER_2':true,
-			'PREFOOTER_LEFT_BOXAD':true,
-			'TOP_LEADERBOARD':true,
-			'TOP_RIGHT_BOXAD':true
-		};
-		if (city_lang == 'de' && typeof slotMap[slotname] != 'undefined') {
-			return true;
-		}
-
-		return false;
-	}
 
 	// TODO refactor to adProviderEvolve ?
 	function isSlotEvolve(slotname, country) {
