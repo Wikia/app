@@ -59,11 +59,6 @@ var Lightbox = {
 		// Check screen height for future interactions
 		Lightbox.shortScreen = $(window).height() < LightboxLoader.defaults.height + LightboxLoader.defaults.topOffset ? true : false;
 		
-		// Set ads class if we're showing ads
-		if(Lightbox.ads.showAds) {
-			Lightbox.openModal.addClass('show-ads');
-		}
-		
 		// Add template to modal
 		Lightbox.openModal.find(".modalContent").html(LightboxLoader.templateHtml);
 		
@@ -408,7 +403,9 @@ var Lightbox = {
 	},
 	ads: {
 		// should user see ads?
-		showAds: false, // !window.wgUserName || window.wgUserShowAds,
+		showAds: function() {
+			return $('#MODAL_INTERSTITIAL').length;
+		},
 		// show an ad after this number of unique images/videos are shown
 		adMediaCount: 2, 
 		// array of media titles shown for tracking unique views
@@ -421,7 +418,7 @@ var Lightbox = {
 		// Determine if we should show an ad
 		showAd: function(title, type) {
 			// Already shown?
-			if(!Lightbox.ads.showAds || Lightbox.ads.adWasShown) {
+			if(!Lightbox.ads.showAds() || Lightbox.ads.adWasShown) {
 				return false;
 			}
 			
@@ -772,7 +769,7 @@ var Lightbox = {
 			}
 		}
 		
-		var itemsShown = Lightbox.ads.showAds ? 6 : 9;
+		var itemsShown = Lightbox.ads.showAds() ? 6 : 9;
 
 		// Make sure we have our i18n message before initializing the carousel plugin
 		$.when.apply(this, deferredList).done(function() {
