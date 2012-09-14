@@ -48,7 +48,11 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 		$videos = $specialVideos->getVideos( $sort, $page );
 
 		$mediaService = F::build( 'MediaQueryService' );
-		$totalVideos = $mediaService->getTotalVideos();
+		if ( $sort == 'premium' ) {
+			$totalVideos = $mediaService->getTotalPremiumVideos();
+		} else {
+			$totalVideos = $mediaService->getTotalVideos();
+		}
 		$totalVideos = $totalVideos + 1; // plus one for 'add video' placeholder
 
 		$sortingOptions = array_merge( $specialVideos->getSortingOptions(), $specialVideos->getFilterOptions() );
