@@ -350,4 +350,43 @@ class MediaQueryService extends Service {
 		$this->app->wg->Memc->delete( $this->getMemKeyTotalVideos() );
 	}
 
+	/**
+	 * get total video views by title
+	 * @param string $title
+	 * @return integer $videoViews
+	 */
+	public static function getTotalVideoViewsByTitle( $title ) {
+		$app = F::app();
+
+		$app->wf->ProfileIn( __METHOD__ );
+
+		$memKey = $app->wf->MemcKey( 'videos', 'total_video_views' );
+		$videoList = $app->wg->Memc->get( $memKey );
+		if ( !is_array($videoList) ) {
+			$db = $app->wf->GetDB( DB_SLAVE );
+
+			$result = $db->select(
+				array( 'video_info' ),
+				array( 'video_title, views_total' ),
+				array(),
+				__METHOD__
+			);
+
+			$videoList = array();
+			while ( $row = $db->fetchObject($result) ) {
+				$hashTitle = md5( $row->video_title );
+				$videoList[$hashTitle] = $row->views_total;
+			}
+
+			$app->wg->Memc->set( $memKey, $videoList, 60*60*24 );
+		}
+
+		$hashTitle = md5( $title );
+		$videoViews = ( isset($videoList[$hashTitle]) ) ? $videoList[$hashTitle] : 0;
+
+		$app->wf->ProfileOut( __METHOD__ );
+
+		return $videoViews;
+	}
+
 }

@@ -158,7 +158,7 @@ class WikiaFileHelper extends Service {
 
 				// video views
 				$videoTitle = $media->getDBKey();
-				$views = DataMartService::getVideoViewsByTitleTotal( $videoTitle );
+				$views = MediaQueryService::getTotalVideoViewsByTitle( $videoTitle );
 				$content .= self::videoOverlayViews( $views );
 				$content .= '<meta itemprop="interactionCount" content="UserPlays:'.$views.'" />';
 
@@ -344,7 +344,7 @@ class WikiaFileHelper extends Service {
 					}
 					$data['videoEmbedCode'] = $file->getEmbedCode( $width, true, true);
 					$data['playerAsset'] = $file->getPlayerAssetUrl();
-					$data['videoViews'] = DataMartService::getVideoViewsByTitleTotal( $fileTitle->getDBKey() );
+					$data['videoViews'] = MediaQueryService::getTotalVideoViewsByTitle( $fileTitle->getDBKey() );
 
 					$mediaPage = F::build( 'WikiaVideoPage', array($fileTitle) );
 
