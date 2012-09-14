@@ -20,7 +20,7 @@ Version 0.1.0	2008-03
 function getDebugBacktrace($NL = "<BR>")
 {
      $dbgTrace = debug_backtrace();
-     $dbgMsg .= $NL."Debug backtrace begin:$NL";
+     $dbgMsg = $NL."Debug backtrace begin:$NL";
      foreach($dbgTrace as $dbgIndex => $dbgInfo)
      {
          $dbgMsg .= "\t at $dbgIndex  ".$dbgInfo['file']." (line {$dbgInfo['line']}) -> {$dbgInfo['function']}()$NL";
@@ -33,7 +33,7 @@ function getDebugBacktrace($NL = "<BR>")
 
 function sandboxParse($wikiText)
 {
-	global $wgTitle, $wgUser, $wgParser, $wgExtensionFunctions, $wgVersion;
+	global $wgTitle, $wgParser, $wgVersion;
 
 	// temporarily replace the global parser
 	$old_wgParser = $wgParser;
@@ -65,7 +65,7 @@ function sandboxParse($wikiText)
 
 	// do the parsing
 	wfRunHooks( 'custom_SandboxParse', array( &$wikiText ) );
-	$result = $wgParser->parse($wikiText, $wgTitle, $myParserOptions);
+	$result = $wgParser->parse($wikiText, $wgTitle, $myParserOptions); /* @var $result ParserOutput */
 	$result = $result->getText();
 
 	// restore the global parser
@@ -81,7 +81,9 @@ function sandboxParse($wikiText)
 ////
 function lw_simpleQuery($queryString){
 	$retVal = "";
-	$db = &wfGetDB(DB_SLAVE)->getProperty('mConn');
+	$db = wfGetDB(DB_SLAVE)->getProperty('mConn');
+
+	// TODO: use Database class instead
 	if($result = mysql_query($queryString,$db)){
 		if(($numRows = mysql_num_rows($result)) && ($numRows > 0)){
 			$row = mysql_fetch_row($result);

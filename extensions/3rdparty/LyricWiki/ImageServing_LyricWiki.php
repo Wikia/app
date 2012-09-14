@@ -36,7 +36,7 @@ function lw_ImageServingFallback(ImageServing $imageServing, $n, &$out){
 	$articleTitlesToTry = array();
 	if(isset($imageServing->articlesByNS[NS_GRACENOTE])){
 		$gnArticles = $imageServing->articlesByNS[ NS_GRACENOTE ];
-		foreach($gnArticles as $gnArticleId => $gnArticleData){
+		foreach($gnArticles as $gnArticleData){
 			$title = $gnArticleData['title'];
 
 			// Just pass the page title in directly. By not passing the Gracenote namespace in, we'll get the main-namespace equivalent.
@@ -47,7 +47,7 @@ function lw_ImageServingFallback(ImageServing $imageServing, $n, &$out){
 	// For main namespace pages, fall back from song to album to artist.
 	if(isset($imageServing->articlesByNS[NS_MAIN])){
 		$articles = $imageServing->articlesByNS[ NS_MAIN ];
-		foreach($articles as $articleId => $articleData){
+		foreach($articles as $articleData){
 			$title = $articleData['title'];
 
 			// If the title is an album, fall back to the artist... if the title is a song, fall back to the album.

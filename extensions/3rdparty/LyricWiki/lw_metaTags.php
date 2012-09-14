@@ -20,14 +20,14 @@ if (defined('MEDIAWIKI')) {
 
 	// Attach post-parser hook to extract metadata and alter headers
 	$wgHooks['OutputPageBeforeHTML'][] = 'insertMetaKeywords';
-	
-	////
-	// Adds the appropriate data into the meta-tags where appropriate.
-	//
-	// @param OutputPage $out Handle to an OutputPage object - presumably $wgOut (passed by reference).
-	// @param String $text Output text.
-	// @return Boolean Always true to allow other extensions to continue processing.
-	////
+
+	/**
+	 * Adds the appropriate data into the meta-tags where appropriate.
+	 *
+	 * @param OutputPage $out Handle to an OutputPage object - presumably $wgOut (passed by reference).
+	 * @param String $text Output text.
+	 * @return Boolean Always true to allow other extensions to continue processing.
+	 */
 	function insertMetaKeywords($out, $text){
 		$title = (isset($_GET['title'])?$_GET['title']:"");
 
@@ -51,7 +51,7 @@ if (defined('MEDIAWIKI')) {
 				if(strpos($title, ":") !== false){
 					// Song
 					$artist = substr($title, 0, strpos($title, ":"));
-					$song = substr($title, strpos($title, ":") + 1); 
+					$song = substr($title, strpos($title, ":") + 1);
 					$out->addKeyword("$song lyrics");
 					$out->addKeyword("$artist $song lyrics");
 					$out->addKeyword("$song by $artist lyrics");
@@ -75,5 +75,3 @@ if (defined('MEDIAWIKI')) {
 	} // end insertMetaKeywords()
 
 } // end check to see if this was a direct-access or not.
-
-?>

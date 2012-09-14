@@ -32,7 +32,7 @@ function wfImpliedRedirects(){
 ////
 // Given a title, gives us a chance to create an article for it before MediaWiki takes its normal approach.
 ////
-function wfImpliedRedirects_articleFromTitle(&$title, &$article){
+function wfImpliedRedirects_articleFromTitle(Title &$title, &$article){
 	// We only want to mess with titles for pages that don't already exist.
 	if(!$title->exists() && ($title->getNamespace() == NS_MAIN || $title->getNamespace() == NS_GRACENOTE)){
 		$origTitle = $title->getDBkey(); // this format has the characters as we need them already
@@ -77,15 +77,16 @@ function wfImpliedRedirects_articleFromTitle(&$title, &$article){
 			// We successfully found a page using implied redirects... change this request around.
 			if($titleStr != $origTitle){
 			    if (!class_exists('LW_ImpliedRedirect')) {
+					// TODO: move to a separate file
 			        class LW_ImpliedRedirect extends Article {
 			            var $mTarget;
-			        
+
 			            function __construct( $source, $target ) {
 			                Article::__construct($source);
 			                $this->mTarget = $target;
 			                $this->mIsRedirect = true;
 			            }
-			        
+
 			            function followRedirect() {
 			                return $this->mTarget;
 			            }
