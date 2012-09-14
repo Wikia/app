@@ -55,6 +55,8 @@
 		};
 
 		var showVideoModal = function() {
+
+debugger;
 			$.showModal( self.addModalData.title, self.addModalData.html, {
 				id: 'add-video-modal',
 				width: settings.modalWidth,
