@@ -15,7 +15,7 @@
 
 <?= empty($wg->GlobalHeaderFullWidth) ? '' : F::app()->renderView('Ad', 'Top') ?>
 
-<section id="WikiaPage" class="WikiaPage<?= empty( $wg->OasisNavV2 ) ? '' : ' V2' ?><?= !empty($isGridLayoutEnabled) && $railModulesExist ? ' WikiaGrid' : '' ?>">
+<section id="WikiaPage" class="WikiaPage<?= empty( $wg->OasisNavV2 ) ? '' : ' V2' ?><?= !empty($isGridLayoutEnabled) ? ' WikiaGrid' : '' ?>">
 	<div id="WikiaPageBackground" class="WikiaPageBackground"></div>
 	<div class="WikiaPageContentWrapper">
 		<?= empty($wg->GlobalHeaderFullWidth) ? F::app()->renderView('Notifications', 'Confirmation') : '' ?>
@@ -52,7 +52,7 @@
 			<?= F::app()->renderView( 'ForumController', 'header' ) ?>
 		<? endif ?>
 
-		<article id="WikiaMainContent" class="WikiaMainContent<?= !empty($isGridLayoutEnabled) && $railModulesExist ? ' grid-4' : '' ?>">
+		<article id="WikiaMainContent" class="WikiaMainContent<?= !empty($isGridLayoutEnabled) ? $railModulesExist ? ' grid-4' : ' grid-6' : '' ?>">
 			<?php
 				// Needs to be above page header so it can suppress page header
 				if ($displayAdminDashboard) {

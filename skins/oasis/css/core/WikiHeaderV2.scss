@@ -393,7 +393,7 @@
 .adm-dash-search {
 	float: right;
 	margin-right: 10px;
-	width: 300px;
+	width: $wikia-search-base-width + 100px;
 }
 
 #shareEmailModal .buttons {

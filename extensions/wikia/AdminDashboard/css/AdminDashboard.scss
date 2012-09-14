@@ -317,7 +317,7 @@ $color-highlight-column: rgba($color-page, 0);
 		@include box-shadow(0, 0, 0, $color-body);
 		float: none;
 		padding: 0 12px 0 5px;
-		width: 982px;
+		width: $width-outside - 18px;
 	}
 	fieldset {
 		border: solid 1px $color-links;

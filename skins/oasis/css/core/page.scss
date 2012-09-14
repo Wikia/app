@@ -11,11 +11,20 @@
 	border-right: 1px solid $color-page-border;
 	margin: -59px auto -39px;
 	padding-top: 59px;
+	/* temp grid transition code - integrate into main, then remove after grid is fully rolled out */
 	&.WikiaGrid {
+		.WikiaSearchHeader {
+			width: 330px;
+		}
+		.WikiaPageHeader {
+			margin-left: 0;
+			margin-right: 0;
+		}
 		.WikiaArticle {
 			padding: 0;
 		}
 	}
+	/* end temp grid transition code */
 	&.V2 {
 		padding-top: 0;
 		margin: 0px auto -39px;
@@ -62,6 +71,9 @@
 	// one column layout (no right rail)
 	.oasis-one-column & {
 		width: $width-outside;
+		&.grid-6 {
+			width: $width-outside - 20px;
+		}
 	}
 
 	a.new,
