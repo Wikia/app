@@ -61,6 +61,7 @@ $config['adengine2_js'] = array(
 		'//extensions/wikia/AdEngine/js/AdProviderEvolve.js',
 		'//extensions/wikia/AdEngine/js/AdProviderEvolveRS.js',
 		'//extensions/wikia/AdEngine/js/AdProviderAdDriver2.js',
+		'//extensions/wikia/AdEngine/js/AdProviderAdDriver.js',
 		'//extensions/wikia/AdEngine/js/AdConfig2.js',
 		'//extensions/wikia/AdEngine/js/AdEngine2.js',
 		'//extensions/wikia/AdEngine/js/AdEngine2.run.js',
