@@ -33,7 +33,7 @@ class WikiaApp {
 	 * @var $namespaceRegistry array list of namespaces Registered by nirvana framework
 	 */
 	private $namespaceRegistry = array();
-	
+
 	/**
 	 * dispatcher
 	 * @var $dispatcher WikiaDispatcher
@@ -67,33 +67,33 @@ class WikiaApp {
 	/**
 	 * this variable is use for local cache of view. Used by getViewOnce, renderViewOnce
 	 */
-	
+
 	protected static $viewCache = array();
-	
+
 	/**
 	 * constructor
 	 * @param $globalRegistry WikiaGlobalRegistry
 	 * @param $localRegistry WikiaLocalRegistry
 	 * @param $hookDispatcher WikiaHookDispatcher
 	 */
-	
+
 	public function __construct(WikiaGlobalRegistry $globalRegistry = null, WikiaLocalRegistry $localRegistry = null, WikiaHookDispatcher $hookDispatcher = null, WikiaFunctionWrapper $functionWrapper = null) {
 
 		if(!is_object($globalRegistry)) {
 			F::setInstance('WikiaGlobalRegistry', new WikiaGlobalRegistry());
 			$globalRegistry = F::build( 'WikiaGlobalRegistry' );
 		}
-		
+
 		if(!is_object($localRegistry)) {
 			F::setInstance('WikiaLocalRegistry', new WikiaLocalRegistry());
 			$localRegistry = F::build( 'WikiaLocalRegistry' );
 		}
-		
+
 		if(!is_object($hookDispatcher)) {
 			F::setInstance('WikiaHookDispatcher', new WikiaHookDispatcher());
 			$hookDispatcher = F::build( 'WikiaHookDispatcher' );
 		}
-		
+
 		if(!is_object($functionWrapper)) {
 			$functionWrapper = F::build( 'WikiaFunctionWrapper' );
 		}
@@ -113,49 +113,49 @@ class WikiaApp {
 			Wikia::logBacktrace(__METHOD__);
 		}
 	}
-	
+
 	/**
 	 * checks if an reference or a string refer to a WikiaService instance
-	 * 
+	 *
 	 * @param mixed $controllerName a string with the name of the class or a reference to an object
 	 */
 	public function isService( $controllerName ) {
 		return ( is_object( $controllerName ) ) ? is_a( $controllerName, 'WikiaService' ) : ( ( strrpos( $controllerName, 'Service' ) === ( strlen( $controllerName ) - 7 ) ) );
 	}
-	
+
 	/**
 	 * checks if an reference or a string refer to a WikiaController instance
-	 * 
+	 *
 	 * @param mixed $controllerName a string with the name of the class or a reference to an object
 	 */
 	public function isController( $controllerName ) {
 		return ( is_object( $controllerName ) ) ? is_a( $controllerName, 'WikiaController' ) : ( ( strrpos( $controllerName, 'Controller' ) === ( strlen( $controllerName ) - 10 ) ) );
 	}
-	
+
 	/**
 	 * @deprecated
-	 * 
+	 *
 	 * checks if an reference or a string refer to a Module instance, this method exists only for supporting legacy code
-	 * 
+	 *
 	 * @param mixed $controllerName a string with the name of the class or a reference to an object
 	 */
 	public function isModule( $controllerName ) {
 		return ( is_object( $controllerName ) ) ? is_a( $controllerName, 'Module' ) : ( ( strrpos( $controllerName, 'Module' ) === ( strlen( $controllerName ) - 6 ) ) );
 	}
-	
+
 	/**
 	 * @deprecated
-	 * 
+	 *
 	 * returns a partial name for a WikiaController or a Module subclass name to use in dispatching requests and loading templates,
 	 * this method exists only for supporting legacy code
-	 * 
+	 *
 	 * @param mixed $controllerName a string with the name of the class or a reference to an object
 	 */
 	public function getControllerLegacyName( $controllerName ) {
 		if ( is_object( $controllerName ) ) {
 			$controllerName = get_class( $controllerName );
 		}
-		
+
 		if ( $this->isController( $controllerName ) ) {
 			return substr( $controllerName, 0, strlen( $controllerName ) - 10 );
 		} elseif ( $this->isModule( $controllerName ) ) {
@@ -220,7 +220,7 @@ class WikiaApp {
 	public function setFunctionWrapper(WikiaFunctionWrapper $functionWrapper) {
 		$this->wf = $functionWrapper;
 	}
-	
+
 	/**
 	 * forces skin initialization
 	 * @param bool $flag
@@ -230,10 +230,10 @@ class WikiaApp {
 			// initialize skin via OutputPage Context
 			$flag = ( is_object( $this->wg->Out ) && is_object( $this->wg->Out->getContext()->getSkin() ) );
 		}
-		
+
 		$this->skinInitialized = $flag;
 	}
-	
+
 	/**
 	 * returns the skin initialization status
 	 * @return bool
@@ -243,12 +243,12 @@ class WikiaApp {
 		if ( $this->skinInitialized === null ) {
 			$this->skinInitialized = true;
 		}
-		
+
 		return $this->skinInitialized;
 	}
-	/** Getter/Setter for global/static skin template object 
+	/** Getter/Setter for global/static skin template object
 	 *
-	 * @param SkinTemplate $skinTemplate 
+	 * @param SkinTemplate $skinTemplate
 	 */
 	public function setSkinTemplateObj( &$skinTemplate ) {
 		$this->skinTemplateObj = $skinTemplate;
@@ -344,52 +344,66 @@ class WikiaApp {
 
 	/**
 	 * registerNamespaceControler
-	 * if the namespace is registered using registerNamespaceControler  
+	 * if the namespace is registered using registerNamespaceControler
 	 * $className, $methodName will be exexuted instead of regular article path
-	 * 
-	 * title is passed as a request attribute. ($app->renderView($className, $methodName, array( 'title' => $wgTitle ) )  
-	 *  
+	 *
+	 * title is passed as a request attribute. ($app->renderView($className, $methodName, array( 'title' => $wgTitle ) )
+	 *
 	 * @param integer $namespace
 	 * @param string $className
 	 * @param string $methodName
-	 * @param string $exists - Controler will be only executed if wgTitle exists 
+	 * @param string $exists - Controler will be only executed if wgTitle exists
 	 */
 
 	public function registerNamespaceControler( $namespace, $className, $methodName, $exists ) {
 		if(empty($this->namespaceRegistry)) {
 			$this->registerHook( 'ArticleViewHeader', 'WikiaApp', 'onArticleViewHeader', array(), false, $this );
-		}	
-		
-		$this->namespaceRegistry[$namespace] =  array( 
-			'className' => $className, 
+		}
+
+		$this->namespaceRegistry[$namespace] =  array(
+			'className' => $className,
 			'methodName' => $methodName,
 		  	'exists' => $exists
 		);
 	}
-	
+
 	/**
-	 * 
+	 * Registers a controller for Wikia's public Nirvana-based API
+	 *
+	 * @param string $className The name of the class contained in the file
+	 * @param string $path The path to the file
+	 */
+	public function registerApiController( $className, $path ) {
+		//register class for autoloading
+		$this->wg->set( 'wgAutoloadClasses', $path, $className );
+
+		//register the API controller for discovery/auto-documentation
+		$this->wg->set( 'wgWikiaApiControllers', $path, $className );
+	}
+
+	/**
+	 *
 	 * onArticleViewHeader
-	 * 
+	 *
 	 * This is a hook which serves the needs of registerNamespaceControler
-	 * 
+	 *
 	 * @param $article Article
 	 * @param $outputDone Bool
 	 * @param $useParserCache
 	 */
-	
+
 	public function onArticleViewHeader(&$article, &$outputDone, &$useParserCache) {
 		$title = $article->getTitle();
-		
+
 		$namespace = $title->getNamespace();
 		if( !empty($this->namespaceRegistry[$namespace]) && (empty($this->namespaceRegistry['exists']) || $title->exists()) ) {
-			$this->wg->Out->addHTML($this->renderView($this->namespaceRegistry[$namespace]['className'], $this->namespaceRegistry[$namespace]['methodName'], array( 'title' => $article->getTitle() ) ));	
+			$this->wg->Out->addHTML($this->renderView($this->namespaceRegistry[$namespace]['className'], $this->namespaceRegistry[$namespace]['methodName'], array( 'title' => $article->getTitle() ) ));
 			$outputDone = true;
 		}
-		
+
 		return true;
 	}
-	
+
 	/**
 	 * register class
 	 * @param mixed $className the name of the class or a list of classes contained in the same file passed as an array
@@ -405,15 +419,15 @@ class WikiaApp {
 			$this->wg->set( 'wgAutoloadClasses', $filePath, $className );
 		}
 	}
-	
+
 	/**
-	 * register controller class 
+	 * register controller class
 	 */
-	
+
 	public function registerController($className, $filePath, $options = null) {
 		// register the class with the autoloader
 		$this->registerClass($className, $filePath);
-		
+
 		if ( is_array ($className)) {
 			foreach ( $className as $cls ) {
 				$this->wg->set('wgWikiaControllers', $className, $options);
@@ -457,12 +471,12 @@ class WikiaApp {
 	 */
 	public function registerSpecialPage( $name, $className, $group = null ) {
 		$this->wg->set( 'wgSpecialPages', $className, $name );
-		
+
 		if( !empty( $group ) ) {
 			$this->wg->set( 'wgSpecialPageGroups', $group, $name );
 		}
 	}
-	
+
 	/**
 	 * get global variable (alias: WikiaGlobalRegistry::get(var,'mediawiki'))
 	 * @param string $globalVarName
@@ -513,21 +527,21 @@ class WikiaApp {
 	 */
 	public function sendRequest( $controllerName = null, $methodName = null, $params = array(), $internal = true ) {
 		$values = array();
-		
+
 		if ( !empty( $controllerName ) ) {
 			$values['controller'] = $controllerName;
 		}
-		
+
 		if ( !empty( $methodName ) ) {
 			$values['method'] = $methodName;
 		}
-		
+
 		$params = array_merge( (array) $params, $values );
-		
+
 		if ( empty( $methodName ) || empty( $controllerName ) ) {
 			$params = array_merge( $params, $_POST, $_GET );
 		}
-		
+
 		$request = F::build('WikiaRequest', array($params) );
 
 		$request->setInternal( $internal );
@@ -559,7 +573,7 @@ class WikiaApp {
 	}
 
 	/**
-	 * get view Object for given controller and method, providing your own data 
+	 * get view Object for given controller and method, providing your own data
 	 * @param string $controllerName
 	 * @param string $method
 	 * @param Array $params
@@ -568,15 +582,15 @@ class WikiaApp {
 	public function getView( $controllerName, $method, Array $params = array() ) {
 		return F::build( 'WikiaView', array( $controllerName, $method, $params ), 'newFromControllerAndMethodName' );
 	}
-	
+
 	/**
-	 * shortcut for getView(...)->render(); (previously wfRenderPartial) 
+	 * shortcut for getView(...)->render(); (previously wfRenderPartial)
 	 * @param string $controllerName
 	 * @param string $method
 	 * @param Array $params
 	 * @return string
 	 */
-	
+
 	public function renderPartial( $controllerName, $method, Array $params = array() ) {
 	 	return $this->getView( $controllerName, $method, $params )->render();
 	}
@@ -588,60 +602,60 @@ class WikiaApp {
 	 * @param array $params
 	 * @return string
 	 */
-	
+
 	public function renderView( $controllerName, $method, Array $params = null ) {
 		return $this->sendRequest( $controllerName, $method, $params, true )->toString();
 	}
-	
+
 	/**
-	 * call renderView and cache results locally. In case of subsequent call for the same controller/method with the same $key, 
+	 * call renderView and cache results locally. In case of subsequent call for the same controller/method with the same $key,
 	 * previously rendered string will be returned.
 	 *
 	 * Use Case: repeated rendering of the some controller/method with the some input data
-	 *   
+	 *
 	 * @param string $controllerName
 	 * @param string $method
-	 * @param string $key caching key for you extension/parent template 
+	 * @param string $key caching key for you extension/parent template
 	 * @param array $params
 	 * @return string
 	 */
-	
+
 	public function renderViewCached( $controllerName, $method, $key, Array $params = array() ) {
 		if(empty(self::$viewCache["V_". $controllerName . $method . $key])) {
 			self::$viewCache["V_". $controllerName . $method . $key] =  $this->renderView($controllerName, $method, $params);
 		}
-		
+
 		return self::$viewCache["V_". $controllerName . $method . $key];
 	}
-	
-	/** 
-	 * call renderPartial and cache results locally. In case of subsequent call for the same controller/method with the same $key, 
+
+	/**
+	 * call renderPartial and cache results locally. In case of subsequent call for the same controller/method with the same $key,
 	 * previously rendered string will be returned.
-	 * 
+	 *
 	 * Use Case: repeated rendering of the some controller/method with the some input data
-	 *   
+	 *
 	 * @param string $controllerName
 	 * @param string $method
-	 * @param string $key caching key for you extension/parent template 
+	 * @param string $key caching key for you extension/parent template
 	 * @param array $params
 	 * @return string
 	 */
-	
+
 	public function renderPartialCached( $controllerName, $method, $key, Array $params = array() ) {
 		if(empty(self::$viewCache["P_". $controllerName . $method . $key])) {
 			self::$viewCache["P_". $controllerName . $method . $key] =  $this->renderPartial($controllerName, $method, $params);
 		}
-		
+
 		return self::$viewCache["P_". $controllerName . $method . $key];
 	}
-	
+
 	/**
 	 * @todo: take a look here, consider removing
 	 */
 	public static function ajax() {
 		return F::app()->sendRequest( null, null, null, false );
 	}
-	
+
 	/**
 	 * commit any open transactions, only if writes were done on connection and if it's a POST request
 	 */
