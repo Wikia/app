@@ -1,4 +1,4 @@
-window.AdProviderEvolve = function (WikiaTracker, log, window, ghostwriter, document, Geo) {
+window.AdProviderEvolve = function (WikiaTracker, log, window, ghostwriter, document) {
 	var slotMap = {
 		'HOME_TOP_LEADERBOARD':{'tile':1, 'size':'728x90', 'dcopt':'ist'},
 		'HOME_TOP_RIGHT_BOXAD':{'tile':2, 'size':'300x250,300x600'},
@@ -9,11 +9,11 @@ window.AdProviderEvolve = function (WikiaTracker, log, window, ghostwriter, docu
 
 	function canHandleSlot(slot) {
 		var slotname = slot[0];
-		var country = Geo.getCountryCode();
-		log('isSlotEvolve', 5, 'AdProviderEvolve');
-		log([slotname, country], 5, 'AdProviderEvolve');
 
-		if ((country == 'AU' || country == 'NZ' || country == 'CA') && typeof slotMap[slotname] != 'undefined') {
+		log('canHandleSlot', 5, 'AdProviderEvolve');
+		log([slotname], 5, 'AdProviderEvolve');
+
+		if (slotMap[slotname]) {
 			return true;
 		}
 

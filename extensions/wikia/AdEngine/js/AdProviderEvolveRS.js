@@ -1,16 +1,11 @@
-window.AdProviderEvolveRS = function(WikiaTracker, log, window, ghostwriter, document, Geo) {
+window.AdProviderEvolveRS = function(WikiaTracker, log, window, ghostwriter, document) {
 	function canHandleSlot(slot) {
-		var slotname = slot[0]
-			, country = Geo.getCountryCode();
+		var slotname = slot[0];
 
 		log('canHandleSlot', 5, 'AdProviderEvolveRS');
-		log([slotname, country], 5, 'AdProviderEvolveRS');
+		log([slotname], 5, 'AdProviderEvolveRS');
 
-		if ((country === 'AU' || country === 'NZ' || country === 'CA') && slotname === 'INVISIBLE_1') {
-			return true;
-		}
-
-		return false;
+		return (slotname === 'INVISIBLE_1');
 	}
 
 	function fillInSlot(slot) {
