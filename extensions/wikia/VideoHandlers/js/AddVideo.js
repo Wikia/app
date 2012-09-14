@@ -54,7 +54,19 @@
 			}
 		};
 
-		var addVideoModal = function(){
+		var showVideoModal = function() {
+			$.showModal( self.addModalData.title, self.addModalData.html, {
+				id: 'add-video-modal',
+				width: settings.modalWidth,
+				callback : function(){
+					self.addModal = $('#add-video-modal');
+					enableVideoSubmit();
+					initModalScroll();
+				}
+			});		
+		};
+
+		var getVideoModal = function(){
 			WikiaTracker.trackEvent(
 				'trackingevent',
 				{
@@ -65,43 +77,39 @@
 				'both'
 			);
 			
-			// Set up promise pattern 
-			var deferredList = [];
-
-			// Get html for add video modal
-			// Important: keep this as the first item in the deferredList array for param ordering in $.when()
-			deferredList.push(
-				$.nirvana.postJson(controllerName, 'getAddVideoModal', {
-					title: wgTitle,
-					format: 'html'
-				})
-			);
-			
-			// Get css for add video modal
-			if(!assetsLoaded) {
+			if(assetsLoaded) {
+				showVideoModal();
+			} else {
+	
+				// Set up promise pattern 
+				var deferredList = [];
+	
+				// Get html for add video modal
+				// Important: keep this as the first item in the deferredList array for param ordering in $.when()
+				deferredList.push(
+					$.nirvana.postJson(controllerName, 'getAddVideoModal', {
+						title: wgTitle,
+						format: 'html'
+					})
+				);
+				
+				// Get css for add video modal
 				deferredList.push($.getResources([$.getSassCommonURL('/extensions/wikia/VideoHandlers/css/AddVideoModal.scss')]));
+	
+				$.when.apply(this, deferredList).done(function(response) {
+					var data = response[0]; // get data from ajax response
+					if(data && data.html) {
+						assetsLoaded = true;
+						self.addModalData = data;
+						showVideoModal();
+					} else {
+						showError();
+					}
+				})
+				.fail(showError);
 			}
-
-			$.when.apply(this, deferredList).done(function(response) {
-				assetsLoaded = true;
-				var data = response[0]; // get data from ajax response
-				if(data.html) {
-					$.showModal( data.title, data.html, {
-						id: 'add-video-modal',
-						width: settings.modalWidth,
-						callback : function(){
-							self.addModal = $('#add-video-modal');
-							enableVideoSubmit();
-							initModalScroll();
-						}
-					});
-				}
-			})
-			.fail(showError);
-
-
 		};
-
+		
 		var initModalScroll = function( modal ) {
 			self.addPos = 1;
 			self.addMax = Math.ceil(($('.item',self.addModal).length)/3);
@@ -272,7 +280,7 @@
 	
 		var handleClick = function(e) {
 			e.preventDefault();
-			loginWrapper(addVideoModal);
+			loginWrapper(getVideoModal);
 		};	
 
 		element.on('click', handleClick);
