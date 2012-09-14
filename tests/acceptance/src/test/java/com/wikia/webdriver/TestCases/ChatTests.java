@@ -487,12 +487,12 @@ public class ChatTests extends TestTemplate_Two_Drivers{
 		chat1.verifyPrivateMessageNotification(1);
 		chat1.clickPrivateMessageUser(Properties.userName2, driver);
 		chat1.blockPrivateMessage(driver);
-		chat1.clickOnDifferentUser(Properties.userName2, driver);
+		chat1.clickOnBlockedDifferentUser(Properties.userName2, driver);
 		chat1.verifyBlockingUserDropdown();
 		chat1.clickOnDifferentUser(Properties.userName2, driver);
 		switchToWindow(driver2);
 		chat2.verifyBlockedUserMessage(Properties.userName, Properties.userName2);
-		chat2.clickOnDifferentUser(Properties.userName, driver2);
+		chat2.clickOnBlockedDifferentUser(Properties.userName, driver2);
 		chat2.verifyBlockedUserDropdown();
 		switchToWindow(driver);
 		chat1.clickOnDifferentUser(Properties.userName2, driver);
