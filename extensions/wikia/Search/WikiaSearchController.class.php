@@ -158,6 +158,22 @@ class WikiaSearchController extends WikiaSpecialPageController {
             $this->overrideTemplate( 'WikiaMobileIndex' );
         }
 
+		/*
+		 * Done to return results in json format
+		 * Can be removed after upgrade to 5.4 and specify serialized Json data on WikiaSearchResult
+		 * http://php.net/manual/en/jsonserializable.jsonserialize.php
+		*/
+		$format = $this->response->getFormat();
+		if( ($format == 'json' || $format == 'jsonp') && count( $results ) ){
+			$tempResults = array();
+			foreach( $results as $result ){
+				if($result instanceof WikiaSearchResult){
+					$tempResults[] = $result->toArray(array('title', 'url'));
+				}
+			}
+			$results = $tempResults;
+		}
+
 		$this->setVal( 'results', $results );
 		$this->setVal( 'resultsFound', $resultsFound );
 		$this->setVal( 'resultsFoundTruncated', $this->wg->Lang->formatNum( $this->getTruncatedResultsNum($resultsFound) ) );

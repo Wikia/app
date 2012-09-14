@@ -198,4 +198,14 @@ class WikiaSearchResult {
 
 	}
 
+	public function toArray($keys){
+		$array = array();
+		foreach ($this as $key => $value)
+		{
+			if(in_array($key, $keys))
+			$array[$key] = $value;
+		}
+		return $array;
+	}
+
 }
