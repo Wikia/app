@@ -30,3 +30,7 @@ $app->registerSpecialPage('GameGuidesPreview', 'GameGuidesSpecialController');
 * message files
 */
 $app->registerExtensionMessageFile('GameGuides', "{$dir}/GameGuides.i18n.php");
+
+$wgGroupPermissions['*']['gameguidespreview'] = false;
+$wgGroupPermissions['staff']['gameguidespreview'] = true;
+$wgGroupPermissions['sysop']['gameguidespreview'] = true;
