@@ -130,4 +130,17 @@ class WikiaSearchAdsTest extends WikiaBaseTest {
 		$this->assertNotEquals( $this->url_result, $responseData );
 		
 	}
+
+	public function testGetPartnerId() {
+		$this->mockApp();
+
+		$this->assertEquals( 'wikiagy', WikiaSearchAdsController::getPartnerId() );
+
+		global $wgInfospaceSearchSub_IDS;
+		$wgInfospaceSearchSub_IDS = 42;
+		$this->assertEquals( 'wikiagy_42', WikiaSearchAdsController::getPartnerId() );
+
+		$wgInfospaceSearchSub_IDS = null;
+		$this->assertEquals( 'wikiagy', WikiaSearchAdsController::getPartnerId() );
+	}
 }
