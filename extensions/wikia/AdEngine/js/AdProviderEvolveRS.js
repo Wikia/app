@@ -1,38 +1,54 @@
-window.AdProviderEvolveRS = function (WikiaTracker, log, window, ghostwriter, document) {
+window.AdProviderEvolveRS = function(WikiaTracker, log, window, ghostwriter, document, Geo) {
+	function canHandleSlot(slot) {
+		var slotname = slot[0]
+			, country = Geo.getCountryCode();
+
+		log('canHandleSlot', 5, 'AdProviderEvolveRS');
+		log([slotname, country], 5, 'AdProviderEvolveRS');
+
+		if ((country === 'AU' || country === 'NZ' || country === 'CA') && slotname === 'INVISIBLE_1') {
+			return true;
+		}
+
+		return false;
+	}
+
 	function fillInSlot(slot) {
 		log('fillInSlot', 5, 'AdProviderEvolveRS');
 		log(slot, 5, 'AdProviderEvolveRS');
 
-		WikiaTracker.trackAdEvent('liftium.slot2', {'ga_category':'slot2/' + slot[1], 'ga_action':slot[0], 'ga_label':'evolve'}, 'ga');
+		WikiaTracker.trackAdEvent('liftium.slot2', {
+			'ga_category' : 'slot2/' + slot[1],
+			'ga_action' : slot[0],
+			'ga_label' : 'evolve'
+		}, 'ga');
 
 		var url = 'http://cdn.triggertag.gorillanation.com/js/triggertag.js';
-		ghostwriter(
-			document.getElementById(slot[0]),
-			{
-				insertType:"append",
-				script:{ src:url },
-				done:function () {
-					log('(invisible triggertag) ghostwriter done', 5, 'AdProviderEvolveRS');
-					log([slot[0], url], 5, 'AdProviderEvolveRS');
-					ghostwriter.flushloadhandlers();
+		ghostwriter(document.getElementById(slot[0]), {
+			insertType : "append",
+			script : {
+				src : url
+			},
+			done : function() {
+				log('(invisible triggertag) ghostwriter done', 5, 'AdProviderEvolveRS');
+				log([slot[0], url], 5, 'AdProviderEvolveRS');
+				ghostwriter.flushloadhandlers();
 
-								var script = getReskinAndSilverScript();
-								ghostwriter(
-									document.getElementById(slot[0]),
-									{
-										insertType:"append",
-										script:{text:script},
-										done:function () {
-											log('(invisible reskin/silver) ghostwriter done', 5, 'AdProviderEvolveRS');
-											log([slot[0], script], 5, 'AdProviderEvolveRS');
-											ghostwriter.flushloadhandlers();
-										}
-									}
-								);
+				var script = getReskinAndSilverScript();
+				ghostwriter(document.getElementById(slot[0]), {
+					insertType : "append",
+					script : {
+						text : script
+					},
+					done : function() {
+						log('(invisible reskin/silver) ghostwriter done', 5, 'AdProviderEvolveRS');
+						log([slot[0], script], 5, 'AdProviderEvolveRS');
+						ghostwriter.flushloadhandlers();
+					}
+				});
 
-				}
 			}
-		);
+		});
 	}
 
 	function getReskinAndSilverScript() {
@@ -66,15 +82,9 @@ window.AdProviderEvolveRS = function (WikiaTracker, log, window, ghostwriter, do
 		return script;
 	}
 
-	var iface = {
-		name: 'EvolveRS',
-		fillInSlot: fillInSlot
+	return {
+		name : 'EvolveRS',
+		fillInSlot : fillInSlot,
+		canHandleSlot: canHandleSlot
 	};
-
-	// TODO: @mech rethink
-	// TODO: @rychu change tests
-	if (window.wgInsideUnitTest) {
-	}
-
-	return iface;
-};
+}; 
