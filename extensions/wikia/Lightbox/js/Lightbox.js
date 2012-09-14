@@ -33,7 +33,7 @@ var Lightbox = {
 	
 	makeLightbox: function(params) {	
 		Lightbox.openModal = params.modal;
-		Lightbox.current.title = params.title;
+		Lightbox.current.title = params.title.toString(); // Added toString() for edge cases where titles are numbers
 		
 		var id = params.parent ? params.parent.attr('id') : '';
 
@@ -652,7 +652,7 @@ var Lightbox = {
 		}
 
 		// Set current carousel index
-		var readableTitle = Lightbox.current.title.split('_').join(" ");				
+		var readableTitle = Lightbox.current.title.split('_').join(" ");
 		for(var i = 0; i < Lightbox.current.thumbs.length; i++) {
 			if(Lightbox.current.thumbs[i].title == readableTitle) {
 				Lightbox.current.index = i;
@@ -701,7 +701,7 @@ var Lightbox = {
 
 			Lightbox.current.index = idx;
 			if(idx > -1 && idx < mediaArr.length) {
-				Lightbox.current.title = mediaArr[idx].title;
+				Lightbox.current.title = mediaArr[idx].title.toString(); // Added toString() for edge cases where titles are numbers
 				Lightbox.current.type = mediaArr[idx].type;
 			}
 			
