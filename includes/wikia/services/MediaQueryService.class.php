@@ -351,6 +351,44 @@ class MediaQueryService extends Service {
 	}
 
 	/**
+	 * get number of total premium videos
+	 * @return integer $totalVideos
+	 */
+	public function getTotalPremiumVideos() {
+		$this->app->wf->ProfileIn( __METHOD__ );
+
+		$memKey = $this->getMemKeyTotalPremiumVideos();
+		$totalVideos = $this->app->wg->Memc->get( $memKey );
+		if ( !is_numeric($totalVideos) ) {
+			$db = $this->app->wf->GetDB( DB_SLAVE );
+
+			$row = $db->selectRow(
+				array( 'video_info' ),
+				array( 'count(video_title) cnt' ),
+				array( 'premium' => 1 ),
+				__METHOD__
+			);
+
+			$totalVideos = ($row) ? $row->cnt : 0 ;
+
+			$this->app->wg->Memc->set( $memKey, $totalVideos, 60*60*24 );
+		}
+
+		$this->app->wf->ProfileOut( __METHOD__ );
+
+		return $totalVideos;
+	}
+
+	//get memcache key for total premium videos
+	protected function getMemKeyTotalPremiumVideos() {
+		return $this->app->wf->MemcKey( 'videos', 'total_premium_videos', 'v3' );
+	}
+
+	public function clearCacheTotalPremiumVideos() {
+		$this->app->wg->Memc->delete( $this->getMemKeyTotalPremiumVideos() );
+	}
+
+	/**
 	 * get total video views by title
 	 * @param string $title
 	 * @return integer $videoViews

@@ -183,34 +183,10 @@ class SpecialVideosHelper extends WikiaModel {
 	 * @return integer $videoExist [0/1]
 	 */
 	public function premiumVideosExist() {
-		$this->wf->ProfileIn( __METHOD__ );
-
-		$memKey = $this->getMemKeyPremiumVideoExist();
-		$videoExist = $this->wg->Memc->get( $memKey );
-		if ( !is_numeric($videoExist) ) {
-			$db = $this->app->wf->GetDB( DB_SLAVE );
-			$row = $db->selectRow(
-				array( 'video_info' ),
-				array( 'video_title' ),
-				array( 'premium' => 1 ),
-				__METHOD__
-			);
-			$videoExist = ($row) ? 1 : 0 ;
-
-			$this->wg->Memc->set( $memKey, $videoExist, 60*10 );
-		}
-
-		$this->wf->ProfileOut( __METHOD__ );
+		$mediaService = F::build( 'MediaQueryService' );
+		$videoExist = (bool) $mediaService->getTotalPremiumVideos();
 
 		return $videoExist;
 	}
 
-	// get memcache key for premium video exist
-	protected function getMemKeyPremiumVideoExist() {
-		return $this->wf->MemcKey( 'videos', 'premium_video_exist' );
-	}
-
-	public function clearCachePremiumVideoExist() {
-		$this->wg->Memc->delete( $this->getMemKeyPremiumVideoExist() );
-	}
 }
