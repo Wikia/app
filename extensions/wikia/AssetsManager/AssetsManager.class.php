@@ -87,7 +87,7 @@ class AssetsManager {
 	 *
 	 * @throws WikiaException
 	 *
-	 * @return array an array containing one or more URL's
+	 * @return String[] array containing one or more URL's
 	 */
 	public function getURL( $assetName, &$type = null, $local = false ) {
 		wfProfileIn( __METHOD__ );
