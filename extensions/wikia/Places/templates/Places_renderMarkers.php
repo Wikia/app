@@ -12,4 +12,3 @@
 			'center' => $center
 		), $options)
 	);
-?>

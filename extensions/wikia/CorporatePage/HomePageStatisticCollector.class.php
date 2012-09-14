@@ -170,4 +170,3 @@ class HomePageStatisticCollector
 		return array_sum($data['fifo']);
 	}
 }
-?>

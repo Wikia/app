@@ -207,4 +207,3 @@ function changeIdOnName( &$case, $key, $myFBService, &$namesTable ) {
 	}
 	unset( $case[$ix] );
 }
-?>

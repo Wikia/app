@@ -15,4 +15,3 @@ class RelatedVideosRailController extends WikiaController {
 	}
 	
 }
-?>

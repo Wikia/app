@@ -153,4 +153,3 @@ class WikiaApiQueryWrite extends ApiQuery {
 
 
 }
-?>

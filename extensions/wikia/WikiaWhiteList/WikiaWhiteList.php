@@ -177,4 +177,3 @@ class WikiaWhitelist
 	public function getRegexes()  { return $this->regexes; }
 }
 
-?>
