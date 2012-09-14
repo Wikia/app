@@ -75,7 +75,8 @@ class WikiaSearchAdsController extends WikiaController {
 		$url = '';
 
 		if (!empty($query) && !empty($ip) && !empty($header)) {
-			$url = 'http://wikia.infospace.com/wikiagy/wsapi/results' .
+			$partner_id = self::getPartnerId();
+			$url = 'http://wikia.infospace.com/' . urlencode($partner_id) . '/wsapi/results' .
 					'?query=' . urlencode($query) .
 					'&category=web' .
 					'&resultsBy=relevance' .
@@ -87,5 +88,21 @@ class WikiaSearchAdsController extends WikiaController {
 		}
 
 		return $url;
+	}
+
+	/**
+	 * @static
+	 * @return string
+	 */
+	public static function getPartnerId() {
+		$partner_id = 'wikiagy';
+
+		// TODO get rid of global...
+		global $wgInfospaceSearchSub_IDS;
+		if (!empty($wgInfospaceSearchSub_IDS)) {
+			$partner_id = $partner_id . '_' . $wgInfospaceSearchSub_IDS;
+		}
+
+		return $partner_id;
 	}
 }
