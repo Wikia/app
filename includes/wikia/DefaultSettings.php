@@ -125,6 +125,7 @@ $wgAutoloadClasses[ "WikiaApiController"            ] = "{$IP}/includes/wikia/ap
 
 //Wikia API controllers/modules
 $app->registerApiController( 'WikiaApiDiscoveryController', "{$IP}/includes/wikia/api/WikiaApiDiscoveryController.class.php" );
+$app->registerApiController( 'WikiInfoController', "{$IP}/includes/wikia/api/WikiInfoController.class.php" );
 
 /**
  * Wikia API end
