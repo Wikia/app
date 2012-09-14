@@ -18,29 +18,20 @@ class VideoInfoHooksHelper {
 		if ( $title instanceof Title && F::build( 'WikiaFileHelper', array( $file ), 'isFileTypeVideo' ) ) {
 			$mediaService = F::build( 'MediaQueryService' );
 
-			if ( $file->isLocal() ) {
-				$mediaService->clearCacheVideoList();
-			} else {
-				$videoInfoHelper = F::build( 'VideoInfoHelper' );
-				$videoData = $videoInfoHelper->getVideoDataByTitle( $title );
-				if ( !empty($videoData) ) {
-					$videoInfo = F::build( 'VideoInfo', array( $videoData ) );
-					if ( $reupload ) {
-						$videoInfo->reuploadVideo();
-					} else {
-						$videoInfo->addVideo();
-					}
+			$videoInfoHelper = F::build( 'VideoInfoHelper' );
+			$videoData = $videoInfoHelper->getVideoDataByTitle( $title );
+			if ( !empty($videoData) ) {
+				$videoInfo = F::build( 'VideoInfo', array( $videoData ) );
+				if ( $reupload ) {
+					$videoInfo->reuploadVideo();
+				} else {
+					$videoInfo->addVideo();
 				}
-
-				$mediaService->clearCachePremiumVideoList();
 			}
 
 			if ( !$reupload ) {
-				$mediaService->clearCacheVideoList();
 				$mediaService->clearCacheTotalVideos();
 			}
-
-			$mediaService->clearCacheSortedVideos();
 		}
 
 		return true;
@@ -70,10 +61,7 @@ class VideoInfoHooksHelper {
 				if ( $file instanceof File && $file->exists() && !$file->isLocal()
 					&& F::build( 'WikiaFileHelper', array( $file ), 'isFileTypeVideo' ) ) {
 					$mediaService = F::build( 'MediaQueryService' );
-					$mediaService->clearCachePremiumVideoList();
-					$mediaService->clearCacheVideoList();
 					$mediaService->clearCacheTotalVideos();
-					$mediaService->clearCacheSortedPremiumVideos();
 					break;
 				}
 			}
@@ -96,7 +84,7 @@ class VideoInfoHooksHelper {
 		if ( $title instanceof Title && F::build( 'WikiaFileHelper', array( $file ), 'isFileTypeVideo' ) ) {
 			$mediaService = F::build( 'MediaQueryService' );
 			if ( $file->isLocal() ) {
-				$mediaService->clearAllCacheVideos();
+				$mediaService->clearCacheTotalVideos();
 			}
 		}
 
@@ -113,7 +101,7 @@ class VideoInfoHooksHelper {
 	 */
 	public static function onFileUndeleteComplete( $title, $versions, $user, $comment ) {
 		$mediaService = F::build( 'MediaQueryService' );
-		$mediaService->invalidateAllCacheVideos( $title );
+		$mediaService->clearCacheTotalVideos();
 
 		return true;
 	}
@@ -127,7 +115,7 @@ class VideoInfoHooksHelper {
 	 */
 	public static function onFileRenameComplete( &$form , &$oldTitle , &$newTitle ) {
 		$mediaService = F::build( 'MediaQueryService' );
-		$mediaService->invalidateAllCacheVideos( $newTitle );
+		//$mediaService->invalidateAllCacheVideos( $newTitle );
 
 		return true;
 	}

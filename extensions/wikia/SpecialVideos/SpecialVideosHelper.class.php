@@ -12,7 +12,10 @@ class SpecialVideosHelper extends WikiaModel {
 	const THUMBNAIL_HEIGHT = 205;
 	const POSTED_IN_ARTICLES = 5;
 
-	// get list of sorting options
+	/**
+	 * get list of sorting options
+	 * @return array $options
+	 */
 	public function getSortingOptions() {
 		$options = array(
 			'recent' => $this->wf->Msg( 'specialvideos-sort-latest' ),
@@ -23,45 +26,46 @@ class SpecialVideosHelper extends WikiaModel {
 		return $options;
 	}
 
-	// get list of filter options
+	/**
+	 * get list of filter options
+	 * @return array $options
+	 */
 	public function getFilterOptions() {
 		$options = array();
-		
+
 		$premiumVideos = $this->premiumVideosExist();
-		if ( $premiumVideos ) {
+		if ( !empty($premiumVideos) ) {
 			$options['premium'] = $this->wf->Msg( 'specialvideos-sort-featured' );
 		}
 
 		return $options;
 	}
 
-	// get list of videos
-	public function getVideos( $sort ) {
+	/**
+	 * get list of videos
+	 * @param string $sort [recent/popular/trend]
+	 * @param integer $page
+	 * @return array $videos
+	 */
+	public function getVideos( $sort, $page ) {
 		$this->wf->ProfileIn( __METHOD__ );
 
-		$memKey = $this->getMemKeySortedVideos( $sort );
-		$videos = $this->wg->Memc->get( $memKey );
-		if ( !is_array($videos) ) {
-			$mediaService = F::build( 'MediaQueryService' );
-			if ( $sort == 'premium' ) {
-				$videoList = $mediaService->getVideoList( true );
-				$sort = 'recent';
-			} else {
-				$videoList = $mediaService->getVideoList();
+		if ( $sort == 'premium' ) {
+			$sort = 'recent';
+			$filter = 'premium';
+		} else {
+			$filter = 'all';
+		}
+
+		$mediaService = F::build( 'MediaQueryService' );
+		$videoList = $mediaService->getVideoList( $sort, $filter, self::VIDEOS_PER_PAGE, $page );
+
+		$videos = array();
+		foreach ( $videoList as $videoInfo ) {
+			$videoDetail = $this->getVideoDetail( $videoInfo );
+			if ( !empty($videoDetail) ) {
+				$videos[] = $videoDetail;
 			}
-
-			$videos = array();
-			foreach ( $videoList as $video ) {
-				$videoDetail = $this->getVideoDetail( $video['name'] );
-				if ( !empty($videoDetail) ) {
-					$videos[] = $videoDetail;
-				}
-			}
-
-			// sort video list
-			$this->sortVideoList( $videos, $sort );
-
-			$this->wg->Memc->set( $memKey, $videos, 60*60*2 );
 		}
 
 		$this->wf->ProfileOut( __METHOD__ );
@@ -69,31 +73,16 @@ class SpecialVideosHelper extends WikiaModel {
 		return $videos;
 	}
 
-	protected function getMemKeySortedVideos( $sort ) {
-		return $this->wf->MemcKey( 'videos', 'sorted_videos', 'v2', $sort );
-	}
-
-	public function clearCacheSortedVideos() {
-		$sortingOptions = array_keys( $this->getSortingOptions() );
-		foreach( $sortingOptions as $option ) {
-			$this->wg->Memc->delete( $this->getMemKeySortedVideos( $option ) );
-		}
-	}
-
-	public function clearCacheSortedPremiumVideos() {
-		$this->wg->Memc->delete( $this->getMemKeySortedVideos( 'premium' ) );
-	}
-
 	/**
 	 * get video detail
-	 * @param string $title
+	 * @param array $title [ array( 'title' => title, 'addedAt' => addedAt , 'addedBy' => addedBy ) ]
 	 * @return array $videoDetail
 	 */
-	public function getVideoDetail( $title ) {
+	public function getVideoDetail( $videoInfo ) {
 		$this->wf->ProfileIn( __METHOD__ );
 
 		$videoDetail = array();
-		$title = F::build( 'Title', array( $title, NS_FILE ), 'newFromText' );
+		$title = F::build( 'Title', array( $videoInfo['title'], NS_FILE ), 'newFromText' );
 		if ( $title instanceof Title ) {
 			$file = $this->wf->FindFile( $title );
 			if ( $file instanceof File && $file->exists()
@@ -103,12 +92,12 @@ class SpecialVideosHelper extends WikiaModel {
 				$thumbUrl = $thumb->getUrl();
 
 				// get user
-				$user = F::build( 'User', array( $file->getUser('id') ), 'newFromId' );
+				$user = F::build( 'User', array( $videoInfo['addedBy'] ), 'newFromId' );
 				$userName = $user->getName();
 				$userUrl = $user->getUserPage()->getFullURL();
 
 				// get article list
-				$mediaQuery =  F::build( 'ArticlesUsingMediaQuery' , array( $title ) );
+				$mediaQuery = F::build( 'ArticlesUsingMediaQuery' , array( $title ) );
 				$articleList = $mediaQuery->getArticleList();
 				list( $truncatedList, $isTruncated ) = F::build( 'WikiaFileHelper', array( $articleList, self::POSTED_IN_ARTICLES ), 'truncateArticleList' );
 
@@ -122,7 +111,7 @@ class SpecialVideosHelper extends WikiaModel {
 					'userUrl' => $userUrl,
 					'truncatedList' => $truncatedList,
 					'isTruncated' => $isTruncated,
-					'timestamp' => $file->getTimestamp(),
+					'timestamp' => $videoInfo['addedAt'],
 					'embedUrl' => $file->getHandler()->getEmbedUrl(),
 				);
 			}
@@ -134,52 +123,11 @@ class SpecialVideosHelper extends WikiaModel {
 	}
 
 	/**
-	 * sort video list
-	 * @param array $videoList
-	 * @param string $sort [recent/popular/trend]
+	 * get message for by user section
+	 * @param string $userName
+	 * @param string $userUrl
+	 * @return string $byUserMsg
 	 */
-	public function sortVideoList( &$videoList, $sort = 'recent' ) {
-		$this->wf->ProfileIn( __METHOD__ );
-
-		if ( $sort == 'popular' ) {
-			uasort( $videoList, array($this, 'sortByMostPopular') );
-		} else if ( $sort == 'trend' ) {
-			uasort( $videoList, array($this, 'sortByTrending') );
-		}
-
-		$this->wf->ProfileOut( __METHOD__ );
-	}
-
-	// sort by most popular
-	protected function sortByMostPopular( $a, $b ) {
-		$aViews = F::build( 'DataMartService', array( $a['title'] ), 'getVideoViewsByTitleTotal' );
-		$bViews = F::build( 'DataMartService', array( $b['title'] ), 'getVideoViewsByTitleTotal' );
-		if ( $aViews < $bViews ) {
-			$result = 1;
-		} else if ( $aViews > $bViews ) {
-			$result = -1;
-		} else {
-			$result = ( $a['timestamp'] < $b['timestamp'] ) ? 1 : -1;
-		}
-		return $result;
-	}
-
-	// sort by trending
-	protected function sortByTrending( $a, $b ) {
-		$startDate = date( 'Y-m-d', strtotime('-30 day') );
-		$aViews = F::build( 'DataMartService', array( $a['title'], DataMartService::PERIOD_ID_DAILY, $startDate ), 'getVideoViewsByTitleTotal' );
-		$bViews = F::build( 'DataMartService', array( $b['title'], DataMartService::PERIOD_ID_DAILY, $startDate ), 'getVideoViewsByTitleTotal' );
-		if ( $aViews < $bViews ) {
-			$result = 1;
-		} else if ( $aViews > $bViews ) {
-			$result = -1;
-		} else {
-			$result = ( $a['timestamp'] < $b['timestamp'] ) ? 1 : -1;
-		}
-		return $result;
-	}
-
-	// get message for by user section
 	public function getByUserMsg( $userName, $userUrl ) {
 		$byUserMsg = '';
 		if ( !empty($userName) ) {
@@ -195,7 +143,11 @@ class SpecialVideosHelper extends WikiaModel {
 		return $byUserMsg;
 	}
 
-	// get html tag for article
+	/**
+	 * get html tag for article
+	 * @param array $article
+	 * @return string $articleLink
+	 */
 	protected function getArticleLink( $article ) {
 		$attribs = array(
 			'href' => $article['url'],
@@ -206,7 +158,12 @@ class SpecialVideosHelper extends WikiaModel {
 		return $articleLink;
 	}
 
-	// get message for by posted in section
+	/**
+	 * get message for by posted in section
+	 * @param array $truncatedList
+	 * @param integer $isTruncated [0/1]
+	 * @return string $postedInMsg
+	 */
 	public function getPostedInMsg( $truncatedList, $isTruncated ) {
 		$postedInMsg = '';
 		$articleLinks = array();
@@ -220,14 +177,37 @@ class SpecialVideosHelper extends WikiaModel {
 
 		return $postedInMsg;
 	}
-	
+
 	/**
-	 * get video detail
-	 * @return int number of premium videos on a wiki
+	 * check if premium video exists
+	 * @return integer $videoExist [0/1]
 	 */
 	public function premiumVideosExist() {
-		// saipetch will fill this in
-		return false;
+		$this->wf->ProfileIn( __METHOD__ );
+
+		$memKey = $this->getMemKeyPremiumVideoExist();
+		$videoExist = $this->wg->Memc->get( $memKey );
+		if ( !is_numeric($videoExist) ) {
+			$db = $this->app->wf->GetDB( DB_SLAVE );
+			$row = $db->selectRow(
+				array( 'video_info' ),
+				array( 'video_title' ),
+				array( 'premium' => 1 ),
+				__METHOD__
+			);
+			$videoExist = ($row) ? 1 : 0 ;
+
+			$this->wg->Memc->set( $memKey, $videoExist, 60*10 );
+		}
+
+		$this->wf->ProfileOut( __METHOD__ );
+
+		return $videoExist;
+	}
+
+	// get memcache key for premium video exist
+	protected function getMemKeyPremiumVideoExist() {
+		return $this->wf->MemcKey( 'videos', 'premium_video_exist' );
 	}
 
 }
