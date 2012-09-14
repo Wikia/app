@@ -14,8 +14,6 @@ function stopBlanking($editor, $text, $section, &$error )
 	{
 		$error = "<p class='error'>".wfMsg("error_blanking")."</p>";
 	};
-	
+
 	return true;
 }
-
-?>

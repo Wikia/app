@@ -242,8 +242,7 @@ function wfSterilizeParse( &$text )
 	return true;
 }
 
-function wfLyricWikiParserFunctions( $parser ) {
+function wfLyricWikiParserFunctions( Parser $parser ) {
 	$parser->setFunctionHook( 'sterilizeTitle', 'wfLyricWikiSterilizeTitle' );
 	return true;
 }
-?>
