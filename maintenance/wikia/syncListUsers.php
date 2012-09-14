@@ -10,7 +10,7 @@
 
 	if (!isset($options['wiki_id']) || (isset($options['wiki_id']) && !is_numeric($options['wiki_id'])))
 		die("Error: Invalid format.\n".$usage);
-	
+
 	if (!empty($wgDevelEnvironment))
 		die("Sorry. production only.\n");
 
@@ -18,11 +18,11 @@
 	$wiki = WikiFactory::getWikiById($wiki_id);
 	if (!$wiki)
 		die("Wiki $wiki_id not found.\n");
-	
+
 	// update events_local_users
 	$dbname = $wiki->city_dbname;
 	echo "Wiki: id=$wiki_id, dbname=$dbname\n";
-	$cmd = sprintf( "perl $IP/../../backend/bin/scribe/events_local_users.pl --usedb={$dbname} " );
+	$cmd = sprintf( "perl /usr/wikia/backend/bin/scribe/events_local_users.pl --usedb={$dbname} " );
 	echo "Running {$cmd}\n";
 	$retval = wfShellExec($cmd, $status);
 	echo "$retval\n";
