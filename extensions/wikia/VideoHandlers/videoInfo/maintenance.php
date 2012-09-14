@@ -12,7 +12,8 @@
 		$videoInfoHelper = F::build( 'VideoInfoHelper' );
 		$videoData = $videoInfoHelper->getVideoDataByTitle( $titleName );
 		if ( !empty($videoData) ) {
-			$titleHash = md5( $titleName );
+			echo $videoData['videoTitle'];
+			$titleHash = md5( $videoData['videoTitle'] );
 			if ( !in_array($titleHash, $videoList) ) {
 				if ( !$isDryrun ) {
 					$videoInfo = F::build( 'VideoInfo', array($videoData) );
@@ -29,7 +30,7 @@
 			}
 		} else {
 			$invalid++;
-			echo "..... INVALID.\n";
+			echo "$titleName..... INVALID.\n";
 		}
 	}
 
@@ -89,7 +90,7 @@ SQL;
 	$result = $db->query( $sql, __METHOD__ );
 
 	while( $row = $db->fetchObject($result) ) {
-		echo "Embedded Video: $row->name";
+		echo "Embedded Video: ";
 		addVideo( $videoList, $row->name );
 		$total++;
 	}
@@ -103,7 +104,7 @@ SQL;
 	);
 
 	while( $row = $db->fetchObject($result) ) {
-		echo "Local Video: $row->name";
+		echo "Local Video: ";
 		addVideo( $videoList, $row->name );
 		$total++;
 	}
@@ -125,7 +126,7 @@ SQL;
 		$relatedVideosNSData = RelatedVideosNamespaceData::newFromTitle( $title );
 		$data = $relatedVideosNSData->getData();
 		foreach( $data['lists']['WHITELIST'] as $v ) {
-			echo 'NS'.NS_RELATED_VIDEOS.": $v[title]";
+			echo 'NS'.NS_RELATED_VIDEOS.": ";
 
 			addVideo( $videoList, $v['title'] );
 			$total++;
@@ -138,7 +139,7 @@ SQL;
 	if ( !empty($relatedVideosNSData) ) {
 		$data = $relatedVideosNSData->getData();
 		foreach( $data['lists']['WHITELIST'] as $v ) {
-			echo "GlobalList: $v[title]";
+			echo "GlobalList: ";
 
 			addVideo( $videoList, $v['title'] );
 			$total++;
