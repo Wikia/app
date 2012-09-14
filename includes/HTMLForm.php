@@ -1100,6 +1100,11 @@ abstract class HTMLFormField {
 			foreach( $this->mParams['help-messages'] as $name ) {
 				$msg = wfMessage( $name );
 				if( $msg->exists() ) {
+					if ( is_null( $helptext ) ) {
+						$helptext = '';
+					} else {
+						$helptext .= wfMessage( 'word-separator' )->escaped(); // some space
+					}
 					$helptext .= $msg->parse(); // append message
 				}
 			}
