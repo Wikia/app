@@ -44,7 +44,7 @@ class CreateWiki {
 	const DEFAULT_USER         = 'Default';
 	const DEFAULT_DOMAIN       = "wikia.com";
 	const ACTIVE_CLUSTER       = "c3";
-	const DEFAULT_SLOT         = "slot2";
+	const DEFAULT_SLOT         = "slot1";
 	const DEFAULT_NAME         = "Wiki";
 	const DEFAULT_WIKI_TYPE    = "";
 	const DEFAULT_WIKI_LOGO    = '$wgUploadPath/b/bc/Wiki.png';
