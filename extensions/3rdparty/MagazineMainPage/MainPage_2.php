@@ -14,4 +14,3 @@ function renderMainPage2( $input ) {
 	$sk =& $wgUser->getSkin();
 	return $sk->getMainPage();
 }
-?>

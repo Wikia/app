@@ -86,4 +86,3 @@ UFO.create(FO,\"".$file."\");
 </script>
 	";
 }
-?>

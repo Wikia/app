@@ -235,4 +235,3 @@ Follow the instructions in the e-mail, to confirm that the account is actually y
             closeElement('option');
     }
 }
-?>

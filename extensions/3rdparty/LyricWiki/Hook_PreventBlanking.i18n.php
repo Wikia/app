@@ -6,4 +6,3 @@ $messages["en"] = array(
 	"questions, contact an [[LyricWiki:Administrators|administrator]]."
 	);
 
-?>

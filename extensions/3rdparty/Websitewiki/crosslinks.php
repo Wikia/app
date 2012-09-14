@@ -33,4 +33,3 @@ function renderCrosslinks( $input, $argv, &$parser ) {
     $output .= " <br/> and the value for the arg 'argument2' is: " . $argv["argument2"];
     return $output;
 }
-?>

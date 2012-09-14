@@ -56,4 +56,3 @@ function renderGoogleCalendar( $contents, $attributes, $parser ) {
 
         return $output;
 }
-?>

@@ -149,4 +149,3 @@ $wgQuizMessages = array(
 		'quiz_reset'			=> "Empezar de nuevo"
 	)
 );
-?>

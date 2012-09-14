@@ -77,4 +77,3 @@ function test_library_support() {
    }
 }
 
-?>
