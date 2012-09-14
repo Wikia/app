@@ -92,6 +92,7 @@ class ArticleService extends WikiaService {
 			}
 
 			$tmpParser = new Parser();
+			// BugID: 47803 - stripping twice on purpose
 			$content = self::stripContentOfTags($content,$this->mTagsToRemove);
 			$content = $tmpParser->parse( $content,  $this->mArticle->getTitle(), new ParserOptions )->getText();
 			$content = self::stripContentOfTags($content,$this->mTagsToRemove);
