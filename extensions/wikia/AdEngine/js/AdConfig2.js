@@ -35,7 +35,7 @@ window.AdConfig2 = function (
 			return AdProviderGamePro;
 		}
 
-		if (isSlotEvolve(slot[0], getCountry())) {
+		if (AdProviderEvolve.canHandleSlot(slot)) {
 			return AdProviderEvolve;
 		}
 
@@ -49,27 +49,6 @@ window.AdConfig2 = function (
 
 		// TODO should be AdProviderLiftium2 eventually
 		return AdProviderAdDriver;
-	}
-
-	// TODO refactor to adProviderGamePro
-
-	// TODO refactor to adProviderEvolve ?
-	function isSlotEvolve(slotname, country) {
-		log('isSlotEvolve', 5, 'AdConfig2');
-		log([slotname, country], 5, 'AdConfig2');
-
-		var slotMap = {
-			'HOME_TOP_LEADERBOARD':true,
-			'HOME_TOP_RIGHT_BOXAD':true,
-			'LEFT_SKYSCRAPER_2':true,
-			'TOP_LEADERBOARD':true,
-			'TOP_RIGHT_BOXAD':true
-		};
-		if ((country == 'AU' || country == 'NZ' || country == 'CA') && typeof slotMap[slotname] != 'undefined') {
-			return true;
-		}
-
-		return false;
 	}
 
 	// TODO refactor to adProviderEvolveRS ?

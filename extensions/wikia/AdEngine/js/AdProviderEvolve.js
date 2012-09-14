@@ -1,4 +1,25 @@
-window.AdProviderEvolve = function (WikiaTracker, log, window, ghostwriter, document) {
+window.AdProviderEvolve = function (WikiaTracker, log, window, ghostwriter, document, Geo) {
+	var slotMap = {
+		'HOME_TOP_LEADERBOARD':{'tile':1, 'size':'728x90', 'dcopt':'ist'},
+		'HOME_TOP_RIGHT_BOXAD':{'tile':2, 'size':'300x250,300x600'},
+		'LEFT_SKYSCRAPER_2':{'tile':3, 'size':'160x600'},
+		'TOP_LEADERBOARD':{'tile':1, 'size':'728x90', 'dcopt':'ist'},
+		'TOP_RIGHT_BOXAD':{'tile':2, 'size':'300x250,300x600'}
+	};
+
+	function canHandleSlot(slot) {
+		var slotname = slot[0];
+		var country = Geo.getCountryCode();
+		log('isSlotEvolve', 5, 'AdProviderEvolve');
+		log([slotname, country], 5, 'AdProviderEvolve');
+
+		if ((country == 'AU' || country == 'NZ' || country == 'CA') && typeof slotMap[slotname] != 'undefined') {
+			return true;
+		}
+
+		return false;
+	}
+
 	function fillInSlot(slot) {
 		log('fillInSlot', 5, 'AdProviderEvolve');
 		log(slot, 5, 'AdProviderEvolve');
@@ -21,13 +42,6 @@ window.AdProviderEvolve = function (WikiaTracker, log, window, ghostwriter, docu
 	}
 
 	var ord = Math.round(Math.random() * 23456787654);
-	var slotMap = {
-		'HOME_TOP_LEADERBOARD':{'tile':1, 'size':'728x90', 'dcopt':'ist'},
-		'HOME_TOP_RIGHT_BOXAD':{'tile':2, 'size':'300x250,300x600'},
-		'LEFT_SKYSCRAPER_2':{'tile':3, 'size':'160x600'},
-		'TOP_LEADERBOARD':{'tile':1, 'size':'728x90', 'dcopt':'ist'},
-		'TOP_RIGHT_BOXAD':{'tile':2, 'size':'300x250,300x600'}
-	};
 
 	// adapted for Evolve + simplified copy of AdConfig.DART.getUrl
 	function getUrl(slotname, size) {
@@ -112,6 +126,7 @@ window.AdProviderEvolve = function (WikiaTracker, log, window, ghostwriter, docu
 	var iface = {
 		name: 'Evolve',
 		fillInSlot: fillInSlot,
+		canHandleSlot: canHandleSlot,
 		hop: hop
 	};
 
