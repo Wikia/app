@@ -283,6 +283,58 @@ $config['oasis_user_js'] = array(
 	)
 );
 
+/** GameGuides */
+
+$config['gameguides_scss'] = array(
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => 'wikiamobile',
+	'assets' => array(
+		'//extensions/wikia/GameGuides/css/GameGuides.scss'
+	)
+);
+
+$config['gameguides_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => 'wikiamobile',
+	'assets' => array(
+		'#group_wikiamobile_js_head',
+		'#group_wikiamobile_js_body_minimal',
+
+		//feature detection
+		'//extensions/wikia/WikiaMobile/js/feature-detects/overflow.wikiamobile.js',
+
+		//polyfills
+		'//resources/wikia/polyfills/outerhtml.js',
+
+		//platform components
+		'//extensions/wikia/AssetsManager/js/AssetsManager.js',
+		'//extensions/wikia/JSMessages/js/JSMessages.wikiamobile.js',
+		'//extensions/wikia/JSSnippets/js/JSSnippets.js',
+
+		//framework extensions
+		'//resources/wikia/libraries/zepto/zepto.getcss.js',
+		'//resources/wikia/libraries/zepto/zepto.wikiamobile.js',
+
+		//modules
+		'//extensions/wikia/WikiaMobile/js/lazyload.js',
+		'//extensions/wikia/WikiaMobile/js/track.js',
+		'//extensions/wikia/WikiaMobile/js/events.js',
+		'//extensions/wikia/WikiaMobile/js/loader.js',
+		'//extensions/wikia/WikiaMobile/js/toast.js',
+		'//extensions/wikia/WikiaMobile/js/pager.js',
+		'//extensions/wikia/WikiaMobile/js/modal.js',
+		'//extensions/wikia/WikiaMobile/js/media.js',
+		'//extensions/wikia/WikiaMobile/js/sections.js',
+		'//extensions/wikia/WikiaMobile/js/layout.js',
+		'//resources/wikia/modules/thumbnailer.js',
+
+		//entrypoint
+		'//extensions/wikia/WikiaMobile/js/WikiaMobile.js',
+
+		'//extensions/wikia/GameGuides/js/GameGuides.js',
+	)
+);
+
 /** WikiaMobile **/
 
 $config['wikiamobile_scss'] = array(

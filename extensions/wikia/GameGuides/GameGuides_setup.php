@@ -20,6 +20,12 @@ $app->registerClass(
 
 $app->registerClass( 'GameGuidesModel', "{$dir}/GameGuidesModel.class.php" );
 
+
+//Special Page to preview page in GameGuide style
+$app->registerClass( 'GameGuidesSpecialController', "{$dir}/GameGuidesSpecialController.class.php" );
+$app->registerSpecialPage('GameGuidesPreview', 'GameGuidesSpecialController');
+
+
 /**
 * message files
 */
