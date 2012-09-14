@@ -77,7 +77,7 @@
 
 		<div class="seemore">
 			<a href="<?= $linkToSeeMore ?>" class="more">
-				<?=wfMsg('related-videos-see-more')?> &gt;
+				<?=wfMsg('related-videos-see-all')?> &gt;
 			</a>
 		</div>
 	</div>

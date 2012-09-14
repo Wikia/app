@@ -66,7 +66,7 @@ else {
 			</ul>
 		</div>
 	</div>
-	<?= Wikia::specialPageLink('NewFiles', 'oasis-latest-photos-more', array('class' => 'more')) ?>
+	<?= Wikia::specialPageLink('NewFiles', 'oasis-latest-photos-see-all', array('class' => 'more')) ?>
 
 
 <?php }
