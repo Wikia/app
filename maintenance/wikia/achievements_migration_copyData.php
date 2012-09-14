@@ -25,7 +25,16 @@ foreach($tables as $t) {
 
 	while( $row = $result->fetchRow() ) {
 		unset( $row['wiki_id'] );
-		$dbw->insert( $t, $row );
+		foreach ($row as $k => &$v) {
+			if (is_numeric($k)) {
+				unset($row[$k]);
+			}
+		}
+		try {
+			$dbw->insert( $t, $row );
+		} catch(Exception $e) {
+			null;
+		}
 	}
 
 	$dbr_wikicities->freeResult( $result );
@@ -54,7 +63,7 @@ foreach( $usersWithData as $user=>$nnn ) {
 
 		$ins = array(
 			'user_id' => $user,
-			'data' => array( $wgCityId => $data_for_wiki )
+			'data' => serialize(array( $wgCityId => $data_for_wiki ))
 		);
 		$dbw->insert( 'ach_user_counters', $ins );
 	}
