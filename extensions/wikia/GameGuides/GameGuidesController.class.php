@@ -149,23 +149,6 @@ class GameGuidesController extends WikiaController {
 		RequestContext::getMain()->setSkin( $skin );
 		$titleName = $this->getVal('title');
 
-		$scssPackages = F::build( 'AssetsManager', array(), 'getInstance' )->getUrl( 'gameguides_scss' );
-
-		$cssLinks = '';
-		foreach ( $scssPackages as $s ) {
-			//safe URL's as getStyles performs all the required checks
-			//W3C standard says type attribute and quotes (for single non-URI values) not needed, let's save on output size
-			$cssLinks .= "<link rel=stylesheet href=\"{$s}\"/>";//this is a strict skin, getStyles returns only elements with a set URL
-		}
-
-		$jsPackages = F::build( 'AssetsManager', array(), 'getInstance' )->getUrl( 'gameguides_js' );
-
-		$js = '';
-		foreach ( $jsPackages as $src ) {
-			//HTML5 standard, no type attribute required == smaller output
-			$js .= "<script src=\"{$src}\"></script>";
-		}
-
 		$params = array(
 			'action' => 'parse',
 			'page' => $titleName,
@@ -185,23 +168,39 @@ class GameGuidesController extends WikiaController {
 			array_flip( $this->wg->WikiaMobileExcludeJSGlobals )
 		);
 
-		F::build( 'JSMessages' )->enqueuePackage( 'WkMbl', JSMessages::INLINE );
-
 		$page = $this->sendSelfRequest('page', array(
 			'html' => $html['parse']['text']['*'],
 			'title' => Title::newFromText( $titleName )->getText()
 		));
 
+		$resources = $this->sendRequest('AssetsManager', 'getMultiTypePackage', array(
+			'scripts' => 'gameguides_js',
+			'styles' => '//extensions/wikia/GameGuides/css/GameGuides.scss'
+		));
+
+		$js = $resources->getVal('scripts', '');
+		$styles = $resources->getVal('styles', '');
+
 		//limit it to html, css and js
 		$this->setVal( 'html', $page->toString());
-		$this->setVal( 'js', WikiaSkin::makeInlineVariablesScript( $vars ) . $skin->getTopScripts() .  $js );
-		$this->setVal( 'css', $cssLinks );
+		$this->setVal( 'js', WikiaSkin::makeInlineVariablesScript( $vars ) . $skin->getTopScripts() . F::build( 'JSMessages' )->printPackages( array( 'WkMbl' ) ) .'<script>' . $js[0] . '</script>');
+		$this->setVal( 'css', '<style>' . $styles . '</style>' );
 
 	}
 
 	public function page(){
 		$this->setVal('title', $this->getVal('title'));
 		$this->setVal('html', $this->getVal('html'));
+	}
+
+
+	public function getResources(){
+		$cb = $this->getVal('cb', $this->wg->CacheBuster);
+		if($cb != $this->wg->CacheBuster){
+			//send resources
+		}else{
+			//all up to date!
+		}
 	}
 }
 

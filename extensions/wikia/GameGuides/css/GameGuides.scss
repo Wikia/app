@@ -10,15 +10,27 @@
 
 $linkColor: rgb(171,197,97);
 
+html {
+	background: black;
+	overflow-x: hidden;
+}
+
 body {
 	overflow-x: hidden;
 	background: black;
 	color: white;
 
+	margin: 0;
+	padding: 10px 15px;
+
 	font-family: roboto, helvetica, "sans serif";
 	font-size: 90%;
 
 	line-height: 20px;
+}
+
+#mw-content-text {
+	background: black;
 }
 
 #pageName {
