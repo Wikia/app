@@ -39,7 +39,7 @@ window.AdConfig2 = function (
 			return AdProviderEvolve;
 		}
 
-		if (isSlotEvolveRS(slot[0], getCountry())) {
+		if (AdProviderEvolveRS.canHandleSlot(slot)) {
 			return AdProviderEvolveRS;
 		}
 
@@ -49,18 +49,6 @@ window.AdConfig2 = function (
 
 		// TODO should be AdProviderLiftium2 eventually
 		return AdProviderAdDriver;
-	}
-
-	// TODO refactor to adProviderEvolveRS ?
-	function isSlotEvolveRS(slotname, country) {
-		log('isSlotEvolveRS', 5, 'AdConfig2');
-		log([slotname, country], 5, 'AdConfig2');
-
-		if ((country == 'AU' || country == 'NZ' || country == 'CA') && slotname == 'INVISIBLE_1') {
-			return true;
-		}
-
-		return false;
 	}
 
 	// TODO unit test!
@@ -154,6 +142,7 @@ window.AdConfig2 = function (
 		return _cache_geo.country;
 	}
 
-	return {getProvider:getProvider};
-
+	return {
+		getProvider: getProvider
+	};
 };
