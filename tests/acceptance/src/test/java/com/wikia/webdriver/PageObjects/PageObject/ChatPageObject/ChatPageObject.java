@@ -332,7 +332,7 @@ public class ChatPageObject extends BasePageObject
 	public void writeOnChat(String message)
 	{
 		messageWritingArea.sendKeys(message);
-		messageWritingArea.click();
+		messageWritingArea.sendKeys(Keys.TAB);
 		messageWritingArea.sendKeys(Keys.ENTER);
 		PageObjectLogging.log("writeOnChat", "Message: "+message+" written", true, driver);
 		waitForElementByBy(By.xpath("//span[@class='message' and contains(text(), '"+message+"')]"));
