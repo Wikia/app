@@ -26,7 +26,7 @@ $use-dark-icons: false;
 		font-size: 15px;
 		margin-right: 8px;
 		padding: 4px 9px;
-		width: 229px;
+		width: $wikia-search-base-width + 29px;
 	}
 
 	input[type="text"]:focus {
