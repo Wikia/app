@@ -88,7 +88,7 @@ function SiteWideMessagesAbortDiffCache($oDiffEngine) {
  * Load JS/CSS for extension
  *
  */
-function SiteWideMessagesIncludeJSCSS( $skin, & $bottomScripts) {
+function SiteWideMessagesIncludeJSCSS( $skin, &$bottomScripts) {
 	global $wgExtensionsPath;
 
 	$bottomScripts .= "<script type=\"text/javascript\" src=\"$wgExtensionsPath/wikia/SiteWideMessages/SpecialSiteWideMessages.js\"></script>";
@@ -108,7 +108,7 @@ function SiteWideMessagesGetUserMessagesContent($dismissLink = true, $parse = tr
 		if ($addJSandCSS) {
 			global $wgHooks;
 			$wgHooks['SkinAfterBottomScripts'][] = 'SiteWideMessagesIncludeJSCSS';
-			$wgOut->AddScript("<link rel=\"stylesheet\" type=\"text/css\" href=\"$wgExtensionsPath/wikia/SiteWideMessages/SpecialSiteWideMessages.css\" />");
+			$wgOut->addScript("<link rel=\"stylesheet\" type=\"text/css\" href=\"$wgExtensionsPath/wikia/SiteWideMessages/SpecialSiteWideMessages.css\" />");
 		}
 
 		$content = SiteWideMessages::getAllUserMessages($wgUser, $dismissLink);
@@ -173,7 +173,7 @@ function SiteWideMessagesUserNewTalks(&$user, &$talks) {
 			if(count($wikis)) {
 				$wikis = implode(',', $wikis);
 				$DB = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
-				$res = $DB->query("SELECT city_id, city_title, city_url FROM city_list WHERE city_id IN ($wikis)");
+				$res = $DB->query("SELECT city_id, city_title, city_url FROM city_list WHERE city_id IN ($wikis)", __METHOD__);
 
 				while($row = $DB->fetchObject($res)) {
 					$link = $row->city_url . 'index.php?title=User_talk:' . urlencode($user->getTitleKey());
