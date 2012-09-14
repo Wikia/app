@@ -31,7 +31,7 @@ class UserChangesHistory {
 	 * @param User    $user -- User class instance
 	 * @param String  $type -- UserLoadFromSessionInfo set this to 'cookie' or 'session'
 	 *
-	 * @return true		process other hooks
+	 * @return bool true		process other hooks
 	 */
 	static public function LoginHistoryHook( $from, $user, $type = false ) {
 		global $wgCityId; #--- private wikia identifier, you can use wgDBname
@@ -77,22 +77,22 @@ class UserChangesHistory {
 						if ( !empty( $wgStatsDBEnabled ) ) {
 							$dbw = wfGetDB( DB_MASTER, array(), $wgStatsDB ) ;
 
-							$status = $dbw->insert(
+							$dbw->insert(
 								"user_login_history",
 								$params,
 								__METHOD__,
 								array('IGNORE')
 							);
-							
-							$status = $dbw->replace(
+
+							$dbw->replace(
 								"user_login_history_summary",
 								array( 'user_id' ),
 								array( 'ulh_timestamp' => wfTimestampOrNull(), 'user_id' => $id ),
 								__METHOD__
 							);
-							
+
 							if ( $dbw->getFlag( DBO_TRX ) ) {
-								$dbw->commit();
+								$dbw->commit(__METHOD__);
 							}
 						}
 					}
@@ -117,7 +117,7 @@ class UserChangesHistory {
 	 * @access public
 	 * @static
 	 *
-	 * @return true		process other hooks
+	 * @return bool true		process other hooks
 	 */
 	static public function SavePreferencesHook($formData, $error) {
 		global $wgStatsDB, $wgEnableScribeReport, $wgUser, $wgStatsDBEnabled;
@@ -139,8 +139,8 @@ class UserChangesHistory {
 					array_push( $a, $oname.'='.$oval );
 				}
 			}
-			$user_options = implode( "\n", $a );	
-			 
+			$user_options = implode( "\n", $a );
+
 			$params = array(
 				"user_id"          => $id,
 				"user_name"        => $wgUser->mName,
@@ -152,7 +152,7 @@ class UserChangesHistory {
 				"user_touched"     => $wgUser->mTouched,
 				"user_token"       => $wgUser->mToken
 			);
-			
+
 			if ( !empty($wgEnableScribeReport) ) {
 				# use scribe
 				$key = "trigger_savepreferences";
@@ -162,12 +162,12 @@ class UserChangesHistory {
 						'params' => $params
 					);
 					$data = json_encode( $message );
-					WScribeClient::singleton('trigger')->send($data);					
+					WScribeClient::singleton('trigger')->send($data);
 				}
 				catch( TException $e ) {
 					Wikia::log( __METHOD__, 'scribeClient exception', $e->getMessage() );
 				}
-			} else {			 
+			} else {
 				if ( !empty( $wgStatsDBEnabled ) ) {
 					$dbw = wfGetDB( DB_MASTER, array(), $wgStatsDB ) ;
 
@@ -175,13 +175,13 @@ class UserChangesHistory {
 					 * so far encodeOptions is public by default but could be
 					 * private in future
 					 */
-					$status = $dbw->insert(
+					$dbw->insert(
 						"user_history",
 						$params,
 						__METHOD__
 					);
 					if ( $dbw->getFlag( DBO_TRX ) ) {
-						$dbw->commit();
+						$dbw->commit(__METHOD__);
 					}
 				}
 			}
