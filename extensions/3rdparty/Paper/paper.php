@@ -45,4 +45,3 @@ $output='<table width="'.$width.'" align="'.$align.'" bgcolor="fbe7bd" style="bo
 
      return $output;
  }
-?>

@@ -33,4 +33,3 @@ define('USE_GWBBCODE', true);
 
 //List templates not to hook gwbbcode into
 $not_to_hook = Array();
-?>

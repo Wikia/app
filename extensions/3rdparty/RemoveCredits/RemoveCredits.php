@@ -34,4 +34,3 @@ function doRemoveCredits($input, $argv, &$parser)
 	}
 }
 
-?>

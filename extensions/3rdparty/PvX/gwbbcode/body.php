@@ -23,4 +23,3 @@ if (!defined('GWBBCODE_ROOT'))
 require_once(GWBBCODE_ROOT.'/common.inc.php');
 
 return USE_GWBBCODE ? file_get_contents(GWBBCODE_ROOT.'/overall_body.tpl') : '';
-?>

@@ -215,4 +215,3 @@ function rebuild ($mode, $file) {
 	}
 }
 
-?>

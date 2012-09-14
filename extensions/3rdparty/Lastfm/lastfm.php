@@ -21,4 +21,3 @@ $wgHooks['ParserFirstCallInit'][] = "wfLastFm";
 
      return $output;
  }
-?>

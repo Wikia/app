@@ -78,4 +78,3 @@ function old_acRedirect($title, $action)
     $wgOut->redirect($title->getFullURL( $query ), '301');
 }
 
-?>

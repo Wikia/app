@@ -12,4 +12,3 @@ $wgAutoloadClasses['Bewertungen'] = dirname(__FILE__) . '/Bewertungen.body.php';
 $wgSpecialPages['Bewertungen'] = 'Bewertungen';
 $wgExtensionMessagesFiles['Bewertungen'] = dirname(__FILE__) . '/Bewertungen.i18n.php';
 
-?>

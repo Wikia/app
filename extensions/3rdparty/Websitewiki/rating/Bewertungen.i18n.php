@@ -7,4 +7,3 @@ $allMessages = array(
                 'bewertungen' => 'Bewertungen'
         ),
 );
-?>

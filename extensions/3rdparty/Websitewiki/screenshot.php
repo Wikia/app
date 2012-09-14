@@ -35,4 +35,3 @@ function showScreenshot( $input, $argv, &$parser )
     $output = "<a href=\"http://www.$dom\" rel=\"nofollow\" alt=\"www.$dom\" title=\"www.$dom\" target=\"_new\"><img src=\"$img\" border=0></a>";
     return $output;
 }
-?>

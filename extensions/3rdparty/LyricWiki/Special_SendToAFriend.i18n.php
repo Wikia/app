@@ -73,4 +73,3 @@ Windows Media Player, Amarok, MusicCube, foobar2000 and more!
 DOC
 ,
 	);
-?>

@@ -209,4 +209,3 @@ function unicodeToUtf8(&$arr)
   return $dest;
 }
 
-?>

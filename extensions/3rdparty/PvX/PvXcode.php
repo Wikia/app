@@ -50,4 +50,3 @@ class ParseIt {
 		return $output->getText();
 	}
 }
-?>

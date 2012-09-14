@@ -43,4 +43,3 @@ $wgOut->setArticleBodyOnly(true);
 
 
 }
-?>

@@ -27,4 +27,3 @@ function RenderVote( $input ){
 	$output = $Vote->display();
 	return $output;
 }
-?>

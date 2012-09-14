@@ -99,4 +99,3 @@ function wfRenderMonth($m,$y,$prefix = '',$query = '',$format = '%e %B %Y',$dayf
 	}
 	return "$table\n|}";
 }
-?>
