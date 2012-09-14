@@ -10,34 +10,14 @@
 */
 module('AdProviderEvolveRS');
 
-test('canHandleSlot EvolveRS AU', function() {
+test('canHandleSlot EvolveRS', function() {
 	// setup
-	var geoMock
-		, adProviderEvolveRS;
+	var adProviderEvolveRS;
 
-	geoMock = {
-		getCountryCode: function() {return 'AU';}
-	};
 	adProviderEvolveRS = AdProviderEvolveRS(
-		WikiaTracker, Wikia.log, window, ghostwriter, document, geoMock
+		WikiaTracker, Wikia.log, window, ghostwriter, document
 	);
 
 	equal(adProviderEvolveRS.canHandleSlot(['INVISIBLE_1']), true, 'INVISIBLE_1');
-	equal(adProviderEvolveRS.canHandleSlot(['TOP_LEADERBOARD']), false, 'TOP_LEADERBOARD');
-});
-
-test('canHandleSlot EvolveRS PL', function() {
-	// setup
-	var geoMock
-		, adProviderEvolveRS;
-
-	geoMock = {
-		getCountryCode: function() {return 'PL';}
-	};
-	adProviderEvolveRS = AdProviderEvolveRS(
-		WikiaTracker, Wikia.log, window, ghostwriter, document, geoMock
-	);
-
-	equal(adProviderEvolveRS.canHandleSlot(['INVISIBLE_1']), false, 'INVISIBLE_1');
 	equal(adProviderEvolveRS.canHandleSlot(['TOP_LEADERBOARD']), false, 'TOP_LEADERBOARD');
 });

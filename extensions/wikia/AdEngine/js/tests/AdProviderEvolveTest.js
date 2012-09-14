@@ -79,14 +79,10 @@ test('getSect', function() {
 
 test('Evolve canHandleSlot AU', function() {
 	// setup
-	var geoMock
-		, adProviderEvolve;
+	var adProviderEvolve;
 
-	geoMock = {
-		getCountryCode: function() {return 'AU';}
-	};
 	adProviderEvolve = AdProviderEvolve(
-		WikiaTracker, Wikia.log, window, ghostwriter, document, geoMock
+		WikiaTracker, Wikia.log, window, ghostwriter, document
 	);
 
 	equal(adProviderEvolve.canHandleSlot(['TOP_LEADERBOARD']), true, 'TOP_LEADERBOARD');
@@ -97,25 +93,3 @@ test('Evolve canHandleSlot AU', function() {
 	equal(adProviderEvolve.canHandleSlot(['PREFOOTER_LEFT_BOXAD']), false, 'PREFOOTER_LEFT_BOXAD');
 	equal(adProviderEvolve.canHandleSlot(['PREFOOTER_RIGHT_BOXAD']), false, 'PREFOOTER_RIGHT_BOXAD');
 });
-
-test('getProvider evolve not AU', function() {
-	// setup
-	var geoMock
-		, adProviderEvolve;
-
-	geoMock = {
-		getCountryCode: function() {return 'PL';}
-	};
-	adProviderEvolve = AdProviderEvolve(
-		WikiaTracker, Wikia.log, window, ghostwriter, document, geoMock
-	);
-
-	equal(adProviderEvolve.canHandleSlot(['TOP_LEADERBOARD']), false, 'TOP_LEADERBOARD');
-	equal(adProviderEvolve.canHandleSlot(['TOP_RIGHT_BOXAD']), false, 'TOP_RIGHT_BOXAD');
-	equal(adProviderEvolve.canHandleSlot(['LEFT_SKYSCRAPER_2']), false, 'LEFT_SKYSCRAPER_2');
-
-	equal(adProviderEvolve.canHandleSlot(['INCONTENT_BOXAD_1']), false, 'INCONTENT_BOXAD_1');
-	equal(adProviderEvolve.canHandleSlot(['PREFOOTER_LEFT_BOXAD']), false, 'PREFOOTER_LEFT_BOXAD');
-	equal(adProviderEvolve.canHandleSlot(['PREFOOTER_RIGHT_BOXAD']), false, 'PREFOOTER_RIGHT_BOXAD');
-});
-
