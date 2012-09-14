@@ -94,7 +94,7 @@ class LocalMaintenanceTask extends BatchTask {
 			}
 
 			$dbname = WikiFactory::IDtoDB($city_id);
-			$cmd = sprintf( "perl $IP/../backend/bin/scribe/events_local_users.pl --usedb={$dbname} " );
+			$cmd = sprintf( "perl /usr/wikia/backend/bin/scribe/events_local_users.pl --usedb={$dbname} " );
 			$this->addLog( "Running {$cmd}" );
 			$retval = wfShellExec( $cmd, $status );
 			$this->addLog( $retval );
