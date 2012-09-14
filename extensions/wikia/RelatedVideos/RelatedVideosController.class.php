@@ -160,7 +160,7 @@ class RelatedVideosController extends WikiaController {
 				)
 			);
 
-			$video['views'] = DataMartService::getVideoViewsByTitleTotal( $videoTitle->getDBKey() );
+			$video['views'] = MediaQueryService::getTotalVideoViewsByTitle( $videoTitle->getDBKey() );
 
 			$this->setVal( 'videoThumb', $videoThumb );
 			$this->setVal( 'video', $video );
