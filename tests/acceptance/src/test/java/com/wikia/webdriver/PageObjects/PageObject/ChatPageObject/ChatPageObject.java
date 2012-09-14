@@ -335,7 +335,8 @@ public class ChatPageObject extends BasePageObject
 	public void writeOnChat(String message)
 	{
 		messageWritingArea.sendKeys(message);
-		messageForm.submit();
+		executeScript("e = jQuery.Event(\"keypress\"); e.which = 13; e.keyCode = 13; $('textarea[name=\"message\"]').trigger(e);", driver);
+//		messageForm.submit();
 		PageObjectLogging.log("writeOnChat", "Message: "+message+" written", true, driver);
 		waitForElementByBy(By.xpath("//span[@class='message' and contains(text(), '"+message+"')]"));
 		PageObjectLogging.log("writeOnChat", "Message: "+message+" is visible on chat board", true, driver);
