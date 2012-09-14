@@ -42,8 +42,8 @@ require(['events', 'loader', 'track'], function (events, loader, track) {
 	if (categorySection) {
 		categorySection.addEventListener(clickEvent, function (ev) {
 			var t = ev.target;
-			ev.preventDefault();
 			if (t.tagName == 'A' && t.parentElement.className.indexOf('cld') > -1) {
+				ev.preventDefault();
 				track.event('category', track.TEXT_LINK, {
 					label: 'category',
 					href: t.href
