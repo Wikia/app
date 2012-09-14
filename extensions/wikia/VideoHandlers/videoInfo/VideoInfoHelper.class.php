@@ -24,7 +24,7 @@ class VideoInfoHelper extends WikiaModel {
 
 		$file = $app->wf->FindFile( $title );
 		if ( $file instanceof File && $file->exists()
-			&& F::build( 'WikiaFileHelper', array($title), 'isTitleVideo' ) ) {
+			&& F::build( 'WikiaFileHelper', array($file), 'isFileTypeVideo' ) ) {
 			$fileMetadata = $file->getMetadata();
 			$userId = $file->getUser( 'id' );
 			$addedAt = ( $file->getTimestamp() ) ? $file->getTimestamp() : time();
