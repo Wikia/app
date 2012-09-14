@@ -210,4 +210,7 @@ class SpecialVideosHelper extends WikiaModel {
 		return $this->wf->MemcKey( 'videos', 'premium_video_exist' );
 	}
 
+	public function clearCachePremiumVideoExist() {
+		$this->wg->Memc->delete( $this->getMemKeyPremiumVideoExist() );
+	}
 }

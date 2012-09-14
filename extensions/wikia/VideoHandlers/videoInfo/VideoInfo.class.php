@@ -71,7 +71,6 @@ class VideoInfo extends WikiaModel {
 		$this->wf->ProfileIn( __METHOD__ );
 
 		if ( !$this->wf->ReadOnly() && !empty($this->videoTitle) ) {
-			$this->createTableVideos();
 			$db = $this->wf->GetDB( DB_MASTER );
 
 			$db->update(
@@ -94,7 +93,6 @@ class VideoInfo extends WikiaModel {
 		$this->wf->ProfileIn( __METHOD__ );
 
 		if ( !$this->wf->ReadOnly() ) {
-			$this->createTableVideos();
 			$db = $this->wf->GetDB( DB_MASTER );
 
 			if ( empty($this->addedAt) ) {
@@ -129,7 +127,6 @@ class VideoInfo extends WikiaModel {
 		$this->wf->ProfileIn( __METHOD__ );
 
 		if ( !$this->wf->ReadOnly() ) {
-			$this->createTableVideos();
 			$db = $this->wf->GetDB( DB_MASTER );
 
 			$db->delete(
@@ -236,7 +233,7 @@ SQL;
 
 
 	public function addVideo() {
-		$this->addToDatabase();
+		return $this->addToDatabase();
 	}
 
 	public function reuploadVideo() {
@@ -253,16 +250,11 @@ SQL;
 	}
 
 	public function renameVideo( $newVideoTitle ) {
-		$video = self::newFromTitle( $oldVideoTitle );
-		$oldVideoTitle = $this->getVideoTitle();
+		$data = array(
+			'video_title' => $newVideoTitle,
+		);
 
-		// add new video
-		$video->setVideoTitle( $newVideoTitle );
-		$video->addVideo();
-
-		// remove old video
-		$video->setVideoTitle( $oldVideoTitle );
-		$video->removeFromDatabase();
+		$this->updateDatabase( $data );
 	}
 
 	public function restoreVideo() {
@@ -279,6 +271,10 @@ SQL;
 		);
 
 		$this->updateDatabase( $data );
+	}
+
+	public function deleteVideo() {
+		$this->removeFromDatabase();
 	}
 
 }
