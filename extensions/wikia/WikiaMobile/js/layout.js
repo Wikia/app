@@ -8,6 +8,7 @@
  */
 define('layout', ['sections', 'media', 'cache'], function(sections, media, cache) {
 	var d = document,
+		pageContent = d.getElementById('mw-content-text'),
 		images = d.getElementsByClassName('media'),
 		selector = 'table:not(.toc):not(.infobox)',
 		tables = d.querySelectorAll(selector),
@@ -15,6 +16,7 @@ define('layout', ['sections', 'media', 'cache'], function(sections, media, cache
 		tablesKey = 'wideTables' + wgStyleVersion,
 		ttl = 604800,//7days
 		assets,
+		width,
 		process = function(res){
 			!assets && cache.set(tablesKey, res, ttl);
 
@@ -38,8 +40,8 @@ define('layout', ['sections', 'media', 'cache'], function(sections, media, cache
 						t.process($(this).find(selector).not('table table'));
 						processedSections[index] = true;
 					}
-				})
-			})
+				});
+			});
 		};
 
 	//init sections
@@ -53,7 +55,7 @@ define('layout', ['sections', 'media', 'cache'], function(sections, media, cache
 			process(assets);
 		}else{
 			Wikia.getMultiTypePackage({
-				scripts: 'wikiamobile_tables_js' + (!Features.overflow ? ',wikiamobile_scroll_js' : ''),
+				scripts: 'wikiamobile_tables_js' + (Features.overflow ? '' : ',wikiamobile_scroll_js'),
 				styles: '/extensions/wikia/WikiaMobile/css/tables.scss',
 				ttl: ttl,
 				callback: process
@@ -63,4 +65,15 @@ define('layout', ['sections', 'media', 'cache'], function(sections, media, cache
 
 	//init media
 	media.init(images);
+
+	//page width
+	window.addEventListener('resize', function(){
+		width = pageContent.offsetWidth;
+	});
+
+	return {
+		getPageWidth: function(){
+			return width ? width : (width = pageContent.offsetWidth);
+		}
+	};
 });
