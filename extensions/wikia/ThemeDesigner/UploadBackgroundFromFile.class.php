@@ -75,4 +75,3 @@ class UploadBackgroundFromFile extends UploadFromFile {
 		return $warnings;
 	}
 }
-?>

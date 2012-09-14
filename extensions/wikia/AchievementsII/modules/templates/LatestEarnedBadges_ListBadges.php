@@ -60,4 +60,3 @@ foreach ($badges as $item) {
 	</li>
 <?php 
 }
-?>

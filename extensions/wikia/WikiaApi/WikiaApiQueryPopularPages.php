@@ -229,4 +229,3 @@ class WikiaApiQueryPopularPages extends WikiaApiQuery {
 	}
 };
 
-?>

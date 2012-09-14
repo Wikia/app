@@ -59,4 +59,3 @@ $namespaces['pl'] = array(
         NS_BLOG_LISTING => 'Blog',
         NS_BLOG_LISTING_TALK => 'Dyskusja_blogu'
 );
-?>

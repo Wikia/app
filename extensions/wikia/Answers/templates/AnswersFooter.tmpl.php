@@ -50,4 +50,3 @@ if( !isAnswered() ){
 </div>
 <?
 }
-?>

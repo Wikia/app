@@ -166,4 +166,3 @@ class WikiaApiAjaxLogin extends ApiBase {
 		return __CLASS__ . ': $Id: ApiLogin.php 17065 2006-10-17 02:11:29Z yurik $';
 	}
 }
-?>

@@ -14,4 +14,3 @@ $app->registerClass( 'StructuredContentHelper',	$dir . '/StructuredContentHelper
  * messages
  */
 $wgExtensionMessagesFiles['StructuredContent'] = "$dir/StructuredContent.i18n.php";
-?>

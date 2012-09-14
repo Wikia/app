@@ -227,4 +227,3 @@ class WikiaApiQueryTopEditUsers extends WikiaApiQuery {
 	}
 };
 
-?>

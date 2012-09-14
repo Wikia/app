@@ -199,4 +199,3 @@ class WikiaApiQueryMostCategories extends WikiaApiQuery {
 	}
 };
 
-?>
