@@ -84,7 +84,7 @@ class VideoInfoHooksHelper {
 					'videoTitle' => $title->getDBKey(),
 				);
 				$videoInfo = F::build( 'VideoInfo', array( $videoData ) );
-				$this->removeVideo();
+				$this->deleteVideo();
 
 				$mediaService = F::build( 'MediaQueryService' );
 				$mediaService->clearCacheTotalVideos();
@@ -125,7 +125,6 @@ class VideoInfoHooksHelper {
 	 */
 	public static function onFileRenameComplete( &$form , &$oldTitle , &$newTitle ) {
 		$videoInfo = F::build( 'VideoInfo', array($oldVideoTitle), 'newFromTitle' );
-
 		if ( empty($videoInfo) ) {
 			// add new video
 			$videoInfoHelper = F::build( 'VideoInfoHelper' );
