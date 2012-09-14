@@ -1,6 +1,6 @@
 <? //  Important: If you change this template, update lightboxVersion in LightboxLoader.js to bust browser cache  ?>
 
-<div class="WikiaLightbox">
+<div class="WikiaLightbox<? echo $showAds ? ' show-ads' : '' ?>">
 	<!-- Keep media at the top so everything stacks on top of this, without the need to mess with z-index -->
 	<div class="media">
 	</div>
