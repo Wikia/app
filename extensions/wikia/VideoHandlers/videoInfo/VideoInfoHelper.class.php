@@ -57,7 +57,7 @@ class VideoInfoHelper extends WikiaModel {
 		return $video;
 	}
 
-	function addVideo( $title ) {
+	public function addVideo( $title ) {
 		$videoData = $this->getVideoDataByTitle( $title );
 		if ( !empty($videoData) ) {
 			$videoInfo = F::build( 'VideoInfo', array( $videoData ) );

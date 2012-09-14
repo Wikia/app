@@ -254,68 +254,57 @@ class MediaQueryService extends Service {
 
 	/**
 	 * get list of all videos (order by timestamp)
+	 * @param string $sort [recent/popular/trend]
+	 * @param string $filter [all/premium]
 	 * @param integer $limit
+	 * @param integer $page
 	 * @return array $videoList
 	 */
-	public function getVideoList( $onlyPremium = false, $limit = 10000 ) {
+	public function getVideoList( $sort = 'recent', $filter = 'all', $limit = 0, $page = 1 ) {
 		$this->app->wf->ProfileIn( __METHOD__ );
 
-		$memKey = $this->getMemKeyVideoList( $onlyPremium );
-		$videoList = $this->app->wg->Memc->get( $memKey );
-		if ( !is_array($videoList) ) {
-			$db = $this->app->wf->GetDB( DB_SLAVE );
+		$db = $this->app->wf->GetDB( DB_SLAVE );
 
-			$excludeList = array( 'png', 'gif', 'bmp', 'jpg', 'jpeg', 'ogg', 'ico', 'svg', 'mp3', 'wav', 'midi' );
-			$sqlWhere = implode( "','", $excludeList );
+		$sqlWhere = array();
+		$sqlOptions = array();
 
-			if ( $onlyPremium ) {
-				$sqlSelect = '';
-				$sqlUnion = '';
-				$sqlOrderBy = '';
-			} else {
-				$sqlSelect = ", '' as ts";
-				$sqlUnion = <<<SQL
-					UNION ALL
-					SELECT img_name as name, img_timestamp as ts
-					FROM image
-					WHERE img_media_type = 'VIDEO'
-SQL;
-				$sqlOrderBy = 'ORDER BY ts DESC';
+		// check for filter
+		if ( $filter == 'premium' ) {
+			$sqlWhere['premium'] = 1;
+		}
+
+		// check for limit
+		if ( !empty($limit) ) {
+			$sqlOptions['LIMIT'] = $limit;
+			if ( !empty($page) ) {
+				$sqlOptions['OFFSET'] = ($page * $limit) - $limit;
 			}
+		}
 
-			// check for limit
-			$sqlLimit = ( empty($limit) ) ? '' : "LIMIT $limit";
+		// check for sorting
+		if ( $sort == 'popular' ) {
+			$sqlOptions['ORDER BY'] = 'views_total DESC';
+		} else if ( $sort == 'trend' ) {
+			$sqlOptions['ORDER BY'] = 'views_30day DESC';
+		} else {
+			$sqlOptions['ORDER BY'] = 'added_at DESC';
+		}
 
-			$sql = <<<SQL
-				SELECT  il_to as name $sqlSelect
-				FROM `imagelinks`
-				WHERE NOT EXISTS ( SELECT 1 FROM image WHERE img_media_type = 'VIDEO' AND img_name = il_to )
-					AND LOWER(il_to) != 'placeholder'
-					AND LOWER(SUBSTRING_INDEX(il_to, '.', -1)) NOT IN ( '$sqlWhere' )
-				$sqlUnion
-				$sqlOrderBy
-				$sqlLimit
-SQL;
+		$result = $db->select(
+			array( 'video_info' ),
+			array( 'video_title, added_at, added_by' ),
+			$sqlWhere,
+			__METHOD__,
+			$sqlOptions
+		);
 
-			$result = $db->query( $sql, __METHOD__ );
-
-			$videoList = array();
-			while( $row = $db->fetchObject($result) ) {
-				$title = F::build( 'Title', array( $row->name, NS_FILE ), 'newFromText' );
-				$file = $this->app->wf->FindFile( $title );
-				if ( $file instanceof File && $file->exists()
-					&& F::build( 'WikiaFileHelper', array($title), 'isTitleVideo' ) ) {
-					$videoList[] = array(
-						'name' => $row->name,
-						'timestamp' => $file->getTimestamp(),
-					);
-				}
-			}
-
-			// sort by timestamp
-			uasort( $videoList, array($this, 'sortByMostRecent') );
-
-			$this->app->wg->Memc->set( $memKey, $videoList, 60*60*24 );
+		$videoList = array();
+		while( $row = $db->fetchObject($result) ) {
+			$videoList[] = array(
+				'title' => $row->video_title,
+				'addedAt' => $row->added_at,
+				'addedBy' => $row->added_by,
+			);
 		}
 
 		$this->app->wf->ProfileOut( __METHOD__ );
@@ -323,87 +312,42 @@ SQL;
 		return $videoList;
 	}
 
-	// get memcache key for video list
-	protected function getMemKeyVideoList( $onlyPremium = false ) {
-		return $this->app->wf->MemcKey( 'videos', 'video_list', 'v2', intval($onlyPremium) );
-	}
-
-	// sort by most recently added
-	protected function sortByMostRecent( $a, $b ) {
-		$result = ( $a['timestamp'] < $b['timestamp'] ) ? 1 : -1;
-		return $result;
-	}
-
-	// get number of total videos
+	/**
+	 * get number of total videos
+	 * @return integer $totalVideos
+	 */
 	public function getTotalVideos() {
 		$this->app->wf->ProfileIn( __METHOD__ );
 
 		$memKey = $this->getMemKeyTotalVideos();
 		$totalVideos = $this->app->wg->Memc->get( $memKey );
 		if ( !is_numeric($totalVideos) ) {
-			$videoList = $this->getVideoList();
-			$totalVideos = count( $videoList );
+			$db = $this->app->wf->GetDB( DB_SLAVE );
+
+			$row = $db->selectRow(
+				array( 'video_info' ),
+				array( 'count(video_title) cnt' ),
+				array(),
+				__METHOD__
+			);
+
+			$totalVideos = ($row) ? $row->cnt : 0 ;
 
 			$this->app->wg->Memc->set( $memKey, $totalVideos, 60*60*24 );
 		}
 
 		$this->app->wf->ProfileOut( __METHOD__ );
+
 		return $totalVideos;
 	}
 
 	//get memcache key for total videos
 	protected function getMemKeyTotalVideos() {
-		return $this->app->wf->MemcKey( 'videos', 'total_videos', 'v2' );
-	}
-
-	public function clearCacheVideoList() {
-		$this->app->wg->Memc->delete( $this->getMemKeyVideoList() );
-	}
-
-	public function clearCachePremiumVideoList() {
-		$this->app->wg->Memc->delete( $this->getMemKeyVideoList( true ) );
+		return $this->app->wf->MemcKey( 'videos', 'total_videos', 'v3' );
 	}
 
 	public function clearCacheTotalVideos() {
 		$this->app->wg->Memc->delete( $this->getMemKeyTotalVideos() );
-	}
-
-	public function clearCacheSortedVideos() {
-		if ( !empty($this->app->wg->EnableSpecialVideosExt) ) {
-			/**
-			 * @var $specialVideos SpecialVideosHelper
-			 */
-			$specialVideos = F::build( 'SpecialVideosHelper' );
-			$specialVideos->clearCacheSortedVideos();
-		}
-	}
-
-	public function clearCacheSortedPremiumVideos() {
-		if ( !empty($this->app->wg->EnableSpecialVideosExt) ) {
-			/**
-			 * @var $specialVideos SpecialVideosHelper
-			 */
-			$specialVideos = F::build( 'SpecialVideosHelper' );
-			$specialVideos->clearCacheSortedPremiumVideos();
-		}
-	}
-
-	public function clearAllCacheVideos() {
-		$this->clearCacheVideoList();
-		$this->clearCacheTotalVideos();
-		$this->clearCacheSortedVideos();
-	}
-
-	/**
-	 * @param Title $title
-	 */
-	public function invalidateAllCacheVideos( $title ) {
-		if ( $title instanceof Title && $title->getNamespace() == NS_FILE ) {
-			$file = wfFindFile( $title );
-			if ( $file instanceof File && $file->exists() && F::build( 'WikiaFileHelper', array( $file ), 'isFileTypeVideo' ) ) {
-				$this->clearAllCacheVideos();
-			}
-		}
 	}
 
 }
