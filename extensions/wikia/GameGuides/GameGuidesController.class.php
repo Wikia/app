@@ -11,7 +11,10 @@ class GameGuidesController extends WikiaController {
 	const API_MINOR_REVISION = 5;
 	const APP_NAME = 'GameGuides';
 	const SKIN_NAME = 'wikiaapp';
-	
+
+	/**
+	 * @var $mModel GameGuidesModel
+	 */
 	private $mModel = null;
 	private $mPlatform = null;
 	
@@ -138,6 +141,67 @@ class GameGuidesController extends WikiaController {
 			'URIData' => $trackingData,
 			'platform' => $this->mPlatform
 		) );
+	}
+
+	public function renderPage(){
+		//set mobile skin as this is based on it
+		$skin = Skin::newFromKey( 'wikiamobile' );
+		RequestContext::getMain()->setSkin( $skin );
+		$titleName = $this->getVal('title');
+
+		$scssPackages = F::build( 'AssetsManager', array(), 'getInstance' )->getUrl( 'gameguides_scss' );
+
+		$cssLinks = '';
+		foreach ( $scssPackages as $s ) {
+			//safe URL's as getStyles performs all the required checks
+			//W3C standard says type attribute and quotes (for single non-URI values) not needed, let's save on output size
+			$cssLinks .= "<link rel=stylesheet href=\"{$s}\"/>";//this is a strict skin, getStyles returns only elements with a set URL
+		}
+
+		$jsPackages = F::build( 'AssetsManager', array(), 'getInstance' )->getUrl( 'gameguides_js' );
+
+		$js = '';
+		foreach ( $jsPackages as $src ) {
+			//HTML5 standard, no type attribute required == smaller output
+			$js .= "<script src=\"{$src}\"></script>";
+		}
+
+		$params = array(
+			'action' => 'parse',
+			'page' => $titleName,
+			'prop' => 'text',
+			'redirects' => 1,
+			'useskin' => 'wikiamobile'
+		);
+
+		$html = ApiService::call( $params );
+
+		//global variables
+		//from Output class
+		//and from ResourceLoaderStartUpModule
+		$res = new ResourceVariablesGetter();
+		$vars = array_diff_key(
+			$this->wg->Out->getJSVars() + $res->get(),
+			array_flip( $this->wg->WikiaMobileExcludeJSGlobals )
+		);
+
+		F::build( 'JSMessages' )->enqueuePackage( 'WkMbl', JSMessages::INLINE );
+
+		$page = $this->sendSelfRequest('page', array(
+			'html' => $html['parse']['text']['*'],
+			'title' => Title::newFromText( $titleName )->getText()
+		));
+
+		//limit it to html, css and js
+		$this->setVal( 'html', $page->toString());
+		$this->setVal( 'js', WikiaSkin::makeInlineVariablesScript( $vars ) . $skin->getTopScripts() .  $js );
+		$this->setVal( 'css', $cssLinks );
+
+	}
+
+	public function page(){
+		$this->setVal('title', $this->getVal('title'));
+		$this->setVal('html', $this->getVal('html'));
 	}
 }
 

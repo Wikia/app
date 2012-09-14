@@ -50,7 +50,7 @@ $(function () {
 				addChevs[i].insertAdjacentHTML('beforeend', '<span class=chev></span>');
 			}
 
-			toc.init();
+			toc && toc.init();
 
 			if (relPage) {
 				relPage.addEventListener(clickEvent, function (ev) {
@@ -60,7 +60,7 @@ $(function () {
 					if(t.tagName == 'A') {
 						track.event('read-more', track.IMAGE_LINK, {
 							href: t.href
-						})
+						});
 					} else {
 						if (relPage.children[0].className.indexOf('open') > -1) {
 							track.event('read-more', track.CLICK, {label: 'close'});

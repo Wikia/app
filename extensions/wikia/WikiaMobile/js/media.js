@@ -173,11 +173,11 @@ define('media', ['modal', 'loader', 'querystring', 'popover', 'track', 'events',
 						callback: function(data) {
 							loader.remove(currentImage);
 
-							if(!data.error){
+							if(data.error){
+								handleError(data.error);
+							}else{
 								videoCache[imgTitle] = data.embedCode;
 								currentImage.innerHTML = '<table id=wkVi><tr><td>' + data.embedCode + '</td></tr></table>';
-							}else{
-								handleError(data.error);
 							}
 						}
 					});
@@ -442,7 +442,7 @@ define('media', ['modal', 'loader', 'querystring', 'popover', 'track', 'events',
 							label: current > n ? 'previous' : 'next'
 						});
 						current = n;
-						sharePopOver.close();
+						sharePopOver && sharePopOver.close();
 						refresh();
 					}
 				},
@@ -471,7 +471,7 @@ define('media', ['modal', 'loader', 'querystring', 'popover', 'track', 'events',
 		});
 
 		shareBtn = document.getElementById('wkShrImg');
-		sharePopOver = popover({
+		sharePopOver = popover && popover({
 			on: shareBtn,
 			style: 'left:3px;',
 			create: function(cnt){
@@ -481,7 +481,7 @@ define('media', ['modal', 'loader', 'querystring', 'popover', 'track', 'events',
 			},
 			open: function(ev){
 				ev.stopPropagation();
-				sharePopOver.changeContent(share(images[current].name));
+				sharePopOver && sharePopOver.changeContent(share(images[current].name));
 				track.event('share', track.CLICK, {
 					label: 'open'
 				});

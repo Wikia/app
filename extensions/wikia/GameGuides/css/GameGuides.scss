@@ -1,0 +1,83 @@
+//dependencies
+@import "../../WikiaMobile/css/infobox";
+@import "../../WikiaMobile/css/sections";
+@import "../../WikiaMobile/css/images";
+@import "../../WikiaMobile/css/videos";
+@import "../../WikiaMobile/css/image_stack";
+@import '../../WikiaMobile/css/modal';
+@import '../../WikiaMobile/css/media_modal';
+@import '../../WikiaMobile/css/image_placeholder';
+
+$linkColor: rgb(171,197,97);
+
+body {
+	overflow-x: hidden;
+	background: black;
+	color: white;
+
+	font-family: roboto, helvetica, "sans serif";
+	font-size: 90%;
+
+	line-height: 20px;
+}
+
+#pageName {
+	max-width: 100%;
+	word-break: break-word;
+	line-height: 30px;
+	color: $linkColor;
+	padding: 5px;
+}
+
+h2,h3, .collSec {
+	color: white;
+}
+
+.collSec {
+	border-top: none;
+	border-bottom: 1px solid rgb(41,41,41);
+
+	padding-bottom: 10px;
+	padding-top: 0;
+
+	font-size: 1.3em;
+
+	-webkit-transition: border .3s;
+
+	&.open {
+		border-bottom: 1px solid $linkColor;
+	}
+}
+
+a {
+	text-decoration: none;
+
+	color: white;
+	pointer-events: none;
+}
+
+a.validLink {
+	color: $linkColor;
+	pointer-events: auto;
+}
+
+.collSec .chev {
+	top: 0;
+}
+
+//hmmm
+#va-titleicons, #toc {
+	display: none;
+}
+
+.chev {
+	background-position: center;
+	background-repeat: no-repeat;
+	background-image:  url('/extensions/wikia/WikiaMobile/images/chevron-grey-down.png'); /* base64 */
+	-webkit-transition: -webkit-transform .3s;
+	-webkit-transform: translateZ(0);
+}
+
+.open .chev {
+	-webkit-transform: rotate(180deg);
+}
