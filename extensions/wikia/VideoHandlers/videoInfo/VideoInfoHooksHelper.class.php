@@ -99,7 +99,7 @@ class VideoInfoHooksHelper {
 					'videoTitle' => $title->getDBKey(),
 				);
 				$videoInfo = F::build( 'VideoInfo', array( $videoData ) );
-				$this->deleteVideo();
+				$videoInfo->deleteVideo();
 
 				$mediaService = F::build( 'MediaQueryService' );
 				$mediaService->clearCacheTotalVideos();
