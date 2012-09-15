@@ -28,6 +28,9 @@ class VideoInfoHooksHelper {
 			if ( !$reupload ) {
 				$mediaService = F::build( 'MediaQueryService' );
 				$mediaService->clearCacheTotalVideos();
+				if ( !$file->isLocal() ) {
+					$mediaService->clearCacheTotalPremiumVideos();
+				}
 			}
 		}
 
@@ -119,12 +122,12 @@ class VideoInfoHooksHelper {
 	/**
 	 * Hook: clear cache when file is renamed
 	 * @param type $form
-	 * @param type $oldTitle
-	 * @param type $newTitle
+	 * @param Title $oldTitle
+	 * @param Title $newTitle
 	 * @return true
 	 */
 	public static function onFileRenameComplete( &$form , &$oldTitle , &$newTitle ) {
-		$videoInfo = F::build( 'VideoInfo', array($oldVideoTitle), 'newFromTitle' );
+		$videoInfo = F::build( 'VideoInfo', array($oldTitle->getDBKey()), 'newFromTitle' );
 		if ( empty($videoInfo) ) {
 			// add new video
 			$videoInfoHelper = F::build( 'VideoInfoHelper' );
@@ -132,9 +135,12 @@ class VideoInfoHooksHelper {
 			if ( !empty($videoData) ) {
 				$videoInfo = F::build( 'VideoInfo', array( $videoData ) );
 				$videoInfo->addVideo();
+
+				$mediaService = F::build( 'MediaQueryService' );
+				$mediaService->clearCacheTotalVideos();
 			}
 		} else {
-			$videoInfo->renameVideo( $newTitle );
+			$videoInfo->renameVideo( $newTitle->getDBKey() );
 		}
 
 		return true;
