@@ -131,9 +131,7 @@ class VideoInfo extends WikiaModel {
 
 			$db->delete(
 				'video_info',
-				array(
-					'video_title' => $this->videoTitle,
-				),
+				array( 'video_title' => $this->videoTitle ),
 				__METHOD__
 			);
 
@@ -188,8 +186,6 @@ SQL;
 		$app = F::App();
 
 		$app->wf->ProfileIn( __METHOD__ );
-
-		$sqlWhere = array( 'video_title' => $videoTitle );
 
 		$db = $app->wf->GetDB( DB_SLAVE );
 
