@@ -48,6 +48,10 @@ XHRPolling.prototype.name = 'xhr-polling';
  */
 
 XHRPolling.prototype.doWrite = function (data) {
+  if(!this.response) {
+        return true;
+  }
+
   HTTPPolling.prototype.doWrite.call(this);
 
   var origin = this.req.headers.origin

@@ -1,3 +1,4 @@
+var monitoring = require('./monitoring.js');
 var config = require("./server_config.js");
 var qs = require('qs'); 
 var storage = require('./storage').redisFactory();
@@ -128,7 +129,7 @@ var clearAuthenticateCache = function(roomId, name) {
 
 WMBridge.prototype.authenticateUser = function(roomId, name, key, address, success, error) {
         var cacheKey = name + "_" + roomId;  
-        if(authenticateUserCache[cacheKey] && authenticateUserCache[cacheKey] == key ) {
+        if(authenticateUserCache[cacheKey] && authenticateUserCache[cacheKey].key == key ) {
                 return success(authenticateUserCache[cacheKey].data);
         }
 
@@ -141,7 +142,7 @@ WMBridge.prototype.authenticateUser = function(roomId, name, key, address, succe
         
         logger.debug(requestUrl);
 	var ts = Math.round((new Date()).getTime() / 1000);                                                                
-
+	monitoring.incrEventCounter('authenticateUserRequest');
         requestMW('GET', roomId, {}, requestUrl, function(data){ 
 		authenticateUserCache[cacheKey] = {
 			data: data, 
@@ -230,6 +231,7 @@ setInterval(function() {
 	logger.info("setUsersList")
         for (i in setUsersListQueue){
 	        setUsersList(i, setUsersListQueue[i]);
+		delete setUsersListQueue[i];
         }
 }, 10000);
 

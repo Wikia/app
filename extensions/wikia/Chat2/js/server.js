@@ -14,7 +14,7 @@ var app = require('express').createServer()
 var http = require("http");
 
 var monitoring = require('./monitoring.js');
-monitoring.startMonitoring(30000, storage);
+monitoring.startMonitoring(50000, storage);
 
 
 // TODO: Consider using this to catch uncaught exceptions (and then exit anyway):
@@ -85,7 +85,7 @@ var sessionIdsByKey = {}; // for each room/username combo, store the sessionId s
 
 io.configure(function () {
 	io.set('flash policy port', config.FLASH_POLICY_PORT );
-	io.set('transports', [  'websocket', 'flashsocket', 'htmlfile', 'xhr-polling', 'jsonp-polling'  ]);	
+	io.set('transports', [  'xhr-polling'  ]);
 	io.set('log level', loggerModule.getSocketIOLogLevel());
 	io.set('authorization', authConnection );  
 });
@@ -315,7 +315,7 @@ function authConnection(handshakeData, authcallback){
 			}, errback);
 		} else {
 			logger.error("User failed authentication. Error from server was: " + data.errorMsg);
-			sendInlineAlertToClient(client, data.error, data.errorWfMsg, data.errorMsgParams);
+//			sendInlineAlertToClient(client, data.error, data.errorWfMsg, data.errorMsgParams);
 			logger.debug("Entire data was: ");
 			logger.debug(data);
 			authcallback(null, false); // error first callback style
@@ -425,9 +425,13 @@ function finishConnectingUser(client, socket ){
 		} else {
 			//we have double connection for the same window
 			if(oldClient){
+				monitoring.incrEventCounter('double_connects');
 				oldClient.donotSendPart = true;
-				client.donotBroadcastUserList = true;
-				oldClient.disconnect();
+                                setTimeout(function(){
+                                        if(oldClient){
+                                                oldClient.disconnect();
+                                        }
+                                }, 1000 * 30);
 			}
 			// Put the user info into the room hash in redis, and add the client to the in-memory (not redis) hash of connected sockets.
 			formallyAddClient(client, socket, connectedUser);
