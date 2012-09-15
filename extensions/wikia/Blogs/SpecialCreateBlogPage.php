@@ -163,8 +163,7 @@ class CreateBlogPage extends SpecialCustomEditPage {
 				else {
 					$sMsg = wfMsg('create-blog-spam');
 				}
-				//FIXME: Member has protected access
-				$this->mFormErrors[] = $sMsg . '(' . $status->value . ')';
+				Wikia::log( __METHOD__, "save error", $sMsg, true );
 				break;
 		}
 	}

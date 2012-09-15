@@ -267,4 +267,3 @@ function gracenote_outputGoogleAnalytics($skin, &$text){
 	return true;
 } // end gracenote_outputGoogleAnalytics()
 
-?>

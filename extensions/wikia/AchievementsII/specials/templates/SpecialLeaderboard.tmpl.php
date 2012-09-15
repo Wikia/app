@@ -104,4 +104,3 @@
 		echo F::app()->renderView('LatestEarnedBadges', 'Index');
 		echo '</div>';
 	}
-?>

@@ -15,15 +15,12 @@ class ArtistRedirects extends SpecialPage
 
 	function execute($par){
 		$this->setHeaders();	// this is required for 1.7.1 to work
-		global $wgRequest, $wgOut;
-
 		$this->wfArtistRedirects();
 	}
 
 	// Outputs the actual page (has its own built in caching mechanisms).
 	function wfArtistRedirects(){
 		global $wgOut;
-		global $wgRequest, $wgUser;
 
 		$tablePrefix = "";
 
@@ -80,7 +77,7 @@ class ArtistRedirects extends SpecialPage
 			if(!$content){
 				ob_start();
 
-				$db = &wfGetDB(DB_SLAVE)->getProperty('mConn');
+				$db = &wfGetDB(DB_SLAVE)->getProperty('mConn'); /* @var $db Resource */
 
 				print "This page lists artist redirects.  It will help you find abbreviations, nick-names, misspellings, and more. ";
 				print "It may not be extremely interesting, but it also allows search engines to index all of these varaints so that ";

@@ -103,4 +103,3 @@ class PartnerAtomFeed extends AtomFeed {
 
 	}
 }
-?>

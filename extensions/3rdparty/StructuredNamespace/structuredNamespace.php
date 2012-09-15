@@ -504,4 +504,3 @@ $this->{$item['name']} = $this->safeUnicodeInput( $request, $item['name'] );
 	}
 }
 }
-?>

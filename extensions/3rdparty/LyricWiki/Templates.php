@@ -126,4 +126,3 @@ function lw_templatePreload(&$textbox, &$title)
 	return true;
 } // end lw_templatePreload()
 
-?>

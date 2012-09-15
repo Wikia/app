@@ -42,6 +42,7 @@ var AdDriver = {
 };
 
 AdDriver.getAdProviderForSpecialCase = function(slotname) {
+	// this goes to WF Nef @9/13
 	switch (wgDBname) {
 		case 'geekfeminism':
 		case 'kinkontap':

@@ -7,144 +7,179 @@
 */
 module('AdConfig2');
 
-test('getProvider failsafe', function() {
+test('getProvider failsafe to AdDriver', function() {
 	// setup
-	var AdProviderGameProMock = {name: 'GameProMock'}
-		, AdProviderEvolveMock = {name: 'EvolveMock'}
-		, AdProviderEvolveRSMock = {name: 'EvolveRSMock'}
-		, AdProviderAdDriver2Mock = {name: 'AdDriver2Mock'}
-		, AdProviderLiftium2Mock = {name: 'Liftium2Mock'}
+	var adProviderGameProMock = {name: 'GameProMock', canHandleSlot: function() {return false;}}
+		, adProviderEvolveMock = {name: 'EvolveMock', canHandleSlot: function() {return false;}}
+		, adProviderEvolveRSMock = {name: 'EvolveRSMock', canHandleSlot: function() {return false;}}
+		, adProviderAdDriver2Mock = {name: 'AdDriver2Mock'}
+		, adProviderAdDriverMock = {name: 'AdDriverMock'}
+		, adProviderLiftium2Mock = {name: 'Liftium2Mock'}
+		, geoMock = {getCountryCode:function() {}}
 		, adConfig;
 
-	window.wgContentLanguage = 'not de';
-	window.testUseCountry = 'error';
-
 	adConfig = AdConfig2(
-		Wikia.log, Wikia, window,
+		Wikia.log, Wikia, window, geoMock,
 		// AdProviders
-		AdProviderGameProMock,
-		AdProviderEvolveMock,
-		AdProviderEvolveRSMock,
-		AdProviderAdDriver2Mock,
-		AdProviderLiftium2Mock
+		adProviderGameProMock,
+		adProviderEvolveMock,
+		adProviderEvolveRSMock,
+		adProviderAdDriver2Mock,
+		adProviderAdDriverMock,
+		adProviderLiftium2Mock
 	);
 
-	equal(adConfig.getProvider(['foo']).name, 'AdDriver2Mock', 'AdDriver2Mock');
+	equal(adConfig.getProvider(['foo']), adProviderAdDriverMock, 'adProviderAdDriverMock');
 });
 
-// TODO may be refactored to AdProviderEvolve
-test('getProvider evolve AU', function() {
+test('getProvider use Evolve(RS) for AU (only if provider accepts)', function() {
 	// setup
-	var AdProviderGameProMock = {name: 'GameProMock'}
-		, AdProviderEvolveMock = {name: 'EvolveMock'}
-		, AdProviderEvolveRSMock = {name: 'EvolveRSMock'}
-		, AdProviderAdDriver2Mock = {name: 'AdDriver2Mock'}
-		, AdProviderLiftium2Mock = {name: 'Liftium2Mock'}
-		, adConfig;
-
-	window.testUseCountry = 'AU';
+	var adProviderGameProMock = {name: 'GameProMock', canHandleSlot: function() {return false;}}
+		, adProviderEvolveMock = {name: 'EvolveMock', canHandleSlot: function() {return false;}}
+		, adProviderEvolveRSMock = {name: 'EvolveRSMock', canHandleSlot: function() {return false;}}
+		, adProviderEvolveMockHandling = {name: 'EvolveMock', canHandleSlot: function() {return true;}}
+		, adProviderEvolveRSMockHandling = {name: 'EvolveRSMock', canHandleSlot: function() {return true;}}
+		, adProviderAdDriver2Mock = {name: 'AdDriver2Mock'}
+		, adProviderAdDriverMock = {name: 'AdDriverMock'}
+		, adProviderLiftium2Mock = {name: 'Liftium2Mock'}
+		, geoMockAU = {getCountryCode:function() {return 'AU';}}
+		, adConfig, adConfigRS;
 
 	adConfig = AdConfig2(
-		Wikia.log, Wikia, window,
+		Wikia.log, Wikia, window, geoMockAU,
 		// AdProviders
-		AdProviderGameProMock,
-		AdProviderEvolveMock,
-		AdProviderEvolveRSMock,
-		AdProviderAdDriver2Mock,
-		AdProviderLiftium2Mock
+		adProviderGameProMock,
+		adProviderEvolveMockHandling,
+		adProviderEvolveRSMock,
+		adProviderAdDriver2Mock,
+		adProviderAdDriverMock,
+		adProviderLiftium2Mock
 	);
 
-	equal(adConfig.getProvider(['TOP_LEADERBOARD']).name, 'EvolveMock', 'TOP_LEADERBOARD');
-	equal(adConfig.getProvider(['TOP_RIGHT_BOXAD']).name, 'EvolveMock', 'TOP_RIGHT_BOXAD');
-	equal(adConfig.getProvider(['LEFT_SKYSCRAPER_2']).name, 'EvolveMock', 'LEFT_SKYSCRAPER_2');
+	adConfigRS = AdConfig2(
+		Wikia.log, Wikia, window, geoMockAU,
+		// AdProviders
+		adProviderGameProMock,
+		adProviderEvolveMock,
+		adProviderEvolveRSMockHandling,
+		adProviderAdDriver2Mock,
+		adProviderAdDriverMock,
+		adProviderLiftium2Mock
+	);
 
-	notEqual(adConfig.getProvider(['INCONTENT_BOXAD_1']).name, 'EvolveMock', 'INCONTENT_BOXAD_1');
-	notEqual(adConfig.getProvider(['PREFOOTER_LEFT_BOXAD']).name, 'EvolveMock', 'PREFOOTER_LEFT_BOXAD');
-	notEqual(adConfig.getProvider(['PREFOOTER_RIGHT_BOXAD']).name, 'EvolveMock', 'PREFOOTER_RIGHT_BOXAD');
+	equal(adConfig.getProvider(['foo']), adProviderEvolveMockHandling, 'adProviderEvolveMock AU');
+	equal(adConfigRS.getProvider(['foo']), adProviderEvolveRSMockHandling, 'adProviderEvolveRSMock AU');
 });
 
-// TODO may be refactored to AdProviderEvolve
-test('getProvider evolve not AU', function() {
+test('getProvider do not use Evolve(RS) for PL', function() {
 	// setup
-	var AdProviderGameProMock = {name: 'GameProMock'}
-		, AdProviderEvolveMock = {name: 'EvolveMock'}
-		, AdProviderEvolveRSMock = {name: 'EvolveRSMock'}
-		, AdProviderAdDriver2Mock = {name: 'AdDriver2Mock'}
-		, AdProviderLiftium2Mock = {name: 'Liftium2Mock'}
+	var adProviderGameProMock = {name: 'GameProMock', canHandleSlot: function() {return false;}}
+		, adProviderEvolveMock = {name: 'EvolveMock', canHandleSlot: function() {return true;}}
+		, adProviderEvolveRSMock = {name: 'EvolveRSMock', canHandleSlot: function() {return false;}}
+		, adProviderAdDriver2Mock = {name: 'AdDriver2Mock'}
+		, adProviderAdDriverMock = {name: 'AdDriverMock'}
+		, adProviderLiftium2Mock = {name: 'Liftium2Mock'}
+		, geoMock = {getCountryCode:function() {return 'PL';}}
 		, adConfig;
 
-	window.testUseCountry = 'not AU';
-
 	adConfig = AdConfig2(
-		Wikia.log, Wikia, window,
+		Wikia.log, Wikia, window, geoMock,
 		// AdProviders
-		AdProviderGameProMock,
-		AdProviderEvolveMock,
-		AdProviderEvolveRSMock,
-		AdProviderAdDriver2Mock,
-		AdProviderLiftium2Mock
+		adProviderGameProMock,
+		adProviderEvolveMock,
+		adProviderEvolveRSMock,
+		adProviderAdDriver2Mock,
+		adProviderAdDriverMock,
+		adProviderLiftium2Mock
 	);
 
-	notEqual(adConfig.getProvider(['TOP_LEADERBOARD']).name, 'EvolveMock', 'TOP_LEADERBOARD');
-	notEqual(adConfig.getProvider(['TOP_RIGHT_BOXAD']).name, 'EvolveMock', 'TOP_RIGHT_BOXAD');
-	notEqual(adConfig.getProvider(['LEFT_SKYSCRAPER_2']).name, 'EvolveMock', 'LEFT_SKYSCRAPER_2');
+	notEqual(adConfig.getProvider(['foo']), adProviderEvolveMock, 'adProviderEvolveMock');
 });
 
-// TODO may be refactored to AdProviderGamePro
-test('getProvider GamePro de', function() {
+test('getProvider do not use Evolve(RS) for AU when it cannot handle the slot', function() {
 	// setup
-	var AdProviderGameProMock = {name: 'GameProMock'}
-		, AdProviderEvolveMock = {name: 'EvolveMock'}
-		, AdProviderEvolveRSMock = {name: 'EvolveRSMock'}
-		, AdProviderAdDriver2Mock = {name: 'AdDriver2Mock'}
-		, AdProviderLiftium2Mock = {name: 'Liftium2Mock'}
+	var adProviderGameProMock = {name: 'GameProMock', canHandleSlot: function() {return false;}}
+		, adProviderEvolveMock = {name: 'EvolveMock', canHandleSlot: function() {return false;}}
+		, adProviderEvolveRSMock = {name: 'EvolveRSMock', canHandleSlot: function() {return false;}}
+		, adProviderAdDriver2Mock = {name: 'AdDriver2Mock'}
+		, adProviderAdDriverMock = {name: 'AdDriverMock'}
+		, adProviderLiftium2Mock = {name: 'Liftium2Mock'}
+		, geoMock = {getCountryCode:function() {return 'AU';}}
 		, adConfig;
 
-	window.wgContentLanguage = 'de';
-
 	adConfig = AdConfig2(
-		Wikia.log, Wikia, window,
+		Wikia.log, Wikia, window, geoMock,
 		// AdProviders
-		AdProviderGameProMock,
-		AdProviderEvolveMock,
-		AdProviderEvolveRSMock,
-		AdProviderAdDriver2Mock,
-		AdProviderLiftium2Mock
+		adProviderGameProMock,
+		adProviderEvolveMock,
+		adProviderEvolveRSMock,
+		adProviderAdDriver2Mock,
+		adProviderAdDriverMock,
+		adProviderLiftium2Mock
 	);
 
-	equal(adConfig.getProvider(['TOP_LEADERBOARD']).name, 'GameProMock', 'TOP_LEADERBOARD');
-	equal(adConfig.getProvider(['TOP_RIGHT_BOXAD']).name, 'GameProMock', 'TOP_RIGHT_BOXAD');
-	equal(adConfig.getProvider(['LEFT_SKYSCRAPER_2']).name, 'GameProMock', 'LEFT_SKYSCRAPER_2');
-	equal(adConfig.getProvider(['PREFOOTER_LEFT_BOXAD']).name, 'GameProMock', 'PREFOOTER_LEFT_BOXAD');
-
-	notEqual(adConfig.getProvider(['INCONTENT_BOXAD_1']).name, 'GameProMock', 'INCONTENT_BOXAD_1');
-	notEqual(adConfig.getProvider(['PREFOOTER_RIGHT_BOXAD']).name, 'GameProMock', 'PREFOOTER_RIGHT_BOXAD');
+	notEqual(adConfig.getProvider(['foo']), adProviderEvolveMock, 'adProviderEvolveMock');
 });
 
-// TODO may be refactored to AdProviderGamePro
-test('getProvider GamePro not de', function() {
+test('getProvider use GamePro if provider says so', function() {
 	// setup
-	var AdProviderGameProMock = {name: 'GameProMock'}
-		, AdProviderEvolveMock = {name: 'EvolveMock'}
-		, AdProviderEvolveRSMock = {name: 'EvolveRSMock'}
-		, AdProviderAdDriver2Mock = {name: 'AdDriver2Mock'}
-		, AdProviderLiftium2Mock = {name: 'Liftium2Mock'}
+	var adProviderGameProMock = {name: 'GameProMock', canHandleSlot: function() {return true;}}
+		, adProviderEvolveMock = {name: 'EvolveMock', canHandleSlot: function() {return false;}}
+		, adProviderEvolveRSMock = {name: 'EvolveRSMock', canHandleSlot: function() {return false;}}
+		, adProviderAdDriver2Mock = {name: 'AdDriver2Mock'}
+		, adProviderAdDriverMock = {name: 'AdDriverMock'}
+		, adProviderLiftium2Mock = {name: 'Liftium2Mock'}
+		, geoMock = {getCountryCode:function() {}}
 		, adConfig;
 
-	window.wgContentLanguage = 'not de';
-
 	adConfig = AdConfig2(
-		Wikia.log, Wikia, window,
+		Wikia.log, Wikia, window, geoMock,
 		// AdProviders
-		AdProviderGameProMock,
-		AdProviderEvolveMock,
-		AdProviderEvolveRSMock,
-		AdProviderAdDriver2Mock,
-		AdProviderLiftium2Mock
+		adProviderGameProMock,
+		adProviderEvolveMock,
+		adProviderEvolveRSMock,
+		adProviderAdDriver2Mock,
+		adProviderAdDriverMock,
+		adProviderLiftium2Mock
 	);
 
-	notEqual(adConfig.getProvider(['TOP_LEADERBOARD']).name, 'GameProMock', 'TOP_LEADERBOARD');
-	notEqual(adConfig.getProvider(['TOP_RIGHT_BOXAD']).name, 'GameProMock', 'TOP_RIGHT_BOXAD');
-	notEqual(adConfig.getProvider(['LEFT_SKYSCRAPER_2']).name, 'GameProMock', 'LEFT_SKYSCRAPER_2');
-	notEqual(adConfig.getProvider(['PREFOOTER_LEFT_BOXAD']).name, 'GameProMock', 'PREFOOTER_LEFT_BOXAD');
+	equal(adConfig.getProvider(['foo']), adProviderGameProMock, 'adProviderGameProMock');
+});
+
+test('getProvider GamePro wins over Evolve', function() {
+	// setup
+	var adProviderGameProMockRejecting = {name: 'GameProMock', canHandleSlot: function() {return false;}}
+		, adProviderGameProMock = {name: 'GameProMock', canHandleSlot: function() {return true;}}
+		, adProviderEvolveMock = {name: 'EvolveMock', canHandleSlot: function() {return true;}}
+		, adProviderEvolveRSMock = {name: 'EvolveRSMock', canHandleSlot: function() {return false;}}
+		, adProviderAdDriver2Mock = {name: 'AdDriver2Mock'}
+		, adProviderAdDriverMock = {name: 'AdDriverMock'}
+		, adProviderLiftium2Mock = {name: 'Liftium2Mock'}
+		, geoMock = {getCountryCode:function() {return 'AU';}}
+		, adConfig;
+
+	// First see if evolve is used for given configuration when GamePro refuses
+	adConfig = AdConfig2(
+		Wikia.log, Wikia, window, geoMock,
+		// AdProviders
+		adProviderGameProMockRejecting,
+		adProviderEvolveMock,
+		adProviderEvolveRSMock,
+		adProviderAdDriver2Mock,
+		adProviderAdDriverMock,
+		adProviderLiftium2Mock
+	);
+	equal(adConfig.getProvider(['foo']), adProviderEvolveMock, 'adProviderEvolveMock');
+
+	adConfig = AdConfig2(
+		Wikia.log, Wikia, window, geoMock,
+		// AdProviders
+		adProviderGameProMock,
+		adProviderEvolveMock,
+		adProviderEvolveRSMock,
+		adProviderAdDriver2Mock,
+		adProviderAdDriverMock,
+		adProviderLiftium2Mock
+	);
+	equal(adConfig.getProvider(['foo']), adProviderGameProMock, 'adProviderGameProMock');
 });

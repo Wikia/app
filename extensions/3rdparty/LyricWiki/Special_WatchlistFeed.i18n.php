@@ -21,4 +21,3 @@ $messages['en'] = array(
 	"watchlistfeed-links" => "Feed links: <a type=\"application/rss+xml\" href=\"$1\">RSS Feed</a> | <a type=\"application/atom+xml\" href=\"$2\">Atom Feed</a><br/>",
 	);
 
-?>

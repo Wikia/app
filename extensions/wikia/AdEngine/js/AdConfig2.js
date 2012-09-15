@@ -1,20 +1,77 @@
-window.AdConfig2 = function (
+var AdConfig2 = function (
 	// regular dependencies
-	log, Wikia, window,
+	log, Wikia, window, Geo,
 
 	// AdProviders
 	AdProviderGamePro,
 	AdProviderEvolve,
 	AdProviderEvolveRS,
 	AdProviderAdDriver2,
+	AdProviderAdDriver,
 	AdProviderLiftium2
 ) {
-	var _cache_geo = null;
+	'use strict';
 
-	function getProvider(slot) {
+	var country = Geo.getCountryCode()
+		, defaultHighValueCountries, defaultHighValueSlots
+		, highValueCountries, highValueSlots
+		, evolveCountries
+		, getProvider;
+
+	defaultHighValueSlots = {
+		'CORP_TOP_LEADERBOARD':true,
+		'CORP_TOP_RIGHT_BOXAD':true,
+		'EXIT_STITIAL_BOXAD_1':true,
+		'HOME_INVISIBLE_TOP':true,
+		'HOME_TOP_LEADERBOARD':true,
+		'HOME_TOP_RIGHT_BOXAD':true,
+		'HUB_TOP_LEADERBOARD':true,
+		'INVISIBLE_MODAL':true,
+		'INVISIBLE_TOP':true,
+		'LEFT_SKYSCRAPER_2':true,
+		'MIDDLE_RIGHT_BOXAD':true,
+		'MODAL_RECTANGLE':true,
+		'MODAL_INTERSTITIAL':true,
+		'MODAL_VERTICAL_BANNER':true,
+		'TEST_HOME_TOP_RIGHT_BOXAD':true,
+		'TEST_TOP_RIGHT_BOXAD':true,
+		'TOP_LEADERBOARD':true,
+		'TOP_RIGHT_BOXAD':true
+	};
+
+	// copy of CommonSettings wgHighValueCountries
+	defaultHighValueCountries = {
+		'CA':true,
+		'DE':true,
+		'DK':true,
+		'ES':true,
+		'FI':true,
+		'FR':true,
+		'GB':true,
+		'IT':true,
+		'NL':true,
+		'NO':true,
+		'SE':true,
+		'UK':true,
+		'US':true
+	};
+
+	evolveCountries = {
+		'AU': true,
+		'NZ': true,
+		'CA': true
+	}
+
+	highValueCountries = window.wgHighValueCountries2 || window.wgHighValueCountries;
+	highValueCountries = highValueCountries || defaultHighValueCountries;
+
+	highValueSlots = defaultHighValueSlots;
+
+	getProvider = function(slot) {
+		var slotname = slot[0];
+
 		log('getProvider', 5, 'AdConfig2');
 		log(slot, 5, 'AdConfig2');
-
 
 		// To be removed later:
 		if (slot[2] === 'GamePro') {
@@ -30,121 +87,37 @@ window.AdConfig2 = function (
 			return AdProviderLiftium2;
 		}
 
-		if (isSlotGamePro(slot[0], window.wgContentLanguage)) {
+		// First ask GamePro
+		if (AdProviderGamePro.canHandleSlot(slot)) {
 			return AdProviderGamePro;
 		}
 
-		if (isSlotEvolve(slot[0], getCountry())) {
-			return AdProviderEvolve;
-		}
-
-		if (isSlotEvolveRS(slot[0], getCountry())) {
-			return AdProviderEvolveRS;
-		}
-
-		if (isWikiLiftiumOnly()) {
-			return AdProviderLiftium2;
-		}
-
-		return AdProviderAdDriver2;
-	}
-
-	// TODO refactor to adProviderGamePro
-	function isSlotGamePro(slotname, city_lang) {
-		log('isSlotGamePro', 5, 'AdConfig2');
-		log([slotname, city_lang], 5, 'AdConfig2');
-
-		var slotMap = {
-			'HOME_TOP_LEADERBOARD':true,
-			'HOME_TOP_RIGHT_BOXAD':true,
-			'LEFT_SKYSCRAPER_2':true,
-			'PREFOOTER_LEFT_BOXAD':true,
-			'TOP_LEADERBOARD':true,
-			'TOP_RIGHT_BOXAD':true
-		};
-		if (city_lang == 'de' && typeof slotMap[slotname] != 'undefined') {
-			return true;
-		}
-
-		return false;
-	}
-
-	// TODO refactor to adProviderEvolve ?
-	function isSlotEvolve(slotname, country) {
-		log('isSlotEvolve', 5, 'AdConfig2');
-		log([slotname, country], 5, 'AdConfig2');
-
-		var slotMap = {
-			'HOME_TOP_LEADERBOARD':true,
-			'HOME_TOP_RIGHT_BOXAD':true,
-			'LEFT_SKYSCRAPER_2':true,
-			'TOP_LEADERBOARD':true,
-			'TOP_RIGHT_BOXAD':true
-		};
-		if ((country == 'AU' || country == 'NZ' || country == 'CA') && typeof slotMap[slotname] != 'undefined') {
-			return true;
-		}
-
-		return false;
-	}
-
-	// TODO refactor to adProviderEvolveRS ?
-	function isSlotEvolveRS(slotname, country) {
-		log('isSlotEvolveRS', 5, 'AdConfig2');
-		log([slotname, country], 5, 'AdConfig2');
-
-		if ((country == 'AU' || country == 'NZ' || country == 'CA') && slotname == 'INVISIBLE_1') {
-			return true;
-		}
-
-		return false;
-	}
-
-	// TODO refactor when fb:45432 is done
-	function getCountry() {
-		log('getCountry', 5, 'AdConfig2');
-
-		if (window.testUseCountry) {
-			log('test', 7, 'AdConfig2');
-			log(window.testUseCountry, 7, 'AdConfig2');
-			return window.testUseCountry;
-		}
-
-		if (_cache_geo) {
-			log('cache', 7, 'AdConfig2');
-			log(_cache_geo.country, 7, 'AdConfig2');
-			return _cache_geo.country;
-		}
-
-		var qs = new Wikia.Querystring;
-		var country = qs.getVal('usegeo', null);
-		if (country) {
-			_cache_geo = {country:country};
-
-			log('querystring', 7, 'AdConfig2');
-			log(country, 7, 'AdConfig2');
-			return country;
-		}
-
-		var cookie = decodeURIComponent(Wikia.Cookies.get('Geo'));
-		if (typeof cookie != 'undefined' && cookie) {
-			try {
-				_cache_geo = JSON.parse(cookie);
-				_cache_geo.country;
-			} catch (e) {
-				_cache_geo = {country:'error'};
+		// Now, if in AU/NZ/CA ask Evolve and Evolve RS
+		if (evolveCountries[country]) {
+			if (AdProviderEvolve.canHandleSlot(slot)) {
+				return AdProviderEvolve;
 			}
-			log('cookie', 7, 'AdConfig2');
-			log(_cache_geo.country, 7, 'AdConfig2');
+			if (AdProviderEvolveRS.canHandleSlot(slot)) {
+				return AdProviderEvolveRS;
+			}
 		}
 
-		return _cache_geo.country;
-	}
+		// Now if slot is high value in high value country,
+		// ask AdDriver2 (DART->Liftium)
+		if (
+			highValueCountries[country] &&
+			highValueSlots[slotname]
+		) {
+			return AdProviderAdDriver2;
+		}
 
-	function isWikiLiftiumOnly() {
-		return false;
-	}
-	
-	return {getProvider:getProvider};
+		// Now Liftium
 
+		// TODO: should be AdProviderLiftium2 eventually
+		return AdProviderAdDriver;
+	};
+
+	return {
+		getProvider: getProvider
+	};
 };

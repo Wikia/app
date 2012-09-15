@@ -974,7 +974,7 @@ class ArticleCommentList {
 	 *
 	 * @return true -- because it's hook
 	 */
-	static public function undeleteComplete($oTitle, $oUser, &$reason) {
+	static public function undeleteComplete($oTitle, $oUser, $reason) {
 		wfProfileIn( __METHOD__ );
 		if ($oTitle instanceof Title) {
 			if ( in_array($oTitle->getNamespace(), array(NS_BLOG_ARTICLE, NS_BLOG_ARTICLE_TALK)) ) {

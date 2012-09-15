@@ -32,9 +32,9 @@ $wide-table-border: 5px solid rgb(215,232,242);
 
 	border: 1px solid $border-color;
 
-    -webkit-transition: border .2s;
-  	-moz-transition: border .2s;
-  	-o-transtion: border .2s;
+	-webkit-transition: border .2s;
+	-moz-transition: border .2s;
+	-o-transtion: border .2s;
 
 	table {
 		pointer-events: none;
@@ -57,5 +57,5 @@ $wide-table-border: 5px solid rgb(215,232,242);
 
 //if not
 .no-overflow .bigTable {
-    overflow: hidden;
+	overflow: hidden;
 }

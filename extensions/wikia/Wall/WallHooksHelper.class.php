@@ -207,6 +207,7 @@ class WallHooksHelper {
 						return true;
 					}
 
+					/* @var $wm WallMessage */
 					$wall = $wm->getWall();
 					$user = $wall->getUser();
 				} else {
@@ -445,7 +446,7 @@ class WallHooksHelper {
 
 		return true;
 	}
-	
+
 	/**
 	 * @brief Changes "My talk" to "Message wall" in Oasis (in the tabs on the User page).
 	 *
@@ -1277,7 +1278,7 @@ class WallHooksHelper {
 	/**
 	 * @brief Adjusting title of a block group on RecentChanges page
 	 *
-	 * @param ChangeList $oChangeList
+	 * @param ChangesList $oChangeList
 	 * @param string $r
 	 * @param array $oRCCacheEntryArray an array of RCCacheEntry instances
 	 * @param boolean $changeRecentChangesHeader a flag saying Wikia's hook if we want to change header or not
@@ -1338,7 +1339,7 @@ class WallHooksHelper {
 	 *
 	 * @desc Changes $secureName which is an array key in RC cache by which blocks on enchance RC page are displayed
 	 *
-	 * @param ChangeList $changesList
+	 * @param ChangesList $changesList
 	 * @param string $secureName
 	 * @param RecentChange $rc
 	 *
@@ -1931,15 +1932,15 @@ class WallHooksHelper {
 		}
 		return true;
 	}
-	
+
 	public function onBeforeCategoryData( &$extraConds ) {
 		$app = F::App();
-		
+
 		$excludedNS = $app->wg->WallNS;
 		foreach($app->wg->WallNS as $ns) {
 			$excludedNS[] = MWNamespace::getTalk( $ns );
 		}
-		
+
 		$extraConds[] = 'page_namespace not in('.implode(',', $excludedNS).')';
 		return true;
 	}

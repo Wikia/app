@@ -57,4 +57,3 @@ class UploadWordmarkFromFile extends UploadFromFile {
 		return $warnings;
 	}
 }
-?>

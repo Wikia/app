@@ -167,4 +167,3 @@ class MultiRestoreTask extends BatchTask {
 		return $desc;
 	}
 }
-?>

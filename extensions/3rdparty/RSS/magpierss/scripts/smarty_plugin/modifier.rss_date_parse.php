@@ -28,4 +28,3 @@ function smarty_modifier_rss_date_parse ($rss_date, $default_date=null)
 
 
 
-?>

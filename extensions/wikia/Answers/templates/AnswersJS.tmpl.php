@@ -15,4 +15,3 @@ if (jQuery("#mw-normal-catlinks").length > 0) {
 </script>
 <?
 }
-?>

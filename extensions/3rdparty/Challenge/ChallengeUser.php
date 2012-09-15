@@ -172,4 +172,3 @@ function wfSpecialChallengeUser(){
 	$wgMessageCache->addMessage( 'challengeuser', 'Challenge a User' );
 }
 
-?>

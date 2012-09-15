@@ -19,4 +19,3 @@ $wgExtensionCredits['other'][] = array(
         'description' => 'Upload more then one file at a time.'
 );	
 
-?>

@@ -98,4 +98,3 @@ class WikiaApiQueryConfGroups extends ApiQueryBase {
 
 };
 
-?>

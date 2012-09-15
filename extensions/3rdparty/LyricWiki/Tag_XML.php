@@ -67,7 +67,7 @@ $wgExtensionCredits["parserhook"][]=array(
 'description' => 'Allows expanding XML-based files into wikitext' );
 }
 
-function wfXMLFormatter( $parser )
+function wfXMLFormatter( Parser $parser )
 {
 	$parser->setHook( "xml", "renderXML" );
 	return true;
@@ -93,9 +93,6 @@ function unfilter( $string )
 
 function renderXML( $input, $argv, $parser )
 {
-	global $wgOut;
-	$localParser = new Parser();
-
 	// parameters
 	$feedURL = $argv["feed"];
 	$escapedFeedURL = urlencode($argv["feed"]);
@@ -108,7 +105,7 @@ function renderXML( $input, $argv, $parser )
 	$cachedSource = false;
 	if( debugSwitch("forceload") )
 	{
-		$wgMemc->get($escapedFeedUrl);
+		$wgMemc->get($escapedFeedURL);
 	}
 	if( !$cachedSource )
 	{
@@ -192,5 +189,3 @@ function renderXML( $input, $argv, $parser )
 
 	return sandboxParse( $result );
 }
-
-?>

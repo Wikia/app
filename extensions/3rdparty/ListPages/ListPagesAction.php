@@ -55,4 +55,3 @@ function wfSpecialListPagesAction(){
  	$wgMessageCache->addMessage( 'listpagesaction', 'just a test extension' );
 }
  
-?>

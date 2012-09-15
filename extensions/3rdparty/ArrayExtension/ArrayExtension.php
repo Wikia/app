@@ -716,4 +716,3 @@ function wfArrayExtensionLanguageGetMagic( &$magicWords, $langCode ) {
         return true;
 }
 
-?>

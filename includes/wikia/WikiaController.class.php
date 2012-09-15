@@ -20,14 +20,24 @@ abstract class WikiaController extends WikiaDispatchableObject {
 	 * @todo implement request/responseParams tags
 	 */
 	public function help() {
+		$reflection = new ReflectionClass( __CLASS__ );
+		$methods = $reflection->getMethods( ReflectionMethod::IS_PUBLIC );
+		$skipMethods = array();
+
+		//build a list of the WikiaController base class methods to filter
+		//them out from the docs, but maintain "help"
+		foreach ( $methods as $m ) {
+			if ( $m->name != 'help' ) {
+				$skipMethods[] = $m->name;
+			}
+		}
+
 		$reflection = new ReflectionClass($this);
 		$methods    = $reflection->getMethods(ReflectionMethod::IS_PUBLIC);
 		$help       = array();
 
 		foreach ($methods as $index => $method) {
-			//if (!isset($this->allowedRequests[$method->name])) {
-			//	unset($methods[$index]);
-			//} else {
+			if ( !in_array( $method->name, $skipMethods ) ) {
 				$comment = $method->getDocComment();
 				if ($comment) {
 					$comment = substr($comment, 3, -2);
@@ -40,7 +50,7 @@ abstract class WikiaController extends WikiaDispatchableObject {
 					'description' => $comment
 				);
 				$help[] = $data;
-			//}
+			}
 		}
 
 		$this->getResponse()->setVal('class', substr($reflection->name, 0, -10));

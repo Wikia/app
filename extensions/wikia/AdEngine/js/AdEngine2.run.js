@@ -1,27 +1,30 @@
-(function(log, WikiaTracker, window, ghostwriter, document) {
+(function(log, WikiaTracker, window, ghostwriter, document, Geo) {
 	var adConfig
 		, adEngine
 		, adProviderEvolve
 		, adProviderEvolveRS
 		, adProviderGamePro
 		, adProviderAdDriver2
+		, adProviderAdDriver
 		, adProviderLiftium2;
 
 	adProviderGamePro = AdProviderGamePro(WikiaTracker, log, window, ghostwriter, document);
 	adProviderEvolve = AdProviderEvolve(WikiaTracker, log, window, ghostwriter, document);
-	adProviderEvolveRS = AdProviderEvolveRS(WikiaTracker, log, window, ghostwriter, document);
+	adProviderEvolveRS = AdProviderEvolveRS(WikiaTracker, log, window, ghostwriter, document, Geo);
 	adProviderAdDriver2 = AdProviderAdDriver2(log, window);
+	adProviderAdDriver = AdProviderAdDriver(log, window);
 	adProviderLiftium2 = AdProviderLiftium2(WikiaTracker, log, window, ghostwriter, document);
 
 	adConfig = AdConfig2(
 		// regular dependencies:
-		Wikia.log, Wikia, window,
+		Wikia.log, Wikia, window, Geo,
 
 		// AdProviders:
 		adProviderGamePro,
 		adProviderEvolve,
 		adProviderEvolveRS,
 		adProviderAdDriver2,
+		adProviderAdDriver,
 		adProviderLiftium2
 	);
 
@@ -33,4 +36,4 @@
 		adProviderEvolve.hop(slotname);
 	};
 
-}(Wikia.log, WikiaTracker, window, ghostwriter, document));
+}(Wikia.log, WikiaTracker, window, ghostwriter, document, Geo));

@@ -27,8 +27,14 @@
 			return geoData;
 		}
 
+		function getCountryCode() {
+			var data = getGeoData();
+			return data.country;
+		}
+
 		return {
-			getGeoData: getGeoData
+			getGeoData: getGeoData,
+			getCountryCode: getCountryCode
 		};
 	}
 
@@ -36,7 +42,7 @@
 	//this depends on cookies.js and will fail if window.Wikia.Cookies is not defined
 	context.Geo = context.Wikia.geo = geo(context.Wikia.Cookies);
 
-	if (typeof define != 'undefined' && define.amd) {
+	if (typeof define !== 'undefined' && define.amd) {
 		//AMD
 		define('geo', function () {
 			return context.Wikia.geo;

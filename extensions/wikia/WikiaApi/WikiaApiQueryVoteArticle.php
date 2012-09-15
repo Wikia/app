@@ -934,4 +934,3 @@ class WikiaApiQueryVoteArticle extends WikiaApiQuery {
 
 };
 
-?>

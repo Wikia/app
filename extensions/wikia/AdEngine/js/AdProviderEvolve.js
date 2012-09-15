@@ -1,4 +1,25 @@
 window.AdProviderEvolve = function (WikiaTracker, log, window, ghostwriter, document) {
+	var slotMap = {
+		'HOME_TOP_LEADERBOARD':{'tile':1, 'size':'728x90', 'dcopt':'ist'},
+		'HOME_TOP_RIGHT_BOXAD':{'tile':2, 'size':'300x250,300x600'},
+		'LEFT_SKYSCRAPER_2':{'tile':3, 'size':'160x600'},
+		'TOP_LEADERBOARD':{'tile':1, 'size':'728x90', 'dcopt':'ist'},
+		'TOP_RIGHT_BOXAD':{'tile':2, 'size':'300x250,300x600'}
+	};
+
+	function canHandleSlot(slot) {
+		var slotname = slot[0];
+
+		log('canHandleSlot', 5, 'AdProviderEvolve');
+		log([slotname], 5, 'AdProviderEvolve');
+
+		if (slotMap[slotname]) {
+			return true;
+		}
+
+		return false;
+	}
+
 	function fillInSlot(slot) {
 		log('fillInSlot', 5, 'AdProviderEvolve');
 		log(slot, 5, 'AdProviderEvolve');
@@ -21,14 +42,6 @@ window.AdProviderEvolve = function (WikiaTracker, log, window, ghostwriter, docu
 	}
 
 	var ord = Math.round(Math.random() * 23456787654);
-	var slotMap = {
-		'HOME_TOP_LEADERBOARD':{'tile':1, 'size':'728x90', 'dcopt':'ist'},
-		'HOME_TOP_RIGHT_BOXAD':{'tile':2, 'size':'300x250,300x600'},
-		'LEFT_SKYSCRAPER_2':{'tile':3, 'size':'160x600'},
-		'TOP_LEADERBOARD':{'tile':1, 'size':'728x90', 'dcopt':'ist'},
-		'TOP_RIGHT_BOXAD':{'tile':2, 'size':'300x250,300x600'}
-	};
-	var adNum = 100; // TODO global-ize it!
 
 	// adapted for Evolve + simplified copy of AdConfig.DART.getUrl
 	function getUrl(slotname, size) {
@@ -80,39 +93,17 @@ window.AdProviderEvolve = function (WikiaTracker, log, window, ghostwriter, docu
 		return sect;
 	}
 
-	// adapted for Evolve + simplified copy of AdDriverDelayedLoader.callLiftium
 	function hop(slotname) {
 		log('hop', 5, 'AdProviderEvolve');
 		log(slotname, 5, 'AdProviderEvolve');
 
 		slotname = sanitizeSlotname(slotname);
 		var size = slotMap[slotname].size || '0x0';
-		log('hop in:', 7, 'AdProviderEvolve');
 		log([slotname, size], 7, 'AdProviderEvolve');
 
 		WikiaTracker.trackAdEvent('liftium.hop2', {'ga_category':'hop2/evolve', 'ga_action':'slot ' + slotname, 'ga_label':'9.9' /* FIXME Liftium.formatTrackTime(time, 5) */}, 'ga');
 
-		// TODO work in progress
-		window.adslots2.push([slotname, /* size */ null, 'Liftium2', '0']);
-		return;
-
-		//LiftiumOptions.placement = slotname;
-		var script = getLiftiumCallScript(slotname, size);
-		ghostwriter(
-			document.getElementById(slotname),
-			{
-				insertType:"append",
-				script:{text:script},
-				done:function () {
-					log('(hop) ghostwriter done', 5, 'AdProviderEvolve');
-					log([slotname, script], 5, 'AdProviderEvolve');
-					ghostwriter.flushloadhandlers();
-					// TODO un-comment this
-					//window.AdDriver.adjustSlotDisplay(slotname);
-				}
-			}
-		); // TODO get rid of ghostscript (inject iframe + call liftium)
-		// TODO check AIC2 for an example
+		window.adslots2.push([slotname, null, 'Liftium2', null]);
 	}
 
 	function sanitizeSlotname(slotname) {
@@ -132,25 +123,10 @@ window.AdProviderEvolve = function (WikiaTracker, log, window, ghostwriter, docu
 		return out;
 	}
 
-	// adapted for Evolve + simplified copy of AdDriverDelayedLoader.getLiftiumCallScript
-	function getLiftiumCallScript(slotname, size) {
-		log('getLiftiumCallScript', 5, 'AdProviderEvolve');
-		log([slotname, size], 5, 'AdProviderEvolve');
-
-		var dims = size.split('x');
-		var script = '';
-		script += "document.write('<div id=\"Liftium_"+size+"_"+(++adNum)+"\"><iframe width=\""+dims[0]+"\" height=\""+dims[1]+"\" id=\""+slotname+"_iframe\" noresize=\"true\" scrolling=\"no\" frameborder=\"0\" marginheight=\"0\" marginwidth=\"0\" style=\"border:none;\" target=\"_blank\"></iframe><div>');";
-
-		script += 'LiftiumOptions.placement = "'+slotname+'";';
-		script += 'Liftium.callInjectedIframeAd("'+size+'", document.getElementById("'+slotname+'_iframe"));';
-
-		log(script, 7, 'AdProviderEvolve');
-		return script;
-	}
-
 	var iface = {
 		name: 'Evolve',
 		fillInSlot: fillInSlot,
+		canHandleSlot: canHandleSlot,
 		hop: hop
 	};
 

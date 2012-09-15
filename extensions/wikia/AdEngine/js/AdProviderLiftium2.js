@@ -7,6 +7,18 @@ window.AdProviderLiftium2 = function (WikiaTracker, log, window, ghostwriter, do
 		slot[1] = slotMap[slot[0]].size || slot[1];
 		log([slot[0], slot[1]], 7, 'AdProviderLiftium2');
 
+		// TODO real deferred queue is needed...
+		if (!window.Liftium) {
+			log('Liftium not available, pushing to the AdDriver queue', 3, 'AdProviderLiftium2');
+			log(slot, 3, 'AdProviderLiftium2');
+
+			if(!window.adslots) {
+				window.adslots = [];
+			}
+			window.adslots.push([slot[0], slot[1], 'Liftium', slot[3]]);
+			return;
+		}
+
 		// this is *NOT* needed, liftium has it's own slot tracking
 		//WikiaTracker.trackAdEvent('liftium.slot2', {'ga_category':'slot2/' + slot[1], 'ga_action':slot[0], 'ga_label':'liftium'}, 'ga');
 
@@ -18,7 +30,7 @@ window.AdProviderLiftium2 = function (WikiaTracker, log, window, ghostwriter, do
 				insertType:"append",
 				script:{text:script},
 				done:function () {
-					log('(hop) ghostwriter done', 5, 'AdProviderLiftium2');
+					log('ghostwriter done', 5, 'AdProviderLiftium2');
 					log([slot[0], script], 5, 'AdProviderLiftium2');
 					ghostwriter.flushloadhandlers();
 					// TODO un-comment this

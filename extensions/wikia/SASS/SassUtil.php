@@ -12,7 +12,7 @@ class SassUtil {
 	 * and wide wiki indicator if it's the case
 	 */
 	public static function getSassSettings() {
-		global $wgOasisHD, $wgOasisFluid;
+		global $wgOasisHD, $wgOasisFluid, $wgOasisGrid;
 
 		$params = self::getOasisSettings();
 
@@ -22,6 +22,10 @@ class SassUtil {
 
 		if ( $wgOasisFluid ) {
 			$params['hd'] = 2;
+		}
+		
+		if ( $wgOasisGrid ) {
+			$params['hd'] = 3;
 		}
 
 		ksort( $params );

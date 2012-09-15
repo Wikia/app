@@ -108,6 +108,29 @@ $app = F::build( 'App' );
 $wgAutoloadClasses['AssetsManager'] = $IP . '/extensions/wikia/AssetsManager/AssetsManager.class.php';
 $wgAutoloadClasses['AssetsConfig'] = $IP . '/extensions/wikia/AssetsManager/AssetsConfig.class.php';
 
+/**
+ * Wikia API
+ * (based on Nirvana)
+ */
+
+//holds a list of all the registered API controllers
+//@see WikiaApp::registerApiController
+$wgWikiaAPIControllers = array();
+
+//ApiGate dependencies
+include_once( "$IP/lib/ApiGate/config.php" );
+
+//Wikia API base controller, all the others extend this class
+$wgAutoloadClasses[ "WikiaApiController"            ] = "{$IP}/includes/wikia/api/WikiaApiController.class.php";
+
+//Wikia API controllers/modules
+$app->registerApiController( 'WikiaApiDiscoveryController', "{$IP}/includes/wikia/api/WikiaApiDiscoveryController.class.php" );
+$app->registerApiController( 'WikiInfoController', "{$IP}/includes/wikia/api/WikiInfoController.class.php" );
+
+/**
+ * Wikia API end
+ */
+
 $wgAutoloadClasses['SpamBlacklist'] = $IP . '/extensions/SpamBlacklist/SpamBlacklist_body.php';
 $wgAutoloadClasses['BaseBlacklist'] = $IP . '/extensions/SpamBlacklist/BaseBlacklist.php';
 $wgAutoloadClasses['SpamRegexBatch'] = $IP . '/extensions/SpamBlacklist/SpamRegexBatch.php';
@@ -277,7 +300,7 @@ include_once( "$IP/extensions/wikia/TimeAgoMessaging/TimeAgoMessaging_setup.php"
 include_once("$IP/extensions/wikia/JSMessages/JSMessages_setup.php");
 
 /**
- * API classes
+ * Custom MediaWiki API modules
  */
 
 $wgAutoloadClasses[ "WikiaApiQuery"                 ] = "$IP/extensions/wikia/WikiaApi/WikiaApiQuery.php";

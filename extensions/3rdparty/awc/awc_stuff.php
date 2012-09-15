@@ -19,4 +19,3 @@ require_once('extensions/awc/multi_file_uploader/main.php');
 
 
 
-?>

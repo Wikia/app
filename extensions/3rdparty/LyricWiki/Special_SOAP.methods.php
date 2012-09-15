@@ -141,4 +141,3 @@ function utf8_compliant($str){
     return (preg_match('/^.{1}/us',$str,$ar) == 1);
 } // end utf8_compliant(...)
 
-?>

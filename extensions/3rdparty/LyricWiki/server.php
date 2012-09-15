@@ -120,10 +120,12 @@ if(!function_exists("lw_connect")){ // Function is in several scripts.  This pre
 }
 
 if(!function_exists("lw_connect_readOnly")){
-	////
-	// Returns a connection to the database just like lw_connect, but this reference will
-	// be to the slave (read-only replica) which will be faster for read but doesn't allow writes.
-	////
+	/***
+	 * Returns a connection to the database just like lw_connect, but this reference will
+	 * be to the slave (read-only replica) which will be faster for read but doesn't allow writes.
+	 *
+	 * @return Resource
+	 */
 	function lw_connect_readOnly(){
 		return wfGetDB(DB_SLAVE)->getProperty('mConn');
 	} // end lw_connect_readOnly()
@@ -2030,12 +2032,12 @@ function postSong($overwriteIfExists, $artist, $song, $lyrics, $onAlbums, $flags
 |fLetter     = $fLetter
 |song        = $song
 |language    = $language
-|youtube     = 
-|goear       = 
-|asin        = 
-|iTunes      = 
-|musicbrainz = 
-|allmusic    = 
+|youtube     =
+|goear       =
+|asin        =
+|iTunes      =
+|musicbrainz =
+|allmusic    =
 }}";
 			$summary = "Page ".(($pageExists)?"edited":"created")." using the [[LyricWiki:API|LyricWiki API]]";
 			if($isSandbox){
@@ -2271,8 +2273,10 @@ function lw_getPage($pageTitle, &$finalName='', $debug=false, $page_namespace=NS
 
 			$article = Article::newFromID($title->getArticleID());
 			if( is_object($article) ){
+				/* @var $article WikiPage */
 				if($article->isRedirect()){
 					$reTitle = $article->followRedirect(); // follows redirects recursively
+					/* @var $reTitle Title */
 					$article = Article::newFromId($reTitle->getArticleID());
 				}
 				if( is_object($article) ){
@@ -2306,7 +2310,7 @@ function lw_createPage($titleObj, $content, $summary="Page created using [[Lyric
 		$retVal = "Title object not an object. Please pass a title object into lw_createPage().";
 	} else {
 		// Create the Article object.
-		$article = new Article($titleObj);
+		$article = new Article($titleObj); /* @var $article WikiPage */
 
 		$result = null;
 

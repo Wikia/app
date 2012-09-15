@@ -27,4 +27,3 @@ define('GWBB_STATIC_HEADER', GWBBCODE_ROOT.'/static_header.tpl');
 define('GWBB_STATIC_BODY', GWBBCODE_ROOT.'/static_body.tpl');
 define('GWBB_DYNAMIC_HEADER', GWBBCODE_ROOT.'/dynamic_header.tpl');
 define('GWBB_DYNAMIC_BODY', GWBBCODE_ROOT.'/dynamic_body.tpl');
-?>

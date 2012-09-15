@@ -370,7 +370,7 @@ $color-related-videos-background: darken($color-page, 20%);
 .WikiaRail .RelatedVideosModule.module {
 	#RelatedVideosRL {
 		&.RelatedVideosHidden { display: block }
-		width: auto;
+		width: 100%;
 		height: auto;
 		margin: 0;
 		h1 {

@@ -6,4 +6,3 @@ $messages['en'] = array(
 	'GoogleSearchResults' => "Google Search",
 );
 
-?>
