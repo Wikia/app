@@ -3415,8 +3415,14 @@ var swfobject=function(){var D="undefined",r="object",S="Shockwave Flash",W="Sho
         if (this.status == 200) {
           self.onData(this.responseText);
           self.get();
+ 	  self.retryCounter = 1;
         } else {
-          self.onClose();
+	  if(!self.retryCounter || self.retryCounter > 3) {
+            self.onClose();  
+          } else {
+            self.retryCounter ++;
+            self.get();
+          }
         }
       }
     };
