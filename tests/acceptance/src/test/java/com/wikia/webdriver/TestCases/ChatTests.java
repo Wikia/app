@@ -35,7 +35,7 @@ public class ChatTests extends TestTemplate_Two_Drivers{
     7. A user can click on the chevron to toggle userlist.
     8. In the message area both users see a message with his name: "user A has joined the chat." or "user B has joined the chat." 
 	 */
-	@Test(groups = {"Chat_001"})
+	@Test(groups = {"Chat_001", "Chat"})
 	public void Chat_001_two_users_open_chat()
 	{
 		//first user opens the chat
@@ -68,7 +68,7 @@ public class ChatTests extends TestTemplate_Two_Drivers{
     3. If user is an admin there should be also: Give ChatMod status and Kickban (if clicked user is not a chat moderator or admin).
 	 */
 	
-	@Test(groups = {"Chat_002"})
+	@Test(groups = {"Chat_002", "Chat"})
 	public void Chat_002_changes_in_drop_down_menu_1()
 	{
 		//first user opens the chat
@@ -110,7 +110,7 @@ public class ChatTests extends TestTemplate_Two_Drivers{
 	 * */
 	
 	
-	@Test(groups = {"Chat_003"})
+	@Test(groups = {"Chat_003", "Chat"})
 	public void Chat_003_changes_in_drop_down_menu_2()
 	{
 		//first user opens the chat
@@ -150,7 +150,7 @@ public class ChatTests extends TestTemplate_Two_Drivers{
     4. If user A is an admin there should be also Give ChatMod status and Kickban (if clicked user is not a chat moderator or admin). 
 	 */
 	
-	@Test(groups = {"Chat_004"})
+	@Test(groups = {"Chat_004", "Chat"})
 	public void Chat_004_changes_in_drop_down_menu_staff()
 	{
 		//first user opens the chat
@@ -199,7 +199,7 @@ public class ChatTests extends TestTemplate_Two_Drivers{
 	 */
 	/*Above test cases are covered by below script */
 	
-	@Test(groups = {"Chat_005"})
+	@Test(groups = {"Chat_005", "Chat"})
 	public void Chat_005_private_chat_validation()
 	{
 		//first user opens the chat
@@ -241,7 +241,7 @@ public class ChatTests extends TestTemplate_Two_Drivers{
     5. Click on main room changes chat messages area so there is 'abc' message displayed now.  
 	 */
 	
-	@Test(groups = {"Chat_006"})
+	@Test(groups = {"Chat_006", "Chat"})
 	public void Chat_006_current_chat_messages_area_changes()
 	{
 		//first user opens the chat
@@ -283,7 +283,7 @@ public class ChatTests extends TestTemplate_Two_Drivers{
     4. User B types and sends string 'abc' in the private chat with user A window.
     5. Private chat with user B appears in user A's userlist area. 
 	 */
-	@Test(groups = {"Chat_007"})
+	@Test(groups = {"Chat_007", "Chat"})
 	public void Chat_007_send_private_message()
 	{
 		//first user opens the chat
@@ -331,7 +331,7 @@ public class ChatTests extends TestTemplate_Two_Drivers{
     7. User A notices that red dot counter is now with number 3 on it.
     8. User A clicks on private chat with user B item from his userlist area and red dot is gone.  
 	 */
-	@Test(groups = {"Chat_008"})
+	@Test(groups = {"Chat_008", "Chat"})
 	public void Chat_008_notifications()
 	{
 		//first user opens the chat
@@ -395,7 +395,7 @@ public class ChatTests extends TestTemplate_Two_Drivers{
     8. After awhile user B comes back and user A is still there. User B's "Offline" status is gone and both of them can chat again in the private room. 
 	 */
 	
-	@Test(groups = {"Chat_009"})
+	@Test(groups = {"Chat_009", "Chat"})
 	public void Chat_009_disconnections()
 	{
 		//first user opens the chat
@@ -452,7 +452,7 @@ public class ChatTests extends TestTemplate_Two_Drivers{
     
 	 */
 	
-	@Test(groups = {"Chat_010"})
+	@Test(groups = {"Chat_010", "Chat"})
 	public void Chat_010_user_blocking_1()
 	{
 		//first user opens the chat
@@ -487,12 +487,12 @@ public class ChatTests extends TestTemplate_Two_Drivers{
 		chat1.verifyPrivateMessageNotification(1);
 		chat1.clickPrivateMessageUser(Properties.userName2, driver);
 		chat1.blockPrivateMessage(driver);
-		chat1.clickOnDifferentUser(Properties.userName2, driver);
+		chat1.clickOnBlockedDifferentUser(Properties.userName2, driver);
 		chat1.verifyBlockingUserDropdown();
 		chat1.clickOnDifferentUser(Properties.userName2, driver);
 		switchToWindow(driver2);
 		chat2.verifyBlockedUserMessage(Properties.userName, Properties.userName2);
-		chat2.clickOnDifferentUser(Properties.userName, driver2);
+		chat2.clickOnBlockedDifferentUser(Properties.userName, driver2);
 		chat2.verifyBlockedUserDropdown();
 		switchToWindow(driver);
 		chat1.clickOnDifferentUser(Properties.userName2, driver);
@@ -518,7 +518,7 @@ public class ChatTests extends TestTemplate_Two_Drivers{
     The message "User A has made user B a chat moderator." appears in the chat message area in main chat room.
     User B now can find "Give ChatMod Status" and "Kickban" option in drop-down menu at non-admin users. 
  */
-	@Test(groups = {"Chat_011"})
+	@Test(groups = {"Chat_011", "Chat"})
 	public void Chat_011_chatMod()
 	{
 		//first user opens the chat

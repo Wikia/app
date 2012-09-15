@@ -44,4 +44,3 @@ class ExternalListPages extends SpecialPage {
 	$wgMessageCache->addMessage( 'externallistpages', 'just a test extension' );
 }
 
-?>

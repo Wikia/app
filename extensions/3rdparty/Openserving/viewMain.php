@@ -39,4 +39,3 @@ function viewMain( $input ){
 	$out = $list->DisplayList();
 	return "<div class=\"mainListPages\">" . $out . "</div>";
 }
-?>

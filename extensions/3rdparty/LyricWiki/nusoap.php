@@ -5449,4 +5449,3 @@ class nusoapclient extends nusoap_base  {
 		return true;
     }
 }
-?>

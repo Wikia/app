@@ -24,4 +24,3 @@ if (@file_exists(CONFIG_PATH)) {
 else {
    require_once (DEFAULT_CONFIG_PATH);
 }
-?>

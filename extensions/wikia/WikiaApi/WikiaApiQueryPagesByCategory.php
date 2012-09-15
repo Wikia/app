@@ -399,4 +399,3 @@ class WikiaApiQueryPagesyByCategory extends WikiaApiQuery {
 	public function getVersion() { return __CLASS__ . ': $Id: '.__CLASS__.'.php '.filesize(dirname(__FILE__)."/".__CLASS__.".php").' '.strftime("%Y-%m-%d %H:%M:%S", time()).'Z wikia $'; }
 };
 
-?>

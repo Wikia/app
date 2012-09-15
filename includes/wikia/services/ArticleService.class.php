@@ -16,6 +16,7 @@ class ArticleService extends WikiaService {
 			'script',
 			'style',
 			'th',
+			'html',
 	);
 
 	public function __construct( $articleId = 0 ) {
@@ -91,12 +92,11 @@ class ArticleService extends WikiaService {
 			}
 
 			$tmpParser = new Parser();
+			// BugID: 47803 - stripping twice on purpose
+			$content = self::stripContentOfTags($content,$this->mTagsToRemove);
 			$content = $tmpParser->parse( $content,  $this->mArticle->getTitle(), new ParserOptions )->getText();
+			$content = self::stripContentOfTags($content,$this->mTagsToRemove);
 
-			// the ? in (.*?) is INCREDIBLY important, guaranting non-greedy behaviour
-			foreach ( $this->mTagsToRemove as $tag ) {
-				$content = preg_replace( "#<{$tag}[^>]*>(.*?)<\/{$tag}>#sm", '', $content );
-			}
 			// strip HTML tags
 			$content = trim(strip_tags($content));
 			$content = mb_substr($content, 0, $length + 200);
@@ -152,6 +152,20 @@ class ArticleService extends WikiaService {
 			self::CACHE_KEY,
 			$this->mArticle->getID()
 		);
+	}
+
+	/**
+	 * @param $content string
+	 * @param $tags
+	 * @return string
+	 */
+	public static function stripContentOfTags($content,$tags) {
+		// the ? in (.*?) is INCREDIBLY important, guaranting non-greedy behaviour
+		foreach ( $tags as $tag ) {
+			$content = preg_replace( "#<{$tag}[^>]*>(.*?)<\/{$tag}>#sm", '', $content );
+			$content = preg_replace( "#<\/{$tag}>#sm", '', $content );
+		}
+		return $content;
 	}
 
 	/**

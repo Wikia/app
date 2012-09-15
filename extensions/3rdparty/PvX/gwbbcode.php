@@ -32,4 +32,3 @@ if (defined('IN_PHPBB') || defined('PUN_ROOT') || defined('SMF'))
       $message = parse_gwbbcode($message);
    else
       $text = parse_gwbbcode($text);
-?>

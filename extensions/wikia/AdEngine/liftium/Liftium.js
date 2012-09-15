@@ -1664,8 +1664,15 @@ Liftium.parseQueryString = function (qs){
 
 		var varName = '', varValue = '';
 		if ((intIndex = nvpairs[i].indexOf('=')) != -1) {
-			varName = decodeURIComponent(nvpairs[i].substr(0, intIndex));
-			varValue = decodeURIComponent(nvpairs[i].substr(intIndex + 1));
+			try {
+				// UTF-8 version
+				varName = decodeURIComponent(nvpairs[i].substr(0, intIndex));
+				varValue = decodeURIComponent(nvpairs[i].substr(intIndex + 1));
+			} catch (e) {
+				// non-UTF version
+				varName = unescape(nvpairs[i].substr(0, intIndex));
+				varValue = unescape(nvpairs[i].substr(intIndex + 1));
+			}
 		} else {
 			// No value, but it's there
 			varName = nvpairs[i];
@@ -2521,8 +2528,15 @@ XDM.parseQueryString = function (qs){
 
 		var varName = '', varValue = '';
 		if ((intIndex = nvpairs[i].indexOf('=')) != -1) {
-			varName = decodeURIComponent(nvpairs[i].substr(0, intIndex));
-			varValue = decodeURIComponent(nvpairs[i].substr(intIndex + 1));
+			try {
+				// UTF-8 version
+				varName = decodeURIComponent(nvpairs[i].substr(0, intIndex));
+				varValue = decodeURIComponent(nvpairs[i].substr(intIndex + 1));
+			} catch (e) {
+				// non-UTF version
+				varName = unescape(nvpairs[i].substr(0, intIndex));
+				varValue = unescape(nvpairs[i].substr(intIndex + 1));
+			}
 		} else {
 			// No value, but it's there
 			varName = nvpairs[i];

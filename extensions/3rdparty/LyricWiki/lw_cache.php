@@ -11,12 +11,19 @@
 // better to store the values in memcached using $wgMemc than to use
 // this class.
 //
-// To create the map used here, send the mySQL query: 
+// To create the map used here, send the mySQL query:
 // "create table lw_map (keyName VARCHAR(255), value TEXT, PRIMARY KEY(keyName));"
 ////
 
 // Slightly modified from version in itms_teknomunk.php
-class DurableCache{
+class DurableCache {
+
+	/* @var $db Resource */
+	var $db;
+
+	/* @var $db_master Resource */
+	var $db_master;
+
 	function DurableCache(){
 		$this->db = &wfGetDB(DB_SLAVE)->getProperty('mConn');
 		$this->db_master = &wfGetDB(DB_MASTER)->getProperty('mConn');
@@ -46,12 +53,10 @@ class DurableCache{
 		}
 		return $retVal;
 	}
-	
+
 	function cacheValue( $entryKey, $value ){
 		if( $this->store( "CACHE_VALUE_".$entryKey, $value ) ){
 			$this->store( "CACHE_TIME_".$entryKey, date("Y-m-d H:i:s") );
 		}
 	}
 }
-
-?>

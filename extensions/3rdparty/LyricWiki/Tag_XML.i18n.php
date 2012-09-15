@@ -9,4 +9,3 @@ $messages['en'] = Array(
 	'xml-parseerror' => "Error parsing XML Feed: \$1",
 	);
 
-?>

@@ -1,33 +1,73 @@
-.WikiaGrid {
-	.grid-1,
-	.grid-2,
-	.grid-3,
-	.grid-4,
-	.grid-5,
-	.grid-6 {
-		display: inline;
-		float: left;
-		margin: 0 0 0 10px;
-		&.alpha {
-			margin: 0;
+$oasisHD: get_command_line_param("hd", 0);
+
+@if $oasisHD == 3 {
+	/* this grid assumes 1030px width, 160px columns */
+	.WikiaGrid {
+		.grid-1,
+		.grid-2,
+		.grid-3,
+		.grid-4,
+		.grid-5,
+		.grid-6 {
+			display: inline;
+			float: left;
+			margin: 0 0 0 10px;
+			&.alpha {
+				margin: 0;
+			}
+		}
+		.grid-1 {
+			width: 160px;
+		}
+		.grid-2 {
+			width: 330px;
+		}
+		.grid-3 {
+			width: 500px;
+		}
+		.grid-4 {
+			width: 670px;
+		}
+		.grid-5 {
+			width: 840px;
+		}
+		.grid-6 {
+			width: 1010px;
 		}
 	}
-	.grid-1 {
-		width: 155px;
-	}
-	.grid-2 {
-		width: 320px;
-	}
-	.grid-3 {
-		width: 485px;
-	}
-	.grid-4 {
-		width: 650px;
-	}
-	.grid-5 {
-		width: 815px;
-	}
-	.grid-6 {
-		width: 980px;
-	}
+} @else {
+	/* this grid assumes 1000px width, 155px columns */
+	.WikiaGrid {
+		.grid-1,
+		.grid-2,
+		.grid-3,
+		.grid-4,
+		.grid-5,
+		.grid-6 {
+			display: inline;
+			float: left;
+			margin: 0 0 0 10px;
+			&.alpha {
+				margin: 0;
+			}
+		}
+		.grid-1 {
+			width: 155px;
+		}
+		.grid-2 {
+			width: 320px;
+		}
+		.grid-3 {
+			width: 485px;
+		}
+		.grid-4 {
+			width: 650px;
+		}
+		.grid-5 {
+			width: 815px;
+		}
+		.grid-6 {
+			width: 980px;
+		}
+	}	
 }

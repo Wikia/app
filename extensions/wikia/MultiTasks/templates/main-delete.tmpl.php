@@ -1,6 +1,8 @@
 <!-- s:<?= __FILE__ ?> -->
 <style type="text/css">
+#mainForm table {width: 100%}
 #mainForm table tr {vertical-align: top}
+#wpPage {width: 100%}
 .right {text-align: right}
 </style>
 <div id="PaneCompose">
@@ -47,7 +49,7 @@
 					<?= wfMsg('multidelete_page') ?>
 				</td>
 				<td>
-					<textarea tabindex="4" name="wpPage" id="wpPage" cols="80" rows="10"><?= htmlspecialchars($obj->mPage) ?></textarea>
+					<textarea tabindex="4" name="wpPage" id="wpPage" rows="10"><?= htmlspecialchars($obj->mPage) ?></textarea>
 				</td>
 			</tr>
 			<tr>

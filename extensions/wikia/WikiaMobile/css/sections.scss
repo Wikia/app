@@ -23,6 +23,7 @@ h1, h2, h3{
 	padding-bottom: 30px;
 
 	&.open {
+		overflow: hidden;
 		display: block;
 	}
 

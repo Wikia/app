@@ -61,4 +61,3 @@ function wfSpiderableBadArtists_outputPage(&$out, &$text){
 	return true;
 } // end wfSpiderableBadArtists_outputPage()
 
-?>

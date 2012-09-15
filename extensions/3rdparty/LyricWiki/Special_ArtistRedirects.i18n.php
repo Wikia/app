@@ -10,4 +10,3 @@ $messages = array();
 $messages['en'] = array(
 	'artistredirects' => "Artist Redirects",
 );
-?>

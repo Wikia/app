@@ -15,4 +15,3 @@ if (!defined('MEDIAWIKI')) {
 $wgAutoloadClasses['Top'] = dirname(__FILE__) . '/Top_body.php';
 $wgSpecialPages['Top'] = 'Top';
 
-?>

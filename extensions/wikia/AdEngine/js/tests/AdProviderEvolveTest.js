@@ -14,7 +14,13 @@ module('AdProviderEvolve');
 // yields window.AdEngine2.hop('=TOP_LEADERBOARD;ord=7121786175');
 // instead of window.AdEngine2.hop('TOP_LEADERBOARD');
 test('sanitizeSlotname', function() {
-	var adProviderEvolve = AdProviderEvolve(WikiaTracker, Wikia.log, window, ghostwriter, document);
+	var geoMock
+		, adProviderEvolve;
+
+	geoMock = {};
+	adProviderEvolve = AdProviderEvolve(
+		WikiaTracker, Wikia.log, window, ghostwriter, document, geoMock
+	);
 
     equal(adProviderEvolve.sanitizeSlotname('foo'), '', 'foo');
     equal(adProviderEvolve.sanitizeSlotname('TOP_LEADERBOARD'), 'TOP_LEADERBOARD', 'TOP_LEADERBOARD');
@@ -22,7 +28,13 @@ test('sanitizeSlotname', function() {
 });
 
 test('getUrl', function() {
-	var adProviderEvolve = AdProviderEvolve(WikiaTracker, Wikia.log, window, ghostwriter, document);
+	var geoMock
+		, adProviderEvolve;
+
+	geoMock = {};
+	adProviderEvolve = AdProviderEvolve(
+		WikiaTracker, Wikia.log, window, ghostwriter, document, geoMock
+	);
 
 	// setup
 	window.wgDBname = null;
@@ -40,7 +52,13 @@ test('getUrl', function() {
 
 test('getSect', function() {
 	// setup
-	var adProviderEvolve = AdProviderEvolve(WikiaTracker, Wikia.log, window, ghostwriter, document);
+	var geoMock
+		, adProviderEvolve;
+
+	geoMock = {};
+	adProviderEvolve = AdProviderEvolve(
+		WikiaTracker, Wikia.log, window, ghostwriter, document, geoMock
+	);
 
 	window.wgDBname = null;
 	window.wgWikiFactoryTagNames = null;
@@ -57,4 +75,21 @@ test('getSect', function() {
 	window.cscoreCat = 'Entertainment';
 
 	equal(adProviderEvolve.getSect(), 'entertainment', 'foo entertainment');
+});
+
+test('Evolve canHandleSlot AU', function() {
+	// setup
+	var adProviderEvolve;
+
+	adProviderEvolve = AdProviderEvolve(
+		WikiaTracker, Wikia.log, window, ghostwriter, document
+	);
+
+	equal(adProviderEvolve.canHandleSlot(['TOP_LEADERBOARD']), true, 'TOP_LEADERBOARD');
+	equal(adProviderEvolve.canHandleSlot(['TOP_RIGHT_BOXAD']), true, 'TOP_RIGHT_BOXAD');
+	equal(adProviderEvolve.canHandleSlot(['LEFT_SKYSCRAPER_2']), true, 'LEFT_SKYSCRAPER_2');
+
+	equal(adProviderEvolve.canHandleSlot(['INCONTENT_BOXAD_1']), false, 'INCONTENT_BOXAD_1');
+	equal(adProviderEvolve.canHandleSlot(['PREFOOTER_LEFT_BOXAD']), false, 'PREFOOTER_LEFT_BOXAD');
+	equal(adProviderEvolve.canHandleSlot(['PREFOOTER_RIGHT_BOXAD']), false, 'PREFOOTER_RIGHT_BOXAD');
 });

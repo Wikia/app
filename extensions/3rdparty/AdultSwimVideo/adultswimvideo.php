@@ -40,4 +40,3 @@ function wfExampleParserASvideo_Render( &$parser, $param1 = '', $param2 = '' ) {
 
 }
 
-?>

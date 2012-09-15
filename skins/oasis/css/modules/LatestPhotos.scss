@@ -201,9 +201,8 @@ $color-see-more-images-placeholder: darken($color-page, 5%);
 
 	.carousel-container {
 		height: 90px;
-		left: 5px;
+		margin: 0 auto;
 		overflow: hidden;
-		position: relative;
 		width: 258px;
 		div {
 			position: relative;

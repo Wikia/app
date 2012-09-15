@@ -1,3 +1,2 @@
 <?php
 system('./db.sh');
-?> 

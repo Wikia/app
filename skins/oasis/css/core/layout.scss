@@ -5,11 +5,17 @@ $zTop: 20000000;
 $oasisHD: get_command_line_param("hd", 0);
 
 $width-outside: 1000px;
+$wikia-search-base-width: 200px;
+
 @if $oasisHD == 1 {
 	$width-outside: 1200px;
 }
 @if $oasisHD == 2 {
 	$width-outside: auto;
+}
+@if $oasisHD == 3 {
+	$width-outside: 1030px;
+	$wikia-search-base-width: 230px;
 }
 
 $width-rail: 300px;

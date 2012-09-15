@@ -101,4 +101,3 @@
  </div>
 <?php
 } //$showShareTools
-?>

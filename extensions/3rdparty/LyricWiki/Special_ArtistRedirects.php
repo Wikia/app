@@ -29,4 +29,3 @@ $wgAutoloadClasses['ArtistRedirects'] = $dir . 'Special_ArtistRedirects.body.php
 $wgExtensionMessagesFiles['ArtistRedirects'] = $dir . 'Special_ArtistRedirects.i18n.php';
 $wgSpecialPages['ArtistRedirects'] = 'ArtistRedirects'; # Let MediaWiki know about your new special page.
 
-?>

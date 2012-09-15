@@ -11,7 +11,10 @@ class GameGuidesController extends WikiaController {
 	const API_MINOR_REVISION = 5;
 	const APP_NAME = 'GameGuides';
 	const SKIN_NAME = 'wikiaapp';
-	
+
+	/**
+	 * @var $mModel GameGuidesModel
+	 */
 	private $mModel = null;
 	private $mPlatform = null;
 	
@@ -138,6 +141,66 @@ class GameGuidesController extends WikiaController {
 			'URIData' => $trackingData,
 			'platform' => $this->mPlatform
 		) );
+	}
+
+	public function renderPage(){
+		//set mobile skin as this is based on it
+		$skin = Skin::newFromKey( 'wikiamobile' );
+		RequestContext::getMain()->setSkin( $skin );
+		$titleName = $this->getVal('title');
+
+		$params = array(
+			'action' => 'parse',
+			'page' => $titleName,
+			'prop' => 'text',
+			'redirects' => 1,
+			'useskin' => 'wikiamobile'
+		);
+
+		$html = ApiService::call( $params );
+
+		//global variables
+		//from Output class
+		//and from ResourceLoaderStartUpModule
+		$res = new ResourceVariablesGetter();
+		$vars = array_diff_key(
+			$this->wg->Out->getJSVars() + $res->get(),
+			array_flip( $this->wg->WikiaMobileExcludeJSGlobals )
+		);
+
+		$page = $this->sendSelfRequest('page', array(
+			'html' => $html['parse']['text']['*'],
+			'title' => Title::newFromText( $titleName )->getText()
+		));
+
+		$resources = $this->sendRequest('AssetsManager', 'getMultiTypePackage', array(
+			'scripts' => 'gameguides_js',
+			'styles' => '//extensions/wikia/GameGuides/css/GameGuides.scss'
+		));
+
+		$js = $resources->getVal('scripts', '');
+		$styles = $resources->getVal('styles', '');
+
+		//limit it to html, css and js
+		$this->setVal( 'html', $page->toString());
+		$this->setVal( 'js', WikiaSkin::makeInlineVariablesScript( $vars ) . $skin->getTopScripts() . F::build( 'JSMessages' )->printPackages( array( 'WkMbl' ) ) .'<script>' . $js[0] . '</script>');
+		$this->setVal( 'css', '<style>' . $styles . '</style>' );
+
+	}
+
+	public function page(){
+		$this->setVal('title', $this->getVal('title'));
+		$this->setVal('html', $this->getVal('html'));
+	}
+
+
+	public function getResources(){
+		$cb = $this->getVal('cb', $this->wg->CacheBuster);
+		if($cb != $this->wg->CacheBuster){
+			//send resources
+		}else{
+			//all up to date!
+		}
 	}
 }
 

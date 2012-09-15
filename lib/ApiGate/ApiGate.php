@@ -10,6 +10,7 @@
  */
 
 $dir = dirname(__FILE__);// Files used to get basic settings an utilities (used almost universally by the others).
+require_once "$dir/config.php";
 require_once "$dir/ApiGate_Config.php";
 require_once "$dir/ApiGate_Profiler.php"; // has no dependencies & most other files depend on this... always include this before other files which have functions/methods in them.
 require_once "$dir/i18n/ApiGate_i18n.php";

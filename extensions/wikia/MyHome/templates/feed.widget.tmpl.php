@@ -31,4 +31,3 @@ if( isset( $emptyMessage ) ) {
 	</ul>
 <?php
 }
-?>

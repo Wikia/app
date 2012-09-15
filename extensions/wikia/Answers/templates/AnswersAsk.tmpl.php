@@ -71,4 +71,3 @@ jQuery("#answers_ask_field").focus(function() {
 </script>
 <?
 }
-?>

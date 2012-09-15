@@ -133,4 +133,3 @@ function parse( $parser, $in ) {
 		return $ret->getText();
 	}
 }
-?>

@@ -54,8 +54,10 @@ class BodyController extends WikiaController {
 	 */
 	public static function isGridLayoutEnabled() {
 		$app = F::app();
-		/* temporarily removing this
-		*/
+		
+		if( !empty($app->wg->OasisGrid) ) {
+			return true;
+		}
 
 		$ns = $app->wg->Title->getNamespace();
 
@@ -66,6 +68,7 @@ class BodyController extends WikiaController {
 		if( defined("NS_WIKIA_FORUM_TOPIC_BOARD") && $ns == NS_WIKIA_FORUM_TOPIC_BOARD ) {
 			return true;
 		}
+		
 		return false;
 	}
 

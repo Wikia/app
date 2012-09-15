@@ -1,4 +1,24 @@
 window.AdProviderGamePro = function(WikiaTracker, log, window, ghostwriter, document) {
+	var ord = Math.round(Math.random() * 23456787654);
+	var slotMap = {
+	   'HOME_TOP_LEADERBOARD': {'tile': 1, 'pos': "leadfull", 'dcopt': "ist"},
+	   'HOME_TOP_RIGHT_BOXAD': {'tile': 3, 'pos': "mpu"},
+	   'LEFT_SKYSCRAPER_2': {'tile': 2, 'pos': "sky"},
+	   'PREFOOTER_LEFT_BOXAD': {'tile': 4, 'pos': "mpu2"},
+	   'TOP_LEADERBOARD': {'tile': 1, 'pos': "leadfull", 'dcopt': "ist"},
+	   'TOP_RIGHT_BOXAD': {'tile': 3, 'pos': "mpu"}
+	};
+
+	function canHandleSlot(slot) {
+		var city_lang = window.wgContentLanguage;
+		var slotname = slot[0];
+
+		log('isSlotGamePro', 5, 'AdProviderGamePro');
+		log([slotname, city_lang], 5, 'AdProviderGamePro');
+
+		return city_lang === 'de' && slotMap[slotname] ? true : false;
+	}
+
 	function fillInSlot(slot) {
 		log('fillInSlot', 5, 'AdProviderGamePro');
 		log(slot, 5, 'AdProviderGamePro');
@@ -19,16 +39,6 @@ window.AdProviderGamePro = function(WikiaTracker, log, window, ghostwriter, docu
 			}
 		);
 	}
-
-	var ord = Math.round(Math.random() * 23456787654);
-	var slotMap = {
-	   'HOME_TOP_LEADERBOARD': {'tile': 1, 'pos': "leadfull", 'dcopt': "ist"},
-	   'HOME_TOP_RIGHT_BOXAD': {'tile': 3, 'pos': "mpu"},
-	   'LEFT_SKYSCRAPER_2': {'tile': 2, 'pos': "sky"},
-	   'PREFOOTER_LEFT_BOXAD': {'tile': 4, 'pos': "mpu2"},
-	   'TOP_LEADERBOARD': {'tile': 1, 'pos': "leadfull", 'dcopt': "ist"},
-	   'TOP_RIGHT_BOXAD': {'tile': 3, 'pos': "mpu"}
-	};
 
 	// adapted for GP + simplified copy of AdConfig.DART.getUrl
 	function getUrl(slotname, size) {
@@ -82,7 +92,8 @@ window.AdProviderGamePro = function(WikiaTracker, log, window, ghostwriter, docu
 
 	var iface = {
 		name: 'GamePro',
-		fillInSlot: fillInSlot
+		fillInSlot: fillInSlot,
+		canHandleSlot: canHandleSlot
 	};
 
 	// TODO: @mech rethink

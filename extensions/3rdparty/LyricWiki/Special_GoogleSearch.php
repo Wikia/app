@@ -32,4 +32,3 @@ $wgAutoloadClasses['GoogleSearchResults'] = $dir . 'Special_GoogleSearch.body.ph
 $wgExtensionMessagesFiles['GoogleSearchResults'] = $dir . 'Special_GoogleSearch.i18n.php';
 $wgSpecialPages['GoogleSearchResults'] = 'GoogleSearchResults'; # Let MediaWiki know about your new special page.
 
-?>

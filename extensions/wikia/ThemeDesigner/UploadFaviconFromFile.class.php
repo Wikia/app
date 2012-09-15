@@ -52,4 +52,3 @@ class UploadFaviconFromFile extends UploadFromFile {
 		return $warnings;
 	}
 }
-?>

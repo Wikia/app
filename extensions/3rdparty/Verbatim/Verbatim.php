@@ -17,4 +17,3 @@ function renderVerbatim( $input )
 {
     return str_replace("\n",'',wfMsg(trim($input)));
 }
-?>

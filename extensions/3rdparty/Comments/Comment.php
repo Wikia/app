@@ -46,4 +46,3 @@ function DisplayComments( $input ){
 	}
 	return $output;
 }
-?>

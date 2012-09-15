@@ -100,4 +100,3 @@ class RenameUserHelper {
 		return (empty($value)) ? self::CLUSTER_DEFAULT : $value;
 	}
 }
-?>

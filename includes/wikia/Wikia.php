@@ -1773,11 +1773,11 @@ class Wikia {
 		return true;
 	}
 
-	/*
+	/**
 	 * Fix for bugid:38093
 	 * Chrome bug: No "Undo" links on Recent Changes
 	 */
-	public static function onPageHistoryLineEnding( $HistoryActionObj, $row , $s, $classes ) {
+	public static function onPageHistoryLineEnding( $HistoryActionObj, $row , &$s, $classes ) {
 		$s = '<span dir="auto">'.$s.'</span>';
 		return true;
 	}

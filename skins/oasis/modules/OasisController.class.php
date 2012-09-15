@@ -82,6 +82,23 @@ class OasisController extends WikiaController {
 		global $wgOut, $wgUser, $wgTitle, $wgRequest, $wgCityId, $wgEnableAdminDashboardExt, $wgAllInOne;
 
 		wfProfileIn(__METHOD__);
+		
+		/* set the grid or full width if passed in, otherwise, respect the default */
+		$grid = $wgRequest->getVal('wikiagrid', '');
+		$fullhead = $wgRequest->getVal('wikiafullheader', '');
+		
+		if ( '1' === $grid ) {
+			$this->wg->OasisGrid = true;
+		} else if ( '0' === $grid ) {
+			$this->wg->OasisGrid = false;
+		}
+		
+		if ( '1' === $fullhead ) {
+			$this->wg->GlobalHeaderFullWidth = true;
+		} else if ( '0' === $fullhead ) {
+			$this->wg->GlobalHeaderFullWidth = false;
+		}
+		/* end grid or full width */
 
 		$jsPackages = array();
 		$scssPackages = array();

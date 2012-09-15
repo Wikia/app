@@ -130,4 +130,3 @@ function insertMetaKeywords( $out, $text ) {
 
 } # End MW env wrapper
 //</source>
-?>

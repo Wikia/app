@@ -316,4 +316,3 @@ function wfSpecialViewManager(){
 	$wgMessageCache->addMessage( 'viewmanager', 'just a test extension' );
 }
 
-?>

@@ -41,7 +41,7 @@ define('sections', ['events'], function(ev){
 				i = 0,
 				elm;
 
-			while(elm = images[i++]) elm.className += ' noSect';
+			while(elm = images[i++]) {elm.className += ' noSect';}
 		}
 	}
 
@@ -129,7 +129,7 @@ define('sections', ['events'], function(ev){
 		if(h2 && isOpen(h2)){
 			close(h2);
 		}else{
-			open(h2)
+			open(h2);
 		}
 	}
 
@@ -152,7 +152,7 @@ define('sections', ['events'], function(ev){
 			h2.className = h2.className.replace(OPENCLASS, '');
 			next.className = next.className.replace(OPENCLASS, '');
 
-			fireEvent('close', next)
+			fireEvent('close', next);
 			//track(['section', 'close']);
 		}
 	}
