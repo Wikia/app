@@ -117,6 +117,10 @@ HTTPPolling.prototype.doWrite = function () {
  */
 
 HTTPPolling.prototype.write = function (data, close) {
+  if(!this.response) {
+        return true;
+  }
+
   this.doWrite(data);
   this.response.end();
   this.onClose();
