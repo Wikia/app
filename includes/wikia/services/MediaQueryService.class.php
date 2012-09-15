@@ -403,20 +403,24 @@ class MediaQueryService extends Service {
 		if ( !is_array($videoList) ) {
 			$db = $app->wf->GetDB( DB_SLAVE );
 
-			$result = $db->select(
-				array( 'video_info' ),
-				array( 'video_title, views_total' ),
-				array(),
-				__METHOD__
-			);
+			if ( !$db->tableExists( 'video_info' ) ) {
+				$videoList = F::build( 'DataMartService', array(), 'getVideoListViewsByTitleTotal' );
+			} else {
+				$result = $db->select(
+					array( 'video_info' ),
+					array( 'video_title, views_total' ),
+					array(),
+					__METHOD__
+				);
 
-			$videoList = array();
-			while ( $row = $db->fetchObject($result) ) {
-				$hashTitle = md5( $row->video_title );
-				$videoList[$hashTitle] = $row->views_total;
+				$videoList = array();
+				while ( $row = $db->fetchObject($result) ) {
+					$hashTitle = md5( $row->video_title );
+					$videoList[$hashTitle] = $row->views_total;
+				}
+
+				$app->wg->Memc->set( $memKey, $videoList, 60*60*24 );
 			}
-
-			$app->wg->Memc->set( $memKey, $videoList, 60*60*24 );
 		}
 
 		$hashTitle = md5( $title );
