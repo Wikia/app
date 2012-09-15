@@ -69,4 +69,11 @@ class VideoInfoHelper extends WikiaModel {
 		}
 	}
 
+	// check if video_info table exists
+	public static function videoInfoExists() {
+		$db = F::app()->wf->GetDB( DB_SLAVE );
+		$exists = ( $db->tableExists( 'video_info' ) ) ? true : false ;
+
+		return $exists;
+	}
 }

@@ -14,6 +14,10 @@ class VideoInfoHooksHelper {
 	 * @return true
 	 */
 	public static function onFileUpload( $file, $reupload, $hasDescription ) {
+		if ( !F::build( 'VideoInfoHelper', array(), 'videoInfoExists' ) ) {
+			return true;
+		}
+
 		$title = $file->getTitle();
 		$videoInfoHelper = F::build( 'VideoInfoHelper' );
 		$videoData = $videoInfoHelper->getVideoDataByTitle( $title );
@@ -46,6 +50,10 @@ class VideoInfoHooksHelper {
 	 * @return true 
 	 */
 	public static function onArticleSaveComplete( $article, $user, $revision, $status ) {
+		if ( !F::build( 'VideoInfoHelper', array(), 'videoInfoExists' ) ) {
+			return true;
+		}
+
 		$insertedImages = Wikia::getVar( 'imageInserts' );
 		$imageDeletes = Wikia::getVar( 'imageDeletes' );
 
@@ -80,6 +88,10 @@ class VideoInfoHooksHelper {
 	 * @return true
 	 */
 	public static function onFileDeleteComplete( &$file, $oldimage, $article, $user, $reason ) {
+		if ( !F::build( 'VideoInfoHelper', array(), 'videoInfoExists' ) ) {
+			return true;
+		}
+
 		$title = $file->getTitle();
 		if ( $title instanceof Title && F::build( 'WikiaFileHelper', array( $file ), 'isFileTypeVideo' ) ) {
 			if ( $file->isLocal() ) {
@@ -106,6 +118,10 @@ class VideoInfoHooksHelper {
 	 * @return true 
 	 */
 	public static function onFileUndeleteComplete( $title, $versions, $user, $comment ) {
+		if ( !F::build( 'VideoInfoHelper', array(), 'videoInfoExists' ) ) {
+			return true;
+		}
+
 		$videoInfoHelper = F::build( 'VideoInfoHelper' );
 		$videoData = $videoInfoHelper->getVideoDataByTitle( $title );
 		if ( !empty($videoData) ) {
@@ -127,6 +143,10 @@ class VideoInfoHooksHelper {
 	 * @return true
 	 */
 	public static function onFileRenameComplete( &$form , &$oldTitle , &$newTitle ) {
+		if ( !F::build( 'VideoInfoHelper', array(), 'videoInfoExists' ) ) {
+			return true;
+		}
+
 		$videoInfo = F::build( 'VideoInfo', array($oldTitle->getDBKey()), 'newFromTitle' );
 		if ( empty($videoInfo) ) {
 			// add new video
