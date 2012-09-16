@@ -30,10 +30,15 @@ class SpecialPromoteController extends WikiaSpecialPageController {
 		if (!$this->checkAccess()) {
 			return false;
 		}
+		$this->wg->out->setPageTitle(wfMsg('promote-title'));
+		if ( !$this->app->checkSkin( 'oasis' ) ) {
+			$this->wg->out->addWikiMsg( 'promote-error-oasis-only' );
+			$this->skipRendering();
+			return true;
+		}
 
 		$this->response->addAsset('resources/wikia/libraries/aim/jquery.aim.js');
 		$this->response->addAsset('extensions/wikia/SpecialPromote/js/SpecialPromote.js');
-		$this->wg->out->setPageTitle(wfMsg('promote-title'));
 
 		F::build('JSMessages')->enqueuePackage('SpecialPromote', JSMessages::EXTERNAL);
 

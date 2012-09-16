@@ -65,6 +65,8 @@ $messages['en'] = array(
 	'promote-statusbar-inreview' => 'Some of your images are currently in review and will appear on [http://www.wikia.com wikia.com] after they\'re approved.  This can take 2-4 business days, so we\'ll update you here when we\'re done.',
 	'promote-statusbar-approved' => 'Woohoo! $1 is promoted on [http://www.wikia.com wikia.com]!',
 	'promote-statusbar-rejected' => 'One or more of your images was not approved. [[Special:Contact|Find out why]]',
+
+	'promote-error-oasis-only' => 'This page is not supported under your skin. Please [[Special:Preferences|switch to the Wikia skin]] to access this feature.',
 );
 
 $messages['de'] = array(
