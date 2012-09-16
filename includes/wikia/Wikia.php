@@ -1826,7 +1826,7 @@ class Wikia {
 	 */
 	public static function onContributionsToolLinks( $id, $title, &$links ) {
 		global $wgUser, $wgCityId;
-		if ( $wgCityId !== '177' && $wgUser->isAllowed( 'lookupuser' ) ) {
+		if ( $wgCityId !== '177' && $id !== 0 && $wgUser->isAllowed( 'lookupuser' ) ) {
 			$links[] = Linker::linkKnown(
 				GlobalTitle::newFromText( 'LookupUser', NS_SPECIAL, 177 ),
 				wfMsgHtml( 'lookupuser' ),
