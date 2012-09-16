@@ -28,6 +28,7 @@ $wgHooks['AfterInitialize']          [] = "Wikia::onAfterInitialize";
 $wgHooks['UserMailerSend']           [] = "Wikia::onUserMailerSend";
 $wgHooks['ArticleDeleteComplete']    [] = "Wikia::onArticleDeleteComplete";
 $wgHooks['PageHistoryLineEnding']    [] = "Wikia::onPageHistoryLineEnding";
+$wgHooks['ContributionsToolLinks']   [] = 'Wikia::onContributionsToolLinks';
 
 # changes in recentchanges (MultiLookup)
 $wgHooks['RecentChange_save']        [] = "Wikia::recentChangesSave";
@@ -1810,5 +1811,29 @@ class Wikia {
 		}
 
 		return $newArray;
+	}
+
+	/**
+	 * Add a link to Special:LookupUser from Special:Contributions/USERNAME
+	 * if the user has 'lookupuser' permission on wikis other than Central
+	 * since the extension is only enabled there (BugID: 47807)
+	 *
+	 * @author grunny
+	 * @param integer $id User identifier
+	 * @param Title $title User page title
+	 * @param Array $tools An array of tool links
+	 * @return bool true
+	 */
+	public static function onContributionsToolLinks( $id, $title, &$links ) {
+		global $wgUser, $wgCityId;
+		if ( $wgCityId !== '177' && $wgUser->isAllowed( 'lookupuser' ) ) {
+			$links[] = Linker::linkKnown(
+				GlobalTitle::newFromText( 'LookupUser', NS_SPECIAL, 177 ),
+				wfMsgHtml( 'lookupuser' ),
+				array(),
+				array( 'target' => $title->getText() )
+			);
+		}
+		return true;
 	}
 }
