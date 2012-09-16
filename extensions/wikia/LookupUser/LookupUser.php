@@ -58,7 +58,7 @@ $wgHooks['ContributionsToolLinks'][] = 'efLoadLookupUserLink';
  */
 function efLoadLookupUserLink( $id, $nt, &$links ) {
 	global $wgUser;
-	if( $wgUser->isAllowed( 'lookupuser' ) ) {
+	if( $wgUser->isAllowed( 'lookupuser' ) && $id !== 0 ) {
 		$links[] = Linker::linkKnown(
 			SpecialPage::getTitleFor( 'LookupUser' ),
 			wfMsgHtml( 'lookupuser' ),
