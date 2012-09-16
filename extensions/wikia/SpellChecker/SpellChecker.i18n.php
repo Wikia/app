@@ -227,6 +227,20 @@ $messages['lb'] = array(
 	'spellchecker-info-spellcheck-is-correct' => 'D\'Wuert "$1" ass net richteg geschriwwen',
 );
 
+/** Malagasy (Malagasy)
+ * @author Jagwar
+ */
+$messages['mg'] = array(
+	'spellchecker-desc' => "Manome mpitsara tsipelina ho an'ilay modiola PHP enchant",
+	'enablespellchecker' => 'Alefa ny mpitsara tsipelina',
+	'spellchecker-info' => 'Fampahalalana mikasika ilay mpitsara tsipelina',
+	'spellchecker-info-languages' => 'Fiteny azo ampiasaina ($1)',
+	'spellchecker-info-provider' => 'Mpanome',
+	'spellchecker-info-dictionaries' => 'Rakibolana azo ampiasaina',
+	'spellchecker-info-spellcheck-text' => 'Teny tokony hotsaraina',
+	'spellchecker-info-spellcheck-languages' => 'Fiteny',
+);
+
 /** Macedonian (македонски)
  * @author Bjankuloski06
  */

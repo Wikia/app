@@ -617,6 +617,7 @@ $messages['ps'] = array(
 
 /** Portuguese (português)
  * @author Hamilton Abreu
+ * @author SandroHc
  * @author Waldir
  */
 $messages['pt'] = array(
@@ -634,6 +635,8 @@ $messages['pt'] = array(
 	'wikiapoll-publish-label' => 'Publicar',
 	'wikiapoll-error-duplicate' => 'Já existe um inquérito com esse nome.',
 	'wikiapoll-error-invalid-title' => 'O texto da pergunta é inválido.',
+	'wikiamobile-wikiapoll-poll' => 'Votação',
+	'wikiamobile-wikiapoll-user-voted' => 'Votas-te para $1',
 );
 
 /** Brazilian Portuguese (português do Brasil)

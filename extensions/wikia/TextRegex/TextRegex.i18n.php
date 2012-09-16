@@ -188,6 +188,15 @@ $messages['ca'] = array(
 	'textregex-invalid-regexid' => 'Expressió no vàlida.',
 );
 
+/** Czech (česky)
+ * @author Chmee2
+ */
+$messages['cs'] = array(
+	'textregex-submit-regex' => 'Přidat frázi',
+	'textregex-select-default' => '--vyberte--',
+	'textregex-create-subpage' => 'nebo vytvořit nový seznam:',
+);
+
 /** German (Deutsch)
  * @author Kghbln
  * @author LWChris

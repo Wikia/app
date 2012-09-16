@@ -688,9 +688,15 @@ $messages['diq'] = array(
 	'multitasks-link-back-label' => 'tiya',
 	'multiwikiedit_button' => 'BIVURNE',
 	'multiwikiedit_confirm' => 'FINA',
+	'multiwikiedit_caption' => 'Listeya pelan',
+	'multiwikiedit_title' => 'Zafın Wiki Vurnayış',
 	'multiwikiedit_or' => '<b>YA NA</b>',
+	'multiwikiedit_list_caption' => 'Listeya Wikiyan',
+	'multiwikiedit_minoredit_caption' => 'Vurnayişo qıcek',
 	'multiwikiedit_select_yourself' => 'Tı',
 	'multidelete_button' => 'BESTERE',
+	'multidelete_caption' => 'Listeya pelan',
+	'multidelete_title' => 'Zafın Besternayış',
 );
 
 /** Ewe (eʋegbe) */
@@ -2329,6 +2335,7 @@ $messages['pms'] = array(
 	'multiwikiedit_tasks_list' => "Lista dj'atività da fé",
 	'multiwikiedit_general_options' => 'Opsion generaj multi-modìfica',
 	'multiwikiedit_edit_options' => 'Opsion ëd modìfica',
+	'action-multiwikiedit' => 'modìfica na partìa ëd pàgine',
 	'multidelete' => 'Scancelé na partìa ëd pàgine',
 	'multidelete_button' => 'SCANCELÉ',
 	'multidelete_help' => "Scanselé na partìa ëd pàgine con n'atività a bassa priorità. A peul felo për sta wiki-sì, tute le wiki dla base ëd dàit condividùa, wiki selessionà, o lenghe selessionà. A peul serne dë scancelé com CHIEL, o com un cont ëd senari preampostà.",
@@ -2380,10 +2387,12 @@ $messages['pms'] = array(
 	'multidelete_french_wikis' => 'tute le wiki an fransèis',
 	'multidelete_swedish_wikis' => 'tute le wiki an svedèis',
 	'multidelete_german_wikis' => 'tute le wiki an alman',
+	'action-multidelete' => 'scancelé na partìa ëd pàgine',
 	'multiwikifinder' => 'Arserca Tìtoj Multiwiki',
 	'multiwikifindpagenames' => 'Trové nòm ëd pàgine',
 	'multiwikienterpagename' => "Ch'a anserissa un nòm ëd pàgina:",
 	'multiwikirecords' => 'trovà $1 wiki',
+	'action-multiwikifinder' => 'serché un tìtol specìfich a travers Wikia',
 );
 
 /** Pashto (پښتو)

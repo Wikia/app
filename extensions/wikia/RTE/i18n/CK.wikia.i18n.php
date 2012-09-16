@@ -548,6 +548,7 @@ $messages['ce'] = array(
 );
 
 /** Czech (česky)
+ * @author Chmee2
  * @author Darth Daron
  * @author Mormegil
  */
@@ -648,6 +649,7 @@ $messages['cs'] = array(
 	'rte-ck-videoPlaceholder-confirmDelete' => 'Opravdu chcete odstranit tento zástupný znak videa ze stránky?',
 	'rte-ck-videoPlaceholder-confirmDeleteTitle' => 'Smazat tento zástupný znak videa?',
 	'rte-ck-videoPlaceholder-tooltip' => 'Toto je zástupný znak videa.',
+	'rte-ck-mut-mut' => 'Video (beta)',
 	'rte-ck-widescreen-toggle' => 'Aktivovat/deaktivovat širokoúhlý formát',
 	'rte-ck-poll-confirmDelete' => 'Opravdu chcete odstranit tuto anketu ze stránky?',
 	'rte-ck-poll-confirmDeleteTitle' => 'Odstranit tuto anketu?',
@@ -797,12 +799,42 @@ $messages['de-formal'] = array(
  * @author Mirzali
  */
 $messages['diq'] = array(
+	'rte-ck-bucket-controls' => 'Qontroli',
+	'rte-ck-hoverPreview-comment-title' => 'Vatış',
+	'rte-ck-hoverPreview-delete' => 'besterne',
 	'rte-ck-hoverPreview-edit' => 'bıvurne',
-	'rte-ck-link-add' => 'Link deqı',
+	'rte-ck-image-add' => 'Resim Deke',
+	'rte-ck-image-photo' => 'Fotraf',
+	'rte-ck-justify-center' => 'Miyan fi',
+	'rte-ck-link-add' => 'Gre deke',
+	'rte-ck-link-error-title' => 'Xırab',
+	'rte-ck-link-external-linkText' => 'Metnê gri',
+	'rte-ck-link-external-tab' => 'Gırêy teberi',
+	'rte-ck-link-external-url' => 'GRE',
+	'rte-ck-link-internal-linkText' => 'Metnê gri',
+	'rte-ck-link-internal-tab' => 'Gıreyê miyani',
+	'rte-ck-link-status-external' => 'Gırêy teberi',
+	'rte-ck-modeSwitch-toSource' => 'Çıme',
+	'rte-ck-photoGallery-gallery' => 'Galeri',
+	'rte-ck-photoGallery-slideshow' => 'Slaytşow',
 	'rte-ck-poll-add' => 'Anket deqı',
-	'rte-ck-templateDropDown-label' => 'Tewre',
+	'rte-ck-poll-poll' => 'Anket',
+	'rte-ck-signature-add' => 'İmzay xo deke',
+	'rte-ck-signature-label' => 'imza',
+	'rte-ck-table-toolbarTooltip' => 'Tablo Deke',
+	'rte-ck-templateDropDown-label' => 'Şablon',
+	'rte-ck-templateEditor-editor-parameters' => 'Parametrey',
 	'rte-ck-templateEditor-editor-previewButton' => 'Verqayt',
 	'rte-ck-templateEditor-editor-previewTitle' => 'Verqayt',
+	'rte-ck-templateEditor-title' => 'Timarkerdenê şablonan',
+	'rte-ck-unlink' => 'Gri wedarne',
+	'rte-ck-video-video' => 'Vidyo',
+	'rte-ck-pasteText-title' => 'Metnê xo pronê',
+	'rte-ck-format-tag_p' => 'Metno normal',
+	'rte-ck-format-tag_h2' => 'Sername 2',
+	'rte-ck-format-tag_h3' => 'Sername 3',
+	'rte-ck-format-tag_h4' => 'Sername 4',
+	'rte-ck-format-tag_h5' => 'Sername 5',
 );
 
 /** Spanish (español)
@@ -2544,6 +2576,7 @@ $messages['ps'] = array(
  * @author Giro720
  * @author Hamilton Abreu
  * @author Malafaya
+ * @author SandroHc
  * @author Waldir
  */
 $messages['pt'] = array(
@@ -2593,18 +2626,26 @@ $messages['pt'] = array(
 	'rte-ck-media-edit' => 'modificar',
 	'rte-ck-modeSwitch-toSource' => 'Fonte',
 	'rte-ck-modeSwitch-toWysiwyg' => 'Visual',
+	'rte-ck-modeSwitch-toSourceTooltip' => 'Alterar para modo Fonte',
+	'rte-ck-modeSwitch-toWysiwygTooltip' => 'Alterar para modo Visual',
 	'rte-ck-modeSwitch-error' => 'Ocorreu um erro durante a mudança de modo. Tente novamente, por favor.',
+	'rte-ck-photoGallery-gallery' => 'Galeria',
+	'rte-ck-photoGallery-slideshow' => 'Apresentação de slides',
+	'rte-ck-photoGallery-addGallery' => 'Adicionar imagem à galeria',
 	'rte-ck-photoGallery-confirmDelete' => 'Tem a certeza que deseja remover a galeria desta página?',
 	'rte-ck-photoGallery-confirmDeleteTitle' => 'Remover esta galeria?',
 	'rte-ck-photoGallery-tooltip' => 'Isto é uma galeria.',
 	'rte-ck-photoGallery-tooltipSlideshow' => 'Isto é uma apresentação de slides.',
 	'rte-ck-poll-add' => 'Adicionar uma votação',
+	'rte-ck-poll-poll' => 'Votação',
 	'rte-ck-signature-add' => 'Adicionar a sua assinatura',
 	'rte-ck-signature-label' => 'Assinatura',
 	'rte-ck-table-alignNotSet' => 'Não definido',
 	'rte-ck-table-invalidCols' => 'O número de colunas deve ser maior que 0.',
 	'rte-ck-table-invalidRows' => 'O número de linhas deve ser maior que 0.',
+	'rte-ck-table-toolbarTooltip' => 'Adicionar Tabela',
 	'rte-ck-templateDropDown-chooseAnotherTpl' => 'Outra predefinição / palavra mágica',
+	'rte-ck-templateDropDown-showUsedList' => 'Mostrar lista das predefinições usadas',
 	'rte-ck-templateDropDown-label' => 'Predefinição',
 	'rte-ck-templateDropDown-title' => 'Escolha uma predefinição',
 	'rte-ck-templateEditor-dialog-browse' => 'Procurar uma predefinição',
@@ -2619,6 +2660,7 @@ $messages['pt'] = array(
 	'rte-ck-templateEditor-editor-previewButton' => 'Antevisão',
 	'rte-ck-templateEditor-editor-previewTitle' => 'Antevisão',
 	'rte-ck-templateEditor-editor-viewTemplate' => '(ver página da predefinição - abre uma janela nova)',
+	'rte-ck-templateEditor-usedTemplates-title' => 'Lista das predefinições usadas',
 	'rte-ck-templateEditor-title' => 'Editor de predefinições',
 	'rte-ck-unlink' => 'Remover link',
 	'rte-ck-video-add' => 'Adicionar um vídeo',
@@ -2637,6 +2679,7 @@ $messages['pt'] = array(
  * @author Aristóbulo
  * @author Caio1478
  * @author Giro720
+ * @author Luckas Blade
  */
 $messages['pt-br'] = array(
 	'rte-ck-bucket-textAppearance' => 'Aparência do texto',
@@ -2656,6 +2699,7 @@ $messages['pt-br'] = array(
 	'rte-ck-hoverPreview-template-notExisting' => 'Esta predefinição não existe!',
 	'rte-ck-hoverPreview-video-notExisting' => 'Este vídeo não existe!',
 	'rte-ck-image-add' => 'Adicionar uma imagem',
+	'rte-ck-image-photo' => 'Foto',
 	'rte-ck-image-confirmDelete' => 'Tem certeza de que deseja remover a imagem desta página?',
 	'rte-ck-image-confirmDeleteTitle' => 'Remover esta imagem?',
 	'rte-ck-imagePlaceholder-confirmDelete' => 'Tem certeza de que deseja remover o espaço reservado para a imagem desta página?',
@@ -2700,6 +2744,7 @@ $messages['pt-br'] = array(
 	'rte-ck-table-alignNotSet' => 'Não definido',
 	'rte-ck-table-invalidCols' => 'O número de colunas deve ser maior do que 0.',
 	'rte-ck-table-invalidRows' => 'O número de linhas deve ser maior do que 0.',
+	'rte-ck-table-toolbarTooltip' => 'Adicionar tabela',
 	'rte-ck-templateDropDown-chooseAnotherTpl' => 'Outra predefinição / palavra mágica',
 	'rte-ck-templateDropDown-label' => 'Predefinição',
 	'rte-ck-templateDropDown-title' => 'Escolha uma predefinição',
@@ -2718,15 +2763,19 @@ $messages['pt-br'] = array(
 	'rte-ck-templateEditor-title' => 'Editor de predefinições',
 	'rte-ck-unlink' => 'Remover link',
 	'rte-ck-video-add' => 'Adicionar um vídeo',
+	'rte-ck-video-video' => 'Vídeo',
 	'rte-ck-video-confirmDelete' => 'Tem certeza de que deseja remover o vídeo desta página?',
 	'rte-ck-video-confirmDeleteTitle' => 'Remover este vídeo?',
 	'rte-ck-videoPlaceholder-confirmDelete' => 'Tem certeza de que deseja remover o espaço reservado para o vídeo desta página?',
 	'rte-ck-videoPlaceholder-confirmDeleteTitle' => 'Remover este espaço reservado para um vídeo?',
 	'rte-ck-videoPlaceholder-tooltip' => 'Este é um espaço reservado para um vídeo.',
+	'rte-ck-mut-add' => 'Adicionar um vídeo (beta)',
+	'rte-ck-mut-mut' => 'Vídeo (beta)',
 	'rte-ck-widescreen-toggle' => 'Ativar ou desativar o modo panorâmico',
 	'rte-ck-poll-confirmDelete' => 'Tem a certeza de que pretende remover a enquete desta página?',
 	'rte-ck-poll-confirmDeleteTitle' => 'Remover esta enquete?',
 	'rte-ck-spellchecker-moreSuggestions' => 'Mais sugestões',
+	'rte-ck-format-tag_p' => 'Texto normal',
 );
 
 /** Romanian (română)

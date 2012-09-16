@@ -400,14 +400,21 @@ $messages['ps'] = array(
 /** Portuguese (português)
  * @author Hamilton Abreu
  * @author Malafaya
+ * @author SandroHc
  */
 $messages['pt'] = array(
 	'timeagomessaging-desc' => 'Fornece a internacionalização do plugin jquery.timeago.js',
+	'timeago-year' => '{{PLURAL:$1|um ano|$1 anos}} atrás',
 	'timeago-month' => 'há {{PLURAL:$1|um mês|$1 meses}} atrás',
 	'timeago-day' => 'há {{PLURAL:$1|um dia|$1 dias}}',
 	'timeago-hour' => 'há {{PLURAL:$1|uma hora|$1 horas}}',
 	'timeago-minute' => 'há {{PLURAL:$1|um minuto|$1 minutos}}',
 	'timeago-second' => 'há um minuto',
+	'timeago-day-from-now' => '{{PLURAL:$1|um dia|$1 dias}} atrás',
+	'timeago-hour-from-now' => '{{PLURAL:$1|uma hora|$1 horas}} atrás',
+	'timeago-minute-from-now' => '{{PLURAL:$1|um minuto|$1 minutos}} atrás',
+	'timeago-month-from-now' => '{{PLURAL:$1|um mês|$1 meses}} atrás',
+	'timeago-second-from-now' => 'à um minuto atrás',
 );
 
 /** Brazilian Portuguese (português do Brasil)

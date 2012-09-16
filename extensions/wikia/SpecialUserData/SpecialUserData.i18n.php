@@ -35,6 +35,13 @@ $messages['br'] = array(
 	'userdata-submit' => 'Tapout roadennoù',
 );
 
+/** Czech (česky)
+ * @author Chmee2
+ */
+$messages['cs'] = array(
+	'userdata-submit' => 'Získat data',
+);
+
 /** German (Deutsch)
  * @author LWChris
  */

@@ -402,6 +402,27 @@ Herramientas útiles:
 [[Special:UserRights|Administrar permisos de usuarios]]',
 );
 
+/** Estonian (eesti)
+ * @author KalmerE.
+ */
+$messages['et'] = array(
+	'wikiadoption-welcome-body' => 'Oled nüüd selle viki bürograat. Uue õigusega pääsed ligi kõigile tööriistadele, mis aitavad hallata {{SITENAME}}.
+<br><br>
+Tähtsaim on jätkata redigeerimist, et aidata {{SITENAME}} kasvamist.
+<br><br>
+Külastage vikit regulaarselt, kuna kui vikis ei ole aktiivset administraatorit saab püüda selle omaksvõtmist.
+<br><br>
+Kasulikud tööriistad:
+<br><br>
+[[Eri:ThemeDesigner|Kujunduse kujundamine]]
+<br>
+[[Eri:LayoutBuilder|Küljenduse koostur]]
+<br>
+[[Eri:ListUsers|Kasutajate nimekiri]]
+<br>
+[[Eri:UserRights|Kasutajate õigused]]',
+);
+
 /** Persian (فارسی)
  * @author Ebraminio
  * @author Wayiran

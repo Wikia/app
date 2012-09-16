@@ -71,6 +71,7 @@ $messages['bs'] = array(
 );
 
 /** Czech (česky)
+ * @author Chmee2
  * @author Dontlietome7
  */
 $messages['cs'] = array(
@@ -79,6 +80,13 @@ $messages['cs'] = array(
 	'stafflog-blockmsg' => '$1 $2 se pokusil zablokovat zaměstnance $3 na wiki $4. Důvod: $5',
 	'stafflog-piggybackloginmsg' => '$1 Piggyback - uživatel $2 se přihlašuje jako $3',
 	'stafflog-piggybacklogoutmsg' => '$1 Piggyback - uživatel $2 se odhlašuje z účtu $3',
+	'stafflog-filter-label' => 'Filtr',
+	'stafflog-filter-user' => 'Uživatel:',
+	'stafflog-filter-type' => 'Typ:',
+	'stafflog-filter-apply' => 'Použít filtr',
+	'stafflog-filter-type-block' => 'Bloky',
+	'stafflog-filter-type-renameuser' => 'Přejmenování uživatele',
+	'stafflog-filter-type-wikifactory' => 'Wiki status',
 );
 
 /** German (Deutsch)
@@ -391,13 +399,20 @@ $messages['pt'] = array(
 	'stafflog-filter-user' => 'Utilizador:',
 );
 
-/** Brazilian Portuguese (português do Brasil) */
+/** Brazilian Portuguese (português do Brasil)
+ * @author Luckas Blade
+ */
 $messages['pt-br'] = array(
 	'stafflog-desc' => 'Registro centralizado para a equipe',
 	'stafflog' => 'Registro da Equipe',
 	'stafflog-blockmsg' => '$1 $2 tentou bloquear o usuário da equipe $3 na wiki $4. Motivo: $5',
 	'stafflog-piggybackloginmsg' => 'Personificação $1 - usuário $2 autenticou-se como $3',
 	'stafflog-piggybacklogoutmsg' => 'Personificação $1 - usuário $2 saiu da conta $3',
+	'stafflog-filter-label' => 'Filtro',
+	'stafflog-filter-user' => 'Usuário:',
+	'stafflog-filter-type' => 'Tipo:',
+	'stafflog-filter-apply' => 'Aplicar filtro',
+	'stafflog-filter-type-block' => 'Bloqueios',
 );
 
 /** Russian (русский)

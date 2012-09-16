@@ -632,6 +632,7 @@ Prosím, vyberte hodnotu ze seznamu.',
 	'autocreatewiki-step4' => 'Přenos výchozích obrázků a loga ...',
 	'autocreatewiki-step5' => 'Nastavování výchozích proměnných v databázi ...',
 	'autocreatewiki-step6' => 'Vytváření tabulek v databázi ...',
+	'autocreatewiki-step7' => 'Nastavit počáteční hodnotu pro daný jazyk ...',
 	'autocreatewiki-step11' => 'Odesílání e-mailu uživateli ...',
 	'autocreatewiki-redirect' => 'Přesměrování na novou wiki: $1  ...',
 	'autocreatewiki-congratulation' => 'Blahopřejeme!',
@@ -643,6 +644,7 @@ Prosím, vyberte hodnotu ze seznamu.',
 	'autocreatewiki-protect-reason' => 'Součást oficiálního rozhraní',
 	'autocreatewiki-welcomesubject' => '$1 bylo vytvořeno!',
 	'newwikis' => 'Nová wiki',
+	'newwikisstart' => 'Zobrazit wiki založené od:',
 	'autocreatewiki-subname-answers' => 'Odpovědi',
 );
 
@@ -904,7 +906,7 @@ $messages['diq'] = array(
 	'autocreatewiki-chooseone' => 'zeweri bıweçine',
 	'autocreatewiki-required' => '$1 = icab keno',
 	'autocreatewiki-web-address' => 'Adrese webi',
-	'autocreatewiki-category-select' => 'yeweri bıweçin',
+	'autocreatewiki-category-select' => 'Yeweri weçine',
 	'autocreatewiki-language-top' => 'Top $1 zıwani',
 	'autocreatewiki-language-all' => 'Zıwani pêro',
 	'autocreatewiki-birthdate' => 'Demê biyayışi:',
@@ -1191,6 +1193,11 @@ $messages['et'] = array(
 	'autocreatewiki-info-domain' => 'Soovituslik on kasutada sõna, mis oleks sinu teema otsingu võtmesõna.',
 	'autocreatewiki-info-topic' => 'Lisa lühike kirjeldus, näiteks "Star Warsist" või "Telesaadetest".',
 	'autocreatewiki-info-category-default' => 'See aitab leida külastajatel sinu vikit.',
+	'autocreatewiki-title-template' => '$1 Viki',
+	'autocreatewiki-category-label' => 'Kategooria:',
+	'autocreatewiki-category-other' => 'Muu',
+	'autocreatewiki-congratulation' => 'Õnnitlen!',
+	'autocreatewiki-welcometalk-log' => 'Tere tulemast sõnum',
 );
 
 /** Basque (euskara)

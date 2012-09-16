@@ -769,13 +769,19 @@ $messages['br'] = array(
  */
 $messages['cs'] = array(
 	'wall-no-title' => 'Bez názvu',
+	'wall-message-wall-shorten' => 'zeď',
+	'wall-message-unfollow' => 'Nesledovat',
 	'wall-message-undoremove' => 'Vrátit',
 	'wall-message-mywall' => 'Moje zeď',
 	'wall-toolbar-history' => 'Historie',
 	'wall-message-remove' => 'Odstranit',
+	'wall-message-quote-button' => 'Citovat',
+	'wall-thread-removed' => 'Odstraněno',
+	'wall-thread-isnotifyeveryone' => 'Zvýraznění',
 	'wall-thread-deleted' => 'Odstraněno',
 	'wall-thread-closed' => 'Zavřeno',
 	'wall-default-title' => 'Zpráva od $1',
+	'wall-no-title-warning' => '← Nezadali jste žádné titul',
 	'wall-placeholder-reply' => 'Odpovědět',
 	'wall-button-to-preview-comment' => 'Náhled',
 	'wall-button-to-cancel-preview' => 'Upravit',
@@ -795,13 +801,17 @@ $messages['cs'] = array(
 	'wall-message-removed-reply-because' => '$1 odstranil vlákno, protože:',
 	'wall-message-deleted-reply-because' => '$1 smazal vlákno, protože:',
 	'wall-message-restore-reply' => 'Obnovit odpověď',
+	'wall-delete-reason' => 'Akce uživatele/správce',
 	'wall-action-all-confirm-cancel' => 'Zrušit',
 	'wall-action-all-confirm-notify' => 'Upozornit správce',
+	'wall-action-remove-reply-title' => 'Odstranit tuto odpověď',
 	'wall-delete-error-title' => 'Chyba',
 	'wall-action-remove-confirm-ok' => 'Odstranit',
 	'wall-action-admin-thread-title' => 'Odstranit toto vlákno',
 	'wall-action-admin-reply-title' => 'Odstranit odpověď',
 	'wall-action-admin-confirm-ok' => 'Smazat',
+	'wall-action-restore-reply-title' => 'Obnovit tuto odpověď',
+	'wall-action-restore-confirm' => 'Uveďte důvod obnovení:',
 	'wall-action-restore-confirm-ok' => 'Obnovit',
 	'wall-action-rev-confirm-ok' => 'Ano, smazat',
 	'wall-notifications' => 'Upozornění',
@@ -814,13 +824,44 @@ $messages['cs'] = array(
 	'wall-sorting-oldest-threads' => 'Nejstarší vlákna',
 	'wall-sorting-newest-replies' => 'Nejnovější odpovědi',
 	'wall-sorting-most-active' => 'Nejaktivnější',
+	'wall-sorting-archived' => 'Archivováno',
 	'wall-deleted-msg-pagetitle' => 'Zpráva byla odstraněna',
+	'wall-deleted-msg-return-to' => 'Navrát na stránku uživatele $1.',
+	'wall-deleted-msg-view' => '(Zobrazit/obnovení)',
+	'wall-recentchanges-edit' => '(upravená zpráva)',
+	'wall-recentchanges-history-link' => 'historie stránky',
+	'wall-recentchanges-thread-history-link' => 'historie vlákna',
+	'wall-deleted-reply' => 'Tato odpověď byla odstraněna.',
 	'wall-history' => 'Historie',
+	'wall-history-title' => 'historie stránky',
+	'wall-history-thread-created' => '$1 vytvořil $2',
+	'wall-history-thread-removed' => '$1 odstranil $2',
+	'wall-history-thread-restored' => '$1 obnovil $2',
+	'wall-history-thread-admin-deleted' => '$1 odstranil $2',
+	'wall-history-sorting-newest-first' => 'Nejdříve nejnovější',
+	'wall-history-sorting-oldest-first' => 'Nejstarší nejdříve',
+	'wall-history-summary-label' => 'Shrnutí',
+	'wall-history-rail-wall' => 'wall',
+	'wall-history-rail-contribs' => 'příspěvky',
+	'wall-history-rail-block' => 'blok',
+	'wall-history-action-view' => 'prohlédnout',
+	'wall-history-action-restore' => 'obnovit',
+	'wall-history-action-thread-history' => 'historie vlákna',
+	'wall-thread-history-title' => 'historie vlákna',
+	'wall-history-action-restore-reply' => 'obnovit odpověď',
+	'wall-history-action-restore-thread' => 'obnovit vlákno',
+	'mail-notification-new-someone' => 'Na $WIKI $AUTHOR_NAME napsal novou zprávu.',
+	'mail-notification-new-your' => '$AUTHOR_NAME vám nechal novou zprávu na $WIKI.',
+	'mail-notification-reply-your' => '$AUTHOR_NAME odpověděl na vaši zprávu na $WIKI.',
 	'mail-notification-html-greeting' => 'Ahoj $1,',
+	'tog-enotifwallthread-v2' => 'Napiš mi email...',
+	'wall-quote-author' => '$1 napsal:',
 	'wall-quote-reply-to' => 'odpověď na #$1',
 	'wall-preview-modal-title' => 'Náhled',
 	'wall-preview-modal-button-back' => 'Zpět',
 	'wall-preview-modal-button-publish' => 'Publikovat',
+	'wall-topic-input-heading' => 'Téma',
+	'wall-topic-edit' => 'Upravit témata',
 );
 
 /** German (Deutsch)
@@ -1440,6 +1481,12 @@ ___________________________________________<br />
 	'wall-preview-modal-title' => 'Previsualizar',
 	'wall-preview-modal-button-back' => 'Volver',
 	'wall-preview-modal-button-publish' => 'Publicar',
+	'wall-topic-input-heading' => 'Tema',
+	'wall-topic-input-placeholder' => 'Añadir un Tema (opcional)',
+	'wall-topic-input-error' => 'No hay ningún artículo llamado "$1". Por favor usa un nombre de artículo existente como un Tema.',
+	'wall-topic-input-error-limit' => 'Un hilo solo puede tener $1 temas como máximo.',
+	'wall-topic-heading' => 'Temas para este hilo:',
+	'wall-topic-edit' => 'Editar temas',
 );
 
 /** Finnish (suomi)
@@ -1851,8 +1898,8 @@ modifier vos préférence de courriel ici : http://communaute.wikia.com/Special:
 	'tog-enotifmywall-sincevisited' => 'Un par fil depuis ma dernière visite',
 	'tog-enotifmywall-reminder' => 'Avec un courriel de rappel quotidien',
 	'tog-enotifmywall-noemail' => 'Jamais. Ne m’envoyer aucun courriel de Mur de discussion.',
-	'wallshowsource-toggle-v2' => "Activer l'option « Mode source » pour les messages du Mur de discussion",
-	'wallshowsource-toggle' => 'Permettre la vue en mode source pour les messages de Mur de discussion',
+	'wallshowsource-toggle-v2' => "Activer l'option « {{int:user-action-menu-view-source}} » pour les messages de Mur de discussion",
+	'wallshowsource-toggle' => 'Activer «  {{int:user-action-menu-view-source}} » pour les messages de Mur de discussion',
 	'walldelete-toggle' => 'Permettre la suppression des versions pour les messages du Mur de discussion',
 	'wall-notifications-notifyeveryone' => 'Mis en valeur par $1',
 	'wall-message-notifyeveryone' => 'Mettre en valeur ce fil',
@@ -1870,6 +1917,12 @@ modifier vos préférence de courriel ici : http://communaute.wikia.com/Special:
 	'wall-preview-modal-title' => 'Aperçu',
 	'wall-preview-modal-button-back' => 'Retour',
 	'wall-preview-modal-button-publish' => 'Publier',
+	'wall-topic-input-heading' => 'Rubrique',
+	'wall-topic-input-placeholder' => 'Ajouter une rubrique (optionnel)',
+	'wall-topic-input-error' => 'Il n’y aucun article intitulé « $1 ». Veuillez utiliser un nom d’article existant comme rubrique.',
+	'wall-topic-input-error-limit' => 'Un fil ne peut avoir que $1 rubriques au maximum.',
+	'wall-topic-heading' => 'Rubriques pour ce fil :',
+	'wall-topic-edit' => 'Modifier les rubriques',
 );
 
 /** Galician (galego)
@@ -2153,6 +2206,12 @@ as preferencias de correo electrónico aquí: http://community.wikia.com/Special
 	'wall-preview-modal-title' => 'Vista previa',
 	'wall-preview-modal-button-back' => 'Volver',
 	'wall-preview-modal-button-publish' => 'Publicar',
+	'wall-topic-input-heading' => 'Tema',
+	'wall-topic-input-placeholder' => 'Engadir un tema (opcional)',
+	'wall-topic-input-error' => 'Non hai ningún artigo chamado "$1". Use o nome dun artigo existente como tema.',
+	'wall-topic-input-error-limit' => 'Un fío pode ter un máximo de $1 temas.',
+	'wall-topic-heading' => 'Temas deste fío:',
+	'wall-topic-edit' => 'Editar os temas',
 );
 
 /** Hungarian (magyar)
@@ -3301,6 +3360,12 @@ ___________________________________________<br />
 	'wall-preview-modal-title' => 'Преглед',
 	'wall-preview-modal-button-back' => 'Назад',
 	'wall-preview-modal-button-publish' => 'Објави',
+	'wall-topic-input-heading' => 'Тема',
+	'wall-topic-input-placeholder' => 'Додај тема (незадолжително)',
+	'wall-topic-input-error' => 'Нема статија со наслов „$1“. Темата мора да има наслов на статија што постои.',
+	'wall-topic-input-error-limit' => 'Нишката може да има највеќе $1 теми.',
+	'wall-topic-heading' => 'Теми во оваа нишка:',
+	'wall-topic-edit' => 'Уреди теми',
 );
 
 /** Malay (Bahasa Melayu)
@@ -3584,6 +3649,12 @@ ubah keutamaan e-mel anda di sini: http://community.wikia.com/Special:Preference
 	'wall-preview-modal-title' => 'Pralihat',
 	'wall-preview-modal-button-back' => 'Kembali',
 	'wall-preview-modal-button-publish' => 'Siarkan',
+	'wall-topic-input-heading' => 'Topik',
+	'wall-topic-input-placeholder' => 'Tambahkan Topik (tidak wajib)',
+	'wall-topic-input-error' => 'Tiada rencana bertajuk "$1". Sila gunakan nama rencana yang sedia ada sebagai Topik.',
+	'wall-topic-input-error-limit' => 'Tred tidak boleh melebihi $1 Topik.',
+	'wall-topic-heading' => 'Topik untuk tred ini:',
+	'wall-topic-edit' => 'Ubah Topik',
 );
 
 /** Norwegian Bokmål (‪norsk (bokmål)‬)
@@ -3850,6 +3921,12 @@ endre e-post-innstillingene dine her: http://community.wikia.com/Special:Prefere
 	'wall-preview-modal-title' => 'Forhåndsvis',
 	'wall-preview-modal-button-back' => 'Tilbake',
 	'wall-preview-modal-button-publish' => 'Publiser',
+	'wall-topic-input-heading' => 'Emne',
+	'wall-topic-input-placeholder' => 'Legg til et emne (valgfritt)',
+	'wall-topic-input-error' => 'Det finnes ingen artikkel med navnet «$1». Vennligst bruk et eksisterende artikkelnavn som emne.',
+	'wall-topic-input-error-limit' => 'En tråd kan maksimalt ha $1 emner.',
+	'wall-topic-heading' => 'Emner i denne tråden:',
+	'wall-topic-edit' => 'Rediger emner',
 );
 
 /** Dutch (Nederlands)
@@ -4424,6 +4501,12 @@ ___________________________________________<br />
 	'wall-preview-modal-title' => 'Podgląd',
 	'wall-preview-modal-button-back' => 'Wstecz',
 	'wall-preview-modal-button-publish' => 'Publikuj',
+	'wall-topic-input-heading' => 'Temat',
+	'wall-topic-input-placeholder' => 'Dodaj temat (opcjonalne)',
+	'wall-topic-input-error' => 'Artykuł o nazwie "$1" nie istnieje. Użyj nazwy istniejącego artykułu.',
+	'wall-topic-input-error-limit' => 'Wątek może mieć nie więcej niż $1 tematów.',
+	'wall-topic-heading' => 'Tematy tego wątku:',
+	'wall-topic-edit' => 'Edytuj tematy',
 );
 
 /** Pashto (پښتو)
@@ -4503,10 +4586,12 @@ $messages['pt'] = array(
 	'wall-message-notify' => 'Notificar administrador',
 	'wall-message-remove' => 'Remover',
 	'wall-message-rev-delete' => 'Eliminar revisão',
+	'wall-message-quote-button' => 'Citar',
 	'wall-message-elseswall' => 'mural de $1',
 	'wall-thread-removed' => 'Removido',
 	'wall-thread-isnotifyeveryone' => 'Destacado',
 	'wall-thread-deleted' => 'Eliminado',
+	'wall-thread-closed' => 'Fechado',
 	'wall-default-title' => 'Mensagem de $1',
 	'wall-no-title-warning' => '← Nenhum título especificado',
 	'wall-placeholder-topic' => 'Qual é o assunto?',
@@ -4524,11 +4609,14 @@ $messages['pt'] = array(
 	'wall-message-edit' => 'Editar',
 	'wall-message-more' => 'Mais',
 	'wall-message-delete' => 'Eliminar',
+	'wall-message-close-thread' => 'Fehcar este tópico',
+	'wall-message-reopen-thread' => 'Re-abrir este tópico',
 	'wall-message-removed-thread-because' => '$1 removeu este tópico porque:',
 	'wall-message-deleted-thread-because' => '$1 eliminou este tópico porque:',
 	'wall-message-restore-thread' => 'Restaurar Tópico',
 	'wall-message-removed-reply-because' => '$1 removeu esta resposta porque:',
 	'wall-message-deleted-reply-because' => '$1 eliminou esta resposta porque:',
+	'wall-message-closed-by' => '[[$2|$1]] fechou este tópico',
 	'wall-message-restore-reply' => 'Restaurar Resposta',
 	'wall-delete-reason' => 'Ação utilizador/administrador',
 	'wall-user-talk-page-archive-anchor' => 'Ver página de discussão arquivada',
@@ -4664,10 +4752,17 @@ suas preferências de e-mail aqui: http://community.wikia.com/Special:Preference
 	'wall-votes-number-tooltip' => 'Veja quem deu "Gosto" a esta mensagem',
 	'wall-votes-vote-tooltip' => 'Dar um "Gosto" a esta mensagem',
 	'wall-votes-voted-tooltip' => 'Você deu um "Gosto" a esta mensagem!',
+	'wall-quote-author' => '$1 escreveu:',
+	'wall-quote-reply-to' => 'responder a #$1',
+	'wall-preview-modal-title' => 'Pre-visualizar',
+	'wall-preview-modal-button-back' => 'Voltar',
+	'wall-preview-modal-button-publish' => 'Publicar',
+	'wall-topic-input-heading' => 'Tópico',
 );
 
 /** Brazilian Portuguese (português do Brasil)
  * @author Caio1478
+ * @author Luckas Blade
  * @author TheGabrielZaum
  */
 $messages['pt-br'] = array(
@@ -4683,10 +4778,13 @@ $messages['pt-br'] = array(
 	'wall-message-notify' => 'Notificar administrador',
 	'wall-message-remove' => 'Remover',
 	'wall-message-rev-delete' => 'Excluir revisão',
+	'wall-message-quote-button' => 'Citar',
 	'wall-message-elseswall' => 'mural de $1',
 	'wall-message-no-permission' => 'Você não tem permissões para executar esta ação na mensagem',
 	'wall-thread-removed' => 'Removido',
+	'wall-thread-isnotifyeveryone' => 'Destacar',
 	'wall-thread-deleted' => 'Excluído',
+	'wall-thread-closed' => 'Fechado',
 	'wall-default-title' => 'Mensagem de $1',
 	'wall-no-title-warning' => '← Você não especificou qualquer título',
 	'wall-desc' => 'Substituição da página de discussão',
@@ -4813,6 +4911,8 @@ ___________________________________________<br>
 suas preferências de email aqui: http://pt-br.wikia.com/wiki/Especial:Preferências',
 	'prefs-email-wall-v2' => 'Mural de Mensagens',
 	'tog-enotifwallthread-v2' => 'Enviar-me um email...',
+	'wall-quote-author' => '$1 escreveu:',
+	'wall-quote-reply-to' => 'responder a #$1',
 );
 
 /** Russian (русский)
@@ -5097,6 +5197,12 @@ ___________________________________________<br />
 	'wall-preview-modal-title' => 'Предпросмотр',
 	'wall-preview-modal-button-back' => 'Назад',
 	'wall-preview-modal-button-publish' => 'Сохранить',
+	'wall-topic-input-heading' => 'Тема',
+	'wall-topic-input-placeholder' => 'Добавить тему (необязательно)',
+	'wall-topic-input-error' => 'Отсутствует статья под названием "$1". Пожалуйста, используйте имя существующей статьи для названия темы.',
+	'wall-topic-input-error-limit' => 'Ветка может содержать не более $1 тем',
+	'wall-topic-heading' => 'Темы этой ветки',
+	'wall-topic-edit' => 'Редактировать темы',
 );
 
 /** Swedish (svenska)

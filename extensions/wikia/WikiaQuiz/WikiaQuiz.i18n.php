@@ -251,6 +251,7 @@ $messages['cs'] = array(
 	'wikiaquiz-answers-label' => 'Odpovědi',
 	'wikiaquiz-answer-label' => 'Odpověď',
 	'wikiaquiz-correct-label' => 'Správně?',
+	'wikiaquiz-addnewitem-label' => 'Přidat novou položku',
 	'wikiaquiz-cancel-label' => 'Zrušit',
 	'wikiaquiz-publish-label' => 'Zveřejnit',
 	'wikiaquiz-error-invalid-image' => 'Obrazek je neplatný: $1',
@@ -357,7 +358,7 @@ $messages['diq'] = array(
 	'wikiaquiz-title-label' => 'Sername',
 	'wikiaquiz-titlescreentext-label' => 'Sernameyê nuştede asenge',
 	'wikiaquiz-moreinfoarticle-label' => 'Wesiqe',
-	'wikiaquiz-moreinfolinktext-label' => 'Metnê linki',
+	'wikiaquiz-moreinfolinktext-label' => 'Metnê Gri',
 	'wikiaquiz-question-label' => 'Pers',
 	'wikiaquiz-image-label' => 'Resim (opsiyonel)',
 	'wikiaquiz-quiz-label' => 'Quiz',
@@ -1411,6 +1412,17 @@ $messages['pt'] = array(
 	'wikiaquiz-game-continue-button' => 'Continuar',
 	'wikiaquiz-game-thanks' => 'Obrigado por ter jogado!',
 	'wikiaquiz-game-challenge' => 'Desafie os seus amigos a jogar!',
+	'wikiaquiz-game-mute' => 'Mudo',
+);
+
+/** Brazilian Portuguese (português do Brasil)
+ * @author Luckas Blade
+ */
+$messages['pt-br'] = array(
+	'wikiaquiz-game-start-button' => 'Iniciar jogo',
+	'wikiaquiz-game-cadence-3' => 'Pronto',
+	'wikiaquiz-game-continue-button' => 'Continuar',
+	'wikiaquiz-game-thanks' => 'Obrigado por jogar!',
 	'wikiaquiz-game-mute' => 'Mudo',
 );
 

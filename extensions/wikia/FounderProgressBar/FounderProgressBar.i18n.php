@@ -186,6 +186,10 @@ $messages['br'] = array(
 $messages['cs'] = array(
 	'founderprogressbar-skip-for-now' => 'Pro teď přeskočit',
 	'founderprogressbar-task-completed' => 'Dokončeno',
+	'founderprogressbar-photo-add10-action' => 'Přidat fotografii',
+	'founderprogressbar-category-add3-action' => 'Přidat kategorii',
+	'founderprogressbar-page-add20-action' => 'Přidat stránku',
+	'founderprogressbar-user-add5-action' => 'Jdi na Nápovědu',
 );
 
 /** German (Deutsch)
@@ -492,6 +496,50 @@ $messages['es'] = array(
 	'founderprogressbar-bonus-edit50-action' => 'Ir a Especial:WikiActivity',
 	'founderprogressbar-bonus-edit50-description' => 'Apunta alto y consigue 50 ediciones más para completar esta tarea de bonificación.',
 	'founderprogressbar-browse-page-name' => 'Navegador',
+);
+
+/** Estonian (eesti)
+ * @author KalmerE.
+ */
+$messages['et'] = array(
+	'founderprogressbar-credits' => 'Ülesannete kogum ja juhend uutele viki asutajatele',
+	'founderprogressbar-widget-label' => '{{SITENAME}} areng',
+	'founderprogressbar-progress-label' => 'Täidetud ülesanded',
+	'founderprogressbar-progress-see-full-list' => 'Täielik nimekiri',
+	'founderprogressbar-progress-hide-full-list' => 'Peida täielik loetelu',
+	'founderprogressbar-skip-for-now' => 'Jäta vahele',
+	'founderprogressbar-task-completed' => 'Täidetud',
+	'founderprogressbar-list-label' => '{{SITENAME}} ülesanded',
+	'founderprogressbar-list-task-label' => 'Ülesanded',
+	'founderprogressbar-list-skipped-task-label' => 'Vahele jäetud ülesanded',
+	'founderprogressbar-list-skipped-task-desc' => 'Ka hiljem saab neid täita.',
+	'founderprogressbar-list-bonus-task-label' => 'Boonus ülesanne',
+	'founderprogressbar-list-bonus-task-desc' => 'Ülesannete täitmisel avaneb boonus ülesanded',
+	'founderprogressbar-task-call-to-action' => 'Mine ülesandele',
+	'founderprogressbar-page-add10-label' => 'Loo $1 {{PLURAL:$1|lehekülg|lehekülge}}',
+	'founderprogressbar-page-add10-action' => 'Loo lehekülg',
+	'founderprogressbar-mainpage-edit-action' => 'Redigeeri esilehte',
+	'founderprogressbar-photo-add10-label' => 'Lisa $1 {{PLURAL:$1|pilt|pilti}}',
+	'founderprogressbar-photo-add10-action' => 'Lisa pilt',
+	'founderprogressbar-category-add3-label' => 'Loo $1 {{PLURAL:$1|kategooria|kategooriat}}',
+	'founderprogressbar-category-add3-action' => 'Lisa kategooria',
+	'founderprogressbar-category-add3-description' => 'Kategooriad on üks parim moodus viki organiseerimiseks ja aitab kasutajatel kergemini leida otsitavat lehekülge. Tee need lihtsad ja selged,   liigne kategooriate kogus võib tekitada segadust.',
+	'founderprogressbar-commcentral-visit-label' => 'Külasta Asutaja- & Adminikeskust!',
+	'founderprogressbar-commcentral-visit-action' => 'Külasta Asutaja & Admini Keskust',
+	'founderprogressbar-commcentral-visit-url' => 'http://community.wikia.com/wiki/Adminikeskus:Esileht',
+	'founderprogressbar-photo-add20-label' => 'Lisa $1 {{PLURAL:$1|pilt|pilti}}',
+	'founderprogressbar-photo-add20-action' => 'Lisa pilt',
+	'founderprogressbar-total-edit75-label' => 'Tee 75 redigeerimist',
+	'founderprogressbar-total-edit75-action' => 'Loo lehekülg',
+	'founderprogressbar-page-add20-label' => 'Loo $1 {{PLURAL:$1|lehekülg|lehekülge}}',
+	'founderprogressbar-page-add20-action' => 'Loo lehekülg',
+	'founderprogressbar-gallery-add-action' => 'Vaata juhendeid',
+	'founderprogressbar-mainpage-addslider-action' => 'Redigeeri esilehte',
+	'founderprogressbar-video-add-label' => 'Lisa video',
+	'founderprogressbar-video-add-action' => 'Lisa video',
+	'founderprogressbar-user-add5-action' => 'Vaata juhendeid',
+	'founderprogressbar-fb-likes3-action' => 'Esilehele',
+	'founderprogressbar-uncategorized-visit-label' => 'Kategoriseerimata leheküljed',
 );
 
 /** Finnish (suomi)
@@ -1701,9 +1749,16 @@ $messages['pt'] = array(
 	'founderprogressbar-list-skipped-task-desc' => 'Você pode completar estas a qualquer altura.',
 	'founderprogressbar-list-bonus-task-label' => 'Tarefas Bónus',
 	'founderprogressbar-task-call-to-action' => 'Ir para tarefa',
+	'founderprogressbar-page-add10-label' => 'Atingir $1 {{PLURAL:$1|página|páginas}}',
 	'founderprogressbar-page-add10-action' => 'Adicionar uma página',
+	'founderprogressbar-mainpage-edit-action' => 'Editar a página principal',
+	'founderprogressbar-photo-add10-label' => 'Atingir $1 {{PLURAL:$1|Imagem|Imagens}}',
 	'founderprogressbar-photo-add10-action' => 'Adicionar uma imagem',
+	'founderprogressbar-category-add3-label' => 'Atingir $1 {{PLURAL:$1|Categoria|Categorias}}',
 	'founderprogressbar-category-add3-action' => 'Adicionar uma categoria',
+	'founderprogressbar-wikiactivity-visit-label' => 'Visitar a Atividade da Wiki',
+	'founderprogressbar-wikiactivity-visit-action' => 'Vai para Especial:WikiActivity',
+	'founderprogressbar-profile-edit-action' => 'Vai para a tua página de perfil',
 	'founderprogressbar-photo-add20-label' => 'Alcançou $1 {{PLURAL:$1|Imagem|Imagens}}',
 	'founderprogressbar-photo-add20-action' => 'Adicionar uma imagem',
 	'founderprogressbar-total-edit75-label' => 'Alcançar 75 Edições',
@@ -1724,6 +1779,36 @@ $messages['pt'] = array(
 	'founderprogressbar-fb-likes3-label' => 'Alcançar $1 Gostos no Facebook',
 	'founderprogressbar-fb-likes3-action' => 'Ir para Página Principal',
 	'founderprogressbar-total-edit300-label' => 'Alcançou {{PLURAL:$1|$1 edição|as $1 edições}}',
+	'founderprogressbar-total-edit300-action' => 'Adicionar uma página',
+	'founderprogressbar-bonus-photo-add10-label' => 'Adicionar mais $1 imagens',
+	'founderprogressbar-bonus-photo-add10-action' => 'Adicionar uma imagem',
+	'founderprogressbar-bonus-page-add5-action' => 'Adicionar uma página',
+	'founderprogressbar-bonus-edit50-label' => 'Editar mais {{PLURAL:$1|$1 página|$1 páginas}}',
+);
+
+/** Brazilian Portuguese (português do Brasil)
+ * @author Luckas Blade
+ */
+$messages['pt-br'] = array(
+	'founderprogressbar-list-task-label' => 'Tarefas',
+	'founderprogressbar-page-add10-action' => 'Adicionar uma página',
+	'founderprogressbar-mainpage-edit-action' => 'Editar a página principal',
+	'founderprogressbar-photo-add10-action' => 'Adicionar uma foto',
+	'founderprogressbar-category-add3-action' => 'Adicionar uma categoria',
+	'founderprogressbar-photo-add20-action' => 'Adicionar uma foto',
+	'founderprogressbar-total-edit75-action' => 'Adicionar uma página',
+	'founderprogressbar-page-add20-action' => 'Adicionar uma página',
+	'founderprogressbar-category-edit-label' => 'Editar uma página de categoria',
+	'founderprogressbar-wikialabs-visit-label' => 'Visitar Wikia Labs',
+	'founderprogressbar-category-add5-action' => 'Adicionar uma categoria',
+	'founderprogressbar-topnav-edit-label' => 'Personalizar sua navegação',
+	'founderprogressbar-topnav-edit-action' => 'Editar navegação',
+	'founderprogressbar-mainpage-addslider-action' => 'Editar a Página Principal',
+	'founderprogressbar-video-add-label' => 'Adicionar um vídeo',
+	'founderprogressbar-video-add-action' => 'Adicionar um vídeo',
+	'founderprogressbar-total-edit300-action' => 'Adicionar uma página',
+	'founderprogressbar-bonus-photo-add10-action' => 'Adicionar uma foto',
+	'founderprogressbar-bonus-page-add5-action' => 'Adicionar uma página',
 );
 
 /** Russian (русский)

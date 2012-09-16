@@ -378,7 +378,12 @@ $messages['br'] = array(
  * @author Vks
  */
 $messages['cs'] = array(
+	'usersignup-page-title' => 'Připojte sedo Wikie',
+	'usersignup-error-invalid-email' => 'Zadejte prosím platnou e-mailovou adresu.',
+	'usersignup-error-empty-email' => 'Vyplňte prosím vaši e-mailovou adresu.',
+	'usersignup-error-empty-username' => 'Ups, vyplňte prosím políčko s uživatelským jménem.',
 	'usersignup-facebook-create-account' => 'Vytvořit účet',
+	'usersignup-facebook-have-an-account-heading' => 'Máte již účet?',
 	'usersignup-confirm-page-title' => 'Potvrzení e-mailu',
 	'usersignup-confirm-email-resend-email' => 'Pošlete mi další potvrzovací e-mail',
 	'usersignup-confirm-email-change-email-content' => 'Chci použít jinou e-mailovou adresu.',
@@ -386,19 +391,33 @@ $messages['cs'] = array(
 	'usersignup-confirm-email-new-email-label' => 'Nový e-mail',
 	'usersignup-confirm-email-update' => 'Aktualizovat',
 	'usersignup-resend-email-heading-success' => 'Nový e-mail odeslán',
+	'usersignup-resend-email-heading-failure' => 'Email nebyl znovu přeposlán.',
 	'usersignup-confirm-page-heading-confirmed-user' => 'Gratulujeme!',
 	'usersignup-confirm-page-subheading-confirmed-user' => 'Vaše e-mailová adresa je už ověřená',
 	'usersignup-confirmation-heading' => 'Už to bude!',
 	'usersignup-confirmation-heading-email-resent' => 'Nový e-mail odeslán',
 	'usersignup-confirmation-subheading' => 'Zkontrolujte si e-maily',
 	'usersignup-confirmation-email_subject' => 'Už to skoro je! Ověřte si účet na Wikia',
+	'usersignup-confirmation-email-greeting' => 'Ahoj $USERNAME,',
 	'usersignup-confirmation-email-signature' => 'Wikia Tým',
+	'usersignup-reconfirmation-email-sent' => 'Vaše e-mailová adresa byla změněna na  $1. Poslali jsme vám nový email k potvrzení. Prosím, potvrďte novou e-mailovou adresu.',
 	'usersignup-reconfirmation-email-greeting' => 'Ahoj $USERNAME',
+	'usersignup-welcome-email-subject' => 'Vítejte na Wikii, $USERNAME!',
 	'usersignup-welcome-email-greeting' => 'Ahoj $USERNAME',
+	'usersignup-welcome-email-edit-profile-heading' => 'Upravte svůj profil.',
+	'usersignup-welcome-email-edit-profile-button' => 'Jít do profilu',
 	'usersignup-welcome-email-learn-basic-heading' => 'Naučte se základy.',
+	'usersignup-welcome-email-explore-wiki-button' => 'Přejít na wikia.com',
+	'usersignup-heading' => 'Připojte se dnes k Wikii',
+	'usersignup-heading-byemail' => 'Vytvořit účet pro někoho jiného',
+	'usersignup-marketing-benefits' => 'Staňte se součástí něčeho velkého',
+	'usersignup-marketing-community-heading' => 'Spolupráce',
 	'usersignup-marketing-global-heading' => 'Vytvořit',
 	'usersignup-marketing-creativity-heading' => 'Buď originální',
+	'usersignup-createaccount-byemail' => 'Vytvořit účet pro někoho jiného',
 	'usersignup-account-creation-heading' => 'Úspěch!',
+	'usersignup-account-creation-subheading' => 'Email poslán uživateli $1',
+	'usersignup-account-creation-email-subject' => 'Účet pro vaši Wikii byl vytvořen!',
 	'usersignup-account-creation-email-greeting' => 'Ahoj,',
 	'usersignup-confirmation-reminder-email-greeting' => 'Ahoj $USERNAME',
 );
@@ -2817,6 +2836,46 @@ $messages['ps'] = array(
 	'usersignup-confirmation-subheading' => 'خپل برېښليک وګورۍ',
 );
 
+/** Portuguese (português)
+ * @author SandroHc
+ */
+$messages['pt'] = array(
+	'usersignup-page-title' => 'Junta-te à Wikia',
+	'usersignup-facebook-create-account' => 'Criar conta',
+	'usersignup-confirm-email-new-email-label' => 'Novo e-mail',
+	'usersignup-confirm-email-update' => 'Atualizar',
+	'usersignup-resend-email-heading-success' => 'Novo e-mail enviado',
+	'usersignup-resend-email-heading-failure' => 'E-mail não re-enviado',
+	'usersignup-confirm-page-heading-confirmed-user' => 'Parabéns!',
+	'usersignup-confirm-page-subheading-confirmed-user' => 'Já estás confirmado',
+	'usersignup-confirmation-heading-email-resent' => 'Novo e-mail enviado',
+	'usersignup-marketing-community-heading' => 'Colabora',
+	'usersignup-marketing-global-heading' => 'Cria',
+	'usersignup-marketing-creativity-heading' => 'Sê original',
+	'usersignup-account-creation-heading' => 'Sucesso!',
+	'usersignup-account-creation-email-greeting' => 'Olá,',
+);
+
+/** Brazilian Portuguese (português do Brasil)
+ * @author Luckas Blade
+ */
+$messages['pt-br'] = array(
+	'usersignup-facebook-create-account' => 'Criar conta',
+	'usersignup-confirm-email-update' => 'Atualizar',
+	'usersignup-confirm-page-subheading-confirmed-user' => 'Você já está confirmado',
+	'usersignup-confirmation-heading' => 'Quase lá',
+	'usersignup-confirmation-email-greeting' => 'Olá $USERNAME,',
+	'usersignup-welcome-email-greeting' => 'Olá $USERNAME,',
+	'usersignup-welcome-email-edit-profile-heading' => 'Editar seu perfil.',
+	'usersignup-welcome-email-edit-profile-button' => 'Ir para o perfil',
+	'usersignup-welcome-email-explore-wiki-heading' => 'Explorar mais wikis.',
+	'usersignup-welcome-email-explore-wiki-button' => 'Ir para wikia.com',
+	'usersignup-heading-byemail' => 'Criar uma conta para outra pessoa',
+	'usersignup-marketing-global-heading' => 'Criar',
+	'usersignup-marketing-creativity-heading' => 'Seja original',
+	'usersignup-account-creation-email-greeting' => 'Olá,',
+);
+
 /** Russian (русский)
  * @author DCamer
  * @author Kuzura
@@ -3446,5 +3505,35 @@ ___________________________________________
 Upang makita ang pinaka huling mga kaganapan sa Wikia, dalawin ang http://community.wikia.com
 Nais mo bang tabanan ang kung anong mga e-liham ang matatanggap mo? Magpunta sa: {{fullurl:{{ns:special}}:Preferences}}",
 	'usersignup-facebook-problem' => 'Nagkaroon ng isang suliranin sa pakikipag-ugnayan sa Facebook. Paki subukan ulit mamaya.',
+);
+
+/** Simplified Chinese (‪中文（简体）‬)
+ * @author Sam Wang
+ */
+$messages['zh-hans'] = array(
+	'usersignup-page-title' => '加入Wikia',
+	'usersignup-page-captcha-label' => '模糊单词',
+	'usersignup-error-username-length' => '您的用户名不能超过{{PLURAL:$1|一个字符|$1字符}}。',
+	'usersignup-error-invalid-user' => '无效用户，请先登录。',
+	'usersignup-error-invalid-email' => '请输入有效的电子邮箱地址。',
+	'usersignup-error-symbols-in-username' => '您的用户名职能保函字母和数字。',
+	'usersignup-error-empty-email' => '请输入您的电子邮箱地址',
+	'usersignup-error-empty-username' => '请输入用户名',
+	'usersignup-error-already-confirmed' => '您已经确认了这个电子邮箱地址。',
+	'usersignup-error-throttled-email' => '您今天请求了太多的确认邮件了，请稍后再试。',
+	'usersignup-error-too-many-changes' => '您今天已经达到可改变次数的限额，请稍后再试。',
+	'usersignup-error-password-length' => '您的密码太长，请选一个少于50字符的密码。',
+	'usersignup-error-confirmed-user' => '看来您已经确认了您的电子邮箱地址：$1！请查看您的帐户[$2 用户资料]。',
+	'usersignup-facebook-heading' => '完成签约',
+	'usersignup-facebook-create-account' => '创建帐户。',
+	'usersignup-facebook-email-tooltip' => '如果您想更改您使用的电子邮箱地址就请查看您的用户属性。',
+	'usersignup-facebook-have-an-account-heading' => '已有帐户？',
+	'usersignup-facebook-have-an-account' => '请使用您的Wikia用户名来链接Facebook。',
+	'usersignup-facebook-proxy-email' => '匿名的Facebook电子邮箱地址。',
+	'usersignup-user-pref-emailconfirmlink' => '请求新的确认邮件。',
+	'usersignup-user-pref-confirmemail_send' => '重发送确认邮件。',
+	'usersignup-user-pref-emailauthenticated' => '谢谢！您的邮箱已在$2$3发送。',
+	'usersignup-user-pref-emailnotauthenticated' => '检查您的邮箱是否正确，以确保确认邮件能够发送到该信箱：$1。',
+	'usersignup-welcome-email-greeting' => '你好 $USERNAME',
 );
 

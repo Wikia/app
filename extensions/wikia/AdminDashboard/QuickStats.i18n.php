@@ -552,6 +552,7 @@ $messages['pl'] = array(
 );
 
 /** Piedmontese (Piemontèis)
+ * @author Borichèt
  * @author Dragonòt
  */
 $messages['pms'] = array(
@@ -564,6 +565,8 @@ $messages['pms'] = array(
 	'quickstats-totals-label' => 'Totaj',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Varda pi statìstiche]]',
 	'quickstats-number-shortening' => '$1K',
+	'quickstats-number-shortening-millions' => '$1M',
+	'quickstats-number-shortening-billions' => '$1Mrd',
 );
 
 /** Pashto (پښتو)
@@ -574,6 +577,7 @@ $messages['ps'] = array(
 	'quickstats-header-views' => 'کتنې',
 	'quickstats-header-edits' => 'سمونونه',
 	'quickstats-header-photos' => 'انځورونه',
+	'quickstats-header-likes' => 'خوښې',
 	'quickstats-totals-label' => 'ټولټال',
 );
 
@@ -597,6 +601,7 @@ $messages['pt'] = array(
 
 /** Brazilian Portuguese (português do Brasil)
  * @author Giro720
+ * @author Luckas Blade
  * @author Pedroca cerebral
  */
 $messages['pt-br'] = array(
@@ -608,6 +613,19 @@ $messages['pt-br'] = array(
 	'quickstats-totals-label' => 'Totais',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Ver mais estatísticas]]',
 	'quickstats-number-shortening' => '$1K',
+	'quickstats-number-shortening-millions' => '$1M',
+	'quickstats-number-shortening-billions' => '$1B',
+);
+
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'quickstats-header-date' => 'Date',
+	'quickstats-header-edits' => 'Cangiaminde',
+	'quickstats-number-shortening' => '$1K',
+	'quickstats-number-shortening-millions' => '$1M',
+	'quickstats-number-shortening-billions' => '$1B',
 );
 
 /** Russian (русский)

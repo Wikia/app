@@ -206,6 +206,50 @@ $messages['ce'] = array(
 	'lookupcontribscontribs' => 'къинхьегам',
 );
 
+/** Czech (česky)
+ * @author Chmee2
+ * @author Mormegil
+ */
+$messages['cs'] = array(
+	'lookupcontribsselectuser' => 'Vyberte uživatele:',
+	'lookupcontribsselectfor' => 'Vyberte pro:',
+	'lookupcontribsdisplaymode' => 'Režim zobrazení:',
+	'lookupcontribsselectmodenormal' => 'nedávné příspěvky uživatele',
+	'lookupcontribsselectmodefinal' => 'poslední příspěvky uživatele',
+	'lookupcontribsselectmodeall' => 'všechny příspěvky uživatele',
+	'lookupcontribsfullurls' => 'celé URL',
+	'lookupcontribsgo' => 'Přejít',
+	'lookupcontribsinvaliduser' => '<p class="error">Uživatel "<b> $1 </b>" neexistuje.
+Zkontrolujte dané uživatelské jméno pro případné překlepy.</p>',
+	'lookupcontribsinvalidviewmode' => '<p class="error">"<b>$1</b>" není platné zobrazení.</p>',
+	'lookupcontribsselectwikis' => 'Vyberte wiki:',
+	'lookupcontribsnoresultfound' => 'Nebyly nalezeny žádné výsledky.',
+	'lookupcontribsinvalidresults' => 'Neplatné výsledky!',
+	'lookupcontribswiki' => 'Wiki',
+	'lookupcontribswikidbname' => 'Název databáze',
+	'lookupcontribswikiurl' => 'URL',
+	'lookupcontribswikititle' => 'Název',
+	'lookupcontribswikioptions' => 'Možnosti',
+	'lookupcontribsdetails' => 'Viz podrobnosti:',
+	'lookupcontribslastedited' => 'Naposledy upravován',
+	'lookupcontribsrecordspager' => 'Zobrazeny záznamy $1 až $2 ze $3 záznamů.',
+	'lookupcontribsnbrresult' => 'Počet výsledku:',
+	'lookupcontribsnext' => 'další',
+	'lookupcontribsprevious' => 'předchozí',
+	'lookupcontribspageremoved' => 'Odstraněno:',
+	'lookupcontribsrestore' => 'obnovit',
+	'lookupcontribslog' => 'log',
+	'lookupcontribscontribs' => 'příspěvky',
+	'lookupcontribshist' => 'historie',
+	'lookupcontribsdiff' => 'rozdíl',
+	'right-lookupcontribs' => 'Zobrazování globálních editací uživatele',
+	'lookupcontribsshowpages' => 'Všechny stránky (jmenný prostor $1)',
+	'lookupcontribscontent' => 'obsah',
+	'lookupcontribscontribtitleforuser' => 'Příspěvky uživatele:',
+	'lookupcontribsnormal' => 'nedávné',
+	'lookupcontribsall' => 'všechny',
+);
+
 /** German (Deutsch)
  * @author LWChris
  * @author SVG

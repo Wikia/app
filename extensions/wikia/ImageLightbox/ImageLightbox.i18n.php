@@ -146,8 +146,17 @@ $1
  * @author Erdemaslancan
  */
 $messages['diq'] = array(
+	'lightbox_details_tooltip' => 'Teferruatê resimi bıvin',
+	'lightbox-forum' => 'Forum',
+	'lightbox-standard-link' => 'Standard link',
+	'lightbox-blog-link' => 'Grey blogi',
 	'lightbox-send' => 'Bırş',
+	'lightbox-share-button-email' => 'E-posta',
+	'lightbox-share-button-www' => 'Vıla ke',
 	'lightbox-share-button-embed' => 'Embed',
+	'lightbox-share-email-page-label-address' => 'Adresê e-posta',
+	'lightbox-share-email-ok-caption' => 'Tesdiqiye',
+	'lightbox-share-email-error-caption' => 'Xırab',
 );
 
 /** Spanish (español)
@@ -610,6 +619,29 @@ $messages['ps'] = array(
 	'lightbox-share-button-www' => 'شريکول',
 	'lightbox-share-email-page-label-address' => 'برېښليک پته',
 	'lightbox-share-email-error-caption' => 'تېروتنه',
+);
+
+/** Portuguese (português)
+ * @author SandroHc
+ */
+$messages['pt'] = array(
+	'lightbox-share-button-email' => 'E-mail',
+	'lightbox-share-button-www' => 'Partilhar',
+	'lightbox-share-button-embed' => 'Incorporar',
+	'lightbox-share-email-page-label-address' => 'Correio electrónico',
+	'lightbox-share-email-ok-caption' => 'Confirmação',
+	'lightbox-share-email-error-caption' => 'Erro',
+);
+
+/** Brazilian Portuguese (português do Brasil)
+ * @author Luckas Blade
+ */
+$messages['pt-br'] = array(
+	'lightbox_details_tooltip' => 'Ver detalhes da foto',
+	'lightbox-forum' => 'Fórum',
+	'lightbox-send' => 'Enviar',
+	'lightbox-share-email-ok-caption' => 'Confirmação',
+	'lightbox-share-email-error-caption' => 'Erro',
 );
 
 /** Russian (русский)

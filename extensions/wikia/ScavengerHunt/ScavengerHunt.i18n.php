@@ -274,12 +274,32 @@ $messages['br'] = array(
 );
 
 /** Czech (česky)
+ * @author Chmee2
  * @author Vks
  */
 $messages['cs'] = array(
+	'scavengerhunt-list-header-name' => 'Název hry',
+	'scavengerhunt-list-header-actions' => 'Akce',
+	'scavengerhunt-list-enabled' => 'Povoleno',
+	'scavengerhunt-list-disabled' => 'Zakázáno',
+	'scavengerhunt-list-edit' => 'upravit',
+	'scavengerhunt-label-name' => 'Jméno:',
+	'scavengerhunt-button-add' => 'Přidat hru',
+	'scavengerhunt-button-save' => 'Uložit',
+	'scavengerhunt-button-disable' => 'Deaktivovat',
+	'scavengerhunt-button-enable' => 'Povolit',
+	'scavengerhunt-button-delete' => 'Odstranit',
+	'scavengerhunt-button-export' => 'Export do formátu CSV',
+	'scavengerhunt-entry-form-name' => 'Vaše jméno:',
+	'scavengerhunt-entry-form-email' => 'Vaše e-mailová adresa:',
+	'scavengerhunt-entry-form-submit' => 'Odeslat položku',
 	'scavengerhunt-quit-game-button-quit' => 'Ukončit',
 	'scavengerhunt-quit-game-button-cancel' => 'Zrušit',
 	'scavengerhunt-quit-game-button-stay' => 'Pokračovat ve hře',
+	'scavengerhunt-label-entry-form-email' => 'E-mail uživatele',
+	'scavengerhunt-label-entry-form-username' => 'Uživatelské jméno',
+	'scavengerhunt-label-clue-color' => 'Barva písma',
+	'scavengerhunt-label-clue-size' => 'Velikost písma',
 );
 
 /** German (Deutsch)
@@ -451,7 +471,19 @@ $messages['de-formal'] = array(
 $messages['diq'] = array(
 	'scavengerhunt-list-header-name' => 'Namey qayer',
 	'scavengerhunt-list-header-actions' => 'Kerdeni',
+	'scavengerhunt-label-general' => 'Heran',
+	'scavengerhunt-label-name' => 'Name:',
+	'scavengerhunt-button-save' => 'Star ke',
+	'scavengerhunt-button-disable' => 'Bikefilne',
+	'scavengerhunt-button-enable' => 'Mekefilne',
+	'scavengerhunt-button-delete' => 'Besterne',
 	'scavengerhunt-entry-form-name' => 'Namey şıma',
+	'scavengerhunt-quit-game-button-quit' => 'Bıvci',
+	'scavengerhunt-quit-game-button-cancel' => 'Bıterkne',
+	'scavengerhunt-label-entry-form-email' => 'E postay karberi',
+	'scavengerhunt-label-entry-form-username' => 'Nameyê Karberi',
+	'scavengerhunt-facebook-image' => 'Resimi Facebook de vıla ke',
+	'scavengerhunt-facebook-description' => 'Metni Facebook de vıla ke',
 );
 
 /** Spanish (español)
@@ -2029,6 +2061,42 @@ $messages['pt'] = array(
 	'scavengerhunt-entry-form-name' => 'O seu nome:',
 	'scavengerhunt-entry-form-email' => 'Correio electrónico:',
 	'scavengerhunt-entry-form-submit' => 'Enviar entrada',
+	'scavengerhunt-quit-game-button-quit' => 'Sair',
+	'scavengerhunt-quit-game-button-cancel' => 'Cancelar',
+);
+
+/** Brazilian Portuguese (português do Brasil)
+ * @author Luckas Blade
+ */
+$messages['pt-br'] = array(
+	'scavengerhunt-list-header-name' => 'Nome do jogo',
+	'scavengerhunt-list-header-actions' => 'Ações',
+	'scavengerhunt-list-enabled' => 'Ativado',
+	'scavengerhunt-list-disabled' => 'Desativado',
+	'scavengerhunt-list-edit' => 'editar',
+	'scavengerhunt-label-image-check' => '(mostrar imagem)',
+	'scavengerhunt-label-general' => 'Geral',
+	'scavengerhunt-label-name' => 'Nome:',
+	'scavengerhunt-label-starting-clue-title' => 'Título da janela:',
+	'scavengerhunt-label-starting-clue-text' => 'Texto da janela <i>(o texto enter &lt;div&gt; terá a cor de um link)</i>',
+	'scavengerhunt-label-entry-form-button-text' => 'Texto do botão:',
+	'scavengerhunt-label-goodbye-title' => 'Título da janela:',
+	'scavengerhunt-label-goodbye-text' => 'Mensagem da janela:',
+	'scavengerhunt-label-goodbye-image' => 'Imagem da janela (endereço URL):',
+	'scavengerhunt-button-add' => 'Adicionar um jogo',
+	'scavengerhunt-button-save' => 'Salvar',
+	'scavengerhunt-button-disable' => 'Desativar',
+	'scavengerhunt-button-enable' => 'Ativar',
+	'scavengerhunt-button-delete' => 'Apagar',
+	'scavengerhunt-button-export' => 'Exportar para CSV',
+	'scavengerhunt-entry-form-name' => 'Seu nome:',
+	'scavengerhunt-label-progress-bar' => 'Barra de progresso',
+	'scavengerhunt-quit-game-button-quit' => 'Sair',
+	'scavengerhunt-quit-game-button-cancel' => 'Cancelar',
+	'scavengerhunt-quit-game-button-stay' => 'Continuar jogando',
+	'scavengerhunt-label-entry-form-username' => 'Nome de usuário',
+	'scavengerhunt-label-clue-color' => 'Cor da fonte',
+	'scavengerhunt-label-clue-size' => 'Tamanho da fonte',
 );
 
 /** Romanian (română)

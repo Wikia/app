@@ -85,6 +85,21 @@ $messages['br'] = array(
 	'browser-loading-message' => 'O kargañ...',
 );
 
+/** Czech (česky)
+ * @author Chmee2
+ */
+$messages['cs'] = array(
+	'main-tab-discover' => 'Vyhledat',
+	'main-tab-personal' => 'Moje Wikia',
+	'main-tab-search' => 'Hledat',
+	'main-tab-offline' => 'Offline',
+	'tab-discover-loading-message' => 'Načítání...',
+	'tab-discover-no-network-dialog-title' => 'Síť není dostupná',
+	'tab-discover-no-network-dialog-close-button' => 'Ok',
+	'tab-search-loading-message' => 'Vyhledávám...',
+	'browser-loading-message' => 'Načítá se…',
+);
+
 /** German (Deutsch)
  * @author Claudia Hattitten
  */
@@ -351,6 +366,17 @@ $messages['pt'] = array(
 	'tab-discover-no-network-dialog-close-button' => 'OK',
 	'tab-search-loading-message' => 'A pesquisar...',
 	'browser-loading-message' => 'A carregar…',
+);
+
+/** Brazilian Portuguese (português do Brasil)
+ * @author Luckas Blade
+ */
+$messages['pt-br'] = array(
+	'main-tab-search' => 'Pesquisar',
+	'tab-discover-loading-message' => 'Carregando...',
+	'tab-discover-no-network-dialog-close-button' => 'OK',
+	'tab-search-loading-message' => 'Pesquisando...',
+	'browser-loading-message' => 'Carregando...',
 );
 
 /** Russian (русский)

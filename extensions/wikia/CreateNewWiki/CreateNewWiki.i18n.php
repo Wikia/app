@@ -476,12 +476,16 @@ $messages['cs'] = array(
 	'cnw-userauth-headline' => 'Máte účet?',
 	'cnw-userauth-creative' => 'Přihlásit se',
 	'cnw-userauth-marketing-heading' => 'Nemáte účet?',
+	'cnw-userauth-signup-button' => 'Zaregistrovat se',
+	'cnw-desc-headline' => 'O čem je vaše wiki?',
+	'cnw-desc-creative' => 'Popište vaše téma',
 	'cnw-desc-tip1' => 'Tip',
 	'cnw-desc-tip2' => 'Pššt',
 	'cnw-desc-choose' => 'Zvolte kategorii',
 	'cnw-desc-select-one' => 'Jeden vyberte',
 	'cnw-desc-change-lang' => 'změnit',
 	'cnw-desc-lang' => 'Jazyk',
+	'cnw-theme-headline' => 'Zvolte téma',
 	'cnw-error-database' => 'Chyba databáze: $1',
 	'cnw-error-wiki-limit-header' => 'Dosažen limit Wiki',
 	'cnw-error-blocked-header' => 'Účet zablokován',
@@ -2009,6 +2013,7 @@ $messages['ps'] = array(
  * @author Geitost
  * @author Hamilton Abreu
  * @author Malafaya
+ * @author SandroHc
  */
 $messages['pt'] = array(
 	'createnewwiki-desc' => '[[Special:CreateNewWiki|Assistente de criação de wikis]]',
@@ -2034,6 +2039,11 @@ $messages['pt'] = array(
 	'cnw-auth-signup-creative' => 'Precisa de ter uma conta para continuar a construir a sua wiki.<br />Só leva um minuto a registar-se!',
 	'cnw-auth-facebook-signup' => 'Registe-se pelo Facebook',
 	'cnw-auth-facebook-login' => 'Entrar pelo Facebook',
+	'cnw-userauth-headline' => 'Tem uma conta?',
+	'cnw-userauth-creative' => 'Entrar',
+	'cnw-userauth-marketing-heading' => 'Não tem conta?',
+	'cnw-userauth-marketing-body' => 'Você precisa de uma conta para criar uma wiki na Wikia. Só demora um minuto para te [[Special:UserSignup|registares]]!',
+	'cnw-userauth-signup-button' => 'Registe-se',
 	'cnw-desc-headline' => 'Qual é o assunto da sua wiki?',
 	'cnw-desc-creative' => 'Descreva o seu assunto',
 	'cnw-desc-placeholder' => 'Isto irá aparecer na página principal da sua wiki.',
@@ -2075,11 +2085,14 @@ Adopte esta versão através do PayPal para ter uma wiki livre de anúncios por 
 	'cnw-badword-msg' => 'Não use estas palavras impróprias ou proibidas na Descrição da Wiki, por favor: $1',
 	'cnw-error-wiki-limit-header' => 'O limite de wikis foi atingido',
 	'cnw-error-wiki-limit' => 'Olá, está limitado à criação de $1 {{PLURAL:$1|wiki|wikis}} por dia. Aguarde 24 horas antes de criar outra wiki.',
+	'cnw-error-blocked-header' => 'Conta bloqueada',
+	'cnw-error-blocked' => 'Você foi bloqueado por $1. Pelo seguinte motivo: $2. (ID do Bloqueio para referência: $3)',
 );
 
 /** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
  * @author Caio1478
+ * @author Luckas Blade
  */
 $messages['pt-br'] = array(
 	'createnewwiki-desc' => '[[Special:CreateNewWiki|Assistente de criação de wikis]]',
@@ -2143,6 +2156,7 @@ Adote esta versão através do PayPal para ter uma wiki livre de anúncios por a
 	'cnw-error-general-heading' => 'Erro ao Criar uma Wiki Nova',
 	'cnw-badword-header' => 'Atenção',
 	'cnw-badword-msg' => 'Não use palavras impróprias ou proibidas na Descrição da Wiki, por favor',
+	'cnw-error-blocked-header' => 'Conta bloqueada',
 );
 
 /** Romanian (română)

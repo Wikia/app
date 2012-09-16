@@ -319,6 +319,7 @@ Sprawdź poprawność wpisanej nazwy.',
 
 /** Piedmontese (Piemontèis)
  * @author Borichèt
+ * @author Dragonòt
  */
 $messages['pms'] = array(
 	'piggybac-desc' => "A përmët d'intré com n'àutr utent",
@@ -332,6 +333,9 @@ Ch\'a contròla l\'ortografìa.',
 	'piggyback-firstlogout' => 'Për piasì prima torna intré an tò cont.',
 	'piggyback-itisyou' => 'A peul pa fé na conession mùltipla con sò pròpi cont.',
 	'piggyback-issysopto' => "A peul pa fé na conession mùltipla ansima al cont ëd n'utent con ël drit ëd fé dle conession mùltiple.",
+	'action-piggyback' => "intré ant ël sistema con n'àutr cont utent",
+	'log-name-piggyback' => 'Registr Piggyback',
+	'log-description-piggyback' => "Ës registr a l'é na lista dj'intrade ant ël sistema con vàire cont.",
 );
 
 /** Portuguese (português) */

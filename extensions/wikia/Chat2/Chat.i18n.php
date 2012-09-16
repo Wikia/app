@@ -440,6 +440,7 @@ $messages['cs'] = array(
 	'chat-kick-you-need-permission' => 'Nemáte oprávnění vykopnout uživatele.',
 	'chat-kick-cant-kick-moderator' => 'Nemůžete vykopnout dalšího moderátora chatu.',
 	'chat-user-was-kicked' => '$2 vyhodil $1 z chatu.',
+	'chat-you-were-kicked' => '$1 vás vyhodil z chatu.',
 	'chat-ban-contributions-heading' => 'Zablokovat na chatu',
 	'chat-ban-modal-heading' => 'Zablokuj tohoto uživatele na chatu',
 	'chat-ban-modal-label-expires' => 'Vyprší',
@@ -593,6 +594,7 @@ $messages['diq'] = array(
 	'chat-ban-modal-button-cancel' => 'Bıterkne',
 	'chat-live2' => 'Live! Chat',
 	'chat-edit-count' => '{{PLURAL:$1|$1 vurnayışt|$1 vurnayışi}}',
+	'chat-user-menu-talk-page' => 'Pela werênayışi',
 	'chat-user-menu-kick' => 'Kick',
 );
 
@@ -1255,9 +1257,14 @@ $messages['ja'] = array(
 	'chat-inlinealert-a-made-b-chatmod' => '$1 が <strong>$2</strong> をチャットモデレータにしました。',
 	'chat-err-connected-from-another-browser' => '他のブラウザからの接続を確認しました。この接続は閉じられます。',
 	'chat-err-communicating-with-mediawiki' => 'MediaWiki サーバとの通信でエラーが発生しました。',
+	'chat-ban-contributions-heading' => 'チャットから追放',
+	'chat-ban-modal-heading' => 'チャットからこの利用者を追放',
+	'chat-ban-modal-label-expires' => '期限',
 	'chat-ban-modal-label-reason' => '理由',
 	'chat-log-reason-undo' => '取り消す',
 	'chat-ban-undolink' => '取り消す',
+	'chat-ban-modal-button-ok' => '追放',
+	'chat-ban-modal-button-cancel' => '中止',
 	'chat-ban-cant-ban-moderator' => '他のチャットモデレータを強制退出させるあるいは追放することはできません。',
 	'chat-ban-already-banned' => '$1 は既にこのウィキのチャットから追放されています。',
 	'chat-ban-you-need-permission' => 'ユーザを強制退出させるあるいは追放するのに必要な$1権限がありません。',
@@ -1292,6 +1299,7 @@ $messages['ja'] = array(
 	'group-chatmoderator-member' => 'チャットモデレータ',
 	'group-bannedfromchat' => 'チャットから追放された利用者',
 	'group-bannedfromchat-member' => 'チャットから追放された利用者',
+	'chat-ban-option-list' => '2時間:2 hours,1日:1 day,3日:3 days,1週間:1 week,2週間:2 weeks,1か月:1 month,3か月:3 months,6か月:6 months,1年:1 year,無期限:infinite',
 );
 
 /** Khowar (کھوار)
@@ -1989,6 +1997,7 @@ $messages['pt'] = array(
  * @author 555
  * @author Aristóbulo
  * @author Caio1478
+ * @author Luckas Blade
  * @author Pedroca cerebral
  */
 $messages['pt-br'] = array(
@@ -2006,6 +2015,18 @@ $messages['pt-br'] = array(
 	'chat-inlinealert-a-made-b-chatmod' => '$1 tornou <strong>$2</strong> um moderador do chat.',
 	'chat-err-connected-from-another-browser' => 'Ligou-se a partir de outro browser. Esta ligação será fechada.',
 	'chat-err-communicating-with-mediawiki' => 'Erro de comunicação com o servidor do MediaWiki.',
+	'chat-ban-contributions-heading' => 'Banir do chat',
+	'chat-ban-modal-heading' => 'Banir este usuário do chat',
+	'chat-ban-modal-label-expires' => 'Expira',
+	'chat-ban-modal-label-reason' => 'Motivo',
+	'chat-log-reason-banadd' => 'Mau comportamento no chat',
+	'chat-log-reason-undo' => 'desfazer',
+	'chat-ban-undolink' => 'desfazer',
+	'chat-ban-modal-button-ok' => 'Banir este usuário',
+	'chat-ban-modal-button-change-ban' => 'Alterar banimento',
+	'chat-ban-modal-button-cancel' => 'Cancelar',
+	'chat-log-reason-banchange' => 'Nenhum motivo especificado',
+	'chat-log-reason-banremove' => 'Nenhum motivo especificado',
 	'chat-ban-cant-ban-moderator' => 'Você não pode expulsar/banir outro Moderador do Chat.',
 	'chat-ban-already-banned' => '$1 já está banido do chat deste wiki.',
 	'chat-ban-you-need-permission' => 'Você não tem a permissão $1 que é necessária para expulsar/banir um usuário.',
@@ -2026,6 +2047,7 @@ $messages['pt-br'] = array(
 	'chat-user-menu-contribs' => 'Contribuições',
 	'chat-user-menu-private' => 'Mensagem privada',
 	'chat-user-menu-give-chat-mod' => 'Dar estatuto de Moderador',
+	'chat-user-menu-ban' => 'Banir',
 	'chat-user-menu-private-block' => 'Bloquear mensagens privadas',
 	'chat-user-menu-private-allow' => 'Permitir mensagens privadas',
 	'chat-user-menu-private-close' => 'Fechar sala privada',
@@ -2035,6 +2057,7 @@ $messages['pt-br'] = array(
 	'group-chatmoderator-member' => 'Moderador do chat',
 	'group-bannedfromchat' => 'Banido do chat',
 	'group-bannedfromchat-member' => 'Banido do chat',
+	'chat-ban-option-list' => '2 horas:2 horas,1 dia:1 dia,3 dias:3 dias,1 semana:1 semana,2 semanas:2 semanas,1 mês:1 mês,3 meses:3 meses,6 meses:6 meses,1 ano:1 ano,infinito:infinito',
 );
 
 /** Romanian (română)

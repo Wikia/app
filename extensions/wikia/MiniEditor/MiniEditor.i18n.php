@@ -204,6 +204,13 @@ $messages['pt'] = array(
 	'minieditor-reply' => 'Responder',
 );
 
+/** Brazilian Portuguese (português do Brasil)
+ * @author Luckas Blade
+ */
+$messages['pt-br'] = array(
+	'minieditor-reply' => 'Responder',
+);
+
 /** Russian (русский)
  * @author Kuzura
  */
