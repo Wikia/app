@@ -50,6 +50,16 @@ $messages['br'] = array(
 	'places-geolocation-modal-error-title' => 'Fazi',
 );
 
+/** Czech (česky)
+ * @author Chmee2
+ */
+$messages['cs'] = array(
+	'places-editor-search' => 'Hledat',
+	'places-geolocation-button-label' => 'Přidat umístění',
+	'places-geolocation-modal-add-title' => 'Přidat umístění',
+	'places-geolocation-modal-error-title' => 'Chyba',
+);
+
 /** German (Deutsch)
  * @author Alphakilo
  * @author George Animal
@@ -408,6 +418,16 @@ $messages['ps'] = array(
  * @author Malafaya
  */
 $messages['pt'] = array(
+	'places-geolocation-modal-error-title' => 'Erro',
+);
+
+/** Brazilian Portuguese (português do Brasil)
+ * @author Luckas Blade
+ */
+$messages['pt-br'] = array(
+	'places-editor-search' => 'Pesquisar',
+	'places-geolocation-button-label' => 'Adicionar localização',
+	'places-geolocation-modal-add-title' => 'Adicionar localização',
 	'places-geolocation-modal-error-title' => 'Erro',
 );
 

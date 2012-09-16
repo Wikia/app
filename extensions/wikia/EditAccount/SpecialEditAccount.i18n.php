@@ -1446,6 +1446,7 @@ $messages['ps'] = array(
 
 /** Portuguese (português)
  * @author Hamilton Abreu
+ * @author SandroHc
  */
 $messages['pt'] = array(
 	'editaccount' => 'Editar Conta',
@@ -1482,6 +1483,12 @@ $messages['pt'] = array(
 	'editaccount-error-close' => 'Ocorreu um problema ao fechar a conta. Tente novamente ou contacte o Suporte Técnico.',
 	'editaccount-invalid-email' => '"$1" não é um endereço electrónico válido!',
 	'editaccount-nouser' => 'A conta "$1" não existe!',
+	'editaccount-labal-account-status' => 'Estado da Conta',
+	'editaccount-labal-email-status' => 'Estado do E-mail',
+	'editaccount-status-confirmed' => 'Confirmado',
+	'editaccount-status-unconfirmed' => 'Não confirmado',
+	'editaccount-status-realuser' => 'Utilizador Real',
+	'editaccount-status-tempuser' => 'Utilizador Temporário',
 	'editaccount-log' => 'Registo de contas de utilizador',
 	'editaccount-log-header' => 'Esta página lista as alterações feitas às suas preferências pela Equipa da Wikia.',
 	'editaccount-log-entry-email' => 'alterou o endereço electrónico do utilizador $2',
@@ -1495,6 +1502,7 @@ $messages['pt'] = array(
 /** Brazilian Portuguese (português do Brasil)
  * @author Giro720
  * @author Jesielt
+ * @author Luckas Blade
  */
 $messages['pt-br'] = array(
 	'editaccount' => 'Editar conta',
@@ -1528,6 +1536,8 @@ $messages['pt-br'] = array(
 	'editaccount-error-close' => 'Ocorreu um problema ao fechar a conta. Tente novamente ou contate a equipe de apoio (Tech Team).',
 	'editaccount-invalid-email' => '"$1" não é um endereço de email válido!',
 	'editaccount-nouser' => 'A conta "$1" não existe!',
+	'editaccount-status-confirmed' => 'Confirmado',
+	'editaccount-status-realuser' => 'Usuário real',
 	'editaccount-log' => 'Use o log de contas',
 	'editaccount-log-header' => 'Essa página lista mudanças feitas nas preferências de usuário pela equipe do Wikia (Wikia Staff).',
 	'editaccount-log-entry-email' => 'email alterado para o usuário $2',

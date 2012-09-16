@@ -533,6 +533,7 @@ $messages['ce'] = array(
 );
 
 /** Czech (česky)
+ * @author Chmee2
  * @author Dontlietome7
  */
 $messages['cs'] = array(
@@ -561,6 +562,7 @@ $messages['cs'] = array(
 	'swm-label-mode-users-group-hint' => '<i>Vyberte skupinu z rozbalovacího menu nebo napište jméno ručně.</i>',
 	'swm-label-mode-users-user' => 'Vybraný uživatel',
 	'swm-label-mode-users-user-hint' => '<i>Tato volba ignoruje volbu ve skupině "Wiki".</i>',
+	'swm-label-mode-users-user-multi' => 'Seznam uživatelů',
 	'swm-label-content' => 'Obsah',
 	'swm-label-comment' => 'Komentář',
 	'swm-label-dismissed' => 'Zrušeno',
@@ -598,6 +600,10 @@ $messages['cs'] = array(
 	'swm-error-long-message' => 'Zprávy jsou omezeny na 500 znaků.',
 	'swm-error-empty-group' => 'Vložte název skupiny',
 	'swm-lang-other' => 'všechny zbývající jazyky',
+	'swm-label-mode-users-registration' => 'Datum registrace',
+	'swm-mode-users-registration-after' => 'Po',
+	'swm-mode-users-registration-before' => 'Před',
+	'swm-mode-users-registration-between' => 'Mezi',
 );
 
 /** Church Slavic (словѣ́ньскъ / ⰔⰎⰑⰂⰡⰐⰠⰔⰍⰟ)
@@ -2159,6 +2165,7 @@ $messages['ps'] = array(
 
 /** Portuguese (português)
  * @author Hamilton Abreu
+ * @author SandroHc
  * @author Waldir
  */
 $messages['pt'] = array(
@@ -2225,6 +2232,9 @@ $messages['pt'] = array(
 	'swm-error-long-message' => 'As mensagens estão limitadas a 500 caracteres.',
 	'swm-error-empty-group' => 'Introduza o nome do grupo.',
 	'swm-lang-other' => 'todas as línguas restantes',
+	'swm-mode-users-registration-after' => 'Depois',
+	'swm-mode-users-registration-before' => 'Antes',
+	'swm-mode-users-registration-between' => 'Entre',
 );
 
 /** Brazilian Portuguese (português do Brasil)
@@ -2259,6 +2269,7 @@ $messages['pt-br'] = array(
 	'swm-label-mode-users-group-hint' => '<i>Escolha um grupo da lista ou escreva o nome do grupo para substituir a selecção da lista.</i>',
 	'swm-label-mode-users-user' => 'Utilizador selecionado',
 	'swm-label-mode-users-user-hint' => '<i>Esta opção ignora a selecção no grupo "Wikis".</i>',
+	'swm-label-mode-users-user-multi' => 'Lista de usuários',
 	'swm-label-content' => 'Conteúdo',
 	'swm-label-comment' => 'Comentário',
 	'swm-label-dismissed' => 'Descartadas',
@@ -2296,6 +2307,10 @@ $messages['pt-br'] = array(
 	'swm-error-long-message' => 'As mensagens estão limitadas a 500 caracteres.',
 	'swm-error-empty-group' => 'Introduza o nome do grupo.',
 	'swm-lang-other' => 'todas as línguas restantes',
+	'swm-label-mode-users-registration' => 'Data de registro',
+	'swm-mode-users-registration-after' => 'Depois',
+	'swm-mode-users-registration-before' => 'Antes',
+	'swm-mode-users-registration-between' => 'Entre',
 );
 
 /** Romanian (română)

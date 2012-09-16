@@ -716,6 +716,7 @@ $messages['crh-cyrl'] = array(
 );
 
 /** Czech (česky)
+ * @author Chmee2
  * @author Danny B.
  * @author Dontlietome7
  * @author Li-sung
@@ -734,6 +735,7 @@ Protokoly viz [[Special:Stafflog]].',
 	'userrenametool-reason' => 'Důvod přejmenování:',
 	'userrenametool-move' => 'Přesunout uživatelské a diskusní stránky (a jejich podstránky) na nové jméno',
 	'userrenametool-reserve' => 'Zabránit nové registraci původního uživatelského jména',
+	'userrenametool-notify-renamed' => 'Poslat přejmenovanému uživateli email až bude hotovo',
 	'userrenametool-warnings' => 'Upozornění:',
 	'userrenametool-confirm' => 'Ano, přejmenovat uživatele',
 	'userrenametool-submit' => 'Přejmenovat',
@@ -744,7 +746,7 @@ Protokoly viz [[Special:Stafflog]].',
 	'userrenametool-errortoomany' => 'Uživatel „<nowiki>$1</nowiki>“ má $2 {{PLURAL:$2|příspěvek|příspěvky|příspěvků}}, přejmenování uživatele s více než $3 {{PLURAL:$3|příspěvkem|příspěvky|příspěvky}} by příliš zatěžovalo systém.',
 	'userrenametool-errorprocessing' => 'Proces přejmenování uživatele <nowiki>$1</nowiki> na <nowiki>$2</nowiki> již probíhá.',
 	'userrenametool-errorblocked' => 'Uživatel <nowiki>$1</nowiki> je zablokován uživatelem <nowiki>$2</nowiki> za $3.',
-	'userrenametool-errorlocked' => 'Uživatel <nowiki>$1</nowiki> je zamčený.',
+	'userrenametool-errorlocked' => 'Uživatel <nowiki>$1</nowiki> je zablokovaný.',
 	'userrenametool-errorbot' => 'Uživatel <nowiki>$1</nowiki> je bot.',
 	'userrenametool-error-request' => 'Při přijímání požadavku došlo k chybě. Vraťte se a zkuste to znovu.',
 	'userrenametool-error-same-user' => 'Nové uživatelské jméno je stejné jako dosavadní.',

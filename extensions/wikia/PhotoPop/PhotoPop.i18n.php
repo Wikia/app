@@ -115,9 +115,22 @@ $messages['br'] = array(
 );
 
 /** Czech (česky)
+ * @author Chmee2
  * @author Vks
  */
 $messages['cs'] = array(
+	'photopop-setup-category-label' => 'Kategorie',
+	'photopop-game-total' => 'celkem',
+	'photopop-game-score' => 'skóre',
+	'photopop-game-wiki' => 'wiki',
+	'photopop-game-timeup' => 'čas vypršel!',
+	'photopop-game-please-wait' => 'Čekejte prosím',
+	'photopop-game-loading' => 'Načítání...',
+	'photopop-game-highscore' => 'Nejvyšší skóre',
+	'photopop-game-highscores' => 'nejvyšší skóre',
+	'photopop-game-yougot' => 'Máš',
+	'photopop-game-progress' => 'fotografie',
+	'photopop-game-finished' => 'hotovo!',
 	'photopop-game-month-0' => 'Led',
 	'photopop-game-month-1' => 'Úno',
 	'photopop-game-month-2' => 'Bře',
@@ -1060,6 +1073,39 @@ $messages['pt'] = array(
 	'photopop-game-month-11' => 'Dez',
 	'photopop-game-no-highscore' => 'Sem pontuações máximas',
 	'photopop-game-update-progress-text' => 'Atualizando jogo...',
+);
+
+/** Brazilian Portuguese (português do Brasil)
+ * @author Luckas Blade
+ */
+$messages['pt-br'] = array(
+	'photopop-setup-category-label' => 'Categoria',
+	'photopop-setup-submit-label' => 'Atualizar',
+	'photopop-current-settings-title' => 'Configurações atuais',
+	'photopop-game-correct' => 'Correto',
+	'photopop-game-points' => 'pontos',
+	'photopop-game-total' => 'total',
+	'photopop-game-score' => 'pontuação',
+	'photopop-game-wiki' => 'wiki',
+	'photopop-game-date' => 'data',
+	'photopop-game-timeup' => 'o tempo acabou!',
+	'photopop-game-please-wait' => 'Aguarde, por favor',
+	'photopop-game-loading' => 'Carregando...',
+	'photopop-game-progress' => 'fotos',
+	'photopop-game-loading-image' => 'Carregando imagem... <br />Por favor aguarde',
+	'photopop-game-month-0' => 'Jan',
+	'photopop-game-month-1' => 'Fev',
+	'photopop-game-month-2' => 'Mar',
+	'photopop-game-month-3' => 'Abr',
+	'photopop-game-month-4' => 'Mai',
+	'photopop-game-month-5' => 'Jun',
+	'photopop-game-month-6' => 'Jul',
+	'photopop-game-month-7' => 'Ago',
+	'photopop-game-month-8' => 'Set',
+	'photopop-game-month-9' => 'Out',
+	'photopop-game-month-10' => 'Nov',
+	'photopop-game-month-11' => 'Dez',
+	'photopop-game-no-highscore' => 'Sem pontuações máximas',
 );
 
 /** Russian (русский)

@@ -195,6 +195,16 @@ $messages['ce'] = array(
  */
 $messages['cs'] = array(
 	'multilookupnext' => 'další',
+	'multilookupprevious' => 'předchozí',
+	'multilookupinvalidresults' => 'Neplatné výsledky!',
+	'multilookupwiki' => 'Wiki',
+	'multilookupdetails' => 'Zobrazit detaily',
+	'multilookupwikidbname' => 'Název databáze',
+	'multilookupwikiurl' => 'URL',
+	'multilookupwikititle' => 'Název',
+	'multilookupwikioptions' => 'Možnosti',
+	'multilookuplastedithdr' => 'Poslední editace',
+	'multilookuprecordspager' => 'Zobrazeny záznamy $1 až $2 ze $3 záznamů.',
 );
 
 /** German (Deutsch)

@@ -216,6 +216,25 @@ $messages['br'] = array(
 	'phalanx-stats-table-wiki-last-edited' => 'Kemmet da ziwezhañ',
 );
 
+/** Czech (česky)
+ * @author Chmee2
+ */
+$messages['cs'] = array(
+	'phalanx-link-unblock' => 'odblokovat',
+	'phalanx-link-modify' => 'změnit',
+	'phalanx-link-stats' => 'statistiky',
+	'phalanx-stats-table-id' => 'ID bloku',
+	'phalanx-stats-table-type' => 'Typ',
+	'phalanx-stats-table-create' => 'Vytvořeno',
+	'phalanx-stats-table-expire' => 'Vyprší',
+	'phalanx-stats-table-exact' => 'Přesný',
+	'phalanx-stats-table-language' => 'Jazyk',
+	'phalanx-stats-table-text' => 'Text',
+	'phalanx-stats-table-reason' => 'Důvod',
+	'phalanx-stats-table-wiki-id' => 'ID wiki',
+	'phalanx-stats-table-wiki-name' => 'Název wiki',
+);
+
 /** German (Deutsch)
  * @author Claudia Hattitten
  * @author DaSch
@@ -1903,6 +1922,54 @@ Se acredita que este bloqueio foi feito em erro [[Special:Contact|contacte a Wik
 	'phalanx-stats-table-wiki-last-edited' => 'Última edição',
 	'right-phalanx' => 'Pode gerir bloqueios globais e filtros de spam',
 	'right-phalanxexempt' => 'Isento da regras do Phalanx',
+);
+
+/** Brazilian Portuguese (português do Brasil)
+ * @author Luckas Blade
+ */
+$messages['pt-br'] = array(
+	'phalanx' => 'Phalanx',
+	'phalanx-type-content' => 'conteúdo da página',
+	'phalanx-type-summary' => 'resumo da página',
+	'phalanx-type-title' => 'título da página',
+	'phalanx-type-user' => 'usuário',
+	'phalanx-type-answers-question-title' => 'título da pergunta',
+	'phalanx-type-answers-recent-questions' => 'perguntas recentes',
+	'phalanx-add-block' => 'Aplicar bloqueio',
+	'phalanx-edit-block' => 'Salvar bloqueio',
+	'phalanx-label-filter' => 'Filtro:',
+	'phalanx-label-reason' => 'Motivo:',
+	'phalanx-label-expiry' => 'Expiração:',
+	'phalanx-label-type' => 'Tipo:',
+	'phalanx-label-lang' => 'Língua:',
+	'phalanx-view-type' => 'Tipo de bloqueio...',
+	'phalanx-view-blocks' => 'Pesquisar filtros',
+	'phalanx-view-id' => 'Obter filtro por ID:',
+	'phalanx-view-id-submit' => 'Obter filtro',
+	'phalanx-format-text' => 'texto simples',
+	'phalanx-format-regex' => 'expressão regular',
+	'phalanx-format-case' => 'distinguir maiúsculas de minúsculas',
+	'phalanx-format-exact' => 'exato',
+	'phalanx-tab-secondary' => 'Testar filtros',
+	'phalanx-test-submit' => 'Testar',
+	'phalanx-test-results-legend' => 'Resultados do teste',
+	'phalanx-display-row-blocks' => 'bloqueios: $1',
+	'phalanx-display-row-created' => "criado por '''$1''' em $2",
+	'phalanx-link-unblock' => 'desbloquear',
+	'phalanx-link-modify' => 'modificar',
+	'phalanx-link-stats' => 'estatísticas',
+	'phalanx-reset-form' => 'Reiniciar o formulário',
+	'phalanx-legend-input' => 'Criar ou modificar filtro',
+	'phalanx-stats-table-user' => 'Adicionado por',
+	'phalanx-stats-table-type' => 'Tipo',
+	'phalanx-stats-table-create' => 'Criado',
+	'phalanx-stats-table-expire' => 'Expira',
+	'phalanx-stats-table-exact' => 'Exato',
+	'phalanx-stats-table-regex' => 'Expressão regular',
+	'phalanx-stats-table-case' => 'Caso',
+	'phalanx-stats-table-language' => 'Língua',
+	'phalanx-stats-table-text' => 'Texto',
+	'phalanx-stats-table-reason' => 'Motivo',
 );
 
 /** Russian (русский)

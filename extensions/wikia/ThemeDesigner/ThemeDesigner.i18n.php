@@ -327,6 +327,7 @@ $messages['ca'] = array(
 );
 
 /** Czech (česky)
+ * @author Chmee2
  * @author Dontlietome7
  * @author Mormegil
  * @author Reaperman
@@ -349,6 +350,7 @@ $messages['cs'] = array(
 	'themedesigner-medium' => 'Střední',
 	'themedesigner-large' => 'Velké',
 	'themedesigner-tile-background' => 'opakovat pozadí',
+	'themedesigner-fix-background' => 'oprava',
 	'themedesigner-transparency' => 'průhlednost',
 	'themedesigner-tab-theme' => 'Motiv',
 	'themedesigner-tab-customize' => 'Upravit',
@@ -373,6 +375,7 @@ $messages['cs'] = array(
 	'themedesigner-button-save' => 'Uložit',
 	'themedesigner-upload-a-graphic' => 'nahrát grafiku',
 	'themedesigner-rules-wordmark' => 'až do 250x65 pixelů (pouze soubory .png)',
+	'themedesigner-rules-favicon-learn-more-link' => 'Další informace.',
 	'themedesigner-dont-use-a-graphic' => 'vyjmout',
 	'themedesigner-history-item' => '$1 - $2',
 	'themedesigner-button-change-text' => 'Změnit text',
@@ -1537,8 +1540,10 @@ $messages['pt'] = array(
 /** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
  * @author Giro720
+ * @author Luckas Blade
  */
 $messages['pt-br'] = array(
+	'themedesigner-or' => 'ou',
 	'themedesigner-desc' => 'Permite aos administradores compor um tema visual para a wiki',
 	'themedesigner-title' => 'Compositor de Temas Visuais da Wikia',
 	'themedesigner-background' => 'Fundo',
@@ -1554,6 +1559,7 @@ $messages['pt-br'] = array(
 	'themedesigner-medium' => 'Médio',
 	'themedesigner-large' => 'Grande',
 	'themedesigner-tile-background' => 'repetir imagem de fundo',
+	'themedesigner-transparency' => 'transparência',
 	'themedesigner-tab-theme' => 'Variante',
 	'themedesigner-tab-customize' => 'Personalizar',
 	'themedesigner-tab-wordmark' => 'Símbolo',
@@ -1569,7 +1575,7 @@ $messages['pt-br'] = array(
 	'themedesigner-dont-use-a-background' => 'Não usar imagem de fundo',
 	'themedesigner-upload-your-own' => 'Faça o upload de uma',
 	'themedesigner-button-upload' => 'Carregar',
-	'themedesigner-rules-background' => 'jpg, gif ou png. Máx: 100 KB',
+	'themedesigner-rules-background' => 'jpg, gif ou png. Máximo: {{PLURAL:$1|$1 kilobyte|$1 kilobytes}}',
 	'themedesigner-default' => 'Padrão',
 	'themedesigner-font' => 'fonte',
 	'themedesigner-size' => 'tamanho',

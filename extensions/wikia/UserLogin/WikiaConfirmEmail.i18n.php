@@ -43,6 +43,14 @@ $messages['de'] = array(
 	'wikiaconfirmemail-username' => 'Benutzername',
 );
 
+/** Zazaki (Zazaki)
+ * @author Erdemaslancan
+ */
+$messages['diq'] = array(
+	'wikiaconfirmemail-login-button' => 'Arşatkrden u qeydi',
+	'wikiaconfirmemail-username' => 'Namey karberi',
+);
+
 /** Spanish (español)
  * @author VegaDark
  */

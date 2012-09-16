@@ -486,12 +486,12 @@ $messages['ca'] = array(
 	'wikiactivity' => 'Wiki Activity',
 	'myhome-activity-more' => 'veure més activitat recent',
 	'myhome-activity-feed' => "Llista d'activitat",
-	'myhome-activity-feed-empty' => "Aquest wiki està esperant a que t'uneixis. Fes clic a ''[[Special:CreatePage|nova pàgina]]''' per començar a escriure!",
+	'myhome-activity-feed-empty' => "Aquest wiki està esperant a que t'uneixis. Fes clic a '''[[Special:CreatePage|nova pàgina]]''' per començar a escriure!",
 	'myhome-watchlist-feed' => 'Llista de seguiment',
 	'myhome-watchlist-feed-empty' => "Pots afegir pàgines a la teva llista de seguiment clicant a l'enllaç \"{{int:watch}}\" a la barra que t'apareix a la part superior de la pàgina. Pots fer servir la teva llista de seguiment per mantenir-te informat sobre els últims canvis a les pàgines que t'interessen.",
 	'myhome-user-contributions-feed' => 'Contribucions',
 	'myhome-hot-spots-feed' => 'Més Populars!',
-	'myhome-hot-spots-feed-empty' => "Aquest wiki està esperant a que t'uneixis. Fes clic a ''[[Special:CreatePage|nova pàgina]]''' per començar a escriure!",
+	'myhome-hot-spots-feed-empty' => "Aquest wiki està esperant a que t'uneixis. Fes clic a '''[[Special:CreatePage|nova pàgina]]''' per començar a escriure!",
 	'myhome-hot-spots-newest' => 'Pàgines noves al wiki',
 	'tog-myhomedisableredirect' => 'Desactivar la redirecció al Wiki Activity',
 	'prefs-myhome' => 'Inici',
@@ -974,6 +974,35 @@ Si eres el fundador o un administrador de este wiki, puedes cambiar este mensaje
 	'tooltip-pt-myhome' => 'Ir a mi página',
 	'activityfeed' => 'Lista de actividad',
 	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|un mensaje|$1 mensajes}}',
+);
+
+/** Estonian (eesti)
+ * @author KalmerE.
+ */
+$messages['et'] = array(
+	'wikiactivity' => 'Wiki logi',
+	'myhome-activity-more' => 'vaata lisa viimaseid toiminguid',
+	'myhome-activity-feed' => 'Toimingute piirang',
+	'myhome-activity-feed-empty' => 'Wiki ootab sinu osalemist.
+Kirjutamise alustamiseks klõpsa "" [[Special:CreatePage|Uus lehekülg]] ""!',
+	'myhome-watchlist-feed' => 'Jälgimisloend',
+	'myhome-watchlist-feed-empty' => 'Lehekülje jälgimisloendisse lisamiseks klõpsa lehekülje ülaosa menüüribal "{{int:watch}}" linki.
+Jälgimisloendit saad kasutada oma lemmik lehekülje või oma muudatuste jälgimiseks.',
+	'myhome-user-contributions-feed' => 'Kaastööd',
+	'myhome-hot-spots-feed-empty' => 'Wiki ootab sinu osalemist.
+Klõpsa "" [[Special:CreatePage|Uus lehekülg]] "" ja alusta kirjutamist!',
+	'myhome-feed-newpage' => 'Uus lehekülg',
+	'myhome-feed-edit' => 'redigeeri',
+	'myhome-feed-talkpage' => 'Aruteluleht',
+	'myhome-feed-delete' => 'kustutatud',
+	'myhome-feed-comment-by' => 'kommentaar $1',
+	'myhome-feed-new-page-details' => 'Uus lehekülg',
+	'myhome-feed-summary-details' => 'Resümee:',
+	'myhome-feed-new-blog-comment-details' => 'Kommentaar',
+	'myhome-feed-new-article-comment-details' => 'Kommentaar',
+	'myhome-feed-move-details' => 'Nimeta ümber',
+	'myhome-feed-redirect-details' => 'Ümbersuunamine',
+	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|Lisatud kategooria|Lisatud kategooriad}}',
 );
 
 /** Persian (فارسی)

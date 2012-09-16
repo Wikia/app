@@ -68,6 +68,13 @@ $messages['br'] = array(
 	'feed-title-blogcomments' => 'Evezhiadenn da $1',
 );
 
+/** Czech (česky)
+ * @author Chmee2
+ */
+$messages['cs'] = array(
+	'partner-feed-recent-changes' => 'Poslední změny',
+);
+
 /** German (Deutsch)
  * @author Diebuche
  * @author George Animal
@@ -100,6 +107,9 @@ $messages['de'] = array(
  * @author Erdemaslancan
  */
 $messages['diq'] = array(
+	'partner-feed-recent-changes' => 'Vurnayışê peyêni',
+	'feed-title-recent-images' => 'Vurnayışê resiman',
+	'all-blog-posts' => 'kategoriy pêro',
 	'feed-title-blogcomments' => 'Vatışê - ($1)',
 );
 

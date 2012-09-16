@@ -878,9 +878,15 @@ $messages['ps'] = array(
 
 /** Portuguese (português)
  * @author Malafaya
+ * @author SandroHc
  */
 $messages['pt'] = array(
 	'app-loading' => 'A carregar...',
+	'app-tab-search' => 'Pesquisar',
+	'app-tab-about' => 'Sobre',
+	'app-tab-browse' => 'A..Z',
+	'app-tab-sotd' => 'CdD',
+	'app-async-error-title' => 'Ops!',
 	'app-nonetwork-dialog-close-button' => 'OK',
 	'search-hint-text' => "p.ex. 'John Lennon:Imagine'",
 	'about-credits' => 'por %s',
@@ -889,8 +895,15 @@ $messages['pt'] = array(
 
 /** Brazilian Portuguese (português do Brasil)
  * @author Caio1478
+ * @author Luckas Blade
  */
 $messages['pt-br'] = array(
+	'app-loading' => 'Carregando...',
+	'app-tab-search' => 'Pesquisar',
+	'app-tab-about' => 'Sobre',
+	'app-tab-browse' => 'A..Z',
+	'app-nonetwork-dialog-close-button' => 'OK',
+	'search-go' => 'Ir!',
 	'login-username-hint' => 'Nome de usuário',
 	'login-password-hint' => 'Senha',
 	'login-submit-button' => 'Login',

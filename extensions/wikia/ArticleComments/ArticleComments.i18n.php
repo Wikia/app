@@ -426,6 +426,7 @@ $messages['da'] = array(
  * @author Geitost
  * @author Inkowik
  * @author LWChris
+ * @author Metalhead64
  * @author PtM
  * @author SVG
  */
@@ -470,26 +471,23 @@ $messages['de'] = array(
 	'enotif_subject_article_comment' => '$PAGEEDITOR hat "$PAGETITLE" auf {{SITENAME}} kommentiert',
 	'enotif_body_article_comment' => 'Hallo $WATCHINGUSERNAME,
 
-$PAGEEDITOR hat einen Kommentar zu "$PAGETITLE" abgegeben.
+Es gibt zu $PAGETITLE auf {{SITENAME}} einen neuen Kommentar. Verwende diesen Link, um alle Kommentare anzusehen: $PAGETITLE_URL#WikiaArticleComments
 
-Um den Kommentar-Thread anzusehen, folge dem unten stehenden Link:
-$PAGETITLE_URL
+– Wikia Community Team
 
-Bitte komm vorbei und bearbeite viel...
-
-Wikia',
+___________________________________________
+* Bekomme Hilfe und Ratschläge auf Community Central: http://community.wikia.com
+* Willst du weniger Nachrichten von uns erhalten? Du kannst die Benachrichtigung abbestellen oder deine E-Mail-Einstellungen hier ändern: http://community.wikia.com/Special:Preferences',
 	'enotif_body_article_comment-HTML' => '<p>Hallo $WATCHINGUSERNAME,
 <br /><br />
-$PAGEEDITOR hat einen Kommentar zu "$PAGETITLE" abgegeben.
+Es gibt zu $PAGETITLE auf {{SITENAME}} einen neuen Kommentar. Verwende diesen Link, um alle Kommentare anzusehen: $PAGETITLE_URL#WikiaArticleComments
 <br /><br />
-Um den Kommentar-Thread anzusehen, folge diesem Link: <a href="$PAGETITLE_URL">$PAGETITLE</a>
+– Wikia Community Team
 <br /><br />
-Bitte komm vorbei und bearbeite viel...
-<br /><br />
-Wikia
-<br /><hr />
+___________________________________________
 <ul>
-<li>Willst du kontrollieren, welche E-Mails du erhältst? <a href="{{fullurl:Special:Preferences}}">Pass deine Einstellungen an<a>.</li>
+<li>Bekomme Hilfe und Ratschläge auf Community Central: <a href="http://community.wikia.com">http://community.wikia.com</a><li>
+<li>Willst du weniger Nachrichten von uns erhalten? Du kannst die Benachrichtigung abbestellen oder deine E-Mail-Einstellungen hier ändern: <a href="http://community.wikia.com/Special:Preferences">http://community.wikia.com/Special:Preferences</a></li>
 </ul>
 </p>',
 );
@@ -547,7 +545,7 @@ $messages['diq'] = array(
 <br /><br />
 $PAGEEDITOR ena vatış "$PAGETITLE".
 <br /><br />
-weşte şıma şi se: <a href="$PAGETITLE_URL">$PAGETITLE</a>
+weşte şıma {{SITENAME}} şi se: <a href="$PAGETITLE_URL">$PAGETITLE</a>
 <br /><br />
 teneye vındere u bahdo bıvurne
 <br /><br />
@@ -634,27 +632,25 @@ $messages['es'] = array(
 	'wikiamobile-article-comments-show' => 'Mostrar',
 	'wikiamobile-article-comments-login-post' => 'Inicia sesión para publicar un comentario.',
 	'enotif_subject_article_comment' => '$PAGEEDITOR ha comentado en "$PAGETITLE" en {{SITENAME}}',
-	'enotif_body_article_comment' => 'Estimado $WATCHINGUSERNAME,
+	'enotif_body_article_comment' => 'Hola $WATCHINGUSERNAME,
 
-$PAGEEDITOR realizó un comentario en "$PAGETITLE".
+Hay un nuevo comentario en la página $PAGETITLE de {{SITENAME}}. Usa este enlace para ver todos los comentarios: $PAGETITLE_URL#WikiaArticleComments
 
-Para ver el comentario, sigue el enlace: $PAGETITLE_URL
+- Equipo Comunitario de Wikia
 
-Por favor visita y edita con frecuencia...
-
-Wikia',
-	'enotif_body_article_comment-HTML' => '<p>Estimado $WATCHINGUSERNAME,
+___________________________________________
+* Encuentra ayuda y consejos en la Central Hispana: http://es.wikia.com
+* ¿Quieres recibir pocos mensajes de nosotros? Puedes darte de baja o cambiar tus preferencias de correo electrónico aquí: http://es.wikia.com/Especial:Preferencias',
+	'enotif_body_article_comment-HTML' => '<p>Hola $WATCHINGUSERNAME,
 <br /><br />
-$PAGEEDITOR realizó un comentario en "$PAGETITLE".
+Hay un nuevo comentario en la página $PAGETITLE de {{SITENAME}}. Usa este enlace para ver todos los comentarios: $PAGETITLE_URL#WikiaArticleComments
 <br /><br />
-Para ver el comentario, sigue el enlace: <a href="$PAGETITLE_URL">$PAGETITLE</a>
+- Equipo Comunitario de Wikia
 <br /><br />
-Por favor, visita y edita con frecuencia...
-<br /><br />
-Wikia
-<br /><hr />
+___________________________________________
 <ul>
-<li>¿Quieres controlar qué mensajes recibir? <a href="{{fullurl:Special:Preferences}}">Actualiza tus preferencias<a>.</li>
+<li>Encuentra ayuda y consejos en la Central Hispana: <a href="http://es.wikia.com">http://es.wikia.com</a><li>
+<li>¿Quieres recibir pocos mensajes de nosotros? Puedes darte de baja o cambia tus preferencias de correo electrónico aquí: <a href="http://es.wikia.com/Especial:Preferencias">http://es.wikia.com/wiki/Especial:Preferencias</a></li>
 </ul>
 </p>',
 );
@@ -664,10 +660,13 @@ Wikia
  */
 $messages['et'] = array(
 	'article-comments-anonymous' => 'Anonüümne kasutaja',
+	'article-comments-comments' => 'Kommentaar ($1)',
+	'article-comments-post' => 'Kommenteeri',
 	'article-comments-cancel' => 'Tühista',
 	'article-comments-delete' => 'kustuta',
 	'article-comments-edit' => 'redigeeri',
 	'article-comments-history' => 'ajalugu',
+	'article-comments-error' => 'Kommentaari ei õnnestu salvestada',
 	'article-comments-toc-item' => 'Kommentaarid',
 	'article-comments-reply' => 'Vasta',
 	'article-comments-show-all' => 'Vaata kõiki kommentaare',
@@ -868,19 +867,19 @@ $messages['fr'] = array(
 	'enotif_subject_article_comment' => '$PAGEEDITOR a commenté « $PAGETITLE » sur {{SITENAME}}',
 	'enotif_body_article_comment' => '$WATCHINGUSERNAME,
 
-Un nouveau commentaire a été laissé sur « $PAGETITLE » sur {{SITENAME}}. Utilisez ce lien pour voir tous les commentaires : $PAGETITLE_URL#article-comments
+Un nouveau commentaire a été laissé sur « $PAGETITLE » sur {{SITENAME}}. Utilisez ce lien pour voir tous les commentaires : $PAGETITLE_URL#WikiaArticleComments
 
 — L’équipe Wikia
 
 ___________________________________________
 * Pour voir les derniers évènements sur Wikia, rendez-vous sur http://communaute.wikia.com
 * Vous souhaitez contrôler les courriels que vous recevez ? Rendez-vous sur : {{fullurl:{{ns:special}}:Preferences}}.
-* Cliquez sur le lien suivant pour vous désabonner de tous les courriels de Wikia : $UNSUBSCRIBEURL',
+* Cliquez sur le lien suivant pour vous désabonner de tous les courriels de Wikia : http://communaute.wikia.com/Special:Preferences',
 	'enotif_body_article_comment-HTML' => '<p>$WATCHINGUSERNAME,
 <br /><br />
-Un nouveau commentaire a été laissé sur « $PAGETITLE » sur {{SITENAME}}. Utilisez ce lien pour voir tous les commentaires : <a href="$PAGETITLE_URL#article-comments">$PAGETITLE</a>
+Un nouveau commentaire a été laissé sur « $PAGETITLE » sur {{SITENAME}}. Utilisez ce lien pour voir tous les commentaires : $PAGETITLE_URL#WikiaArticleComments
 <br /><br />
-- L’équipe Wikia</p>
+— L’équipe Wikia</p>
 <br /><hr />
 <p>
 <ul>
@@ -888,7 +887,7 @@ Un nouveau commentaire a été laissé sur « $PAGETITLE » sur {{SITENAME}}. Ut
 <li>Vous souhaitez contrôler les courriels que vous recevez ? Rendez-vous sur vos <a href="{{fullurl:{{ns:special}}:Preferences}}">préférences</a></li>
 </ul>
 </p>
-<div style="font-size: 70%;margin-top: 25px;text-align: center;">Cliquez <a href="$UNSUBSCRIBEURL">ici</a> pour vous désabonner de tous les courriels de Wikia.</div>',
+<div style="font-size: 70%;margin-top: 25px;text-align: center;">Cliquez <a href="http://communaute.wikia.com/Special:Preferences">ici</a> pour vous désabonner de tous les courriels de Wikia.</div>',
 );
 
 /** Galician (galego)
@@ -933,28 +932,27 @@ $messages['gl'] = array(
 	'wikiamobile-article-comments-show' => 'Mostrar',
 	'wikiamobile-article-comments-login-post' => 'Acceda ao sistema para publicar un comentario.',
 	'enotif_subject_article_comment' => '$PAGEEDITOR fixo un comentario sobre "$PAGETITLE" en {{SITENAME}}',
-	'enotif_body_article_comment' => 'Estimado $WATCHINGUSERNAME:
+	'enotif_body_article_comment' => 'Boas, $WATCHINGUSERNAME:
 
-$PAGEEDITOR fixo un comentario sobre "$PAGETITLE".
+Hai un novo comentario na páxina "$PAGETITLE" de {{SITENAME}}. Use esta ligazón para botar un ollo a todos os comentarios:
+$PAGETITLE_URL#WikiaArticleComments
 
-Para ollar o fío do comentario, siga esta ligazón:
-$PAGETITLE_URL
+- O equipo comunitario de Wikia
 
-Visítenos e edite a miúdo...
-
-Wikia',
-	'enotif_body_article_comment-HTML' => '<p>Estimado $WATCHINGUSERNAME:
+___________________________________________
+* Atope axuda e consellos na central da comunidade: http://community.wikia.com
+* Quere recibir menos mensaxes nosas? Pode cancelar a subscrición ou cambiar as preferencias de correo electrónico aquí: http://community.wikia.com/Special:Preferences',
+	'enotif_body_article_comment-HTML' => '<p>Boas, $WATCHINGUSERNAME:
 <br /><br />
-$PAGEEDITOR fixo un comentario sobre "$PAGETITLE".
+Hai un novo comentario na páxina "$PAGETITLE" de {{SITENAME}}. Use esta ligazón para botar un ollo a todos os comentarios:
+$PAGETITLE_URL#WikiaArticleComments
 <br /><br />
-Para ollar o fío do comentario, siga esta ligazón: <a href="$PAGETITLE_URL">$PAGETITLE</a>
+- O equipo comunitario de Wikia
 <br /><br />
-Visítenos e edite a miúdo...
-<br /><br />
-Wikia
-<br /><hr />
+___________________________________________
 <ul>
-<li>Quere controlar os correos electrónicos que recibe? <a href="{{fullurl:Special:Preferences}}">Actualice as súas preferencias<a>.</li>
+<li>Atope axuda e consellos na central da comunidade: <a href="http://community.wikia.com">http://community.wikia.com</a><li>
+<li>Quere recibir menos mensaxes nosas? Pode cancelar a subscrición ou cambiar as preferencias de correo electrónico aquí: <a href="http://community.wikia.com/Special:Preferences">http://community.wikia.com/Special:Preferences</a></li>
 </ul>
 </p>',
 );
@@ -1490,28 +1488,25 @@ $messages['mk'] = array(
 	'wikiamobile-article-comments-show' => 'Прикажи',
 	'wikiamobile-article-comments-login-post' => 'Најавете се за да можете да коментирате.',
 	'enotif_subject_article_comment' => '$PAGEEDITOR коментираше на „$PAGETITLE“ на {{SITENAME}}',
-	'enotif_body_article_comment' => 'Почитуван/а $WATCHINGUSERNAME,
+	'enotif_body_article_comment' => 'Здраво $WATCHINGUSERNAME,
 
-$PAGEEDITOR коментираше на „$PAGETITLE“.
+Има нов коментар на страницата $PAGETITLE на {{SITENAME}}. Сите коментари ќе ги најдете тука: $PAGETITLE_URL#WikiaArticleComments
 
-Коментарот можете да го проследите на следнава врска:
-$PAGETITLE_URL
+- Поддршка за заедницата на Викија
 
-Посетувајте нè и уредувајте често...
-
-Викија',
-	'enotif_body_article_comment-HTML' => '<p>Почитуван/а $WATCHINGUSERNAME,
+___________________________________________
+* Помош и совети за Викија ќе добиете во Центарот на заедницата: http://community.wikia.com
+* Сакате да добивате помалку пораки од нас? Тука можете да ја откажете претплатата или да ги измените поставките за е-пошта: http://community.wikia.com/Special:Preferences',
+	'enotif_body_article_comment-HTML' => '<p>Здраво $WATCHINGUSERNAME,
 <br /><br />
-$PAGEEDITOR коментираше на „$PAGETITLE“.
+Има нов коментар на страницата $PAGETITLE на {{SITENAME}}. Сите коментари ќе ги најдете тука: $PAGETITLE_URL#WikiaArticleComments
 <br /><br />
-Коментарот може да го проследите на следнава врска: <a href="$PAGETITLE_URL">$PAGETITLE</a>
+- Поддршка за заедницата на Викија
 <br /><br />
-Посетувајте нè и уредувајте често...
-<br /><br />
-Викија
-<br /><hr />
+___________________________________________
 <ul>
-<li>Сакате да определите кои пораки да ги добивате? <a href="{{fullurl:Special:Preferences}}">Изменете си ги нагодувањата<a>.</li>
+<li>омош и совети за Викија ќе добиете во Центарот на заедницата: <a href="http://community.wikia.com">http://community.wikia.com</a><li>
+<li>Сакате да добивате помалку пораки од нас? Тука можете да ја откажете претплатата или да ги измените поставките за е-пошта: <a href="http://community.wikia.com/Special:Preferences">http://community.wikia.com/Special:Preferences</a></li>
 </ul>
 </p>',
 );
@@ -1580,26 +1575,23 @@ $messages['ms'] = array(
 	'enotif_subject_article_comment' => '$PAGEEDITOR telah mengulas "$PAGETITLE" di {{SITENAME}}',
 	'enotif_body_article_comment' => '$WATCHINGUSERNAME,
 
-$PAGEEDITOR telah membuat ulasan di "$PAGETITLE".
+Terdapat komen baru pada $PAGETITLE di {{SITENAME}}. Ikut pautan ini untuk melihat semua komen: $PAGETITLE_URL#WikiaArticleComments
 
-Untuk melihat tred ulasannya, sila ikuti pautan berikut:
-$PAGETITLE_URL
+- Bantuan Komuniti Wikia
 
-Sila datang lagi untuk menyunting...
-
-Wikia',
+___________________________________________
+* Dapatkan bantuan dan nasihat di Pusat Komuniti: http://community.wikia.com
+* Ingin mengurangkan penerimaan pesanan daripada kami? Anda boleh berhenti melanggan atau menukar keutamaan anda di sini: http://community.wikia.com/Special:Preferences',
 	'enotif_body_article_comment-HTML' => '<p>$WATCHINGUSERNAME,
 <br /><br />
-$PAGEEDITOR membuat ulasan di "$PAGETITLE".
+Terdapat komen baru pada $PAGETITLE di {{SITENAME}}. Ikut pautan ini untuk melihat semua komen: $PAGETITLE_URL#WikiaArticleComments
 <br /><br />
-Untuk melihat tred ulasannya, klik di sini: <a href="$PAGETITLE_URL">$PAGETITLE</a>
+- Bantuan Komuniti Wikia
 <br /><br />
-Sila lawati kami selalu untuk menyunting...
-<br /><br />
-Wikia
-<br /><hr />
+___________________________________________
 <ul>
-<li>Nak kawal emel mana yang anda terima? <a href="{{fullurl:Special:Preferences}}">Kemaskini Keutamaan anda<a>.</li>
+<li> Dapatkan bantuan dan nasihat di Pusat Komuniti: <a href="http://community.wikia.com">http://community.wikia.com</a></li>
+<li> Ingin mengurangkan penerimaan pesanan daripada kami? Anda boleh berhenti melanggan atau menukar keutamaan anda di sini: <a href="http://community.wikia.com/Special:Preferences">http://community.wikia.com/Special:Preferences</a></li>
 </ul>
 </p>',
 );
@@ -1655,28 +1647,25 @@ $messages['nb'] = array(
 	'wikiamobile-article-comments-show' => 'Vis',
 	'wikiamobile-article-comments-login-post' => 'Vennligst logg inn for å poste en kommentar.',
 	'enotif_subject_article_comment' => '$PAGEEDITOR har kommentert «$PAGETITLE» på {{SITENAME}}',
-	'enotif_body_article_comment' => 'Kjære $WATCHINGUSERNAME,
+	'enotif_body_article_comment' => 'Hei $WATCHINGUSERNAME,
 
-$PAGEEDITOR har kommentert «$PAGETITLE».
+Det er en ny kommentar til $PAGETITLE på {{SITENAME}}. Bruk denne lenken for å se alle kommentarene: $PAGETITLE_URL#WikiaArticleComments
 
-For å se kommentartråden, følg lenken under:
-$PAGETITLE_URL
+- Wikia fellesskapssupporten
 
-Vennligst kom på besøk og rediger ofte...
-
-Wikia',
-	'enotif_body_article_comment-HTML' => '<p>Kjære $WATCHINGUSERNAME,
+___________________________________________
+* Finn hjelp og råd på Fellesskapssentralen: http://community.wikia.com
+* Vil du motta færre meldinger fra oss? Du kan avslutte abonnementet eller endre e-postinnstillingene dine her: http://community.wikia.com/Special:Preferences',
+	'enotif_body_article_comment-HTML' => '<p>Hei $WATCHINGUSERNAME,
 <br /><br />
-$PAGEEDITOR har kommentert «$PAGETITLE».
+Det er en ny kommentar til $PAGETITLE på {{SITENAME}}. Bruk denne lenken for å se alle kommentarene: $PAGETITLE_URL#WikiaArticleComments
 <br /><br />
-For å se kommentartråden, følg denne lenken: <a href="$PAGETITLE_URL">$PAGETITLE</a>
+- Wikia fellesskapssupporten
 <br /><br />
-Vennligst kom på besøk og rediger ofte...
-<br /><br />
-Wikia
-<br /><br />
+___________________________________________
 <ul>
-<li>Vil du kontrollere hva slags e-post du mottar? <a href="{{fullurl:Special:Preferences}}">Oppdater innstillingene dine<a>.</li>
+<li>Finn hjelp og råd på Fellesskapssentralen: <a href="http://community.wikia.com">http://community.wikia.com</a></li>
+<li>Vil du motta færre meldinger fra oss? Du kan avslutte abonnementet eller endre e-postinnstillingene dine her: <a href="http://community.wikia.com/Special:Preferences">http://community.wikia.com/Special:Preferences</a></li>
 </ul>
 </p>',
 );
@@ -1830,28 +1819,25 @@ $messages['pl'] = array(
 	'wikiamobile-article-comments-show' => 'Pokaż',
 	'wikiamobile-article-comments-login-post' => 'Zaloguj się aby dodać komentarz.',
 	'enotif_subject_article_comment' => '$PAGEEDITOR skomentował "$PAGETITLE" na {{SITENAME}}',
-	'enotif_body_article_comment' => 'Drogi $WATCHINGUSERNAME,
+	'enotif_body_article_comment' => 'Witaj $WATCHINGUSERNAME,
 
-$PAGEEDITOR dodał komentarz na "$PAGETITLE".
+Na {{SITENAME}} pojawił się nowy komentarz na stronie $PAGETITLE . Użyj tego linku aby zobaczyć wszystkie komentarze: $PAGETITLE_URL#WikiaArticleComments
 
-Aby zobaczyć komentarz, wejdź na:
-$PAGETITLE_URL
+- Zespół Wikii
 
-Sprawdź i edytuj...
-
-Wikia',
-	'enotif_body_article_comment-HTML' => '<p>Drogi $WATCHINGUSERNAME,
+___________________________________________
+* Aby uzyskać dodatkową pomoc od społeczności Wikii, odwiedź http://spolecznosc.wikia.com
+* W celu zmiany ustawień powiadomień e-mail, odwiedź http://spolecznosc.wikia.com/wiki/Special:Preferences',
+	'enotif_body_article_comment-HTML' => '<p>Witaj $WATCHINGUSERNAME,
 <br /><br />
-$PAGEEDITOR dodał komentarz na "$PAGETITLE".
+Na {{SITENAME}} pojawił się nowy komentarz na stronie $PAGETITLE . Użyj tego linku aby zobaczyć wszystkie komentarze: $PAGETITLE_URL#WikiaArticleComments
 <br /><br />
-Aby zobaczyć komentarz, wejdź na: <a href="$PAGETITLE_URL">$PAGETITLE</a>
+- Zespół Wikii
 <br /><br />
-Sprawdź i edytuj...
-<br /><br />
-Wikia
-<br /><hr />
+___________________________________________
 <ul>
-<li>Chcesz zmienić ustawiania otrzymywanych e-maili? <a href="{{fullurl:Special:Preferences}}">Zmień ustawienia<a>.</li>
+<li>Aby uzyskać dodatkową pomoc od społeczności Wikii, odwiedź <a href="http://spolecznosc.wikia.com">Centrum Społeczności</a>.</li>
+<li>W celu zmiany ustawień powiadomień e-mail, odwiedź <a href="http://spolecznosc.wikia.com/wiki/Special:Preferences">tą stronę</a>.</li>
 </ul>
 </p>',
 );
@@ -1922,16 +1908,15 @@ $messages['pt'] = array(
 	'wikiamobile-article-comments-show' => 'Mostrar',
 	'wikiamobile-article-comments-login-post' => 'Inicie sessão antes de publicar um comentário.',
 	'enotif_subject_article_comment' => '$PAGEEDITOR comentou "$PAGETITLE" na {{SITENAME}}',
-	'enotif_body_article_comment' => 'Caro $WATCHINGUSERNAME,
+	'enotif_body_article_comment' => 'Olá $WATCHINGUSERNAME,
 
-$PAGEEDITOR fez um comentário em "$PAGETITLE".
+Existe um novo comentário em $PAGETITLE na {{SITENAME}}. Usa este link para ver todos os comentários: $PAGETITLE_URL#WikiaArticleComments
 
-Para ver o comentário, siga o link abaixo:
-$PAGETITLE_URL
+- Suporte da Comunidade da Wikia
 
-Por favor, visite-nos e edite muito...
-
-Wikia',
+___________________________________________
+* Encontra ajuda e conselhos na Central da Comunidade: http://community.wikia.com
+* Desejas receber menos mensagens nossas? Podes des-subscrever ou alterar as tuas preferências de e-mail aqui: http://community.wikia.com/Special:Preferences',
 	'enotif_body_article_comment-HTML' => '<p>Caro $WATCHINGUSERNAME,
 <br /><br />
 $PAGEEDITOR fez um comentário em "$PAGETITLE".
@@ -1951,6 +1936,7 @@ Wikia
 /** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
  * @author Caio1478
+ * @author Luckas Blade
  */
 $messages['pt-br'] = array(
 	'article-comments-anonymous' => 'Usuário anônimo',
@@ -1978,8 +1964,12 @@ $messages['pt-br'] = array(
 	'article-comments-page-spacer' => '& # 160... & # 160',
 	'article-comments-delete-reason' => '',
 	'article-comments-empty-comment' => 'Você não pode postar um comentário vazio. <a href="$1">Excluí-lo em vez disso?</a>',
+	'wikiamobile-article-comments-none' => 'Sem comentários',
+	'wikiamobile-article-comments-view' => 'Ver respostas',
+	'wikiamobile-article-comments-replies' => 'respostas',
 	'wikiamobile-article-comments-post' => 'Postar',
 	'wikiamobile-article-comments-placeholder' => 'Postar um comentário',
+	'wikiamobile-article-comments-show' => 'Mostrar',
 	'enotif_subject_article_comment' => 'Comentou sobre "$ PAGETITLE" em {{SITENAME}} $PAGEEDITOR',
 	'enotif_body_article_comment' => 'Caro $ WATCHINGUSERNAME,
 
@@ -2028,6 +2018,8 @@ $messages['ro'] = array(
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
+	'article-comments-cancel' => 'Annulle',
+	'article-comments-toc-item' => 'Commende',
 	'article-comments-reply' => 'Respunne',
 );
 
@@ -2074,24 +2066,25 @@ $messages['ru'] = array(
 	'wikiamobile-article-comments-show' => 'Показать',
 	'wikiamobile-article-comments-login-post' => 'Пожалуйста войдите, чтобы оставить комментарий.',
 	'enotif_subject_article_comment' => '$PAGEEDITOR прокомментировал "$ PAGETITLE" на {{SITENAME}}',
-	'enotif_body_article_comment' => 'Уважаемый $WATCHINGUSERNAME,
+	'enotif_body_article_comment' => 'Привет $WATCHINGUSERNAME,
 
-$PAGEEDITOR оставил комментарий "$PAGETITLE".
+Новый комментарий был добавлен к странице $PAGETITLE на {{SITENAME}}. Вы можете посмотреть все комментарии по этой ссылке: $PAGETITLE_URL#WikiaArticleComments
 
-Чтобы посмотреть комментарий, перейдите по этой ссылке:
-$PAGETITLE_URL
+- Команда Викия
 
-Викия',
-	'enotif_body_article_comment-HTML' => '<p>Уважаемый $WATCHINGUSERNAME,
+___________________________________________
+* Вы можете найти помощь и совет на Центральной Вики: http://community.wikia.com
+* Хотите контролировать, какие электронные письма вы хотите получать? Вы можете настроить рассылку или отписаться от неё на странице личных настроек: http://community.wikia.com/Special:Preferences',
+	'enotif_body_article_comment-HTML' => '<p>Привет $WATCHINGUSERNAME,
 <br /><br />
-$PAGEEDITOR оставил комментарий "$PAGETITLE".
+Новый комментарий был добавлен к странице $PAGETITLE на {{SITENAME}}. Uы можете посмотреть все комментарии по этой ссылке:  $PAGETITLE_URL#WikiaArticleComments
 <br /><br />
-Чтобы увидеть этот комментарий, пройдите по этой ссылке: <a href="$PAGETITLE_URL">$PAGETITLE</a>
+- Команда Викия
 <br /><br />
-Викия
-<br /><hr />
+___________________________________________
 <ul>
-<li>Хотите изменить настройки получаемых email? <a href="{{fullurl:Special:Preferences}}">Обновите личные настройки<a>.</li>
+<li>Вы можете найти помощь и совет на Центральной Вики: <a href="http://community.wikia.com">http://community.wikia.com</a><li>
+<li>Хотите контролировать, какие электронные письма вы хотите получать? Вы можете настроить рассылку или отписаться от неё на странице личных настроек: <a href="http://community.wikia.com/Special:Preferences">http://community.wikia.com/Special:Preferences</a></li>
 </ul>
 </p>',
 );

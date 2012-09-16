@@ -263,6 +263,31 @@ $messages['ca'] = array(
 	'wikiamobile-facebook-connect-fail' => 'Ho sentim, el teu compte de Facebook no està actualment vinculat amb el teu compte de Wikia.',
 );
 
+/** Czech (česky)
+ * @author Chmee2
+ */
+$messages['cs'] = array(
+	'userlogin-login-heading' => 'Přihlásit se',
+	'userlogin-forgot-password' => 'Zapomněli jste heslo?',
+	'userlogin-remembermypassword' => 'Zůstat přihlášený',
+	'userlogin-error-invalidemailaddress' => 'Zadejte prosím platnou e-mailovou adresu.',
+	'userlogin-error-invalid-username' => 'Neplatné uživatelské jméno',
+	'userlogin-error-userlogin-unable-info' => 'Omlouváme se, ale nyní není možné zaregistrovat váš účet.',
+	'userlogin-error-user-not-allowed' => 'Toto uživatelské jméno není dovoleno.',
+	'userlogin-error-noemailtitle' => 'Zadejte prosím platnou e-mailovou adresu.',
+	'userlogin-error-resetpass_forbidden' => 'Hesla není možné změnit',
+	'userlogin-error-unconfirmed-user' => 'Omlouváme se, ale nepotvrdil jste váš email. Prosíme, nejprve ho potvrďte.',
+	'userlogin-password-page-title' => 'Změnit heslo',
+	'userlogin-oldpassword' => 'Staré heslo',
+	'userlogin-newpassword' => 'Nové heslo',
+	'userlogin-retypenew' => 'Zadat nové heslo znovu',
+	'userlogin-password-email-greeting' => 'Ahoj $USERNAME,',
+	'userlogin-provider-or' => 'Nebo',
+	'userlogin-provider-tooltip-facebook' => 'Klikněte pro přihlášení skrze Facebook',
+	'userlogin-loginreqlink' => 'přihlásit se',
+	'wikiamobile-sendpassword-label' => 'Poslat nové heslo',
+);
+
 /** German (Deutsch)
  * @author MtaÄ
  */
@@ -1271,6 +1296,7 @@ $messages['pt'] = array(
 	'userlogin-newpassword' => 'Nova senha',
 	'userlogin-retypenew' => 'Confirme a nova senha',
 	'userlogin-password-email-greeting' => 'Olá $USERNAME,',
+	'userlogin-password-email-signature' => 'Suporte da Comunidade da Wikia',
 	'userlogin-provider-or' => 'Ou',
 	'userlogin-loginreqlink' => 'entrar',
 	'userlogin-changepassword-needlogin' => 'Você necessita de $1 para alterar a senha.',
@@ -1280,6 +1306,7 @@ $messages['pt'] = array(
 
 /** Brazilian Portuguese (português do Brasil)
  * @author Caio1478
+ * @author Luckas Blade
  */
 $messages['pt-br'] = array(
 	'userlogin-login-heading' => 'Login',
@@ -1313,6 +1340,13 @@ $messages['pt-br'] = array(
 	'userlogin-password-email-sent' => 'Nós enviamos uma nova senha para o endereço de e-mail para $1.',
 	'userlogin-error-unconfirmed-user' => 'Desculpe, você não confirmou seu endereço de e-mail. Por favor, confirme seu endereço de e-mail primeiro.',
 	'userlogin-password-page-title' => 'Mude sua senha',
+	'userlogin-oldpassword' => 'Senha antiga',
+	'userlogin-newpassword' => 'Nova senha',
+	'userlogin-retypenew' => 'Confirme a nova senha',
+	'userlogin-password-email-greeting' => 'Olá $USERNAME,',
+	'userlogin-provider-or' => 'Ou',
+	'userlogin-loginreqlink' => 'entrar',
+	'wikiamobile-sendpassword-label' => 'Enviar nova senha',
 );
 
 /** Russian (русский)
@@ -1785,17 +1819,46 @@ $messages['zh-hans'] = array(
 	'userlogin-error-invalid-username' => '用户名无效',
 	'userlogin-error-userlogin-unable-info' => '抱歉，我们不能在这时等级您的帐户。',
 	'userlogin-error-user-not-allowed' => '该用户名禁用。',
+	'userlogin-error-captcha-createaccount-fail' => '输入的字符不匹配，请重输！',
 	'userlogin-error-userlogin-bad-birthday' => '请填写年、月、和日。',
 	'userlogin-error-externaldberror' => '抱歉，目前系统出错，请稍后再试。',
 	'userlogin-error-noemailtitle' => '请输入有效的邮箱地址',
 	'userlogin-error-acct_creation_throttle_hit' => '抱歉，该IP地址今天新建帐户过多，请稍后再试。',
 	'userlogin-error-resetpass_forbidden' => '无法更改密码',
 	'userlogin-error-blocked-mailpassword' => '该IP地址已被Wikia限制使用。不能申请新密码。',
-	'userlogin-error-throttled-mailpassword' => '密码提醒已在{{PLURAL:$1|小时|$1小时}}内发送到该帐户，请查收您的电子邮件。',
+	'userlogin-error-throttled-mailpassword' => '密码提醒已在{{PLURAL:$1|hour|$1hour}}内发送到该帐户，请查收您的电子邮件。',
+	'userlogin-error-mail-error' => '哦，关于错误的信息已发送至您的信箱，请[[Special:Contact/general|联系我们]]。',
 	'userlogin-password-email-sent' => '我们已将新密码寄至该邮箱$1。',
+	'userlogin-error-unconfirmed-user' => '抱歉，您的电子邮件还未得到确认。请先确认。',
+	'userlogin-password-page-title' => '更改您的密码',
 	'userlogin-oldpassword' => '旧密码',
 	'userlogin-newpassword' => '新密码',
+	'userlogin-retypenew' => '再次输入新密码',
+	'userlogin-password-email-subject' => '忘记密码请求',
 	'userlogin-password-email-greeting' => '嗨！$USERNAME，',
+	'userlogin-password-email-content' => '请使用该临时密码登录Wikia：”$NEWPASSWORD“
+<br /><br />
+如果您没有申请新密码，不用担心！您的帐户十分安全可靠。您可以忽略该邮件并且继续使用旧密码登录Wikia。
+<br /><br />
+如果您有任何问题，请联系我们。',
+	'userlogin-password-email-signature' => 'Wikia社区支持',
+	'userlogin-password-email-body' => '你好$2，
+
+请使用临时密码登录Wikia：“$3”
+
+如果您没有申请新密码，不用担心！您的帐户十分安全可靠。您可以忽略该邮件摈弃恶继续使用旧密码登录Wikia。
+
+如果您有任何问题，请联系我们。
+
+Wikia社区支持
+
+_______________________________________
+如果您想查询Wikia最新资讯，请查看http://community.wikia.com
+如果您想对您所收邮件进行限制设置，请查看{{fullurl:{{ns:special}}:Preferences}}',
+	'userlogin-email-footer-line1' => '为了查看Wikia最新发生的事，请点击<a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>',
+	'userlogin-provider-or' => '或',
 	'userlogin-loginreqlink' => '登录',
+	'userlogin-changepassword-needlogin' => '您需要$1来更改您的密码。',
+	'wikiamobile-sendpassword-label' => '发送新密码',
 );
 

@@ -416,6 +416,20 @@ Por favor, si tienes alguna duda, no seas tímido, deja un mensaje en mi muro pa
 Por favor, si tienes alguna duda, no seas tímido, deja un mensaje en mi muro para ver si puedo ayudarte con cualquier cosa.",
 );
 
+/** Estonian (eesti)
+ * @author KalmerE.
+ */
+$messages['et'] = array(
+	'welcome-user-page' => '== Minust ==
+"See on sinu kasutaja lehekülg. Palun kirjuta siia leheküljele endast, et tutvustada ennast kogukonnale! "
+== Minu kaastööd ==
+* [[Special:Contributions/$1|Kasutaja kaastööd]]
+== Lemmik leheküljed ==
+* Lisa  viki lemmik lehekülje lingid siia!
+ * lemmik lehekülg # 2
+ * lemmik lehekülg # 3',
+);
+
 /** Persian (فارسی)
  * @author BlueDevil
  * @author Huji

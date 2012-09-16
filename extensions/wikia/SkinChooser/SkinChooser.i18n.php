@@ -187,19 +187,21 @@ $messages['pms'] = array(
 
 /** Portuguese (português)
  * @author Hamilton Abreu
+ * @author SandroHc
  */
 $messages['pt'] = array(
 	'skinchooser-desc' => 'Permite que os utilizadores escolham temas nas suas preferências',
-	'new-look' => 'Novo Visual da Wikia',
+	'new-look' => 'Wikia',
 	'site-layout' => 'Composições do Site',
 );
 
 /** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
+ * @author Luckas Blade
  */
 $messages['pt-br'] = array(
 	'skinchooser-desc' => 'Permite que os utilizadores escolham temas nas suas preferências',
-	'new-look' => 'Novo Visual da Wikia',
+	'new-look' => 'Wikia',
 	'site-layout' => 'Composições do Site',
 );
 

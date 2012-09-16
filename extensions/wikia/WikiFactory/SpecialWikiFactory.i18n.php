@@ -1201,6 +1201,7 @@ $messages['cs'] = array(
 	'closed-reason' => 'Důvod:',
 	'newwikisgraph' => 'Nový graf wiki',
 	'newwikisgraph-report-title' => 'Wiki tvorba po dnech',
+	'newwikisgraph-wikis-created' => 'wiki vytvořena',
 	'newwikisgraph-param-all' => 'Vše',
 	'newwikisgraph-param-other' => 'Ostatní',
 );
@@ -3997,6 +3998,7 @@ $messages['ps'] = array(
  * @author Hamilton Abreu
  * @author Masked Rogue
  * @author Rhaijin
+ * @author SandroHc
  * @author Waldir
  */
 $messages['pt'] = array(
@@ -4119,6 +4121,10 @@ regist.',
 	'closed-confirm-btn' => 'Confirmar o fecho',
 	'closed-redirect-alert' => 'Introduza a URL nova do redireccionamento!',
 	'closed-reason' => 'Motivo:',
+	'newwikisgraph-report-title' => 'criações de wiki por dia',
+	'newwikisgraph-wikis-created' => 'wikis criadas',
+	'newwikisgraph-param-all' => 'Todas',
+	'newwikisgraph-param-other' => 'Outra',
 );
 
 /** Brazilian Portuguese (português do Brasil)

@@ -147,6 +147,21 @@ Si es prefereix l'ús regular de correu electrònic o arxius adjunts, es pot con
 	'specialcontact-submitcomplete' => 'Gràcies per contactar amb Wikia.',
 );
 
+/** Czech (česky)
+ * @author Chmee2
+ */
+$messages['cs'] = array(
+	'specialcontact-username' => 'Uživatelské jméno',
+	'specialcontact-wikiname' => 'Která wiki',
+	'specialcontact-realname' => 'Vaše jméno',
+	'specialcontact-yourmail' => 'E-mailová adresa',
+	'specialcontact-problem' => 'Předmět',
+	'specialcontact-problemdesc' => 'Zpráva',
+	'specialcontact-mail' => 'Poslat do Wikii',
+	'specialcontact-notyou' => 'Ne vy?',
+	'specialcontact-captchatitle' => 'Rozmazané slovo',
+);
+
 /** German (Deutsch)
  * @author George Animal
  * @author LWChris

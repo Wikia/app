@@ -181,7 +181,12 @@ $messages['es'] = array(
  * @author KalmerE.
  */
 $messages['et'] = array(
+	'ajaxpoll-thankyou' => 'Täname hääletamast!',
+	'ajaxpoll-error' => 'Hääletamisel esines probleem, proovige uuesti.',
+	'ajaxpoll-summary' => 'Küsitlus loodi  $1  kohta  $2 , ja seni on  $3  inimest hääletanud.',
 	'ajaxpoll-submit' => 'Hääleta!',
+	'ajaxpoll-closed' => 'Küsitlus on lõppenud. Vaata tulemusi.',
+	'ajaxpoll-submitting' => 'Oota, edastan sinu hääletuse...',
 );
 
 /** Basque (euskara)
@@ -585,6 +590,13 @@ $messages['ro'] = array(
 	'ajaxpoll-error' => 'Există o problemă la procesarea votului dvs. Vă rugăm încercaţi iar.',
 	'ajaxpoll-submit' => 'Votează!',
 	'ajaxpoll-closed' => 'Sondajul este închis acum. Bucuraţi-vă de rezultate.',
+);
+
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'ajaxpoll-submit' => 'Vote!',
 );
 
 /** Russian (русский)

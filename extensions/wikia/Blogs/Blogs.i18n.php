@@ -609,6 +609,12 @@ $messages['ca'] = array(
 	'create-blog-post-title-edit' => "Editar l'entrada de bloc",
 	'create-blog-form-title' => 'Què és una entrada de bloc?',
 	'create-blog-form-post-text' => 'Text de bloc',
+	'create-blog-categories-textinput' => 'Afegir una nova categoria',
+	'create-blog-categories-submit' => 'Acceptar',
+	'create-blog-save' => 'Desa la pàgina',
+	'create-blog-listing-sortby' => 'Classificar per',
+	'create-blog-listing-sortby-author' => 'Autor',
+	'blog-defaulttitle' => 'Blocs',
 	'blog-added' => 'afegit',
 	'blog-edited' => 'editat',
 	'blog-page' => 'Bloc',
@@ -618,6 +624,8 @@ $messages['ca'] = array(
 	'blog-rc-comments' => 'Comentaris del bloc',
 	'blog-comments-new' => 'Nou comentari al bloc',
 	'blog-comments-save' => 'Guardar comentari al bloc',
+	'blog-comments-label' => 'Comentaris',
+	'blog-comments-anonymous' => 'Usuari anònim',
 	'blog-comment-delete' => 'eliminar',
 	'blog-comment-hide' => 'amagar',
 	'blog-comment-unhide' => 'mostrar',
@@ -625,6 +633,9 @@ $messages['ca'] = array(
 	'blog-comment-edit' => 'editar',
 	'blog-comment-error' => "El comentari no s'ha pogut guardar",
 	'blog-comment-cannot-add' => 'No pots afegir un comentari al bloc.',
+	'blog-avatar-preferences-title' => 'Avatar',
+	'blog-userblog' => 'Bloc de $1',
+	'blog-fromsitename' => 'De $1',
 	'blogs-comment-hidden' => 'Comentari amagat',
 	'right-blog-comments-toggle' => 'Activar comentaris a articles del bloc',
 	'right-blog-comments-delete' => 'Esborrar comentaris en articles de bloc',
@@ -632,6 +643,7 @@ $messages['ca'] = array(
 	'blogs-recent-url-text' => 'Entrades de Bloc recents',
 	'blog-comment-sending' => 'Enviant...',
 	'blog-by' => '$1 per $2',
+	'blogs-searchprofile' => 'Blocs',
 );
 
 /** Sorani Kurdish (کوردی) */
@@ -670,6 +682,7 @@ $messages['cs'] = array(
 	'create-blog-save' => 'Uložit stránku',
 	'create-blog-preview' => 'Zobrazit náhled',
 	'create-blog-updated' => 'Příspěvek do blogu byl vytvořen nebo změněn.',
+	'create-blog-permission-denied' => 'Chyba při ukládání stránky blogu: oprávnění odepřeno.',
 	'create-blog-listing-preview' => 'Náhled',
 	'create-blog-listing-sortby' => 'Řadit dle',
 	'create-blog-listing-sortby-date' => 'Nejnovější',
@@ -2252,6 +2265,7 @@ $messages['kn'] = array(
 /** Korean (한국어)
  * @author Cafeinlove
  * @author Cwt96
+ * @author 아라
  */
 $messages['ko'] = array(
 	'createblogpage' => '블로그 만들기',
@@ -2268,7 +2282,7 @@ $messages['ko'] = array(
 	'blog-comments' => '댓글',
 	'blog-rc-comments' => '블로그 댓글',
 	'blog-avatar-preferences-title' => '아바타',
-	'blog-refresh-label' => '새로고침',
+	'blog-refresh-label' => '새로 고침',
 	'blogs-reportproblem' => '문제점 신고하기',
 );
 
@@ -3292,6 +3306,8 @@ $messages['pms'] = array(
 	'blog-movepage-badtitle' => 'Tìtol ëd mëssagi dë scartari pa bon.',
 	'blog-comment-sending' => 'An spedission ...',
 	'blog-by' => '$1 da $2',
+	'blogs-searchprofile' => 'Scartari',
+	'blogs-searchprofile-tooltip' => "Sërché ant j'artìcoj e le Liste dë Scartari",
 );
 
 /** Pashto (پښتو)
@@ -3453,6 +3469,7 @@ Crie páginas de listagem de blogues para categorias, tais como "Barack Obama" o
 	'blog-movepage-badtitle' => 'O título da entrada é inválido.',
 	'blog-comment-sending' => 'A enviar...',
 	'blog-by' => '$1 de $2',
+	'blogs-searchprofile' => 'Blogues',
 );
 
 /** Brazilian Portuguese (português do Brasil)
@@ -3460,6 +3477,7 @@ Crie páginas de listagem de blogues para categorias, tais como "Barack Obama" o
  * @author Aristóbulo
  * @author Giro720
  * @author Jesielt
+ * @author Luckas Blade
  */
 $messages['pt-br'] = array(
 	'createblogpage' => 'Criar blog',
@@ -3574,6 +3592,7 @@ Crie uma lista de blogs para categorias como "Barack Obama", "Humor" ou, até me
 	'blog-movepage-badtitle' => 'Título de post inválido.',
 	'blog-comment-sending' => 'Enviando...',
 	'blog-by' => '$1 de $2',
+	'blogs-searchprofile' => 'Blogs',
 );
 
 /** Romanian (română)

@@ -177,6 +177,16 @@ $messages['de'] = array(
 	'prefs-rte' => 'Rich Text Editor',
 );
 
+/** Zazaki (Zazaki)
+ * @author Erdemaslancan
+ */
+$messages['diq'] = array(
+	'rte-edgecase-comment' => 'Vatışdiq HTML',
+	'rte-edgecase-triplecurls' => 'parametrey şablonan',
+	'rte-edgecase-redirect' => 'hetenayış',
+	'prefs-rte' => 'Editorê metnê Zengini',
+);
+
 /** Greek (Ελληνικά)
  * @author Περίεργος
  */

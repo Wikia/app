@@ -322,6 +322,7 @@ $messages['pms'] = array(
 
 /** Portuguese (português)
  * @author Hamilton Abreu
+ * @author SandroHc
  */
 $messages['pt'] = array(
 	'taskmanager' => 'Ver e administrar as tarefas de segundo plano',
@@ -329,11 +330,13 @@ $messages['pt'] = array(
 	'taskmanager_tasklist' => 'Voltar à Lista de Tarefas',
 	'right-taskmanager' => 'Pode mostrar tarefas de segundo plano',
 	'right-taskmanager-action' => 'Pode administrar tarefas de segundo plano',
+	'taskmanager-invert' => 'Inverter seleção',
 );
 
 /** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
  * @author Giro720
+ * @author Luckas Blade
  */
 $messages['pt-br'] = array(
 	'taskmanager' => 'Ver e administrar as tarefas de segundo plano',
@@ -341,6 +344,7 @@ $messages['pt-br'] = array(
 	'taskmanager_tasklist' => 'Voltar à Lista de Tarefas',
 	'right-taskmanager' => 'Pode mostrar tarefas de segundo plano',
 	'right-taskmanager-action' => 'Pode administrar tarefas de segundo plano',
+	'taskmanager-invert' => 'Inverter seleção',
 );
 
 /** Russian (русский)

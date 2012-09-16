@@ -104,6 +104,7 @@ $messages['br'] = array(
 );
 
 /** Czech (česky)
+ * @author Chmee2
  * @author Reaperman
  */
 $messages['cs'] = array(
@@ -123,6 +124,7 @@ $messages['cs'] = array(
 	'alert-download-updated-wikis-message' => 'Seznam dostupných návodů bude aktualizován.',
 	'alert-download-updated-wikis-button-ok' => 'OK',
 	'error-update-required' => 'Aktualizace pro tuto aplikaci je dostupná a vyžadovaná.',
+	'error-no-connection' => 'Připojení k Internetu není k dispozici. \\nProsím, opakujte akci.',
 );
 
 /** German (Deutsch)
@@ -153,6 +155,13 @@ $messages['de'] = array(
 	'error-no-connection' => 'Keine Internet-Verbindung vorhanden.\\nBitte versuche es erneut.',
 	'error-server' => 'Unsere Server haben einen Fehler gemeldet, sorry.\\nBitte versuche es erneut.',
 	'error-json-parse' => 'Es gab ein Problem mit den Daten von unseren Servern, sorry.\\nBitte versuche es erneut.',
+);
+
+/** Zazaki (Zazaki)
+ * @author Erdemaslancan
+ */
+$messages['diq'] = array(
+	'window-category-load-batch' => 'Zewbi',
 );
 
 /** Spanish (español)
@@ -535,6 +544,19 @@ $messages['pt'] = array(
 	'error-no-connection' => 'Não está disponível nenhuma ligação à internet.\\nTente novamente, por favor.',
 	'error-server' => 'Desculpe, os nossos servidores responderam com um erro.\\nTente novamente, por favor.',
 	'error-json-parse' => 'Desculpe, houve um problema com os dados recebidos dos nossos servidores.\\nTente novamente, por favor.',
+);
+
+/** Brazilian Portuguese (português do Brasil)
+ * @author Luckas Blade
+ */
+$messages['pt-br'] = array(
+	'activityindicator-message' => 'Carregando...',
+	'window-category-load-batch' => 'Mais',
+	'window-article-button-close' => 'Fechar',
+	'window-article-button-back' => 'Voltar',
+	'window-article-menu-search-label' => 'Pesquisar',
+	'window-article-menu-cancel-label' => 'Cancelar',
+	'alert-download-updated-wikis-button-ok' => 'Ok',
 );
 
 /** Russian (русский)

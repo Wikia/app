@@ -125,6 +125,13 @@ The first parameter is a placeholder for the license logo/image. The third param
 	'prefs-editing-experience' => 'This is a heading in Special:Preferences',
 );
 
+/** Tati (Tati)
+ * @author Erdemaslancan
+ */
+$messages['ttt'] = array(
+	'editpagelayout-captcha-title' => 'Captcha',
+);
+
 /** Azerbaijani (azərbaycanca)
  * @author Cekli829
  */
@@ -507,8 +514,36 @@ $messages['de-formal'] = array(
  * @author Mirzali
  */
 $messages['diq'] = array(
+	'editpagelayout-more' => 'dehana vêşi',
+	'editpagelayout-less' => 'dehana tayn',
+	'editpagelayout-helpLink-url' => 'Help:Vurnayış',
+	'editpagelayout-notificationsLink' => '<span>$1</span> {{PLURAL:$1|Amayen|Amayeni}}',
 	'editpagelayout-notificationsLink-none' => 'Tebliği',
+	'editpagelayout-edit-title' => 'Sernuşti buvırne',
+	'editpagelayout-edit-info' => 'Malumati  bıvurne',
+	'editpagelayout-diff-header-url' => 'Help:Ver',
+	'editpagelayout-captcha-title' => 'Captcha',
+	'editpagelayout-pageControls-minorEdit' => 'Vurnayişo qıcek',
+	'editpagelayout-pageControls-changes' => 'Vurnayışi',
 	'editpagelayout-blocked-user' => 'Nameyê karberi ya zi adresa IPê şıma kılit biya.',
+	'editpagelayout-edit-summary-label' => 'Xulasay Bıvurnen',
+	'wikia-editor-media-image' => 'Fotraf',
+	'wikia-editor-media-gallery' => 'Galeri',
+	'wikia-editor-media-slideshow' => 'Slaytşow',
+	'wikia-editor-media-video' => 'Vidyo',
+	'wikia-editor-media-mut' => 'Vidyo',
+	'wikia-editor-media-image-tooltip' => 'Resim Deke',
+	'wikia-editor-media-gallery-tooltip' => 'Galeri Deke',
+	'wikia-editor-media-slideshow-tooltip' => 'Slaytşow Deke',
+	'wikia-editor-media-video-tooltip' => 'Vidyo Deke',
+	'wikia-editor-media-mut-tooltip' => 'Vidyo Deke (beta)',
+	'wikia-editor-source-bold-tooltip' => 'Honqe',
+	'wikia-editor-source-italic-tooltip' => 'İtalik',
+	'wikia-editor-source-link-tooltip' => 'Gre deke',
+	'wikia-editor-modules-templates-title' => 'Şabloni',
+	'wikia-editor-modules-categories-title' => 'Kategoriy',
+	'wikia-editor-edittools-caption' => 'dehana vêşi',
+	'prefs-general' => 'Heran',
 );
 
 /** Spanish (español)
@@ -1842,10 +1877,52 @@ $messages['pt'] = array(
 /** Brazilian Portuguese (português do Brasil)
  * @author 555
  * @author Caio1478
+ * @author Luckas Blade
  */
 $messages['pt-br'] = array(
+	'editpagelayout-more' => 'mais',
+	'editpagelayout-less' => 'menos',
+	'editpagelayout-helpLink' => 'Precisa de [[{{MediaWiki:Editpagelayout-helpLink-url}}|ajuda?]]',
+	'editpagelayout-notificationsLink' => '<span>$1</span> {{PLURAL:$1|Notificação|Notificações}}',
 	'editpagelayout-notificationsLink-none' => 'Notificações',
+	'editpagelayout-edit-title' => 'Editar título',
+	'editpagelayout-edit-info' => 'Editar informação',
+	'editpagelayout-diff-header' => 'As diferenças ([[{{MediaWiki:Editpagelayout-diff-header-url}}|ajuda]])',
+	'editpagelayout-myedit-header' => 'Esta é a sua edição. Copie as alterações para a caixa acima!',
+	'editpagelayout-captcha-title' => 'Captcha',
+	'editpagelayout-pageControls-pageLink' => 'voltar à página',
+	'editpagelayout-pageControls-minorEdit' => 'Edição menor',
+	'editpagelayout-pageControls-summaryLabel' => 'Adicionar um resumo da sua edição',
+	'editpagelayout-pageControls-newSectionLabel' => 'Adicionar o cabeçalho da seção',
+	'editpagelayout-pageControls-back' => 'Voltar ao editor',
+	'editpagelayout-pageControls-changes' => 'Alterações',
+	'editpagelayout-blocked-user' => 'O seu nome de usuário ou endereço IP foi bloqueado',
+	'editpagelayout-edit-summary-label' => 'Editar sumário',
+	'editpagelayout-subject-headline-label' => 'Assunto/cabeçalho:',
+	'wikia-editor-media-image' => 'Foto',
+	'wikia-editor-media-gallery' => 'Galeria',
+	'wikia-editor-media-video' => 'Vídeo',
+	'wikia-editor-media-mut' => 'Vídeo',
+	'wikia-editor-media-image-tooltip' => 'Adicionar foto',
+	'wikia-editor-media-gallery-tooltip' => 'Adicionar galeria',
+	'wikia-editor-media-video-tooltip' => 'Adicionar vídeo',
+	'wikia-editor-media-mut-tooltip' => 'Adicionar vídeo (beta)',
+	'wikia-editor-source-bold-tooltip' => 'Negrito',
+	'wikia-editor-source-italic-tooltip' => 'Itálico',
+	'wikia-editor-source-link-tooltip' => 'Adicionar link',
+	'wikia-editor-modules-templates-title' => 'Predefinições',
+	'wikia-editor-modules-templates-add-tooltip' => "Adicionar predefinição '$1'",
+	'wikia-editor-modules-templates-otherTemplates' => 'Adicionar outras predefinições',
+	'wikia-editor-modules-templates-showUsedList' => 'Mostrar lista das predefinições usadas',
+	'wikia-editor-modules-templates-showUsedList-dialog-title' => 'Lista das predefinições usadas',
+	'wikia-editor-modules-categories-title' => 'Categorias',
+	'wikia-editor-loadingStates-loading' => 'Carregando editor',
+	'wikia-editor-loadingStates-saving' => 'Publicando sua edição',
+	'wikia-editor-edittools-caption' => 'mais',
+	'wikia-editor-preview-editSummary' => 'Editar sumário: $1',
 	'restore-edits-notice' => "Bem-vindo(a) de volta! Nós restauramos algumas alterações que você ainda não tinha publicado. <a class='notice-action restoreeditlink'>Excluir minhas alterações e iniciar uma nova edição</a>",
+	'prefs-general' => 'Geral',
+	'prefs-starting-an-edit' => 'Começar uma edição',
 );
 
 /** Russian (русский)
