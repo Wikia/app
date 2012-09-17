@@ -129,4 +129,3 @@ class ArtistRedirects extends SpecialPage
 
 } // end class ArtistRedirects
 
-?>

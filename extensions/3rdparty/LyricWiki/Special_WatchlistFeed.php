@@ -48,4 +48,3 @@ $wgSpecialPages['WatchlistFeed'] = 'WatchlistFeed';
 # default options
 $wgWatchlistAccessKeySize = 64;
 
-?>

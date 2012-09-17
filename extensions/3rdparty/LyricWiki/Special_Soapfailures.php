@@ -300,4 +300,3 @@ function formatLookedFor($lookedFor){
 	return $lookedFor;
 } // end formatLookedFor()
 
-?>

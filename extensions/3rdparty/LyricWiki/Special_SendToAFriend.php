@@ -105,4 +105,3 @@ $wgAutoloadClasses['SendToAFriend'] = $dir . 'Special_SendToAFriend.body.php'; #
 $wgExtensionMessagesFiles['SendToAFriend'] = $dir . 'Special_SendToAFriend.i18n.php';
 $wgSpecialPages['SendToAFriend'] = 'SendToAFriend'; # Let MediaWiki know about your new special page.
 
-?>
