@@ -7,12 +7,17 @@ $oasisHD: get_command_line_param("hd", 0);
 $width-outside: 1000px;
 $wikia-search-base-width: 200px;
 
+/* $wgOasisHD */
 @if $oasisHD == 1 {
 	$width-outside: 1200px;
 }
+
+/* $wgOasisFluid */
 @if $oasisHD == 2 {
 	$width-outside: auto;
 }
+
+/* $wgOasisGrid */
 @if $oasisHD == 3 {
 	$width-outside: 1030px;
 	$wikia-search-base-width: 230px;
@@ -20,8 +25,8 @@ $wikia-search-base-width: 200px;
 
 $width-rail: 300px;
 
-/* We often use this amount of padding or margin to separate elements in our layout. 
- * For example, .WikiaRail has this much padding on the left and right to not touch the edge of the page or the article content. 
- * .WikiaArticle does the same. 
- */ 
-$width-gutter: 10px; 
+/* We often use this amount of padding or margin to separate elements in our layout.
+ * For example, .WikiaRail has this much padding on the left and right to not touch the edge of the page or the article content.
+ * .WikiaArticle does the same.
+ */
+$width-gutter: 10px;
