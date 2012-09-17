@@ -73,6 +73,14 @@ $app->registerClass( 'WikiaNoArticleLocalFile',	$dir . '/filerepo/WikiaNoArticle
 // handler
 $app->registerClass( 'VideoHandler',		$dir . '/handlers/VideoHandler.class.php' );
 
+// video controller
+$app->registerClass( 'VideosController', $dir . '/VideosController.class.php' );
+
+// video info
+$app->registerClass( 'VideoInfo', $dir . '/videoInfo/VideoInfo.class.php' );
+$app->registerClass( 'VideoInfoHelper', $dir . '/videoInfo/VideoInfoHelper.class.php' );
+$app->registerClass( 'VideoInfoHooksHelper', $dir . '/videoInfo/VideoInfoHooksHelper.class.php' );
+
 /**
  * messages
  */
@@ -88,7 +96,6 @@ $app->registerHook( 'SpecialNewImages::beforeQuery', 'VideoHandlerHooks', 'Wikia
 $app->registerHook( 'Parser::FetchTemplateAndTitle', 'VideoHandlerHooks', 'WikiaVideoFetchTemplateAndTitle');
 $app->registerHook( 'ParserBeforeStrip', 'VideoHandlerHooks', 'WikiaVideoParserBeforeStrip'); // <videogallery>
 
-
 $app->registerHook( 'FileRevertFormBeforeUpload', 'VideoHandlerHooks', 'onFileRevertFormBeforeUpload' );
 $app->registerHook( 'ArticleFromTitle', 'VideoHandlerHooks', 'onArticleFromTitle' );
 $app->registerHook( 'SetupAfterCache', 'VideoHandlerHooks', 'onSetupAfterCache' );
@@ -96,6 +103,15 @@ $app->registerHook( 'BeforePageDisplay', 'VideoHandlerHooks', 'onBeforePageDispl
 $app->registerHook( 'LinkerMakeThumbLink2FileOriginalSize', 'VideoHandlerHooks', 'onLinkerMakeThumbLink2FileOriginalSize' );
 $app->registerHook( 'ParserAfterStrip', 'VideoHandlerHooks', 'convertOldInterwikiToNewInterwiki' );
 $app->registerHook( 'File::checkExtensionCompatibilityResult', 'VideoHandlerHooks', 'checkExtensionCompatibilityResult' );
+
+// (BugId:44086) hiding front end for now while back end if being worked on
+//$app->registerHook( 'SkinTemplateNavigation', 'VideoHandlerHooks', 'onSkinTemplateNavigation' );
+
+$app->registerHook( 'FileUpload', 'VideoInfoHooksHelper', 'onFileUpload' );
+$app->registerHook( 'ArticleSaveComplete', 'VideoInfoHooksHelper', 'onArticleSaveComplete' );
+$app->registerHook( 'FileDeleteComplete', 'VideoInfoHooksHelper', 'onFileDeleteComplete' );
+$app->registerHook( 'FileUndeleteComplete', 'VideoInfoHooksHelper', 'onFileUndeleteComplete' );
+$app->registerHook( 'SpecialMovepageAfterMove', 'VideoInfoHooksHelper', 'onFileRenameComplete' );
 
 if(!empty($wgVideoHandlersVideosMigrated)) {
 	$app->registerHook( 'ParserFirstCallInit', 'VideoHandlerHooks', 'initParserHook' );
