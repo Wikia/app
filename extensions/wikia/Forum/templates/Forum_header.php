@@ -7,8 +7,5 @@
 		<div class="last tally">
 			<?= $wf->MsgExt(('forum-header-active-threads'), array('parsemag'), $activeThreads) ?>
 		</div>
-		<section id="WikiaSearchHeader" class="WikiaSearchHeader">
-			<?= $app->renderView('Search', 'Index') ?>
-		</section>
 	</div>
 </header>

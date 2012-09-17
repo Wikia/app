@@ -147,6 +147,7 @@ class BodyController extends WikiaController {
 		// Forum Extension
 		if (WikiaPageType::isForum()) {
 			$railModuleList = array (
+				1500 => array('Search', 'Index', null),
 				1002 => array('Forum', 'forumRelatedThreads', null),
 				1001 => array('Forum', 'forumActivityModule', null),
 				1000 => array('Forum', 'forumParticipationModule', null),
