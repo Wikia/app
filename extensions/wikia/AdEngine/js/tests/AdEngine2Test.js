@@ -5,93 +5,82 @@
 
 module('AdEngine2');
 
-test('run with something in queue', function() {
-	// setup
-	var slots_done = []
-		, logMock = function() {}
-		, adConfigMock;
+test('Throws with undefined queue', function() {
+	var logMock = function() {}
+		, adConfigMock
+		, lazyQueueMock
+		, adEngine;
 
-	adConfigMock = {
-		getProvider: function(slot) {
-			// AdProviderMock:
-			return {
-				name: 'Mock',
-				fillInSlot: function(slot) {
-					slots_done.push(slot);
-				}
-			};
-		}
-	};
+	adEngine = AdEngine2(adConfigMock, logMock, lazyQueueMock);
 
-	window.adslots2 = [];
-	window.adslots2.push(['foo']);
-	window.adslots2.push(['bar']);
-
-	// Mock logMock and window as well!
-	AdEngine2(adConfigMock, logMock, window).run();
-
-	equal(slots_done.length, 2, 'pre move');
-
-	window.adslots2.push(['baz']);
-
-	equal(slots_done.length, 3, 'post move');
+	throws(function() {
+		adEngine.run(adslotsNotUsed);
+	}, 'Throws exception');
 });
 
-test('run with empty queue', function() {
-	// setup
-	var slots_done = []
-		, logMock = function() {}
-		, adConfigMock;
+test('Makes LazyQueue from run parameter and starts it', function() {
+	var logMock = function() {}
+		, adConfigMock
+		, slotsMock
+		, lazyQueueMock
+		, makeQueueCalledOn
+		, queueStartCalled = false
+		, adEngine;
 
-	adConfigMock = {
-		getProvider: function(slot) {
-			// AdProviderMock:
-			return {
-				name: 'Mock',
-				fillInSlot: function(slot) {
-					slots_done.push(slot);
-				}
-			};
+	lazyQueueMock = {
+		makeQueue: function(queue, callback) {
+			makeQueueCalledOn = queue;
 		}
 	};
 
-	window.adslots2 = [];
+	slotsMock = {
+		start: function() {
+			queueStartCalled = true;
+		}
+	};
 
-	// Mock logMock and window as well!
-	AdEngine2(adConfigMock, logMock, window).run();
+	adEngine = AdEngine2(adConfigMock, logMock, lazyQueueMock);
+	adEngine.run(slotsMock);
 
-	equal(slots_done.length, 0, 'pre move');
-
-	window.adslots2.push(['baz']);
-
-	equal(slots_done.length, 1, 'post move');
+	equal(makeQueueCalledOn, slotsMock, 'Made LazyQueue from the slot array provided to adEngine.run');
+	equal(queueStartCalled, true, 'Called start on the slot array provided to adEngine.run')
 });
 
-test('run with null queue', function() {
-	// setup
-	// setup
-	var slots_done = []
-		, logMock = function() {}
-		, adConfigMock;
+test('Calls AdConfig2 getProvider and then fillInSlot for slots provider in the passed array', function() {
+	var logMock = function() {}
+		, adConfigMock
+		, slotsMock = {start: function() {}}
+		, lazyQueueMock
+		, getProviderCalledFor = []
+		, fillInSlotCalledFor = []
+		, adEngine;
 
-	adConfigMock = {
-		getProvider: function(slot) {
-			// AdProviderMock:
-			return {
-				name: 'Mock',
-				fillInSlot: function(slot) {
-					slots_done.push(slot);
-				}
-			};
+	lazyQueueMock = {
+		makeQueue: function(slots, callback) {
+			callback(['slot1', 'ProviderName']);
+			callback(['slot2', 'ProviderName']);
 		}
 	};
 
-	// Mock logMock and window as well!
-	AdEngine2(adConfigMock, logMock, window).run();
+	adConfigMock = {
+		getProvider: function(slot) {
+			getProviderCalledFor.push(slot[0]);
+			return {
+				fillInSlot: function() {
+					fillInSlotCalledFor.push(slot[0]);
+				}
+			}
+		}
+	};
 
-	equal(slots_done.length, 0, 'pre move');
+	adEngine = AdEngine2(adConfigMock, logMock, lazyQueueMock);
+	adEngine.run(slotsMock);
 
-	window.adslots2.push(['baz']);
+	equal(getProviderCalledFor.length, 2, 'adConfig.getProvider called 2 times');
+	equal(getProviderCalledFor[0], 'slot1', 'adConfig.getProvider called for slot1');
+	equal(getProviderCalledFor[1], 'slot2', 'adConfig.getProvider called for slot2');
 
-	equal(slots_done.length, 1, 'post move');
+	equal(fillInSlotCalledFor.length, 2, 'AdProvider*.fillInSlot called 2 times');
+	equal(fillInSlotCalledFor[0], 'slot1', 'adConfig.getProvider called for slot1');
+	equal(fillInSlotCalledFor[1], 'slot2', 'adConfig.getProvider called for slot2');
 });

@@ -1,36 +1,35 @@
-window.AdEngine2 = function (AdConfig2, log, window, undef) {
-	function fillInSlot(slot) {
-		log('fillInSlot', 5, 'AdEngine2');
-		log(slot, 5, 'AdEngine2');
+var AdEngine2 = function(AdConfig2, log, LazyQueue) {
+	'use strict';
+
+	var MODULE = 'AdEngine2'
+		, fillInSlot
+		, run;
+
+	fillInSlot = function(slot) {
+		log('fillInSlot', 5, MODULE);
+		log(slot, 5, MODULE);
 
 		var provider = AdConfig2.getProvider(slot);
-		log('calling ' + provider.name + ' for ' + slot[0], 3, 'AdEngine2');
+		log('calling ' + provider.name + ' for ' + slot[0], 3, MODULE);
 
 		slot[2] = provider.name;
 		provider.fillInSlot(slot);
-	}
+	};
 
-	// based on WikiaTrackerQueue by macbre
-	function run() {
-		log('run', 5, 'AdEngine2');
+	run = function(adslots) {
+		log('run', 5, MODULE);
 
-		var slots = window.adslots2 || [], slot;
-		log('queue', 7, 'AdEngine2');
-		log(slots, 7, 'AdEngine2');
-		while ((slot = slots.shift()) !== undef) {
-			fillInSlot(slot);
-		}
+		log('initial queue', 7, MODULE);
+		log(adslots, 7, MODULE);
 
-		slots.push = proxy(fillInSlot, this);
-		log('initial queue handled', 6, 'AdEngine2');
-	}
+		log('initializing LazyQueue on adslots', 7, MODULE);
+		LazyQueue.makeQueue(adslots, fillInSlot);
 
-	function proxy(fn, scope) {
-		return function () {
-			return fn.apply(scope, arguments);
-		}
-	}
+		log('launching queue on adslots', 7, MODULE);
+		adslots.start();
+
+		log('initial queue handled', 6, MODULE);
+	};
 
 	return {run: run};
-
 };

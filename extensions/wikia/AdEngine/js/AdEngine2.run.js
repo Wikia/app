@@ -1,4 +1,4 @@
-(function(log, WikiaTracker, window, ghostwriter, document, Geo) {
+(function(log, WikiaTracker, window, ghostwriter, document, Geo, LazyQueue) {
 	var adConfig
 		, adEngine
 		, adProviderEvolve
@@ -6,7 +6,9 @@
 		, adProviderGamePro
 		, adProviderAdDriver2
 		, adProviderAdDriver
-		, adProviderLiftium2;
+		, adProviderLiftium2
+		, adSlotsQueue
+		, lazyQueue = LazyQueue();
 
 	adProviderGamePro = AdProviderGamePro(WikiaTracker, log, window, ghostwriter, document);
 	adProviderEvolve = AdProviderEvolve(WikiaTracker, log, window, ghostwriter, document);
@@ -28,12 +30,16 @@
 		adProviderLiftium2
 	);
 
-	adEngine = AdEngine2(adConfig, log, window);
+	adEngine = AdEngine2(adConfig, log, lazyQueue);
 
-	adEngine.run();
+	// Make sure the adslots2 is defined
+	window.adslots2 = window.adslots2 || [];
+
+	// Show ads now :-)
+	adEngine.run(window.adslots2);
 
 	window.evolve_hop = function(slotname) {
 		adProviderEvolve.hop(slotname);
 	};
 
-}(Wikia.log, WikiaTracker, window, ghostwriter, document, Geo));
+}(Wikia.log, WikiaTracker, window, ghostwriter, document, Geo, LazyQueue));
