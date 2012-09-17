@@ -529,6 +529,8 @@ AdDriver.init();
 
 //// BEGIN AdDriverDelayedLoaderItem
 var AdDriverDelayedLoaderItem = function (slotname, size, defaultAdProvider) {
+	Wikia.log('Item ' + slotname + ', ' + size + ', ' + defaultAdProvider, 5, 'AdDriverDelayedLoader');
+
 	this.clientWidth = 0;
 	this.clientHeight = 0;
 	this.hasPrefooters = null;
@@ -539,7 +541,7 @@ var AdDriverDelayedLoaderItem = function (slotname, size, defaultAdProvider) {
 	// do not generate DART url until it is needed. This allows
 	// for last-minute reordering of slots, and correct value of tile
 	this.getDARTUrl = function (){
-		Wikia.log('getDARTUrl', 5, 'AdDriverDelayedLoaderItem');
+		Wikia.log('Item.getDARTUrl', 5, 'AdDriverDelayedLoader');
 
 		if (!this.dartUrl) {
 			this.dartUrl = AdConfig.DART.getUrl(slotname, size, false, AdDriver.adProviderAdDriver);
@@ -574,13 +576,15 @@ var AdDriverDelayedLoader = {
 AdDriverDelayedLoader.init();
 
 AdDriverDelayedLoader.appendItem = function(adDriverItem) {
-	Wikia.log('appendItem ' + adDriverItem, 5, 'AdDriverDelayedLoader');
+	Wikia.log('appendItem', 5, 'AdDriverDelayedLoader');
+	Wikia.log(adDriverItem, 5, 'AdDriverDelayedLoader');
 
 	AdDriverDelayedLoader.adDriverItems.push(adDriverItem);
 };
 
 AdDriverDelayedLoader.prependItem = function(adDriverItem) {
-	Wikia.log('prependItem ' + adDriverItem, 5, 'AdDriverDelayedLoader');
+	Wikia.log('prependItem', 5, 'AdDriverDelayedLoader');
+	Wikia.log(adDriverItem, 5, 'AdDriverDelayedLoader');
 
 	AdDriverDelayedLoader.adDriverItems.unshift(adDriverItem);
 };
@@ -924,13 +928,16 @@ if (window.getTreatmentGroup) {	// any page without getTreatmentGroup() defined 
 	var tgId = getTreatmentGroup(EXP_AD_LOAD_TIMING);
 
 	if (!window.wgLoadAdDriverOnLiftiumInit && tgId != TG_AS_WRAPPERS_ARE_RENDERED) {
+Wikia.log('(launch, stage 1)', 3, 'AdDriver');
 		for (var i=0; i < window.adslots.length; i++) {
 			AdDriverDelayedLoader.appendItem(new AdDriverDelayedLoaderItem(window.adslots[i][0], window.adslots[i][1], window.adslots[i][2]));
 		}
 	}
 
 	if (!window.wgLoadAdDriverOnLiftiumInit && tgId == TG_ONLOAD) {
+Wikia.log('(launch, stage 2)', 3, 'AdDriver');
 		$(window).load(function() {
+Wikia.log('(launch, stage 3)', 3, 'AdDriver');
 			AdDriverDelayedLoader.load();
 		});
 	}
