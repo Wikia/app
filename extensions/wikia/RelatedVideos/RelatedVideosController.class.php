@@ -160,7 +160,7 @@ class RelatedVideosController extends WikiaController {
 				)
 			);
 
-			$video['views'] = MediaQueryService::getTotalVideoViewsByTitle( $videoTitle->getDBKey() );
+			$video['views'] = DataMartService::getVideoViewsByTitleTotal( $videoTitle->getDBKey() );
 
 			$this->setVal( 'videoThumb', $videoThumb );
 			$this->setVal( 'video', $video );
@@ -172,16 +172,24 @@ class RelatedVideosController extends WikiaController {
 	}
 
 	public function getAddVideoModal(){
-		$this->request->setVal( 'suppressSuggestions', false );
-		$this->forward( 'VideosController', 'getAddVideoModal' );
+
+		$pgTitle = $this->request->getVal('title', '');
+		$this->setVal( 'pageTitle', $pgTitle );
+		$this->setVal( 'html', $this->app->renderView( 'RelatedVideos', 'addVideoModalText', array('pageTitle'=>$pgTitle) ) );
+		$this->setVal( 'title',	wfMsg('related-videos-add-video-to-this-wiki') );
 	}
 
+	public function addVideoModalText(){
+
+		$pgTitle = $this->request->getVal('pageTitle', '');
+		$this->setVal( 'pageTitle', $pgTitle );
+	}
+	
 	public function addVideo() {
 		global $wgRelatedVideosOnRail;
 
 		$url = urldecode( $this->getVal( 'url', '' ) );
 		$articleId = $this->getVal( 'articleId', '' );
-
 		$rvd = F::build( 'RelatedVideosData' );
 		$retval = $rvd->addVideo( $articleId, $url );
 		if ( is_array( $retval ) ) {

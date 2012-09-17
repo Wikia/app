@@ -18,9 +18,3 @@ $app->registerClass('WikiaStyleGuideSpecialController', $dir . 'WikiaStyleGuideS
 
 // special pages
 $app->registerSpecialPage('WikiaStyleGuide', 'WikiaStyleGuideSpecialController');
-
-// JS Messages
-F::build('JSMessages')->registerPackage('VideoPage', array(
-  'videohandler-remove-video-modal-*',
-));
-

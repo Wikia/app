@@ -121,7 +121,7 @@ html>body #WallNotifications .avatars { *float: left; }
 	}
 	.subnav {
 		@include menu-heavy;
-		@include box-shadow(0, 5px, 10px, rgba(0, 0, 0, 0.5), 0, 0);
+		@include box-shadow(0, 5px, 10px, rgba(0, 0, 0, 0.5));
 		padding: 0px; // overwrite from menu-heavy
 		//> li:first-child { 		border-top: 1px solid $color-page-border; } // overwrite from menu-heavy
 		display: block;
@@ -175,10 +175,10 @@ html>body #WallNotifications .avatars { *float: left; }
 		}
 		a {
 			&:hover {
-				@include box-shadow(0,0,8px, mix($color-buttons, $color-page, 25%), inset, 0);
+				@include box-shadow(0,0,8px, mix($color-buttons, $color-page, 25%), inset);
 				background: mix($color-buttons, $color-page, 15%) !important;
 				@if $is-dark-wiki {
-					@include box-shadow(0,0,8px, mix($color-buttons, $color-page, 40%), inset, 0);
+					@include box-shadow(0,0,8px, mix($color-buttons, $color-page, 40%), inset);
 					background: mix($color-buttons, $color-page, 30%) !important;
 				}
 			}
@@ -270,11 +270,11 @@ html>body #WallNotifications .avatars { *float: left; }
 
 #WallNotificationsReminder {
 	@include border-radius(3px);
-	@include box-shadow(0px, 2px, 5px, darken($color-page,12%), 0, 0);
+	@include box-shadow(0px, 2px, 5px, darken($color-page,12%));
 	background: $color-page;
 	border: 1px solid $color-page-border;
 	@if $is-dark-wiki {
-		@include box-shadow(0px, 2px, 5px, darken($color-page,7%), 0, 0);
+		@include box-shadow(0px, 2px, 5px, darken($color-page,7%));
 		background: $color-module-background;
 		border: 1px solid $color-page-border;
 	}

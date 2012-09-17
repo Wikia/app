@@ -8,14 +8,13 @@ class RealgravityVideoHandler extends VideoHandler {
 	const REALGRAVITY_PLAYER_VIDEOEMBEDTOOL_ID = '49321a60-d897-012e-f9bf-12313d18e962';
 
 	protected $apiName = 'RealgravityApiWrapper';
-	protected static $urlTemplate = 'http://anomaly.realgravity.com/flash/player.swf';
 	protected static $providerDetailUrlTemplate = 'http://www.realgravity.com/';
 	protected static $providerHomeUrl = 'http://www.realgravity.com/';
 
 	public function getEmbed( $articleId, $width, $autoplay = false, $isAjax = false, $postOnload=false ) {
 
 		$height = $this->getHeight($width);
-		$url = $this->getEmbedUrl();
+
 		$videoId = $this->getVideoId();
 
 		if ( $width == self::DEFAULT_VET_WIDTH ) {
@@ -29,7 +28,7 @@ class RealgravityVideoHandler extends VideoHandler {
 		$embed =
 			'<object id="rg_player_' . $playerId . '" name="rg_player_' . $playerId . '" type="application/x-shockwave-flash"
 			width="' . $width . '" height="' . $height . '" classid="clsid:' . $playerId . '" style="visibility: visible;"
-			data="'.$url.'">
+			data="http://anomaly.realgravity.com/flash/player.swf">
 			<param name="allowscriptaccess" value="always"></param>
 			<param name="allowNetworking" value="all"></param>
 			<param name="menu" value="false"></param>
@@ -39,14 +38,10 @@ class RealgravityVideoHandler extends VideoHandler {
 			<embed id="' . $playerId . '" name="' . $playerId . '" width="' . $width . '" height="' . $height . '"
 			allowNetworking="all" allowscriptaccess="always" allowfullscreen="true" wmode="transparent"
 			flashvars="config=http://mediacast.realgravity.com/vs/2/players/single/' . $playerId . '/' . $videoId . '.xml"
-			src="'.$url.'"></embed>
+			src="http://anomaly.realgravity.com/flash/player.swf"></embed>
 			</object>';
 
 		return $embed;
-	}
-
-	public function getEmbedUrl() {
-		return static::$urlTemplate;
 	}
 
 }
