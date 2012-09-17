@@ -132,7 +132,7 @@ public class CommonFunctions
 	{
 		wait = new WebDriverWait(driver, 30);
 		driver.get(Global.LIVE_DOMAIN+"wiki/Special:UserLogout?returnto=User "+userName);
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("$('a[data-id='login']')")));
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("a[data-id='login']")));
 	}
 	
 
