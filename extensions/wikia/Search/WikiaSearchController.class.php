@@ -50,6 +50,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 		$query = $this->getVal('query', $this->getVal('search'));
 		$query = htmlentities( Sanitizer::StripAllTags ( $query ), ENT_COMPAT, 'UTF-8' );
+		$limit = $this->getVal('limit', self::RESULTS_PER_PAGE);
 
 		$page = $this->getVal('page', 1);
 		$rank = $this->getVal('rank', 'default');
@@ -121,7 +122,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			$this->wikiaSearch->setIncludeRedirects( $redirs );
 
 			$params = array('page'=>$page,
-							'length'=>self::RESULTS_PER_PAGE,
+							'length'=>$limit,
 							'cityId'=>( $isInterWiki ? 0 : $this->wg->CityId ),
 							'groupResults'=>$isInterWiki,
 							'rank'=>$rank,
@@ -134,7 +135,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			$resultsFound = $results->getResultsFound();
 
 			if(!empty($resultsFound)) {
-				$paginationLinks = $this->sendSelfRequest( 'pagination', array( 'query' => $query, 'page' => $page, 'count' => $resultsFound, 'crossWikia' => $isInterWiki, 'skipCache' => $skipCache, 'debug' => $debug, 'namespaces' => $namespaces, 'advanced' => $advanced, 'redirs' => $redirs) );
+				$paginationLinks = $this->sendSelfRequest( 'pagination', array( 'query' => $query, 'page' => $page, 'count' => $resultsFound, 'crossWikia' => $isInterWiki, 'skipCache' => $skipCache, 'debug' => $debug, 'namespaces' => $namespaces, 'advanced' => $advanced, 'redirs' => $redirs, 'limit'=>$limit) );
 			}
 
 			$this->app->wg->Out->setPageTitle( $this->wf->msg( 'wikiasearch2-page-title-with-query', array(ucwords($query), $wikiName) )  );
@@ -177,13 +178,13 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setVal( 'results', $results );
 		$this->setVal( 'resultsFound', $resultsFound );
 		$this->setVal( 'resultsFoundTruncated', $this->wg->Lang->formatNum( $this->getTruncatedResultsNum($resultsFound) ) );
-		$this->setVal( 'isOneResultsPageOnly', ( $resultsFound <= self::RESULTS_PER_PAGE ) );
-		$this->setVal( 'pagesCount', ceil($resultsFound/self::RESULTS_PER_PAGE) );
+		$this->setVal( 'isOneResultsPageOnly', ( $resultsFound <= $limit ) );
+		$this->setVal( 'pagesCount', ceil($resultsFound/$limit) );
 		$this->setVal( 'currentPage',  $page );
 		$this->setVal( 'paginationLinks', $paginationLinks );
 		$this->setVal( 'tabs', $this->sendSelfRequest( 'tabs', array( 'term' => $query, 'redirs' => $redirs,  'activeTab' => $activeTab) ) );
 		$this->setVal( 'query', $query );
-		$this->setVal( 'resultsPerPage', self::RESULTS_PER_PAGE );
+		$this->setVal( 'resultsPerPage', $this->getVal('limit', $limit) );
 		$this->setVal( 'pageUrl', $this->wg->Title->getFullUrl() );
 		$this->setVal( 'debug', $debug );
 		$this->setVal( 'solrHost', $this->wg->SolrHost);
@@ -360,7 +361,8 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$query = $this->getVal('query');
 		$page = $this->getVal( 'page', 1 );
 		$resultsCount = $this->getVal( 'count', 0);
-		$pagesNum = ceil( $resultsCount / self::RESULTS_PER_PAGE );
+		$limit = $this->getVal('limit', self::RESULTS_PER_PAGE);
+		$pagesNum = ceil( $resultsCount / $limit );
 
 		$crossWikia = $this->getVal('crossWikia');
 		$debug = $this->getVal('debug');
@@ -382,6 +384,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setVal( 'namespaces', $namespaces );
 		$this->setVal( 'advanced', $advanced );
 		$this->setVal( 'redirs', $redirs );
+		$this->setVal( 'limit', $limit );
 	}
 
 	public function getPage() {
