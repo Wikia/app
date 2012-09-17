@@ -190,6 +190,24 @@ public class BasePageObject{
 		}
 	}
 	
+	public void mouseOverInArticleIframe(String cssSelecotr)
+	{
+		executeScript("$($($('iframe[title*=\"Rich\"]')[0].contentDocument.body).find('"+cssSelecotr+"')).mouseenter()");
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	
+	public void jQueryClick(String cssSelector)
+	{
+		executeScript("$('"+cssSelector+"').click()");
+		executeScript("$('"+cssSelector+"').click()");
+	}
+	
 //	public void clickRobot(WebElement pageElem)
 //	{
 ////		try
@@ -206,7 +224,7 @@ public class BasePageObject{
 //	}
 	
 	
-	protected void executeScript(String script)
+	public void executeScript(String script)
 	{
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		js.executeScript(script);

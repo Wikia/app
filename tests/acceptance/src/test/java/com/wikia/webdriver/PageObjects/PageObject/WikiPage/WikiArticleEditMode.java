@@ -324,11 +324,11 @@ public class WikiArticleEditMode extends WikiArticlePageObject {
 	 * @author Michal Nowierski
 	 * @param caption Caption of the image 
 	 * 	 */
-	public void clickModifyButtonOfImage(String caption) {
-		hoverCursorOverImage(caption);
+	public void clickModifyButtonOfImage(String caption) 
+	{
+		mouseOverInArticleIframe("img");
 		waitForElementByElement(modifyButton);
-		waitForElementClickableByElement(modifyButton);
-		modifyButton.click();
+		jQueryClick("span.RTEMediaOverlayEdit");
 		PageObjectLogging.log("ClickModifyButtonOfImage", "Click on 'modify button' of image with caption: '"+caption+"'", true, driver);
 
 		
