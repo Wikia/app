@@ -33,7 +33,7 @@ var Lightbox = {
 	
 	makeLightbox: function(params) {	
 		Lightbox.openModal = params.modal;
-		Lightbox.current.title = params.title;
+		Lightbox.current.title = params.title.toString(); // Added toString() for edge cases where titles are numbers
 		
 		var id = params.parent ? params.parent.attr('id') : '';
 
@@ -58,11 +58,6 @@ var Lightbox = {
 		
 		// Check screen height for future interactions
 		Lightbox.shortScreen = $(window).height() < LightboxLoader.defaults.height + LightboxLoader.defaults.topOffset ? true : false;
-		
-		// Set ads class if we're showing ads
-		if(Lightbox.ads.showAds) {
-			Lightbox.openModal.addClass('show-ads');
-		}
 		
 		// Add template to modal
 		Lightbox.openModal.find(".modalContent").html(LightboxLoader.templateHtml);
@@ -129,7 +124,7 @@ var Lightbox = {
 				Lightbox.eventTimers.lastMouseUpdated = time; 
 				var target = $(evt.target);
 				Lightbox.showOverlay();
-				if(!(target.closest('.arrow, .LightboxHeader, .LightboxCarousel')).exists()) {
+				if(!(target.closest('.LightboxHeader, .LightboxCarousel')).exists()) {
 					Lightbox.hideOverlay();
 				}
 			}
@@ -334,7 +329,7 @@ var Lightbox = {
 				
 				var imageContainerHeight = modalHeight;
 				if(Lightbox.openModal.hasClass('pinned-mode')) {
-					imageContainerHeight -= 220;
+					imageContainerHeight -= 190;
 					if(imageHeight > imageContainerHeight ) {
 						imageHeight = imageContainerHeight;
 					}
@@ -408,7 +403,9 @@ var Lightbox = {
 	},
 	ads: {
 		// should user see ads?
-		showAds: false, // !window.wgUserName || window.wgUserShowAds,
+		showAds: function() {
+			return $('#MODAL_INTERSTITIAL').length;
+		},
 		// show an ad after this number of unique images/videos are shown
 		adMediaCount: 2, 
 		// array of media titles shown for tracking unique views
@@ -421,7 +418,7 @@ var Lightbox = {
 		// Determine if we should show an ad
 		showAd: function(title, type) {
 			// Already shown?
-			if(!Lightbox.ads.showAds || Lightbox.ads.adWasShown) {
+			if(!Lightbox.ads.showAds() || Lightbox.ads.adWasShown) {
 				return false;
 			}
 			
@@ -563,8 +560,8 @@ var Lightbox = {
 				caption = Lightbox.openModal.carousel.find('li').eq(idx).find('img').data('caption');
 			data['caption'] = caption || false;*/
 			Lightbox[type].updateLightbox(data);		
-			Lightbox.showOverlay();
-			Lightbox.hideOverlay();
+			//Lightbox.showOverlay();
+			//Lightbox.hideOverlay();
 		});
 		
 	},
@@ -655,7 +652,7 @@ var Lightbox = {
 		}
 
 		// Set current carousel index
-		var readableTitle = Lightbox.current.title.split('_').join(" ");				
+		var readableTitle = Lightbox.current.title.split('_').join(" ");
 		for(var i = 0; i < Lightbox.current.thumbs.length; i++) {
 			if(Lightbox.current.thumbs[i].title == readableTitle) {
 				Lightbox.current.index = i;
@@ -667,14 +664,14 @@ var Lightbox = {
 		Lightbox.openModal.progress = $('#LightboxCarouselProgress');
 		Lightbox.openModal.data('overlayactive', true);
 
-		$(document).off('keydown.Lightbox');
-		$(document).on('keydown.Lightbox', function(e) {
-			if(e.keyCode == 37) {
-				$('#LightboxPrevious').click();
-			} else if(e.keyCode == 39) {
-				$('#LightboxNext').click();
-			}
-		});
+		$(document).off('keydown.Lightbox')
+			.on('keydown.Lightbox', function(e) {
+				if(e.keyCode == 37) {
+					$('#LightboxPrevious').click();
+				} else if(e.keyCode == 39) {
+					$('#LightboxNext').click();
+				}
+			});
 		
 		// Clicking on an image should advance you to the next one
 		Lightbox.openModal.media.on('click', 'img', function() {
@@ -704,7 +701,7 @@ var Lightbox = {
 
 			Lightbox.current.index = idx;
 			if(idx > -1 && idx < mediaArr.length) {
-				Lightbox.current.title = mediaArr[idx].title;
+				Lightbox.current.title = mediaArr[idx].title.toString(); // Added toString() for edge cases where titles are numbers
 				Lightbox.current.type = mediaArr[idx].type;
 			}
 			
@@ -772,7 +769,7 @@ var Lightbox = {
 			}
 		}
 		
-		var itemsShown = Lightbox.ads.showAds ? 6 : 9;
+		var itemsShown = Lightbox.ads.showAds() ? 6 : 9;
 
 		// Make sure we have our i18n message before initializing the carousel plugin
 		$.when.apply(this, deferredList).done(function() {

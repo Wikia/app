@@ -62,14 +62,10 @@ class RelatedVideosData {
 	public function addVideo( $articleId, $url ) {
 
 		wfProfileIn( __METHOD__ );
-		if ( empty( $articleId ) ){
+
+		if ( empty( $articleId ) ) {
 			wfProfileOut( __METHOD__ );
 			return wfMsg('related-videos-error-no-article-id');
-		}
-
-		if ( empty( $url ) ){
-			wfProfileOut( __METHOD__ );
-			return wfMsg('related-videos-error-no-video-url');
 		}
 
 		/*
@@ -86,37 +82,14 @@ class RelatedVideosData {
 			return wfMsg('related-videos-error-permission-article');
 		}*/
 
-		try {
-			if ( WikiaFileHelper::isVideoStoredAsFile() ) {
-				// is it a WikiLink?
-				$title = Title::newFromText($url);
-				if ( !$title || !WikiaFileHelper::isTitleVideo($title) ) {
-					$title = Title::newFromText(str_replace(array('[[',']]'),array('',''),$url));
-				}
-				if ( !$title || !WikiaFileHelper::isTitleVideo($title) ) {
-					if ( ($pos = strpos($url,'Video:')) !== false ) {
-						$title = Title::newFromText( substr($url,$pos) );
-					}
-					elseif ( ($pos = strpos($url,'File:')) !== false ) {
-						$title = Title::newFromText( substr($url,$pos) );
-					}
-				}
-				if( $title && WikiaFileHelper::isTitleVideo($title) ) {
-					$videoTitle = $title;
-					$videoPageId = $title->getArticleId();
-					$videoProvider = '';
-				} else {
-					list($videoTitle, $videoPageId, $videoProvider) = $this->addVideoVideoHandlers( $url );
-				}
-			} else {
-				wfProfileOut( __METHOD__ );
-				throw new Exception( 'Old type of videos no longer supported (VideoPage)');
-			}
-		}
-		catch( Exception $e ) {
+		$videoService = F::build( 'VideoService' );
+		$retval = $videoService->addVideo( $url );
+		if ( !is_array($retval) ) {
 			wfProfileOut( __METHOD__ );
-			return $e->getMessage();
+			return $retval;
 		}
+
+		list($videoTitle, $videoPageId, $videoProvider) = $retval;
 
 		// add to article's whitelist
 		//$rvn = F::build( 'RelatedVideosNamespaceData', array( $targetTitle ), 'newFromTargetTitle' );
@@ -144,13 +117,6 @@ class RelatedVideosData {
 		}
 		wfProfileOut( __METHOD__ );
 		return $retval;
-	}
-
-	protected function addVideoVideoHandlers( $url ) {
-		$title = VideoFileUploader::URLtoTitle( $url );
-		if (!$title) throw new Exception( wfMsg('related-videos-error-unknown', 876463) );
-		return array( $title, $title->getArticleID(), null );
-
 	}
 
 	protected function sanitizeTitle($name) {

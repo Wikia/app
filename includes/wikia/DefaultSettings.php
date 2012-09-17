@@ -192,11 +192,6 @@ $wgAutoloadClasses['ArticleService'] = $IP.'/includes/wikia/services/ArticleServ
 $wgAutoloadClasses['AvatarService'] = $IP.'/includes/wikia/services/AvatarService.class.php';
 $wgAutoloadClasses['MediaQueryService'] = $IP.'/includes/wikia/services/MediaQueryService.class.php';
 $wgHooks['ArticleEditUpdates'][] = 'MediaQueryService::onArticleEditUpdates';
-$wgHooks['FileUpload'][] = 'MediaQueryService::onFileUpload';
-$wgHooks['ArticleSaveComplete'][] = 'MediaQueryService::onArticleSaveComplete';
-$wgHooks['FileDeleteComplete'][] = 'MediaQueryService::onFileDeleteComplete';
-$wgHooks['FileUndeleteComplete'][] = 'MediaQueryService::onFileUndeleteComplete';
-$wgHooks['SpecialMovepageAfterMove'][] = 'MediaQueryService::onFileRenameComplete';
 $wgAutoloadClasses['NavigationService']  =  $IP.'/includes/wikia/services/NavigationService.class.php';
 $wgAutoloadClasses['WikiNavigationService']  =  $IP.'/includes/wikia/services/WikiNavigationService.class.php';
 $wgAutoloadClasses['OasisService']  =  $IP.'/includes/wikia/services/OasisService.php';
@@ -225,6 +220,7 @@ $wgAutoloadClasses['HubService'] = $IP . '/includes/wikia/services/HubService.cl
 $wgAutoloadClasses['ImagesService'] = $IP . '/includes/wikia/services/ImagesService.class.php';
 $wgAutoloadClasses['WikiService'] = $IP . '/includes/wikia/services/WikiService.class.php';
 $wgAutoloadClasses['DataMartService'] = $IP . '/includes/wikia/services/DataMartService.class.php';
+$wgAutoloadClasses['VideoService'] = $IP . '/includes/wikia/services/VideoService.class.php';
 $wgAutoloadClasses['SassService']  =  $IP.'/includes/wikia/services/SassService.php';
 
 // modules
