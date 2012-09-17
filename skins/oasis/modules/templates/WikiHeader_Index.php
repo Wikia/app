@@ -60,5 +60,4 @@ if( is_array($menuNodes) && isset($menuNodes[0]) && $showMenu) {
 		<?= Wikia::specialPageLink('RecentChanges', 'recentchanges', array('accesskey' => 'r')) ?>
 	</div>
 	<?= $displaySearch ? F::app()->renderView('Search', 'Index') : '' ?>
-	<img class="shadow-mask" src="<?= $wg->BlankImgUrl ?>" width="0" height="0">
 </header>

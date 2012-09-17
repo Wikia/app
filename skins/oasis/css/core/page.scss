@@ -56,7 +56,6 @@
  */
 .oasis-split-skin {
 	.WikiaPage {
-		@include box-shadow(0, 1px, 8px, $color-page-shadow);
 		border-top: 1px solid $color-page-border;
 		margin: 0 auto 10px;
 		padding-top: 0;
@@ -122,11 +121,9 @@
 	}
 	.module {
 		@include clearfix;
-		@include box-shadow(0px, 2px, 5px, darken($color-page,12%));
 		background: $color-page;
 		border: 1px solid $color-page-border;
 		@if lightness($color-page) < 50 {
-			@include box-shadow(0px, 2px, 5px, darken($color-page,7%));
 			background: $color-module-background;
 			border: 1px solid $color-page-border;
 		}

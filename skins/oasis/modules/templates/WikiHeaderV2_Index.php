@@ -20,7 +20,6 @@
 			echo Wikia::specialPageLink('Random', 'randompage', array('accesskey' => 'x'));
 			echo Wikia::specialPageLink('RecentChanges', 'recentchanges', array('accesskey' => 'r'));
 	?></div>
-	<img class="shadow-mask" src="<?= $wg->BlankImgUrl ?>" width="0" height="0">
 
 	<? echo F::app()->renderView('SharingToolbar', 'Index'); ?>
 </header>
