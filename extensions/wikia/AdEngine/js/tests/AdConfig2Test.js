@@ -1,10 +1,8 @@
-/*
-@test-framework QUnit
- @test-require-asset resources/wikia/modules/querystring.js
- @test-require-asset resources/wikia/modules/cookies.js
- @test-require-asset resources/wikia/modules/log.js
- @test-require-asset extensions/wikia/AdEngine/js/AdConfig2.js
-*/
+/*!
+ * @test-framework QUnit
+ * @test-require-asset extensions/wikia/AdEngine/js/AdConfig2.js
+ */
+
 module('AdConfig2');
 
 test('getProvider failsafe to AdDriver', function() {
@@ -16,10 +14,11 @@ test('getProvider failsafe to AdDriver', function() {
 		, adProviderAdDriverMock = {name: 'AdDriverMock'}
 		, adProviderLiftium2Mock = {name: 'Liftium2Mock'}
 		, geoMock = {getCountryCode:function() {}}
+		, logMock = function() {}
 		, adConfig;
 
 	adConfig = AdConfig2(
-		Wikia.log, Wikia, window, geoMock,
+		logMock, window, geoMock,
 		// AdProviders
 		adProviderGameProMock,
 		adProviderEvolveMock,
@@ -43,10 +42,11 @@ test('getProvider use Evolve(RS) for AU (only if provider accepts)', function() 
 		, adProviderAdDriverMock = {name: 'AdDriverMock'}
 		, adProviderLiftium2Mock = {name: 'Liftium2Mock'}
 		, geoMockAU = {getCountryCode:function() {return 'AU';}}
+		, logMock = function() {}
 		, adConfig, adConfigRS;
 
 	adConfig = AdConfig2(
-		Wikia.log, Wikia, window, geoMockAU,
+		logMock, window, geoMockAU,
 		// AdProviders
 		adProviderGameProMock,
 		adProviderEvolveMockHandling,
@@ -57,7 +57,7 @@ test('getProvider use Evolve(RS) for AU (only if provider accepts)', function() 
 	);
 
 	adConfigRS = AdConfig2(
-		Wikia.log, Wikia, window, geoMockAU,
+		logMock, window, geoMockAU,
 		// AdProviders
 		adProviderGameProMock,
 		adProviderEvolveMock,
@@ -80,10 +80,11 @@ test('getProvider do not use Evolve(RS) for PL', function() {
 		, adProviderAdDriverMock = {name: 'AdDriverMock'}
 		, adProviderLiftium2Mock = {name: 'Liftium2Mock'}
 		, geoMock = {getCountryCode:function() {return 'PL';}}
+		, logMock = function() {}
 		, adConfig;
 
 	adConfig = AdConfig2(
-		Wikia.log, Wikia, window, geoMock,
+		logMock, window, geoMock,
 		// AdProviders
 		adProviderGameProMock,
 		adProviderEvolveMock,
@@ -105,10 +106,11 @@ test('getProvider do not use Evolve(RS) for AU when it cannot handle the slot', 
 		, adProviderAdDriverMock = {name: 'AdDriverMock'}
 		, adProviderLiftium2Mock = {name: 'Liftium2Mock'}
 		, geoMock = {getCountryCode:function() {return 'AU';}}
+		, logMock = function() {}
 		, adConfig;
 
 	adConfig = AdConfig2(
-		Wikia.log, Wikia, window, geoMock,
+		logMock, window, geoMock,
 		// AdProviders
 		adProviderGameProMock,
 		adProviderEvolveMock,
@@ -130,10 +132,11 @@ test('getProvider use GamePro if provider says so', function() {
 		, adProviderAdDriverMock = {name: 'AdDriverMock'}
 		, adProviderLiftium2Mock = {name: 'Liftium2Mock'}
 		, geoMock = {getCountryCode:function() {}}
+		, logMock = function() {}
 		, adConfig;
 
 	adConfig = AdConfig2(
-		Wikia.log, Wikia, window, geoMock,
+		logMock, window, geoMock,
 		// AdProviders
 		adProviderGameProMock,
 		adProviderEvolveMock,
@@ -156,11 +159,12 @@ test('getProvider GamePro wins over Evolve', function() {
 		, adProviderAdDriverMock = {name: 'AdDriverMock'}
 		, adProviderLiftium2Mock = {name: 'Liftium2Mock'}
 		, geoMock = {getCountryCode:function() {return 'AU';}}
+		, logMock = function() {}
 		, adConfig;
 
 	// First see if evolve is used for given configuration when GamePro refuses
 	adConfig = AdConfig2(
-		Wikia.log, Wikia, window, geoMock,
+		logMock, window, geoMock,
 		// AdProviders
 		adProviderGameProMockRejecting,
 		adProviderEvolveMock,
@@ -172,7 +176,7 @@ test('getProvider GamePro wins over Evolve', function() {
 	equal(adConfig.getProvider(['foo']), adProviderEvolveMock, 'adProviderEvolveMock');
 
 	adConfig = AdConfig2(
-		Wikia.log, Wikia, window, geoMock,
+		logMock, window, geoMock,
 		// AdProviders
 		adProviderGameProMock,
 		adProviderEvolveMock,
