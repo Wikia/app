@@ -49,4 +49,3 @@ class GoogleSearchResults extends SpecialPage
 
 } // end class GoogleSearchResults
 
-?>
