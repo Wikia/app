@@ -701,8 +701,13 @@ $config['mini_editor_rte_js'] = array(
 
 $config['chat_js2'] = array(
 	'type' => AssetsManager::TYPE_JS,
-	'assets' => array(
-		'#group_oasis_shared_js',
+	'assets' => array( 
+		'#group_oasis_jquery',
+
+		// shared libraries
+		'//extensions/wikia/AssetsManager/js/AssetsManager.js',
+		'//extensions/wikia/JSMessages/js/JSMessages.js',
+
 		'//extensions/wikia/Chat2/js/lib/socket.io.client.js',
 		'//extensions/wikia/Chat2/js/emoticons.js', // must be before controllers.js
 		'//extensions/wikia/Chat2/js/lib/underscore.js',

@@ -3104,6 +3104,8 @@ var swfobject=function(){var D="undefined",r="object",S="Shockwave Flash",W="Sho
     req.open(method || 'GET', this.prepareUrl() + query, true);
 
     if (method == 'POST') {
+    	debugger;
+    	
       try {
         if (req.setRequestHeader) {
           req.setRequestHeader('Content-type', 'text/plain;charset=UTF-8');
@@ -3420,8 +3422,11 @@ var swfobject=function(){var D="undefined",r="object",S="Shockwave Flash",W="Sho
 	  if(!self.retryCounter || self.retryCounter > 3) {
             self.onClose();  
           } else {
+        	  
             self.retryCounter ++;
+            self.onData('');
             self.get();
+//            self.xhr.send(null);
           }
         }
       }
