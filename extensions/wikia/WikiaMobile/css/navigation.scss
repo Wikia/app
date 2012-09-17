@@ -241,7 +241,7 @@
 			h1 {
 				float: none;
 				font-weight: bold;
-				margin: 0 50px 0 80px;
+				margin: 0 50px;
 			}
 			a {
 				display: block;
@@ -419,7 +419,8 @@
 #wkNavBack {
 	color: inherit;
 	display: none;
-	position: absolute;
+
+	float: left;
 }
 
 //default style if js is disabled
