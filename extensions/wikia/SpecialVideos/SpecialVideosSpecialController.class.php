@@ -21,6 +21,7 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 	 * Videos page
 	 * @requestParam string sort [ recent/popular/trend/premium ]
 	 * @requestParam integer page - page number
+	 * @responseParam integer addVideo [0/1]
 	 * @responseParam string pagination
 	 * @responseParam string sortMsg - selected option (sorting)
 	 * @responseParam array sortingOptions - sorting options
@@ -41,9 +42,18 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 			$page = 1;
 		}
 
+		$addVideo = 1;
+
 		$specialVideos = F::build( 'SpecialVideosHelper' );
-		$videos = $specialVideos->getVideos( $sort );
-		$totalVideos = count( $videos );
+		$videos = $specialVideos->getVideos( $sort, $page );
+
+		$mediaService = F::build( 'MediaQueryService' );
+		if ( $sort == 'premium' ) {
+			$totalVideos = $mediaService->getTotalPremiumVideos();
+		} else {
+			$totalVideos = $mediaService->getTotalVideos();
+		}
+		$totalVideos = $totalVideos + 1; // plus one for 'add video' placeholder
 
 		$sortingOptions = array_merge( $specialVideos->getSortingOptions(), $specialVideos->getFilterOptions() );
 
@@ -51,9 +61,15 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 		$pagination = '';
 		$linkToSpecialPage = SpecialPage::getTitleFor("Videos")->escapeLocalUrl();
 		if( $totalVideos > SpecialVideosHelper::VIDEOS_PER_PAGE ) {
-			$pages = Paginator::newFromArray( $videos, SpecialVideosHelper::VIDEOS_PER_PAGE );
-			$videos = $pages->getPage( $page, true);
+			$pages = Paginator::newFromArray( array_fill( 0, $totalVideos, '' ), SpecialVideosHelper::VIDEOS_PER_PAGE );
+			$pages->setActivePage( $page - 1 );
+
 			$pagination = $pages->getBarHTML( $linkToSpecialPage.'?page=%s&sort='.$sort );
+			// check if we're on the last page
+			if ( $page < $pages->getPagesCount() ) {
+				// we're not so don't show the add video placeholder
+				$addVideo = 0;
+			}
 		}
 
 		foreach ( $videos as &$video ) {
@@ -63,6 +79,7 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 			$video['videoPlayButton'] = F::build( 'WikiaFileHelper', array( SpecialVideosHelper::THUMBNAIL_WIDTH, SpecialVideosHelper::THUMBNAIL_HEIGHT ), 'videoPlayButtonOverlay' );
 		}
 
+		$this->addVideo = $addVideo;
 		$this->pagination = $pagination;
 		$this->sortMsg = $sortingOptions[$sort]; // selected sorting option to display in drop down
 		$this->sortingOptions = $sortingOptions; // populate the drop down 

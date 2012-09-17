@@ -14,7 +14,7 @@
 
 	// "Add a photo" button
 	if (!empty($isSpecialVideos) && !empty($wg->EnableUploads)) { ?>
-		<? /* <a class="button addVideo" href="#" rel="tooltip" title="<?=wfMsg('related-videos-tooltip-add');?>"><img src="<?=wfBlankImgUrl();?>" class="sprite addRelatedVideo" /> <?=wfMsg('related-videos-add-video')?></a>*/ ?>
+		<a class="button addVideo" href="#" rel="tooltip" title="<?=wfMsg('related-videos-tooltip-add');?>"><img src="<?=wfBlankImgUrl();?>" class="sprite addRelatedVideo" /> <?=wfMsg('videos-add-video')?></a>
 	<? }
 
 	// comments & like button

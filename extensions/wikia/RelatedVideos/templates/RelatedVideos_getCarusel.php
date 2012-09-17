@@ -3,7 +3,7 @@
 	<div class="removingProcess messageHolder"><?=wfMsg('related-videos-remove-call');?></div>
 	<div class="addVideoTooltip messageHolder"><?=wfMsg('related-videos-tooltip-add');?></div>
 	<div class="embedCodeTooltip messageHolder"><?=wfMsg('related-videos-tooltip-embed');?></div>
-	<div class="errorWhileLoading messageHolder"><?=wfMsg('related-videos-error-while-loading');?></div>
+	<div class="errorWhileLoading messageHolder"><?=wfMsg('videos-error-while-loading');?></div>
 	<div class="RVHeader">
 		<div class="tally">
 			<em><?=count($videos);?></em>

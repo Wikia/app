@@ -11,10 +11,16 @@ var SpecialVideos = {
 				}
 			}
 		});
+		
+		$('.addVideo').addVideoButton({
+			gaCat: 'testing',
+			callback: function() {
+				window.location.search = "?sort=recent"; // TODO: fix this so it's not hard coded
+			}
+		});
 	}
 };
 
 $(function() {
 	SpecialVideos.init();
 });
-
