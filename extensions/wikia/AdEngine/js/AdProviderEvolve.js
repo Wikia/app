@@ -20,11 +20,16 @@ window.AdProviderEvolve = function (WikiaTracker, log, window, ghostwriter, docu
 		return false;
 	}
 
+	var slotTimer2 = {};
+
 	function fillInSlot(slot) {
 		log('fillInSlot', 5, 'AdProviderEvolve');
 		log(slot, 5, 'AdProviderEvolve');
 
 		WikiaTracker.trackAdEvent('liftium.slot2', {'ga_category':'slot2/' + slot[1], 'ga_action':slot[0], 'ga_label':'evolve'}, 'ga');
+
+		slotTimer2[slot[0]] = new Date().getTime();
+		log('slotTimer2 start for ' + slot[0], 7, 'AdProviderEvolve');
 
 		var url = getUrl(slot[0], slot[1]);
 		ghostwriter(
@@ -101,7 +106,9 @@ window.AdProviderEvolve = function (WikiaTracker, log, window, ghostwriter, docu
 		var size = slotMap[slotname].size || '0x0';
 		log([slotname, size], 7, 'AdProviderEvolve');
 
-		WikiaTracker.trackAdEvent('liftium.hop2', {'ga_category':'hop2/evolve', 'ga_action':'slot ' + slotname, 'ga_label':'9.9' /* FIXME Liftium.formatTrackTime(time, 5) */}, 'ga');
+		var time = new Date().getTime() - slotTimer2[slotname];
+		log('slotTimer2 end for ' + slotname + ' after ' + time + ' ms', 7, 'AdProviderEvolve');
+		WikiaTracker.trackAdEvent('liftium.hop2', {'ga_category':'hop2/evolve', 'ga_action':'slot ' + slotname, 'ga_label':formatTrackTime(time, 5)}, 'ga');
 
 		window.adslots2.push([slotname, null, 'Liftium2', null]);
 	}
@@ -121,6 +128,27 @@ window.AdProviderEvolve = function (WikiaTracker, log, window, ghostwriter, docu
 
 		log(out, 7, 'AdProviderEvolve');
 		return out;
+	}
+
+	// copy of Liftium.formatTrackTime
+	// TODO refactor out... AdEngine2Helper? WikiaTracker?
+	function formatTrackTime(t, max) {
+		if (isNaN(t)) {
+			log('Error, time tracked is NaN: ' + t, 7, 'AdProviderEvolve');
+			return "NaN";
+		}
+
+		if (t < 0) {
+			log('Error, time tracked is a negative number: ' + t, 7, 'AdProviderEvolve');
+			return "negative";
+		}
+
+		t = t / 1000;
+		if (t > max) {
+			return "more_than_" + max;
+		}
+
+		return t.toFixed(1);
 	}
 
 	var iface = {
