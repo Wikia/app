@@ -58,5 +58,9 @@ class VideoHandlerController extends WikiaController {
 			$prefix.$sTitle
 		);
 	}
+	
+	public function removeVideo() {
+		$this->response = 'success';
+	}
 
 }
