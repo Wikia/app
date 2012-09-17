@@ -17,7 +17,7 @@
 
 	adConfig = AdConfig2(
 		// regular dependencies:
-		Wikia.log, Wikia, window, Geo,
+		Wikia.log, window, Geo,
 
 		// AdProviders:
 		adProviderGamePro,

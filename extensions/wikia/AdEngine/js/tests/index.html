@@ -11,22 +11,13 @@
 		 * and should be solved ASAP.
 		 */
 		wgInsideUnitTest = true;
-
-		/**
-		 * AdConfig.js have a strong dependency on Wikia.geo.getGeoData function which is not
-		 * available in test environment so we are mocking it here. It can't be defined in module
-		 * setup because it is too late (AdConfig.js calls that function just after it is loaded).
-		 * This problem should be solved in a better way.
-		 */
-		Wikia = { geo: { getGeoData: function() { } } };
 		</script>
 
 		<!-- Load test framework -->
-		<!-- TODO: Put QUnit somewhere in local repository instead of using remote reference -->
-		<link rel="stylesheet" href="http://code.jquery.com/qunit/qunit-1.9.0.css">
-		<script src="http://code.jquery.com/qunit/qunit-1.9.0.js"></script>
+		<link rel="stylesheet" href="../../../../../tests/lib/qunit/qunit.css">
+		<script src="../../../../../tests/lib/qunit/qunit.js"></script>
 
-		<!-- Load application -->
+		<!-- Tested objects -->
 		<script src="../../../../../resources/wikia/modules/querystring.js"></script>
 		<script src="../../../../../resources/wikia/modules/cookies.js"></script>
 		<script src="../../../../../resources/wikia/modules/log.js"></script>
@@ -38,17 +29,31 @@
 		<script src="../AdProviderAdDriver2.js"></script>
 		<script src="../AdConfig2.js"></script>
 		<script src="../../AdDriverGP.js"></script>
-		<script src="../../AdConfig.js"></script>
 		<script src="../AdEngine2.js"></script>
 
 		<!-- Load test suites -->
 		<script src="AdConfig2Test.js"></script>
-		<script src="AdDriverGPTest.js"></script>
-		<script src="AdDriverTest.js"></script>
 		<script src="AdEngine2Test.js"></script>
 		<script src="AdProviderEvolveTest.js"></script>
 		<script src="AdProviderEvolveRSTest.js"></script>
 		<script src="AdProviderGameProTest.js"></script>
+
+		<!-- Crazy tests requiring environmental stuff -->
+		<script>
+		/**
+		 * AdConfig.js have a strong dependency on Wikia.geo.getGeoData function which is not
+		 * available in test environment so we are mocking it here. It can't be defined in module
+		 * setup because it is too late (AdConfig.js calls that function just after it is loaded).
+		 * This problem should be solved in a better way.
+		 */
+		Wikia.geo = { getGeoData: function() { } };
+		</script>
+		<!-- Tested objects (+ anything before of course) -->
+		<script src="../../AdConfig.js"></script>
+
+		<!-- Tests -->
+		<script src="AdDriverGPTest.js"></script>
+		<script src="AdDriverTest.js"></script>
 	</head>
 	<body>
 		<div id="qunit"></div>

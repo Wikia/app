@@ -1,6 +1,6 @@
 var AdConfig2 = function (
 	// regular dependencies
-	log, Wikia, window, Geo,
+	log, window, Geo,
 
 	// AdProviders
 	AdProviderGamePro,
