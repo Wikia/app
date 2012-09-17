@@ -159,7 +159,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		// redirect to the new create wiki.  use action or type query params to bypass.
 		if(!($wgRequest->wasPosted()) && empty($this->mAction) && empty($this->mType)) {
 			$cnwTitle = Title::newFromText("CreateNewWiki", NS_SPECIAL);
-			$wgOut->redirect($cnwTitle->getFullURL().'?uselang='.$this->mLang);
+			$wgOut->redirect( $cnwTitle->getFullURL().'?uselang='.$this->mLang, 301 /* moved permanently */ );
 			wfProfileOut( __METHOD__ );
 			return;
 		}
