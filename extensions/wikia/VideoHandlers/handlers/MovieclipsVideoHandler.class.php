@@ -3,14 +3,14 @@
 class MovieclipsVideoHandler extends VideoHandler {
 	
 	protected $apiName = 'MovieclipsApiWrapper';
-	protected static $urlTemplate = 'http://movieclips.com/e/$1/';
+	protected static $urlTemplate = 'http://movieclips.com/e/';
 	protected static $providerDetailUrlTemplate = 'http://movieclips.com/$1';
 	protected static $providerHomeUrl = 'http://movieclips.com/';
 	
 	public function getEmbed($articleId, $width, $autoplay=false, $isAjax=false, $postOnload=false) {
 		$height =  $this->getHeight( $width );
 		
-		$url = $this->getEmbedUrl();
+		$url = self::$urlTemplate . $this->videoId . '/';
 		
 		$embedCode = <<<EOT
 <object width="$width" height="$height" type="application/x-shockwave-flash" data="$url/" style="background: #000000; display:block; overflow: hidden;">

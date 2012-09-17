@@ -12,7 +12,6 @@ class OasisController extends WikiaController {
 	 * @author: Inez Korczyński
 	 */
 	public static function addBodyClass($className) {
-
 		if(!in_array($className,self::$extraBodyClasses)) {
 			self::$extraBodyClasses[] = $className;
 			return true;
@@ -117,7 +116,6 @@ class OasisController extends WikiaController {
 
 		// TODO: move to CreateNewWiki extension - this code should use a hook
 		$wikiWelcome = $wgRequest->getVal('wiki-welcome');
-
 		if(!empty($wikiWelcome)) {
 			$wgOut->addStyle( $this->assetsManager->getSassCommonURL( 'extensions/wikia/CreateNewWiki/css/WikiWelcome.scss' ) );
 			$wgOut->addScript( '<script src="' . $this->wg->ExtensionsPath . '/wikia/CreateNewWiki/js/WikiWelcome.js"></script>' );
@@ -138,8 +136,6 @@ class OasisController extends WikiaController {
 			$this->body = !empty($params['body']) ? $params['body'] : F::app()->renderView('Body', 'Index');
 			wfProfileOut(__METHOD__ . ' - renderBody');
 		}
-		// get microdata for body tag
-		$this->itemType = self::getItemType();
 
 		$skin = RequestContext::getMain()->getSkin();
 		// this is bad but some extensions could have added some scripts to bottom queue
@@ -641,20 +637,5 @@ EOT;
 			$first = false;
 		}
 	}
-	
-	/**
-	 *	Logic for microdata to be added to body tag. 
-	 */
-	protected function getItemType() {
-		$type = '';
-		if($this->wg->Title->isSpecial('Videos')) {
-			$type = "VideoGallery";
-		}
-		// TODO: Add ImageGallery for photos page
-		if(!empty($type)) {
-			return ' itemscope itemtype="http://schema.org/'.$type.'"';
 
-		}
-		return '';
-	}
 }

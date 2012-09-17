@@ -834,7 +834,6 @@ $config['relatedvideos_js'] = array(
 	'skin' => array( 'oasis' ), //we have no support for relatedvideos in wikiamobile and monobook as for now
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
-		'//extensions/wikia/VideoHandlers/js/AddVideo.js',
 		'//extensions/wikia/RelatedVideos/js/RelatedVideos.js'
 	)
 );
@@ -1110,7 +1109,6 @@ $config['special_videos_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => array( 'oasis', 'monobook' ),
 	'assets' => array(
-		'//extensions/wikia/VideoHandlers/js/AddVideo.js',
 		'//extensions/wikia/SpecialVideos/js/SpecialVideos.js',
 		'//extensions/wikia/WikiaStyleGuide/js/Dropdown.js',
 	)

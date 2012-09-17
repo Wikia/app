@@ -3,14 +3,14 @@
 class MyvideoVideoHandler extends VideoHandler {
 	
 	protected $apiName = 'MyvideoApiWrapper';
-	protected static $urlTemplate = 'http://www.myvideo.de/movie/$1';
+	protected static $urlTemplate = 'http://www.myvideo.de/movie/';
 	protected static $providerDetailUrlTemplate = 'http://www.myvideo.de/watch/$1';
 	protected static $providerHomeUrl = 'http://www.myvideo.de/';
 	
 	public function getEmbed($articleId, $width, $autoplay=false, $isAjax=false, $postOnload=false) {
 		$height =  $this->getHeight( $width );
 		
-		$url = $this->getEmbedUrl();
+		$url = self::$urlTemplate . $this->videoId;
 		
 		$embedCode = <<<EOT
 <object style='width:611px;height:383px;' width='$width' height='$height'>

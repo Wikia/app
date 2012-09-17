@@ -20,7 +20,6 @@ abstract class VideoHandler extends BitmapHandler {
 	protected $thumbnailImage = null;
 	protected static $aspectRatio = 1.7777778;
 	protected static $classnameSuffix = 'VideoHandler';
-	protected static $urlTemplate = '';	// must have a token called "$1"
 	protected static $providerDetailUrlTemplate = '';	// must have a token called "$1"
 
 	/**
@@ -78,10 +77,6 @@ abstract class VideoHandler extends BitmapHandler {
 	 * @return string Embed HTML
 	 */
 	abstract function getEmbed( $articleId, $width, $autoplay = false, $isAjax = false, $postOnload = false );
-
-	public function getEmbedUrl() {
-		return str_replace('$1', $this->getEmbedVideoId(), static::$urlTemplate);
-	}
 
 	public function setMaxHeight( $height ) {
 		$this->maxHeight = $height;
@@ -251,7 +246,7 @@ abstract class VideoHandler extends BitmapHandler {
 
 		return '';
 	}
-	
+
 	/**
 	 * Get the video id that is used for embed code
 	 * @return string

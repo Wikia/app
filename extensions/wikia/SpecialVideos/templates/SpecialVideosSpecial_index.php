@@ -23,9 +23,9 @@
 </div>
 
 
-<div class="WikiaGrid VideoGrid">
+<div class="WikiaGrid VideoGrid" itemscope itemtype="http://schema.org/VideoGallery">
 	<?php $counter = 0 ?>
-	<?php foreach( $videos as $video ): ?>
+	<?php foreach( $videos as $video ) { ?>
 		<?php $alpha = $counter % 3 == 0 ? 'alpha' : ''; ?>
 
 		<div class="grid-2 <?= $alpha ?>" itemprop="video" itemscope itemtype="http://schema.org/VideoObject">
@@ -36,19 +36,11 @@
 			</a>
 			<p><?= $video['byUserMsg'] ?></p>
 			<p itemprop="uploadDate"><?= wfTimeFormatAgo($video['timestamp']) ?></p>
-			<p><?= $video['postedInMsg']; ?></p>
-			<meta itemprop="embedUrl" content="<?= $video['embedUrl'] ?>" />			
+			<p class="posted-in"><?= $video['postedInMsg']; ?></p>
+
 		</div>
 
 		<?php $counter++; ?>
-	<?php endforeach; ?>
-	<?php if (!empty($addVideo)): ?>
-		<?php $alpha = $counter % 3 == 0 ? 'alpha' : ''; ?>
-		<div class="grid-2 <?= $alpha ?>">
-			<div class="add-video-placeholder addVideo"></div>
-			<p><a href="#" class="addVideo"><?= wfMsg('special-videos-add-video') ?></a></p>
-		</div>
-	<?php endif; ?>
+	<?php } ?>
 </div>
 <?= $pagination ?>
-<div class="errorWhileLoading messageHolder"><?=wfMsg('videos-error-while-loading');?></div>
