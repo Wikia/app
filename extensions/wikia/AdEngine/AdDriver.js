@@ -21,6 +21,8 @@ var AdDriver = {
 	standardTopButtonMinHeight: 100,
 
 	getMinNumDARTCall: function(country) {
+		Wikia.log('getMinNumDARTCall ' + country, 5, 'AdDriver');
+
 		country = country.toUpperCase();
 		if (window.wgHighValueCountries && window.wgHighValueCountries[country]) {
 			return window.wgHighValueCountries[country];
@@ -29,6 +31,8 @@ var AdDriver = {
 	},
 
 	init: function() {
+		Wikia.log('init', 5, 'AdDriver');
+
 		window.adDriverLastDARTCallNoAds = [];
 		window.adDriverAdCallComplete = [];
 		AdDriver.debug = parseInt($.getUrlVar('debug'));
@@ -42,6 +46,8 @@ var AdDriver = {
 };
 
 AdDriver.getAdProviderForSpecialCase = function(slotname) {
+	Wikia.log('getAdProviderForSpecialCase ' + slotname, 5, 'AdDriver');
+
 	// this goes to WF Nef @9/13
 	switch (wgDBname) {
 		case 'geekfeminism':
@@ -85,6 +91,8 @@ AdDriver.getAdProviderForSpecialCase = function(slotname) {
 };
 
 AdDriver.isHighValue = function(slotname) {
+	Wikia.log('isHighValue ' + slotname, 5, 'AdDriver');
+
 	if (AdConfig.isHighValueSlot(slotname)) {
 		// FogBugz 9953: Liftium.geo may have country data when AdConfig.geo does not
 		// Read from Liftium.geo first
@@ -104,15 +112,19 @@ AdDriver.isHighValue = function(slotname) {
 };
 
 AdDriver.getNumDARTCall = function(slotname) {
+	Wikia.log('getNumDARTCall ' + slotname, 5, 'AdDriver');
+
 	var num = 0;
 
 	num = AdDriver.getNumCall(AdDriver.storageNameNumDARTCall, slotname);
-	AdDriver.log(slotname + ' has ' + num + ' DART calls');
+	Wikia.log(slotname + ' has ' + num + ' DART calls', 3, 'AdDriver');
 
 	return num;
 };
 
 AdDriver.getNumAllCall = function(slotname) {
+	Wikia.log('getNumAllCall ' + slotname, 5, 'AdDriver');
+
 	var num = 0;
 
 	num = AdDriver.getNumCall(AdDriver.storageNameNumAllCall, slotname);
@@ -121,6 +133,8 @@ AdDriver.getNumAllCall = function(slotname) {
 };
 
 AdDriver.getNumCall = function(storageName, slotname) {
+	Wikia.log('getNumCall ' + storageName + ', ' + slotname, 5, 'AdDriver');
+
 	var storageNum = 0,
 		cookieNum = 0,
 		numCallStorage;
@@ -140,20 +154,22 @@ AdDriver.getNumCall = function(storageName, slotname) {
 			// compare and report error if they're not equal
 			if (storageNum != cookieNum) {
 				WikiaTracker.trackAdEvent('liftium.errors', {'ga_category':'errors/numcalloutofsync', 'ga_action':slotname, 'ga_label':'storage ' + storageName + ', num ' + storageNum + ', cookie ' + cookieNum}, 'ga');
-				AdDriver.log('Cookie and ExpiryStorage for ' + storageName + ':' + slotname + ' are out of sync!');
-				AdDriver.log('Cookie contents: ' + cookieNum);
-				AdDriver.log('ExpiryStogage contents: ' + storageNum);
+				Wikia.log('Cookie and ExpiryStorage for ' + storageName + ':' + slotname + ' are out of sync!', 1, 'AdDriver');
+				Wikia.log('Cookie contents: ' + cookieNum, 1, 'AdDriver');
+				Wikia.log('ExpiryStogage contents: ' + storageNum, 1, 'AdDriver');
 			}
 		}
 	}
 	catch (e) {
-		AdDriver.log(e.message);
+		Wikia.log(e.message, 1, 'AdDriver');
 	}
 
 	return window.wgAdDriverUseExpiryStorage ? storageNum : cookieNum;
 };
 
 AdDriver.getNumCallFromStorageContents = function(numCallStorage, slotname) {
+	Wikia.log('getNumCallFromStorageContents ' + numCallStorage + ', ' + slotname, 5, 'AdDriver');
+
 	var num = 0;
 
 	if (typeof(numCallStorage) != 'undefined' && numCallStorage) {
@@ -172,14 +188,19 @@ AdDriver.getNumCallFromStorageContents = function(numCallStorage, slotname) {
 };
 
 AdDriver.incrementNumDARTCall = function(slotname) {
+	Wikia.log('incrementNumDARTCall ' + slotname, 5, 'AdDriver');
+
 	return AdDriver.incrementNumCall(AdDriver.storageNameNumDARTCall, slotname);
 };
 
 AdDriver.incrementNumAllCall = function(slotname) {
+	Wikia.log('incrementNumAllCall ' + slotname, 5, 'AdDriver');
+
 	return AdDriver.incrementNumCall(AdDriver.storageNameNumAllCall, slotname);
 };
 
 AdDriver.incrementNumCall = function(storageName, slotname) {
+	Wikia.log('incrementNumCall ' + storageName + ', ' + slotname, 5, 'AdDriver');
 
 	var newSlotnameObjs = new Array();
 	var numInStorage = 0;
@@ -196,7 +217,7 @@ AdDriver.incrementNumCall = function(storageName, slotname) {
 			newSlotnameObjs = incrementResult.newSlotnameObjs;
 		}
 		catch (e) {
-			AdDriver.log(e.message);
+			Wikia.log(e.message, 1, 'AdDriver');
 		}
 
 		if (!slotnameInStorage) {
@@ -218,7 +239,7 @@ AdDriver.incrementNumCall = function(storageName, slotname) {
 			newSlotnameObjs = incrementResult.newSlotnameObjs;
 		}
 		catch (e) {
-			AdDriver.log(e.message);
+			Wikia.log(e.message, 1, 'AdDriver');
 		}
 
 		if (!slotnameInStorage) {
@@ -233,6 +254,8 @@ AdDriver.incrementNumCall = function(storageName, slotname) {
 };
 
 AdDriver.incrementStorageContents = function(numCallStorage, slotname) {
+	Wikia.log('incrementStorageContents ' + numCallStorage + ', ' + slotname, 5, 'AdDriver');
+
 	var newSlotnameObjs = new Array();
 	var num = 0;
 	var slotnameInStorage = false;
@@ -263,6 +286,8 @@ AdDriver.incrementStorageContents = function(numCallStorage, slotname) {
 };
 
 AdDriver.isLastDARTCallNoAd = function(slotname) {
+	Wikia.log('isLastDARTCallNoAd ' + slotname, 5, 'AdDriver');
+
 	var storageValue = false;
 	var cookieValue = false;
 
@@ -284,15 +309,17 @@ AdDriver.isLastDARTCallNoAd = function(slotname) {
 		}
 	}
 	catch (e) {
-		AdDriver.log(e.message);
+		Wikia.log(e.message, 1, 'AdDriver');
 	}
 
-	AdDriver.log(slotname + ' last DART call had no ad? ' + (window.wgAdDriverUseExpiryStorage ? storageValue : cookieValue));
+	Wikia.log(slotname + ' last DART call had no ad? ' + (window.wgAdDriverUseExpiryStorage ? storageValue : cookieValue), 1, 'AdDriver');
 
 	return window.wgAdDriverUseExpiryStorage ? storageValue : cookieValue;
 };
 
 AdDriver.getLastDARTCallNoAdFromStorageContents = function(lastDARTCallNoAdStorage, slotname) {
+	Wikia.log('getLastDARTCallNoAdFromStorageContents ' + lastDARTCallNoAdStorage + ', ' + slotname, 5, 'AdDriver');
+
 	var value = false;
 
 	if (typeof(lastDARTCallNoAdStorage) != 'undefined' && lastDARTCallNoAdStorage) {
@@ -311,6 +338,8 @@ AdDriver.getLastDARTCallNoAdFromStorageContents = function(lastDARTCallNoAdStora
 };
 
 AdDriver.setLastDARTCallNoAd = function(slotname, value) {
+	Wikia.log('setLastDARTCallNoAd ' + slotname + ', ' + value, 5, 'AdDriver');
+
 	var newSlotnameTimestamps = new Array();
 	var slotnameInStorage = false;
 
@@ -322,7 +351,7 @@ AdDriver.setLastDARTCallNoAd = function(slotname, value) {
 			slotnameInStorage = setResult.slotnameInStorage;
 		}
 		catch (e) {
-			AdDriver.log(e.message);
+			Wikia.log(e.message, 1, 'AdDriver');
 		}
 
 		if (value && !slotnameInStorage) {
@@ -344,7 +373,7 @@ AdDriver.setLastDARTCallNoAd = function(slotname, value) {
 			slotnameInStorage = setResult.slotnameInStorage;
 		}
 		catch (e) {
-			AdDriver.log(e.message);
+			Wikia.log(e.message, 1, 'AdDriver');
 		}
 
 		if (value && !slotnameInStorage) {
@@ -361,6 +390,8 @@ AdDriver.setLastDARTCallNoAd = function(slotname, value) {
 };
 
 AdDriver.setLastDARTCallNoAdInStorageContents = function(lastDARTCallNoAdStorage, slotname, value) {
+	Wikia.log('setLastDARTCallNoAdInStorageContents ' + lastDARTCallNoAdStorage + ', ' + slotname + ', ' + value, 5, 'AdDriver');
+
 	var slotnameInStorage = false;
 	var newSlotnameTimestamps = new Array();
 
@@ -388,6 +419,8 @@ AdDriver.setLastDARTCallNoAdInStorageContents = function(lastDARTCallNoAdStorage
 };
 
 AdDriver.adjustSlotDisplay = function(slotname) {
+	Wikia.log('adjustSlotDisplay ' + slotname, 5, 'AdDriver');
+
 	var $slot = $('#'+slotname);
 	switch (slotname) {
 		case 'CORP_TOP_LEADERBOARD':
@@ -426,6 +459,8 @@ AdDriver.adjustSlotDisplay = function(slotname) {
 };
 
 AdDriver.canCallLiftium = function(slotname) {
+	Wikia.log('canCallLiftium ' + slotname, 5, 'AdDriver');
+
 	switch (slotname) {
 		case 'HOME_INVISIBLE_TOP':
 		case 'HUB_TOP_LEADERBOARD':
@@ -441,6 +476,8 @@ AdDriver.canCallLiftium = function(slotname) {
 };
 
 AdDriver.doesUrlParameterExist = function(param) {
+	Wikia.log('doesUrlParameterExist ' + param, 5, 'AdDriver');
+
 	if ($.getUrlVar(param) != null) {
 		return true;
 	}
@@ -449,6 +486,8 @@ AdDriver.doesUrlParameterExist = function(param) {
 };
 
 AdDriver.isForceLiftium = function() {
+	Wikia.log('isForceLiftium', 5, 'AdDriver');
+
 	var forceLiftiumParams = new Array(AdDriver.paramLiftiumTag);
 
 	for (var i=0; i<forceLiftiumParams.length; i++) {
@@ -461,6 +500,8 @@ AdDriver.isForceLiftium = function() {
 };
 
 AdDriver.getAdProvider = function(slotname, size, defaultAdProvider) {
+	Wikia.log('getAdProvider ' + slotname + ', ' + size + ', ' + defaultAdProvider, 5, 'AdDriver');
+
 	if (AdDriver.isForceLiftium()) {
 		return AdDriver.adProviderLiftium;
 	}
@@ -498,6 +539,8 @@ var AdDriverDelayedLoaderItem = function (slotname, size, defaultAdProvider) {
 	// do not generate DART url until it is needed. This allows
 	// for last-minute reordering of slots, and correct value of tile
 	this.getDARTUrl = function (){
+		Wikia.log('getDARTUrl', 5, 'AdDriverDelayedLoaderItem');
+
 		if (!this.dartUrl) {
 			this.dartUrl = AdConfig.DART.getUrl(slotname, size, false, AdDriver.adProviderAdDriver);
 		}
@@ -517,6 +560,8 @@ var AdDriverDelayedLoader = {
 	runFinalize: false,
 	started: false,
 	init: function(adDriverItems) {
+		Wikia.log('init', 5, 'AdDriverDelayedLoader');
+
 		AdDriverDelayedLoader.adDriverItems = adDriverItems ? adDriverItems : new Array();
 		AdDriverDelayedLoader.adNum = 0;
 		AdDriverDelayedLoader.currentAd = null;
@@ -529,14 +574,20 @@ var AdDriverDelayedLoader = {
 AdDriverDelayedLoader.init();
 
 AdDriverDelayedLoader.appendItem = function(adDriverItem) {
+	Wikia.log('appendItem ' + adDriverItem, 5, 'AdDriverDelayedLoader');
+
 	AdDriverDelayedLoader.adDriverItems.push(adDriverItem);
 };
 
 AdDriverDelayedLoader.prependItem = function(adDriverItem) {
+	Wikia.log('prependItem ' + adDriverItem, 5, 'AdDriverDelayedLoader');
+
 	AdDriverDelayedLoader.adDriverItems.unshift(adDriverItem);
 };
 
 AdDriverDelayedLoader.removeItemsBySlotname = function(slotname) {
+	Wikia.log('removeItemsBySlotname ' + slotname, 5, 'AdDriverDelayedLoader');
+
 	// iterate through AdDriverDelayedLoader.adDriverItems and look for
 	// items to remove. Remove the highest index first
 	var itemIdxs = [];
@@ -551,9 +602,11 @@ AdDriverDelayedLoader.removeItemsBySlotname = function(slotname) {
 };
 
 AdDriverDelayedLoader.callDART = function() {
+	Wikia.log('callDART', 5, 'AdDriverDelayedLoader');
+
 	WikiaTracker.trackAdEvent('liftium.slot2', {'ga_category':'slot2/' + AdDriverDelayedLoader.currentAd.size, 'ga_action':AdDriverDelayedLoader.currentAd.slotname, 'ga_label':'addriver'}, 'ga');
 
-	AdDriver.log(AdDriverDelayedLoader.currentAd.slotname + ': calling DART...');
+	Wikia.log(AdDriverDelayedLoader.currentAd.slotname + ': calling DART...', 1, 'AdDriverDelayedLoader');
 	AdDriver.incrementNumDARTCall(AdDriverDelayedLoader.currentAd.slotname);
 	AdDriver.setLastDARTCallNoAd(AdDriverDelayedLoader.currentAd.slotname, null);
 	var slot = document.getElementById(AdDriverDelayedLoader.currentAd.slotname);
@@ -569,11 +622,11 @@ AdDriverDelayedLoader.callDART = function() {
 				var nextAdProvider = null;
 
 				if (typeof(window.adDriverLastDARTCallNoAds[AdDriverDelayedLoader.currentAd.slotname]) == 'undefined' || !window.adDriverLastDARTCallNoAds[AdDriverDelayedLoader.currentAd.slotname]) {
-					AdDriver.log(AdDriverDelayedLoader.currentAd.slotname + ' was filled by DART');
+					Wikia.log(AdDriverDelayedLoader.currentAd.slotname + ' was filled by DART', 1, 'AdDriverDelayedLoader');
 					AdDriver.adjustSlotDisplay(AdDriverDelayedLoader.currentAd.slotname);
 				}
 				else {
-					AdDriver.log(AdDriverDelayedLoader.currentAd.slotname + ' was not filled by DART');
+					Wikia.log(AdDriverDelayedLoader.currentAd.slotname + ' was not filled by DART', 1, 'AdDriverDelayedLoader');
 					AdDriver.setLastDARTCallNoAd(AdDriverDelayedLoader.currentAd.slotname, window.wgNow.getTime());
 					if (AdDriver.canCallLiftium(AdDriverDelayedLoader.currentAd.slotname)) {
 						nextAdProvider = AdDriver.adProviderLiftium;
@@ -600,11 +653,15 @@ AdDriverDelayedLoader.callDART = function() {
 };
 
 AdDriverDelayedLoader.getPlaceHolderIframeScript = function(slotname, size) {
+	Wikia.log('getPlaceHolderIframeScript ' + slotname + ', ' + size, 5, 'AdDriverDelayedLoader');
+
 	var dims = size.split('x');
 	return "document.write('<div id=\"Liftium_"+size+"_"+(++AdDriverDelayedLoader.adNum)+"\"><iframe width=\""+dims[0]+"\" height=\""+dims[1]+"\" id=\""+escape(slotname)+"_iframe\" noresize=\"true\" scrolling=\"no\" frameborder=\"0\" marginheight=\"0\" marginwidth=\"0\" style=\"border:none;\" target=\"_blank\"></iframe><div>');";
 };
 
 AdDriverDelayedLoader.getLiftiumCallScript = function(slotname, size) {
+	Wikia.log('getLiftiumCallScript ' + slotname + ', ' + size, 5, 'AdDriverDelayedLoader');
+
 	var script = '';
 
 	if (slotname in AdConfig.adSlotsRequiringJSInvocation) {
@@ -619,6 +676,8 @@ AdDriverDelayedLoader.getLiftiumCallScript = function(slotname, size) {
 };
 
 AdDriverDelayedLoader.callLiftium = function() {
+	Wikia.log('callLiftium', 5, 'AdDriverDelayedLoader');
+
 	var slotname = AdDriverDelayedLoader.currentAd.slotname;
 
 	if (!AdDriver.canCallLiftium(slotname)) {
@@ -626,7 +685,7 @@ AdDriverDelayedLoader.callLiftium = function() {
 		return;
 	}
 
-	AdDriver.log(slotname + ': calling Liftium...');
+	Wikia.log(slotname + ': calling Liftium...', 1, 'AdDriverDelayedLoader');
 
 	var size = AdDriverDelayedLoader.currentAd.size;
 	LiftiumOptions.placement = slotname;
@@ -648,12 +707,14 @@ AdDriverDelayedLoader.callLiftium = function() {
 		);
 	}
 	catch (e) {
-		AdDriver.log(e.message);
+		Wikia.log(e.message, 1, 'AdDriverDelayedLoader');
 		AdDriverDelayedLoader.loadNext();
 	}
 };
 
 AdDriverDelayedLoader.loadNext = function() {
+	Wikia.log('loadNext', 5, 'AdDriverDelayedLoader');
+
 	if (AdDriverDelayedLoader.adDriverItems.length) {
 		AdDriverDelayedLoader.currentAd = AdDriverDelayedLoader.adDriverItems.shift();
 		if (AdEngine.isSlotDisplayableOnCurrentPage(AdDriverDelayedLoader.currentAd.slotname)) {
@@ -703,6 +764,8 @@ AdDriverDelayedLoader.loadNext = function() {
 // TOP_RIGHT_BOXAD are first. It does not guarantee the order of the rest of
 // the slots.
 AdDriverDelayedLoader.reorderItems = function() {
+	Wikia.log('reorderItems', 5, 'AdDriverDelayedLoader');
+
 	var highPriorityItems = ['TOP_LEADERBOARD', 'TOP_RIGHT_BOXAD'];
 	var tmpItems = [];
 	for (var i=0; i<AdDriverDelayedLoader.adDriverItems.length; i++) {
@@ -733,6 +796,8 @@ AdDriverDelayedLoader.reorderItems = function() {
 // slots are moved. process internal queue.
 // @param int loadPriorityFloor process slots with a minimum load priority
 AdDriverDelayedLoader.prepareSlots = function(loadPriorityFloor) {
+	Wikia.log('prepareSlots ' + loadPriorityFloor, 5, 'AdDriverDelayedLoader');
+
 	if (!AdDriverDelayedLoader.isRunning()) {
 		AdDriverDelayedLoader.reset();
 	}
@@ -753,6 +818,8 @@ AdDriverDelayedLoader.prepareSlots = function(loadPriorityFloor) {
 // @param int loadPriorityFloor
 //
 AdDriverDelayedLoader.getNextSlotFromBuffer = function(loadPriorityFloor) {
+	Wikia.log('getNextSlotFromBuffer ' + loadPriorityFloor, 5, 'AdDriverDelayedLoader');
+
 	var highestPriority = -1;
 	var highestPriorityIndex = -1;
 	for (var i=0; i<window.adslots.length; i++) {
@@ -772,6 +839,8 @@ AdDriverDelayedLoader.getNextSlotFromBuffer = function(loadPriorityFloor) {
 };
 AdDriverDelayedLoader.startCalled = false;
 AdDriverDelayedLoader.load = function() {
+	Wikia.log('load', 5, 'AdDriverDelayedLoader');
+
 	AdDriverDelayedLoader.started = true;
 
 	// Temporary AdDriver tracking by Inez
@@ -789,7 +858,7 @@ AdDriverDelayedLoader.load = function() {
 
 	if (typeof wgNow != 'undefined' && AdDriverDelayedLoader.adDriverItems.length) {
 		var loadTime = (new Date()).getTime() - wgNow.getTime();
-		$().log('AdDriver started loading after ' + loadTime + ' ms');
+		Wikia.log('AdDriver started loading after ' + loadTime + ' ms', 1, 'AdDriverDelayedLoader');
 	}
 
 	// there used to be a check for no-ad wikis here. In practice, no-ad wikis
@@ -801,14 +870,19 @@ AdDriverDelayedLoader.load = function() {
 };
 
 AdDriverDelayedLoader.reset = function() {
+	Wikia.log('reset', 5, 'AdDriverDelayedLoader');
+
 	AdDriverDelayedLoader.init();
 };
 
 AdDriverDelayedLoader.isRunning = function() {
+	Wikia.log('isRunning', 5, 'AdDriverDelayedLoader');
+
 	return AdDriverDelayedLoader.started && AdDriverDelayedLoader.adDriverItems.length;
 };
 
 AdDriverDelayedLoader.finalize = function() {
+	Wikia.log('finalize', 5, 'AdDriverDelayedLoader');
 
 	// Temporary AdDriver tracking by Inez
 	if((typeof EXP_AD_LOAD_TIMING != "undefined") &&
@@ -821,12 +895,12 @@ AdDriverDelayedLoader.finalize = function() {
 	}
 
 	if (window.wgEnableKruxTargeting) {
-		AdDriver.log('loading krux');
+		Wikia.log('loading krux', 1, 'AdDriverDelayedLoader');
 		Krux.load(window.wgKruxCategoryId);
 	}
 
 	var loadTime = (new Date()).getTime() - wgNow.getTime();
-	$().log('AdDriver finished at ' + loadTime + ' ms');
+	Wikia.log('AdDriver finished at ' + loadTime + ' ms', 1, 'AdDriverDelayedLoader');
 };
 //// END AdDriverDelayedLoader
 
