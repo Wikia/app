@@ -1,12 +1,12 @@
 /*global jwplayer:true */
 var RelatedVideos = {
 
-	lockTable:		[],
-	videoPlayerLock:	false,
+	//lockTable:		[],
+	//videoPlayerLock:	false,
 	maxRooms:		1,
 	currentRoom:		1,
-	modalWidth:		666,
-	alreadyLoggedIn:	false,
+	//modalWidth:		666,
+	//alreadyLoggedIn:	false,
 	heightThreshold:	600,
 	playerHeight:           371,
 	onRightRail: false,
@@ -21,7 +21,7 @@ var RelatedVideos = {
 		this.rvModule = $(relatedVideosModule);
 		if ( this.rvModule.closest('.WikiaRail').size() > 0 ) {
 			this.onRightRail = true;
-			this.videosPerPage = 3;
+			//this.videosPerPage = 3;
 		}
 
 		if( this.rvModule.hasClass('RelatedHubsVideos') ) {
@@ -47,10 +47,14 @@ var RelatedVideos = {
 				(this.isHubExtEnabled && this.isHubExtPage && this.isHubVideos)
 		) {
 			relatedVideosModule.removeClass('RelatedVideosHidden');
-			relatedVideosModule.delegate( 'a.video-play', 'click', RelatedVideos.displayVideoModal );
 			relatedVideosModule.delegate( '.scrollright', 'click', RelatedVideos.scrollright );
 			relatedVideosModule.delegate( '.scrollleft', 'click', RelatedVideos.scrollleft );
-			relatedVideosModule.delegate( '.addVideo', 'click', RelatedVideos.addVideoLoginWrapper );
+			
+			relatedVideosModule.find('.addVideo').addVideoButton({
+				gaCat: RelatedVideos.gaCat,
+				callback: RelatedVideos.injectCaruselElement
+			});
+			
 			$('body').delegate( '#relatedvideos-video-player-embed-show', 'click', function() {
 				$('#relatedvideos-video-player-embed-code').show();
 				$('#relatedvideos-video-player-embed-show').hide();
@@ -143,115 +147,6 @@ var RelatedVideos = {
 			});
 		} else if (futureState == 0 && RelatedVideos.maxRooms == 1) {
 			$('.page',this.rvModule).text(1);
-		}
-	},
-
-	initModalScroll: function( modal ) {
-		this.rvAddModal = modal;
-		this.rvAddPos = 1;
-		this.rvAddMax = Math.ceil(($('.item',this.rvAddModal).length)/3);
-		var $rvAddModal = $(this.rvAddModal);
-		$rvAddModal.delegate( '.scrollleft', 'click', RelatedVideos.modalScrollLeft );
-		$rvAddModal.delegate( '.scrollright', 'click', RelatedVideos.modalScrollRight );
-		$rvAddModal.delegate( '.add-this-video', 'click', RelatedVideos.modalAddVideo );
-        $rvAddModal.delegate( 'a.video', 'click', RelatedVideos.previewVideo );
-        this.updateModalScrollButtons();
-	},
-
-    previewVideo: function() {
-        var videoTitle = $(this).siblings(".item-title").eq(0).attr("data-dbkey");
-        $.nirvana.postJson(
-            'RelatedVideosController',
-            'getVideoPreview',
-            {
-                vTitle: videoTitle
-            },
-            function( res ) {
-                if ( res.html ) {
-                    $("div.RVSuggestionCont", RelatedVideos.rvAddModal).hide();
-                    $("div.RVSuggestPreviewVideo", RelatedVideos.rvAddModal).html( res.html );
-                    RelatedVideos.bindPreviewActions();
-                }
-            },
-            function(){
-                RelatedVideos.showError();
-            }
-        );
-        return false;
-    },
-
-    bindPreviewActions: function() {
-
-        $( RelatedVideos.rvAddModal ).delegate( '.preview_back', 'click', function() {
-
-            $("div.RVSuggestPreviewVideo .preview_container", RelatedVideos.rvAddModal).remove();
-            $("div.RVSuggestionCont", RelatedVideos.rvAddModal).show();
-            return false;
-        } );
-        $( RelatedVideos.rvAddModal ).delegate( '.insert', 'click', RelatedVideos.modalAddVideo );
-
-    },
-
-    updateModalScrollButtons: function() {
-
-        if ( this.rvAddPos == 1 ) {
-            $('.scrollleft',RelatedVideos.rvAddModal).addClass("inactive");
-        } else {
-            $('.scrollleft',RelatedVideos.rvAddModal).removeClass("inactive");
-        }
-
-        if ( this.rvAddPos == this.rvAddMax ) {
-            $('.scrollright',RelatedVideos.rvAddModal).addClass("inactive");
-        } else {
-            $('.scrollright',RelatedVideos.rvAddModal).removeClass("inactive");
-        }
-
-    },
-
-	modalAddVideo: function(ev) {
-		var video = 'File:'+$(ev.target).closest('.item').children('.item-title').attr('data-dbkey');
-		$('.videoUrl',RelatedVideos.rvAddModal).val(video);
-		RelatedVideos.addVideoConfirm(ev);
-	},
-
-	modalScrollLeft: function() {
-		RelatedVideos.modalScroll(-1);
-        RelatedVideos.updateModalScrollButtons();
-	},
-
-	modalScrollRight: function() {
-		RelatedVideos.modalScroll(1);
-        RelatedVideos.updateModalScrollButtons();
-	},
-
-	modalScroll: function( param, callback ) {
-		//setup variables
-
-		var scroll_by = parseInt( $('.item',this.rvAddModal).outerWidth(true) * 3 );
-		var anim_time = 500;
-
-		// button vertical secondary left
-		var futureState = RelatedVideos.rvAddPos + param;
-
-		if( futureState >= 1 && futureState <= RelatedVideos.rvAddMax ) {
-			var scroll_to = (futureState-1) * scroll_by;
-			RelatedVideos.rvAddPos = futureState;
-			//console.log('future state ' + futureState);
-
-			//$('.container',this.rvAddModal).clearQueue();
-			//RelatedVideos.checkButtonState();
-
-			//scroll
-			$('.container',this.rvAddModal).stop().animate({
-				left: -scroll_to
-			}, anim_time, function(){
-				//hide description
-				if (typeof callback == 'function') {
-					callback();
-				}
-			});
-		} else if (futureState == 0 && RelatedVideos.rvAddMax == 1) {
-			$('.page',this.rvAddModal).text(1);
 		}
 	},
 
@@ -349,42 +244,13 @@ var RelatedVideos = {
 
 	// general helper functions
 
-	loginWrapper: function ( callback, target ){
-		var message = 'protected';
-		if(( wgUserName == null ) || ( RelatedVideos.alreadyLoggedIn )){
-			if (window.wgComboAjaxLogin) {
-				showComboAjaxForPlaceHolder( false, "", function() {
-					AjaxLogin.doSuccess = function() {
-						$('#AjaxLoginBoxWrapper').closest('.modalWrapper').closeModal();
-						RelatedVideos.alreadyLoggedIn = true;
-						callback( target );
-					};
-					AjaxLogin.close = function() {
-						$('#AjaxLoginBoxWrapper').closeModal();
-						$( window ).scrollTop( $(RelatedVideos.rvModule).offset().top + 100 );
-					}
-				}, false, message );
-			}
-			else {
-				UserLoginModal.show({
-					callback: function() {
-						$( window ).scrollTop( $(RelatedVideos.rvModule).offset().top + 100 );
-						RelatedVideos.alreadyLoggedIn = true;
-						callback(target);
-					}
-				});
-			}
-		} else {
-			callback( target );
-		}
-	},
-
 	showError: function(){
 		GlobalNotification.show( $('.errorWhileLoading').html(), 'error' );
 	},
 
 	// Video Modal
 
+	// TODO: Make sure this isn't being used anymore and remove it. 
 	displayVideoModal : function(e) {
 		e.preventDefault();
 		var $thisJquery = $(this);
@@ -478,113 +344,13 @@ var RelatedVideos = {
 
 	// Add Video
 
-	addVideoLoginWrapper: function( e ){
+	/*addVideoLoginWrapper: function( e ){
 		e.preventDefault();
 		RelatedVideos.loginWrapper( RelatedVideos.addVideoModal, this );
-	},
-
-	enableVideoSubmit: function(){
-		var $relatedVideosAddVideo = $('#relatedvideos-add-video');
-		$relatedVideosAddVideo.undelegate( '.rv-add-form', 'submit').removeClass('loading');
-		$relatedVideosAddVideo.delegate( '.rv-add-form', 'submit', RelatedVideos.addVideoConfirm );
-	},
-
-	preventVideoSubmit: function(){
-		var $relatedVideosAddVideo = $('#relatedvideos-add-video');
-		$relatedVideosAddVideo.undelegate( '.rv-add-form', 'submit').addClass('loading');
-		$relatedVideosAddVideo.delegate(
-			'.rv-add-form',
-			'submit',
-			function( e ){
-				e.preventDefault();
-			}
-		);
-
-	},
-	addVideoModal: function( target ){
-		WikiaTracker.trackEvent(
-			'trackingevent',
-			{
-				'ga_category':RelatedVideos.gaCat,
-				'ga_action':WikiaTracker.ACTIONS.ADD,
-				'ga_label':'add-video'
-			},
-			'both'
-		);
-		$(this.rvModule).undelegate( '.addVideo', 'click' );
-		$.nirvana.postJson(
-			'RelatedVideosController',
-			'getAddVideoModal',
-			{
-				title: wgTitle,
-				format: 'html'
-			},
-			function( res ) {
-				if ( res.html ) {
-					$.showModal( res.title, res.html, {
-						id: 'relatedvideos-add-video',
-						width: RelatedVideos.modalWidth,
-						callback : function(){
-							var $rvModule = $(RelatedVideos.rvModule);
-							$rvModule.undelegate( '.addVideo', 'click' );
-							$rvModule.delegate( '.addVideo', 'click', RelatedVideos.addVideoModal );
-							RelatedVideos.enableVideoSubmit();
-							RelatedVideos.initModalScroll('.modalContent');
-						}
-					});
-				}
-			},
-			function(){
-				RelatedVideos.showError();
-			}
-		);
-	},
-
-	addVideoConfirm: function( e ){
-		e.preventDefault();
-		GlobalNotification.show( $('#relatedvideos-add-video .notifyHolder').html(), 'notify' );
-		RelatedVideos.preventVideoSubmit();
-		$.nirvana.postJson(
-			'RelatedVideosController',
-			'addVideo',
-			{
-				articleId: wgArticleId,
-				url: $('#relatedvideos-add-video input').val()
-			},
-			function( formRes ) {
-				WikiaTracker.trackEvent(
-					'trackingevent',
-					{
-						'ga_category':RelatedVideos.gaCat,
-						'ga_action':WikiaTracker.ACTIONS.ADD,
-						'ga_label':'add-video-success'
-					},
-					'both'
-				);
-				GlobalNotification.hide();
-				var $relatedVideosAddVideo = $('#relatedvideos-add-video');
-				if ( formRes.error ) {
-					$relatedVideosAddVideo.addClass( 'error-mode' );
-					RelatedVideos.enableVideoSubmit();
-					RelatedVideos.injectCaruselElementError( formRes.error );
-				} else if ( formRes.html ){
-					$relatedVideosAddVideo.removeClass( 'error-mode' );
-					$relatedVideosAddVideo.closest('.modalWrapper').closeModal();
-					RelatedVideos.injectCaruselElement( formRes.html );
-				} else {
-					$relatedVideosAddVideo.addClass( 'error-mode' );
-					RelatedVideos.enableVideoSubmit();
-					RelatedVideos.injectCaruselElementError( $('#relatedvideos-add-video .somethingWentWrong').html() );
-				}
-			},
-			function(){
-				RelatedVideos.showError();
-			}
-		);
-	},
+	},*/
 
 	injectCaruselElement: function( html ){
-		$( '#relatedvideos-add-video' ).closest('.modalWrapper').closeModal();
+		$( '#add-video-modal' ).closest('.modalWrapper').closeModal();
 		var scrollLength = -1 * ( RelatedVideos.currentRoom - 1 );
 		RelatedVideos.scroll(
 			scrollLength,
@@ -598,11 +364,8 @@ var RelatedVideos = {
 				RelatedVideos.regroup();
 			}
 		);
-	},
-
-	injectCaruselElementError: function( error ){
-		$( '#relatedvideos-add-video .rv-error td' ).html( error );
 	}
+
 
 };
 
