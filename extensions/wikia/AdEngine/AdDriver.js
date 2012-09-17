@@ -843,19 +843,6 @@ AdDriverDelayedLoader.load = function() {
 
 	AdDriverDelayedLoader.started = true;
 
-	// Temporary AdDriver tracking by Inez
-	if((typeof EXP_AD_LOAD_TIMING != "undefined") &&
-		(typeof abBeingTracked != "undefined") && (typeof abBeingTracked[EXP_AD_LOAD_TIMING] != "undefined") && abBeingTracked[EXP_AD_LOAD_TIMING]){
-		if ( AdDriverDelayedLoader.startCalled === false ) {
-			AdDriverDelayedLoader.startCalled = true;
-			WikiaTracker.trackEvent(
-				'AdDriver',
-				{ pos: 'start' },
-				'internal'
-			);
-		}
-	}
-
 	if (typeof wgNow != 'undefined' && AdDriverDelayedLoader.adDriverItems.length) {
 		var loadTime = (new Date()).getTime() - wgNow.getTime();
 		Wikia.log('AdDriver started loading after ' + loadTime + ' ms', 1, 'AdDriverDelayedLoader');
@@ -883,16 +870,6 @@ AdDriverDelayedLoader.isRunning = function() {
 
 AdDriverDelayedLoader.finalize = function() {
 	Wikia.log('finalize', 5, 'AdDriverDelayedLoader');
-
-	// Temporary AdDriver tracking by Inez
-	if((typeof EXP_AD_LOAD_TIMING != "undefined") &&
-		(typeof abBeingTracked != "undefined") && (typeof abBeingTracked[EXP_AD_LOAD_TIMING] != "undefined") && abBeingTracked[EXP_AD_LOAD_TIMING]){
-		WikiaTracker.trackEvent(
-			'AdDriver',
-			{ pos: 'stop' },
-			'internal'
-		);
-	}
 
 	if (window.wgEnableKruxTargeting) {
 		Wikia.log('loading krux', 1, 'AdDriverDelayedLoader');
