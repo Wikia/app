@@ -13,8 +13,8 @@ import com.wikia.webdriver.PageObjects.PageObject.WikiPage.WikiArticlePageObject
 public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 {
 	private String videoURL = "http://www.youtube.com/watch?v=pZB6Dg1RJ_o";
-	private String Caption = "QAcaption1";
-	private String Caption2 = "QAcaption2";
+	private String Caption = "QAWebdriverCaption1";
+	private String Caption2 = "QAWebdriverCaption2";
 	private String pageName;
 	
 	@Test(groups={"ArticleFeaturesCRUDAdmin_001", "ArticleCRUDAdmin"}) 
@@ -183,67 +183,37 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		CommonFunctions.logOut(Properties.userName2, driver);
 	}
 	
-//	@Test(groups = {"ImageServing005"}) 
-////	https://internal.wikia-inc.com/wiki/QA/Core_Features_and_Testing/Manual_Regression_Tests/Image_Serving
-//	// Test Case 005 Modifying images in an article in edit mode
-//	public void ArticleCRUDAdmin_006_ModifyImage()
-//	{
-//		CommonFunctions.logOut(Properties.userName, driver);
-//		CommonFunctions.logIn(Properties.userNameStaff, Properties.passwordStaff);
-//		WikiBasePageObject wiki = new WikiBasePageObject(driver, Global.DOMAIN);
-//		pageName = "QAarticle"+wiki.getTimeStamp();
-//		wiki.openWikiPage();
-//		WikiArticleEditMode edit = wiki.createNewArticle(pageName, 1);
-//		edit.clickOnAddObjectButton("Image");
-//		edit.waitForModalAndClickAddThisPhoto();
-//		edit.typePhotoCaption(Caption);
-//		edit.clickOnAddPhotoButton2();
-//		edit.clickModifyButtonOfImage(Caption);
-//		edit.typePhotoCaption(Caption2);
-//		edit.clickOnAddPhotoButton2();
-//		edit.verifyThatThePhotoAppears(Caption2);
-//		edit.clickOnPreviewButton();
-//		edit.verifyTheImageOnThePreview();
-//		edit.verifyTheCaptionOnThePreview(Caption2);
-//		WikiArticlePageObject article = edit.clickOnPublishButtonInPreviewMode();
-//		article = edit.clickOnPublishButtonInPreviewMode();
-//		article.VerifyTheImageOnThePage();
-//		edit = article.Edit();
-//		edit.deleteArticleContent();
-//		article = edit.clickOnPublishButton();
-//		article.deleteArticle();
-//		article.openArticle(pageName);
-//		article.verifyDeletedArticlePage(pageName);
-//		CommonFunctions.logOut(Properties.userName2, driver);
-//	}
-	
-//	@Test(groups = {"ImageServing006"}) 
-////	https://internal.wikia-inc.com/wiki/QA/Core_Features_and_Testing/Manual_Regression_Tests/Image_Serving	
-//	// Test Case 006  Removing images in an article in edit mode
-//	public void ImageServing006_RemovingImages()
-//	{
-//		CommonFunctions.MoveCursorTo(0, 0);
-//		WikiBasePageObject wiki = new WikiBasePageObject(driver, Global.DOMAIN);
-//		WikiArticlePageObject article = wiki.OpenArticle(wikiArticle);
-//		CommonFunctions.logIn(Properties.userName2, Properties.password2);
-//		WikiArticleEditMode editArticle = article.Edit();
-//		editArticle.clickOnAddObjectButton("Image");
-//		editArticle.waitForModalAndClickAddThisPhoto();
-//		editArticle.typePhotoCaption(Caption);
-//		editArticle.clickOnAddPhotoButton2();
-//		editArticle.hoverCursorOverImage(Caption);
-//		editArticle.clickRemoveButtonOfImage(Caption);
-//		editArticle.leftClickCancelButton();
-////		editArticle.VerifyModalDisappeared();  
-//		editArticle.hoverCursorOverImage(Caption);
-//		editArticle.clickRemoveButtonOfImage(Caption);
-//		editArticle.leftClickOkButton();
-////		editArticle.VerifyModalDisappeared();
-////		editArticle.VerifyTheImageNotOnTheArticleEditMode();
-//		article = editArticle.clickOnPublishButton();
-////		article.VerifyTheImageNotOnThePage();
-//		
-//		CommonFunctions.logOut(Properties.userName2, driver);
-//		CommonFunctions.MoveCursorTo(0, 0);
-//	}	
+	@Test(groups={"ArticleFeaturesCRUDAdmin_006", "ArticleCRUDAdmin"})
+//	https://internal.wikia-inc.com/wiki/QA/Core_Features_and_Testing/Manual_Regression_Tests/Image_Serving
+	// Test Case 005 Modifying images in an article in edit mode
+	public void ArticleCRUDAdmin_006_ModifyImage()
+	{
+		CommonFunctions.logOut(Properties.userName, driver);
+		CommonFunctions.logIn(Properties.userNameStaff, Properties.passwordStaff);
+		WikiBasePageObject wiki = new WikiBasePageObject(driver, Global.DOMAIN);
+		pageName = "QAarticle"+wiki.getTimeStamp();
+		wiki.openWikiPage();
+		WikiArticleEditMode edit = wiki.createNewArticle(pageName, 1);
+		edit.deleteArticleContent();
+		edit.clickOnVisualButton();
+		edit.clickOnAddObjectButton("Image");
+		edit.waitForModalAndClickAddThisPhoto();
+		edit.typePhotoCaption(Caption);
+		edit.clickOnAddPhotoButton2();
+		edit.verifyThatThePhotoAppears(Caption);
+		edit.clickModifyButtonOfImage(Caption);
+		edit.typePhotoCaption(Caption2);
+		edit.clickOnAddPhotoButton2();
+		edit.verifyThatThePhotoAppears(Caption2);
+		edit.clickOnPreviewButton();
+		edit.verifyTheImageOnThePreview();
+		edit.verifyTheCaptionOnThePreview(Caption2);
+		WikiArticlePageObject article = edit.clickOnPublishButtonInPreviewMode();
+		article.VerifyTheImageOnThePage();
+		article.deleteArticle();
+		article.openArticle(pageName);
+		article.verifyDeletedArticlePage(pageName);
+		CommonFunctions.logOut(Properties.userName2, driver);
+	}
+
 }
