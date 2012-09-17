@@ -270,76 +270,18 @@ window.WikiaTracker = (function(){
 	};
 })();
 
-// FIXME refactor inGroup / userGroup / isTracked, it should be much simpler now
-WikiaTracker.debug = function (msg, level, obj) {
-	Wikia.log(msg, level, 'WikiaTracker');
-	return true;
-};
-
+// TODO remove if really unused
 WikiaTracker.track = function(page, profile, events) {
-	if (typeof page != 'undefined' && page instanceof Array) {
-		page = page.join('/');
-	}
+	WikiaTracker.trackAdEvent('liftium.errors', {'ga_category':'errors/wikiatracker', 'ga_action':'track', 'ga_label':page}, 'ga');
 
-	this.debug(page + ' in ' + profile, 3, events);
-
-	return this._track(page, profile, 100, events);
+	return false;
 };
 
+// TODO remove if really unused
 WikiaTracker._track = function(page, profile, sample, events) {
-	this.debug(page + ' in ' + profile + ' at ' + sample + '%', 7);
+	WikiaTracker.trackAdEvent('liftium.errors', {'ga_category':'errors/wikiatracker', 'ga_action':'_track', 'ga_label':page}, 'ga');
 
-	/* ignore events, should be handled already
-	if (typeof events != 'undefined' && events instanceof Array) {
-		this.debug('...with events: ' + events.join('/'), 7);
-
-		events.unshift('_trackEvent');
-		_gaq.push(events);
-
-		// don't track real events *and* fakeurl events for the same call
-		return true;
-	}
-	*/
-
-	if (page != null) {
-		if (page.indexOf('/') != 0) {
-			page = '/' + page;
-		}
-
-		// test account for ads
-		if (page.indexOf('/999') != -1) {
-			// track errors in full
-			if (page.indexOf('/999/error') != -1) {
-				//_gaq.push(['Ads._trackEvent', 'fakeurl3', page]);
-				window.gaTrackAdEvent(profile, page, null, null, true);
-				return true;
-			}
-
-			// sample slots @ 10%
-			if (page.indexOf('/999/slot') != -1) {
-				/*if (Math.floor(Math.random()*10) != 7) {
-					return false;
-				}*/
-				//_gaq.push(['Ads._trackEvent', 'fakeurl3', page]);
-				window.gaTrackAdEvent(profile, page, null, null, true);
-				return true;
-			}
-
-			// sample the rest (init, beacon, hop) @ 1%
-			/*if (Math.floor(Math.random()*100) != 7) {
-				return false;
-			}*/
-			//_gaq.push(['Ads._trackEvent', 'fakeurl3', page]);
-			window.gaTrackAdEvent(profile, page, null, null, true);
-			return true;
-		}
-
-		// don't track other fakeurls
-		return false;
-		//_gaq.push(['_trackEvent', 'fakeurl', page]);
-	}
-
-	return true;
+	return false;
 };
 
 // TODO refactor back into trackEvent
@@ -371,52 +313,3 @@ WikiaTracker.trackAdEvent = function(eventName, data, trackingMethod) {
 			window.gaTrackAdEvent(ga_category, ga_action, ga_label, ga_value, true);
 		}
 };
-
-WikiaTracker._simpleHash = function(s, tableSize) {
-		var i, hash = 0;
-		for (i = 0; i < s.length; i++) {
-			hash += (s.charCodeAt(i) * (i+1));
-		}
-		return Math.abs(hash) % tableSize;
- };
-
-WikiaTracker._inGroup = function(hash_id, group_id) {
-	return false;
-};
-
-WikiaTracker._userGroup = function() {
-	return null;
-};
-
-WikiaTracker.inGroup = function(group) {
-	return false;
-};
-
-WikiaTracker.isTracked = function() {
-	return this.inGroup('N');
-};
-
-WikiaTracker._abData = function() {
-	var in_ab = [];
-
-	return in_ab;
-};
-
-WikiaTracker.AB = function(page) {
-	return true;
-};
-
-
-/*
-TODO: REMOVE - Old A/B Testing framework.
-if (typeof jQuery == 'function') {
-	if ($.getUrlVar('wikiatracker_is_tracked') || $.cookies.get('wikiatracker_is_tracked')) {
-		WikiaTracker._in_group_cache['N'] = true;
-	}
-	var _temp_ab_group = $.getUrlVar('wikiatracker_ab_group') || $.cookies.get('wikiatracker_ab_group');
-	if (_temp_ab_group) {
-		WikiaTracker._in_group_cache[_temp_ab_group] = true;
-		WikiaTracker._in_group_cache['N'] = true;
-	}
-}
-*/
