@@ -6,12 +6,6 @@
 
 /* FILE: LatestPhotos.scss */
 
-
-$color-see-more-images-placeholder: darken($color-page, 5%);
-@if $is-dark-wiki {
-	$color-see-more-images-placeholder: lighten($color-page, 5%);
-}
-
 @mixin arrow-style {
 	border-style: solid;
 	border-width: 9px;
@@ -151,7 +145,7 @@ $color-see-more-images-placeholder: darken($color-page, 5%);
 
 	.wikia-button {
 		img {
-			margin-right: 0px;
+			margin-right: 5px;
 			margin-top: 1px;
 		}
 	}
@@ -248,14 +242,21 @@ $color-see-more-images-placeholder: darken($color-page, 5%);
 		.see-all {
 			text-align: center;
 			a {
-				background: $color-see-more-images-placeholder;
-				color: $color-text;
-				display: block;
+				border: 3px solid #FFF;
 				font-size: 14px;
 				font-weight: bold;
-				height: 61px;
+				height: 55px;
+				*left: 0;
 				padding-top: 21px;
+				position: absolute;
+				width: 76px;
 				z-index: 1;
+			}
+			img {
+				left: 0;
+				@include opacity(100);
+				position: absolute;
+				top: 0;
 			}
 		}
 		.add-more {

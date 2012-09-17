@@ -13,7 +13,7 @@ class WikiaVideoPage extends ImagePage {
 	protected static $videoWidth = 660;
 
 	function openShowImage(){
-		global $wgOut, $wgRequest, $wgJsMimeType, $wgExtensionsPath;
+		global $wgOut, $wgTitle, $wgRequest;
 		wfProfileIn( __METHOD__ );
 		$timestamp = $wgRequest->getInt('t', 0);
 
@@ -25,10 +25,6 @@ class WikiaVideoPage extends ImagePage {
 		} else {
 			$img = $this->getDisplayedFile();
 		}
-		
-		F::build('JSMessages')->enqueuePackage('VideoPage', JSMessages::EXTERNAL);
-		
-		$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/VideoHandlers/js/VideoPage.js\"></script>\n" );
 
 		$wgOut->addHTML( '<div class="fullImageLink" id="file">'.$img->getEmbedCode( self::$videoWidth ).$this->getVideoInfoLine().'</div>' );
 		wfProfileOut( __METHOD__ );

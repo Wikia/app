@@ -226,7 +226,7 @@ var LightboxLoader = {
 				type:		'GET',
 				format: 'html',
 				data: {
-					lightboxVersion: 3 // update this when we change the template
+					lightboxVersion: 2 // update this when we change the template
 				},
 				callback: function(html) {
 					LightboxLoader.templateHtml = html;

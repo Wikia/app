@@ -18,25 +18,7 @@ $messages['en'] = array(
 	'videohandler-category' => 'Videos',
     	'videohandler-description' => 'Description',
 	'videohandler-video-views' => '$1 {{PLURAL:$1|view|views}}',
-	'videohandler-non-premium' => 'Non premium videos are disabled on this Wiki.',
-	'videohandler-remove' => 'Remove',
-	'videohandler-remove-video-modal-title' => 'Are you sure you want to remove this video from your wiki?',
-	'videohandler-remove-video-modal-ok' => 'Remove',
-	'videohandler-remove-video-modal-success' => 'File:$1 has been removed from this wiki',
-	'videohandler-remove-video-modal-cancel' => 'Cancel',
-
-	'videos-add-video' => 'Add a video',
-	'videos-add-video-to-this-wiki' => 'Add a video to this wiki',
-	'videos-add-video-label-name' => 'Enter the full URL, from any of the supported sites.',
-	'videod-add-video-label-all' => 'See all',
-	'videos-add-video-ok' => 'Add',
-	'videos-notify' => 'Please wait while we process this video',
-	'videos-something-went-wrong' => 'We are sorry, but something went wrong with the upload.',
-	'videos-error-not-logged-in' => 'Please log in first.',
-	'videos-error-no-video-url' => 'No video URL provided.',
-	'videos-error-unknown' => 'An unknown error occurred. Code: $1.',
-	'videos-error-old-type-video' => 'Old type of videos no longer supported (VideoPage)',
-	'videos-error-while-loading' => 'Error occurred while loading data. Please recheck your connection and refesh the page.',
+	'videohandler-non-premium' => 'Non premium videos are disabled on this Wiki.'
 );
 
 /** Message documentation (Message documentation) */
@@ -48,26 +30,6 @@ $messages['qqq'] = array(
 * $1 is a link to the video on its source page, with the label being the original title of the video
 * $2 is a link to the provider's homepage (e.g. [http://youtube.com/ youtube.com])",
 	'videohandler-video-views' => 'video views. $1 is number of video views.',
-	'videohandler-remove' => 'Text for button to click to remove a wikia library video from your wiki.',
-	'videohandler-remove-video-modal-title' => 'This is the message to the user confirming they want to remove the video from their wiki.',
-	'videohandler-remove-video-modal-ok' => 'This is the button text to confirm removing a video from a wiki',
-	'videohandler-remove-video-modal-success' => 'This is the confirmation message that a video has been removed from a wiki',
-	'videohandler-remove-video-modal-cancel' => 'This is the button text to cancel removal of a video from a wiki',
-
-	'videos-add-video' => 'Button text to click to add a video to the wiki',
-	'videos-add-video-to-this-wiki' => 'Tooltip text for the button to add a video to this wiki',
-	'videos-add-video-label-name' => 'Instructions for adding a video to a wiki',
-	'videod-add-video-label-all' => 'Link to see a list of supported video providers',
-	'videos-add-video-ok' => 'Button text to submit the add video form',
-	'videos-notify' => 'Loading text - wait while video is being added',
-	'videos-something-went-wrong' => 'Error message when a generic problem occurs while adding a video to a wiki',
-	'videos-error-not-logged-in' => 'Error message when a user tries to add a video while not logged in.',
-	'videos-error-no-video-url' => 'Error message when there\'s no video URL provided.',
-	'videos-error-unknown' => 'Error message when an unknown error occurred',
-	'videos-error-old-type-video' => 'Error message when user tries to add a video of a type that is no longer supported.',
-	'videos-error-while-loading' => 'Error message when failing to add a video.',
-
-
 );
 
 /** Afrikaans (Afrikaans)
@@ -106,8 +68,6 @@ $messages['bg'] = array(
  */
 $messages['br'] = array(
 	'videohandler-category' => 'Videoioù',
-	'videos-add-video-ok' => 'Graet',
-	'videos-add-video-label-all' => 'Gwelet pep tra',
 );
 
 /** Bosnian (bosanski)
@@ -158,10 +118,6 @@ $messages['de'] = array(
 	'videohandler-video-details' => '$1 (Provider: $2)',
 	'videohandler-category' => 'Videos',
 	'videohandler-description' => 'Beschreibung',
-	'videos-error-while-loading' => 'Fehler beim laden von Daten. Überprüfen Sie bitte Ihre Verbindung und laden sie die Seite erneut.',
-	'videos-add-video-label-name' => 'Gib die vollständige URL von einer der unterstützten Websites ein.',
-	'videos-add-video-ok' => 'Hinzufügen',
-	'videos-add-video-label-all' => 'Alle anzeigen',
 );
 
 /** German (formal address) (‪Deutsch (Sie-Form)‬)
@@ -191,10 +147,6 @@ $messages['es'] = array(
 	'videohandler-video-details' => '$1 (proveedor: $2)',
 	'videohandler-category' => 'Vídeos',
 	'videohandler-description' => 'Descripción',
-	'videos-error-while-loading' => 'Error al cargar los datos. Por favor vuelve a comprobar tu conexión a internet y refresca la página.',
-	'videos-add-video-label-name' => 'Ingrese la dirección completa de cualquiera de los sitios soportados.',
-	'videos-add-video-ok' => 'Añadir',
-	'videos-add-video-label-all' => 'Ver todo',
 );
 
 /** Basque (euskara)
@@ -234,10 +186,6 @@ $messages['fr'] = array(
 	'videohandler-video-details' => '$1 (hébergeur : $2)',
 	'videohandler-category' => 'Vidéos',
 	'videohandler-description' => 'Description',
-	'videos-error-while-loading' => 'Une erreur est survenue lors du chargement des données. Veuillez vérifier votre connexion et rafraîchir la page.',
-	'videos-add-video-label-name' => "Entrez l'URL complète, de n'importe lequel des sites pris en charge.",
-	'videos-add-video-ok' => 'Ajouter',
-	'videos-add-video-label-all' => 'Tout voir',
 );
 
 /** Galician (galego)
@@ -256,10 +204,6 @@ $messages['gl'] = array(
 	'videohandler-video-details' => '$1 (provedor: $2)',
 	'videohandler-category' => 'Vídeos',
 	'videohandler-description' => 'Descrición',
-	'videos-error-while-loading' => 'Houbo un erro ao cargar os datos. Volva comprobar a súa conexión e recargue a páxina.',
-	'videos-add-video-label-name' => 'Escriba o enderezo URL completo de calquera dos sitios soportados.',
-	'videos-add-video-ok' => 'Engadir',
-	'videos-add-video-label-all' => 'Ollar todos',
 );
 
 /** Hebrew (עברית)
@@ -284,10 +228,6 @@ $messages['hu'] = array(
 	'videohandler-video-details' => '$1 (szolgáltató: $2 )',
 	'videohandler-category' => 'Videók',
 	'videohandler-description' => 'Leírás',
-	'videos-error-while-loading' => 'Hiba történt az adatok betöltése közben. Kérlek, ellenőrizd az internetkapcsolatodat és frissítsd az oldalt.',
-	'videos-add-video-label-name' => 'Írd be a teljes URL-címet valamely támogatott webhelyről.',
-	'videos-add-video-ok' => 'Hozzáadás',
-	'videos-add-video-label-all' => 'Összes megtekintése',
 );
 
 /** Armenian (Հայերեն)
@@ -311,10 +251,6 @@ $messages['ia'] = array(
 	'videohandler-video-details' => '$1 (fornitor: $2)',
 	'videohandler-category' => 'Videos',
 	'videohandler-description' => 'Description',
-	'videos-error-while-loading' => 'Un error occurreva durante le cargamento del datos. Per favor re-verifica tu connexion e refresca le pagina.',
-	'videos-add-video-label-name' => 'Entra le URL complete de un del sitos supportate.',
-	'videos-add-video-ok' => 'Adder',
-	'videos-add-video-label-all' => 'Vider totes',
 );
 
 /** Indonesian (Bahasa Indonesia)
@@ -378,10 +314,6 @@ $messages['mk'] = array(
 	'videohandler-category' => 'Видеоснимки',
 	'videohandler-description' => 'Опис',
 	'videohandler-video-views' => '$1 {{PLURAL:$1|преглед|прегледи}}',
-	'videos-error-while-loading' => 'Не појави грешка при вчитувањето на податоците. Проверете си ја врската со интернет и превчитајте ја страницата.',
-	'videos-add-video-label-name' => 'Внесете ја полната URL-адреса од едно од поддржаните мрежни места.',
-	'videos-add-video-ok' => 'Додај',
-	'videos-add-video-label-all' => 'Прикажи ги сите',
 );
 
 /** Malay (Bahasa Melayu)
@@ -399,10 +331,6 @@ $messages['ms'] = array(
 	'videohandler-video-details' => '$1 (penyedia: $2)',
 	'videohandler-category' => 'Video',
 	'videohandler-description' => 'Keterangan',
-	'videos-error-while-loading' => 'Berlakunya ralat ketika memuatkan data. Sila semak semula sambungan anda dan muatkan semula laman ini.',
-	'videos-add-video-label-name' => 'Isikan URL penuh dari mana-mana tapak web yang disokong.',
-	'videos-add-video-ok' => 'Tambahkan',
-	'videos-add-video-label-all' => 'Lihat semua',
 );
 
 /** Norwegian Bokmål (‪norsk (bokmål)‬)
@@ -422,10 +350,6 @@ $messages['nb'] = array(
 	'videohandler-video-details' => '$1 (leverandør: $2)',
 	'videohandler-category' => 'Videoer',
 	'videohandler-description' => 'Beskrivelse',
-	'videos-error-while-loading' => 'Det oppstod en feil under lasting av data. Vennligst sjekk din netttilkobling og oppdater siden.',
-	'videos-add-video-label-name' => 'Oppgi en fullstendig URL fra en av de støttede sidene.',
-	'videos-add-video-ok' => 'Legg til',
-	'videos-add-video-label-all' => 'Vis alle',
 );
 
 /** Dutch (Nederlands)
@@ -440,10 +364,6 @@ $messages['nl'] = array(
 	'videohandler-video-details' => '$1 (provider: $2)',
 	'videohandler-category' => "Video's",
 	'videohandler-description' => 'Beschrijving',
-	'videos-error-while-loading' => 'Fout is opgetreden tijdens het laden van gegevens. Controleer alstublieft uw verbinding en ververs de pagina.',
-	'videos-add-video-label-name' => 'Geef een volledige URL op van een van de ondersteunde websites.',
-	'videos-add-video-ok' => 'Toevoegen',
-	'videos-add-video-label-all' => 'Allemaal bekijken',
 );
 
 /** Punjabi (ਪੰਜਾਬੀ)
@@ -472,10 +392,6 @@ $messages['pl'] = array(
 	'videohandler-video-details' => '$1 (z $2)',
 	'videohandler-category' => 'Filmy',
 	'videohandler-description' => 'Opis',
-	'videos-error-while-loading' => 'Wystąpił błąd podczas ładowania danych. Sprawdź ponownie połączenie i odśwież stronę.',
-	'videos-add-video-label-name' => 'Wpisz pełny adres URL, z jednej z obsługiwanych witryn.',
-	'videos-add-video-ok' => 'Dodaj',
-	'videos-add-video-label-all' => 'Pokaż wszystko',
 );
 
 /** Piedmontese (Piemontèis)
@@ -491,8 +407,6 @@ $messages['pms'] = array(
  */
 $messages['ps'] = array(
 	'videohandler-category' => 'ويډيوګانې',
-	'videos-add-video-ok' => 'ورګډول',
-	'videos-add-video-label-all' => 'ټول کتل',
 );
 
 /** Portuguese (português)
@@ -537,10 +451,6 @@ $messages['ru'] = array(
 	'videohandler-video-details' => '$1 (источник: $2)',
 	'videohandler-category' => 'Видео',
 	'videohandler-description' => 'Описание',
-	'videos-error-while-loading' => 'Ошибка при загрузке данных. Пожалуйста, проверьте Ваше соединение и обновите страницу.',
-	'videos-add-video-label-name' => 'Введите полный URL-адрес от любого из поддерживаемых сайтов.',
-	'videos-add-video-ok' => 'Добавить',
-	'videos-add-video-label-all' => 'Смотреть всё',
 );
 
 /** Sinhala (සිංහල)
@@ -581,18 +491,6 @@ $messages['sv'] = array(
 	'videohandler-video-details' => '$1 (leverantör: $2)',
 	'videohandler-category' => 'Videoklipp',
 	'videohandler-description' => 'Beskrivning',
-	'videos-error-while-loading' => 'Ett fel uppstod när data skulle läses in. Var god kontrollera din anslutning och uppdatera sidan.',
-	'videos-add-video-label-name' => 'Ange en fullständig URL från någon av de stödjande sidorna.',
-	'videos-add-video-ok' => 'Lägg till',
-	'videos-add-video-label-all' => 'Se alla',
-);
-
-/** Tamil (தமிழ்)
- * @author Karthi.dr
- */
-$messages['ta'] = array(
-	'videos-add-video-ok' => 'முடிந்தது',
-	'videos-add-video-label-all' => 'எல்லாவற்றையும் பார்க்கவும்',
 );
 
 /** Tagalog (Tagalog)
@@ -611,10 +509,6 @@ $messages['tl'] = array(
 	'videohandler-video-details' => '$1 (tagapagbigay: $2)',
 	'videohandler-category' => 'Mga bidyo',
 	'videohandler-description' => 'Paglalarawan',
-	'videos-error-while-loading' => 'Naganap ang kamalian habang ikinakarga ang dato. Pakisuring muli ang pagkakakunekta mo at sariwain ang pahina.',
-	'videos-add-video-label-name' => 'Ipasok ang buong URL, mula sa anuman sa tinatangkilik na mga pook.',
-	'videos-add-video-ok' => 'Idagdag',
-	'videos-add-video-label-all' => 'Tingnan lahat',
 );
 
 /** Turkish (Türkçe)

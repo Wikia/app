@@ -66,12 +66,7 @@ $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 	}
 	&.pinned-mode {
 		.media {
-			margin: 81px 0;
-		}
-		&.video-lightbox {
-			.media {
-				margin: 90px 0;
-			}		
+			margin: 110px 0;
 		}
 		.LightboxCarousel,
 		.LightboxHeader {
@@ -83,7 +78,7 @@ $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 	}
 	>.close {
 		display: none;
-		z-index: 3;
+		z-index: 2;
 	}
 	.more-info h1 {
 		float: left;
@@ -217,7 +212,7 @@ $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 	}
 	.video-media {
 		height: auto;
-		margin-top: 90px;
+		margin-top: 115px;
 		embed, object, > div {
 			display: block;
 			margin: 0 auto;
@@ -260,6 +255,34 @@ $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 		}
 		&.pin.active:after {
 			@include sprite-Lightbox('filmstrip_close'+$sprite-normal);
+		}
+	}
+	.lightbox-arrows {
+		span {
+			@include sprite-Lightbox-base;
+			@include opacity(65); 
+			@include transition-shorthand(opacity $lightbox-overlay-show-duration ease-out);
+			cursor: pointer;
+			display: block;
+			height: 60px;
+			margin-top: -30px;
+			position: absolute;
+			top: 50%;
+			width: 50px;
+			&:hover {
+				@include opacity(100);
+			}
+			&.disabled {
+				display: none;
+			}
+		}
+		.next {
+			@include sprite-Lightbox('arrow_large_next');
+			right: 20px;
+		}
+		.previous {
+			@include sprite-Lightbox('arrow_large_previous');
+			left: 20px;
 		}
 	}
 	.LightboxHeader,
@@ -399,7 +422,7 @@ $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 		}
 	}
 	
-	.show-ads .LightboxCarousel {
+	&.show-ads .LightboxCarousel {
 		@include clearfix;
 		.wikia-ad {
 			width: 318px;
@@ -419,18 +442,10 @@ $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 			width: 625px;		
 		}
 		.icon {
-			margin-right: 21px;			
+			margin-right: 18px;			
 		}
 		.progress {
 			margin-left: 22px;
-		}
-		.carousel-arrow {
-			&.next {
-				margin-right: -10px;
-			}
-			&.previous {
-				margin-left: -10px;			
-			}
 		}
 	}
 	
@@ -442,11 +457,10 @@ $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 	
 	.LightboxHeader {
 		border-bottom: 1px solid $color-lightbox-border;
-		height: 50px;
-		padding: 20px 20px 10px;
+		height: 70px;
+		padding: 20px;
 		top: 0;
 		width: 960px;
-		z-index: 2;
 		h1 {
 			float: left; 
 			font-size: 18px;
@@ -502,58 +516,7 @@ $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 		margin-left: 10px;
 		padding-left: 10px;
 	}
-
-	// Left right arrows in lightbox (not carousel arrows)
-	.lightbox-arrows {
-		span {
-			@include opacity(65); 
-			@include transition-shorthand(opacity $lightbox-overlay-show-duration ease-out);
-			cursor: pointer;
-			display: block;
-			height: 100%;
-			width: 50%;
-			position: absolute;
-			top: 0px;
-
-			&:after {
-				@include sprite-Lightbox-base;
-				content: '';
-				display: block;
-				height: 60px;
-				margin-top: -30px;
-				position: absolute;
-				top: 50%;
-				width: 50px;
-			}
-			&:hover {
-				@include opacity(100);
-			}
-			&.disabled {
-				display: none;
-			}
-		}
-		.next {
-			right: 0px;
-			&:after {
-				@include sprite-Lightbox('arrow_large_next');
-				right: 20px;
-			}
-		}
-		.previous {
-			left: 0px;
-			&:after {
-				left: 20px;
-				@include sprite-Lightbox('arrow_large_previous');
-			}
-		}
-	}
-
 	&.video-lightbox {
-		// video lightbox arrow hit area is smaller so it doesn't overlap videos
-		.lightbox-arrows span {
-			width: 100px;
-		}
-
 		.see-full-size-link {
 			display: none;
 		}

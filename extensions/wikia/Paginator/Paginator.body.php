@@ -189,9 +189,5 @@ class Paginator extends Service{
 		return $oTmpl->render( "paginator" );
 	}
 
-	public function getPagesCount() {
-		return $this->pagesCount;
-	}
-
 }
 
