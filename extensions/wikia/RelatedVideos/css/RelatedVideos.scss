@@ -10,8 +10,10 @@ $color-inactive-button: darken($color-secondary-button, 50%);
 	$color-inactive-button: lighten($color-secondary-button, 50%);
 }
 
+$color-see-more-videos-placeholder: darken($color-page, 5%);
 $color-related-videos-background: darken($color-page, 20%);
 @if lightness($color-page) < 50 {
+	$color-see-more-videos-placeholder: lighten($color-page, 5%);
 	$color-inactive-button: lighten($color-page, 20%);
 }
 
@@ -325,21 +327,7 @@ $color-related-videos-background: darken($color-page, 20%);
 	float: right;
 }
 
-#relatedvideos-add-video {
-
-	&.loading {
-		cursor: busy;
-	}
-
-	fieldset {
-		input {
-			width: 400px;
-		}
-	}
-
-	.rv-error {
-		display: none;
-	}
+#add-video-modal {
 
   .RVSuggestPreviewVideo .preview_video { float:left; width:65%; }
   .RVSuggestPreviewVideo .preview_options { float:left; width:30%; }
@@ -348,27 +336,6 @@ $color-related-videos-background: darken($color-page, 20%);
 
     button.relatedVideosConfirm { height: 24px }
 
-	&.error-mode {
-		.rv-error {
-			@include border-radius(4px);
-			@include border-radius-nw(0px);
-			display: table;
-			_display: block;
-			*display: block;
-			background-color: $color-buttons;
-			color: $color-button-text;
-			font-size: 12px;
-			line-height: 14px;
-			padding: 3px;
-		}
-		input {
-			background-color: #FFEEA6 !important;
-		}
-	}
-
-	.messageHolder {
-		display: none;
-	}
 }
 
 #relatedvideos-video-player {
@@ -490,6 +457,19 @@ $color-related-videos-background: darken($color-page, 20%);
 						position: absolute;
 						float: none;
 					}*/
+					.see-more-videos-placeholder {
+						background: $color-see-more-videos-placeholder;
+						border: 1px solid $color-page-border;
+						color: $color-text;
+						display: block;
+						font-size: 14px;
+						font-weight: bold;
+						height: 52px;
+						padding-top: 36px;
+						outline: none;
+						text-align: center;
+						width: 150px;
+					}
 				}
 				div.action {
 				    cursor: pointer;
@@ -524,7 +504,7 @@ $color-related-videos-background: darken($color-page, 20%);
     				&:hover {
     				    border: none;
     					padding: 1px;
-    					@include box-shadow( 0, 0, 0, #ffffff );
+    					@include box-shadow( 0, 0, 0, #ffffff, 0, 0 );
     					background: none;
     					.addVideo {
     						@include opacity(50);
