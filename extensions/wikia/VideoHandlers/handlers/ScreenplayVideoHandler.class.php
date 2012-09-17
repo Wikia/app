@@ -13,11 +13,23 @@ class ScreenplayVideoHandler extends VideoHandler {
 
 	public function getEmbed($articleId, $width, $autoplay=false, $isAjax=false, $postOnload=false) {
 		$height =  $this->getHeight( $width );
+		$metadata = $this->getMetadata(true);
+		if(isset($metadata['streamUrl'])) {
+			$file = $metadata['streamUrl'];
+		} else {
+			$file = $this->getFileUrl(ScreenplayApiWrapper::VIDEO_TYPE, $this->getStandardBitrateCode());
+		}
+
+		if(isset($metadata['streamHdUrl'])) {
+			$hdfile = $metadata['streamHdUrl'];
+		} else {
+			$hdfile = $this->getFileUrl(ScreenplayApiWrapper::VIDEO_TYPE, ScreenplayApiWrapper::HIGHDEF_BITRATE_ID);
+		}
 
 		$app = F::app();
 
 		if ( $app->checkSkin( 'wikiamobile' ) ) {
-			$url = $this->getEmbedUrl();
+			$url = ( ( $this->isHd() ) ? $hdfile : $file );
 			$fileObj = $app->wf->FindFile( $this->getTitle() );
 			$poster = '';
 
@@ -28,10 +40,6 @@ class ScreenplayVideoHandler extends VideoHandler {
 
 			$result = '<video controls width="' . $width . '" height="' . $height . '"' . $poster . '><source src="' . $url . '">' . $app->wf->Msg( 'wikiamobile-unsupported-video-download', $url ) . '</video>';
 		} else {
-			$metadata = $this->getMetadata( true );
-			$file = $this->getStreamUrl( $metadata );
-			$hdfile = $this->getStreamHdUrl( $metadata );
-
 			$jwplayer = new JWPlayer($this->getVideoId());
 			$jwplayer->setArticleId($articleId);
 			$jwplayer->setUrl($file);
@@ -62,35 +70,6 @@ class ScreenplayVideoHandler extends VideoHandler {
 
 		$urlCommonPart = self::$urlTemplate . http_build_query($fileParams);
 		return $urlCommonPart . '&type=' . $type . '&bitrateid=' . $bitrateid;
-	}
-
-	protected function getStreamUrl( $metadata ) {
-		if ( isset($metadata['streamUrl']) ) {
-			$file = $metadata['streamUrl'];
-		} else {
-			$file = $this->getFileUrl( ScreenplayApiWrapper::VIDEO_TYPE, $this->getStandardBitrateCode() );
-		}
-
-		return $file;
-	}
-
-	protected function getStreamHdUrl( $metadata ) {
-		if ( isset($metadata['streamHdUrl']) ) {
-			$hdfile = $metadata['streamHdUrl'];
-		} else {
-			$hdfile = $this->getFileUrl( ScreenplayApiWrapper::VIDEO_TYPE, ScreenplayApiWrapper::HIGHDEF_BITRATE_ID );
-		}
-
-		return $hdfile;
-	}
-
-	public function getEmbedUrl() {
-		$metadata = $this->getMetadata( true );
-		$file = $this->getStreamUrl( $metadata );
-		$hdfile = $this->getStreamHdUrl( $metadata );
-		$url = ( $this->isHd() ) ? $hdfile : $file ;
-
-		return $url;
 	}
 
 	protected function getStandardBitrateCode() {

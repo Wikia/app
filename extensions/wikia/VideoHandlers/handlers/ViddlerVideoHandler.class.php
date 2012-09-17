@@ -8,7 +8,7 @@ class ViddlerVideoHandler extends VideoHandler {
 
 	public function getEmbed($articleId, $width, $autoplay = false, $isAjax = false, $postOnload = false) {
 		$height = $this->getHeight($width);
-		$url = $this->getEmbedUrl();
+		$url = str_replace('$1', $this->getEmbedVideoId(), static::$urlTemplate);
 		$embedVideoId = $this->getEmbedVideoId();
 		$flashVars = '';
 

@@ -74,16 +74,13 @@ Any of these will produce the buttons, please use them as appropriate:
 <h2>Menu Button</h2>
 <h3>Sample:</h3>
 <?php
-$dropdown = array(
-	array(
-		"id" => "UISGMenuButtonFirst",
-		"text" => "First Item"
-	), 
-	array(
-		"id" => "UISGMenuButtonSecond",
-		"text" => "Second Item"
-	)
-);
+$dropdown = array(array(
+	"id" => "UISGMenuButtonFirst",
+	"text" => "First Item"
+), array(
+	"id" => "UISGMenuButtonSecond",
+	"text" => "Second Item"
+));
 ?>
 <?= F::app()->renderView('MenuButton',
 	'Index',

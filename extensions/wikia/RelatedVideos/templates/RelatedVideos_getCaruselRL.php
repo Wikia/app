@@ -6,7 +6,7 @@
 	<!--div class="addVideoTooltip messageHolder"><?=wfMsg('related-videos-tooltip-add');?></div-->
 	<div class="removeVideoTooltip messageHolder"><?=wfMsg('related-videos-tooltip-remove');?></div>
 	<div class="embedCodeTooltip messageHolder"><?=wfMsg('related-videos-tooltip-embed');?></div>
-	<div class="errorWhileLoading messageHolder"><?=wfMsg('videos-error-while-loading');?></div>
+	<div class="errorWhileLoading messageHolder"><?=wfMsg('related-videos-error-while-loading');?></div>
 	<div class="RVHeader">
 		<div class="tally">
 			<em><?=$totalVideos?></em>
@@ -19,9 +19,6 @@
 			<div class="container">
 				<? $i = 0;
 				if( isset($videos) && is_array($videos) ){
-					$videos[] = array(
-						"seeMorePlaceholder" => true,
-					);
 					$videosGrouped = array();
 					$j = -1;
 					foreach( $videos as $id => $video ){
@@ -37,22 +34,14 @@
 						$i++; 
 						echo '<div class="group">';
 						foreach( $videos as $id => $video ){
-							if( array_key_exists( "seeMorePlaceholder", $video ) ) {
-								?>
-								<div class="item">
-									<a href="<?= $linkToSeeMore ?>" class="see-more-videos-placeholder"><?= wfMsg('related-videos-see-all') ?></a>
-								</div>
-								<?
-							} else {
-								echo F::app()->renderView(
-									'RelatedVideos',
-									'getCaruselElementRL',
-									array(
-										'video' => $video,
-										'preloaded' => ( $i <= 2 )
-									)
-								);
-							}
+							echo F::app()->renderView(
+								'RelatedVideos',
+								'getCaruselElementRL',
+								array(
+									'video' => $video,
+									'preloaded' => ( $i <= 2 )
+								)
+							);
 						}
 						echo '</div>';
 					}
@@ -77,7 +66,7 @@
 
 		<div class="seemore">
 			<a href="<?= $linkToSeeMore ?>" class="more">
-				<?=wfMsg('related-videos-see-all')?> &gt;
+				<?=wfMsg('related-videos-see-more')?> &gt;
 			</a>
 		</div>
 	</div>

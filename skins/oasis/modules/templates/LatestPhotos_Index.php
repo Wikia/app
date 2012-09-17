@@ -55,6 +55,7 @@ else {
 	if (count($thumbUrls) > 2) { ?>
 		<li class="see-all">
 			<?= Wikia::specialPageLink('NewFiles', 'oasis-latest-photos-inner-message') ?>
+			<img src="<?= $wg->BlankImgUrl ?>" data-src="<?= $wg->StylePath ?>/oasis/images/empty_gallery.png" />
 		</li>
 	<?php
 	}
@@ -66,7 +67,7 @@ else {
 			</ul>
 		</div>
 	</div>
-	<?= Wikia::specialPageLink('NewFiles', 'oasis-latest-photos-see-all', array('class' => 'more')) ?>
+	<?= Wikia::specialPageLink('NewFiles', 'oasis-latest-photos-more', array('class' => 'more')) ?>
 
 
 <?php }

@@ -121,7 +121,7 @@ $.showModal = function(title, content, options) {
 
 	// fire callback if provided
 	if (typeof options.callback == 'function') {
-		options.callback(wrapper); // pass modal wrapper so it can be used in callback
+		options.callback();
 	}
 
     return wrapper;

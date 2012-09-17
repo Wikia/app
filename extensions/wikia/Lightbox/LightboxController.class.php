@@ -159,14 +159,14 @@ class LightboxController extends WikiaController {
 
 		$config = array(
 			'imageMaxWidth'  => 1000,
-			'contextWidth'   => $this->request->getVal('width', 750),
-			'contextHeight'  => $this->request->getVal('height', 415),
+			'contextWidth'   => $this->request->getVal('width', 660),
+			'contextHeight'  => $this->request->getVal('height', 360),
 			'userAvatarWidth'=> 16,
 		);
 
 		// set max height if play in lightbox
 		if ( $this->request->getVal('width', 0) == 0 ) {
-			$config['maxHeight'] = 415;
+			$config['maxHeight'] = 395;
 		}
 
 		$data = WikiaFileHelper::getMediaDetail( $title, $config );
