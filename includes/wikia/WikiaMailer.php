@@ -101,6 +101,17 @@ class WikiaSendgridMailer {
 			}
 			
 			foreach ( $attachments as $file ) {
+				if ( !is_array( $file ) ) {
+					$magic = MimeMagic::singleton();
+					$mimeType = $magic->guessMimeType( $file );
+					$ext_file = end( explode( '.', $file) );
+					$file = array( 
+						'file'	=> $file,
+						'ext'	=> $ext_file,
+						'mime'	=> $mimeType
+					);
+				}
+				
 				$filename = $file['file'];
 				$ext_filename = $file['ext'];
 				if ( !file_exists( $filename ) ) {
