@@ -93,7 +93,7 @@ function gracenote_getAnalyticsHtml($google_action){
 ////
 // Disable view source when trying to "edit" a page in the Gracenote namespace.
 ////
-function gracenote_disableEdit(&$out, &$sk){
+function gracenote_disableEdit(OutputPage &$out, &$sk){
 	GLOBAL $wgUser,$wgTitle;
 	$retVal = true;
 	if( ($wgTitle->getNamespace() == NS_GRACENOTE)  && (isset($_GET['action']) && $_GET['action']=="edit") && (!$wgUser->isAllowed( 'editgracenote' )) ) {
@@ -108,7 +108,7 @@ function gracenote_disableEdit(&$out, &$sk){
 // Called at BeforePageDisplay hook, this will let us stuff some javascript into the <head> element to accomplish the
 // copy-protection requirements of the Gracenote integration.
 ////
-function gracenote_installCopyProtection(&$out, &$sk){
+function gracenote_installCopyProtection(OutputPage &$out, &$sk){
 	wfProfileIn( __METHOD__ );
 
 	global $wgTitle, $wgUser;
@@ -266,4 +266,3 @@ function gracenote_outputGoogleAnalytics($skin, &$text){
 	$text .= gracenote_getAnalyticsHtml(GRACENOTE_VIEW_NOT_LYRICS);
 	return true;
 } // end gracenote_outputGoogleAnalytics()
-

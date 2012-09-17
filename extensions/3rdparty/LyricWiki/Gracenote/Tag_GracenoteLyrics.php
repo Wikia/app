@@ -129,13 +129,13 @@ if(isset($wgScriptPath))
 	$wgHooks['SkinAfterBottomScripts'][] = 'gracenote_outputGoogleAnalytics';
 
 	//$wgHooks['getUserPermissionsErrorsExpensive'][] = "gracenote_disableEditByPermissions";
-	
+
 	// Use this pre-existing Wikia-specific hook to apply the index policy changes after the defaults are set (which comes after parsing).
 	$wgHooks['AfterViewUpdates'][] = "efGracenoteApplyIndexPolicy";
 }
 
 #Install extension
-function gracenoteLyricsTag( &$parser)
+function gracenoteLyricsTag( Parser &$parser)
 {
   #install hook on the element <gracenotelyrics>
   $parser->setHook("gracenotelyrics", "renderGracenoteLyricsTag");
@@ -144,7 +144,7 @@ function gracenoteLyricsTag( &$parser)
 }
 
 
-function gracenoteLyricsTagCss($out)
+function gracenoteLyricsTagCss(OutputPage $out)
 {
 	$css = <<<DOC
 .lyricbox
@@ -161,7 +161,7 @@ DOC
 	return true;
 }
 
-function renderGracenoteLyricsTag($input, $argv, $parser)
+function renderGracenoteLyricsTag($input, $argv, Parser $parser)
 {
 	#make new lines in wikitext new lines in html
 	$transform = str_replace(array("\r\n", "\r","\n"), "<br />", trim($input));
@@ -182,7 +182,7 @@ function renderGracenoteLyricsTag($input, $argv, $parser)
 	if($colonIndex !== false){
 		$artist = substr($artist, 0, $colonIndex);
 		$songTitle = substr($songTitle, $colonIndex+1);
-		
+
 		$artistLink = str_replace(" ", "+", $artist);
 		$songLink = str_replace(" ", "+", $songTitle);
 	}
@@ -197,7 +197,7 @@ function renderGracenoteLyricsTag($input, $argv, $parser)
 	$ringtoneLink.= "</div>";
 	GLOBAL $wgFirstLyricTag;
 	$wgFirstLyricTag = false; // Even though the gracenote extension ignores these, this will prevent ringtones on other <lyrics> tags.
-	
+
 	// FogBugz 8675 - if a page is on the Gracenote takedown list, make it not spiderable (because it's not actually good content... more of a placeholder to indicate to the community that we KNOW about the song, but just legally can't display it).
 	if(0 < preg_match("/\{\{gracenote[ _]takedown\}\}/i", $transform)){
 		$parser->mOutput->setIndexPolicy( 'noindex' );
@@ -218,7 +218,7 @@ function renderGracenoteLyricsTag($input, $argv, $parser)
 
 	// Required Gracenote branding.
 	$retVal.= gracenote_getBrandingHtml();
-	
+
 	// Tell the Google Analytics code that this view was for Gracenote lyrics.
 	$retVal.= gracenote_getAnalyticsHtml(GRACENOTE_VIEW_GRACENOTE_LYRICS);
 
@@ -228,6 +228,8 @@ function renderGracenoteLyricsTag($input, $argv, $parser)
 /**
  * The parser tag may have set a parser option (which gets cached in the parser-cache) indicating that
  * this page should have a certain index policy.
+ *
+ * @param $wikiPage WikiPage
  */
 function efGracenoteApplyIndexPolicy($wikiPage){
 	global $wgUser;

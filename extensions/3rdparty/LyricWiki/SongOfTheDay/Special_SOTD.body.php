@@ -143,8 +143,6 @@ class SOTD extends SpecialPage
 
 	function makeUserLink( $userId, $userName )
 	{
-		global $wgUser;
-
 		if ( $userId == 0 )
 		{
 			$userLink = SpecialPage::getTitleFor( 'Contributions', $userName )->getPrefixedText();
@@ -191,7 +189,7 @@ class SOTD extends SpecialPage
 
 	function execute( $par )
 	{
-		global $wgRequest, $wgOut, $wgUser, $wgPageName, $errors, $errorlist;
+		global $wgRequest, $wgOut, $wgUser, $errors, $errorlist;
 
 		$this->setHeaders();
 		$canModify = $wgUser->isAllowed('moderatesotd');
@@ -228,7 +226,7 @@ class SOTD extends SpecialPage
 						if ( $count )
 						{	# Insert into database
 							$SOTDTitle = Title::makeTitle( NS_PROJECT, 'SOTD' );
-							$SOTDArticle = new Article( $SOTDTitle , 0 );
+							$SOTDArticle = new Article( $SOTDTitle , 0 ); /* @var $SOTDArticle WikiPage */
 							$content = $SOTDArticle->getContent();
 							# Make sure the previous nominations (if there are any) end with two br's in a row.
 							# If there are no previous nominations, there should still be one nomination.
@@ -676,15 +674,15 @@ class SOTD extends SpecialPage
 				if ( empty( $token ) )
 				{	# No token yet => seems to be a new nomination
 					$dbw = wfGetDB( DB_MASTER );
-					$result = $dbw->select( 
-						'sotdnoms', 
-						array( 'sn_status' ), 
+					$result = $dbw->select(
+						'sotdnoms',
+						array( 'sn_status' ),
 						array(
-							'sn_artist' => $artist, 
+							'sn_artist' => $artist,
 							'sn_song' => $song,
-							'sn_status != 3' 
-						), 
-						__METHOD__ 
+							'sn_status != 3'
+						),
+						__METHOD__
 					);
 					$rows = $dbw->numRows( $result );
 					if ( $rows )
