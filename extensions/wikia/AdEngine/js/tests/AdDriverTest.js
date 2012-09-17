@@ -246,12 +246,14 @@ test('getZone2', function() {
 });
 
 test('getCustomKeyValues', function() {
-  var expectedResult = 'age=adult,yadult;egnre=comedy,comic,family;media=movie,tv;mom=mom;women=women-mom;';
+  var expectedResult = 'age=adult;age=yadult;egnre=comedy;egnre=comic;egnre=family;media=movie;media=tv;mom=mom;women=women-mom;';
 
   window.wgDartCustomKeyValues = "age=adult;age=yadult;egnre=comedy;egnre=comic;egnre=family;media=movie;media=tv;mom=mom;women=women-mom";
-  equal( AdConfig.DART.getCustomKeyValues(), expectedResult, 'custom key-values set' );
+  equal( AdConfig.DART.getCustomKeyValues(), expectedResult, expectedResult );
   window.wgDartCustomKeyValues = null;
-  equal( AdConfig.DART.getCustomKeyValues(), '', 'custom key-values not set');
+  equal( AdConfig.DART.getCustomKeyValues(), '', 'null');
+  window.wgDartCustomKeyValues = "age=adult;age=yadult;egnre=comedy;egnre=comic;egnre=family;media=movie;media=tv;mom=mom;women=women-mom;blahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblablahblahblahblahblahblahblahblahhhhhhhhhhhhhhhhhhhhhhhhhhhh";
+  equal( AdConfig.DART.getCustomKeyValues(), expectedResult, 'too long' );
 });
 
 test('getArticleKV', function() {
@@ -308,7 +310,7 @@ test('getPartnerKeywords', function() {
 });
 
 test('getCategories', function() {
-  var expectedResult = 'cat=all_businesses,businesses_in_gta_iii,businesses_in_gta_liberty_city_stories,food;';
+  var expectedResult = 'cat=all_businesses;cat=businesses_in_gta_iii;cat=businesses_in_gta_liberty_city_stories;cat=food;';
 
   window.wgCategories = ['All Businesses', 'Businesses in GTA III', 'Businesses in GTA Liberty City Stories', 'Food'];
   AdConfig.DART.initCategories();
@@ -407,8 +409,8 @@ test('getUrl', function() {
   window.wgCategories = ['All Businesses', 'Businesses in GTA III', 'Businesses in GTA Liberty City Stories', 'Food'];
   window.wgUserName = null;
   var expectedResult = 'http://ad.doubleclick.net/adj/wka.ent/_muppet/article;s0=ent;s1=_muppet;s2=article;'
-  + 'age=adult,yadult;egnre=comedy,comic,family;media=movie,tv;mom=mom;women=women-mom'
-  + ';artid=37414;'
+  + 'age=adult;age=yadult;egnre=comedy;egnre=comic;egnre=family;media=movie;media=tv;mom=mom;women=women-mom;'
+  + 'artid=37414;'
   + AdConfig.DART.getDomainKV(window.location.hostname)
   + AdConfig.DART.getHostnamePrefix(window.location.hostname)
   + 'pos=TOP_LEADERBOARD;wpage='
@@ -463,8 +465,8 @@ test('getUrl', function() {
   AdConfig.DART.initCategories();
   window.wgUserName = null;
   var expectedResult = 'http://ad-apac.doubleclick.net/adi/wka.gaming/_wowwiki/article;s0=gaming;s1=_wowwiki;s2=article;'
-  + 'aff=hardware,tech;age=13-17,18-34,teen,yadult;dev=blizzard;edu=college;egnre=fantasy;esrb=teen;eth=cauc;gnre=mmo,rpg;hhi=0-30,30-60;kids=0-2;pform=pc;pub=blizzard;sex=m;sub=elves,orcs,wizards;volum=l'
-  + ';artid=119514;'
+  + 'age=13-17;age=18-34;eth=cauc;kids=0-2;hhi=0-30;hhi=30-60;edu=college;age=teen;age=yadult;esrb=teen;gnre=mmo;gnre=rpg;pform=pc;sex=m;volum=l;pub=blizzard;dev=blizzard;sub=wizards;sub=orcs;sub=elves;egnre=fantasy;aff=tech;aff=hardware;'
+  + 'artid=119514;'
   + AdConfig.DART.getDomainKV(window.location.hostname)
   + AdConfig.DART.getHostnamePrefix(window.location.hostname)
   + 'pos=LEFT_SKYSCRAPER_2;wpage='
@@ -476,43 +478,25 @@ test('getUrl', function() {
   equal( AdConfig.DART.getUrl('LEFT_SKYSCRAPER_2', '160x600', true, 'DART'), expectedResult, 'DART, LEFT_SKYSCRAPER_2' );
 });
 
-test('_rebuildKV', function() {
-	var input = 'age=adult;age=yadult;egnre=comedy;egnre=comic;egnre=family;media=movie;media=tv;mom=mom;women=women-mom';
-	var expected = 'age=adult,yadult;egnre=comedy,comic,family;media=movie,tv;mom=mom;women=women-mom';
-	var actual = AdConfig.DART._rebuildKV(input);
-	equal(actual, expected, input);
-
-	var input = '';
-	var expected = '';
-	var actual = AdConfig.DART._rebuildKV(input);
-	equal(actual, expected, input);
-
-	var input = 'age=13-17;age=18-34;eth=cauc;kids=0-2;hhi=0-30;hhi=30-60;edu=college;age=teen;age=yadult;esrb=teen;gnre=mmo;gnre=rpg;pform=pc;sex=m;volum=l;pub=blizzard;dev=blizzard;sub=wizards;sub=orcs;sub=elves;egnre=fantasy;aff=tech;aff=hardware';
-	var expected = 'aff=hardware,tech;age=13-17,18-34,teen,yadult;dev=blizzard;edu=college;egnre=fantasy;esrb=teen;eth=cauc;gnre=mmo,rpg;hhi=0-30,30-60;kids=0-2;pform=pc;pub=blizzard;sex=m;sub=elves,orcs,wizards;volum=l';
-	var actual = AdConfig.DART._rebuildKV(input);
-
-	equal(actual, expected, input);
-});
-
-test('_rebuildKruxKV', function() {
+test('rebuildKruxKV', function() {
 	var input = 'u=H14RBw22;ksgmnt=mc3n9p17i;ksgmnt=mhu7kdyz5;ksgmnt=mhu6g41xv;ksgmnt=md0rid1k6;ksgmnt=mh1w1yv7r;ksgmnt=mh1x5fzgz;';
-	var expected = 'u=H14RBw22;ksgmnt=mc3n9p17i,mhu7kdyz5,mhu6g41xv,md0rid1k6,mh1w1yv7r,mh1x5fzgz';
-	var actual = AdConfig.DART._rebuildKruxKV(input);
+	var expected = 'u=H14RBw22;ksgmnt=mc3n9p17i;ksgmnt=mhu7kdyz5;ksgmnt=mhu6g41xv;ksgmnt=md0rid1k6;ksgmnt=mh1w1yv7r;ksgmnt=mh1x5fzgz;';
+	var actual = AdConfig.DART.rebuildKruxKV(input);
 	equal(actual, expected, input);
 
-	var input = '';
+	var input = null;
 	var expected = '';
-	var actual = AdConfig.DART._rebuildKruxKV(input);
-	equal(actual, expected, input);
+	var actual = AdConfig.DART.rebuildKruxKV(input);
+	equal(actual, expected, 'null');
 
 	var input = 'u=H14RBw22;';
-	var expected = 'u=H14RBw22';
-	var actual = AdConfig.DART._rebuildKruxKV(input);
+	var expected = 'u=H14RBw22;';
+	var actual = AdConfig.DART.rebuildKruxKV(input);
 	equal(actual, expected, input);
 
 	var input = 'u=H14RBw22;ksgmnt=mc3n9p17i;ksgmnt=mhu7kdyz5;ksgmnt=mhu6g41xv;ksgmnt=md0rid1k6;ksgmnt=mh1w1yv7r;ksgmnt=mh1x5fzgz;ksgmnt=mdq2wjhdi;ksgmnt=l7wynpgnl;ksgmnt=l7kt8r02u;ksgmnt=l65e7q72q;ksgmnt=mczlqdo8q;ksgmnt=miqlt2xrx;ksgmnt=l7tjfzchg;ksgmnt=l64tpoveg;ksgmnt=md0socy4l;ksgmnt=l5ejdqcaa;ksgmnt=l9cvrsbl4;ksgmnt=l4w5i2lte;ksgmnt=l6czhl6h4;ksgmnt=l70mnpbta;ksgmnt=mce246keb;ksgmnt=l9b29oqlp;ksgmnt=l7drxohb5;ksgmnt=l4ml7tc6y;ksgmnt=l5pqy5y87;ksgmnt=l4ipfweef;ksgmnt=mhu6miy43;ksgmnt=l6wzg5l0u;ksgmnt=l6e62in33;ksgmnt=l5h9g8s81;ksgmnt=mh1xf2h44;ksgmnt=mjdpm83vl;ksgmnt=mlhkv0y2u;ksgmnt=l98c7mtek;ksgmnt=md6z9csde;ksgmnt=l9cyd00wd;ksgmnt=l65gcbg79;ksgmnt=mfia735jn;ksgmnt=mkcdphvyq;ksgmnt=l555eyz3i;ksgmnt=mh1w7bwvc;ksgmnt=mdv3k2a3w;ksgmnt=l6dwvwk4q;ksgmnt=l6dw08y3a;ksgmnt=l6g84eoki;ksgmnt=l5eaw5w2w;ksgmnt=l60oj8o6a;ksgmnt=l51i9y6sb;ksgmnt=l6886827n;ksgmnt=l557ki65o;ksgmnt=mhu60s0zh;ksgmnt=l6sy2oz2g;ksgmnt=l8cvx4q0q;ksgmnt=l85bjt8dm;ksgmnt=mgdqsrp7j;ksgmnt=l55a043ml;ksgmnt=l6s4rzsar;ksgmnt=mkwaoxp2x;ksgmnt=l5hoxac0q;ksgmnt=l8gj0qxti;ksgmnt=l64xyo7a0;ksgmnt=mdq3gtpva;ksgmnt=l5h9zxgiw;ksgmnt=l5hpnos2g;ksgmnt=l6cuxmuio;ksgmnt=l9cy36qsl;ksgmnt=l978u56l0;ksgmnt=md6wc664y;ksgmnt=l9cwgqxmx;ksgmnt=mhu6jt32u;ksgmnt=l5hqg89ks;ksgmnt=mh1xzu4ar;ksgmnt=mfagngs4v;ksgmnt=l68jly1dg;ksgmnt=mh1xpz9gv;';
-	var expected = 'u=H14RBw22;ksgmnt=mc3n9p17i,mhu7kdyz5,mhu6g41xv,md0rid1k6,mh1w1yv7r,mh1x5fzgz,mdq2wjhdi,l7wynpgnl,l7kt8r02u,l65e7q72q,mczlqdo8q,miqlt2xrx,l7tjfzchg,l64tpoveg,md0socy4l,l5ejdqcaa,l9cvrsbl4,l4w5i2lte,l6czhl6h4,l70mnpbta,mce246keb,l9b29oqlp,l7drxohb5,l4ml7tc6y,l5pqy5y87,l4ipfweef,mhu6miy43,l6wzg5l0u,l6e62in33,l5h9g8s81,mh1xf2h44,mjdpm83vl,mlhkv0y2u,l98c7mtek,md6z9csde,l9cyd00wd,l65gcbg79,mfia735jn,mkcdphvyq,l555eyz3i,mh1w7bwvc,mdv3k2a3w,l6dwvwk4q,l6dw08y3a,l6g84eoki,l5eaw5w2w,l60oj8o6a,l51i9y6sb,l6886827n';
-	var actual = AdConfig.DART._rebuildKruxKV(input);
+	var expected = 'u=H14RBw22;ksgmnt=mc3n9p17i;ksgmnt=mhu7kdyz5;ksgmnt=mhu6g41xv;ksgmnt=md0rid1k6;ksgmnt=mh1w1yv7r;ksgmnt=mh1x5fzgz;ksgmnt=mdq2wjhdi;ksgmnt=l7wynpgnl;ksgmnt=l7kt8r02u;ksgmnt=l65e7q72q;ksgmnt=mczlqdo8q;ksgmnt=miqlt2xrx;ksgmnt=l7tjfzchg;ksgmnt=l64tpoveg;ksgmnt=md0socy4l;ksgmnt=l5ejdqcaa;ksgmnt=l9cvrsbl4;ksgmnt=l4w5i2lte;ksgmnt=l6czhl6h4;ksgmnt=l70mnpbta;ksgmnt=mce246keb;ksgmnt=l9b29oqlp;ksgmnt=l7drxohb5;ksgmnt=l4ml7tc6y;ksgmnt=l5pqy5y87;ksgmnt=l4ipfweef;ksgmnt=mhu6miy43;ksgmnt=l6wzg5l0u;';
+	var actual = AdConfig.DART.rebuildKruxKV(input);
 
 	equal(actual, expected, input);
 });
