@@ -76,7 +76,7 @@ window.WikiaTracker = (function(){
 	 * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
 	 */
 	function trackEvent(eventName, data, trackingMethod){
-		var logGroup = 'WikiaTracker.trackEvent',
+		var logGroup = 'WikiaTracker',
 		eventName = eventName || mainEventName,
 		data = data || {},
 		trackingMethod = trackingMethod || 'none',
@@ -155,7 +155,7 @@ window.WikiaTracker = (function(){
 	 * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
 	 */
 	function internalTrack(event, data, successCallback /* unused */, errorCallback /* unused */, timeout){
-		var logGroup = 'WikiaTracker.internalTrack';
+		var logGroup = 'WikiaTracker';
 
 		// Require an event argument
 		if (!event) {
@@ -252,8 +252,8 @@ window.WikiaTracker = (function(){
 		for(var x = 0, y = wikiaTrackingSpool.length; x < y; x++){
 			eventData = wikiaTrackingSpool[x];
 
-			Wikia.log('Sending previously-spooled tracking event', 'trace', 'WikiaTracker.trackEvent::spool');
-			Wikia.log(eventData, 'trace', 'WikiaTracker.trackEvent::spool');
+			Wikia.log('Sending previously-spooled tracking event', 'trace', 'WikiaTracker');
+			Wikia.log(eventData, 'trace', 'WikiaTracker');
 
 			trackEvent.apply(this, eventData);
 		}
@@ -272,7 +272,7 @@ window.WikiaTracker = (function(){
 
 // FIXME refactor inGroup / userGroup / isTracked, it should be much simpler now
 WikiaTracker.debug = function (msg, level, obj) {
-	Wikia.log(msg, level, 'WikiaTracker.debug');
+	Wikia.log(msg, level, 'WikiaTracker');
 	return true;
 };
 
@@ -344,7 +344,7 @@ WikiaTracker._track = function(page, profile, sample, events) {
 
 // TODO refactor back into trackEvent
 WikiaTracker.trackAdEvent = function(eventName, data, trackingMethod) {
-		var logGroup = 'WikiaTracker.trackAdEvent',
+		var logGroup = 'WikiaTracker',
 		gaqArgs = [];
 
 		var ga_category = data['ga_category'],
