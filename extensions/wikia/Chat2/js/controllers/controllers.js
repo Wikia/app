@@ -53,7 +53,7 @@ var NodeChatSocketWrapper = $.createClass(Observable,{
 					'try multiple transports': true,
 					'connect timeout': false,
 					'query':data,
-					'reconnect':true
+					'reconnect':false
 				});
 				var transport = globalTransports[0];
 				socket.on('message', this.proxy( this.onMsgReceived, this ) );
