@@ -54,21 +54,21 @@ $dir = dirname(__FILE__) . '/';
 $wgExtensionMessagesFiles['lwTemplates'] = $dir.'Templates.i18n.php';
 $wgHooks['EditFormPreloadText'][] = array('lw_templatePreload');
 
-////
-// Fills the textbox of a new page with content.
-////
-function lw_templatePreload(&$textbox, &$title)
+/**
+ * Fills the textbox of a new page with content.
+ */
+function lw_templatePreload(&$textbox, Title &$title)
 {
 	$lwVars = getLyricWikiVariables();
 
 	$titleStr = $title->getText();
-	
+
 	// only use templates in the main namespace
 	$ns = $title->getNamespace();
 	if(($ns != NS_MAIN) && ($ns != NS_TALK)){
 		return true;
 	}
-	
+
 	$tempType = "";
 	$pageType = "";
 	if(isset($_GET['template']))
@@ -104,7 +104,7 @@ function lw_templatePreload(&$textbox, &$title)
 			}
 		}
 		$template = wfMsgForContentNoTrans("lwtemp-{$pageType}-template");
-		
+
 		// only display a template if the template actually exists
 		if( $template != "<{$pageType}Template>" and $template != "&lt;{$pageType}Template&gt;" )
 		{
@@ -125,4 +125,3 @@ function lw_templatePreload(&$textbox, &$title)
 	}
 	return true;
 } // end lw_templatePreload()
-
