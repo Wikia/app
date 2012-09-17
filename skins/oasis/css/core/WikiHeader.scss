@@ -19,27 +19,6 @@
 			overflow: hidden;
 		}
 	}
-	h1:before,
-	.shadow-mask {
-		bottom: 0;
-		height: 8px;
-		position: absolute;
-		right: 0;
-		width: 1000px;
-	}
-	h1:before {
-		background: url(/skins/oasis/images/sprite.png) 0 -34px no-repeat; /* $wgCdnStylePath */
-		content: " ";
-		z-index: 1;
-	}
-	.shadow-mask {
-		@if $page-opacity < 100 {
-			display: none;
-		}
-		@include opacity(75);
-		background: $color-page;
-		z-index: 2;
-	}
 	a:hover {
 		text-decoration: none;
 	}
