@@ -25,7 +25,7 @@ $app->wg->append(
 		"url" => "http://help.wikia.com/wiki/Help:PathFinder",
 		"author" => array(
 			'Federico "Lox" Lucignano <federico(at)wikia-inc.com>',
-			'Jakub Olek <bukaj.kelo(at)gmail.com>'
+			'Jakub Olek <jakubolek@wikia-inc.com>'
 		)
 	),
 	'other'
