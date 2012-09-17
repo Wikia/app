@@ -17,28 +17,27 @@
 		<link rel="stylesheet" href="../../../../../tests/lib/qunit/qunit.css">
 		<script src="../../../../../tests/lib/qunit/qunit.js"></script>
 
-		<!-- Tested objects -->
-		<script src="../../../../../resources/wikia/modules/querystring.js"></script>
-		<script src="../../../../../resources/wikia/modules/cookies.js"></script>
-		<script src="../../../../../resources/wikia/modules/log.js"></script>
-		<script src="../../../WikiaTracker/js/WikiaTracker.js"></script>
-		<script src="../../ghost/gw-11.6.7/lib/gw.js"></script>
-		<script src="../AdProviderEvolve.js"></script>
-		<script src="../AdProviderEvolveRS.js"></script>
-		<script src="../AdProviderGamePro.js"></script>
-		<script src="../AdProviderAdDriver2.js"></script>
+		<!-- AdConfig test -->
 		<script src="../AdConfig2.js"></script>
-		<script src="../../AdDriverGP.js"></script>
-		<script src="../AdEngine2.js"></script>
-
-		<!-- Load test suites -->
 		<script src="AdConfig2Test.js"></script>
+
+		<!-- AdEngine test -->
+		<script src="../AdEngine2.js"></script>
 		<script src="AdEngine2Test.js"></script>
-		<script src="AdProviderEvolveTest.js"></script>
+
+		<!-- AdProviderEvolveRS -->
+		<script src="../AdProviderEvolveRS.js"></script>
 		<script src="AdProviderEvolveRSTest.js"></script>
+
+		<!-- AdProviderGamePro -->
+		<script src="../AdProviderGamePro.js"></script>
 		<script src="AdProviderGameProTest.js"></script>
 
-		<!-- Crazy tests requiring environmental stuff -->
+		<!-- AdProviderEvolve -->
+		<script src="../AdProviderEvolve.js"></script>
+		<script src="AdProviderEvolveTest.js"></script>
+
+		<!-- Crazy deprecated/old stuff now -->
 		<script>
 		/**
 		 * AdConfig.js have a strong dependency on Wikia.geo.getGeoData function which is not
@@ -46,12 +45,12 @@
 		 * setup because it is too late (AdConfig.js calls that function just after it is loaded).
 		 * This problem should be solved in a better way.
 		 */
-		Wikia.geo = { getGeoData: function() { } };
+		Wikia = {};
+		Wikia.geo = {getGeoData: function() {}};
 		</script>
-		<!-- Tested objects (+ anything before of course) -->
+		<script src="../../../../../resources/wikia/modules/cookies.js"></script>
 		<script src="../../AdConfig.js"></script>
-
-		<!-- Tests -->
+		<script src="../../AdDriverGP.js"></script>
 		<script src="AdDriverGPTest.js"></script>
 		<script src="AdDriverTest.js"></script>
 	</head>

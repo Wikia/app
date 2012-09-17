@@ -1,7 +1,6 @@
-/*
- @test-framework QUnit
- @test-require-asset extensions/wikia/AdEngine/AdDriverGP.js
-
+/*!
+ * @test-framework QUnit
+ * @test-require-asset extensions/wikia/AdEngine/AdDriverGP.js
  */
 module('AdDriverGP');
 
