@@ -51,9 +51,11 @@ public class CommonFunctions
 		wait = new WebDriverWait(driver, 30);
 		WebElement logInAjaxElem = driver.findElement(logInAjax);
 		logInAjaxElem.click();
+		PageObjectLogging.log("logIn", "log in ajax button clicked", true, driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("input[name='username']")));
 		WebElement userNameFieldElem = driver.findElement(userNameField);
 		userNameFieldElem.sendKeys(userName);
+		PageObjectLogging.log("logIn", "user name field is populated with " + userName, true, driver);
 		try {
 			Thread.sleep(500);
 		} catch (InterruptedException e) {
@@ -61,9 +63,11 @@ public class CommonFunctions
 			e.printStackTrace();
 		}
 		WebElement passwordFieldElem = driver.findElement(passwordField);
+		PageObjectLogging.log("logIn", "password field is populated", true, driver);
 		passwordFieldElem.sendKeys(password);
 		WebElement submitButtonElem = driver.findElement(submitButton);
 		submitButtonElem.click();
+		PageObjectLogging.log("logIn", "submit button clicked", true, driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("a[href*='/User:"+userName+"']")));		
 	}
 	
@@ -133,6 +137,7 @@ public class CommonFunctions
 		wait = new WebDriverWait(driver, 30);
 		driver.get(Global.LIVE_DOMAIN+"wiki/Special:UserLogout?returnto=User "+userName);
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("a[data-id='login']")));
+		PageObjectLogging.log("logOut", "uses is logged out", true, driver);
 	}
 	
 
