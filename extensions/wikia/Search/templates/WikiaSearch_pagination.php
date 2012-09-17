@@ -19,6 +19,9 @@
 			$extraParams['ns'.$ns] = 1;
 		}
 	}
+	if ($limit !== WikiaSearchController::RESULTS_PER_PAGE) {
+		$extraParams['limit'] = $limit;
+	}
 ?>
 	<div class="wikia-paginator">
 		<ul>
