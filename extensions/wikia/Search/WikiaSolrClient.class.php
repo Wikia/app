@@ -84,6 +84,17 @@ class WikiaSolrClient extends WikiaSearchClient {
 		$spellCheckHappened = isset($spellCheckHappened) ? $spellCheckHappened : false;
 		$videoSearch 		= isset($videoSearch) 		 ? $videoSearch 	   : false;
 
+		// handle push-to-top slice ordering
+		if ($this->getArticleMatch() !== null) {
+			if ($start == 0) {
+				// prevent 21 results on a 20-result page
+				$size--;
+			} else {
+				// prevent missing the 20th result 
+				$start--;
+			}
+		}
+
 		if (!isset($namespaces)) {
 			$namespaces = $this->namespaces ?: SearchEngine::DefaultNamespaces();
 		} 
