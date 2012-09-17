@@ -282,7 +282,7 @@ class ImageTweaksHooks extends WikiaObject {
 					'span',
 					array( 'class' => 'videoInfo' ),
 					"{$titleText} (" . $file->getHandler()->getFormattedDuration() .
-						", " . $this->wf->MsgForContent( 'wikiamobile-video-views-counter', DataMartService::getVideoViewsByTitleTotal( $title ) ) .
+						", " . $this->wf->MsgForContent( 'wikiamobile-video-views-counter', MediaQueryService::getTotalVideoViewsByTitle( $title ) ) .
 						')'
 				);
 			}

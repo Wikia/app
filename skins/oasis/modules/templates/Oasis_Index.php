@@ -72,7 +72,7 @@
 
 	<?= $headitems ?>
 </head>
-<body class="<?= implode(' ', $bodyClasses) ?>">
+<body class="<?= implode(' ', $bodyClasses) ?>"<?= $itemType ?>>
 <!-- comScore -->
 <?= $comScore ?>
 
