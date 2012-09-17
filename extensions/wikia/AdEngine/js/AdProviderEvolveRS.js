@@ -82,4 +82,4 @@ window.AdProviderEvolveRS = function(WikiaTracker, log, window, ghostwriter, doc
 		fillInSlot : fillInSlot,
 		canHandleSlot: canHandleSlot
 	};
-}; 
+};

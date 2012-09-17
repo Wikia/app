@@ -1,8 +1,7 @@
 /*
-@test-framework QUnit
-@test-require-asset resources/wikia/modules/cookies.js
-@test-require-asset extensions/wikia/AdEngine/AdConfig.js
-
+ * @test-framework QUnit
+ * @test-require-asset resources/wikia/modules/cookies.js
+ * @test-require-asset extensions/wikia/AdEngine/AdConfig.js
 */
 module('AdConfig');
 

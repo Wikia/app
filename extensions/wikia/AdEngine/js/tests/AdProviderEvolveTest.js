@@ -1,12 +1,8 @@
-/*
-@test-framework QUnit
- @test-require-asset resources/wikia/modules/querystring.js
- @test-require-asset resources/wikia/modules/cookies.js
- @test-require-asset resources/wikia/modules/log.js
- @test-require-asset extensions/wikia/WikiaTracker/js/WikiaTracker.js
- @test-require-asset extensions/wikia/AdEngine/ghost/gw-11.6.7/lib/gw.js
-@test-require-asset extensions/wikia/AdEngine/js/AdProviderEvolve.js
-*/
+/*!
+ * @test-framework QUnit
+ * @test-require-asset extensions/wikia/AdEngine/js/AdProviderEvolve.js
+ */
+
 module('AdProviderEvolve');
 
 // dart has problems with sending back scripts based on key-val %p
@@ -14,12 +10,14 @@ module('AdProviderEvolve');
 // yields window.AdEngine2.hop('=TOP_LEADERBOARD;ord=7121786175');
 // instead of window.AdEngine2.hop('TOP_LEADERBOARD');
 test('sanitizeSlotname', function() {
-	var geoMock
+	var wikiaTrackerMock
+		, logMock = function() {}
+		, ghostwriterMock
+		, documentMock
 		, adProviderEvolve;
 
-	geoMock = {};
 	adProviderEvolve = AdProviderEvolve(
-		WikiaTracker, Wikia.log, window, ghostwriter, document, geoMock
+		wikiaTrackerMock, logMock, window, ghostwriterMock, documentMock
 	);
 
     equal(adProviderEvolve.sanitizeSlotname('foo'), '', 'foo');
@@ -28,12 +26,14 @@ test('sanitizeSlotname', function() {
 });
 
 test('getUrl', function() {
-	var geoMock
+	var wikiaTrackerMock
+		, logMock = function() {}
+		, ghostwriterMock
+		, documentMock
 		, adProviderEvolve;
 
-	geoMock = {};
 	adProviderEvolve = AdProviderEvolve(
-		WikiaTracker, Wikia.log, window, ghostwriter, document, geoMock
+		wikiaTrackerMock, logMock, window, ghostwriterMock, documentMock
 	);
 
 	// setup
@@ -52,12 +52,14 @@ test('getUrl', function() {
 
 test('getSect', function() {
 	// setup
-	var geoMock
+	var wikiaTrackerMock
+		, logMock = function() {}
+		, ghostwriterMock
+		, documentMock
 		, adProviderEvolve;
 
-	geoMock = {};
 	adProviderEvolve = AdProviderEvolve(
-		WikiaTracker, Wikia.log, window, ghostwriter, document, geoMock
+		wikiaTrackerMock, logMock, window, ghostwriterMock, documentMock
 	);
 
 	window.wgDBname = null;
@@ -79,10 +81,14 @@ test('getSect', function() {
 
 test('Evolve canHandleSlot AU', function() {
 	// setup
-	var adProviderEvolve;
+	var wikiaTrackerMock
+		, logMock = function() {}
+		, ghostwriterMock
+		, documentMock
+		, adProviderEvolve;
 
 	adProviderEvolve = AdProviderEvolve(
-		WikiaTracker, Wikia.log, window, ghostwriter, document
+		wikiaTrackerMock, logMock, window, ghostwriterMock, documentMock
 	);
 
 	equal(adProviderEvolve.canHandleSlot(['TOP_LEADERBOARD']), true, 'TOP_LEADERBOARD');

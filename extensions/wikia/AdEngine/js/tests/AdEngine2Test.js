@@ -1,19 +1,17 @@
-/*
-@test-framework QUnit
- @test-require-asset resources/wikia/modules/querystring.js
- @test-require-asset resources/wikia/modules/cookies.js
- @test-require-asset resources/wikia/modules/log.js
- @test-require-asset extensions/wikia/AdEngine/js/AdEngine2.js
-*/
+/*!
+ * @test-framework QUnit
+ * @test-require-asset extensions/wikia/AdEngine/js/AdEngine2.js
+ */
 
-// Sorry for that
+module('AdEngine2');
 
 test('run with something in queue', function() {
 	// setup
 	var slots_done = []
-		, AdConfigMock;
+		, logMock = function() {}
+		, adConfigMock;
 
-	AdConfigMock = {
+	adConfigMock = {
 		getProvider: function(slot) {
 			// AdProviderMock:
 			return {
@@ -29,8 +27,8 @@ test('run with something in queue', function() {
 	window.adslots2.push(['foo']);
 	window.adslots2.push(['bar']);
 
-	// Mock Wikia.log and window as well!
-	AdEngine2(AdConfigMock, Wikia.log, window).run();
+	// Mock logMock and window as well!
+	AdEngine2(adConfigMock, logMock, window).run();
 
 	equal(slots_done.length, 2, 'pre move');
 
@@ -42,9 +40,10 @@ test('run with something in queue', function() {
 test('run with empty queue', function() {
 	// setup
 	var slots_done = []
-		, AdConfigMock;
+		, logMock = function() {}
+		, adConfigMock;
 
-	AdConfigMock = {
+	adConfigMock = {
 		getProvider: function(slot) {
 			// AdProviderMock:
 			return {
@@ -58,8 +57,8 @@ test('run with empty queue', function() {
 
 	window.adslots2 = [];
 
-	// Mock Wikia.log and window as well!
-	AdEngine2(AdConfigMock, Wikia.log, window).run();
+	// Mock logMock and window as well!
+	AdEngine2(adConfigMock, logMock, window).run();
 
 	equal(slots_done.length, 0, 'pre move');
 
@@ -72,9 +71,10 @@ test('run with null queue', function() {
 	// setup
 	// setup
 	var slots_done = []
-		, AdConfigMock;
+		, logMock = function() {}
+		, adConfigMock;
 
-	AdConfigMock = {
+	adConfigMock = {
 		getProvider: function(slot) {
 			// AdProviderMock:
 			return {
@@ -86,8 +86,8 @@ test('run with null queue', function() {
 		}
 	};
 
-	// Mock Wikia.log and window as well!
-	AdEngine2(AdConfigMock, Wikia.log, window).run();
+	// Mock logMock and window as well!
+	AdEngine2(adConfigMock, logMock, window).run();
 
 	equal(slots_done.length, 0, 'pre move');
 

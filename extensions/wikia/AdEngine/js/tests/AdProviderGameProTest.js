@@ -1,23 +1,35 @@
-/*
-@test-framework QUnit
- @test-require-asset resources/wikia/modules/querystring.js
- @test-require-asset resources/wikia/modules/cookies.js
- @test-require-asset resources/wikia/modules/log.js
- @test-require-asset extensions/wikia/WikiaTracker/js/WikiaTracker.js
- @test-require-asset extensions/wikia/AdEngine/ghost/gw-11.6.7/lib/gw.js
-@test-require-asset extensions/wikia/AdEngine/js/AdProviderGamePro.js
-*/
+/*!
+ * @test-framework QUnit
+ * @test-require-asset extensions/wikia/AdEngine/js/AdProviderGamePro.js
+ */
+
 module('AdProviderGamePro');
 
 test('rebuildKV', function() {
-	var adProviderGamePro = AdProviderGamePro(WikiaTracker, Wikia.log, window, ghostwriter, document);
+	var logMock = function() {}
+		, wikiaTrackerMock
+		, ghostwriterMock
+		, documentMock
+		, adProviderGamePro;
+
+	adProviderGamePro = AdProviderGamePro(
+		wikiaTrackerMock, logMock, window, ghostwriterMock, documentMock
+	);
 
     equal(adProviderGamePro.rebuildKV('egnre=action;egnre=adventure;egnre=drama;egnre=scifi;media=tv'), 'egnre=action,adventure,drama,scifi;media=tv', 'egnre=action;egnre=adventure;egnre=drama;egnre=scifi;media=tv');
 });
 
 test('canHandleSlot GamePro de', function() {
 	// setup
-	var adProviderGamePro = AdProviderGamePro(WikiaTracker, Wikia.log, window, ghostwriter, document);
+	var logMock = function() {}
+		, wikiaTrackerMock
+		, ghostwriterMock
+		, documentMock
+		, adProviderGamePro;
+
+	adProviderGamePro = AdProviderGamePro(
+		wikiaTrackerMock, logMock, window, ghostwriterMock, documentMock
+	);
 
 	window.wgContentLanguage = 'de';
 
@@ -26,17 +38,26 @@ test('canHandleSlot GamePro de', function() {
 	equal(adProviderGamePro.canHandleSlot(['INCONTENT_BOXAD_1']), false, 'de slot INCONTENT_BOXAD_1');
 });
 
-test('getProvider GamePro not de', function() {
+test('canHandleSlot GamePro outside de', function() {
 	// setup
-	var adProviderGamePro = AdProviderGamePro(WikiaTracker, Wikia.log, window, ghostwriter, document);
+	var logMock = function() {}
+		, wikiaTrackerMock
+		, ghostwriterMock
+		, documentMock
+		, windowMock = {}
+		, adProviderGamePro;
 
-	window.wgContentLanguage = 'pl';
+	adProviderGamePro = AdProviderGamePro(
+		wikiaTrackerMock, logMock, windowMock, ghostwriterMock, documentMock
+	);
+
+	windowMock.wgContentLanguage = 'pl';
 
 	equal(adProviderGamePro.canHandleSlot(['HOME_TOP_LEADERBOARD']), false, 'pl slot HOME_TOP_LEADERBOARD');
 	equal(adProviderGamePro.canHandleSlot(['HOME_TOP_RIGHT_BOXAD']), false, 'pl slot HOME_TOP_RIGHT_BOXAD');
 	equal(adProviderGamePro.canHandleSlot(['INCONTENT_BOXAD_1']), false, 'pl slot INCONTENT_BOXAD_1');
 
-	window.wgContentLanguage = 'en';
+	windowMock.wgContentLanguage = 'en';
 
 	equal(adProviderGamePro.canHandleSlot(['HOME_TOP_LEADERBOARD']), false, 'en slot HOME_TOP_LEADERBOARD');
 	equal(adProviderGamePro.canHandleSlot(['HOME_TOP_RIGHT_BOXAD']), false, 'en slot HOME_TOP_RIGHT_BOXAD');
