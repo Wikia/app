@@ -9,14 +9,14 @@
 	function addVideo( &$videoList, $titleName ) {
 		global $isDryrun, $added, $invalid, $duplicate;
 
-		$videoInfoHelper = F::build( 'VideoInfoHelper' );
+		$videoInfoHelper = F::build( 'VideoInfoHelper' ); /* @var $videoInfoHelper VideoInfoHelper */
 		$videoData = $videoInfoHelper->getVideoDataByTitle( $titleName );
 		if ( !empty($videoData) ) {
 			echo $videoData['videoTitle'];
 			$titleHash = md5( $videoData['videoTitle'] );
 			if ( !in_array($titleHash, $videoList) ) {
 				if ( !$isDryrun ) {
-					$videoInfo = F::build( 'VideoInfo', array($videoData) );
+					$videoInfo = F::build( 'VideoInfo', array($videoData) ); /* @var $videoInfo VideoInfo */
 					$videoInfo->addVideo();
 				}
 
@@ -63,7 +63,7 @@
 
 	if ( !$isDryrun ) {
 		// create table or patch table schema
-		$video = F::build( 'VideoInfo' );
+		$video = F::build( 'VideoInfo' ); /* @var $video VideoInfo */
 		$video->createTableVideos();
 
 		echo "Create video_info table.\n";
@@ -71,7 +71,7 @@
 
 	$videoList = array();
 	$total = 0;
-	$add = 0;
+	$added = 0;
 	$invalid = 0;
 	$duplicate = 0;
 
