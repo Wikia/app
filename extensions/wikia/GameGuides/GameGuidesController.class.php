@@ -159,48 +159,55 @@ class GameGuidesController extends WikiaController {
 
 		$html = ApiService::call( $params );
 
-		//global variables
-		//from Output class
-		//and from ResourceLoaderStartUpModule
-		$res = new ResourceVariablesGetter();
-		$vars = array_diff_key(
-			$this->wg->Out->getJSVars() + $res->get(),
-			array_flip( $this->wg->WikiaMobileExcludeJSGlobals )
-		);
+		$globals = $this->sendSelfRequest( 'getGlobals' );
 
-		$page = $this->sendSelfRequest('page', array(
-			'html' => $html['parse']['text']['*'],
-			'title' => Title::newFromText( $titleName )->getText()
-		));
+		$this->setVal( 'globals', $globals->getVal( 'globals' ) );
+		$this->setVal( 'messages', $globals->getVal( 'messages' ) );
+		$this->setVal( 'title', Title::newFromText( $titleName )->getText() );
+		$this->setVal( 'html', $html['parse']['text']['*'] );
+	}
 
+	public function renderFullPage(){
 		$resources = $this->sendRequest('AssetsManager', 'getMultiTypePackage', array(
 			'scripts' => 'gameguides_js',
 			'styles' => '//extensions/wikia/GameGuides/css/GameGuides.scss'
 		));
 
-		$js = $resources->getVal('scripts', '');
-		$styles = $resources->getVal('styles', '');
+		$js = $resources->getVal( 'scripts', '' );
+		$styles = $resources->getVal( 'styles', '' );
 
-		//limit it to html, css and js
-		$this->setVal( 'html', $page->toString());
-		$this->setVal( 'js', WikiaSkin::makeInlineVariablesScript( $vars ) . $skin->getTopScripts() . F::build( 'JSMessages' )->printPackages( array( 'WkMbl' ) ) .'<script>' . $js[0] . '</script>');
-		$this->setVal( 'css', '<style>' . $styles . '</style>' );
+		$this->setVal( 'js', $js[0] );
+		$this->setVal( 'css', $styles );
+		$this->setVal( 'html', $this->sendSelfRequest( 'renderPage', array(
+			'title' => $this->getVal( 'title')
+		) ) );
 
 	}
 
 	public function page(){
-		$this->setVal('title', $this->getVal('title'));
-		$this->setVal('html', $this->getVal('html'));
+		$this->setVal( 'title', $this->getVal( 'title' ) );
+		$this->setVal( 'html', $this->getVal( 'html' ) );
 	}
 
+	public function getCB(){
+		$this->setVal( 'cb', $this->wg->CacheBuster );
+	}
 
-	public function getResources(){
-		$cb = $this->getVal('cb', $this->wg->CacheBuster);
-		if($cb != $this->wg->CacheBuster){
-			//send resources
-		}else{
-			//all up to date!
-		}
+	public function getGlobals(){
+		$wg = F::app()->wg;
+		$skin = Skin::newFromKey( 'wikiamobile' );
+
+		//global variables
+		//from Output class
+		//and from ResourceLoaderStartUpModule
+		$res = new ResourceVariablesGetter();
+		$vars = array_intersect_key(
+			$wg->Out->getJSVars() + $res->get(),
+			array_flip( $wg->GameGuidesGlobalsWhiteList )
+		);
+
+		$this->setVal( 'globals', WikiaSkin::makeInlineVariablesScript( $vars ) /*. $skin->getTopScripts()*/);
+		$this->setVal( 'messages', F::build( 'JSMessages' )->getPackages( array( 'GameGuides' ) ));
 	}
 }
 

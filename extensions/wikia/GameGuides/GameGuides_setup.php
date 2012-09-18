@@ -34,3 +34,22 @@ $app->registerExtensionMessageFile('GameGuides', "{$dir}/GameGuides.i18n.php");
 $wgGroupPermissions['*']['gameguidespreview'] = false;
 $wgGroupPermissions['staff']['gameguidespreview'] = true;
 $wgGroupPermissions['sysop']['gameguidespreview'] = true;
+
+//the only globals needed in Game Guides
+if ( empty( $app->wg->GameGuidesGlobalsWhiteList ) ) {
+$app->wg->set( 'wgGameGuidesGlobalsWhiteList',
+	array(
+		'wgArticleId',
+		'wgTitle',
+		'wgServer',
+		'wgScriptPath',
+		'wgAssetsManagerQuery',
+		'wgStyleVersion'
+	) );
+}
+
+//minimal package of messages in Game Gudes
+F::build( 'JSMessages' )->registerPackage( 'GameGuides', array(
+	'wikiamobile-hide-section',
+	'wikiamobile-image-not-loaded'
+) );

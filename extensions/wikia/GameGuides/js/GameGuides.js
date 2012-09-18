@@ -10,7 +10,7 @@ $(function(){
 			q = new qs(link.href);
 			var path = q.getPath();
 			if(q.getPath().indexOf('/wiki/') > -1 && path.indexOf(':') == -1) {
-				link.href = wgServer + '/wikia.php?controller=GameGuidesController&method=renderPage&title=' + path.slice(6);
+				link.href = wgServer + '/wikia.php?controller=GameGuidesController&method=renderFullPage&title=' + path.slice(6);
 				link.className += ' validLink';
 			} else if(link.className.indexOf('image') > -1) {
 				link.className += ' validLink';
