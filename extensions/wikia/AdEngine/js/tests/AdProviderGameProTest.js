@@ -17,8 +17,6 @@ test('rebuildKV', function() {
 		scriptWriterMock, wikiaTrackerMock, logMock, windowMock, documentMock
 	);
 
-	console.log(adProviderGamePro);
-
     equal(adProviderGamePro.rebuildKV('egnre=action;egnre=adventure;egnre=drama;egnre=scifi;media=tv'), 'egnre=action,adventure,drama,scifi;media=tv', 'egnre=action;egnre=adventure;egnre=drama;egnre=scifi;media=tv');
 });
 

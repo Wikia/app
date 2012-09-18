@@ -12,10 +12,10 @@ test('Throws with undefined queue', function() {
 		, adslotsNotUsed
 		, adEngine;
 
-	adEngine = AdEngine2(adConfigMock, logMock, lazyQueueMock);
+	adEngine = AdEngine2(logMock, lazyQueueMock);
 
 	throws(function() {
-		adEngine.run(adslotsNotUsed);
+		adEngine.run(adConfigMock, adslotsNotUsed);
 	}, 'Throws exception');
 });
 
@@ -40,8 +40,8 @@ test('Makes LazyQueue from run parameter and starts it', function() {
 		}
 	};
 
-	adEngine = AdEngine2(adConfigMock, logMock, lazyQueueMock);
-	adEngine.run(slotsMock);
+	adEngine = AdEngine2(logMock, lazyQueueMock);
+	adEngine.run(adConfigMock, slotsMock);
 
 	equal(makeQueueCalledOn, slotsMock, 'Made LazyQueue from the slot array provided to adEngine.run');
 	equal(queueStartCalled, true, 'Called start on the slot array provided to adEngine.run')
@@ -74,8 +74,8 @@ test('Calls AdConfig2 getProvider and then fillInSlot for slots provider in the 
 		}
 	};
 
-	adEngine = AdEngine2(adConfigMock, logMock, lazyQueueMock);
-	adEngine.run(slotsMock);
+	adEngine = AdEngine2(logMock, lazyQueueMock);
+	adEngine.run(adConfigMock, slotsMock);
 
 	equal(getProviderCalledFor.length, 2, 'adConfig.getProvider called 2 times');
 	equal(getProviderCalledFor[0], 'slot1', 'adConfig.getProvider called for slot1');
