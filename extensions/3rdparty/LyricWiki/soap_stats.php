@@ -32,7 +32,7 @@ define('LW_API_TYPE_MOBILE', 'mobile');
  */
 function lw_soapStats_logHit($resultsFound, $type=LW_API_TYPE_WEB){
 	wfProfileIn(__METHOD__);
-	
+
 	if(rand(1, LW_API_STATS_SAMPLING_INTERVAL) === 1){
 		lw_soapStats_term($resultsFound, LW_TERM_DAILY, $type);
 		lw_soapStats_term($resultsFound, LW_TERM_WEEKLY, $type);
@@ -55,17 +55,17 @@ function lw_soapStats_logHit($resultsFound, $type=LW_API_TYPE_WEB){
 function lw_soapStats_getStats($termType = LW_TERM_DAILY, $termValue = "", $type=LW_API_TYPE_WEB){
 	global $wgMemc;
 	wfProfileIn(__METHOD__);
-	
+
 	if($termValue == ""){
 		$termValue = lw_soapStats_currentTermValue($termType);
 	}
 
 	$foundKey = wfMemcKey(LW_API_STATS_MEMKEY, $type, LW_API_FOUND, $termType, $termValue);
 	$notFoundKey = wfMemcKey(LW_API_STATS_MEMKEY, $type, LW_API_NOT_FOUND, $termType, $termValue);
-	
+
 	$numFound = $wgMemc->get($foundKey);
 	$numNotFound = $wgMemc->get($notFoundKey);
-	
+
 	// Default to 0 if a value was not found.
 	$numFound = ($numFound===null ? 0 : $numFound);
 	$numNotFound = ($numNotFound===null ? 0 : $numNotFound);
@@ -82,8 +82,8 @@ function lw_soapStats_getStats($termType = LW_TERM_DAILY, $termValue = "", $type
 		LW_API_PERCENT_FOUND => $percentFound
 	);
 
-	return $stats;
 	wfProfileOut(__METHOD__);
+	return $stats;
 } // end lw_soapStats_getStats()
 
 /**
