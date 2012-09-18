@@ -1,4 +1,4 @@
-/*!
+/**
  * @test-framework QUnit
  * @test-require-asset extensions/wikia/AdEngine/js/AdEngine2.js
  */
@@ -9,6 +9,7 @@ test('Throws with undefined queue', function() {
 	var logMock = function() {}
 		, adConfigMock
 		, lazyQueueMock
+		, adslotsNotUsed
 		, adEngine;
 
 	adEngine = AdEngine2(adConfigMock, logMock, lazyQueueMock);
