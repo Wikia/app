@@ -24,22 +24,6 @@ class WikiaDispatcher {
 	}
 
 	/**
-	 * @param WikiaRequest $request
-	 * @return mixed
-	 */
-	protected function getControllerName( WikiaRequest $request ) {
-		return $request->getVal( 'controller' );
-	}
-
-	/**
-	 * @param $controllerName
-	 * @return null|string
-	 */
-	protected function getControllerClassName( $controllerName ) {
-		return !empty( $controllerName ) ? ( "{$controllerName}Controller" ) : null;
-	}
-
-	/**
 	 * dispatch the request
 	 *
 	 * @param WikiaApp $app
@@ -64,49 +48,39 @@ class WikiaDispatcher {
 
 			try {
 				$method = $this->getMethodName( $request );
-				$controllerName = $this->getControllerName( $request );
-				$controllerLegacyName = $app->getControllerLegacyName( $controllerName );
-				$controllerClassName = null;
 
-				if (
-					(
-						$app->isService( $controllerName ) ||
-						$app->isController( $controllerName ) ||
-						$app->isModule( $controllerName )
-					) &&
-					!empty( $autoloadClasses[$controllerName] )
-				) {
-					$controllerClassName = $controllerName;
+				// Determine the "base" name for the controller, stripping off Controller/Service/Module
+				$controllerName = $app->getControllerName( $request->getVal( 'controller' ) );
+				
+				// Service classes must be dispatched by full name otherwise we look for a controller.
+				if ($app->isService($request->getVal('controller'))) {
+					$controllerClassName = $app->getServiceClassName( $controllerName );
+				} else {
+					$controllerClassName = $app->getControllerClassName( $controllerName );
 				}
 
-				if ( empty( $controllerClassName ) ) {
-					$controllerClassName = $this->getControllerClassName( $controllerLegacyName );
-				}
+				$profilename = __METHOD__ . " ({$controllerName}_{$method})";
 
-				if( empty( $controllerClassName ) ) {
+				if( empty( $controllerName ) ) {
 					throw new WikiaException( "Invalid controller name: {$controllerName}" );
 				}
 
-				$fname = __METHOD__ . " ({$controllerName}_{$method})";
+				if ( empty( $autoloadClasses[$controllerClassName] ) ) {
+					throw new WikiaException( "Controller class does not exist: {$controllerClassName}" );
+				}
 
-				$app->wf->profileIn($fname);
+				$app->wf->profileIn($profilename);
 				$response->setControllerName( $controllerName );
 				$response->setMethodName( $method );
 
-				if ( empty( $autoloadClasses[$controllerClassName] ) ) {
-					throw new WikiaException( "Controller does not exist: {$controllerClassName}" );
-				}
-
 				$controller = F::build( $controllerClassName ); /* @var $controller WikiaController */
 
-				// Temporary remap of executeX methods for modules
+				// map X to executeX method names for things that used to be modules
 				if (!method_exists($controller, $method)) {
 					$method = ucfirst( $method );
-					$moduleTemplatePath = dirname( $autoloadClasses[$controllerClassName] ) . "/templates/{$controllerName}_{$method}.php";
-					$response->getView()->setTemplatePath( $moduleTemplatePath );
-
+					$response->getView()->setTemplate( $controllerName, $method );
 					$method = "execute{$method}";
-					$params = $request->getParams();
+					$params = $request->getParams();  // old modules expect params in a different place
 				}
 
 				if (
@@ -144,13 +118,9 @@ class WikiaDispatcher {
 				$controller->init();
 
 				// BugId:5125 - keep old hooks naming convention
-				$originalMethod = ucfirst( $this->getMethodName( $request ) );
+				$hookMethod = ucfirst( $this->getMethodName( $request ) );
 
-				$hookResult = $app->runHook( ( "{$controllerName}{$originalMethod}BeforeExecute" ), array( &$controller, &$params ) );
-
-				if ( $controllerName != $controllerLegacyName ) {
-					$hookResult = ( $hookResult && $app->runHook( ( "{$controllerLegacyName}{$originalMethod}BeforeExecute" ), array( &$controller, &$params ) ) );
-				}
+				$hookResult = $app->runHook( ( "{$controllerName}{$hookMethod}BeforeExecute" ), array( &$controller, &$params ) );
 
 				if ( $hookResult ) {
 					$result = $controller->$method( $params );
@@ -160,7 +130,7 @@ class WikiaDispatcher {
 						$controller->skipRendering();
 					}
 				}
-				// Preserve original request (this happens for SpecialPageControllers)
+				// Preserve original request (this is for SpecialPageControllers)
 				if ($originalRequest != null) {
 					$controller->setRequest($originalRequest);
 				}
@@ -168,20 +138,18 @@ class WikiaDispatcher {
 					$controller->setResponse($originalResponse);
 				}
 
-				$app->runHook( ( "{$controllerName}{$originalMethod}AfterExecute" ), array( &$controller, &$params ) );
+				// we ignore the result of the AfterExecute hook
+				$app->runHook( ( "{$controllerName}{$hookMethod}AfterExecute" ), array( &$controller, &$params ) );
 
-				if ( $controllerName != $controllerLegacyName ) {
-					$app->runHook( ( "{$controllerLegacyName}{$originalMethod}AfterExecute" ), array( &$controller, &$params ) );
-				}
-				$app->wf->profileOut($fname);
+				$app->wf->profileOut($profilename);
 			} catch ( Exception $e ) {
-				$app->wf->profileOut($fname);
+				$app->wf->profileOut($profilename);
 
 				$response->setException($e);
 				Wikia::log(__METHOD__, $e->getMessage() );
 
+				// if we catch an exception, redirect to the WikiaError controller
 				if ( $controllerClassName != 'WikiaErrorController' && $method != 'error' ) {
-					// Work around for module dispatching until modules are renamed
 					$response->getView()->setTemplatePath( null );
 					$request->setVal( 'controller', 'WikiaError' );
 					$request->setVal( 'method', 'error' );
