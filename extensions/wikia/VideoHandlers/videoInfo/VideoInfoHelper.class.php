@@ -57,18 +57,6 @@ class VideoInfoHelper extends WikiaModel {
 		return $video;
 	}
 
-	public function addVideo( $title ) {
-		$videoData = $this->getVideoDataByTitle( $title );
-		if ( !empty($videoData) ) {
-			$videoInfo = F::build( 'VideoInfo', array( $videoData ) );
-			if ( $reupload ) {
-				$videoInfo->reuploadVideo();
-			} else {
-				$videoInfo->addVideo();
-			}
-		}
-	}
-
 	// check if video_info table exists
 	public static function videoInfoExists() {
 		$db = F::app()->wf->GetDB( DB_SLAVE );
