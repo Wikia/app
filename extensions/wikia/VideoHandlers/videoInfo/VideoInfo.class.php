@@ -24,7 +24,7 @@ class VideoInfo extends WikiaModel {
 
 	/**
 	 * set video title
-	 * @param strin $videoTitle
+	 * @param string $videoTitle
 	 */
 	public function setVideoTitle( $videoTitle ) {
 		$this->videoTitle = $videoTitle;
@@ -64,7 +64,7 @@ class VideoInfo extends WikiaModel {
 
 	/**
 	 * update data in the database
-	 * @param array updateValue [ array( field => value ) ]
+	 * @param array $updateValue [ array( field => value ) ]
 	 * [ field = added_at, added_by, duration, premium ,hdfile, removed ]
 	 */
 	protected function updateDatabase( $updateValue ) {
@@ -169,8 +169,8 @@ class VideoInfo extends WikiaModel {
 					) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 SQL;
 
-				$db->query( $sql );
-				$db->commit();
+				$db->query( $sql, __METHOD__ );
+				$db->commit(__METHOD__);
 			}
 		}
 
@@ -208,8 +208,8 @@ SQL;
 
 	/**
 	 * get video object from row
-	 * @param array row
-	 * @return array video 
+	 * @param object $row
+	 * @return array video
 	 */
 	public static function newFromRow( $row ) {
 		$data = array(
