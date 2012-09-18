@@ -13,7 +13,10 @@ class GameGuidesSpecialController extends WikiaSpecialPageController {
 
 		$titleText = $this->getPar();
 
-		$this->setVal( 'url', $this->wg->Server .'/wikia.php?allinone=1&controller=GameGuidesController&method=renderPage&title=' . $titleText );
+		//http://fallout.jolek.wikia-dev.com/wikia.php?controller=AssetsManager&method=getMultiTypePackage&scripts=gameguides_js&styles=//extensions/wikia/GameGuides/css/GameGuides.scss
+
+		$this->setVal( 'url', $this->wg->Server .'/wikia.php?allinone=1&controller=GameGuidesController&method=renderFullPage&title=' . $titleText );
+		return true;
 	}
 
 }
