@@ -5,11 +5,13 @@
  * MIT Licensed
  */
 
+
 /**
  * Module requirements.
  */
 
-var HTTPTransport = require('./http');
+var HTTPTransport = require('./http'),
+	Transport = require('../transport');
 
 /**
  * Exports the constructor.
@@ -62,7 +64,10 @@ HTTPPolling.prototype.handleRequest = function (req) {
 
   if (req.method == 'GET') {
     var self = this;
-
+    
+    Transport.prototype.clearCloseTimeout.call(this);
+    Transport.prototype.setCloseTimeout.call(this);
+    
     this.pollTimeout = setTimeout(function () {
       self.packet({ type: 'noop' });
       self.log.debug(self.name + ' closed due to exceeded duration');
@@ -132,8 +137,20 @@ HTTPPolling.prototype.write = function (data, close) {
  * @api private
  */
 
+HTTPPolling.prototype.onSocketEnd = function () {
+	
+}
+
+HTTPPolling.prototype.onSocketClose = function (error) {
+	
+}
+
+HTTPPolling.prototype.error = function (error) {
+	
+}
+
 HTTPPolling.prototype.end = function () {
-  this.clearPollTimeout();
-  return HTTPTransport.prototype.end.call(this);
+	this.clearPollTimeout();
+	return HTTPTransport.prototype.end.call(this);
 };
 
