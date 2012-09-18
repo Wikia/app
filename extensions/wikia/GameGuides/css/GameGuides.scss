@@ -9,15 +9,24 @@
 @import '../../WikiaMobile/css/image_placeholder';
 
 $linkColor: rgb(171,197,97);
+$backgroundColor: black;
+
+//I use it in a lot of places so it makes sense to have it here
+//The faster the better as it is not rendering but browser does calculation based on it
+*{
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
 
 html {
-	background: black;
+	background: $backgroundColor;
 	overflow-x: hidden;
 }
 
 body {
 	overflow-x: hidden;
-	background: black;
+	background: $backgroundColor;
 	color: white;
 
 	margin: 0;
@@ -30,7 +39,7 @@ body {
 }
 
 #mw-content-text {
-	background: black;
+	background: $backgroundColor;
 }
 
 #pageName {
@@ -59,6 +68,11 @@ h2,h3, .collSec {
 	&.open {
 		border-bottom: 1px solid $linkColor;
 	}
+
+	.chev {
+		width: 0;
+		height: 0;
+	}
 }
 
 a {
@@ -66,6 +80,8 @@ a {
 
 	color: white;
 	pointer-events: none;
+
+	-webkit-transition: color .2s;
 }
 
 a.validLink {
@@ -73,23 +89,42 @@ a.validLink {
 	pointer-events: auto;
 }
 
-.collSec .chev {
-	top: 0;
-}
-
 //hmmm
 #va-titleicons, #toc {
 	display: none;
 }
 
+$size: 9;
+$width: 3;
+
 .chev {
-	background-position: center;
-	background-repeat: no-repeat;
-	background-image:  url('/extensions/wikia/WikiaMobile/images/chevron-grey-down.png'); /* base64 */
+	position: relative;
+
+	width: 0;
+	height: 0;
+	border: $size + px solid;
+	border-color: rgb(224,224,224) transparent transparent transparent;
+
 	-webkit-transition: -webkit-transform .3s;
-	-webkit-transform: translateZ(0);
+	-webkit-transform-origin: 50% 25%;
+
+	border-radius: 4px;
+}
+
+.chev:after {
+	content: '';
+	position: absolute;
+
+	left: ( -$size + $width ) + px;
+	top: ( -$size ) + px;
+	width: 0;
+	height: 0;
+
+	border: ( $size - $width ) + px solid;
+	border-color: $backgroundColor transparent transparent transparent;
 }
 
 .open .chev {
-	-webkit-transform: rotate(180deg);
+	border-color: $linkColor transparent transparent transparent;
+	-webkit-transform: rotateZ(-180deg);
 }
