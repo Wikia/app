@@ -233,8 +233,9 @@ SQL;
 	}
 
 	public function reuploadVideo() {
+		$addedAt = $this->wf->Timestamp( TS_MW );
 		$data = array(
-			'added_at' => $this->addedAt,
+			'added_at' => $addedAt,
 			'added_by' => $this->addedBy,
 			'duration' => $this->duration,
 			'premium' => $this->premium,
@@ -258,7 +259,7 @@ SQL;
 			'removed' => 0,
 		);
 
-		$this->updateDatabase( $data );		
+		$this->updateDatabase( $data );
 	}
 
 	public function removeVideo() {
