@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -13,6 +14,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 
 import com.wikia.webdriver.Common.Core.CommonFunctions;
+import com.wikia.webdriver.Common.Core.Global;
 import com.wikia.webdriver.Common.Logging.PageObjectLogging;
 
 
@@ -308,7 +310,14 @@ public class WikiArticleEditMode extends WikiArticlePageObject {
 		waitForElementByElement(visualModeIFrame);
 		driver.switchTo().frame(visualModeIFrame);
 		waitForElementByElement(bodyContent);
-		bodyContent.sendKeys(content);
+		if (Global.BROWSER.equals("FF"))
+		{
+			((JavascriptExecutor) driver).executeScript("document.body.innerHTML='" + content + "'");
+		}
+		else
+		{
+			bodyContent.sendKeys(content);			
+		}
 		driver.switchTo().defaultContent();
 		PageObjectLogging.log("typeInContent", "content type into article body", true, driver);
 	}
