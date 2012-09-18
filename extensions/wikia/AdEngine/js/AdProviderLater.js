@@ -1,16 +1,15 @@
-window.AdProviderLater = function(log, adslots_later) {
-	function fillInSlot(slot) {
+var AdProviderLater = function(log, queueForLateAds) {
+	'use strict';
+
+	var fillInSlot = function(slot) {
 		log('fillInSlot', 5, 'AdProviderLater');
 		log(slot, 5, 'AdProviderLater');
 
-		adslots_later.push(slot);
-	}
+		queueForLateAds.push(slot);
+	};
 
-	var iface = {
+	return {
 		name: 'Later',
 		fillInSlot: fillInSlot
 	};
-
-	return iface;
-
 };
