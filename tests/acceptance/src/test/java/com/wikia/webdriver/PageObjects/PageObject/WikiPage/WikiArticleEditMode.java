@@ -360,6 +360,14 @@ public class WikiArticleEditMode extends WikiArticlePageObject {
 		PageObjectLogging.log("clickModifyButtonSlideshow", "Click on 'modify button' on slideshow", true, driver);
 	}
 
+	public void clickModifyButtonSlider() 
+	{
+		waitForElementByElement(iFrame);
+		mouseOverInArticleIframe("img.image-gallery-slider");
+		waitForElementByElement(modifyButton);
+		jQueryClick("span.RTEMediaOverlayEdit");
+		PageObjectLogging.log("clickModifyButtonSlideshow", "Click on 'modify button' on slideshow", true, driver);		
+	}
 
 	/**
 	 * Click on 'remove button' of image with given caption
@@ -718,6 +726,8 @@ public class WikiArticleEditMode extends WikiArticlePageObject {
 		}
 		PageObjectLogging.log("deleteUnwantedVideoFromMessage", "Delete all source code on the article", true, driver);
 	}
+
+	
 
 	
 	

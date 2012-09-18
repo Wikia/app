@@ -57,12 +57,7 @@ public class WikiArticlePageObject extends WikiBasePageObject {
 	
 	public void triggerCommentArea()
 	{
-//		Point p = editCommentTrigger.getLocation();
-//		CommonFunctions.MoveCursorToElement(p);
-//		CommonFunctions.ClickElement();
-//		waitForElementByElement(editCommentArea);
-		editCommentTrigger.click();
-//		waitForElementByElement(editCommentArea);
+		jQueryFocus("textarea#article-comm");
 	}
 	
 	public void writeOnCommentArea(String comment)
@@ -70,7 +65,14 @@ public class WikiArticlePageObject extends WikiBasePageObject {
 		driver.switchTo().frame(iframe);
 		waitForElementByElement(editCommentArea);
 		editCommentArea.clear();
-		editCommentArea.sendKeys(comment);
+		if (Global.BROWSER.equals("FF"))
+		{
+			((JavascriptExecutor) driver).executeScript("document.body.innerHTML='" + comment + "'");
+		}
+		else
+		{			
+			editCommentArea.sendKeys(comment);
+		}
 		driver.switchTo().defaultContent();
 	}
 	
@@ -326,6 +328,14 @@ public class WikiArticlePageObject extends WikiBasePageObject {
 			PageObjectLogging.log("verifySlideshowPosion", "Slideshow position verified: "+position, true, driver);
 		}
 		
+	}
+/**
+ * 
+ * @param position available values (vertical, horizontal)
+ */
+	public void verifySliderThumbnailsPosition(String position) {
+		waitForElementByCss(".wikiaPhotoGallery-slider-body div."+position);
+		PageObjectLogging.log("verifySliderThumbnailsPosition", "Slider thumbnails position verified: "+position, true, driver);		
 	}
 
 }
