@@ -209,6 +209,11 @@ public class BasePageObject{
 //		executeScript("$('"+cssSelector+"').click()");
 	}
 	
+	public void jQueryFocus(String cssSelector)
+	{
+		executeScript("$('"+cssSelector+"').focus()");
+	}
+	
 //	public void clickRobot(WebElement pageElem)
 //	{
 ////		try
