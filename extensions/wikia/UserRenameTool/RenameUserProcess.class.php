@@ -54,6 +54,7 @@ class RenameUserProcess {
 		array( 'table' => 'filearchive', 'userid_column' => 'fa_user', 'username_column' => 'fa_user_text' ),
 		array( 'table' => 'image', 'userid_column' => 'img_user', 'username_column' => 'img_user_text' ),
 		array( 'table' => 'ipblocks', 'userid_column' => 'ipb_by', 'username_column' => 'ipb_by_text' ),
+		array( 'table' => 'ipblocks', 'userid_column' => 'ipb_user', 'username_column' => 'ipb_address' ),
 		array( 'table' => 'logging', 'userid_column' => null, 'username_column' => 'log_title',
 			'conds' => array(
 				'log_namespace' => NS_USER,
