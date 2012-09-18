@@ -7,31 +7,32 @@ module('AdProviderGamePro');
 
 test('rebuildKV', function() {
 	var logMock = function() {}
+		, adProviderCommonMock
 		, wikiaTrackerMock
-		, ghostwriterMock
+		, windowMock = {wgInsideUnitTest: true}
 		, documentMock
 		, adProviderGamePro;
 
 	adProviderGamePro = AdProviderGamePro(
-		wikiaTrackerMock, logMock, window, ghostwriterMock, documentMock
+		adProviderCommonMock, wikiaTrackerMock, logMock, windowMock, documentMock
 	);
+
+	console.log(adProviderGamePro);
 
     equal(adProviderGamePro.rebuildKV('egnre=action;egnre=adventure;egnre=drama;egnre=scifi;media=tv'), 'egnre=action,adventure,drama,scifi;media=tv', 'egnre=action;egnre=adventure;egnre=drama;egnre=scifi;media=tv');
 });
 
 test('canHandleSlot GamePro de', function() {
-	// setup
 	var logMock = function() {}
+		, adProviderCommonMock
 		, wikiaTrackerMock
-		, ghostwriterMock
+		, windowMock = {wgInsideUnitTest: true, wgContentLanguage: 'de'}
 		, documentMock
 		, adProviderGamePro;
 
 	adProviderGamePro = AdProviderGamePro(
-		wikiaTrackerMock, logMock, window, ghostwriterMock, documentMock
+		adProviderCommonMock, wikiaTrackerMock, logMock, windowMock, documentMock
 	);
-
-	window.wgContentLanguage = 'de';
 
 	equal(adProviderGamePro.canHandleSlot(['HOME_TOP_LEADERBOARD']), true, 'de slot HOME_TOP_LEADERBOARD');
 	equal(adProviderGamePro.canHandleSlot(['HOME_TOP_RIGHT_BOXAD']), true, 'de slot HOME_TOP_RIGHT_BOXAD');
@@ -39,16 +40,15 @@ test('canHandleSlot GamePro de', function() {
 });
 
 test('canHandleSlot GamePro outside de', function() {
-	// setup
 	var logMock = function() {}
+		, adProviderCommonMock
 		, wikiaTrackerMock
-		, ghostwriterMock
+		, windowMock = {wgInsideUnitTest: true}
 		, documentMock
-		, windowMock = {}
 		, adProviderGamePro;
 
 	adProviderGamePro = AdProviderGamePro(
-		wikiaTrackerMock, logMock, windowMock, ghostwriterMock, documentMock
+		adProviderCommonMock, wikiaTrackerMock, logMock, windowMock, documentMock
 	);
 
 	windowMock.wgContentLanguage = 'pl';

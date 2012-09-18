@@ -18,7 +18,7 @@
  * At some time, you can "upgrade" the array to be a lazy queue by calling:
  *
  * LazyQueue().makeQueue(myQueue, function(item) {
- * 	alert(item);
+ *  alert(item);
  * });
  *
  * The function passed as second argument is a callback that will be
