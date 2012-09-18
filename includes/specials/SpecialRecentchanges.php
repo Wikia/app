@@ -197,6 +197,10 @@ class SpecialRecentChanges extends IncludableSpecialPage {
 			return;
 		}
 
+		// wikia change begin
+		// bugId: 47961 Owen -- this whole query is useless IMHO as the results are not used directly 
+		// It caches links as a side effect, but the links are already cached by other wikia changes
+		/*
 		if( !$feedFormat ) {
 			$batch = new LinkBatch;
 			foreach( $rows as $row ) {
@@ -206,6 +210,8 @@ class SpecialRecentChanges extends IncludableSpecialPage {
 			}
 			$batch->execute();
 		}
+		*/
+		// wikia change end
 		if( $feedFormat ) {
 			list( $changesFeed, $formatter ) = $this->getFeedObject( $feedFormat );
 			$changesFeed->execute( $formatter, $rows, $lastmod, $opts );
