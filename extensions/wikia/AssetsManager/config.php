@@ -55,15 +55,15 @@ $config['adengine2_js'] = array(
 	'assets' => array(
 		// core
 		'//extensions/wikia/AdEngine/js/LazyQueue.js',
+		'//extensions/wikia/AdEngine/js/ScriptWriter.js',
 		'//extensions/wikia/AdEngine/js/AdEngine2.js',
 
 		// high prio
-		'//extensions/wikia/AdEngine/js/ScriptWriter.js',
-		'//extensions/wikia/AdEngine/js/AdProviderLater.js',
-		'//extensions/wikia/AdEngine/js/AdProviderGamePro.js',
+		'//extensions/wikia/AdEngine/js/AdProviderAdDriver2.js',
 		'//extensions/wikia/AdEngine/js/AdProviderEvolve.js',
 		'//extensions/wikia/AdEngine/js/AdProviderEvolveRS.js',
-		'//extensions/wikia/AdEngine/js/AdProviderAdDriver2.js',
+		'//extensions/wikia/AdEngine/js/AdProviderGamePro.js',
+		'//extensions/wikia/AdEngine/js/AdProviderLater.js',
 		'//extensions/wikia/AdEngine/js/AdConfig2.js',
 		'//extensions/wikia/AdEngine/js/AdEngine2.run.js',
 
@@ -82,19 +82,20 @@ $config['oasis_ads_js'] = array(
 		'//extensions/wikia/AdEngine/AdProviderOpenX.js',
 		'//extensions/wikia/AdEngine/LazyLoadAds.js',
 
+		// adengine2 low prio
+		// @requires adengine2 core already loaded
+		// @requires liftium loaded later (TODO FIXME)
+		'//extensions/wikia/AdEngine/js/AdProviderAdDriver.js',
+		'//extensions/wikia/AdEngine/js/AdProviderLiftium2.js',
+		'//extensions/wikia/AdEngine/js/AdConfig2_later.js',
+		'//extensions/wikia/AdEngine/js/AdEngine2.run_later.js',
+
 		'#group_liftium_ads_js',
 
 		'//extensions/wikia/AdEngine/liftium/AdsInContent.js',
 
 		'//extensions/wikia/AdEngine/AdDriver.js',
 		'//extensions/wikia/AdEngine/AdDriverGP.js',
-
-		// adengine2 low prio
-		// (@requires adengine2 core already loaded)
-		'//extensions/wikia/AdEngine/js/AdProviderLiftium2.js',
-		'//extensions/wikia/AdEngine/js/AdProviderAdDriver.js',
-		'//extensions/wikia/AdEngine/js/AdConfig2_later.js',
-		'//extensions/wikia/AdEngine/js/AdEngine2.run_later.js',
 	),
 );
 
