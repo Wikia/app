@@ -17,9 +17,6 @@ class WikiaPollTest extends WikiaBaseTest {
 	}
 
 	public static function tearDownAfterClass() {
-		$title = Title::newFromText ("Unit Testing", NS_WIKIA_POLL) ;
-		$article = new Article($title, NS_WIKIA_POLL);
-
 		F::unsetInstance( 'User');
 		F::unsetInstance( 'WebRequest' );
 		F::unsetInstance( 'Title' );
@@ -30,18 +27,14 @@ class WikiaPollTest extends WikiaBaseTest {
 	/* These are all part of one giant test call because the $pollId variable is shared */
 
 	public function testWikiaPollAjax() {
-		$this->markTestSkipped('This test fails randomly'); // see BugId:47403
-
-//		global $wgUser, $wgTitle;
-
-		/* @var $poll WikiaPollAjax */
-		$poll = WF::build('WikiaPollAjax');
+		$poll = WF::build('WikiaPollAjax'); /* @var $poll WikiaPollAjax */
 
 		// Sometimes the tear down doesn't execute?  Delete any old data before running create...
 		$title = Title::newFromText ("Unit Testing", NS_WIKIA_POLL) ;
-		$article = new Article($title, NS_WIKIA_POLL);
-		if ($article->exists())
+		$article = new Article($title, NS_WIKIA_POLL); /* @var $article WikiPage */
+		if ($article->exists()) {
 			$article->doDelete("Unit Testing", true);
+		}
 
 		/* TODO: mock these objects more agressively
 		 * for now, just use a "real" title and article, as an integration test
@@ -145,9 +138,9 @@ class WikiaPollTest extends WikiaBaseTest {
 		$this->assertEquals(true, $result['hasVoted'], "HasVoted result is true");
 
 		// clean up
-		if ($article->exists())
+		if ($article->exists()) {
 			$article->doDelete("Unit Testing", true);
-
+		}
 	}
 
 	function testDuplicateCreate() {
@@ -173,7 +166,6 @@ class WikiaPollTest extends WikiaBaseTest {
 
 		// Create the same poll twice
 		$result = $poll->create();
-		$result = $poll->create();
 
 		$this->assertType("array", $result, "Create duplicate result is array");
 		$this->assertEquals(false, $result["success"], "Create duplicate Poll success flag is false");
@@ -181,10 +173,9 @@ class WikiaPollTest extends WikiaBaseTest {
 
 		// clean up
 		$title = Title::newFromText ("Unit Testing", NS_WIKIA_POLL) ;
-		$article = new Article($title, NS_WIKIA_POLL);
-		if ($article->exists())
+		$article = new Article($title, NS_WIKIA_POLL); /* @var $article WikiPage */
+		if ($article->exists()) {
 			$article->doDelete("Unit Testing", true);
-
+		}
 	}
-
 }
