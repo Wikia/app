@@ -143,10 +143,15 @@ class GameGuidesController extends WikiaController {
 		) );
 	}
 
-	public function renderPage(){
+	/**
+	 * Api entry point to get a page and globals that are relevant to the page
+	 */
+	public function getPage(){
 		//set mobile skin as this is based on it
-		$skin = Skin::newFromKey( 'wikiamobile' );
-		RequestContext::getMain()->setSkin( $skin );
+		RequestContext::getMain()->setSkin(
+			Skin::newFromKey( 'wikiamobile' )
+		);
+
 		$titleName = $this->getVal('title');
 
 		$params = array(
@@ -161,38 +166,62 @@ class GameGuidesController extends WikiaController {
 
 		$globals = $this->sendSelfRequest( 'getGlobals' );
 
-		$this->setVal( 'globals', $globals->getVal( 'globals' ) );
-		$this->setVal( 'messages', $globals->getVal( 'messages' ) );
-		$this->setVal( 'title', Title::newFromText( $titleName )->getText() );
-		$this->setVal( 'html', $html['parse']['text']['*'] );
+		$relatedPages = (!empty( $this->wg->EnableRelatedPagesExt ) &&
+		empty( $this->wg->MakeWikiWebsite ) &&
+		empty( $this->wg->EnableAnswers ) ) ? $this->app->sendRequest( 'RelatedPagesController', 'index', array(
+			'categories' => $this->wg->Title->getParentCategories()
+		) ) : null;
+
+		if ( !is_null( $relatedPages ) ) {
+			$this->response->setVal( 'relatedPages', $relatedPages->getVal( 'pages' ) );
+		}
+
+		$this->response->setVal( 'globals', $globals->getVal( 'globals' ) );
+		$this->response->setVal( 'messages', F::build( 'JSMessages' )->getPackages( array( 'GameGuides' ) ) );
+		$this->response->setVal( 'title', Title::newFromText( $titleName )->getText() );
+		$this->response->setVal( 'html', $html['parse']['text']['*'] );
 	}
 
+	/**
+	 * helper function to build a GameGuidesSpecial Preview
+	 * it returns a page and all 'global' assets
+	 */
 	public function renderFullPage(){
-		$resources = $this->sendRequest('AssetsManager', 'getMultiTypePackage', array(
+		$resources = $this->sendRequest( 'AssetsManager', 'getMultiTypePackage', array(
 			'scripts' => 'gameguides_js',
 			'styles' => '//extensions/wikia/GameGuides/css/GameGuides.scss'
-		));
+		) );
 
 		$js = $resources->getVal( 'scripts', '' );
 		$styles = $resources->getVal( 'styles', '' );
 
-		$this->setVal( 'js', $js[0] );
-		$this->setVal( 'css', $styles );
-		$this->setVal( 'html', $this->sendSelfRequest( 'renderPage', array(
+		$page = $this->sendSelfRequest( 'getPage', array(
 			'title' => $this->getVal( 'title')
-		) ) );
+		) );
+
+		$this->response->setVal( 'globals', $page->getVal( 'globals' ) );
+		$this->response->setVal( 'messages', $page->getVal( 'messages' ) );
+		$this->response->setVal( 'title', $page->getVal( 'title' ) );
+		$this->response->setVal( 'html', $page->getVal( 'html' ) );
+
+		$this->response->setVal( 'js', $js[0] );
+		$this->response->setVal( 'css', $styles );
+
 
 	}
 
-	public function page(){
-		$this->setVal( 'title', $this->getVal( 'title' ) );
-		$this->setVal( 'html', $this->getVal( 'html' ) );
-	}
-
+	/**
+	 * Simple API Call to get latest CB value
+	 *
+	 * @return Integer CB Value
+	 */
 	public function getCB(){
 		$this->setVal( 'cb', $this->wg->CacheBuster );
 	}
 
+	/**
+	 * function returns globals needed for an Article
+	 */
 	public function getGlobals(){
 		$wg = F::app()->wg;
 		$skin = Skin::newFromKey( 'wikiamobile' );
@@ -206,8 +235,7 @@ class GameGuidesController extends WikiaController {
 			array_flip( $wg->GameGuidesGlobalsWhiteList )
 		);
 
-		$this->setVal( 'globals', WikiaSkin::makeInlineVariablesScript( $vars ) /*. $skin->getTopScripts()*/);
-		$this->setVal( 'messages', F::build( 'JSMessages' )->getPackages( array( 'GameGuides' ) ));
+		$this->setVal( 'globals', WikiaSkin::makeInlineVariablesScript( $vars ) . $skin->getTopScripts() );
 	}
 }
 
