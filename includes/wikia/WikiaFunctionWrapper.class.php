@@ -22,6 +22,8 @@
  * @method SharedMemcKey
  * @method PaginateArray
  * @method debug
+ * @method ReadOnly
+ * @method Timestamp
  */
 class WikiaFunctionWrapper {
 
