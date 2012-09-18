@@ -1,4 +1,4 @@
-/*!
+/**
  * @test-framework QUnit
  * @test-require-asset extensions/wikia/AdEngine/js/AdProviderGamePro.js
  */
