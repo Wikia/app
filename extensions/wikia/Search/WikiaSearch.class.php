@@ -61,12 +61,9 @@ class WikiaSearch extends WikiaObject {
 	 */
 	protected $client = null;
 	protected $parserHookActive = false;
-	protected $namespaces = array();
-	protected $skipCache = false;
-	protected $includeRedirects = true;
 	protected $articleMatch = null;
 
-	public function __construct( WikiaSearchClient $client ) {
+	public function __construct( Solarium_Client $client ) {
 		$this->client = $client;
 		parent::__construct();
 	}
@@ -81,60 +78,29 @@ class WikiaSearch extends WikiaObject {
 	public function doSearch( $query, WikiaSearchConfig $searchConfig ) {
 		wfProfileIn(__METHOD__);
 
-		// generate query
-		
-		$methodParams['page'] = isset($methodParams['page']) ? $methodParams['page'] : 1; // query->setStart()
-		$methodParams['length'] = isset($methodParams['length']) ? $methodParams['length'] : null; // query->setRows()
-		$methodParams['cityId'] = isset($methodParams['cityId']) ? $methodParams['cityId'] : 0; // this->setCityId
-		$methodParams['groupResults'] = isset($methodParams['groupResults']) ? $methodParams['groupResults'] : false; // this->setGroupResults 
-		$methodParams['rank'] = isset($methodParams['rank']) ? $methodParams['rank'] : 'default'; // query->addSort()
-		$methodParams['hub'] = isset($methodParams['hub']) ? $methodParams['hub'] : false; // this->hub 
-		$methodParams['videoSearch'] = isset($methodParams['videoSearch']) ? $methodParams['videoSearch'] : false; // this->videoSearch
-		
-		extract($methodParams);
+		if($searchConfig->getGroupResults() == true) {
 
-		$length = !empty($length) ? $length : self::RESULTS_PER_PAGE;
-		$groupResults = ( empty($cityId) && $groupResults );
+			$searchConfig	->setLength		( self::GROUP_RESULTS_SEARCH_LIMIT )
+							->setIsInterWiki( true )
+							->setStart		( $searchConfig->getLength() * ($searchConfig->getPage() - 1) )
+			;
 
-		if($groupResults) {
-
-			$length = self::GROUP_RESULTS_SEARCH_LIMIT;
-
-			$methodOptions = array( 'rank'=>$rank,
-									'hub'=>$hub,
-									'size' => $length,
-									'cityId' =>  $cityId,
-									'isInterWiki' => true,
-									'start' => $length * ($page - 1),
-								  );
-			$results = $this->client->search( $query, $methodOptions );
+		} else {
+			$searchConfig	->setStart		( ($searchConfig->getPage() - 1) * $searchConfig->getLength() );
 		}
-		else {
-			// no grouping, e.g. intra-wiki searching
-			if($this->namespaces) {
-					$this->client->setNamespaces($this->namespaces);
-			} 
+		
+		$query = $this->client->createSelect();
+		$this->prepareQuery( $query, $searchConfig );
+		// @TODO register appropriate resultset class that works with our existing setup
+		$results = $this->client->select( $query );
+		
 
-			$methodOptions = array('start'  => (($page - 1) * $length), 
-					       'size' => $length, 
-					       'cityId' => $cityId, 
-					       'includeRedirects' => $this->includeRedirects,
-					       'rank' => $rank,
-						   'videoSearch' => $videoSearch,
-					       );
-			$results = $this->client->search( $query, $methodOptions);
-
-			if (!$this->namespaces) {
-				$this->namespaces = $this->client->getNamespaces();
-			}
-		}
-
-		if( $page == 1 ) {
+		if( $searchConfig->getPage() == 1 ) {
 			$resultCount = $results->getResultsFound();
 			Track::event( ( !empty( $resultCount ) ? 'search_start' : 'search_start_nomatch' ), 
 							array(	'sterm' => $query, 
 									'rver' => self::RELEVANCY_FUNCTION_ID,
-									'stype' => ( empty($cityId) ? 'inter' : 'intra' ) 
+									'stype' => ( $searchConfig->getCityId() == 0 ? 'inter' : 'intra' ) 
 								 ) 
 						);
 		}
@@ -142,10 +108,10 @@ class WikiaSearch extends WikiaObject {
 		wfProfileOut(__METHOD__);
 		return $results;
 	}
-
-
-	public function setClient( WikiaSearchClient $client ) {
-		$this->client = $client;
+	
+	private function prepareQuery( $query, WikiaSearchConfig $searchConfig )
+	{
+		
 	}
 
 	public function getPages( $pageIds, $withMetaData = true ) {
@@ -630,31 +596,6 @@ class WikiaSearch extends WikiaObject {
 
 		wfProfileOut(__METHOD__);
 		return null;
-	}
-
-
-	public function setNamespaces( Array $namespaces ) {
-		$this->namespaces = $namespaces;
-	}
-
-	public function getNamespaces() {
-		return $this->namespaces;
-	}
-
-	public function setSkipCache($value) {
-		$this->skipCache = (bool) $value;
-	}
-
-	public function getSkipCache() {
-		return $this->skipCache;
-	}
-
-	public function setIncludeRedirects($value) {
-		$this->includeRedirects = $value;
-	}
-
-	public function getIncludeRedirects() {
-		return $this->includeRedirects;
 	}
 
 	public static function onGetPreferences($user, &$defaultPreferences) {

@@ -18,7 +18,6 @@ Solarium_Autoloader::register();
  */
 $app->registerClass('WikiaSearch', $dir . 'WikiaSearch.class.php');
 $app->registerClass('WikiaSearchConfig', $dir . 'WikiaSearchConfig.class.php');
-$app->registerClass('WikiaSearchClient', $dir . 'WikiaSearchClient.class.php');
 $app->registerClass('WikiaSearchController', $dir . 'WikiaSearchController.class.php');
 $app->registerClass('WikiaSearchResult', $dir . 'WikiaSearchResult.class.php');
 $app->registerClass('WikiaSearchResultSet', $dir . 'WikiaSearchResultSet.class.php');
