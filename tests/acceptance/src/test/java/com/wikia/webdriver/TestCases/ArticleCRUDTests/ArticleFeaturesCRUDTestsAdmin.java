@@ -41,7 +41,7 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		edit.clickOnPreviewButton();
 		edit.verifyTheObjectOnThePreview("gallery");
 		WikiArticlePageObject article = edit.clickOnPublishButtonPreview();
-		article.VerifyTheObjectOnThePage("gallery");
+		article.verifyTheObjectOnThePage("gallery");
 		edit = article.Edit();
 		edit.deleteArticleContent();
 		article = edit.clickOnPublishButton();
@@ -74,7 +74,7 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		edit.clickOnPreviewButton();
 		edit.verifyTheObjectOnThePreview("slideshow");
 		WikiArticlePageObject article = edit.clickOnPublishButtonInPreviewMode();
-		article.VerifyTheObjectOnThePage("slideshow");
+		article.verifyTheObjectOnThePage("slideshow");
 		edit = article.Edit();
 		edit.deleteArticleContent();
 		article = edit.clickOnPublishButton();
@@ -107,7 +107,7 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		edit.clickOnPreviewButton();
 		edit.verifyTheObjectOnThePreview("slider");
 		WikiArticlePageObject article = edit.clickOnPublishButtonInPreviewMode();
-		article.VerifyTheObjectOnThePage("slider");
+		article.verifyTheObjectOnThePage("slider");
 		edit = article.Edit();
 		edit.deleteArticleContent();
 		article = edit.clickOnPublishButton();
@@ -141,7 +141,7 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		edit.clickOnPreviewButton();
 		edit.verifyTheVideoOnThePreview();
 		WikiArticlePageObject article = edit.clickOnPublishButtonInPreviewMode();
-		article.VerifyTheVideoOnThePage();
+		article.verifyTheVideoOnThePage();
 		edit = article.Edit();
 		edit.deleteArticleContent();
 		article = edit.clickOnPublishButton();
@@ -247,4 +247,89 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		article.verifyDeletedArticlePage(pageName);
 		CommonFunctions.logOut(Properties.userName2, driver);
 	}	
+	
+	@Test(groups={"ArticleFeaturesCRUDAdmin_001", "ArticleCRUDAdmin"}) 
+//	https://internal.wikia-inc.com/wiki/QA/Core_Features_and_Testing/Manual_Regression_Tests/Image_Serving	
+	// Test Case 007  Adding galleries to an article in edit mode
+	public void ArticleCRUDAdmin_008_ModifyGallery()
+	{
+		CommonFunctions.logOut(Properties.userName, driver);
+		CommonFunctions.logIn(Properties.userNameStaff, Properties.passwordStaff);
+		WikiBasePageObject wiki = new WikiBasePageObject(driver, Global.DOMAIN);
+		pageName = "QAarticle"+wiki.getTimeStamp();
+		wiki.openWikiPage();
+		WikiArticleEditMode edit = wiki.createNewArticle(pageName, 1);
+		edit.deleteArticleContent();
+		edit.clickOnVisualButton();
+		edit.clickOnAddObjectButton("Gallery");
+		edit.waitForObjectModalAndClickAddAphoto("Gallery");
+		edit.galleryCheckImageInputs(4);
+		edit.galleryClickOnSelectButton();
+		edit.gallerySetPositionGallery("Center");//error!!!
+		edit.gallerySetPhotoOrientation(2);
+		edit.galleryClickOnFinishButton();
+		edit.verifyObjectInEditMode("gallery");
+		edit.clickOnPreviewButton();
+		edit.verifyTheObjectOnThePreview("gallery");
+		WikiArticlePageObject article = edit.clickOnPublishButtonPreview();
+		article.verifyTheObjectOnThePage("gallery");
+		article.verifyGalleryPosion("center");
+		edit = article.Edit();
+		edit.clickModifyButtonGallery();
+		edit.waitForObjectModalAndClickAddAphoto("Gallery");
+		edit.galleryCheckImageInputs(8);
+		edit.galleryClickOnSelectButton();
+		edit.gallerySetPositionGallery("Right");
+		edit.gallerySetPhotoOrientation(3);
+		edit.galleryClickOnFinishButton();
+		edit.verifyObjectInEditMode("gallery");
+		article = edit.clickOnPublishButton();
+		article.verifyGalleryPosion("right");
+		article.deleteArticle();
+		article.openArticle(pageName);
+		article.verifyDeletedArticlePage(pageName);
+		CommonFunctions.logOut(Properties.userName2, driver);
+	}
+	
+	@Test(groups={"ArticleFeaturesCRUDAdmin_002", "ArticleCRUDAdmin"})
+//	https://internal.wikia-inc.com/wiki/QA/Core_Features_and_Testing/Manual_Regression_Tests/Image_Serving	
+	// Test Case 008 Adding slideshows to an article in edit mode
+	public void ArticleCRUDAdmin_009_ModifySlideshow()
+	{
+		CommonFunctions.logOut(Properties.userName, driver);
+		CommonFunctions.logIn(Properties.userNameStaff, Properties.passwordStaff);
+		WikiBasePageObject wiki = new WikiBasePageObject(driver, Global.DOMAIN);
+		pageName = "QAarticle"+wiki.getTimeStamp();
+		wiki.openWikiPage();
+		WikiArticleEditMode edit = wiki.createNewArticle(pageName, 1);
+		edit.deleteArticleContent();
+		edit.clickOnVisualButton();
+		edit.clickOnAddObjectButton("Slideshow");
+		edit.waitForObjectModalAndClickAddAphoto("GallerySlideshow");
+		edit.galleryCheckImageInputs(4);
+		edit.galleryClickOnSelectButton();
+		edit.gallerySetPositionSlideshow("Center");
+		edit.galleryClickOnFinishButton();
+		edit.verifyObjectInEditMode("slideshow");
+		edit.clickOnPreviewButton();
+		edit.verifyTheObjectOnThePreview("slideshow");
+		WikiArticlePageObject article = edit.clickOnPublishButtonInPreviewMode();
+		article.verifyTheObjectOnThePage("slideshow");
+		article.verifySlideshowPosition("center");
+		edit = article.Edit();
+		edit.clickModifyButtonSlideshow();
+		edit.waitForObjectModalAndClickAddAphoto("GallerySlideshow");
+		edit.galleryCheckImageInputs(8);
+		edit.galleryClickOnSelectButton();
+		edit.gallerySetPositionSlideshow("Right");
+		edit.galleryClickOnFinishButton();
+		edit.verifyObjectInEditMode("slideshow");
+		article = edit.clickOnPublishButton();
+		article.verifyTheObjectOnThePage("slideshow");
+		article.verifySlideshowPosition("right");
+		article.deleteArticle();
+		article.openArticle(pageName);
+		article.verifyDeletedArticlePage(pageName);
+		CommonFunctions.logOut(Properties.userNameStaff, driver);
+	}
 }
