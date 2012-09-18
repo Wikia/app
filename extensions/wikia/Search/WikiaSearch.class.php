@@ -10,6 +10,50 @@ class WikiaSearch extends WikiaObject {
 	const VIDEO_WIKI_ID = 298117;
 	const GROUP_RESULT_MAX_FETCHES = 30;
 	const RELEVANCY_FUNCTION_ID = 6;
+	
+	private static $languageFields  = array(
+			'title',
+	        'html',
+	        'wikititle',
+	        'first500',
+	        'beginningText',
+	        'headings',
+	        'redirect_titles',
+	        'categories',
+	);
+	
+	private static $dynamicUnstoredFields = array('headings', 'first500', 'beginningText');
+	
+	private static $multiValuedFields = array('categories', 'redirect_titles', 'headings');
+	
+	private static $requestedFields = array(
+			'id',
+	        'wikiarticles',
+	        'wikititle',
+	        'url',
+	        'wid',
+	        'canonical',
+	        'host',
+	        'ns',
+	        'indexed',
+	        'backlinks',
+	        'title',
+	        'score',
+	        'created',
+	        'views',
+	        'categories',
+	);
+
+	private $rankOptions = array(	
+			'default'			=>	array( 'score',		Solarium_Query_Select::SORT_DESC ),
+	        'newest'			=>	array( 'created',	Solarium_Query_Select::SORT_DESC ),
+	        'oldest'			=>	array( 'created',	Solarium_Query_Select::SORT_ASC  ),
+	        'recently-modified'	=>	array( 'touched',	Solarium_Query_Select::SORT_DESC ),
+	        'stable'			=>	array( 'touched',	Solarium_Query_Select::SORT_ASC  ),
+	        'most-viewed'		=>	array( 'views',		Solarium_Query_Select::SORT_DESC ),
+	        'freshest'			=>	array( 'indexed',	Solarium_Query_Select::SORT_DESC ),
+	        'stalest'			=>	array( 'indexed', 	Solarium_Query_Select::SORT_ASC  ),
+	);
 
 	/**
 	 * Search client
@@ -20,6 +64,7 @@ class WikiaSearch extends WikiaObject {
 	protected $namespaces = array();
 	protected $skipCache = false;
 	protected $includeRedirects = true;
+	protected $articleMatch = null;
 
 	public function __construct( WikiaSearchClient $client ) {
 		$this->client = $client;
@@ -33,16 +78,18 @@ class WikiaSearch extends WikiaObject {
 	 * @param array $methodParams
 	 * @return WikiaSearchResultSet
 	 */
-	public function doSearch( $query, array $methodParams = array() ) {
+	public function doSearch( $query, WikiaSearchConfig $searchConfig ) {
 		wfProfileIn(__METHOD__);
 
-		$methodParams['page'] = isset($methodParams['page']) ? $methodParams['page'] : 1;
-		$methodParams['length'] = isset($methodParams['length']) ? $methodParams['length'] : null;
-		$methodParams['cityId'] = isset($methodParams['cityId']) ? $methodParams['cityId'] : 0;
-		$methodParams['groupResults'] = isset($methodParams['groupResults']) ? $methodParams['groupResults'] : false;
-		$methodParams['rank'] = isset($methodParams['rank']) ? $methodParams['rank'] : 'default';
-		$methodParams['hub'] = isset($methodParams['hub']) ? $methodParams['hub'] : false;
-		$methodParams['videoSearch'] = isset($methodParams['videoSearch']) ? $methodParams['videoSearch'] : false;
+		// generate query
+		
+		$methodParams['page'] = isset($methodParams['page']) ? $methodParams['page'] : 1; // query->setStart()
+		$methodParams['length'] = isset($methodParams['length']) ? $methodParams['length'] : null; // query->setRows()
+		$methodParams['cityId'] = isset($methodParams['cityId']) ? $methodParams['cityId'] : 0; // this->setCityId
+		$methodParams['groupResults'] = isset($methodParams['groupResults']) ? $methodParams['groupResults'] : false; // this->setGroupResults 
+		$methodParams['rank'] = isset($methodParams['rank']) ? $methodParams['rank'] : 'default'; // query->addSort()
+		$methodParams['hub'] = isset($methodParams['hub']) ? $methodParams['hub'] : false; // this->hub 
+		$methodParams['videoSearch'] = isset($methodParams['videoSearch']) ? $methodParams['videoSearch'] : false; // this->videoSearch
 		
 		extract($methodParams);
 
@@ -550,8 +597,8 @@ class WikiaSearch extends WikiaObject {
 	public function getArticleMatch( $term ) {
 		wfProfileIn(__METHOD__);
 
-		if ($match = $this->client->getArticleMatch()) {
-			return $match;
+		if ($this->articleMatch !== null) {
+			return $this->articleMatch;
 		}
 
 		// Try to go to page as entered.
@@ -571,14 +618,14 @@ class WikiaSearch extends WikiaObject {
 				$target = $article->getRedirectTarget();
 				// apparently the target can be null
 				if ($target instanceOf Title) {
-					$this->client->setArticleMatch(array('article'=>new Article($target), 'redirect'=>$article));
+					$this->articleMatch = array('article'=>new Article($target), 'redirect'=>$article);
 				}
 			}
 			else {
-				$this->client->setArticleMatch(array('article'=>$article));
+				$this->articleMatch = array('article'=>$article);
 			}
 			wfProfileOut(__METHOD__);
-			return $this->client->getArticleMatch();
+			return $this->articleMatch;
 		}
 
 		wfProfileOut(__METHOD__);
@@ -641,15 +688,33 @@ class WikiaSearch extends WikiaObject {
 		wfProfileOut( __METHOD__ );
 		return true;
 	}
-
-    public static function highlightSearchResult($text, $word){
-        wfProfileIn( __METHOD__ );
-
-        $word = preg_quote($word);
-        $text = preg_replace("/\b($word)/i", '<b>\1</b>', $text);
-
-        wfProfileOut( __METHOD__ );
-        return $text;
+    
+    public static function valueForField ( $field, $value, array $params = array() )
+    {
+        $boostVal = isset($params['boost']) && $params['boost'] !== false ? '^'.$params['boost'] : '';
+    
+        $evaluate = isset($params['quote']) && $params['quote'] !== false ? "(%s:{$params['quote']}%s{$params['quote']})%s" : '(%s:%s)%s';
+    
+        return sprintf( $evaluate, self::field( $field ), $value, $boostVal );
+    }
+    
+    public static function field ( $field )
+    {
+        global $wgLanguageCode, $wgWikiaSearchSupportedLanguages;
+        $lang = preg_replace('/-.*/', '', $wgLanguageCode);
+        if ( in_array($field, self::$languageFields) &&
+                in_array($wgLanguageCode, $wgWikiaSearchSupportedLanguages) ) {
+    
+            $us = in_array($field, self::$dynamicUnstoredFields) ? '_us' : '';
+    
+            $mv = in_array($field, self::$multiValuedFields) ? '_mv' : '';
+    
+            $field .= $us . $mv . '_' . $lang;
+    
+        }
+    
+        return $field;
+    
     }
 
 }
