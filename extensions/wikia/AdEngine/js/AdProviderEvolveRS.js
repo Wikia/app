@@ -1,4 +1,4 @@
-var AdProviderEvolveRS = function(AdProviderCommon, WikiaTracker, log, window, document) {
+var AdProviderEvolveRS = function(ScriptWriter, WikiaTracker, log, window, document) {
 	function canHandleSlot(slot) {
 		var slotname = slot[0];
 
@@ -19,13 +19,13 @@ var AdProviderEvolveRS = function(AdProviderCommon, WikiaTracker, log, window, d
 		}, 'ga');
 
 		var url = 'http://cdn.triggertag.gorillanation.com/js/triggertag.js';
-		AdProviderCommon.injectScriptByUrl(
+		ScriptWriter.injectScriptByUrl(
 			slot[0], 'http://cdn.triggertag.gorillanation.com/js/triggertag.js',
 			function() {
 				log('(invisible triggertag) ghostwriter done', 5, 'AdProviderEvolveRS');
 				log([slot[0], url], 5, 'AdProviderEvolveRS');
 
-				AdProviderCommon.injectScriptByText(slot[0], getReskinAndSilverScript());
+				ScriptWriter.injectScriptByText(slot[0], getReskinAndSilverScript());
 			}
 		);
 	}

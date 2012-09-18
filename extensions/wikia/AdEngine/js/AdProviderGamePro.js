@@ -1,4 +1,4 @@
-var AdProviderGamePro = function(AdProviderCommon, WikiaTracker, log, window, document) {
+var AdProviderGamePro = function(ScriptWriter, WikiaTracker, log, window, document) {
 	var ord = Math.round(Math.random() * 23456787654);
 	var slotMap = {
 	   'HOME_TOP_LEADERBOARD': {'tile': 1, 'pos': "leadfull", 'dcopt': "ist"},
@@ -24,7 +24,7 @@ var AdProviderGamePro = function(AdProviderCommon, WikiaTracker, log, window, do
 		log(slot, 5, 'AdProviderGamePro');
 
 		WikiaTracker.trackAdEvent('liftium.slot2', {'ga_category':'slot2/' + slot[1], 'ga_action':slot[0], 'ga_label':'gamepro'}, 'ga');
-		AdProviderCommon.injectScriptByUrl(slot[0], getUrl(slot[0], slot[1]));
+		ScriptWriter.injectScriptByUrl(slot[0], getUrl(slot[0], slot[1]));
 	}
 
 	// adapted for GP + simplified copy of AdConfig.DART.getUrl

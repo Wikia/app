@@ -1,7 +1,7 @@
 (function(log, WikiaTracker, window, ghostwriter, document, Geo, LazyQueue) {
 	var adConfig
 		, adEngine
-		, adProviderCommon
+		, scriptWriter
 		, adProviderEvolve
 		, adProviderEvolveRS
 		, adProviderGamePro
@@ -10,10 +10,10 @@
 		, adSlotsQueue
 		, lazyQueue = LazyQueue();
 
-	adProviderCommon = AdProviderCommon(log, ghostwriter, document);
-	adProviderGamePro = AdProviderGamePro(adProviderCommon, WikiaTracker, log, window, document);
-	adProviderEvolve = AdProviderEvolve(adProviderCommon, WikiaTracker, log, window, document);
-	adProviderEvolveRS = AdProviderEvolveRS(adProviderCommon, WikiaTracker, log, window, document, Geo);
+	scriptWriter = ScriptWriter(log, ghostwriter, document);
+	adProviderGamePro = AdProviderGamePro(scriptWriter, WikiaTracker, log, window, document);
+	adProviderEvolve = AdProviderEvolve(scriptWriter, WikiaTracker, log, window, document);
+	adProviderEvolveRS = AdProviderEvolveRS(scriptWriter, WikiaTracker, log, window, document, Geo);
 	adProviderAdDriver2 = AdProviderAdDriver2(log, window);
 
 	window.adslots2_later = window.adslots2_later || [];
