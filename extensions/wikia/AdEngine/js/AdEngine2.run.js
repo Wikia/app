@@ -5,8 +5,7 @@
 		, adProviderEvolveRS
 		, adProviderGamePro
 		, adProviderAdDriver2
-		, adProviderAdDriver
-		, adProviderLiftium2
+		, adProviderLater
 		, adSlotsQueue
 		, lazyQueue = LazyQueue();
 
@@ -14,8 +13,9 @@
 	adProviderEvolve = AdProviderEvolve(WikiaTracker, log, window, ghostwriter, document);
 	adProviderEvolveRS = AdProviderEvolveRS(WikiaTracker, log, window, ghostwriter, document, Geo);
 	adProviderAdDriver2 = AdProviderAdDriver2(log, window);
-	adProviderAdDriver = AdProviderAdDriver(log, window);
-	adProviderLiftium2 = AdProviderLiftium2(WikiaTracker, log, window, ghostwriter, document);
+
+	window.adslots2_later = window.adslots2_later || [];
+	adProviderLater = AdProviderLater(log, window.adslots2_later);
 
 	adConfig = AdConfig2(
 		// regular dependencies:
@@ -26,16 +26,13 @@
 		adProviderEvolve,
 		adProviderEvolveRS,
 		adProviderAdDriver2,
-		adProviderAdDriver,
-		adProviderLiftium2
+		adProviderLater
 	);
 
 	adEngine = AdEngine2(adConfig, log, lazyQueue);
 
-	// Make sure the adslots2 is defined
+	log('work on window.adslots2 according to AdConfig2', 1, 'AdEngine2');
 	window.adslots2 = window.adslots2 || [];
-
-	// Show ads now :-)
 	adEngine.run(window.adslots2);
 
 	window.evolve_hop = function(slotname) {

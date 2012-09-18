@@ -53,19 +53,21 @@ $config['liftium_ads_js'] = array(
 $config['adengine2_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
-		'//extensions/wikia/AdEngine/AdConfig.js', // TODO refactor out
-		'#group_liftium_ads_js', // TODO refactor out
+		// core
+		'//extensions/wikia/AdEngine/js/LazyQueue.js',
+		'//extensions/wikia/AdEngine/js/AdEngine2.js',
 
+		// high prio
+		'//extensions/wikia/AdEngine/js/AdProviderLater.js',
 		'//extensions/wikia/AdEngine/js/AdProviderGamePro.js',
-		'//extensions/wikia/AdEngine/js/AdProviderLiftium2.js',
 		'//extensions/wikia/AdEngine/js/AdProviderEvolve.js',
 		'//extensions/wikia/AdEngine/js/AdProviderEvolveRS.js',
 		'//extensions/wikia/AdEngine/js/AdProviderAdDriver2.js',
-		'//extensions/wikia/AdEngine/js/AdProviderAdDriver.js',
 		'//extensions/wikia/AdEngine/js/AdConfig2.js',
-		'//extensions/wikia/AdEngine/js/LazyQueue.js',
-		'//extensions/wikia/AdEngine/js/AdEngine2.js',
 		'//extensions/wikia/AdEngine/js/AdEngine2.run.js',
+
+		// low prio
+		// not here! @see adengine2 low prio section someplace else
 	),
 );
 
@@ -74,18 +76,25 @@ $config['oasis_ads_js'] = array(
     'assets' => array(
 		// ads
 		'//extensions/wikia/AdEngine/AdMeldAPIClient.js',
-		//'//extensions/wikia/AdEngine/AdConfig.js', TODO refactor back here
+		'//extensions/wikia/AdEngine/AdConfig.js',
 		'//extensions/wikia/AdEngine/AdEngine.js',
 		'//extensions/wikia/AdEngine/AdProviderOpenX.js',
 		'//extensions/wikia/AdEngine/LazyLoadAds.js',
 
-		//'#group_liftium_ads_js', TODO refactor back here
+		'#group_liftium_ads_js',
 
 		'//extensions/wikia/AdEngine/liftium/AdsInContent.js',
 
 		'//extensions/wikia/AdEngine/AdDriver.js',
 		'//extensions/wikia/AdEngine/AdDriverGP.js',
-    ),
+
+		// adengine2 low prio
+		// (@requires adengine2 core already loaded)
+		'//extensions/wikia/AdEngine/js/AdProviderLiftium2.js',
+		'//extensions/wikia/AdEngine/js/AdProviderAdDriver.js',
+		'//extensions/wikia/AdEngine/js/AdConfig2_later.js',
+		'//extensions/wikia/AdEngine/js/AdEngine2.run_later.js',
+	),
 );
 
 $config['oasis_noads_extensions_js'] = array(
