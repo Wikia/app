@@ -1,3 +1,10 @@
+<?
+/**
+ * @var $globals String
+ * @var $messages String
+ * @var $title String
+ */
+?>
 <?= $globals; ?>
 <script>
 	wgMessages = <?= json_encode( $messages ); ?>;
