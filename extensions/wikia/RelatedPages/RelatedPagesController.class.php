@@ -9,9 +9,15 @@ class RelatedPagesController extends WikiaController {
 	}
 
 	public function executeIndex() {
-		global $wgOut, $wgTitle, $wgArticle, $wgContentNamespaces, $wgRequest, $wgMemc, $wgRelatedPagesAddAfterSection;
+		global $wgTitle, $wgContentNamespaces, $wgRequest, $wgMemc, $wgRelatedPagesAddAfterSection;
 
 		$relatedPages = RelatedPages::getInstance();
+
+		$categories = $this->request->getVal( 'categories' );
+
+		if( !is_null( $categories ) ) {
+			$relatedPages->setCategories( $categories );
+		}
 
 		// check for mainpage
 		if( Wikia::isMainPage() ) {
@@ -63,6 +69,20 @@ class RelatedPagesController extends WikiaController {
 		}
 	}
 
+	/**
+	 * @param $article Article
+	 * @param $user User
+	 * @param $text
+	 * @param $summary
+	 * @param $minoredit
+	 * @param $watchthis
+	 * @param $sectionanchor
+	 * @param $flags
+	 * @param $revision
+	 * @param $status
+	 * @param $baseRevId
+	 * @return bool
+	 */
 	static function onArticleSaveComplete(&$article, &$user, $text, $summary,
 		$minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
 		global $wgMemc;
