@@ -3,8 +3,6 @@
  * @test-require-asset extensions/wikia/AdEngine/js/AdProviderEvolve.js
  */
 
-// TODO: mock window
-
 module('AdProviderEvolve');
 
 // dart has problems with sending back scripts based on key-val %p
@@ -15,11 +13,12 @@ test('sanitizeSlotname', function() {
 	var wikiaTrackerMock
 		, logMock = function() {}
 		, scriptWriterMock
+		, windowMock = {wgInsideUnitTest: true}
 		, documentMock
 		, adProviderEvolve;
 
 	adProviderEvolve = AdProviderEvolve(
-		scriptWriterMock, wikiaTrackerMock, logMock, window, documentMock
+		scriptWriterMock, wikiaTrackerMock, logMock, windowMock, documentMock
 	);
 
     equal(adProviderEvolve.sanitizeSlotname('foo'), '', 'foo');
@@ -31,16 +30,17 @@ test('getUrl', function() {
 	var wikiaTrackerMock
 		, logMock = function() {}
 		, scriptWriterMock
+		, windowMock = {wgInsideUnitTest: true}
 		, documentMock
 		, adProviderEvolve;
 
 	adProviderEvolve = AdProviderEvolve(
-		scriptWriterMock, wikiaTrackerMock, logMock, window, documentMock
+		scriptWriterMock, wikiaTrackerMock, logMock, windowMock, documentMock
 	);
 
-	window.wgDBname = null;
-	window.wgWikiFactoryTagNames = null;
-	window.cscoreCat = null;
+	windowMock.wgDBname = null;
+	windowMock.wgWikiFactoryTagNames = null;
+	windowMock.cscoreCat = null;
 
 	var expected = 'http://n4403ad.doubleclick.net/adj/gn.wikia4.com/ros;sect=ros;mtfInline=true;pos=TOP_LEADERBOARD;sz=728x90;dcopt=ist;type=pop;type=int;tile=1;ord=1234567890?';
 	expected = expected.replace(/;ord=[0-9]+\?$/, ''); // ord is random cb
@@ -55,26 +55,27 @@ test('getSect', function() {
 	var wikiaTrackerMock
 		, logMock = function() {}
 		, scriptWriterMock
+		, windowMock = {wgInsideUnitTest: true}
 		, documentMock
 		, adProviderEvolve;
 
 	adProviderEvolve = AdProviderEvolve(
-		scriptWriterMock, wikiaTrackerMock, logMock, window, documentMock
+		scriptWriterMock, wikiaTrackerMock, logMock, windowMock, documentMock
 	);
 
-	window.wgDBname = null;
-	window.wgWikiFactoryTagNames = null;
-	window.cscoreCat = null;
+	windowMock.wgDBname = null;
+	windowMock.wgWikiFactoryTagNames = null;
+	windowMock.cscoreCat = null;
 
 	equal(adProviderEvolve.getSect(), 'ros', 'ros');
 
-	window.wgWikiFactoryTagNames = ['tv'];
-	window.cscoreCat = 'Entertainment';
+	windowMock.wgWikiFactoryTagNames = ['tv'];
+	windowMock.cscoreCat = 'Entertainment';
 
 	equal(adProviderEvolve.getSect(), 'tv', 'tv entertainment');
 
-	window.wgWikiFactoryTagNames = ['foo'];
-	window.cscoreCat = 'Entertainment';
+	windowMock.wgWikiFactoryTagNames = ['foo'];
+	windowMock.cscoreCat = 'Entertainment';
 
 	equal(adProviderEvolve.getSect(), 'entertainment', 'foo entertainment');
 });
