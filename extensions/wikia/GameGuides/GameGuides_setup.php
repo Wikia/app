@@ -39,7 +39,11 @@ $wgGroupPermissions['sysop']['gameguidespreview'] = true;
 if ( empty( $app->wg->GameGuidesGlobalsWhiteList ) ) {
 $app->wg->set( 'wgGameGuidesGlobalsWhiteList',
 	array(
+		'wgNamespaceNumber',
+		'wgCityId',
+		'wgPageName',
 		'wgArticleId',
+		'wgArticlePath',
 		'wgTitle',
 		'wgServer',
 		'wgScriptPath',
