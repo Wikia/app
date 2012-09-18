@@ -104,7 +104,8 @@ yui-overlay, .yui-panel-container {
 	#ImageUpload,
 	#VideoEmbed {
 		@include box-shadow(0, 10px, 60px, mix($color-page, #000));
-		border: 5px solid transparentize($color-buttons, 0.7);
+		border: 5px solid $color-buttons; 
+		border-color: transparentize($color-buttons, 0.7); // for browser that do support RGBa
 		padding: 35px 5px 5px 5px !important;
 		position: absolute;
 		width: auto !important;
