@@ -16,6 +16,10 @@
  * moved to separate EditPage and HTMLFileCache classes.
  *
  * @internal documentation reviewed 15 Mar 2010
+ *
+ * //Wikia Change Start - helping PHP lint
+ * @property Title mTitle
+ * //Wikia Change End
  */
 class Article extends Page {
 	/**@{{
