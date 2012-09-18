@@ -326,13 +326,31 @@ public class WikiArticleEditMode extends WikiArticlePageObject {
 	 * 	 */
 	public void clickModifyButtonOfImage(String caption) 
 	{
+		waitForElementByElement(iFrame);
 		mouseOverInArticleIframe("img");
 		waitForElementByElement(modifyButton);
 		jQueryClick("span.RTEMediaOverlayEdit");
 		PageObjectLogging.log("ClickModifyButtonOfImage", "Click on 'modify button' of image with caption: '"+caption+"'", true, driver);
-
-		
 	}
+	
+	public void clickModifyButtonGallery()
+	{
+		waitForElementByElement(iFrame);
+		mouseOverInArticleIframe("img.image-gallery");
+		waitForElementByElement(modifyButton);
+		jQueryClick("span.RTEMediaOverlayEdit");
+		PageObjectLogging.log("clickModifyButtonGallery", "Click on 'modify button' on gallery", true, driver);
+	}
+	
+	public void clickModifyButtonSlideshow() 
+	{
+		waitForElementByElement(iFrame);
+		mouseOverInArticleIframe("img.image-slideshow");
+		waitForElementByElement(modifyButton);
+		jQueryClick("span.RTEMediaOverlayEdit");
+		PageObjectLogging.log("clickModifyButtonSlideshow", "Click on 'modify button' on slideshow", true, driver);
+	}
+
 
 	/**
 	 * Click on 'remove button' of image with given caption
@@ -346,7 +364,14 @@ public class WikiArticleEditMode extends WikiArticlePageObject {
 		waitForElementByElement(removeButton);
 		jQueryClick("span.RTEMediaOverlayDelete");
 		PageObjectLogging.log("ClickRemoveButtonOfImage", "Click on 'remove button' of image with caption: '"+caption+"'", true, driver);
-		
+	}
+	
+	public void clickRemoveButtonGallery() {
+		waitForElementByElement(iFrame);
+		mouseOverInArticleIframe("img.image-gallery");
+		waitForElementByElement(removeButton);
+		jQueryClick("span.RTEMediaOverlayDelete");
+		PageObjectLogging.log("ClickRemoveButtonOfImage", "Click on 'remove button' on gallery", true, driver);
 	}
 
 	/**
@@ -684,6 +709,7 @@ public class WikiArticleEditMode extends WikiArticlePageObject {
 		}
 		PageObjectLogging.log("deleteUnwantedVideoFromMessage", "Delete all source code on the article", true, driver);
 	}
+
 	
 	
 
