@@ -131,7 +131,7 @@ window.WikiaTracker = (function(){
 
 			// uncomment the next line later when GA is re-implemented
 			//WikiaTracker.track(null, 'main.sampled', gaqArgs);
-			window.gaTrackEvent(ga_category, ga_action, ga_label, ga_value, true);
+			if(window.gaTrackEvent) gaTrackEvent(ga_category, ga_action, ga_label, ga_value, true);
 		}
 
 		//delay at the end to make sure all of the above was at least invoked
