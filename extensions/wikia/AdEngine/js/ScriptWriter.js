@@ -13,7 +13,7 @@ var ScriptWriter = function(log, ghostwriter, document) {
 				insertType: 'append',
 				script: { src: url },
 				done: function() {
-					log('injectScriptByUrl: injected ' + url + ' to slot: ' + elementId, 5, module);
+					log('DONE injectScriptByUrl: (' + url + ' to slot: ' + elementId + ')', 5, module);
 					ghostwriter.flushloadhandlers();
 					if (typeof(callback) === 'function') {
 						callback();
@@ -31,7 +31,7 @@ var ScriptWriter = function(log, ghostwriter, document) {
 				insertType: 'append',
 				script: { text: text },
 				done: function() {
-					log('injectScriptByText: injected script ' + text.substr(0, 20) + '... to slot: ' + elementId, 5, module);
+					log('DONE injectScriptByText: (' + text.substr(0, 20) + '... to slot: ' + elementId + ')', 5, module);
 					ghostwriter.flushloadhandlers();
 					if (typeof(callback) === 'function') {
 						callback();
