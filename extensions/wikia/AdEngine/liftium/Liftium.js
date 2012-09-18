@@ -1300,8 +1300,17 @@ Liftium.init = function (callback) {
 		return false;
 	}
 
+	// TODO remove! an ugly hack for AdDriver transparency
+	var callback2 = function() {
+		if (typeof callback === 'function') callback();
+		if (window.AdEngine_run_later) {
+			Liftium.d("AdEngine_run_later", 1);
+			window.AdEngine_run_later();
+		}
+	}
+
 	Liftium.pullGeo();
-	Liftium.pullConfig(callback);
+	Liftium.pullConfig(callback2);
 	
 	Liftium.addEventListener(window, "load", Liftium.onLoadHandler);
 

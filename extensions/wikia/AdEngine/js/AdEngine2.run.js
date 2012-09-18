@@ -41,4 +41,9 @@
 		adProviderEvolve.hop(slotname);
 	};
 
+	// TODO this is the right approach but it does compete with AdDriver
+	/*// TODO refactor to AdEngine2Controller?
+	window.LiftiumOptions = window.LiftiumOptions || {};
+	window.LiftiumOptions.autoInit = false;*/
+
 }(Wikia.log, WikiaTracker, window, ghostwriter, document, Geo, LazyQueue));
