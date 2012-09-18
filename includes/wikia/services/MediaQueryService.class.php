@@ -7,6 +7,10 @@ class MediaQueryService extends Service {
 	const MEDIA_TYPE_VIDEO = 'video';
 	const MEDIA_TYPE_IMAGE = 'image';
 
+	public function __construct() {
+		$this->app = F::app();
+	}
+
 	/**
 	 * Get list of images which:
 	 *  - are used on pages (in content namespaces) matching given query
@@ -103,10 +107,6 @@ class MediaQueryService extends Service {
 		}
 
 		return $results;
-	}
-
-	public function __construct() {
-		$this->app = F::app();
 	}
 
 	protected function getArticleMediaMemcKey(Title $title) {
@@ -233,7 +233,7 @@ class MediaQueryService extends Service {
 		return $images;
 	}
 
-	/*
+	/**
 	 * adaptor for getRecentlyUploaded to format as mediaTable
 	 */
 	public static function getRecentlyUploadedAsMediaTable($limit) {
@@ -379,7 +379,9 @@ class MediaQueryService extends Service {
 		return $totalVideos;
 	}
 
-	//get memcache key for total premium videos
+	/**
+	 * Get memcache key for total premium videos
+	 */
 	protected function getMemKeyTotalPremiumVideos() {
 		return $this->app->wf->MemcKey( 'videos', 'total_premium_videos', 'v3' );
 	}
