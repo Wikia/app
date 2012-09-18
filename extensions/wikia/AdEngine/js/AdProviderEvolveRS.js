@@ -1,4 +1,4 @@
-window.AdProviderEvolveRS = function(WikiaTracker, log, window, ghostwriter, document) {
+var AdProviderEvolveRS = function(AdProviderCommon, WikiaTracker, log, window, document) {
 	function canHandleSlot(slot) {
 		var slotname = slot[0];
 
@@ -19,31 +19,15 @@ window.AdProviderEvolveRS = function(WikiaTracker, log, window, ghostwriter, doc
 		}, 'ga');
 
 		var url = 'http://cdn.triggertag.gorillanation.com/js/triggertag.js';
-		ghostwriter(document.getElementById(slot[0]), {
-			insertType : "append",
-			script : {
-				src : url
-			},
-			done : function() {
+		AdProviderCommon.injectScriptByUrl(
+			slot[0], 'http://cdn.triggertag.gorillanation.com/js/triggertag.js',
+			function() {
 				log('(invisible triggertag) ghostwriter done', 5, 'AdProviderEvolveRS');
 				log([slot[0], url], 5, 'AdProviderEvolveRS');
-				ghostwriter.flushloadhandlers();
 
-				var script = getReskinAndSilverScript();
-				ghostwriter(document.getElementById(slot[0]), {
-					insertType : "append",
-					script : {
-						text : script
-					},
-					done : function() {
-						log('(invisible reskin/silver) ghostwriter done', 5, 'AdProviderEvolveRS');
-						log([slot[0], script], 5, 'AdProviderEvolveRS');
-						ghostwriter.flushloadhandlers();
-					}
-				});
-
+				AdProviderCommon.injectScriptByText(slot[0], getReskinAndSilverScript());
 			}
-		});
+		);
 	}
 
 	function getReskinAndSilverScript() {

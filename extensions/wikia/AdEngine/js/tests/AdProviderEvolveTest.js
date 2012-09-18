@@ -1,7 +1,9 @@
-/*!
+/**
  * @test-framework QUnit
  * @test-require-asset extensions/wikia/AdEngine/js/AdProviderEvolve.js
  */
+
+// TODO: mock window
 
 module('AdProviderEvolve');
 
@@ -12,12 +14,12 @@ module('AdProviderEvolve');
 test('sanitizeSlotname', function() {
 	var wikiaTrackerMock
 		, logMock = function() {}
-		, ghostwriterMock
+		, adProviderCommonMock
 		, documentMock
 		, adProviderEvolve;
 
 	adProviderEvolve = AdProviderEvolve(
-		wikiaTrackerMock, logMock, window, ghostwriterMock, documentMock
+		adProviderCommonMock, wikiaTrackerMock, logMock, window, documentMock
 	);
 
     equal(adProviderEvolve.sanitizeSlotname('foo'), '', 'foo');
@@ -28,15 +30,14 @@ test('sanitizeSlotname', function() {
 test('getUrl', function() {
 	var wikiaTrackerMock
 		, logMock = function() {}
-		, ghostwriterMock
+		, adProviderCommonMock
 		, documentMock
 		, adProviderEvolve;
 
 	adProviderEvolve = AdProviderEvolve(
-		wikiaTrackerMock, logMock, window, ghostwriterMock, documentMock
+		adProviderCommonMock, wikiaTrackerMock, logMock, window, documentMock
 	);
 
-	// setup
 	window.wgDBname = null;
 	window.wgWikiFactoryTagNames = null;
 	window.cscoreCat = null;
@@ -51,15 +52,14 @@ test('getUrl', function() {
 });
 
 test('getSect', function() {
-	// setup
 	var wikiaTrackerMock
 		, logMock = function() {}
-		, ghostwriterMock
+		, adProviderCommonMock
 		, documentMock
 		, adProviderEvolve;
 
 	adProviderEvolve = AdProviderEvolve(
-		wikiaTrackerMock, logMock, window, ghostwriterMock, documentMock
+		adProviderCommonMock, wikiaTrackerMock, logMock, window, documentMock
 	);
 
 	window.wgDBname = null;
@@ -80,15 +80,14 @@ test('getSect', function() {
 });
 
 test('Evolve canHandleSlot AU', function() {
-	// setup
 	var wikiaTrackerMock
 		, logMock = function() {}
-		, ghostwriterMock
+		, adProviderCommonMock
 		, documentMock
 		, adProviderEvolve;
 
 	adProviderEvolve = AdProviderEvolve(
-		wikiaTrackerMock, logMock, window, ghostwriterMock, documentMock
+		adProviderCommonMock, wikiaTrackerMock, logMock, window, documentMock
 	);
 
 	equal(adProviderEvolve.canHandleSlot(['TOP_LEADERBOARD']), true, 'TOP_LEADERBOARD');
