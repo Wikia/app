@@ -62,9 +62,12 @@ class EditPageLayoutHelper {
 		*/
 		$this->out->addModules('wikia.yui');
 
-		// Disable custom JS while loading the edit page on MediaWiki JS pages (BugID: 41449)
-		if ( $editedArticle->getTitle()->getNamespace() === NS_MEDIAWIKI
-			&& substr( $editedArticle->getTitle()->getText(), -3 ) === '.js' ) {
+		// Disable custom JS while loading the edit page on MediaWiki JS pages and user subpages (BugID: 41449)
+		if ( ( $editedArticle->getTitle()->getNamespace() === NS_MEDIAWIKI
+			&& substr( $editedArticle->getTitle()->getText(), -3 ) === '.js' )
+			|| ( $editedArticle->getTitle()->getNamespace() === NS_USER
+			&& preg_match( '/^' . preg_quote( $user->getName(), '/' ) . '\/.*\.js$/', $editedArticle->getTitle()->getText() ) )
+		) {
 			$this->out->disallowUserJs();
 		}
 
