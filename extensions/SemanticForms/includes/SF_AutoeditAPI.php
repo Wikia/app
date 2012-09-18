@@ -206,7 +206,7 @@ END;
 	 * Returns usage examples for this module.
 	 * @return mixed string or array of strings
 	 */
-	protected function getExamples() {
+	public function getExamples() {
 		return array(
 			'With query parameter:    api.php?action=sfautoedit&form=form-name&target=page-name&query=template-name[field-name-1]=field-value-1%26template-name[field-name-2]=field-value-2',
 			'Without query parameter: api.php?action=sfautoedit&form=form-name&target=page-name&template-name[field-name-1]=field-value-1&template-name[field-name-2]=field-value-2'
