@@ -121,6 +121,8 @@ window.AdProviderEvolve = function (WikiaTracker, log, window, ghostwriter, docu
 		var out = re.exec(slotname);
 		log(out, 8, 'AdProviderEvolve');
 
+		if (out) out = out[0];
+
 		if (typeof slotMap[out] == 'undefined') {
 			log('error, unknown slotname', 1, 'AdProviderEvolve');
 			out = '';

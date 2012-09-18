@@ -7,8 +7,7 @@ var AdConfig2 = function (
 	AdProviderEvolve,
 	AdProviderEvolveRS,
 	AdProviderAdDriver2,
-	AdProviderAdDriver,
-	AdProviderLiftium2
+	AdProviderLater
 ) {
 	'use strict';
 
@@ -73,7 +72,6 @@ var AdConfig2 = function (
 		log('getProvider', 5, 'AdConfig2');
 		log(slot, 5, 'AdConfig2');
 
-		// To be removed later:
 		if (slot[2] === 'GamePro') {
 			return AdProviderGamePro;
 		}
@@ -84,7 +82,7 @@ var AdConfig2 = function (
 			return AdProviderAdDriver2;
 		}
 		if (slot[2] === 'Liftium2') {
-			return AdProviderLiftium2;
+			return AdProviderLater;
 		}
 
 		// First ask GamePro
@@ -111,10 +109,7 @@ var AdConfig2 = function (
 			return AdProviderAdDriver2;
 		}
 
-		// Now Liftium
-
-		// TODO: should be AdProviderLiftium2 eventually
-		return AdProviderAdDriver;
+		return AdProviderLater;
 	};
 
 	return {

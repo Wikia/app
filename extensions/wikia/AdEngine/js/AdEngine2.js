@@ -12,7 +12,6 @@ var AdEngine2 = function(AdConfig2, log, LazyQueue) {
 		var provider = AdConfig2.getProvider(slot);
 		log('calling ' + provider.name + ' for ' + slot[0], 3, MODULE);
 
-		slot[2] = provider.name;
 		provider.fillInSlot(slot);
 	};
 
