@@ -1,7 +1,7 @@
-var AdProviderCommon = function(log, ghostwriter, document) {
+var ScriptWriter = function(log, ghostwriter, document) {
 	'use strict';
 
-	var module = 'AdProviderCommon'
+	var module = 'ScriptWriter'
 		, injectScriptByUrl
 		, injectScriptByText;
 

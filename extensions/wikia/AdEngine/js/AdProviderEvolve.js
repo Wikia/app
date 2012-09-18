@@ -1,4 +1,4 @@
-var AdProviderEvolve = function (AdProviderCommon, WikiaTracker, log, window, document) {
+var AdProviderEvolve = function (ScriptWriter, WikiaTracker, log, window, document) {
 	var slotMap = {
 		'HOME_TOP_LEADERBOARD':{'tile':1, 'size':'728x90', 'dcopt':'ist'},
 		'HOME_TOP_RIGHT_BOXAD':{'tile':2, 'size':'300x250,300x600'},
@@ -31,7 +31,7 @@ var AdProviderEvolve = function (AdProviderCommon, WikiaTracker, log, window, do
 		slotTimer2[slot[0]] = new Date().getTime();
 		log('slotTimer2 start for ' + slot[0], 7, 'AdProviderEvolve');
 
-		AdProviderCommon.injectScriptByUrl(slot[0], getUrl(slot[0], slot[1]));
+		ScriptWriter.injectScriptByUrl(slot[0], getUrl(slot[0], slot[1]));
 	}
 
 	var ord = Math.round(Math.random() * 23456787654);

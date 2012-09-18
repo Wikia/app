@@ -8,7 +8,7 @@ module('AdProviderEvolveRS');
 test('canHandleSlot EvolveRS', function() {
 	// setup
 	var wikiaTrackerMock
-		, adProviderCommonMock
+		, scriptWriterMock
 		, logMock = function() {}
 		, windowMock
 		, ghostwriterMock
@@ -16,7 +16,7 @@ test('canHandleSlot EvolveRS', function() {
 		, adProviderEvolveRS;
 
 	adProviderEvolveRS = AdProviderEvolveRS(
-		adProviderCommonMock, wikiaTrackerMock, logMock, windowMock, documentMock
+		scriptWriterMock, wikiaTrackerMock, logMock, windowMock, documentMock
 	);
 
 	equal(adProviderEvolveRS.canHandleSlot(['INVISIBLE_1']), true, 'INVISIBLE_1');
