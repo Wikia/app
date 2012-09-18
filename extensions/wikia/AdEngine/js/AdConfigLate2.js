@@ -1,6 +1,6 @@
-var AdConfig2_later = function (
+var AdConfigLate2 = function (
 	// regular dependencies
-	log, window,
+	log,
 
 	// AdProviders
 	AdProviderAdDriver,
@@ -8,13 +8,14 @@ var AdConfig2_later = function (
 ) {
 	'use strict';
 
-	var getProvider;
+	var module = 'AdConfigLate2'
+		, getProvider;
 
 	getProvider = function(slot) {
 		var slotname = slot[0];
 
-		log('getProvider', 5, 'AdConfig2');
-		log(slot, 5, 'AdConfig2');
+		log('getProvider', 5, module);
+		log(slot, 5, module);
 
 		if (slot[2] === 'Liftium2') {
 			return AdProviderLiftium2;
