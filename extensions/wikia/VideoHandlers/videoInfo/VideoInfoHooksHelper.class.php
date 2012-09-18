@@ -27,50 +27,11 @@ class VideoInfoHooksHelper {
 				$videoInfo->reuploadVideo();
 			} else {
 				$videoInfo->addVideo();
-			}
 
-			if ( !$reupload ) {
 				$mediaService = F::build( 'MediaQueryService' );
 				$mediaService->clearCacheTotalVideos();
 				if ( !$file->isLocal() ) {
 					$mediaService->clearCacheTotalPremiumVideos();
-				}
-			}
-		}
-
-		return true;
-	}
-
-	/**
-	 * Hook: clear cache for premium videos
-	 * @param type $article
-	 * @param type $user
-	 * @param type $revision
-	 * @param type $status
-	 * @return true 
-	 */
-	public static function onArticleSaveComplete( $article, $user, $revision, $status ) {
-		if ( !F::build( 'VideoInfoHelper', array(), 'videoInfoExists' ) ) {
-			return true;
-		}
-
-		$insertedImages = Wikia::getVar( 'imageInserts' );
-		$imageDeletes = Wikia::getVar( 'imageDeletes' );
-
-		$changedImages = $imageDeletes;
-		foreach( $insertedImages as $img ) {
-			$changedImages[ $img['il_to'] ] = true;
-		}
-
-		foreach( $changedImages as $imageDBName => $dummy ) {
-			$title = F::build( 'Title', array( NS_FILE, $imageDBName ), 'makeTitle' );
-			if ( $title instanceof Title ) {
-				$file = wfFindFile( $title );
-				if ( $file instanceof File && $file->exists() && !$file->isLocal()
-					&& F::build( 'WikiaFileHelper', array( $file ), 'isFileTypeVideo' ) ) {
-					$mediaService = F::build( 'MediaQueryService' );
-					$mediaService->clearCacheTotalVideos();
-					break;
 				}
 			}
 		}

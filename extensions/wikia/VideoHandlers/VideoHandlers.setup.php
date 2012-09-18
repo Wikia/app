@@ -108,7 +108,6 @@ $app->registerHook( 'File::checkExtensionCompatibilityResult', 'VideoHandlerHook
 //$app->registerHook( 'SkinTemplateNavigation', 'VideoHandlerHooks', 'onSkinTemplateNavigation' );
 
 $app->registerHook( 'FileUpload', 'VideoInfoHooksHelper', 'onFileUpload' );
-$app->registerHook( 'ArticleSaveComplete', 'VideoInfoHooksHelper', 'onArticleSaveComplete' );
 $app->registerHook( 'FileDeleteComplete', 'VideoInfoHooksHelper', 'onFileDeleteComplete' );
 $app->registerHook( 'FileUndeleteComplete', 'VideoInfoHooksHelper', 'onFileUndeleteComplete' );
 $app->registerHook( 'SpecialMovepageAfterMove', 'VideoInfoHooksHelper', 'onFileRenameComplete' );
