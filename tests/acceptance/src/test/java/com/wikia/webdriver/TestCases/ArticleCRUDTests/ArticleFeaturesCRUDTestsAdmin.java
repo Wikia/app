@@ -215,5 +215,36 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		article.verifyDeletedArticlePage(pageName);
 		CommonFunctions.logOut(Properties.userName2, driver);
 	}
-
+	
+	@Test(groups={"ArticleFeaturesCRUDAdmin_007", "ArticleCRUDAdmin"})
+//	https://internal.wikia-inc.com/wiki/QA/Core_Features_and_Testing/Manual_Regression_Tests/Image_Serving
+	// Test Case 005 Modifying images in an article in edit mode
+	public void ArticleCRUDAdmin_007_DeleteImage()
+	{
+		CommonFunctions.logOut(Properties.userName, driver);
+		CommonFunctions.logIn(Properties.userNameStaff, Properties.passwordStaff);
+		WikiBasePageObject wiki = new WikiBasePageObject(driver, Global.DOMAIN);
+		pageName = "QAarticle"+wiki.getTimeStamp();
+		wiki.openWikiPage();
+		WikiArticleEditMode edit = wiki.createNewArticle(pageName, 1);
+		edit.deleteArticleContent();
+		edit.clickOnVisualButton();
+		edit.clickOnAddObjectButton("Image");
+		edit.waitForModalAndClickAddThisPhoto();
+		edit.typePhotoCaption(Caption);
+		edit.clickOnAddPhotoButton2();
+		edit.verifyThatThePhotoAppears(Caption);
+		WikiArticlePageObject article = edit.clickOnPublishButton();
+		article.VerifyTheImageOnThePage();
+		edit = article.Edit();
+		edit.clickRemoveButtonOfImage(Caption);
+		edit.leftClickOkButton();
+		edit.verifyTheImageNotOnTheArticleEditMode();
+		article = edit.clickOnPublishButton();
+		article.VerifyTheImageNotOnThePage();
+		article.deleteArticle();
+		article.openArticle(pageName);
+		article.verifyDeletedArticlePage(pageName);
+		CommonFunctions.logOut(Properties.userName2, driver);
+	}	
 }

@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -205,7 +206,7 @@ public class BasePageObject{
 	public void jQueryClick(String cssSelector)
 	{
 		executeScript("$('"+cssSelector+"').click()");
-		executeScript("$('"+cssSelector+"').click()");
+//		executeScript("$('"+cssSelector+"').click()");
 	}
 	
 //	public void clickRobot(WebElement pageElem)
@@ -384,6 +385,10 @@ public class BasePageObject{
 		{
 			wait.until(ExpectedConditions.invisibilityOfElementLocated(by));								
 		}
+		catch(NoSuchElementException e)
+		{
+			PageObjectLogging.log("waitForElementNotVisibleByBy", "Element " + by.getClass() + " is not visible which is expected", true);
+		}
 		catch(Exception e)
 		{
 			PageObjectLogging.log("waitForElementNotVisibleByBy", e.toString(), false);			
@@ -549,6 +554,7 @@ public class BasePageObject{
 		waitForElementByCss("div.toolbar ul.tools li.overflow");
 		waitForElementByCss("div.toolbar ul.tools li.mytools");
 		waitForElementByCss("div.toolbar ul.tools li a.tools-customize");
+		PageObjectLogging.log("verifyUserToolBar", "user toolbar verified", true, driver);
 	}
 	
 	/**

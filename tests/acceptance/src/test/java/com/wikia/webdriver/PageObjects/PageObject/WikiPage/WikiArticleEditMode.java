@@ -50,7 +50,7 @@ public class WikiArticleEditMode extends WikiArticlePageObject {
 	private WebElement removeButton;
 	@FindBy(css="div.RTEConfirmButtons a[id='RTEConfirmCancel'] span")
 	private WebElement cancelImageRemovalButton;
-	@FindBy(css="a[id='RTEConfirmOk'] span")
+	@FindBy(css="a[id='RTEConfirmOk']")
 	private WebElement oKbutton;
 	@FindBy(css="section[id='WikiaPhotoGalleryEditor']")
 	private WebElement objectModal;
@@ -341,11 +341,10 @@ public class WikiArticleEditMode extends WikiArticlePageObject {
 	 * @param caption Caption of the image 
 	 * 	 */
 	public void clickRemoveButtonOfImage(String caption) {
-		CommonFunctions.MoveCursorTo(0, 0);
-		hoverCursorOverImage(caption);
+		waitForElementByElement(iFrame);
+		mouseOverInArticleIframe("img");
 		waitForElementByElement(removeButton);
-		waitForElementClickableByElement(removeButton);
-		removeButton.click();
+		jQueryClick("span.RTEMediaOverlayDelete");
 		PageObjectLogging.log("ClickRemoveButtonOfImage", "Click on 'remove button' of image with caption: '"+caption+"'", true, driver);
 		
 	}
