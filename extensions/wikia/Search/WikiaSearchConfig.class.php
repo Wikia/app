@@ -9,7 +9,16 @@
 
 class WikiaSearchConfig implements ArrayAccess
 {
-	private $params = array();
+	private $params = array(
+			'page'			=>	1,
+			'length'		=>	WikiaSearch::RESULTS_PER_PAGE,
+			'cityId'		=>	0,
+			'groupResults'	=>	false,
+			'rank'			=>	'default',
+			'hub'			=>	false,
+			'videoSearch'	=>	false,
+			'start'			=>	0,
+			);
 	
 	public function __construct( array $params = array() )
 	{
