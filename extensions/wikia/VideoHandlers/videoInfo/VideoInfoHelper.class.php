@@ -8,8 +8,8 @@ class VideoInfoHelper extends WikiaModel {
 
 	/**
 	 * get video data from title
-	 * @param Title or string $title
-	 * @return array or null  $video
+	 * @param Title|string $title
+	 * @return array|null  $video
 	 */
 	public function getVideoDataByTitle( $title ) {
 		$app = F::app();
@@ -57,7 +57,9 @@ class VideoInfoHelper extends WikiaModel {
 		return $video;
 	}
 
-	// check if video_info table exists
+	/**
+	 * Check if video_info table exists
+	 */
 	public static function videoInfoExists() {
 		$db = F::app()->wf->GetDB( DB_SLAVE );
 		$exists = ( $db->tableExists( 'video_info' ) ) ? true : false ;
