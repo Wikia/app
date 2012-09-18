@@ -94,12 +94,12 @@ public class ImageServing extends TestTemplate {
 		RVmoduleMessage = RVmoduleMessageEdit.clickOnPublishButton();
 		// after deletion start testing
 		WikiArticlePageObject article = RVmoduleMessage.OpenArticle(wikiArticle);
-		article.VerifyRVModulePresence();
-		article.ClickOnAddVideoRVModule();
-		article.TypeInVideoURL(videoURL2);
-		article.ClickOnRVModalAddButton();
+		article.verifyRVModulePresence();
+		article.clickOnAddVideoRVModule();
+		article.typeInVideoURL(videoURL2);
+		article.clickOnRVModalAddButton();
 //		article.WaitForProcessingToFinish();
-		article.VerifyVideoAddedToRVModule(videoURL2name);
+		article.verifyVideoAddedToRVModule(videoURL2name);
 	
 		CommonFunctions.logOut(Properties.userName2, driver);
 		

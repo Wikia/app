@@ -219,7 +219,7 @@ public class WikiArticlePageObject extends WikiBasePageObject {
 	 * @author Michal Nowierski
 	 * @param Object Object = {gallery, slideshow}
 	 * 	 */
-	public void VerifyTheObjectOnThePage(String Object) {
+	public void verifyTheObjectOnThePage(String Object) {
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div.WikiaArticle div[id*='"+Object+"']")));
 		PageObjectLogging.log("VerifyTheObjetOnThePage", "Verify that the "+Object+" appears on the page", true, driver);
 		
@@ -230,7 +230,7 @@ public class WikiArticlePageObject extends WikiBasePageObject {
 	 *  
 	 * @author Michal Nowierski
 	 * 	 */
-	public void VerifyTheVideoOnThePage() {
+	public void verifyTheVideoOnThePage() {
 		waitForElementByBy(VideoOnWikiaArticle);
 		PageObjectLogging.log("VerifyTheVideoOnThePage", "Verify that the Video appears on the page", true, driver);
 	}
@@ -240,7 +240,7 @@ public class WikiArticlePageObject extends WikiBasePageObject {
 	 *  
 	 * @author Michal Nowierski
 	 * 	 */
-	public void VerifyRVModulePresence() {
+	public void verifyRVModulePresence() {
 		waitForElementByElement(rVModule);
 		PageObjectLogging.log("VerifyRVModulePresence", "Verify that the RV Module Is Present", true, driver);
 		
@@ -251,7 +251,7 @@ public class WikiArticlePageObject extends WikiBasePageObject {
 	 *  
 	 * @author Michal Nowierski
 	 * 	 */
-	public void ClickOnAddVideoRVModule() {
+	public void clickOnAddVideoRVModule() {
 		waitForElementByBy(AddVideoRVButton);
 		CommonFunctions.scrollToElement(driver.findElement(AddVideoRVButton));
 		waitForElementClickableByBy(AddVideoRVButton);
@@ -266,7 +266,7 @@ public class WikiArticlePageObject extends WikiBasePageObject {
 	 * @author Michal Nowierski
 	 * @param videoURL URL of the video to be added
 	 * 	 */
-	public void TypeInVideoURL(String videoURL) {
+	public void typeInVideoURL(String videoURL) {
 		waitForElementByElement(videoRVmodalInput);		
 		videoRVmodalInput.clear();
 		videoRVmodalInput.sendKeys(videoURL);
@@ -278,7 +278,7 @@ public class WikiArticlePageObject extends WikiBasePageObject {
 	 *  
 	 * @author Michal Nowierski
 	 * 	 */
-	public void ClickOnRVModalAddButton() {
+	public void clickOnRVModalAddButton() {
 		waitForElementByBy(VideoModalAddButton);
 		waitForElementClickableByBy(VideoModalAddButton);
 		driver.findElement(VideoModalAddButton).click();
@@ -291,7 +291,7 @@ public class WikiArticlePageObject extends WikiBasePageObject {
 	 *  
 	 * @author Michal Nowierski
 	 * 	 */
-	public void WaitForProcessingToFinish() {
+	public void waitForProcessingToFinish() {
 		waitForElementNotVisibleByBy(RVvideoLoading);
 		PageObjectLogging.log("WaitForProcessingToFinish", "Wait for processing the added video to finish", true, driver);
 		
@@ -303,9 +303,28 @@ public class WikiArticlePageObject extends WikiBasePageObject {
 	 * @author Michal Nowierski
 	 * @param videoURL2name The name of the video, or any fragment of the video name
 	 * 	 */
-	public void VerifyVideoAddedToRVModule(String videoURL2name) {
+	public void verifyVideoAddedToRVModule(String videoURL2name) {
 		waitForElementByCss("img[data-video*='"+videoURL2name+"']");
 		PageObjectLogging.log("VerifyVideoAddedToRVModule", "Verify that video given by its name has been added to RV module", true, driver);
+		
+	}
+
+	public void verifyGalleryPosion(String position) {
+		waitForElementByCss("div.wikia-gallery-position-"+position);
+		PageObjectLogging.log("verifyGalleryPosion", "Gallery position verified: "+position, true, driver);
+	}
+
+	public void verifySlideshowPosition(String position) {
+		if (position.equals("left")||position.equals("right"))
+		{
+			waitForElementByCss("div.wikia-slideshow.float"+position);
+			PageObjectLogging.log("verifySlideshowPosion", "Slideshow position verified: "+position, true, driver);
+		}
+		else if (position.equals("center"))
+		{
+			waitForElementByCss("div.wikia-slideshow.slideshow-center");			
+			PageObjectLogging.log("verifySlideshowPosion", "Slideshow position verified: "+position, true, driver);
+		}
 		
 	}
 
