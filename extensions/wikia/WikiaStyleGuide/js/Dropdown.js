@@ -71,7 +71,7 @@ Wikia.Dropdown = $.createClass(Observable, {
 	},
 
 	close: function() {
-		this.$wrapper.toggleClass('open closed');
+		this.$wrapper.removeClass('open').addClass('closed');
 		this.fire('close');
 	},
 
