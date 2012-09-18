@@ -7,14 +7,14 @@ module('AdProviderGamePro');
 
 test('rebuildKV', function() {
 	var logMock = function() {}
-		, adProviderCommonMock
+		, scriptWriterMock
 		, wikiaTrackerMock
 		, windowMock = {wgInsideUnitTest: true}
 		, documentMock
 		, adProviderGamePro;
 
 	adProviderGamePro = AdProviderGamePro(
-		adProviderCommonMock, wikiaTrackerMock, logMock, windowMock, documentMock
+		scriptWriterMock, wikiaTrackerMock, logMock, windowMock, documentMock
 	);
 
 	console.log(adProviderGamePro);
@@ -24,14 +24,14 @@ test('rebuildKV', function() {
 
 test('canHandleSlot GamePro de', function() {
 	var logMock = function() {}
-		, adProviderCommonMock
+		, scriptWriterMock
 		, wikiaTrackerMock
 		, windowMock = {wgInsideUnitTest: true, wgContentLanguage: 'de'}
 		, documentMock
 		, adProviderGamePro;
 
 	adProviderGamePro = AdProviderGamePro(
-		adProviderCommonMock, wikiaTrackerMock, logMock, windowMock, documentMock
+		scriptWriterMock, wikiaTrackerMock, logMock, windowMock, documentMock
 	);
 
 	equal(adProviderGamePro.canHandleSlot(['HOME_TOP_LEADERBOARD']), true, 'de slot HOME_TOP_LEADERBOARD');
@@ -41,14 +41,14 @@ test('canHandleSlot GamePro de', function() {
 
 test('canHandleSlot GamePro outside de', function() {
 	var logMock = function() {}
-		, adProviderCommonMock
+		, scriptWriterMock
 		, wikiaTrackerMock
 		, windowMock = {wgInsideUnitTest: true}
 		, documentMock
 		, adProviderGamePro;
 
 	adProviderGamePro = AdProviderGamePro(
-		adProviderCommonMock, wikiaTrackerMock, logMock, windowMock, documentMock
+		scriptWriterMock, wikiaTrackerMock, logMock, windowMock, documentMock
 	);
 
 	windowMock.wgContentLanguage = 'pl';
