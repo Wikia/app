@@ -5,8 +5,6 @@ class WikiaSolrClient extends WikiaSearchClient {
 	const VIDEO_WIKI = 298117;
 
 	protected $solrClient;
-	protected $solrPort;
-	protected $solrHost;
 	protected $query;
 	protected $namespaces = array();
 	protected $isInterWiki = false;
@@ -54,10 +52,8 @@ class WikiaSolrClient extends WikiaSearchClient {
 	const DEFAULT_RESULTSET_SIZE = 20;
 	const DEFAULT_CITYID = 0;
 
-	public function __construct( $solrHost, $solrPort ) {
-		$this->solrHost = $solrHost;
-		$this->solrPort = $solrPort;
-		$this->solrClient = F::build( 'Apache_Solr_Service', array( 'host' => $solrHost, 'port' => $solrPort, 'path' => '/solr' ) );
+	public function __construct( array $solariumConfig ) {
+		$this->solrClient = F::build( 'Solarium_Client', $solariumConfig );
 	}
 
 	/**

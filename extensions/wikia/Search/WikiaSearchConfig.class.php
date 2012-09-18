@@ -22,7 +22,8 @@ class WikiaSearchConfig implements ArrayAccess
 		if ( substr($method, 0, 3) == 'get' ) {
 			return $this->offsetGet( strtolower($method[3]).strtolower(substr($method, 4)) );
 		} else if ( substr($method, 0, 3) == 'set' ) {
-			return $this->offsetSet( strtolower($method[3]).strtolower(substr($method, 4)) );
+			$this->offsetSet( strtolower($method[3]).strtolower(substr($method, 4)) );
+			return $this; // fluent
 		}
 	}
 	

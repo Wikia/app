@@ -48,46 +48,35 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			$this->response->addAsset('extensions/wikia/Search/css/WikiaSearch.scss');
 		}
 
+		$searchConfig = F::build('WikiaSearchConfig');
+		
 		$query = $this->getVal('query', $this->getVal('search'));
 		$query = htmlentities( Sanitizer::StripAllTags ( $query ), ENT_COMPAT, 'UTF-8' );
 		$limit = $this->getVal('limit', self::RESULTS_PER_PAGE);
-
 		$page = $this->getVal('page', 1);
 		$rank = $this->getVal('rank', 'default');
 		$debug = $this->request->getBool('debug', false);
-		$crossWikia = $this->request->getBool('crossWikia');
-		$skipCache = $this->request->getBool('skipCache');
+		$crossWikia = $this->request->getBool('crossWikia', false);
+		$skipCache = $this->request->getBool('skipCache', false);
+		$advanced = $this->getVal( 'advanced', false );
+		$hub = ($this->getVal('nohub') != '1') ? $this->getVal('hub', false) : false;
+		$redirs = !empty($advanced) ? $this->request->getBool('redirs', false) : false;
 
-		$advanced = $this->getVal( 'advanced' );
 		$searchableNamespaces = SearchEngine::searchableNamespaces();
-		$wikiName = $this->wg->Sitename;
-		$hub = ($this->getVal('nohub') != '1') ? $this->getVal('hub') : false;
-
-		if(!empty($advanced)) {
-			$redirs = $this->request->getBool('redirs');
-		}
-		else {
-			// don't include redirects by default
-			$redirs = false;
-		}
-
 		$namespaces = array();
 		foreach($searchableNamespaces as $i => $name) {
 			if ($ns = $this->getVal('ns'.$i)) {
 				$namespaces[] = $i;
 			}
 		}
-
 		if (empty($namespaces) && $this->wg->User->getOption('searchAllNamespaces')) {
 			$namespaces = array_keys($searchableNamespaces);
 		}
 
-		$isCorporateWiki = $this->isCorporateWiki();
-
 		//  Check for crossWikia value set in url.  Otherwise, check if we're on the corporate wiki
-		$isInterWiki = $crossWikia ? true : $isCorporateWiki;
+		$isInterWiki = $crossWikia ? true : $this->isCorporateWiki();
 
-		if($isCorporateWiki) {
+		if($this->isCorporateWiki()) {
 			OasisController::addBodyClass('inter-wiki-search');
 		}
 
@@ -115,43 +104,62 @@ class WikiaSearchController extends WikiaSpecialPageController {
 				}
 			}
 
-
-		 	$this->wikiaSearch->setNamespaces( $namespaces );
-
-			$this->wikiaSearch->setSkipCache( $skipCache );
-			$this->wikiaSearch->setIncludeRedirects( $redirs );
-
-			$params = array('page'=>$page,
-							'length'=>$limit,
-							'cityId'=>( $isInterWiki ? 0 : $this->wg->CityId ),
-							'groupResults'=>$isInterWiki,
-							'rank'=>$rank,
-							'hub'=>$hub);
+			$isGrouped = $isInterWiki || $this->getVal('grouped', false);
 			
-			$params['videoSearch'] = $this->getVal('videoSearch', false);
+			$searchConfig->setQuery				( $query )
+						 ->setLength			( $limit )
+						 ->setPage				( $page )
+						 ->setRank				( $rank )
+						 ->setCityId			( $isInterWiki ? 0 : $this->wg->CityId )
+						 ->setGroupResults		( $isGrouped )
+						 ->setHub				( $hub )
+						 ->setVideoSearch		( $this->getVal('videoSearch', false) )
+						 ->setSkipCache			( $skipCache )
+						 ->setIncludeRedirects	( $redirs )
+						 ->setNamespaces		( $namespaces )
+			;
 
-			$results = $this->wikiaSearch->doSearch( $query, $params );
+			$results = $this->wikiaSearch->doSearch( $query, $searchConfig );
 
 			$resultsFound = $results->getResultsFound();
 
 			if(!empty($resultsFound)) {
-				$paginationLinks = $this->sendSelfRequest( 'pagination', array( 'query' => $query, 'page' => $page, 'count' => $resultsFound, 'crossWikia' => $isInterWiki, 'skipCache' => $skipCache, 'debug' => $debug, 'namespaces' => $namespaces, 'advanced' => $advanced, 'redirs' => $redirs, 'limit'=>$limit) );
+				// @TODO: refactor paginationparams into SearchConfig, use searchConfig in self request controller action
+				$paginationParams = array(
+						'query' => $query, 
+						'page' => $page, 
+						'count' => $resultsFound, 
+						'crossWikia' => $isInterWiki, 
+						'skipCache' => $skipCache, 
+						'debug' => $debug, 
+						'namespaces' => $namespaces, 
+						'advanced' => $advanced, 
+						'redirs' => $redirs, 
+						'limit'=>$limit);
+				$paginationLinks = $this->sendSelfRequest( 	'pagination',  $paginationParams);
 			}
 
-			$this->app->wg->Out->setPageTitle( $this->wf->msg( 'wikiasearch2-page-title-with-query', array(ucwords($query), $wikiName) )  );
+			$this->app->wg->Out->setPageTitle( $this->wf->msg( 'wikiasearch2-page-title-with-query', array(ucwords($query), $this->wg->Sitename) )  );
 		} else {
 			if($isInterWiki) {
 				$this->app->wg->Out->setPageTitle( $this->wf->msg( 'wikiasearch2-page-title-no-query-interwiki' ) );
 			} else {
-				$this->app->wg->Out->setPageTitle( $this->wf->msg( 'wikiasearch2-page-title-no-query-intrawiki', array($wikiName) )  );
+				$this->app->wg->Out->setPageTitle( $this->wf->msg( 'wikiasearch2-page-title-no-query-intrawiki', array($this->wg->Sitename) )  );
 			}
 		}
 
-		$namespaces = $namespaces ?: $this->wikiaSearch->getNamespaces();
 		$activeTab = $this->getActiveTab( $namespaces );
 
 		if(!$isInterWiki) {
-			$advancedSearchBox = $this->sendSelfRequest( 'advancedBox', array( 'term' => $query, 'namespaces' => $namespaces, 'searchableNamespaces' => $searchableNamespaces, 'advanced' => $advanced, 'redirs' => $redirs ) );
+			// @TODO refactor advancedParams into searchfonfig, using searchconfig in self request
+			$advancedParams = array(
+					'term' => $query, 
+					'namespaces' => $namespaces, 
+					'searchableNamespaces' => $searchableNamespaces, 
+					'advanced' => $advanced, 
+					'redirs' => $redirs 
+					);
+			$advancedSearchBox = $this->sendSelfRequest( 'advancedBox', $advancedParams );
 			$this->setval( 'advancedSearchBox', $advancedSearchBox );
 		}
 
@@ -175,6 +183,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			$results = $tempResults;
 		}
 
+		//@todo see how many of these we can re-handle as searchconfig
 		$this->setVal( 'results', $results );
 		$this->setVal( 'resultsFound', $resultsFound );
 		$this->setVal( 'resultsFoundTruncated', $this->wg->Lang->formatNum( $this->getTruncatedResultsNum($resultsFound) ) );
@@ -195,7 +204,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setVal( 'hasArticleMatch', (isset($articleMatch) && !empty($articleMatch)) );
 		$this->setVal( 'isMonobook', ($this->wg->User->getSkin() instanceof SkinMonobook) );
 		$this->setVal( 'showSearchAds', $query ? $showSearchAds : false );
-		$this->setVal( 'isCorporateWiki', $isCorporateWiki );
+		$this->setVal( 'isCorporateWiki', $this->isCorporateWiki() );
 	}
 
 	public function advancedBox() {
