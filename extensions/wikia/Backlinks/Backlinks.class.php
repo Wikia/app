@@ -30,20 +30,20 @@ class Backlinks
 
 		self::$sourceArticleIds = array_unique( self::$sourceArticleIds + array($sourceArticleId) );
 
-		$backlinkRowSignature = sprintf( "(%s,%s,'%s',", $sourceArticleId, 
-														 $targetArticleId, 
+		$backlinkRowSignature = sprintf( "(%s,%s,'%s',", $sourceArticleId,
+														 $targetArticleId,
 														 mysql_real_escape_string(substr($text, 0, 255))
 										);
 
-		self::$backlinkRows[$backlinkRowSignature] = isset( self::$backlinkRows[$backlinkRowSignature] ) 
-												   ? self::$backlinkRows[$backlinkRowSignature] + 1 
+		self::$backlinkRows[$backlinkRowSignature] = isset( self::$backlinkRows[$backlinkRowSignature] )
+												   ? self::$backlinkRows[$backlinkRowSignature] + 1
 												   : 1;
 
 		wfProfileOut(__METHOD__);
 		return true;
 
 	}
-	
+
 	static function clearRows()
 	{
 		self::$backlinkRows = array();
@@ -60,7 +60,7 @@ class Backlinks
 
 		try {
 			$dbr = wfGetDb( DB_SLAVE );
-			$res = $dbr->select( self::TABLE_NAME, 
+			$res = $dbr->select( self::TABLE_NAME,
 								 array('backlink_text', 'SUM(count)'),
 								 array('target_page_id' => $targetPageId),
 								 __METHOD__,
@@ -94,7 +94,7 @@ class Backlinks
 		}
 
 		$rowCount = count( self::$backlinkRows );
-		if ($rowCount == 0) { 
+		if ($rowCount == 0) {
 			wfProfileOut(__METHOD__);
 			return true;
 		}
@@ -146,9 +146,9 @@ class Backlinks
 			wfProfileOut(__METHOD__);
 			return "Table ".self::TABLE_NAME." created.";
 		}
-		
+
 		wfProfileOut(__METHOD__);
-		return "Table ".self::TABLE_NAME." already exists."; 
+		return "Table ".self::TABLE_NAME." already exists.";
 	}
 
 	static function tableCreateSql()
@@ -163,10 +163,32 @@ CREATE TABLE `{$tableName}` (
 	PRIMARY KEY (`source_page_id`, `target_page_id`, `backlink_text`),
 	KEY `wikia_page_backlinks_source_page_id` (`source_page_id`),
 	KEY `wikia_page_backlinks_target_page_id` (`target_page_id`)
-) ENGINE = InnoDB 
+) ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_bin;
 ENDTABLE;
 
+	}
+
+	/**
+	 * LoadExtensionSchemaUpdates handler; set up wikia_page_backlinks table on install/upgrade.
+	 *
+	 * @author Krzysztof Krzyżaniak (eloy) <eloy@wikia-inc.com>
+	 * @param $updater DatabaseUpdater
+	 * @return bool
+	 */
+	static function onLoadExtensionSchemaUpdates( $updater = null ) {
+		$map = array(
+			'mysql' => 'patch-create-wikia_page_backlinks.sql',
+		);
+
+		$type = $updater->getDB()->getType();
+		if( isset( $map[$type] ) ) {
+			$sql = dirname( __FILE__ ) . $map[ $type ];
+			$updater->addExtensionTable( 'wikia_page_backlinks', $sql );
+		} else {
+			throw new MWException( "Math extension does not currently support $type database." );
+		}
+		return true;
 	}
 }
