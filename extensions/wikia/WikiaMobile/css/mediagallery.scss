@@ -7,6 +7,7 @@
 	opacity: 0;
 
 	text-align: center;
+	line-height: 0;
 
 	-webkit-transition: opacity .4s, -webkit-transform .4s;
 	-moz-transition: opacity .4s, -moz-transform .4s;
@@ -39,7 +40,7 @@
 	display: inline-block;
 	height: 100px;
 	width: 100px;
-	margin: -1px 2.5px;
+	margin: 2px;
 }
 
 .galPlc.img {
@@ -76,12 +77,16 @@
 }
 
 #wkGalPag {
-	position: absolute;
-	bottom: 0;
-	opacity: 0;
+	position: relative;
+	bottom: 25px;
+
 	width: 100%;
-	text-align: center;
 	max-height: 25px;
+
+	opacity: 0;
+
+	text-align: center;
+
 	-webkit-transition: opacity .6s, -webkit-transform .3s;
 	-moz-transition: opacity .6s, -moz-transform .3s;
 	-o-transition: opacity .6s, transform .3s;
