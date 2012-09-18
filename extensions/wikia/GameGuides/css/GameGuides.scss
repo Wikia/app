@@ -22,6 +22,8 @@ $backgroundColor: black;
 html {
 	background: $backgroundColor;
 	overflow-x: hidden;
+
+	height: 100%;;
 }
 
 body {
@@ -95,7 +97,7 @@ a.validLink {
 }
 
 $size: 9;
-$width: 3;
+$width: 2;
 
 .chev {
 	position: relative;
@@ -107,24 +109,28 @@ $width: 3;
 
 	-webkit-transition: -webkit-transform .3s;
 	-webkit-transform-origin: 50% 25%;
+	-moz-transition: -moz-transform .3s;
+	-moz-transform-origin: 50% 25%;
+	transition: transform .3s;
+	transform-origin: 50% 25%;
 
-	border-radius: 4px;
-}
+	&:after {
+		content: '';
+		position: absolute;
 
-.chev:after {
-	content: '';
-	position: absolute;
+		left: ( -$size + $width ) + px;
+		top: ( -$size ) + px;
+		width: 0;
+		height: 0;
 
-	left: ( -$size + $width ) + px;
-	top: ( -$size ) + px;
-	width: 0;
-	height: 0;
-
-	border: ( $size - $width ) + px solid;
-	border-color: $backgroundColor transparent transparent transparent;
+		border: ( $size - $width ) + px solid;
+		border-color: $backgroundColor transparent transparent transparent;
+	}
 }
 
 .open .chev {
 	border-color: $linkColor transparent transparent transparent;
 	-webkit-transform: rotateZ(-180deg);
+	-moz-transform: rotateZ(-180deg);
+	transform: rotateZ(-180deg);
 }
