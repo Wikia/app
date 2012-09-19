@@ -128,6 +128,9 @@ img.media-placeholder {
 	border: 1px solid $color-article-thumb-border;
 	clear: both;
 	margin: 2px;
+	&.alignCenter {
+		margin: 0 auto;
+	}
 }
 
 img.image-placeholder {
