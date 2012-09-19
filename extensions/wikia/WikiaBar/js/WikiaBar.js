@@ -50,7 +50,6 @@ var WikiaBar = {
 	getAd: function() {
 		var weeboBoxAd = $(this.WIKIA_BAR_BOXAD_NAME);
 		if( weeboBoxAd.hasClass('wikia-ad') == false ) {
-			document.getElementById(this.WIKIA_BAR_BOXAD_NAME + "_iframe");
 			window.adslots2.push([this.WIKIA_BAR_BOXAD_NAME, null, 'Liftium2', null]);
 			weeboBoxAd.addClass('wikia-ad');
 		}
