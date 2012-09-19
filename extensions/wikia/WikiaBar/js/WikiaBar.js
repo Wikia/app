@@ -215,7 +215,7 @@ var WikiaBar = {
 		if( this.isUserAnon() && !this.isMainWikiaBarLang() ) {
 			cookieData.expires = this.WIKIA_BAR_HIDDEN_ANON_NML_TTL;
 		} else if( !this.isUserAnon ) {
-			cookieData.expires = this.WIKIA_BAR_STATE_USER_KEY;
+			cookieData.expires = this.WIKIA_BAR_HIDDEN_USER_TTL;
 		}
 
 		if( window.wgDevelEnvironment ) {
@@ -225,11 +225,11 @@ var WikiaBar = {
 		$.cookie(key, hiddenState, cookieData);
 	},
 	getStorageKey: function() {
-		var key = this.WIKIA_BAR_STATE_ANON_NML_KEY;
+		var key = this.WIKIA_BAR_STATE_USER_KEY;
 		if( this.isUserAnon() && this.isMainWikiaBarLang() ) {
 			key = this.WIKIA_BAR_STATE_ANON_ML_KEY;
-		} else if( !this.isUserAnon ) {
-			key = this.WIKIA_BAR_STATE_USER_KEY;
+		} else if( this.isUserAnon() && !this.isMainWikiaBarLang() ) {
+			key = this.WIKIA_BAR_STATE_ANON_NML_KEY;
 		}
 
 		return key;
