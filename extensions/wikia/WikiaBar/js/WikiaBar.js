@@ -50,8 +50,8 @@ var WikiaBar = {
 	getAd: function() {
 		var weeboBoxAd = $(this.WIKIA_BAR_BOXAD_NAME);
 		if( weeboBoxAd.hasClass('wikia-ad') == false ) {
-			LiftiumOptions.placement = this.WIKIA_BAR_BOXAD_NAME;
-			Liftium.callInjectedIframeAd("300x250", document.getElementById(this.WIKIA_BAR_BOXAD_NAME + "_iframe"));
+			document.getElementById(this.WIKIA_BAR_BOXAD_NAME + "_iframe");
+			window.adslots2.push([this.WIKIA_BAR_BOXAD_NAME, null, 'Liftium2', null]);
 			weeboBoxAd.addClass('wikia-ad');
 		}
 		return true;

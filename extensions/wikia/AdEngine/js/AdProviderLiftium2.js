@@ -41,7 +41,8 @@ var AdProviderLiftium2 = function (scriptWriter, WikiaTracker, log, window) {
 		'HOME_TOP_RIGHT_BOXAD':{'size':'300x250'},
 		'LEFT_SKYSCRAPER_2':{'size':'160x600'},
 		'TOP_LEADERBOARD':{'size':'728x90'},
-		'TOP_RIGHT_BOXAD':{'size':'300x250'}
+		'TOP_RIGHT_BOXAD':{'size':'300x250'},
+		'WIKIA_BAR_BOXAD_1':{'size':'300x250'}
 	};
 	var adNum = 100; // TODO global-ize it!
 
