@@ -211,6 +211,7 @@ class WikiaBarModel extends WikiaBarModelBase {
 		}
 
 		foreach ($lines as $line) {
+			$line = trim($line);
 			if (stripos($line, '=') === false) {
 				$valid = false;
 			}
