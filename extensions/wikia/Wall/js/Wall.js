@@ -308,7 +308,6 @@ var Wall = $.createClass(Object, {
 		}
 
 		target.addClass('inprogress');
-		target.trigger('mouseenter.wikiaTooltip');
 
 		$.nirvana.sendRequest({
 			controller: 'WallExternalController',

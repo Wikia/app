@@ -1,5 +1,5 @@
 /**
- * This is an example of JS code full on antipatterns
+ * This is an example of JS code full of antipatterns
  * and other things you should avoid in JavaScript
  */
 
@@ -174,11 +174,6 @@ var foo = $('#bar').attr('data-foo'),
 
 // > jQuery('selector').bind( 'someevent', jQuery.debounce( delay, [ at_begin, ] callback ) );
 // > jQuery('selector').unbind( 'someevent', callback );
-
-/*
- *	$('#test').wikiaTooltip('this is a tooltip aligned top-left');
- *	$('#test').wikiaTooltip('and this is a tooltip aligned bottom-right', {side: 'bottom', align: 'right'});
- */
 
 // debugger;
 	// debugger;
