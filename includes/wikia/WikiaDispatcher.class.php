@@ -78,7 +78,9 @@ class WikiaDispatcher {
 				// map X to executeX method names for things that used to be modules
 				if (!method_exists($controller, $method)) {
 					$method = ucfirst( $method );
-					$response->getView()->setTemplate( $controllerName, $method );
+					if ($format == WikiaResponse::FORMAT_HTML) {
+						$response->getView()->setTemplate( $controllerName, $method );
+					}
 					$method = "execute{$method}";
 					$params = $request->getParams();  // old modules expect params in a different place
 				}
