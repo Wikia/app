@@ -81,7 +81,6 @@
 				showVideoModal();
 			} else {
 				$.when(
-					// Important: keep this as the first item in the deferredList array for param ordering in $.when()
 					$.nirvana.sendRequest({
 						controller: controllerName, 
 						method: 'getAddVideoModal', 
