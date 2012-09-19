@@ -185,15 +185,21 @@
 	</article>
 
 	<? if ($wg->User->isLoggedIn()) { ?>
-	<footer id="WikiaFooter" class="WikiaFooter">
-		<div class="toolbar">
-			<ul class="tools">
-				<?= F::app()->renderView('Footer','Toolbar') ?>
-			</ul>
-			<img src="<?= $wg->BlankImgUrl; ?>" class="banner-corner-left" height="0" width="0">
-			<img src="<?= $wg->BlankImgUrl; ?>" class="banner-corner-right" height="0" width="0">
-		</div>
-	</footer>
+		<?php if( !$wg->EnableWikiaBarExt ): ?>
+			<footer id="WikiaFooter" class="WikiaFooter">
+				<div class="toolbar">
+					<ul class="tools">
+						<?= F::app()->renderView('Footer','Toolbar') ?>
+					</ul>
+					<img src="<?= $wg->BlankImgUrl; ?>" class="banner-corner-left" height="0" width="0">
+					<img src="<?= $wg->BlankImgUrl; ?>" class="banner-corner-right" height="0" width="0">
+				</div>
+			</footer>
+		<?php endif; ?>
 	<? } ?>
 
 </section>
+
+<?php if( $wg->EnableWikiaBarExt ): ?>
+	<?= F::app()->renderView('WikiaBar', 'Index'); ?>
+<?php endif; ?>

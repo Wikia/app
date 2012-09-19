@@ -4,7 +4,8 @@
 
 .WikiaArticle {
 	&.SpecialPromoteArticle {
-			border-bottom: none;
+	    border-bottom: none;
+        width:auto;
 	}
 	.UploadTool {
 		margin: 0 15px 150px 15px;

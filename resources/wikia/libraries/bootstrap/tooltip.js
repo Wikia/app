@@ -139,6 +139,11 @@
           case 'right':
             tp = {top: pos.top + pos.height / 2 - actualHeight / 2, left: pos.left + pos.width}
             break
+          /* wikia change start (marcin) */
+          case 'wikiaBar':
+            tp = {top: pos.top - actualHeight, right: 0}
+            break
+          /* wikia change end */
         }
 
         $tip

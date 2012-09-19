@@ -134,11 +134,9 @@
 
 		</article><!-- WikiaMainContent -->
 
-	<?php
-		if ($railModulesExist) {
-			echo F::app()->renderView('Rail', 'Index', array('railModuleList' => $railModuleList));
-		}
-	?>
+		<?php if( $railModulesExist ): ?>
+			<?= F::app()->renderView('Rail', 'Index', array('railModuleList' => $railModuleList)); ?>
+		<?php endif; ?>
 
 		<?= empty($wg->SuppressFooter) ? F::app()->renderView('Footer', 'Index') : '' ?>
 		<? if(!empty($wg->EnableWikiaHomePageExt)) echo F::App()->renderView('WikiaHomePage', 'footer') ?>
@@ -146,4 +144,6 @@
 	</div>
 </section><!--WikiaPage-->
 
-<? if(!empty($wg->EnableWikiaBarExt) && $wg->user->isAnon()) echo F::App()->renderView('WikiaBar', 'index'); ?>
+<?php if( $wg->EnableWikiaBarExt ): ?>
+	<?= F::app()->renderView('WikiaBar', 'Index'); ?>
+<?php endif; ?>

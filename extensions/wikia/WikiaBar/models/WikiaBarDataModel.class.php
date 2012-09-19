@@ -10,14 +10,21 @@
 class WikiaBarDataModel extends WikiaBarModelBase {
 	public function getData() {
 		$this->wf->profileIn(__METHOD__);
-		$message = Message::newFromKey('WikiaBar/' . $this->getVertical() . '/' . $this->getLang());
-		if($message->exists()) {
-			$data = $message->text();
-		} else {
-			$data = null;
-		}
-		$this->wf->profileOut(__METHOD__);
 
+		/* Config is stored on community Wiki */
+		$wikiaBarConfigMessage = WikiFactory::getVarValueByName('wgWikiaBarConfig', 177, true);
+
+		if (
+			!empty($wikiaBarConfigMessage)
+			&& !empty($wikiaBarConfigMessage[$this->getVertical()])
+			&& !empty($wikiaBarConfigMessage[$this->getVertical()][$this->getLang()])
+		) {
+			$data = trim($wikiaBarConfigMessage[$this->getVertical()][$this->getLang()]);
+		} else {
+			$data = false;
+		}
+
+		$this->wf->profileOut(__METHOD__);
 		return $data;
 	}
 }
