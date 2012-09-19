@@ -147,12 +147,31 @@ class GameGuidesController extends WikiaController {
 	 * Api entry point to get a page and globals that are relevant to the page
 	 */
 	public function getPage(){
+		$this->response->setFormat( 'json' );
 		//set mobile skin as this is based on it
 		RequestContext::getMain()->setSkin(
 			Skin::newFromKey( 'wikiamobile' )
 		);
 
 		$titleName = $this->getVal('title');
+
+		$relatedPages = ( !empty( $this->wg->EnableRelatedPagesExt ) &&
+		empty( $this->wg->MakeWikiWebsite ) &&
+		empty( $this->wg->EnableAnswers ) ) ? $this->app->sendRequest( 'RelatedPagesController', 'index', array(
+			'categories' => $this->wg->Title->getParentCategories()
+		) ) : null;
+
+		if ( !is_null( $relatedPages ) ) {
+			$this->response->setVal( 'relatedPages', $relatedPages->getVal( 'pages' ) );
+		}
+
+		$this->response->setVal( 'html', $this->sendSelfRequest( 'renderPage', array(
+			'title' => $titleName
+		) )->toString() );
+	}
+
+	public function renderPage(){
+		$titleName = $this->request->getVal( 'title' );
 
 		$params = array(
 			'action' => 'parse',
@@ -165,16 +184,6 @@ class GameGuidesController extends WikiaController {
 		$html = ApiService::call( $params );
 
 		$globals = $this->sendSelfRequest( 'getGlobals' );
-
-		$relatedPages = (!empty( $this->wg->EnableRelatedPagesExt ) &&
-		empty( $this->wg->MakeWikiWebsite ) &&
-		empty( $this->wg->EnableAnswers ) ) ? $this->app->sendRequest( 'RelatedPagesController', 'index', array(
-			'categories' => $this->wg->Title->getParentCategories()
-		) ) : null;
-
-		if ( !is_null( $relatedPages ) ) {
-			$this->response->setVal( 'relatedPages', $relatedPages->getVal( 'pages' ) );
-		}
 
 		$this->response->setVal( 'globals', $globals->getVal( 'globals' ) );
 		$this->response->setVal( 'messages', F::build( 'JSMessages' )->getPackages( array( 'GameGuides' ) ) );
@@ -199,15 +208,19 @@ class GameGuidesController extends WikiaController {
 			'title' => $this->getVal( 'title')
 		) );
 
-		$this->response->setVal( 'globals', $page->getVal( 'globals' ) );
-		$this->response->setVal( 'messages', $page->getVal( 'messages' ) );
-		$this->response->setVal( 'title', $page->getVal( 'title' ) );
 		$this->response->setVal( 'html', $page->getVal( 'html' ) );
 
 		$this->response->setVal( 'js', $js[0] );
 		$this->response->setVal( 'css', $styles );
 
 
+	}
+
+	public function getResourcesUrl(){
+		$this->response->setVal( 'url',
+			//How can I build this url ?
+			'wikia.php?controller=AssetsManager&method=getMultiTypePackage&scripts=gameguides_js&styles=//extensions/wikia/GameGuides/css/GameGuides.scss?cb=' . $this->wg->CacheBuster
+		);
 	}
 
 	/**

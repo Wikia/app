@@ -1,15 +1,8 @@
-<?
-/**
- * @var $globals String
- * @var $messages String
- * @var $title String
- */
-?>
 <?= $globals; ?>
 <script>
-	wgMessages = <?= json_encode( $messages ); ?>;
+wgMessages = <?= json_encode( $messages ); ?>;
 </script>
-<h2><?= $title ?></h2>
+<h2><?= $title; ?></h2>
 <section id=wkPage>
     <div id=mw-content-text>
 		<?= $html; ?>
