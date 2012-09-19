@@ -279,7 +279,7 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 	}
 	
 	
-	@Test(groups={"ArticleFeaturesCRUDAdmin_08", "ArticleCRUDAdmin"})
+	@Test(groups={"ArticleFeaturesCRUDAdmin_008", "ArticleCRUDAdmin"})
 //	https://internal.wikia-inc.com/wiki/QA/Core_Features_and_Testing/Manual_Regression_Tests/Image_Serving	
 	// Test Case 009 Adding sliders to an article in edit mode
 	public void ArticleCRUDAdmin_008_ModifySlider()
@@ -321,7 +321,40 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		CommonFunctions.logOut(Properties.userName, driver);	
 	}
 	
-	public void ArticleCRUDAdmin_009_DeleteSlider(){}
+	@Test(groups={"ArticleFeaturesCRUDAdmin_009", "ArticleCRUDAdmin"})
+	public void ArticleCRUDAdmin_009_DeleteSlider()
+	{
+		CommonFunctions.logOut(Properties.userName, driver);
+		CommonFunctions.logIn(Properties.userNameStaff, Properties.passwordStaff);
+		WikiBasePageObject wiki = new WikiBasePageObject(driver, Global.DOMAIN);
+		pageName = "QAarticle"+wiki.getTimeStamp();
+		wiki.openWikiPage();
+		WikiArticleEditMode edit = wiki.createNewArticle(pageName, 1);
+		edit.deleteArticleContent();
+		edit.clickOnVisualButton();
+		edit.clickOnAddObjectButton("Slider");
+		edit.waitForObjectModalAndClickAddAphoto("GallerySlider");
+		edit.galleryCheckImageInputs(4);
+		edit.galleryClickOnSelectButton();
+		edit.gallerySetSliderPosition(2);//Vertical
+		edit.galleryClickOnFinishButton();
+		edit.verifyObjectInEditMode("gallery-slider");
+		edit.clickOnPreviewButton();
+		edit.verifyTheObjectOnThePreview("slider");//publish 
+		WikiArticlePageObject article = edit.clickOnPublishButtonInPreviewMode();
+		article.verifyTheObjectOnThePage("slider");
+		article.verifySliderThumbnailsPosition("vertical");
+		edit = article.Edit();
+		edit.clickRemoveButtonSlider();
+		edit.leftClickOkButton();
+		edit.verifyTheSliderNotOnTheArticleEditMode();
+		article = edit.clickOnPublishButton();
+		article.verifyTheSlideshowNotOnThePage();
+		article.deleteArticle();
+		article.openArticle(pageName);
+		article.verifyDeletedArticlePage(pageName);
+		CommonFunctions.logOut(Properties.userName2, driver);
+	}
 	
 	@Test(groups={"ArticleFeaturesCRUDAdmin_010", "ArticleCRUDAdmin"})
 //	https://internal.wikia-inc.com/wiki/QA/Core_Features_and_Testing/Manual_Regression_Tests/Image_Serving	
