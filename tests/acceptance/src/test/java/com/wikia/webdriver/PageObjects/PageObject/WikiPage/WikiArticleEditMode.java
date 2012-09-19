@@ -438,6 +438,12 @@ public class WikiArticleEditMode extends WikiArticlePageObject {
 		PageObjectLogging.log("VerifyTheImageNotOnTheArticleEditMode", "Verify that the image does not appear on the Article edit mode", true, driver);
 				
 	}
+	
+	public void verifyTheGalleryNotOnTheArticleEditMode() {
+		waitForElementNotVisibleByBy(imageOnArticleEditMode);
+		PageObjectLogging.log("VerifyTheImageNotOnTheArticleEditMode", "Verify that the image does not appear on the Article edit mode", true, driver);
+				
+	}
 
 	/**
 	 * Wait for Object and click on 'add this photo' under the first seen

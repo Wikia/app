@@ -241,7 +241,7 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		edit.leftClickOkButton();
 		edit.verifyTheImageNotOnTheArticleEditMode();
 		article = edit.clickOnPublishButton();
-		article.VerifyTheImageNotOnThePage();
+		article.verifyTheImageNotOnThePage();
 		article.deleteArticle();
 		article.openArticle(pageName);
 		article.verifyDeletedArticlePage(pageName);
@@ -374,4 +374,43 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		article.verifyDeletedArticlePage(pageName);
 		CommonFunctions.logOut(Properties.userName, driver);	
 	}
+	
+	@Test(groups={"ArticleFeaturesCRUDAdmin_011", "ArticleCRUDAdmin"}) 
+//	https://internal.wikia-inc.com/wiki/QA/Core_Features_and_Testing/Manual_Regression_Tests/Image_Serving	
+	// Test Case 007  Adding galleries to an article in edit mode
+	public void ArticleCRUDAdmin_011_DeleteGallery()
+	{
+		CommonFunctions.logOut(Properties.userName, driver);
+		CommonFunctions.logIn(Properties.userNameStaff, Properties.passwordStaff);
+		WikiBasePageObject wiki = new WikiBasePageObject(driver, Global.DOMAIN);
+		pageName = "QAarticle"+wiki.getTimeStamp();
+		wiki.openWikiPage();
+		WikiArticleEditMode edit = wiki.createNewArticle(pageName, 1);
+		edit.deleteArticleContent();
+		edit.clickOnVisualButton();
+		edit.clickOnAddObjectButton("Gallery");
+		edit.waitForObjectModalAndClickAddAphoto("Gallery");
+		edit.galleryCheckImageInputs(4);
+		edit.galleryClickOnSelectButton();
+		edit.gallerySetPositionGallery("Center");//error!!!
+		edit.gallerySetPhotoOrientation(2);
+		edit.galleryClickOnFinishButton();
+		edit.verifyObjectInEditMode("gallery");
+		edit.clickOnPreviewButton();
+		edit.verifyTheObjectOnThePreview("gallery");
+		WikiArticlePageObject article = edit.clickOnPublishButtonPreview();
+		article.verifyTheObjectOnThePage("gallery");
+		article.verifyGalleryPosion("center");
+		edit = article.Edit();
+		edit.clickRemoveButtonGallery();
+		edit.leftClickOkButton();
+		edit.verifyTheGalleryNotOnTheArticleEditMode();
+		article = edit.clickOnPublishButton();
+		article.verifyTheGalleryNotOnThePage();
+		article.deleteArticle();
+		article.openArticle(pageName);
+		article.verifyDeletedArticlePage(pageName);
+		CommonFunctions.logOut(Properties.userName2, driver);
+	}
+
 }

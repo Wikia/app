@@ -39,12 +39,12 @@ public class WikiArticlePageObject extends WikiBasePageObject {
 	@FindBy(css="input[id*='article-comm-reply']")
 	private WebElement submitReplyButton;
 	
-	
 	private By ImageOnWikiaArticle = By.cssSelector("div.WikiaArticle figure a img");
 	private By VideoOnWikiaArticle = By.cssSelector("div.WikiaArticle span.Wikia-video-play-button");
 	private By AddVideoRVButton = By.cssSelector("a.addVideo");
 	private By VideoModalAddButton = By.cssSelector("button.relatedVideosConfirm");
 	private By RVvideoLoading = By.cssSelector("section.loading");
+	private By galleryOnPublish = By.cssSelector("div[class*='gallery']");
 	
 	
 
@@ -209,10 +209,14 @@ public class WikiArticlePageObject extends WikiBasePageObject {
 	 *  
 	 * @author Michal Nowierski
 	 */
-	public void VerifyTheImageNotOnThePage() {
+	public void verifyTheImageNotOnThePage() {
 		waitForElementNotVisibleByBy(ImageOnWikiaArticle);
-		PageObjectLogging.log("VerifyTheImageNotOnThePage", "Verify that the image does not appear on the page", true, driver);
-						
+		PageObjectLogging.log("VerifyTheImageNotOnThePage", "Verify that the image does not appear on the page", true, driver);	
+	}
+	
+	public void verifyTheGalleryNotOnThePage() {
+		waitForElementNotVisibleByBy(galleryOnPublish);
+		PageObjectLogging.log("verifyTheGalleryNotOnThePage", "Verify that the gallery does not appear on the page", true, driver);	
 	}
 	
 	/**
