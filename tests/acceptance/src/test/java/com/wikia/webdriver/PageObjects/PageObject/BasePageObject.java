@@ -202,6 +202,17 @@ public class BasePageObject{
 		}
 	}
 	
+	public void mouseReleaseInArticleIframe(String cssSelecotr)
+	{
+		executeScript("$($($('iframe[title*=\"Rich\"]')[0].contentDocument.body).find('"+cssSelecotr+"')).mouseleave()");
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	
 	public void jQueryClick(String cssSelector)
 	{
