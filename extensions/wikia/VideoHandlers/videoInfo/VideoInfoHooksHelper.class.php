@@ -7,8 +7,8 @@
 class VideoInfoHooksHelper {
 
 	/**
-	 * Hook: clear cache when file is uploaded
-	 * @param $file LocalFile
+	 * Hook: add or reupload video and clear cache when file is uploaded
+	 * @param LocalFile $file
 	 * @param $reupload
 	 * @param $hasDescription
 	 * @return true
@@ -40,11 +40,82 @@ class VideoInfoHooksHelper {
 	}
 
 	/**
-	 * Hook: clear cache when file is deleted
-	 * @param $file LocalFile
+	 * Hook: add premium video and clear cache (video embed tool, video service)
+	 * @param Title $title
+	 * @return true
+	 */
+	public static function onAddPremiumVideo( $title ) {
+		if ( !F::build( 'VideoInfoHelper', array(), 'videoInfoExists' ) ) {
+			return true;
+		}
+
+		if ( $title instanceof Title ) {
+			$videoInfoHelper = F::build( 'VideoInfoHelper' );
+			$videoData = $videoInfoHelper->getVideoDataByTitle( $title, true );
+			if ( !empty($videoData) ) {
+				$videoInfo = F::build( 'VideoInfo', array( $videoData ) );
+				$affected = $videoInfo->addPremiumVideo( F::app()->wg->User->getId() );
+
+				if ( $affected ) {
+					$mediaService = F::build( 'MediaQueryService' );
+					$mediaService->clearCacheTotalVideos();
+					$mediaService->clearCacheTotalPremiumVideos();
+				}
+			}
+		}
+
+		return true;
+	}
+
+	/**
+	 * Hook: add premium video and clear cache (editor - source mode)
+	 * @param Article $article
+	 * @param User $user
+	 * @param $text
+	 * @param $summary
+	 * @param $minoredit
+	 * @param $watchthis
+	 * @param $sectionanchor
+	 * @param $flags
+	 * @param $revision
+	 * @param $status
+	 * @param $baseRevId
+	 * @return true 
+	 */
+	public static function onArticleSaveComplete(&$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
+		if ( !F::build( 'VideoInfoHelper', array(), 'videoInfoExists' ) ) {
+			return true;
+		}
+
+		$insertedImages = Wikia::getVar( 'imageInserts' );
+
+		$affected = false;
+		$userId = $user->getId();
+		foreach( $insertedImages as $img ) {
+			$videoInfoHelper = F::build( 'VideoInfoHelper' );
+			$videoData = $videoInfoHelper->getVideoDataByTitle( $img['il_to'], true );
+			if ( !empty($videoData) ) {
+				$videoInfo = F::build( 'VideoInfo', array( $videoData ) );
+				$affected = $videoInfo->addPremiumVideo( $userId );
+			}
+		}
+
+		// clear cache if premium video is added
+		if ( $affected ) {
+			$mediaService = F::build( 'MediaQueryService' );
+			$mediaService->clearCacheTotalVideos();
+			$mediaService->clearCacheTotalPremiumVideos();
+		}
+
+		return true;
+	}
+
+	/**
+	 * Hook: delete video and clear cache when file is deleted
+	 * @param LocalFile $file
 	 * @param $oldimage
 	 * @param $article
-	 * @param $user User
+	 * @param User $user
 	 * @param $reason
 	 * @return true
 	 */
@@ -71,11 +142,11 @@ class VideoInfoHooksHelper {
 	}
 
 	/**
-	 * Hook: clear cache when file is restored
+	 * Hook: add video and clear cache when file is restored
 	 * @param Title $title
-	 * @param type $versions
+	 * @param $versions
 	 * @param User $user
-	 * @param type $comment
+	 * @param $comment
 	 * @return true 
 	 */
 	public static function onFileUndeleteComplete( $title, $versions, $user, $comment ) {
@@ -97,8 +168,8 @@ class VideoInfoHooksHelper {
 	}
 
 	/**
-	 * Hook: clear cache when file is renamed
-	 * @param type $form
+	 * Hook: add new video if old video does not exist or rename old video and clear cache when file is renamed
+	 * @param $form
 	 * @param Title $oldTitle
 	 * @param Title $newTitle
 	 * @return true

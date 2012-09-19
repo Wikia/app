@@ -324,14 +324,43 @@ class MediaQueryService extends Service {
 		if ( !is_numeric($totalVideos) ) {
 			$db = $this->app->wf->GetDB( DB_SLAVE );
 
-			$row = $db->selectRow(
-				array( 'video_info' ),
-				array( 'count(video_title) cnt' ),
-				array(),
-				__METHOD__
-			);
+			if ( !$db->tableExists( 'video_info' ) ) {
+				$excludeList = array( 'png', 'gif', 'bmp', 'jpg', 'jpeg', 'ogg', 'ico', 'svg', 'mp3', 'wav', 'midi' );
+				$sqlWhere = implode( "','", $excludeList );
 
-			$totalVideos = ($row) ? $row->cnt : 0 ;
+				$sql =<<<SQL
+					SELECT il_to as name
+					FROM imagelinks
+					WHERE NOT EXISTS ( SELECT 1 FROM image WHERE img_media_type = 'VIDEO' AND img_name = il_to )
+						AND LOWER(il_to) != 'placeholder'
+						AND LOWER(SUBSTRING_INDEX(il_to, '.', -1)) NOT IN ( '$sqlWhere' )
+					UNION ALL
+					SELECT img_name as name
+					FROM image
+					WHERE img_media_type = 'VIDEO'
+					LIMIT 10000
+SQL;
+				$result = $db->query( $sql, __METHOD__ );
+
+				$totalVideos = 0;
+				while ( $row = $db->fetchObject($result) ) {
+					$title = F::build( 'Title', array( $row->name, NS_FILE ), 'newFromText' );
+					$file = $this->app->wf->FindFile( $title );
+					if ( $file instanceof File && $file->exists()
+						&& F::build( 'WikiaFileHelper', array($title), 'isTitleVideo' ) ) {
+						$totalVideos++;
+					}
+				}
+			} else {
+				$row = $db->selectRow(
+					array( 'video_info' ),
+					array( 'count(video_title) cnt' ),
+					array(),
+					__METHOD__
+				);
+
+				$totalVideos = ($row) ? $row->cnt : 0 ;
+			}
 
 			$this->app->wg->Memc->set( $memKey, $totalVideos, 60*60*24 );
 		}

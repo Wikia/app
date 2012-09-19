@@ -37,6 +37,7 @@ class VideoService extends WikiaModel {
 					$videoTitle = $title;
 					$videoPageId = $title->getArticleId();
 					$videoProvider = '';
+					wfRunHooks( 'AddPremiumVideo', array( $title ) );
 				} else {
 					list($videoTitle, $videoPageId, $videoProvider) = $this->addVideoVideoHandlers( $url );
 				}
