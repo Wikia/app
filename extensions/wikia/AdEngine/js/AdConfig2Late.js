@@ -1,4 +1,4 @@
-var AdConfigLate2 = function (
+var AdConfig2Late = function (
 	// regular dependencies
 	log,
 
@@ -8,7 +8,7 @@ var AdConfigLate2 = function (
 ) {
 	'use strict';
 
-	var module = 'AdConfigLate2'
+	var module = 'AdConfig2Late'
 		, getProvider;
 
 	getProvider = function(slot) {

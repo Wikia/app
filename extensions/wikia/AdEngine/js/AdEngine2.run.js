@@ -56,7 +56,7 @@
 	// Register late run trigger
 	window.AdEngine_loadLateAds = function(adConfigForLateAds) {
 		log('launching late ads now', 1, module);
-		log('work on queueForLateAds according to AdConfigLate2', 1, module);
+		log('work on queueForLateAds according to AdConfig2Late', 1, module);
 		adEngine.run(adConfigForLateAds, queueForLateAds)
 	};
 

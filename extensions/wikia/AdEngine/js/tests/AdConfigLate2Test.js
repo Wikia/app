@@ -1,9 +1,9 @@
 /**
  * @test-framework QUnit
- * @test-require-asset extensions/wikia/AdEngine/js/AdConfigLate2.js
+ * @test-require-asset extensions/wikia/AdEngine/js/AdConfig2Late.js
  */
 
-module('AdConfigLate2');
+module('AdConfig2Late');
 
 test('getProvider failsafe to AdDriver', function() {
 	var adProviderAdDriverMock = {name: 'AdDriverMock'}
@@ -11,7 +11,7 @@ test('getProvider failsafe to AdDriver', function() {
 		, logMock = function() {}
 		, adConfig;
 
-	adConfig = AdConfigLate2(
+	adConfig = AdConfig2Late(
 		logMock,
 		adProviderAdDriverMock,
 		adProviderLiftium2Mock
