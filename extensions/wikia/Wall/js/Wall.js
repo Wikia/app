@@ -5,6 +5,8 @@ var Wall = $.createClass(Object, {
 		if(Wall.initialized) {
 			return;
 		}
+		var self = this;
+		
 		Wall.initialized = true;
 		this.wall = $(element);
 		this.settings = $.extend(true, {}, Wall.settings, settings);
@@ -17,6 +19,7 @@ var Wall = $.createClass(Object, {
 			title: this.title,
 			namespace: window.wgNamespaceNumber
 		};
+		this.WallTooltipMeta = $('#WallTooltipMeta');
 
 		this.model = new Wall.BackendBridge();
 		if(this.settings.pageController) {
@@ -57,22 +60,14 @@ var Wall = $.createClass(Object, {
 			.bind('afterWatching', this.proxy(this.onWallWatch))
 			.bind('afterUnwatching', this.proxy(this.onWallUnwatch));
 
-		$.loadWikiaTooltip(function() {
-			// tooltips for votes
-			$('.voting-controls .votes').wikiaTooltip(function(el) {
-				if(!el.hasClass('notlink')) {
-					return $('#WallTooltipMeta .tooltip-votes-voterlist').text();
-				}
-				return {};
-			}, {nocache: true});
-			$('.voting-controls .vote').wikiaTooltip(function(el) {
-				var $el = $(el);
-				if(el.hasClass('voted') || el.hasClass('inprogress')) {
-					return $('#WallTooltipMeta .tooltip-votes-voted').text();
-				}
-				return $('#WallTooltipMeta .tooltip-votes-vote').text();
-			}, {nocache: true});
-			$('#ForumNewMessage .highlight').wikiaTooltip($('#WallTooltipMeta .tooltip-highlight-thread').text());
+		// Enable tooltips
+		this.setUpVoteTooltips();
+		
+		$('#ForumNewMessage .highlight').popover({
+			content: function() {
+				return self.WallTooltipMeta.find('.tooltip-highlight-thread').clone();
+			},
+			placement: 'top'
 		});
 
 		$('.timeago').timeago();
@@ -80,6 +75,46 @@ var Wall = $.createClass(Object, {
 		// If any textarea has content make sure Reply / Post button is visible
 		$(document).ready(this.initTextareas);
 		$(window).bind('hashchange', this.proxy(this.onHashChange)).trigger('hashchange');
+	},
+	
+	setUpVoteTooltips: function() {
+		// tooltips for votes
+		var self = this,
+			votingControls = $('.voting-controls');
+		
+		votingControls.find('.vote').popover({
+			content: function() {
+				var popoverText,
+					$this = $(this);
+					
+				if($this.hasClass('voted') || $this.hasClass('inprogress')) {
+					return self.WallTooltipMeta.find('.tooltip-votes-voted').clone();
+				}
+				return self.WallTooltipMeta.find('.tooltip-votes-vote').clone();
+			},
+			placement: 'top'
+		});
+
+		var votesLink = votingControls.find('.votes');
+		
+		if(!votesLink.hasClass('notlink')) {
+			this.enableVotesLink(votesLink);
+		}
+	},
+	
+	enableVotesLink: function(votesLink) {
+		var self = this;
+
+		votesLink.popover({
+			content: function() {
+				return self.WallTooltipMeta.find('.tooltip-votes-voterlist').clone();
+			},
+			placement: 'top'
+		});
+	},
+	
+	disableVotesLink: function(votesLink) {
+		votesLink.popover('destroy');
 	},
 
 	onHashChange: function() {
@@ -244,20 +279,22 @@ var Wall = $.createClass(Object, {
 				})
 			});
 		} else {
-			this.voteBase(e, function(target, data, dir) {
+			this.voteBase(e, this.proxy(function(target, data, dir) {
 				var votes = target.closest('li.message').find(".votes:first"),
-					number =  votes.find(".number:first"),
+					number = votes.find(".number:first"),
 					val = dir + parseInt(number.text());
 				number.html(val);
 				votes.data("votes", val);
 				if(val > 0) {
 					votes.removeClass('notlink');
+					this.enableVotesLink(votes)
 				} else {
 					votes.addClass('notlink');
+					this.disableVotesLink(votes);
 				}
 				target.toggleClass('voted')
 					.removeClass('inprogress');
-			});
+			}));
 		}
 	},
 
