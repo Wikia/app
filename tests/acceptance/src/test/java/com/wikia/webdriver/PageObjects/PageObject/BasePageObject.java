@@ -388,7 +388,7 @@ public class BasePageObject{
 	{
 		try
 		{
-			wait.until(ExpectedConditions.invisibilityOfElementLocated(by));								
+			wait.until(CommonExpectedConditions.invisibilityOfElementLocated(by));								
 		}
 		catch(NoSuchElementException e)
 		{
