@@ -199,6 +199,8 @@ class VideoEmbedTool {
 				header('X-screen-type: error');
 				return wfMsg ( 'vet-name-incorrect' );
 			}
+
+			wfRunHooks( 'AddPremiumVideo', array( $title ) );
 		} else { // needs to upload
 			// sanitize name and init title objects
 			$name = VideoFileUploader::sanitizeTitle($name);

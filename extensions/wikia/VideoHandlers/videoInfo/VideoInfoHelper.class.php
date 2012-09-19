@@ -9,9 +9,10 @@ class VideoInfoHelper extends WikiaModel {
 	/**
 	 * get video data from title
 	 * @param Title|string $title
+	 * @param boolean $premiumOnly
 	 * @return array|null  $video
 	 */
-	public function getVideoDataByTitle( $title ) {
+	public function getVideoDataByTitle( $title, $premiumOnly = false ) {
 		$app = F::app();
 
 		$app->wf->ProfileIn( __METHOD__ );
@@ -25,31 +26,33 @@ class VideoInfoHelper extends WikiaModel {
 		$file = $app->wf->FindFile( $title );
 		if ( $file instanceof File && $file->exists()
 			&& F::build( 'WikiaFileHelper', array($file), 'isFileTypeVideo' ) ) {
-			$fileMetadata = $file->getMetadata();
-			$userId = $file->getUser( 'id' );
-			$addedAt = ( $file->getTimestamp() ) ? $file->getTimestamp() : time();
+			if ( !($premiumOnly && $file->isLocal()) ) {
+				$fileMetadata = $file->getMetadata();
+				$userId = $file->getUser( 'id' );
+				$addedAt = ( $file->getTimestamp() ) ? $file->getTimestamp() : $this->wf->Timestamp( TS_MW );
 
-			$duration = 0;
-			$hdfile = 0;
-			if ( $fileMetadata ) {
-				$fileMetadata = unserialize( $fileMetadata );
-				if ( array_key_exists('duration', $fileMetadata) ) {
-					$duration = $fileMetadata['duration'];
+				$duration = 0;
+				$hdfile = 0;
+				if ( $fileMetadata ) {
+					$fileMetadata = unserialize( $fileMetadata );
+					if ( array_key_exists('duration', $fileMetadata) ) {
+						$duration = $fileMetadata['duration'];
+					}
+					if ( array_key_exists('hd', $fileMetadata) ) {
+						$hdfile = ( $fileMetadata['hd'] ) ? 1 : 0;
+					}
 				}
-				if ( array_key_exists('hd', $fileMetadata) ) {
-					$hdfile = ( $fileMetadata['hd'] ) ? 1 : 0;
-				}
+
+				$premium = ( $file->isLocal() ) ? 0 : 1 ;
+				$video = array(
+					'videoTitle' => $title->getDBKey(),
+					'addedAt' => $addedAt,
+					'addedBy' => $userId,
+					'duration' => $duration,
+					'premium' => $premium,
+					'hdfile' => $hdfile,
+				);
 			}
-
-			$premium = ( $file->isLocal() ) ? 0 : 1 ;
-			$video = array(
-				'videoTitle' => $title->getDBKey(),
-				'addedAt' => $addedAt,
-				'addedBy' => $userId,
-				'duration' => $duration,
-				'premium' => $premium,
-				'hdfile' => $hdfile,
-			);
 		}
 
 		$app->wf->ProfileOut( __METHOD__ );

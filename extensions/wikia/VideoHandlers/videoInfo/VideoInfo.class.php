@@ -114,10 +114,14 @@ class VideoInfo extends WikiaModel {
 				'IGNORE'
 			);
 
+			$affected = (bool) $db->affectedRows();
+
 			$db->commit();
 		}
 
 		$this->wf->ProfileOut( __METHOD__ );
+
+		return $affected;
 	}
 
 	/**
@@ -229,6 +233,15 @@ SQL;
 
 
 	public function addVideo() {
+		return $this->addToDatabase();
+	}
+
+	public function addPremiumVideo( $userId ) {
+		$this->addedAt = $this->wf->Timestamp( TS_MW );
+		if ( !empty($userId) ) {
+			$this->addedBy = $userId;
+		}
+
 		return $this->addToDatabase();
 	}
 
