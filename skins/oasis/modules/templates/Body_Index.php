@@ -47,14 +47,16 @@
 			echo F::app()->renderView($headerModuleName, $headerModuleAction, $headerModuleParams);
 		}
 		?>
+		
+		<?php
+			// Needs to be above page header so it can suppress page header
+			if ($displayAdminDashboard) {
+				echo F::app()->renderView('AdminDashboard', 'Chrome');
+			}
+		?>
 
 		<article id="WikiaMainContent" class="WikiaMainContent<?= !empty($isGridLayoutEnabled) ? $railModulesExist ? ' grid-4' : ' grid-6' : '' ?>">
 			<?php
-				// Needs to be above page header so it can suppress page header
-				if ($displayAdminDashboard) {
-					echo F::app()->renderView('AdminDashboard', 'Chrome');
-				}
-				
 				if (!empty($wg->EnableForumExt) && !empty($wg->IsForum)) {
 					echo F::app()->renderView( 'ForumController', 'header' );
 				}
