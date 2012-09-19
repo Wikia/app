@@ -8,7 +8,7 @@
 	adProviderAdDriver = AdProviderAdDriver(log, window);
 	adProviderLiftium2 = AdProviderLiftium2(scriptWriter, WikiaTracker, log, window);
 
-	adConfig = AdConfigLate2(
+	adConfig = AdConfig2Late(
 		log,
 		// AdProviders:
 		adProviderAdDriver,
