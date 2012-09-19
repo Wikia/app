@@ -10,7 +10,8 @@
 class WikiaBarModel extends WikiaBarModelBase {
 	const WIKIA_BAR_TYPE_DATA_MODEL = 1;
 	const WIKIA_BAR_TYPE_DATA_FAILSAFE_MODEL = 2;
-	const WIKIABAR_MCACHE_VERSION = '0.01';
+	const WIKIA_BAR_MCACHE_VERSION = '0.20.1333';
+	const WIKIA_BAR_DEFAULT_LANG_CODE = 'en';
 
 	const BUTTON_1_CLASS = 'button-1-class';
 	const BUTTON_1_TEXT = 'button-1-text';
@@ -58,15 +59,17 @@ class WikiaBarModel extends WikiaBarModelBase {
 	public function getBarContents() {
 		$this->wf->profileIn(__METHOD__);
 
-		$dataMemcKey = $this->wf->SharedMemcKey('WikiaBar', $this->getLang(), $this->getVertical(), self::WIKIABAR_MCACHE_VERSION);
+		$dataMemcKey = $this->getMemcKey();
+		Wikia::log(__METHOD__, '', 'Reading ' . $dataMemcKey);
 		$data = $this->wg->memc->get($dataMemcKey);
 
 		if (!$data) {
+			Wikia::log(__METHOD__, '', 'Memcache entry ' . $dataMemcKey . ' empty');
 			$data = $this->getParsedBarConfiguration();
 			$this->wg->memc->set($dataMemcKey, $data);
 		}
 
-		$data['data'] = $this->structureData($data['data']);
+		$data['data'] = $this->structuredData($data['data']);
 
 		$this->wf->profileOut(__METHOD__);
 		return $data;
@@ -74,22 +77,68 @@ class WikiaBarModel extends WikiaBarModelBase {
 
 	protected function getParsedBarConfiguration() {
 		$message = $this->getRegularMessage();
+
+		/** @var $validator WikiaBarMessageDataValidator */
 		$validator = F::build('WikiaBarMessageDataValidator');
 		$parseResult = $this->parseBarConfigurationMessage($message, $validator);
 		$status = true;
 
+		// Result from message is empty. Trying to get failsafe
 		if (!$parseResult) {
-			Wikia::log(__METHOD__, null, 'WikiaBar message ' . implode('', array($this->getVertical(), '/', $this->getLang())) . ' falling back to failsafe');
-			$message = $this->getFailsafeMessage();
-			$validator = F::build('WikiaBarFailsafeDataValidator');
-			$parseResult = $this->parseBarConfigurationMessage($message, $validator);
+			$parseResult = $this->getParsedFailsafeResult();
 			$status = false;
 		}
+
+		// Result from failsafe is empty. Trying to get from english message
+		if(!$parseResult && $this->getLang() != self:: WIKIA_BAR_DEFAULT_LANG_CODE) {
+			$parseResult = $this->getParsedMessageFromDefaultLang();
+			$status = false;
+		}
+
+		// Result from english message is empty. Trying to get from english failsafe
+		if(!$parseResult && $this->getLang() != self:: WIKIA_BAR_DEFAULT_LANG_CODE) {
+			$parseResult = $this->getParsedFailsafeMessageFromDefaultLang();
+			$status = false;
+		}
+
 		$data = array(
 			'data' => $parseResult,
 			'status' => $status
 		);
 		return $data;
+	}
+
+	protected function getParsedFailsafeMessageFromDefaultLang() {
+		$tmpLang = $this->getLang();
+		$this->setLang(self::WIKIA_BAR_DEFAULT_LANG_CODE);
+		$dataMemcKey = $this->getMemcKey();
+		Wikia::log(__METHOD__, null, 'WikiaBar configured en message ' . $dataMemcKey . ' empty, trying en failsafe');
+		$message = $this->getFailsafeMessage();
+		$validator = F::build('WikiaBarFailsafeDataValidator');
+		$parseResult = $this->parseBarConfigurationMessage($message, $validator);
+		$this->setLang($tmpLang);
+		return $parseResult;
+	}
+
+	protected function getParsedMessageFromDefaultLang() {
+		$tmpLang = $this->getLang();
+		$this->setLang(self::WIKIA_BAR_DEFAULT_LANG_CODE);
+		$dataMemcKey = $this->getMemcKey();
+		Wikia::log(__METHOD__, null, 'WikiaBar failsafe message ' . $dataMemcKey . ' empty, trying configured en');
+		$message = $this->getRegularMessage();
+		$validator = F::build('WikiaBarMessageDataValidator');
+		$parseResult = $this->parseBarConfigurationMessage($message, $validator);
+		$this->setLang($tmpLang);
+		return $parseResult;
+	}
+
+	protected function getParsedFailsafeResult() {
+		$dataMemcKey = $this->getMemcKey();
+		Wikia::log(__METHOD__, null, 'WikiaBar message ' . $dataMemcKey . ' falling back to failsafe');
+		$message = $this->getFailsafeMessage();
+		$validator = F::build('WikiaBarFailsafeDataValidator');
+		$parseResult = $this->parseBarConfigurationMessage($message, $validator);
+		return $parseResult;
 	}
 
 	protected function getRegularMessage() {
@@ -105,12 +154,17 @@ class WikiaBarModel extends WikiaBarModelBase {
 	/**
 	 * @param WikiaBarModelBase $model
 	 * @return string
+	 * @todo: fatal error if $model = false
 	 */
-	protected function getMessageFromModel(WikiaBarModelBase $model) {
+	protected function getMessageFromModel($model) {
 		$this->wf->profileIn(__METHOD__);
-		$model->setLang($this->getLang());
-		$model->setVertical($this->getVertical());
-		$data = $model->getData();
+		if ($model instanceof WikiaBarModelBase) {
+			$model->setLang($this->getLang());
+			$model->setVertical($this->getVertical());
+			$data = $model->getData();
+		} else {
+			$data = false;
+		}
 		$this->wf->profileOut(__METHOD__);
 		return $data;
 	}
@@ -119,7 +173,8 @@ class WikiaBarModel extends WikiaBarModelBase {
 	 * @param int $modelType
 	 * @return bool|WikiaBarModelBase
 	 */
-	protected function getModel($modelType) {
+	protected
+	function getModel($modelType) {
 		switch ($modelType) {
 			case self::WIKIA_BAR_TYPE_DATA_MODEL:
 				$model = F::build('WikiaBarDataModel');
@@ -135,9 +190,11 @@ class WikiaBarModel extends WikiaBarModelBase {
 
 	/**
 	 * @param string $message
+	 * @param WikiaBarDataValidator $validator
 	 * @return bool|array
 	 */
-	protected function parseBarConfigurationMessage($message, WikiaBarDataValidator $validator) {
+	public
+	function parseBarConfigurationMessage($message, WikiaBarDataValidator &$validator) {
 		$this->wf->profileIn(__METHOD__);
 		$data = array();
 		$valid = true;
@@ -156,19 +213,17 @@ class WikiaBarModel extends WikiaBarModelBase {
 		foreach ($lines as $line) {
 			if (stripos($line, '=') === false) {
 				$valid = false;
-				break;
 			}
 
 			if (!$validator->validateLine($line)) {
 				$valid = false;
-				break;
 			}
 
 			list($key, $val) = explode('=', $line, 2);
 			$data[$key] = trim($val);
 		}
 
-		if (count(array_intersect(array_keys($data), $this->requiredFields)) != count($this->requiredFields)) {
+		if (!$validator->isArrayASuperArrayOf(array_keys($data), $this->requiredFields)) {
 			$valid = false;
 		}
 
@@ -180,7 +235,8 @@ class WikiaBarModel extends WikiaBarModelBase {
 		}
 	}
 
-	protected function structureData($data) {
+	protected
+	function structuredData($data) {
 		$data = array(
 			'buttons' =>
 			array(
@@ -227,7 +283,13 @@ class WikiaBarModel extends WikiaBarModelBase {
 		return $data;
 	}
 
-	public function getData() {
+	public
+	function getData() {
 		return $this->getBarContents();
+	}
+
+	protected
+	function getMemcKey() {
+		return $this->wf->SharedMemcKey('WikiaBarContents', $this->getVertical(), $this->getLang(), self::WIKIA_BAR_MCACHE_VERSION);
 	}
 }

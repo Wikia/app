@@ -27,12 +27,13 @@ abstract class WikiaBarModelBase extends WikiaModel {
 		return $this->vertical;
 	}
 
-    public function mapVerticalToMain($vertical) {
-        if(!in_array($vertical,array(WikiFactoryHub::CATEGORY_ID_GAMING,WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT))) {
-            return WikiFactoryHub::CATEGORY_ID_LIFESTYLE;
-        } else {
-			return $vertical;
+	public function mapVerticalToMain($vertical) {
+		$mainVertical = WikiFactoryHub::CATEGORY_ID_LIFESTYLE;
+		if( in_array($vertical,array(WikiFactoryHub::CATEGORY_ID_GAMING,WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT))) {
+			$mainVertical = $vertical;
 		}
+
+		return $mainVertical;
     }
 
 	abstract public function getData();

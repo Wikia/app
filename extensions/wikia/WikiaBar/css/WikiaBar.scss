@@ -1,5 +1,6 @@
 @import "../../../../skins/oasis/css/core/color";
 @import "../../../../skins/oasis/css/core/layout";
+@import "../../../../skins/oasis/css/mixins/menus";
 @import "../../../../skins/oasis/css/mixins/box-shadow";
 @import "../../../../skins/oasis/css/mixins/gradient";
 @import "../../../../skins/oasis/css/mixins/transition";
@@ -11,13 +12,13 @@ body {
 	margin-bottom: 25px;
 }
 
-.WikiaBarWrapper {
+#WikiaBarWrapper {
 	bottom: 0;
 	height: 25px;
+	padding: 0;
 	position: fixed;
 	width: 100%;
 	z-index: $zTop;
-	@include linear-gradient($color-header, left, $color-header-alt, 0, $color-header, 50%, $color-header-alt, 100%);
 	@include box-shadow(0, 0, 10px, $color-page-shadow);
 	@include transition-shorthand(all $animationSpeed ease-in $animationSpeed);
 	&.hidden {
@@ -48,9 +49,9 @@ body {
 			display: inline-block;
 			float: left;
 			font-size: 11px;
-			height: 14px;
-			line-height: 13px;
-			margin: 1px 0 1px 3px;
+			height: 16px;
+			line-height: 15px;
+			margin: 0 0 2px 3px;
 			padding: 4px 5px 3px 5px;
 			img {
 				background-image: url(/extensions/wikia/WikiaBar/images/wikiabarIcon.png); /* base64 */
@@ -58,28 +59,162 @@ body {
 				height: 14px;
 				margin-right: 5px;
 				width: 12px;
+				&.ent_actionheroshowdown {
+					background-image: url(/extensions/wikia/WikiaBar/images/icons/ent_actionheroshowdown.png); /* base64 */
+					width: 8px;
+				}
+				&.ent_bookclub {
+					background-image: url(/extensions/wikia/WikiaBar/images/icons/ent_bookclub.png); /* base64 */
+					width: 9px;
+				}
+				&.ent_breakingentertainment {
+					background-image: url(/extensions/wikia/WikiaBar/images/icons/ent_breakingentertainment.png); /* base64 */
+					width: 12px;
+				}
+				&.ent_comiccon {
+					background-image: url(/extensions/wikia/WikiaBar/images/icons/ent_comiccon.png); /* base64 */
+					width: 13px;
+				}
+				&.ent_falltv {
+					background-image: url(/extensions/wikia/WikiaBar/images/icons/ent_falltv.png); /* base64 */
+					width: 13px;
+				}
+				&.ent_halloweengiveaway {
+					background-image: url(/extensions/wikia/WikiaBar/images/icons/ent_halloweengiveaway.png); /* base64 */
+					width: 18px;
+				}
+				&.ent_judgedredd {
+					background-image: url(/extensions/wikia/WikiaBar/images/icons/ent_judgedredd.png); /* base64 */
+					width: 6px;
+				}
+				&.ent_movietrailers {
+					background-image: url(/extensions/wikia/WikiaBar/images/icons/ent_movietrailers.png); /* base64 */
+					width: 11px;
+				}
+				&.ent_summermusic {
+					background-image: url(/extensions/wikia/WikiaBar/images/icons/ent_summermusic.png); /* base64 */
+					width: 13px;
+				}
+				&.ent_thedarkknightrises {
+					background-image: url(/extensions/wikia/WikiaBar/images/icons/ent_thedarkknightrises.png); /* base64 */
+					width: 22px;
+				}
+				&.ent_twitter {
+					background-image: url(/extensions/wikia/WikiaBar/images/icons/ent_twitter.png); /* base64 */
+					width: 14px;
+				}
+				&.lifestyle_beauty {
+					background-image: url(/extensions/wikia/WikiaBar/images/icons/lifestyle_beauty.png); /* base64 */
+					width: 19px;
+				}
+				&.lifestyle_fooddrink {
+					background-image: url(/extensions/wikia/WikiaBar/images/icons/lifestyle_fooddrink.png); /* base64 */
+					width: 11px;
+				}
+				&.lifestyle_olympics {
+					background-image: url(/extensions/wikia/WikiaBar/images/icons/lifestyle_olympics.png); /* base64 */
+					width: 20px;
+				}
+				&.lifestyle_science {
+					background-image: url(/extensions/wikia/WikiaBar/images/icons/lifestyle_science.png); /* base64 */
+					width: 16px;
+				}
+				&.lifestyle_summerfun {
+					background-image: url(/extensions/wikia/WikiaBar/images/icons/lifestyle_summerfun.png); /* base64 */
+					width: 13px;
+				}
+				&.lifestyle_summerolympics {
+					background-image: url(/extensions/wikia/WikiaBar/images/icons/lifestyle_summerolympics.png); /* base64 */
+					width: 12px;
+				}
+				&.lifestyle_travel {
+					background-image: url(/extensions/wikia/WikiaBar/images/icons/lifestyle_travel.png); /* base64 */
+					width: 12px;
+				}
+				&.lifestyle_twitter {
+					background-image: url(/extensions/wikia/WikiaBar/images/icons/lifestyle_twitter.png); /* base64 */
+					width: 14px;
+				}
+				&.vg_gameguides {
+					background-image: url(/extensions/wikia/WikiaBar/images/icons/vg_gameguides.png); /* base64 */
+					width: 20px;
+				}
+				&.vg_halloweengiveaway {
+					background-image: url(/extensions/wikia/WikiaBar/images/icons/vg_halloweengiveaway.png); /* base64 */
+					width: 16px;
+				}
+				&.vg_halo4 {
+					background-image: url(/extensions/wikia/WikiaBar/images/icons/vg_halo4.png); /* base64 */
+					width: 25px;
+				}
+				&.vg_newreleases {
+					background-image: url(/extensions/wikia/WikiaBar/images/icons/vg_newreleases.png); /* base64 */
+					width: 16px;
+				}
+				&.vg_skyrimv {
+					background-image: url(/extensions/wikia/WikiaBar/images/icons/vg_skyrimv.png); /* base64 */
+					width: 10px;
+				}
+				&.vg_sleepingdogs {
+					background-image: url(/extensions/wikia/WikiaBar/images/icons/vg_sleepingdogs.png); /* base64 */
+					width: 14px;
+				}
+				&.vg_streetfighter {
+					background-image: url(/extensions/wikia/WikiaBar/images/icons/vg_streetfighter.png); /* base64 */
+					width: 10px;
+				}
+				&.vg_twitter {
+					background-image: url(/extensions/wikia/WikiaBar/images/icons/vg_twitter.png); /* base64 */
+					width: 14px;
+				}
+				&.vg_videogameolympics {
+					background-image: url(/extensions/wikia/WikiaBar/images/icons/vg_videogameolympics.png); /* base64 */
+					width: 12px;
+				}
 			}
 			span {
 				float: right;
 			}
 		}
 	  	.message {
-			background-color: blue;
 			float: right;
+			font-family: helvetica;
+			font-size: 11px;
 			height: 25px;
-			margin-left: 50px;
-			text-align: left;
+			margin: 0 24px 0 50px;
+			padding: 5px 5px 0 0;
+			text-align: right;
+			white-space: nowrap;
 			width: 420px;
+			a {
+				color: $color-header-text;
+				text-decoration: none;
+			}
 		}
-	  	.arrow {
-			background-image: url(/extensions/wikia/WikiaBar/images/arrowDown.png); /* base64 */
-			background-position: center;
-			background-repeat: no-repeat;
-			display: block;
-			float: right;
-			height: 25px;
-			width: 24px;
+	}
+	.toolbar {
+		background: transparent;
+		border: 0;
+		margin: 0 auto;
+		padding: 3px 0 0 0;
+		position: relative;
+		text-align: left;
+		width: $width-outside;
+		&:after {
+			background: transparent;
+			position: relative;
 		}
+	}
+	.arrow {
+		background-image: url(/extensions/wikia/WikiaBar/images/arrowDown.png); /* base64 */
+		background-position: center;
+		background-repeat: no-repeat;
+	  	bottom: 0;
+		display: block;
+		height: 25px;
+	  	position: absolute;
+	  	right: 0;
+		width: 24px;
 	}
 }
 
@@ -91,6 +226,7 @@ body {
 	bottom: 0;
 	position: fixed;
 	right: 0;
+	z-index: $zTop;
 	@include box-shadow(0, 0, 10px, $color-page-shadow);
 	@include transition-shorthand(all $animationSpeed ease-in $animationSpeed);
 	&.hidden {
@@ -104,4 +240,23 @@ body {
 		width: 23px;
 		background-image: url(/skins/oasis/images/checkers.png); /* base64 */
 	}
+}
+
+.popover.wikiaBar {
+  .arrow {
+	border-left: 10px solid transparent;
+	border-top: 4px solid $color-page;
+	border-right: 10px solid transparent;
+	bottom: 2px;
+	margin-left: -5px;
+	right: 5px;
+  }
+  .popover-inner {
+	float: right;
+  }
+}
+
+body.nowikiabar {
+  padding-bottom: 0;
+  margin-bottom: 17px;
 }
