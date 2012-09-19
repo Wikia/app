@@ -45,7 +45,8 @@ public class WikiArticlePageObject extends WikiBasePageObject {
 	private By VideoModalAddButton = By.cssSelector("button.relatedVideosConfirm");
 	private By RVvideoLoading = By.cssSelector("section.loading");
 	private By galleryOnPublish = By.cssSelector("div[class*='gallery']");
-	
+	private By slideShowOnPublish = By.cssSelector("div.wikia-slideshow");
+	private By videoOnPublish = By.cssSelector("a.image.video");
 	
 
 	public WikiArticlePageObject(WebDriver driver, String Domain,
@@ -219,6 +220,17 @@ public class WikiArticlePageObject extends WikiBasePageObject {
 		PageObjectLogging.log("verifyTheGalleryNotOnThePage", "Verify that the gallery does not appear on the page", true, driver);	
 	}
 	
+	public void verifyTheSlideshowNotOnThePage() 
+	{
+		waitForElementNotVisibleByBy(slideShowOnPublish);
+		PageObjectLogging.log("verifyTheSlideshowNotOnThePage", "Verify that the slideshow does not appear on the page", true, driver);			
+	}
+	
+	public void verifyTheVideoNotOnThePage() {
+		waitForElementNotVisibleByBy(videoOnPublish);
+		PageObjectLogging.log("verifyTheVideoNotOnThePage", "Verify that the video does not appear on the page", true, driver);
+	}
+
 	/**
 	 * Verify that the Object appears on the page
 	 *  
@@ -341,5 +353,8 @@ public class WikiArticlePageObject extends WikiBasePageObject {
 		waitForElementByCss(".wikiaPhotoGallery-slider-body div."+position);
 		PageObjectLogging.log("verifySliderThumbnailsPosition", "Slider thumbnails position verified: "+position, true, driver);		
 	}
+
+
+
 
 }

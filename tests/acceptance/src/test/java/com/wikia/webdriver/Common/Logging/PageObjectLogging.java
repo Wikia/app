@@ -180,6 +180,7 @@ public class PageObjectLogging implements WebDriverEventListener {
 	@Override
 	public void onException(Throwable throwable, WebDriver driver) {
 
+		//sometimes there is no ability to capture from browser, if it's not responding
 		try {
 			CommonUtils.captureScreenshot(screenPath + imageCounter, driver);
 			CommonUtils.appendTextToFile(screenPath + imageCounter + ".html",
@@ -189,19 +190,24 @@ public class PageObjectLogging implements WebDriverEventListener {
 					"driver has no ability to catch screenshot or html source - driver may died",
 					false);
 		}
-
-		String stackTrace = Throwables.getStackTraceAsString(throwable);
-		Throwable a = Throwables.getRootCause(throwable);
-		// String s1 =
-		// "<tr class=\"error\"><td>error</td><td>"+stackTrace+"</td><td> <br/><a href='screenshots/screenshot"+imageCounter+".png'>Screenshot</a><br/><a href='screenshots/screenshot"+imageCounter+".html'>HTML Source</a></td></tr>";
-
-		StackTraceElement[] stacktraceElements = a.getStackTrace();
+		
+		//getting stacktrace of exception
+		String stackTrace = Throwables.getStackTraceAsString(throwable); 
+		Throwable cause = Throwables.getRootCause(throwable);
+		//creating array with stacktrace
+		StackTraceElement[] stacktraceElements = cause.getStackTrace();
 		try {
+			//looking for stacktrace element with method name findInvisibleElement when exception message is "Unable to find element"
 			for (int i = 0; i < stacktraceElements.length; i++) {
 				if (stacktraceElements[i].getMethodName().contains(
 						"findInvisibleElement")
 						&& throwable.getMessage().contains(
 								"Unable to find element")) {
+					//if below conditions were met:
+					//exception comes from findInvisibleElement method and
+					//exception message contains text "Unable to find element"
+					//exception "elementIsInvisible" is thrown to be caught at the bottom
+					
 					throw new Exception("elementIsInvisible");
 				}
 			}

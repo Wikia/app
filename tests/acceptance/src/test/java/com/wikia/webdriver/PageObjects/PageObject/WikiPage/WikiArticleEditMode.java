@@ -86,10 +86,18 @@ public class WikiArticleEditMode extends WikiArticlePageObject {
 	private By captionInPreview = By.cssSelector("section.modalWrapper.preview section.modalContent figcaption");
 	private By removePhotoDialog = By.cssSelector("section.modalWrapper.RTEModal");
 	private By imageOnArticleEditMode = By.cssSelector("div.WikiaArticle figure a img");
+	private By videoOnArticleEditMode = By.cssSelector("img..video");
+	private By slideShowOnArticleEditMode = By.cssSelector("img.image-slideshow");
 	private By galleryDialogPhotosList = By.cssSelector("ul.WikiaPhotoGalleryResults li input");
 	private By galleryDialogPhotoOrientationsList = By.cssSelector("ul.clearfix[id='WikiaPhotoGalleryOrientation'] li");
 	private By galleryDialogSlideshowOrientationsList = By.cssSelector("ul.clearfix[id='WikiaPhotoGallerySliderType'] li");
 
+	private String imageArticleIFrame = "img";
+	private String galleryArticleIFrame = "img.image-gallery";
+	private String sliderArticleIFrame = "img.image-gallery-slider";
+	private String slideShowArticleIFrame = "img.image-slideshow";
+	private String videoArticleIFrame = "img.video";
+	
 	public WikiArticleEditMode(WebDriver driver, String Domain,
 			String articlename) {
 		super(driver, Domain, articlename);
@@ -336,7 +344,7 @@ public class WikiArticleEditMode extends WikiArticlePageObject {
 	public void clickModifyButtonOfImage(String caption) 
 	{
 		waitForElementByElement(iFrame);
-		mouseOverInArticleIframe("img");
+		mouseOverInArticleIframe(imageArticleIFrame);
 		waitForElementByElement(modifyButton);
 		jQueryClick("span.RTEMediaOverlayEdit");
 		PageObjectLogging.log("ClickModifyButtonOfImage", "Click on 'modify button' of image with caption: '"+caption+"'", true, driver);
@@ -345,7 +353,7 @@ public class WikiArticleEditMode extends WikiArticlePageObject {
 	public void clickModifyButtonGallery()
 	{
 		waitForElementByElement(iFrame);
-		mouseOverInArticleIframe("img.image-gallery");
+		mouseOverInArticleIframe(galleryArticleIFrame);
 		waitForElementByElement(modifyButton);
 		jQueryClick("span.RTEMediaOverlayEdit");
 		PageObjectLogging.log("clickModifyButtonGallery", "Click on 'modify button' on gallery", true, driver);
@@ -354,7 +362,7 @@ public class WikiArticleEditMode extends WikiArticlePageObject {
 	public void clickModifyButtonSlideshow() 
 	{
 		waitForElementByElement(iFrame);
-		mouseOverInArticleIframe("img.image-slideshow");
+		mouseOverInArticleIframe(slideShowArticleIFrame);
 		waitForElementByElement(modifyButton);
 		jQueryClick("span.RTEMediaOverlayEdit");
 		PageObjectLogging.log("clickModifyButtonSlideshow", "Click on 'modify button' on slideshow", true, driver);
@@ -363,10 +371,18 @@ public class WikiArticleEditMode extends WikiArticlePageObject {
 	public void clickModifyButtonSlider() 
 	{
 		waitForElementByElement(iFrame);
-		mouseOverInArticleIframe("img.image-gallery-slider");
+		mouseOverInArticleIframe(sliderArticleIFrame);
 		waitForElementByElement(modifyButton);
 		jQueryClick("span.RTEMediaOverlayEdit");
 		PageObjectLogging.log("clickModifyButtonSlideshow", "Click on 'modify button' on slideshow", true, driver);		
+	}
+	
+	public void clickModifyButtonVideo() {
+		waitForElementByElement(iFrame);
+		mouseOverInArticleIframe(videoArticleIFrame);
+		waitForElementByElement(modifyButton);
+		jQueryClick("span.RTEMediaOverlayEdit");
+		PageObjectLogging.log("clickModifyButtonSlideshow", "Click on 'modify button' on video", true, driver);		
 	}
 
 	/**
@@ -377,7 +393,7 @@ public class WikiArticleEditMode extends WikiArticlePageObject {
 	 * 	 */
 	public void clickRemoveButtonOfImage(String caption) {
 		waitForElementByElement(iFrame);
-		mouseOverInArticleIframe("img");
+		mouseOverInArticleIframe(imageArticleIFrame);
 		waitForElementByElement(removeButton);
 		jQueryClick("span.RTEMediaOverlayDelete");
 		PageObjectLogging.log("ClickRemoveButtonOfImage", "Click on 'remove button' of image with caption: '"+caption+"'", true, driver);
@@ -385,7 +401,23 @@ public class WikiArticleEditMode extends WikiArticlePageObject {
 	
 	public void clickRemoveButtonGallery() {
 		waitForElementByElement(iFrame);
-		mouseOverInArticleIframe("img.image-gallery");
+		mouseOverInArticleIframe(galleryArticleIFrame);
+		waitForElementByElement(removeButton);
+		jQueryClick("span.RTEMediaOverlayDelete");
+		PageObjectLogging.log("ClickRemoveButtonOfImage", "Click on 'remove button' on gallery", true, driver);
+	}
+	
+	public void clickRemoveButtonSlideshow() {
+		waitForElementByElement(iFrame);
+		mouseOverInArticleIframe(slideShowArticleIFrame);
+		waitForElementByElement(removeButton);
+		jQueryClick("span.RTEMediaOverlayDelete");
+		PageObjectLogging.log("ClickRemoveButtonOfImage", "Click on 'remove button' on gallery", true, driver);
+	}
+	
+	public void clickRemoveButtonVideo() {
+		waitForElementByElement(iFrame);
+		mouseOverInArticleIframe(videoArticleIFrame);
 		waitForElementByElement(removeButton);
 		jQueryClick("span.RTEMediaOverlayDelete");
 		PageObjectLogging.log("ClickRemoveButtonOfImage", "Click on 'remove button' on gallery", true, driver);
@@ -434,15 +466,29 @@ public class WikiArticleEditMode extends WikiArticlePageObject {
 	 * @author Michal Nowierski
 	 * 	 */
 	public void verifyTheImageNotOnTheArticleEditMode() {
-		waitForElementNotVisibleByBy(imageOnArticleEditMode);
+		waitForElementNotVisibleByBy(imageOnArticleEditMode);//this need to be rewritten
 		PageObjectLogging.log("VerifyTheImageNotOnTheArticleEditMode", "Verify that the image does not appear on the Article edit mode", true, driver);
 				
 	}
 	
 	public void verifyTheGalleryNotOnTheArticleEditMode() {
-		waitForElementNotVisibleByBy(imageOnArticleEditMode);
+		waitForElementNotVisibleByBy(imageOnArticleEditMode);//this need to be rewritten
 		PageObjectLogging.log("VerifyTheImageNotOnTheArticleEditMode", "Verify that the image does not appear on the Article edit mode", true, driver);
-				
+	}
+	
+	public void verifyTheSlideshowNotOnTheArticleEditMode() {
+		driver.switchTo().frame(iFrame);
+		waitForElementNotVisibleByBy(slideShowOnArticleEditMode);
+		driver.switchTo().defaultContent();
+		PageObjectLogging.log("VerifyTheImageNotOnTheArticleEditMode", "Verify that the image does not appear on the Article edit mode", true, driver);		
+	}
+	
+	public void verifyTheVideoNotOnTheArticleEditMode() {
+		driver.switchTo().frame(iFrame);
+		waitForElementNotVisibleByBy(videoOnArticleEditMode);
+		driver.switchTo().defaultContent();
+		PageObjectLogging.log("verifyTheVideoNotOnTheArticleEditMode", "Verify that the video does not appear on the Article edit mode", true, driver);
+		
 	}
 
 	/**
@@ -576,13 +622,16 @@ public class WikiArticleEditMode extends WikiArticlePageObject {
 	 *  
 	 * @author Michal Nowierski
 	 * 	 */
-	public void verifyVideoInEditMode() {
+	public void verifyVideoInEditMode(String caption) {
 		waitForElementByElement(iFrame);
 //		WebElement iFrame = driver.findElement(IframeVisualEditor);
 		driver.switchTo().frame(iFrame);
 		waitForElementByElement(videoInEditMode);
-//		wait.until(ExpectedConditions.visibilityOfElementLocated(VideoInEditMode));
+//		wait.until(ExpectedConditions.visibilityOfElementLocated(VideoInEditMode));		
 		driver.switchTo().defaultContent();
+		mouseOverInArticleIframe(videoArticleIFrame);
+		waitForElementByXPath("//div[@class='RTEMediaCaption' and contains(text(), '"+caption+"')]");
+		mouseReleaseInArticleIframe(videoArticleIFrame);
 		PageObjectLogging.log("VerifyVideoInEditMode", "Verify that video appears in edit mode", true, driver);
 		
 	}
@@ -732,6 +781,14 @@ public class WikiArticleEditMode extends WikiArticlePageObject {
 		}
 		PageObjectLogging.log("deleteUnwantedVideoFromMessage", "Delete all source code on the article", true, driver);
 	}
+
+	
+
+	
+
+	
+
+	
 
 	
 
