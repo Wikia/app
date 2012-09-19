@@ -124,19 +124,19 @@ class WikiaPhotoGalleryHelper {
 
 		if ( $data['type'] == WikiaPhotoGallery::WIKIA_PHOTO_SLIDESHOW ) {
 			$class .= ' image-slideshow';
+		}
 
-			// support "position" attribute (slideshow alignment)
-			switch ($gallery->getParam('position')) {
-				case 'left':
-					$class .= ' alignLeft';
-					break;
-				case 'center':
-					$class .= ' alignCenter';
-					break;
-				case 'right':
-					$class .= ' alignRight';
-					break;
-			}
+		// support "position" attribute (gallery alignment)
+		switch ($gallery->getParam('position')) {
+			case 'left':
+				$class .= ' alignLeft';
+				break;
+			case 'center':
+				$class .= ' alignCenter';
+				break;
+			case 'right':
+				$class .= ' alignRight';
+				break;
 		}
 
 		if ( $data['type'] == WikiaPhotoGallery::WIKIA_PHOTO_SLIDER ) {
