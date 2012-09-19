@@ -115,65 +115,53 @@ class WikiaApp {
 	}
 
 	/**
-	 * checks if a class reference or a string refer to a WikiaService instance
+	 * checks if an reference or a string refer to a WikiaService instance
 	 *
-	 * @param mixed $controllerClass a string with the name of the class or a reference to an object
+	 * @param mixed $controllerName a string with the name of the class or a reference to an object
 	 */
-	public function isService( $controllerClass ) {
-		return ( is_object( $controllerClass ) ) ? is_a( $controllerClass, 'WikiaService' ) : ( ( strrpos( $controllerClass, 'Service' ) === ( strlen( $controllerClass ) - 7 ) ) );
+	public function isService( $controllerName ) {
+		return ( is_object( $controllerName ) ) ? is_a( $controllerName, 'WikiaService' ) : ( ( strrpos( $controllerName, 'Service' ) === ( strlen( $controllerName ) - 7 ) ) );
 	}
 
 	/**
-	 * checks if a class reference or a string refer to a WikiaController instance
+	 * checks if an reference or a string refer to a WikiaController instance
 	 *
-	 * @param mixed $controllerClass a string with the name of the class or a reference to an object
+	 * @param mixed $controllerName a string with the name of the class or a reference to an object
 	 */
-	public function isController( $controllerClass ) {
-		return ( is_object( $controllerClass ) ) ? is_a( $controllerClass, 'WikiaController' ) : ( ( strrpos( $controllerClass, 'Controller' ) === ( strlen( $controllerClass ) - 10 ) ) );
+	public function isController( $controllerName ) {
+		return ( is_object( $controllerName ) ) ? is_a( $controllerName, 'WikiaController' ) : ( ( strrpos( $controllerName, 'Controller' ) === ( strlen( $controllerName ) - 10 ) ) );
 	}
 
-	/** 
-	 * This helper gets the "base" controller name from the request object built by sendRequest 
-	 * unfortunately, this needs to check for calls which also append "Controller"
-	 * So: sendRequest("Foo") and sendRequest("FooController") can both work. 
-	 *  @param String name
-	 *  @return String name
-	 */ 
-	public function getControllerName( $controllerName ) {
-		// case-insensitive
-		if ( empty($controllerName) ) {
-			return null;
-		} elseif ( endsWith($controllerName, "Controller", false) ) {
- 			return substr( $controllerName, 0, -10 );
-		} elseif ( endsWith($controllerName, "Service", false) ) {
- 			return substr( $controllerName, 0, -7 );
+	/**
+	 * @deprecated
+	 *
+	 * checks if an reference or a string refer to a Module instance, this method exists only for supporting legacy code
+	 *
+	 * @param mixed $controllerName a string with the name of the class or a reference to an object
+	 */
+	public function isModule( $controllerName ) {
+		return ( is_object( $controllerName ) ) ? is_a( $controllerName, 'Module' ) : ( ( strrpos( $controllerName, 'Module' ) === ( strlen( $controllerName ) - 6 ) ) );
+	}
+
+	/**
+	 * @deprecated
+	 *
+	 * returns a partial name for a WikiaController or a Module subclass name to use in dispatching requests and loading templates,
+	 * this method exists only for supporting legacy code
+	 *
+	 * @param mixed $controllerName a string with the name of the class or a reference to an object
+	 */
+	public function getControllerLegacyName( $controllerName ) {
+		if ( is_object( $controllerName ) ) {
+			$controllerName = get_class( $controllerName );
+		}
+
+		if ( $this->isController( $controllerName ) ) {
+			return substr( $controllerName, 0, strlen( $controllerName ) - 10 );
+		} elseif ( $this->isModule( $controllerName ) ) {
+			return substr( $controllerName, 0, strlen( $controllerName ) - 6 );
 		} else {
 			return $controllerName;
-		}
-	}
-
-	/** 
-	 * This helper gets the full controller class name from the request object built by sendRequest 
-	 * unfortunately, this needs to handle calls which sometimes append "Controller" and sometimes do not
-	 * So: sendRequest("Foo") and sendRequest("FooController") can both work. 
-	 */
-	public function getControllerClassName( $baseName ) {
-		if ( empty($baseName) ) {
-			return null;
-		} elseif ( endsWith($baseName, "Controller", false) ) {
-			return $baseName;
-		} else {
- 			return $baseName . "Controller";
-		}
-	}
-
-	public function getServiceClassName ( $baseName ) {
-		if ( empty($baseName) ) {
-			return null;
-		} elseif ( endsWith($baseName, "Service", false) ) {
-			return $baseName;
-		} else {
- 			return $baseName . "Service";
 		}
 	}
 

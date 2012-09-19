@@ -108,9 +108,23 @@ class WikiaView {
 				$extension = WikiaResponse::TEMPLATE_ENGINE_PHP;
 			}
 
-			// sanitize inputs
-			$controllerName = $app->getControllerName( $controllerName );
-			$controllerClass = $app->getControllerClassName( $controllerName );
+			if (
+				(
+					$app->isService( $controllerName ) ||
+					$app->isController( $controllerName ) ||
+					$app->isModule( $controllerName )
+				) &&
+				!empty( $autoloadClasses[$controllerName] )
+			) {
+				$controllerClass = $controllerName;
+			} else {
+				$controllerClass = "{$controllerName}Controller";
+			}
+
+			// Workaround for Dispatching Module classes while Module still exists
+			if( empty( $autoloadClasses[$controllerClass] ) ) {
+				$controllerClass = "{$controllerName}Module";
+			}
 
 			if( empty( $autoloadClasses[$controllerClass] ) ) {
 				throw new WikiaException( "Invalid controller name: {$controllerName}" );
@@ -141,10 +155,12 @@ class WikiaView {
 			}
 
 			$templateExists = file_exists( $templatePath );
-			if( !$templateExists && $app->isController( $controllerClass ) ) {
-				$templatePath = "{$dirName}/templates/{$controllerClass}_{$methodName}.$extension";
+
+			if( !$templateExists && !$app->isService( $controllerName ) ) {
+				$controllerName = $app->getControllerLegacyName($controllerName);
+				$templatePath = "{$dirName}/templates/{$controllerName}_{$methodName}.$extension";
 				$templateExists = file_exists( $templatePath );
-			} 
+			}
 
 			if( !$templateExists ) {
 				throw new WikiaException( "Template file not found: {$templatePath}" );

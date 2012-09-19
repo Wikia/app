@@ -5,19 +5,8 @@ class ControllerTest extends WikiaBaseTest {
 	function setUp() {
 		global $wgAutoloadClasses, $IP;
 
-		$wgAutoloadClasses['UnitTestController'] = dirname( __FILE__ ) . '/controllers/UnitTestController.class.php';
-		$wgAutoloadClasses['UnitTestService'] = dirname( __FILE__ ) . '/controllers/UnitTestService.class.php';
+		$wgAutoloadClasses['UnitTestController'] = dirname( __FILE__ ) . '/modules/UnitTestController.class.php';
 		$wgAutoloadClasses['OasisTemplate'] = $IP . '/skins/Oasis.php';
-	}
-
-	function testDispatchingToController() {
-		$response = F::app()->sendRequest('UnitTest');
-		$this->assertEquals('Foo', $response->getVal('foo'));
-	}
-
-	function testDispatchingToService() {
-		$response = F::app()->sendRequest('UnitTestService');
-		$this->assertEquals('Yes', $response->getVal('service'));
 	}
 
 	function testRenderView() {
@@ -28,40 +17,39 @@ class ControllerTest extends WikiaBaseTest {
 		);
 	}
 
-	function testWikiaSpecialPageLink() {
+	function testViewSpecialPageLink() {
 		$this->assertTag (
 			array("tag" => "a"),
 			Wikia::specialPageLink('CreatePage', 'button-createpage', 'wikia-button')
 		);
 	}
 
-	function testWikiaLink() {
+	function testViewLink() {
 		$this->assertTag (
 			array("tag" => "a"),
 			Wikia::link(Title::newFromText("Test"))
 		);
 	}
 
-	function testDispatchingWithParams() {
+	function testGetDataAll() {
+		$this->markTestSkipped();
+		$random = rand();
+		$data = Module::get('UnitTest', 'Index2', array('foo2' => $random))->getData();
+
+		$this->assertEquals(
+			$random,
+			$data['foo2']
+		);
+	}
+
+	function testGetDataOne() {
+		$this->markTestSkipped();
 		$random = rand();
 
-		$response = F::app()->sendRequest('UnitTest', 'failureWithParams', array('foo2' => $random));
-		$data = $response->getData();
-		$this->assertNull( $data['foo2']);
-
-		$response = F::app()->sendRequest('UnitTest', 'successWithParams', array('foo2' => $random));
-		$data = $response->getData();
 		$this->assertEquals(
 			$random,
-			$data['foo2']
-			);
-
-		$response = F::app()->sendRequest('UnitTest', 'legacyFunctionWithParams', array('foo2' => $random));
-		$data = $response->getData();
-		$this->assertEquals(
-			$random,
-			$data['foo2']
-			);
+			Module::get('UnitTest', 'Index2', array('foo2' => $random))->getData('foo2')
+		);
 	}
 
 	function testSetGetSkinTemplate() {
@@ -75,9 +63,9 @@ class ControllerTest extends WikiaBaseTest {
 		);
 	}
 
-	function testNotExistingController() {
+	function testNotExistingModule() {
 		$this->setExpectedException('WikiaException');
-		F::app()->sendRequest("DoesNotExist");
+		$this->assertNull(Module::get('ModuleThatDoesNotExist'));
 	}
 
 }
