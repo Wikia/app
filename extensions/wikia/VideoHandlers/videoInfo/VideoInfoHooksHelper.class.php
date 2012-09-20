@@ -18,9 +18,8 @@ class VideoInfoHooksHelper {
 			return true;
 		}
 
-		$title = $file->getTitle();
 		$videoInfoHelper = F::build( 'VideoInfoHelper' );
-		$videoData = $videoInfoHelper->getVideoDataByTitle( $title );
+		$videoData = $videoInfoHelper->getVideoDataByFile( $file );
 		if ( !empty($videoData) ) {
 			$videoInfo = F::build( 'VideoInfo', array( $videoData ) );
 			if ( $reupload ) {

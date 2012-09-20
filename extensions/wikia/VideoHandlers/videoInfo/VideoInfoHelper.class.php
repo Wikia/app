@@ -17,13 +17,31 @@ class VideoInfoHelper extends WikiaModel {
 
 		$app->wf->ProfileIn( __METHOD__ );
 
-		$video = null;
-
 		if ( is_string($title) ) {
 			$title = F::build( 'Title', array( $title, NS_FILE ), 'newFromText' );
 		}
 
 		$file = $app->wf->FindFile( $title );
+		$video = $this->getVideoDataByFile( $file, $premiumOnly );
+
+		$app->wf->ProfileOut( __METHOD__ );
+
+		return $video;
+	}
+
+	/**
+	 * get video data from file
+	 * @param File $file
+	 * @param boolean $premiumOnly
+	 * @return array|null  $video
+	 */
+	public function getVideoDataByFile( $file, $premiumOnly = false ) {
+		$app = F::app();
+
+		$app->wf->ProfileIn( __METHOD__ );
+
+		$video = null;
+
 		if ( $file instanceof File && $file->exists()
 			&& F::build( 'WikiaFileHelper', array($file), 'isFileTypeVideo' ) ) {
 			if ( !($premiumOnly && $file->isLocal()) ) {
@@ -45,7 +63,7 @@ class VideoInfoHelper extends WikiaModel {
 
 				$premium = ( $file->isLocal() ) ? 0 : 1 ;
 				$video = array(
-					'videoTitle' => $title->getDBKey(),
+					'videoTitle' => $file->getTitle()->getDBKey(),
 					'addedAt' => $addedAt,
 					'addedBy' => $userId,
 					'duration' => $duration,
