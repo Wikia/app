@@ -33,7 +33,7 @@ class WikiaSearch extends WikiaObject {
 
 	/**
 	 * Search client
-	 * @var WikiaSearchClient
+	 * @var Solarium_Client
 	 */
 	protected $client = null;
 	protected $parserHookActive = false;
@@ -91,11 +91,12 @@ class WikiaSearch extends WikiaObject {
 	private function prepareQuery( Solarium_Query_Select $query, WikiaSearchConfig $searchConfig )
 	{
 		// $query->setResultClass('wikiasearchresult')
+		$sort = $searchConfig->getSort();
 		
 		$query	->setFields		( $searchConfig->getRequestedFields() )
 			  	->setStart		( $searchConfig->getStart() )
 				->setRows		( $searchConfig->getLength() )
-				->addSort		( $searchConfig->getSort() )
+				->addSort		( $sort[0], $sort[1] )
 				->addParam		( 'timeAllowed', $searchConfig->getIsInterwiki() ? 7500 : 5000 )
 		;
 		
@@ -121,18 +122,16 @@ class WikiaSearch extends WikiaObject {
 			;
 			
 			$queryFieldsString .= sprintf(' %s^7', self::field('wikititle'));
-		} 
-		else {
-			
 		}
 		
 		$query->createFilterQuery()->setQuery( $this->getFilterQueryString( $searchConfig ) );
 		
-		$nestedQuery = clone($query);
+		$nestedQuery = $this->client->createSelect();
+		$nestedQuery->setQuery($query->getQuery());
 		
 		$dismax = $nestedQuery->getDismax();
 		
-		$boostQueryString = $this->getBoostQueryString( $searchConfig );
+		$boostQueryString = $this->getBoostQueryString( $query, $searchConfig );
 		
 		$dismax	->setQueryFields		( $queryFieldsString )
 				->setPhraseFields		( $queryFieldsString )
@@ -147,7 +146,10 @@ class WikiaSearch extends WikiaObject {
 			$dismax->setBoostFunctions( $this->getBoostFunctions( $searchConfig) );
 		}
 		
-		$query->setQuery( $this->getQueryClauses( $searchConfig ) . ' AND ' . $nestedQuery );
+		$query->setQuery( $this->getQueryClausesString( $searchConfig ) . ' AND ' . $nestedQuery );
+		
+		var_dump($query);
+		var_dump($nestedQuery); die;
 		
 	}
 	
@@ -194,7 +196,7 @@ class WikiaSearch extends WikiaObject {
 		return $boostFunctions;
 	}
 	
-	private function getQueryClauses( WikiaSearchConfig $searchConfig )
+	private function getQueryClausesString( WikiaSearchConfig $searchConfig )
 	{
 		if ( $searchConfig->isInterWiki() ) {
 			global $wgContLang;
@@ -234,7 +236,7 @@ class WikiaSearch extends WikiaObject {
 			array_unshift($queryClauses, 'wid:'.$searchConfig->getCityId());
 		}
 		
-		return $queryClauses;
+		return sprintf( '(%s)', implode(' AND ', $queryClauses) );
 	}
 	
 	private function getBoostQueryString( Solarium_Query_Select $query, WikiaSearchConfig $searchConfig )

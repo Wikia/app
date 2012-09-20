@@ -60,7 +60,7 @@ class WikiaSearchConfig implements ArrayAccess
 		if ( substr($method, 0, 3) == 'get' ) {
 			return $this->offsetGet( strtolower($method[3]).substr($method, 4) );
 		} else if ( substr($method, 0, 3) == 'set' ) {
-			$this->offsetSet( strtolower($method[3]).substr($method, 4), $params );
+			$this->offsetSet( strtolower($method[3]).substr($method, 4), $params[0] );
 			return $this; // fluent
 		}
 	}
@@ -127,7 +127,10 @@ class WikiaSearchConfig implements ArrayAccess
 	
 	public function getNamespaces()
 	{
-		$namespaces = (isset($this->params['namespaces'])) ? $this->params['namespaces'] : SearchEngine::DefaultNamespaces();
+		$namespaces = ( isset($this->params['namespaces']) && !empty($this->params['namespaces']) ) 
+					? $this->params['namespaces'] 
+					: SearchEngine::DefaultNamespaces();
+		
 		$queryNamespaceArray = (isset($this->params['queryNamespace'])) ? array($this->params['queryNamespace']) : array(); 
 		$this->params['namespaces'] = array_merge($namespaces, $queryNamespaceArray);
 		return $this->params['namespaces'];
@@ -140,7 +143,6 @@ class WikiaSearchConfig implements ArrayAccess
 	
 	public function getSort()
 	{
-		var_dump('fix me... rank is an array'); die;
 		$rank = $this->getRank();
 		return isset($this->rankOptions[$rank]) ? $this->rankOptions[$rank] : $this->rankOptions['default']; 
 	}
