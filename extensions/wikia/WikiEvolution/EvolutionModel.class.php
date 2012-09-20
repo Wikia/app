@@ -1,21 +1,26 @@
 <?php
 
 require_once ( '../../../maintenance/commandLine.inc' );
-define("HOWMANYCATEGORIES", 200);
+define("HOWMANYCATEGORIES", 150000);
 define("CATEGORIESTOARTICLE", 30);
 
 
 class EvolutionModel {
 
+	private $wikiName;
 	private $wikiColor;
 	private $revisionsData;
 	private $biggestCategories;
 	private $articlesCache = array();
+	private $downloadedAvatars = array();
 
 
-	public function __construct() {
+	public function __construct($wgDBname) {
+		$this->wikiName = $wgDBname ;
 		$this->msg("Collecting Wiki's colors...");
 		$this->setWikiColor();
+		$this->msg("Collecting Wiki's logo...");
+		$this->downloadWordmark();
 		$this->msg("Collecting revisions data...");
 		$this->loadRevisionsData();
 		$this->msg("Collecting " . HOWMANYCATEGORIES . " biggest categories...");
@@ -27,6 +32,27 @@ class EvolutionModel {
 		$wiki_colors = SassUtil::getOasisSettings();
 		$wiki_color = substr($wiki_colors["color-buttons"], 1);
 		$this->wikiColor = strtoupper($wiki_color);
+	}
+
+
+	private function downloadWordmark() {
+		$themeSettings = new ThemeSettings();
+		$settings = $themeSettings->getSettings();
+		$wordmark = wfReplaceImageServer($settings['wordmark-image-url'], SassUtil::getCacheBuster());
+
+		$folder_path = $this->wikiName ;
+		if (!is_dir($folder_path)) {
+			mkdir($folder_path, 0700);
+		}
+		$file_path = $folder_path . '/wordmark.png';
+		if( file_exists($file_path) ) {
+			system("rm " . $file_path);
+		}
+		file_put_contents( $file_path, Http::get($wordmark) );
+		if( file_get_contents($file_path) == '' ) {
+			system("rm " . $file_path);
+			system("cp default_wordmark.png " . $file_path);
+		}
 	}
 
 
@@ -69,11 +95,10 @@ class EvolutionModel {
 
 	public function formARow() {
 		if( $row = $this->revisionsData->fetchObject() ) {
-
-		$page_id = $row->page_id;
-		$page_title = $row->page_title;
-		$rev_len = $row->rev_len;
-		$user_name = $row->rev_user_text;
+			$page_id = $row->page_id;
+			$page_title = $row->page_title;
+			$rev_len = $row->rev_len;
+			$user_name = $row->rev_user_text;
 
 			if( !( $this->checkIfArticleIsInCache($page_id) ) ) {
 				if( !( $this->initializeCache($page_id, $page_title, $rev_len) ) ) {
@@ -101,6 +126,8 @@ class EvolutionModel {
 			} else {
 				$processedRow["user_name"] = 'Anonym' ;
 			}
+
+			$this->getAvatar($processedRow["user_name"]);
 
 			$processedRow["size"] = $rev_len;
 
@@ -263,6 +290,36 @@ class EvolutionModel {
 		}
 	}
 
+	
+	private function getAvatar($user_name) {
+
+		if( !($this->checkIfAvatarIsDownloaded($user_name)) ) {
+			$folder_path = $this->wikiName ;
+			if (!is_dir($folder_path)) {
+				mkdir($folder_path, 0700);
+			}
+			$folder_path = $folder_path . '/avatars' ;
+			if (!is_dir($folder_path)) {
+				mkdir($folder_path, 0700);
+			}
+			$file_path = $folder_path . '/' . $user_name . '.png';
+			if( !( file_exists($file_path) ) ) {
+				$avatar = AvatarService::getAvatarurl($user_name, 50);
+				file_put_contents($file_path, Http::get($avatar));
+				$this->downloadedAvatars[$user_name] = true;
+			}
+		}
+	}
+
+
+	private function checkIfAvatarIsDownloaded($user_name) {
+		if( isset( $this->downloadedAvatars[$user_name] ) ) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 
 	private function indexIsInArray($index, $array) {
 		$filled_indexes = array_keys( $array );
@@ -274,7 +331,7 @@ class EvolutionModel {
 	}
 
 
-	protected function isIp($str) {
+	private function isIp($str) {
 		return filter_var($str, FILTER_VALIDATE_IP);
 	}
 

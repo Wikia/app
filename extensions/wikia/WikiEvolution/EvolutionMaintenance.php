@@ -1,9 +1,7 @@
 <?php
 
-include("EvolutionModel.class.php");
-include("EvolutionAbstractLogRenderer.class.php");
-include("EvolutionGourceLogRenderer.class.php");
-include("EvolutionLogstalgiaLogRenderer.class.php");
+ini_set( "include_path", dirname( __FILE__ )."/../../../maintenance/" );
+require_once( "commandLine.inc" );
 
 define("FILENAME_GOURCE", "gource.log");
 define("FILENAME_LOGSTALGIA", "logstalgia.log");

@@ -1,17 +1,20 @@
 <?php
 
-include("EvolutionModel.class.php");
-include("EvolutionAbstractLogRenderer.class.php");
-include("EvolutionGourceLogRenderer.class.php");
+ini_set( "include_path", dirname( __FILE__ )."/../../../maintenance/" );
+require_once( "commandLine.inc" );
 
-define("FILENAME", "gource.log");
+define("FILENAME", 'gource.log');
 
 $gouRen = new EvolutionGourceLogRenderer();
-$model = new EvolutionModel();
+$model = new EvolutionModel($wgDBname);
 
 print "\n". "Generating log file..." . "\n";
 
-$file = FILENAME;
+$folder_path = $wgDBname ;
+if (!is_dir($folder_path)) {
+	mkdir($folder_path, 0700);
+}
+$file = $folder_path . '/' . FILENAME;
 $f = fopen($file, "w");
 
 while ( $row = $model->formARow() ) {
@@ -22,8 +25,7 @@ while ( $row = $model->formARow() ) {
 }
 fclose($f);
 
-//$output = shell_exec('cat gource.log | gource -o');
-//echo $output;
 
 print "\n". "Done." . "\n";
+
 ?>
