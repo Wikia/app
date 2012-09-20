@@ -59,6 +59,7 @@ $config['adengine2_js'] = array(
 		'//extensions/wikia/AdEngine/js/AdEngine2.js',
 
 		// high prio
+		'//extensions/wikia/AdEngine/js/AdProviderAdDriver.js',
 		'//extensions/wikia/AdEngine/js/AdProviderAdDriver2.js',
 		'//extensions/wikia/AdEngine/js/AdProviderEvolve.js',
 		'//extensions/wikia/AdEngine/js/AdProviderEvolveRS.js',
@@ -85,7 +86,6 @@ $config['oasis_ads_js'] = array(
 		// adengine2 low prio
 		// @requires adengine2 core already loaded
 		// @requires liftium loaded later (TODO FIXME)
-		'//extensions/wikia/AdEngine/js/AdProviderAdDriver.js',
 		'//extensions/wikia/AdEngine/js/AdProviderLiftium2.js',
 		'//extensions/wikia/AdEngine/js/AdConfig2Late.js',
 		'//extensions/wikia/AdEngine/js/AdEngine2.configLateAds.js',

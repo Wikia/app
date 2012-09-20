@@ -3,7 +3,6 @@ var AdConfig2Late = function (
 	log,
 
 	// AdProviders
-	AdProviderAdDriver,
 	AdProviderLiftium2
 ) {
 	'use strict';
@@ -21,8 +20,7 @@ var AdConfig2Late = function (
 			return AdProviderLiftium2;
 		}
 
-		// TODO: should be AdProviderLiftium2 eventually
-		return AdProviderAdDriver;
+		return AdProviderLiftium2;
 	};
 
 	return {

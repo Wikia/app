@@ -7,6 +7,7 @@ var AdConfig2 = function (
 	AdProviderEvolve,
 	AdProviderEvolveRS,
 	AdProviderAdDriver2,
+	AdProviderAdDriver,
 	AdProviderLater
 ) {
 	'use strict';
@@ -80,6 +81,9 @@ var AdConfig2 = function (
 		}
 		if (slot[2] === 'AdDriver2') {
 			return AdProviderAdDriver2;
+		}
+		if (slot[2] === 'AdDriver') {
+			return AdProviderAdDriver;
 		}
 		if (slot[2] === 'Liftium2') {
 			return AdProviderLater;
