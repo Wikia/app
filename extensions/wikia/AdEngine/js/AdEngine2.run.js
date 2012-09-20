@@ -7,6 +7,7 @@
 		, adProviderEvolveRS
 		, adProviderGamePro
 		, adProviderAdDriver2
+		, adProviderAdDriver
 		, adProviderLater
 		, adSlotsQueue
 		, lazyQueue = LazyQueue()
@@ -23,6 +24,7 @@
 	adProviderEvolve = AdProviderEvolve(scriptWriter, WikiaTracker, log, window, document);
 	adProviderEvolveRS = AdProviderEvolveRS(scriptWriter, WikiaTracker, log, window, document, Geo);
 	adProviderAdDriver2 = AdProviderAdDriver2(log, window);
+	adProviderAdDriver = AdProviderAdDriver(log, window);
 
 	// Special Ad Provider, to deal with the ads Late
 	queueForLateAds = [];
@@ -37,6 +39,7 @@
 		adProviderEvolve,
 		adProviderEvolveRS,
 		adProviderAdDriver2,
+		adProviderAdDriver,
 		adProviderLater
 	);
 

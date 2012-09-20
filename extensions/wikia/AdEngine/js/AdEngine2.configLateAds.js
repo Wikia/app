@@ -7,17 +7,14 @@
 (function(log, WikiaTracker, window, ghostwriter, document) {
 	var adConfig
 		, scriptWriter
-		, adProviderAdDriver
 		, adProviderLiftium2;
 
 	scriptWriter = ScriptWriter(log, ghostwriter, document);
-	adProviderAdDriver = AdProviderAdDriver(log, window);
 	adProviderLiftium2 = AdProviderLiftium2(scriptWriter, WikiaTracker, log, window);
 
 	adConfig = AdConfig2Late(
 		log,
 		// AdProviders:
-		adProviderAdDriver,
 		adProviderLiftium2
 	);
 
