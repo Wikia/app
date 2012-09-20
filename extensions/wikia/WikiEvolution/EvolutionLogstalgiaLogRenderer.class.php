@@ -1,7 +1,5 @@
 <?php
 
-//include("EvolutionAbstractLogRenderer.class.php");
-
 class EvolutionLogstalgiaLogRenderer extends EvolutionAbstractLogRenderer {
 
 
