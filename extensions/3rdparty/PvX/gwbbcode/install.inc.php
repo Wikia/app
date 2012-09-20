@@ -285,4 +285,3 @@ function template_list($dirname) {
    
    return $list;
 }
-?>

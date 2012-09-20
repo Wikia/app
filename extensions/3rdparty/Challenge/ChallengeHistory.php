@@ -178,4 +178,3 @@ function wfSpecialChallengeHistory(){
 	$wgMessageCache->addMessage( 'challengehistory', 'Challenge History' );
 }
 
-?>

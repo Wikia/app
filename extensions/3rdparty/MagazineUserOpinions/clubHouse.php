@@ -26,4 +26,3 @@ function renderclubHouse( $input ) {
 }
 
 
-?>
