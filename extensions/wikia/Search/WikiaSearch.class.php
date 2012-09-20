@@ -41,6 +41,7 @@ class WikiaSearch extends WikiaObject {
 
 	public function __construct( Solarium_Client $client ) {
 		$this->client = $client;
+		$this->client->setAdapter('Solarium_Client_Adapter_Curl');
 		parent::__construct();
 	}
 
@@ -67,12 +68,11 @@ class WikiaSearch extends WikiaObject {
 		
 		$query = $this->client->createSelect();
 		$this->prepareQuery( $query, $searchConfig );
-		
-		var_dump($query); die;
-		
+		//var_dump($this->client); die;
 		// @TODO register appropriate resultset class that works with our existing setup
 		$results = $this->client->select( $query );
 		
+		var_dump($results); die;		
 
 		if( $searchConfig->getPage() == 1 ) {
 			$resultCount = $results->getResultsFound();
@@ -127,7 +127,7 @@ class WikiaSearch extends WikiaObject {
 		$query->createFilterQuery()->setQuery( $this->getFilterQueryString( $searchConfig ) );
 		
 		$nestedQuery = $this->client->createSelect();
-		$nestedQuery->setQuery($query->getQuery());
+		$nestedQuery->setQuery( $searchConfig->getQuery() );
 		
 		$dismax = $nestedQuery->getDismax();
 		
@@ -143,14 +143,10 @@ class WikiaSearch extends WikiaObject {
 		;
 		
 		if (! $searchConfig->getSkipBoostFunctions() ) {
-			$dismax->setBoostFunctions( $this->getBoostFunctions( $searchConfig) );
+			$dismax->setBoostFunctions( $this->getBoostFunctionsString( $searchConfig) );
 		}
 		
 		$query->setQuery( $this->getQueryClausesString( $searchConfig ) . ' AND ' . $nestedQuery );
-		
-		var_dump($query);
-		var_dump($nestedQuery); die;
-		
 	}
 	
 	private function getFilterQueryString( WikiaSearchConfig $searchConfig )
@@ -175,7 +171,7 @@ class WikiaSearch extends WikiaObject {
 		return $fqString;
 	}
 	
-	private function getBoostFunctions( WikiaSearchConfig $searchConfig )
+	private function getBoostFunctionsString( WikiaSearchConfig $searchConfig )
 	{
 		if ( $searchConfig->isInterWiki() ) {
 			$boostFunctions = array(
@@ -193,7 +189,7 @@ class WikiaSearch extends WikiaObject {
 			);
 		}
 		
-		return $boostFunctions;
+		return implode(' ', $boostFunctions);
 	}
 	
 	private function getQueryClausesString( WikiaSearchConfig $searchConfig )
