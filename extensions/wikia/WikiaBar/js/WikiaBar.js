@@ -34,14 +34,14 @@ var WikiaBar = {
 			//show bar (depends on user's local storage data)
 			this.show();
 
-			//getting the ad
-			if( window.wgEnableWikiaBarAds ) {
-				this.getAd();
-			}
-
 			//messages animation
 			if ($('#WikiaBarWrapper .message').exists()) {
 				this.startSlideShow();
+			}
+
+			//getting the ad
+			if( window.wgEnableWikiaBarAds ) {
+				this.getAd();
 			}
 		}
 
