@@ -221,8 +221,10 @@ var RelatedVideos = {
 	},
 
 	recalculateLength: function(){
-		var numberItems = $( '.container .item',this.rvModule ).size();
-		$( '.tally em',this.rvModule ).html( numberItems );
+		var numberElem = $( '.tally em',this.rvModule ),
+			numberItems = parseInt(numberElem.text());
+
+		numberElem.text( numberItems + 1 );
         if ( numberItems == 0 ) {
             $( '.novideos' ).show();
         } else {
