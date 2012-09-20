@@ -11,7 +11,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	protected $wikiaSearch = null;
 
 	public function __construct() {
-	        // note: this is required since we haven't constructed $this->wg yet
+        // note: this is required since we haven't constructed $this->wg yet
 		global $wgWikiaSearchIsDefault;
 
 		$this->wikiaSearch = F::build('WikiaSearch');
@@ -105,7 +105,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			}
 
 			$isGrouped = $isInterWiki || $this->getVal('grouped', false);
-			
+
 			$searchConfig->setQuery				( $query )
 						 ->setLength			( $limit )
 						 ->setPage				( $page )
