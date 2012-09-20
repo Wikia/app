@@ -339,18 +339,23 @@ class HAWelcomeJob extends Job {
 						$dbr = wfGetDB( DB_SLAVE );
 
 						/**
-						 * get all users which are sysops/sysops or staff or helpers
+                                                 * prior to September 20, 2012:
+						 * get all users who are sysops or staff or helpers
 						 * but not bots
-						 *
-						 * @todo check $db->makeList( $array )
-						 */
+                                                 *
 						$groups = ($sysop !== "@sysop")
 							? array( "ug_group" => array( "staff", "sysop", "helper", "bot" ) )
 							: array( "ug_group" => array( "sysop", "bot" ) );
+                                                 * 
+                                                 * from September 20, 2012 on:
+                                                 * BugId:41817: get all users who are sysops but not bots or staff or helpers
+                                                 * (fallback to a staff member by calling Wikia::staffForLang()).
+                                                 */
+                                                $groups = array( "ug_group" => array( "sysop", "bot" ) );
 
 						$bots   = array();
 						$admins = array();
-						$staff  = array();
+
 						$res = $dbr->select(
 							array( "user_groups" ),
 							array( "ug_user, ug_group" ),
