@@ -28,4 +28,3 @@ class EvolutionLogstalgiaLogRenderer extends EvolutionAbstractLogRenderer {
 } // end of EvolutionLogstalgiaLogRenderer class
 
 
-?>

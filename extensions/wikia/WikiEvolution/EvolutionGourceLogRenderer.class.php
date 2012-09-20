@@ -28,4 +28,3 @@ class EvolutionGourceLogRenderer extends EvolutionAbstractLogRenderer {
 } // end of EvolutionGourceLogRenderer class
 
 
-?>

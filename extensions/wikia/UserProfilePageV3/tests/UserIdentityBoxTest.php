@@ -110,4 +110,3 @@ class UserIdentityBoxTest extends WikiaBaseTest {
 	}
 	
 }
-?>

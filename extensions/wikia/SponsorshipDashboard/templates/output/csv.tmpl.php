@@ -16,4 +16,3 @@ foreach( $data as $dataKey => $row ){
 	}
 	echo implode( ',' , $tmpArr )."\n";
 }
-?>
