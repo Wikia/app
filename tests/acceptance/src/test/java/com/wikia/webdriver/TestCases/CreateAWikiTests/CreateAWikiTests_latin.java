@@ -210,7 +210,7 @@ public class CreateAWikiTests_latin extends TestTemplate
 	 * https://internal.wikia-inc.com/wiki/Global_Log_in_and_Sign_up/Test_Cases:_CNW#Test_Case_3.1.02_Create_new_wiki:_log_in_field_validation_.28Latin_characters.29
 	 * Password field Validation: username and password are correct
 	 * */
-	@Test(groups = {"CreateNewWiki_latin_006","CNW"})
+	@Test(groups = {"CreateNewWiki_latin_006","CNW", "Smoke"})
 	public void CreateNewWiki_latin_TC006_user_name_and_password_are_correct()
 	{
 		HomePageObject home = new HomePageObject(driver);

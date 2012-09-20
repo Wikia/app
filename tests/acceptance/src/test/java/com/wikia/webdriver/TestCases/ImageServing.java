@@ -25,7 +25,7 @@ public class ImageServing extends TestTemplate {
 	private String videoURL2name = "What is love (?) - on piano (Haddway)";
 	
 	
-	@Test(groups = {"ImageServing001"}) 
+	@Test(groups = {"ImageServing001", "Smoke"}) 
 //	https://internal.wikia-inc.com/wiki/QA/Core_Features_and_Testing/Manual_Regression_Tests/Image_Serving
 	public void ImageServing001_SpecialNewFilesTest()
 	{
@@ -47,7 +47,7 @@ public class ImageServing extends TestTemplate {
 
 	}
 	
-	@Test(groups = {"ImageServing002"}) 
+	@Test(groups = {"ImageServing002", "Smoke"}) 
 //	https://internal.wikia-inc.com/wiki/QA/Core_Features_and_Testing/Manual_Regression_Tests/Image_Serving
 	public void ImageServing002_SpecialUploadTest()
 	{
@@ -62,7 +62,7 @@ public class ImageServing extends TestTemplate {
 		filePage.VerifyCorrectFilePage();
 		CommonFunctions.logOut(Properties.userName2, driver);
 	}
-	@Test(groups = {"ImageServing003"}) 
+	@Test(groups = {"ImageServing003", "Smoke"}) 
 //	https://internal.wikia-inc.com/wiki/QA/Core_Features_and_Testing/Manual_Regression_Tests/Image_Serving
 	public void ImageServing003_SpecialMultipleUploadTest()
 	{

@@ -19,7 +19,7 @@ public class SignUpTests_account_creation extends TestTemplate
 	 * 3.30 Test Case 2.3.01 Sign up page: Account creation Non latin username
 	 * https://internal.wikia-inc.com/wiki/Global_Log_in_and_Sign_up/Test_Cases:_Sign_up  
 	 * */
-	@Test(groups = {"SignUp_account_creation_TC_001", "SignUp"})
+	@Test(groups = {"SignUp_account_creation_TC_001", "SignUp", "Smoke"})
 	public void SignUp_account_creation_TC_001_non_latin_user_name()
 	{
 		SignUpPageObject signUp = new SignUpPageObject(driver);
@@ -137,7 +137,7 @@ public class SignUpTests_account_creation extends TestTemplate
 	 * 3.37 Test Case 2.3.08 Sign up page: Account creation Password is 50 characters
 	 * https://internal.wikia-inc.com/wiki/Global_Log_in_and_Sign_up/Test_Cases:_Sign_up  
 	 * */
-	@Test(groups = {"SignUp_account_creation__005", "SignUp"})
+	@Test(groups = {"SignUp_account_creation__005", "SignUp", "Smoke"})
 	public void SignUp_account_creation_TC_005_fifty_character_password()
 	{
 		SignUpPageObject signUp = new SignUpPageObject(driver);

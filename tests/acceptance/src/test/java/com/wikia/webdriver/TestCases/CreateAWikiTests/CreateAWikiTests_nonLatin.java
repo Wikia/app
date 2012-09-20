@@ -149,7 +149,7 @@ public class CreateAWikiTests_nonLatin extends TestTemplate
 	 * https://internal.wikia-inc.com/wiki/Global_Log_in_and_Sign_up/Test_Cases:_CNW#Test_Case_3.1.02_Create_new_wiki:_log_in_field_validation_.28Latin_characters.29
 	 * Password field Validation: username and password are correct
 	 * */
-	@Test(groups = {"CreateNewWiki_nonLatin_TC004","CNW"})
+	@Test(groups = {"CreateNewWiki_nonLatin_TC004","CNW", "Smoke"})
 	public void CreateNewWiki_nonLatin_TC004_user_name_and_password_are_correct()
 	{
 		CommonFunctions.logOut(Properties.userNameNonLatinEncoded, driver);
