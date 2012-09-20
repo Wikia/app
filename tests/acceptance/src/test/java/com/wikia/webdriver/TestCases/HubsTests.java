@@ -36,8 +36,7 @@ public class HubsTests extends TestTemplate{
 //	https://internal.wikia-inc.com/wiki/Hubs/QA/Hubs_Test_Cases#Module_1_.28Mosaic_Slider.29_Test_Cases
 // The test covers underscored steps from test case documentation - see link above
 	public void HubsTest001(HubBasePageObject Hub, String HubName, String HubURL)
-	{
-		CommonFunctions.MoveCursorTo(0, 0);		
+	{		
 		home = new HomePageObject(driver);
 		home.openHomePage();				
 		Hub = home.OpenHub(HubName);
@@ -52,8 +51,7 @@ public class HubsTests extends TestTemplate{
 		Hub.MosaicSliderHoverOverImage(2);
 		CurrentLargeImageDescription = Hub.MosaicSliderVerifyLargeImageChangeAndGetCurrentDescription(CurrentLargeImageDescription);
 		Hub.MosaicSliderHoverOverImage(1);
-		CurrentLargeImageDescription = Hub.MosaicSliderVerifyLargeImageChangeAndGetCurrentDescription(CurrentLargeImageDescription);
-		CommonFunctions.MoveCursorTo(0, 0);							
+		CurrentLargeImageDescription = Hub.MosaicSliderVerifyLargeImageChangeAndGetCurrentDescription(CurrentLargeImageDescription);							
 		home = Hub.BackToHomePage();					
 	}
 	
