@@ -201,10 +201,32 @@ public class BasePageObject{
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void mouseReleaseInArticleIframe(String cssSelecotr)
 	{
 		executeScript("$($($('iframe[title*=\"Rich\"]')[0].contentDocument.body).find('"+cssSelecotr+"')).mouseleave()");
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void mouseOver(String cssSelecotr)
+	{
+		executeScript("$('"+cssSelecotr+"').mouseenter()");
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void mouseRelease(String cssSelecotr)
+	{
+		executeScript("$('"+cssSelecotr+"').mouseleave()");
 		try {
 			Thread.sleep(500);
 		} catch (InterruptedException e) {

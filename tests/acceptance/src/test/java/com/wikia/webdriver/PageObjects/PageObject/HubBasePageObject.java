@@ -174,10 +174,11 @@ public class HubBasePageObject extends BasePageObject{
 			return;
 		}
 		waitForElementByBy(By.cssSelector("ul.wikia-mosaic-thumb-region img"));
-		List<WebElement> WikiaMosaicSliderThumbRegionImages = driver.findElements(By.cssSelector("ul.wikia-mosaic-thumb-region img"));
-		waitForElementByElement(WikiaMosaicSliderThumbRegionImages.get(n-1));
-		Point ImageLocation = WikiaMosaicSliderThumbRegionImages.get(n-1).getLocation();
-		CommonFunctions.MoveCursorToElement(ImageLocation);
+//		List<WebElement> WikiaMosaicSliderThumbRegionImages = driver.findElements(By.cssSelector("ul.wikia-mosaic-thumb-region img"));
+//		waitForElementByElement(WikiaMosaicSliderThumbRegionImages.get(n-1));
+//		Point ImageLocation = WikiaMosaicSliderThumbRegionImages.get(n-1).getLocation();
+//		CommonFunctions.MoveCursorToElement(ImageLocation);
+		mouseOver("ul.wikia-mosaic-thumb-region li:nth-child("+n+")");
 		PageObjectLogging.log("MosaicSliderHoverOverImage", "MosaicSlider: Hover over image number "+n, true, driver);
 		
 	}
