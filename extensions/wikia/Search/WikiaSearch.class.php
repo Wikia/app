@@ -11,6 +11,10 @@ class WikiaSearch extends WikiaObject {
 	const GROUP_RESULT_MAX_FETCHES = 30;
 	const RELEVANCY_FUNCTION_ID = 6;
 	
+	const HL_FRAG_SIZE = 150;
+	const HL_MATCH_PREFIX = '<span class="searchmatch">';
+	const HL_MATCH_POSTFIX = '</span>';
+	
 	private static $languageFields  = array(
 			'title',
 	        'html',
@@ -25,35 +29,7 @@ class WikiaSearch extends WikiaObject {
 	private static $dynamicUnstoredFields = array('headings', 'first500', 'beginningText');
 	
 	private static $multiValuedFields = array('categories', 'redirect_titles', 'headings');
-	
-	private static $requestedFields = array(
-			'id',
-	        'wikiarticles',
-	        'wikititle',
-	        'url',
-	        'wid',
-	        'canonical',
-	        'host',
-	        'ns',
-	        'indexed',
-	        'backlinks',
-	        'title',
-	        'score',
-	        'created',
-	        'views',
-	        'categories',
-	);
 
-	private $rankOptions = array(	
-			'default'			=>	array( 'score',		Solarium_Query_Select::SORT_DESC ),
-	        'newest'			=>	array( 'created',	Solarium_Query_Select::SORT_DESC ),
-	        'oldest'			=>	array( 'created',	Solarium_Query_Select::SORT_ASC  ),
-	        'recently-modified'	=>	array( 'touched',	Solarium_Query_Select::SORT_DESC ),
-	        'stable'			=>	array( 'touched',	Solarium_Query_Select::SORT_ASC  ),
-	        'most-viewed'		=>	array( 'views',		Solarium_Query_Select::SORT_DESC ),
-	        'freshest'			=>	array( 'indexed',	Solarium_Query_Select::SORT_DESC ),
-	        'stalest'			=>	array( 'indexed', 	Solarium_Query_Select::SORT_ASC  ),
-	);
 
 	/**
 	 * Search client
@@ -82,7 +58,7 @@ class WikiaSearch extends WikiaObject {
 
 			$searchConfig	->setLength		( self::GROUP_RESULTS_SEARCH_LIMIT )
 							->setIsInterWiki( true )
-							->setStart		( $searchConfig->getLength() * ($searchConfig->getPage() - 1) )
+							->setStart		( ((int) $searchConfig->getLength()) * (((int)$searchConfig->getPage()) - 1) )
 			;
 
 		} else {
@@ -91,6 +67,9 @@ class WikiaSearch extends WikiaObject {
 		
 		$query = $this->client->createSelect();
 		$this->prepareQuery( $query, $searchConfig );
+		
+		var_dump($query); die;
+		
 		// @TODO register appropriate resultset class that works with our existing setup
 		$results = $this->client->select( $query );
 		
@@ -109,10 +88,199 @@ class WikiaSearch extends WikiaObject {
 		return $results;
 	}
 	
-	private function prepareQuery( $query, WikiaSearchConfig $searchConfig )
+	private function prepareQuery( Solarium_Query_Select $query, WikiaSearchConfig $searchConfig )
 	{
+		// $query->setResultClass('wikiasearchresult')
+		
+		$query	->setFields		( $searchConfig->getRequestedFields() )
+			  	->setStart		( $searchConfig->getStart() )
+				->setRows		( $searchConfig->getLength() )
+				->addSort		( $searchConfig->getSort() )
+				->addParam		( 'timeAllowed', $searchConfig->getIsInterwiki() ? 7500 : 5000 )
+		;
+		
+		$highlighting = $query->getHighlighting();
+		$highlighting->addField						( self::field('html') )
+					 ->setSnippets					( 1 )
+					 ->setRequireFieldMatch			( true )
+					 ->setFragSize					( self::HL_FRAG_SIZE )      // @todo determine if these should go in wikiasearchconfig?
+					 ->setSimplePrefix				( self::HL_MATCH_PREFIX )
+					 ->setSimplePostfix				( self::HL_MATCH_POSTFIX )
+					 ->setAlternateField			( 'html' )
+					 ->setMaxAlternateFieldLength	( $searchConfig->isMobile() ? 100 : 300 )
+		;
+		
+		$queryFieldsString = sprintf('%s^5 %s %s^4', self::field('title'), self::field('html'), self::field('redirect_titles'));
+		
+		if ( $searchConfig->isInterWiki() ) {
+			$grouping = $query->getGrouping();
+			$grouping	->setLimit			( 4 )
+						->setOffset			( $searchConfig->getStart() )
+						->setNumberOfGroups	( $searchConfig->getSize() )
+						->setFields			( array( 'host' ) )
+			;
+			
+			$queryFieldsString .= sprintf(' %s^7', self::field('wikititle'));
+		} 
+		else {
+			
+		}
+		
+		$query->createFilterQuery()->setQuery( $this->getFilterQueryString( $searchConfig ) );
+		
+		$nestedQuery = clone($query);
+		
+		$dismax = $nestedQuery->getDismax();
+		
+		$boostQueryString = $this->getBoostQueryString( $searchConfig );
+		
+		$dismax	->setQueryFields		( $queryFieldsString )
+				->setPhraseFields		( $queryFieldsString )
+				->setBoostQuery			( $this->getBoostQueryString( $query, $searchConfig ) )
+				->setMinimumMatch		( $searchConfig->getMinimumMatch() )
+				->setQueryParser		( 'edismax' )
+				->setPhraseSlop			( 3 )
+				->setTie				( 0.01 )
+		;
+		
+		if (! $searchConfig->getSkipBoostFunctions() ) {
+			$dismax->setBoostFunctions( $this->getBoostFunctions( $searchConfig) );
+		}
+		
+		$query->setQuery( $this->getQueryClauses( $searchConfig ) . ' AND ' . $nestedQuery );
 		
 	}
+	
+	private function getFilterQueryString( WikiaSearchConfig $searchConfig )
+	{
+		$fqString = '';
+		if ( $searchConfig->isInterWiki() ) {
+			
+			$fqString .= 'iscontent:true';
+				
+			if ( $hub = $searchConfig->getHub() ) {
+			    $fqString .= ' hub:'.$this->sanitizeQuery($hub);
+			}
+		}
+		else {
+			$fqString .= 'wid:'.$searchConfig->getCityId();
+		}
+		
+		if (! $searchConfig->getIncludeRedirects() ) {
+			$fqString = "({$fqString}) AND is_redirect:false";
+		}
+		
+		return $fqString;
+	}
+	
+	private function getBoostFunctions( WikiaSearchConfig $searchConfig )
+	{
+		if ( $searchConfig->isInterWiki() ) {
+			$boostFunctions = array(
+					'log(wikipages)^4',
+					'log(activeusers)^4',
+					'log(revcount)^1',
+					'log(views)^8',
+					'log(words)^0.5',
+			);
+		}
+		else {
+			$boostFunctions = array(
+					'log(views)^0.66', 
+					'log(backlinks)'
+			);
+		}
+		
+		return $boostFunctions;
+	}
+	
+	private function getQueryClauses( WikiaSearchConfig $searchConfig )
+	{
+		if ( $searchConfig->isInterWiki() ) {
+			global $wgContLang;
+			
+			$queryClauses = array();
+			
+			$widQuery = '';
+			
+			foreach ($this->getInterWikiSearchExcludedWikis() as $excludedWikiId) {
+			    $widQuery .= ( !empty($widQuery) ? ' AND ' : '' ) . '!wid:' . $excludedWikiId;
+			}
+			 
+			$queryClauses[] = $widQuery;
+			
+			$queryClauses[] = "lang:".$wgContLang->mCode;
+			
+			$queryClauses[] = "iscontent:true";
+			
+			if ( $hub = $searchConfig->getHub() ) {
+			    $queryClauses[] = "hub:".$this->sanitizeQuery($hub);
+			}
+			
+			
+		}
+		else {
+			if ( $searchConfig->isVideoSearch() ) {
+				$searchConfig->setNamespaces(array(NS_FILE));
+				$queryClauses[] = 'is_video:true';
+			}
+			
+			$nsQuery = '';
+			foreach ( $searchConfig->getNamespaces() as $namespace ) {
+				$nsQuery .= ( !empty($nsQuery) ? ' OR ' : '' ) . 'ns:' . $namespace;
+			}
+			$queryClauses[] = "({$nsQuery})";
+			
+			array_unshift($queryClauses, 'wid:'.$searchConfig->getCityId());
+		}
+		
+		return $queryClauses;
+	}
+	
+	private function getBoostQueryString( Solarium_Query_Select $query, WikiaSearchConfig $searchConfig )
+	{
+		$sanitizedQuery = $query->getQuery();
+		
+		if ( $searchConfig->isInterWiki() ) {
+			$sanitizedQuery = preg_replace('/\bwiki\b/i', '', $sanitizedQuery);
+		}
+		
+		$queryNoQuotes = preg_replace("/['\"]/", '', html_entity_decode($query->getQuery(), ENT_COMPAT, 'UTF-8'));
+		
+		$boostQueries = array(
+				self::valueForField('html', $queryNoQuotes, array('boost'=>5, 'quote'=>'\"')),
+		        self::valueForField('title', $queryNoQuotes, array('boost'=>10, 'quote'=>'\"')),
+		);
+		
+		if ( $searchConfig->isInterWiki() ) {
+			$boostQueries[] = self::valueForField('wikititle', $queryNoQuotes, array('boost'=>15, 'quote'=>'\"'));
+			$boostQueries[] = '-host:\"answers\"^10';
+			$boostQueries[] = '-host:\"respuestas\"^10';
+		}
+		
+		return implode(' ', $boostQueries);
+	}
+	
+
+	/**
+	 * any query string transformation before sending to backend should be placed here
+	 */
+	private function sanitizeQuery($query) 
+	{
+		if ( $this->queryHelper === null ) {
+			$this->queryHelper = new Solarium_Query_Helper();
+		}
+
+		// non-indexed number-string phrases issue workaround (RT #24790)
+	    $query = preg_replace('/(\d+)([a-zA-Z]+)/i', '$1 $2', $query);
+	
+	    // escape all lucene special characters: + - && || ! ( ) { } [ ] ^ " ~ * ? : \ (RT #25482)
+	    // added html entity decoding now that we're doing extra work to prevent xss o
+	    $query = $this->queryHelper->escapeTerm(html_entity_decode($query,  ENT_COMPAT, 'UTF-8'));
+		// @todo make sure this works i'm iffy about it
+	    return $query;
+	}
+	
 
 	public function getPages( $pageIds, $withMetaData = true ) {
 		wfProfileIn(__METHOD__);
@@ -657,5 +825,28 @@ class WikiaSearch extends WikiaObject {
         return $field;
     
     }
+    
+    /**
+     * get list of wikis excluded from inter-wiki searching
+     * @return array
+     */
+    private function getInterWikiSearchExcludedWikis($currentWikiId = 0) {
+        wfProfileIn(__METHOD__);
+    
+        $wg = F::app()->wg;
+        $cacheKey = F::app()->wf->SharedMemcKey( 'crossWikiaSearchExcludedWikis' );
+        $privateWikis = $wg->Memc->get( $cacheKey );
+    
+        if(!is_array($privateWikis)) {
+            // get private wikis from db
+            $wgIsPrivateWiki = WikiFactory::getVarByName( 'wgIsPrivateWiki', $currentWikiId );
+            $privateWikis = WikiFactory::getCityIDsFromVarValue( $wgIsPrivateWiki->cv_id, true, '=' );
+            $wg->Memc->set( $cacheKey, $privateWikis, 3600 ); // cache for 1 hour
+        }
+    
+        wfProfileOut(__METHOD__);
+        return count( $privateWikis ) ? array_merge( $privateWikis, $wg->CrossWikiaSearchExcludedWikis ) : $wg->CrossWikiaSearchExcludedWikis;
+    }
+    
 
 }

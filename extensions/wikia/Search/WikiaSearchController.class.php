@@ -117,6 +117,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 						 ->setSkipCache			( $skipCache )
 						 ->setIncludeRedirects	( $redirs )
 						 ->setNamespaces		( $namespaces )
+						 ->setArticleMatch		( $articleMatch )
 			;
 
 			$results = $this->wikiaSearch->doSearch( $query, $searchConfig );

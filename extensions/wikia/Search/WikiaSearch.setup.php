@@ -47,10 +47,10 @@ $solariumConfig = array(
 		)
 );
 
-F::addClassConstructor( 'WikiaSolrClient', array( 'solariumConfig' => $solariumConfig ) );
+F::addClassConstructor( 'Solarium_Client', array( 'solariumConfig' => $solariumConfig ) );
 
 
-F::addClassConstructor( 'WikiaSearch', array( 'client' => F::build('WikiaSolrClient') ) );
+F::addClassConstructor( 'WikiaSearch', array( 'client' => F::build('Solarium_Client') ) );
 
 /**
  * message files
