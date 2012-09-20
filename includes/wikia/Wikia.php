@@ -1251,6 +1251,8 @@ class Wikia {
 
 	/**
 	 * Create / get cached instance of Linker class
+	 *
+	 * @return Linker
 	 */
 	private static function getLinker() {
 		if (!is_object(self::$cachedLinker)) {
@@ -1260,7 +1262,8 @@ class Wikia {
 		return self::$cachedLinker;
 	}
 
-	/*  Create a link to any page with Oasis style buttons
+	/**
+	 * Create a link to any page with Oasis style buttons
 	 *
 	 * Sample Usages:
 	 * View::normalPageLink('Somewhere', 'button-createpage', 'wikia-button');
@@ -1274,7 +1277,6 @@ class Wikia {
 	 * @param imgclass String - [optional] the name of a css class for the image (for secondary buttons)
 	 * @param query array [optional] query parameters
 	 */
-
 	static function normalPageLink($title, $message = '', $class = null, $img = null, $alt = null, $imgclass = null, $query = null, $rel = null) {
 		global $wgStylePath, $wgBlankImgUrl;
 
@@ -1321,7 +1323,8 @@ class Wikia {
 			);
 	}
 
-	/* create a link to a SpecialPage.
+	/**
+	 * create a link to a SpecialPage.
 	 *
 	 * Depending on params, this will create a text link, a css button, or a "secondary" button with an embedded image
 	 * avoiding this hardcoded stuff
@@ -1345,7 +1348,6 @@ class Wikia {
 	 * @param imgclass String - [optional] the name of a css class for the image (for secondary buttons)
 	 * @param rel String - [optional] the link's rel attribute
 	 */
-
 	static function specialPageLink($pageName, $message = '', $class = null, $img = null, $alt = null, $imgclass = null, $query = null, $rel = null)
 	{
 		$title = SpecialPage::getTitleFor( $pageName );
@@ -1359,8 +1361,6 @@ class Wikia {
 		$linker = self::getLinker();
 		return $linker->link($target, $text, $customAttribs, $query, $options);
 	}
-
-
 
 	/**
 	 * recentChangesSave -- hook
@@ -1438,7 +1438,7 @@ class Wikia {
 	 */
 	static public function onTitleGetSquidURLs(Title $title, Array $urls) {
 		// if this is a site css or js purge it as well
-		global $wgUseSiteJs, $wgUseSiteCss, $wgAllowUserJs;
+		global $wgUseSiteCss, $wgAllowUserJs;
 		global $wgSquidMaxage, $wgJsMimeType;
 
 		wfProfileIn(__METHOD__);
@@ -1511,11 +1511,14 @@ class Wikia {
 	}
 
 	/**
-	 * Detect debug mode for assets (allinone=0)
+	 * Handle URL parameters and set proper global variables early enough :)
+	 *
+	 * - Detect debug mode for assets (allinone=0) - sets $wgAllInOne and $wgResourceLoaderDebug
 	 *
 	 * @author macbre
 	 */
 	static public function onAfterInitialize($title, $article, $output, $user, WebRequest $request, $wiki) {
+		// allinone
 		global $wgResourceLoaderDebug, $wgAllInOne;
 
 		$wgAllInOne = $request->getBool('allinone', $wgAllInOne) !== false;
@@ -1570,10 +1573,10 @@ class Wikia {
 	/**
 	 * This function uses the facebook api to get the open graph id for this domain
 	 *
-	 * @global type $wgServer
-	 * @global type $fbAccessToken
-	 * @global type $fbDomain
-	 * @global type $wgMemc
+	 * @global string $wgServer
+	 * @global string $fbAccessToken
+	 * @global string $fbDomain
+	 * @global MemCachedClientforWiki $wgMemc
 	 * @return int
 	 */
 
@@ -1695,13 +1698,13 @@ class Wikia {
 		return self::get_const_values( 'content_ns' );
 	}
 
-	/* add some extra request parameters to control memcache behavior @author: owen
+	/**
+	 * Add some extra request parameters to control memcache behavior @author: owen
 	 * mcache=none disables memcache for the duration of the request (not really that useful)
 	 * mcache=writeonly disables memcache reads for the duration of the request
 	 * mcache=readonly disables memcache writes for the duration of the request
 	 * TODO: allow disabling specific keys?
 	 */
-
 	static public function onPerformActionMemcachePurge($output, $article, $title, $user, WebRequest $request, $wiki ) {
 		global $wgAllowMemcacheDisable, $wgAllowMemcacheReads, $wgAllowMemcacheWrites;
 		$mcachePurge = $request->getVal("mcache", null);
