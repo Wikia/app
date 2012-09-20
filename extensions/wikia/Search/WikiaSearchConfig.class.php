@@ -13,25 +13,54 @@ class WikiaSearchConfig implements ArrayAccess
 			'page'			=>	1,
 			'length'		=>	WikiaSearch::RESULTS_PER_PAGE,
 			'cityId'		=>	0,
-			'groupResults'	=>	false,
 			'rank'			=>	'default',
-			'hub'			=>	false,
-			'videoSearch'	=>	false,
 			'start'			=>	0,
+			'minimumMatch'	=> '66%',
 			);
+	
+	private $requestedFields = array(
+	        'id',
+	        'wikiarticles',
+	        'wikititle',
+	        'url',
+	        'wid',
+	        'canonical',
+	        'host',
+	        'ns',
+	        'indexed',
+	        'backlinks',
+	        'title',
+	        'score',
+	        'created',
+	        'views',
+	        'categories',
+	);
+
+	private $rankOptions = array(
+	        'default'			=>	array( 'score',		Solarium_Query_Select::SORT_DESC ),
+	        'newest'			=>	array( 'created',	Solarium_Query_Select::SORT_DESC ),
+	        'oldest'			=>	array( 'created',	Solarium_Query_Select::SORT_ASC  ),
+	        'recently-modified'	=>	array( 'touched',	Solarium_Query_Select::SORT_DESC ),
+	        'stable'			=>	array( 'touched',	Solarium_Query_Select::SORT_ASC  ),
+	        'most-viewed'		=>	array( 'views',		Solarium_Query_Select::SORT_DESC ),
+	        'freshest'			=>	array( 'indexed',	Solarium_Query_Select::SORT_DESC ),
+	        'stalest'			=>	array( 'indexed', 	Solarium_Query_Select::SORT_ASC  ),
+	);
 	
 	public function __construct( array $params = array() )
 	{
-		$this->params = array_merge( $this->params, $params );
+		$this->params = array_merge( $this->params, 
+									 array( 'requestedFields' => $this->requestedFields ), 
+									 $params );
 	}
 
 	// getter and setter shortcuts
 	public function __call($method, $params)
 	{
 		if ( substr($method, 0, 3) == 'get' ) {
-			return $this->offsetGet( strtolower($method[3]).strtolower(substr($method, 4)) );
+			return $this->offsetGet( strtolower($method[3]).substr($method, 4) );
 		} else if ( substr($method, 0, 3) == 'set' ) {
-			$this->offsetSet( strtolower($method[3]).strtolower(substr($method, 4)) );
+			$this->offsetSet( strtolower($method[3]).substr($method, 4), $params );
 			return $this; // fluent
 		}
 	}
@@ -56,4 +85,63 @@ class WikiaSearchConfig implements ArrayAccess
 		unset($this->params[$offset]);
 	}
 	
+	public function getSize()
+	{
+		// backwards compatibility, of sorts
+		return $this->getLength();
+	}
+	
+	public function getLength()
+	{
+		// handles PTT
+		return ( $this->getArticleMatch() !== null && $this->getStart() === 0 ) 
+			? ((int)$this->params['length']) - 1 
+			: $this->params['length'];
+	}
+	
+	public function getStart()
+	{
+		return ( $this->getArticleMatch() !== null && $this->params['start'] !== 0) 
+			? ((int)$this->params['start'] - 1) 
+			: $this->params['start'];
+	}
+	
+	public function getPaginatedSearch()
+	{
+		return $this->getStart() !== 0;
+	}
+	
+	public function setQuery( $query )
+	{
+		if ($queryNamespace = MWNamespace::getCanonicalIndex(array_shift(explode(':', strtolower($query))))) {
+		    if (!in_array($queryNamespace, $this->params['namespaces'])) {
+		        $this->params['queryNamespace'] = $queryNamespace;
+		    }
+		    $query = implode(':', array_slice(explode(':', $query), 1));
+		}
+		
+		$this->params['query'] = $query;
+		
+		return $this;
+	}
+	
+	public function getNamespaces()
+	{
+		$namespaces = (isset($this->params['namespaces'])) ? $this->params['namespaces'] : SearchEngine::DefaultNamespaces();
+		$queryNamespaceArray = (isset($this->params['queryNamespace'])) ? array($this->params['queryNamespace']) : array(); 
+		$this->params['namespaces'] = array_merge($namespaces, $queryNamespaceArray);
+		return $this->params['namespaces'];
+	}
+	
+	public function isMobile()
+	{
+		return F::app()->checkSkin( 'wikiamobile' );
+	}
+	
+	public function getSort()
+	{
+		var_dump('fix me... rank is an array'); die;
+		$rank = $this->getRank();
+		return isset($this->rankOptions[$rank]) ? $this->rankOptions[$rank] : $this->rankOptions['default']; 
+	}
 }
