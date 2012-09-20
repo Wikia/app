@@ -183,9 +183,11 @@ class Answer {
 		return $img;
 	}
 
-	// Convenience function for getting the non-image version of the badge.
+	/**
+	 * Convenience function for getting the non-image version of the badge.
+	 */
 	public static function getSmallUserBadge($userData){
-		return getUserBadge($userData, false);
+		return self::getUserBadge($userData, false);
 	}
 
 	/**
