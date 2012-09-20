@@ -75,17 +75,11 @@ class WikiaBarHooks {
 				&& array_search($app->wg->dBname, self::$PROHIBITED_DBNAMES) === FALSE
 			) {
 				$vars['wgEnableWikiaBarExt'] = true;
-				if (!$wgNoExternals) {
-					$vars['wgEnableWikiaBarAds'] = true;
-				} else {
-					$vars['wgEnableWikiaBarAds'] = false;
-				}
 			}
 		} else {
 			$vars['wgEnableWikiaBarExt'] = true;
-			$vars['wgEnableWikiaBarAds'] = false;
 		}
-
+		$vars['wgEnableWikiaBarAds'] = true;
 		$vars['wgWikiaBarMainLanguages'] = $app->wg->WikiaBarMainLanguages;
 		$vars['wgDevelEnvironment'] = $app->wg->DevelEnvironment;
 
