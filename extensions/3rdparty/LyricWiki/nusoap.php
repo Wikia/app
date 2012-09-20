@@ -643,10 +643,6 @@ function usleepWindows($usec)
 	while ($timePassed < $usec);
 }
 
-?><?php
-
-
-
 /**
 * soap_fault class, allows for creation of faults
 * mainly used for returning faults from deployed functions
