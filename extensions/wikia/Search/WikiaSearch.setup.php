@@ -30,12 +30,13 @@ $app->registerClass('WikiaSearchAjaxController', $dir . 'WikiaSearchAjaxControll
 $app->registerSpecialPage('WikiaSearch', 'WikiaSearchController');
 $app->registerSpecialPage('Search', 'WikiaSearchController');
 
+global $wgSolrProxy, $wgSolrHost, $wgWikiaSearchUseProxy;
+
 $wgSolrHost = isset($_GET['solrhost']) ? $_GET['solrhost'] : $wgSolrHost;
 
 if (isset($_GET['solrhost']) || isset($_GET['solrport'])) {
      $wgSolrPort = isset($_GET['solrport']) ? $_GET['solrport'] : 8983;
 
-     global $wikiaSearchUseProxy;
      $wgWikiaSearchUseProxy = false;
 }
 
@@ -46,6 +47,11 @@ $solariumConfig = array(
 			'path' => '/solr/',
 		)
 );
+
+if ($wgWikiaSearchUseProxy && isset($wgSolrProxy)) {
+	$solariumConfig['adapteroptions']['proxy'] = $wgSolrProxy;
+	unset($solariumConfig['adapteroptions']['port']);
+}
 
 F::addClassConstructor( 'Solarium_Client', array( 'solariumConfig' => $solariumConfig ) );
 
