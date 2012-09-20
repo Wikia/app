@@ -86,7 +86,7 @@ public class ArticleCRUDTestsAdmin extends TestTemplate{
 				};
 	}	
 	
-	@Test(dataProvider="getArticleName", groups={"ArticleCRUDAdmin_004", "ArticleCRUDAdmin"})
+	@Test(dataProvider="getArticleName", groups={"ArticleCRUDAdmin_004", "ArticleCRUDAdmin", "Smoke"})
 	public void ArticleCRUDAdmin_004_CreateArticle(String articleName)
 	{
 		CommonFunctions.logOut(Properties.userName, driver);
@@ -112,7 +112,7 @@ public class ArticleCRUDTestsAdmin extends TestTemplate{
 	 * Edit article
 	 * Delete article
 	 */
-	@Test(groups={"ArticleCRUDAdmin_005", "ArticleCRUDAdmin"})
+	@Test(groups={"ArticleCRUDAdmin_005", "ArticleCRUDAdmin", "Smoke"})
 	public void ArticleCRUDAdmin_005_CreateEditArticle()
 	{
 		CommonFunctions.logOut(Properties.userName, driver);
@@ -147,7 +147,7 @@ public class ArticleCRUDTestsAdmin extends TestTemplate{
 	 * Delete comment
 	 * Delete article
 	 */
-	@Test(groups={"ArticleCRUDAdmin_006", "ArticleCRUDAdmin"})
+	@Test(groups={"ArticleCRUDAdmin_006", "ArticleCRUDAdmin", "Smoke"})
 	public void ArticleCRUDAdmin_006_CreateArticleComment()
 	{
 		CommonFunctions.logOut(Properties.userName, driver);

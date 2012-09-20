@@ -18,7 +18,7 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 	private String Caption2 = "QAWebdriverCaption2";
 	private String pageName;
 	
-	@Test(groups={"ArticleFeaturesCRUDAdmin_001", "ArticleCRUDAdmin"}) 
+	@Test(groups={"ArticleFeaturesCRUDAdmin_001", "ArticleCRUDAdmin", "Smoke"}) 
 //	https://internal.wikia-inc.com/wiki/QA/Core_Features_and_Testing/Manual_Regression_Tests/Image_Serving	
 	// Test Case 007  Adding galleries to an article in edit mode
 	public void ArticleCRUDAdmin_001_AddingGallery()
@@ -133,7 +133,7 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		CommonFunctions.logOut(Properties.userName2, driver);
 	}
 	
-	@Test(groups={"ArticleFeaturesCRUDAdmin_004", "ArticleCRUDAdmin"})
+	@Test(groups={"ArticleFeaturesCRUDAdmin_004", "ArticleCRUDAdmin", "Smoke"})
 //	https://internal.wikia-inc.com/wiki/QA/Core_Features_and_Testing/Manual_Regression_Tests/Image_Serving	
 	// Test Case 008 Adding slideshows to an article in edit mode
 	public void ArticleCRUDAdmin_004_AddingSlideshow()
@@ -245,7 +245,7 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 	
 	
 	
-	@Test(groups={"ArticleFeaturesCRUDAdmin_007", "ArticleCRUDAdmin"})
+	@Test(groups={"ArticleFeaturesCRUDAdmin_007", "ArticleCRUDAdmin", "Smoke"})
 //	https://internal.wikia-inc.com/wiki/QA/Core_Features_and_Testing/Manual_Regression_Tests/Image_Serving	
 	// Test Case 009 Adding sliders to an article in edit mode
 	public void ArticleCRUDAdmin_007_AddingSlider()
@@ -356,7 +356,7 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		CommonFunctions.logOut(Properties.userName2, driver);
 	}
 	
-	@Test(groups={"ArticleFeaturesCRUDAdmin_010", "ArticleCRUDAdmin"})
+	@Test(groups={"ArticleFeaturesCRUDAdmin_010", "ArticleCRUDAdmin", "Smoke"})
 //	https://internal.wikia-inc.com/wiki/QA/Core_Features_and_Testing/Manual_Regression_Tests/Image_Serving	
 	// Test Case 010 Adding videos to an article in edit mode
 	public void ArticleCRUDAdmin_010_AddingVideo()
@@ -462,7 +462,7 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		CommonFunctions.logOut(Properties.userName2, driver);
 	}
 	
-	@Test(groups={"ArticleFeaturesCRUDAdmin_013", "ArticleCRUDAdmin"}) 
+	@Test(groups={"ArticleFeaturesCRUDAdmin_013", "ArticleCRUDAdmin", "Smoke"}) 
 //	https://internal.wikia-inc.com/wiki/QA/Core_Features_and_Testing/Manual_Regression_Tests/Image_Serving
 	// Test Case 004 Adding images to an article in edit mode
 	public void ArticleCRUDAdmin_013_AddingImage()
