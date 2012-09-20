@@ -1448,7 +1448,7 @@ abstract class DatabaseBase implements DatabaseType {
 	 * @param $options string|array Query options
 	 * @param $join_conds array|string Join conditions
 	 *
-	 * @return ResultWrapper|bool
+	 * @return ResultWrapper|object|bool
 	 */
 	function selectRow( $table, $vars, $conds, $fname = 'DatabaseBase::selectRow',
 		$options = array(), $join_conds = array() )
