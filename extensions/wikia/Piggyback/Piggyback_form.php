@@ -33,4 +33,3 @@ class PiggybackTemplate extends QuickTemplate {
 		return $out;
 	} 
 }
-?>

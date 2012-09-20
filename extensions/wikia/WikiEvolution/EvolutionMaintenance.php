@@ -29,4 +29,3 @@ fclose($fg);
 fclose($fl);
 
 print "\n". "Done." . "\n";
-?>

@@ -302,4 +302,3 @@ class ThumbnailVideo extends ThumbnailImage {
 		}
 	}
 }
-?>

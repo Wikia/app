@@ -724,4 +724,3 @@ function wfLoadRegexBlockLink( $id, $nt, &$links ) {
 	return true;
 }
 
-?>

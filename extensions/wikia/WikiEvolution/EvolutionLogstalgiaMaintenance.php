@@ -22,4 +22,3 @@ while ( $row = $model->formARow() ) {
 fclose($f);
 
 print "\n". "Done." . "\n";
-?>

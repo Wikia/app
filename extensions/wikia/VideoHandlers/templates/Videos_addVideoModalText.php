@@ -20,4 +20,3 @@
     if ( $wg->EnableRelatedVideosSuggestions && !$suppressSuggestions ) {
         echo F::app()->sendRequest( "RelatedVideos", "getSuggestedVideos", array('pageTitle'=>$pageTitle) );
     }
-?>
