@@ -10,7 +10,9 @@
 		, adProviderLater
 		, adSlotsQueue
 		, lazyQueue = LazyQueue()
-		, queueForLateAds;
+
+		, queueForLateAds
+		, adConfigForLateAds;
 
 	// Construct Ad Engine
 	adEngine = AdEngine2(log, lazyQueue);
@@ -53,11 +55,20 @@
 	 * window.LiftiumOptions.autoInit = false;
 	 */
 
-	// Register late run trigger
-	window.AdEngine_loadLateAds = function(adConfigForLateAds) {
-		log('launching late ads now', 1, module);
-		log('work on queueForLateAds according to AdConfig2Late', 1, module);
-		adEngine.run(adConfigForLateAds, queueForLateAds)
+	// Set late run config
+	window.AdEngine_setLateAdsConfig = function(adConfig) {
+		adConfigForLateAds = adConfig;
+	};
+
+	// Load late ads now (you need to call AdEngine_setLateConfig first!)
+	window.AdEngine_loadLateAds = function() {
+		if (adConfigForLateAds) {
+			log('launching late ads now', 1, module);
+			log('work on queueForLateAds according to AdConfig2Late', 1, module);
+			adEngine.run(adConfigForLateAds, queueForLateAds)
+		} else {
+			log('ERROR, AdEngine_loadLateAds called before AdEngine_setLateConfig!', 1, module);
+		}
 	};
 
 }(Wikia.log, WikiaTracker, window, ghostwriter, document, Geo, LazyQueue));

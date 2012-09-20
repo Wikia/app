@@ -1303,9 +1303,9 @@ Liftium.init = function (callback) {
 	// TODO remove! an ugly hack for AdDriver transparency
 	var callback2 = function() {
 		if (typeof callback === 'function') callback();
-		if (window.AdEngine_run_later) {
+		if (window.AdEngine_loadLateAds) {
 			Liftium.d("AdEngine_run_later", 1);
-			window.AdEngine_run_later();
+			window.AdEngine_loadLateAds();
 		}
 	}
 
