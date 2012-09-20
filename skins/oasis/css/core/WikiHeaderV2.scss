@@ -32,9 +32,7 @@
 		@include wordmark;
 		color: $color-links;
 		margin-bottom: 10px;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		white-space: nowrap;
+		word-break: break-all;
 	}
 	h1:before,
 	.shadow-mask {
