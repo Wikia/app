@@ -39,4 +39,3 @@ function efArrayExtensionWords( $lang ) {
                 : array_merge( $words['en'], $words[$lang] );
 }
  
-?>

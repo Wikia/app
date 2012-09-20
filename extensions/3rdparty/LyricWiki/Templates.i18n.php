@@ -96,4 +96,3 @@ DOC
 	'lwtemp-extra-templates'=>""
 );
 
-?>

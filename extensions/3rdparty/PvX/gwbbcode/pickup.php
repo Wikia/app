@@ -125,4 +125,3 @@ echo <<<EOT
 parent.pickup_set('$userlist', '$id');
 </script>
 EOT;
-?>

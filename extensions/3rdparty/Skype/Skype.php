@@ -98,4 +98,3 @@ function RenderSkype( $input, $argv ) {
 // send the output to MediaWiki
      return $output;
 }
-?>

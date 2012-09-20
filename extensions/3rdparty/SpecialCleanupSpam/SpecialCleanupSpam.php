@@ -452,4 +452,3 @@ function cleanUp ($phrase, $database) {
 	}
 }
 
-?>

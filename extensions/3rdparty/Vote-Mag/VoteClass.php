@@ -210,4 +210,3 @@ Class VoteStars extends Vote {
      }
 
 }
-?>

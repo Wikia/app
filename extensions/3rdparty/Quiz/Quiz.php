@@ -837,4 +837,3 @@ class Question {
 		return $output = "$a_inputBeg<span $style><input $class type=\"text\" name=\"$wqInputId\" $title $size $maxlength $value $disabled autocomplete=\"off\" />$big</span>$a_inputEnd";
 	}
 }
-?>
