@@ -1,3 +1,9 @@
+/**
+ * This code constructs adConfig2Late for use with Liftium
+ * and passes it to AdEngine using AdEngine_setLateConfig
+ *
+ * Liftium must call AdEngine_loadLateAds to trigger showing ads
+ */
 (function(log, WikiaTracker, window, ghostwriter, document) {
 	var adConfig
 		, scriptWriter
@@ -22,8 +28,10 @@
 	 *   window.AdEngine_loadLateAdsNow(adConfig);
 	 * });
 	 *
+	 * (And remove AdEngine_setLateConfig)
+	 *
 	 * END OF TODO
 	 */
-	window.AdEngine_loadLateAds(adConfig);
+	window.AdEngine_setLateAdsConfig(adConfig);
 
 }(Wikia.log, WikiaTracker, window, ghostwriter, document));
