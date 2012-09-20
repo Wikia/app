@@ -1,10 +1,8 @@
 <?php
-/*
+/**
  * Author: Tomek Odrobny
  * Data model
  */
-
-
 class FollowModel {
         static public $ajaxListLimit = 600;
         static public $specialPageListLimit = 15;
@@ -15,8 +13,7 @@ class FollowModel {
 	 * @static
 	 * @access public
 	 *
-	 *
-	 * @return bool
+	 * @return array
 	 */
 	static function getWatchList($user_id, $from = 0, $limit = 15, $namespace_head = null, $show_deleted_pages = true) {
 		global $wgServer, $wgScript, $wgContentNamespaces, $wgEnableBlogArticles;
@@ -69,8 +66,8 @@ class FollowModel {
 
 		$queryArray = array();
 		foreach ($namespaces_keys as $value) {
-			$queryArray[] = "(select wl_namespace, wl_title from watchlist where wl_user = ".intval($user_id)." and wl_namespace = ".intval($value) 
-					.( intval($value) == NS_USER_WALL ? " and not wl_title like '%/%'  ":"") 
+			$queryArray[] = "(select wl_namespace, wl_title from watchlist where wl_user = ".intval($user_id)." and wl_namespace = ".intval($value)
+					.( intval($value) == NS_USER_WALL ? " and not wl_title like '%/%'  ":"")
 					//THIS hack will be removed after runing script with will clear all notification copy
 					.( intval($value) == NS_USER_WALL ? " and wl_wikia_addedtimestamp > '2012-01-31'  ":"")
 					." ORDER BY wl_wikia_addedtimestamp desc limit ".intval($from).",".intval($limit).")";
@@ -78,7 +75,6 @@ class FollowModel {
 
 		$res = $db->query( implode(" union ",$queryArray) );
 		$out_data = array();
-		$hasWall = false;
 		while ($row =  $db->fetchRow( $res ) ) {
 			$title = Title::makeTitle( $row['wl_namespace'], $row['wl_title'] );
 			$row['url'] = $title->getFullURL();
@@ -96,7 +92,7 @@ class FollowModel {
 				$ttile = Title::makeTitle($row['wl_namespace'], "none");
 				$row['other_namespace'] = $ttile->getNsText();
 			}
-			
+
 			if( $show_deleted_pages ) {
 				$out_data[$namespaces[ $row['wl_namespace'] ]][] = $row;
 			} else {
@@ -104,21 +100,21 @@ class FollowModel {
 					$out_data[$namespaces[ $row['wl_namespace'] ]][] = $row;
 				}
 			}
-			
+
 		}
-		
+
 		/**
-		 * Wall Logic 
-		 * 
+		 * Wall Logic
+		 *
 		 * When you fallow tread the fallowing is marked in NS_USER_WALL_MESSAGE, NS_USER_WALL
 		 * so we will skip NS_USER_WALL with are subpage to filter out this.
 		 */
-			
+
 		$con = " wl_user = ".intval($user_id)." and wl_namespace in (".implode(',', $namespaces_keys).")";
 		//special case for Wall to avoid subpages
 		//THIS hack will be removed after runing script with will clear all notification copy
 		$con .= (" and ( not wl_namespace = ".NS_USER_WALL."  or (wl_namespace = ".NS_USER_WALL."  and not wl_title like '%/%' and wl_wikia_addedtimestamp > '2012-01-31' ))");
-		
+
 
 		$res = $db->select(
 			array( 'watchlist' ),
@@ -131,8 +127,6 @@ class FollowModel {
 				'GROUP BY' => 'wl_namespace'
 			)
 		);
-
-		$out_count = array();
 
 		while ($row =  $db->fetchRow( $res ) ) {
 			$ns = $namespaces[$row['wl_namespace']];
@@ -147,7 +141,7 @@ class FollowModel {
 				$out[$ns]['show_more'] = 1;
 			}
 		}
-		
+
 		foreach ($order as $key => $value) {
 			if (!empty($out[$value]) ) {
 				$order[$key] = $out[$value];
@@ -171,7 +165,7 @@ class FollowModel {
 	 */
 
 	static function getUserPageWatchList($user_id) {
-		global $wgMemc, $wgContentNamespaces, $wgEnableBlogArticles;
+		global $wgContentNamespaces, $wgEnableBlogArticles;
 
 		$NS = array();
 
