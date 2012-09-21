@@ -192,6 +192,13 @@ class Solarium_Result_Select extends Solarium_Result_QueryType
 
         return $this->_components;
     }
+    
+    public function getStart()
+    {
+    	$this->_parseResponse();
+    	$data = $this->getData();
+    	return $data['response']['start'];
+    }
 
     /**
      * Get a component result by key

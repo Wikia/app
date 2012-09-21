@@ -108,7 +108,6 @@ class Solarium_Client_Adapter_Curl extends Solarium_Client_Adapter
             $headers = array();
             $data = '';
         }
-        var_dump($headers); var_dump($data);
 
         curl_close($handle);
         $this->check($data, $headers);
@@ -131,9 +130,9 @@ class Solarium_Client_Adapter_Curl extends Solarium_Client_Adapter
 
         $handler = curl_init();
         curl_setopt($handler, CURLOPT_URL, $uri);
-        curl_setopt($handler, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($handler, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($handler, CURLOPT_FOLLOWLOCATION, true);
-        curl_setopt($handler, CURLOPT_TIMEOUT, $options['timeout']);
+        curl_setopt($handler, CURLOPT_CONNECTTIMEOUT, $options['timeout']);
         
         if ( $proxy = $this->getOption('proxy') ) {
         	curl_setopt($handler, CURLOPT_PROXY, $proxy);

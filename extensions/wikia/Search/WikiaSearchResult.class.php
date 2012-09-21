@@ -1,8 +1,7 @@
 <?php
 
-class WikiaSearchResult {
-	protected $id = 0;
-	protected $cityId;
+class WikiaSearchResult extends Solarium_Document_ReadWrite
+{
 	protected $title;
 	protected $titleObject;
 	protected $thumbnail;
@@ -11,28 +10,11 @@ class WikiaSearchResult {
 	protected $linkUrl;
 	protected $canonical = null	;
 	protected $vars = array();
-	public $score = 0;
-
-	public function __construct($id) {
-		$this->id = $id;
-	}
-
-	public function getId() {
-		return $this->id;
-	}
 
 	public function getCityId() {
-		return $this->cityId;
+		return $this->_fields['wid'];
 	}
-
-	public function setCityId($value) {
-		$this->cityId = $value;
-	}
-
-	public function getText() {
-		return $this->text;
-	}
-
+	
 	public function setText($value) {
 	        $this->text = $this->fixSnippeting($value, true);
 	}
@@ -124,24 +106,6 @@ class WikiaSearchResult {
 		return !empty($this->canonical) ? true : false;
 	}
 
-	public function deCanonize() {
-		$this->setTitle($this->getCanonical());
-		$title = F::app()->wg->EnableCorporatePageExt 
-				? GlobalTitle::newFromText($this->getCanonical(), $this->getVar('ns'), $this->cityId) 
-				: Title::newFromText($this->getCanonical());
-		$this->setUrl(urldecode($title->getFullUrl())); // required to normalize processing
-		$this->setCanonical(null);
-		return $this;
-	}
-
-	public function setScore($score) {
-	  $this->score = $score;
-	}
-
-	public function getScore() {
-	  return $this->score;
-	}
-
 	public function setVar($name, $value) {
 		$this->vars[$name] = $value;
 	}
@@ -149,6 +113,9 @@ class WikiaSearchResult {
 	public function getVar($name, $default = null) {
 		if(isset($this->vars[$name])) {
 			return $this->vars[$name];
+		}
+		else if (isset($this->fields[$name])) { 
+			return $this->fields[$name];
 		}
 		else {
 			return $default;

@@ -1,6 +1,6 @@
 <?php
 
-class WikiaSearchResultSet implements Iterator {
+class WikiaSearchResultSet implements Iterator,ArrayAccess {
 	private $position = 0;
 
 	protected $resultsFound = 0;
@@ -9,17 +9,25 @@ class WikiaSearchResultSet implements Iterator {
 	protected $results = array();
 	protected $query;
 	protected $queryTime = 0;
+	protected $searchResultObject;
+	protected $highlightingObject;
+	protected $searchConfig;
 
 	public $totalScore;
 
-	public function __construct(Array $results = array(), $resultsFound = 0, $resultsStart = 0, $query = null, $queryTime=0, $score = 0) {
-		$this->setResults($results);
-		# the max is for if no results found, but we have results (e.g. push to top)
-		$this->setResultsFound(max(array(count($results), $resultsFound)));
-		$this->setResultsStart($resultsStart);
-		$this->setQuery($query);
-		$this->setQueryTime($queryTime);
-		$this->totalScore = $score;
+	public function __construct( Solarium_Result_Select $result, WikiaSearchConfig $searchConfig ) {
+		$this->searchResultObject = $result;
+		$this->searchConfig = $searchConfig;
+		$this->highlightingObject = $result->getHighlighting();
+		
+		if ( $this->searchConfig->hasArticleMatch() ) {
+			$am = $this->searchConfig->getArticleMatch();
+			$this->prependArticleMatch( $am[0], $am[1] );
+		}
+		$this->setResults( $result->getDocuments() );
+		$this->setResultsFound( count($this->results) );
+		$this->setResultsStart( $result->getStart() );
+		$this->setQueryTime( $result->getQueryTime() );
 	}
 
 	/**
@@ -39,9 +47,58 @@ class WikiaSearchResultSet implements Iterator {
 		$this->resultsFound = $value;
 	}
 
-	public function addResult($result) {
+	public function prependArticleMatch( Article $article, $redirect = null )
+	{
+		global $wgCityId;
+		$title = $article->getTitle();
+		$articleId = $article->getID();
+		if ( in_array($title->getNamespace(), $this->searchConfig->getNamespaces()) ) {
+			$articleMatchId = sprintf('%s_%s', $wgCityId, $articleId);
+			$articleService = F::build('ArticleService', array($articleId));
+
+			$fieldsArray = array(
+					'wid'			=>	$wgCityId,
+					'title'			=>	$article->mTitle,
+					'url'			=>	urldecode($title->getFullUrl()),
+					'score'			=>	'PTT',
+					'isArticleMatch'=>	true,
+					'ns'			=>	$title->getNamespace(),
+					'pageId'		=>	$article->getID()
+					);
+			
+			$result = F::build( 'WikiaSearchResult', $fieldsArray );
+			$snippet = $articleService->getTextSnippet(250);
+			var_dump($snippet); die;
+			$result->setText($snippet[0]);
+			if ( $redirect !== null ) {
+				$result->setVar('redirectTitle', $redirect->getTitle());
+			}
+			
+		}
+		
+		
+	}
+	
+	public function addResult( WikiaSearchResult $result) {
 		if($this->isValidResult($result)) {
-			$this->results[] = $result;
+			$id = $result['id'];
+			if ( $this->highlightingObject !== null && ($field = $this->highlightingObject->getResult($id)->getField(WikiaSearch::field('html'))) ) {
+				$result->setText( $field[0] );
+			}
+			global $wgLang;
+			if ($result['created'] !== null && $wgLang) {
+				$result->setVar('created', $result['created']);
+				$result->setVar('fmt_timestamp', $wgLang->date(wfTimestamp(TS_MW, $result['created'])));
+				if ($result->getVar('fmt_timestamp')) {
+				    $result->setVar('created_30daysago', time() - strtotime($result['created']) > 2592000 );
+				}
+			}
+			
+			$result->setVar('categories', $result[WikiaSearch::field('categories')] ?: 'NONE');
+			$result->setVar('cityArticlesNum', $result['wikiarticles']);
+			$result->setVar('wikititle', $result[WikiaSearch::field('wikititle')]);
+			
+			$this->results[$id] = $result;
 		}
 		else {
 			throw new WikiaException( 'Invalid result in set' );
@@ -166,5 +223,33 @@ class WikiaSearchResultSet implements Iterator {
 
 		return $this->getResultsNum() == 1 && $this->getResultsFound() == 0 && $this->results[0]->getVar('isArticleMatch') == true;
 
+	}
+	
+	/* (non-PHPdoc)
+	 * @see ArrayAccess::offsetExists()
+	 */
+	public function offsetExists ($offset) {
+		return isset($this->results[$offset]);
+	}
+
+	/* (non-PHPdoc)
+	 * @see ArrayAccess::offsetGet()
+	 */
+	public function offsetGet ($offset)	{
+		return (isset($this->results[$offset])) ? $this->results[$offset] : false;
+	}
+
+	/* (non-PHPdoc)
+	 * @see ArrayAccess::offsetSet()
+	 */
+	public function offsetSet ($offset, $value)	{
+		$this->results[$offset] = $value;
+	}
+
+	/* (non-PHPdoc)
+	 * @see ArrayAccess::offsetUnset()
+	 */
+	public function offsetUnset ($offset) {
+		unset($this->results[$offset]);
 	}
 }
