@@ -1033,14 +1033,10 @@ class UserProfilePageController extends WikiaController {
 		//$result = array('success' => false);
 
 		if (!$user->isAnon()) {
-			/**
-			 * @var $fb_ids FBConnectDB
-			 */
+			/** @var $fb_ids FBConnectDB */
 			$fb_ids = F::build('FBConnectDB', array($user), 'getFacebookIDs');
-			/**
-			 * @var $fbConnectAPI FBConnectAPI
-			 */
-			$fbConnectAPI = F::build('FBConnectAPI');
+			/** @var $fbConnectAPI FBConnectAPI */
+			$fbConnectAPI = F::build('FBConnectOpenGraphAPI');
 
 			if (count($fb_ids) > 0) {
 				$fbUserId = $fb_ids[0];
@@ -1054,6 +1050,7 @@ class UserProfilePageController extends WikiaController {
 					array('first_name, current_location, hometown_location, work_history, profile_url, sex, birthday_date, pic_big, website')
 				);
 				$userFbData = $this->cleanFbData($userFbData);
+
 				$result = array('success' => true, 'fbUser' => $userFbData);
 			} else {
 				$result = array('success' => false, 'error' => $this->app->wf->Msg('user-identity-box-invalid-fb-id-error'));

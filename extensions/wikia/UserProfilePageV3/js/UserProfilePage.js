@@ -366,7 +366,6 @@ var UserProfilePage = {
 	},
 
 	getFormData: function() {
-
 		var userData = {
 			name: null,
 			location: null,
@@ -469,12 +468,11 @@ var UserProfilePage = {
 	extractFbDateAndFill: function(date) {
 		if( typeof(date) === 'string' ) {
 			var dateArray = date.split('/');
-
 			var monthSelectBox = $('#userBDayMonth'),
 				daySelectBox = $('#userBDayDay');
 
 			if( typeof(dateArray[0]) !== 'undefined' ) {
-				monthSelectBox.val(dateArray[0]);
+				monthSelectBox.val( parseInt(dateArray[0], 10) );
 			}
 
 			if( typeof(dateArray[1]) !== 'undefined' ) {
