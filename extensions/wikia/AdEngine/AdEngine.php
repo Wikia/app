@@ -15,12 +15,12 @@ function wfAdEngineInit() {
 	global $wgRequest, $wgUser;
 	global $wgNoExternals, $wgShowAds, $wgEnableAdsInContent, $wgEnableAdMeldAPIClient, $wgEnableKruxTargeting;
 
-	if ($wgRequest->getBool('noexternals', $wgNoExternals)) {
+	// No ads when noexternals or noads is passed in URL
+	if ($wgRequest->getBool('noexternals', $wgNoExternals) || $wgRequest->getBool('noads', false)) {
 		$wgShowAds = false;
 	}
 
-	$action = $wgRequest->getVal('action', 'view');
-	if ($action !== 'view') {
+	if (WikiaPageType::isActionPage()) {
 		$wgShowAds = false;
 	}
 
