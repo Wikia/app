@@ -123,13 +123,13 @@ class FBConnectAPI {
 				// Cache the data in the $userinfo array
 
 				//avoid Notice: Uninitialized string offset: 0
-				$userinfo[$user] = !empty( $user_details[ 0 ] ) ? $user_details[ 0 ] : null;
+				self::$userinfo[$user] = !empty( $user_details[ 0 ] ) ? $user_details[ 0 ] : null;
 			} catch( Exception $e ) {
 				error_log( 'Failure in the api when requesting ' . join(',', $fields) .
 				           " on uid $user: " . $e->getMessage());
 			}
 		}
-		return isset($userinfo[$user]) ? $userinfo[$user] : null;
+		return isset(self::$userinfo[$user]) ? self::$userinfo[$user] : null;
 	}
 
 	/**
