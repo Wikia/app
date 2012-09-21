@@ -26,7 +26,7 @@
 		 * @return array $pageviews [ array( 'YYYY-MM-DD' => pageviews ) ]
 		 */
 		protected static function getPageviews( $periodId, $startDate, $endDate = null, $wikiId = null ) {
-			$app = F::app(); 
+			$app = F::app();
 
 			$app->wf->ProfileIn( __METHOD__ );
 
@@ -93,60 +93,77 @@
 		}
 
 		/**
-		 * get top wikis by pageviews (last 30 days) and optionally by language
-		 * @param integer $limit
-		 * @param string $lang (optional)
-		 * @param integer $public (optional)
+		 * Get top wikis by pageviews over a specified span of time, optionally filtering by
+		 * public status and language
+		 *
+		 * @param integer $limit The maximum amount of results
+		 * @param string $lang (optional) The language code to use as a filter (e.g. en for English)
+		 * @param integer $public (optional) Filter results by public status
+		 * @param integer $interval The interval of time to take into consideration, in days
+		 *
 		 * @return array $topWikis [ array( wikiId => pageviews ) ]
 		 */
-		public static function getTopWikisByPageviews( $limit = 200, $lang = null, $public = null ) {
-			$app = F::app(); 
+		public static function getTopWikisByPageviews( $limit = 200, $lang = null, $hub = null, $public = null, $interval = 30 ) {
+			$app = F::app();
 
 			$app->wf->ProfileIn( __METHOD__ );
 
 			$limitDefault = 200;
 			$limitUsed = ( $limit > $limitDefault ) ? $limit : $limitDefault ;
 
-			$memKey = $app->wf->SharedMemcKey( 'datamart', 'topwikis', $limitUsed, $lang );
+			$memKey = $app->wf->SharedMemcKey( 'datamart', 'topwikis', $limitUsed, $lang, $hub, $public, $interval );
 			$topWikis = $app->wg->Memc->get( $memKey );
-			if (!is_array($topWikis) ) {
+
+			if ( !is_array( $topWikis ) ) {
 				$topWikis = array();
-				if ( !empty($app->wg->StatsDBEnabled) ) {
+
+				if ( !empty( $app->wg->StatsDBEnabled ) ) {
 					$db = $app->wf->GetDB( DB_SLAVE, array(), $app->wg->DatamartDB );
+					$tables = array(
+						'rollup_wiki_pageviews AS r',
+						'dimension_wikis AS d'
+					);
+					$where  = array(
+						'r.period_id' => self::PERIOD_ID_DAILY,
+						"r.time_id > CURDATE() - INTERVAL {$interval} DAY",
+						'r.wiki_id = d.wiki_id'
+					);
 
-					$tables = array('rollup_wiki_pageviews',
-									  'dimension_wikis');
-					$where  = array('period_id' => self::PERIOD_ID_DAILY,
-									'time_id > CURDATE() - INTERVAL 30 DAY',
-									'rollup_wiki_pageviews.wiki_id = dimension_wikis.wiki_id'
-							  );
+					if ( !is_null( $lang ) ) {
+						$where[] = "d.lang = '{$lang}'";
+					}
 
-					if ($lang) {
-						$where[] = "lang = '$lang'";
+					if ( !is_null( $hub ) ) {
+						$where[] = "d.hub_name = '{$hub}'";
 					}
 
 					// Default to showing public wikis
-					if (!is_null($public)) {
-						$where[] = 'public = '.$public;
+					if ( !is_null( $public ) ) {
+						$where[] = "d.public = {$public}";
 					} else {
-						$where[] = 'public = 1';
+						$where[] = 'd.public = 1';
 					}
 
 					$result = $db->select(
 							$tables,
-							array( 'rollup_wiki_pageviews.wiki_id, sum(pageviews) as cnt' ),
+							array(
+								'r.wiki_id AS id',
+								'sum(r.pageviews) AS pageviews'
+							),
 							$where,
 							__METHOD__,
-							array( 'GROUP BY' => 'rollup_wiki_pageviews.wiki_id',
-								   'ORDER BY' => 'cnt desc',
-								   'LIMIT'    => $limitUsed )
+							array(
+								'GROUP BY' => 'r.wiki_id',
+								'ORDER BY' => 'pageviews desc',
+								'LIMIT'    => $limitUsed
+							)
 					);
 
-					while ( $row = $db->fetchObject($result) ) {
-						$topWikis[ $row->wiki_id ] = $row->cnt;
+					while ( $row = $db->fetchObject( $result ) ) {
+						$topWikis[ $row->id ] = $row->pageviews;
 					}
 
-					$app->wg->Memc->set( $memKey, $topWikis, 60*60*12 );
+					$app->wg->Memc->set( $memKey, $topWikis, 43200 /* 12 hours */ );
 				}
 			}
 
@@ -168,7 +185,7 @@
 		 * Note: number of edits includes number of creates
 		 */
 		protected static function getEventsByWikiId( $periodId, $startDate, $endDate = null, $wikiId = null, $eventType = null ) {
-			$app = F::app(); 
+			$app = F::app();
 
 			$app->wf->ProfileIn( __METHOD__ );
 
