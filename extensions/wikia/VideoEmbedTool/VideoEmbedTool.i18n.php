@@ -85,6 +85,7 @@ $messages['en'] = array(
  * @author LWChris
  * @author McDutchie
  * @author Siebrand
+ * @author mech
  */
 $messages['qqq'] = array(
 	'vet-upload-btn' => '{{Identical|Next}}Upload button text.',
@@ -108,6 +109,18 @@ $messages['qqq'] = array(
 	'vet-left' => '{{Identical|Left}}',
 	'vet-right' => '{{Identical|Right}}',
 	'vet-gallery' => '{{Identical|Gallery}}',
+	'vet-suggestions' => 'New feature that will be released soon. Header for displaying suggestions for the article being edited',
+	'vet-back-to-suggestions' => 'New feature that will be released soon. Label for a link displayed about search results carousel',
+	'vet-url-label' => 'New feature that will be released soon. Label for adding url input',
+	'vet-search-label' => 'New feature that will be released soon. Label for the search input + name of search submit button',
+	'vet-search-placeholder' => 'New feature that will be released soon. Placeholder for search input',
+	'vet-add-from-preview' => 'New feature that will be released soon. Add video from preview window',
+	'vet-no-results-found' => 'New feature that will be released soon. Info that no results were found for search',
+	'vet-search-results-WVL' => 'New feature that will be released soon. Number of results found for keyword in Wikia Video Library. $1 = number, $2 = keyword',
+	'vet-search-results-local' => 'New feature that will be released soon. Number of results found for keyword on local wiki. $1 = number, $2 = keyword',
+	'vet-center' => 'New feature that will be released soon. Label for video center position layout option',
+	'vet-style' => 'New feature that will be released soon. Style label in display options (plain image or with border and caption)',
+	'vet-no-caption' => 'New feature that will be released soon. Info that no caption is available for plain image style option'
 );
 
 /** Abkhazian (Аҧсшәа)
