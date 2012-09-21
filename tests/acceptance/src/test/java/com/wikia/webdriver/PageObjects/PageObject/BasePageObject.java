@@ -327,15 +327,17 @@ public class BasePageObject{
 	 *
 	 ** @param element The element to be checked
 	 */
-	public void waitForElementByElement(WebElement element)
+	public boolean waitForElementByElement(WebElement element)
 	{
 		try
 		{
-			wait.until(ExpectedConditions.visibilityOf(element));								
+			wait.until(ExpectedConditions.visibilityOf(element));	
+			return true;
 		}
 		catch(Exception e)
 		{
 			PageObjectLogging.log("waitForElementByElement", e.toString(), false);			
+			return false;
 		}
 	}
 
@@ -356,15 +358,17 @@ public class BasePageObject{
 		}
 	}
 	
-	public void waitForElementByCss(String cssSelector)
+	public boolean waitForElementByCss(String cssSelector)
 	{
 		try
 		{						
 			wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(cssSelector)));
+			return true;
 		}
 		catch(Exception e)
 		{
-			PageObjectLogging.log("waitForElementByCss", e.toString(), false);			
+			PageObjectLogging.log("waitForElementByCss", e.toString(), false);
+			return false;
 		}
 		
 	}
