@@ -699,12 +699,6 @@ class soap_fault extends nusoap_base {
 	}
 }
 
-
-
-?><?php
-
-
-
 /**
 * parses an XML Schema, allows access to it's data, other utility methods
 * no validation... yet.
