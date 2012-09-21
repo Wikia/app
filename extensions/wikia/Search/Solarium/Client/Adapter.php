@@ -219,7 +219,9 @@ abstract class Solarium_Client_Adapter extends Solarium_Configurable
      */
     public function getBaseUri()
     {
-        $uri = 'http://' . $this->getHost() . ':' . $this->getPort() . $this->getPath() . '/';
+        // port should be optional
+        $port = ($port = $this->getPort()) ? ":{$port}" : ''; 
+        $uri = 'http://' . $this->getHost() . $port . $this->getPath() . '/';
 
         $core = $this->getCore();
         if (!empty($core)) {
