@@ -98,6 +98,7 @@
 		 *
 		 * @param integer $limit The maximum amount of results
 		 * @param string $lang (optional) The language code to use as a filter (e.g. en for English)
+		 * @param string $hub (optional) The vertical name to use as a filter (e.g. Gaming)
 		 * @param integer $public (optional) Filter results by public status
 		 * @param integer $interval The interval of time to take into consideration, in days
 		 *
