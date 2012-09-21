@@ -8,7 +8,7 @@ $messages['en'] = array(
 	'vet-find' => 'Find a video',
 	'vet-thiswiki' => 'This wiki',
 	'vet-flickr' => 'Flickr',
-	'vet-upload-btn' => 'Next',
+	'vet-upload-btn' => 'Add',
 	'vet-find-btn' => 'Search',
 	'vet-flickr-inf' => 'Search properly licensed free photos from Flickr and import them into your wiki.',
 	'vet-conflict-inf' => '<h1>Oops, a video with that name already exists.</h1>What do you want to do about <b>$1</b>?',
@@ -24,8 +24,10 @@ $messages['en'] = array(
 	'vet-thumbnail' => 'Thumbnail',
 	'vet-fullsize' => 'Full-size ($1x$2px)',
 	'vet-width' => 'Width',
-	'vet-layout' => 'Layout',
+	'vet-layout' => 'Position',
+	'vet-style' => 'Style',
 	'vet-caption' => 'Caption',
+ 	'vet-no-caption' => 'No caption',
 	'vet-optional' => ' (Optional)',
 	'vet-insert2' => 'Insert video',
 	'vet-update' => 'Update video',
@@ -75,8 +77,19 @@ $messages['en'] = array(
 	'vet-gallery-add-success' => 'Video has been added to the video gallery in this article.',
 	'vet-left' => 'Left',
 	'vet-right' => 'Right',
+	'vet-center' => 'Center',
 	'vet-gallery' => 'Gallery',
 	'vet-protected' => 'This video is protected.',
+	'vet-suggestions' => 'Suggested videos for this article',
+	'vet-back-to-suggestions' => 'Back to suggestions',
+	'vet-url-label' => 'URL',
+	'vet-search-label' => 'Find',
+	'vet-search-placeholder' => 'Search',
+	'vet-add-from-preview' => 'Add video',
+	'vet-no-results-found' => 'No results found',
+	'vet-search-results-WVL' => 'We found $1 results for "$2" on Wikia Video Library',
+	'vet-search-results-local' => 'We found $1 results for "$2" on this Wiki',
+	'vet-search-filter-caption' => 'Search filter',
 );
 
 /** Message documentation (Message documentation)
@@ -120,7 +133,8 @@ $messages['qqq'] = array(
 	'vet-search-results-local' => 'New feature that will be released soon. Number of results found for keyword on local wiki. $1 = number, $2 = keyword',
 	'vet-center' => 'New feature that will be released soon. Label for video center position layout option',
 	'vet-style' => 'New feature that will be released soon. Style label in display options (plain image or with border and caption)',
-	'vet-no-caption' => 'New feature that will be released soon. Info that no caption is available for plain image style option'
+	'vet-no-caption' => 'New feature that will be released soon. Info that no caption is available for plain image style option',
+	'vet-search-filter-caption' => 'New feature that will be released soon. Label for dropdown with search filter options'
 );
 
 /** Abkhazian (Аҧсшәа)
