@@ -34,7 +34,9 @@ function wfJSVariablesTopScripts(Array &$vars) {
 
 	// c&p from OutputPage::getJSVars, it's needed earlier
 	$user = F::app()->wg->User; /** @var $user User */
-	if (!$user->isAnon()) {
+	if ($user->isAnon()) {
+		$vars['wgUserName'] = null;
+	} else {
 		$vars['wgUserName'] = $user->getName();
 	}
 
