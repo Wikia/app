@@ -28,7 +28,7 @@ test('getProvider failsafe to AdDriver', function() {
 		adProviderLiftium2Mock
 	);
 
-	equal(adConfig.getProvider(['foo']), adProviderAdDriverMock, 'adProviderAdDriverMock');
+	equal(adConfig.getProvider(['foo']), adProviderLiftium2Mock, 'adProviderLiftium2Mock');
 });
 
 test('getProvider use Evolve(RS) for AU (only if provider accepts)', function() {
