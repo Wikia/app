@@ -1,13 +1,15 @@
 <?php
 /**
- * Wikia API discovery tool
+ * Controller to brows information about Wikia's API
+ *
+ * @author  Federico "Lox" Lucignano <federico@wikia-inc.com>
  */
 
 class WikiaApiDiscoveryController extends WikiaApiController {
 	/**
 	 * Lists all the registered API controllers
 	 *
-	 * @responseParam array A list of controllers' names
+	 * @responseParam array controllers A list of controllers' names
 	 */
 	public function listControllers() {
 		$controllers = array();
