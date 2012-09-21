@@ -1917,13 +1917,19 @@ class WallHooksHelper {
 		$app = F::app();
 		$title = Title::newFromId($page);
 
-		if(in_array(MWNamespace::getSubject( $title->getNamespace()  ), $app->wg->WallNS) ) {
+		if( ($title instanceof Title) && in_array(MWNamespace::getSubject( $title->getNamespace()  ), $app->wg->WallNS) ) {
 			return false;
 		}
 
 		return true;
 	}
 
+	/**
+	 * @static
+	 * @param Block $block
+	 * @param $user
+	 * @return bool
+	 */
 	public static function onBlockIpComplete( $block, $user ) {
 		$blockTarget = $block->getTarget();
 		if ( $blockTarget instanceof User && $blockTarget->isLoggedIn() ) {
@@ -1946,4 +1952,3 @@ class WallHooksHelper {
 	}
 
 }
-
