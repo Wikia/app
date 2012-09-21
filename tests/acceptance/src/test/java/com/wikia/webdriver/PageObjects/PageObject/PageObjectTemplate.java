@@ -11,6 +11,5 @@ public class PageObjectTemplate extends BasePageObject{
 		PageFactory.initElements(driver, this);
 	}
 	
-	
 
 }

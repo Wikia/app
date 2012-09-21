@@ -354,6 +354,12 @@ public class WikiArticlePageObject extends WikiBasePageObject {
 		PageObjectLogging.log("verifySliderThumbnailsPosition", "Slider thumbnails position verified: "+position, true, driver);		
 	}
 
+	public WikiHistoryPageObject openHistoryPage()
+	{
+		driver.get(driver.getCurrentUrl() + "?action=history");
+		waitForElementByElement(WikiHistoryPageObject.historyHeadLine);
+		return new WikiHistoryPageObject(driver, articlename, articlename);
+	}
 
 
 
