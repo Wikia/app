@@ -50,7 +50,7 @@ $solariumConfig = array(
 
 if ($wgWikiaSearchUseProxy && isset($wgSolrProxy)) {
 	$solariumConfig['adapteroptions']['proxy'] = $wgSolrProxy;
-	unset($solariumConfig['adapteroptions']['port']);
+	$solariumConfig['adapteroptions']['port'] = null;
 }
 
 F::addClassConstructor( 'Solarium_Client', array( 'solariumConfig' => $solariumConfig ) );
