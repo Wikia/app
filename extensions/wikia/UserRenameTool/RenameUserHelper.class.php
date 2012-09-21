@@ -45,10 +45,14 @@ class RenameUserHelper {
 
 				while($row = $dbr->fetchObject($res)) {
 					if ( !in_array( $row->wiki_id, self::$excludedWikis ) ) {
-						$result[] = (int)$row->wiki_id;
-						wfDebugLog(__CLASS__.'::'.__METHOD__, "Registered user with ID {$userID} was active on wiki with ID {$row->wiki_id}");
+                                                if ( WikiFactory::isPublic( $row->wiki_id ) ) {
+                                                    $result[] = (int)$row->wiki_id;
+                                                    wfDebugLog(__CLASS__.'::'.__METHOD__, "Registered user with ID {$userID} was active on wiki with ID {$row->wiki_id}");
+                                                } else {
+                                                    wfDebugLog(__CLASS__.'::'.__METHOD__, "Skipped wiki with ID {$row->wiki_id} (inactive wiki)");
+                                                }
 					} else {
-						wfDebugLog(__CLASS__.'::'.__METHOD__, "Skipped wiki with ID {$row->wiki_id}");
+						wfDebugLog(__CLASS__.'::'.__METHOD__, "Skipped wiki with ID {$row->wiki_id} (excluded wiki)");
 					}
 				}
 
