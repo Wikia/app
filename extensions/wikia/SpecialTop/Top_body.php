@@ -7,6 +7,7 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
 
+// TODO: use autoloader instead
 global $IP;
 require_once("$IP/extensions/wikia/DataProvider/DataProvider.php");
 
@@ -17,7 +18,7 @@ class Top extends SpecialPage
         }
 
         function execute( $par ) {
-			global $wgRequest, $wgOut;
+			global $wgOut;
 
 			$this->setHeaders();
 			$topFiveArray = DataProvider::GetTopFiveArray();
@@ -55,5 +56,3 @@ class Top extends SpecialPage
 			$wgOut->addHtml("</ul>");
         }
 }
-
-?>
