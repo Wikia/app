@@ -66,12 +66,14 @@ class WikiaSearch extends WikiaObject {
 			$searchConfig	->setStart		( ($searchConfig->getPage() - 1) * $searchConfig->getLength() );
 		}
 		
-		$query = $this->client->createSelect();
-		$this->prepareQuery( $query, $searchConfig );
-		//var_dump($this->client); die;
-		// @TODO register appropriate resultset class that works with our existing setup
-		$results = $this->client->select( $query );
+		$queryInstance = $this->client->createSelect();
+		$this->prepareQuery( $queryInstance, $searchConfig );
 		
+		$result = $this->client->select( $queryInstance );
+		$results = F::build('WikiaSearchResultSet', array($result, $searchConfig) );
+		
+		// set here due to all the changes we make to the base query
+		$results->setQuery($query);
 		var_dump($results); die;		
 
 		if( $searchConfig->getPage() == 1 ) {
@@ -90,7 +92,8 @@ class WikiaSearch extends WikiaObject {
 	
 	private function prepareQuery( Solarium_Query_Select $query, WikiaSearchConfig $searchConfig )
 	{
-		// $query->setResultClass('wikiasearchresult')
+		$query->setDocumentClass('WikiaSearchResult');
+		
 		$sort = $searchConfig->getSort();
 		
 		$query	->setFields		( $searchConfig->getRequestedFields() )
