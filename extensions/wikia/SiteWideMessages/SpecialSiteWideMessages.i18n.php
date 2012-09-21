@@ -141,6 +141,7 @@ $messages['qqq'] = array(
 	'swm-list-table-content' => '{{Identical|Content}}',
 	'swm-list-table-tools' => '{{Identical|Tools}}',
 	'swm-list-table-lang' => '{{Identical|Language}}',
+	'swm-list-table-hub' => 'Column heading of a table with one message per line. The column contains the hub of wikis the message was sent to.',
 	'swm-yes' => '{{Identical|Yes}}',
 	'swm-no' => '{{Identical|No}}',
 	'swm-label-mode-users-registration' => 'Label for option to select users by registration date.',
