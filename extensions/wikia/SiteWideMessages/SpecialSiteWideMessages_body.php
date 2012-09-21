@@ -259,7 +259,7 @@ class SiteWideMessages extends SpecialPage {
 				$wgOut->SetPageTitle(wfMsg('swm-page-title-list'));
 
 				//init pager
-				$oPager = new SiteWideMessagesPager;
+				$oPager = new SiteWideMessagesPager( $formData );
 				$formData['body']  = $oPager->getBody();
 				$formData['nav']   = $oPager->getNavigationBar();
 				break;
@@ -1294,14 +1294,16 @@ class SiteWideMessagesPager extends TablePager {
 	var $mQueryConds = array();
 	var $mTitle;
 	var $never;
+	var $formData;
 
 	#--- constructor
-	function __construct() {
+	function __construct( $formData ) {
 		global $wgExternalSharedDB;
 		$this->mTitle = Title::makeTitle( NS_SPECIAL, 'SiteWideMessages' );
 		$this->mDefaultDirection = true;
 		$this->never = explode(',', wfMsg('swm-days'));
 		$this->never = $this->never[0];
+		$this->formData = $formData;
 		parent::__construct();
 		$this->mDb = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
 	}
@@ -1313,13 +1315,14 @@ class SiteWideMessagesPager extends TablePager {
 			$this->mFieldNames['msg_id']             = wfMsg('swm-list-table-id');
 			$this->mFieldNames['msg_sender']         = wfMsg('swm-list-table-sender');
 			$this->mFieldNames['msg_wiki_name']      = wfMsg('swm-list-table-wiki');
+			$this->mFieldNames['msg_hub_id']         = wfMsg( 'swm-list-table-hub' );
 			$this->mFieldNames['msg_recipient_name'] = wfMsg('swm-list-table-recipient');
 			$this->mFieldNames['msg_group_name']     = wfMsg('swm-list-table-group');
 			$this->mFieldNames['msg_expire']         = wfMsg('swm-list-table-expire');
 			$this->mFieldNames['msg_removed']        = wfMsg('swm-list-table-removed');
 			$this->mFieldNames['msg_text']           = wfMsg('swm-list-table-content');
 			$this->mFieldNames['msg_date']           = wfMsg('swm-list-table-date');
-			$this->mFieldNames['msg_lang']		 = wfMsg('swm-list-table-lang');
+			$this->mFieldNames['msg_lang']           = wfMsg('swm-list-table-lang');
 			$this->mFieldNames['msg_wiki_tools']     = wfMsg('swm-list-table-tools');
 		}
 		return $this->mFieldNames;
@@ -1327,7 +1330,7 @@ class SiteWideMessagesPager extends TablePager {
 
 	#--- isFieldSortable-----------------------------------------------------
 	function isFieldSortable( $field ) {
-		static $sortable = array( 'msg_id', 'msg_sender', 'msg_removed', 'msg_date', 'msg_expire', 'msg_wiki_name', 'msg_group_name', 'msg_recipient_name', 'msg_text', 'msg_lang' );
+		static $sortable = array( 'msg_id', 'msg_sender', 'msg_removed', 'msg_date', 'msg_expire', 'msg_wiki_name', 'msg_group_name', 'msg_recipient_name', 'msg_text', 'msg_lang', 'msg_hub_id' );
 		return in_array( $field, $sortable );
 	}
 
@@ -1359,6 +1362,10 @@ class SiteWideMessagesPager extends TablePager {
 				if (!$this->mCurrentRow->msg_removed) {
 					$sRetval .= ' | <a href="#" onclick="if(confirm(\'' . addslashes(wfMsg('swm-msg-remove')) . '\')) document.location=\'' . $wgTitle->getLocalUrl("id={$this->mCurrentRow->msg_id}&action=remove") . '\';">' . wfMsg('swm-label-remove') . '</a>';
 				}
+				break;
+
+			case 'msg_hub_id':
+				$sRetval = ( $value && isset( $this->formData['hubNames'][$value] ) ) ? htmlspecialchars( $this->formData['hubNames'][$value] ) : htmlspecialchars( $value );
 				break;
 
 			default:
@@ -1409,7 +1416,7 @@ class SiteWideMessagesPager extends TablePager {
 	function getQueryInfo() {
 		return array(
 			'tables' => MSG_TEXT_DB . ' LEFT JOIN user ON msg_sender_id = user_id',
-			'fields' => array('msg_id', 'user_name AS msg_sender', 'msg_text', 'msg_removed', 'msg_expire', 'msg_date', 'msg_recipient_name', 'msg_group_name', 'msg_wiki_name', 'msg_lang')
+			'fields' => array('msg_id', 'user_name AS msg_sender', 'msg_text', 'msg_removed', 'msg_expire', 'msg_date', 'msg_recipient_name', 'msg_group_name', 'msg_wiki_name', 'msg_lang', 'msg_hub_id')
 		);
 	}
 

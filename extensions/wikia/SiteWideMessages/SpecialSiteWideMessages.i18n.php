@@ -83,6 +83,7 @@ $messages['en'] = array(
 	'swm-list-table-content'	=> 'Content',
 	'swm-list-table-tools'		=> 'Tools',
 	'swm-list-table-lang'		=> 'Languages',
+	'swm-list-table-hub'		=> 'Hub',
 	'swm-yes'					=> 'Yes',
 	'swm-no'					=> 'No',
 	'swm-error-no-such-wiki'	=> 'There is no such wiki!',
