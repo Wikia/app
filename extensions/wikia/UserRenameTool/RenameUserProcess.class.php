@@ -1027,6 +1027,44 @@ class RenameUserProcess {
 	public function getInternalLog() {
 		return $this->mInternalLog;
 	}
+        
+        /**
+         * Checks self::$mLocalDefaults against the current database layout and lists fields, that no longer exist.
+         * 
+         * @author Michał Roszka (Mix) <michal@wikia-inc.com>
+         * @static
+         * @access public
+         * @return string
+         */
+        static public function checkDatabaseLayout() {
+            $oDB = wfGetDB( DB_SLAVE );
+            $sOut = '';
+            
+            foreach ( self::$mLocalDefaults as $aEntry ) {
+                // table.userid_column
+                if ( !empty( $aEntry['userid_column'] ) && !$oDB->fieldInfo( $aEntry['table'], $aEntry['userid_column'] ) ) {
+                    $sOut .= sprintf( "The %s.%s column does not exist in the current database layout.\n", $aEntry['table'], $aEntry['userid_column'] );
+                }
+                // table.username_column
+                if ( !empty( $aEntry['username_column'] ) && !$oDB->fieldInfo( $aEntry['table'], $aEntry['username_column'] ) ) {
+                    $sOut .= sprintf( "The %s.%s column does not exist in the current database layout.\n", $aEntry['table'], $aEntry['username_column'] );
+                }
+                // table.[columns in conditions]
+                if ( isset( $aEntry['conds'] ) ) {
+                    foreach ( $aEntry['conds'] as $key => $value ) {
+                        if ( !$oDB->fieldInfo( $aEntry['table'], $key ) ) {
+                            $sOut .= sprintf( "The %s.%s column does not exist in the current database layout.\n", $aEntry['table'], $aEntry['username_column'] );
+                        }
+                    }
+                }
+            }
+            
+            if ( empty( $sOut ) ) {
+                $sOut = 'There are no missing columns in the current database layout';
+            }
+            
+            return trim( $sOut );
+        }
 
 	static public function newFromData( $data ) {
 		wfProfileIn(__METHOD__);
