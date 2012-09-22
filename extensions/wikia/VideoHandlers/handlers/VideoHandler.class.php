@@ -236,8 +236,6 @@ abstract class VideoHandler extends BitmapHandler {
 		if (!empty($metadata['duration'])) {
 
 			$sec = $metadata['duration'];
-file_put_contents('/tmp/sk.log','.............$this->getTitle()='.var_export($this->getTitle(),1)."\n",FILE_APPEND);
-file_put_contents('/tmp/sk.log','.............$sec='.var_export($sec,1)."\n",FILE_APPEND);
 
 			if ( (int)$sec == $sec ) {
 
