@@ -338,19 +338,24 @@ class EditAccount extends SpecialPage {
 			}
 		}
 
-		// Remove e-mail address
+		// Remove e-mail address and passwor
 		$this->mUser->setEmail( '' );
+		$this->mUser->setPassword( $newpass = $this->generateRandomScrambledPassword() );
+		// Save the new settings
+		$this->mUser->saveSettings();
 
-		if ( $this->mUser->getEmail() == '' && $this->mUser->invalidateEmail() && $this->mUser->setPassword( $this->generateRandomScrambledPassword() ) ) {
+		$id = $this->mUser->getId();
+
+		// Reload user
+		$this->mUser = User::newFromName( $id );
+
+		if ( $this->mUser->getEmail() == ''  ) {
 			global $wgUser, $wgTitle;
-
 			// Mark as disabled in a more real way, that doesnt depend on the real_name text
 			$this->mUser->setOption( 'disabled', 1 );
                         // BugId:18085 - setting a new token causes the user to be logged out.
-                        $this->mUser->setToken( md5( microtime() . mt_rand( 0, 0x7fffffff ) ) );
+			$this->mUser->setToken( md5( microtime() . mt_rand( 0, 0x7fffffff ) ) );
 
-			// Save the new settings
-			$this->mUser->saveSettings();
 
 			// Log what was done
 			$log = new LogPage( 'editaccnt' );

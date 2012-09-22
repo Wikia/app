@@ -56,3 +56,4 @@ if ( isset( $_SERVER['MW_COMPILED'] ) ) {
 
 $mediaWiki = new MediaWiki();
 $mediaWiki->run();
+
