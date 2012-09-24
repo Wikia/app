@@ -73,8 +73,7 @@ class WikiaSearch extends WikiaObject {
 		$results = F::build('WikiaSearchResultSet', array($result, $searchConfig) );
 		
 		// set here due to all the changes we make to the base query
-		$results->setQuery($query);
-		var_dump($results); die;		
+		$results->setQuery($query);		
 
 		if( $searchConfig->getPage() == 1 ) {
 			$resultCount = $results->getResultsFound();

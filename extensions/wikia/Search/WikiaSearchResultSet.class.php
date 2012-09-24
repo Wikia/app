@@ -58,9 +58,9 @@ class WikiaSearchResultSet implements Iterator,ArrayAccess {
 			$articleMatchId = sprintf('%s_%s', $wgCityId, $articleId);
 			$articleService = F::build('ArticleService', array($articleId));
 			$firstRev = $title->getFirstRevision();
-			$created = $firstRev->getTimestamp();
+			$created = wfTimestamp(TS_ISO_8601, $firstRev->getTimestamp());
 			$lastRev = Revision::newFromId($title->getLatestRevID());
-			$touched = $lastRev->getTimestamp();
+			$touched = wfTimeStamp(TS_ISO_8601, $lastRev->getTimestamp());
 
 			$fieldsArray = array(
 					'wid'			=>	$wgCityId,
@@ -71,7 +71,7 @@ class WikiaSearchResultSet implements Iterator,ArrayAccess {
 					'ns'			=>	$title->getNamespace(),
 					'pageId'		=>	$article->getID(),
 					'created'		=>	$created,
-					//'touched'		=>	$touched,
+					'touched'		=>	$touched,
 					);
 			//@TODO: we could put categories ^^ here but we aren't really using them yet
 			
