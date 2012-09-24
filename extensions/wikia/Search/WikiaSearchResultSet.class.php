@@ -9,29 +9,88 @@ class WikiaSearchResultSet implements Iterator,ArrayAccess {
 	protected $results = array();
 	protected $query;
 	protected $queryTime = 0;
+	protected $host;
+	
+	/**
+	 * @var Solarium_Result_Select
+	 */
 	protected $searchResultObject;
+	
+	/**
+	 * @var Solarium_Result_Select_Highlighting
+	 */
 	protected $highlightingObject;
+	
+	/**
+	 * @var WikiaSearchConfig
+	 */
 	protected $searchConfig;
+	
+	/**
+	 * @var WikiaSearchResultSet
+	 */
+	protected $parent;
 
 	public $totalScore;
 
-	public function __construct( Solarium_Result_Select $result, WikiaSearchConfig $searchConfig ) {
+	public function __construct( Solarium_Result_Select $result, WikiaSearchConfig $searchConfig, $parent = null, $metaposition = null) {
 		$this->searchResultObject = $result;
 		$this->searchConfig = $searchConfig;
-		$this->highlightingObject = $result->getHighlighting();
 		
-		if ( $this->searchConfig->hasArticleMatch() ) {
-			$am = $this->searchConfig->getArticleMatch();
-			$article = $am['article'];
-			$redirect = $am['redirect'] ?: null;
-			$this->prependArticleMatch( $article, $redirect );
+		if ( $parent === null && $this->searchConfig->getGroupResults() ) {
+			
+			$this->setResultGroupings( $result, $searchConfig );
+			
+		} else {
+			$this->parent = $parent;
+			$this->metaposition = $metaposition;
+			
+			$this->highlightingObject = $result->getHighlighting();
+			
+			if ($this->parent !== null && $this->metaposition !==  null) {
+				// this is a child grouping
+				$valueGroups = $this->searchResultObject->getGrouping()->getGroup('host')->getValueGroups();
+				$valueGroup = $valueGroups[$this->metaposition];
+				$documents = $valueGroup->getDocuments();
+				$this->setResults($documents);
+				
+				$exampleDoc = $documents[0];
+				$cityId = $exampleDoc->getCityId();
+				$this->setHeader( 'cityId', $cityId );
+				$this->setHeader( 'cityTitle',  WikiFactory::getVarValueByName( 'wgSitename', $cityId ) );
+				$this->setHeader( 'cityUrl', WikiFactory::getVarValueByName( 'wgServer', $cityId ) );
+				$this->setHeader( 'cityArticlesNum', $exampleDoc['wikiarticles'] );
+				
+			} else {
+				// default behavior
+				if ( $this->searchConfig->hasArticleMatch() ) {
+					$am = $this->searchConfig->getArticleMatch();
+					$article = $am['article'];
+					$redirect = $am['redirect'] ?: null;
+					$this->prependArticleMatch( $article, $redirect );
+				}
+			}
+			
+			$this->setResults( $result->getDocuments() );
+			$this->setResultsFound( $result->getNumFound() );
+			$this->setResultsStart( $result->getStart() );
+			$this->setQueryTime( $result->getQueryTime() );
+			
 		}
-		$this->setResults( $result->getDocuments() );
-		$this->setResultsFound( $result->getNumFound() );
-		$this->setResultsStart( $result->getStart() );
-		$this->setQueryTime( $result->getQueryTime() );
 	}
 
+	public function setResultGroupings( Solarium_Result_Select $result, WikiaSearchConfig $searchConfig ) {
+		
+		$fieldGroup = $result->getGrouping()->getGroup('host');
+		$metaposition = 0;
+		foreach ($fieldGroup->getValueGroups() as $valueGroup) {
+			$resultSet = F::build('WikiaSearchResultSet', array($result, $searchConfig, $this, $metaposition++));
+			$this->results[$resultSet->getHeader('cityUrl')] = $resultSet;
+		}
+		
+		var_dump($this); die;
+	}
+	
 	/**
 	 * set result documents
 	 * @param array $results list of WikiaResult or WikiaResultSet (for result grouping) objects
@@ -263,5 +322,13 @@ class WikiaSearchResultSet implements Iterator,ArrayAccess {
 	 */
 	public function offsetUnset ($offset) {
 		unset($this->results[$offset]);
+	}
+	
+	public function getParent() {
+		return $this->parent;
+	}
+	
+	public function getId() {
+		return $this->host;
 	}
 }
