@@ -43,22 +43,8 @@ class WikiaSearchResult extends Solarium_Document_ReadWrite
 		return $this->_fields['url'];
 	}
 
-	public function getLinkUrl() {
-
-		if (!$this->linkUrl && isset($this->_fields['url'])) {
-			$exploded = explode('/', $this->_fields['url']);
-			$parsed = parse_url($this->_fields['url']); // can't just use this because it interprets plaintext ? as query string
-			foreach ($exploded as $key=>$val)
-			{
-				if ($val == $parsed['scheme'].':' || $val == $parsed['host']) {
-					continue;
-				}
-				$exploded[$key] = self::replaceUnusualEscapes(rawurlencode($val));
-			}
-			$this->linkUrl = implode('/', $exploded);
-		}
-
-		return $this->linkUrl;
+	public function getTextUrl() {
+		return urldecode($this->_fields['url']);
 	}
 	
 	// The following two methods have been copied over from Parser. We need to copy over the 
