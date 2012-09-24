@@ -393,7 +393,7 @@
 		// render "Preview" modal
 		renderPreview: function(extraData) {
 			var self = this,
-				width = 660 + 32 /* modal padding */,
+				width = 680 + 32 /* modal padding */,
 				config = this.editor.config;
 
 			if (config.isWidePage) {
