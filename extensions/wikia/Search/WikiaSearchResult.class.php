@@ -2,14 +2,12 @@
 
 class WikiaSearchResult extends Solarium_Document_ReadWrite
 {
-	protected $title;
 	protected $titleObject;
 	protected $thumbnail;
 	protected $text;
 	protected $url;
 	protected $linkUrl;
 	protected $canonical = null	;
-	protected $vars = array();
 
 	public function getCityId() {
 		return $this->_fields['wid'];
@@ -20,22 +18,22 @@ class WikiaSearchResult extends Solarium_Document_ReadWrite
 	}
 
 	public function getTitle() {
-		return $this->title;
+		return isset($this->_fields[WikiaSearch::field('title')]) ? $this->_fields[WikiaSearch::field('title')] : $this->_fields['title'];
 	}
 
 	public function setTitle($value) {
-	       $this->title = $this->fixSnippeting($value);
+	       $this->_fields[WikiaSearch::field('title')] = $this->fixSnippeting($value);
 	}
 
 	public function getUrl() {
-		return $this->url;
+		return $this->_fields['url'];
 	}
 
 	public function getLinkUrl() {
 
-		if (!$this->linkUrl && $this->url) {
-			$exploded = explode('/', $this->url);
-			$parsed = parse_url($this->url); // can't just use this because it interprets plaintext ? as query string
+		if (!$this->linkUrl && isset($this->_fields['url'])) {
+			$exploded = explode('/', $this->_fields['url']);
+			$parsed = parse_url($this->_fields['url']); // can't just use this because it interprets plaintext ? as query string
 			foreach ($exploded as $key=>$val)
 			{
 				if ($val == $parsed['scheme'].':' || $val == $parsed['host']) {
@@ -91,7 +89,7 @@ class WikiaSearchResult extends Solarium_Document_ReadWrite
 	}
 
 	public function setUrl($value) {
-			$this->url = $value;
+			$this->_fields['url'] = $value;
 	}
 
 	public function getCanonical() {
@@ -107,15 +105,12 @@ class WikiaSearchResult extends Solarium_Document_ReadWrite
 	}
 
 	public function setVar($name, $value) {
-		$this->vars[$name] = $value;
+		$this->_fields[$name] = $value;
 	}
 
 	public function getVar($name, $default = null) {
-		if(isset($this->vars[$name])) {
-			return $this->vars[$name];
-		}
-		else if (isset($this->fields[$name])) { 
-			return $this->fields[$name];
+		if(isset($this->_fields[$name])) {
+			return $this->_fields[$name];
 		}
 		else {
 			return $default;
@@ -123,7 +118,7 @@ class WikiaSearchResult extends Solarium_Document_ReadWrite
 	}
 
 	public function getVars() {
-		return $this->vars;
+		return $this->_fields;
 	}
 
 	private function fixSnippeting($text, $addEllipses=false) {
@@ -141,28 +136,24 @@ class WikiaSearchResult extends Solarium_Document_ReadWrite
 	}
 
 	public function getTitleObject() {
-	  if (!isset($this->titleObject)) {
-	    $this->titleObject = Title::makeTitle( $this->getVar('ns'), 
-												preg_replace('/^'.MWNamespace::getCanonicalName($this->getVar('ns')).':/', 
-															'', $this->title)
-											 );
-	  }
-
-	  return $this->titleObject;
+		if (!isset($this->titleObject)) {
+			$this->titleObject = Title::makeTitle( $this->getVar('ns'), 
+													preg_replace('/^'.MWNamespace::getCanonicalName($this->getVar('ns')).':/', 
+																 '', $this->title)
+											 	 );
+		}
+		return $this->titleObject;
 	}
 
 	public function getThumbnail() {
-	  if ((!isset($this->thumbnail)) && ($this->getVar('ns') == NS_FILE)) {
-	    if ($img = wfFindFile($this->getTitleObject())) {
-	      if ($thumb = $img->transform( array( 'width' => 120, 'height' => 120 ) )) {
-		$this->thumbnail = $thumb;
-	      }
-	    }
-
-	  }
-
+		if ((!isset($this->thumbnail)) && ($this->getVar('ns') == NS_FILE)) {
+			if ($img = wfFindFile($this->getTitleObject())) {
+				if ($thumb = $img->transform( array( 'width' => 120, 'height' => 120 ) )) {
+					$this->thumbnail = $thumb;
+				}
+	    	}
+	  	}
 	  return $this->thumbnail;
-
 	}
 
 	public function toArray($keys){
