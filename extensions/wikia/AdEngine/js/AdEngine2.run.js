@@ -44,6 +44,7 @@
 	);
 
 	log('work on window.adslots2 according to AdConfig2', 1, module);
+	WikiaTracker.trackAdEvent('liftium.init', {'ga_category':'init2/init', 'ga_action':'init', 'ga_label':'adengine2'}, 'ga');
 	window.adslots2 = window.adslots2 || [];
 	adEngine.run(adConfig, window.adslots2);
 
@@ -68,9 +69,11 @@
 		if (adConfigForLateAds) {
 			log('launching late ads now', 1, module);
 			log('work on queueForLateAds according to AdConfig2Late', 1, module);
+			WikiaTracker.trackAdEvent('liftium.init', {'ga_category':'init2/init', 'ga_action':'init', 'ga_label':'adengine2 late'}, 'ga');
 			adEngine.run(adConfigForLateAds, queueForLateAds)
 		} else {
 			log('ERROR, AdEngine_loadLateAds called before AdEngine_setLateConfig!', 1, module);
+			WikiaTracker.trackAdEvent('liftium.errors', {'ga_category':'errors2/no_late_config', 'ga_action':'no_late_config', 'ga_label':'adengine2 late'}, 'ga');
 		}
 	};
 

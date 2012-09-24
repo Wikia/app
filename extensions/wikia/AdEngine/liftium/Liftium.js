@@ -287,6 +287,7 @@ Liftium._callAd = function (slotname, iframe) {
 	} catch (e) {
 		// This is probably never called, because the document.write hides it...
 		Liftium.reportError("Error loading tag #" + t.tag_id + ": " + Liftium.print_r(e), "tag");
+		WikiaTracker.trackAdEvent('liftium.errors', {'ga_category':'errors/_callAd', 'ga_action':slotname, 'ga_label':'tag ' + t.tag_id}, 'ga');
 	}
 
 	return true;
@@ -1300,6 +1301,8 @@ Liftium.init = function (callback) {
 		return false;
 	}
 
+	WikiaTracker.trackAdEvent('liftium.init', {'ga_category':'init/init', 'ga_action':'init', 'ga_label':'liftium'}, 'ga');
+
 	// TODO remove! an ugly hack for AdDriver transparency
 	var callback2 = function() {
 		if (typeof callback === 'function') callback();
@@ -1337,9 +1340,6 @@ Liftium.init = function (callback) {
 	if (Liftium.getRequestVal('liftium_exclude_tag')){
 		LiftiumOptions.exclude_tags = [ Liftium.getRequestVal('liftium_exclude_tag') ];
 	}
-
-
-	WikiaTracker.trackAdEvent('liftium.init', {'ga_category':'init/init', 'ga_action':'init'}, 'ga');
 
 	Liftium.trackQcseg();
 
@@ -1544,13 +1544,16 @@ Liftium.isValidPacing = function(tag){
 
 /* Load the supplied url inside a script tag  */
 Liftium.loadScript = function(url, noblock, callback) {
+	Liftium.d("Loading script from " + url + " (not blocking: " + (!Liftium.e(noblock) ? "true" : "false") + ", with callback: " + (!Liftium.e(callback) ? "true" : "false") + ")", 5);
 	if (typeof noblock == "undefined"){
+		Liftium.d("Using document.write", 5);
 		// This method blocks
 		document.write('<scr' + 'ipt type="text/javascript" src="' + url + '"><\/sc' + 'ript>');
 		return true;
 	} else {
 		// This method does not block
 		if (typeof jQuery == "undefined" || !callback) {
+			Liftium.d("Using document.createElement(script)", 5);
 			var h = document.getElementsByTagName("head").item(0);
 			var s = document.createElement("script");
 			s.src = url;
@@ -1558,6 +1561,7 @@ Liftium.loadScript = function(url, noblock, callback) {
 			return s;
 		}
 		else {
+			Liftium.d("Using $.getScript", 5);
 			$.getScript(url, callback);
 			return true;
 		}
@@ -1887,6 +1891,7 @@ Liftium.reportError = function (msg, type) {
 
   } catch (e) {
 	Liftium.d("Yikes. Liftium.reportError has an error");
+	WikiaTracker.trackAdEvent('liftium.errors', {'ga_category':'errors/reportError', 'ga_action':'reportError'}, 'ga');
   }
 };
 
