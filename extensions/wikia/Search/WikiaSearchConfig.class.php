@@ -156,4 +156,15 @@ class WikiaSearchConfig implements ArrayAccess
 	{
 		return $this->params['length'];
 	}
+	
+	public function getRequestedFields()
+	{
+		$fieldsPrepped = array();
+		foreach ($this->requestedFields as $field) {
+			$fieldsPrepped[] = WikiaSearch::field($field);
+		}
+		
+		return $fieldsPrepped;
+	}
+	
 }
