@@ -192,24 +192,8 @@ class SiteWideMessages extends SpecialPage {
 				break;
 
 			case 'send':
-				$mRecipientId = $formData['sendModeUsers'] != 'USER' ? null : $wgUser->idFromName($formData['userName']);
-				//TODO: if $mRecipientId == 0 => error - no such user
 				$mText = $wgRequest->getText('mContent');
-				$groupName = $formData['groupName'] == '' ? $formData['groupNameS'] : $formData['groupName'];
-				$expiryArr = array( 'manual' => $formData['expireTimeS'], 'preset' => $formData['expireTime'] );
-				$registrationArr = array(
-					'option' => $formData['registrationDateOption'],
-					'datefrom' => $formData['registrationDateOne'],
-					'dateto' => $formData['registrationDateTwo']
-				);
-				$editCountArr = array(
-					'option' => $formData['editCountOption'],
-					'ecfrom' => $formData['editCountOne'],
-					'ecto' => $formData['editCountTwo']
-				);
-				$result = $this->sendMessage( $wgUser, $mRecipientId, $mText, $expiryArr, $formData['wikiName'],
-					$formData['userName'], $formData['listUserNames'], $groupName, $registrationArr, $editCountArr, $formData['sendModeWikis'],
-					$formData['sendModeUsers'], $formData['hubId'], $formData['mLang'], $formData['clusterId'] );
+				$result = $this->sendMessage( $wgUser, $mText, $formData );
 
 				if (is_null($result['msgId'])) {	//we have an error
 					$formData['messageContent'] = $wgRequest->getText('mContent');
@@ -288,16 +272,24 @@ class SiteWideMessages extends SpecialPage {
 	}
 
 	//DB functions
-	// TODO: refactor most of these parameters into a single array parameter
-	private function sendMessage( $mSender, $mRecipientId, $mText, $mExpireArray, $mWikiName, $mRecipientName, $mUserNames, $mGroupName, $mRegistrationArr, $mEditCountArr, $mSendModeWikis, $mSendModeUsers, $mHubId, $mLang, $mClusterId ) {
-		global $wgExternalSharedDB, $wgStatsDB;
+	private function sendMessage( $mSender, $mText, $formData ) {
+		global $wgExternalSharedDB, $wgStatsDB, $wgUser;
 		$result = array('msgId' => null, 'errMsg' => null);
 		$dbInsertResult = false;
 		$mWikiId = null;
+		$mLang = $formData['mLang'];
 		if ( is_array( $mLang ) ) {
 			$mLang = implode( ',', $mLang );
 		}
-		$mUserNamesArr = array_unique( explode( "\n", $mUserNames ) );
+		$mRecipientId = $formData['sendModeUsers'] != 'USER' ? null : $wgUser->idFromName( $formData['userName'] );
+		$mWikiName = $formData['wikiName'];
+		$mRecipientName = $formData['userName'];
+		$mGroupName = $formData['groupName'] == '' ? $formData['groupNameS'] : $formData['groupName'];
+		$mSendModeWikis = $formData['sendModeWikis'];
+		$mSendModeUsers = $formData['sendModeUsers'];
+		$mHubId = $formData['hubId'];
+		$mClusterId = $formData['clusterId'];
+		$mUserNamesArr = array_unique( explode( "\n", $formData['listUserNames'] ) );
 
 		//remove unnecessary data
 		switch ( $mSendModeWikis ) {
@@ -317,6 +309,7 @@ class SiteWideMessages extends SpecialPage {
 			case 'WIKI':
 				$mHubId = null;
 				$mClusterId = null;
+				break;
 		}
 
 		switch ( $mSendModeUsers ) {
@@ -324,36 +317,30 @@ class SiteWideMessages extends SpecialPage {
 			case 'ACTIVE':
 				$mRecipientName = '';
 				$mGroupName = '';
-				$mUserNames = '';
 				break;
 			case 'GROUP':
 				$mRecipientName = '';
-				$mUserNames = '';
 				break;
 			case 'USER':
 				$mGroupName = '';
-				$mUserNames = '';
-				$mLang = array( MSG_LANG_ALL );
+				$mLang = MSG_LANG_ALL;
 				break;
 			case 'USERS':
 				$mRecipientName = count( $mUserNamesArr ) . ' users';
 				$mGroupName = '';
-				$mLang = array( MSG_LANG_ALL );
+				$mLang = MSG_LANG_ALL;
 				break;
 			case 'ANONS':
 				$mRecipientName = MSG_RECIPIENT_ANON;
 				$mGroupName = '';
-				$mUserNames = '';
 				break;
 			case 'REGISTRATION':
 				$mRecipientName = '';
 				$mGroupName = '';
-				$mUserNames = '';
 				break;
 			case 'EDITCOUNT':
 				$mRecipientName = '';
 				$mGroupName = '';
-				$mUserNames = '';
 				break;
 		}
 
@@ -373,30 +360,30 @@ class SiteWideMessages extends SpecialPage {
 		}
 
 		$validDateTime = true;
-		if ( $mExpireArray['manual'] !== '' ) {
-			$timestamp = wfTimestamp( TS_UNIX, $mExpireArray['manual'] );
+		if ( $formData['expireTimeS'] !== '' ) {
+			$timestamp = wfTimestamp( TS_UNIX, $formData['expireTimeS'] );
 			if ( !$timestamp ) {
 				$validDateTime = false;
 			}
 			$mExpire = wfTimestamp( TS_DB, $timestamp );
 		} else {
 			//null => expire never
-			$mExpire = $mExpireArray['preset'] != '0' ? date('Y-m-d H:i:s', strtotime(ctype_digit($mExpireArray['preset']) ? " +{$mExpireArray['preset']} day" : ' +' . substr($mExpireArray['preset'], 0, -1) . ' hour')) : null;
+			$mExpire = $formData['expireTime'] != '0' ? date('Y-m-d H:i:s', strtotime(ctype_digit($formData['expireTime']) ? " +{$formData['expireTime']} day" : ' +' . substr($formData['expireTime'], 0, -1) . ' hour')) : null;
 		}
 
 		if ( $mSendModeUsers === 'REGISTRATION' ) {
-			$timestamp = wfTimestamp( TS_UNIX, $mRegistrationArr['datefrom'] );
+			$timestamp = wfTimestamp( TS_UNIX, $formData['registrationDateOne'] );
 			if ( !$timestamp ) {
 				$validDateTime = false;
 			}
-			$mRegistrationArr['datefrom'] = wfTimestamp( TS_MW, $timestamp );
-			if ( $mRegistrationArr['option'] === 'between' ) {
-				if ( $mRegistrationArr['dateto'] !== '' ) {
-					$timestamp = wfTimestamp( TS_UNIX, $mRegistrationArr['dateto'] );
+			$formData['registrationDateOne'] = wfTimestamp( TS_MW, $timestamp );
+			if ( $formData['registrationDateOption'] === 'between' ) {
+				if ( $formData['registrationDateTwo'] !== '' ) {
+					$timestamp = wfTimestamp( TS_UNIX, $formData['registrationDateTwo'] );
 					if ( !$timestamp ) {
 						$validDateTime = false;
 					}
-					$mRegistrationArr['dateto'] = wfTimestamp( TS_MW, $timestamp );
+					$formData['registrationDateTwo'] = wfTimestamp( TS_MW, $timestamp );
 				} else {
 					$validDateTime = false;
 				}
@@ -415,24 +402,24 @@ class SiteWideMessages extends SpecialPage {
 			$result['errMsg'] = wfMsg('swm-error-no-such-wiki');
 		} elseif ($mSendModeUsers == 'USER' && !User::idFromName($mRecipientName)) {
 			$result['errMsg'] = wfMsg('swm-error-no-such-user');
-		} elseif ( $mSendModeUsers == 'USERS' && empty( $mUserNames ) ) {
+		} elseif ( $mSendModeUsers == 'USERS' && empty( $formData['listUserNames'] ) ) {
 			$result['errMsg'] = wfMsg( 'swm-error-no-user-list' );
 		} elseif ( !$validDateTime ) {
 			$result['errMsg'] = wfMsg( 'swm-error-invalid-time' );
 		} elseif ( $mSendModeUsers === 'REGISTRATION'
-			&& $mRegistrationArr['option'] === 'between'
-			&& ( $mRegistrationArr['dateto'] <= $mRegistrationArr['datefrom'] )
+			&& $formData['registrationDateOption'] === 'between'
+			&& ( $formData['registrationDateTwo'] <= $formData['registrationDateOne'] )
 		) {
 			$result['errMsg'] = wfMsg( 'swm-error-registered-tobeforefrom' );
 		} elseif ( $mSendModeUsers === 'EDITCOUNT'
-			&& ( !is_numeric( $mEditCountArr['ecfrom'] )
-			|| ( $mEditCountArr['option'] === 'between'
-			&& !is_numeric( $mEditCountArr['ecto'] ) ) )
+			&& ( !is_numeric( $formData['editCountOne'] )
+			|| ( $formData['editCountOption'] === 'between'
+			&& !is_numeric( $formData['editCountTwo'] ) ) )
 		) {
 			$result['errMsg'] = wfMsg( 'swm-error-editcount-notnumber' );
 		} elseif ( $mSendModeUsers === 'EDITCOUNT'
-			&& $mEditCountArr['option'] === 'between'
-			&& ( $mEditCountArr['ecto'] <= $mEditCountArr['ecfrom'] )
+			&& $formData['editCountOption'] === 'between'
+			&& ( $formData['editCountTwo'] <= $formData['editCountOne'] )
 		) {
 			$result['errMsg'] = wfMsg( 'swm-error-editcount-tolessthanfrom' );
 		} else {
@@ -549,9 +536,9 @@ class SiteWideMessages extends SpecialPage {
 											'sendModeUsers'	=> $mSendModeUsers,
 											'wikiName'		=> $mWikiName,
 											'groupName'		=> $mGroupName,
-											'regOption'     => $mRegistrationArr['option'],
-											'regStartDate'  => $mRegistrationArr['datefrom'],
-											'regEndDate'    => $mRegistrationArr['dateto'],
+											'regOption'     => $formData['registrationDateOption'],
+											'regStartDate'  => $formData['registrationDateOne'],
+											'regEndDate'    => $formData['registrationDateTwo'],
 											'senderId'		=> $mSender->getID(),
 											'senderName'	=> $mSender->getName(),
 											'hubId'			=> $mHubId,
@@ -571,9 +558,9 @@ class SiteWideMessages extends SpecialPage {
 											'sendModeUsers'		=> $mSendModeUsers,
 											'wikiName'			=> $mWikiName,
 											'groupName'			=> $mGroupName,
-											'editCountOption'	=> $mEditCountArr['option'],
-											'editCountStart'	=> $mEditCountArr['ecfrom'],
-											'editCountEnd'		=> $mEditCountArr['ecto'],
+											'editCountOption'	=> $formData['editCountOption'],
+											'editCountStart'	=> $formData['editCountOne'],
+											'editCountEnd'		=> $formData['editCountTwo'],
 											'senderId'			=> $mSender->getID(),
 											'senderName'		=> $mSender->getName(),
 											'hubId'				=> $mHubId,
@@ -705,9 +692,9 @@ class SiteWideMessages extends SpecialPage {
 											'sendModeUsers'		=> $mSendModeUsers,
 											'wikiName'			=> $mWikiName,
 											'groupName'			=> $mGroupName,
-											'editCountOption'	=> $mEditCountArr['option'],
-											'editCountStart'	=> $mEditCountArr['ecfrom'],
-											'editCountEnd'		=> $mEditCountArr['ecto'],
+											'editCountOption'	=> $formData['editCountOption'],
+											'editCountStart'	=> $formData['editCountOne'],
+											'editCountEnd'		=> $formData['editCountTwo'],
 											'senderId'			=> $mSender->getID(),
 											'senderName'		=> $mSender->getName(),
 											'hubId'				=> $mHubId,
