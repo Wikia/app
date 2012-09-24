@@ -20,7 +20,7 @@
 		hasTransitionEnd = (/iphone|ipad/gi).test(navigator.appVersion) || (/playbook/gi).test(navigator.appVersion),
 
 		// Events
-		RESIZE_EV = 'orientationchange',
+		RESIZE_EV = 'viewportsize',
 		START_EV = 'touchstart',
 		MOVE_EV = 'touchmove',
 		END_EV = 'touchend',

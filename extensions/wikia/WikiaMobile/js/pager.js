@@ -184,19 +184,16 @@ define('pager', function () {
 				if((isFunction ? !checkCancel() : true) && delta !== 0)
 					goTo(delta);
 			},
-			cleanup = function(notResize){
+			cleanup = function(onePage){
 				eventsNotAdded = true;
+				!onePage && window.removeEventListener('viewportsize', onResize);
 				wrapper.removeEventListener('touchstart', onTouchStart, true);
 				wrapper.removeEventListener('touchmove', onTouchMove, true);
 				wrapper.removeEventListener('touchend', onTouchEnd, true);
 				wrapper.removeEventListener('touchcancel', onTouchEnd, true);
-
-				if(!notResize) {
-					window.removeEventListener('viewportsize', onResize);
-				}
 			},
 			events = function(){
-				if(( lastPage > 0 || circle ) && eventsNotAdded){
+				if(eventsNotAdded){
 					eventsNotAdded = false;
 					wrapper.addEventListener('touchstart', onTouchStart, true);
 					wrapper.addEventListener('touchmove', onTouchMove, true);
@@ -224,15 +221,12 @@ define('pager', function () {
 		//true init
 		if(container && pages){
 			lastPage = pages.length-1;
-			circle = (circle && lastPage > 0);
-
+			circle = (circle && lastPage);
 			pages = (center) ? wrap(pages) : pages;
-
 			loadCurrentPage();
 
 			window.addEventListener('viewportsize', onResize);
-
-			events();
+			(lastPage || circle) && events();
 
 			return {
 				prev: function(){
@@ -243,16 +237,15 @@ define('pager', function () {
 				},
 				reset: function(options){
 					if(options.pages){
-						pages = (center) ? wrap(options.pages) : options.pages;
+						pages = center ? wrap(options.pages) : options.pages;
 					}
 					lastPage = pages.length-1;
-					circle = (circle && lastPage > 0);
-					currentPageNum = (typeof options.pageNumber == 'number') ? options.pageNumber : currentPageNum;
+					circle = (circle && lastPage);
+					currentPageNum = (typeof options.pageNumber === 'number') ? options.pageNumber : currentPageNum;
 
 					loadCurrentPage();
-
-					cleanup(true);
-					events();
+					//add/remove events when necessary
+					(lastPage || circle) ? events() : cleanup(true);
 				},
 				cleanup: cleanup,
 				getCurrent: function () {

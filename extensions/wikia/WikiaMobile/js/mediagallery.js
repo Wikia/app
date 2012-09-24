@@ -126,7 +126,7 @@ define('mediagallery', ['media', 'modal', 'pager', 'thumbnailer', 'lazyload', 't
 
 		pages[pagesNum] += '</div>';
 
-		if(pagesNum > 0) {
+		if(pagesNum) {
 			pagination.innerHTML = dots;
 
 			//18 is a width of a single dot
@@ -134,6 +134,8 @@ define('mediagallery', ['media', 'modal', 'pager', 'thumbnailer', 'lazyload', 't
 			dotsPerWidth = ~~(width / 18);
 
 			paginationStyle.width = (paginationWidth > width ? paginationWidth + 'px' : '');
+		}else{
+			pagination.innerHTML = '';
 		}
 	}
 
@@ -175,9 +177,8 @@ define('mediagallery', ['media', 'modal', 'pager', 'thumbnailer', 'lazyload', 't
 				}
 			},
 			onResize: function(){
-				var img  = current * imgsPerPage;
+				current = ~~((current * imgsPerPage) / imgsPerPage);
 				prepareGallery();
-				current = ~~(img / imgsPerPage);
 				pager.reset({
 					pages: pages,
 					pageNumber: current
