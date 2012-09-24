@@ -4073,7 +4073,17 @@ class User {
 	 */
 	public function incEditCount() {
 		if( !$this->isAnon() ) {
-			$dbw = wfGetDB( DB_MASTER );
+                        // wikia change, load always from first cluster when we use
+                        // shared users database
+                        // @author Lucas Garczewski (tor)
+                        global $wgExternalSharedDB, $wgSharedDB;
+                        if( isset( $wgSharedDB ) ) {
+                                $dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
+                        }
+                        else {
+                                $dbw = wfGetDB( DB_MASTER );
+                        }
+
 			$dbw->update( 'user',
 				array( 'user_editcount=user_editcount+1' ),
 				array( 'user_id' => $this->getId() ),
@@ -4083,7 +4093,18 @@ class User {
 			if( $dbw->affectedRows() == 0 ) {
 				// Pull from a slave to be less cruel to servers
 				// Accuracy isn't the point anyway here
-				$dbr = wfGetDB( DB_SLAVE );
+
+				// wikia change, load always from first cluster when we use
+				// shared users database
+				// @author Lucas Garczewski (tor)
+				if( isset( $wgSharedDB ) ) {
+					$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
+				}
+				else {
+					$dbr = wfGetDB( DB_SLAVE );
+				}
+
+
 				$count = $dbr->selectField( 'revision',
 					'COUNT(rev_user)',
 					array( 'rev_user' => $this->getId() ),
