@@ -207,15 +207,17 @@ class AssetsManager {
 	 *
 	 * @return string the generated URL
 	 */
-	private function getSassURL( $scssFilePath, $prefix, $minify = null ) {
+	private function getSassURL( $scssFilePath, $prefix, $minify = null, $params = null ) {
 		wfProfileIn( __METHOD__ );
 
-		$params = SassUtil::getSassSettings();
+		if ( !is_array( $params ) ) {
+			$params = SassUtil::getSassSettings();
 
-		if ( $minify !== null ? !$minify : !$this->mMinify ) {
-			$params['minify'] = false;
-		} else {
-			unset( $params['minify'] );
+			if ( $minify !== null ? !$minify : !$this->mMinify ) {
+				$params['minify'] = false;
+			} else {
+				unset( $params['minify'] );
+			}
 		}
 
 		$url = $prefix . $this->getAMLocalURL( 'sass', $scssFilePath, $params );
@@ -227,9 +229,9 @@ class AssetsManager {
 	/**
 	 * @author Inez Korczyński <korczynski@gmail.com>
  	 */
-	public function getSassCommonURL(/* string */ $scssFilePath, /* boolean */ $minify = null) {
+	public function getSassCommonURL(/* string */ $scssFilePath, /* boolean */ $minify = null, /* array */ $params = null) {
 		global $wgCdnRootUrl;
-		return $this->getSassURL( $scssFilePath, $wgCdnRootUrl, $minify );
+		return $this->getSassURL( $scssFilePath, $wgCdnRootUrl, $minify, $params );
 	}
 
 	/**
@@ -242,8 +244,8 @@ class AssetsManager {
 	 *
 	 * @return string the generated URL
 	 */
-	public function getSassLocalURL( $scssFilePath, $minify = null ) {
-		return $this->getSassURL( $scssFilePath, '', $minify );
+	public function getSassLocalURL( $scssFilePath, $minify = null, $params = null ) {
+		return $this->getSassURL( $scssFilePath, '', $minify, $params );
 	}
 
 	private function getSassGroupURL( $groupName, $prefix, $combine = null, $minify = null ) {

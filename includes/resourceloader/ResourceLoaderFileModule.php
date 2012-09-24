@@ -271,7 +271,7 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 	public function getScriptURLsForDebug( ResourceLoaderContext $context ) {
 		$urls = array();
 		foreach ( $this->getScriptFiles( $context ) as $file ) {
-			$urls[] = $this->getRemotePath( $file );
+			$urls[] = $this->getRemotePath( $file, $context );
 		}
 		return $urls;
 	}
@@ -335,7 +335,7 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 		foreach ( $this->getStyleFiles( $context ) as $mediaType => $list ) {
 			$urls[$mediaType] = array();
 			foreach ( $list as $file ) {
-				$urls[$mediaType][] = $this->getRemotePath( $file );
+				$urls[$mediaType][] = $this->getRemotePath( $file, $context );
 			}
 		}
 		return $urls;
@@ -456,8 +456,14 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 	 * @param $path string
 	 * @return string
 	 */
-	protected function getRemotePath( $path ) {
-		return "{$this->remoteBasePath}/$path";
+	protected function getRemotePath( $path, ResourceLoaderContext $context ) {
+		switch (self::getFileType($path)) {
+			case self::FILE_TYPE_SASS:
+				return AssetsManager::getInstance()->getSassLocalURL($path,false);
+				break;
+			default:
+				return "{$this->remoteBasePath}/$path";
+		}
 	}
 
 	/**
@@ -637,7 +643,7 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 			$dirname = '';
 		}
 		$dir = $this->getLocalPath( $dirname );
-		$remoteDir = $this->getRemotePath( $dirname );
+		$remoteDir = $this->getRemotePath( $dirname, $context );
 		// Get and register local file references
 		$this->localFileRefs = array_merge(
 			$this->localFileRefs,
