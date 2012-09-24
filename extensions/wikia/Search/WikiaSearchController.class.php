@@ -125,6 +125,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 						 ->setArticleMatch		( $articleMatch )
 						 ->setDebug				( $debug )
 						 ->setAdvanced			( $advanced )
+						 ->setIsInterWiki		( $isInterWiki )
 			;
 
 			$results = $this->wikiaSearch->doSearch( $query, $searchConfig );

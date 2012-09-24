@@ -68,7 +68,6 @@ class WikiaSearch extends WikiaObject {
 		
 		$queryInstance = $this->client->createSelect();
 		$this->prepareQuery( $queryInstance, $searchConfig );
-		
 		$result = $this->client->select( $queryInstance );
 		$results = F::build('WikiaSearchResultSet', array($result, $searchConfig) );
 		
@@ -99,7 +98,7 @@ class WikiaSearch extends WikiaObject {
 			  	->setStart		( $searchConfig->getStart() )
 				->setRows		( $searchConfig->getLength() )
 				->addSort		( $sort[0], $sort[1] )
-				->addParam		( 'timeAllowed', $searchConfig->getIsInterwiki() ? 7500 : 5000 )
+				->addParam		( 'timeAllowed', $searchConfig->isInterWiki() ? 7500 : 5000 )
 		;
 		
 		$highlighting = $query->getHighlighting();
@@ -119,7 +118,6 @@ class WikiaSearch extends WikiaObject {
 			$grouping = $query->getGrouping();
 			$grouping	->setLimit			( 4 )
 						->setOffset			( $searchConfig->getStart() )
-						->setNumberOfGroups	( $searchConfig->getSize() )
 						->setFields			( array( 'host' ) )
 			;
 			

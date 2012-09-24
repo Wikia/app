@@ -167,4 +167,9 @@ class WikiaSearchConfig implements ArrayAccess
 		return $fieldsPrepped;
 	}
 	
+	public function isInterWiki()
+	{
+		return $this->getIsInterWiki();
+	}
+	
 }
