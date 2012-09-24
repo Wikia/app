@@ -118,25 +118,17 @@ class WikiaSearchController extends WikiaSpecialPageController {
 						 ->setIncludeRedirects	( $redirs )
 						 ->setNamespaces		( $namespaces )
 						 ->setArticleMatch		( $articleMatch )
+						 ->setDebug				( $debug )
+						 ->setAdvanced			( $advanced )
 			;
 
 			$results = $this->wikiaSearch->doSearch( $query, $searchConfig );
 
 			$resultsFound = $results->getResultsFound();
+			$searchConfig->setResultsFound($resultsFound);
 
 			if(!empty($resultsFound)) {
-				// @TODO: refactor paginationparams into SearchConfig, use searchConfig in self request controller action
-				$paginationParams = array(
-						'query' => $query, 
-						'page' => $page, 
-						'count' => $resultsFound, 
-						'crossWikia' => $isInterWiki, 
-						'skipCache' => $skipCache, 
-						'debug' => $debug, 
-						'namespaces' => $namespaces, 
-						'advanced' => $advanced, 
-						'redirs' => $redirs, 
-						'limit'=>$limit);
+				$paginationParams = array('config' => $searchConfig);
 				$paginationLinks = $this->sendSelfRequest( 	'pagination',  $paginationParams);
 			}
 
@@ -368,18 +360,20 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 
 	public function pagination() {
-		$query = $this->getVal('query');
-		$page = $this->getVal( 'page', 1 );
-		$resultsCount = $this->getVal( 'count', 0);
-		$limit = $this->getVal('limit', self::RESULTS_PER_PAGE);
+		$config = $this->getVal('config');
+		
+		$query = $config->getQuery();
+		$page = $config->getPage();
+		$resultsCount = $config->getResultsFound();
+		$limit = $config->getLimit();
 		$pagesNum = ceil( $resultsCount / $limit );
 
-		$crossWikia = $this->getVal('crossWikia');
-		$debug = $this->getVal('debug');
-		$skipCache = $this->getVal('skipCache');
-		$namespaces = $this->getVal('namespaces', array());
-		$advanced = $this->getVal( 'advanced' );
-		$redirs = $this->getVal( 'redirs' );
+		$crossWikia = $config->getIsInterwiki();
+		$debug = $config->getDebug();
+		$skipCache = $config->getSkipCache();
+		$namespaces = $config->getNamespaces();
+		$advanced = $config->getAdvanced();
+		$redirs = $config->getIncludeRedirects();
 
 		$this->setVal( 'query', $query );
 		$this->setVal( 'pagesNum', $pagesNum );
