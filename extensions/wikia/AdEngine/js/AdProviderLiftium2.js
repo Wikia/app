@@ -1,8 +1,40 @@
 var AdProviderLiftium2 = function (scriptWriter, WikiaTracker, log, window) {
-	var module = 'AdProviderLiftium2';
+	'use strict';
+
+	var module = 'AdProviderLiftium2'
+		, canHandleSlot
+		, fillInSlot
+		, slotMap
+		, getLiftiumCallScript
+		, adNum = 100; // TODO global-ize it!
+
+	slotMap = {
+		'HOME_TOP_LEADERBOARD':{'size':'728x90'},
+		'HOME_TOP_RIGHT_BOXAD':{'size':'300x250'},
+		'LEFT_SKYSCRAPER_2':{'size':'160x600'},
+		'TOP_LEADERBOARD':{'size':'728x90'},
+		'TOP_RIGHT_BOXAD':{'size':'300x250'},
+		'PREFOOTER_LEFT_BOXAD':{'size':'300x250'},
+		'PREFOOTER_RIGHT_BOXAD':{'size':'300x250'},
+		'INVISIBLE_1':{'size':'0x0'},
+		'WIKIA_BAR_BOXAD_1':{'size':'300x250'}
+	};
+
+	canHandleSlot = function(slot) {
+		var slotname = slot[0];
+
+		log('fillInSlot', 5, module);
+		log(slot, 5, module);
+
+		if (slotMap[slotname]) {
+			return true;
+		}
+
+		return false;
+	};
 
 	// adapted for Evolve + simplified copy of AdDriverDelayedLoader.callLiftium
-	function fillInSlot(slot) {
+	fillInSlot = function(slot) {
 		log('fillInSlot', 5, module);
 		log(slot, 5, module);
 
@@ -34,23 +66,10 @@ var AdProviderLiftium2 = function (scriptWriter, WikiaTracker, log, window) {
 			// TODO un-comment this
 			//window.AdDriver.adjustSlotDisplay(slotname);
 		});
-	}
-
-	var slotMap = {
-		'HOME_TOP_LEADERBOARD':{'size':'728x90'},
-		'HOME_TOP_RIGHT_BOXAD':{'size':'300x250'},
-		'LEFT_SKYSCRAPER_2':{'size':'160x600'},
-		'TOP_LEADERBOARD':{'size':'728x90'},
-		'TOP_RIGHT_BOXAD':{'size':'300x250'},
-		'PREFOOTER_LEFT_BOXAD':{'size':'300x250'},
-		'PREFOOTER_RIGHT_BOXAD':{'size':'300x250'},
-		'INVISIBLE_1':{'size':'0x0'},
-		'WIKIA_BAR_BOXAD_1':{'size':'300x250'}
 	};
-	var adNum = 100; // TODO global-ize it!
 
 	// adapted for Evolve + simplified copy of AdDriverDelayedLoader.getLiftiumCallScript
-	function getLiftiumCallScript(slotname, size) {
+	getLiftiumCallScript = function(slotname, size) {
 		log('getLiftiumCallScript', 5, module);
 		log([slotname, size], 5, module);
 
@@ -63,10 +82,11 @@ var AdProviderLiftium2 = function (scriptWriter, WikiaTracker, log, window) {
 
 		log(script, 7, module);
 		return script;
-	}
+	};
 
 	return {
 		name: 'Liftium2',
+		canHandleSlot: canHandleSlot,
 		fillInSlot: fillInSlot
 	};
 };

@@ -3,7 +3,8 @@ var AdConfig2Late = function (
 	log,
 
 	// AdProviders
-	AdProviderLiftium2
+	adProviderNull,
+	adProviderLiftium2
 ) {
 	'use strict';
 
@@ -17,10 +18,14 @@ var AdConfig2Late = function (
 		log(slot, 5, module);
 
 		if (slot[2] === 'Liftium2') {
-			return AdProviderLiftium2;
+			return adProviderLiftium2;
 		}
 
-		return AdProviderLiftium2;
+		if (adProviderLiftium2.canHandleSlot(slot)) {
+			return adProviderLiftium2;
+		}
+
+		return adProviderNull;
 	};
 
 	return {
