@@ -40,6 +40,7 @@ class WikiaSearchResultSet implements Iterator,ArrayAccess {
 		if ( $parent === null && $this->searchConfig->getGroupResults() ) {
 			
 			$this->setResultGroupings( $result, $searchConfig );
+			$this->setResultsFound( $result->getGrouping()->getGroup('host')->getMatches() );
 			
 		} else {
 			$this->parent = $parent;
@@ -60,6 +61,7 @@ class WikiaSearchResultSet implements Iterator,ArrayAccess {
 				$this->setHeader( 'cityTitle',  WikiFactory::getVarValueByName( 'wgSitename', $cityId ) );
 				$this->setHeader( 'cityUrl', WikiFactory::getVarValueByName( 'wgServer', $cityId ) );
 				$this->setHeader( 'cityArticlesNum', $exampleDoc['wikiarticles'] );
+				$this->setResultsFound($valueGroup->getNumFound());
 				
 			} else {
 				// default behavior
@@ -69,10 +71,11 @@ class WikiaSearchResultSet implements Iterator,ArrayAccess {
 					$redirect = $am['redirect'] ?: null;
 					$this->prependArticleMatch( $article, $redirect );
 				}
+				$this->setResults( $result->getDocuments() );
+				$this->setResultsFound( $result->getNumFound() );
 			}
 			
-			$this->setResults( $result->getDocuments() );
-			$this->setResultsFound( $result->getNumFound() );
+			
 			$this->setResultsStart( $result->getStart() );
 			$this->setQueryTime( $result->getQueryTime() );
 			
@@ -80,15 +83,12 @@ class WikiaSearchResultSet implements Iterator,ArrayAccess {
 	}
 
 	public function setResultGroupings( Solarium_Result_Select $result, WikiaSearchConfig $searchConfig ) {
-		
 		$fieldGroup = $result->getGrouping()->getGroup('host');
 		$metaposition = 0;
 		foreach ($fieldGroup->getValueGroups() as $valueGroup) {
 			$resultSet = F::build('WikiaSearchResultSet', array($result, $searchConfig, $this, $metaposition++));
 			$this->results[$resultSet->getHeader('cityUrl')] = $resultSet;
 		}
-		
-		var_dump($this); die;
 	}
 	
 	/**

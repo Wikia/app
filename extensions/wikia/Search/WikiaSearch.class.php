@@ -70,7 +70,7 @@ class WikiaSearch extends WikiaObject {
 		$this->prepareQuery( $queryInstance, $searchConfig );
 		$result = $this->client->select( $queryInstance );
 		$results = F::build('WikiaSearchResultSet', array($result, $searchConfig) );
-		
+
 		// set here due to all the changes we make to the base query
 		$results->setQuery($query);		
 
