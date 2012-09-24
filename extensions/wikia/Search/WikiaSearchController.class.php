@@ -84,23 +84,26 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$resultsFound = 0;
 		$paginationLinks = '';
 		if( !empty( $query ) ) {
-			$articleMatch = $this->wikiaSearch->getArticleMatch($query);
-			if (!empty($articleMatch) && $this->getVal('fulltext', '0') === '0') {
-
-				$article = isset($articleMatch['redirect']) ? $articleMatch['redirect'] : $articleMatch['article'];
-				$title = $article->getTitle();
-
-				wfRunHooks( 'SpecialSearchIsgomatch', array( &$title, $query ) );
-
-				Track::event( 'search_start_gomatch', array( 'sterm' => $query, 'rver' => 0 ) );
-				$this->response->redirect( $title->getFullURL() );
-			}
-			elseif(!empty($articleMatch)) {
-				Track::event( 'search_start_match', array( 'sterm' => $query, 'rver' => 0 ) );
-			} else {
-				$title = Title::newFromText( $query );
-				if ( !is_null( $title ) ) {
-					wfRunHooks( 'SpecialSearchNogomatch', array( &$title ) );
+			$articleMatch = null;
+			if ( $page == 1 ) {
+				$articleMatch = $this->wikiaSearch->getArticleMatch($query);
+				if (!empty($articleMatch) && $this->getVal('fulltext', '0') === '0') {
+	
+					$article = isset($articleMatch['redirect']) ? $articleMatch['redirect'] : $articleMatch['article'];
+					$title = $article->getTitle();
+	
+					wfRunHooks( 'SpecialSearchIsgomatch', array( &$title, $query ) );
+	
+					Track::event( 'search_start_gomatch', array( 'sterm' => $query, 'rver' => 0 ) );
+					$this->response->redirect( $title->getFullURL() );
+				}
+				elseif(!empty($articleMatch)) {
+					Track::event( 'search_start_match', array( 'sterm' => $query, 'rver' => 0 ) );
+				} else {
+					$title = Title::newFromText( $query );
+					if ( !is_null( $title ) ) {
+						wfRunHooks( 'SpecialSearchNogomatch', array( &$title ) );
+					}
 				}
 			}
 
