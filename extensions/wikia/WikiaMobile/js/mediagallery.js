@@ -126,7 +126,7 @@ define('mediagallery', ['media', 'modal', 'pager', 'thumbnailer', 'lazyload', 't
 
 		pages[pagesNum] += '</div>';
 
-		if(pagesNum > 1) {
+		if(pagesNum > 0) {
 			pagination.innerHTML = dots;
 
 			//18 is a width of a single dot
