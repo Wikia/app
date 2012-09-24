@@ -151,4 +151,9 @@ class WikiaSearchConfig implements ArrayAccess
 	{
 		return isset($this->params['articleMatch']);
 	}
+	
+	public function getLimit()
+	{
+		return $this->params['length'];
+	}
 }
