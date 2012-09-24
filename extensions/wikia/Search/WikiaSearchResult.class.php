@@ -8,21 +8,35 @@ class WikiaSearchResult extends Solarium_Document_ReadWrite
 	protected $url;
 	protected $linkUrl;
 	protected $canonical = null	;
+	
 
 	public function getCityId() {
 		return $this->_fields['wid'];
 	}
 	
 	public function setText($value) {
-	        $this->text = $this->fixSnippeting($value, true);
+        $this->_fields[WikiaSearch::field('text')] = $this->fixSnippeting($value, true);
+	}
+	
+	public function getText() {
+		return $this->_fields['text']; 
 	}
 
 	public function getTitle() {
-		return isset($this->_fields[WikiaSearch::field('title')]) ? $this->_fields[WikiaSearch::field('title')] : $this->_fields['title'];
+		if ( isset($this->_fields[WikiaSearch::field('title')])  ) {
+			return $this->_fields[WikiaSearch::field('title')];
+		}
+		
+		if ( isset($this->_fields['title']) ) {
+			return $this->_fields['title'];
+		}
+		
+		return '';
 	}
 
 	public function setTitle($value) {
-	       $this->_fields[WikiaSearch::field('title')] = $this->fixSnippeting($value);
+		var_dump($value);
+		$this->_fields[WikiaSearch::field('title')] = $this->fixSnippeting($value);
 	}
 
 	public function getUrl() {
