@@ -1856,9 +1856,15 @@ _______________________________________
 如果您想查询Wikia最新资讯，请查看http://community.wikia.com
 如果您想对您所收邮件进行限制设置，请查看{{fullurl:{{ns:special}}:Preferences}}',
 	'userlogin-email-footer-line1' => '为了查看Wikia最新发生的事，请点击<a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>',
+	'userlogin-email-footer-line2' => '想控制您地接收邮件？请查看您的<a href="{{fullurl:{{ns:specia}}:Preferences}}" style="color:#2a87d5; text-decoration:none;">属性</a>',
 	'userlogin-provider-or' => '或',
+	'userlogin-provider-tooltip-facebook' => '按键进入Facebook。',
+	'userlogin-provider-tooltip-facebook-signup' => '按键签入Facebook。',
+	'userlogin-facebook-show-preferences' => '显示Facebook属性。',
+	'userlogin-facebook-hide-preferences' => '隐藏Facebook属性。',
 	'userlogin-loginreqlink' => '登录',
 	'userlogin-changepassword-needlogin' => '您需要$1来更改您的密码。',
 	'wikiamobile-sendpassword-label' => '发送新密码',
+	'wikiamobile-facebook-connect-fail' => '对不起，您的Facebook帐户现在未链接到WIkia帐户。',
 );
 

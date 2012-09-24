@@ -181,6 +181,7 @@ $messages['cs'] = array(
 	'wikiadoption-adopt-inquiry' => 'Zjistěte více!',
 	'wikiadoption-know-more-header' => 'Chcete vědět více?',
 	'wikiadoption-adoption-successed' => 'Blahopřejeme! Pro tento okamžik jste správce této wiki.',
+	'wikiadoption-not-allowed' => 'Je nám to líto. Právě teď nemůžete přijmout tuto wiki.',
 	'wikiadoption-log-reason' => 'Automatické přijetí Wiki',
 	'wikiadoption-mail-first-subject' => 'Chvíli jsme vás zde neviděli',
 	'wikiadoption-mail-adoption-subject' => '#WIKINAME byla přijata',

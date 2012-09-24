@@ -649,6 +649,7 @@ $messages['cs'] = array(
 	'rte-ck-videoPlaceholder-confirmDelete' => 'Opravdu chcete odstranit tento zástupný znak videa ze stránky?',
 	'rte-ck-videoPlaceholder-confirmDeleteTitle' => 'Smazat tento zástupný znak videa?',
 	'rte-ck-videoPlaceholder-tooltip' => 'Toto je zástupný znak videa.',
+	'rte-ck-mut-add' => 'Přidat video (beta)',
 	'rte-ck-mut-mut' => 'Video (beta)',
 	'rte-ck-widescreen-toggle' => 'Aktivovat/deaktivovat širokoúhlý formát',
 	'rte-ck-poll-confirmDelete' => 'Opravdu chcete odstranit tuto anketu ze stránky?',
