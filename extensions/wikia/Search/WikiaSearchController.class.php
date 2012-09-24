@@ -369,12 +369,15 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$namespaces = $config->getNamespaces();
 		$advanced = $config->getAdvanced();
 		$redirs = $config->getIncludeRedirects();
+		
+		$windowFirstPage = ( ( ( $page - self::PAGES_PER_WINDOW ) > 0 ) ? ( $page - self::PAGES_PER_WINDOW ) : 1 );
+		$windowLastPage = ( ( ( $page + self::PAGES_PER_WINDOW ) < $pagesNum ) ? ( $page + self::PAGES_PER_WINDOW ) : $pagesNum ) ;
 
 		$this->setVal( 'query', $query );
 		$this->setVal( 'pagesNum', $pagesNum );
 		$this->setVal( 'currentPage', $page );
-		$this->setVal( 'windowFirstPage', ( ( ( $page - self::PAGES_PER_WINDOW ) > 0 ) ? ( $page - self::PAGES_PER_WINDOW ) : 1 ) );
-		$this->setVal( 'windowLastPage', ( ( ( $page + self::PAGES_PER_WINDOW ) < $pagesNum ) ? ( $page + self::PAGES_PER_WINDOW ) : $pagesNum ) );
+		$this->setVal( 'windowFirstPage', $windowFirstPage );
+		$this->setVal( 'windowLastPage', $windowLastPage );
 		$this->setVal( 'pageTitle', $this->wg->Title );
 		$this->setVal( 'crossWikia', $crossWikia );
 		$this->setVal( 'resultsCount', $resultsCount );
