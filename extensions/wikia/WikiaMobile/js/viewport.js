@@ -89,8 +89,8 @@
 
 		getDimensions();
 
-		w[ADD]('orientationchange', resize, true);
-		w[ADD]('resize', resize, true);
+		w[ADD]('orientationchange', resize);
+		w[ADD]('resize', resize);
 	}
 
 	w[ADD](LOAD, init);
