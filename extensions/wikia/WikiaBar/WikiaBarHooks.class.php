@@ -66,8 +66,6 @@ class WikiaBarHooks {
 		wfProfileIn(__METHOD__);
 
 		$app = F::app();
-		$wgNoExternals = $app->wg->request->getBool('noexternals', $app->wg->noExternals);
-
 		if( $app->wg->user->isAnon() ) {
 			if (
 				RequestContext::getMain()->getSkin()->getSkinName() == 'oasis'

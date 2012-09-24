@@ -4,8 +4,7 @@ var WikiaBar = {
 	WIKIA_BAR_STATE_ANON_NML_KEY: 'AnonNotMainLangWikiaBar_0.0001',
 	WIKIA_BAR_HIDDEN_ANON_ML_TTL: 24 * 60 * 1000, //millieseconds
 	WIKIA_BAR_HIDDEN_ANON_NML_TTL: 180 * 24 * 60 * 1000, //millieseconds
-	WIKIA_BAR_STATE_USER_KEY: 'UserWikiaBar_0.0001',
-	WIKIA_BAR_HIDDEN_USER_TTL: 180 * 24 * 60 * 1000, //millieseconds
+	WIKIA_BAR_STATE_USER_KEY: 'UserWikiaBar_1.0001',
 	messageConfig: {
 		index: 0,
 		container: null,
@@ -21,8 +20,8 @@ var WikiaBar = {
 		$('.WikiaBarCollapseWrapper').click($.proxy(this.clickTrackingHandler, this));
 
 		//hidding/showing the bar events
-		$('.WikiaBarWrapper').on('click', '.arrow', $.proxy(this.onShownClick, this));
-		$('.WikiaBarCollapseWrapper').on('click', '.wikia-bar-collapse', $.proxy(this.onHiddenClick, this));
+		$('.WikiaBarWrapper .arrow').click($.proxy(this.onShownClick, this));
+		$('.WikiaBarCollapseWrapper .wikia-bar-collapse').click($.proxy(this.onHiddenClick, this));
 
 		//tooltips
 		$('#WikiaBarWrapper .arrow, .wikia-bar-collapse').popover({
@@ -30,7 +29,9 @@ var WikiaBar = {
 			content: $('#WikiaBarWrapper .arrow').data('tooltip')
 		});
 
-		if( this.isBarHidden() === false ) {
+		if( !this.isUserAnon() ) {
+			this.handleLoggedInUsersWikiaBar();
+		} else if( this.isUserAnon() && this.hasAnonHiddenWikiaBar() === false ) {
 			//show bar (depends on user's local storage data)
 			this.show();
 
@@ -56,7 +57,7 @@ var WikiaBar = {
 		return true;
 	},
 	cutMessageIntoSmallPieces: function(messageArray, container) {
-		var returnArray = new Array(),
+		var returnArray = [],
 			currentMessageArray,
 			originalMessageArray,
 			originalCurrentDiffArray,
@@ -83,7 +84,7 @@ var WikiaBar = {
 	},
 	checkMessageWidth: function(messageArray, container) {
 		var tempMessage = '',
-			lastMessage = new Array(),
+			lastMessage = [],
 			tempMessageObject;
 
 		for(var i = 0, length = messageArray.length; i < length; i++) {
@@ -164,29 +165,90 @@ var WikiaBar = {
 		$('.WikiaBarCollapseWrapper').removeClass('hidden');
 	},
 	onShownClick: function(e) {
-		this.hide();
-		this.changeLocalStorageData();
+		this.changeBarStateData();
 		e.preventDefault();
 	},
 	onHiddenClick: function(e) {
-		this.show();
-		this.changeLocalStorageData();
+		this.changeBarStateData();
 		e.preventDefault();
 	},
-	changeLocalStorageData: function() {
-		var isHidden = this.isBarHidden();
-
-		if( isHidden === false ) {
-			this.setStorageData(true);
+	changeBarStateData: function() {
+		if( this.isUserAnon() ) {
+			this.changeAnonBarStateData();
 		} else {
-			this.setStorageData(false);
+			this.changeLoggedInUserStateBar();
 		}
 	},
-	isBarHidden: function() {
-		return this.getStorageData();
+	changeAnonBarStateData: function() {
+		var isHidden = this.hasAnonHiddenWikiaBar();
+
+		if( isHidden === false ) {
+			this.setCookieData(true);
+			this.hide();
+		} else {
+			this.setCookieData(false);
+			this.show();
+		}
 	},
-	getStorageData: function() {
-		var key = this.getStorageKey(),
+	hasAnonHiddenWikiaBar: function() {
+		return this.getAnonData();
+	},
+	handleLoggedInUsersWikiaBar: function() {
+		var cachedState = this.getLocalStorageData();
+
+		if( cachedState === null ) {
+			$.nirvana.sendRequest({
+				controller: 'WikiaBarController',
+				method: 'getWikiaBarState',
+				type: 'get',
+				format: 'json',
+				callback: $.proxy(this.onHandleLoggedInUsersWikiaBar, this),
+				onErrorCallback: $.proxy(this.onHandleLoggedInUsersWikiaBarError, this)
+			});
+		} else {
+			this.doWikiaBarAnimationDependingOnState(cachedState);
+		}
+	},
+	onHandleLoggedInUsersWikiaBar: function(response) {
+		this.onWikiaBarStateChangeResponse(response);
+	},
+	onHandleLoggedInUsersWikiaBarError: function() {
+	},
+	changeLoggedInUserStateBar: function() {
+		$.nirvana.sendRequest({
+			controller: 'WikiaBarController',
+			method: 'changeUserStateBar',
+			type: 'post',
+			format: 'json',
+			callback: $.proxy(this.onChangeLoggedInUserStateBar, this),
+			onErrorCallback: $.proxy(this.onChangeLoggedInUserStateBarError, this)
+		});
+	},
+	onChangeLoggedInUserStateBar: function(response) {
+		this.onWikiaBarStateChangeResponse(response);
+	},
+	onChangeLoggedInUserStateBarError: function() {
+	},
+	onWikiaBarStateChangeResponse: function(response) {
+		var state = response.results.wikiaBarState || 'shown';
+		this.doWikiaBarAnimationDependingOnState(state);
+		this.setLocalStorageData(state);
+	},
+	doWikiaBarAnimationDependingOnState: function(state) {
+		if( state === 'shown' ) {
+			this.show();
+		} else {
+			this.hide();
+		}
+	},
+	getLocalStorageData: function() {
+		return $.storage.get(this.WIKIA_BAR_STATE_USER_KEY);
+	},
+	setLocalStorageData: function(state) {
+		$.storage.set(this.WIKIA_BAR_STATE_USER_KEY, state);
+	},
+	getAnonData: function() {
+		var key = this.getCookieKey(),
 			data = $.cookie(key),
 			hidden = null;
 
@@ -202,8 +264,8 @@ var WikiaBar = {
 
 		return hidden;
 	},
-	setStorageData: function(hiddenState) {
-		var key = this.getStorageKey(),
+	setCookieData: function(hiddenState) {
+		var key = this.getCookieKey(),
 			now = new Date(),
 			expireDate = new Date(now.getTime() + this.WIKIA_BAR_HIDDEN_ANON_ML_TTL),
 			cookieData = {
@@ -224,11 +286,9 @@ var WikiaBar = {
 
 		$.cookie(key, hiddenState, cookieData);
 	},
-	getStorageKey: function() {
-		var key = this.WIKIA_BAR_STATE_USER_KEY;
-		if( this.isUserAnon() && this.isMainWikiaBarLang() ) {
-			key = this.WIKIA_BAR_STATE_ANON_ML_KEY;
-		} else if( this.isUserAnon() && !this.isMainWikiaBarLang() ) {
+	getCookieKey: function() {
+		var key = this.WIKIA_BAR_STATE_ANON_ML_KEY;
+		if( this.isUserAnon() && !this.isMainWikiaBarLang() ) {
 			key = this.WIKIA_BAR_STATE_ANON_NML_KEY;
 		}
 
