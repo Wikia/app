@@ -114,6 +114,7 @@ class WikiaBarModel extends WikiaBarModelBase {
 		$dataMemcKey = $this->getMemcKey();
 		Wikia::log(__METHOD__, null, 'WikiaBar configured en message ' . $dataMemcKey . ' empty, trying en failsafe');
 		$message = $this->getFailsafeMessage();
+		/** @var $validator WikiaBarFailsafeDataValidator */
 		$validator = F::build('WikiaBarFailsafeDataValidator');
 		$parseResult = $this->parseBarConfigurationMessage($message, $validator);
 		$this->setLang($tmpLang);
@@ -126,6 +127,7 @@ class WikiaBarModel extends WikiaBarModelBase {
 		$dataMemcKey = $this->getMemcKey();
 		Wikia::log(__METHOD__, null, 'WikiaBar failsafe message ' . $dataMemcKey . ' empty, trying configured en');
 		$message = $this->getRegularMessage();
+		/** @var $validator WikiaBarMessageDataValidator */
 		$validator = F::build('WikiaBarMessageDataValidator');
 		$parseResult = $this->parseBarConfigurationMessage($message, $validator);
 		$this->setLang($tmpLang);
@@ -136,6 +138,7 @@ class WikiaBarModel extends WikiaBarModelBase {
 		$dataMemcKey = $this->getMemcKey();
 		Wikia::log(__METHOD__, null, 'WikiaBar message ' . $dataMemcKey . ' falling back to failsafe');
 		$message = $this->getFailsafeMessage();
+		/** @var $validator WikiaBarFailsafeDataValidator */
 		$validator = F::build('WikiaBarFailsafeDataValidator');
 		$parseResult = $this->parseBarConfigurationMessage($message, $validator);
 		return $parseResult;
