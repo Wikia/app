@@ -52,6 +52,8 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		
 		$query = $this->getVal('query', $this->getVal('search'));
 		$query = htmlentities( Sanitizer::StripAllTags ( $query ), ENT_COMPAT, 'UTF-8' );
+		$searchConfig->setQuery( $query );
+		
 		$limit = $this->getVal('limit', self::RESULTS_PER_PAGE);
 		$page = $this->getVal('page', 1);
 		$rank = $this->getVal('rank', 'default');
@@ -87,6 +89,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			$articleMatch = null;
 			if ( $page == 1 ) {
 				$articleMatch = $this->wikiaSearch->getArticleMatch($searchConfig);
+				
 				if (!empty($articleMatch) && $this->getVal('fulltext', '0') === '0') {
 	
 					$article = isset($articleMatch['redirect']) ? $articleMatch['redirect'] : $articleMatch['article'];
@@ -109,8 +112,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 			$isGrouped = $isInterWiki || $this->getVal('grouped', false);
 
-			$searchConfig->setQuery				( $query )
-						 ->setLength			( $limit )
+			$searchConfig->setLength			( $limit )
 						 ->setPage				( $page )
 						 ->setRank				( $rank )
 						 ->setCityId			( $isInterWiki ? 0 : $this->wg->CityId )
