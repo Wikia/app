@@ -115,9 +115,16 @@ Liftium.buildChain = function(slotname) {
 	if (size == "1x1") { size = "0x0"; }
 
 
+	if (Liftium.e(Liftium.config) || Liftium.e(Liftium.config.sizes)){
+		Liftium.d('Error, config is empty in buildChain(' + slotname + ')', 1);
+		WikiaTracker.trackAdEvent('liftium.errors', {'ga_category':'errors/no_config', 'ga_action':'buildChain', 'ga_label':slotname}, 'ga');
+		return false;
+	}
 	// Do we have this slot?
 	if (Liftium.e(Liftium.config.sizes) || Liftium.e(Liftium.config.sizes[size])){
-		Liftium.reportError("Unrecognized size in Liftium: " + size, "publisher");
+		//Liftium.reportError("Unrecognized size in Liftium: " + size, "publisher");
+		Liftium.d('Error, unrecognized size ' + size + ' (' + slotname + ')', 1);
+		WikiaTracker.trackAdEvent('liftium.errors', {'ga_category':'errors/unrecognized_size', 'ga_action':size, 'ga_label':slotname}, 'ga');
 		return false;
 	}
 
@@ -167,7 +174,8 @@ Liftium.buildChain = function(slotname) {
 	}
 
 	if (Liftium.chain[slotname].length === 0){
-		Liftium.reportError("Error building chain for " + slotname + ".  No matching tags?");
+		//Liftium.reportError("Error building chain for " + slotname + ".  No matching tags?");
+		Liftium.d('Error building chain for ' + slotname + '. No matching tags?', 1);
 		WikiaTracker.trackAdEvent('liftium.errors', {'ga_category':'errors/no_matching_tags', 'ga_action':slotname}, 'ga');
 
 		return false;
@@ -228,12 +236,16 @@ Liftium.callAd = function (sizeOrSlot, iframe) {
 	// FIXME. Seems wrong to do this config check every time an add is called.
 	// Catch config errors
 	if (Liftium.e(Liftium.config)){
-		Liftium.reportError("Error downloading config");
+		//Liftium.reportError("Error downloading config");
+		Liftium.d('Error downloading config (' + sizeOrSlot + ')', 1);
+		WikiaTracker.trackAdEvent('liftium.errors', {'ga_category':'errors/error_downloading_config', 'ga_action':sizeOrSlot}, 'ga');
 		var t = Liftium.fillerAd(sizeOrSlot, "Error downloading config");
 		document.write(t.tag);
 		return false;
 	} else if (Liftium.config.error){
-		Liftium.reportError("Config error " + Liftium.config.error);
+		//Liftium.reportError("Config error " + Liftium.config.error);
+		Liftium.d('Config error ' + Liftium.config.error + ' (' + sizeOrSlot + ')', 1);
+		WikiaTracker.trackAdEvent('liftium.errors', {'ga_category':'errors/config_error', 'ga_action':sizeOrSlot, 'ga_label':(Liftium.config.error || 'unknown')}, 'ga');
 		var t2 = Liftium.fillerAd(sizeOrSlot, Liftium.config.error);
 		document.write(t2.tag);
 		return false;
@@ -286,7 +298,8 @@ Liftium._callAd = function (slotname, iframe) {
 		}
 	} catch (e) {
 		// This is probably never called, because the document.write hides it...
-		Liftium.reportError("Error loading tag #" + t.tag_id + ": " + Liftium.print_r(e), "tag");
+		//Liftium.reportError("Error loading tag #" + t.tag_id + ": " + Liftium.print_r(e), "tag");
+		Liftium.d('Error loading tag #' + t.tag_id + ' (' + slotname + ')', 1, e);
 		WikiaTracker.trackAdEvent('liftium.errors', {'ga_category':'errors/_callAd', 'ga_action':slotname, 'ga_label':'tag ' + t.tag_id}, 'ga');
 	}
 
@@ -749,6 +762,12 @@ Liftium.getStyle = function (element, cssprop){
 /* Look through the list of ads in the potential chain, and return the best always_fill */
 Liftium.getAlwaysFillAd = function(size, slotname){
 
+	if (Liftium.e(Liftium.config) || Liftium.e(Liftium.config.sizes)){
+		Liftium.d('Error, config is empty in getAlwaysFillAd(' + size + ', ' + slotname + ')', 1);
+		WikiaTracker.trackAdEvent('liftium.errors', {'ga_category':'errors/no_config', 'ga_action':'getAlwaysFillAd', 'ga_label':size + '/' + slotname}, 'ga');
+		return false;
+	}
+
 	for (var i = 0, l = Liftium.config.sizes[size].length; i < l; i++){
 		var t = Liftium.config.sizes[size][i];
 
@@ -1005,6 +1024,12 @@ Liftium.getRequestVal = function(varName, defaultVal, qstring){
 
 /* Look through the list of ads in the potential chain, and find one that is sample-able */
 Liftium.getSampledAd = function(size){
+	if (Liftium.e(Liftium.config) || Liftium.e(Liftium.config.sizes)){
+		Liftium.d('Error, config is empty in getSampledAd(' + size + ')', 1);
+		WikiaTracker.trackAdEvent('liftium.errors', {'ga_category':'errors/no_config', 'ga_action':'getSampledAd', 'ga_label':size}, 'ga');
+		return false;
+	}
+
 	// Build up an array of the sample stats.
 	var sArray = [], total = 0, myRandom = Math.random() * 100;
 	for (var i = 0, l = Liftium.config.sizes[size].length; i < l; i++){
