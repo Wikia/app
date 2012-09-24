@@ -37,9 +37,7 @@
 	if(android){
 		var pixelRatio = w.devicePixelRatio || 1,
 			//these are the sizes of topbar in android
-			//in LDPI 19
-			//in MDPI 25
-			//in HDPI 38
+			//in LDPI 19, MDPI 25, HDPI 38
 			topBarSize = (pixelRatio === 1.5) ? 25 : (pixelRatio < 1.5 ? 19 : 38);
 	}
 
@@ -58,8 +56,6 @@
 				height = w.innerWidth;
 			}
 		}
-
-		return portrait;
 	}
 
 	function resize() {
