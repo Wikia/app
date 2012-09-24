@@ -146,4 +146,9 @@ class WikiaSearchConfig implements ArrayAccess
 		$rank = $this->getRank();
 		return isset($this->rankOptions[$rank]) ? $this->rankOptions[$rank] : $this->rankOptions['default']; 
 	}
+	
+	public function hasArticleMatch()
+	{
+		return isset($this->params['articleMatch']);
+	}
 }

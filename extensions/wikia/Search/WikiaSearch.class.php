@@ -149,7 +149,17 @@ class WikiaSearch extends WikiaObject {
 			$dismax->setBoostFunctions( $this->getBoostFunctionsString( $searchConfig) );
 		}
 		
-		$query->setQuery( $this->getQueryClausesString( $searchConfig ) . ' AND ' . $nestedQuery );
+		// this is how we prevent the PTT from messing with results
+		$noPtt = '';
+		if ( $searchConfig->hasArticleMatch() ) {
+			$am = $searchConfig->getArticleMatch();
+			$article = ( isset($am['redirect']) ) ? $am['redirect'] : $am['article'];  
+			$noPtt = sprintf(' AND -(id:%s_%s)', $searchConfig->getCityId(), $article->getID());
+		}
+		
+		$formulatedQuery = sprintf('%s AND (%s)%s', $this->getQueryClausesString( $searchConfig ), $nestedQuery, $noPtt);
+		
+		$query->setQuery( $formulatedQuery );
 	}
 	
 	private function getFilterQueryString( WikiaSearchConfig $searchConfig )

@@ -22,7 +22,9 @@ class WikiaSearchResultSet implements Iterator,ArrayAccess {
 		
 		if ( $this->searchConfig->hasArticleMatch() ) {
 			$am = $this->searchConfig->getArticleMatch();
-			$this->prependArticleMatch( $am[0], $am[1] );
+			$article = $am['article'];
+			$redirect = $am['redirect'] ?: null;
+			$this->prependArticleMatch( $article, $redirect );
 		}
 		$this->setResults( $result->getDocuments() );
 		$this->setResultsFound( count($this->results) );
@@ -55,6 +57,10 @@ class WikiaSearchResultSet implements Iterator,ArrayAccess {
 		if ( in_array($title->getNamespace(), $this->searchConfig->getNamespaces()) ) {
 			$articleMatchId = sprintf('%s_%s', $wgCityId, $articleId);
 			$articleService = F::build('ArticleService', array($articleId));
+			$firstRev = $title->getFirstRevision();
+			$created = $firstRev->getTimestamp();
+			$lastRev = Revision::newFromId($title->getLatestRevID());
+			$touched = $lastRev->getTimestamp();
 
 			$fieldsArray = array(
 					'wid'			=>	$wgCityId,
@@ -63,26 +69,31 @@ class WikiaSearchResultSet implements Iterator,ArrayAccess {
 					'score'			=>	'PTT',
 					'isArticleMatch'=>	true,
 					'ns'			=>	$title->getNamespace(),
-					'pageId'		=>	$article->getID()
+					'pageId'		=>	$article->getID(),
+					'created'		=>	$created,
+					//'touched'		=>	$touched,
 					);
+			//@TODO: we could put categories ^^ here but we aren't really using them yet
 			
-			$result = F::build( 'WikiaSearchResult', $fieldsArray );
+			
+			$result = F::build( 'WikiaSearchResult', array($fieldsArray) );
 			$snippet = $articleService->getTextSnippet(250);
-			var_dump($snippet); die;
-			$result->setText($snippet[0]);
+			$result->setText($snippet);
 			if ( $redirect !== null ) {
 				$result->setVar('redirectTitle', $redirect->getTitle());
 			}
 			
+			$result->setVar('id', $articleMatchId);
+			$this->addResult($result);
 		}
-		
-		
 	}
 	
 	public function addResult( WikiaSearchResult $result) {
 		if($this->isValidResult($result)) {
 			$id = $result['id'];
-			if ( $this->highlightingObject !== null && ($field = $this->highlightingObject->getResult($id)->getField(WikiaSearch::field('html'))) ) {
+			if ( 		( $this->highlightingObject !== null ) 
+					&&  ( $hlResult = $this->highlightingObject->getResult($id) )
+					&&  ( $field = $hlResult->getField( WikiaSearch::field('html') ) ) ) {
 				$result->setText( $field[0] );
 			}
 			global $wgLang;
@@ -93,7 +104,7 @@ class WikiaSearchResultSet implements Iterator,ArrayAccess {
 				    $result->setVar('created_30daysago', time() - strtotime($result['created']) > 2592000 );
 				}
 			}
-			
+
 			$result->setVar('categories', $result[WikiaSearch::field('categories')] ?: 'NONE');
 			$result->setVar('cityArticlesNum', $result['wikiarticles']);
 			$result->setVar('wikititle', $result[WikiaSearch::field('wikititle')]);
