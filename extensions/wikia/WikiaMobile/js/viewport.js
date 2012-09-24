@@ -5,6 +5,8 @@
  * iOS > 3.2
  * Android > 2.3
  *
+ * @author Jakub 'Student' Olek (jolek@wikia-inc.com)
+ *
  * @example window.addEventListener('viewportsize', function(){});
  */
 
@@ -34,7 +36,10 @@
 
 	if(android){
 		var pixelRatio = w.devicePixelRatio || 1,
-		//these are the sizes of topbar in android
+			//these are the sizes of topbar in android
+			//in LDPI 19
+			//in MDPI 25
+			//in HDPI 38
 			topBarSize = (pixelRatio === 1.5) ? 25 : (pixelRatio < 1.5 ? 19 : 38);
 	}
 
@@ -49,6 +54,7 @@
 			if(portrait && !width) {
 				width = w.innerWidth;
 			}else if(!height){
+				//innerWidth is the only size that I can use and gives me meaningful measures
 				height = w.innerWidth;
 			}
 		}
@@ -69,6 +75,8 @@
 			ev.width = portrait ? width : height;
 
 			if(ios) {
+				//64 is size of ui of iPhone in portrait mode
+				//52 in landscape mode
 				ev.height = portrait ? height - 64 : width - 52;
 			}else{
 				ev.height = (portrait ? height : width) - topBarSize;
