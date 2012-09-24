@@ -144,14 +144,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$activeTab = $this->getActiveTab( $namespaces );
 
 		if(!$isInterWiki) {
-			// @TODO refactor advancedParams into searchfonfig, using searchconfig in self request
-			$advancedParams = array(
-					'term' => $query, 
-					'namespaces' => $namespaces, 
-					'searchableNamespaces' => $searchableNamespaces, 
-					'advanced' => $advanced, 
-					'redirs' => $redirs 
-					);
+			$advancedParams = array( 'config' => $searchConfig );
 			$advancedSearchBox = $this->sendSelfRequest( 'advancedBox', $advancedParams );
 			$this->setval( 'advancedSearchBox', $advancedSearchBox );
 		}
@@ -184,7 +177,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setVal( 'pagesCount', ceil($resultsFound/$limit) );
 		$this->setVal( 'currentPage',  $page );
 		$this->setVal( 'paginationLinks', $paginationLinks );
-		$this->setVal( 'tabs', $this->sendSelfRequest( 'tabs', array( 'term' => $query, 'redirs' => $redirs,  'activeTab' => $activeTab) ) );
+		$this->setVal( 'tabs', $this->sendSelfRequest( 'tabs', array( 'config' => $searchConfig, 'activeTab' => $activeTab) ) );
 		$this->setVal( 'query', $query );
 		$this->setVal( 'resultsPerPage', $this->getVal('limit', $limit) );
 		$this->setVal( 'pageUrl', $this->wg->Title->getFullUrl() );
@@ -201,11 +194,12 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	}
 
 	public function advancedBox() {
-		$term = $this->getVal( 'term' );
-		$namespaces = $this->getVal( 'namespaces', $this->wikiaSearch->getNamespaces() );
-		$searchableNamespaces = $this->getVal( 'searchableNamespaces' );
-		$advanced = $this->getVal( 'advanced' );
-		$redirs = $this->getVal( 'redirs' );
+		$config = $this->getVal('config');
+		$term = $config->getQuery();
+		$namespaces = $config->getNamespaces();
+		$searchableNamespaces = SearchEngine::searchableNamespaces();
+		$advanced = $config->getAdvanced();
+		$redirs = $config->getIncludeRedirects();
 
 		$bareterm = $term;
 		if( $this->termStartsWithImage( $term ) ) {
@@ -222,10 +216,12 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	}
 
 	public function tabs() {
-		$term = $this->getVal( 'term' );
-		$namespaces = $this->getVal( 'namespaces', $this->wikiaSearch->getNamespaces() );
-		$redirs = $this->getVal( 'redirs' );
+		$config = $this->getVal('config');
 		$activeTab = $this->getVal( 'activeTab' );
+		
+		$term = $config->getQuery();
+		$namespaces = $config->getNamespaces();
+		$redirs = $config->getIncludeRedirects();
 
 		$bareterm = $term;
 		if( $this->termStartsWithImage( $term ) ) {
