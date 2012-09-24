@@ -197,7 +197,7 @@ class Solarium_Result_Select extends Solarium_Result_QueryType
     {
     	$this->_parseResponse();
     	$data = $this->getData();
-    	return $data['response']['start'];
+    	return $data['responseHeader']['params']['start'];
     }
 
     /**
