@@ -27,7 +27,7 @@ class WikiaSearchResultSet implements Iterator,ArrayAccess {
 			$this->prependArticleMatch( $article, $redirect );
 		}
 		$this->setResults( $result->getDocuments() );
-		$this->setResultsFound( count($this->results) );
+		$this->setResultsFound( $result->getNumFound() );
 		$this->setResultsStart( $result->getStart() );
 		$this->setQueryTime( $result->getQueryTime() );
 	}
@@ -215,7 +215,6 @@ class WikiaSearchResultSet implements Iterator,ArrayAccess {
 		foreach($resultSet as $result) {
 			$this->addResult($result);
 		}
-
 		$this->setResultsFound($resultSet->getResultsFound());
 		$this->setResultsStart($resultSet->getResultsStart());
 
