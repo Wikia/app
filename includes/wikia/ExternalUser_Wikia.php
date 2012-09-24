@@ -20,7 +20,7 @@ class ExternalUser_Wikia extends ExternalUser {
 	}
 
 	protected function initFromUser( $user ) {
-		wfDebug( __METHOD__ . ": init User from object: " . print_r($user, true) ." \n" );
+		wfDebug( __METHOD__ . ": init User from object with user id : " . $user->getId() ." \n" );
 		$this->mUser = $user;
 		return $this->initFromCond( array( 'user_id' => $user->getId() ) );
 	}
@@ -47,11 +47,11 @@ class ExternalUser_Wikia extends ExternalUser {
 				__METHOD__
 			);
 		}
-		
+
 		if ( !$row ) {
-			return false;			
+			return false;
 		}
-		
+
 		$this->mRow = $row;
 
 		return true;
@@ -76,7 +76,7 @@ class ExternalUser_Wikia extends ExternalUser {
 			trigger_error("###INEZ### {$_SESSION['wsUserID']}\n", E_USER_WARNING);
 			return false;
 		}
-		
+
 		wfDebug( __METHOD__ . ": user from session: $uid \n" );
 		if ( empty($uid) ) {
 			return false;
@@ -280,8 +280,8 @@ class ExternalUser_Wikia extends ExternalUser {
 						$need_update = true;
 					}
 				}
-				
-				if ( $need_update ) { 
+
+				if ( $need_update ) {
 					$dbw->update( 'user', $data, array( 'user_id' => $this->getId() ), __METHOD__ );
 					$dbw->commit();
 				}
