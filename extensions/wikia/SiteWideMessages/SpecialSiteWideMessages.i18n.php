@@ -159,6 +159,9 @@ $messages['qqq'] = array(
 	'swm-mode-users-editcount-between' => 'Option to select if user wants to send message to users who have an edit count between two given numbers.',
 	'swm-error-editcount-tolessthanfrom' => 'Error message when given edit count upper limit is less than lower limit.',
 	'swm-error-editcount-notnumber' => 'Error message when given edit count is not a valid number.',
+	'swm-label-mode-wikis-wiki-multi' => 'Option to select if user wants to send message to users on a list of wikis.',
+	'swm-label-mode-users-user-multi-hint' => 'Message explaining the format of the list of wikis.',
+	'swm-error-no-wiki-list' => 'Error message to display when no wikis where entered into the list of wikis box.',
 );
 
 /** Afrikaans (Afrikaans)
