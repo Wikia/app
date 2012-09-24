@@ -738,11 +738,13 @@ class WikiaSearch extends WikiaObject {
 	}
 
 
-	public function getArticleMatch( $term ) {
+	public function getArticleMatch( WikiaSearchConfig $config ) {
 		wfProfileIn(__METHOD__);
+		
+		$term = $config->getQuery();
 
-		if ($this->articleMatch !== null) {
-			return $this->articleMatch;
+		if ( $config->hasArticleMatch() ) {
+			return $config->getArticleMatch();
 		}
 
 		// Try to go to page as entered.
@@ -755,21 +757,21 @@ class WikiaSearch extends WikiaObject {
 
 		// If there's an exact or very near match, jump right there.
 		$title = SearchEngine::getNearMatch( $term );
-		if( !is_null( $title )) {
+		if( !is_null( $title ) && ( in_array($title->getNamespace(), $config->getNamespaces()) ) ) {
 			$article = new Article( $title );
 
 			if($article->isRedirect()) {
 				$target = $article->getRedirectTarget();
 				// apparently the target can be null
 				if ($target instanceOf Title) {
-					$this->articleMatch = array('article'=>new Article($target), 'redirect'=>$article);
+					$config->setArticleMatch(array('article'=>new Article($target), 'redirect'=>$article));
 				}
 			}
 			else {
-				$this->articleMatch = array('article'=>$article);
+				$config->setArticleMatch(array('article'=>$article));
 			}
 			wfProfileOut(__METHOD__);
-			return $this->articleMatch;
+			return $config->getArticleMatch();
 		}
 
 		wfProfileOut(__METHOD__);
