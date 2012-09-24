@@ -740,7 +740,7 @@ class WikiaSearch extends WikiaObject {
 
 	public function getArticleMatch( WikiaSearchConfig $config ) {
 		wfProfileIn(__METHOD__);
-		
+
 		$term = $config->getQuery();
 
 		if ( $config->hasArticleMatch() ) {
@@ -754,7 +754,7 @@ class WikiaSearch extends WikiaObject {
 			wfProfileOut(__METHOD__);
 			return null;
 		}
-
+		
 		// If there's an exact or very near match, jump right there.
 		$title = SearchEngine::getNearMatch( $term );
 		if( !is_null( $title ) && ( in_array($title->getNamespace(), $config->getNamespaces()) ) ) {
