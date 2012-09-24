@@ -429,6 +429,7 @@ $config['wikiamobile_js_body_full'] = array(
 
 		//polyfills
 		'//resources/wikia/polyfills/outerhtml.js',
+		'//extensions/wikia/WikiaMobile/js/viewport.js',
 
 		//platform components
 		'//extensions/wikia/AssetsManager/js/AssetsManager.js',
