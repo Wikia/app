@@ -17,6 +17,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import com.google.common.base.Throwables;
 import com.wikia.webdriver.Common.Core.CommonExpectedConditions;
 import com.wikia.webdriver.Common.Core.CommonFunctions;
 import com.wikia.webdriver.Common.Core.Global;
@@ -152,7 +153,8 @@ public class BasePageObject{
 		}
 		catch(Exception e)
 		{
-			PageObjectLogging.log("click", e.toString(), false);
+			
+			PageObjectLogging.log("click", Throwables.getStackTraceAsString(e), false);
 		}
 	}
 	/**

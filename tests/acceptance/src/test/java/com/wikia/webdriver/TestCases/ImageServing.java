@@ -89,7 +89,7 @@ public class ImageServing extends TestTemplate {
 		WikiBasePageObject wiki = new WikiBasePageObject(driver, Global.DOMAIN);
 		WikiArticlePageObject RVmoduleMessage = wiki.OpenArticle("MediaWiki:RelatedVideosGlobalList");
 		CommonFunctions.logIn(Properties.userNameStaff, Properties.passwordStaff);
-		WikiArticleEditMode RVmoduleMessageEdit = RVmoduleMessage.Edit();		
+		WikiArticleEditMode RVmoduleMessageEdit = RVmoduleMessage.edit();		
 		RVmoduleMessageEdit.deleteUnwantedVideoFromMessage(videoURL2name);
 		RVmoduleMessage = RVmoduleMessageEdit.clickOnPublishButton();
 		// after deletion start testing

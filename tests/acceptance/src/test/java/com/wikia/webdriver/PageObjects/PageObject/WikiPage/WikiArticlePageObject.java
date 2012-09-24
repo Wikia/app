@@ -188,7 +188,7 @@ public class WikiArticlePageObject extends WikiBasePageObject {
 	 *  
 	 * @author Michal Nowierski
 	 */
-	public WikiArticleEditMode Edit() {
+	public WikiArticleEditMode edit() {
 		waitForElementByElement(editButton);
 		editButton.click();
 		PageObjectLogging.log("Edit", "Edit Article: "+articlename+", on wiki: "+Domain+"", true, driver);

@@ -43,7 +43,7 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		edit.verifyTheObjectOnThePreview("gallery");
 		WikiArticlePageObject article = edit.clickOnPublishButtonPreview();
 		article.verifyTheObjectOnThePage("gallery");
-		edit = article.Edit();
+		edit = article.edit();
 		edit.deleteArticleContent();
 		article = edit.clickOnPublishButton();
 		article.deleteArticle();
@@ -78,7 +78,7 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		WikiArticlePageObject article = edit.clickOnPublishButtonPreview();
 		article.verifyTheObjectOnThePage("gallery");
 		article.verifyGalleryPosion("center");
-		edit = article.Edit();
+		edit = article.edit();
 		edit.clickModifyButtonGallery();
 		edit.waitForObjectModalAndClickAddAphoto("Gallery");
 		edit.galleryCheckImageInputs(8);
@@ -121,7 +121,7 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		WikiArticlePageObject article = edit.clickOnPublishButtonPreview();
 		article.verifyTheObjectOnThePage("gallery");
 		article.verifyGalleryPosion("center");
-		edit = article.Edit();
+		edit = article.edit();
 		edit.clickRemoveButtonGallery();
 		edit.leftClickOkButton();
 		edit.verifyTheGalleryNotOnTheArticleEditMode();
@@ -157,7 +157,7 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		edit.verifyTheObjectOnThePreview("slideshow");
 		WikiArticlePageObject article = edit.clickOnPublishButtonInPreviewMode();
 		article.verifyTheObjectOnThePage("slideshow");
-		edit = article.Edit();
+		edit = article.edit();
 		edit.deleteArticleContent();
 		article = edit.clickOnPublishButton();
 		article.deleteArticle();
@@ -191,7 +191,7 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		WikiArticlePageObject article = edit.clickOnPublishButtonInPreviewMode();
 		article.verifyTheObjectOnThePage("slideshow");
 		article.verifySlideshowPosition("center");
-		edit = article.Edit();
+		edit = article.edit();
 		edit.clickModifyButtonSlideshow();
 		edit.waitForObjectModalAndClickAddAphoto("GallerySlideshow");
 		edit.galleryCheckImageInputs(8);
@@ -231,7 +231,7 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		WikiArticlePageObject article = edit.clickOnPublishButtonInPreviewMode();
 		article.verifyTheObjectOnThePage("slideshow");
 		article.verifySlideshowPosition("center");
-		edit = article.Edit();
+		edit = article.edit();
 		edit.clickRemoveButtonSlideshow();
 		edit.leftClickOkButton();
 		edit.verifyTheSlideshowNotOnTheArticleEditMode();
@@ -269,7 +269,7 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		edit.verifyTheObjectOnThePreview("slider");
 		WikiArticlePageObject article = edit.clickOnPublishButtonInPreviewMode();
 		article.verifyTheObjectOnThePage("slider");
-		edit = article.Edit();
+		edit = article.edit();
 		edit.deleteArticleContent();
 		article = edit.clickOnPublishButton();
 		article.deleteArticle();
@@ -304,7 +304,7 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		WikiArticlePageObject article = edit.clickOnPublishButtonInPreviewMode();
 		article.verifyTheObjectOnThePage("slider");
 		article.verifySliderThumbnailsPosition("vertical");
-		edit = article.Edit();
+		edit = article.edit();
 		edit.clickModifyButtonSlider();
 		edit.waitForObjectModalAndClickAddAphoto("GallerySlider");
 		edit.galleryCheckImageInputs(8);
@@ -344,7 +344,7 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		WikiArticlePageObject article = edit.clickOnPublishButtonInPreviewMode();
 		article.verifyTheObjectOnThePage("slider");
 		article.verifySliderThumbnailsPosition("vertical");
-		edit = article.Edit();
+		edit = article.edit();
 		edit.clickRemoveButtonSlider();
 		edit.leftClickOkButton();
 		edit.verifyTheSliderNotOnTheArticleEditMode();
@@ -381,7 +381,7 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		edit.verifyTheVideoOnThePreview();
 		WikiArticlePageObject article = edit.clickOnPublishButtonInPreviewMode();
 		article.verifyTheVideoOnThePage();
-		edit = article.Edit();
+		edit = article.edit();
 		edit.deleteArticleContent();
 		article = edit.clickOnPublishButton();
 		article.deleteArticle();
@@ -413,7 +413,7 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		edit.verifyTheVideoOnThePreview();
 		WikiArticlePageObject article = edit.clickOnPublishButtonInPreviewMode();
 		article.verifyTheVideoOnThePage();
-		edit = article.Edit();
+		edit = article.edit();
 		edit.clickModifyButtonVideo();
 		edit.waitForVideoDialog();
 		edit.typeVideoCaption(Caption2);
@@ -450,7 +450,7 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		edit.verifyTheVideoOnThePreview();
 		WikiArticlePageObject article = edit.clickOnPublishButtonInPreviewMode();
 		article.verifyTheVideoOnThePage();
-		edit = article.Edit();
+		edit = article.edit();
 		edit.clickRemoveButtonVideo();
 		edit.leftClickOkButton();
 		edit.verifyTheVideoNotOnTheArticleEditMode();
@@ -485,7 +485,7 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		edit.verifyTheCaptionOnThePreview(Caption);
 		WikiArticlePageObject article = edit.clickOnPublishButtonInPreviewMode();
 		article.VerifyTheImageOnThePage();
-		edit = article.Edit();
+		edit = article.edit();
 		edit.deleteArticleContent();
 		article = edit.clickOnPublishButton();
 		article.deleteArticle();
@@ -547,7 +547,7 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		edit.verifyThatThePhotoAppears(Caption);
 		WikiArticlePageObject article = edit.clickOnPublishButton();
 		article.VerifyTheImageOnThePage();
-		edit = article.Edit();
+		edit = article.edit();
 		edit.clickRemoveButtonOfImage(Caption);
 		edit.leftClickOkButton();
 		edit.verifyTheImageNotOnTheArticleEditMode();
