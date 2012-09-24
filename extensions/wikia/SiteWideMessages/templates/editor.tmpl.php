@@ -82,6 +82,20 @@
 								<input name="mWikiName" id="mWikiName" type="text" size="48" value="<?= $formData['wikiName'] ?>"/>
 							</td>
 						</tr>
+						<tr>
+							<td>
+								<input name="mSendModeWikis" id="mSendModeWikisM" type="radio" value="WIKIS"<?= $formData['sendModeWikis'] == 'WIKIS' ? ' checked="checked"' : ''?>/>
+							</td>
+							<td>
+								<label for="mSendModeWikisM"><?= wfMsg( 'swm-label-mode-wikis-wiki-multi' ) ?></label>
+							</td>
+							<td>
+								<textarea name="mWikiNames" id="mWikiNames" type="text" rows="10" cols="40" value="<?= $formData['listWikiNames'] ?>"></textarea>
+							</td>
+							<td>
+								<?= wfMsg( 'swm-label-mode-wikis-wiki-multi-hint' ) ?>
+							</td>
+						</tr>
 					</table>
 				</fieldset>
 
@@ -302,7 +316,22 @@ jQuery( document ).ready( function ( $ ) {
 			case 'mSendModeWikisC':
 			case 'mSendModeWikisW':
 				$( '#mSendModeUsersA' ).prop( 'disabled', true );
-				if ( $( '#mSendModeUsersA' ).prop( 'checked' ) ) {
+				$( '#mSendModeUsersReg' ).prop( 'disabled', true );
+				$( '#mSendModeUsersIP' ).prop( 'disabled', true );
+				if ( $( '#mSendModeUsersA' ).prop( 'checked' ) ||
+					$( '#mSendModeUsersReg' ).prop( 'checked' )||
+					$( '#mSendModeUsersIP' ).prop( 'checked' )
+				) {
+					$( '#mSendModeUsersC' ).prop( 'checked', true );
+				}
+				break;
+			case 'mSendModeWikisM':
+				$( '#mSendModeUsersA' ).prop( 'disabled', true );
+				$( '#mSendModeUsersReg' ).prop( 'disabled', true );
+				$( '#mSendModeUsersIP' ).prop( 'disabled', false );
+				if ( $( '#mSendModeUsersA' ).prop( 'checked' ) ||
+					$( '#mSendModeUsersReg' ).prop( 'checked' )
+				) {
 					$( '#mSendModeUsersC' ).prop( 'checked', true );
 				}
 				break;
@@ -337,6 +366,8 @@ jQuery( document ).ready( function ( $ ) {
 			default:
 				if ( $( '#mSendModeWikisA' ).prop( 'checked' ) ) {
 					$( '#mSendModeUsersA' ).prop( 'disabled', false );
+					$( '#mSendModeUsersReg' ).prop( 'disabled', false );
+					$( '#mSendModeUsersIP' ).prop( 'disabled', false );
 				}
 				$( '#mSendModeWikisA' ).prop( 'disabled', false );
 				$( '#mSendModeWikisH' ).prop( 'disabled', false );
@@ -345,9 +376,10 @@ jQuery( document ).ready( function ( $ ) {
 		}
 	}
 	$( '#mSendModeWikisA' ).add( '#mSendModeWikisH' ).add( '#mSendModeWikisC' )
-		.add( '#mSendModeWikisW' ).add( '#mSendModeUsersA' ).add( '#mSendModeUsersC' )
-		.add( '#mSendModeUsersG' ).add( '#mSendModeUsersU' ).add( '#mSendModeUsersM' )
-		.add( '#mSendModeUsersIP' ).add( '#mSendModeUsersReg' ).add( '#mSendModeUsersEC' ).bind( 'click', grayOut );
+		.add( '#mSendModeWikisW' ).add( '#mSendModeWikisM' ).add( '#mSendModeUsersA' )
+		.add( '#mSendModeUsersC' ).add( '#mSendModeUsersG' ).add( '#mSendModeUsersU' )
+		.add( '#mSendModeUsersM' ).add( '#mSendModeUsersIP' ).add( '#mSendModeUsersReg' )
+		.add( '#mSendModeUsersEC' ).bind( 'click', grayOut );
 
 	$( '#mRegistrationS' ).change( function () {
 		if ( $( this ).val() === 'between' ) {
