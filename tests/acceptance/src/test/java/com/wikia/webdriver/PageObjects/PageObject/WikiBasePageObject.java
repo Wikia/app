@@ -102,6 +102,7 @@ public class WikiBasePageObject extends BasePageObject {
 	public void openWikiPage()
 	{
 		driver.get(Domain);
+		executeScript("$('ul#pagehistory li:nth-child(1) .mw-history-undo')");
 	}
 	
 	public void openRandomArticle()
@@ -277,7 +278,7 @@ public class WikiBasePageObject extends BasePageObject {
 	
 	public WikiArticlePageObject openArticle(String articleName)
 	{
-		driver.get(Domain+"wiki/"+articleName);
+		driver.get(Global.DOMAIN+"wiki/"+articleName);
 		PageObjectLogging.log("openArticle", "article "+articleName+" opened", true, driver);
 		return new WikiArticlePageObject(driver, Domain, articleName);
 	}

@@ -29,6 +29,12 @@ public class WikiHistoryPageObject extends WikiBasePageObject{
 	private WebElement deletedOnlyCheckBox;
 	@FindBy(xpath="//a[contains(text(), 'Back to page')]")
 	private WebElement backToPageLink;
+	@FindBy(css="span.mw-rollback-link a")
+	private WebElement rollbackButton;
+	@FindBy(xpath="//h1[contains(text(), 'Action complete')]")
+	private WebElement rollbackCompleteMessage;
+	@FindBy(css="p#mw-returnto a")
+	private WebElement backToPageLinkOnRollbackPage;
 
 	
 	public WikiHistoryPageObject(WebDriver driver, String Domain, String articlename) {
@@ -39,9 +45,24 @@ public class WikiHistoryPageObject extends WikiBasePageObject{
 	
 	public WikiArticleRevisionEditMode clickUndoRevision(int revision)
 	{
-		WebElement undo = driver.findElement(By.cssSelector("span.mw-history-undo:nth("+revision+")"));
+		WebElement undo = driver.findElement(By.xpath("//ul[@id='pagehistory']/li["+revision+"]//span[@class='mw-history-undo']/a"));
+//		WebElement undo = driver.findElement(By.cssSelector("ul#pagehistory li:nth-child("+revision+") .mw-history-undo"));
 		click(undo);
 		return new WikiArticleRevisionEditMode(driver, Domain, articlename);
+	}
+	
+	public void rollbackPage()
+	{
+		waitForElementByElement(rollbackButton);
+		click(rollbackButton);
+		waitForElementByElement(rollbackCompleteMessage);
+	}
+	
+	public WikiArticlePageObject enterPageAfterRollback()
+	{
+		waitForElementByElement(backToPageLinkOnRollbackPage);
+		click(backToPageLinkOnRollbackPage);
+		return new WikiArticlePageObject(driver, Domain, articlename);
 	}
 	
 	

@@ -305,4 +305,5 @@ public class ArticleCRUDTestsAdmin extends TestTemplate{
 		CommonFunctions.logOut(Properties.userNameStaff, driver);
 	}
 
+
 }
