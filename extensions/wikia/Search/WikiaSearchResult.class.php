@@ -30,12 +30,12 @@ class WikiaSearchResult extends Solarium_Document_ReadWrite
 		if ( isset($this->_fields['title']) ) {
 			return $this->_fields['title'];
 		}
+		var_dump($this->_fields); die;
 		
 		return '';
 	}
 
 	public function setTitle($value) {
-		var_dump($value);
 		$this->_fields[WikiaSearch::field('title')] = $this->fixSnippeting($value);
 	}
 
