@@ -144,22 +144,25 @@ class GameGuidesController extends WikiaController {
 	}
 
 	/**
-	 * Api entry point to get a page and globals that are relevant to the page
+	 * Api entry point to get a page and globals and messages that are relevant to the page
+	 *
+	 * @example wikia.php?controller=GameGuides&method=getPage&title={Title}
 	 */
 	public function getPage(){
 		$this->response->setFormat( 'json' );
+
 		//set mobile skin as this is based on it
 		RequestContext::getMain()->setSkin(
 			Skin::newFromKey( 'wikiamobile' )
 		);
 
-		$titleName = $this->getVal('title');
+		$titleName = $this->getVal( 'title' );
 
 		$relatedPages = ( !empty( $this->wg->EnableRelatedPagesExt ) &&
-		empty( $this->wg->MakeWikiWebsite ) &&
-		empty( $this->wg->EnableAnswers ) ) ? $this->app->sendRequest( 'RelatedPagesController', 'index', array(
-			'categories' => $this->wg->Title->getParentCategories()
-		) ) : null;
+			empty( $this->wg->MakeWikiWebsite ) &&
+			empty( $this->wg->EnableAnswers ) ) ? $this->app->sendRequest( 'RelatedPagesController', 'index', array(
+				'categories' => $this->wg->Title->getParentCategories()
+			) ) : null;
 
 		if ( !is_null( $relatedPages ) ) {
 			$this->response->setVal( 'relatedPages', $relatedPages->getVal( 'pages' ) );
@@ -209,7 +212,6 @@ class GameGuidesController extends WikiaController {
 		) );
 
 		$this->response->setVal( 'html', $page->getVal( 'html' ) );
-
 		$this->response->setVal( 'js', $js[0] );
 		$this->response->setVal( 'css', $styles );
 
