@@ -64,6 +64,7 @@ class SiteWideMessages extends SpecialPage {
 		$formData['hubId'] = intval($wgRequest->getVal('mHubId'));
 		$formData['clusterId'] = intval($wgRequest->getVal('mClusterId'));
 		$formData['wikiName'] = $wgRequest->getText('mWikiName');
+		$formData['listWikiNames'] = $wgRequest->getText( 'mWikiNames' );
 		$formData['groupName'] = $wgRequest->getText('mGroupName');
 		$formData['groupNameS'] = $wgRequest->getText('mGroupNameS');
 		$formData['userName'] = $wgRequest->getText('mUserName');
@@ -290,6 +291,7 @@ class SiteWideMessages extends SpecialPage {
 		$mHubId = $formData['hubId'];
 		$mClusterId = $formData['clusterId'];
 		$mUserNamesArr = array_unique( explode( "\n", $formData['listUserNames'] ) );
+		$mWikiNamesArr = array_unique( explode( "\n", $formData['listWikiNames'] ) );
 
 		//remove unnecessary data
 		switch ( $mSendModeWikis ) {
@@ -307,6 +309,11 @@ class SiteWideMessages extends SpecialPage {
 				$mHubId = null;
 				break;
 			case 'WIKI':
+				$mHubId = null;
+				$mClusterId = null;
+				break;
+			case 'WIKIS':
+				$mWikiName = count( $mWikiNamesArr ) . ' wikis';
 				$mHubId = null;
 				$mClusterId = null;
 				break;
@@ -400,6 +407,8 @@ class SiteWideMessages extends SpecialPage {
 		} elseif ($mSendModeWikis == 'WIKI' && is_null($mWikiId)) {
 			//this wiki doesn't exist
 			$result['errMsg'] = wfMsg('swm-error-no-such-wiki');
+		} elseif ( $mSendModeUsers == 'WIKIS' && empty( $formData['listWikiNames'] ) ) {
+			$result['errMsg'] = wfMsg( 'swm-error-no-wiki-list' );
 		} elseif ($mSendModeUsers == 'USER' && !User::idFromName($mRecipientName)) {
 			$result['errMsg'] = wfMsg('swm-error-no-such-user');
 		} elseif ( $mSendModeUsers == 'USERS' && empty( $formData['listUserNames'] ) ) {
@@ -468,7 +477,7 @@ class SiteWideMessages extends SpecialPage {
 						);
 						$dbInsertResult &= $dbResult;
 					}
-				} elseif ( $mSendModeUsers == 'ANONS' ) {
+				} elseif ( $mSendModeWikis != 'WIKIS' && $mSendModeUsers == 'ANONS' ) {
 					if ( !is_null( $result['msgId'] ) ) {
 						$dbResult = (boolean)$DB->query(
 							'INSERT INTO ' . MSG_STATUS_DB .
@@ -697,6 +706,37 @@ class SiteWideMessages extends SpecialPage {
 											'editCountEnd'		=> $formData['editCountTwo'],
 											'senderId'			=> $mSender->getID(),
 											'senderName'		=> $mSender->getName(),
+											'hubId'				=> $mHubId,
+											'clusterId'     	=> $mClusterId,
+										),
+										TASK_QUEUED
+									);
+									break;
+							}
+							break;
+
+						case 'WIKIS':
+							switch ($mSendModeUsers) {
+								case 'ALL':
+								case 'ACTIVE':
+								case 'GROUP':
+								case 'EDITCOUNT':
+								case 'ANONS':
+									//add task to TaskManager
+									$oTask = new SWMSendToGroupTask();
+									$oTask->createTask(
+										array(
+											'messageId'			=> $result['msgId'],
+											'sendModeWikis'		=> $mSendModeWikis,
+											'sendModeUsers'		=> $mSendModeUsers,
+											'wikiName'			=> $mWikiName,
+											'wikiNames'			=> $mWikiNamesArr,
+											'groupName'			=> $mGroupName,
+											'editCountOption'	=> $formData['editCountOption'],
+											'editCountStart'	=> $formData['editCountOne'],
+											'editCountEnd'		=> $formData['editCountTwo'],
+											'senderId'			=> $mSender->GetID(),
+											'senderName'		=> $mSender->GetName(),
 											'hubId'				=> $mHubId,
 											'clusterId'     	=> $mClusterId,
 										),
