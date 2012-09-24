@@ -1466,7 +1466,7 @@ $messages['diq'] = array(
 	'awc-metrics-wikis' => 'Wikiya Vinayış',
 	'awc-metrics-select' => 'Wiki bımocne:',
 	'awc-metrics-by-language' => 'Zıwanê cı:',
-	'awc-metrics-category' => 'u kategori:',
+	'awc-metrics-category' => 'u kategoriye:',
 	'awc-metrics-all' => 'Wikiy pêro',
 	'awc-metrics-all-languages' => 'zıwani pêro',
 	'awc-metrics-search' => 'Tercihê geyrayışi:',
@@ -2087,7 +2087,7 @@ $messages['gv'] = array(
 	'closed-reason' => 'Fa:',
 );
 
-/** Hausa (هَوُسَ) */
+/** Hausa (Hausa) */
 $messages['ha'] = array(
 	'wf_cc_name' => 'Rukuni',
 	'closed-reason' => 'Dalili:',

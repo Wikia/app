@@ -130,6 +130,8 @@ $messages['qqq'] = array(
 
 {{Identical|List}}',
 	'swm-label-recipient-users' => '{{Identical|User}}',
+	'swm-label-mode-wikis-wiki-multi' => 'Option to select if user wants to send message to users on a list of wikis.',
+	'swm-label-mode-wikis-wiki-multi-hint' => 'Message explaining the format of the list of wikis.',
 	'swm-label-content' => '{{Identical|Content}}',
 	'swm-label-comment' => '{{Identical|Comment}}',
 	'swm-label-dismissed' => 'Page title after message is sent out.',
@@ -147,6 +149,7 @@ $messages['qqq'] = array(
 	'swm-list-table-hub' => 'Column heading of a table with one message per line. The column contains the hub of wikis the message was sent to.',
 	'swm-yes' => '{{Identical|Yes}}',
 	'swm-no' => '{{Identical|No}}',
+	'swm-error-no-wiki-list' => 'Error message to display when no wikis where entered into the list of wikis box.',
 	'swm-label-mode-users-registration' => 'Label for option to select users by registration date.',
 	'swm-mode-users-registration-after' => 'Option to select if user wants to send message to users who registered after the given date.',
 	'swm-mode-users-registration-before' => 'Option to select if user wants to send message to users who registered before the given date.',
@@ -159,9 +162,6 @@ $messages['qqq'] = array(
 	'swm-mode-users-editcount-between' => 'Option to select if user wants to send message to users who have an edit count between two given numbers.',
 	'swm-error-editcount-tolessthanfrom' => 'Error message when given edit count upper limit is less than lower limit.',
 	'swm-error-editcount-notnumber' => 'Error message when given edit count is not a valid number.',
-	'swm-label-mode-wikis-wiki-multi' => 'Option to select if user wants to send message to users on a list of wikis.',
-	'swm-label-mode-wikis-wiki-multi-hint' => 'Message explaining the format of the list of wikis.',
-	'swm-error-no-wiki-list' => 'Error message to display when no wikis where entered into the list of wikis box.',
 );
 
 /** Afrikaans (Afrikaans)
@@ -661,6 +661,8 @@ $messages['de'] = array(
 	'swm-label-mode-wikis-hub' => 'Ausgewählter Hub',
 	'swm-label-mode-wikis-cluster' => 'Ausgewählter Benutzer',
 	'swm-label-mode-wikis-wiki' => 'Ausgewähltes Wiki',
+	'swm-label-mode-wikis-wiki-multi' => 'Wikiliste',
+	'swm-label-mode-wikis-wiki-multi-hint' => '<i>Ein Wiki pro Zeile eingeben.</i>',
 	'swm-label-mode-users-all' => 'Alle Benutzer',
 	'swm-label-mode-users-active' => 'Aktive Benutzer',
 	'swm-label-mode-users-group' => 'Benutzer in der Gruppe',
@@ -703,6 +705,7 @@ $messages['de'] = array(
 	'swm-yes' => 'Ja',
 	'swm-no' => 'Nein',
 	'swm-error-no-such-wiki' => 'Es gibt kein solches Wiki!',
+	'swm-error-no-wiki-list' => 'Es muss mindestens ein Wiki angegeben werden',
 	'swm-error-no-such-user' => 'Das angegebene Benutzerkonto ist nicht vorhanden.',
 	'swm-error-no-user-list' => 'Mindestens ein Benutzer muss angegeben werden',
 	'swm-error-empty-message' => 'Gib den Inhalt der Nachricht ein.',
@@ -717,6 +720,12 @@ $messages['de'] = array(
 	'swm-mode-users-registration-between' => 'Zwischen',
 	'swm-label-mode-users-registration-hint' => '<i>Daten müssen das Format 2012-04-01 00:00:00 aufweisen</i>',
 	'swm-error-registered-tobeforefrom' => 'Das Enddatum der Benutzeranmeldung liegt vor dem Anfangsdatum.',
+	'swm-label-mode-users-editcount' => 'Bearbeitungszähler',
+	'swm-mode-users-editcount-more' => 'Mehr',
+	'swm-mode-users-editcount-less' => 'Weniger',
+	'swm-mode-users-editcount-between' => 'Zwischen',
+	'swm-error-editcount-tolessthanfrom' => 'Die Obergrenze des Bearbeitungszählers ist kleiner als die Untergrenze.',
+	'swm-error-editcount-notnumber' => 'Bearbeitungsanzahl muss eine gültige Nummer sein.',
 );
 
 /** German (formal address) (‪Deutsch (Sie-Form)‬)
@@ -888,6 +897,12 @@ $messages['es'] = array(
 	'swm-mode-users-registration-between' => 'Entre',
 	'swm-label-mode-users-registration-hint' => '<i>Las fechas deben estar en el formato aaaa/mm/dd  2012-04-01 00:00:00</i>',
 	'swm-error-registered-tobeforefrom' => 'La fecha final del registro de usuario está antes de la fecha de inicio.',
+	'swm-label-mode-users-editcount' => 'Contador de ediciones',
+	'swm-mode-users-editcount-more' => 'Más',
+	'swm-mode-users-editcount-less' => 'Menos',
+	'swm-mode-users-editcount-between' => 'Entre',
+	'swm-error-editcount-tolessthanfrom' => 'El límite superior del contador de ediciones del usuario es menor que el límite inferior.',
+	'swm-error-editcount-notnumber' => 'El contador de ediciones debe ser un número válido.',
 );
 
 /** Basque (euskara)
@@ -1069,6 +1084,12 @@ $messages['fr'] = array(
 	'swm-mode-users-registration-between' => 'Entre',
 	'swm-label-mode-users-registration-hint' => '<i>Les dates doivent être au format 2012-04-01 00:00:00</i>',
 	'swm-error-registered-tobeforefrom' => "La date de fin d'inscription de l'utilisateur est antérieure à sa date de début.",
+	'swm-label-mode-users-editcount' => 'Compteur de modifications',
+	'swm-mode-users-editcount-more' => 'Plus',
+	'swm-mode-users-editcount-less' => 'Moins',
+	'swm-mode-users-editcount-between' => 'Entre',
+	'swm-error-editcount-tolessthanfrom' => 'La limite supérieure du compteur de modifications est plus petite que sa limite inférieure.',
+	'swm-error-editcount-notnumber' => 'Le compteur de modifications doit être un nombre valide.',
 );
 
 /** Galician (galego)
@@ -1152,6 +1173,12 @@ $messages['gl'] = array(
 	'swm-mode-users-registration-between' => 'Entre',
 	'swm-label-mode-users-registration-hint' => '<i>As datas deben seguir o formato 2012-04-01 00:00:00</i>',
 	'swm-error-registered-tobeforefrom' => 'A data de fin de rexistro de usuario é anterior á data de inicio.',
+	'swm-label-mode-users-editcount' => 'Total de edicións',
+	'swm-mode-users-editcount-more' => 'Máis',
+	'swm-mode-users-editcount-less' => 'Menos',
+	'swm-mode-users-editcount-between' => 'Entre',
+	'swm-error-editcount-tolessthanfrom' => 'O número total de edicións do usuario é menor que o límite inferior.',
+	'swm-error-editcount-notnumber' => 'O número total de edicións debe ser un número válido.',
 );
 
 /** Ancient Greek (Ἀρχαία ἑλληνικὴ)
@@ -1161,7 +1188,7 @@ $messages['grc'] = array(
 	'swm-label-language' => 'Γλῶττα',
 );
 
-/** Hausa (هَوُسَ) */
+/** Hausa (Hausa) */
 $messages['ha'] = array(
 	'swm-label-comment' => 'Bahasi',
 );
@@ -1637,6 +1664,12 @@ $messages['mk'] = array(
 	'swm-mode-users-registration-between' => 'Помеѓу',
 	'swm-label-mode-users-registration-hint' => '<i>Датумот мора да биде од обликот 2012-04-01 00:00:00</i>',
 	'swm-error-registered-tobeforefrom' => 'Завршниот датум мора да биде пред почетниот.',
+	'swm-label-mode-users-editcount' => 'Број на уредувања',
+	'swm-mode-users-editcount-more' => 'Повеќе',
+	'swm-mode-users-editcount-less' => 'Помалку',
+	'swm-mode-users-editcount-between' => 'Помеѓу',
+	'swm-error-editcount-tolessthanfrom' => 'Горната граница е помала од долната.',
+	'swm-error-editcount-notnumber' => 'Бројот е неважечки.',
 );
 
 /** Mongolian (монгол)
@@ -1730,6 +1763,12 @@ $messages['ms'] = array(
 	'swm-mode-users-registration-between' => 'Antara',
 	'swm-label-mode-users-registration-hint' => '<i>Tarikh mesti mengikut format 2012-04-01 00:00:00</i>',
 	'swm-error-registered-tobeforefrom' => 'Tarikh tutup pendaftaran pengguna adalah sebelum tarikh bermula.',
+	'swm-label-mode-users-editcount' => 'Kiraan suntingan',
+	'swm-mode-users-editcount-more' => 'Melebihi',
+	'swm-mode-users-editcount-less' => 'Kurang daripada',
+	'swm-mode-users-editcount-between' => 'Antara',
+	'swm-error-editcount-tolessthanfrom' => 'Had maksimum kiraan suntingan kurang daripada had minimum.',
+	'swm-error-editcount-notnumber' => 'Kiraan suntingan mestilah nombor yang sah.',
 );
 
 /** Burmese (မြန်မာဘာသာ)
@@ -1849,6 +1888,12 @@ $messages['nb'] = array(
 	'swm-mode-users-registration-between' => 'Mellom',
 	'swm-label-mode-users-registration-hint' => '<i>Datoer må være i formatet 2012-04-01 00:00:00</i>',
 	'swm-error-registered-tobeforefrom' => 'Brukerregistreringens sluttdato er før startdatoen.',
+	'swm-label-mode-users-editcount' => 'Antall redigeringer',
+	'swm-mode-users-editcount-more' => 'Mer',
+	'swm-mode-users-editcount-less' => 'Mindre',
+	'swm-mode-users-editcount-between' => 'Mellom',
+	'swm-error-editcount-tolessthanfrom' => 'Den øvre begrensningen på brukerens antall redigeringer er mindre enn den nedre grensen.',
+	'swm-error-editcount-notnumber' => 'Antallet redigeringer må være et gyldig tall.',
 );
 
 /** Nepali (नेपाली)
@@ -2008,6 +2053,8 @@ $messages['pl'] = array(
 	'swm-label-mode-wikis-hub' => 'Wybrany hub',
 	'swm-label-mode-wikis-cluster' => 'Wybrana grupa',
 	'swm-label-mode-wikis-wiki' => 'Wybrana wiki',
+	'swm-label-mode-wikis-wiki-multi' => 'Lista wiki',
+	'swm-label-mode-wikis-wiki-multi-hint' => '<i>Jedna wiki na linię</i>',
 	'swm-label-mode-users-all' => 'Wszyscy użytkownicy',
 	'swm-label-mode-users-active' => 'Użytkownicy aktywni',
 	'swm-label-mode-users-group' => 'Użytkownicy należący do grupy',
@@ -2047,9 +2094,11 @@ $messages['pl'] = array(
 	'swm-list-table-content' => 'Treść',
 	'swm-list-table-tools' => 'Narzędzia',
 	'swm-list-table-lang' => 'Języki',
+	'swm-list-table-hub' => 'Portal',
 	'swm-yes' => 'Tak',
 	'swm-no' => 'Nie',
 	'swm-error-no-such-wiki' => 'Nie ma takiej wiki!',
+	'swm-error-no-wiki-list' => 'Przynajmniej jedna wiki musi zostać dodana',
 	'swm-error-no-such-user' => 'Taki użytkownik nie istnieje.',
 	'swm-error-no-user-list' => 'Przynajmniej jedna nazwa użytkownika musi zostać podana.',
 	'swm-error-empty-message' => 'Wpisz treść wiadomości.',
@@ -2064,6 +2113,12 @@ $messages['pl'] = array(
 	'swm-mode-users-registration-between' => 'Pomiędzy',
 	'swm-label-mode-users-registration-hint' => '<i>Daty muszą być w formacie 2012-04-01 00:00:00</i>',
 	'swm-error-registered-tobeforefrom' => 'Wybrana końcowa data rejestracji sprzed wybranej daty początkowej.',
+	'swm-label-mode-users-editcount' => 'Liczba edycji',
+	'swm-mode-users-editcount-more' => 'Więcej',
+	'swm-mode-users-editcount-less' => 'Mniej',
+	'swm-mode-users-editcount-between' => 'Pomiędzy',
+	'swm-error-editcount-tolessthanfrom' => 'Górnym limit edycji użytkownika jest niższy niż dolny limit.',
+	'swm-error-editcount-notnumber' => 'Ilość edycji musi być podana w formie liczbowej.',
 );
 
 /** Piedmontese (Piemontèis)

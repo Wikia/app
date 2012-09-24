@@ -1319,7 +1319,7 @@ Raison : « $5 ».',
 	'userrenametool-info-in-progress' => 'Le processus de renommage est en cours.
 Le reste sera effectué en arrière-plan.
 Vous serez informé par courriel quand cela sera terminé.',
-	'userrenametool-success' => 'L’utilisateur « <nowiki>$1</nowiki> » a été renommé « <nowiki>$2</nowiki> »',
+	'userrenametool-success' => 'L’utilisateur « $1 » a été renommé en « $2 ».',
 	'userrenametool-confirm-intro' => 'Voulez-vous vraiment faire ceci ?',
 	'userrenametool-confirm-yes' => 'Oui',
 	'userrenametool-confirm-no' => 'Non',

@@ -77,6 +77,23 @@ $messages['az'] = array(
 	'quickstats-number-shortening' => '$1K',
 );
 
+/** Bashkir (башҡортса)
+ * @author ҒатаУлла
+ */
+$messages['ba'] = array(
+	'quickstats-header-label' => 'Вики статистикаһы',
+	'quickstats-header-date' => 'Дата',
+	'quickstats-header-views' => 'Ҡарауҙар',
+	'quickstats-header-edits' => 'Үҙгәртеүҙәр',
+	'quickstats-header-photos' => 'Фото',
+	'quickstats-header-likes' => 'Оҡшай',
+	'quickstats-totals-label' => 'Барыһы',
+	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Тағын статистика]]',
+	'quickstats-number-shortening' => '$1K',
+	'quickstats-number-shortening-millions' => '$1милл.',
+	'quickstats-number-shortening-billions' => '$1миллиард',
+);
+
 /** Bulgarian (български)
  * @author DCLXVI
  */

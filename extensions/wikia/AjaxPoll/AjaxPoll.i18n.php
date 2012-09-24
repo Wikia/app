@@ -54,6 +54,14 @@ $messages['az'] = array(
 	'ajaxpoll-submit' => 'Səs ver!',
 );
 
+/** Bashkir (башҡортса)
+ * @author ҒатаУлла
+ */
+$messages['ba'] = array(
+	'ajaxpoll-percentVotes' => '$1%&nbsp; бөтә тауыштан',
+	'ajaxpoll-thankyou' => 'Тауышығыз өсөн рәхмәт!',
+);
+
 /** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Wizardist
@@ -374,11 +382,11 @@ $messages['ko'] = array(
 $messages['ksh'] = array(
 	'ajaxpoll-percentVotes' => '$1%&nbsp;vun alle Shtemme',
 	'ajaxpoll-thankyou' => 'Mer danke för et Afshtemme!',
-	'ajaxpoll-error' => 'Doh hät jät nit jeflupp mem Beärbeide vun Dinge Shtemm. Bes esu jood_un versöhg_et norr_ens.',
+	'ajaxpoll-error' => 'Doh hät jät nit jeflupp mem Beärbeide vun Dinge Schtemm. Bes esu jood_un versöhg_et norr_ens.',
 	'ajaxpoll-summary' => 'De Afshtemmung es {{GENDER:$1|vum|vum|vum Metmaacher|vun dä|vum}} $1 aam $2 aanjelaat woode, un bes jäz {{PLURAL:$3|hät Eine|hann_er $3 Metmaacher|hät Keine}} dobei metjemaat.',
 	'ajaxpoll-submit' => 'Afshtemme!',
 	'ajaxpoll-closed' => 'Di Affshtemmong es eröm. Vill Shpaß met däm, wad_eruß jekumme es.',
-	'ajaxpoll-submitting' => 'Ene koot Momang, Ding Shtemm weed beärbeidt&nbsp;…',
+	'ajaxpoll-submitting' => 'Ene kleine Momang, Ding Schtemm weed beärbeidt&nbsp;…',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
