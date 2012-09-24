@@ -153,7 +153,8 @@ class WikiaSearchResultSet implements Iterator,ArrayAccess {
 
 	public function current() {
 		if($this->valid()) {
-			return $this->results[$this->position];
+			$keys = array_keys($this->results);
+			return $this->results[$keys[$this->position]];
 		}
 		else {
 			return false;
@@ -165,7 +166,8 @@ class WikiaSearchResultSet implements Iterator,ArrayAccess {
 	}
 
 	public function valid() {
-		return isset($this->results[$this->position]);
+		$keys = array_keys($this->results);
+		return isset($keys[$this->position]);
 	}
 
 	public function setHeader($key, $value) {
