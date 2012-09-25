@@ -32,10 +32,12 @@ $animationSpeed: 200ms;
 		text-align: center;
 		width: 100%;
 		.ad {
+		  	bottom: 0;
 			float: left;
+		  	left: 0;
 			margin: 0 5px;
+		  	position: fixed;
 			width: 320px;
-			height: 25px;
 			@include transition-shorthand(all $animationSpeed ease-in $animationSpeed);
 		}
 		.wikiabar-button {
