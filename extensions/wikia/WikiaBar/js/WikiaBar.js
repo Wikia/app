@@ -32,18 +32,7 @@ var WikiaBar = {
 		if( !this.isUserAnon() ) {
 			this.handleLoggedInUsersWikiaBar();
 		} else if( this.isUserAnon() && this.hasAnonHiddenWikiaBar() === false ) {
-			//show bar (depends on user's local storage data)
-			this.show();
-
-			//messages animation
-			if ($('#WikiaBarWrapper .message').exists()) {
-				this.startSlideShow();
-			}
-
-			//getting the ad
-			if( window.wgEnableWikiaBarAds ) {
-				this.getAd();
-			}
+			this.handleLoggedOutUsersWikiaBar();
 		}
 
 		return true;
@@ -192,6 +181,19 @@ var WikiaBar = {
 	},
 	hasAnonHiddenWikiaBar: function() {
 		return this.getAnonData();
+	},
+	handleLoggedOutUsersWikiaBar: function() {
+		this.show();
+
+		//messages animation
+		if ($('#WikiaBarWrapper .message').exists()) {
+			this.startSlideShow();
+		}
+
+		//getting the ad
+		if( window.wgEnableWikiaBarAds ) {
+			this.getAd();
+		}
 	},
 	handleLoggedInUsersWikiaBar: function() {
 		var cachedState = this.getLocalStorageData();

@@ -74,16 +74,18 @@ class WikiaBarController extends WikiaController {
 	 * @desc Checks users properties for WikiaBar display state and changes it to oposite
 	 */
 	public function changeUserStateBar() {
-		$results = new stdClass();
-		$state = $this->getWikiaBarState();
+		$results = $this->getWikiaBarState();
+		$state = $results->wikiaBarState;
 		$isShown = ($state === self::WIKIA_BAR_SHOWN_STATE_VALUE) ? true : false;
 
-		if( $isShown ) {
+		if( $isShown && $results->success ) {
 			$results->wikiaBarState = self::WIKIA_BAR_HIDDEN_STATE_VALUE;
 			$results->success = true;
-		} else {
+		} else if( !$isShown && $results->success ) {
 			$results->wikiaBarState = self::WIKIA_BAR_SHOWN_STATE_VALUE;
 			$results->success = true;
+		} else {
+			//results from WikiaBarController::getWikiaBarState()
 		}
 
 		$this->setWikiaBarState($results->wikiaBarState);
@@ -111,7 +113,7 @@ class WikiaBarController extends WikiaController {
 
 		$results->wikiaBarState = $state;
 		$this->results = $results;
-		return $state;
+		return $results;
 	}
 
 	protected function setWikiaBarState($state) {
