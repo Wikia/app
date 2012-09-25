@@ -4084,7 +4084,7 @@ class User {
                                 $dbw = wfGetDB( DB_MASTER );
                         }
 
-			$dbw->update( 'user',
+			$dbw->update( '`user`',
 				array( 'user_editcount=user_editcount+1' ),
 				array( 'user_id' => $this->getId() ),
 				__METHOD__ );
@@ -4093,17 +4093,7 @@ class User {
 			if( $dbw->affectedRows() == 0 ) {
 				// Pull from a slave to be less cruel to servers
 				// Accuracy isn't the point anyway here
-
-				// wikia change, load always from first cluster when we use
-				// shared users database
-				// @author Lucas Garczewski (tor)
-				if( isset( $wgSharedDB ) ) {
-					$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
-				}
-				else {
-					$dbr = wfGetDB( DB_SLAVE );
-				}
-
+				$dbr = wfGetDB( DB_SLAVE );
 
 				$count = $dbr->selectField( 'revision',
 					'COUNT(rev_user)',
@@ -4122,7 +4112,7 @@ class User {
 					// just added in the working transaction.
 				}
 
-				$dbw->update( 'user',
+				$dbw->update( '`user`',
 					array( 'user_editcount' => $count ),
 					array( 'user_id' => $this->getId() ),
 					__METHOD__ );
