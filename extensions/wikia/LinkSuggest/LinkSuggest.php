@@ -27,6 +27,8 @@ $wgExtensionCredits['other'][] = array(
     'version' => '1.53',
 );
 
+$wgLinkSuggestLimit = 6;
+
 $wgExtensionMessagesFiles['LinkSuggest'] = dirname(__FILE__).'/'.'LinkSuggest.i18n.php';
 F::build('JSMessages')->registerPackage('LinkSuggest', array('tog-*'));
 
@@ -116,7 +118,7 @@ function linkSuggestAjaxResponse($out) {
 
 
 function getLinkSuggest() {
-	global $wgRequest, $wgContLang, $wgCityId, $wgExternalDatawareDB, $wgContentNamespaces, $wgMemc;
+	global $wgRequest, $wgContLang, $wgCityId, $wgExternalDatawareDB, $wgContentNamespaces, $wgMemc, $wgLinkSuggestLimit;
 	wfProfileIn(__METHOD__);
 
 	$isMobile = F::app()->checkSkin( 'wikiamobile' );
@@ -130,7 +132,7 @@ function getLinkSuggest() {
 	} else {
 		$key = wfMemcKey( __METHOD__, md5( $query.'_'.$wgRequest->getText('format') ) );
 	}
-
+	
 	if (strlen($query) < 3 ) {
 		// enforce minimum character limit on server side
 		$out = $wgRequest->getText('format') == 'json'
@@ -211,7 +213,7 @@ function getLinkSuggest() {
 			'qc_namespace' => $namespaces
 		),
 		__METHOD__,
-		array( 'ORDER BY' => 'qc_value DESC', 'LIMIT' => 10 )
+		array( 'ORDER BY' => 'qc_value DESC', 'LIMIT' => $wgLinkSuggestLimit )
 	);
 
 	linkSuggestFormatResults($db, $res, $query, $redirects, $results, $exactMatchRow);
@@ -221,9 +223,14 @@ function getLinkSuggest() {
 	}
 
 	$pageNamespaceClause = isset($commaJoinedNamespaces) ?  'page_namespace IN (' . $commaJoinedNamespaces . ') AND ' : '';
+	if( count($results) < $wgLinkSuggestLimit ) {
+		$orderBy = '';
+		/* just don't add the sort option on lyrics wiki */
+		if ( $wgCityId != 43339 ) {
+			$orderBy = 'order by page_len desc'; 			
+		}
 
-	if(count($results) < 10 ) {
-		$sql = "SELECT page_id, page_title, rd_title, page_namespace, page_is_redirect
+		$sql = "SELECT page_len, page_id, page_title, rd_title, page_namespace, page_is_redirect
 
 				FROM page IGNORE INDEX (`name_title`)
 
@@ -231,8 +238,10 @@ function getLinkSuggest() {
 
 				WHERE {$pageNamespaceClause} (page_title LIKE '{$query}%' or LOWER(page_title) LIKE '{$queryLower}%')
 
-				LIMIT 20 ";
+				{$orderBy}
 
+				LIMIT ".($wgLinkSuggestLimit * 3);
+				
 		$res = $db->query($sql);
 
 		linkSuggestFormatResults($db, $res, $query, $redirects, $results, $exactMatchRow);
@@ -321,7 +330,8 @@ function getLinkSuggest() {
 }
 
 function linkSuggestFormatResults($db, $res, $query, &$redirects, &$results, &$exactMatchRow) {
-	while(($row = $db->fetchObject($res)) && count($results < 10)) {
+	global $wgLinkSuggestLimit;	
+	while(($row = $db->fetchObject($res)) && count($results) < $wgLinkSuggestLimit ) {
 
 		if (strtolower($row->page_title) == $query) {
 			$exactMatchRow = $row;
