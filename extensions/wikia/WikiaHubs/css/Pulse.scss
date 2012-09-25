@@ -30,7 +30,7 @@
 			margin-top: 10px;
 			width: 100%;
 			position: relative;
-			@include clearfix;			
+			@include clearfix;
 		}
 		.pulse-content {
 			.search {
@@ -70,7 +70,7 @@
 				float: left;
 				margin-left: 10px;
 				border-left: 1px dotted #808080;
-				padding-left: 10px;			
+				padding-left: 10px;
 				h5 {
 					font-size: 15px;
 					line-height: 1.5em;
@@ -87,7 +87,23 @@
 					border-left: 0;
 					padding-left: 0;
 				}
-			}		
-		}	
+			}
+		}
 	}
 }
+
+/* temp transition code until grid is fully rolled out, remove and integrate after transition */
+.WikiaPage.WikiaGrid .WikiaArticle {
+	.wikiahubs-pulse {
+		.pulse-content {
+			.search {
+				.WikiaSearch {
+					input[type="text"] {
+						width: 260px;
+					}
+				}
+			}
+		}
+	}
+}
+/* end temp transistion code */

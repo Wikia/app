@@ -39,3 +39,16 @@
 		}
 	}
 }
+
+/* temp transition code until grid is fully rolled out, remove and integrate after transition */
+.WikiaPage.WikiaGrid .WikiaArticle {
+	.wikiahubs-popular-videos {
+		.button.left {
+			left: 633px;
+		}
+		.scrollleft {
+			left: 0;
+		}
+	}
+}
+/* end temp transistion code */
