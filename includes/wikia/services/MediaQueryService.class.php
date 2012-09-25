@@ -324,7 +324,7 @@ class MediaQueryService extends Service {
 		if ( !is_numeric($totalVideos) ) {
 			$db = $this->app->wf->GetDB( DB_SLAVE );
 
-			if ( !F::build( 'VideoInfoHelper', array(), 'videoInfoExists' ) ) {
+			if ( !VideoInfoHelper::videoInfoExists() ) {
 				$excludeList = array( 'png', 'gif', 'bmp', 'jpg', 'jpeg', 'ogg', 'ico', 'svg', 'mp3', 'wav', 'midi' );
 				$sqlWhere = implode( "','", $excludeList );
 
@@ -432,7 +432,7 @@ SQL;
 		$memKey = $app->wf->MemcKey( 'videos', 'total_video_views' );
 		$videoList = $app->wg->Memc->get( $memKey );
 		if ( !is_array($videoList) ) {
-			if ( !F::build( 'VideoInfoHelper', array(), 'videoInfoExists' ) ) {
+			if ( !VideoInfoHelper::videoInfoExists() ) {
 				$videoList = F::build( 'DataMartService', array(), 'getVideoListViewsByTitleTotal' );
 			} else {
 				$db = $app->wf->GetDB( DB_SLAVE );
