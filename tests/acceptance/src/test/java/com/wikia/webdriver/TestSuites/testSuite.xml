@@ -8,7 +8,7 @@
 			<class name="com.wikia.webdriver.TestCases.CreateAWikiTests.CreateAWikiTests_logInFieldValidation"/>
 			<class name="com.wikia.webdriver.TestCases.ImageServing"/>
 			<class name="com.wikia.webdriver.TestCases.HubsTests"/>
-			<!--class name="com.wikia.webdriver.TestCases.CustomizeToolbarTests"/-->
+			<class name="com.wikia.webdriver.TestCases.CustomizeToolbarTests"/>
 			<class name="com.wikia.webdriver.TestCases.SignUpTests.SignUpTests_account_creation"/>
 			<class name="com.wikia.webdriver.TestCases.ChatTests"/>
 			<class name="com.wikia.webdriver.TestCases.ArticleCRUDTests.ArticleCRUDTestsAdmin"/> 
