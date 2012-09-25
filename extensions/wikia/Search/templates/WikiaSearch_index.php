@@ -49,7 +49,7 @@
 	<?php if(!$isCorporateWiki): ?>
 		<div class="results-wrapper grid-3 alpha">
 	<?php endif; ?>
-
+		
 		<?php if(!empty($results)): ?>
 			<?php if( $resultsFound > 0 ): ?>
 				<p class="result-count subtle">
@@ -121,8 +121,10 @@
 				<? if ( !$hasArticleMatch && $isMonobook ): ?>
 					<?=wfMsgExt('searchmenu-new', array('parse'), $query);?>
 				<? endif; ?>
-					<p><i><?=wfMsg('wikiasearch2-noresults')?></i></p>
+				<p><i><?=wfMsg('wikiasearch2-noresults')?></i></p>
 			<?php endif; ?>
+		<?php else: // add border in center column for blank search page BugId: 48489 ?>
+			<p>&nbsp;</p>	
 		<?php endif; ?>
 
 	<?php if(!$isCorporateWiki): ?>
