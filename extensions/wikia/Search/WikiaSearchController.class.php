@@ -432,66 +432,61 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	}
 
 	public function getRelatedVideos() {
-
-	       $pageId = $this->getVal('id');
-	       $params = array();
-	       if ( !empty( $pageId ) ) {
-		 $params['pageId'] = $pageId;
-	       }
-	       $responseData = $this->wikiaSearch->getRelatedVideos( $params );
-	       $this->response->setData($responseData);
-	       $this->response->setFormat('json');
-
+		$searchConfig = F::build('WikiaSearchConfig');
+		$pageId = $this->getVal('id');
+		if ( !empty( $pageId ) ) {
+			$searchConfig->setPageId( $pageId );
+		}
+		$searchConfig
+			->setStart	(  0 )
+			->setSize	( 20 );
+		
+		$responseData = $this->wikiaSearch->getRelatedVideos( $searchConfig );
+		$this->response->setData($responseData);
+		$this->response->setFormat('json');
 	}
 
 	public function getSimilarPagesExternal() {
-
-	       $url = $this->getVal('url');
-	       if ( !empty($url) ) {
-		 $params = array('stream.url'=>$url);
-	       } else if ($contents = $this->getVal('contents')) {
-		 $params = array('stream.body'=>$contents);
-	       } else {
-		 throw new Exception('Please provide a url or stream contents');
-	       }
-	       $responseData = $this->wikiaSearch->getSimilarPages(false, $params);
-	       $this->response->setData($responseData);
-	       $this->response->setFormat('json');
-
+		$searchConfig = F::build('WikiaSearchConfig');
+		$url = $this->getVal('url', null);
+		$contents = $this->getVal('contents', null); 
+		if ( $url !== null ) {
+			$searchConfig->setContentUrl($url);
+		} else if ( $contents !== null ) {
+			$searchConfig->setStreamBody($contents);
+		} else {
+			throw new Exception('Please provide a url or stream contents');
+		}
+		
+		$responseData = $this->wikiaSearch->getSimilarPages( $searchConfig );
+		$this->response->setData($responseData);
+		$this->response->setFormat('json');
 	}
 
 	public function getKeywords() {
-
-       	       $pageId = $this->getVal('id');
-	       $params = array();
-	       if ( !empty( $pageId ) ) {
-		 $params['pageId'] = $pageId;
-	       }
-	       $responseData = $this->wikiaSearch->getKeywords( $params );
-	       $this->response->setData($responseData);
-	       $this->response->setFormat('json');
-
-
+		$searchConfig = F::build('WikiaSearchConfig');
+		$searchConfig->setPageId($this->getVal('id', false));
+		$responseData = $this->wikiaSearch->getKeywords( $searchConfig );
+		$this->response->setData($responseData);
+		$this->response->setFormat('json');
 	}
 
 	public function getTagCloud() {
+		$params = $this->getTagCloudParams();
 
-	  $params = $this->getTagCloudParams();
-
-	  $this->response->setData($this->wikiaSearch->getTagCloud($params));
-	  $this->response->setFormat('json');
-
+		$this->response->setData($this->wikiaSearch->getTagCloud($params));
+		$this->response->setFormat('json');
 	}
 
 	private function getTagCloudParams()
 	{
-	  $params = array();
-	  $params['maxpages']    = $this->getVal('maxpages', 25);
-	  $params['termcount']   = $this->getVal('termcount', 50);
-	  $params['maxfontsize'] = $this->getVal('maxfontsize', 56);
-	  $params['minfontsize'] = $this->getVal('minfontsize', 10);
-	  $params['sizetype']    = $this->getVal('sizetype', 'pt');
-	  return $params;
+		$params = array();
+		$params['maxpages']    = $this->getVal('maxpages', 25);
+		$params['termcount']   = $this->getVal('termcount', 50);
+		$params['maxfontsize'] = $this->getVal('maxfontsize', 56);
+		$params['minfontsize'] = $this->getVal('minfontsize', 10);
+		$params['sizetype']    = $this->getVal('sizetype', 'pt');
+		return $params;
 	}
 
 	//WikiaMobile hook to add assets so they are minified and concatenated
