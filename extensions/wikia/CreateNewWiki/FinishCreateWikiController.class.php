@@ -61,7 +61,7 @@ class FinishCreateWikiController extends WikiaController {
 				$matches = array();
 				$description = $this->params['wikiDescription'];
 				if(preg_match('/={2,3}[^=]+={2,3}/', $mainPageText, $matches)) {
-					$newMainPageText = str_replace('Wiki', $wgSitename, $matches[0]);
+					$newSectionTitle = str_replace('Wiki', $wgSitename, $matches[0]);
 					$description = "{$newSectionTitle}\n{$description}";
 				}
 				$newMainPageText = $wgParser->replaceSection( $mainPageText, 1, $description );
