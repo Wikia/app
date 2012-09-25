@@ -142,3 +142,17 @@
 		}
 	}
 }
+
+/* temp transition code until grid is fully rolled out, remove and integrate after transition */
+.WikiaPage.WikiaGrid .WikiaMosaicSlider {
+	.wikia-mosaic-slider-region {
+		width: 330px;
+	}
+
+	.wikia-mosaic-thumb-region {
+		.wikia-mosaic-slide {
+			width: 160px;
+		}
+	}
+}
+/* end temp transistion code */
