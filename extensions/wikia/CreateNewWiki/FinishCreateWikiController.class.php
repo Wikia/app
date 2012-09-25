@@ -57,15 +57,15 @@ class FinishCreateWikiController extends WikiaController {
 			$mainArticle = Article::newFromID($mainId);
 			if (!empty($mainArticle)) {
 				global $wgParser;
-				$firstSectionText = $wgParser->getSection($mainArticle->getRawText(), 1);
+				$mainPageText = $mainArticle->getRawText();
 				$matches = array();
-				if(preg_match('/={2,3}[^=]+={2,3}/', $firstSectionText, $matches)) {
-					$newSectionTitle = str_replace('Wiki', $wgSitename, $matches[0]);
-					$newSectionText = $wgParser->replaceSection($firstSectionText, 1, "{$newSectionTitle}\n{$this->params['wikiDescription']}");
-				} else {
-					$newSectionText = $wgParser->replaceSection($firstSectionText, 1, $this->params['wikiDescription']);
+				$description = $this->params['wikiDescription'];
+				if(preg_match('/={2,3}[^=]+={2,3}/', $mainPageText, $matches)) {
+					$newMainPageText = str_replace('Wiki', $wgSitename, $matches[0]);
+					$description = "{$newSectionTitle}\n{$description}";
 				}
-				$mainArticle->doEdit($newSectionText, '');
+				$newMainPageText = $wgParser->replaceSection( $mainPageText, 1, $description );
+				$mainArticle->doEdit($newMainPageText, '');
 			}
 		}
 		
