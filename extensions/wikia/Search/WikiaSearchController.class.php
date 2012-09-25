@@ -508,9 +508,14 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	{
 		$query = $this->getVal('q');
 
-		$params = array('cityId' => $this->wg->cityId);
+		$searchConfig = F::build('WikiaSearchConfig');
+		$searchConfig
+			->setCityId	($this->wg->cityId)
+			->setQuery	($query)
+		;
+		
 
-		$results = $this->wikiaSearch->searchVideos($query, $params);
+		$results = $this->wikiaSearch->searchVideos($query, $searchConfig);
 		
 		// up to whoever's using this service as to what they want from here. I'm just going to return JSON.
 		// if you just want to search for only videos in the traditional video interface, then you should 

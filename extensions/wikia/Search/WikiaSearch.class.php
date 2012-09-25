@@ -49,7 +49,7 @@ class WikiaSearch extends WikiaObject {
 	 * perform search
 	 *
 	 * @param string $query
-	 * @param array $methodParams
+	 * @param WikiaSearchConfig $searchConfig
 	 * @return WikiaSearchResultSet
 	 */
 	public function doSearch( $query, WikiaSearchConfig $searchConfig ) {
@@ -268,7 +268,6 @@ class WikiaSearch extends WikiaObject {
 		
 		return implode(' ', $boostQueries);
 	}
-	
 
 	/**
 	 * any query string transformation before sending to backend should be placed here
@@ -288,7 +287,6 @@ class WikiaSearch extends WikiaObject {
 		// @todo make sure this works i'm iffy about it
 	    return $query;
 	}
-	
 
 	public function getPages( $pageIds, $withMetaData = true ) {
 		wfProfileIn(__METHOD__);
@@ -514,7 +512,6 @@ class WikiaSearch extends WikiaObject {
 		wfProfileOut(__METHOD__);
 		return $result;
 	}
-
 	
 	private function getRedirectTitles( Article $page ) {
 		wfProfileIn(__METHOD__);
@@ -532,7 +529,6 @@ class WikiaSearch extends WikiaObject {
 		wfProfileOut(__METHOD__);
 		return (!empty($result)) ? str_replace('_', ' ', $result->redirect_titles) : '';
 	}
-
 
 	private function getWikiViews( Article $page ) {
 		wfProfileIn(__METHOD__);
@@ -566,12 +562,14 @@ class WikiaSearch extends WikiaObject {
 		return $row;
 	}
 
-	public function searchVideos( $query, array $methodParams = array() )
+	public function searchVideos( $query, WikiaSearchConfig $searchConfig )
 	{
-		$this->namespaces = array(NS_FILE);
-		$methodParams['videoSearch'] = true;
+		$searchConfig
+			->setNamespaces		(array(NS_FILE))
+			->setVideoSearch	(true)
+		;
 
-		return $this->doSearch($query, $methodParams);
+		return $this->doSearch($query, $searchConfig);
 	}
 
 	public function getRelatedVideos(array $params = array('start'=>0, 'size'=>20)) {
