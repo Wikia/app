@@ -572,21 +572,14 @@ class WikiaSearch extends WikiaObject {
 		return $this->doSearch($query, $searchConfig);
 	}
 
-	public function getRelatedVideos(array $params = array('start'=>0, 'size'=>20)) {
-	        wfProfileIn(__METHOD__);
-	        # going to need an "is_video" field
-	        if ( !empty($params['video_wiki_only']) ) {
-				$params['fq'] = ' wid:' . self::VIDEO_WIKI_ID .' ';
-
-				
-	        } else {
-		        $params['fq'] = '(wid:' . $this->wg->cityId . ' OR wid:' . self::VIDEO_WIKI_ID . '^2) ';
-	        }
-		$params['fq'] .= 'AND is_video:true';
+	public function getRelatedVideos( WikiaSearchConfig $searchConfig ) {
+		wfProfileIn(__METHOD__);
+		
+        $filterQuery = '(wid:' . $this->wg->cityId . ' OR wid:' . self::VIDEO_WIKI_ID . '^2) AND is_video:true';
 
 		$query = sprintf('wid:%d', $this->wg->cityId);
-		if (isset($params['pageId'])) {
-		  $query .= sprintf(' AND pageid:%d', $params['pageId']);
+		if ( $searchConfig->getPageId() !== false ) {
+			$query .= sprintf(' AND pageid:%d', $searchConfig->getPageId() );
 		} else {
 
 			// tweakable heuristic:
@@ -599,26 +592,42 @@ class WikiaSearch extends WikiaObject {
 													));
 
 			if (isset($data['query']) && isset($data['query']['statistics']) && isset($data['query']['statistics']['articles'])) {
-				$params['mindf'] = (int) ($data['query']['statistics']['articles'] * .5);
+				$searchConfig->setMindf( (int) ($data['query']['statistics']['articles'] * .5) );
 			}
 			$query .= ' AND iscontent:true';
 		}
+		
+		$searchConfig
+			->setQuery			($query)
+			->setFilterQuery	($filterQuery)
+			->setMltFields		(array(self::field('title'), self::field('html')));
+		
 		wfProfileOut(__METHOD__);
-	        return $this->getSimilarPages($query, $params);
+		return $this->moreLikeThis( $searchConfig );
 	}
 
-	public function getSimilarPages($query = false, array $params = array()) {
+	public function getSimilarPages( WikiaSearchConfig $searchConfig ) {
+		wfProfileIn(__METHOD__);
+		
+		$contentUrl = false;
+		$streamBody = false;
+		$query = $searchConfig->getQuery();
+		
+		if ( $query == false ) {
+			$contentUrl = $searchConfig->getContentUrl();
+			if ( $contentUrl === false ) {
+				$streamBody = $searchConfig->getStreamBody();
+			}
+		}
+		
+		if ( $contentUrl || $streamBody ) {
+			$searchConfig->setFilterQuery(implode(' AND ', array_merge($this->getInterWikiQueryClauses())));
+		}
 
-	        wfProfileIn(__METHOD__);
-	        if ((!$query) && (isset($params['content.url']) || isset($params['stream.body']))) {
-		  $params['fq'] = implode(' AND ', array_merge($this->client->getInterWikiQueryClauses()));
-	        }
+		$searchConfig->setMltBoost(true);
+		$searchConfig->setMltFields(array('title', 'html'));
 
-		$params['mlt.boost'] = 'true';
-		#note, mlt.maxnpt might be necessary for performance
-		$params['mlt.fl'] = 'title,html';
-
-		$clientResponse = $this->client->getSimilarPages($query, $params);
+		$clientResponse = $this->moreLikeThis( $searchConfig );
 
 		$similarPages = array();
 		if ( is_object($clientResponse->response) ) {
@@ -633,10 +642,43 @@ class WikiaSearch extends WikiaObject {
 		wfProfileOut(__METHOD__);
 		return $response;
 	}
+	
+	public function moreLikeThis( WikiaSearchConfig $searchConfig )
+	{
+		$query = $searchConfig->getQuery();
+		$streamBody = $searchConfig->getStreamBody();
+		$streamUrl = $searchConfig->getStreamUrl();
+		
+		if (! ( $query || $streamBody || $streamUrl ) ) {
+	        throw new Exception("A query, url, or stream is required.");
+	    }
+	    
+	    
+	    $mlt = $this->client->createMoreLikeThis();
+	    $mlt->setMltFields		( $searchConfig->getMltFields() )
+	    	->addFilterQuery	( $searchConfig->getFilterQuery() )
+	    	->addParam			( 'mlt.match.include', 'false' )
+	    	->setStart			( $searchConfig->getStart() )
+	    	->setRows			( $searchConfig->getRows() )
+	    ;
+	    
+	    if ( $query !== false ) { 
+	    	$mlt->setQuery($query);
+	    } else if ( $streamBody ) {
+	    	$mlt->setQueryStream	( true )
+	    		->setQuery			( $streamBody )
+    		;
+	    } else if ($streamUrl ) {
+	    	$mlt->addParam('mlt.url', $streamUrl);;
+	    }
+	    
+	    $mltResults = $this->client->moreLikeThis( $mlt );
+	    
+	}
 
 	public function getInterestingTerms($query = false, array $params = array()) {
 
-	        wfProfileIn(__METHOD__);
+        wfProfileIn(__METHOD__);
 		$params['mlt.fl'] = 'title,headings,first500,redirect_text,html';
 		$params['mlt.fl'] = 'title, html';
 		$params['mlt.boost'] = 'true';
@@ -651,7 +693,7 @@ class WikiaSearch extends WikiaObject {
 		  return $interestingTerms;
 		}
 
-		$clientResponse = $this->client->getSimilarPages($query, $params);
+		$clientResponse = $this->getSimilarPages($query, $params);
 
 		$response = array();
 
@@ -665,41 +707,44 @@ class WikiaSearch extends WikiaObject {
 
 	}
 
-	public function getKeywords($params) {
+	public function getKeywords( WikiaSearchConfig $searchConfig ) {
 
-	        $query = sprintf('wid:%d', $this->wg->cityId);
-		if (isset($params['pageId'])) {
-		  $query .= sprintf(' AND pageid:%d', $params['pageId']);
+		$query = sprintf('wid:%d', $this->wg->cityId);
+		if ( $searchConfig->getPageId() !== false ) {
+			$query .= sprintf(' AND pageid:%d', $searchConfig->getPageId() );
 		} else {
-		  $query .= ' AND is_main_page:1';
+			$query .= ' AND is_main_page:1';
 		}
 		
-		return $this->getInterestingTerms($query, $params);
+		$searchConfig->setQuery($query);
+		
+		return $this->getInterestingTerms( $searchConfig );
 
 	}
 
 	public function getTagCloud(array $params = array('maxpages'=>25, 'termcount'=>'20', 'maxfontsize'=>'56', 
                                                           'minfontsize'=>6, 'sizetype'=>'px')) {
-	        wfProfileIn(__METHOD__);
-	        $wid = $this->wg->cityId;
+        wfProfileIn(__METHOD__);
+        $wid = $this->wg->cityId;
+        
+        $searchConfig = F::build('WikiaSearchConfig');
+        $searchConfig
+        	->setQuery	('wid:'.$wid.' AND iscontent:true')
+        	->setRank	('most-viewed');
 
-		$query = 'wid:'.$wid.' AND iscontent:true';
-
-		$methodOptions = array('sort'=>'views desc');
-
-		$response =$this->client->searchByLuceneQuery($query, 0, $params['maxpages'], $methodOptions);
+		$response = $this->searchByLuceneQuery( $searchConfig );
+		#@TODO take care of this
 		$docs = $response->response->docs;
 
 		$interestingTerms = array();
 
 		foreach ($docs as $doc) {
+			$searchConfig->setQuery('wid:'.$wid.' AND pageid:'.$doc->pageid);
+			$termResults = $this->getInterestingTerms($searchConfig);
 
-		  $termResults = $this->getInterestingTerms('wid:'.$wid.' AND pageid:'.$doc->pageid);
-
-		  foreach ($termResults as $term) {
-		    $interestingTerms[$term] = isset($interestingTerms[$term]) ? $interestingTerms[$term]+1 : 1;;
-		  }
-
+			foreach ($termResults as $term) {
+				$interestingTerms[$term] = isset($interestingTerms[$term]) ? $interestingTerms[$term]+1 : 1;;
+			}
 		}
 
 		arsort($interestingTerms);
@@ -712,11 +757,10 @@ class WikiaSearch extends WikiaObject {
 		$max = max(array_values($interestingTerms));
 
 		foreach ($interestingTerms as $term=>$count) {
-		  $termsToFontSize[$term] = max(array($params['minfontsize'], 
-						      #tagcloud calc
-						      round(abs($params['maxfontsize'] * ($count - $min) /  ($max - $min))) 
-						      )
-						).$params['sizetype'];
+			$termsToFontSize[$term] = max(array($params['minfontsize'], 
+												round(abs($params['maxfontsize'] * ($count - $min) /  ($max - $min))) 
+						      					)
+										 ).$params['sizetype'];
 		}
 		wfProfileOut(__METHOD__);
 		return $termsToFontSize;
