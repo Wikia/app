@@ -10,7 +10,7 @@ $(function(){
 					ga_action: action,
 					ga_label: label
 				}, 
-				'internal');
+				'ga');
 		};
 	
 	$('#WikiaHeader').on('click', 'a', function(e) {
