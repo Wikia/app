@@ -45,7 +45,7 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 			$sqlWhere[ $image['state'] ][] = "( wiki_id = $image[wikiId] AND page_id = $image[pageId]) ";
 			
 			if ( $image['state'] == ImageReviewStatuses::STATE_DELETED ) {
-				$deletionList[$image['wikiId']] = $image['pageId'];
+				$deletionList[] = array( $image['wikiId'], $image['pageId'] );
 			}
 
 			$statsInsert[] = array(
