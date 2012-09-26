@@ -30,7 +30,7 @@
 			return true;
 		}
 
-	    // What's inside wgJqueryUrl should also be written natively
+		// What's inside wgJqueryUrl should also be written natively
 		if (window.wgJqueryUrl) {
 			for (i = 0; i < window.wgJqueryUrl.length; i += 1) {
 				if (src.indexOf(window.wgJqueryUrl[i]) === 0) {
