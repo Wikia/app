@@ -121,7 +121,6 @@ html>body #WallNotifications .avatars { *float: left; }
 	}
 	.subnav {
 		@include menu-heavy;
-		@include box-shadow(0, 5px, 10px, rgba(0, 0, 0, 0.5), 0, 0);
 		padding: 0px; // overwrite from menu-heavy
 		//> li:first-child { 		border-top: 1px solid $color-page-border; } // overwrite from menu-heavy
 		display: block;
