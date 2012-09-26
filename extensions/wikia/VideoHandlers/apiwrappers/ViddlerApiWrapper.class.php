@@ -145,6 +145,7 @@ class ViddlerApiWrapper extends ApiWrapper {
 
 		$embed_code = $this->interfaceObj['video']['embed_code'];
 		$matches = array();
+		$width = $height = null;
 		if (preg_match('/width="(\d+)"/', $embed_code, $matches)) {
 			$width = $matches[1];
 			$matches = array();
