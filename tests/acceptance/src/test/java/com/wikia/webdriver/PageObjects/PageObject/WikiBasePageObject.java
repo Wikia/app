@@ -64,6 +64,27 @@ public class WikiBasePageObject extends BasePageObject {
 	@FindBy(css="input#wpReason")
 	private WebElement deleteCommentReasonField;
 	
+	@FindBy(css="tr.ImageUploadFindLinks td a")
+	private WebElement addThisPhotoLink;
+	
+	@FindBy(css="div.reset[id='ImageUpload']")
+	private WebElement imageUploadModal;
+	
+	@FindBy(css="div.details input")
+	private WebElement addPhotoButton;
+	
+	@FindBy(css="input[id='VideoEmbedUrl']")
+	private WebElement videoModalInput;
+	
+	@FindBy(css="a[id='VideoEmbedUrlSubmit']")
+	private WebElement videoNextButton;
+	
+	@FindBy(css="tr.VideoEmbedNoBorder input.wikia-button")
+	private WebElement videoAddVideoButton;
+	
+	@FindBy(css="div[id='VideoEmbed'] input[value='Return to editing']")
+	private WebElement videoReturnToEditing;
+	
 	private By layoutList = By.cssSelector("ul#CreatePageDialogChoices li");
 	
 	public WikiBasePageObject(WebDriver driver, String Domain) {
@@ -74,6 +95,92 @@ public class WikiBasePageObject extends BasePageObject {
 
 	public String getWikiName() {
 		return Domain;
+	}
+	
+	/**
+	 * Wait For Succes dialog and click on 'return to editing'
+	 *  
+	 * @author Michal Nowierski
+	 * 	 */
+	public void waitForSuccesDialogAndReturnToEditing() {
+		waitForElementByElement(videoReturnToEditing);
+		waitForElementClickableByElement(videoReturnToEditing);
+		videoReturnToEditing.click();
+		PageObjectLogging.log("WaitForSuccesDialogAndReturnToEditing", "Wait For Succes dialog and click on 'return to editing'", true, driver);
+		
+	}
+	
+	/**
+	 * Wait for video dialog
+	 *  
+	 * @author Michal Nowierski
+	 * 	 */
+	public void waitForVideoDialog() {
+		waitForElementByElement(videoAddVideoButton);
+		PageObjectLogging.log("WaitForVideoDialog", "Wait for video dialog", true, driver);
+		
+	}
+
+	/**
+	 * Click 'Add a video'
+	 *  
+	 * @author Michal Nowierski
+	 * 	 */
+	public void clickAddAvideo() {
+		waitForElementClickableByElement(videoAddVideoButton);
+		videoAddVideoButton.click();
+		PageObjectLogging.log("ClickAddAvideo", "Click 'Add a video'", true, driver);
+		
+	}
+	
+	/**
+	 * Video Click Next button
+	 *  
+	 * @author Michal Nowierski
+	 * 	 */
+	public void clickVideoNextButton() {
+		waitForElementByElement(videoNextButton);
+		waitForElementClickableByElement(videoNextButton);
+		videoNextButton.click();
+		PageObjectLogging.log("ClickVideoNextButton", "Left Click Next button", true, driver);
+			
+	}
+
+	/**
+	 * Wait for Video modal and type in the video URL 
+	 *  
+	 * @author Michal Nowierski
+	 * 	 */
+	public void waitForVideoModalAndTypeVideoURL(String videoURL) {
+		waitForElementByElement(videoModalInput);
+		waitForElementClickableByElement(videoModalInput);
+		videoModalInput.clear();
+		videoModalInput.sendKeys(videoURL);
+		PageObjectLogging.log("WaitForVideoModalAndTypeVideoURL", "Wait for Video modal and type in the video URL: "+videoURL, true, driver);		
+	}
+	
+	/**
+	 * Left Click on add 'Photo' button.
+	 *  
+	 * @author Michal Nowierski
+	 */
+	public void clickOnAddPhotoButton2() {
+		waitForElementByElement(addPhotoButton);
+		waitForElementClickableByElement(addPhotoButton);
+		addPhotoButton.click();
+		PageObjectLogging.log("ClickOnAddPhotoButton2", "Left Click on add 'Photo' button.", true, driver);	
+	}
+	
+	/**
+	 * Wait for modal and click on 'add this photo' under the first seen photo
+	 *  
+	 * @author Michal Nowierski
+	 */
+	public void waitForModalAndClickAddThisPhoto() {
+		waitForElementByElement(imageUploadModal);
+		waitForElementClickableByElement(addThisPhotoLink);
+		addThisPhotoLink.click();
+		PageObjectLogging.log("WaitForModalAndClickAddThisPhoto", "Wait for modal and click on 'add this photo' under the first seen photo", true, driver);
 	}
 	
 	public SpecialNewFilesPageObject OpenSpecialNewFiles() {
