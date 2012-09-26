@@ -1,4 +1,4 @@
-<?php
+what<?php
 class WikiaSearchController extends WikiaSpecialPageController {
 
 
@@ -67,7 +67,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$searchableNamespaces = SearchEngine::searchableNamespaces();
 		$namespaces = array();
 		foreach($searchableNamespaces as $i => $name) {
-			if ($ns = $this->getVal('ns'.$i)) {
+			if ( $this->getVal('ns'.$i, false) ) {
 				$namespaces[] = $i;
 			}
 		}
