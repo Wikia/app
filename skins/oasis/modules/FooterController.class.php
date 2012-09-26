@@ -2,10 +2,13 @@
 class FooterController extends WikiaController {
 
 	public function executeIndex() {
-		global $wgTitle, $wgContentNamespaces, $wgShowMyToolsOnly;
+		global $wgTitle,
+			   $wgContentNamespaces,
+			   $wgShowMyToolsOnly,
+			   $wgEnableWikiaBarExt;
 
 		// show for anons as well (BugId:20730)
-		$this->showNotifications = empty($wgSuppressToolbar);
+		$this->showNotifications = empty($wgSuppressToolbar) && empty($wgEnableWikiaBarExt);
 		$this->showToolbar = $this->isAdminToolbarSupressed();
 
 		if( $this->showToolbar == false ) {

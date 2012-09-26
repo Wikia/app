@@ -146,10 +146,12 @@ var WikiaBar = {
 		}
 	},
 	show: function() {
+		$('#WikiaNotifications').removeClass('hidden');
 		$('.WikiaBarWrapper').removeClass('hidden');
 		$('.WikiaBarCollapseWrapper').addClass('hidden');
 	},
 	hide: function() {
+		$('#WikiaNotifications').addClass('hidden');
 		$('.WikiaBarWrapper').addClass('hidden');
 		$('.WikiaBarCollapseWrapper').removeClass('hidden');
 	},
