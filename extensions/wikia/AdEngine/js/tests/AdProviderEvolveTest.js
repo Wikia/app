@@ -78,6 +78,12 @@ test('getSect', function() {
 	windowMock.cscoreCat = 'Entertainment';
 
 	equal(adProviderEvolve.getSect(), 'entertainment', 'foo entertainment');
+
+	windowMock.wgWikiFactoryTagNames = ['movie'];
+	windowMock.cscoreCat = 'Entertainment';
+
+	equal(adProviderEvolve.getSect(), 'movies', 'movie entertainment');
+
 });
 
 test('Evolve canHandleSlot AU', function() {
