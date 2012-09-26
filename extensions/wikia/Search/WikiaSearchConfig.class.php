@@ -113,10 +113,12 @@ class WikiaSearchConfig implements ArrayAccess
 	
 	public function setQuery( $query )
 	{
+		$this->params['originalQuery'] = $query;
+		
 		if ($queryNamespace = MWNamespace::getCanonicalIndex(array_shift(explode(':', strtolower($query))))) {
 		    if (!in_array($queryNamespace, $this->params['namespaces'])) {
 		        $this->params['queryNamespace'] = $queryNamespace;
-		    }
+		    } 
 		    $query = implode(':', array_slice(explode(':', $query), 1));
 		}
 		
@@ -186,6 +188,4 @@ class WikiaSearchConfig implements ArrayAccess
 	
 	    return $result;
 	}
-	
-	
 }
