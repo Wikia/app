@@ -10,6 +10,10 @@
 
 class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 {
+	/**
+	 * Default parameters for a number of values that come up regularly in search
+	 * @var array
+	 */
 	private $params = array(
 			'page'			=>	1,
 			'length'		=>	WikiaSearch::RESULTS_PER_PAGE,
@@ -19,6 +23,10 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 			'minimumMatch'	=> '66%',
 			);
 	
+	/**
+	 * The usual requested fields, stored here so we dont have to add them all to the default params array
+	 * @var array
+	 */
 	private $requestedFields = array(
 	        'id',
 	        'wikiarticles',
@@ -37,6 +45,10 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	        'categories',
 	);
 
+	/**
+	 * This array allows us to associate sort arguments from the request with the appropriate sorting format
+	 * @var array
+	 */
 	private $rankOptions = array(
 	        'default'			=>	array( 'score',		Solarium_Query_Select::SORT_DESC ),
 	        'newest'			=>	array( 'created',	Solarium_Query_Select::SORT_DESC ),
@@ -48,16 +60,20 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	        'stalest'			=>	array( 'indexed', 	Solarium_Query_Select::SORT_ASC  ),
 	);
 	
-	public function __construct( array $params = array() )
-	{
+	public function __construct( array $params = array() ) {
 		$this->params = array_merge( $this->params, 
 									 array( 'requestedFields' => $this->requestedFields ), 
 									 $params );
 	}
 
-	// getter and setter shortcuts
-	public function __call($method, $params)
-	{
+	/**
+	 * Magic getters and setters used to make it ease array access.
+	 * Setter provides fluent interface. 
+	 * @param string $method
+	 * @param array  $params
+	 * @return Ambigous <NULL, multitype:>|WikiaSearchConfig
+	 */
+	public function __call($method, $params) {
 		if ( substr($method, 0, 3) == 'get' ) {
 			return $this->offsetGet( strtolower($method[3]).substr($method, 4) );
 		} else if ( substr($method, 0, 3) == 'set' ) {
@@ -66,52 +82,59 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 		}
 	}
 	
-	public function offsetExists ($offset)
-	{
+	/**
+	 * @see ArrayAccess::offsetExists()
+	 */
+	public function offsetExists ($offset) {
 		return isset($this->params[$offset]);
 	}
 
-	public function offsetGet ($offset)
-	{
+	/**
+	 * @see ArrayAccess::offsetGet()
+	 */
+	public function offsetGet ($offset) {
 		return isset($this->params[$offset]) ? $this->params[$offset] : null;
 	}
 
-	public function offsetSet ($offset, $value)
-	{
+	/**
+	 * @see ArrayAccess::offsetSet()
+	 */
+	public function offsetSet ($offset, $value) {
 		$this->params[$offset] = $value;
 	}
 
-	public function offsetUnset ($offset)
-	{
+	/**
+	 * @see ArrayAccess::offsetUnset()
+	 */
+	public function offsetUnset ($offset) {
 		unset($this->params[$offset]);
 	}
 	
-	public function getSize()
-	{
-		// backwards compatibility, of sorts
+	/**
+	 * Synonym function for backwards compatibility
+	 * @return integer
+	 */
+	public function getSize() {
 		return $this->getLength();
 	}
 	
+	/**
+	 * Provides the appropriate search result length based on whether we have an article match or not
+	 * @return integer
+	 */
 	public function getLength()
 	{
-		// handles PTT
 		return ( $this->getArticleMatch() !== null && $this->getStart() === 0 ) 
 			? ((int)$this->params['length']) - 1 
 			: $this->params['length'];
 	}
 	
-	public function getStart()
-	{
-		return ( $this->getArticleMatch() !== null && $this->params['start'] !== 0) 
-			? ((int)$this->params['start'] - 1) 
-			: $this->params['start'];
-	}
-	
-	public function getPaginatedSearch()
-	{
-		return $this->getStart() !== 0;
-	}
-	
+	/**
+	 * Used to store the query from the request as passed by the controller.
+	 * We remove any namespaces prefixes, but store the original query under the originalQuery param.
+	 * @param string $query
+	 * @return WikiaSearchConfig provides fluent interface
+	 */
 	public function setQuery( $query )
 	{
 		$this->params['originalQuery'] = $query;
@@ -128,6 +151,11 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 		return $this;
 	}
 	
+	/**
+	 * Returns the namespaces that were set if they have been set, otherwise returns default namespaces.
+	 * If a query with a namespace prefix has been set, we also include this value in the namespace array.
+	 * @return array
+	 */
 	public function getNamespaces()
 	{
 		$namespaces = ( isset($this->params['namespaces']) && !empty($this->params['namespaces']) ) 
@@ -139,27 +167,38 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 		return $this->params['namespaces'];
 	}
 	
-	public function isMobile()
-	{
-		return F::app()->checkSkin( 'wikiamobile' );
-	}
-	
+	/**
+	 * Provides the appropriate values for Solarium sorting based on our sort names
+	 * @return array where index 0 is the field name and index 1 is the constant used for ASC or DESC in solarium
+	 */
 	public function getSort()
 	{
 		$rank = $this->getRank();
 		return isset($this->rankOptions[$rank]) ? $this->rankOptions[$rank] : $this->rankOptions['default']; 
 	}
 	
+	/**
+	 * Determines whether an article match has been set
+	 * @return boolean
+	 */
 	public function hasArticleMatch()
 	{
-		return isset($this->params['articleMatch']);
+		return isset($this->params['articleMatch']) && !empty($this->params['articleMatch']);
 	}
 	
+	/**
+	 * Returns desired number of results WITHOUT consideration for article match
+	 * @return int
+	 */
 	public function getLimit()
 	{
 		return $this->params['length'];
 	}
 	
+	/**
+	 * Provides the requested fields with respect to dynamic language fields
+	 * @return array
+	 */
 	public function getRequestedFields()
 	{
 		$fieldsPrepped = array();
@@ -170,11 +209,19 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 		return $fieldsPrepped;
 	}
 	
+	/**
+	 * Synonym function for backwards compatibility
+	 * @return boolean
+	 */
 	public function isInterWiki()
 	{
 		return $this->getIsInterWiki();
 	}
 	
+	/**
+	 * Returns results number based on a truncated heuristic
+	 * @return integer
+	 */
 	public function getTruncatedResultsNum() 
 	{
 		$resultsNum = $this->getResultsFound();
@@ -190,6 +237,11 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	    return $result;
 	}
 	
+	/**
+	 * These search profiles are used to figure out what tab we're on and how we should be searching based on that
+	 * While kind of a view concern, moved here so it can play nicely with the namespaces value
+	 * @return array
+	 */
 	public function getSearchProfiles() {
 	    // Builds list of Search Types (profiles)
 	    $nsAllSet = array_keys( SearchEngine::searchableNamespaces() );
@@ -233,7 +285,11 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	
 	    return $profiles;
 	}
-	
+
+	/**
+	 * Uses search profiles to determine the active tab in the view
+	 * @return string
+	 */
 	public function getActiveTab() {
 		
 		if( $this->getAdvanced() ) {
@@ -256,6 +312,10 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 		return 'advanced';
 	}
 	
+	/**
+	 * Determines the number of pages based on the desired number of results per page
+	 * @return integer 
+	 */
 	public function getNumPages() {
 		return $this->getResultsFound() ? ceil( $this->getResultsFound() / $this->getLimit() ) : 0;
 	}

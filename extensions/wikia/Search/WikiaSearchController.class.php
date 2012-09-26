@@ -58,9 +58,8 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 		if( $searchConfig->getQuery() ) {
 			$articleMatch = null;
+			$this->wikiaSearch->getArticleMatch( $searchConfig );
 			if ( $searchConfig->getPage() == 1 ) {
-				$this->wikiaSearch->getArticleMatch( $searchConfig );
-
 				$this->handleArticleMatchTracking( $searchConfig );
 			}
 
