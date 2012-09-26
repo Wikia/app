@@ -83,6 +83,7 @@ $wikiaheader-width: $width-outside + 14px;
 .oasis-split-skin {
 	.WikiaHeader {
 		@include box-shadow(0, 0, 10px, $color-page-shadow);
+		min-width: 1050px;
 		width: auto;
 		.banner-corner-left,
 		.banner-corner-right {
