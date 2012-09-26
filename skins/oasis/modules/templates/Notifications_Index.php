@@ -1,7 +1,7 @@
 <?php
 	if (!empty($notifications)) {
 ?>
-<ul id="WikiaNotifications" class="WikiaNotifications">
+<ul id="WikiaNotifications" class="WikiaNotifications<?php if( !empty($wg->EnableWikiaBarExt) ): echo ' hidden'; endif; ?>">
 <?php
 		foreach ($notifications as $notification) {
 ?>
