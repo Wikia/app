@@ -59,6 +59,7 @@ test('getProvider use AdDriver2 for high value countries', function() {
 	equal(adConfig.getProvider([highValueSlot]), adProviderAdDriver2Mock, 'adProviderAdDriver2Mock');
 });
 
+/*
 test('getProvider use Evolve(RS) for AU (only if provider accepts)', function() {
 	var adProviderGameProMock = {name: 'GameProMock', canHandleSlot: function() {return false;}}
 		, adProviderEvolveMock = {name: 'EvolveMock', canHandleSlot: function() {return false;}}
@@ -98,6 +99,7 @@ test('getProvider use Evolve(RS) for AU (only if provider accepts)', function() 
 	equal(adConfig.getProvider(['foo']), adProviderEvolveMockHandling, 'adProviderEvolveMock AU');
 	equal(adConfigRS.getProvider(['foo']), adProviderEvolveRSMockHandling, 'adProviderEvolveRSMock AU');
 });
+*/
 
 test('getProvider do not use Evolve(RS) for PL', function() {
 	var adProviderGameProMock = {name: 'GameProMock', canHandleSlot: function() {return false;}}

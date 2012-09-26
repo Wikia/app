@@ -76,9 +76,9 @@ var AdConfig2 = function (
 		if (slot[2] === 'GamePro') {
 			return AdProviderGamePro;
 		}
-		if (slot[2] === 'Evolve') {
+		/*if (slot[2] === 'Evolve') {
 			return AdProviderEvolve;
-		}
+		}*/
 		if (slot[2] === 'AdDriver2') {
 			return AdProviderAdDriver2;
 		}
@@ -95,14 +95,14 @@ var AdConfig2 = function (
 		}
 
 		// Now, if in AU/NZ/CA ask Evolve and Evolve RS
-		if (evolveCountries[country]) {
+		/*if (evolveCountries[country]) {
 			if (AdProviderEvolve.canHandleSlot(slot)) {
 				return AdProviderEvolve;
 			}
 			if (AdProviderEvolveRS.canHandleSlot(slot)) {
 				return AdProviderEvolveRS;
 			}
-		}
+		}*/
 
 		// Now if slot is high value in high value country,
 		// ask AdDriver2 (DART->Liftium)
