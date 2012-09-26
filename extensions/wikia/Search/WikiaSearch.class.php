@@ -724,51 +724,6 @@ class WikiaSearch extends WikiaObject {
 
 	}
 
-	public function getTagCloud(array $params = array('maxpages'=>25, 'termcount'=>'20', 'maxfontsize'=>'56', 
-                                                          'minfontsize'=>6, 'sizetype'=>'px')) {
-        wfProfileIn(__METHOD__);
-        $wid = $this->wg->cityId;
-        
-        $searchConfig = F::build('WikiaSearchConfig');
-        $searchConfig
-        	->setQuery	('wid:'.$wid.' AND iscontent:true')
-        	->setRank	('most-viewed');
-
-		$response = $this->searchByLuceneQuery( $searchConfig );
-		#@TODO take care of this
-		$docs = $response->response->docs;
-
-		$interestingTerms = array();
-
-		foreach ($docs as $doc) {
-			$searchConfig->setQuery('wid:'.$wid.' AND pageid:'.$doc->pageid);
-			$termResults = $this->getInterestingTerms($searchConfig);
-
-			foreach ($termResults as $term) {
-				$interestingTerms[$term] = isset($interestingTerms[$term]) ? $interestingTerms[$term]+1 : 1;;
-			}
-		}
-
-		arsort($interestingTerms);
-
-		$interestingTerms = array_slice($interestingTerms, 0, $params['termcount']);
-
-		$termsToFontSize = array();
-
-		$min = min(array_values($interestingTerms));
-		$max = max(array_values($interestingTerms));
-
-		foreach ($interestingTerms as $term=>$count) {
-			$termsToFontSize[$term] = max(array($params['minfontsize'], 
-												round(abs($params['maxfontsize'] * ($count - $min) /  ($max - $min))) 
-						      					)
-										 ).$params['sizetype'];
-		}
-		wfProfileOut(__METHOD__);
-		return $termsToFontSize;
-
-	}
-
 	private function callMediaWikiAPI( Array $params ) {
 		wfProfileIn(__METHOD__);
 

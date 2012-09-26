@@ -19,10 +19,6 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		parent::__construct( $specialPageName, $specialPageName, false );
 	}
 
-	protected function  isCorporateWiki() {
-		return !empty($this->wg->EnableWikiaHomePageExt);
-	}
-
 	public function index() {
 		$this->wg->Out->addHTML( F::build('JSSnippets')->addToStack( array( "/extensions/wikia/Search/js/WikiaSearch.js" ) ) );
 		$this->wg->SuppressRail = true;
@@ -104,6 +100,22 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setVal( 'isMonobook', ($this->wg->User->getSkin() instanceof SkinMonobook) );
 		$this->setVal( 'showSearchAds', $searchConfig->getQuery() ? $this->showSearchAds() : false );
 		$this->setVal( 'isCorporateWiki', $this->isCorporateWiki() );
+	}
+	
+	public function videoSearch()
+	{
+	    $searchConfig = F::build('WikiaSearchConfig');
+	    $searchConfig
+	    ->setCityId	( $this->wg->cityId )
+	    ->setQuery	( $this->getVal('q') )
+	    ;
+	    $this->wikiaSearch->searchVideos($searchConfig);
+	    // up to whoever's using this service as to what they want from here. I'm just going to return JSON.
+	    // if you just want to search for only videos in the traditional video interface, then you should
+	    // be setting 'videoSearch' in the query string of the search index page
+	    $this->getResponse()->setFormat('json');
+	    $this->getResponse()->setData( ($searchConfig->getResults()) ? $searchConfig->getResults()->toNestedArray() : array() );
+	
 	}
 	
 	private function handleArticleMatchTracking( WikiaSearchConfig $searchConfig )
@@ -331,24 +343,6 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->response->setFormat('json');
 	}
 
-	public function getTagCloud() {
-		$params = $this->getTagCloudParams();
-
-		$this->response->setData($this->wikiaSearch->getTagCloud($params));
-		$this->response->setFormat('json');
-	}
-
-	private function getTagCloudParams()
-	{
-		$params = array();
-		$params['maxpages']    = $this->getVal('maxpages', 25);
-		$params['termcount']   = $this->getVal('termcount', 50);
-		$params['maxfontsize'] = $this->getVal('maxfontsize', 56);
-		$params['minfontsize'] = $this->getVal('minfontsize', 10);
-		$params['sizetype']    = $this->getVal('sizetype', 'pt');
-		return $params;
-	}
-
 	//WikiaMobile hook to add assets so they are minified and concatenated
 	public function onWikiaMobileAssetsPackages( &$jsHeadPackages, &$jsBodyPackages, &$scssPackages){
 		if( F::app()->wg->Title->isSpecial('Search') ) {
@@ -359,20 +353,11 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		return true;
 	}
 
-	public function videoSearch()
-	{
-		$searchConfig = F::build('WikiaSearchConfig');
-		$searchConfig
-			->setCityId	( $this->wg->cityId )
-			->setQuery	( $this->getVal('q') )
-		;
-		$this->wikiaSearch->searchVideos($searchConfig);
-		// up to whoever's using this service as to what they want from here. I'm just going to return JSON.
-		// if you just want to search for only videos in the traditional video interface, then you should 
-		// be setting 'videoSearch' in the query string of the search index page
-		$this->getResponse()->setFormat('json');
-		$this->getResponse()->setData( ($searchConfig->getResults()) ? $searchConfig->getResults()->toNestedArray() : array() );
-		
+	
+
+	protected function  isCorporateWiki() {
+	    return !empty($this->wg->EnableWikiaHomePageExt);
 	}
+	
 	
 }
