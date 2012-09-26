@@ -36,8 +36,7 @@ public class WikiArticleEditMode extends WikiArticlePageObject {
 	private WebElement header;
 	@FindBy(css="tr.ImageUploadFindLinks td a")
 	private WebElement addThisPhotoLink;
-	@FindBy(css="div.details input")
-	private WebElement addPhotoButton;
+	
 	@FindBy(css="div.module_content nav.buttons nav.wikia-menu-button a")
 	private WebElement previewButton;
 	@FindBy(css="div.neutral.modalToolbar a[id='publish']")
@@ -60,16 +59,8 @@ public class WikiArticleEditMode extends WikiArticlePageObject {
 	private WebElement galleryDialogSelectButton;
 	@FindBy(css="a[id='WikiaPhotoGalleryEditorSave']")
 	private WebElement galleryDialogFinishButton;
-	@FindBy(css="input[id='VideoEmbedUrl']")
-	private WebElement videoModalInput;
-	@FindBy(css="a[id='VideoEmbedUrlSubmit']")
-	private WebElement videoNextButton;
 	@FindBy(css="input[id='VideoEmbedCaption']")
 	private WebElement videoCaptionTextArea;
-	@FindBy(css="tr.VideoEmbedNoBorder input.wikia-button")
-	private WebElement videoAddVideoButton;
-	@FindBy(css="div[id='VideoEmbed'] input[value='Return to editing']")
-	private WebElement videoReturnToEditing;
 	@FindBy(css="img.video")
 	private WebElement videoInEditMode;
 	@FindBy(css="div.ArticlePreview span.Wikia-video-play-button")
@@ -127,17 +118,7 @@ public class WikiArticleEditMode extends WikiArticlePageObject {
 		
 	}
 
-	/**
-	 * Wait for modal and click on 'add this photo' under the first seen photo
-	 *  
-	 * @author Michal Nowierski
-	 */
-	public void waitForModalAndClickAddThisPhoto() {
-		waitForElementByElement(imageUploadModal);
-		waitForElementClickableByElement(addThisPhotoLink);
-		addThisPhotoLink.click();
-		PageObjectLogging.log("WaitForModalAndClickAddThisPhoto", "Wait for modal and click on 'add this photo' under the first seen photo", true, driver);
-	}
+
 
 	/**
 	 * Type given caption for the photo
@@ -163,17 +144,7 @@ public class WikiArticleEditMode extends WikiArticlePageObject {
 		PageObjectLogging.log("TypeAcaption", "Type any caption for the photo", true, driver);
 	}
 
-	/**
-	 * Left Click on add 'Photo' button.
-	 *  
-	 * @author Michal Nowierski
-	 */
-	public void clickOnAddPhotoButton2() {
-		waitForElementByElement(addPhotoButton);
-		waitForElementClickableByElement(addPhotoButton);
-		addPhotoButton.click();
-		PageObjectLogging.log("ClickOnAddPhotoButton2", "Left Click on add 'Photo' button.", true, driver);	
-	}
+
 
 	/**
 	 * Verify that the photo appears in the visual mode
@@ -598,44 +569,9 @@ public class WikiArticleEditMode extends WikiArticlePageObject {
 		PageObjectLogging.log("VerifyTheObjectOnThePreview", "Verify that the "+Object+" appears in the preview", true, driver);		
 	}
 
-	/**
-	 * Wait for Video modal and type in the video URL 
-	 *  
-	 * @author Michal Nowierski
-	 * 	 */
-	public void waitForVideoModalAndTypeVideoURL(String videoURL) {
-		waitForElementByElement(videoModalInput);
-		waitForElementClickableByElement(videoModalInput);
-		videoModalInput.clear();
-		videoModalInput.sendKeys(videoURL);
-		PageObjectLogging.log("WaitForVideoModalAndTypeVideoURL", "Wait for Video modal and type in the video URL: "+videoURL, true, driver);		
-	}
+	
 
-	/**
-	 * Video Click Next button
-	 *  
-	 * @author Michal Nowierski
-	 * 	 */
-	public void clickVideoNextButton() {
-		waitForElementByElement(videoNextButton);
-		waitForElementClickableByElement(videoNextButton);
-		videoNextButton.click();
-		PageObjectLogging.log("ClickVideoNextButton", "Left Click Next button", true, driver);
-			
-	}
-
-	/**
-	 * Wait For Succes dialog and click on 'return to editing'
-	 *  
-	 * @author Michal Nowierski
-	 * 	 */
-	public void waitForSuccesDialogAndReturnToEditing() {
-		waitForElementByElement(videoReturnToEditing);
-		waitForElementClickableByElement(videoReturnToEditing);
-		videoReturnToEditing.click();
-		PageObjectLogging.log("WaitForSuccesDialogAndReturnToEditing", "Wait For Succes dialog and click on 'return to editing'", true, driver);
-		
-	}
+	
 
 	/**
 	 * Verify that video appears in edit mode
@@ -731,28 +667,7 @@ public class WikiArticleEditMode extends WikiArticlePageObject {
 		
 	}
 
-	/**
-	 * Wait for video dialog
-	 *  
-	 * @author Michal Nowierski
-	 * 	 */
-	public void waitForVideoDialog() {
-		waitForElementByElement(videoAddVideoButton);
-		PageObjectLogging.log("WaitForVideoDialog", "Wait for video dialog", true, driver);
-		
-	}
 
-	/**
-	 * Click 'Add a video'
-	 *  
-	 * @author Michal Nowierski
-	 * 	 */
-	public void clickAddAvideo() {
-		waitForElementClickableByElement(videoAddVideoButton);
-		videoAddVideoButton.click();
-		PageObjectLogging.log("ClickAddAvideo", "Click 'Add a video'", true, driver);
-		
-	}
 
 	/**
 	 * Get text of source mode text of message article page. Remmember that source mode must be turned on to invoke this method. Just invoke 'ClickOnSourceButton'
