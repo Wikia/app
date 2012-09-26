@@ -148,7 +148,7 @@ class WikiaSearch extends WikiaObject {
 					 ->setSimplePrefix				( self::HL_MATCH_PREFIX )
 					 ->setSimplePostfix				( self::HL_MATCH_POSTFIX )
 					 ->setAlternateField			( 'html' )
-					 ->setMaxAlternateFieldLength	( $searchConfig->isMobile() ? 100 : 300 )
+					 ->setMaxAlternateFieldLength	( F::app()->checkSkin( 'wikiamobile' ) ? 100 : 300 )
 		;
 		
 		$queryFieldsString = sprintf('%s^5 %s %s^4', self::field('title'), self::field('html'), self::field('redirect_titles'));
