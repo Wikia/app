@@ -39,6 +39,9 @@ $animationSpeed: 200ms;
 		  	position: fixed;
 			width: 320px;
 			@include transition-shorthand(all $animationSpeed ease-in $animationSpeed);
+	  		iframe {
+				display: block;
+			}
 		}
 		.wikiabar-button {
 			background-color: #303030;
