@@ -200,43 +200,23 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 	public function advancedBox() {
 		$config = $this->getVal('config');
-		$term = $config->getQuery();
-		$namespaces = $config->getNamespaces();
-		$searchableNamespaces = SearchEngine::searchableNamespaces();
-		$advanced = $config->getAdvanced();
-		$redirs = $config->getIncludeRedirects();
 
-		$bareterm = $term;
-		if( $this->termStartsWithImage( $term ) ) {
-			// Deletes prefixes
-			$bareterm = substr( $term, strpos( $term, ':' ) + 1 );
-		}
-
-		$this->setVal( 'term',  $term);
-		$this->setVal( 'bareterm', $bareterm );
-		$this->setVal( 'namespaces', $namespaces );
-		$this->setVal( 'searchableNamespaces', $searchableNamespaces );
-		$this->setVal( 'redirs', $redirs );
-		$this->setVal( 'advanced', $advanced);
+		$this->setVal( 'term',  $config->getQuery() );
+		$this->setVal( 'bareterm', $config->getQuery() ); // query is stored as bareterm in config
+		$this->setVal( 'namespaces', $config->getNamespaces() );
+		$this->setVal( 'searchableNamespaces', SearchEngine::searchableNamespaces() );
+		$this->setVal( 'redirs', $config->getIncludeRedirects() );
+		$this->setVal( 'advanced', $config->getAdvanced() );
 	}
 
 	public function tabs() {
 		$config = $this->getVal('config');
 		$activeTab = $this->getVal( 'activeTab' );
-		
-		$term = $config->getQuery();
 		$namespaces = $config->getNamespaces();
-		$redirs = $config->getIncludeRedirects();
 
-		$bareterm = $term;
-		if( $this->termStartsWithImage( $term ) ) {
-			// Deletes prefixes
-			$bareterm = substr( $term, strpos( $term, ':' ) + 1 );
-		}
-
-		$this->setVal( 'bareterm', $bareterm );
-		$this->setVal( 'searchProfiles', $this->getSearchProfiles($namespaces));
-		$this->setVal( 'redirs', $redirs );
+		$this->setVal( 'bareterm', $config->getQuery() );
+		$this->setVal( 'searchProfiles', $config->getSearchProfiles() );
+		$this->setVal( 'redirs', $config->getIncludeRedirects() );
 		$this->setVal( 'activeTab', $activeTab );
 	}
 
@@ -264,17 +244,6 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setVal( 'tooltip', $tooltip );
 	}
 
-	/*
-	 * Check if query starts with image: prefix
-	 * @return bool
-	 */
-	protected function termStartsWithImage( $term ) {
-		$p = explode( ':', $term );
-		if( count( $p ) > 1 ) {
-			return $this->wg->ContLang->getNsIndex( $p[0] ) == NS_FILE;
-		}
-		return false;
-	}
 
 	protected function getSearchProfiles($namespaces) {
 		// Builds list of Search Types (profiles)
