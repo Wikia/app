@@ -19,6 +19,7 @@ $animationSpeed: 200ms;
 	@include transition-shorthand(all $animationSpeed ease-in $animationSpeed);
 	&.hidden {
 		bottom: -25px;
+		z-index: -1;
 		@include transition-shorthand(all $animationSpeed ease-in);
 		.ad {
 			opacity: 0;
