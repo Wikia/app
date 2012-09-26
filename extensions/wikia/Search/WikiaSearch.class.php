@@ -439,8 +439,8 @@ class WikiaSearch extends WikiaObject {
 		$params['size'] = 0;
 
 		$memkey = $this->wf->SharedMemcKey( 'WikiaInterestingTerms', md5($query.serialize($params)) );
-		
-		if ($interestingTerms = $this->wg->Memc->get($memkey)) {
+		$interestingTerms = $this->wg->Memc->get($memkey);
+		if ( !empty( $interestingTerms ) ) {
 		  return $interestingTerms;
 		}
 
