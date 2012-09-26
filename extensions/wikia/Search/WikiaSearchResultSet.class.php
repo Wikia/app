@@ -331,4 +331,21 @@ class WikiaSearchResultSet implements Iterator,ArrayAccess {
 	public function getId() {
 		return $this->host;
 	}
+	
+	/*
+	 * Done to return results in json format
+	 * Can be removed after upgrade to 5.4 and specify serialized Json data on WikiaSearchResult
+	 * http://php.net/manual/en/jsonserializable.jsonserialize.php
+	 * 
+	 * @return array
+	 */
+	public function toNestedArray() {
+		$tempResults = array();
+		foreach( $this as $result ){
+		    if($result instanceof WikiaSearchResult){
+		        $tempResults[] = $result->toArray(array('title', 'url'));
+		    }
+		}
+		return $tempResults;
+	}
 }

@@ -1,4 +1,4 @@
-what<?php
+<?php
 class WikiaSearchController extends WikiaSpecialPageController {
 
 
@@ -27,175 +27,155 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->wg->Out->addHTML( F::build('JSSnippets')->addToStack( array( "/extensions/wikia/Search/js/WikiaSearch.js" ) ) );
 		$this->wg->SuppressRail = true;
 
-		$skin = $this->wg->User->getSkin();
-		$showSearchAds = false;
-		if (!empty($this->wg->EnableWikiaSearchAds)) {
-			if (!empty($this->wg->NoExternals)) {
-				// don't show ads in search
-			} elseif (is_object($this->wg->User) && $this->wg->User->isLoggedIn() && !($this->wg->User->getOption('showAds') || !empty($_GET['showads']))) {
-				// don't show ads in search
-			} elseif ((! $skin instanceof SkinMonoBook) && (! $skin instanceof SkinVector)) {
-				$this->app->registerHook('MakeGlobalVariablesScript', 'WikiaSearchAdsController', 'onMakeGlobalVariablesScript');
-				$this->response->addAsset('extensions/wikia/Search/js/WikiaSearchAds.js');
-				$showSearchAds = true;
-			}
-		}
-
-		if ( $skin instanceof SkinMonoBook ) {
-			$this->response->addAsset('extensions/wikia/Search/monobook/monobook.scss');
-		}
-		if ( get_class($this->wg->User->getSkin()) == 'SkinOasis' ) {
-			$this->response->addAsset('extensions/wikia/Search/css/WikiaSearch.scss');
-		}
+		$this->handleSkinSettings();
 
 		$searchConfig = F::build('WikiaSearchConfig');
 		
-		$query = $this->getVal('query', $this->getVal('search'));
-		$query = htmlentities( Sanitizer::StripAllTags ( $query ), ENT_COMPAT, 'UTF-8' );
-		$searchConfig->setQuery( $query );
-		
-		$limit = $this->getVal('limit', self::RESULTS_PER_PAGE);
-		$page = $this->getVal('page', 1);
-		$rank = $this->getVal('rank', 'default');
-		$debug = $this->request->getBool('debug', false);
-		$crossWikia = $this->request->getBool('crossWikia', false);
-		$skipCache = $this->request->getBool('skipCache', false);
-		$advanced = $this->getVal( 'advanced', false );
-		$hub = ($this->getVal('nohub') != '1') ? $this->getVal('hub', false) : false;
-		$redirs = !empty($advanced) ? $this->request->getBool('redirs', false) : false;
+		$searchConfig
+			->setQuery			( htmlentities( Sanitizer::StripAllTags ( $this->getVal('query', $this->getVal('search')) ), ENT_COMPAT, 'UTF-8') )
+			->setLimit			( $this->getVal('limit', self::RESULTS_PER_PAGE) )
+			->setPage			( $this->getVal('page', 1) )
+			->setRank			( $this->getVal('rank', 'default') )
+			->setDebug			( $this->request->getBool('debug', false) )
+			->setSkipCache		( $this->request->getBool('skipCache', false) )
+			->setAdvanced		( $this->request->getBool( 'advanced', false ) )
+			->setHub			( ($this->getVal('nohub') != '1') ? $this->getVal('hub', false) : false )
+			->setRedirs			( $searchConfig->getAdvanced() ? $this->request->getBool('redirs', false) : false )
+			->setIsInterWiki	( $this->request->getBool('crossWikia', false) || $this->isCorporateWiki() )
+			->setVideoSearch	( $this->getVal('videoSearch', false) )
+			->setGroupResults	( $searchConfig->isInterWiki() || $this->getVal('grouped', false) )
+		 ;
 
-		$searchableNamespaces = SearchEngine::searchableNamespaces();
-		$namespaces = array();
-		foreach($searchableNamespaces as $i => $name) {
-			if ( $this->getVal('ns'.$i, false) ) {
-				$namespaces[] = $i;
-			}
-		}
-		if (empty($namespaces) && $this->wg->User->getOption('searchAllNamespaces')) {
-			$namespaces = array_keys($searchableNamespaces);
-		}
-
-		//  Check for crossWikia value set in url.  Otherwise, check if we're on the corporate wiki
-		$isInterWiki = $crossWikia ? true : $this->isCorporateWiki();
+		$this->setNamespacesFromRequest( $searchConfig );
 
 		if($this->isCorporateWiki()) {
 			OasisController::addBodyClass('inter-wiki-search');
 		}
 
-		$results = false;
-		$resultsFound = 0;
-		$paginationLinks = '';
-		if( !empty( $query ) ) {
+		if( $searchConfig->getQuery() ) {
 			$articleMatch = null;
-			if ( $page == 1 ) {
-				$articleMatch = $this->wikiaSearch->getArticleMatch($searchConfig);
-				
-				if (!empty($articleMatch) && $this->getVal('fulltext', '0') === '0') {
-	
-					$article = isset($articleMatch['redirect']) ? $articleMatch['redirect'] : $articleMatch['article'];
-					$title = $article->getTitle();
-	
-					wfRunHooks( 'SpecialSearchIsgomatch', array( &$title, $query ) );
-	
-					Track::event( 'search_start_gomatch', array( 'sterm' => $query, 'rver' => 0 ) );
-					$this->response->redirect( $title->getFullURL() );
-				}
-				elseif(!empty($articleMatch)) {
-					Track::event( 'search_start_match', array( 'sterm' => $query, 'rver' => 0 ) );
-				} else {
-					$title = Title::newFromText( $query );
-					if ( !is_null( $title ) ) {
-						wfRunHooks( 'SpecialSearchNogomatch', array( &$title ) );
-					}
-				}
+			if ( $searchConfig->getPage() == 1 ) {
+				$this->wikiaSearch->getArticleMatch( $searchConfig );
+
+				$this->handleArticleMatchTracking( $searchConfig );
 			}
 
-			$isGrouped = $isInterWiki || $this->getVal('grouped', false);
+			$this->wikiaSearch->doSearch( $searchConfig );
 
-			$searchConfig->setLength			( $limit )
-						 ->setPage				( $page )
-						 ->setRank				( $rank )
-						 ->setCityId			( $isInterWiki ? 0 : $this->wg->CityId )
-						 ->setGroupResults		( $isGrouped )
-						 ->setHub				( $hub )
-						 ->setVideoSearch		( $this->getVal('videoSearch', false) )
-						 ->setSkipCache			( $skipCache )
-						 ->setIncludeRedirects	( $redirs )
-						 ->setNamespaces		( $namespaces )
-						 ->setArticleMatch		( $articleMatch )
-						 ->setDebug				( $debug )
-						 ->setAdvanced			( $advanced )
-						 ->setIsInterWiki		( $isInterWiki )
-			;
-
-			$results = $this->wikiaSearch->doSearch( $query, $searchConfig );
-
-			$resultsFound = $results->getResultsFound();
-			$searchConfig->setResultsFound($resultsFound);
-
-			if(!empty($resultsFound)) {
-				$paginationParams = array('config' => $searchConfig);
-				$paginationLinks = $this->sendSelfRequest( 	'pagination',  $paginationParams);
-			}
-
-			$this->app->wg->Out->setPageTitle( $this->wf->msg( 'wikiasearch2-page-title-with-query', array(ucwords($query), $this->wg->Sitename) )  );
+			$this->app->wg->Out->setPageTitle( $this->wf->msg( 'wikiasearch2-page-title-with-query', 
+												array(ucwords($searchConfig->getQuery()), $this->wg->Sitename) )  );
 		} else {
-			if($isInterWiki) {
+			if( $searchConfig->getIsInterWiki() ) {
 				$this->app->wg->Out->setPageTitle( $this->wf->msg( 'wikiasearch2-page-title-no-query-interwiki' ) );
 			} else {
-				$this->app->wg->Out->setPageTitle( $this->wf->msg( 'wikiasearch2-page-title-no-query-intrawiki', array($this->wg->Sitename) )  );
+				$this->app->wg->Out->setPageTitle( $this->wf->msg( 'wikiasearch2-page-title-no-query-intrawiki', 
+													array($this->wg->Sitename) )  );
 			}
 		}
 
-		$activeTab = $this->getActiveTab( $namespaces );
-
-		if(!$isInterWiki) {
-			$advancedParams = array( 'config' => $searchConfig );
-			$advancedSearchBox = $this->sendSelfRequest( 'advancedBox', $advancedParams );
-			$this->setval( 'advancedSearchBox', $advancedSearchBox );
+		if(! $searchConfig->getIsInterWiki() ) {
+			$this->setVal( 'advancedSearchBox', $this->sendSelfRequest( 'advancedBox', array( 'config' => $searchConfig ) ) );
 		}
 
-        if ( $this->app->checkSkin( 'wikiamobile' ) ) {
-            $this->overrideTemplate( 'WikiaMobileIndex' );
-        }
-
-		/*
-		 * Done to return results in json format
-		 * Can be removed after upgrade to 5.4 and specify serialized Json data on WikiaSearchResult
-		 * http://php.net/manual/en/jsonserializable.jsonserialize.php
-		*/
 		$format = $this->response->getFormat();
-		if( ($format == 'json' || $format == 'jsonp') && count( $results ) ){
-			$tempResults = array();
-			foreach( $results as $result ){
-				if($result instanceof WikiaSearchResult){
-					$tempResults[] = $result->toArray(array('title', 'url'));
-				}
-			}
-			$results = $tempResults;
+		if( ($format == 'json' || $format == 'jsonp') && ($searchConfig->getResultsFound() > 0) ){
+			$searchConfig->setResults( $searchConfig->getResults()->toNestedArray() );
 		}
 
-		$this->setVal( 'results', $results );
-		$this->setVal( 'resultsFound', $resultsFound );
+		$this->setVal( 'results', $searchConfig->getResults() );
+		$this->setVal( 'resultsFound', $searchConfig->getResultsFound() );
 		$this->setVal( 'resultsFoundTruncated', $this->wg->Lang->formatNum( $searchConfig->getTruncatedResultsNum() ) );
-		$this->setVal( 'isOneResultsPageOnly', ( $resultsFound <= $limit ) );
-		$this->setVal( 'pagesCount', ceil($resultsFound/$limit) );
-		$this->setVal( 'currentPage',  $page );
-		$this->setVal( 'paginationLinks', $paginationLinks );
-		$this->setVal( 'tabs', $this->sendSelfRequest( 'tabs', array( 'config' => $searchConfig, 'activeTab' => $activeTab) ) );
-		$this->setVal( 'query', $query );
-		$this->setVal( 'resultsPerPage', $this->getVal('limit', $limit) );
+		$this->setVal( 'isOneResultsPageOnly', $searchConfig->getNumPages() < 2 );
+		$this->setVal( 'pagesCount', $searchConfig->getNumPages() );
+		$this->setVal( 'currentPage',  $searchConfig->getPage() );
+		// @todo handle showing something or nothing in the controller action -- not sure how to de-register a template
+		$this->setVal( 'paginationLinks', $this->sendSelfRequest( 'pagination',  array('config' => $searchConfig) ) ); 
+		$this->setVal( 'tabs', $this->sendSelfRequest( 'tabs', array( 'config' => $searchConfig ) ) );
+		$this->setVal( 'query', $searchConfig->getQuery() );
+		$this->setVal( 'resultsPerPage', $searchConfig->getLimit() );
 		$this->setVal( 'pageUrl', $this->wg->Title->getFullUrl() );
-		$this->setVal( 'debug', $debug );
+		$this->setVal( 'debug', $searchConfig->getDebug() );
 		$this->setVal( 'solrHost', $this->wg->SolrHost);
-		$this->setVal( 'isInterWiki', $isInterWiki );
+		$this->setVal( 'isInterWiki', $searchConfig->getIsInterWiki() );
 		$this->setVal( 'relevancyFunctionId', WikiaSearch::RELEVANCY_FUNCTION_ID );
-		$this->setVal( 'namespaces', $namespaces );
-		$this->setVal( 'hub', $hub );
+		$this->setVal( 'namespaces', $searchConfig->getNamespaces() );
+		$this->setVal( 'hub', $searchConfig->getHub() );
 		$this->setVal( 'hasArticleMatch', $searchConfig->hasArticleMatch() );
 		$this->setVal( 'isMonobook', ($this->wg->User->getSkin() instanceof SkinMonobook) );
-		$this->setVal( 'showSearchAds', $query ? $showSearchAds : false );
+		$this->setVal( 'showSearchAds', $searchConfig->getQuery() ? $this->showSearchAds() : false );
 		$this->setVal( 'isCorporateWiki', $this->isCorporateWiki() );
+	}
+	
+	private function handleArticleMatchTracking( WikiaSearchConfig $searchConfig )
+	{
+		$articleMatch = $searchConfig->getArticleMatch();
+		if ( !empty($articleMatch) && $this->getVal('fulltext', '0') === '0') {
+		
+		    $article = isset($articleMatch['redirect']) ? $articleMatch['redirect'] : $articleMatch['article'];
+		    $title = $article->getTitle();
+		
+		    wfRunHooks( 'SpecialSearchIsgomatch', array( &$title, $searchConfig->getOriginalQuery() ) );
+		
+		    Track::event( 'search_start_gomatch', array( 'sterm' => $searchConfig->getOriginalQuery(), 'rver' => 0 ) );
+		    $this->response->redirect( $title->getFullURL() );
+		}
+		elseif(!empty($articleMatch)) {
+		    Track::event( 'search_start_match', array( 'sterm' => $searchConfig->getOriginalQuery(), 'rver' => 0 ) );
+		} else {
+		    $title = Title::newFromText( $searchConfig->getOriginalQuery() );
+		    if ( !is_null( $title ) ) {
+		        wfRunHooks( 'SpecialSearchNogomatch', array( &$title ) );
+		    }
+		}
+	}
+	
+	private function setNamespacesFromRequest( WikiaSearchConfig $searchConfig )
+	{
+		$searchableNamespaces = SearchEngine::searchableNamespaces();
+		$namespaces = array();
+		foreach($searchableNamespaces as $i => $name) {
+		    if ( $this->getVal('ns'.$i, false) ) {
+		        $namespaces[] = $i;
+		    }
+		}
+		if (empty($namespaces) && $this->wg->User->getOption('searchAllNamespaces')) {
+		    $namespaces = array_keys($searchableNamespaces);
+		}
+		
+		$searchConfig->setNamespaces( $namespaces );
+	}
+	
+	private function handleSkinSettings()
+	{
+		$skin = $this->wg->User->getSkin();
+		
+		if ( $skin instanceof SkinMonoBook ) {
+		    $this->response->addAsset('extensions/wikia/Search/monobook/monobook.scss');
+		}
+		if ( get_class($this->wg->User->getSkin()) == 'SkinOasis' ) {
+		    $this->response->addAsset('extensions/wikia/Search/css/WikiaSearch.scss');
+		}
+		if ( $this->app->checkSkin( 'wikiamobile' ) ) {
+		    $this->overrideTemplate( 'WikiaMobileIndex' );
+		}
+	}
+	
+	private function showSearchAds()
+	{
+		$skin = $this->wg->User->getSkin();
+		
+		if (!empty($this->wg->EnableWikiaSearchAds)) {
+		    if (!empty($this->wg->NoExternals)) {
+		        // don't show ads in search
+		    } elseif (is_object($this->wg->User) && $this->wg->User->isLoggedIn() && !($this->wg->User->getOption('showAds') || !empty($_GET['showads']))) {
+		        // don't show ads in search
+		    } elseif ((! $skin instanceof SkinMonoBook) && (! $skin instanceof SkinVector)) {
+		        $this->app->registerHook('MakeGlobalVariablesScript', 'WikiaSearchAdsController', 'onMakeGlobalVariablesScript');
+		        $this->response->addAsset('extensions/wikia/Search/js/WikiaSearchAds.js');
+		        return true;
+		    }
+		}
+		return false;
 	}
 
 	public function advancedBox() {
@@ -211,13 +191,11 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 	public function tabs() {
 		$config = $this->getVal('config');
-		$activeTab = $this->getVal( 'activeTab' );
-		$namespaces = $config->getNamespaces();
 
 		$this->setVal( 'bareterm', $config->getQuery() );
 		$this->setVal( 'searchProfiles', $config->getSearchProfiles() );
 		$this->setVal( 'redirs', $config->getIncludeRedirects() );
-		$this->setVal( 'activeTab', $activeTab );
+		$this->setVal( 'activeTab', $config->getActiveTab() );
 	}
 
 	public function advancedTabLink() {
@@ -245,111 +223,36 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	}
 
 
-	protected function getSearchProfiles($namespaces) {
-		// Builds list of Search Types (profiles)
-		$nsAllSet = array_keys( SearchEngine::searchableNamespaces() );
-		$profiles = array(
-			'default' => array(
-				'message' => 'wikiasearch2-tabs-articles',
-				'tooltip' => 'searchprofile-articles-tooltip',
-				'namespaces' => SearchEngine::defaultNamespaces(),
-				'namespace-messages' => SearchEngine::namespacesAsText(
-					SearchEngine::defaultNamespaces()
-				),
-			),
-			'images' => array(
-				'message' => 'wikiasearch2-tabs-photos-and-videos',
-				'tooltip' => 'searchprofile-images-tooltip',
-				'namespaces' => array( NS_FILE ),
-			),
-			'users' => array(
-				'message' => 'wikiasearch2-users',
-				'tooltip' => 'wikiasearch2-users-tooltip',
-				'namespaces' => array( NS_USER )
-			),
-			'all' => array(
-				'message' => 'searchprofile-everything',
-				'tooltip' => 'searchprofile-everything-tooltip',
-				'namespaces' => $nsAllSet,
-			),
-			'advanced' => array(
-				'message' => 'searchprofile-advanced',
-				'tooltip' => 'searchprofile-advanced-tooltip',
-				'namespaces' => $namespaces,
-				'parameters' => array( 'advanced' => 1 ),
-			)
-		);
-
-		$this->wf->RunHooks( 'SpecialSearchProfiles', array( &$profiles ) );
-
-		foreach( $profiles as $key => &$data ) {
-			sort($data['namespaces']);
-		}
-
-		return $profiles;
-	}
-
-	protected function getActiveTab( $namespaces ) {
-		if($this->request->getVal('advanced')) {
-			return 'advanced';
-		}
-
-		$searchableNamespaces = array_keys( SearchEngine::searchableNamespaces() );
-		$nsVals = array();
-
-		foreach($searchableNamespaces as $ns) {
-			if ($val = $this->request->getVal('ns'.$ns)) {
-				$nsVals[] = $ns;
-			}
-		}
-
-		if(empty($nsVals)) {
-			return $this->wg->User->getOption('searchAllNamespaces') ? 'all' :  'default';
-		}
-
-		foreach( $this->getSearchProfiles( $namespaces ) as $name => $profile ) {
-			if ( !count( array_diff( $nsVals, $profile['namespaces'] ) ) && !count( array_diff($profile['namespaces'], $nsVals ) )) {
-				return $name;
-			}
-		}
-
-		return 'advanced';
-	}
-
-
 	public function pagination() {
 		$config = $this->getVal('config');
+		if (! $config->getResultsFound() ) {
+			return false;
+		}
 		
-		$query = $config->getQuery();
 		$page = $config->getPage();
-		$resultsCount = $config->getResultsFound();
-		$limit = $config->getLimit();
-		$pagesNum = ceil( $resultsCount / $limit );
-
-		$crossWikia = $config->getIsInterwiki();
-		$debug = $config->getDebug();
-		$skipCache = $config->getSkipCache();
-		$namespaces = $config->getNamespaces();
-		$advanced = $config->getAdvanced();
-		$redirs = $config->getIncludeRedirects();
 		
-		$windowFirstPage = ( ( ( $page - self::PAGES_PER_WINDOW ) > 0 ) ? ( $page - self::PAGES_PER_WINDOW ) : 1 );
-		$windowLastPage = ( ( ( $page + self::PAGES_PER_WINDOW ) < $pagesNum ) ? ( $page + self::PAGES_PER_WINDOW ) : $pagesNum ) ;
+		$windowFirstPage = ( ( $page - self::PAGES_PER_WINDOW ) > 0 ) 
+						? ( $page - self::PAGES_PER_WINDOW ) 
+						: 1;
+		
+		$windowLastPage = ( ( ( $page + self::PAGES_PER_WINDOW ) < $config->getNumPages() ) 
+						? ( $page + self::PAGES_PER_WINDOW )
+						: $config->getNumPages() ) ;
 
-		$this->setVal( 'query', $query );
-		$this->setVal( 'pagesNum', $pagesNum );
-		$this->setVal( 'currentPage', $page );
-		$this->setVal( 'windowFirstPage', $windowFirstPage );
-		$this->setVal( 'windowLastPage', $windowLastPage );
-		$this->setVal( 'pageTitle', $this->wg->Title );
-		$this->setVal( 'crossWikia', $crossWikia );
-		$this->setVal( 'resultsCount', $resultsCount );
-		$this->setVal( 'skipCache', $skipCache );
-		$this->setVal( 'debug', $debug );
-		$this->setVal( 'namespaces', $namespaces );
-		$this->setVal( 'advanced', $advanced );
-		$this->setVal( 'redirs', $redirs );
-		$this->setVal( 'limit', $limit );
+		$this->setVal( 'query', 			$config->getQuery() );
+		$this->setVal( 'pagesNum', 			$config->getNumPages() );
+		$this->setVal( 'currentPage', 		$page );
+		$this->setVal( 'windowFirstPage', 	$windowFirstPage );
+		$this->setVal( 'windowLastPage', 	$windowLastPage );
+		$this->setVal( 'pageTitle', 		$this->wg->Title );
+		$this->setVal( 'crossWikia', 		$this->getIsInterWiki() );
+		$this->setVal( 'resultsCount', 		$config->getResultsFound() );
+		$this->setVal( 'skipCache', 		$config->getSkipCache() );
+		$this->setVal( 'debug', 			$config->getDebug() );
+		$this->setVal( 'namespaces', 		$config->getNamespaces() );
+		$this->setVal( 'advanced', 			$config->getAdvanced() );
+		$this->setVal( 'redirs', 			$config->getIncludeRedirects() );
+		$this->setVal( 'limit', 			$config->getLimit() );
 	}
 
 	public function getPage() {
@@ -458,26 +361,17 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 	public function videoSearch()
 	{
-		$query = $this->getVal('q');
-
 		$searchConfig = F::build('WikiaSearchConfig');
 		$searchConfig
-			->setCityId	($this->wg->cityId)
-			->setQuery	($query)
+			->setCityId	( $this->wg->cityId )
+			->setQuery	( $this->getVal('q') )
 		;
-		
-
-		$results = $this->wikiaSearch->searchVideos($query, $searchConfig);
-		
+		$this->wikiaSearch->searchVideos($searchConfig);
 		// up to whoever's using this service as to what they want from here. I'm just going to return JSON.
 		// if you just want to search for only videos in the traditional video interface, then you should 
 		// be setting 'videoSearch' in the query string of the search index page
-		$processedResultArray = array();
-		foreach ($results as $result) {
-			$processedResultArray[] = (array) $result;
-		}
 		$this->getResponse()->setFormat('json');
-		$this->getResponse()->setData( $processedResultArray );
+		$this->getResponse()->setData( ($searchConfig->getResults()) ? $searchConfig->getResults()->toNestedArray() : array() );
 		
 	}
 	
