@@ -431,6 +431,8 @@ class WallHooksHelper {
 			if(!empty($personalUrls['mytalk']['class'])){
 				unset($personalUrls['mytalk']['class']);
 			}
+			
+			$personalUrls['mytalk']['class'] = 'message-wall-item';
 
 			if($app->wg->User->getSkin()->getSkinName() == 'monobook') {
 				$personalUrls['wall-notifications'] = array(
