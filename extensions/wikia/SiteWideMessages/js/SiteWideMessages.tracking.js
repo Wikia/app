@@ -10,7 +10,7 @@ jQuery( document ).ready( function ( $ ) {
 		firstMsgId,
 		impTrackObj;
 	if ( $firstNotification.length ) {
-		firstMsgId = parseInt( $firstNotification.attr( 'id' ).substr( 4 ) )
+		firstMsgId = parseInt( $firstNotification.attr( 'id' ).substr( 4 ) );
 		impTrackObj= {
 			ga_category: 'sitewidemessages',
 			ga_action: WikiaTracker.ACTIONS.IMPRESSION,
