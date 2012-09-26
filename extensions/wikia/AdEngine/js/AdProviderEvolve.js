@@ -91,7 +91,7 @@ var AdProviderEvolve = function (ScriptWriter, WikiaTracker, log, window, docume
 		log(slotname, 5, 'AdProviderEvolve');
 
 		slotname = sanitizeSlotname(slotname);
-		var size = (slotMap[slotname].size || '0x0').replace(/,.*/, '');
+		var size = (slotMap[slotname].size || '1x1').replace(/,.*/, '');
 		log([slotname, size], 7, 'AdProviderEvolve');
 
 		var time = new Date().getTime() - slotTimer2[slotname];
