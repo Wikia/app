@@ -91,14 +91,14 @@ var AdProviderEvolve = function (ScriptWriter, WikiaTracker, log, window, docume
 		log(slotname, 5, 'AdProviderEvolve');
 
 		slotname = sanitizeSlotname(slotname);
-		var size = slotMap[slotname].size || '0x0';
+		var size = (slotMap[slotname].size || '0x0').replace(/,.*/, '');
 		log([slotname, size], 7, 'AdProviderEvolve');
 
 		var time = new Date().getTime() - slotTimer2[slotname];
 		log('slotTimer2 end for ' + slotname + ' after ' + time + ' ms', 7, 'AdProviderEvolve');
 		WikiaTracker.trackAdEvent('liftium.hop2', {'ga_category':'hop2/evolve', 'ga_action':'slot ' + slotname, 'ga_label':formatTrackTime(time, 5)}, 'ga');
 
-		window.adslots2.push([slotname, null, 'Liftium2', null]);
+		window.adslots2.push([slotname, size, 'Liftium2', null]);
 	}
 
 	function sanitizeSlotname(slotname) {
