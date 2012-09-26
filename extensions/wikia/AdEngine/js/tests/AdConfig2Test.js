@@ -179,6 +179,7 @@ test('getProvider use GamePro if provider says so', function() {
 	equal(adConfig.getProvider(['foo']), adProviderGameProMock, 'adProviderGameProMock');
 });
 
+/*
 test('getProvider GamePro wins over Evolve', function() {
 	var adProviderGameProMockRejecting = {name: 'GameProMock', canHandleSlot: function() {return false;}}
 		, adProviderGameProMock = {name: 'GameProMock', canHandleSlot: function() {return true;}}
@@ -217,3 +218,4 @@ test('getProvider GamePro wins over Evolve', function() {
 	);
 	equal(adConfig.getProvider(['foo']), adProviderGameProMock, 'adProviderGameProMock');
 });
+*/
