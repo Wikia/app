@@ -124,7 +124,7 @@ class WikiaSearchResult extends Solarium_Document_ReadWrite
 	private function fixSnippeting($text, $addEllipses=false) {
 		$text = preg_replace('/^(span class="searchmatch">)/', '<$1', 
 							preg_replace("/^[[:punct:]] ?/", '',
-							preg_replace("/(<\/span>)('s)/i", '$2$1',
+							preg_replace("/(<\\/span>)('s)/i", '$2$1',
 							preg_replace('/ +$/', '',
 							preg_replace('/ ?\.{1,3}$/', '', 
 							preg_replace('/ ?&hellip;$/', '',
@@ -147,8 +147,10 @@ class WikiaSearchResult extends Solarium_Document_ReadWrite
 
 	public function getThumbnail() {
 		if ((!isset($this->thumbnail)) && ($this->getVar('ns') == NS_FILE)) {
-			if ($img = wfFindFile($this->getTitleObject())) {
-				if ($thumb = $img->transform( array( 'width' => 120, 'height' => 120 ) )) {
+			$img = wfFindFile( $this->getTitleObject() );
+			if (! empty( $img ) ) {
+				$thumb = $img->transform( array( 'width' => 120, 'height' => 120 ) );
+				if (! empty( $thumb ) ) {
 					$this->thumbnail = $thumb;
 				}
 	    	}
