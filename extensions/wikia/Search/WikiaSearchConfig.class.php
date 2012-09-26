@@ -3,7 +3,8 @@
 /**
  * A config class intended to handle variable flags for search
  * Intended to be a dependency-injected receptacle for different search requirements
- * @author relwell
+ * 
+ * @author Robert Elwell
  *
  */
 

@@ -16,19 +16,20 @@ Solarium_Autoloader::register();
 /**
  * classes
  */
-$app->registerClass('WikiaSearch', $dir . 'WikiaSearch.class.php');
-$app->registerClass('WikiaSearchConfig', $dir . 'WikiaSearchConfig.class.php');
-$app->registerClass('WikiaSearchController', $dir . 'WikiaSearchController.class.php');
-$app->registerClass('WikiaSearchResult', $dir . 'WikiaSearchResult.class.php');
-$app->registerClass('WikiaSearchResultSet', $dir . 'WikiaSearchResultSet.class.php');
-$app->registerClass('WikiaSearchAdsController', $dir . 'WikiaSearchAdsController.class.php');
-$app->registerClass('WikiaSearchAjaxController', $dir . 'WikiaSearchAjaxController.class.php');
+$app->registerClass('WikiaSearch', 					$dir . 'WikiaSearch.class.php');
+$app->registerClass('WikiaSearchIndexer', 			$dir . 'WikiaSearchIndexer.class.php');
+$app->registerClass('WikiaSearchConfig', 			$dir . 'WikiaSearchConfig.class.php');
+$app->registerClass('WikiaSearchController', 		$dir . 'WikiaSearchController.class.php');
+$app->registerClass('WikiaSearchResult', 			$dir . 'WikiaSearchResult.class.php');
+$app->registerClass('WikiaSearchResultSet', 		$dir . 'WikiaSearchResultSet.class.php');
+$app->registerClass('WikiaSearchAdsController', 	$dir . 'WikiaSearchAdsController.class.php');
+$app->registerClass('WikiaSearchAjaxController',	$dir . 'WikiaSearchAjaxController.class.php');
 
 /**
  * special pages
  */
-$app->registerSpecialPage('WikiaSearch', 'WikiaSearchController');
-$app->registerSpecialPage('Search', 'WikiaSearchController');
+$app->registerSpecialPage('WikiaSearch',	'WikiaSearchController');
+$app->registerSpecialPage('Search',			'WikiaSearchController');
 
 global $wgSolrProxy, $wgSolrHost, $wgWikiaSearchUseProxy;
 
@@ -74,8 +75,8 @@ $app->registerHook('GetPreferences', 'WikiaSearch', 'onGetPreferences');
 $app->registerHook('WikiaMobileAssetsPackages', 'WikiaSearchController', 'onWikiaMobileAssetsPackages');
 
 $wgExtensionCredits['other'][] = array(
-	'name'        => 'Wikia Search',
-	'version'     => '3.0',
-	'author'      => '[http://www.wikia.com/wiki/User:Adi3ek Adrian \'ADi\' Wieczorek], [http://wikia.com/wiki/User:Relwell Robert Elwell]',
-	'descriptionmsg' => 'wikia-search-desc',
+	'name'				=> 'Wikia Search',
+	'version'			=> '3.0',
+	'author'			=> '[http://www.wikia.com/wiki/User:Adi3ek Adrian \'ADi\' Wieczorek], [http://wikia.com/wiki/User:Relwell Robert Elwell]',
+	'descriptionmsg'	=> 'wikia-search-desc',
 );
