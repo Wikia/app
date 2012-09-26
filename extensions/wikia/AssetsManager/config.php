@@ -11,6 +11,7 @@ $config['oasis_shared_core_js'] = array(
 
 		// The following should go to adengine2_js group later
 		'//extensions/wikia/AdEngine/ghost/gw-11.6.7/lib/gw.min.js',
+		'//extensions/wikia/AdEngine/js/gw.config.js',
 	),
 );
 

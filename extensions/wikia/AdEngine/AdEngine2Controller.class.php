@@ -17,13 +17,13 @@ class AdEngine2Controller extends WikiaController {
 	public function onWikiaSkinTopScripts(&$vars) {
 		wfProfileIn(__METHOD__);
 
+		$wg = $this->app->wg;
+
 		$vars['adslots2'] = array();
+		$vars['wgLoadAdsInHead'] = $wg->LoadAdsInHead;
 
 		// TODO remove? dev only?
-		global $wgHighValueCountries2;
-		if ($wgHighValueCountries2) {
-			$vars['wgHighValueCountries2'] = $wgHighValueCountries2;
-		}
+		$vars['wgHighValueCountries2'] = $wg->HighValueCountries2;
 
 		wfProfileOut(__METHOD__);
 
