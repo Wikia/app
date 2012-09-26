@@ -29,7 +29,11 @@ $(function(){
 		} else if(el.closest('.topNav').length > 0) {
 			track(category, WikiaTracker.ACTIONS.CLICK, 'hub-item');
 		} else if(el.data('id') == 'mytalk') {
-			track(category, WikiaTracker.ACTIONS.CLICK, 'user-menu-message-wall');
+			if(el.hasClass('message-wall-item')) {
+				track(category, WikiaTracker.ACTIONS.CLICK, 'user-menu-message-wall');
+			} else {
+				track(category, WikiaTracker.ACTIONS.CLICK, 'user-menu-talk');
+			}
 		} else if(el.attr('accesskey') == '.') {
 			track(category, WikiaTracker.ACTIONS.CLICK, 'user-menu-profile');
 		} else if(el.closest('.notifications-for-wiki').length > 0) {
@@ -41,7 +45,7 @@ $(function(){
 		}
 	});
 	
-	$('#WikiHeader.WikiHeaderRestyle').on('click', 'a', function(e) {
+	$('#WikiHeader').on('click', 'a', function(e) {
 		var el = $(e.target);
 
 		if(el.length === 0) {
@@ -50,7 +54,7 @@ $(function(){
 		
 		var category = 'wiki-nav';
 		
-		if(el.parent().hasClass('wordmark')) {
+		if(el.closest('.wordmark').length > 0) {
 			track(category, WikiaTracker.ACTIONS.CLICK, 'wordmark');
 		} else if(el.data('canonical')) {
 			var canonical = el.data('canonical');
@@ -93,7 +97,11 @@ $(function(){
 		if((el.data('id') || el.parent().data('id')) == 'edit') {
 			track(category, WikiaTracker.ACTIONS.CLICK, 'edit');
 		} else if((el.data('id') || el.parent().data('id')) == 'comment') {
-			track(category, WikiaTracker.ACTIONS.CLICK, 'comment');
+			if(el.hasClass('talk') || el.parent().hasClass('talk')) {
+				track(category, WikiaTracker.ACTIONS.CLICK, 'talk');
+			} else {
+				track(category, WikiaTracker.ACTIONS.CLICK, 'comment');
+			}
 		}
 	});
 	
@@ -153,6 +161,12 @@ $(function(){
 		} else if(el.closest('.chat-join').length > 0) {
 			track('chat-module', WikiaTracker.ACTIONS.CLICK, 'chat-join');
 		}
+	});
+	
+	$('#WikiaSearch').on('click', '.autocomplete', function(e) {
+		track('search', WikiaTracker.ACTIONS.CLICK, 'search-suggest');
+	}).on('submit', '', function(e) {
+		track('search', WikiaTracker.ACTIONS.CLICK, 'search-enter');
 	});
 	
 	if($('body.editor').length > 0) {

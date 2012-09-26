@@ -19,7 +19,8 @@ class CommentsLikesController extends WikiaController {
 	 * Are article comments enabled for context title?
 	 */
 	private function checkArticleComments() {
-		return class_exists('ArticleComment') && ArticleCommentInit::ArticleCommentCheckTitle($this->contextTitle);
+		$this->isArticleComments = class_exists('ArticleComment') && ArticleCommentInit::ArticleCommentCheckTitle($this->contextTitle);
+		return $this->isArticleComments;
 	}
 
 	/**
@@ -137,6 +138,7 @@ class CommentsLikesController extends WikiaController {
 
 			$this->commentsLink = $this->getCommentsLink();
 			$this->commentsTooltip = $this->getCommentsTooltip();
+			$this->isArticleComments = $this->checkArticleComments();
 
 			// get source of comments number (comments / talk page revisions)
 			$this->commentsEnabled = $this->checkArticleComments();
