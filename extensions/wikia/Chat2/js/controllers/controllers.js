@@ -7,14 +7,11 @@ var NodeChatSocketWrapper = $.createClass(Observable,{
 	proxy: $.proxy,
 	connected: false,
 	firstConnected: false,
-	trying: null,
 	autoReconnect: true,
 	isInitialized: false,
-	inAuthRequestWithMW: false,
 	comingBackFromAway: false,
 	roomId: false,
 	socket: false,
-	reConnectCount: 0,
 	constructor: function( roomId ) {
 		NodeChatSocketWrapper.superclass.constructor.apply(this,arguments);
 		this.sessionData = null;
@@ -29,10 +26,6 @@ var NodeChatSocketWrapper = $.createClass(Observable,{
 	},
 
 	connect: function() {
-		if(this.connected) {
-			$().log("already connected");
-			return true;
-		}
 		var url = 'http://' + WIKIA_NODE_HOST + ':' + WIKIA_NODE_PORT;
 		$().log(url, 'Chat server');
 		
@@ -69,7 +62,6 @@ var NodeChatSocketWrapper = $.createClass(Observable,{
 
 	onConnect: function(socket, transport) {
 		this.socket = socket;
-		this.reConnectCount = 0;
 
 		if(!this.firstConnected) {
 			var InitqueryCommand = new models.InitqueryCommand();
@@ -79,8 +71,6 @@ var NodeChatSocketWrapper = $.createClass(Observable,{
 		}
 
 		$().log("connected.");
-		
-		this.connected = true;
 	},
 
 	authRequestWithMW: function(callback) {
@@ -93,13 +83,13 @@ var NodeChatSocketWrapper = $.createClass(Observable,{
 
 		};
 
-		this.proxy(callback, this)('name=' + encodedWgUserName + '&key=' + wgChatKey + '&roomId=' + this.roomId + '&RCC=' + this.reConnectCount);
+		this.proxy(callback, this)('name=' + encodedWgUserName + '&key=' + wgChatKey + '&roomId=' + this.roomId );
 	},
 
 
     forceReconnect: function() {
 		NodeChatSocketWrapper.sessionData = null;
-		this.socket.disconnect();
+		this.socket.disconnectSync();
 		this.socket = null;
 		this.connect();
     },
@@ -600,22 +590,26 @@ var NodeChatController = $.createClass(NodeRoomController,{
 			actions.admin.push('give-chat-mod');
 		}
 
-		if(this.userMain.get('isModerator') === true && user.get('isModerator') === false ) {
+		if(this.userMain.get('isModerator') === true && user.get('isModerator') === false) {
 			actions.admin.push('kick');
 			actions.admin.push('ban');
 		}
 
-		this.viewUsers.showMenu(obj.target, actions);
-
-		if(this.model.get('isStaff') === true){
-			$(this.el).addClass('staff');
+		if(this.userMain.get('isCanGiveChatMode') === true && user.get('isStaff') == false && $.inArray('kick', actions.admin) == -1) {
+                        actions.admin.push('kick');
+                        actions.admin.push('ban');
 		}
+
+		this.viewUsers.showMenu(obj.target, actions);
 	},
 
 	privateListClick: function(obj) {
 		var user = this.model.users.findByName(obj.name);
 
-		var actions = { regular: ['profile', 'contribs', 'private-block'] };
+		var actions = { regular: ['profile', 'contribs'] };
+		if(user.get('isStaff') === false) {
+			actions.regular.push('private-block');
+		}
 
 		//, 'private-close'
 		if(!this.privateMessage(obj)) {
