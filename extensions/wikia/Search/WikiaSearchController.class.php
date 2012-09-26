@@ -141,13 +141,12 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	
 	/**
 	 * Used during indexing to retrieve data for a single page in JSON format.
-	 * @TODO: Split out functionality from WikiaSearch class to a WikiaIndexer class.
 	 */
 	public function getPage() {
 	    $pageId = $this->getVal( 'id' );
 	
 	    if( !empty( $pageId ) ) {
-	        $page = $this->wikiaSearch->getPage( $pageId );
+	        $page = $this->wikiaSearchIndexer->getPage( $pageId );
 	
 	        $this->response->setData( $page );
 	    }
@@ -158,13 +157,12 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	
 	/**
 	 * Used during indexing to retrieve multiple pages in JSON format.
-	 * @TODO: Split out functionality from WikiaSearch class to a WikiaIndexer class.
 	 */
 	public function getPages() {
 	    $this->wg->AllowMemcacheWrites = false;
 	    $ids = $this->getVal('ids');
 	    if ( !empty( $ids ) ) {
-	        $this->response->setData( $this->wikiaSearch->getPages( $ids ) );
+	        $this->response->setData( $this->wikiaSearchIndexer->getPages( explode( '|', $ids ) ) );
 	    }
 	    $this->getResponse()->setFormat('json');
 	}
