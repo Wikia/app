@@ -1,7 +1,6 @@
 <?php
 class WikiaSearchController extends WikiaSpecialPageController {
 
-
 	const RESULTS_PER_PAGE = 25;
 	const PAGES_PER_WINDOW = 5;
 
@@ -14,8 +13,10 @@ class WikiaSearchController extends WikiaSpecialPageController {
         // note: this is required since we haven't constructed $this->wg yet
 		global $wgWikiaSearchIsDefault;
 
-		$this->wikiaSearch = F::build('WikiaSearch');
-		$specialPageName = $wgWikiaSearchIsDefault ? 'Search' : 'WikiaSearch';
+		$this->wikiaSearch			= F::build('WikiaSearch');
+		$this->wikiaSearchIndexer	= F::build('WikiaSearchIndexer');
+		$specialPageName 			= $wgWikiaSearchIsDefault ? 'Search' : 'WikiaSearch';
+
 		parent::__construct( $specialPageName, $specialPageName, false );
 	}
 
