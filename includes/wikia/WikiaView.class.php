@@ -96,7 +96,7 @@ class WikiaView {
 	 * @param string $methodName
 	 * @param bool $forceRebuild
 	 */
-	protected function buildTemplatePath( $controllerName, $methodName, $forceRebuild = false ) {
+	protected function buildTemplatePath( $controllerClass, $methodName, $forceRebuild = false ) {
 		wfProfileIn(__METHOD__);
 		if( ( $this->templatePath == null ) || $forceRebuild ) {
 			$app = F::app();
@@ -108,30 +108,21 @@ class WikiaView {
 				$extension = WikiaResponse::TEMPLATE_ENGINE_PHP;
 			}
 
-			if (
-				(
-					$app->isService( $controllerName ) ||
-					$app->isController( $controllerName ) ||
-					$app->isModule( $controllerName )
-				) &&
-				!empty( $autoloadClasses[$controllerName] )
-			) {
-				$controllerClass = $controllerName;
+			// Service classes must be dispatched by full name otherwise we default to a controller.
+			$controllerBaseName = $app->getBaseName( $controllerClass );
+			if ($app->isService($controllerClass)) {
+				$controllerClass = $app->getServiceClassName( $controllerBaseName );
 			} else {
-				$controllerClass = "{$controllerName}Controller";
-			}
-
-			// Workaround for Dispatching Module classes while Module still exists
-			if( empty( $autoloadClasses[$controllerClass] ) ) {
-				$controllerClass = "{$controllerName}Module";
+				$controllerClass = $app->getControllerClassName( $controllerBaseName );
 			}
 
 			if( empty( $autoloadClasses[$controllerClass] ) ) {
-				throw new WikiaException( "Invalid controller name: {$controllerName}" );
+				throw new WikiaException( "Invalid controller or service name: {$controllerClass}" );
 			}
 
+			// First we look for BaseName_MethodName
 			$dirName = dirname( $autoloadClasses[$controllerClass] );
-			$basePath = "{$dirName}/templates/{$controllerName}_{$methodName}";
+			$basePath = "{$dirName}/templates/{$controllerBaseName}_{$methodName}";
 			$templatePath = null;
 
 			/**
@@ -154,11 +145,11 @@ class WikiaView {
 				$templatePath = "{$basePath}.$extension";
 			}
 
+			// First we look for BaseName_MethodName
 			$templateExists = file_exists( $templatePath );
-
-			if( !$templateExists && !$app->isService( $controllerName ) ) {
-				$controllerName = $app->getControllerLegacyName($controllerName);
-				$templatePath = "{$dirName}/templates/{$controllerName}_{$methodName}.$extension";
+			// Fall back to ControllerClass_MethodName
+			if( !$templateExists ) {
+				$templatePath = "{$dirName}/templates/{$controllerClass}_{$methodName}.$extension";
 				$templateExists = file_exists( $templatePath );
 			}
 
