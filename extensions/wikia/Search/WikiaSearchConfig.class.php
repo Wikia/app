@@ -172,4 +172,20 @@ class WikiaSearchConfig implements ArrayAccess
 		return $this->getIsInterWiki();
 	}
 	
+	public function getTruncatedResultsNum() 
+	{
+		$resultsNum = $this->getResultsFound();
+		
+	    $result = $resultsNum;
+	
+	    $digits = strlen( $resultsNum );
+	    if( $digits > 1 ) {
+	        $zeros = ( $digits > 3 ) ? ( $digits - 1 ) : $digits;
+	        $result = round( $resultsNum, ( 0 - ( $zeros - 1 ) ) );
+	    }
+	
+	    return $result;
+	}
+	
+	
 }

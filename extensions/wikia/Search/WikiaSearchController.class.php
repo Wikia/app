@@ -177,7 +177,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 		$this->setVal( 'results', $results );
 		$this->setVal( 'resultsFound', $resultsFound );
-		$this->setVal( 'resultsFoundTruncated', $this->wg->Lang->formatNum( $this->getTruncatedResultsNum($resultsFound) ) );
+		$this->setVal( 'resultsFoundTruncated', $this->wg->Lang->formatNum( $searchConfig->getTruncatedResultsNum() ) );
 		$this->setVal( 'isOneResultsPageOnly', ( $resultsFound <= $limit ) );
 		$this->setVal( 'pagesCount', ceil($resultsFound/$limit) );
 		$this->setVal( 'currentPage',  $page );
@@ -262,18 +262,6 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setVal( 'title', $tooltip );
 		$this->setVal( 'label', $label );
 		$this->setVal( 'tooltip', $tooltip );
-	}
-
-	private function getTruncatedResultsNum($resultsNum) {
-		$result = $resultsNum;
-
-		$digits = strlen( $resultsNum );
-		if( $digits > 1 ) {
-			$zeros = ( $digits > 3 ) ? ( $digits - 1 ) : $digits;
-			$result = round( $resultsNum, ( 0 - ( $zeros - 1 ) ) );
-		}
-
-		return $result;
 	}
 
 	/*
