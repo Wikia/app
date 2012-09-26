@@ -11,14 +11,37 @@
 (function(window, document, location, ghostwriter) {
 	'use strict';
 
-	var selfDomain = location.protocol + '//' + location.host
-		, scriptsDomain = window.wgCdnRootUrl
-		, jQueryUrl = window.wgJqueryUrl[0]
-		, documentWriteScript
-		, checkHandler;
+	var documentWriteScript
+		, checkHandler
+		, shouldUseNativeWrite;
 
 	// Save the original document.write method
 	document.nativeWrite = document.write;
+
+	// Decide whether the script should be written natively (return true)
+	// or can be safely handled by ghostwriter (return false)
+	shouldUseNativeWrite = function(src) {
+		var i;
+
+		if (src.indexOf(location.protocol + '//' + location.host) === 0 // the same host
+			|| src.indexOf(window.wgCdnRootUrl) === 0                   // regular script location
+			|| src.indexOf('http://images.wikia.com/') === 0            // legacy script location
+		) {
+			return true;
+		}
+
+	    // What's inside wgJqueryUrl should also be written natively
+		if (window.wgJqueryUrl) {
+			for (i = 0; i < window.wgJqueryUrl.length; i += 1) {
+				if (src.indexOf(window.wgJqueryUrl[i]) === 0) {
+					return true;
+				}
+			}
+		}
+
+		// External scripts should not block
+		return false;
+	};
 
 	// Natively document.write script tag with given attrs
 	documentWriteScript = function(attrs) {
@@ -37,14 +60,9 @@
 	// If script is ours, load it natively using documentWriteScript
 	// and return false, otherwise return true
 	checkHandler = function(tagName, attrs) {
-		if (tagName === 'script' && attrs.src) {
-			if (attrs.src.indexOf(scriptsDomain) === 0
-				|| attrs.src.indexOf(selfDomain) === 0
-				|| attrs.src.indexOf(jQueryUrl) === 0
-			) {
-				documentWriteScript(attrs);
-				return false;
-			}
+		if (tagName === 'script' && attrs.src && shouldUseNativeWrite(attrs.src)) {
+			documentWriteScript(attrs);
+			return false;
 		}
 		return true;
 	};
