@@ -1,6 +1,6 @@
 <?php if(empty($wgSuppressWikiaBar)): ?>
 <div id="WikiaBarWrapper" class="WikiaBarWrapper hidden">
-    <div class="wikia-bar">
+    <div class="wikia-bar<?if($wg->User->isAnon()):?> wikia-bar-anon<?endif;?>">
         <a href="#" class="arrow" data-tooltip="<?= wfMsg('wikiabar-tooltip') ?>"></a>
 		<?php
 		if ($wg->User->isAnon()) {
