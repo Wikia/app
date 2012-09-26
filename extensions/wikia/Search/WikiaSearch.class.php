@@ -434,9 +434,7 @@ class WikiaSearch extends WikiaObject {
 		}
 
 
-		if( $withMetaData ) {
-			$result = array_merge($result, $this->getPageMetaData($page));
-		}
+		$result = array_merge($result, $this->getPageMetaData($page));
 
 		// restore global state
 		$this->wg->Title = $wgTitle;
