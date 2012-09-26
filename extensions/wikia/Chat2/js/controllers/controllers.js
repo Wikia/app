@@ -336,6 +336,10 @@ var NodeRoomController = $.createClass(Observable,{
 		newChatEntry.mport(message.data);
 
 		this.model.chats.add(newChatEntry);
+		if( this.model.chats.length > 1000 ){
+			var first = this.model.chats.at(0);
+			this.model.chats.remove(first);
+		}
 	},
 
 	onJoin: function(message) {
