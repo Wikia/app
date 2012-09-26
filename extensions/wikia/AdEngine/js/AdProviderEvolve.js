@@ -70,7 +70,7 @@ var AdProviderEvolve = function (ScriptWriter, WikiaTracker, log, window, docume
 		var sect;
 		if (window.wgDBname == 'wikiaglobal') {
 			sect = 'home';
-		} else if (kv.indexOf('movies') != -1) {
+		} else if (kv.indexOf('movie') != -1) {
 			sect = 'movies';
 		} else if (kv.indexOf('tv') != -1) {
 			sect = 'tv';
