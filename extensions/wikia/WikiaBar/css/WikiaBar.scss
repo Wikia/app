@@ -30,7 +30,6 @@ $animationSpeed: 200ms;
 		background-image: url(/skins/oasis/images/checkers.png); /* base64 */
 		height: 25px;
 		margin: auto;
-	  	padding-left: 330px;
 		text-align: center;
 		width: 100%;
 		.ad {
@@ -191,6 +190,9 @@ $animationSpeed: 200ms;
 				text-decoration: none;
 			}
 		}
+	}
+	.wikia-bar-anon {
+		padding-left: 330px;
 	}
 	.toolbar {
 		background: transparent;
