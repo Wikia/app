@@ -52,7 +52,7 @@ class WikiaSearch extends WikiaObject {
 	 * @param WikiaSearchConfig $searchConfig
 	 * @return WikiaSearchResultSet
 	 */
-	public function doSearch( $query, WikiaSearchConfig $searchConfig ) {
+	public function doSearch( WikiaSearchConfig $searchConfig ) {
 		wfProfileIn(__METHOD__);
 
 		if($searchConfig->getGroupResults() == true) {
@@ -72,12 +72,14 @@ class WikiaSearch extends WikiaObject {
 		$results = F::build('WikiaSearchResultSet', array($result, $searchConfig) );
 
 		// set here due to all the changes we make to the base query
-		$results->setQuery($query);		
+		$results->setQuery($searchConfig->getQuery());
+		$searchConfig->setResults($results);
+		$searchConfig->setResultsFound( $results->getResultsFound() );		
 
 		if( $searchConfig->getPage() == 1 ) {
 			$resultCount = $results->getResultsFound();
 			Track::event( ( !empty( $resultCount ) ? 'search_start' : 'search_start_nomatch' ), 
-							array(	'sterm' => $query, 
+							array(	'sterm' => $searchConfig->getQuery(), 
 									'rver' => self::RELEVANCY_FUNCTION_ID,
 									'stype' => ( $searchConfig->getCityId() == 0 ? 'inter' : 'intra' ) 
 								 ) 

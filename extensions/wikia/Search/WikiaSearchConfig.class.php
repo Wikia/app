@@ -7,7 +7,7 @@
  *
  */
 
-class WikiaSearchConfig implements ArrayAccess
+class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 {
 	private $params = array(
 			'page'			=>	1,
@@ -187,5 +187,75 @@ class WikiaSearchConfig implements ArrayAccess
 	    }
 	
 	    return $result;
+	}
+	
+	public function getSearchProfiles() {
+	    // Builds list of Search Types (profiles)
+	    $nsAllSet = array_keys( SearchEngine::searchableNamespaces() );
+	    $profiles = array(
+	            'default' => array(
+	                    'message' => 'wikiasearch2-tabs-articles',
+	                    'tooltip' => 'searchprofile-articles-tooltip',
+	                    'namespaces' => SearchEngine::defaultNamespaces(),
+	                    'namespace-messages' => SearchEngine::namespacesAsText(
+	                            SearchEngine::defaultNamespaces()
+	                    ),
+	            ),
+	            'images' => array(
+	                    'message' => 'wikiasearch2-tabs-photos-and-videos',
+	                    'tooltip' => 'searchprofile-images-tooltip',
+	                    'namespaces' => array( NS_FILE ),
+	            ),
+	            'users' => array(
+	                    'message' => 'wikiasearch2-users',
+	                    'tooltip' => 'wikiasearch2-users-tooltip',
+	                    'namespaces' => array( NS_USER )
+	            ),
+	            'all' => array(
+	                    'message' => 'searchprofile-everything',
+	                    'tooltip' => 'searchprofile-everything-tooltip',
+	                    'namespaces' => $nsAllSet,
+	            ),
+	            'advanced' => array(
+	                    'message' => 'searchprofile-advanced',
+	                    'tooltip' => 'searchprofile-advanced-tooltip',
+	                    'namespaces' => $this->getNamespaces(),
+	                    'parameters' => array( 'advanced' => 1 ),
+	            )
+	    );
+	
+	    wfRunHooks( 'SpecialSearchProfiles', array( &$profiles ) );
+	
+	    foreach( $profiles as $key => &$data ) {
+	        sort($data['namespaces']);
+	    }
+	
+	    return $profiles;
+	}
+	
+	public function getActiveTab() {
+		
+		if( $this->getAdvanced() ) {
+		    return 'advanced';
+		}
+		
+		$searchableNamespaces = array_keys( SearchEngine::searchableNamespaces() );
+		$nsVals = $this->getNamespaces();
+		
+		if(empty($nsVals)) {
+		    return $this->wg->User->getOption('searchAllNamespaces') ? 'all' :  'default';
+		}
+		
+		foreach( $this->getSearchProfiles() as $name => $profile ) {
+		    if ( !count( array_diff( $nsVals, $profile['namespaces'] ) ) && !count( array_diff($profile['namespaces'], $nsVals ) )) {
+		        return $name;
+		    }
+		}
+		
+		return 'advanced';
+	}
+	
+	public function getNumPages() {
+		return $this->getResultsFound() ? ceil( $this->getResultsFound() / $this->getLimit() ) : 0;
 	}
 }
