@@ -243,6 +243,7 @@ var NodeChatDiscussion = Backbone.View.extend({
 		this.roomId = options.roomId;
 		this.model = options.model;
 		this.model.chats.bind('afteradd', $.proxy(this.addChat, this));
+		this.model.chats.bind('remove', $.proxy(this.removeChat, this));
 		this.model.chats.bind('clear', $.proxy(this.clear, this));
 		this.forceScroll = true;
 		        
@@ -351,6 +352,12 @@ var NodeChatDiscussion = Backbone.View.extend({
 		if (this.forceScroll) {
 			this.scrollToBottom();
 		}
+	},
+
+	removeChat: function(chat) {
+		var node = $('#entry-' + chat.cid);
+		node.next().removeClass('continued');
+		node.remove();
 	},
 	
 	scrollToBottom: function() {
