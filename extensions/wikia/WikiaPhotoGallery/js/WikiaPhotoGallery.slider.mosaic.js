@@ -52,6 +52,12 @@ var WikiaMosaicSlider = function(el) {
 	this.el = $(el);
 	this._imageWidth = 320;
 	this.init();
+
+	/* temp transition code until grid is fully rolled out, remove and integrate after transition */
+	if( window.wgOasisGrid ) {
+		this._imageWidth = 330;
+	}
+	/* end temp transistion code */
 };
 
 WikiaMosaicSlider.prototype.init = function() {

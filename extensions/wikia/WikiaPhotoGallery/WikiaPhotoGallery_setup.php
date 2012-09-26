@@ -44,6 +44,9 @@ $wgHooks['BeforeParserrenderImageGallery'][] = 'WikiaPhotoGalleryHelper::beforeR
 $wgHooks['RTEUseDefaultPlaceholder'][] = 'WikiaPhotoGalleryHelper::useDefaultRTEPlaceholder';
 $wgHooks['EditPage::showEditForm:initial2'][] = 'WikiaPhotoGalleryHelper::setupEditPage';
 $wgHooks['Parser::FetchTemplateAndTitle'][] = 'WikiaPhotoGalleryHelper::fetchTemplateAndTitle';
+/* temp transition code until grid is fully rolled out, remove and integrate after transition */
+$wgHooks['MakeGlobalVariablesScript'][] = 'WikiaPhotoGalleryHelper::makeGlobalVariablesScriptForWikiaGrid';
+/* end temp transistion code */
 
 // i18n
 $wgExtensionMessagesFiles['WikiaPhotoGallery'] = $dir.'/WikiaPhotoGallery.i18n.php';
