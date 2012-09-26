@@ -139,7 +139,8 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	{
 		$this->params['originalQuery'] = $query;
 		
-		if ($queryNamespace = MWNamespace::getCanonicalIndex(array_shift(explode(':', strtolower($query))))) {
+		$queryNamespace = MWNamespace::getCanonicalIndex( array_shift( explode( ':', strtolower( $query ) ) ) );
+		if ( $queryNamespace ) {
 		    if (!in_array($queryNamespace, $this->params['namespaces'])) {
 		        $this->params['queryNamespace'] = $queryNamespace;
 		    } 
