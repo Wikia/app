@@ -5,7 +5,6 @@
 .WikiaArticle {
 	&.SpecialPromoteArticle {
 	    border-bottom: none;
-        width:auto;
 	}
 	.UploadTool {
 		margin: 0 15px 150px 15px;
@@ -82,7 +81,13 @@
 				padding: 1px 3px 3px 3px;
 				width: 310px;
 			}
-			.error label, .error .headline-character-counter, .error .character-counter {
+            .main-image .explanatory-copy {
+                margin-top: 0;
+            }
+            .more-images .explanatory-copy {
+                margin-top: 0;
+            }
+            .error label, .error .headline-character-counter, .error .character-counter {
 				@if $is-dark-wiki {
 					color: mix(#ff0000, #2b2b2b, 60%);
 				} @else {
