@@ -54,14 +54,14 @@ class RTEAjax {
 	 * Check whether given page exists and return extra info about page (href and title attribute for link)
 	 */
 	static public function checkInternalLink() {
-		global $wgTitle, $wgEnableWallExt;
+		global $wgTitle, $wgEnableWallEngine;
 		wfProfileIn(__METHOD__);
 
 		$res = array('exists' => false);
 
 		if (!empty($wgTitle)) {
 			// existing local URL or interwiki link
-			$exists = $wgTitle->exists() || $wgTitle->isExternal() || ( !empty($wgEnableWallExt) && ($wgTitle->getNamespace() == NS_USER_WALL || $wgTitle->getNamespace() == NS_USER_WALL_MESSAGE) );
+			$exists = $wgTitle->exists() || $wgTitle->isExternal() || ( !empty($wgEnableWallEngine) && WallHelper::isWallNamespace($wgTitle->getNamespace()) );
 
 			$res = array(
 				'exists' => $exists,

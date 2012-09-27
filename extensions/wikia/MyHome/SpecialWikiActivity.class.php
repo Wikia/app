@@ -75,14 +75,11 @@ JS
 
 		$feedProvider = new DataFeedProvider($feedProxy);
 
-		global $wgJsMimeType, $wgExtensionsPath, $wgEnableWallExt;
+		global $wgJsMimeType, $wgExtensionsPath;
 		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/MyHome/WikiActivity.js\"></script>\n");
 		$wgOut->addExtensionStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/MyHome/oasis.scss'));
 
-		if( !empty($wgEnableWallExt) ) {
-			$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/Wall/js/WallWikiActivity.js\"></script>\n");
-			$wgOut->addExtensionStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/Wall/css/WallWikiActivity.scss'));
-		}
+		wfRunHooks( 'SpecialWikiActivityExecute', array( $wgOut, $wgUser ));
 
 		$data = $feedProvider->get(50);  // this breaks when set to 60...
 

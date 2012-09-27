@@ -13,6 +13,9 @@ html>body #WallNotifications .avatars { *float: left; }
 
 
 #WallNotifications {
+  &.prehide {
+    visibility:hidden;
+  }
 	.bubbles {
 		background-image: url(/skins/common/images/bubbles.png); /* base64 */
 		background-repeat: no-repeat;

@@ -128,17 +128,17 @@ function getLinkSuggest() {
 	$query = str_replace(' ', '_', $query);
 
 	if ( $isMobile ) {
-		$key = wfMemcKey( __METHOD__, md5( $query.'_'.$wgRequest->getText('format') ), 'WikiaMobile' );
+		$key = wfMemcKey( __METHOD__, md5( $query.'_'.$wgRequest->getText('format').$wgRequest->getText('nospecial', '') ), 'WikiaMobile' );
 	} else {
-		$key = wfMemcKey( __METHOD__, md5( $query.'_'.$wgRequest->getText('format') ) );
+		$key = wfMemcKey( __METHOD__, md5( $query.'_'.$wgRequest->getText('format').$wgRequest->getText('nospecial', '') ) );
 	}
 	
-	if (strlen($query) < 3 ) {
+	if (strlen($query) < 3) {
 		// enforce minimum character limit on server side
 		$out = $wgRequest->getText('format') == 'json'
 			 ? json_encode(array('suggestions'=>array(),'redirects'=>array()))
 			 : '';
-	} else if ($cached = $wgMemc->get($key)) {
+	} else if (false && $cached = $wgMemc->get($key)) {
 		$out = $cached;
 	}
 
@@ -275,21 +275,24 @@ function getLinkSuggest() {
 	}
 
 	$db->freeResult( $res );
-
-	// bugid 29988: include special pages
-	// (registered in SpecialPage::$mList, not in the DB like a normal page)
-	if (($namespaces == array('-1')) && (strlen($query) > 0)) {
-		$specialPagesByAlpha = SpecialPageFactory::getList();
-		ksort($specialPagesByAlpha, SORT_STRING);
-		array_walk( $specialPagesByAlpha,
-					function($val,$key) use (&$results, $query) {
-						if (strtolower(substr($key, 0, strlen($query))) === strtolower($query)) {
-							$results[] = wfLinkSuggestFormatTitle('-1', $key);
-						}
+	
+	if($wgRequest->getText('nospecial', 0) != 1) {
+		// bugid 29988: include special pages
+		// (registered in SpecialPage::$mList, not in the DB like a normal page)
+		if (($namespaces == array('-1')) && (strlen($query) > 0)) {
+			$specialPagesByAlpha = SpecialPageFactory::getList();
+			$specialPagesByAlpha = get_object_vars($specialPagesByAlpha);
+			
+			ksort($specialPagesByAlpha, SORT_STRING);
+			array_walk( $specialPagesByAlpha,
+				function($val,$key) use (&$results, $query) {
+					if (strtolower(substr($key, 0, strlen($query))) === strtolower($query)) {
+						$results[] = wfLinkSuggestFormatTitle('-1', $key);
 					}
-				  );
+				}
+			);
+		}
 	}
-
 
 	$format = $wgRequest->getText('format');
 

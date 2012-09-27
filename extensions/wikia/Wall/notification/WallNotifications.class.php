@@ -154,7 +154,7 @@ class WallNotifications {
 
 		// make sure that current Wiki is on the list, as first entry, sort the rest
 		asort($val);
-		if(!empty($this->app->wg->EnableWallExt) || !empty($this->app->wg->EnableForumExt) ) {
+		if(!empty($this->app->wg->EnableWallEngine) ) {
 			unset($val[ $this->app->wg->CityId ]);
 			$output = array( array(
 				'id' => $this->app->wg->CityId,

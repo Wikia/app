@@ -97,6 +97,8 @@
 		endif; ?>
 	</blockquote>
 	
+	<?php echo $app->renderView( 'WallController', 'statusInfoBox', array('showDeleteOrRemoveInfo' => $showClosedBox, 'comment' => $comment) ); ?>
+	
 	<? if(!$isreply): ?>
 		<ul class="replies">
 			<? if(!empty($replies)): ?>

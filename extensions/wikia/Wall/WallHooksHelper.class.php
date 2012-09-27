@@ -32,15 +32,6 @@ class WallHooksHelper {
 		$helper = F::build('WallHelper', array());
 		$title = $article->getTitle();
 
-		if( $title->getNamespace() === NS_USER_WALL
-				&& !$title->isSubpage()
-		) {
-			//message wall index
-			$outputDone = true;
-			$action = $app->wg->request->getVal('action');
-			$app->wg->Out->addHTML($app->renderView('WallController', 'index', array( 'title' => $article->getTitle() ) ));
-		}
-
 		if( $title->getNamespace() === NS_USER_WALL_MESSAGE
 				&& intval($title->getText()) > 0
 		) {
@@ -96,6 +87,21 @@ class WallHooksHelper {
 
 			wfProfileOut(__METHOD__);
 			return true;
+		}
+		
+		if( empty( $app->wg->EnableWallExt ) ) {
+			wfProfileOut(__METHOD__);
+			return true;			
+		}
+		
+		
+		if( $title->getNamespace() === NS_USER_WALL
+				&& !$title->isSubpage()
+		) {
+			//message wall index
+			$outputDone = true;
+			$action = $app->wg->request->getVal('action');
+			$app->wg->Out->addHTML($app->renderView('WallController', 'index', array( 'title' => $article->getTitle() ) ));
 		}
 
 		if( $title->getNamespace() === NS_USER_TALK
@@ -319,6 +325,11 @@ class WallHooksHelper {
 	 **/
 	function onBeforeToolbarMenu(&$items) {
 		$app = F::app();
+		
+		if( empty( $app->wg->EnableWallExt ) ){
+			return true;
+		}		
+		
 		$title = $app->wg->Title;
 		$action = $app->wg->Request->getText('action');
 
@@ -418,6 +429,10 @@ class WallHooksHelper {
 	public function onPersonalUrls(&$personalUrls, &$title) {
 		$app = F::App();
 
+		if(empty($app->wg->EnableWallExt)) {
+			return true;
+		}
+		
 		$user = $app->wg->User;
 		F::build('JSMessages')->enqueuePackage('Wall', JSMessages::EXTERNAL);
 
@@ -430,19 +445,6 @@ class WallHooksHelper {
 
 			if(!empty($personalUrls['mytalk']['class'])){
 				unset($personalUrls['mytalk']['class']);
-			}
-			
-			$personalUrls['mytalk']['class'] = 'message-wall-item';
-
-			if($app->wg->User->getSkin()->getSkinName() == 'monobook') {
-				$personalUrls['wall-notifications'] = array(
-						'text'=>$app->wf->Msg('wall-notifications'),
-						//'text'=>print_r($app->wg->User->getSkin(),1),
-						'href'=>'#',
-						'class'=>'wall-notifications-monobook',
-						'active'=>false
-				);
-				$app->wg->Out->addStyle("{$app->wg->ExtensionsPath}/wikia/Wall/css/WallNotificationsMonobook.css");
 			}
 		}
 
@@ -458,24 +460,25 @@ class WallHooksHelper {
 	 */
 	public function onUserPagesHeaderModuleAfterGetTabs(&$tabs, $namespace, $userName) {
 		$app = F::App();
-
-		foreach($tabs as $key => $tab) {
-			if( !empty($tab['data-id']) && $tab['data-id'] === 'talk' ) {
-				$userWallTitle = $this->getWallTitle();
-
-				if( $userWallTitle instanceof Title ) {
-					$tabs[$key]['link'] = '<a href="'.$userWallTitle->getLocalUrl().'" title="'. $userWallTitle->getPrefixedText() .'">'.$app->wf->Msg('wall-message-wall').'</a>';
-					$tabs[$key]['data-id'] = 'wall';
-
-					if( $namespace === NS_USER_WALL ) {
-						$tabs[$key]['selected'] = true;
+		
+		if(!empty($app->wg->EnableWallExt)) {
+			foreach($tabs as $key => $tab) {
+				if( !empty($tab['data-id']) && $tab['data-id'] === 'talk' ) {
+					$userWallTitle = $this->getWallTitle();
+	
+					if( $userWallTitle instanceof Title ) {
+						$tabs[$key]['link'] = '<a href="'.$userWallTitle->getLocalUrl().'" title="'. $userWallTitle->getPrefixedText() .'">'.$app->wf->Msg('wall-message-wall').'</a>';
+						$tabs[$key]['data-id'] = 'wall';
+	
+						if( $namespace === NS_USER_WALL ) {
+							$tabs[$key]['selected'] = true;
+						}
 					}
+	
+					break;
 				}
-
-				break;
 			}
 		}
-
 		return true;
 	}
 
@@ -1780,7 +1783,7 @@ class WallHooksHelper {
 		$diff = $app->wg->request->getVal('diff', false);
 		$oldId = $app->wg->request->getVal('oldid', false);
 
-		if( $app->wg->Title instanceof Title && $app->wg->Title->getNamespace() === NS_USER_WALL_MESSAGE ) {
+		if( $app->wg->Title instanceof Title && WallHelper::isWallNamespace($app->wg->Title->getNamespace()) ) {
 			$metaTitle = $this->getMetatitleFromTitleObject($app->wg->Title);
 			$differenceEngine->mOldPage->mPrefixedText = $metaTitle;
 			$differenceEngine->mNewPage->mPrefixedText = $metaTitle;
@@ -1804,10 +1807,14 @@ class WallHooksHelper {
 	 * @return true
 	 */
 	public function onPageHeaderEditPage($pageHeaderModule, $ns, $isPreview, $isShowChanges, $isDiff, $isEdit, $isHistory) {
-		if( $ns === NS_USER_WALL_MESSAGE && $isDiff ) {
+		if(  WallHelper::isWallNamespace($ns) && $isDiff ) {
 			$app = F::App();
+			
+			$app->wg->Out->addExtensionStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/Wall/css/WallDiffPage.scss'));
+					
 			$wmRef = '';
-			$pageHeaderModule->title = $this->getMetatitleFromTitleObject($app->wg->Title, $wmRef);
+			$meta = $this->getMetatitleFromTitleObject($app->wg->Title, $wmRef);
+			$pageHeaderModule->title = wfMsg('oasis-page-header-diff', $meta ); 
 			$pageHeaderModule->subtitle = Xml::element('a', array('href' => $wmRef->getMessagePageUrl()), $app->wf->Msg('oasis-page-header-back-to-article'));
 		}
 
@@ -1953,4 +1960,84 @@ class WallHooksHelper {
 		return true;
 	}
 
+	public function onGetRailModuleSpecialPageList( &$railModuleList ) {
+		$app = F::App();
+		
+		$namespace = $app->wg->Title->getNamespace();
+		$diff = $app->wg->Request->getVal('diff', false);
+		
+		$isDiff = !empty($diff) &&  $app->wg->Request->getVal('oldid', false);
+
+		if ( $isDiff&& WallHelper::isWallNamespace( $namespace )) {
+			//SuppressRail
+			$railModuleList = array();
+		}
+		
+		return true;
+	}
+	
+	public function onSpecialWikiActivityExecute( $out, $user ) {
+		$app = F::App();
+		$out->addScript("<script type=\"{$app->wg->JsMimeType}\" src=\"{$app->wg->ExtensionsPath}/wikia/Wall/js/WallWikiActivity.js\"></script>\n");
+		$out->addExtensionStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/Wall/css/WallWikiActivity.scss'));
+		
+		return true;
+	}
+	
+	protected function getQueryNS() {
+		$app = F::App();
+		$ns = array();
+		
+		foreach($app->wg->WallNS as $val) {
+			$ns[] = $val;
+			$ns[] = MWNamespace::getTalk($val);
+		}
+		return implode(',', $ns);
+	}
+	
+	public function onListredirectsPageGetQueryInfo( &$self, &$query ) {
+		wfProfileIn(__METHOD__);
+		
+		$query['conds'][] = 'p1.page_namespace not in ('. $this->getQueryNS() . ')';
+	
+		wfProfileOut(__METHOD__);	
+		return true;		
+	}
+	
+	public function onWantedPagesGetQueryInfo( &$self, &$query ) {
+		wfProfileIn(__METHOD__);
+		
+		$query['conds'][] = 'pl_namespace not in ('. $this->getQueryNS() . ')';
+		
+		wfProfileOut(__METHOD__);	
+		return true;
+	}
+	
+	public function onAfterLanguageGetNamespaces( &$namespaces ) {
+		wfProfileIn(__METHOD__);
+		$app = F::App();
+		$title = $app->wg->Title;
+
+		if(empty($title) || !$title->isSpecial('Allpages') ) {
+			wfProfileOut(__METHOD__);
+			return true;
+		}
+
+		foreach($app->wg->WallNS as $val) {
+			$ns = MWNamespace::getTalk($val);
+			if(!empty($namespaces[$ns])) {
+				unset($namespaces[$ns]);
+			}
+		}
+		wfProfileOut(__METHOD__);
+		return true;
+	}
+	
+	public function onDiffLoadText( $self, &$oldtext, &$newtext ) {
+		/*
+		
+		$oldtext = ArticleComment::removeMetadataTag($oldtext);
+		$newtext = ArticleComment::removeMetadataTag($newtext);; */
+		return true;
+	}
 }

@@ -33,5 +33,43 @@ class WallNotificationsHooksHelper {
 		}
 		return true;
 	}
+	
+	
+	/**
+	 * @brief Add notification dropdown to right corner for monobook
+	 *
+	 * @return true
+	 *
+	 * @author Tomasz Odrobny
+	 * @author Piotrek Bablok
+	 */
+	public function onPersonalUrls(&$personalUrls, &$title) {
+		$app = F::App();
+		$user = $app->wg->User;
+		if( $user instanceof User && $user->isLoggedIn() ) {
+			if($app->wg->User->getSkin()->getSkinName() == 'monobook') {
+				$personalUrls['wall-notifications'] = array(
+						'text'=>$app->wf->Msg('wall-notifications'),
+						//'text'=>print_r($app->wg->User->getSkin(),1),
+						'href'=>'#',
+						'class'=>'wall-notifications-monobook ',
+						'active'=>false
+				);
+				
+				/** 
+				 * none of the Wall "base" extension is enable so we are pre hide the notification drop down 
+				 * and we show it in java script when there are new notification 
+				 */
+				if(empty($this->wg->EnableWallExt) && empty($this->wg->EnableForumExt)) {
+					$personalUrls['wall-notifications']['class'] .= 'prehide';
+				}
+				
+				$app->wg->Out->addStyle("{$app->wg->ExtensionsPath}/wikia/Wall/css/WallNotificationsMonobook.css");
+			}
+		}
+
+		return true;
+	}
+	
 
 }

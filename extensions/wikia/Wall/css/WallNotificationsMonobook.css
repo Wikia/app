@@ -15,7 +15,11 @@
 }
 
 #pt-wall-notifications {
-	position: relative
+	position: relative;
+}
+
+#pt-wall-notifications .prehide {
+	visibility:hidden; 
 }
 
 #pt-wall-notifications .wall-notifications-monobook .count {

@@ -38,6 +38,7 @@ $messages['en'] = array(
 	'forum-thread-title' => '$1 board',
 	'forum-thread-reply-placeholder' => 'Post a reply',
 	'forum-thread-reply-post' => 'Reply',
+	'forum-thread-deleted-return-to' => 'Return to $1 board',
 
 	/* Sorting */
 	'forum-sorting-option-newest-replies' => 'Most Recent',

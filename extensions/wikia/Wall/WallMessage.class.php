@@ -183,7 +183,6 @@ class WallMessage {
 		return $class;
 	}
 
-	//TODO: add some cache
 	public function setOrderId($val = 1) {
 		wfProfileIn( __METHOD__ );
 		$this->setInProps(WPP_WALL_COUNT, $val);
@@ -192,7 +191,6 @@ class WallMessage {
 		return $val;
 	}
 
-	//TODO: add some cache
 	public function getOrderId($for_update = false) {
 		wfProfileIn(__METHOD__);
 		if($for_update) {
@@ -300,6 +298,10 @@ class WallMessage {
 
 	public function canAdminDelete(User $user) {
 		return $this->can($user, 'walladmindelete') && !$this->isAdminDelete() && $this->isRemove() && $this->isMain();
+	}
+	
+	public function canFastAdminDelete(User $user) {
+		return $this->can($user, 'wallfastadmindelete');
 	}
 
 	public function canFastrestore(User $user) {
@@ -873,6 +875,14 @@ class WallMessage {
 		$this->addWatch($user);
 
 		return $status;
+	}
+	
+	public function fastAdminDelete($user) {
+		if( $this->adminDelete($user) ){
+			return true;
+		}
+		
+		return false;
 	}
 
 	protected function customActionNotifyRC($user, $action, $reason) {
