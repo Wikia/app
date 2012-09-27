@@ -38,7 +38,7 @@ $color-shadow: mix(#000000, $color-page, 50%);
 }
 
 .popover.top .arrow {
-	bottom:2px;
+	bottom:-3px;
 	left: 50%;
 	margin-left: -5px;
 	border-top: 4px solid $color-page;
@@ -56,7 +56,7 @@ $color-shadow: mix(#000000, $color-page, 50%);
 }
 
 .popover.bottom .arrow {
-	top: 2px;
+	top: -3px;
 	left: 50%;
 	margin-left: -5px;
 	border-right: 10px solid transparent;
