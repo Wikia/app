@@ -182,7 +182,13 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	    	->setStart	(  0 )
 	    	->setSize	( 20 );
 	     
-	    $responseData = $this->wikiaSearch->getRelatedVideos( $searchConfig );
+	    $mltResult = $this->wikiaSearch->getRelatedVideos( $searchConfig );
+	    
+	    $responseData = array();
+	    foreach ( $mltResult->getDocuments() as $document ) {
+	    	$responseData[$document['url']] = $document->getFields();
+	    }
+	    
 	    $this->response->setData($responseData);
 	    $this->response->setFormat('json');
 	}
@@ -225,6 +231,9 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	    }
 	
 	    $responseData = $this->wikiaSearch->getSimilarPages( $searchConfig );
+	    
+	    // prepare the response
+	    
 	    $this->response->setData($responseData);
 	    $this->response->setFormat('json');
 	}

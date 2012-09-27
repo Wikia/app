@@ -308,6 +308,19 @@ class WikiaSearchIndexer extends WikiaObject {
 		wfProfileOut(__METHOD__);
 		return $row;
 	}
+
+	/**
+	 * Used to access API data from various MediaWiki services
+	 * @param  array $params
+	 * @return array result data
+	 **/
+	private function callMediaWikiAPI( Array $params ) {
+	    wfProfileIn(__METHOD__);
 	
+	    $api = F::build( 'ApiMain', array( 'request' => new FauxRequest($params) ) );
+	    $api->execute();
 	
+	    wfProfileOut(__METHOD__);
+	    return  $api->getResultData();
+	}
 }

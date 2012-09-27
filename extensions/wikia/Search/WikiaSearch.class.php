@@ -383,7 +383,7 @@ class WikiaSearch extends WikiaObject {
 	/**
 	 * Used in the related videos module to get both premium and on-wiki videos.
 	 * @param  WikiaSearchConfig $searchConfig
-	 * @return WikiaSearchResultSet
+	 * @return Solarium_Result_MoreLikeThis
 	 */
 	public function getRelatedVideos( WikiaSearchConfig $searchConfig ) {
 		wfProfileIn(__METHOD__);
@@ -420,6 +420,11 @@ class WikiaSearch extends WikiaObject {
 		return $this->moreLikeThis( $searchConfig );
 	}
 
+	/**
+	 * A more textual interface to the MoreLikeThis functionality
+	 * @param  WikiaSearchConfig $searchConfig
+	 * @return array of urls to array of wid and pageid
+	 */
 	public function getSimilarPages( WikiaSearchConfig $searchConfig ) {
 		wfProfileIn(__METHOD__);
 		
@@ -443,21 +448,23 @@ class WikiaSearch extends WikiaObject {
 
 		$clientResponse = $this->moreLikeThis( $searchConfig );
 
-		$similarPages = array();
-		if ( is_object( $clientResponse->response ) ) {
-			$similarPages = $clientResponse->response->docs;
-		}
-
 		$response = array();
-		foreach ($similarPages as $similarPage)
-		{
-		    $response[$similarPage->url] = array('wid'=>$similarPage->wid, 'pageid'=>$similarPage->pageid);
+		foreach ( $clientResponse->getDocuments() as $similarPage ) {
+		    $response[$similarPage['url']] = array(
+		    		'wid'		=>	$similarPage['wid'], 
+		    		'pageid'	=>	$similarPage['pageid']
+    		);
 		}
 		wfProfileOut(__METHOD__);
 		return $response;
 	}
 	
-	public function moreLikeThis( WikiaSearchConfig $searchConfig )
+	/**
+	 * Utilizes Solr's MoreLikeThis component to return similar pages
+	 * @param  WikiaSearchConfig $searchConfig
+	 * @return Solarium_Result_MoreLikeThis
+	 */
+	private function moreLikeThis( WikiaSearchConfig $searchConfig )
 	{
 		$query = $searchConfig->getQuery();
 		$streamBody = $searchConfig->getStreamBody();
@@ -467,62 +474,55 @@ class WikiaSearch extends WikiaObject {
 	        throw new Exception("A query, url, or stream is required.");
 	    }
 	    
-	    
 	    $mlt = $this->client->createMoreLikeThis();
 	    $mlt->setMltFields		( $searchConfig->getMltFields() )
-	    	->addFilterQuery	( $searchConfig->getFilterQuery() )
 	    	->addParam			( 'mlt.match.include', 'false' )
 	    	->setStart			( $searchConfig->getStart() )
 	    	->setRows			( $searchConfig->getRows() )
 	    ;
 	    
+	    if ( $searchConfig->getFilterQuery() ) {
+	    	$mlt->addFilterQuery( $mlt->createFilterQuery()->getQuery( $searchConfig->getFilterQuery() ) );
+	    }
 	    if ( $query !== false ) { 
-	    	$mlt->setQuery($query);
+	    	$mlt->setQuery( $query );
 	    } else if ( $streamBody ) {
 	    	$mlt->setQueryStream	( true )
 	    		->setQuery			( $streamBody )
     		;
 	    } else if ($streamUrl ) {
-	    	$mlt->addParam('mlt.url', $streamUrl);;
+	    	$mlt->addParam( 'mlt.url', $streamUrl );
 	    }
 	    
-	    $mltResults = $this->client->moreLikeThis( $mlt );
-	    
+	    return $this->client->moreLikeThis( $mlt );
 	}
 
-	public function getInterestingTerms($query = false, array $params = array()) {
-
+	/**
+	 * Retrives interesting terms from a MoreLikeThis search
+	 * @param  WikiaSearchConfig $searchConfig
+	 * @return array of interesting terms
+	 */
+	public function getInterestingTerms( WikiaSearchConfig $searchConfig ) {
         wfProfileIn(__METHOD__);
-		$params['mlt.fl'] = 'title,headings,first500,redirect_text,html';
-		$params['mlt.fl'] = 'title, html';
-		$params['mlt.boost'] = 'true';
-		#note, mlt.maxnpt might be necessary for performance
-		$params['mlt.interestingTerms'] = 'list';
-
-		$params['size'] = 0;
-
-		$memkey = $this->wf->SharedMemcKey( 'WikiaInterestingTerms', md5($query.serialize($params)) );
-		$interestingTerms = $this->wg->Memc->get($memkey);
-		if ( !empty( $interestingTerms ) ) {
-		  return $interestingTerms;
-		}
-
-		$clientResponse = $this->getSimilarPages($query, $params);
-
-		$response = array();
-
-		$interestingTerms = $clientResponse->interestingTerms;
-
-		#@todo reverse dictionary-based stemming, but need all unique words, then to stem, then to use the most frequent. yuck.
-
-		$this->wg->Memc->set($memkey, $interestingTerms, self::GROUP_RESULTS_CACHE_TTL);
+        
+        $searchConfig->setInterestingTerms	( 'list' )
+        			 ->setMltFields			( array( self::field( 'title' ), self::field( 'html' ) ) )
+        			 ->setMltBoost			( true )
+		;
+        
+		$result = $this->moreLikeThis( $searchConfig );
+		
 		wfProfileOut(__METHOD__);
-		return $interestingTerms;
-
+		return $result->getInterestingTerms();
 	}
 
+	/**
+	 * Used to return interesting terms for a given page
+	 * @param  WikiaSearchConfig $searchConfig
+	 * @return array of interesting terms
+	 */
 	public function getKeywords( WikiaSearchConfig $searchConfig ) {
-
+		wfProfileIn(__METHOD__);
 		$query = sprintf('wid:%d', $searchConfig->getCityId() );
 		if ( $searchConfig->getPageId() !== false ) {
 			$query .= sprintf(' AND pageid:%d', $searchConfig->getPageId() );
@@ -532,10 +532,15 @@ class WikiaSearch extends WikiaObject {
 		
 		$searchConfig->setQuery($query);
 		
+		wfProfileOut(__METHOD__);
 		return $this->getInterestingTerms( $searchConfig );
-
 	}
 
+	/**
+	 * Used to access API data from various MediaWiki services
+	 * @param  array $params
+	 * @return array result data
+	 **/
 	private function callMediaWikiAPI( Array $params ) {
 		wfProfileIn(__METHOD__);
 
@@ -546,7 +551,11 @@ class WikiaSearch extends WikiaObject {
 		return  $api->getResultData();
 	}
 
-
+	/**
+	 * Finds an article match and sets the value in the search config
+	 * @param WikiaSearchConfig $config
+	 * @return Article|null
+	 */
 	public function getArticleMatch( WikiaSearchConfig $config ) {
 		wfProfileIn(__METHOD__);
 
@@ -587,38 +596,52 @@ class WikiaSearch extends WikiaObject {
 		return null;
 	}
 
+	/**
+	 * Used to configure the user preference pane settings for search. 
+	 * This is a registered hook function of the samme name.
+	 * @param User $user
+	 * @param 
+	 */ 
 	public static function onGetPreferences($user, &$defaultPreferences) {
 		wfProfileIn( __METHOD__ );
 
 		// removes core mw search prefs
-		$defunctPreferences = array('searchlimit',
-									'contextlines',
-									'contextchars',
-									'disablesuggest',
-									'searcheverything',
-									'searchnamespaces',
-									);
+		$defunctPreferences = array(
+			'searchlimit',
+			'contextlines',
+			'contextchars',
+			'disablesuggest',
+			'searcheverything',
+			'searchnamespaces',
+		);
 
-		foreach ($defunctPreferences as $goAway) {
-			unset($defaultPreferences[$goAway]);
+		foreach ( $defunctPreferences as $goAway ) {
+			unset( $defaultPreferences[$goAway] );
 		}
 
 		$defaultPreferences["enableGoSearch"] = array(
-			'type' => 'toggle',
-			'label-message' => array('wikiasearch2-enable-go-search'),
-			'section' => 'under-the-hood/advanced-displayv2',
+			'type'			=> 'toggle',
+			'label-message'	=> array('wikiasearch2-enable-go-search'),
+			'section'		=> 'under-the-hood/advanced-displayv2',
 		);
 
 		$defaultPreferences["searchAllNamespaces"] = array(
-			'type' => 'toggle',
-			'label-message' => array('wikiasearch2-search-all-namespaces'),
-			'section' => 'under-the-hood/advanced-displayv2',
+			'type'			=> 'toggle',
+			'label-message'	=> array('wikiasearch2-search-all-namespaces'),
+			'section'		=> 'under-the-hood/advanced-displayv2',
 		);
 
 		wfProfileOut( __METHOD__ );
 		return true;
 	}
     
+	/**
+	 * Used to compose field name, value, boosts, and quotes in support of dynamic language fields
+	 * @param  string $field
+	 * @param  string $value
+	 * @param  array  $params
+	 * @return string the lucene-ready string 
+	 **/
     public static function valueForField ( $field, $value, array $params = array() )
     {
         $boostVal = isset($params['boost']) && $params['boost'] !== false ? '^'.$params['boost'] : '';
@@ -628,43 +651,47 @@ class WikiaSearch extends WikiaObject {
         return sprintf( $evaluate, self::field( $field ), $value, $boostVal );
     }
     
+    /**
+     * Accepts a string and, checks it against a known set of dynamic language fields, and composes 
+     * a field namebased on the language context and field set membership.
+     * @param  string $field
+     * @return string the dynamic field, or the field name if not dynamic  
+     **/
     public static function field ( $field )
     {
-        $lang = preg_replace('/-.*/', '', $this->wg->LanguageCode);
-        if ( in_array($field, self::$languageFields) &&
-                in_array($this->wg->LanguageCode, $this->wg->WikiaSearchSupportedLanguages) ) {
+        $lang = preg_replace( '/-.*/', '', $this->wg->LanguageCode );
+        if ( 		in_array( $field, self::$languageFields ) 
+        		&&	in_array( $this->wg->LanguageCode, $this->wg->WikiaSearchSupportedLanguages ) ) {
     
-            $us = in_array($field, self::$dynamicUnstoredFields) ? '_us' : '';
+            $us = in_array( $field, self::$dynamicUnstoredFields ) ? '_us' : '';
     
-            $mv = in_array($field, self::$multiValuedFields) ? '_mv' : '';
+            $mv = in_array( $field, self::$multiValuedFields ) ? '_mv' : '';
     
             $field .= $us . $mv . '_' . $lang;
-    
         }
     
         return $field;
-    
     }
     
     /**
      * get list of wikis excluded from inter-wiki searching
+     * @param  int $currentWikiId
      * @return array
      */
     private function getInterWikiSearchExcludedWikis($currentWikiId = 0) {
         wfProfileIn(__METHOD__);
     
-        $wg = F::app()->wg;
-        $cacheKey = F::app()->wf->SharedMemcKey( 'crossWikiaSearchExcludedWikis' );
-        $privateWikis = $wg->Memc->get( $cacheKey );
+        $cacheKey		= $this->wf->SharedMemcKey( 'crossWikiaSearchExcludedWikis' );
+        $privateWikis	= $this->wg->Memc->get( $cacheKey );
     
-        if(!is_array($privateWikis)) {
+        if(! is_array( $privateWikis ) ) {
             // get private wikis from db
-            $wgIsPrivateWiki = WikiFactory::getVarByName( 'wgIsPrivateWiki', $currentWikiId );
-            $privateWikis = WikiFactory::getCityIDsFromVarValue( $wgIsPrivateWiki->cv_id, true, '=' );
+            $wgIsPrivateWiki	= WikiFactory::getVarByName( 'wgIsPrivateWiki', $currentWikiId );
+            $privateWikis		= WikiFactory::getCityIDsFromVarValue( $wgIsPrivateWiki->cv_id, true, '=' );
             $wg->Memc->set( $cacheKey, $privateWikis, 3600 ); // cache for 1 hour
         }
     
         wfProfileOut(__METHOD__);
-        return count( $privateWikis ) ? array_merge( $privateWikis, $wg->CrossWikiaSearchExcludedWikis ) : $wg->CrossWikiaSearchExcludedWikis;
+        return count( $privateWikis ) ? array_merge( $privateWikis, $this->wg->CrossWikiaSearchExcludedWikis ) : $this->wg->CrossWikiaSearchExcludedWikis;
     }
 }
