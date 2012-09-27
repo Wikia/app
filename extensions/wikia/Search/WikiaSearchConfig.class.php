@@ -220,9 +220,18 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	 * Synonym function for backwards compatibility
 	 * @return boolean
 	 */
-	public function isInterWiki()
-	{
-		return $this->getIsInterWiki();
+	public function isInterWiki() {
+		return $this->getInterWiki();
+	}
+	
+	/**
+	 * Synonym function for backward compatbility
+	 * @param  boolean $value
+	 * @return WikiaSearchConfig provides fluent interface
+	 */
+	public function setIsInterWiki( $value ) {
+		$this->params['interWiki'] = $value;
+		return $this; 
 	}
 	
 	/**
@@ -341,13 +350,10 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	}
 	
 	/**
-	 * Convenience helpers for case-sensitivity issues
-	 * Note that setCityId is not defined since it follows __call() convention
+	 * Normalizes the cityId value in case of mistyping
+	 * @param int $value
 	 */
-	public function getCityID() {
-		return $this->getCityId();
-	}
 	public function setCityID( $value ) {
-		return $this->setCityId( $value );
+		return $this->__call( 'setCityId', array( $value ) );
 	}
 }
