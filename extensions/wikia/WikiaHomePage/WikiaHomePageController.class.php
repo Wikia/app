@@ -24,9 +24,9 @@ class WikiaHomePageController extends WikiaController {
 	//images sizes
 	const REMIX_IMG_SMALL_WIDTH = 155;
 	const REMIX_IMG_SMALL_HEIGHT = 100;
-	const REMIX_IMG_MEDIUM_WIDTH = 320;
+	const REMIX_IMG_MEDIUM_WIDTH = 330;
 	const REMIX_IMG_MEDIUM_HEIGHT = 210;
-	const REMIX_IMG_BIG_WIDTH = 320;
+	const REMIX_IMG_BIG_WIDTH = 330;
 	const REMIX_IMG_BIG_HEIGHT = 320;
 
 	// wiki batches
@@ -39,7 +39,7 @@ class WikiaHomePageController extends WikiaController {
 	//failsafe
 	const FAILSAFE_ARTICLE_TITLE = 'Failsafe';
 
-	const HUBS_IMAGES_MEMC_KEY_VER = '1.00';
+	const HUBS_IMAGES_MEMC_KEY_VER = '1.01';
 
 	/**
 	 * @var WikiaHomePageHelper
