@@ -37,6 +37,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		
 		$searchConfig
 			->setQuery			( htmlentities( Sanitizer::StripAllTags ( $this->getVal('query', $this->getVal('search')) ), ENT_COMPAT, 'UTF-8') )
+			->setCityId			( $this->wg->CityId )
 			->setLimit			( $this->getVal('limit', self::RESULTS_PER_PAGE) )
 			->setPage			( $this->getVal('page', 1) )
 			->setRank			( $this->getVal('rank', 'default') )
@@ -192,15 +193,18 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	public function videoSearch() {
 	    $searchConfig = F::build('WikiaSearchConfig');
 	    $searchConfig
-	    	->setCityId	( $this->wg->cityId )
-	    	->setQuery	( $this->getVal('q') )
+	    	->setCityId			( $this->wg->cityId )
+	    	->setQuery			( $this->getVal('q') )
+	    	->setNamespaces		( array(NS_FILE) )
+	    	->setVideoSearch	( true )
 	    ;
-	    $this->wikiaSearch->searchVideos($searchConfig);
+	    
+	    $this->wikiaSearch->doSearch( $searchConfig );
 	    // up to whoever's using this service as to what they want from here. I'm just going to return JSON.
 	    // if you just want to search for only videos in the traditional video interface, then you should
 	    // be setting 'videoSearch' in the query string of the search index page
-	    $this->getResponse()->setFormat('json');
-	    $this->getResponse()->setData( ($searchConfig->getResults()) ? $searchConfig->getResults()->toNestedArray() : array() );
+	    $this->getResponse()->setFormat( 'json' );
+	    $this->getResponse()->setData( ( $searchConfig->getResults() ) ? $searchConfig->getResults()->toNestedArray() : array() );
 	
 	}
 	

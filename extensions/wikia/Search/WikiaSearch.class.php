@@ -2,23 +2,59 @@
 
 /**
  * This class is responsible for handling interacting with Solr to retrieve results.
+ * It uses a custom-modified version of the Solarium library to build out abstracted queries.
  * 
  * @author Robert Elwell
  */
 class WikiaSearch extends WikiaObject {
 
-	const RESULTS_PER_PAGE = 10;
-	const RESULTS_PER_WIKI = 4;
-	const GROUP_RESULTS_SEARCH_LIMIT = 20;
-	const GROUP_RESULTS_CACHE_TTL = 900; // 15 mins
-	const WIKIPAGES_CACHE_TTL = 604800; // 7 days
-	const VIDEO_WIKI_ID = 298117;
-	const GROUP_RESULT_MAX_FETCHES = 30;
-	const RELEVANCY_FUNCTION_ID = 6;
+	/**
+	 * Number of result groupings we want on a grouped search
+	 * @var int
+	 */
+	const GROUP_RESULTS_GROUPINGS_LIMIT		= 20;
 	
-	const HL_FRAG_SIZE = 150;
-	const HL_MATCH_PREFIX = '<span class="searchmatch">';
-	const HL_MATCH_POSTFIX = '</span>';
+	/**
+	 * Number of results per grouping we want in a grouped search
+	 */
+	const GROUP_RESULTS_GROUPING_ROW_LIMIT	= 4;
+	
+	/**
+	 * Time to cache grouped results, in seconds -- 15 minutes.
+	 * @var int
+	 */
+	const GROUP_RESULTS_CACHE_TTL			= 900;
+
+	/**
+	 * This is the cityId value for the video wiki, used in video searches.
+	 * @var int
+	 */
+	const VIDEO_WIKI_ID						= 298117;
+	
+	/**
+	 * This was originally used to track which _kind_ of search technology, 
+	 * among many candidates, was used. I'd like to see this removed in the future.
+	 * @var int
+	 */	
+	const RELEVANCY_FUNCTION_ID				= 6;
+	
+	/**
+	 * Snippets should be 150 characters long, by default.
+	 * @var int
+	 */
+	const HL_FRAG_SIZE 						= 150;
+	
+	/**
+	 * This should be prepended to matches in Solr snippets.
+	 * @var string
+	 */
+	const HL_MATCH_PREFIX					= '<span class="searchmatch">';
+	
+	/**
+	 * This should be appended to matches in Solr snippets.
+	 * @var string
+	 */
+	const HL_MATCH_POSTFIX					= '</span>';
 	
 	/**
 	 * These fields are actually dynamic language fields supported in 36 different languages
@@ -54,7 +90,13 @@ class WikiaSearch extends WikiaObject {
 	 * Search client
 	 * @var Solarium_Client
 	 */
-	protected $client = null;
+	protected $client;
+	
+	/**
+	 * Used and reused for string preparation
+	 * @var Solarium_Query_Helper
+	 */
+	protected $queryHelper;
 	
 	/* Boost functions used in interwiki search
 	 * @var array
@@ -85,7 +127,6 @@ class WikiaSearch extends WikiaObject {
 	/**
 	 * perform search
 	 *
-	 * @param string $query
 	 * @param WikiaSearchConfig $searchConfig
 	 * @return WikiaSearchResultSet
 	 */
@@ -94,31 +135,32 @@ class WikiaSearch extends WikiaObject {
 
 		if($searchConfig->getGroupResults() == true) {
 
-			$searchConfig	->setLength		( self::GROUP_RESULTS_SEARCH_LIMIT )
+			$searchConfig	->setLength		( self::GROUP_RESULTS_GROUPINGS_LIMIT )
 							->setIsInterWiki( true )
-							->setStart		( ((int) $searchConfig->getLength()) * (((int)$searchConfig->getPage()) - 1) )
+							->setStart		( ( (int) $searchConfig->getLength() ) * ( ( (int) $searchConfig->getPage() ) - 1 ) )
 			;
 
 		} else {
-			$searchConfig	->setStart		( ($searchConfig->getPage() - 1) * $searchConfig->getLength() );
+			$searchConfig	->setStart		( ( $searchConfig->getPage() - 1 ) * $searchConfig->getLength() );
 		}
 		
 		$queryInstance = $this->client->createSelect();
 		$this->prepareQuery( $queryInstance, $searchConfig );
 		$result = $this->client->select( $queryInstance );
 		$results = F::build('WikiaSearchResultSet', array($result, $searchConfig) );
-
 		// set here due to all the changes we make to the base query
 		$results->setQuery($searchConfig->getQuery());
-		$searchConfig->setResults($results);
-		$searchConfig->setResultsFound( $results->getResultsFound() );		
+		
+		$searchConfig->setResults		( $results )
+					 ->setResultsFound	( $results->getResultsFound() )
+		;		
 
 		if( $searchConfig->getPage() == 1 ) {
 			$resultCount = $results->getResultsFound();
 			Track::event( ( !empty( $resultCount ) ? 'search_start' : 'search_start_nomatch' ), 
-							array(	'sterm' => $searchConfig->getQuery(), 
-									'rver' => self::RELEVANCY_FUNCTION_ID,
-									'stype' => ( $searchConfig->getCityId() == 0 ? 'inter' : 'intra' ) 
+							array(	'sterm'	=> $searchConfig->getQuery(), 
+									'rver'	=> self::RELEVANCY_FUNCTION_ID,
+									'stype'	=> ( $searchConfig->getCityId() == 0 ? 'inter' : 'intra' ) 
 								 ) 
 						);
 		}
@@ -127,9 +169,16 @@ class WikiaSearch extends WikiaObject {
 		return $results;
 	}
 	
+	/**
+	 * Takes a query we've created and configures it based on the values set in the SearchConfig
+	 * @param Solarium_Query_Select $query
+	 * @param WikiaSearchConfig $searchConfig
+	 * @return WikiaSearch provides fluent interface
+	 */
 	private function prepareQuery( Solarium_Query_Select $query, WikiaSearchConfig $searchConfig )
 	{
-		$query->setDocumentClass('WikiaSearchResult');
+		wfProfileIn(__METHOD__);
+		$query->setDocumentClass( 'WikiaSearchResult' );
 		
 		$sort = $searchConfig->getSort();
 		
@@ -141,29 +190,29 @@ class WikiaSearch extends WikiaObject {
 		;
 		
 		$highlighting = $query->getHighlighting();
-		$highlighting->addField						( self::field('html') )
+		$highlighting->addField						( self::field( 'html' ) )
 					 ->setSnippets					( 1 )
 					 ->setRequireFieldMatch			( true )
-					 ->setFragSize					( self::HL_FRAG_SIZE )      // @todo determine if these should go in wikiasearchconfig?
+					 ->setFragSize					( self::HL_FRAG_SIZE )      
 					 ->setSimplePrefix				( self::HL_MATCH_PREFIX )
 					 ->setSimplePostfix				( self::HL_MATCH_POSTFIX )
 					 ->setAlternateField			( 'html' )
 					 ->setMaxAlternateFieldLength	( F::app()->checkSkin( 'wikiamobile' ) ? 100 : 300 )
 		;
 		
-		$queryFieldsString = sprintf('%s^5 %s %s^4', self::field('title'), self::field('html'), self::field('redirect_titles'));
+		$queryFieldsString = sprintf( '%s^5 %s %s^4', self::field( 'title' ), self::field( 'html' ), self::field( 'redirect_titles' ) );
 		
 		if ( $searchConfig->isInterWiki() ) {
 			$grouping = $query->getGrouping();
-			$grouping	->setLimit			( 4 )
+			$grouping	->setLimit			( self::GROUP_RESULTS_GROUPING_ROW_LIMIT )
 						->setOffset			( $searchConfig->getStart() )
 						->setFields			( array( 'host' ) )
 			;
 			
-			$queryFieldsString .= sprintf(' %s^7', self::field('wikititle'));
+			$queryFieldsString .= sprintf( ' %s^7', self::field( 'wikititle' ) );
 		}
 		
-		$query->createFilterQuery()->setQuery( $this->getFilterQueryString( $searchConfig ) );
+		$query->addFilterQuery( $query->createFilterQuery()->setQuery( $this->getFilterQueryString( $searchConfig ) ) );
 		
 		$nestedQuery = $this->client->createSelect();
 		$nestedQuery->setQuery( $searchConfig->getQuery() );
@@ -190,69 +239,79 @@ class WikiaSearch extends WikiaObject {
 										);
 		}
 		
-		// this is how we prevent the PTT from messing with results
+		// this is how we prevent duplicate results when we already have PTT
 		$noPtt = '';
 		if ( $searchConfig->hasArticleMatch() ) {
-			$am = $searchConfig->getArticleMatch();
-			$article = ( isset($am['redirect']) ) ? $am['redirect'] : $am['article'];  
-			$noPtt = sprintf(' AND -(id:%s_%s)', $searchConfig->getCityId(), $article->getID());
+			$am			= $searchConfig->getArticleMatch();
+			$article	= ( isset( $am['redirect'] ) ) ? $am['redirect'] : $am['article'];  
+			$noPtt		= sprintf( ' AND -(id:%s_%s)', $searchConfig->getCityId(), $article->getID() );
 		}
 		
 		$formulatedQuery = sprintf('%s AND (%s)%s', $this->getQueryClausesString( $searchConfig ), $nestedQuery, $noPtt);
 		
 		$query->setQuery( $formulatedQuery );
+		wfProfileOut(__METHOD__);
+		return $this;
 	}
 	
+	/**
+	 * Builds the string used with filter queries based on search config
+	 * @param WikiaSearchConfig $searchConfig
+	 * @return string
+	 */
 	private function getFilterQueryString( WikiaSearchConfig $searchConfig )
 	{
+		wfProfileIn(__METHOD__);
 		$fqString = '';
 		if ( $searchConfig->isInterWiki() ) {
 			
 			$fqString .= 'iscontent:true';
 				
 			if ( $searchConfig->getHub() !== false ) {
-			    $fqString .= ' hub:'.$this->sanitizeQuery( $searchConfig->getHub() );
+			    $fqString .= ' hub:' . $this->sanitizeQuery( $searchConfig->getHub() );
 			}
 		}
 		else {
-			$fqString .= 'wid:'.$searchConfig->getCityId();
+			$fqString .= 'wid:' . $searchConfig->getCityId();
 		}
 		
 		if (! $searchConfig->getIncludeRedirects() ) {
 			$fqString = "({$fqString}) AND is_redirect:false";
 		}
-		
+		wfProfileOut(__METHOD__);
 		return $fqString;
 	}
 	
+	/**
+	 * Builds the necessary query clauses based on values set in the searchconfig object
+	 * @param  WikiaSearchConfig $searchConfig
+	 * @return string
+	 */
 	private function getQueryClausesString( WikiaSearchConfig $searchConfig )
 	{
 		if ( $searchConfig->isInterWiki() ) {
-			global $wgContLang;
 			
 			$queryClauses = array();
 			
 			$widQuery = '';
 			
-			foreach ($this->getInterWikiSearchExcludedWikis() as $excludedWikiId) {
+			foreach ( $this->getInterWikiSearchExcludedWikis() as $excludedWikiId ) {
 			    $widQuery .= ( !empty($widQuery) ? ' AND ' : '' ) . '!wid:' . $excludedWikiId;
 			}
 			 
 			$queryClauses[] = $widQuery;
 			
-			$queryClauses[] = "lang:".$wgContLang->mCode;
+			$queryClauses[] = "lang:" . $this->wg->ContLang->mCode;
 			
 			$queryClauses[] = "iscontent:true";
 			
 			if ( $searchConfig->getHub() !== false ) {
 			    $queryClauses[] = "hub:".$this->sanitizeQuery( $searchConfig->getHub() );
 			}
-			
-			
 		}
 		else {
 			if ( $searchConfig->isVideoSearch() ) {
-				$searchConfig->setNamespaces( array(NS_FILE) );
+				$searchConfig->setNamespaces( array( NS_FILE ) );
 				$queryClauses[] = 'is_video:true';
 			}
 			
@@ -262,40 +321,50 @@ class WikiaSearch extends WikiaObject {
 			}
 			$queryClauses[] = "({$nsQuery})";
 			
-			array_unshift($queryClauses, 'wid:'.$searchConfig->getCityId());
+			// first priority is to filter by wid; that's why it's prepended
+			array_unshift( $queryClauses, 'wid:' . $searchConfig->getCityId() );
 		}
 		
-		return sprintf( '(%s)', implode(' AND ', $queryClauses) );
+		return sprintf( '(%s)', implode( ' AND ', $queryClauses ) );
 	}
 	
+	/**
+	 * Returns the string used to build out a boost query with Solarium
+	 * @param  Solarium_Query_Select $query
+	 * @param  WikiaSearchConfig $searchConfig
+	 * @return string
+	 */
 	private function getBoostQueryString( Solarium_Query_Select $query, WikiaSearchConfig $searchConfig )
 	{
 		$sanitizedQuery = $query->getQuery();
 		
 		if ( $searchConfig->isInterWiki() ) {
-			$sanitizedQuery = preg_replace('/\bwiki\b/i', '', $sanitizedQuery);
+			$sanitizedQuery = preg_replace( '/\bwiki\b/i', '', $sanitizedQuery );
 		}
 		
-		$queryNoQuotes = preg_replace("/['\"]/", '', html_entity_decode($query->getQuery(), ENT_COMPAT, 'UTF-8'));
+		$queryNoQuotes = preg_replace( "/['\"]/", '', html_entity_decode( $query->getQuery(), ENT_COMPAT, 'UTF-8' ) );
 		
 		$boostQueries = array(
-				self::valueForField('html', $queryNoQuotes, array('boost'=>5, 'quote'=>'\"')),
-		        self::valueForField('title', $queryNoQuotes, array('boost'=>10, 'quote'=>'\"')),
+				self::valueForField( 'html', $queryNoQuotes, array( 'boost'=>5, 'quote'=>'\"' ) ),
+		        self::valueForField( 'title', $queryNoQuotes, array( 'boost'=>10, 'quote'=>'\"' ) ),
 		);
 		
 		if ( $searchConfig->isInterWiki() ) {
-			$boostQueries[] = self::valueForField('wikititle', $queryNoQuotes, array('boost'=>15, 'quote'=>'\"'));
+			$boostQueries[] = self::valueForField( 'wikititle', $queryNoQuotes, array( 'boost'=>15, 'quote'=>'\"' ) );
 			$boostQueries[] = '-host:\"answers\"^10';
 			$boostQueries[] = '-host:\"respuestas\"^10';
 		}
 		
-		return implode(' ', $boostQueries);
+		return implode( ' ', $boostQueries );
 	}
 
 	/**
-	 * any query string transformation before sending to backend should be placed here
+	 * Prevents XSS and escapes characters used in Lucene query syntax.
+	 * Any query string transformations before sending to backend should be placed here.
+	 * @param  string $query
+	 * @return string
 	 */
-	private function sanitizeQuery($query) 
+	private function sanitizeQuery( $query ) 
 	{
 		if ( $this->queryHelper === null ) {
 			$this->queryHelper = new Solarium_Query_Helper();
@@ -306,33 +375,25 @@ class WikiaSearch extends WikiaObject {
 	
 	    // escape all lucene special characters: + - && || ! ( ) { } [ ] ^ " ~ * ? : \ (RT #25482)
 	    // added html entity decoding now that we're doing extra work to prevent xss
-	    $query = $this->queryHelper->escapeTerm(html_entity_decode($query,  ENT_COMPAT, 'UTF-8'));
-		// @todo make sure this works i'm iffy about it
+	    $query = $this->queryHelper->escapeTerm( html_entity_decode( $query,  ENT_COMPAT, 'UTF-8' ) );
+
 	    return $query;
 	}
-
-
-
-	public function searchVideos( $query, WikiaSearchConfig $searchConfig )
-	{
-		$searchConfig
-			->setNamespaces		(array(NS_FILE))
-			->setVideoSearch	(true)
-		;
-
-		return $this->doSearch($query, $searchConfig);
-	}
-
+	
+	/**
+	 * Used in the related videos module to get both premium and on-wiki videos.
+	 * @param  WikiaSearchConfig $searchConfig
+	 * @return WikiaSearchResultSet
+	 */
 	public function getRelatedVideos( WikiaSearchConfig $searchConfig ) {
 		wfProfileIn(__METHOD__);
 		
-        $filterQuery = '(wid:' . $this->wg->cityId . ' OR wid:' . self::VIDEO_WIKI_ID . '^2) AND is_video:true';
+        $filterQuery = '(wid:' . $searchConfig->getCityId() . ' OR wid:' . self::VIDEO_WIKI_ID . '^2) AND is_video:true';
 
-		$query = sprintf('wid:%d', $this->wg->cityId);
+		$query = sprintf( 'wid:%d', $searchConfig->getCityId() );
 		if ( $searchConfig->getPageId() !== false ) {
 			$query .= sprintf(' AND pageid:%d', $searchConfig->getPageId() );
 		} else {
-
 			// tweakable heuristic:
 			// the document frequency for the interesting terms needs to be at least 50% of the wiki's pages
 			$data = $this->callMediaWikiAPI( array( 'action' => 'query',
@@ -342,7 +403,7 @@ class WikiaSearch extends WikiaObject {
 													'siprop' => 'statistics|wikidesc|variables|namespaces|category'
 													));
 
-			if (isset($data['query']) && isset($data['query']['statistics']) && isset($data['query']['statistics']['articles'])) {
+			if ( isset( $data['query'] ) && isset( $data['query']['statistics'] ) && isset( $data['query']['statistics']['articles'] ) ) {
 				$searchConfig->setMindf( (int) ($data['query']['statistics']['articles'] * .5) );
 			}
 			$query .= ' AND iscontent:true';
@@ -351,7 +412,9 @@ class WikiaSearch extends WikiaObject {
 		$searchConfig
 			->setQuery			($query)
 			->setFilterQuery	($filterQuery)
-			->setMltFields		(array(self::field('title'), self::field('html')));
+								// note that we're also adding the default title field 
+								// for slightly better foreign language coverage
+			->setMltFields		( array( self::field( 'title' ), self::field('html'), 'title' ) );
 		
 		wfProfileOut(__METHOD__);
 		return $this->moreLikeThis( $searchConfig );
@@ -372,16 +435,16 @@ class WikiaSearch extends WikiaObject {
 		}
 		
 		if ( $contentUrl || $streamBody ) {
-			$searchConfig->setFilterQuery(implode(' AND ', array_merge($this->getInterWikiQueryClauses())));
+			$searchConfig->setFilterQuery( $this->getQueryClausesString( $searchConfig ) );
 		}
 
-		$searchConfig->setMltBoost(true);
-		$searchConfig->setMltFields(array('title', 'html'));
+		$searchConfig	->setMltBoost( true )
+						->setMltFields( array( self::field( 'title' ), self::field( 'html' ), 'title' ) );
 
 		$clientResponse = $this->moreLikeThis( $searchConfig );
 
 		$similarPages = array();
-		if ( is_object($clientResponse->response) ) {
+		if ( is_object( $clientResponse->response ) ) {
 			$similarPages = $clientResponse->response->docs;
 		}
 
@@ -460,7 +523,7 @@ class WikiaSearch extends WikiaObject {
 
 	public function getKeywords( WikiaSearchConfig $searchConfig ) {
 
-		$query = sprintf('wid:%d', $this->wg->cityId);
+		$query = sprintf('wid:%d', $searchConfig->getCityId() );
 		if ( $searchConfig->getPageId() !== false ) {
 			$query .= sprintf(' AND pageid:%d', $searchConfig->getPageId() );
 		} else {
@@ -567,10 +630,9 @@ class WikiaSearch extends WikiaObject {
     
     public static function field ( $field )
     {
-        global $wgLanguageCode, $wgWikiaSearchSupportedLanguages;
-        $lang = preg_replace('/-.*/', '', $wgLanguageCode);
+        $lang = preg_replace('/-.*/', '', $this->wg->LanguageCode);
         if ( in_array($field, self::$languageFields) &&
-                in_array($wgLanguageCode, $wgWikiaSearchSupportedLanguages) ) {
+                in_array($this->wg->LanguageCode, $this->wg->WikiaSearchSupportedLanguages) ) {
     
             $us = in_array($field, self::$dynamicUnstoredFields) ? '_us' : '';
     

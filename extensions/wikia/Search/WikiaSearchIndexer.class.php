@@ -9,10 +9,16 @@
 class WikiaSearchIndexer extends WikiaObject {
 	
 	/**
+	 * Time to cache the wikipages value, used in indexing, in seconds -- 7 days.
+	 * @var int
+	 */
+	const WIKIPAGES_CACHE_TTL	= 604800;
+	
+	/**
 	 * Used to determine whether we have registered the onParserClearState hook
 	 * @var boolean
 	 */
-	protected $parserHookActive = false;
+	protected $parserHookActive	= false;
 	
 	/**
 	 * ParserClearState hook handler, called internally.
