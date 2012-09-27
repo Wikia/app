@@ -162,11 +162,13 @@ var WikiaBar = {
 		$('#WikiaNotifications').removeClass('hidden');
 		$('.WikiaBarWrapper').removeClass('hidden');
 		$('.WikiaBarCollapseWrapper').addClass('hidden');
+		this.wikiaBarHidden = false;
 	},
 	hide: function() {
 		$('#WikiaNotifications').addClass('hidden');
 		$('.WikiaBarWrapper').addClass('hidden');
 		$('.WikiaBarCollapseWrapper').removeClass('hidden');
+		this.wikiaBarHidden = true;
 	},
 	isWikiaBarHidden: function() {
 		return this.wikiaBarHidden;
@@ -192,12 +194,10 @@ var WikiaBar = {
 		if( isHidden === false ) {
 			this.setCookieData(true);
 			this.hide();
-			this.wikiaBarHidden = true;
 		} else {
 			this.setCookieData(false);
 			this.getAdIfNeeded();
 			this.show();
-			this.wikiaBarHidden = false;
 		}
 	},
 	hasAnonHiddenWikiaBar: function() {
@@ -205,7 +205,6 @@ var WikiaBar = {
 	},
 	handleLoggedOutUsersWikiaBar: function() {
 		this.show();
-		this.wikiaBarHidden = false;
 
 		//messages animation
 		if ($('#WikiaBarWrapper .message').exists()) {
@@ -261,10 +260,8 @@ var WikiaBar = {
 	doWikiaBarAnimationDependingOnState: function(state) {
 		if( state === 'shown' ) {
 			this.show();
-			this.wikiaBarHidden = false;
 		} else {
 			this.hide();
-			this.wikiaBarHidden = true;
 		}
 	},
 	getLocalStorageData: function() {
