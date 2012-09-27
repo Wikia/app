@@ -22,6 +22,7 @@ abstract class VideoHandler extends BitmapHandler {
 	protected static $classnameSuffix = 'VideoHandler';
 	protected static $urlTemplate = '';	// must have a token called "$1"
 	protected static $providerDetailUrlTemplate = '';	// must have a token called "$1"
+	protected static $autoplayParam = "";
 
 	/**
 	 * @param $image File
@@ -78,6 +79,20 @@ abstract class VideoHandler extends BitmapHandler {
 	 * @return string Embed HTML
 	 */
 	abstract function getEmbed( $articleId, $width, $autoplay = false, $isAjax = false, $postOnload = false );
+
+	/*
+	 * Returns embed data
+	 * autoplayParam
+	 * srcParam
+	 */
+	public function getEmbedSrcData() {
+
+		$data = array();
+		$data['autoplayParam'] = static::$autoplayParam;
+		$data['srcParam'] = $this->getEmbedUrl();
+		$data['srcType'] = 'player';
+		return $data;
+	}
 
 	public function getEmbedUrl() {
 		return str_replace('$1', $this->getEmbedVideoId(), static::$urlTemplate);

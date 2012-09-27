@@ -6,6 +6,7 @@ class BliptvVideoHandler extends VideoHandler {
 	protected static $urlTemplate = 'http://a.blip.tv/api.swf#$1';
 	protected static $providerDetailUrlTemplate = 'http://blip.tv/play/$1';
 	protected static $providerHomeUrl = 'http://blip.tv/';
+	protected static $autoplayParam = "autoStart=true";
 	
 	public function getEmbed( $articleId, $width, $autoplay = false, $isAjax = false, $postOnload = false ) {
 		$height =  $this->getHeight( $width );
@@ -20,5 +21,15 @@ EOT;
 
 	public function getProviderDetailUrl() {
 		return str_replace('$1', $this->getEmbedVideoId(), static::$providerDetailUrlTemplate);
+	}
+
+	// we don't support this provider
+	public function getEmbedSrcData() {
+
+		$data = array();
+		$data['autoplayParam'] = self::$autoplayParam;
+		$data['canEmbed'] = 0;
+
+		return $data;
 	}
 }

@@ -6,6 +6,7 @@ class YoutubeVideoHandler extends VideoHandler {
 	protected static $urlTemplate = 'http://www.youtube.com/embed/$1';
 	protected static $providerDetailUrlTemplate = 'http://www.youtube.com/watch?v=$1';
 	protected static $providerHomeUrl = 'http://www.youtube.com/';
+	protected static $autoplayParam = "autoplay=1";
 
 	public function getEmbed($articleId, $width, $autoplay=false, $isAjax=false, $postOnload=false) {
 		return $this->getEmbedNative($width, $autoplay);
