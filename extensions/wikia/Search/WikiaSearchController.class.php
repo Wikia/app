@@ -5,15 +5,25 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	const PAGES_PER_WINDOW = 5;
 
 	/**
+	 * Responsible for search queries
 	 * @var WikiaSearch
 	 */
-	protected $wikiaSearch = null;
+	private $wikiaSearch;
+	
+	/**
+	 * Responsible for building data used in indexing
+	 * @var WikiaSearchIndexer
+	 */
+	private $wikiaSearchIndexer;
 
+	/**
+	 * Handles dependency-building and special page routing before calling controller actions 
+	 */
 	public function __construct() {
         // note: this is required since we haven't constructed $this->wg yet
 		global $wgWikiaSearchIsDefault;
-
-		$this->wikiaSearch			= F::build('WikiaSearch');
+		// Solarium_Client dependency handled in class constructor call in WikiaSearch.setup.php
+		$this->wikiaSearch			= F::build('WikiaSearch'); 
 		$this->wikiaSearchIndexer	= F::build('WikiaSearchIndexer');
 		$specialPageName 			= $wgWikiaSearchIsDefault ? 'Search' : 'WikiaSearch';
 
