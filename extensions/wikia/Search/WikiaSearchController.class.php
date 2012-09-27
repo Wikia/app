@@ -95,13 +95,13 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		if( ($format == 'json' || $format == 'jsonp') && ($searchConfig->getResultsFound() > 0) ){
 			$searchConfig->setResults( $searchConfig->getResults()->toNestedArray() );
 		}
-
+		
 		$this->setVal( 'results',				$searchConfig->getResults() );
 		$this->setVal( 'resultsFound',			$searchConfig->getResultsFound() );
 		$this->setVal( 'resultsFoundTruncated', $this->wg->Lang->formatNum( $searchConfig->getTruncatedResultsNum() ) );
 		$this->setVal( 'isOneResultsPageOnly',	$searchConfig->getNumPages() < 2 );
 		$this->setVal( 'pagesCount', 			$searchConfig->getNumPages() );
-		$this->setVal( 'currentPage', 			$searchConfig->getPage() );
+		$this->setVal( 'currentPage', 			$searchConfig->getPage() ); 
 		$this->setVal( 'paginationLinks',		$this->sendSelfRequest( 'pagination',  array('config' => $searchConfig) ) ); 
 		$this->setVal( 'tabs', 					$this->sendSelfRequest( 'tabs', array( 'config' => $searchConfig ) ) );
 		$this->setVal( 'query',					$searchConfig->getQuery() );
@@ -435,10 +435,10 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setVal( 'pagesNum', 			$config->getNumPages() );
 		$this->setVal( 'currentPage', 		$page );
 		$this->setVal( 'windowFirstPage', 	$windowFirstPage );
-		$this->setVal( 'windowLastPage', 	$windowLastPage );
+		$this->setVal( 'windowLastPage', 	$windowLastPage ); 
 		$this->setVal( 'pageTitle', 		$this->wg->Title );
-		$this->setVal( 'crossWikia', 		$this->getIsInterWiki() );
-		$this->setVal( 'resultsCount', 		$config->getResultsFound() );
+		$this->setVal( 'crossWikia', 		$config->getIsInterWiki() );
+		$this->setVal( 'resultsCount', 		$config->getResultsFound() ); 
 		$this->setVal( 'skipCache', 		$config->getSkipCache() );
 		$this->setVal( 'debug', 			$config->getDebug() );
 		$this->setVal( 'namespaces', 		$config->getNamespaces() );

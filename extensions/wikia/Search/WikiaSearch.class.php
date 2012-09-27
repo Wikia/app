@@ -157,6 +157,7 @@ class WikiaSearch extends WikiaObject {
 		$result = $this->client->select( $queryInstance );
 		$results = F::build('WikiaSearchResultSet', array($result, $searchConfig) );
 		// set here due to all the changes we make to the base query
+		
 		$results->setQuery($searchConfig->getQuery());
 		
 		$searchConfig->setResults		( $results )
@@ -244,10 +245,10 @@ class WikiaSearch extends WikiaObject {
 	    	}
 			$query .= ' AND iscontent:true';
 		}
-	
+
 		$searchConfig
 			->setQuery			($query)
-			->setFilterQuery	($filterQuery)
+			->setMltFilterQuery	($filterQuery)
 		    // note that we're also adding the default title field
 		    // for slightly better foreign language coverage
 			->setMltFields		( array( self::field( 'title' ), self::field('html'), 'title' ) );
@@ -369,9 +370,10 @@ class WikiaSearch extends WikiaObject {
 	 **/
 	public static function field ( $field )
 	{
-	    $lang = preg_replace( '/-.*/', '', $this->wg->LanguageCode );
-	    if ( 		in_array( $field, self::$languageFields )
-	            &&	in_array( $this->wg->LanguageCode, $this->wg->WikiaSearchSupportedLanguages ) ) {
+		global $wgLanguageCode, $wgWikiaSearchSupportedLanguages;
+	    $lang = preg_replace( '/-.*/', '', $wgLanguageCode );
+	    if ( 		in_array( $field,	self::$languageFields )
+	            &&	in_array( $lang,	$wgWikiaSearchSupportedLanguages ) ) {
 	
 	        $us = in_array( $field, self::$dynamicUnstoredFields )	? '_us' : '';
 	        $mv = in_array( $field, self::$multiValuedFields )		? '_mv' : '';
@@ -427,7 +429,10 @@ class WikiaSearch extends WikiaObject {
 			$queryFieldsString .= sprintf( ' %s^7', self::field( 'wikititle' ) );
 		}
 		
-		$query->addFilterQuery( $query->createFilterQuery()->setQuery( $this->getFilterQueryString( $searchConfig ) ) );
+		$query->addFilterQuery( array(
+				'query'		=>		$this->getFilterQueryString( $searchConfig ),
+				'key'		=>		'fq1' // constraint of library
+		) );
 		
 		$nestedQuery = $this->client->createSelect();
 		$nestedQuery->setQuery( $searchConfig->getQuery() );
@@ -618,8 +623,11 @@ class WikiaSearch extends WikiaObject {
 	    	->setRows			( $searchConfig->getRows() )
 	    ;
 	    
-	    if ( $searchConfig->getFilterQuery() ) {
-	    	$mlt->addFilterQuery( $mlt->createFilterQuery()->getQuery( $searchConfig->getFilterQuery() ) );
+	    if ( $searchConfig->getMltFilterQuery() ) {
+			$mlt->addFilterQuery( array(
+				'query'	=>	$searchConfig->getMltFilterQuery(),
+				'key'	=>	'mltfilterquery'
+			) );
 	    }
 	    if ( $query !== false ) { 
 	    	$mlt->setQuery( $query );

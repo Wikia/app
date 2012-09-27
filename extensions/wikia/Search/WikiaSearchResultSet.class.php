@@ -102,6 +102,7 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 	 */
 	public function __construct( Solarium_Result_Select $result, WikiaSearchConfig $searchConfig, $parent = null, $metaposition = null) {
 		wfProfileIn(__METHOD__);
+		parent::__construct();
 		$this->searchResultObject = $result;
 		$this->searchConfig = $searchConfig;
 		
