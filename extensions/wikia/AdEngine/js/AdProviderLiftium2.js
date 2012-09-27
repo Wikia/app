@@ -75,7 +75,7 @@ var AdProviderLiftium2 = function (scriptWriter, WikiaTracker, log, window) {
 
 		var dims = size.split('x');
 		var script = '';
-		script += "document.write('<div id=\"Liftium_"+size+"_"+(++adNum)+"\"><iframe width=\""+dims[0]+"\" height=\""+dims[1]+"\" id=\""+slotname+"_iframe\" noresize=\"true\" scrolling=\"no\" frameborder=\"0\" marginheight=\"0\" marginwidth=\"0\" style=\"border:none;\" target=\"_blank\"></iframe><div>');";
+		script += "document.write('<div id=\"Liftium_"+size+"_"+(++adNum)+"\"><iframe width=\""+dims[0]+"\" height=\""+dims[1]+"\" id=\""+slotname+"_iframe\" noresize=\"true\" scrolling=\"no\" frameborder=\"0\" marginheight=\"0\" marginwidth=\"0\" style=\"border:none;display:block\" target=\"_blank\"></iframe><div>');";
 
 		script += 'LiftiumOptions.placement = "'+slotname+'";';
 		script += 'Liftium.callInjectedIframeAd("'+size+'", document.getElementById("'+slotname+'_iframe"));';
