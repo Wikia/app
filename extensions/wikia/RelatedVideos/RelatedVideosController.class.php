@@ -275,13 +275,13 @@ class RelatedVideosController extends WikiaController {
 		}
 
 		$search = F::build( 'WikiaSearch' );  /* @var $search WikiaSearch */
-		$resultSet = $search->getRelatedVideos( $searchConfig );
+		$mltResultSet = $search->getRelatedVideos( $searchConfig );
 
-		if ( $resultSet->getNumFound() == 0 && $searchConfig->getPageId() && $this->request->getVal('debug') != 1 ) {
+		if ( $mltResultSet->getNumFound() == 0 && $searchConfig->getPageId() && $this->request->getVal('debug') != 1 ) {
 
 			// if nothing for specify article, do general search
 			$searchConfig->setPageId( false );
-			$resultSet = $search->getRelatedVideos( $searchConfig );
+			$mltResultSet = $search->getRelatedVideos( $searchConfig );
 		}
 
 		$rvService = F::build( 'RelatedVideosService' ); /* @var $rvService RelatedVideosService */
@@ -294,24 +294,25 @@ class RelatedVideosController extends WikiaController {
 		}
 
 		$response = array();
-		foreach ( $resultSet as $result ) {
+		foreach ( $mltResultSet->getDocuments() as $document ) {
 
-			$globalTitle = GlobalTitle::newFromId( $result['pageid'], $result['wid'] );
+			$globalTitle = GlobalTitle::newFromId( $document['pageid'], $document['wid'] );
 			if ( !empty( $globalTitle ) ) {
 
 				$title = $globalTitle->getText();
 				if( isset( $currentVideosByTitle[$title] ) ) {
 					// don't suggest videos that are already in RelatedVideos
-					unset( $response[$url] );
 					continue;
 				}
 				
-				$response[$result['url']] = $result->toArray();
+				$response[$document['url']] = $document->getFields();
 
-				$rvService->inflateWithVideoData( $result->toArray(),
+				$rvService->inflateWithVideoData( 
+								$document->getFields(),
 								$globalTitle,
 								$this->getVal( 'videoWidth', 160 ),
-								$this->getVal( 'videoHeight', 90 ) );
+								$this->getVal( 'videoHeight', 90 ) 
+				);
 
 			} else {
 				unset( $response[$url] );
