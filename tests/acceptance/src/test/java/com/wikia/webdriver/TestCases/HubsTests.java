@@ -32,7 +32,7 @@ public class HubsTests extends TestTemplate{
 		};
 	}
 	
-	@Test(dataProvider = "provideHub", groups= {"HubsTests001"})
+	@Test(dataProvider = "provideHub", groups= {"HubsTests001", "Hubs"})
 //	https://internal.wikia-inc.com/wiki/Hubs/QA/Hubs_Test_Cases#Module_1_.28Mosaic_Slider.29_Test_Cases
 // The test covers underscored steps from test case documentation - see link above
 	public void HubsTest001(HubBasePageObject Hub, String HubName, String HubURL)
@@ -55,7 +55,7 @@ public class HubsTests extends TestTemplate{
 		home = Hub.BackToHomePage();					
 	}
 	
-	@Test(dataProvider = "provideHub", groups= {"HubsTests002"})
+	@Test(dataProvider = "provideHub", groups= {"HubsTests002", "Hubs"})
 //	https://internal.wikia-inc.com/wiki/Hubs/QA/Hubs_Test_Cases#Module_2_.28News_Tabs.29_Test_Cases
 // The test covers underscored steps from test case documentation - see link above
 	public void HubsTest002(HubBasePageObject Hub, String HubName, String HubURL)
@@ -75,7 +75,7 @@ public class HubsTests extends TestTemplate{
 		home = Hub.BackToHomePage();						
 	}
 	
-	@Test(dataProvider = "provideHub", groups= {"HubsTests003"})
+	@Test(dataProvider = "provideHub", groups= {"HubsTests003", "Hubs"})
 //	https://internal.wikia-inc.com/wiki/Hubs/QA/Hubs_Test_Cases#Module_3_.28Videos_Module.29_Test_Cases
 // The test covers underscored steps from test case documentation - see link above
 	public void HubsTest003(HubBasePageObject Hub, String HubName, String HubURL)
@@ -123,7 +123,7 @@ public class HubsTests extends TestTemplate{
 	}
 	
 	
-	@Test(dataProvider = "provideHub", groups= {"HubsTests004"})
+	@Test(dataProvider = "provideHub", groups= {"HubsTests004", "Hubs"})
 //	https://internal.wikia-inc.com/wiki/Hubs/QA/Hubs_Test_Cases#Module_3_.28Videos_Module.29_Test_Cases
 // The test covers underscored steps from test case documentation - see link above
 	public void HubsTest004(HubBasePageObject Hub, String HubName, String HubURL)
@@ -158,7 +158,7 @@ public class HubsTests extends TestTemplate{
 		
 	}
 	
-	@Test(dataProvider = "provideHub", groups= {"HubsTests005"})
+	@Test(dataProvider = "provideHub", groups= {"HubsTests005", "Hubs"})
 //	https://internal.wikia-inc.com/wiki/Hubs/QA/Hubs_Test_Cases#Module_5_.28The_Pulse.29_Test_Cases
 // The test covers underscored steps from test case documentation - see link above
 	public void HubsTest005(HubBasePageObject Hub, String HubName, String HubURL)
@@ -180,7 +180,7 @@ public class HubsTests extends TestTemplate{
 		
 	}
 	
-	@Test(dataProvider = "provideHub", groups= {"HubsTests006"})
+	@Test(dataProvider = "provideHub", groups= {"HubsTests006", "Hubs"})
 //	https://internal.wikia-inc.com/wiki/Hubs/QA/Hubs_Test_Cases#Module_7_.28Top_Wikis.29_Test_Cases
 // The test covers underscored steps from test case documentation - see link above
 	public void HubsTest006(HubBasePageObject Hub, String HubName, String HubURL)
