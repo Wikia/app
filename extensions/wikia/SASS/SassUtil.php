@@ -17,15 +17,15 @@ class SassUtil {
 		$params = self::getOasisSettings();
 
 		if ( $wgOasisHD ) {
-			$params['oasisWidthType'] = 1;
+			$params['widthType'] = 1;
 		}
 
 		if ( $wgOasisFluid ) {
-			$params['oasisWidthType'] = 2;
+			$params['widthType'] = 2;
 		}
 		
 		if ( $wgOasisGrid ) {
-			$params['oasisWidthType'] = 3;
+			$params['widthType'] = 3;
 		}
 
 		ksort( $params );
