@@ -14,7 +14,8 @@ var WikiaBar = {
 		prevMsgNumber: -1, //this is only needed for tracking impressions in messageFadeOut()
 		doTrackImpression: false //this is only needed for tracking impressions in messageFadeIn()
 	},
-	hasGetAdBeenFired: false,
+	wasAdCalled: false,
+	wikiaBarHidden: true,
 	init: function() {
 		//clicktracking
 		$('#WikiaBarWrapper').click($.proxy(this.clickTrackingHandler, this));
@@ -48,12 +49,12 @@ var WikiaBar = {
 		if( weeboBoxAd.hasClass('wikia-ad') == false ) {
 			window.adslots2.push([this.WIKIA_BAR_BOXAD_NAME, null, 'Liftium2', null]);
 			weeboBoxAd.addClass('wikia-ad');
+			this.wasAdCalled = true;
 		}
-		this.hasGetAdBeenFired = true;
 		return true;
 	},
 	getAdIfNeeded: function() {
-		if( !this.hasGetAdBeenFired ) {
+		if( !this.wasAdCalled ) {
 			this.getAd();
 		}
 	},
@@ -168,7 +169,7 @@ var WikiaBar = {
 		$('.WikiaBarCollapseWrapper').removeClass('hidden');
 	},
 	isWikiaBarHidden: function() {
-		return $('.WikiaBarWrapper').hasClass('hidden');
+		return this.wikiaBarHidden;
 	},
 	onShownClick: function(e) {
 		this.changeBarStateData();
@@ -191,10 +192,12 @@ var WikiaBar = {
 		if( isHidden === false ) {
 			this.setCookieData(true);
 			this.hide();
+			this.wikiaBarHidden = true;
 		} else {
 			this.setCookieData(false);
 			this.getAdIfNeeded();
 			this.show();
+			this.wikiaBarHidden = false;
 		}
 	},
 	hasAnonHiddenWikiaBar: function() {
@@ -202,6 +205,7 @@ var WikiaBar = {
 	},
 	handleLoggedOutUsersWikiaBar: function() {
 		this.show();
+		this.wikiaBarHidden = false;
 
 		//messages animation
 		if ($('#WikiaBarWrapper .message').exists()) {
@@ -257,8 +261,10 @@ var WikiaBar = {
 	doWikiaBarAnimationDependingOnState: function(state) {
 		if( state === 'shown' ) {
 			this.show();
+			this.wikiaBarHidden = false;
 		} else {
 			this.hide();
+			this.wikiaBarHidden = true;
 		}
 	},
 	getLocalStorageData: function() {
