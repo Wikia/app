@@ -81,3 +81,7 @@ $highlight: mix($color-buttons, $color-page, 15%);
 	.wikitable { margin: 0 !important; }
 	#PagesToNukeDT tr:hover td { text-decoration:line-through; }
 }
+
+body .popover-inner {
+	padding: 10px 14px;
+}
