@@ -24,7 +24,7 @@ body {
 		background-attachment: fixed;
 	}
 }
-@if $oasisHD == 1 {
+@if $oasisWidthType == 1 {
 	body {
 		min-width: $width-outside + 40;
 	}
