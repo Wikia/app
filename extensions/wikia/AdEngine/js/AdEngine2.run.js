@@ -3,6 +3,7 @@
 		, adConfig
 		, adEngine
 		, scriptWriter
+		, adProviderNull
 		, adProviderEvolve
 		, adProviderEvolveRS
 		, adProviderGamePro
@@ -20,6 +21,7 @@
 
 	// Construct Ad Providers
 	scriptWriter = ScriptWriter(log, ghostwriter, document);
+	adProviderNull = AdProviderNull(log);
 	adProviderGamePro = AdProviderGamePro(scriptWriter, WikiaTracker, log, window, document);
 	adProviderEvolve = AdProviderEvolve(scriptWriter, WikiaTracker, log, window, document);
 	adProviderEvolveRS = AdProviderEvolveRS(scriptWriter, WikiaTracker, log, window, document, Geo);
@@ -32,9 +34,10 @@
 
 	adConfig = AdConfig2(
 		// regular dependencies:
-		log, window, Geo,
+		log, window, document, Geo,
 
 		// AdProviders:
+		adProviderNull,
 		adProviderGamePro,
 		adProviderEvolve,
 		adProviderEvolveRS,

@@ -1,20 +1,23 @@
 var AdConfig2 = function (
 	// regular dependencies
-	log, window, Geo,
+	log, window, document, Geo,
 
-	// AdProviders
-	AdProviderGamePro,
-	AdProviderEvolve,
-	AdProviderEvolveRS,
-	AdProviderAdDriver2,
-	AdProviderAdDriver,
-	AdProviderLater
+	// adProviders
+	adProviderNull,
+	adProviderGamePro,
+	adProviderEvolve,
+	adProviderEvolveRS,
+	adProviderAdDriver2,
+	adProviderAdDriver,
+	adProviderLater
 ) {
 	'use strict';
 
-	var country = Geo.getCountryCode()
+	var module = 'AdConfig2'
+		, country = Geo.getCountryCode()
 		, defaultHighValueCountries, defaultHighValueSlots
 		, highValueCountries, highValueSlots
+		, slotsOnlyOnLongPages
 		, getProvider;
 
 	defaultHighValueSlots = {
@@ -55,45 +58,65 @@ var AdConfig2 = function (
 		'US':true
 	};
 
+	// Map of slots present only on long pages
+	// key: slot name
+	// value: minimal height needed to show the ad (in pixels)
+	slotsOnlyOnLongPages = {
+		LEFT_SKYSCRAPER_2: 2400,
+		LEFT_SKYSCRAPER_3: 4000,
+		PREFOOTER_LEFT_BOXAD: 2400,
+		PREFOOTER_RIGHT_BOXAD: 2400
+	};
+
 	highValueCountries = window.wgHighValueCountries2 || window.wgHighValueCountries;
 	highValueCountries = highValueCountries || defaultHighValueCountries;
 
 	highValueSlots = defaultHighValueSlots;
 
 	getProvider = function(slot) {
-		var slotname = slot[0];
+		var slotname = slot[0]
+			, pageHeight = document.documentElement.offsetHeight;
 
-		log('getProvider', 5, 'AdConfig2');
-		log(slot, 5, 'AdConfig2');
+		log('getProvider', 5, module);
+		log(slot, 5, module);
 
+		// Check height of page for some slots
+		if (slotsOnlyOnLongPages[slotname]) {
+			if (pageHeight < slotsOnlyOnLongPages[slotname]) {
+				log('#' + slotname + ' disabled. Page too short', 7, module);
+				return adProviderNull;
+			}
+		}
+
+		// Force providers:
 		if (slot[2] === 'GamePro') {
-			return AdProviderGamePro;
+			return adProviderGamePro;
 		}
 		if (slot[2] === 'Evolve') {
-			return AdProviderEvolve;
+			return adProviderEvolve;
 		}
 		if (slot[2] === 'AdDriver2') {
-			return AdProviderAdDriver2;
+			return adProviderAdDriver2;
 		}
 		if (slot[2] === 'AdDriver') {
-			return AdProviderAdDriver;
+			return adProviderAdDriver;
 		}
 		if (slot[2] === 'Liftium2') {
-			return AdProviderLater;
+			return adProviderLater;
 		}
 
 		// First ask GamePro (german lang wiki)
-		if (AdProviderGamePro.canHandleSlot(slot)) {
-			return AdProviderGamePro;
+		if (adProviderGamePro.canHandleSlot(slot)) {
+			return adProviderGamePro;
 		}
 
 		// Next Evolve (NZ traffic)
 		if (country == 'NZ') {
-			if (AdProviderEvolve.canHandleSlot(slot)) {
-				return AdProviderEvolve;
+			if (adProviderEvolve.canHandleSlot(slot)) {
+				return adProviderEvolve;
 			}
-			if (AdProviderEvolveRS.canHandleSlot(slot)) {
-				return AdProviderEvolveRS;
+			if (adProviderEvolveRS.canHandleSlot(slot)) {
+				return adProviderEvolveRS;
 			}
 		}
 
@@ -102,11 +125,10 @@ var AdConfig2 = function (
 			highValueCountries[country] &&
 			highValueSlots[slotname]
 		) {
-			return AdProviderAdDriver2;
+			return adProviderAdDriver2;
 		}
 
-		// The rest goes to low prio queue
-		return AdProviderLater;
+		return adProviderLater;
 	};
 
 	return {
