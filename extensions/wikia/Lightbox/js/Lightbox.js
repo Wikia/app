@@ -859,10 +859,11 @@ var Lightbox = {
 			}
 		});
 	},
+	// Show this modal when ?file=xyz and xyz doesn't exist - mainly used for sharing and direct links
 	handleErrorTemplate: function() {
 		LightboxLoader.lightboxLoading = false;
 
-		Lightbox.openModal.removeClass('LightboxModal');
+		Lightbox.openModal.closeModal();
 		
 		$.nirvana.sendRequest({
 			controller:	'Lightbox',
@@ -870,14 +871,8 @@ var Lightbox = {
 			type:		'GET',
 			format: 'html',
 			callback: function(html) {
-				var modalContent = Lightbox.openModal.find(".modalContent");
-				modalContent.html(html);
-				
-				// Fix H1 styling
-				modalContent.find('h1:first').insertBefore(modalContent);
-				
-				$('#close-lightbox').click(function() {
-					$('#' + LightboxLoader.defaults.id).closeModal();
+				$(html).makeModal({
+					width: 600
 				});
 			}
 		});
