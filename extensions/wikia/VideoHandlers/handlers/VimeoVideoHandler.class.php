@@ -6,7 +6,8 @@ class VimeoVideoHandler extends VideoHandler {
 	protected static $urlTemplate = 'http://player.vimeo.com/video/$1';
 	protected static $providerDetailUrlTemplate = 'http://vimeo.com/$1';
 	protected static $providerHomeUrl = 'http://vimeo.com/';
-	
+	protected static $autoplayParam = "autoplay=1";
+
 	public function getPlayerAssetUrl() {
 		return '';
 	}
@@ -21,4 +22,5 @@ class VimeoVideoHandler extends VideoHandler {
 		$url = $this->getEmbedUrl();
 		return '<iframe src="'.$url.'?autoplay='.$autoplayStr.'" width="'.$width.'" height="'.$height.'" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>';
 	}
+
 }
