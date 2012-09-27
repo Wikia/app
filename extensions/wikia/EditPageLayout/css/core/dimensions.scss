@@ -2,3 +2,10 @@
 $height-epl-header: 45px;
 $width-epl-module-input: 252px;
 $width-rail-epl: 303px; // BugId:7247
+
+/* temp code for grid transition.  integrate into main after transition */
+$oasisWidthType: get_command_line_param("widthType", 0);
+@if $oasisWidthType == 3 {
+	$width-epl-module-input: 272px;
+	$width-rail-epl: 323px;
+}
