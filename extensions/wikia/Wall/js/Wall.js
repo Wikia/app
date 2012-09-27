@@ -36,6 +36,7 @@ var Wall = $.createClass(Object, {
 
 		this.wall
 			.on('click', '.admin-delete-message', this.proxy(this.confirmAction))
+			.on('click', '.fast-admin-delete-message', this.proxy(this.confirmAction))
 			.on('click', '.delete-message', this.proxy(this.confirmAction))
 			.on('click', '.remove-message', this.proxy(this.confirmAction))
 			.on('click', '.message-restore', this.proxy(this.confirmAction))
@@ -52,7 +53,6 @@ var Wall = $.createClass(Object, {
 			.on('mouseleave', '.follow', this.proxy(this.unhoverFollow))
 			.on('click', '.load-more a', this.proxy(this.loadMore))
 			.on('click', '.related-topics .edit-topic-link', this.proxy(this.handleEditTopics))
-
 			// Fix FireFox bug where textareas remain disabled on page reload
 			.find('textarea').removeAttr('disabled');
 
@@ -387,9 +387,7 @@ var Wall = $.createClass(Object, {
 		var target = $(e.target);
 
 		var isreply = target.closest('.SpeechBubble').attr('data-is-reply');
-
 		var wallMsg = target.closest('li.message, .message-restore');
-
 		var id = wallMsg.attr('data-id');
 
 		var type = isreply ? 'reply':'thread';
@@ -401,7 +399,7 @@ var Wall = $.createClass(Object, {
 		}
 
 		mode = mode[0];
-		if(submode == 'fast') {
+		if(submode == 'fast' || mode == 'fastadmin' ) {
 			var formdata = {};
 			this.doAction(id, mode, wallMsg, target, formdata );
 			return true;

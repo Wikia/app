@@ -5,7 +5,7 @@
  * In typical use, a Wall will only load a subset of Bricks because there will be a TON of bricks as time goes on.
  */
 
-class WallBaseController extends ArticleCommentsController {
+class WallBaseController extends WikiaController{
 	const WALL_MESSAGE_RELATIVE_TIMESTAMP = 604800; // relative message timestampt for 7 days (improvement 20178)
 	protected $helper;
 	public function __construct() {
@@ -130,6 +130,7 @@ class WallBaseController extends ArticleCommentsController {
 		$this->response->setVal( 'canEdit', $wallMessage->canEdit($this->wg->User) );
 		$this->response->setVal( 'canDelete', $wallMessage->canDelete($this->wg->User));
 		$this->response->setVal( 'canAdminDelete', $wallMessage->canAdminDelete($this->wg->User)  && $wallMessage->isRemove()  );
+		$this->response->setVal( 'canFastAdminDelete', $wallMessage->canFastAdminDelete($this->wg->User) );
 		$this->response->setVal( 'canRemove', $wallMessage->canRemove($this->wg->User)  && !$wallMessage->isRemove());
 		$this->response->setVal( 'canClose', $wallMessage->canArchive($this->wg->User) );
 		$this->response->setVal( 'canReopen', $wallMessage->canReopen($this->wg->User) );
@@ -161,7 +162,7 @@ class WallBaseController extends ArticleCommentsController {
 		$this->response->setVal( 'removedOrDeletedMessage', false);
 		$this->response->setVal( 'showRemovedBox', false);
 
-		$this->response->setVal( 'showClosedBox', false );
+		$this->response->setVal( 'showClosedBox', $wallMessage->isArchive() );
 
 		if( !$this->getVal('isreply', false) ) {
 			$this->response->setVal('feedtitle', htmlspecialchars($wallMessage->getMetaTitle()) );

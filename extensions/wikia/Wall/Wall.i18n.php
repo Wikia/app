@@ -18,6 +18,7 @@ $messages['en'] = array(
 	'wall-message-notify' => 'Notify admin',
 	'wall-message-remove' => 'Remove',
 	'wall-message-rev-delete' => 'Revision delete',
+	'wall-message-fast-admin-delete-message' => 'VSTF delete',
 	'wall-message-quote-button' => 'Quote',
 
 	'wall-message-elseswall' => "$1's wall",
@@ -381,6 +382,7 @@ $messages['qqq'] = array(
 	'wall-message-notify' => 'In the remove/delete-message modal box, checkbox for telling the admin about the removal',
 	'wall-message-remove' => 'Menu item to remove a message',
 	'wall-message-rev-delete' => 'Dropdown menu for staff, option to revision-delete the message',
+	'wall-message-fast-admin-delete-message' => 'Button for vstf, allow to delete without any confirmation',
 	'wall-message-quote-button' => 'Quote button on messages',
 	'wall-message-elseswall' => "Link to a user's wall. Parameters:
 * $1 is the username (GENDER is supported)",

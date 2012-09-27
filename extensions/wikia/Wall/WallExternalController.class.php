@@ -186,6 +186,16 @@ class WallExternalController extends WikiaController {
 				}
 			break;
 			
+			case 'fastadmin':
+				if($mw->canFastAdminDelete($this->wg->User)) {
+					$result = $mw->fastAdminDelete($this->wg->User, $reason, $notify);
+					$this->response->setVal('status', $result);
+					$isDeleteOrRemove = true;
+				} else {
+					$this->response->setVal('error', wfMsg('wall-message-no-permission'));
+				}
+			break;			
+			
 			case 'remove':
 				if( $mw->canRemove($this->wg->User) ) {
 					$this->response->setVal('status', $result);
@@ -270,13 +280,17 @@ class WallExternalController extends WikiaController {
 			return true;
 		}
 		
-		if($mw->isAdminDelete() && $mw->canRestore($this->wg->User)) {
+		if($mw->isAdminDelete() && $mw->isRemove() && $mw->canRestore($this->wg->User)) {
 			$mw->undoAdminDelete($this->wg->User);
 			$this->response->setVal('status', true);
 			return true;
 		}
 	
-		if($mw->isRemove() && $mw->canRestore($this->wg->User)) {
+		if( 
+			($mw->isRemove() && $mw->canRestore($this->wg->User)) || 
+			($mw->isAdminDelete() || !$mw->isRemove() && $mw->canRestore($this->wg->User))
+		
+		){
 			$mw->restore($this->wg->User);
 			$this->response->setVal('status', true);
 			return true;

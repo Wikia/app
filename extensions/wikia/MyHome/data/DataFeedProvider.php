@@ -363,7 +363,7 @@ class DataFeedProvider {
 
 	private function filterNew($res, $title) {
 		wfProfileIn(__METHOD__);
-		global $wgContentNamespaces, $wgEnableWallExt, $wgWallNS;
+		global $wgContentNamespaces, $wgWallNS;
 		
 		$item = array('type' => 'new');
 

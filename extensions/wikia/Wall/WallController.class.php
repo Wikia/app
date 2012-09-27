@@ -18,10 +18,6 @@ class WallController extends WallBaseController {
 		$this->helper = F::build('WallHelper', array());
 	}
 
-	/*
-	 * deprecated
-	 */
-
 	public function messageDeleted() {
 		$id = $this->app->wg->Title->getText();
 
@@ -35,14 +31,15 @@ class WallController extends WallBaseController {
 			$user = $wm->getWallOwner();
 			$user_displayname = $user->getName();
 
-			$wallTitle = Title::newFromText( $user->getName(), NS_USER_WALL );
-
-
 			$this->response->setVal( 'wallOwner', $user_displayname);
-			$this->response->setVal( 'wallUrl', $wallTitle->getFullURL() );
+			$this->response->setVal( 'wallUrl', $wm->getWallTitle()->getFullURL() );
 
 			$this->response->setVal( 'showViewLink', $wm->canViewDeletedMessage($this->app->wg->User) );
 			$this->response->setVal( 'viewUrl', $this->app->wg->Title->getFullUrl('show=1'));
+
+			$this->response->setVal( 'returnTo', wfMsg('wall-deleted-msg-return-to', $user_displayname) );
+
+			wfRunHooks( 'WallMessageDeleted', array( &$wm, &$this->response ) );
 		}
 	}
 
@@ -265,27 +262,7 @@ class WallController extends WallBaseController {
 			return $this->app->wg->Parser->parse($article->getContent(), $pageTitle, new ParserOptions($this->wg->User))->getText();
 		}
 	}
-
-	public function getThreads($title, $page, $perPage = null) {
-		wfProfileIn(__METHOD__);
-
-		$wall = F::build('Wall', array(($title)), 'newFromTitle');
-
-		if(!empty($perPage)) {
-			$wall->setMaxPerPage($perPage);
-		}
-
-		$wall->setSorting($this->getSortingSelected() );
-
-		$this->threads = $wall->getThreads($page);
-
-		$this->countComments = $wall->getThreadCount();
-
-		$this->title = $this->wg->Title;
-
-		wfProfileOut(__METHOD__);
-	}
-
+	
 	public function getThread($filterid) {
 		wfProfileIn(__METHOD__);
 

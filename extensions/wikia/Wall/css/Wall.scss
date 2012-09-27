@@ -26,6 +26,11 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 }
 
 .Wall {
+	&.Board {
+		.deleteorremove-infobox {
+			margin-left: 75px;
+		}
+	}
 	ul {
 		margin: 0;
 	}
@@ -574,6 +579,11 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 	}
 	.highlight {
 		display: none;
+	}
+	
+	&.Thread {
+		@include clearfix;
+		margin-bottom: 100px;
 	}
 }
 

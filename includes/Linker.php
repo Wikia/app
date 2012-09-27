@@ -269,7 +269,8 @@ class Linker {
 		# (i.e., for a nonexistent special page).
 		if ( in_array( 'broken', $options ) && empty( $query['action'] )
 			&& !$isAutoPageCreateEnabled # added by wikia
-			&& !$target->isSpecialPage() ) {
+			&& !$target->isSpecialPage() 
+			&& $target->getNamespace() != NS_USER ) {
 
 			$query['action'] = 'edit';
 			$query['redlink'] = '1';

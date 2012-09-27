@@ -39,7 +39,7 @@ class ListredirectsPage extends QueryPage {
 	function sortDescending() { return false; }
 
 	function getQueryInfo() {
-		return array(
+		 $query = array(
 			'tables' => array( 'p1' => 'page', 'redirect', 'p2' => 'page' ),
 			'fields' => array( 'p1.page_namespace AS namespace',
 					'p1.page_title AS title',
@@ -56,6 +56,9 @@ class ListredirectsPage extends QueryPage {
 					'p2.page_namespace=rd_namespace',
 					'p2.page_title=rd_title' ) ) )
 		);
+
+		wfRunHooks( 'ListredirectsPage::getQueryInfo', array( &$this, &$query ) );
+		return $query;
 	}
 
 	function getOrderFields() {

@@ -1,9 +1,6 @@
 <?php
 
 class WallDisabledHooksHelper {
-	const wallEnableVarName = 'wgEnableWallExt';
-	const wallCopyFollowFlag = 'wgWallCopyFollowsHasBeenFiredBefore';
-
 	/** @brief Allows to edit or not archived talk pages and its subpages
 	 *
 	 * @author Andrzej 'nAndy' Łukaszewski

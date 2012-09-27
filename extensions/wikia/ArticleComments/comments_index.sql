@@ -18,5 +18,4 @@ CREATE TABLE IF NOT EXISTS `comments_index` (
   KEY `comment_id` (`comment_id`,`archived`,`deleted`,`removed`),
   KEY `parent_comment_id` (`parent_comment_id`,`archived`,`deleted`,`removed`),
   KEY `last_touched` (`last_touched`,`archived`,`deleted`,`removed`,`parent_comment_id`,`parent_page_id`),
-  KEY `sticky` (`sticky`,`created_at`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
