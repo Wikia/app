@@ -297,12 +297,12 @@ class WallHistory extends WikiaModel {
 		
 		return $res;
 	}
-	
+
 	protected function loadFromDB($con, $limit, $offset, $sort) {
 		$db =  $this->getDatawareDB(DB_SLAVE);
-		
+
 		$res = $this->baseLoadFromDB($con, $limit, $offset, $sort);
-		
+
 		$out = array();
 		while($row = $db->fetchRow($res)) {
 			$data = $this->formatData($row);
@@ -310,21 +310,26 @@ class WallHistory extends WikiaModel {
 				$out[] = $data;
 			}
 		}
-		
+
 		return $out;
 	}
-	
+
 	protected function formatData($row) {
 		$user = null;
 		if($row['post_user_id'] > 0) {
-			$user = User::newFromID($row['post_user_id']);	
+			$user = User::newFromID($row['post_user_id']);
 		} else {
 			$user = User::newFromName($this->long2ip($row['post_user_ip']), false);
 		}
-		
+
 		$message = WallMessage::newFromId($row['page_id']);
+
+		if(empty($message)) {
+			return;
+		}
+
 		$title = $message->getTitle();
-		
+
 		if( ($title instanceof Title) && ($message instanceof WallMessage) ) {
 			return array(
 				'user' => $user,
@@ -340,13 +345,13 @@ class WallHistory extends WikiaModel {
 				'reason' => $row['reason'],
 				'revision_id' => $row['revision_id'],
 				'wall_message' => $message
-			);				
+			);
 		} else {
 		//it happened once on devbox when master&slave weren't sync'ed
 			wfDebug( __METHOD__ . ": Seems like master&slave are not sync'ed\n" );
 		}
 	}
-	
+
 	protected function ip2long($userName) {
 		return User::isIP($userName) ? ip2long($userName):null;
 	}
