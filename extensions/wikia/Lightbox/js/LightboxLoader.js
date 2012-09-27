@@ -226,7 +226,7 @@ var LightboxLoader = {
 				type:		'GET',
 				format: 'html',
 				data: {
-					lightboxVersion: 3 // update this when we change the template
+					lightboxVersion: 4 // update this when we change the template
 				},
 				callback: function(html) {
 					LightboxLoader.templateHtml = html;
@@ -318,7 +318,7 @@ var LightboxLoader = {
 		if(typeof embedCode === 'object') {
 			var playerJson = embedCode;	// renaming to keep my sanity
 			$.getScript(json['playerAsset'], function() {
-				json['videoEmbedCode'] = '<div id="' + playerJson['id'] + '"></div>';	//$("<div>").attr("id", playerJson['id']);
+				json['videoEmbedCode'] = '<div id="' + playerJson['id'] + '"></div>';
 				json['playerScript'] = playerJson['script'] + ' loadJWPlayer();';
 				callback(json);
 			});	

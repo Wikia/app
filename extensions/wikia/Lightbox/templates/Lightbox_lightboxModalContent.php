@@ -231,6 +231,10 @@
 			</div>
 		</div>
 	</script>
+	
+	<script id="LightboxErrorMessage" type="text/template">
+		<p><?= wfMsg('lightbox-file-error') ?></p>
+	</script>
 
 
 </div>
