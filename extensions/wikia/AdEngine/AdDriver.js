@@ -660,7 +660,7 @@ AdDriverDelayedLoader.getPlaceHolderIframeScript = function(slotname, size) {
 	Wikia.log('getPlaceHolderIframeScript ' + slotname + ', ' + size, 5, 'AdDriverDelayedLoader');
 
 	var dims = size.split('x');
-	return "document.write('<div id=\"Liftium_"+size+"_"+(++AdDriverDelayedLoader.adNum)+"\"><iframe width=\""+dims[0]+"\" height=\""+dims[1]+"\" id=\""+escape(slotname)+"_iframe\" noresize=\"true\" scrolling=\"no\" frameborder=\"0\" marginheight=\"0\" marginwidth=\"0\" style=\"border:none;\" target=\"_blank\"></iframe><div>');";
+	return "document.write('<div id=\"Liftium_"+size+"_"+(++AdDriverDelayedLoader.adNum)+"\"><iframe width=\""+dims[0]+"\" height=\""+dims[1]+"\" id=\""+escape(slotname)+"_iframe\" noresize=\"true\" scrolling=\"no\" frameborder=\"0\" marginheight=\"0\" marginwidth=\"0\" style=\"border:none;display:block\" target=\"_blank\"></iframe><div>');";
 };
 
 AdDriverDelayedLoader.getLiftiumCallScript = function(slotname, size) {
