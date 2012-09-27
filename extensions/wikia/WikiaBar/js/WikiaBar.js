@@ -24,17 +24,21 @@ var WikiaBar = {
 		$('.WikiaBarWrapper .arrow').click($.proxy(this.onShownClick, this));
 		$('.WikiaBarCollapseWrapper .wikia-bar-collapse').click($.proxy(this.onHiddenClick, this));
 
-		//tooltips
-		$('#WikiaBarWrapper .arrow, .wikia-bar-collapse').popover({
-			placement: "wikiaBar",
-			content: $('#WikiaBarWrapper .arrow').data('tooltip')
-		});
-
 		if( !this.isUserAnon() ) {
 			this.handleLoggedInUsersWikiaBar();
 		} else if( this.isUserAnon() && this.hasAnonHiddenWikiaBar() === false ) {
 			this.handleLoggedOutUsersWikiaBar();
 		}
+
+		//tooltips
+		var tooltipMessage = $('#WikiaBarWrapper .arrow').data('tooltip');
+		if (this.isWikiaBarHidden()) {
+			tooltipMessage = $('#WikiaBarWrapper .arrow').data('tooltipshow');
+		}
+		$('#WikiaBarWrapper .arrow, .wikia-bar-collapse').popover({
+			placement: "wikiaBar",
+			content: tooltipMessage
+		});
 
 		return true;
 	},
