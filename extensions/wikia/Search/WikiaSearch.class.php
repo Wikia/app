@@ -556,13 +556,13 @@ class WikiaSearch extends WikiaObject {
 	 */
 	private function getBoostQueryString( Solarium_Query_Select $query, WikiaSearchConfig $searchConfig )
 	{
-		$sanitizedQuery = $query->getQuery();
+		$sanitizedQuery = $searchConfig->getQuery();
 		
 		if ( $searchConfig->isInterWiki() ) {
 			$sanitizedQuery = preg_replace( '/\bwiki\b/i', '', $sanitizedQuery );
 		}
 		
-		$queryNoQuotes = preg_replace( "/['\"]/", '', html_entity_decode( $query->getQuery(), ENT_COMPAT, 'UTF-8' ) );
+		$queryNoQuotes = preg_replace( "/['\"]/", '', html_entity_decode( $searchConfig->getQuery(), ENT_COMPAT, 'UTF-8' ) );
 		
 		$boostQueries = array(
 				self::valueForField( 'html', $queryNoQuotes, array( 'boost'=>5, 'quote'=>'\"' ) ),
