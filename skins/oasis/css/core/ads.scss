@@ -156,7 +156,7 @@
 			}
 		}
 	}
-	@if $oasisHD == 1 {
+	@if $oasisWidthType == 1 {
 		.FooterAd {
 			width: $width-outside;
 		}
