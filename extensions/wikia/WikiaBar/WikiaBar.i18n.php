@@ -11,4 +11,5 @@ $messages['en'] = array(
 	'wikiabar-validation-message-too-long' => '$1 is too long',
 	'wikiabar-validation-wrong-element-count' => 'Wrong element count',
 	'wikiabar-tooltip' => 'Collapse',
+	'wikiabar-tooltip-show' => 'Show',
 );
