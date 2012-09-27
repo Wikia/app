@@ -224,11 +224,6 @@ function getLinkSuggest() {
 
 	$pageNamespaceClause = isset($commaJoinedNamespaces) ?  'page_namespace IN (' . $commaJoinedNamespaces . ') AND ' : '';
 	if( count($results) < $wgLinkSuggestLimit ) {
-		$orderBy = '';
-		/* just don't add the sort option on lyrics wiki */
-		if ( $wgCityId != 43339 ) {
-			$orderBy = 'order by page_len desc'; 			
-		}
 
 		$sql = "SELECT page_len, page_id, page_title, rd_title, page_namespace, page_is_redirect
 
@@ -238,10 +233,8 @@ function getLinkSuggest() {
 
 				WHERE {$pageNamespaceClause} (page_title LIKE '{$query}%' or LOWER(page_title) LIKE '{$queryLower}%')
 
-				{$orderBy}
-
 				LIMIT ".($wgLinkSuggestLimit * 3);
-				
+
 		$res = $db->query($sql);
 
 		linkSuggestFormatResults($db, $res, $query, $redirects, $results, $exactMatchRow);
