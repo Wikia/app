@@ -10,12 +10,13 @@ $animationSpeed: 200ms;
 
 #WikiaNotifications {
 	z-index: $zTop;
-	bottom: 40px;
-	right: 15px;
+	bottom: 38px;
+	right: 16px;
+	position: fixed;
 	@include transition-shorthand(all $animationSpeed ease-in $animationSpeed);
 	&.hidden {
 		bottom: 7px;
-		right: 15px;
+		right: 16px;
 		@include transition-shorthand(all $animationSpeed ease-in);
 	}
 }
