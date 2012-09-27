@@ -14,6 +14,7 @@ var WikiaBar = {
 		prevMsgNumber: -1, //this is only needed for tracking impressions in messageFadeOut()
 		doTrackImpression: false //this is only needed for tracking impressions in messageFadeIn()
 	},
+	hasGetAdBeenFired: false,
 	init: function() {
 		//clicktracking
 		$('#WikiaBarWrapper').click($.proxy(this.clickTrackingHandler, this));
@@ -43,7 +44,13 @@ var WikiaBar = {
 			window.adslots2.push([this.WIKIA_BAR_BOXAD_NAME, null, 'Liftium2', null]);
 			weeboBoxAd.addClass('wikia-ad');
 		}
+		this.hasGetAdBeenFired = true;
 		return true;
+	},
+	getAdIfNeeded: function() {
+		if( !this.hasGetAdBeenFired ) {
+			this.getAd();
+		}
 	},
 	cutMessageIntoSmallPieces: function(messageArray, container) {
 		var returnArray = [],
@@ -93,7 +100,7 @@ var WikiaBar = {
 			messageConfig = this.messageConfig;
 
 		//tracking impressions of the message (not chunk of a long message)
-		if( messageConfig.doTrackImpression ) {
+		if( messageConfig.doTrackImpression && !this.isWikiaBarHidden() ) {
 			var GALabel = 'message-' + messageConfig.content[currentMsgIndex].messageNumber + '-appears';
 			this.trackClick('wikia-bar', WikiaTracker.ACTIONS.IMPRESSION, GALabel, null, {});
 		}
@@ -155,6 +162,9 @@ var WikiaBar = {
 		$('.WikiaBarWrapper').addClass('hidden');
 		$('.WikiaBarCollapseWrapper').removeClass('hidden');
 	},
+	isWikiaBarHidden: function() {
+		return $('.WikiaBarWrapper').hasClass('hidden');
+	},
 	onShownClick: function(e) {
 		this.changeBarStateData();
 		e.preventDefault();
@@ -178,6 +188,7 @@ var WikiaBar = {
 			this.hide();
 		} else {
 			this.setCookieData(false);
+			this.getAdIfNeeded();
 			this.show();
 		}
 	},
