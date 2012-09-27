@@ -59,8 +59,7 @@ test('getProvider use AdDriver2 for high value countries', function() {
 	equal(adConfig.getProvider([highValueSlot]), adProviderAdDriver2Mock, 'adProviderAdDriver2Mock');
 });
 
-/*
-test('getProvider use Evolve(RS) for AU (only if provider accepts)', function() {
+test('getProvider use Evolve(RS) for NZ (only if provider accepts)', function() {
 	var adProviderGameProMock = {name: 'GameProMock', canHandleSlot: function() {return false;}}
 		, adProviderEvolveMock = {name: 'EvolveMock', canHandleSlot: function() {return false;}}
 		, adProviderEvolveRSMock = {name: 'EvolveRSMock', canHandleSlot: function() {return false;}}
@@ -69,7 +68,7 @@ test('getProvider use Evolve(RS) for AU (only if provider accepts)', function() 
 		, adProviderAdDriver2Mock = {name: 'AdDriver2Mock'}
 		, adProviderAdDriverMock = {name: 'AdDriverMock'}
 		, adProviderLaterMock = {name: 'LaterMock'}
-		, geoMockAU = {getCountryCode:function() {return 'AU';}}
+		, geoMockAU = {getCountryCode:function() {return 'NZ';}}
 		, logMock = function() {}
 		, windowMock = {}
 		, adConfig, adConfigRS;
@@ -96,10 +95,9 @@ test('getProvider use Evolve(RS) for AU (only if provider accepts)', function() 
 		adProviderLaterMock
 	);
 
-	equal(adConfig.getProvider(['foo']), adProviderEvolveMockHandling, 'adProviderEvolveMock AU');
-	equal(adConfigRS.getProvider(['foo']), adProviderEvolveRSMockHandling, 'adProviderEvolveRSMock AU');
+	equal(adConfig.getProvider(['foo']), adProviderEvolveMockHandling, 'adProviderEvolveMock NZ');
+	equal(adConfigRS.getProvider(['foo']), adProviderEvolveRSMockHandling, 'adProviderEvolveRSMock NZ');
 });
-*/
 
 test('getProvider do not use Evolve(RS) for PL', function() {
 	var adProviderGameProMock = {name: 'GameProMock', canHandleSlot: function() {return false;}}
@@ -127,14 +125,14 @@ test('getProvider do not use Evolve(RS) for PL', function() {
 	notEqual(adConfig.getProvider(['foo']), adProviderEvolveMock, 'adProviderEvolveMock');
 });
 
-test('getProvider do not use Evolve(RS) for AU when it cannot handle the slot', function() {
+test('getProvider do not use Evolve(RS) for NZ when it cannot handle the slot', function() {
 	var adProviderGameProMock = {name: 'GameProMock', canHandleSlot: function() {return false;}}
 		, adProviderEvolveMock = {name: 'EvolveMock', canHandleSlot: function() {return false;}}
 		, adProviderEvolveRSMock = {name: 'EvolveRSMock', canHandleSlot: function() {return false;}}
 		, adProviderAdDriver2Mock = {name: 'AdDriver2Mock'}
 		, adProviderAdDriverMock = {name: 'AdDriverMock'}
 		, adProviderLaterMock = {name: 'LaterMock'}
-		, geoMock = {getCountryCode:function() {return 'AU';}}
+		, geoMock = {getCountryCode:function() {return 'NZ';}}
 		, logMock = function() {}
 		, windowMock = {}
 		, adConfig;
@@ -179,7 +177,6 @@ test('getProvider use GamePro if provider says so', function() {
 	equal(adConfig.getProvider(['foo']), adProviderGameProMock, 'adProviderGameProMock');
 });
 
-/*
 test('getProvider GamePro wins over Evolve', function() {
 	var adProviderGameProMockRejecting = {name: 'GameProMock', canHandleSlot: function() {return false;}}
 		, adProviderGameProMock = {name: 'GameProMock', canHandleSlot: function() {return true;}}
@@ -188,7 +185,7 @@ test('getProvider GamePro wins over Evolve', function() {
 		, adProviderAdDriver2Mock = {name: 'AdDriver2Mock'}
 		, adProviderAdDriverMock = {name: 'AdDriverMock'}
 		, adProviderLaterMock = {name: 'LaterMock'}
-		, geoMock = {getCountryCode:function() {return 'AU';}}
+		, geoMock = {getCountryCode:function() {return 'NZ';}}
 		, logMock = function() {}
 		, windowMock = {}
 		, adConfig;
@@ -218,4 +215,3 @@ test('getProvider GamePro wins over Evolve', function() {
 	);
 	equal(adConfig.getProvider(['foo']), adProviderGameProMock, 'adProviderGameProMock');
 });
-*/
