@@ -164,8 +164,8 @@ class WikiaSearchResult extends Solarium_Document_ReadWrite {
 					$this->thumbnailObject = $thumb;
 				}
 			}
-	  	}
-	  return $this->thumbnailObject;
+		}
+		return $this->thumbnailObject;
 	}
 
 	/**
