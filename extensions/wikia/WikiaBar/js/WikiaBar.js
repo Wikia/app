@@ -31,13 +31,14 @@ var WikiaBar = {
 		}
 
 		//tooltips
-		var tooltipMessage = $('#WikiaBarWrapper .arrow').data('tooltip');
-		if (this.isWikiaBarHidden()) {
-			tooltipMessage = $('#WikiaBarWrapper .arrow').data('tooltipshow');
-		}
-		$('#WikiaBarWrapper .arrow, .wikia-bar-collapse').popover({
+		var wikiaBarWrapperArrow = $('#WikiaBarWrapper .arrow');
+		wikiaBarWrapperArrow.popover({
 			placement: "wikiaBar",
-			content: tooltipMessage
+			content: wikiaBarWrapperArrow.data('tooltip')
+		});
+		$('.wikia-bar-collapse').popover({
+			placement: "wikiaBar",
+			content: wikiaBarWrapperArrow.data('tooltipshow')
 		});
 
 		return true;
