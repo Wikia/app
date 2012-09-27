@@ -11,12 +11,18 @@
 class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 {
 	/**
+	 * Default number of results per page. Usually overwritten. 
+	 * @var int
+	 */
+	const RESULTS_PER_PAGE	=	10;
+	
+	/**
 	 * Default parameters for a number of values that come up regularly in search
 	 * @var array
 	 */
 	private $params = array(
 			'page'			=>	1,
-			'length'		=>	WikiaSearch::RESULTS_PER_PAGE,
+			'length'		=>	self::RESULTS_PER_PAGE,
 			'cityId'		=>	0,
 			'rank'			=>	'default',
 			'start'			=>	0,
@@ -319,5 +325,29 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	 */
 	public function getNumPages() {
 		return $this->getResultsFound() ? ceil( $this->getResultsFound() / $this->getLimit() ) : 0;
+	
+	}
+
+	/**
+	 * If the cityId hasn't been set, and we're not interwiki, we use $wgCityId. 
+	 * Otherwise, return the set value.
+	 * @return int
+	 */
+	public function getCityId() {
+		if ( ( $this->params['cityId'] == 0 ) && (! $this->isInterWiki() ) ) {
+			$this->setCityId( $this->wg->CityId )->getCityId();
+		}
+		return $this->params['cityId'];
+	}
+	
+	/**
+	 * Convenience helpers for case-sensitivity issues
+	 * Note that setCityId is not defined since it follows __call() convention
+	 */
+	public function getCityID() {
+		return $this->getCityId();
+	}
+	public function setCityID( $value ) {
+		return $this->setCityId( $value );
 	}
 }

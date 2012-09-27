@@ -1,7 +1,8 @@
 <?php
 /**
- * Wikia Search (v2) Extension
+ * Wikia Search (v3) Extension
  *
+ * @author Robert Elwell <robert(at)wikia-inc.com>
  * @author Adrian 'ADi' Wieczorek <adi(at)wikia.com>
  *
  */

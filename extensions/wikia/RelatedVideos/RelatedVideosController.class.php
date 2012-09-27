@@ -155,12 +155,11 @@ class RelatedVideosController extends WikiaController {
 					'duration' => true,
 					'src' => $preloaded ? false : wfBlankImgUrl(),
 					'constHeight' => RelatedVideosService::$height,
-					'usePreloading' => true,
-					'disableRDF' => true
+					'usePreloading' => true
 				)
 			);
 
-			$video['views'] = MediaQueryService::getTotalVideoViewsByTitle( $videoTitle->getDBKey() );
+			$video['views'] = DataMartService::getVideoViewsByTitleTotal( $videoTitle->getText() );
 
 			$this->setVal( 'videoThumb', $videoThumb );
 			$this->setVal( 'video', $video );
@@ -172,16 +171,24 @@ class RelatedVideosController extends WikiaController {
 	}
 
 	public function getAddVideoModal(){
-		$this->request->setVal( 'suppressSuggestions', false );
-		$this->forward( 'VideosController', 'getAddVideoModal' );
+
+		$pgTitle = $this->request->getVal('title', '');
+		$this->setVal( 'pageTitle', $pgTitle );
+		$this->setVal( 'html', $this->app->renderView( 'RelatedVideos', 'addVideoModalText', array('pageTitle'=>$pgTitle) ) );
+		$this->setVal( 'title',	wfMsg('related-videos-add-video-to-this-wiki') );
 	}
 
+	public function addVideoModalText(){
+
+		$pgTitle = $this->request->getVal('pageTitle', '');
+		$this->setVal( 'pageTitle', $pgTitle );
+	}
+	
 	public function addVideo() {
 		global $wgRelatedVideosOnRail;
 
 		$url = urldecode( $this->getVal( 'url', '' ) );
 		$articleId = $this->getVal( 'articleId', '' );
-
 		$rvd = F::build( 'RelatedVideosData' );
 		$retval = $rvd->addVideo( $articleId, $url );
 		if ( is_array( $retval ) ) {
@@ -245,6 +252,12 @@ class RelatedVideosController extends WikiaController {
 
 	public function getSuggestedVideos() {
 
+		$searchConfig = F::build( 'WikiaSearchConfig' );
+		$searchConfig	->setCityId	( WikiaSearch::VIDEO_WIKI_ID )
+						->setStart	( 0 )
+						->setSize	( 20 )
+		;
+		
 		$relatedVideosParams = array( 'video_wiki_only'=>true, 'start'=>0, 'size'=>20 );
 
 		$sTitle = $this->request->getVal('pageTitle');
@@ -258,17 +271,17 @@ class RelatedVideosController extends WikiaController {
 		}
 
 		if ( $articleId > 0 ) {
-			$relatedVideosParams['pageId'] = $articleId;
+			$searchConfig->setPageId( $articleId );
 		}
 
 		$search = F::build( 'WikiaSearch' );  /* @var $search WikiaSearch */
-		$response = $search->getRelatedVideos( $relatedVideosParams );
+		$resultSet = $search->getRelatedVideos( $searchConfig );
 
-		if ( count( $response ) == 0 && !empty($relatedVideosParams['pageId']) && $this->request->getVal('debug')!=1 ) {
+		if ( $resultSet->getNumFound() == 0 && $searchConfig->getPageId() && $this->request->getVal('debug') != 1 ) {
 
 			// if nothing for specify article, do general search
-			unset( $relatedVideosParams['pageId'] );
-			$response = $search->getRelatedVideos( $relatedVideosParams );
+			$searchConfig->setPageId( false );
+			$resultSet = $search->getRelatedVideos( $searchConfig );
 		}
 
 		$rvService = F::build( 'RelatedVideosService' ); /* @var $rvService RelatedVideosService */
@@ -280,26 +293,27 @@ class RelatedVideosController extends WikiaController {
 			$currentVideosByTitle[$vid['title']] = $vid;
 		}
 
+		$response = array();
+		foreach ( $resultSet as $result ) {
 
-		foreach ( $response as $url => &$singleVideoData ) {
-
-			$globalTitle = GlobalTitle::newFromId( $singleVideoData['pageid'], $singleVideoData['wid'] );
+			$globalTitle = GlobalTitle::newFromId( $result['pageid'], $result['wid'] );
 			if ( !empty( $globalTitle ) ) {
 
 				$title = $globalTitle->getText();
-				if( isset($currentVideosByTitle[$title]) ) {
+				if( isset( $currentVideosByTitle[$title] ) ) {
 					// don't suggest videos that are already in RelatedVideos
 					unset( $response[$url] );
 					continue;
 				}
+				
+				$response[$result['url']] = $result->toArray();
 
-				$rvService->inflateWithVideoData( $singleVideoData,
+				$rvService->inflateWithVideoData( $result->toArray(),
 								$globalTitle,
 								$this->getVal( 'videoWidth', 160 ),
 								$this->getVal( 'videoHeight', 90 ) );
 
 			} else {
-
 				unset( $response[$url] );
 			}
 		}
