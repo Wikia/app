@@ -147,8 +147,6 @@ var WikiaBar = {
 		return true;
 	},
 	startSlideShow: function() {
-		this.messageConfig.container = $('.message');
-
 		this.messageConfig.content = this.cutMessageIntoSmallPieces(
 			this.messageConfig.container.data('content'),
 			this.messageConfig.container
@@ -207,7 +205,8 @@ var WikiaBar = {
 		this.show();
 
 		//messages animation
-		if ($('#WikiaBarWrapper .message').exists()) {
+		this.messageConfig.container = $('#WikiaBarWrapper .message');
+		if (this.messageConfig.container.exists()) {
 			this.startSlideShow();
 		}
 
