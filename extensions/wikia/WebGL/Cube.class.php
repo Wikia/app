@@ -28,7 +28,7 @@ class Cube {
 		case 0:
 			for($i=1;$i<7;$i++){
 				if($i>1)$pics .=",";
-				$pics .="'".$wgExtensionsPath."/wikia/WebGL/$i.png'";
+				$pics .="'".$wgExtensionsPath."/wikia/WebGL/images/$i.png'";
 			} break;
 		case 1: for($i=1;$i<7;$i++){
 				if($i>1)$pics .=",";
@@ -104,7 +104,6 @@ class Cube {
 	//echo$pics;
 		$width = isset($args['width']) ? $args['width'] : 200;
 		$height = isset($args['height']) ? $args['height'] : 200;
-		$input = isset($args['input']) ? $args['input'] : "keyboard";
 		// get contents of a file into a string
 		$filename = $IP."/extensions/wikia/WebGL/Cube.include.php";
 		$content = file_get_contents($filename);

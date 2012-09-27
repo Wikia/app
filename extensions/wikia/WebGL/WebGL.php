@@ -3,6 +3,12 @@
  * WebGL widget c - implements tag <cube> for showing webGL 3D cube 
  *
  * @author Andrzej P.Urbański <andrzej.urbanski(at)wikia-inc.com>
+
+ * usage in wikia:
+<cube width="500" height="500">
+name of a wikia image from NS_FILE MAME SPACE (one to six each in seperate line
+</cube>
+
  */
 
 if(!defined('MEDIAWIKI')) {
