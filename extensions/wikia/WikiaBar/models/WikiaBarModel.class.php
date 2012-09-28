@@ -90,13 +90,13 @@ class WikiaBarModel extends WikiaBarModelBase {
 		}
 
 		// Result from failsafe is empty. Trying to get from english message
-		if(!$parseResult && $this->getLang() != self:: WIKIA_BAR_DEFAULT_LANG_CODE) {
+		if (!$parseResult && $this->getLang() != self:: WIKIA_BAR_DEFAULT_LANG_CODE) {
 			$parseResult = $this->getParsedMessageFromDefaultLang();
 			$status = false;
 		}
 
 		// Result from english message is empty. Trying to get from english failsafe
-		if(!$parseResult && $this->getLang() != self:: WIKIA_BAR_DEFAULT_LANG_CODE) {
+		if (!$parseResult && $this->getLang() != self:: WIKIA_BAR_DEFAULT_LANG_CODE) {
 			$parseResult = $this->getParsedFailsafeMessageFromDefaultLang();
 			$status = false;
 		}
@@ -241,50 +241,106 @@ class WikiaBarModel extends WikiaBarModelBase {
 
 	protected
 	function structuredData($data) {
-		$data = array(
-			'buttons' =>
-			array(
+		$structuredData = array(
+			'buttons' => array(),
+			'messages' => array()
+		);
+
+		if (
+			!empty($data[self::BUTTON_1_CLASS])
+			&& !empty($data[self::BUTTON_1_TEXT])
+			&& !empty($data[self::BUTTON_1_HREF])
+		) {
+			$structuredData['buttons'] [] =
 				array(
 					'class' => $data[self::BUTTON_1_CLASS],
 					'text' => $data[self::BUTTON_1_TEXT],
 					'href' => $data[self::BUTTON_1_HREF]
-				),
+				);
+		}
+
+		if (
+			!empty($data[self::BUTTON_2_CLASS])
+			&& !empty($data[self::BUTTON_2_TEXT])
+			&& !empty($data[self::BUTTON_2_HREF])
+		) {
+			$structuredData['buttons'] [] =
 				array(
 					'class' => $data[self::BUTTON_2_CLASS],
 					'text' => $data[self::BUTTON_2_TEXT],
 					'href' => $data[self::BUTTON_2_HREF]
-				),
+				);
+		}
+
+		if (
+			!empty($data[self::BUTTON_3_CLASS])
+			&& !empty($data[self::BUTTON_3_TEXT])
+			&& !empty($data[self::BUTTON_3_HREF])
+		) {
+			$structuredData['buttons'] [] =
 				array(
 					'class' => $data[self::BUTTON_3_CLASS],
 					'text' => $data[self::BUTTON_3_TEXT],
 					'href' => $data[self::BUTTON_3_HREF]
-				)
-			),
-			'messages' =>
-			array(
+				);
+		}
+
+		if (
+			!empty($data[self::LINE_1_TEXT])
+			&& !empty($data[self::LINE_1_HREF])
+		) {
+			$structuredData['messages'] [] =
 				array(
 					'text' => $data[self::LINE_1_TEXT],
 					'href' => $data[self::LINE_1_HREF],
-				),
+				);
+		}
+
+		if (
+			!empty($data[self::LINE_2_TEXT])
+			&& !empty($data[self::LINE_2_HREF])
+		) {
+			$structuredData['messages'] [] =
 				array(
 					'text' => $data[self::LINE_2_TEXT],
 					'href' => $data[self::LINE_2_HREF],
-				),
+				);
+		}
+
+		if (
+			!empty($data[self::LINE_3_TEXT])
+			&& !empty($data[self::LINE_3_HREF])
+		) {
+			$structuredData['messages'] [] =
 				array(
 					'text' => $data[self::LINE_3_TEXT],
 					'href' => $data[self::LINE_3_HREF],
-				),
+				);
+		}
+
+		if (
+			!empty($data[self::LINE_4_TEXT])
+			&& !empty($data[self::LINE_4_HREF])
+		) {
+			$structuredData['messages'] [] =
 				array(
 					'text' => $data[self::LINE_4_TEXT],
 					'href' => $data[self::LINE_4_HREF],
-				),
+				);
+		}
+
+		if (
+			!empty($data[self::LINE_5_TEXT])
+			&& !empty($data[self::LINE_5_HREF])
+		) {
+			$structuredData['messages'] [] =
 				array(
 					'text' => $data[self::LINE_5_TEXT],
 					'href' => $data[self::LINE_5_HREF],
-				)
-			)
-		);
-		return $data;
+				);
+		}
+
+		return $structuredData;
 	}
 
 	public
