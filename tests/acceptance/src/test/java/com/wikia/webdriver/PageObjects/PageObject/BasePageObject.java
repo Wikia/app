@@ -776,12 +776,13 @@ public class BasePageObject{
 	 */
 	public void customizeToolbar_ClickOnToolRemoveButton(String Tool) {
 		By By1 = By.cssSelector("ul.options-list li[data-caption='"+Tool+"']");
-		By By2 = By.cssSelector("ul.options-list li[data-caption='"+Tool+"'] img.trash");
-		Point Elem1_location = driver.findElement(By1).getLocation();
-		CommonFunctions.MoveCursorToElement(Elem1_location);
-		waitForElementByBy(By2);
-		waitForElementClickableByBy(By2);
-		driver.findElement(By2).click();
+//		By By2 = By.cssSelector("ul.options-list li[data-caption='"+Tool+"'] img.trash");
+//		Point Elem1_location = driver.findElement(By1).getLocation();
+//		CommonFunctions.MoveCursorToElement(Elem1_location);
+//		waitForElementByBy(By2);
+//		waitForElementClickableByBy(By2);
+//		driver.findElement(By2).click();
+		jQueryClick("ul.options-list li[data-caption=\""+Tool+"\"] img.trash");
 		PageObjectLogging.log("customizeToolbar_ClickOnToolRemoveButton", "Remove Tool with id "+Tool+" from Toolbar List", true, driver);
 	}
 	
