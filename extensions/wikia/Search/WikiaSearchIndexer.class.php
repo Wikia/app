@@ -82,14 +82,14 @@ class WikiaSearchIndexer extends WikiaObject {
 		}
 	
 		if(! $this->parserHookActive ) {
-			$this->app->registerHook('ParserClearState', 'WikiaSearch', 'onParserClearState');
+			$this->app->registerHook('ParserClearState', 'WikiaSearchIndexer', 'onParserClearState');
 			$this->parserHookActive = true;
 		}
 	
 		// hack: setting wgTitle as rendering fails otherwise
 		$wgTitle 			= $this->wg->Title;
 		$this->wg->Title	= $page->getTitle();
-	
+
 		// hack: setting action=render to exclude "Related Pages" and other unwanted stuff
 		$wgRequest = $this->wg->Request;
 		$this->wg->Request->setVal('action', 'render');
