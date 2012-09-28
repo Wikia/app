@@ -209,6 +209,7 @@ public class WikiBasePageObject extends BasePageObject {
 	public void openWikiPage()
 	{
 		driver.get(Domain);
+		waitForElementByElement(editDropDown);
 		executeScript("$('ul#pagehistory li:nth-child(1) .mw-history-undo')");
 	}
 	
