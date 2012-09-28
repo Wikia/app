@@ -748,7 +748,7 @@ class WikiaStatsAutoHubsConsumerDB {
 	public function removeExludeWiki($tag_id, $city_id, $lang) {
 		if ($this->removeExlude($tag_id, $city_id, 0, 0, 'city')) {
 			$this->loadHideLimits('city',true);
-			$this->rebuildMemc($tag_id, $lang, $type,true);
+			$this->rebuildMemc($tag_id, $lang, 'city' ,true);
 			return true;
 		}
 		return false;
@@ -882,7 +882,6 @@ class WikiaStatsAutoHubsConsumerDB {
 		}
 
 		$this->dbs->begin();
-		$delete_date = date("Y-m-d", mktime(0, 0, 0, date("m")  , date("d") - $date_col['exp'], date("Y")));
 
 		$con = "sf_city_id = $city_id and sf_page_id = $page_id and sf_user_id = $user_id and sf_tag_id = $tag_id and sf_type = '$type' ";
 
