@@ -868,30 +868,36 @@ public class BasePageObject{
 		
 	}
 	
-	/**
-	 * <p> Verify that wanted Tool appears in Toolbar. <br> 
-	 * The method finds all of Tools appearing in Toolbar (by their name), and checks if there is at least one name which fits the given param (ToolName)
-	 * 
-	 * @param ToolName Tool to be verified (name that should appear on toolbar)
-	 * @author Michal Nowierski
-	 */
-	public void customizeToolbar_VerifyToolOnToolbar(String ToolName) {
-		try {Thread.sleep(500);} catch (InterruptedException e) {e.printStackTrace();}
-		waitForElementByBy(customizeToolbar_ToolsList);
-		List<WebElement> List = driver.findElements(customizeToolbar_ToolsList);
-		int amountOfToolsOtherThanTheWantedTool = 0;
-		for (int i = 0; i < List.size(); i++) {
-			if (!driver.findElements(customizeToolbar_ToolsList).get(i).getText().equals(ToolName)) {
-				++amountOfToolsOtherThanTheWantedTool;
-			}
-		}
-		if (amountOfToolsOtherThanTheWantedTool==List.size()) {
-			PageObjectLogging.log("customizeToolbar_VerifyToolOnToolbar",
-					ToolName+" does not appear on toolbar. All of tools are other than the wanted one.", false, driver);
-				fail();
-		}
-		PageObjectLogging.log("customizeToolbar_VerifyToolOnToolbar",
-				"Verify that "+ToolName+" appears in Toolbar.", true, driver);
+//	/**
+//	 * <p> Verify that wanted Tool appears in Toolbar. <br> 
+//	 * The method finds all of Tools appearing in Toolbar (by their name), and checks if there is at least one name which fits the given param (ToolName)
+//	 * 
+//	 * @param ToolName Tool to be verified (name that should appear on toolbar)
+//	 * @author Michal Nowierski
+//	 */
+//	public void customizeToolbar_VerifyToolOnToolbar(String ToolName) {
+//		try {Thread.sleep(500);} catch (InterruptedException e) {e.printStackTrace();}
+//		waitForElementByBy(customizeToolbar_ToolsList);
+//		List<WebElement> List = driver.findElements(customizeToolbar_ToolsList);
+//		int amountOfToolsOtherThanTheWantedTool = 0;
+//		for (int i = 0; i < List.size(); i++) {
+//			if (!driver.findElements(customizeToolbar_ToolsList).get(i).getText().equals(ToolName)) {
+//				++amountOfToolsOtherThanTheWantedTool;
+//			}
+//		}
+//		if (amountOfToolsOtherThanTheWantedTool==List.size()) {
+//			PageObjectLogging.log("customizeToolbar_VerifyToolOnToolbar",
+//					ToolName+" does not appear on toolbar. All of tools are other than the wanted one.", false, driver);
+//				fail();
+//		}
+//		PageObjectLogging.log("customizeToolbar_VerifyToolOnToolbar",
+//				"Verify that "+ToolName+" appears in Toolbar.", true, driver);
+//	}
+	
+	public void customizeToolbar_VerifyToolOnToolbar(String ToolName)
+	{
+		waitForElementByXPath("//ul[@class='tools']//a[contains(text(), '"+ToolName+"')]");
+		PageObjectLogging.log("customizeToolbar_VerifyToolOnToolbar","Verify that "+ToolName+" appears in Toolbar.", true, driver);
 	}
 	
 	/**
