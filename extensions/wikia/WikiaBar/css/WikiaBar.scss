@@ -39,20 +39,26 @@ $animationSpeed: 200ms;
 			@include transition-shorthand(all $animationSpeed ease-in);
 		}
 	}
+	&.not-fixed {
+		position: relative;
+		&.hidden {
+			position: fixed;
+		}
+	}
 	.wikia-bar {
 		background-image: url(/skins/oasis/images/checkers.png); /* base64 */
 		height: 25px;
 		margin: auto;
 		text-align: center;
 		.ad {
-		  	bottom: 0;
+			bottom: 0;
 			float: left;
-		  	left: 0;
+			left: 0;
 			margin: 0 5px;
-		  	position: fixed;
+			position: fixed;
 			width: 320px;
 			@include transition-shorthand(all $animationSpeed ease-in $animationSpeed);
-	  		iframe {
+			iframe {
 				display: block;
 			}
 		}
@@ -190,7 +196,7 @@ $animationSpeed: 200ms;
 				float: right;
 			}
 		}
-	  	.message {
+		.message {
 			float: right;
 			font-family: helvetica;
 			font-size: 11px;
@@ -226,11 +232,11 @@ $animationSpeed: 200ms;
 		background-image: url(/extensions/wikia/WikiaBar/images/arrowDown.png); /* base64 */
 		background-position: center;
 		background-repeat: no-repeat;
-	  	bottom: 0;
+		bottom: 0;
 		display: block;
 		height: 25px;
-	  	position: absolute;
-	  	right: 0;
+		position: absolute;
+		right: 0;
 		width: 24px;
 	}
 }
@@ -260,20 +266,20 @@ $animationSpeed: 200ms;
 }
 
 .popover.wikiaBar {
-  .arrow {
-	border-left: 10px solid transparent;
-	border-top: 4px solid $color-page;
-	border-right: 10px solid transparent;
-	bottom: 2px;
-	margin-left: -5px;
-	right: 5px;
-  }
-  .popover-inner {
-	float: right;
-  }
+	.arrow {
+		border-left: 10px solid transparent;
+		border-top: 4px solid $color-page;
+		border-right: 10px solid transparent;
+		bottom: 2px;
+		margin-left: -5px;
+		right: 5px;
+	}
+	.popover-inner {
+		float: right;
+	}
 }
 
 body.nowikiabar {
-  padding-bottom: 0;
-  margin-bottom: 17px;
+	padding-bottom: 0;
+	margin-bottom: 17px;
 }
