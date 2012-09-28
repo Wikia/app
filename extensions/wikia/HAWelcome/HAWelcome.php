@@ -329,7 +329,7 @@ class HAWelcomeJob extends Job {
 					 */
 					$sysopId = $wgMemc->get( wfMemcKey( "last-sysop-id" ) );
 					if( $sysopId ) {
-						Wikia::log( __METHOD__, "sysop", "Have sysop id from memcached: {$sysopId}" );
+						wfDebug( __METHOD__ . "-sysop: Have sysop id from memcached: {$sysopId}" );
 						$this->mSysop = User::newFromId( $sysopId );
 					}
 					else {
@@ -339,19 +339,19 @@ class HAWelcomeJob extends Job {
 						$dbr = wfGetDB( DB_SLAVE );
 
 						/**
-                                                 * prior to September 20, 2012:
+						 * prior to September 20, 2012:
 						 * get all users who are sysops or staff or helpers
 						 * but not bots
-                                                 *
-						$groups = ($sysop !== "@sysop")
-							? array( "ug_group" => array( "staff", "sysop", "helper", "bot" ) )
-							: array( "ug_group" => array( "sysop", "bot" ) );
-                                                 * 
-                                                 * from September 20, 2012 on:
-                                                 * BugId:41817: get all users who are sysops but not bots or staff or helpers
-                                                 * (fallback to a staff member by calling Wikia::staffForLang()).
-                                                 */
-                                                $groups = array( "ug_group" => array( "sysop", "bot" ) );
+						 *
+						 * $groups = ($sysop !== "@sysop")
+						 *	? array( "ug_group" => array( "staff", "sysop", "helper", "bot" ) )
+						 *	: array( "ug_group" => array( "sysop", "bot" ) );
+						 *
+						 * from September 20, 2012 on:
+						 * BugId:41817: get all users who are sysops but not bots or staff or helpers
+						 * (fallback to a staff member by calling Wikia::staffForLang()).
+						 */
+						$groups = array( "ug_group" => array( "sysop", "bot" ) );
 
 						$bots   = array();
 						$admins = array();
@@ -387,7 +387,7 @@ class HAWelcomeJob extends Job {
 							__METHOD__,
 							array( "ORDER BY" => "rev_timestamp DESC", "DISTINCT" )
 						);
-						Wikia::log( __METHOD__, "query", $dbr->lastQuery() );
+						wfDebug( __METHOD__ . "-query: " . $dbr->lastQuery() );
 
 						/** if there are no active wiki admins, fall back to default staffers per language
 						* Note: We used to first go to any active staff member first and then go to this method if still empty
@@ -418,7 +418,7 @@ class HAWelcomeJob extends Job {
 					}
 				}
 				else {
-					Wikia::log( __METHOD__, "sysop", "Hardcoded sysop: {$sysop}" );
+					wfDebug( __METHOD__ . "-sysop: Hardcoded sysop: {$sysop}" );
 					$this->mSysop = User::newFromName( $sysop );
 				}
 			}
@@ -427,7 +427,7 @@ class HAWelcomeJob extends Job {
 			 * fallback, if still user is uknown we use Wikia user
 			 */
 			if( $this->mSysop instanceof User && $this->mSysop->getId() ) {
-				Wikia::log( __METHOD__, "sysop", "Found sysop: " . $this->mSysop->getName() );
+				wfDebug( __METHOD__ . "-sysop: Found sysop: " . $this->mSysop->getName() );
 			}
 			else {
 				$this->mSysop = Wikia::staffForLang( $wgLanguageCode );
@@ -445,7 +445,7 @@ class HAWelcomeJob extends Job {
 					);
 				}
 
-				Wikia::log( __METHOD__, "sysop", "Fallback to hardcoded user: " . $this->mSysop->getName() );
+				wfDebug( __METHOD__ . "-sysop: Fallback to hardcoded user: " . $this->mSysop->getName() );
 			}
 		}
 		wfProfileOut( __METHOD__ );
@@ -516,7 +516,7 @@ class HAWelcomeJob extends Job {
 			 * put possible welcomer into memcached, RT#14067
 			 */
 			if( $wgUser->getId() && self::isWelcomer( $wgUser ) ) {
-				
+
 				// BugId:41817 - if ( 1 == $wgUser->getId() ) { notify Mix }
 				if ( 1 == $wgUser->getId() ) {
 					UserMailer::sendHTML(
