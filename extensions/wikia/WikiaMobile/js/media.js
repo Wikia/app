@@ -389,7 +389,7 @@ define('media', ['modal', 'loader', 'querystring', 'popover', 'track', 'events',
 		});
 
 		if(imagesLength > 1 && !galleryInited) {
-			galleryData = cache.get(cacheKey);
+			galleryData = cache && cache.get(cacheKey);
 
 			if(galleryData){
 				Wikia.processStyle(galleryData[0]);
@@ -407,7 +407,7 @@ define('media', ['modal', 'loader', 'querystring', 'popover', 'track', 'events',
 						Wikia.processStyle(style);
 						Wikia.processScript(script);
 
-						cache.set(cacheKey, [style, script], ttl);
+						cache && cache.set(cacheKey, [style, script], ttl);
 						require('mediagallery');
 					}
 				});
