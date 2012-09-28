@@ -64,11 +64,14 @@
 		width: 25px;
 		box-shadow: 0 0 5px black;
 		border: none;
+		padding: 0;
+		color: grey;
 
 		-webkit-transition: all .3s;
 
 		&:hover{
 			box-shadow: 0 0 6px red;
+			color: rgb(255,100,100);
 		}
 	}
 }
