@@ -8,6 +8,8 @@
 class WallBaseController extends WikiaController{
 	const WALL_MESSAGE_RELATIVE_TIMESTAMP = 604800; // relative message timestampt for 7 days (improvement 20178)
 	protected $helper;
+	//use for controlling if we are not adding the some css/js head two time 
+	static $uniqueHead = array();
 	public function __construct() {
 		$this->app = F::App();
 		$this->helper = F::build('WallHelper', array());
@@ -153,6 +155,22 @@ class WallBaseController extends WikiaController{
 			wfProfileOut( __METHOD__);
 			return true;
 		}
+		
+		$head = '';
+		
+		/** 
+		 * Some of the wiki text returns also style and script
+		 * let's take this items and add them to text 
+		 */
+		foreach($wallMessage->getHeadItems() as $key => $val) {
+			$head = '';
+			if( empty(self::$uniqueHead[$key] ) ) {
+				$head .= $val;
+				self::$uniqueHead[$key] = true;
+			} 
+		}
+		
+		$this->response->setVal( 'head', $head);
 
 		$this->response->setVal( 'comment', $wallMessage);
 		$this->response->setVal( 'hide',  false);

@@ -614,6 +614,16 @@ class WallMessage {
 	public function getText() {
 		return $this->getArticleComment()->getText();
 	}
+	
+	public function getHeadItems() {
+		$ac = $this->getArticleComment();
+		 
+		if(!empty($ac->mHeadItems)) {
+			return $ac->mHeadItems;
+		}
+		
+		return array();
+	}
 
 	public function getCreateTime($format = TS_ISO_8601) {
 		return wfTimestamp($format, $this->getCreateTimeRAW() );
