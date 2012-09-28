@@ -110,7 +110,7 @@ class MediaQueryService extends Service {
 	}
 
 	protected function getArticleMediaMemcKey(Title $title) {
-		return $this->app->wf->MemcKey( 'MQSArticleMedia', '1.0', $title->getDBkey() );
+		return $this->app->wf->MemcKey( 'MQSArticleMedia', '1.3', $title->getDBkey() );
 	}
 
 	public function unsetCache( $title ) {
@@ -156,8 +156,20 @@ class MediaQueryService extends Service {
 						$file = wfFindFile( $media );
 						if ( !empty( $file ) ) {
 							if ( $file->canRender() ) {
-								$titles[] = array('title' => $row->il_to,
-										'type' => WikiaFileHelper::isTitleVideo( $media ) ? self::MEDIA_TYPE_VIDEO : self::MEDIA_TYPE_IMAGE);
+								$isVideo = WikiaFileHelper::isFileTypeVideo( $file );
+								if( $isVideo ) {
+									/** @var $videoHandler VideoHandler */
+									$videoHandler = $file->getHandler();
+									$thumb = $file->transform( array('width'=> 320), 0 );
+								}
+								else {
+									$videoHandler = false;
+								}
+								$titles[] = array(
+									'title' => $row->il_to,
+									'type' => ( $isVideo ? self::MEDIA_TYPE_VIDEO : self::MEDIA_TYPE_IMAGE ),
+									'meta' => ( $videoHandler ? array_merge( $videoHandler->getMetadata(true), $videoHandler->getEmbedSrcData() ) : array() ),
+									'thumbUrl' => ( !empty($thumb) ? $thumb->getUrl() : false ));
 							}
 						}
 					}

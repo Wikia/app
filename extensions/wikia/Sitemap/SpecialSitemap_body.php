@@ -19,8 +19,12 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 class SitemapPage extends UnlistedSpecialPage {
 
 	private $mType, $mTitle, $mNamespaces, $mNamespace, $mPriorities,
-		$mSizeLimit, $mPage, $mGoogleCode;
+		$mSizeLimit, $mPage, $mGoogleCode, $mVideoNamespaces;
 
+	/**
+	 * @var MediaQueryService
+	 */
+	private $mMediaService;
 	public $mCacheTime;
 
 	/**
@@ -50,10 +54,12 @@ class SitemapPage extends UnlistedSpecialPage {
 			NS_CATEGORY_TALK        => '0.1',
         );
 
+		$this->mVideoNamespaces = array_merge( F::app()->wg->ContentNamespaces, array( 500 /* NS_BLOG not defined yet */ ) );
 		$this->mSizeLimit = ( pow( 2, 20 ) * 10 ) - 20; // safe margin
-		$this->mLinkLimit = 50000;
+		$this->mLinkLimit = 25000;
 		$this->mPage = 0;
 		$this->mCacheTime = 86400*14; // cron is run every week but we want to keep them longer
+		$this->mMediaService = F::build('MediaQueryService');
 	}
 
 
@@ -288,7 +294,12 @@ class SitemapPage extends UnlistedSpecialPage {
 			array( "ORDER BY" => "page_id" )
 		);
 
-		$out .= "<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n";
+		$includeVideo = (bool) F::app()->wg->EnableVideoSitemaps;
+		if( $includeVideo && !in_array( $this->mNamespace, $this->mVideoNamespaces ) ) {
+			$includeVideo = false;
+		}
+
+		$out .= "<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\"" . ( $includeVideo ? ' xmlns:video="http://www.google.com/schemas/sitemap-video/1.1"' : '' ) . ">\n";
 		while ( $row = $dbr->fetchObject( $sth ) ) {
 			$size = strlen( $out );
 			$title = Title::makeTitle( $row->page_namespace, $row->page_title );
@@ -297,7 +308,7 @@ class SitemapPage extends UnlistedSpecialPage {
 				? $this->mPriorities[ $row->page_namespace ]
 				: "0.5";
 
-			$entry = $this->titleEntry( $title->getFullURL(), $stamp, $prior );
+			$entry = $this->titleEntry( $title, $stamp, $prior, $includeVideo );
 
 			/**
 			 * break if it's to big
@@ -313,13 +324,41 @@ class SitemapPage extends UnlistedSpecialPage {
 		print gzencode( $out );
 	}
 
-	private function titleEntry( $url, $date, $priority ) {
+	private function titleEntry( Title $title, $date, $priority, $includeVideo = false ) {
 		return
 			"\t<url>\n" .
-			"\t\t<loc>$url</loc>\n" .
+			"\t\t<loc>{$title->getFullURL()}</loc>\n" .
 			"\t\t<lastmod>$date</lastmod>\n" .
 			"\t\t<priority>$priority</priority>\n" .
+			( $includeVideo ? $this->videoEntry( $title ) : "" ) .
 			"\t</url>\n";
+	}
+
+	private function videoEntry( Title $title ) {
+		$entries = array();
+
+		$articleVideos = $this->mMediaService->getMediaFromArticle( $title, MediaQueryService::MEDIA_TYPE_VIDEO );
+
+		foreach( $articleVideos as $videoTitleData ) {
+			$metaData = $videoTitleData['meta'];
+			if($metaData['canEmbed'] === 0) {
+				continue;
+			}
+			$entry =
+					"\t\t<video:video>\n" .
+					"\t\t\t<video:title>{$metaData['title']}</video:title>\n" .
+					"\t\t\t<video:description>{$metaData['description']}</video:description>\n" .
+					( !empty($videoTitleData['thumbUrl']) ? "\t\t\t<video:thumbnail_loc>{$videoTitleData['thumbUrl']}</video:thumbnail_loc>\n" : "" ) .
+					( ( $metaData['srcType'] == 'player') ? "\t\t\t<video:player_loc allow_embed=\"yes\" autoplay=\"{$metaData['autoplayParam']}\">{$metaData['srcParam']}</video:player_loc>\n" :
+							"\t\t\t<video:content_loc>{$metaData['srcParam']}</video:content_loc>\n" ) .
+					( !empty($metaData['duration']) ? "\t\t\t<video:duration>{$metaData['duration']}</video:duration>\n" : "" ) .
+					"\t\t\t<video:family_friendly>yes</video:family_friendly>\n" .
+					"\t\t</video:video>\n";
+
+			$entries[] = $entry;
+		}
+
+		return implode("\t\n", $entries);
 	}
 
 	public function cachePages( $namespace ) {
