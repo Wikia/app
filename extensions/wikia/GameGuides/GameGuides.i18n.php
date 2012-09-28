@@ -4,6 +4,19 @@ $messages = array();
 
 $messages['en'] = array(
 	'wikiagameguides-desc' => 'Wikia Game Guides mobile app modules',
+
+	//Preview page
+	'wikiagameguides-preview-description' => 'This is just a preview of how pages would look like in a Wikia Game Guides application.',
+
+	//Content Managment tool
+	'wikiagameguides-content-title' => 'Wikia Game Guides content managment tool',
+	'wikiagameguides-content-category' => 'Category',
+	'wikiagameguides-content-tag' => 'Tag',
+	'wikiagameguides-content-name' => 'Name',
+	'wikiagameguides-content-add' => 'Add',
+	'wikiagameguides-content-save' => 'Save',
+	'wikiagameguides-content-category-error' => 'Category does not exists',
+	'wikiagameguides-content-duplicate-entry' => 'This value is duplicated'
 );
 
 /** Message documentation (Message documentation) */

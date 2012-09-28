@@ -20,16 +20,27 @@ $app->registerClass(
 
 $app->registerClass( 'GameGuidesModel', "{$dir}/GameGuidesModel.class.php" );
 
+/**
+ * message files
+ */
+$app->registerExtensionMessageFile('GameGuides', "{$dir}/GameGuides.i18n.php");
+
 
 //Special Page to preview page in GameGuide style
-$app->registerClass( 'GameGuidesSpecialController', "{$dir}/GameGuidesSpecialController.class.php" );
-$app->registerSpecialPage('GameGuidesPreview', 'GameGuidesSpecialController');
+$app->registerClass( 'GameGuidesSpecialPreviewController', "{$dir}/GameGuidesSpecialPreviewController.class.php" );
+$app->registerSpecialPage( 'GameGuidesPreview', 'GameGuidesSpecialPreviewController' );
 
+//Special Page for Content Managment Tool
+$app->registerClass( 'GameGuidesSpecialContentController', "{$dir}/GameGuidesSpecialContentController.class.php" );
+$app->registerSpecialPage( 'GameGuidesContent', 'GameGuidesSpecialContentController' );
 
-/**
-* message files
-*/
-$app->registerExtensionMessageFile('GameGuides', "{$dir}/GameGuides.i18n.php");
+F::build( 'JSMessages' )->registerPackage( 'GameGuidesContentMsg', array(
+	'wikiagameguides-content-category',
+	'wikiagameguides-content-tag',
+	'wikiagameguides-content-name',
+	'wikiagameguides-content-duplicate-entry',
+	'wikiagameguides-content-category-error'
+) );
 
 $wgGroupPermissions['*']['gameguidespreview'] = false;
 $wgGroupPermissions['staff']['gameguidespreview'] = true;

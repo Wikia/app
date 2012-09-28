@@ -310,12 +310,33 @@ $config['gameguides_scss'] = array(
 	)
 );
 
+
+//this combines couple of WikiaMobile groups to make it possible to load all js via one request
 $config['gameguides_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'wikiamobile',
 	'assets' => array(
-		'#group_wikiamobile_js_head',
-		'#group_wikiamobile_js_body_minimal',
+		//set js class as fast as possible to make styling as fast as possible
+		'//extensions/wikia/WikiaMobile/js/html_js_class.js',
+
+		//libraries/frameworks
+		'//resources/wikia/libraries/zepto/zepto-0.8.js',
+		'//resources/wikia/libraries/modil/modil.js',
+
+		//core modules
+		'//resources/wikia/modules/querystring.js',
+
+		//feature detection
+		'//extensions/wikia/WikiaMobile/js/features.js',
+		'//extensions/wikia/WikiaMobile/js/feature-detects/positionfixed.wikiamobile.js',
+
+		// deferred.js - jQuery-free implementation (BugId:34943)
+		'//resources/wikia/libraries/deferred/deferred.js',
+		'//resources/wikia/libraries/deferred/deferred.api.js',
+
+		//tracker
+		'//extensions/wikia/WikiaTracker/js/WikiaTracker_config.js',
+		'//extensions/wikia/WikiaTracker/js/WikiaTracker.js',
 
 		//feature detection
 		'//extensions/wikia/WikiaMobile/js/feature-detects/overflow.wikiamobile.js',
@@ -347,7 +368,6 @@ $config['gameguides_js'] = array(
 
 		//entrypoint
 		'//extensions/wikia/WikiaMobile/js/WikiaMobile.js',
-
 		'//extensions/wikia/GameGuides/js/GameGuides.js',
 	)
 );
