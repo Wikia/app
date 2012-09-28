@@ -930,24 +930,31 @@ public class BasePageObject{
 	 * @param ToolName Tool to be verified (name that should not appear on toolbar)
 	 * @author Michal Nowierski
 	 */
-	public void customizeToolbar_VerifyToolNotOnToolbar(String ToolName){
-		try {Thread.sleep(500);} catch (InterruptedException e) {e.printStackTrace();}
-		waitForElementByBy(customizeToolbar_ToolsList);
-		List<WebElement> List = driver.findElements(customizeToolbar_ToolsList);
-		int amountOfToolsOtherThanTheWantedTool = 0;
-		for (int i = 0; i < List.size(); i++) {
-			if (!List.get(i).getText().equals(ToolName)) {
-				++amountOfToolsOtherThanTheWantedTool;
-			}
-		}
-		if (amountOfToolsOtherThanTheWantedTool<List.size()) {
-			PageObjectLogging.log("customizeToolbar_VerifyToolNotOnToolbar",
-					ToolName+" Tool appears on toolbar (Not all of tools are other than the wanted one).", false, driver);
-				fail();
-		}
-		PageObjectLogging.log("customizeToolbar_VerifyToolNotOnToolbar",
-				"Verify that "+ToolName+" tool does not appear in Toolbar.", true, driver);
-		
+//	public void customizeToolbar_VerifyToolNotOnToolbar(String ToolName){
+//		try {Thread.sleep(500);} catch (InterruptedException e) {e.printStackTrace();}
+//		waitForElementByBy(customizeToolbar_ToolsList);
+//		List<WebElement> List = driver.findElements(customizeToolbar_ToolsList);
+//		int amountOfToolsOtherThanTheWantedTool = 0;
+//		for (int i = 0; i < List.size(); i++) {
+//			if (!List.get(i).getText().equals(ToolName)) {
+//				++amountOfToolsOtherThanTheWantedTool;
+//			}
+//		}
+//		if (amountOfToolsOtherThanTheWantedTool<List.size()) {
+//			PageObjectLogging.log("customizeToolbar_VerifyToolNotOnToolbar",
+//					ToolName+" Tool appears on toolbar (Not all of tools are other than the wanted one).", false, driver);
+//				fail();
+//		}
+//		PageObjectLogging.log("customizeToolbar_VerifyToolNotOnToolbar",
+//				"Verify that "+ToolName+" tool does not appear in Toolbar.", true, driver);
+//		
+//	}
+	
+	public void customizeToolbar_VerifyToolNotOnToolbar(String ToolName)
+	{
+		By tool = By.xpath("//ul[@class='tools']//a[contains(text(), '"+ToolName+"')]");
+		waitForElementNotVisibleByBy(tool);
+		PageObjectLogging.log("customizeToolbar_VerifyToolNotOnToolbar","Verify that "+ToolName+" tool does not appear in Toolbar.", true, driver);
 	}
 	
 	/**
