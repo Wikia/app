@@ -21,16 +21,30 @@
 	// Decide whether the script should be written natively (return true)
 	// or can be safely handled by ghostwriter (return false)
 	shouldUseNativeWrite = function(src) {
-		var i;
+		var i, srcDomain;
 
-		if (src.indexOf(location.protocol + '//' + location.host) === 0 // the same host
-			|| src.indexOf(window.wgCdnRootUrl) === 0                   // regular script location
-			|| src.indexOf('http://images.wikia.com/') === 0            // legacy script location
-		) {
+		// Check if script source is a full URL. If not it may be
+		// a relative URL, so we'll use native write for it
+		if (src.search(/^[a-z]+:\/\/[a-z0-9\.]+\//) === -1) {
 			return true;
 		}
 
-		// What's inside wgJqueryUrl should also be written natively
+		// For scripts matching CDN URL, use native write
+		if (src.indexOf(window.wgCdnRootUrl) === 0) {
+			return true;
+		}
+
+		// For scripts in current domain and for scripts in
+		// wikia.com domain (resource loader on production)
+		// use native write. This case also catches the
+		// legacy domain for assets: images.wikia.com
+		srcDomain = src.split('/')[2];
+		if (srcDomain === location.host || srcDomain.search(/\.wikia\.com$/) !== -1) {
+			return true;
+		}
+
+		// For scripts whose URLs are from wgJqueryUrl
+		// use native document.write as well
 		if (window.wgJqueryUrl) {
 			for (i = 0; i < window.wgJqueryUrl.length; i += 1) {
 				if (src.indexOf(window.wgJqueryUrl[i]) === 0) {
