@@ -282,7 +282,7 @@ function outputTestsResult() {
 		skipped = 0,
 		tests = 0,
 		time = 0.0;
-	
+
 	for(var i = 0 ; i < testResults.length ; i++) {
 
 		if (options.output) {
@@ -320,6 +320,12 @@ function outputTestsResult() {
 					}
 
 					console.log('\t' + testName + '\t' + stylize( '[OK]', 'green' ) + ' (' + assertions + ')' );
+					if ( test.messages && test.messages.length > 0 ) {
+						var messages = test.messages.split('\n');
+						for(var j = 0 ; j < messages.length ; j++) {
+							console.log('\t\t' + messages[j]);
+						}
+					}
 
 				} else {
 
