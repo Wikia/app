@@ -794,9 +794,7 @@ public class BasePageObject{
 	 */
 	public void customizeToolbar_ClickOnToolRenameButton(String ToolID) {
 		By By1 = By.cssSelector("ul.options-list li[data-caption='"+ToolID+"']");
-		By By2 = By.cssSelector("ul.options-list li[data-caption='"+ToolID+"'] img.edit-pencil");
-		waitForElementByBy(By2);
-		waitForElementClickableByBy(By2);
+		waitForElementByBy(By1);
 		jQueryClick("ul.options-list li[data-caption=\""+ToolID+"\"] img.edit-pencil");
 		PageObjectLogging.log("customizeToolbar_ClickOnToolRenameButton", "Rename the "+ToolID+" Tool", true, driver);
 	}
