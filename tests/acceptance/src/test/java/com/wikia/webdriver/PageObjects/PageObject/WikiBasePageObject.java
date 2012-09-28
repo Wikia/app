@@ -34,6 +34,9 @@ public class WikiBasePageObject extends BasePageObject {
 	@FindBy(id="wpCreatePageDialogTitle")
 	private WebElement articleNameField;
 	
+	@FindBy(css="#GlobalNavigation")
+	private WebElement globalNav;
+	
 	@FindBy(css="article span.drop")
 	private WebElement editDropDown;
 	
@@ -209,7 +212,7 @@ public class WikiBasePageObject extends BasePageObject {
 	public void openWikiPage()
 	{
 		driver.get(Domain);
-		waitForElementByElement(editDropDown);
+		waitForElementByElement(globalNav);
 		executeScript("$('ul#pagehistory li:nth-child(1) .mw-history-undo')");
 	}
 	
