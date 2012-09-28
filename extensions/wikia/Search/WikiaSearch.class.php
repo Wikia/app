@@ -232,16 +232,16 @@ class WikiaSearch extends WikiaObject {
 	    $filterQuery = '(wid:' . $searchConfig->getCityId() . ' OR wid:' . self::VIDEO_WIKI_ID . '^2) AND is_video:true';
 	
 	    $query = sprintf( 'wid:%d', $searchConfig->getCityId() );
-	    if ( $searchConfig->getPageId() !== false ) {
+	    if ( $searchConfig->getPageId() != false ) {
 	        $query .= sprintf(' AND pageid:%d', $searchConfig->getPageId() );
 	    } else {
 	        // tweakable heuristic:
 	        // the document frequency for the interesting terms needs to be at least 50% of the wiki's pages
-	        $data = $this->callMediaWikiAPI( array( 'action' => 'query',
-									                'prop' => 'info|categories',
-									                'inprop' => 'url|created|views|revcount',
-									                'meta' => 'siteinfo',
-									                'siprop' => 'statistics|wikidesc|variables|namespaces|category'
+	        $data = $this->callMediaWikiAPI( array( 'action'	=> 'query',
+									                'prop'		=> 'info|categories',
+									                'inprop'	=> 'url|created|views|revcount',
+									                'meta'		=> 'siteinfo',
+									                'siprop'	=> 'statistics|wikidesc|variables|namespaces|category'
 	                						));
 	
 			if ( isset( $data['query'] ) && isset( $data['query']['statistics'] ) && isset( $data['query']['statistics']['articles'] ) ) {
@@ -644,7 +644,7 @@ class WikiaSearch extends WikiaObject {
 			$mlt->addParam( 'mlt.url', $streamUrl );
 		}
 	    
-		$mltResult = $this->client->moreLikeThis( $mlt ); 
+		$mltResult = $this->client->moreLikeThis( $mlt );
 		return $mltResult;
 	}
 
