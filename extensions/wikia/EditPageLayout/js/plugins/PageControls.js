@@ -400,7 +400,7 @@
 
 			if (config.isWidePage) {
 				// 980 px of content width on main pages / pages without right rail
-				width += 320;
+				width += 320 + (this.isGridLayout ? 20 : 0);
 			}
 			if (config.extraPageWidth) {
 				// wide wikis
