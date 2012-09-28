@@ -25,6 +25,9 @@ class EditPageLayoutController extends WikiaController {
 
 		// adding 'editor' class as a CSS helper
 		OasisController::addBodyClass('editor');
+		
+		// temporary grid transition code, remove after transition
+		OasisController::addBodyClass('WikiaGrid');
 
 		// render Oasis module
 		$this->html = F::app()->renderView( 'Oasis', 'Index', array('body' => $body) );
