@@ -18,7 +18,7 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 	private String Caption2 = "QAWebdriverCaption2";
 	private String pageName;
 	
-	@Test(groups={"ArticleFeaturesCRUDAdmin_001", "ArticleCRUDAdmin", "Smoke"}) 
+	@Test(groups={"ArticleFeaturesCRUDAdmin_001", "ArticleFeaturesCRUDAdmin", "Smoke"}) 
 //	https://internal.wikia-inc.com/wiki/QA/Core_Features_and_Testing/Manual_Regression_Tests/Image_Serving	
 	// Test Case 007  Adding galleries to an article in edit mode
 	public void ArticleCRUDAdmin_001_AddingGallery()
@@ -52,7 +52,7 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		CommonFunctions.logOut(Properties.userName2, driver);
 	}
 	
-	@Test(groups={"ArticleFeaturesCRUDAdmin_002", "ArticleCRUDAdmin"}) 
+	@Test(groups={"ArticleFeaturesCRUDAdmin_002", "ArticleFeaturesCRUDAdmin"}) 
 //	https://internal.wikia-inc.com/wiki/QA/Core_Features_and_Testing/Manual_Regression_Tests/Image_Serving	
 	// Test Case 007  Adding galleries to an article in edit mode
 	public void ArticleCRUDAdmin_002_ModifyGallery()
@@ -95,7 +95,7 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		CommonFunctions.logOut(Properties.userName2, driver);
 	}
 	
-	@Test(groups={"ArticleFeaturesCRUDAdmin_003", "ArticleCRUDAdmin"}) 
+	@Test(groups={"ArticleFeaturesCRUDAdmin_003", "ArticleFeaturesCRUDAdmin"}) 
 //	https://internal.wikia-inc.com/wiki/QA/Core_Features_and_Testing/Manual_Regression_Tests/Image_Serving	
 	// Test Case 007  Adding galleries to an article in edit mode
 	public void ArticleCRUDAdmin_003_DeleteGallery()
@@ -133,7 +133,7 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		CommonFunctions.logOut(Properties.userName2, driver);
 	}
 	
-	@Test(groups={"ArticleFeaturesCRUDAdmin_004", "ArticleCRUDAdmin", "Smoke"})
+	@Test(groups={"ArticleFeaturesCRUDAdmin_004", "ArticleFeaturesCRUDAdmin", "Smoke"})
 //	https://internal.wikia-inc.com/wiki/QA/Core_Features_and_Testing/Manual_Regression_Tests/Image_Serving	
 	// Test Case 008 Adding slideshows to an article in edit mode
 	public void ArticleCRUDAdmin_004_AddingSlideshow()
@@ -166,7 +166,7 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		CommonFunctions.logOut(Properties.userNameStaff, driver);
 	}
 	
-	@Test(groups={"ArticleFeaturesCRUDAdmin_009", "ArticleCRUDAdmin"})
+	@Test(groups={"ArticleFeaturesCRUDAdmin_009", "ArticleFeaturesCRUDAdmin"})
 //	https://internal.wikia-inc.com/wiki/QA/Core_Features_and_Testing/Manual_Regression_Tests/Image_Serving	
 	// Test Case 008 Adding slideshows to an article in edit mode
 	public void ArticleCRUDAdmin_005_ModifySlideshow()
@@ -208,7 +208,7 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		CommonFunctions.logOut(Properties.userNameStaff, driver);
 	}
 	
-	@Test(groups={"ArticleFeaturesCRUDAdmin_006", "ArticleCRUDAdmin"})
+	@Test(groups={"ArticleFeaturesCRUDAdmin_006", "ArticleFeaturesCRUDAdmin"})
 	public void ArticleCRUDAdmin_006_DeleteSlideshow()
 	{
 		CommonFunctions.logOut(Properties.userName, driver);
@@ -245,7 +245,7 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 	
 	
 	
-	@Test(groups={"ArticleFeaturesCRUDAdmin_007", "ArticleCRUDAdmin", "Smoke"})
+	@Test(groups={"ArticleFeaturesCRUDAdmin_007", "ArticleFeaturesCRUDAdmin", "Smoke"})
 //	https://internal.wikia-inc.com/wiki/QA/Core_Features_and_Testing/Manual_Regression_Tests/Image_Serving	
 	// Test Case 009 Adding sliders to an article in edit mode
 	public void ArticleCRUDAdmin_007_AddingSlider()
@@ -279,7 +279,7 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 	}
 	
 	
-	@Test(groups={"ArticleFeaturesCRUDAdmin_008", "ArticleCRUDAdmin"})
+	@Test(groups={"ArticleFeaturesCRUDAdmin_008", "ArticleFeaturesCRUDAdmin"})
 //	https://internal.wikia-inc.com/wiki/QA/Core_Features_and_Testing/Manual_Regression_Tests/Image_Serving	
 	// Test Case 009 Adding sliders to an article in edit mode
 	public void ArticleCRUDAdmin_008_ModifySlider()
@@ -321,7 +321,7 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		CommonFunctions.logOut(Properties.userName, driver);	
 	}
 	
-	@Test(groups={"ArticleFeaturesCRUDAdmin_009", "ArticleCRUDAdmin"})
+	@Test(groups={"ArticleFeaturesCRUDAdmin_009", "ArticleFeaturesCRUDAdmin"})
 	public void ArticleCRUDAdmin_009_DeleteSlider()
 	{
 		CommonFunctions.logOut(Properties.userName, driver);
@@ -356,7 +356,7 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		CommonFunctions.logOut(Properties.userName2, driver);
 	}
 	
-	@Test(groups={"ArticleFeaturesCRUDAdmin_010", "ArticleCRUDAdmin", "Smoke"})
+	@Test(groups={"ArticleFeaturesCRUDAdmin_010", "ArticleFeaturesCRUDAdmin", "Smoke"})
 //	https://internal.wikia-inc.com/wiki/QA/Core_Features_and_Testing/Manual_Regression_Tests/Image_Serving	
 	// Test Case 010 Adding videos to an article in edit mode
 	public void ArticleCRUDAdmin_010_AddingVideo()
@@ -390,7 +390,7 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		CommonFunctions.logOut(Properties.userName2, driver);
 	}	
 	
-	@Test(groups={"ArticleFeaturesCRUDAdmin_011", "ArticleCRUDAdmin"})
+	@Test(groups={"ArticleFeaturesCRUDAdmin_011", "ArticleFeaturesCRUDAdmin"})
 	public void ArticleCRUDAdmin_011_ModifyVideo()
 	{
 		CommonFunctions.logOut(Properties.userName, driver);
@@ -427,7 +427,7 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		CommonFunctions.logOut(Properties.userName2, driver);
 	}
 	
-	@Test(groups={"ArticleFeaturesCRUDAdmin_012", "ArticleCRUDAdmin"})
+	@Test(groups={"ArticleFeaturesCRUDAdmin_012", "ArticleFeaturesCRUDAdmin"})
 	public void ArticleCRUDAdmin_012_DeleteVideo()
 	{
 		CommonFunctions.logOut(Properties.userName, driver);
@@ -462,7 +462,7 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		CommonFunctions.logOut(Properties.userName2, driver);
 	}
 	
-	@Test(groups={"ArticleFeaturesCRUDAdmin_013", "ArticleCRUDAdmin", "Smoke"}) 
+	@Test(groups={"ArticleFeaturesCRUDAdmin_013", "ArticleFeaturesCRUDAdmin", "Smoke"}) 
 //	https://internal.wikia-inc.com/wiki/QA/Core_Features_and_Testing/Manual_Regression_Tests/Image_Serving
 	// Test Case 004 Adding images to an article in edit mode
 	public void ArticleCRUDAdmin_013_AddingImage()
@@ -494,7 +494,7 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		CommonFunctions.logOut(Properties.userName2, driver);
 	}
 	
-	@Test(groups={"ArticleFeaturesCRUDAdmin_014", "ArticleCRUDAdmin"})
+	@Test(groups={"ArticleFeaturesCRUDAdmin_014", "ArticleFeaturesCRUDAdmin"})
 //	https://internal.wikia-inc.com/wiki/QA/Core_Features_and_Testing/Manual_Regression_Tests/Image_Serving
 	// Test Case 005 Modifying images in an article in edit mode
 	public void ArticleCRUDAdmin_014_ModifyImage()
@@ -527,7 +527,7 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		CommonFunctions.logOut(Properties.userName2, driver);
 	}
 	
-	@Test(groups={"ArticleFeaturesCRUDAdmin_015", "ArticleCRUDAdmin"})
+	@Test(groups={"ArticleFeaturesCRUDAdmin_015", "ArticleFeaturesCRUDAdmin"})
 //	https://internal.wikia-inc.com/wiki/QA/Core_Features_and_Testing/Manual_Regression_Tests/Image_Serving
 	// Test Case 005 Modifying images in an article in edit mode
 	public void ArticleCRUDAdmin_015_DeleteImage()
