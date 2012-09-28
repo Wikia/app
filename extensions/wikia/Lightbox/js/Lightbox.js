@@ -905,6 +905,9 @@ var Lightbox = {
 			method:		'lightboxModalContentError',
 			type:		'GET',
 			format: 'html',
+			data: {
+				lightboxVersion: 1 // update this when we change the template
+			},
 			callback: function(html) {
 				$(html).makeModal({
 					width: 600
