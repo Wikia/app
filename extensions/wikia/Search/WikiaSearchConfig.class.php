@@ -131,7 +131,7 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	public function getLength()
 	{
 		return ( $this->getArticleMatch() !== null && $this->getStart() === 0 ) 
-			? ((int)$this->params['length']) - 1 
+			? ( (int) $this->params['length'] ) - 1 
 			: $this->params['length'];
 	}
 	
@@ -200,6 +200,17 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	public function getLimit()
 	{
 		return $this->params['length'];
+	}
+	
+	/**
+	 * Sets length value, so we don't get confused
+	 * @param  int $val
+	 * @return WikiaSearchConfig provides fluent interface
+	 */
+	public function setLimit( $val )
+	{
+		$this->params['length'] = $val;
+		return $this;
 	}
 	
 	/**

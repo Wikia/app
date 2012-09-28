@@ -117,6 +117,9 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 			$this->metaposition			= $metaposition;
 			$this->highlightingObject	= $result->getHighlighting();
 			
+			$this	->setResultsStart	( $result->getStart() )
+					->setQueryTime		( $result->getQueryTime() );
+			
 			if ( ( $this->parent !== null ) && ( $this->metaposition !==  null ) ) {
 				$this->prepareChildResultSet();
 			} else {
@@ -126,9 +129,6 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 					->setResults					( $this->searchResultObject->getDocuments() )
 					->setResultsFound				( $this->searchResultObject->getNumFound() );
 			}
-			
-			$this	->setResultsStart	( $result->getStart() )
-					->setQueryTime		( $result->getQueryTime() );
 		}
 		wfProfileOut(__METHOD__);
 	}
@@ -232,8 +232,8 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 	 */
 	public function prependArticleMatchIfExists() {
 		wfProfileIn(__METHOD__);
-		if (! $this->searchConfig->hasArticleMatch() ) {
-			// we didn't get an article match. and that's okay. don't feel bad about it.
+		
+		if (! ( $this->searchConfig->hasArticleMatch() && $this->resultsStart == 0 ) ) {
 			return $this;
 		}
 
