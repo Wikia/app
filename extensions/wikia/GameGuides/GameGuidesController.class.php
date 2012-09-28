@@ -214,8 +214,6 @@ class GameGuidesController extends WikiaController {
 		$this->response->setVal( 'html', $page->getVal( 'html' ) );
 		$this->response->setVal( 'js', $js[0] );
 		$this->response->setVal( 'css', $styles );
-
-
 	}
 
 	public function getResourcesUrl(){
