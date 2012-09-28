@@ -499,6 +499,7 @@ define('media', ['modal', 'loader', 'querystring', 'popover', 'track', 'events',
 	return {
 		openModal: openModal,
 		getImages: function(){
+			!inited && setup();
 			return images;
 		},
 		getCurrent: function(){
