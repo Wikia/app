@@ -775,6 +775,7 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 	}
 }
 
+/* temp transition code until grid is fully rolled out, remove and integrate after transition */
 .WikiaGrid .WikiaHomePage #visualization {
 	.grid-1 {
 		width: 160px;
@@ -834,6 +835,11 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 		width: 353px;
 	}
 }
+
+.WikiaPage.WikiaGrid .wikiahomepage-hubs .wikiahomepage-hubs-section .wikiahomepage-hubs-hero-image {
+	width: 330px;
+}
+/* end temp transistion code */
 
 .popover .details {
 	//@include box-shadow(0, 0, 10px, mix(#000000, $color-page, 50%), false, 0);
