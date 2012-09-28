@@ -32,14 +32,14 @@ class WikiaHomePageController extends WikiaController {
 	// wiki batches
 	const WIKI_BATCH_SIZE = 10;
 
-	const hubsImgWidth = 320;
+	const hubsImgWidth = 330;
 	const hubsImgHeight = 160;
 	const INITIAL_BATCHES_NUMBER = 5;
 
 	//failsafe
 	const FAILSAFE_ARTICLE_TITLE = 'Failsafe';
 
-	const HUBS_IMAGES_MEMC_KEY_VER = '1.01';
+	const HUBS_IMAGES_MEMC_KEY_VER = '1.02';
 
 	/**
 	 * @var WikiaHomePageHelper
@@ -337,7 +337,7 @@ class WikiaHomePageController extends WikiaController {
 		$memKey = $this->wf->SharedMemcKey('wikiahomepage', 'hubimages', $this->wg->contLang->getCode(), self::HUBS_IMAGES_MEMC_KEY_VER);
 		$hubImages = $this->wg->Memc->get($memKey);
 
-		if (empty($hubImages)) {
+		if( empty($hubImages) ) {
 			$hubImages = $this->getHubImageUrls();
 			$this->wg->Memc->set($memKey, $hubImages, 60 * 60 * 24);
 		}
