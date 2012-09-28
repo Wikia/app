@@ -19,6 +19,7 @@ class ArticleComment {
 		$mMetadata,
 		$mText,
 		$mRawtext,
+		$mHeadItems,
 		$mNamespaceTalk;
 
 	/**
@@ -189,6 +190,7 @@ class ArticleComment {
 				$this->mText = $acData['text'];
 				$this->mMetadata = empty($this->mMetadata) ? $acData['metadata']:$this->mMetadata;
 				$this->mRawtext = $acData['raw'];
+				$this->mHeadItems = empty($acData['head']) ? null:$acData['head'];  
 				$this->mFirstRevision = $acData['first'];
 				$this->mLastRevision = $acData['last'];
 				$this->mUser = $acData['user'];
@@ -233,6 +235,7 @@ class ArticleComment {
 				'text' => $this->mText,
 				'metadata' => $this->mMetadata,
 				'raw' => $this->mRawtext,
+				'head' => $this->mHeadItems,
 				'first' => $this->mFirstRevision,
 				'last' => $this->mLastRevision,
 				'user' => $this->mUser
@@ -253,7 +256,10 @@ class ArticleComment {
 
 		$wgParser->ac_metadata = array();
 
-		$this->mText = $wgParser->parse( $rawtext, $this->mTitle, $wgOut->parserOptions())->getText();
+		$head = $wgParser->parse( $rawtext, $this->mTitle, $wgOut->parserOptions());
+		$this->mText = $head->getText();
+		$this->mHeadItems = $head->getHeadItems();
+
 		if( isset($wgParser->ac_metadata) ) {
 			$this->mMetadata = $wgParser->ac_metadata;
 		} else {
