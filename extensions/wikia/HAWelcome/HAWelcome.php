@@ -116,14 +116,14 @@ class HAWelcomeJob extends Job {
 			if( ($bot_message == '@bot') || ($wgUser && $wgUser->isAllowed( 'bot' )) ) {
 				$flags = EDIT_FORCE_BOT;
 			}
-			Wikia::log( __METHOD__, "user", $this->mUser->getName() );
+			wfDebug( __METHOD__ . "-user: " . $this->mUser->getName() );
 
 			if( $this->mUser && $this->mUser->getName() !== self::WELCOMEUSER ) {
 				/**
 				 * check again if talk page exists
 				 */
 				$talkPage  = $this->mUser->getUserPage()->getTalkPage();
-				Wikia::log( __METHOD__, "talk", $talkPage->getFullUrl() );
+				wfDebug( __METHOD__ . "-talk: " . $talkPage->getFullUrl() );
 
 				if( $talkPage ) {
 					$this->mSysop = $this->getLastSysop();
@@ -156,7 +156,7 @@ class HAWelcomeJob extends Job {
 								));
 							}
 							else {
-								Wikia::log( __METHOD__, "talk", "message-anon disabled" );
+								wfDebug( __METHOD__ . "-talk: message-anon disabled" );
 							}
 						}
 						else {
@@ -168,18 +168,18 @@ class HAWelcomeJob extends Job {
 								if( $userPage ) {
 									$wgTitle = $userPage;
 									$userArticle = new Article( $userPage, 0 );
-									Wikia::log( __METHOD__, "userpage", $userPage->getFullUrl() );
+									wfDebug( __METHOD__ ."-userpage: " . $userPage->getFullUrl() );
 									if( ! $userArticle->exists() ) {
 										$pageMsg = wfMsgForContent( 'welcome-user-page', $this->mUser->getName() );
 										$userArticle->doEdit( $pageMsg, false, $flags );
 									}
 								}
 								else {
-									Wikia::log( __METHOD__, "page", "user page already exists." );
+									wfDebug( __METHOD__ . "-page: user page already exists." );
 								}
 							}
 							else {
-								Wikia::log( __METHOD__, "page", "page-user disabled" );
+								wfDebug( __METHOD__ . "-page: page-user disabled" );
 							}
 
 							if( $this->isEnabled( "message-user" ) ) {
@@ -198,7 +198,7 @@ class HAWelcomeJob extends Job {
 								));
 							}
 							else {
-								Wikia::log( __METHOD__, "talk", "message-user disabled" );
+								wfDebug( __METHOD__ . "-talk: message-user disabled" );
 							}
 						}
 						if( $welcomeMsg ) {
@@ -221,7 +221,7 @@ class HAWelcomeJob extends Job {
 			$wgErrorLog = $oldValue;
 		}
 		else {
-			Wikia::log( __METHOD__, "disabled", $sysop );
+			wfDebug( __METHOD__ . "-disabled: " . $sysop );
 		}
 
 		wfProfileOut( __METHOD__ );
