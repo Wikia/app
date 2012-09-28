@@ -191,7 +191,7 @@ class WikiaSearch extends WikiaObject {
 	    wfProfileIn(__METHOD__);
 	
 	    $searchConfig	->setInterestingTerms	( 'list' )
-	    				->setMltFields			( array( self::field( 'title' ), self::field( 'html' ) ) )
+	    				->setMltFields			( sprintf( '%s,%s', self::field( 'title' ), self::field( 'html' ) ) )
 	    				->setMltBoost			( true )
 	    ;
 	
@@ -257,8 +257,8 @@ class WikiaSearch extends WikiaObject {
 		    // for slightly better foreign language coverage
 			->setMltFields		( array( self::field( 'title' ), self::field('html'), 'title' ) );
 	
-		    wfProfileOut(__METHOD__);
-		    return $this->moreLikeThis( $searchConfig );
+	    wfProfileOut(__METHOD__);
+	    return $this->moreLikeThis( $searchConfig );
     }
 	
    /**
@@ -618,33 +618,34 @@ class WikiaSearch extends WikiaObject {
 		$streamUrl = $searchConfig->getStreamUrl();
 		
 		if (! ( $query || $streamBody || $streamUrl ) ) {
-	        throw new Exception("A query, url, or stream is required.");
-	    }
+			throw new Exception("A query, url, or stream is required.");
+		}
 	    
-	    $mlt = $this->client->createMoreLikeThis();
-	    $mlt->setMltFields		( $searchConfig->getMltFields() )
-	    	->addParam			( 'mlt.match.include', 'false' )
-	    	->setStart			( $searchConfig->getStart() )
-	    	->setRows			( $searchConfig->getRows() )
-	    ;
-	    
-	    if ( $searchConfig->getMltFilterQuery() ) {
+		$mlt = $this->client->createMoreLikeThis();
+		$mlt->setMltFields		( implode( ',', $searchConfig->getMltFields() ) )
+			->addParam			( 'mlt.match.include', 'false' )
+			->setStart			( $searchConfig->getStart() )
+			->setRows			( $searchConfig->getRows() )
+		;
+		
+		if ( $searchConfig->getMltFilterQuery() ) {
 			$mlt->addFilterQuery( array(
 				'query'	=>	$searchConfig->getMltFilterQuery(),
 				'key'	=>	'mltfilterquery'
 			) );
-	    }
-	    if ( $query !== false ) { 
-	    	$mlt->setQuery( $query );
-	    } else if ( $streamBody ) {
-	    	$mlt->setQueryStream	( true )
-	    		->setQuery			( $streamBody )
-    		;
-	    } else if ($streamUrl ) {
-	    	$mlt->addParam( 'mlt.url', $streamUrl );
-	    }
+		}
+		if ( $query !== false ) { 
+			$mlt->setQuery( $query );
+		} else if ( $streamBody ) {
+			$mlt->setQueryStream	( true )
+				->setQuery			( $streamBody )
+			;
+		} else if ($streamUrl ) {
+			$mlt->addParam( 'mlt.url', $streamUrl );
+		}
 	    
-	    return $this->client->moreLikeThis( $mlt );
+		$mltResult = $this->client->moreLikeThis( $mlt ); 
+		return $mltResult;
 	}
 
 	
