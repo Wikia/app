@@ -17,9 +17,8 @@ class WallRelatedPages extends WikiaModel {
 			}
 		}
 		
-		return false;
-		
 		wfProfileOut( __METHOD__ );
+		return false;
 	}
 	
 	/**
