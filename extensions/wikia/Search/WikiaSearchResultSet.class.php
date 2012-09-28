@@ -144,17 +144,18 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 		$this->host		= $valueGroup->getValue();
 		$documents		= $valueGroup->getDocuments();
 		
-		$this->setResults( $documents );
+		$this	->setResults		( $documents )
+				->setResultsFound	( $valueGroup->getNumFound() );
 		
-		$exampleDoc		= $documents[0];
-		$cityId			= $exampleDoc->getCityId();
-		
-		$this->setHeader( 'cityId',				$cityId );
-		$this->setHeader( 'cityTitle',			WikiFactory::getVarValueByName( 'wgSitename', $cityId ) );
-		$this->setHeader( 'cityUrl',			WikiFactory::getVarValueByName( 'wgServer', $cityId ) );
-		$this->setHeader( 'cityArticlesNum',	$exampleDoc['wikiarticles'] );
-		
-		$this->setResultsFound( $valueGroup->getNumFound() );
+		if ( count( $documents ) > 0 ) {
+			$exampleDoc		= $documents[0];
+			$cityId			= $exampleDoc->getCityId();
+			
+			$this->setHeader( 'cityId',				$cityId );
+			$this->setHeader( 'cityTitle',			WikiFactory::getVarValueByName( 'wgSitename', $cityId ) );
+			$this->setHeader( 'cityUrl',			WikiFactory::getVarValueByName( 'wgServer', $cityId ) );
+			$this->setHeader( 'cityArticlesNum',	$exampleDoc['wikiarticles'] );
+		}
 		
 		wfProfileOut(__METHOD__);
 		return $this;
