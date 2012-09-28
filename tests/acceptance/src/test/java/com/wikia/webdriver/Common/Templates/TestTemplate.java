@@ -97,6 +97,7 @@ public class TestTemplate {
 	
 	private void stopBrowser()
 	{
+		driver = DriverProvider.getWebDriver();
 		if (driver != null)
 		{
 			driver.close();
