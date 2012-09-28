@@ -13,9 +13,10 @@ $messages['en'] = array(
 	'wikiabar-tooltip' => 'Collapse',
 	'wikiabar-tooltip-show' => 'Show',
 );
+
 $messages['de'] = array(
 	'wikiabar-validation-message-too-long' => '$1 ist zu lang',
-	'wikiabar-validation-wrong-element-count' => 'Unrecht Element zählung',
-	'wikiabar-tooltip' => 'Einklappen',
-	'wikiabar-tooltip-show' => 'Ausklappen',
+	'wikiabar-validation-wrong-element-count' => 'Falsche Elementanzahl',
+	'wikiabar-tooltip' => 'Einblenden',
+	'wikiabar-tooltip-show' => 'Ausblenden',
 );
