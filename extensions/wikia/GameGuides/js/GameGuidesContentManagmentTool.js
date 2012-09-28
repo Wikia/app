@@ -29,7 +29,7 @@ $(function(){
 					},
 					appendTo: form,
 					onSelect: function(){
-						$(this).next().focus();
+						$form.find('input:focus').next().focus();
 					},
 					fnPreprocessResults: function(data){
 						var suggestions = data.suggestions,
@@ -62,7 +62,7 @@ $(function(){
 					lookup: tags,
 					appendTo: form,
 					onSelect: function(){
-						$(this).next().focus();
+						$form.find('input:focus').next().focus();
 					},
 					zIndex: 9999,
 					width: 200,
@@ -99,7 +99,7 @@ $(function(){
 			.on('blur', '.category, .name', function(){
 				var names = [];
 
-				$(this.className.indexOf('category') > -1 ? '.category' : '.name').each(function(){
+				$form.find(this.className.indexOf('category') > -1 ? '.category' : '.name').each(function(){
 					var val = this.value;
 					if(names.indexOf(val) === -1) {
 						names.push(val);
