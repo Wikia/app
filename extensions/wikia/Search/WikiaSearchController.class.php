@@ -229,22 +229,21 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * @throws Exception
 	 */
 	public function getSimilarPagesExternal() {
-	    $searchConfig = F::build('WikiaSearchConfig');
-	    $url = $this->getVal('url', null);
-	    $contents = $this->getVal('contents', null);
-	    if ( $url !== null ) {
-	        $searchConfig->setContentUrl($url);
+	    $searchConfig 	= F::build('WikiaSearchConfig');
+	    $query 			= $this->getVal( 'q', null );
+	    $url 			= $this->getVal( 'url', null );
+	    $contents 		= $this->getVal( 'contents', null );
+	    if ( $query !== null ) {
+	    	$searchConfig->setQuery( $query );
+	    } else if ( $url !== null ) {
+	        $searchConfig->setStreamUrl( $url );
 	    } else if ( $contents !== null ) {
-	        $searchConfig->setStreamBody($contents);
+	        $searchConfig->setStreamBody( $contents );
 	    } else {
-	        throw new Exception('Please provide a url or stream contents');
+	        throw new Exception('Please provide a query, url or stream contents');
 	    }
-	
-	    $responseData = $this->wikiaSearch->getSimilarPages( $searchConfig );
 	    
-	    // prepare the response
-	    
-	    $this->response->setData($responseData);
+	    $this->response->setData( $this->wikiaSearch->getSimilarPages( $searchConfig ) );
 	    $this->response->setFormat('json');
 	}
 	
@@ -256,11 +255,11 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	    if (empty($id)) {
 	        throw new Exception('Please provide an ID');
 	    }
-	    $searchConfig = F::build('WikiaSearchConfig');
-	    $searchConfig->setPageId( $id );
-	    $responseData = $this->wikiaSearch->getKeywords( $searchConfig );
-	    $this->response->setData( $responseData );
-	    $this->response->setFormat( 'json' );
+	    $searchConfig 	= F::build		('WikiaSearchConfig');
+	    $searchConfig	->setPageId		( $id );
+	    $responseData 	= $this->wikiaSearch->getKeywords( $searchConfig );
+	    $this->response	->setData		( $responseData );
+	    $this->response	->setFormat		( 'json' );
 	}
 	
 	
