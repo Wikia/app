@@ -45,10 +45,10 @@ var WikiaBar = {
 		return true;
 	},
 	getAd: function() {
-		var weeboBoxAd = $(this.WIKIA_BAR_BOXAD_NAME);
-		if( weeboBoxAd.hasClass('wikia-ad') == false ) {
+		var WikiaBarBoxAd = $(this.WIKIA_BAR_BOXAD_NAME);
+		if( WikiaBarBoxAd.hasClass('wikia-ad') == false ) {
 			window.adslots2.push([this.WIKIA_BAR_BOXAD_NAME, null, 'Liftium2', null]);
-			weeboBoxAd.addClass('wikia-ad');
+			WikiaBarBoxAd.addClass('wikia-ad');
 			this.wasAdCalled = true;
 		}
 		return true;
