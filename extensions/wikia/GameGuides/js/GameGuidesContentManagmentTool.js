@@ -15,7 +15,7 @@ $(function(){
 			categoryId = window.wgNamespaceIds.category,
 			categoryName = window.wgFormattedNamespaces[categoryId] + ':',
 			//prepare html to be injected in ul
-			row = '<li><input class=category placeholder="' + $.msg('wikiagameguides-content-category') + '" /><input class=tag placeholder="' + $.msg('wikiagameguides-content-tag') + '" /><input class=name placeholder="' + $.msg('wikiagameguides-content-name') + '" /><button class="remove secondary">-</button></li>',
+			row = '<li><input class=category placeholder="' + $.msg('wikiagameguides-content-category') + '" /><input class=tag placeholder="' + $.msg('wikiagameguides-content-tag') + '" /><input class=name placeholder="' + $.msg('wikiagameguides-content-name') + '" /><button class="remove secondary">X</button></li>',
 			//list of all tags, so we can suggest them to a user
 			tags = [],
 			setup = function(last){
