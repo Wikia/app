@@ -65,7 +65,7 @@ public class ChatPageObject extends BasePageObject
 	@FindBy(css="ul.PrivateChatList span.splotch")
 	private WebElement privateMessageNotificator;
 	
-	@FindBy(css="li[class='User selected blocked']")
+	@FindBy(css="li.User.selected.blocked")
 	private WebElement userDisconnectedButton;
 	
 	@FindBy(css="li.give-chat-mod span.label")
@@ -157,7 +157,8 @@ public class ChatPageObject extends BasePageObject
 	public void verifyPrivateMessageIsHighLighted(String user)
 	{
 		//li[@class='User selected' and @id='priv-user-QATestsUser']
-		waitForElementByXPath("//li[@class='User selected' and @id='priv-user-"+user+"']");
+//		waitForElementByXPath("//li[@class='User selected' and @id='priv-user-"+user+"']");
+		waitForElementByXPath("//li[contains(@class, 'User') and contains(@class, 'selected') and @id='priv-user-"+user+"']");
 		PageObjectLogging.log("verifyPrivateMessageIsHighLighted", "private message section is highlighted", true, driver);
 	}
 	
@@ -361,16 +362,8 @@ public class ChatPageObject extends BasePageObject
 	public void selectChatModStatus(WebDriver driver)
 	{
 		waitForElementByElement(giveChatModStatusButton);
-		Point p = giveChatModStatusButton.getLocation();
-		CommonFunctions.MoveCursorToElement(p, driver);
-		CommonFunctions.ClickElement();
+		jQueryClick("li.give-chat-mod span.label");
 		PageObjectLogging.log("selectChatModStatus", "chat mod status is clicked", true, driver);
-		try {
-			Thread.sleep(1500);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 	
 	
