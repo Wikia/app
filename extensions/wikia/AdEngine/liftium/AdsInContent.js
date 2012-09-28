@@ -17,14 +17,14 @@ AIC2.init = function() {
 
 	if ($('body').hasClass('rtl')) {
 		Liftium.d("AIC2: rtl wiki", 7);
-		WikiaTracker.trackAdEvent('liftium.varia', {'ga_category':'varia/AIC2', 'ga_action':'rtl'}, 'ga');
+		//WikiaTracker.trackAdEvent('liftium.varia', {'ga_category':'varia/AIC2', 'ga_action':'rtl'}, 'ga');
 		AIC2.isRightToLeft = true;
 	}
 
 	// FIXME
 	if ($window.width() < 1010) {
 		Liftium.d("AIC2: window too narrow, bailing out", 3);
-		WikiaTracker.trackAdEvent('liftium.varia', {'ga_category':'varia/AIC2', 'ga_action':'too narrow'}, 'ga');
+		//WikiaTracker.trackAdEvent('liftium.varia', {'ga_category':'varia/AIC2', 'ga_action':'too narrow'}, 'ga');
 		return;
 	}
 
@@ -40,7 +40,7 @@ AIC2.init = function() {
 		//}
 	} else {
 		Liftium.d("AIC2: page too short", 3);
-		WikiaTracker.trackAdEvent('liftium.varia', {'ga_category':'varia/AIC2', 'ga_action':'too short'}, 'ga');
+		//WikiaTracker.trackAdEvent('liftium.varia', {'ga_category':'varia/AIC2', 'ga_action':'too short'}, 'ga');
 	}
 };
 
@@ -54,7 +54,7 @@ AIC2.checkStartStopPosition = function() {
 
 	if (!AIC2.$placeHolder.length) {
 		Liftium.d("AIC2: no rail", 3);
-		WikiaTracker.trackAdEvent('liftium.varia', {'ga_category':'varia/AIC2', 'ga_action':'no rail'}, 'ga');
+		//WikiaTracker.trackAdEvent('liftium.varia', {'ga_category':'varia/AIC2', 'ga_action':'no rail'}, 'ga');
 		// No rail, no ads
 		return false;
 	}
