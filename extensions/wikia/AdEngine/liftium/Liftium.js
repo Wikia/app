@@ -333,6 +333,7 @@ Liftium.callIframeAd = function(slotname, tag, adIframe){
 		adIframe.marginHeight = 0;
 		adIframe.marginWidth = 0;
 		adIframe.allowTransparency = true; // For IE
+		adIframe.id = slotname + '_' + tag.tag_id;
 		adIframe.style.display = 'block';
 
 		// expandable slots via in-tag-name magic phrase
