@@ -319,6 +319,8 @@ function outputTestsResult() {
 						assertions = stylize('no assertions', 'yellow');
 					}
 
+					console.log('\t' + testName + '\t' + stylize( '[OK]', 'green' ) + ' (' + assertions + ')' );
+
 				} else {
 
 					console.log('\t'+testName+'\t'+stylize('[FAIL]', 'lightred'));
