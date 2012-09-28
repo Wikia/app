@@ -6,6 +6,11 @@ class GameGuidesSpecialContentController extends WikiaSpecialPageController {
 	}
 
 	public function index() {
+		if (!$this->wg->User->isAllowed( 'gameguidescontent' )) {
+			$this->displayRestrictionError();
+			return false;  // skip rendering
+		}
+
 		$title = $this->wf->Msg( 'wikiagameguides-content-title' );
 		$this->wg->Out->setPageTitle( $title );
 		$this->wg->Out->setHTMLTitle( $title );
@@ -34,6 +39,10 @@ class GameGuidesSpecialContentController extends WikiaSpecialPageController {
 	}
 
 	public function save(){
+		if (!$this->wg->User->isAllowed( 'gameguidescontent' )) {
+			$this->displayRestrictionError();
+			return false;  // skip rendering
+		}
 		$this->response->setFormat( 'json' );
 
 		$categories = $this->getVal( 'categories' );

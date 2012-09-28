@@ -30,9 +30,16 @@ $app->registerExtensionMessageFile('GameGuides', "{$dir}/GameGuides.i18n.php");
 $app->registerClass( 'GameGuidesSpecialPreviewController', "{$dir}/GameGuidesSpecialPreviewController.class.php" );
 $app->registerSpecialPage( 'GameGuidesPreview', 'GameGuidesSpecialPreviewController' );
 
+$wgGroupPermissions['*']['gameguidespreview'] = false;
+$wgGroupPermissions['staff']['gameguidespreview'] = true;
+$wgGroupPermissions['sysop']['gameguidespreview'] = true;
+
 //Special Page for Content Managment Tool
 $app->registerClass( 'GameGuidesSpecialContentController', "{$dir}/GameGuidesSpecialContentController.class.php" );
 $app->registerSpecialPage( 'GameGuidesContent', 'GameGuidesSpecialContentController' );
+
+$wgGroupPermissions['*']['gameguidescontent'] = false;
+$wgGroupPermissions['staff']['gameguidescontent'] = true;
 
 F::build( 'JSMessages' )->registerPackage( 'GameGuidesContentMsg', array(
 	'wikiagameguides-content-category',
@@ -42,9 +49,6 @@ F::build( 'JSMessages' )->registerPackage( 'GameGuidesContentMsg', array(
 	'wikiagameguides-content-category-error'
 ) );
 
-$wgGroupPermissions['*']['gameguidespreview'] = false;
-$wgGroupPermissions['staff']['gameguidespreview'] = true;
-$wgGroupPermissions['sysop']['gameguidespreview'] = true;
 
 //the only globals needed in Game Guides
 if ( empty( $app->wg->GameGuidesGlobalsWhiteList ) ) {
