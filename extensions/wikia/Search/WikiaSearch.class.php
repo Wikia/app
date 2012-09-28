@@ -154,10 +154,14 @@ class WikiaSearch extends WikiaObject {
 		
 		$queryInstance = $this->client->createSelect();
 		$this->prepareQuery( $queryInstance, $searchConfig );
-		$result = $this->client->select( $queryInstance );
+		try {
+			$result = $this->client->select( $queryInstance );
+		} catch (Exception $e) {
+			Wikia::log(__METHOD__, 'Querying Solr', $e);
+			$result = F::build('Solarium_Result_Select_Empty');
+		}
 		$results = F::build('WikiaSearchResultSet', array($result, $searchConfig) );
 		// set here due to all the changes we make to the base query
-		
 		$results->setQuery($searchConfig->getQuery());
 		
 		$searchConfig->setResults		( $results )
@@ -399,7 +403,8 @@ class WikiaSearch extends WikiaObject {
 		
 		$sort = $searchConfig->getSort();
 		
-		$query	->setFields		( $searchConfig->getRequestedFields() )
+		$query	->addFields		( $searchConfig->getRequestedFields() )
+				->				removeField('*')
 			  	->setStart		( $searchConfig->getStart() )
 				->setRows		( $searchConfig->getLength() )
 				->addSort		( $sort[0], $sort[1] )
