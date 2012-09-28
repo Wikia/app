@@ -67,6 +67,7 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	);
 	
 	public function __construct( array $params = array() ) {
+		parent::__construct();
 		$this->params = array_merge( $this->params, 
 									 array( 'requestedFields' => $this->requestedFields ), 
 									 $params );
