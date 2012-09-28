@@ -319,14 +319,6 @@ function outputTestsResult() {
 						assertions = stylize('no assertions', 'yellow');
 					}
 
-					console.log('\t' + testName + '\t' + stylize( '[OK]', 'green' ) + ' (' + assertions + ')' );
-					if ( test.messages && test.messages.length > 0 ) {
-						var messages = test.messages.split('\n');
-						for(var j = 0 ; j < messages.length ; j++) {
-							console.log('\t\t' + messages[j]);
-						}
-					}
-
 				} else {
 
 					console.log('\t'+testName+'\t'+stylize('[FAIL]', 'lightred'));
