@@ -84,7 +84,6 @@ public class CustomizeToolbarTests extends TestTemplate{
 //		article.customizeToolbar_VerifyToolNotOnToolbarList("Edit");
 		article.customizeToolbar_ClickOnSaveButton();
 		article.customizeToolbar_VerifyToolNotOnToolbar("Edit");
-		CommonFunctions.MoveCursorTo(0, 0);
 	}
 	
 	@Test(groups = {"CustomizeToolbar005", "Toolbar"}) 
