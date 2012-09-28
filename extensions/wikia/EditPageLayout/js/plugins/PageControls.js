@@ -139,6 +139,8 @@
 					RTE.config.startupFocus = false;
 				}
 			}
+			
+			this.isGridLayout = $('.WikiaGrid').length > 0;	// remove this after grid transition
 		},
 
 		// Enable 'Publish' button when the editor is ready (BugId:13957)
@@ -393,7 +395,7 @@
 		// render "Preview" modal
 		renderPreview: function(extraData) {
 			var self = this,
-				width = 680 + 32 /* modal padding */,
+				width = 660 + 32 /* modal padding */ + (this.isGridLayout ? 30 : 0),
 				config = this.editor.config;
 
 			if (config.isWidePage) {
