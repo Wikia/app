@@ -1,5 +1,5 @@
 <?= $header ?>
-<section id="WikiaPage" class="WikiaPage">
+<section id="WikiaPage" class="WikiaPage<?= empty($wg->OasisGrid) ? '' : ' WikiaGrid' ?>">
 	<article id="WikiaMainContent" class="WikiaMainContent" style="float:none">
 		<header id="EditPageHeader">
 			<span class="wordmark <?= $wordmark['wordmarkSize'] ?> <?= $wordmark['wordmarkType'] ?> font-<?= $wordmark['wordmarkFont'] ?>">
