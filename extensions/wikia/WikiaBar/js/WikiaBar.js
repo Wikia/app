@@ -219,42 +219,40 @@ var WikiaBar = {
 		var cachedState = this.getLocalStorageData();
 
 		if( cachedState === null ) {
-			$.nirvana.sendRequest({
-				controller: 'WikiaBarController',
-				method: 'getWikiaBarState',
-				type: 'get',
-				format: 'json',
-				callback: $.proxy(this.onHandleLoggedInUsersWikiaBar, this),
-				onErrorCallback: $.proxy(this.onHandleLoggedInUsersWikiaBarError, this)
-			});
+			this.changeLoggedInUserStateBar();
+			this.getLoggedInUserStateBarAndChangeLocalStorage();
 		} else {
 			this.doWikiaBarAnimationDependingOnState(cachedState);
 		}
 	},
-	onHandleLoggedInUsersWikiaBar: function(response) {
-		this.onWikiaBarStateChangeResponse(response);
-	},
-	onHandleLoggedInUsersWikiaBarError: function() {
-	},
-	changeLoggedInUserStateBar: function() {
+	getLoggedInUserStateBarAndChangeLocalStorage: function() {
 		$.nirvana.sendRequest({
 			controller: 'WikiaBarController',
 			method: 'changeUserStateBar',
 			type: 'post',
 			format: 'json',
-			callback: $.proxy(this.onChangeLoggedInUserStateBar, this),
-			onErrorCallback: $.proxy(this.onChangeLoggedInUserStateBarError, this)
+			callback: $.proxy(this.onGetLoggedInUserStateBarAndChangeLocalStorage, this),
+			onErrorCallback: $.proxy(this.onGetLoggedInUserStateBarAndChangeLocalStorageError, this)
 		});
 	},
-	onChangeLoggedInUserStateBar: function(response) {
-		this.onWikiaBarStateChangeResponse(response);
+	changeLoggedInUserStateBar: function() {
+		var changeState = this.isWikiaBarHidden() ? 'shown' : 'hidden';
+
+		this.doWikiaBarAnimationDependingOnState(changeState);
+		this.setLocalStorageData(changeState);
+
+		$.nirvana.sendRequest({
+			controller: 'WikiaBarController',
+			method: 'changeUserStateBar',
+			type: 'post',
+			format: 'json'
+		});
 	},
-	onChangeLoggedInUserStateBarError: function() {
-	},
-	onWikiaBarStateChangeResponse: function(response) {
+	onGetLoggedInUserStateBarAndChangeLocalStorage: function(response) {
 		var state = response.results.wikiaBarState || 'shown';
-		this.doWikiaBarAnimationDependingOnState(state);
 		this.setLocalStorageData(state);
+	},
+	onGetLoggedInUserStateBarAndChangeLocalStorageError: function() {
 	},
 	doWikiaBarAnimationDependingOnState: function(state) {
 		if( state === 'shown' ) {
