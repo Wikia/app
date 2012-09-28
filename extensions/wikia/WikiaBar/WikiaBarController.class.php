@@ -26,15 +26,32 @@ class WikiaBarController extends WikiaController {
 	 */
 	public function index() {
 		if (
-			HubService::isCorporatePage(F::app()->wg->cityId)
-			&& Wikia::isMainPage()
-			&& !F::app()->wg->User->isAnon()
+			$this->isWikiaBarSuppressed()
 		) {
 			$this->wgSuppressWikiaBar = true;
 			OasisController::addBodyClass('nowikiabar');
 		}
 		$this->lang = F::app()->wg->contLang->getCode();
 		$this->vertical = HubService::getCategoryInfoForCity(F::app()->wg->cityId)->cat_id;
+	}
+
+	protected function isWikiaBarSuppressed() {
+		return ($this->isCorporateMainPageNonAnon() || $this->isNonViewActionAnon());
+	}
+
+	protected function isCorporateMainPageNonAnon() {
+		return (
+			HubService::isCorporatePage(F::app()->wg->cityId)
+			&& Wikia::isMainPage()
+			&& !F::app()->wg->User->isAnon()
+		);
+	}
+
+	protected function isNonViewActionAnon() {
+		return (
+			F::app()->wg->User->isAnon()
+			&& F::app()->wg->request->getText('action', 'view') != 'view'
+		);
 	}
 
 	/**
