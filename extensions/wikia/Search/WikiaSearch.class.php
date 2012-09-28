@@ -535,7 +535,7 @@ class WikiaSearch extends WikiaObject {
 			}
 		}
 		else {
-			if ( $searchConfig->isVideoSearch() ) {
+			if ( $searchConfig->getVideoSearch() ) {
 				$searchConfig->setNamespaces( array( NS_FILE ) );
 				$queryClauses[] = 'is_video:true';
 			}
