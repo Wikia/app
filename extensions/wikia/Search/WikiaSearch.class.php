@@ -191,7 +191,7 @@ class WikiaSearch extends WikiaObject {
 	    wfProfileIn(__METHOD__);
 	
 	    $searchConfig	->setInterestingTerms	( 'list' )
-	    				->setMltFields			( sprintf( '%s,%s', self::field( 'title' ), self::field( 'html' ) ) )
+	    				->setMltFields			( array( self::field( 'title' ), self::field( 'html' ), 'title' ) )
 	    				->setMltBoost			( true )
 	    ;
 	
@@ -215,7 +215,9 @@ class WikiaSearch extends WikiaObject {
 	        $query .= ' AND is_main_page:1';
 	    }
 	
-	    $searchConfig->setQuery($query);
+	    $searchConfig	->setQuery($query)
+	    				->setMltFields	( array( self::field( 'title' ), self::field( 'html' ), 'title' ) );
+	    
 	
 	    wfProfileOut(__METHOD__);
 	    return $this->getInterestingTerms( $searchConfig );
@@ -269,18 +271,18 @@ class WikiaSearch extends WikiaObject {
 	public function getSimilarPages( WikiaSearchConfig $searchConfig ) {
 		wfProfileIn(__METHOD__);
 	
-		$contentUrl = false;
+		$streamUrl = false;
 		$streamBody = false;
 		$query = $searchConfig->getQuery();
 	
 		if ( $query == false ) {
-			$contentUrl = $searchConfig->getContentUrl();
-			if ( $contentUrl === false ) {
+			$streamUrl = $searchConfig->getStreamUrl();
+			if ( $streamUrl === false ) {
 				$streamBody = $searchConfig->getStreamBody();
 			}
 		}
 	
-		if ( $contentUrl || $streamBody ) {
+		if ( $streamUrl || $streamBody ) {
 			$searchConfig->setFilterQuery( $this->getQueryClausesString( $searchConfig ) );
 		}
 	
@@ -613,9 +615,9 @@ class WikiaSearch extends WikiaObject {
 	 */
 	private function moreLikeThis( WikiaSearchConfig $searchConfig )
 	{
-		$query = $searchConfig->getQuery();
-		$streamBody = $searchConfig->getStreamBody();
-		$streamUrl = $searchConfig->getStreamUrl();
+		$query		= $searchConfig->getQuery();
+		$streamBody	= $searchConfig->getStreamBody();
+		$streamUrl	= $searchConfig->getStreamUrl();
 		
 		if (! ( $query || $streamBody || $streamUrl ) ) {
 			throw new Exception("A query, url, or stream is required.");
@@ -628,20 +630,23 @@ class WikiaSearch extends WikiaObject {
 			->setRows			( $searchConfig->getRows() )
 		;
 		
+		if ( $searchConfig->getInterestingTerms() == 'list' ) {
+			$mlt->setInterestingTerms( 'list' );
+		}
+
 		if ( $searchConfig->getMltFilterQuery() ) {
 			$mlt->addFilterQuery( array(
 				'query'	=>	$searchConfig->getMltFilterQuery(),
 				'key'	=>	'mltfilterquery'
 			) );
 		}
-		if ( $query !== false ) { 
+		if ( $query != false ) { 
 			$mlt->setQuery( $query );
 		} else if ( $streamBody ) {
-			$mlt->setQueryStream	( true )
-				->setQuery			( $streamBody )
+			$mlt->addParam( 'stream.body', $streamBody );
 			;
 		} else if ($streamUrl ) {
-			$mlt->addParam( 'mlt.url', $streamUrl );
+			$mlt->addParam( 'stream.url', $streamUrl );
 		}
 	    
 		$mltResult = $this->client->moreLikeThis( $mlt );
