@@ -544,7 +544,7 @@ public class BasePageObject{
 		}
 		catch(Exception e)
 		{
-			PageObjectLogging.log("waitForTextToBePresentInElementByElement", e.toString(), false);			
+			PageObjectLogging.log("waitForTextToBePresentInElementByElement", e.toString(), false);
 		}
 		
 	}
@@ -795,11 +795,9 @@ public class BasePageObject{
 	public void customizeToolbar_ClickOnToolRenameButton(String ToolID) {
 		By By1 = By.cssSelector("ul.options-list li[data-caption='"+ToolID+"']");
 		By By2 = By.cssSelector("ul.options-list li[data-caption='"+ToolID+"'] img.edit-pencil");
-		Point Elem1_location = driver.findElement(By1).getLocation();
-		CommonFunctions.MoveCursorToElement(Elem1_location);
 		waitForElementByBy(By2);
 		waitForElementClickableByBy(By2);
-		driver.findElement(By2).click();
+		jQueryClick("ul.options-list li[data-caption=\""+ToolID+"\"] img.edit-pencil");
 		PageObjectLogging.log("customizeToolbar_ClickOnToolRenameButton", "Rename the "+ToolID+" Tool", true, driver);
 	}
 	
