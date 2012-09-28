@@ -1084,20 +1084,6 @@ class WallMessage {
 		wfSetWikiaPageProp( WPP_WALL_ACTIONREASON, $this->getId(), $this->mActionReason);
 	}
 
-	protected function getActionPropName($action) {
-		switch($action) {
-			case WH_REMOVE:
-			case WH_DELETE:
-			case WH_RESTORE:
-				return WPP_WALL_ACTIONREASON;
-			break;
-			case WH_REOPEN:
-			case WH_ARCHIVE:
-				return WPP_WALL_ACTIONREASON_REMOVE_OR_DELETE;
-			break;
-		}
-	}
-
 	public function getQuoteOf() {
 		$id = $this->getPropVal(WPP_WALL_QUOTE_OF);
 		if(empty($id)) {
