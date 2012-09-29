@@ -20,15 +20,16 @@ test('getProvider failsafe to Later', function() {
 		, adConfig;
 
 	adConfig = AdConfig2(
-		logMock, windowMock, documentMock, geoMock,
+		logMock, windowMock, documentMock, geoMock
+
 		// AdProviders
-		adProviderNullMock,
-		adProviderGameProMock,
-		adProviderEvolveMock,
-		adProviderEvolveRSMock,
-		adProviderAdDriver2Mock,
-		adProviderAdDriverMock,
-		adProviderLaterMock
+		, adProviderAdDriverMock
+		, adProviderAdDriver2Mock
+		, adProviderEvolveMock
+		, adProviderEvolveRSMock
+		, adProviderGameProMock
+		, adProviderLaterMock
+		, adProviderNullMock
 	);
 
 	equal(adConfig.getProvider(['foo']), adProviderLaterMock, 'adProviderLaterMock');
@@ -50,15 +51,16 @@ test('getProvider use AdDriver2 for high value countries', function() {
 		, highValueSlot = 'TOP_LEADERBOARD';
 
 	adConfig = AdConfig2(
-		logMock, windowMock, documentMock, geoMock,
+		logMock, windowMock, documentMock, geoMock
+
 		// AdProviders
-		adProviderNullMock,
-		adProviderGameProMock,
-		adProviderEvolveMock,
-		adProviderEvolveRSMock,
-		adProviderAdDriver2Mock,
-		adProviderAdDriverMock,
-		adProviderLaterMock
+		, adProviderAdDriverMock
+		, adProviderAdDriver2Mock
+		, adProviderEvolveMock
+		, adProviderEvolveRSMock
+		, adProviderGameProMock
+		, adProviderLaterMock
+		, adProviderNullMock
 	);
 
 	equal(adConfig.getProvider(['foo']), adProviderLaterMock, 'adProviderLaterMock');
@@ -82,27 +84,29 @@ test('getProvider use Evolve(RS) for NZ (only if provider accepts)', function() 
 		, adConfig, adConfigRS;
 
 	adConfig = AdConfig2(
-		logMock, windowMock, documentMock, geoMockAU,
+		logMock, windowMock, documentMock, geoMockAU
+
 		// AdProviders
-		adProviderNullMock,
-		adProviderGameProMock,
-		adProviderEvolveMockHandling,
-		adProviderEvolveRSMock,
-		adProviderAdDriver2Mock,
-		adProviderAdDriverMock,
-		adProviderLaterMock
+		, adProviderAdDriverMock
+		, adProviderAdDriver2Mock
+		, adProviderEvolveMockHandling
+		, adProviderEvolveRSMock
+		, adProviderGameProMock
+		, adProviderLaterMock
+		, adProviderNullMock
 	);
 
 	adConfigRS = AdConfig2(
-		logMock, windowMock, documentMock, geoMockAU,
+		logMock, windowMock, documentMock, geoMockAU
+
 		// AdProviders
-		adProviderNullMock,
-		adProviderGameProMock,
-		adProviderEvolveMock,
-		adProviderEvolveRSMockHandling,
-		adProviderAdDriver2Mock,
-		adProviderAdDriverMock,
-		adProviderLaterMock
+		, adProviderAdDriverMock
+		, adProviderAdDriver2Mock
+		, adProviderEvolveMock
+		, adProviderEvolveRSMockHandling
+		, adProviderGameProMock
+		, adProviderLaterMock
+		, adProviderNullMock
 	);
 
 	equal(adConfig.getProvider(['foo']), adProviderEvolveMockHandling, 'adProviderEvolveMock NZ');
@@ -124,15 +128,16 @@ test('getProvider do not use Evolve(RS) for PL', function() {
 		, adConfig;
 
 	adConfig = AdConfig2(
-		logMock, windowMock, documentMock, geoMock,
+		logMock, windowMock, documentMock, geoMock
+
 		// AdProviders
-		adProviderNullMock,
-		adProviderGameProMock,
-		adProviderEvolveMock,
-		adProviderEvolveRSMock,
-		adProviderAdDriver2Mock,
-		adProviderAdDriverMock,
-		adProviderLaterMock
+		, adProviderAdDriverMock
+		, adProviderAdDriver2Mock
+		, adProviderEvolveMock
+		, adProviderEvolveRSMock
+		, adProviderGameProMock
+		, adProviderLaterMock
+		, adProviderNullMock
 	);
 
 	notEqual(adConfig.getProvider(['foo']), adProviderEvolveMock, 'adProviderEvolveMock');
@@ -153,15 +158,16 @@ test('getProvider do not use Evolve(RS) for NZ when it cannot handle the slot', 
 		, adConfig;
 
 	adConfig = AdConfig2(
-		logMock, windowMock, documentMock, geoMock,
+		logMock, windowMock, documentMock, geoMock
+
 		// AdProviders
-		adProviderNullMock,
-		adProviderGameProMock,
-		adProviderEvolveMock,
-		adProviderEvolveRSMock,
-		adProviderAdDriver2Mock,
-		adProviderAdDriverMock,
-		adProviderLaterMock
+		, adProviderAdDriverMock
+		, adProviderAdDriver2Mock
+		, adProviderEvolveMock
+		, adProviderEvolveRSMock
+		, adProviderGameProMock
+		, adProviderLaterMock
+		, adProviderNullMock
 	);
 
 	notEqual(adConfig.getProvider(['foo']), adProviderEvolveMock, 'adProviderEvolveMock');
@@ -182,15 +188,16 @@ test('getProvider use GamePro if provider says so', function() {
 		, adConfig;
 
 	adConfig = AdConfig2(
-		logMock, windowMock, documentMock, geoMock,
+		logMock, windowMock, documentMock, geoMock
+
 		// AdProviders
-		adProviderNullMock,
-		adProviderGameProMock,
-		adProviderEvolveMock,
-		adProviderEvolveRSMock,
-		adProviderAdDriver2Mock,
-		adProviderAdDriverMock,
-		adProviderLaterMock
+		, adProviderAdDriverMock
+		, adProviderAdDriver2Mock
+		, adProviderEvolveMock
+		, adProviderEvolveRSMock
+		, adProviderGameProMock
+		, adProviderLaterMock
+		, adProviderNullMock
 	);
 
 	equal(adConfig.getProvider(['foo']), adProviderGameProMock, 'adProviderGameProMock');
@@ -213,28 +220,30 @@ test('getProvider GamePro wins over Evolve', function() {
 
 	// First see if evolve is used for given configuration when GamePro refuses
 	adConfig = AdConfig2(
-		logMock, windowMock, documentMock, geoMock,
+		logMock, windowMock, documentMock, geoMock
+
 		// AdProviders
-		adProviderNullMock,
-		adProviderGameProMockRejecting,
-		adProviderEvolveMock,
-		adProviderEvolveRSMock,
-		adProviderAdDriver2Mock,
-		adProviderAdDriverMock,
-		adProviderLaterMock
+		, adProviderAdDriverMock
+		, adProviderAdDriver2Mock
+		, adProviderEvolveMock
+		, adProviderEvolveRSMock
+		, adProviderGameProMockRejecting
+		, adProviderLaterMock
+		, adProviderNullMock
 	);
 	equal(adConfig.getProvider(['foo']), adProviderEvolveMock, 'adProviderEvolveMock');
 
 	adConfig = AdConfig2(
-		logMock, windowMock, documentMock, geoMock,
+		logMock, windowMock, documentMock, geoMock
+
 		// AdProviders
-		adProviderNullMock,
-		adProviderGameProMock,
-		adProviderEvolveMock,
-		adProviderEvolveRSMock,
-		adProviderAdDriver2Mock,
-		adProviderAdDriverMock,
-		adProviderLaterMock
+		, adProviderAdDriverMock
+		, adProviderAdDriver2Mock
+		, adProviderEvolveMock
+		, adProviderEvolveRSMock
+		, adProviderGameProMock
+		, adProviderLaterMock
+		, adProviderNullMock
 	);
 	equal(adConfig.getProvider(['foo']), adProviderGameProMock, 'adProviderGameProMock');
 });
@@ -254,15 +263,16 @@ test('getProvider returns Null for some slots for short pages', function() {
 		, adConfig;
 
 	adConfig = AdConfig2(
-		logMock, windowMock, documentMock, geoMock,
+		logMock, windowMock, documentMock, geoMock
+
 		// AdProviders
-		adProviderNullMock,
-		adProviderGameProMock,
-		adProviderEvolveMock,
-		adProviderEvolveRSMock,
-		adProviderAdDriver2Mock,
-		adProviderAdDriverMock,
-		adProviderLaterMock
+		, adProviderAdDriverMock
+		, adProviderAdDriver2Mock
+		, adProviderEvolveMock
+		, adProviderEvolveRSMock
+		, adProviderGameProMock
+		, adProviderLaterMock
+		, adProviderNullMock
 	);
 
 	documentMock.documentElement.offsetHeight = 1000;
