@@ -1,6 +1,6 @@
-$oasisHD: get_command_line_param("hd", 0);
+$oasisWidthType: get_command_line_param("widthType", 0);
 
-@if $oasisHD == 3 {
+@if $oasisWidthType == 3 {
 	/* this grid assumes 1030px width, 160px columns */
 	.WikiaGrid {
 		.grid-1,

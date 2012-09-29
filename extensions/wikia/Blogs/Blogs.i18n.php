@@ -1504,7 +1504,7 @@ Cree páxinas de listas de blogues para categorías como "Barack Obama", "Galici
 	'blogs-searchprofile-tooltip' => 'Procurar nos artigos e listas de blogue',
 );
 
-/** Hausa (هَوُسَ) */
+/** Hausa (Hausa) */
 $messages['ha'] = array(
 	'blog-comment-delete' => 'soke',
 );

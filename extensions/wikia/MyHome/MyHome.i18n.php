@@ -781,7 +781,7 @@ Wenn Sie der Gründer oder ein Admin dieses Wikis sind, können Sie diese Nachri
 $messages['diq'] = array(
 	'myhome' => 'Keyey me',
 	'myhome-watchlist-feed' => 'Lista seyr-kerdışi',
-	'myhome-user-contributions-feed' => 'Pêşteni',
+	'myhome-user-contributions-feed' => 'Dekerdeni',
 	'prefs-myhome' => 'Keyey me',
 	'myhome-feed-edit' => 'bıvurne',
 	'myhome-feed-created-by' => "$1'i vıraşt",
@@ -980,6 +980,7 @@ Si eres el fundador o un administrador de este wiki, puedes cambiar este mensaje
  * @author KalmerE.
  */
 $messages['et'] = array(
+	'myhome' => 'Wiki logi',
 	'wikiactivity' => 'Wiki logi',
 	'myhome-activity-more' => 'vaata lisa viimaseid toiminguid',
 	'myhome-activity-feed' => 'Toimingute piirang',
@@ -1363,7 +1364,7 @@ Se vostede é o fundador ou un administrador desde wiki, pode cambiar esta mensa
 	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|unha mensaxe|$1 mensaxes}}',
 );
 
-/** Hausa (هَوُسَ) */
+/** Hausa (Hausa) */
 $messages['ha'] = array(
 	'myhome-feed-new-blog-comment-details' => 'Bahasi',
 	'myhome-feed-new-article-comment-details' => 'Bahasi',

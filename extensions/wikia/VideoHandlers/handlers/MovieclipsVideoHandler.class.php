@@ -6,6 +6,7 @@ class MovieclipsVideoHandler extends VideoHandler {
 	protected static $urlTemplate = 'http://movieclips.com/e/$1/';
 	protected static $providerDetailUrlTemplate = 'http://movieclips.com/$1';
 	protected static $providerHomeUrl = 'http://movieclips.com/';
+	protected static $autoplayParam = "autoplay=true";
 	
 	public function getEmbed($articleId, $width, $autoplay=false, $isAjax=false, $postOnload=false) {
 		$height =  $this->getHeight( $width );

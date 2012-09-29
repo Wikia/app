@@ -460,7 +460,7 @@ function formallyAddClient(client, socket, connectedUser){
 				event: 'join',
 				joinData: connectedUser.xport()
 			});
-			broadcastUserListToMediaWiki(client);		
+			broadcastUserListToMediaWiki(client, false);		
 		}
 	);	
 } // end formallyAddClient()
@@ -505,7 +505,7 @@ function broadcastDisconnectionInfo(client, socket){
 		return true;
 	}
 	
-	broadcastUserListToMediaWiki(client);
+	broadcastUserListToMediaWiki(client, true);
 
 	broadcastToRoom(client, socket, {
         	event: 'part',
@@ -516,13 +516,20 @@ function broadcastDisconnectionInfo(client, socket){
 /**
  * Given a roomId, returns a list of the usernames of all users in the room (as JSON).
  */
-function broadcastUserListToMediaWiki(client){
+function broadcastUserListToMediaWiki(client, removeClient){
 	if(client.donotBroadcastUserList) {
                 return true;
         }
 
 	storage.getUsersInRoom(client.roomId, function(users) {
 		if(!users){users = {};} // if the key doesn't exist, return an empty userlist
+		if(removeClient) {
+			for( var i in users ) {
+				if(i == client.username) {
+					delete users[i];
+				}
+			}
+		}
 		logger.debug("Sending status update to media wiki")
 		if(client.privateRoom) {
 			mwBridge.setUsersList(client.roomId, users);	
@@ -556,7 +563,7 @@ function logout(client, socket, msg) {
 		null,
 		function() {
 			client.donotSendPart = true;
-			broadcastUserListToMediaWiki(client);
+			broadcastUserListToMediaWiki(client, true);
 		}
 	);
 }

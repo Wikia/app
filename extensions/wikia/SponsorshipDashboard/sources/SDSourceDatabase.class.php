@@ -121,7 +121,7 @@ class SponsorshipDashboardSourceDatabase extends SponsorshipDashboardSource {
 	protected function getLocalParamsArray() {
 		$aData = array();
 
-		$aData[ self::SD_SERIE_NAME ] = $this->serieName;
+		$aData[ SponsorshipDashboardSourceMobile::SD_SERIE_NAME ] = $this->serieName;
 
 		return $aData;
 	}

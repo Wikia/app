@@ -283,7 +283,7 @@ public class ChatTests extends TestTemplate_Two_Drivers{
     4. User B types and sends string 'abc' in the private chat with user A window.
     5. Private chat with user B appears in user A's userlist area. 
 	 */
-	@Test(groups = {"Chat_007", "Chat"})
+	@Test(groups = {"Chat_007", "Chat", "Smoke"})
 	public void Chat_007_send_private_message()
 	{
 		//first user opens the chat

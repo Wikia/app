@@ -53,9 +53,12 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 		} else {
 			$totalVideos = $mediaService->getTotalVideos();
 		}
-		$totalVideos = $totalVideos + 1; // plus one for 'add video' placeholder
+		$totalVideos = $totalVideos + 1; // adding 'add video' placeholder to video array count
 
 		$sortingOptions = array_merge( $specialVideos->getSortingOptions(), $specialVideos->getFilterOptions() );
+		if ( !array_key_exists( $sort, $sortingOptions ) ) {
+			$sort = 'recent';
+		}
 
 		// Set up pagination
 		$pagination = '';

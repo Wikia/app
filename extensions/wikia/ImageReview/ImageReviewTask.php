@@ -48,8 +48,10 @@ class ImageReviewTask extends BatchTask {
 
 		$data = unserialize($params->task_arguments);
 
-		foreach ( $data['page_list'] as $wikiId => $imageId ) {
+		foreach ( $data['page_list'] as $imageData ) {
 			$retval = "";
+
+			list( $wikiId, $imageId) = $imageData;
 
 			$dbname = WikiFactory::getWikiByID( $wikiId );
 			if ( !$dbname ) continue;

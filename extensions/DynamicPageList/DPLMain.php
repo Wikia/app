@@ -14,7 +14,7 @@ class DPLMain {
 		// Output
 		$output = '';
 
-		error_reporting( E_ALL );
+		error_reporting( E_ALL & ~E_STRICT );
 
 		global $wgUser, $wgLang, $wgContLang, $wgRequest, $wgRawHtml;
 		global $wgTitle, $wgNonincludableNamespaces;

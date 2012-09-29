@@ -2895,6 +2895,13 @@ $messages['uk'] = array(
 	'wmu-gallery' => 'Галерея',
 );
 
+/** Uzbek (oʻzbekcha)
+ * @author CoderSI
+ */
+$messages['uz'] = array(
+	'wmu-find' => 'Qidiruv',
+);
+
 /** Yiddish (ייִדיש)
  * @author פוילישער
  */

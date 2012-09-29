@@ -643,10 +643,6 @@ function usleepWindows($usec)
 	while ($timePassed < $usec);
 }
 
-?><?php
-
-
-
 /**
 * soap_fault class, allows for creation of faults
 * mainly used for returning faults from deployed functions
@@ -702,12 +698,6 @@ class soap_fault extends nusoap_base {
 		return $return_msg;
 	}
 }
-
-
-
-?><?php
-
-
 
 /**
 * parses an XML Schema, allows access to it's data, other utility methods

@@ -119,7 +119,6 @@ class WallHistory extends WikiaModel {
 	}
 	
 	public function  getLastPosts($ns, $count = 5) {
-		
 		$where = array(
 			'action' => WH_NEW,
 			'post_ns' => $ns,
@@ -127,7 +126,29 @@ class WallHistory extends WikiaModel {
 			'deleted_or_removed' => 0
 		);
 		
-		return $this->loadFromDB($where, $count, 0, 'desc');
+		$out = array();
+		$group = array();
+		
+		$db =  $this->getDatawareDB(DB_SLAVE);
+		
+		for($try = 0; ($try < 5 && count($out) < $count ); $try++  ) {
+			$res = $this->baseLoadFromDB($where, 100, $try*100, 'desc');
+			while($row = $db->fetchRow($res)) {
+				$key = empty($row['parent_page_id']) ? $row['page_id']:$row['parent_page_id'];
+				if(empty($group[$key])) {
+					$data = $this->formatData($row);
+					if(!empty($data)){
+						$out[] = $data;
+						$group[$key] = true;					
+					}
+				}
+				
+				if($count == count($out)) {
+					break;
+				}
+			}
+		}
+		return $out;
 	}
 	
 	public function getLastUsers($ns, $count = 10) {
@@ -169,11 +190,10 @@ class WallHistory extends WikiaModel {
 		
 		$where = array(
 			'revision_id' => $in,
-                        'action' => WH_NEW,
-                        'post_ns' => $ns,
-                        'wiki_id' => $this->wikiId, 
-                        'deleted_or_removed' => 0
-
+			'action' => WH_NEW,
+			'post_ns' => $ns,
+			'wiki_id' => $this->wikiId, 
+			'deleted_or_removed' => 0
 		);
 		
 		return $this->loadFromDB($where, $count, 0, 'desc');
@@ -249,12 +269,13 @@ class WallHistory extends WikiaModel {
 		return ($this->page - 1) * $this->perPage;
 	}
 	
-	protected function loadFromDB($con, $limit, $offset, $sort) {
+	protected function baseLoadFromDB($con, $limit, $offset, $sort) {
 		$db =  $this->getDatawareDB(DB_SLAVE);
 		
 		$res = $db->select(
 			'wall_history',
 			array(
+				'parent_page_id',
 				'post_user_id',
 				'post_user_ip',
 				'is_reply',
@@ -274,6 +295,14 @@ class WallHistory extends WikiaModel {
 			)
 		);
 		
+		return $res;
+	}
+
+	protected function loadFromDB($con, $limit, $offset, $sort) {
+		$db =  $this->getDatawareDB(DB_SLAVE);
+
+		$res = $this->baseLoadFromDB($con, $limit, $offset, $sort);
+
 		$out = array();
 		while($row = $db->fetchRow($res)) {
 			$data = $this->formatData($row);
@@ -281,21 +310,26 @@ class WallHistory extends WikiaModel {
 				$out[] = $data;
 			}
 		}
-		
+
 		return $out;
 	}
-	
+
 	protected function formatData($row) {
 		$user = null;
 		if($row['post_user_id'] > 0) {
-			$user = User::newFromID($row['post_user_id']);	
+			$user = User::newFromID($row['post_user_id']);
 		} else {
 			$user = User::newFromName($this->long2ip($row['post_user_ip']), false);
 		}
-		
-		$title = Title::newFromId($row['page_id']);
+
 		$message = WallMessage::newFromId($row['page_id']);
-		
+
+		if(empty($message)) {
+			return;
+		}
+
+		$title = $message->getTitle();
+
 		if( ($title instanceof Title) && ($message instanceof WallMessage) ) {
 			return array(
 				'user' => $user,
@@ -311,13 +345,13 @@ class WallHistory extends WikiaModel {
 				'reason' => $row['reason'],
 				'revision_id' => $row['revision_id'],
 				'wall_message' => $message
-			);				
+			);
 		} else {
 		//it happened once on devbox when master&slave weren't sync'ed
 			wfDebug( __METHOD__ . ": Seems like master&slave are not sync'ed\n" );
 		}
 	}
-	
+
 	protected function ip2long($userName) {
 		return User::isIP($userName) ? ip2long($userName):null;
 	}

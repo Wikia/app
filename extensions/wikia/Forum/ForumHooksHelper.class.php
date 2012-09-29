@@ -171,111 +171,6 @@ class ForumHooksHelper {
 
 		return true;
 	}
-
-	// Hook: get query for load thread list
-	public function onWallLoadThreadListFromDB( $title, &$query ) {
-		$app = F::App();
-
-		if ( $title->getNamespace() == NS_WIKIA_FORUM_BOARD || !empty($app->wg->EnableCommentsIndex) ) {
-			$boardId = $title->getArticleID();
-			$query = <<<SQL
-				SELECT comment_id as page_id, page_title
-				FROM comments_index
-				LEFT JOIN page ON comment_id = page_id
-				WHERE parent_page_id = $boardId and parent_comment_id = 0 and deleted = 0 and removed = 0
-				ORDER BY comment_id desc
-SQL;
-		}
-
-		return true;
-	}
-
-	// Hook: load data for threads on the notCached list and send it to objects on threads list
-	public function onWallPreloadThreadsGrouped( $title, $master, $notCached, &$threadMapping, &$threads, &$return ) {
-		$app = F::App();
-
-		if ( $title->getNamespace() != NS_WIKIA_FORUM_BOARD || empty($app->wg->EnableCommentsIndex) ) {
-			return true;
-		}
-
-		$return = true;
-		$boardId = $title->getArticleID();
-		$commentIds = array_keys( $notCached );
-
-		$db = $app->wf->GetDB( $master ? DB_MASTER : DB_SLAVE );
-
-		$res = $db->select(
-			array( 'comments_index', 'page' ),
-			array( 'comment_id as page_id, page_title' ),
-			array(
-				'parent_page_id' => $boardId,
-				'parent_comment_id in ('.implode( ',', $commentIds ).')'
-			),
-			__METHOD__,
-			array( 'ORDER BY' => 'comment_id ASC' ),
-			array(
-				'page' => array(
-					'LEFT JOIN',
-					array( 'comment_id=page_id' )
-				)
-			)
-		);
-
-		$replyThreadMapping = array();
-		$threadWithNoReplies = array_flip( $notCached );
-		while( $row = $db->fetchObject($res) ) {
-			$parent = Wall::getParentTitleFromReplyTitle( $row->page_title );
-			if( !isset($replyThreadMapping[$parent]) ) {
-				$replyThreadMapping[$parent] = array();
-				unset( $threadWithNoReplies[$parent] );
-			}
-			array_push( $replyThreadMapping[$parent], $row->page_id );
-		}
-
-		foreach( $replyThreadMapping as $title => $ids ) {
-			if( !isset($threadMapping[$title]) ) {
-				// replies to thread that doesn't exist
-				// ignore
-			} else {
-				$parentId = $threadMapping[$title];
-				$threads[$parentId]->setReplies( $ids );
-			}
-		}
-
-		foreach( $threadWithNoReplies as $title => $id ) {
-			$threads[$id]->setReplies( array() );
-		}
-
-		return true;
-	}
-
-	// Hooks: get reply ids for thread
-	public function onWallThreadLoadReplyIdsFromDB( $title, $master, &$list ) {
-		$app = F::App();
-
-		if ( empty( $title ) || $title->getNamespace() != NS_WIKIA_FORUM_BOARD_THREAD || empty($app->wg->EnableCommentsIndex) ) {
-			return true;
-		}
-
-		$threadId = $title->getArticleID();
-
-		$db = $app->wf->GetDB( $master ? DB_MASTER : DB_SLAVE );
-
-		$result = $db->select(
-				array( 'comments_index' ),
-				array( 'distinct comment_id' ),
-				array( 'parent_comment_id = '.$threadId ),
-				__METHOD__,
-				array( 'ORDER BY' => 'comment_id ASC' )
-		);
-
-		$list = array();
-		while ( $row = $db->fetchObject( $result ) ) {
-			$list[] = $row->comment_id;
-		}
-
-		return true;
-	}
 	
 	/**
 	 * clear the caches
@@ -289,5 +184,17 @@ SQL;
 			$forum->clearCacheTotalThreads();
 		}
 		return true; 
+	}
+
+	/**
+	* overriding message
+	*/
+
+	public function onWallMessageDeleted(&$mw, &$response) {
+                $title = $mw->getTitle();
+                if($title->getNamespace() == NS_WIKIA_FORUM_BOARD_THREAD ) {
+			$response->setVal( 'returnTo', wfMsg('forum-thread-deleted-return-to', $mw->getWallTitle()->getText()) );
+		}
+		return true;
 	}
 }

@@ -103,7 +103,7 @@ abstract class BatchTask {
 	}
 
     /**
-     * @return true if form is submitted with success
+     * @return bool true if form is submitted with success
      *      array otherwise, array contains:
      * array(
      *      errors = array(
@@ -155,7 +155,7 @@ abstract class BatchTask {
      *
      * @param integer $taskID: task id from wikia_tasks table
      *
-     * @return object BatchTask or null if doesn't exists
+     * @return BatchTask|null if doesn't exists
      */
     static public function newFromID( $taskID ) {
         global $wgWikiaBatchTasks, $wgExternalSharedDB;
@@ -174,7 +174,7 @@ abstract class BatchTask {
 
         $sClass = isset($wgWikiaBatchTasks[ $oTask->task_type ]) ? $wgWikiaBatchTasks[ $oTask->task_type ] : null;
         if ( is_subclass_of( $sClass, "BatchTask" )) {
-            $oObject = new $sClass();
+            $oObject = new $sClass(); /* @var $oObject BatchTask */
             $oObject->setID( $oTask->task_id );
             $oObject->mData = $oTask;
             $retval =  $oObject;
@@ -195,14 +195,14 @@ abstract class BatchTask {
      *
      * @param object $oTask: task data from wikia_tasks table
      *
-     * @return object BatchTask or null if doesn't exists
+     * @return BatchTask|null if doesn't exists
      */
     static public function newFromData( $oTask ) {
         global $wgWikiaBatchTasks;
 
         $sClass = $wgWikiaBatchTasks[ $oTask->task_type ];
         if ( is_subclass_of( $sClass, "BatchTask" )) {
-            $oObject = new $sClass();
+            $oObject = new $sClass(); /* @var $oObject BatchTask */
             $oObject->setID( $oTask->task_id );
             $oObject->mData = $oTask;
             return $oObject;

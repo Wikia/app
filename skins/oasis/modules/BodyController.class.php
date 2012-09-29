@@ -123,20 +123,10 @@ class BodyController extends WikiaController {
 			$wgEnableCorporatePageExt,
 			$wgEnableWikiAnswers,
 			$wgSalesTitles, $wgEnableHuluVideoPanel,
-			$wgEnableGamingCalendarExt, $wgEnableWallExt, $wgRequest;
+			$wgEnableGamingCalendarExt, $wgEnableWallEngine, $wgRequest;
 
 		$namespace = $wgTitle->getNamespace();
 		$subjectNamespace = MWNamespace::getSubject($namespace);
-		$isDiff = ( !is_null( $wgRequest->getVal('diff', false) ) && $wgRequest->getVal('oldid', false));
-
-		/** @TODO should be done via a hook instead **/
-		if ( !empty($wgEnableWallExt) && $namespace === NS_USER_WALL_MESSAGE && $isDiff ) {
-			$this->wg->SuppressRail = true;
-		}
-
-		if ( $this->wg->SuppressRail ) {
-			return array();
-		}
 
 		$railModuleList = array();
 
@@ -298,8 +288,8 @@ class BodyController extends WikiaController {
 
 		//  No rail on main page or edit page for oasis skin
 		// except &action=history of wall
-		if( !empty($wgEnableWallExt) ) {
-			$isEditPage = $namespace !== NS_USER_WALL && $namespace !== NS_USER_WALL_MESSAGE && BodyController::isEditPage();
+		if( !empty($wgEnableWallEngine) ) {
+			$isEditPage = !WallHelper::isWallNamespace($namespace) && BodyController::isEditPage() || $wgRequest->getVal('diff');
 		} else {
 			$isEditPage = BodyController::isEditPage();
 		}

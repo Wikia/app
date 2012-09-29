@@ -6,6 +6,7 @@ class IgnVideoHandler extends VideoHandler {
 	protected static $urlTemplate = '';
 	protected static $providerDetailUrlTemplate = 'http://www.ign.com/watch?v=$1';
 	protected static $providerHomeUrl = 'http://www.ign.com/';
+	protected static $autoplayParam = "qs_autoplay=true";
 
 	public function getEmbed($articleId, $width, $autoplay=false, $isAjax=false, $postOnload=false) {
 		return $this->getEmbedNative($width, $autoplay);
@@ -28,6 +29,17 @@ EOT;
 		$url = $metadata['videoUrl'];
 
 		return $url;
+	}
+
+
+	public function getEmbedSrcData() {
+
+		$data = array();
+		$data['autoplayParam'] = static::$autoplayParam;
+		$data['srcParam'] = 'http://oystatic.ignimgs.com/src/core/swf/IGNPlayer.swf?url='.$this->getEmbedUrl();
+		$data['srcType'] = 'player';
+
+		return $data;
 	}
 
 }

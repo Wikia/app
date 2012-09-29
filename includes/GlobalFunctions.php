@@ -2223,7 +2223,7 @@ function wfSuppressWarnings( $end = false ) {
 			if( !defined( 'E_DEPRECATED' ) ) {
 				define( 'E_DEPRECATED', 8192 );
 			}
-			$originalLevel = error_reporting( E_ALL & ~( E_WARNING | E_NOTICE | E_USER_WARNING | E_USER_NOTICE | E_DEPRECATED ) );
+			$originalLevel = error_reporting( E_ALL & ~( E_WARNING | E_NOTICE | E_USER_WARNING | E_USER_NOTICE | E_DEPRECATED | E_STRICT ) );
 		}
 		++$suppressCount;
 	}
@@ -3318,7 +3318,7 @@ function wfFixSessionID() {
 			|| ini_get( 'session.entropy_file' )
 		)
 		&& intval( ini_get( 'session.entropy_length' ) ) >= 32;
-	
+
 	// If built-in entropy is not enabled or not sufficient override php's built in session id generation code
 	if ( !$entropyEnabled ) {
 		wfDebug( __METHOD__ . ": PHP's built in entropy is disabled or not sufficient, overriding session id generation using our cryptrand source.\n" );

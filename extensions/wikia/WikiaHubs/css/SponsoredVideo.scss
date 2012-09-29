@@ -7,7 +7,7 @@
 		.title-wrapper {
 			border: 0;
 			overflow:hidden;
-			h2 {				
+			h2 {
 				border:none;
 				float:left;
 				margin-bottom: 10px;
@@ -22,7 +22,7 @@
 					height:18px;
 					line-height:25px;
 					margin-right:5px;
-					display:block;		
+					display:block;
 				}
 				a {
 					float:left;
@@ -40,7 +40,7 @@
 			}
 			.wikiheader {
 				clear:both;
-				float:left;			
+				float:left;
 			}
 		}
 		.sponsored-video-content {
@@ -75,8 +75,16 @@
 				line-height: 1.5em;
 			}
 			.thumbcaption {
-				display: none;			
+				display: none;
 			}
 		}
 	}
 }
+
+/* temp transition code until grid is fully rolled out, remove and integrate after transition */
+.WikiaPage.WikiaGrid .WikiaArticle {
+	.wikiahubs-sponsored-video {
+		width: 310px;
+	}
+}
+/* end temp transistion code */

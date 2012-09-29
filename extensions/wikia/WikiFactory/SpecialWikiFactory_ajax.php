@@ -518,8 +518,6 @@ function axWFactorySaveVariable() {
 				ob_end_clean(); #--- puts parse error to /dev/null
 		}
 
-
-
                 if( empty( $error ) ) {
                     $varInfo = WikiFactory::getVarById($cv_id, $city_id);
                     if($varInfo->cv_is_unique) {
@@ -531,6 +529,9 @@ function axWFactorySaveVariable() {
                         }
                     }
                 }
+
+		wfRunHooks('WikiFactoryVarSave::AfterErrorDetection',array($cv_id,$city_id,$cv_name,$cv_value,&$return,&$error));
+
 
 		# Save to DB, but only if no errors occurred
 		if ( empty( $error ) ) {

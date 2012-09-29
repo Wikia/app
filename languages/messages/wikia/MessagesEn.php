@@ -496,12 +496,6 @@ div.wikiaDialog h2,
 	background: #36C !important;
 }
 
-/* tooltips */
-.wikiaTooltip {
-	background-color: #ffec3b;
-	border-color: #FFD242;
-}
-
 .prefSection {
 	background: #EEE;
 }

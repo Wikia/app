@@ -33,7 +33,7 @@
 				<img src="<?= $wg->ExtensionsPath ?>/wikia/ThemeDesigner/images/babygirl_swatch.jpg" data-image="<?= $wg->CdnStylePath ?>/skins/oasis/images/themes/babygirl.jpg">
 			</li>
 			<li>
-				<img src="<?= $wg->ExtensionsPath ?>/wikia/ThemeDesigner/images/carbon_swatch.jpg" data-image="<?= $wg->CdnStylePath ?>/skins/oasis/images/themes/carbon.png">
+				<img src="<?= $wg->ExtensionsPath ?>/wikia/ThemeDesigner/images/carbon_swatch.jpg" data-image="<?= $wg->CdnStylePath ?>/skins/oasis/images/themes/carbon.jpg">
 			</li>
 			<li>
 				<img src="<?= $wg->ExtensionsPath ?>/wikia/ThemeDesigner/images/rockgarden_swatch.jpg" data-image="<?= $wg->CdnStylePath ?>/skins/oasis/images/themes/rockgarden.jpg">

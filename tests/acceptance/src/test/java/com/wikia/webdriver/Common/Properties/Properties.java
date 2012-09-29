@@ -34,6 +34,9 @@ public class Properties {
 	public static String userNameStaff;
 	public static String passwordStaff;
 	
+	public static String userNameFB;
+	public static String passwordFB;
+	
 	
 	
 	private static void setVariables()
@@ -60,6 +63,9 @@ public class Properties {
 		
 		userNameStaff = XMLFunctions.getXMLConfiguration(Global.CONFIG_FILE, "ci.user.wikiastaff.username");
 		passwordStaff = XMLFunctions.getXMLConfiguration(Global.CONFIG_FILE, "ci.user.wikiastaff.password");
+		
+		userNameFB = XMLFunctions.getXMLConfiguration(Global.CONFIG_FILE, "ci.user.facebook.username");
+		passwordFB = XMLFunctions.getXMLConfiguration(Global.CONFIG_FILE, "ci.user.facebook.password");
 		
 		email = XMLFunctions.getXMLConfiguration(Global.CONFIG_FILE, "ci.email.generic.username");
 		emailPassword = XMLFunctions.getXMLConfiguration(Global.CONFIG_FILE, "ci.email.generic.password");
@@ -92,7 +98,7 @@ public class Properties {
 	
 	private static void setPropertiesManually()
 	{
-		Global.BROWSER = "IE";
+		Global.BROWSER = "FF";
 		Global.DOMAIN = "http://mediawiki119.wikia.com/";
 		Global.LIVE_DOMAIN = "http://www.wikia.com/";
 		Global.CONFIG_FILE = new File("c:"+File.separator+"wikia-qa"+File.separator+"config.xml");

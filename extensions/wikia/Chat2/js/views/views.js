@@ -243,6 +243,7 @@ var NodeChatDiscussion = Backbone.View.extend({
 		this.roomId = options.roomId;
 		this.model = options.model;
 		this.model.chats.bind('afteradd', $.proxy(this.addChat, this));
+		this.model.chats.bind('remove', $.proxy(this.removeChat, this));
 		this.model.chats.bind('clear', $.proxy(this.clear, this));
 		this.forceScroll = true;
 		        
@@ -351,6 +352,12 @@ var NodeChatDiscussion = Backbone.View.extend({
 		if (this.forceScroll) {
 			this.scrollToBottom();
 		}
+	},
+
+	removeChat: function(chat) {
+		var node = $('#entry-' + chat.cid);
+		node.next().removeClass('continued');
+		node.remove();
 	},
 	
 	scrollToBottom: function() {
@@ -518,7 +525,8 @@ var NodeChatUsers = Backbone.View.extend({
 		// regular actions
 		if (actions.regular && actions.regular.length) {
 			var regularActions = ul.clone().addClass('regular-actions');
-			for (i = 0, l = actions.regular.length; i < l, action = actions.regular[i]; i++) {
+			for (var i in actions.regular) {
+				var action = actions.regular[i];
 				if (action == 'profile') {
 					action = /Message_Wall/.test(pathToProfilePage) ? 'message-wall' : 'talk-page';
 					location = pathToProfilePage.replace('$1', username);
@@ -545,7 +553,8 @@ var NodeChatUsers = Backbone.View.extend({
 		// admin actions
 		if (actions.admin && actions.admin.length) {
 			var adminActions = ul.clone().addClass('admin-actions');
-			for (i = 0, l = actions.admin.length; i < l, action = actions.admin[i]; i++) {
+			for (var i in actions.admin) {
+				var action = actions.admin[i];
 				adminActions.append(
 					this.actionTemplateNoUrl({
 						actionName: action,

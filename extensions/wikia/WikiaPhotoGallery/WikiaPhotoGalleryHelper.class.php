@@ -20,6 +20,11 @@ class WikiaPhotoGalleryHelper {
 	const SLIDER_MOSAIC_MIN_IMG_WIDTH = 320;
 	const SLIDER_MOSAIC_MIN_IMG_HEIGHT = 210;
 
+	/* temp transition code until grid is fully rolled out, remove and integrate after transition */
+	const WIKIA_GRID_THUMBNAIL_MAX_WIDTH = 160;
+	const WIKIA_GRID_SLIDER_MOSAIC_MIN_IMG_WIDTH = 330;
+	/* end temp transistion code */
+
 	const STRICT_IMG_WIDTH_PREV = 320;
 	const STRICT_IMG_HEIGHT_PREV = 157;
 
@@ -109,6 +114,15 @@ class WikiaPhotoGalleryHelper {
 		return true;
 	}
 
+	/* temp transition code until grid is fully rolled out, remove and integrate after transition */
+	static public function makeGlobalVariablesScriptForWikiaGrid(Array &$vars) {
+		global $wgOasisGrid;
+		$vars['wgOasisGrid'] = $wgOasisGrid;
+
+		return true;
+	}
+	/* end temp transistion code */
+
 	/**
 	 * Render gallery placeholder for RTE
 	 *
@@ -124,19 +138,19 @@ class WikiaPhotoGalleryHelper {
 
 		if ( $data['type'] == WikiaPhotoGallery::WIKIA_PHOTO_SLIDESHOW ) {
 			$class .= ' image-slideshow';
+		}
 
-			// support "position" attribute (slideshow alignment)
-			switch ($gallery->getParam('position')) {
-				case 'left':
-					$class .= ' alignLeft';
-					break;
-				case 'center':
-					$class .= ' alignCenter';
-					break;
-				case 'right':
-					$class .= ' alignRight';
-					break;
-			}
+		// support "position" attribute (gallery alignment)
+		switch ($gallery->getParam('position')) {
+			case 'left':
+				$class .= ' alignLeft';
+				break;
+			case 'center':
+				$class .= ' alignCenter';
+				break;
+			case 'right':
+				$class .= ' alignRight';
+				break;
 		}
 
 		if ( $data['type'] == WikiaPhotoGallery::WIKIA_PHOTO_SLIDER ) {

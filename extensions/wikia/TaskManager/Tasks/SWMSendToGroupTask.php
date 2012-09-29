@@ -119,6 +119,17 @@ class SWMSendToGroupTask extends BatchTask {
 						break;
 				}
 				break;
+
+			case 'WIKIS':
+				switch ( $args['sendModeUsers'] ) {
+					case 'ALL':
+					case 'ACTIVE':
+					case 'GROUP':
+					case 'EDITCOUNT':
+						$result = $this->sendMessageToListOfWikis( $args );
+						break;
+				}
+				break;
 		}
 		return (boolean)$result;
 	}
@@ -353,6 +364,45 @@ class SWMSendToGroupTask extends BatchTask {
 								break;
 						}
 						break;
+
+					case 'WIKIS':
+						switch ($args['sendModeUsers']) {
+							case 'ALL':
+							case 'ACTIVE':
+								$desc = sprintf('SiteWideMessages :: Send to active users on %s wikis<br/>' .
+									'Sender: %s [id: %d]',
+									count( $args['wikiNames'] ),
+									$args['senderName'],
+									$args['senderId']
+								);
+								break;
+							case 'GROUP':
+								$desc = sprintf('SiteWideMessages :: Send to a group on %s wikis<br/>' .
+									'Group: %s, Wiki: %s<br/>' .
+									'Sender: %s [id: %d]',
+									count( $args['wikiNames'] ),
+									$args['groupName'],
+									$args['wikiName'],
+									$args['senderName'],
+									$args['senderId']
+								);
+								break;
+
+							case 'EDITCOUNT':
+								$desc = sprintf('SiteWideMessages :: Send to users by editcount on %s wikis<br/>' .
+									'Option: %s, From: %s, TO: %s, Wiki: %s<br/>' .
+									'Sender: %s [id: %d]',
+									count( $args['wikiNames'] ),
+									$args['editCountOption'],
+									$args['editCountStart'],
+									( $args['editCountEnd'] === false ? '' : $args['editCountEnd'] ),
+									$args['wikiName'],
+									$args['senderName'],
+									$args['senderId']
+								);
+								break;
+						}
+						break;
 				}
 			}
 		}
@@ -429,6 +479,75 @@ class SWMSendToGroupTask extends BatchTask {
 		$result = $this->sendMessageHelperToUsers( $sqlValues );
 
 		unset( $sqlValues );
+
+		return $result;
+	}
+
+	/**
+	 * sendMessageToListOfWikis
+	 *
+	 * sends a message to specified group of users
+	 *
+	 * @access private
+	 * @author Daniel Grunwell (grunny)
+	 *
+	 * @param mixed $params - task arguments
+	 *
+	 * @return boolean: result of sending
+	 */
+	private function sendMessageToListOfWikis( $params ) {
+		global $wgExternalSharedDB;
+		$result = true;
+		$sqlValues = array();
+		$wikisDB = array();
+
+		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
+		$dbw = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
+
+		$this->addLog( 'Get Wiki IDs for the supplied ' . count( $params['wikiNames'] ) . ' wikis' );
+		foreach ( $params['wikiNames'] as $wikiName ) {
+			$wikiID = null;
+			$wikiDomains = array( '', '.wikia.com', '.sjc.wikia-inc.com' );
+			foreach( $wikiDomains as $wikiDomain ) {
+				if( !is_null( $wikiID = WikiFactory::DomainToID( $params['wikiName'] . $wikiDomain ) ) ) {
+					break;
+				}
+			}
+			if ( !is_null( $wikiID ) ) {
+				$wikiDB = WikiFactory::IDtoDB( $wikiID );
+				$wikisDB[$wikiID] = $wikiDB;
+			}
+		}
+
+		switch ( $params['sendModeUsers'] ) {
+			case 'ALL':
+			case 'ACTIVE':
+				$result = $this->sendMessageHelperToActive( $dbr, $wikisDB, $params );
+				break;
+
+			case 'GROUP':
+				$result = $this->sendMessageHelperToGroup( $dbr, $wikisDB, $params );
+				break;
+
+			case 'ANONS':
+				foreach ( $wikisDB as $mWikiId => $mWikiDB ) {
+					$sqlValues[] = array(
+						'msg_wiki_id' => $mWikiId,
+						'msg_recipient_id' => 0,
+						'msg_id' => $params['messageId'],
+						'msg_status' => MSG_STATUS_UNSEEN
+					);
+				}
+				$result = (boolean)$dbw->insert(
+					MSG_STATUS_DB,
+					$sqlValues
+				);
+				break;
+
+			case 'EDITCOUNT':
+				$result = $this->sendMessageByEditcountList( $wikisDB, $params );
+				break;
+		}
 
 		return $result;
 	}
@@ -625,6 +744,66 @@ class SWMSendToGroupTask extends BatchTask {
 		}
 		$dbr->freeResult( $res );
 		$this->addLog("Add records about new message to right users [wiki_id = $wikiID, wiki_db = $wikiDB, number of users = " . count( $sqlValues ) . "]");
+		if ( count( $sqlValues ) ) {
+			$result = $this->sendMessageHelperToUsers( $sqlValues );
+		}
+		unset( $sqlValues );
+		return $result;
+	}
+
+	/**
+	 * sendMessageByEditcountList
+	 *
+	 * sends a message to specified group of users
+	 *
+	 * @access private
+	 * @author Daniel Grunwell (grunny)
+	 *
+	 * @param mixed $params - task arguments
+	 *
+	 * @return boolean: result of sending
+	 */
+	private function sendMessageByEditcountList( $wikisDB, $params ) {
+		$result = true;
+		$sqlValues = array();
+		$having = '';
+		$dbr = wfGetDB( DB_SLAVE );
+
+		switch ( $params['editCountOption'] ) {
+			case 'more':
+				$having = "editcnt > {$dbr->addQuotes( $params['editCountStart'] )}";
+				break;
+
+			case 'less':
+				$having = "editcnt < {$dbr->addQuotes( $params['editCountStart'] )}";
+				break;
+
+			case 'between':
+				$having = "editcnt BETWEEN {$dbr->addQuotes( $params['editCountStart'] )} AND {$dbr->addQuotes( $params['editCountEnd'] )}";
+				break;
+		}
+
+		foreach ( $wikisDB as $wikiID => $wikiDB ) {
+			$this->addLog("Look into selected wiki for users that have a specific editcount [operator = {$params['editCountOption']}, from = {$params['editCountStart']}, to = {$params['editCountEnd']}, wiki_id = $wikiID, wiki_db = $wikiDB]");
+			$dbr->selectDB( $wikiDB );
+			$res = $dbr->select(
+				array( 'revision' ),
+				array( 'rev_user', 'count(*) as editcnt' ),
+				'',
+				__METHOD__,
+				array(
+					'GROUP BY' => 'rev_user',
+					'HAVING' => $having
+				)
+			);
+
+			while ( $row = $dbr->fetchObject( $res ) ) {
+				$sqlValues[] = "($wikiID, {$row->rev_user}, {$params['messageId']}, " . MSG_STATUS_UNSEEN . ')';
+			}
+			$dbr->freeResult( $res );
+			$this->addLog("Add records about new message to right users [wiki_id = $wikiID, wiki_db = $wikiDB, number of users = " . count( $sqlValues ) . "]");
+		}
+		$this->addLog( 'Add records about new message to right users [number of wikis = ' . count( $wikisDB ) . ', number of users = ' . count( $sqlValues ) . ']' );
 		if ( count( $sqlValues ) ) {
 			$result = $this->sendMessageHelperToUsers( $sqlValues );
 		}

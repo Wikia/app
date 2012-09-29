@@ -92,7 +92,7 @@ class CreateNewWikiController extends WikiaController {
 	public function executeCheckWikiName() {
 		wfProfileIn(__METHOD__);
 
-		$wgRequest = $this->app->getGlobal('wgRequest');
+		$wgRequest = $this->app->getGlobal('wgRequest'); /* @var $wgRequest WebRequest */
 
 		$name = $wgRequest->getVal('name');
 		$lang = $wgRequest->getVal('lang');
@@ -107,8 +107,9 @@ class CreateNewWikiController extends WikiaController {
 	 */
 	public function executeCreateWiki() {
 		wfProfileIn(__METHOD__);
-		$wgRequest = $this->app->getGlobal('wgRequest');
+		$wgRequest = $this->app->getGlobal('wgRequest'); /* @var $wgRequest WebRequest */
 		$wgDevelDomains = $this->app->getGlobal('wgDevelDomains');
+		$wgUser = $this->app->getGlobal('wgUser'); /* @var $wgUser User */
 
 		$params = $wgRequest->getArray('data');
 
@@ -116,7 +117,6 @@ class CreateNewWikiController extends WikiaController {
 			(!empty($params['wikiName']) && !empty($params['wikiDomain']) ) )
 		{
 			// log if called with old params
-			$wgUser = $this->app->getGlobal('wgUser');
 			trigger_error("CreateWiki called with old params." . $params['wikiName'] . " " . $params['wikiDomain'] . " " . $wgRequest->getIP() . " " . $wgUser->getName() . " " . $wgUser->getId(), E_USER_WARNING);
 		}
 
@@ -124,7 +124,6 @@ class CreateNewWikiController extends WikiaController {
 			(!empty($params['wikiaName']) && !empty($params['wikiaDomain']) ) )
 		{
 			// log if called with old params
-			$wgUser = $this->app->getGlobal('wgUser');
 			trigger_error("CreateWiki called with 2nd old params." . $params['wikiaName'] . " " . $params['wikiaDomain'] . " " . $wgRequest->getIP() . " " . $wgUser->getName() . " " . $wgUser->getId(), E_USER_WARNING);
 		}
 
@@ -139,8 +138,6 @@ class CreateNewWikiController extends WikiaController {
 			$this->statusMsg = $this->app->runFunction('wfMsg', 'cnw-error-general');
 			$this->statusHeader = $this->app->runFunction('wfMsg', 'cnw-error-general-heading');
 		} else {
-			$wgUser = $this->app->getGlobal('wgUser');
-
 			/*
 			$stored_answer = $this->getStoredAnswer();
 			if(empty($stored_answer) || $params['wAnswer'].'' !== $stored_answer.'') {
@@ -176,7 +173,7 @@ class CreateNewWikiController extends WikiaController {
 				return;
 			}
 
-			$createWiki = F::build('CreateWiki', array($params['wName'], $params['wDomain'], $params['wLanguage'], $params['wCategory']));
+			$createWiki = F::build('CreateWiki', array($params['wName'], $params['wDomain'], $params['wLanguage'], $params['wCategory'])); /* @var $createWiki CreateWiki */
 			$error_code = $createWiki->create();
 			$cityId = $createWiki->getWikiInfo('city_id');
 			if(empty($cityId)) {

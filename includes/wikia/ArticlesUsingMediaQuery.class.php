@@ -33,6 +33,7 @@ class ArticlesUsingMediaQuery
 			$data = $this->memc->get( $this->getMemcKey() );
 
 			if ( is_array($data) ) {
+				wfProfileOut(__METHOD__);
 				return $data;
 			}
 		}

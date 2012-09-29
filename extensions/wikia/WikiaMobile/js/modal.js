@@ -30,12 +30,6 @@ define('modal', ['loader', 'events', 'ads'], function modal(loader, events, ads)
 		caption = d.getElementById('wkMdlFtr');
 		closeButton = d.getElementById('wkMdlClo');
 
-		//TODO: create better resolution 'finder'
-		var ios = $.os.ios,
-			deviceWidth = (ios) ? 268 : w.innerWidth,
-			deviceHeight = (ios) ? 416 : w.innerHeight;
-
-		d.head.insertAdjacentHTML('beforeend', '<style>#wkMdlWrp{min-height: ' + deviceHeight + 'px}@media only screen and (orientation:landscape) and (min-width: 321px){#wkMdlWrp{min-height:' + deviceWidth + 'px;}}</style>');
 		created = true;
 	}
 
@@ -58,13 +52,14 @@ define('modal', ['loader', 'events', 'ads'], function modal(loader, events, ads)
 	}
 
 	function onHashChange(ev){
-		if(isOpen() && w.location.hash == ''){
+		if(isOpen() && w.location.hash === ''){
 			ev.preventDefault();
 			close();
 		}
 	}
 
-	function onOrientationChange(){
+	function onOrientationChange(ev){
+		wrapper.style.minHeight = ev.height + 'px';
 		!w.pageYOffset && w.scrollTo(0, 1);
 	}
 
@@ -127,7 +122,7 @@ define('modal', ['loader', 'events', 'ads'], function modal(loader, events, ads)
 		setCaption(cap);
 
 		//hide adress bar on orientation change
-		w.addEventListener('orientationchange', onOrientationChange);
+		w.addEventListener('viewportsize', onOrientationChange);
 
 		//handle close on back button
 		w.addEventListener('hashchange', onHashChange);
@@ -165,7 +160,7 @@ define('modal', ['loader', 'events', 'ads'], function modal(loader, events, ads)
 				topBar.style.top = '';
 			}
 
-			w.removeEventListener('orientationchange', onOrientationChange);
+			w.removeEventListener('viewportsize', onOrientationChange);
 			w.removeEventListener('hashchange', onHashChange);
 			closeButton.removeEventListener('click', onCloseClick);
 			content.removeEventListener('click', onContentClick);
@@ -202,7 +197,7 @@ define('modal', ['loader', 'events', 'ads'], function modal(loader, events, ads)
 	}
 
 	function setCaption(cap){
-		if(typeof cap == 'string' && cap != ''){
+		if(typeof cap === 'string' && cap !== ''){
 			caption.innerHTML = cap;
 			caption.style.display = 'block';
 		}else{

@@ -3,7 +3,7 @@
 	if ($commentsBubble) {
 ?>
 	<div class="commentslikes">
-		<a href="<?= htmlspecialchars($commentsLink) ?>" data-id="comment" title="<?= htmlspecialchars($commentsTooltip) ?>"<?= $commentsAccesskey ?>><span class="commentsbubble"><?= $formattedComments ?></span></a>
+		<a href="<?= htmlspecialchars($commentsLink) ?>" data-id="comment" class="<?= empty($isArticleComments) ? 'talk' : '' ?>" title="<?= htmlspecialchars($commentsTooltip) ?>"<?= $commentsAccesskey ?>><span class="commentsbubble"><?= $formattedComments ?></span></a>
 	</div>
 <?php
 	}
@@ -16,7 +16,7 @@
 ?>
 	<li class="comments">
 		<span class="commentsbubble"><?= $formattedComments ?></span>
-		<a href="<?= htmlspecialchars($commentsLink) ?>" rel="nofollow" data-id="comment" title="<?= htmlspecialchars($commentsTooltip) ?>"<?= $commentsAccesskey ?>><?= wfMsgExt($commentsEnabled ? 'oasis-page-header-comments' : 'oasis-page-header-talk', array('parsemag'), $comments) ?></a>
+		<a href="<?= htmlspecialchars($commentsLink) ?>" rel="nofollow" data-id="comment" class="<?= empty($isArticleComments) ? 'talk' : '' ?>" title="<?= htmlspecialchars($commentsTooltip) ?>"<?= $commentsAccesskey ?>><?= wfMsgExt($commentsEnabled ? 'oasis-page-header-comments' : 'oasis-page-header-talk', array('parsemag'), $comments) ?></a>
 	</li>
 <?php
 		}

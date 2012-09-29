@@ -26,7 +26,6 @@ class AccountCreationTrackerController extends WikiaSpecialPageController {
 
 		$this->response->addAsset("extensions/wikia/AccountCreationTracker/ACT.js");
 		$this->response->addAsset('resources/wikia/libraries/jquery/datatables/jquery.dataTables.min.js');
-		$this->response->addAsset('skins/oasis/css/modules/WikiaTooltip.scss');
 		$this->response->addAsset('extensions/wikia/AccountCreationTracker/ACT.scss');
 
 		$username = $this->getVal( 'username' );

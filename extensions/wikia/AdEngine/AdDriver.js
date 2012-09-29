@@ -608,7 +608,7 @@ AdDriverDelayedLoader.removeItemsBySlotname = function(slotname) {
 AdDriverDelayedLoader.callDART = function() {
 	Wikia.log('callDART', 5, 'AdDriverDelayedLoader');
 
-	WikiaTracker.trackAdEvent('liftium.slot2', {'ga_category':'slot2/' + AdDriverDelayedLoader.currentAd.size, 'ga_action':AdDriverDelayedLoader.currentAd.slotname, 'ga_label':'addriver'}, 'ga');
+	WikiaTracker.trackAdEvent('liftium.slot2', {'ga_category':'slot2/' + (AdDriverDelayedLoader.currentAd.size || 'unknown'), 'ga_action':(AdDriverDelayedLoader.currentAd.slotname || 'unknown'), 'ga_label':'addriver'}, 'ga');
 
 	Wikia.log(AdDriverDelayedLoader.currentAd.slotname + ': calling DART...', 1, 'AdDriverDelayedLoader');
 	AdDriver.incrementNumDARTCall(AdDriverDelayedLoader.currentAd.slotname);
@@ -638,7 +638,7 @@ AdDriverDelayedLoader.callDART = function() {
 				}
 
 				if (nextAdProvider == AdDriver.adProviderLiftium) {
-					WikiaTracker.trackAdEvent('liftium.hop2', {'ga_category':'hop2/addriver', 'ga_action':'slot ' + AdDriverDelayedLoader.currentAd.slotname, 'ga_label':'9.9' /* FIXME Liftium.formatTrackTime(time, 5) */}, 'ga');
+					WikiaTracker.trackAdEvent('liftium.hop2', {'ga_category':'hop2/addriver', 'ga_action':'slot ' + (AdDriverDelayedLoader.currentAd.slotname || 'unknown'), 'ga_label':'9.9' /* FIXME Liftium.formatTrackTime(time, 5) */}, 'ga');
 
 					var liftiumItem = new AdDriverDelayedLoaderItem(AdDriverDelayedLoader.currentAd.slotname, AdDriverDelayedLoader.currentAd.size, AdDriver.adProviderLiftium);
 					AdDriverDelayedLoader.prependItem(liftiumItem);
@@ -660,7 +660,7 @@ AdDriverDelayedLoader.getPlaceHolderIframeScript = function(slotname, size) {
 	Wikia.log('getPlaceHolderIframeScript ' + slotname + ', ' + size, 5, 'AdDriverDelayedLoader');
 
 	var dims = size.split('x');
-	return "document.write('<div id=\"Liftium_"+size+"_"+(++AdDriverDelayedLoader.adNum)+"\"><iframe width=\""+dims[0]+"\" height=\""+dims[1]+"\" id=\""+escape(slotname)+"_iframe\" noresize=\"true\" scrolling=\"no\" frameborder=\"0\" marginheight=\"0\" marginwidth=\"0\" style=\"border:none;\" target=\"_blank\"></iframe><div>');";
+	return "document.write('<div id=\"Liftium_"+size+"_"+(++AdDriverDelayedLoader.adNum)+"\"><iframe width=\""+dims[0]+"\" height=\""+dims[1]+"\" id=\""+escape(slotname)+"_iframe\" noresize=\"true\" scrolling=\"no\" frameborder=\"0\" marginheight=\"0\" marginwidth=\"0\" style=\"border:none;display:block\" target=\"_blank\"></iframe><div>');";
 };
 
 AdDriverDelayedLoader.getLiftiumCallScript = function(slotname, size) {
@@ -845,6 +845,8 @@ AdDriverDelayedLoader.startCalled = false;
 AdDriverDelayedLoader.load = function() {
 	Wikia.log('load', 5, 'AdDriverDelayedLoader');
 
+	WikiaTracker.trackAdEvent('liftium.init', {'ga_category':'init2/init', 'ga_action':'init', 'ga_label':'addriver'}, 'ga');
+
 	AdDriverDelayedLoader.started = true;
 
 	if (typeof wgNow != 'undefined' && AdDriverDelayedLoader.adDriverItems.length) {
@@ -884,41 +886,6 @@ AdDriverDelayedLoader.finalize = function() {
 	Wikia.log('AdDriver finished at ' + loadTime + ' ms', 1, 'AdDriverDelayedLoader');
 };
 //// END AdDriverDelayedLoader
-
-if (window.wgEnableKruxTargeting) {
-	// krux ad targeting. must come before dart urls are constructed
-	window.Krux||((Krux=function(){Krux.q.push(arguments)}).q=[]);
-	Krux.load = function(confid){
-		var k=document.createElement('script');k.type='text/javascript';k.async=true;var m,src=(m=location.href.match(/\bkxsrc=([^&]+)\b/))&&decodeURIComponent(m[1]);
-		k.src=src||(location.protocol==='https:'?'https:':'http:')+'//cdn.krxd.net/controltag?confid='+confid;
-		var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(k,s);
-	};
-
-	window.Krux||((Krux=function(){Krux.q.push(arguments);}).q=[]);
-	(function(){
-	  function retrieve(n){
-	    var m, k='kx'+n;
-	    if (window.localStorage) {
-	        return window.localStorage[k] || "";
-	    } else if (navigator.cookieEnabled) {
-	        m = document.cookie.match(k+'=([^;]*)');
-	        return (m && unescape(m[1])) || "";
-	    } else {
-	        return '';
-	    }
-	  }
-	  var kvs = [];
-	  Krux.user = retrieve('user');
-	  if (Krux.user) {
-	    kvs.push('u=' + Krux.user);
-	  }
-	  Krux.segments = retrieve('segs') && retrieve('segs').split(',') || [];
-	  for (var i = 0; i < Krux.segments.length; i++ ) {
-	    kvs.push('ksgmnt=' + Krux.segments[i]);
-	  }
-	  Krux.dartKeyValues = kvs.length ? kvs.join(';') + ';': '';
-	})();
-}
 
 if (!window.adslots) {
 	window.adslots = [];

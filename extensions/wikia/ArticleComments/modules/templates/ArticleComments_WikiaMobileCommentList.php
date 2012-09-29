@@ -9,4 +9,3 @@ if ( count( $commentListRaw ) ) {
 		}
 	}
 }
-?>

@@ -5,6 +5,8 @@ class OasisController extends WikiaController {
 	private static $extraBodyClasses = array();
 
 	private $printStyles;
+
+	/* @var AssetsManager */
 	private $assetsManager;
 
 	/**
@@ -82,17 +84,17 @@ class OasisController extends WikiaController {
 		global $wgOut, $wgUser, $wgTitle, $wgRequest, $wgCityId, $wgEnableAdminDashboardExt, $wgAllInOne;
 
 		wfProfileIn(__METHOD__);
-		
+
 		/* set the grid or full width if passed in, otherwise, respect the default */
 		$grid = $wgRequest->getVal('wikiagrid', '');
 		$fullhead = $wgRequest->getVal('wikiafullheader', '');
-		
+
 		if ( '1' === $grid ) {
 			$this->wg->OasisGrid = true;
 		} else if ( '0' === $grid ) {
 			$this->wg->OasisGrid = false;
 		}
-		
+
 		if ( '1' === $fullhead ) {
 			$this->wg->GlobalHeaderFullWidth = true;
 		} else if ( '0' === $fullhead ) {
@@ -141,7 +143,7 @@ class OasisController extends WikiaController {
 		// get microdata for body tag
 		$this->itemType = self::getItemType();
 
-		$skin = RequestContext::getMain()->getSkin();
+		$skin = RequestContext::getMain()->getSkin(); /* @var $skin WikiaSkin */
 		// this is bad but some extensions could have added some scripts to bottom queue
 		// todo: make it not run twice during each request
 		$this->bottomscripts = $skin->bottomScripts();
@@ -389,8 +391,6 @@ class OasisController extends WikiaController {
 	private function loadJs() {
 		global $wgJsMimeType, $wgUser, $wgSpeedBox, $wgDevelEnvironment, $wgEnableAbTesting, $wgAllInOne;
 		wfProfileIn(__METHOD__);
-
-		$assetsManager = F::build( 'AssetsManager', array(), 'getInstance' );
 
 		$this->jsAtBottom = self::JsAtBottom();
 
@@ -644,6 +644,18 @@ EOT;
 	
 	/**
 	 *	Logic for microdata to be added to body tag. 
+	 */
+	protected function getItemType() {
+		$type = '';
+		if($this->wg->Title->isSpecial('Videos')) {
+			$type = "VideoGallery";
+		}
+		// TODO: Add ImageGallery for photos page
+		if(!empty($type)) {
+			return ' itemscope itemtype="http://schema.org/'.$type.'"';
+
+	/**
+	 *	Logic for microdata to be added to body tag.
 	 */
 	protected function getItemType() {
 		$type = '';

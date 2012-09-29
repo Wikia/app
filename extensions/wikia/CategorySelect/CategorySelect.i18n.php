@@ -437,7 +437,7 @@ $messages['grc'] = array(
 	'categoryselect-button-cancel' => 'Ἀκυροῦν',
 );
 
-/** Hausa (هَوُسَ) */
+/** Hausa (Hausa) */
 $messages['ha'] = array(
 	'categoryselect-button-cancel' => 'Soke',
 );

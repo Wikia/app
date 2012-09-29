@@ -11,7 +11,7 @@ var WallNotifications = $.createClass(Object, {
 		setTimeout( this.proxy( this.updateCounts ), 300);
 
 		this.$bubblesCount = $('#bubbles_count');
-		this.$wallNotifications = $('#WallNotifications');
+		this.$wallNotifications = $('#WallNotifications, .wall-notifications-monobook');
 		this.$wallNotificationsReminder = $('#WallNotificationsReminder');
 		this.$wallNotificationsSubnav = this.$wallNotifications.find('.subnav');
 
@@ -84,12 +84,13 @@ var WallNotifications = $.createClass(Object, {
 
 	updateCounts: function() {
 		var callback = this.proxy(function(data) {
+
 			if (data.status != true || data.html == '') {
 				return;
 			}
 
 			if (data.count) {
-				this.$wallNotifications.show();
+				this.$wallNotifications.removeClass('prehide');
 			}
 
 			this.updateCountsHtml(data);

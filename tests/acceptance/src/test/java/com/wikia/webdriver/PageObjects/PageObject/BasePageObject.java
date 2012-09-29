@@ -17,6 +17,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import com.google.common.base.Throwables;
 import com.wikia.webdriver.Common.Core.CommonExpectedConditions;
 import com.wikia.webdriver.Common.Core.CommonFunctions;
 import com.wikia.webdriver.Common.Core.Global;
@@ -152,7 +153,8 @@ public class BasePageObject{
 		}
 		catch(Exception e)
 		{
-			PageObjectLogging.log("click", e.toString(), false);
+			
+			PageObjectLogging.log("click", Throwables.getStackTraceAsString(e), false);
 		}
 	}
 	/**
@@ -194,6 +196,39 @@ public class BasePageObject{
 	public void mouseOverInArticleIframe(String cssSelecotr)
 	{
 		executeScript("$($($('iframe[title*=\"Rich\"]')[0].contentDocument.body).find('"+cssSelecotr+"')).mouseenter()");
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void mouseReleaseInArticleIframe(String cssSelecotr)
+	{
+		executeScript("$($($('iframe[title*=\"Rich\"]')[0].contentDocument.body).find('"+cssSelecotr+"')).mouseleave()");
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void mouseOver(String cssSelecotr)
+	{
+		executeScript("$('"+cssSelecotr+"').mouseenter()");
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void mouseRelease(String cssSelecotr)
+	{
+		executeScript("$('"+cssSelecotr+"').mouseleave()");
 		try {
 			Thread.sleep(500);
 		} catch (InterruptedException e) {
@@ -294,15 +329,17 @@ public class BasePageObject{
 	 *
 	 ** @param element The element to be checked
 	 */
-	public void waitForElementByElement(WebElement element)
+	public boolean waitForElementByElement(WebElement element)
 	{
 		try
 		{
-			wait.until(ExpectedConditions.visibilityOf(element));								
+			wait.until(ExpectedConditions.visibilityOf(element));	
+			return true;
 		}
 		catch(Exception e)
 		{
 			PageObjectLogging.log("waitForElementByElement", e.toString(), false);			
+			return false;
 		}
 	}
 
@@ -323,15 +360,17 @@ public class BasePageObject{
 		}
 	}
 	
-	public void waitForElementByCss(String cssSelector)
+	public boolean waitForElementByCss(String cssSelector)
 	{
 		try
 		{						
 			wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(cssSelector)));
+			return true;
 		}
 		catch(Exception e)
 		{
-			PageObjectLogging.log("waitForElementByCss", e.toString(), false);			
+			PageObjectLogging.log("waitForElementByCss", e.toString(), false);
+			return false;
 		}
 		
 	}
@@ -388,7 +427,11 @@ public class BasePageObject{
 	{
 		try
 		{
-			wait.until(ExpectedConditions.invisibilityOfElementLocated(by));								
+			wait.until(CommonExpectedConditions.invisibilityOfElementLocated(by));								
+		}
+		catch(NoSuchElementException e)
+		{
+			PageObjectLogging.log("waitForElementNotVisibleByBy", "Element " + by.getClass() + " is not visible which is expected", true);
 		}
 		catch(NoSuchElementException e)
 		{
@@ -505,7 +548,7 @@ public class BasePageObject{
 		}
 		catch(Exception e)
 		{
-			PageObjectLogging.log("waitForTextToBePresentInElementByElement", e.toString(), false);			
+			PageObjectLogging.log("waitForTextToBePresentInElementByElement", e.toString(), false);
 		}
 		
 	}
@@ -737,12 +780,13 @@ public class BasePageObject{
 	 */
 	public void customizeToolbar_ClickOnToolRemoveButton(String Tool) {
 		By By1 = By.cssSelector("ul.options-list li[data-caption='"+Tool+"']");
-		By By2 = By.cssSelector("ul.options-list li[data-caption='"+Tool+"'] img.trash");
-		Point Elem1_location = driver.findElement(By1).getLocation();
-		CommonFunctions.MoveCursorToElement(Elem1_location);
-		waitForElementByBy(By2);
-		waitForElementClickableByBy(By2);
-		driver.findElement(By2).click();
+//		By By2 = By.cssSelector("ul.options-list li[data-caption='"+Tool+"'] img.trash");
+//		Point Elem1_location = driver.findElement(By1).getLocation();
+//		CommonFunctions.MoveCursorToElement(Elem1_location);
+//		waitForElementByBy(By2);
+//		waitForElementClickableByBy(By2);
+//		driver.findElement(By2).click();
+		jQueryClick("ul.options-list li[data-caption=\""+Tool+"\"] img.trash");
 		PageObjectLogging.log("customizeToolbar_ClickOnToolRemoveButton", "Remove Tool with id "+Tool+" from Toolbar List", true, driver);
 	}
 	
@@ -754,12 +798,8 @@ public class BasePageObject{
 	 */
 	public void customizeToolbar_ClickOnToolRenameButton(String ToolID) {
 		By By1 = By.cssSelector("ul.options-list li[data-caption='"+ToolID+"']");
-		By By2 = By.cssSelector("ul.options-list li[data-caption='"+ToolID+"'] img.edit-pencil");
-		Point Elem1_location = driver.findElement(By1).getLocation();
-		CommonFunctions.MoveCursorToElement(Elem1_location);
-		waitForElementByBy(By2);
-		waitForElementClickableByBy(By2);
-		driver.findElement(By2).click();
+		waitForElementByBy(By1);
+		jQueryClick("ul.options-list li[data-caption=\""+ToolID+"\"] img.edit-pencil");
 		PageObjectLogging.log("customizeToolbar_ClickOnToolRenameButton", "Rename the "+ToolID+" Tool", true, driver);
 	}
 	
@@ -832,30 +872,36 @@ public class BasePageObject{
 		
 	}
 	
-	/**
-	 * <p> Verify that wanted Tool appears in Toolbar. <br> 
-	 * The method finds all of Tools appearing in Toolbar (by their name), and checks if there is at least one name which fits the given param (ToolName)
-	 * 
-	 * @param ToolName Tool to be verified (name that should appear on toolbar)
-	 * @author Michal Nowierski
-	 */
-	public void customizeToolbar_VerifyToolOnToolbar(String ToolName) {
-		try {Thread.sleep(500);} catch (InterruptedException e) {e.printStackTrace();}
-		waitForElementByBy(customizeToolbar_ToolsList);
-		List<WebElement> List = driver.findElements(customizeToolbar_ToolsList);
-		int amountOfToolsOtherThanTheWantedTool = 0;
-		for (int i = 0; i < List.size(); i++) {
-			if (!driver.findElements(customizeToolbar_ToolsList).get(i).getText().equals(ToolName)) {
-				++amountOfToolsOtherThanTheWantedTool;
-			}
-		}
-		if (amountOfToolsOtherThanTheWantedTool==List.size()) {
-			PageObjectLogging.log("customizeToolbar_VerifyToolOnToolbar",
-					ToolName+" does not appear on toolbar. All of tools are other than the wanted one.", false, driver);
-				fail();
-		}
-		PageObjectLogging.log("customizeToolbar_VerifyToolOnToolbar",
-				"Verify that "+ToolName+" appears in Toolbar.", true, driver);
+//	/**
+//	 * <p> Verify that wanted Tool appears in Toolbar. <br> 
+//	 * The method finds all of Tools appearing in Toolbar (by their name), and checks if there is at least one name which fits the given param (ToolName)
+//	 * 
+//	 * @param ToolName Tool to be verified (name that should appear on toolbar)
+//	 * @author Michal Nowierski
+//	 */
+//	public void customizeToolbar_VerifyToolOnToolbar(String ToolName) {
+//		try {Thread.sleep(500);} catch (InterruptedException e) {e.printStackTrace();}
+//		waitForElementByBy(customizeToolbar_ToolsList);
+//		List<WebElement> List = driver.findElements(customizeToolbar_ToolsList);
+//		int amountOfToolsOtherThanTheWantedTool = 0;
+//		for (int i = 0; i < List.size(); i++) {
+//			if (!driver.findElements(customizeToolbar_ToolsList).get(i).getText().equals(ToolName)) {
+//				++amountOfToolsOtherThanTheWantedTool;
+//			}
+//		}
+//		if (amountOfToolsOtherThanTheWantedTool==List.size()) {
+//			PageObjectLogging.log("customizeToolbar_VerifyToolOnToolbar",
+//					ToolName+" does not appear on toolbar. All of tools are other than the wanted one.", false, driver);
+//				fail();
+//		}
+//		PageObjectLogging.log("customizeToolbar_VerifyToolOnToolbar",
+//				"Verify that "+ToolName+" appears in Toolbar.", true, driver);
+//	}
+	
+	public void customizeToolbar_VerifyToolOnToolbar(String ToolName)
+	{
+		waitForElementByXPath("//ul[@class='tools']//a[contains(text(), '"+ToolName+"')]");
+		PageObjectLogging.log("customizeToolbar_VerifyToolOnToolbar","Verify that "+ToolName+" appears in Toolbar.", true, driver);
 	}
 	
 	/**
@@ -888,24 +934,31 @@ public class BasePageObject{
 	 * @param ToolName Tool to be verified (name that should not appear on toolbar)
 	 * @author Michal Nowierski
 	 */
-	public void customizeToolbar_VerifyToolNotOnToolbar(String ToolName){
-		try {Thread.sleep(500);} catch (InterruptedException e) {e.printStackTrace();}
-		waitForElementByBy(customizeToolbar_ToolsList);
-		List<WebElement> List = driver.findElements(customizeToolbar_ToolsList);
-		int amountOfToolsOtherThanTheWantedTool = 0;
-		for (int i = 0; i < List.size(); i++) {
-			if (!List.get(i).getText().equals(ToolName)) {
-				++amountOfToolsOtherThanTheWantedTool;
-			}
-		}
-		if (amountOfToolsOtherThanTheWantedTool<List.size()) {
-			PageObjectLogging.log("customizeToolbar_VerifyToolNotOnToolbar",
-					ToolName+" Tool appears on toolbar (Not all of tools are other than the wanted one).", false, driver);
-				fail();
-		}
-		PageObjectLogging.log("customizeToolbar_VerifyToolNotOnToolbar",
-				"Verify that "+ToolName+" tool does not appear in Toolbar.", true, driver);
-		
+//	public void customizeToolbar_VerifyToolNotOnToolbar(String ToolName){
+//		try {Thread.sleep(500);} catch (InterruptedException e) {e.printStackTrace();}
+//		waitForElementByBy(customizeToolbar_ToolsList);
+//		List<WebElement> List = driver.findElements(customizeToolbar_ToolsList);
+//		int amountOfToolsOtherThanTheWantedTool = 0;
+//		for (int i = 0; i < List.size(); i++) {
+//			if (!List.get(i).getText().equals(ToolName)) {
+//				++amountOfToolsOtherThanTheWantedTool;
+//			}
+//		}
+//		if (amountOfToolsOtherThanTheWantedTool<List.size()) {
+//			PageObjectLogging.log("customizeToolbar_VerifyToolNotOnToolbar",
+//					ToolName+" Tool appears on toolbar (Not all of tools are other than the wanted one).", false, driver);
+//				fail();
+//		}
+//		PageObjectLogging.log("customizeToolbar_VerifyToolNotOnToolbar",
+//				"Verify that "+ToolName+" tool does not appear in Toolbar.", true, driver);
+//		
+//	}
+	
+	public void customizeToolbar_VerifyToolNotOnToolbar(String ToolName)
+	{
+		By tool = By.xpath("//ul[@class='tools']//a[contains(text(), '"+ToolName+"')]");
+		waitForElementNotVisibleByBy(tool);
+		PageObjectLogging.log("customizeToolbar_VerifyToolNotOnToolbar","Verify that "+ToolName+" tool does not appear in Toolbar.", true, driver);
 	}
 	
 	/**

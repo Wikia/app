@@ -91,4 +91,3 @@ class LiteSemanticsParserException extends Exception{
 		parent::__construct( "Invalid Lite Semantics markup at index {$index}" . ( !empty( $invalidMarkup ) ) ? ": <pre>{$invalidMarkup}</pre>" : '' . ( $title instanceof Title ) ? ' (URL: ' . $title->getFullUrl() . ')' : '' );
 	}
 }
-?>

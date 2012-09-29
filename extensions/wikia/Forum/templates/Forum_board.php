@@ -42,7 +42,7 @@
 			)) ?>
 		<? endif ?>
 		<div id="WallTooltipMeta">
-			<div class="tooltip-highlight-thread"><?= wfMsg('wall-message-notifyeveryone-tooltip') ?></div>
+			<div class="tooltip-text tooltip-highlight-thread"><?= wfMsg('wall-message-notifyeveryone-tooltip') ?></div>
 		</div>
 	</section>
 </div>

@@ -953,7 +953,7 @@ class ExtDynamicPageList2
     // The real callback function for converting the input text to HTML output
     private static function dynamicPageList( $input, $params, &$parser, &$bReset, $calledInMode ) {
 
-        error_reporting(E_ALL);
+        error_reporting(E_ALL & ~E_STRICT);
 
         global $wgUser, $wgContLang;
         global $wgTitle, $wgNonincludableNamespaces;

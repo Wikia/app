@@ -84,12 +84,6 @@ $color-highlight-column: rgba($color-page, 0);
 			text-decoration: none;
 		}
 	}
-	nav {
-		bottom: 5px;
-		color: #788086;
-		position: absolute;
-		right: 10px;
-	}
 }
 
 .AdminDashboardTabs {
@@ -99,7 +93,7 @@ $color-highlight-column: rgba($color-page, 0);
 	padding: 10px 0 0 0;
 	position: absolute;
 	right: $width-outside - $admin-dashboard-content-width;
-	top: $admin-dashboard-header-height - $nav-height - 10px;
+	top: $admin-dashboard-header-height - $nav-height - 11px;
 	z-index: $base-z - 	1;
 	&.expanded {
 		right: 10px;
@@ -300,6 +294,11 @@ $color-highlight-column: rgba($color-page, 0);
 		font-size: 12px;
 		font-style: italic;
 		margin: 0 -12px 7px -5px;
+		/* temp transition code until grid is fully rolled out, remove and integrate after transition */
+		.WikiaGrid & {
+			margin: 0 -10px 7px -10px;
+		}
+		/* end temp transistion code */
 	}
 }
 
@@ -322,6 +321,22 @@ $color-highlight-column: rgba($color-page, 0);
 	fieldset {
 		border: solid 1px $color-links;
 	}
+}
+
+.oasis-one-column .WikiaMainContent {
+	width: 690px;
+}
+
+.WikiaGrid {
+	.AdminDashboardChromedArticle {
+		border-right: 0;
+		margin: 0 10px;
+		width: $width-outside - 20px;
+	}
+}
+.oasis-one-column .WikiaGrid .WikiaMainContent.grid-6 {
+	margin-left: 0;
+	width: inherit;
 }
 
 .WikiHeader {

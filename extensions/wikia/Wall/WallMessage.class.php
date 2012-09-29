@@ -183,7 +183,6 @@ class WallMessage {
 		return $class;
 	}
 
-	//TODO: add some cache
 	public function setOrderId($val = 1) {
 		wfProfileIn( __METHOD__ );
 		$this->setInProps(WPP_WALL_COUNT, $val);
@@ -192,7 +191,6 @@ class WallMessage {
 		return $val;
 	}
 
-	//TODO: add some cache
 	public function getOrderId($for_update = false) {
 		wfProfileIn(__METHOD__);
 		if($for_update) {
@@ -300,6 +298,10 @@ class WallMessage {
 
 	public function canAdminDelete(User $user) {
 		return $this->can($user, 'walladmindelete') && !$this->isAdminDelete() && $this->isRemove() && $this->isMain();
+	}
+	
+	public function canFastAdminDelete(User $user) {
+		return $this->can($user, 'wallfastadmindelete');
 	}
 
 	public function canFastrestore(User $user) {
@@ -612,6 +614,16 @@ class WallMessage {
 	public function getText() {
 		return $this->getArticleComment()->getText();
 	}
+	
+	public function getHeadItems() {
+		$ac = $this->getArticleComment();
+		 
+		if(!empty($ac->mHeadItems)) {
+			return $ac->mHeadItems;
+		}
+		
+		return array();
+	}
 
 	public function getCreateTime($format = TS_ISO_8601) {
 		return wfTimestamp($format, $this->getCreateTimeRAW() );
@@ -874,6 +886,14 @@ class WallMessage {
 
 		return $status;
 	}
+	
+	public function fastAdminDelete($user) {
+		if( $this->adminDelete($user) ){
+			return true;
+		}
+		
+		return false;
+	}
 
 	protected function customActionNotifyRC($user, $action, $reason) {
 		$articleId = $this->getArticleId();
@@ -1062,20 +1082,6 @@ class WallMessage {
 		);
 
 		wfSetWikiaPageProp( WPP_WALL_ACTIONREASON, $this->getId(), $this->mActionReason);
-	}
-
-	protected function getActionPropName($action) {
-		switch($action) {
-			case WH_REMOVE:
-			case WH_DELETE:
-			case WH_RESTORE:
-				return WPP_WALL_ACTIONREASON;
-			break;
-			case WH_REOPEN:
-			case WH_ARCHIVE:
-				return WPP_WALL_ACTIONREASON_REMOVE_OR_DELETE;
-			break;
-		}
 	}
 
 	public function getQuoteOf() {

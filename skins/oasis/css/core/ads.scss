@@ -1,3 +1,4 @@
+@import "color";
 @import "layout";
 @import "../mixins/clearfix";
 
@@ -89,6 +90,23 @@
 	width: 300px;
 	z-index: 100;
 }
+/* grid layout transition temp code.  remove and integrate into main code after transition is complete */
+.WikiaGrid {
+	.SelfServeUrl {
+		line-height: 10px;
+		margin: 0;
+		position: relative;
+		top: -16px;
+	}
+	#HOME_TOP_RIGHT_BOXAD,
+	#TOP_RIGHT_BOXAD {
+		background-color: mix($color-page, $color-page-opposite, 95%);
+		margin-bottom: 0;
+		padding: 15px;
+	}
+} 
+/* end transistion temp code */
+
 #TOP_RIGHT_BOXAD, #CORP_TOP_RIGHT_BOXAD {
 	margin-bottom: 10px;
 	z-index: 100;
@@ -138,7 +156,7 @@
 			}
 		}
 	}
-	@if $oasisHD == 1 {
+	@if $oasisWidthType == 1 {
 		.FooterAd {
 			width: $width-outside;
 		}

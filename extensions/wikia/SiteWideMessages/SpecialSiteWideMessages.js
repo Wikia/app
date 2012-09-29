@@ -7,7 +7,18 @@ $(document).ready(function(){
 		}
 	});
 	$( '.SWM_message' ).each( function() {
-		var msgId = parseInt( $( this ).attr( 'id' ).substr( 4 ) );
+		var msgId = parseInt( $( this ).attr( 'id' ).substr( 4 ) ),
+			impTrackObj = {
+				ga_category: 'sitewidemessages',
+				ga_action: WikiaTracker.ACTIONS.IMPRESSION,
+				ga_label: 'swm-impression',
+				ga_value: msgId
+			};
+		WikiaTracker.trackEvent(
+			'trackingevent',
+			impTrackObj,
+			'internal'
+		);
 		$( this ).find( 'p a' ).click( function () {
 			var trackObj = {
 				ga_category: 'sitewidemessages',

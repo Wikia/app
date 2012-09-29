@@ -22,6 +22,7 @@ class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	protected $setupFile = null;
 	protected $app = null;
 	protected $appOrig = null;
+	/* @var WikiaAppMock */
 	private $appMock = null;
 	private $mockedClasses = array();
 
@@ -31,7 +32,7 @@ class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 		$this->appMock = new WikiaAppMock( $this );
 
 		if ($this->setupFile != null) {
-			global $wgAutoloadClasses;
+			global $wgAutoloadClasses; // used by setup file
 			require_once($this->setupFile);
 		}
 	}

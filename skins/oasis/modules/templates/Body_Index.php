@@ -47,14 +47,16 @@
 			echo F::app()->renderView($headerModuleName, $headerModuleAction, $headerModuleParams);
 		}
 		?>
+		
+		<?php
+			// Needs to be above page header so it can suppress page header
+			if ($displayAdminDashboard) {
+				echo F::app()->renderView('AdminDashboard', 'Chrome');
+			}
+		?>
 
 		<article id="WikiaMainContent" class="WikiaMainContent<?= !empty($isGridLayoutEnabled) ? $railModulesExist ? ' grid-4' : ' grid-6' : '' ?>">
 			<?php
-				// Needs to be above page header so it can suppress page header
-				if ($displayAdminDashboard) {
-					echo F::app()->renderView('AdminDashboard', 'Chrome');
-				}
-				
 				if (!empty($wg->EnableForumExt) && !empty($wg->IsForum)) {
 					echo F::app()->renderView( 'ForumController', 'header' );
 				}
@@ -134,11 +136,9 @@
 
 		</article><!-- WikiaMainContent -->
 
-	<?php
-		if ($railModulesExist) {
-			echo F::app()->renderView('Rail', 'Index', array('railModuleList' => $railModuleList));
-		}
-	?>
+		<?php if( $railModulesExist ): ?>
+			<?= F::app()->renderView('Rail', 'Index', array('railModuleList' => $railModuleList)); ?>
+		<?php endif; ?>
 
 		<?= empty($wg->SuppressFooter) ? F::app()->renderView('Footer', 'Index') : '' ?>
 		<? if(!empty($wg->EnableWikiaHomePageExt)) echo F::App()->renderView('WikiaHomePage', 'footer') ?>
@@ -146,4 +146,6 @@
 	</div>
 </section><!--WikiaPage-->
 
-<? if(!empty($wg->EnableWikiaBarExt) && $wg->user->isAnon()) echo F::App()->renderView('WikiaBar', 'index'); ?>
+<?php if( $wg->EnableWikiaBarExt ): ?>
+	<?= F::app()->renderView('WikiaBar', 'Index'); ?>
+<?php endif; ?>

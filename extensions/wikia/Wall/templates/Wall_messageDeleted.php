@@ -4,7 +4,7 @@
 <div class="WikiaArticle" id="WikiaArticle">
 	<?= wfMsg('wall-deleted-msg-text'); ?>
 	<?php if(!empty($wallUrl)): ?>
-		<a href="<?= $wallUrl ?>"><?=  wfMsg('wall-deleted-msg-return-to', $wallOwner) ?></a>
+		<a href="<?= $wallUrl ?>"><?=  $returnTo ?></a>
 	<?php endif; ?>
 	<?php if($showViewLink): ?>
 		<p>

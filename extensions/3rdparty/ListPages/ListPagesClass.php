@@ -802,4 +802,3 @@ class ListPagesView extends ListPages {
 			fclose($fp);
 		}
 	}
-?>

@@ -24,6 +24,7 @@
  * @method debug
  * @method ReadOnly
  * @method Timestamp
+ * @method TimestampNow
  */
 class WikiaFunctionWrapper {
 

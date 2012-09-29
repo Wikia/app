@@ -1,7 +1,5 @@
 <?php
 
-//include("EvolutionAbstractLogRenderer.class.php");
-
 class EvolutionLogstalgiaLogRenderer extends EvolutionAbstractLogRenderer {
 
 
@@ -30,4 +28,3 @@ class EvolutionLogstalgiaLogRenderer extends EvolutionAbstractLogRenderer {
 } // end of EvolutionLogstalgiaLogRenderer class
 
 
-?>

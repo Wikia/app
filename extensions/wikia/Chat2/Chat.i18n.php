@@ -426,6 +426,8 @@ $messages['ca'] = array(
 
 /** Czech (česky)
  * @author Chmee2
+ * @author Macinosak
+ * @author Mormegil
  */
 $messages['cs'] = array(
 	'chat' => 'Chat',
@@ -433,6 +435,7 @@ $messages['cs'] = array(
 	'chat-no-login' => 'Musíte být přihlášen, pokud chcete použít chat.',
 	'chat-no-login-text' => 'Přihlaste se k chatu.',
 	'chat-default-topic' => 'Vítejte na $1 chatu',
+	'chat-welcome-message' => 'Vítejte na chatu $1',
 	'chat-user-joined' => '$1 se připojil k chatu.',
 	'chat-private-messages' => 'Soukromé zprávy',
 	'chat-user-parted' => '$1 opustil chat.',
@@ -456,6 +459,7 @@ $messages['cs'] = array(
 	'chat-log-reason-banchange' => 'Bez udání důvodu',
 	'chat-log-reason-banremove' => 'Bez udání důvodu',
 	'chat-ban-cant-ban-moderator' => 'Nemůžete vykopnout/zablokovat dalšího moderátora chatu.',
+	'chat-live2' => 'Živě! Chat',
 	'chat-start-a-chat' => 'Zahájit chat',
 	'chat-join-the-chat' => 'Připojit se k chatu',
 	'chat-edit-count' => '{{PLURAL:$1|$1 editace|$1 editací}}',
@@ -469,6 +473,8 @@ $messages['cs'] = array(
 	'chat-user-menu-private-block' => 'Zablokovat soukromé zprávy',
 	'chat-user-menu-private-allow' => 'Povolit soukromé zprávy',
 	'chat-user-menu-private-close' => 'Uzavřít soukromý chat',
+	'chat-ban-option-list' => '2 hodiny:2 hours,1 den:1 day,3 dny:3 days,1 týden:1 week,2 týdny:2 weeks,1 měsíc:1 month,3 měsíce:3 months,6 měsíců:6 months,1 rok:1 year,navždy:infinite',
+	'chat-ban-log-change-ban-link' => 'Změnit ban',
 	'chat-status-away' => 'Pryč',
 );
 
@@ -1251,8 +1257,14 @@ $messages['ja'] = array(
 	'chat-user-parted' => '$1 がチャットから退席しました。',
 	'chat-user-blocked' => '$1 が $2 をブロックしました。',
 	'chat-user-allow' => '$1 が $2 に許可を与えました。',
+	'chat-kick-you-need-permission' => '利用者を強制退出させる権限がありません。',
+	'chat-kick-cant-kick-moderator' => '他のチャットモデレータを強制退出させることはできません。',
 	'chat-user-was-kicked' => '$2 が $1 を強制退出させました。',
 	'chat-you-were-kicked' => '$1 があなたを強制退出させました。',
+	'chat-user-was-banned' => '$2 が $1 を追放しました。 $3',
+	'chat-you-were-banned' => '$1 があなたを追放しました。',
+	'chat-user-was-unbanned' => '$2 が $1 の追放を取り消しました。',
+	'chat-ban-cannt-undo' => '追放はすでに取り消されています',
 	'chat-user-permanently-disconnected' => '切断されました。インターネット接続を確認し、ブラウザウィンドウを更新してください。',
 	'chat-inlinealert-a-made-b-chatmod' => '$1 が <strong>$2</strong> をチャットモデレータにしました。',
 	'chat-err-connected-from-another-browser' => '他のブラウザからの接続を確認しました。この接続は閉じられます。',
@@ -1261,10 +1273,17 @@ $messages['ja'] = array(
 	'chat-ban-modal-heading' => 'チャットからこの利用者を追放',
 	'chat-ban-modal-label-expires' => '期限',
 	'chat-ban-modal-label-reason' => '理由',
+	'chat-log-reason-banadd' => 'チャットでの不適切な振る舞い',
 	'chat-log-reason-undo' => '取り消す',
 	'chat-ban-undolink' => '取り消す',
 	'chat-ban-modal-button-ok' => '追放',
+	'chat-ban-modal-button-change-ban' => '変更',
 	'chat-ban-modal-button-cancel' => '中止',
+	'chat-ban-modal-change-ban-heading' => 'この利用者のチャット追放設定を変更',
+	'chat-ban-modal-change-ban-label' => '新しい設定',
+	'chat-ban-modal-end-ban' => '追放を解除',
+	'chat-log-reason-banchange' => '理由未記入',
+	'chat-log-reason-banremove' => '理由未記入',
 	'chat-ban-cant-ban-moderator' => '他のチャットモデレータを強制退出させるあるいは追放することはできません。',
 	'chat-ban-already-banned' => '$1 は既にこのウィキのチャットから追放されています。',
 	'chat-ban-you-need-permission' => 'ユーザを強制退出させるあるいは追放するのに必要な$1権限がありません。',
@@ -1300,6 +1319,17 @@ $messages['ja'] = array(
 	'group-bannedfromchat' => 'チャットから追放された利用者',
 	'group-bannedfromchat-member' => 'チャットから追放された利用者',
 	'chat-ban-option-list' => '2時間:2 hours,1日:1 day,3日:3 days,1週間:1 week,2週間:2 weeks,1か月:1 month,3か月:3 months,6か月:6 months,1年:1 year,無期限:infinite',
+	'chat-ban-log-change-ban-link' => '設定を変更',
+	'chat-chatconnect-log' => 'チャット接続記録',
+	'chat-chatconnect-log-entry' => 'アドレス $2 から $1 に接続しました',
+	'chat-chatban-log' => 'チャット追放記録',
+	'chat-chatbanadd-log-entry' => '$1 を$3までの$2チャットから追放しました。',
+	'chat-chatbanremove-log-entry' => '$1 の追放を解除しました。',
+	'chat-chatbanchange-log-entry' => '$1 のチャット追放設定を$3までの$2に変更しました。',
+	'chat-contributions-ban-notice' => 'この利用者は現在チャットから追放されています。 参考のために最新のブロック記録を以下に表示します：',
+	'chat-browser-is-notsupported' => 'お使いのブラウザはサポートされていません。より快適にご利用いただくために、<a href="http://community.wikia.com/wiki/Help:Supported_browsers">最新のブラウザ</a>への変更をお勧めいたします。',
+	'chat-checkuser-join-action' => 'チャットに参加',
+	'chat-status-away' => '退席中',
 );
 
 /** Khowar (کھوار)

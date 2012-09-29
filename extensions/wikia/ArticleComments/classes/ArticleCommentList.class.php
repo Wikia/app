@@ -783,7 +783,6 @@ class ArticleCommentList {
 		if( !is_null($oTitle)
 			&& MWNamespace::isTalk($namespace)
 			&& ArticleComment::isTitleComment($oTitle)
-			&& ( empty($wgEnableWallExt) || (!empty($wgEnableWallExt) && !in_array(MWNamespace::getSubject($namespace), F::app()->wg->WallNS)) )
 		) {
 			$parts = ArticleComment::explode($oTitle->getFullText());
 

@@ -12,15 +12,11 @@ var AdProviderEvolveRS = function(ScriptWriter, WikiaTracker, log, window, docum
 		log('fillInSlot', 5, 'AdProviderEvolveRS');
 		log(slot, 5, 'AdProviderEvolveRS');
 
-		WikiaTracker.trackAdEvent('liftium.slot2', {
-			'ga_category' : 'slot2/' + slot[1],
-			'ga_action' : slot[0],
-			'ga_label' : 'evolve'
-		}, 'ga');
+		WikiaTracker.trackAdEvent('liftium.slot2', {'ga_category' : 'slot2/' + slot[1], 'ga_action' : slot[0], 'ga_label' : 'evolve'}, 'ga');
 
 		var url = 'http://cdn.triggertag.gorillanation.com/js/triggertag.js';
 		ScriptWriter.injectScriptByUrl(
-			slot[0], 'http://cdn.triggertag.gorillanation.com/js/triggertag.js',
+			slot[0], url,
 			function() {
 				log('(invisible triggertag) ghostwriter done', 5, 'AdProviderEvolveRS');
 				log([slot[0], url], 5, 'AdProviderEvolveRS');

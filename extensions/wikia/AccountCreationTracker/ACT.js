@@ -208,11 +208,11 @@ $(document).ready(function() {
 			nuke_url += '&page_id=' + page_id;
 			if(user_id) {
 				oTableNukeList.fnAddData([nuke_url,user_name,wiki_name,page_name,'---']);
-				if(typeof $(this).data('tooltip-options') === 'undefined'){
-					$(this).wikiaTooltip('Added page to NukeList (below)', {side: 'bottom', align: 'center'});
-					$(this).unbind('mouseenter.wikiaTooltip');
-				}
-				jQuery.__wikiaTooltipOnMouseEnter.call(this);
+				$(this).popover({
+					content: 'Added page to NukeList (below)', 
+					placement: 'bottom'
+				})
+				.popover('show');
 			}
 		});
 		

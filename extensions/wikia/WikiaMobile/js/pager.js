@@ -43,7 +43,7 @@ define('pager', function () {
 			container,
 			wrapper,
 			onEnd,
-			onResizeCallback,
+			onOrientCallback,
 			checkCancel,
 			pages,
 			center,
@@ -55,6 +55,7 @@ define('pager', function () {
 			toX,
 			width,
 			lastPage,
+			eventsNotAdded = true,
 			end = function(){
 				var insertPage,
 					changePage = (toX !== 0),
@@ -79,9 +80,9 @@ define('pager', function () {
 						if(currentPageNum > 0){
 							insertPage = currentPageNum-1;
 						}else if(circle){
-							if(currentPageNum == 0){
+							if(currentPageNum === 0){
 								insertPage = lastPage;
-							}else if(currentPageNum == -1){
+							}else if(currentPageNum === -1){
 								currentPageNum = lastPage;
 								insertPage = currentPageNum-1;
 							}
@@ -126,15 +127,15 @@ define('pager', function () {
 			},
 			loadCurrentPage = function(){
 				container.innerHTML = ((currentPageNum > 0) ? pages[currentPageNum-1] :
-					(circle && currentPageNum == 0) ? pages[lastPage] : '') +
+					(circle && currentPageNum === 0) ? pages[lastPage] : '') +
 					pages[currentPageNum] +
 					((lastPage > 0 && currentPageNum < lastPage) ? pages[currentPageNum+1] :
-					(circle && currentPageNum == lastPage) ? pages[0] : '');
+						(circle && currentPageNum === lastPage) ? pages[0] : '');
 
 				var elems = container.childNodes;
 
 				if(elems.length <= 2){
-					if(currentPageNum != 0) {
+					if(currentPageNum !== 0) {
 						prev = elems[0];
 						current = elems[1];
 						next = false;
@@ -183,9 +184,26 @@ define('pager', function () {
 				if((isFunction ? !checkCancel() : true) && delta !== 0)
 					goTo(delta);
 			},
+			cleanup = function(onePage){
+				eventsNotAdded = true;
+				!onePage && window.removeEventListener('viewportsize', onResize);
+				wrapper.removeEventListener('touchstart', onTouchStart, true);
+				wrapper.removeEventListener('touchmove', onTouchMove, true);
+				wrapper.removeEventListener('touchend', onTouchEnd, true);
+				wrapper.removeEventListener('touchcancel', onTouchEnd, true);
+			},
+			events = function(){
+				if(eventsNotAdded){
+					eventsNotAdded = false;
+					wrapper.addEventListener('touchstart', onTouchStart, true);
+					wrapper.addEventListener('touchmove', onTouchMove, true);
+					wrapper.addEventListener('touchend', onTouchEnd, true);
+					wrapper.addEventListener('touchcancel', onTouchEnd, true);
+				}
+			},
 			onResize = function(){
-				onResizeCallback && onResizeCallback();
 				width = wrapper.offsetWidth;
+				onOrientCallback && onOrientCallback();
 			};
 
 		//get options
@@ -193,7 +211,7 @@ define('pager', function () {
 		wrapper = options.wrapper || container;
 		currentPageNum = options.pageNumber || 0;
 		onEnd = (typeof options.onEnd === 'function') ? options.onEnd : false;
-		onResizeCallback = (typeof options.onResize === 'function') ? options.onResize : false;
+		onOrientCallback = (typeof options.onResize === 'function') ? options.onResize : false;
 		checkCancel = options.setCancel;
 		isFunction = (typeof checkCancel === 'function');
 		pages = options.pages;
@@ -203,19 +221,12 @@ define('pager', function () {
 		//true init
 		if(container && pages){
 			lastPage = pages.length-1;
-			circle = (circle && lastPage > 0);
-
+			circle = (circle && lastPage);
 			pages = (center) ? wrap(pages) : pages;
-
 			loadCurrentPage();
 
-			if(lastPage > 1 || circle){
-				wrapper.addEventListener('touchstart', onTouchStart, true);
-				wrapper.addEventListener('touchmove', onTouchMove, true);
-				wrapper.addEventListener('touchend', onTouchEnd, true);
-				wrapper.addEventListener('touchcancel', onTouchEnd, true);
-				window.addEventListener('resize', onResize);
-			}
+			window.addEventListener('viewportsize', onResize);
+			(lastPage || circle) && events();
 
 			return {
 				prev: function(){
@@ -226,20 +237,17 @@ define('pager', function () {
 				},
 				reset: function(options){
 					if(options.pages){
-						pages = (center) ? wrap(options.pages) : options.pages;
+						pages = center ? wrap(options.pages) : options.pages;
 					}
 					lastPage = pages.length-1;
-					circle = (circle && lastPage > 0);
-					currentPageNum = (typeof options.pageNumber == 'number') ? options.pageNumber : currentPageNum;
+					circle = (circle && lastPage);
+					currentPageNum = (typeof options.pageNumber === 'number') ? options.pageNumber : currentPageNum;
+
 					loadCurrentPage();
+					//add/remove events when necessary
+					(lastPage || circle) ? events() : cleanup(true);
 				},
-				cleanup: function(){
-					wrapper.removeEventListener('touchstart', onTouchStart, true);
-					wrapper.removeEventListener('touchmove', onTouchMove, true);
-					wrapper.removeEventListener('touchend', onTouchEnd, true);
-					wrapper.removeEventListener('touchcancel', onTouchEnd, true);
-					window.removeEventListener('resize', onResize);
-				},
+				cleanup: cleanup,
 				getCurrent: function () {
 					return current;
 				}
@@ -247,5 +255,5 @@ define('pager', function () {
 		}else {
 			throw 'no container or pages specified';
 		}
-	}
+	};
 });

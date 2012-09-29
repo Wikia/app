@@ -20,20 +20,35 @@ $app->registerClass(
 
 $app->registerClass( 'GameGuidesModel', "{$dir}/GameGuidesModel.class.php" );
 
+/**
+ * message files
+ */
+$app->registerExtensionMessageFile('GameGuides', "{$dir}/GameGuides.i18n.php");
+
 
 //Special Page to preview page in GameGuide style
-$app->registerClass( 'GameGuidesSpecialController', "{$dir}/GameGuidesSpecialController.class.php" );
-$app->registerSpecialPage('GameGuidesPreview', 'GameGuidesSpecialController');
-
-
-/**
-* message files
-*/
-$app->registerExtensionMessageFile('GameGuides', "{$dir}/GameGuides.i18n.php");
+$app->registerClass( 'GameGuidesSpecialPreviewController', "{$dir}/GameGuidesSpecialPreviewController.class.php" );
+$app->registerSpecialPage( 'GameGuidesPreview', 'GameGuidesSpecialPreviewController' );
 
 $wgGroupPermissions['*']['gameguidespreview'] = false;
 $wgGroupPermissions['staff']['gameguidespreview'] = true;
 $wgGroupPermissions['sysop']['gameguidespreview'] = true;
+
+//Special Page for Content Managment Tool
+$app->registerClass( 'GameGuidesSpecialContentController', "{$dir}/GameGuidesSpecialContentController.class.php" );
+$app->registerSpecialPage( 'GameGuidesContent', 'GameGuidesSpecialContentController' );
+
+$wgGroupPermissions['*']['gameguidescontent'] = false;
+$wgGroupPermissions['staff']['gameguidescontent'] = true;
+
+F::build( 'JSMessages' )->registerPackage( 'GameGuidesContentMsg', array(
+	'wikiagameguides-content-category',
+	'wikiagameguides-content-tag',
+	'wikiagameguides-content-name',
+	'wikiagameguides-content-duplicate-entry',
+	'wikiagameguides-content-category-error'
+) );
+
 
 //the only globals needed in Game Guides
 if ( empty( $app->wg->GameGuidesGlobalsWhiteList ) ) {

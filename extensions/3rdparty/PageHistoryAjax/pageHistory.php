@@ -43,4 +43,3 @@ function wfSpecialPageHistoryAJAX(){
  	global $wgMessageCache,$wgOut;
  	$wgMessageCache->addMessage( 'pagehistoryajax', 'just a test extension' );
 }
-?>

@@ -11,9 +11,8 @@ class WikiaFileHelper extends Service {
 	 * @return boolean
 	 */
 	public static function isVideoStoredAsFile() {
-
-		$convertedVar = F::app()->wg->videoHandlersVideosMigrated;
-		return !empty( $convertedVar );
+		// all videos are already converted and stored as a file
+		return true;
 	}
 
 	/*
@@ -39,6 +38,7 @@ class WikiaFileHelper extends Service {
 
 	/*
 	 * Checks if given Title is video
+	 * @deprecated use isFileTypeVideo instead
 	 * @return boolean
 	 */
 	public static function isTitleVideo( $title, $allowOld = true ) {

@@ -7,4 +7,3 @@ abstract class EvolutionAbstractLogRenderer {
 } // end of EvolutionAbstractLogRenderer class
 
 
-?>

@@ -2,23 +2,23 @@
 $zTop: 20000000;
 
 // Dimension Variables //
-$oasisHD: get_command_line_param("hd", 0);
+$oasisWidthType: get_command_line_param("widthType", 0);
 
 $width-outside: 1000px;
 $wikia-search-base-width: 200px;
 
 /* $wgOasisHD */
-@if $oasisHD == 1 {
+@if $oasisWidthType == 1 {
 	$width-outside: 1200px;
 }
 
 /* $wgOasisFluid */
-@if $oasisHD == 2 {
+@if $oasisWidthType == 2 {
 	$width-outside: auto;
 }
 
 /* $wgOasisGrid */
-@if $oasisHD == 3 {
+@if $oasisWidthType == 3 {
 	$width-outside: 1030px;
 	$wikia-search-base-width: 230px;
 }

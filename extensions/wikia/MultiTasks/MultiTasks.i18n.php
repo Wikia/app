@@ -424,6 +424,7 @@ $messages['ckb'] = array(
 );
 
 /** Czech (česky)
+ * @author Darth Daron
  * @author Dontlietome7
  */
 $messages['cs'] = array(
@@ -476,6 +477,7 @@ $messages['cs'] = array(
 	'multiwikiedit_tasks_list' => 'Seznam úkolů pro spuštění',
 	'multiwikiedit_general_options' => 'Obecné možnosti vícenásobné editace',
 	'multiwikiedit_edit_options' => 'Možnosti editace',
+	'action-multiwikiedit' => 'dávkově editovat více stránek najednou',
 	'multidelete' => 'Smazat dávku stránek',
 	'multidelete_button' => 'ODSTRANIT',
 	'multidelete_help' => 'Smazat dávku stránek pes úkol na pozadí. Můžete to udělat pro tuto wiki, všechny wiki ze sdílené databéze, vybrané wiki, nebo vybrané jazyky. Můžete zvolit mazání jako VY, nebo jako přítomný skriptovací účet.',
@@ -527,10 +529,12 @@ $messages['cs'] = array(
 	'multidelete_french_wikis' => 'všechny francouzské wiki',
 	'multidelete_swedish_wikis' => 'všechny švédské wiki',
 	'multidelete_german_wikis' => 'všechny německé wiki',
+	'action-multidelete' => 'dávkově smazat více stránek najednou',
 	'multiwikifinder' => 'Hledač titulků na více wiki',
 	'multiwikifindpagenames' => 'Najít názvy stránek',
 	'multiwikienterpagename' => 'Zadejte název stránky:',
 	'multiwikirecords' => 'nalezeno $1 wiki',
+	'action-multiwikifinder' => 'hledat konkrétní název na Wikii',
 );
 
 /** German (Deutsch)
@@ -1114,7 +1118,7 @@ $messages['gl'] = array(
 	'action-multiwikifinder' => 'procurar un título específico en toda Wikia',
 );
 
-/** Hausa (هَوُسَ) */
+/** Hausa (Hausa) */
 $messages['ha'] = array(
 	'multidelete_button' => 'SOKE',
 );

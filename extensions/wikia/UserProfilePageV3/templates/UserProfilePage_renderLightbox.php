@@ -114,7 +114,7 @@
 						<p id="facebookPage" <? if( empty($user['fbPage']) ): ?>style="display: none;"<? endif; ?>>
 							<label><?= wfMsg('user-identity-box-fb-page'); ?></label>
 							<input type="text" name="fbPage" value="<?= $user['fbPage']; ?>"><br>
-							<a href="<?= $facebookPrefsLink ?>#prefsection-4"><?= wfMsg('user-identity-box-fb-prefs'); ?></a>
+							<a href="<?= $facebookPrefsLink ?>#mw-prefsection-fbconnect-prefstext"><?= wfMsg('user-identity-box-fb-prefs'); ?></a>
 						</p>
 					<? endif; ?>
 					

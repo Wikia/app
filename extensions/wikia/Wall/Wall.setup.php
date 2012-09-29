@@ -23,8 +23,15 @@ include($dir . '/WallNamespaces.php');
 
 $wgNamespacesWithSubpages[ NS_USER_WALL ] = true;
 
-$app->registerClass('Wall', $dir . '/Wall.class.php');
-$app->registerClass('WallThread', $dir . '/WallThread.class.php');
+if(!empty($app->wg->EnableForumExt)) {
+	$app->registerClass('Wall', $dir . '/Wall.class.php');
+	$app->registerClass('WallThread', $dir . '/WallThread.class.php');
+} else {
+	$app->registerClass('Wall', $dir . '/backward_compatibility/Wall.class.php');
+	$app->registerClass('WallThread', $dir . '/backward_compatibility/WallThread.class.php');	
+}
+
+
 $app->registerClass('WallMessage', $dir . '/WallMessage.class.php');
 $app->registerClass('WallController', $dir . '/WallController.class.php');
 $app->registerClass('WallExternalController', $dir . '/WallExternalController.class.php');
@@ -107,6 +114,7 @@ $app->registerHook('ArticleCommentBeforeWatchlistAdd', 'WallHooksHelper', 'onArt
 //diff page adjusting
 $app->registerHook('DiffViewHeader', 'WallHooksHelper', 'onDiffViewHeader');
 $app->registerHook('PageHeaderEditPage', 'WallHooksHelper', 'onPageHeaderEditPage');
+$app->registerHook('DiffLoadText', 'WallHooksHelper', 'onDiffLoadText');
 
 //right rail adjusting
 $app->registerHook('GetRailModuleList', 'WallRailHelper', 'onGetRailModuleList');
@@ -126,6 +134,14 @@ $app->registerHook('BlockIpComplete', 'WallHooksHelper', 'onBlockIpComplete');
 $app->registerHook('UnBlockIpComplete', 'WallHooksHelper', 'onBlockIpComplete');
 
 $app->registerHook('CategoryViewer::beforeCategoryData', 'WallHooksHelper', 'onBeforeCategoryData');
+
+$app->registerHook('GetRailModuleSpecialPageList', 'WallHooksHelper', 'onGetRailModuleSpecialPageList');
+$app->registerHook('SpecialWikiActivityExecute', 'WallHooksHelper', 'onSpecialWikiActivityExecute');
+
+$app->registerHook('WantedPages::getQueryInfo', 'WallHooksHelper', 'onWantedPagesGetQueryInfo');
+$app->registerHook('ListredirectsPage::getQueryInfo', 'WallHooksHelper', 'onListredirectsPageGetQueryInfo');
+
+$app->registerHook('AfterLanguageGetNamespaces', 'WallHooksHelper', 'onAfterLanguageGetNamespaces');
 
 F::build('JSMessages')->registerPackage('Wall', array(
 	'wall-notifications',
@@ -227,3 +243,8 @@ $wgGroupPermissions['sysop']['notifyeveryone'] = true;
 $wgGroupPermissions['vstf']['notifyeveryone'] = true;
 $wgGroupPermissions['staff']['notifyeveryone'] = true;
 $wgGroupPermissions['helper']['notifyeveryone'] = true;
+
+$wgGroupPermissions['*']['wallfastadmindelete'] = false;
+$wgGroupPermissions['sysop']['wallfastadmindelete'] = true;
+$wgGroupPermissions['vstf']['wallfastadmindelete'] = true;
+$wgGroupPermissions['staff']['wallfastadmindelete'] = true;

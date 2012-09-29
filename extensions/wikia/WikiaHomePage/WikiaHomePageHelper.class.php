@@ -484,7 +484,7 @@ class WikiaHomePageHelper extends WikiaModel {
 					$wikiInfo['images'][] = $wikiData['main_image'];
 				}
 
-                $wikiData['images'] = (array)$wikiData['images'];
+                $wikiData['images'] = (!empty($wikiData['images']))?((array)$wikiData['images']):array();
 
 				// wiki images
 				if (!empty($wikiData['images'])) {

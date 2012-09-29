@@ -1,5 +1,6 @@
 <li class="SpeechBubble message <?php echo ($isreply ? '':'message-main'); ?> <?php echo ($removedOrDeletedMessage ? 'hide ':'') . ($showRemovedBox?' message-removed':''); ?> <? echo 'message-'.$linkid ?>" id="<? echo $linkid ?>" data-id="<? echo $id ?>" data-is-reply="<?= $isreply == true ?>" <? if($hide):?> style="display:none" <? endif;?> >	
-
+	<?php echo $head ?>
+	
 	<?php echo $app->renderView( 'WallController', 'statusInfoBox', array('showDeleteOrRemoveInfo' => $showDeleteOrRemoveInfo, 'comment' => $comment) ); ?>
 
 	<? if($showRemovedBox): ?>
@@ -96,6 +97,8 @@
 			echo $app->renderPartialCached( 'MiniEditorController', 'Footer', 'Wall_message' );
 		endif; ?>
 	</blockquote>
+	
+	<?php echo $app->renderView( 'WallController', 'statusInfoBox', array('showDeleteOrRemoveInfo' => $showClosedBox, 'comment' => $comment) ); ?>
 	
 	<? if(!$isreply): ?>
 		<ul class="replies">

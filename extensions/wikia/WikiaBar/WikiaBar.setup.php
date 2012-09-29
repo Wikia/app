@@ -27,4 +27,9 @@ $app->registerClass('WikiaBarFailsafeDataValidator', $dir . 'models/WikiaBarFail
  * hooks
  */
 $app->registerHook('WikiaAssetsPackages', 'WikiaBarHooks', 'onWikiaAssetsPackages');
-$app->registerHook('MessageCacheReplace', 'WikiaBarHooks', 'onMessageCacheReplace');
+$app->registerHook('MakeGlobalVariablesScript', 'WikiaBarHooks', 'onMakeGlobalVariablesScript');
+$app->registerHook('WikiFactoryChanged', 'WikiaBarHooks', 'onWikiFactoryVarChanged');
+$app->registerHook('WikiFactoryVarSave::AfterErrorDetection', 'WikiaBarHooks', 'onWFAfterErrorDetection');
+
+// i18n mapping
+$wgExtensionMessagesFiles['WikiaBar'] = $dir . 'WikiaBar.i18n.php';

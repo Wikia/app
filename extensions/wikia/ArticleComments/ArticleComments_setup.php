@@ -50,7 +50,7 @@ $wgGroupPermissions['sysop']['commentmove'] = true;
 $wgGroupPermissions['sysop']['commentedit'] = true;
 $wgGroupPermissions['sysop']['commentdelete'] = true;
 
-if (!empty($wgEnableWallExt) || !empty($wgEnableArticleCommentsExt) || !empty($wgEnableBlogArticles)) {
+if (!empty($wgEnableWallEngine) || !empty($wgEnableArticleCommentsExt) || !empty($wgEnableBlogArticles)) {
 
 	$wgHooks['ArticleDelete'][] = 'ArticleCommentList::articleDelete';
 	$wgHooks['ArticleDeleteComplete'][] = 'ArticleCommentList::articleDeleteComplete';

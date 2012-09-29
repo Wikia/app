@@ -26,6 +26,10 @@ QUnit.log = function(data){
     if (!data.result) QUnit.reporter_messages.push(data.message);
 };
 
+QUnit.logmessage = function(message) {
+	QUnit.reporter_messages.push(message);
+};
+
 QUnit.moduleStart = function(data){
 	console.log(JSON.stringify({
 		command:'startSuite',

@@ -2,26 +2,16 @@
 //
 //Controllers
 //
-if($.getUrlVar('nosockets', false) == 1 || 'ontouchstart' in document.createElement( 'div' )) {
-	var globalTransports = ['htmlfile', 'xhr-multipart', 'xhr-polling' ];
-	io.transports = globalTransports;
-} else {
-	var globalTransports = [ 'websocket', 'flashsocket', 'htmlfile', 'xhr-multipart', 'xhr-polling'];
-}
 
 var NodeChatSocketWrapper = $.createClass(Observable,{
 	proxy: $.proxy,
 	connected: false,
 	firstConnected: false,
-	announceConnection: true,
-	trying: null,
 	autoReconnect: true,
 	isInitialized: false,
-	inAuthRequestWithMW: false,
 	comingBackFromAway: false,
 	roomId: false,
 	socket: false,
-	reConnectCount: 0,
 	constructor: function( roomId ) {
 		NodeChatSocketWrapper.superclass.constructor.apply(this,arguments);
 		this.sessionData = null;
@@ -35,102 +25,52 @@ var NodeChatSocketWrapper = $.createClass(Observable,{
 		}
 	},
 
-	baseconnect: function() {
-		if(this.connected) {
-			$().log("already connected");
-			return true;
-		}
+	connect: function() {
 		var url = 'http://' + WIKIA_NODE_HOST + ':' + WIKIA_NODE_PORT;
 		$().log(url, 'Chat server');
+		
 		if( this.socket ) {
 			this.socket.removeAllListeners('message');
 			this.socket.removeAllListeners('connect');
+			this.socket.removeAllListeners('connect_failed');
 		}
-
-			this.authRequestWithMW(function(data){
-				var socket = io.connect(url, {
-					'force new connection' : true,
-					'try multiple transports': true,
-					'connect timeout': false,
-					'query':data,
-					'reconnect':true
-				});
-				var transport = globalTransports[0];
-				socket.on('message', this.proxy( this.onMsgReceived, this ) );
-				socket.on('connect', this.proxy( function(){this.onConnect(socket, transport); }, this ) );
+		this.authRequestWithMW( function(data){
+			var socket = io.connect(url, {
+				'force new connection' : true,
+				'try multiple transports': true,
+				'connect timeout': false,
+				'query':data,
+				'max reconnection attempts': 8,
+				'reconnect':true
 			});
-	//	} else {
-	//		$("reconecte");
-	//		this.socket.socket.disconnect();
-	//		this.socket.socket.connect();
-	//	}
-	},
 
-	connect: function() {
-		this.baseconnect();
-
-		if(!this.firstConnected) {
-			this.connectTimeoutTimer = setTimeout($.proxy(function() {
-				$().log("timeout try without socket connection");
-				globalTransports = [ 'htmlfile', 'xhr-polling'];
-				io.transports = globalTransports;
-				if(this.socket) {
-					this.socket.removeAllListeners('disconnect');
-					this.socket.socket.disconnect();
-					delete this.socket;
-					this.connected = false;
-					this.announceConnection = true;
+			socket.on('message', this.proxy( this.onMsgReceived, this ) );
+			socket.on('connect', this.proxy( function(){this.onConnect(socket, [ 'xhr-polling' ]); }, this ) );
+			
+			var connectionFail = this.proxy( function(delay, count) {
+				if(count == 8) {
+					if(socket) { 
+						socket.disconnect();
+					}
+					this.fire( "reConnectFail", {} );
 				}
-				this.baseconnect();
-			}, this), 15000 );
-		}
+			}, this);
+
+			socket.on( 'reconnecting', connectionFail  );
+		} );
 	},
 
 	onConnect: function(socket, transport) {
 		this.socket = socket;
-		this.reConnectCount = 0;
 
 		if(!this.firstConnected) {
 			var InitqueryCommand = new models.InitqueryCommand();
-		//	if(transport != 'websocket') {
-				//Wait for session propagation
-				setTimeout($.proxy(function() {
-					this.socket.send(InitqueryCommand.xport());
-				}, this ), 500);
-		//	}
+			setTimeout($.proxy(function() {
+				this.socket.send(InitqueryCommand.xport());
+			}, this ), 500);
 		}
 
-		socket.on('disconnect', this.proxy( this.onDisconnect, this ) );
-
-		clearTimeout(this.tryconnect);
-		if(this.announceConnection){
-			$().log("Reconnected.");
-			this.announceConnection = false;
-		}
-		this.connected = true;
-	},
-
-	onDisconnect: function(){
-
-		//problem with first connection (for example fire wall)
-		if(!this.firstConnected) {
-			//TODO: call connectTimeoutTimer
-			return true;
-		}
-
-                if( this.socket && this.socket.socket.connected) {
-                        return true;
-                }
-
-		$().log("Node-server connection needs to be refreshed...");
-		this.connected = false;
-		this.announceConnection = true;
-
-		// Sometimes the view is in a state where it shouldn't reconnected (eg: user has entered the same room from another computer and wants to kick this instance off w/o it reconnecting).
-		if(this.autoReconnect){
-			clearTimeout(this.tryconnect);
-			this.trying = setTimeout(this.proxy(this.tryconnect, this),2500);
-		}
+		$().log("connected.");
 	},
 
 	authRequestWithMW: function(callback) {
@@ -143,13 +83,13 @@ var NodeChatSocketWrapper = $.createClass(Observable,{
 
 		};
 
-		this.proxy(callback, this)('name=' + encodedWgUserName + '&key=' + wgChatKey + '&roomId=' + this.roomId + '&RCC=' + this.reConnectCount);
+		this.proxy(callback, this)('name=' + encodedWgUserName + '&key=' + wgChatKey + '&roomId=' + this.roomId );
 	},
 
 
     forceReconnect: function() {
 		NodeChatSocketWrapper.sessionData = null;
-		this.socket.disconnect();
+		this.socket.disconnectSync();
 		this.socket = null;
 		this.connect();
     },
@@ -163,42 +103,15 @@ var NodeChatSocketWrapper = $.createClass(Observable,{
 				this.forceReconnect();
 				break;
 			case 'initial':
-				clearTimeout(this.connectTimeoutTimer);
 				this.firstConnected = true; //we are 100% sure about conenction
 			default:
-				if(this.firstConnected) {
-					this.fire( message.event, message );
-				}
+				this.fire( message.event, message );
 			break;
     	}
     },
 
     getAllowedEvents: function() {
     	return ['updateUser', 'initial', 'chat:add', 'join', 'part', 'kick', 'logout'];
-    },
-
-    tryconnect: function (){
-    	$().log('tryconnect');
-
-   		if(this.connected || this.reConnectCount > 8) {
-   			return false;
-   		}
-		$().log("Trying to re-connect to node-server:" + this.reConnectCount);
-        clearTimeout(this.trying);
-        this.reConnectCount++;
-
-        if(this.reConnectCount == 8) {
-            	this.fire( "reConnectFail", {} );
-        } else {
-            var time = 10000;
-            if(this.reConnectCount > 2) {
-            	time = 10000 + this.reConnectCount * 300;
-            }
-
-			this.connect();
-			this.trying = setTimeout(this.proxy(this.tryconnect, this), time);
-        }
-
     }
 });
 
@@ -413,6 +326,10 @@ var NodeRoomController = $.createClass(Observable,{
 		newChatEntry.mport(message.data);
 
 		this.model.chats.add(newChatEntry);
+		if( this.model.chats.length > 1000 ){
+			var first = this.model.chats.at(0);
+			this.model.chats.remove(first);
+		}
 	},
 
 	onJoin: function(message) {
@@ -460,7 +377,7 @@ var NodeRoomController = $.createClass(Observable,{
 		}
 		this.partTimeOuts[partedUser.get('name')] = setTimeout(this.proxy(function(){
 			this.onPartBase(partedUser);
-		}), 25000);
+		}), 45000);
 	},
 
 	onLogout: function(message) {
@@ -673,22 +590,26 @@ var NodeChatController = $.createClass(NodeRoomController,{
 			actions.admin.push('give-chat-mod');
 		}
 
-		if(this.userMain.get('isModerator') === true && user.get('isModerator') === false ) {
+		if(this.userMain.get('isModerator') === true && user.get('isModerator') === false) {
 			actions.admin.push('kick');
 			actions.admin.push('ban');
 		}
 
-		this.viewUsers.showMenu(obj.target, actions);
-
-		if(this.model.get('isStaff') === true){
-			$(this.el).addClass('staff');
+		if(this.userMain.get('isCanGiveChatMode') === true && user.get('isStaff') == false && $.inArray('kick', actions.admin) == -1) {
+                        actions.admin.push('kick');
+                        actions.admin.push('ban');
 		}
+
+		this.viewUsers.showMenu(obj.target, actions);
 	},
 
 	privateListClick: function(obj) {
 		var user = this.model.users.findByName(obj.name);
 
-		var actions = { regular: ['profile', 'contribs', 'private-block'] };
+		var actions = { regular: ['profile', 'contribs'] };
+		if(user.get('isStaff') === false) {
+			actions.regular.push('private-block');
+		}
 
 		//, 'private-close'
 		if(!this.privateMessage(obj)) {

@@ -45,7 +45,7 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 			$sqlWhere[ $image['state'] ][] = "( wiki_id = $image[wikiId] AND page_id = $image[pageId]) ";
 			
 			if ( $image['state'] == ImageReviewStatuses::STATE_DELETED ) {
-				$deletionList[$image['wikiId']] = $image['pageId'];
+				$deletionList[] = array( $image['wikiId'], $image['pageId'] );
 			}
 
 			$statsInsert[] = array(
@@ -137,12 +137,13 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 		$db->update(
 			'image_review',
 			array(
-				'reviewer_id = null',
+				'reviewer_id' => null,
 				'state' => ImageReviewStatuses::STATE_UNREVIEWED,
+				'review_start' => '0000-00-00 00:00:00',
+				'review_end' => '0000-00-00 00:00:00',
 			),
 			array(
 				"review_start < '{$review_start}'",
-				"review_end = '0000-00-00 00:00:00'",
 				'state' => ImageReviewStatuses::STATE_IN_REVIEW,
 			),
 			__METHOD__
@@ -151,10 +152,13 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 		// for STATE_QUESTIONABLE
 		$db->update(
 			'image_review',
-			array( 'state' => ImageReviewStatuses::STATE_QUESTIONABLE ),
+			array(
+				'state' => ImageReviewStatuses::STATE_QUESTIONABLE,
+				'review_start' => '0000-00-00 00:00:00',
+				'review_end' => '0000-00-00 00:00:00',
+			),
 			array(
 				"review_start < '{$review_start}'",
-				"review_end = '0000-00-00 00:00:00'",
 				'state' => ImageReviewStatuses::STATE_QUESTIONABLE_IN_REVIEW,
 			),
 			__METHOD__
@@ -163,10 +167,13 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 		// for STATE_REJECTED
 		$db->update(
 			'image_review',
-			array( 'state' => ImageReviewStatuses::STATE_REJECTED ),
+			array(
+				'state' => ImageReviewStatuses::STATE_REJECTED,
+				'review_start' => '0000-00-00 00:00:00',
+				'review_end' => '0000-00-00 00:00:00',
+			),
 			array(
 				"review_start < '{$review_start}'",
-				"review_end = '0000-00-00 00:00:00'",
 				'state' => ImageReviewStatuses::STATE_REJECTED_IN_REVIEW,
 			),
 			__METHOD__

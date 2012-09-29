@@ -55,6 +55,21 @@ var WikiaNotificationsApp = {
 					// remove <div>
 					notification.remove();
 					nextNotification.css("display", "block");
+					// Track impression for the next SWM being displayed after a previous one was dismissed
+					if ( nextNotification.length ) {
+						var	nextMessageId = parseInt( nextNotification.attr( 'id' ).substr( 4 ) ),
+							impTrackObj = {
+								ga_category: 'sitewidemessages',
+								ga_action: WikiaTracker.ACTIONS.IMPRESSION,
+								ga_label: 'swm-impression',
+								ga_value: nextMessageId
+							};
+						WikiaTracker.trackEvent(
+							'trackingevent',
+							impTrackObj,
+							'internal'
+						);
+					}
 					break;
 
 				// dismiss custom notifications

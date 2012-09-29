@@ -52,7 +52,7 @@ class Chat {
 
 		if( ($userToKickBan instanceof User) && $kickingUser->isAllowed( $PERMISSION_TO_KICKBAN ) ){
 
-			if( $userToKickBan->isAllowed( $PERMISSION_TO_KICKBAN ) ){
+			if( $userToKickBan->isAllowed( $PERMISSION_TO_KICKBAN ) && !$kickingUser->isAllowed('chatstaff') && !$kickingUser->isAllowed('chatadmin') ){
 				$errorMsg .= wfMsg('chat-ban-cant-ban-moderator')."\n";
 			} else {
 				self::banUserDB($wgCityId, $userToKickBan, $kickingUser, $time, $reason, $time == 0 ?  'remove':'add' );

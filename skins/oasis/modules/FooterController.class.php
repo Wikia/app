@@ -2,14 +2,16 @@
 class FooterController extends WikiaController {
 
 	public function executeIndex() {
-		global $wgTitle, $wgContentNamespaces, $wgUser, $wgSuppressToolbar, $wgShowMyToolsOnly;
+		global $wgTitle,
+			   $wgContentNamespaces,
+			   $wgShowMyToolsOnly,
+			   $wgEnableWikiaBarExt;
 
 		// show for anons as well (BugId:20730)
-		$this->showNotifications = empty($wgSuppressToolbar);
+		$this->showNotifications = empty($wgSuppressToolbar) && empty($wgEnableWikiaBarExt);
+		$this->showToolbar = $this->isAdminToolbarSupressed();
 
-		// don't show toolbar when wgSuppressToolbar is set (for instance on edit pages)
-		$this->showToolbar = empty($wgSuppressToolbar) && !$wgUser->isAnon();
-		if ($this->showToolbar == false) {
+		if( $this->showToolbar == false ) {
 			return;
 		}
 
@@ -19,6 +21,15 @@ class FooterController extends WikiaController {
 		}
 
 		// BugId:5497 PerformanceStats are now displayed via OasisToolbarService (see: DevInfoUserCommand)
+	}
+
+	/**
+	 * @desc AdminToolBar isn't displayed in OasisFooter if $wgSupressToolbar variable is set to true (for instance on edit pages), user is an anon or WikiaBar extension is turned on
+	 * @return bool
+	 */
+	protected function isAdminToolbarSupressed() {
+		global $wgUser, $wgSuppressToolbar, $wgEnableWikiaBarExt;
+		return empty($wgSuppressToolbar) && empty($wgEnableWikiaBarExt) && !$wgUser->isAnon();
 	}
 
 	static protected $toolbarService = null;

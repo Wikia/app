@@ -314,7 +314,6 @@ class JavascriptFile {
 			return false;
 		}
 
-		$firstChar = @$this->fileTree->treeNodes[0] ? $this->fileTree->treeNodes[0]->start : 0;
 		$globals = array();
 		foreach ($this->messages as $entry) {
 			if ( empty($entry['line']) || empty($entry['type']) || empty($entry['name']) ) {
@@ -362,13 +361,27 @@ class JavascriptFile {
 
 					$code = substr($code,0,$start)."window.".substr($code,$start);
 
-					if ( $varIndex == 0 ) {
-//						var_dump($varNode->start,$varNode->end);
-						$code = substr($code,0,$varNode->start).substr($code,$varNode->start+4/* "var "*/);
+					if ( !$node->initializer ) {
+						$removeStart = $node->start;
+						$removeEnd = strpos($code,';',$removeStart); // var names cannot have semicolon
+						if ( $varIndex == 0 ) {
+							$removeStart = $varNode->start;
+						}
+//						var_dump($node->start,"r",$removeStart,$removeEnd);
+						if ( $removeEnd !== false ) {
+							$code = substr($code,0,$removeStart).substr($code,$removeEnd);
+						}
 					} else {
-						$pos = strrpos($code,',',$start);
-						if ( $pos !== false ) {
-							$code = substr($code,0,$pos).';'.substr($code,$pos+1);
+						if ( $varIndex == 0 ) {
+							// remove "var "
+							$code = substr($code,0,$varNode->start).substr($code,$varNode->start+4/* "var "*/);
+						} else {
+							// replace the previous comma with semicolon
+							$pos = strrpos(substr($code,0,$start),',');
+//							var_dump($node->name,$start,$pos);
+							if ( $pos !== false ) {
+								$code = substr($code,0,$pos).';'.substr($code,$pos+1);
+							}
 						}
 					}
 
@@ -377,19 +390,21 @@ class JavascriptFile {
 		}
 
 
-		// build wrapper
+		// build wrapper beginning
 		$preCode = array();
 		$preCode[] = '(function(window){';
 		foreach ($globals as $k => $v) {
 			$preCode[] = "window.$k = $v;";
 		}
 		$preCode = implode("\n",$preCode);
+
+		// build wrapper end
 		$postCode = array();
 		$postCode[] = '})(this);';
 		$postCode = implode("\n",$postCode);
 
 		// inject
-		$code = substr($code,0,$firstChar).$preCode."\n".$code."\n".$postCode;
+		$code = "{$preCode}\n{$code}\n{$postCode}";
 
 		// test new code if it compiles
 		$tmpName = tempnam('/tmp','jsfix');

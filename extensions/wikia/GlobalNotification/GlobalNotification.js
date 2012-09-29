@@ -53,7 +53,9 @@ var GlobalNotification = {
 				}
 			});
 		} else {
-			callback();			
+			if( jQuery.isFunction( callback ) ) {
+				callback();			
+			}
 		}
 	},
 	isModal: function() {

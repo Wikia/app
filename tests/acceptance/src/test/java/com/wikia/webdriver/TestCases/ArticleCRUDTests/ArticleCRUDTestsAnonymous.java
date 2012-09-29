@@ -26,7 +26,7 @@ public class ArticleCRUDTestsAnonymous extends TestTemplate{
 	 * Click edit drop-down
 	 * Verify available edit options for anonymous user (history item)
 	 */
-	@Test(groups={"ArticleCRUDAnon_001", "ArticleCRUDAnon"})
+	@Test(groups={"ArticleCRUDAnon_001", "ArticleCRUDAnonymous"})
 	public void ArticleCRUDAnon_001_VerifyEditDropDown()
 	{
 		CommonFunctions.logOut(Properties.userName, driver);
@@ -50,7 +50,7 @@ public class ArticleCRUDTestsAnonymous extends TestTemplate{
 	 * Delete article
 	 */
 			
-	@Test(dataProvider="getArticleName", groups={"ArticleCRUDAnon_002", "ArticleCRUDAnon"})
+	@Test(dataProvider="getArticleName", groups={"ArticleCRUDAnon_002", "ArticleCRUDAnonymous"})
 	public void ArticleCRUDAnon_002_CreateArticle(String articleName)
 	{
 		CommonFunctions.logOut(Properties.userName, driver);
@@ -77,7 +77,7 @@ public class ArticleCRUDTestsAnonymous extends TestTemplate{
 	 * Edit article
 	 * Delete article
 	 */
-	@Test(groups={"ArticleCRUDAnon_003", "ArticleCRUDAnon"})
+	@Test(groups={"ArticleCRUDAnon_003", "ArticleCRUDAnonymous"})
 	public void ArticleCRUDAnon_003_CreateEditArticle()
 	{
 		CommonFunctions.logOut(Properties.userName, driver);
@@ -113,7 +113,7 @@ public class ArticleCRUDTestsAnonymous extends TestTemplate{
 	 * Delete comment
 	 * Delete article
 	 */
-	@Test(groups={"ArticleCRUDAnon_004", "ArticleCRUDAnon"})
+	@Test(groups={"ArticleCRUDAnon_004", "ArticleCRUDAnonymous"})
 	public void ArticleCRUDAnon_004_CreateArticleComment()
 	{
 		CommonFunctions.logOut(Properties.userName, driver);
@@ -145,7 +145,7 @@ public class ArticleCRUDTestsAnonymous extends TestTemplate{
 	 * Delete comment
 	 * Delete article
 	 */
-	@Test(groups={"ArticleCRUDAnon_005", "ArticleCRUDAnon"})
+	@Test(groups={"ArticleCRUDAnon_005", "ArticleCRUDAnonymous"})
 	public void ArticleCRUDAnon_005_CreateArticleCommentReply()
 	{
 		CommonFunctions.logOut(Properties.userName, driver);

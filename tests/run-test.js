@@ -282,7 +282,7 @@ function outputTestsResult() {
 		skipped = 0,
 		tests = 0,
 		time = 0.0;
-	
+
 	for(var i = 0 ; i < testResults.length ; i++) {
 
 		if (options.output) {
