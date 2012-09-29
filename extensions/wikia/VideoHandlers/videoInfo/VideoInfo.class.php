@@ -92,6 +92,7 @@ class VideoInfo extends WikiaModel {
 	protected function addToDatabase() {
 		$this->wf->ProfileIn( __METHOD__ );
 
+		$affected = true;
 		if ( !$this->wf->ReadOnly() ) {
 			$db = $this->wf->GetDB( DB_MASTER );
 

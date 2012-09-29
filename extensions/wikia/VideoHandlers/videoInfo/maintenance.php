@@ -7,21 +7,27 @@
 	*/
 
 	function addVideo( &$videoList, $titleName ) {
-		global $isDryrun, $added, $invalid, $duplicate;
+		global $isDryrun, $added, $invalid, $duplicate, $dupInDb;
 
-		$videoInfoHelper = F::build( 'VideoInfoHelper' ); /* @var $videoInfoHelper VideoInfoHelper */
+		$videoInfoHelper = new VideoInfoHelper();
 		$videoData = $videoInfoHelper->getVideoDataByTitle( $titleName );
 		if ( !empty($videoData) ) {
 			echo $videoData['videoTitle'];
 			$titleHash = md5( $videoData['videoTitle'] );
 			if ( !in_array($titleHash, $videoList) ) {
+				$status = true;
 				if ( !$isDryrun ) {
-					$videoInfo = F::build( 'VideoInfo', array($videoData) ); /* @var $videoInfo VideoInfo */
-					$videoInfo->addVideo();
+					$videoInfo = new VideoInfo( $videoData );
+					$status = $videoInfo->addVideo();
 				}
 
-				$added++;
-				echo "..... ADDED.\n";
+				if ( $status ) {
+					$added++;
+					echo "..... ADDED.\n";
+				} else {
+					$dupInDb++;
+					echo "..... ALREADY ADDED TO DB.\n";
+				}
 
 				$videoList[] = $titleHash;
 			} else {
@@ -61,19 +67,39 @@
 
 	$db = $app->wf->GetDB( DB_MASTER );
 
-	if ( !$isDryrun ) {
-		// create table or patch table schema
-		$video = F::build( 'VideoInfo' ); /* @var $video VideoInfo */
-		$video->createTableVideos();
-
-		echo "Create video_info table.\n";
-	}
-
-	$videoList = array();
 	$total = 0;
 	$added = 0;
 	$invalid = 0;
 	$duplicate = 0;
+	$dupInDb = 0;
+	$removed = 0;
+	$videoList = array();
+
+	if ( !$isDryrun ) {
+		// create table or patch table schema
+		$video = new VideoInfo();
+		$video->createTableVideos();
+
+		echo "Create video_info table.\n";
+
+		// remove deleted local videos
+		$sql = <<<SQL
+			SELECT video_title
+			FROM video_info
+			LEFT JOIN image ON video_info.video_title = image.img_name
+			WHERE image.img_name is null AND video_info.premium = 0
+SQL;
+
+		$result = $db->query( $sql, __METHOD__ );
+
+		while( $row = $db->fetchObject($result) ) {
+			echo "Deleted video (local): $row->video_title";
+			$video->setVideoTitle( $row->video_title );
+			$video->deleteVideo();
+			echo "..... DELETED.\n";
+			$removed++;
+		}
+	}
 
 	// get embedded videos (premium)
 	$excludeList = array( 'png', 'gif', 'bmp', 'jpg', 'jpeg', 'ogg', 'ico', 'svg', 'mp3', 'wav', 'midi' );
@@ -146,4 +172,5 @@ SQL;
 		}
 	}
 
-	echo "Wiki $wgCityId: TOTAL: $total, ADDED: $added, DUPLICATE: $duplicate, INVALID: $invalid\n";
+	echo "Wiki $wgCityId: TOTAL: $total, ADDED: $added, DUPLICATE: $duplicate, DUPLICATE IN DB: $dupInDb, INVALID: $invalid\n";
+	echo "Total removed deleted videos: $removed\n";
