@@ -40,7 +40,8 @@
 	}
 
 	/* Q */
-	.state-5 {
+	.state-5,
+	.state-6 {
 		border-color: #000;
 		background-color: gold;
 		label {
@@ -48,14 +49,14 @@
 		}
 	}
 
-        .state-2,
-        .questionable {
-                border-color: #ccc;
-                background-color: transparent;
-                label {
-                        border-color: #ccc;
-                }
-        }
+	.state-2,
+	.questionable {
+		border-color: #ccc;
+		background-color: transparent;
+		label {
+			border-color: #ccc;
+		}
+	}
 
 	div {
 		text-align: center;
