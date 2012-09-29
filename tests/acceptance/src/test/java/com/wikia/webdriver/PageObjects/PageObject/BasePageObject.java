@@ -433,10 +433,6 @@ public class BasePageObject{
 		{
 			PageObjectLogging.log("waitForElementNotVisibleByBy", "Element " + by.getClass() + " is not visible which is expected", true);
 		}
-		catch(NoSuchElementException e)
-		{
-			PageObjectLogging.log("waitForElementNotVisibleByBy", "Element " + by.getClass() + " is not visible which is expected", true);
-		}
 		catch(Exception e)
 		{
 			PageObjectLogging.log("waitForElementNotVisibleByBy", e.toString(), false);			
