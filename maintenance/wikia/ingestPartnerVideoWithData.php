@@ -105,6 +105,10 @@ foreach ($providersVideoFeed as $provider) {
 			$startDate = date('Y-m-d', $startDateTS);
 			$endDate = date('Y-m-d', $endDateTS);
 			break;
+		case VideoFeedIngester::PROVIDER_ANYCLIP:
+			$startDate = date( 'Y-m-d', $startDateTS );
+			$file = $feedIngester->downloadFeed( $startDate );
+			break;
 		default:
 	}
 

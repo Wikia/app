@@ -194,6 +194,14 @@ $app->registerClass('GamestarVideoHandler', $dir . '/handlers/GamestarVideoHandl
 $app->registerClass('GamestarApiWrapper', $dir . '/apiwrappers/GamestarApiWrapper.class.php');
 $wgMediaHandlers['video/gamestar'] = 'GamestarVideoHandler';
 
+$app->registerClass('AnyclipVideoHandler', $dir . '/handlers/AnyclipVideoHandler.class.php');
+$app->registerClass('AnyclipApiWrapper', $dir . '/apiwrappers/AnyclipApiWrapper.class.php');
+$wgMediaHandlers['video/anyclip'] = 'AnyclipVideoHandler';
+
+$app->registerClass('TwitchtvVideoHandler', $dir . '/handlers/TwitchtvVideoHandler.class.php');
+$app->registerClass('TwitchtvApiWrapper', $dir . '/apiwrappers/TwitchtvApiWrapper.class.php');
+$wgMediaHandlers['video/twitchtv'] = 'TwitchtvVideoHandler';
+
 /**
  * Feed ingesters
  */
@@ -201,6 +209,7 @@ $app->registerClass('VideoFeedIngester', $dir . '/feedingesters/VideoFeedIngeste
 $app->registerClass('RealgravityFeedIngester', $dir . '/feedingesters/RealgravityFeedIngester.class.php');
 $app->registerClass('ScreenplayFeedIngester', $dir . '/feedingesters/ScreenplayFeedIngester.class.php');
 $app->registerClass('IgnFeedIngester', $dir . '/feedingesters/IgnFeedIngester.class.php');
+$app->registerClass('AnyclipFeedIngester', $dir . '/feedingesters/AnyclipFeedIngester.class.php');
 
 $wgVideoMigrationProviderMap = array(
 	4 => 'Fivemin',
@@ -221,6 +230,8 @@ $wgVideoMigrationProviderMap = array(
 	24 => 'Wikia',
 	*/
 	25 => 'Gamestar',
+	26 => 'Anyclip',
+	27 => 'Twitchtv',
 );
 
 
