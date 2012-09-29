@@ -69,7 +69,7 @@ class Wall {
 		wfProfileIn(__METHOD__);
 		$pageId = $this->mTitle->getArticleID();
 		
-		$where = "parent_page_id = $pageId";
+		$where = "parent_page_id = $pageId  and deleted = 0 and removed = 0";
 		
 		if( !empty($this->mRelatedPageId) ) {
 			$where = "comment_id in (select comment_id from wall_related_pages where page_id = {$this->mRelatedPageId})";
@@ -98,8 +98,6 @@ class Wall {
 			array(
 				$this->getWhere(),
 				'parent_comment_id != 0',
-				'removed' => 0,
-				'deleted' => 0,
 				"last_touched BETWEEN '$time' AND NOW()",
 			),
 			__METHOD__,
@@ -162,7 +160,7 @@ class Wall {
 		
 		$where = $this->getWhere();
 		
-		$where .= ' and parent_comment_id = 0 and deleted = 0 and removed = 0 ';
+		$where .= ' and parent_comment_id = 0 ';
 				
 		$orderBy = $this->getOrderBy();
 	
@@ -172,7 +170,7 @@ class Wall {
 				ORDER BY $orderBy
 				LIMIT $offset, {$this->mMaxPerPage}
 			";
-		
+			
 		$res = $db->query( $query );
 		
 		$out = array();
@@ -194,6 +192,7 @@ class Wall {
 			array( 'comments_index' ),
 			array( 'count(distinct comment_id) cnt' ),
 			array(
+				'parent_comment_id' => 0,
 				$this->getWhere()
 			),
 			__METHOD__
