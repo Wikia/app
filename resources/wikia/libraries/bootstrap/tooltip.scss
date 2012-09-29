@@ -2,6 +2,8 @@
 @import "skins/oasis/css/mixins/box-shadow";
 
 $color-shadow: mix(#000000, $color-page, 50%);
+$tooltip-padding: 10px 14px;
+
 
 .tooltip {
 	position: absolute;
@@ -19,7 +21,7 @@ $color-shadow: mix(#000000, $color-page, 50%);
 	font-size: 12px;
 	line-height: 18px;
 	max-width: 200px;
-	padding: 10px 14px;
+	padding: $tooltip-padding;
 	text-align: center;
 	text-decoration: none;
 }

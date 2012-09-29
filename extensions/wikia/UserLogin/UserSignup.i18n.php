@@ -375,15 +375,36 @@ $messages['br'] = array(
 
 /** Czech (česky)
  * @author Chmee2
+ * @author Macinosak
+ * @author Mormegil
  * @author Vks
  */
 $messages['cs'] = array(
 	'usersignup-page-title' => 'Připojte sedo Wikie',
+	'usersignup-page-captcha-label' => 'Rozmazané slovo',
+	'usersignup-error-username-length' => 'Pozor, vaše uživatelské jméno nemůže být delší než {{PLURAL:$1|jeden znak|$1 znaky|$1 znaků}}.',
+	'usersignup-error-invalid-user' => 'Neplatný uživatel. Nejprve se prosím přihlašte.',
 	'usersignup-error-invalid-email' => 'Zadejte prosím platnou e-mailovou adresu.',
+	'usersignup-error-symbols-in-username' => 'Pozor, vaše uživatelské jméno může obsahovat pouze písmena a číslice.',
 	'usersignup-error-empty-email' => 'Vyplňte prosím vaši e-mailovou adresu.',
 	'usersignup-error-empty-username' => 'Ups, vyplňte prosím políčko s uživatelským jménem.',
+	'usersignup-error-already-confirmed' => 'Už jste potvrdil tuto e-mailovou adresu.',
+	'usersignup-error-throttled-email' => 'Pozor, už jste dnes žádal o příliš mnoho potvrzujících e-mailů. Opakujte akci za chvíli.',
+	'usersignup-error-too-many-changes' => 'Dosáhl jste dnes maximálního počtu změn e-mailu. Zkuste to prosím později.',
+	'usersignup-error-password-length' => 'Pozor, vaše heslo je příliš dlouhé. Zvolte heslo, které má 50 znaků nebo méně.',
+	'usersignup-error-confirmed-user' => 'Zdá se, že už jste e-mailovou adresu pro $1 potvrdili! Zkontrolujte svůj [$2 uživatelský profil].',
+	'usersignup-facebook-heading' => 'Dokončení přihlášení',
 	'usersignup-facebook-create-account' => 'Vytvořit účet',
+	'usersignup-facebook-email-tooltip' => 'Pokud chcete použít jinou e-mailovou adresu, můžete ji změnit později ve vašem nastavení.',
 	'usersignup-facebook-have-an-account-heading' => 'Máte již účet?',
+	'usersignup-facebook-have-an-account' => 'Místo toho připojte stávající uživatelské jméno Wikia s Facebookem.',
+	'usersignup-facebook-proxy-email' => 'Anonymní e-mail Facebooku',
+	'usersignup-user-pref-emailconfirmlink' => 'Požádat o nový potvrzující e-mail',
+	'usersignup-user-pref-confirmemail_send' => 'Znovu odeslat mé potvrzení e-mailu',
+	'usersignup-user-pref-emailauthenticated' => 'Díky! Váš email byl potvrzen $2  v  $3 .',
+	'usersignup-user-pref-emailnotauthenticated' => 'Zkontrolujte svůj e-mail a klikněte na potvrzující odkaz k dokončení změny vašeho e-mailu na: $1',
+	'usersignup-user-pref-unconfirmed-emailnotauthenticated' => 'Ale ne! Váš e-mail není potvrzen. E-mailové funkce nebudou fungovat, dokud nepotvrdíte vaši e-mailovou adresu.',
+	'usersignup-user-pref-reconfirmation-email-sent' => 'Už to bude! Poslali jsme nový potvrzující e-mail na $1. Zkontrolujte svůj e-mail a klikněte na odkaz k dokončení potvrzení vaši e-mailové adresy.',
 	'usersignup-confirm-page-title' => 'Potvrzení e-mailu',
 	'usersignup-confirm-email-resend-email' => 'Pošlete mi další potvrzovací e-mail',
 	'usersignup-confirm-email-change-email-content' => 'Chci použít jinou e-mailovou adresu.',
@@ -3534,6 +3555,46 @@ $messages['zh-hans'] = array(
 	'usersignup-user-pref-confirmemail_send' => '重发送确认邮件。',
 	'usersignup-user-pref-emailauthenticated' => '谢谢！您的邮箱已在$2$3发送。',
 	'usersignup-user-pref-emailnotauthenticated' => '检查您的邮箱是否正确，以确保确认邮件能够发送到该信箱：$1。',
+	'usersignup-user-pref-unconfirmed-emailnotauthenticated' => '您的电子邮件地址没有确认，未确认邮件地址功能无效。',
+	'usersignup-user-pref-reconfirmation-email-sent' => '几乎完成。我们以发送新的确认邮件到$1。请检查您的电子邮箱并且点击链接来确认您的电子邮箱地址。',
+	'usersignup-user-pref-noemailprefs' => '看来我们没有您的电子邮箱地址。请输入您的电子邮箱地址。',
+	'usersignup-confirm-email-unconfirmed-emailnotauthenticated' => '您的电子邮箱地址没有确认。我们已向您发送了一封邮件，请按确认链接确认。',
+	'usersignup-user-pref-confirmemail_noemail' => '看来我们没有您的电子邮箱地址。请到[[Special:Preferences|属性]]输入。',
+	'usersignup-confirm-page-title' => '确认您的电子邮箱地址。',
+	'usersignup-confirm-email-resend-email' => '给我再发送一封确认电子邮件。',
+	'usersignup-confirm-email-change-email-content' => '我想使用不同的电子邮箱地址。',
+	'usersignup-confirm-email-change-email' => '更改我的电子邮箱地址。',
+	'usersignup-confirm-email-new-email-label' => '信邮箱地址',
+	'usersignup-confirm-email-update' => '更新',
+	'usersignup-confirm-email-tooltip' => '您是否输入了您未确认的电子邮箱地址，或者向使用不同的电子邮箱地址？不用担心，点击下列链接来更改您的邮箱地址并获得新的确认邮件。',
+	'usersignup-resend-email-heading-success' => '新电子邮件已发送。',
+	'usersignup-resend-email-heading-failure' => '邮件未重新发送。',
+	'usersignup-confirm-page-heading-confirmed-user' => '恭喜！',
+	'usersignup-confirm-page-subheading-confirmed-user' => '您已确认。',
+	'usersignup-confirmation-heading' => '马上好了。',
+	'usersignup-confirmation-heading-email-resent' => '新邮件已发送。',
+	'usersignup-confirmation-subheading' => '请查看您的电子邮箱。',
+	'usersignup-confirmation-email-sent' => "我们已向'''$1'''发送电子邮件。
+
+请点击确认链接完成创立新账户。",
+	'usersignup-confirmation-email_subject' => '马上就好！请确认您的Wikia帐户',
+	'usersignup-confirmation-email-greeting' => '你好 $USERNAME，',
+	'usersignup-confirmation-email-content' => '您已到创立Wikia帐户地最后一步！请点击下列链接。
+
+<a style="color:#2C85D5;" href="$CONFIRMURL">$CONFIRMURL</a>',
+	'usersignup-confirmation-email-signature' => 'Wikia团队',
+	'usersignup-confirmation-email_body' => '你好$2，
+
+您已到创立Wikia帐户地最后一步！请点击下列链接。
+
+¥3
+
+Wikia团队',
+	'usersignup-welcome-email-subject' => '欢迎来到Wikia，$USERNAME！',
 	'usersignup-welcome-email-greeting' => '你好 $USERNAME',
+	'usersignup-marketing-community-heading' => '合作',
+	'usersignup-marketing-global-heading' => '创新',
+	'usersignup-account-creation-email-greeting' => '你好，',
+	'usersignup-confirmation-reminder-email-greeting' => '你好 $USERNAME',
 );
 

@@ -1,21 +1,34 @@
 <?php
 
 require_once ( '../../../maintenance/commandLine.inc' );
-define("HOWMANYCATEGORIES", 200);
-define("CATEGORIESTOARTICLE", 30);
+
+//////////////////////////////////////////////////////
+define("HOWMANYCATEGORIES", 150000);
+define("CATEGORIESTOARTICLE", 'nolimit');	// 'nolimit' or a number
+define("COLORINCASEOFERROR", '444444');
+//////////////////////////////////////////////////////
 
 
 class EvolutionModel {
 
+	private $wikiName;
 	private $wikiColor;
+	private $redConverter;
+	private $greenConverter;
+	private $blueConverter;
 	private $revisionsData;
 	private $biggestCategories;
 	private $articlesCache = array();
+	private $downloadedAvatars = array();
 
 
-	public function __construct() {
+	public function __construct($wgDBname) {
+		$this->wikiName = $wgDBname ;
 		$this->msg("Collecting Wiki's colors...");
 		$this->setWikiColor();
+		$this->setColorConverters();
+		$this->msg("Collecting Wiki's logo...");
+		$this->downloadWordmark();
 		$this->msg("Collecting revisions data...");
 		$this->loadRevisionsData();
 		$this->msg("Collecting " . HOWMANYCATEGORIES . " biggest categories...");
@@ -25,8 +38,66 @@ class EvolutionModel {
 
 	private function setWikiColor() {
 		$wiki_colors = SassUtil::getOasisSettings();
-		$wiki_color = substr($wiki_colors["color-buttons"], 1);
-		$this->wikiColor = strtoupper($wiki_color);
+		if( strlen($wiki_colors["color-buttons"]) != 7 ) { // this resolves Futurama Wiki's problem
+			$this->wikiColor = COLORINCASEOFERROR;
+			$this->msg('-------------------------------------');
+			$this->msg('Error in collecting Wiki\'s color! Color set to ' . COLORINCASEOFERROR . ', can be changed in EvolutionModel.class.php file.');
+			$this->msg('-------------------------------------');
+		} else {
+			$wiki_color = substr($wiki_colors["color-buttons"], 1);
+			$this->wikiColor = strtoupper($wiki_color);
+		}
+	}
+
+
+	private function setColorConverters() {
+		global $wgExternalSharedDB;
+		$db = wfGetDb(DB_SLAVE);
+		$result = $db->select(
+			array( 'site_stats' ),
+			array( 'ss_total_edits', 'ss_total_pages'),
+			array(),
+			__METHOD__,
+			array (),
+			array ()
+		);
+
+		$row = $result->fetchObject();
+		$expected_number_of_edits_to_white = $row->ss_total_edits / $row->ss_total_pages ;
+
+		$wiki_color = $this->wikiColor;
+		$red = hexdec( substr($wiki_color, 0, -4) );
+		$green = hexdec( substr($wiki_color, 2, -2) );
+		$blue = hexdec( substr($wiki_color, -2) );
+
+		$red_diff = 255 - $red;
+		$green_diff = 255 - $green;
+		$blue_diff = 255 - $blue;
+
+		$this->redConverter =  $red_diff / $expected_number_of_edits_to_white ;
+		$this->greenConverter =  $green_diff / $expected_number_of_edits_to_white ;
+		$this->blueConverter =  $blue_diff / $expected_number_of_edits_to_white ;
+	}
+
+
+	private function downloadWordmark() {
+		$themeSettings = new ThemeSettings();
+		$settings = $themeSettings->getSettings();
+		$wordmark = wfReplaceImageServer($settings['wordmark-image-url'], SassUtil::getCacheBuster());
+
+		$folder_path = $this->wikiName ;
+		if (!is_dir($folder_path)) {
+			mkdir($folder_path, 0700);
+		}
+		$file_path = $folder_path . '/wordmark.png';
+		if( file_exists($file_path) ) {
+			system("rm " . $file_path);
+		}
+		file_put_contents( $file_path, Http::get($wordmark) );
+		if( file_get_contents($file_path) == '' ) {
+			system("rm " . $file_path);
+			system("cp default_wordmark.png " . $file_path);
+		}
 	}
 
 
@@ -69,11 +140,10 @@ class EvolutionModel {
 
 	public function formARow() {
 		if( $row = $this->revisionsData->fetchObject() ) {
-
-		$page_id = $row->page_id;
-		$page_title = $row->page_title;
-		$rev_len = $row->rev_len;
-		$user_name = $row->rev_user_text;
+			$page_id = $row->page_id;
+			$page_title = $row->page_title;
+			$rev_len = $row->rev_len;
+			$user_name = $row->rev_user_text;
 
 			if( !( $this->checkIfArticleIsInCache($page_id) ) ) {
 				if( !( $this->initializeCache($page_id, $page_title, $rev_len) ) ) {
@@ -101,6 +171,8 @@ class EvolutionModel {
 			} else {
 				$processedRow["user_name"] = 'Anonym' ;
 			}
+
+			$this->getAvatar($processedRow["user_name"]);
 
 			$processedRow["size"] = $rev_len;
 
@@ -133,7 +205,11 @@ class EvolutionModel {
 		}
 		$this->atriclesCache[$page_id]["articles_length"] = $rev_len;
 		$this->atriclesCache[$page_id]["actual_color"] = $this->wikiColor;
-		$this->atriclesCache[$page_id]["category"] = $this->getAllCategoriesInOrder( $this->getArticlesCategories($page_title, $page_id) );
+		if( CATEGORIESTOARTICLE == 'nolimit' ) {
+			$this->atriclesCache[$page_id]["category"] = $this->getAllCategoriesInOrder( $this->getArticlesCategories($page_title, $page_id) );
+		} else {
+			$this->atriclesCache[$page_id]["category"] = $this->getXCategoriesInOrder( $this->getArticlesCategories($page_title, $page_id), CATEGORIESTOARTICLE );
+		}
 		return true;
 	}
 
@@ -158,15 +234,19 @@ class EvolutionModel {
 		$green = hexdec( substr($actual_color, 2, -2) );
 		$blue = hexdec( substr($actual_color, -2) );
 
+		$red_conv = $this->redConverter ;
+		$green_conv = $this->greenConverter ;
+		$blue_conv = $this->blueConverter ;
+
 		if ($minor_edit) {
-			$converter = 50;
-		} else {
-			$converter = 100;
+			$red_conv = $red_conv / 2;
+			$green_conv = $green_conv / 2;
+			$blue_conv = $blue_conv / 2;
 		}
 
-		$red = $red + $converter;
-		$green = $green + $converter;
-		$blue = $blue + $converter;
+		$red = $red + $red_conv;
+		$green = $green + $green_conv;
+		$blue = $blue + $blue_conv;
 
 		$red = $this->setLengthOfHexColorString( dechex($red), 2);
 		$green = $this->setLengthOfHexColorString( dechex($green), 2);
@@ -217,20 +297,6 @@ class EvolutionModel {
 		return $categories;
 	} // end of getArticlesCategories method
 
-/*
-	private function getOneCategory($this_articles_categories) {
-		$intersect_res = array_intersect( $this->biggestCategories, $this_articles_categories );
-		if ($intersect_res != NULL) {
-			foreach( $intersect_res as $intersect_element ) {
-				if ($intersect_element) {
-					return $intersect_element . '/' ;
-				}
-			}
-		} else {
-			return NULL;
-		}
-	}
-*/
 
 	private function getAllCategoriesInOrder($this_articles_categories) {
 		$intersect_res = array_intersect( $this->biggestCategories, $this_articles_categories );
@@ -263,6 +329,36 @@ class EvolutionModel {
 		}
 	}
 
+	
+	private function getAvatar($user_name) {
+
+		if( !($this->checkIfAvatarIsDownloaded($user_name)) ) {
+			$folder_path = $this->wikiName ;
+			if (!is_dir($folder_path)) {
+				mkdir($folder_path, 0700);
+			}
+			$folder_path = $folder_path . '/avatars' ;
+			if (!is_dir($folder_path)) {
+				mkdir($folder_path, 0700);
+			}
+			$file_path = $folder_path . '/' . $user_name . '.png';
+			if( !( file_exists($file_path) ) ) {
+				$avatar = AvatarService::getAvatarurl($user_name, 50);
+				file_put_contents($file_path, Http::get($avatar));
+				$this->downloadedAvatars[$user_name] = true;
+			}
+		}
+	}
+
+
+	private function checkIfAvatarIsDownloaded($user_name) {
+		if( isset( $this->downloadedAvatars[$user_name] ) ) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 
 	private function indexIsInArray($index, $array) {
 		$filled_indexes = array_keys( $array );
@@ -274,7 +370,7 @@ class EvolutionModel {
 	}
 
 
-	protected function isIp($str) {
+	private function isIp($str) {
 		return filter_var($str, FILTER_VALIDATE_IP);
 	}
 
@@ -288,4 +384,3 @@ class EvolutionModel {
 
 } // end of EvolutionModel class
 
-?>

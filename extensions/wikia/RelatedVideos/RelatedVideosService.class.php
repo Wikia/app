@@ -43,11 +43,15 @@ class RelatedVideosService {
 			);
 
 			if ( isset( $result['data']['error']) ){
+				wfProfileOut( __METHOD__ );
 				return array();
 			}
 				
 			// just to be sure and to be able to work cross devbox.
-			if ( !isset( $result['data']['uniqueId'] ) ) return array();
+			if ( !isset( $result['data']['uniqueId'] ) ) {
+				wfProfileOut( __METHOD__ );
+				return array();
+			}
 
 			$this->saveToCache( $titleText, $source, $videoWidth, $cityShort, $result );
 		} else {

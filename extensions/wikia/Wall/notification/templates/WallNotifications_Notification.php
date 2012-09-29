@@ -1,4 +1,5 @@
 <?
+	//TODO: move it to controller
 	$helper = new WallHelper();
 ?>
 <? if($unread): ?>

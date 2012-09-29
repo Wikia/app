@@ -25,7 +25,7 @@ var Lightbox = {
 	backfillCount: 0,
 	backfillCountMessage: false,
 	to: 0, // timestamp for getting wiki images
-	includeLatestPhotos: !$('#LatestPhotosModule').length, // if we don't have latest photos in the DOM, request them from back end
+	includeLatestPhotos: !$('#LatestPhotosModule .carousel-container').length, // if we don't have latest photos in the DOM, request them from back end
 	
 	dom: {
 		relatedVideos: $('#RelatedVideosRL').find('.Wikia-video-thumb')
@@ -64,7 +64,7 @@ var Lightbox = {
 		
 		if(!Lightbox.initialFileDetail['exists']) {
 			// We're showing an error template
-			Lightbox.handleErrorTemplate();
+			Lightbox.showErrorModal();
 			return;
 		}
 		
@@ -75,6 +75,9 @@ var Lightbox = {
 		Lightbox.openModal.videoTemplate = $("#LightboxVideoTemplate");
 		Lightbox.openModal.headerTemplate = $("#LightboxHeaderTemplate");
 		Lightbox.openModal.headerAdTemplate = $("#LightboxHeaderAdTemplate");
+
+		// Cache error message
+		Lightbox.openModal.errorMessage = $("#LightboxErrorMessage").html();
 		
 		// pre-cache known doms
 		Lightbox.openModal.carousel = $('#LightboxCarouselContainer .carousel');
@@ -284,69 +287,73 @@ var Lightbox = {
 			var image = $('<img id="LightboxPreload" src="'+imageUrl+'" />').appendTo('body');
 			
 			// Do calculations
-			image.load(function() {
-				var image = $(this),
-					topOffset = LightboxLoader.defaults.topOffset,
-					modalMinHeight = LightboxLoader.defaults.height,
-					windowHeight = $(window).height(),
-					modalHeight = windowHeight - topOffset*2,  
-					currentModalHeight = Lightbox.openModal.height();
-
-				modalHeight = modalHeight < modalMinHeight ? modalMinHeight : modalHeight;
-
-				// Just in case image is wider than 1000px
-				if(image.width() > 1000) {
-					image.width(1000);
-				}
-				var imageHeight = image.height();
-							
-				if(imageHeight < modalHeight) {
-					// Image is shorter than screen, adjust modal height
-					modalHeight = imageHeight;
-					
-					// Modal has a min height
-					if(modalHeight < modalMinHeight) {
-						modalHeight = modalMinHeight;
+			image
+				.error(function() {				
+					Lightbox.error.updateLightbox();
+				})
+				.load(function() {
+					var image = $(this),
+						topOffset = LightboxLoader.defaults.topOffset,
+						modalMinHeight = LightboxLoader.defaults.height,
+						windowHeight = $(window).height(),
+						modalHeight = windowHeight - topOffset*2,  
+						currentModalHeight = Lightbox.openModal.height();
+	
+					modalHeight = modalHeight < modalMinHeight ? modalMinHeight : modalHeight;
+	
+					// Just in case image is wider than 1000px
+					if(image.width() > 1000) {
+						image.width(1000);
 					}
-
-					// Calculate modal's top offset
-					var extraHeight = windowHeight - modalHeight - 10; // 5px modal border
-					
-					var newOffset = (extraHeight / 2);
-					if(newOffset < topOffset){
-						newOffset = topOffset; 
+					var imageHeight = image.height();
+								
+					if(imageHeight < modalHeight) {
+						// Image is shorter than screen, adjust modal height
+						modalHeight = imageHeight;
+						
+						// Modal has a min height
+						if(modalHeight < modalMinHeight) {
+							modalHeight = modalMinHeight;
+						}
+	
+						// Calculate modal's top offset
+						var extraHeight = windowHeight - modalHeight - 10; // 5px modal border
+						
+						var newOffset = (extraHeight / 2);
+						if(newOffset < topOffset){
+							newOffset = topOffset; 
+						}
+						topOffset = newOffset;
+						
+					} else {
+						// Image is taller than screen, shorten image
+						imageHeight = modalHeight;
+						// If currentModalHeight is greater than calculated modalHeight, adjust the top offset
+						topOffset = currentModalHeight > modalHeight ? topOffset - 5 : topOffset;
 					}
-					topOffset = newOffset;
 					
-				} else {
-					// Image is taller than screen, shorten image
-					imageHeight = modalHeight;
-					// If currentModalHeight is greater than calculated modalHeight, adjust the top offset
-					topOffset = currentModalHeight > modalHeight ? topOffset - 5 : topOffset;
-				}
-				
-				topOffset = topOffset + $(window).scrollTop();
-				
-				var imageContainerHeight = modalHeight;
-				if(Lightbox.openModal.hasClass('pinned-mode')) {
-					imageContainerHeight -= 190;
-					if(imageHeight > imageContainerHeight ) {
-						imageHeight = imageContainerHeight;
+					topOffset = topOffset + $(window).scrollTop();
+					
+					var imageContainerHeight = modalHeight;
+					if(Lightbox.openModal.hasClass('pinned-mode')) {
+						imageContainerHeight -= 190;
+						if(imageHeight > imageContainerHeight ) {
+							imageHeight = imageContainerHeight;
+						}
 					}
-				}
-				
-				var dimensions = {
-					modalHeight: modalHeight,
-					topOffset: topOffset,
-					imageHeight: imageHeight,
-					imageContainerHeight: imageContainerHeight
-				};
-
-				// remove preloader image
-				image.remove();
-				
-				callback(dimensions);
-			});
+					
+					var dimensions = {
+						modalHeight: modalHeight,
+						topOffset: topOffset,
+						imageHeight: imageHeight,
+						imageContainerHeight: imageContainerHeight
+					};
+	
+					// remove preloader image
+					image.remove();
+					
+					callback(dimensions);
+				});
 		}
 	},
 	video: {
@@ -477,6 +484,36 @@ var Lightbox = {
 			Lightbox.openModal.progress.removeClass('invisible');
 		}
 	},
+	error: {
+		updateLightbox: function() {
+			// Set lightbox css
+			var css = {
+				height: LightboxLoader.defaults.height
+			}
+			
+			// don't change top offset if the screen is shorter than the min modal height
+			if(!Lightbox.shortScreen) {
+				css['top'] = Lightbox.getDefaultTopOffset();
+			}
+
+			// Resize modal
+			Lightbox.openModal.css(css);
+			
+			// Empty header html
+			Lightbox.openModal.header
+				.html('')
+				.prepend($(Lightbox.openModal.closeButton).clone(true, true));	// clone close button into header
+
+			// Display error message
+			Lightbox.openModal.media
+				.css({
+					'margin-top': (LightboxLoader.defaults.height/2)-14,
+					'line-height': 'normal'
+				})
+				.addClass('error-lightbox')
+				.html(Lightbox.openModal.errorMessage);
+		}
+	},
     updateMediaType: function() {
 
         if ( Lightbox.current.type == 'video' ) {
@@ -504,7 +541,7 @@ var Lightbox = {
 				.prepend($(Lightbox.openModal.closeButton).clone(true, true));	// clone close button into header
 		});
 	},
-	// Render special Header for ads
+	// Render special header for ads
 	renderAdHeader: function() {
 		var headerAdTemplate = Lightbox.openModal.headerAdTemplate.html();
 		Lightbox.openModal.header
@@ -555,13 +592,11 @@ var Lightbox = {
 			fileTitle: title,
 			type: type
 		}, function(data) {
-			// TODO: cache caption 
-			/*var idx = Lightbox.current.index,
-				caption = Lightbox.openModal.carousel.find('li').eq(idx).find('img').data('caption');
-			data['caption'] = caption || false;*/
+			if(data.exists === false) {
+				Lightbox.error.updateLightbox();
+				return;
+			}
 			Lightbox[type].updateLightbox(data);		
-			//Lightbox.showOverlay();
-			//Lightbox.hideOverlay();
 		});
 		
 	},
@@ -859,25 +894,23 @@ var Lightbox = {
 			}
 		});
 	},
-	handleErrorTemplate: function() {
+	// Show this modal when ?file=xyz and xyz doesn't exist - mainly used for sharing and direct links
+	showErrorModal: function() {
 		LightboxLoader.lightboxLoading = false;
 
-		Lightbox.openModal.removeClass('LightboxModal');
+		Lightbox.openModal.closeModal();
 		
 		$.nirvana.sendRequest({
 			controller:	'Lightbox',
 			method:		'lightboxModalContentError',
 			type:		'GET',
 			format: 'html',
+			data: {
+				lightboxVersion: 1 // update this when we change the template
+			},
 			callback: function(html) {
-				var modalContent = Lightbox.openModal.find(".modalContent");
-				modalContent.html(html);
-				
-				// Fix H1 styling
-				modalContent.find('h1:first').insertBefore(modalContent);
-				
-				$('#close-lightbox').click(function() {
-					$('#' + LightboxLoader.defaults.id).closeModal();
+				$(html).makeModal({
+					width: 600
 				});
 			}
 		});

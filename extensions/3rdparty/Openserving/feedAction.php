@@ -74,4 +74,3 @@ function wfSpecialFeedAction(){
  	$wgMessageCache->addMessage( 'feedaction', 'just a test extension' );
 }
 
-?>

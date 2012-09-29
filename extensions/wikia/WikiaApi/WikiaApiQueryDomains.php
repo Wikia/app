@@ -21,9 +21,7 @@ class WikiaApiQueryDomains extends ApiQueryBase {
 
 	protected function getDB() {
 		global $wgExternalSharedDB;
-		$this->mDb = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
-
-		return $this->mDb;
+		return wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
 	}
 
 	/**

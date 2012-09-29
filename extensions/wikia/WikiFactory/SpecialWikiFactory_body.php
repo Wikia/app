@@ -337,16 +337,6 @@ class WikiFactoryPage extends SpecialPage {
 			}
 		}
 
-		$oWikiRequest = null;
-		if( class_exists( "CreateWikiForm" ) ) {
-			preg_match('/http:\/\/(\w{1,})./i', $this->mWiki->city_url, $matches);
-			$sRequestName = $matches[1];
-			if(!empty($sRequestName)) {
-				$oWikiRequest = CreateWikiForm::getRequestBy( 'request_name', $sRequestName );
-				$oWikiRequest = is_object($oWikiRequest) ? $oWikiRequest : $sRequestName;
-			}
-		}
-
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$vars = array(
 			"tab"         => $this->mTab,
@@ -360,7 +350,6 @@ class WikiFactoryPage extends SpecialPage {
 			"domains"     => WikiFactory::getDomains( $this->mWiki->city_id ),
 			"statuses" 	  => $this->mStatuses,
 			"variables"   => WikiFactory::getVariables(),
-			"wikiRequest" => $oWikiRequest,
 			"variableName"=> $this->mVariableName,
 			"isDevel"     => $wgDevelEnvironment,
 			'wikiFactoryUrl' => Title::makeTitle( NS_SPECIAL, 'WikiFactory' )->getFullUrl(),

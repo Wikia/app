@@ -25,9 +25,15 @@ $wgAvailableRights[] = 'chatmoderator';
 $wgGroupPermissions['*']['chatmoderator'] = false;
 $wgGroupPermissions['sysop']['chatmoderator'] = true;
 $wgGroupPermissions['staff']['chatmoderator'] = true;
-$wgGroupPermissions['staff']['chatstaff'] = true;
 $wgGroupPermissions['helper']['chatmoderator'] = true;
 $wgGroupPermissions['chatmoderator']['chatmoderator'] = true;
+
+$wgGroupPermissions['*']['chatstaff'] = false;
+$wgGroupPermissions['staff']['chatstaff'] = true;
+
+$wgGroupPermissions['*']['chatadmin'] = false;
+$wgGroupPermissions['sysop']['chatadmin'] = true;
+
 $wgAvailableRights[] = 'chat';
 $wgGroupPermissions['*']['chat'] = false;
 $wgGroupPermissions['user']['chat'] = true;
@@ -38,16 +44,16 @@ $wgGroupPermissions['util']['chatfailover'] = true;
 
 
 // Let staff & helpers change chatmod & banning status.
-if( !is_array($wgAddGroups['staff']) ){
+if( empty($wgAddGroups['staff'])  || !is_array($wgAddGroups['staff']) ){
 	$wgAddGroups['staff'] = array();
 }
-if( !is_array($wgAddGroups['helper']) ){
+if( empty($wgAddGroups['helper'])  || !is_array($wgAddGroups['helper']) ){
 	$wgAddGroups['helper'] = array();
 }
-if( !is_array($wgRemoveGroups['staff']) ){
+if( empty($wgRemoveGroups['staff']) || !is_array($wgRemoveGroups['staff']) ){
 	$wgRemoveGroups['staff'] = array();
 }
-if( !is_array($wgRemoveGroups['helper']) ){
+if( empty($wgRemoveGroups['helper']) || !is_array($wgRemoveGroups['helper']) ){
 	$wgRemoveGroups['helper'] = array();
 }
 

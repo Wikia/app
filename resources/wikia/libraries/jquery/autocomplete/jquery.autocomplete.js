@@ -267,7 +267,7 @@
 
       var me, len, div, f, suggestion;
       me = this;
-      len = this.suggestions.length;
+      len = this.options.maxSuggestions || this.suggestions.length;
       f = this.options.fnFormatResult;
       v = this.getQuery(this.currentValue);
       this.container.hide().empty();

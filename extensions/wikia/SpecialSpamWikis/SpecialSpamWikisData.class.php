@@ -41,12 +41,7 @@ class SpecialSpamWikisData {
      * Fetches and prepares the data for the output.
      */
     public function getList($limit = 10, $offset = 0, $wikiName = null, $criteria = array(), $order = 'city_created DESC') {
-        $sk = F::app()->wg->User->getSkin();
         $data = array( 'count' => 0, 'items' => array() );
-        
-        // required for link formatting
-        $link = new Linker();
-        
         $where = array();
         
         // processing parameters for DB query: the criteria
@@ -98,14 +93,14 @@ class SpecialSpamWikisData {
             $user = User::newFromId( $oRow->city_founding_user );
             $mail = $user->getEmail();
             if ( !empty( $mail ) ) {
-                $mail = $link->makeExternalLink( 'mailto:' . $user->getEmail(), $user->getEmail() );
+                $mail = Linker::makeExternalLink( 'mailto:' . $user->getEmail(), $user->getEmail(), false );
             }
             // format the output
             $data['items'][] = array(
                 '<input type="checkbox" name="close[' . $oRow->city_id . ']" value="1" />',
-                '<b>' . $oRow->city_title . '</b><br /><small>' . $link->makeExternalLink( $oRow->city_url, $oRow->city_url ) . '</small>',
+                '<b>' . $oRow->city_title . '</b><br /><small>' . Linker::makeExternalLink( $oRow->city_url, $oRow->city_url, false ) . '</small>',
                 $oRow->city_created,
-                $sk->makeLinkObj( $user->getUserPage(), $user->getName() ),
+                Linker::link( $user->getUserPage(), $user->getName() ),
                 $mail
             );
         }

@@ -158,7 +158,7 @@ class WallNotificationEntity {
 			$this->data->thread_title = $acParent->getMetaTitle();
 			$this->data_noncached->parent_title_dbkey = $acParent->getTitle()->getDBkey();
 			$this->data->parent_id = $acParent->getTitle()->getArticleId();
-			$this->data->url = $acParent->getMessagePageUrl();
+			$this->data->url = $ac->getMessagePageUrl();
 
 		} else {
 			$this->data->url = $ac->getMessagePageUrl();

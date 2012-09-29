@@ -68,4 +68,3 @@ function formatImageLink( $imageName, $linkTarget, $altText ) {
     '" /></a>';
 }
 
-?>

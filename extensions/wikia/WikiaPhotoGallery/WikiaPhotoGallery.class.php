@@ -1263,7 +1263,7 @@ class WikiaPhotoGallery extends ImageGallery {
 		$orientation = $this->getParam('orientation');
 
 		// setup image serving for "big" images
-		if ($orientation == 'mosaic') {
+		if( $orientation == 'mosaic' ) {
 			$imagesDimensions = array(
 				'w' => WikiaPhotoGalleryHelper::SLIDER_MOSAIC_MIN_IMG_WIDTH,
 				'h' => WikiaPhotoGalleryHelper::SLIDER_MOSAIC_MIN_IMG_HEIGHT,
@@ -1275,10 +1275,14 @@ class WikiaPhotoGallery extends ImageGallery {
 			);
 		}
 
+		/* temp transition code until grid is fully rolled out, remove and integrate after transition */
+		global $wgOasisGrid;
+		if( $orientation == 'mosaic' && !empty($wgOasisGrid) ) {
+			$imagesDimensions['w'] = WikiaPhotoGalleryHelper::WIKIA_GRID_SLIDER_MOSAIC_MIN_IMG_WIDTH;
+		}
+		/* end temp transistion code */
 
 		$imageServingForImages = new ImageServing(null, $imagesDimensions['w'], $imagesDimensions);
-
-
 
 		// setup image serving for navigation thumbnails
 		if ( $orientation == 'mosaic' ) {
@@ -1292,6 +1296,13 @@ class WikiaPhotoGallery extends ImageGallery {
 			$sliderClass = 'horizontal';
 			$thumbDimensions = array( "w" => 90, "h" => 70 );
 		}
+
+		/* temp transition code until grid is fully rolled out, remove and integrate after transition */
+		if( $orientation == 'mosaic' && !empty($wgOasisGrid) ) {
+			$thumbDimensions['w'] = WikiaPhotoGalleryHelper::WIKIA_GRID_THUMBNAIL_MAX_WIDTH;
+		}
+		/* end temp transistion code */
+
 		$imageServingForThumbs = new ImageServing(null, $thumbDimensions['w'], $thumbDimensions);
 
 		$out = array();

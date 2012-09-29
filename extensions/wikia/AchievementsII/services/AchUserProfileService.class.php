@@ -260,7 +260,7 @@ class AchUserProfileService {
 		global $wgEnableAchievementsStoreLocalData;
 		wfProfileIn(__METHOD__);
 
-		$where = array('user_id' => $this->mUserViewer->getId());
+		$where = array('user_id' => $this->mUserOwner->getId());
 		if(empty($wgEnableAchievementsStoreLocalData)) {
 			$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
 			$where['wiki_id'] = $wgCityId;

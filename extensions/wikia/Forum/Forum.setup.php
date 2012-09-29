@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Forum
  *
@@ -32,11 +33,9 @@ $app->registerSpecialPage( 'Forum', 'ForumSpecialController' );
 
 // hooks
 $app->registerHook( 'AfterWallWikiActivityFilter', 'ForumHooksHelper', 'onAfterWallWikiActivityFilter' );
-$app->registerHook( 'NotificationGetNotificationMessage', 'ForumNotificationPlugin', 'onGetNotificationMessage' );
-$app->registerHook( 'WallContributionsLine', 'ForumHooksHelper', 'onWallContributionsLine' ); 
+$app->registerHook( 'WallContributionsLine', 'ForumHooksHelper', 'onWallContributionsLine' );
 $app->registerHook( 'getUserPermissionsErrors', 'ForumHooksHelper', 'getUserPermissionsErrors' );
 $app->registerHook( 'WallRecentchangesMessagePrefix', 'ForumHooksHelper', 'onWallRecentchangesMessagePrefix' );
-$app->registerHook( 'NotificationGetMailNotificationMessage', 'ForumNotificationPlugin', 'onGetMailNotificationMessage' );
 $app->registerHook( 'WallThreadHeader', 'ForumHooksHelper', 'onWallThreadHeader' );
 $app->registerHook( 'WallHistoryThreadHeader', 'ForumHooksHelper', 'onWallHistoryThreadHeader' );
 $app->registerHook( 'WallHeader', 'ForumHooksHelper', 'onWallHeader' );
@@ -44,9 +43,12 @@ $app->registerHook( 'WallNewMessage', 'ForumHooksHelper', 'onWallNewMessage' );
 $app->registerHook( 'EditCommentsIndex', 'ForumHooksHelper', 'onEditCommentsIndex' );
 $app->registerHook( 'ArticleInsertComplete', 'ForumHooksHelper', 'onArticleInsertComplete' );
 $app->registerHook( 'WallBeforeRenderThread', 'ForumHooksHelper', 'onWallBeforeRenderThread' );
-$app->registerHook( 'WallPreloadThreadsGrouped', 'ForumHooksHelper', 'onWallPreloadThreadsGrouped' );
-$app->registerHook( 'WallThreadLoadReplyIdsFromDB', 'ForumHooksHelper', 'onWallThreadLoadReplyIdsFromDB');
 $app->registerHook( 'AfterBuildNewMessageAndPost', 'ForumHooksHelper', 'onAfterBuildNewMessageAndPost');
+$app->registerHook( 'WallMessageDeleted', 'ForumHooksHelper', 'onWallMessageDeleted');
+
+//notification hooks
+$app->registerHook( 'NotificationGetNotificationMessage', 'ForumNotificationPlugin', 'onGetNotificationMessage' );
+$app->registerHook( 'NotificationGetMailNotificationMessage', 'ForumNotificationPlugin', 'onGetMailNotificationMessage' );
 
 include( $dir . '/Forum.namespace.setup.php' );
 

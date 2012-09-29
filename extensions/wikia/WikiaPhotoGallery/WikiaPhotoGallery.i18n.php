@@ -2222,7 +2222,7 @@ Describa esta foto.",
 	'galery-slider-read-more' => ' Ler máis >',
 );
 
-/** Hausa (هَوُسَ) */
+/** Hausa (Hausa) */
 $messages['ha'] = array(
 	'wikiaPhotoGallery-preview-hover-delete' => 'soke',
 );
@@ -5864,6 +5864,13 @@ $messages['uk'] = array(
 	'wikiaPhotoGallery-upload-selectbutton' => 'Вибрати',
 	'wikiaPhotoGallery-photooptions-captionsub' => 'Опишіть цю фотографію.',
 	'wikiaPhotoGallery-photooptions-linktext' => 'Текст для відображення посилання.',
+);
+
+/** Uzbek (oʻzbekcha)
+ * @author CoderSI
+ */
+$messages['uz'] = array(
+	'wikiaPhotoGallery-upload-findtitle' => 'Qidiruv',
 );
 
 /** Vietnamese (Tiếng Việt)

@@ -1,10 +1,12 @@
 package com.wikia.webdriver.Common.DriverProvider;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
 import org.browsermob.core.har.Har;
 import org.browsermob.proxy.ProxyServer;
+import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -80,6 +82,14 @@ public class DriverProvider {
 		{
 			setChromeProperties();
 			driver = new EventFiringWebDriver(new ChromeDriver()).register(listener);
+		}
+		else if (Global.BROWSER.equals("CHROMEMOBILE"))
+		{
+			setChromeProperties();
+			DesiredCapabilities caps = new DesiredCapabilities();
+			caps.setCapability("chrome.switches", Arrays.asList("--user-agent="+"Mozilla/5.0 (iPhone; U; CPU like Mac OS X; en) AppleWebKit/420+ (KHTML, like Gecko) Version/3.0 Mobile/1A543a Safari/419.3"));
+			//"--user-agent="+"Mozilla/5.0 (iPhone; U; CPU like Mac OS X; en) AppleWebKit/420+ (KHTML, like Gecko) Version/3.0 Mobile/1A543a Safari/419.3");
+			driver = new EventFiringWebDriver(new ChromeDriver(caps)).register(listener);
 		}
 		else if (Global.BROWSER.equals("HTMLUNIT"))
 		{

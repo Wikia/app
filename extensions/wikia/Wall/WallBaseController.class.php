@@ -5,9 +5,11 @@
  * In typical use, a Wall will only load a subset of Bricks because there will be a TON of bricks as time goes on.
  */
 
-class WallBaseController extends ArticleCommentsController {
+class WallBaseController extends WikiaController{
 	const WALL_MESSAGE_RELATIVE_TIMESTAMP = 604800; // relative message timestampt for 7 days (improvement 20178)
 	protected $helper;
+	//use for controlling if we are not adding the some css/js head two time 
+	static $uniqueHead = array();
 	public function __construct() {
 		$this->app = F::App();
 		$this->helper = F::build('WallHelper', array());
@@ -130,6 +132,7 @@ class WallBaseController extends ArticleCommentsController {
 		$this->response->setVal( 'canEdit', $wallMessage->canEdit($this->wg->User) );
 		$this->response->setVal( 'canDelete', $wallMessage->canDelete($this->wg->User));
 		$this->response->setVal( 'canAdminDelete', $wallMessage->canAdminDelete($this->wg->User)  && $wallMessage->isRemove()  );
+		$this->response->setVal( 'canFastAdminDelete', $wallMessage->canFastAdminDelete($this->wg->User) );
 		$this->response->setVal( 'canRemove', $wallMessage->canRemove($this->wg->User)  && !$wallMessage->isRemove());
 		$this->response->setVal( 'canClose', $wallMessage->canArchive($this->wg->User) );
 		$this->response->setVal( 'canReopen', $wallMessage->canReopen($this->wg->User) );
@@ -152,6 +155,22 @@ class WallBaseController extends ArticleCommentsController {
 			wfProfileOut( __METHOD__);
 			return true;
 		}
+		
+		$head = '';
+		
+		/** 
+		 * Some of the wiki text returns also style and script
+		 * let's take this items and add them to text 
+		 */
+		foreach($wallMessage->getHeadItems() as $key => $val) {
+			$head = '';
+			if( empty(self::$uniqueHead[$key] ) ) {
+				$head .= $val;
+				self::$uniqueHead[$key] = true;
+			} 
+		}
+		
+		$this->response->setVal( 'head', $head);
 
 		$this->response->setVal( 'comment', $wallMessage);
 		$this->response->setVal( 'hide',  false);
@@ -161,7 +180,7 @@ class WallBaseController extends ArticleCommentsController {
 		$this->response->setVal( 'removedOrDeletedMessage', false);
 		$this->response->setVal( 'showRemovedBox', false);
 
-		$this->response->setVal( 'showClosedBox', false );
+		$this->response->setVal( 'showClosedBox', $wallMessage->isArchive() );
 
 		if( !$this->getVal('isreply', false) ) {
 			$this->response->setVal('feedtitle', htmlspecialchars($wallMessage->getMetaTitle()) );

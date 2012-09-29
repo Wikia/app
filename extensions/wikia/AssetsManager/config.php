@@ -11,6 +11,7 @@ $config['oasis_shared_core_js'] = array(
 
 		// The following should go to adengine2_js group later
 		'//extensions/wikia/AdEngine/ghost/gw-11.6.7/lib/gw.min.js',
+		'//extensions/wikia/AdEngine/js/gw.config.js',
 	),
 );
 
@@ -59,10 +60,12 @@ $config['adengine2_js'] = array(
 		'//extensions/wikia/AdEngine/js/AdEngine2.js',
 
 		// high prio
+		'//extensions/wikia/AdEngine/js/AdProviderAdDriver.js',
 		'//extensions/wikia/AdEngine/js/AdProviderAdDriver2.js',
 		'//extensions/wikia/AdEngine/js/AdProviderEvolve.js',
 		'//extensions/wikia/AdEngine/js/AdProviderEvolveRS.js',
 		'//extensions/wikia/AdEngine/js/AdProviderGamePro.js',
+		'//extensions/wikia/AdEngine/js/AdProviderNull.js',
 		'//extensions/wikia/AdEngine/js/AdProviderLater.js',
 		'//extensions/wikia/AdEngine/js/AdConfig2.js',
 		'//extensions/wikia/AdEngine/js/AdEngine2.run.js',
@@ -85,15 +88,15 @@ $config['oasis_ads_js'] = array(
 		// adengine2 low prio
 		// @requires adengine2 core already loaded
 		// @requires liftium loaded later (TODO FIXME)
-		'//extensions/wikia/AdEngine/js/AdProviderAdDriver.js',
 		'//extensions/wikia/AdEngine/js/AdProviderLiftium2.js',
-		'//extensions/wikia/AdEngine/js/AdConfigLate2.js',
-		'//extensions/wikia/AdEngine/js/AdEngine2.loadLateAds.js',
+		'//extensions/wikia/AdEngine/js/AdConfig2Late.js',
+		'//extensions/wikia/AdEngine/js/AdEngine2.configLateAds.js',
 
 		'#group_liftium_ads_js',
 
 		'//extensions/wikia/AdEngine/liftium/AdsInContent.js',
 
+		'//extensions/wikia/AdEngine/js/Krux.js',
 		'//extensions/wikia/AdEngine/AdDriver.js',
 		'//extensions/wikia/AdEngine/AdDriverGP.js',
 	),
@@ -252,6 +255,7 @@ $config['oasis_nojquery_shared_js'] = array(
 		'//extensions/wikia/CategorySelect/CategorySelect.view.js',
 
 		// oasis specific files
+		'//resources/wikia/oasis_tracking.js',
 		'//resources/wikia/libraries/bootstrap/tooltip.js',
 		'//resources/wikia/libraries/bootstrap/popover.js',
 		'//skins/oasis/js/hoverMenu.js',
@@ -306,12 +310,33 @@ $config['gameguides_scss'] = array(
 	)
 );
 
+
+//this combines couple of WikiaMobile groups to make it possible to load all js via one request
 $config['gameguides_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'wikiamobile',
 	'assets' => array(
-		'#group_wikiamobile_js_head',
-		'#group_wikiamobile_js_body_minimal',
+		//set js class as fast as possible to make styling as fast as possible
+		'//extensions/wikia/WikiaMobile/js/html_js_class.js',
+
+		//libraries/frameworks
+		'//resources/wikia/libraries/zepto/zepto-0.8.js',
+		'//resources/wikia/libraries/modil/modil.js',
+
+		//core modules
+		'//resources/wikia/modules/querystring.js',
+
+		//feature detection
+		'//extensions/wikia/WikiaMobile/js/features.js',
+		'//extensions/wikia/WikiaMobile/js/feature-detects/positionfixed.wikiamobile.js',
+
+		// deferred.js - jQuery-free implementation (BugId:34943)
+		'//resources/wikia/libraries/deferred/deferred.js',
+		'//resources/wikia/libraries/deferred/deferred.api.js',
+
+		//tracker
+		'//extensions/wikia/WikiaTracker/js/WikiaTracker_config.js',
+		'//extensions/wikia/WikiaTracker/js/WikiaTracker.js',
 
 		//feature detection
 		'//extensions/wikia/WikiaMobile/js/feature-detects/overflow.wikiamobile.js',
@@ -343,7 +368,6 @@ $config['gameguides_js'] = array(
 
 		//entrypoint
 		'//extensions/wikia/WikiaMobile/js/WikiaMobile.js',
-
 		'//extensions/wikia/GameGuides/js/GameGuides.js',
 	)
 );
@@ -427,6 +451,7 @@ $config['wikiamobile_js_body_full'] = array(
 
 		//polyfills
 		'//resources/wikia/polyfills/outerhtml.js',
+		'//extensions/wikia/WikiaMobile/js/viewport.js',
 
 		//platform components
 		'//extensions/wikia/AssetsManager/js/AssetsManager.js',

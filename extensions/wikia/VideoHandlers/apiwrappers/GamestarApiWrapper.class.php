@@ -15,14 +15,20 @@ class GamestarApiWrapper extends ApiWrapper {
 	public static function newFromUrl( $url ) {
 		wfProfileIn( __METHOD__ );
 
-		if ( preg_match('/pk\=(\d+)/', $url, $parsed) ) {
-			$videoId = $parsed[1];
+		$url = trim( $url, ".html" );
+		$parsed = explode( "/", $url );
+		if( is_array( $parsed ) ) {
+			$last = explode( ",", array_pop( $parsed ), 2 );
+			$videoId = array_pop( $last );
+			if ( is_numeric($videoId) ) {
+				wfProfileOut( __METHOD__ );
 
-			wfProfileOut( __METHOD__ );
-			return new static( $videoId );
+				return new static( $videoId );
+			}
 		}
 
 		wfProfileOut( __METHOD__ );
+
 		return null;
 	}
 

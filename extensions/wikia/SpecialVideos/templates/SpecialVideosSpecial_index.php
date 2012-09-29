@@ -5,7 +5,7 @@
 	
 <div class="WikiaDropdown MultiSelect" id="sorting-dropdown">
 	<div class="selected-items">
-		<span class="selected-items-list"><?= $sortMsg ?></span> <? // TODO: value should be dynamic ?>
+		<span class="selected-items-list"><?= $sortMsg ?></span>
 		<img class="arrow" src="<?= $wg->BlankImgUrl ?>" />
 	</div>
 	<div class="dropdown">

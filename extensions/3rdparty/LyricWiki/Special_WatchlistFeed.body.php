@@ -273,19 +273,18 @@ class WatchlistFeed extends SpecialPage
 // Watchlist class for simply fetching items.
 ////
 class Watchlist{
+
+	/* @var Database */
 	private $mDbr;
 	private $mChanges; // the result for the "changes" query.
 
-	public function Watchlist(){
-	}
+	public function __construct() {}
 
 	////
 	// Pre-fetch the results from the database.
 	////
 	public function prepare(){
-		global $wgUser, $wgOut, $wgLang, $wgRequest;
-		global $wgRCShowWatchingUsers, $wgEnotifWatchlist, $wgShowUpdatedMarker;
-		global $wgEnotifWatchlist;
+		global $wgUser, $wgRequest, $wgShowUpdatedMarker;
 		$fname = 'Watchlist::prepare';
 
 		$defaults = array(
@@ -449,5 +448,3 @@ class Watchlist{
 	}
 
 } // end class Watchlist
-
-?>

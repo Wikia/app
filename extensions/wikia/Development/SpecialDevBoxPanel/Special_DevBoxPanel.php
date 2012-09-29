@@ -412,4 +412,3 @@ function getHtmlForInfo(){
 	return $html;
 } // end getHtmlForInfo()
 
-?>

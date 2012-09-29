@@ -3,7 +3,13 @@ var WikiaFooterApp = {
 
 	init: function() {
 		//Variables
-		this.footer = $("#WikiaFooter");
+		if( window.wgEnableWikiaBarExt ) {
+		//the admin tool bar is within wikia bar container which is outside the #WikiaPage
+			this.footer = $("#WikiaBarWrapper .wikia-bar");
+		} else {
+		//the admin tool bar is positioned absolutely but in DOM in it's in #WikiaFooter within #WikiaPage
+			this.footer = $("#WikiaFooter");
+		}
 		this.toolbar = this.footer.children(".toolbar");
 		this.gn = $('.global-notification');
 		this.windowObj = $(window);
@@ -41,7 +47,7 @@ var WikiaFooterApp = {
 	// this is called while scrolling
 	resolvePosition: function() {
 		// Disable floating for RTE
-		if (typeof wgIsEditPage != 'undefined') {
+		if( window.wgIsEditPage ) {
 			return;
 		}
 

@@ -18,7 +18,7 @@ define('layout', ['sections', 'media', 'cache'], function(sections, media, cache
 		assets,
 		width,
 		process = function(res){
-			!assets && cache.set(tablesKey, res, ttl);
+			!assets && cache && cache.set(tablesKey, res, ttl);
 
 			var scripts = res.scripts,
 				l = scripts.length,
@@ -49,7 +49,7 @@ define('layout', ['sections', 'media', 'cache'], function(sections, media, cache
 
 	//tables
 	if(tables && tables.length > 0){
-		assets = cache.get(tablesKey);
+		assets = cache && cache.get(tablesKey);
 
 		if(assets){
 			process(assets);

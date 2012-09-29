@@ -3,7 +3,7 @@
 	if ($commentsBubble) {
 ?>
 	<div class="commentslikes">
-		<a href="<?= htmlspecialchars($commentsLink) ?>" class="comments" data-id="comment" title="<?= htmlspecialchars($commentsTooltip) ?>"<?= $commentsAccesskey ?>><span class="commentsbubble"><?= $formattedComments ?></span></a>
+		<a href="<?= htmlspecialchars($commentsLink) ?>" class="comments<?= empty($isArticleComments) ? ' talk' : '' ?>" data-id="comment" title="<?= htmlspecialchars($commentsTooltip) ?>"<?= $commentsAccesskey ?>><span class="commentsbubble"><?= $formattedComments ?></span></a>
 	</div>
 <?php
 	}
@@ -20,7 +20,7 @@
 				'accesskey' => wfMsg('accesskey-ca-talk'),
 			),
 			'name' => 'comment',
-			'class' => 'comments secondary',
+			'class' => 'comments secondary'.(empty($isArticleComments) ? ' talk' : ''),
 			'nofollow' => true
 		));
 	}

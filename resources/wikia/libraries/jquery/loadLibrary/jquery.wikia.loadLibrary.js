@@ -68,17 +68,6 @@ $.loadJQueryAutocomplete = function(callback) {
 	return mw.loader.use('jquery.autocomplete').done(callback);
 };
 
-$.loadWikiaTooltip = function(callback) {
-	return $.loadLibrary('Wikia Tooltip',
-		[
-			stylepath + '/../resources/wikia/libraries/jquery/tooltip/jquery.wikia.tooltip.js',
-			$.getSassCommonURL("skins/oasis/css/modules/WikiaTooltip.scss")
-		],
-		typeof jQuery.fn.wikiaTooltip,
-		callback
-	);
-};
-
 $.loadJQueryAIM = function(callback) {
 	return mw.loader.use('jquery.aim').done(callback);
 };

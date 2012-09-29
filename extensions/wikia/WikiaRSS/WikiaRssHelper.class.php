@@ -1,21 +1,21 @@
-<?php 
+<?php
 class WikiaRssHelper {
-	
+
 	/**
 	 * @brief Renders a placeholder or cached feed's data
 	 * @param String $input user's options
-	 * 
+	 *
 	 * @return String
 	 */
 	public function renderRssPlaceholder($input) {
 		$app = F::app();
-		$rss = F::build('WikiaRssModel', array($input));
-		
+		$rss = F::build('WikiaRssModel', array($input)); /* @var $rss WikiaRssModel */
+
 		// Kill parser cache
 		//$app->wg->Parser->disableCache();
 		$app->wg->ParserCacheExpireTime = 600;
 		//wfDebug( "soft disable Cache (wikia rss)\n" );
-		
+
 		$html = '';
 		$options = $rss->getRssAttributes();
 		if ( array_key_exists('nojs', $options) && $options['nojs'] ) {
@@ -25,14 +25,14 @@ class WikiaRssHelper {
 			$html .= self::getJSSnippet( $options );
 			$html .= $rss->getPlaceholder();
 		}
-		
+
 		return $html;
 	}
-	
+
 	/**
 	 * @brief Gets JavaScript code snippet to be loaded
-	 * 
-	 * @param Array options passed to callback javascript function
+	 *
+	 * @param Array $options passed to callback javascript function
 	 */
 	static private function getJSSnippet($options) {
 		$html = F::build('JSSnippets')->addToStack(
@@ -47,5 +47,5 @@ class WikiaRssHelper {
 
 		return $html;
 	}
-	
+
 }

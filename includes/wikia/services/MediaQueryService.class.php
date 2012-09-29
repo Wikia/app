@@ -110,7 +110,7 @@ class MediaQueryService extends Service {
 	}
 
 	protected function getArticleMediaMemcKey(Title $title) {
-		return $this->app->wf->MemcKey( 'MQSArticleMedia', '1.0', $title->getDBkey() );
+		return $this->app->wf->MemcKey( 'MQSArticleMedia', '1.3', $title->getDBkey() );
 	}
 
 	public function unsetCache( $title ) {
@@ -156,8 +156,20 @@ class MediaQueryService extends Service {
 						$file = wfFindFile( $media );
 						if ( !empty( $file ) ) {
 							if ( $file->canRender() ) {
-								$titles[] = array('title' => $row->il_to,
-										'type' => WikiaFileHelper::isTitleVideo( $media ) ? self::MEDIA_TYPE_VIDEO : self::MEDIA_TYPE_IMAGE);
+								$isVideo = WikiaFileHelper::isFileTypeVideo( $file );
+								if( $isVideo ) {
+									/** @var $videoHandler VideoHandler */
+									$videoHandler = $file->getHandler();
+									$thumb = $file->transform( array('width'=> 320), 0 );
+								}
+								else {
+									$videoHandler = false;
+								}
+								$titles[] = array(
+									'title' => $row->il_to,
+									'type' => ( $isVideo ? self::MEDIA_TYPE_VIDEO : self::MEDIA_TYPE_IMAGE ),
+									'meta' => ( $videoHandler ? array_merge( $videoHandler->getMetadata(true), $videoHandler->getEmbedSrcData() ) : array() ),
+									'thumbUrl' => ( !empty($thumb) ? $thumb->getUrl() : false ));
 							}
 						}
 					}
@@ -324,14 +336,43 @@ class MediaQueryService extends Service {
 		if ( !is_numeric($totalVideos) ) {
 			$db = $this->app->wf->GetDB( DB_SLAVE );
 
-			$row = $db->selectRow(
-				array( 'video_info' ),
-				array( 'count(video_title) cnt' ),
-				array(),
-				__METHOD__
-			);
+			if ( !VideoInfoHelper::videoInfoExists() ) {
+				$excludeList = array( 'png', 'gif', 'bmp', 'jpg', 'jpeg', 'ogg', 'ico', 'svg', 'mp3', 'wav', 'midi' );
+				$sqlWhere = implode( "','", $excludeList );
 
-			$totalVideos = ($row) ? $row->cnt : 0 ;
+				$sql =<<<SQL
+					SELECT il_to as name
+					FROM imagelinks
+					WHERE NOT EXISTS ( SELECT 1 FROM image WHERE img_media_type = 'VIDEO' AND img_name = il_to )
+						AND LOWER(il_to) != 'placeholder'
+						AND LOWER(SUBSTRING_INDEX(il_to, '.', -1)) NOT IN ( '$sqlWhere' )
+					UNION ALL
+					SELECT img_name as name
+					FROM image
+					WHERE img_media_type = 'VIDEO'
+					LIMIT 10000
+SQL;
+				$result = $db->query( $sql, __METHOD__ );
+
+				$totalVideos = 0;
+				while ( $row = $db->fetchObject($result) ) {
+					$title = F::build( 'Title', array( $row->name, NS_FILE ), 'newFromText' );
+					$file = $this->app->wf->FindFile( $title );
+					if ( $file instanceof File && $file->exists()
+						&& F::build( 'WikiaFileHelper', array($title), 'isTitleVideo' ) ) {
+						$totalVideos++;
+					}
+				}
+			} else {
+				$row = $db->selectRow(
+					array( 'video_info' ),
+					array( 'count(video_title) cnt' ),
+					array(),
+					__METHOD__
+				);
+
+				$totalVideos = ($row) ? $row->cnt : 0 ;
+			}
 
 			$this->app->wg->Memc->set( $memKey, $totalVideos, 60*60*24 );
 		}
@@ -403,11 +444,11 @@ class MediaQueryService extends Service {
 		$memKey = $app->wf->MemcKey( 'videos', 'total_video_views' );
 		$videoList = $app->wg->Memc->get( $memKey );
 		if ( !is_array($videoList) ) {
-			$db = $app->wf->GetDB( DB_SLAVE );
-
-			if ( !$db->tableExists( 'video_info' ) ) {
+			if ( !VideoInfoHelper::videoInfoExists() ) {
 				$videoList = F::build( 'DataMartService', array(), 'getVideoListViewsByTitleTotal' );
 			} else {
+				$db = $app->wf->GetDB( DB_SLAVE );
+
 				$result = $db->select(
 					array( 'video_info' ),
 					array( 'video_title, views_total' ),

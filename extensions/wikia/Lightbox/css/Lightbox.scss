@@ -571,4 +571,7 @@ $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 	}
 }
 
-
+// Error template styles
+.modalWrapper .modalToolbar .close {
+	margin: 0;
+}

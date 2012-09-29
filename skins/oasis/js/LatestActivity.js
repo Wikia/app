@@ -12,10 +12,10 @@ var LatestActivity = {
 			callback: function(html) {
 				// IE would lose styling otherwise
 				if ($.browser.msie) {
-					$("section.WikiaActivityModule:not(.UserProfileRailModule_RecentActivity)").empty().append(html);
+					$('#WikiaRecentActivity').empty().append(html);
 				}
 				else {
-					$('section.WikiaActivityModule:not(.UserProfileRailModule_RecentActivity)').replaceWith(html);
+					$('#WikiaRecentActivity').replaceWith(html);
 				}
 			}
 		});

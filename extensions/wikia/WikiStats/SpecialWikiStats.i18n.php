@@ -1882,7 +1882,7 @@ $messages['diq'] = array(
 	'wikistats_hide' => 'Bınımne',
 	'wikistats_wikiname' => 'Name:',
 	'wikistats_wikidbname' => 'DBName:',
-	'wikistats_wikicategory' => 'Kategori:',
+	'wikistats_wikicategory' => 'Kategoriye:',
 	'wikistats_wikiid' => 'ID:',
 	'wikistats_mean' => 'vatış',
 	'wikistats_username' => 'Karber',
@@ -2931,7 +2931,7 @@ Por favor, [[Special:UserLogin|acceda ao sistema ou cree unha conta]] se aínda 
 	'wikistats_error_malformed_date' => 'Erro: A data fornecida é incorrecta',
 );
 
-/** Hausa (هَوُسَ) */
+/** Hausa (Hausa) */
 $messages['ha'] = array(
 	'wikistats_namespace' => 'Sararin suna',
 	'wikistats_show' => 'Nuna',

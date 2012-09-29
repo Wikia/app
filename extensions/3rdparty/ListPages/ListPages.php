@@ -71,4 +71,3 @@ function ListPages( $input ) {
     return $output;
 }
 
-?>

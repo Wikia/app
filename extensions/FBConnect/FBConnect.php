@@ -82,8 +82,9 @@ $wgExtensionMessagesFiles['FBPushEvents'] = $dir . 'pushEvents/FBPushEvents.i18n
 $wgExtensionMessagesFiles['FBConnectLanguage'] = $dir . 'FBConnectLanguage.i18n.php';
 $wgExtensionAliasesFiles['FBConnect'] =		$dir . 'FBConnect.alias.php';
 
-$wgAutoloadClasses['FBConnectAPI'] =		$dir . 'FBConnectAPI.php';
-$wgAutoloadClasses['Facebook3'] =		$dir . 'facebook-sdk3/facebook.php';
+$wgAutoloadClasses['FBConnectAPI']			= $dir . 'FBConnectAPI.php';
+$wgAutoloadClasses['FBConnectOpenGraphAPI'] = $dir . 'FBConnectOpenGraphAPI.php';
+$wgAutoloadClasses['Facebook3']				= $dir . 'facebook-sdk3/facebook.php';
 
 $wgAutoloadClasses['FBConnectDB'] =			$dir . 'FBConnectDB.php';
 $wgAutoloadClasses['FBConnectHooks'] =		$dir . 'FBConnectHooks.php';

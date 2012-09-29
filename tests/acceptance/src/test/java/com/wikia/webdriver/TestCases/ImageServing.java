@@ -25,7 +25,7 @@ public class ImageServing extends TestTemplate {
 	private String videoURL2name = "What is love (?) - on piano (Haddway)";
 	
 	
-	@Test(groups = {"ImageServing001"}) 
+	@Test(groups = {"ImageServing001", "Smoke"}) 
 //	https://internal.wikia-inc.com/wiki/QA/Core_Features_and_Testing/Manual_Regression_Tests/Image_Serving
 	public void ImageServing001_SpecialNewFilesTest()
 	{
@@ -89,7 +89,7 @@ public class ImageServing extends TestTemplate {
 		WikiBasePageObject wiki = new WikiBasePageObject(driver, Global.DOMAIN);
 		WikiArticlePageObject RVmoduleMessage = wiki.OpenArticle("MediaWiki:RelatedVideosGlobalList");
 		CommonFunctions.logIn(Properties.userNameStaff, Properties.passwordStaff);
-		WikiArticleEditMode RVmoduleMessageEdit = RVmoduleMessage.Edit();		
+		WikiArticleEditMode RVmoduleMessageEdit = RVmoduleMessage.edit();		
 		RVmoduleMessageEdit.deleteUnwantedVideoFromMessage(videoURL2name);
 		RVmoduleMessage = RVmoduleMessageEdit.clickOnPublishButton();
 		// after deletion start testing

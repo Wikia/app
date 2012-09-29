@@ -18,6 +18,7 @@ $messages['en'] = array(
 	'wall-message-notify' => 'Notify admin',
 	'wall-message-remove' => 'Remove',
 	'wall-message-rev-delete' => 'Revision delete',
+	'wall-message-fast-admin-delete-message' => 'VSTF delete',
 	'wall-message-quote-button' => 'Quote',
 
 	'wall-message-elseswall' => "$1's wall",
@@ -381,6 +382,7 @@ $messages['qqq'] = array(
 	'wall-message-notify' => 'In the remove/delete-message modal box, checkbox for telling the admin about the removal',
 	'wall-message-remove' => 'Menu item to remove a message',
 	'wall-message-rev-delete' => 'Dropdown menu for staff, option to revision-delete the message',
+	'wall-message-fast-admin-delete-message' => 'Button for vstf, allow to delete without any confirmation',
 	'wall-message-quote-button' => 'Quote button on messages',
 	'wall-message-elseswall' => "Link to a user's wall. Parameters:
 * $1 is the username (GENDER is supported)",
@@ -1157,6 +1159,7 @@ $messages['diq'] = array(
 	'wall-message-mywall' => 'Dêsê me',
 	'wall-toolbar-history' => 'Ravêrden',
 	'wall-message-remove' => 'Hewad',
+	'wall-message-quote-button' => 'Groteko',
 	'wall-message-elseswall' => "Dêsê $1'i",
 	'wall-thread-removed' => 'Hewadeya',
 	'wall-thread-deleted' => 'Esteriya',
@@ -5197,12 +5200,12 @@ ___________________________________________<br />
 	'wall-preview-modal-title' => 'Предпросмотр',
 	'wall-preview-modal-button-back' => 'Назад',
 	'wall-preview-modal-button-publish' => 'Сохранить',
-	'wall-topic-input-heading' => 'Тема',
-	'wall-topic-input-placeholder' => 'Добавить тему (необязательно)',
-	'wall-topic-input-error' => 'Отсутствует статья под названием "$1". Пожалуйста, используйте имя существующей статьи для названия темы.',
-	'wall-topic-input-error-limit' => 'Ветка может содержать не более $1 тем',
-	'wall-topic-heading' => 'Темы этой ветки',
-	'wall-topic-edit' => 'Редактировать темы',
+	'wall-topic-input-heading' => 'Topic',
+	'wall-topic-input-placeholder' => 'Add a Topic (optional)',
+	'wall-topic-input-error' => 'There is no article named "$1". Please use an existing article name as a Topic.',
+	'wall-topic-input-error-limit' => 'A thread can only have $1 Topics maximum.',
+	'wall-topic-heading' => 'Topics for this thread:',
+	'wall-topic-edit' => 'Edit Topics',
 );
 
 /** Swedish (svenska)
@@ -5805,6 +5808,13 @@ $messages['tly'] = array(
 	'wall-delete-error-title' => 'Сәһв',
 	'wall-history-rail-block' => 'бә гырд гәтеј',
 	'wall-history-action-view' => 'тәмшо кардеј',
+);
+
+/** Turkish (Türkçe)
+ * @author Erdemaslancan
+ */
+$messages['tr'] = array(
+	'wall-message-quote-button' => 'Alıntı',
 );
 
 /** Tatar (Cyrillic script) (татарча)

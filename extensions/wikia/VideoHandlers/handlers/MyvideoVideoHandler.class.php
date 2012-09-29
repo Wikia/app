@@ -6,6 +6,7 @@ class MyvideoVideoHandler extends VideoHandler {
 	protected static $urlTemplate = 'http://www.myvideo.de/movie/$1';
 	protected static $providerDetailUrlTemplate = 'http://www.myvideo.de/watch/$1';
 	protected static $providerHomeUrl = 'http://www.myvideo.de/';
+	protected static $autoplayParam = "";
 	
 	public function getEmbed($articleId, $width, $autoplay=false, $isAjax=false, $postOnload=false) {
 		$height =  $this->getHeight( $width );
@@ -23,5 +24,5 @@ EOT;
 	
 		return $embedCode;
 	}
-		
+
 }

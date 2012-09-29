@@ -70,7 +70,7 @@ class WikiaResponseTest extends PHPUnit_Framework_TestCase {
 				$i++;
 			}
 		}
-		
+
 		// there is one additional header to be send, content-type
 		$headersNum = $replace ? 2 : $headersNum + 1;
 

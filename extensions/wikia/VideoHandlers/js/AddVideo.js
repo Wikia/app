@@ -80,23 +80,19 @@
 			if(assetsLoaded) {
 				showVideoModal();
 			} else {
-	
-				// Set up promise pattern 
-				var deferredList = [];
-	
-				// Get html for add video modal
-				// Important: keep this as the first item in the deferredList array for param ordering in $.when()
-				deferredList.push(
-					$.nirvana.postJson(controllerName, 'getAddVideoModal', {
-						title: wgTitle,
-						format: 'html'
-					})
-				);
-				
-				// Get css for add video modal
-				deferredList.push($.getResources([$.getSassCommonURL('/extensions/wikia/VideoHandlers/css/AddVideoModal.scss')]));
-	
-				$.when.apply(this, deferredList).done(function(response) {
+				$.when(
+					$.nirvana.sendRequest({
+						controller: controllerName, 
+						method: 'getAddVideoModal', 
+						type: 'GET',
+						format: 'json',
+						data: {
+							title: wgTitle
+						}
+					}),
+					$.getResources([$.getSassCommonURL('/extensions/wikia/VideoHandlers/css/AddVideoModal.scss')])
+				)
+				.done(function(response) {
 					var data = response[0]; // get data from ajax response
 					if(data && data.html) {
 						assetsLoaded = true;

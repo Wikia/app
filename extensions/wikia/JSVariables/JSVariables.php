@@ -11,7 +11,7 @@ $wgHooks['WikiaSkinTopScripts'][] = 'wfJSVariablesTopScripts';
  * @return bool return true - it's a hook
  */
 function wfJSVariablesTopScripts(Array &$vars) {
-	global $wgWikiFactoryTags, $wgDBname, $wgCityId, $wgMedusaSlot;
+	global $wgWikiFactoryTags, $wgDBname, $wgCityId, $wgMedusaSlot, $wgCdnRootUrl;
 
 	// ads need it
 	$vars['wgAfterContentAndJS'] = array();
@@ -19,6 +19,7 @@ function wfJSVariablesTopScripts(Array &$vars) {
 		$vars['wgWikiFactoryTagIds'] = array_keys( $wgWikiFactoryTags );
 		$vars['wgWikiFactoryTagNames'] = array_values( $wgWikiFactoryTags );
 	}
+	$vars['wgCdnRootUrl'] = $wgCdnRootUrl;
 
 	// analytics needs it (from here till the end of the function)
 	$vars['wgDBname'] = $wgDBname;
@@ -34,7 +35,9 @@ function wfJSVariablesTopScripts(Array &$vars) {
 
 	// c&p from OutputPage::getJSVars, it's needed earlier
 	$user = F::app()->wg->User; /** @var $user User */
-	if (!$user->isAnon()) {
+	if ($user->isAnon()) {
+		$vars['wgUserName'] = null;
+	} else {
 		$vars['wgUserName'] = $user->getName();
 	}
 

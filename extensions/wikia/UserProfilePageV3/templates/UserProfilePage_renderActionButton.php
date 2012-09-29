@@ -7,4 +7,3 @@ if( !empty($actionButton) ) {
 </div>
 <?php 
 }
-?>

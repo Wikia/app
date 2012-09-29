@@ -214,7 +214,7 @@ $messages['gl'] = array(
 	'tagsreportgenerated' => 'Xerado o $1 ás $2',
 );
 
-/** Hausa (هَوُسَ) */
+/** Hausa (Hausa) */
 $messages['ha'] = array(
 	'tagsreportgo' => 'Nuna',
 );

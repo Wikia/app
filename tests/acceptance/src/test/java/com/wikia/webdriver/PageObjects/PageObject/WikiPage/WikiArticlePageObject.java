@@ -39,13 +39,14 @@ public class WikiArticlePageObject extends WikiBasePageObject {
 	@FindBy(css="input[id*='article-comm-reply']")
 	private WebElement submitReplyButton;
 	
-	
 	private By ImageOnWikiaArticle = By.cssSelector("div.WikiaArticle figure a img");
 	private By VideoOnWikiaArticle = By.cssSelector("div.WikiaArticle span.Wikia-video-play-button");
 	private By AddVideoRVButton = By.cssSelector("a.addVideo");
 	private By VideoModalAddButton = By.cssSelector("button.relatedVideosConfirm");
 	private By RVvideoLoading = By.cssSelector("section.loading");
-	
+	private By galleryOnPublish = By.cssSelector("div[class*='gallery']");
+	private By slideShowOnPublish = By.cssSelector("div.wikia-slideshow");
+	private By videoOnPublish = By.cssSelector("a.image.video");
 	
 
 	public WikiArticlePageObject(WebDriver driver, String Domain,
@@ -187,7 +188,7 @@ public class WikiArticlePageObject extends WikiBasePageObject {
 	 *  
 	 * @author Michal Nowierski
 	 */
-	public WikiArticleEditMode Edit() {
+	public WikiArticleEditMode edit() {
 		waitForElementByElement(editButton);
 		editButton.click();
 		PageObjectLogging.log("Edit", "Edit Article: "+articlename+", on wiki: "+Domain+"", true, driver);
@@ -209,12 +210,27 @@ public class WikiArticlePageObject extends WikiBasePageObject {
 	 *  
 	 * @author Michal Nowierski
 	 */
-	public void VerifyTheImageNotOnThePage() {
+	public void verifyTheImageNotOnThePage() {
 		waitForElementNotVisibleByBy(ImageOnWikiaArticle);
-		PageObjectLogging.log("VerifyTheImageNotOnThePage", "Verify that the image does not appear on the page", true, driver);
-						
+		PageObjectLogging.log("VerifyTheImageNotOnThePage", "Verify that the image does not appear on the page", true, driver);	
 	}
 	
+	public void verifyTheGalleryNotOnThePage() {
+		waitForElementNotVisibleByBy(galleryOnPublish);
+		PageObjectLogging.log("verifyTheGalleryNotOnThePage", "Verify that the gallery does not appear on the page", true, driver);	
+	}
+	
+	public void verifyTheSlideshowNotOnThePage() 
+	{
+		waitForElementNotVisibleByBy(slideShowOnPublish);
+		PageObjectLogging.log("verifyTheSlideshowNotOnThePage", "Verify that the slideshow does not appear on the page", true, driver);			
+	}
+	
+	public void verifyTheVideoNotOnThePage() {
+		waitForElementNotVisibleByBy(videoOnPublish);
+		PageObjectLogging.log("verifyTheVideoNotOnThePage", "Verify that the video does not appear on the page", true, driver);
+	}
+
 	/**
 	 * Verify that the Object appears on the page
 	 *  
@@ -337,5 +353,14 @@ public class WikiArticlePageObject extends WikiBasePageObject {
 		waitForElementByCss(".wikiaPhotoGallery-slider-body div."+position);
 		PageObjectLogging.log("verifySliderThumbnailsPosition", "Slider thumbnails position verified: "+position, true, driver);		
 	}
+
+	public WikiHistoryPageObject openHistoryPage()
+	{
+		driver.get(driver.getCurrentUrl() + "?action=history");
+		waitForElementByElement(WikiHistoryPageObject.historyHeadLine);
+		return new WikiHistoryPageObject(driver, articlename, articlename);
+	}
+
+
 
 }

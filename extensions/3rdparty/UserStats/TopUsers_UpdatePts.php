@@ -41,4 +41,3 @@ class TopUsersUpdate extends UnlistedSpecialPage {
 
 }
 
-?>

@@ -15,7 +15,7 @@ var SpecialVideos = {
 		$('.addVideo').addVideoButton({
 			gaCat: 'testing',
 			callback: function() {
-				window.location.search = "?sort=recent"; // TODO: fix this so it's not hard coded
+				window.location = window.location.href.split('?')[0]; // Remove query string when reloading the page (default sort is recent)
 			}
 		});
 	}

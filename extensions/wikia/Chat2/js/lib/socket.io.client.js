@@ -3408,16 +3408,15 @@ var swfobject=function(){var D="undefined",r="object",S="Shockwave Flash",W="Sho
 
     var self = this;
 
-    function stateChange () {
+    function stateChange() {
       if (this.readyState == 4) {
         this.onreadystatechange = empty;
-
         if (this.status == 200) {
           self.onData(this.responseText);
           self.get();
  	  self.retryCounter = 1;
         } else {
-	  if(!self.retryCounter || self.retryCounter > 3) {
+	  if(!self.retryCounter || self.retryCounter > 5) {
             self.onClose();  
           } else {
             self.retryCounter ++;

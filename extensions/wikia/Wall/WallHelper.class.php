@@ -599,4 +599,9 @@ class WallHelper {
 		return $topicTitle->getFullURL();
 	}
 	
+	public static function isWallNamespace($ns) {
+		$app = F::App();
+		return in_array( MWNamespace::getSubject( $ns ), $app->wg->WallNS );
+	}
+	
 }

@@ -8,7 +8,7 @@ class SpecialThemeDesignerPreview extends UnlistedSpecialPage {
 
 	public function execute() {
 		wfProfileIn( __METHOD__ );
-		global $wgOut, $wgExtensionsPath, $wgCacheBuster;
+		global $wgOut, $wgExtensionsPath;
 
 		$wgOut->allowClickjacking();
 
@@ -16,13 +16,12 @@ class SpecialThemeDesignerPreview extends UnlistedSpecialPage {
 
 		$wgOut->setPageTitle('Example Page Title');
 
-		$wgOut->addScript('<script src="'. $wgExtensionsPath .'/wikia/ThemeDesigner/js/ThemeDesignerPreview.js?'. $wgCacheBuster .'"></script>');
+		$wgOut->addScript('<script src="'. $wgExtensionsPath .'/wikia/ThemeDesigner/js/ThemeDesignerPreview.js"></script>');
 		$wgOut->addLink(array(
-				"type" => "text/css",
-				"rel" => "stylesheet",
-				"href" => AssetsManager::getInstance()->getSassCommonURL('/extensions/wikia/ThemeDesigner/css/ThemeDesignerPreview.scss'),
-			)
-		);
+			"type" => "text/css",
+			"rel" => "stylesheet",
+			"href" => AssetsManager::getInstance()->getSassCommonURL('/extensions/wikia/ThemeDesigner/css/ThemeDesignerPreview.scss'),
+		));
 
 		$wgOut->addHtml(F::app()->renderView('ThemeDesigner', 'Preview'));
 

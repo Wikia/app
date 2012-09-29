@@ -366,7 +366,11 @@ class Language {
 
 			wfRunHooks( 'LanguageGetNamespaces', array( &$this->namespaceNames ) );
 		}
-		return $this->namespaceNames;
+		
+		$namespaceNames =  $this->namespaceNames;
+		wfRunHooks( 'AfterLanguageGetNamespaces', array( &$namespaceNames ) );
+		
+		return $namespaceNames;
 	}
 
 	/**

@@ -114,4 +114,3 @@ class CommentAction extends UnlistedSpecialPage {
 
 }
 
-?>

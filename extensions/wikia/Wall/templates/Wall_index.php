@@ -40,8 +40,8 @@ if (!empty($app->wg->WallBrickHeader)) {
 	<?php endif;?>
 	<?= $app->renderView( 'WallController', 'renderUserTalkArchiveAnchor', array('renderUserTalkArchiveAnchor' => $renderUserTalkArchiveAnchor,  'title' => $title ) ); ?>
 	<div id="WallTooltipMeta">
-		<div class="tooltip-votes-vote"><?= wfMsg('wall-votes-vote-tooltip') ?></div>
-		<div class="tooltip-votes-voted"><?= wfMsg('wall-votes-voted-tooltip') ?></div>
-		<div class="tooltip-votes-voterlist"><?= wfMsg('wall-votes-number-tooltip') ?></div>
+		<div class="tooltip-text tooltip-votes-vote"><?= wfMsg('wall-votes-vote-tooltip') ?></div>
+		<div class="tooltip-text tooltip-votes-voted"><?= wfMsg('wall-votes-voted-tooltip') ?></div>
+		<div class="tooltip-text tooltip-votes-voterlist"><?= wfMsg('wall-votes-number-tooltip') ?></div>
 	</div>
 </div>

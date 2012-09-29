@@ -3,9 +3,13 @@
  * @ingroup mwabstract
  */
 class WikiaAppTest extends PHPUnit_Framework_TestCase {
+	/* @var WikiaApp */
 	private $application;
+	/* @var PHPUnit_Framework_MockObject_MockObject */
 	private $globalRegistry;
+	/* @var PHPUnit_Framework_MockObject_MockObject */
 	private $localRegistry;
+	/* @var PHPUnit_Framework_MockObject_MockObject */
 	private $hookDispatcher;
 
 	protected function setUp() {

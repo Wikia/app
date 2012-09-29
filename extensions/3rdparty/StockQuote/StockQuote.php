@@ -30,4 +30,3 @@ function StockQuote($input, $argv, $parser) {
     return $info[1];
   }
 }
-?>

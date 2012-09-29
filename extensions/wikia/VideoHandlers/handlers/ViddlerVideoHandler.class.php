@@ -5,6 +5,7 @@ class ViddlerVideoHandler extends VideoHandler {
 	protected static $urlTemplate = 'http://www.viddler.com/player/$1/';
 	protected static $providerDetailUrlTemplate = 'http://www.viddler.com/v/$1';
 	protected static $providerHomeUrl = 'http://www.viddler.com/';
+	protected static $autoplayParam = "autoplay=t";
 
 	public function getEmbed($articleId, $width, $autoplay = false, $isAjax = false, $postOnload = false) {
 		$height = $this->getHeight($width);

@@ -1149,13 +1149,6 @@ class SpecialSearch extends SpecialPage {
 		$out .= Xml::element( 'div', array( 'style' => 'clear:both' ), '', false );
 		$out .= Xml::closeElement('div');
 
-		// Adds hidden namespace fields
-		if ( !$this->searchAdvanced ) {
-			foreach( $this->namespaces as $ns ) {
-				$out .= Xml::hidden( "ns{$ns}", '1' );
-			}
-		}
-
 		return $out;
 	}
 

@@ -6,6 +6,7 @@ class GamestarVideoHandler extends VideoHandler {
 	protected static $urlTemplate = 'http://www.gamestar.de/jw5/player.swf?config=http://www.gamestar.de/emb/getVideoData71.cfm?vid=$1';
 	protected static $providerDetailUrlTemplate = 'http://www.gamestar.de/index.cfm?pid=1589&pk=$1';
 	protected static $providerHomeUrl = 'http://www.gamestar.de/';
+	protected static $autoplayParam = "autoStart=1";
 	
 	public function getEmbed( $articleId, $width, $autoplay = false, $isAjax = false, $postOnload = false ) {
 		$height =  $this->getHeight( $width );

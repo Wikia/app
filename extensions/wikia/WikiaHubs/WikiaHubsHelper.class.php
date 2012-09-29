@@ -9,6 +9,13 @@
 
 class WikiaHubsHelper {
 
+	/**
+	 * @static
+	 * @param OutputPage $out
+	 * @param $categories
+	 * @param $links
+	 * @return bool
+	 */
 	public static function onOutputPageMakeCategoryLinks(&$out, $categories, &$links) {
 		if (!F::app()->wg->WikiaHubsPages) {
 			return true;
@@ -42,7 +49,6 @@ class WikiaHubsHelper {
 		OasisController::addBodyClass($categoryName);
 		return true;
 	}
-
 
 	public function onWikiaAssetsPackages(&$out, &$jsPackages, &$scssPackages) {
 		if (HubService::isCurrentPageAWikiaHub()) {

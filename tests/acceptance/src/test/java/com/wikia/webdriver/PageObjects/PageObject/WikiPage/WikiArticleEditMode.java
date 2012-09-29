@@ -36,8 +36,7 @@ public class WikiArticleEditMode extends WikiArticlePageObject {
 	private WebElement header;
 	@FindBy(css="tr.ImageUploadFindLinks td a")
 	private WebElement addThisPhotoLink;
-	@FindBy(css="div.details input")
-	private WebElement addPhotoButton;
+	
 	@FindBy(css="div.module_content nav.buttons nav.wikia-menu-button a")
 	private WebElement previewButton;
 	@FindBy(css="div.neutral.modalToolbar a[id='publish']")
@@ -60,16 +59,8 @@ public class WikiArticleEditMode extends WikiArticlePageObject {
 	private WebElement galleryDialogSelectButton;
 	@FindBy(css="a[id='WikiaPhotoGalleryEditorSave']")
 	private WebElement galleryDialogFinishButton;
-	@FindBy(css="input[id='VideoEmbedUrl']")
-	private WebElement videoModalInput;
-	@FindBy(css="a[id='VideoEmbedUrlSubmit']")
-	private WebElement videoNextButton;
 	@FindBy(css="input[id='VideoEmbedCaption']")
 	private WebElement videoCaptionTextArea;
-	@FindBy(css="tr.VideoEmbedNoBorder input.wikia-button")
-	private WebElement videoAddVideoButton;
-	@FindBy(css="div[id='VideoEmbed'] input[value='Return to editing']")
-	private WebElement videoReturnToEditing;
 	@FindBy(css="img.video")
 	private WebElement videoInEditMode;
 	@FindBy(css="div.ArticlePreview span.Wikia-video-play-button")
@@ -86,10 +77,23 @@ public class WikiArticleEditMode extends WikiArticlePageObject {
 	private By captionInPreview = By.cssSelector("section.modalWrapper.preview section.modalContent figcaption");
 	private By removePhotoDialog = By.cssSelector("section.modalWrapper.RTEModal");
 	private By imageOnArticleEditMode = By.cssSelector("div.WikiaArticle figure a img");
+	private By videoOnArticleEditMode = By.cssSelector("img..video");
+	private By slideShowOnArticleEditMode = By.cssSelector("img.image-slideshow");
+	private By sliderOnArticleEditMode = By.cssSelector("img.image-gallery-slider");
 	private By galleryDialogPhotosList = By.cssSelector("ul.WikiaPhotoGalleryResults li input");
 	private By galleryDialogPhotoOrientationsList = By.cssSelector("ul.clearfix[id='WikiaPhotoGalleryOrientation'] li");
 	private By galleryDialogSlideshowOrientationsList = By.cssSelector("ul.clearfix[id='WikiaPhotoGallerySliderType'] li");
 
+	private String imageArticleIFrame = "img";
+	private String galleryArticleIFrame = "img.image-gallery";
+	private String sliderArticleIFrame = "img.image-gallery-slider";
+	private String slideShowArticleIFrame = "img.image-slideshow";
+	private String videoArticleIFrame = "img.video";
+	
+	private String editButtonArticleItem = "span.RTEMediaOverlayEdit";
+	private String deleteButtonArticleItem = "span.RTEMediaOverlayDelete";
+	
+	
 	public WikiArticleEditMode(WebDriver driver, String Domain,
 			String articlename) {
 		super(driver, Domain, articlename);
@@ -114,17 +118,7 @@ public class WikiArticleEditMode extends WikiArticlePageObject {
 		
 	}
 
-	/**
-	 * Wait for modal and click on 'add this photo' under the first seen photo
-	 *  
-	 * @author Michal Nowierski
-	 */
-	public void waitForModalAndClickAddThisPhoto() {
-		waitForElementByElement(imageUploadModal);
-		waitForElementClickableByElement(addThisPhotoLink);
-		addThisPhotoLink.click();
-		PageObjectLogging.log("WaitForModalAndClickAddThisPhoto", "Wait for modal and click on 'add this photo' under the first seen photo", true, driver);
-	}
+
 
 	/**
 	 * Type given caption for the photo
@@ -150,17 +144,7 @@ public class WikiArticleEditMode extends WikiArticlePageObject {
 		PageObjectLogging.log("TypeAcaption", "Type any caption for the photo", true, driver);
 	}
 
-	/**
-	 * Left Click on add 'Photo' button.
-	 *  
-	 * @author Michal Nowierski
-	 */
-	public void clickOnAddPhotoButton2() {
-		waitForElementByElement(addPhotoButton);
-		waitForElementClickableByElement(addPhotoButton);
-		addPhotoButton.click();
-		PageObjectLogging.log("ClickOnAddPhotoButton2", "Left Click on add 'Photo' button.", true, driver);	
-	}
+
 
 	/**
 	 * Verify that the photo appears in the visual mode
@@ -336,37 +320,45 @@ public class WikiArticleEditMode extends WikiArticlePageObject {
 	public void clickModifyButtonOfImage(String caption) 
 	{
 		waitForElementByElement(iFrame);
-		mouseOverInArticleIframe("img");
+		mouseOverInArticleIframe(imageArticleIFrame);
 		waitForElementByElement(modifyButton);
-		jQueryClick("span.RTEMediaOverlayEdit");
+		jQueryClick(editButtonArticleItem);
 		PageObjectLogging.log("ClickModifyButtonOfImage", "Click on 'modify button' of image with caption: '"+caption+"'", true, driver);
 	}
 	
 	public void clickModifyButtonGallery()
 	{
 		waitForElementByElement(iFrame);
-		mouseOverInArticleIframe("img.image-gallery");
+		mouseOverInArticleIframe(galleryArticleIFrame);
 		waitForElementByElement(modifyButton);
-		jQueryClick("span.RTEMediaOverlayEdit");
+		jQueryClick(editButtonArticleItem);
 		PageObjectLogging.log("clickModifyButtonGallery", "Click on 'modify button' on gallery", true, driver);
 	}
 	
 	public void clickModifyButtonSlideshow() 
 	{
 		waitForElementByElement(iFrame);
-		mouseOverInArticleIframe("img.image-slideshow");
+		mouseOverInArticleIframe(slideShowArticleIFrame);
 		waitForElementByElement(modifyButton);
-		jQueryClick("span.RTEMediaOverlayEdit");
+		jQueryClick(editButtonArticleItem);
 		PageObjectLogging.log("clickModifyButtonSlideshow", "Click on 'modify button' on slideshow", true, driver);
 	}
 
 	public void clickModifyButtonSlider() 
 	{
 		waitForElementByElement(iFrame);
-		mouseOverInArticleIframe("img.image-gallery-slider");
+		mouseOverInArticleIframe(sliderArticleIFrame);
 		waitForElementByElement(modifyButton);
-		jQueryClick("span.RTEMediaOverlayEdit");
+		jQueryClick(editButtonArticleItem);
 		PageObjectLogging.log("clickModifyButtonSlideshow", "Click on 'modify button' on slideshow", true, driver);		
+	}
+	
+	public void clickModifyButtonVideo() {
+		waitForElementByElement(iFrame);
+		mouseOverInArticleIframe(videoArticleIFrame);
+		waitForElementByElement(modifyButton);
+		jQueryClick(editButtonArticleItem);
+		PageObjectLogging.log("clickModifyButtonSlideshow", "Click on 'modify button' on video", true, driver);		
 	}
 
 	/**
@@ -377,17 +369,41 @@ public class WikiArticleEditMode extends WikiArticlePageObject {
 	 * 	 */
 	public void clickRemoveButtonOfImage(String caption) {
 		waitForElementByElement(iFrame);
-		mouseOverInArticleIframe("img");
+		mouseOverInArticleIframe(imageArticleIFrame);
 		waitForElementByElement(removeButton);
-		jQueryClick("span.RTEMediaOverlayDelete");
+		jQueryClick(deleteButtonArticleItem);
 		PageObjectLogging.log("ClickRemoveButtonOfImage", "Click on 'remove button' of image with caption: '"+caption+"'", true, driver);
 	}
 	
 	public void clickRemoveButtonGallery() {
 		waitForElementByElement(iFrame);
-		mouseOverInArticleIframe("img.image-gallery");
+		mouseOverInArticleIframe(galleryArticleIFrame);
 		waitForElementByElement(removeButton);
-		jQueryClick("span.RTEMediaOverlayDelete");
+		jQueryClick(deleteButtonArticleItem);
+		PageObjectLogging.log("ClickRemoveButtonOfImage", "Click on 'remove button' on gallery", true, driver);
+	}
+	
+	public void clickRemoveButtonSlideshow() {
+		waitForElementByElement(iFrame);
+		mouseOverInArticleIframe(slideShowArticleIFrame);
+		waitForElementByElement(removeButton);
+		jQueryClick(deleteButtonArticleItem);
+		PageObjectLogging.log("ClickRemoveButtonOfImage", "Click on 'remove button' on gallery", true, driver);
+	}
+	
+	public void clickRemoveButtonSlider() {
+		waitForElementByElement(iFrame);
+		mouseOverInArticleIframe(sliderArticleIFrame);
+		waitForElementByElement(removeButton);
+		jQueryClick(deleteButtonArticleItem);
+		PageObjectLogging.log("ClickRemoveButtonOfImage", "Click on 'remove button' on gallery", true, driver);
+	}
+	
+	public void clickRemoveButtonVideo() {
+		waitForElementByElement(iFrame);
+		mouseOverInArticleIframe(videoArticleIFrame);
+		waitForElementByElement(removeButton);
+		jQueryClick(deleteButtonArticleItem);
 		PageObjectLogging.log("ClickRemoveButtonOfImage", "Click on 'remove button' on gallery", true, driver);
 	}
 
@@ -434,9 +450,36 @@ public class WikiArticleEditMode extends WikiArticlePageObject {
 	 * @author Michal Nowierski
 	 * 	 */
 	public void verifyTheImageNotOnTheArticleEditMode() {
-		waitForElementNotVisibleByBy(imageOnArticleEditMode);
+		waitForElementNotVisibleByBy(imageOnArticleEditMode);//this need to be rewritten
 		PageObjectLogging.log("VerifyTheImageNotOnTheArticleEditMode", "Verify that the image does not appear on the Article edit mode", true, driver);
 				
+	}
+	
+	public void verifyTheGalleryNotOnTheArticleEditMode() {
+		waitForElementNotVisibleByBy(imageOnArticleEditMode);//this need to be rewritten
+		PageObjectLogging.log("VerifyTheImageNotOnTheArticleEditMode", "Verify that the image does not appear on the Article edit mode", true, driver);
+	}
+	
+	public void verifyTheSlideshowNotOnTheArticleEditMode() {
+		driver.switchTo().frame(iFrame);
+		waitForElementNotVisibleByBy(slideShowOnArticleEditMode);
+		driver.switchTo().defaultContent();
+		PageObjectLogging.log("VerifyTheImageNotOnTheArticleEditMode", "Verify that the image does not appear on the Article edit mode", true, driver);		
+	}
+	
+	public void verifyTheVideoNotOnTheArticleEditMode() {
+		driver.switchTo().frame(iFrame);
+		waitForElementNotVisibleByBy(videoOnArticleEditMode);
+		driver.switchTo().defaultContent();
+		PageObjectLogging.log("verifyTheVideoNotOnTheArticleEditMode", "Verify that the video does not appear on the Article edit mode", true, driver);	
+	}
+	
+	public void verifyTheSliderNotOnTheArticleEditMode() {
+		driver.switchTo().frame(iFrame);
+		waitForElementNotVisibleByBy(sliderOnArticleEditMode);
+		driver.switchTo().defaultContent();
+		PageObjectLogging.log("verifyTheSliderNotOnTheArticleEditMode", "Verify that the slider does not appear on the Article edit mode", true, driver);
+		
 	}
 
 	/**
@@ -526,57 +569,25 @@ public class WikiArticleEditMode extends WikiArticlePageObject {
 		PageObjectLogging.log("VerifyTheObjectOnThePreview", "Verify that the "+Object+" appears in the preview", true, driver);		
 	}
 
-	/**
-	 * Wait for Video modal and type in the video URL 
-	 *  
-	 * @author Michal Nowierski
-	 * 	 */
-	public void waitForVideoModalAndTypeVideoURL(String videoURL) {
-		waitForElementByElement(videoModalInput);
-		waitForElementClickableByElement(videoModalInput);
-		videoModalInput.clear();
-		videoModalInput.sendKeys(videoURL);
-		PageObjectLogging.log("WaitForVideoModalAndTypeVideoURL", "Wait for Video modal and type in the video URL: "+videoURL, true, driver);		
-	}
+	
 
-	/**
-	 * Video Click Next button
-	 *  
-	 * @author Michal Nowierski
-	 * 	 */
-	public void clickVideoNextButton() {
-		waitForElementByElement(videoNextButton);
-		waitForElementClickableByElement(videoNextButton);
-		videoNextButton.click();
-		PageObjectLogging.log("ClickVideoNextButton", "Left Click Next button", true, driver);
-			
-	}
-
-	/**
-	 * Wait For Succes dialog and click on 'return to editing'
-	 *  
-	 * @author Michal Nowierski
-	 * 	 */
-	public void waitForSuccesDialogAndReturnToEditing() {
-		waitForElementByElement(videoReturnToEditing);
-		waitForElementClickableByElement(videoReturnToEditing);
-		videoReturnToEditing.click();
-		PageObjectLogging.log("WaitForSuccesDialogAndReturnToEditing", "Wait For Succes dialog and click on 'return to editing'", true, driver);
-		
-	}
+	
 
 	/**
 	 * Verify that video appears in edit mode
 	 *  
 	 * @author Michal Nowierski
 	 * 	 */
-	public void verifyVideoInEditMode() {
+	public void verifyVideoInEditMode(String caption) {
 		waitForElementByElement(iFrame);
 //		WebElement iFrame = driver.findElement(IframeVisualEditor);
 		driver.switchTo().frame(iFrame);
 		waitForElementByElement(videoInEditMode);
-//		wait.until(ExpectedConditions.visibilityOfElementLocated(VideoInEditMode));
+//		wait.until(ExpectedConditions.visibilityOfElementLocated(VideoInEditMode));		
 		driver.switchTo().defaultContent();
+		mouseOverInArticleIframe(videoArticleIFrame);
+		waitForElementByXPath("//div[@class='RTEMediaCaption' and contains(text(), '"+caption+"')]");
+		mouseReleaseInArticleIframe(videoArticleIFrame);
 		PageObjectLogging.log("VerifyVideoInEditMode", "Verify that video appears in edit mode", true, driver);
 		
 	}
@@ -656,28 +667,7 @@ public class WikiArticleEditMode extends WikiArticlePageObject {
 		
 	}
 
-	/**
-	 * Wait for video dialog
-	 *  
-	 * @author Michal Nowierski
-	 * 	 */
-	public void waitForVideoDialog() {
-		waitForElementByElement(videoAddVideoButton);
-		PageObjectLogging.log("WaitForVideoDialog", "Wait for video dialog", true, driver);
-		
-	}
 
-	/**
-	 * Click 'Add a video'
-	 *  
-	 * @author Michal Nowierski
-	 * 	 */
-	public void clickAddAvideo() {
-		waitForElementClickableByElement(videoAddVideoButton);
-		videoAddVideoButton.click();
-		PageObjectLogging.log("ClickAddAvideo", "Click 'Add a video'", true, driver);
-		
-	}
 
 	/**
 	 * Get text of source mode text of message article page. Remmember that source mode must be turned on to invoke this method. Just invoke 'ClickOnSourceButton'
@@ -726,6 +716,16 @@ public class WikiArticleEditMode extends WikiArticlePageObject {
 		}
 		PageObjectLogging.log("deleteUnwantedVideoFromMessage", "Delete all source code on the article", true, driver);
 	}
+
+	
+
+	
+
+	
+
+	
+
+	
 
 	
 

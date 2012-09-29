@@ -72,3 +72,6 @@
 // WikiaPhotoGallery - slideshows slidding (BugId:1296)
 // TODO: load on demand using JSView
 @import "extensions/wikia/WikiaPhotoGallery/css/slideshow";
+
+// WikiaBar extension - theme designer needs that to apply styles
+@import "core/WikiaBar.scss";

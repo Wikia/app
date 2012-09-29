@@ -831,6 +831,32 @@ class UserProfilePageController extends WikiaController {
 	}
 
 	/**
+	 * @brief Return current title object
+	 *
+	 * Return current title, which is later used by getUserFromTitle method
+	 * @return Title
+	 *
+	 */
+	public function getCurrentTitle() {
+		$this->app->wf->ProfileIn(__METHOD__);
+		$title = $this->getVal('title');
+
+		if (!empty($title) && is_string($title) && strpos($title, ':') !== false) {
+			$title = F::build('Title', array($title), 'newFromText');
+		}
+
+		if ($title instanceof Title && $title->isRedirect()) {
+			$article = new Article($title);
+			$redirect = Title::newFromRedirectRecurse($article->getContent());
+			if ($redirect instanceof Title) {
+				$title = $redirect;
+			}
+		}
+		$this->app->wf->ProfileOut(__METHOD__);
+		return $title;
+	}
+
+	/**
 	 * @brief Get user object from given title
 	 *
 	 * @desc getUserFromTitle() is sometimes called in hooks therefore I added returnUser flag and when
@@ -846,24 +872,10 @@ class UserProfilePageController extends WikiaController {
 	 */
 	public function getUserFromTitle() {
 		$this->app->wf->ProfileIn(__METHOD__);
-
-		$title = $this->getVal('title');
 		$returnUserInData = (boolean)$this->getVal('returnUser');
-
-		if (!empty($title) && is_string($title) && strpos($title, ':') !== false) {
-			$title = F::build('Title', array($title), 'newFromText');
-		}
-
-		if ($title instanceof Title && $title->isRedirect()) {
-			$article = new Article($title);
-			$redirect = Title::newFromRedirectRecurse($article->getContent());
-			if ($redirect instanceof Title) {
-				$title = $redirect;
-			}
-		}
+		$title = $this->getCurrentTitle();
 
 		$user = null;
-
 		if ($title instanceof Title && in_array($title->getNamespace(), $this->allowedNamespaces)) {
 			// get "owner" of this user / user talk / blog page
 			$parts = explode('/', $title->getText());
@@ -932,16 +944,19 @@ class UserProfilePageController extends WikiaController {
 	 */
 	public function onBeforeDisplayNoArticleText($article) {
 		$this->setRequest( new WikiaRequest( $this->app->wg->Request->getValues() ) );
-		$user = $this->getUserFromTitle();
-		if ( $user instanceof User && $user->getId() > 0) {
-			/**
-			 * @var $userIdentityBox UserIdentityBox
-			 */
-			$userIdentityBox = F::build('UserIdentityBox', array( $this->app, $user, self::MAX_TOP_WIKIS ) );
-			$userData = $userIdentityBox->getFullData();
-			if ( is_array( $userData ) && array_key_exists( 'showZeroStates', $userData ) ) {
-				if ( !$userData['showZeroStates'] ) {
-					$this->app->wg->Out->setStatusCode (200 );
+		$title = $this->getCurrentTitle();
+		if ($title instanceof Title && in_array($title->getNamespace(), $this->allowedNamespaces)) {
+			$user = $this->getUserFromTitle();
+			if ( $user instanceof User && $user->getId() > 0) {
+				/**
+				 * @var $userIdentityBox UserIdentityBox
+				 */
+				$userIdentityBox = F::build('UserIdentityBox', array( $this->app, $user, self::MAX_TOP_WIKIS ) );
+				$userData = $userIdentityBox->getFullData();
+				if ( is_array( $userData ) && array_key_exists( 'showZeroStates', $userData ) ) {
+					if ( !$userData['showZeroStates'] ) {
+						$this->app->wg->Out->setStatusCode ( 200 );
+					}
 				}
 			}
 		}
@@ -1033,14 +1048,10 @@ class UserProfilePageController extends WikiaController {
 		//$result = array('success' => false);
 
 		if (!$user->isAnon()) {
-			/**
-			 * @var $fb_ids FBConnectDB
-			 */
+			/** @var $fb_ids FBConnectDB */
 			$fb_ids = F::build('FBConnectDB', array($user), 'getFacebookIDs');
-			/**
-			 * @var $fbConnectAPI FBConnectAPI
-			 */
-			$fbConnectAPI = F::build('FBConnectAPI');
+			/** @var $fbConnectAPI FBConnectAPI */
+			$fbConnectAPI = F::build('FBConnectOpenGraphAPI');
 
 			if (count($fb_ids) > 0) {
 				$fbUserId = $fb_ids[0];
@@ -1054,6 +1065,7 @@ class UserProfilePageController extends WikiaController {
 					array('first_name, current_location, hometown_location, work_history, profile_url, sex, birthday_date, pic_big, website')
 				);
 				$userFbData = $this->cleanFbData($userFbData);
+
 				$result = array('success' => true, 'fbUser' => $userFbData);
 			} else {
 				$result = array('success' => false, 'error' => $this->app->wf->Msg('user-identity-box-invalid-fb-id-error'));

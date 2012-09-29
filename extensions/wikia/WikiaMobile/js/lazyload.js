@@ -12,7 +12,7 @@ define('lazyload', ['thumbnailer'], function (thumbnailer) {
 		//20 is a margin around page
 		pageWidth = win.innerWidth - 20;
 
-	win.addEventListener('orientationchange', function(){
+	win.addEventListener('viewportsize', function(){
 		setTimeout(function(){
 			pageWidth = win.innerWidth - 20;
 		}, 200);

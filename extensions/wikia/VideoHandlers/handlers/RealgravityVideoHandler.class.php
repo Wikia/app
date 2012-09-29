@@ -11,6 +11,7 @@ class RealgravityVideoHandler extends VideoHandler {
 	protected static $urlTemplate = 'http://anomaly.realgravity.com/flash/player.swf';
 	protected static $providerDetailUrlTemplate = 'http://www.realgravity.com/';
 	protected static $providerHomeUrl = 'http://www.realgravity.com/';
+	protected static $autoplayParam = "";
 
 	public function getEmbed( $articleId, $width, $autoplay = false, $isAjax = false, $postOnload=false ) {
 
@@ -43,6 +44,20 @@ class RealgravityVideoHandler extends VideoHandler {
 			</object>';
 
 		return $embed;
+	}
+
+	public function getEmbedSrcData() {
+
+		$playerId = self::REALGRAVITY_PLAYER_NO_AUTOSTART_ID;
+		$videoId = $this->getVideoId();
+
+		$data = array();
+		$data['autoplayParam'] = self::$autoplayParam;
+		$data['srcParam'] = $this->getEmbedUrl() . "?config=http://mediacast.realgravity.com/vs/2/players/single/{$playerId}/{$videoId}.xml";
+		$data['srcType'] = 'player';
+		$data['canEmbed'] = 0;
+
+		return $data;
 	}
 
 	public function getEmbedUrl() {

@@ -10,6 +10,8 @@
 @import "WallSortingBar";
 @import "RelatedTopics";
 
+$tooltip-padding: 10px 14px;
+
 /* IE7 targeted hacks */
 html>body #Wall textarea { *width: 96%; }
 html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9999px; }
@@ -24,6 +26,11 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 }
 
 .Wall {
+	&.Board {
+		.deleteorremove-infobox {
+			margin-left: 75px;
+		}
+	}
 	ul {
 		margin: 0;
 	}
@@ -573,6 +580,11 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 	.highlight {
 		display: none;
 	}
+	
+	&.Thread {
+		@include clearfix;
+		margin-bottom: 100px;
+	}
 }
 
 #WikiaConfirm {
@@ -860,4 +872,8 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 			}
 		}
 	}
+}
+// Vote tooltip styles
+.tooltip-text {
+	padding: $tooltip-padding;
 }

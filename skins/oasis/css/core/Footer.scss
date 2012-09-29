@@ -5,7 +5,7 @@
 @import "../mixins/gradient";
 @import "../mixins/menus";
 
-.WikiaFooter {
+.WikiaFooter, .WikiaBarWrapper {
 	clear: both;
 	padding-top: 23px;
 	position: relative;
@@ -179,9 +179,9 @@
 		}
 	}
 	.WikiaHubBranding {
-	    background: transparent;
+		background: transparent;
 		float: left;
-		margin-left: 15px;
+		margin-left: 10px;
 		padding: 1px;
 		.wordmark {
 			float: left;
@@ -192,36 +192,38 @@
 			background: $color-page;
 			float: left;
 			height: 10px;
-            padding: 5px 6px 8px 6px;
-            .hub2,
-            .hub3,
-            .hub9 {
-                font-size: 10px;
-                font-weight: bold;
-                letter-spacing: -0.5px;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-            .hub2 {
-                color: $color-wikiahome-videogames;
-            }
-            .hub3 {
-                color: $color-wikiahome-entertainment;
-            }
-            .hub9 {
-                color: $color-wikiahome-lifestyle;
-            }
+			padding: 5px 6px 8px 6px;
+			.hub2,
+			.hub3,
+			.hub9 {
+				font-size: 10px;
+				font-weight: bold;
+				letter-spacing: -0.5px;
+				text-decoration: none;
+				text-transform: uppercase;
+			}
+			.hub2 {
+				color: $color-wikiahome-videogames;
+			}
+			.hub3 {
+				color: $color-wikiahome-entertainment;
+			}
+			.hub9 {
+				color: $color-wikiahome-lifestyle;
+			}
 		}
 	}
-    .HubBrandingBlackBackground {
-        background: black;
-    }
+	.HubBrandingBlackBackground {
+		background: black;
+	}
 	ul {
 		float: right;
 		list-style: none outside none;
 		margin: {
-			top: 8px;
 			bottom: 7px;
+			left: 0px;
+			right: 10px;
+			top: 8px;
 		}
 		display: inline-block;
 		*width: 1000px; // /** IE 7  **/

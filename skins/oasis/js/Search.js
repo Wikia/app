@@ -74,7 +74,7 @@ var WikiaSearchApp = {
 					}
 				}, this),
 				appendTo: '#WikiaSearch',
-				deferRequestBy: 2000,
+				deferRequestBy: 400,
 				minLength: 3,
 				maxHeight: 1000,
 				selectedClass: 'selected',

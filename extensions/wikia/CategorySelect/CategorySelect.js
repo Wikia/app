@@ -235,10 +235,12 @@ function addCategoryBase(category, params, index, checkdupes) {
 	if(csType == 'module') {
 
 		elementA = document.createElement('li');
-		if(categoryText.length > csMaxTextLength) {
+		/*
+if(categoryText.length > csMaxTextLength) {
 			elementA.title = categoryText;
 			categoryText = categoryText.substr(0,csMaxTextLength)  + '...';
 		}
+*/
 		elementText = $('<span>' + categoryText + '</span>').get(0);
 	} else {
 		elementA = document.createElement('a');

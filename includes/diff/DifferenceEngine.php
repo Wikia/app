@@ -267,7 +267,7 @@ class DifferenceEngine extends ContextSource {
 					$rollback = '&#160;&#160;&#160;' . Linker::generateRollback( $this->mNewRev );
 				}
 				if ( !$this->mOldRev->isDeleted( Revision::DELETED_TEXT ) && !$this->mNewRev->isDeleted( Revision::DELETED_TEXT ) ) {
-					$undoLink = ' ' . $this->msg( 'parentheses' )->rawParams(
+					$undoLink = '<span class="mw-rev-head-action">' . $this->msg( 'parentheses' )->rawParams(
 						Html::element( 'a', array(
 							'href' => $this->mNewPage->getLocalUrl( array(
 								'action' => 'edit',
@@ -276,7 +276,7 @@ class DifferenceEngine extends ContextSource {
 							'title' => Linker::titleAttrib( 'undo' )
 						),
 						$this->msg( 'editundo' )->text()
-					) )->escaped();
+					) )->escaped().'</span>';
 				}
 			}
 
@@ -865,7 +865,9 @@ class DifferenceEngine extends ContextSource {
 			}
 
 			$msg = $this->msg( $title->userCan( 'edit', $user ) ? 'editold' : 'viewsourceold' )->escaped();
-			$header .= ' (' . Linker::linkKnown( $title, $msg, array(), $editQuery ) . ')';
+			/* Wikia Change begin */
+			$header .= ' <span class="mw-rev-head-action">(' . Linker::linkKnown( $title, $msg, array(), $editQuery ) . ')</span>';
+			/* Wikia Change end */
 			if ( $rev->isDeleted( Revision::DELETED_TEXT ) ) {
 				$header = Html::rawElement( 'span', array( 'class' => 'history-deleted' ), $header );
 			}
@@ -1067,6 +1069,9 @@ class DifferenceEngine extends ContextSource {
 				return false;
 			}
 		}
+		
+		wfRunHooks( 'DiffLoadText', array( $this, &$this->mOldtext, &$this->mNewtext ) );
+		
 		return true;
 	}
 

@@ -91,4 +91,3 @@ class UploadVisualizationImageFromFile extends UploadFromFile {
 		return true;
 	}
 }
-?>

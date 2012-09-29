@@ -91,6 +91,7 @@
 					action: 'ajax',
 					rs: 'getLinkSuggest',
 					format: 'json',
+					nospecial: 1,
 					query: q
 				},
 				method: 'post',
@@ -113,7 +114,7 @@
 				$.loadMustache()
 			).then(function() {
 				messageTopic.autocomplete = messageTopic.input.autocomplete({
-					serviceUrl: wgServer + wgScript + '?action=ajax&rs=getLinkSuggest&format=json',
+					serviceUrl: wgServer + wgScript + '?action=ajax&rs=getLinkSuggest&format=json&nospecial=1',
 					onSelect: function(value, data) {
 						$().log("on select");
 						messageTopic.addSelection(value);
@@ -123,6 +124,7 @@
 					deferRequestBy: 200,
 					minLength: 2,
 					maxHeight: 1000,
+					maxSuggestions: 6,
 					selectedClass: 'selected',
 					width: '100%',
 					skipBadQueries: true // BugId:4625 - always send the request even if previous one returned no suggestions

@@ -130,6 +130,9 @@
 		.cke_button_big {
 			display: inline-block;
 			margin: 5px 0 4px 5px;
+			@if $oasisWidthType == 3 {
+				margin-left: 9px;	/* move this into above margin after grid transition */
+			}
 		}
 		.cke_hidden {
 			display: none;

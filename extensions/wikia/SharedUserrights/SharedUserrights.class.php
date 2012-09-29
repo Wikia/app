@@ -44,17 +44,7 @@ class UserRights {
 			$dbr->freeResult($res);
 			self::$globalGroup[$user->mId] = array_intersect($globalGroups, $wgWikiaGlobalUserGroups);
 		}
-		return self::$globalGroup[$user->mId];
-	}
-
-	/**
-	 * check if we are on central wiki (shared db)
-	 *
-	 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
-	 */
-	static function isCentralWiki() {
-		global $wgDBname, $wgExternalSharedDB;
-		return $wgExternalSharedDB == $wgDBname;
+		return self::$globalGroup[ $user->mId ];
 	}
 
 	/**
@@ -63,9 +53,7 @@ class UserRights {
 	 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
 	 */
 	static function userEffectiveGroups(&$user, &$groups) {
-		if (!self::isCentralWiki()) {
-			$groups = array_unique(array_merge($groups, self::getGlobalGroups($user)));
-		}
+		$groups = array_unique(array_merge($groups, self::getGlobalGroups($user)));
 		return $groups;
 	}
 
@@ -76,10 +64,7 @@ class UserRights {
 	 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
 	 */
 	static function showEditUserGroupsForm(&$user, &$groups) {
-		//if not on central, block changing global rights
-		if (!self::isCentralWiki()) {
-			$groups = array_unique(array_merge($groups, self::getGlobalGroups($user)));
-		}
+		$groups = array_unique(array_merge($groups, self::getGlobalGroups($user)));
 		return true;
 	}
 
@@ -91,7 +76,7 @@ class UserRights {
 	static function groupCheckboxes($group, &$disabled, &$irreversible) {
 		global $wgWikiaGlobalUserGroups;
 
-		if (!self::isCentralWiki() && in_array($group, $wgWikiaGlobalUserGroups)) {
+		if( in_array( $group, $wgWikiaGlobalUserGroups ) ) {
 			$disabled = true;
 		}
 		return true;

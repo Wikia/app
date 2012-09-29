@@ -48,7 +48,7 @@ interface DatabaseType {
 	 * member variables.
 	 *
 	 * @param $res ResultWrapper|object as returned from DatabaseBase::query(), etc.
-	 * @return Row object
+	 * @return object
 	 * @throws DBUnexpectedError Thrown if the database returns an error
 	 */
 	function fetchObject( $res );
@@ -58,7 +58,7 @@ interface DatabaseType {
 	 * form.  Fields are retrieved with $row['fieldname'].
 	 *
 	 * @param $res ResultWrapper result object as returned from DatabaseBase::query(), etc.
-	 * @return Row object
+	 * @return object
 	 * @throws DBUnexpectedError Thrown if the database returns an error
 	 */
 	function fetchRow( $res );
@@ -1448,7 +1448,7 @@ abstract class DatabaseBase implements DatabaseType {
 	 * @param $options string|array Query options
 	 * @param $join_conds array|string Join conditions
 	 *
-	 * @return ResultWrapper|bool
+	 * @return ResultWrapper|object|bool
 	 */
 	function selectRow( $table, $vars, $conds, $fname = 'DatabaseBase::selectRow',
 		$options = array(), $join_conds = array() )
