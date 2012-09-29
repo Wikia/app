@@ -1,15 +1,15 @@
 var AdConfig2 = function (
 	// regular dependencies
-	log, window, document, Geo,
+	log, window, document, Geo
 
 	// adProviders
-	adProviderNull,
-	adProviderGamePro,
-	adProviderEvolve,
-	adProviderEvolveRS,
-	adProviderAdDriver2,
-	adProviderAdDriver,
-	adProviderLater
+	, adProviderAdDriver
+	, adProviderAdDriver2
+	, adProviderEvolve
+	, adProviderEvolveRS
+	, adProviderGamePro
+	, adProviderLater
+	, adProviderNull
 ) {
 	'use strict';
 
@@ -96,7 +96,7 @@ var AdConfig2 = function (
 			return adProviderEvolve;
 		}
 		if (slot[2] === 'AdDriver2') {
-			return adProviderAdDriver2;
+			return adProviderAdDriver;
 		}
 		if (slot[2] === 'AdDriver') {
 			return adProviderAdDriver;
@@ -125,7 +125,7 @@ var AdConfig2 = function (
 			highValueCountries[country] &&
 			highValueSlots[slotname]
 		) {
-			return adProviderAdDriver2;
+			return adProviderAdDriver;
 		}
 
 		return adProviderLater;
