@@ -641,18 +641,6 @@ EOT;
 			$first = false;
 		}
 	}
-	
-	/**
-	 *	Logic for microdata to be added to body tag. 
-	 */
-	protected function getItemType() {
-		$type = '';
-		if($this->wg->Title->isSpecial('Videos')) {
-			$type = "VideoGallery";
-		}
-		// TODO: Add ImageGallery for photos page
-		if(!empty($type)) {
-			return ' itemscope itemtype="http://schema.org/'.$type.'"';
 
 	/**
 	 *	Logic for microdata to be added to body tag.
