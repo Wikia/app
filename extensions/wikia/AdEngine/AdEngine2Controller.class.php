@@ -20,10 +20,12 @@ class AdEngine2Controller extends WikiaController {
 		$wg = $this->app->wg;
 
 		$vars['adslots2'] = array();
-		$vars['wgLoadAdsInHead'] = $wg->LoadAdsInHead;
+		if ($wg->LoadAdsInHead) {
+			$vars['wgLoadAdsInHead'] = $wg->LoadAdsInHead;
+		}
 
-		// TODO remove? dev only?
-		$vars['wgHighValueCountries2'] = $wg->HighValueCountries2;
+		// TODO remove later, legacy addriver for adsinhead=1
+		$vars['adDriverLastDARTCallNoAds'] = array();
 
 		wfProfileOut(__METHOD__);
 

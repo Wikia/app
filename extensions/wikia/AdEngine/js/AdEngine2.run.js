@@ -1,15 +1,15 @@
-(function(log, WikiaTracker, window, ghostwriter, document, Geo, LazyQueue) {
+(function(log, WikiaTracker, window, ghostwriter, document, Geo, LazyQueue, Cookies) {
 	var module = 'AdEngine2.run'
 		, adConfig
 		, adEngine
 		, scriptWriter
-		, adProviderNull
+		, adProviderAdDriver
+		, adProviderAdDriver2
 		, adProviderEvolve
 		, adProviderEvolveRS
 		, adProviderGamePro
-		, adProviderAdDriver2
-		, adProviderAdDriver
 		, adProviderLater
+		, adProviderNull
 		, adSlotsQueue
 		, lazyQueue = LazyQueue()
 
@@ -21,29 +21,30 @@
 
 	// Construct Ad Providers
 	scriptWriter = ScriptWriter(log, ghostwriter, document);
-	adProviderNull = AdProviderNull(log);
-	adProviderGamePro = AdProviderGamePro(scriptWriter, WikiaTracker, log, window, document);
-	adProviderEvolve = AdProviderEvolve(scriptWriter, WikiaTracker, log, window, document);
-	adProviderEvolveRS = AdProviderEvolveRS(scriptWriter, WikiaTracker, log, window, document, Geo);
-	adProviderAdDriver2 = AdProviderAdDriver2(log, window);
-	adProviderAdDriver = AdProviderAdDriver(log, window);
 
-	// Special Ad Provider, to deal with the ads Late
+	adProviderAdDriver = AdProviderAdDriver(log, window);
+	adProviderAdDriver2 = AdProviderAdDriver2(scriptWriter, WikiaTracker, log, window, document, Cookies, Geo);
+	adProviderEvolve = AdProviderEvolve(scriptWriter, WikiaTracker, log, window, document);
+	adProviderEvolveRS = AdProviderEvolveRS(scriptWriter, WikiaTracker, log, window, document);
+	adProviderGamePro = AdProviderGamePro(scriptWriter, WikiaTracker, log, window, document);
+	adProviderNull = AdProviderNull(log);
+
+	// Special Ad Provider, to deal with the late ads
 	queueForLateAds = [];
 	adProviderLater = AdProviderLater(log, queueForLateAds);
 
 	adConfig = AdConfig2(
 		// regular dependencies:
-		log, window, document, Geo,
+		log, window, document, Geo
 
 		// AdProviders:
-		adProviderNull,
-		adProviderGamePro,
-		adProviderEvolve,
-		adProviderEvolveRS,
-		adProviderAdDriver2,
-		adProviderAdDriver,
-		adProviderLater
+		, adProviderAdDriver
+		, adProviderAdDriver2
+		, adProviderEvolve
+		, adProviderEvolveRS
+		, adProviderGamePro
+		, adProviderLater
+		, adProviderNull
 	);
 
 	log('work on window.adslots2 according to AdConfig2', 1, module);
@@ -80,4 +81,4 @@
 		}
 	};
 
-}(Wikia.log, WikiaTracker, window, ghostwriter, document, Geo, LazyQueue));
+}(Wikia.log, WikiaTracker, window, ghostwriter, document, Geo, LazyQueue, Wikia.Cookies));
