@@ -4,6 +4,7 @@ abstract class VideoFeedIngester {
 	const PROVIDER_SCREENPLAY = 'screenplay';
 	const PROVIDER_REALGRAVITY = 'realgravity';
 	const PROVIDER_IGN = 'ign';
+	const PROVIDER_ANYCLIP = 'anyclip';
 	public static $PROVIDERS = array(self::PROVIDER_SCREENPLAY, self::PROVIDER_IGN);
 	public static $PROVIDERS_DEFAULT = array(self::PROVIDER_SCREENPLAY, self::PROVIDER_IGN);
 	protected static $API_WRAPPER;
@@ -136,6 +137,7 @@ abstract class VideoFeedIngester {
 			return 1;
 		}
 		else {
+			$uploadedTitle = null;
 			$result = VideoFileUploader::uploadVideo(static::$PROVIDER, $id, $uploadedTitle, $body, false, $metadata );
 			if ($result->ok) {
 				$fullUrl = WikiFactory::getLocalEnvURL($uploadedTitle->getFullURL());
