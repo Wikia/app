@@ -130,6 +130,17 @@ class SWMSendToGroupTask extends BatchTask {
 						break;
 				}
 				break;
+
+			case 'CREATED':
+				switch ( $args['sendModeUsers'] ) {
+					case 'ALL':
+					case 'ACTIVE':
+					case 'GROUP':
+					case 'EDITCOUNT':
+						$result = $this->sendMessageToWikisByCreationDate( $args );
+						break;
+				}
+				break;
 		}
 		return (boolean)$result;
 	}
@@ -378,11 +389,10 @@ class SWMSendToGroupTask extends BatchTask {
 								break;
 							case 'GROUP':
 								$desc = sprintf('SiteWideMessages :: Send to a group on %s wikis<br/>' .
-									'Group: %s, Wiki: %s<br/>' .
+									'Group: %s<br/>' .
 									'Sender: %s [id: %d]',
 									count( $args['wikiNames'] ),
 									$args['groupName'],
-									$args['wikiName'],
 									$args['senderName'],
 									$args['senderId']
 								);
@@ -390,13 +400,58 @@ class SWMSendToGroupTask extends BatchTask {
 
 							case 'EDITCOUNT':
 								$desc = sprintf('SiteWideMessages :: Send to users by editcount on %s wikis<br/>' .
-									'Option: %s, From: %s, TO: %s, Wiki: %s<br/>' .
+									'Option: %s, From: %s, TO: %s<br/>' .
 									'Sender: %s [id: %d]',
 									count( $args['wikiNames'] ),
 									$args['editCountOption'],
 									$args['editCountStart'],
 									( $args['editCountEnd'] === false ? '' : $args['editCountEnd'] ),
-									$args['wikiName'],
+									$args['senderName'],
+									$args['senderId']
+								);
+								break;
+						}
+						break;
+
+					case 'CREATED':
+						switch ($args['sendModeUsers']) {
+							case 'ALL':
+							case 'ACTIVE':
+								$desc = sprintf('SiteWideMessages :: Send to active users on wikis by creation date:<br/>' .
+									'Option: %s; Start date: %s; End date: %s<br />' .
+									'Sender: %s [id: %d]',
+									$args['wcOption'],
+									$args['wcStartDate'],
+									$args['wcEndDate'],
+									$args['senderName'],
+									$args['senderId']
+								);
+								break;
+							case 'GROUP':
+								$desc = sprintf('SiteWideMessages :: Send to a group on wikis by creation date:<br/>' .
+									'Option: %s; Start date: %s; End date: %s<br />' .
+									'Group: %s<br/>' .
+									'Sender: %s [id: %d]',
+									$args['wcOption'],
+									$args['wcStartDate'],
+									$args['wcEndDate'],
+									$args['groupName'],
+									$args['senderName'],
+									$args['senderId']
+								);
+								break;
+
+							case 'EDITCOUNT':
+								$desc = sprintf('SiteWideMessages :: Send to users by editcount on wikis by creation date:<br/>' .
+									'Option: %s; Start date: %s; End date: %s<br />' .
+									'Option: %s, From: %s, TO: %s<br/>' .
+									'Sender: %s [id: %d]',
+									$args['wcOption'],
+									$args['wcStartDate'],
+									$args['wcEndDate'],
+									$args['editCountOption'],
+									$args['editCountStart'],
+									( $args['editCountEnd'] === false ? '' : $args['editCountEnd'] ),
 									$args['senderName'],
 									$args['senderId']
 								);
@@ -502,14 +557,14 @@ class SWMSendToGroupTask extends BatchTask {
 		$wikisDB = array();
 
 		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
-		$dbw = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
+		$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 
 		$this->addLog( 'Get Wiki IDs for the supplied ' . count( $params['wikiNames'] ) . ' wikis' );
 		foreach ( $params['wikiNames'] as $wikiName ) {
 			$wikiID = null;
 			$wikiDomains = array( '', '.wikia.com', '.sjc.wikia-inc.com' );
 			foreach( $wikiDomains as $wikiDomain ) {
-				if( !is_null( $wikiID = WikiFactory::DomainToID( $params['wikiName'] . $wikiDomain ) ) ) {
+				if( !is_null( $wikiID = WikiFactory::DomainToID( $wikiName . $wikiDomain ) ) ) {
 					break;
 				}
 			}
@@ -519,6 +574,90 @@ class SWMSendToGroupTask extends BatchTask {
 			}
 		}
 
+		switch ( $params['sendModeUsers'] ) {
+			case 'ALL':
+			case 'ACTIVE':
+				$result = $this->sendMessageHelperToActive( $dbr, $wikisDB, $params );
+				break;
+
+			case 'GROUP':
+				$result = $this->sendMessageHelperToGroup( $dbr, $wikisDB, $params );
+				break;
+
+			case 'ANONS':
+				foreach ( $wikisDB as $mWikiId => $mWikiDB ) {
+					$sqlValues[] = array(
+						'msg_wiki_id' => $mWikiId,
+						'msg_recipient_id' => 0,
+						'msg_id' => $params['messageId'],
+						'msg_status' => MSG_STATUS_UNSEEN
+					);
+				}
+				$result = (boolean)$dbw->insert(
+					MSG_STATUS_DB,
+					$sqlValues
+				);
+				break;
+
+			case 'EDITCOUNT':
+				$result = $this->sendMessageByEditcountList( $wikisDB, $params );
+				break;
+		}
+
+		return $result;
+	}
+
+	/**
+	 * sendMessageToWikisByCreationDate
+	 *
+	 * sends a message to specified group of users
+	 *
+	 * @access private
+	 * @author Daniel Grunwell (grunny)
+	 *
+	 * @param mixed $params - task arguments
+	 *
+	 * @return boolean: result of sending
+	 */
+	private function sendMessageToWikisByCreationDate( $params ) {
+		global $wgExternalSharedDB;
+		$result = true;
+		$sqlValues = array();
+		$where = array();
+		$wikisDB = array();
+
+		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
+		$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
+
+		switch ( $params['wcOption'] ) {
+			case 'after':
+				$where[] = "city_created > {$dbr->addQuotes( $params['wcStartDate'] )}";
+				break;
+
+			case 'before':
+				$where[] = "city_created < {$dbr->addQuotes( $params['wcStartDate'] )}";
+				break;
+
+			case 'between':
+				$where[] = "city_created BETWEEN {$dbr->addQuotes( $params['wcStartDate'] )} AND {$dbr->addQuotes( $params['wcEndDate'] )}";
+				break;
+		}
+		// Only get active wikis
+		$where['city_public'] = 1;
+
+		$this->addLog( "Get Wiki IDs based on the given creation date parameters (option: {$params['wcOption']}; start date: {$params['wcStartDate']}; end date: {$params['wcEndDate']}" );
+		$res = $dbr->select(
+			array( 'city_list' ),
+			array( 'city_id', 'city_dbname' ),
+			$where,
+			__METHOD__
+		);
+		while ( $row = $dbr->fetchObject( $res ) ) {
+			$wikisDB[$row->city_id] = $row->city_dbname;
+		}
+		$dbr->freeResult( $res );
+
+		$this->addLog( 'Send message to the retrieved ' . count( $wikisDB ) . ' wikis' );
 		switch ( $params['sendModeUsers'] ) {
 			case 'ALL':
 			case 'ACTIVE':
