@@ -169,6 +169,12 @@ $messages['qqq'] = array(
 	'swm-mode-users-editcount-between' => 'Option to select if user wants to send message to users who have an edit count between two given numbers.',
 	'swm-error-editcount-tolessthanfrom' => 'Error message when given edit count upper limit is less than lower limit.',
 	'swm-error-editcount-notnumber' => 'Error message when given edit count is not a valid number.',
+	'swm-label-mode-wikis-created' => 'Label for option to select wikis by creation date.',
+	'swm-mode-wikis-created-after' => 'Option to select if user wants to send message to wikis created after the given date.',
+	'swm-mode-wikis-created-before' => 'Option to select if user wants to send message to wikis created before the given date.',
+	'swm-mode-wikis-created-between' => 'Option to select if user wants to send message to wikis created between two given date.',
+	'swm-label-mode-wikis-created-hint' => 'Message that lets the user know that dates must be in the form 2012-04-01 00:00:00.',
+	'swm-error-created-tobeforefrom' => 'Error message when given wiki creation end date is before start date.',
 );
 
 /** Afrikaans (Afrikaans)
