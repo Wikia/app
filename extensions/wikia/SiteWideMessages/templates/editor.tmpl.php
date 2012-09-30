@@ -96,6 +96,26 @@
 								<?= wfMsg( 'swm-label-mode-wikis-wiki-multi-hint' ) ?>
 							</td>
 						</tr>
+						<tr>
+							<td>
+								<input name="mSendModeWikis" id="mSendModeWikisD" type="radio" value="CREATED"<?= $formData['sendModeWikis'] == 'CREATED' ? ' checked="checked"' : ''; ?>/>
+							</td>
+							<td>
+								<label for="mSendModeWikisD"><?= wfMsg( 'swm-label-mode-wikis-created' ) ?></label>
+							</td>
+							<td>
+								<select name="mWikiCreationS" id="mWikiCreationS">
+									<option value="after"<?= $formData['wikiCreationDateOption'] == 'after' ? ' selected="selected"' : ''; ?>><?= wfMsg( 'swm-mode-wikis-created-after' ) ?></option>
+									<option value="before"<?= $formData['wikiCreationDateOption'] == 'before' ? ' selected="selected"' : ''; ?>><?= wfMsg( 'swm-mode-wikis-created-before' ) ?></option>
+									<option value="between"<?= $formData['wikiCreationDateOption'] == 'between' ? ' selected="selected"' : ''; ?>><?= wfMsg( 'swm-mode-wikis-created-between' ) ?></option>
+								</select>
+								<input name="mWikiCreationDateOne" id="mWikiCreationDateOne" type="text" size="20" value="<?= $formData['wikiCreationDateOne'] ?>" />
+								<input name="mWikiCreationDateTwo" id="mWikiCreationDateTwo" type="text" size="20" value="<?= $formData['wikiCreationDateTwo'] ?>" style="display: <?= $formData['wikiCreationDateOption'] == 'between' ? 'inline' : 'none' ?>" />
+							</td>
+							<td>
+								<?= wfMsg( 'swm-label-mode-wikis-created-hint' ) ?>
+							</td>
+						</tr>
 					</table>
 				</fieldset>
 
@@ -326,6 +346,7 @@ jQuery( document ).ready( function ( $ ) {
 				}
 				break;
 			case 'mSendModeWikisM':
+			case 'mSendModeWikisD':
 				$( '#mSendModeUsersA' ).prop( 'disabled', true );
 				$( '#mSendModeUsersReg' ).prop( 'disabled', true );
 				$( '#mSendModeUsersIP' ).prop( 'disabled', false );
@@ -376,10 +397,10 @@ jQuery( document ).ready( function ( $ ) {
 		}
 	}
 	$( '#mSendModeWikisA' ).add( '#mSendModeWikisH' ).add( '#mSendModeWikisC' )
-		.add( '#mSendModeWikisW' ).add( '#mSendModeWikisM' ).add( '#mSendModeUsersA' )
-		.add( '#mSendModeUsersC' ).add( '#mSendModeUsersG' ).add( '#mSendModeUsersU' )
-		.add( '#mSendModeUsersM' ).add( '#mSendModeUsersIP' ).add( '#mSendModeUsersReg' )
-		.add( '#mSendModeUsersEC' ).bind( 'click', grayOut );
+		.add( '#mSendModeWikisW' ).add( '#mSendModeWikisM' ).add( '#mSendModeWikisD' )
+		.add( '#mSendModeUsersA' ).add( '#mSendModeUsersC' ).add( '#mSendModeUsersG' )
+		.add( '#mSendModeUsersU' ).add( '#mSendModeUsersM' ).add( '#mSendModeUsersIP' )
+		.add( '#mSendModeUsersReg' ).add( '#mSendModeUsersEC' ).bind( 'click', grayOut );
 
 	$( '#mRegistrationS' ).change( function () {
 		if ( $( this ).val() === 'between' ) {
@@ -393,6 +414,13 @@ jQuery( document ).ready( function ( $ ) {
 			$( '#mEditCountTwo' ).show();
 		} else {
 			$( '#mEditCountTwo' ).hide();
+		}
+	} );
+	$( '#mWikiCreationS' ).change( function () {
+		if ( $( this ).val() === 'between' ) {
+			$( '#mWikiCreationDateTwo' ).show();
+		} else {
+			$( '#mWikiCreationDateTwo' ).hide();
 		}
 	} );
 } );

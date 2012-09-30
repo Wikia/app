@@ -112,6 +112,13 @@ $messages['en'] = array(
 	'swm-mode-users-editcount-between' => 'Between',
 	'swm-error-editcount-tolessthanfrom' => 'User edit count upper limit is less than lower limit.',
 	'swm-error-editcount-notnumber' => 'Edit count must be a valid number.',
+
+	'swm-label-mode-wikis-created' => 'Wiki creation date',
+	'swm-mode-wikis-created-after' => 'After',
+	'swm-mode-wikis-created-before' => 'Before',
+	'swm-mode-wikis-created-between' => 'Between',
+	'swm-label-mode-wikis-created-hint' => '<i>Dates must be in the form 2012-04-01 00:00:00</i>',
+	'swm-error-created-tobeforefrom' => 'Wiki creation end date is before start date.',
 );
 
 /** Message documentation (Message documentation)

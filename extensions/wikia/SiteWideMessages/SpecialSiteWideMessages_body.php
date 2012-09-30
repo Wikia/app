@@ -40,6 +40,7 @@ define('MSG_REMOVED_YES', '1');
 define('MSG_LANG_ALL', 'all');
 define('MSG_LANG_OTHER', 'other');
 define('MSG_RECIPIENT_ANON', 'Anonymous users');
+define('MSG_WIKI_CREATION_DATE', 'CREATION DATE'); // Hack until we add a column to store extra parameters
 
 class SiteWideMessages extends SpecialPage {
 
@@ -65,6 +66,9 @@ class SiteWideMessages extends SpecialPage {
 		$formData['clusterId'] = intval($wgRequest->getVal('mClusterId'));
 		$formData['wikiName'] = $wgRequest->getText('mWikiName');
 		$formData['listWikiNames'] = $wgRequest->getText( 'mWikiNames' );
+		$formData['wikiCreationDateOption'] = $wgRequest->getVal( 'mWikiCreationS' );
+		$formData['wikiCreationDateOne'] = $wgRequest->getVal( 'mWikiCreationDateOne' );
+		$formData['wikiCreationDateTwo'] = $wgRequest->getVal( 'mWikiCreationDateTwo' );
 		$formData['groupName'] = $wgRequest->getText('mGroupName');
 		$formData['groupNameS'] = $wgRequest->getText('mGroupNameS');
 		$formData['userName'] = $wgRequest->getText('mUserName');
@@ -317,6 +321,11 @@ class SiteWideMessages extends SpecialPage {
 				$mHubId = null;
 				$mClusterId = null;
 				break;
+			case 'CREATED':
+				$mWikiName = MSG_WIKI_CREATION_DATE;
+				$mHubId = null;
+				$mClusterId = null;
+				break;
 		}
 
 		switch ( $mSendModeUsers ) {
@@ -378,6 +387,25 @@ class SiteWideMessages extends SpecialPage {
 			$mExpire = $formData['expireTime'] != '0' ? date('Y-m-d H:i:s', strtotime(ctype_digit($formData['expireTime']) ? " +{$formData['expireTime']} day" : ' +' . substr($formData['expireTime'], 0, -1) . ' hour')) : null;
 		}
 
+		if ( $mSendModeWikis === 'CREATED' ) {
+			$timestamp = wfTimestamp( TS_UNIX, $formData['wikiCreationDateOne'] );
+			if ( !$timestamp ) {
+				$validDateTime = false;
+			}
+			$formData['wikiCreationDateOne'] = wfTimestamp( TS_DB, $timestamp );
+			if ( $formData['wikiCreationDateOption'] === 'between' ) {
+				if ( $formData['wikiCreationDateTwo'] !== '' ) {
+					$timestamp = wfTimestamp( TS_UNIX, $formData['wikiCreationDateTwo'] );
+					if ( !$timestamp ) {
+						$validDateTime = false;
+					}
+					$formData['wikiCreationDateTwo'] = wfTimestamp( TS_DB, $timestamp );
+				} else {
+					$validDateTime = false;
+				}
+			}
+		}
+
 		if ( $mSendModeUsers === 'REGISTRATION' ) {
 			$timestamp = wfTimestamp( TS_UNIX, $formData['registrationDateOne'] );
 			if ( !$timestamp ) {
@@ -420,6 +448,11 @@ class SiteWideMessages extends SpecialPage {
 			&& ( $formData['registrationDateTwo'] <= $formData['registrationDateOne'] )
 		) {
 			$result['errMsg'] = wfMsg( 'swm-error-registered-tobeforefrom' );
+		} elseif ( $mSendModeWikis === 'CREATED'
+			&& $formData['wikiCreationDateOption'] === 'between'
+			&& ( $formData['wikiCreationDateTwo'] <= $formData['wikiCreationDateOne'] )
+		) {
+			$result['errMsg'] = wfMsg( 'swm-error-created-tobeforefrom' );
 		} elseif ( $mSendModeUsers === 'EDITCOUNT'
 			&& ( !is_numeric( $formData['editCountOne'] )
 			|| ( $formData['editCountOption'] === 'between'
@@ -477,7 +510,7 @@ class SiteWideMessages extends SpecialPage {
 						);
 						$dbInsertResult &= $dbResult;
 					}
-				} elseif ( $mSendModeWikis != 'WIKIS' && $mSendModeUsers == 'ANONS' ) {
+				} elseif ( $mSendModeWikis != 'WIKIS' && $mSendModeWikis != 'CREATED' && $mSendModeUsers == 'ANONS' ) {
 					if ( !is_null( $result['msgId'] ) ) {
 						$dbResult = (boolean)$DB->query(
 							'INSERT INTO ' . MSG_STATUS_DB .
@@ -732,6 +765,40 @@ class SiteWideMessages extends SpecialPage {
 											'wikiName'			=> $mWikiName,
 											'wikiNames'			=> $mWikiNamesArr,
 											'groupName'			=> $mGroupName,
+											'editCountOption'	=> $formData['editCountOption'],
+											'editCountStart'	=> $formData['editCountOne'],
+											'editCountEnd'		=> $formData['editCountTwo'],
+											'senderId'			=> $mSender->GetID(),
+											'senderName'		=> $mSender->GetName(),
+											'hubId'				=> $mHubId,
+											'clusterId'     	=> $mClusterId,
+										),
+										TASK_QUEUED
+									);
+									break;
+							}
+							break;
+
+						case 'CREATED':
+							switch ( $mSendModeUsers ) {
+								case 'ALL':
+								case 'ACTIVE':
+								case 'GROUP':
+								case 'EDITCOUNT':
+								case 'ANONS':
+									//add task to TaskManager
+									$oTask = new SWMSendToGroupTask();
+									$oTask->createTask(
+										array(
+											'messageId'			=> $result['msgId'],
+											'sendModeWikis'		=> $mSendModeWikis,
+											'sendModeUsers'		=> $mSendModeUsers,
+											'wikiName'			=> $mWikiName,
+											'wikiNames'			=> $mWikiNamesArr,
+											'groupName'			=> $mGroupName,
+											'wcOption'			=> $formData['wikiCreationDateOption'],
+											'wcStartDate'		=> $formData['wikiCreationDateOne'],
+											'wcEndDate'			=> $formData['wikiCreationDateTwo'],
 											'editCountOption'	=> $formData['editCountOption'],
 											'editCountStart'	=> $formData['editCountOne'],
 											'editCountEnd'		=> $formData['editCountTwo'],
@@ -1378,6 +1445,10 @@ class SiteWideMessagesPager extends TablePager {
 				$sRetval = $value ?
 					( $value === MSG_RECIPIENT_ANON ? ('<i>' . wfMsg( 'swm-label-mode-users-anon' ) . '</i>') : htmlspecialchars( $value ) ) :
 					( '<i>' . wfMsg('swm-label-mode-users-all') . '</i>' );
+				break;
+
+			case 'msg_wiki_name':
+				$sRetval = ( $value === MSG_WIKI_CREATION_DATE ? ('<i>' . wfMsg( 'swm-label-mode-wikis-created' ) . '</i>') : htmlspecialchars( $value ) );
 				break;
 
 			case 'msg_text':
