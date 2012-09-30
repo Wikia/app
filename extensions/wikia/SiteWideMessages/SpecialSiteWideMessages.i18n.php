@@ -176,6 +176,7 @@ $messages['qqq'] = array(
 	'swm-mode-wikis-created-between' => 'Option to select if user wants to send message to wikis created between two given date.',
 	'swm-label-mode-wikis-created-hint' => 'Message that lets the user know that dates must be in the form 2012-04-01 00:00:00.',
 	'swm-error-created-tobeforefrom' => 'Error message when given wiki creation end date is before start date.',
+	'swm-msg-sent-task' => 'Message to display when a task is created in order to send a message. $1 is a link to the created task.',
 );
 
 /** Afrikaans (Afrikaans)
