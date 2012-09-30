@@ -205,7 +205,8 @@ class SiteWideMessages extends SpecialPage {
 					$formData['errMsg'] = $result['errMsg'];
 					$wgOut->SetPageTitle(wfMsg('swm-page-title-editor'));
 				} else {
-					$redirect = $wgTitle->getLocalUrl("action=sent&id={$result['msgId']}");
+					$queryStr = "action=sent&id={$result['msgId']}" . ( !is_null( $result['taskId'] ) ? "&taskid={$result['taskId']}" : '' );
+					$redirect = $wgTitle->getLocalUrl( $queryStr );
 					$wgOut->redirect($redirect, 200);
 					return;
 				}
@@ -214,10 +215,25 @@ class SiteWideMessages extends SpecialPage {
 			case 'sent':
 				$mId = $wgRequest->getText('id');
 				$mText = $mId ? $this->getMessageText($mId, true) : null;
+				$mTaskId = $wgRequest->getText( 'taskid' );
 
 				if ($mId && !is_null($mText)) {
 					$formData['messageContent'] = $wgOut->parse($mText);
 					$formData['sendResult'] = wfMsg('swm-msg-sent-ok');
+					if ( !empty( $mTaskId ) ) {
+						$mTaskId = intval( $mTaskId );
+						$taskLink = Linker::linkKnown(
+							GlobalTitle::newFromText( 'TaskManager', NS_SPECIAL, 177 ),
+							"#{$mTaskId}",
+							array(),
+							array(
+								'action' => 'log',
+								'id' => $mTaskId,
+								'offset' => 0
+							)
+						);
+						$formData['sendResult'] .= wfMsg( 'swm-msg-sent-task', $taskLink );
+					}
 				} else {
 					$formData['messageContent'] = '';
 					$formData['sendResult'] = wfMsg('swm-msg-sent-err');
@@ -541,6 +557,7 @@ class SiteWideMessages extends SpecialPage {
 						),
 						TASK_QUEUED
 					);
+					$result['taskId'] = $oTask->getID();
 				} else {
 					switch ($mSendModeWikis) {
 						case 'ALL':
@@ -566,6 +583,7 @@ class SiteWideMessages extends SpecialPage {
 										),
 										TASK_QUEUED
 									);
+									$result['taskId'] = $oTask->getID();
 									break;
 
 								case 'REGISTRATION':
@@ -588,6 +606,7 @@ class SiteWideMessages extends SpecialPage {
 										),
 										TASK_QUEUED
 									);
+									$result['taskId'] = $oTask->getID();
 									break;
 
 								case 'EDITCOUNT':
@@ -610,6 +629,7 @@ class SiteWideMessages extends SpecialPage {
 										),
 										TASK_QUEUED
 									);
+									$result['taskId'] = $oTask->getID();
 									break;
 							}
 							break;
@@ -635,6 +655,7 @@ class SiteWideMessages extends SpecialPage {
 										),
 										TASK_QUEUED
 									);
+									$result['taskId'] = $oTask->getID();
 									break;
 							}
 							break;
@@ -660,6 +681,7 @@ class SiteWideMessages extends SpecialPage {
 										),
 										TASK_QUEUED
 									);
+									$result['taskId'] = $oTask->getID();
 									break;
 							}
 							break;
@@ -722,6 +744,7 @@ class SiteWideMessages extends SpecialPage {
 										),
 										TASK_QUEUED
 									);
+									$result['taskId'] = $oTask->getID();
 									break;
 
 								case 'EDITCOUNT':
@@ -744,6 +767,7 @@ class SiteWideMessages extends SpecialPage {
 										),
 										TASK_QUEUED
 									);
+									$result['taskId'] = $oTask->getID();
 									break;
 							}
 							break;
@@ -775,6 +799,7 @@ class SiteWideMessages extends SpecialPage {
 										),
 										TASK_QUEUED
 									);
+									$result['taskId'] = $oTask->getID();
 									break;
 							}
 							break;
@@ -809,6 +834,7 @@ class SiteWideMessages extends SpecialPage {
 										),
 										TASK_QUEUED
 									);
+									$result['taskId'] = $oTask->getID();
 									break;
 							}
 							break;
