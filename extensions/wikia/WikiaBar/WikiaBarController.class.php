@@ -33,7 +33,6 @@ class WikiaBarController extends WikiaController {
 		}
 		$this->lang = F::app()->wg->contLang->getCode();
 		$this->vertical = HubService::getCategoryInfoForCity(F::app()->wg->cityId)->cat_id;
-		$this->action = F::app()->wg->request->getText('action', 'view');
 	}
 
 	protected function isWikiaBarSuppressed() {

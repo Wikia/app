@@ -5,7 +5,7 @@ var WikiaBar = {
 	WIKIA_BAR_HIDDEN_ANON_ML_TTL: 24 * 60 * 1000, //millieseconds
 	WIKIA_BAR_HIDDEN_ANON_NML_TTL: 180 * 24 * 60 * 1000, //millieseconds
 	WIKIA_BAR_STATE_USER_KEY_SUFFIX: 'UserWikiaBar_1.0002',
-    WIKIA_BAR_MAX_MESSAGE_PARTS: 5,
+	WIKIA_BAR_MAX_MESSAGE_PARTS: 5,
 	messageConfig: {
 		index: 0,
 		container: null,
@@ -65,7 +65,7 @@ var WikiaBar = {
 			originalMessageArray,
 			originalCurrentDiffArray,
 			messageArrayText,
-            messageLoops = 0;
+			messageLoops = 0;
 
 		for(var i = 0, length = messageArray.length; i < length; i++) {
 			messageArrayText = messageArray[i].text;
@@ -79,7 +79,7 @@ var WikiaBar = {
 					);
 					returnArray.push({'anchor': $.trim(currentMessageArray.join('')), 'href': messageArray[i].href, 'messageNumber': i});
 					originalMessageArray = originalCurrentDiffArray;
-                    messageLoops++;
+					messageLoops++;
 				} while (originalCurrentDiffArray.length > 0 && messageLoops < this.WIKIA_BAR_MAX_MESSAGE_PARTS);
 			}
 		}
@@ -89,27 +89,27 @@ var WikiaBar = {
 	checkMessageWidth: function(messageArray, container) {
 		var tempMessage = '',
 			tempMessageObject,
-            lastSpaceIndex = -1,
-            cutIndex = -1;
+			lastSpaceIndex = -1,
+			cutIndex = -1;
 
 		for(var j = 0, length = messageArray.length; j < length; j++) {
-            if(messageArray[j] == ' ') {
-                lastSpaceIndex = j;
-            }
+			if(messageArray[j] == ' ') {
+				lastSpaceIndex = j;
+			}
 			tempMessage = tempMessage + messageArray[j];
 			tempMessageObject = $('<span></span>').text(tempMessage);
 			container.html(tempMessageObject);
 			if(tempMessageObject.width() >= this.messageConfig.container.width()) {
-                if(lastSpaceIndex == -1) {
-                    cutIndex = j;
-                } else {
-                    cutIndex = ((lastSpaceIndex + 1)<length)?(lastSpaceIndex + 1):lastSpaceIndex;
-                }
+				if(lastSpaceIndex == -1) {
+					cutIndex = j;
+				} else {
+					cutIndex = ((lastSpaceIndex + 1)<length)?(lastSpaceIndex + 1):lastSpaceIndex;
+				}
 				break;
 			}
 		}
 
-        return ((cutIndex==-1)?messageArray:messageArray.slice(0,cutIndex));
+		return ((cutIndex==-1)?messageArray:messageArray.slice(0,cutIndex));
 	},
 	messageFadeIn: function () {
 		var currentMsgIndex = this.messageConfig.index,
@@ -291,10 +291,10 @@ var WikiaBar = {
 			hidden = null;
 
 		if( data === null && !this.isMainWikiaBarLang() ) {
-		//first time and data storage is empty let's hide the bar if it IS NOT a main language wiki
+			//first time and data storage is empty let's hide the bar if it IS NOT a main language wiki
 			hidden = true;
 		} else if ( data === null && this.isMainWikiaBarLang() ) {
-		//first time and data storage is empty let's hide the bar if it IS a main language wiki
+			//first time and data storage is empty let's hide the bar if it IS a main language wiki
 			hidden = false;
 		} else {
 			hidden = (data === 'true') ? true : false; //all data in cookies is saved as strings
