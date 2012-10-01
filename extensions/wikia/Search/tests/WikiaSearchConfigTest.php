@@ -2,7 +2,7 @@
 
 require_once( 'WikiaSearchBaseTest.php' );
 
-class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
+class WikiaSearchConfigTest extends WikiaSearchBaseTest {
 	
 	
 	
