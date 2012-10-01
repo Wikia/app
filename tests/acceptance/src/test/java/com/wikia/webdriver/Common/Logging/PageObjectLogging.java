@@ -7,6 +7,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.events.WebDriverEventListener;
+import org.testng.Reporter;
 
 import com.google.common.base.Throwables;
 import com.wikia.webdriver.Common.Core.CommonUtils;
@@ -32,7 +33,8 @@ public class PageObjectLogging implements WebDriverEventListener {
 		String l2 = "<p>Browser: " + Global.BROWSER + "</p>";
 		String l3 = "<p>OS: " + Global.BROWSER + "</p>";
 		String l4 = "<p>Screen resolution: " + Global.BROWSER + "</p>";
-
+		
+		
 		CommonUtils.appendTextToFile(logPath, l1);
 	}
 
@@ -72,6 +74,7 @@ public class PageObjectLogging implements WebDriverEventListener {
 				+ ".png'>Screenshot</a><br/><a href='screenshots/screenshot"
 				+ imageCounter + ".html'>HTML Source</a></td></tr>";
 		CommonUtils.appendTextToFile(logPath, s);
+		
 	}
 
 	public static void log(String command, String description, boolean success) {
@@ -80,6 +83,8 @@ public class PageObjectLogging implements WebDriverEventListener {
 				+ "</td><td>" + description
 				+ "</td><td> <br/> &nbsp;</td></tr>";
 		CommonUtils.appendTextToFile(logPath, s);
+	
+		
 	}
 
 	@Override
@@ -210,6 +215,10 @@ public class PageObjectLogging implements WebDriverEventListener {
 					
 					throw new Exception("elementIsInvisible");
 				}
+				if (throwable.getMessage().contains("Timed out waiting for page load"))
+				{
+					throw new Exception("pageLoadTimeOut");
+				}
 			}
 			String s1 = "<tr class=\"error\"><td>error</td><td>"
 					+ stackTrace
@@ -219,9 +228,19 @@ public class PageObjectLogging implements WebDriverEventListener {
 					+ imageCounter + ".html'>HTML Source</a></td></tr>";
 			CommonUtils.appendTextToFile(logPath, s1);
 			imageCounter += 1;
-		} catch (Exception e) {
+		} 
+		catch (Exception e) {
 			if (e.getMessage().equals("elementIsInvisible")) {
 				String s1 = "<tr class=\"success\"><td>findInvisibleElement</td><td>element is not visible which is expected</td><td> <br/><a href='screenshots/screenshot"
+						+ imageCounter
+						+ ".png'>Screenshot</a><br/><a href='screenshots/screenshot"
+						+ imageCounter + ".html'>HTML Source</a></td></tr>";
+				CommonUtils.appendTextToFile(logPath, s1);
+				imageCounter += 1;
+			}
+			if(e.getMessage().equals("pageLoadTimeOut"))
+			{
+				String s1 = "<tr class=\"success\"><td>pageLoadTimeOut</td><td>page loads for more than 30 seconds</td><td> <br/><a href='screenshots/screenshot"
 						+ imageCounter
 						+ ".png'>Screenshot</a><br/><a href='screenshots/screenshot"
 						+ imageCounter + ".html'>HTML Source</a></td></tr>";
