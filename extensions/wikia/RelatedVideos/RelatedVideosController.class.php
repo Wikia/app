@@ -275,13 +275,24 @@ class RelatedVideosController extends WikiaController {
 		}
 
 		$search = F::build( 'WikiaSearch' );  /* @var $search WikiaSearch */
-		$mltResultSet = $search->getRelatedVideos( $searchConfig );
-
-		if ( $mltResultSet->getNumFound() == 0 && $searchConfig->getPageId() && $this->request->getVal('debug') != 1 ) {
-
-			// if nothing for specify article, do general search
-			$searchConfig->setPageId( false );
-			$mltResultSet = $search->getRelatedVideos( $searchConfig );
+		
+		if ( $this->wg->ContLang->mCode !== 'en' ) {
+			// we can't use MoreLikeThis because we can't reconcile different language fields
+			// if we were given a title, then search against that title; if not, then search against the wiki's name, minus the term "wiki"
+			$searchConfig	->setQuery		( (! empty( $sTitle ) ) ? $sTitle : preg_replace( '/ wiki\b/i', '', $this->wg->SiteName ) )
+							->setVideoSearch( true );
+			
+			$solariumResultSet = $search->doSearch( $searchConfig );
+			
+		} else {
+			$solariumResultSet = $search->getRelatedVideos( $searchConfig );
+	
+			if ( $solariumResultSet->getNumFound() == 0 && $searchConfig->getPageId() && $this->request->getVal('debug') != 1 ) {
+	
+				// if nothing for specify article, do general search
+				$searchConfig->setPageId( false );
+				$solariumResultSet = $search->getRelatedVideos( $searchConfig );
+			}
 		}
 
 		$rvService = F::build( 'RelatedVideosService' ); /* @var $rvService RelatedVideosService */
@@ -294,7 +305,7 @@ class RelatedVideosController extends WikiaController {
 		}
 
 		$response = array();
-		foreach ( $mltResultSet->getDocuments() as $document ) {
+		foreach ( $solariumResultSet->getDocuments() as $document ) {
 
 			$globalTitle = GlobalTitle::newFromId( $document['pageid'], $document['wid'] );
 			if ( !empty( $globalTitle ) ) {

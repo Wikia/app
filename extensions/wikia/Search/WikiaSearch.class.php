@@ -457,6 +457,11 @@ class WikiaSearch extends WikiaObject {
 		
 		$queryFieldsString = sprintf( '%s^5 %s %s^4', self::field( 'title' ), self::field( 'html' ), self::field( 'redirect_titles' ) );
 		
+		if ( $searchConfig->getVideoSearch() && $this->wg->LanguageCode !== 'en' ) {
+			// video wiki requires english field search
+			$queryFieldsString .= sprintf( '%s^5 %s %s^4', self::field( 'title', 'en' ), self::field( 'html', 'en' ), self::field( 'redirect_titles', 'en' ) );
+		}
+		
 		if ( $searchConfig->isInterWiki() ) {
 			$grouping = $query->getGrouping();
 			$grouping	->setLimit			( self::GROUP_RESULTS_GROUPING_ROW_LIMIT )
@@ -531,7 +536,9 @@ class WikiaSearch extends WikiaObject {
 			}
 		}
 		else {
-			$filterQueries[] = self::valueForField( 'wid', $searchConfig->getCityId() );
+			$filterQueries[] 	= $searchConfig->getVideoSearch() 
+								? sprintf('(%s OR %s)', self::valueForField( 'wid', $searchConfig->getCityId() ), self::valueForField( 'wid', self::VIDEO_WIKI_ID ) )
+								: self::valueForField( 'wid', $searchConfig->getCityId() );
 		}
 		
 		if (! $searchConfig->getIncludeRedirects() ) {
