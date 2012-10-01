@@ -39,7 +39,7 @@ class GlobalHeaderController extends WikiaController {
 			$centralUrl = $wgLangToCentralMap[$userLang];
 		}
 
-		$createWikiUrl = 'http://www.wikia.com/Special:CreateWiki';
+		$createWikiUrl = 'http://www.wikia.com/Special:CreateNewWiki';
 		if ($userLang != 'en') {
 			$createWikiUrl .= '?uselang=' . $userLang;
 		}
