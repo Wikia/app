@@ -618,7 +618,7 @@ class WallExternalController extends WikiaController {
 		if(!empty($mw)) {
 			$mw->load();
 			$mw->setRelatedTopics($relatedTopics);
-			$mw->doSaveMetadata($this->wg->User, "OMNOMNOMNOM");
+			$mw->doSaveMetadata($this->wg->User, wfMsg( 'wall-message-update-topics' ) );
 		}
 
 		foreach($relatedTopics as $topic) {
