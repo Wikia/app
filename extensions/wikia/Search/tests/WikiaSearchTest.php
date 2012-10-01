@@ -111,5 +111,47 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 		
 	}
 	
+	/**
+	 * @covers WikiaSearch::getBoostQueryString
+	 */
+	public function testGetBoostQueryString() {
+		$this->mockApp();
+		$this->mockClass( 'Solarium_Client', $this->getMock( 'Solarium_Client', array('setAdapter') ) );
+		
+		$wikiaSearch	= F::build( 'WikiaSearch' );
+		$searchConfig	= F::build( 'WikiaSearchConfig' );
+		
+		$method = new ReflectionMethod( 'WikiaSearch', 'getBoostQueryString' );
+		$method->setAccessible( true );
+		
+		$searchConfig->setQuery('foo bar');
+		$this->assertEquals( $method->invoke( $wikiaSearch, $searchConfig ),
+							'(html:\"foo bar\")^5 (title:\"foo bar\")^10', 
+							'WikiaSearch::getBoostQueryString should boost exact-match in quotes for html and title field'
+							);
+		
+		$searchConfig->setQuery('"foo bar"');
+		$this->assertEquals( $method->invoke( $wikiaSearch, $searchConfig ),
+					        '(html:\"foo bar\")^5 (title:\"foo bar\")^10',
+					        'WikiaSearch::getBoostQueryString should strip quotes from original query'
+							);
+
+		$searchConfig->setQuery("'foo bar'");
+		$this->assertEquals( $method->invoke( $wikiaSearch, $searchConfig ),
+					        '(html:\"foo bar\")^5 (title:\"foo bar\")^10',
+					        'WikiaSearch::getBoostQueryString should strip quotes from original query'
+							);
+		
+		$searchConfig	->setQuery		('foo bar wiki')
+						->setIsInterWiki(true)
+		;
+		$this->assertEquals( $method->invoke( $wikiaSearch, $searchConfig ),
+					        '(html:\"foo bar\")^5 (title:\"foo bar\")^10 (wikititle:\"foo bar\")^15 -host:\"answers\"^10 -host:\"respuestas\"^10',
+					        'WikiaSearch::getBoostQueryString should remove "wiki" from searches,, include wikititle, and remove answers wikis'
+							);
+		
+		
+	}
+	
 	
 }

@@ -408,7 +408,7 @@ class WikiaSearch extends WikiaObject {
 		$sort = $searchConfig->getSort();
 		
 		$query	->addFields		( $searchConfig->getRequestedFields() )
-				->				removeField('*')
+				->removeField	('*')
 			  	->setStart		( $searchConfig->getStart() )
 				->setRows		( $searchConfig->getLength() )
 				->addSort		( $sort[0], $sort[1] )
@@ -448,7 +448,7 @@ class WikiaSearch extends WikiaObject {
 		
 		$dismax = $nestedQuery->getDismax();
 		
-		$boostQueryString = $this->getBoostQueryString( $query, $searchConfig );
+		$boostQueryString = $this->getBoostQueryString( $searchConfig );
 		
 		$dismax	->setQueryFields		( $queryFieldsString )
 				->setPhraseFields		( $queryFieldsString )
@@ -560,19 +560,19 @@ class WikiaSearch extends WikiaObject {
 	
 	/**
 	 * Returns the string used to build out a boost query with Solarium
-	 * @param  Solarium_Query_Select $query
+	 * @see    WikiaSearchTest::testGetBoostQueryString
 	 * @param  WikiaSearchConfig $searchConfig
 	 * @return string
 	 */
-	private function getBoostQueryString( Solarium_Query_Select $query, WikiaSearchConfig $searchConfig )
+	private function getBoostQueryString( WikiaSearchConfig $searchConfig )
 	{
-		$sanitizedQuery = $searchConfig->getQuery();
+		$query = $searchConfig->getQuery();
 		
 		if ( $searchConfig->isInterWiki() ) {
-			$sanitizedQuery = preg_replace( '/\bwiki\b/i', '', $sanitizedQuery );
+			$query = preg_replace( '/ wiki\b/i', '', $query );
 		}
 		
-		$queryNoQuotes = preg_replace( "/['\"]/", '', html_entity_decode( $searchConfig->getQuery(), ENT_COMPAT, 'UTF-8' ) );
+		$queryNoQuotes = preg_replace( "/['\"]/", '', html_entity_decode( $query, ENT_COMPAT, 'UTF-8' ) );
 		
 		$boostQueries = array(
 				self::valueForField( 'html', $queryNoQuotes, array( 'boost'=>5, 'quote'=>'\"' ) ),
