@@ -38,6 +38,12 @@ public class CreateNewWikiPageObjectStep3 extends BasePageObject{
 	{
 		waitForElementByCss("li[data-theme]");
 		jQueryClick("li[data-theme]:nth-child("+skinNumber+")");
+		try {
+			Thread.sleep(1500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 //		List<WebElement> lista = driver.findElements(By.cssSelector("li[data-theme]"));
 		
 //		Actions builder = new Actions(driver);
