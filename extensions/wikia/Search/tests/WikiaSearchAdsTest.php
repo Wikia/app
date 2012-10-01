@@ -1,5 +1,7 @@
 <?php
 
+require_once( 'WikiaSearchBaseTest.php' );
+
 /* TODO
 
 <?xml version="1.0" encoding="utf-8"?><search-results version="7.0"><error description="User-agent not passed as part of users headers | (Mozilla/5.0(Macintosh;IntelMacOSX10_7_4)AppleWebKit/536.5(KHTML,likeGecko)Chrome/19.0.1084.56Safari/536.5)" /></search-results>
