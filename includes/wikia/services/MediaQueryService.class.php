@@ -373,6 +373,7 @@ SQL;
 
 				$totalVideos = ($row) ? $row->cnt : 0 ;
 			}
+			$totalVideos = $this->app->wg->Lang->formatNum($totalVideos);
 
 			$this->app->wg->Memc->set( $memKey, $totalVideos, 60*60*24 );
 		}
