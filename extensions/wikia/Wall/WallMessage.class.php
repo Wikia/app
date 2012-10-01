@@ -232,10 +232,10 @@ class WallMessage {
 		return $out;
 	}
 
-	public function doSaveComment($body, $user) {
+	public function doSaveComment($body, $user, $summary = '') {
 		wfProfileIn( __METHOD__ );
 		if($this->canEdit($user)){
-			$this->getArticleComment()->doSaveComment( $body, $user, null, 0, true );
+			$this->getArticleComment()->doSaveComment( $body, $user, null, 0, true, $summary );
 		}
 		if( !$this->isMain() ) {
 			// after changing reply invalidate thread cache
@@ -252,10 +252,10 @@ class WallMessage {
 		return $out;
 	}
 
-	public function doSaveMetadata($user) {
+	public function doSaveMetadata($user, $summary = '') {
 		wfProfileIn( __METHOD__ );
 		$body = $this->getRawText(true);
-		$out = $this->doSaveComment($body, $user);
+		$out = $this->doSaveComment($body, $user, $summary);
 		wfProfileOut( __METHOD__ );
 		return $out;
 	}

@@ -20,6 +20,7 @@ class CommentsIndex extends WikiaModel {
 	protected $createdAt = 0;
 	protected $lastRevId = 0;
 	protected $lastTouched = 0;
+	protected $namespace = 0;
 
 	public function __construct( $data = array() ) {
 		foreach ( $data as $key => $value ) {
@@ -189,8 +190,8 @@ class CommentsIndex extends WikiaModel {
 		$this->wf->ProfileIn( __METHOD__ );
 		
 		//Just for transition time
-		if(empty($this->wg->WallIndexed)) {
-			return true;
+		if(empty($this->wg->EnableWallEngine) || !WallHelper::isWallNamespace($this->namespace) ) {
+			return false;
 		}
 
 		if ( !$this->wf->ReadOnly() ) {
