@@ -92,7 +92,7 @@ public class Properties {
 		Global.CONFIG_FILE = new File(System.getProperty("config"));
 		Global.CAPTCHA_FILE = new File(System.getProperty("captcha"));
 		Global.DOMAIN = System.getProperty("base-address");
-		Global.LIVE_DOMAIN = "http://www.wikia.com/";
+		Global.LIVE_DOMAIN = System.getProperty("live-domain");
 		Global.LOG_VERBOSE = 1;
 	}
 	
@@ -100,7 +100,7 @@ public class Properties {
 	{
 		Global.BROWSER = "FF";
 		Global.DOMAIN = "http://mediawiki119.wikia.com/";
-		Global.LIVE_DOMAIN = "http://www.wikia.com/";
+		Global.LIVE_DOMAIN = "http://preview.www.wikia.com/";
 		Global.CONFIG_FILE = new File("c:"+File.separator+"wikia-qa"+File.separator+"config.xml");
 		Global.CAPTCHA_FILE = new File("c:"+File.separator+"wikia-qa"+File.separator+"captcha.txt");
 		Global.LOG_VERBOSE = 1;
