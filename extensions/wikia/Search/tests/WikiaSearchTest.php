@@ -6,6 +6,8 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 	
 	/**
 	 * Tests our support for dynamic fields
+	 * @covers WikiaSearch::field
+	 * @covers WikiaSearch::valueForField
 	 */
 	public function testFieldMethods() {
 		
@@ -69,9 +71,28 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 		$this->assertEquals( WikiaSearch::valueForField( 'foo', 'bar', array( 'quote' => "'", 'boost' => 5 ) ), "(foo:'bar')^5",
 		        										'WikiaSearch::valueForField() did not construct field value with quote and boost as expected' );
 		
-		
 	}
 	
+	/**
+	 * @covers WikiaSearch::getFilterQueryString
+	 */
+	public function testGetFilterQueryString()
+	{
+		$this->mockApp();
+		$this->mockClass( 'Solarium_Client', $this->getMock( 'Solarium_Client', array('setAdapter') ) );
+		$mockCityId = 123;
+		
+		$searchConfig	= F::build( 'WikiaSearchConfig' );
+		$searchConfig	->setCityId( $mockCityId );
+
+		$method = new ReflectionMethod( 'WikiaSearch', 'getFilterQueryString' );		
+		$method->setAccessible( true );
+		
+		$this->assertEquals("(wid:{$mockCityId}) AND is_redirect:false", $method->invoke( F::build( 'WikiaSearch' ), $searchConfig ) );
+		
+		
+		
+	}
 	
 	
 }
