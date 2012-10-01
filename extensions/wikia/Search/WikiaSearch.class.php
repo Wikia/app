@@ -354,6 +354,7 @@ class WikiaSearch extends WikiaObject {
 	
 	/**
 	 * Used to compose field name, value, boosts, and quotes in support of dynamic language fields
+	 * @see    WikiaSearchTest::testFieldMethods
 	 * @param  string $field
 	 * @param  string $value
 	 * @param  array  $params
@@ -371,6 +372,7 @@ class WikiaSearch extends WikiaObject {
 	/**
 	 * Accepts a string and, checks it against a known set of dynamic language fields, and composes
 	 * a field namebased on the language context and field set membership.
+	 * @see    WikiaSearchTest::testFieldMethods
 	 * @param  string $field
 	 * @return string the dynamic field, or the field name if not dynamic
 	 **/
@@ -484,6 +486,7 @@ class WikiaSearch extends WikiaObject {
 	/**
 	 * Builds the string used with filter queries based on search config
 	 * @param WikiaSearchConfig $searchConfig
+	 * @see WikiaSearchTest::testGetFilterQueryString
 	 * @return string
 	 */
 	private function getFilterQueryString( WikiaSearchConfig $searchConfig )
