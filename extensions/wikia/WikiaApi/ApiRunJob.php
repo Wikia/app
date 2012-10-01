@@ -130,23 +130,17 @@ class ApiRunJob extends ApiBase {
 	 *
 	 * @return Array
 	 */
-	private function checkQueue( $done  ) {
+	private function checkQueue( $done ) {
 
 		wfProfileIn( __METHOD__ );
 		global $wgApiRunJobsPerRequest;
 
 		$total = 0;
-		if( $done > 0 ) {
-			$dbr = wfGetDB( DB_SLAVE, 'vslow' );
-			$total = $dbr->estimateRowCount( "job", "*", "", __METHOD__ );
-
-			#
-			# check again using count if $total near working value
-			#
-			if( $total < $wgApiRunJobsPerRequest ) {
-				$total = $dbr->selectField( "job", "COUNT(*)", "", __METHOD__ );
-			}
-		}
+		#
+		# just check if there's any job left
+		#
+		$dbr = wfGetDB( DB_SLAVE );
+		$total = $dbr->selectField( "job", "job_id", "", __METHOD__ );
 
 		$result[ "total" ] = $total;
 		$result[ "done" ] = $done;
