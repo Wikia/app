@@ -1,7 +1,5 @@
 package com.wikia.webdriver.TestCases.SignUpTests;
 
-import java.io.IOException;
-
 import org.apache.commons.lang.RandomStringUtils;
 import org.testng.annotations.Test;
 
@@ -22,7 +20,7 @@ public class SignUpTests_account_creation extends TestTemplate
 	 * https://internal.wikia-inc.com/wiki/Global_Log_in_and_Sign_up/Test_Cases:_Sign_up  
 	 * */
 	@Test(groups = {"SignUp_account_creation_TC_001", "SignUp", "Smoke"})
-	public void SignUp_account_creation_TC_001_non_latin_user_name() throws IOException
+	public void SignUp_account_creation_TC_001_non_latin_user_name()
 	{
 		SignUpPageObject signUp = new SignUpPageObject(driver);
 		timeStamp = signUp.getTimeStamp(); 
@@ -52,7 +50,7 @@ public class SignUpTests_account_creation extends TestTemplate
 	 * https://internal.wikia-inc.com/wiki/Global_Log_in_and_Sign_up/Test_Cases:_Sign_up  
 	 * */
 	@Test(groups = {"SignUp_account_creation_TC_002", "SignUp"})
-	public void SignUp_account_creation_TC_002_fifty_character_user_name() throws IOException
+	public void SignUp_account_creation_TC_002_fifty_character_user_name()
 	{
 		SignUpPageObject signUp = new SignUpPageObject(driver);
 		timeStamp = signUp.getTimeStamp(); 
@@ -81,7 +79,7 @@ public class SignUpTests_account_creation extends TestTemplate
 	 * https://internal.wikia-inc.com/wiki/Global_Log_in_and_Sign_up/Test_Cases:_Sign_up  
 	 * */
 	@Test(groups = {"SignUp_account_creation_TC_003", "SignUp"})
-	public void SignUp_account_creation_TC_003_backward_slash_user_name() throws IOException
+	public void SignUp_account_creation_TC_003_backward_slash_user_name()
 	{
 		SignUpPageObject signUp = new SignUpPageObject(driver);
 		timeStamp = signUp.getTimeStamp(); 
@@ -111,7 +109,7 @@ public class SignUpTests_account_creation extends TestTemplate
 	 * https://internal.wikia-inc.com/wiki/Global_Log_in_and_Sign_up/Test_Cases:_Sign_up  
 	 * */
 	@Test(groups = {"SignUp_account_creation_TC_004", "SignUp"})
-	public void SignUp_account_creation_TC_004_one_char_password() throws IOException
+	public void SignUp_account_creation_TC_004_one_char_password()
 	{
 		SignUpPageObject signUp = new SignUpPageObject(driver);
 		timeStamp = signUp.getTimeStamp(); 
@@ -140,7 +138,7 @@ public class SignUpTests_account_creation extends TestTemplate
 	 * https://internal.wikia-inc.com/wiki/Global_Log_in_and_Sign_up/Test_Cases:_Sign_up  
 	 * */
 	@Test(groups = {"SignUp_account_creation__005", "SignUp", "Smoke"})
-	public void SignUp_account_creation_TC_005_fifty_character_password() throws IOException
+	public void SignUp_account_creation_TC_005_fifty_character_password()
 	{
 		SignUpPageObject signUp = new SignUpPageObject(driver);
 		timeStamp = signUp.getTimeStamp(); 
@@ -168,7 +166,7 @@ public class SignUpTests_account_creation extends TestTemplate
 	 * https://internal.wikia-inc.com/wiki/Global_Log_in_and_Sign_up/Test_Cases:_Sign_up  
 	 * */
 	@Test(groups = {"SignUp_account_creation_TC_006", "SignUp"})
-	public void SignUp_account_creation_TC_006_lap_year() throws IOException
+	public void SignUp_account_creation_TC_006_lap_year()
 	{
 		SignUpPageObject signUp = new SignUpPageObject(driver);
 		timeStamp = signUp.getTimeStamp(); 
