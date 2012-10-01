@@ -32,7 +32,11 @@ class TwitchtvApiWrapper extends ApiWrapper {
 	}
 
 	public function getDescription() {
-		return '';
+		return $this->getOriginalDescription();
+	}
+
+	protected function getOriginalDescription() {
+		return $this->getVideoTitle();	
 	}
 
 	public function getThumbnailUrl() {
