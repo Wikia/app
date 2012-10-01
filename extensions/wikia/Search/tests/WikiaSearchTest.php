@@ -63,13 +63,15 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 		
 		// tests to make sure the valueForField method works as advertised (ignoring WikiaSearch::field() dependency since all tests passed)
 		$this->assertEquals( WikiaSearch::valueForField( 'foo', 'bar' ), '(foo:bar)', 
-														'WikiaSearch::valueForField() did not construct field value as expected' );
+														'WikiaSearch::valueForField() should return Lucene query field wrapped in parens.' );
 		$this->assertEquals( WikiaSearch::valueForField( 'foo', 'bar', array( 'boost' => 5 ) ), '(foo:bar)^5',
-														'WikiaSearch::valueForField() did not construct field value with boost as expected' );
+														'WikiaSearch::valueForField() should add Lucene query style boost with boost array param.' );
 		$this->assertEquals( WikiaSearch::valueForField( 'foo', 'bar', array( 'quote'=>"'" ) ), "(foo:'bar')",
-		        										'WikiaSearch::valueForField() did not construct field value with quote as expected' );
+		        										'WikiaSearch::valueForField() should add wrap a search term in quotes with the provided quote param.' );
 		$this->assertEquals( WikiaSearch::valueForField( 'foo', 'bar', array( 'quote' => "'", 'boost' => 5 ) ), "(foo:'bar')^5",
-		        										'WikiaSearch::valueForField() did not construct field value with quote and boost as expected' );
+		        										'WikiaSearch::valueForField() should be able to handle both quotes and boosts at the same time.' );
+		$this->assertEquals( WikiaSearch::valueForField( 'foo', 'bar', array( 'negate' => true ) ), "-(foo:bar)",
+				 										'WikiaSearch::valueForField() should add the Lucene negation operator if array param "negate" is set to true.');
 		
 	}
 	
@@ -91,22 +93,22 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 		$method = new ReflectionMethod( 'WikiaSearch', 'getFilterQueryString' );		
 		$method->setAccessible( true );
 		
-		$this->assertEquals( "(wid:{$mockCityId}) AND is_redirect:false", $method->invoke( $wikiaSearch, $searchConfig ),
+		$this->assertEquals( "(wid:{$mockCityId}) AND (is_redirect:false)", $method->invoke( $wikiaSearch, $searchConfig ),
 							'The default behavior for on-wiki search should be to filter query for wiki ID and against redirects.' );
 		
 		$searchConfig->setIncludeRedirects( true );
 		
-		$this->assertEquals( "wid:{$mockCityId}", $method->invoke( $wikiaSearch, $searchConfig ),
+		$this->assertEquals( "(wid:{$mockCityId})", $method->invoke( $wikiaSearch, $searchConfig ),
 							'If we have redirects configured to be included, we should not be filter against them in the filter query.' );
 		
 		$searchConfig->setIsInterWiki( true );
 		
-		$this->assertEquals( 'iscontent:true', $method->invoke( $wikiaSearch, $searchConfig), 
+		$this->assertEquals( '(iscontent:true)', $method->invoke( $wikiaSearch, $searchConfig), 
 							'An interwiki search should filter for content pages only.' );
 		
 		$searchConfig->setHub( $mockHub );
 		
-		$this->assertEquals( 'iscontent:true hub:Games', $method->invoke( $wikiaSearch, $searchConfig ), 
+		$this->assertEquals( '(iscontent:true) AND (hub:Games)', $method->invoke( $wikiaSearch, $searchConfig ), 
 							'An interwiki search with a hub should include the hub in the filter query.' );
 		
 	}
@@ -146,7 +148,7 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 						->setIsInterWiki(true)
 		;
 		$this->assertEquals( $method->invoke( $wikiaSearch, $searchConfig ),
-					        '(html:\"foo bar\")^5 (title:\"foo bar\")^10 (wikititle:\"foo bar\")^15 -host:\"answers\"^10 -host:\"respuestas\"^10',
+					        '(html:\"foo bar\")^5 (title:\"foo bar\")^10 (wikititle:\"foo bar\")^15 -(host:answers)^10 -(host:respuestas)^10',
 					        'WikiaSearch::getBoostQueryString should remove "wiki" from searches,, include wikititle, and remove answers wikis'
 							);
 	}
@@ -176,8 +178,65 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 							$method->invoke( $wikiaSearch, '&quot;fame &amp; glory&quot;' ),
 							'WikiaSearch::sanitizeQuery shoudl decode HTML entities and escape any entities that are also Lucene special characters.'
 							);
-		
 	}
 	
-	
+	/**
+	 * @covers WikiaSearch::getQueryClausesString
+	 */
+	public function testGetQueryClausesString() {
+		$expectedLanguageCode	= 'en';
+		$mockContLang 			= new stdClass();
+		$mockContLang->mCode	= $expectedLanguageCode;
+		$mockPrivateWiki		= new stdClass();
+		$mockPrivateWiki->cv_id	= 0;
+		$mockCityId				= 123;
+		
+		$memcacheMock = $this->getMock( 'stdClass', array( 'get', 'set' ) );
+		$memcacheMock
+			->expects	( $this->any() )
+			->method	( 'get' )
+			->will		( $this->returnValue( null ) )
+		;
+		$memcacheMock
+			->expects	( $this->any() )
+			->method	( 'set' )
+			->will	( $this->returnValue( null ) )
+		;
+		
+		$this->mockGlobalVariable( 'wgContLang',						$mockContLang );
+		$this->mockGlobalVariable( 'wgIsPrivateWiki',					false );
+		$this->mockGlobalVariable( 'wgCrossWikiaSearchExcludedWikis',	array( 123, 234 ) );
+		$this->mockGlobalVariable( 'wgCityId',							$mockCityId );
+		$this->mockGlobalVariable( 'wgMemc',							$memcacheMock );
+		$this->mockApp();
+		$this->mockClass( 'Solarium_Client', $this->getMock( 'Solarium_Client', array('setAdapter') ) );
+		
+		$wikiaSearch	= F::build( 'WikiaSearch' );
+		$searchConfig	= F::build( 'WikiaSearchConfig' );
+		
+		$method = new ReflectionMethod( 'WikiaSearch', 'getQueryClausesString' );
+		$method->setAccessible( true );
+		
+		$searchConfig->setNamespaces( array(1, 2, 3) );
+		
+		$this->assertEquals( '((wid:123) AND ((ns:1) OR (ns:2) OR (ns:3)))', $method->invoke( $wikiaSearch, $searchConfig ),
+							'WikiaSearch::getQueryClauses by default should query for namespaces and wiki ID.' );
+		
+		$searchConfig->setVideoSearch( true );
+		
+		$expectedWithVideo = '(((wid:123) OR (wid:'.WikiaSearch::VIDEO_WIKI_ID.')) AND (is_video:true) AND ((ns:'.NS_FILE.')))';
+		$this->assertEquals( $expectedWithVideo, $method->invoke( $wikiaSearch, $searchConfig ),
+							'WikiaSearch::getQueryClauses should search only for video namespaces in video search, and should only search for videos' );
+		
+		$searchConfig	->setVideoSearch	( false )
+						->setIsInterWiki	( true );
+		
+		// I tried to mock this up better, but per Bergmann, static methods are death to testability (particularly if called from another class)
+		// This means we'll have to update this test every time this changes.
+		// @todo write some logic that circumvents WikiFactory calls
+		$expectedInterWiki = '((-(wid:13390) AND -(wid:14379) AND -(wid:19416) AND -(wid:25694) AND -(wid:118245) AND -(wid:281701) AND -(wid:123) AND -(wid:234)) AND (lang:en) AND (iscontent:true))';
+		$this->assertEquals( $expectedInterWiki, $method->invoke( $wikiaSearch, $searchConfig ),
+		        			'WikiaSearch::getQueryClauses should exclude bad wikis, require the language of the wiki, and require content' );
+		
+	}
 }
