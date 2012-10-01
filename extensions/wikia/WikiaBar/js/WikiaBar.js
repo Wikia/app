@@ -4,7 +4,7 @@ var WikiaBar = {
 	WIKIA_BAR_STATE_ANON_NML_KEY: 'AnonNotMainLangWikiaBar_0.0001',
 	WIKIA_BAR_HIDDEN_ANON_ML_TTL: 24 * 60 * 1000, //millieseconds
 	WIKIA_BAR_HIDDEN_ANON_NML_TTL: 180 * 24 * 60 * 1000, //millieseconds
-	WIKIA_BAR_STATE_USER_KEY: 'UserWikiaBar_1.0001',
+	WIKIA_BAR_STATE_USER_KEY_SUFFIX: 'UserWikiaBar_1.0001',
     WIKIA_BAR_MAX_MESSAGE_PARTS: 5,
 	messageConfig: {
 		index: 0,
@@ -271,11 +271,19 @@ var WikiaBar = {
 			this.hide();
 		}
 	},
+	getLocalStorageDataKey: function() {
+		if( window.wgUserName ) {
+			return window.wgUserName + '_' + this.WIKIA_BAR_STATE_USER_KEY_SUFFIX;
+		} else {
+			$().log('WikiaBar notice: No user name found');
+			'Unknown' + '_' + this.WIKIA_BAR_STATE_USER_KEY_SUFFIX;
+		}
+	},
 	getLocalStorageData: function() {
-		return $.storage.get(this.WIKIA_BAR_STATE_USER_KEY);
+		return $.storage.get( this.getLocalStorageDataKey() );
 	},
 	setLocalStorageData: function(state) {
-		$.storage.set(this.WIKIA_BAR_STATE_USER_KEY, state);
+		$.storage.set( this.getLocalStorageDataKey(), state );
 	},
 	getAnonData: function() {
 		var key = this.getCookieKey(),
