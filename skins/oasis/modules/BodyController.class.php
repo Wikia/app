@@ -437,7 +437,7 @@ class BodyController extends WikiaController {
 		$this->railModulesExist = true;
 
 		// use one column layout for pages with no right rail modules
-		if (count($this->railModuleList ) == 0) {
+		if( count($this->railModuleList ) == 0 || !empty($this->wg->SuppressRail) ) {
 			OasisController::addBodyClass('oasis-one-column');
 			$this->headerModuleParams = array ('showSearchBox' => true);
 			$this->railModulesExist = false;
