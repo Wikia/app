@@ -17,6 +17,7 @@ $wgAutoloadClasses['SpecialCreateNewWiki'] = $dir . 'SpecialCreateNewWiki.class.
 
 // special page mapping
 $wgSpecialPages['CreateNewWiki'] = 'SpecialCreateNewWiki';
+$wgSpecialPages['CreateWiki'] = 'SpecialCreateNewWiki';
 
 // i18n mapping
 $wgExtensionMessagesFiles['CreateNewWiki'] = $dir . 'CreateNewWiki.i18n.php';
