@@ -4,6 +4,9 @@ require_once( 'WikiaSearchBaseTest.php' );
 
 class WikiaSearchTest extends WikiaSearchBaseTest {
 	
+	/**
+	 * Tests our support for dynamic fields
+	 */
 	public function testFieldMethods() {
 		
 		// this is a supported language code
@@ -56,6 +59,19 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 			$this->assertEquals( $field, WikiaSearch::field( $field ), 'An unsupported language returned mutated fields from WikiaSearch::field()' );
 		}
 		
+		// tests to make sure the valueForField method works as advertised (ignoring WikiaSearch::field() dependency since all tests passed)
+		$this->assertEquals( WikiaSearch::valueForField( 'foo', 'bar' ), '(foo:bar)', 
+														'WikiaSearch::valueForField() did not construct field value as expected' );
+		$this->assertEquals( WikiaSearch::valueForField( 'foo', 'bar', array( 'boost' => 5 ) ), '(foo:bar)^5',
+														'WikiaSearch::valueForField() did not construct field value with boost as expected' );
+		$this->assertEquals( WikiaSearch::valueForField( 'foo', 'bar', array( 'quote'=>"'" ) ), "(foo:'bar')",
+		        										'WikiaSearch::valueForField() did not construct field value with quote as expected' );
+		$this->assertEquals( WikiaSearch::valueForField( 'foo', 'bar', array( 'quote' => "'", 'boost' => 5 ) ), "(foo:'bar')^5",
+		        										'WikiaSearch::valueForField() did not construct field value with quote and boost as expected' );
+		
+		
 	}
+	
+	
 	
 }
