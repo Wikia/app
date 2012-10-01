@@ -5,6 +5,7 @@
  * A Wall consists of "Bricks" which are each a single topic/thread/conversation.
  * In typical use, a Wall will only load a subset of Bricks because there will be a TON of bricks as time goes on.
  */
+ 
 class WallExternalController extends WikiaController {
 	/**
 	 * @var $helper WallHelper
@@ -617,7 +618,7 @@ class WallExternalController extends WikiaController {
 		if(!empty($mw)) {
 			$mw->load();
 			$mw->setRelatedTopics($relatedTopics);
-			$mw->doSaveMetadata($this->wg->User);
+			$mw->doSaveMetadata($this->wg->User, "OMNOMNOMNOM");
 		}
 
 		foreach($relatedTopics as $topic) {

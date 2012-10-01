@@ -623,7 +623,7 @@ class ArticleComment {
 	 *
 	 * @return Array or false on error. - TODO: Document what the array contains.
 	 */
-	public function doSaveComment( $text, $user, $title = null, $commentId = 0, $force = false ) {
+	public function doSaveComment( $text, $user, $title = null, $commentId = 0, $force = false, $summary = '' ) {
 		global $wgMemc, $wgTitle;
 		wfProfileIn( __METHOD__ );
 
@@ -657,7 +657,7 @@ class ArticleComment {
 			 */
 
 			$article = new Article( $commentTitle, intval($this->mLastRevId) );
-			$retval = self::doSaveAsArticle($text, $article, $user, $this->mMetadata );
+			$retval = self::doSaveAsArticle($text, $article, $user, $this->mMetadata, $summary );
 			if(!empty($title)) {
 				$key = $title->getPrefixedDBkey();
 			} else {
@@ -691,12 +691,14 @@ class ArticleComment {
 	 * @param array $metadata
 	 * @return Status TODO: Document
 	 */
-	static protected function doSaveAsArticle($text, $article, $user, $metadata = array() ) {
+	static protected function doSaveAsArticle($text, $article, $user, $metadata = array(), $summary = '' ) {
 		$result = null;
 
 		$editPage = new EditPage( $article );
 		$editPage->edittime = $article->getTimestamp();
 		$editPage->textbox1 = self::removeMetadataTag($text);
+		
+		$editPage->summary = $summary;
 
 		if(!empty($metadata)) {
 			$editPage->textbox1 =  $text. Xml::element( 'ac_metadata', $metadata, ' ' );
@@ -811,6 +813,7 @@ class ArticleComment {
 		if ( $retval->value == EditPage::AS_SUCCESS_NEW_ARTICLE ) {
 			$revId = $article->getRevIdFetched();
 			$data = array(
+				'namespace' => $title->getNamespace(),
 				'parentPageId' => $title->getArticleID(),
 				'commentId' => $article->getID(),
 				'parentCommentId' => intval($parentId),
