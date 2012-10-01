@@ -31,7 +31,7 @@
 		<?php if($showVotes): ?>
 			<div class="voting-controls">
 				<a class="votes<?= $votes > 0 ? "" : " notlink" ?>" data-votes="<?= $votes ?>">
-					<?= $isreply ? '<span class="number" >'.$votes.'</span>' : wfMsg('wall-votes-number', '<span class="number" >'.$votes.'</span>') ?>
+					<?= wfMsg('wall-votes-number', '<span class="number" >'.$votes.'</span>') ?>
 				</a>			
 				<?php if($canVotes):?>
 					<a class="vote <?php if($isVoted): ?>voted<?php endif;?>">
