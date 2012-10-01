@@ -2,14 +2,10 @@
 /**
  * This service provides methods for querying for media
  */
-class MediaQueryService extends Service {
+class MediaQueryService extends WikiaService {
 
 	const MEDIA_TYPE_VIDEO = 'video';
 	const MEDIA_TYPE_IMAGE = 'image';
-
-	public function __construct() {
-		$this->app = F::app();
-	}
 
 	/**
 	 * Get list of images which:
@@ -110,11 +106,11 @@ class MediaQueryService extends Service {
 	}
 
 	protected function getArticleMediaMemcKey(Title $title) {
-		return $this->app->wf->MemcKey( 'MQSArticleMedia', '1.3', $title->getDBkey() );
+		return $this->wf->MemcKey( 'MQSArticleMedia', '1.3', $title->getDBkey() );
 	}
 
 	public function unsetCache( $title ) {
-		$this->app->wg->memc->delete( $this->getArticleMediaMemcKey( $title ) );
+		$this->wg->memc->delete( $this->getArticleMediaMemcKey( $title ) );
 	}
 
 	/**
@@ -136,11 +132,11 @@ class MediaQueryService extends Service {
 		wfProfileIn(__METHOD__);
 
 		$memcKey = $this->getArticleMediaMemcKey( $title );
-		$titles = $this->app->wg->memc->get( $memcKey );
+		$titles = $this->wg->memc->get( $memcKey );
 		if ( empty( $titles ) ) {
 			$articleId = $title->getArticleId();
 			if ( $articleId ) {
-					$db = $this->app->wf->GetDB( DB_SLAVE );
+					$db = $this->wf->GetDB( DB_SLAVE );
 					$result = $db->select(
 							array('imagelinks'),
 							array('il_to'),
@@ -173,7 +169,7 @@ class MediaQueryService extends Service {
 							}
 						}
 					}
-					$this->app->wg->memc->set($memcKey, $titles);
+					$this->wg->memc->set($memcKey, $titles);
 			}
 		}
 		if ( ! is_array($titles) ) $titles = array();
@@ -273,9 +269,9 @@ class MediaQueryService extends Service {
 	 * @return array $videoList
 	 */
 	public function getVideoList( $sort = 'recent', $filter = 'all', $limit = 0, $page = 1 ) {
-		$this->app->wf->ProfileIn( __METHOD__ );
+		$this->wf->ProfileIn( __METHOD__ );
 
-		$db = $this->app->wf->GetDB( DB_SLAVE );
+		$db = $this->wf->GetDB( DB_SLAVE );
 
 		$sqlWhere = array();
 		$sqlOptions = array();
@@ -319,7 +315,7 @@ class MediaQueryService extends Service {
 			);
 		}
 
-		$this->app->wf->ProfileOut( __METHOD__ );
+		$this->wf->ProfileOut( __METHOD__ );
 
 		return $videoList;
 	}
@@ -329,12 +325,12 @@ class MediaQueryService extends Service {
 	 * @return integer $totalVideos
 	 */
 	public function getTotalVideos() {
-		$this->app->wf->ProfileIn( __METHOD__ );
+		$this->wf->ProfileIn( __METHOD__ );
 
 		$memKey = $this->getMemKeyTotalVideos();
-		$totalVideos = $this->app->wg->Memc->get( $memKey );
+		$totalVideos = $this->wg->Memc->get( $memKey );
 		if ( !is_numeric($totalVideos) ) {
-			$db = $this->app->wf->GetDB( DB_SLAVE );
+			$db = $this->wf->GetDB( DB_SLAVE );
 
 			if ( !VideoInfoHelper::videoInfoExists() ) {
 				$excludeList = array( 'png', 'gif', 'bmp', 'jpg', 'jpeg', 'ogg', 'ico', 'svg', 'mp3', 'wav', 'midi' );
@@ -357,7 +353,7 @@ SQL;
 				$totalVideos = 0;
 				while ( $row = $db->fetchObject($result) ) {
 					$title = F::build( 'Title', array( $row->name, NS_FILE ), 'newFromText' );
-					$file = $this->app->wf->FindFile( $title );
+					$file = $this->wf->FindFile( $title );
 					if ( $file instanceof File && $file->exists()
 						&& F::build( 'WikiaFileHelper', array($title), 'isTitleVideo' ) ) {
 						$totalVideos++;
@@ -373,23 +369,23 @@ SQL;
 
 				$totalVideos = ($row) ? $row->cnt : 0 ;
 			}
-			$totalVideos = $this->app->wg->Lang->formatNum($totalVideos);
+			$totalVideos = $this->wg->Lang->formatNum($totalVideos);
 
-			$this->app->wg->Memc->set( $memKey, $totalVideos, 60*60*24 );
+			$this->wg->Memc->set( $memKey, $totalVideos, 60*60*24 );
 		}
 
-		$this->app->wf->ProfileOut( __METHOD__ );
+		$this->wf->ProfileOut( __METHOD__ );
 
 		return $totalVideos;
 	}
 
 	//get memcache key for total videos
 	protected function getMemKeyTotalVideos() {
-		return $this->app->wf->MemcKey( 'videos', 'total_videos', 'v3' );
+		return $this->wf->MemcKey( 'videos', 'total_videos', 'v3' );
 	}
 
 	public function clearCacheTotalVideos() {
-		$this->app->wg->Memc->delete( $this->getMemKeyTotalVideos() );
+		$this->wg->Memc->delete( $this->getMemKeyTotalVideos() );
 	}
 
 	/**
@@ -397,12 +393,12 @@ SQL;
 	 * @return integer $totalVideos
 	 */
 	public function getTotalPremiumVideos() {
-		$this->app->wf->ProfileIn( __METHOD__ );
+		$this->wf->ProfileIn( __METHOD__ );
 
 		$memKey = $this->getMemKeyTotalPremiumVideos();
-		$totalVideos = $this->app->wg->Memc->get( $memKey );
+		$totalVideos = $this->wg->Memc->get( $memKey );
 		if ( !is_numeric($totalVideos) ) {
-			$db = $this->app->wf->GetDB( DB_SLAVE );
+			$db = $this->wf->GetDB( DB_SLAVE );
 
 			$row = $db->selectRow(
 				array( 'video_info' ),
@@ -413,10 +409,10 @@ SQL;
 
 			$totalVideos = ($row) ? $row->cnt : 0 ;
 
-			$this->app->wg->Memc->set( $memKey, $totalVideos, 60*60*24 );
+			$this->wg->Memc->set( $memKey, $totalVideos, 60*60*24 );
 		}
 
-		$this->app->wf->ProfileOut( __METHOD__ );
+		$this->wf->ProfileOut( __METHOD__ );
 
 		return $totalVideos;
 	}
@@ -425,11 +421,11 @@ SQL;
 	 * Get memcache key for total premium videos
 	 */
 	protected function getMemKeyTotalPremiumVideos() {
-		return $this->app->wf->MemcKey( 'videos', 'total_premium_videos', 'v3' );
+		return $this->wf->MemcKey( 'videos', 'total_premium_videos', 'v3' );
 	}
 
 	public function clearCacheTotalPremiumVideos() {
-		$this->app->wg->Memc->delete( $this->getMemKeyTotalPremiumVideos() );
+		$this->wg->Memc->delete( $this->getMemKeyTotalPremiumVideos() );
 	}
 
 	/**
