@@ -116,14 +116,20 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 		$this->assertEquals( "(wid:{$mockCityId})", $method->invoke( $wikiaSearch, $searchConfig ),
 							'If we have redirects configured to be included, we should not be filter against them in the filter query.' );
 		
+		$searchConfig->setVideoSearch( true );
+		$searchConfig->setIncludeRedirects( false );
+		
+		$this->assertEquals( "((wid:{$mockCityId}) OR (wid:".WikiaSearch::VIDEO_WIKI_ID.")) AND (is_redirect:false)", $method->invoke( $wikiaSearch, $searchConfig ),
+		'If we have redirects configured to be included, we should not be filter against them in the filter query.' );
+		
 		$searchConfig->setIsInterWiki( true );
 		
-		$this->assertEquals( '(iscontent:true)', $method->invoke( $wikiaSearch, $searchConfig), 
+		$this->assertEquals( '(iscontent:true) AND (is_redirect:false)', $method->invoke( $wikiaSearch, $searchConfig), 
 							'An interwiki search should filter for content pages only.' );
 		
 		$searchConfig->setHub( $mockHub );
 		
-		$this->assertEquals( '(iscontent:true) AND (hub:Games)', $method->invoke( $wikiaSearch, $searchConfig ), 
+		$this->assertEquals( '(iscontent:true) AND (hub:Games) AND (is_redirect:false)', $method->invoke( $wikiaSearch, $searchConfig ), 
 							'An interwiki search with a hub should include the hub in the filter query.' );
 		
 	}
