@@ -31,6 +31,19 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 		$this->assertEquals( $dynamicOutput, $expectedDynamicOutput, 
 							'A basic dynamic field did not have its language code appended during WikiaSearch::field()' );
 		
+		// You should be able to overwrite the default language by passing the field parameter
+		$dynamicField			= 'html';
+		$dynamicOutput			= WikiaSearch::field( $dynamicField, 'fr' );
+		$expectedDynamicOutput	= 'html_fr';
+		$this->assertEquals( $dynamicOutput, $expectedDynamicOutput,
+		        'Providing a supported alternate language field did not correctly change a supported field during WikiaSearch::field()' );
+		
+		// But that language still needs to be supported
+		$dynamicField			= 'html';
+		$dynamicOutput			= WikiaSearch::field( $dynamicField, 'zz' );
+		$expectedDynamicOutput	= 'html';
+		$this->assertEquals( $dynamicOutput, $expectedDynamicOutput,
+		        'An unsupported language field parameter should result in the default field name during WikiaSearch::field()' );
 		
 		// A field that is dynamic unstored should have '_us' and the language code appended
 		$dynamicUnstoredField			= 'first500';
@@ -72,6 +85,8 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 		        										'WikiaSearch::valueForField() should be able to handle both quotes and boosts at the same time.' );
 		$this->assertEquals( WikiaSearch::valueForField( 'foo', 'bar', array( 'negate' => true ) ), "-(foo:bar)",
 				 										'WikiaSearch::valueForField() should add the Lucene negation operator if array param "negate" is set to true.');
+		
+		
 		
 	}
 	
