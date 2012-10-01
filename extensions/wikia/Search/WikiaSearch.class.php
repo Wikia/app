@@ -367,11 +367,12 @@ class WikiaSearch extends WikiaObject {
 	 **/
 	public static function valueForField ( $field, $value, array $params = array() )
 	{
+		$lang 		= isset( $params['lang']   ) && $params['lang']   !== false ? $lang : null;
 		$negate		= isset( $params['negate'] ) && $params['negate'] !== false ? '-' : '';
 	    $boostVal	= isset( $params['boost']  ) && $params['boost']  !== false ? '^'.$params['boost'] : '';
 	    $evaluate	= isset( $params['quote']  ) && $params['quote']  !== false ? "%s(%s:{$params['quote']}%s{$params['quote']})%s" : '%s(%s:%s)%s';
 	
-	    return sprintf( $evaluate, $negate, self::field( $field ), self::sanitizeQuery( $value ), $boostVal );
+	    return sprintf( $evaluate, $negate, self::field( $field, $lang ), self::sanitizeQuery( $value ), $boostVal );
 	}
 	
 	/**
@@ -381,10 +382,10 @@ class WikiaSearch extends WikiaObject {
 	 * @param  string $field
 	 * @return string the dynamic field, or the field name if not dynamic
 	 **/
-	public static function field ( $field )
+	public static function field ( $field, $lang = null )
 	{
 		global $wgLanguageCode, $wgWikiaSearchSupportedLanguages;
-	    $lang = preg_replace( '/-.*/', '', $wgLanguageCode );
+	    $lang = $lang ?: preg_replace( '/-.*/', '', $wgLanguageCode );
 	    if ( 		in_array( $field,	self::$languageFields )
 	            &&	in_array( $lang,	$wgWikiaSearchSupportedLanguages ) ) {
 	
