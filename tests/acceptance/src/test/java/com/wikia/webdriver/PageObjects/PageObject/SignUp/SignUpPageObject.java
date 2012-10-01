@@ -11,8 +11,10 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.Proxy.ProxyType;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
@@ -194,8 +196,12 @@ public class SignUpPageObject extends BasePageObject {
 			String captchaId = CommonFunctions.getAttributeValue(blurryWordHidden, "value");
 			String urlAd = Global.DOMAIN+ "wiki/Special:Captcha/image?wpCaptchaId="+ captchaId;
 			URL url = new URL(urlAd);
+			System.setProperty("http.proxyHost", "squid.proxy.local");
+			System.setProperty("http.proxyPort", "3128");
 			System.out.println("***********************"+System.getProperty("http.proxyHost"));
 			System.out.println("***********************"+System.getProperty("http.proxyPort"));
+			
+			
 			String md5 = md5(url.openStream());
 			if (md5 == null) 
 			{
