@@ -80,17 +80,34 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 	{
 		$this->mockApp();
 		$this->mockClass( 'Solarium_Client', $this->getMock( 'Solarium_Client', array('setAdapter') ) );
-		$mockCityId = 123;
 		
+		$mockCityId 	= 123;
+		$mockHub		= 'Games';
+		$wikiaSearch	= F::build( 'WikiaSearch' );
 		$searchConfig	= F::build( 'WikiaSearchConfig' );
 		$searchConfig	->setCityId( $mockCityId );
+		
 
 		$method = new ReflectionMethod( 'WikiaSearch', 'getFilterQueryString' );		
 		$method->setAccessible( true );
 		
-		$this->assertEquals("(wid:{$mockCityId}) AND is_redirect:false", $method->invoke( F::build( 'WikiaSearch' ), $searchConfig ) );
+		$this->assertEquals( "(wid:{$mockCityId}) AND is_redirect:false", $method->invoke( $wikiaSearch, $searchConfig ),
+							'The default behavior for on-wiki search should be to filter query for wiki ID and against redirects.' );
 		
+		$searchConfig->setIncludeRedirects( true );
 		
+		$this->assertEquals( "wid:{$mockCityId}", $method->invoke( $wikiaSearch, $searchConfig ),
+							'If we have redirects configured to be included, we should not be filter against them in the filter query.' );
+		
+		$searchConfig->setIsInterWiki( true );
+		
+		$this->assertEquals( 'iscontent:true', $method->invoke( $wikiaSearch, $searchConfig), 
+							'An interwiki search should filter for content pages only.' );
+		
+		$searchConfig->setHub( $mockHub );
+		
+		$this->assertEquals( 'iscontent:true hub:Games', $method->invoke( $wikiaSearch, $searchConfig ), 
+							'An interwiki search with a hub should include the hub in the filter query.' );
 		
 	}
 	

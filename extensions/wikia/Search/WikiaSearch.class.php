@@ -494,7 +494,7 @@ class WikiaSearch extends WikiaObject {
 			
 			$fqString .= 'iscontent:true';
 				
-			if ( $searchConfig->getHub() !== false ) {
+			if ( $searchConfig->getHub() !== null ) {
 			    $fqString .= ' hub:' . $this->sanitizeQuery( $searchConfig->getHub() );
 			}
 		}
@@ -640,7 +640,7 @@ class WikiaSearch extends WikiaObject {
 				'key'	=>	'mltfilterquery'
 			) );
 		}
-		if ( $query != false ) { 
+		if ( $query !== null ) { 
 			$mlt->setQuery( $query );
 		} else if ( $streamBody ) {
 			$mlt->addParam( 'stream.body', $streamBody );
