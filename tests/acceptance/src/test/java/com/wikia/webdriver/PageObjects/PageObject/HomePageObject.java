@@ -66,6 +66,12 @@ public class HomePageObject extends BasePageObject{
 	{
 		startWikiButton.click();	
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("form[name='label-wiki-form']")));
+		if (Global.LIVE_DOMAIN.contains("preview"))
+		{
+			String currentUrl = driver.getCurrentUrl();
+			String desiredUrl = currentUrl.replace("www.wikia.com", "preview.www.wikia.com");
+			driver.get(desiredUrl);
+		}
 		verifyURL(Global.LIVE_DOMAIN+"Special:CreateNewWiki?uselang=en");
 		return new CreateNewWikiPageObjectStep1(driver);
 	}
