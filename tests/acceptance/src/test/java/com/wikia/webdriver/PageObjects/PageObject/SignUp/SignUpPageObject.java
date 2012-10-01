@@ -194,6 +194,8 @@ public class SignUpPageObject extends BasePageObject {
 			String captchaId = CommonFunctions.getAttributeValue(blurryWordHidden, "value");
 			String urlAd = Global.DOMAIN+ "wiki/Special:Captcha/image?wpCaptchaId="+ captchaId;
 			URL url = new URL(urlAd);
+			System.out.println("***********************"+System.getProperty("http.proxyHost"));
+			System.out.println("***********************"+System.getProperty("http.proxyPort"));
 			String md5 = md5(url.openStream());
 			if (md5 == null) 
 			{
