@@ -109,7 +109,7 @@ Happy editing!",
 
 However, if this talk page option is not available in your situation, then the best advice we can give you is to wait the block out or join the community at another of the many thousand Wikia wikis available. 
 
-If you feel you still need to discuss this block further with Wikia staff, please contact us [[MediaWiki:Specialcontact-intro/basic_contact|here]].",
+If you feel you still need to discuss this block further with Wikia staff, please contact us [[Special:Contact/general|here]].",
 	
 	'specialcontact-intro-using-wikia' => "Now that you are a part of the community, you are able to edit and contribute to almost any page across Wikia. For some introductory help, check out our [[Help:Getting_Started|help pages here]]. They are a great place to learn the basics of editing, formatting and much more. 
 
