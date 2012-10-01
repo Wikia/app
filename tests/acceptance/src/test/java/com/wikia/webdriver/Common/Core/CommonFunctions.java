@@ -10,6 +10,7 @@ import java.awt.event.InputEvent;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Point;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -134,8 +135,15 @@ public class CommonFunctions
 	 */
 	public static void logOut(String userName, WebDriver driver)
 	{
+		
 		wait = new WebDriverWait(driver, 30);
-		driver.get(Global.DOMAIN+"wiki/Special:UserLogout?returnto=User "+userName);
+		try{			
+			driver.get(Global.DOMAIN+"wiki/Special:UserLogout?returnto=User "+userName);
+		}
+		catch (TimeoutException e)
+		{
+			PageObjectLogging.log("logOut", "page loads for more than 30 seconds", true);
+		}
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("a[data-id='login']")));
 		PageObjectLogging.log("logOut", "uses is logged out", true, driver);
 	}
