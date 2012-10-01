@@ -4,7 +4,7 @@ var WikiaBar = {
 	WIKIA_BAR_STATE_ANON_NML_KEY: 'AnonNotMainLangWikiaBar_0.0001',
 	WIKIA_BAR_HIDDEN_ANON_ML_TTL: 24 * 60 * 1000, //millieseconds
 	WIKIA_BAR_HIDDEN_ANON_NML_TTL: 180 * 24 * 60 * 1000, //millieseconds
-	WIKIA_BAR_STATE_USER_KEY_SUFFIX: 'UserWikiaBar_1.0001',
+	WIKIA_BAR_STATE_USER_KEY_SUFFIX: 'UserWikiaBar_1.0002',
     WIKIA_BAR_MAX_MESSAGE_PARTS: 5,
 	messageConfig: {
 		index: 0,
