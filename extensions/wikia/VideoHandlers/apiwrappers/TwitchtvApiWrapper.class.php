@@ -32,11 +32,24 @@ class TwitchtvApiWrapper extends ApiWrapper {
 	}
 
 	public function getDescription() {
-		return $this->getOriginalDescription();
+		$description = $this->getOriginalDescription();
+		if ( $category = $this->getVideoCategory() ) {
+			$description .= "\n\nCategory: $category";
+		}
+
+		return $description;
 	}
 
 	protected function getOriginalDescription() {
-		return $this->getVideoTitle();	
+		$description = "Name: ".$this->interfaceObj['name'];
+		if ( isset($this->interfaceObj['game']) ) {
+			$description .= "\n\nGame: {$this->interfaceObj['game']}";
+		}
+		if ( isset($this->interfaceObj['teams'][0]['display_name']) ) {
+			$description .= "\n\nTeam: {$this->interfaceObj['teams'][0]['display_name']}";
+		}
+
+		return $description;
 	}
 
 	public function getThumbnailUrl() {
@@ -66,6 +79,10 @@ class TwitchtvApiWrapper extends ApiWrapper {
 		}
 
 		return $title;
+	}
+
+	protected function getVideoCategory(){
+		return 'live gaming';
 	}
 
 	protected function getApiUrl() {
