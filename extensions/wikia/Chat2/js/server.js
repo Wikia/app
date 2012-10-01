@@ -579,7 +579,7 @@ function kick(client, socket, msg){
 	var kickedUser = new models.User({name: userToKick});
 	if ( client.myUser.get('isModerator') !== true) {
 		sendInlineAlertToClient(client, '', 'chat-kick-you-need-permission', []);
-	} else if ( kickedUser.get('isModerator') === true ) {
+	} else if ( kickedUser.get('isModerator') === true && client.myUser.get('isCanGiveChatMode') !== true ) {
 		sendInlineAlertToClient(client, '', 'chat-kick-cant-kick-moderator', []);
 	} else {
     	var kickEvent = new models.KickEvent({
