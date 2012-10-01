@@ -1,5 +1,7 @@
 package com.wikia.webdriver.TestCases.SignUpTests;
 
+import java.io.IOException;
+
 import org.apache.commons.lang.RandomStringUtils;
 import org.testng.annotations.Test;
 
@@ -20,7 +22,7 @@ public class SignUpTests_account_creation extends TestTemplate
 	 * https://internal.wikia-inc.com/wiki/Global_Log_in_and_Sign_up/Test_Cases:_Sign_up  
 	 * */
 	@Test(groups = {"SignUp_account_creation_TC_001", "SignUp", "Smoke"})
-	public void SignUp_account_creation_TC_001_non_latin_user_name()
+	public void SignUp_account_creation_TC_001_non_latin_user_name() throws IOException
 	{
 		SignUpPageObject signUp = new SignUpPageObject(driver);
 		timeStamp = signUp.getTimeStamp(); 
