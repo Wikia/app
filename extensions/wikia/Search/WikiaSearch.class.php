@@ -96,7 +96,7 @@ class WikiaSearch extends WikiaObject {
 	 * Used and reused for string preparation
 	 * @var Solarium_Query_Helper
 	 */
-	protected $queryHelper;
+	private static $queryHelper;
 	
 	/* Boost functions used in interwiki search
 	 * @var array
@@ -208,11 +208,11 @@ class WikiaSearch extends WikiaObject {
 	 */
 	public function getKeywords( WikiaSearchConfig $searchConfig ) {
 	    wfProfileIn(__METHOD__);
-	    $query = sprintf('wid:%d', $searchConfig->getCityId() );
+	    $query = self::valueForField( 'wid', $searchConfig->getCityId() );
 	    if ( $searchConfig->getPageId() !== false ) {
-	        $query .= sprintf(' AND pageid:%d', $searchConfig->getPageId() );
+	        $query .= sprintf(' AND %s', self::valueForField( 'pageid', $searchConfig->getPageId() ) );
 	    } else {
-	        $query .= ' AND is_main_page:1';
+	        $query .= sprintf(' AND %s', self::valueForField( 'is_main_page', '1' ) );
 	    }
 	
 	    $searchConfig	->setQuery($query)
@@ -231,11 +231,16 @@ class WikiaSearch extends WikiaObject {
 	public function getRelatedVideos( WikiaSearchConfig $searchConfig ) {
 	    wfProfileIn(__METHOD__);
 	
-	    $filterQuery = '(wid:' . $searchConfig->getCityId() . ' OR wid:' . self::VIDEO_WIKI_ID . '^2) AND is_video:true';
+	    $filterQuery = sprintf( '(%s OR %s) AND %s', 
+	    						self::valueForField( 'wid', 		$searchConfig->getCityId() ),
+	    						self::valueForField( 'wid', 		self::VIDEO_WIKI_ID, array( 'boost' => 2 ) ),
+	    						self::valueForField( 'is_video', 	'true' )
+	    						);
+	    								
 	
-	    $query = sprintf( 'wid:%d', $searchConfig->getCityId() );
+	    $query = self::valueForField( 'wid', $searchConfig->getCityId() );
 	    if ( $searchConfig->getPageId() != false ) {
-	        $query .= sprintf(' AND pageid:%d', $searchConfig->getPageId() );
+	        $query .= sprintf(' AND %s', self::valueForField( 'pageid', $searchConfig->getPageId() ) );
 	    } else {
 	        // tweakable heuristic:
 	        // the document frequency for the interesting terms needs to be at least 50% of the wiki's pages
@@ -249,12 +254,12 @@ class WikiaSearch extends WikiaObject {
 			if ( isset( $data['query'] ) && isset( $data['query']['statistics'] ) && isset( $data['query']['statistics']['articles'] ) ) {
 				$searchConfig->setMindf( (int) ($data['query']['statistics']['articles'] * .5) );
 	    	}
-			$query .= ' AND iscontent:true';
+			$query .= ' AND ' . self::valueForField( 'iscontent', 'true' );
 		}
 
 		$searchConfig
-			->setQuery			($query)
-			->setMltFilterQuery	($filterQuery)
+			->setQuery			( $query )
+			->setMltFilterQuery	( $filterQuery )
 		    // note that we're also adding the default title field
 		    // for slightly better foreign language coverage
 			->setMltFields		( array( self::field( 'title' ), self::field('html'), 'title' ) );
@@ -362,11 +367,11 @@ class WikiaSearch extends WikiaObject {
 	 **/
 	public static function valueForField ( $field, $value, array $params = array() )
 	{
-	    $boostVal = isset($params['boost']) && $params['boost'] !== false ? '^'.$params['boost'] : '';
+		$negate		= isset( $params['negate'] ) && $params['negate'] !== false ? '-' : '';
+	    $boostVal	= isset( $params['boost']  ) && $params['boost']  !== false ? '^'.$params['boost'] : '';
+	    $evaluate	= isset( $params['quote']  ) && $params['quote']  !== false ? "%s(%s:{$params['quote']}%s{$params['quote']})%s" : '%s(%s:%s)%s';
 	
-	    $evaluate = isset($params['quote']) && $params['quote'] !== false ? "(%s:{$params['quote']}%s{$params['quote']})%s" : '(%s:%s)%s';
-	
-	    return sprintf( $evaluate, self::field( $field ), $value, $boostVal );
+	    return sprintf( $evaluate, $negate, self::field( $field ), self::sanitizeQuery( $value ), $boostVal );
 	}
 	
 	/**
@@ -388,6 +393,29 @@ class WikiaSearch extends WikiaObject {
 	        $field .= $us . $mv . '_' . $lang;
 	    }
 	    return $field;
+	}
+	
+	/**
+	 * Prevents XSS and escapes characters used in Lucene query syntax.
+	 * Any query string transformations before sending to backend should be placed here.
+	 * @see    WikiaSearchTest::testSanitizeQuery
+	 * @param  string $query
+	 * @return string
+	 */
+	private static function sanitizeQuery( $query )
+	{
+	    if ( self::$queryHelper === null ) {
+	        self::$queryHelper = new Solarium_Query_Helper();
+	    }
+	
+	    // non-indexed number-string phrases issue workaround (RT #24790)
+	    $query = preg_replace('/(\d+)([a-zA-Z]+)/i', '$1 $2', $query);
+	
+	    // escape all lucene special characters: + - && || ! ( ) { } [ ] ^ " ~ * ? : \ (RT #25482)
+	    // added html entity decoding now that we're doing extra work to prevent xss
+	    $query = self::$queryHelper->escapeTerm( html_entity_decode( $query,  ENT_COMPAT, 'UTF-8' ) );
+	
+	    return $query;
 	}
 	
 	/**
@@ -492,67 +520,68 @@ class WikiaSearch extends WikiaObject {
 	private function getFilterQueryString( WikiaSearchConfig $searchConfig )
 	{
 		wfProfileIn(__METHOD__);
-		$fqString = '';
+		$filterQueries = array();
 		if ( $searchConfig->isInterWiki() ) {
 			
-			$fqString .= 'iscontent:true';
+			$filterQueries[] = self::valueForField( 'iscontent', 'true');
 				
 			if ( $searchConfig->getHub() !== null ) {
-			    $fqString .= ' hub:' . $this->sanitizeQuery( $searchConfig->getHub() );
+			    $filterQueries[] = self::valueForField( 'hub', $searchConfig->getHub() );
 			}
 		}
 		else {
-			$fqString .= 'wid:' . $searchConfig->getCityId();
+			$filterQueries[] = self::valueForField( 'wid', $searchConfig->getCityId() );
 		}
 		
 		if (! $searchConfig->getIncludeRedirects() ) {
-			$fqString = "({$fqString}) AND is_redirect:false";
+			$filterQueries[] = self::valueForField( 'is_redirect', 'false');
 		}
 		wfProfileOut(__METHOD__);
-		return $fqString;
+		return implode( ' AND ', $filterQueries );
 	}
 	
 	/**
 	 * Builds the necessary query clauses based on values set in the searchconfig object
+	 * @see    WikiaSearchTest::testGetQueryClausesString
 	 * @param  WikiaSearchConfig $searchConfig
 	 * @return string
 	 */
 	private function getQueryClausesString( WikiaSearchConfig $searchConfig )
 	{
+		$queryClauses = array();
+		
 		if ( $searchConfig->isInterWiki() ) {
 			
-			$queryClauses = array();
-			
-			$widQuery = '';
-			
+			$widQueries = array();
 			foreach ( $this->getInterWikiSearchExcludedWikis() as $excludedWikiId ) {
-			    $widQuery .= ( !empty($widQuery) ? ' AND ' : '' ) . '!wid:' . $excludedWikiId;
+			    $widQueries[] = self::valueForField( 'wid',  $excludedWikiId, array( 'negate' => true ) );
 			}
 			 
-			$queryClauses[] = $widQuery;
+			$queryClauses[] = '(' . implode( ' AND ', $widQueries ) . ')';
 			
-			$queryClauses[] = "lang:" . $this->wg->ContLang->mCode;
+			$queryClauses[] = self::valueForField( 'lang', $this->wg->ContLang->mCode );
 			
-			$queryClauses[] = "iscontent:true";
+			$queryClauses[] = self::valueForField( 'iscontent', 'true' );
 			
-			if ( $searchConfig->getHub() !== false ) {
-			    $queryClauses[] = "hub:".$this->sanitizeQuery( $searchConfig->getHub() );
+			if ( $searchConfig->getHub() !== null ) {
+			    $queryClauses[] = self::valueForField( 'hub', $searchConfig->getHub() );
 			}
 		}
 		else {
 			if ( $searchConfig->getVideoSearch() ) {
 				$searchConfig->setNamespaces( array( NS_FILE ) );
-				$queryClauses[] = 'is_video:true';
+				$queryClauses[] = self::valueForField( 'is_video', 'true' );
+				$queryWithVideo = sprintf('(%s OR %s)', self::valueForField( 'wid', $searchConfig->getCityId() ), self::valueForField( 'wid', self::VIDEO_WIKI_ID ) );
+				array_unshift( $queryClauses, $queryWithVideo );
+			} else {
+				array_unshift( $queryClauses, self::valueForField( 'wid', $searchConfig->getCityId() ) );
 			}
 			
 			$nsQuery = '';
 			foreach ( $searchConfig->getNamespaces() as $namespace ) {
-				$nsQuery .= ( !empty($nsQuery) ? ' OR ' : '' ) . 'ns:' . $namespace;
+				$nsQuery .= ( !empty($nsQuery) ? ' OR ' : '' ) . self::valueForField( 'ns', $namespace );
 			}
 			$queryClauses[] = "({$nsQuery})";
-			
-			// first priority is to filter by wid; that's why it's prepended
-			array_unshift( $queryClauses, 'wid:' . $searchConfig->getCityId() );
 		}
 		
 		return sprintf( '(%s)', implode( ' AND ', $queryClauses ) );
@@ -580,36 +609,13 @@ class WikiaSearch extends WikiaObject {
 		);
 		
 		if ( $searchConfig->isInterWiki() ) {
-			$boostQueries[] = self::valueForField( 'wikititle', $queryNoQuotes, array( 'boost'=>15, 'quote'=>'\"' ) );
-			$boostQueries[] = '-host:\"answers\"^10';
-			$boostQueries[] = '-host:\"respuestas\"^10';
+			$boostQueries[] = self::valueForField( 'wikititle',	$queryNoQuotes,	array( 'boost' => 15, 'quote' => '\"' )		);
+			$boostQueries[] = self::valueForField( 'host',		'answers', 		array( 'boost' => 10, 'negate' => true )	);
+			$boostQueries[] = self::valueForField( 'host',		'respuestas',	array( 'boost' => 10, 'negate' => true )	);
 		}
 		
 		return implode( ' ', $boostQueries );
 	}
-
-	/**
-	 * Prevents XSS and escapes characters used in Lucene query syntax.
-	 * Any query string transformations before sending to backend should be placed here.
-	 * @param  string $query
-	 * @return string
-	 */
-	private function sanitizeQuery( $query ) 
-	{
-		if ( $this->queryHelper === null ) {
-			$this->queryHelper = new Solarium_Query_Helper();
-		}
-
-		// non-indexed number-string phrases issue workaround (RT #24790)
-	    $query = preg_replace('/(\d+)([a-zA-Z]+)/i', '$1 $2', $query);
-	
-	    // escape all lucene special characters: + - && || ! ( ) { } [ ] ^ " ~ * ? : \ (RT #25482)
-	    // added html entity decoding now that we're doing extra work to prevent xss
-	    $query = $this->queryHelper->escapeTerm( html_entity_decode( $query,  ENT_COMPAT, 'UTF-8' ) );
-
-	    return $query;
-	}
-	
 	
 	/**
 	 * Utilizes Solr's MoreLikeThis component to return similar pages
@@ -678,7 +684,7 @@ class WikiaSearch extends WikiaObject {
 	 * @param  int $currentWikiId
 	 * @return array
 	 */
-	private function getInterWikiSearchExcludedWikis($currentWikiId = 0) {
+	private function getInterWikiSearchExcludedWikis( $currentWikiId = 0 ) {
 	    wfProfileIn(__METHOD__);
 	
 	    $cacheKey		= $this->wf->SharedMemcKey( 'crossWikiaSearchExcludedWikis' );
@@ -688,7 +694,7 @@ class WikiaSearch extends WikiaObject {
 	        // get private wikis from db
 	        $wgIsPrivateWiki	= WikiFactory::getVarByName( 'wgIsPrivateWiki', $currentWikiId );
 	        $privateWikis		= WikiFactory::getCityIDsFromVarValue( $wgIsPrivateWiki->cv_id, true, '=' );
-	        $wg->Memc->set( $cacheKey, $privateWikis, 3600 ); // cache for 1 hour
+	        $this->wg->Memc->set( $cacheKey, $privateWikis, 3600 ); // cache for 1 hour
 	    }
 	
 	    wfProfileOut(__METHOD__);
