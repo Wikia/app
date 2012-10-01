@@ -74,10 +74,19 @@
 	// If script is ours, load it natively using documentWriteScript
 	// and return false, otherwise return true
 	checkHandler = function(tagName, attrs) {
+		// Optional logging
+		var logging = location.search.indexOf('gwconfiglog=1');
+
+		logging && window.console.log('gw.config.js: checkHandler: ', tagName, attrs);
+
 		if (tagName === 'script' && attrs.src && shouldUseNativeWrite(attrs.src)) {
+			logging && window.console.log('gw.config.js: checkHandler: natively writing script ' + attrs.src);
 			documentWriteScript(attrs);
+			logging && window.console.log('gw.config.js: checkHandler: end of ' + attrs.src);
 			return false;
 		}
+
+		logging && window.console.log('gw.config.js: checkHandler: let GW write');
 		return true;
 	};
 
