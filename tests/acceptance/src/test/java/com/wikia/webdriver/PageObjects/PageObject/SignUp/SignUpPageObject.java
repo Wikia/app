@@ -146,8 +146,9 @@ public class SignUpPageObject extends BasePageObject {
 	
 	/**
 	 * @author Karol Kujawiak
+	 * @throws IOException 
 	 */
-	public void enterBlurryWord()
+	public void enterBlurryWord() throws IOException
 	{
 		String word = getWordFromCaptcha();
 		blurryWordField.sendKeys(word);
@@ -186,11 +187,12 @@ public class SignUpPageObject extends BasePageObject {
 	
 	/**
 	 * @author Karol Kujawiak
+	 * @throws IOException 
 	 */
-	private String getWordFromCaptcha() 
+	private String getWordFromCaptcha() throws IOException 
 	{
-		try
-		{
+//		try
+//		{
 			String captchaId = CommonFunctions.getAttributeValue(blurryWordHidden, "value");
 			String urlAd = Global.DOMAIN+ "wiki/Special:Captcha/image?wpCaptchaId="+ captchaId;
 			URL url = new URL(urlAd);
@@ -216,13 +218,13 @@ public class SignUpPageObject extends BasePageObject {
 			in.close();
 			PageObjectLogging.log("getWordFromCaptcha", "Captcha word not decoded", false);
 			return null;
-		}
-		catch(IOException e)
-		{
-			PageObjectLogging.log("getWordFromCaptcha", e.toString(), false);
-			e.printStackTrace();
-			return null;
-		} 
+//		}
+//		catch(IOException e)
+//		{
+//			PageObjectLogging.log("getWordFromCaptcha", e.toString(), false);
+//			e.printStackTrace();
+//			return null;
+//		} 
 		
 	}
 
