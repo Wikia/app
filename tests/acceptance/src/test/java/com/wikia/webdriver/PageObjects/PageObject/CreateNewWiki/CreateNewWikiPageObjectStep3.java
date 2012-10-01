@@ -37,17 +37,20 @@ public class CreateNewWikiPageObjectStep3 extends BasePageObject{
 	public void selectTheme(int skinNumber)
 	{
 		waitForElementByCss("li[data-theme]");
-		List<WebElement> lista = driver.findElements(By.cssSelector("li[data-theme]"));
-		PageObjectLogging.log("selectTheme", "skin number: " + skinNumber + " selected", true, driver);
-		Actions builder = new Actions(driver);
-		WebElement e = lista.get(skinNumber);
-		builder.click(e);
+		jQueryClick("li[data-theme]:nth-child("+skinNumber+")");
+//		List<WebElement> lista = driver.findElements(By.cssSelector("li[data-theme]"));
+		
+//		Actions builder = new Actions(driver);
+//		WebElement e = lista.get(skinNumber);
+//		builder.click(e);
 //		builder.moveToElement(logInAjax).build().perform();
 //		lista.get(skinNumber).click();
+		PageObjectLogging.log("selectTheme", "skin number: " + skinNumber + " selected", true, driver);
 	}
 	
 	public NewWikiaHomePage submit(String wikiName)
 	{
+		waitForElementByElement(submitButton);
 		submitButton.click();
 		PageObjectLogging.log("submit", "Submit button clicked", true, driver);
 		return new NewWikiaHomePage(driver, wikiName);
