@@ -288,7 +288,7 @@ var WikiaPhotoGallery = {
 						delete gallery.params.rssfeed;
 					}
 				} else if ( !this.isSlider() ) {
-					gallery.params.captionalign = $('#WikiaPhotoGalleryEditorGalleryCaptionAlignment').val();
+					gallery.params.captionalign = $('#WikiaPhotoGalleryEditorGalleryCaptionAlignment').val();                   
 					gallery.params.widths = $('#WikiaPhotoGallerySliderGallery').find('.slider').slider('value');
 					if (gallery.params.usefeed) {
 						delete gallery.params.usefeed;
@@ -2416,6 +2416,12 @@ var WikiaPhotoGallery = {
 						return;
 					}
 					if (!isSlideshow && value == 'left') {
+						return;
+					}
+					break;
+                                //skip when default (BugId:15294)
+				case 'captionalign':
+					if (value == 'left') {
 						return;
 					}
 					break;
