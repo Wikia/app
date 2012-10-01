@@ -149,7 +149,33 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 					        '(html:\"foo bar\")^5 (title:\"foo bar\")^10 (wikititle:\"foo bar\")^15 -host:\"answers\"^10 -host:\"respuestas\"^10',
 					        'WikiaSearch::getBoostQueryString should remove "wiki" from searches,, include wikititle, and remove answers wikis'
 							);
+	}
+	
+	/**
+	 * @covers WikiaSearch::sanitizeQuery
+	 */
+	public function testSanitizeQuery() {
+		$this->mockApp();
+		$this->mockClass( 'Solarium_Client', $this->getMock( 'Solarium_Client', array('setAdapter') ) );
 		
+		$wikiaSearch	= F::build( 'WikiaSearch' );
+		
+		$method = new ReflectionMethod( 'WikiaSearch', 'sanitizeQuery' );
+		$method->setAccessible( true );
+		
+		$this->assertEquals( '123 foo', $method->invoke( $wikiaSearch, '123foo' ),
+							 'WikiaSearch::sanitizeQuery should split numbers and letters.'
+							);
+		
+		$this->assertEquals( '\\+\\-\\&&\\||\\!\\(\\)\\{\\}\\[\\]\\^\\"\\~\\*\\?\\:\\\\', 
+							$method->invoke( $wikiaSearch, '+-&&||!(){}[]^"~*?:\\' ),
+							'WikiaSearch::sanitizeQuery should escape lucene special characters.'
+							);
+		
+		$this->assertEquals( '\"fame & glory\"',
+							$method->invoke( $wikiaSearch, '&quot;fame &amp; glory&quot;' ),
+							'WikiaSearch::sanitizeQuery shoudl decode HTML entities and escape any entities that are also Lucene special characters.'
+							);
 		
 	}
 	
