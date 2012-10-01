@@ -15,27 +15,27 @@ var ChatView = Backbone.View.extend({
 		// Load the mapping of emoticons.  This wiki has priority, then falls back to Messaging.  If both of those fail, uses some hardcoded fallback.
 		this.emoticonMapping.loadFromWikiText( EMOTICONS );
 	},
-	
+
 	/**
 	 * All messages that are recieved are processed here before being displayed. This
 	 * will escape html/js, build links, and process emoticons.
 	 */
 	processText: function( text, allowHtml ){
-		
+
 		if (!allowHtml) {
 			// Prevent simple HTML/JS vulnerabilities (need to do this before other rewrites).
 			text = text.replace(/</g, "&lt;");
-			text = text.replace(/>/g, "&gt;");			
+			text = text.replace(/>/g, "&gt;");
 		}
 
 		// TODO: Use the wgServer and wgArticlePath from the chat room. Maybe the room should be passed into this function? (it seems like it could be called a bunch of times in rapid succession).
-		
+
 		// Prepare a regexp we use to match local wiki links
 		var localWikiLinkReg = '^' + wgServer + wgArticlePath;
 		localWikiLinkReg = localWikiLinkReg.replace(/\$1/, "(\\S+[^.\\s\\?\\,])");
 		localWikiLinkReg = new RegExp(localWikiLinkReg, "i");
-		
-		
+
+
 		if (!allowHtml) {
 			// Linkify http://links
 			var exp = /\b(ftp|http|https):\/\/(\w+:{0,1}\w*@)?[a-zA-Z0-9\-\.]+(:[0-9]+)?\S+[^.\s\?\,]/ig;
@@ -52,7 +52,7 @@ var ChatView = Backbone.View.extend({
 				return '<a href="'+link+'">'+linkName+'</a>';
 			});
 		}
-		
+
 		// helper function (to avoid code duplicates)
 		var linkify = function(article, linkText) {
 			article = article.replace(/ /g, "_");
@@ -66,9 +66,9 @@ var ChatView = Backbone.View.extend({
 			article = article.replace(/%2f/ig, "/"); // make slashes more human-readable (they don't really need to be escaped)
 			article = article.replace(/%3a/ig, ":"); // make colons more human-readable (they don't really need to be escaped)
 			var url = path.replace("$1", article);
-			return '<a href="' + url + '">' + linkText + '</a>';			
+			return '<a href="' + url + '">' + linkText + '</a>';
 		}
-		
+
 		// Linkify [[Pipes|Pipe-notation]] in bracketed links.
 		var exp = /\[\[([^\[\|\]\r\n\t]*)\|([^\[\]\|\r\n\t]*)\]\]/ig;
 		text = text.replace(exp, function(wholeMatch, article, linkText) {
@@ -89,14 +89,14 @@ var ChatView = Backbone.View.extend({
 
 		return text;
 	},
-	
+
 	render: function(type){
 		//$().log("ABOUT TO RENDER THIS CHAT MESSAGE: " + JSON.stringify(this.model));
-		
+
 		// Inline Alerts have may have i18n messages in them. If so (and they don't have 'text' yet), process the message and cache it in 'text'.
 		// This needs to be done before the template processing below so that 'text' will be set by then.
-		
-		
+
+
 		if(this.model.get('text') == ''){
 			$().log("Found an i18n message with msg name " + this.model.get('wfMsg') + " and params: " + this.model.get('msgParams'));
 			var params = this.model.get('msgParams');
@@ -105,7 +105,7 @@ var ChatView = Backbone.View.extend({
 			this.model.set({text: i18nText});
 			$().log("Message translated to: " + i18nText);
 		}
-		
+
 		var msg = this.model.toJSON();
 		// Make a call to process any text for links, unsafe html/js, emoticions, etc.
 		// note: html/js is not escaped in alerts (FB 21922)
@@ -118,9 +118,9 @@ var ChatView = Backbone.View.extend({
 		} else {
 			$(this.el).html(this.template(msg));
 		}
-		
+
 		$(this.el).attr('id', 'entry-' + this.model.cid );
-		
+
 		// Add username as a class in li element
 		if (this.model.get('name')) {
 			$(this.el).attr('data-user', this.model.get('name'));
@@ -132,7 +132,7 @@ var ChatView = Backbone.View.extend({
 				$(this.el).addClass('continued');
 			}
 		}
-		
+
 		// Add a special "you" class for styling your own messages
 		if (this.model.get('name') == wgUserName) {
 			$(this.el).addClass('you');
@@ -142,7 +142,7 @@ var ChatView = Backbone.View.extend({
 		if(this.model.get('isInlineAlert') === true){
 			$(this.el).addClass('inline-alert');
 		}
-		
+
 		// Timestamps
 		if(this.model.get('timeStamp').toString().match(/^\d+$/)) {
 			var date = new Date(this.model.get('timeStamp'));
@@ -157,7 +157,7 @@ var ChatView = Backbone.View.extend({
 			var minutes = (date.getMinutes().toString().length == 1) ? '0' + date.getMinutes() : date.getMinutes();
 			$(this.el).find('.time').text(hours + ':' + minutes);
 		}
-		
+
 		return this;
 	}
 });
@@ -181,17 +181,17 @@ var UserView = Backbone.View.extend({
 
 	render: function(){
 		//$().log("ABOUT TO RENDER THIS USER: " + JSON.stringify(this.model));
-		
+
 		var model = this.model.toJSON();
 		$().log(model, model.name);
 		if(model['since']) {
-			model['since'] = wgLangtMonthAbbreviation[model['since']['mon']] + ' ' + model['since']['year'];	
+			model['since'] = wgLangtMonthAbbreviation[model['since']['mon']] + ' ' + model['since']['year'];
 		}
 
 		$(this.el).html( this.template(model) );
-		
+
 		// Set the id by username so that we can remove it when the user parts.
-		
+
 		$(this.el).attr('id', this.liId());
 		$(this.el).attr('data-user', this.model.get('name'));
 
@@ -199,12 +199,12 @@ var UserView = Backbone.View.extend({
 		if(this.model.get('isModerator') === true){
 			$(this.el).addClass('chat-mod');
 		}
-		
+
 		if(this.model.get('isStaff') === true){
 			$(this.el).addClass('staff');
 		}
-		
-		
+
+
 		// If the user is away, add a certain class to them, if not, remove the away class.
 		if(this.model.get('statusState') == STATUS_STATE_AWAY){
 			$(this.el).addClass('away');
@@ -222,17 +222,17 @@ var UserView = Backbone.View.extend({
 
 		return this;
 	},
-	
+
 	liId: function(){
 		var prefix = "";
-		
-		if( this.model.get('isPrivate') === true ) { 
+
+		if( this.model.get('isPrivate') === true ) {
 			prefix = "priv-";
 		}
 		username = this.model.get('name').replace(/ /g, "_"); // encodeURIComponent would add invalid characters
 		return prefix + 'user-' + username;
 	},
-	
+
 	getUserElement: function() {
 		return $(document.getElementById(this.liId()));
 	}
@@ -246,39 +246,39 @@ var NodeChatDiscussion = Backbone.View.extend({
 		this.model.chats.bind('remove', $.proxy(this.removeChat, this));
 		this.model.chats.bind('clear', $.proxy(this.clear, this));
 		this.forceScroll = true;
-		        
+
 		this.delegateEventsToTrigger(this.triggerEvents, function(e){
 			return e;
 		});
-		
+
 		$("#WikiaPage").append($('<div style="display:none" id="Chat_' + this.roomId + '" class="Chat"><ul></ul></div>'));
 		this.chatDiv = $("#Chat_" + this.roomId );
 		this.chatUL = $("#Chat_" + this.roomId + " ul");
 
-		$("#Chat_" + this.roomId).on('click', 'a', $.proxy(function(e) { 
-			this.trigger('clickAnchor', e); 
-			e.preventDefault(); 
-        },this)); 
-		
+		$("#Chat_" + this.roomId).on('click', 'a', $.proxy(function(e) {
+			this.trigger('clickAnchor', e);
+			e.preventDefault();
+        },this));
+
 		this.model.room.bind('change', $.proxy(this.updateRoom, this));
-		this.chatDiv.bind('scroll', $.proxy(this.userScroll, this));
+		this.chatDiv.bind('scroll', $.debounce(100, $.proxy(this.userScroll, this)));
 	},
 	//TODO: divide to NodeChatDiscussion and NodeChatUsers
 	updateRoom: function(status) {
 		var count = $('#MsgCount_' + status.get('roomId'));
 		var room = count.closest('.User, .wordmark');
 		var privateHeader = $('#Rail > .private');
-		
+
 		if(status.get('unreadMessage') > 0 ) {
-			count.text(status.get('unreadMessage'));	
+			count.text(status.get('unreadMessage'));
 			room.addClass('unread');
 		} else {
-			room.removeClass('unread');	
+			room.removeClass('unread');
 		}
-		
+
 		if(status.get('isActive') === true) {
 			room.addClass('selected');
-			
+
 			if(status.get('blockedMessageInput') === true ) {
 
 				$('#Write').addClass('blocked');
@@ -286,8 +286,8 @@ var NodeChatDiscussion = Backbone.View.extend({
 			} else {
 				$('#Write').removeClass('blocked');
 				$('#Write textarea').removeAttr("disabled");
-			}	
-			
+			}
+
 			this.show();
 			if(status.get('privateUser') === false ) {
 		 		$('#ChatHeader .public').show();
@@ -300,22 +300,22 @@ var NodeChatDiscussion = Backbone.View.extend({
 			room.removeClass('selected');
 			this.hide();
 		}
-		
+
 		if(status.get('blockedMessageInput') === true ) {
 			room.addClass('blocked');
 		} else {
 			room.removeClass('blocked');
 		}
-		
+
 		if(status.get('hidden') === true ) {
 			room.hide();
 		} else {
 			room.show();
 		}
-		
+
 		// Handle hiding/showing private chat header
 		($('#PrivateChatList .User:visible').length) ? privateHeader.show() : privateHeader.hide();
-		
+
 	},
 
 	getTextInput: function() {
@@ -326,24 +326,24 @@ var NodeChatDiscussion = Backbone.View.extend({
 		this.chatDiv.show();
 		this.scrollToBottom();
 	},
-	
+
 	hide: function() {
 		this.chatDiv.hide();
 	},
-	
+
 	triggerEvents: {
 		"keyup #Write [name='message']": "updateCharacterCount",
 		"keydown #Write [name='message']": "updateCharacterCount",
 		"keypress #Write [name='message']": "sendMessage"
 	},
-	
+
 	clear: function(chat) {
-		this.chatUL.empty(); 	
+		this.chatUL.empty();
 	},
-	
+
 	addChat: function(chat) {
 		if (chat.attributes.name == wgUserName) this.forceScroll = true;
-		
+
 		// Add message to chat
 		var view = new ChatView({model: chat});
 		this.chatUL.append(view.render().el);
@@ -359,7 +359,7 @@ var NodeChatDiscussion = Backbone.View.extend({
 		node.next().removeClass('continued');
 		node.remove();
 	},
-	
+
 	scrollToBottom: function() {
 		// scroll after delay to allow text expansion (eg. emoteicons)
 		var forceScroll = this.forceScroll;
@@ -369,48 +369,48 @@ var NodeChatDiscussion = Backbone.View.extend({
 			this.forceScroll = forceScroll;
 		}, this), 0);
 	},
-	
+
 	userScroll: function() {
 		// Determine if chat view is presently scrolled to the bottom
-		var isAtBottom = false;				
+		var isAtBottom = false;
 		if (( this.chatDiv.scrollTop() + 1) >= (this.chatUL.outerHeight() - this.chatDiv.height())) {
 			isAtBottom = true;
 		}
-		
+
 		if(isAtBottom)	this.forceScroll = true;
 		else			this.forceScroll = false;
 	}
 });
-//TODO: rename it to frame NodeChatFrame ? 
+//TODO: rename it to frame NodeChatFrame ?
 var NodeChatUsers = Backbone.View.extend({
 	actionTemplate: _.template( $('#user-action-template').html() ),
 	actionTemplateNoUrl: _.template( $('#user-action-template-no-url').html() ),
 	initialize: function(options) {
 		this.model.users.bind('add', $.proxy(this.addUser,this));
 		this.model.users.bind('remove', $.proxy(this.removeUser, this));
-		
+
 		this.model.privateUsers.bind('add', $.proxy(this.addUser, this));
 		this.model.privateUsers.bind('remove', $.proxy(this.removeUser, this));
-		
-        $("#ChatHeader a").click($.proxy(function(e) { 
-            this.trigger('clickAnchor', e); 
-            e.preventDefault(); 
-        },this)); 
-        
+
+        $("#ChatHeader a").click($.proxy(function(e) {
+            this.trigger('clickAnchor', e);
+            e.preventDefault();
+        },this));
+
 		this.delegateEventsToTrigger(this.triggerEvents, function(e) {
     		e.preventDefault();
     		var name = $(e.target).closest('.UserStatsMenu').find('.username').text();
     		if(!(name.length > 0)) {
     			name = $(e.target).closest('li').find('.username').first().text();
     		}
-    		return { 'name': name, 'event': e, 'target': $(e.target).closest('li')}; 
+    		return { 'name': name, 'event': e, 'target': $(e.target).closest('li')};
 		});
-		
+
 		$("#Rail").on("click", '.wordmark', function(event) {
 			event.preventDefault();
 			window.mainRoom.showRoom('main');
 		});
-		
+
 		// Hide/show main chat user list
 		$('#Rail .chevron').click(function() {
 			if ($('#WikiChatList').is(':visible')) {
@@ -422,7 +422,7 @@ var NodeChatUsers = Backbone.View.extend({
 			}
 		});
 	},
-	
+
 	triggerEvents: {
 			"click .kick": "kick",
 			"click .ban": "ban",
@@ -433,25 +433,25 @@ var NodeChatUsers = Backbone.View.extend({
 			"click #WikiChatList li": "mainListClick",
 			"click #PrivateChatList li": "privateListClick"
 	},
-	
+
  	clearPrivateChatActive: function() {
  		$("#PrivateChatList li").removeClass('selected');
  	},
-		
+
 	addUser: function(user) {
 		var view = new UserView({model: user}),
 			list = (user.attributes.isPrivate) ? $('#PrivateChatList') : $('#WikiChatList'),
 			isPrivate = user.get('isPrivate'),
 			el = $(view.render().el);
 
-		// For private chats, show private headline and possibly select the chat		
+		// For private chats, show private headline and possibly select the chat
 		if(isPrivate) {
 			$('#Rail h1.private').show();
 			if(user.get('active')) {
-				el.addClass('selected');	
+				el.addClass('selected');
 			}
 		}
-	
+
 		// Add users to list
 		if (list.children().length) {
 			// The list is not empty. Arrange alphabetically.
@@ -476,38 +476,38 @@ var NodeChatUsers = Backbone.View.extend({
 			// The list is empty. Append this user.
 			list.append(el);
 		}
-		
+
 		// Scroll the list down if a new private chat is being added
 		if (user.get('isPrivate')) {
 			$().log('UserView SCROLL DOWN!!!');
-			$('#Rail').scrollTop($('#Rail').get(0).scrollHeight);		
+			$('#Rail').scrollTop($('#Rail').get(0).scrollHeight);
 		}
 
 		if(!isPrivate) {
 			this.toggleChevron(list);
 		}
 	},
-	
+
 	removeUser: function(user) {
 		var list = (user.attributes.isPrivate) ? $('#PrivateChatList') : $('#WikiChatList'),
 			isPrivate = user.get('isPrivate'),
 			view = new UserView({model: user});
-		
+
 		view.getUserElement().remove();
-		
+
 		if(!isPrivate) {
 			this.toggleChevron(list);
-		}	
+		}
 	},
-	
+
 	// Only show chevron in public chat if there is anyone to talk to
-	toggleChevron: function(list) { 
+	toggleChevron: function(list) {
 		var chevron = $('#Rail .public .chevron');
 		if (list.children().length > 1) {
 			chevron.show();
 		} else {
 			chevron.hide();
-		}	
+		}
 	},
 
 	showMenu: function(element, actions) {
@@ -544,7 +544,7 @@ var NodeChatUsers = Backbone.View.extend({
 						actionName: action,
 						actionDesc: $.msg('chat-user-menu-' + action)
 					})
-				);	
+				);
 			}
 
 			menuActions.append(regularActions);
@@ -560,14 +560,14 @@ var NodeChatUsers = Backbone.View.extend({
 						actionName: action,
 						actionDesc: $.msg('chat-user-menu-' + action)
 					})
-				);	
+				);
 			}
 
 			menuActions.append($('<hr>').addClass('separator'));
 			menuActions.append(adminActions);
 		}
 
-		// Is the menu falling below the viewport? If so, move it!				
+		// Is the menu falling below the viewport? If so, move it!
 		if (parseInt(menu.css('top')) + menu.outerHeight() > $(window).height()) {
 			menu.css('top', $(window).height() - menu.outerHeight());
 		}
@@ -577,33 +577,33 @@ var NodeChatUsers = Backbone.View.extend({
 
 		menu.show();
 
-		// Bind event handler to body to close the menu			
+		// Bind event handler to body to close the menu
 		$('body').bind('click.menuclose', function(event) {
 			if (!$(event.target).closest('#UserStatsMenu').length) {
 				$('#UserStatsMenu').hide();
 				$('body').unbind('.menuclose');
 			};
 		});
-		
+
 		// Handle clicking the profile and contrib links
-			
+
 		menu.find('.talk-page').add('.contribs').add('.message-wall').click(function(event) {
 			event.preventDefault();
 			var target = $(event.currentTarget);
 			var menu = target.closest('.UserStatsMenu');
 			var username = menu.find('.username').text();
 			var location = '';
-			
+
 			if (target.hasClass('talk-page') || target.hasClass('message-wall')) {
 				location = pathToProfilePage.replace('$1', username);
 			} else if (target.hasClass('contribs')) {
 				location = pathToContribsPage.replace('$1', username);
 			}
-							
+
 			window.open(location);
 			menu.hide();
-		});		
-	}, 
+		});
+	},
 	hideMenu: function() {
 		$("#UserStatsMenu").hide();
 	}
@@ -617,10 +617,10 @@ Backbone.View.prototype.delegateEventsToTrigger = function(events, preProcess) {
     for (var key in events) {
     	var event = events[key];
     	var view = this;
-    	this[ event ] = (function(event){ return function(e) {  
-    		view.trigger( event, preProcess(e) ); }; 
+    	this[ event ] = (function(event){ return function(e) {
+    		view.trigger( event, preProcess(e) ); };
     	})(event);
-    }	
-   
+    }
+
 	this.delegateEvents(this.triggerEvents);
 };

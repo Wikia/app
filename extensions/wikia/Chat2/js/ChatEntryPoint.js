@@ -47,16 +47,16 @@ var ChatEntryPoint = {
 			prevClass: 'arrow-left',
 			itemsShown: 6
 		});
-		
+
 		// TODO: abstract this because we use this pattern in a few places: i.e. hovering over popover will not close it
 		var popoverTimeout = 0;
 
 		function setPopoverTimeout(elem) {
 			popoverTimeout = setTimeout(function() {
-				elem.popover('hide');	
+				elem.popover('hide');
 			}, 300);
 		}
-				
+
 		chatWhosHere.find('.chatter').popover({
 			trigger: "manual",
 			placement: "bottom",
@@ -85,7 +85,6 @@ var ChatEntryPoint = {
 	onClickChatButton: function(isLoggedIn, linkToSpecialChat) {
 		if (isLoggedIn) {
 			window.open(linkToSpecialChat, 'wikiachat', wgWikiaChatWindowFeatures);
-			$('.modalWrapper').closeModal();
 		} else {
 			UserLoginModal.show({
 				persistModal: true,
