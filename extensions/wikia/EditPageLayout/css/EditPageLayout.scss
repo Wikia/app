@@ -303,6 +303,10 @@ body {
 				overflow-y: scroll;
 				min-height: 320px;
 				padding: 10px;
+                .global-notification {
+                    /* FB#48494 - change nav2 error styling for modal preview */
+                    width: auto;
+                }
 			}
 			/**
 			 *	FB#8087 - styling for interlanguage links in RTE popup preview

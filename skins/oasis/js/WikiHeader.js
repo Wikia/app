@@ -534,8 +534,13 @@ $(function() {
 
 			if (errorMessages.length > 0) {
 				$('#publish').remove();
-				// FIXME:replace with $.showModal
-				alert(errorMessages.join("\n\n"));
+				// TODO: use mustache and promise pattern along with .getMessages
+                var notifications =
+                    '<div class="global-notification error">'
+                    + '<div class="msg">' + errorMessages.join("</br>") + '</div>'
+                    + '</div>'
+
+                $('.modalContent .ArticlePreview').prepend(notifications);
 			}
 			previewNode.find('nav > ul a').click(function() {
 				if ($(this).attr('href') == '#') {
