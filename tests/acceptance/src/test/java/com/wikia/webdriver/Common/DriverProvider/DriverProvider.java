@@ -98,6 +98,15 @@ public class DriverProvider {
 			
 		
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		try
+		{			
+			driver.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
+			driver.manage().timeouts().setScriptTimeout(30, TimeUnit.SECONDS);
+		}
+		catch (Exception e)
+		{
+			PageObjectLogging.log("Page load timeout", "Page was loading for over 30 seconds", true);
+		}
 		return instance;
 	}
 	
@@ -132,10 +141,7 @@ public class DriverProvider {
 	/**
 	 * @author Karol Kujawiak
 	 */
-	public void close()
-	{
-		driver.close();
-	}
+	
 	
 
 	/**
