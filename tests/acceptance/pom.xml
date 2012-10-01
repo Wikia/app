@@ -96,6 +96,7 @@
 					<systemPropertyVariables>
 						<run_mvn>true</run_mvn>
 						<base-address>${base-address}</base-address>
+						<live-domain>${live-domain}</live-domain>
 						<browser>${browser}</browser>
 						<config>c:/wikia-qa/config.xml</config>
 						<captcha>c:/wikia-qa/captcha.txt</captcha>
