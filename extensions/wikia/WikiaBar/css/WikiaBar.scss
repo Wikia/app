@@ -39,12 +39,6 @@ $animationSpeed: 200ms;
 			@include transition-shorthand(all $animationSpeed ease-in);
 		}
 	}
-	&.not-fixed {
-		position: relative;
-		&.hidden {
-			position: fixed;
-		}
-	}
 	.wikia-bar {
 		background-image: url(/skins/oasis/images/checkers.png); /* base64 */
 		height: 25px;

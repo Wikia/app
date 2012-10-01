@@ -52,6 +52,9 @@
 		editboxReady: function(editor, editbox) {
 			var node,
 				footerHeight = $("#WikiaFooter").outerHeight(true) || 0,
+				wikiaBarWrapper = $("#WikiaBarWrapper"),
+				wikiaBarHeight = wikiaBarWrapper.outerHeight(true) || 0,
+				wikiaBarHidden = wikiaBarWrapper.hasClass('hidden') || false,
 				offsetHeight = 0,
 				self = this;
 
@@ -67,7 +70,11 @@
 				offsetHeight += (node.outerHeight(true) - node.height());
 			});
 
-			this.editboxOffsetHeight = (offsetHeight + footerHeight);
+			if( wikiaBarHidden ) {
+				this.editboxOffsetHeight = (offsetHeight + footerHeight);
+			} else {
+				this.editboxOffsetHeight = (offsetHeight + footerHeight + wikiaBarHeight);
+			}
 
 			this.delayedResize();
 		},
