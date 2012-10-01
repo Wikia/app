@@ -93,6 +93,10 @@ public class MailFunctions {
 			
 			//establishing connections
 			Properties props = System.getProperties();
+
+			props.setProperty("proxySet","true");
+			props.setProperty("socksProxyHost","squid-proxy.local");
+			props.setProperty("socksProxyPort","3128");
 			props.setProperty("mail.store.protocol", "imaps");
 			Session session = Session.getDefaultInstance(props, null);
 			session.setDebug(true);
