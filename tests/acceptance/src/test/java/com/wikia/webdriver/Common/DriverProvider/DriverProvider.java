@@ -8,6 +8,7 @@ import org.browsermob.core.har.Har;
 import org.browsermob.proxy.ProxyServer;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.Proxy;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -103,7 +104,7 @@ public class DriverProvider {
 			driver.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
 			driver.manage().timeouts().setScriptTimeout(30, TimeUnit.SECONDS);
 		}
-		catch (Exception e)
+		catch (TimeoutException e)
 		{
 			PageObjectLogging.log("Page load timeout", "Page was loading for over 30 seconds", true);
 		}
