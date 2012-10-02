@@ -94,6 +94,10 @@
 	if (window.wgLoadAdsInHead) {
 		ghostwriter.handlers = ghostwriter.handlers || {};
 		ghostwriter.handlers.check = checkHandler;
+
+		// We need to reverse what happens in ghostwriter function setDocumentOverrides
+		ghostwriter(document.documentElement); // this initializes ghostwriter without doing much harm
+		document.write = document.nativeWrite;
 	}
 
 }(window, document, location, ghostwriter));
