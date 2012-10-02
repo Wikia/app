@@ -80,14 +80,32 @@ public class HomePageObject extends BasePageObject{
 		PageObjectLogging.log("OpenHub", "Opening "+Hub, true, driver);
 		if (Hub.equals("VideoGamesHub")) {
 			OpenVideoGamesHub.click();
+			if (Global.LIVE_DOMAIN.contains("preview"))
+			{
+				String currentUrl = driver.getCurrentUrl();
+				String temp = currentUrl.replace("http://www.wikia.com", "http://preview.www.wikia.com");
+				driver.get(temp);
+			}
 			return new VideoGamesHubPageObject(driver);
 		}
 		if (Hub.equals("EntertainmentHub")) {
 			OpenEntertainmentHub.click();
+			if (Global.LIVE_DOMAIN.contains("preview"))
+			{
+				String currentUrl = driver.getCurrentUrl();
+				String temp = currentUrl.replace("http://www.wikia.com", "http://preview.www.wikia.com");
+				driver.get(temp);
+			}
 			return new EntertainmentHubPageObject(driver);	
 		}
 		if (Hub.equals("LifestyleHub")) {
 			OpenLifestyleHub.click();
+			if (Global.LIVE_DOMAIN.contains("preview"))
+			{
+				String currentUrl = driver.getCurrentUrl();
+				String temp = currentUrl.replace("http://www.wikia.com", "http://preview.www.wikia.com");
+				driver.get(temp);
+			}
 			return new LifestyleHubPageObject(driver);	
 		}
 		else {
