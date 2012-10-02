@@ -12,10 +12,14 @@ $messages['en'] = array(
 
 	'wall-message-undoremove' => 'Undo',
 	'wall-message-edited' => '<a href="$3" >Edited by</a> <a class="username" href="$1">$2</a>',
+	
+	'wall-message-update-topics-summary' => 'Topic changed',
+	
 	'wall-message-mywall' => 'My wall',
 	'wall-toolbar-history' => 'History',
 
 	'wall-message-notify' => 'Notify admin',
+	
 	'wall-message-remove' => 'Remove',
 	'wall-message-rev-delete' => 'Revision delete',
 	'wall-message-fast-admin-delete-message' => 'VSTF delete',
@@ -377,6 +381,7 @@ $messages['qqq'] = array(
 * $1 is the user who edited the message
 * $2 is user page URL
 * $3 is a diff URL.',
+	'wall-message-update-topics-summary' => 'Added as auto summery when editing topics',
 	'wall-message-mywall' => 'It is display when you are on thread page which is on your own wall',
 	'wall-toolbar-history' => 'Link in the toolbar to see the history of the wall or thread',
 	'wall-message-notify' => 'In the remove/delete-message modal box, checkbox for telling the admin about the removal',
