@@ -67,7 +67,7 @@ var AdProviderEvolve = function (ScriptWriter, WikiaTracker, log, window, docume
 	function getSect() {
 		log('getSect', 5, 'AdProviderEvolve');
 
-		var kv = window.wgWikiFactoryTagNames || [];
+		var kv = window.wgDartCustomKeyValues || '';
 		var hub = window.cscoreCat || '';
 
 		var sect;

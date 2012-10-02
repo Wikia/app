@@ -39,7 +39,7 @@ test('getUrl', function() {
 	);
 
 	windowMock.wgDBname = null;
-	windowMock.wgWikiFactoryTagNames = null;
+	windowMock.wgDartCustomKeyValues = null;
 	windowMock.cscoreCat = null;
 
 	var expected = 'http://n4403ad.doubleclick.net/adj/gn.wikia4.com/ros;sect=ros;mtfInline=true;pos=TOP_LEADERBOARD;sz=728x90;dcopt=ist;type=pop;type=int;tile=1;ord=1234567890?';
@@ -64,22 +64,22 @@ test('getSect', function() {
 	);
 
 	windowMock.wgDBname = null;
-	windowMock.wgWikiFactoryTagNames = null;
+	windowMock.wgDartCustomKeyValues = null;
 	windowMock.cscoreCat = null;
 
 	equal(adProviderEvolve.getSect(), 'ros', 'ros');
 
-	windowMock.wgWikiFactoryTagNames = ['tv'];
+	windowMock.wgDartCustomKeyValues = 'foo=bar;media=tv';
 	windowMock.cscoreCat = 'Entertainment';
 
 	equal(adProviderEvolve.getSect(), 'tv', 'tv entertainment');
 
-	windowMock.wgWikiFactoryTagNames = ['foo'];
+	windowMock.wgDartCustomKeyValues = 'foo=bar';
 	windowMock.cscoreCat = 'Entertainment';
 
 	equal(adProviderEvolve.getSect(), 'entertainment', 'foo entertainment');
 
-	windowMock.wgWikiFactoryTagNames = ['movie'];
+	windowMock.wgDartCustomKeyValues = 'foo=bar;media=movie';
 	windowMock.cscoreCat = 'Entertainment';
 
 	equal(adProviderEvolve.getSect(), 'movies', 'movie entertainment');
