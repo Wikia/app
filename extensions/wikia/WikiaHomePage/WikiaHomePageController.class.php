@@ -61,10 +61,6 @@ class WikiaHomePageController extends WikiaController {
 	protected $verticalsSlots = array();
 	protected $verticalsWikis = array();
 
-	private $imageServing = null;
-	private $imageSmallServing = null;
-	private $imageMediumServing = null;
-
 	public function __construct() {
 		parent::__construct();
 		$this->helper = F::build('WikiaHomePageHelper');
