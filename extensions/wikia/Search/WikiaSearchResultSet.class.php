@@ -237,11 +237,10 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 			return $this;
 		}
 
-		$am 		= $this->searchConfig->getArticleMatch();
-	    $article	= $am['article'];
-	    $redirect	= $am['redirect'] ?: null;
-		$title		= $article->getTitle();
-		$articleId	= $article->getID();
+		$articleMatch	= $this->searchConfig->getArticleMatch();
+		$article		= $articleMatch->getArticle();
+		$title			= $article->getTitle();
+		$articleId		= $article->getID();
 		
 		if (! in_array( $title->getNamespace(), $this->searchConfig->getNamespaces() ) ) {
 			// we had an article match by name, but not in our desired namespaces
@@ -273,8 +272,8 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 		$snippet	= $articleService->getTextSnippet(250);
 		
 		$result->setText( $snippet );
-		if ( $redirect !== null ) {
-			$result->setVar( 'redirectTitle', $redirect->getTitle() );
+		if ( $articleMatch->hasRedirect() ) {
+			$result->setVar( 'redirectTitle', $articleMatch->getOriginalArticle()->getTitle() );
 		}
 		
 		$result->setVar( 'id', $articleMatchId );

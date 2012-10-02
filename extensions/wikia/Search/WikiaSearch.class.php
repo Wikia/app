@@ -135,7 +135,7 @@ class WikiaSearch extends WikiaObject {
 	
 	/**
 	 * perform search
-	 * @param WikiaSearchConfig $searchConfig
+	 * @param  WikiaSearchConfig $searchConfig
 	 * @return WikiaSearchResultSet
 	 */
 	public function doSearch( WikiaSearchConfig $searchConfig ) {
@@ -310,7 +310,7 @@ class WikiaSearch extends WikiaObject {
 
 	/**
 	 * Finds an article match and sets the value in the search config
-	 * @param WikiaSearchConfig $config
+	 * @param  WikiaSearchConfig $config
 	 * @return Article|null
 	 */
 	public function getArticleMatch( WikiaSearchConfig $config ) {
@@ -331,22 +331,16 @@ class WikiaSearch extends WikiaObject {
 	    }
 	
 	    // If there's an exact or very near match, jump right there.
-	    $title = SearchEngine::getNearMatch( $term );
-	    if( !is_null( $title ) && ( in_array($title->getNamespace(), $config->getNamespaces()) ) ) {
-	        $article = new Article( $title );
+	    $searchEngine	= F::build( 'SearchEngine' );
+	    $title			= $searchEngine->getNearMatch( $term );
+	    if( !is_null( $title ) && ( in_array( $title->getNamespace(), $config->getNamespaces() ) ) ) {
+	        $article		= F::build( 'Article',		$title );
+	        $articleMatch	= F::build( 'ArticleMatch',	$article );
 	
-	        if($article->isRedirect()) {
-	            $target = $article->getRedirectTarget();
-	            // apparently the target can be null
-	            if ($target instanceOf Title) {
-	                $config->setArticleMatch(array('article'=>new Article($target), 'redirect'=>$article));
-	            }
-	        }
-	        else {
-	            $config->setArticleMatch(array('article'=>$article));
-	        }
+	        $config->setArticleMatch( $articleMatch );
+	        
 	        wfProfileOut(__METHOD__);
-	        return $config->getArticleMatch();
+	        return $articleMatch;
 	    }
 	
 	    wfProfileOut(__METHOD__);
@@ -506,8 +500,8 @@ class WikiaSearch extends WikiaObject {
 		$noPtt = '';
 		if ( $searchConfig->hasArticleMatch() ) {
 			$am			= $searchConfig->getArticleMatch();
-			$article	= ( isset( $am['redirect'] ) ) ? $am['redirect'] : $am['article'];  
-			$noPtt		= sprintf( ' AND -(id:%s_%s)', $searchConfig->getCityId(), $article->getID() );
+			$article	= $am->getArticle();  
+			$noPtt		= ' AND ' . self::valueForField( 'id', sprintf( '%s_%s', $searchConfig->getCityId(), $article->getID() ), array( 'negate' => true ) ) ;
 		}
 		
 		$formulatedQuery = sprintf('%s AND (%s)%s', $this->getQueryClausesString( $searchConfig ), $nestedQuery, $noPtt);
