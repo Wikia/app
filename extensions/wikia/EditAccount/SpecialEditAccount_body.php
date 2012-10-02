@@ -347,13 +347,13 @@ class EditAccount extends SpecialPage {
 		$id = $this->mUser->getId();
 
 		// Reload user
-		$this->mUser = User::newFromName( $id );
+		$this->mUser = User::newFromId( $id );
 
 		if ( $this->mUser->getEmail() == ''  ) {
 			global $wgUser, $wgTitle;
 			// Mark as disabled in a more real way, that doesnt depend on the real_name text
 			$this->mUser->setOption( 'disabled', 1 );
-                        // BugId:18085 - setting a new token causes the user to be logged out.
+			// BugId:18085 - setting a new token causes the user to be logged out.
 			$this->mUser->setToken( md5( microtime() . mt_rand( 0, 0x7fffffff ) ) );
 
 
