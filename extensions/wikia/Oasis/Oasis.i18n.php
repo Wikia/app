@@ -187,7 +187,7 @@ $messages['en'] = array(
 	'oasis-navigation-v2-level1-validation' => 'Oops! Your Level 1 menu is too wide. Please shorten the items to fit. Thanks!',
 	'oasis-navigation-v2-level2-validation' => 'Oops! Your Level 2 menu is too wide. Please shorten the items to fit. Thanks!',
 	'oasis-navigation-v2-level12-validation' => 'Oops! Your Level 1 and Level 2 menus are too wide. Please edit them to fit.',
-	'oasis-navigation-v2-magic-word-validation' => 'Oops, magic words like #category1# can only be used in Level 2 menus. It looks like you have magic words in your Level 1 menu. Please move them to proceed. <a href="http://community.wikia.com/wiki/Help:NavigationNeed">Need more help</a>?', // using <a> because $.msg does not allow wikitext
+	'oasis-navigation-v2-magic-word-validation' => 'Oops, magic words (example: #category1#) can only be used in Level 2 menus. It looks like you have some magic words in your Level 1 menu, move them in order to publish your changes. <a href="http://community.wikia.com/wiki/Help:NavigationNeed">Need more help?</a>', // using <a> because $.msg does not allow wikitext
 	'oasis-navigation-v2-validation-next' => 'Next',
 	'oasis-navigation-v2-validation-caption' => 'Preview will check for menu errors. If ok, you can Publish from the Preview screen. If not, a Back button will allow you to continue editing.',
 	'oasis-navigation-v2-new-photos' => 'New Photos',
