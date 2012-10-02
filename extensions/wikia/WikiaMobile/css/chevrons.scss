@@ -1,0 +1,23 @@
+.chev {
+	background-position: center;
+	background-repeat: no-repeat;
+	background-image:  url('/extensions/wikia/WikiaMobile/images/chevron-grey-down.png'); /* base64 */
+	-webkit-animation: cute .3s ease-in;
+	-moz-animation: cute .3s ease-in;
+}
+
+.open .chev {
+	background-image:  url('/extensions/wikia/WikiaMobile/images/chevron-blue-up.png'); /* base64 */
+	-webkit-animation: cute .3s ease-out;
+	-moz-animation: cute .3s ease-out;
+}
+
+@-webkit-keyframes cute {
+	0%{-webkit-transform: rotate(180deg);}
+	100%{-webkit-transform: rotate(0);}
+}
+
+@-moz-keyframes cute {
+	0%{-moz-transform: rotate(180deg);}
+	100%{-moz-transform: rotate(0);}
+}
