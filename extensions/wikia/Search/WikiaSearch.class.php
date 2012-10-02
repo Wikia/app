@@ -310,6 +310,10 @@ class WikiaSearch extends WikiaObject {
 
 	/**
 	 * Finds an article match and sets the value in the search config
+	 * @see    WikiaSearchTest::testGetArticleMatch
+	 * @see    WikiaSearchTest::testGetArticleMatchWithNoMatch
+	 * @see    WikiaSearchTest::testGetArticleMatchWithMatchFirstCall
+	 * @see    WikiaSearchTest::testGetArticleMatchWithMatchFirstCallMismatchedNamespaces
 	 * @param  WikiaSearchConfig $config
 	 * @return Article|null
 	 */
@@ -321,28 +325,19 @@ class WikiaSearch extends WikiaObject {
 	    if ( $config->hasArticleMatch() ) {
 	        return $config->getArticleMatch();
 	    }
-	
-	    // Try to go to page as entered.
-	    $title = Title::newFromText( $term );
-	    # If the string cannot be used to create a title
-	    if( is_null( $title ) ) {
-	        wfProfileOut(__METHOD__);
-	        return null;
-	    }
-	
-	    // If there's an exact or very near match, jump right there.
+
 	    $searchEngine	= F::build( 'SearchEngine' );
-	    $title			= $searchEngine->getNearMatch( $term );
-	    if( !is_null( $title ) && ( in_array( $title->getNamespace(), $config->getNamespaces() ) ) ) {
-	        $article		= F::build( 'Article',		$title );
-	        $articleMatch	= F::build( 'ArticleMatch',	$article );
+    	$title			= $searchEngine->getNearMatch( $term );
+
+	    if( ( $title !== null ) && ( in_array( $title->getNamespace(), $config->getNamespaces() ) ) ) {
+	        $article		= F::build( 'Article',		array( $title ), 'newFromTitle' );
+	        $articleMatch	= F::build( 'ArticleMatch',	array( $article ) );
 	
 	        $config->setArticleMatch( $articleMatch );
 	        
 	        wfProfileOut(__METHOD__);
 	        return $articleMatch;
 	    }
-	
 	    wfProfileOut(__METHOD__);
 	    return null;
 	}
@@ -691,12 +686,12 @@ class WikiaSearch extends WikiaObject {
 	
 	    $cacheKey		= $this->wf->SharedMemcKey( 'crossWikiaSearchExcludedWikis' );
 	    $privateWikis	= $this->wg->Memc->get( $cacheKey );
-	
+
 	    if(! is_array( $privateWikis ) ) {
 	        // get private wikis from db
 	        $wikiFactory		= F::build( 'WikiFactory' );
 	        $wgIsPrivateWiki	= $wikiFactory->getVarByName( 'wgIsPrivateWiki', $currentWikiId );
-	        $privateWikis		= $wikiFactory->getCityIDsFromVarValue( $wgIsPrivateWiki->cv_id, true, '=' );
+	        $privateWikis		= $wikiFactory->getCityIDsFromVarValue( $wgIsPrivateWiki === null ? null : $wgIsPrivateWiki->cv_id , true, '=' );
 	        $this->wg->Memc->set( $cacheKey, $privateWikis, 3600 ); // cache for 1 hour
 	    }
 	

@@ -200,6 +200,14 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	}
 	
 	/**
+	 * For IDE type-hinting
+	 * @return WikiaSearchArticleMatch
+	 */
+	public function getArticleMatch() {
+		return $this->params['articleMatch'];
+	}
+	
+	/**
 	 * Returns desired number of results WITHOUT consideration for article match
 	 * @return int
 	 */
