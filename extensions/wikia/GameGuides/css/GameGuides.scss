@@ -21,8 +21,12 @@
 
 $mainGreen: rgb(171,197,97);
 $halfMainGreen: rgba(171,197,97,.5);
+
+$sectionGrey: rgb(41, 41, 41);
+
 $linkColor: rgb(172,172,172);
 $textColor: rgb(233,233,233);
+
 $backgroundColor: black;
 
 //I use it in a lot of places so it makes sense to have it here
@@ -41,7 +45,9 @@ html {
 
 	font-size: 1em;
 
-	&.serif body {
+	font-family: roboto, helvetica, 'sans serif';
+
+	&.serif {
 		font-family: 'Droid Serif', serif;
 	}
 }
@@ -53,7 +59,6 @@ body {
 	margin: 0;
 	padding: 10px 20px;
 
-	font-family: roboto, helvetica, "sans serif";
 	color: $textColor;
 
 	line-height: 1.7em;
@@ -79,7 +84,7 @@ h1, h2, h3{
 }
 
 h2, h3, .collSec {
-	color: white;
+	color: $textColor;
 }
 
 .collSec {
@@ -94,7 +99,9 @@ h2, h3, .collSec {
 	background-repeat: no-repeat;
 	background-position: 100% 100%;
 	background-size: 300% 1px;
-	background-image: -webkit-linear-gradient(left, $mainGreen 30%, rgb(41, 41, 41) 50%);
+	background-image: -webkit-gradient(linear, left top, right top, color-stop( 30%, $mainGreen ), color-stop( 50%, $sectionGrey ));
+	background-image: -webkit-linear-gradient(left, $mainGreen 30%, $sectionGrey 50%);
+	background-image: linear-gradient(to right, $mainGreen 30%, $sectionGrey 50%);
 
 	-webkit-transition: background-position .3s linear;
 
