@@ -23,7 +23,7 @@ $app->registerClass('WikiaSearchConfig', 			$dir . 'WikiaSearchConfig.class.php'
 $app->registerClass('WikiaSearchController', 		$dir . 'WikiaSearchController.class.php');
 $app->registerClass('WikiaSearchResult', 			$dir . 'WikiaSearchResult.class.php');
 $app->registerClass('WikiaSearchResultSet', 		$dir . 'WikiaSearchResultSet.class.php');
-$app->registerClass('WikiaSearchAdsController', 	$dir . 'WikiaSearchAdsController.class.php');
+$app->registerClass('WikiaSearchArticleMatch',		$dir . 'WikiaSearchArticleMatch.class.php');
 $app->registerClass('WikiaSearchAjaxController',	$dir . 'WikiaSearchAjaxController.class.php');
 
 /**
