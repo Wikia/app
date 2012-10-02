@@ -233,7 +233,7 @@
 	</script>
 	
 	<script id="LightboxErrorMessage" type="text/template">
-		<p><?= wfMsg('lightbox-file-error') ?></p>
+		<p><?= wfMsg('lightbox-no-media-error-header') ?> <?= wfMsg('lightbox-no-media-error', $wg->Sitename) ?></p>
 	</script>
 
 
