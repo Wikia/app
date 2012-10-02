@@ -20,14 +20,16 @@ define('layout', ['sections', 'media', 'cache'], function(sections, media, cache
 		process = function(res){
 			!assets && cache && cache.set(tablesKey, res, ttl);
 
-			var scripts = res.scripts,
-				l = scripts.length,
-				i = 0;
+			if(res) {
+				var scripts = res.scripts,
+					l = scripts.length,
+					i = 0;
 
-			Wikia.processStyle(res.styles);
+				Wikia.processStyle(res.styles);
 
-			for(; i < l; i++ ){
-				Wikia.processScript(scripts[i]);
+				for(; i < l; i++ ){
+					Wikia.processScript(scripts[i]);
+				}
 			}
 
 			require('tables', function(t){
@@ -51,7 +53,7 @@ define('layout', ['sections', 'media', 'cache'], function(sections, media, cache
 	if(tables && tables.length > 0){
 		assets = cache && cache.get(tablesKey);
 
-		if(assets){
+		if(window.wgGameGuides || assets){
 			process(assets);
 		}else{
 			Wikia.getMultiTypePackage({
