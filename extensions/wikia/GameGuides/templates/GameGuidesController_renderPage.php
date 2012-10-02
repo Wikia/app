@@ -1,8 +1,9 @@
 <?= $globals; ?>
 <script>
+wgGameGuides = true;
 wgMessages = <?= json_encode( $messages ); ?>;
 </script>
-<h2><?= $title; ?></h2>
+<h2 id=pageName><?= $title; ?></h2>
 <section id=wkPage>
     <div id=mw-content-text>
 		<?= $html; ?>
