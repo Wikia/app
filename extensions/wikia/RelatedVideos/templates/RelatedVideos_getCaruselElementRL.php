@@ -4,7 +4,7 @@
 <div class="item">
 	<?= $videoThumb ?>
 	<div class="description">
-		<a class="<?= $videoPlay; ?>" href="<?=$video['fullUrl'];?>" data-ref="<?=$video['prefixedUrl'];?>" data-external="<?=$video['external'];?>" data-video-name="<?=htmlspecialchars($video['title']);?>" >
+		<a class="lightbox" href="<?=$video['fullUrl'];?>" data-ref="<?=$video['prefixedUrl'];?>" data-external="<?=$video['external'];?>" data-video-name="<?=htmlspecialchars($video['title']);?>" >
 		<?=( strlen( $video['title'] ) > $maxDescriptionLength )
 			? substr( $video['title'], 0, $maxDescriptionLength).'&#8230;'
 			: $video['title'];

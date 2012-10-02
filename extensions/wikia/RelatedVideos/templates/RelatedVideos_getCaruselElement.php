@@ -2,7 +2,7 @@
 	$maxDescriptionLength = 45;
 ?>
 <div class="item">
-	<a class="video-thumbnail <?= $videoPlay ?>" style="height:<?=$elementHeight; ?>px" href="<?=$video['fullUrl'];?>" data-ref="<?=$video['prefixedUrl'];?>" data-external="<?=$video['external'];?>" data-video-name="<?=htmlspecialchars($video['title']);?>" >
+	<a class="video-thumbnail lightbox" style="height:<?=$elementHeight; ?>px" href="<?=$video['fullUrl'];?>" data-ref="<?=$video['prefixedUrl'];?>" data-external="<?=$video['external'];?>" data-video-name="<?=htmlspecialchars($video['title']);?>" >
 		<?
 		if ( !empty( $video['duration'] ) ) {
 			$mins = floor ($video['duration'] / 60);
