@@ -60,7 +60,7 @@ var AdProviderEvolve = function (ScriptWriter, WikiaTracker, log, window, docume
 			'tile=' + slotMap[slotname].tile + ';' +
 			'ord=' + ord + '?';
 
-		log(url, /* 7 */ 5, 'AdProviderEvolve');
+		log(url, 7, 'AdProviderEvolve');
 		return url;
 	}
 
