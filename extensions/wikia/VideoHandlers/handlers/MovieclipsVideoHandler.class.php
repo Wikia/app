@@ -6,8 +6,9 @@ class MovieclipsVideoHandler extends VideoHandler {
 	protected static $urlTemplate = 'http://movieclips.com/e/$1/';
 	protected static $providerDetailUrlTemplate = 'http://movieclips.com/$1';
 	protected static $providerHomeUrl = 'http://movieclips.com/';
-	protected static $autoplayParam = "autoplay=true";
-	
+	protected static $autoplayParam = "autoplay";
+	protected static $autoplayValue = "true";
+
 	public function getEmbed($articleId, $width, $autoplay=false, $isAjax=false, $postOnload=false) {
 		$height =  $this->getHeight( $width );
 		
@@ -21,7 +22,7 @@ class MovieclipsVideoHandler extends VideoHandler {
 	<param name="wmode" value="transparent" />
 	<param name="allowscriptaccess" value="always" />
 EOT;
-		$embedCode .= '<param name="FlashVars" value="autoPlay='.($autoplay ? 'true' : 'false').'" />';
+		$embedCode .= '<param name="FlashVars" value="'.self::$autoplayParam.'='.($autoplay ? self::$autoplayValue : 'false').'" />';
 		$embedCode .= <<<EOT
 	<embed src="$url" type="application/x-shockwave-flash" allowfullscreen="true" movie="$url" wmode="transparent" allowscriptaccess="always" ></embed>
 </object>

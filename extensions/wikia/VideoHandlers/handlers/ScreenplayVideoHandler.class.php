@@ -6,7 +6,6 @@ class ScreenplayVideoHandler extends VideoHandler {
 	protected static $urlTemplate = 'http://www.totaleclips.com/Player/Bounce.aspx?';
 	protected static $providerDetailUrlTemplate = 'http://screenplayinc.com/';
 	protected static $providerHomeUrl = 'http://screenplayinc.com/';
-	protected static $autoplayParam = "";
 
 	public function getPlayerAssetUrl() {
 		return JWPlayer::getJavascriptPlayerUrl();
@@ -56,12 +55,11 @@ class ScreenplayVideoHandler extends VideoHandler {
 	}
 
 	public function getEmbedSrcData() {
-
 		$metadata = $this->getMetadata( true );
 		$file = $this->getStreamUrl( $metadata );
 
 		$data = array();
-		$data['autoplayParam'] = self::$autoplayParam;
+		$data['autoplayParam'] = $this->getAutoplayString();
 		$data['srcParam'] = $file;
 		$data['srcType'] = 'content';
 

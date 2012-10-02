@@ -23,6 +23,7 @@ abstract class VideoHandler extends BitmapHandler {
 	protected static $urlTemplate = '';	// must have a token called "$1"
 	protected static $providerDetailUrlTemplate = '';	// must have a token called "$1"
 	protected static $autoplayParam = "";
+	protected static $autoplayValue = "";
 
 	/**
 	 * @param $image File
@@ -86,9 +87,8 @@ abstract class VideoHandler extends BitmapHandler {
 	 * srcParam
 	 */
 	public function getEmbedSrcData() {
-
 		$data = array();
-		$data['autoplayParam'] = static::$autoplayParam;
+		$data['autoplayParam'] = $this->getAutoplayString();
 		$data['srcParam'] = $this->getEmbedUrl();
 		$data['srcType'] = 'player';
 		return $data;
@@ -279,6 +279,13 @@ abstract class VideoHandler extends BitmapHandler {
 		return $this->videoId;
 	}
 
+	/**
+	 * get provider autoplay string used by embed src data
+	 * @return string
+	 */
+	protected function getAutoplayString() {
+		return !empty(static::$autoplayParam) ? ( static::$autoplayParam . '=' . static::$autoplayValue ) : '';
+	}
 
 	/**
 	 * Returns fedault thumbnail mime type
@@ -313,4 +320,5 @@ abstract class VideoHandler extends BitmapHandler {
 	public function addExtraBorder( $width ){
 		return 0;
 	}
+
 }

@@ -7,6 +7,7 @@ class HuluVideoHandler extends VideoHandler {
 	protected static $providerDetailUrlTemplate = 'http://www.hulu.com/watch/$1';
 	protected static $providerHomeUrl = 'http://www.hulu.com/';
 	protected static $autoplayParam = "";
+	protected static $autoplayValue = "";
 
 	public function getEmbed( $articleId, $width, $autoplay = false, $isAjax = false, $postOnload = false ) {
 		$height = $this->getHeight($width);

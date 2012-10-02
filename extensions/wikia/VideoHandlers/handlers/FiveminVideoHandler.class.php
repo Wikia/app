@@ -6,13 +6,15 @@ class FiveminVideoHandler extends VideoHandler {
 	protected static $urlTemplate = 'http://www.5min.com/Embeded/$1';
 	protected static $providerDetailUrlTemplate = 'http://www.5min.com/Video/$1';
 	protected static $providerHomeUrl = 'http://www.5min.com/';
-	protected static $autoplayParam = "autostart=true";
-		
+	protected static $autoplayParam = "autostart";
+	protected static $autoplayValue = "true";
+
 	public function getEmbed( $articleId, $width, $autoplay = false, $isAjax = false, $postOnload = false ) {
 		$height =  $this->getHeight( $width );
-		$sAutoPlay = $autoplay  ? 'true' : 'false';
 		$url = $this->getEmbedUrl( $autoplay );
-		$url .= '/&autostart='.$sAutoPlay;
+		if($autoplay) {
+			$url .= '/&' . self::$autoplayParam . '=' . self::$autoplayValue;
+		}
 		$embedCode = <<<EOT
 <embed src='{$url}' type='application/x-shockwave-flash' width="{$width}" height="{$height}" allowfullscreen='true' allowScriptAccess='always'></embed>
 EOT;

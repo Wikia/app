@@ -9,7 +9,7 @@ class SevenloadVideoHandler extends VideoHandler {
 	
 	public function getEmbed($articleId, $width, $autoplay = false, $isAjax = false, $postOnload=false) {
 		$height = $this->getHeight($width);
-		$autoplayStr = ( $autoplay ) ? '/play' : '' ;
+		$autoplayStr = ( $autoplay ) ? '/' . self::$autoplayParam : '' ;
 		$url = $this->getEmbedUrl();
 		$url .= '/'.$width.'x'.$height.'/swf'.$autoplayStr;
 
