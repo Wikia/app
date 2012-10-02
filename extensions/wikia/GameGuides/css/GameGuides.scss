@@ -84,7 +84,6 @@ h2, h3, .collSec {
 
 .collSec {
 	border-top: none;
-	border-bottom: 1px solid rgb(41,41,41);
 
 	padding-bottom: 10px;
 	padding-top: 0;
@@ -92,10 +91,15 @@ h2, h3, .collSec {
 	font-size: 1.1em;
 	text-transform: uppercase;
 
-	-webkit-transition: border .3s;
+	background-repeat: no-repeat;
+	background-position: 100% 100%;
+	background-size: 300% 1px;
+	background-image: -webkit-linear-gradient(left, $mainGreen 30%, rgb(41, 41, 41) 50%);
+
+	-webkit-transition: background-position .3s linear;
 
 	&.open {
-		border-bottom: 1px solid $mainGreen;
+		background-position: 0 100%;
 	}
 
 	.chev {
