@@ -112,9 +112,89 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 	    $method->setAccessible( true );
 	
 	    $invocationResult = $method->invoke( $indexer, $mockArticle );
-	    $this->assertInstanceOf	( 'stdClass', $invocationResult, 'getWikiViews should have fallback result of type stdClass.' );
-	    $this->assertEquals		( 0, $invocationResult->weekly, 'getWikiViews fallback result should have a weekly property with a numerical value of 0');
-	    $this->assertEquals		( 0, $invocationResult->monthly, 'getWikiViews fallback result should have a monthly property with a numerical value of 0');
+	    $this->assertInstanceOf	( 'stdClass', $invocationResult,	'getWikiViews should have fallback result of type stdClass.' );
+	    $this->assertEquals		( 0, $invocationResult->weekly,		'getWikiViews fallback result should have a weekly property with a numerical value of 0.' );
+	    $this->assertEquals		( 0, $invocationResult->monthly,	'getWikiViews fallback result should have a monthly property with a numerical value of 0.' );
+	}
+	
+	/**
+	 * @covers WikiaSearchIndexer::getRedirectTitles
+	 */
+	public function testGetRedirectTitlesNoResults() {
+		$mockTitle		=	$this->getMock( 'Title', array( 'getDbKey' ) );
+		$mockArticle	=	$this->getMock( 'Article', array(), array( $mockTitle ) );
+		$mockMemc		=	$this->getMock( 'stdClass', array( 'get', 'set' ) );
+		$mockDb 		=	$this->getMock( 'stdClass', array( 'selectRow' ) );
+
+		// couldn't get the constructor stuff to work right for mock article
+		$mockArticle
+			->expects	( $this->any() )
+			->method	( 'getTitle')
+			->will		( $this->returnValue( $mockTitle ) )
+		;
+		
+		$mockTitle
+			->expects	( $this->any() )
+			->method	( 'getDbKey' )
+			->will		( $this->returnValue( 'foo' ) )
+		;
+		
+		$mockDb
+			->expects	( $this->any() )
+			->method	( 'selectRow' )
+			->will		( $this->returnValue( null ) )
+		;
+		
+		$this->mockGlobalFunction( 'GetDB', $mockDb );
+		$this->mockApp();
+		
+		$indexer 	= F::build( 'WikiaSearchIndexer' );
+		$method		= new ReflectionMethod( 'WikiaSearchIndexer', 'getRedirectTitles' );
+		$method->setAccessible( true );
+		
+		$this->assertEmpty( $method->invoke( $indexer, $mockArticle ), 'A query for redirect titles without a result should return an empty string.' );
+	}
+	
+	/**
+	 * @covers WikiaSearchIndexer::getRedirectTitles
+	 */
+	public function testGetRedirectTitlesWithResults() {
+		$mockTitle		=	$this->getMock( 'Title', array( 'getDbKey' ) );
+		$mockArticle	=	$this->getMock( 'Article', array(), array( $mockTitle ) );
+		$mockMemc		=	$this->getMock( 'stdClass', array( 'get', 'set' ) );
+		$mockDb 		=	$this->getMock( 'stdClass', array( 'selectRow' ) );
+		$mockResultRow	=	$this->getMock( 'stdClass' );
+		
+		$mockResultRow->redirect_titles = 'Foo_Bar | Baz_Qux';
+		
+		// couldn't get the constructor stuff to work right for mock article
+		$mockArticle
+			->expects	( $this->any() )
+			->method	( 'getTitle')
+			->will		( $this->returnValue( $mockTitle ) )
+		;
+		
+		$mockTitle
+			->expects	( $this->any() )
+			->method	( 'getDbKey' )
+			->will		( $this->returnValue( 'foo' ) )
+		;
+		
+		$mockDb
+			->expects	( $this->any() )
+			->method	( 'selectRow' )
+			->will		( $this->returnValue( $mockResultRow ) )
+		;
+		
+		$this->mockGlobalFunction( 'GetDB', $mockDb );
+		$this->mockApp();
+		
+		$indexer 	= F::build( 'WikiaSearchIndexer' );
+		$method		= new ReflectionMethod( 'WikiaSearchIndexer', 'getRedirectTitles' );
+		$method->setAccessible( true );
+		
+		$this->assertEquals( 'Foo Bar | Baz Qux', $method->invoke( $indexer, $mockArticle ), 'A query for redirect titles with result rows should be pipe-joined with underscores replaced with spaces.' );
+		
 	}
 	
 }
