@@ -776,78 +776,108 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 }
 
 /* temp transition code until grid is fully rolled out, remove and integrate after transition */
-.WikiaGrid .WikiaHomePage #visualization {
-	.grid-1 {
-		width: 160px;
-	}
-	.grid-2 {
-		width: 330px;
-	}
-	.grid-3 {
-		width: 500px;
-	}
-	.grid-4 {
-		width: 670px;
-	}
-	.grid-5 {
-		width: 840px;
-	}
-	.grid-6 {
-		width: 1010px;
-		.remix {
-			width: 160px;
+.WikiaGrid .WikiaHomePage {
+    .WikiPreviewInterstitial {
+        .preview-aside {
+            padding-right: 45px;
+            width: 390px;
+        }
+    }
+    #visualization {
+        .grid-1 {
+            width: 160px;
+        }
+        .grid-2 {
+            width: 330px;
+        }
+        .grid-3 {
+            width: 500px;
+        }
+        .grid-4 {
+            width: 670px;
+        }
+        .grid-5 {
+            width: 840px;
+        }
+        .grid-6 {
+            width: 1010px;
+            .remix {
+                width: 160px;
 
-            /* stripes at the top of remix panel */
-            &:before,
-            &:after,
-            h2:before,
-            h2:after {
-              width: 40px;
+                /* stripes at the top of remix panel */
+                &:before,
+                &:after,
+                h2:before,
+                h2:after {
+                  width: 40px;
+                }
+                &:after {
+                  left: 40px;
+                }
+                h2:before {
+                  right: 40px;
+                }
+                a.wikia-button.secondary {
+                    padding: 9px 26px 15px 24px;
+                }
             }
-            &:after {
-              left: 40px;
+            .stats {
+                width: 300px;
+                .statisticdata {
+                    .datasection {
+                        padding-left: 25px;
+                    }
+                    .firstrowcell {
+                        padding-left: 0px;
+                    }
+                }
             }
-            h2:before {
-              right: 40px;
+            .slot-small {
+                >a {
+                    width: 160px;
+                    img {
+                        width: 160px;
+                    }
+                }
+            }
+            .slot-small:hover .preview-pane-wrapper {
+                width: 185px;
+            }
+            .slot-medium {
+                >a {
+                    width: 330px;
+                    img {
+                        width: 330px;
+                    }
+                }
+            }
+            .slot-medium:hover .preview-pane-wrapper {
+                width: 353px;
+            }
+            .slot-big {
+                >a {
+                    width: 330px;
+                    img {
+                        width: 330px;
+                    }
+                }
+            }
+            .slot-big:hover .preview-pane-wrapper {
+                width: 353px;
             }
         }
-		.stats {
-			width: 300px;
-		}
-	}
-	.slot-small {
-		>a {
-			width: 160px;
-			img {
-				width: 160px;
-			}
-		}
-	}
-	.slot-small:hover .preview-pane-wrapper {
-		width: 185px;
-	}
-	.slot-medium {
-		>a {
-			width: 330px;
-			img {
-				width: 330px;
-			}
-		}
-	}
-	.slot-medium:hover .preview-pane-wrapper {
-		width: 353px;
-	}
-	.slot-big {
-		>a {
-			width: 330px;
-			img {
-				width: 330px;
-			}
-		}
-	}
-	.slot-big:hover .preview-pane-wrapper {
-		width: 353px;
-	}
+    }
+    .wikiahomepage-header {
+        margin-top: 25px;
+        .WikiaSearch {
+            input[type="text"] {
+                width: 259px;
+            }
+        }
+        .wikiahompage-heading-group {
+            margin-left: 0;
+        }
+    }
 }
 
 .WikiaPage.WikiaGrid .wikiahomepage-hubs .wikiahomepage-hubs-section .wikiahomepage-hubs-hero-image {
