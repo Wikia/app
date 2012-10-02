@@ -22,6 +22,8 @@ Wall.EditMessageForm = $.createClass(Wall.MessageForm, {
 			this.showSourceTextArea(msg, data.htmlorwikitext);
 			$('.edit-buttons.sourceview', msg).first().show();
 		}
+		
+		msg.find('.buttonswrapper').hide();
 
 		$('.follow', msg).hide();
 		$('textarea.title', msg).first()
@@ -80,6 +82,8 @@ Wall.EditMessageForm = $.createClass(Wall.MessageForm, {
 
 		/* restore html to state from before edit */
 		this.insertOldHTML(id, bubble);
+		
+		msg.find('.buttonswrapper').show();
 
 		if( window.skin && window.skin != "monobook" ) {
 			WikiaButtons.init(bubble);
@@ -149,6 +153,8 @@ Wall.EditMessageForm = $.createClass(Wall.MessageForm, {
 
 			//$('.SpeechBubble .timestamp .permalink')
 			buttons.removeAttr('disabled');
+			
+			msg.find('.buttonswrapper').show();
 		}));
 	},
 
