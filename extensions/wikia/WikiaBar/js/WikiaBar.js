@@ -270,6 +270,11 @@ var WikiaBar = {
 		} else {
 			this.hide();
 		}
+
+		if( window.wgAction == 'edit' ) {
+			var WE = window.WikiaEditor = window.WikiaEditor || (new Observable());
+			WE.getInstance().fire('sizeChanged');
+		}
 	},
 	getLocalStorageDataKey: function() {
 		if( window.wgUserName ) {
@@ -342,6 +347,10 @@ var WikiaBar = {
 		}
 
 		return (result >= 0) ? true : false;
+	},
+	getWikiaBarOffset: function() {
+		var wikiaBarHeight = $("#WikiaBarWrapper").outerHeight() || 0;
+		return (this.wikiaBarHidden) ?  0 : wikiaBarHeight;
 	},
 	//todo: extract class
 	trackClick: function (category, action, label, value, params) {

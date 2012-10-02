@@ -52,9 +52,6 @@
 		editboxReady: function(editor, editbox) {
 			var node,
 				footerHeight = $("#WikiaFooter").outerHeight(true) || 0,
-				wikiaBarWrapper = $("#WikiaBarWrapper"),
-				wikiaBarHeight = wikiaBarWrapper.outerHeight(true) || 0,
-				wikiaBarHidden = wikiaBarWrapper.hasClass('hidden') || false,
 				offsetHeight = 0,
 				self = this;
 
@@ -70,11 +67,7 @@
 				offsetHeight += (node.outerHeight(true) - node.height());
 			});
 
-			if( wikiaBarHidden ) {
-				this.editboxOffsetHeight = (offsetHeight + footerHeight);
-			} else {
-				this.editboxOffsetHeight = (offsetHeight + footerHeight + wikiaBarHeight);
-			}
+			this.editboxOffsetHeight = (offsetHeight + footerHeight);
 
 			this.delayedResize();
 		},
@@ -88,9 +81,15 @@
 			var topOffset = node.offset().top,
 				viewportHeight = $(window).height(),
 				dimensions = {
-					nodeHeight: parseInt(viewportHeight - topOffset - this.editboxOffsetHeight),
+					nodeHeight: parseInt(viewportHeight - topOffset),
 					viewportHeight: viewportHeight
 				};
+
+			/** Start of Wikia change @author nAndy **/
+			if( window.wgEnableWikiaBarExt ) {
+				dimensions.nodeHeight = parseInt(viewportHeight - topOffset - window.WikiaBar.getWikiaBarOffset() - 11);
+			}
+			/** End of Wikia change **/
 
 			return dimensions;
 		},
