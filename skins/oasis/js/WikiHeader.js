@@ -547,6 +547,11 @@ $(function() {
 					return false;
 				}
 			});
+
+            previewNode.find('.msg > a').click(function() {
+                window.location = this.href;
+            })
+
 		});
 
 		$('#wpPreview').parent().removeClass('secondary');
