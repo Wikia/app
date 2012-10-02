@@ -38,7 +38,7 @@ class WikiaHomePageHelper extends WikiaModel {
 	const INTERSTITIAL_SMALL_IMAGE_HEIGHT = 65;
 
 	const SLIDER_IMAGES_KEY = 'SliderImagesKey';
-	const WIKIA_HOME_PAGE_HELPER_MEMC_VERSION = 'v0.5.010.005';
+	const WIKIA_HOME_PAGE_HELPER_MEMC_VERSION = 'v0.6';
 
 	protected $visualizationModel = null;
 
@@ -373,7 +373,7 @@ class WikiaHomePageHelper extends WikiaModel {
 		$user = F::build('User', array($userId), 'newFromId');
 
 
-		if ($user instanceof User && $this->isValidUserForInterstitial($user) ) {
+		if ($user instanceof User && $this->isValidUserForInterstitial($user)) {
 			$username = $user->getName();
 
 			$userInfo['avatarUrl'] = F::build('AvatarService', array($user, self::AVATAR_SIZE), 'getAvatarUrl');
@@ -407,10 +407,10 @@ class WikiaHomePageHelper extends WikiaModel {
 
 		return (
 			!$user->isIP($userName)
-			&& !in_array($userId, $this->excludeUsersFromInterstitial)
-			&& !in_array('bot', $user->getRights())
-			&& !$user->isBlocked()
-			&& !$user->isBlockedGlobally()
+				&& !in_array($userId, $this->excludeUsersFromInterstitial)
+				&& !in_array('bot', $user->getRights())
+				&& !$user->isBlocked()
+				&& !$user->isBlockedGlobally()
 		);
 	}
 
@@ -484,7 +484,7 @@ class WikiaHomePageHelper extends WikiaModel {
 					$wikiInfo['images'][] = $wikiData['main_image'];
 				}
 
-                $wikiData['images'] = (!empty($wikiData['images']))?((array)$wikiData['images']):array();
+				$wikiData['images'] = (!empty($wikiData['images'])) ? ((array)$wikiData['images']) : array();
 
 				// wiki images
 				if (!empty($wikiData['images'])) {
@@ -603,36 +603,35 @@ class WikiaHomePageHelper extends WikiaModel {
 		return $imageId;
 	}
 
-	protected function getImageServingParamsForResize($requestedWidth, $requestedHeight, $originalWidth, $originalHeight) {
+	public function getImageServingParamsForResize($requestedWidth, $requestedHeight, $originalWidth, $originalHeight) {
 		$requestedRatio = $requestedWidth / $requestedHeight;
 		$originalRatio = $originalWidth / $originalHeight;
 
 		$requestedCropHeight = $requestedHeight;
 		$requestedCropWidth = $requestedWidth;
 
-		if ($originalHeight < $requestedHeight || $originalWidth < $requestedWidth) {
-			// we will be unable to extend image, so we will just crop it to fit requested ratio
-			if ($originalRatio < $requestedRatio) {
-				// result should have more 'horizontal' orientation, cropping top and bottom
-				$requestedWidth = $originalWidth / $requestedRatio;
-				$requestedCropWidth = $requestedWidth;
-				$requestedCropHeight = $requestedCropWidth / $requestedRatio;
-			} else {
-				// result should have more 'vertical' orientation, cropping left and right
-				$requestedWidth = $originalWidth / $originalRatio;
-				$requestedCropWidth = $requestedWidth;
-				$requestedCropHeight = $requestedCropWidth / $requestedRatio;
-			}
+		if ($originalHeight < $requestedHeight && $originalRatio > $requestedRatio) {
+			// result should have more 'vertical' orientation, cropping left and right from original image;
+			$requestedCropHeight = $originalHeight;
+			$requestedCropWidth = ceil($requestedCropHeight * $requestedRatio);
+		}
+
+		if ($originalWidth < $requestedWidth && $originalRatio < $requestedRatio) {
+			// result should have more 'horizontal' orientation, cropping top and bottom from original image;
+			$requestedWidth =  $originalWidth;
+			$requestedCropWidth =  $originalWidth;
+			$requestedCropHeight = ceil($requestedCropWidth / $requestedRatio);
 		}
 
 		$imageServingParams = array(
 			null,
-			floor($requestedWidth),
+			ceil(min($originalWidth,$requestedWidth)),
 			array(
-				'h' => floor($requestedCropHeight),
-				'w' => floor($requestedCropWidth)
+				'w' => floor($requestedCropWidth),
+				'h' => floor($requestedCropHeight)
 			)
 		);
+
 		return $imageServingParams;
 	}
 
@@ -750,24 +749,71 @@ class WikiaHomePageHelper extends WikiaModel {
 	 */
 	public function getProcessedWikisImgSizes($limit) {
 		$result = new StdClass;
-
 		switch ($limit) {
 			case self::SLOTS_SMALL:
-				$result->width = WikiaHomePageController::REMIX_IMG_SMALL_WIDTH;
-				$result->height = WikiaHomePageController::REMIX_IMG_SMALL_HEIGHT;
+				$result->width = $this->getRemixSmallImgWidth();
+				$result->height = $this->getRemixSmallImgHeight();
 				break;
 			case self::SLOTS_MEDIUM:
-				$result->width = WikiaHomePageController::REMIX_IMG_MEDIUM_WIDTH;
-				$result->height = WikiaHomePageController::REMIX_IMG_MEDIUM_HEIGHT;
+				$result->width = $this->getRemixMediumImgWidth();
+				$result->height = $this->getRemixMediumImgHeight();
 				break;
 			case self::SLOTS_BIG:
 			default:
-				$result->width = WikiaHomePageController::REMIX_IMG_BIG_WIDTH;
-				$result->height = WikiaHomePageController::REMIX_IMG_BIG_HEIGHT;
+				$result->width = $this->getRemixBigImgWidth();
+				$result->height = $this->getRemixBigImgHeight();
 				break;
 		}
 
 		return $result;
+	}
+
+	public function getRemixBigImgHeight() {
+		if (!empty($this->wg->OasisGrid)) {
+			return WikiaHomePageController::REMIX_GRID_IMG_BIG_HEIGHT;
+		} else {
+			return WikiaHomePageController::REMIX_IMG_BIG_HEIGHT;
+		}
+	}
+
+	public function getRemixBigImgWidth() {
+		if (!empty($this->wg->OasisGrid)) {
+			return WikiaHomePageController::REMIX_GRID_IMG_BIG_WIDTH;
+		} else {
+			return WikiaHomePageController::REMIX_IMG_BIG_WIDTH;
+		}
+	}
+
+	public function getRemixMediumImgHeight() {
+		if (!empty($this->wg->OasisGrid)) {
+			return WikiaHomePageController::REMIX_GRID_IMG_MEDIUM_HEIGHT;
+		} else {
+			return WikiaHomePageController::REMIX_IMG_MEDIUM_HEIGHT;
+		}
+	}
+
+	public function getRemixMediumImgWidth() {
+		if (!empty($this->wg->OasisGrid)) {
+			return WikiaHomePageController::REMIX_GRID_IMG_BIG_WIDTH;
+		} else {
+			return WikiaHomePageController::REMIX_IMG_BIG_WIDTH;
+		}
+	}
+
+	public function getRemixSmallImgHeight() {
+		if (!empty($this->wg->OasisGrid)) {
+			return WikiaHomePageController::REMIX_GRID_IMG_SMALL_HEIGHT;
+		} else {
+			return WikiaHomePageController::REMIX_IMG_SMALL_HEIGHT;
+		}
+	}
+
+	public function getRemixSmallImgWidth() {
+		if (!empty($this->wg->OasisGrid)) {
+			return WikiaHomePageController::REMIX_GRID_IMG_SMALL_WIDTH;
+		} else {
+			return WikiaHomePageController::REMIX_IMG_SMALL_WIDTH;
+		}
 	}
 
 	public function setFlag($wikiId, $flag, $corpWikiId, $langCode) {
