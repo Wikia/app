@@ -6,6 +6,7 @@ class WikiaHomePageTest extends WikiaBaseTest {
 	const TEST_URL = 'http://testing';
 	const TEST_MEMBER_DATE = 'Jan 1970';
 	const MOCK_FILE_URL = 'Mock file URL';
+	const BLANK_IMG_URL = 'data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D';
 
 	protected $wgServerOrg = null;
 
@@ -187,11 +188,24 @@ TXT;
 			'exists' => false,
 		);
 
+		$expHubImages3 = array(
+			'Entertainment' => '',
+			'Video_Games' => '',
+			'Lifestyle' => '',
+		);
+
+		// 4 - not empty html + gallery tag exists with orientation="mosaic" + file does not exist
+		$expHubImages4 = array(
+			'Entertainment' => self::BLANK_IMG_URL,
+			'Video_Games' => self::BLANK_IMG_URL,
+			'Lifestyle' => self::BLANK_IMG_URL,
+		);
+
 		// 5 - not empty html + gallery tag exists with orientation="mosaic" + file exists
 		$expHubImages5 = array(
-			'Entertainment' => self::MOCK_FILE_URL,
-			'Video_Games' => self::MOCK_FILE_URL,
-			'Lifestyle' => self::MOCK_FILE_URL,
+			'Entertainment' => self::BLANK_IMG_URL,
+			'Video_Games' => self::BLANK_IMG_URL,
+			'Lifestyle' => self::BLANK_IMG_URL,
 		);
 		$mockFileParams5 = array(
 			'exists' => true,
@@ -203,7 +217,7 @@ TXT;
 		);
 		$mockImageServingParams5 = array(
 			'getUrl' => array(
-				'mockExpTimes' => 3,
+				'mockExpTimes' => 0,
 				'mockExpValues' => self::MOCK_FILE_URL
 			)
 		);
@@ -214,9 +228,9 @@ TXT;
 			// 2 - not empty html + gallery tag not exists
 			array($mockRawText2, $mockFileParams1, $mockImageServingParams1, $expHubImages1),
 			// 3 - not empty html + gallery tag exists with orientation="right"
-			array($mockRawText3, $mockFileParams1, $mockImageServingParams1, $expHubImages1),
+			array($mockRawText3, $mockFileParams1, $mockImageServingParams1, $expHubImages3),
 			// 4 - not empty html + gallery tag exists with orientation="mosaic" + file NOT exist
-			array($mockRawText4, $mockFileParams4, $mockImageServingParams1, $expHubImages1),
+			array($mockRawText4, $mockFileParams4, $mockImageServingParams1, $expHubImages4),
 			// 5 - not empty html + gallery tag exists with orientation="mosaic" + file exists
 			array($mockRawText4, $mockFileParams5, $mockImageServingParams5, $expHubImages5),
 		);
@@ -630,11 +644,12 @@ TXT;
 	}
 
 	public function getProcessedWikisImgSizesDataProvider() {
+		$whh = F::build('WikiaHomePageHelper'); /** @var WikiaHomePageHelper $whh */
 		return array(
-			array(WikiaHomePageHelper::SLOTS_BIG, WikiaHomePageController::REMIX_IMG_BIG_WIDTH, WikiaHomePageController::REMIX_IMG_BIG_HEIGHT),
-			array(WikiaHomePageHelper::SLOTS_MEDIUM, WikiaHomePageController::REMIX_IMG_MEDIUM_WIDTH, WikiaHomePageController::REMIX_IMG_MEDIUM_HEIGHT),
-			array(WikiaHomePageHelper::SLOTS_SMALL, WikiaHomePageController::REMIX_IMG_SMALL_WIDTH, WikiaHomePageController::REMIX_IMG_SMALL_HEIGHT),
-			array(666, WikiaHomePageController::REMIX_IMG_BIG_WIDTH, WikiaHomePageController::REMIX_IMG_BIG_HEIGHT),
+			array(WikiaHomePageHelper::SLOTS_BIG, $whh->getRemixBigImgWidth(), $whh->getRemixBigImgHeight()),
+			array(WikiaHomePageHelper::SLOTS_MEDIUM, $whh->getRemixMediumImgWidth(), $whh->getRemixMediumImgHeight()),
+			array(WikiaHomePageHelper::SLOTS_SMALL, $whh->getRemixSmallImgWidth(), $whh->getRemixSmallImgHeight()),
+			array(666, $whh->getRemixBigImgWidth(), $whh->getRemixBigImgHeight()),
 		);
 	}
 
