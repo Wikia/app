@@ -1,11 +1,13 @@
 package com.wikia.webdriver.PageObjects.PageObject.WikiPage;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import com.google.inject.Key;
 import com.wikia.webdriver.Common.Core.Global;
 import com.wikia.webdriver.Common.Logging.PageObjectLogging;
 import com.wikia.webdriver.PageObjects.PageObject.WikiBasePageObject;
@@ -80,7 +82,9 @@ public class MessageWallPageObject extends WikiBasePageObject{
 		messageTitleField.sendKeys(title);
 		triggerMessageArea();
 		waitForElementByElement(messageWallIFrame);
+		messageTitleField.sendKeys(Keys.TAB);
 		driver.switchTo().frame(messageWallIFrame);
+		waitForElementByElement(messageBodyField);
 		messageBodyField.sendKeys(message);
 		driver.switchTo().defaultContent();
 		PageObjectLogging.log("writeMessage", "message is written, title: "+title+" body: "+message, true, driver);
@@ -88,8 +92,10 @@ public class MessageWallPageObject extends WikiBasePageObject{
 
 	public void writeMessageNoTitle(String message)
 	{
+		messageTitleField.click();
 		triggerMessageArea();
 		waitForElementByElement(messageWallIFrame);
+		messageTitleField.sendKeys(Keys.TAB);
 		driver.switchTo().frame(messageWallIFrame);
 		messageBodyField.sendKeys(message);
 		driver.switchTo().defaultContent();
@@ -220,7 +226,7 @@ public class MessageWallPageObject extends WikiBasePageObject{
 		removeMessageConfirmButton.click();
 		waitForElementByElement(removeMessageConfirmation);
 		driver.navigate().refresh();
-		waitForElementNotVisibleByBy(messageTitle);
+//		waitForElementNotVisibleByBy(messageTitle);
 		PageObjectLogging.log("removeMessage", "message is removed", true, driver);
 	}
 	

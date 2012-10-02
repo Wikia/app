@@ -13,7 +13,7 @@ public class MessageWallTests extends TestTemplate
 {
 	protected String url = "http://www.youtube.com/watch?v=LQjkDW3UPVk";
 	
-	@Test
+	@Test(groups = {"MessageWall001", "MessageWall"}) 
 	public void MessageWall_001_WriteMessage()
 	{
 		
@@ -30,7 +30,7 @@ public class MessageWallTests extends TestTemplate
 		wall.removeMessage("reason");
 	}
 	
-	@Test
+	@Test(groups = {"MessageWall002", "MessageWall"}) 
 	public void MessageWall_002_WriteMessageNoTitle()
 	{
 		
@@ -46,7 +46,7 @@ public class MessageWallTests extends TestTemplate
 		wall.removeMessage("reason");
 	}
 	
-	@Test
+	@Test(groups = {"MessageWall003", "MessageWall"}) 
 	public void MessageWall_003_WriteMessageImage()
 	{
 		
@@ -62,7 +62,7 @@ public class MessageWallTests extends TestTemplate
 		wall.removeMessage("reason");
 	}
 	
-	@Test
+	@Test(groups = {"MessageWall004", "MessageWall"}) 
 	public void MessageWall_004_WriteMessageVideo()
 	{
 		
