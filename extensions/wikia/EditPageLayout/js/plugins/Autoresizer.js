@@ -86,8 +86,10 @@
 				};
 
 			/** Start of Wikia change @author nAndy **/
+			//FIXME: talk to Władek/Macbre about better way of making it and moving this logic maybe to new class which extends this one
 			if( window.wgEnableWikiaBarExt ) {
-				dimensions.nodeHeight = parseInt(viewportHeight - topOffset - window.WikiaBar.getWikiaBarOffset() - 11);
+				var editorBottomBorder = ($('#EditPageMain').height() || 0) - ($('#EditPageToolbar').height() || 0) - (node.height() || 0);
+				dimensions.nodeHeight = parseInt(viewportHeight - topOffset - editorBottomBorder - window.WikiaBar.getWikiaBarOffset());
 			}
 			/** End of Wikia change **/
 
