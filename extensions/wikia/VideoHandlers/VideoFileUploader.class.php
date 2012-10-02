@@ -71,23 +71,38 @@ class VideoFileUploader {
 			wfProfileOut(__METHOD__);
 			return Status::newFatal("Can't get ApiWrapper");
 		}
+
 		$retries = 3;
 
-		for ( $i = 0; $i < $retries; $i++ ){
+		for ( $i = 0; $i < $retries; $i++ ) {
+			if ( $i > 0 ) sleep( 3 );
 			/* prepare temporary file */
 			$upload = $this->tmpUpload( $this->getApiWrapper()->getThumbnailUrl() );
-			$upload->fetchFile();
-			$status = $upload->verifyUpload();
-			if ( isset( $status['status'] ) && ( $status['status'] != UploadBase::EMPTY_FILE ) ){
-				break;
+			$fetchStatus = $upload->fetchFile();
+			if ($fetchStatus->isGood()) {
+				$status = $upload->verifyUpload();
+				if ( isset( $status['status'] ) && ( $status['status'] != UploadBase::EMPTY_FILE ) ){
+					break;
+				}
 			}
-			sleep( 3 );
 		}
 
 		if ( $i == $retries ) {
-			/* prepare temporary file with default thumbnail */
-			$upload = $this->tmpUpload( LegacyVideoApiWrapper::$THUMBNAIL_URL );
-			$upload->fetchFile();
+			for ( $i = 0; $i < $retries; $i++ ) {
+				if ( $i > 0 ) sleep( 3 );
+				/* prepare temporary file with default thumbnail */
+				$upload = $this->tmpUpload( LegacyVideoApiWrapper::$THUMBNAIL_URL );
+				$fetchStatus = $upload->fetchFile();
+				if ($fetchStatus->isGood()) {
+					break;
+				}
+			}
+
+			if ( $i == $retries ) {
+				wfProfileOut(__METHOD__);
+				return Status::newFatal('');
+			}
+
 			$status = $upload->verifyUpload();
 			if ( isset( $status['status'] ) && ( $status['status'] == UploadBase::EMPTY_FILE ) ){
 				wfProfileOut(__METHOD__);
