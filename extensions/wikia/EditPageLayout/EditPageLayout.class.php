@@ -123,7 +123,8 @@ class EditPageLayout extends EditPage {
 
 		if (!$this->mEditNotices->isEmpty()) {
 			wfDebug(__METHOD__ . ": custom edit notices found - submit prevented\n");
-			$ret = self::AS_SUMMARY_NEEDED;
+			$ret = Status::newGood();
+			$ret->value = self::AS_SUMMARY_NEEDED;
 		}
 		else {
 			// tell MW core to save the article
