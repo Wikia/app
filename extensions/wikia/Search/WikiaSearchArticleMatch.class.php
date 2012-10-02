@@ -23,7 +23,7 @@ class WikiaSearchArticleMatch {
 		if ( $article->isRedirect() ) {
 			$target = $article->getRedirectTarget();
 			if ( $target instanceOf Title ) {
-				$this->redirect = F::build( 'Article', $target );
+				$this->redirect = F::build( 'Article', array( $target ) );
 			}
 		}
 	}
