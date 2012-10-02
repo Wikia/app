@@ -124,9 +124,6 @@ function wfAdEngineSetupJSVars(Array &$vars) {
 		$vars['wgLoadAdDriverOnLiftiumInit'] = $wgLoadAdDriverOnLiftiumInit;
 	}
 
-	// Custom KeyValues (for DART requests)
-	$vars['wgDartCustomKeyValues'] = $wgDartCustomKeyValues;
-
 	if ($wgUser->getOption('showAds')) {
 		$vars['wgUserShowAds'] = true;
 	}

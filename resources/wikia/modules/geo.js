@@ -32,9 +32,15 @@
 			return data.country;
 		}
 
+		function getContinentCode() {
+			var data = getGeoData();
+			return data.continent;
+		}
+
 		return {
 			getGeoData: getGeoData,
-			getCountryCode: getCountryCode
+			getCountryCode: getCountryCode,
+			getContinentCode: getContinentCode
 		};
 	}
 

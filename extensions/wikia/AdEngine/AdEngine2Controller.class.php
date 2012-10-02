@@ -14,11 +14,15 @@ class AdEngine2Controller extends WikiaController {
 	 *
 	 * @return bool
 	 */
-	public function onWikiaSkinTopScripts(&$vars) {
+	public function onWikiaSkinTopScripts(&$vars, &$scripts) {
 		wfProfileIn(__METHOD__);
+
+		// TODO remove later, hack for gw+adsinhead clash
+		//$scripts .= '<script>document.wikia_write = document.write;</script>';
 
 		$wg = $this->app->wg;
 
+		// AdEngine2.js
 		$vars['adslots2'] = array();
 		if ($wg->LoadAdsInHead) {
 			$vars['wgLoadAdsInHead'] = $wg->LoadAdsInHead;
@@ -26,6 +30,11 @@ class AdEngine2Controller extends WikiaController {
 
 		// TODO remove later, legacy addriver for adsinhead=1
 		$vars['adDriverLastDARTCallNoAds'] = array();
+
+		// WikiaDartHelper.js
+		if (!empty($wg->DartCustomKeyValues)) {
+			$vars['wgDartCustomKeyValues'] = $wg->DartCustomKeyValues;
+		}
 
 		wfProfileOut(__METHOD__);
 
