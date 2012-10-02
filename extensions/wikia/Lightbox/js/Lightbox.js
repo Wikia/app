@@ -906,7 +906,7 @@ var Lightbox = {
 			type:		'GET',
 			format: 'html',
 			data: {
-				lightboxVersion: 1 // update this when we change the template
+				lightboxVersion: 2 // update this when we change the template
 			},
 			callback: function(html) {
 				$(html).makeModal({
