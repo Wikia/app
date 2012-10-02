@@ -25,7 +25,7 @@
 
 		// Check if script source is a full URL. If not it may be
 		// a relative URL, so we'll use native write for it
-		if (src.search(/^[a-z]+:\/\/[a-z0-9\.]+\//) === -1) {
+		if (src.search(/^[a-z]+:\/\/[a-z0-9\.\-]+\//) === -1) {
 			return true;
 		}
 
@@ -75,18 +75,18 @@
 	// and return false, otherwise return true
 	checkHandler = function(tagName, attrs) {
 		// Optional logging
-		var logging = location.search.indexOf('gwconfiglog=1');
+		var logging = (location.search.indexOf('gwconfiglog=1') !== -1);
 
-		logging && window.console.log('gw.config.js: checkHandler: ', tagName, attrs);
+		if (logging) { window.console.log('gw.config.js: checkHandler: ', tagName, attrs); }
 
 		if (tagName === 'script' && attrs.src && shouldUseNativeWrite(attrs.src)) {
-			logging && window.console.log('gw.config.js: checkHandler: natively writing script ' + attrs.src);
+			if (logging) { window.console.log('gw.config.js: checkHandler: natively writing script ' + attrs.src); }
 			documentWriteScript(attrs);
-			logging && window.console.log('gw.config.js: checkHandler: end of ' + attrs.src);
+			if (logging) { window.console.log('gw.config.js: checkHandler: end of ' + attrs.src); }
 			return false;
 		}
 
-		logging && window.console.log('gw.config.js: checkHandler: let GW write');
+		if (logging) { window.console.log('gw.config.js: checkHandler: let GW write'); }
 		return true;
 	};
 
