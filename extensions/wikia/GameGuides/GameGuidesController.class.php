@@ -200,11 +200,17 @@ class GameGuidesController extends WikiaController {
 	 */
 	public function renderFullPage(){
 		$resources = $this->sendRequest( 'AssetsManager', 'getMultiTypePackage', array(
-			'scripts' => 'gameguides_js',
+			'scripts' => 'gameguides_js,wikiamobile_scroll_js,wikiamobile_tables_js',
 			'styles' => '//extensions/wikia/GameGuides/css/GameGuides.scss'
 		) );
 
 		$js = $resources->getVal( 'scripts', '' );
+		$scripts = '';
+
+		foreach( $js as $s ) {
+			$scripts .= $s;
+		}
+
 		$styles = $resources->getVal( 'styles', '' );
 
 		$page = $this->sendSelfRequest( 'getPage', array(
@@ -212,7 +218,7 @@ class GameGuidesController extends WikiaController {
 		) );
 
 		$this->response->setVal( 'html', $page->getVal( 'html' ) );
-		$this->response->setVal( 'js', $js[0] );
+		$this->response->setVal( 'js', $scripts );
 		$this->response->setVal( 'css', $styles );
 	}
 
@@ -220,7 +226,7 @@ class GameGuidesController extends WikiaController {
 		$cb = $this->wg->CacheBuster;
 		$this->response->setVal( 'url',
 			//How can I build this url ?
-			'wikia.php?controller=AssetsManager&method=getMultiTypePackage&scripts=gameguides_js&styles=//extensions/wikia/GameGuides/css/GameGuides.scss?cb=' . $cb
+			'wikia.php?controller=AssetsManager&method=getMultiTypePackage&scripts=gameguides_js,wikiamobile_tables_js,wikiamobile_scroll_js&styles=//extensions/wikia/GameGuides/css/GameGuides.scss?cb=' . $cb
 		);
 		$this->response->setVal( 'cb', $cb );
 	}
