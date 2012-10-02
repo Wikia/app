@@ -225,7 +225,7 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 			->will		( $this->returnValue( null ) )
 		;
 		
-		$wikiFactoryMock = $this->getMock( 'WikiFactory' );
+		$wikiFactoryMock = $this->getMock( 'WikiFactory', array('getCityIDsFromVarValue', 'getVarByName' ) );
 		$wikiFactoryMock
 			->expects	( $this->any() )
 			->method	( 'getCityIDsFromVarValue' )

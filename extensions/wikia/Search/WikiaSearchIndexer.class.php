@@ -274,19 +274,21 @@ class WikiaSearchIndexer extends WikiaObject {
 	
 	/**
 	 * Provided an Article, queries the database for weekly and monthly pageviews. 
+	 * @see   WikiaSearchIndexerTest::testGetWikiViewsWithCache
+	 * @see   WikiaSearchIndexerTest::testGetWikiViewsNoCacheYesDb
+	 * @see   WikiaSearchIndexerTest::testGetWikiViewsNoCacheNoDb
 	 * @param Article $page
 	 */
 	private function getWikiViews( Article $page ) {
 		wfProfileIn(__METHOD__);
 		$key = $this->wf->SharedMemcKey( 'WikiaSearchPageViews', $this->wg->CityId );
-	
+
 		// should probably re-poll for wikis without much love
 		if ( ( $result = $this->wg->Memc->get( $key ) ) && ( $result->weekly > 0 || $result->monthly > 0 ) ) {
 			return $result;
 		}
 	
-		$db = wfGetDB( DB_SLAVE, array(), $this->wg->statsDB );
-	
+		$db = $this->wf->GetDB( DB_SLAVE, array(), $this->wg->statsDB );
 		$row = $db->selectRow(
 				array( 'page_views' ),
 				array(	'SUM(pv_views) as "monthly"',
