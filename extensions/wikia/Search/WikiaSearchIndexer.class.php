@@ -252,12 +252,15 @@ class WikiaSearchIndexer extends WikiaObject {
 	
 	/**
 	 * Provided an Article, queries the database for all titles that are redirects to that page.
-	 * @param Article $page
+	 * @see    WikiaSearchIndexerTest::testGetRedirectTitlesNoResults
+	 * @see    WikiaSearchIndexerTest::testGetRedirectTitlesWithResults
+	 * @param  Article $page
+	 * @return string the pipe-joined redirect titles with underscores replaced with spaces
 	 */
 	private function getRedirectTitles( Article $page ) {
 		wfProfileIn(__METHOD__);
 	
-		$dbr = wfGetDB(DB_SLAVE);
+		$dbr = $this->wf->GetDB(DB_SLAVE);
 	
 		$result = $dbr->selectRow(
 				array( 'redirect', 'page' ),
@@ -265,7 +268,7 @@ class WikiaSearchIndexer extends WikiaObject {
 				array(),
 				__METHOD__,
 				array( 'GROUP'=>'rd_title' ),
-				array( 'page' => array( 'INNER JOIN', array('rd_title'=>$page->mTitle->getDbKey(), 'page_id = rd_from' ) ) )
+				array( 'page' => array( 'INNER JOIN', array('rd_title'=>$page->getTitle()->getDbKey(), 'page_id = rd_from' ) ) )
 		);
 	
 		wfProfileOut(__METHOD__);
