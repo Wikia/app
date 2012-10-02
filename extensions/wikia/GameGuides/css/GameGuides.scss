@@ -1,4 +1,7 @@
+@import "../../WikiaMobile/css/variables";
+
 //dependencies
+@import "../../WikiaMobile/css/ui";
 @import "../../WikiaMobile/css/infobox";
 @import "../../WikiaMobile/css/sections";
 @import "../../WikiaMobile/css/images";
@@ -8,7 +11,10 @@
 @import '../../WikiaMobile/css/media_modal';
 @import '../../WikiaMobile/css/image_placeholder';
 
-$linkColor: rgb(171,197,97);
+$mainGreen: rgb(171,197,97);
+$halfMainGreen: rgba(171,197,97,.5);
+$linkColor: rgb(172,172,172);
+$textColor: rgb(233,233,233);
 $backgroundColor: black;
 
 //I use it in a lot of places so it makes sense to have it here
@@ -23,21 +29,30 @@ html {
 	background: $backgroundColor;
 	overflow-x: hidden;
 
-	height: 100%;;
+	height: 100%;
+
+	font-size: 1em;
 }
 
 body {
 	overflow-x: hidden;
 	background: $backgroundColor;
-	color: white;
 
 	margin: 0;
-	padding: 10px 15px;
+	padding: 10px 20px;
 
 	font-family: roboto, helvetica, "sans serif";
-	font-size: 90%;
+	color: $textColor;
 
-	line-height: 20px;
+	line-height: 1.7em;
+
+	//avoid webkit's automatic text adjustment
+	-webkit-text-size-adjust: none;
+}
+
+h1, h2, h3{
+	margin: 10px 0 0 0;
+	font-weight: 100;
 }
 
 #mw-content-text {
@@ -45,14 +60,13 @@ body {
 }
 
 #pageName {
-	max-width: 100%;
 	word-break: break-word;
-	line-height: 30px;
-	color: $linkColor;
-	padding: 5px;
+	color: $textColor;
+	font-weight: 800;
+	font-size: 1.2em;
 }
 
-h2,h3, .collSec {
+h2, h3, .collSec {
 	color: white;
 }
 
@@ -63,12 +77,13 @@ h2,h3, .collSec {
 	padding-bottom: 10px;
 	padding-top: 0;
 
-	font-size: 1.3em;
+	font-size: 1.1em;
+	text-transform: uppercase;
 
 	-webkit-transition: border .3s;
 
 	&.open {
-		border-bottom: 1px solid $linkColor;
+		border-bottom: 1px solid $mainGreen;
 	}
 
 	.chev {
@@ -80,7 +95,7 @@ h2,h3, .collSec {
 a {
 	text-decoration: none;
 
-	color: white;
+	color: $textColor;
 	pointer-events: none;
 
 	-webkit-transition: color .2s;
@@ -89,6 +104,8 @@ a {
 a.validLink {
 	color: $linkColor;
 	pointer-events: auto;
+
+	border-bottom: 1px dotted $linkColor;
 }
 
 //hmmm
@@ -96,7 +113,7 @@ a.validLink {
 	display: none;
 }
 
-$size: 9;
+$size: 10;
 $width: 2;
 
 .chev {
@@ -129,8 +146,86 @@ $width: 2;
 }
 
 .open .chev {
-	border-color: $linkColor transparent transparent transparent;
+	border-top-color: $mainGreen;
 	-webkit-transform: rotateZ(-180deg);
 	-moz-transform: rotateZ(-180deg);
 	transform: rotateZ(-180deg);
+}
+
+.wikitable, .sortable{
+	border:1px solid $border-color;
+
+	th{
+		background-color:$border-color;
+		text-align:center;
+		white-space:nowrap;
+	}
+
+	td{
+		border:1px solid $border-color;
+		white-space:nowrap;
+	}
+}
+
+table {
+	font-size: 1em;
+	line-height: inherit;
+}
+
+//handling wide Tables
+.bigTable{
+	position: relative;
+
+	max-width: 100%;
+	padding: 5px;
+	margin-top: $page-padding;
+
+	border-right: 1px solid $halfMainGreen;
+
+	background-color: #222;
+
+	font-size: .8em;
+
+	-webkit-transition: border .2s;
+	-moz-transition: border .2s;
+	-o-transtion: border .2s;
+
+	table {
+		pointer-events: none;
+	}
+
+	&.active {
+		table {
+			pointer-events: auto;
+		}
+	}
+}
+
+//if native scroll is available:
+.overflow .bigTable {
+	overflow: auto;
+	-webkit-overflow-scrolling: touch;
+}
+
+//if not
+.no-overflow .bigTable {
+	overflow: hidden;
+}
+
+//images
+figure {
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+
+	img {
+		border: 1px solid rgb(42, 42, 42);
+	}
+
+	.thumbcaption {
+		position: relative;
+
+		background: none;
+
+		white-space: normal;
+		color: rgb(187, 187, 187);
+	}
 }
