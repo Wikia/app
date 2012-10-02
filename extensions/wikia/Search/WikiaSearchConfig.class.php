@@ -129,8 +129,7 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	 * Provides the appropriate search result length based on whether we have an article match or not
 	 * @return integer
 	 */
-	public function getLength()
-	{
+	public function getLength() {
 		return ( $this->getArticleMatch() !== null && $this->getStart() === 0 ) 
 			? ( (int) $this->params['length'] ) - 1 
 			: $this->params['length'];
@@ -142,8 +141,7 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	 * @param string $query
 	 * @return WikiaSearchConfig provides fluent interface
 	 */
-	public function setQuery( $query )
-	{
+	public function setQuery( $query ) {
 		$this->params['originalQuery'] = $query;
 		
 		$queryNamespace = MWNamespace::getCanonicalIndex( array_shift( explode( ':', strtolower( $query ) ) ) );
@@ -164,8 +162,7 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	 * If a query with a namespace prefix has been set, we also include this value in the namespace array.
 	 * @return array
 	 */
-	public function getNamespaces()
-	{
+	public function getNamespaces()	{
 		$namespaces = ( isset($this->params['namespaces']) && !empty($this->params['namespaces']) ) 
 					? $this->params['namespaces'] 
 					: SearchEngine::DefaultNamespaces();
@@ -179,8 +176,7 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	 * Provides the appropriate values for Solarium sorting based on our sort names
 	 * @return array where index 0 is the field name and index 1 is the constant used for ASC or DESC in solarium
 	 */
-	public function getSort()
-	{
+	public function getSort() {
 		$rank = $this->getRank();
 		return isset($this->rankOptions[$rank]) ? $this->rankOptions[$rank] : $this->rankOptions['default']; 
 	}
@@ -189,9 +185,18 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	 * Determines whether an article match has been set
 	 * @return boolean
 	 */
-	public function hasArticleMatch()
-	{
+	public function hasArticleMatch() {
 		return isset($this->params['articleMatch']) && !empty($this->params['articleMatch']);
+	}
+	
+	/**
+	 * Overloading __set to type hint
+	 * @param  WikiaSearchArticleMatch $articleMatch
+	 * @return WikiaSearchConfig provides fluent interface
+	 */
+	public function setArticleMatch( WikiaSearchArticleMatch $articleMatch ) {
+		$this->params['articleMatch'] = $articleMatch;
+		return $this;
 	}
 	
 	/**

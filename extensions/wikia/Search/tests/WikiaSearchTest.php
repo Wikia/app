@@ -267,12 +267,24 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 		$searchConfig	->setVideoSearch	( false )
 						->setIsInterWiki	( true );
 		
-		// I tried to mock this up better, but per Bergmann, static methods are death to testability (particularly if called from another class)
-		// This means we'll have to update this test every time this changes.
-		// @todo write some logic that circumvents WikiFactory calls
 		$expectedInterWiki = '((-(wid:123) AND -(wid:234)) AND (lang:en) AND (iscontent:true))';
 		$this->assertEquals( $expectedInterWiki, $method->invoke( $wikiaSearch, $searchConfig ),
 		        			'WikiaSearch::getQueryClauses should exclude bad wikis, require the language of the wiki, and require content' );
 		
 	}
+	
+	/**
+	 * @covers WikiaSearch::getArticleMatch
+	 */
+	public function testGetArticleMatch() {
+		
+		$wikiaSearch		= F::build( 'WikiaSearch' );
+		$searchConfig		= F::build( 'WikiaSearchConfig' );
+		$mockArticleMatch	= $this->getMock(  );
+		
+		$searchConfig->setQuery( 'foo' );
+		
+		
+	}
+	
 }
