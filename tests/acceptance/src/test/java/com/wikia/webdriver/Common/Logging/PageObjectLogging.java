@@ -1,13 +1,16 @@
 package com.wikia.webdriver.Common.Logging;
 
-import java.awt.List;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.io.File;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.events.WebDriverEventListener;
-import org.testng.Reporter;
 
 import com.google.common.base.Throwables;
 import com.wikia.webdriver.Common.Core.CommonUtils;
@@ -29,13 +32,25 @@ public class PageObjectLogging implements WebDriverEventListener {
 	public static void startLoggingSuite() {
 		CommonUtils.createDirectory(screenDirPath);
 		imageCounter = 0;
+		//date time
+		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		Date date = new Date();
+		//resolution
+		Toolkit toolkit =  Toolkit.getDefaultToolkit ();
+		Dimension dim = toolkit.getScreenSize();
+		
 		String l1 = "<html><style>table {margin:0 auto;}td:first-child {width:200px;}td:nth-child(2) {width:660px;}td:nth-child(3) {width:100px;}tr.success{color:black;background-color:#CCFFCC;}tr.error{color:black;background-color:#FFCCCC;}tr.step{color:white;background:grey}</style><head><meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\"><style>td { border-top: 1px solid grey; } </style></head><body>";
-		String l2 = "<p>Browser: " + Global.BROWSER + "</p>";
-		String l3 = "<p>OS: " + Global.BROWSER + "</p>";
-		String l4 = "<p>Screen resolution: " + Global.BROWSER + "</p>";
+		String l2 = "<p>Date: " + dateFormat.format(date) + "</p>";
+		String l3 = "<p>Browser: " + Global.BROWSER + "</p>";
+		String l4 = "<p>OS: " + System.getProperty("os.name") + "</p>";
+		String l5 = "<p>Screen resolution: " + dim.width + "x"+dim.height+"</p>";
 		
 		
 		CommonUtils.appendTextToFile(logPath, l1);
+		CommonUtils.appendTextToFile(logPath, l2);
+		CommonUtils.appendTextToFile(logPath, l3);
+		CommonUtils.appendTextToFile(logPath, l4);
+		CommonUtils.appendTextToFile(logPath, l5);
 	}
 
 	public static void stopLoggingSuite() {
