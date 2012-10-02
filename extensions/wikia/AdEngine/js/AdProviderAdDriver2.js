@@ -1,4 +1,4 @@
-var AdProviderAdDriver2 = function (helper, ScriptWriter, WikiaTracker, log, window, Geo) {
+var AdProviderAdDriver2 = function (helper, WikiaDart, ScriptWriter, WikiaTracker, log, window, Geo) {
 	var slotMap = {
 		'HOME_TOP_LEADERBOARD':{'tile':2, 'size':'728x90,468x60,980x130,980x65', 'loc':'top', 'dcopt':'ist'},
 		'HOME_TOP_RIGHT_BOXAD':{'tile':1, 'size':'300x250,300x600', 'loc':'top'},
@@ -45,8 +45,7 @@ var AdProviderAdDriver2 = function (helper, ScriptWriter, WikiaTracker, log, win
 		helper.AdDriver_incrementNumDARTCall(slot[0]);
 		helper.AdDriver_setLastDARTCallNoAd(slot[0], null);
 
-		// TODO FIXME this requires AdConfig.js high in AssetManager's config.php
-		var url = AdConfig.DART.getUrl(slot[0], slot[1], false, 'AdDriver');
+		var url = WikiaDart.AdConfig_DART_getUrl(slot[0], slot[1], false, 'AdDriver');
 		ScriptWriter.injectScriptByUrl(
 			slot[0], url,
 			function() {
