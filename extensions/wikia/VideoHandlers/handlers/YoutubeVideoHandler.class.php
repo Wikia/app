@@ -6,7 +6,8 @@ class YoutubeVideoHandler extends VideoHandler {
 	protected static $urlTemplate = 'http://www.youtube.com/embed/$1';
 	protected static $providerDetailUrlTemplate = 'http://www.youtube.com/watch?v=$1';
 	protected static $providerHomeUrl = 'http://www.youtube.com/';
-	protected static $autoplayParam = "autoplay=1";
+	protected static $autoplayParam = "autoplay";
+	protected static $autoplayValue = "1";
 
 	public function getEmbed($articleId, $width, $autoplay=false, $isAjax=false, $postOnload=false) {
 		return $this->getEmbedNative($width, $autoplay);
@@ -17,7 +18,7 @@ class YoutubeVideoHandler extends VideoHandler {
 		$height =  $this->getHeight( $width );
 		$url = $this->getEmbedUrl();
 		$params = array('rel'=>0);
-		if ($autoplay) $params['autoplay'] = 1;
+		if ($autoplay) $params[self::$autoplayParam] = self::$autoplayValue;
 		$qs = http_build_query($params);
 
 		$code = <<<EOT

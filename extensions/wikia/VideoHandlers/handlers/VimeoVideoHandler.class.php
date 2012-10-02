@@ -6,7 +6,8 @@ class VimeoVideoHandler extends VideoHandler {
 	protected static $urlTemplate = 'http://player.vimeo.com/video/$1';
 	protected static $providerDetailUrlTemplate = 'http://vimeo.com/$1';
 	protected static $providerHomeUrl = 'http://vimeo.com/';
-	protected static $autoplayParam = "autoplay=1";
+	protected static $autoplayParam = "autoplay";
+	protected static $autoplayValue = "1";
 
 	public function getPlayerAssetUrl() {
 		return '';
@@ -18,9 +19,10 @@ class VimeoVideoHandler extends VideoHandler {
 		
 	private function getEmbedNative( $width, $autoplay = false ) {
 		$height =  $this->getHeight( $width );
-		$autoplayStr = $autoplay ? '1' : '0';
+		$autoplayStrParam = self::$autoplayParam;
+		$autoplayStrValue = $autoplay ? self::$autoplayValue : '0';
 		$url = $this->getEmbedUrl();
-		return '<iframe src="'.$url.'?autoplay='.$autoplayStr.'" width="'.$width.'" height="'.$height.'" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>';
+		return '<iframe src="'.$url.'?'.$autoplayStrParam.'='.$autoplayStrValue.'" width="'.$width.'" height="'.$height.'" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>';
 	}
 
 }

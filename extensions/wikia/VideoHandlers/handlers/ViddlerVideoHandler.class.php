@@ -5,7 +5,8 @@ class ViddlerVideoHandler extends VideoHandler {
 	protected static $urlTemplate = 'http://www.viddler.com/player/$1/';
 	protected static $providerDetailUrlTemplate = 'http://www.viddler.com/v/$1';
 	protected static $providerHomeUrl = 'http://www.viddler.com/';
-	protected static $autoplayParam = "autoplay=t";
+	protected static $autoplayParam = "autoplay";
+	protected static $autoplayValue = "t";
 
 	public function getEmbed($articleId, $width, $autoplay = false, $isAjax = false, $postOnload = false) {
 		$height = $this->getHeight($width);
@@ -16,8 +17,8 @@ class ViddlerVideoHandler extends VideoHandler {
 		$html = <<<EOT
 <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="$width" height="$height" id="viddler_$embedVideoId">
 EOT;
-		if ($autoplay) {
-			$flashVars = ' flashvars="autoplay=t"';
+		if($autoplay) {
+			$flashVars = ' flashvars="'.self::$autoplayParam.'='.self::$autoplayValue.'"';
 			$html .= <<<EOT
 	<param name="flashvars" value="autoplay=t" />
 EOT;
