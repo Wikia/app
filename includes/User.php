@@ -4073,24 +4073,35 @@ class User {
 	 */
 	public function incEditCount() {
 		if( !$this->isAnon() ) {
-                        // wikia change, load always from first cluster when we use
-                        // shared users database
-                        // @author Lucas Garczewski (tor)
-                        global $wgExternalSharedDB, $wgSharedDB;
-                        if( isset( $wgSharedDB ) ) {
-                                $dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
-                        }
-                        else {
-                                $dbw = wfGetDB( DB_MASTER );
-                        }
+            // wikia change, load always from first cluster when we use
+            // shared users database
+            // @author Lucas Garczewski (tor)
+            global $wgExternalSharedDB, $wgSharedDB;
+            if( isset( $wgSharedDB ) ) {
+                    $dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
+            }
+            else {
+                    $dbw = wfGetDB( DB_MASTER );
+            }
 
 			$dbw->update( '`user`',
 				array( 'user_editcount=user_editcount+1' ),
 				array( 'user_id' => $this->getId() ),
 				__METHOD__ );
-
+			$dbw->commit();
+			
+			
+			/*
+			 * Wikia Change By Tomek
+			 * at this point we do not want to run 
+			 * other logic because is not truth in our system 
+			 * (local table of revision on every wiki)
+			 * 
+			 *  false && to skip runing this part of code
+			 */
+			
 			// Lazy initialization check...
-			if( $dbw->affectedRows() == 0 ) {
+			if( false && $dbw->affectedRows() == 0 ) {
 				// Pull from a slave to be less cruel to servers
 				// Accuracy isn't the point anyway here
 				$dbr = wfGetDB( DB_SLAVE );
@@ -4117,6 +4128,8 @@ class User {
 					array( 'user_id' => $this->getId() ),
 					__METHOD__ );
 			}
+
+
 		}
 		// edit count in user cache too
 		$this->invalidateCache();
