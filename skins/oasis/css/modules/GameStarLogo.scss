@@ -1,4 +1,5 @@
 @import "../core/color";
+@import "../core/GlobalHeader";
 
 .GameStarLogo {
   float: right;
@@ -16,4 +17,21 @@
       color: transparent;
     }
   }
+}
+
+.gamestar-wrapper {
+	position: absolute;
+	width: 100%;
+	.gamestar-container {
+		margin: 0 auto;
+		position: relative;
+		width: $wikiaheader-width;
+		.gamestar {
+			background-color: $color-header-alt;
+			float: right;
+			height: 37px;
+			margin-right: -132px;
+			width: 132px;
+		}
+	}
 }

@@ -1,3 +1,10 @@
+<? if ( !empty($isGameStarLogoEnabled )): ?>
+	<div class="gamestar-wrapper">
+		<div class="gamestar-container">
+			<div class="gamestar"></div>
+		</div>
+	</div>
+<? endif; ?>
 <header id="WikiaHeader" class="WikiaHeader">
 	<div class="wikia-header-mask">
 		<div class="page-width-container">
