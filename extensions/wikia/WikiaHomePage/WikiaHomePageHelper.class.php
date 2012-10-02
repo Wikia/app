@@ -614,8 +614,7 @@ class WikiaHomePageHelper extends WikiaModel {
 			// result should have more 'vertical' orientation, cropping left and right from original image;
 			$requestedCropHeight = $originalHeight;
 			$requestedCropWidth = ceil($requestedCropHeight * $requestedRatio);
-			$currentRatio = $requestedCropWidth / $requestedCropHeight;
-			if($requestedWidth >= $originalWidth && $requestedCropHeight == $originalHeight && $currentRatio > $requestedRatio && $requestedRatio >= 1) {
+			if($requestedWidth >= $originalWidth && $requestedCropHeight == $originalHeight && $requestedRatio >= 1) {
 				$requestedWidth = $requestedCropWidth;
 			}
 		}
