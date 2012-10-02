@@ -31,7 +31,7 @@ define('track', function () {
 				obj.href = options.href;
 			}
 
-			WikiaTracker.trackEvent('trackingevent', obj, 'ga');
+			!window.wgGameGuides && WikiaTracker.trackEvent('trackingevent', obj, 'ga');
 		},
 		//if anything happens to WikiaTracker it'll be much easier to fix it in one place
 		CLICK: ACTIONS.CLICK,
