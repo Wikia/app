@@ -796,7 +796,21 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 		width: 1010px;
 		.remix {
 			width: 160px;
-		}
+
+            /* stripes at the top of remix panel */
+            &:before,
+            &:after,
+            h2:before,
+            h2:after {
+              width: 40px;
+            }
+            &:after {
+              left: 40px;
+            }
+            h2:before {
+              right: 40px;
+            }
+        }
 		.stats {
 			width: 300px;
 		}
