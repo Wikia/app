@@ -258,6 +258,12 @@ class GameGuidesController extends WikiaController {
 
 		$this->setVal( 'globals', WikiaSkin::makeInlineVariablesScript( $vars ) . $skin->getTopScripts() );
 	}
+
+	public function getContent(){
+		$this->response->setFormat( 'json' );
+
+		$this->response->setVal( 'content', WikiFactory::getVarValueByName( 'wgWikiaGameGuidesContent', $this->wg->CityId ) );
+	}
 }
 
 class GameGuidesWrongAPIVersionException extends WikiaException {
