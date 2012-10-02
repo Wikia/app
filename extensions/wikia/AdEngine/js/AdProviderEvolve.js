@@ -51,13 +51,16 @@ var AdProviderEvolve = function (ScriptWriter, WikiaTracker, log, window, docume
 			'sect=' + sect + ';' +
 			'mtfInline=true;' +
 			'pos=' + slotname + ';' +
+			 WikiaDartHelper_getZone1() +
+			 WikiaDartHelper_getCustomKeyValues() +
+			 WikiaDartHelper_getKruxKV() +
 			'sz=' + slotMap[slotname].size + ';' +
 			(slotMap[slotname].dcopt ? 'dcopt=' + slotMap[slotname].dcopt + ';' : '') +
 			'type=pop;type=int;' + // TODO remove?
 			'tile=' + slotMap[slotname].tile + ';' +
 			'ord=' + ord + '?';
 
-		log(url, 7, 'AdProviderEvolve');
+		log(url, /* 7 */ 5, 'AdProviderEvolve');
 		return url;
 	}
 
@@ -86,6 +89,56 @@ var AdProviderEvolve = function (ScriptWriter, WikiaTracker, log, window, docume
 		return sect;
 	}
 
+	// c&p WikiaDartHelper.getZone1
+	// TODO refactor
+	function WikiaDartHelper_getZone1() {
+		log('WikiaDartHelper_getZone1', 5, 'AdProviderEvolve');
+
+		if (window.wgDBname) {
+			var kv = 's1=_' + window.wgDBname.replace('/[^0-9A-Z_a-z]/', '_') + ';';
+
+			log(kv, 7, 'AdProviderEvolve');
+			return kv;
+		}
+
+		return '';
+	}
+
+	// c&p WikiaDartHelper.getCustomKeyValues
+	// TODO refactor
+	var kvStrMaxLength = 500;
+	function WikiaDartHelper_getCustomKeyValues() {
+		log('WikiaDartHelper_getCustomKeyValues', 5, 'AdProviderEvolve');
+
+		if (window.wgDartCustomKeyValues) {
+			var kv = window.wgDartCustomKeyValues + ';';
+			kv = kv.substr(0, kvStrMaxLength);
+			kv = kv.replace(/;[^;]*$/, ';');
+
+			log(kv, 7, 'AdProviderEvolve');
+			return kv;
+		}
+
+		return '';
+	}
+
+	// c&p WikiaDartHelper.getKruxKV
+	// TODO refactor
+	function WikiaDartHelper_getKruxKV() {
+		log('WikiaDartHelper_getKruxKV', 5, 'AdProviderEvolve');
+
+		if (window.wgEnableKruxTargeting && window.Krux && window.Krux.dartKeyValues) {
+			var kv = window.Krux.dartKeyValues;
+			kv = kv.substr(0, kvStrMaxLength);
+			kv = kv.replace(/;[^;]*$/, ';');
+
+			log(kv, 7, 'AdProviderEvolve');
+			return kv;
+		}
+
+		return '';
+	}
+
 	function hop(slotname) {
 		log('hop', 5, 'AdProviderEvolve');
 		log(slotname, 5, 'AdProviderEvolve');
@@ -98,7 +151,7 @@ var AdProviderEvolve = function (ScriptWriter, WikiaTracker, log, window, docume
 		log('slotTimer2 end for ' + slotname + ' after ' + time + ' ms', 7, 'AdProviderEvolve');
 		WikiaTracker.trackAdEvent('liftium.hop2', {'ga_category':'hop2/evolve', 'ga_action':'slot ' + slotname, 'ga_label':formatTrackTime(time, 5)}, 'ga');
 
-		window.adslots2.push([slotname, size, 'Liftium2', null]);
+		window.adslots2.push([slotname, size, 'AdDriver2', null]);
 	}
 
 	function sanitizeSlotname(slotname) {
