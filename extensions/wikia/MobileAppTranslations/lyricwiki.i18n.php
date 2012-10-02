@@ -617,7 +617,7 @@ $messages['ko'] = array(
 	'ringtone-matcher-by-song' => '핸드폰에 %s 링톤을 보내세요',
 );
 
-/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
+/** Kurdish (Latin script) (Kurdî (latînî)‎)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -720,7 +720,7 @@ $messages['ms'] = array(
 	'ringtone-matcher-by-song' => 'Hantar Nada Dering %s Kepada Telefon Bimbit Anda',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -802,7 +802,7 @@ $messages['nl'] = array(
 	'ringtone-matcher-by-song' => 'De ringtone %s naar uw telefoon sturen',
 );
 
-/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+/** Nederlands (informeel)‎ (Nederlands (informeel)‎)
  * @author Siebrand
  */
 $messages['nl-informal'] = array(
@@ -1068,7 +1068,7 @@ $messages['tr'] = array(
 	'about-heading-licensing' => 'Telif hakları',
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
+/** Simplified Chinese (中文（简体）‎)
  * @author Anakmalaysia
  */
 $messages['zh-hans'] = array(

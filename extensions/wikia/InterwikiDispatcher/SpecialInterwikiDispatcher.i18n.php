@@ -34,7 +34,7 @@ $messages['af'] = array(
 	'interwikidispatcher-desc' => 'Los interwikiskakels op om Apache-aansture te verminder',
 );
 
-/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
  * @author EugeneZelenko
  * @author Wizardist
  */
@@ -181,7 +181,7 @@ $messages['ms'] = array(
 	'interwikidispatcher-desc' => 'Membaiki pautan antara wiki untuk mengurangkan pelencongan Apache',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Nghtwlkr
  */
 $messages['nb'] = array(
@@ -247,7 +247,7 @@ $messages['ru'] = array(
 	'interwikidispatcher-desc' => 'Разрешает интервики ссылки для сокращения перенаправлений Apache',
 );
 
-/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Charmed94
  * @author Rancher
  * @author Verlor

@@ -142,7 +142,7 @@ $messages['ms'] = array(
 	'scribeeventsrecords' => 'Rekod',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬) */
+/** Norwegian Bokmål (norsk (bokmål)‎) */
 $messages['nb'] = array(
 	'scribe-desc' => '[[Special:Scribeevents|Verktøyl]] for å søke etter en bestemt sidetittel på tvers av wikier',
 	'scribeevents' => 'Nylige hendelser',
@@ -196,7 +196,7 @@ $messages['ru'] = array(
 	'scribeeventsrecords' => 'Записи',
 );
 
-/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Rancher
  */
 $messages['sr-ec'] = array(

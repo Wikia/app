@@ -341,7 +341,7 @@ $messages['ms'] = array(
 	'category-exhibition-display-new' => 'Paparan Pameran Kategori',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -459,7 +459,7 @@ $messages['ru'] = array(
 	'category-exhibition-display-new' => 'Просмотр категории-выставки',
 );
 
-/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -525,7 +525,7 @@ $messages['uk'] = array(
 	'category-exhibition-subcategories-header' => 'Підкатегорії',
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
+/** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  * @author Hzy980512
  */

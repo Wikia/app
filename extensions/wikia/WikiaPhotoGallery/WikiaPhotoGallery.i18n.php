@@ -484,7 +484,7 @@ $messages['az'] = array(
 	'wikiaPhotoGallery-upload-selectbutton' => 'Seç',
 );
 
-/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
  * @author EugeneZelenko
  * @author Jim-by
  * @author Wizardist
@@ -1436,7 +1436,7 @@ Wenn auf dieses Bild geklickt wird, zu dieser Seite gehen.",
 	'galery-slider-read-more' => 'Mehr lesen >',
 );
 
-/** German (formal address) (‪Deutsch (Sie-Form)‬)
+/** German (formal address) (Deutsch (Sie-Form)‎)
  * @author LWChris
  * @author The Evil IP address
  */
@@ -3135,7 +3135,7 @@ $messages['ko'] = array(
 	'wikiaPhotoGallery-upload-findbutton' => '찾기',
 );
 
-/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
+/** Kurdish (Latin script) (Kurdî (latînî)‎)
  * @author George Animal
  * @author Gomada
  */
@@ -3759,7 +3759,7 @@ $messages['my'] = array(
 	'wikiaPhotoGallery-preview-hover-delete' => 'ဖျက်​ပါ',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -4126,7 +4126,7 @@ Als dit bestand wordt aangeklikt, ga dan naar de aangegeven pagina.",
 	'galery-slider-read-more' => 'Meer lezen >',
 );
 
-/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+/** Nederlands (informeel)‎ (Nederlands (informeel)‎)
  * @author Siebrand
  */
 $messages['nl-informal'] = array(
@@ -5130,7 +5130,7 @@ $messages['sl'] = array(
 	'wikiaPhotoGallery-back' => 'Nazaj',
 );
 
-/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -6061,7 +6061,7 @@ $messages['yi'] = array(
 	'wikiaPhotoGallery-preview-bordersize-none' => 'קיין',
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
+/** Simplified Chinese (中文（简体）‎)
  * @author Anakmalaysia
  * @author Hydra
  * @author Hzy980512
@@ -6145,7 +6145,7 @@ $messages['zh-hans'] = array(
 	'wikiaPhotoGallery-search-tooltip' => '在该维基搜索图片',
 );
 
-/** Chinese (Taiwan) (‪中文（台灣）‬) */
+/** Chinese (Taiwan) (中文（台灣）‎) */
 $messages['zh-tw'] = array(
 	'wikiaphotogallery-desc' => '提供一個界面以管理頁面中的圖片集與幻燈片',
 	'wikiaPhotoGallery-back' => '返回',

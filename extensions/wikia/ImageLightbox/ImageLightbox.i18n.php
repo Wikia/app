@@ -55,6 +55,16 @@ $messages['az'] = array(
 	'lightbox-share-button-email' => 'E-məktub',
 );
 
+/** Breton (brezhoneg)
+ * @author Fohanno
+ */
+$messages['br'] = array(
+	'lightbox-send' => 'Kas',
+	'lightbox-share-button-www' => 'Rannañ',
+	'lightbox-share-email-page-label-address' => "Chomlec'h postel",
+	'lightbox-visit-the-wiki' => 'Gweladenniñ ar wiki :',
+);
+
 /** Catalan (català)
  * @author BroOk
  */
@@ -127,7 +137,7 @@ Details: $2',
 	'lightbox-visit-the-wiki' => 'Besuche das Wiki:',
 );
 
-/** German (formal address) (‪Deutsch (Sie-Form)‬)
+/** German (formal address) (Deutsch (Sie-Form)‎)
  * @author Tiin
  */
 $messages['de-formal'] = array(
@@ -496,7 +506,7 @@ Butiran: $2',
 	'lightbox-visit-the-wiki' => 'Lawati wiki:',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -760,7 +770,7 @@ $messages['tr'] = array(
 	'lightbox-share-email-error-caption' => 'Hata',
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
+/** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  */
 $messages['zh-hans'] = array(

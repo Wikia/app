@@ -366,7 +366,7 @@ Schreibe den ersten Abschnitt deines Artikels hier.
 Schreibe den zweiten Abschnitt deines Artikels hier.',
 );
 
-/** German (formal address) (‪Deutsch (Sie-Form)‬)
+/** German (formal address) (Deutsch (Sie-Form)‎)
  * @author LWChris
  */
 $messages['de-formal'] = array(
@@ -965,7 +965,7 @@ $messages['km'] = array(
 សរសេរផ្នែកទីពីររបស់ទំព័រអ្នកនៅទៅនេះ។',
 );
 
-/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
+/** Kurdish (Latin script) (Kurdî (latînî)‎)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -1219,7 +1219,7 @@ Isikan bahagian pertama laman anda di sini.
 Isikan bahagian kedua laman anda di sini.',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -1308,7 +1308,7 @@ Schrijf hier de eerste paragraaf van uw pagina.
 Schrijf hier de tweede paragraaf van uw pagina.',
 );
 
-/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+/** Nederlands (informeel)‎ (Nederlands (informeel)‎)
  * @author Siebrand
  */
 $messages['nl-informal'] = array(
@@ -1681,7 +1681,7 @@ $messages['sah'] = array(
 Манна ыстатыйаҥ иккис салаатын суруй.',
 );
 
-/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Rancher
  * @author Verlor
  * @author Жељко Тодоровић
@@ -1989,7 +1989,7 @@ $messages['zh'] = array(
 	'createpage_enter_text' => '輸入文字',
 );
 
-/** Chinese (China) (‪中文（中国大陆）‬) */
+/** Chinese (China) (中文（中国大陆）‎) */
 $messages['zh-cn'] = array(
 	'createpage-sp-title' => '新增文章',
 	'createpage_title' => '发表新文章',
@@ -1997,7 +1997,7 @@ $messages['zh-cn'] = array(
 	'createpage_enter_text' => '输入文字',
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
+/** Simplified Chinese (中文（简体）‎)
  * @author Anakmalaysia
  * @author Dimension
  * @author Hydra
@@ -2030,7 +2030,7 @@ $messages['zh-hans'] = array(
 在这里撰写第二项。',
 );
 
-/** Traditional Chinese (‪中文（繁體）‬)
+/** Traditional Chinese (中文（繁體）‎)
  * @author Anakmalaysia
  * @author Ffaarr
  * @author Oapbtommy
@@ -2053,7 +2053,7 @@ $messages['zh-hant'] = array(
 	'tog-createpagedefaultblank' => '使用空白頁作為預設創建新頁面',
 );
 
-/** Chinese (Hong Kong) (‪中文（香港）‬)
+/** Chinese (Hong Kong) (中文（香港）‎)
  * @author Anakmalaysia
  */
 $messages['zh-hk'] = array(
@@ -2063,14 +2063,14 @@ $messages['zh-hk'] = array(
 	'createpage_enter_text' => '輸入文字',
 );
 
-/** Chinese (Singapore) (‪中文（新加坡）‬) */
+/** Chinese (Singapore) (中文（新加坡）‎) */
 $messages['zh-sg'] = array(
 	'createpage_title' => '发表新文章',
 	'createpage_title_caption' => '文章标题',
 	'createpage_enter_text' => '输入文字',
 );
 
-/** Chinese (Taiwan) (‪中文（台灣）‬) */
+/** Chinese (Taiwan) (中文（台灣）‎) */
 $messages['zh-tw'] = array(
 	'createpage-sp-title' => '新增文章',
 	'createpage_title' => '發表新文章',

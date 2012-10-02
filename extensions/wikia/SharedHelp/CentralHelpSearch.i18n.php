@@ -130,7 +130,7 @@ $messages['ms'] = array(
 	'centralhelpsearch-placeholder' => 'Cari Bantuan&hellip;',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -203,7 +203,7 @@ $messages['tt-cyrl'] = array(
 	'centralhelpsearch-placeholder' => 'Белешмәлек буенча эзләү ...',
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
+/** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  */
 $messages['zh-hans'] = array(

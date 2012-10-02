@@ -457,7 +457,7 @@ $messages['de'] = array(
 	'scavengerhunt-facebook-description' => 'Facebook-Teilen-Text',
 );
 
-/** German (formal address) (‪Deutsch (Sie-Form)‬)
+/** German (formal address) (Deutsch (Sie-Form)‎)
  * @author Tiin
  */
 $messages['de-formal'] = array(
@@ -1170,7 +1170,7 @@ $messages['ja'] = array(
 	'scavengerhunt-entry-form-email' => 'メール アドレス',
 );
 
-/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
+/** Kurdish (Latin script) (Kurdî (latînî)‎)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -1507,7 +1507,7 @@ Perhatian: Ruangan ini tidak wajib; jika dibiarkan kosong, ia tidak akan dipapar
 	'scavengerhunt-facebook-description' => 'Teks kongsian Facebook',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -1810,7 +1810,7 @@ $messages['nl'] = array(
 	'scavengerhunt-facebook-description' => 'Tekst voor delen via Facebook',
 );
 
-/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+/** Nederlands (informeel)‎ (Nederlands (informeel)‎)
  * @author Siebrand
  */
 $messages['nl-informal'] = array(
@@ -2266,7 +2266,7 @@ $messages['ru'] = array(
 	'scavengerhunt-facebook-description' => 'Facebook, поделиться текстом',
 );
 
-/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -2349,6 +2349,7 @@ $messages['sv'] = array(
 	'scavengerhunt-form-error-landing-button-text' => 'Var god ange knapptexten för destinationssidan.',
 	'scavengerhunt-form-error-landing-button-position' => 'Var god ange knappositionen för destinationssidan.',
 	'scavengerhunt-form-error-no-article-title' => 'Var god ange alla artikelrubriker (som giltiga URLs).',
+	'scavengerhunt-form-error-duplicated-article-title' => 'Jaktstegen kan inte ha dubblerade titlar',
 	'scavengerhunt-form-error-article-hidden-image' => 'Var god ange alla adresser för dolda bilder.',
 	'scavengerhunt-form-error-article-clue' => 'Var god fyll i alla information om artikelledtrådarna.',
 	'scavengerhunt-form-error-clue' => 'Var god fyll i all information  om artikelns gratulationsmeddelande.',
@@ -2363,6 +2364,7 @@ $messages['sv'] = array(
 	'scavengerhunt-game-has-been-enabled' => 'Markerade skattjaktsspel har aktiverats.',
 	'scavengerhunt-game-has-been-disabled' => 'Markerade skattjaktsspel har inaktiverats.',
 	'scavengerhunt-game-has-not-been-saved' => 'Skattjaktsspelet har inte sparats.',
+	'scavengerhunt-edit-token-mismatch' => 'Redigeringskoden stämde inte - var god försök igen.',
 	'scavengerhunt-entry-form-name' => 'Ditt namn:',
 	'scavengerhunt-entry-form-email' => 'Din e-postadress:',
 	'scavengerhunt-label-sprite-img' => 'Sökväg för spritebild',
@@ -2398,12 +2400,19 @@ $messages['sv'] = array(
 	'scavengerhunt-editor-tip-progressBarBackgroundSprite' => 'Använd dessa koordinater för att ange: <br />
 (1) var du vill placera spritefilen<br />
 (2) vilken del av spritefilen som är det aktiva bildobjektet.',
+	'scavengerhunt-editor-tip-progressBarExitSprite' => 'OBS: Alla koordinater är relativa till referenspunkten i det nedre högra hörnet på sidan',
 	'scavengerhunt-editor-tip-starting-clue-text' => 'Detta är texten som orienterar spelaren och startar jakten.',
+	'scavengerhunt-editor-tip-articleTitle' => 'Detta är sidan med nästa objekt.',
+	'scavengerhunt-editor-tip-spriteNotFound' => 'Detta avsnitt definierar bilden som ska vara ledtråden.',
+	'scavengerhunt-editor-tip-article-title' => 'Detta är platsen för sidan med nästa objekt.',
+	'scavengerhunt-editor-tip-entry-form-title' => 'Detta är titeln för dialogrutan som visas i slutet av jakten.',
+	'scavengerhunt-editor-tip-entry-form-text' => 'Detta är texten i dialogrutan som visas i slutet av jakten.',
 	'scavengerhunt-editor-tip-finishPopupSprite' => 'Om du vill visa en bild i det slutliga popup-meddelandet, ange den här.',
 	'scavengerhunt-editor-tip-goodbye-title' => 'Detta är titeln på det slutliga popup-meddelandet från jakten.',
 	'scavengerhunt-editor-tip-goodbye-text' => 'Detta är texten på det slutliga popup-meddelandet från jakten.',
 	'scavengerhunt-editor-tip-clue-color' => 'Färger bör ha hexadecimala teckensystem, som #F00.',
 	'scavengerhunt-editor-tip-entry-form-button-text' => 'Detta är knapptexten som visas i dialogrutan i slutet av jakten.',
+	'scavengerhunt-editor-tip-facebook-image' => "Bildstil i MediaWiki-format på destinationssidans wiki. T.ex.: 'Ett_bildexempel.png'",
 	'scavengerhunt-editor-tip-facebook-description' => 'Text som visas i delningsmeddelande',
 	'scavengerhunt-facebook-image' => 'Bild för Facebook-delning',
 	'scavengerhunt-facebook-description' => 'Text för Facebook-delning',
@@ -2598,7 +2607,7 @@ $messages['uk'] = array(
 	'scavengerhunt-label-name' => 'Назва:',
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
+/** Simplified Chinese (中文（简体）‎)
  * @author Hydra
  */
 $messages['zh-hans'] = array(

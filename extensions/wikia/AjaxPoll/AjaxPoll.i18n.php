@@ -62,7 +62,7 @@ $messages['ba'] = array(
 	'ajaxpoll-thankyou' => 'Тауышығыз өсөн рәхмәт!',
 );
 
-/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
  * @author EugeneZelenko
  * @author Wizardist
  */
@@ -138,7 +138,7 @@ $messages['de'] = array(
 	'ajaxpoll-submitting' => 'Bitte warte kurz, deine Stimme wird verarbeitet.',
 );
 
-/** German (formal address) (‪Deutsch (Sie-Form)‬)
+/** German (formal address) (Deutsch (Sie-Form)‎)
  * @author LWChris
  */
 $messages['de-formal'] = array(
@@ -447,7 +447,7 @@ $messages['ms'] = array(
 	'ajaxpoll-submitting' => 'Sila tunggu, undian anda sedang diserahkan...',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -476,7 +476,7 @@ Geniet van de resultaten.',
 Bezig met het opslaan van uw stem...',
 );
 
-/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+/** Nederlands (informeel)‎ (Nederlands (informeel)‎)
  * @author Siebrand
  */
 $messages['nl-informal'] = array(
@@ -487,7 +487,7 @@ Probeer het nog een keer.',
 Bezig met het opslaan van je stem...',
 );
 
-/** Norwegian Nynorsk (‪norsk (nynorsk)‬)
+/** Norwegian Nynorsk (norsk (nynorsk)‎)
  * @author Harald Khan
  */
 $messages['nn'] = array(
@@ -630,7 +630,7 @@ $messages['si'] = array(
 	'ajaxpoll-submit' => 'ඡන්දය දෙන්න!',
 );
 
-/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Rancher
  * @author Verlor
  */
@@ -741,7 +741,7 @@ $messages['vi'] = array(
 	'ajaxpoll-submitting' => 'Xin vui lòng chờ, đang gửi bình chọn của bạn...',
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
+/** Simplified Chinese (中文（简体）‎)
  * @author Hydra
  * @author Wilsonmess
  */
@@ -755,7 +755,7 @@ $messages['zh-hans'] = array(
 	'ajaxpoll-submitting' => '请稍候，正在递交您的投票……',
 );
 
-/** Traditional Chinese (‪中文（繁體）‬)
+/** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
  */
 $messages['zh-hant'] = array(

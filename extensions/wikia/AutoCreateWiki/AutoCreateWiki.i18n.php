@@ -349,7 +349,7 @@ $messages['az'] = array(
 	'autocreatewiki-subname-answers' => 'Cavablar',
 );
 
-/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
  * @author Wizardist
  */
 $messages['be-tarask'] = array(
@@ -488,7 +488,7 @@ $messages['br'] = array(
 	'autocreatewiki-step11' => "Kas ar postel d'an implijer...",
 	'autocreatewiki-redirect' => 'Adkas war-du ar wiki nevez : $1 ...',
 	'autocreatewiki-congratulation' => "Gourc'hemennoù !",
-	'autocreatewiki-welcometalk-log' => 'Kemenadenn Degemer',
+	'autocreatewiki-welcometalk-log' => 'Kemennadenn Degemer',
 	'autocreatewiki-regex-error-comment' => 'implijet er wiki $1 (skrid  klok : $2)',
 	'autocreatewiki-step2-error' => "Bez' ez eus c'hoazh eus an diaz roadennoù-se !",
 	'autocreatewiki-step3-error' => "Ne c'haller ket ouzhpennañ an titouroù dre ziouer en diaz roadennoù !",
@@ -803,7 +803,7 @@ indem du <a href="$2">$2</a> besuchst.</p>
 	'autocreatewiki-subname-answers' => 'Fragen',
 );
 
-/** German (formal address) (‪Deutsch (Sie-Form)‬)
+/** German (formal address) (Deutsch (Sie-Form)‎)
  * @author Claudia Hattitten
  * @author LWChris
  * @author The Evil IP address
@@ -2728,7 +2728,7 @@ Dat es e brandneu Projäk, un wann De Froore häß, schriiv ons dovun!
 	'autocreatewiki-subname-answers' => 'Antwoote',
 );
 
-/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
+/** Kurdish (Latin script) (Kurdî (latînî)‎)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -3164,7 +3164,7 @@ $messages['mzn'] = array(
 	'autocreatewiki-page-title-default' => 'اتا نو ویکی درس هکردن',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -3457,7 +3457,7 @@ Dit is een volledig nieuw project, dus laat het ons weten als u met vragen zit.
 	'autocreatewiki-subname-answers' => 'Antwoorden',
 );
 
-/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+/** Nederlands (informeel)‎ (Nederlands (informeel)‎)
  * @author Siebrand
  */
 $messages['nl-informal'] = array(
@@ -4413,7 +4413,7 @@ ___________________________________________
 	'autocreatewiki-subname-answers' => 'Ответы',
 );
 
-/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Nikola Smolenski
  * @author Rancher
  * @author Verlor
@@ -5205,13 +5205,13 @@ $messages['zh'] = array(
 Wikia 社群團隊',
 );
 
-/** Chinese (China) (‪中文（中国大陆）‬) */
+/** Chinese (China) (中文（中国大陆）‎) */
 $messages['zh-cn'] = array(
 	'autocreatewiki-page-title-default' => '申请wiki',
 	'createwiki' => '申请wiki',
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
+/** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  * @author Hydra
  * @author Yfdyh000
@@ -5317,7 +5317,7 @@ $messages['zh-hans'] = array(
 	'autocreatewiki-subname-answers' => '问答网站',
 );
 
-/** Traditional Chinese (‪中文（繁體）‬)
+/** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
  * @author Oapbtommy
  */
@@ -5413,19 +5413,19 @@ $messages['zh-hant'] = array(
 	'autocreatewiki-subname-answers' => '問答網站',
 );
 
-/** Chinese (Hong Kong) (‪中文（香港）‬) */
+/** Chinese (Hong Kong) (中文（香港）‎) */
 $messages['zh-hk'] = array(
 	'autocreatewiki-page-title-default' => '申請wiki',
 	'createwiki' => '申請wiki',
 );
 
-/** Chinese (Singapore) (‪中文（新加坡）‬) */
+/** Chinese (Singapore) (中文（新加坡）‎) */
 $messages['zh-sg'] = array(
 	'autocreatewiki-page-title-default' => '申请wiki',
 	'createwiki' => '申请wiki',
 );
 
-/** Chinese (Taiwan) (‪中文（台灣）‬) */
+/** Chinese (Taiwan) (中文（台灣）‎) */
 $messages['zh-tw'] = array(
 	'autocreatewiki-page-title-default' => '申請wiki',
 	'createwiki' => '申請wiki',

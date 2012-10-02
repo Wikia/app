@@ -319,7 +319,7 @@ $messages['ms'] = array(
 	'timeago-second-from-now' => 'seminit dari sekarang',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -454,7 +454,7 @@ $messages['ru'] = array(
 	'timeago-second-from-now' => 'минуту назад',
 );
 
-/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -535,7 +535,7 @@ $messages['vi'] = array(
 	'timeago-second' => '1 phút trước',
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
+/** Simplified Chinese (中文（简体）‎)
  * @author Hydra
  */
 $messages['zh-hans'] = array(

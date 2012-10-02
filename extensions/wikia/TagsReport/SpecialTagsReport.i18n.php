@@ -48,7 +48,7 @@ $messages['az'] = array(
 	'tagsreportmainnspace' => 'Əsas',
 );
 
-/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -131,7 +131,7 @@ $messages['de'] = array(
 	'tagsreportgenerated' => 'Erstellt am $1 um $2',
 );
 
-/** German (formal address) (‪Deutsch (Sie-Form)‬)
+/** German (formal address) (Deutsch (Sie-Form)‎)
  * @author LWChris
  */
 $messages['de-formal'] = array(
@@ -312,7 +312,7 @@ $messages['ja'] = array(
 	'tagsreportgenerated' => '$1 $2 に生成',
 );
 
-/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
+/** Kurdish (Latin script) (Kurdî (latînî)‎)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -384,7 +384,7 @@ $messages['my'] = array(
 	'tagsreportgenerated' => '$1 ရက် $2 အချိန်တွင် ဖန်တီးခဲ့သည်',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -417,7 +417,7 @@ $messages['nl'] = array(
 	'tagsreportgenerated' => 'Aangemaakt op $1 om $2',
 );
 
-/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+/** Nederlands (informeel)‎ (Nederlands (informeel)‎)
  * @author Siebrand
  */
 $messages['nl-informal'] = array(
@@ -520,7 +520,7 @@ $messages['ru'] = array(
 	'tagsreportgenerated' => 'Создана $1 в $2',
 );
 
-/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Charmed94
  * @author Rancher
  * @author Verlor
@@ -622,7 +622,7 @@ $messages['vep'] = array(
 	'tagsreportgenerated' => 'Om sätud $1 aigal $2',
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
+/** Simplified Chinese (中文（简体）‎)
  * @author Hydra
  */
 $messages['zh-hans'] = array(
@@ -630,7 +630,7 @@ $messages['zh-hans'] = array(
 	'tagsreportmainnspace' => '主要',
 );
 
-/** Traditional Chinese (‪中文（繁體）‬)
+/** Traditional Chinese (中文（繁體）‎)
  * @author Horacewai2
  */
 $messages['zh-hant'] = array(

@@ -606,7 +606,7 @@ $messages['az'] = array(
 	'wikistats_title' => 'Başlıq',
 );
 
-/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
  * @author EugeneZelenko
  * @author Jim-by
  * @author Wizardist
@@ -1831,7 +1831,7 @@ Bitte [[Special:UserLogin|anmelden oder ein Konto anlegen]] falls du noch keins 
 	'wikistats_error_malformed_date' => 'Fehler: Das angegebene Datum ist ungültig',
 );
 
-/** German (formal address) (‪Deutsch (Sie-Form)‬)
+/** German (formal address) (Deutsch (Sie-Form)‎)
  * @author LWChris
  * @author The Evil IP address
  * @author Umherirrender
@@ -1946,7 +1946,7 @@ $messages['diq'] = array(
 	'wikistats_article_total' => 'Wesiqey Pêro',
 	'wikistats_article_edits' => 'Wesiqe bıvurne',
 	'wikistats_article_created' => 'Wesiqe Vıraze',
-	'wikistats_article_talk' => 'Wesiqe:Werenayış',
+	'wikistats_article_talk' => 'Wesiqe:Behse',
 	'wikistats_blog_created' => 'Blog Vıraze',
 	'wikistats_blog_comment' => 'Vatışê Blogi',
 	'wikistats_photo_new' => 'Fotrafê newey',
@@ -4468,7 +4468,7 @@ $messages['ksh'] = array(
 	'wikistats_uploaded_images' => 'huhjelaade',
 );
 
-/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
+/** Kurdish (Latin script) (Kurdî (latînî)‎)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -5720,7 +5720,7 @@ $messages['mzn'] = array(
 	'wikistats_hide' => 'فه‌رو  بـور',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -6204,7 +6204,7 @@ U moet aangemeld zijn om de Wikia-statistieken in te zien.
 	'wikistats_error_malformed_date' => 'Fout: de opgegeven datumnotatie is onjuist',
 );
 
-/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+/** Nederlands (informeel)‎ (Nederlands (informeel)‎)
  * @author Siebrand
  */
 $messages['nl-informal'] = array(
@@ -7610,7 +7610,7 @@ $messages['sq'] = array(
 	'wikistats_active_year' => 'vit',
 );
 
-/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Nikola Smolenski
  * @author Rancher
  * @author Verlor
@@ -8648,7 +8648,7 @@ $messages['wuu'] = array(
 	'wikistats_xls_cancel' => '取消',
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
+/** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  * @author Hydra
  */
@@ -8682,7 +8682,7 @@ $messages['zh-hans'] = array(
 	'wikistats_photo_new' => '新照片',
 );
 
-/** Traditional Chinese (‪中文（繁體）‬)
+/** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
  * @author Horacewai2
  * @author Oapbtommy
@@ -8815,7 +8815,7 @@ $messages['zh-hant'] = array(
 	'wikistats_language_all' => '所有語言',
 );
 
-/** Chinese (Taiwan) (‪中文（台灣）‬)
+/** Chinese (Taiwan) (中文（台灣）‎)
  * @author Ffaarr
  */
 $messages['zh-tw'] = array(

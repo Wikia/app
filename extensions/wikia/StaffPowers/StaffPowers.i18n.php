@@ -95,7 +95,7 @@ $messages['ms'] = array(
 	'staffpowers-ipblock-abort' => 'Anda tidak boleh menyekat Kakitangan Wikia, Pembantu Wikia, atau para sukarelawan Pasukan Pembasmi Spam (PPS). Sila gunakan [[Special:Contact|borang ini]] untuk melaporkan sebarang isu atau masalah berkenaan kakitangan kami.',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  */
 $messages['nb'] = array(

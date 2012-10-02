@@ -22,7 +22,7 @@ $messages['af'] = array(
 	'tog-watchlistsubpages' => 'Volg subbladsye',
 );
 
-/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -168,7 +168,7 @@ $messages['ms'] = array(
 	'tog-watchlistsubpages' => 'Pantau sublaman',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -233,7 +233,7 @@ $messages['sl'] = array(
 	'tog-watchlistsubpages' => 'Sledi podstranem',
 );
 
-/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Rancher
  */
 $messages['sr-ec'] = array(

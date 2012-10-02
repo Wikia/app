@@ -220,6 +220,21 @@ $messages['br'] = array(
  * @author Chmee2
  */
 $messages['cs'] = array(
+	'phalanx-type-title' => 'název stránky',
+	'phalanx-type-user' => 'uživatel',
+	'phalanx-type-user-email' => 'e-mail',
+	'phalanx-type-answers-question-title' => 'název otázky',
+	'phalanx-type-answers-recent-questions' => 'poslední otázky',
+	'phalanx-add-block' => 'Použít blok',
+	'phalanx-edit-block' => 'Uložit blok',
+	'phalanx-label-filter' => 'Filtr:',
+	'phalanx-label-reason' => 'Důvod:',
+	'phalanx-label-expiry' => 'Čas vypršení:',
+	'phalanx-label-type' => 'Typ:',
+	'phalanx-label-lang' => 'Jazyk:',
+	'phalanx-view-type' => 'Typ bloku...',
+	'phalanx-view-blocks' => 'Vyhledávací filtry',
+	'phalanx-test-submit' => 'Test',
 	'phalanx-link-unblock' => 'odblokovat',
 	'phalanx-link-modify' => 'změnit',
 	'phalanx-link-stats' => 'statistiky',
@@ -233,6 +248,7 @@ $messages['cs'] = array(
 	'phalanx-stats-table-reason' => 'Důvod',
 	'phalanx-stats-table-wiki-id' => 'ID wiki',
 	'phalanx-stats-table-wiki-name' => 'Název wiki',
+	'phalanx-stats-table-wiki-url' => 'Adresa URL wiki',
 );
 
 /** German (Deutsch)
@@ -355,7 +371,7 @@ Bitte [[Special:Contact|kontaktiere Wikia]] im Falle eines Versehens!<br />Als S
 	'right-phalanxemailblock' => 'Kann E-Mail-bezogene Sperren ordnen, einsehen und bearbeiten',
 );
 
-/** German (formal address) (‪Deutsch (Sie-Form)‬)
+/** German (formal address) (Deutsch (Sie-Form)‎)
  * @author Geitost
  */
 $messages['de-formal'] = array(
@@ -1407,7 +1423,7 @@ Sila [[Special:Contact|hubungi Wikia]] tentang masalah ini.<br />Penyekat juga m
 	'right-phalanxemailblock' => 'Boleh memfailkan, melihat dan mengurus sekatan berasaskan e-mel',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -1638,7 +1654,7 @@ Kies een andere gebruikersnaam of [[Special:Contact|neem contact op met Wikia]] 
 	'right-phalanxemailblock' => 'Kan e-mailgebaseerde blokkades toevoegen, bekijken en beheren',
 );
 
-/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+/** Nederlands (informeel)‎ (Nederlands (informeel)‎)
  * @author Siebrand
  */
 $messages['nl-informal'] = array(
@@ -1797,7 +1813,7 @@ Prosimy [[Special:Contact|skontaktuj się z nami]] w sprawie problemu.<br />Blok
 $messages['ps'] = array(
 	'phalanx-type-content' => 'د مخ منځپانګه',
 	'phalanx-type-summary' => 'د مخ لنډيز',
-	'phalanx-type-title' => 'د مخ سرليک',
+	'phalanx-type-title' => 'مخ سرليک',
 	'phalanx-type-user' => 'کارن',
 	'phalanx-type-user-email' => 'برېښليک',
 	'phalanx-type-answers-question-title' => 'د پوښتنې سرليک',
@@ -2091,7 +2107,7 @@ $messages['ru'] = array(
 	'right-phalanxemailblock' => 'Можно обратиться, просмотреть и управлять e-mail на основе блоков',
 );
 
-/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -2167,6 +2183,7 @@ Klicka på "{{int:phalanx-edit-block}}" för att spara dina ändringar!',
 	'phalanx-help-type-title' => 'Detta filter förhindrar en sida från att skapas, om dess titel matchar någon av de svartlistade fraserna.
 
 Filtret förhindrar inte möjligheten att redigera en tidigare skapad sida.',
+	'phalanx-help-type-wiki-creation' => 'Detta filter förhindrar en wiki från att skapas om dess namn eller URL-adress matchar någon svartlistad fras.',
 	'phalanx-help-type-answers-question-title' => 'Detta filter förhindrar att en fråga (sida) skapas, om dess titel matchar någon av de svartlistade fraserna.
 Anmärkning: fungerar endast på Svar-typ wikier.',
 	'phalanx-help-type-answers-recent-questions' => 'Detta filter förhindrar att frågor (sidor) visas i ett antal listor (widgets, listor, tag-baserade listor).
@@ -2174,7 +2191,19 @@ Filtret förhindrar inte att dessa sidor skapas.
 
 Anmärkning: fungerar endast på Svar-typ wikier.',
 	'phalanx-help-type-user-email' => 'Detta filter förhindrar att konton skapas med en blockerad e-postadress.',
+	'phalanx-user-block-reason-ip' => 'Denna IP-adress förhindras från att redigera på hela Wikia-nätverket på grund av vandalisering eller andra störningar av dig eller någon annan som delar din IP-adress.
+Om du tror att detta är ett fel, var god [[Special:Contact|kontakta Wikia]].',
+	'phalanx-user-block-reason-exact' => 'Detta användarnamn eller IP-adress förhindras från att redigera på hela Wikia-nätverket på grund av vandalisering eller någon annan störning.
+Om du tror att detta är ett fel, var god [[Special:Contact|kontakta Wikia]].',
+	'phalanx-user-block-reason-similar' => 'Detta användarnamn förhindras från att redigera på hela Wikia-nätverket på grund av vandalisering eller andra störningar av en användare med ett liknande namn.
+Vänligen [[Special:Contact|kontakta Wikia]] om problemet.',
 	'phalanx-user-block-new-account' => 'Användarnamnet är inte tillgängligt för registrering. Välj ett annat.',
+	'phalanx-user-block-withreason-ip' => 'Denna IP-adress förhindras från att redigera på hela Wikia-nätverket på grund av vandalisering eller andra störningar av dig eller någon annan som delar din IP-adress.
+Om du tror att detta är ett fel, var god [[Special:Contact|kontakta Wikia]].<br />Blockeringen gav också denna tilläggande anledning: $1.',
+	'phalanx-user-block-withreason-exact' => 'Detta användarnamn eller IP-adress förhindras från att redigera på hela Wikia-nätverket på grund av vandalisering eller någon annan störning.
+Om du tror att detta är ett fel, var god [[Special:Contact|kontakta Wikia]].<br />Blockeringen gav också denna tilläggande anledning: $1.',
+	'phalanx-user-block-withreason-similar' => 'Detta användarnamn förhindras från att redigera på hela Wikia-nätverket på grund av vandalisering eller andra störningar av en användare med ett liknande namn.
+Var god [[Special:Contact|kontakta Wikia]] om problemet.<br />Blockeringen gav också denna tilläggande anledning: $1.',
 	'phalanx-title-move-summary' => 'Anledningen du skrev in innehöll en blockerad fras.',
 	'phalanx-content-spam-summary' => 'Texten hittades i sidans sammanfattning.',
 	'phalanx-stats-block-notfound' => 'blockerings-ID hittades inte',
@@ -2398,7 +2427,7 @@ $messages['uk'] = array(
 Якщо Ви вважаєте, що сталася помилка, будь ласка,[[Special:Contact|зверніться до адміністраторів Вікіа]].<br />Блокувач так пояснив свій крок: $1.",
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
+/** Simplified Chinese (中文（简体）‎)
  * @author Hydra
  * @author Xiaomingyan
  */

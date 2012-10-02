@@ -163,7 +163,7 @@ $messages['ms'] = array(
 	'categorygalleries-desc' => 'Menunjukkan galeri laman di laman kategori',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -262,7 +262,7 @@ $messages['vi'] = array(
 	'categorygalleries-desc' => 'Hiển thị một trang thư viện ảnh trên các trang thể loại',
 );
 
-/** Traditional Chinese (‪中文（繁體）‬)
+/** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
  */
 $messages['zh-hant'] = array(

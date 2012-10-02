@@ -149,7 +149,7 @@ Wikia
 	'globalwatchlist-no-blog-page-found' => 'Keine Blogseite gefunden.',
 );
 
-/** German (formal address) (‪Deutsch (Sie-Form)‬)
+/** German (formal address) (Deutsch (Sie-Form)‎)
  * @author LWChris
  * @author The Evil IP address
  */
@@ -504,7 +504,7 @@ Wikia
 	'globalwatchlist-no-blog-page-found' => 'Tiada laman blog dijumpai.',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -566,7 +566,7 @@ Groet, Wikia
 	'globalwatchlist-no-blog-page-found' => 'Geen blogpagina aangetroffen.',
 );
 
-/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+/** Nederlands (informeel)‎ (Nederlands (informeel)‎)
  * @author Siebrand
  */
 $messages['nl-informal'] = array(
@@ -773,7 +773,7 @@ Wikia
 	'globalwatchlist-no-blog-page-found' => 'Не найдено страниц блогов.',
 );
 
-/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Charmed94
  * @author Rancher
  * @author Verlor
@@ -867,7 +867,7 @@ Wikia
 	'globalwatchlist-no-blog-page-found' => 'Walang natagpuang pahina ng blog.',
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
+/** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  */
 $messages['zh-hans'] = array(

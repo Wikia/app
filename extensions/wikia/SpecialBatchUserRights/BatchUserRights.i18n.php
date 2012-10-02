@@ -260,7 +260,7 @@ Ini tidak akan mendatangkan sebarang hasil.
 Yang selebihnya dalam laman ini akan dibenarkan berjalan supaya anda mudah melihat sama ada terdapat nama pengguna yang tidak dapat dimuatkan.',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -298,7 +298,7 @@ Nu wordt er niets uitgevoerd.
 De rest van de pagina kan uitgevoerd worden zodat u eenvoudig kunt zien of een van de gebruikersnamen niet geladen kon worden.',
 );
 
-/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+/** Nederlands (informeel)‎ (Nederlands (informeel)‎)
  * @author Siebrand
  */
 $messages['nl-informal'] = array(
@@ -411,6 +411,9 @@ $messages['ru'] = array(
 $messages['sv'] = array(
 	'batchuserrights-desc' => 'Gör det möjligt att lägga till en eller flera användare till en grupp i en handling',
 	'batchuserrights-names' => 'Användarnamn som ska läggas till denna grupp (en per rad):',
+	'batchuserrights-intro' => 'Denna sida låter dig lägga till en grupp till flera användare på en gång.
+Av säkerhetsskäl är listan över tilläggsbara grupper angiven i förlängningskonfigurationen och kan inte ändras från wikin.
+Var god be en systemadministratör om du behöver tillåta gruppaddering av andra grupper.',
 	'batchuserrights-single-progress-update' => 'Lade till {{PLURAL:$1|grupp|grupperna}} till <strong>$2</strong>.',
 	'batchuserrights-add-groups' => 'Lägger till {{PLURAL:$1|en användare|$1 användare}} till följande {{PLURAL:$2|grupp|grupper}}: <strong>$3</strong>.',
 	'batchuserrights-userload-error' => "Kunde inte läsa in användaren \"'''\$1'''\".",
@@ -452,7 +455,7 @@ $messages['uk'] = array(
 	'batchuserrights-desc' => 'Дозволяє додавання одного або кількох користувачів до групи в одну дію',
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
+/** Simplified Chinese (中文（简体）‎)
  * @author Anakmalaysia
  * @author Dimension
  * @author Hydra

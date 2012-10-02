@@ -37,7 +37,7 @@ $messages['az'] = array(
 	'wikiarelatedpages-heading' => 'Daha ətraflı',
 );
 
-/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
  * @author Jim-by
  */
 $messages['be-tarask'] = array(
@@ -202,7 +202,7 @@ $messages['ms'] = array(
 	'wikiarelatedpages-heading' => 'Bacaan lanjut',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -279,7 +279,7 @@ $messages['sl'] = array(
 	'wikiarelatedpages-heading' => 'Preberite več',
 );
 
-/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -324,7 +324,7 @@ $messages['vi'] = array(
 	'wikiarelatedpages-heading' => 'Đọc nhiều hơn',
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
+/** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  * @author Hydra
  */
@@ -333,7 +333,7 @@ $messages['zh-hans'] = array(
 	'wikiarelatedpages-heading' => '读更多',
 );
 
-/** Traditional Chinese (‪中文（繁體）‬)
+/** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
  */
 $messages['zh-hant'] = array(

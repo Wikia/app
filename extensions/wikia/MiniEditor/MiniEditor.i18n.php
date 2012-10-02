@@ -21,6 +21,15 @@ $messages['qqq'] = array(
 	'minieditor-placeholder-reply' => 'Placeholder text, showin in an input field, disappears when clicked',
 );
 
+/** Breton (brezhoneg)
+ * @author Fohanno
+ */
+$messages['br'] = array(
+	'minieditor-new-heading' => 'Krouiñ ur gemennadenn nevez',
+	'minieditor-placeholder-new' => 'Skrivit ho kemennadenn amañ',
+	'minieditor-reply' => 'Respont',
+);
+
 /** Czech (česky)
  * @author Jezevec
  */
@@ -152,7 +161,7 @@ $messages['ms'] = array(
 	'minieditor-placeholder-reply' => 'Balas pesanan di sini',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  */
 $messages['nb'] = array(

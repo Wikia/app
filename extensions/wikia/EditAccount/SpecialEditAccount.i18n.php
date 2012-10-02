@@ -154,7 +154,7 @@ $messages['az'] = array(
 	'editaccount-submit-realname' => 'Əsl adı qeyd et',
 );
 
-/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
  * @author EugeneZelenko
  */
 $messages['be-tarask'] = array(
@@ -187,6 +187,7 @@ $messages['bho'] = array(
 );
 
 /** Breton (brezhoneg)
+ * @author Fohanno
  * @author Fulup
  * @author Gwenn-Ael
  * @author Y-M D
@@ -213,7 +214,7 @@ $messages['br'] = array(
 	'editaccount-submit-close' => 'Serriñ ar gont',
 	'editaccount-usage-close' => "Gallout a rit ivez diweredekaat ur gont implijer en ur rinegiñ he ger-tremen hag en ur implijout he chomlec'h postel. Diwallit ! Kollet e vo ar roadennoù ha ne c'hallor ket adtapout anezho.",
 	'editaccount-warning-close' => "<b>Diwallit !</b> Emaoc'h war-nes diweredekaat ar gont implijer <b>$1</b> da vat. Ne c'hallor ket en dizober. Ha c'hoant ho peus d'en ober ?",
-	'editaccount-status' => 'Kemenadenn statud',
+	'editaccount-status' => 'Kemennadenn statud',
 	'editaccount-success-email' => 'Kemmet eo bet ar postel evit ar gont $1 da $2.',
 	'editaccount-success-email-blank' => "Dilamet mat eo bet chomlec'h postel ar gont $1.",
 	'editaccount-success-pass' => 'Kemmet eo bet ger-tremen ar gont $1.',
@@ -230,6 +231,7 @@ $messages['br'] = array(
 	'editaccount-labal-email-status' => 'Stad ar postel',
 	'editaccount-status-confirmed' => 'Kadarnaet',
 	'editaccount-status-unconfirmed' => "N'eo ket kadarnaet",
+	'editaccount-status-realuser' => 'Implijer gwirion',
 	'editaccount-log' => "Marilh ar c'hontoù implijer",
 	'editaccount-log-header' => "Rollet e vez er pajenn-mañ ar c'hemmoù graet gant staff Wikia er penndibaboù implijer.",
 	'editaccount-log-entry-email' => "en deus kemmet chmolec'h postel an implijer $2",
@@ -380,7 +382,7 @@ $messages['de'] = array(
 	'right-editaccount' => 'Bearbeite andere Benutzereinstellungen',
 );
 
-/** German (formal address) (‪Deutsch (Sie-Form)‬)
+/** German (formal address) (Deutsch (Sie-Form)‎)
  * @author LWChris
  */
 $messages['de-formal'] = array(
@@ -1136,7 +1138,7 @@ $messages['ms'] = array(
 	'right-editaccount' => 'Sunting keutamaan pengguna lain',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -1273,7 +1275,7 @@ Probeer het opnieuw of neem contact op met het Tech Team.',
 	'right-editaccount' => 'Voorkeuren van gebruikers bewerken',
 );
 
-/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+/** Nederlands (informeel)‎ (Nederlands (informeel)‎)
  * @author Siebrand
  */
 $messages['nl-informal'] = array(
@@ -1698,7 +1700,7 @@ $messages['sk'] = array(
 	'editaccount-submit-realname' => 'Uložiť skutočné meno',
 );
 
-/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Rancher
  * @author Verlor
  */
@@ -2022,7 +2024,7 @@ $messages['vi'] = array(
 	'right-editaccount' => 'Sửa đổi thông tin người dùng khác',
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
+/** Simplified Chinese (中文（简体）‎)
  * @author Anakmalaysia
  * @author Dimension
  * @author Hydra
@@ -2063,7 +2065,7 @@ $messages['zh-hans'] = array(
 	'right-editaccount' => '编辑其他用户的信息',
 );
 
-/** Traditional Chinese (‪中文（繁體）‬)
+/** Traditional Chinese (中文（繁體）‎)
  * @author Dream
  * @author Horacewai2
  * @author Waihorace

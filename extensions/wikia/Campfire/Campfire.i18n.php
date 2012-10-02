@@ -110,7 +110,7 @@ $messages['ms'] = array(
 	'campfire-licensed-under' => 'Dilesenkan di bawah $1',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -200,14 +200,14 @@ $messages['vi'] = array(
 	'campfire-licensed-under' => 'Theo giấy phép $1',
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
+/** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  */
 $messages['zh-hans'] = array(
 	'campfire-licensed-under' => '在 $1 的许可之下',
 );
 
-/** Traditional Chinese (‪中文（繁體）‬)
+/** Traditional Chinese (中文（繁體）‎)
  * @author Lauhenry
  */
 $messages['zh-hant'] = array(

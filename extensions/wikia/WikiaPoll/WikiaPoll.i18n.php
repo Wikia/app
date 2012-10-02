@@ -522,7 +522,7 @@ $messages['my'] = array(
 	'wikiapoll-error-invalid-title' => 'မေးခွန်း သည် တရားမဝင်ပါ။',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -721,7 +721,7 @@ $messages['sk'] = array(
 	'wikiapoll-error-invalid-title' => 'Text otázky nie je správny.',
 );
 
-/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -854,7 +854,7 @@ $messages['uk'] = array(
 	'wikiapoll-error-duplicate' => 'Опитування з такою назвою вже існує.',
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
+/** Simplified Chinese (中文（简体）‎)
  * @author Anakmalaysia
  * @author Hydra
  * @author Hzy980512
@@ -874,7 +874,7 @@ $messages['zh-hans'] = array(
 	'wikiapoll-error-invalid-title' => '问题文本无效。',
 );
 
-/** Traditional Chinese (‪中文（繁體）‬)
+/** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
  */
 $messages['zh-hant'] = array(

@@ -290,7 +290,7 @@ $messages['ms'] = array(
 	'browser-loading-message' => 'Memuatkan...',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  */
 $messages['nb'] = array(

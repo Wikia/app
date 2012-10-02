@@ -75,7 +75,7 @@ $messages['bar'] = array(
 	'ircgate-channel' => 'Chat-Kanoi:',
 );
 
-/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
  * @author Jim-by
  */
 $messages['be-tarask'] = array(
@@ -284,7 +284,7 @@ $messages['ksh'] = array(
 	'ircgate-channel' => 'Kanaal:',
 );
 
-/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
+/** Kurdish (Latin script) (Kurdî (latînî)‎)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -346,7 +346,7 @@ $messages['my'] = array(
 	'ircgate-username' => 'အသုံးပြုသူအမည် :',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Nghtwlkr
  */
 $messages['nb'] = array(
@@ -449,7 +449,7 @@ $messages['si'] = array(
 	'ircgate-channel' => 'චැනලය:',
 );
 
-/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Rancher
  * @author Verlor
  */
@@ -521,7 +521,7 @@ $messages['vi'] = array(
 	'ircgate-channel' => 'Kênh:',
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
+/** Simplified Chinese (中文（简体）‎)
  * @author Gaoxuewei
  */
 $messages['zh-hans'] = array(

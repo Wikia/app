@@ -287,7 +287,7 @@ $messages['ms'] = array(
 	'stafflog-filter-type-wikifactory' => 'Status wiki',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -446,6 +446,8 @@ $messages['sv'] = array(
 	'stafflog-desc' => 'Centraliserad loggning för personal',
 	'stafflog' => 'Personallogg',
 	'stafflog-blockmsg' => '$1 $2 försökte blockera personalanvändaren $3 på wikin $4. Anledning: $5',
+	'stafflog-piggybackloginmsg' => '$1 Ryggridning - användare $2 loggar in som $3',
+	'stafflog-piggybacklogoutmsg' => '$1 Ryggridning - användare $2 loggar ut från kontot $3',
 	'right-stafflog' => 'Kan visa personalloggen',
 	'stafflog-wiki-status-change' => '$1 ändrade statusen för $2 till $3. Anledning: $4',
 	'stafflog-filter-label' => 'Filter',
@@ -453,6 +455,7 @@ $messages['sv'] = array(
 	'stafflog-filter-type' => 'Typ:',
 	'stafflog-filter-apply' => 'Verkställ filter',
 	'stafflog-filter-type-block' => 'Blockeringar',
+	'stafflog-filter-type-piggyback' => 'Ryggridning',
 	'stafflog-filter-type-renameuser' => 'Användarnamnbyten',
 	'stafflog-filter-type-wikifactory' => 'Wiki-status',
 );
@@ -485,7 +488,7 @@ $messages['uk'] = array(
 	'stafflog-blockmsg' => '$1 $2 спробував заблокувати користувача-співробітника $3 у вікі $4. Причина: $5',
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
+/** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  */
 $messages['zh-hans'] = array(

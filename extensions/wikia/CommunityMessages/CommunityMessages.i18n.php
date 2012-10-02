@@ -210,7 +210,7 @@ $messages['ms'] = array(
 	'communitymessages-notice-msg' => '[[Special:WikiActivity|Pesanan Komuniti telah dikemaskinikan]].',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -336,7 +336,7 @@ $messages['vi'] = array(
 	'communitymessages-notice-msg' => '[[Special:WikiActivity|Thông điệp cộng đồng đã được cập nhật]].',
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
+/** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  */
 $messages['zh-hans'] = array(

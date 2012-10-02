@@ -171,7 +171,7 @@ $messages['ms'] = array(
 	'paginator-back' => 'Kembali',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -236,7 +236,7 @@ $messages['ru'] = array(
 	'paginator-back' => 'Назад',
 );
 
-/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -306,7 +306,7 @@ $messages['wa'] = array(
 	'paginator-back' => 'En erî',
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
+/** Simplified Chinese (中文（简体）‎)
  * @author Hydra
  */
 $messages['zh-hans'] = array(
@@ -314,7 +314,7 @@ $messages['zh-hans'] = array(
 	'paginator-back' => '前一步',
 );
 
-/** Traditional Chinese (‪中文（繁體）‬)
+/** Traditional Chinese (中文（繁體）‎)
  * @author Lauhenry
  */
 $messages['zh-hant'] = array(

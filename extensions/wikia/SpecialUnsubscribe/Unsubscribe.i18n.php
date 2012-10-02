@@ -346,7 +346,7 @@ $messages['my'] = array(
 	'unsubscribe-confirm-legend' => 'အတည်ပြု',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -388,7 +388,7 @@ $messages['nl'] = array(
 	'unsubscribe-preferences-notice' => 'E-mails zijn uitgeschakeld voor uw gebruiker. Ga naar het gebruikersprofiel om e-mailberichten opnieuw in te schakelen.',
 );
 
-/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+/** Nederlands (informeel)‎ (Nederlands (informeel)‎)
  * @author Siebrand
  */
 $messages['nl-informal'] = array(
@@ -485,7 +485,7 @@ $messages['ru'] = array(
 	'unsubscribe-preferences-notice' => 'Получение писем было отключено для вашей учётной записи. Посетите вкладку Личные данные, чтобы снова включить это.',
 );
 
-/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -578,7 +578,7 @@ $messages['vi'] = array(
 	'unsubscribe-preferences-notice' => 'Thư điện tử đã bị vô hiệu hóa cho tài khoản của bạn. Truy cập vào thẻ Hồ sơ người dùng để kích hoạt lại chúng.',
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
+/** Simplified Chinese (中文（简体）‎)
  * @author Hydra
  * @author Hzy980512
  */

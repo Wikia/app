@@ -69,7 +69,7 @@ $messages['az'] = array(
 * Ana səhifəyə keçid etmək üçün bu keçiddən istifadə edin: [{{SERVER}} {{SITENAME}}]",
 );
 
-/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
  * @author EugeneZelenko
  * @author Wizardist
  */
@@ -141,7 +141,7 @@ Der Artikel '''$1''' konnte nicht gefunden werden.
 * Um zur Hauptseite zu gelangen, klicke auf diesen Link: [{{SERVER}} {{SITENAME}}]",
 );
 
-/** German (formal address) (‪Deutsch (Sie-Form)‬)
+/** German (formal address) (Deutsch (Sie-Form)‎)
  * @author LWChris
  */
 $messages['de-formal'] = array(
@@ -402,7 +402,7 @@ Dä Atikel '''$1''' ham_mer nit jefonge.
 * Öm op de Houpsigg ze kumme, kleck op: [{{SERVER}} {{SITENAME}}]",
 );
 
-/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
+/** Kurdish (Latin script) (Kurdî (latînî)‎)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -483,7 +483,7 @@ Rencana '''$1''' tidak dapat dijumpai.
 * Untuk ke laman utama tapak ini, klik pautan ini: [{{SERVER}} {{SITENAME}}]",
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Nghtwlkr
  */
 $messages['nb'] = array(
@@ -515,7 +515,7 @@ Pagina \"'''\$1'''\" is niet aangetroffen.
 * U kunt naar de hoofdpagina van deze site gaan: [{{SERVER}} {{SITENAME}}]",
 );
 
-/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+/** Nederlands (informeel)‎ (Nederlands (informeel)‎)
  * @author Siebrand
  */
 $messages['nl-informal'] = array(
@@ -530,7 +530,7 @@ Pagina \"'''\$1'''\" is niet aangetroffen.
 * Je kunt naar de hoofdpagina van deze site gaan: [{{SERVER}} {{SITENAME}}]",
 );
 
-/** Norwegian Nynorsk (‪norsk (nynorsk)‬)
+/** Norwegian Nynorsk (norsk (nynorsk)‎)
  * @author Harald Khan
  */
 $messages['nn'] = array(
@@ -693,7 +693,7 @@ $messages['sl'] = array(
 * Za obisk glavne strani tega mesta kliknite povezavo: [{{SERVER}} {{SITENAME}}]",
 );
 
-/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Charmed94
  * @author Rancher
  * @author Verlor
@@ -793,7 +793,7 @@ Bài viết '''$1''' không tìm thấy.
 * Để tiếp tục đến trang chính của website này, nhấn vào liên kết: [{{SERVER}} {{SITENAME}}]",
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
+/** Simplified Chinese (中文（简体）‎)
  * @author Wilsonmess
  */
 $messages['zh-hans'] = array(

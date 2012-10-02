@@ -589,7 +589,7 @@ Sila cuba lagi atau [[Special:Contact|laporkannya kepada kami]].',
 	'comboajaxlogin-ajaxerror' => 'Wikia tidak bertindak balas. Sila periksa sambungan rangkaian anda.',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -659,7 +659,7 @@ Als u al een gebruiker hebt, kunt u <a href="#">aanmelden</a> zoals altijd, maar
 	'comboajaxlogin-ajaxerror' => 'Wikia reageert niet. Controleer uw netwerkverbinding.',
 );
 
-/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+/** Nederlands (informeel)‎ (Nederlands (informeel)‎)
  * @author Siebrand
  */
 $messages['nl-informal'] = array(
@@ -885,7 +885,7 @@ $messages['ru'] = array(
 	'comboajaxlogin-ajaxerror' => 'Викия не отвечает. Пожалуйста, проверьте подключение к сети.',
 );
 
-/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -1043,7 +1043,7 @@ Sau đó, bạn có thể đặng nhập dễ dàng dùng bất cứ nút Facebo
 	'comboajaxlogin-ajaxerror' => 'Wikia chưa trả lời. Xin vui lòng kiểm tra lại kết nối mạng của bạn.',
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
+/** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  * @author Hzy980512
  * @author Wilsonmess

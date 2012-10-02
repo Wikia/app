@@ -29,7 +29,7 @@ $messages['ar'] = array(
 	'randomwiki' => 'ويكي عشوائية',
 );
 
-/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -218,7 +218,7 @@ $messages['my'] = array(
 	'randomwiki' => 'ကျပန်း ဝီကီ',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -289,7 +289,7 @@ $messages['sah'] = array(
 	'randomwiki' => 'Үлүбээй биики',
 );
 
-/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -352,7 +352,7 @@ $messages['wa'] = array(
 	'randomwiki' => "Wiki a l' astcheyance",
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
+/** Simplified Chinese (中文（简体）‎)
  * @author Hydra
  */
 $messages['zh-hans'] = array(
@@ -360,7 +360,7 @@ $messages['zh-hans'] = array(
 	'randomwiki' => '随机维基',
 );
 
-/** Traditional Chinese (‪中文（繁體）‬)
+/** Traditional Chinese (中文（繁體）‎)
  * @author Horacewai2
  * @author Waihorace
  */

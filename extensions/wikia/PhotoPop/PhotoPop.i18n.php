@@ -85,10 +85,12 @@ $messages['qqq'] = array(
 );
 
 /** Breton (brezhoneg)
+ * @author Fohanno
  * @author Fulup
  * @author Y-M D
  */
 $messages['br'] = array(
+	'photopop-setup-category-label' => 'Rummad',
 	'photopop-setup-submit-label' => 'Hizivaat',
 	'photopop-game-correct' => 'Reizh',
 	'photopop-game-points' => 'poentoù',
@@ -120,6 +122,8 @@ $messages['br'] = array(
  */
 $messages['cs'] = array(
 	'photopop-setup-category-label' => 'Kategorie',
+	'photopop-setup-watermark-label' => 'Vodoznak',
+	'photpop-category-none' => 'N/A',
 	'photopop-game-total' => 'celkem',
 	'photopop-game-score' => 'skóre',
 	'photopop-game-wiki' => 'wiki',
@@ -626,7 +630,7 @@ $messages['ko'] = array(
 	'photopop-game-date' => '날짜',
 );
 
-/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
+/** Kurdish (Latin script) (Kurdî (latînî)‎)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -783,7 +787,7 @@ $messages['ms'] = array(
 	'photopop-game-month-4' => 'Mei',
 	'photopop-game-month-5' => 'Jun',
 	'photopop-game-month-6' => 'Jul',
-	'photopop-game-month-7' => 'Ogo',
+	'photopop-game-month-7' => 'Ogs',
 	'photopop-game-month-8' => 'Sep',
 	'photopop-game-month-9' => 'Okt',
 	'photopop-game-month-10' => 'Nov',
@@ -796,7 +800,7 @@ $messages['ms'] = array(
 	'photopop-game-download-error-text' => 'Berlakunya ralat ketika memuat turun data permainan, sila cuba lagi.',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -1174,7 +1178,7 @@ $messages['ru'] = array(
 	'photopop-game-download-error-text' => 'Произошла ошибка при загрузке данных игры, пожалуйста, попробуйте еще раз.',
 );
 
-/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -1370,7 +1374,7 @@ $messages['uk'] = array(
 	'photopop-game-loading-image' => 'Завантаження зображення... <br />Зачекайте',
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
+/** Simplified Chinese (中文（简体）‎)
  * @author Anakmalaysia
  */
 $messages['zh-hans'] = array(

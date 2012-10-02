@@ -934,7 +934,7 @@ $messages['ko'] = array(
 	'wikiaquiz-game-mute' => '음소거',
 );
 
-/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
+/** Kurdish (Latin script) (Kurdî (latînî)‎)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -950,11 +950,21 @@ $messages['lb'] = array(
 	'wikiaquiz-title-label' => 'Titel',
 	'wikiaquiz-moreinfoarticle-label' => 'Artikel',
 	'wikiaquiz-question-label' => 'Fro',
+	'wikiaquiz-quiz-label' => 'Quiz',
 	'wikiaquiz-questions-label' => 'Froen',
 	'wikiaquiz-answers-label' => 'Äntwerten',
 	'wikiaquiz-answer-label' => 'Äntwert',
+	'wikiaquiz-correct-label' => 'Richteg?',
+	'wikiaquiz-cancel-label' => 'Ofbriechen',
+	'wikiaquiz-error-duplicate-quiz' => 'Et gëtt schonn e Quiz mat deem Numm.',
+	'wikiaquiz-error-missing-answers' => 'Dir musst mindestens eng Äntwert ginn.',
+	'wikiaquiz-game-start-button' => 'Spill ufänken',
+	'wikiaquiz-game-cadence-3' => 'Fäerdeg',
+	'wikiaquiz-game-cadence-1' => 'Lass!',
 	'wikiaquiz-game-question-label' => 'FRO',
 	'wikiaquiz-game-next-button' => 'Nächst Fro',
+	'wikiaquiz-game-finish-button' => 'Fäerdeg maachen',
+	'wikiaquiz-game-continue-button' => 'Viru fueren',
 );
 
 /** Maithili (मैथिली)
@@ -1138,7 +1148,7 @@ $messages['ms'] = array(
 	'wikiaquiz-game-mute' => 'Bisu',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -1517,7 +1527,7 @@ $messages['ru'] = array(
 	'wikiaquiz-game-mute' => 'Без звука',
 );
 
-/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -1797,7 +1807,7 @@ $messages['uk'] = array(
 	'wikiaquiz-game-incorrect-label' => 'Невірно.',
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
+/** Simplified Chinese (中文（简体）‎)
  * @author Hzy980512
  * @author Yanmiao liu
  */

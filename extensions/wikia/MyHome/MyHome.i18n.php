@@ -287,7 +287,7 @@ $messages['az'] = array(
 	'myhome-namespace-blog' => 'Bloq',
 );
 
-/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -737,7 +737,7 @@ Wenn du der Gründer oder ein Admin dieses Wikis bist, kannst du diese Nachricht
 	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|eine Nachricht|$1 Nachrichten}}',
 );
 
-/** German (formal address) (‪Deutsch (Sie-Form)‬)
+/** German (formal address) (Deutsch (Sie-Form)‎)
  * @author Claudia Hattitten
  * @author LWChris
  * @author The Evil IP address
@@ -796,7 +796,7 @@ $messages['diq'] = array(
 	'myhome-feed-by' => '$1 kerden ra',
 	'myhome-feed-summary-details' => 'Xulasa',
 	'myhome-feed-new-blog-comment-details' => 'Vatış',
-	'myhome-feed-new-article-comment-details' => 'Mışewre',
+	'myhome-feed-new-article-comment-details' => 'Vacayış',
 	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|Resime ke debyay|Resime ke debyay}}',
 	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|Videoye ke debyay|Videoye ke debyay}}',
 	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|Kategoriye ke debyay|Kategoriye ke debyay}}',
@@ -1899,7 +1899,7 @@ $messages['ksh'] = array(
 	'myhome-feed-redirect-details' => 'Ömleidung',
 );
 
-/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
+/** Kurdish (Latin script) (Kurdî (latînî)‎)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -2177,7 +2177,7 @@ $messages['mzn'] = array(
 	'myhome-feed-edit' => 'دچی‌ین',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -2362,7 +2362,7 @@ Als u de oprichter of een beheerder van deze wiki bent, kunt u dit bericht gebru
 	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|één bericht|$1 berichten}}',
 );
 
-/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+/** Nederlands (informeel)‎ (Nederlands (informeel)‎)
  * @author Siebrand
  */
 $messages['nl-informal'] = array(
@@ -3047,7 +3047,7 @@ $messages['sl'] = array(
 	'myhome-feed-summary-details' => 'Povzetek',
 );
 
-/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Rancher
  * @author Verlor
  * @author Жељко Тодоровић
@@ -3614,7 +3614,7 @@ $messages['zh'] = array(
 	'myhome' => '我的首页',
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
+/** Simplified Chinese (中文（简体）‎)
  * @author Hydra
  * @author Hzy980512
  * @author Liangent
@@ -3705,7 +3705,7 @@ $messages['zh-hans'] = array(
 	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|一条信息|$1条信息}}',
 );
 
-/** Traditional Chinese (‪中文（繁體）‬)
+/** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
  */
 $messages['zh-hant'] = array(
@@ -3763,7 +3763,7 @@ $messages['zh-hant'] = array(
 	'tooltip-pt-myhome' => '轉到我的首頁',
 );
 
-/** Chinese (Taiwan) (‪中文（台灣）‬)
+/** Chinese (Taiwan) (中文（台灣）‎)
  * @author Ffaarr
  * @author Yyaootw
  */

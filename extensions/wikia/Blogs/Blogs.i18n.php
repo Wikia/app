@@ -419,7 +419,7 @@ $messages['be'] = array(
 	'blog-comment-history' => 'гісторыя',
 );
 
-/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
  * @author EugeneZelenko
  * @author Wizardist
  */
@@ -857,7 +857,7 @@ $messages['de'] = array(
 	'blogs-searchprofile-tooltip' => 'In Blogartikeln und Bloglisten suchen',
 );
 
-/** German (formal address) (‪Deutsch (Sie-Form)‬)
+/** German (formal address) (Deutsch (Sie-Form)‎)
  * @author LWChris
  * @author The Evil IP address
  */
@@ -2305,7 +2305,7 @@ $messages['ku'] = array(
 	'blog-edited' => 'hate guherandin',
 );
 
-/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
+/** Kurdish (Latin script) (Kurdî (latînî)‎)
  * @author George Animal
  * @author Gomada
  */
@@ -2760,7 +2760,7 @@ Cipta laman senarai blog untuk kategori-kategori seperti "Barack Obama", "Cereka
 	'blogs-searchprofile-tooltip' => 'Cari dalam Rencana Blog dan Senarai Blog',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -3013,7 +3013,7 @@ Gebruik alstublieft een van de beschikbare parameters: <code>$2</code>.',
 	'blogs-searchprofile-tooltip' => 'In blogberichten en bloglijsten zoeken',
 );
 
-/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+/** Nederlands (informeel)‎ (Nederlands (informeel)‎)
  * @author Siebrand
  */
 $messages['nl-informal'] = array(
@@ -3772,7 +3772,7 @@ $messages['sl'] = array(
 	'blog-comment-history' => 'zgodovina',
 );
 
-/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Rancher
  * @author Verlor
  */
@@ -4380,6 +4380,13 @@ $messages['uk'] = array(
 	'blogs-reportproblem' => 'Повідомити про проблему',
 );
 
+/** Uzbek (oʻzbekcha)
+ * @author CoderSI
+ */
+$messages['uz'] = array(
+	'create-blog-preview' => 'Ko‘rib chiqish',
+);
+
 /** Veps (vepsän kel’)
  * @author Игорь Бродский
  */
@@ -4532,7 +4539,7 @@ $messages['wa'] = array(
 	'blog-edited' => 'candjeye',
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
+/** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  * @author Ffaarr
  * @author Hydra
@@ -4657,7 +4664,7 @@ $messages['zh-hans'] = array(
 	'blog-by' => '$1由$2',
 );
 
-/** Traditional Chinese (‪中文（繁體）‬)
+/** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
  */
 $messages['zh-hant'] = array(

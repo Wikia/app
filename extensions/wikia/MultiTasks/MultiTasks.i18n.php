@@ -263,7 +263,7 @@ $messages['az'] = array(
 	'multidelete_german_wikis' => 'almanca bütün vikilər',
 );
 
-/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
  * @author EugeneZelenko
  */
 $messages['be-tarask'] = array(
@@ -652,7 +652,7 @@ $messages['de'] = array(
 	'action-multiwikifinder' => 'in ganz Wikia nach einem Titel suchen',
 );
 
-/** German (formal address) (‪Deutsch (Sie-Form)‬)
+/** German (formal address) (Deutsch (Sie-Form)‎)
  * @author Geitost
  * @author Kghbln
  * @author LWChris
@@ -1546,7 +1546,7 @@ $messages['ksh'] = array(
 	'multiwikirecords' => '{{PLURAL:$1|Ei Wiki|$1 Wikis|Kei Wiki}} jefonge',
 );
 
-/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
+/** Kurdish (Latin script) (Kurdî (latînî)‎)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -1854,7 +1854,7 @@ $messages['ms'] = array(
 	'action-multiwikifinder' => 'cari tajuk tertentu di seluruh Wikia',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -2098,7 +2098,7 @@ Voer de taak daarna opnieuw uit om alle overgebleven pagina's te verwerken.",
 	'action-multiwikifinder' => "naar een bepaalde pagina in alle Wikiawiki's te zoeken",
 );
 
-/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+/** Nederlands (informeel)‎ (Nederlands (informeel)‎)
  * @author MarkvA
  * @author Siebrand
  */
@@ -2769,7 +2769,7 @@ $messages['ru'] = array(
 	'action-multiwikifinder' => 'искать конкретный заголовок на всей Викия',
 );
 
-/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Rancher
  * @author Sasa Stefanovic
  * @author Verlor
@@ -2886,9 +2886,11 @@ $messages['sv'] = array(
 	'multiwikiedit' => 'Redigera serier av sidor',
 	'multiwikiedit_button' => 'REDIGERA',
 	'multiwikiedit_confirm' => 'BEKRÄFTA',
+	'multiwikiedit_help' => 'Redigera en grupp sidor. Du kan redigera sidor listade i en textruta. Välj en användare som ska visas i raderingsloggar. Överförd fil bör innehålla sidnamn och valfria anledningar separeras med tecknet | i varje rad.',
 	'multiwikiedit_caption' => 'Sidlista',
 	'multiwikiedit_title' => 'Multiwiki-redigering',
 	'multiwikiedit_as' => 'Kör skriptet som',
+	'multiwikiedit_both_modes' => 'Var god välj antingen en specificerad sida eller en lista över sidor.',
 	'multiwikiedit_or' => '<b>ELLER</b>',
 	'multiwikiedit_task_none_selected' => 'Du valde inte några artiklar. Uppgiften lades inte till.',
 	'multiwikiedit_task_link' => 'Du kan kontrollera din uppgift',
@@ -2962,9 +2964,11 @@ $messages['sv'] = array(
 	'multidelete_french_wikis' => 'alla franska wikis',
 	'multidelete_swedish_wikis' => 'alla svenska wikis',
 	'multidelete_german_wikis' => 'alla tyska wikis',
+	'action-multidelete' => 'radera en grupp sidor',
 	'multiwikifindpagenames' => 'Hitta sidnamn',
 	'multiwikienterpagename' => 'Ange ett sidnamn:',
 	'multiwikirecords' => '$1 wiki hittades',
+	'action-multiwikifinder' => 'sök efter en specifik titel över hela Wikia',
 );
 
 /** Tamil (தமிழ்)
@@ -3129,7 +3133,7 @@ $messages['uk'] = array(
 	'multidelete_button' => 'ВИЛУЧИТИ',
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
+/** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  * @author Hydra
  */
@@ -3175,7 +3179,7 @@ $messages['zh-hans'] = array(
 	'multiwikirecords' => '找到了$1个维基',
 );
 
-/** Traditional Chinese (‪中文（繁體）‬)
+/** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
  */
 $messages['zh-hant'] = array(
@@ -3198,7 +3202,7 @@ $messages['zh-hant'] = array(
 	'multidelete_german_wikis' => '所有的德語wiki',
 );
 
-/** Chinese (Taiwan) (‪中文（台灣）‬)
+/** Chinese (Taiwan) (中文（台灣）‎)
  * @author Ffaarr
  */
 $messages['zh-tw'] = array(

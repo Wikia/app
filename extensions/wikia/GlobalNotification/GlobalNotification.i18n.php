@@ -108,7 +108,7 @@ $messages['ms'] = array(
 	'globalnotification-general-ajax-failure' => 'Pelayar tidak dapat bersambung ke Wikia. Cuba lagi nanti.',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -182,14 +182,14 @@ $messages['tt-cyrl'] = array(
 	'globalnotification-general-ajax-failure' => 'Браузер Викия белән тоташа алмады. Соңрак кереп карагыз.',
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
+/** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  */
 $messages['zh-hans'] = array(
 	'globalnotification-general-ajax-failure' => '浏览器无法连接到Wikia。请稍后再试。',
 );
 
-/** Traditional Chinese (‪中文（繁體）‬)
+/** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
  */
 $messages['zh-hant'] = array(

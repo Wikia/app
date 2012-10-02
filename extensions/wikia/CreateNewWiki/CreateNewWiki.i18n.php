@@ -577,7 +577,7 @@ Upgrade mit PayPal um ein werbefreies Wiki für nur $4,95 pro Monat zu bekommen!
 	'cnw-error-bot-header' => 'Du wurdest als Bot identifiziert.',
 );
 
-/** German (formal address) (‪Deutsch (Sie-Form)‬)
+/** German (formal address) (Deutsch (Sie-Form)‎)
  * @author Geitost
  * @author Tiin
  */
@@ -603,7 +603,7 @@ $messages['diq'] = array(
 	'cnw-signup' => 'Hesab Vıraze',
 	'cnw-auth-headline' => 'Qeyd vıraze',
 	'cnw-auth-headline2' => 'Deqew de',
-	'cnw-userauth-creative' => 'Cı kewe',
+	'cnw-userauth-creative' => 'Ronıştış akerê',
 	'cnw-userauth-signup-button' => 'Hesabo Newe Ake',
 	'cnw-desc-tip2' => 'Psst',
 	'cnw-desc-change-lang' => 'bıvurne',
@@ -1437,7 +1437,7 @@ $messages['ko'] = array(
 	'cnw-error-blocked-header' => '계정이 차단됨',
 );
 
-/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
+/** Kurdish (Latin script) (Kurdî (latînî)‎)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -1691,7 +1691,7 @@ Naik taraf wiki anda kepada wiki tanpa iklan dengan membayar $4.95 (USD) sebulan
 	'cnw-error-bot-header' => 'Anda telah dikesan sebagai bot',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -1852,7 +1852,7 @@ Schaf uw upgrade aan via PayPal. Geen advertenties voor maar $4,95 per maand!",
 	'cnw-error-bot-header' => 'U bent geïdentificeerd als een geautomatiseerd proces',
 );
 
-/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+/** Nederlands (informeel)‎ (Nederlands (informeel)‎)
  * @author Geitost
  * @author MarkvA
  * @author Siebrand
@@ -2285,7 +2285,7 @@ $messages['ru'] = array(
 	'cnw-error-bot-header' => 'Вы были определены как бот',
 );
 
-/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -2858,7 +2858,7 @@ Upgrade through PayPal to get an ad-free wiki for only $4.95 per month!',
 	'cnw-welcome-help' => 'Find answers, advice, and more on <a href="http://community.wikia.com">Community Central</a>.',
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
+/** Simplified Chinese (中文（简体）‎)
  * @author Anakmalaysia
  * @author Dimension
  * @author Hydra
@@ -2903,7 +2903,7 @@ $messages['zh-hans'] = array(
 	'cnw-error-bot-header' => '您已被识别为机器人',
 );
 
-/** Traditional Chinese (‪中文（繁體）‬)
+/** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
  * @author Oapbtommy
  * @author Wrightbus

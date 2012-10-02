@@ -350,6 +350,7 @@ $messages['qqq'] = array(
 );
 
 /** Breton (brezhoneg)
+ * @author Fohanno
  * @author Y-M D
  */
 $messages['br'] = array(
@@ -363,13 +364,21 @@ $messages['br'] = array(
 	'usersignup-reconfirmation-email-greeting' => 'Ac\'hanta $USERNAME',
 	'usersignup-reconfirmation-email-signature' => 'Skipailh Wikia',
 	'usersignup-welcome-email-greeting' => 'Ac\'hanta $USERNAME',
+	'usersignup-welcome-email-edit-profile-heading' => 'Aozañ ho profil.',
 	'usersignup-welcome-email-edit-profile-button' => "Mont d'ar profil",
 	'usersignup-welcome-email-learn-basic-heading' => 'Deskiñ an diazezoù.',
 	'usersignup-welcome-email-learn-basic-button' => 'Gwiriekaat',
 	'usersignup-welcome-email-explore-wiki-heading' => "Dizoloiñ muioc'h a wikioù.",
+	'usersignup-welcome-email-explore-wiki-button' => 'Mont da wikia.com',
+	'usersignup-welcome-email-signature' => 'Skipailh Wikia',
+	'usersignup-marketing-community-heading' => 'Kenlabourit',
 	'usersignup-marketing-global-heading' => 'Krouiñ',
+	'usersignup-account-creation-subheading' => 'Kaset hon eus ur postel da $1',
+	'usersignup-account-creation-email-subject' => "Krouet ez eus bet ur gont evidoc'h war Wikia !",
 	'usersignup-account-creation-email-greeting' => 'Demat,',
 	'usersignup-account-creation-email-signature' => 'Skipailh Wikia',
+	'usersignup-confirmation-reminder-email_subject' => 'Na vezit ket un estrañjour...',
+	'usersignup-confirmation-reminder-email-greeting' => 'Ac\'hanta $USERNAME',
 	'usersignup-confirmation-reminder-email-signature' => 'Skipailh Wikia',
 );
 
@@ -2225,7 +2234,7 @@ Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Prefer
 	'usersignup-facebook-problem' => 'Timbulnya masalah ketika berhubung dengan Facebook. Sila cuba lagi nanti.',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -3528,7 +3537,7 @@ Nais mo bang tabanan ang kung anong mga e-liham ang matatanggap mo? Magpunta sa:
 	'usersignup-facebook-problem' => 'Nagkaroon ng isang suliranin sa pakikipag-ugnayan sa Facebook. Paki subukan ulit mamaya.',
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
+/** Simplified Chinese (中文（简体）‎)
  * @author Sam Wang
  */
 $messages['zh-hans'] = array(
@@ -3587,14 +3596,141 @@ $messages['zh-hans'] = array(
 
 您已到创立Wikia帐户地最后一步！请点击下列链接。
 
-¥3
+$3
 
 Wikia团队',
+	'usersignup-reconfirmation-email-sent' => '您的电子邮箱地址已换成$1。我们已向您发送确认邮件。请确认您新的邮箱地址。',
+	'usersignup-reconfirmation-email_subject' => '在Wikia上确认您的电子邮箱地址。',
+	'usersignup-reconfirmation-email-greeting' => '你好$USERNAME',
+	'usersignup-reconfirmation-email-content' => '请点击下列链接来确认您在Wikia上更改的邮箱地址。
+
+<a style="color:#2C85D5;" href="$CONFIRMURL">$CONFIRMURL</a>
+
+在确认您新电子邮箱地址之前我们会仍然使用您现在的邮箱地址。',
+	'usersignup-reconfirmation-email-signature' => 'Wikia团队',
+	'usersignup-reconfirmation-email_body' => '你好$2，
+
+请点击以下链接确认在Wikia上更改的电子邮箱地址。
+
+$3
+
+在确认您新电子邮箱地址之前我们会仍然使用您现在的邮箱地址。
+
+Wikia团队
+
+
+___________________________________________
+查看Wikia的最新信息请访问http://community.wikia.com
+想控制接收那些电子邮件？请查看：{{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-welcome-email-subject' => '欢迎来到Wikia，$USERNAME！',
-	'usersignup-welcome-email-greeting' => '你好 $USERNAME',
+	'usersignup-welcome-email-greeting' => '你好$USERNAME',
+	'usersignup-welcome-email-heading' => '欢迎您访问Wikia网站和{{SITENAME}}！以下内容可以方便您的访问。',
+	'usersignup-welcome-email-edit-profile-heading' => '编辑您的档案。',
+	'usersignup-welcome-email-edit-profile-content' => '在{{SITENAME}}档案上添加照片和一些关于您的基本情况。',
+	'usersignup-welcome-email-edit-profile-button' => '访问档案。',
+	'usersignup-welcome-email-learn-basic-heading' => '学习基本知识。',
+	'usersignup-welcome-email-learn-basic-content' => '了解Wikia的基本情况：如何编辑网页、个人档案、更改属性等等。',
+	'usersignup-welcome-email-learn-basic-button' => '查看',
+	'usersignup-welcome-email-explore-wiki-heading' => '了解更多维基的情况',
+	'usersignup-welcome-email-explore-wiki-content' => 'Wikia上又成千上万的维基，找到您感兴趣的维基信息请访问我们的中心：<a style="color:#2C85D5;" href="http://www.wikia.com/Video_Games">音像游戏</a>、<a style="color:#2C85D5;" href="http://www.wikia.com/Entertainment">娱乐</a>或<a style="color:#2C85D5;" href="http://www.wikia.com/Lifestyle">生活方式</a>。',
+	'usersignup-welcome-email-explore-wiki-button' => '访问wikia.com',
+	'usersignup-welcome-email-content' => '想知道更多的情况？在<a style="color:#2C85D5;“ href="http://community.wikia.com">Wikia社区</a>能找到建议和答案。编辑愉快！',
+	'usersignup-welcome-email-signature' => 'Wikia团队',
+	'usersignup-welcome-email-body' => '你好$USERNAME，
+
+欢迎您访问Wikia和{{SITENAME}}！您可以从这里开始：
+
+编辑您的档案。
+
+在您的{{SITENAME}}档案添加一个档案图片并且加入一些基本的自我介绍。
+
+
+访问$EDITPROFILEURL
+
+学习基本知识。
+
+了解Wikia的基本情况：如何编辑网页、个人档案、更改属性等等。
+
+查看（$LEARNBASICURL）
+
+访问更多维基。
+
+Wikia上又成千上万的维基，找到您感兴趣的维基信息请访问我们的中心：音像游戏（http://www.wikia.com/Video_Games），娱乐（http://www.wikia.com/Entertainment），或生活方式（http://www.wikia.com/Lifestyle）。
+
+访问$EXPLOREWIKISURL
+
+想知道更多的情况？在Wikia社区（http://www.community.wikia.com）能找到建议和答案。编辑愉快！
+
+Wikia团队
+
+
+___________________________________________
+查看Wikia的最新信息请访问http://community.wikia.com
+想控制接收那些电子邮件？请查看：{{fullurl:{{ns:special}}:Preferences}}',
+	'usersignup-heading' => '现在加入Wikia',
+	'usersignup-heading-byemail' => '为他人建立帐户',
+	'usersignup-marketing-wikia' => '与世界各地数百万的人的人合作并且分享他们的知识和友爱。',
+	'usersignup-marketing-login' => '已有帐户？[[Special:UserLogin|登录]]',
+	'usersignup-marketing-benefits' => '加入我们的队伍',
 	'usersignup-marketing-community-heading' => '合作',
+	'usersignup-marketing-community' => '发现和探索不同的主题，包括音像游戏、电影、和电视。和有共同兴趣爱好的朋友交流。',
 	'usersignup-marketing-global-heading' => '创新',
+	'usersignup-marketing-global' => '创立一个维基。在他人的帮助下由小变大。',
+	'usersignup-marketing-creativity-heading' => '要有创意',
+	'usersignup-marketing-creativity' => '通过投票、选择前十名的照片、影响、和开发软件等等，在Wikia来表现您的创造力。',
+	'usersignup-createaccount-byemail' => '为他人建立帐户',
+	'usersignup-error-captcha' => '输入的自负不匹配，请重输！',
+	'usersignup-account-creation-heading' => '成功！',
+	'usersignup-account-creation-subheading' => '我们已向$1发送电子邮件',
+	'usersignup-account-creation-email-sent' => '$2，您已经开始帐户创立的过程。我们已经通过电子邮件向$1提供了临时密码和确认链接。
+
+您会需要点击链接来更换密码完成开户程序。
+
+在{{SITENAME}}上[{{fullurl:{{ns:special}}:UserSignup|byemail=1}} 创立更多帐户]',
+	'usersignup-account-creation-email-subject' => '您在Wikia的帐户已创立！',
 	'usersignup-account-creation-email-greeting' => '你好，',
+	'usersignup-account-creation-email-content' => '您在{{SITENAME}}的帐户已创立！为了进入您的帐户和更换您的临时密码请点击以下链接并使用您的用户名$USERNAME和密码$NEWPASSWORD进行登录。
+
+请在<a style="color:#2C85D5;" href="{{fullurl:{{ns:special}}:UserLogin}}">{{fullurl:{{Ns:special}}:UserLogin}}登录</a>
+
+如果您不想创立您的帐户就请忽略这封邮件或有任何问题联系我们的社区支持团队。',
+	'usersignup-account-creation-email-signature' => 'Wikia团队',
+	'usersignup-account-creation-email-body' => '你好，
+
+您在{{SITENAME}}的帐户已创立！为了进入您的帐户和更换您的临时密码请点击以下链接并使用您的用户名$2和密码$3进行登录。
+
+请在{{fullurl:{{ns:special}}:UserLogin}}登录
+
+如果您不想创立您的帐户就请忽略这封邮件或有任何问题联系我们的社区支持团队。
+
+Wikia团队
+
+
+___________________________________________
+查看Wikia的最新信息请访问http://community.wikia.com
+想控制接收那些电子邮件？请查看：{{fullurl:{{ns:special}}:Preferences}}',
+	'usersignup-confirmation-reminder-email_subject' => '不用害怕。',
 	'usersignup-confirmation-reminder-email-greeting' => '你好 $USERNAME',
+	'usersignup-confirmation-reminder-email-content' => '看来您在Wikia上创立帐户已经有好几天了，但是还没有完成。很简单，只需要点击以下的链接完成您在Wikia上创立的帐户：
+
+<a style="color:#2C85D5;" href="$CONFIRMURL">$CONFIRMURL</a>
+
+如果您不在23天内确认您的帐户（$USERNAME），您的帐户就会永远无效，所以尽快确认吧！',
+	'usersignup-confirmation-reminder-email-signature' => 'Wikia团队',
+	'usersignup-confirmation-reminder-email_body' => '你好$2，
+
+看来您在Wikia上创立帐户已经有好几天了，但是还没有完成。很简单，只需要点击以下的链接完成您在Wikia上创立的帐户：
+
+$3
+
+如果您不在23天内确认您的帐户（$USERNAME），您的帐户就会永远无效，所以尽快确认吧！
+
+Wikia团队
+
+
+___________________________________________
+查看Wikia的最新信息请访问http://community.wikia.com
+想控制接收那些电子邮件？请查看：{{fullurl:{{ns:special}}:Preferences}}',
+	'usersignup-facebook-problem' => '与脸谱链接出错，请稍后再试。',
 );
 

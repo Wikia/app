@@ -201,7 +201,7 @@ $messages['id'] = array(
 	'landingpage-buttons-learn-more' => 'Selengkapnya &gt;',
 );
 
-/** Kazakh (Cyrillic script) (‪қазақша (кирил)‬)
+/** Kazakh (Cyrillic script) (қазақша (кирил)‎)
  * @author MrKarahanly
  */
 $messages['kk-cyrl'] = array(
@@ -274,7 +274,7 @@ $messages['ms'] = array(
 	'landingpage-buttons-learn-more' => 'Ketahui lebih lanjut &gt;',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -305,7 +305,7 @@ $messages['nl'] = array(
 	'landingpage-buttons-learn-more' => 'Meer informatie >',
 );
 
-/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+/** Nederlands (informeel)‎ (Nederlands (informeel)‎)
  * @author Siebrand
  */
 $messages['nl-informal'] = array(
@@ -388,7 +388,7 @@ $messages['ru'] = array(
 	'landingpage-buttons-learn-more' => 'Подробнее &gt;',
 );
 
-/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -453,7 +453,7 @@ $messages['uk'] = array(
 	'landingpage-buttons-learn-more' => 'Дізнатись більше &gt;',
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
+/** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  * @author Liangent
  */
@@ -466,7 +466,7 @@ $messages['zh-hans'] = array(
 	'landingpage-buttons-learn-more' => '了解更多 &gt;',
 );
 
-/** Traditional Chinese (‪中文（繁體）‬)
+/** Traditional Chinese (中文（繁體）‎)
  * @author Lauhenry
  */
 $messages['zh-hant'] = array(

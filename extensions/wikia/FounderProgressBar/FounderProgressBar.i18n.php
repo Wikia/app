@@ -134,6 +134,7 @@ $messages['qqq'] = array(
 );
 
 /** Breton (brezhoneg)
+ * @author Fohanno
  * @author Y-M D
  */
 $messages['br'] = array(
@@ -148,6 +149,7 @@ $messages['br'] = array(
 	'founderprogressbar-list-task-label' => 'Trevelloù',
 	'founderprogressbar-page-add10-label' => 'Ouzhpennañ $1 pajenn',
 	'founderprogressbar-page-add10-action' => 'Ouzhpennañ ur bajenn',
+	'founderprogressbar-themedesigner-visit-label' => 'Personelaat ho tem.',
 	'founderprogressbar-mainpage-edit-action' => 'Kemmañ ar bajenn degemer',
 	'founderprogressbar-photo-add10-label' => 'Ouzhpennañ $1 skeudenn',
 	'founderprogressbar-photo-add10-action' => 'Ouzhpennañ ur skeudenn',
@@ -178,6 +180,8 @@ $messages['br'] = array(
 	'founderprogressbar-uncategorized-visit-action' => 'Mont da Dibar:UncategorizedPages',
 	'founderprogressbar-total-edit300-label' => 'Tizhout $1 kemm',
 	'founderprogressbar-total-edit300-action' => 'Ouzhpennañ ur bajenn',
+	'founderprogressbar-bonus-photo-add10-action' => "Ouzhpennañ ul luc'hskeudenn",
+	'founderprogressbar-bonus-page-add5-action' => 'Ouzhpennañ ur bajenn',
 );
 
 /** Czech (česky)
@@ -327,7 +331,7 @@ $messages['de'] = array(
 	'founderprogressbar-browse-page-name' => 'Durchsuchen',
 );
 
-/** German (formal address) (‪Deutsch (Sie-Form)‬)
+/** German (formal address) (Deutsch (Sie-Form)‎)
  * @author Geitost
  * @author Tiin
  */
@@ -1049,7 +1053,7 @@ $messages['ja'] = array(
 	'founderprogressbar-video-add-action' => '動画を追加',
 );
 
-/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
+/** Kurdish (Latin script) (Kurdî (latînî)‎)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -1334,7 +1338,7 @@ $messages['ms'] = array(
 	'founderprogressbar-browse-page-name' => 'Semak seimbas',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -1933,7 +1937,7 @@ $messages['ru'] = array(
 	'founderprogressbar-browse-page-name' => 'Обзор',
 );
 
-/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -1947,6 +1951,7 @@ $messages['sr-ec'] = array(
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'founderprogressbar-credits' => 'En uppgiftshubb och guide för nya wikigrundare',
 	'founderprogressbar-widget-label' => '{{SITENAME}}s framsteg',
 	'founderprogressbar-progress-label' => 'Utförda uppgifter',
 	'founderprogressbar-progress-see-full-list' => 'Se fullständig lista',
@@ -1954,6 +1959,7 @@ $messages['sv'] = array(
 	'founderprogressbar-skip-for-now' => 'Hoppa över tills vidare',
 	'founderprogressbar-task-completed' => 'Färdigt',
 	'founderprogressbar-list-label' => '{{SITENAME}}s uppgifter',
+	'founderprogressbar-list-description1' => 'Är du redo att driva din wiki till framgång? Utför alla uppgifter som listas nedan för att få din förloppsmätare till 100 %! Vem som helst på din wiki kan hjälpa till och alla deras bidrag kommer att räknas in i uppgifterna på denna lista.',
 	'founderprogressbar-list-task-label' => 'Uppgifter',
 	'founderprogressbar-list-skipped-task-label' => 'Överhoppade uppgifter',
 	'founderprogressbar-list-skipped-task-desc' => 'Du kan slutföra dessa när som helst.',
@@ -2020,6 +2026,7 @@ $messages['sv'] = array(
 	'founderprogressbar-commcorner-edit-description' => 'Genom att redigera Gemenskapshörnan kommer det att generera ett meddelande för personer som besöker din wiki. Det är en fantastisk plats att låta människor veta vet vilken typ av gemenskapen du är, hur de kan hjälpa till och göra utannonseringar.',
 	'founderprogressbar-video-add-label' => 'Lägg till en video',
 	'founderprogressbar-video-add-action' => 'Lägg till en video',
+	'founderprogressbar-video-add-description' => 'Videoklipp är ett annat populärt mediatyp som kommer att engagera människor på din wiki. Du kan hitta bra videoklipp på YouTube, Hulu och mer. Lägg till ett med hjälp av knapparna Funktioner och Media i redigeraren.',
 	'founderprogressbar-user-add5-label' => 'Nå 5 användarprofiler',
 	'founderprogressbar-user-add5-action' => 'Gå till hjälpsidan',
 	'founderprogressbar-user-add5-description' => 'En bra wiki stöds av en bra gemenskap. De största wikis har mycket folk som redigerar, och att få fem personer att redigera på din wiki är en bra start.',
@@ -2028,6 +2035,7 @@ $messages['sv'] = array(
 	'founderprogressbar-recentchanges-visit-description' => 'Senaste ändringar är en mer avancerad version av wikiaktivitet. Du kan se "skillnader" som i detalj visar ändringar som har gjorts på en sida, ångra ändringar, och se mer detaljer än vad du kan göra på wikiaktivitet. Det är ett bra hanteringsverktyg när du behöver mer information.',
 	'founderprogressbar-wordmark-edit-label' => 'Ladda upp en logotyp',
 	'founderprogressbar-wordmark-edit-action' => 'Gå till Special:ThemeDesigner',
+	'founderprogressbar-wordmark-edit-description' => 'Din wikis logotyp är flaggskeppet för din wiki, den är synlig på varje sida och kan verkligen ge användarna en försmak på ämnet. Ladda upp din egen grafiska logotyp är ett jättebra sätt att få din wikis märke att stå ut ännu mer.',
 	'founderprogressbar-mostvisited-visit-label' => 'Se dina mest besökta sidor',
 	'founderprogressbar-mostvisited-visit-action' => 'Gå till Special:MostVisitedPages',
 	'founderprogressbar-toptenlist-add-label' => 'Lägg till en "topp tio"-lista',
@@ -2228,7 +2236,7 @@ $messages['uk'] = array(
 	'founderprogressbar-browse-page-name' => 'Огляд',
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
+/** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  * @author Hzy980512
  */
@@ -2271,7 +2279,7 @@ $messages['zh-hans'] = array(
 	'founderprogressbar-browse-page-name' => '浏览',
 );
 
-/** Traditional Chinese (‪中文（繁體）‬)
+/** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
  */
 $messages['zh-hant'] = array(
