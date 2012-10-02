@@ -124,7 +124,6 @@ class EditPageLayout extends EditPage {
 		if (!$this->mEditNotices->isEmpty()) {
 			wfDebug(__METHOD__ . ": custom edit notices found - submit prevented\n");
 			$ret = Status::newGood();
-			$ret->value = self::AS_SUMMARY_NEEDED;
 			$ret->setResult( false, self::AS_SUMMARY_NEEDED );
 		}
 		else {
