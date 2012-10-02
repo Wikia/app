@@ -38,7 +38,7 @@ class WikiaHomePageHelper extends WikiaModel {
 	const INTERSTITIAL_SMALL_IMAGE_HEIGHT = 65;
 
 	const SLIDER_IMAGES_KEY = 'SliderImagesKey';
-	const WIKIA_HOME_PAGE_HELPER_MEMC_VERSION = 'v0.6';
+	const WIKIA_HOME_PAGE_HELPER_MEMC_VERSION = 'v0.7';
 
 	protected $visualizationModel = null;
 
@@ -614,6 +614,10 @@ class WikiaHomePageHelper extends WikiaModel {
 			// result should have more 'vertical' orientation, cropping left and right from original image;
 			$requestedCropHeight = $originalHeight;
 			$requestedCropWidth = ceil($requestedCropHeight * $requestedRatio);
+			$currentRatio = $requestedCropWidth / $requestedCropHeight;
+			if($requestedWidth >= $originalWidth && $requestedCropHeight == $originalHeight && $currentRatio > $requestedRatio && $requestedRatio >= 1) {
+				$requestedWidth = $requestedCropWidth;
+			}
 		}
 
 		if ($originalWidth < $requestedWidth && $originalRatio < $requestedRatio) {
