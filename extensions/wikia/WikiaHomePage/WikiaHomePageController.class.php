@@ -19,21 +19,33 @@ class WikiaHomePageController extends WikiaController {
 	 * @var int
 	 */
 	static $seoSamplesNo = 17;
-	static $seoMemcKeyVer = '1.33';
+	static $seoMemcKeyVer = '1.35';
 
 	//images sizes
 	const REMIX_IMG_SMALL_WIDTH = 155;
 	const REMIX_IMG_SMALL_HEIGHT = 100;
-	const REMIX_IMG_MEDIUM_WIDTH = 330;
+	const REMIX_IMG_MEDIUM_WIDTH = 320;
 	const REMIX_IMG_MEDIUM_HEIGHT = 210;
-	const REMIX_IMG_BIG_WIDTH = 330;
+	const REMIX_IMG_BIG_WIDTH = 320;
 	const REMIX_IMG_BIG_HEIGHT = 320;
 
 	// wiki batches
 	const WIKI_BATCH_SIZE = 10;
 
-	const hubsImgWidth = 330;
+	const hubsImgWidth = 320;
 	const hubsImgHeight = 160;
+
+	// values for oasis skin width change to 1030px
+	const REMIX_GRID_IMG_SMALL_WIDTH = 160;
+	const REMIX_GRID_IMG_SMALL_HEIGHT = 100;
+	const REMIX_GRID_IMG_MEDIUM_WIDTH = 330;
+	const REMIX_GRID_IMG_MEDIUM_HEIGHT = 210;
+	const REMIX_GRID_IMG_BIG_WIDTH = 330;
+	const REMIX_GRID_IMG_BIG_HEIGHT = 320;
+	const hubsGridImgWidth = 330;
+	const hubsGridImgHeight = 160;
+	// skin change values end
+
 	const INITIAL_BATCHES_NUMBER = 5;
 
 	//failsafe
@@ -130,7 +142,7 @@ class WikiaHomePageController extends WikiaController {
 	 */
 	public function getList() {
 		$wikiBatches = $this->helper->getWikiBatches($this->wg->cityId, $this->wg->contLang->getCode(), self::INITIAL_BATCHES_NUMBER);
-		if( !empty($wikiBatches) ) {
+		if (!empty($wikiBatches)) {
 			Wikia::log(__METHOD__, false, ' pulling visualization data from db');
 			$status = 'true';
 			$this->response->setVal('initialWikiBatchesForVisualization', json_encode($wikiBatches));
@@ -141,13 +153,14 @@ class WikiaHomePageController extends WikiaController {
 				$this->source = $this->getMediaWikiMessage();
 
 				$failoverData = $this->parseSourceMessage();
-				$visualization = F::build('CityVisualization'); /** @var $visualization CityVisualization */
+				$visualization = F::build('CityVisualization');
+				/** @var $visualization CityVisualization */
 				$visualization->generateBatches($this->wg->cityId, $this->wg->contLang->getCode(), $failoverData, true);
 				$failoverBatches = $this->helper->getWikiBatches($this->wg->cityId, $this->wg->contLang->getCode(), self::INITIAL_BATCHES_NUMBER);
 
 				$this->response->setVal('initialWikiBatchesForVisualization', json_encode($failoverBatches));
 			} catch (Exception $e) {
-				Wikia::log(__METHOD__,false,' pulling failover visualization data from file');
+				Wikia::log(__METHOD__, false, ' pulling failover visualization data from file');
 				$status = 'false';
 
 				$failoverData = $this->getFailoverWikiList();
@@ -337,7 +350,7 @@ class WikiaHomePageController extends WikiaController {
 		$memKey = $this->wf->SharedMemcKey('wikiahomepage', 'hubimages', $this->wg->contLang->getCode(), self::HUBS_IMAGES_MEMC_KEY_VER);
 		$hubImages = $this->wg->Memc->get($memKey);
 
-		if( empty($hubImages) ) {
+		if (empty($hubImages)) {
 			$hubImages = $this->getHubImageUrls();
 			$this->wg->Memc->set($memKey, $hubImages, 60 * 60 * 24);
 		}
@@ -347,10 +360,6 @@ class WikiaHomePageController extends WikiaController {
 
 	protected function getHubImageUrls() {
 		$hubImages = array();
-		$this->imageServing = F::build('ImageServing', array(null, self::hubsImgWidth, array(
-			'w' => self::hubsImgWidth,
-			'h' => self::hubsImgHeight,
-		)));
 
 		foreach ($this->wg->wikiaHubsPages as $groupId => $hubGroup) {
 			if (!empty($hubGroup[0])) {
@@ -421,13 +430,7 @@ class WikiaHomePageController extends WikiaController {
 	}
 
 	protected function getImageUrlFromString($imageName) {
-		$imageUrl = false;
-		$title = F::build('Title', array($imageName, NS_IMAGE), 'newFromText');
-
-		$file = $this->wf->FindFile($title);
-		if ($file instanceof File && $file->exists()) {
-			$imageUrl = $this->imageServing->getUrl($file, max(self::hubsImgWidth, $file->getWidth()), max(self::hubsImgHeight, $file->getHeight()));
-		}
+		$imageUrl = $this->helper->getImageUrl($imageName, $this->getHubsImgWidth(), $this->getHubsImgHeight());
 		return $imageUrl;
 	}
 
@@ -606,4 +609,20 @@ class WikiaHomePageController extends WikiaController {
 		$this->wikis = $this->helper->getWikiBatches($wikiId, $langCode, $numberOfBatches);
 	}
 
+	public function getHubsImgWidth() {
+		if (!empty($this->wg->OasisGrid)) {
+			return self::hubsGridImgWidth;
+		} else {
+			return self::hubsImgWidth;
+		}
+	}
+
+	public function getHubsImgHeight() {
+		if (!empty($this->wg->OasisGrid)) {
+			return self::hubsGridImgHeight;
+		} else {
+			return self::hubsImgHeight;
+		}
+
+	}
 }
