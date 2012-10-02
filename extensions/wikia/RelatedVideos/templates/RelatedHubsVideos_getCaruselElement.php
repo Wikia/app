@@ -1,7 +1,7 @@
 <?	$elementHeight = 90;
 	$maxDescriptionLength = 45;
 ?>
-<div class="item"><a class="video-thumbnail  video-hubs-video <?= $videoPlay ?>" style="height:<?=$elementHeight; ?>px" href="<?=$video['fullUrl'];?>" data-ref="<?=$video['prefixedUrl'];?>" data-external="<?=$video['external'];?>" data-video-name="<?=htmlspecialchars($video['title']);?>" data-wiki="<?=$video['wiki'];?>"><?
+<div class="item"><a class="video-thumbnail  video-hubs-video lightbox" style="height:<?=$elementHeight; ?>px" href="<?=$video['fullUrl'];?>" data-ref="<?=$video['prefixedUrl'];?>" data-external="<?=$video['external'];?>" data-video-name="<?=htmlspecialchars($video['title']);?>" data-wiki="<?=$video['wiki'];?>"><?
 		if ( !empty( $video['duration'] ) ) {
 			$mins = floor ($video['duration'] / 60);
 			$secs = $video['duration'] % 60;
