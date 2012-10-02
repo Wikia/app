@@ -700,8 +700,9 @@ class WikiaSearch extends WikiaObject {
 	
 	    if(! is_array( $privateWikis ) ) {
 	        // get private wikis from db
-	        $wgIsPrivateWiki	= WikiFactory::getVarByName( 'wgIsPrivateWiki', $currentWikiId );
-	        $privateWikis		= WikiFactory::getCityIDsFromVarValue( $wgIsPrivateWiki->cv_id, true, '=' );
+	        $wikiFactory		= F::build( 'WikiFactory' );
+	        $wgIsPrivateWiki	= $wikiFactory->getVarByName( 'wgIsPrivateWiki', $currentWikiId );
+	        $privateWikis		= $wikiFactory->getCityIDsFromVarValue( $wgIsPrivateWiki->cv_id, true, '=' );
 	        $this->wg->Memc->set( $cacheKey, $privateWikis, 3600 ); // cache for 1 hour
 	    }
 	

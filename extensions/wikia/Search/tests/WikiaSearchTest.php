@@ -203,6 +203,7 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 	
 	/**
 	 * @covers WikiaSearch::getQueryClausesString
+	 * @covers WikiaSearch::getInterWikiSearchExcludedWikis
 	 */
 	public function testGetQueryClausesString() {
 		$expectedLanguageCode	= 'en';
@@ -221,16 +222,30 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 		$memcacheMock
 			->expects	( $this->any() )
 			->method	( 'set' )
-			->will	( $this->returnValue( null ) )
+			->will		( $this->returnValue( null ) )
 		;
 		
-		$this->mockGlobalVariable( 'wgContLang',						$mockContLang );
-		$this->mockGlobalVariable( 'wgIsPrivateWiki',					false );
-		$this->mockGlobalVariable( 'wgCrossWikiaSearchExcludedWikis',	array( 123, 234 ) );
-		$this->mockGlobalVariable( 'wgCityId',							$mockCityId );
-		$this->mockGlobalVariable( 'wgMemc',							$memcacheMock );
+		$wikiFactoryMock = $this->getMock( 'WikiFactory' );
+		$wikiFactoryMock
+			->expects	( $this->any() )
+			->method	( 'getCityIDsFromVarValue' )
+			->will		( $this->returnValue( null ) )
+		;
+		$wikiFactoryMock
+			->expects	( $this->any() )
+			->method	( 'getVaryByName' )
+			->will		( $this->returnValue( $mockPrivateWiki ) )
+		;
+		
+		$this->mockGlobalVariable	( 'wgContLang',							$mockContLang );
+		$this->mockGlobalVariable	( 'wgIsPrivateWiki',					false );
+		$this->mockGlobalVariable	( 'wgCrossWikiaSearchExcludedWikis',	array( 123, 234 ) );
+		$this->mockGlobalVariable	( 'wgCityId',							$mockCityId );
+		$this->mockGlobalVariable	( 'wgMemc',								$memcacheMock );
+		$this->mockClass			( 'Solarium_Client',					$this->getMock( 'Solarium_Client', array('setAdapter') ) );
+		$this->mockClass			( 'WikiFactory',						$wikiFactoryMock );
 		$this->mockApp();
-		$this->mockClass( 'Solarium_Client', $this->getMock( 'Solarium_Client', array('setAdapter') ) );
+		
 		
 		$wikiaSearch	= F::build( 'WikiaSearch' );
 		$searchConfig	= F::build( 'WikiaSearchConfig' );
@@ -255,7 +270,7 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 		// I tried to mock this up better, but per Bergmann, static methods are death to testability (particularly if called from another class)
 		// This means we'll have to update this test every time this changes.
 		// @todo write some logic that circumvents WikiFactory calls
-		$expectedInterWiki = '((-(wid:13390) AND -(wid:14379) AND -(wid:19416) AND -(wid:25694) AND -(wid:118245) AND -(wid:281701) AND -(wid:123) AND -(wid:234)) AND (lang:en) AND (iscontent:true))';
+		$expectedInterWiki = '((-(wid:123) AND -(wid:234)) AND (lang:en) AND (iscontent:true))';
 		$this->assertEquals( $expectedInterWiki, $method->invoke( $wikiaSearch, $searchConfig ),
 		        			'WikiaSearch::getQueryClauses should exclude bad wikis, require the language of the wiki, and require content' );
 		
