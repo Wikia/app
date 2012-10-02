@@ -3,9 +3,10 @@
 		, adConfig
 		, adEngine
 		, scriptWriter
+		, wikiaDart
 		, adProviderAdDriver
-//		, adProviderAdDriver2Helper
-//		, adProviderAdDriver2
+		, adProviderAdDriver2Helper
+		, adProviderAdDriver2
 		, adProviderEvolve
 		, adProviderEvolveRS
 		, adProviderGamePro
@@ -22,10 +23,11 @@
 
 	// Construct Ad Providers
 	scriptWriter = ScriptWriter(log, ghostwriter, document);
+	wikiaDart = WikiaDartHelper(log, window, document, Geo);
 
 	adProviderAdDriver = AdProviderAdDriver(log, window);
-//	adProviderAdDriver2Helper = AdProviderAdDriver2Helper(log, window, Cookies);
-//	adProviderAdDriver2 = AdProviderAdDriver2(adProviderAdDriver2Helper, scriptWriter, WikiaTracker, log, window, Geo);
+	adProviderAdDriver2Helper = AdProviderAdDriver2Helper(log, window, Cookies);
+	adProviderAdDriver2 = AdProviderAdDriver2(adProviderAdDriver2Helper, wikiaDart, scriptWriter, WikiaTracker, log, window, Geo);
 	adProviderEvolve = AdProviderEvolve(scriptWriter, WikiaTracker, log, window, document);
 	adProviderEvolveRS = AdProviderEvolveRS(scriptWriter, WikiaTracker, log, window, document);
 	adProviderGamePro = AdProviderGamePro(scriptWriter, WikiaTracker, log, window, document);
@@ -41,7 +43,7 @@
 
 		// AdProviders:
 		, adProviderAdDriver
-//		, adProviderAdDriver2
+		, adProviderAdDriver2
 		, adProviderEvolve
 		, adProviderEvolveRS
 		, adProviderGamePro

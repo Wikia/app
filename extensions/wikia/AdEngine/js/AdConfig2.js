@@ -96,7 +96,7 @@ var AdConfig2 = function (
 			return adProviderEvolve;
 		}
 		if (slot[2] === 'AdDriver2') {
-			return adProviderAdDriver;
+			return adProviderAdDriver2;
 		}
 		if (slot[2] === 'AdDriver') {
 			return adProviderAdDriver;
@@ -111,21 +111,21 @@ var AdConfig2 = function (
 		}
 
 		// Next Evolve (NZ traffic)
-		if (country == 'NZ') {
+//		if (country == 'NZ') {
 			if (adProviderEvolve.canHandleSlot(slot)) {
 				return adProviderEvolve;
 			}
 			if (adProviderEvolveRS.canHandleSlot(slot)) {
 				return adProviderEvolveRS;
 			}
-		}
+//		}
 
 		// Then our dart (high value slots && high value traffic)
 		if (
 			highValueCountries[country] &&
 			highValueSlots[slotname]
 		) {
-			return adProviderAdDriver;
+			return adProviderAdDriver2;
 		}
 
 		return adProviderLater;
