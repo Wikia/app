@@ -351,8 +351,10 @@ var WikiaDartHelper = function (log, window, document, Geo) {
 			categories += 'cat=' + encodeURIComponent(window.wgCategories[i].toLowerCase().replace(/ /g, '_')) + ';';
 		}
 
-		categories = categories.substr(0, categoryStrMaxLength);
-		categories = categories.replace(/;[^;]*$/, ';');
+		if (categories) {
+			categories = categories.substr(0, categoryStrMaxLength);
+			categories = categories.replace(/;[^;]*$/, ';');
+		}
 	}
 
 	function getCategories() {
