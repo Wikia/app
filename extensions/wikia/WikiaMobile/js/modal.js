@@ -8,6 +8,7 @@
 define('modal', ['loader', 'events', 'ads'], function modal(loader, events, ads){
 	var d = document,
 		w = window,
+		html = d.documentElement,
 		opened,
 		created,
 		toolbar,
@@ -46,9 +47,8 @@ define('modal', ['loader', 'events', 'ads'], function modal(loader, events, ads)
 	function onCloseClick(ev){
 		ev.stopPropagation();
 		ev.preventDefault();
-		w.history.back();
-		//in case browser doesn't care about history (:)) call close on click anyway
 		close();
+		w.history.back();
 	}
 
 	function onHashChange(ev){
@@ -93,12 +93,41 @@ define('modal', ['loader', 'events', 'ads'], function modal(loader, events, ads)
 		onClose = options.onClose;
 
 		if(!opened){
-			position = w.pageYOffset;
-			d.documentElement.className += ' modal';
-			wrapper.className = 'open';
+			position = w.scrollY;
+
+			var ev = w.event,
+				ht = ~~(ev && ev.screenY - (window.innerHeight / 2)) || 0,
+				wd = ~~(ev && ev.screenX - (window.innerWidth / 2)) || 0;
+
+			wrapper.className = '';
+			wrapper.style.webkitTransform = 'translate(' + wd + 'px,' + ht + 'px) scale(.3)';
+
+			//browser needs time to move whole modal around
+			setTimeout(function(){
+				wrapper.style.top = position + 'px';
+				wrapper.className += ' zoomer open';
+
+				setTimeout(function(){
+					html.className += ' noPage';
+					wrapper.style.top = 0;
+				},310);
+
+			},50);
 
 			//needed for closing modal on back button
 			w.location.hash = "Modal";
+
+			//hide adress bar on orientation change
+			w.addEventListener('viewportsize', onOrientationChange);
+
+			//handle close on back button
+			w.addEventListener('hashchange', onHashChange);
+
+			//close modal on back button
+			closeButton.addEventListener('click', onCloseClick);
+
+			//handle hiding ui of modal on click
+			content.addEventListener('click', onContentClick);
 		}
 
 		//move topbar along with scroll manually for browsers with no support for position fixed
@@ -121,29 +150,21 @@ define('modal', ['loader', 'events', 'ads'], function modal(loader, events, ads)
 		setToolbar(tool);
 		setCaption(cap);
 
-		//hide adress bar on orientation change
-		w.addEventListener('viewportsize', onOrientationChange);
-
-		//handle close on back button
-		w.addEventListener('hashchange', onHashChange);
-
-		//close modal on back button
-		closeButton.addEventListener('click', onCloseClick);
-
-		//handle hiding ui of modal on click
-		content.addEventListener('click', onContentClick);
-
 		//track('modal/open');
 		opened = true;
 	}
 
 	function close(stopScrolling){
 		if(opened){
-			d.documentElement.className = d.documentElement.className.replace(' modal','');
+			w.removeEventListener('viewportsize', onOrientationChange);
+			w.removeEventListener('hashchange', onHashChange);
+			closeButton.removeEventListener('click', onCloseClick);
+			content.removeEventListener('click', onContentClick);
+
+			html.className = html.className.replace(' noPage','');
 
 			content.innerHTML = '';
 			caption.innerHTML = '';
-			wrapper.className = '';
 			caption.className = '';
 			topBar.className = '';
 
@@ -151,28 +172,31 @@ define('modal', ['loader', 'events', 'ads'], function modal(loader, events, ads)
 				onClose();
 			}
 
-			//track('modal/close');
-			opened = false;
-
 			//remove event listners since they are not needed outside modal
 			if(!positionfixed){
 				w.removeEventListener('scroll', fixTopBar);
 				topBar.style.top = '';
 			}
 
-			w.removeEventListener('viewportsize', onOrientationChange);
-			w.removeEventListener('hashchange', onHashChange);
-			closeButton.removeEventListener('click', onCloseClick);
-			content.removeEventListener('click', onContentClick);
-
 			//scroll to where user was before
 			//in setTimout because ios4.x has to do this after everything has to do now
 			//otherwise it forgets to scroll...
 			setTimeout(function(){
-				!stopScrolling && w.scrollTo(0, position);
+				if(!stopScrolling){
+					w.scrollTo(0, position);
+					wrapper.style.top = position + 'px';
+				}
+
+				wrapper.className = 'zoomer';
+
+				setTimeout(function(){
+					wrapper.style.top = 0;
+				},310);
 
 				ads && ads.fix();
 			},50);
+
+			opened = false;
 		}
 	}
 
