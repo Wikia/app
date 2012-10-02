@@ -33,7 +33,7 @@ $messages['ar'] = array(
 	'sitemap-desc' => 'توليد خرائط مواقع ليكي على الطاير',
 );
 
-/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
  * @author EugeneZelenko
  */
 $messages['be-tarask'] = array(
@@ -165,7 +165,7 @@ $messages['ms'] = array(
 	'sitemap-desc' => 'Segera menjana Peta Tapak untuk wiki ini',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -278,7 +278,7 @@ $messages['vi'] = array(
 	'sitemap-desc' => 'Tạo ra Sơ đồ web cho wiki này đang được tiến hành',
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
+/** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  */
 $messages['zh-hans'] = array(

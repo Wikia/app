@@ -248,7 +248,7 @@ $messages['ia'] = array(
 	'feed-title-recentchanges' => 'Modificationes recente',
 );
 
-/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
+/** Kurdish (Latin script) (Kurdî (latînî)‎)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -337,7 +337,7 @@ $messages['ms'] = array(
 	'feed-title-recentchanges' => 'Perubahan terkini',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -527,7 +527,7 @@ $messages['ru'] = array(
 	'feed-title-recentchanges' => 'Свежие правки',
 );
 
-/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -627,7 +627,7 @@ $messages['uk'] = array(
 	'feed-title-recentchanges' => 'Нові редагування',
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
+/** Simplified Chinese (中文（简体）‎)
  * @author Hydra
  */
 $messages['zh-hans'] = array(

@@ -29,7 +29,7 @@ $messages['ar'] = array(
 	'sharedhelp-autotalkcreate-summary' => 'إنشاء صفحة نقاش تلقائيا',
 );
 
-/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
  * @author EugeneZelenko
  */
 $messages['be-tarask'] = array(
@@ -176,7 +176,7 @@ $messages['ms'] = array(
 	'sharedhelp-autotalkcreate-summary' => 'Laman perbincangan dicipta secara automatik',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -267,7 +267,7 @@ $messages['uk'] = array(
 	'sharedhelp-autotalkcreate-summary' => 'Сторінку обговорення створено автоматично',
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
+/** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  */
 $messages['zh-hans'] = array(

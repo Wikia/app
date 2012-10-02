@@ -151,7 +151,7 @@ $messages['ms'] = array(
 	'signup' => 'Daftar Diri',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬) */
+/** Norwegian Bokmål (norsk (bokmål)‎) */
 $messages['nb'] = array(
 	'signup-desc' => 'Legger til aliaset [[{{#Special:Signup}}]] for [[{{#Special:UserLogin}}/signup]]',
 	'signup' => 'Registrer',
@@ -273,7 +273,7 @@ $messages['vi'] = array(
 	'signup' => 'Đăng ký',
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
+/** Simplified Chinese (中文（简体）‎)
  * @author Hydra
  * @author Liangent
  */

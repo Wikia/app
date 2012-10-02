@@ -34,7 +34,7 @@ $messages['bar'] = array(
 	'healthcheck-desc' => '[[Special:HealthCheck|Speziaalseiten]] zur Priaffung vom Serverstaatus',
 );
 
-/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
  * @author Jim-by
  */
 $messages['be-tarask'] = array(
@@ -179,7 +179,7 @@ $messages['ms'] = array(
 	'healthcheck-desc' => '[[Special:HealthCheck|Laman khas]] untuk memeriksa keadaan pelayan',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -277,7 +277,7 @@ $messages['uk'] = array(
 	'healthcheck-desc' => '[[Special:HealthCheck|Спеціальна сторінка]] для перевірки стану сервера',
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
+/** Simplified Chinese (中文（简体）‎)
  * @author Hydra
  */
 $messages['zh-hans'] = array(

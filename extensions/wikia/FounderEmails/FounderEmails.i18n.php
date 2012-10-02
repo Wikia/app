@@ -423,6 +423,7 @@ $messages['bg'] = array(
 );
 
 /** Breton (brezhoneg)
+ * @author Fohanno
  * @author Fulup
  * @author Gwenn-Ael
  * @author Y-M D
@@ -430,7 +431,7 @@ $messages['bg'] = array(
 $messages['br'] = array(
 	'founderemails-desc' => 'Skoazellañ a ra da gelaouiñ ar grouerien pa vez degaset kemmoù en o wikioù',
 	'tog-founderemailsenabled' => 'Kas din hizivadennoù eus ar pezh a ra an dud all (diazezerien hepken)',
-	'founderemails-email-user-registered-subject' => 'Unan bennak en deus krouet ur gont war ho wiki !',
+	'founderemails-email-user-registered-subject' => 'Unan bennak a zo aet da-gaout $WIKINAME',
 	'founderemails-email-user-registered-body' => 'Ac\'hanta $USERNAME,
 
 Evit doare eo bet an implijer $EDITORNAME oc\'h en em enrollañ war ho wiki ! Perak ned afec\'h ket da saludi anezhañ war e bajenn kaozeal $EDITORTALKPAGEURL ?
@@ -559,7 +560,7 @@ Evit doare eo bet kemmet ho wiki gant an implijer enrollet $USERNAME ! Perak ned
 	'founderemails-answers-email-page-edited-anon-body-HTML' => 'Ac\'hanta $USERNAME,<br /><br />
 Seblantout a ra en defe unan bennak kemmet ho wiki ! Perak ne yafec\'h ket <a href="$MYHOMEURL">da welet petra \'zo bet kemmet</a> ?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- Skipailh Wikia</div>',
-	'founderemails-lot-happening-subject' => "Un toullad traoù a c'hoarvez war ho lec'hienn hiziv !",
+	'founderemails-lot-happening-subject' => 'Un toullad traoù a c\'hoarvez war $WIKINAME !',
 	'founderemails-lot-happening-body' => 'Demat dit $USERNAME,
 
 Ur bern traoù a c\'hoarvez war ho wiki hiziv ! Kit war $MYHOMEURL da welet penaos emaén kont.
@@ -1200,7 +1201,7 @@ Du kannst immer auf den Knopf «Wiki-Aktivitäten» klicken, um zu sehen, was al
 Das Wikia-Team',
 );
 
-/** German (formal address) (‪Deutsch (Sie-Form)‬)
+/** German (formal address) (Deutsch (Sie-Form)‎)
  * @author Geitost
  * @author LWChris
  * @author The Evil IP address
@@ -4059,7 +4060,7 @@ Anda boleh sentiasa pergi ke Kegiatan Wiki untuk melihat semua perubahan yang di
 	'founderemails-pref-complete-digest-v2' => '...tersedianya Ikhtisar Harian penyertaan, suntingan dan kunjungan',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -4718,7 +4719,7 @@ U kunt altijd naar de wiki gaan om alle interessante wijzigingen van $WIKINAME t
 	'founderemails-pref-complete-digest-v2' => "... een dagelijkse samenvatting van lidmaatschappen, bewerkingen en bekeken pagina's is beschikbaar",
 );
 
-/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+/** Nederlands (informeel)‎ (Nederlands (informeel)‎)
  * @author Siebrand
  */
 $messages['nl-informal'] = array(
@@ -7034,7 +7035,7 @@ Bạn luôn luôn có thể ghé qua hoạt động của wiki để xem tất c
 	'founderemails-pref-complete-digest-v2' => '...một bản tóm tắt đầy đủ và ngắn gọn về số người tham gia, số sửa đổi, số lượt xem',
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
+/** Simplified Chinese (中文（简体）‎)
  * @author Anakmalaysia
  * @author Dimension
  * @author Hydra
@@ -7142,7 +7143,7 @@ Wikia团队',
 	'founderemails-pref-edits' => '有人编辑$1时邮件通知我。',
 );
 
-/** Traditional Chinese (‪中文（繁體）‬)
+/** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
  */
 $messages['zh-hant'] = array(

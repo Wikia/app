@@ -565,7 +565,7 @@ $messages['be'] = array(
 	'closed-reason' => 'Прычына:',
 );
 
-/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -1424,7 +1424,7 @@ $messages['de'] = array(
 	'newwikisgraph-param-other' => 'Andere',
 );
 
-/** German (formal address) (‪Deutsch (Sie-Form)‬)
+/** German (formal address) (Deutsch (Sie-Form)‎)
  * @author Geitost
  * @author LWChris
  * @author Umherirrender
@@ -3319,7 +3319,7 @@ $messages['mzn'] = array(
 	'wikifactory-label-actions' => 'عملکاردون',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -3588,14 +3588,14 @@ Kom hier alstublieft terug.',
 	'newwikisgraph-param-other' => 'Anders',
 );
 
-/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+/** Nederlands (informeel)‎ (Nederlands (informeel)‎)
  * @author Siebrand
  */
 $messages['nl-informal'] = array(
 	'closed-wiki-dump-exists' => 'Wil je [$1 de inhoud van je wiki downloaden]?',
 );
 
-/** Norwegian Nynorsk (‪norsk (nynorsk)‬)
+/** Norwegian Nynorsk (norsk (nynorsk)‎)
  * @author Harald Khan
  */
 $messages['nn'] = array(
@@ -4474,7 +4474,7 @@ $messages['sl'] = array(
 	'closed-reason' => 'Razlog:',
 );
 
-/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Charmed94
  * @author Rancher
  * @author Verlor
@@ -5081,6 +5081,13 @@ $messages['ur'] = array(
 	'closed-reason' => 'وجہ:',
 );
 
+/** Uzbek (oʻzbekcha)
+ * @author CoderSI
+ */
+$messages['uz'] = array(
+	'wikifactory-label-info' => "Ma'lumot",
+);
+
 /** Wu (吴语) */
 $messages['wuu'] = array(
 	'closed-reason' => '理由：',
@@ -5093,7 +5100,7 @@ $messages['yi'] = array(
 	'closed-reason' => 'אורזאַך:',
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
+/** Simplified Chinese (中文（简体）‎)
  * @author Anakmalaysia
  * @author Hydra
  */
@@ -5116,7 +5123,7 @@ $messages['zh-hans'] = array(
 	'closed-reason' => '原因：',
 );
 
-/** Traditional Chinese (‪中文（繁體）‬)
+/** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
  * @author Wrightbus
  */
@@ -5197,7 +5204,7 @@ $messages['zh-hant'] = array(
 	'newwikisgraph-param-other' => '其他',
 );
 
-/** Chinese (Taiwan) (‪中文（台灣）‬)
+/** Chinese (Taiwan) (中文（台灣）‎)
  * @author Ffaarr
  */
 $messages['zh-tw'] = array(

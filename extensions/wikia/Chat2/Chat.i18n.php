@@ -581,7 +581,7 @@ Wenn du dies für einen Fehler hältst oder möchtest, dass die Entscheidung üb
 	'chat-status-away' => 'Abwesend',
 );
 
-/** German (formal address) (‪Deutsch (Sie-Form)‬)
+/** German (formal address) (Deutsch (Sie-Form)‎)
  * @author Tiin
  */
 $messages['de-formal'] = array(
@@ -1612,7 +1612,7 @@ Sila hubungi mereka untuk penjelasan lanjut.',
 	'chat-status-away' => 'Keluar',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -1802,7 +1802,7 @@ De laatste regel uit het logboek chatverbanningen wordt hieronder ter referentie
 	'chat-status-away' => 'Weg',
 );
 
-/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+/** Nederlands (informeel)‎ (Nederlands (informeel)‎)
  * @author Siebrand
  */
 $messages['nl-informal'] = array(
@@ -2208,7 +2208,7 @@ $messages['ru'] = array(
 	'chat-status-away' => 'Отсутствует',
 );
 
-/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -2564,7 +2564,7 @@ $messages['vi'] = array(
 	'chat-checkuser-join-action' => 'Tham gia Tán gẫu',
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
+/** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  * @author Liangent
  * @author Yanmiao liu
@@ -2616,7 +2616,7 @@ $messages['zh-hans'] = array(
 	'group-bannedfromchat-member' => '从聊天中禁止',
 );
 
-/** Traditional Chinese (‪中文（繁體）‬)
+/** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
  */
 $messages['zh-hant'] = array(

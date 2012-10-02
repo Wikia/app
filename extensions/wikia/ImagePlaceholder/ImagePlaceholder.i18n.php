@@ -27,7 +27,7 @@ $messages['ast'] = array(
 	'imgplc-notinhistory' => 'Nun pues amestar una imaxe nel mou historial.',
 );
 
-/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
  * @author Wizardist
  */
 $messages['be-tarask'] = array(
@@ -75,7 +75,7 @@ $messages['de'] = array(
 	'imgplc-notinhistory' => 'Du kannst keine Bilder im Verlaufsmodus hinzufügen.',
 );
 
-/** German (formal address) (‪Deutsch (Sie-Form)‬)
+/** German (formal address) (Deutsch (Sie-Form)‎)
  * @author LWChris
  */
 $messages['de-formal'] = array(
@@ -221,7 +221,7 @@ $messages['ksh'] = array(
 	'imgplc-notinhistory' => 'Belder kammer nit em Zosammehang vun de verjange Versione dobei donn',
 );
 
-/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
+/** Kurdish (Latin script) (Kurdî (latînî)‎)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -266,7 +266,7 @@ $messages['ms'] = array(
 	'imgplc-notinhistory' => 'Anda tidak boleh membubuh gambar dalam mod sejarah.',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -286,14 +286,14 @@ $messages['nl'] = array(
 	'imgplc-notinhistory' => 'U kunt geen afbeelding toevoegen in geschiedenismodus.',
 );
 
-/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+/** Nederlands (informeel)‎ (Nederlands (informeel)‎)
  * @author Siebrand
  */
 $messages['nl-informal'] = array(
 	'imgplc-notinhistory' => 'Je kunt geen afbeelding toevoegen in geschiedenismodus.',
 );
 
-/** Norwegian Nynorsk (‪norsk (nynorsk)‬)
+/** Norwegian Nynorsk (norsk (nynorsk)‎)
  * @author Harald Khan
  */
 $messages['nn'] = array(
@@ -373,7 +373,7 @@ $messages['ru'] = array(
 	'imgplc-notinhistory' => 'Вы не можете добавить изображение в режиме истории.',
 );
 
-/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Charmed94
  * @author Rancher
  * @author Verlor
@@ -431,7 +431,7 @@ $messages['uk'] = array(
 	'imgplc-image' => 'Зображення',
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
+/** Simplified Chinese (中文（简体）‎)
  * @author Hydra
  */
 $messages['zh-hans'] = array(

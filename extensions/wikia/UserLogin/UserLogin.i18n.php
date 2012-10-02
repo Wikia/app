@@ -209,9 +209,14 @@ $messages['bcl'] = array(
 );
 
 /** Breton (brezhoneg)
+ * @author Fohanno
  * @author Y-M D
  */
 $messages['br'] = array(
+	'userlogin-forgot-password' => 'Ankouaet ho peus ho ker-tremen ?',
+	'userlogin-error-invalid-username' => 'Anv implijer direizh',
+	'userlogin-error-resetpass_forbidden' => "
+N'haller ket cheñch ar gerioù-termen",
 	'userlogin-password-page-title' => 'Cheñch ar ger-tremen',
 	'userlogin-oldpassword' => 'Ger-tremen kozh',
 	'userlogin-newpassword' => 'Ger-tremen nevez',
@@ -891,6 +896,20 @@ ___________________________________________
 	'wikiamobile-facebook-connect-fail' => 'あなたの Facebook アカウントは現在ウィキアのアカウントとリンクされていません。',
 );
 
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'userlogin-forgot-password' => 'Hutt Dir Äert Passwuert vergiess?',
+	'userlogin-error-resetpass_forbidden' => 'Passwierder kënnen net geännert ginn',
+	'userlogin-password-page-title' => 'Ännert Äert Passwuert',
+	'userlogin-oldpassword' => 'Aalt Passwuert',
+	'userlogin-newpassword' => 'Neit Passwuert',
+	'userlogin-retypenew' => 'Neit Passwuert nach eemol antippen',
+	'userlogin-provider-or' => 'Oder',
+	'wikiamobile-sendpassword-label' => 'Neit Passwuert schécken',
+);
+
 /** Macedonian (македонски)
  * @author Bjankuloski06
  */
@@ -1039,7 +1058,7 @@ Ingin mengawal e-mel yang anda terima? Pergi ke: {{fullurl:{{ns:special}}:Prefer
 	'wikiamobile-facebook-connect-fail' => 'Maaf, akaun Facebook anda sekarang tidak berpautan dengan sebarang akaun Wikia.',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -1795,7 +1814,7 @@ Muốn kiểm soát email mà bạn nhận được? Đi đến: {{fullurl:{{ns:
 	'wikiamobile-facebook-connect-fail' => 'Xin lỗi, tài khoản Facebook của bạn hiện đang không được liên kết với một tài khoản Wikia.',
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
+/** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  * @author Sam Wang
  */

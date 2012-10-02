@@ -120,6 +120,8 @@ $messages['br'] = array(
 	'quickstats-totals-label' => 'Hollad',
 	'quickstats-see-more-stats-link' => "[[Special:WikiStats|Gwelet muioc'h a stadegoù]]",
 	'quickstats-number-shortening' => '$1K',
+	'quickstats-number-shortening-millions' => '$1M',
+	'quickstats-number-shortening-billions' => '$1Mrd',
 );
 
 /** Catalan (català)
@@ -422,7 +424,7 @@ $messages['ko'] = array(
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|더 많은 통계 보기]]',
 );
 
-/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
+/** Kurdish (Latin script) (Kurdî (latînî)‎)
  * @author Gomada
  */
 $messages['ku-latn'] = array(
@@ -493,7 +495,7 @@ $messages['ms'] = array(
 	'quickstats-number-shortening-billions' => '$1B',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -689,7 +691,7 @@ $messages['si'] = array(
 	'quickstats-totals-label' => 'සියල්ල',
 );
 
-/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -838,7 +840,7 @@ $messages['vi'] = array(
 	'quickstats-number-shortening-billions' => '$1B',
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
+/** Simplified Chinese (中文（简体）‎)
  * @author Anakmalaysia
  * @author Dimension
  */
@@ -854,7 +856,7 @@ $messages['zh-hans'] = array(
 	'quickstats-number-shortening-millions' => '$1（百万）',
 );
 
-/** Traditional Chinese (‪中文（繁體）‬)
+/** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
  */
 $messages['zh-hant'] = array(

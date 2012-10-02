@@ -184,7 +184,7 @@ $messages['ms'] = array(
 	'exitstitial-button' => 'Langkau Iklan Ini',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -210,7 +210,7 @@ $messages['nl'] = array(
 	'exitstitial-button' => 'Deze advertentie overslaan',
 );
 
-/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+/** Nederlands (informeel)‎ (Nederlands (informeel)‎)
  * @author Siebrand
  */
 $messages['nl-informal'] = array(
@@ -298,7 +298,7 @@ $messages['ru'] = array(
 	'exitstitial-button' => 'Пропустить эту рекламу',
 );
 
-/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -353,7 +353,7 @@ $messages['tt-cyrl'] = array(
 	'exitstitial-button' => 'Бу рекламаны калдырырга',
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
+/** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  */
 $messages['zh-hans'] = array(

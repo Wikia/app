@@ -31,7 +31,7 @@ $messages['ar'] = array(
 	'quickcreate' => 'أرسل وصفتك',
 );
 
-/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
  * @author Jim-by
  */
 $messages['be-tarask'] = array(
@@ -74,7 +74,7 @@ $messages['de'] = array(
 	'quickcreate' => 'Sende dein Rezept',
 );
 
-/** German (formal address) (‪Deutsch (Sie-Form)‬)
+/** German (formal address) (Deutsch (Sie-Form)‎)
  * @author LWChris
  */
 $messages['de-formal'] = array(
@@ -205,7 +205,7 @@ $messages['ms'] = array(
 	'quickcreate' => 'serahkan resipi anda',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -283,7 +283,7 @@ $messages['ru'] = array(
 	'quickcreate' => 'отправить свой рецепт',
 );
 
-/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Charmed94
  * @author Rancher
  * @author Verlor
@@ -332,7 +332,7 @@ $messages['uk'] = array(
 	'quickcreate-desc' => 'Додає кнопку створення нової сторінки з можливістю увійти в систему для анонімних користувачів',
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
+/** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  */
 $messages['zh-hans'] = array(

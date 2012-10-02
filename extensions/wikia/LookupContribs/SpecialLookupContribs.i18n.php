@@ -124,7 +124,7 @@ $messages['az'] = array(
 	'lookupcontribsfinal' => 'son',
 );
 
-/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
  * @author EugeneZelenko
  */
 $messages['be-tarask'] = array(
@@ -307,7 +307,7 @@ Bitte überprüfe den angegebenen Benutzernamen auf mögliche Tippfehler.</p>',
 	'lookupcontribsall' => 'alle',
 );
 
-/** German (formal address) (‪Deutsch (Sie-Form)‬)
+/** German (formal address) (Deutsch (Sie-Form)‎)
  * @author LWChris
  */
 $messages['de-formal'] = array(
@@ -727,7 +727,7 @@ $messages['ko'] = array(
 	'lookupcontribscontribs' => '기여',
 );
 
-/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
+/** Kurdish (Latin script) (Kurdî (latînî)‎)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -924,7 +924,7 @@ $messages['my'] = array(
 	'lookupcontribsall' => 'အားလုံး',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -1035,7 +1035,7 @@ Controleer of u een tikfout hebt gemaakt in de gebruikersnaam.</p>',
 	'lookupcontribsall' => 'alle',
 );
 
-/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+/** Nederlands (informeel)‎ (Nederlands (informeel)‎)
  * @author Siebrand
  */
 $messages['nl-informal'] = array(
@@ -1402,7 +1402,7 @@ $messages['ru'] = array(
 	'lookupcontribsall' => 'все',
 );
 
-/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Rancher
  * @author Verlor
  */
@@ -1613,7 +1613,7 @@ $messages['yi'] = array(
 	'lookupcontribscontent' => 'אינהאַלט',
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
+/** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  * @author Hydra
  */

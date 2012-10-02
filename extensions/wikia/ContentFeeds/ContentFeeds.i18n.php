@@ -201,7 +201,7 @@ $messages['ksh'] = array(
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Fähler: En Sigg bruch ene Enhalld',
 );
 
-/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
+/** Kurdish (Latin script) (Kurdî (latînî)‎)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -259,7 +259,7 @@ $messages['ms'] = array(
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Perhatian: Isi kandungan laman diperlukan',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬) */
+/** Norwegian Bokmål (norsk (bokmål)‎) */
 $messages['nb'] = array(
 	'contentfeeds-desc' => 'Gir utdypende og oppdatert informasjon gjennom ulike tagger eller «feeds»',
 	'contentfeeds-newimages-rss-title' => 'RSS Feed for {{#Special:NewFiles}}',
@@ -285,7 +285,7 @@ $messages['nl'] = array(
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Fout: paginainhoud is verplicht',
 );
 
-/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+/** Nederlands (informeel)‎ (Nederlands (informeel)‎)
  * @author Siebrand
  */
 $messages['nl-informal'] = array(
@@ -384,7 +384,7 @@ $messages['ru'] = array(
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Ошибка: Требуется тело страницы',
 );
 
-/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -475,7 +475,7 @@ $messages['vi'] = array(
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Lỗi: Nội dung trang là bắt buộc',
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
+/** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  * @author Hydra
  * @author Hzy980512

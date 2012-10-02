@@ -185,24 +185,29 @@ $messages['bg'] = array(
 );
 
 /** Breton (brezhoneg)
+ * @author Fohanno
  * @author Fulup
  * @author Y-M D
  */
 $messages['br'] = array(
 	'userprofilepage-lightbox-interview-cancel' => 'Nullañ',
 	'userprofilepage-add-question' => 'Ouzhpennañ ur goulenn nevez',
+	'user-identity-box-edit' => 'Aozañ',
 	'user-identity-box-avatar-cancel' => 'Nullañ',
 	'user-identity-box-group-blocked' => 'Stanket',
+	'user-identity-box-zero-state-birthday' => 'Deiz-ha-bloaz',
 	'user-identity-box-zero-state-twitter' => 'Ma Z/Twitter',
 	'user-identity-box-zero-state-website' => "Ma lec'hienn internet",
 	'user-identity-box-zero-state-fb-page' => 'Ma Facebook',
 	'user-identity-box-about-me' => 'Diwar ma fenn',
 	'user-identity-box-avatar' => 'Avatar',
+	'user-identity-box-about-gender' => "Paotr pe blac'h oc'h ?",
 	'user-identity-box-about-fav-wikis-refresh' => 'Freskaat',
 	'userprofilepage-lightbox-about-me-cancel' => 'Nullañ',
 	'userprofilepage-lightbox-about-me-save' => 'Enrollañ, poent echuiñ',
 	'userprofilepage-closing-popup-save-and-quit' => 'Enrollañ ha kuitaat',
 	'userprofilepage-closing-popup-cancel' => 'Nullañ',
+	'user-action-menu-edit' => 'Aozañ',
 	'user-action-menu-protect' => 'Gwareziñ',
 	'user-action-menu-unprotect' => 'Diwareziñ',
 	'user-action-menu-rename' => 'Adenvel',
@@ -1574,7 +1579,7 @@ $messages['ms'] = array(
 	'user-identity-remove-fail' => 'Ada sedikit masalah ketika menggugurkan avatar!',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -2263,7 +2268,7 @@ $messages['ru'] = array(
 	'user-identity-remove-fail' => 'Возникли некоторые проблемы при удалении аватара!',
 );
 
-/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -2385,7 +2390,9 @@ $messages['sv'] = array(
 	'user-action-menu-rename' => 'Byt namn',
 	'user-action-menu-delete' => 'Radera',
 	'user-action-menu-history' => 'Historik',
+	'usermasthead-log' => 'Redaktionsruta för användare',
 	'usermasthead-log-message' => 'lade till profilinformation',
+	'usermasthead-log-alt' => 'Redigeringsloggar för redaktionsruta',
 	'useravatar-log' => 'Användaravatarslogg',
 	'blog-avatar-changed-log' => 'Lade till eller ändrade avatar',
 	'blog-avatar-removed-log' => 'Tog bort $1s avatarer',
@@ -2593,6 +2600,14 @@ $messages['uk'] = array(
 	'usermasthead-log-alt' => 'Журнали зміни даних про користувачів',
 );
 
+/** Uzbek (oʻzbekcha)
+ * @author CoderSI
+ */
+$messages['uz'] = array(
+	'user-identity-box-about-fav-wikis-refresh' => 'Yangilash',
+	'user-action-menu-view-source' => "Manbasini ko'rish",
+);
+
 /** Vietnamese (Tiếng Việt)
  * @author Xiao Qiao
  */
@@ -2693,7 +2708,7 @@ $messages['vi'] = array(
 	'usermasthead-log-message' => 'bổ sung thông tin hồ sơ',
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
+/** Simplified Chinese (中文（简体）‎)
  * @author Anakmalaysia
  * @author Hzy980512
  */
@@ -2727,7 +2742,7 @@ $messages['zh-hans'] = array(
 	'user-action-menu-protect' => '保护',
 );
 
-/** Traditional Chinese (‪中文（繁體）‬)
+/** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
  */
 $messages['zh-hant'] = array(

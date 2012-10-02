@@ -46,7 +46,7 @@ $messages['az'] = array(
 	'wikifactoryreporter' => 'Məruzəçi WikiFactory',
 );
 
-/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
  * @author EugeneZelenko
  */
 $messages['be-tarask'] = array(
@@ -309,7 +309,7 @@ $messages['ms'] = array(
 	'wikifactoryreporter' => 'Pelapor Kilang Wiki',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Nghtwlkr
  */
 $messages['nb'] = array(
@@ -413,7 +413,7 @@ $messages['sl'] = array(
 	'wikifactoryreporter' => 'Poročevalec WikiFactory',
 );
 
-/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Charmed94
  * @author Rancher
  */
@@ -477,14 +477,14 @@ $messages['vec'] = array(
 	'wikifactoryreporter' => 'WikiFactory Reporter',
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
+/** Simplified Chinese (中文（简体）‎)
  * @author Hydra
  */
 $messages['zh-hans'] = array(
 	'wikifactoryreporter' => 'WikiFactory 报告',
 );
 
-/** Traditional Chinese (‪中文（繁體）‬)
+/** Traditional Chinese (中文（繁體）‎)
  * @author Wrightbus
  */
 $messages['zh-hant'] = array(

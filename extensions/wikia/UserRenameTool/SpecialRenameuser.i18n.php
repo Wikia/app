@@ -417,7 +417,7 @@ $messages['bcl'] = array(
 	'userrenametool-log' => '$1 mga hirá. Rasón: $2',
 );
 
-/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
  * @author EugeneZelenko
  * @author Jim-by
  * @author KorneySan
@@ -695,7 +695,7 @@ $messages['ce'] = array(
 	'renameuser' => 'Декъашхочуьна цlе хийца',
 );
 
-/** Crimean Turkish (Latin script) (‪qırımtatarca (Latin)‬)
+/** Crimean Turkish (Latin script) (qırımtatarca (Latin)‎)
  * @author Alessandro
  */
 $messages['crh-latn'] = array(
@@ -705,7 +705,7 @@ $messages['crh-latn'] = array(
 	'userrenametool-log' => '{{PLURAL:$1|1 deñişiklik|$1 deñişiklik}} yapqan. Sebep: $2',
 );
 
-/** Crimean Turkish (Cyrillic script) (‪къырымтатарджа (Кирилл)‬)
+/** Crimean Turkish (Cyrillic script) (къырымтатарджа (Кирилл)‎)
  * @author Alessandro
  */
 $messages['crh-cyrl'] = array(
@@ -2087,7 +2087,7 @@ $messages['khw'] = array(
 	'renameuser' => 'صارفو نامو تبدیل کورے',
 );
 
-/** Kazakh (Arabic script) (‫قازاقشا (تٴوتە)‬) */
+/** Kazakh (Arabic script) (قازاقشا (تٴوتە)‏) */
 $messages['kk-arab'] = array(
 	'renameuser' => 'قاتىسۋشىنى قايتا اتاۋ',
 	'userrenametool-old' => 'اعىمداعى قاتىسۋشى اتى:',
@@ -2110,7 +2110,7 @@ $messages['kk-arab'] = array(
 	'userrenametool-move-log' => '«[[User:$1|$1]]» دەگەن قاتىسۋشى اتىن «[[User:$2|$2]]» دەگەنگە اۋىسقاندا بەت وزدىك تۇردە جىلجىتىلدى',
 );
 
-/** Kazakh (Cyrillic script) (‪қазақша (кирил)‬) */
+/** Kazakh (Cyrillic script) (қазақша (кирил)‎) */
 $messages['kk-cyrl'] = array(
 	'renameuser' => 'Қатысушыны қайта атау',
 	'userrenametool-old' => 'Ағымдағы қатысушы аты:',
@@ -2133,7 +2133,7 @@ $messages['kk-cyrl'] = array(
 	'userrenametool-move-log' => '«[[User:$1|$1]]» деген қатысушы атын «[[User:$2|$2]]» дегенге ауысқанда бет өздік түрде жылжытылды',
 );
 
-/** Kazakh (Latin script) (‪qazaqşa (latın)‬) */
+/** Kazakh (Latin script) (qazaqşa (latın)‎) */
 $messages['kk-latn'] = array(
 	'renameuser' => 'Qatıswşını qaýta ataw',
 	'userrenametool-old' => 'Ağımdağı qatıswşı atı:',
@@ -2268,7 +2268,7 @@ Bes esu joot un versöök et noch ens.',
 	'right-renameuser' => 'Metmaacher ömdäufe',
 );
 
-/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
+/** Kurdish (Latin script) (Kurdî (latînî)‎)
  * @author George Animal
  * @author Ghybu
  */
@@ -2710,7 +2710,7 @@ $messages['nan'] = array(
 	'userrenametool-logpagetext' => 'Chit-ê log lia̍t-chhut kái-piàn iōng-chiá miâ-jī ê tōng-chok.',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -2896,7 +2896,7 @@ U wordt per e-mail op de hoogte gesteld als het proces is afgerond.',
 	'right-renameuser' => 'Gebruikers hernoemen',
 );
 
-/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+/** Nederlands (informeel)‎ (Nederlands (informeel)‎)
  * @author Siebrand
  */
 $messages['nl-informal'] = array(
@@ -2909,7 +2909,7 @@ Je wordt per e-mail op de hoogte gesteld als het proces is afgerond.',
 	'userrenametool-confirm-intro' => 'Weet je zeker dat je dit wilt uitvoeren?',
 );
 
-/** Norwegian Nynorsk (‪norsk (nynorsk)‬)
+/** Norwegian Nynorsk (norsk (nynorsk)‎)
  * @author Harald Khan
  * @author Njardarlogar
  */
@@ -3654,7 +3654,7 @@ $messages['sq'] = array(
 	'userrenametool-log' => '{{PLURAL:$1|1 redaktim|$1 redaktime}}. Arsyeja: $2',
 );
 
-/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author FriedrickMILBarbarossa
  * @author Millosh
  * @author Rancher
@@ -3697,7 +3697,7 @@ $messages['sr-ec'] = array(
 	'right-renameuser' => 'преименовање корисника',
 );
 
-/** Serbian (Latin script) (‪srpski (latinica)‬) */
+/** Serbian (Latin script) (srpski (latinica)‎) */
 $messages['sr-el'] = array(
 	'renameuser' => 'Preimenuj korisnika',
 	'right-renameuser' => 'preimenovanje korisničkih imena',
@@ -4341,7 +4341,7 @@ $messages['yue'] = array(
 	'right-renameuser' => '改用戶名',
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
+/** Simplified Chinese (中文（简体）‎)
  * @author Anakmalaysia
  * @author Gzdavidwong
  * @author Hydra
@@ -4381,7 +4381,7 @@ $messages['zh-hans'] = array(
 	'right-renameuser' => '重新命名用户',
 );
 
-/** Traditional Chinese (‪中文（繁體）‬)
+/** Traditional Chinese (中文（繁體）‎)
  * @author Lauhenry
  * @author Wrightbus
  */

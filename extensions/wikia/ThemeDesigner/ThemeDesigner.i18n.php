@@ -162,7 +162,7 @@ $messages['az'] = array(
 	'themedesigner-history-item' => '$1 tərəfindən $2',
 );
 
-/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
  * @author Jim-by
  */
 $messages['be-tarask'] = array(
@@ -201,6 +201,7 @@ $messages['bg'] = array(
 );
 
 /** Breton (brezhoneg)
+ * @author Fohanno
  * @author Fulup
  * @author Y-M D
  */
@@ -221,6 +222,7 @@ $messages['br'] = array(
 	'themedesigner-medium' => 'Etre',
 	'themedesigner-large' => 'Bras',
 	'themedesigner-tile-background' => 'drekleur ar garrezenn',
+	'themedesigner-transparency' => 'treuzwelusted',
 	'themedesigner-tab-theme' => 'Dodenn',
 	'themedesigner-tab-customize' => 'Personelaat',
 	'themedesigner-tab-wordmark' => 'Arouez',
@@ -1022,7 +1024,7 @@ $messages['ko'] = array(
 	'themedesigner-button-cancel' => '취소',
 );
 
-/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
+/** Kurdish (Latin script) (Kurdî (latînî)‎)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -1204,7 +1206,7 @@ $messages['mzn'] = array(
 	'themedesigner-button-upload' => 'باربی‌یشتن',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -1665,7 +1667,7 @@ $messages['ru'] = array(
 	'themedesigner-wodmark-preview' => 'Предпросмотр',
 );
 
-/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -1944,7 +1946,7 @@ $messages['vi'] = array(
 	'themedesigner-wodmark-preview' => 'Xem thử',
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
+/** Simplified Chinese (中文（简体）‎)
  * @author Hydra
  */
 $messages['zh-hans'] = array(
@@ -1961,7 +1963,7 @@ $messages['zh-hans'] = array(
 	'themedesigner-button-save' => '保存',
 );
 
-/** Traditional Chinese (‪中文（繁體）‬)
+/** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
  */
 $messages['zh-hant'] = array(

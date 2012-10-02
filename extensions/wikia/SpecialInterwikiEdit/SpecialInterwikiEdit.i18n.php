@@ -80,7 +80,7 @@ $messages['bar'] = array(
 	'iwedit-success' => '<p>Link-Erzeigung erfoigreich.</p>',
 );
 
-/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -342,7 +342,7 @@ $messages['ms'] = array(
 	'iwedit-success' => '<p>Pautan berjaya dicipta.</p>',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Nghtwlkr
  */
 $messages['nb'] = array(
@@ -465,7 +465,7 @@ $messages['si'] = array(
 	'iwedit-update' => 'යාවත්කාලීන',
 );
 
-/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Charmed94
  * @author Rancher
  * @author Verlor
@@ -525,7 +525,7 @@ $messages['tr'] = array(
 	'iwedit-success' => '<p>Bağlantı yaratımı başarılı</p>',
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
+/** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  */
 $messages['zh-hans'] = array(

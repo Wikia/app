@@ -1148,7 +1148,7 @@ $messages['ksh'] = array(
 	'toplists-desc' => 'Leßte met de bövverste Zehn.',
 );
 
-/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
+/** Kurdish (Latin script) (Kurdî (latînî)‎)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -1357,7 +1357,7 @@ $messages['my'] = array(
 	'toplists-days' => '$1 {{PLURAL:$1|ရက်|ရက်}}',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -1536,7 +1536,7 @@ U kunt <a href="$4">uitschrijven</a> van wijzigingen op deze lijst.',
 	'toplists-oasis-only' => 'Het aanmaken en bewerken van Top 10-lijsten is niet mogelijk in deze vormgeving. Als u deze optie wilt gebruiken, kan dat alleen in de vormgeving "Wikia", die u kunt instelling in uw voorkeuren.',
 );
 
-/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+/** Nederlands (informeel)‎ (Nederlands (informeel)‎)
  * @author Siebrand
  */
 $messages['nl-informal'] = array(
@@ -1981,7 +1981,7 @@ $messages['ru'] = array(
 	'toplists-oasis-only' => 'Создание и редактирование списков Топ 10 не доступно в Monobook. Если вы хотите использовать эту функцию, переключите ваш скин на Викия.',
 );
 
-/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -2121,6 +2121,7 @@ Du kan <a href="$4">avbryta prenumerationen</a> från förändringslistan när d
 	'toplists-msg-fb-OnRateArticle-short' => 'har röstat på Topp 10 listan på $WIKINAME!',
 	'toplists-create-heading' => '<em>Nyhet!</em> Skapa Din Egen Topp Tio',
 	'toplists-create-button-msg' => 'Skapa en lista',
+	'toplists-oasis-only' => 'Skapa och redigera Topp 10-listor är inte tillgängligt i Monobook. Om du vill använda denna funktion, var god byt till Wikia-skalet i dina inställningar.',
 );
 
 /** Telugu (తెలుగు)
@@ -2239,7 +2240,7 @@ $messages['uk'] = array(
 	'toplists-weeks' => '$1 {{PLURAL:$1|тиждень|тижня|тижнів}}',
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
+/** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  * @author Hydra
  * @author Hzy980512
@@ -2271,7 +2272,7 @@ $messages['zh-hans'] = array(
 	'toplists-create-button-msg' => '创建列表',
 );
 
-/** Traditional Chinese (‪中文（繁體）‬)
+/** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
  */
 $messages['zh-hant'] = array(

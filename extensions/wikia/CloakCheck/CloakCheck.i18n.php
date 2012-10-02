@@ -333,7 +333,7 @@ $messages['ko'] = array(
 	'cloakcheck-process-emailconf-no' => '이메일 주소가 인증되지 않았습니다.',
 );
 
-/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
+/** Kurdish (Latin script) (Kurdî (latînî)‎)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -420,7 +420,7 @@ $messages['ms'] = array(
 	'cloakcheck-process-edits-no' => 'Jumlah suntingan pengguna tidak memadai.',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -596,7 +596,7 @@ $messages['ru'] = array(
 	'cloakcheck-process-edits-no' => 'Участником не сделано необходимого числа правок.',
 );
 
-/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -702,7 +702,7 @@ $messages['tt-cyrl'] = array(
 	'cloakcheck-process-edits-no' => 'Кулланучы тарафыннан тиешле күләмдә төзәтмәләр эшләнмәгән.',
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
+/** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  * @author Hydra
  */

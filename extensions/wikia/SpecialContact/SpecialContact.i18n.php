@@ -594,7 +594,7 @@ $messages['my'] = array(
 	'specialcontact-problemdesc' => 'စာသား',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -662,7 +662,7 @@ Als u liever gebruik maakt van e-mail of bijlagen wilt meesturen, stuur dan een 
 	'specialcontact-submitcomplete' => 'Dank u wel voor het contact opnemen met Wikia.',
 );
 
-/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+/** Nederlands (informeel)‎ (Nederlands (informeel)‎)
  * @author Siebrand
  */
 $messages['nl-informal'] = array(
@@ -842,7 +842,7 @@ $messages['ru'] = array(
 	'specialcontact-submitcomplete' => 'Благодарим Вас за письмо к Викия.',
 );
 
-/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -1000,7 +1000,7 @@ Nếu bạn thích sử dụng thư điện tử thường xuyên hoặc có t�
 	'specialcontact-submitcomplete' => 'Cảm ơn bạn đã liên hệ Wikia',
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
+/** Simplified Chinese (中文（简体）‎)
  * @author Hydra
  */
 $messages['zh-hans'] = array(
@@ -1015,7 +1015,7 @@ $messages['zh-hans'] = array(
 	'specialcontact-notyou' => '不是您？',
 );
 
-/** Traditional Chinese (‪中文（繁體）‬)
+/** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
  */
 $messages['zh-hant'] = array(

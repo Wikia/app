@@ -60,7 +60,7 @@ $messages['ar'] = array(
 	'dump-database-info-more' => 'الرجاء <a href="http://community.wikia.com/wiki/Help:Database_download">قراءة هذا</a> لمزيد من المعلومات',
 );
 
-/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -526,7 +526,7 @@ $messages['my'] = array(
 	'dump-database-curr-pages' => 'ယခုစာမျက်နှာများ',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -695,7 +695,7 @@ $messages['si'] = array(
 	'dump-database-request-submit' => 'ඉල්ලීම යවන්න',
 );
 
-/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Charmed94
  * @author Rancher
  * @author Verlor
@@ -790,7 +790,7 @@ $messages['uk'] = array(
 	'dump-database-info-more' => 'Будь ласка, ознайомтесь з детальнішою інформацією <a href="http://community.wikia.com/wiki/Help:Database_download">тут</a>',
 );
 
-/** Traditional Chinese (‪中文（繁體）‬)
+/** Traditional Chinese (中文（繁體）‎)
  * @author Wrightbus
  */
 $messages['zh-hant'] = array(

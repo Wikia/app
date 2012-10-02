@@ -287,7 +287,7 @@ $messages['az'] = array(
 	'wmu-gallery' => 'Qalereya',
 );
 
-/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -792,7 +792,7 @@ $messages['de'] = array(
 	'wmu-file-error' => 'Es gab einen Fehler während des Hochladens. Bitte versuche es erneut.',
 );
 
-/** German (formal address) (‪Deutsch (Sie-Form)‬)
+/** German (formal address) (Deutsch (Sie-Form)‎)
  * @author Geitost
  * @author LWChris
  * @author Tiin
@@ -1659,7 +1659,7 @@ $messages['ko'] = array(
 	'wmu-added-from-plc' => '플레이스홀더를 통해 삽입된 그림',
 );
 
-/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
+/** Kurdish (Latin script) (Kurdî (latînî)‎)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -1924,7 +1924,7 @@ $messages['mzn'] = array(
 	'wmu-upload-btn' => 'باربی‌یشتن',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -2088,7 +2088,7 @@ U kunt er geen afbeeldingen aan toevoegen.',
 	'wmu-file-error' => 'Er is een fout opgetreden tijdens het uploadproces. Probeer het opnieuw.',
 );
 
-/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+/** Nederlands (informeel)‎ (Nederlands (informeel)‎)
  * @author Siebrand
  */
 $messages['nl-informal'] = array(
@@ -2571,7 +2571,7 @@ $messages['sl'] = array(
 	'wmu-close' => 'zapri',
 );
 
-/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Rancher
  * @author Verlor
  */
@@ -2910,7 +2910,7 @@ $messages['yi'] = array(
 	'wmu-caption' => 'באשרייבונג',
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
+/** Simplified Chinese (中文（简体）‎)
  * @author Anakmalaysia
  * @author Gaoxuewei
  * @author Hydra
@@ -2991,7 +2991,7 @@ $messages['zh-hans'] = array(
 	'wmu-file-error' => '抱歉，上传过程中出错了。请再试一次。',
 );
 
-/** Traditional Chinese (‪中文（繁體）‬)
+/** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
  */
 $messages['zh-hant'] = array(

@@ -216,7 +216,7 @@ $messages['be'] = array(
 	'rte-ck-templateDropDown-label' => 'Шаблон',
 );
 
-/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -788,7 +788,7 @@ $messages['de'] = array(
 	'rte-ck-format-tag_h5' => 'Überschrift 5',
 );
 
-/** German (formal address) (‪Deutsch (Sie-Form)‬)
+/** German (formal address) (Deutsch (Sie-Form)‎)
  * @author Tiin
  */
 $messages['de-formal'] = array(
@@ -1708,7 +1708,7 @@ $messages['ksh'] = array(
 	'rte-ck-link-status-external' => 'Ene Lengk noh ußerhallef vum Wiki',
 );
 
-/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
+/** Kurdish (Latin script) (Kurdî (latînî)‎)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -2055,7 +2055,7 @@ $messages['mzn'] = array(
 	'rte-ck-hoverPreview-edit' => 'دچی‌ین',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -2298,7 +2298,7 @@ $messages['nl'] = array(
 	'rte-ck-format-tag_h5' => 'Kop 5',
 );
 
-/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+/** Nederlands (informeel)‎ (Nederlands (informeel)‎)
  * @author Siebrand
  */
 $messages['nl-informal'] = array(
@@ -2916,7 +2916,7 @@ $messages['ru'] = array(
 	'rte-ck-format-tag_h5' => 'Заголовок 5',
 );
 
-/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -3529,7 +3529,7 @@ $messages['vi'] = array(
 	'rte-ck-format-tag_h5' => 'Đề mục cấp 5',
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
+/** Simplified Chinese (中文（简体）‎)
  * @author Hydra
  * @author Sam Wang
  */
@@ -3575,7 +3575,7 @@ $messages['zh-hans'] = array(
 	'rte-ck-format-tag_h5' => '标题5',
 );
 
-/** Chinese (Taiwan) (‪中文（台灣）‬)
+/** Chinese (Taiwan) (中文（台灣）‎)
  * @author Ffaarr
  */
 $messages['zh-tw'] = array(

@@ -290,7 +290,7 @@ Hilfreiche Werkzeuge:
 [[Special:UserRights|Rechteverwaltung]]',
 );
 
-/** German (formal address) (‪Deutsch (Sie-Form)‬)
+/** German (formal address) (Deutsch (Sie-Form)‎)
  * @author Geitost
  */
 $messages['de-formal'] = array(
@@ -1146,7 +1146,7 @@ Alatan yang Berguna:
 [[Special:UserRights|Uruskan Hak]]',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -1346,7 +1346,7 @@ Handige hulpmiddelen:<br /><br />
 [[Special:UserRights|Rechten beheren]]',
 );
 
-/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+/** Nederlands (informeel)‎ (Nederlands (informeel)‎)
  * @author MarkvA
  * @author Siebrand
  */
@@ -1849,7 +1849,7 @@ $messages['ru'] = array(
 [[Special:UserRights|Управление правами участников]]',
 );
 
-/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -2087,7 +2087,7 @@ $messages['uk'] = array(
 	'wikiadoption-know-more-header' => 'Хочете знати більше?',
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
+/** Simplified Chinese (中文（简体）‎)
  * @author Anakmalaysia
  * @author Dimension
  * @author Hydra
@@ -2121,7 +2121,7 @@ Wikia小组
 	'wikiadoption-welcome-header' => '恭喜！你已认领了{{SITENAME}}！',
 );
 
-/** Traditional Chinese (‪中文（繁體）‬)
+/** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
  */
 $messages['zh-hant'] = array(

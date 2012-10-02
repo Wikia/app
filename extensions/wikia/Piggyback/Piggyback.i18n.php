@@ -180,7 +180,7 @@ $messages['ja'] = array(
 入力に間違いがないか確認してください。',
 );
 
-/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
+/** Kurdish (Latin script) (Kurdî (latînî)‎)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -242,7 +242,7 @@ Sila semak ejaan anda.',
 	'log-description-piggyback' => 'Log ini merupakan rekod gendongan akaun.',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -282,7 +282,7 @@ Controleer uw schrijfwijze.',
 	'log-description-piggyback' => 'Dit logboek bevat een overzicht van alle piggybackhandelingen.',
 );
 
-/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+/** Nederlands (informeel)‎ (Nederlands (informeel)‎)
  * @author Siebrand
  */
 $messages['nl-informal'] = array(
@@ -398,6 +398,7 @@ $messages['ru'] = array(
  */
 $messages['sv'] = array(
 	'piggybac-desc' => 'Tillåter att logga in som en annan användare',
+	'piggyback' => 'Ryggridning',
 	'piggyback-otherusername' => 'Annat användarnamn:',
 	'piggyback-nosuchuser' => 'Det finns ingen användare med namnet "$1".
 Användarnamn är skriftlägeskänsliga.
@@ -405,7 +406,11 @@ Kontrollera stavningen.',
 	'piggyback-wronguser' => '$1 är inte ditt användarnamn',
 	'piggyback-loginprompt' => 'Vänligen ange ditt användarnamn och lösenord.',
 	'piggyback-firstlogout' => 'Var god logga ut tillbaka till ditt konto.',
+	'piggyback-itisyou' => 'Du kan inte använda ryggridning på dig själv.',
+	'piggyback-issysopto' => 'Du kan inte ryggrida en användare med rättigheterna till ryggridning.',
 	'action-piggyback' => 'logga in som en annan användare',
+	'log-name-piggyback' => 'Logg för ryggridning',
+	'log-description-piggyback' => 'Denna logg är en dokumentering av konto-ryggridning.',
 );
 
 /** Telugu (తెలుగు) */
@@ -434,7 +439,7 @@ Suriin ang iyong pagbabaybay.',
 	'log-description-piggyback' => 'Ang talaang ito ay isang rekord ng mga pag-angkas sa likod ng akawnt.',
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
+/** Simplified Chinese (中文（简体）‎)
  * @author Hydra
  */
 $messages['zh-hans'] = array(

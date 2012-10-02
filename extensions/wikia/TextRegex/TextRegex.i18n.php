@@ -100,7 +100,7 @@ $messages['be'] = array(
 	'textregex-stats-url' => '[{{SERVER}}$1&id=$2 статыстыка]',
 );
 
-/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
  * @author EugeneZelenko
  * @author Jim-by
  * @author Wizardist
@@ -234,7 +234,7 @@ Versuche es noch einmal.',
 	'textregex-return-mainpage' => '[{{SERVER}}$1 zurück zur Liste]',
 );
 
-/** German (formal address) (‪Deutsch (Sie-Form)‬)
+/** German (formal address) (Deutsch (Sie-Form)‎)
  * @author LWChris
  */
 $messages['de-formal'] = array(
@@ -550,7 +550,7 @@ Sila cuba lagi.',
 	'textregex-return-mainpage' => '[{{SERVER}}$1 kembali ke senarai]',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -797,7 +797,7 @@ $messages['ru'] = array(
 	'textregex-return-mainpage' => '[{{SERVER}}$1 Возврат к списку]',
 );
 
-/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Rancher
  * @author Verlor
  */
@@ -919,7 +919,7 @@ $messages['yi'] = array(
 	'textregex-stats-url' => '[{{SERVER}}$1&id=$2 סטאַטיסטיק]',
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
+/** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  */
 $messages['zh-hans'] = array(

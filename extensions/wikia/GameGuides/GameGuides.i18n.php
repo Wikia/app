@@ -136,7 +136,7 @@ $messages['ms'] = array(
 	'wikiagameguides-desc' => 'Modul aplikasi mudah alih Panduan Permainan Wikia',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  */
 $messages['nb'] = array(

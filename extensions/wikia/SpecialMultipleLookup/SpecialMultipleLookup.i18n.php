@@ -94,7 +94,7 @@ $messages['az'] = array(
 	'multilookupwikiurl' => 'URL',
 );
 
-/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -241,7 +241,7 @@ $messages['de'] = array(
 	'action-multilookup' => 'Multi-Account-Suche über mehrere Wikis',
 );
 
-/** German (formal address) (‪Deutsch (Sie-Form)‬)
+/** German (formal address) (Deutsch (Sie-Form)‎)
  * @author LWChris
  * @author The Evil IP address
  */
@@ -481,7 +481,7 @@ $messages['ja'] = array(
 	'right-multilookup' => '複数ウィキにおけるユーザの情報を閲覧',
 );
 
-/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
+/** Kurdish (Latin script) (Kurdî (latînî)‎)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -578,7 +578,7 @@ $messages['my'] = array(
 	'multilookupwikioptions' => 'ရွေးပိုင်ခွင့်',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -642,7 +642,7 @@ Controleer het opgegeven IP-adres; mogelijk hebt u een invoerfout gemaakt.</p>',
 	'action-multilookup' => "gegevens over gebruikers op meerdere wiki's opzoeken",
 );
 
-/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+/** Nederlands (informeel)‎ (Nederlands (informeel)‎)
  * @author Siebrand
  */
 $messages['nl-informal'] = array(
@@ -848,7 +848,7 @@ $messages['ru'] = array(
 	'action-multilookup' => 'просмотр сведений об участниках в нескольких вики',
 );
 
-/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Rancher
  * @author Verlor
  */
@@ -990,7 +990,7 @@ $messages['yi'] = array(
 	'multilookupprevious' => 'פֿריערדיקער',
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
+/** Simplified Chinese (中文（简体）‎)
  * @author Hydra
  */
 $messages['zh-hans'] = array(

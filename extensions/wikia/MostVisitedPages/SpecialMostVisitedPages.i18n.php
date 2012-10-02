@@ -69,7 +69,7 @@ $messages['az'] = array(
 	'mostvisitedpagesalllink' => 'Ən çox nəzərdən keçirilən səhifələrə bax',
 );
 
-/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
  * @author Wizardist
  */
 $messages['be-tarask'] = array(
@@ -314,7 +314,7 @@ $messages['kn'] = array(
 	'mostvisitedpagesalllink' => 'ಅತ್ಯಂತ ಹೆಚ್ಚು ಭೇಟಿಕೊಟ್ಟ ಪುಟಗಳನ್ನು ನೋಡಿ',
 );
 
-/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
+/** Kurdish (Latin script) (Kurdî (latînî)‎)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -366,7 +366,7 @@ $messages['ms'] = array(
 	'mostvisitedpagesalllink' => 'Lihat laman yang paling kerap dikunjungi',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -391,7 +391,7 @@ $messages['nl'] = array(
 	'mostvisitedpagesalllink' => "Meest bezochte pagina's bekijken",
 );
 
-/** Norwegian Nynorsk (‪norsk (nynorsk)‬)
+/** Norwegian Nynorsk (norsk (nynorsk)‎)
  * @author Harald Khan
  */
 $messages['nn'] = array(
@@ -500,7 +500,7 @@ $messages['sl'] = array(
 	'mostvisitedpagesalllink' => 'Ogled najbolj obiskanih strani',
 );
 
-/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Charmed94
  * @author Rancher
  * @author Verlor
@@ -615,7 +615,7 @@ $messages['vi'] = array(
 	'mostvisitedpagesalllink' => 'Xem trang được truy cập nhiều nhất',
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
+/** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  * @author Hydra
  */
@@ -626,7 +626,7 @@ $messages['zh-hans'] = array(
 	'mostvisitedpageslatestlink' => '查看最近访问的页面',
 );
 
-/** Traditional Chinese (‪中文（繁體）‬)
+/** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
  */
 $messages['zh-hant'] = array(
@@ -638,7 +638,7 @@ $messages['zh-hant'] = array(
 	'mostvisitedpagesalllink' => '查詢訪問數最多的頁面',
 );
 
-/** Chinese (Taiwan) (‪中文（台灣）‬)
+/** Chinese (Taiwan) (中文（台灣）‎)
  * @author Ffaarr
  */
 $messages['zh-tw'] = array(

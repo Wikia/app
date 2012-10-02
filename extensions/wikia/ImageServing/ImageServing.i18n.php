@@ -123,7 +123,7 @@ $messages['ms'] = array(
 	'imageserving-desc' => 'Memilih gambar daripada tatasusunan laman yang terpilih berasaskan keperluan visual',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬) */
+/** Norwegian Bokmål (norsk (bokmål)‎) */
 $messages['nb'] = array(
 	'imageserving-desc' => 'Velger ut bilder fra en angitt rekke sider basert på visuelle krav',
 );
@@ -195,7 +195,7 @@ $messages['tt-cyrl'] = array(
 	'imageserving-desc' => 'Күрсәтелгән мәкаләләр массивыннан визуаль таләпләр нигезендә сурәтләр сайлый.',
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
+/** Simplified Chinese (中文（简体）‎)
  * @author Hydra
  */
 $messages['zh-hans'] = array(

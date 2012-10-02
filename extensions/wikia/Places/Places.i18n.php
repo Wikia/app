@@ -41,9 +41,11 @@ $messages['qqq'] = array(
 );
 
 /** Breton (brezhoneg)
+ * @author Fohanno
  * @author Y-M D
  */
 $messages['br'] = array(
+	'places-editor-search' => 'Klask',
 	'places-editor-geoposition' => "Geolec'hiadur a-vremañ :",
 	'places-geolocation-button-label' => "Ouzhpennañ ul lec'hiadur",
 	'places-geolocation-modal-add-title' => "Ouzhpennañ ul lec'hiadur",
@@ -259,6 +261,16 @@ $messages['it'] = array(
 	'places-geolocation-modal-error-title' => 'Errore',
 );
 
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'places' => 'Plazen an dëser Wiki',
+	'places-in-category' => 'Plazen an der Kategorie $1',
+	'places-editor-search' => 'Sichen',
+	'places-geolocation-modal-error-title' => 'Feeler',
+);
+
 /** Macedonian (македонски)
  * @author Bjankuloski06
  */
@@ -315,7 +327,7 @@ $messages['ms'] = array(
 	'places-category-switch-off' => 'Hidupkan ciri geotag',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -459,7 +471,7 @@ $messages['ru'] = array(
 	'places-category-switch-off' => 'Включить геотеги',
 );
 
-/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -575,7 +587,7 @@ $messages['wa'] = array(
 	'places-category-switch-off' => 'Permete les etiketes djeyografikes',
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
+/** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  */
 $messages['zh-hans'] = array(

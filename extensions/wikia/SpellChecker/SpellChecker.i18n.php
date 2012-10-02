@@ -284,7 +284,7 @@ $messages['my'] = array(
 	'spellchecker-info-spellcheck-languages' => 'ဘာသာ',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -494,7 +494,7 @@ $messages['wa'] = array(
 	'spellchecker-info-spellcheck-suggestions' => 'Po «$1» li coridjrece vos propôze: $2',
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
+/** Simplified Chinese (中文（简体）‎)
  * @author Hydra
  */
 $messages['zh-hans'] = array(

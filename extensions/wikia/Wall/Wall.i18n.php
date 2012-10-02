@@ -757,12 +757,79 @@ $messages['bg'] = array(
 );
 
 /** Breton (brezhoneg)
+ * @author Fohanno
  * @author Y-M D
  */
 $messages['br'] = array(
+	'wall-no-title' => 'Titl ebet',
+	'wall-message-loadmore' => 'Gwelet <span class="count">{{PLURAL:$1|ur|ar/an $1}} respont</span>',
+	'wall-message-wall' => "Moger ar c'homzoù",
+	'wall-message-wall-shorten' => 'moger',
+	'wall-message-unfollow' => 'Chom hep heuliañ',
+	'wall-message-undoremove' => 'Dizober',
+	'wall-message-edited' => '<a href="$3" >Kemmet gant</a> <a class="username" href="$1">$2</a>',
+	'wall-message-mywall' => 'Ma moger',
+	'wall-toolbar-history' => 'Istor',
+	'wall-message-notify' => 'Kelaouiñ ar merourien',
+	'wall-message-remove' => 'Dilemel',
+	'wall-message-quote-button' => 'Arroudenniñ',
+	'wall-message-elseswall' => 'Moger $1',
+	'wall-thread-removed' => 'Tennet kuit',
+	'wall-thread-isnotifyeveryone' => 'Lakaat war-wel',
+	'wall-thread-deleted' => 'Dilamet',
+	'wall-thread-closed' => 'Serret',
+	'wall-default-title' => 'Kemennadenn a-berzh $1',
+	'wall-no-title-warning' => "← N'ho peus spisaet titl ebet",
+	'wall-placeholder-topic' => "Deus petra fell deoc'h komz ?",
+	'wall-placeholder-reply' => 'Kas ur respont',
+	'wall-button-to-preview-comment' => 'Rakwelet',
+	'wall-button-to-cancel-preview' => 'Aozañ',
+	'wall-button-to-submit-comment' => 'Kas',
 	'wall-button-to-submit-reply' => 'Respont',
+	'wall-button-to-submit-comment-no-topic' => 'Kas hep titl',
+	'wall-button-save-changes' => "Enrollañ ar c'hemmoù",
 	'wall-button-cancel-changes' => 'Nullañ',
+	'wall-button-done-source' => 'Graet',
+	'wall-message-edit' => 'Aozañ',
 	'wall-message-more' => "Muioc'h",
+	'wall-message-delete' => 'Dilemel',
+	'wall-message-close-thread' => 'Serriñ an neudennad-mañ',
+	'wall-message-reopen-thread' => 'Addigeriñ an neudennad-mañ',
+	'wall-message-removed-thread-because' => '$1 en deus tennet an neudennad evit an abeg-mañ :',
+	'wall-message-deleted-thread-because' => '$1 en deus diverket an neudennad evit an abeg-mañ :',
+	'wall-message-restore-thread' => 'Adsevel an neudennad',
+	'wall-message-removed-reply-because' => '$1 en deus tennet ar repsont evit an abeg-mañ :',
+	'wall-message-deleted-reply-because' => '$1 en deus diverket ar respont evit an abeg-mañ :',
+	'wall-message-closed-by' => '[[$2|$1]] en deus serret an neudennad-mañ',
+	'wall-message-restore-reply' => 'Adsevel ar respont',
+	'wall-action-all-confirm-cancel' => 'Nullañ',
+	'wall-delete-error-title' => 'Fazi',
+	'wall-action-remove-confirm-ok' => 'Dilemel',
+	'wall-action-admin-thread-title' => 'Diverkañ an neudennad-mañ',
+	'wall-action-admin-reply-title' => 'Dilemel ar respont-mañ',
+	'wall-action-admin-confirm-ok' => 'Diverkañ',
+	'wall-action-restore-thread-title' => 'Adsevel an neudennad-mañ',
+	'wall-action-restore-reply-title' => 'Adsevel ar respont-mañ',
+	'wall-action-restore-confirm' => "Mar plij displegit perak e fell deoc'h ec'h adsevel :",
+	'wall-action-restore-confirm-ok' => 'Assevel',
+	'wall-action-rev-confirm-ok' => 'Ya, diverkañ',
+	'wall-notifications' => 'Kemennoù',
+	'wall-notifications-all' => 'An holl gemennoù',
+	'wall-notifications-markasread' => 'Merkañ an holl evel lennet',
+	'wall-notifications-markasread-all-wikis' => 'An holl wikioù',
+	'wall-notifications-markasread-this-wiki' => 'Ar wiki-mañ',
+	'wall-notifications-empty' => "N'eus kemenn ebet",
+	'wall-notifications-loading' => "O kargañ ar c'hemennoù",
+	'wall-notifications-reminder' => '<span>$1</span> kemenn nann-lennet ho peus',
+	'wall-sorting-newest-threads' => 'Neudennadoù nevesañ',
+	'wall-sorting-oldest-threads' => 'Neudennadoù koshañ',
+	'wall-sorting-newest-replies' => 'Respontoù nevesañ',
+	'wall-sorting-most-active' => 'Oberiantañ',
+	'wall-sorting-archived' => 'Diellaouet',
+	'wall-deleted-msg-pagetitle' => 'Kemennadenn dilamet',
+	'wall-deleted-msg-view' => '(Gwelet/Adsevel)',
+	'wall-recentchanges-history-link' => 'istor ar voger',
+	'wall-recentchanges-thread-history-link' => 'istor ar gaoz',
 );
 
 /** Czech (česky)
@@ -3082,6 +3149,36 @@ $messages['ksh'] = array(
 	'wall-thread-history-title' => 'dem Jeshprääschßfäddem sing Verjangeheit un Versione',
 );
 
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'wall-no-title' => 'Keen Titel',
+	'wall-message-remove' => 'Ewechhuelen',
+	'wall-thread-deleted' => 'Geläscht',
+	'wall-default-title' => 'Message vum $1',
+	'wall-button-to-cancel-preview' => 'Änneren',
+	'wall-button-save-changes' => 'Ännerunge späicheren',
+	'wall-button-cancel-changes' => 'Ofbriechen',
+	'wall-button-done-source' => 'Fäerdeg',
+	'wall-message-edit' => 'Änneren',
+	'wall-message-more' => 'Méi',
+	'wall-message-delete' => 'Läschen',
+	'wall-action-all-confirm-cancel' => 'Ofbriechen',
+	'wall-delete-error-title' => 'Feeler',
+	'wall-action-remove-confirm-ok' => 'Ewechhuelen',
+	'wall-action-admin-thread-title' => 'Dës Rubrik läschen',
+	'wall-action-admin-reply-title' => 'Dës Äntwert läschen',
+	'wall-action-admin-confirm-ok' => 'Läschen',
+	'wall-action-restore-confirm-ok' => 'Restauréieren',
+	'wall-action-rev-reply-confirm' => 'Sidd Dir sécher datt Dir dëse Message läsche wëllt?',
+	'wall-action-rev-confirm-ok' => 'Jo, läschen',
+	'wall-notifications-markasread-all-wikis' => 'All Wikiën',
+	'wall-notifications-markasread-this-wiki' => 'Dës Wiki',
+	'wall-history-summary-label' => 'Resumé',
+	'wall-preview-modal-button-back' => 'Zréck',
+);
+
 /** Macedonian (македонски)
  * @author Bjankuloski06
  */
@@ -3660,7 +3757,7 @@ ubah keutamaan e-mel anda di sini: http://community.wikia.com/Special:Preference
 	'wall-topic-edit' => 'Ubah Topik',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -5489,6 +5586,12 @@ dina e-postinställningar här: http://community.wikia.com/Special:Preferences',
 	'wall-preview-modal-title' => 'Förhandsgranskning',
 	'wall-preview-modal-button-back' => 'Tillbaka',
 	'wall-preview-modal-button-publish' => 'Publicera',
+	'wall-topic-input-heading' => 'Ämne',
+	'wall-topic-input-placeholder' => 'Lägg till ett ämne (valfritt)',
+	'wall-topic-input-error' => 'Det finns ingen artikel med namnet "$1". Var god använd ett existerande artikelnamn som ämne.',
+	'wall-topic-input-error-limit' => 'En tråd kan bara maximalt ha $1 ämnen.',
+	'wall-topic-heading' => 'Ämnen för denna tråd:',
+	'wall-topic-edit' => 'Redigera ämnen',
 );
 
 /** Tamil (தமிழ்)
@@ -6222,7 +6325,7 @@ Li messaedje d' oridjinne eyet vosse rascourti seront todi veyåves dins l' istw
 	'wall-history-action-restore' => 'rapexhî',
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
+/** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  */
 $messages['zh-hans'] = array(

@@ -53,7 +53,7 @@ Möchtest du zur [[{{MediaWiki:Mainpage}}|Hauptseite]] oder vielleicht auf eine 
 	'outbound-screen-you-are-leaving' => 'Du verlässt jetzt Wikia.',
 );
 
-/** German (formal address) (‪Deutsch (Sie-Form)‬)
+/** German (formal address) (Deutsch (Sie-Form)‎)
  * @author LWChris
  */
 $messages['de-formal'] = array(
@@ -214,7 +214,7 @@ Adakah anda ingin ke [[{{MediaWiki:Mainpage}}|Laman utama]] ataupun [[Special:Ra
 	'outbound-screen-you-are-leaving' => 'Anda sekarang meninggalkan Wikia.',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -239,7 +239,7 @@ Wilt u naar de [[{{MediaWiki:Mainpage}}|hoofdpagina]] gaan, of wellicht naar een
 	'outbound-screen-you-are-leaving' => 'U verlaat nu Wikia.',
 );
 
-/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+/** Nederlands (informeel)‎ (Nederlands (informeel)‎)
  * @author Siebrand
  */
 $messages['nl-informal'] = array(
@@ -327,7 +327,7 @@ $messages['ru'] = array(
 	'outbound-screen-you-are-leaving' => 'Вы покидаете Wikia.',
 );
 
-/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Charmed94
  * @author Rancher
  * @author Verlor

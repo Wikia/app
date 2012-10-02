@@ -500,7 +500,7 @@ $messages['de'] = array(
 	'tog-forceeditsummary' => 'Warnen, sofern beim Speichern die Zusammenfassung fehlt',
 );
 
-/** German (formal address) (‪Deutsch (Sie-Form)‬)
+/** German (formal address) (Deutsch (Sie-Form)‎)
  * @author Geitost
  */
 $messages['de-formal'] = array(
@@ -1502,7 +1502,7 @@ $messages['ms'] = array(
 	'tog-forceeditsummary' => 'Ingatkan saya jika ringkasan suntingan kosong',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -1669,7 +1669,7 @@ $messages['nl'] = array(
 	'tog-forceeditsummary' => 'Een melding geven bij een lege bewerkingssamenvatting',
 );
 
-/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+/** Nederlands (informeel)‎ (Nederlands (informeel)‎)
  * @author MarkvA
  * @author McDutchie
  * @author Siebrand
@@ -2334,7 +2334,7 @@ $messages['vi'] = array(
 	'tog-forceeditsummary' => 'Nhắc tôi khi tôi quên điền tóm lược sửa đổi',
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
+/** Simplified Chinese (中文（简体）‎)
  * @author Anakmalaysia
  * @author Dimension
  * @author Hzy980512

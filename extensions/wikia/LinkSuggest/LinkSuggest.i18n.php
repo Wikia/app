@@ -22,7 +22,7 @@ $messages['az'] = array(
 	'tog-disablelinksuggest' => 'İlkin kod rejimində keçid təklifini göstərmə',
 );
 
-/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
  * @author EugeneZelenko
  */
 $messages['be-tarask'] = array(
@@ -208,7 +208,7 @@ $messages['ms'] = array(
 	'tog-redirected-from' => '&ndash; Dilencongkan dari $1',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -225,7 +225,7 @@ $messages['nl'] = array(
 	'tog-redirected-from' => '&ndash; Doorverwezen vanaf $1',
 );
 
-/** Norwegian Nynorsk (‪norsk (nynorsk)‬)
+/** Norwegian Nynorsk (norsk (nynorsk)‎)
  * @author Harald Khan
  */
 $messages['nn'] = array(
@@ -295,7 +295,7 @@ $messages['ru'] = array(
 	'tog-redirected-from' => '&ndash; перенаправление с $1',
 );
 
-/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Rancher
  * @author Verlor
  */
@@ -353,7 +353,7 @@ $messages['uk'] = array(
 	'tog-disablelinksuggest' => 'Не показувати пропозиції посилань',
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
+/** Simplified Chinese (中文（简体）‎)
  * @author Anakmalaysia
  * @author Dimension
  * @author Hydra
@@ -363,7 +363,7 @@ $messages['zh-hans'] = array(
 	'tog-redirected-from' => '&ndash;重定向自$1',
 );
 
-/** Traditional Chinese (‪中文（繁體）‬)
+/** Traditional Chinese (中文（繁體）‎)
  * @author Frankou
  * @author Lauhenry
  */

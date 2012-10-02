@@ -298,7 +298,7 @@ Viel Spaß im Wiki! Falls ich dir irgendwie helfen kann, hinterlass mir einfach 
 Viel Spaß im Wiki! Falls ich dir irgendwie helfen kann, hinterlass mir einfach eine Nachricht.",
 );
 
-/** German (formal address) (‪Deutsch (Sie-Form)‬)
+/** German (formal address) (Deutsch (Sie-Form)‎)
  * @author Geitost
  * @author LWChris
  * @author The Evil IP address
@@ -996,7 +996,7 @@ Sila tinggalkan pesanan sekiranya anda memerlukan bantuan saya!",
 Sila tinggalkan pesanan jika anda memerlukan bantuan saya!",
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -1121,7 +1121,7 @@ Het is een eenvoudige manier om uw bijdragen te volgen en helpt u bij het onderh
 Laat alstublieft een bericht achter als ik u ergens mee kan helpen!",
 );
 
-/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+/** Nederlands (informeel)‎ (Nederlands (informeel)‎)
  * @author Geitost
  * @author Siebrand
  */
@@ -1474,7 +1474,7 @@ $messages['ru'] = array(
 Пожалуйста, оставьте мне сообщение, если я могу чем-то помочь!",
 );
 
-/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Charmed94
  * @author Rancher
  * @author Verlor
@@ -1811,7 +1811,7 @@ Xin vui lòng để lại tin nhắn cho tôi nếu bạn cần sự trợ giúp
 Xin vui lòng để lại tin nhắn cho tôi nếu bạn cần sự trợ giúp về bất cứ điều gì!",
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
+/** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  */
 $messages['zh-hans'] = array(

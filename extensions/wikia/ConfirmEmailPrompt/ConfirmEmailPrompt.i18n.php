@@ -114,7 +114,7 @@ $messages['ms'] = array(
 	'confirmemailprompt-error' => 'Adakah ini alamat e-mel anda: <strong>$1</strong>? [[$2|Sahkan]] atau [[$3|tukar]].',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  */
 $messages['nb'] = array(

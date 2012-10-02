@@ -44,7 +44,7 @@ $messages['ar'] = array(
 	'rte-edgecase-comment' => 'تعليقات HTML',
 );
 
-/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -428,7 +428,7 @@ $messages['ms'] = array(
 	'prefs-rte' => 'Alat Penyunting Teks Beraneka',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -478,7 +478,7 @@ $messages['nl'] = array(
 	'prefs-rte' => 'Uitgebreide tekstverwerker',
 );
 
-/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+/** Nederlands (informeel)‎ (Nederlands (informeel)‎)
  * @author Siebrand
  */
 $messages['nl-informal'] = array(
@@ -615,7 +615,7 @@ $messages['ru'] = array(
 	'prefs-rte' => 'Визуальный текстовый редактор (RTE)',
 );
 
-/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -723,7 +723,7 @@ $messages['zh'] = array(
 	'rte-edgecase-image-with-link' => '圖像描述中有連結',
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
+/** Simplified Chinese (中文（简体）‎)
  * @author Anakmalaysia
  */
 $messages['zh-hans'] = array(

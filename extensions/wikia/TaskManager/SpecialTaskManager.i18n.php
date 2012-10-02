@@ -33,7 +33,7 @@ $messages['af'] = array(
 	'taskmanager_tasklist' => 'Keer terug na taaklys',
 );
 
-/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -256,7 +256,7 @@ $messages['ms'] = array(
 	'action-taskmanager' => 'paparkan dan uruskan tugas-tugas latar belakang',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -371,7 +371,7 @@ $messages['si'] = array(
 	'taskmanager_tasklist' => 'කාර්යයන් නාමාවලිය වෙත නැවත යන්න',
 );
 
-/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Charmed94
  * @author Rancher
  * @author Verlor

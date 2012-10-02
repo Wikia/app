@@ -492,7 +492,7 @@ ___________________________________________
 </p>',
 );
 
-/** German (formal address) (‪Deutsch (Sie-Form)‬)
+/** German (formal address) (Deutsch (Sie-Form)‎)
  * @author Claudia Hattitten
  */
 $messages['de-formal'] = array(
@@ -1323,7 +1323,7 @@ $messages['ksh'] = array(
 	'enotif_subject_article_comment' => '$PAGEEDITOR hädd_en Aanmärkong zoh "$PAGETITLE" op {{SITENAME}} jemaat.',
 );
 
-/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
+/** Kurdish (Latin script) (Kurdî (latînî)‎)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -1605,7 +1605,7 @@ $messages['mzn'] = array(
 	'article-comments-undeleted-comment' => 'نظر صفحۀ وبلاگ $1 وسّه احیاء بیّه',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -1740,7 +1740,7 @@ Wikia
 </p>',
 );
 
-/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+/** Nederlands (informeel)‎ (Nederlands (informeel)‎)
  * @author Siebrand
  */
 $messages['nl-informal'] = array(
@@ -1840,6 +1840,21 @@ ___________________________________________
 <li>W celu zmiany ustawień powiadomień e-mail, odwiedź <a href="http://spolecznosc.wikia.com/wiki/Special:Preferences">tą stronę</a>.</li>
 </ul>
 </p>',
+);
+
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'article-comments-anonymous' => 'Utent anònim',
+	'article-comments-comments' => 'Coment ($1)',
+	'article-comments-post' => "Coment a l'artìcol",
+	'article-comments-cancel' => 'Scancela',
+	'article-comments-delete' => 'scancelé',
+	'article-comments-edit' => 'modìfica',
+	'article-comments-history' => 'stòria',
+	'article-comments-error' => "Ël coment a l'ha pa podù esse salvà",
+	'article-comments-undeleted-comment' => 'Coment ripristinà për pàgina dë scartari $1',
 );
 
 /** Pashto (پښتو)
@@ -2154,7 +2169,7 @@ $messages['si'] = array(
 	'article-comments-history' => 'ඉතිහාසය',
 );
 
-/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -2216,28 +2231,31 @@ $messages['sv'] = array(
 	'wikiamobile-article-comments-show' => 'Visa',
 	'wikiamobile-article-comments-login-post' => 'Logga in för att skriva en kommentar.',
 	'enotif_subject_article_comment' => '$PAGEEDITOR har kommenterat "$PAGETITLE" på {{SITENAME}}',
-	'enotif_body_article_comment' => 'Kära $WATCHINGUSERNAME,
+	'enotif_body_article_comment' => 'Hej $WATCHINGUSERNAME,
 
-$PAGEEDITOR har lagt in en kommentar på "$PAGETITLE".
-
-För att se kommentartråden, följ länken nedan:
-$PAGETITLE_URL
+Det finns en ny kommentar på PAGETITLE på {{SITENAME}}. Använd denna länk för att se alla kommentarer.
+$PAGETITLE_URL#WikiaArticleComments
 
 Besök oss och redigera ofta...
 
-Wikia',
-	'enotif_body_article_comment-HTML' => '<p>Kära $WATCHINGUSERNAME,
+- Wikia Gemenskapssupport
+
+___________________________________________
+* Hitta hjälp och råd på Gemenskapscentralen: http://community.wikia.com
+* Vill du få färre meddelanden från oss? Vill du få färre meddelanden från oss? Du kan avprenumerera eller ändra din e-postadress här: http://community.wikia.com/Special:Preferences',
+	'enotif_body_article_comment-HTML' => '<p>Hej $WATCHINGUSERNAME,
 <br /><br />
-$PAGEEDITOR har kommenterat på "$PAGETITLE".
+Det finns en ny kommentar på PAGETITLE på {{SITENAME}}. Använd denna länk för att se alla kommentarer.
+$PAGETITLE_URL#WikiaArticleComments
 <br /><br />
-För att se kommentartråden, följ denna länk: <a href="$PAGETITLE_URL">$PAGETITLE</a>
+Besök oss och redigera ofta...
 <br /><br />
-Vänligen besök och redigera ofta...
+- Wikia Gemenskapssupport
 <br /><br />
-Wikia
-<br /><hr />
+___________________________________________
 <ul>
-<li>Vill du kontrollera vilka e-postmeddelanden du får? <a href="{{fullurl:Special:Preferences}}">Uppdatera dina inställningar.<a>.</li>
+<li>Hitta hjälp och råd på Gemenskapscentralen: <a href="http://community.wikia.com">http://community.wikia.com</a><li>
+<li>Vill du få färre meddelanden från oss? Vill du få färre meddelanden från oss? Du kan avprenumerera eller ändra din e-postadress här: <a href="http://community.wikia.com/Special:Preferences">http://community.wikia.com/Special:Preferences</a></li>
 </ul>
 </p>',
 );
@@ -2525,7 +2543,7 @@ Wikia
 </p>',
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
+/** Simplified Chinese (中文（简体）‎)
  * @author Anakmalaysia
  * @author Dimension
  * @author Hydra
@@ -2595,7 +2613,7 @@ Wikia
 </p>',
 );
 
-/** Traditional Chinese (‪中文（繁體）‬)
+/** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
  */
 $messages['zh-hant'] = array(
