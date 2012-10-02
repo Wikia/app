@@ -10,6 +10,14 @@
 @import '../../WikiaMobile/css/modal';
 @import '../../WikiaMobile/css/media_modal';
 @import '../../WikiaMobile/css/image_placeholder';
+@import '../../WikiaMobile/css/loader';
+
+@font-face {
+	font-family: 'Droid Serif';
+	font-style: normal;
+	font-weight: 400;
+	src: local('Droid Serif'), local('DroidSerif'), url(../fonts/DroidSerif.ttf) format('truetype');
+}
 
 $mainGreen: rgb(171,197,97);
 $halfMainGreen: rgba(171,197,97,.5);
@@ -32,6 +40,10 @@ html {
 	height: 100%;
 
 	font-size: 1em;
+
+	&.serif body {
+		font-family: 'Droid Serif', serif;
+	}
 }
 
 body {
