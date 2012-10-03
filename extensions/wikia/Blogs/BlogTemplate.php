@@ -706,11 +706,15 @@ class BlogTemplateClass {
 				array( 'GROUP BY' => 'cl_to' )
 			);
 			while ( $oRow = self::$dbr->fetchObject( $res ) ) {
-                                // BugId:49308
+                                // BugId:49408
                                 // Since GROUP_CONCAT respects group_concat_max_len arbitrarily,
                                 // sometimes we end up with a comma or a truncated item, which
                                 // we don't want.
-				$aPages[] = preg_replace('/,\d+,?$/', '', $oRow->cl_page );
+                                if ( GROUP_CONCAT == str_len( $oRow->cl_page ) ) {
+                                    $aPages[] = preg_replace('/,\d+,?$/', '', $oRow->cl_page );
+                                } else {
+                                    $aPages[] = $oRow->cl_page;
+                                }
 			}
 			self::$dbr->freeResult( $res );
 		}
