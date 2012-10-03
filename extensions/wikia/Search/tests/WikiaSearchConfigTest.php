@@ -80,6 +80,7 @@ class WikiaSearchConfigTest extends WikiaSearchBaseTest {
 	 * @covers WikiaSearchConfig::getSize
 	 * @covers WikiaSearchConfig::getLength
 	 * @covers WikiaSearchConfig::getLimit
+	 * @covers WikiaSearchConfig::setLimit
 	 */
 	public function testGetSize() {
 		
@@ -152,6 +153,22 @@ class WikiaSearchConfigTest extends WikiaSearchBaseTest {
 		        $config->getLimit(),
 		        $config->getLength(),
 		        'WikiaSearchConfig::getLimit and WikiaSearchConfig::getLength should be equal if we have an article match at start > 0.'
+		);
+		$newLimit = 20;
+		$this->assertEquals(
+				$config,
+				$config->setLimit( $newLimit ),
+				'WikiaSearchConfig::setLimit should provide fluent interface.'
+		);
+		$this->assertEquals(
+				$newLimit,
+				$config->getLimit(),
+				'Setting a limit should return that value when calling getLimit.'
+		);
+		$this->assertEquals(
+				$newLimit,
+				$config->getLength(),
+				'Setting a limit should set the same key used by size and length methods.'
 		);
 	}
 	
