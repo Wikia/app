@@ -1,93 +1,179 @@
 <?php
 
+/**
+ * This class is responsible for handling interacting with Solr to retrieve results.
+ * It uses a custom-modified version of the Solarium library to build out abstracted queries.
+ * 
+ * @author Robert Elwell
+ */
 class WikiaSearch extends WikiaObject {
 
-	const RESULTS_PER_PAGE = 10;
-	const RESULTS_PER_WIKI = 4;
-	const GROUP_RESULTS_SEARCH_LIMIT = 20;
-	const GROUP_RESULTS_CACHE_TTL = 900; // 15 mins
-	const WIKIPAGES_CACHE_TTL = 604800; // 7 days
-	const VIDEO_WIKI_ID = 298117;
-	const GROUP_RESULT_MAX_FETCHES = 30;
-	const RELEVANCY_FUNCTION_ID = 6;
+	/**
+	 * Number of result groupings we want on a grouped search
+	 * @var int
+	 */
+	const GROUP_RESULTS_GROUPINGS_LIMIT		= 20;
+	
+	/**
+	 * Number of results per grouping we want in a grouped search
+	 */
+	const GROUP_RESULTS_GROUPING_ROW_LIMIT	= 4;
+	
+	/**
+	 * Time to cache grouped results, in seconds -- 15 minutes.
+	 * @var int
+	 */
+	const GROUP_RESULTS_CACHE_TTL			= 900;
+
+	/**
+	 * This is the cityId value for the video wiki, used in video searches.
+	 * @var int
+	 */
+	const VIDEO_WIKI_ID						= 298117;
+	
+	/**
+	 * This was originally used to track which _kind_ of search technology, 
+	 * among many candidates, was used. I'd like to see this removed in the future.
+	 * @var int
+	 */	
+	const RELEVANCY_FUNCTION_ID				= 6;
+	
+	/**
+	 * Snippets should be 150 characters long, by default.
+	 * @var int
+	 */
+	const HL_FRAG_SIZE 						= 150;
+	
+	/**
+	 * This should be prepended to matches in Solr snippets.
+	 * @var string
+	 */
+	const HL_MATCH_PREFIX					= '<span class="searchmatch">';
+	
+	/**
+	 * This should be appended to matches in Solr snippets.
+	 * @var string
+	 */
+	const HL_MATCH_POSTFIX					= '</span>';
+	
+	/**
+	 * These fields are actually dynamic language fields supported in 36 different languages
+	 * @see WikiaSearch::field
+	 * @staticvar array
+	 */
+	private static $languageFields  = array(
+			'title',
+	        'html',
+	        'wikititle',
+	        'first500',
+	        'beginningText',
+	        'headings',
+	        'redirect_titles',
+	        'categories',
+	);
+	
+	/**
+	 * Used for dynamically composing unstored language fields
+	 * @see WikiaSearch::field
+	 * @staticvar array
+	 */
+	private static $dynamicUnstoredFields = array('headings', 'first500', 'beginningText');
+	
+	/**
+	 * Used for dynamically composing multivalued language fields
+	 * @see WikiaSearch::field
+	 * @staticvar array
+	 */
+	private static $multiValuedFields = array('categories', 'redirect_titles', 'headings');
 
 	/**
 	 * Search client
-	 * @var WikiaSearchClient
+	 * @var Solarium_Client
 	 */
-	protected $client = null;
-	protected $parserHookActive = false;
-	protected $namespaces = array();
-	protected $skipCache = false;
-	protected $includeRedirects = true;
+	protected $client;
+	
+	/**
+	 * Used and reused for string preparation
+	 * @var Solarium_Query_Helper
+	 */
+	private static $queryHelper;
+	
+	/* Boost functions used in interwiki search
+	 * @var array
+	 */
+	protected $interWikiBoostFunctions = array(
+		'log(wikipages)^4',
+		'log(activeusers)^4',
+		'log(revcount)^1',
+		'log(views)^8',
+		'log(words)^0.5',
+	);
 
-	public function __construct( WikiaSearchClient $client ) {
+	/**
+	 * Boost functions for on-wiki search
+	 * @var array
+	 */
+	protected $onWikiBoostFunctions = array(
+		'log(views)^0.66', 
+		'log(backlinks)'
+	);
+	
+	/**
+	 * Instantiates the class; sets and configures the Solarium client
+	 * @param Solarium_Client $client
+	 */
+	public function __construct( Solarium_Client $client ) {
 		$this->client = $client;
+		$this->client->setAdapter('Solarium_Client_Adapter_Curl');
 		parent::__construct();
 	}
 
 	/**
+	 * Public methods -- these generally speak with controllers 
+	 * (Search, Related Videos, Game Guide)
+	 *------------------------------------------------------------------------*/
+	
+	/**
 	 * perform search
-	 *
-	 * @param string $query
-	 * @param array $methodParams
+	 * @param  WikiaSearchConfig $searchConfig
 	 * @return WikiaSearchResultSet
 	 */
-	public function doSearch( $query, array $methodParams = array() ) {
+	public function doSearch( WikiaSearchConfig $searchConfig ) {
 		wfProfileIn(__METHOD__);
 
-		$methodParams['page'] = isset($methodParams['page']) ? $methodParams['page'] : 1;
-		$methodParams['length'] = isset($methodParams['length']) ? $methodParams['length'] : null;
-		$methodParams['cityId'] = isset($methodParams['cityId']) ? $methodParams['cityId'] : 0;
-		$methodParams['groupResults'] = isset($methodParams['groupResults']) ? $methodParams['groupResults'] : false;
-		$methodParams['rank'] = isset($methodParams['rank']) ? $methodParams['rank'] : 'default';
-		$methodParams['hub'] = isset($methodParams['hub']) ? $methodParams['hub'] : false;
-		$methodParams['videoSearch'] = isset($methodParams['videoSearch']) ? $methodParams['videoSearch'] : false;
+		if($searchConfig->getGroupResults() == true) {
+
+			$searchConfig	->setLength		( self::GROUP_RESULTS_GROUPINGS_LIMIT )
+							->setIsInterWiki( true )
+							->setStart		( ( (int) $searchConfig->getLength() ) * ( ( (int) $searchConfig->getPage() ) - 1 ) )
+			;
+
+		} else {
+			$searchConfig	->setStart		( ( $searchConfig->getPage() - 1 ) * $searchConfig->getLength() );
+		}
 		
-		extract($methodParams);
-
-		$length = !empty($length) ? $length : self::RESULTS_PER_PAGE;
-		$groupResults = ( empty($cityId) && $groupResults );
-
-		if($groupResults) {
-
-			$length = self::GROUP_RESULTS_SEARCH_LIMIT;
-
-			$methodOptions = array( 'rank'=>$rank,
-									'hub'=>$hub,
-									'size' => $length,
-									'cityId' =>  $cityId,
-									'isInterWiki' => true,
-									'start' => $length * ($page - 1),
-								  );
-			$results = $this->client->search( $query, $methodOptions );
+		$queryInstance = $this->client->createSelect();
+		$this->prepareQuery( $queryInstance, $searchConfig );
+		try {
+			$result = $this->client->select( $queryInstance );
+		} catch (Exception $e) {
+			Wikia::log(__METHOD__, 'Querying Solr', $e);
+			$result = F::build('Solarium_Result_Select_Empty');
 		}
-		else {
-			// no grouping, e.g. intra-wiki searching
-			if($this->namespaces) {
-					$this->client->setNamespaces($this->namespaces);
-			} 
+		$results = F::build('WikiaSearchResultSet', array($result, $searchConfig) );
+		// set here due to all the changes we make to the base query
+		$results->setQuery($searchConfig->getQuery());
+		
+		$searchConfig->setResults		( $results )
+					 ->setResultsFound	( $results->getResultsFound() )
+		;		
 
-			$methodOptions = array('start'  => (($page - 1) * $length), 
-					       'size' => $length, 
-					       'cityId' => $cityId, 
-					       'includeRedirects' => $this->includeRedirects,
-					       'rank' => $rank,
-						   'videoSearch' => $videoSearch,
-					       );
-			$results = $this->client->search( $query, $methodOptions);
-
-			if (!$this->namespaces) {
-				$this->namespaces = $this->client->getNamespaces();
-			}
-		}
-
-		if( $page == 1 ) {
+		if( $searchConfig->getPage() == 1 ) {
 			$resultCount = $results->getResultsFound();
 			Track::event( ( !empty( $resultCount ) ? 'search_start' : 'search_start_nomatch' ), 
-							array(	'sterm' => $query, 
-									'rver' => self::RELEVANCY_FUNCTION_ID,
-									'stype' => ( empty($cityId) ? 'inter' : 'intra' ) 
+							array(	'sterm'	=> $searchConfig->getQuery(), 
+									'rver'	=> self::RELEVANCY_FUNCTION_ID,
+									'stype'	=> ( $searchConfig->getCityId() == 0 ? 'inter' : 'intra' ) 
 								 ) 
 						);
 		}
@@ -95,447 +181,491 @@ class WikiaSearch extends WikiaObject {
 		wfProfileOut(__METHOD__);
 		return $results;
 	}
-
-
-	public function setClient( WikiaSearchClient $client ) {
-		$this->client = $client;
+	
+	/**
+	 * Retrives interesting terms from a MoreLikeThis search
+	 * @param  WikiaSearchConfig $searchConfig
+	 * @return array of interesting terms
+	 */
+	public function getInterestingTerms( WikiaSearchConfig $searchConfig ) {
+	    wfProfileIn(__METHOD__);
+	
+	    $searchConfig	->setInterestingTerms	( 'list' )
+	    				->setMltFields			( array( self::field( 'title' ), self::field( 'html' ), 'title' ) )
+	    				->setMltBoost			( true )
+	    ;
+	
+	    $result = $this->moreLikeThis( $searchConfig );
+	
+	    wfProfileOut(__METHOD__);
+	    return $result->getInterestingTerms();
 	}
-
-	public function getPages( $pageIds, $withMetaData = true ) {
-		wfProfileIn(__METHOD__);
-		$result = array('pages'=>array(), 'missingPages'=>array());
-
-	  foreach (explode('|', $pageIds) as $pageId) {
-	    try {
-	      $result['pages'][$pageId] = $this->getPage( $pageId, $withMetaData );
-	    } catch (WikiaException $e) {
-	      /**
-	       * here's how we will pretend that a page is empty for now. the risk is that if any of the 
-	       * API code is broken in the getPage() method, it will tell the indexer to queue the page up 
-	       * for removal from the index.
-	       **/
-	      $result['missingPages'][] = $pageId;
+	
+	/**
+	 * Used to return interesting terms for a given page
+	 * @param  WikiaSearchConfig $searchConfig
+	 * @return array of interesting terms
+	 */
+	public function getKeywords( WikiaSearchConfig $searchConfig ) {
+	    wfProfileIn(__METHOD__);
+	    $query = self::valueForField( 'wid', $searchConfig->getCityId() );
+	    if ( $searchConfig->getPageId() !== false ) {
+	        $query .= sprintf(' AND %s', self::valueForField( 'pageid', $searchConfig->getPageId() ) );
+	    } else {
+	        $query .= sprintf(' AND %s', self::valueForField( 'is_main_page', '1' ) );
 	    }
-	  }
-
-		wfProfileOut(__METHOD__);
-	  return $result;
+	
+	    $searchConfig	->setQuery($query)
+	    				->setMltFields	( array( self::field( 'title' ), self::field( 'html' ), 'title' ) );
+	    
+	
+	    wfProfileOut(__METHOD__);
+	    return $this->getInterestingTerms( $searchConfig );
 	}
 
 	/**
-	 * ParserClearState hook handler
-	 * @static
-	 * @param $parser Parser
-	 * @return bool
+	 * Used in the related videos module to get both premium and on-wiki videos.
+	 * @param  WikiaSearchConfig $searchConfig
+	 * @return Solarium_Result_MoreLikeThis
 	 */
-	public static function onParserClearState( &$parser ) {
-		// prevent from caching when indexer is running to avoid infrastructure overload
-		$parser->getOutput()->setCacheTime(-1);
-		return true;
-	}
-
-	public function getPage( $pageId, $withMetaData = true ) {
-		wfProfileIn(__METHOD__);
-		$result = array();
-
-		$page = F::build( 'Article', array( $pageId ), 'newFromID' );
-
-		if(!($page instanceof Article)) {
-			throw new WikiaException('Invalid Article ID');
-		}
-
-		if(!$this->parserHookActive) {
-			$this->app->registerHook('ParserClearState', 'WikiaSearch', 'onParserClearState');
-			$this->parserHookActive = true;
-		}
-
-		// hack: setting wgTitle as rendering fails otherwise
-		$wgTitle = $this->wg->Title;
-		$this->wg->Title = $page->getTitle();
-
-		// hack: setting action=render to exclude "Related Pages" and other unwanted stuff
-		$wgRequest = $this->wg->Request;
-		$this->wg->Request->setVal('action', 'render');
-
-		if( $page->isRedirect() ) {
-			$redirectPage = F::build( 'Article', array( $page->getRedirectTarget() ) );
-			$redirectPage->loadContent();
-
-			// hack: setting wgTitle as rendering fails otherwise
-			$this->wg->Title = $page->getRedirectTarget();
-
-			$redirectPage->render();
-			$canonical = $page->getRedirectTarget()->getPrefixedText();
-		}
-		else {
-			$page->render();
-			$canonical = '';
-		}
-
-		$html = $this->wg->Out->getHTML();
-
-		$namespace = $this->wg->Title->getNamespace();
-
-		$isVideo = false;
-		$isImage = false;
-		if ( $namespace == NS_FILE && ($file = $this->wf->findFile( $this->wg->Title->getText() )) ) {
-
-			$detail = WikiaFileHelper::getMediaDetail( $this->wg->Title );
-
-			$isVideo = WikiaFileHelper::isVideoFile( $file );
-			$isImage = $detail['mediaType'] == 'image' && !$isVideo;
-
-			$metadata = $file->getMetadata();
-
-			if ($metadata !== "0") {
-				$metadata = unserialize( $metadata );
-
-				$fileParams = array('description', 'keywords')
-							+ ($isVideo ? array('movieTitleAndYear', 'videoTitle') : array());
-
-				foreach ($fileParams as $datum) {
-					$html .= isset( $metadata[$datum] ) ? ' ' . $metadata[$datum] : '';
-				}
-			}
-		}
-
-		$title = $page->getTitle()->getText();
-
-		// if it's the namespace for forum thread post... <-- 2001 (forum) 1201 (wall)
-		// @todo -- replace numbers with constants
-		if ( in_array( $namespace, array(2001, 1201) ) ){
-			$wm = WallMessage::newFromId($page->getId());
-			$wm->load();
-			if ($wm->isMain()) {
-				$title = $wm->getMetaTitle();
-			} else {
-				if ($main = $wm->getTopParentObj() and !empty($main)) {
-					$main->load();
-					$title = $main->getMetaTitle();
-				}
-			}
-		}
-		
-
-		// clear output buffer in case we want get more pages
-		$this->wg->Out->clearHTML();
-
-		$result['wid'] = (int) $this->wg->CityId;
-		$result['pageid'] = $page->getId();
-		$result['id'] = $result['wid'] . '_' . $result['pageid'];
-		$result['sitename'] = $this->wg->Sitename;
-		$result['title'] = $title;
-		$result['canonical'] = $canonical;
-		$result['html'] = html_entity_decode($html, ENT_COMPAT, 'UTF-8'); // where are the other constants?
-		$result['url'] = $page->getTitle()->getFullUrl();
-		$result['ns'] = $page->getTitle()->getNamespace();
-		$result['host'] = substr($this->wg->Server, 7);
-		$result['lang'] = $this->wg->Lang->mCode;
-
-		# these need to be strictly typed as bool strings since they're passed via http when in the hands of the worker
-		$result['iscontent'] = in_array( $result['ns'], $this->wg->ContentNamespaces ) ? 'true' : 'false';
-		$result['is_main_page'] = ($page->getId() == Title::newMainPage()->getArticleId() && $page->getId() != 0) ? 'true' : 'false';
-		$result['is_redirect'] = ($canonical == '') ? 'false' : 'true';
-		$result['is_video'] = $isVideo ? 'true' : 'false';
-		$result['is_image'] = $isImage ? 'true' : 'false';
-
-
-		if ( $this->wg->EnableBacklinksExt && $this->wg->IndexBacklinks ) {
-			$result['backlink_text'] = Backlinks::getForArticle($page);
-		}
-
-
-		if( $withMetaData ) {
-			$result = array_merge($result, $this->getPageMetaData($page));
-		}
-
-		// restore global state
-		$this->wg->Title = $wgTitle;
-		$this->wg->Request = $wgRequest;
-
-		wfProfileOut(__METHOD__);
-		return $result;
-	}
-
-	public function getPageMetaData( $page ) {
-		wfProfileIn(__METHOD__);
-		$result = array();
-
-		$data = $this->callMediaWikiAPI( array(
-			'titles' => $page->getTitle(),
-			'bltitle' => $page->getTitle(),
-			'action' => 'query',
-			'list' => 'backlinks',
-			'blcount' => 1
-		));
-
-		if( isset($data['query']['backlinks_count'] ) ) {
-			$result['backlinks'] = $data['query']['backlinks_count'];
-		}
-		else {
-			$result['backlinks'] = 0;
-		}
-
-
-		$data = $this->callMediaWikiAPI( array(
-			'pageids' => $page->getId(),
-			'action' => 'query',
-			'prop' => 'info|categories',
-			'inprop' => 'url|created|views|revcount',
-			'meta' => 'siteinfo',
-			'siprop' => 'statistics|wikidesc|variables|namespaces|category'
-		));
-
-		if( isset( $data['query']['pages'][$page->getId()] ) ) {
-			$pageData = $data['query']['pages'][$page->getId()];
-			$result['views'] = $pageData['views'];
-			$result['revcount'] = $pageData['revcount'];
-			$result['created'] = $pageData['created'];
-			$result['touched'] = $pageData['touched'];
-		}
-
-		$result['categories'] = array();
-
-		if (isset($pageData['categories'])) {
-			foreach ($pageData['categories'] as $category) {
-
-				$result['categories'][] = implode(':', array_slice(explode(':', $category['title']), 1));
-
-			}
-		}
-
-		$result['hub'] = isset($data['query']['category']['catname']) ? $data['query']['category']['catname'] : '';
-		$result['wikititle'] = isset($data['query']['wikidesc']['pagetitle']) ? $data['query']['wikidesc']['pagetitle'] : '';
-
-		$statistics = $data['query']['statistics'];
-		if(is_array($statistics)) {
-			$result['wikipages'] = $statistics['pages'];
-			$result['wikiarticles'] = $statistics['articles'];
-			$result['activeusers'] = $statistics['activeusers'];
-			$result['wiki_images'] = $statistics['images'];
-		}
-
-		$result['redirect_titles'] = $this->getRedirectTitles($page);
-
-		$wikiViews = $this->getWikiViews($page);
-
-		$result['wikiviews_weekly'] = (int) $wikiViews->weekly;
-		$result['wikiviews_monthly'] = (int) $wikiViews->monthly;
-
-		wfProfileOut(__METHOD__);
-		return $result;
-	}
-
+	public function getRelatedVideos( WikiaSearchConfig $searchConfig ) {
+	    wfProfileIn(__METHOD__);
 	
-	private function getRedirectTitles( Article $page ) {
-		wfProfileIn(__METHOD__);
-
-		$dbr = wfGetDB(DB_SLAVE);
-
-		$result = $dbr->selectRow(array('redirect', 'page'),
-				array('GROUP_CONCAT(page_title SEPARATOR " | ") AS redirect_titles'),
-				array(),
-				__METHOD__,
-				array('GROUP'=>'rd_title'),
-				array('page' => array('INNER JOIN', array('rd_title'=>$page->mTitle->getDbKey(), 'page_id = rd_from')))
-			);
-
-		wfProfileOut(__METHOD__);
-		return (!empty($result)) ? str_replace('_', ' ', $result->redirect_titles) : '';
-	}
-
-
-	private function getWikiViews( Article $page ) {
-		wfProfileIn(__METHOD__);
-		$key = $this->wf->SharedMemcKey( 'WikiaSearchPageViews', $this->wg->CityId );
-
-		// should probably re-poll for wikis without much love
-		if ( ($result = $this->wg->Memc->get( $key )) && ($result->weekly > 0 || $result->monthly > 0) ) {
-			return $result;
+	    $filterQuery = sprintf( '(%s OR %s) AND %s', 
+	    						self::valueForField( 'wid', 		$searchConfig->getCityId() ),
+	    						self::valueForField( 'wid', 		self::VIDEO_WIKI_ID, array( 'boost' => 2 ) ),
+	    						self::valueForField( 'is_video', 	'true' )
+	    						);
+	    								
+	
+	    $query = self::valueForField( 'wid', $searchConfig->getCityId() );
+	    if ( $searchConfig->getPageId() != false ) {
+	        $query .= sprintf(' AND %s', self::valueForField( 'pageid', $searchConfig->getPageId() ) );
+	    } else {
+	        // tweakable heuristic:
+	        // the document frequency for the interesting terms needs to be at least 50% of the wiki's pages
+	        $data = $this->callMediaWikiAPI( array( 'action'	=> 'query',
+									                'prop'		=> 'info|categories',
+									                'inprop'	=> 'url|created|views|revcount',
+									                'meta'		=> 'siteinfo',
+									                'siprop'	=> 'statistics|wikidesc|variables|namespaces|category'
+	                						));
+	
+			if ( isset( $data['query'] ) && isset( $data['query']['statistics'] ) && isset( $data['query']['statistics']['articles'] ) ) {
+				$searchConfig->setMindf( (int) ($data['query']['statistics']['articles'] * .5) );
+	    	}
+			$query .= ' AND ' . self::valueForField( 'iscontent', 'true' );
 		}
 
-		$db = wfGetDB( DB_SLAVE, array(), $this->wg->statsDB );
-
-		$row = $db->selectRow(array('page_views'),
-			array('SUM(pv_views) as "monthly"',
-			'SUM(CASE WHEN pv_ts >= DATE_SUB(DATE(NOW()), INTERVAL 7 DAY) THEN pv_views ELSE 0 END) as "weekly"'),
-			array('pv_city_id' => (int) $this->wg->CityId,
-			'pv_ts >= DATE_SUB(DATE(NOW()), INTERVAL 30 DAY)'),
-			__METHOD__
-		);
-
-		// a pinch of defensive programming
-		if (!$row) {
-			$row = new stdClass();
-			$row->weekly = 0;
-			$row->monthly = 0;
-		}
-
-		$this->wg->Memc->set( $key, $row, self::WIKIPAGES_CACHE_TTL );
-
-		wfProfileOut(__METHOD__);
-		return $row;
-	}
-
-	public function searchVideos( $query, array $methodParams = array() )
-	{
-		$this->namespaces = array(NS_FILE);
-		$methodParams['videoSearch'] = true;
-
-		return $this->doSearch($query, $methodParams);
-	}
-
-	public function getRelatedVideos(array $params = array('start'=>0, 'size'=>20)) {
-	        wfProfileIn(__METHOD__);
-	        # going to need an "is_video" field
-	        if ( !empty($params['video_wiki_only']) ) {
-				$params['fq'] = ' wid:' . self::VIDEO_WIKI_ID .' ';
-
-				
-	        } else {
-		        $params['fq'] = '(wid:' . $this->wg->cityId . ' OR wid:' . self::VIDEO_WIKI_ID . '^2) ';
-	        }
-		$params['fq'] .= 'AND is_video:true';
-
-		$query = sprintf('wid:%d', $this->wg->cityId);
-		if (isset($params['pageId'])) {
-		  $query .= sprintf(' AND pageid:%d', $params['pageId']);
-		} else {
-
-			// tweakable heuristic:
-			// the document frequency for the interesting terms needs to be at least 50% of the wiki's pages
-			$data = $this->callMediaWikiAPI( array( 'action' => 'query',
-													'prop' => 'info|categories',
-													'inprop' => 'url|created|views|revcount',
-													'meta' => 'siteinfo',
-													'siprop' => 'statistics|wikidesc|variables|namespaces|category'
-													));
-
-			if (isset($data['query']) && isset($data['query']['statistics']) && isset($data['query']['statistics']['articles'])) {
-				$params['mindf'] = (int) ($data['query']['statistics']['articles'] * .5);
+		$searchConfig
+			->setQuery			( $query )
+			->setMltFilterQuery	( $filterQuery )
+		    // note that we're also adding the default title field
+		    // for slightly better foreign language coverage
+			->setMltFields		( array( self::field( 'title' ), self::field('html'), 'title' ) );
+	
+	    wfProfileOut(__METHOD__);
+	    return $this->moreLikeThis( $searchConfig );
+    }
+	
+   /**
+    * A more textual interface to the MoreLikeThis functionality
+    * @param  WikiaSearchConfig $searchConfig
+    * @return array of urls to array of wid and pageid
+    */
+	public function getSimilarPages( WikiaSearchConfig $searchConfig ) {
+		wfProfileIn(__METHOD__);
+	
+		$streamUrl = false;
+		$streamBody = false;
+		$query = $searchConfig->getQuery();
+	
+		if ( $query == false ) {
+			$streamUrl = $searchConfig->getStreamUrl();
+			if ( $streamUrl === false ) {
+				$streamBody = $searchConfig->getStreamBody();
 			}
-			$query .= ' AND iscontent:true';
 		}
-		wfProfileOut(__METHOD__);
-	        return $this->getSimilarPages($query, $params);
-	}
-
-	public function getSimilarPages($query = false, array $params = array()) {
-
-	        wfProfileIn(__METHOD__);
-	        if ((!$query) && (isset($params['content.url']) || isset($params['stream.body']))) {
-		  $params['fq'] = implode(' AND ', array_merge($this->client->getInterWikiQueryClauses()));
-	        }
-
-		$params['mlt.boost'] = 'true';
-		#note, mlt.maxnpt might be necessary for performance
-		$params['mlt.fl'] = 'title,html';
-
-		$clientResponse = $this->client->getSimilarPages($query, $params);
-
-		$similarPages = array();
-		if ( is_object($clientResponse->response) ) {
-			$similarPages = $clientResponse->response->docs;
+	
+		if ( $streamUrl || $streamBody ) {
+			$searchConfig->setFilterQuery( $this->getQueryClausesString( $searchConfig ) );
 		}
-
+	
+		$searchConfig	->setMltBoost( true )
+						->setMltFields( array( self::field( 'title' ), self::field( 'html' ), 'title' ) );
+	
+		$clientResponse = $this->moreLikeThis( $searchConfig );
+	
 		$response = array();
-		foreach ($similarPages as $similarPage)
-		{
-		    $response[$similarPage->url] = array('wid'=>$similarPage->wid, 'pageid'=>$similarPage->pageid);
+		foreach ( $clientResponse->getDocuments() as $similarPage ) {
+			$response[$similarPage['url']] = array(
+				'wid'		=>	$similarPage['wid'],
+				'pageid'	=>	$similarPage['pageid']
+			);
 		}
 		wfProfileOut(__METHOD__);
 		return $response;
 	}
+	
 
-	public function getInterestingTerms($query = false, array $params = array()) {
+	/**
+	 * Finds an article match and sets the value in the search config
+	 * @see    WikiaSearchTest::testGetArticleMatch
+	 * @see    WikiaSearchTest::testGetArticleMatchWithNoMatch
+	 * @see    WikiaSearchTest::testGetArticleMatchWithMatchFirstCall
+	 * @see    WikiaSearchTest::testGetArticleMatchWithMatchFirstCallMismatchedNamespaces
+	 * @param  WikiaSearchConfig $config
+	 * @return Article|null
+	 */
+	public function getArticleMatch( WikiaSearchConfig $config ) {
+	    wfProfileIn(__METHOD__);
+	
+	    $term = $config->getQuery();
+	
+	    if ( $config->hasArticleMatch() ) {
+	        return $config->getArticleMatch();
+	    }
 
-	        wfProfileIn(__METHOD__);
-		$params['mlt.fl'] = 'title,headings,first500,redirect_text,html';
-		$params['mlt.fl'] = 'title, html';
-		$params['mlt.boost'] = 'true';
-		#note, mlt.maxnpt might be necessary for performance
-		$params['mlt.interestingTerms'] = 'list';
+	    $searchEngine	= F::build( 'SearchEngine' );
+    	$title			= $searchEngine->getNearMatch( $term );
 
-		$params['size'] = 0;
-
-		$memkey = $this->wf->SharedMemcKey( 'WikiaInterestingTerms', md5($query.serialize($params)) );
+	    if( ( $title !== null ) && ( in_array( $title->getNamespace(), $config->getNamespaces() ) ) ) {
+	        $article		= F::build( 'Article',		array( $title ), 'newFromTitle' );
+	        $articleMatch	= F::build( 'ArticleMatch',	array( $article ) );
+	
+	        $config->setArticleMatch( $articleMatch );
+	        
+	        wfProfileOut(__METHOD__);
+	        return $articleMatch;
+	    }
+	    wfProfileOut(__METHOD__);
+	    return null;
+	}
+	
+	/**
+	 * Public static helper functions for dynamic language support
+	 *------------------------------------------------------------------------*/
+	
+	/**
+	 * Used to compose field name, value, boosts, and quotes in support of dynamic language fields
+	 * @see    WikiaSearchTest::testFieldMethods
+	 * @param  string $field
+	 * @param  string $value
+	 * @param  array  $params
+	 * @return string the lucene-ready string
+	 **/
+	public static function valueForField ( $field, $value, array $params = array() )
+	{
+		$lang 		= isset( $params['lang']   ) && $params['lang']   !== false ? $lang : null;
+		$negate		= isset( $params['negate'] ) && $params['negate'] !== false ? '-' : '';
+	    $boostVal	= isset( $params['boost']  ) && $params['boost']  !== false ? '^'.$params['boost'] : '';
+	    $evaluate	= isset( $params['quote']  ) && $params['quote']  !== false ? "%s(%s:{$params['quote']}%s{$params['quote']})%s" : '%s(%s:%s)%s';
+	
+	    return sprintf( $evaluate, $negate, self::field( $field, $lang ), self::sanitizeQuery( $value ), $boostVal );
+	}
+	
+	/**
+	 * Accepts a string and, checks it against a known set of dynamic language fields, and composes
+	 * a field namebased on the language context and field set membership.
+	 * @see    WikiaSearchTest::testFieldMethods
+	 * @param  string $field
+	 * @return string the dynamic field, or the field name if not dynamic
+	 **/
+	public static function field ( $field, $lang = null )
+	{
+		global $wgLanguageCode, $wgWikiaSearchSupportedLanguages;
+	    $lang = $lang ?: preg_replace( '/-.*/', '', $wgLanguageCode );
+	    if ( 		in_array( $field,	self::$languageFields )
+	            &&	in_array( $lang,	$wgWikiaSearchSupportedLanguages ) ) {
+	
+	        $us = in_array( $field, self::$dynamicUnstoredFields )	? '_us' : '';
+	        $mv = in_array( $field, self::$multiValuedFields )		? '_mv' : '';
+	        $field .= $us . $mv . '_' . $lang;
+	    }
+	    return $field;
+	}
+	
+	/**
+	 * Prevents XSS and escapes characters used in Lucene query syntax.
+	 * Any query string transformations before sending to backend should be placed here.
+	 * @see    WikiaSearchTest::testSanitizeQuery
+	 * @param  string $query
+	 * @return string
+	 */
+	private static function sanitizeQuery( $query )
+	{
+	    if ( self::$queryHelper === null ) {
+	        self::$queryHelper = new Solarium_Query_Helper();
+	    }
+	
+	    // non-indexed number-string phrases issue workaround (RT #24790)
+	    $query = preg_replace('/(\d+)([a-zA-Z]+)/i', '$1 $2', $query);
+	
+	    // escape all lucene special characters: + - && || ! ( ) { } [ ] ^ " ~ * ? : \ (RT #25482)
+	    // added html entity decoding now that we're doing extra work to prevent xss
+	    $query = self::$queryHelper->escapeTerm( html_entity_decode( $query,  ENT_COMPAT, 'UTF-8' ) );
+	
+	    return $query;
+	}
+	
+	/**
+	 * Private functions -- used mostly for query preparation and configuration
+	 *------------------------------------------------------------------------*/
+	
+	/**
+	 * Takes a query we've created and configures it based on the values set in the SearchConfig
+	 * @param Solarium_Query_Select $query
+	 * @param WikiaSearchConfig $searchConfig
+	 * @return WikiaSearch provides fluent interface
+	 */
+	private function prepareQuery( Solarium_Query_Select $query, WikiaSearchConfig $searchConfig )
+	{
+		wfProfileIn(__METHOD__);
+		$query->setDocumentClass( 'WikiaSearchResult' );
 		
-		if ($interestingTerms = $this->wg->Memc->get($memkey)) {
-		  return $interestingTerms;
-		}
-
-		$clientResponse = $this->client->getSimilarPages($query, $params);
-
-		$response = array();
-
-		$interestingTerms = $clientResponse->interestingTerms;
-
-		#@todo reverse dictionary-based stemming, but need all unique words, then to stem, then to use the most frequent. yuck.
-
-		$this->wg->Memc->set($memkey, $interestingTerms, self::GROUP_RESULTS_CACHE_TTL);
-		wfProfileOut(__METHOD__);
-		return $interestingTerms;
-
-	}
-
-	public function getKeywords($params) {
-
-	        $query = sprintf('wid:%d', $this->wg->cityId);
-		if (isset($params['pageId'])) {
-		  $query .= sprintf(' AND pageid:%d', $params['pageId']);
-		} else {
-		  $query .= ' AND is_main_page:1';
+		$sort = $searchConfig->getSort();
+		
+		$query	->addFields		( $searchConfig->getRequestedFields() )
+				->removeField	('*')
+			  	->setStart		( $searchConfig->getStart() )
+				->setRows		( $searchConfig->getLength() )
+				->addSort		( $sort[0], $sort[1] )
+				->addParam		( 'timeAllowed', $searchConfig->isInterWiki() ? 7500 : 5000 )
+		;
+		
+		$highlighting = $query->getHighlighting();
+		$highlighting->addField						( self::field( 'html' ) )
+					 ->setSnippets					( 1 )
+					 ->setRequireFieldMatch			( true )
+					 ->setFragSize					( self::HL_FRAG_SIZE )      
+					 ->setSimplePrefix				( self::HL_MATCH_PREFIX )
+					 ->setSimplePostfix				( self::HL_MATCH_POSTFIX )
+					 ->setAlternateField			( 'html' )
+					 ->setMaxAlternateFieldLength	( F::app()->checkSkin( 'wikiamobile' ) ? 100 : 300 )
+		;
+		
+		$queryFieldsString = sprintf( '%s^5 %s %s^4', self::field( 'title' ), self::field( 'html' ), self::field( 'redirect_titles' ) );
+		
+		if ( $searchConfig->getVideoSearch() && $this->wg->LanguageCode !== 'en' ) {
+			// video wiki requires english field search
+			$queryFieldsString .= sprintf( '%s^5 %s %s^4', self::field( 'title', 'en' ), self::field( 'html', 'en' ), self::field( 'redirect_titles', 'en' ) );
 		}
 		
-		return $this->getInterestingTerms($query, $params);
-
-	}
-
-	public function getTagCloud(array $params = array('maxpages'=>25, 'termcount'=>'20', 'maxfontsize'=>'56', 
-                                                          'minfontsize'=>6, 'sizetype'=>'px')) {
-	        wfProfileIn(__METHOD__);
-	        $wid = $this->wg->cityId;
-
-		$query = 'wid:'.$wid.' AND iscontent:true';
-
-		$methodOptions = array('sort'=>'views desc');
-
-		$response =$this->client->searchByLuceneQuery($query, 0, $params['maxpages'], $methodOptions);
-		$docs = $response->response->docs;
-
-		$interestingTerms = array();
-
-		foreach ($docs as $doc) {
-
-		  $termResults = $this->getInterestingTerms('wid:'.$wid.' AND pageid:'.$doc->pageid);
-
-		  foreach ($termResults as $term) {
-		    $interestingTerms[$term] = isset($interestingTerms[$term]) ? $interestingTerms[$term]+1 : 1;;
-		  }
-
+		if ( $searchConfig->isInterWiki() ) {
+			$grouping = $query->getGrouping();
+			$grouping	->setLimit			( self::GROUP_RESULTS_GROUPING_ROW_LIMIT )
+						->setOffset			( $searchConfig->getStart() )
+						->setFields			( array( 'host' ) )
+			;
+			
+			$queryFieldsString .= sprintf( ' %s^7', self::field( 'wikititle' ) );
 		}
-
-		arsort($interestingTerms);
-
-		$interestingTerms = array_slice($interestingTerms, 0, $params['termcount']);
-
-		$termsToFontSize = array();
-
-		$min = min(array_values($interestingTerms));
-		$max = max(array_values($interestingTerms));
-
-		foreach ($interestingTerms as $term=>$count) {
-		  $termsToFontSize[$term] = max(array($params['minfontsize'], 
-						      #tagcloud calc
-						      round(abs($params['maxfontsize'] * ($count - $min) /  ($max - $min))) 
-						      )
-						).$params['sizetype'];
+		
+		$query->addFilterQuery( array(
+				'query'		=>		$this->getFilterQueryString( $searchConfig ),
+				'key'		=>		'fq1' // constraint of library
+		) );
+		
+		$nestedQuery = $this->client->createSelect();
+		$nestedQuery->setQuery( $searchConfig->getQuery() );
+		
+		$dismax = $nestedQuery->getDismax();
+		
+		$boostQueryString = $this->getBoostQueryString( $searchConfig );
+		
+		$dismax	->setQueryFields		( $queryFieldsString )
+				->setPhraseFields		( $queryFieldsString )
+				->setBoostQuery			( $this->getBoostQueryString( $query, $searchConfig ) )
+				->setMinimumMatch		( $searchConfig->getMinimumMatch() )
+				->setQueryParser		( 'edismax' )
+				->setPhraseSlop			( 3 )
+				->setTie				( 0.01 )
+		;
+		
+		if (! $searchConfig->getSkipBoostFunctions() ) {
+			$dismax->setBoostFunctions( implode(' ', 
+												$searchConfig->isInterWiki() 
+												? $this->interWikiBoostFunctions 
+												: $this->onWikiBoostFunctions 
+												)
+										);
+		}
+		
+		// this is how we prevent duplicate results when we already have PTT
+		$noPtt = '';
+		if ( $searchConfig->hasArticleMatch() ) {
+			$am			= $searchConfig->getArticleMatch();
+			$article	= $am->getArticle();  
+			$noPtt		= ' AND ' . self::valueForField( 'id', sprintf( '%s_%s', $searchConfig->getCityId(), $article->getID() ), array( 'negate' => true ) ) ;
+		}
+		
+		$formulatedQuery = sprintf('%s AND (%s)%s', $this->getQueryClausesString( $searchConfig ), $nestedQuery, $noPtt);
+		
+		$query->setQuery( $formulatedQuery );
+		wfProfileOut(__METHOD__);
+		return $this;
+	}
+	
+	/**
+	 * Builds the string used with filter queries based on search config
+	 * @param WikiaSearchConfig $searchConfig
+	 * @see WikiaSearchTest::testGetFilterQueryString
+	 * @return string
+	 */
+	private function getFilterQueryString( WikiaSearchConfig $searchConfig )
+	{
+		wfProfileIn(__METHOD__);
+		$filterQueries = array();
+		if ( $searchConfig->isInterWiki() ) {
+			
+			$filterQueries[] = self::valueForField( 'iscontent', 'true');
+				
+			if ( $searchConfig->getHub() !== null ) {
+			    $filterQueries[] = self::valueForField( 'hub', $searchConfig->getHub() );
+			}
+		}
+		else {
+			$filterQueries[] 	= $searchConfig->getVideoSearch() 
+								? sprintf('(%s OR %s)', self::valueForField( 'wid', $searchConfig->getCityId() ), self::valueForField( 'wid', self::VIDEO_WIKI_ID ) )
+								: self::valueForField( 'wid', $searchConfig->getCityId() );
+		}
+		
+		if (! $searchConfig->getIncludeRedirects() ) {
+			$filterQueries[] = self::valueForField( 'is_redirect', 'false');
 		}
 		wfProfileOut(__METHOD__);
-		return $termsToFontSize;
+		return implode( ' AND ', $filterQueries );
+	}
+	
+	/**
+	 * Builds the necessary query clauses based on values set in the searchconfig object
+	 * @see    WikiaSearchTest::testGetQueryClausesString
+	 * @param  WikiaSearchConfig $searchConfig
+	 * @return string
+	 */
+	private function getQueryClausesString( WikiaSearchConfig $searchConfig )
+	{
+		$queryClauses = array();
+		
+		if ( $searchConfig->isInterWiki() ) {
+			
+			$widQueries = array();
+			foreach ( $this->getInterWikiSearchExcludedWikis() as $excludedWikiId ) {
+			    $widQueries[] = self::valueForField( 'wid',  $excludedWikiId, array( 'negate' => true ) );
+			}
+			 
+			$queryClauses[] = '(' . implode( ' AND ', $widQueries ) . ')';
+			
+			$queryClauses[] = self::valueForField( 'lang', $this->wg->ContLang->mCode );
+			
+			$queryClauses[] = self::valueForField( 'iscontent', 'true' );
+			
+			if ( $searchConfig->getHub() !== null ) {
+			    $queryClauses[] = self::valueForField( 'hub', $searchConfig->getHub() );
+			}
+		}
+		else {
+			if ( $searchConfig->getVideoSearch() ) {
+				$searchConfig->setNamespaces( array( NS_FILE ) );
+				$queryClauses[] = self::valueForField( 'is_video', 'true' );
+				$queryWithVideo = sprintf('(%s OR %s)', self::valueForField( 'wid', $searchConfig->getCityId() ), self::valueForField( 'wid', self::VIDEO_WIKI_ID ) );
+				array_unshift( $queryClauses, $queryWithVideo );
+			} else {
+				array_unshift( $queryClauses, self::valueForField( 'wid', $searchConfig->getCityId() ) );
+			}
+			
+			$nsQuery = '';
+			foreach ( $searchConfig->getNamespaces() as $namespace ) {
+				$nsQuery .= ( !empty($nsQuery) ? ' OR ' : '' ) . self::valueForField( 'ns', $namespace );
+			}
+			$queryClauses[] = "({$nsQuery})";
+		}
+		
+		return sprintf( '(%s)', implode( ' AND ', $queryClauses ) );
+	}
+	
+	/**
+	 * Returns the string used to build out a boost query with Solarium
+	 * @see    WikiaSearchTest::testGetBoostQueryString
+	 * @param  WikiaSearchConfig $searchConfig
+	 * @return string
+	 */
+	private function getBoostQueryString( WikiaSearchConfig $searchConfig )
+	{
+		$query = $searchConfig->getQuery();
+		
+		if ( $searchConfig->isInterWiki() ) {
+			$query = preg_replace( '/ wiki\b/i', '', $query );
+		}
+		
+		$queryNoQuotes = preg_replace( "/['\"]/", '', html_entity_decode( $query, ENT_COMPAT, 'UTF-8' ) );
+		
+		$boostQueries = array(
+				self::valueForField( 'html', $queryNoQuotes, array( 'boost'=>5, 'quote'=>'\"' ) ),
+		        self::valueForField( 'title', $queryNoQuotes, array( 'boost'=>10, 'quote'=>'\"' ) ),
+		);
+		
+		if ( $searchConfig->isInterWiki() ) {
+			$boostQueries[] = self::valueForField( 'wikititle',	$queryNoQuotes,	array( 'boost' => 15, 'quote' => '\"' )		);
+			$boostQueries[] = self::valueForField( 'host',		'answers', 		array( 'boost' => 10, 'negate' => true )	);
+			$boostQueries[] = self::valueForField( 'host',		'respuestas',	array( 'boost' => 10, 'negate' => true )	);
+		}
+		
+		return implode( ' ', $boostQueries );
+	}
+	
+	/**
+	 * Utilizes Solr's MoreLikeThis component to return similar pages
+	 * @param  WikiaSearchConfig $searchConfig
+	 * @return Solarium_Result_MoreLikeThis
+	 */
+	private function moreLikeThis( WikiaSearchConfig $searchConfig )
+	{
+		$query		= $searchConfig->getQuery();
+		$streamBody	= $searchConfig->getStreamBody();
+		$streamUrl	= $searchConfig->getStreamUrl();
+		
+		if (! ( $query || $streamBody || $streamUrl ) ) {
+			throw new Exception("A query, url, or stream is required.");
+		}
+	    
+		$mlt = $this->client->createMoreLikeThis();
+		$mlt->setMltFields		( implode( ',', $searchConfig->getMltFields() ) )
+			->addParam			( 'mlt.match.include', 'false' )
+			->setStart			( $searchConfig->getStart() )
+			->setRows			( $searchConfig->getRows() )
+		;
+		
+		if ( $searchConfig->getInterestingTerms() == 'list' ) {
+			$mlt->setInterestingTerms( 'list' );
+		}
 
+		if ( $searchConfig->getMltFilterQuery() ) {
+			$mlt->addFilterQuery( array(
+				'query'	=>	$searchConfig->getMltFilterQuery(),
+				'key'	=>	'mltfilterquery'
+			) );
+		}
+		if ( $query !== null ) { 
+			$mlt->setQuery( $query );
+		} else if ( $streamBody ) {
+			$mlt->addParam( 'stream.body', $streamBody );
+			;
+		} else if ($streamUrl ) {
+			$mlt->addParam( 'stream.url', $streamUrl );
+		}
+	    
+		$mltResult = $this->client->moreLikeThis( $mlt );
+		return $mltResult;
 	}
 
+	
+
+	/**
+	 * Used to access API data from various MediaWiki services
+	 * @param  array $params
+	 * @return array result data
+	 **/
 	private function callMediaWikiAPI( Array $params ) {
 		wfProfileIn(__METHOD__);
 
@@ -545,111 +675,72 @@ class WikiaSearch extends WikiaObject {
 		wfProfileOut(__METHOD__);
 		return  $api->getResultData();
 	}
+	
+	/**
+	 * get list of wikis excluded from inter-wiki searching
+	 * @param  int $currentWikiId
+	 * @return array
+	 */
+	private function getInterWikiSearchExcludedWikis( $currentWikiId = 0 ) {
+	    wfProfileIn(__METHOD__);
+	
+	    $cacheKey		= $this->wf->SharedMemcKey( 'crossWikiaSearchExcludedWikis' );
+	    $privateWikis	= $this->wg->Memc->get( $cacheKey );
 
-
-	public function getArticleMatch( $term ) {
-		wfProfileIn(__METHOD__);
-
-		if ($match = $this->client->getArticleMatch()) {
-			return $match;
-		}
-
-		// Try to go to page as entered.
-		$title = Title::newFromText( $term );
-		# If the string cannot be used to create a title
-		if( is_null( $title ) ) {
-			wfProfileOut(__METHOD__);
-			return null;
-		}
-
-		// If there's an exact or very near match, jump right there.
-		$title = SearchEngine::getNearMatch( $term );
-		if( !is_null( $title )) {
-			$article = new Article( $title );
-
-			if($article->isRedirect()) {
-				$target = $article->getRedirectTarget();
-				// apparently the target can be null
-				if ($target instanceOf Title) {
-					$this->client->setArticleMatch(array('article'=>new Article($target), 'redirect'=>$article));
-				}
-			}
-			else {
-				$this->client->setArticleMatch(array('article'=>$article));
-			}
-			wfProfileOut(__METHOD__);
-			return $this->client->getArticleMatch();
-		}
-
-		wfProfileOut(__METHOD__);
-		return null;
+	    if(! is_array( $privateWikis ) ) {
+	        // get private wikis from db
+	        $wikiFactory		= F::build( 'WikiFactory' );
+	        $wgIsPrivateWiki	= $wikiFactory->getVarByName( 'wgIsPrivateWiki', $currentWikiId );
+	        $privateWikis		= $wikiFactory->getCityIDsFromVarValue( $wgIsPrivateWiki === null ? null : $wgIsPrivateWiki->cv_id , true, '=' );
+	        $this->wg->Memc->set( $cacheKey, $privateWikis, 3600 ); // cache for 1 hour
+	    }
+	
+	    wfProfileOut(__METHOD__);
+	    return count( $privateWikis ) ? array_merge( $privateWikis, $this->wg->CrossWikiaSearchExcludedWikis ) : $this->wg->CrossWikiaSearchExcludedWikis;
 	}
 
-
-	public function setNamespaces( Array $namespaces ) {
-		$this->namespaces = $namespaces;
-	}
-
-	public function getNamespaces() {
-		return $this->namespaces;
-	}
-
-	public function setSkipCache($value) {
-		$this->skipCache = (bool) $value;
-	}
-
-	public function getSkipCache() {
-		return $this->skipCache;
-	}
-
-	public function setIncludeRedirects($value) {
-		$this->includeRedirects = $value;
-	}
-
-	public function getIncludeRedirects() {
-		return $this->includeRedirects;
-	}
-
+	/**
+	 * Hooks
+	 *------------------------------------------------------------------------*/
+	
+	/**
+	 * Used to configure the user preference pane settings for search. 
+	 * This is a registered hook function of the samme name.
+	 * @param User $user
+	 * @param 
+	 */ 
 	public static function onGetPreferences($user, &$defaultPreferences) {
 		wfProfileIn( __METHOD__ );
 
 		// removes core mw search prefs
-		$defunctPreferences = array('searchlimit',
-									'contextlines',
-									'contextchars',
-									'disablesuggest',
-									'searcheverything',
-									'searchnamespaces',
-									);
+		$defunctPreferences = array(
+			'searchlimit',
+			'contextlines',
+			'contextchars',
+			'disablesuggest',
+			'searcheverything',
+			'searchnamespaces',
+		);
 
-		foreach ($defunctPreferences as $goAway) {
-			unset($defaultPreferences[$goAway]);
+		foreach ( $defunctPreferences as $goAway ) {
+			unset( $defaultPreferences[$goAway] );
 		}
 
 		$defaultPreferences["enableGoSearch"] = array(
-			'type' => 'toggle',
-			'label-message' => array('wikiasearch2-enable-go-search'),
-			'section' => 'under-the-hood/advanced-displayv2',
+			'type'			=> 'toggle',
+			'label-message'	=> array('wikiasearch2-enable-go-search'),
+			'section'		=> 'under-the-hood/advanced-displayv2',
 		);
 
 		$defaultPreferences["searchAllNamespaces"] = array(
-			'type' => 'toggle',
-			'label-message' => array('wikiasearch2-search-all-namespaces'),
-			'section' => 'under-the-hood/advanced-displayv2',
+			'type'			=> 'toggle',
+			'label-message'	=> array('wikiasearch2-search-all-namespaces'),
+			'section'		=> 'under-the-hood/advanced-displayv2',
 		);
 
 		wfProfileOut( __METHOD__ );
 		return true;
 	}
-
-    public static function highlightSearchResult($text, $word){
-        wfProfileIn( __METHOD__ );
-
-        $word = preg_quote($word);
-        $text = preg_replace("/\b($word)/i", '<b>\1</b>', $text);
-
-        wfProfileOut( __METHOD__ );
-        return $text;
-    }
+    
 
 }
