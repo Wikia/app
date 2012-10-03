@@ -7,7 +7,7 @@ $messages['en'] = array(
 	'vet-notlogged' => 'Log in or register to insert videos',
 	'vet-find' => 'Find a video',
 	'vet-thiswiki' => 'This wiki',
-	'vet-video-wiki' => 'Video Wiki',
+	'vet-video-wiki' => 'Wikia Video Library',
 	'vet-flickr' => 'Flickr',
 	'vet-upload-btn' => 'Add',
 	'vet-find-btn' => 'Search',
@@ -136,7 +136,7 @@ $messages['qqq'] = array(
 	'vet-style' => 'New feature that will be released soon. Style label in display options (plain image or with border and caption)',
 	'vet-no-caption' => 'New feature that will be released soon. Info that no caption is available for plain image style option',
 	'vet-search-filter-caption' => 'New feature that will be released soon. Label for dropdown with search filter options',
-	'vet-video-wiki' => 'dropdown label for search filter - Video Wiki'
+	'vet-video-wiki' => 'dropdown label for search filter - Wikia Video Library'
 );
 
 /** Abkhazian (Аҧсшәа)
