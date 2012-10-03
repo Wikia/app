@@ -445,6 +445,9 @@ class BodyController extends WikiaController {
 
 		// determine if WikiaGridLayout needs to be enabled
 		$this->isGridLayoutEnabled = self::isGridLayoutEnabled();
+		if($this->isGridLayoutEnabled) {
+			OasisController::addBodyClass('wikia-grid');
+		}
 
 		// if we are on a special search page, pull in the css file and don't render a header
 		if($wgTitle && $wgTitle->isSpecial( 'Search' ) && !$this->wg->WikiaSearchIsDefault) {
