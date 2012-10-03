@@ -238,6 +238,7 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	
 	/**
 	 * Sets length value, so we don't get confused
+	 * @see    WikiaSearchConfigTest::testGetSize
 	 * @param  int $val
 	 * @return WikiaSearchConfig provides fluent interface
 	 */
@@ -254,7 +255,7 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	public function getRequestedFields()
 	{
 		$fieldsPrepped = array();
-		foreach ($this->requestedFields as $field) {
+		foreach ($this['requestedFields'] as $field) {
 			$fieldsPrepped[] = WikiaSearch::field($field);
 		}
 		
@@ -263,6 +264,7 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	
 	/**
 	 * Synonym function for backwards compatibility
+	 * @see    WikiaSearchConfigTest::testInterWiki
 	 * @return boolean
 	 */
 	public function isInterWiki() {
@@ -270,7 +272,17 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	}
 	
 	/**
+	 * Synonym function for backwards compatibility
+	 * @see    WikiaSearchConfigTest::testInterWiki
+	 * @return boolean
+	 */
+	public function getIsInterWiki() {
+	    return $this->getInterWiki();
+	}
+	
+	/**
 	 * Synonym function for backward compatbility
+	 * @see    WikiaSearchConfigTest::testInterWiki
 	 * @param  boolean $value
 	 * @return WikiaSearchConfig provides fluent interface
 	 */
@@ -281,6 +293,7 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	
 	/**
 	 * Returns results number based on a truncated heuristic
+	 * @see    WikiaSearchConfigTest::testTruncatedResultsNum
 	 * @return integer
 	 */
 	public function getTruncatedResultsNum() 
@@ -375,16 +388,17 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	
 	/**
 	 * Determines the number of pages based on the desired number of results per page
+	 * @see    WikiaSearchConfigTest::testGetNumPages
 	 * @return integer 
 	 */
 	public function getNumPages() {
 		return $this->getResultsFound() ? ceil( $this->getResultsFound() / $this->getLimit() ) : 0;
-	
 	}
 
 	/**
 	 * If the cityId hasn't been set, and we're not interwiki, we use $wgCityId. 
 	 * Otherwise, return the set value.
+	 * @see    WikiaSearchConfigTest::testGetCityId
 	 * @return int
 	 */
 	public function getCityId() {
@@ -396,6 +410,7 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	
 	/**
 	 * Normalizes the cityId value in case of mistyping
+	 * @see   WikiaSearchConfigTest::testGetCityId
 	 * @param int $value
 	 */
 	public function setCityID( $value ) {
