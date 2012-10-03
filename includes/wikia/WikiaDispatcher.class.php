@@ -79,7 +79,12 @@ class WikiaDispatcher {
 				if (!method_exists($controller, $method)) {
 					$method = ucfirst( $method );
 					if ($format == WikiaResponse::FORMAT_HTML) {
-						$response->getView()->setTemplate( $controllerName, $method );
+						try {
+							$response->getView()->setTemplate( $controllerName, $method );
+						} catch( Exception $e ) {
+						//"quick", dirty fix for fb#49392
+							Wikia::log(__METHOD__, false, 'ERROR: Possible fatal error because of change old oasis modules to controllers -- template not found.');
+						}
 					}
 					$method = "execute{$method}";
 					$params = $request->getParams();  // old modules expect params in a different place
