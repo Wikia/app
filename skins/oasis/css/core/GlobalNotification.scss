@@ -66,6 +66,12 @@
 	}
 }
 
+/* temp transition code until grid is fully rolled out, remove and integrate after transition */
+.wikia-grid .global-notification {
+      width: 988px;
+}
+/* end temp transistion code */
+
 /**
  * IMPORTANT (21-Aug-2012, FB:45031): Integrate this code into base css above after transition.
  * This is currently an override depending on skin switch.
