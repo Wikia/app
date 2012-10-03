@@ -199,6 +199,7 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	
 	/**
 	 * Determines whether an article match has been set
+	 * @see    WikiaSearchConfigTest::testArticleMatching
 	 * @return boolean
 	 */
 	public function hasArticleMatch() {
@@ -207,6 +208,7 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	
 	/**
 	 * Overloading __set to type hint
+	 * @see    WikiaSearchConfigTest::testArticleMatching
 	 * @param  WikiaSearchArticleMatch $articleMatch
 	 * @return WikiaSearchConfig provides fluent interface
 	 */
@@ -217,14 +219,16 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	
 	/**
 	 * For IDE type-hinting
+	 * @see    WikiaSearchConfigTest::testArticleMatching
 	 * @return WikiaSearchArticleMatch
 	 */
 	public function getArticleMatch() {
-		return $this['articleMatch'];
+		return isset( $this['articleMatch'] ) ? $this['articleMatch'] : null;
 	}
 	
 	/**
 	 * Returns desired number of results WITHOUT consideration for article match
+	 * @see    WikiaSearchConfigTest::testGetSize
 	 * @return int
 	 */
 	public function getLimit()
