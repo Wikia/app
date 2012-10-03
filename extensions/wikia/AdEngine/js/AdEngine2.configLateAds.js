@@ -7,19 +7,24 @@
 (function(log, WikiaTracker, window, ghostwriter, document) {
 	var adConfig
 		, scriptWriter
+		, adProviderLiftium2
+		, adProviderLiftium2Dom
 		, adProviderNull
-		, adProviderLiftium2;
+		;
 
 	scriptWriter = ScriptWriter(log, ghostwriter, document);
 	// TODO: ad provider error
 	adProviderNull = AdProviderNull(log);
 	adProviderLiftium2 = AdProviderLiftium2(scriptWriter, WikiaTracker, log, window);
+	adProviderLiftium2Dom = AdProviderLiftium2Dom(WikiaTracker, log, document);
 
 	adConfig = AdConfig2Late(
-		log,
+		log
+
 		// AdProviders:
-		adProviderNull,
-		adProviderLiftium2
+		, adProviderLiftium2
+		, adProviderLiftium2Dom
+		, adProviderNull
 	);
 
 	/*

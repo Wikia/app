@@ -1,7 +1,7 @@
 var AdProviderLiftium2 = function (scriptWriter, WikiaTracker, log, window) {
 	'use strict';
 
-	var module = 'AdProviderLiftium2'
+	var log_group = 'AdProviderLiftium2'
 		, canHandleSlot
 		, fillInSlot
 		, slotMap
@@ -23,8 +23,8 @@ var AdProviderLiftium2 = function (scriptWriter, WikiaTracker, log, window) {
 	canHandleSlot = function(slot) {
 		var slotname = slot[0];
 
-		log('fillInSlot', 5, module);
-		log(slot, 5, module);
+		log('fillInSlot', 5, log_group);
+		log(slot, 5, log_group);
 
 		if (slotMap[slotname]) {
 			return true;
@@ -35,16 +35,16 @@ var AdProviderLiftium2 = function (scriptWriter, WikiaTracker, log, window) {
 
 	// adapted for Evolve + simplified copy of AdDriverDelayedLoader.callLiftium
 	fillInSlot = function(slot) {
-		log('fillInSlot', 5, module);
-		log(slot, 5, module);
+		log('fillInSlot', 5, log_group);
+		log(slot, 5, log_group);
 
 		slot[1] = slotMap[slot[0]].size || slot[1];
-		log([slot[0], slot[1]], 7, module);
+		log([slot[0], slot[1]], 7, log_group);
 
 		// TODO real deferred queue is needed...
 		if (!window.Liftium) {
-			log('Liftium not available, pushing to the AdDriver queue', 3, module);
-			log(slot, 3, module);
+			log('Liftium not available, pushing to the AdDriver queue', 3, log_group);
+			log(slot, 3, log_group);
 
 			if(!window.adslots) {
 				window.adslots = [];
@@ -70,8 +70,8 @@ var AdProviderLiftium2 = function (scriptWriter, WikiaTracker, log, window) {
 
 	// adapted for Evolve + simplified copy of AdDriverDelayedLoader.getLiftiumCallScript
 	getLiftiumCallScript = function(slotname, size) {
-		log('getLiftiumCallScript', 5, module);
-		log([slotname, size], 5, module);
+		log('getLiftiumCallScript', 5, log_group);
+		log([slotname, size], 5, log_group);
 
 		var dims = size.split('x');
 		var script = '';
@@ -80,13 +80,13 @@ var AdProviderLiftium2 = function (scriptWriter, WikiaTracker, log, window) {
 		script += 'LiftiumOptions.placement = "'+slotname+'";';
 		script += 'Liftium.callInjectedIframeAd("'+size+'", document.getElementById("'+slotname+'_iframe"));';
 
-		log(script, 7, module);
+		log(script, 7, log_group);
 		return script;
 	};
 
 	return {
-		name: 'Liftium2',
-		canHandleSlot: canHandleSlot,
-		fillInSlot: fillInSlot
+		name: 'Liftium2'
+		, canHandleSlot: canHandleSlot
+		, fillInSlot: fillInSlot
 	};
 };
