@@ -4,8 +4,6 @@
 @import "../mixins/clearfix";
 @import "../mixins/gradient";
 
-$wikiaheader-width: $width-outside + 14px;
-
 .WikiaHeader {
 	@include linear-gradient($color-header, left, $color-header-alt, 0, $color-header, 50%, $color-header-alt, 100%);
 	border-top: 3px solid #000;
