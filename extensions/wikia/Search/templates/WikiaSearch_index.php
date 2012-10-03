@@ -35,17 +35,6 @@
 		<?php echo $tabs; ?>
 	<?php endif; ?>
 
-	<?php if($isCorporateWiki): ?>
-		<?php if ($showSearchAds): ?>
-			<div id="SearchAdsTop" class="WikiaSearchAds SearchAdsTop">
-				<h3 class="subtle"><?= wfMsg( 'wikiasearch2-search-ads-header' );?></h3>
-				<ul class="list loading"></ul>
-			</div>
-		<?php else: // regular ads ?>
-			<?php // Regular right-hand ads not compatible with corporate search ?>
-		<?php endif; ?>
-	<?php endif; ?>
-
 	<?php if(!$isCorporateWiki): ?>
 		<div class="results-wrapper grid-3 alpha">
 	<?php endif; ?>
@@ -106,13 +95,6 @@
 					<?= $paginationLinks; ?>
 				<?php endif; ?>
 
-				<?php if ($showSearchAds): ?>
-					<div id="SearchAdsBottom" class="WikiaSearchAds SearchAdsBottom">
-						<h3 class="subtle"><?= wfMsg( 'wikiasearch2-search-ads-header' );?></h3>
-						<ul class="list loading"></ul>
-					</div>
-				<?php endif; ?>
-
 				<?php if($isCorporateWiki): ?>
 					<?= $paginationLinks; ?>
 				<?php endif; ?>
@@ -133,16 +115,9 @@
 
 	<?php if(!$isCorporateWiki): ?>
 		<div class="SearchAdsTopWrapper grid-2 alpha">
-		<?php if ($showSearchAds): ?>
-			<div id="SearchAdsTop" class="WikiaSearchAds SearchAdsTop">
-				<h3 class="subtle"><?= wfMsg( 'wikiasearch2-search-ads-header' );?></h3>
-				<ul class="list loading"></ul>
-			</div>
-		<?php else: // regular ads ?>
 			<?= F::app()->renderView('Ad', 'Index', array('slotname' => 'TOP_RIGHT_BOXAD')); ?>
 			<?= F::app()->renderView('Ad', 'Index', array('slotname' => 'LEFT_SKYSCRAPER_2')); ?>
 			<div id="WikiaAdInContentPlaceHolder"></div>
-		<?php endif; ?>
 		</div>
 	<?php endif; ?>
 

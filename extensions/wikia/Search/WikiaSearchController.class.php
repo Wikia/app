@@ -115,7 +115,6 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setVal( 'hub',					$searchConfig->getHub() );
 		$this->setVal( 'hasArticleMatch',		$searchConfig->hasArticleMatch() );
 		$this->setVal( 'isMonobook',			($this->wg->User->getSkin() instanceof SkinMonobook) );
-		$this->setVal( 'showSearchAds',			$searchConfig->getQuery() ? $this->showSearchAds() : false );
 		$this->setVal( 'isCorporateWiki',		$this->isCorporateWiki() );
 	}
 	
@@ -337,27 +336,6 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		}
 		
 		return true;
-	}
-	
-	/**
-	 * Called in index action. Determines whether to show search ads based on skin settings.
-	 * @return boolean whether to show search ads, value used in the view
-	 */
-	private function showSearchAds() {
-		$skin = $this->wg->User->getSkin();
-		
-		if (!empty($this->wg->EnableWikiaSearchAds)) {
-		    if (!empty($this->wg->NoExternals)) {
-		        // don't show ads in search
-		    } elseif (is_object($this->wg->User) && $this->wg->User->isLoggedIn() && !($this->wg->User->getOption('showAds') || !empty($_GET['showads']))) {
-		        // don't show ads in search
-		    } elseif ((! $skin instanceof SkinMonoBook) && (! $skin instanceof SkinVector)) {
-		        $this->app->registerHook('MakeGlobalVariablesScript', 'WikiaSearchAdsController', 'onMakeGlobalVariablesScript');
-		        $this->response->addAsset('extensions/wikia/Search/js/WikiaSearchAds.js');
-		        return true;
-		    }
-		}
-		return false;
 	}
 
 	/**
