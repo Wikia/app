@@ -207,18 +207,14 @@ class GameGuidesModel{
 			$ret = $this->loadFromCache( $cacheKey );
 
 			if ( empty( $ret ) ) {
-				/**
-				 * @var $wikiaSearch WikiaSearch
-				 */
 				$wikiaSearch = F::build('WikiaSearch');
+				$wikiaSearchConfig = F::build('WikiaSearchConfig');
+				$wikiaSearchConfig	->setNamespaces	( array( NS_MAIN ) )
+									->setQuery		( $term )
+									->setLength		( $totalLimit )
+									->setCityId		( $this->app->wg->CityId );
 
-				//only articles
-				$wikiaSearch->setNamespaces( array( NS_MAIN ) );
-
-				$resultSet = $wikiaSearch->doSearch( $term, array(
-					'length'=> $totalLimit, 
-					'cityId'=> $this->app->wg->CityId,
-				) );
+				$resultSet = $wikiaSearch->doSearch( $term, $wikiaSearchConfig );
 
 				$found = $resultSet->getResultsFound();
 				$count = 0;
