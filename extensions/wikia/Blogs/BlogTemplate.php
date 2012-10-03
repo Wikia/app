@@ -710,7 +710,7 @@ class BlogTemplateClass {
                                 // Since GROUP_CONCAT respects group_concat_max_len arbitrarily,
                                 // sometimes we end up with a comma or a truncated item, which
                                 // we don't want.
-                                if ( GROUP_CONCAT == str_len( $oRow->cl_page ) ) {
+                                if ( GROUP_CONCAT == strlen( $oRow->cl_page ) ) {
                                     $aPages[] = preg_replace('/,\d+,?$/', '', $oRow->cl_page );
                                 } else {
                                     $aPages[] = $oRow->cl_page;
