@@ -36,7 +36,6 @@ class ForumController extends WallBaseController {
 		}
 		
 		$this->app->wg->SuppressPageHeader = true;
-		$this->app->wg->WallBrickHeader = true;
 		$this->app->wg->Out->setPageTitle( wfMsg('forum-board-title', $this->wg->title->getBaseText()) );
 	}
 
@@ -148,18 +147,6 @@ class ForumController extends WallBaseController {
 		$forum = F::build( 'Forum' );
 		$this->response->setVal( 'threads', $forum->getTotalThreads() );
 		$this->response->setVal( 'activeThreads', $forum->getTotalActiveThreads() );
-	}
-
-	public function thread() {
-		parent::index();
-
-		F::build('JSMessages')->enqueuePackage('Wall', JSMessages::EXTERNAL);
-
-		// add assets
-		$this->response->addAsset('extensions/wikia/Forum/css/ForumThread.scss');
-		$this->response->addAsset('forum_js');
-		$this->addMiniEditorAssets();
-		$this->response->addAsset('extensions/wikia/Forum/js/ForumThread.js');
 	}
 
 	public function threadMessage() {

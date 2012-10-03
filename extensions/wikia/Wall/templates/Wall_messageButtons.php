@@ -107,6 +107,10 @@
 <div class="buttons-monobook">
 	<!-- only show this if it's user's own message -->
 	<span class="tools">
+		<? if($canFastAdminDelete): ?>
+			<a href="#"  class="fast-admin-delete-message" data-mode="fastadmin"><?= wfMsg('wall-message-fast-admin-delete-message') ?></a>
+		<? endif; ?>
+		
 		<a href="#" class="quote-button"><?= wfMsg('wall-message-quote-button') ?></a>
 		<? if( $showViewSource ): ?>
 			<a href="#" class="source-message"> <?= wfMsg('user-action-menu-view-source'); ?> </a>

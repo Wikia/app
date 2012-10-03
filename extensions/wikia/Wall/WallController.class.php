@@ -90,12 +90,13 @@ class WallController extends WallBaseController {
 	 *
 	 * @author Andrzej 'nAndy' √Ö¬Åukaszewski
 	 */
+
 	public function renderUserTalkArchiveAnchor() {
 		$title = $this->request->getVal('title');
 
 		$this->renderUserTalkArchiveAnchor = false;
 		$pageTitle = $this->helper->getTitle(NS_USER_TALK);
-		if( $title->getNamespace() == NS_USER_WALL && !empty($pageTitle) && $pageTitle->exists()) {
+		if( !empty($title) && $title->getNamespace() == NS_USER_WALL && !empty($pageTitle) && $pageTitle->exists()) {
 			$this->renderUserTalkArchiveAnchor = true;
 			$this->userTalkArchivePageUrl = (empty($title) ? $this->wg->Title->getFullUrl():$title->getFullUrl()).'/'.$this->helper->getArchiveSubPageText();
 		}

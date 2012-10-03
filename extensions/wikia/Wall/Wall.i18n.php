@@ -12,8 +12,11 @@ $messages['en'] = array(
 
 	'wall-message-undoremove' => 'Undo',
 	'wall-message-edited' => '<a href="$3" >Edited by</a> <a class="username" href="$1">$2</a>',
-	
+	'wall-message-edited-summary' => '<a href="$4" >$1 by </a><a class="username" href="$2">$3</a>',
+								
 	'wall-message-update-topics-summary' => 'Topic changed',
+	'wall-message-update-highlight-summary' => 'Highlighted',
+	'wall-message-update-removed-highlight-summary'  => 'Highlight removed',
 	
 	'wall-message-mywall' => 'My wall',
 	'wall-toolbar-history' => 'History',
@@ -172,6 +175,7 @@ The original post and your summary will still appear in the wiki's history.",
 
 	'wall-recentchanges-new-message' => 'on <a href="$1">$2\'s wall</a>',
 	'wall-recentchanges-edit' => '(edited message)',
+	'wall-recentchanges-summary' => '($1)',
 
 	'wall-recentchanges-removed-thread' => 'removed thread "[[$1|$2]]" from [[$3|$4\'s wall]]',
 	'wall-recentchanges-removed-reply' => 'removed reply from "[[$1|$2]]" from [[$3|$4\'s wall]]',
@@ -377,11 +381,20 @@ $messages['qqq'] = array(
 	'wall-message-wall-shorten' => "Name of the feature when it's used with a possessive, as in John's wall",
 	'wall-message-unfollow' => 'stop subscribing to notifications for this thread',
 	'wall-message-undoremove' => 'undo the action that you just took',
+	'wall-message-edited-summary' => 'Parameters:
+* $1 summary of the edit
+* $2 is the user who edited the message
+* $3 is user page URL
+* $4 is a diff URL.',
 	'wall-message-edited' => 'Parameters:
 * $1 is the user who edited the message
 * $2 is user page URL
 * $3 is a diff URL.',
 	'wall-message-update-topics-summary' => 'Added as auto summery when editing topics',
+	
+	'wall-message-update-highlight-summary' => 'Added as auto summery when highlighted message',
+	'wall-message-update-removed-highlight-summary'  => 'Added as auto summery when removed highlight from message',
+	
 	'wall-message-mywall' => 'It is display when you are on thread page which is on your own wall',
 	'wall-toolbar-history' => 'Link in the toolbar to see the history of the wall or thread',
 	'wall-message-notify' => 'In the remove/delete-message modal box, checkbox for telling the admin about the removal',
@@ -550,6 +563,7 @@ This message follows after http://messaging.wikia.com/wiki/MediaWiki:Prefs-email
 	'wall-deleted-msg-view' => 'Option for admins and staff to view and restore a deleted thread',
 	'wall-recentchanges-new-message' => 'Recent changes item, $2 is wall owner',
 	'wall-recentchanges-edit' => 'Recent changes item, default summary for editing a message',
+	'wall-recentchanges-summary' => 'Recent changes item, summary for editing a message',
 	'wall-recentchanges-removed-thread' => 'Recent changes item. Parameters:
 * $2 is thread title
 * $4 is wall owner

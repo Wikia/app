@@ -363,7 +363,7 @@ class WallMessage {
 			$this->load(true);
 			if($notifyeveryone) {
 				$this->getArticleComment()->setMetaData('notify_everyone', time());
-				$this->doSaveMetadata($app->wg->User);
+				$this->doSaveMetadata($app->wg->User, wfMsgForContent('wall-message-update-highlight-summary') );
 				$rev = $this->getArticleComment()->mLastRevision;
 				$notif = F::build('WallNotificationEntity', array($rev, $this->cityId), 'createFromRev');
 				$wne->addNotificationToQueue($notif);
@@ -371,7 +371,7 @@ class WallMessage {
 				$this->getArticleComment()->removeMetadata('notify_everyone');
 				$pageId = $this->getArticleComment()->getTitle()->getArticleId();
 				$wne->removeNotificationFromQueue($pageId);
-				$this->doSaveMetadata($app->wg->User);
+				$this->doSaveMetadata($app->wg->User, wfMsgForContent('wall-message-update-removed-highlight-summary') );
 			}
 		}
 	}
@@ -383,10 +383,11 @@ class WallMessage {
 		return false;
 	}
 
-	public function setRelatedTopics($relatedTopics) {
+	public function setRelatedTopics($user, $relatedTopics) {
 		if($this->isMain()) {
 			$this->getArticleComment()->setMetaData('related_topics', implode('|', $relatedTopics));
 			$this->storeRelatedTopicsInDB($relatedTopics);
+			$this->doSaveMetadata( $user, wfMsgForContent( 'wall-message-update-topics-summary' ) );
 		}
 		return false;
 	}

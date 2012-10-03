@@ -15,25 +15,65 @@ class WallBaseController extends WikiaController{
 		$this->helper = F::build('WallHelper', array());
 	}
 
-	public function index() {
-		wfProfileIn( __METHOD__ );
+	public function addAsset() {
 		F::build('JSMessages')->enqueuePackage('Wall', JSMessages::EXTERNAL);
-
+				
 		$this->response->addAsset('wall_topic_js');	// need to load on thread only
 		$this->response->addAsset('wall_js');
 		$this->response->addAsset('extensions/wikia/Wall/css/Wall.scss');
 		$this->response->addAsset('extensions/wikia/Wall/css/MessageTopic.scss');	// need to load on thread only
 
 		// Load MiniEditor assets, if enabled
-		if ($this->wg->EnableMiniEditorExtForWall && $this->app->checkSkin( 'oasis' )) {
+		if ($this->wg->EnableMiniEditorExtForWall ) {
 			$this->sendRequest('MiniEditor', 'loadAssets', array(
 				'additionalAssets' => array(
 					'wall_mini_editor_js',
 					'extensions/wikia/MiniEditor/css/Wall/Wall.scss'
 				)
 			));
+		}		
+	}
+	
+	public function thread() {
+		wfProfileIn( __METHOD__ );
+		
+		$this->addAsset();
+		
+		$title = $this->request->getVal('title', $this->app->wg->Title);	
+		$id = $this->request->getVal('id', null);
+
+		$this->getThread($id);
+		
+		$this->response->setVal('showNewMessage', false);
+		$this->response->setVal('type', 'Thread');
+		$this->response->setVal('condenseMessage', false);
+
+		if( count($this->threads) > 0 ) {
+			$wn = F::build('WallNotifications', array());
+			foreach($this->threads as $key => $val ){
+				$all = $wn->markRead( $this->wg->User->getId(), $this->wg->CityId, $key );
+				break;
+			}
 		}
 
+		$this->response->setVal('renderUserTalkArchiveAnchor', false);
+		$this->response->setVal('greeting', '');
+
+		$title = F::build('Title', array($id), 'newFromId' );
+		if(!empty($title) && $title->exists() && in_array(MWNamespace::getSubject( $title->getNamespace() ), $this->app->wg->WallNS) ) {
+			$wallMessage = F::build('WallMessage', array($title), 'newFromTitle' );
+			$wallMessage->load();
+			$this->app->wg->Out->setPageTitle( $wallMessage->getMetaTitle() );
+		}
+
+		wfProfileOut( __METHOD__ );	
+	}
+
+	public function index() {
+		wfProfileIn( __METHOD__ );
+
+		$this->addAsset();
+		
 		$title = $this->request->getVal('title', $this->app->wg->Title);
 		$page = $this->request->getVal('page', 1);
 
@@ -41,59 +81,28 @@ class WallBaseController extends WikiaController{
 		if( !empty($this->app->wg->WallMessagesPerPage) ){
 			$wallMessagesPerPage = $this->app->wg->WallMessagesPerPage;
 		};
+		
+		$this->getThreads($title, $page, $wallMessagesPerPage);
 
-		$filterid = $this->request->getVal('filterid', null);
-		if( !empty($filterid) ) {
-			$this->getThread($filterid);
-		} else {
-			$this->getThreads($title, $page, $wallMessagesPerPage);
+		$this->response->setVal('type', 'Board');
+		$this->response->setVal('showNewMessage', true);
+		$this->response->setVal('condenseMessage', true);
+
+		$this->response->setVal('renderUserTalkArchiveAnchor', $this->request->getVal('dontRenderUserTalkArchiveAnchor', false) != true);
+
+		$greeting = F::build('Title', array($title->getText(), NS_USER_WALL_MESSAGE_GREETING), 'newFromText' );
+		$greetingText = '';
+
+		if(!empty($greeting) && $greeting->exists() ) {
+			$article = F::build( 'Article', array($greeting));
+			$article->getParserOptions();
+			$article->mParserOptions->setIsPreview(true); //create parser option
+			$article->mParserOptions->setEditSection(false);
+			$greetingText = $article->getParserOutput()->getText();
 		}
-
-		if( !empty($filterid) ) {
-			$this->response->setVal('showNewMessage', false);
-			$this->response->setVal('type', 'Thread');
-			$this->response->setVal('condenseMessage', false);
-			$this->response->setVal('showDeleteOrRemoveInfo', true);
-
-			if( count($this->threads) > 0 ) {
-				$wn = F::build('WallNotifications', array());
-				foreach($this->threads as $key => $val ){
-					$all = $wn->markRead( $this->wg->User->getId(), $this->wg->CityId, $key );
-					break;
-				}
-			}
-
-			$this->response->setVal('renderUserTalkArchiveAnchor', false);
-			$this->response->setVal('greeting', '');
-
-			$title = F::build('Title', array($filterid), 'newFromId' );
-			if(!empty($title) && $title->exists() && in_array(MWNamespace::getSubject( $title->getNamespace() ), $this->app->wg->WallNS) ) {
-				$wallMessage = F::build('WallMessage', array($title), 'newFromTitle' );
-				$wallMessage->load();
-				$this->app->wg->Out->setPageTitle( $wallMessage->getMetaTitle() );
-			}
-
-		} else {
-			$this->response->setVal('type', 'Board');
-			$this->response->setVal('showDeleteOrRemoveInfo', false);
-			$this->response->setVal('showNewMessage', true);
-			$this->response->setVal('condenseMessage', true);
-
-			$this->response->setVal('renderUserTalkArchiveAnchor', $this->request->getVal('dontRenderUserTalkArchiveAnchor', false) != true);
-
-			$greeting = F::build('Title', array($title->getText(), NS_USER_WALL_MESSAGE_GREETING), 'newFromText' );
-			$greetingText = '';
-
-			if(!empty($greeting) && $greeting->exists() ) {
-				$article = F::build( 'Article', array($greeting));
-				$article->getParserOptions();
-				$article->mParserOptions->setIsPreview(true); //create parser option
-				$article->mParserOptions->setEditSection(false);
-				$greetingText = $article->getParserOutput()->getText();
-			}
-			wfRunHooks( 'WallGreetingContent', array( &$greetingText ) ); // used by SWM to add messages to Wall in monobook
-			$this->response->setVal('greeting', $greetingText);
-		}
+		wfRunHooks( 'WallGreetingContent', array( &$greetingText ) ); // used by SWM to add messages to Wall in monobook
+		$this->response->setVal('greeting', $greetingText);
+	
 		$this->response->setVal('sortingOptions', $this->getSortingOptions());
 		$this->response->setVal('sortingSelected', $this->getSortingSelectedText());
 		$this->response->setVal('title', $title);
@@ -101,23 +110,7 @@ class WallBaseController extends WikiaController{
 		$this->response->setVal('itemsPerPage', $wallMessagesPerPage);
 		$this->response->setVal('showPager', ($this->countComments > $wallMessagesPerPage) );
 		$this->response->setVal('currentPage', $page );
-
-		if($this->wg->User->getId() > 0 && empty($filterid) ) {
-			//THIS hack will be removed after runing script with will clear all notification copy
-			$dbw = wfGetDB( DB_SLAVE, array() );
-			$row = $dbw->selectRow( array( 'watchlist' ),
-				array( 'count(wl_user) as cnt' ),
-				array(
-					'wl_title' => array( $title->getDbKey() ),
-					'wl_namespace' => array(NS_USER_WALL, NS_USER_WALL_MESSAGE),
-					'wl_wikia_addedtimestamp < "2012-01-31" '
-				), __METHOD__
-			);
-
-			if($row->cnt > 0) {
-				$this->wg->User->removeWatch($this->wg->Title);
-			}
-		}
+		
 		wfProfileOut( __METHOD__ );
 	}
 	
@@ -149,7 +142,6 @@ class WallBaseController extends WikiaController{
 		wfProfileIn( __METHOD__ );
 		
 		$wallMessage = $this->getWallMessage(); 
-		$showDeleteOrRemoveInfo = $this->request->getVal('showDeleteOrRemoveInfo');
 		
 		if( !($wallMessage instanceof WallMessage) ) {
 			$this->forward('WallBaseController', 'message_error');
@@ -175,16 +167,21 @@ class WallBaseController extends WikiaController{
 		$this->response->setVal( 'comment', $wallMessage);
 		$this->response->setVal( 'hide',  false);
 		$this->response->setVal( 'showReplyForm', false);
-		$this->response->setVal( 'showDeleteOrRemoveInfo', $showDeleteOrRemoveInfo );
 		$this->response->setVal( 'removedOrDeletedMessage', false);
+		
+		
+		$isThreadPage = $this->request->getVal( 'isThreadPage', false );
+		
 		$this->response->setVal( 'showRemovedBox', false);
-
-		$this->response->setVal( 'showClosedBox', $wallMessage->isArchive() && !$showDeleteOrRemoveInfo );
+		
+		$this->response->setVal( 'showDeleteOrRemoveInfo', $isThreadPage);
+		$this->response->setVal( 'showClosedBox', $wallMessage->isArchive() & !$isThreadPage );
 
 		if( !$this->getVal('isreply', false) ) {
 			$this->response->setVal('feedtitle', htmlspecialchars($wallMessage->getMetaTitle()) );
 			$this->response->setVal('body', $wallMessage->getText() );
 			$this->response->setVal('isreply', false ); 
+			$this->response->setVal( 'isThreadPage', $isThreadPage );
 			
 			$wallMaxReplies = 4;
 			if( !empty($this->app->wg->WallMaxReplies) ) {
@@ -239,7 +236,14 @@ class WallBaseController extends WikiaController{
 			$this->response->setVal( 'editorUrl',  $editorUrl );
 			$this->response->setVal( 'isEdited',  true);
 			
-			$wallMessage->getLastEditSummery();
+			$summary = $wallMessage->getLastEditSummery();
+			
+			if(!empty($summary)) {
+				$this->response->setVal( 'summary',  $summary );
+				$this->response->setVal( 'showSummary',  true );
+			} else {
+				$this->response->setVal( 'showSummary',  false );
+			}
 			
 			$query = array(
 				'diff' => 'prev',

@@ -132,6 +132,12 @@ class WallNotificationEntity {
 		$this->data_non_cached->msg_text = $ac->getText();
 		$this->data->notifyeveryone = $ac->getNotifyeveryone();
 
+		if($ac->isEdited()) {
+			$this->data->reason = $ac->getLastEditSummery();
+		} else {
+			$this->data->reason = '';
+		}
+
 		if( !empty($acParent) ) {
 			$acParent->load();
 			$parentUser = $acParent->getUser();

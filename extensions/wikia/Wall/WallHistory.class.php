@@ -51,7 +51,7 @@ class WallHistory extends WikiaModel {
 			$feed->data->parent_id,
 			$feed->data_non_cached->thread_title_full,
 			$action,
-			null,
+			$feed->data->reason,
 			$feed->data->rev_id
 		);
 		return true;
