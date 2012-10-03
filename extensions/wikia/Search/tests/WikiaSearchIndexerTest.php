@@ -2,6 +2,10 @@
 
 require_once( 'WikiaSearchBaseTest.php' );
 
+/**
+ * @todo   Find ways to handle all the MW API querying we're doing in tests
+ * @author Robert Elwell <robert@wikia-inc.com>
+ */
 class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 	
 	/**
@@ -194,7 +198,6 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 		$method->setAccessible( true );
 		
 		$this->assertEquals( 'Foo Bar | Baz Qux', $method->invoke( $indexer, $mockArticle ), 'A query for redirect titles with result rows should be pipe-joined with underscores replaced with spaces.' );
-		
 	}
 	
 }

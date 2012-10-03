@@ -66,6 +66,11 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	        'stalest'			=>	array( 'indexed', 	Solarium_Query_Select::SORT_ASC  ),
 	);
 	
+	/**
+	 * Constructor method
+	 * @see   WikiaSearchConfigTest::testConstructor
+	 * @param array $params
+	 */
 	public function __construct( array $params = array() ) {
 		parent::__construct();
 		$this->params = array_merge( $this->params, 
@@ -75,9 +80,10 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 
 	/**
 	 * Magic getters and setters used to make it ease array access.
-	 * Setter provides fluent interface. 
-	 * @param string $method
-	 * @param array  $params
+	 * Setter provides fluent interface.
+	 * @see    WikiaSearchConfigTest::testMagicMethods 
+	 * @param  string $method
+	 * @param  array  $params
 	 * @return Ambigous <NULL, multitype:>|WikiaSearchConfig
 	 */
 	public function __call($method, $params) {
@@ -90,6 +96,7 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	}
 	
 	/**
+	 * @see WikiaSearchConfigTest::testArrayAccessMethods
 	 * @see ArrayAccess::offsetExists()
 	 */
 	public function offsetExists ($offset) {
@@ -97,6 +104,7 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	}
 
 	/**
+	 * @see WikiaSearchConfigTest::testArrayAccessMethods
 	 * @see ArrayAccess::offsetGet()
 	 */
 	public function offsetGet ($offset) {
@@ -104,6 +112,7 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	}
 
 	/**
+	 * @see WikiaSearchConfigTest::testArrayAccessMethods
 	 * @see ArrayAccess::offsetSet()
 	 */
 	public function offsetSet ($offset, $value) {
@@ -111,6 +120,7 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	}
 
 	/**
+	 * @see WikiaSearchConfigTest::testArrayAccessMethods
 	 * @see ArrayAccess::offsetUnset()
 	 */
 	public function offsetUnset ($offset) {
@@ -119,6 +129,7 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	
 	/**
 	 * Synonym function for backwards compatibility
+	 * @see    WikiaSearchConfigTest::testGetSize
 	 * @return integer
 	 */
 	public function getSize() {
@@ -127,6 +138,7 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	
 	/**
 	 * Provides the appropriate search result length based on whether we have an article match or not
+	 * @see    WikiaSearchConfigTest::testGetSize
 	 * @return integer
 	 */
 	public function getLength() {
@@ -138,13 +150,14 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	/**
 	 * Used to store the query from the request as passed by the controller.
 	 * We remove any namespaces prefixes, but store the original query under the originalQuery param.
-	 * @param string $query
+	 * @see    WikiaSearchConfigTest::testSetQuery
+	 * @param  string $query
 	 * @return WikiaSearchConfig provides fluent interface
 	 */
 	public function setQuery( $query ) {
 		$this->params['originalQuery'] = $query;
-		
-		$queryNamespace = MWNamespace::getCanonicalIndex( array_shift( explode( ':', strtolower( $query ) ) ) );
+		$mwNamespace 	= F::build( 'MWNamespace' );
+		$queryNamespace	= $mwNamespace->getCanonicalIndex( array_shift( explode( ':', strtolower( $query ) ) ) );
 		if ( $queryNamespace ) {
 		    if (!in_array($queryNamespace, $this->params['namespaces'])) {
 		        $this->params['queryNamespace'] = $queryNamespace;
@@ -160,20 +173,23 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	/**
 	 * Returns the namespaces that were set if they have been set, otherwise returns default namespaces.
 	 * If a query with a namespace prefix has been set, we also include this value in the namespace array.
+	 * @see    WikiaSearchConfigTest::testSetQueryAndGetNamespaces
 	 * @return array
 	 */
 	public function getNamespaces()	{
+		$searchEngine = F::build( 'SearchEngine' );
 		$namespaces = ( isset($this->params['namespaces']) && !empty($this->params['namespaces']) ) 
 					? $this->params['namespaces'] 
-					: SearchEngine::DefaultNamespaces();
+					: $searchEngine->DefaultNamespaces();
 		
 		$queryNamespaceArray = (isset($this->params['queryNamespace'])) ? array($this->params['queryNamespace']) : array(); 
-		$this->params['namespaces'] = array_merge($namespaces, $queryNamespaceArray);
+		$this->params['namespaces'] = array_unique( array_merge($namespaces, $queryNamespaceArray) );
 		return $this->params['namespaces'];
 	}
 	
 	/**
 	 * Provides the appropriate values for Solarium sorting based on our sort names
+	 * @see    WikiaSearchConfigTest::testGetSort
 	 * @return array where index 0 is the field name and index 1 is the constant used for ASC or DESC in solarium
 	 */
 	public function getSort() {
@@ -204,7 +220,7 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	 * @return WikiaSearchArticleMatch
 	 */
 	public function getArticleMatch() {
-		return $this->params['articleMatch'];
+		return $this['articleMatch'];
 	}
 	
 	/**
