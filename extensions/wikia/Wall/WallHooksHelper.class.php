@@ -72,12 +72,11 @@ class WallHooksHelper {
 				} else {
 					$wallMessage = F::build('WallMessage', array($mainTitle), 'newFromTitle' );
 					$app->wg->SuppressPageHeader = true;
-					$app->wg->WallBrickHeader = $title->getText();
 					if( $wallMessage->isVisible($app->wg->User) ||
 							($wallMessage->canViewDeletedMessage($app->wg->User) && $app->wg->Request->getVal('show') == '1')
 					) {
 						if(wfRunHooks('WallBeforeRenderThread', array($mainTitle, $wallMessage))) {
-							$app->wg->Out->addHTML($app->renderView('WallController', 'index',  array('filterid' => $title->getText(),  'title' => $wallMessage->getWallTitle() )));
+							$app->wg->Out->addHTML($app->renderView('WallController', 'thread',  array('id' => $title->getText(),  'title' => $wallMessage->getWallTitle() )));
 						}
 					} else {
 						$app->wg->Out->addHTML($app->renderView('WallController', 'messageDeleted', array( 'title' =>wfMsg( 'wall-deleted-msg-pagetitle' ) ) ));
@@ -994,7 +993,16 @@ class WallHooksHelper {
 
 			if( $rcType == RC_EDIT ) {
 				$comment = ' ';
-				$comment .= Xml::element('span', array('class' => 'comment'), $app->wf->Msg($this->getMessagePrefix($rc->getAttribute('rc_namespace')).'-edit'));
+				
+				$summary = $rc->mAttribs['rc_comment'];
+				
+				if(empty($summary)) {
+					$msg = $app->wf->MsgForContent( $this->getMessagePrefix($rc->getAttribute('rc_namespace')).'-edit' );
+				} else {
+					$msg = $app->wf->MsgForContent( 'wall-recentchanges-summary', $summary );
+				}
+				
+				$comment .= Xml::element( 'span', array('class' => 'comment'), $msg );
 			} else if( $rcType == RC_LOG && in_array($rc->getAttribute('rc_log_action'), $this->rcWallActionTypes) ) {
 				//this will be deletion/removal/restore summary
 				$text = $rc->getAttribute('rc_comment');
@@ -1632,14 +1640,23 @@ class WallHooksHelper {
 
 				$ret .= $app->wf->Msg('wall-contributions-wall-line', $wfMsgOpts);
 
-				if( !$isNew ) {
-					$ret .= ' ' . Xml::openElement('span', array('class' => 'comment')) . $app->wf->Msg($this->getMessagePrefix($row->page_namespace) . '-edit') . Xml::closeElement('span');
+			}
+
+			if( !$isNew ) {			
+				$summary = $rev->getComment();
+				
+				if(empty($summary)) {
+					$msg = $app->wf->MsgForContent( $this->getMessagePrefix($row->page_namespace).'-edit' );
+				} else {
+					$msg = $app->wf->MsgForContent( 'wall-recentchanges-summary', $summary );
 				}
+				
+				$ret .= ' ' . Xml::openElement('span', array('class' => 'comment')) . $msg . Xml::closeElement('span');
 			}
 
 		}
 
-		wfProfileOut(__METHOD__);
+	 	wfProfileOut(__METHOD__);
 		return true;
 	}
 

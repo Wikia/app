@@ -131,10 +131,6 @@ class ForumHooksHelper {
 
 		$ret .= $app->wf->Msg('forum-contributions-line', $wfMsgOpts);
 
-		if( !$wfMsgOptsBase['isNew'] ) {
-			$ret .= ' ' . Xml::openElement('span', array('class' => 'comment')) . $app->wf->Msg('wall-recentchanges-edit') . Xml::closeElement('span');
-		}
-
 		return false;
 	}
 

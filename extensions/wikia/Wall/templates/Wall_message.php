@@ -2,13 +2,13 @@
 	<?php echo $head ?>
 	
 	<?php echo $app->renderView( 'WallController', 'statusInfoBox', array('showDeleteOrRemoveInfo' => $showDeleteOrRemoveInfo, 'comment' => $comment) ); ?>
-
+	
 	<? if($showRemovedBox): ?>
 		<div class='removed-info speech-bubble-message-removed' >
 			<?php echo wfMsg('wall-removed-reply'); ?>
 		</div>
 	<? endif; ?>
-
+	
 	<div class="speech-bubble-avatar">
 		<a href="<?= $user_author_url ?>">
 			<? if(!$isreply): ?>
@@ -77,7 +77,11 @@
 		<div class="msg-toolbar">
 			<div class="timestamp">
 				<?php if($isEdited):?>
-					<? echo wfMsg('wall-message-edited', array('$1' => $editorUrl, '$2' => $editorName, '$3' => $historyUrl )); ?>
+					<? if($showSummary): ?> 
+						<? echo wfMsg('wall-message-edited-summary', array('$1' => $summary, '$2' => $editorUrl, '$3' => $editorName, '$4' => $historyUrl )); ?>
+					<? else: ?> 	
+						<? echo wfMsg('wall-message-edited', array( '$1' => $editorUrl, '$2' => $editorName, '$3' => $historyUrl )); ?>
+					<? endif; ?>
 				<?php endif; ?>
 				<a href="<?= $fullpageurl; ?>" class="permalink" tabindex="-1">
 					<?php if (!is_null($iso_timestamp)): ?>
@@ -110,7 +114,7 @@
 				<? foreach( $replies as $key  => $val): ?>
 					<?php //TODO: move this logic to controler !!! ?>
 					<?php if(!$val->isRemove() || $showDeleteOrRemoveInfo): ?>
-						<?= $app->renderView( 'WallController', 'message', array('showDeleteOrRemoveInfo' => $showDeleteOrRemoveInfo, 'comment' => $val, 'isreply' => true, 'repliesNumber' => $repliesNumber, 'showRepliesNumber' => $showRepliesNumber,  'current' => $i)  ) ; ?>
+						<?= $app->renderView( 'WallController', 'message', array('isThreadPage' => $isThreadPage, 'comment' => $val, 'isreply' => true, 'repliesNumber' => $repliesNumber, 'showRepliesNumber' => $showRepliesNumber,  'current' => $i)  ) ; ?>
 					<?php else: ?>
 						<?= $app->renderView( 'WallController', 'messageRemoved', array('comment' => $val, 'repliesNumber' => $repliesNumber, 'showRepliesNumber' => $showRepliesNumber,  'current' => $i)) ; ?>
 					<?php endif; ?>

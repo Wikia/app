@@ -1,12 +1,8 @@
 <? 
 if ($wg->EnableMiniEditorExtForWall) {
 	echo $app->renderView('MiniEditorController', 'Setup');
-}
+}?>
 
-if (!empty($app->wg->WallBrickHeader)) {
-	echo $app->renderView('WallController', 'brickHeader', array('id' => $app->wg->WallBrickHeader));
-}
-?>
 <div class="WallGreeting" >
 	<?= $greeting ?>
 </div>
@@ -32,16 +28,12 @@ if (!empty($app->wg->WallBrickHeader)) {
 	<? endif; ?>
 	<ul class="comments">
 		<? foreach($threads as $value): ?>
-			<? echo $app->renderView( 'WallController', 'message', array('showDeleteOrRemoveInfo' => $showDeleteOrRemoveInfo, 'condense' => $condenseMessage, 'title' => $title, 'replies' => $value->getRepliesWallMessages(), 'comment' => $value->getThreadMainMsg(), 'isreply' => false ) ); ?>
+			<? echo $app->renderView( 'WallController', 'message', array( 'isThreadPage' => false, 'condense' => $condenseMessage, 'title' => $title, 'replies' => $value->getRepliesWallMessages(), 'comment' => $value->getThreadMainMsg(), 'isreply' => false ) ); ?>
 		<? endforeach; ?>
 	</ul>
 	<?php if($showPager): ?>
 		<?= $app->renderView( 'PaginationController', 'index', array('totalItems' => $totalItems, 'itemsPerPage' => $itemsPerPage, 'currentPage' => $currentPage)); ?>
 	<?php endif;?>
 	<?= $app->renderView( 'WallController', 'renderUserTalkArchiveAnchor', array('renderUserTalkArchiveAnchor' => $renderUserTalkArchiveAnchor,  'title' => $title ) ); ?>
-	<div id="WallTooltipMeta">
-		<div class="tooltip-text tooltip-votes-vote"><?= wfMsg('wall-votes-vote-tooltip') ?></div>
-		<div class="tooltip-text tooltip-votes-voted"><?= wfMsg('wall-votes-voted-tooltip') ?></div>
-		<div class="tooltip-text tooltip-votes-voterlist"><?= wfMsg('wall-votes-number-tooltip') ?></div>
-	</div>
+	<?= $app->renderPartial('Wall', 'TooltipMeta' ); ?>
 </div>
