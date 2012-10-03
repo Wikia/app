@@ -6,7 +6,7 @@ $wgHooks['ParserFirstCallInit'][] = "BlogTemplateClass::setParserHook";
 
 define ("BLOGS_TIMESTAMP", "20081101000000");
 define ("BLOGS_XML_REGEX", "/\<(.*?)\>(.*?)\<\/(.*?)\>/si");
-define ("GROUP_CONCAT", "32000"); // Changed from 64000 while fixing BugId:49408 - we don't need that much anyway.
+define ("GROUP_CONCAT", "64000");
 define ("BLOGS_DEFAULT_LENGTH", "400");
 define ("BLOGS_HTML_PARSE", "/(<.+?>)?([^<>]*)/s");
 define ("BLOGS_ENTITIES_PARSE", "/&[0-9a-z]{2,8};|&#[0-9]{1,7};|&#x[0-9a-f]{1,6};/i");
