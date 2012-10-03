@@ -10,7 +10,7 @@ $config['oasis_shared_core_js'] = array(
 		'#group_oasis_tracker_js',
 
 		// The following should go to adengine2_js group later
-		'//extensions/wikia/AdEngine/ghost/gw-11.6.7/lib/gw.min.js',
+		'//extensions/wikia/AdEngine/ghost/gw-12.4.4/lib/gw.min.js',
 		'//extensions/wikia/AdEngine/js/gw.config.js',
 	),
 );
@@ -605,7 +605,7 @@ $config['monobook_js'] = array(
 		'//extensions/FBConnect/fbconnect.js',
 		'//extensions/wikia/AdEngine/AdProviderOpenX.js',
 		'//extensions/wikia/AdEngine/LazyLoadAds.js',
-		'//extensions/wikia/AdEngine/ghost/gw-2010.10.4/lib/gw.js',
+		'//extensions/wikia/AdEngine/ghost/gw-12.4.4/lib/gw.src.js',
 		'//extensions/wikia/GlobalNotification/GlobalNotification.js',
 		'//extensions/wikia/WikiaTracker/js/WikiaTracker_config.js',
 		'//extensions/wikia/WikiaTracker/js/WikiaTracker.js',
