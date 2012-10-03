@@ -27,9 +27,8 @@ class AnyclipFeedIngester extends VideoFeedIngester {
 		return $content;
 	}
 
-	private function initFeedUrl( $startDate ) {
-		$today = date( 'Y-m-d' );
-		if ( $startDate != $today ) {
+	private function initFeedUrl( $getAllVideos ) {
+		if ( $getAllVideos ) {
 			$url = str_replace( '$1', 'full', static::$FEED_URL );
 		} else {
 			$url = str_replace( '$1', 'daily', static::$FEED_URL );
@@ -81,6 +80,11 @@ class AnyclipFeedIngester extends VideoFeedIngester {
 				continue;
 			}
 
+			if ( empty($clipData['videoId']) ) {
+				print "ERROR: Empty videoId for {$clipData['titleName']} - {$clipData['description']}.\n";
+				continue;
+			}
+
 			// check for nonadult videos
 			$elements = $item->getElementsByTagNameNS( 'http://search.yahoo.com/mrss/', 'rating' );
 			$clipData['ageGate'] = ( $elements->length > 0 && $elements->item(0)->textContent == 'nonadult' ) ? 0 : 1;
@@ -89,6 +93,8 @@ class AnyclipFeedIngester extends VideoFeedIngester {
 				print "ERROR: Skipping adult video: {$clipData['titleName']} ({$clipData['videoId']}) - {$clipData['description']}.\n";
 				continue;
 			}
+
+			$this->getTitleName( $clipData['titleName'], $clipData['videoId'] );
 
 			$clipData['published'] = $item->getElementsByTagName('pubDate')->item(0)->textContent;
 			$clipData['videoUrl'] = $item->getElementsByTagName('link')->item(0)->textContent;
@@ -199,6 +205,53 @@ class AnyclipFeedIngester extends VideoFeedIngester {
 		);
 
 		return $metadata;
+	}
+
+	protected function getTitleName( &$titleName, $code ) {
+		wfProfileIn( __METHOD__ );
+
+		$url = $this->getApi( $code );
+		$req = MWHttpRequest::factory( $url );
+		$status = $req->execute();
+		if( $status->isOK() ) {
+			$response = $req->getContent();
+			$content = json_decode( $response, true );
+			if ( isset($content['name']) && !empty($content['name']) ) {
+				$titleName = $content['name'];
+			}
+		}
+
+		wfProfileOut( __METHOD__ );
+	}
+
+	protected function getApi( $code ) {
+		global $wgAnyclipApiConfig;
+
+		$params = array(
+			'cid' => $wgAnyclipApiConfig['AppId'],
+			'format' => 'JSON',
+		);
+		$url = str_replace( '$1', $code, 'http://apis.anyclip.com/api/clip/$1/' );
+		$params['sig'] = $this->getApiSig( $url, $params );
+		$url .= '?'.http_build_query( $params );
+
+		return $url;
+	}
+
+	protected function getApiSig( $url, $params ) {
+		global $wgAnyclipApiConfig;
+
+		$input = explode( '.com', $url );
+		if ( !is_array($input) ) {
+			return '';
+		}
+
+		$input = array_pop( $input );
+		$params['appKey'] = $wgAnyclipApiConfig['AppKey'];
+		ksort( $params );
+		$input .= '?'.http_build_query( $params );
+
+		return sha1( $input );
 	}
 
 }
