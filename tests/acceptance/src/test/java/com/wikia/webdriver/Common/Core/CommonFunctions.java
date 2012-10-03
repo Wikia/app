@@ -20,6 +20,7 @@ import org.testng.Assert;
 import com.wikia.webdriver.Common.DriverProvider.DriverProvider;
 import com.wikia.webdriver.Common.Logging.PageObjectLogging;
 import com.wikia.webdriver.Common.Properties.Properties;
+import com.wikia.webdriver.PageObjects.PageObject.BasePageObject;
 
 public class CommonFunctions 
 {
@@ -46,30 +47,86 @@ public class CommonFunctions
 	 * @author: Karol Kujawiak
 	 */
 	
-	public static void logIn(String userName, String password)
+	private static void clickLogInAjax()
 	{
 		driver   = DriverProvider.getWebDriver();
-		wait = new WebDriverWait(driver, 30);
-		WebElement logInAjaxElem = driver.findElement(logInAjax);
-		logInAjaxElem.click();
+		WebElement loginButton = driver.findElement(logInAjax);
+		loginButton.click();
 		PageObjectLogging.log("logIn", "log in ajax button clicked", true, driver);
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("input[name='username']")));
-		WebElement userNameFieldElem = driver.findElement(userNameField);
-		userNameFieldElem.sendKeys(userName);
-		PageObjectLogging.log("logIn", "user name field is populated with " + userName, true, driver);
-		try {
-			Thread.sleep(500);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		WebElement passwordFieldElem = driver.findElement(passwordField);
-		PageObjectLogging.log("logIn", "password field is populated", true, driver);
-		passwordFieldElem.sendKeys(password);
-		WebElement submitButtonElem = driver.findElement(submitButton);
-		submitButtonElem.click();
+	}
+	
+	private static void typeInUserName(String userName)
+	{
+		driver   = DriverProvider.getWebDriver();
+		WebElement userNameInAjax = driver.findElement(userNameField);
+		userNameInAjax.sendKeys(userName);
+		PageObjectLogging.log("logIn", "user name field populated", true, driver);
+	}
+	
+	
+	private static void typeInUserPass(String password)
+	{
+		driver   = DriverProvider.getWebDriver();
+		WebElement passwordInAjax = driver.findElement(passwordField);
+		passwordInAjax.sendKeys(password);
+		PageObjectLogging.log("logIn", "password field populated", true, driver);
+	}
+	
+	private static void clickSubmitLoginButton(String userName)
+	{
+		driver   = DriverProvider.getWebDriver();
+		WebElement submitLoginButton = driver.findElement(submitButton);
+		submitLoginButton.click();
 		PageObjectLogging.log("logIn", "submit button clicked", true, driver);
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("a[href*='/User:"+userName+"']")));		
+		driver.findElement(By.cssSelector("a[href*='/User:"+userName+"']"));
+		PageObjectLogging.log("logIn", "verified user is logged in", true, driver);
+	}
+	
+	
+	
+	public static void logIn(String userName, String password)
+	{
+		try
+		{
+			clickLogInAjax();
+			typeInUserName(userName);
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			typeInUserPass(password);
+			clickSubmitLoginButton(userName);			
+		}
+		catch (TimeoutException e)
+		{
+			PageObjectLogging.log("logIn", "page loads for more than 30 seconds", true, driver);
+		}
+		
+		
+//		driver   = DriverProvider.getWebDriver();
+//		wait = new WebDriverWait(driver, 30);
+//		WebElement logInAjaxElem = driver.findElement(logInAjax);
+//		logInAjaxElem.click();
+//		PageObjectLogging.log("logIn", "log in ajax button clicked", true, driver);
+//		wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("input[name='username']")));
+//		WebElement userNameFieldElem = driver.findElement(userNameField);
+//		userNameFieldElem.sendKeys(userName);
+//		PageObjectLogging.log("logIn", "user name field is populated with " + userName, true, driver);
+//		try {
+//			Thread.sleep(500);
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		WebElement passwordFieldElem = driver.findElement(passwordField);
+//		PageObjectLogging.log("logIn", "password field is populated", true, driver);
+//		passwordFieldElem.sendKeys(password);
+//		WebElement submitButtonElem = driver.findElement(submitButton);
+//		submitButtonElem.click();
+//		PageObjectLogging.log("logIn", "submit button clicked", true, driver);
+//		wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("a[href*='/User:"+userName+"']")));		
 	}
 	
 	/**
