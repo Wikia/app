@@ -79,6 +79,7 @@ class WikiaSearchConfigTest extends WikiaSearchBaseTest {
 	/**
 	 * @covers WikiaSearchConfig::getSize
 	 * @covers WikiaSearchConfig::getLength
+	 * @covers WikiaSearchConfig::getLimit
 	 */
 	public function testGetSize() {
 		
@@ -94,10 +95,17 @@ class WikiaSearchConfigTest extends WikiaSearchBaseTest {
 				$config->getLength(),
 				'WikiaSearchConfig getSize and getLength methods should be synonymous.'
 		);
+		$this->assertEquals(
+				$config->getSize(),
+				$config->getLimit(),
+				'WikiaSearchConfig getSize and getLimit methods should be synonymous without an article match.'	
+		);
 		
 		$mockTitle			= $this->getMock( 'Title' );
 		$mockArticle		= $this->getMock( 'Article', array(), array( $mockTitle ) );
 		$mockArticleMatch	= $this->getMock( 'WikiaSearchArticleMatch', array(), array( $mockArticle ) );
+		
+		$limit = $config->getLimit();
 		
 		$config	->setArticleMatch	( $mockArticleMatch )
 				->setStart			( 0 );
@@ -105,7 +113,45 @@ class WikiaSearchConfigTest extends WikiaSearchBaseTest {
 		$this->assertEquals(
 				WikiaSearchConfig::RESULTS_PER_PAGE - 1,
 				$config->getLength(),
-				'A stored article match in WikiaSearchConfig should result in reducing the length value by 1'
+				'A stored article match in WikiaSearchConfig should result in reducing the length value by 1 if start=0.'
+		);
+		$this->assertEquals(
+				$limit,
+				$config->getLimit(),
+				'The return value of WikiaSearchConfig::getLimit should not mutate regardless of article match if start=0.'
+		);
+		$this->assertEquals(
+		        $config->getSize(),
+		        $config->getLength(),
+		        'WikiaSearchConfig getSize and getLength methods should be synonymous, even with article match at start=0.'
+		);
+		$this->assertNotEquals(
+				$config->getLimit(),
+				$config->getLength(),
+				'WikiaSearchConfig::getLimit and WikiaSearchConfig::getLength should not be equal if we have an article match at start=0.'
+		);
+		
+		$config->setStart( 10 );
+		
+		$this->assertEquals(
+		        WikiaSearchConfig::RESULTS_PER_PAGE,
+		        $config->getLength(),
+		        'A stored article match in WikiaSearchConfig should not result in reducing the length value by 1 if start != 0.'
+		);
+		$this->assertEquals(
+		        $limit,
+		        $config->getLimit(),
+		        'The return value of WikiaSearchConfig::getLimit should not mutate regardless of article match or start.'
+		);
+		$this->assertEquals(
+		        $config->getSize(),
+		        $config->getLength(),
+		        'WikiaSearchConfig getSize and getLength methods should be synonymous, even with article match, regardless of start.'
+		);
+		$this->assertEquals(
+		        $config->getLimit(),
+		        $config->getLength(),
+		        'WikiaSearchConfig::getLimit and WikiaSearchConfig::getLength should be equal if we have an article match at start > 0.'
 		);
 	}
 	
@@ -231,4 +277,34 @@ class WikiaSearchConfigTest extends WikiaSearchBaseTest {
 		);
 	}
 	
+	/**
+	 * @covers WikiaSearchConfig::hasArticleMatch
+	 * @covers WikiaSearchConfig::setArticleMatch
+	 * @covers WikiaSearchConfig::getArticleMatch
+	 */
+	public function testArticleMatching() {
+		$mockTitle			= $this->getMock( 'Title' );
+		$mockArticle		= $this->getMock( 'Article', array(), array( $mockTitle ) );
+		$mockArticleMatch	= $this->getMock( 'WikiaSearchArticleMatch', array(), array( $mockArticle ) );
+		$config				= F::build( 'WikiaSearchConfig' );
+		
+		$this->assertFalse(
+				$config->hasArticleMatch(),
+				'WikiaSearchConfig should not have an article match by default.'
+		);
+		$this->assertNull(
+				$config->getArticleMatch(),
+				'WikiaSearchConfig should return null when getting an uninitialized article match'
+		);
+		$this->assertEquals(
+				$config,
+				$config->setArticleMatch( $mockArticleMatch ),
+				'WikiaSearchConfig::setArticleMatch should provide a fluent interface.'
+		);
+		$this->assertEquals(
+				$mockArticleMatch,
+				$config->getArticleMatch(),
+				'WikiaSearchConfig::getArticleMatch should return the appropriate article match once set.'
+		);
+	}
 }
