@@ -16,6 +16,7 @@ class EvolutionModel {
 	private $redConverter;
 	private $greenConverter;
 	private $blueConverter;
+	/* @var ResultWrapper */
 	private $revisionsData;
 	private $biggestCategories;
 	private $articlesCache = array();
@@ -51,19 +52,7 @@ class EvolutionModel {
 
 
 	private function setColorConverters() {
-		global $wgExternalSharedDB;
-		$db = wfGetDb(DB_SLAVE);
-		$result = $db->select(
-			array( 'site_stats' ),
-			array( 'ss_total_edits', 'ss_total_pages'),
-			array(),
-			__METHOD__,
-			array (),
-			array ()
-		);
-
-		$row = $result->fetchObject();
-		$expected_number_of_edits_to_white = $row->ss_total_edits / $row->ss_total_pages ;
+		$expected_number_of_edits_to_white = SiteStats::edits() / SiteStats::articles() ;
 
 		$wiki_color = $this->wikiColor;
 		$red = hexdec( substr($wiki_color, 0, -4) );
@@ -102,7 +91,6 @@ class EvolutionModel {
 
 
 	private function loadRevisionsData() {
-		global $wgExternalSharedDB;
 		$db = wfGetDb(DB_SLAVE);
 		$result = $db->select(
 			array( 'r' => 'revision', 'page' ),
@@ -132,7 +120,7 @@ class EvolutionModel {
 
 		foreach( $res_part as $part ) {
 			$categories[] = $part["title"];
-		}								
+		}
 
 		$this->biggestCategories = $categories;
 	}
@@ -152,7 +140,7 @@ class EvolutionModel {
 					$processedRow["action"] = 'added' ;
 				}
 			} else {
-				if( !($this->atriclesCache[$page_id]["is_article"]) ) {
+				if( !($this->articlesCache[$page_id]["is_article"]) ) {
 					return 'skip';
 				} else {
 					$processedRow["action"] = $this->updateCacheAndReturnAction($page_id, $rev_len, $row->rev_minor_edit);
@@ -161,8 +149,8 @@ class EvolutionModel {
 
 			$processedRow["title"] = $page_title;
 
-			$processedRow["color"] = $this->atriclesCache[$page_id]["actual_color"];
-			$processedRow["category"] = $this->atriclesCache[$page_id]["category"];
+			$processedRow["color"] = $this->articlesCache[$page_id]["actual_color"];
+			$processedRow["category"] = $this->articlesCache[$page_id]["category"];
 
 			$processedRow["timestamp"] = wfTimestamp( TS_UNIX, $row->rev_timestamp);
 
@@ -184,7 +172,7 @@ class EvolutionModel {
 
 
 	private function checkIfArticleIsInCache($page_id) {
-		if( isset( $this->atriclesCache[$page_id] ) ) {
+		if( isset( $this->articlesCache[$page_id] ) ) {
 			return true;
 		} else {
 			return false;
@@ -194,33 +182,33 @@ class EvolutionModel {
 
 	private function initializeCache($page_id, $page_title, $rev_len) {
 		if( !( $title = Title::newFromID( $page_id ) ) ) {
-			$this->atriclesCache[$page_id]["is_article"] = false;
+			$this->articlesCache[$page_id]["is_article"] = false;
 			return false;
 		}
 		if( $title->getNamespace() == NS_MAIN ) {
-			$this->atriclesCache[$page_id]["is_article"] = true;
+			$this->articlesCache[$page_id]["is_article"] = true;
 		} else {
-			$this->atriclesCache[$page_id]["is_article"] = false;
+			$this->articlesCache[$page_id]["is_article"] = false;
 			return false;
 		}
-		$this->atriclesCache[$page_id]["articles_length"] = $rev_len;
-		$this->atriclesCache[$page_id]["actual_color"] = $this->wikiColor;
+		$this->articlesCache[$page_id]["articles_length"] = $rev_len;
+		$this->articlesCache[$page_id]["actual_color"] = $this->wikiColor;
 		if( CATEGORIESTOARTICLE == 'nolimit' ) {
-			$this->atriclesCache[$page_id]["category"] = $this->getAllCategoriesInOrder( $this->getArticlesCategories($page_title, $page_id) );
+			$this->articlesCache[$page_id]["category"] = $this->getAllCategoriesInOrder( $this->getArticlesCategories($page_title, $page_id) );
 		} else {
-			$this->atriclesCache[$page_id]["category"] = $this->getXCategoriesInOrder( $this->getArticlesCategories($page_title, $page_id), CATEGORIESTOARTICLE );
+			$this->articlesCache[$page_id]["category"] = $this->getXCategoriesInOrder( $this->getArticlesCategories($page_title, $page_id), CATEGORIESTOARTICLE );
 		}
 		return true;
 	}
 
 
 	private function updateCacheAndReturnAction($page_id, $rev_len, $minor_edit) {
-		if( $this->atriclesCache[$page_id]["actual_color"] != "FFFFFF" ) {
-			$this->atriclesCache[$page_id]["actual_color"] = $this->setColor( $minor_edit, $this->atriclesCache[$page_id]["actual_color"] );
+		if( $this->articlesCache[$page_id]["actual_color"] != "FFFFFF" ) {
+			$this->articlesCache[$page_id]["actual_color"] = $this->setColor( $minor_edit, $this->articlesCache[$page_id]["actual_color"] );
 		}
-		if( $rev_len > $this->atriclesCache[$page_id]["articles_length"] ) {
+		if( $rev_len > $this->articlesCache[$page_id]["articles_length"] ) {
 			return "added" ;
-		} else if ($rev_len < $this->atriclesCache[$page_id]["articles_length"]) {
+		} else if ($rev_len < $this->articlesCache[$page_id]["articles_length"]) {
 			return 'deleted';
 		} else {
 			return 'modified';
@@ -329,7 +317,7 @@ class EvolutionModel {
 		}
 	}
 
-	
+
 	private function getAvatar($user_name) {
 
 		if( !($this->checkIfAvatarIsDownloaded($user_name)) ) {
@@ -378,9 +366,6 @@ class EvolutionModel {
 	private function msg($msg) {
 		print "\n".$msg . "\n";
 	}
-
-
-
 
 } // end of EvolutionModel class
 
