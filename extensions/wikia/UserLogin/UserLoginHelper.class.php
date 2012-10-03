@@ -131,7 +131,7 @@ class UserLoginHelper extends WikiaModel {
 	 * @return array $wikis
 	 */
 	public function getRandomWikis( $require=self::LIMIT_WIKIS ) {
-		$this->wf->ProfileIn( __METHOD__ );
+		return array();
 
 		$memKey = $this->wf->SharedMemcKey( 'userlogin', 'random_wikis' );
 		$wikis = $this->wg->Memc->get( $memKey );
