@@ -324,4 +324,135 @@ class WikiaSearchConfigTest extends WikiaSearchBaseTest {
 				'WikiaSearchConfig::getArticleMatch should return the appropriate article match once set.'
 		);
 	}
+	
+	/**
+	 * @covers WikiaSearchConfig::isInterWiki
+	 * @covers WikiaSearchConfig::setIsInterWiki
+	 * @covers WikiaSearchConfig::getIsInterWiki
+	 */
+	public function testInterWiki() {
+		$config	= F::build( 'WikiaSearchConfig' );
+		
+		$this->assertFalse(
+				$config->getIsInterWiki() || $config->getInterWiki() || $config->getIsInterWiki(),
+				'Interwiki accessor methods should be false by default.'
+		);
+		$this->assertEquals(
+				$config,
+				$config->setIsInterWiki( true ),
+				'WikiaSearch::setIsInterWiki should provide fluent interface.'
+		);
+		$this->assertTrue(
+				$config->getIsInterWiki() && $config->getInterWiki() && $config->isInterWiki(),
+				'Interwiki accessor methods should always have the same value, regardless of previous mutated state.'
+		);
+	}
+	
+	/**
+	 * @covers WikiaSearchconfig::getTruncatedResultsNum
+	 */
+	public function testTruncatedResultsNum() {
+		$config	= F::build( 'WikiaSearchConfig' );
+		
+		$singleDigit = 9;
+		
+		$config->setResultsFound( $singleDigit );
+		
+		$this->assertEquals(
+				$singleDigit,
+				$config->getTruncatedResultsNum(),
+				"We should not truncate a single digit result number value."
+		);
+		
+		$doubleDigit = 26;
+		
+		$config->setResultsFound( $doubleDigit );
+		
+		$this->assertEquals(
+				30,
+				$config->getTruncatedResultsNum(),
+				"We should round only for double digits."
+		);
+		
+		$tripleDigit = 492;
+		
+		$config->setResultsFound( $tripleDigit );
+		
+		$this->assertEquals(
+				500,
+				$config->getTruncatedResultsNum(),
+				"We should round to hundreds for triple digits."
+		);
+		
+		$bigDigit = 55555;
+		
+		$config->setResultsFound( $bigDigit );
+		
+		$this->assertEquals(
+				56000,
+				$config->getTruncatedResultsNum(),
+				"Larger digits should round to the nearest n-1 radix."
+		);
+	}
+	
+	/**
+	 * @covers WikiaSearchConfig::getNumPages
+	 */
+	public function testGetNumPages() {
+		$config = F::build( 'WikiaSearchConfig' );
+		
+		$this->assertEquals(
+				0,
+				$config->getNumPages(),
+				'Number of pages should default to zero.'
+		);
+		
+		$numFound = 50;
+		$config->setResultsFound( $numFound );
+		
+		$this->assertEquals(
+				ceil( $numFound / WikiaSearchConfig::RESULTS_PER_PAGE ),
+				$config->getNumPages(),
+				'Number of pages should be divided by default number of results per page by if no limit is set.'
+		);
+		
+		$newLimit = 20;
+		$config->setLimit( $newLimit );
+		
+		$this->assertEquals(
+		        ceil( $numFound / $newLimit ),
+		        $config->getNumPages(),
+		        'Number of pages should be informed by limit set by user.'
+		);
+	}
+	
+	/**
+	 * @covers WikiaSearchConfig::getCityId
+	 * @covers WikiaSearchConfig::setCityID
+	 */
+	public function testGetCityId() {
+		$config = F::build( 'WikiaSearchConfig' );
+		
+		$mockCityId = 123;
+		global $wgCityId;
+		
+		$config->setInterWiki( true );
+		$this->assertEquals(
+				0,
+				$config->getCityId(),
+				'City ID should be zero by default, but only when interwiki.'
+		);
+		
+		$this->assertEquals(
+				$wgCityId,
+				$config->setIsInterWiki( false )->getCityId(),
+				'City ID should default to wgCityId if the config is not interwiki.'
+		);
+		$this->assertEquals(
+				456,
+				$config->setCityID( 456 )->getCityId(),
+				'If we set a different city ID, we should get a different city ID.'
+		);
+	}
+	
 }
