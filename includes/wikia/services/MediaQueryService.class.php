@@ -149,6 +149,7 @@ class MediaQueryService extends WikiaService {
 
 					while ($row = $db->fetchObject( $result ) ) {
 						$media = F::build('Title', array($row->il_to, NS_FILE), 'newFromText');
+						$articleService = F::build('ArticleService', array( $media->getArticleID() ));
 						$file = wfFindFile( $media );
 						if ( !empty( $file ) ) {
 							if ( $file->canRender() ) {
@@ -162,7 +163,8 @@ class MediaQueryService extends WikiaService {
 									$videoHandler = false;
 								}
 								$titles[] = array(
-									'title' => $row->il_to,
+									'title' => $media->getText(),
+									'desc' => $articleService->getTextSnippet( 256 ),
 									'type' => ( $isVideo ? self::MEDIA_TYPE_VIDEO : self::MEDIA_TYPE_IMAGE ),
 									'meta' => ( $videoHandler ? array_merge( $videoHandler->getMetadata(true), $videoHandler->getEmbedSrcData() ) : array() ),
 									'thumbUrl' => ( !empty($thumb) ? $thumb->getUrl() : false ));
