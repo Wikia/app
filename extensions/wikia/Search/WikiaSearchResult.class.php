@@ -177,11 +177,12 @@ class WikiaSearchResult extends Solarium_Document_ReadWrite {
 
 	/**
 	 * Returns the thumbnail object that is used to render thumbnails in a search result
-	 * @return ThumbnailImage (i think?)
+	 * @see    WikiaSearchTest::testGetThumbnail
+	 * @return MediaTransformOutput|null (i think?)
 	 */
 	public function getThumbnail() {
-		if ((!isset($this->thumbnailObject)) && ($this->getVar('ns') == NS_FILE)) {
-			$img = wfFindFile( $this->getTitleObject() );
+		if ( (! isset( $this->thumbnailObject ) ) && ( $this['ns'] == NS_FILE ) ) {
+			$img = F::app()->wf->FindFile( $this->getTitleObject() );
 			if (! empty( $img ) ) {
 				$thumb = $img->transform( array( 'width' => 120, 'height' => 120 ) );
 				if (! empty( $thumb ) ) {

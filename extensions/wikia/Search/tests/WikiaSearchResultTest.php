@@ -286,4 +286,42 @@ class WikiaSearchResultTest extends WikiaSearchBaseTest {
 				'WikiaSearchResult::getTitleObject() should return a title object based on namespace and title field values.'
 		);
 	}
+	
+	/**
+	 * @covers WikiaSearchResult::getThumbnail
+	 * Looks like this is a victim of MediaWiki's habit of declaring multiple classes in a single file?
+	 */
+	public function testGetThumbnail() {
+		/**
+		$result		= F::build( 'WikiaSearchResult', array( $this->defaultFields ) );
+		$titleMock	= $this->getMock( 'Title', array( 'MakeTitle' ) );
+		$mockImage  = $this->getMock( 'stdClass', array( 'transform' ), array(), 'File' );
+		$mockThumb	= $this->getMock( 'stdClass', array(), array(), 'ThumbnailImage' );
+		
+		$result['title']	= 'File:Foo.jpg';
+		$result['ns']		= NS_FILE;
+		
+		$titleMock
+			->expects	( $this->any() )
+			->method	( 'MakeTitle' )
+			->will		( $this->returnValue( $titleMock ) )
+		;
+		
+		$mockImage
+			->expects	( $this->any() )
+			->method	( 'transform' )
+			->will		( $this->returnValue( $mockThumb ) )
+		;
+		
+		$this->mockClass( 'ThumbnailImage', $mockThumb );
+		$this->mockGlobalFunction( 'FindFile', $mockImage );
+		$this->mockApp();
+		
+		$this->assertInstanceOf(
+				'MediaTransformOutput',
+				$result->getThumbnail(),
+				'The result of WikiaSearch::getThumbnail should be an instance of MediaTransformOutput if the thumbnail exists.'
+		);
+		**/
+	}
 }
