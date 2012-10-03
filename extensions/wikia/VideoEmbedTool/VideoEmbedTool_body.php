@@ -93,7 +93,7 @@ class VideoEmbedTool {
 	}
 
 	function insertVideo() {
-		global $wgRequest, $wgUser;
+		global $wgRequest, $wgUser, $wgContLang;
 
 		$url = $wgRequest->getVal( 'url' );
 
@@ -130,7 +130,8 @@ class VideoEmbedTool {
 		} else { // if not a partner video try to parse link for File:
 			$file = null;
 			// get the video name
-			$pattern = '/(File:|Video:)(.+)$/';
+			$nsFileTranslated = $wgContLang->getNsText(NS_FILE);
+			$pattern = '/(File:|Video:|'.$nsFileTranslated.':)(.+)$/';
 			if (preg_match($pattern, $url, $matches)) {
 				$file = wfFindFile( $matches[2] );
 				if ( !$file ) { // bugID: 26721

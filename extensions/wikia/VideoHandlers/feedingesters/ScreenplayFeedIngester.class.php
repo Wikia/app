@@ -64,7 +64,7 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 					// keep going. If this title has Movie Trailer clips, ingest them
 				}
 			}
-			
+
 			$year = $title->getElementsByTagName('Year')->item(0)->textContent;
 			$dateAdded = $title->getElementsByTagName('DateAdded')->item(0)->textContent;
 			$clips = $title->getElementsByTagName('Clip');
@@ -87,6 +87,14 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 				if (strtolower($clipData['trailerType']) == 'not set') unset($clipData['trailerType']);
 				if (strtolower($clipData['trailerVersion']) == 'not set') unset($clipData['trailerVersion']);
 				$clipData['videoId'] = $clip->getElementsByTagName('EclipId')->item(0)->textContent;
+
+				/*
+				 * If array is not empty - use only videos that exists in $this->filterByProviderVideoId array
+				 */
+				if ( count($this->filterByProviderVideoId)>0 && !in_array( $clipData['videoId'], $this->filterByProviderVideoId ) ) {
+					continue;
+				}
+
 				$clipData['description'] = html_entity_decode( $clip->getElementsByTagName('Description')->item(0)->textContent );
 				$clipData['duration'] = $clip->getElementsByTagName('RunTime')->item(0)->textContent;
 				$clipData['trailerRating'] = $clip->getElementsByTagName('TrailerRating')->item(0)->textContent;
