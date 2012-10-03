@@ -12,6 +12,7 @@ abstract class VideoFeedIngester {
 	protected static $FEED_URL;
 	protected static $CLIP_TYPE_BLACKLIST = array();
 	private static $instances = array();
+	protected $filterByProviderVideoId = array();
 	
 	const CACHE_KEY = 'videofeedingester-2';
 	const CACHE_EXPIRY = 3600;
@@ -32,7 +33,18 @@ abstract class VideoFeedIngester {
 	abstract protected function generateName(array $data);
 	abstract protected function generateMetadata(array $data, &$errorMsg);
 	abstract protected function generateCategories(array $data, $addlCategories);
-	
+
+	/*
+	 *  If  $this->filterByProviderVideoId  is not empty, the ingestion script will only upload the videos
+	 *  that are in the array
+	 */
+	public function setFilter( $id ) {
+
+		if ( !in_array( $id, $this->filterByProviderVideoId ) ) {
+			$this->filterByProviderVideoId[] = $id;
+		}
+	}
+
 	public static function getInstance($provider='') {
 		if (empty($provider)) {
 			$className = __CLASS__;
