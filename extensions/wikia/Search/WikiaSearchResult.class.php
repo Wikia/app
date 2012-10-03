@@ -13,6 +13,7 @@ class WikiaSearchResult extends Solarium_Document_ReadWrite {
 
 	/**
 	 * Backwards compatibility, since Solarium_Document_ReadWrite instances have array access.
+	 * @see    WikiaSearchResult::testGetCityId
 	 * @return int;
 	 */
 	public function getCityId() {
@@ -21,7 +22,8 @@ class WikiaSearchResult extends Solarium_Document_ReadWrite {
 	
 	/**
 	 * This field is specially set to handle highlighting, which is separate from the result doc in Solarium.
-	 * @param string $value
+	 * @see    WikiaSearchResultTest::testTextFieldMethods
+	 * @param  string $value
 	 * @return WikiaSearchResult provides fluent interface
 	 */
 	public function setText( $value ) {
@@ -31,6 +33,7 @@ class WikiaSearchResult extends Solarium_Document_ReadWrite {
 	
 	/**
 	 * Get the text found via highlighting fields
+	 * @see    WikiaSearchResultTest::testTextFieldMethods
 	 * @return string
 	 */
 	public function getText() {
@@ -39,6 +42,7 @@ class WikiaSearchResult extends Solarium_Document_ReadWrite {
 
 	/**
 	 * Returns the string value of the document's title
+	 * @see    WikiaSearchResultTest::testTitleFieldMethods
 	 * @return string
 	 */
 	public function getTitle() {
@@ -55,7 +59,8 @@ class WikiaSearchResult extends Solarium_Document_ReadWrite {
 
 	/**
 	 * Allows you to set the title for the search result.
-	 * @param string $value
+	 * @see    WikiaSearchResultTest::testTitleFieldMethods
+	 * @param  string $value
 	 * @return WikiaSearchResult provides fluent interface
 	 */
 	public function setTitle($value) {
