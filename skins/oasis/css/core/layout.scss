@@ -30,3 +30,6 @@ $width-rail: 300px;
  * .WikiaArticle does the same.
  */
 $width-gutter: 10px;
+
+/* wikiaheader-width for the globalheader and gamestarlogo */
+$wikiaheader-width: $width-outside + 14px;
