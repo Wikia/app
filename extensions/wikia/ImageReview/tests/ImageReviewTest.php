@@ -46,7 +46,7 @@ class ImageReviewTest extends WikiaBaseTest {
 		F::setInstance('SpecialPage', $specialPageStub);
 
 		//to prevent fatal error
-		$wgTitleStub = $this->getMock('wgTitle', array('getFullUrl'));
+		$wgTitleStub = $this->getMock('Title', array('getFullUrl'));
 		$wgTitleStub->expects($this->any())->method('getFullUrl')->will($this->returnValue($this->fakeUrl));
 		$this->mockGlobalVariable('wgTitle', $wgTitleStub);
 
