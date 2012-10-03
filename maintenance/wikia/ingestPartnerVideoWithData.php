@@ -25,6 +25,7 @@ Options:
   -e <date>         End date for searching videos by date (Unix timestamp)
   -d                Debug mode
   -r				Reingest videos (overwrite existing)
+  -a				get all videos
   
 Args:
   provider          Partner to import video from. Int defined in VideoPage.php.
@@ -47,6 +48,7 @@ date_sub($now, $di); // for some reason, this subtracts twice the date interval!
 $startDateTS = isset( $options['s'] ) ? $options['s'] : date_timestamp_get($now);
 $debug = isset($options['d']);
 $reupload = isset($options['r']);
+$getAllVideos = isset($options['a']);
 
 // INPUT VALIDATION
 
@@ -106,8 +108,7 @@ foreach ($providersVideoFeed as $provider) {
 			$endDate = date('Y-m-d', $endDateTS);
 			break;
 		case VideoFeedIngester::PROVIDER_ANYCLIP:
-			$startDate = date( 'Y-m-d', $startDateTS );
-			$file = $feedIngester->downloadFeed( $startDate );
+			$file = $feedIngester->downloadFeed( $getAllVideos );
 			break;
 		default:
 	}
