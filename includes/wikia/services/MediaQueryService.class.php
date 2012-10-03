@@ -106,7 +106,7 @@ class MediaQueryService extends WikiaService {
 	}
 
 	protected function getArticleMediaMemcKey(Title $title) {
-		return $this->wf->MemcKey( 'MQSArticleMedia', '1.3', $title->getDBkey() );
+		return $this->wf->MemcKey( 'MQSArticleMedia', '1.4', $title->getDBkey() );
 	}
 
 	public function unsetCache( $title ) {
