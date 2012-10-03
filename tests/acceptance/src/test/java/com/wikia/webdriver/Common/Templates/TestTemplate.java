@@ -29,9 +29,9 @@ public class TestTemplate {
 	{
 		CommonUtils.deleteDirectory("."+File.separator+"logs");
 		CommonUtils.createDirectory("."+File.separator+"logs");
+		Properties.setProperties();
 		PageObjectLogging.startLoggingSuite();
 		
-		Properties.setProperties();
 		
 	}
 	
