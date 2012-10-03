@@ -216,8 +216,21 @@ class AnyclipFeedIngester extends VideoFeedIngester {
 		if( $status->isOK() ) {
 			$response = $req->getContent();
 			$content = json_decode( $response, true );
+
+			$title = '';
+			if ( isset($content['title']['name']) && !empty($content['title']['name']) ) {
+				$title = $content['title']['name'];
+			}
+
 			if ( isset($content['name']) && !empty($content['name']) ) {
-				$titleName = $content['name'];
+				if ( !empty($title) ) {
+					$title .= ' - ';
+				}
+				$title .= $content['name'];
+			}
+
+			if ( !empty($title) ) {
+				$titleName = $title;
 			}
 		}
 
