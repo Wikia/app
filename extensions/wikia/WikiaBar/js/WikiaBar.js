@@ -401,5 +401,7 @@ var WikiaBar = {
 };
 
 $(function() {
-	WikiaBar.init();
+	if(window.wgEnableWikiaBarExt) {
+		WikiaBar.init();
+	}
 });

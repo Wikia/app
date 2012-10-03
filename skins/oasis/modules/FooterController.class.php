@@ -10,7 +10,7 @@ class FooterController extends WikiaController {
 
 		// show for anons as well (BugId:20730)
 		$this->showNotifications = empty($wgSuppressToolbar) && empty($wgEnableWikiaBarExt);
-		$this->showToolbar = !($this->isAdminToolbarSupressed() || $wgSuppressToolbar);
+		$this->showToolbar = !($this->isAdminToolbarSupressed() || $wgSuppressToolbar) && empty($wgEnableWikiaBarExt);
 
 		if( $this->showToolbar == false ) {
 			return;
@@ -20,8 +20,6 @@ class FooterController extends WikiaController {
 		if (!empty($wgShowMyToolsOnly)) {
 			return;
 		}
-
-		// BugId:5497 PerformanceStats are now displayed via OasisToolbarService (see: DevInfoUserCommand)
 	}
 
 	/**

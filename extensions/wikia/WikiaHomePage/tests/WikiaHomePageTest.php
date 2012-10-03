@@ -217,7 +217,7 @@ TXT;
 		);
 		$mockImageServingParams5 = array(
 			'getUrl' => array(
-				'mockExpTimes' => 0,
+				'mockExpTimes' => 3,
 				'mockExpValues' => self::MOCK_FILE_URL
 			)
 		);

@@ -36,7 +36,7 @@ class WikiaBarController extends WikiaController {
 	}
 
 	protected function isWikiaBarSuppressed() {
-		return ($this->isCorporateMainPageNonAnon() || $this->isNonViewActionAnon());
+		return ($this->isCorporateMainPageNonAnon() || $this->isNonViewActionAnon() || WikiaBarHooks::isWikiaBarSuppressed());
 	}
 
 	protected function isCorporateMainPageNonAnon() {

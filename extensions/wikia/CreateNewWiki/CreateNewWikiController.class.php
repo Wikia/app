@@ -14,6 +14,8 @@ class CreateNewWikiController extends WikiaController {
 		$wgSuppressAds = true;
 		$wgSuppressToolbar = true;
 
+		$wgRequest->setVal('createNewWiki', true);
+		
 		// reuiqred for FB Connect to work
 		$this->response->addAsset( 'extensions/wikia/UserLogin/js/UserLoginFacebookPageInit.js' );
 
