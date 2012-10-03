@@ -40,7 +40,7 @@ public class PageObjectLogging implements WebDriverEventListener {
 		Dimension dim = toolkit.getScreenSize();
 		
 		String l1 = "<html><style>table {margin:0 auto;}td:first-child {width:200px;}td:nth-child(2) {width:660px;}td:nth-child(3) {width:100px;}tr.success{color:black;background-color:#CCFFCC;}tr.error{color:black;background-color:#FFCCCC;}tr.step{color:white;background:grey}</style><head><meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\"><style>td { border-top: 1px solid grey; } </style></head><body>";
-		String l2 = "<p>Date: " + dateFormat.format(date) + "</p>";
+		String l2 = "<p>Date: " + dateFormat.format(date) + " UTC</p>";
 		String l3 = "<p>Browser: " + Global.BROWSER + "</p>";
 		String l4 = "<p>OS: " + System.getProperty("os.name") + "</p>";
 		String l5 = "<p>Screen resolution: " + dim.width + "x"+dim.height+"</p>";
