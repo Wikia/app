@@ -330,8 +330,8 @@ class WikiaSearch extends WikiaObject {
     	$title			= $searchEngine->getNearMatch( $term );
 
 	    if( ( $title !== null ) && ( in_array( $title->getNamespace(), $config->getNamespaces() ) ) ) {
-	        $article		= F::build( 'Article',		array( $title ), 'newFromTitle' );
-	        $articleMatch	= F::build( 'ArticleMatch',	array( $article ) );
+	        $article		= F::build( 'Article',					array( $title, RequestContext::getMain() ), 'newFromTitle' );
+	        $articleMatch	= F::build( 'WikiaSearchArticleMatch',	array( $article ) );
 	
 	        $config->setArticleMatch( $articleMatch );
 	        
@@ -475,7 +475,7 @@ class WikiaSearch extends WikiaObject {
 		
 		$dismax	->setQueryFields		( $queryFieldsString )
 				->setPhraseFields		( $queryFieldsString )
-				->setBoostQuery			( $this->getBoostQueryString( $query, $searchConfig ) )
+				->setBoostQuery			( $this->getBoostQueryString( $searchConfig ) )
 				->setMinimumMatch		( $searchConfig->getMinimumMatch() )
 				->setQueryParser		( 'edismax' )
 				->setPhraseSlop			( 3 )
