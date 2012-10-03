@@ -272,8 +272,13 @@ var WikiaBar = {
 		}
 
 		if( window.wgAction == 'edit' ) {
-			var WE = window.WikiaEditor = window.WikiaEditor || (new Observable());
-			WE.getInstance().fire('sizeChanged');
+			var WE = window.WikiaEditor = window.WikiaEditor || (new Observable()),
+				editorInstance = WE.getInstance();
+
+			//quick fix for fb#49383
+			if( typeof(editorInstance) !== 'undefined' ) {
+				editorInstance.fire('sizeChanged');
+			}
 		}
 	},
 	getLocalStorageDataKey: function() {
