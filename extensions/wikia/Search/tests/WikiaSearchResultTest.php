@@ -254,6 +254,36 @@ class WikiaSearchResultTest extends WikiaSearchBaseTest {
 		        $method->invoke( $result, $text, true ),
 		        'WikiaSearchResult::fixSnippeting should append an ellipses to the end of a string if second parameter passed as true. Broken span tags should be repaired, as well.'
 		);
+	}
+	
+	/**
+	 * @covers WikiaSearchResultTest::getTitleObject
+	 */
+	public function testGetTitleObject() {
+		$result		= F::build( 'WikiaSearchResult', array( $this->defaultFields ) );
+		$titleMock	= $this->getMock( 'Title', array( 'MakeTitle' ) );
 		
+		$this->assertNull(
+				$result->getTitleObject(),
+				'A result object without a title value should return null when calling getTitleObject.'
+		);
+		
+		$result['title']	= 'Foo';
+		$result['ns']		= 0;
+		
+		$titleMock
+			->expects	( $this->any() )
+			->method	( 'MakeTitle' )
+			->will		( $this->returnValue( $titleMock ) )
+		;
+		
+		$this->mockClass( 'Title', $titleMock );
+		$this->mockApp();
+		
+		$this->assertEquals(
+				$titleMock,
+				$result->getTitleObject(),
+				'WikiaSearchResult::getTitleObject() should return a title object based on namespace and title field values.'
+		);
 	}
 }
