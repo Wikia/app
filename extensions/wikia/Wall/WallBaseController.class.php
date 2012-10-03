@@ -149,6 +149,7 @@ class WallBaseController extends WikiaController{
 		wfProfileIn( __METHOD__ );
 		
 		$wallMessage = $this->getWallMessage(); 
+		$showDeleteOrRemoveInfo = $this->request->getVal('showDeleteOrRemoveInfo');
 		
 		if( !($wallMessage instanceof WallMessage) ) {
 			$this->forward('WallBaseController', 'message_error');
@@ -171,16 +172,14 @@ class WallBaseController extends WikiaController{
 		}
 		
 		$this->response->setVal( 'head', $head);
-
 		$this->response->setVal( 'comment', $wallMessage);
 		$this->response->setVal( 'hide',  false);
-		
 		$this->response->setVal( 'showReplyForm', false);
-		$this->response->setVal( 'showDeleteOrRemoveInfo', $this->request->getVal('showDeleteOrRemoveInfo') );
+		$this->response->setVal( 'showDeleteOrRemoveInfo', $showDeleteOrRemoveInfo );
 		$this->response->setVal( 'removedOrDeletedMessage', false);
 		$this->response->setVal( 'showRemovedBox', false);
 
-		$this->response->setVal( 'showClosedBox', $wallMessage->isArchive() );
+		$this->response->setVal( 'showClosedBox', $wallMessage->isArchive() && !$showDeleteOrRemoveInfo );
 
 		if( !$this->getVal('isreply', false) ) {
 			$this->response->setVal('feedtitle', htmlspecialchars($wallMessage->getMetaTitle()) );
