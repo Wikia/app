@@ -240,6 +240,8 @@ class WallBaseController extends WikiaController{
 			$this->response->setVal( 'editorUrl',  $editorUrl );
 			$this->response->setVal( 'isEdited',  true);
 			
+			$wallMessage->getLastEditSummery();
+			
 			$query = array(
 				'diff' => 'prev',
 				'oldid' => $wallMessage->getTitle()->getLatestRevID(),

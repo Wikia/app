@@ -712,6 +712,16 @@ class WallMessage {
 	public function isEdited() {
 		return $this->getArticleComment()->mLastRevId != $this->getArticleComment()->mFirstRevId;
 	}
+	
+	public function getLastEditSummery() {
+		$lastRev = Revision::newFromId($this->getArticleComment()->mLastRevId);
+		
+		if(empty($lastRev)) {
+			return false;	
+		}
+				
+		return $lastRev->getComment();
+	}
 
 	public function isAuthor(User $user){
 		return $this->getArticleComment()->isAuthor($user);
