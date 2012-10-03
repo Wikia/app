@@ -5,11 +5,12 @@ class FooterController extends WikiaController {
 		global $wgTitle,
 			   $wgContentNamespaces,
 			   $wgShowMyToolsOnly,
-			   $wgEnableWikiaBarExt;
+			   $wgEnableWikiaBarExt,
+			   $wgSuppressToolbar;
 
 		// show for anons as well (BugId:20730)
 		$this->showNotifications = empty($wgSuppressToolbar) && empty($wgEnableWikiaBarExt);
-		$this->showToolbar = $this->isAdminToolbarSupressed();
+		$this->showToolbar = !($this->isAdminToolbarSupressed() || $wgSuppressToolbar);
 
 		if( $this->showToolbar == false ) {
 			return;
@@ -28,7 +29,7 @@ class FooterController extends WikiaController {
 	 * @return bool
 	 */
 	protected function isAdminToolbarSupressed() {
-		global $wgUser, $wgSuppressToolbar, $wgEnableWikiaBarExt;
+		global $wgUser, $wgSuppressToolbar, $wgEnableWikiaBarExt, $wgSuppressToolbar;
 		return empty($wgSuppressToolbar) && empty($wgEnableWikiaBarExt) && !$wgUser->isAnon();
 	}
 
