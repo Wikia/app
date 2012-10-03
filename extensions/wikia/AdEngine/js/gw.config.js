@@ -2,10 +2,15 @@
  * Make sure scripts from local domains are loaded using regular
  * document.write, not ghostwriter's replacement.
  *
- * This is needed to force synchronization our scripts need.
+ * Also revert the default ghostwriter behavior of replacing the
+ * regular document.write with a safeguard.
+ *
+ * This is needed to force the synchronization our scripts need.
  *
  * Right now, we only need this hack if ads are loaded in <head>,
- * but it should be safe to enable this "hack" globally
+ * but it should be safe to enable this "hack" globally.
+ *
+ * This file needs to be included right after ghostwriter's library.
  */
 
 (function(window, document, location, ghostwriter) {
