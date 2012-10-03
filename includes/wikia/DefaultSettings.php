@@ -975,3 +975,9 @@ $wgResourceLoaderJavascriptMinifier = false;
  * @var false|callback
  */
 $wgResourceLoaderCssMinifier = false;
+
+/**
+ * by default we are not on central wiki
+ * @var false|callback
+ */
+$wgWikiaIsCentralWiki = false;
