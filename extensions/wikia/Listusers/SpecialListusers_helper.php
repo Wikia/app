@@ -465,8 +465,10 @@ class ListusersData {
 		}
 
 		$central_groups = array();
-		if( class_exists('UserRights') ) {
-			$central_groups = UserRights::getGlobalGroups($user);
+		if ( class_exists('UserRights') ) {
+			if ( !UserRights::isCentralWiki() ) {
+				$central_groups = UserRights::getGlobalGroups($user);
+			}
 		}
 
 		# add groups
