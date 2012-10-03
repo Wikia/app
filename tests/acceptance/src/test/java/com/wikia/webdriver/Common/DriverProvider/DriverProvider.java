@@ -101,7 +101,10 @@ public class DriverProvider {
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		try
 		{			
-			driver.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
+			if (!Global.BROWSER.equals("CHROME"))
+			{
+				driver.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
+			}
 			driver.manage().timeouts().setScriptTimeout(30, TimeUnit.SECONDS);
 		}
 		catch (TimeoutException e)
