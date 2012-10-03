@@ -29,7 +29,7 @@ class FooterController extends WikiaController {
 	 * @return bool
 	 */
 	protected function isAdminToolbarSupressed() {
-		global $wgUser, $wgSuppressToolbar, $wgEnableWikiaBarExt, $wgSuppressToolbar;
+		global $wgUser, $wgSuppressToolbar, $wgEnableWikiaBarExt;
 		return empty($wgSuppressToolbar) && empty($wgEnableWikiaBarExt) && !$wgUser->isAnon();
 	}
 
