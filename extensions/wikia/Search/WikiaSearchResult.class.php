@@ -151,14 +151,26 @@ class WikiaSearchResult extends Solarium_Document_ReadWrite {
 
 	/**
 	 * Retrieves the title object for this
-	 * @return Title 
+	 * @see    WikiaSearchResultTest::testGetTitleObject
+	 * @return Title|null
 	 */
 	public function getTitleObject() {
-		if (!isset($this->titleObject)) {
-			$this->titleObject = Title::makeTitle( $this->getVar('ns'), 
-													preg_replace('/^'.MWNamespace::getCanonicalName($this->getVar('ns')).':/', 
-																 '', $this->title)
-											 	 );
+		$title = $this->getTitle();
+		
+		if ( empty( $title ) ) {
+			// this will likely be null
+			return $this->titleObject;
+		}
+		
+		$ns = $this['ns'] ?: 0;
+		
+		if (! isset( $this->titleObject ) ) {
+			$this->titleObject = F::build( 'Title', 
+											array(	$ns, 
+													preg_replace( '/^' . MWNamespace::getCanonicalName( $ns ) . ':/', '', $title )
+												 ),
+											'MakeTitle'
+									 	 );
 		}
 		return $this->titleObject;
 	}

@@ -177,13 +177,12 @@ class WikiaSearchConfigTest extends WikiaSearchBaseTest {
 	 * @covers WikiaSearchConfig::getNamespaces
 	 */
 	public function testSetQueryAndGetNamespaces() {
-		
+
 		$config = F::build( 'WikiaSearchConfig' );
 		$noNsQuery			= 'foo';
 		$nsQuery			= 'File:foo';
 		
 		$searchEngineMock	= $this->getMock( 'stdClass', array( 'DefaultNamespaces' ), array(), 'SearchEngine' );
-		$mwNamespaceMock	= $this->getMock( 'stdClass', array( 'getCanonicalIndex' ), array(), 'MWNamespace' );
 
 		$expectedDefaultNamespaces = array( NS_MAIN );
 		
@@ -192,23 +191,9 @@ class WikiaSearchConfigTest extends WikiaSearchBaseTest {
 			->method	( 'DefaultNamespaces' )
 			->will		( $this->returnValue( $expectedDefaultNamespaces ) )
 		;
-		$mwNamespaceMock
-			->expects	( $this->at(0) )
-			->method	( 'getCanonicalIndex' )
-			->with		( $noNsQuery )
-			->will		( $this->returnValue( null ) )
-		;
-		$mwNamespaceMock
-			->expects	( $this->at(1) )
-			->method	( 'getCanonicalIndex' )
-			->with		( array_shift( explode( ':', strtolower($nsQuery ) ) ) )
-			->will		( $this->returnValue( NS_FILE ) )
-		;
 		
 		$this->mockClass( 'SearchEngine',	$searchEngineMock );
-		$this->mockClass( 'MWNamespace',	$mwNamespaceMock );
 		$this->mockApp();
-		F::setInstance	( 'MWNamespace', 	$mwNamespaceMock );
 		
 		$originalNamespaces = $config->getNamespaces();
 		$this->assertEquals(
