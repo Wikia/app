@@ -70,6 +70,7 @@ class WikiaSearchResult extends Solarium_Document_ReadWrite {
 
 	/**
 	 * Returns the URL based on the value stored in the search document.
+	 * @see    WikiaSearchResult::testUrlMethods
 	 * @return string
 	 */
 	public function getUrl() {
@@ -78,6 +79,7 @@ class WikiaSearchResult extends Solarium_Document_ReadWrite {
 
 	/**
 	 * Returns the view-readable URL
+	 * @see    WikiaSearchResult::testUrlMethods
 	 * @return string
 	 */
 	public function getTextUrl() {
@@ -87,7 +89,8 @@ class WikiaSearchResult extends Solarium_Document_ReadWrite {
 
 	/**
 	 * Sets the URL
-	 * @param string $value
+	 * @see    WikiaSearchResult::testUrlMethods
+	 * @param  string $value
 	 * @return WikiaSearchResult provides fluent interface
 	 */
 	public function setUrl( $value ) {
@@ -97,8 +100,9 @@ class WikiaSearchResult extends Solarium_Document_ReadWrite {
 
 	/**
 	 * general-purpose value-setting method (backwards compatibility)
-	 * @param string $name
-	 * @param mixed  $value
+	 * @see    WikiaSearchResultTest::testVarMethods
+	 * @param  string $name
+	 * @param  mixed  $value
 	 * @return WikiaSearchResult provides fluent interface
 	 */
 	public function setVar($name, $value) {
@@ -108,6 +112,7 @@ class WikiaSearchResult extends Solarium_Document_ReadWrite {
 
 	/**
 	 * Returns a field value (backwards compatibility)
+	 * @see    WikiaSearchResultTest::testVarMethods
 	 * @param string $name
 	 * @param mixed  $default
 	 */
@@ -117,6 +122,7 @@ class WikiaSearchResult extends Solarium_Document_ReadWrite {
 
 	/**
 	 * Returns the fields array (backwards compatibility)
+	 * @see    WikiaSearchResultTest::testVarMethods
 	 * @return array
 	 */
 	public function getVars() {
@@ -125,15 +131,16 @@ class WikiaSearchResult extends Solarium_Document_ReadWrite {
 
 	/**
 	 * Removes junk values from snippeting
+	 * @see   WikiaSearchResultTest::testFixSnippeting
 	 * @param string  $text
 	 * @param boolean $addEllipses
 	 */
 	private function fixSnippeting($text, $addEllipses=false) {
 		$text = preg_replace('/^(span class="searchmatch">)/', '<$1', 
-							preg_replace("/^[[:punct:]] ?/", '',
+							preg_replace("/^[[:punct:]]+ ?/", '',
 							preg_replace("/(<\\/span>)('s)/i", '$2$1',
 							preg_replace('/ +$/', '',
-							preg_replace('/ ?\.{1,3}$/', '', 
+							preg_replace('/ ?\.{2,3}$/', '', 
 							preg_replace('/ ?&hellip;$/', '',
 							str_replace('�', '', $text)))))));
 		return strlen($text) > 0 && $addEllipses 

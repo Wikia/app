@@ -105,4 +105,155 @@ class WikiaSearchResultTest extends WikiaSearchBaseTest {
 		);
 	}
 	
+	/**
+	 * @covers WikiaSearchResult::getUrl
+	 * @covers WikiaSearchResult::setUrl
+	 * @covers WikiaSearchResult::getTextUrl
+	 */
+	public function testUrlMethods() {
+		
+		$result		= F::build( 'WikiaSearchResult', array( $this->defaultFields ) );
+		$urlNormal	= 'http://www.willcaltrainsucktoday.com/Fake:Will_Caltrain_Suck_Today?';
+		$urlEncoded	= 'http://www.willcaltrainsucktoday.com/Fake:Will_Caltrain_Suck_Today' . urlencode('?');
+		
+		$this->assertEquals(
+				'',
+				$result->getUrl(),
+				'WikiaSearchResult::getUrl should return an empty string if the url field has not been set.'
+		);
+		$this->assertEquals(
+				$result,
+				$result->setUrl( $urlEncoded ),
+				'WikiaSearchResult::setUrl should provide a fluent interface.'
+		);
+		$this->assertEquals(
+				$urlNormal,
+				$result->getTextUrl(),
+				'WikiaSearchResult::getTextUrl() should provide a user-readable version of the URL.'
+		);
+		$this->assertEquals(
+				$urlEncoded,
+				$result->getUrl(),
+				'WikiaSearchResult::getUrl should return exactly what was stored in WikiaSearchResult::setUrl'
+		);
+	}
+	
+	/**
+	 * @covers WikiaSearchResult::setVar
+	 * @covers WikiaSearchResult::getVar
+	 * @covers WikiaSearchResult::getVars
+	 */
+	public function testVarMethods() {
+		
+		$result		= F::build( 'WikiaSearchResult', array( $this->defaultFields ) );
+		
+		$this->assertEquals(
+				$this->defaultFields,
+				$result->getVars(),
+				'WikiaSearchResult::getVars should return the protected $_fields array.'
+		);
+		$this->assertEquals(
+				$this->defaultFields['wid'],
+				$result->getVar( 'wid' ),
+				'WikiaSearchResult::getVar should return any values already set in the result fields.'
+		);
+		$this->assertNull(
+				$result->getVar( 'NonExistentField' ),
+				'Querying for nonexistent fields without a second parameter passed should return null in WikiaSearchResult::getVar.'
+		);
+		$this->assertEquals(
+				'TestDefault',
+				$result->getVar( 'NonExistentField', 'TestDefault' ),
+				'WikiaSearchResult::getVar should accommodate a flexible default value as the second parameter.'
+		);
+		$this->assertEquals(
+				$result,
+				$result->setVar( 'foo', 'bar' ),
+				'WikiaSearchResult::setVar should provide a fluent interface.'
+		);
+		$this->assertEquals(
+				$result['foo'],
+				$result->getVar( 'foo' ),
+				'WikiaSearchResult::setVar should store a value as a field, accessible by array methods or getVar().'
+		);
+	}
+	
+	/**
+	 * @covers WikiaSearchResult::fixSnippeting
+	 */
+	public function testFixSnippeting() {
+		
+		$result		= F::build( 'WikiaSearchResult', array( $this->defaultFields ) );
+		$method		= new ReflectionMethod( 'WikiaSearchResult', 'fixSnippeting' );
+		$method->setAccessible( true );
+		
+		$text = '�foo';
+		$this->assertEquals(
+				'foo',
+				$method->invoke( $result, $text ),
+				'WikiaSearchResult::fixSnippeting should remove bytecode junk.'
+		);
+		
+		$text = 'foo &hellip;';
+		$this->assertEquals(
+		        'foo',
+		        $method->invoke( $result, $text ),
+		        'WikiaSearchResult::fixSnippeting should remove string-final ellipses.'
+		);
+		$text = 'foo&hellip;';
+		$this->assertEquals(
+		        'foo',
+		        $method->invoke( $result, $text ),
+		        'WikiaSearchResult::fixSnippeting should remove string-final ellipses.'
+		);
+		$text = 'foo...';
+		$this->assertEquals(
+		        'foo',
+		        $method->invoke( $result, $text ),
+		        'WikiaSearchResult::fixSnippeting should remove string-final ellipses.'
+		);
+		$text = 'foo ...';
+		$this->assertEquals(
+		        'foo',
+		        $method->invoke( $result, $text ),
+		        'WikiaSearchResult::fixSnippeting should remove string-final ellipses.'
+		);
+		$text = 'foo..';
+		$this->assertEquals(
+		        'foo',
+		        $method->invoke( $result, $text ),
+		        'WikiaSearchResult::fixSnippeting should remove multiple string-final periods.'
+		);
+		$text = 'foo                     ';
+		$this->assertEquals(
+		        'foo',
+		        $method->invoke( $result, $text ),
+		        'WikiaSearchResult::fixSnippeting should remove string-final whitespace.'
+		);
+		$text = "foo</span>'s";
+		$this->assertEquals(
+		        "foo's</span>",
+		        $method->invoke( $result, $text ),
+		        'WikiaSearchResult::fixSnippeting should fix searchmatch spans that orphan apostrophes.'
+		);
+		$text = '!,?. foo';
+		$this->assertEquals(
+		        'foo',
+		        $method->invoke( $result, $text ),
+		        'WikiaSearchResult::fixSnippeting should remove string-initial punctuation.'
+		);
+		$text = 'span class="searchmatch"> foo';
+		$this->assertEquals(
+		        '<span class="searchmatch"> foo',
+		        $method->invoke( $result, $text ),
+		        'WikiaSearchResult::fixSnippeting should repair broken string-initial span tags.'
+		);
+		$text = 'foo</span>!!!!';
+		$this->assertEquals(
+		        'foo</span>&hellip;',
+		        $method->invoke( $result, $text, true ),
+		        'WikiaSearchResult::fixSnippeting should append an ellipses to the end of a string if second parameter passed as true. Broken span tags should be repaired, as well.'
+		);
+		
+	}
 }
