@@ -60,19 +60,15 @@ class MediaQueryService extends WikiaService {
 	}
 
 	public static function searchInTitle($query, $page=1, $limit=8) {
-
-		global $wgCityId, $wgExternalDatawareDB;
-
-		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalDatawareDB );
+		$dbr = wfGetDB( DB_SLAVE );
 		$dbquerylike = $dbr->buildLike( $dbr->anyString(), mb_strtolower( $query ), $dbr->anyString() );
 		$res = $dbr->select(
-			array( 'pages' ),
-			array( 'count(page_id) as count ' ),
+			array( 'image' ),
+			array( 'count(*) as count ' ),
 			array(
-				'page_wikia_id' => $wgCityId,
-				"page_title_lower $dbquerylike" ,
-				'page_namespace' => NS_FILE,
-				'page_status' => 0 ),
+				"img_name $dbquerylike" ,
+				"img_media_type in ('".MEDIATYPE_BITMAP."','".MEDIATYPE_DRAWING."')",
+			),
 			__METHOD__
 		);
 
@@ -85,21 +81,21 @@ class MediaQueryService extends WikiaService {
 		);
 
 		$res = $dbr->select(
-			array( 'pages' ),
-			array( ' page_title ' ),
+			array( 'image' ),
+			array( 'img_name' ),
 			array(
-				'page_wikia_id' => $wgCityId,
-				"page_title_lower $dbquerylike",
-				'page_namespace' => NS_FILE,
-				'page_status' => 0 ),
+				"img_name $dbquerylike" ,
+				"img_media_type in ('".MEDIATYPE_BITMAP."','".MEDIATYPE_DRAWING."')",
+			),
 			__METHOD__ ,
 			array (
+				"ORDER BY" => 'img_timestamp',
 				"LIMIT" => $limit,
 				"OFFSET" => ($page*$limit-$limit) )
 		);
 
 		while($row = $dbr->fetchObject($res)) {
-			$results['images'][] = array('title' => $row->page_title);
+			$results['images'][] = array('title' => $row->img_name);
 		}
 
 		return $results;
