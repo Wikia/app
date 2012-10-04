@@ -3,10 +3,10 @@
 class Wall {
 	protected $mTitle;
 	protected $mCityId;
-	
+
 	protected $mMaxPerPage = false;
 	protected $mSorting = false;
-	protected $mRelatedPageId = false; 
+	protected $mRelatedPageId = false;
 	protected $cacheable = true;
 
 	static public function newFromTitle( Title $title ) {
@@ -16,51 +16,51 @@ class Wall {
 		$wall->mCityId = F::app()->wg->CityId;
 		wfProfileOut(__METHOD__);
 		return $wall;
-	} 
-	
+	}
+
 	static public function newFromRelatedPages( Title $title, $relatedPageId ) {
 		wfProfileIn(__METHOD__);
-			
+
 		$wall = new Wall();
 		$wall->mTitle = $title;
 		$wall->mCityId = F::app()->wg->CityId;
 		$wall->mRelatedPageId = (int) $relatedPageId;
-		
+
 		wfProfileOut(__METHOD__);
 		return $wall;
-	} 
-	
+	}
+
 	static function getParentTitleFromReplyTitle( $titleText ) {
 		wfProfileIn(__METHOD__);
 		$parts = explode('/@', $titleText);
 		if(count($parts) < 3) return null;
-		wfProfileOut(__METHOD__);	
+		wfProfileOut(__METHOD__);
 		return $parts[0] . '/@' . $parts[1];
 	}
-	
+
 	public function getId() {
 		return $this->mTitle->getArticleId();
 	}
-	
+
 	public function getTitle() {
 		return $this->mTitle;
 	}
-	
+
 	public function getRelatedPageId() {
 		return $this->mRelatedPageId;
 	}
-	
+
 	public function getUser() {
 		return User::newFromName($this->mTitle->getBaseText(), false);
 	}
-	
+
 	public function getUrl() {
 		wfProfileIn(__METHOD__);
 		$title = F::build( 'title', array( $this->getUser()->getName(), NS_USER_WALL ), 'newFromText' );
 		wfProfileOut(__METHOD__);
 		return $title->getFullUrl();
 	}
-	
+
 	public function disableCache() {
 		$this->cacheable = false;
 	}
@@ -68,30 +68,30 @@ class Wall {
 	protected function getWhere() {
 		wfProfileIn(__METHOD__);
 		$pageId = $this->mTitle->getArticleID();
-		
+
 		$where = "parent_page_id = $pageId  and deleted = 0 and removed = 0";
-		
+
 		if( !empty($this->mRelatedPageId) ) {
 			$where = "comment_id in (select comment_id from wall_related_pages where page_id = {$this->mRelatedPageId})";
 		}
-		
+
 		wfProfileOut(__METHOD__);
 		return $where;
 	}
-	
-	/* 
+
+	/*
 	 * most replies in 7 days
 	 */
-	
+
 	protected function getLast7daysOrder( $master = false ) {
 		wfProfileIn(__METHOD__);
-		
-		$db = wfGetDB( $master ? DB_MASTER : DB_SLAVE ); 
-		
-		$time = date ("Y-m-d H:i:s", time() - 24*7*60*60 ) ; 
-	   	
+
+		$db = wfGetDB( $master ? DB_MASTER : DB_SLAVE );
+
+		$time = date ("Y-m-d H:i:s", time() - 24*7*60*60 ) ;
+
 		$pageId = (int) $this->mTitle->getArticleID();
-		
+
 		$res = $db->select(
 			array( 'comments_index' ),
 			array( 'parent_comment_id, count(*) as cnt' ),
@@ -109,16 +109,16 @@ class Wall {
 		);
 
 		$out = array();
-		
+
 		while ( $row = $db->fetchObject( $res ) ) {
 			$out[] = $row->parent_comment_id;
 		}
 		$ids = implode(',', $out);
- 
+
 		if(!empty($out)) {
-			/* look a lit bit complicated but it is fast, tested on 150000 rows, we are expecing less then that. */  
+			/* look a lit bit complicated but it is fast, tested on 150000 rows, we are expecing less then that. */
 			$ids = implode(',', $out);
-			$out = "CASE WHEN comment_id in (" . $ids . ") THEN Field(comment_id," . $ids . ") 
+			$out = "CASE WHEN comment_id in (" . $ids . ") THEN Field(comment_id," . $ids . ")
 				ELSE 1e12 END asc, comment_id desc ";
 		} else {
 			$out = 'comment_id DESC';
@@ -127,12 +127,12 @@ class Wall {
 		wfProfileOut(__METHOD__);
 		return $out;
 	}
-	
+
 	protected function getOrderBy() {
-		wfProfileIn(__METHOD__);	
+		wfProfileIn(__METHOD__);
 
 		$this->getLast7daysOrder();
-	
+
 		switch( $this->mSorting ) {
 			case 'nt': // newest threads first
 			default:
@@ -150,44 +150,44 @@ class Wall {
 				return $out;
 		}
 	}
-	
+
 	public function getThreads( $page = 1, $master = false ) {
 		wfProfileIn(__METHOD__);
 		// get list of threads (article IDs) on Message Wall
-		$db = wfGetDB( $master ? DB_MASTER : DB_SLAVE ); 
-		
+		$db = wfGetDB( $master ? DB_MASTER : DB_SLAVE );
+
 		$offset = ($page - 1)*$this->mMaxPerPage;
-		
+
 		$where = $this->getWhere();
-		
+
 		$where .= ' and parent_comment_id = 0 ';
-				
+
 		$orderBy = $this->getOrderBy();
-	
+
 		$query = "
 			SELECT comment_id FROM comments_index
 				WHERE $where
 				ORDER BY $orderBy
 				LIMIT $offset, {$this->mMaxPerPage}
 			";
-			
+
 		$res = $db->query( $query );
-		
+
 		$out = array();
-		
+
 		while ( $row = $db->fetchObject( $res ) ) {
 			$out[] = WallThread::newFromId($row->comment_id);
 		}
-		
+
 		wfProfileOut(__METHOD__);
 		return $out;
 	}
 
 	public function getThreadCount( $master = false ) {
 		wfProfileIn(__METHOD__);
-		
-		$db = wfGetDB( $master ? DB_MASTER : DB_SLAVE ); 
-		
+
+		$db = wfGetDB( $master ? DB_MASTER : DB_SLAVE );
+
 		$count = $db->selectField(
 			array( 'comments_index' ),
 			array( 'count(distinct comment_id) cnt' ),
@@ -196,28 +196,22 @@ class Wall {
 				$this->getWhere()
 			),
 			__METHOD__
-		);		
+		);
 
 		wfProfileOut(__METHOD__);
 		return $count;
 	}
-	
+
 	public function setMaxPerPage( $val ) {
-		wfProfileIn(__METHOD__);
  		$this->mMaxPerPage = $val;
- 		wfProfileOut(__METHOD__);
 	}
 
 	public function setSorting( $val ) {
-		wfProfileIn(__METHOD__);
  		$this->mSorting = $val;
- 		wfProfileOut(__METHOD__);
 	}
-	
+
 	public function invalidateCache() {
-		wfProfileIn(__METHOD__);
 		//TODO: implent it
 		return true;
-		wfProfileOut(__METHOD__);
 	}
 }
