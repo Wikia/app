@@ -241,7 +241,6 @@ public class BasePageObject{
 	public void jQueryClick(String cssSelector)
 	{
 		executeScript("$('"+cssSelector+"').click()");
-//		executeScript("$('"+cssSelector+"').click()");
 	}
 	
 	public void jQueryFocus(String cssSelector)

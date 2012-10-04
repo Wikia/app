@@ -16,6 +16,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import org.testng.reporters.JqReporter;
 
 import com.wikia.webdriver.Common.DriverProvider.DriverProvider;
 import com.wikia.webdriver.Common.Logging.PageObjectLogging;
@@ -105,6 +106,7 @@ public class CommonFunctions
 //			clickSubmitLoginButton(userName);			
 //			verifyUserIsLoggedIn(userName);
 			driver   = DriverProvider.getWebDriver();
+			String temp = driver.getCurrentUrl();
 			driver.get(Global.DOMAIN + "wiki/Special:UserLogin");
 			WebElement userNameField = driver.findElement(By.cssSelector("#WikiaArticle input[name='username']"));
 			WebElement passwordField = driver.findElement(By.cssSelector("#WikiaArticle input[name='password']"));
@@ -113,6 +115,7 @@ public class CommonFunctions
 			passwordField.sendKeys(password);
 			submitButton.click();
 			driver.findElement(By.cssSelector(".AccountNavigation a[href*='User:"+userName+"']"));//only for verification
+			driver.get(temp);
 			
 			
 		}
@@ -183,23 +186,34 @@ public class CommonFunctions
 	
 	public static void logIn(String userName, String password, WebDriver driver)
 	{
-		wait = new WebDriverWait(driver, 30);
-		WebElement logInAjaxElem = driver.findElement(logInAjax);
-		logInAjaxElem.click();
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("input[name='username']")));
-		WebElement userNameFieldElem = driver.findElement(userNameField);
-		userNameFieldElem.sendKeys(userName);
-		try {
-			Thread.sleep(500);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		WebElement passwordFieldElem = driver.findElement(passwordField);
-		passwordFieldElem.sendKeys(password);
-		WebElement submitButtonElem = driver.findElement(submitButton);
-		submitButtonElem.click();
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("a[href*='/User:"+userName+"']")));		
+		String temp = driver.getCurrentUrl();
+		driver.get(Global.DOMAIN + "wiki/Special:UserLogin");
+		WebElement userNameField = driver.findElement(By.cssSelector("#WikiaArticle input[name='username']"));
+		WebElement passwordField = driver.findElement(By.cssSelector("#WikiaArticle input[name='password']"));
+		String submitButtonSelector = "#WikiaArticle input[class='login-button big']";
+		WebElement submitButton = driver.findElement(By.cssSelector(submitButtonSelector));
+		userNameField.sendKeys(userName);
+		passwordField.sendKeys(password);
+		submitButton.click();
+		driver.findElement(By.cssSelector(".AccountNavigation a[href*='User:"+userName+"']"));//only for verification
+		driver.get(temp);
+//		wait = new WebDriverWait(driver, 30);
+//		WebElement logInAjaxElem = driver.findElement(logInAjax);
+//		logInAjaxElem.click();
+//		wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("input[name='username']")));
+//		WebElement userNameFieldElem = driver.findElement(userNameField);
+//		userNameFieldElem.sendKeys(userName);
+//		try {
+//			Thread.sleep(500);
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		WebElement passwordFieldElem = driver.findElement(passwordField);
+//		passwordFieldElem.sendKeys(password);
+//		WebElement submitButtonElem = driver.findElement(submitButton);
+//		submitButtonElem.click();
+//		wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("a[href*='/User:"+userName+"']")));		
 	}
 	
 	/**
