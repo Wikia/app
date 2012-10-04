@@ -376,7 +376,7 @@ var WikiaBar = {
 		WikiaTracker.trackEvent(
 			'trackingevent',
 			trackingObj,
-			'internal'
+			'ga'
 		);
 	},
 	clickTrackingHandler: function (e) {
