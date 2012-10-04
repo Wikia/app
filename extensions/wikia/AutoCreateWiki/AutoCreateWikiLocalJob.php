@@ -36,8 +36,9 @@ class AutoCreateWikiLocalJob extends Job {
 	const REMINDER_URL   = "http://theschwartz/function/TheSchwartz::Worker::URL";
 	const REMINDER_DELAY =  172800; # 48h
 
-	private
-		$mFounder;
+	/* @var User */
+	private $mFounder;
+	public $wikiaName, $wikiaLang;
 
 	/**
 	 * constructor
@@ -132,7 +133,7 @@ class AutoCreateWikiLocalJob extends Job {
 	 */
 	public function WFinsert( $city_id, $database = false ) {
 
-		global $wgDBname, $wgErrorLog;
+		global $wgErrorLog;
 
 		/**
 		 * we can take local database from city_id in params array
@@ -235,17 +236,15 @@ class AutoCreateWikiLocalJob extends Job {
 	 * move main page to SEO-friendly name
 	 */
 	private function moveMainPage() {
-		global $wgSitename, $wgUser, $parserMemc, $wgContLanguageCode;
+		global $wgSitename, $parserMemc, $wgContLanguageCode;
 
 		$source = wfMsgForContent('Mainpage');
 		$target = $wgSitename;
 
+		$sourceTitle = Title::newFromText( "Main_Page" );
 		if( !$sourceTitle ) {
-			$sourceTitle = Title::newFromText( "Main_Page" );
-			if( !$sourceTitle ) {
-				Wikia::log( __METHOD__, "err", "Invalid page title: {$source} and Main_page" );
-				return;
-			}
+			Wikia::log( __METHOD__, "err", "Invalid page title: {$source} and Main_page" );
+			return;
 		}
 
 		$mainArticle = new Article( $sourceTitle, 0 );
@@ -384,7 +383,7 @@ class AutoCreateWikiLocalJob extends Job {
 	 * @return boolean status
 	 */
 	private function sendWelcomeMail() {
-		global $wgUser, $wgPasswordSender, $wgWikiaEnableFounderEmailsExt;
+		global $wgPasswordSender, $wgWikiaEnableFounderEmailsExt;
 
 		if(!empty($wgWikiaEnableFounderEmailsExt)) {
 			// skip this step when FounderEmails extension is enabled
@@ -566,7 +565,7 @@ class AutoCreateWikiLocalJob extends Job {
 				# call function
 				$archive = 0;
 
-				$res = ScribeProducer::saveComplete( $oArticle, $oUser, null, null, null, $archive, null, $flags, $oRevision, $status, 0 );
+				ScribeProducer::saveComplete( $oArticle, $oUser, null, null, null, $archive, null, $flags, $oRevision, $status, 0 );
 			}
 
 			$pages[$oRow->page_id] = $oRow->rev_id;
