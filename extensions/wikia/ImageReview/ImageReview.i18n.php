@@ -16,6 +16,7 @@ $messages['en'] = array(
 	'imagereview-state-4' => 'Deleted',
 	'imagereview-state-5' => 'Questionable',
 
+	'imagereview-imagepage-header' => 'Image Review history',
 	'imagereview-imagepage-not-in-queue' => 'Warning: this image has not been added to the review queue.',
 );
 
