@@ -13,7 +13,7 @@ class ExternalUser_Wikia extends ExternalUser {
 
 		return $this->initFromCond( array( 'user_name' => $name ) );
 	}
-
+	
 	protected function initFromId( $id ) {
 		wfDebug( __METHOD__ . ": init User from id: $id \n" );
 		return $this->initFromCond( array( 'user_id' => $id ) );
@@ -313,6 +313,22 @@ class ExternalUser_Wikia extends ExternalUser {
 		} else {
 			wfDebug( __METHOD__ . ": update central user data \n" );
 
+                        /**
+                         * @author Michał Roszka (Mix)
+                         * trap for BugId:17012
+                         */
+                        if ( 'Lancer1289' == $this->mUser->mName || 'Mroszka' == $this->mUser->mName ) {
+                            $aDebugBacktrace = wfDebugBacktrace();
+                            UserMailer::sendHTML(
+                                    'mix@wikia-inc.com',
+                                    'mix@wikia-inc.com',
+                                    'BugId:17012 Occurrence Report',
+                                    $aDebugBacktrace,
+                                    "<pre>{$aDebugBacktrace}</pre>",
+                                    'unknown',
+                                     0
+                            );
+                       }
 			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 			$this->mUser->mTouched = User::newTouchedTimestamp();
 			$dbw->update( '`user`',

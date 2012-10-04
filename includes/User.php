@@ -2977,11 +2977,11 @@ class User {
 			$this->mPassword = '';
 		}
 
+                // wikia change begin
 		/**
 		 * @author Krzysztof Krzyżaniak (eloy)
 		 * trap for BugId: 4013
 		 */
-		// wikia change begin
 		if( $this->mEmail == "devbox@wikia-inc.com" || $this->mEmail == "devbox+test@wikia-inc.com" ) {
 			// gather everything we know about request
 			global $wgCommandLineMode;
@@ -3000,8 +3000,25 @@ class User {
 				}
 			}
 		}
+                
+                /**
+                 * @author Michał Roszka (Mix)
+                 * trap for BugId:17012
+                 */
+                if ( 'Lancer1289' == $this->mName || 'Mroszka' == $this->mName ) {
+                    $aDebugBacktrace = wfDebugBacktrace();
+                    UserMailer::sendHTML(
+                            'mix@wikia-inc.com',
+                            'mix@wikia-inc.com',
+                            'BugId:17012 Occurrence Report',
+                            $aDebugBacktrace,
+                            "<pre>{$aDebugBacktrace}</pre>",
+                            'unknown',
+                            0
+                    );
+                }
 		// wikia change end
-
+                
 		$dbw = wfGetDB( DB_MASTER );
 		$dbw->update( 'user',
 			array( /* SET */
