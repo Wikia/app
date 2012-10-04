@@ -120,8 +120,9 @@
 
 				if ( !empty( $app->wg->StatsDBEnabled ) ) {
 					$db = $app->wf->GetDB( DB_SLAVE, array(), $app->wg->DatamartDB );
+					$ignoreIndex = ($lang == null && $hub == null) ? ' IGNORE INDEX (wiki_time_period)' : '';
 					$tables = array(
-						'rollup_wiki_pageviews AS r',
+						'rollup_wiki_pageviews AS r' . $ignoreIndex,
 						'dimension_wikis AS d'
 					);
 					$where  = array(
