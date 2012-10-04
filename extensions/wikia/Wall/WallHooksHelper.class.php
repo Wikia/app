@@ -2050,6 +2050,7 @@ class WallHooksHelper {
 		return true;
 	}
 	
+	//TODO: implement this :) 
 	public function onDiffLoadText( $self, &$oldtext, &$newtext ) {
 		/*
 		

@@ -1,5 +1,7 @@
 <?php
 
+
+//TODO: maybe just move it back to setup ?
 define( "NS_USER_WALL", 1200 );
 define( "NS_USER_WALL_MESSAGE", 1201 );
 define( "NS_USER_WALL_MESSAGE_GREETING", 1202 );

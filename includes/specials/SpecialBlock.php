@@ -165,9 +165,15 @@ class SpecialBlock extends FormSpecialPage {
 		}
 
 		if( $wgBlockAllowsUTEdit ){
+			global $wgEnableWallExt;
+			$msg = 'ipb-disableusertalk';
+			if(!empty($wgEnableWallExt)) {
+				$msg = 'wall-ipb-disableusertalk';
+			}
+
 			$a['DisableUTEdit'] = array(
 				'type' => 'check',
-				'label-message' => 'ipb-disableusertalk',
+				'label-message' => $msg,
 				'default' => false,
 			);
 		}
