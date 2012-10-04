@@ -131,6 +131,7 @@ class VideoEmbedTool {
 			$file = null;
 			// get the video name
 			$nsFileTranslated = $wgContLang->getNsText(NS_FILE);
+			// added $nsFileTransladed to fix bugId:#48874
 			$pattern = '/(File:|Video:|'.$nsFileTranslated.':)(.+)$/';
 			if (preg_match($pattern, $url, $matches)) {
 				$file = wfFindFile( $matches[2] );
