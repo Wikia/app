@@ -75,19 +75,36 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 		}
 		
 		// tests to make sure the valueForField method works as advertised (ignoring WikiaSearch::field() dependency since all tests passed)
-		$this->assertEquals( WikiaSearch::valueForField( 'foo', 'bar' ), '(foo:bar)', 
-														'WikiaSearch::valueForField() should return Lucene query field wrapped in parens.' );
-		$this->assertEquals( WikiaSearch::valueForField( 'foo', 'bar', array( 'boost' => 5 ) ), '(foo:bar)^5',
-														'WikiaSearch::valueForField() should add Lucene query style boost with boost array param.' );
-		$this->assertEquals( WikiaSearch::valueForField( 'foo', 'bar', array( 'quote'=>"'" ) ), "(foo:'bar')",
-		        										'WikiaSearch::valueForField() should add wrap a search term in quotes with the provided quote param.' );
-		$this->assertEquals( WikiaSearch::valueForField( 'foo', 'bar', array( 'quote' => "'", 'boost' => 5 ) ), "(foo:'bar')^5",
-		        										'WikiaSearch::valueForField() should be able to handle both quotes and boosts at the same time.' );
-		$this->assertEquals( WikiaSearch::valueForField( 'foo', 'bar', array( 'negate' => true ) ), "-(foo:bar)",
-				 										'WikiaSearch::valueForField() should add the Lucene negation operator if array param "negate" is set to true.');
-		
-		
-		
+		$this->assertEquals( 
+				'(foo:bar)',
+				WikiaSearch::valueForField( 'foo', 'bar' ),  
+				'WikiaSearch::valueForField() should return Lucene query field wrapped in parens.'
+		);
+		$this->assertEquals( 
+				'(foo:bar)^5',
+				WikiaSearch::valueForField( 'foo', 'bar', array( 'boost' => 5 ) ),
+				'WikiaSearch::valueForField() should add Lucene query style boost with boost array param.' 
+		);
+		$this->assertEquals(
+				"(foo:'bar')",
+				WikiaSearch::valueForField( 'foo', 'bar', array( 'quote'=>"'" ) ),
+				'WikiaSearch::valueForField() should add wrap a search term in quotes with the provided quote param.' 
+		);
+		$this->assertEquals(
+				"(foo:'bar')^5",
+				WikiaSearch::valueForField( 'foo', 'bar', array( 'quote' => "'", 'boost' => 5 ) ),
+        		'WikiaSearch::valueForField() should be able to handle both quotes and boosts at the same time.' 
+		);
+		$this->assertEquals( 
+				"-(foo:bar)",
+				WikiaSearch::valueForField( 'foo', 'bar', array( 'negate' => true ) ),
+				'WikiaSearch::valueForField() should add the Lucene negation operator if array param "negate" is set to true.'
+		);
+		$this->assertEquals( 
+				'(foo:bar\:\"baz\~\")',
+				WikiaSearch::valueForField( 'foo', 'bar:"baz~"' ),
+				'WikiaSearch::valueForField should sanitize the field value.'
+		);
 	}
 	
 	/**
@@ -148,28 +165,28 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 		$method->setAccessible( true );
 		
 		$searchConfig->setQuery('foo bar');
-		$this->assertEquals( $method->invoke( $wikiaSearch, $searchConfig ),
-							'(html:\"foo bar\")^5 (title:\"foo bar\")^10', 
+		$this->assertEquals( '(html:\"foo bar\")^5 (title:\"foo bar\")^10',
+							$method->invoke( $wikiaSearch, $searchConfig ),
 							'WikiaSearch::getBoostQueryString should boost exact-match in quotes for html and title field'
 							);
 		
 		$searchConfig->setQuery('"foo bar"');
-		$this->assertEquals( $method->invoke( $wikiaSearch, $searchConfig ),
-					        '(html:\"foo bar\")^5 (title:\"foo bar\")^10',
+		$this->assertEquals( '(html:\"foo bar\")^5 (title:\"foo bar\")^10',
+					        $method->invoke( $wikiaSearch, $searchConfig ),
 					        'WikiaSearch::getBoostQueryString should strip quotes from original query'
 							);
 
 		$searchConfig->setQuery("'foo bar'");
-		$this->assertEquals( $method->invoke( $wikiaSearch, $searchConfig ),
-					        '(html:\"foo bar\")^5 (title:\"foo bar\")^10',
+		$this->assertEquals( '(html:\"foo bar\")^5 (title:\"foo bar\")^10',
+							 $method->invoke( $wikiaSearch, $searchConfig ),
 					        'WikiaSearch::getBoostQueryString should strip quotes from original query'
 							);
 		
 		$searchConfig	->setQuery		('foo bar wiki')
 						->setIsInterWiki(true)
 		;
-		$this->assertEquals( $method->invoke( $wikiaSearch, $searchConfig ),
-					        '(html:\"foo bar\")^5 (title:\"foo bar\")^10 (wikititle:\"foo bar\")^15 -(host:answers)^10 -(host:respuestas)^10',
+		$this->assertEquals( '(html:\"foo bar\")^5 (title:\"foo bar\")^10 (wikititle:\"foo bar\")^15 -(host:answers)^10 -(host:respuestas)^10',
+					        $method->invoke( $wikiaSearch, $searchConfig ),
 					        'WikiaSearch::getBoostQueryString should remove "wiki" from searches,, include wikititle, and remove answers wikis'
 							);
 	}

@@ -49,9 +49,10 @@ class Solarium_Client_NestedQueryBuilder extends Solarium_Client_Builder
      */
     public function build( $query )
     {
+        $helper = new Solarium_Query_Helper();
         return sprintf('_query_:"{!%s %s}%s"', $this->getDefType($query), 
                                                $this->constructParamString($this->getSubQueryParams($this->getParamsFromQuery($query))),
-                                               $query->getQuery()
+                                               $helper->escapeTerm( $query->getQuery() ) // we need to double-escape subqueries values per solr bug
                       );       
         
     }

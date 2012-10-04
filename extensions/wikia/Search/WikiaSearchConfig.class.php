@@ -17,6 +17,24 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	const RESULTS_PER_PAGE	=	10;
 	
 	/**
+	 * Constant for retrieving query -- default behavior
+	 * @var int
+	 */
+	const QUERY_DEFAULT		=	1;
+	
+	/**
+	 * Constant for retrieving query -- retrieve query without escaping
+	 * @var int
+	 */
+	const QUERY_RAW			=	2;
+	
+	/**
+	 * Constant for retrieving query -- retrieve unescaped query with HTML entities encoded
+	 * @var int
+	 */
+	const QUERY_ENCODED		=	3;
+	
+	/**
 	 * Default parameters for a number of values that come up regularly in search
 	 * @var array
 	 */
@@ -150,11 +168,14 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	/**
 	 * Used to store the query from the request as passed by the controller.
 	 * We remove any namespaces prefixes, but store the original query under the originalQuery param.
-	 * @see    WikiaSearchConfigTest::testSetQuery
+	 * @see    WikiaSearchConfigTest::testQueryAndNamespaceMethods
 	 * @param  string $query
 	 * @return WikiaSearchConfig provides fluent interface
 	 */
 	public function setQuery( $query ) {
+		
+		$query = html_entity_decode( Sanitizer::StripAllTags ( $query ), ENT_COMPAT, 'UTF-8');
+		
 		$this->params['originalQuery'] = $query;
 		$mwNamespace 	= F::build( 'MWNamespace' );
 		$queryNamespace	= $mwNamespace->getCanonicalIndex( array_shift( explode( ':', strtolower( $query ) ) ) );
@@ -171,9 +192,32 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	}
 	
 	/**
+	 * Most of the time, we want the query escaped for XSS and Lucene syntax well-formedness
+	 * @see    WikiaSearchConfigTest::testQueryAndNamespaceMethods
+	 * @param  int $strategy one of the self::QUERY_ constants
+	 * @return string
+	 */
+	public function getQuery( $strategy = self::QUERY_DEFAULT ) {
+		$query = $strategy !== self::QUERY_DEFAULT	? $this->params['query'] : WikiaSearch::sanitizeQuery( $this->params['query'] );
+		$query = $strategy === self::QUERY_ENCODED	? htmlentities( $query ) : $query;
+		return $query;
+	}
+	
+	/**
+	 * Strips out quotes, and optionally
+	 * @see    WikiaSearchConfigTest::testQueryAndNamespaceMethods 
+	 * @param  boolean $raw
+	 * @return string
+	 */
+	public function getQueryNoQuotes( $raw = false ) {
+		$query = preg_replace( "/['\"]/", '', preg_replace( "/(\\w)['\"](\\w)/", '$1 $2',  html_entity_decode( $this->params['query'], ENT_COMPAT, 'UTF-8' ) ) );
+		return $raw ? $query : WikiaSearch::sanitizeQuery( $query );
+	}
+	
+	/**
 	 * Returns the namespaces that were set if they have been set, otherwise returns default namespaces.
 	 * If a query with a namespace prefix has been set, we also include this value in the namespace array.
-	 * @see    WikiaSearchConfigTest::testSetQueryAndGetNamespaces
+	 * @see    WikiaSearchConfigTest::testQueryAndNamespaceMethods
 	 * @return array
 	 */
 	public function getNamespaces()	{

@@ -105,6 +105,7 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 		parent::__construct();
 		$this->searchResultObject = $result;
 		$this->searchConfig = $searchConfig;
+		$this->setQuery( $searchConfig->getQuery( WikiaSearchConfig::QUERY_ENCODED ) );
 		
 		if ( ( $parent === null ) && $this->searchConfig->getGroupResults() ) {
 			

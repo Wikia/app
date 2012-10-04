@@ -161,8 +161,6 @@ class WikiaSearch extends WikiaObject {
 			$result = F::build('Solarium_Result_Select_Empty');
 		}
 		$results = F::build('WikiaSearchResultSet', array($result, $searchConfig) );
-		// set here due to all the changes we make to the base query
-		$results->setQuery($searchConfig->getQuery());
 		
 		$searchConfig->setResults		( $results )
 					 ->setResultsFound	( $results->getResultsFound() )
@@ -320,7 +318,7 @@ class WikiaSearch extends WikiaObject {
 	public function getArticleMatch( WikiaSearchConfig $config ) {
 	    wfProfileIn(__METHOD__);
 	
-	    $term = $config->getQuery();
+	    $term = $config->getQueryNoQuotes( WikiaSearchConfig::QUERY_RAW );
 	
 	    if ( $config->hasArticleMatch() ) {
 	        return $config->getArticleMatch();
@@ -392,7 +390,7 @@ class WikiaSearch extends WikiaObject {
 	 * @param  string $query
 	 * @return string
 	 */
-	private static function sanitizeQuery( $query )
+	public static function sanitizeQuery( $query )
 	{
 	    if ( self::$queryHelper === null ) {
 	        self::$queryHelper = new Solarium_Query_Helper();
@@ -592,14 +590,12 @@ class WikiaSearch extends WikiaObject {
 	 */
 	private function getBoostQueryString( WikiaSearchConfig $searchConfig )
 	{
-		$query = $searchConfig->getQuery();
+		$queryNoQuotes = $searchConfig->getQueryNoQuotes( true );
 		
 		if ( $searchConfig->isInterWiki() ) {
-			$query = preg_replace( '/ wiki\b/i', '', $query );
+			$queryNoQuotes = preg_replace( '/ wiki\b/i', '', $queryNoQuotes );
 		}
-		
-		$queryNoQuotes = preg_replace( "/['\"]/", '', html_entity_decode( $query, ENT_COMPAT, 'UTF-8' ) );
-		
+
 		$boostQueries = array(
 				self::valueForField( 'html', $queryNoQuotes, array( 'boost'=>5, 'quote'=>'\"' ) ),
 		        self::valueForField( 'title', $queryNoQuotes, array( 'boost'=>10, 'quote'=>'\"' ) ),

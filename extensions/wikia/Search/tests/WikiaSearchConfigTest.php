@@ -174,9 +174,11 @@ class WikiaSearchConfigTest extends WikiaSearchBaseTest {
 	
 	/**
 	 * @covers WikiaSearchConfig::setQuery
+	 * @covers WikiaSearchConfig::getQuery
 	 * @covers WikiaSearchConfig::getNamespaces
+	 * @covers WikiaSearchConfig::getQueryNoQuotes
 	 */
-	public function testSetQueryAndGetNamespaces() {
+	public function testQueryAndNamespaceMethods() {
 
 		$config = F::build( 'WikiaSearchConfig' );
 		$noNsQuery			= 'foo';
@@ -245,6 +247,73 @@ class WikiaSearchConfigTest extends WikiaSearchBaseTest {
 		        array_merge( $originalNamespaces, array( NS_FILE ) ),
 		        $config->getNamespaces(),
 		        'Setting a namespace-prefixed query should result in the appropriate namespace being appended.'
+		);
+		$tildeQuery = 'foo~';
+		$this->assertEquals(
+				'foo\~',
+				$config->setQuery( $tildeQuery )->getQuery(),
+				'A query with a tilde should be escaped in getQuery.'
+		);
+		$quoteQuery = '"foo bar"';
+		$this->assertEquals(
+				'\"foo bar\"',
+				$config->setQuery( $quoteQuery )->getQuery(),
+				'A query with quotes should have the quotes escaped by default in getQuery.'
+		);
+		$this->assertEquals(
+		        '"foo bar"',
+		        $config->setQuery( $quoteQuery )->getQuery( true ),
+		        'A query with quotes should have its quotes left alone if the first parameter of getQuery is passed as true.'
+		);
+		$this->assertEquals(
+				'foo bar',
+				$config->setQuery( $quoteQuery )->getQueryNoQuotes(),
+				'A query with double quotes should have its quotes stripped in the default versoin of getQueryNoQuotes.'
+		);
+		$this->assertEquals(
+		        'foo bar\~',
+		        $config->setQuery( $quoteQuery.'~' )->getQueryNoQuotes(),
+		        'Tildes should be escaped in the default versoin of getQueryNoQuotes.'
+		);
+		$this->assertEquals(
+		        'foo bar~',
+		        $config->setQuery( $quoteQuery.'~' )->getQueryNoQuotes( true ),
+		        'Tildes should not be escaped in the raw versoin of getQueryNoQuotes.'
+		);
+		
+		$xssQuery = "foo'<script type='javascript'>alert('xss');</script>";
+		$this->assertEquals(
+				"foo'alert\\('xss'\\);",
+				$config->setQuery( $xssQuery )->getQuery(),
+				'Setting a query should result in the sanitization and html entity decoding of that query.'
+		);
+		$this->assertEquals(
+				"foo alert\\(xss\\);",
+				$config->getQueryNoQuotes(),
+				"Queries with quotes or apostrophes between two letters should be replaced with spaces with getQueryNoQuotes."
+		);
+
+		$htmlEntityQuery = "'foo & bar &amp; baz' &quot;";
+		$this->assertEquals(
+				"'foo & bar & baz' \\\"",
+				$config->setQuery( $htmlEntityQuery )->getQuery(),
+				"HTML entities in queries should be decoded when being set."
+		);
+		$this->assertEquals(
+		        $config->setQuery( $htmlEntityQuery )->getQuery( WikiaSearchConfig::QUERY_DEFAULT ),
+		        $config->setQuery( $htmlEntityQuery )->getQuery(),
+		        "The default behavior of the getQuery method should be identical to passing the WikiaSearchConfig::QUERY_DEFAULT constant."
+		);
+		
+		$this->assertEquals(
+		        "'foo & bar & baz' \"",
+		        $config->setQuery( $htmlEntityQuery )->getQuery( WikiaSearchConfig::QUERY_RAW ),
+		        "HTML entities in queries should be decoded when being set. Raw-strategy queries shouldn't escape anything."
+		);
+		$this->assertEquals(
+		        "'foo &amp; bar &amp; baz' &quot;",
+		        $config->setQuery( $htmlEntityQuery )->getQuery( WikiaSearchConfig::QUERY_ENCODED ),
+		        "HTML entities in queries should be decoded when being set. HTML-decoded queries should properly HTML-encode all entities on access if using encoded strategy."
 		);
 	}
 	

@@ -46,7 +46,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$searchConfig = F::build('WikiaSearchConfig');
 		
 		$searchConfig
-			->setQuery			( htmlentities( Sanitizer::StripAllTags ( $this->getVal('query', $this->getVal('search')) ), ENT_COMPAT, 'UTF-8') )
+			->setQuery			( $this->getVal('query', $this->getVal('search') ) )
 			->setCityId			( $this->wg->CityId )
 			->setLimit			( $this->getVal('limit', self::RESULTS_PER_PAGE) )
 			->setPage			( $this->getVal('page', 1) )
@@ -67,7 +67,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			OasisController::addBodyClass('inter-wiki-search');
 		}
 
-		if( $searchConfig->getQuery() ) {
+		if( $searchConfig->getQueryNoQuotes( true ) ) {
 			$articleMatch = null;
 			$this->wikiaSearch->getArticleMatch( $searchConfig );
 			if ( $searchConfig->getPage() == 1 ) {
@@ -77,7 +77,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			$this->wikiaSearch->doSearch( $searchConfig );
 
 			$this->app->wg->Out->setPageTitle( $this->wf->msg( 'wikiasearch2-page-title-with-query', 
-												array(ucwords($searchConfig->getQuery()), $this->wg->Sitename) )  );
+												array( ucwords( $searchConfig->getQuery( WikiaSearchConfig::QUERY_RAW ) ), $this->wg->Sitename) )  );
 		} else {
 			if( $searchConfig->getIsInterWiki() ) {
 				$this->app->wg->Out->setPageTitle( $this->wf->msg( 'wikiasearch2-page-title-no-query-interwiki' ) );
@@ -104,7 +104,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setVal( 'currentPage', 			$searchConfig->getPage() ); 
 		$this->setVal( 'paginationLinks',		$this->sendSelfRequest( 'pagination',  array('config' => $searchConfig) ) ); 
 		$this->setVal( 'tabs', 					$this->sendSelfRequest( 'tabs', array( 'config' => $searchConfig ) ) );
-		$this->setVal( 'query',					$searchConfig->getQuery() );
+		$this->setVal( 'query',					$searchConfig->getQuery( WikiaSearchConfig::QUERY_ENCODED ) );
 		$this->setVal( 'resultsPerPage',		$searchConfig->getLimit() );
 		$this->setVal( 'pageUrl',				$this->wg->Title->getFullUrl() );
 		$this->setVal( 'debug',					$searchConfig->getDebug() );
@@ -359,8 +359,6 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			throw new Exception("This should not be called outside of self-request context.");
 		}
 
-		$this->setVal( 'term',  				$config->getQuery() );
-		$this->setVal( 'bareterm', 				$config->getQuery() ); // query is stored as bareterm in config
 		$this->setVal( 'namespaces', 			$config->getNamespaces() );
 		$this->setVal( 'searchableNamespaces', 	SearchEngine::searchableNamespaces() );
 		$this->setVal( 'redirs', 				$config->getIncludeRedirects() );
@@ -377,7 +375,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		    throw new Exception("This should not be called outside of self-request context.");
 		}
 		
-		$this->setVal( 'bareterm', 			$config->getQuery() );
+		$this->setVal( 'bareterm', 			$config->getQuery( WikiaSearchConfig::QUERY_RAW ) );
 		$this->setVal( 'searchProfiles', 	$config->getSearchProfiles() );
 		$this->setVal( 'redirs', 			$config->getIncludeRedirects() );
 		$this->setVal( 'activeTab', 		$config->getActiveTab() );
@@ -408,7 +406,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 						? ( $page + self::PAGES_PER_WINDOW )
 						: $config->getNumPages() ) ;
 
-		$this->setVal( 'query', 			$config->getQuery() );
+		$this->setVal( 'query', 			$config->getQuery( WikiaSearchConfig::QUERY_RAW ) );
 		$this->setVal( 'pagesNum', 			$config->getNumPages() );
 		$this->setVal( 'currentPage', 		$page );
 		$this->setVal( 'windowFirstPage', 	$windowFirstPage );
