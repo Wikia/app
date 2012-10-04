@@ -8,6 +8,15 @@ $messages['en'] = array(
 	'imagereview-header-questionable' => 'Questionable images awaiting staff review',
 	'imagereview-header-rejected' => 'Rejected images awaiting staff review',
 	'imagereview-noresults' => 'No images found.',
+
+	'imagereview-state-0' => 'Unreviewed',
+	'imagereview-state-1' => 'In review',
+	'imagereview-state-2' => 'Approved',
+	'imagereview-state-3' => 'Rejected',
+	'imagereview-state-4' => 'Deleted',
+	'imagereview-state-5' => 'Questionable',
+
+	'imagereview-imagepage-not-in-queue' => 'Warning: this image has not been added to the review queue.',
 );
 
 $messages['pl'] = array(
