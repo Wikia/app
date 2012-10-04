@@ -71,7 +71,7 @@ function wfMainPageTag_lcs( $input, $args, $parser ) {
 	} else {
 		$gutter = 300 + $args['gutter'];
 		$html .= 'main-page-tag-lcs-exploded" ';
-		if ( !empty($wgOasisGrid) ) {
+		if ( F::app()->checkSkin( 'oasis' ) && !empty($wgOasisGrid) ) {
 			$html .= '><div>';
 		} else {
 			$html .= 'style="margin-right: -'. $gutter .'px; "><div style="margin-right: '. $gutter .'px;">';
