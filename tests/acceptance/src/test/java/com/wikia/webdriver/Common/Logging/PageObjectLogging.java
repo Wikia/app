@@ -44,6 +44,8 @@ public class PageObjectLogging implements WebDriverEventListener {
 		String l3 = "<p>Browser: " + Global.BROWSER + "</p>";
 		String l4 = "<p>OS: " + System.getProperty("os.name") + "</p>";
 		String l5 = "<p>Screen resolution: " + dim.width + "x"+dim.height+"</p>";
+		String l6 = "<p>Testing environment: "+ Global.DOMAIN+"</p>";
+		String l7 = "<p>Testing environment: "+ Global.LIVE_DOMAIN+"</p>";
 		
 		
 		CommonUtils.appendTextToFile(logPath, l1);
@@ -51,6 +53,8 @@ public class PageObjectLogging implements WebDriverEventListener {
 		CommonUtils.appendTextToFile(logPath, l3);
 		CommonUtils.appendTextToFile(logPath, l4);
 		CommonUtils.appendTextToFile(logPath, l5);
+		CommonUtils.appendTextToFile(logPath, l6);
+		CommonUtils.appendTextToFile(logPath, l7);
 	}
 
 	public static void stopLoggingSuite() {
