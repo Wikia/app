@@ -32,7 +32,7 @@ AIC2.init = function() {
 
 	if (AIC2.startPosition + AIC2.magicNumber < AIC2.stopPosition) {
 		Liftium.d("AIC2: page long enough", 7);
-		AIC2.$placeHolder.append('<div id="INCONTENT_BOXAD_1" class="noprint" style="height: 250px; width: 300px; position: relative;"><div id="Liftium_300x250_99"><iframe width="300" height="250" id="INCONTENT_BOXAD_1_iframe" class="" noresize="true" scrolling="no" frameborder="0" marginheight="0" marginwidth="0" style="border:none;display:block" target="_blank"></iframe></div></div><!-- END SLOTNAME: INCONTENT_BOXAD_1 -->');
+		AIC2.$placeHolder.append('<div id="INCONTENT_BOXAD_1" class="noprint" style="height: 250px; width: 300px; position: relative;"></div>');
 
 		//if (!AIC2.checkFooterAd()) {
 			$window.bind("scroll.AIC2", AIC2.onScroll ); // FIXME: throttle
@@ -115,8 +115,7 @@ AIC2.onScroll = function() {
 			if (!AIC2.checkStartStopPosition()) { return; }
 			//if (!AIC2.checkFooterAd()) {
 				if ($incontentBoxAd.hasClass('wikia-ad') == false) {
-					LiftiumOptions.placement = "INCONTENT_BOXAD_1";
-					Liftium.callInjectedIframeAd("300x250", document.getElementById("INCONTENT_BOXAD_1_iframe"));
+					window.adslots2.push(['INCONTENT_BOXAD_1', null, 'AdEngine2', null]);
 					$incontentBoxAd.addClass('wikia-ad');
 				}
 				$incontentBoxAd.css({

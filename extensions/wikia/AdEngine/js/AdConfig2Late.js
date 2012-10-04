@@ -25,7 +25,7 @@ var AdConfig2Late = function (
 			return adProviderLiftium2Dom;
 		}
 
-		if (slotname == 'WIKIA_BAR_BOXAD_1') {
+		if (slotname == 'WIKIA_BAR_BOXAD_1' || slotname == 'INCONTENT_BOXAD_1') {
 			if (adProviderLiftium2Dom.canHandleSlot(slot)) {
 				return adProviderLiftium2Dom;
 			}

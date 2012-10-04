@@ -151,7 +151,7 @@ var AdProviderEvolve = function (ScriptWriter, WikiaTracker, log, window, docume
 		log('slotTimer2 end for ' + slotname + ' after ' + time + ' ms', 7, 'AdProviderEvolve');
 		WikiaTracker.trackAdEvent('liftium.hop2', {'ga_category':'hop2/evolve', 'ga_action':'slot ' + slotname, 'ga_label':formatTrackTime(time, 5)}, 'ga');
 
-		window.adslots2.push([slotname, size, 'Liftium2', null]);
+		window.adslots2.push([slotname, size, 'Liftium2Dom', null]);
 	}
 
 	function sanitizeSlotname(slotname) {
