@@ -3005,17 +3005,9 @@ class User {
                  * @author Michał Roszka (Mix)
                  * trap for BugId:17012
                  */
-                if ( 'Lancer1289' == $this->mName || 'Mroszka' == $this->mName ) {
-                    $aDebugBacktrace = wfDebugBacktrace();
-                    UserMailer::sendHTML(
-                            'mix@wikia-inc.com',
-                            'mix@wikia-inc.com',
-                            'BugId:17012 Occurrence Report',
-                            $aDebugBacktrace,
-                            "<pre>{$aDebugBacktrace}</pre>",
-                            'unknown',
-                            0
-                    );
+                if ( 'Lancer1289' == $this->mName ) {
+                    $oTo = $oFrom = new MailAddress( 'mix@wikia-inc.com' );
+                    UserMailer::send( $oTo, $oFrom, 'BugId:17012 Occurrence Report', serialize( wfDebugBacktrace() ) );
                 }
 		// wikia change end
                 

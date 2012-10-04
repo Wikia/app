@@ -106,14 +106,12 @@ class HAWelcomeEdit extends UnlistedSpecialPage {
 
 			// BugId:41817 - if ( 1 == $new_id ) { notify Mix }
 			if ( 1 == $new_id ) {
-				UserMailer::sendHTML(
-					'mix@wikia-inc.com',
-					'mix@wikia-inc.com',
+                                $oTo = $oFrom = new MailAddress( 'mix@wikia-inc.com' );
+				UserMailer::send(
+					$oTo,
+					$oFrom,
 					'BugId:41817 Occurrence Report',
-					sprintf( "File: %s\nLine: %s, Date: %s\nOutput: %s", __FILE__, __LINE__, date( 'Y-m-d H:i:s' ), var_export( $new_id, true ) ),
-					sprintf( "<pre>File: %s\nLine: %s, Date: %s\nOutput: %s</pre>", __FILE__, __LINE__, date( 'Y-m-d H:i:s' ), var_export( $new_id, true ) ),
-					'unknown',
-					0
+					sprintf( "File: %s\nLine: %s, Date: %s\nOutput: %s", __FILE__, __LINE__, date( 'Y-m-d H:i:s' ), var_export( $new_id, true ) )
 				);
 			}
 			
@@ -137,14 +135,12 @@ class HAWelcomeEdit extends UnlistedSpecialPage {
 
 			// BugId:41817 - if ( 1 == $new_id ) { notify Mix }
 			if ( 1 == $new_id ) {
-				UserMailer::sendHTML(
-					'mix@wikia-inc.com',
-					'mix@wikia-inc.com',
+                                $oTo = $oFrom = new MailAddress( 'mix@wikia-inc.com' );
+				UserMailer::send(
+					$oTo,
+					$oFrom,
 					'BugId:41817 Occurrence Report',
-					sprintf( "File: %s\nLine: %s, Date: %s\nOutput: %s", __FILE__, __LINE__, date( 'Y-m-d H:i:s' ), var_export( $new_id, true ) ),
-					sprintf( "<pre>File: %s\nLine: %s, Date: %s\nOutput: %s</pre>", __FILE__, __LINE__, date( 'Y-m-d H:i:s' ), var_export( $new_id, true ) ),
-					'unknown',
-					0
+					sprintf( "File: %s\nLine: %s, Date: %s\nOutput: %s", __FILE__, __LINE__, date( 'Y-m-d H:i:s' ), var_export( $new_id, true ) )
 				);
 			}
 
