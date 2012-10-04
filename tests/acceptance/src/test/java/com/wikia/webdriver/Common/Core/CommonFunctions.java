@@ -78,10 +78,13 @@ public class CommonFunctions
 		WebElement submitLoginButton = driver.findElement(submitButton);
 		submitLoginButton.click();
 		PageObjectLogging.log("logIn", "submit button clicked", true, driver);
-		driver.findElement(By.cssSelector("a[href*='/User:"+userName+"']"));
-		PageObjectLogging.log("logIn", "verified user is logged in", true, driver);
 	}
 	
+	private static void verifyUserIsLoggedIn(String userName)
+	{
+		driver.findElement(By.cssSelector("a[href*='/User:"+userName+"']"));
+		PageObjectLogging.log("verifyUserIsLoggedIn", "verified user is logged in", true, driver);
+	}
 	
 	
 	public static void logIn(String userName, String password)
@@ -98,6 +101,7 @@ public class CommonFunctions
 			}
 			typeInUserPass(password);
 			clickSubmitLoginButton(userName);			
+			verifyUserIsLoggedIn(userName);
 		}
 		catch (TimeoutException e)
 		{

@@ -103,7 +103,7 @@ public class DriverProvider {
 		{			
 			if (!Global.BROWSER.equals("CHROME"))
 			{
-				driver.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
+				driver.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);
 			}
 			driver.manage().timeouts().setScriptTimeout(30, TimeUnit.SECONDS);
 		}
