@@ -20,16 +20,11 @@ function wfAdEngineInit() {
 		$wgShowAds = false;
 	}
 
-	// Canonical value for wgLoadAdsInHead
-	$wgLoadAdsInHead = !empty($wgLoadAdsInHead);
-
-	// Override wgLoadAdsInHead by cookie adsinhead
-	$wgLoadAdsInHead = (bool) $wgRequest->getCookie('adsinhead', '', $wgLoadAdsInHead);
-
-	// Override wgLoadAdsInHead by URL param adsinhead (?adsinhead=0 or ?adsinhead=1)
-	$wgLoadAdsInHead = $wgRequest->getBool('adsinhead', $wgLoadAdsInHead);
-
 	if (WikiaPageType::isActionPage()) {
+		$wgShowAds = false;
+	}
+
+	if ($wgUser->isLoggedIn() && !$wgUser->getOption('showAds')) {
 		$wgShowAds = false;
 	}
 
@@ -39,11 +34,14 @@ function wfAdEngineInit() {
 		$wgEnableKruxTargeting = false;
 	}
 
-	if ($wgUser->isLoggedIn() && !$wgUser->getOption('showAds')) {
-		// Disable right rail ads and AdMeld ads for logged in users not willing to see ads
-		$wgEnableAdsInContent = false;
-		$wgEnableAdMeldAPIClient = false;
-	}
+	// Canonical value for wgLoadAdsInHead
+	$wgLoadAdsInHead = !empty($wgLoadAdsInHead);
+
+	// Override wgLoadAdsInHead by cookie adsinhead
+	$wgLoadAdsInHead = (bool) $wgRequest->getCookie('adsinhead', '', $wgLoadAdsInHead);
+
+	// Override wgLoadAdsInHead by URL param adsinhead (?adsinhead=0 or ?adsinhead=1)
+	$wgLoadAdsInHead = $wgRequest->getBool('adsinhead', $wgLoadAdsInHead);
 }
 
 //$wgHooks["WikiaSkinTopScripts"][] = "wfAdEngineSetupJSVars";

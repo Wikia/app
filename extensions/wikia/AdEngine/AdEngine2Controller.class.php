@@ -7,6 +7,29 @@ class AdEngine2Controller extends WikiaController {
 	const ASSET_GROUP_CORE = 'oasis_shared_core_js';
 	const ASSET_GROUP_ADENGINE = 'adengine2_js';
 
+	// BIG TODO: Move all show some/show some/show none logic to this file
+
+	/**
+	 * Check if for current page the ads can be displayed or not
+	 * We only want ads on regular article pages plug a few
+	 * special pages. The logic lays here.
+	 *
+	 * @return bool
+	 */
+	public static function areAdsShowableOnPage() {
+		$wg = F::app()->wg;
+
+		$runAds = $wg->Out->isArticle()
+			|| WikiaPageType::isSearch()
+			|| WikiaPageType::isForum()
+			|| WikiaPageType::isWikiaHub();
+
+			// Can be re-enabled after AdDriver2.js is implemented:
+			// || $wg->Title->isSpecial('Leaderboard');
+
+		return $runAds;
+	}
+
 	/**
 	 * Register ad-related vars on top
 	 *
@@ -17,16 +40,13 @@ class AdEngine2Controller extends WikiaController {
 	public function onWikiaSkinTopScripts(&$vars, &$scripts) {
 		wfProfileIn(__METHOD__);
 
-		// TODO remove later, hack for gw+adsinhead clash
-		//$scripts .= '<script>document.wikia_write = document.write;</script>';
-
 		$wg = $this->app->wg;
 
 		// AdEngine2.js
 		$vars['adslots2'] = array();
-		if ($wg->LoadAdsInHead) {
-			$vars['wgLoadAdsInHead'] = $wg->LoadAdsInHead;
-		}
+		$vars['wgLoadAdsInHead'] = !empty($wg->LoadAdsInHead);
+		$vars['wgAdsShowableOnPage'] = self::areAdsShowableOnPage();
+		$vars['wgShowAds'] = $wg->ShowAds;
 
 		// TODO remove later, legacy addriver for adsinhead=1
 		$vars['adDriverLastDARTCallNoAds'] = array();

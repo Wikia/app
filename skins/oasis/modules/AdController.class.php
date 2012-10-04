@@ -7,19 +7,11 @@ class AdController extends WikiaController {
 	private static $slotsDisplayShinyAdSelfServe = array( 'CORP_TOP_RIGHT_BOXAD', 'HOME_TOP_RIGHT_BOXAD', 'TEST_TOP_RIGHT_BOXAD', 'TOP_RIGHT_BOXAD' );
 
 	private function configure() {
-		global $wgOut, $wgTitle, $wgContentNamespaces, $wgEnableFAST_HOME2, $wgEnableCorporatePageExt, $wgExtraNamespaces;
+		global $wgTitle, $wgContentNamespaces, $wgEnableFAST_HOME2, $wgEnableCorporatePageExt, $wgExtraNamespaces;
 
 		self::$config = array();
 
-		$runAds = $wgOut->isArticle()
-			|| WikiaPageType::isSearch()
-			|| WikiaPageType::isForum()
-			|| WikiaPageType::isWikiaHub();
-
-			// Can be re-enabled after AdDriver2.js is implemented:
-			// || $wgTitle->isSpecial('Leaderboard');
-
-		if (!$runAds) {
+		if (!AdEngine2Controller::areAdsShowableOnPage()) {
 			return;
 		}
 
