@@ -88,7 +88,12 @@
 			/** Start of Wikia change @author nAndy **/
 			//FIXME: talk to Władek/Macbre about better way of making it and moving this logic maybe to new class which extends this one
 			if( window.wgEnableWikiaBarExt ) {
-				var editorBottomBorder = ($('#EditPageMain').height() || 0) - ($('#EditPageToolbar').height() || 0) - (node.height() || 0);
+				var mainHeight = $('#EditPageMain').height() || 0,
+					nodeHeight = node.height() || 0,
+					toolbarHeight = $('#EditPageToolbar').height() || 0,
+					introHeight = $('#EditPageIntro').outerHeight(true) || 0;
+
+				var editorBottomBorder = (mainHeight) - (nodeHeight) - (toolbarHeight) - (introHeight);
 				dimensions.nodeHeight = parseInt(viewportHeight - topOffset - editorBottomBorder - window.WikiaBar.getWikiaBarOffset());
 			}
 			/** End of Wikia change **/
