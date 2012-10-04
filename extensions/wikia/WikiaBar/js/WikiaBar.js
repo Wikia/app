@@ -55,7 +55,7 @@ var WikiaBar = {
 		return true;
 	},
 	getAdIfNeeded: function() {
-		if( !this.wasAdCalled ) {
+		if( !this.wasAdCalled && window.wgShowAds && window.wgAdsShowableOnPage) {
 			this.getAd();
 		}
 	},
