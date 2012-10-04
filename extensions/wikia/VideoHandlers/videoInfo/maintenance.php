@@ -12,7 +12,7 @@
 		$videoInfoHelper = new VideoInfoHelper();
 		$videoData = $videoInfoHelper->getVideoDataByTitle( $titleName );
 		if ( !empty($videoData) ) {
-			echo $videoData['videoTitle'];
+			printText( $videoData['videoTitle'] );
 			$titleHash = md5( $videoData['videoTitle'] );
 			if ( !in_array($titleHash, $videoList) ) {
 				$status = true;
@@ -23,20 +23,28 @@
 
 				if ( $status ) {
 					$added++;
-					echo "..... ADDED.\n";
+					printText( "..... ADDED.\n" );
 				} else {
 					$dupInDb++;
-					echo "..... ALREADY ADDED TO DB.\n";
+					printText( "..... ALREADY ADDED TO DB.\n" );
 				}
 
 				$videoList[] = $titleHash;
 			} else {
 				$duplicate++;
-				echo "..... ALREADY ADDED.\n";
+				printText( "..... ALREADY ADDED.\n" );
 			}
 		} else {
 			$invalid++;
-			echo "$titleName..... INVALID.\n";
+			printText( "$titleName..... INVALID.\n" );
+		}
+	}
+
+	function printText( $text ) {
+		global $isQuiet;
+
+		if ( !$isQuiet ) {
+			echo $text;
 		}
 	}
 
@@ -49,6 +57,7 @@
 	if ( isset($options['help']) ) {
 		die( "Usage: php maintenance.php [--dry-run] [--help]
 		--dry-run			dry run
+		--quiet				show summary result only
 		--help				you are reading it right now\n\n" );
 	}
 
@@ -61,7 +70,8 @@
 		die( "Error: In read only mode." );
 	}
 
-	$isDryrun = ( isset($options['dry-run']) ) ? true : false ;
+	$isDryrun = ( isset($options['dry-run']) );
+	$isQuiet = ( isset($options['quiet']) );
 
 	echo "Wiki $wgCityId:\n";
 
@@ -93,10 +103,10 @@ SQL;
 		$result = $db->query( $sql, __METHOD__ );
 
 		while( $row = $db->fetchObject($result) ) {
-			echo "Deleted video (local): $row->video_title";
+			printText( "Deleted video (local): $row->video_title" );
 			$video->setVideoTitle( $row->video_title );
 			$video->deleteVideo();
-			echo "..... DELETED.\n";
+			printText( "..... DELETED.\n" );
 			$removed++;
 		}
 	}
@@ -116,7 +126,7 @@ SQL;
 	$result = $db->query( $sql, __METHOD__ );
 
 	while( $row = $db->fetchObject($result) ) {
-		echo "Embedded Video: ";
+		printText( "Embedded Video: " );
 		addVideo( $videoList, $row->name );
 		$total++;
 	}
@@ -130,7 +140,7 @@ SQL;
 	);
 
 	while( $row = $db->fetchObject($result) ) {
-		echo "Local Video: ";
+		printText( "Local Video: " );
 		addVideo( $videoList, $row->name );
 		$total++;
 	}
@@ -146,13 +156,13 @@ SQL;
 	);
 
 	while( $row = $db->fetchObject($result) ) {
-		echo "RelatedVideos Article: $row->page_title\n";
+		printText( "RelatedVideos Article: $row->page_title\n" );
 
 		$title = Title::newFromText( $row->page_title, NS_RELATED_VIDEOS );
 		$relatedVideosNSData = RelatedVideosNamespaceData::newFromTitle( $title );
 		$data = $relatedVideosNSData->getData();
 		foreach( $data['lists']['WHITELIST'] as $v ) {
-			echo 'NS'.NS_RELATED_VIDEOS.": ";
+			printText( 'NS'.NS_RELATED_VIDEOS.": " );
 
 			addVideo( $videoList, $v['title'] );
 			$total++;
@@ -161,11 +171,11 @@ SQL;
 
 	// get related videos - Global list
 	$relatedVideosNSData = RelatedVideosNamespaceData::newFromGeneralMessage();
-	echo "MediaWiki:RelatedVideosGlobalList\n";
+	printText( "MediaWiki:RelatedVideosGlobalList\n" );
 	if ( !empty($relatedVideosNSData) ) {
 		$data = $relatedVideosNSData->getData();
 		foreach( $data['lists']['WHITELIST'] as $v ) {
-			echo "GlobalList: ";
+			printText( "GlobalList: " );
 
 			addVideo( $videoList, $v['title'] );
 			$total++;
