@@ -211,7 +211,7 @@ class PhalanxHelper {
 
 	static public function removeSingleBlock() {
 		global $wgRequest;
-		$id = $wgRequest->getVal( 'id' );
+		$id = $wgRequest->getInt( 'id' );
 		return array(
 			"error" => self::removeFilter( $id ),
 			"text" => wfMsg( 'phalanx-unblock-message', $id )

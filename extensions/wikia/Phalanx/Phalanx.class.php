@@ -95,10 +95,10 @@ class Phalanx {
 			$closestTimestamp = 0;
 			$dbr = wfGetDB( $master ? DB_MASTER : DB_SLAVE, array(), $wgExternalSharedDB );
 
-			if( !empty( $moduleId ) ) {
+			if( !empty( $moduleId ) && is_numeric( $moduleId ) ) {
 				$cond[] = "p_type & $moduleId = $moduleId";
 			}
-			if( !empty( $lang ) ) {
+			if( !empty( $lang ) && Language::isValidCode( $lang ) ) {
 				$cond[] = "(p_lang = '$lang' OR p_lang IS NULL)";
 			} else {
 				$cond[] = "p_lang IS NULL";
@@ -156,7 +156,7 @@ class Phalanx {
 		$row = $dbr->selectRow(
 			'phalanx',
 			'*',
-			"p_id = $blockerId",
+			array( 'p_id' => intval( $blockerId ) ),
 			__METHOD__
 		);
 
