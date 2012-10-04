@@ -113,7 +113,8 @@ class WikiaMiniUpload {
 
 			if ( (int)$page == 0 ) $page = 1;
 
-			$results = MediaQueryService::searchInTitle($query, $page, 8);
+			$mediaService = new MediaQueryService();
+			$results = $mediaService->searchInTitle( $query, $page, 8 );
 
 			$tmpl = new EasyTemplate(dirname(__FILE__).'/templates/');
 			$tmpl->set_vars(array('results' => $results, 'query' => addslashes($query)));

@@ -870,7 +870,8 @@ class WikiaPhotoGalleryHelper {
 		$images = array();
 
 		if( !empty( $query ) ) {
-			$results = MediaQueryService::searchInTitle( $query, 1, $limit );
+			$mediaService = new MediaQueryService();
+			$results = $mediaService->searchInTitle( $query, 1, $limit );
 
 			if( !empty( $results['images'] ) ) {
 				foreach( $results['images'] as $img ) {

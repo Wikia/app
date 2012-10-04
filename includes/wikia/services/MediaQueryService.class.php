@@ -59,26 +59,20 @@ class MediaQueryService extends WikiaService {
 		return $images;
 	}
 
-	public static function searchInTitle($query, $page=1, $limit=8) {
-		$dbr = wfGetDB( DB_SLAVE );
-		$dbquerylike = $dbr->buildLike( $dbr->anyString(), mb_strtolower( $query ), $dbr->anyString() );
-		$res = $dbr->select(
-			array( 'image' ),
-			array( 'count(*) as count ' ),
-			array(
-				"img_name $dbquerylike" ,
-				"img_media_type in ('".MEDIATYPE_BITMAP."','".MEDIATYPE_DRAWING."')",
-			),
-			__METHOD__
-		);
+	public function searchInTitle( $query, $page=1, $limit=8 ) {
+		$this->wf->ProfileIn(__METHOD__);
 
-		$row = $dbr->fetchRow($res);
+		$totalImages = $this->getTotalImages( $query );
 
 		$results = array(
-			'total' => $row['count'],
-			'pages' => ceil( $row['count'] / $limit ),
+			'total' => $totalImages,
+			'pages' => ceil( $totalImages / $limit ),
 			'page'=> $page
 		);
+
+		$dbr = $this->wf->GetDB( DB_SLAVE );
+
+		$dbquerylike = $dbr->buildLike( $dbr->anyString(), mb_strtolower( $query ), $dbr->anyString() );
 
 		$res = $dbr->select(
 			array( 'image' ),
@@ -89,7 +83,7 @@ class MediaQueryService extends WikiaService {
 			),
 			__METHOD__ ,
 			array (
-				"ORDER BY" => 'img_timestamp',
+				"ORDER BY" => 'img_timestamp DESC',
 				"LIMIT" => $limit,
 				"OFFSET" => ($page*$limit-$limit) )
 		);
@@ -98,7 +92,51 @@ class MediaQueryService extends WikiaService {
 			$results['images'][] = array('title' => $row->img_name);
 		}
 
+		$this->wf->ProfileOut(__METHOD__);
+
 		return $results;
+	}
+
+	public function getTotalImages( $name = '' ) {
+		$this->wf->ProfileIn(__METHOD__);
+
+		$memKey = $this->getMemKeyTotalImages( $name );
+		$totalImages = $this->wg->Memc->get( $memKey );
+		if ( !is_numeric($totalImages) ) {
+			$db = $this->wf->GetDB( DB_SLAVE );
+
+			$sqlWhere = array(
+				"img_media_type in ('".MEDIATYPE_BITMAP."','".MEDIATYPE_DRAWING."')",
+			);
+
+			if ( !empty($name) ) {
+				$dbquerylike = $db->buildLike( $db->anyString(), mb_strtolower( $name ), $db->anyString() );
+				$sqlWhere[] = "img_name $dbquerylike";
+			}
+
+			$row = $db->selectRow(
+				array( 'image' ),
+				array( 'count(*) as cnt' ),
+				$sqlWhere,
+				__METHOD__
+			);
+
+			$totalImages = ( $row ) ? $row->cnt : 0 ;
+
+			$this->wg->Memc->set( $memKey, $totalImages, 60*60*5 );
+		}
+
+		$this->wf->ProfileIn(__METHOD__);
+
+		return $totalImages;
+	}
+
+	protected function getMemKeyTotalImages( $name = '' ) {
+		if ( !empty($name) ) {
+			$name = md5( $name );
+		}
+
+		return $this->wf->MemcKey( 'media', 'total_images', $name );
 	}
 
 	protected function getArticleMediaMemcKey(Title $title) {
