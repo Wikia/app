@@ -1,0 +1,1 @@
+document.write("<span style=\'background:#aaf\'>Written via nested document.write (external script)</span>");

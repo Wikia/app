@@ -1,0 +1,43 @@
+<!doctype HTML>
+<html> 
+<head >
+<title> Ghostwriter Unit Test: Hooks</title> 
+<style type="text/css" > 
+.myclass { height: 10px; } 
+.yui3-skin-sam #log .yui3-separate-console {position:static; }
+</style> 
+<script charset="utf-8" src="http://yui.yahooapis.com/3.3.0/build/yui/yui.js"></script>
+<!--
+<script src="../../src/ghostwriter.js" ></script>
+<script src="../../src/loadhandlers.js" ></script>
+<script src="../../src/domtree.js" ></script>
+<script src="../../src/domelement.js" ></script>
+<script src="../../src/htmlstreamparser.js" ></script>
+<script src="../../src/scriptloader.js" ></script>
+<script src="../../src/capabilities.js"></script> 
+-->
+<script src="../../lib/gw.min.js" ></script>
+</head> 
+<body class="yui3-skin-sam"> 
+<h1> GhostWriter Unit Test: Hooks </h1> 
+<div id=writeto-1></div> 
+
+<script src="t0.js" ></script> 
+<div id="log"></div>
+<script> 
+YUI({
+	logInclude: { TestRunner: true } 
+	,filter: 'raw' 
+}).use("console", "test", tester); 
+	
+function tester(Y){
+	window.Y= Y; 
+	var 
+		yc= new Y.Console({ newestOnTop: false, width: "95%", height: "400px" })
+	; 
+	yc.render("#log"); 
+	test(); 
+}
+</script> 
+</body> 
+</html> 

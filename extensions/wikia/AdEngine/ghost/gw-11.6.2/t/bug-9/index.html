@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html> 
+<head >
+<title> GhostWriter Unit Test: White Space In Remote Scripts</title> 
+<style type="text/css" > 
+.yui3-skin-sam #log .yui3-separate-console {position:static; }
+</style> 
+<script charset="utf-8" src="http://yui.yahooapis.com/3.1.1/build/yui/yui-min.js"></script>
+<script src="../../src/ghostwriter.js" ></script>
+<script src="../../src/loadhandlers.js" ></script>
+<script src="../../src/domtree.js" ></script>
+<script src="../../src/domelement.js" ></script>
+<script src="../../src/htmlstreamparser.js" ></script>
+<script src="../../src/scriptloader.js" ></script>
+<script src="../../src/capabilities.js"></script> 
+<script src="../../lib/gw.min.js" ></script>
+
+</head> 
+<body class="yui3-skin-sam"> 
+<h1> GhostWriter Unit Test: White Space in Remote Scripts</h1> 
+<p> 
+IE9 exhibits a strange behavior when text is added to a remote script element<br/> 
+</p> 
+<p> 
+The appendChild() call on the script element will cause execution of the script 
+even though it is not attached. 
+<pre> 
+(function(){ 
+with (document){ 
+	var 
+	  scriptNode= createElement("script")
+	 ,textNode= createTextNode("")
+	 ,url= 'http://paraload.ec2-1.digital-fulcrum.com/?delay=0'
+	;
+	scriptNode.src= url 
+	scriptNode.appendChild(textNode) 
+}
+})()
+
+</pre> 
+</p>
+<div id=test-1></div> 
+<div style="margin: 3.0em">
+<div id=p3-c></div>
+</div> 
+<div style="position: " id="log"></div>
+<script src=t0.js></script>
+<script> 
+YUI({ logInclude: { TestRunner: true } })
+	.use("console", "test", tester); 
+
+function tester(Y){
+	window.Y= Y; 
+	var 
+		yc= new Y.Console({ newestOnTop: false, width: "95%", height: "600px" })
+	; 
+	yc.render("#log"); 
+	test(); 
+}
+
+</script> 
+</body> 
+</html> 
