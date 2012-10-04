@@ -10,9 +10,16 @@
 
 	require_once( "commandLine.inc" );
 
+	$getTotalRV = ( isset($options['getTotalRV']) );
+	$setupVideoInfo = ( isset($options['setupVideoInfo']) );
+	$dryRun = ( isset($options['dry-run']) );
+
 	if ( isset($options['help']) ) {
-		die( "Usage: php maintenance.php [--help]
-		--help				you are reading it right now\n\n" );
+		die( "Usage: php maintenance.php [--help] [--getTotalRV] [--setupVideoInfo]
+		--getTotalRV             get total number of RelatedVideo articles
+		--setupVideoInfo         set up video info table
+		--dry-run                dry run
+		--help                   you are reading it right now\n\n" );
 	}
 
 	$app = F::app();
@@ -34,31 +41,49 @@
 	$counter = 0;
 	$failed = 0;
 
-	// get number of RelatedVideos articles on the wiki
 	foreach( $wikis as $wikiId => $detail ) {
 		echo "[$counter of $total] Wiki $wikiId ";
 		$wiki = WikiFactory::getWikiById( $wikiId );
 		if ( !empty($wiki) && $wiki->city_public == 1 ) {
 			$dbname = $wiki->city_dbname;
 
-			echo "($dbname): ";
+			echo "($dbname): \n";
 
-			$db = $app->wf->GetDB( DB_SLAVE, array(), $dbname );
+			// get number of RelatedVideos articles on the wiki
+			if ( $getTotalRV ) {
+				$db = $app->wf->GetDB( DB_SLAVE, array(), $dbname );
 
-			$row = $db->selectRow(
-				array( 'page' ),
-				array( 'count(*) cnt' ),
-				array(
-					'page_namespace' => 1100
-				),
-				__METHOD__,
-				array(
-					'GROUP BY' => 'page_namespace'
-				)
-			);
+				$row = $db->selectRow(
+					array( 'page' ),
+					array( 'count(*) cnt' ),
+					array(
+						'page_namespace' => 1100
+					),
+					__METHOD__,
+					array(
+						'GROUP BY' => 'page_namespace'
+					)
+				);
 
-			$cnt = ( $row ) ? $row->cnt : 0 ;
-			echo "$cnt\n";
+				$cnt = ( $row ) ? $row->cnt : 0 ;
+				echo "\tTotal RelatedVideos articles (NS1100): $cnt\n";
+			}
+
+			// set up video info
+			if ( $setupVideoInfo ) {
+				$file = dirname( __FILE__ ).'/../../extensions/wikia/VideoHandlers/videoInfo/maintenance.php';
+				$cmd = "SERVER_ID={$wikiId} php {$file} --conf=/usr/wikia/docroot/wiki.factory/LocalSettings.php";
+				if ( $dryRun ) {
+					$cmd .= " --dry-run";
+				}
+				echo "\tCommand: $cmd\n";
+				$result = wfShellExec( $cmd, $retval );
+				if ( $retval ) {
+					echo "Error code $retval: $result \n";
+				} else {
+					echo "$result \n";
+				}
+			}
 		} else {
 			echo "......... NOT FOUND or CLOSED\n";
 			$failed++;
@@ -67,4 +92,4 @@
 		$counter++;
 	}
 
-	echo "TOTAL: ".$counter.", SUCCESS: ".($counter-$failed).", FAILED: $failed\n\n";
+	echo "Total Wikis: ".$counter.", Success: ".($counter-$failed).", Failed: $failed\n\n";
