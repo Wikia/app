@@ -94,7 +94,7 @@
 					introHeight = $('#EditPageIntro').outerHeight(true) || 0,
 					editNoticeHeight = $('#EditPageEditNotice').outerHeight(true) || 0;
 
-				var editorBottomBorder = (mainHeight) - (nodeHeight) - (toolbarHeight) - (introHeight);
+				var editorBottomBorder = mainHeight - nodeHeight - toolbarHeight - introHeight - editNoticeHeight;
 				dimensions.nodeHeight = parseInt(viewportHeight - topOffset - editorBottomBorder - window.WikiaBar.getWikiaBarOffset());
 			}
 			/** End of Wikia change **/
