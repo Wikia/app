@@ -379,7 +379,6 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 		$mockSearchConfig
 			->expects	( $this->any() )
 			->method	( 'setArticleMatch' )
-			->with		( $mockArticleMatch )
 			->will		( $this->returnValue( $mockSearchConfig ) )
 		;
 		$mockSearchConfig
@@ -387,11 +386,18 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 			->method	( 'getNamespaces' )
 			->will		( $this->returnValue( array( 1 ) ) )
 		;
+		$mockArticle
+			->expects	( $this->any() )
+			->method	( 'newFromTitle' )
+			->will		( $this->returnValue( $mockArticle ) )
+		;
 		
 		$this->mockClass( 'Title',				$mockTitle );
 		$this->mockClass( 'Article',			$mockArticle );
 		$this->mockClass( 'ArticleMatch',		$mockArticleMatch );
 		$this->mockClass( 'SearchEngine',		$mockSearchEngine );
+		$this->mockApp();
+		F::setInstance( 'Article', $mockArticle );
 		
 		$this->assertInstanceOf( 'WikiaSearchArticleMatch', $wikiaSearch->getArticleMatch( $mockSearchConfig ),
 		        				'A query term that is a near title match should result in the creation, storage, and return of an instance of WikiaArticleMatch' );
