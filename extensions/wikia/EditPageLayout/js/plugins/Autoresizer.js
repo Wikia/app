@@ -91,7 +91,8 @@
 				var mainHeight = $('#EditPageMain').height() || 0,
 					nodeHeight = node.height() || 0,
 					toolbarHeight = $('#EditPageToolbar').height() || 0,
-					introHeight = $('#EditPageIntro').outerHeight(true) || 0;
+					introHeight = $('#EditPageIntro').outerHeight(true) || 0,
+					editNoticeHeight = $('#EditPageEditNotice').outerHeight(true) || 0;
 
 				var editorBottomBorder = (mainHeight) - (nodeHeight) - (toolbarHeight) - (introHeight);
 				dimensions.nodeHeight = parseInt(viewportHeight - topOffset - editorBottomBorder - window.WikiaBar.getWikiaBarOffset());
