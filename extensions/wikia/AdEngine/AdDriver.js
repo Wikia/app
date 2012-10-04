@@ -877,10 +877,7 @@ AdDriverDelayedLoader.isRunning = function() {
 AdDriverDelayedLoader.finalize = function() {
 	Wikia.log('finalize', 5, 'AdDriverDelayedLoader');
 
-	if (window.wgEnableKruxTargeting) {
-		Wikia.log('loading krux', 1, 'AdDriverDelayedLoader');
-		Krux.load(window.wgKruxCategoryId);
-	}
+	// Calling Krux moved to AdEngine2_loadKrux
 
 	var loadTime = (new Date()).getTime() - wgNow.getTime();
 	Wikia.log('AdDriver finished at ' + loadTime + ' ms', 1, 'AdDriverDelayedLoader');

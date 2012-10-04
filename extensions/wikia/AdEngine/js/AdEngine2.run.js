@@ -85,4 +85,16 @@
 		}
 	};
 
+	// Load Krux asynchronously later
+	// If you call AdEngine_loadKruxLater(Krux) at the end of the HTML Krux
+	// or on DOM ready, it will be loaded after most (if not all) of the ads
+	window.AdEngine_loadKruxLater = function(Krux) {
+		if (window.wgAdsShowableOnPage) {
+			scriptWriter.callLater(function() {
+				log('Loading Krux code', 8, module);
+				Krux.load(window.wgKruxCategoryId);
+			});
+		}
+	};
+
 }(Wikia.log, WikiaTracker, window, ghostwriter, document, Geo, LazyQueue, Wikia.Cookies));

@@ -99,7 +99,6 @@ $config['oasis_ads_js'] = array(
 
 		'//extensions/wikia/AdEngine/liftium/AdsInContent.js',
 
-		'//extensions/wikia/AdEngine/js/Krux.js',
 		'//extensions/wikia/AdEngine/AdDriver.js',
 		'//extensions/wikia/AdEngine/AdDriverGP.js',
 	),
@@ -125,6 +124,8 @@ $config['oasis_noads_extensions_js'] = array(
 		'//extensions/wikia/GlobalNotification/GlobalNotification.js',
 		'//skins/oasis/js/GlobalModal.js',  // This needs to load last after all common extensions, please keep this last.
 		'//extensions/wikia/UserLogin/js/UserLogin.js',
+		'//extensions/wikia/AdEngine/js/Krux.js',
+		'//extensions/wikia/AdEngine/js/Krux.run.js', // Needs to load after Krux.js, jQuery and AdEngine2.run.js
 	)
 );
 

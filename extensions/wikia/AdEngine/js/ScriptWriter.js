@@ -3,7 +3,8 @@ var ScriptWriter = function(log, ghostwriter, document) {
 
 	var module = 'ScriptWriter'
 		, injectScriptByUrl
-		, injectScriptByText;
+		, injectScriptByText
+		, callLater;
 
 	injectScriptByUrl = function(elementId, url, callback) {
 		log('injectScriptByUrl: injecting ' + url + ' to slot: ' + elementId, 5, module);
@@ -41,8 +42,27 @@ var ScriptWriter = function(log, ghostwriter, document) {
 		);
 	};
 
+	callLater = function(callback) {
+		log('callLater registered', 5, module);
+		ghostwriter(
+			document.documentElement,
+			{
+				insertType: 'append',
+				script: { text: '' },
+				done: function() {
+					if (typeof(callback) === 'function') {
+						log('Calling callLater now', 7, module);
+						callback();
+						log('Actual callLater called', 7, module);
+					}
+				}
+			}
+		);
+	};
+
 	return {
 		injectScriptByUrl: injectScriptByUrl,
-		injectScriptByText: injectScriptByText
+		injectScriptByText: injectScriptByText,
+		callLater: callLater
 	};
 };
