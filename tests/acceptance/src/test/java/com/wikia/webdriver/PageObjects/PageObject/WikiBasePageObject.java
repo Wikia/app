@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -211,14 +212,26 @@ public class WikiBasePageObject extends BasePageObject {
 	
 	public void openWikiPage()
 	{
-		driver.get(Domain);
+		try{
+			driver.get(Domain);
+		}
+		catch (TimeoutException e)
+		{
+			PageObjectLogging.log("logOut", "page loads for more than 30 seconds", true);
+		}
 		waitForElementByElement(globalNav);
 		executeScript("$('ul#pagehistory li:nth-child(1) .mw-history-undo')");
 	}
 	
 	public void openRandomArticle()
 	{
-		randomPageButton.click();
+		try{
+			randomPageButton.click();
+		}
+		catch (TimeoutException e)
+		{
+			PageObjectLogging.log("logOut", "page loads for more than 30 seconds", true);
+		}
 		PageObjectLogging.log("openRandomArticle", "random page button clicked", true);
 	}
 	
@@ -305,7 +318,13 @@ public class WikiBasePageObject extends BasePageObject {
 	{
 		waitForElementByElement(editDropDown);
 //		clickActions(editDropDown);
-		editDropDown.click();
+		try{
+			editDropDown.click();
+		}
+		catch(Exception e)
+		{
+			PageObjectLogging.log("createNewArticle", e.toString(), false);
+		}
 		PageObjectLogging.log("clickEditDropDown", "edit drop-down clicked", true);
 	}
 	

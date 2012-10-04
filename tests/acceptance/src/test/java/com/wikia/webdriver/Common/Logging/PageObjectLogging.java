@@ -230,7 +230,7 @@ public class PageObjectLogging implements WebDriverEventListener {
 					
 					throw new Exception("elementIsInvisible");
 				}
-				if (throwable.getMessage().contains("Timed out waiting for page load"))
+				if (throwable.getMessage().contains("Timed out waiting for page"))
 				{
 					throw new Exception("pageLoadTimeOut");
 				}
