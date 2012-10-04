@@ -1,13 +1,13 @@
 <?php
 
-/*
+/**
  * Video Service
  */
 class VideoService extends WikiaModel {
 
 	/**
 	 * add video
-	 * @param type $url
+	 * @param string $url
 	 * @return string error message or array( $videoTitle, $videoPageId, $videoProvider )
 	 */
 	public function addVideo( $url ) {
@@ -54,6 +54,11 @@ class VideoService extends WikiaModel {
 		return array( $videoTitle, $videoPageId, $videoProvider );
 	}
 
+	/**
+	 * @param $url
+	 * @return array
+	 * @throws Exception
+	 */
 	protected function addVideoVideoHandlers( $url ) {
 		$title = F::build( 'VideoFileUploader', array($url), 'URLtoTitle' );
 		if ( !$title ) {
