@@ -108,9 +108,14 @@ var AdConfig2 = function (
 			return adProviderLater;
 		}
 
+		// TODO refactor highValueSlots check to the top of the whole config
+		if (highValueSlots[slotname]) {
+
 		// First ask GamePro (german lang wiki)
 		if (adProviderGamePro.canHandleSlot(slot)) {
 			return adProviderGamePro;
+		}
+
 		}
 
 		// Next Evolve (NZ traffic)
@@ -123,12 +128,14 @@ var AdConfig2 = function (
 			}
 		}
 
-		// Then our dart (high value slots && high value traffic)
-		if (
-			highValueCountries[country] &&
-			highValueSlots[slotname]
-		) {
+		// TODO refactor highValueSlots check to the top of the whole config
+		if (highValueSlots[slotname]) {
+
+		// Then our dart (high value traffic)
+		if (highValueCountries[country]) {
 			return adProviderAdDriver;
+		}
+
 		}
 
 		return adProviderLater;

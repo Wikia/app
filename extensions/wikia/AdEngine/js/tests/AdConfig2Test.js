@@ -200,7 +200,8 @@ test('getProvider use GamePro if provider says so', function() {
 		, adProviderNullMock
 	);
 
-	equal(adConfig.getProvider(['foo']), adProviderGameProMock, 'adProviderGameProMock');
+	equal(adConfig.getProvider(['TOP_LEADERBOARD']), adProviderGameProMock, 'adProviderGameProMock TOP_LEADERBOARD');
+	equal(adConfig.getProvider(['PREFOOTER_LEFT_BOXAD']), adProviderLaterMock, 'adProviderLaterMock PREFOOTER_LEFT_BOXAD');
 });
 
 test('getProvider GamePro wins over Evolve', function() {
@@ -231,7 +232,7 @@ test('getProvider GamePro wins over Evolve', function() {
 		, adProviderLaterMock
 		, adProviderNullMock
 	);
-	equal(adConfig.getProvider(['foo']), adProviderEvolveMock, 'adProviderEvolveMock');
+	equal(adConfig.getProvider(['TOP_LEADERBOARD']), adProviderEvolveMock, 'adProviderEvolveMock TOP_LEADERBOARD');
 
 	adConfig = AdConfig2(
 		logMock, windowMock, documentMock, geoMock
@@ -245,7 +246,7 @@ test('getProvider GamePro wins over Evolve', function() {
 		, adProviderLaterMock
 		, adProviderNullMock
 	);
-	equal(adConfig.getProvider(['foo']), adProviderGameProMock, 'adProviderGameProMock');
+	equal(adConfig.getProvider(['TOP_LEADERBOARD']), adProviderGameProMock, 'adProviderGameProMock TOP_LEADERBOARD');
 });
 
 test('getProvider returns Null for some slots for short pages', function() {

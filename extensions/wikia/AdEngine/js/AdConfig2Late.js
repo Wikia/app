@@ -3,6 +3,7 @@ var AdConfig2Late = function (
 	log
 
 	// AdProviders
+	, adProviderGamePro
 	, adProviderLiftium2
 	, adProviderLiftium2Dom
 	, adProviderNull
@@ -23,6 +24,11 @@ var AdConfig2Late = function (
 		}
 		if (slot[2] === 'Liftium2Dom') {
 			return adProviderLiftium2Dom;
+		}
+
+		// First ask GamePro (german lang wiki)
+		if (adProviderGamePro.canHandleSlot(slot)) {
+			return adProviderGamePro;
 		}
 
 		if (slotname == 'WIKIA_BAR_BOXAD_1' || slotname == 'INCONTENT_BOXAD_1') {
