@@ -52,6 +52,7 @@ public class CommonFunctions
 		driver   = DriverProvider.getWebDriver();
 		WebElement loginButton = driver.findElement(logInAjax);
 		loginButton.click();
+		
 		PageObjectLogging.log("logIn", "log in ajax button clicked", true, driver);
 	}
 	
@@ -59,6 +60,7 @@ public class CommonFunctions
 	{
 		driver   = DriverProvider.getWebDriver();
 		WebElement userNameInAjax = driver.findElement(userNameField);
+		
 		userNameInAjax.sendKeys(userName);
 		PageObjectLogging.log("logIn", "user name field populated", true, driver);
 	}
@@ -91,17 +93,28 @@ public class CommonFunctions
 	{
 		try
 		{
-			clickLogInAjax();
-			typeInUserName(userName);
-			try {
-				Thread.sleep(500);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			typeInUserPass(password);
-			clickSubmitLoginButton(userName);			
-			verifyUserIsLoggedIn(userName);
+//			clickLogInAjax();
+//			typeInUserName(userName);
+//			try {
+//				Thread.sleep(500);
+//			} catch (InterruptedException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//			typeInUserPass(password);
+//			clickSubmitLoginButton(userName);			
+//			verifyUserIsLoggedIn(userName);
+			driver   = DriverProvider.getWebDriver();
+			driver.get(Global.DOMAIN + "wiki/Special:UserLogin");
+			WebElement userNameField = driver.findElement(By.cssSelector("#WikiaArticle input[name='username']"));
+			WebElement passwordField = driver.findElement(By.cssSelector("#WikiaArticle input[name='password']"));
+			WebElement submitButton = driver.findElement(By.cssSelector("#WikiaArticle input[class='login-button big']"));
+			userNameField.sendKeys(userName);
+			passwordField.sendKeys(password);
+			submitButton.click();
+			driver.findElement(By.cssSelector(".AccountNavigation a[href*='User:"+userName+"']"));//only for verification
+			
+			
 		}
 		catch (TimeoutException e)
 		{
