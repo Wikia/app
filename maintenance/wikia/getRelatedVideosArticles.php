@@ -12,14 +12,18 @@
 
 	$getTotalRV = ( isset($options['getTotalRV']) );
 	$setupVideoInfo = ( isset($options['setupVideoInfo']) );
+	$enableSpecialVideosExt = ( isset($options['enableSpecialVideosExt']) );
 	$dryRun = ( isset($options['dry-run']) );
+	$quiet = ( isset($options['quiet']) );
 
 	if ( isset($options['help']) ) {
-		die( "Usage: php maintenance.php [--help] [--getTotalRV] [--setupVideoInfo]
-		--getTotalRV             get total number of RelatedVideo articles
-		--setupVideoInfo         set up video info table
-		--dry-run                dry run
-		--help                   you are reading it right now\n\n" );
+		die( "Usage: php maintenance.php [--help] [--getTotalRV] [--setupVideoInfo] [--enableSpecialVideosExt]
+		--getTotalRV                   get total number of RelatedVideo articles
+		--setupVideoInfo               set up video info table
+		--enableSpecialVideosExt       enable Special Video Ext
+		--dry-run                      dry run
+		--quiet                        show summary result only
+		--help                         you are reading it right now\n\n" );
 	}
 
 	$app = F::app();
@@ -76,12 +80,29 @@
 				if ( $dryRun ) {
 					$cmd .= " --dry-run";
 				}
+				if ( $quiet ) {
+					$cmd .= " --quiet";
+				}
 				echo "\tCommand: $cmd\n";
 				$result = wfShellExec( $cmd, $retval );
 				if ( $retval ) {
 					echo "Error code $retval: $result \n";
 				} else {
 					echo "$result \n";
+				}
+			}
+
+			// enable Special Video Ext
+			if ( $enableSpecialVideosExt ) {
+				echo "Enable Special Videos Ext:\n";
+				$feature = 'wgEnableSpecialVideosExt';
+				$wgValue = WikiFactory::getVarByName( $feature, $wikiId );
+				if ( empty($wgValue) ) {
+					echo "\tError invalid params. \n";
+				} else {
+					WikiFactory::setVarByName( $feature, $wikiId, true, "enable Special Videos Ext for wikis that enable Related Videos" );
+					WikiFactory::clearCache( $wikiId );
+					echo "\tUpdate $feature from ".var_export( unserialize($wgValue->cv_value), true )." to true. \n";
 				}
 			}
 		} else {
