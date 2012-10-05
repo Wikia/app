@@ -8,8 +8,8 @@
 class SpecialVideosHelper extends WikiaModel {
 
 	const VIDEOS_PER_PAGE = 24;
-	const THUMBNAIL_WIDTH = 320;
-	const THUMBNAIL_HEIGHT = 205;
+	const THUMBNAIL_WIDTH = 330;
+	const THUMBNAIL_HEIGHT = 211;
 	const POSTED_IN_ARTICLES = 5;
 
 	/**

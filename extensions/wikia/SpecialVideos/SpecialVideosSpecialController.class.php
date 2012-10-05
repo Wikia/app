@@ -82,6 +82,8 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 			$video['videoPlayButton'] = F::build( 'WikiaFileHelper', array( SpecialVideosHelper::THUMBNAIL_WIDTH, SpecialVideosHelper::THUMBNAIL_HEIGHT ), 'videoPlayButtonOverlay' );
 		}
 
+		$this->thumbHeight = SpecialVideosHelper::THUMBNAIL_HEIGHT;
+		$this->thumbWidth = SpecialVideosHelper::THUMBNAIL_WIDTH;
 		$this->addVideo = $addVideo;
 		$this->pagination = $pagination;
 		$this->sortMsg = $sortingOptions[$sort]; // selected sorting option to display in drop down

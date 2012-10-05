@@ -31,7 +31,7 @@
 		<div class="grid-2 <?= $alpha ?>" itemprop="video" itemscope itemtype="http://schema.org/VideoObject">
 			<a href="<?= $video['fileUrl'] ?>" class="image video" data-video-name="<?= $video['fileTitle'] ?>">
 				<?= $video['videoPlayButton'] ?>
-				<img itemprop="thumbnail" alt="<?= $video['fileTitle'] ?>" src="<?= $video['thumbUrl'] ?>" width="320" height="205" data-video="<?= $video['fileTitle'] ?>" class="Wikia-video-thumb thumbimage">
+				<img itemprop="thumbnail" alt="<?= $video['fileTitle'] ?>" src="<?= $video['thumbUrl'] ?>" width="<?= $thumbWidth ?>" height="<?= $thumbHeight ?>" data-video="<?= $video['fileTitle'] ?>" class="Wikia-video-thumb thumbimage">
 				<?= $video['videoOverlay'] ?>
 			</a>
 			<p><?= $video['byUserMsg'] ?></p>
