@@ -24,14 +24,16 @@ function wfAdEngineInit() {
 		$wgShowAds = false;
 	}
 
-	if ($wgUser->isLoggedIn() && !$wgUser->getOption('showAds')) {
-		$wgShowAds = false;
-	}
-
 	if (empty($wgShowAds)) {
 		$wgEnableAdsInContent = false;
 		$wgEnableAdMeldAPIClient = false;
 		$wgEnableKruxTargeting = false;
+	}
+
+	if ($wgUser->isLoggedIn() && !$wgUser->getOption('showAds')) {
+		// Disable right rail ads and AdMeld ads for logged in users not willing to see ads
+		$wgEnableAdsInContent = false;
+		$wgEnableAdMeldAPIClient = false;
 	}
 
 	// Canonical value for wgLoadAdsInHead
