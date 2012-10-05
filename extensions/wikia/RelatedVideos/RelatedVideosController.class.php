@@ -155,11 +155,12 @@ class RelatedVideosController extends WikiaController {
 					'duration' => true,
 					'src' => $preloaded ? false : wfBlankImgUrl(),
 					'constHeight' => RelatedVideosService::$height,
-					'usePreloading' => true
+					'usePreloading' => true,
+					'disableRDF' => true
 				)
 			);
 
-			$video['views'] = DataMartService::getVideoViewsByTitleTotal( $videoTitle->getText() );
+			$video['views'] = MediaQueryService::getTotalVideoViewsByTitle( $videoTitle->getDBKey() );
 
 			$this->setVal( 'videoThumb', $videoThumb );
 			$this->setVal( 'video', $video );
@@ -171,11 +172,8 @@ class RelatedVideosController extends WikiaController {
 	}
 
 	public function getAddVideoModal(){
-
-		$pgTitle = $this->request->getVal('title', '');
-		$this->setVal( 'pageTitle', $pgTitle );
-		$this->setVal( 'html', $this->app->renderView( 'RelatedVideos', 'addVideoModalText', array('pageTitle'=>$pgTitle) ) );
-		$this->setVal( 'title',	wfMsg('related-videos-add-video-to-this-wiki') );
+		$this->request->setVal( 'suppressSuggestions', false );
+		$this->forward( 'VideosController', 'getAddVideoModal' );
 	}
 
 	public function addVideoModalText(){
