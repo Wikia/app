@@ -93,10 +93,11 @@
 					toolbarHeight = $('#EditPageToolbar').height() || 0,
 					introHeight = $('#EditPageIntro').outerHeight(true) || 0,
 					editNoticeHeight = $('#EditPageEditNotice').outerHeight(true) || 0,
+					editCustomHeight = $('#EditPageCustomIntro').outerHeight(true) || 0,
 					talkPageIntroHeight = $('#EditPageTalkPageIntro').outerHeight(true) || 0,
 					diffContainerHeight = $('#diff').outerHeight(true) || 0;
 
-				var editorBottomBorder = mainHeight - nodeHeight - toolbarHeight - introHeight - editNoticeHeight - talkPageIntroHeight - diffContainerHeight;
+				var editorBottomBorder = mainHeight - nodeHeight - toolbarHeight - introHeight - editCustomHeight - editNoticeHeight - talkPageIntroHeight - diffContainerHeight;
 				dimensions.nodeHeight = parseInt(viewportHeight - topOffset - editorBottomBorder - window.WikiaBar.getWikiaBarOffset());
 			}
 			/** End of Wikia change **/
