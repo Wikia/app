@@ -66,7 +66,7 @@ var WikiaBar = {
 		return true;
 	},
 	getAdIfNeeded: function() {
-		if( !this.wasAdCalled && window.wgShowAds && window.wgAdsShowableOnPage) {
+		if( !this.wasAdCalled && window.wgShowAds && window.wgAdsShowableOnPage && window.wgEnableWikiaBarAds ) {
 			this.getAd();
 		}
 	},
@@ -231,10 +231,7 @@ var WikiaBar = {
 			this.startSlideShow();
 		}
 
-		//getting the ad
-		if( window.wgEnableWikiaBarAds ) {
-			this.getAd();
-		}
+		this.getAdIfNeeded();
 	},
 	handleLoggedInUsersWikiaBar: function() {
 		var cachedState = this.getLocalStorageData();
