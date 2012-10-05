@@ -223,12 +223,19 @@ class GameGuidesController extends WikiaController {
 	}
 
 	public function getResourcesUrl(){
-		$cb = $this->wg->CacheBuster;
+		$this->response->setFormat( 'json' );
+
 		$this->response->setVal( 'url',
-			//How can I build this url ?
-			'wikia.php?controller=AssetsManager&method=getMultiTypePackage&scripts=gameguides_js,wikiamobile_tables_js,wikiamobile_scroll_js&styles=//extensions/wikia/GameGuides/css/GameGuides.scss?cb=' . $cb
+			AssetsManager::getInstance()->getMultiTypePackageURL(
+				array(
+					'scripts' => 'gameguides_js,wikiamobile_tables_js,wikiamobile_scroll_js',
+					'styles' => '//extensions/wikia/GameGuides/css/GameGuides.scss'
+				),
+				true
+			)
 		);
-		$this->response->setVal( 'cb', $cb );
+
+		$this->response->setVal( 'cb', $this->wg->CacheBuster );
 	}
 
 	/**
