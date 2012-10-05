@@ -98,11 +98,11 @@ public class Properties {
 	
 	private static void setPropertiesManually()
 	{
-		Global.BROWSER = "IE";
+		Global.BROWSER = "CHROME";
 		Global.DOMAIN = "http://mediawiki119.wikia.com/";
 		Global.LIVE_DOMAIN = "http://preview.www.wikia.com/";
 		Global.CONFIG_FILE = new File("c:"+File.separator+"wikia-qa"+File.separator+"config.xml");
 		Global.CAPTCHA_FILE = new File("c:"+File.separator+"wikia-qa"+File.separator+"captcha.txt");
-		Global.LOG_VERBOSE = 1;
+		Global.LOG_VERBOSE = 2;
 	}
 }
