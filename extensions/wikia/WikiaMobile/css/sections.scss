@@ -58,6 +58,8 @@ h1, h2, h3{
 	padding: $page-padding 27px 0 0;
 	position: relative;
 
+	word-break: break-word;
+
     .chev {
 		pointer-events: none;
 
