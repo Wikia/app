@@ -6,6 +6,7 @@ var WikiaBar = {
 	WIKIA_BAR_HIDDEN_ANON_NML_TTL: 180 * 24 * 60 * 1000, //millieseconds
 	WIKIA_BAR_STATE_USER_KEY_SUFFIX: 'UserWikiaBar_1.0002',
 	WIKIA_BAR_MAX_MESSAGE_PARTS: 5,
+    WIKIA_BAR_SAMPLING_RATIO: 10, // integer (0-100): 0 - no tracking, 100 - track everything */
 	messageConfig: {
 		index: 0,
 		container: null,
@@ -17,10 +18,20 @@ var WikiaBar = {
 	},
 	wasAdCalled: false,
 	wikiaBarHidden: true,
-	init: function() {
-		//clicktracking
-		$('#WikiaBarWrapper').click($.proxy(this.clickTrackingHandler, this));
-		$('.WikiaBarCollapseWrapper').click($.proxy(this.clickTrackingHandler, this));
+    isSample: false,
+    initSampling:function () {
+        this.isSample = this.WIKIA_BAR_SAMPLING_RATIO >= Math.floor((Math.random() * 100 + 1));
+    },
+    bindTracking:function () {
+        $('#WikiaBarWrapper').click($.proxy(this.clickTrackingHandler, this));
+        $('.WikiaBarCollapseWrapper').click($.proxy(this.clickTrackingHandler, this));
+    },
+    init: function() {
+        this.initSampling();
+
+        if(this.isSample) {
+            this.bindTracking();
+        }
 
 		//hidding/showing the bar events
 		$('.WikiaBarWrapper .arrow').click($.proxy(this.onShownClick, this));
@@ -116,13 +127,10 @@ var WikiaBar = {
 			messageConfig = this.messageConfig;
 
 		//tracking impressions of the message (not chunk of a long message)
-		/*
-		// Removing tracking of messages' impressions as a quick fix for p2 (fb#49479) we'll implement sampling for WikiaBar (fb#49369)
 		if( messageConfig.doTrackImpression && !this.isWikiaBarHidden() ) {
 			var GALabel = 'message-' + messageConfig.content[currentMsgIndex].messageNumber + '-appears';
 			this.trackClick('wikia-bar', WikiaTracker.ACTIONS.IMPRESSION, GALabel, null, {});
 		}
-		*/
 
 		if( currentMsgIndex == (messageConfig.content.length - 1) ) { //indexes are counted starting with 0 and length() counts items starting with 1
 			this.messageConfig.index = 0;
@@ -285,12 +293,13 @@ var WikiaBar = {
 		}
 	},
 	getLocalStorageDataKey: function() {
-		if( window.wgUserName ) {
-			return window.wgUserName + '_' + this.WIKIA_BAR_STATE_USER_KEY_SUFFIX;
+		var key = undefined;
+        if( window.wgUserName ) {
+            key = window.wgUserName + '_' + this.WIKIA_BAR_STATE_USER_KEY_SUFFIX;
 		} else {
 			$().log('WikiaBar notice: No user name found');
-			'Unknown' + '_' + this.WIKIA_BAR_STATE_USER_KEY_SUFFIX;
 		}
+        return key;
 	},
 	getLocalStorageData: function() {
 		return $.storage.get( this.getLocalStorageDataKey() );
@@ -310,7 +319,7 @@ var WikiaBar = {
 			//first time and data storage is empty let's hide the bar if it IS a main language wiki
 			hidden = false;
 		} else {
-			hidden = (data === 'true') ? true : false; //all data in cookies is saved as strings
+			hidden = (data === 'true'); //all data in cookies is saved as strings
 		}
 
 		return hidden;
@@ -354,7 +363,7 @@ var WikiaBar = {
 			result = window.wgWikiaBarMainLanguages.indexOf(window.wgContentLanguage);
 		}
 
-		return (result >= 0) ? true : false;
+		return (result >= 0);
 	},
 	getWikiaBarOffset: function() {
 		var wikiaBarHeight = $("#WikiaBarWrapper").outerHeight() || 0;
