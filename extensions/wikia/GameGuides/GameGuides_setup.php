@@ -49,6 +49,9 @@ F::build( 'JSMessages' )->registerPackage( 'GameGuidesContentMsg', array(
 	'wikiagameguides-content-category-error'
 ) );
 
+//hooks
+$app->registerHook( 'GameGuidesContentSave', 'GameGuidesController', 'onGameGuidesContentSave' );
+
 
 //the only globals needed in Game Guides
 if ( empty( $app->wg->GameGuidesGlobalsWhiteList ) ) {
