@@ -39,7 +39,7 @@ public class BasePageObject{
 	
 	public WebDriverWait wait;
 
-	@FindBy(css="a.tools-customize[data-name='customize']")
+	@FindBy(css="div[class='wikia-bar'] a.tools-customize[data-name='customize']")
 	WebElement customizeToolbar_CustomizeButton;
 	@FindBy(css="div.msg")
 	WebElement customizeToolbar_PageWatchlistStatusMessage;
