@@ -46,6 +46,9 @@ public class WikiBasePageObject extends BasePageObject {
 	@FindBy(css="input#wpConfirmB")
 	private WebElement deleteConfirmationButton;
 	
+	@FindBy(css=".msg a[title*='Special:Undelete']")
+	private WebElement deleteConfirmationMessage;
+	
 	@FindBy(css="a#ca-edit")
 	protected WebElement editButton;
 	
@@ -350,6 +353,8 @@ public class WikiBasePageObject extends BasePageObject {
 		deleteCommentReasonField.sendKeys("QAReason");
 //		executeScript("document.querySelectorAll('#wpConfirmB')[0].click()");
 		deleteConfirmationButton.click();
+		waitForElementByElement(deleteConfirmationMessage);
+		
 	}
 	
 	public void deleteArticle()
