@@ -11,6 +11,7 @@ class GameGuidesController extends WikiaController {
 	const API_MINOR_REVISION = 5;
 	const APP_NAME = 'GameGuides';
 	const SKIN_NAME = 'wikiaapp';
+	const VARNISH_CACHE_TIME = 86400; //24h
 
 	/**
 	 * @var $mModel GameGuidesModel
@@ -269,7 +270,33 @@ class GameGuidesController extends WikiaController {
 	public function getContent(){
 		$this->response->setFormat( 'json' );
 
-		$this->response->setVal( 'content', WikiFactory::getVarValueByName( 'wgWikiaGameGuidesContent', $this->wg->CityId ) );
+		$this->response->setCacheValidity(
+			self::VARNISH_CACHE_TIME,
+			self::VARNISH_CACHE_TIME,
+			array(
+				WikiaResponse::CACHE_TARGET_VARNISH
+			)
+		);
+
+		$this->response->setVal( 'tags',  WikiFactory::getVarValueByName( 'wgWikiaGameGuidesContent', $this->wg->CityId ) );
+	}
+
+	static function onGameGuidesContentSave(){
+		$app = F::app();
+
+		SquidUpdate::purge(
+			array(
+				$app->wf->AppendQuery(
+					$app->wf->ExpandUrl( $app->wg->Server . $app->wg->ScriptPath . '/wikia.php' ),
+					array(
+						'controller' => __CLASS__,
+						'method' => 'getContent'
+					)
+				)
+			)
+		);
+
+		return true;
 	}
 }
 
