@@ -27,7 +27,7 @@ $sectionGrey: rgb(41, 41, 41);
 $linkColor: rgb(172,172,172);
 $textColor: rgb(233,233,233);
 
-$backgroundColor: black;
+$backgroundColor: rgb(20,20,20);
 
 //I use it in a lot of places so it makes sense to have it here
 //The faster the better as it is not rendering but browser does calculation based on it
@@ -181,8 +181,6 @@ $width: 2;
 	border:1px solid $border-color;
 
 	th{
-		background-color:$border-color;
-		text-align:center;
 		white-space:nowrap;
 	}
 
