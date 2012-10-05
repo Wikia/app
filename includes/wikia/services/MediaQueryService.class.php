@@ -407,7 +407,6 @@ SQL;
 
 				$totalVideos = ($row) ? $row->cnt : 0 ;
 			}
-			$totalVideos = $this->wg->Lang->formatNum($totalVideos);
 
 			$this->wg->Memc->set( $memKey, $totalVideos, 60*60*24 );
 		}
@@ -419,7 +418,7 @@ SQL;
 
 	//get memcache key for total videos
 	protected function getMemKeyTotalVideos() {
-		return $this->wf->MemcKey( 'videos', 'total_videos', 'v3' );
+		return $this->wf->MemcKey( 'videos', 'total_videos', 'v4' );
 	}
 
 	public function clearCacheTotalVideos() {
