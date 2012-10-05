@@ -42,10 +42,6 @@ html {
 
 	font-size: 1em;
 
-	height: 100%;
-
-	font-family: roboto, helvetica, 'sans serif';
-
 	&.serif {
 		font-family: 'Droid Serif', serif;
 	}
@@ -54,15 +50,11 @@ html {
 body {
 	background: $backgroundColor;
 
-	margin: 0;
 	padding: 10px 20px;
 
 	color: $textColor;
 
 	line-height: 1.7em;
-
-	//avoid webkit's automatic text adjustment
-	-webkit-text-size-adjust: none;
 }
 
 h1, h2, h3{
@@ -75,7 +67,6 @@ h1, h2, h3{
 }
 
 #pageName {
-	word-break: break-word;
 	color: $textColor;
 	font-weight: 800;
 	font-size: 1.2em;
@@ -121,14 +112,12 @@ a {
 	color: $textColor;
 	pointer-events: none;
 
-	-webkit-transition: color .2s;
-}
+	&.validLink {
+		color: $linkColor;
+		pointer-events: auto;
 
-a.validLink {
-	color: $linkColor;
-	pointer-events: auto;
-
-	border-bottom: 1px dotted $linkColor;
+		border-bottom: 1px dotted $linkColor;
+	}
 }
 
 //hmmm

@@ -28,24 +28,14 @@
 
 html {
 	border: none;
-	padding: 0;
-	margin: 0;
 	cursor: pointer;
 }
 
 body {
 	background-color: $footerBackground;
 	color: $page-text-color;
-	font-family: helvetica, android, sans-serif;
 	font-size: medium;
 	line-height: 25px;
-	margin: 0;
-	padding: 0;
-	word-wrap: break-word;
-	//position: relative;
-
-	//avoid webkit's automatic text adjustment
-	-webkit-text-size-adjust: none;
 }
 
 #wkCurtain {
