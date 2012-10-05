@@ -93,7 +93,7 @@ public class Properties {
 		Global.CAPTCHA_FILE = new File(System.getProperty("captcha"));
 		Global.DOMAIN = System.getProperty("base-address");
 		Global.LIVE_DOMAIN = System.getProperty("live-domain");
-		Global.LOG_VERBOSE = 1;
+		Global.LOG_VERBOSE = 2;
 	}
 	
 	private static void setPropertiesManually()
