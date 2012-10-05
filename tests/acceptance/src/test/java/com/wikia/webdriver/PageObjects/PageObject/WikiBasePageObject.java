@@ -35,7 +35,7 @@ public class WikiBasePageObject extends BasePageObject {
 	@FindBy(id="wpCreatePageDialogTitle")
 	private WebElement articleNameField;
 	
-	@FindBy(css="#GlobalNavigation")
+	@FindBy(css="#GlobalNavigation li")
 	private WebElement globalNav;
 	
 	@FindBy(css="article span.drop")
