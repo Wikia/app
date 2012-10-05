@@ -210,7 +210,7 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	 * @return string
 	 */
 	public function getQueryNoQuotes( $raw = false ) {
-		$query = preg_replace( "/['\"]/", '', preg_replace( "/(\\w)['\"](\\w)/", '$1 $2',  html_entity_decode( $this->params['query'], ENT_COMPAT, 'UTF-8' ) ) );
+		$query = preg_replace( "/['\"]/", '', preg_replace( "/(\\w)['\"](\\w)/", '$1 $2',  $this->getQuery( self::QUERY_RAW ) ) );
 		return $raw ? $query : WikiaSearch::sanitizeQuery( $query );
 	}
 	

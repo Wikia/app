@@ -128,7 +128,8 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 				$this
 					->prependArticleMatchIfExists	()
 					->setResults					( $this->searchResultObject->getDocuments() )
-					->setResultsFound				( $this->searchResultObject->getNumFound() );
+					->setResultsFound				( $this->resultsFound + $this->searchResultObject->getNumFound() )
+				;
 			}
 		}
 		wfProfileOut(__METHOD__);
@@ -243,7 +244,7 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 		$title			= $article->getTitle();
 		$articleId		= $article->getID();
 		
-		if (! in_array( $title->getNamespace(), $this->searchConfig->getNamespaces() ) ) {
+		if (! in_array( $title->getNamespace(), $this->searchConfig->getNamespaces() ) ) { 
 			// we had an article match by name, but not in our desired namespaces
 			return $this;
 		}
@@ -268,7 +269,6 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 				);
 		//@TODO: we could put categories ^^ here but we aren't really using them yet
 		
-		
 		$result		= F::build( 'WikiaSearchResult', array($fieldsArray) );
 		$snippet	= $articleService->getTextSnippet(250);
 		
@@ -280,6 +280,8 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 		$result->setVar( 'id', $articleMatchId );
 		
 		$this->addResult( $result );
+		
+		$this->resultsFound++;
 		
 		wfProfileOut(__METHOD__);
 		return $this;
@@ -472,7 +474,7 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 	}
 
 	public function isOnlyArticleMatchFound() {
-		return $this->getResultsNum() == 1 && $this->getResultsFound() == 0 && $this->results[0]->getVar( 'isArticleMatch' ) == true;
+		return $this->getResultsNum() == 1 && $this->results[0]->getVar( 'isArticleMatch' ) == true;
 	}
 	
 	/* (non-PHPdoc)

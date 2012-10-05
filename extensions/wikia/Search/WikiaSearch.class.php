@@ -318,15 +318,14 @@ class WikiaSearch extends WikiaObject {
 	public function getArticleMatch( WikiaSearchConfig $config ) {
 	    wfProfileIn(__METHOD__);
 	
-	    $term = $config->getQueryNoQuotes( WikiaSearchConfig::QUERY_RAW );
-	
 	    if ( $config->hasArticleMatch() ) {
 	        return $config->getArticleMatch();
 	    }
-
+	    
+	    $term 			= $config->getQuery( WikiaSearchConfig::QUERY_RAW );
 	    $searchEngine	= F::build( 'SearchEngine' );
     	$title			= $searchEngine->getNearMatch( $term );
-
+    	
 	    if( ( $title !== null ) && ( in_array( $title->getNamespace(), $config->getNamespaces() ) ) ) {
 	        $article		= F::build( 'Article',					array( $title, RequestContext::getMain() ), 'newFromTitle' );
 	        $articleMatch	= F::build( 'WikiaSearchArticleMatch',	array( $article ) );
