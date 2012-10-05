@@ -29,10 +29,14 @@
 	&.zoomer {
 		-webkit-transition: -webkit-transform .3s, opacity .3s;
 		-moz-transition: -moz-transform .3s, opacity .3s;
+		-o-transition: -o-transform .3s, opacity .3s;
 		transition: transform .3s, opacity .3s;
 	}
 
-	-webkit-transform: translate(0,0) scale(0) blur(90deg);
+	-webkit-transform: translate(0,0) scale(0);
+	-moz-transform: translate(0,0) scale(0);
+	-o-transform: translate(0,0) scale(0);
+	transform: translate(0,0) scale(0);
 
 	&.open {
 		pointer-events: auto;
@@ -41,6 +45,9 @@
 		//this has to override values set in JS
 		//at least open state is in CSS
 		-webkit-transform: translate(0,0) scale(1)!important;
+		-moz-transform: translate(0,0) scale(1) !important;
+		-o-transform: translate(0,0) scale(1) !important;
+		transform: translate(0,0) scale(1) !important;
 	}
 }
 
