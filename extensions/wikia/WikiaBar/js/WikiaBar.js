@@ -227,6 +227,7 @@ var WikiaBar = {
 			this.messageConfig.container.exists()
 			&& dataContent
 			&& (typeof dataContent == 'object')
+			&& (dataContent.length > 0)
 		) {
 			this.startSlideShow();
 		}
