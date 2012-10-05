@@ -23,7 +23,6 @@ class RelatedVideosController extends WikiaController {
 	}
 
 	public function getCarusel(){
-
 		if( $this->app->checkSkin( 'wikiamobile' ) || Wikia::isMainPage() || ( !$this->app->wg->title instanceof Title ) || !$this->app->wg->title->exists() ) {
 			return false;
 		}
@@ -34,7 +33,7 @@ class RelatedVideosController extends WikiaController {
 		$this->videos = $videos;
 
 		$mediaService = F::build( 'MediaQueryService' );
-		$this->totalVideos = $mediaService->getTotalVideos();
+		$this->totalVideos = $this->wg->Lang->formatNum( $mediaService->getTotalVideos() );
 	}
 
 	public function getVideo(){
