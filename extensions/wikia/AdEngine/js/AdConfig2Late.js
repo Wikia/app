@@ -37,7 +37,10 @@ var AdConfig2Late = function (
 			}
 		}
 
-		if (slotname == 'WIKIA_BAR_BOXAD_1' || slotname == 'INCONTENT_BOXAD_1') {
+		if (
+			slotname == 'WIKIA_BAR_BOXAD_1' || slotname == 'INCONTENT_BOXAD_1'
+			|| slotname == 'PREFOOTER_LEFT_BOXAD' || slotname == 'PREFOOTER_RIGHT_BOXAD'
+		) {
 			if (adProviderLiftium2Dom.canHandleSlot(slot)) {
 				return adProviderLiftium2Dom;
 			}
