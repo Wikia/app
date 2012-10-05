@@ -68,7 +68,7 @@ require(['loader', 'toast', 'modal', 'events', 'track'], function(loader, toast,
 
 				((forward) ? loadPrev : loadMore).style.display = 'block';
 
-				window.scrollTo(0, wkArtCom.offsetTop);
+				wkArtCom.scrollIntoView();
 			});
 		}
 	}
@@ -197,10 +197,25 @@ require(['loader', 'toast', 'modal', 'events', 'track'], function(loader, toast,
 			classes: 'cmnMdl',
 			content: parent.parentElement.outerHTML + postComm.outerHTML,
 			toolbar: toolbar,
-			stopHiding: true
+			stopHiding: true,
+			onOpen: (function(){
+				return focus ?
+					/*
+						If this is reply action focus on input and scroll to it
+						otherwise scroll to top
+					*/
+					function(content){
+						var input = content.getElementsByClassName('wkInp')[0];
+						if(input){
+							input.scrollIntoView();
+							input.focus();
+						}
+					}:
+					function(){
+						window.scrollTo(0,0);
+					};
+			})()
 		});
-
-		if(focus) {d.getElementById('wkMdlCnt').getElementsByClassName('wkInp')[0].focus();}
 	}
 
 	if(totalPages > 1 && wgArticleId){
@@ -210,7 +225,6 @@ require(['loader', 'toast', 'modal', 'events', 'track'], function(loader, toast,
 
 	$(wkArtCom).on(clickEvent, '.viewAll', function(){
 		openModal(this);
-		window.scroll(0,0);
 		track.event('article-comments', track.CLICK, {
 			label: 'open'
 		});
