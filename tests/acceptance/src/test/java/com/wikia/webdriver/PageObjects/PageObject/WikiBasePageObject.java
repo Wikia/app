@@ -214,8 +214,12 @@ public class WikiBasePageObject extends BasePageObject {
 	
 	public void openWikiPage()
 	{
+		String temp = Domain;
 		try{
-			driver.get(Domain);
+			if (Global.BROWSER.equals("CHROME")){
+				temp = Domain + "?noexternals=1";
+			}
+			driver.get(temp);
 		}
 		catch (TimeoutException e)
 		{
