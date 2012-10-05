@@ -316,7 +316,7 @@ class RelatedVideosController extends WikiaController {
 					continue;
 				}
 				
-				$response[$document['url']] = $document->getFields();
+				$response[ $document['url'] ] = $document->getFields();
 
 				$rvService->inflateWithVideoData( 
 								$document->getFields(),
@@ -326,7 +326,7 @@ class RelatedVideosController extends WikiaController {
 				);
 
 			} else {
-				unset( $response[$url] );
+				unset( $response[ $document['url'] ] );
 			}
 		}
 
