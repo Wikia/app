@@ -110,6 +110,8 @@ define('modal', ['loader', 'events', 'ads'], function modal(loader, events, ads)
 				setTimeout(function(){
 					html.className += ' noPage';
 					wrapper.style.top = 0;
+
+					if(typeof options.onOpen === 'function') {options.onOpen(content);}
 				},310);
 
 			},50);
