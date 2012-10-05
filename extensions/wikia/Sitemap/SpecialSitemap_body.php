@@ -347,10 +347,10 @@ class SitemapPage extends UnlistedSpecialPage {
 			$description = !empty($videoTitleData['desc']) ? $videoTitleData['desc'] : ( !empty($metaData['description']) ? $metaData['description'] : $videoTitleData['title'] );
 			$entry =
 					"\t\t<video:video>\n" .
-					"\t\t\t<video:title>{$videoTitleData['title']}</video:title>\n" .
+					"\t\t\t<video:title><![CDATA[{$videoTitleData['title']}]]></video:title>\n" .
 					"\t\t\t<video:description><![CDATA[{$description}]]></video:description>\n" .
 					( !empty($videoTitleData['thumbUrl']) ? "\t\t\t<video:thumbnail_loc>{$videoTitleData['thumbUrl']}</video:thumbnail_loc>\n" : "" ) .
-					( ( $metaData['srcType'] == 'player') ? "\t\t\t<video:player_loc allow_embed=\"yes\" autoplay=\"{$metaData['autoplayParam']}\">".htmlentities($metaData['srcParam'])."</video:player_loc>\n" :
+					( ( $metaData['srcType'] == 'player') ? "\t\t\t<video:player_loc allow_embed=\"yes\" " . ( !empty($metaData['autoplayParam']) ? "autoplay=\"{$metaData['autoplayParam']}\"" : "" ) . ">".htmlentities($metaData['srcParam'])."</video:player_loc>\n" :
 							"\t\t\t<video:content_loc>".htmlentities($metaData['srcParam'])."</video:content_loc>\n" ) .
 					( !empty($metaData['duration']) ? "\t\t\t<video:duration>{$metaData['duration']}</video:duration>\n" : "" ) .
 					"\t\t\t<video:family_friendly>yes</video:family_friendly>\n" .
