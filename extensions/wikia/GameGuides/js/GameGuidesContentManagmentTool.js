@@ -84,22 +84,11 @@ $(function(){
 					var val = this.value;
 					if(val && tags.indexOf(val) === -1) tags.push(val);
 				});
-			};
-
-		$form
-			.on('focus', '.category, .name', function(){
-				this.className = this.className.replace(' error', '');
-			})
-			.on('click', '.remove', function(){
-				ul.removeChild(this.parentElement);
-			})
-			.on('blur', '.tag', function(){
-				grabTags();
-			})
-			.on('blur', '.category, .name', function(){
+			},
+			findDuplicates = function(elements){
 				var names = [];
 
-				$form.find(this.className.indexOf('category') > -1 ? '.category' : '.name').each(function(){
+				elements.each(function(){
 					var val = this.value;
 					if(names.indexOf(val) === -1) {
 						names.push(val);
@@ -112,12 +101,43 @@ $(function(){
 						if(this.className.indexOf('error') === -1) this.className += ' error';
 					}
 				});
-
+			},
+			checkSave = function(){
 				if(d.getElementsByClassName('error').length > 0){
 					save.setAttribute('disabled', '');
 				}else{
 					save.removeAttribute('disabled');
 				}
+			};
+
+		$form
+			.on('focus', '.category, .name', function(){
+				this.className = this.className.replace(' error', '');
+			})
+			.on('click', '.remove', function(){
+				ul.removeChild(this.parentElement);
+			})
+			.on('blur', '.tag', function(){
+				grabTags();
+			})
+			.on('blur', '.category', function(){
+				this.value = $.trim(this.value).replace(/ /g, '_');
+
+				findDuplicates($form.find('.category'));
+
+				checkSave();
+			})
+			.on('blur', '.name', function(){
+				var tag,
+					i = 0;
+
+				this.value = $.trim(this.value);
+
+				while(tag = tags[i++]) {
+					findDuplicates($('.tag[value="' + tag + '"] ~ input'));
+				}
+
+				checkSave();
 			});
 
 		add.addEventListener('click', addNew);
