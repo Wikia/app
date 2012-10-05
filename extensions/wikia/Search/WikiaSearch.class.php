@@ -152,14 +152,19 @@ class WikiaSearch extends WikiaObject {
 			$searchConfig	->setStart		( ( $searchConfig->getPage() - 1 ) * $searchConfig->getLength() );
 		}
 		
-		$queryInstance = $this->client->createSelect();
-		$this->prepareQuery( $queryInstance, $searchConfig );
 		try {
-			$result = $this->client->select( $queryInstance );
-		} catch (Exception $e) {
-			Wikia::log(__METHOD__, 'Querying Solr', $e);
-			$result = F::build('Solarium_Result_Select_Empty');
+			$result = $this->getQueryResult( $searchConfig );
+		} catch ( Exception $e ) {
+			Wikia::log(__METHOD__, 'Querying Solr First Time', $e);
+			$searchConfig->setSkipBoostFunctions( true );
+			try {
+				$result = $this->getQueryResult( $searchConfig );
+			} catch ( Exception $e ) {
+				Wikia::log(__METHOD__, 'Querying Solr With No Boost Functions', $e);
+				$result = F::build('Solarium_Result_Select_Empty');
+			}
 		}
+		
 		$results = F::build('WikiaSearchResultSet', array($result, $searchConfig) );
 		
 		$searchConfig->setResults		( $results )
@@ -411,8 +416,9 @@ class WikiaSearch extends WikiaObject {
 	
 	/**
 	 * Takes a query we've created and configures it based on the values set in the SearchConfig
-	 * @param Solarium_Query_Select $query
-	 * @param WikiaSearchConfig $searchConfig
+	 * @see    WikiaSearchTest::testPrepareQuery
+	 * @param  Solarium_Query_Select $query
+	 * @param  WikiaSearchConfig $searchConfig
 	 * @return WikiaSearch provides fluent interface
 	 */
 	private function prepareQuery( Solarium_Query_Select $query, WikiaSearchConfig $searchConfig )
@@ -505,8 +511,8 @@ class WikiaSearch extends WikiaObject {
 	
 	/**
 	 * Builds the string used with filter queries based on search config
-	 * @param WikiaSearchConfig $searchConfig
 	 * @see WikiaSearchTest::testGetFilterQueryString
+	 * @param WikiaSearchConfig $searchConfig
 	 * @return string
 	 */
 	private function getFilterQueryString( WikiaSearchConfig $searchConfig )
@@ -745,6 +751,17 @@ class WikiaSearch extends WikiaObject {
 
 		wfProfileOut( __METHOD__ );
 		return true;
+	}
+	
+	/**
+	 * Create a query instance, configures it, and performs the actual query to solr.
+	 * @param  WikiaSearchConfig $searchConfig
+	 * @return Solarium_Result
+	 */
+	private function getQueryResult( WikiaSearchConfig $searchConfig ) {
+		$queryInstance = $this->client->createSelect();
+		$this->prepareQuery( $queryInstance, $searchConfig );
+		return $this->client->select( $queryInstance ); 
 	}
     
 

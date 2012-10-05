@@ -470,4 +470,8 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 	
 	}
 	
+	/**
+	 * 
+	 */
+	
 }
