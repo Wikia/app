@@ -249,7 +249,7 @@ class RelatedVideosController extends WikiaController {
 	}
 
 	public function getSuggestedVideos() {
-
+		
 		$searchConfig = F::build( 'WikiaSearchConfig' );
 		$searchConfig	->setCityId	( WikiaSearch::VIDEO_WIKI_ID )
 						->setStart	( 0 )
@@ -274,24 +274,35 @@ class RelatedVideosController extends WikiaController {
 
 		$search = F::build( 'WikiaSearch' );  /* @var $search WikiaSearch */
 		
-		if ( $this->wg->ContLang->mCode !== 'en' ) {
-			// we can't use MoreLikeThis because we can't reconcile different language fields
+		$resultCount = 0;
+		if ( $this->wg->ContLang->mCode == 'en' ) {
+			// we can't use MoreLikeThis outside of English because we can't reconcile different language fields
 			// if we were given a title, then search against that title; if not, then search against the wiki's name, minus the term "wiki"
-			$searchConfig	->setQuery		( (! empty( $sTitle ) ) ? $sTitle : preg_replace( '/ wiki\b/i', '', $this->wg->SiteName ) )
-							->setVideoSearch( true );
 			
-			$solariumResultSet = $search->doSearch( $searchConfig );
+			$searchResultSet = $search->getRelatedVideos( $searchConfig );
 			
-		} else {
-			$solariumResultSet = $search->getRelatedVideos( $searchConfig );
-	
-			if ( $solariumResultSet->getNumFound() == 0 && $searchConfig->getPageId() && $this->request->getVal('debug') != 1 ) {
-	
-				// if nothing for specify article, do general search
-				$searchConfig->setPageId( false );
-				$solariumResultSet = $search->getRelatedVideos( $searchConfig );
+			if ( $searchResultSet->getResultsFound() == 0 && $searchConfig->getPageId() && $this->request->getVal('debug') != 1 ) {
+			
+			    // if nothing for specify article, do general search
+			    $searchConfig->setPageId( false );
+			    $solariumResultSet = $search->getRelatedVideos( $searchConfig );
 			}
+			
+			$resultCount = $searchResultSet->getResultsNum();
 		}
+		
+		if ( $resultCount == 0 ) {
+			$searchConfig	->setQuery		( (! empty( $sTitle ) ) ? $sTitle : preg_replace( '/ wiki\b/i', '', $this->wg->SiteName ) )
+							->setVideoSearch( true )
+							->setPageId		( false )
+			;
+			
+			$searchResultSet = $search->doSearch( $searchConfig );
+			$resultCount = $searchResultSet->getResultNum();
+		}
+			
+		
+		Wikia::Log( __METHOD__, '', $resultCount );
 
 		$rvService = F::build( 'RelatedVideosService' ); /* @var $rvService RelatedVideosService */
 
@@ -303,9 +314,8 @@ class RelatedVideosController extends WikiaController {
 		}
 
 		$response = array();
-		foreach ( $solariumResultSet->getDocuments() as $document ) {
-
-			$globalTitle = GlobalTitle::newFromId( $document['pageid'], $document['wid'] );
+		foreach ( $searchResultSet as $document ) {
+			$globalTitle = F::build( 'GlobalTitle', explode( '_', $document['id'] ), 'newFromId' );
 			if ( !empty( $globalTitle ) ) {
 
 				$title = $globalTitle->getText();

@@ -224,7 +224,7 @@ class WikiaSearch extends WikiaObject {
 	/**
 	 * Used in the related videos module to get both premium and on-wiki videos.
 	 * @param  WikiaSearchConfig $searchConfig
-	 * @return Solarium_Result_MoreLikeThis
+	 * @return WikiaSearchResultSet
 	 */
 	public function getRelatedVideos( WikiaSearchConfig $searchConfig ) {
 	    wfProfileIn(__METHOD__);
@@ -612,11 +612,11 @@ class WikiaSearch extends WikiaObject {
 	/**
 	 * Utilizes Solr's MoreLikeThis component to return similar pages
 	 * @param  WikiaSearchConfig $searchConfig
-	 * @return Solarium_Result_MoreLikeThis
+	 * @return WikiaSearchResultSet
 	 */
 	private function moreLikeThis( WikiaSearchConfig $searchConfig )
 	{
-		$query		= $searchConfig->getQuery();
+		$query		= $searchConfig->getQuery( WikiaSearchConfig::QUERY_RAW );
 		$streamBody	= $searchConfig->getStreamBody();
 		$streamUrl	= $searchConfig->getStreamUrl();
 		
@@ -626,9 +626,11 @@ class WikiaSearch extends WikiaObject {
 	    
 		$mlt = $this->client->createMoreLikeThis();
 		$mlt->setMltFields		( implode( ',', $searchConfig->getMltFields() ) )
+			->setFields			( $searchConfig->getRequestedFields() )
 			->addParam			( 'mlt.match.include', 'false' )
 			->setStart			( $searchConfig->getStart() )
 			->setRows			( $searchConfig->getRows() )
+			->setDocumentClass	( 'WikiaSearchResult' )
 		;
 		
 		if ( $searchConfig->getInterestingTerms() == 'list' ) {
@@ -650,8 +652,16 @@ class WikiaSearch extends WikiaObject {
 			$mlt->addParam( 'stream.url', $streamUrl );
 		}
 	    
-		$mltResult = $this->client->moreLikeThis( $mlt );
-		return $mltResult;
+		try {
+			$mltResult = $this->client->moreLikeThis( $mlt );
+		} catch ( Exception $e ) {
+			$mltResult = F::build('Solarium_Result_Select_Empty');
+			Wikia::Log( __METHOD__, '', $e );
+		}
+		
+		$results = F::build('WikiaSearchResultSet', array($mltResult, $searchConfig) );
+		
+		return $results;
 	}
 
 	

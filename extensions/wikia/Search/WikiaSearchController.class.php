@@ -194,7 +194,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	    $mltResult = $this->wikiaSearch->getRelatedVideos( $searchConfig );
 	    
 	    $responseData = array();
-	    foreach ( $mltResult->getDocuments() as $document ) {
+	    foreach ( $mltResult as $document ) {
 	    	$responseData[$document['url']] = $document->getFields();
 	    }
 	    
