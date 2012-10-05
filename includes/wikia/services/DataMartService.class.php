@@ -112,63 +112,69 @@
 			$limitDefault = 200;
 			$limitUsed = ( $limit > $limitDefault ) ? $limit : $limitDefault ;
 
-			$memKey = $app->wf->SharedMemcKey( 'datamart', 'topwikis', $limitUsed, $lang, $hub, $public, $interval );
-			$topWikis = $app->wg->Memc->get( $memKey );
+			switch($interval) {
+				case 7:
+					$field = 'pageviews_7day';
+					break;
+				case 30:
+				default:
+					$field = 'pageviews_30day';
+					break;
+				case 90:
+					$field = 'pageviews_90day';
+					break;
+			}
 
-			if ( !is_array( $topWikis ) ) {
+			$memKey = $app->wf->SharedMemcKey( 'datamart', 'topwikis', $limitUsed, $lang, $hub, $public, $field, 5 );
+
+			$getData = function() use ($limitUsed, $lang, $hub, $public, $field) {
+				$app = F::app();
+
 				$topWikis = array();
 
 				if ( !empty( $app->wg->StatsDBEnabled ) ) {
 					$db = $app->wf->GetDB( DB_SLAVE, array(), $app->wg->DatamartDB );
-					$ignoreIndex = ($lang == null && $hub == null) ? ' IGNORE INDEX (wiki_time_period)' : '';
-					$tables = array(
-						'rollup_wiki_pageviews AS r' . $ignoreIndex,
-						'dimension_wikis AS d'
-					);
-					$where  = array(
-						'r.period_id' => self::PERIOD_ID_DAILY,
-						"r.time_id > CURDATE() - INTERVAL {$interval} DAY",
-						'r.wiki_id = d.wiki_id'
-					);
+
+					$tables = array('report_wiki_recent_pageviews as r');
+					$where = array();
 
 					if ( !is_null( $lang ) ) {
-						$where[] = "d.lang = '{$lang}'";
+						$where[] = "r.lang = '{$lang}'";
 					}
 
 					if ( !is_null( $hub ) ) {
-						$where[] = "d.hub_name = '{$hub}'";
+						$where[] = "r.hub_name = '{$hub}'";
 					}
 
-					// Default to showing public wikis
+					// Default to showing all wikis
 					if ( !is_null( $public ) ) {
+						$tables[] = 'dimension_wikis AS d';
+						$where[] = 'r.wiki_id = d.wiki_id';
 						$where[] = "d.public = {$public}";
-					} else {
-						$where[] = 'd.public = 1';
 					}
 
 					$result = $db->select(
-							$tables,
-							array(
-								'r.wiki_id AS id',
-								'sum(r.pageviews) AS pageviews'
-							),
-							$where,
-							__METHOD__,
-							array(
-								'GROUP BY' => 'r.wiki_id',
-								'ORDER BY' => 'pageviews desc',
-								'LIMIT'    => $limitUsed
-							)
+						$tables,
+						array(
+							'r.wiki_id AS id',
+							"$field AS pageviews"
+						),
+						$where,
+						__METHOD__,
+						array(
+							'ORDER BY' => 'pageviews desc',
+							'LIMIT'    => $limitUsed
+						)
 					);
-
 					while ( $row = $db->fetchObject( $result ) ) {
 						$topWikis[ $row->id ] = $row->pageviews;
 					}
+				};
 
-					$app->wg->Memc->set( $memKey, $topWikis, 43200 /* 12 hours */ );
-				}
-			}
+				return $topWikis;
+			};
 
+			$topWikis = WikiaDataAccess::simpleCached( $getData, $memKey, 43200 /* 12 hours */ );
 			$topWikis = array_slice( $topWikis, 0, $limit, true );
 
 			$app->wf->ProfileOut( __METHOD__ );
@@ -235,6 +241,7 @@
 
 			// get data depending on eventType
 			if ( !empty($eventType) ) {
+				$temp = array();
 				foreach( $events as $date => $value ) {
 					$temp[$date] = $value[$eventType];
 				}
