@@ -222,7 +222,12 @@ var WikiaBar = {
 
 		//messages animation
 		this.messageConfig.container = $('#WikiaBarWrapper .message');
-		if (this.messageConfig.container.exists() && this.messageConfig.container.data('content')) {
+		var dataContent = this.messageConfig.container.data('content');
+		if (
+			this.messageConfig.container.exists()
+			&& dataContent
+			&& (typeof dataContent == 'object')
+		) {
 			this.startSlideShow();
 		}
 
