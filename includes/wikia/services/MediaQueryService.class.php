@@ -126,14 +126,14 @@ class MediaQueryService extends WikiaService {
 			$this->wg->Memc->set( $memKey, $totalImages, 60*60*5 );
 		}
 
-		$this->wf->ProfileIn(__METHOD__);
+		$this->wf->ProfileOut(__METHOD__);
 
 		return $totalImages;
 	}
 
 	protected function getMemKeyTotalImages( $name = '' ) {
 		if ( !empty($name) ) {
-			$name = md5( $name );
+			$name = md5( strtolower($name) );
 		}
 
 		return $this->wf->MemcKey( 'media', 'total_images', $name );
