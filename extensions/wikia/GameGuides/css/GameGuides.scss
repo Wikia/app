@@ -39,11 +39,10 @@ $backgroundColor: rgb(20,20,20);
 
 html {
 	background: $backgroundColor;
-	overflow-x: hidden;
-
-	height: 100%;
 
 	font-size: 1em;
+
+	height: 100%;
 
 	font-family: roboto, helvetica, 'sans serif';
 
@@ -53,7 +52,6 @@ html {
 }
 
 body {
-	overflow-x: hidden;
 	background: $backgroundColor;
 
 	margin: 0;
