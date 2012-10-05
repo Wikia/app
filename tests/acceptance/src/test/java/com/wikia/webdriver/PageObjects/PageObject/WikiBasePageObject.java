@@ -37,9 +37,6 @@ public class WikiBasePageObject extends BasePageObject {
 	@FindBy(id="wpCreatePageDialogTitle")
 	private WebElement articleNameField;
 	
-	@FindBy(css=".hub3")
-	private WebElement footerElement;
-	
 	@FindBy(css="article span.drop")
 	private WebElement editDropDown;
 	
@@ -221,7 +218,7 @@ public class WikiBasePageObject extends BasePageObject {
 		{
 			PageObjectLogging.log("logOut", "page loads for more than 30 seconds", true);
 		}
-		waitForElementByElement(footerElement);
+		waitForElementByCss(".hub3");
 		executeScript("$('ul#pagehistory li:nth-child(1) .mw-history-undo')");
 	}
 	
