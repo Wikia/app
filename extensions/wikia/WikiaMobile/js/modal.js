@@ -109,7 +109,7 @@ define('modal', ['loader', 'events', 'ads'], function modal(loader, events, ads)
 
 				setTimeout(function(){
 					wrapper.style.top = 0;
-					html.className += ' noPage';
+					html.className += ' modal';
 
 					if(typeof options.onOpen === 'function') {options.onOpen(content);}
 				},310);
@@ -160,7 +160,7 @@ define('modal', ['loader', 'events', 'ads'], function modal(loader, events, ads)
 		if(opened){
 			//rest of closing will be done after all animations
 			//to make to as light to a browser as I can get
-			html.className = html.className.replace(' noPage','');
+			html.className = html.className.replace(' modal','');
 
 			//scroll to where user was before
 			//in setTimout because ios4.x has to do this after everything has to do now
