@@ -188,7 +188,7 @@ ENDTABLE;
 
 		$type = $updater->getDB()->getType();
 		if( isset( $map[$type] ) ) {
-			$sql = dirname( __FILE__ ) . $map[ $type ];
+			$sql = dirname( __FILE__ ) . "/" . $map[ $type ];
 			$updater->addExtensionTable( 'wikia_page_backlinks', $sql );
 		} else {
 			throw new MWException( "Math extension does not currently support $type database." );
