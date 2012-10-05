@@ -1,6 +1,4 @@
-<div id="InWikiGame" class="InWikiGame">
-
-</div>
+<div id="InWikiGameWrapper" class="InWikiGameWrapper"></div>
 
 <?php
 
