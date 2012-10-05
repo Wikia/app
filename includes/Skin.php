@@ -422,6 +422,7 @@ abstract class Skin extends ContextSource {
 		global $wgUseCategoryBrowser;
 
 		/* Wikia change begin - @author: Marcin, #BugId: 30443 */
+		$alternativeCategoryLinks = null;
 		if( !wfRunHooks( 'Skin::getCategoryLinks::begin', array( &$alternativeCategoryLinks ) ) ) {
 			return $alternativeCategoryLinks;
 		}
