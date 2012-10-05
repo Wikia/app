@@ -1,10 +1,5 @@
-<div id="InWikiGameWrapper" class="InWikiGameWrapper"></div>
+<div id="InWikiGameWrapper-<?= $gameId ?>" class="InWikiGameWrapper">
 
-<?php
+</div>
 
-echo F::build('JSSnippets')->addToStack(
-	array('/extensions/wikia/InWikiGame/js/InWikiGame.js'),
-	null,
-	'InWikiGame.init',
-	null
-);
+<?= $jsSnippet ?>
