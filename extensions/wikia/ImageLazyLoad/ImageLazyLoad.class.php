@@ -39,7 +39,7 @@ class ImageLazyLoad extends WikiaObject {
 				$this->app->wg->Parser->lazyLoadedImagesCount += 1;
 
 				// Skip first few images in article
-				if ( $this->app->wg->Parser->lazyLoadedImagesCount < 5 ) {
+				if ( $this->app->wg->Parser->lazyLoadedImagesCount < 3 ) {
 					return true;
 				}
 			}
@@ -68,6 +68,39 @@ class ImageLazyLoad extends WikiaObject {
 		}
 
 		return true;
+	}
+
+	function onGalleryBeforeRenderImage( &$image ) {
+		global $wgRTEParserEnabled;
+
+		if ( self::$enabled && empty( $wgRTEParserEnabled ) ) {
+
+			// Don't lazy-load data elements
+			if ( startsWith( $image[ 'thumbnail' ], 'data:' ) ) {
+				return true;
+			}
+
+			if ( !empty( $this->app->wg->Parser ) ) {
+				if ( empty( $this->app->wg->Parser->lazyLoadedImagesCount ) ) {
+					$this->app->wg->Parser->lazyLoadedImagesCount = 0;
+				}
+
+				$this->app->wg->Parser->lazyLoadedImagesCount += 1;
+
+				// Skip first few images in article
+				if ( $this->app->wg->Parser->lazyLoadedImagesCount < 3 ) {
+					return true;
+				}
+			}
+
+			$image['thumbnail-src'] = $this->wf->BlankImgUrl();
+			$image['thumbnail-classes'] = self::LAZY_IMAGE_CLASSES;
+			$image['thumbnail-onload'] = 'if(typeof ImgLzy=="object"){ImgLzy.load(this)}';
+
+		}
+
+		return true;
+
 	}
 
 	function onParserClearState( &$parser ) {

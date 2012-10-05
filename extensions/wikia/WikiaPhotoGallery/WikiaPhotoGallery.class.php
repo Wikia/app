@@ -888,8 +888,21 @@ class WikiaPhotoGallery extends ImageGallery {
 						$imgAttribs['data-caption'] = $image['data-caption'];
 					}
 
+					if( isset($image['thumbnail-classes']) &&
+						isset($image['thumbnail-src']) &&
+						isset($image['thumbnail-onload']) ) {
+
+						$thumbHtml .= '<noscript>'.Xml::openElement('img', $imgAttribs).'</noscript>';
+						$imgAttribs['class'] .= ' ' . $image['thumbnail-classes'];
+						$imgAttribs['data-src'] = $imgAttribs['src'];
+						$imgAttribs['src'] = $image['thumbnail-src'];
+						$imgAttribs['onload'] = $image['thumbnail-onload'];
+					}
+
 					$thumbHtml .= Xml::openElement('img', $imgAttribs);
 					$thumbHtml .= $videoOverlay;
+
+					wyvlog( $thumbHtml );
 				} else {
 					$thumbHtml = $image['linkTitle'];
 				}
@@ -958,6 +971,7 @@ class WikiaPhotoGallery extends ImageGallery {
 			$html .= Xml::closeElement('div');
 		}
 		wfProfileOut(__METHOD__);
+
 		return $html;
 	} // end renderGallery()
 

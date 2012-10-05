@@ -179,9 +179,12 @@ var WikiaPhotoGalleryView = {
 			image.css({
 					height: imageHeight,
 					width: imageWidth
-				}).
-				attr('src', image.attr('data-src')).
-				removeAttr('data-src');
+				});
+			if(!image.hasClass('lzyPlcHld')) {
+				image.
+					attr('src', image.attr('data-src')).
+					removeAttr('data-src');
+			}
 
 			self.log('loaded: ' + image.attr('src') + ' (' + imageWidth  + 'x' + imageHeight + ')' + (crop ? ' + crop' : ''));
 

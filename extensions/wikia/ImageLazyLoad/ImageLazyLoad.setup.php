@@ -13,3 +13,6 @@ $app->registerHook( 'BeforePageDisplay', 'ImageLazyLoad', 'onBeforePageDisplay' 
 $app->registerHook( 'ParserClearState', 'ImageLazyLoad', 'onParserClearState' );
 $app->registerHook( 'ThumbnailImageHTML', 'ImageLazyLoad', 'onThumbnailImageHTML' );
 $app->registerHook( 'ThumbnailVideoHTML', 'ImageLazyLoad', 'onThumbnailImageHTML' );
+
+// galleries
+$app->registerHook( 'GalleryBeforeRenderImage', 'ImageLazyLoad', 'onGalleryBeforeRenderImage' );
