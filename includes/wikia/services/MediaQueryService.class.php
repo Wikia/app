@@ -78,7 +78,7 @@ class MediaQueryService extends WikiaService {
 			array( 'image' ),
 			array( 'img_name' ),
 			array(
-				"img_name $dbquerylike" ,
+				"lower(img_name) $dbquerylike" ,
 				"img_media_type in ('".MEDIATYPE_BITMAP."','".MEDIATYPE_DRAWING."')",
 			),
 			__METHOD__ ,
@@ -111,7 +111,7 @@ class MediaQueryService extends WikiaService {
 
 			if ( !empty($name) ) {
 				$dbquerylike = $db->buildLike( $db->anyString(), mb_strtolower( $name ), $db->anyString() );
-				$sqlWhere[] = "img_name $dbquerylike";
+				$sqlWhere[] = "lower(img_name) $dbquerylike";
 			}
 
 			$row = $db->selectRow(
