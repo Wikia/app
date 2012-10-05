@@ -11,8 +11,11 @@ $messages['en'] = array(
 	//Content Managment tool
 	'wikiagameguides-content-title' => 'Wikia Game Guides content managment tool',
 	'wikiagameguides-content-category' => 'Category',
-	'wikiagameguides-content-tag' => 'Tag',
-	'wikiagameguides-content-name' => 'Name',
+	'wikiagameguides-content-category-desc' => 'Enter the categories on your wiki that you would like to include in Game Guides.',
+	'wikiagameguides-content-tag' => 'Category Tag (optional)',
+	'wikiagameguides-content-tag-desc' => 'Organize your game categories by giving them tags.',
+	'wikiagameguides-content-name' => 'Game Guide Name (optional)',
+	'wikiagameguides-content-name-desc' => 'Rename the wiki categories as you\'d like them to appear on Game Guides',
 	'wikiagameguides-content-add' => 'Add',
 	'wikiagameguides-content-save' => 'Save',
 	'wikiagameguides-content-category-error' => 'Category does not exists',

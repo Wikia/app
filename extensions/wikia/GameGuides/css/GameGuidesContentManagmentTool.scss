@@ -4,10 +4,17 @@
 	margin: 100px 0;
 	position: relative;
 
-	.header span {
+	.header > div {
 		display: inline-block;
 		width: 200px;
 		margin: 0 15px;
+
+		font-weight: 800;
+
+		div {
+			font-weight: 100;
+			font-size: 90%;
+		}
 	}
 
 	ul {

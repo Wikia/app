@@ -1,5 +1,18 @@
 <div id=contentManagmentForm>
-	<div class=header><span><?= $wf->Msg('wikiagameguides-content-category');?></span><span><?= $wf->Msg('wikiagameguides-content-tag');?></span><span><?= $wf->Msg('wikiagameguides-content-name');?></span></div>
+	<div class=header>
+		<div>
+			<?= $wf->Msg('wikiagameguides-content-category');?>
+			<div><?= $wf->Msg('wikiagameguides-content-category-desc');?></div>
+		</div>
+		<div>
+			<?= $wf->Msg('wikiagameguides-content-tag');?>
+			<div><?= $wf->Msg('wikiagameguides-content-tag-desc');?></div>
+		</div>
+		<div>
+			<?= $wf->Msg('wikiagameguides-content-name');?>
+			<div><?= $wf->Msg('wikiagameguides-content-name-desc');?></div>
+		</div>
+	</div>
 	<ul>
 		<?
 		if ( is_array( $categories ) ):
