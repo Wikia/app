@@ -24,6 +24,8 @@ $wgExtensionMessagesFiles['SharedHelp'] =  dirname( __FILE__ ) . '/SharedHelp.i1
 $wgHooks['OutputPageBeforeHTML'][] = 'SharedHelpHook';
 $wgHooks['EditPage::showEditForm:initial'][] = 'SharedHelpEditPageHook';
 $wgHooks['LinkBegin'][] = 'SharedHelpLinkBegin';
+$wgHooks['WikiaCanonicalHref'][] = 'SharedHelpCanonicalHook';
+
 
 /* in MW 1.19 WantedPages::getSQL hook changes into WantedPages::getQueryInfo */
 $wgHooks['WantedPages::getQueryInfo'][] = 'SharedHelpWantedPagesSql';
@@ -498,6 +500,25 @@ function efSharedHelpRemoveMagicWord(&$parser, &$text, &$strip_state) {
 	$found = MagicWord::get('MAG_NOSHAREDHELP')->matchAndRemove($text);
 	if ( $found ) {
 		$text .= NOSHAREDHELP_MARKER;
+	}
+
+	return true;
+}
+
+
+/*
+ * Replace meta information for canonical link
+ * Article from shared help should point to it's origin
+ */
+function SharedHelpCanonicalHook( &$url ) {
+
+	global $wgTitle, $wgHelpWikiId;
+
+	if ( $wgTitle instanceof Title && $wgTitle->getNamespace() == NS_HELP && !$wgTitle->exists() ) {
+
+		$sharedServer = WikiFactory::getVarValueByName( 'wgServer', $wgHelpWikiId );
+		$titleUrl = $wgTitle->getLinkURL();
+		$url = $sharedServer . $titleUrl;
 	}
 
 	return true;
