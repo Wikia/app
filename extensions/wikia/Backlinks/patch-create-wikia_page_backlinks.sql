@@ -1,4 +1,4 @@
-CREATE TABLE `/*$wgDBprefix*/wikia_page_backlinks` (
+CREATE TABLE /*$wgDBprefix*/wikia_page_backlinks (
 	`source_page_id` UNSIGNED INT NOT NULL,
 	`target_page_id` UNSIGNED INT NOT NULL,
 	`backlink_text` VARBINARY(255),
