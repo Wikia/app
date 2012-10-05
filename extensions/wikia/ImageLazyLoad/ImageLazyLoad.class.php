@@ -44,6 +44,8 @@ class ImageLazyLoad extends WikiaObject {
 				}
 			}
 
+			$origImgAlt = Xml::element( 'img', $attribs, '', true );
+
 			// Remove empty alt attributes (messes up string replace later if not removed)
 			if ( isset( $attribs[ 'alt' ] ) && empty( $attribs[ 'alt' ] ) ) {
 				unset( $attribs[ 'alt' ] );
@@ -61,6 +63,8 @@ class ImageLazyLoad extends WikiaObject {
 			$lazyImageAttribs[ 'onload' ] = 'if(typeof ImgLzy=="object"){ImgLzy.load(this)}';
 
 			$html = str_replace( $origImg, Xml::element( 'img', $lazyImageAttribs ) . "<noscript>{$origImg}</noscript>", $html );
+			$html = str_replace( $origImgAlt, Xml::element( 'img', $lazyImageAttribs ) . "<noscript>{$origImg}</noscript>", $html );
+
 		}
 
 		return true;
