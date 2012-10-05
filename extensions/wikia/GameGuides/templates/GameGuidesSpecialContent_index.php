@@ -15,10 +15,12 @@
 	</div>
 	<ul>
 		<?
-		if ( is_array( $categories ) ):
-			foreach( $categories as $categoryName => $data ): ?>
-			<li><input class=category placeholder="<?= $wf->Msg('wikiagameguides-content-category');?>" value="<?=$categoryName; ?>"/><input class=tag placeholder="<?= $wf->Msg('wikiagameguides-content-tag');?>" value="<?= $data['tag']; ?>"/><input class=name placeholder="<?= $wf->Msg('wikiagameguides-content-name');?>" value="<?= $data['name']; ?>"/><button class="remove secondary">X</button></li>
-			<? endforeach;
+		if ( is_array( $tags ) ):
+			foreach( $tags as $tag ):
+				foreach( $tag['categories'] as $category ): ?>
+			<li><input class=category placeholder="<?= $wf->Msg('wikiagameguides-content-category');?>" value="<?= $category['category']; ?>"/><input class=tag placeholder="<?= $wf->Msg('wikiagameguides-content-tag');?>" value="<?= $tag['name']; ?>"/><input class=name placeholder="<?= $wf->Msg('wikiagameguides-content-name');?>" value="<?= $category['name']; ?>"/><button class="remove secondary">X</button></li>
+				<? endforeach;
+			endforeach;
 		else: ?>
 			<li><input class=category placeholder="<?= $wf->Msg('wikiagameguides-content-category');?>" /><input class=tag placeholder="<?= $wf->Msg('wikiagameguides-content-tag');?>" /><input class=name placeholder="<?= $wf->Msg('wikiagameguides-content-name');?>" /><button class="remove secondary">X</button></li>
 		<? endif; ?>

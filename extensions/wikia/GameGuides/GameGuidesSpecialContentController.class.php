@@ -33,13 +33,14 @@ class GameGuidesSpecialContentController extends WikiaSpecialPageController {
 
 		F::build( 'JSMessages' )->enqueuePackage( 'GameGuidesContentMsg', JSMessages::INLINE );
 
-		$categories = WikiFactory::getVarValueByName( 'wgWikiaGameGuidesContent', $this->wg->CityId );
+		$tags = WikiFactory::getVarValueByName( 'wgWikiaGameGuidesContent', $this->wg->CityId );
 
-		$this->response->setVal( 'categories', $categories );
+		$this->response->setVal( 'tags', $tags );
+		return true;
 	}
 
 	public function save(){
-		if (!$this->wg->User->isAllowed( 'gameguidescontent' )) {
+		if ( !$this->wg->User->isAllowed( 'gameguidescontent' ) ) {
 			$this->displayRestrictionError();
 			return false;  // skip rendering
 		}
@@ -47,23 +48,49 @@ class GameGuidesSpecialContentController extends WikiaSpecialPageController {
 
 		$categories = $this->getVal( 'categories' );
 		$err = array();
+		$tags = array();
 
-		foreach ( $categories as $categoryName => $values) {
-			$categoryTitle = Title::newFromText( $categoryName, NS_CATEGORY );
+		if( !empty( $categories ) ) {
+			//check if categories exists
+			foreach ( $categories as $categoryName => $values) {
+				$category = Category::newFromName( $categoryName );
 
-			if ( $categoryTitle instanceof Title && $categoryTitle->exists() ) {
-			} else {
-				$err[] = $categoryName;
+				if ( !( $category instanceof Category ) || $category->getPageCount() === 0 ) {
+					$err[] = $categoryName;
+				} else if ( empty( $err ) ) {
+
+					if ( array_key_exists( $values['tag'], $tags ) ) {
+						$tags[$values['tag']]['categories'][] = array(
+							'category' => $categoryName,
+							'name' => $values['name']
+						);
+					} else {
+						$tags[$values['tag']] = array(
+							'name' => $values['tag'],
+							'categories' => array(
+								array(
+									'category' => $categoryName,
+									'name' => $values['name']
+								)
+							)
+						);
+					}
+				}
+			}
+
+			if ( !empty( $err ) ) {
+				$this->response->setVal( 'error', $err );
+				return true;
 			}
 		}
 
-		if ( !empty( $err ) ) {
-			$this->response->setVal( 'error', $err );
-			return true;
+		$status = WikiFactory::setVarByName( 'wgWikiaGameGuidesContent', $this->wg->CityId, array_values( $tags ) );
+		$this->response->setVal( 'status', $status );
+
+		if ( $status ) {
+			$this->wf->RunHooks( 'GameGuidesContentSave' );
 		}
 
-		$status = WikiFactory::setVarByName( 'wgWikiaGameGuidesContent', $this->wg->CityId, $categories );
-		$this->response->setVal( 'status', $status );
 		return true;
 	}
 }
