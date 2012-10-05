@@ -1,6 +1,6 @@
 var AdConfig2Late = function (
 	// regular dependencies
-	log
+	log, window
 
 	// AdProviders
 	, adProviderGamePro
@@ -10,7 +10,8 @@ var AdConfig2Late = function (
 ) {
 	'use strict';
 
-	var log_group = 'AdConfig2Late'
+	var log_group = 'AdConfig2'
+		, city_lang = window.wgContentLanguage
 		, getProvider;
 
 	getProvider = function(slot) {
@@ -27,8 +28,13 @@ var AdConfig2Late = function (
 		}
 
 		// First ask GamePro (german lang wiki)
-		if (adProviderGamePro.canHandleSlot(slot)) {
-			return adProviderGamePro;
+		if (city_lang == 'de') {
+			if (slotname == 'PREFOOTER_RIGHT_BOXAD' || slotname == 'LEFT_SKYSCRAPER_3' || slotname == 'TOP_RIGHT_BUTTON') {
+				return adProviderNull;
+			}
+			if (adProviderGamePro.canHandleSlot(slot)) {
+				return adProviderGamePro;
+			}
 		}
 
 		if (slotname == 'WIKIA_BAR_BOXAD_1' || slotname == 'INCONTENT_BOXAD_1') {

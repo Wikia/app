@@ -183,7 +183,7 @@ test('getProvider use GamePro if provider says so', function() {
 		, adProviderLaterMock = {name: 'LaterMock'}
 		, geoMock = {getCountryCode:function() {}}
 		, logMock = function() {}
-		, windowMock = {}
+		, windowMock = {wgContentLanguage: 'de'}
 		, documentMock = {documentElement: {offsetHeight: 99999}}
 		, adConfig;
 
@@ -215,7 +215,7 @@ test('getProvider GamePro wins over Evolve', function() {
 		, adProviderLaterMock = {name: 'LaterMock'}
 		, geoMock = {getCountryCode:function() {return 'NZ';}}
 		, logMock = function() {}
-		, windowMock = {}
+		, windowMock = {wgContentLanguage: 'de'}
 		, documentMock = {documentElement: {offsetHeight: 99999}}
 		, adConfig;
 

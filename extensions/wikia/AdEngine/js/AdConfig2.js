@@ -13,7 +13,8 @@ var AdConfig2 = function (
 ) {
 	'use strict';
 
-	var module = 'AdConfig2'
+	var log_group = 'AdConfig2'
+		, city_lang = window.wgContentLanguage
 		, country = Geo.getCountryCode()
 		, defaultHighValueCountries, defaultHighValueSlots
 		, highValueCountries, highValueSlots
@@ -77,13 +78,13 @@ var AdConfig2 = function (
 		var slotname = slot[0]
 			, pageHeight = document.documentElement.offsetHeight;
 
-		log('getProvider', 5, module);
-		log(slot, 5, module);
+		log('getProvider', 5, log_group);
+		log(slot, 5, log_group);
 
 		// Check height of page for some slots
 		if (slotsOnlyOnLongPages[slotname]) {
 			if (pageHeight < slotsOnlyOnLongPages[slotname]) {
-				log('#' + slotname + ' disabled. Page too short', 7, module);
+				log('#' + slotname + ' disabled. Page too short', 7, log_group);
 				return adProviderNull;
 			}
 		}
@@ -112,8 +113,10 @@ var AdConfig2 = function (
 		if (highValueSlots[slotname]) {
 
 		// First ask GamePro (german lang wiki)
-		if (adProviderGamePro.canHandleSlot(slot)) {
-			return adProviderGamePro;
+		if (city_lang == 'de') {
+			if (adProviderGamePro.canHandleSlot(slot)) {
+				return adProviderGamePro;
+			}
 		}
 
 		}

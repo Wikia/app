@@ -11,10 +11,11 @@ test('getProvider returns Liftium2 if it can handle it', function() {
 		, adProviderLiftium2Mock = {name: 'Liftium2Mock', canHandleSlot: function() {return true;}}
 		, adProviderLiftium2DomMock = {name: 'Liftium2DomMock', canHandleSlot: function() {return false;}}
 		, logMock = function() {}
+		, windowMock = {}
 		, adConfig;
 
 	adConfig = AdConfig2Late(
-		logMock
+		logMock, windowMock
 
 		, adProviderGameProMock
 		, adProviderLiftium2Mock
@@ -31,10 +32,11 @@ test('getProvider returns Null if Liftium cannot handle it', function() {
 		, adProviderLiftium2Mock = {name: 'Liftium2Mock', canHandleSlot: function() {return false;}}
 		, adProviderLiftium2DomMock = {name: 'Liftium2DomMock', canHandleSlot: function() {return false;}}
 		, logMock = function() {}
+		, windowMock = {}
 		, adConfig;
 
 	adConfig = AdConfig2Late(
-		logMock
+		logMock, windowMock
 
 		, adProviderGameProMock
 		, adProviderLiftium2Mock

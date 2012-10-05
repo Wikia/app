@@ -10,13 +10,16 @@ var AdProviderGamePro = function(ScriptWriter, WikiaTracker, log, window, docume
 	};
 
 	function canHandleSlot(slot) {
-		var city_lang = window.wgContentLanguage;
 		var slotname = slot[0];
 
-		log('isSlotGamePro', 5, 'AdProviderGamePro');
-		log([slotname, city_lang], 5, 'AdProviderGamePro');
+		log('canHandleSlot', 5, 'AdProviderGamePro');
+		log([slotname], 5, 'AdProviderGamePro');
 
-		return city_lang === 'de' && slotMap[slotname] ? true : false;
+		if (slotMap[slotname]) {
+			return true;
+		}
+
+		return false;
 	}
 
 	function fillInSlot(slot) {

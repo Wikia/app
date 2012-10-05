@@ -37,7 +37,8 @@ test('canHandleSlot GamePro de', function() {
 	equal(adProviderGamePro.canHandleSlot(['INCONTENT_BOXAD_1']), false, 'de slot INCONTENT_BOXAD_1');
 });
 
-test('canHandleSlot GamePro outside de', function() {
+// TODO move to AdConfig2Test.js
+/*test('canHandleSlot GamePro outside de', function() {
 	var logMock = function() {}
 		, scriptWriterMock
 		, wikiaTrackerMock
@@ -60,4 +61,4 @@ test('canHandleSlot GamePro outside de', function() {
 	equal(adProviderGamePro.canHandleSlot(['HOME_TOP_LEADERBOARD']), false, 'en slot HOME_TOP_LEADERBOARD');
 	equal(adProviderGamePro.canHandleSlot(['HOME_TOP_RIGHT_BOXAD']), false, 'en slot HOME_TOP_RIGHT_BOXAD');
 	equal(adProviderGamePro.canHandleSlot(['INCONTENT_BOXAD_1']), false, 'en slot INCONTENT_BOXAD_1');
-});
+});*/

@@ -21,7 +21,7 @@
 	adProviderLiftium2Dom = AdProviderLiftium2Dom(WikiaTracker, log, document);
 
 	adConfig = AdConfig2Late(
-		log
+		log, window
 
 		// AdProviders:
 		, adProviderGamePro
