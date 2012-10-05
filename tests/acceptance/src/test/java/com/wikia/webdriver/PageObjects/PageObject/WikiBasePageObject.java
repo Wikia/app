@@ -1,5 +1,7 @@
 package com.wikia.webdriver.PageObjects.PageObject;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 
 import org.openqa.selenium.By;
@@ -409,7 +411,15 @@ public class WikiBasePageObject extends BasePageObject {
 	public WikiArticlePageObject openArticle(String articleName)
 	{
 		PageObjectLogging.log("debug", "url: "+Global.DOMAIN+"wiki/"+articleName , false);
-		driver.get(Global.DOMAIN+"wiki/"+articleName);
+		URI uri;
+		try {
+			uri = new URI(Global.DOMAIN+"wiki/"+articleName);
+			String url = uri.toASCIIString();
+			driver.get(url);
+		} catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		PageObjectLogging.log("openArticle", "article "+articleName+" opened", true, driver);
 		return new WikiArticlePageObject(driver, Domain, articleName);
 	}
