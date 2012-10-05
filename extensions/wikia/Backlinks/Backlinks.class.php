@@ -88,15 +88,6 @@ class Backlinks
 
 		$dbr = wfGetDb( DB_MASTER );
 
-		if (! $dbr->tableExists(self::TABLE_NAME) ) {
-			try {
-				self::initTable();
-			} catch ( Exception $e ) {
-				wfProfileOut(__METHOD__);
-				return true;
-			}
-		}
-
 		$rowCount = count( self::$backlinkRows );
 		if ($rowCount == 0) {
 			wfProfileOut(__METHOD__);
