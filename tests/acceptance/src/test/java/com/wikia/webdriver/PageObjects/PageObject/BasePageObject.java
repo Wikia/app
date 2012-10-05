@@ -522,6 +522,18 @@ public class BasePageObject{
 			PageObjectLogging.log("waitForValueToBePresentInElementsAttributeByCss", e.toString(), false);			
 		}
 	}
+	
+	public void waitForValueToBePresentInElementsAttributeByElement(WebElement element, String attribute, String value)
+	{
+		try
+		{
+			wait.until(CommonExpectedConditions.valueToBePresentInElementsAttribute(element, attribute, value));								
+		}
+		catch(Exception e)
+		{
+			PageObjectLogging.log("waitForValueToBePresentInElementsAttributeByCss", e.toString(), false);			
+		}
+	}
 
 	public void waitForValueToNotBePresentInElementsAttributeByCss(String selector, String attribute, String value)
 	{

@@ -78,8 +78,95 @@ public class MessageWallTests extends TestTemplate
 		wall.removeMessage("reason");
 	}
 	
-//	@Test
-//	public void MessageWall_002_WriteEditMessage()
+	@Test(groups = { "MessageWall005", "MessageWall" })
+	public void MessageWall_005_WriteMessageImagePreview() {
+		CommonFunctions.logOut(Properties.userName, driver);
+		MessageWallPageObject wall = new MessageWallPageObject(driver, Global.DOMAIN);
+		String timeStamp = wall.getTimeStamp();
+		String title = "QATitle"+timeStamp;
+		CommonFunctions.logIn(Properties.userName, Properties.password);
+		wall.openMessageWall(Properties.userName);
+		wall.writeMessageImage(title);
+		wall.clickPreviewButton();
+		wall.clickPublishButton();
+		wall.verifyPostedMessageImage(title);
+		wall.removeMessage("reason");
+	}
+	
+	@Test(groups = {"MessageWall006", "MessageWall"}) 
+	public void MessageWall_006_WriteMessagePreview()
+	{
+		
+		CommonFunctions.logOut(Properties.userName, driver);
+		MessageWallPageObject wall = new MessageWallPageObject(driver, Global.DOMAIN);
+		String timeStamp = wall.getTimeStamp();
+		String title = "QATitle"+timeStamp;
+		String message = "QAMessage" + timeStamp;
+		CommonFunctions.logIn(Properties.userName, Properties.password);
+		wall.openMessageWall(Properties.userName);
+		wall.writeMessage(title, message);
+		wall.clickPreviewButton();
+		wall.clickPublishButton();
+		wall.verifyPostedMessageWithTitle(title, message);
+		wall.removeMessage("reason");
+	}
+	
+	@Test(groups = {"MessageWall007", "MessageWall"}) 
+	public void MessageWall_007_WriteMessageWithLink()
+	{
+		
+		CommonFunctions.logOut(Properties.userName, driver);
+		MessageWallPageObject wall = new MessageWallPageObject(driver, Global.DOMAIN);
+		String timeStamp = wall.getTimeStamp();
+		String title = "QATitle"+timeStamp;
+		String Externallink = "www.wikia.com";
+		String Internallink = "Formatting";
+		CommonFunctions.logIn(Properties.userName, Properties.password);
+		wall.openMessageWall(Properties.userName);
+		wall.writeMessageWithLink(Internallink, Externallink, title);
+		wall.clickPostButton();
+		wall.verifyPostedMessageWithLinks(Internallink, Externallink);
+		wall.removeMessage("reason");
+	}
+	
+	@Test(groups = {"MessageWall008", "MessageWall"}) 
+	public void MessageWall_008_WriteMessageVideoPreview()
+	{
+		
+		CommonFunctions.logOut(Properties.userName, driver);
+		MessageWallPageObject wall = new MessageWallPageObject(driver, Global.DOMAIN);
+		String timeStamp = wall.getTimeStamp();
+		String title = "QATitle"+timeStamp;
+		CommonFunctions.logIn(Properties.userName, Properties.password);
+		wall.openMessageWall(Properties.userName);
+		wall.writeMessageVideo(title, url);
+		wall.clickPreviewButton();
+		wall.clickPublishButton();
+		wall.verifyPostedMessageVideo(title);
+		wall.removeMessage("reason");
+	}
+	
+	@Test(groups = {"MessageWall009", "MessageWall"}) 
+	public void MessageWall_009_WriteMessageWithLinkPreview()
+	{
+		
+		CommonFunctions.logOut(Properties.userName, driver);
+		MessageWallPageObject wall = new MessageWallPageObject(driver, Global.DOMAIN);
+		String timeStamp = wall.getTimeStamp();
+		String title = "QATitle"+timeStamp;
+		String Externallink = "www.wikia.com";
+		String Internallink = "Formatting";
+		CommonFunctions.logIn(Properties.userName, Properties.password);
+		wall.openMessageWall(Properties.userName);
+		wall.writeMessageWithLink(Internallink, Externallink, title);
+		wall.clickPreviewButton();
+		wall.clickPublishButton();
+		wall.verifyPostedMessageWithLinks(Internallink, Externallink);
+		wall.removeMessage("reason");
+	}
+	
+//	@Test(groups = {"MessageWall010", "MessageWall"}) 
+//	public void MessageWall_010_WriteBoldMessage()
 //	{
 //		
 //		CommonFunctions.logOut(Properties.userName, driver);
@@ -87,8 +174,26 @@ public class MessageWallTests extends TestTemplate
 //		String timeStamp = wall.getTimeStamp();
 //		String title = "QATitle"+timeStamp;
 //		String message = "QAMessage" + timeStamp;
-//		String titleEdit = "QATitle"+timeStamp+"edit";
-//		String messageEdit = "QAMessage" + timeStamp+"edit";
+//		CommonFunctions.logIn(Properties.userName, Properties.password);
+//		wall.openMessageWall(Properties.userName);
+//		wall.writeBoldMessage(title, message);
+//		wall.clickPostButton();
+//		wall.verifyPostedBoldMessageWithTitle(title, message);
+//		wall.removeMessage("reason");
+//	}
+	
+	
+	
+//	@Test(groups = { "MessageWall00x", "MessageWall" })
+//	public void MessageWall_00x_WriteAndEditMessage() {
+//
+//		CommonFunctions.logOut(Properties.userName, driver);
+//		MessageWallPageObject wall = new MessageWallPageObject(driver,Global.DOMAIN);
+//		String timeStamp = wall.getTimeStamp();
+//		String title = "QATitle" + timeStamp;
+//		String message = "QAMessage" + timeStamp;
+//		String titleEdit = "QATitle" + timeStamp + "edit";
+//		String messageEdit = "QAMessage" + timeStamp + "edit";
 //		CommonFunctions.logIn(Properties.userName, Properties.password);
 //		wall.openMessageWall(Properties.userName);
 //		wall.writeMessage(title, message);
@@ -96,6 +201,7 @@ public class MessageWallTests extends TestTemplate
 //		wall.verifyPostedMessageWithTitle(title, message);
 //		wall.editMessage(titleEdit, messageEdit);
 //		wall.verifyPostedMessageWithTitle(titleEdit, messageEdit);
-//		
+//
 //	}
+	
 }
