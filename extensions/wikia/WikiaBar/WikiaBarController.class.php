@@ -33,7 +33,7 @@ class WikiaBarController extends WikiaController {
 		$this->lang = F::app()->wg->contLang->getCode();
 
 		if( HubService::isCurrentPageAWikiaHub() ) {
-			$this->vertical =  HubService::getHubIdForCurrentPage();
+			$this->vertical = HubService::getCategoryInfoForCurrentPage()->cat_id;
 		} else {
 			$this->vertical = HubService::getCategoryInfoForCity(F::app()->wg->cityId)->cat_id;
 		}
