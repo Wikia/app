@@ -125,7 +125,7 @@ class ListusersData {
 		$memkey = wfForeignMemcKey( $this->mCityId, null, "ludata", md5( implode(', ', $subMemkey) ) );
 		$cached = $wgMemc->get($memkey);
 
-		if ( empty($cached) && !empty($this->mDBEnable) ) {
+		if ( 1 && empty($cached) && !empty($this->mDBEnable) ) {
 			/* db handle */
 			$dbs = wfGetDB( DB_SLAVE, array(), $this->mDBh );
 
@@ -241,10 +241,18 @@ class ListusersData {
 						)
 					);
 
-					$oUTitle = Title::newFromText($oUser->getName(), NS_USER_TALK);
-					if ( $oUTitle instanceof Title ) {
-						$links[0] = $sk->makeLinkObj( $oUTitle, $wgLang->ucfirst(wfMsg('talkpagelinktext') ) );
+					global $wgEnableWallExt;
+					if(!empty($wgEnableWallExt)) {
+						$oUTitle = Title::newFromText($oUser->getName(), NS_USER_WALL);
+						$msg = 'wall-message-wall-shorten';
+					} else {
+						$oUTitle = Title::newFromText($oUser->getName(), NS_USER_TALK);
+						$msg = 'talkpagelinktext';
 					}
+
+                               		if ( $oUTitle instanceof Title ) {
+                                        	$links[0] = $sk->makeLinkObj( $oUTitle, $wgLang->ucfirst(wfMsg($msg) ) );
+                                        }
 
 					if ( $wgUser->isAllowed( 'block' ) && ( !$userIsBlocked ) ) {
 						$links[] = $sk->makeLinkObj(
