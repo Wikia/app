@@ -1,3 +1,15 @@
+@font-face {
+	font-family: 'Droid Serif';
+	src: local('Droid Serif'), local('DroidSerif'), url(extensions/wikia/GameGuides/fonts/DroidSerif.ttf) format('truetype');
+	font-weight: 400;
+}
+
+@font-face {
+	font-family: 'Roboto-Thin';
+	src: local('Roboto Thin'), local('RobotoThin'), url(extensions/wikia/GameGuides/fonts/RobotoThin.ttf) format('truetype');
+	font-weight: 100;
+}
+
 @import "../../WikiaMobile/css/variables";
 
 //dependencies
@@ -11,13 +23,6 @@
 @import '../../WikiaMobile/css/media_modal';
 @import '../../WikiaMobile/css/image_placeholder';
 @import '../../WikiaMobile/css/loader';
-
-@font-face {
-	font-family: 'Droid Serif';
-	font-style: normal;
-	font-weight: 400;
-	src: local('Droid Serif'), local('DroidSerif'), url(../fonts/DroidSerif.ttf) format('truetype');
-}
 
 $mainGreen: rgb(171,197,97);
 $halfMainGreen: rgba(171,197,97,.5);
