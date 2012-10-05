@@ -267,7 +267,26 @@ class GameGuidesController extends WikiaController {
 		$this->setVal( 'globals', WikiaSkin::makeInlineVariablesScript( $vars ) . $skin->getTopScripts() );
 	}
 
-	public function getContent(){
+	/**
+	 * API to get data from Game Guides Content Managment Tool in json
+	 *
+	 * make sure that name of this function is aligned
+	 * with what is in onGameGuidesContentSave to purge varnish correctly
+	 *
+	 * $return response['tags'] List of tags in a format:
+	 *
+	 * {tags:[
+	 * 		{
+	 * 			name: 'name',
+	 * 			categories:
+	 * 			{
+	 * 				category: 'Category',
+	 * 				name: 'Name'
+	 * 			}
+	 * 		}
+	 * ]}
+	 */
+	public function getTags(){
 		$this->response->setFormat( 'json' );
 
 		$this->response->setCacheValidity(
@@ -281,6 +300,12 @@ class GameGuidesController extends WikiaController {
 		$this->response->setVal( 'tags',  WikiFactory::getVarValueByName( 'wgWikiaGameGuidesContent', $this->wg->CityId ) );
 	}
 
+	/**
+	 * Whenever data is saved in GG Content Managment Tool
+	 * purge Varnish cache for it
+	 *
+	 * @return bool
+	 */
 	static function onGameGuidesContentSave(){
 		$app = F::app();
 
@@ -290,7 +315,7 @@ class GameGuidesController extends WikiaController {
 					$app->wf->ExpandUrl( $app->wg->Server . $app->wg->ScriptPath . '/wikia.php' ),
 					array(
 						'controller' => __CLASS__,
-						'method' => 'getContent'
+						'method' => 'getTags'
 					)
 				)
 			)
