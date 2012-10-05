@@ -72,13 +72,14 @@ class MediaQueryService extends WikiaService {
 
 		$dbr = $this->wf->GetDB( DB_SLAVE );
 
-		$dbquerylike = $dbr->buildLike( $dbr->anyString(), mb_strtolower( $query ), $dbr->anyString() );
+		$dbquerylikeLower = $dbr->buildLike( $dbr->anyString(), mb_strtolower( $query ), $dbr->anyString() );
+		$dbquerylike = $dbr->buildLike( $dbr->anyString(), $query, $dbr->anyString() );
 
 		$res = $dbr->select(
 			array( 'image' ),
 			array( 'img_name' ),
 			array(
-				"lower(img_name) $dbquerylike" ,
+				"lower(img_name) $dbquerylikeLower or img_name $dbquerylike" ,
 				"img_media_type in ('".MEDIATYPE_BITMAP."','".MEDIATYPE_DRAWING."')",
 			),
 			__METHOD__ ,
@@ -110,8 +111,9 @@ class MediaQueryService extends WikiaService {
 			);
 
 			if ( !empty($name) ) {
-				$dbquerylike = $db->buildLike( $db->anyString(), mb_strtolower( $name ), $db->anyString() );
-				$sqlWhere[] = "lower(img_name) $dbquerylike";
+				$dbquerylikeLower = $db->buildLike( $db->anyString(), mb_strtolower( $name ), $db->anyString() );
+				$dbquerylike = $db->buildLike( $db->anyString(), $name, $db->anyString() );
+				$sqlWhere[] = "lower(img_name) $dbquerylikeLower or img_name $dbquerylike";
 			}
 
 			$row = $db->selectRow(
