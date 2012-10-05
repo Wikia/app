@@ -17,9 +17,18 @@ $wgExtensionCredits['other'][] = array(
 );
 
 
-// classes
+$dir = dirname(__FILE__);
+$app = F::app();
 
+// classes
+$app->registerClass('InWikiGameHelper', $dir . '/InWikiGameHelper.class.php');
+$app->registerClass('InWikiGameParserTag', $dir . '/InWikiGameParserTag.class.php');
+$app->registerClass('InWikiGameRailController', $dir . '/InWikiGameRailController.class.php');
+
+// hooks
+$app->registerHook('GetRailModuleList', 'InWikiGameHelper', 'onGetRailModuleList');
+$app->registerHook('ParserFirstCallInit', 'InWikiGameParserTag', 'onParserFirstCallInit');
 
 // i18n mapping
-$app->registerExtensionMessageFile('InWikiGame', $dir.'InWikiGame.i18n.php');
+$app->registerExtensionMessageFile('InWikiGame', $dir . '/InWikiGame.i18n.php');
 F::build('JSMessages')->registerPackage('InWikiGame', array('inwikigame-*'));
