@@ -47,9 +47,8 @@ var ScriptWriter = function(log, ghostwriter, document) {
 		ghostwriter(
 			document.documentElement,
 			{
-				insertType: 'append',
-				script: { text: '' },
 				done: function() {
+					ghostwriter.flushloadhandlers();
 					if (typeof(callback) === 'function') {
 						log('Calling callLater now', 7, module);
 						callback();

@@ -101,7 +101,11 @@
 		ghostwriter.handlers.check = checkHandler;
 
 		// We need to reverse what happens in ghostwriter function setDocumentOverrides
-		ghostwriter(document.documentElement); // this initializes ghostwriter without doing much harm
+		ghostwriter(document.documentElement, {
+			done: function() {
+				ghostwriter.flushloadhandlers();
+			}
+		}); // this initializes ghostwriter without doing much harm
 		document.write = document.nativeWrite;
 	}
 
