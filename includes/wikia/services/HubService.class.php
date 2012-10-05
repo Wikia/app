@@ -142,7 +142,7 @@ class HubService extends Service {
 		return (in_array($cityId, self::$corporate_sites));
 	}
 
-	private static function getHubIdForCurrentPage() {
+	public static function getHubIdForCurrentPage() {
 		$categoryId = null;
 		if (F::app()->wg->EnableWikiaHubsV2Ext) {
 			$categoryId = self::getHubIdForCurrentPageV2();
@@ -162,8 +162,8 @@ class HubService extends Service {
 		if (!empty($hubsPages) && $tmpTitle instanceof Title) {
 			$textTitle = $tmpTitle->getDBKey();
 			if ($textTitle) {
-				foreach ($hubsPages as $hubId => $hubGroup) {
-					if (in_array($textTitle, $hubGroup)) {
+				foreach ($hubsPages as $hubId => $hubText) {
+					if( $textTitle == $hubText ) {
 						return $hubId;
 					}
 				}

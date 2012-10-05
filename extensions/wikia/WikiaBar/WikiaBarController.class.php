@@ -25,14 +25,18 @@ class WikiaBarController extends WikiaController {
 	 * @desc Template for wrapper containing Weebo / Admin Toolbar
 	 */
 	public function index() {
-		if (
-			$this->isWikiaBarSuppressed()
-		) {
+		if( $this->isWikiaBarSuppressed() ) {
 			$this->wgSuppressWikiaBar = true;
 			OasisController::addBodyClass('nowikiabar');
 		}
+
 		$this->lang = F::app()->wg->contLang->getCode();
-		$this->vertical = HubService::getCategoryInfoForCity(F::app()->wg->cityId)->cat_id;
+
+		if( HubService::isCurrentPageAWikiaHub() ) {
+			$this->vertical =  HubService::getHubIdForCurrentPage();
+		} else {
+			$this->vertical = HubService::getCategoryInfoForCity(F::app()->wg->cityId)->cat_id;
+		}
 	}
 
 	protected function isWikiaBarSuppressed() {
