@@ -608,7 +608,7 @@ public class BasePageObject{
 	public void customizeToolbar_ClickCustomize() {
 		waitForElementByElement(customizeToolbar_CustomizeButton);
 		waitForElementClickableByElement(customizeToolbar_CustomizeButton);
-		customizeToolbar_CustomizeButton.click();
+		click(customizeToolbar_CustomizeButton);
 		PageObjectLogging.log("customizeToolbar_ClickCustomize", "Clicks on 'Customize' button.", true, driver);
 		
 	}
@@ -700,7 +700,7 @@ public class BasePageObject{
 		}
 		else {
 			waitForElementClickableByElement(element);
-			element.click();
+			click(element);
 		}
 		PageObjectLogging.log("customizeToolbar_ClickOnFoundTool", "Click on "+Tool_dataname, true, driver);
 	}
