@@ -22,28 +22,25 @@ $wgExtensionCredits['other'][] = array(
 	'descriptionmsg' => 'backlinks-desc',
 );
 
-global $wgEnableBacklinksExt;
-if ($wgEnableBacklinksExt) {
 
-	$dir = dirname(__FILE__);
-	$app = F::app();
+$dir = dirname(__FILE__);
+$app = F::app();
 
-	// Interface code
-	include("$dir/Backlinks.php");
+// Interface code
+include("$dir/Backlinks.php");
 
-	$app->registerClass("Backlinks", "$dir/Backlinks.class.php");
+$app->registerClass("Backlinks", "$dir/Backlinks.class.php");
 
-	//@todo make a special page controller that lets you view all pointing to a given page
-	/**
-	 * * register class BacklinksController $dir/BacklinksController.class.php
-	 * * register special page Backlinks BacklinksController
-	 */
+//@todo make a special page controller that lets you view all pointing to a given page
+/**
+ * * register class BacklinksController $dir/BacklinksController.class.php
+ * * register special page Backlinks BacklinksController
+ */
 
-	// i18n
-	$wgExtensionMessagesFiles['Backlinks'] = $dir.'/Backlinks.i18n.php';
+// i18n
+$wgExtensionMessagesFiles['Backlinks'] = $dir.'/Backlinks.i18n.php';
 
-	// hooks
-	$wgHooks['LinkEnd'][] = 'Backlinks::storeBacklinkText';
-	$wgHooks['OutputPageParserOutput'][] = 'Backlinks::updateBacklinkText';
-	$wgHooks['LoadExtensionSchemaUpdates'][] = 'Backlinks::onLoadExtensionSchemaUpdates';
-}
+// hooks
+$wgHooks['LinkEnd'][] = 'Backlinks::storeBacklinkText';
+$wgHooks['OutputPageParserOutput'][] = 'Backlinks::updateBacklinkText';
+$wgHooks['LoadExtensionSchemaUpdates'][] = 'Backlinks::onLoadExtensionSchemaUpdates';
