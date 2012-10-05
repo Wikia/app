@@ -103,13 +103,15 @@ h2, h3, .collSec {
 	background-image: -webkit-linear-gradient(left, $mainGreen 30%, $sectionGrey 50%);
 	background-image: linear-gradient(to right, $mainGreen 30%, $sectionGrey 50%);
 
-	-webkit-transition: background-position .3s linear;
+	-webkit-transition: background-position .3s linear, color .3s;
 
 	&.open {
+		color: $mainGreen;
 		background-position: 0 100%;
 	}
 
 	.chev {
+		top: 23%;
 		width: 0;
 		height: 0;
 	}
