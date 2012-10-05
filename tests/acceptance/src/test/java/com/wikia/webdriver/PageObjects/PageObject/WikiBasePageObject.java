@@ -412,7 +412,6 @@ public class WikiBasePageObject extends BasePageObject {
 	
 	public WikiArticlePageObject openArticle(String articleName)
 	{
-		PageObjectLogging.log("debug", "url: "+Global.DOMAIN+"wiki/"+articleName , false);
 		URI uri;
 		try {
 			uri = new URI(Global.DOMAIN+"wiki/"+articleName);
