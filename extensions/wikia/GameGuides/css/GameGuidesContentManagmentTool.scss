@@ -28,6 +28,8 @@
 	li::before{
 		counter-increment: categories;
 		content: "#"counter(categories);
+		width: 30px;
+		display: inline-block;
 	}
 
 	.autocomplete {
