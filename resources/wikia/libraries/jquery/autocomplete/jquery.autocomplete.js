@@ -151,7 +151,7 @@
             this.hide();
             return;
           }
-          this.select(this.selectedIndex);
+          this.select(this.selectedIndex, /*wikia change*/ e /*end*/);
           if (e.keyCode === 9/* Event.KEY_TAB */) { return; }
           break;
         case 38: //Event.KEY_UP:
