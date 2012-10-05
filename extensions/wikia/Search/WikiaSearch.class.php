@@ -153,12 +153,12 @@ class WikiaSearch extends WikiaObject {
 		}
 		
 		try {
-			$result = $this->getQueryResult( $searchConfig );
+			$result = $this->client->select( $this->getSelectQuery( $searchConfig ) );
 		} catch ( Exception $e ) {
 			Wikia::log(__METHOD__, 'Querying Solr First Time', $e);
 			$searchConfig->setSkipBoostFunctions( true );
 			try {
-				$result = $this->getQueryResult( $searchConfig );
+				$result = $this->client->select( $this->getSelectQuery( $searchConfig ) );
 			} catch ( Exception $e ) {
 				Wikia::log(__METHOD__, 'Querying Solr With No Boost Functions', $e);
 				$result = F::build('Solarium_Result_Select_Empty');
@@ -358,11 +358,13 @@ class WikiaSearch extends WikiaObject {
 	 **/
 	public static function valueForField ( $field, $value, array $params = array() )
 	{
+		wfProfileIn( __METHOD__ );
 		$lang 		= isset( $params['lang']   ) && $params['lang']   !== false ? $lang : null;
 		$negate		= isset( $params['negate'] ) && $params['negate'] !== false ? '-' : '';
 	    $boostVal	= isset( $params['boost']  ) && $params['boost']  !== false ? '^'.$params['boost'] : '';
 	    $evaluate	= isset( $params['quote']  ) && $params['quote']  !== false ? "%s(%s:{$params['quote']}%s{$params['quote']})%s" : '%s(%s:%s)%s';
 	
+	    wfProfileOut( __METHOD__ );
 	    return sprintf( $evaluate, $negate, self::field( $field, $lang ), self::sanitizeQuery( $value ), $boostVal );
 	}
 	
@@ -375,6 +377,7 @@ class WikiaSearch extends WikiaObject {
 	 **/
 	public static function field ( $field, $lang = null )
 	{
+		wfProfileIn( __METHOD__ );
 		global $wgLanguageCode, $wgWikiaSearchSupportedLanguages;
 	    $lang = $lang ?: preg_replace( '/-.*/', '', $wgLanguageCode );
 	    if ( 		in_array( $field,	self::$languageFields )
@@ -384,6 +387,7 @@ class WikiaSearch extends WikiaObject {
 	        $mv = in_array( $field, self::$multiValuedFields )		? '_mv' : '';
 	        $field .= $us . $mv . '_' . $lang;
 	    }
+	    wfProfileOut( __METHOD__ );
 	    return $field;
 	}
 	
@@ -396,6 +400,7 @@ class WikiaSearch extends WikiaObject {
 	 */
 	public static function sanitizeQuery( $query )
 	{
+		wfProfileIn( __METHOD__ );
 	    if ( self::$queryHelper === null ) {
 	        self::$queryHelper = new Solarium_Query_Helper();
 	    }
@@ -406,7 +411,7 @@ class WikiaSearch extends WikiaObject {
 	    // escape all lucene special characters: + - && || ! ( ) { } [ ] ^ " ~ * ? : \ (RT #25482)
 	    // added html entity decoding now that we're doing extra work to prevent xss
 	    $query = self::$queryHelper->escapeTerm( html_entity_decode( $query,  ENT_COMPAT, 'UTF-8' ) );
-	
+		wfProfileOut( __METHOD__ );
 	    return $query;
 	}
 	
@@ -415,15 +420,16 @@ class WikiaSearch extends WikiaObject {
 	 *------------------------------------------------------------------------*/
 	
 	/**
-	 * Takes a query we've created and configures it based on the values set in the SearchConfig
-	 * @see    WikiaSearchTest::testPrepareQuery
+	 * Creates an instance of Solarium_Query_Select configured by searchconfig.
+	 * @see    WikiaSearchTest::testGetQuery
 	 * @param  Solarium_Query_Select $query
 	 * @param  WikiaSearchConfig $searchConfig
-	 * @return WikiaSearch provides fluent interface
+	 * @return Solarium_Query_Select
 	 */
-	private function prepareQuery( Solarium_Query_Select $query, WikiaSearchConfig $searchConfig )
+	private function getSelectQuery( WikiaSearchConfig $searchConfig )
 	{
 		wfProfileIn(__METHOD__);
+		$query = $this->client->createSelect();
 		$query->setDocumentClass( 'WikiaSearchResult' );
 		
 		$sort = $searchConfig->getSort();
@@ -447,12 +453,10 @@ class WikiaSearch extends WikiaObject {
 					 ->setMaxAlternateFieldLength	( F::app()->checkSkin( 'wikiamobile' ) ? 100 : 300 )
 		;
 		
-		$queryFieldsString = sprintf( '%s^5 %s %s^4', self::field( 'title' ), self::field( 'html' ), self::field( 'redirect_titles' ) );
-		
-		if ( $searchConfig->getVideoSearch() && $this->wg->LanguageCode !== 'en' ) {
-			// video wiki requires english field search
-			$queryFieldsString .= sprintf( '%s^5 %s %s^4', self::field( 'title', 'en' ), self::field( 'html', 'en' ), self::field( 'redirect_titles', 'en' ) );
-		}
+		$query->addFilterQuery( array(
+				'query'		=>		$this->getFilterQueryString( $searchConfig ),
+				'key'		=>		'fq1' // constraint of library
+		) );
 		
 		if ( $searchConfig->isInterWiki() ) {
 			$grouping = $query->getGrouping();
@@ -460,21 +464,39 @@ class WikiaSearch extends WikiaObject {
 						->setOffset			( $searchConfig->getStart() )
 						->setFields			( array( 'host' ) )
 			;
-			
-			$queryFieldsString .= sprintf( ' %s^7', self::field( 'wikititle' ) );
 		}
 		
-		$query->addFilterQuery( array(
-				'query'		=>		$this->getFilterQueryString( $searchConfig ),
-				'key'		=>		'fq1' // constraint of library
-		) );
+		// this is how we prevent duplicate results when we already have PTT
+		$noPtt = '';
+		if ( $searchConfig->hasArticleMatch() ) {
+			$am			= $searchConfig->getArticleMatch();
+			$article	= $am->getArticle();  
+			$noPtt		= ' AND ' . self::valueForField( 'id', sprintf( '%s_%s', $searchConfig->getCityId(), $article->getID() ), array( 'negate' => true ) ) ;
+		}
 		
+		$formulatedQuery = sprintf('%s AND (%s)%s', $this->getQueryClausesString( $searchConfig ), $this->getNestedQuery( $searchConfig ), $noPtt);
+		
+		$query->setQuery( $formulatedQuery );
+		wfProfileOut(__METHOD__);
+		return $query;
+	}
+	
+	/**
+	 * Creates a nested query using dismax.
+	 * @see    WikiaSearchTest::testGetNestedQuery
+	 * @param  WikiaSearchConfig $searchConfig
+	 * @return Solarium_Query_Select
+	 */
+	private function getNestedQuery( WikiaSearchConfig $searchConfig ) {
+		wfProfileIn( __METHOD__ );
 		$nestedQuery = $this->client->createSelect();
 		$nestedQuery->setQuery( $searchConfig->getQuery() );
 		
 		$dismax = $nestedQuery->getDismax();
 		
 		$boostQueryString = $this->getBoostQueryString( $searchConfig );
+		
+		$queryFieldsString = $this->getQueryFieldsString( $searchConfig );
 		
 		$dismax	->setQueryFields		( $queryFieldsString )
 				->setPhraseFields		( $queryFieldsString )
@@ -486,27 +508,38 @@ class WikiaSearch extends WikiaObject {
 		;
 		
 		if (! $searchConfig->getSkipBoostFunctions() ) {
-			$dismax->setBoostFunctions( implode(' ', 
-												$searchConfig->isInterWiki() 
-												? $this->interWikiBoostFunctions 
-												: $this->onWikiBoostFunctions 
-												)
-										);
+		    $dismax->setBoostFunctions( 
+	    		implode(' ',
+		            $searchConfig->isInterWiki()
+		            ? $this->interWikiBoostFunctions
+		            : $this->onWikiBoostFunctions
+		    	)
+		    );
+		}
+		wfProfileOut( __METHOD__ );
+		return $nestedQuery;
+	}
+	
+	/**
+	 * Return a string of query fields based on configuration
+	 * @see    WikiaSearchTest::testGetQueryFieldsString
+	 * @param  WikiaSearchConfig $searchConfig
+	 * @return string
+	 */
+	private function getQueryFieldsString( WikiaSearchConfig $searchConfig ) {
+
+		$queryFieldsString = sprintf( '%s^5 %s %s^4', self::field( 'title' ), self::field( 'html' ), self::field( 'redirect_titles' ) );
+
+		if ( $searchConfig->getVideoSearch() && $this->wg->LanguageCode !== 'en' ) {
+		    // video wiki requires english field search
+		    $queryFieldsString .= sprintf( ' %s^5 %s %s^4', self::field( 'title', 'en' ), self::field( 'html', 'en' ), self::field( 'redirect_titles', 'en' ) );
 		}
 		
-		// this is how we prevent duplicate results when we already have PTT
-		$noPtt = '';
-		if ( $searchConfig->hasArticleMatch() ) {
-			$am			= $searchConfig->getArticleMatch();
-			$article	= $am->getArticle();  
-			$noPtt		= ' AND ' . self::valueForField( 'id', sprintf( '%s_%s', $searchConfig->getCityId(), $article->getID() ), array( 'negate' => true ) ) ;
+		if ( $searchConfig->isInterWiki() ) {
+		    $queryFieldsString .= sprintf( ' %s^7', self::field( 'wikititle' ) );
 		}
 		
-		$formulatedQuery = sprintf('%s AND (%s)%s', $this->getQueryClausesString( $searchConfig ), $nestedQuery, $noPtt);
-		
-		$query->setQuery( $formulatedQuery );
-		wfProfileOut(__METHOD__);
-		return $this;
+		return $queryFieldsString;
 	}
 	
 	/**
@@ -752,17 +785,5 @@ class WikiaSearch extends WikiaObject {
 		wfProfileOut( __METHOD__ );
 		return true;
 	}
-	
-	/**
-	 * Create a query instance, configures it, and performs the actual query to solr.
-	 * @param  WikiaSearchConfig $searchConfig
-	 * @return Solarium_Result
-	 */
-	private function getQueryResult( WikiaSearchConfig $searchConfig ) {
-		$queryInstance = $this->client->createSelect();
-		$this->prepareQuery( $queryInstance, $searchConfig );
-		return $this->client->select( $queryInstance ); 
-	}
-    
 
 }

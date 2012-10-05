@@ -225,7 +225,9 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 		$namespaces = ( isset($this->params['namespaces']) && !empty($this->params['namespaces']) ) 
 					? $this->params['namespaces'] 
 					: $searchEngine->DefaultNamespaces();
-		
+		if (! is_array( $namespaces ) ) { 
+			$namespaces = array();
+		}
 		$queryNamespaceArray = (isset($this->params['queryNamespace'])) ? array($this->params['queryNamespace']) : array(); 
 		$this->params['namespaces'] = array_unique( array_merge($namespaces, $queryNamespaceArray) );
 		return $this->params['namespaces'];

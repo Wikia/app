@@ -471,7 +471,268 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 	}
 	
 	/**
-	 * 
+	 * @covers WikiaSearch::getSelectQuery
 	 */
+	public function testGetSelectQuery() {
+		
+		$mockClient			=	$this->getMock( 'Solarium_Client', array( 'setAdapter', 'createSelect', 'select' ) );
+		$wikiaSearch		=	F::build( 'WikiaSearch', array( $mockClient ) ); 
+		$searchConfig		=	F::build( 'WikiaSearchConfig' );
+		$method				=	new ReflectionMethod( 'WikiaSearch', 'getSelectQuery' );
+		
+		$searchConfig->setQuery( 'foo' );
+		$method->setAccessible( true );
+		
+		
+		$query = $method->invoke( $wikiaSearch, $searchConfig ); /** @var Solarium_Query_Select $query **/ 
+		
+		$this->assertInstanceOf(
+				'Solarium_Query_Select',
+				$query,
+				'WikiaSearch::getSelectQuery should return an instance of Solarium_Query_Select.'
+		);
+		$this->assertEquals(
+				'WikiaSearchResult',
+				$query->getDocumentClass(),
+				'WikiaSearch::getSelectQuery should set the query\'s document class to WikiaSearchResult.'
+		);
+		$requested	= $searchConfig->getRequestedFields();
+		$actual		= $query->getFields();
+		sort($requested);
+		sort($actual); 
+		$this->assertEquals(
+				$requested,
+				$actual,
+				'WikiaSearch::getSelectQuery should set the requested fields to be identical to those set in WikiaSearchConfig.'
+		);
+		$this->assertEquals(
+				$searchConfig->getStart(),
+				$query->getStart(),
+				'WikiaSearch::getSelectQuery should set the start offset to be identical to that set in WikiaSearchConfig.'
+		);
+		$sort = $searchConfig->getSort();
+		$this->assertEquals(
+				array( $sort[0] => $sort[1] ),
+				$query->getSorts(),
+				'WikiaSearch::getSelectQuery should set the sort value to be identical to that set in WikiaSearchConfig via the rank key.'
+		);
+		$params = $query->getParams();
+		$this->assertEquals(
+				5000,
+				$params['timeAllowed'],
+				'WikiaSearch::getSelectQuery should set the sort value to be identical to that set in WikiaSearchConfig via the rank key.'
+		);
+		$highlighting = $query->getHighlighting();
+		$this->assertEquals(
+		        array( WikiaSearch::field( 'html' ) ),
+		        array_keys( $highlighting->getFields() ),
+		        'WikiaSearch::getSelectQuery should select the proper dynamic field for html to highlight.'
+		);
+		$this->assertEquals(
+		        1,
+		        $highlighting->getSnippets(),
+		        'WikiaSearch::getSelectQuery should set the number of highlighting snippets to 1.'
+		);
+		$this->assertTrue(
+		        $highlighting->getRequireFieldMatch(),
+		        'WikiaSearch::getSelectQuery should require a field match to get highlighting snippets.'
+		);
+		$this->assertEquals(
+		        WikiaSearch::HL_FRAG_SIZE,
+		        $highlighting->getFragSize(),
+		        'WikiaSearch::getSelectQuery should set the highlighting frag size according to its constant.'
+		);
+		$this->assertEquals(
+		        WikiaSearch::HL_MATCH_PREFIX,
+		        $highlighting->getSimplePrefix(),
+		        'WikiaSearch::getSelectQuery should set the highlighting prefix according to its constant.'
+		);
+		$this->assertEquals(
+		        WikiaSearch::HL_MATCH_POSTFIX,
+		        $highlighting->getSimplePostfix(),
+		        'WikiaSearch::getSelectQuery should set the highlighting postfix according to its constant.'
+		);
+		$this->assertEquals(
+		        'html',
+		        $highlighting->getAlternateField(),
+		        'WikiaSearch::getSelectQuery should set the highlighting alternate field to be non-dynamic html.'
+		);
+		$this->assertEquals(
+				300,
+				$highlighting->getMaxAlternateFieldLength(),
+				'WikiaSearch::getSelectQuery should set the highlighting alternate field length to 300 by default.'	
+		);
+		$this->assertInstanceOf(
+				'Solarium_Query_Select_FilterQuery',
+				$query->getFilterQuery('fq1'),
+				'WikiaSearch::getSelectQuery should register filter query at key "fq1".'
+		);
+		
+		$queryClausesStringMethod	= new ReflectionMethod( 'WikiaSearch', 'getQueryClausesString' );
+		$getNestedQueryMethod		= new ReflectionMethod( 'WikiaSearch', 'getNestedQuery' );
+		$queryClausesStringMethod->setAccessible( true );
+		$getNestedQueryMethod->setAccessible( true );
+		$constructedQuery 			= sprintf('%s AND (%s)%s', $queryClausesStringMethod->invoke( $wikiaSearch, $searchConfig ), $getNestedQueryMethod->invoke( $wikiaSearch, $searchConfig ), '');
+		$this->assertEquals(
+				$constructedQuery,
+				$query->getQuery(),
+				'WikiaSearch::getSelectQuery should return a query instance with a query string based on WikiaSearch::getQueryClausesString and WikiaSearch::getNestedQuery'
+		);
+		
+		// now to test article match
+		// now to test interwiki
+	}
+	
+	/**
+	 * @covers WikiaSearch::getNestedQuery
+	 */
+	public function testGetNestedQuery() {
+		$mockClient			=	$this->getMock( 'Solarium_Client' );
+		$wikiaSearch		=	F::build( 'WikiaSearch', array( $mockClient ) );
+		$searchConfig		=	F::build( 'WikiaSearchConfig' ); /** @var WikiaSearchConfig $searchConfig **/
+		$method				=	new ReflectionMethod( 'WikiaSearch', 'getNestedQuery' );
+		
+		$searchConfig->setQuery( 'foo' );
+		$method->setAccessible( true );
+		
+		$nestedQuery = $method->invoke( $wikiaSearch, $searchConfig ); /** @var Solarium_Query_Select $nestedQuery **/
+		
+		$this->assertInstanceOf(
+				'Solarium_Query_Select',
+				$nestedQuery,
+				'WikiaSearch::getNestedQuery should return an instance of Solarium_Query_Select.'
+		);
+		$this->assertEquals(
+				$searchConfig->getMinimumMatch(),
+				$nestedQuery->getDismax()->getMinimumMatch(),
+				'WikiaSearch::getNestedQuery should set the query\'s MM value based on search config.'
+		);
+		$this->assertEquals(
+				'edismax',
+				$nestedQuery->getDismax()->getQueryParser(),
+				'WikiaSearch::getNestedQuery should set the query\'s parser to extended dismax.'
+		);
+		$this->assertEquals(
+		        3,
+		        $nestedQuery->getDismax()->getPhraseSlop(),
+		        'WikiaSearch::getNestedQuery should set the query\'s phrase slop to 3.'
+		);
+		$this->assertEquals(
+		        0.01,
+		        $nestedQuery->getDismax()->getTie(),
+		        'WikiaSearch::getNestedQuery should set the query\'s tie value to 0.01.'
+		);
+		$this->assertAttributeEquals(
+				explode( ' ', $nestedQuery->getDismax()->getBoostFunctions() ),
+				'onWikiBoostFunctions',
+				$wikiaSearch,
+				'By default, WikiaSearch::getNestedQuery should set boost functions according to WikiaSearch::onWikiBoostFunctions.'
+		);
+		
+		
+		$bqMethod = new ReflectionMethod( 'WikiaSearch', 'getBoostQueryString' );
+		$qfMethod = new ReflectionMethod( 'WikiaSearch', 'getQueryFieldsString' );
+		$bqMethod->setAccessible( true );
+		$qfMethod->setAccessible( true );
+		
+		$this->assertEquals(
+				$bqMethod->invoke( $wikiaSearch, $searchConfig ),
+				$nestedQuery->getDismax()->getBoostQuery(),
+				'WikiaSearch::getNestedQuery should have a boostquery set by WikiaSearch::getBoostQueryString.'
+		);
+		$this->assertEquals(
+		        $qfMethod->invoke( $wikiaSearch, $searchConfig ),
+		        $nestedQuery->getDismax()->getQueryFields(),
+		        'WikiaSearch::getNestedQuery should have query fields set by WikiaSearch::getQueryFieldsString.'
+		);
+		$this->assertEquals(
+		        $qfMethod->invoke( $wikiaSearch, $searchConfig ),
+		        $nestedQuery->getDismax()->getPhraseFields(),
+		        'WikiaSearch::getNestedQuery should have phrase fields set by WikiaSearch::getQueryFieldsString.'
+		);
+		
+		$searchConfig->setInterWiki( true );
+		$nestedQueryIW = $method->invoke( $wikiaSearch, $searchConfig ); /** @var Solarium_Query_Select $nestedQueryIW **/
+		$this->assertAttributeEquals(
+		        explode( ' ', $nestedQueryIW->getDismax()->getBoostFunctions() ),
+		        'interWikiBoostFunctions',
+		        $wikiaSearch,
+		        'WikiaSearch::getNestedQuery should set boost functions according to WikiaSearch::interWikiBoostFunctions when interWiki is set to true in WikiaSearchConfig.'
+		);
+		
+		$searchConfig
+			->setInterWiki			( false )
+			->setSkipBoostFunctions	( true )
+		;
+		$nestedQueryNBF = $method->invoke( $wikiaSearch, $searchConfig ); /** @var Solarium_Query_Select $nestedQueryNBF **/
+		$this->assertEmpty(
+				$nestedQueryNBF->getDismax()->getBoostFunctions(),
+				'WikiaSearch::getNestedQuery should not have boost functions set if WikiaSearchConfig has had skipBoostFunctions set to true.'
+		);
+	}
+	
+	/**
+	 * @covers WikiaSearch::getQueryFieldsString
+	 */
+	public function testGetQueryFieldsString() {
+
+		$this->mockGlobalVariable( 'wgLanguageCode', 'en' );
+		$this->mockApp();
+		
+		$mockClient			=	$this->getMock( 'Solarium_Client' );
+		$wikiaSearch		=	F::build( 'WikiaSearch', array( $mockClient ) );
+		$searchConfig		=	F::build( 'WikiaSearchConfig' ); /** @var WikiaSearchConfig $searchConfig  **/
+		$method				=	new ReflectionMethod( 'WikiaSearch', 'getQueryFieldsString' );
+		$defaultString		=	sprintf( '%s^5 %s %s^4', WikiaSearch::field( 'title' ), WikiaSearch::field( 'html' ), WikiaSearch::field( 'redirect_titles' ) );
+		$interwikiString	=	$defaultString . sprintf( ' %s^7', WikiaSearch::field( 'wikititle' ) );
+		
+		$method->setAccessible( true );
+		$searchConfig->setQuery( 'foo' );
+		
+		$this->assertEquals(
+				$defaultString,
+				$method->invoke( $wikiaSearch, $searchConfig ),
+				'WikiaSearch should query against the dynamic title, html, and redirect titles fields by default.'
+		);
+		
+		$searchConfig->setInterWiki( true );
+		$this->assertEquals(
+				$interwikiString,
+				$method->invoke( $wikiaSearch, $searchConfig ),
+				'WikiaSearch should add wikititle as a query field if we are performing an interwiki search.'
+		);
+		
+		$searchConfig
+			->setIsInterWiki	( false )
+			->setVideoSearch	( true )
+		;
+		$this->assertEquals(
+		        $defaultString,
+		        $method->invoke( $wikiaSearch, $searchConfig ),
+		        'WikiaSearch should use the default query fields if the global language code is english.'
+		);
+
+		$this->mockGlobalVariable( 'wgLanguageCode', 'fr' );
+		$this->mockApp();
+		global $wgLanguageCode;
+		$wgLanguageCode = 'fr';
+		
+		$frVideoString		=	sprintf( '%s^5 %s %s^4 %s^5 %s %s^4',
+						        WikiaSearch::field( 'title', 'fr' ),
+						        WikiaSearch::field( 'html', 'fr' ),
+						        WikiaSearch::field( 'redirect_titles', 'fr' ),
+						        WikiaSearch::field( 'title', 'en' ),
+						        WikiaSearch::field( 'html', 'en' ),
+						        WikiaSearch::field( 'redirect_titles', 'en' )
+		);
+		
+		$this->assertEquals(
+		        $frVideoString,
+		        $method->invoke( $wikiaSearch, $searchConfig ),
+		        'WikiaSearch should append english query fields if the global language is not english and we\'re doing premium video search.'
+		);
+		
+		
+	}
 	
 }
