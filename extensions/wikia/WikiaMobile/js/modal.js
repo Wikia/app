@@ -100,7 +100,7 @@ define('modal', ['loader', 'events', 'ads'], function modal(loader, events, ads)
 				wd = ~~(ev && ev.screenX - (window.innerWidth / 2)) || 0;
 
 			wrapper.className = '';
-			wrapper.style.webkitTransform = 'translate(' + wd + 'px,' + ht + 'px) scale(.3)';
+			wrapper.style.webkitTransform = 'translate(' + wd + 'px,' + ht + 'px) scale(.1)';
 
 			//browser needs time to move whole modal around
 			setTimeout(function(){
@@ -108,8 +108,8 @@ define('modal', ['loader', 'events', 'ads'], function modal(loader, events, ads)
 				wrapper.className += ' zoomer open';
 
 				setTimeout(function(){
-					html.className += ' noPage';
 					wrapper.style.top = 0;
+					html.className += ' noPage';
 
 					if(typeof options.onOpen === 'function') {options.onOpen(content);}
 				},310);
@@ -158,27 +158,9 @@ define('modal', ['loader', 'events', 'ads'], function modal(loader, events, ads)
 
 	function close(stopScrolling){
 		if(opened){
-			w.removeEventListener('viewportsize', onOrientationChange);
-			w.removeEventListener('hashchange', onHashChange);
-			closeButton.removeEventListener('click', onCloseClick);
-			content.removeEventListener('click', onContentClick);
-
+			//rest of closing will be done after all animations
+			//to make to as light to a browser as I can get
 			html.className = html.className.replace(' noPage','');
-
-			content.innerHTML = '';
-			caption.innerHTML = '';
-			caption.className = '';
-			topBar.className = '';
-
-			if(typeof onClose === 'function'){
-				onClose();
-			}
-
-			//remove event listners since they are not needed outside modal
-			if(!positionfixed){
-				w.removeEventListener('scroll', fixTopBar);
-				topBar.style.top = '';
-			}
 
 			//scroll to where user was before
 			//in setTimout because ios4.x has to do this after everything has to do now
@@ -193,10 +175,30 @@ define('modal', ['loader', 'events', 'ads'], function modal(loader, events, ads)
 
 				setTimeout(function(){
 					wrapper.style.top = 0;
+
+					content.innerHTML = '';
+					caption.innerHTML = '';
+					caption.className = '';
+					topBar.className = '';
+
+					w.removeEventListener('viewportsize', onOrientationChange);
+					w.removeEventListener('hashchange', onHashChange);
+					closeButton.removeEventListener('click', onCloseClick);
+					content.removeEventListener('click', onContentClick);
+
+					if(typeof onClose === 'function'){
+						onClose();
+					}
+
+					//remove event listners since they are not needed outside modal
+					if(!positionfixed){
+						w.removeEventListener('scroll', fixTopBar);
+						topBar.style.top = '';
+					}
 				},310);
 
 				ads && ads.fix();
-			},50);
+			},200);
 
 			opened = false;
 		}

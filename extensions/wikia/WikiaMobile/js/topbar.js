@@ -345,8 +345,8 @@ define('topbar', ['querystring', 'loader', 'toc', 'events', 'ads', 'track'], fun
 	function hidePage(){
 		ads && ads.unfix();
 
-		if(d.body.className.indexOf('hidden') == -1) {
-			d.body.className += ' hidden';
+		if(d.documentElement.className.indexOf('hidden') == -1) {
+			d.documentElement.className += ' hidden';
 		}
 	}
 
@@ -354,7 +354,7 @@ define('topbar', ['querystring', 'loader', 'toc', 'events', 'ads', 'track'], fun
 		ads && ads.fix();
 
 		navBar.className = '';
-		d.body.className = d.body.className.replace(' hidden', '');
+		d.documentElement.className = d.documentElement.className.replace(' hidden', '');
 	}
 
 	return {

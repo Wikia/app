@@ -98,6 +98,7 @@ h2, h3, .collSec {
 	background-image: linear-gradient(to right, $mainGreen 30%, $sectionGrey 50%);
 
 	-webkit-transition: background-position .3s linear, color .3s;
+	-webkit-transition-delay: .15s;
 
 	&.open {
 		color: $mainGreen;
@@ -123,6 +124,18 @@ a {
 
 		border-bottom: 1px dotted $linkColor;
 	}
+
+	.link &, .thumb & {
+		border-bottom: none;
+	}
+}
+
+.reference {
+	display: none;
+}
+
+dd {
+	margin-left: 15px;
 }
 
 //hmmm
@@ -131,7 +144,7 @@ a {
 }
 
 $size: 10;
-$width: 2;
+$width: 1;
 
 .chev {
 	position: relative;
@@ -139,13 +152,16 @@ $width: 2;
 	width: 0;
 	height: 0;
 	border: $size + px solid;
-	border-color: rgb(224,224,224) transparent transparent transparent;
+	border-color: $textColor transparent transparent transparent;
 
 	-webkit-transition: -webkit-transform .3s;
+	-webkit-transition-delay: .15s;
 	-webkit-transform-origin: 50% 25%;
 	-moz-transition: -moz-transform .3s;
+	-moz-transition-delay: .1s;
 	-moz-transform-origin: 50% 25%;
 	transition: transform .3s;
+	transition-delay: .1s;
 	transform-origin: 50% 25%;
 
 	&:after {
@@ -153,7 +169,7 @@ $width: 2;
 		position: absolute;
 
 		left: ( -$size + $width ) + px;
-		top: ( -$size ) + px;
+		top: ( -$size - 1 ) + px;
 		width: 0;
 		height: 0;
 
