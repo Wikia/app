@@ -96,8 +96,8 @@ define('modal', ['loader', 'events', 'ads'], function modal(loader, events, ads)
 			position = w.scrollY;
 
 			var ev = w.event,
-				ht = ~~(ev && ev.screenY - (window.innerHeight / 2)) || 0,
-				wd = ~~(ev && ev.screenX - (window.innerWidth / 2)) || 0;
+				ht = ~~(ev && ev.y - (screen.height / 2)) || 0,
+				wd = ~~(ev && ev.x - (screen.width / 2)) || 0;
 
 			wrapper.className = '';
 			wrapper.style.webkitTransform = 'translate(' + wd + 'px,' + ht + 'px) scale(.1)';

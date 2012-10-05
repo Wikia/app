@@ -12,6 +12,7 @@
 
 html {
 	//avoid webkit's automatic text adjustment
+	//ie. make text bigger when in landscape
 	-webkit-text-size-adjust: none;
 
 	word-wrap: break-word;
