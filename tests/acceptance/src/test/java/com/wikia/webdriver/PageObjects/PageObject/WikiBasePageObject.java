@@ -408,6 +408,7 @@ public class WikiBasePageObject extends BasePageObject {
 	
 	public WikiArticlePageObject openArticle(String articleName)
 	{
+		PageObjectLogging.log("debug", "url: "+Global.DOMAIN+"wiki/"+articleName , false);
 		driver.get(Global.DOMAIN+"wiki/"+articleName);
 		PageObjectLogging.log("openArticle", "article "+articleName+" opened", true, driver);
 		return new WikiArticlePageObject(driver, Domain, articleName);
