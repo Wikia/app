@@ -666,6 +666,8 @@ var Wall = $.createClass(Object, {
 				});
 		}
 		
+		messageTopic.input.focus();
+		
 	},
 
 	proxy: function(func) {
