@@ -9,7 +9,7 @@ class InWikiGameParserTag {
 	public function renderTag($input, $params) {
 		$app = F::app();
 
-		$html = 'inwikirender';
+		$html = F::app()->renderView('InWikiGame', 'Index');
 
 		if (!empty($app->wg->RTEParserEnabled)) {
 			return $html;

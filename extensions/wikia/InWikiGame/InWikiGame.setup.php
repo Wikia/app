@@ -23,6 +23,7 @@ $app = F::app();
 // classes
 $app->registerClass('InWikiGameHelper', $dir . '/InWikiGameHelper.class.php');
 $app->registerClass('InWikiGameParserTag', $dir . '/InWikiGameParserTag.class.php');
+$app->registerClass('InWikiGameController', $dir . '/InWikiGameController.class.php');
 $app->registerClass('InWikiGameRailController', $dir . '/InWikiGameRailController.class.php');
 
 // hooks
