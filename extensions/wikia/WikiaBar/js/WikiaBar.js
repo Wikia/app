@@ -358,7 +358,7 @@ var WikiaBar = {
 	isMainWikiaBarLang: function () {
 		var result = -1;
 		if (window.wgContentLanguage && window.wgWikiaBarMainLanguages) {
-			result = window.wgWikiaBarMainLanguages.indexOf(window.wgContentLanguage);
+			result = $.inArray(window.wgContentLanguage, window.wgWikiaBarMainLanguages);
 		}
 
 		return (result >= 0);
