@@ -11,6 +11,7 @@ abstract class ApiWrapper {
 	protected $videoId;
 	protected $metadata;
 	protected $interfaceObj = null;
+	protected $videoName = '';
 
 	protected static $API_URL;
 	protected static $CACHE_KEY;
@@ -48,10 +49,24 @@ abstract class ApiWrapper {
 		wfProfileIn( __METHOD__ );
 
 		$this->videoId = $this->sanitizeVideoId( $videoId );
-		$this->initializeInterfaceObject();
+
 		if ( !is_array( $overrideMetadata ) ) {
 			$overrideMetadata = array();
 		}
+
+		if ( empty($overrideMetadata) ) {
+			$this->initializeInterfaceObject();
+		} else {
+			if( isset($overrideMetadata['destinationTitle']) ) {
+				$this->videoName = $overrideMetadata['destinationTitle'];
+				// make sure that this field is not saved in the metadata
+				unset( $overrideMetadata['destinationTitle'] );
+			} else {
+				// this if just a fallback, shouldn't happen
+				$this->videoName = $this->getProvider() . '-' . $videoId;
+			}
+		}
+
 		$this->loadMetadata( $overrideMetadata );
 
 		wfProfileOut( __METHOD__ );
