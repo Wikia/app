@@ -16,8 +16,15 @@ class WikiaSearch extends WikiaObject {
 	
 	/**
 	 * Number of results per grouping we want in a grouped search
+	 * @var int
 	 */
 	const GROUP_RESULTS_GROUPING_ROW_LIMIT	= 4;
+	
+	/**
+	 * The field(s) to group over.
+	 * @var array
+	 */
+	const GROUP_RESULTS_GROUPING_FIELD		= 'host';
 	
 	/**
 	 * Time to cache grouped results, in seconds -- 15 minutes.
@@ -462,7 +469,7 @@ class WikiaSearch extends WikiaObject {
 			$grouping = $query->getGrouping();
 			$grouping	->setLimit			( self::GROUP_RESULTS_GROUPING_ROW_LIMIT )
 						->setOffset			( $searchConfig->getStart() )
-						->setFields			( array( 'host' ) )
+						->setFields			( array( self::GROUP_RESULTS_GROUPING_FIELD ) )
 			;
 		}
 		
@@ -471,10 +478,15 @@ class WikiaSearch extends WikiaObject {
 		if ( $searchConfig->hasArticleMatch() ) {
 			$am			= $searchConfig->getArticleMatch();
 			$article	= $am->getArticle();  
-			$noPtt		= ' AND ' . self::valueForField( 'id', sprintf( '%s_%s', $searchConfig->getCityId(), $article->getID() ), array( 'negate' => true ) ) ;
+			$noPtt		= self::valueForField( 'id', sprintf( '%s_%s', $searchConfig->getCityId(), $article->getID() ), array( 'negate' => true ) ) ;
+			
+			$query->addFilterQuery( array(
+					'query'		=>	$noPtt,
+					'key'		=>	'ptt'
+			) );
 		}
 		
-		$formulatedQuery = sprintf('%s AND (%s)%s', $this->getQueryClausesString( $searchConfig ), $this->getNestedQuery( $searchConfig ), $noPtt);
+		$formulatedQuery = sprintf('%s AND (%s)', $this->getQueryClausesString( $searchConfig ), $this->getNestedQuery( $searchConfig ));
 		
 		$query->setQuery( $formulatedQuery );
 		wfProfileOut(__METHOD__);

@@ -579,8 +579,60 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 				'WikiaSearch::getSelectQuery should return a query instance with a query string based on WikiaSearch::getQueryClausesString and WikiaSearch::getNestedQuery'
 		);
 		
-		// now to test article match
-		// now to test interwiki
+		$searchConfig->setInterWiki( true );
+		$query = $method->invoke( $wikiaSearch, $searchConfig ); /** @var Solarium_Query_Select $query **/
+		$this->assertEquals(
+				WikiaSearch::GROUP_RESULTS_GROUPING_ROW_LIMIT,
+				$query->getGrouping()->getLimit(),
+				'WikiaSearch::getSelectQuery should set grouping and group limit in the query if the config is set to interwiki.'
+		);
+		$this->assertEquals(
+		        $searchConfig->getStart(),
+		        $query->getGrouping()->getOffset(),
+		        'WikiaSearch::getSelectQuery query grouping should be set to search config start value.'
+		);
+		$this->assertEquals(
+				array( WikiaSearch::GROUP_RESULTS_GROUPING_FIELD ),
+				$query->getGrouping()->getFields(),
+				'WikiaSearch::getSelectQuery query grouping fields should be set to WikiaSearch default grouping fields constant.'
+		);
+		
+		$mockTitle				=	$this->getMock( 'Title' );
+		$mockArticle			=	$this->getMock( 'Article', array( 'getID' ), array( $mockTitle ) );
+		$mockArticleMatch		=	$this->getMock( 'WikiaSearchArticleMatch', array( 'getArticle' ), array( $mockArticle ) );
+
+		$mockArticle
+			->expects	( $this->any() )
+			->method	( 'getID' )
+			->will		( $this->returnValue( 123 ) )
+		;
+		$mockArticleMatch
+			->expects	( $this->any() )
+			->method	( 'getArticle' )
+			->will		( $this->returnValue( $mockArticle ) )
+		;
+		$searchConfig
+			->setCityId			( 321 )
+			->setInterWiki		( false )
+			->setArticleMatch	( $mockArticleMatch )
+		;
+		
+		$this->mockClass( 'Article', $mockArticle );
+		$this->mockApp();
+		
+		$query = $method->invoke( $wikiaSearch, $searchConfig ); /** @var Solarium_Query_Select $query **/
+
+		$pttFq = $query->getFilterQuery( 'ptt' );
+		$this->assertInstanceOf(
+		        'Solarium_Query_Select_FilterQuery',
+		        $pttFq,
+		        'WikiaSearch::getSelectQuery should register filter query at key "ptt" when there is an article match.'
+		);
+		$this->assertEquals(
+				WikiaSearch::valueForField( 'id', '321_123', array( 'negate' => true ) ),
+				$pttFq->getQuery(),
+				'WikiaSearch::getSelectQuery should register filter query at key "ptt" when there is an article match; this should filter against the article match id.'
+		);
 	}
 	
 	/**
