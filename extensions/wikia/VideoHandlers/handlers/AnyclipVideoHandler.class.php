@@ -27,8 +27,13 @@ class AnyclipVideoHandler extends VideoHandler {
 
 		$html = <<<EOT
 <div id="AnyClipPlayer" style="width: {$width}px; height: {$height}px;"></div>
-<script type="text/javascript" src="http://player.anyclip.com/embed/AnyClipPlayer.js"></script>
-<script type="text/javascript">AnyClipPlayer.load(["#AnyClipPlayer", {clipID:"{$this->videoId}"{$autoPlay}}]);</script>
+<script type="text/javascript">
+	$.when(
+		$.getScript('http://player.anyclip.com/embed/AnyClipPlayer.js')
+	).done(function() {
+		AnyClipPlayer.load(["#AnyClipPlayer", {clipID:"{$this->videoId}"{$autoPlay}}]);
+	});
+</script>
 EOT;
 
 		return $html;
