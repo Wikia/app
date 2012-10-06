@@ -90,11 +90,16 @@ class AnyclipFeedIngester extends VideoFeedIngester {
 			$clipData['ageGate'] = ( $elements->length > 0 && $elements->item(0)->textContent == 'nonadult' ) ? 0 : 1;
 
 			if ( $clipData['ageGate'] ) {
-				print "ERROR: Skipping adult video: {$clipData['titleName']} ({$clipData['videoId']}) - {$clipData['description']}.\n";
+				print "SKIP: Skipping adult video: {$clipData['titleName']} ({$clipData['videoId']}) - {$clipData['description']}.\n";
 				continue;
 			}
 
 			$this->getTitleName( $clipData['titleName'], $clipData['videoId'] );
+
+			if ( preg_match('/trailer/', strtolower($clipData['titleName'])) ) {
+				print "SKIP: Skipping trailer video: {$clipData['titleName']} ({$clipData['videoId']}) - {$clipData['description']}.\n";
+				continue;
+			}
 
 			$clipData['published'] = $item->getElementsByTagName('pubDate')->item(0)->textContent;
 			$clipData['videoUrl'] = $item->getElementsByTagName('link')->item(0)->textContent;
