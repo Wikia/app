@@ -102,10 +102,6 @@ function wfAdEngineSetupJSVars(Array &$vars) {
 		$vars["wgEnableOpenXSPC"] = $wgEnableOpenXSPC;
 	}
 
-	// category/hub
-	$cat = AdEngine::getCachedCategory();
-	$vars["cityShort"] = $cat['short'];
-
 	// AdDriver
 	$vars['wgAdDriverCookieLifetime'] = $wgAdDriverCookieLifetime;
 	$highValueCountries = WikiFactory::getVarValueByName('wgHighValueCountries', 177);	// community central

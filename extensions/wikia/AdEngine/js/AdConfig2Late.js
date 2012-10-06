@@ -3,6 +3,7 @@ var AdConfig2Late = function (
 	log, window
 
 	// AdProviders
+	, adProviderAdDriver2
 	, adProviderGamePro
 	, adProviderLiftium2
 	, adProviderLiftium2Dom
@@ -37,9 +38,16 @@ var AdConfig2Late = function (
 			}
 		}
 
+		/* uncomment for dart wikia bar ad
+		if (slotname == 'WIKIA_BAR_BOXAD_1') {
+			return adProviderAdDriver2;
+		}
+		*/
+
 		if (
-			slotname == 'WIKIA_BAR_BOXAD_1' || slotname == 'INCONTENT_BOXAD_1'
+			slotname == 'INCONTENT_BOXAD_1'
 			|| slotname == 'PREFOOTER_LEFT_BOXAD' || slotname == 'PREFOOTER_RIGHT_BOXAD'
+			|| slotname == 'WIKIA_BAR_BOXAD_1'
 		) {
 			if (adProviderLiftium2Dom.canHandleSlot(slot)) {
 				return adProviderLiftium2Dom;

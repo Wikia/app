@@ -55,6 +55,8 @@ class AdEngine2Controller extends WikiaController {
 		if (!empty($wg->DartCustomKeyValues)) {
 			$vars['wgDartCustomKeyValues'] = $wg->DartCustomKeyValues;
 		}
+		$cat = AdEngine::getCachedCategory();
+		$vars["cityShort"] = $cat['short'];
 
 		wfProfileOut(__METHOD__);
 

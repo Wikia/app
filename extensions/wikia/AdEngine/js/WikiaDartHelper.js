@@ -13,6 +13,7 @@ var WikiaDartHelper = function (log, window, document, Geo) {
 		'120x240': '120x240',
 		'242x90': '242x90',
 		'320x240': '320x240'
+		, '320x50': '320x50'
 	};
 
 	var site = null, zone1 = null, zone2 = null;
@@ -79,7 +80,7 @@ var WikiaDartHelper = function (log, window, document, Geo) {
 		}
 
 		if (!site) {
-			site = getSite(window.cscoreCat.toLowerCase());
+			site = getSite(window.cityShort);
 		}
 		if (!zone1) {
 			zone1 = getZone1(window.wgDBname);
@@ -342,8 +343,9 @@ var WikiaDartHelper = function (log, window, document, Geo) {
 	var categoryStrMaxLength = 300;
 
 	function initCategories() {
+		categories = '';
+
 		if (typeof window.wgCategories != 'object' || !window.wgCategories) {
-			categories = '';
 			return;
 		}
 
@@ -411,6 +413,7 @@ var WikiaDartHelper = function (log, window, document, Geo) {
 		'TEST_HOME_TOP_RIGHT_BOXAD': {'tile': 1, 'loc': "top"},
 		'TEST_TOP_RIGHT_BOXAD': {'tile': 1, 'loc': "top"},
 		'TOP_RIGHT_BUTTON': {'tile': 3, 'loc': "top"}
+		, 'WIKIA_BAR_BOXAD_1': {'tile': 4, 'loc': "bottom"}
 	};
 
 	function getLocKV(slotname){

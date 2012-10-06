@@ -5,6 +5,7 @@ var AdProviderAdDriver2 = function (helper, WikiaDart, ScriptWriter, WikiaTracke
 		'LEFT_SKYSCRAPER_2':{'tile':3, 'size':'160x600,120x600', 'loc':'middle'},
 		'TOP_LEADERBOARD':{'tile':2, 'size':'728x90,468x60,980x130,980x65', 'loc':'top', 'dcopt':'ist'},
 		'TOP_RIGHT_BOXAD':{'tile':1, 'size':'300x250,300x600', 'loc':'top'}
+		, 'WIKIA_BAR_BOXAD_1':{'size':'320x50'}
 	};
 
 	function canHandleSlot(slot) {
@@ -33,6 +34,9 @@ var AdProviderAdDriver2 = function (helper, WikiaDart, ScriptWriter, WikiaTracke
 			window.adslots2.push([slot[0], slot[1], 'Liftium2', slot[3]]);
 			return;
 		}
+
+		slot[1] = slotMap[slot[0]].size || slot[1];
+		log([slot[0], slot[1]], 7, 'AdProviderAdDriver2');
 
 		// increment number of pageviews
 		helper.AdDriver_incrementNumAllCall(slot[0]);
