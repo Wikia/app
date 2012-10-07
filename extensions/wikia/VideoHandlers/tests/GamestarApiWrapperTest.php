@@ -1,5 +1,8 @@
 <?php
 
+	/**
+	 * @group Broken
+	 */
 	class GamestarApiWrapperTest extends WikiaBaseTest {
 		const TEST_CITY_ID = 79860;
 
