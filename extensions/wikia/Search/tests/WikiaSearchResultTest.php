@@ -257,7 +257,7 @@ class WikiaSearchResultTest extends WikiaSearchBaseTest {
 	}
 	
 	/**
-	 * @covers WikiaSearchResultTest::getTitleObject
+	 * @covers WikiaSearchResult::getTitleObject
 	 */
 	public function testGetTitleObject() {
 		$result		= F::build( 'WikiaSearchResult', array( $this->defaultFields ) );
