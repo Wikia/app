@@ -195,6 +195,7 @@ $messages['cs'] = array(
 	'textregex-submit-regex' => 'Přidat frázi',
 	'textregex-select-default' => '--vyberte--',
 	'textregex-create-subpage' => 'nebo vytvořit nový seznam:',
+	'textregex-invalid-regexid' => 'Neplatný výraz.',
 );
 
 /** German (Deutsch)

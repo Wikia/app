@@ -2871,6 +2871,7 @@ $messages['ps'] = array(
  */
 $messages['pt'] = array(
 	'usersignup-page-title' => 'Junta-te à Wikia',
+	'usersignup-page-captcha-label' => 'Palavra Borratada',
 	'usersignup-facebook-create-account' => 'Criar conta',
 	'usersignup-confirm-email-new-email-label' => 'Novo e-mail',
 	'usersignup-confirm-email-update' => 'Atualizar',
@@ -2884,6 +2885,8 @@ $messages['pt'] = array(
 	'usersignup-marketing-creativity-heading' => 'Sê original',
 	'usersignup-account-creation-heading' => 'Sucesso!',
 	'usersignup-account-creation-email-greeting' => 'Olá,',
+	'usersignup-confirmation-reminder-email-greeting' => 'Olá $USERNAME',
+	'usersignup-confirmation-reminder-email-signature' => 'A Equipa da Wikia',
 );
 
 /** Brazilian Portuguese (português do Brasil)

@@ -100,6 +100,22 @@ Detalls: $2",
 	'lightbox-visit-the-wiki' => 'Visita el wiki:',
 );
 
+/** Czech (česky)
+ * @author Chmee2
+ */
+$messages['cs'] = array(
+	'lightbox_details_tooltip' => 'Zobrazit podrobnosti fotografie',
+	'lightbox-forum' => 'Fórum',
+	'lightbox-standard-link' => 'Standardní link',
+	'lightbox-send' => 'Poslat',
+	'lightbox-share-button-email' => 'E-mail',
+	'lightbox-share-button-www' => 'Sdílet',
+	'lightbox-share-email-label' => 'Poslat obrázek emailem kamarádovi',
+	'lightbox-share-email-page-label' => 'Poslat stránku emailem kamarádovi',
+	'lightbox-share-email-page-label-address' => 'E-mailová adresa',
+	'lightbox-share-email-error-caption' => 'Chyba',
+);
+
 /** German (Deutsch)
  * @author George Animal
  * @author PtM

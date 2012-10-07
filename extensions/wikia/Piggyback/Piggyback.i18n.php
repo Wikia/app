@@ -439,6 +439,20 @@ Suriin ang iyong pagbabaybay.',
 	'log-description-piggyback' => 'Ang talaang ito ay isang rekord ng mga pag-angkas sa likod ng akawnt.',
 );
 
+/** Ukrainian (українська)
+ * @author Wildream
+ */
+$messages['uk'] = array(
+	'piggybac-desc' => 'Дозволяє ввійти в систему, як інший користувач',
+	'piggyback' => 'Комбінований',
+	'piggyback-otherusername' => 'Інше ім’я користувача',
+	'piggyback-nosuchuser' => 'Не існує користувача з ім\'ям "$1".
+Імена користувачів вводяться з урахуванням регістру.
+Перевірте правильність написання.',
+	'piggyback-wronguser' => "$1Це не ваше ім'я користувача",
+	'piggyback-loginprompt' => "Будь ласка, повторно введіть ім'я користувача та пароль.",
+);
+
 /** Simplified Chinese (中文（简体）‎)
  * @author Hydra
  */

@@ -159,7 +159,9 @@ $messages['cs'] = array(
 	'specialcontact-problemdesc' => 'Zpráva',
 	'specialcontact-mail' => 'Poslat do Wikii',
 	'specialcontact-notyou' => 'Ne vy?',
+	'specialcontact-captchainfo' => 'Prosím zadejte text z obrázku.',
 	'specialcontact-captchatitle' => 'Rozmazané slovo',
+	'specialcontact-nomessage' => 'Vyplňte prosím ve zprávě',
 );
 
 /** German (Deutsch)

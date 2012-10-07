@@ -1484,6 +1484,7 @@ $messages['ps'] = array(
  * @author Hamilton Abreu
  * @author Malafaya
  * @author Rhaijin
+ * @author SandroHc
  */
 $messages['pt'] = array(
 	'createpage-desc' => 'Permite criar uma página nova usando o editor WYSIWYG da Wikia',
@@ -1498,7 +1499,7 @@ $messages['pt'] = array(
 Escolha outro nome, por favor.',
 	'createpage_spam' => 'Não foi possível gravar a sua edição',
 	'createpage_cant_edit' => 'Não foi possível fazer a edição',
-	'createpage-dialog-title' => 'Criar Uma Página Nova',
+	'createpage-dialog-title' => 'Criar uma página nova',
 	'createpage-dialog-message1' => 'Está a criar uma página nova!',
 	'createpage-dialog-message2' => 'Que nome lhe quer dar?',
 	'createpage-dialog-choose' => 'Escolha um modelo de página:',

@@ -57,6 +57,9 @@ $messages['br'] = array(
  */
 $messages['cs'] = array(
 	'places-editor-search' => 'Hledat',
+	'places-editor-title-create-new' => 'Přidat geotag',
+	'places-editor-title-edit' => 'Upravit geotag',
+	'places-editor-show-my-location' => 'Vezmi mě na mé místo',
 	'places-geolocation-button-label' => 'Přidat umístění',
 	'places-geolocation-modal-add-title' => 'Přidat umístění',
 	'places-geolocation-modal-error-title' => 'Chyba',

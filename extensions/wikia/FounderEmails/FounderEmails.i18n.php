@@ -804,15 +804,19 @@ $messages['cs'] = array(
 	'founderemails-email-first-edit-greeting' => 'Ahoj $USERNAME,',
 	'founderemails-email-general-edit-greeting' => 'Ahoj $USERNAME,',
 	'founderemails-email-anon-edit-greeting' => 'Ahoj $USERNAME,',
+	'founderemails-email-lot-happening-greeting' => 'Ahoj $USERNAME,',
 	'founderemails-email-0-day-addpages-heading' => 'Přidat stránky.',
+	'founderemails-email-0-day-addpages-button' => 'Přidat stránku',
 	'founderemails-email-0-day-addphotos-heading' => 'Přidat obrázky.',
 	'founderemails-email-0-day-addphotos-button' => 'Přidat obrázek',
+	'founderemails-email-0-day-customizetheme-button' => 'Přizpůsobit',
 	'founderemails-email-3-day-heading' => 'Vítej $USERNAME,',
 	'founderemails-email-3-day-addphotos-button' => 'Přidat obrázky',
 	'founderemails-email-3-day-explore-heading' => 'Najděte inspiraci.',
 	'founderemails-email-views-digest-greeting' => 'Ahoj $USERNAME,',
 	'founderemails-email-views-digest-button' => 'Přidej více stránek',
 	'founderemails-email-complete-digest-greeting' => 'Ahoj $USERNAME,',
+	'founderemails-pref-joins-v2' => '... někdo se připojil',
 );
 
 /** German (Deutsch)

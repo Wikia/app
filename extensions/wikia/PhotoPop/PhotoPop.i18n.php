@@ -124,6 +124,7 @@ $messages['cs'] = array(
 	'photopop-setup-category-label' => 'Kategorie',
 	'photopop-setup-watermark-label' => 'Vodoznak',
 	'photpop-category-none' => 'N/A',
+	'photopop-game-points' => 'body',
 	'photopop-game-total' => 'celkem',
 	'photopop-game-score' => 'skóre',
 	'photopop-game-wiki' => 'wiki',
@@ -135,6 +136,8 @@ $messages['cs'] = array(
 	'photopop-game-yougot' => 'Máš',
 	'photopop-game-progress' => 'fotografie',
 	'photopop-game-finished' => 'hotovo!',
+	'photopop-game-loading-image' => 'Načítám obrázek... <br />Prosím, čekejte.',
+	'photopop-game-paused' => 'Hra pozastavena',
 	'photopop-game-month-0' => 'Led',
 	'photopop-game-month-1' => 'Úno',
 	'photopop-game-month-2' => 'Bře',
@@ -147,6 +150,8 @@ $messages['cs'] = array(
 	'photopop-game-month-9' => 'Říj',
 	'photopop-game-month-10' => 'Lis',
 	'photopop-game-month-11' => 'Pro',
+	'photopop-game-download-progress-text' => 'Stahuji hru...',
+	'photopop-game-update-progress-text' => 'Aktualizuji hru...',
 );
 
 /** German (Deutsch)

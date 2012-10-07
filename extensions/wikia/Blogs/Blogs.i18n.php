@@ -1078,16 +1078,28 @@ $messages['eu'] = array(
  * @author Ebraminio
  * @author Huji
  * @author Taranet
+ * @author پاناروما
  */
 $messages['fa'] = array(
 	'createblogpage' => 'ایجاد وبلاگ',
 	'createbloglistingpage' => 'ایجاد فهرست وبلاگ',
 	'create-blog-post-category' => 'پست‌های وبلاگ',
+	'create-blog-post-recent-listing-title' => 'پست های اخیر',
+	'create-blog-post-recent-listing-log' => 'مقاله های ایجاد شده برای پست های اخیر وبلاگ',
 	'create-blog-post-title' => 'ایجاد یک پست جدید',
+	'create-blog-post-title-edit' => 'ویرایش یک پست وبلاگ',
+	'create-blog-form-title' => 'پست وبلاگ چیست؟',
+	'create-blog-form-post-text' => 'متن وبلاگ',
 	'create-blog-form-info' => 'پست وبلاگ‌ها راه بسیار خوبی برای به اشتراک گذاشتن اخبار، نظرات، و مطالب بدیع با جامعه است.',
 	'create-blog-form-post-title' => 'عنوان پست وبلاگ',
+	'create-blog-empty-title-error' => 'عنوان مورد نیاز',
+	'create-blog-empty-post-error' => 'بدنۀ پست خالی است',
+	'create-blog-empty-article-log' => 'مقاله های ایجاد شده برای فهرست وبلاگ',
+	'create-blog-invalid-title-error' => 'عنوان نامعتبر',
 	'create-blog-no-login' => 'وارد سامانه نشده‌اید',
 	'create-blog-login-required' => 'برای ایجاد پست جدید در وبلاگ یا فهرست‌ها باید [{{fullurl:Special:Signup|$1}} به سامانه وارد شوید].',
+	'create-blog-categories-textinput' => 'اضافه کردن یک موضوع جدید',
+	'create-blog-categories-submit' => 'ارسال',
 	'create-blog-save' => 'صفحه ذخیره شود',
 	'create-blog-preview' => 'پیش‌نمایش',
 	'create-blog-listing-preview' => 'پیش‌نمایش',
@@ -2279,7 +2291,7 @@ $messages['ko'] = array(
 	'blog-edited' => '편집됨',
 	'blog-page' => '블로그',
 	'blog-comment-post' => '댓글 남기기',
-	'blog-comments' => '댓글',
+	'blog-comments' => '덧글',
 	'blog-rc-comments' => '블로그 댓글',
 	'blog-avatar-preferences-title' => '아바타',
 	'blog-refresh-label' => '새로 고침',

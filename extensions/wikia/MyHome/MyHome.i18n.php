@@ -1896,7 +1896,7 @@ $messages['ko'] = array(
 $messages['ksh'] = array(
 	'myhome-feed-new-blog-comment-details' => 'Aanmärkong',
 	'myhome-feed-new-article-comment-details' => 'Aanmärkong',
-	'myhome-feed-redirect-details' => 'Ömleidung',
+	'myhome-feed-redirect-details' => 'Ömleidong',
 );
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)

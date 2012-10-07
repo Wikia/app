@@ -630,6 +630,14 @@ $messages['cs'] = array(
 	'swm-mode-users-registration-after' => 'Po',
 	'swm-mode-users-registration-before' => 'Před',
 	'swm-mode-users-registration-between' => 'Mezi',
+	'swm-label-mode-users-editcount' => 'Počet editací',
+	'swm-mode-users-editcount-more' => 'Více',
+	'swm-mode-users-editcount-less' => 'Méně',
+	'swm-mode-users-editcount-between' => 'Mezi',
+	'swm-mode-wikis-created-after' => 'Po',
+	'swm-mode-wikis-created-before' => 'Před',
+	'swm-mode-wikis-created-between' => 'Mezi',
+	'swm-label-mode-wikis-created-hint' => '<i>Data musí být ve formě 2012-04-01 00:00:00</i>',
 );
 
 /** Church Slavic (словѣ́ньскъ / ⰔⰎⰑⰂⰡⰐⰠⰔⰍⰟ)
@@ -704,6 +712,7 @@ $messages['de'] = array(
 	'swm-button-new' => '[ Neu ]',
 	'swm-msg-sent-ok' => '<h3>Die Nachricht wurde verschickt.</h3>',
 	'swm-msg-sent-err' => '<h3>Die Nachricht wurde NICHT verschickt.</h3>Mehr Informationen findest du im Fehler-Log.',
+	'swm-msg-sent-task' => 'Aufgabe zum Versenden der Nachricht erstellt: $1',
 	'swm-msg-remove' => 'Willst du diese Nachricht wirklich entfernen? Dies kann nicht rückgängig gemacht werden!',
 	'swm-expire-info' => 'Diese Nachricht wird am $1 ablaufen.',
 	'swm-link-dismiss' => 'Nachricht ausblenden',
@@ -745,6 +754,12 @@ $messages['de'] = array(
 	'swm-mode-users-editcount-between' => 'Zwischen',
 	'swm-error-editcount-tolessthanfrom' => 'Die Obergrenze des Bearbeitungszählers ist kleiner als die Untergrenze.',
 	'swm-error-editcount-notnumber' => 'Bearbeitungsanzahl muss eine gültige Nummer sein.',
+	'swm-label-mode-wikis-created' => 'Wikierstellungsdatum',
+	'swm-mode-wikis-created-after' => 'Nach',
+	'swm-mode-wikis-created-before' => 'Vor',
+	'swm-mode-wikis-created-between' => 'Zwischen',
+	'swm-label-mode-wikis-created-hint' => '<i>Daten müssen das Format 2012-04-01 00:00:00 aufweisen</i>',
+	'swm-error-created-tobeforefrom' => 'Das Enddatum der Wikierstellung liegt vor dem Startdatum.',
 );
 
 /** German (formal address) (Deutsch (Sie-Form)‎)
@@ -885,6 +900,7 @@ $messages['es'] = array(
 	'swm-button-new' => '[ Nuevo ]',
 	'swm-msg-sent-ok' => '<h3>El mensaje ha sido enviado.</h3>',
 	'swm-msg-sent-err' => '<h3>El mensaje No ha sido enviado.</h3>Ver registro de errores para mayor información.',
+	'swm-msg-sent-task' => 'Tarea creada para enviar el mensaje: $1',
 	'swm-msg-remove' => '¿Estás seguro de que quieres quitar este mensaje? ¡Esto no se puede deshacer!',
 	'swm-expire-info' => 'Este mensaje expirará en $1.',
 	'swm-link-dismiss' => 'descartar este mensaje',
@@ -926,6 +942,12 @@ $messages['es'] = array(
 	'swm-mode-users-editcount-between' => 'Entre',
 	'swm-error-editcount-tolessthanfrom' => 'El límite superior del contador de ediciones del usuario es menor que el límite inferior.',
 	'swm-error-editcount-notnumber' => 'El contador de ediciones debe ser un número válido.',
+	'swm-label-mode-wikis-created' => 'Fecha de creación del wiki',
+	'swm-mode-wikis-created-after' => 'Después',
+	'swm-mode-wikis-created-before' => 'Antes',
+	'swm-mode-wikis-created-between' => 'Entre',
+	'swm-label-mode-wikis-created-hint' => '<i>Las fechas deben estar en el formato aaaa/mm/dd,  2012-04-01 00:00:00</i>',
+	'swm-error-created-tobeforefrom' => 'La fecha final de creación del wiki es anterior a la fecha de creación.',
 );
 
 /** Basque (euskara)
@@ -1076,6 +1098,7 @@ $messages['fr'] = array(
 	'swm-button-new' => '[ Nouveau ]',
 	'swm-msg-sent-ok' => '<h3>Ce message a été envoyé.</h3>',
 	'swm-msg-sent-err' => "<h3>Ce message n'a PAS été envoyé.</h3>Voyez le journal d'erreurs pour plus d'informations.",
+	'swm-msg-sent-task' => 'Tâche créée pour envoyer le message: $1',
 	'swm-msg-remove' => 'Êtes-vous certain de vouloir supprimer ce message ? Ceci ne peut pas être défait !',
 	'swm-expire-info' => 'Ce message expirera le $1.',
 	'swm-link-dismiss' => 'rejeter ce message',
@@ -1117,6 +1140,12 @@ $messages['fr'] = array(
 	'swm-mode-users-editcount-between' => 'Entre',
 	'swm-error-editcount-tolessthanfrom' => 'La limite supérieure du compteur de modifications est plus petite que sa limite inférieure.',
 	'swm-error-editcount-notnumber' => 'Le compteur de modifications doit être un nombre valide.',
+	'swm-label-mode-wikis-created' => 'Date de création du wiki',
+	'swm-mode-wikis-created-after' => 'Après',
+	'swm-mode-wikis-created-before' => 'Avant',
+	'swm-mode-wikis-created-between' => 'Entre',
+	'swm-label-mode-wikis-created-hint' => '<i>Les dates doivent être sous la forme 2012-04-01 00:00:00</i>',
+	'swm-error-created-tobeforefrom' => 'La date de fin de création du wiki est antérieure à sa date de démarrage.',
 );
 
 /** Galician (galego)
@@ -1169,6 +1198,7 @@ $messages['gl'] = array(
 	'swm-button-new' => '[ Novo ]',
 	'swm-msg-sent-ok' => '<h3>A mensaxe foi enviada.</h3>',
 	'swm-msg-sent-err' => '<h3>NON se enviou a mensaxe.</h3>Olle o rexistro de erros para obter máis información.',
+	'swm-msg-sent-task' => 'Tarefa creada para enviar a mensaxe: $1',
 	'swm-msg-remove' => 'Está seguro de querer eliminar esta mensaxe? Isto non se pode desfacer!',
 	'swm-expire-info' => 'Esta mensaxe caducará o $1.',
 	'swm-link-dismiss' => 'rexeitar esta mensaxe',
@@ -1210,6 +1240,12 @@ $messages['gl'] = array(
 	'swm-mode-users-editcount-between' => 'Entre',
 	'swm-error-editcount-tolessthanfrom' => 'O número total de edicións do usuario é menor que o límite inferior.',
 	'swm-error-editcount-notnumber' => 'O número total de edicións debe ser un número válido.',
+	'swm-label-mode-wikis-created' => 'Data de creación do wiki',
+	'swm-mode-wikis-created-after' => 'Despois',
+	'swm-mode-wikis-created-before' => 'Antes',
+	'swm-mode-wikis-created-between' => 'Entre',
+	'swm-label-mode-wikis-created-hint' => '<i>As datas deben seguir o formato 2012-04-01 00:00:00</i>',
+	'swm-error-created-tobeforefrom' => 'A data de fin de creación do wiki é anterior á data de inicio.',
 );
 
 /** Ancient Greek (Ἀρχαία ἑλληνικὴ)
@@ -1667,6 +1703,7 @@ $messages['mk'] = array(
 	'swm-button-new' => '[ Нова ]',
 	'swm-msg-sent-ok' => '<h3>Пораката е испратена.</h3>',
 	'swm-msg-sent-err' => '<h3>Пораката НЕ е испратена.</h3>Погледајте во дневникот на грешки за повеќе информации.',
+	'swm-msg-sent-task' => 'Создадена задача за испраќање на пораката: $1',
 	'swm-msg-remove' => 'Дали сте сигурни дека сакате да ја отстраните оваа порака? Оваа постапка не може да се врати!',
 	'swm-expire-info' => 'Оваа порака истекува на $1.',
 	'swm-link-dismiss' => 'отфрли ја пораката',
@@ -1701,13 +1738,19 @@ $messages['mk'] = array(
 	'swm-mode-users-registration-before' => 'Пред',
 	'swm-mode-users-registration-between' => 'Помеѓу',
 	'swm-label-mode-users-registration-hint' => '<i>Датумот мора да биде од обликот 2012-04-01 00:00:00</i>',
-	'swm-error-registered-tobeforefrom' => 'Завршниот датум мора да биде пред почетниот.',
+	'swm-error-registered-tobeforefrom' => 'Завршниот датум е пред почетниот.',
 	'swm-label-mode-users-editcount' => 'Број на уредувања',
 	'swm-mode-users-editcount-more' => 'Повеќе',
 	'swm-mode-users-editcount-less' => 'Помалку',
 	'swm-mode-users-editcount-between' => 'Помеѓу',
 	'swm-error-editcount-tolessthanfrom' => 'Горната граница е помала од долната.',
 	'swm-error-editcount-notnumber' => 'Бројот е неважечки.',
+	'swm-label-mode-wikis-created' => 'Датум на создавање на викито',
+	'swm-mode-wikis-created-after' => 'По',
+	'swm-mode-wikis-created-before' => 'Пред',
+	'swm-mode-wikis-created-between' => 'Помеѓу',
+	'swm-label-mode-wikis-created-hint' => '<i>Датумот мора да биде од обликот 2012-04-01 00:00:00</i>',
+	'swm-error-created-tobeforefrom' => 'Завршниот датум мора е пред почетниот.',
 );
 
 /** Mongolian (монгол)
@@ -1770,6 +1813,7 @@ $messages['ms'] = array(
 	'swm-button-new' => '[ Baru ]',
 	'swm-msg-sent-ok' => '<h3>Pesanan telah dihantar.</h3>',
 	'swm-msg-sent-err' => '<h3>Pesanan BELUM dihantar.</h3>Rujuk log ralat untuk keterangan lanjut.',
+	'swm-msg-sent-task' => 'Tugas yang dibuat untuk menghantar pesanan: $1',
 	'swm-msg-remove' => 'Adakah anda benar-benar ingin memadamkan pesanan ini? Pesanan yang terpadam tidak boleh dipulihkan!',
 	'swm-expire-info' => 'Pesanan ini akan luput pada $1.',
 	'swm-link-dismiss' => 'buang pesanan ini',
@@ -1811,6 +1855,12 @@ $messages['ms'] = array(
 	'swm-mode-users-editcount-between' => 'Antara',
 	'swm-error-editcount-tolessthanfrom' => 'Had maksimum kiraan suntingan kurang daripada had minimum.',
 	'swm-error-editcount-notnumber' => 'Kiraan suntingan mestilah nombor yang sah.',
+	'swm-label-mode-wikis-created' => 'Tarikh penubuhan wiki',
+	'swm-mode-wikis-created-after' => 'Selepas',
+	'swm-mode-wikis-created-before' => 'Sebelum',
+	'swm-mode-wikis-created-between' => 'Antara',
+	'swm-label-mode-wikis-created-hint' => '<i>Tarikh mesti mengikut format 2012-04-01 00:00:00</i>',
+	'swm-error-created-tobeforefrom' => 'Tarikh tutup penubuhan wiki adalah sebelum tarikh bermula.',
 );
 
 /** Burmese (မြန်မာဘာသာ)
@@ -2130,6 +2180,7 @@ $messages['pl'] = array(
 	'swm-button-new' => '[ Nowy ]',
 	'swm-msg-sent-ok' => '<h3>Wiadomość została wysłana.</h3>',
 	'swm-msg-sent-err' => '<h3>Wiadomość nie została wysłana.</h3>Zobacz log błędów aby uzyskać więcej informacji.',
+	'swm-msg-sent-task' => 'Dodano zadanie wysłania wiadomości: $1',
 	'swm-msg-remove' => 'Czy na pewno chcesz usunąć tą wiadomość? Tego wyboru nie można cofnąć!',
 	'swm-expire-info' => 'Komunikat ten wygasa $1 .',
 	'swm-link-dismiss' => 'odrzucić tę wiadomość',
@@ -2164,13 +2215,19 @@ $messages['pl'] = array(
 	'swm-mode-users-registration-before' => 'Przed',
 	'swm-mode-users-registration-between' => 'Pomiędzy',
 	'swm-label-mode-users-registration-hint' => '<i>Daty muszą być w formacie 2012-04-01 00:00:00</i>',
-	'swm-error-registered-tobeforefrom' => 'Wybrana końcowa data rejestracji sprzed wybranej daty początkowej.',
+	'swm-error-registered-tobeforefrom' => 'Końcowa data rejestracji jest przed datą początkową.',
 	'swm-label-mode-users-editcount' => 'Liczba edycji',
 	'swm-mode-users-editcount-more' => 'Więcej',
 	'swm-mode-users-editcount-less' => 'Mniej',
 	'swm-mode-users-editcount-between' => 'Pomiędzy',
-	'swm-error-editcount-tolessthanfrom' => 'Górnym limit edycji użytkownika jest niższy niż dolny limit.',
+	'swm-error-editcount-tolessthanfrom' => 'Górny limit edycji użytkownika jest niższy niż dolny limit.',
 	'swm-error-editcount-notnumber' => 'Ilość edycji musi być podana w formie liczbowej.',
+	'swm-label-mode-wikis-created' => 'Data utworzenia wiki',
+	'swm-mode-wikis-created-after' => 'Po',
+	'swm-mode-wikis-created-before' => 'Przed',
+	'swm-mode-wikis-created-between' => 'Pomiędzy',
+	'swm-label-mode-wikis-created-hint' => '<i>Daty muszą być w formacie 2012-04-01 00:00:00</i>',
+	'swm-error-created-tobeforefrom' => 'Końcowa data utworzenia wiki jest przed datą początkową.',
 );
 
 /** Piedmontese (Piemontèis)
@@ -2496,6 +2553,7 @@ $messages['ru'] = array(
 	'swm-button-new' => '[ Новое ]',
 	'swm-msg-sent-ok' => '<h3>Сообщение отправлено.</h3>',
 	'swm-msg-sent-err' => '<h3>Сообщение НЕ было отправлено.</h3>См. подробности в журнале ошибок.',
+	'swm-msg-sent-task' => 'Задачи, созданная для отправки сообщения: $1',
 	'swm-msg-remove' => 'Вы действительно хотите удалить это сообщение? Это действие не может быть отменено!',
 	'swm-expire-info' => 'Это сообщение будет действовать до $1.',
 	'swm-link-dismiss' => 'пропустить это сообщение',
@@ -2537,6 +2595,12 @@ $messages['ru'] = array(
 	'swm-mode-users-editcount-between' => 'Между',
 	'swm-error-editcount-tolessthanfrom' => 'Верхняя граница числа правок участника меньше нижней границы.',
 	'swm-error-editcount-notnumber' => 'Число правок должно быть целым числов',
+	'swm-label-mode-wikis-created' => 'Дата создания вики',
+	'swm-mode-wikis-created-after' => 'После',
+	'swm-mode-wikis-created-before' => 'До',
+	'swm-mode-wikis-created-between' => 'Между',
+	'swm-label-mode-wikis-created-hint' => '<i>Даты должны быть в формате 2012-04-01 00:00:00</i>',
+	'swm-error-created-tobeforefrom' => 'Последняя дата не может быть больше первой даты',
 );
 
 /** Slovenian (slovenščina)

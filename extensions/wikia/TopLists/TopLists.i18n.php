@@ -315,6 +315,7 @@ Gellout a rit <a href="$4">paouez da resevout</a> kemmoù ar roll-mañ.',
 );
 
 /** Czech (česky)
+ * @author Chmee2
  * @author Darth Daron
  */
 $messages['cs'] = array(
@@ -345,6 +346,7 @@ $messages['cs'] = array(
 	'toplists-editor-title-placeholder' => 'Zadejte název seznamu',
 	'toplists-editor-related-article-label' => 'Související stránka <small>(nepovinné, ale vybere obrázek)</small>',
 	'toplists-editor-related-article-placeholder' => 'Zadejte existující název stránky',
+	'toplists-editor-description-placeholder' => 'Zadejte popis',
 	'toplists-editor-image-browser-tooltip' => 'Přidat obrázek',
 	'toplists-editor-remove-item-tooltip' => 'Odstranit položku',
 	'toplists-editor-drag-item-tooltip' => 'Přetažením lze změnit pořadí',

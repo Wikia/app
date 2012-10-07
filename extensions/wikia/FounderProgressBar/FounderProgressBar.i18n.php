@@ -192,7 +192,11 @@ $messages['cs'] = array(
 	'founderprogressbar-task-completed' => 'Dokončeno',
 	'founderprogressbar-photo-add10-action' => 'Přidat fotografii',
 	'founderprogressbar-category-add3-action' => 'Přidat kategorii',
+	'founderprogressbar-photo-add20-action' => 'Přidat fotografii',
 	'founderprogressbar-page-add20-action' => 'Přidat stránku',
+	'founderprogressbar-category-add5-action' => 'Přidat kategorii',
+	'founderprogressbar-video-add-label' => 'Přidat video',
+	'founderprogressbar-video-add-action' => 'Přidat video',
 	'founderprogressbar-user-add5-action' => 'Jdi na Nápovědu',
 );
 
