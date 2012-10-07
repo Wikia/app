@@ -150,6 +150,8 @@ class CreateWiki {
 			"{$this->mIP}/maintenance/archives/wikia/patch-create-blog_listing_relation.sql",
 			"{$this->mIP}/maintenance/archives/wikia/patch-create-page_vote.sql",
 			"{$this->mIP}/maintenance/archives/wikia/patch-create-page_visited.sql",
+			//article comments list use by wall/forum
+			"{$this->mIP}/extensions/wikia/ArticleComments/comments_index.sql",
 		);
 
 		/**
