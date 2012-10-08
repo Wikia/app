@@ -1,4 +1,4 @@
-/*global jwplayer:true */
+/*global jwplayer:true, WikiaHubs */
 var RelatedVideos = {
 
 	maxRooms: 1,
@@ -20,8 +20,14 @@ var RelatedVideos = {
 	init: function(relatedVideosModule) {
 		// DOM caching
 		this.rvModule = $(relatedVideosModule);
-	
-	
+		this.rvContainer = $('.container',this.rvModule);
+		this.rvScrollRight = $('.scrollright', this.rvModule);
+		this.rvScrollLeft = $('.scrollleft', this.rvModule);
+		this.rvPage = $('.page', this.rvModule);
+		this.rvMaxCount = $('.maxcount', this.rvModule);
+		this.rvTallyCount = $('.tally em', this.rvModule);
+		this.rvNoVideos = $('.novideos', this.rvModule);
+
 		this.loadedCount = $('.item', this.rvModule).length;
 		
 		if ( this.rvModule.closest('.WikiaRail').size() > 0 ) {
@@ -54,17 +60,19 @@ var RelatedVideos = {
 				(this.isHubExtEnabled && this.isHubExtPage && this.isHubVideos)
 		) {
 			relatedVideosModule.removeClass('RelatedVideosHidden');
-			relatedVideosModule.on( 'click', '.scrollright', RelatedVideos.scrollright );
-			relatedVideosModule.on( 'click', '.scrollleft', RelatedVideos.scrollleft );
+			relatedVideosModule.on( 'click', '.scrollright', this.scrollright );
+			relatedVideosModule.on( 'click', '.scrollleft', this.scrollleft );
 			
 			relatedVideosModule.find('.addVideo').addVideoButton({
 				gaCat: RelatedVideos.gaCat,
 				callback: RelatedVideos.injectCaruselElement
+			}).tooltip({
+				delay: { show: 500, hide: 100 }
 			});
 			
-			$('body').delegate( '#relatedvideos-video-player-embed-show', 'click', function() {
+			$('body').on( 'click', '#relatedvideos-video-player-embed-show', function() {
 				$('#relatedvideos-video-player-embed-code').show();
-				$('#relatedvideos-video-player-embed-show').hide();
+				$(this).hide();
 			});
 
 			RelatedVideos.maxRooms = relatedVideosModule.attr('data-count');
@@ -73,9 +81,6 @@ var RelatedVideos = {
 			}
 			RelatedVideos.trackItemImpressions(RelatedVideos.currentRoom);
 			RelatedVideos.checkButtonState();
-			$('.addVideo',this.rvModule).tooltip({
-				delay: { show: 500, hide: 100 }
-			});
 		}
 		WikiaTracker.trackEvent(
 			'trackingevent',
@@ -127,27 +132,26 @@ var RelatedVideos = {
 
 		var scroll_by, anim_time;
 		if( this.onRightRail ) {
-			scroll_by = parseInt( $('.group',this.rvModule).outerWidth(true) );
+			scroll_by = parseInt( $('.group', this.rvModule).outerWidth(true) );
 			anim_time = 300;
 		} else {
-			scroll_by = parseInt( $('.item',this.rvModule).outerWidth(true) * 3 );
+			scroll_by = parseInt( $('.item', this.rvModule).outerWidth(true) * 3 );
 			anim_time = 500;
 		}
-		//scroll_by = scroll_by * param;
 
 		// button vertical secondary left
 		var futureState = RelatedVideos.currentRoom + param;
 		RelatedVideos.trackItemImpressions(futureState);
-		//if (( $('#RelatedVideosRL .container').queue().length == 0 ) &&
-		//	(( futureState >= 1 ) && ( futureState <= RelatedVideos.maxRooms ))) {
-		if( futureState >= 1 && futureState <= RelatedVideos.maxRooms ) {
+		if( futureState >= 1 && futureState <= this.maxRooms ) {
 			var scroll_to = (futureState-1) * scroll_by;
-			$('.page',this.rvModule).text(futureState);
-			RelatedVideos.currentRoom = futureState;
-			$('.container',this.rvModule).clearQueue();
-			RelatedVideos.checkButtonState();
+
+			this.rvPage.text(futureState);
+			this.currentRoom = futureState;
+			this.rvContainer.clearQueue();
+			this.checkButtonState();
+			
 			//scroll
-			$('.container',this.rvModule).stop().animate({
+			this.rvContainer.stop().animate({
 				left: -scroll_to
 				//left: '-=' + scroll_by
 			}, anim_time, function(){
@@ -157,14 +161,14 @@ var RelatedVideos = {
 				}
 			});
 		} else if (futureState == 0 && RelatedVideos.maxRooms == 1) {
-			$('.page',this.rvModule).text(1);
+			this.rvPage.text(1);
 		}
 	},
 
 	trackItemImpressions: function(room) {
 		var titles = [];
 		var orders = [];
-		var group = $( $('.container .group', this.rvModule)[room-1] );
+		var group = this.rvContainer.find('.group').eq(room-1);
 		var itemLinks = group.find('a.video-thumbnail');
 		itemLinks.each( function(i) {
 			titles.push( $(this).data('ref') );
@@ -187,35 +191,45 @@ var RelatedVideos = {
 	},
 
 	regroup: function() {
-		if ( !this.onRightRail ) { return; }
-		var container = $('.container',this.rvModule);
-		$('.group .item',this.rvModule).each( function() {
+		if ( !this.onRightRail ) { 
+			return; 
+		}
+		
+		var self = this,
+			container = this.rvContainer;
+		
+		$('.group .item', container).each( function() {
 			$(this).appendTo( container );
 		});
-		$('.group',this.rvModule).remove();
+		$('.group', container).remove();
 
 		var group = null;
-		$('.container > .item',this.rvModule).each( function(i) {
-			if( i % RelatedVideos.videosPerPage == 0 ) {
-				if(group) { group.appendTo( container ); }
+		container.children('.item').each( function(i) {
+			if( i % self.videosPerPage == 0 ) {
+				if(group) { 
+					group.appendTo( container ); 
+				}
 				group = $('<div class="group"></div>');
 			}
 			$(this).appendTo( group );
 		});
-		if(group) { group.appendTo( container ); }
+		
+		if(group) { 
+			group.appendTo( container ); 
+		}
 
 	},
 
 	// State calculations & refresh
 
 	checkButtonState: function() {
-		$('.scrollleft',this.rvModule).removeClass( 'inactive' );
-		$('.scrollright',this.rvModule).removeClass( 'inactive' );
-		if ( RelatedVideos.currentRoom == 1 ){
-			$('.scrollleft',this.rvModule).addClass( 'inactive' );
+		this.rvScrollLeft.removeClass( 'inactive' );
+		this.rvScrollRight.removeClass( 'inactive' );
+		if ( this.currentRoom == 1 ){
+			this.rvScrollLeft.addClass( 'inactive' );
 		}
-		if ( RelatedVideos.currentRoom == RelatedVideos.maxRooms ) {
-			$('.scrollright',this.rvModule).addClass( 'inactive' );
+		if ( this.currentRoom == RelatedVideos.maxRooms ) {
+			this.rvScrollRight.addClass( 'inactive' );
 		}
 	},
 
@@ -223,7 +237,7 @@ var RelatedVideos = {
 	// Only for hubs
 	showImages: function(){
 		var rl = this;
-		$('div.item a.video-thumbnail img',this.rvModule).each( function (i) {
+		$('div.item a.video-thumbnail img', this.rvModule).each( function (i) {
 			if ( i < ( ( RelatedVideos.currentRoom + (rl.videosPerPage-1) ) * rl.videosPerPage ) ){
 				var $thisJquery = $(this);
 				if ( $thisJquery.attr( 'data-src' ) != "" ){
@@ -285,7 +299,7 @@ var RelatedVideos = {
 				$(item).appendTo(last).show();
 			} else {
 				// All the groups are full, create a new one
-				var newDiv = $('<div class="group"></div>').appendTo('.container', self.rvModule); // TODO: cache .container better
+				var newDiv = $('<div class="group"></div>').appendTo(self.rvContainer);
 				$(item).appendTo(newDiv).show();
 			}
 		}
@@ -310,7 +324,7 @@ var RelatedVideos = {
 	
 	recalculateLength: function(){
 		// Update video tally text
-		var numberElem = $( '.tally em',this.rvModule );
+		var numberElem = this.rvTallyCount;
 		numberElem.text( parseInt(numberElem.text()) + 1 );
 
 		// Update carousel progress
@@ -322,9 +336,9 @@ var RelatedVideos = {
 		}
 
         if ( numberItems == 0 ) {
-            $( '.novideos' ).show();
+            this.rvNoVideos.show();
         } else {
-            $( '.novideos' ).hide();
+            this.rvNoVideos.hide();
         }
 
 		if ( this.onRightRail ) {
@@ -336,14 +350,14 @@ var RelatedVideos = {
         if( numberItems == 0) { numberItems = 1; }
 
 		// Update carousel progress text
-		RelatedVideos.maxRooms = numberItems;
-		$( '.maxcount',this.rvModule ).text( numberItems );
+		this.maxRooms = numberItems;
+		this.rvMaxCount.text( numberItems );
 
-        if(numberItems < RelatedVideos.currentRoom) {
-            RelatedVideos.scroll(-1);
+        if(numberItems < this.currentRoom) {
+            this.scroll(-1);
         }
 
-		RelatedVideos.checkButtonState();
+		this.checkButtonState();
 	},
 
 	// general helper functions
@@ -359,7 +373,7 @@ var RelatedVideos = {
 			scrollLength,
 			function(){
 				$( html ).css('display', 'inline-block') /* JSlint ignore */
-					.prependTo( $('.container',RelatedVideos.rvModule) )
+					.prependTo( RelatedVideos.rvContainer )
 					.fadeOut( 0 )
 					.fadeIn( 'slow', function(){
 						RelatedVideos.totalVideos += 1;
@@ -378,5 +392,6 @@ var RelatedVideos = {
 
 //on content ready
 $().ready(function() {
-	RelatedVideos.init($('#RelatedVideosRL').size() > 0 ? $('#RelatedVideosRL') : $('#RelatedVideos'));
+	var railElem = $('#RelatedVideosRL');
+	RelatedVideos.init(railElem.length > 0 ? railElem : $('#RelatedVideos'));
 });
