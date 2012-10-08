@@ -465,6 +465,7 @@ class Chat {
 
 	static public function getBanTimeFactors() {
 		return array(
+			'minutes' => 60,
 			'hours' => 60*60,
 			'days' => 60*60*24,
 			'weeks' => 60*60*24*7,
