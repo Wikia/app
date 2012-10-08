@@ -5,9 +5,17 @@ class ArticleCommentsController extends WikiaController {
 
 	public function executeIndex() {
 		$this->wf->ProfileIn(__METHOD__);
-
+		$this->response->setVal('render', true);  
 		if (class_exists('ArticleCommentInit') && ArticleCommentInit::ArticleCommentCheck()) {
 			$isMobile = $this->app->checkSkin( 'wikiamobile' );
+
+			if (defined('NS_BLOG_ARTICLE') && $this->wg->Title->getNamespace() == NS_BLOG_ARTICLE) {
+				$props = BlogArticle::getProps($this->wg->Title->getArticleID());
+				$commentingAllowed = isset($props['commenting']) ? (bool)$props['commenting'] : true;
+				if(!$commentingAllowed) {
+					$this->response->setVal('render', false); 			
+				}
+			}
 
 			// for non-JS version !!! (used also for Monobook and WikiaMobile)
 			if ($this->wg->Request->wasPosted()) {

@@ -548,6 +548,11 @@ var ArticleComments = {
 
 if (ArticleComments.loadOnDemand) {
 	$(function() {
+		
+		//NO article comment on this page lets just skip 
+		if( $('#WikiaArticleComments').length == 0 ) {
+			return true;
+		}
 		var content,
 			hash = window.location.hash,
 			permalink = /^#comm-/.test(hash),
