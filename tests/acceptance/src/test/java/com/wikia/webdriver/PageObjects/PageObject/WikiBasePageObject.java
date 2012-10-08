@@ -290,9 +290,9 @@ public class WikiBasePageObject extends BasePageObject {
 		try{
 			click(list.get(number));
 		}
-		catch(Exception e)
+		catch (TimeoutException e)
 		{
-			PageObjectLogging.log("createNewArticle", e.toString(), false);
+			PageObjectLogging.log("logIn", "page loads for more than 30 seconds", true, driver);
 		}
 	}
 	
