@@ -121,8 +121,8 @@ var AdConfig2 = function (
 
 		}
 
-		// Next Evolve (NZ traffic)
-		if (country == 'NZ') {
+		// Next Evolve (AU, CA, and NZ traffic)
+		if ( /* country == 'AU' || country == 'CA' || */ country == 'NZ') {
 			if (adProviderEvolve.canHandleSlot(slot)) {
 				return adProviderEvolve;
 			}
