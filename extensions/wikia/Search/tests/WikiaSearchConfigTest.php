@@ -315,6 +315,24 @@ class WikiaSearchConfigTest extends WikiaSearchBaseTest {
 		        $config->setQuery( $htmlEntityQuery )->getQuery( WikiaSearchConfig::QUERY_ENCODED ),
 		        "HTML entities in queries should be decoded when being set. HTML-decoded queries should properly HTML-encode all entities on access if using encoded strategy."
 		);
+		
+		$utf8Query = '"аВатаР"';
+		$this->assertEquals(
+				'\"аВатаР\"',
+				$config->setQuery( $utf8Query )->getQuery( WikiaSearchConfig::QUERY_DEFAULT ),
+				'WikiaSearch::setQuery should not unnecessarily mutate UTF-8 characters. Retrieving them should return those characters, properly encoded.'
+		);
+		$this->assertEquals(
+				'"аВатаР"',
+				$config->setQuery( $utf8Query )->getQuery( WikiaSearchConfig::QUERY_RAW ),
+				'WikiaSearch::getQuery() should not unnecessarily mutate UTF-8 characters, and should not escape quotes when asking for raw query.'
+		);
+		$this->assertEquals(
+		        htmlentities( '"аВатаР"', ENT_COMPAT, 'UTF-8' ),
+		        $config->setQuery( $utf8Query )->getQuery( WikiaSearchConfig::QUERY_ENCODED ),
+		        'WikiaSearch::getQuery() should properly HTML-encode UTF-8 characters when using the encoded query strategy.'
+		);
+		
 	}
 	
 	/**
