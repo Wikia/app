@@ -15,7 +15,8 @@ var SpecialVideos = {
 		$('.addVideo').addVideoButton({
 			gaCat: 'testing',
 			callback: function() {
-				window.location = window.location.href.split('?')[0]; // Remove query string when reloading the page (default sort is recent)
+				// After adding a video, show the video at the top of the "recent" sort screen
+				window.location.search = "?sort=recent"; 
 			}
 		});
 	}

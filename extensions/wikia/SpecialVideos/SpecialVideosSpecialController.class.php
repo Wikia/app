@@ -35,7 +35,7 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 
 		$this->getContext()->getOutput()->setRobotPolicy( "index,follow" );
 
-		$sort = $this->request->getVal( 'sort', 'recent' );
+		$sort = $this->request->getVal( 'sort', 'trend' );
 		$page = $this->request->getVal( 'page', 1 );
 
 		if ( !is_numeric($page) ) {
