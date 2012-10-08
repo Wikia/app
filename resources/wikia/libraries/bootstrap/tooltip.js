@@ -143,6 +143,9 @@
           case 'wikiaBar':
             tp = {top: pos.top - actualHeight, right: 0}
             break
+          case 'wikiaBarMessage':
+            tp = {top: pos.top - actualHeight, right: 0}
+            break
           /* wikia change end */
         }
 

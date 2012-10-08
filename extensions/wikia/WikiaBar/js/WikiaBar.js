@@ -171,7 +171,7 @@ var WikiaBar = {
 
 		if (typeof this.messageConfig.content == 'object') {
 			this.messageConfig.container.popover({
-				placement: "wikiaBar",
+				placement: "wikiaBarMessage",
 				content: this.messageConfig.container.data('messagetooltip')
 			});
 			this.messageSlideShow();

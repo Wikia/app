@@ -259,7 +259,7 @@ $animationSpeed: 200ms;
 	}
 }
 
-.popover.wikiaBar {
+.popover.wikiaBar, .popover.wikiaBarMessage {
 	.arrow {
 		border-left: 10px solid transparent;
 		border-top: 4px solid $color-page;
@@ -270,6 +270,14 @@ $animationSpeed: 200ms;
 	}
 	.popover-inner {
 		float: right;
+	}
+}
+.popover.wikiaBarMessage {
+	.arrow {
+		right: 30px;
+	}
+	.popover-inner {
+		margin-right: 25px;
 	}
 }
 
