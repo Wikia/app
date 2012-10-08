@@ -147,7 +147,7 @@ class HAWelcomeJob extends Job {
 								} else {
 									$key = $this->getMessageKey("anon");
 								}
-								$welcomeMsg = wfMsgExt( $key, array("parsemag", "content"),
+								$welcomeMsg = wfMsgNoTrans( $key,
 								array(
 									$this->getPrefixedText(),
 									$sysopPage->getPrefixedText(),
@@ -170,7 +170,7 @@ class HAWelcomeJob extends Job {
 									$userArticle = new Article( $userPage, 0 );
 									wfDebug( __METHOD__ ."-userpage: " . $userPage->getFullUrl() );
 									if( ! $userArticle->exists() ) {
-										$pageMsg = wfMsgForContent( 'welcome-user-page', $this->mUser->getName() );
+										$pageMsg = wfMsgForContentNoTrans( 'welcome-user-page', $this->mUser->getName() );
 										$userArticle->doEdit( $pageMsg, false, $flags );
 									}
 								}
@@ -189,7 +189,7 @@ class HAWelcomeJob extends Job {
 								else {
 									$key = $this->getMessageKey("user");
 								}
-								$welcomeMsg = wfMsgExt( $key, array("parsemag", "content"),
+								$welcomeMsg = wfMsgNoTrans( $key,
 								array(
 									$this->getPrefixedText(),
 									$sysopPage->getPrefixedText(),
@@ -209,7 +209,6 @@ class HAWelcomeJob extends Job {
 							global $wgCityId, $wgServer;
 
 							$wgServer = WikiFactory::getVarValueByName('wgServer', $wgCityId );
-
 							$this->doPost($talkArticle, $flags,  wfMsgForContent( "welcome-message-log" ), $welcomeMsg, $wgUser,  $this->mUser, $this->mSysop);
 						}
 					}
