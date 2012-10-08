@@ -1,5 +1,11 @@
 <?php
-
+/**
+ * Controller for InWikiGame extension
+ *
+ * @author Andrzej 'nAndy' Łukaszewski
+ * @author Marcin Maciejewski
+ * @author Sebastian Marzjan
+ */
 class InWikiGameController extends WikiaController {
 
 	public function executeIndex() {

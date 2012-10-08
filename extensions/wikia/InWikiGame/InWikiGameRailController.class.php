@@ -1,5 +1,11 @@
 <?php
-
+/**
+ * Controller for InWikiGame rail module
+ *
+ * @author Andrzej 'nAndy' Łukaszewski
+ * @author Marcin Maciejewski
+ * @author Sebastian Marzjan
+ */
 class InWikiGameRailController extends WikiaController {
 
 	/**
@@ -27,6 +33,8 @@ class InWikiGameRailController extends WikiaController {
 			$this->img->src = $cfg['background-img-url']['src'];
 
 			$this->gameUrl = $cfg['article-with-game-url'];
+		} else {
+			$this->skipRendering();
 		}
 	}
 }

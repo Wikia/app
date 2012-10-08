@@ -1,6 +1,17 @@
 <?php
-
+/**
+ * InWikiGame extension helper
+ *
+ * @author Andrzej 'nAndy' Łukaszewski
+ * @author Marcin Maciejewski
+ * @author Sebastian Marzjan
+ */
 class InWikiGameHelper {
+
+	/**
+	 * @param Array $modules right rail modules array
+	 * @return bool return true because it's a hook
+	 */
 	public function onGetRailModuleList(&$modules) {
 		wfProfileIn(__METHOD__);
 
@@ -9,4 +20,5 @@ class InWikiGameHelper {
 		wfProfileOut(__METHOD__);
 		return true;
 	}
+
 }
