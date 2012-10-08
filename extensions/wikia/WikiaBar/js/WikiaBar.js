@@ -170,9 +170,9 @@ var WikiaBar = {
 		);
 
 		if (typeof this.messageConfig.content == 'object') {
-			$('.wikia-bar .message').popover({
+			this.messageConfig.container.popover({
 				placement: "wikiaBar",
-				content: $('.wikia-bar .message').data('messagetooltip')
+				content: this.messageConfig.container.data('messagetooltip')
 			});
 			this.messageSlideShow();
 		}
