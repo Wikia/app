@@ -255,9 +255,9 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 		$articleMatchId	= sprintf( '%s_%s', $this->wg->CityId, $articleId );
 		$articleService	= F::build('ArticleService', array( $articleId ) );
 		$firstRev		= $title->getFirstRevision();
-		$created		= wfTimestamp(TS_ISO_8601, $firstRev->getTimestamp());
+		$created		= $firstRev ? wfTimestamp(TS_ISO_8601, $firstRev->getTimestamp()) : '';
 		$lastRev		= Revision::newFromId($title->getLatestRevID());
-		$touched		= wfTimeStamp(TS_ISO_8601, $lastRev->getTimestamp());
+		$touched		= $lastRev ? wfTimeStamp(TS_ISO_8601, $lastRev->getTimestamp()) : '';
 
 		$fieldsArray = array(
 				'wid'			=>	$this->wg->CityId,
