@@ -114,7 +114,6 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 		if ( ( $parent === null ) && $this->searchConfig->getGroupResults() ) {
 			
 			$this->setResultGroupings( $result, $searchConfig );
-			
 			$this->setResultsFound( $this->getHostGrouping()->getMatches() );
 			
 		} else {

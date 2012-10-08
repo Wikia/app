@@ -200,6 +200,11 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	public function getQuery( $strategy = self::QUERY_DEFAULT ) {
 		$query = $strategy !== self::QUERY_DEFAULT	? $this->params['query'] : WikiaSearch::sanitizeQuery( $this->params['query'] );
 		$query = $strategy === self::QUERY_ENCODED	? htmlentities( $query, ENT_COMPAT, 'UTF-8' ) : $query;
+		
+		if ( $this->isInterWiki() ) {
+			$query = preg_replace( '/ wiki\b/i', ' ', $query);
+		}
+		
 		return $query;
 	}
 	

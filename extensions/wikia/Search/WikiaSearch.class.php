@@ -161,6 +161,7 @@ class WikiaSearch extends WikiaObject {
 		
 		try {
 			$result = $this->client->select( $this->getSelectQuery( $searchConfig ) );
+			
 		} catch ( Exception $e ) {
 			Wikia::log(__METHOD__, 'Querying Solr First Time', $e);
 			$searchConfig->setSkipBoostFunctions( true );
@@ -325,7 +326,7 @@ class WikiaSearch extends WikiaObject {
 	 * @see    WikiaSearchTest::testGetArticleMatchWithMatchFirstCall
 	 * @see    WikiaSearchTest::testGetArticleMatchWithMatchFirstCallMismatchedNamespaces
 	 * @param  WikiaSearchConfig $config
-	 * @return Article|null
+	 * @return WikiaSearchArticleMatch|null
 	 */
 	public function getArticleMatch( WikiaSearchConfig $config ) {
 	    wfProfileIn(__METHOD__);
@@ -539,11 +540,11 @@ class WikiaSearch extends WikiaObject {
 	 */
 	private function getQueryFieldsString( WikiaSearchConfig $searchConfig ) {
 
-		$queryFieldsString = sprintf( '%s^5 %s %s^4', self::field( 'title' ), self::field( 'html' ), self::field( 'redirect_titles' ) );
+		$queryFieldsString = sprintf( '%s^5 %s^1.5 %s^4 %s^1', self::field( 'title' ), self::field( 'html' ), self::field( 'redirect_titles' ), self::field( 'categories' ) );
 
 		if ( $searchConfig->getVideoSearch() && $this->wg->LanguageCode !== 'en' ) {
 		    // video wiki requires english field search
-		    $queryFieldsString .= sprintf( ' %s^5 %s %s^4', self::field( 'title', 'en' ), self::field( 'html', 'en' ), self::field( 'redirect_titles', 'en' ) );
+		    $queryFieldsString .= sprintf( ' %s^5 %s^1.5 %s^4', self::field( 'title', 'en' ), self::field( 'html', 'en' ), self::field( 'redirect_titles', 'en' ) );
 		}
 		
 		if ( $searchConfig->isInterWiki() ) {
@@ -628,6 +629,10 @@ class WikiaSearch extends WikiaObject {
 				$nsQuery .= ( !empty($nsQuery) ? ' OR ' : '' ) . self::valueForField( 'ns', $namespace );
 			}
 			$queryClauses[] = "({$nsQuery})";
+		}
+		
+		if (! $searchConfig->getIncludeRedirects() ) {
+			$queryClauses[] = self::valueForField( 'is_redirect', 'false' );
 		}
 		
 		return sprintf( '(%s)', implode( ' AND ', $queryClauses ) );
