@@ -202,7 +202,7 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 		$query = $strategy === self::QUERY_ENCODED	? htmlentities( $query, ENT_COMPAT, 'UTF-8' ) : $query;
 		
 		if ( $this->isInterWiki() ) {
-			$query = preg_replace( '/ wiki\b/i', ' ', $query);
+			$query = preg_replace( '/ wiki\b/i', '', $query);
 		}
 		
 		return $query;

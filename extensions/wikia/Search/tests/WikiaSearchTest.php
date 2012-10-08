@@ -272,19 +272,19 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 		
 		$searchConfig->setNamespaces( array(1, 2, 3) );
 		
-		$this->assertEquals( '((wid:123) AND ((ns:1) OR (ns:2) OR (ns:3)))', $method->invoke( $wikiaSearch, $searchConfig ),
+		$this->assertEquals( '((wid:123) AND ((ns:1) OR (ns:2) OR (ns:3)) AND (is_redirect:false))', $method->invoke( $wikiaSearch, $searchConfig ),
 							'WikiaSearch::getQueryClauses by default should query for namespaces and wiki ID.' );
 		
 		$searchConfig->setVideoSearch( true );
 		
-		$expectedWithVideo = '(((wid:123) OR (wid:'.WikiaSearch::VIDEO_WIKI_ID.')) AND (is_video:true) AND ((ns:'.NS_FILE.')))';
+		$expectedWithVideo = '(((wid:123) OR (wid:'.WikiaSearch::VIDEO_WIKI_ID.')) AND (is_video:true) AND ((ns:'.NS_FILE.')) AND (is_redirect:false))';
 		$this->assertEquals( $expectedWithVideo, $method->invoke( $wikiaSearch, $searchConfig ),
 							'WikiaSearch::getQueryClauses should search only for video namespaces in video search, and should only search for videos' );
 		
 		$searchConfig	->setVideoSearch	( false )
 						->setIsInterWiki	( true );
 		
-		$expectedInterWiki = '(-(wid:123) AND -(wid:234) AND (lang:en) AND (iscontent:true))';
+		$expectedInterWiki = '(-(wid:123) AND -(wid:234) AND (lang:en) AND (iscontent:true) AND (is_redirect:false))';
 		$this->assertEquals( $expectedInterWiki, $method->invoke( $wikiaSearch, $searchConfig ),
 		        			'WikiaSearch::getQueryClauses should exclude bad wikis, require the language of the wiki, and require content' );
 		
@@ -735,7 +735,7 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 		$wikiaSearch		=	F::build( 'WikiaSearch', array( $mockClient ) );
 		$searchConfig		=	F::build( 'WikiaSearchConfig' ); /** @var WikiaSearchConfig $searchConfig  **/
 		$method				=	new ReflectionMethod( 'WikiaSearch', 'getQueryFieldsString' );
-		$defaultString		=	sprintf( '%s^5 %s %s^4', WikiaSearch::field( 'title' ), WikiaSearch::field( 'html' ), WikiaSearch::field( 'redirect_titles' ) );
+		$defaultString		=	sprintf( '%s^5 %s^1.5 %s^4 %s^1', WikiaSearch::field( 'title' ), WikiaSearch::field( 'html' ), WikiaSearch::field( 'redirect_titles' ), WikiaSearch::field( 'categories' ) );
 		$interwikiString	=	$defaultString . sprintf( ' %s^7', WikiaSearch::field( 'wikititle' ) );
 		
 		$method->setAccessible( true );
@@ -769,10 +769,11 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 		global $wgLanguageCode;
 		$wgLanguageCode = 'fr';
 		
-		$frVideoString		=	sprintf( '%s^5 %s %s^4 %s^5 %s %s^4',
+		$frVideoString		=	sprintf( '%s^5 %s^1.5 %s^4 %s^1 %s^5 %s^1.5 %s^4',
 						        WikiaSearch::field( 'title', 'fr' ),
 						        WikiaSearch::field( 'html', 'fr' ),
 						        WikiaSearch::field( 'redirect_titles', 'fr' ),
+								WikiaSearch::field( 'categories', 'fr' ),
 						        WikiaSearch::field( 'title', 'en' ),
 						        WikiaSearch::field( 'html', 'en' ),
 						        WikiaSearch::field( 'redirect_titles', 'en' )
