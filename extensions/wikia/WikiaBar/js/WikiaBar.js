@@ -10,6 +10,7 @@ var WikiaBar = {
 	messageConfig: {
 		index: 0,
 		container: null,
+		attributeName: 'wikiabarcontent',
 		content: null,
 		speed: 500,
 		delay: 10000,
@@ -164,11 +165,15 @@ var WikiaBar = {
 	},
 	startSlideShow: function () {
 		this.messageConfig.content = this.cutMessageIntoSmallPieces(
-			this.messageConfig.container.data('content'),
+			this.messageConfig.container.data(this.messageConfig.attributeName),
 			this.messageConfig.container
 		);
 
 		if (typeof this.messageConfig.content == 'object') {
+			$('.wikia-bar .message').popover({
+				placement: "wikiaBar",
+				content: $('.wikia-bar .message').data('messagetooltip')
+			});
 			this.messageSlideShow();
 		}
 	},
@@ -222,7 +227,7 @@ var WikiaBar = {
 
 		//messages animation
 		this.messageConfig.container = $('#WikiaBarWrapper .message');
-		var dataContent = this.messageConfig.container.data('content');
+		var dataContent = this.messageConfig.container.data(this.messageConfig.attributeName);
 		if (
 			this.messageConfig.container.exists()
 			&& dataContent

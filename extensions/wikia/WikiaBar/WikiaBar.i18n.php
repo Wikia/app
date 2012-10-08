@@ -12,6 +12,7 @@ $messages['en'] = array(
 	'wikiabar-validation-wrong-element-count' => 'Wrong element count',
 	'wikiabar-tooltip' => 'Collapse',
 	'wikiabar-tooltip-show' => 'Show',
+	'wikiabar-message-tooltip' => 'Click here for more information!',
 );
 
 $messages['de'] = array(
