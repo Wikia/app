@@ -1,6 +1,5 @@
-<li class="SpeechBubble message <?php echo ($isreply ? '':'message-main'); ?> <?php echo ($removedOrDeletedMessage ? 'hide ':'') . ($showRemovedBox?' message-removed':''); ?> <? echo 'message-'.$linkid ?>" id="<? echo $linkid ?>" data-id="<? echo $id ?>" data-is-reply="<?= $isreply == true ?>" <? if($hide):?> style="display:none" <? endif;?> >	
+<li class="SpeechBubble message <?php echo ($isreply ? '':'message-main'); ?> <?php echo ($removedOrDeletedMessage ? 'hide ':'') . ($showRemovedBox?' message-removed':''); ?> <? echo 'message-'.$linkid ?>" id="<? echo $linkid ?>" data-id="<? echo $id ?>" data-is-reply="<?= $isreply == true ?>" <? if($collapsed):?> style="display:none" <? endif;?> >	
 	<?php echo $head ?>
-	
 	<?php echo $app->renderView( 'WallController', 'statusInfoBox', array('showDeleteOrRemoveInfo' => $showDeleteOrRemoveInfo, 'comment' => $comment) ); ?>
 	
 	<? if($showRemovedBox): ?>
@@ -40,6 +39,8 @@
 				<?php endif; ?>
 			</div>
 		<?php endif; ?>	
+		
+		
 		<? if ( $wg->EnableMiniEditorExtForWall ):
 			echo $app->renderPartialCached( 'MiniEditorController', 'Header', 'Wall_message', array(
 				'attributes' => array( 'data-min-height' => 100, 'data-max-height' => 400 )

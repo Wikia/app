@@ -156,7 +156,6 @@ class WallBaseController extends WikiaController{
 		 * let's take this items and add them to text 
 		 */
 		foreach($wallMessage->getHeadItems() as $key => $val) {
-			$head = '';
 			if( empty(self::$uniqueHead[$key] ) ) {
 				$head .= $val;
 				self::$uniqueHead[$key] = true;
@@ -165,7 +164,7 @@ class WallBaseController extends WikiaController{
 		
 		$this->response->setVal( 'head', $head);
 		$this->response->setVal( 'comment', $wallMessage);
-		$this->response->setVal( 'hide',  false);
+		$this->response->setVal( 'collapsed',  false);
 		$this->response->setVal( 'showReplyForm', false);
 		$this->response->setVal( 'removedOrDeletedMessage', false);
 		
@@ -210,7 +209,7 @@ class WallBaseController extends WikiaController{
 			$showFrom = $this->request->getVal('repliesNumber', 0) - $this->request->getVal('showRepliesNumber', 0);
 			//$current = $this->request->getVal('current', false);
 			if($showFrom > $this->request->getVal('current') ){
-				$this->response->setVal('hide',  true);
+				$this->response->setVal('collapsed',  true);
 			}
 			
 			$this->response->setVal('body', $wallMessage->getText() );

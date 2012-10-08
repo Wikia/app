@@ -60,7 +60,8 @@ class WallNotificationsHooksHelper {
 				 * none of the Wall "base" extension is enable so we are pre hide the notification drop down 
 				 * and we show it in java script when there are new notification 
 				 */
-				if(empty($this->wg->EnableWallExt) && empty($this->wg->EnableForumExt)) {
+				 
+				if(empty($app->wg->EnableWallExt) && empty($app->wg->EnableForumExt)) {
 					$personalUrls['wall-notifications']['class'] .= 'prehide';
 				}
 				
