@@ -1398,11 +1398,6 @@ class WallHooksHelper {
 		$namespace = $target->getNamespace();
 		if( WallHelper::isWallNamespace($namespace) ) {
 
-			if($target->exists()) {
-				$ret = "XXX";
-				return true;
-			}
-
 			// remove "broken" assumption/override
 			$brokenKey = array_search('broken', $options);
 			if ( $brokenKey !== false ) {
