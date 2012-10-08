@@ -30,9 +30,13 @@ var NodeChatSocketWrapper = $.createClass(Observable,{
 		$().log(url, 'Chat server');
 		
 		if( this.socket ) {
-			this.socket.removeAllListeners('message');
-			this.socket.removeAllListeners('connect');
-			this.socket.removeAllListeners('connect_failed');
+			if(this.socket.socket.connected) {
+				return true;
+			} else {
+				this.socket.removeAllListeners('message');
+				this.socket.removeAllListeners('connect');
+				this.socket.removeAllListeners('connect_failed');
+			}
 		}
 		this.authRequestWithMW( function(data){
 			var socket = io.connect(url, {
@@ -105,7 +109,9 @@ var NodeChatSocketWrapper = $.createClass(Observable,{
 			case 'initial':
 				this.firstConnected = true; //we are 100% sure about conenction
 			default:
-				this.fire( message.event, message );
+				if(this.firstConnected) {
+					this.fire( message.event, message );
+				}
 			break;
     	}
     },
