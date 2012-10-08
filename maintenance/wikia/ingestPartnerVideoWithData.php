@@ -8,7 +8,7 @@
 
 ini_set( 'display_errors', 'stdout' );
 
-$optionsWithArgs = array( 'u', 's', 'e' );
+$optionsWithArgs = array( 'u', 's', 'e', 'i' );
 
 ini_set( "include_path", dirname(__FILE__)."/.." );
 require_once( 'commandLine.inc' );
@@ -25,6 +25,7 @@ Options:
   -e <date>         End date for searching videos by date (Unix timestamp)
   -d                Debug mode
   -r				Reingest videos (overwrite existing)
+  -i <time>			Do not reingest videos if they were uploaded in the last <time> seconds
   -a				get all videos
   
 Args:
@@ -48,6 +49,7 @@ date_sub($now, $di); // for some reason, this subtracts twice the date interval!
 $startDateTS = isset( $options['s'] ) ? $options['s'] : date_timestamp_get($now);
 $debug = isset($options['d']);
 $reupload = isset($options['r']);
+$ignoreRecent = isset($options['i']) ? $options['i'] : 0;
 $getAllVideos = isset($options['a']);
 
 // INPUT VALIDATION
@@ -113,7 +115,7 @@ foreach ($providersVideoFeed as $provider) {
 		default:
 	}
 
-	$params = array('debug'=>$debug, 'startDate'=>$startDate, 'endDate'=>$endDate);
+	$params = array('debug'=>$debug, 'startDate'=>$startDate, 'endDate'=>$endDate, 'ignorerecent'=>$ignoreRecent);
 	if (!empty($ingestionData['keyphrases'])) {
 		$params['keyphrasesCategories'] = $ingestionData['keyphrases'];
 	}

@@ -67,6 +67,7 @@ abstract class VideoFeedIngester {
 
 		wfProfileIn( __METHOD__ );
 		$debug = !empty($params['debug']);
+		$ignoreRecent = !empty($params['ignorerecent']) ? $params['ignorerecent'] : 0;
 		if($debug) {
 			print "data after initial processing: \n";
 			foreach( explode("\n", var_export($data, 1)) as $line ) {
@@ -87,6 +88,7 @@ abstract class VideoFeedIngester {
 
 		$duplicates = WikiaFileHelper::findVideoDuplicates(static::$PROVIDER,$id);
 		$dup_count = count($duplicates);
+		$previousFile = null;
 		if ( $dup_count > 0 ) {
 			if ( $this->reupload === false ) {
 				// if reupload is disabled finish now
@@ -100,6 +102,7 @@ abstract class VideoFeedIngester {
 			// instead of generating new one
 			$name = $duplicates[0]['img_name'];
 			echo "Video already exists, using it's old name: $name\n";
+			$previousFile = Title::newFromText( $name, NS_FILE );
 		} else {
 			// sanitize name
 			$name = VideoFileUploader::sanitizeTitle( $name );
@@ -149,6 +152,17 @@ abstract class VideoFeedIngester {
 			return 1;
 		}
 		else {
+			if(!empty($ignoreRecent) && !is_null($previousFile) ) {
+				$revId = $previousFile->getLatestRevID();
+				$revision = Revision::newFromId( $revId );
+				$time = $revision->getTimestamp();
+				$timeUnix = intval(wfTimestamp( TS_UNIX, $time ) );
+				$timeNow = intval(wfTimestamp( TS_UNIX, time() ) );
+				if($timeUnix + $ignoreRecent >= $timeNow) {
+					print "Recently uploaded, ignoring";
+					return 0;
+				}
+			}
 			$uploadedTitle = null;
 			$result = VideoFileUploader::uploadVideo(static::$PROVIDER, $id, $uploadedTitle, $body, false, $metadata );
 			if ($result->ok) {

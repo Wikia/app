@@ -6,8 +6,9 @@
 startdate='2007-01-01'
 provider='ign'
 logfile='/tmp/ingestion.log'
-extra='-d'
-timeslice=2
+extra='-r'
+timeslice=1
+ignorerecent=5184000
 
 
 counter=0
@@ -43,9 +44,9 @@ do
 	from=`date -d "$startdate $counter sec" '+%s'`
 	to=`date -d "$startdate $endtime sec" '+%s'`
 
-	SERVER_ID=298117 php ./ingestPartnerVideoWithData.php --conf=/usr/wikia/docroot/wiki.factory/LocalSettings.php $extra -e $to -s $from $provider | tee -a $logfile || exit
-	#SERVER_ID=298117 php ./ingestPartnerVideoWithData.php --conf=/home/release/video_refactoring/LocalSettings.php $extra -e $to -s $from $provider | tee -a $logfile || exit
-	#/usr/wikia/backend/bin/withcity --maintenance-script="../../../../../$dir/ingestPartnerVideoWithData.php $extra -e $to -s $from $provider" --usedb=video151 | tee -a $logfile
+	SERVER_ID=298117 php ./ingestPartnerVideoWithData.php --conf=/usr/wikia/docroot/wiki.factory/LocalSettings.php $extra -i $ignorerecent -e $to -s $from $provider | tee -a $logfile || exit
+	#SERVER_ID=298117 php ./ingestPartnerVideoWithData.php --conf=/home/release/video_refactoring/LocalSettings.php $extra -i $ignorerecent -e $to -s $from $provider | tee -a $logfile || exit
+	#/usr/wikia/backend/bin/withcity --maintenance-script="../../../../../$dir/ingestPartnerVideoWithData.php $extra -i $ignorerecent -e $to -s $from $provider" --usedb=video151 | tee -a $logfile
 
 	counter=$(( $counter + 60 * 60 * 24 * $timeslice ))
 	from=`date -d "$startdate $counter sec" '+%s'`

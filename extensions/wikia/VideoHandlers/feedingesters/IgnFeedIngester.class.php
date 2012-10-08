@@ -53,6 +53,7 @@ class IgnFeedIngester extends VideoFeedIngester {
 		wfProfileIn( __METHOD__ );
 
 		$debug = !empty($params['debug']);
+		$ignoreRecent = !empty($params['ignorerecent']) ? $params['ignorerecent'] : 0;
 
 		$articlesCreated = 0;
 
@@ -129,7 +130,7 @@ class IgnFeedIngester extends VideoFeedIngester {
 			//$addlCategories = array_merge( $addlCategories, $tags );
 			$clipData['tags'] = implode(", ", $tags );
 
-			$createParams = array('addlCategories'=>$addlCategories, 'debug'=>$debug);
+			$createParams = array('addlCategories'=>$addlCategories, 'debug'=>$debug, 'ignorerecent'=>$ignoreRecent);
 			$articlesCreated += $this->createVideo($clipData, $msg, $createParams);
 
 
