@@ -305,10 +305,10 @@ class WikiaSearch extends WikiaObject {
 		$searchConfig	->setMltBoost( true )
 						->setMltFields( array( self::field( 'title' ), self::field( 'html' ), 'title' ) );
 	
-		$clientResponse = $this->moreLikeThis( $searchConfig );
+		$resultSet = $this->moreLikeThis( $searchConfig );
 	
 		$response = array();
-		foreach ( $clientResponse->getDocuments() as $similarPage ) {
+		foreach ( $resultSet as $similarPage ) {
 			$response[$similarPage['url']] = array(
 				'wid'		=>	$similarPage['wid'],
 				'pageid'	=>	$similarPage['pageid']
