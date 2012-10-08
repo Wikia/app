@@ -241,7 +241,7 @@ class CommentsIndex extends WikiaModel {
 			$db = $this->wf->GetDB( DB_MASTER );
 
 			if ( !$db->tableExists('comments_index') ) {
-				$source = dirname(__FILE__) . "/patch-create-comments_index.sql";
+				$source = dirname(__FILE__) . "/../patch-create-comments_index.sql";
 				$db->sourceFile( $source );
 			}
 		}
@@ -448,7 +448,7 @@ SQL;
 
 		$type = $updater->getDB()->getType();
 		if( isset( $map[$type] ) ) {
-			$sql = dirname( __FILE__ ) . "/" . $map[ $type ];
+			$sql = dirname( __FILE__ ) . "/../" . $map[ $type ];
 			$updater->addExtensionTable( 'comments_index', $sql );
 		} else {
 			throw new MWException( "Comments extension does not currently support $type database." );
