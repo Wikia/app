@@ -46,8 +46,8 @@ public class WikiBasePageObject extends BasePageObject {
 	@FindBy(css="input#wpConfirmB")
 	private WebElement deleteConfirmationButton;
 	
-	@FindBy(css=".msg a[title*='Special:Undelete']")
-	private WebElement deleteConfirmationMessage;
+	@FindBy(xpath="//div[@class='msg' and contains(text(), 'The comment has been deleted.')]")
+	private WebElement deleteCommentConfirmationMessage;
 	
 	@FindBy(css="a#ca-edit")
 	protected WebElement editButton;
@@ -90,6 +90,8 @@ public class WikiBasePageObject extends BasePageObject {
 	
 	@FindBy(css="div[id='VideoEmbed'] input[value='Return to editing']")
 	private WebElement videoReturnToEditing;
+
+	
 	
 	private By layoutList = By.cssSelector("ul#CreatePageDialogChoices li");
 	
@@ -349,7 +351,7 @@ public class WikiBasePageObject extends BasePageObject {
 		PageObjectLogging.log("clickDeleteButtonInDropDown", "delete button in drop-down clicked", true);
 	}
 	
-	protected void clickDeleteConfirmationButton()
+	protected void clickCommentDeleteConfirmationButton()
 	{
 		waitForElementByElement(deleteConfirmationButton);
 		waitForElementByElement(deleteCommentReasonField);
@@ -357,15 +359,30 @@ public class WikiBasePageObject extends BasePageObject {
 		deleteCommentReasonField.sendKeys("QAReason");
 //		executeScript("document.querySelectorAll('#wpConfirmB')[0].click()");
 		deleteConfirmationButton.click();
-		waitForElementByElement(deleteConfirmationMessage);
+		waitForElementByElement(deleteCommentConfirmationMessage);
 		
 	}
 	
-	public void deleteArticle()
+	protected void clickArticleDeleteConfirmationButton(String atricleName)
+	{
+		waitForElementByElement(deleteConfirmationButton);
+		waitForElementByElement(deleteCommentReasonField);
+		deleteCommentReasonField.clear();
+		deleteCommentReasonField.sendKeys("QAReason");
+//		executeScript("document.querySelectorAll('#wpConfirmB')[0].click()");
+		deleteConfirmationButton.click();
+		waitForElementByXPath("//div[@class='msg' and contains(text(), '\""+atricleName+"\" has been deleted.')]");
+		
+	}
+	
+	
+	
+	public void deleteArticle(String atricleName)
 	{
 		driver.get(driver.getCurrentUrl()+"?action=delete");
 //		clickDeleteButtonInDropDown();
-		clickDeleteConfirmationButton();
+		clickArticleDeleteConfirmationButton(atricleName);
+		waitForElementByXPath("//div[@class='msg' and contains(text(), 'has been deleted.')]");
 		PageObjectLogging.log("deleteArticle", "article has been deleted", true, driver);
 	}
 	

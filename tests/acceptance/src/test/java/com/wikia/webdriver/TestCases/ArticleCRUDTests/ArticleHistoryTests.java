@@ -50,7 +50,7 @@ public class ArticleHistoryTests extends TestTemplate
 		article = revision.clickOnPublishButton();
 		article.verifyTitle(pageName);
 		article.verifyArticleText(articleText);
-		article.deleteArticle();
+		article.deleteArticle(pageName);
 		article.openArticle(pageName);
 		article.verifyDeletedArticlePage(pageName);
 		CommonFunctions.logOut(Properties.userNameStaff, driver);
@@ -89,7 +89,7 @@ public class ArticleHistoryTests extends TestTemplate
 		article = history.enterPageAfterRollback();
 		article.verifyTitle(pageName);
 		article.verifyArticleText(articleText);
-		article.deleteArticle();
+		article.deleteArticle(pageName);
 		article.openArticle(pageName);
 		article.verifyDeletedArticlePage(pageName);
 		CommonFunctions.logOut(Properties.userNameStaff, driver);

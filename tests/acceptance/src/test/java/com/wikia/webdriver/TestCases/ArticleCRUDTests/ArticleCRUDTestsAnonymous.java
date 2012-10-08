@@ -66,7 +66,7 @@ public class ArticleCRUDTestsAnonymous extends TestTemplate{
 		article.verifyArticleText(articleText);
 		CommonFunctions.logIn(Properties.userNameStaff, Properties.passwordStaff);
 		article.openArticle(pageName);
-		article.deleteArticle();
+		article.deleteArticle(pageName);
 		article.openArticle(pageName);
 		article.verifyDeletedArticlePage(pageName);
 		CommonFunctions.logOut(Properties.userNameStaff, driver);
@@ -100,7 +100,7 @@ public class ArticleCRUDTestsAnonymous extends TestTemplate{
 		article.verifyArticleText(articleTextEdit);
 		CommonFunctions.logIn(Properties.userNameStaff, Properties.passwordStaff);
 		article.openArticle(pageName);
-		article.deleteArticle();
+		article.deleteArticle(pageName);
 		article.openArticle(pageName);
 		article.verifyDeletedArticlePage(pageName);
 		CommonFunctions.logOut(Properties.userNameStaff, driver);
@@ -132,7 +132,7 @@ public class ArticleCRUDTestsAnonymous extends TestTemplate{
 		article.verifyComment(commentText, "A Wikia contributor");
 		CommonFunctions.logIn(Properties.userNameStaff, Properties.passwordStaff);
 		article.openArticle(pageName);
-		article.deleteArticle();
+		article.deleteArticle(pageName);
 		article.openArticle(pageName);
 		article.verifyDeletedArticlePage(pageName);
 		CommonFunctions.logOut(Properties.userNameStaff, driver);
@@ -165,7 +165,7 @@ public class ArticleCRUDTestsAnonymous extends TestTemplate{
 		article.replyComment(commentText, replyText);
 		CommonFunctions.logIn(Properties.userNameStaff, Properties.passwordStaff);
 		article.openArticle(pageName);
-		article.deleteArticle();
+		article.deleteArticle(pageName);
 		article.openArticle(pageName);
 		article.verifyDeletedArticlePage(pageName);
 		CommonFunctions.logOut(Properties.userNameStaff, driver);

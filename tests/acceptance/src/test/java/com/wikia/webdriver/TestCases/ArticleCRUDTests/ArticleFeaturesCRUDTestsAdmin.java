@@ -46,7 +46,7 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		edit = article.edit();
 		edit.deleteArticleContent();
 		article = edit.clickOnPublishButton();
-		article.deleteArticle();
+		article.deleteArticle(pageName);
 		article.openArticle(pageName);
 		article.verifyDeletedArticlePage(pageName);
 		CommonFunctions.logOut(Properties.userName2, driver);
@@ -89,7 +89,7 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		edit.verifyObjectInEditMode("gallery");
 		article = edit.clickOnPublishButton();
 		article.verifyGalleryPosion("right");
-		article.deleteArticle();
+		article.deleteArticle(pageName);
 		article.openArticle(pageName);
 		article.verifyDeletedArticlePage(pageName);
 		CommonFunctions.logOut(Properties.userName2, driver);
@@ -127,7 +127,7 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		edit.verifyTheGalleryNotOnTheArticleEditMode();
 		article = edit.clickOnPublishButton();
 		article.verifyTheGalleryNotOnThePage();
-		article.deleteArticle();
+		article.deleteArticle(pageName);
 		article.openArticle(pageName);
 		article.verifyDeletedArticlePage(pageName);
 		CommonFunctions.logOut(Properties.userName2, driver);
@@ -160,7 +160,7 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		edit = article.edit();
 		edit.deleteArticleContent();
 		article = edit.clickOnPublishButton();
-		article.deleteArticle();
+		article.deleteArticle(pageName);
 		article.openArticle(pageName);
 		article.verifyDeletedArticlePage(pageName);
 		CommonFunctions.logOut(Properties.userNameStaff, driver);
@@ -202,7 +202,7 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		article = edit.clickOnPublishButton();
 		article.verifyTheObjectOnThePage("slideshow");
 		article.verifySlideshowPosition("right");
-		article.deleteArticle();
+		article.deleteArticle(pageName);
 		article.openArticle(pageName);
 		article.verifyDeletedArticlePage(pageName);
 		CommonFunctions.logOut(Properties.userNameStaff, driver);
@@ -237,7 +237,7 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		edit.verifyTheSlideshowNotOnTheArticleEditMode();
 		article = edit.clickOnPublishButton();
 		article.verifyTheSlideshowNotOnThePage();
-		article.deleteArticle();
+		article.deleteArticle(pageName);
 		article.openArticle(pageName);
 		article.verifyDeletedArticlePage(pageName);
 		CommonFunctions.logOut(Properties.userName2, driver);
@@ -272,7 +272,7 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		edit = article.edit();
 		edit.deleteArticleContent();
 		article = edit.clickOnPublishButton();
-		article.deleteArticle();
+		article.deleteArticle(pageName);
 		article.openArticle(pageName);
 		article.verifyDeletedArticlePage(pageName);
 		CommonFunctions.logOut(Properties.userName, driver);	
@@ -315,7 +315,7 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		article = edit.clickOnPublishButton();
 		article.verifyTheObjectOnThePage("slider");
 		article.verifySliderThumbnailsPosition("horizontal");
-		article.deleteArticle();
+		article.deleteArticle(pageName);
 		article.openArticle(pageName);
 		article.verifyDeletedArticlePage(pageName);
 		CommonFunctions.logOut(Properties.userName, driver);	
@@ -350,7 +350,7 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		edit.verifyTheSliderNotOnTheArticleEditMode();
 		article = edit.clickOnPublishButton();
 		article.verifyTheSlideshowNotOnThePage();
-		article.deleteArticle();
+		article.deleteArticle(pageName);
 		article.openArticle(pageName);
 		article.verifyDeletedArticlePage(pageName);
 		CommonFunctions.logOut(Properties.userName2, driver);
@@ -384,7 +384,7 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		edit = article.edit();
 		edit.deleteArticleContent();
 		article = edit.clickOnPublishButton();
-		article.deleteArticle();
+		article.deleteArticle(pageName);
 		article.openArticle(pageName);
 		article.verifyDeletedArticlePage(pageName);
 		CommonFunctions.logOut(Properties.userName2, driver);
@@ -421,7 +421,7 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		edit.verifyVideoInEditMode(Caption2);
 		article = edit.clickOnPublishButton();
 		article.verifyTheVideoOnThePage();
-		article.deleteArticle();
+		article.deleteArticle(pageName);
 		article.openArticle(pageName);
 		article.verifyDeletedArticlePage(pageName);
 		CommonFunctions.logOut(Properties.userName2, driver);
@@ -456,7 +456,7 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		edit.verifyTheVideoNotOnTheArticleEditMode();
 		article = edit.clickOnPublishButton();
 		article.verifyTheVideoNotOnThePage();
-		article.deleteArticle();
+		article.deleteArticle(pageName);
 		article.openArticle(pageName);
 		article.verifyDeletedArticlePage(pageName);
 		CommonFunctions.logOut(Properties.userName2, driver);
@@ -488,7 +488,7 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		edit = article.edit();
 		edit.deleteArticleContent();
 		article = edit.clickOnPublishButton();
-		article.deleteArticle();
+		article.deleteArticle(pageName);
 		article.openArticle(pageName);
 		article.verifyDeletedArticlePage(pageName);
 		CommonFunctions.logOut(Properties.userName2, driver);
@@ -521,7 +521,7 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		edit.verifyTheCaptionOnThePreview(Caption2);
 		WikiArticlePageObject article = edit.clickOnPublishButtonInPreviewMode();
 		article.VerifyTheImageOnThePage();
-		article.deleteArticle();
+		article.deleteArticle(pageName);
 		article.openArticle(pageName);
 		article.verifyDeletedArticlePage(pageName);
 		CommonFunctions.logOut(Properties.userName2, driver);
@@ -553,7 +553,7 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		edit.verifyTheImageNotOnTheArticleEditMode();
 		article = edit.clickOnPublishButton();
 		article.verifyTheImageNotOnThePage();
-		article.deleteArticle();
+		article.deleteArticle(pageName);
 		article.openArticle(pageName);
 		article.verifyDeletedArticlePage(pageName);
 		CommonFunctions.logOut(Properties.userName2, driver);

@@ -327,18 +327,18 @@ public class BasePageObject{
 	 * Checks if the element is visible on browser
 	 *
 	 ** @param element The element to be checked
+	 * @throws Exception 
 	 */
-	public boolean waitForElementByElement(WebElement element)
+	public void waitForElementByElement(WebElement element)
 	{
 		try
 		{
-			wait.until(ExpectedConditions.visibilityOf(element));	
-			return true;
+			wait.until(ExpectedConditions.visibilityOf(element));
 		}
 		catch(Exception e)
 		{
-			PageObjectLogging.log("waitForElementByElement", e.toString(), false);			
-			return false;
+			String stackTrace = Throwables.getStackTraceAsString(e);
+			PageObjectLogging.log("waitForElementByElement", stackTrace, false);			
 		}
 	}
 

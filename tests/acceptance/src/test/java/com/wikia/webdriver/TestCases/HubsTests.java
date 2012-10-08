@@ -59,8 +59,7 @@ public class HubsTests extends TestTemplate{
 //	https://internal.wikia-inc.com/wiki/Hubs/QA/Hubs_Test_Cases#Module_2_.28News_Tabs.29_Test_Cases
 // The test covers underscored steps from test case documentation - see link above
 	public void HubsTest002(HubBasePageObject Hub, String HubName, String HubURL)
-	{	
-		CommonFunctions.MoveCursorTo(0, 0);				
+	{		
 		home = new HomePageObject(driver);
 		home.openHomePage();		
 		Hub = home.OpenHub(HubName);
@@ -79,8 +78,7 @@ public class HubsTests extends TestTemplate{
 //	https://internal.wikia-inc.com/wiki/Hubs/QA/Hubs_Test_Cases#Module_3_.28Videos_Module.29_Test_Cases
 // The test covers underscored steps from test case documentation - see link above
 	public void HubsTest003(HubBasePageObject Hub, String HubName, String HubURL)
-	{	
-		CommonFunctions.MoveCursorTo(0, 0);				
+	{					
 		home = new HomePageObject(driver);
 		home.openHomePage();		
 		Hub = home.OpenHub(HubName);
@@ -117,8 +115,7 @@ public class HubsTests extends TestTemplate{
 		Hub.VerifySuggestVideoOrArticleButtonNotClickable();
 		Hub.SuggestVideoTypeIntoWhatVideoField("random text");
 		Hub.SuggestVideoTypeIntoWhichWikiField("random text");
-		Hub.VerifySuggestVideoOrArticleButtonClickable();
-		
+		Hub.VerifySuggestVideoOrArticleButtonClickable();	
 		home = Hub.BackToHomePage();						
 	}
 	
@@ -127,8 +124,7 @@ public class HubsTests extends TestTemplate{
 //	https://internal.wikia-inc.com/wiki/Hubs/QA/Hubs_Test_Cases#Module_3_.28Videos_Module.29_Test_Cases
 // The test covers underscored steps from test case documentation - see link above
 	public void HubsTest004(HubBasePageObject Hub, String HubName, String HubURL)
-	{	
-		CommonFunctions.MoveCursorTo(0, 0);				
+	{			
 		home = new HomePageObject(driver);
 		home.openHomePage();		
 		Hub = home.OpenHub(HubName);
@@ -153,17 +149,14 @@ public class HubsTests extends TestTemplate{
 		Hub.SuggestArticleTypeIntoWhatVideoField("random text");
 		Hub.SuggestArticleTypeIntoWhyCoolField("random text");
 		Hub.VerifySuggestVideoOrArticleButtonClickable();
-		
 		home = Hub.BackToHomePage();
-		
 	}
 	
 	@Test(dataProvider = "provideHub", groups= {"HubsTests005", "Hubs"})
 //	https://internal.wikia-inc.com/wiki/Hubs/QA/Hubs_Test_Cases#Module_5_.28The_Pulse.29_Test_Cases
 // The test covers underscored steps from test case documentation - see link above
 	public void HubsTest005(HubBasePageObject Hub, String HubName, String HubURL)
-	{	
-		CommonFunctions.MoveCursorTo(0, 0);				
+	{		
 		home = new HomePageObject(driver);
 		home.openHomePage();		
 		Hub = home.OpenHub(HubName);
@@ -177,22 +170,18 @@ public class HubsTests extends TestTemplate{
 		Hub.verifyGoogleButtonIsClickable();
 		Hub.verifyStatisticsAreDisplayed();
 		Hub.verifyWikiaSearchFieldIsDisplayed();
-		
 	}
 	
 	@Test(dataProvider = "provideHub", groups= {"HubsTests006", "Hubs"})
 //	https://internal.wikia-inc.com/wiki/Hubs/QA/Hubs_Test_Cases#Module_7_.28Top_Wikis.29_Test_Cases
 // The test covers underscored steps from test case documentation - see link above
 	public void HubsTest006(HubBasePageObject Hub, String HubName, String HubURL)
-	{	
-		CommonFunctions.MoveCursorTo(0, 0);				
+	{				
 		home = new HomePageObject(driver);
 		home.openHomePage();		
 		Hub = home.OpenHub(HubName);
 		Hub.verifyURL(HubURL);
 		Hub.verifyTopWikisModuleAppears();
 		Hub.verifyWikisAreListedInTopWikisModule();
-		
 	}
-	
 }

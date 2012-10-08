@@ -158,7 +158,7 @@ public class WikiArticlePageObject extends WikiBasePageObject {
 		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,0)");
 //		hoverMouseOverCommentArea(comment);
 		clickDeleteCommentButton();
-		clickDeleteConfirmationButton();
+		clickCommentDeleteConfirmationButton();
 		PageObjectLogging.log("deleteComment", "comment deleted", true, driver);
 	}
 	
