@@ -30,6 +30,19 @@ var WikiaDartHelper = function (log, window, document, Geo) {
 
 		initSiteAndZones();
 
+/*
+http://ad.doubleclick.net/adj/wka.ent/_glee/article;s0=ent;s1=_glee;s2=article;media=tv;sex=f;age=13-17;age=18-34;eth=asian;hhi=0-30;aff=fashion;aff=teens;age=teen;aff=video;aff=communities;artid=2102;dmn=wikia-devcom;hostpre=glee;pos=TOP_RIGHT_BOXAD;wpage=the_rhodes_not_taken;lang=en;dis=large;hasp=yes;u=H5feJdXS;ksgmnt=l4ml7tc6y;ksgmnt=l7drxohb5;ksgmnt=mhu7kdyz5;ksgmnt=mkwaoxp2x;ksgmnt=mkcdphvyq;ksgmnt=l4ipfweef;ksgmnt=mhu6miy43;ksgmnt=l5g2q8ndp;ksgmnt=l6dwvwk4q;ksgmnt=mlhkv0y2u;ksgmnt=l60oj8o6a;ksgmnt=l65e7q72q;ksgmnt=mdfzhvp3x;ksgmnt=mczlqdo8q;ksgmnt=l9cwgqxmx;ksgmnt=miqlt2xrx;ksgmnt=mhu6jt32u;ksgmnt=l5hqg89ks;ksgmnt=md0socy4l;ksgmnt=mnbz18cpv;ksgmnt=l8cvx4q0q;
+impct=4;cat=episodes;cat=season_one;cat=april_rhodes;cat=glee_episodes;cat=cabaret;cat=episode_5;cat=carrie_underwood;cat=queen;cat=terri_schuester;cat=will_schuester;cat=finn-centric;cat=kristin_chenoweth;
+loc=top;admeld=-1.00;ab=e1g1;src=driver;sz=300x250,300x600;mtfInline=true;tile=2;endtag=$;ord=17177439419?
+
+
+http://ad.doubleclick.net/adj/wka.ent/_glee/article;s0=ent;s1=_glee;s2=article;media=tv;sex=f;age=13-17;age=18-34;eth=asian;hhi=0-30;aff=fashion;aff=teens;age=teen;aff=video;aff=communities;artid=2102;dmn=wikia-devcom;hostpre=glee;pos=TOP_LEADERBOARD;wpage=the_rhodes_not_taken;lang=en;dis=large;hasp=unknown;
+        cat=episodes;cat=season_one;cat=april_rhodes;cat=glee_episodes;cat=cabaret;cat=episode_5;cat=carrie_underwood;cat=queen;cat=terri_schuester;cat=will_schuester;cat=finn-centric;cat=kristin_chenoweth;
+loc=top;dcopt=ist;admeld=-1.00;mtfIFPath=/extensions/wikia/AdEngine/;src=driver;sz=728x90,468x60,980x130,980x65;mtfInline=true;tile=1;endtag=$;ord=2097541707?
+
+http://ad.doubleclick.net/adj/wka.ent/_glee/article;s0=ent;s1=_glee;s2=article;media=tv;sex=f;age=13-17;age=18-34;eth=asian;hhi=0-30;aff=fashion;aff=teens;age=teen;aff=video;aff=communities;           dmn=wikia-devcom;hostpre=glee;pos=TOP_LEADERBOARD;                           lang=en;dis=large;hasp=unknown;
+loc=top;                          dcopt=ist;mtfIFPath=/extensions/wikia/AdEngine/;src=driver;sz=728x90,468x60,980x130,980x65;mtfInline=true;tile=1;endtag=$;ord=21889937933?
+*/
 		var url = 'http://' +
 			getSubdomain() +
 			'.doubleclick.net/' +
@@ -39,21 +52,21 @@ var WikiaDartHelper = function (log, window, document, Geo) {
 			's1=' + zone1 + ';' +
 			's2=' + zone2 + ';' +
 			getCustomKeyValues() +
-			getArticleKV() +
+			getArticleKV() + // TODO FIXME missing in adsinhead
 			getDomainKV(window.location.hostname) + // TODO inconsistent, most func just read window.*
 			getHostnamePrefix(window.location.hostname) + // TODO inconsistent, most func just read window.*
 			'pos=' + slotname + ';' +
-			getTitle() +
+			getTitle() + // TODO FIXME missing in adsinhead
 			getLanguage() +
 			getResolution() +
-			getPrefooterStatus() +
-//			(window.wgEnableKruxTargeting && window.Krux && window.Krux.dartKeyValues ? DART.rebuildKruxKV(window.Krux.dartKeyValues) : '') +
-			getImpressionCount(slotname) +
-			getPartnerKeywords() +
-			getCategories() +
+			getPrefooterStatus() + // TODO FIXME just height
+			(window.wgEnableKruxTargeting && window.Krux && window.Krux.dartKeyValues ? rebuildKruxKV(window.Krux.dartKeyValues) : '') + // TODO FIXME missing
+			getImpressionCount(slotname) + // TODO remove missing
+			getPartnerKeywords() + // TODO remove missing
+			getCategories() + // TODO FIXME missing in adsinhead
 			getLocKV(slotname) +
 			getDcoptKV(slotname) +
-//			((typeof window.top.wgEnableAdMeldAPIClient != 'undefined' && window.top.wgEnableAdMeldAPIClient) ? window.top.AdMeldAPIClient.getParamForDART(slotname) : '') +
+			((typeof window.top.wgEnableAdMeldAPIClient != 'undefined' && window.top.wgEnableAdMeldAPIClient) ? window.top.AdMeldAPIClient.getParamForDART(slotname) : '') + // TODO FIXME missing in adsinhead
 			'mtfIFPath=/extensions/wikia/AdEngine/;' +
 			'src=driver;' +
 			'sz=' + size + ';' +
@@ -297,6 +310,17 @@ var WikiaDartHelper = function (log, window, document, Geo) {
 		}
 
 		return "hasp=" + hasPrefooters + ";";
+	}
+
+	function rebuildKruxKV(kv) {
+		if (kv) {
+			kv = kv.substr(0, kvStrMaxLength);
+			kv = kv.replace(/;[^;]*$/, ';');
+
+			return kv;
+		}
+
+		return '';
 	}
 
 	// TODO FIXME? remove?
