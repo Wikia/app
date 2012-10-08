@@ -107,6 +107,10 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 		$this->searchConfig = $searchConfig;
 		$this->setQuery( $searchConfig->getQuery( WikiaSearchConfig::QUERY_ENCODED ) );
 		
+		if ( $result instanceof Solarium_Result_Select_Empty ) {
+			return;
+		}
+		
 		if ( ( $parent === null ) && $this->searchConfig->getGroupResults() ) {
 			
 			$this->setResultGroupings( $result, $searchConfig );

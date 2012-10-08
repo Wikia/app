@@ -487,7 +487,6 @@ class WikiaSearch extends WikiaObject {
 		}
 		
 		$formulatedQuery = sprintf('%s AND (%s)', $this->getQueryClausesString( $searchConfig ), $this->getNestedQuery( $searchConfig ));
-		
 		$query->setQuery( $formulatedQuery );
 		wfProfileOut(__METHOD__);
 		return $query;
@@ -567,9 +566,10 @@ class WikiaSearch extends WikiaObject {
 		if ( $searchConfig->isInterWiki() ) {
 			
 			$filterQueries[] = self::valueForField( 'iscontent', 'true');
-				
-			if ( $searchConfig->getHub() !== null ) {
-			    $filterQueries[] = self::valueForField( 'hub', $searchConfig->getHub() );
+			
+			$hub = $searchConfig->getHub();
+			if (! empty( $hub ) ) {
+			    $filterQueries[] = self::valueForField( 'hub', $hub );
 			}
 		}
 		else {
@@ -602,14 +602,15 @@ class WikiaSearch extends WikiaObject {
 			    $widQueries[] = self::valueForField( 'wid',  $excludedWikiId, array( 'negate' => true ) );
 			}
 			 
-			$queryClauses[] = '(' . implode( ' AND ', $widQueries ) . ')';
+			$queryClauses[] = implode( ' AND ', $widQueries );
 			
 			$queryClauses[] = self::valueForField( 'lang', $this->wg->ContLang->mCode );
 			
 			$queryClauses[] = self::valueForField( 'iscontent', 'true' );
 			
-			if ( $searchConfig->getHub() !== null ) {
-			    $queryClauses[] = self::valueForField( 'hub', $searchConfig->getHub() );
+			$hub = $searchConfig->getHub();
+			if (! empty( $hub ) ) {
+			    $queryClauses[] = self::valueForField( 'hub', $hub );
 			}
 		}
 		else {

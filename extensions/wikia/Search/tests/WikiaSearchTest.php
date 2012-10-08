@@ -284,7 +284,7 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 		$searchConfig	->setVideoSearch	( false )
 						->setIsInterWiki	( true );
 		
-		$expectedInterWiki = '((-(wid:123) AND -(wid:234)) AND (lang:en) AND (iscontent:true))';
+		$expectedInterWiki = '(-(wid:123) AND -(wid:234) AND (lang:en) AND (iscontent:true))';
 		$this->assertEquals( $expectedInterWiki, $method->invoke( $wikiaSearch, $searchConfig ),
 		        			'WikiaSearch::getQueryClauses should exclude bad wikis, require the language of the wiki, and require content' );
 		
