@@ -153,6 +153,7 @@ class VideoEmbedTool {
 						return $e->getMessage();
 					}
 
+					// return wfMessage("videohandler-non-premium")->parse(); //TODO: re-instate html links once VETUpgrade branch is merged into trunk (Liz)
 					return wfMsg( 'videohandler-non-premium' );
 				}
 				header('X-screen-type: error');
