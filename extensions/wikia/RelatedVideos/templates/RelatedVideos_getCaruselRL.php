@@ -1,4 +1,5 @@
-<? $pageCount = ceil((count($videos))/3); ?>
+<? $pageCount = ceil((count($videos)+1)/3); // Added +1 for video placeholder ?>
+
 <div class="RelatedVideos RelatedVideosHidden noprint" id="RelatedVideosRL" data-count="<?=$pageCount;?>">
 	<h1><?= wfMsg('related-videos-tally'); ?></h1>
 	<div class="deleteConfirm messageHolder"><?=wfMsg('related-videos-remove-confirm');?></div>
@@ -9,7 +10,7 @@
 	<div class="errorWhileLoading messageHolder"><?=wfMsg('videos-error-while-loading');?></div>
 	<div class="RVHeader">
 		<div class="tally">
-			<em><?=$totalVideos?></em>
+			<em><?= $totalVideos ?></em>
 			<span class="fixedwidth"><?=wfMsg('related-videos-tally-wiki') ?></span>
 		</div>
 		<a class="button addVideo" href="#" rel="tooltip" title="<?=wfMsg('related-videos-tooltip-add');?>"><img src="<?=wfBlankImgUrl();?>" class="sprite addRelatedVideo" /> <?=wfMsg('related-videos-add-video')?></a>
@@ -17,45 +18,39 @@
 	<div class="RVBody">
 		<div class="wrapper">
 			<div class="container">
-				<? $i = 0;
+				<? 
 				if( isset($videos) && is_array($videos) ){
-					$videos[] = array(
-						"seeMorePlaceholder" => true,
-					);
-					$videosGrouped = array();
-					$j = -1;
+					
+					$videoTitles = array();
+					$i = 1;
+
+					echo '<div class="group">';
+
 					foreach( $videos as $id => $video ){
-						if( $i % 3 == 0 ) {
-							$j++;
-							$videosGrouped[$j] = array();
-						}
-						$videosGrouped[$j][$id] = $video;
-						$i++;
-					}
-					$i = 0;
-					foreach( $videosGrouped as $id => $videos ){
-						$i++; 
-						echo '<div class="group">';
-						foreach( $videos as $id => $video ){
-							if( array_key_exists( "seeMorePlaceholder", $video ) ) {
-								?>
-								<div class="item">
-									<a href="<?= $linkToSeeMore ?>" class="see-more-videos-placeholder"><?= wfMsg('related-videos-see-all') ?></a>
-								</div>
-								<?
-							} else {
-								echo F::app()->renderView(
-									'RelatedVideos',
-									'getCaruselElementRL',
-									array(
-										'video' => $video,
-										'preloaded' => ( $i <= 2 )
-									)
-								);
+						// Cache video ids in their already randomized order
+						$videoTitles[] = $video['title'];
+
+						if( $i <= 6 ) {
+							echo F::app()->renderView(
+								'RelatedVideos',
+								'getCaruselElementRL',
+								array(
+									'video' => $video,
+									'preloaded' => true,
+								)
+							);
+	
+							// Start next page
+							if( $i == 3 ) {
+								echo '</div><div class="group">';
 							}
+							$i++;
 						}
-						echo '</div>';
 					}
+					echo '</div>';
+					
+					echo '<script type="text/javascript"> window.RelatedVideosIds = ' . json_encode($videoTitles) . '</script>';
+					
 				} ?>
 			</div>
 		</div>
@@ -79,6 +74,9 @@
 			<a href="<?= $linkToSeeMore ?>" class="more">
 				<?=wfMsg('related-videos-see-all')?> &gt;
 			</a>
+		</div>
+		<div class="seeMorePlaceholder">
+			<a href="<?= $linkToSeeMore ?>" class="see-more-videos-placeholder"><?= wfMsg('related-videos-see-all') ?></a>
 		</div>
 	</div>
 </div>

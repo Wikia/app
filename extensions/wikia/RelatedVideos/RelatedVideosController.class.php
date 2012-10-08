@@ -18,6 +18,8 @@ class RelatedVideosController extends WikiaController {
 	}
 
 	public function getCaruselElementRL(){
+		$this->response->setTemplateEngine(WikiaResponse::TEMPLATE_ENGINE_MUSTACHE);
+
 		// just use different template, logic stays the same
 		return $this->getCaruselElement();
 	}
@@ -28,7 +30,7 @@ class RelatedVideosController extends WikiaController {
 		}
 		$rvs = new RelatedVideosService();
 		$videos = $rvs->getRVforArticleId( $this->app->wg->title->getArticleId() );
-		
+
 		$this->linkToSeeMore = !empty($this->app->wg->EnableSpecialVideosExt) ? SpecialPage::getTitleFor("Videos")->escapeLocalUrl() : Title::newFromText(WikiaVideoPage::getVideosCategory())->getFullUrl();
 		$this->videos = $videos;
 
@@ -134,7 +136,14 @@ class RelatedVideosController extends WikiaController {
 		global $wgVideoHandlersVideosMigrated;
 
 		$video = $this->getVal( 'video' );
-		$preloaded = $this->getVal( 'preloaded' );
+
+		if( empty( $video ) ) {
+			$title = $this->getVal('videoTitle');
+			$rvs = F::build('RelatedVideosService');
+			$video = $rvs->getRelatedVideoDataFromTitle( array( 'title' => $title ) );
+		}
+
+ 		$preloaded = $this->getVal( 'preloaded' );
 
 		$videoTitle = F::build('Title', array($video['id'], NS_FILE), 'newFromText');
 		$videoFile = wfFindFile($videoTitle);
@@ -160,11 +169,18 @@ class RelatedVideosController extends WikiaController {
 			);
 
 			$video['views'] = MediaQueryService::getTotalVideoViewsByTitle( $videoTitle->getDBKey() );
+			
+			// Add ellipses if title is too long
+			$maxDescriptionLength = 45;
+			$video['truncatedTitle'] = ( strlen( $video['title'] ) > $maxDescriptionLength )
+				? substr( $video['title'], 0, $maxDescriptionLength).'&#8230;'
+				: $video['title'];
 
-			$this->setVal( 'videoThumb', $videoThumb );
-			$this->setVal( 'video', $video );
-			$this->setVal( 'preloaded', $preloaded );
-			$this->setVal( 'videoPlay',empty($wgVideoHandlersVideosMigrated) ? 'video-play' : 'lightbox');
+			$video['viewsMsg'] = wfMsg('related-videos-video-views', $this->wg->ContLang->formatNum($video['views']));
+			
+			$this->videoThumb = $videoThumb;
+			$this->video = $video;
+			$this->preloaded = $preloaded;
 		} else {
 			Wikia::log(__METHOD__, false, 'A video file not found. ID: '.$video['id']);
 		}
@@ -173,12 +189,6 @@ class RelatedVideosController extends WikiaController {
 	public function getAddVideoModal(){
 		$this->request->setVal( 'suppressSuggestions', false );
 		$this->forward( 'VideosController', 'getAddVideoModal' );
-	}
-
-	public function addVideoModalText(){
-
-		$pgTitle = $this->request->getVal('pageTitle', '');
-		$this->setVal( 'pageTitle', $pgTitle );
 	}
 	
 	public function addVideo() {

@@ -1,27 +1,34 @@
 /*global jwplayer:true */
 var RelatedVideos = {
 
-	//lockTable:		[],
-	//videoPlayerLock:	false,
-	maxRooms:		1,
-	currentRoom:		1,
-	//modalWidth:		666,
-	//alreadyLoggedIn:	false,
-	heightThreshold:	600,
-	playerHeight:           371,
+	maxRooms: 1,
+	currentRoom: 1,
+	heightThreshold: 600,
 	onRightRail: false,
 	videosPerPage: 3,
 	rvModule: null,
 	isHubVideos: false,
 	isHubExtEnabled: false,
 	isHubExtPage: false,
-	gaCat:			'related-videos',
+	gaCat: 'related-videos',
+	totalVideos: null,
+
+	// Lazy Loading
+	loadedCount: 0,
+	seeMorePlaceholderAdded: false,
 
 	init: function(relatedVideosModule) {
+		// DOM caching
 		this.rvModule = $(relatedVideosModule);
+	
+	
+		this.loadedCount = $('.item', this.rvModule).length;
+		
 		if ( this.rvModule.closest('.WikiaRail').size() > 0 ) {
 			this.onRightRail = true;
-			//this.videosPerPage = 3;
+			this.totalVideos = window.RelatedVideosIds.length;
+		} else {
+			this.totalVideos = this.loadedCount;		
 		}
 
 		if( this.rvModule.hasClass('RelatedHubsVideos') ) {
@@ -47,8 +54,8 @@ var RelatedVideos = {
 				(this.isHubExtEnabled && this.isHubExtPage && this.isHubVideos)
 		) {
 			relatedVideosModule.removeClass('RelatedVideosHidden');
-			relatedVideosModule.delegate( '.scrollright', 'click', RelatedVideos.scrollright );
-			relatedVideosModule.delegate( '.scrollleft', 'click', RelatedVideos.scrollleft );
+			relatedVideosModule.on( 'click', '.scrollright', RelatedVideos.scrollright );
+			relatedVideosModule.on( 'click', '.scrollleft', RelatedVideos.scrollleft );
 			
 			relatedVideosModule.find('.addVideo').addVideoButton({
 				gaCat: RelatedVideos.gaCat,
@@ -83,7 +90,11 @@ var RelatedVideos = {
 	// Scrolling modal items
 
 	scrollright: function(){
-		RelatedVideos.showImages();
+		if(RelatedVideos.onRightRail) {
+			RelatedVideos.lazyLoad();
+		} else {
+			RelatedVideos.showImages();
+		}
 		WikiaTracker.trackEvent(
 			'trackingevent',
 			{
@@ -208,6 +219,8 @@ var RelatedVideos = {
 		}
 	},
 
+	// Lazy load image src
+	// Only for hubs
 	showImages: function(){
 		var rl = this;
 		$('div.item a.video-thumbnail img',this.rvModule).each( function (i) {
@@ -219,28 +232,117 @@ var RelatedVideos = {
 			}
 		});
 	},
+	
+	// Lazy load html
+	// Only for onRightRail
+	lazyLoad: function() {
+		var self = this,
+			idx = this.loadedCount, // cache index to avoid race conditions
+			totalCount = window.RelatedVideosIds.length;
 
+		var getItems = function() {
+			for(var i = 0; i < self.videosPerPage; i++) {
+
+				// Stop lazy loading if we've got all the videos
+				if(self.loadedCount >= totalCount) {
+					self.lazyLoaded = true;
+					break;
+				}
+
+				// update lazy loading progress
+				self.loadedCount += 1; 
+
+				// Load new videos
+				$.nirvana.sendRequest({
+					controller: 'RelatedVideos',
+					method: 'getCaruselElementRL',
+					type: 'GET',
+					format: 'json',
+					data: {
+						videoTitle: window.RelatedVideosIds[idx + i],
+						preloaded: true
+					}, 
+					callback: function(data) {
+						var html = self.mustacheTemplate.mustache(data);
+						
+						doInsert(html);
+						
+						if($('.item', this.rvModule).length == self.totalVideos) {
+							var seeMorePlaceholder = $('.seeMorePlaceholder', self.rvModule).addClass('item');
+							doInsert(seeMorePlaceholder);
+							self.seeMorePlaceholderAdded = true;
+						}						
+					}
+				});	
+			}		
+		}
+		
+		var doInsert = function(item) {
+			var last = $('.group',this.rvModule).last();
+			
+			if(last.children().length < self.videosPerPage) {
+				// There's space for this item in the last group, append it
+				$(item).appendTo(last).show();
+			} else {
+				// All the groups are full, create a new one
+				var newDiv = $('<div class="group"></div>').appendTo('.container', self.rvModule); // TODO: cache .container better
+				$(item).appendTo(newDiv).show();
+			}
+		}
+
+		if(this.mustacheTemplate) {
+			getItems();		
+		} else {
+			// Load all the resources for Lazy Loading
+			$.when(
+				$.loadMustache(),
+				Wikia.getMultiTypePackage({
+					mustache: 'extensions/wikia/RelatedVideos/templates/RelatedVideosController_getCaruselElementRL.mustache'
+				})
+			).done(function(libData, packagesData) {
+				// cache mustache template for carousel item
+				self.mustacheTemplate = $(packagesData[0].mustache[0]).wrap('<div></div>').parent();
+				getItems();
+			});
+		}
+		
+	},
+	
 	recalculateLength: function(){
-		var numberElem = $( '.tally em',this.rvModule ),
-			numberItems = parseInt(numberElem.text());
+		// Update video tally text
+		var numberElem = $( '.tally em',this.rvModule );
+		numberElem.text( parseInt(numberElem.text()) + 1 );
 
-		numberElem.text( numberItems + 1 );
+		// Update carousel progress
+		var numberItems = this.totalVideos;
+		
+		// Account for placeholder item
+		if(!this.seeMorePlaceholderAdded && this.onRightRail) {
+			numberItems += 1;
+		}
+
         if ( numberItems == 0 ) {
             $( '.novideos' ).show();
         } else {
             $( '.novideos' ).hide();
         }
+
 		if ( this.onRightRail ) {
 			numberItems = Math.ceil( ( numberItems ) / this.videosPerPage );
 		} else {
 			numberItems = Math.ceil( ( numberItems + 1 ) / this.videosPerPage );
 		}
+
         if( numberItems == 0) { numberItems = 1; }
+
+		// Update carousel progress text
 		RelatedVideos.maxRooms = numberItems;
 		$( '.maxcount',this.rvModule ).text( numberItems );
+
         if(numberItems < RelatedVideos.currentRoom) {
             RelatedVideos.scroll(-1);
         }
+
 		RelatedVideos.checkButtonState();
 	},
 
@@ -260,6 +362,7 @@ var RelatedVideos = {
 					.prependTo( $('.container',RelatedVideos.rvModule) )
 					.fadeOut( 0 )
 					.fadeIn( 'slow', function(){
+						RelatedVideos.totalVideos += 1;
 						RelatedVideos.recalculateLength();
 					});
 				RelatedVideos.regroup();
@@ -269,6 +372,9 @@ var RelatedVideos = {
 
 
 };
+
+
+
 
 //on content ready
 $().ready(function() {
