@@ -19,7 +19,12 @@ class SpecialPromoteController extends WikiaSpecialPageController {
 
 	public function __construct() {
 		parent::__construct('Promote');
-		$this->wg->Out->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/AdminDashboard/css/AdminDashboard.scss'));
+
+		if( $this->wg->User->isLoggedIn() ) {
+		//fix for fb#49401 -- the page for anons looks better without this stylesheet
+			$this->wg->Out->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/AdminDashboard/css/AdminDashboard.scss'));
+		}
+
 		$this->wg->Out->addStyle(AssetsManager::getInstance()->getSassCommonURL('skins/oasis/css/core/WikiaForm.scss'));
 		$this->wg->Out->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/SpecialPromote/css/SpecialPromote.scss'));
 
