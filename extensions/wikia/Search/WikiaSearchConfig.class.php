@@ -198,6 +198,10 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	 * @return string
 	 */
 	public function getQuery( $strategy = self::QUERY_DEFAULT ) {
+		if (! isset( $this->params['query'] ) ) {
+			return false;
+		}
+		
 		$query = $strategy !== self::QUERY_DEFAULT	? $this->params['query'] : WikiaSearch::sanitizeQuery( $this->params['query'] );
 		$query = $strategy === self::QUERY_ENCODED	? htmlentities( $query, ENT_COMPAT, 'UTF-8' ) : $query;
 		

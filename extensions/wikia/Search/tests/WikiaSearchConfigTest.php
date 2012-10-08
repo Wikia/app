@@ -203,6 +203,7 @@ class WikiaSearchConfigTest extends WikiaSearchBaseTest {
 				$originalNamespaces,
 				'WikiaSearchConfig::getNamespaces should return SearchEngine::DefaultNamespaces if namespaces are not initialized.'
 		);
+		$this->assertFalse( $config->getQuery(), 'WikiaSearchConfig::getQuery should return false if the query has not been set.');
 		$this->assertEquals(
 				$config,
 				$config->setQuery( $noNsQuery ),

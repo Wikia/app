@@ -784,8 +784,106 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 		        $method->invoke( $wikiaSearch, $searchConfig ),
 		        'WikiaSearch should append english query fields if the global language is not english and we\'re doing premium video search.'
 		);
+	}
+	
+	public function testMoreLikeThis() {
+		$mockClient			=	$this->getMock( 'Solarium_Client', array( 'createMoreLikeThis', 'moreLikeThis' ) );
+		$defaultMltMethods	=	array(
+				'setMltFields',
+				'setFields',
+				'addParam',
+				'setStart',
+				'setRows',
+				'setDocumentClass'
+		);
+		$addtlMltMethods	=	array(
+				'setInterestingTerms',
+				'addFilterQuery',
+				'setQuery',
+				'addParam'
+		);
 		
+		$mockMoreLikeThis	=	$this->getMock( 'Solarium_Query_MoreLikeThis', $defaultMltMethods + $addtlMltMethods );
+		$mockResponse		=	$this->getMock( 'Solarium_Client_Response', array(), array( '', array() ) );
+		$mockMltResult		=	$this->getMock( 'Solarium_Result_MoreLikeThis', array(), array( $mockClient, $mockMoreLikeThis, $mockResponse ) );
+		$wikiaSearch		=	F::build( 'WikiaSearch', array( $mockClient ) );
+		$searchConfig		=	F::build( 'WikiaSearchConfig' );
+		$mockResultSet		=	$this->getMock( 'stdClass', array(), array(), 'WikiaSearchResultSet' );
+		$method				=	new ReflectionMethod( 'WikiaSearch', 'moreLikeThis' );
+		
+		$method->setAccessible( true );
+		
+		$searchConfig->setMltFields( array( 'title', 'html' ) );
+		
+		$e = null;
+		try { 
+			$method->invoke( $wikiaSearch, $searchConfig );
+		} catch ( Exception $e ) {  }
+		
+		$this->assertNotNull( $e, 'WikiaSearch::moreLikeThis should throw an exception if a query, stream body, or stream url has not been set.' );
+		
+		$mockClient
+			->expects	( $this->any() )
+			->method	( 'createMoreLikeThis' )
+			->will		( $this->returnValue( $mockMoreLikeThis ) )
+		;
+		
+		foreach ($defaultMltMethods as $mltMethod ) {
+			$mockMoreLikeThis
+				->expects	( $this->any() )
+				->method	( $mltMethod )
+				->will		( $this->returnValue( $mockMoreLikeThis ) )
+			;
+		}
+
+		$this->mockClass( 'Solarium_Query_MoreLikeThis',		$mockMoreLikeThis);
+		$this->mockClass( 'WikiaSearchResultSet',				$mockResultSet );
+		$this->mockClass( 'Solarium_Client_Response',			$mockResponse );
+		$this->mockClass( 'Solarium_Result_MoreLikeThis',		$mockMltResult );
+		$this->mockApp();
+		F::setInstance( 'WikiaSearchResultSet', $mockResultSet );
+		F::setInstance( 'Solarium_Client', $mockClient );
+		F::addClassConstructor( 'WikiaSearch', array( 'client' => $mockClient ) );
+		$wikiaSearch = F::build( 'WikiaSearch' );
+		
+		$searchConfig
+			->setStreamBody			( 'foo' )
+			->setInterestingTerms	( 'list' )
+		;
+				
+		$this->assertInstanceOf(
+				'WikiaSearchResultSet',
+				$method->invoke( $wikiaSearch, $searchConfig ),
+				'WikiaSearch::moreLikeThis should return an instance of WikiaSearchResultSet'
+		);
+		
+		$searchConfig
+			->setStreamBody			( false )
+			->setQuery				( 'foo' )
+			->setInterestingTerms	( false )
+		;
+		
+		$this->assertInstanceOf(
+		        'WikiaSearchResultSet',
+		        $method->invoke( $wikiaSearch, $searchConfig ),
+		        'WikiaSearch::moreLikeThis should return an instance of WikiaSearchResultSet, even if the client throws an exception.'
+		);
+		
+		$searchConfig
+			->setStreamUrl			( 'http://foo.com' )
+			->setMltFilterQuery		( 'foo:bar' )
+		;
+		
+		$this->assertInstanceOf(
+		        'WikiaSearchResultSet',
+		        $method->invoke( $wikiaSearch, $searchConfig ),
+		        'WikiaSearch::moreLikeThis should return an instance of WikiaSearchResultSet, even if the client throws an exception.'
+		);
+		
+		
+		// lots more to do for this one, but the dependencies are really hard.
 		
 	}
+	
 	
 }

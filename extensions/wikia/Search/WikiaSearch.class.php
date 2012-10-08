@@ -668,6 +668,7 @@ class WikiaSearch extends WikiaObject {
 	
 	/**
 	 * Utilizes Solr's MoreLikeThis component to return similar pages
+	 * @see    WikiaSearchTest::testMoreLikeThis
 	 * @param  WikiaSearchConfig $searchConfig
 	 * @return WikiaSearchResultSet
 	 */
@@ -704,7 +705,6 @@ class WikiaSearch extends WikiaObject {
 			$mlt->setQuery( $query );
 		} else if ( $streamBody ) {
 			$mlt->addParam( 'stream.body', $streamBody );
-			;
 		} else if ($streamUrl ) {
 			$mlt->addParam( 'stream.url', $streamUrl );
 		}
@@ -720,8 +720,6 @@ class WikiaSearch extends WikiaObject {
 		
 		return $results;
 	}
-
-	
 
 	/**
 	 * Used to access API data from various MediaWiki services
@@ -768,8 +766,9 @@ class WikiaSearch extends WikiaObject {
 	/**
 	 * Used to configure the user preference pane settings for search. 
 	 * This is a registered hook function of the samme name.
+	 * 
 	 * @param User $user
-	 * @param 
+	 * @param array $defaultPreferences
 	 */ 
 	public static function onGetPreferences($user, &$defaultPreferences) {
 		wfProfileIn( __METHOD__ );
