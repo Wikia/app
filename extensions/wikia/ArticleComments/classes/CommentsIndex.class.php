@@ -28,7 +28,7 @@ class CommentsIndex extends WikiaModel {
 		}
 		parent::__construct();
 	}
-	
+
 	public function setCommentId( $value ) {
 		$this->commentId = $value;
 	}
@@ -188,7 +188,7 @@ class CommentsIndex extends WikiaModel {
 	 */
 	public function addToDatabase() {
 		$this->wf->ProfileIn( __METHOD__ );
-		
+
 		//Just for transition time
 		if(empty($this->wg->EnableWallEngine) || !WallHelper::isWallNamespace($this->namespace) ) {
 			return false;
@@ -241,31 +241,8 @@ class CommentsIndex extends WikiaModel {
 			$db = $this->wf->GetDB( DB_MASTER );
 
 			if ( !$db->tableExists('comments_index') ) {
-				$sql =<<<SQL
-					CREATE TABLE IF NOT EXISTS `comments_index` (
-						`parent_page_id` int(10) unsigned NOT NULL,
-						`comment_id` int(10) unsigned NOT NULL,
-						`parent_comment_id` int(10) unsigned NOT NULL DEFAULT '0',
-						`last_child_comment_id` int(10) unsigned NOT NULL DEFAULT '0',
-						`archived` tinyint(1) NOT NULL DEFAULT '0',
-						`deleted` tinyint(1) NOT NULL DEFAULT '0',
-						`removed` tinyint(1) NOT NULL DEFAULT '0',
-						`locked` tinyint(1) NOT NULL DEFAULT '0',
-						`protected` tinyint(1) NOT NULL DEFAULT '0',
-						`sticky` tinyint(1) NOT NULL DEFAULT '0',
-						`first_rev_id` int(10) unsigned NOT NULL DEFAULT '0',
-						`created_at` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-						`last_rev_id` int(10) unsigned NOT NULL DEFAULT '0',
-						`last_touched` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-						PRIMARY KEY (`parent_page_id`,`comment_id`),
-						KEY `parent_page_id` (`parent_page_id`,`archived`,`deleted`,`removed`,`parent_comment_id`),
-						KEY `comment_id` (`comment_id`,`archived`,`deleted`,`removed`),
-						KEY `parent_comment_id` (`parent_comment_id`,`archived`,`deleted`,`removed`),
-						KEY `last_touched` (`last_touched`,`archived`,`deleted`,`removed`,`parent_comment_id`,`parent_page_id`)
-					) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-SQL;
-
-				$db->query( $sql );
+				$source = dirname(__FILE__) . "/patch-create-comments_index.sql";
+				$db->sourceFile( $source );
 			}
 		}
 
@@ -317,7 +294,7 @@ SQL;
 	/**
 	 * get CommentsIndex object from row
 	 * @param array row
-	 * @return array comment 
+	 * @return array comment
 	 */
 	public static function newFromRow( $row ) {
 		$data = array(
@@ -343,7 +320,7 @@ SQL;
 
 	/**
 	 * get last revision id of the comment
-	 * @return integer 
+	 * @return integer
 	 */
 	protected function getArticleLastRevId() {
 		$article = F::build( 'Article', array($this->commentId), 'newFromID' );
@@ -352,7 +329,7 @@ SQL;
 
 	/**
 	 * update last child comment id of the parent comment
-	 * @param integer $lastChildCommentId 
+	 * @param integer $lastChildCommentId
 	 */
 	public function updateParentLastCommentId( $lastChildCommentId ) {
 		$this->wf->ProfileIn( __METHOD__ );
@@ -455,6 +432,29 @@ SQL;
 		}
 
 		$this->wf->ProfileOut( __METHOD__ );
+	}
+
+	/**
+	 * LoadExtensionSchemaUpdates handler; set up wikia_page_backlinks table on install/upgrade.
+	 *
+	 * @author Krzysztof Krzyżaniak (eloy) <eloy@wikia-inc.com>
+	 * @param $updater DatabaseUpdater
+	 * @return bool
+	 */
+	static public function onLoadExtensionSchemaUpdates( $updater = null ) {
+		$map = array(
+			'mysql' => 'patch-create-comments_index.sql',
+		);
+
+		$type = $updater->getDB()->getType();
+		if( isset( $map[$type] ) ) {
+			$sql = dirname( __FILE__ ) . "/" . $map[ $type ];
+			$updater->addExtensionTable( 'comments_index', $sql );
+		} else {
+			throw new MWException( "Comments extension does not currently support $type database." );
+		}
+		return true;
+
 	}
 
 }

@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS `comments_index` (
+CREATE TABLE IF NOT EXISTS /*$wgDBprefix*/comments_index (
   `parent_page_id` int(10) unsigned NOT NULL,
   `comment_id` int(10) unsigned NOT NULL,
   `parent_comment_id` int(10) unsigned NOT NULL DEFAULT '0',

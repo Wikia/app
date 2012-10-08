@@ -92,6 +92,10 @@ if (!empty($wgEnableWallEngine) || !empty($wgEnableArticleCommentsExt) || !empty
 
 	$wgHooks['BeforePageDisplay'][] = 'ArticleCommentsController::onBeforePageDisplay';
 	$wgHooks['SkinAfterContent'][] = 'ArticleCommentsController::onSkinAfterContent';
+
+	// comments_index table
+	$wgHooks['LoadExtensionSchemaUpdates'][] = 'CommentsIndex::onLoadExtensionSchemaUpdates';
+
 }
 
 //JSMEssages setup
