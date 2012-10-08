@@ -96,11 +96,6 @@ class AnyclipFeedIngester extends VideoFeedIngester {
 
 			$this->getTitleName( $clipData['titleName'], $clipData['videoId'] );
 
-			if ( stristr($clipData['titleName'], 'trailer') ) {
-				print "SKIP: Skipping trailer video: {$clipData['titleName']} ({$clipData['videoId']}).\n";
-				continue;
-			}
-
 			$clipData['published'] = $item->getElementsByTagName('pubDate')->item(0)->textContent;
 			$clipData['videoUrl'] = $item->getElementsByTagName('link')->item(0)->textContent;
 
@@ -164,8 +159,12 @@ class AnyclipFeedIngester extends VideoFeedIngester {
 		wfProfileIn( __METHOD__ );
 
 		$categories = !empty($addlCategories) ? $addlCategories : array();
-		$categories[] = 'AnyClips';
+		$categories[] = 'AnyClip';
 		$categories[] = 'Entertainment';
+		if ( stristr($data['titleName'], 'trailer') ) {
+			$categories[] = 'Trailers';
+		}
+
 		if ( isset($data['keywords']) && !empty($data['keywords']) ) {
 			$categories[] = $data['keywords'];
 		}
