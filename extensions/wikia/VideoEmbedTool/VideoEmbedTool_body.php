@@ -148,6 +148,11 @@ class VideoEmbedTool {
 			else {
 				if ( $isNonPremium ) {
 					header('X-screen-type: error');
+
+					if ( !empty(F::app()->wg->allowNonPremiumVideos) ) {
+						return $e->getMessage();
+					}
+
 					return wfMsg( 'videohandler-non-premium' );
 				}
 				header('X-screen-type: error');
