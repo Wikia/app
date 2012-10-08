@@ -16,10 +16,6 @@
 			.on('keypress.MessageTopic', '.message-topic-input', $.proxy(this.handleKeypress, this));
 	};
 	
-	var encodeSelection = function(value) {
-		return encodeURIComponent(value.replace(/ /g, '_'));
-	};
-	
 	MessageTopic.prototype = {
 		addSelection: function(selection) {
 			if(this.getTopics().length === this.inputMax) {
