@@ -265,7 +265,7 @@ public class ArticleCRUDTestsAdmin extends TestTemplate{
 		article.renameArticle(pageName, pageName+"moved");
 		article.verifyPageTitle(pageName+"moved");
 		article.verifyArticleText(articleText);
-		article.deleteArticle(pageName);
+		article.deleteArticle(pageName+"moved");
 		article.openArticle(pageName+"moved");
 		article.verifyDeletedArticlePage(pageName+"moved");
 		CommonFunctions.logOut(Properties.userNameStaff, driver);

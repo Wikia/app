@@ -371,7 +371,8 @@ public class WikiBasePageObject extends BasePageObject {
 		deleteCommentReasonField.sendKeys("QAReason");
 //		executeScript("document.querySelectorAll('#wpConfirmB')[0].click()");
 		deleteConfirmationButton.click();
-		waitForElementByXPath("//div[@class='msg' and contains(text(), '\""+atricleName+"\" has been deleted.')]");
+		String temp = atricleName.replace("_", " ");
+		waitForElementByXPath("//div[@class='msg' and contains(text(), '\""+temp+"\" has been deleted.')]");
 		
 	}
 	
