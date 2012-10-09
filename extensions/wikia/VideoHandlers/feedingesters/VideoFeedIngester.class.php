@@ -159,7 +159,7 @@ abstract class VideoFeedIngester {
 				$timeUnix = intval(wfTimestamp( TS_UNIX, $time ) );
 				$timeNow = intval(wfTimestamp( TS_UNIX, time() ) );
 				if($timeUnix + $ignoreRecent >= $timeNow) {
-					print "Recently uploaded, ignoring";
+					print "Recently uploaded, ignoring\n";
 					return 0;
 				}
 			}
