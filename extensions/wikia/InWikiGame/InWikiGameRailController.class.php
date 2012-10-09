@@ -12,6 +12,7 @@ class InWikiGameRailController extends WikiaController {
 	 * @desc The idea is to look for an element in WF variable and if it's there display the rail module with proper image and link
 	 */
 	public function executeIndex() {
+		$this->wg->out->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/InWikiGame/css/InWikiGameRail.scss'));
 		//once we agree about this solution and get assets we'll put it into WikiFactory
 		$fakeWikiFactoryArr = array(
 			175762 => array( //rotmg wiki id
