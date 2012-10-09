@@ -510,13 +510,18 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 	}
 
 	.follow {
+		@include opacity(70);
+		background-image: none;
+		display: block;
 		float: right;
+		margin-left: 5px;
 		min-width: 60px;
 		text-align: center;
-		opacity: 0.7;
-		display: block;
-		&:hover { opacity: 1; background-image: none; }
-		background-image: none;
+		&:hover { 
+			@include opacity(100);
+			background-image: none;
+		}
+		
 	}
 
 	.follow.secondary {
