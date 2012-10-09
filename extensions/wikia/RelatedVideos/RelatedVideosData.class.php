@@ -163,7 +163,10 @@ class RelatedVideosData {
 			return wfMsg('related-videos-error-permission-article');
 		}
 
-		$rvn = F::build('RelatedVideosNamespaceData', array($targetTitle), 'newFromTargetTitle');
+		$rvn = F::build('RelatedVideosNamespaceData', array(), 'newFromGeneralMessage');
+		if ( empty($rvn) ) {
+			$rvn = F::build('RelatedVideosNamespaceData', array(), 'createGlobalList');
+		}
 
 		// standardize format of title
 		$titleObj = F::build('Title', array($title), 'newFromText');
