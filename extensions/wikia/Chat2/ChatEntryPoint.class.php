@@ -26,7 +26,11 @@ class ChatEntryPoint {
 
 		$template->set('linkToSpecialChat', SpecialPage::getTitleFor("Chat")->escapeLocalUrl());
 
-		$html = $template->render( 'entryPointTag' );
+		if ( F::app()->checkSkin( 'oasis' ) ) {  
+			$html = $template->render( 'entryPointTag' );
+		} else {
+			$html = $template->render( 'entryPointTagMonobook' );
+		}
 
 		wfProfileOut( __METHOD__ );
 		return $html;
