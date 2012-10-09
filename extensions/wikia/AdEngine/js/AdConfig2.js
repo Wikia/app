@@ -113,7 +113,7 @@ var AdConfig2 = function (
 		if (highValueSlots[slotname]) {
 
 		// First ask GamePro (german lang wiki)
-		if (city_lang == 'de') {
+		if (city_lang === 'de') {
 			if (adProviderGamePro.canHandleSlot(slot)) {
 				return adProviderGamePro;
 			}
@@ -122,7 +122,7 @@ var AdConfig2 = function (
 		}
 
 		// Next Evolve (AU, CA, and NZ traffic)
-		if ( /* country == 'AU' || country == 'CA' || */ country == 'NZ') {
+		if (/* country === 'AU' || */ country === 'CA' || country === 'NZ') {
 			if (adProviderEvolve.canHandleSlot(slot)) {
 				return adProviderEvolve;
 			}
