@@ -269,27 +269,30 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	/**
 	 * Called in index action.
 	 * Based on an article match and various settings, generates tracking events and routes user to appropriate page.
-	 * @param WikiaSearchConfig $searchConfig
+	 * @see    WikiaSearchControllerTest::testArticleMatchTracking
+	 * @param  WikiaSearchConfig $searchConfig
 	 * @return boolean true (if not routed to search match page)
 	 */
 	private function handleArticleMatchTracking( WikiaSearchConfig $searchConfig ) {
-		$articleMatch = $searchConfig->getArticleMatch();
+		$articleMatch	=	$searchConfig->getArticleMatch();
+		$track			=	F::build( 'Track' );
+		
 		if ( !empty($articleMatch) && $this->getVal('fulltext', '0') === '0') {
 		
-		    $article = isset($articleMatch['redirect']) ? $articleMatch['redirect'] : $articleMatch['article'];
+		    $article = $articleMatch->getArticle();
 		    $title = $article->getTitle();
 		
-		    wfRunHooks( 'SpecialSearchIsgomatch', array( &$title, $searchConfig->getOriginalQuery() ) );
+		    $this->wf->RunHooks( 'SpecialSearchIsgomatch', array( &$title, $searchConfig->getOriginalQuery() ) );
 		
-		    Track::event( 'search_start_gomatch', array( 'sterm' => $searchConfig->getOriginalQuery(), 'rver' => 0 ) );
+		    $track->event( 'search_start_gomatch', array( 'sterm' => $searchConfig->getOriginalQuery(), 'rver' => 0 ) );
 		    $this->response->redirect( $title->getFullURL() );
 		}
-		elseif(!empty($articleMatch)) {
-		    Track::event( 'search_start_match', array( 'sterm' => $searchConfig->getOriginalQuery(), 'rver' => 0 ) );
+		elseif(! empty( $articleMatch ) ) {
+		    $track->event( 'search_start_match', array( 'sterm' => $searchConfig->getOriginalQuery(), 'rver' => 0 ) );
 		} else {
-		    $title = Title::newFromText( $searchConfig->getOriginalQuery() );
-		    if ( !is_null( $title ) ) {
-		        wfRunHooks( 'SpecialSearchNogomatch', array( &$title ) );
+		    $title = F::build( 'Title', array( $searchConfig->getOriginalQuery() ), 'newFromText');
+		    if ( $title !== null ) {
+		        $this->wf->RunHooks( 'SpecialSearchNogomatch', array( &$title ) );
 		    }
 		}
 		
