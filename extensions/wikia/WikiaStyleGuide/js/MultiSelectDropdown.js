@@ -24,8 +24,6 @@ Wikia.MultiSelectDropdown = $.createClass(Wikia.Dropdown, {
 		this.$checkboxes = this.getItems().find(':checkbox');
 		this.$footerToolbar = $('.WikiaFooter .toolbar');
 
-		this.$checkboxes.on('change.' + this.settings.eventNamespace, this.proxy(this.onChange));
-
 		this.updateDropdownHeight();
 		this.updateSelectedItemsList();
 
