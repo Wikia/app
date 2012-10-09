@@ -577,9 +577,9 @@ class WallExternalController extends WikiaController {
 			$convertToFormat = $this->request->getVal('convertToFormat', '');
 			
 			if($convertToFormat == 'wikitext') {
-				$markup = '<div class="quote">' . wfMsgForContent('wall-quote-author', $username) . "\n" . $mw->getRawText() . "</div>\n";
+				$markup = '<div class="quote">' . "\n" . wfMsgForContent('wall-quote-author', $username) . "\n" . $mw->getRawText() . "\n</div>\n";
 			} else {
-				$markup = $this->getConvertedContent('<div class="quote">' . wfMsgForContent('wall-quote-author', $username) . "<br>" . $mw->getRawText() . '</div><br>');
+				$markup = $this->getConvertedContent('<div class="quote">' . wfMsgForContent('wall-quote-author', $username) . "<br>" . $mw->getRawText() . "\n</div><br>");
 			}
 
 			$status = 'success';
