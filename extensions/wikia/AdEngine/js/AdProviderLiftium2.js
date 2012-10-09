@@ -1,4 +1,4 @@
-var AdProviderLiftium2 = function (scriptWriter, WikiaTracker, log, window) {
+var AdProviderLiftium2 = function (scriptWriter, WikiaTracker, log, window, slotTweaker) {
 	'use strict';
 
 	var log_group = 'AdProviderLiftium2'
@@ -64,8 +64,7 @@ var AdProviderLiftium2 = function (scriptWriter, WikiaTracker, log, window) {
 
 		var script = getLiftiumCallScript(slot[0], slot[1]);
 		scriptWriter.injectScriptByText(slot[0], script, function() {
-			// TODO un-comment this
-			//window.AdDriver.adjustSlotDisplay(slotname);
+			slotTweaker.removeDefaultHeight(slot[0]);
 		});
 	};
 

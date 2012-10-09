@@ -29,7 +29,9 @@
 
 	adProviderAdDriver = AdProviderAdDriver(log, window);
 	adProviderAdDriver2Helper = AdProviderAdDriver2Helper(log, window, Cookies);
-	adProviderAdDriver2 = AdProviderAdDriver2(adProviderAdDriver2Helper, wikiaDart, scriptWriter, WikiaTracker, log, window, Geo);
+	adProviderAdDriver2 = AdProviderAdDriver2(
+		adProviderAdDriver2Helper, wikiaDart, scriptWriter, WikiaTracker, log, window, Geo, slotTweaker
+	);
 	adProviderEvolve = AdProviderEvolve(scriptWriter, WikiaTracker, log, window, document, Krux);
 	adProviderEvolveRS = AdProviderEvolveRS(scriptWriter, WikiaTracker, log, window, document);
 	adProviderGamePro = AdProviderGamePro(scriptWriter, WikiaTracker, log, window, document);

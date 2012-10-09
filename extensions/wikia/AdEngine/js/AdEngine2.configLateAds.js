@@ -26,10 +26,12 @@
 	wikiaDart = WikiaDartHelper(log, window, document, Geo);
 
 	adProviderAdDriver2Helper = AdProviderAdDriver2Helper(log, window, Cookies);
-	adProviderAdDriver2 = AdProviderAdDriver2(adProviderAdDriver2Helper, wikiaDart, scriptWriter, WikiaTracker, log, window, Geo);
+	adProviderAdDriver2 = AdProviderAdDriver2(
+		adProviderAdDriver2Helper, wikiaDart, scriptWriter, WikiaTracker, log, window, Geo, slotTweaker
+	);
 	adProviderGamePro = AdProviderGamePro(scriptWriter, WikiaTracker, log, window, document);
-	adProviderLiftium2 = AdProviderLiftium2(scriptWriter, WikiaTracker, log, window);
-	adProviderLiftium2Dom = AdProviderLiftium2Dom(WikiaTracker, log, document);
+	adProviderLiftium2 = AdProviderLiftium2(scriptWriter, WikiaTracker, log, window, slotTweaker);
+	adProviderLiftium2Dom = AdProviderLiftium2Dom(WikiaTracker, log, document, slotTweaker);
 
 	adConfig = AdConfig2Late(
 		log, window

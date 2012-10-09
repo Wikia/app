@@ -1,4 +1,4 @@
-var AdProviderLiftium2Dom = function (WikiaTracker, log, document) {
+var AdProviderLiftium2Dom = function (WikiaTracker, log, document, slotTweaker) {
 	'use strict';
 
 	var log_group = 'AdProviderLiftium2'
@@ -74,6 +74,7 @@ var AdProviderLiftium2Dom = function (WikiaTracker, log, document) {
 
 		LiftiumOptions.placement = slotname;
 		Liftium.callInjectedIframeAd(size, document.getElementById(slotname + '_iframe'));
+		slotTweaker.removeDefaultHeight(slotname);
 	};
 
 	return {

@@ -1,4 +1,4 @@
-var AdProviderAdDriver2 = function (helper, WikiaDart, ScriptWriter, WikiaTracker, log, window, Geo) {
+var AdProviderAdDriver2 = function (helper, WikiaDart, ScriptWriter, WikiaTracker, log, window, Geo, slotTweaker) {
 	var slotMap = {
 		'HOME_TOP_LEADERBOARD':{'tile':2, 'size':'728x90,468x60,980x130,980x65', 'loc':'top', 'dcopt':'ist'},
 		'HOME_TOP_RIGHT_BOXAD':{'tile':1, 'size':'300x250,300x600', 'loc':'top'},
@@ -29,41 +29,44 @@ var AdProviderAdDriver2 = function (helper, WikiaDart, ScriptWriter, WikiaTracke
 		log('fillInSlot', 5, 'AdProviderAdDriver2');
 		log(slot, 5, 'AdProviderAdDriver2');
 
+		var slotname = slot[0];
+
 		if (helper.AdDriver_isLastDARTCallNoAd(slot[0]) && helper.AdDriver_getNumDARTCall(slot[0]) >= helper.AdDriver_getMinNumDARTCall(Geo.getCountryCode())) {
 			log('last call no ad && reached # of calls for this geo', 5, 'AdProviderAdDriver2');
-			window.adslots2.push([slot[0], slot[1], 'Liftium2', slot[3]]);
+			window.adslots2.push([slotname, slot[1], 'Liftium2', slot[3]]);
 			return;
 		}
 
-		slot[1] = slotMap[slot[0]].size || slot[1];
-		log([slot[0], slot[1]], 7, 'AdProviderAdDriver2');
+		slot[1] = slotMap[slotname].size || slot[1];
+		log([slotname, slot[1]], 7, 'AdProviderAdDriver2');
 
 		// increment number of pageviews
-		helper.AdDriver_incrementNumAllCall(slot[0]);
+		helper.AdDriver_incrementNumAllCall(slotname);
 
-		WikiaTracker.trackAdEvent('liftium.slot2', {'ga_category':'slot2/' + slot[1], 'ga_action':slot[0], 'ga_label':'addriver2'}, 'ga');
+		WikiaTracker.trackAdEvent('liftium.slot2', {'ga_category':'slot2/' + slot[1], 'ga_action':slotname, 'ga_label':'addriver2'}, 'ga');
 
-		slotTimer2[slot[0]] = new Date().getTime();
-		log('slotTimer2 start for ' + slot[0], 7, 'AdProviderAdDriver2');
+		slotTimer2[slotname] = new Date().getTime();
+		log('slotTimer2 start for ' + slotname, 7, 'AdProviderAdDriver2');
 
-		helper.AdDriver_incrementNumDARTCall(slot[0]);
-		helper.AdDriver_setLastDARTCallNoAd(slot[0], null);
+		helper.AdDriver_incrementNumDARTCall(slotname);
+		helper.AdDriver_setLastDARTCallNoAd(slotname, null);
 
-		var url = WikiaDart.AdConfig_DART_getUrl(slot[0], slot[1], false, 'AdDriver');
+		var url = WikiaDart.AdConfig_DART_getUrl(slotname, slot[1], false, 'AdDriver');
 		ScriptWriter.injectScriptByUrl(
-			slot[0], url,
+			slotname, url,
 			function() {
 
 				// TODO switch to addriver2_hop
-				if (typeof(window.adDriverLastDARTCallNoAds[slot[0]]) == 'undefined' || !window.adDriverLastDARTCallNoAds[slot[0]]) {
-					log(slot[0] + ' was filled by DART', 5, 'AdProviderAdDriver2');
+				if (typeof(window.adDriverLastDARTCallNoAds[slotname]) == 'undefined' || !window.adDriverLastDARTCallNoAds[slotname]) {
+					log(slotname + ' was filled by DART', 5, 'AdProviderAdDriver2');
+					slotTweaker.removeDefaultHeight(slotname);
 					//AdDriver.adjustSlotDisplay(AdDriverDelayedLoader.currentAd.slotname);
 				}
 				else {
-					log(slot[0] + ' was not filled by DART', 2, 'AdProviderAdDriver2');
-					helper.AdDriver_setLastDARTCallNoAd(slot[0], window.wgNow.getTime());
+					log(slotname + ' was not filled by DART', 2, 'AdProviderAdDriver2');
+					helper.AdDriver_setLastDARTCallNoAd(slotname, window.wgNow.getTime());
 
-					hop(slot[0]);
+					hop(slotname);
 				}
 
 
