@@ -61,7 +61,7 @@ public class HubBasePageObject extends BasePageObject{
 	@FindBy(css="div.top-wikis-content") 
 	private WebElement topWikisModule;
 		
-	By MosaicSliderLargeImageDescription = By.cssSelector("div.wikia-mosaic-slider-description span.description-more");
+	By MosaicSliderLargeImageDescription = By.cssSelector("div.wikia-mosaic-slider-description span.image-description b");
 	By NewsTabsList = By.cssSelector("div.tabbertab");
 	By RelatedVideosList = By.cssSelector("div.wikiahubs-popular-videos div.container div.item");
 	By FromCommunityImagesList = By.cssSelector("ul.wikiahubs-ftc-list div img");
