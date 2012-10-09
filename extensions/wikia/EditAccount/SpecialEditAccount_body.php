@@ -355,6 +355,8 @@ class EditAccount extends SpecialPage {
 			$this->mUser->setOption( 'disabled', 1 );
 			// BugId:18085 - setting a new token causes the user to be logged out.
 			$this->mUser->setToken( md5( microtime() . mt_rand( 0, 0x7fffffff ) ) );
+			// Need to save these additional changes
+			$this->mUser->saveSettings();
 
 
 			// Log what was done
