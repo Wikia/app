@@ -184,18 +184,19 @@ class WikiaSearchConfigTest extends WikiaSearchBaseTest {
 		$noNsQuery			= 'foo';
 		$nsQuery			= 'File:foo';
 		
-		$searchEngineMock	= $this->getMock( 'stdClass', array( 'DefaultNamespaces' ), array(), 'SearchEngine' );
+		$searchEngineMock	= $this->getMock( 'SearchEngine', array( 'DefaultNamespaces' ), array() );
 
 		$expectedDefaultNamespaces = array( NS_MAIN );
 		
 		$searchEngineMock
-			->expects	( $this->any() )
-			->method	( 'DefaultNamespaces' )
-			->will		( $this->returnValue( $expectedDefaultNamespaces ) )
+			->staticExpects	( $this->any() )
+			->method		( 'DefaultNamespaces' )
+			->will			( $this->returnValue( $expectedDefaultNamespaces ) )
 		;
 		
 		$this->mockClass( 'SearchEngine',	$searchEngineMock );
 		$this->mockApp();
+		F::setInstance( 'SearchEngine', $searchEngineMock );
 		
 		$originalNamespaces = $config->getNamespaces();
 		$this->assertEquals(
