@@ -50,6 +50,10 @@ Wikia.MultiSelectDropdown = $.createClass(Wikia.Dropdown, {
 	everythingSelected: function() {
 		return this.getItems().length == this.getSelectedItems().length;
 	},
+	
+	getSelectedItems: function() {
+		return this.$dropdown.find(':checked:not(.select-all)');
+	},
 
 	selectAll: function(event) {
 		var checked = this.$selectAll.removeClass('modified').is(':checked');
