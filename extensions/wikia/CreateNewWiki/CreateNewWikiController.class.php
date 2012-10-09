@@ -168,7 +168,7 @@ class CreateNewWikiController extends WikiaController {
 
 			// check if user created more wikis than we allow per day
 			$numWikis = $this->countCreatedWikis($wgUser->getId());
-			if($numWikis >= self::DAILY_USER_LIMIT && $wgUser->isPingLimitable() ) {
+			if($numWikis >= self::DAILY_USER_LIMIT && $wgUser->isPingLimitable() && !$wgUser->isAllowed( 'createwikilimitsexempt' ) ) {
 				$this->status = 'wikilimit';
 				$this->statusMsg = $this->app->runFunction('wfMsgExt', 'cnw-error-wiki-limit', array( 'parsemag' ), self::DAILY_USER_LIMIT);
 				$this->statusHeader = $this->app->runFunction('wfMsg', 'cnw-error-wiki-limit-header');
