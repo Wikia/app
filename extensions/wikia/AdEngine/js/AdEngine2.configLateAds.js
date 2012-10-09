@@ -13,12 +13,15 @@
 		, adProviderGamePro
 		, adProviderLiftium2
 		, adProviderLiftium2Dom
+		, slotTweaker
 		, adProviderNull
 	;
 
 	scriptWriter = ScriptWriter(log, ghostwriter, document);
+	slotTweaker = SlotTweaker(log, document);
+
 	// TODO: ad provider error
-	adProviderNull = AdProviderNull(log);
+	adProviderNull = AdProviderNull(log, slotTweaker);
 
 	wikiaDart = WikiaDartHelper(log, window, document, Geo);
 

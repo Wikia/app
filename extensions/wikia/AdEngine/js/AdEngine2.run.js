@@ -13,6 +13,7 @@
 		, adProviderLater
 		, adProviderNull
 		, adSlotsQueue
+		, slotTweaker
 		, lazyQueue = LazyQueue()
 
 		, queueForLateAds
@@ -22,6 +23,7 @@
 	adEngine = AdEngine2(log, lazyQueue);
 
 	// Construct Ad Providers
+	slotTweaker = SlotTweaker(log, document);
 	scriptWriter = ScriptWriter(log, ghostwriter, document);
 	wikiaDart = WikiaDartHelper(log, window, document, Geo, Krux);
 
@@ -31,7 +33,7 @@
 	adProviderEvolve = AdProviderEvolve(scriptWriter, WikiaTracker, log, window, document, Krux);
 	adProviderEvolveRS = AdProviderEvolveRS(scriptWriter, WikiaTracker, log, window, document);
 	adProviderGamePro = AdProviderGamePro(scriptWriter, WikiaTracker, log, window, document);
-	adProviderNull = AdProviderNull(log);
+	adProviderNull = AdProviderNull(log, slotTweaker);
 
 	// Special Ad Provider, to deal with the late ads
 	queueForLateAds = [];
