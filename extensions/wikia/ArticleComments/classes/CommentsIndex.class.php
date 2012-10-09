@@ -435,7 +435,7 @@ SQL;
 	}
 
 	/**
-	 * LoadExtensionSchemaUpdates handler; set up wikia_page_backlinks table on install/upgrade.
+	 * LoadExtensionSchemaUpdates handler; set up comments_index table on install/upgrade.
 	 *
 	 * @author Krzysztof Krzyżaniak (eloy) <eloy@wikia-inc.com>
 	 * @param $updater DatabaseUpdater
