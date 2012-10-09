@@ -1,13 +1,12 @@
-if (window.wgEnableKruxTargeting) {
-	// krux ad targeting. must come before dart urls are constructed
-	window.Krux||((Krux=function(){Krux.q.push(arguments)}).q=[]);
-	Krux.load = function(confid){
-		var k=document.createElement('script');k.type='text/javascript';k.async=true;var m,src=(m=location.href.match(/\bkxsrc=([^&]+)\b/))&&decodeURIComponent(m[1]);
-		k.src=src||(location.protocol==='https:'?'https:':'http:')+'//cdn.krxd.net/controltag?confid='+confid;
-		var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(k,s);
-	};
+// krux ad targeting. must come before dart urls are constructed
+window.Krux||((Krux=function(){Krux.q.push(arguments)}).q=[]);
+Krux.load = function(confid){
+	var k=document.createElement('script');k.type='text/javascript';k.async=true;var m,src=(m=location.href.match(/\bkxsrc=([^&]+)\b/))&&decodeURIComponent(m[1]);
+	k.src=src||(location.protocol==='https:'?'https:':'http:')+'//cdn.krxd.net/controltag?confid='+confid;
+	var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(k,s);
+};
 
-	window.Krux||((Krux=function(){Krux.q.push(arguments);}).q=[]);
+if (window.wgEnableKruxTargeting) {
 	(function(){
 		function retrieve(n){
 			var m, k='kx'+n;
@@ -31,4 +30,6 @@ if (window.wgEnableKruxTargeting) {
 		}
 		Krux.dartKeyValues = kvs.length ? kvs.join(';') + ';': '';
 	})();
+} else {
+	Krux.dartKeyValues = '';
 }

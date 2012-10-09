@@ -1,4 +1,4 @@
-var WikiaDartHelper = function (log, window, document, Geo) {
+var WikiaDartHelper = function (log, window, document, Geo, Krux) {
 
 	// TODO refactor...
 	// AdConfig.DART c&p begin
@@ -60,7 +60,7 @@ loc=top;                          dcopt=ist;mtfIFPath=/extensions/wikia/AdEngine
 			getLanguage() +
 			getResolution() +
 			getPrefooterStatus() + // TODO FIXME just height
-			(window.wgEnableKruxTargeting && window.Krux && window.Krux.dartKeyValues ? rebuildKruxKV(window.Krux.dartKeyValues) : '') + // TODO FIXME missing
+			(Krux.dartKeyValues ? rebuildKruxKV(Krux.dartKeyValues) : '') +
 			getImpressionCount(slotname) + // TODO remove missing
 			getPartnerKeywords() + // TODO remove missing
 			getCategories() + // TODO FIXME missing in adsinhead

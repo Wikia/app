@@ -1,4 +1,4 @@
-var AdProviderEvolve = function (ScriptWriter, WikiaTracker, log, window, document) {
+var AdProviderEvolve = function (ScriptWriter, WikiaTracker, log, window, document, Krux) {
 	var slotMap = {
 		'HOME_TOP_LEADERBOARD':{'tile':1, 'size':'728x90', 'dcopt':'ist'},
 		'HOME_TOP_RIGHT_BOXAD':{'tile':2, 'size':'300x250,300x600'},
@@ -127,8 +127,9 @@ var AdProviderEvolve = function (ScriptWriter, WikiaTracker, log, window, docume
 	function WikiaDartHelper_getKruxKV() {
 		log('WikiaDartHelper_getKruxKV', 5, 'AdProviderEvolve');
 
-		if (window.wgEnableKruxTargeting && window.Krux && window.Krux.dartKeyValues) {
-			var kv = window.Krux.dartKeyValues;
+		var kv = Krux.dartKeyValues;
+
+		if (kv) {
 			kv = kv.substr(0, kvStrMaxLength);
 			kv = kv.replace(/;[^;]*$/, ';');
 

@@ -15,10 +15,11 @@ test('sanitizeSlotname', function() {
 		, scriptWriterMock
 		, windowMock = {wgInsideUnitTest: true}
 		, documentMock
+		, kruxMock = {}
 		, adProviderEvolve;
 
 	adProviderEvolve = AdProviderEvolve(
-		scriptWriterMock, wikiaTrackerMock, logMock, windowMock, documentMock
+		scriptWriterMock, wikiaTrackerMock, logMock, windowMock, documentMock, kruxMock
 	);
 
     equal(adProviderEvolve.sanitizeSlotname('foo'), '', 'foo');
@@ -32,10 +33,11 @@ test('getUrl', function() {
 		, scriptWriterMock
 		, windowMock = {wgInsideUnitTest: true}
 		, documentMock
+		, kruxMock = {}
 		, adProviderEvolve;
 
 	adProviderEvolve = AdProviderEvolve(
-		scriptWriterMock, wikiaTrackerMock, logMock, windowMock, documentMock
+		scriptWriterMock, wikiaTrackerMock, logMock, windowMock, documentMock, kruxMock
 	);
 
 	windowMock.wgDBname = null;
@@ -57,10 +59,11 @@ test('getSect', function() {
 		, scriptWriterMock
 		, windowMock = {wgInsideUnitTest: true}
 		, documentMock
+		, kruxMock = {}
 		, adProviderEvolve;
 
 	adProviderEvolve = AdProviderEvolve(
-		scriptWriterMock, wikiaTrackerMock, logMock, windowMock, documentMock
+		scriptWriterMock, wikiaTrackerMock, logMock, windowMock, documentMock, kruxMock
 	);
 
 	windowMock.wgDBname = null;
@@ -91,10 +94,11 @@ test('Evolve canHandleSlot AU', function() {
 		, logMock = function() {}
 		, scriptWriterMock
 		, documentMock
+		, kruxMock = {}
 		, adProviderEvolve;
 
 	adProviderEvolve = AdProviderEvolve(
-		scriptWriterMock, wikiaTrackerMock, logMock, window, documentMock
+		scriptWriterMock, wikiaTrackerMock, logMock, window, documentMock, kruxMock
 	);
 
 	equal(adProviderEvolve.canHandleSlot(['TOP_LEADERBOARD']), true, 'TOP_LEADERBOARD');

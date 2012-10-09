@@ -1,4 +1,4 @@
-(function(log, WikiaTracker, window, ghostwriter, document, Geo, LazyQueue, Cookies) {
+(function(log, WikiaTracker, window, ghostwriter, document, Geo, LazyQueue, Cookies, Krux) {
 	var module = 'AdEngine2.run'
 		, adConfig
 		, adEngine
@@ -23,12 +23,12 @@
 
 	// Construct Ad Providers
 	scriptWriter = ScriptWriter(log, ghostwriter, document);
-	wikiaDart = WikiaDartHelper(log, window, document, Geo);
+	wikiaDart = WikiaDartHelper(log, window, document, Geo, Krux);
 
 	adProviderAdDriver = AdProviderAdDriver(log, window);
 	adProviderAdDriver2Helper = AdProviderAdDriver2Helper(log, window, Cookies);
 	adProviderAdDriver2 = AdProviderAdDriver2(adProviderAdDriver2Helper, wikiaDart, scriptWriter, WikiaTracker, log, window, Geo);
-	adProviderEvolve = AdProviderEvolve(scriptWriter, WikiaTracker, log, window, document);
+	adProviderEvolve = AdProviderEvolve(scriptWriter, WikiaTracker, log, window, document, Krux);
 	adProviderEvolveRS = AdProviderEvolveRS(scriptWriter, WikiaTracker, log, window, document);
 	adProviderGamePro = AdProviderGamePro(scriptWriter, WikiaTracker, log, window, document);
 	adProviderNull = AdProviderNull(log);
@@ -97,4 +97,4 @@
 		}
 	};
 
-}(Wikia.log, WikiaTracker, window, ghostwriter, document, Geo, LazyQueue, Wikia.Cookies));
+}(Wikia.log, WikiaTracker, window, ghostwriter, document, Geo, LazyQueue, Wikia.Cookies, Krux));

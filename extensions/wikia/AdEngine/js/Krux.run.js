@@ -1,4 +1,4 @@
-if (window.wgEnableKruxTargeting && window.Krux) {
+if (window.wgEnableKruxTargeting) {
 	$(function() {
 		window.AdEngine_loadKruxLater(Krux);
 	});
