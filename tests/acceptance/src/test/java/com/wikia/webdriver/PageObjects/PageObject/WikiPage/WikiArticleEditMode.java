@@ -77,7 +77,7 @@ public class WikiArticleEditMode extends WikiArticlePageObject {
 	private By captionInPreview = By.cssSelector("section.modalWrapper.preview section.modalContent figcaption");
 	private By removePhotoDialog = By.cssSelector("section.modalWrapper.RTEModal");
 	private By imageOnArticleEditMode = By.cssSelector("div.WikiaArticle figure a img");
-	private By videoOnArticleEditMode = By.cssSelector("img..video");
+	private By videoOnArticleEditMode = By.cssSelector("img.video");
 	private By slideShowOnArticleEditMode = By.cssSelector("img.image-slideshow");
 	private By sliderOnArticleEditMode = By.cssSelector("img.image-gallery-slider");
 	private By galleryDialogPhotosList = By.cssSelector("ul.WikiaPhotoGalleryResults li input");
