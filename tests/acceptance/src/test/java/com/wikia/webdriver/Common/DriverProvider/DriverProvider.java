@@ -98,19 +98,12 @@ public class DriverProvider {
 		}
 			
 		
-		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-		try
-		{			
-			if (!Global.BROWSER.equals("CHROME"))
-			{
-				driver.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);
-			}
-			driver.manage().timeouts().setScriptTimeout(30, TimeUnit.SECONDS);
-		}
-		catch (TimeoutException e)
+		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);			
+		if (!Global.BROWSER.equals("CHROME"))
 		{
-			PageObjectLogging.log("Page load timeout", "Page was loading for over 30 seconds", true);
+			driver.manage().timeouts().pageLoadTimeout(15, TimeUnit.SECONDS);
 		}
+		driver.manage().timeouts().setScriptTimeout(30, TimeUnit.SECONDS);
 		return instance;
 	}
 	

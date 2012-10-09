@@ -2,8 +2,14 @@ package com.wikia.webdriver.Common.Properties;
 
 import java.io.File;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.htmlunit.HtmlUnitDriver;
+
 import com.wikia.webdriver.Common.Core.Global;
 import com.wikia.webdriver.Common.Core.XMLFunctions;
+import com.wikia.webdriver.Common.Logging.PageObjectLogging;
 
 public class Properties {
 
@@ -83,6 +89,7 @@ public class Properties {
 		{
 			setPropertiesManually();
 		}		
+		getWikiVersion();
 		setVariables();
 	}
 	
@@ -99,10 +106,19 @@ public class Properties {
 	private static void setPropertiesManually()
 	{
 		Global.BROWSER = "FF";
-		Global.DOMAIN = "http://preview.mediawiki119.wikia.com/";
-		Global.LIVE_DOMAIN = "http://preview.www.wikia.com/";
+		Global.DOMAIN = "http://mediawiki119.wikia.com/";
+		Global.LIVE_DOMAIN = "http://www.wikia.com/";
 		Global.CONFIG_FILE = new File("c:"+File.separator+"wikia-qa"+File.separator+"config.xml");
 		Global.CAPTCHA_FILE = new File("c:"+File.separator+"wikia-qa"+File.separator+"captcha.txt");
 		Global.LOG_VERBOSE = 2;
+	}
+	
+	private static void getWikiVersion()
+	{
+		WebDriver versionDriver = new HtmlUnitDriver();
+		versionDriver.get(Global.DOMAIN+"wiki/Special:Version");
+		WebElement versionTable = versionDriver.findElement(By.xpath("//td[contains(text(), 'Code')]"));
+		Global.WIKI_VERSION = versionTable.getText();
+		versionDriver.close();
 	}
 }
