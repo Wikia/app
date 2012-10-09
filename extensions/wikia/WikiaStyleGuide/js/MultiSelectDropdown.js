@@ -123,7 +123,7 @@ Wikia.MultiSelectDropdown = $.createClass(Wikia.Dropdown, {
 
 	getSelectedValues: function() {
 		return this.getSelectedItems().map(function() {
-			return $(this).find(':checked').val();
+			return $(this).val();
 		}).get();
 	},
 
