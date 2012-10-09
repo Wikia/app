@@ -6,6 +6,7 @@
  */
 
 $wgHooks['ImagePageAfterImageLinks'][] = 'efImageReviewDisplayStatus';
+$wgGroupPermissions['staff']['imagereviewstats'] = true;
 
 function efImageReviewDisplayStatus( $imagePage, &$html ) {
 	global $wgCityId, $wgExternalDatawareDB, $wgUser;
