@@ -37,9 +37,15 @@ var RelatedVideos = {
 			this.onRightRail = true;
 			this.totalVideos = window.RelatedVideosIds.length;
 			this.rvContainer.on('click', '.remove', this.removeVideoLoginWrapper);
-			this.rvContainer.on('mouseenter mouseleave', '.video-thumbnail, .remove', function() {
-				$(this).parent().find('.remove').toggle();
-			});
+			this.rvContainer.on({
+				'mouseenter': function() {
+					// Note: can't use .toggle() here due to IE bug when hovering while deleting
+					$(this).parent().find('.remove').show();
+				},
+				'mouseleave': function() {
+					$(this).parent().find('.remove').hide();				
+				}
+			}, '.video-thumbnail, .remove');
 		} else {
 			// Hubs
 			this.totalVideos = this.loadedCount;		
@@ -342,7 +348,7 @@ var RelatedVideos = {
 		var numberItems = this.totalVideos;
 		
 		// Account for placeholder item
-		if(!this.seeMorePlaceholderAdded && this.onRightRail) {
+		if(this.onRightRail) {
 			numberItems += 1;
 		}
 
