@@ -24,7 +24,7 @@ class WallBaseController extends WikiaController{
 		$this->response->addAsset('extensions/wikia/Wall/css/MessageTopic.scss');	// need to load on thread only
 
 		// Load MiniEditor assets, if enabled
-		if ($this->wg->EnableMiniEditorExtForWall ) {
+		if ($this->wg->EnableMiniEditorExtForWall &&  F::app()->checkSkin( 'oasis' )) {
 			$this->sendRequest('MiniEditor', 'loadAssets', array(
 				'additionalAssets' => array(
 					'wall_mini_editor_js',
