@@ -19,6 +19,7 @@ public class CustomizeToolbarTests extends TestTemplate{
 		WikiBasePageObject wiki = new WikiBasePageObject(driver, Global.DOMAIN);
 		WikiArticlePageObject article = wiki.OpenArticle(wikiArticle);
 		CommonFunctions.logIn(Properties.userName2, Properties.password2);
+		article.executeScript("$('div#WikiaBarWrapper').attr('class', 'WikiaBarWrapper')");
 		article.customizeToolbar_ClickCustomize();
 		article.customizeToolbar_ClickOnResetDefaults();
 		article.customizeToolbar_TypeIntoFindATool("e");
@@ -36,6 +37,7 @@ public class CustomizeToolbarTests extends TestTemplate{
 		WikiBasePageObject wiki = new WikiBasePageObject(driver, Global.DOMAIN);
 		WikiArticlePageObject article = wiki.OpenArticle(wikiArticle);
 		CommonFunctions.logIn(Properties.userName2, Properties.password2);
+		article.executeScript("$('div#WikiaBarWrapper').attr('class', 'WikiaBarWrapper')");
 		article.customizeToolbar_ClickCustomize();
 		article.customizeToolbar_ClickOnResetDefaults();
 		article.customizeToolbar_TypeIntoFindATool("e");
@@ -75,6 +77,7 @@ public class CustomizeToolbarTests extends TestTemplate{
 		WikiBasePageObject wiki = new WikiBasePageObject(driver, Global.DOMAIN);
 		WikiArticlePageObject article = wiki.OpenArticle(wikiArticle);
 		CommonFunctions.logIn(Properties.userName2, Properties.password2);
+		article.executeScript("$('div#WikiaBarWrapper').attr('class', 'WikiaBarWrapper')");
 		article.customizeToolbar_ClickCustomize();
 		article.customizeToolbar_ClickOnResetDefaults();
 		article.customizeToolbar_TypeIntoFindATool("e");
@@ -93,6 +96,7 @@ public class CustomizeToolbarTests extends TestTemplate{
 		WikiBasePageObject wiki = new WikiBasePageObject(driver, Global.DOMAIN);
 		WikiArticlePageObject article = wiki.OpenArticle(wikiArticle);
 		CommonFunctions.logIn(Properties.userName2, Properties.password2);
+		article.executeScript("$('div#WikiaBarWrapper').attr('class', 'WikiaBarWrapper')");
 		article.customizeToolbar_ClickCustomize();
 		article.customizeToolbar_ClickOnResetDefaults();
 		article.customizeToolbar_TypeIntoFindATool("Up");
@@ -109,6 +113,7 @@ public class CustomizeToolbarTests extends TestTemplate{
 		WikiBasePageObject wiki = new WikiBasePageObject(driver, Global.DOMAIN);
 		WikiArticlePageObject article = wiki.OpenArticle(wikiArticle);
 		CommonFunctions.logIn(Properties.userName2, Properties.password2);
+		article.executeScript("$('div#WikiaBarWrapper').attr('class', 'WikiaBarWrapper')");
 		article.customizeToolbar_ClickCustomize();
 		article.customizeToolbar_ClickOnResetDefaults();
 		article.customizeToolbar_TypeIntoFindATool("Up");
@@ -130,6 +135,7 @@ public class CustomizeToolbarTests extends TestTemplate{
 		WikiBasePageObject wiki = new WikiBasePageObject(driver, Global.DOMAIN);
 		WikiArticlePageObject article = wiki.OpenArticle(wikiArticle);
 		CommonFunctions.logIn(Properties.userName2, Properties.password2);
+		article.executeScript("$('div#WikiaBarWrapper').attr('class', 'WikiaBarWrapper')");
 		article.customizeToolbar_UnfollowIfPageIsFollowed();
 		article.customizeToolbar_VerifyToolOnToolbar("Follow");
 		article.customizeToolbar_ClickOnTool("follow");
