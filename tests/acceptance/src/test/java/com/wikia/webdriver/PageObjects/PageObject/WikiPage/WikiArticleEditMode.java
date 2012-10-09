@@ -506,6 +506,7 @@ public class WikiArticleEditMode extends WikiArticlePageObject {
 	 * @param n n = parameter determining how many inputs the method should check
 	 * 	 */
 	public void galleryCheckImageInputs(int n) {
+		driver.findElement(galleryDialogPhotosList);
 		List<WebElement> List = driver.findElements(galleryDialogPhotosList);
 		for (int i = 0; i < n; i++) {
 			List.get(i).click();
