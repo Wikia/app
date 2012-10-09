@@ -72,6 +72,7 @@ public class SpecialNewFilesPageObject extends WikiBasePageObject{
 	}
 
 	public void waitForFile(String FileName) {
+		driver.navigate().refresh();
 		waitForValueToBePresentInElementsAttributeByCss(WikiaPreviewImgCssSelector, "src", FileName);
 		PageObjectLogging.log("waitForFile", "Verify if "+FileName+" has been succesfully uploaded", true, driver);
 
