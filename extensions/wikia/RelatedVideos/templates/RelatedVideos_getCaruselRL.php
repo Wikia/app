@@ -4,9 +4,6 @@
 	<h1><?= wfMsg('related-videos-tally'); ?></h1>
 	<div class="deleteConfirm messageHolder"><?=wfMsg('related-videos-remove-confirm');?></div>
 	<div class="removingProcess messageHolder"><?=wfMsg('related-videos-remove-call');?></div>
-	<!--div class="addVideoTooltip messageHolder"><?=wfMsg('related-videos-tooltip-add');?></div-->
-	<div class="removeVideoTooltip messageHolder"><?=wfMsg('related-videos-tooltip-remove');?></div>
-	<div class="embedCodeTooltip messageHolder"><?=wfMsg('related-videos-tooltip-embed');?></div>
 	<div class="errorWhileLoading messageHolder"><?=wfMsg('videos-error-while-loading');?></div>
 	<div class="RVHeader">
 		<div class="tally">

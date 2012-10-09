@@ -20,7 +20,7 @@ var RelatedVideos = {
 	init: function(relatedVideosModule) {
 		// DOM caching
 		this.rvModule = $(relatedVideosModule);
-		this.rvContainer = $('.container',this.rvModule);
+		this.rvContainer = $('.container', this.rvModule);
 		this.rvScrollRight = $('.scrollright', this.rvModule);
 		this.rvScrollLeft = $('.scrollleft', this.rvModule);
 		this.rvPage = $('.page', this.rvModule);
@@ -28,13 +28,20 @@ var RelatedVideos = {
 		this.rvTallyCount = $('.tally em', this.rvModule);
 		this.rvNoVideos = $('.novideos', this.rvModule);
 
+		// If we're lazy loading, loaded count will not equal the total number of videos to be shown
+		// Cache the number loaded on init
 		this.loadedCount = $('.item', this.rvModule).length;
 		
 		if ( this.rvModule.closest('.WikiaRail').size() > 0 ) {
+			// Right rail 
 			this.onRightRail = true;
 			this.totalVideos = window.RelatedVideosIds.length;
-			this.rvModule.on('click', '.remove', this.removeVideoLoginWrapper);
+			this.rvContainer.on('click', '.remove', this.removeVideoLoginWrapper);
+			this.rvContainer.on('mouseenter mouseleave', '.video-thumbnail, .remove', function() {
+				$(this).parent().find('.remove').toggle();
+			});
 		} else {
+			// Hubs
 			this.totalVideos = this.loadedCount;		
 		}
 
@@ -51,6 +58,8 @@ var RelatedVideos = {
 
 		var importantContentHeight = $('#WikiaArticle').height();
 		importantContentHeight += $('#WikiaArticleComments').height();
+		
+		// TODO: Clean this up so it's clear when we're talking about right rail vs. hubs etc. (Liz)
 		var $RelatedVideosPlaceholder = $('span[data-placeholder="RelatedVideosModule"]');
 		if ( !this.onRightRail && $RelatedVideosPlaceholder.length != 0 ){
 			$RelatedVideosPlaceholder.replaceWith( relatedVideosModule );
@@ -390,8 +399,7 @@ var RelatedVideos = {
 	
 	removeVideoLoginWrapper: function( e ){
 		e.preventDefault();
-		//RelatedVideos.track( 'module/removeVideo/beforeLogin' );
-		
+
 		var self = this,
 			callback = RelatedVideos.removeVideoClick;
 
@@ -424,7 +432,6 @@ var RelatedVideos = {
 	},
 
 	removeVideoClick: function(target) {
-		//RelatedVideos.track( 'module/removeVideo/afterLogin' );
 		var parentItem = $(target).parents('.item');
 		$.confirm({
 			content: $( '.deleteConfirm', RelatedVideos.rvModule ).html(),
@@ -468,14 +475,7 @@ var RelatedVideos = {
 			}
 		});
 	}
-
-
-
-
 };
-
-
-
 
 //on content ready
 $().ready(function() {

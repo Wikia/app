@@ -178,9 +178,14 @@ class RelatedVideosController extends WikiaController {
 
 			$video['viewsMsg'] = wfMsg('related-videos-video-views', $this->wg->ContLang->formatNum($video['views']));
 			
+			$userGroups = $this->wg->User->getEffectiveGroups();
+			$isAdmin = in_array('admin', $userGroups) || in_array('staff', $userGroups);
+
+			$this->removeTooltip = wfMsg('related-videos-tooltip-remove');
 			$this->videoThumb = $videoThumb;
 			$this->video = $video;
 			$this->preloaded = $preloaded;
+			$this->isAdmin = $isAdmin;
 		} else {
 			Wikia::log(__METHOD__, false, 'A video file not found. ID: '.$video['id']);
 		}
