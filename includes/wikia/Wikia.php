@@ -407,10 +407,11 @@ class Wikia {
 	 * @param String $method - use __METHOD__
 	 */
 	static public function debugBacktrace($method) {
-		global $wgDBname;
 		$backtrace = wfDebugBacktrace();
+		$msg = "***** BEGIN *****";
+		Wikia::log($method, false, $msg, true /* $force */);
 		foreach( $backtrace as $call ) {
-			$msg = "$method (' . $wgDBname . ') \n";
+			$msg = "";
 			if( isset( $call['file'] ) ) {
 				$f = explode( DIRECTORY_SEPARATOR, $call['file'] );
 				$file = $f[count($f)-1];
@@ -429,6 +430,8 @@ class Wikia {
 			
 			Wikia::log($method, false, $msg, true /* $force */);
 		}
+		$msg = "***** END *****";
+		Wikia::log($method, false, $msg, true /* $force */);
 	}
 
 	/**
