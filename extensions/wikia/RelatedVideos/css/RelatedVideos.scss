@@ -65,57 +65,6 @@ $color-related-videos-background: darken($color-page, 20%);
 			height: 22px;
 			width: 30px;
 		}
-		&.premiumVideo {
-			height: 16px;
-			width: 75px;
-			margin-top: 3px;
-			background-image: url(/extensions/wikia/RelatedVideos/images/WikiVideo_Sprite.png);  /* wgCdnStylePath */
-			@if lightness($color-page) < 50 {
-				background-position: 0px -19px;
-			} @else {
-				background-position: 0px 0px;
-			}
-		}
-	}
-
-	.RVHeader {
-		//border: 1px solid $color-page-border;
-		//height: 38px;
-		//em {
-	//		font-style: normal;
-	//	}
-		.tally {
-//			float: left;
-//			margin: 5px 0px;
-//			display: inline-block;
-		}
-		.button {
-//			margin-top: 8px;
-//			display: inline-block;
-//			float: left;
-//			&.secondary{
-//				float: right;
-//				margin-right:5px;
-//			}
-		}
-//		.feedback {
-//			line-height: 38px;
-//			margin-right: 11px;
-//			float: right;
-//		}
-/*		.beta {
-			@include border-radius(4px);
-			font-size: 11px;
-			line-height: 14px;
-			padding: 2px 4px;
-			margin-right: 11px;
-			float: right;
-			background-color: $color-buttons;
-			color: $color-button-text;
-			margin-top: 13px;
-			padding: 0px 5px;
-			text-decoration: none;
-		}*/
 	}
 
 	.RVBody {
@@ -404,6 +353,22 @@ $color-related-videos-background: darken($color-page, 20%);
 				width: 80px;
 			}
 		}
+		.remove {
+			background-color: #DDD;
+			display: inline-block;
+			padding: 4px 5px;
+			position: absolute;
+			left: 132px;
+			top: 8px;
+			z-index: 101;
+			.sprite {
+				width: 13px;
+				height: 16px;
+				display: block;
+			}
+		}
+		
+
 		.RVBody {
 			height: auto;
 			clear: both;
@@ -414,13 +379,10 @@ $color-related-videos-background: darken($color-page, 20%);
 				left: 0;
 				div.item {
 					@include clearfix;
-					//border: 1px solid transparent;
 					display: block;
 					float: none;
 					width: auto;
 					height: 90px;
-					//padding-left: 160px;
-					//padding-right: 13px;
 					margin: 0 0 15px 0;
 					.new {
 						top: 14px;
@@ -430,9 +392,6 @@ $color-related-videos-background: darken($color-page, 20%);
 						float: left;
 						margin-right: 10px;
 						width: 150px;
-						//position: absolute;
-						//left: 5px;
-						//top: 5px;
 						.playButton {
 							width: 150px;
 						}

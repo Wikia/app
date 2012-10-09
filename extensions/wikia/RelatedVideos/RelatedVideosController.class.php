@@ -184,6 +184,9 @@ class RelatedVideosController extends WikiaController {
 		} else {
 			Wikia::log(__METHOD__, false, 'A video file not found. ID: '.$video['id']);
 		}
+
+		// set cache control to 1 day
+		$this->response->setCacheValidity(86400, 86400, array(WikiaResponse::CACHE_TARGET_BROWSER, WikiaResponse::CACHE_TARGET_VARNISH));
 	}
 
 	public function getAddVideoModal(){

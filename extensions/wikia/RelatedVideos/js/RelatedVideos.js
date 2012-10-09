@@ -33,6 +33,7 @@ var RelatedVideos = {
 		if ( this.rvModule.closest('.WikiaRail').size() > 0 ) {
 			this.onRightRail = true;
 			this.totalVideos = window.RelatedVideosIds.length;
+			this.rvModule.on('click', '.remove', this.removeVideoLoginWrapper);
 		} else {
 			this.totalVideos = this.loadedCount;		
 		}
@@ -92,14 +93,11 @@ var RelatedVideos = {
 		);
 	},
 
-	// Scrolling modal items
+	// Scrolling items
 
 	scrollright: function(){
-		if(RelatedVideos.onRightRail) {
-			RelatedVideos.lazyLoad();
-		} else {
-			RelatedVideos.showImages();
-		}
+		RelatedVideos.lazyLoad();
+
 		WikiaTracker.trackEvent(
 			'trackingevent',
 			{
@@ -250,6 +248,10 @@ var RelatedVideos = {
 	// Lazy load html
 	// Only for onRightRail
 	lazyLoad: function() {
+		if(!RelatedVideos.onRightRail) {
+			RelatedVideos.showImages();
+			return;
+		}
 		var self = this,
 			idx = this.loadedCount, // cache index to avoid race conditions
 			totalCount = window.RelatedVideosIds.length;
@@ -382,7 +384,92 @@ var RelatedVideos = {
 				RelatedVideos.regroup();
 			}
 		);
+	},
+
+	// Remove Video
+	
+	removeVideoLoginWrapper: function( e ){
+		e.preventDefault();
+		//RelatedVideos.track( 'module/removeVideo/beforeLogin' );
+		
+		var self = this,
+			callback = RelatedVideos.removeVideoClick;
+
+		var message = 'protected';
+		if(( wgUserName == null ) && ( !alreadyLoggedIn )){
+			if (window.wgComboAjaxLogin) {
+				showComboAjaxForPlaceHolder( false, "", function() {
+					AjaxLogin.doSuccess = function() {
+						$('#AjaxLoginBoxWrapper').closest('.modalWrapper').closeModal();
+						alreadyLoggedIn = true;
+						callback(self);
+					};
+					AjaxLogin.close = function() {
+						$('#AjaxLoginBoxWrapper').closeModal();
+						$( window ).scrollTop( element.offset().top + 100 );
+					}
+				}, false, message );
+			} else {
+				UserLoginModal.show({
+					callback: function() {
+						$( window ).scrollTop( element.offset().top + 100 );
+						alreadyLoggedIn = true;
+						callback(self);
+					}
+				});
+			}
+		} else {
+			callback(self);
+		}
+	},
+
+	removeVideoClick: function(target) {
+		//RelatedVideos.track( 'module/removeVideo/afterLogin' );
+		var parentItem = $(target).parents('.item');
+		$.confirm({
+			content: $( '.deleteConfirm', RelatedVideos.rvModule ).html(),
+			onOk: function(){
+				RelatedVideos.removeVideoItem( parentItem );
+			}
+		});
+	},
+
+	removeVideoItem: function(parentItem) {
+		$( parentItem ).fadeTo( 'slow', 0 );
+		var item = $(parentItem).find('a.video-thumbnail');
+		$.nirvana.sendRequest({
+			controller: 'RelatedVideos',
+			method: 'removeVideo',
+			format: 'json',
+			data: {
+				external:	item.attr('data-external'),
+				title:		item.attr('data-ref'),
+				articleId:	wgArticleId
+			}, 
+			callback: function(formRes) {
+				if ( formRes.error ) {
+					$.showModal( '', formRes.error, {
+						'width': RelatedVideos.modalWidth,
+						callback: function(){
+							$( parentItem ).fadeTo( 'slow', 1 );
+						}
+					});
+				} else {
+					$(parentItem).remove();
+					RelatedVideos.totalVideos -= 1;
+					RelatedVideos.recalculateLength();
+					RelatedVideos.lazyLoad();
+					RelatedVideos.regroup();
+				}
+
+			},
+			onErrorCallback: function(){
+				RelatedVideos.showError();
+			}
+		});
 	}
+
+
 
 
 };
