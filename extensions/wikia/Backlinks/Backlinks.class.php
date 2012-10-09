@@ -181,7 +181,7 @@ ENDTABLE;
 			$sql = dirname( __FILE__ ) . "/" . $map[ $type ];
 			$updater->addExtensionTable( 'wikia_page_backlinks', $sql );
 		} else {
-			throw new MWException( "Math extension does not currently support $type database." );
+			throw new MWException( "Backlinks extension does not currently support $type database." );
 		}
 		return true;
 	}
