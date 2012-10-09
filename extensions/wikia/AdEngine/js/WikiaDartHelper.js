@@ -66,7 +66,7 @@ loc=top;                          dcopt=ist;mtfIFPath=/extensions/wikia/AdEngine
 			getCategories() + // TODO FIXME missing in adsinhead
 			getLocKV(slotname) +
 			getDcoptKV(slotname) +
-			((typeof window.top.wgEnableAdMeldAPIClient != 'undefined' && window.top.wgEnableAdMeldAPIClient) ? window.top.AdMeldAPIClient.getParamForDART(slotname) : '') + // TODO FIXME missing in adsinhead
+			(window.AdMeldAPIClient ? window.AdMeldAPIClient.getParamForDART(slotname) : '') + // TODO FIXME missing in adsinhead
 			'mtfIFPath=/extensions/wikia/AdEngine/;' +
 			'src=driver;' +
 			'sz=' + size + ';' +
