@@ -399,6 +399,39 @@ class Wikia {
 	}
 
 	/**
+	 * Wikia denug backtrace logger
+	 *
+	 * @example Wikia::debugBacktrace(__METHOD__);
+	 * @author Piotr Molski <moli@wikia-inc.com>
+	 *
+	 * @param String $method - use __METHOD__
+	 */
+	static public function debugBacktrace($method) {
+		global $wgDBname;
+		$backtrace = wfDebugBacktrace();
+		foreach( $backtrace as $call ) {
+			$msg = "$method (' . $wgDBname . ') \n";
+			if( isset( $call['file'] ) ) {
+				$f = explode( DIRECTORY_SEPARATOR, $call['file'] );
+				$file = $f[count($f)-1];
+			} else {
+				$file = '-';
+			}
+			if( isset( $call['line'] ) ) {
+				$line = $call['line'];
+			} else {
+				$line = '-';
+			}
+			$msg .= "$file line $line calls ";
+
+			if( !empty( $call['class'] ) ) $msg .= $call['class'] . '::';
+			$msg .= $call['function'] . '()';
+			
+			Wikia::log($method, false, $msg, true /* $force */);
+		}
+	}
+
+	/**
 	 * get staff person responsible for language
 	 *
 	 * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
