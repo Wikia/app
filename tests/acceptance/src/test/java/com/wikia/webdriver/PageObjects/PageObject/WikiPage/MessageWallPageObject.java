@@ -40,6 +40,8 @@ public class MessageWallPageObject extends WikiBasePageObject{
 	private WebElement previewButton;
 	@FindBy(css=".buttonswrapper .wikia-menu-button.secondary.combined")
 	private WebElement moreButton;
+	@FindBy(css="a.thread-history")
+	private WebElement historyButton;
 	@FindBy(css="a.edit-message")
 	private WebElement editMessageButton;
 	@FindBy(css=".WikiaMenuElement .remove-message")
@@ -82,8 +84,15 @@ public class MessageWallPageObject extends WikiBasePageObject{
 	private WebElement linkModalOkButton;
 	@FindBy(css="input[value='ext']")
 	private WebElement externalLinkOption;
+	@FindBy(css="a.cke_button_ModeSource .cke_icon")
+	private WebElement sourceModeButton;
+	@FindBy(css="textarea.cke_source")
+	private WebElement sourceModeTextarea;
+	@FindBy(css=".SortingSelected")
+	private WebElement sortingMenu;
 	
-	
+	By messageList = By.cssSelector("div.msg-body");
+	By sortingList = By.cssSelector("ul.SortingList li a");
 	
 //	By messageTitle = By.cssSelector(".msg-title");
 	
@@ -113,7 +122,7 @@ public class MessageWallPageObject extends WikiBasePageObject{
 		messageTitleField.sendKeys(title);
 		triggerMessageArea();
 		waitForElementByElement(messageWallIFrame);
-		
+		messageTitleField.sendKeys(Keys.TAB);
 		driver.switchTo().frame(messageWallIFrame);
 		waitForElementByElement(messageBodyField);
 		messageBodyField.sendKeys(message);
@@ -122,6 +131,7 @@ public class MessageWallPageObject extends WikiBasePageObject{
 	}
 	
 	public void writeBoldMessage(String title, String message) {	
+		
 		messageTitleField.click();
 		messageTitleField.sendKeys(title);
 		triggerMessageArea();
@@ -313,6 +323,17 @@ public class MessageWallPageObject extends WikiBasePageObject{
 		PageObjectLogging.log("clickEditMessage", "edit message button is clicked", true, driver);
 	}
 	
+	public MessageWallHistoryPageObject openHistory() {
+		waitForElementByCss("div.msg-toolbar");
+		executeScript("document.getElementsByClassName(\"buttons\")[1].style.display = \"block\"");
+		waitForElementByElement(moreButton);
+		moreButton.click();
+		waitForElementByElement(historyButton);
+		historyButton.click();
+		PageObjectLogging.log("openHistory", "open History page of the newest thread", true, driver);
+		return new MessageWallHistoryPageObject(driver, Domain);
+	}
+	
 	private void writeEditMessage(String title, String message)
 	{
 //		waitForElementByElement(messageWallEditIFrame);
@@ -367,6 +388,61 @@ public class MessageWallPageObject extends WikiBasePageObject{
 		PageObjectLogging.log("writeMessageWithLink", "internal and external links: "+internallink+" and" +externallink+ "added", true, driver);
 		
 	}
+
+	public void writeMessageSourceMode(String title, String message) {
+		messageTitleField.click();
+		messageTitleField.sendKeys(title);
+		triggerMessageArea();
+		waitForElementByElement(messageWallIFrame);
+		sourceModeButton.click();
+		waitForElementByElement(sourceModeTextarea);
+		sourceModeTextarea.sendKeys(message);
+		PageObjectLogging.log("writeMessageSourceMode", "message in source mode is written, title: "+title+" body: "+message, true, driver);
+
+		
+	}
+
+	/**
+	 * verifies order of first two messages
+	 * 
+	 * @author Michal Nowierski
+	 * @param message1 - first message to be checked
+	 * @param message2 - second message to be checked
+	 * 	 */
+	public void verifyMessagesOrderIs(String message1, String message2) {
+		List<WebElement> list = driver.findElements(messageList);
+		waitForTextToBePresentInElementByElement(list.get(0), message1);
+		waitForTextToBePresentInElementByElement(list.get(1), message2);
+		PageObjectLogging.log("verifyMessagesOrderIs", "order of messages is appropriate: "+message1+", then "+message2, true, driver);
+		
+		
+	}
+
+	/**
+	 * sort threads (wall messages = threads) in specified order<br>
+	 * 
+	 * @author Michal Nowierski
+	 * @param order - specifies order of sorting <br><br> possible values: <br> "NewestThreads", "OldestThreads", "NewestReplies"}
+	 * 	 */
+	public void sortThreads(String order) {
+		sortingMenu.click();
+		List<WebElement> list = driver.findElements(sortingList);
+		if (order.equals("NewestThreads")) {
+			waitForElementByElement(list.get(0));
+			list.get(0).click();
+		}
+		if (order.equals("OldestThreads")) {
+			waitForElementByElement(list.get(1));
+			list.get(1).click();
+		}
+		if (order.equals("NewestReplies")) {
+			waitForElementByElement(list.get(2));
+			list.get(2).click();
+		}
+		PageObjectLogging.log("sortThreads", "order of messages sorted: "+order, true, driver);
+	}
+
+
 
 
 
