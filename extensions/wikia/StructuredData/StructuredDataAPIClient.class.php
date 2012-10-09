@@ -3,6 +3,7 @@
  * @author ADi
  */
 class StructuredDataAPIClient {
+	const VOCABS_PATH = 'vocabs';
 
 	private $httpRequest = null;
 	protected $schemaName = null;
@@ -15,11 +16,11 @@ class StructuredDataAPIClient {
 		$this->httpRequest = new HTTP_Request();
 	}
 
+	protected function call( $urlArgs, $vocabs = false ) {
+		//var_dump( $this->endpointUrl . ( $vocabs ? self::VOCABS_PATH : $this->schemaName ) . '/' . $urlArgs );
+		$this->httpRequest->setURL( $this->endpointUrl . ( $vocabs ? self::VOCABS_PATH : $this->schemaName ) . '/' . $urlArgs );
 
-	protected function call( $urlArgs ) {
-		$this->httpRequest->setURL( $this->endpointUrl . $this->schemaName . '/' . $urlArgs );
-
-		$this->httpRequest->addHeader( 'Accept', 'application/json');
+		$this->httpRequest->addHeader( 'Accept', 'application/ld+json' );
 		$this->httpRequest->sendRequest();
 
 		return $this->httpRequest->getResponseBody();
@@ -33,5 +34,9 @@ class StructuredDataAPIClient {
 
 	}
 
+	public function getTemplate( $objectType ) {
+		$rawJson = $this->call(  str_replace(':', '/', $objectType) . '?template=true', true );
+		return $rawJson;
+	}
 
 }
