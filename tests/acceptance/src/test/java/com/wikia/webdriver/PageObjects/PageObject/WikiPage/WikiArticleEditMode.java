@@ -71,6 +71,10 @@ public class WikiArticleEditMode extends WikiArticlePageObject {
 	private WebElement imageOnPreview;
 	@FindBy(css="body[id='bodyContent']")
 	private WebElement bodyContent;
+	@FindBy(css="input[name='search'][placeholder='Search photos on this wiki']")
+	private WebElement searchFieldImageInLightBox;
+	@FindBy(css="img.sprite.search")
+	private WebElement searchButtonImageInLightBox;
 	
 
 	
@@ -80,7 +84,7 @@ public class WikiArticleEditMode extends WikiArticlePageObject {
 	private By videoOnArticleEditMode = By.cssSelector("img.video");
 	private By slideShowOnArticleEditMode = By.cssSelector("img.image-slideshow");
 	private By sliderOnArticleEditMode = By.cssSelector("img.image-gallery-slider");
-	private By galleryDialogPhotosList = By.cssSelector("ul.WikiaPhotoGalleryResults li input");
+	private By galleryDialogPhotosList = By.cssSelector("ul[class='WikiaPhotoGalleryResults'][type='results'] li input");
 	private By galleryDialogPhotoOrientationsList = By.cssSelector("ul.clearfix[id='WikiaPhotoGalleryOrientation'] li");
 	private By galleryDialogSlideshowOrientationsList = By.cssSelector("ul.clearfix[id='WikiaPhotoGallerySliderType'] li");
 
@@ -513,7 +517,14 @@ public class WikiArticleEditMode extends WikiArticlePageObject {
 		}
 		PageObjectLogging.log("CheckGalleryImageInputs", "Check first "+n+" image inputs", true, driver);
 	}
-
+	
+	public void searchImageInLightBox(String imageName)
+	{
+		waitForElementByElement(searchFieldImageInLightBox);
+		searchFieldImageInLightBox.sendKeys(imageName);
+		searchButtonImageInLightBox.click();
+		waitForElementByElement(searchButtonImageInLightBox);
+	}
 	/**
 	 * Gallery dialog: Left click 'Select' button
 	 *  

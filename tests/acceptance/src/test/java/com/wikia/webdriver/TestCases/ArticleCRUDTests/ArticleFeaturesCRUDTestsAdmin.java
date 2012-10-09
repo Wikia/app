@@ -33,6 +33,7 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		edit.clickOnVisualButton();
 		edit.clickOnAddObjectButton("Gallery");
 		edit.waitForObjectModalAndClickAddAphoto("Gallery");
+		edit.searchImageInLightBox("image");
 		edit.galleryCheckImageInputs(4);
 		edit.galleryClickOnSelectButton();
 		edit.gallerySetPositionGallery("Center");//error!!!
@@ -67,6 +68,7 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		edit.clickOnVisualButton();
 		edit.clickOnAddObjectButton("Gallery");
 		edit.waitForObjectModalAndClickAddAphoto("Gallery");
+		edit.searchImageInLightBox("image");
 		edit.galleryCheckImageInputs(4);
 		edit.galleryClickOnSelectButton();
 		edit.gallerySetPositionGallery("Center");//error!!!
@@ -81,6 +83,7 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		edit = article.edit();
 		edit.clickModifyButtonGallery();
 		edit.waitForObjectModalAndClickAddAphoto("Gallery");
+		edit.searchImageInLightBox("image");
 		edit.galleryCheckImageInputs(8);
 		edit.galleryClickOnSelectButton();
 		edit.gallerySetPositionGallery("Right");
@@ -110,6 +113,7 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		edit.clickOnVisualButton();
 		edit.clickOnAddObjectButton("Gallery");
 		edit.waitForObjectModalAndClickAddAphoto("Gallery");
+		edit.searchImageInLightBox("image");
 		edit.galleryCheckImageInputs(4);
 		edit.galleryClickOnSelectButton();
 		edit.gallerySetPositionGallery("Center");//error!!!
@@ -148,6 +152,7 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		edit.clickOnVisualButton();
 		edit.clickOnAddObjectButton("Slideshow");
 		edit.waitForObjectModalAndClickAddAphoto("GallerySlideshow");
+		edit.searchImageInLightBox("image");
 		edit.galleryCheckImageInputs(4);
 		edit.galleryClickOnSelectButton();
 		edit.gallerySetPositionSlideshow("Center");
@@ -181,6 +186,7 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		edit.clickOnVisualButton();
 		edit.clickOnAddObjectButton("Slideshow");
 		edit.waitForObjectModalAndClickAddAphoto("GallerySlideshow");
+		edit.searchImageInLightBox("image");
 		edit.galleryCheckImageInputs(4);
 		edit.galleryClickOnSelectButton();
 		edit.gallerySetPositionSlideshow("Center");
@@ -194,6 +200,7 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		edit = article.edit();
 		edit.clickModifyButtonSlideshow();
 		edit.waitForObjectModalAndClickAddAphoto("GallerySlideshow");
+		edit.searchImageInLightBox("image");
 		edit.galleryCheckImageInputs(8);
 		edit.galleryClickOnSelectButton();
 		edit.gallerySetPositionSlideshow("Right");
@@ -221,6 +228,7 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		edit.clickOnVisualButton();
 		edit.clickOnAddObjectButton("Slideshow");
 		edit.waitForObjectModalAndClickAddAphoto("GallerySlideshow");
+		edit.searchImageInLightBox("image");
 		edit.galleryCheckImageInputs(4);
 		edit.galleryClickOnSelectButton();
 		edit.gallerySetPositionSlideshow("Center");
@@ -260,6 +268,7 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		edit.clickOnVisualButton();
 		edit.clickOnAddObjectButton("Slider");
 		edit.waitForObjectModalAndClickAddAphoto("GallerySlider");
+		edit.searchImageInLightBox("image");
 		edit.galleryCheckImageInputs(4);
 		edit.galleryClickOnSelectButton();
 		edit.gallerySetSliderPosition(2);
@@ -294,6 +303,7 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		edit.clickOnVisualButton();
 		edit.clickOnAddObjectButton("Slider");
 		edit.waitForObjectModalAndClickAddAphoto("GallerySlider");
+		edit.searchImageInLightBox("image");
 		edit.galleryCheckImageInputs(4);
 		edit.galleryClickOnSelectButton();
 		edit.gallerySetSliderPosition(2);//Vertical
@@ -307,6 +317,7 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		edit = article.edit();
 		edit.clickModifyButtonSlider();
 		edit.waitForObjectModalAndClickAddAphoto("GallerySlider");
+		edit.searchImageInLightBox("image");
 		edit.galleryCheckImageInputs(8);
 		edit.galleryClickOnSelectButton();
 		edit.gallerySetSliderPosition(1);//Horizontal
@@ -334,6 +345,7 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		edit.clickOnVisualButton();
 		edit.clickOnAddObjectButton("Slider");
 		edit.waitForObjectModalAndClickAddAphoto("GallerySlider");
+		edit.searchImageInLightBox("image");
 		edit.galleryCheckImageInputs(4);
 		edit.galleryClickOnSelectButton();
 		edit.gallerySetSliderPosition(2);//Vertical
