@@ -43,6 +43,9 @@ $wgUpdates[ "mysql" ][] = array( "do_drop_table", "user_relationship_request" );
 $wgUpdates[ "mysql" ][] = array( "do_drop_table", "user_register_track" );
 $wgUpdates[ "mysql" ][] = array( "do_drop_table", "user_board" );
 $wgUpdates[ "mysql" ][] = array( "do_drop_table", "watchlist_old" );
+$wgUpdates[ "mysql" ][] = array( "do_drop_table", "plb_page" );
+$wgUpdates[ "mysql" ][] = array( "do_drop_table", "plb_copy_layout" );
+$wgUpdates[ "mysql" ][] = array( "do_drop_table", "plb_field" );
 
 
 
