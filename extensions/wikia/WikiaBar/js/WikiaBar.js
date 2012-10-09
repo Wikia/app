@@ -17,7 +17,6 @@ var WikiaBar = {
 		prevMsgNumber: -1, //this is only needed for tracking impressions in messageFadeOut()
 		doTrackImpression: false //this is only needed for tracking impressions in messageFadeIn()
 	},
-	wasAdCalled: false,
 	wikiaBarHidden: true,
 	isSampledEvent: function () {
 		return this.WIKIA_BAR_SAMPLING_RATIO >= Math.floor((Math.random() * 100 + 1));
@@ -52,18 +51,11 @@ var WikiaBar = {
 
 		return true;
 	},
-	getAd: function () {
-		var WikiaBarBoxAd = $(this.WIKIA_BAR_BOXAD_NAME);
-		if (WikiaBarBoxAd.hasClass('wikia-ad') == false) {
+	getAdIfNeeded: function () {
+		var WikiaBarBoxAd = $('#' + this.WIKIA_BAR_BOXAD_NAME);
+		if( WikiaBarBoxAd.hasClass('wikia-ad') == false && window.wgShowAds && window.wgAdsShowableOnPage && window.wgEnableWikiaBarAds ) {
 			window.adslots2.push([this.WIKIA_BAR_BOXAD_NAME, null, 'AdEngine2', null]);
 			WikiaBarBoxAd.addClass('wikia-ad');
-			this.wasAdCalled = true;
-		}
-		return true;
-	},
-	getAdIfNeeded: function () {
-		if (!this.wasAdCalled && window.wgShowAds && window.wgAdsShowableOnPage && window.wgEnableWikiaBarAds) {
-			this.getAd();
 		}
 	},
 	cutMessageIntoSmallPieces: function (messageArray, container) {
