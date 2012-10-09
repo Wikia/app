@@ -343,6 +343,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 	/**
 	 * Determines whether we are on the corporate wiki
+	 * @see WikiaSearchControllerTest::testIsCorporateWiki
 	 */
 	private function  isCorporateWiki() {
 	    return !empty($this->wg->EnableWikiaHomePageExt);
@@ -354,6 +355,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	
 	/**
 	 * This is how we generate the subtemplate for the advanced search box.
+	 * @see    WikiaSearchControllerTest::testAdvancedBox
 	 * @throws Exception
 	 */
 	public function advancedBox() {
@@ -362,19 +364,22 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			throw new Exception("This should not be called outside of self-request context.");
 		}
 
+		$searchEngine = F::build( 'SearchEngine' );
+		
 		$this->setVal( 'namespaces', 			$config->getNamespaces() );
-		$this->setVal( 'searchableNamespaces', 	SearchEngine::searchableNamespaces() );
+		$this->setVal( 'searchableNamespaces', 	$searchEngine->searchableNamespaces() );
 		$this->setVal( 'redirs', 				$config->getIncludeRedirects() );
 		$this->setVal( 'advanced', 				$config->getAdvanced() );
 	}
 
 	/**
 	 * This is how we generate the search type tabs in the left-hand rail
+	 * @see    WikiaSearchControllerTest::tabs
 	 * @throws Exception
 	 */
 	public function tabs() {
 		$config = $this->getVal('config', false);
-		if (! $config ) {
+		if (! $config || (! $config instanceOf WikiaSearchConfig ) ) {
 		    throw new Exception("This should not be called outside of self-request context.");
 		}
 		
@@ -386,12 +391,13 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 	/**
 	 * This handles pagination via a template script. 
+	 * @see    WikiaSearchControllerTest::testPagination
 	 * @throws Exception
 	 * @return boolean|null (false if we don't want pagination, fully routed to view via sendSelfRequest if we do want pagination) 
 	 */
 	public function pagination() {
 		$config = $this->getVal('config', false);
-		if (! $config ) {
+		if (! $config || (! $config instanceOf WikiaSearchConfig ) ) {
 			throw new Exception("This should not be called outside of self-request context.");
 		}
 		
@@ -431,9 +437,10 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	
 	/**
 	 * WikiaMobile hook to add assets so they are minified and concatenated
-	 * @param array $jsHeadPackages
-	 * @param array $jsBodyPackages
-	 * @param array $scssPackages
+	 * @see    WikiaSearchControllerTest::testOnWikiaMobileAssetsPackages
+	 * @param  array $jsHeadPackages
+	 * @param  array $jsBodyPackages
+	 * @param  array $scssPackages
 	 * @return boolean
 	 */
 	public function onWikiaMobileAssetsPackages( &$jsHeadPackages, &$jsBodyPackages, &$scssPackages){

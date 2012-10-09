@@ -373,7 +373,8 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	 */
 	public function getSearchProfiles() {
 	    // Builds list of Search Types (profiles)
-	    $nsAllSet = array_keys( SearchEngine::searchableNamespaces() );
+	    $searchEngine = F::build( 'SearchEngine' );
+	    $nsAllSet = array_keys( $searchEngine->searchableNamespaces() );
 	    $profiles = array(
 	            'default' => array(
 	                    'message' => 'wikiasearch2-tabs-articles',
