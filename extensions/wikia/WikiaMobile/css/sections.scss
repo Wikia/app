@@ -57,6 +57,8 @@ h1, h2, h3{
 	min-height: $section-title-font-size;
 	padding: $page-padding 27px 0 0;
 	position: relative;
+	//lest make our sections a little bit more sexy
+	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Roboto, "Lucida Grande", arial, sans-serif;
 
 	word-break: break-word;
 
