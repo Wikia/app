@@ -93,8 +93,7 @@ class Backlinks
 			wfProfileOut(__METHOD__);
 			return true;
 		}
-
-		$dbr->begin();
+		
 		$deleteSql = 'DELETE FROM `'.self::TABLE_NAME.'` WHERE source_page_id IN ('.implode(', ', self::$sourceArticleIds).');';
 		$insertSql = "INSERT IGNORE INTO `".self::TABLE_NAME."` (`source_page_id`, `target_page_id`, `backlink_text`, `count` ) VALUES ";
 
@@ -106,14 +105,14 @@ class Backlinks
 			$insertSql .= ++$rowCounter == $rowCount ? ';' : ', ';
 		}
 
-
-		$dbr->query( $deleteSql );
-		$dbr->query( $insertSql );
-
 		try {
+			$dbr->begin();
+			$dbr->query( $deleteSql );
+			$dbr->query( $insertSql );
 			$dbr->commit();
 		} catch (Exception $e) {
-			// should probably log this
+			$dbr->rollback();
+			Wikia::Log( __METHOD__, 'Transaction', $e );
 		}
 
 		wfProfileOut(__METHOD__);
@@ -182,7 +181,7 @@ ENDTABLE;
 			$sql = dirname( __FILE__ ) . "/" . $map[ $type ];
 			$updater->addExtensionTable( 'wikia_page_backlinks', $sql );
 		} else {
-			throw new MWException( "Backlinks extension does not currently support $type database." );
+			throw new MWException( "Math extension does not currently support $type database." );
 		}
 		return true;
 	}
