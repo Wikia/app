@@ -7,6 +7,7 @@ class StructuredData {
 	 * @var StructuredDataAPIClient
 	 */
 	protected $APIClient = null;
+	private $contexts = array();
 
 	public function __construct( StructuredDataAPIClient $apiClient ) {
 		$this->APIClient = $apiClient;

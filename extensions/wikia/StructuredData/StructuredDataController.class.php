@@ -23,7 +23,7 @@ class StructuredDataController extends WikiaSpecialPageController {
 
 	public function init() {
 		$this->config = $this->wg->StructuredDataConfig;
-		$this->APIClient = F::build( 'StructuredDataAPIClient', array( 'endpoint' => $this->config['endpointUrl'], 'schemaUrl' => $this->config['schemaUrl'] ) );
+		$this->APIClient = F::build( 'StructuredDataAPIClient', array( 'baseUrl' => $this->config['baseUrl'], 'apiPath' => $this->config['apiPath'], 'schemaPath' => $this->config['schemaPath'] ) );
 		$this->structuredData = F::build( 'StructuredData', array( 'apiClient' => $this->APIClient ));
 	}
 

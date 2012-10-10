@@ -6,19 +6,20 @@ class StructuredDataAPIClient {
 	const VOCABS_PATH = 'vocabs';
 
 	private $httpRequest = null;
-	protected $schemaName = null;
-	protected $endpointUrl = null;
+	protected $baseUrl = null;
+	protected $apiPath = null;
+	protected $schemaPath = null;
 
-	public function __construct( $endpointUrl, $schemaName ) {
-		$this->endpointUrl = $endpointUrl;
-		$this->schemaName = $schemaName;
+	public function __construct( $baseUrl, $apiPath, $schemaPath ) {
+		$this->baseUrl = $baseUrl;
+		$this->apiPath = $apiPath;
+		$this->schemaPath = $schemaPath;
 
 		$this->httpRequest = new HTTP_Request();
 	}
 
-	protected function call( $urlArgs, $vocabs = false ) {
-		//var_dump( $this->endpointUrl . ( $vocabs ? self::VOCABS_PATH : $this->schemaName ) . '/' . $urlArgs );
-		$this->httpRequest->setURL( $this->endpointUrl . ( $vocabs ? self::VOCABS_PATH : $this->schemaName ) . '/' . $urlArgs );
+	protected function call( $url ) {
+		$this->httpRequest->setURL( $url );
 
 		$this->httpRequest->addHeader( 'Accept', 'application/ld+json' );
 		$this->httpRequest->sendRequest();
@@ -26,8 +27,16 @@ class StructuredDataAPIClient {
 		return $this->httpRequest->getResponseBody();
 	}
 
+	private function getApiPath() {
+		return $this->baseUrl . $this->apiPath . $this->schemaPath . '/';
+	}
+
+	private function getVocabsPath() {
+		return $this->baseUrl . $this->apiPath . self::VOCABS_PATH . '/';
+	}
+
 	public function getObject( $id ) {
-		return $this->call( $id );
+		return $this->call( $this->getApiPath() . $id );
 	}
 
 	public function getCollection() {
@@ -35,8 +44,10 @@ class StructuredDataAPIClient {
 	}
 
 	public function getTemplate( $objectType ) {
-		$rawJson = $this->call(  str_replace(':', '/', $objectType) . '?template=true', true );
-		return $rawJson;
+		return $this->call(  $this->getVocabsPath() . str_replace(':', '/', $objectType) . '?template=true' );
 	}
 
+	public function getContext( $contextUrl, $relative = true ) {
+		return $this->call( ( $relative ? $this->baseUrl : '' ) . $contextUrl );
+	}
 }
