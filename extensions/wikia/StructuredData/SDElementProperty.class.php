@@ -5,10 +5,15 @@
 class SDElementProperty implements SplObserver {
 	protected $type = 'rdf:Literal';
 	protected $name = null;
+	protected $label = '';
 	protected $value = null;
 
 	function __construct($name, $value, $type = false) {
 		$this->name = $name;
+
+		$nameParts = explode( ':', $name );
+		$this->label = count($nameParts) > 1 ? $nameParts[1] : $name;
+
 		$this->value = $value;
 		if($type !== false) {
 			$this->type = $type;
@@ -39,6 +44,14 @@ class SDElementProperty implements SplObserver {
 		return $this->name;
 	}
 
+	public function setLabel($label) {
+		$this->label = $label;
+	}
+
+	public function getLabel() {
+		return $this->label;
+	}
+
 	public function toArray() {
 		if($this->value instanceof SDElement) {
 			$array = $this->value->toArray();
@@ -47,6 +60,7 @@ class SDElementProperty implements SplObserver {
 			$array = array(
 				'type' => $this->type,
 				'name' => $this->name,
+				'label' => $this->label,
 				'value' => $this->value
 			);
 
@@ -65,8 +79,10 @@ class SDElementProperty implements SplObserver {
 	 * @return void
 	 */
 	public function update(SplSubject $subject) {
-		$this->type = $subject->getContext()->getType( $this->name );
+		$type = $subject->getContext()->getType( $this->name );
+		if($type) {
+			$this->type = $type;
+		}
 	}
-
 
 }

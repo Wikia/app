@@ -37,7 +37,7 @@ class SDContext extends WikiaObject {
 	}
 
 	public function getType($name) {
-		return isset($this->types[$name]) ? $this->types[$name] : $name;
+		return isset($this->types[$name]) ? $this->types[$name] : false;
 	}
 
 	private function processResource($resourceUrl) {
