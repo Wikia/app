@@ -28,6 +28,7 @@ class ChatController extends WikiaController {
 		$this->roomName = $roomName;
 		$this->roomTopic = $roomTopic;
 
+ 		$this->chatkey = Chat::echoCookies();
 		// Set the hostname of the node server that the page will connect to.
 
 		$server = ChatHelper::getServer('Main');
@@ -104,7 +105,7 @@ class ChatController extends WikiaController {
 		$vars['pathToContribsPage'] = $this->pathToContribsPage;
 		$vars['wgAvatarUrl'] = $this->avatarUrl;
 
-		$vars['wgChatKey'] = Chat::echoCookies();
+		$vars['wgChatKey'] = $this->chatkey;
 
 		$months = array();
 		for($i = 1; $i < 13; $i++ ) {
