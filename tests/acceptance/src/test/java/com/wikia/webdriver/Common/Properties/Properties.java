@@ -89,7 +89,7 @@ public class Properties {
 		{
 			setPropertiesManually();
 		}		
-//		getWikiVersion();
+		getWikiVersion();
 		setVariables();
 	}
 	
