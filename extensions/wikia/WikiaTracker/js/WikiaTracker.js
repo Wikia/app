@@ -313,3 +313,22 @@ WikiaTracker.trackAdEvent = function(eventName, data, trackingMethod) {
 			window.gaTrackAdEvent(ga_category, ga_action, ga_label, ga_value, true);
 		}
 };
+
+WikiaTracker.trackClick = function (paramObject) {
+	var trackingObj = {
+		ga_category: paramObject.category,
+		ga_action: paramObject.action,
+		ga_label: paramObject.label
+	};
+	if (paramObject.value) {
+		trackingObj['ga_value'] = paramObject.value;
+	}
+	if (paramObject.params) {
+		$.extend(trackingObj, paramObject.params);
+	}
+	WikiaTracker.trackEvent(
+		'trackingevent',
+		trackingObj,
+		paramObject.trackingMethod
+	);
+};
