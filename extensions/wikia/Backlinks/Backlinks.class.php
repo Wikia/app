@@ -93,7 +93,7 @@ class Backlinks
 			wfProfileOut(__METHOD__);
 			return true;
 		}
-		
+
 		$deleteSql = 'DELETE FROM `'.self::TABLE_NAME.'` WHERE source_page_id IN ('.implode(', ', self::$sourceArticleIds).');';
 		$insertSql = "INSERT IGNORE INTO `".self::TABLE_NAME."` (`source_page_id`, `target_page_id`, `backlink_text`, `count` ) VALUES ";
 
@@ -107,9 +107,9 @@ class Backlinks
 
 		try {
 			$dbr->begin();
-			$dbr->query( $deleteSql );
-			$dbr->query( $insertSql );
-			$dbr->commit();
+			$dbr->query( $deleteSql, __METHOD__ );
+			$dbr->query( $insertSql, __METHOD__ );
+			$dbr->commit(__METHOD__);
 		} catch (Exception $e) {
 			$dbr->rollback();
 			Wikia::Log( __METHOD__, 'Transaction', $e );
@@ -132,7 +132,7 @@ class Backlinks
 
 		if (! $dbr->tableExists(self::TABLE_NAME) ) {
 			try {
-				$dbr->query(self::tableCreateSql());
+				$dbr->query(self::tableCreateSql(), __METHOD__);
 			} catch (Exception $e) {
 				wfProfileOut(__METHOD__);
 				return $e;
