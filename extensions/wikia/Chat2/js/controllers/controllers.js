@@ -610,7 +610,7 @@ var NodeChatController = $.createClass(NodeRoomController,{
 	},
 
 	privateListClick: function(obj) {
-		var user = this.model.users.findByName(obj.name);
+		var user = this.model.privateUsers.findByName(obj.name);
 
 		var actions = { regular: ['profile', 'contribs'] };
 		if(user.get('isStaff') === false) {
