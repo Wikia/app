@@ -140,12 +140,12 @@
 
 					if ( !empty( $lang ) ) {
 						$lang = $db->addQuotes( $lang );
-						$where[] = "r.lang = '{$lang}'";
+						$where[] = "r.lang = {$lang}";
 					}
 
 					if ( !empty( $hub ) ) {
 						$hub = $db->addQuotes( $hub );
-						$where[] = "r.hub_name = '{$hub}'";
+						$where[] = "r.hub_name = {$hub}";
 					}
 
 					// Default to showing all wikis
