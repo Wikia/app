@@ -352,29 +352,14 @@ $color-related-videos-background: darken($color-page, 20%);
 			.fixedwidth {
 				width: 80px;
 			}
-		}
-		.remove {
-			background-color: #DDD;
-			display: none;
-			padding: 4px 5px;
-			position: absolute;
-			left: 127px;
-			top: 8px;
-			z-index: 101;
-			.sprite {
-				width: 13px;
-				height: 16px;
-				display: block;
-			}
-		}
-		
+		}		
 
 		.RVBody {
 			height: auto;
 			clear: both;
 			.novideos { padding: 7px; }
 			.wrapper {
-				width: 268px;
+				width: 298px;
 				position: static;
 				left: 0;
 				div.item {
@@ -418,6 +403,23 @@ $color-related-videos-background: darken($color-page, 20%);
 						outline: none;
 						text-align: center;
 						width: 150px;
+					}
+					.remove {
+						background-color: #DDD;
+						display: none;
+						padding: 4px 5px;
+						position: absolute;
+						left: 127px;
+						top: 8px;
+						z-index: 101;
+						.sprite {
+							width: 13px;
+							height: 16px;
+							display: block;
+						}
+					}
+					&:hover .remove {
+						display: block;
 					}
 				}
 				div.action {
@@ -463,7 +465,7 @@ $color-related-videos-background: darken($color-page, 20%);
 				.group {
 					display: inline-block;
 					float: left;
-					width: 278px;
+					width: 298px;
 					padding-bottom: 5px;
 				}
 			}

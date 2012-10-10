@@ -37,15 +37,6 @@ var RelatedVideos = {
 			this.onRightRail = true;
 			this.totalVideos = window.RelatedVideosIds.length;
 			this.rvContainer.on('click', '.remove', this.removeVideoLoginWrapper);
-			this.rvContainer.on({
-				'mouseenter': function() {
-					// Note: can't use .toggle() here due to IE bug when hovering while deleting
-					$(this).parent().find('.remove').show();
-				},
-				'mouseleave': function() {
-					$(this).parent().find('.remove').hide();				
-				}
-			}, '.video-thumbnail, .remove');
 			
 			// If we don't have any items to lazy load, add the see-more-placeholder on init
 			this.handleSeeMorePlaceholder();
