@@ -18,18 +18,22 @@ var WikiaBar = {
 		doTrackImpression: false //this is only needed for tracking impressions in messageFadeIn()
 	},
 	wikiaBarHidden: true,
+	wikiaBarWrapperObj: null,
 	isSampledEvent: function () {
 		return this.WIKIA_BAR_SAMPLING_RATIO >= Math.floor((Math.random() * 100 + 1));
 	},
 	bindTracking: function () {
-		$('#WikiaBarWrapper').click($.proxy(this.clickTrackingHandler, this));
+		this.wikiaBarWrapperObj.click($.proxy(this.clickTrackingHandler, this));
 		$('.WikiaBarCollapseWrapper').click($.proxy(this.clickTrackingHandler, this));
 	},
 	init: function () {
+		this.wikiaBarWrapperObj = $('#WikiaBarWrapper');
 		this.bindTracking();
 
+		var WikiaBarWrapperArrow = this.wikiaBarWrapperObj.find('.arrow');
+
 		//hidding/showing the bar events
-		$('.WikiaBarWrapper .arrow').click($.proxy(this.onShownClick, this));
+		WikiaBarWrapperArrow.click($.proxy(this.onShownClick, this));
 		$('.WikiaBarCollapseWrapper .wikia-bar-collapse').click($.proxy(this.onHiddenClick, this));
 
 		if (!this.isUserAnon()) {
@@ -39,14 +43,13 @@ var WikiaBar = {
 		}
 
 		//tooltips
-		var wikiaBarWrapperArrow = $('#WikiaBarWrapper .arrow');
-		wikiaBarWrapperArrow.popover({
+		WikiaBarWrapperArrow.popover({
 			placement: "wikiaBar",
-			content: wikiaBarWrapperArrow.data('tooltip')
+			content: WikiaBarWrapperArrow.data('tooltip')
 		});
 		$('.wikia-bar-collapse').popover({
 			placement: "wikiaBar",
-			content: wikiaBarWrapperArrow.data('tooltipshow')
+			content: WikiaBarWrapperArrow.data('tooltipshow')
 		});
 
 		return true;
@@ -171,14 +174,14 @@ var WikiaBar = {
 	},
 	show: function () {
 		$('#WikiaNotifications').removeClass('hidden');
-		$('.WikiaBarWrapper').removeClass('hidden');
 		$('.WikiaBarCollapseWrapper').addClass('hidden');
+		this.wikiaBarWrapperObj.removeClass('hidden');
 		this.wikiaBarHidden = false;
 	},
 	hide: function () {
 		$('#WikiaNotifications').addClass('hidden');
-		$('.WikiaBarWrapper').addClass('hidden');
 		$('.WikiaBarCollapseWrapper').removeClass('hidden');
+		this.wikiaBarWrapperObj.addClass('hidden');
 		this.wikiaBarHidden = true;
 	},
 	isWikiaBarHidden: function () {
@@ -218,7 +221,7 @@ var WikiaBar = {
 		this.show();
 
 		//messages animation
-		this.messageConfig.container = $('#WikiaBarWrapper .message');
+		this.messageConfig.container = this.wikiaBarWrapperObj.find('.message');
 		var dataContent = this.messageConfig.container.data(this.messageConfig.attributeName);
 		if (
 			this.messageConfig.container.exists()
@@ -357,6 +360,7 @@ var WikiaBar = {
 		return (result >= 0);
 	},
 	getWikiaBarOffset: function () {
+		//this method is being used in our RTE plugin therefore we don't use here cached jQuery object this.WikiaBarWrapperObj
 		var wikiaBarHeight = $("#WikiaBarWrapper").outerHeight() || 0;
 		return (this.wikiaBarHidden) ? 0 : wikiaBarHeight;
 	},
