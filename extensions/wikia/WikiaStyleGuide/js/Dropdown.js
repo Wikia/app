@@ -44,8 +44,8 @@ Wikia.Dropdown = $.createClass(Observable, {
 			.on('click.' + this.settings.eventNamespace, this.proxy(this.onClick));
 
 		this.getItems()
-			.off('click.' + this.settings.eventNamespace)
-			.on('click.' + this.settings.eventNamespace, this.proxy(this.onChange));
+			.off('change.' + this.settings.eventNamespace)
+			.on('change.' + this.settings.eventNamespace, this.proxy(this.onChange));
 
 		this.$document
 			.off('click.' + this.settings.eventNamespace)
@@ -94,7 +94,7 @@ Wikia.Dropdown = $.createClass(Observable, {
 	},
 
 	getSelectedItems: function() {
-		return this.getItems().filter('.selected');
+		return this.$dropdown.find(':checked:not(.select-all)');
 	},
 
 	isOpen: function() {
