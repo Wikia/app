@@ -335,7 +335,7 @@ class WikiaSearch extends WikiaObject {
 	        return $config->getArticleMatch();
 	    }
 	    
-	    $term 			= $config->getQuery( WikiaSearchConfig::QUERY_RAW );
+	    $term 			= $config->getOriginalQuery();
 	    $searchEngine	= F::build( 'SearchEngine' );
     	$title			= $searchEngine->getNearMatch( $term );
     	

@@ -296,7 +296,7 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 	public function testGetArticleMatchHasMatch() {
 		
 		$wikiaSearch		= F::build( 'WikiaSearch' );
-		$mockSearchConfig	= $this->getMock( 'WikiaSearchConfig', array( 'getQuery', 'hasArticleMatch', 'getArticleMatch' ) );
+		$mockSearchConfig	= $this->getMock( 'WikiaSearchConfig', array( 'getOriginalQuery', 'hasArticleMatch', 'getArticleMatch' ) );
 		$mockTitle			= $this->getMock( 'Title', array( 'getNamespace' ) );
 		$mockArticle		= $this->getMock( 'Article', array(), array( $mockTitle ) );
 		$mockArticleMatch	= $this->getMock( 'WikiaSearchArticleMatch', array(), array( $mockArticle ) );
@@ -305,7 +305,7 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 		// If there's already an article match set in the search config, return that
 		$mockSearchConfig
 			->expects	( $this->any() )
-			->method	( 'getQuery' )
+			->method	( 'getOriginalQuery' )
 			->will		( $this->returnValue( $mockTerm ) )
 		;
 		$mockSearchConfig
@@ -327,7 +327,7 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 	 */
 	public function testGetArticleMatchWithNoMatch() {
 		$wikiaSearch		= F::build( 'WikiaSearch' );
-		$mockSearchConfig	= $this->getMock( 'WikiaSearchConfig', array( 'getQuery', 'hasArticleMatch', 'getArticleMatch' ) );
+		$mockSearchConfig	= $this->getMock( 'WikiaSearchConfig', array( 'getOriginalQuery', 'hasArticleMatch', 'getArticleMatch' ) );
 		$mockTitle			= $this->getMock( 'Title', array( 'getNamespace' ) );
 		$mockArticle		= $this->getMock( 'Article', array(), array( $mockTitle ) );
 		$mockArticleMatch	= $this->getMock( 'WikiaSearchArticleMatch', array(), array( $mockArticle ) );
@@ -336,7 +336,7 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 		
 		$mockSearchConfig
 			->expects	( $this->any() )
-			->method	( 'getQuery' )
+			->method	( 'getOriginalQuery' )
 			->will		( $this->returnValue( $mockTerm ) )
 		;
 		$mockSearchConfig
@@ -370,7 +370,7 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 	 */
 	public function testGetArticleMatchWithMatchFirstCall() {
 		$wikiaSearch		= F::build( 'WikiaSearch' );
-		$mockSearchConfig	= $this->getMock( 'WikiaSearchConfig', array( 'getArticleMatch', 'setArticleMatch', 'getNamespaces', 'getQuery' ) );
+		$mockSearchConfig	= $this->getMock( 'WikiaSearchConfig', array( 'getArticleMatch', 'setArticleMatch', 'getNamespaces', 'getOriginalQuery' ) );
 		$mockTitle			= $this->getMock( 'Title', array( 'getNamespace' ) );
 		$mockArticle		= $this->getMock( 'Article', array(), array( $mockTitle ) );
 		$mockArticleMatch	= $this->getMock( 'WikiaSearchArticleMatch', array(), array( $mockArticle ) );
@@ -390,7 +390,7 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 		;
 		$mockSearchConfig
 			->expects	( $this->any() )
-			->method	( 'getQuery' )
+			->method	( 'getOriginalQuery' )
 			->will		( $this->returnValue( $mockTerm ) )
 		;
 		$mockSearchConfig
@@ -426,7 +426,7 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 	 */
 	public function testGetArticleMatchWithMatchFirstCallMismatchedNamespace() {
 	    $wikiaSearch		= F::build( 'WikiaSearch' );
-	    $mockSearchConfig	= $this->getMock( 'WikiaSearchConfig', array( 'getQuery', 'getNamespaces', 'hasArticleMatch' ) );
+	    $mockSearchConfig	= $this->getMock( 'WikiaSearchConfig', array( 'getOriginalQuery', 'getNamespaces', 'hasArticleMatch' ) );
 		$mockTitle			= $this->getMock( 'Title', array( 'getNamespace' ) );
 		$mockArticle		= $this->getMock( 'Article', array(), array( $mockTitle ) );
 		$mockArticleMatch	= $this->getMock( 'WikiaSearchArticleMatch', array(), array( $mockArticle ) );
@@ -451,7 +451,7 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
     	;
 	    $mockSearchConfig
 		    ->expects	( $this->any() )
-		    ->method	( 'getQuery' )
+		    ->method	( 'getOriginalQuery' )
 		    ->will		( $this->returnValue( $mockTerm ) )
 	    ;
 	    $mockSearchConfig
