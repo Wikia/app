@@ -41,7 +41,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->wg->Out->addHTML( F::build('JSSnippets')->addToStack( array( "/extensions/wikia/Search/js/WikiaSearch.js" ) ) );
 		$this->wg->SuppressRail = true;
 
-		$this->handleSkinSettings();
+		$this->handleSkinSettings( $this->wg->User->getSkin() );
 
 		$searchConfig = F::build('WikiaSearchConfig');
 		
@@ -323,18 +323,19 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	
 	/**
 	 * Called in index action to manipulate the view based on the user's skin
+	 * @see    WikiaSearchControllerTest::testSkinSettings
+	 * @param  SkinTemplate $skin
 	 * @return boolean true
 	 */
-	private function handleSkinSettings() {
-		$skin = $this->wg->User->getSkin();
-		
+	private function handleSkinSettings( $skin ) {
+	
 		if ( $skin instanceof SkinMonoBook ) {
-		    $this->response->addAsset('extensions/wikia/Search/monobook/monobook.scss');
+		    $this->response->addAsset ('extensions/wikia/Search/monobook/monobook.scss' );
 		}
-		if ( get_class($this->wg->User->getSkin()) == 'SkinOasis' ) {
-		    $this->response->addAsset('extensions/wikia/Search/css/WikiaSearch.scss');
+		if ( $skin instanceof SkinOasis ) {
+		    $this->response->addAsset( 'extensions/wikia/Search/css/WikiaSearch.scss' );
 		}
-		if ( $this->app->checkSkin( 'wikiamobile' ) ) {
+		if ( $skin instanceof SkinWikiaMobile ) {
 		    $this->overrideTemplate( 'WikiaMobileIndex' );
 		}
 		

@@ -524,6 +524,46 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 		
 	}
 	
+	/**
+	 * @see WikiaSearch
+	 */
+	public function testSkinSettings() {
+		$mockSkinMonoBook		=	$this->getMock( 'stdClass', array(), array(), 'SkinMonoBook' );
+		$mockSkinOasis			=	$this->getMock( 'stdClass', array(), array(), 'SkinOasis' );
+		$mockSkinWikiaMobile	=	$this->getMock( 'stdClass', array(), array(), 'SkinWikiaMobile' );
+		$mockResponse			=	$this->getMock( 'WikiaResponse', array( 'addAsset' ), array( 'html' ) );
+		$mockRequestContext		=	$this->getMock( 'RequestContext', array( 'getSkin' ) );
+		
+		$mockResponse
+			->expects	( $this->at( 0 ) )
+			->method	( 'addAsset' )
+			->with		( 'extensions/wikia/Search/monobook/monobook.scss' )
+		;
+		$mockResponse
+			->expects	( $this->at( 1 ) )
+			->method	( 'addAsset' )
+			->with		( 'extensions/wikia/Search/css/WikiaSearch.scss' )
+		;
+		
+		$method = new ReflectionMethod( 'WikiaSearchController', 'handleSkinSettings' );
+		$method->setAccessible( true );
+		
+		$this->searchController->setResponse( $mockResponse );
+		
+		$this->assertTrue(
+				$method->invoke( $this->searchController, $mockSkinMonoBook ),
+				'WikiaSearchController::handleSkinSettings should always return true.' 
+		);
+		$this->assertTrue(
+		        $method->invoke( $this->searchController, $mockSkinOasis ),
+		        'WikiaSearchController::handleSkinSettings should always return true.'
+		);
+		$this->assertTrue(
+		        $method->invoke( $this->searchController, $mockSkinWikiaMobile ),
+		        'WikiaSearchController::handleSkinSettings should always return true.'
+		);
+		
+	}
 	
 	/**
 	 * Helper hook for testing article match
@@ -541,6 +581,15 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 		global $hookNoGoMatch;
 		$hookNoGoMatch = true;
 		return true;
+	}
+	
+	/**
+	 * Helper hook for testing skins
+	 */
+	public static function requestContextCreateSkin( RequestContext $context, &$skin = null ) {
+		
+		var_dump($skin);
+		
 	}
 	
 }
