@@ -2,6 +2,7 @@
 @import "layout";
 @import "../mixins/border-radius";
 @import "../mixins/box-shadow";
+@import "../mixins/clearfix";
 @import "../mixins/gradient";
 @import "../mixins/menus";
 @import "../mixins/opacity";
@@ -389,9 +390,12 @@
 }
 
 .adm-dash-search {
-	float: right;
-	margin-right: 10px;
-	width: $wikia-search-base-width + 100px;
+	@include clearfix;
+	.WikiaSearch {
+		float: right;
+		margin-right: 10px;
+		width: $wikia-search-base-width + 100px;
+	}
 }
 
 #shareEmailModal .buttons {
