@@ -26,32 +26,34 @@ define('mediagallery', ['media', 'modal', 'pager', 'thumbnailer', 'lazyload', 't
 		current,
 		imgsPerPage = 9;
 
-	modalWrapper.addEventListener('tap', function (ev) {
-		var target = ev.target;
+	function init(){
+		modalWrapper.addEventListener('tap', function (ev) {
+			var target = ev.target;
 
-		//go to a specific page
-		if (target.parentElement.className.indexOf('dot') > -1) {
-			current = ~~target.parentElement.id.slice(3);
-			pager.reset({
-				pageNumber: current
-			});
-			loadImages();
-			updateDots();
+			//go to a specific page
+			if (target.parentElement.className.indexOf('dot') > -1) {
+				current = ~~target.parentElement.id.slice(3);
+				pager.reset({
+					pageNumber: current
+				});
+				loadImages();
+				updateDots();
 
-			//open specific image chosen from gallery
-		} else if (target.className.indexOf('galPlc img') > -1) {
-			goBackToImgModal(~~target.id.slice(3));
-			if(target.className.indexOf('video')) {track.event('video', track.CLICK, {label: 'gallery'});}
-			//open/close gallery
-		} else if (target.id === 'wkGalTgl') {
-			if(modalWrapper.className.indexOf('wkMedGal') > -1) {
-				track.event('gallery', track.CLICK, {label: 'close'});
-				goBackToImgModal(goToImg);
-			} else {
-				open();
+				//open specific image chosen from gallery
+			} else if (target.className.indexOf('galPlc img') > -1) {
+				goBackToImgModal(~~target.id.slice(3));
+				if(target.className.indexOf('video')) {track.event('video', track.CLICK, {label: 'gallery'});}
+				//open/close gallery
+			} else if (target.id === 'wkGalTgl') {
+				if(modalWrapper.className.indexOf('wkMedGal') > -1) {
+					track.event('gallery', track.CLICK, {label: 'close'});
+					goBackToImgModal(goToImg);
+				} else {
+					open();
+				}
 			}
-		}
-	}, true);
+		}, true);
+	}
 
 	function loadImages(){
 		//this gives me a chance to first load current page then next and at the end prev
@@ -194,6 +196,7 @@ define('mediagallery', ['media', 'modal', 'pager', 'thumbnailer', 'lazyload', 't
 	}
 
 	return {
+		init: init,
 		open: open
-	}
+	};
 });

@@ -5,7 +5,7 @@
  * @author Jakub "Student" Olek
  */
 
-define('topbar', ['querystring', 'loader', 'toc', 'events', 'ads', 'track'], function (qs, loader, toc, events, ads, track) {
+define('topbar', ['querystring', 'loader', 'toc', 'events', require.optional('ads'), 'track'], function (qs, loader, toc, events, ads, track) {
 	'use strict';
 	var w = window,
 		d = document,
@@ -256,7 +256,7 @@ define('topbar', ['querystring', 'loader', 'toc', 'events', 'ads', 'track'], fun
                 ttl: 604800,
                 callback: function(res){
                     Wikia.processScript(res.scripts[0]);
-                    require('suggest', function(sug){
+                    require(['suggest'], function(sug){
                         sug({
                             url: wgServer + '/api.php' + '?action=opensearch',
                             input: searchInput,

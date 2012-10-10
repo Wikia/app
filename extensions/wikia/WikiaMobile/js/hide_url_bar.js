@@ -14,7 +14,7 @@
  */
 /*global window, define, setTimeout, setInterval, clearInterval*/
 
-require(['ads'], function (ads) {
+require([require.optional('ads')], function (ads) {
 	'use strict';
 
 	var w = window,

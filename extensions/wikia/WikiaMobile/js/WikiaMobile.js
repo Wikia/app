@@ -29,7 +29,7 @@
 //init
 $(function () {
 	'use strict';
-	require(['layout', 'querystring', 'topbar', 'toc', 'events', 'share', 'popover', 'cookies', 'track'],
+	require(['layout', 'querystring', require.optional('topbar'), require.optional('toc'), 'events', require.optional('share'), require.optional('popover'), require.optional('cookies'), 'track'],
 		function (layout, qs, topbar, toc, events, share, popover, cookies, track) {
 			var d = document,
 				clickEvent = events.click,

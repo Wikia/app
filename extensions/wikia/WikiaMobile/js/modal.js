@@ -5,7 +5,7 @@
  * @author Jakub "Student" Olek
  */
 
-define('modal', ['loader', 'events', 'ads'], function modal(loader, events, ads){
+define('modal', ['loader', 'events', require.optional('ads')], function modal(loader, events, ads){
 	var d = document,
 		w = window,
 		html = d.documentElement,

@@ -4,7 +4,7 @@
  *
  * @author Jakub "Student" Olek
  */
-define('media', ['modal', 'loader', 'querystring', 'popover', 'track', 'events', 'share', 'cache'], function(modal, loader, qs, popover, track, events, share, cache){
+define('media', ['modal', 'loader', 'querystring', require.optional('popover'), 'track', 'events', require.optional('share'), require.optional('cache')], function(modal, loader, qs, popover, track, events, share, cache){
 	'use strict';
 	/** @private **/
 
@@ -321,7 +321,7 @@ define('media', ['modal', 'loader', 'querystring', 'popover', 'track', 'events',
 
 			if(!zoomed && scale < 1){
 				if(!zooming && scale < 0.8){
-					require('mediagallery', function(mg){
+					require(['mediagallery'], function(mg){
 						mg.open();
 					});
 				}
@@ -394,7 +394,9 @@ define('media', ['modal', 'loader', 'querystring', 'popover', 'track', 'events',
 			if(galleryData){
 				Wikia.processStyle(galleryData[0]);
 				Wikia.processScript(galleryData[1]);
-				require('mediagallery');
+				require(['mediagallery'], function(mg){
+					mg.init();
+				});
 			}else{
 				Wikia.getMultiTypePackage({
 					styles: '/extensions/wikia/WikiaMobile/css/mediagallery.scss',
@@ -408,7 +410,9 @@ define('media', ['modal', 'loader', 'querystring', 'popover', 'track', 'events',
 						Wikia.processScript(script);
 
 						cache && cache.set(cacheKey, [style, script], ttl);
-						require('mediagallery');
+						require(['mediagallery'], function(mg){
+							mg.init();
+						});
 					}
 				});
 			}
@@ -426,7 +430,7 @@ define('media', ['modal', 'loader', 'querystring', 'popover', 'track', 'events',
 		widthFll = wkMdlImages.offsetWidth;
 		heightFll = wkMdlImages.offsetHeight;
 
-		require('pager', function(pg){
+		require(['pager'], function(pg){
 			pager = pg({
 				wrapper: wrapper,
 				container: wkMdlImages,

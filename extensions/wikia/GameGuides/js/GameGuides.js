@@ -1,8 +1,7 @@
 $(function(){
-	var html = document.documentElement,
-		fontSize = 100;
+	var html = document.documentElement;
 
-	require('querystring', function(qs){
+	require(['querystring'], function(qs){
 		var links = Array.prototype.slice.call(document.getElementsByTagName('a')),
 			l = links.length,
 			link,

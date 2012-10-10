@@ -6,7 +6,7 @@
  * Layout handling of WikiaMobile
  * ie. Sections, Images, Galleries etc.
  */
-define('layout', ['sections', 'media', 'cache'], function(sections, media, cache) {
+define('layout', ['sections', 'media', require.optional('cache')], function(sections, media, cache) {
 	var d = document,
 		pageContent = d.getElementById('mw-content-text'),
 		images = d.getElementsByClassName('media'),
@@ -32,7 +32,7 @@ define('layout', ['sections', 'media', 'cache'], function(sections, media, cache
 				}
 			}
 
-			require('tables', function(t){
+			require(['tables'], function(t){
 				t.process($(selector).not('.artSec table, table table'));
 
 				sections.addEventListener('open', function(){
