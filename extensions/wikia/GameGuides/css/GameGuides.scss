@@ -6,7 +6,7 @@
 
 @font-face {
 	font-family: 'Roboto-Thin';
-	src: local('Roboto Thin'), local('RobotoThin'), url(extensions/wikia/GameGuides/fonts/RobotoThin.ttf) format('truetype');
+	src: local('Roboto Thin'), local('RobotoThin'), url(file:///android_asset/fonts/RobotoThin.ttf), url(extensions/wikia/GameGuides/fonts/RobotoThin.ttf) format('truetype');
 	font-weight: 100;
 }
 
@@ -58,6 +58,8 @@ body {
 	padding: 10px 20px;
 
 	color: $textColor;
+
+	font-family: 'Roboto-Thin';
 
 	line-height: 1.7em;
 }
