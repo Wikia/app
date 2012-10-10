@@ -16,8 +16,7 @@
 			?>
 		</div>
 	</div>
-</div>
-<div class="WikiaBarCollapseWrapper">
-    <a href="#" class="wikia-bar-collapse" data-tooltip="<?= wfMsg('wikiabar-tooltip') ?>"></a>
-</div>
+	<div class="WikiaBarCollapseWrapper">
+		<a href="#" class="wikia-bar-collapse" data-tooltip="<?= wfMsg('wikiabar-tooltip') ?>"></a>
+	</div>
 <?php endif; ?>
