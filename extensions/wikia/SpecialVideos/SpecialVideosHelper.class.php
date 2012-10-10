@@ -75,7 +75,7 @@ class SpecialVideosHelper extends WikiaModel {
 
 	/**
 	 * get video detail
-	 * @param array $title [ array( 'title' => title, 'addedAt' => addedAt , 'addedBy' => addedBy ) ]
+	 * @param array $videoInfo [ array( 'title' => title, 'addedAt' => addedAt , 'addedBy' => addedBy ) ]
 	 * @return array $videoDetail
 	 */
 	public function getVideoDetail( $videoInfo ) {
@@ -93,7 +93,7 @@ class SpecialVideosHelper extends WikiaModel {
 
 				// get user
 				$user = F::build( 'User', array( $videoInfo['addedBy'] ), 'newFromId' );
-				$userName = $user->getName();
+				$userName = ( User::isIP($user->getName()) ) ? $this->wf->Msg( 'oasis-anon-user' ) : $user->getName();
 				$userUrl = $user->getUserPage()->getFullURL();
 
 				// get article list

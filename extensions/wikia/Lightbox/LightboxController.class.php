@@ -191,7 +191,7 @@ class LightboxController extends WikiaController {
 		$this->fileUrl = $data['fileUrl'];
 		$this->rawImageUrl = $data['rawImageUrl'];
 		$this->userThumbUrl = $data['userThumbUrl'];
-		$this->userName = $data['userName'];
+		$this->userName = ( User::isIP($data['userName']) ) ? $this->wf->Msg( 'oasis-anon-user' ) : $data['userName'] ;
 		$this->userPageUrl = $data['userPageUrl'];
 		$this->articles = $articles;
 		$this->isPostedIn = $isPostedIn;
