@@ -7,7 +7,7 @@ class StructuredData {
 	 * @var StructuredDataAPIClient
 	 */
 	protected $APIClient = null;
-	private $contexts = array();
+	private $context = array();
 
 	public function __construct( StructuredDataAPIClient $apiClient ) {
 		$this->APIClient = $apiClient;
@@ -15,13 +15,10 @@ class StructuredData {
 
 	public function getSDElement($id) {
 
-		$elementJson = $this->APIClient->getObject($id);
-		$element = json_decode( $elementJson );
+		$element = $this->APIClient->getObject($id);
+		$template = $this->APIClient->getTemplate( $element->type );
 
-		$templateJson = $this->APIClient->getTemplate( $element->type );
-		$template = json_decode( $templateJson );
-
-		$SDElement = F::build( 'SDElement', array( 'template' => $template, 'data' => $element ), 'newFromTemplate');
+		$SDElement = F::build( 'SDElement', array( 'template' => $template, 'context' => $this->context, 'data' => $element ), 'newFromTemplate');
 
 		return $SDElement;
 	}

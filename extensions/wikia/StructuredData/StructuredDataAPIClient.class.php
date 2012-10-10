@@ -35,8 +35,18 @@ class StructuredDataAPIClient {
 		return $this->baseUrl . $this->apiPath . self::VOCABS_PATH . '/';
 	}
 
+	private function isValidResponse($response) {
+		if(!isset($response->error)) {
+			return $response;
+		}
+		else {
+			throw new WikiaException('SD API Error: ' . $response->error . ' - ' . $response->message);
+		}
+	}
+
 	public function getObject( $id ) {
-		return $this->call( $this->getApiPath() . $id );
+		$response = json_decode( $this->call( $this->getApiPath() . $id ) );
+		return $this->isValidResponse($response);
 	}
 
 	public function getCollection() {
@@ -44,10 +54,12 @@ class StructuredDataAPIClient {
 	}
 
 	public function getTemplate( $objectType ) {
-		return $this->call(  $this->getVocabsPath() . str_replace(':', '/', $objectType) . '?template=true' );
+		$response =json_decode( $this->call(  $this->getVocabsPath() . str_replace(':', '/', $objectType) . '?template=true' ) );
+		return $this->isValidResponse($response);
 	}
 
 	public function getContext( $contextUrl, $relative = true ) {
-		return $this->call( ( $relative ? $this->baseUrl : '' ) . $contextUrl );
+		$response = json_decode( $this->call( ( $relative ? $this->baseUrl : '' ) . $contextUrl ) );
+		return $this->isValidResponse($response);
 	}
 }

@@ -9,6 +9,7 @@ $app->registerClass('StructuredDataAPIClient', $dir . 'StructuredDataAPIClient.c
 $app->registerClass('StructuredData', $dir . 'StructuredData.class.php');
 $app->registerClass('SDElement', $dir . 'SDElement.class.php');
 $app->registerClass('SDElementProperty', $dir . 'SDElementProperty.class.php');
+$app->registerClass('SDContext', $dir . 'SDContext.class.php');
 
 require_once( $dir . '../../../lib/HTTP/Request.php');
 

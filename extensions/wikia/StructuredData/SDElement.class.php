@@ -34,7 +34,7 @@ class SDElement {
 		$this->properties[] = $property;
 	}
 
-	public static function newFromTemplate(stdClass $template, stdClass $data = null) {
+	public static function newFromTemplate(stdClass $template, SDContext $context, stdClass $data = null) {
 		if(!empty($data) && isset($data->id)) {
 			$elementId = $data->id;
 		}
