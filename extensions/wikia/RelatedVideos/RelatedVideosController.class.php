@@ -90,9 +90,9 @@ class RelatedVideosController extends WikiaController {
 		$this->setVal( 'videoHtml', $videoHtml );
 		$this->setVal( 'embedUrl', $embedUrl );
 	}
-	
+
 	/*
-	 * get data for an article stored in NS_RELATED_VIDEOS 
+	 * get data for an article stored in NS_RELATED_VIDEOS
 	 */
 	public function getLists() {
 
@@ -133,7 +133,7 @@ class RelatedVideosController extends WikiaController {
 	}
 
 	public function getCaruselElement() {
-		global $wgVideoHandlersVideosMigrated;
+		wfProfileIn(__METHOD__);
 
 		$video = $this->getVal( 'video' );
 
@@ -169,7 +169,7 @@ class RelatedVideosController extends WikiaController {
 			);
 
 			$video['views'] = MediaQueryService::getTotalVideoViewsByTitle( $videoTitle->getDBKey() );
-			
+
 			// Add ellipses if title is too long
 			$maxDescriptionLength = 45;
 			$video['truncatedTitle'] = ( strlen( $video['title'] ) > $maxDescriptionLength )
@@ -177,7 +177,7 @@ class RelatedVideosController extends WikiaController {
 				: $video['title'];
 
 			$video['viewsMsg'] = wfMsg('related-videos-video-views', $this->wg->ContLang->formatNum($video['views']));
-			
+
 			$userGroups = $this->wg->User->getEffectiveGroups();
 			$isAdmin = in_array('admin', $userGroups) || in_array('staff', $userGroups);
 
@@ -192,13 +192,15 @@ class RelatedVideosController extends WikiaController {
 
 		// set cache control to 1 day
 		$this->response->setCacheValidity(86400, 86400, array(WikiaResponse::CACHE_TARGET_BROWSER, WikiaResponse::CACHE_TARGET_VARNISH));
+
+		wfProfileOut(__METHOD__);
 	}
 
 	public function getAddVideoModal(){
 		$this->request->setVal( 'suppressSuggestions', false );
 		$this->forward( 'VideosController', 'getAddVideoModal' );
 	}
-	
+
 	public function addVideo() {
 		global $wgRelatedVideosOnRail;
 
@@ -220,9 +222,9 @@ class RelatedVideosController extends WikiaController {
 			$this->setVal( 'error', $retval );
 		}
 	}
-	
+
 	public function removeVideo() {
-		
+
 		$articleId = $this->getVal( 'articleId', '' );
 		$title = urldecode( $this->getVal( 'title', '' ) );
 		$external = $this->getVal( 'external', 0 );
@@ -266,13 +268,13 @@ class RelatedVideosController extends WikiaController {
 	}
 
 	public function getSuggestedVideos() {
-		
+
 		$searchConfig = F::build( 'WikiaSearchConfig' );
 		$searchConfig	->setCityId	( WikiaSearch::VIDEO_WIKI_ID )
 						->setStart	( 0 )
 						->setSize	( 20 )
 		;
-		
+
 		$relatedVideosParams = array( 'video_wiki_only'=>true, 'start'=>0, 'size'=>20 );
 
 		$sTitle = $this->request->getVal('pageTitle');
@@ -290,35 +292,35 @@ class RelatedVideosController extends WikiaController {
 		}
 
 		$search = F::build( 'WikiaSearch' );  /* @var $search WikiaSearch */
-		
+
 		$resultCount = 0;
 		if ( $this->wg->ContLang->mCode == 'en' ) {
 			// we can't use MoreLikeThis outside of English because we can't reconcile different language fields
 			// if we were given a title, then search against that title; if not, then search against the wiki's name, minus the term "wiki"
-			
+
 			$searchResultSet = $search->getRelatedVideos( $searchConfig );
-			
+
 			if ( $searchResultSet->getResultsFound() == 0 && $searchConfig->getPageId() && $this->request->getVal('debug') != 1 ) {
-			
+
 			    // if nothing for specify article, do general search
 			    $searchConfig->setPageId( false );
 			    $solariumResultSet = $search->getRelatedVideos( $searchConfig );
 			}
-			
+
 			$resultCount = $searchResultSet->getResultsNum();
 		}
-		
+
 		if ( $resultCount == 0 ) {
 			$searchConfig	->setQuery		( (! empty( $sTitle ) ) ? $sTitle : preg_replace( '/ wiki\b/i', '', $this->wg->SiteName ) )
 							->setVideoSearch( true )
 							->setPageId		( false )
 			;
-			
+
 			$searchResultSet = $search->doSearch( $searchConfig );
 			$resultCount = $searchResultSet->getResultNum();
 		}
-			
-		
+
+
 		Wikia::Log( __METHOD__, '', $resultCount );
 
 		$rvService = F::build( 'RelatedVideosService' ); /* @var $rvService RelatedVideosService */
@@ -340,14 +342,14 @@ class RelatedVideosController extends WikiaController {
 					// don't suggest videos that are already in RelatedVideos
 					continue;
 				}
-				
+
 				$response[ $document['url'] ] = $document->getFields();
 
-				$rvService->inflateWithVideoData( 
+				$rvService->inflateWithVideoData(
 								$document->getFields(),
 								$globalTitle,
 								$this->getVal( 'videoWidth', 160 ),
-								$this->getVal( 'videoHeight', 90 ) 
+								$this->getVal( 'videoHeight', 90 )
 				);
 
 			} else {
