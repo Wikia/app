@@ -95,6 +95,8 @@ class Solarium_Result
         // check status for error (range of 400 and 500)
         $statusNum = floor($response->getStatusCode() / 100);
         if ($statusNum == 4 || $statusNum == 5) {
+        	var_dump($query);
+        	var_dump($response); die;
             throw new Solarium_Client_HttpException(
                 $response->getStatusMessage(),
                 $response->getStatusCode(),
