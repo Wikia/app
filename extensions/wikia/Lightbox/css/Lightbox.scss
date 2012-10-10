@@ -455,6 +455,7 @@ $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 			overflow: hidden;
 			text-overflow: ellipsis;
 			white-space: nowrap;
+			margin-top: 0;
 		}
 		.caption {
 			clear: left;
