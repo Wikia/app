@@ -208,7 +208,9 @@ class WikiInfoModel extends WikiaModel {
 					}
 				}
 
-				$where[] = 'cv.city_id IN (' . $list . ')';
+				if ( !empty( $list ) ) {
+					$where[] = 'cv.city_id IN (' . $list . ')';
+				}
 			}
 
 			if ( !empty( $hub ) ) {
