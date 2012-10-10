@@ -6,7 +6,7 @@
  */
 
 class WikiInfoModel extends WikiaModel {
-	const CACHE_VERSION = '1';
+	const CACHE_VERSION = '3';
 	const MAX_RESULTS = 250;
 
 	const FLAG_NEW = 1;
@@ -54,9 +54,7 @@ class WikiInfoModel extends WikiaModel {
 
 		if ( !is_array( $results ) ) {
 			$results = array();
-			//On devboxes use a 90-days span as DataMart
-			//data is seldomly updated there
-			$wikis = DataMartService::getTopWikisByPageviews( self::MAX_RESULTS, $lang, $hub, 1 /* only pubic */, ( $this->wg->DevelEnvironment ) ? 120 : 7 );
+			$wikis = DataMartService::getTopWikisByPageviews( DataMartService::PERIOD_ID_WEEKLY, self::MAX_RESULTS, $lang, $hub, 1 /* only pubic */ );
 
 			foreach ( $wikis as $wikiId => $wiki ) {
 				$results[] = array(
@@ -185,7 +183,7 @@ class WikiInfoModel extends WikiaModel {
 		}
 
 		$memKey = $this->wf->SharedMemcKey( __METHOD__, self::CACHE_VERSION, $md5, $lang, $hub );
-		$results = null;//$this->wg->Memc->get( $memKey );
+		$results = $this->wg->Memc->get( $memKey );
 
 		if ( !is_array( $results ) ) {
 			$db = $this->getSharedDB();

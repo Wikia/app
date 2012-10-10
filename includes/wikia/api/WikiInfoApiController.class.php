@@ -6,7 +6,6 @@
  */
 
 class WikiInfoApiController extends WikiaApiController {
-	const MAX_RESULTS = 250;//TODO: remove
 	const ITEMS_PER_BATCH = 25;
 
 	private $model = null;
