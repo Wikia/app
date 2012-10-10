@@ -6,6 +6,7 @@ import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -265,7 +266,13 @@ public class WikiArticleEditMode extends WikiArticlePageObject {
 	public WikiArticlePageObject clickOnPublishButton() {
 		waitForElementByElement(publishButtonGeneral);
 		waitForElementClickableByElement(publishButtonGeneral);
-		publishButtonGeneral.click();
+		try{
+			publishButtonGeneral.click();
+		}
+		catch(TimeoutException e)
+		{
+			PageObjectLogging.log("logIn", "page loads for more than 30 seconds", true, driver);
+		}
 		waitForElementByElement(editButton);
 		PageObjectLogging.log("ClickOnPublishButton", "Click on 'Publish' button", true, driver);
 	
