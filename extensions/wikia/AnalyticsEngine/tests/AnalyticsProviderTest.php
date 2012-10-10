@@ -8,24 +8,6 @@
 class AnalyticsProviderTest extends WikiaBaseTest {
 
 	/**
-	 * given an URL, fetch the page source
-	 *
-	 * @param $url page address
-	 * @return mixed page content
-	 */
-	private function fetch_page($url)
-	{
-		$ch = curl_init();
-		$timeout = 5;
-		curl_setopt($ch,CURLOPT_URL,$url);
-		curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
-		curl_setopt($ch,CURLOPT_CONNECTTIMEOUT,$timeout);
-		$data = curl_exec($ch);
-		curl_close($ch);
-		return $data;
-	}
-
-	/**
 	 * Check the page source for analytics tracking and return used tag
 	 *
 	 * @param $url page address to fetch
@@ -33,7 +15,7 @@ class AnalyticsProviderTest extends WikiaBaseTest {
 	 *
 	 */
 	private function getAnalyticsProviderTag($url) {
-		$page = $this->fetch_page($url);
+		$page = Http::get($url);
 		if (preg_match('/<img src="([^">]+)" [^>]+ alt="szmtag"/', $page, $m)) {
 			$path = parse_url($m[1], PHP_URL_PATH);
 			return array_pop(explode('/', $path));
