@@ -11,8 +11,9 @@ class WikiaFileHelper extends Service {
 	 * @return boolean
 	 */
 	public static function isVideoStoredAsFile() {
-		// all videos are already converted and stored as a file
-		return true;
+
+		$convertedVar = F::app()->wg->videoHandlersVideosMigrated;
+		return !empty( $convertedVar );
 	}
 
 	/*
@@ -38,7 +39,6 @@ class WikiaFileHelper extends Service {
 
 	/*
 	 * Checks if given Title is video
-	 * @deprecated use isFileTypeVideo instead
 	 * @return boolean
 	 */
 	public static function isTitleVideo( $title, $allowOld = true ) {
@@ -148,8 +148,6 @@ class WikiaFileHelper extends Service {
 					$fileMetadata = unserialize( $fileMetadata );
 					if ( array_key_exists('duration', $fileMetadata) ) {
 						$duration = self::formatDuration( $fileMetadata['duration'] );
-						$isoDuration = self::getISO8601Duration($duration);
-						$content .= '<meta itemprop="duration" content="'.$isoDuration.'">';
 					}
 				}
 
@@ -158,9 +156,8 @@ class WikiaFileHelper extends Service {
 
 				// video views
 				$videoTitle = $media->getDBKey();
-				$views = MediaQueryService::getTotalVideoViewsByTitle( $videoTitle );
+				$views = DataMartService::getVideoViewsByTitleTotal( $videoTitle );
 				$content .= self::videoOverlayViews( $views );
-				$content .= '<meta itemprop="interactionCount" content="UserPlays:'.$views.'" />';
 
 				// info
 				$attribs = array(
@@ -191,6 +188,7 @@ class WikiaFileHelper extends Service {
 		if ( !empty($duration) ) {
 			$attribs = array(
 				'class' => 'info-overlay-duration',
+				'itemprop' => 'duration',
 			);
 
 			$html = Xml::element( 'span', $attribs, "($duration)", false );
@@ -206,9 +204,9 @@ class WikiaFileHelper extends Service {
 		$attribs = array(
 			'class' => 'info-overlay-views',
 		);
-		$views = $app->wf->MsgForContent( 'videohandler-video-views', $app->wg->Lang->formatNum($views) );
+		$views = $app->wf->MsgExt( 'videohandler-video-views', array( 'parsemag' ), $app->wg->Lang->formatNum($views) );
 
-		return Xml::element( 'span', $attribs, $views, false );
+                return Xml::element( 'span', $attribs, $views, false );
 	}
 
 	/*
@@ -344,7 +342,7 @@ class WikiaFileHelper extends Service {
 					}
 					$data['videoEmbedCode'] = $file->getEmbedCode( $width, true, true);
 					$data['playerAsset'] = $file->getPlayerAssetUrl();
-					$data['videoViews'] = MediaQueryService::getTotalVideoViewsByTitle( $fileTitle->getDBKey() );
+					$data['videoViews'] = DataMartService::getVideoViewsByTitleTotal( $fileTitle->getDBKey() );
 
 					$mediaPage = F::build( 'WikiaVideoPage', array($fileTitle) );
 
@@ -417,25 +415,4 @@ class WikiaFileHelper extends Service {
 
 		return $hms;
 	}
-
-	/** 
-	 * Get the duration in ISO 8601 format for meta tag
-	 * @return string
-	 */
-	public function getISO8601Duration($hms) {
-		if (!empty($hms)) {
-			$segments = explode(':', $hms);
-			$ret = "PT";
-			if(count($segments) == 3) {
-				$ret .= array_shift($segments) . 'H';
-			} 
-			$ret .= array_shift($segments) . 'M';
-			$ret .= array_shift($segments) . 'S';
-			
-			return $ret;
-		}		
-		return '';		
-	}
-
-
 }
