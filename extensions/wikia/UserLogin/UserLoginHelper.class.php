@@ -168,7 +168,7 @@ class UserLoginHelper extends WikiaModel {
 		$memKey = $this->wf->SharedMemcKey( 'userlogin', 'popular_wikis' );
 		$popularWikis = $this->wg->Memc->get( $memKey );
 		if ( empty($popularWikis) ) {
-			$popularWikis = array_keys( DataMartService::getTopWikisByPageviews($limit) );
+			$popularWikis = array_keys( DataMartService::getTopWikisByPageviews( DataMartService::PERIOD_ID_MONTHLY, $limit ) );
 
 			if ( empty($popularWikis) ) {
 				$popularWikis[] = self::WIKIA_CITYID_COMMUNITY;
