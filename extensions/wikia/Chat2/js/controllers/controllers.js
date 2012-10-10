@@ -886,10 +886,10 @@ var NodeChatController = $.createClass(NodeRoomController,{
 		room.mport(message.data);
 
 		var users = room.get('users');
-		for( var i in users) {
+		for( var i = 0; i < users.length; i++ ) {
 			if( users[i] != wgUserName ) {
 				var blockedUser = this.model.blockedUsers.findByName( users[i] );
-				if(typeof(blockedUser ) != 'undefined' ) {
+				if(typeof(blockedUser ) != 'undefined' && blockedUser.get('name') ==  users[i] ) {
 					return ;
 				}
 			}
