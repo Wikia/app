@@ -95,8 +95,9 @@ class ArticleService extends WikiaService {
 			// BugID: 47803 - stripping twice on purpose
 			$content = self::stripContentOfTags($content,$this->mTagsToRemove);
 			$content = $tmpParser->parse( $content,  $this->mArticle->getTitle(), new ParserOptions )->getText();
+			// BugID: 44365 - if people try to align the __TOC__ directive, Parser doesn't follow __NOTOC__ (note the ungreediness)
+			$content = preg_replace('/<table id="toc" class="toc">.*<\/table>/msU', '', $content);
 			$content = self::stripContentOfTags($content,$this->mTagsToRemove);
-
 			// strip HTML tags
 			$content = trim(strip_tags($content));
 			$content = mb_substr($content, 0, $length + 200);
@@ -113,7 +114,7 @@ class ArticleService extends WikiaService {
 				$content = mb_substr( $content, 0, $length-3 );
 				$content = mb_substr( $content, 0, mb_strrpos($content,' ')) . '...';
 			}
-
+			
 			$cacheContent = mb_substr( $content, 0, self::MAX_CACHED_TEXT_LENGTH-3 );
 
 			if ( $length <= self::MAX_CACHED_TEXT_LENGTH ){
