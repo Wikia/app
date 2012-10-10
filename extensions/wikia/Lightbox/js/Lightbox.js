@@ -1,9 +1,6 @@
 /*global LightboxLoader:true*/
 
 var Lightbox = {
-	log: function(content) {
-		$().log(content, "Lightbox");
-	},
 	eventTimers: {
 		lastMouseUpdated: 0
 	},
@@ -104,8 +101,6 @@ var Lightbox = {
 			Lightbox.hideOverlay(3000);
 
 			LightboxLoader.lightboxLoading = false;
-			Lightbox.log("Lightbox modal loaded");
-			/* lightbox loading ends here */ // TODO: this comment might not be accurate now due to asynchronus backfill content loading - liz
 			
 			/* tracking after lightbox has fully loaded */
 			var trackingTitle = Lightbox.getTitleForTracking();
@@ -923,7 +918,6 @@ var Lightbox = {
 				thumbArr = [];
 
 			if(cached.length) {
-				$().log("Loading articleMedia from cache", "Lightbox");
 				thumbArr = cached;
 			} else {
 			
@@ -985,7 +979,6 @@ var Lightbox = {
 				thumbArr = [];
 				
 			if(cached.length) {
-				$().log("Loading relatedVideos from cache", "Lightbox");
 				thumbArr = cached;
 			} else {
 			
@@ -1033,7 +1026,6 @@ var Lightbox = {
 			var cached = LightboxLoader.cache.latestPhotos,
 				thumbArr = [];
 			if(cached.length) {
-				$().log("Loading latestPhotos from cache", "Lightbox");
 				thumbArr = cached;
 			} else {
 			
@@ -1081,9 +1073,7 @@ var Lightbox = {
 				return;
 			}
 			Lightbox.getMediaThumbs.backfilling = true;
-			
-			$().log("Backfilling with wiki photos", "Lightbox");
-			
+
 			$.nirvana.sendRequest({
 				controller: 'Lightbox',
 				method: 'getThumbImages',

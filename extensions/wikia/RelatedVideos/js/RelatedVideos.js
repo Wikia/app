@@ -46,6 +46,9 @@ var RelatedVideos = {
 					$(this).parent().find('.remove').hide();				
 				}
 			}, '.video-thumbnail, .remove');
+			
+			// If we don't have any items to lazy load, add the see-more-placeholder on init
+			this.handleSeeMorePlaceholder();
 		} else {
 			// Hubs
 			this.totalVideos = this.loadedCount;		
@@ -261,12 +264,14 @@ var RelatedVideos = {
 	},
 	
 	// Lazy load html
-	// Only for onRightRail
 	lazyLoad: function() {
+		// Only for onRightRail
+		// Hubs will divert to showImages();
 		if(!RelatedVideos.onRightRail) {
 			RelatedVideos.showImages();
 			return;
 		}
+		
 		var self = this,
 			idx = this.loadedCount, // cache index to avoid race conditions
 			totalCount = window.RelatedVideosIds.length;
@@ -296,31 +301,13 @@ var RelatedVideos = {
 					callback: function(data) {
 						var html = self.mustacheTemplate.mustache(data);
 						
-						doInsert(html);
-						
-						if($('.item', this.rvModule).length == self.totalVideos) {
-							var seeMorePlaceholder = $('.seeMorePlaceholder', self.rvModule).addClass('item');
-							doInsert(seeMorePlaceholder);
-							self.seeMorePlaceholderAdded = true;
-						}						
+						self.doLazyInsert(html);
+						self.handleSeeMorePlaceholder();
 					}
 				});	
 			}		
 		}
 		
-		var doInsert = function(item) {
-			var last = $('.group',this.rvModule).last();
-			
-			if(last.children().length < self.videosPerPage) {
-				// There's space for this item in the last group, append it
-				$(item).appendTo(last).show();
-			} else {
-				// All the groups are full, create a new one
-				var newDiv = $('<div class="group"></div>').appendTo(self.rvContainer);
-				$(item).appendTo(newDiv).show();
-			}
-		}
-
 		if(this.mustacheTemplate) {
 			getItems();		
 		} else {
@@ -338,7 +325,28 @@ var RelatedVideos = {
 		}
 		
 	},
+
+	handleSeeMorePlaceholder: function() {
+		if(!this.seeMorePlaceholderAdded && $('.item', this.rvModule).length == this.totalVideos) {
+			var seeMorePlaceholder = $('.seeMorePlaceholder', this.rvModule).addClass('item');
+			this.doLazyInsert(seeMorePlaceholder);
+			this.seeMorePlaceholderAdded = true;
+		}						
+	},
 	
+	doLazyInsert: function(item) {
+		var last = $('.group',this.rvModule).last();
+		
+		if(last.children().length < this.videosPerPage) {
+			// There's space for this item in the last group, append it
+			$(item).appendTo(last).show();
+		} else {
+			// All the groups are full, create a new one
+			var newDiv = $('<div class="group"></div>').appendTo(this.rvContainer);
+			$(item).appendTo(newDiv).show();
+		}
+	},
+
 	recalculateLength: function(){
 		// Update video tally text
 		var numberElem = this.rvTallyCount;
@@ -383,6 +391,7 @@ var RelatedVideos = {
 		GlobalNotification.show( $('.errorWhileLoading').html(), 'error' );
 	},
 
+	// Inject newly added video into carousel - different from lazy loading
 	injectCaruselElement: function( html ){
 		$( '#add-video-modal' ).closest('.modalWrapper').closeModal();
 		var scrollLength = -1 * ( RelatedVideos.currentRoom - 1 );
@@ -440,6 +449,7 @@ var RelatedVideos = {
 	removeVideoClick: function(target) {
 		var parentItem = $(target).parents('.item');
 		$.confirm({
+			title: $( '.deleteConfirmTitle', RelatedVideos.rvModule ).html(),
 			content: $( '.deleteConfirm', RelatedVideos.rvModule ).html(),
 			onOk: function(){
 				RelatedVideos.removeVideoItem( parentItem );

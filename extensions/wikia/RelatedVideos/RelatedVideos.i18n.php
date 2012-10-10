@@ -28,6 +28,7 @@ $messages['en'] = array(
 	'related-videos-something-went-wrong' => 'We are sorry, but something went wrong with the upload.',
 	'related-videos-remove-video-error-duplicate' => 'This video has already been removed.',
 	'related-videos-remove-video-error-nonexisting' => 'The video you are trying to remove does not exist.',
+	'related-videos-remove-confirm-title' => 'Remove video',
 	'related-videos-remove-confirm' => 'Are you sure you want to remove this video from Related Videos?',
 	'related-videos-remove-call' => 'Please wait wile we are removing the video',
 	'related-videos-wiki-summary-blacklist' => 'Removed [[:$2|$1]] from Related Videos.',

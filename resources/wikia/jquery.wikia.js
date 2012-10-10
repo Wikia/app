@@ -134,7 +134,13 @@ $.confirm = function(options) {
 	options = (typeof options != 'object') ? {} : options;
 	options.id = 'WikiaConfirm';
 
-	var html = '<p>' + (options.content || '') + '</p>' +
+	var html = '';
+	
+	if(options.title) {
+		html += '<h1>' + options.title + '</h1>';
+	}
+	
+	html += '<p>' + (options.content || '') + '</p>' +
 		'<div class="neutral modalToolbar">' +
 		'<button id="WikiaConfirmCancel" class="wikia-button secondary">' + (options.cancelMsg || 'Cancel') + '</button>' +
 		'<button id="WikiaConfirmOk" class="wikia-button">' + (options.okMsg || 'Ok') + '</button>' +
