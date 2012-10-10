@@ -10,8 +10,17 @@ var InWikiGame = {
 					'height': '600px'
 				}
 			);
+			iframe.load(function() {
+				WikiaTracker.trackClick({
+					'category': 'in-wiki-game',
+					'action': WikiaTracker.ACTIONS.CLICK_LINK_BUTTON,
+					'label': 'game-iframe-placeholder-click',
+					'value': null,
+					'params': {},
+					'trackingMethod': 'internal'
+				});
+			});
 			$(this).html(iframe);
-			InWikiGame.trackClick('in-wiki-game', WikiaTracker.ACTIONS.CLICK_LINK_BUTTON, 'game-iframe-appears', null, {});
 		});
 
 		this.trackEntryPoint();
@@ -20,34 +29,18 @@ var InWikiGame = {
 		var entryPoint = $.storage.get(InWikiGameEntryPointTracker.ENTRY_POINT_STORAGE_KEY);
 
 		if( entryPoint !== null ) {
-			var GALabel = this.getGALabel(entryPoint);
-			this.trackClick('in-wiki-game', WikiaTracker.ACTIONS.CLICK, GALabel, null, {});
+			this.trackClick({
+				'category': 'in-wiki-game',
+				'action': WikiaTracker.ACTIONS.CLICK,
+				'label': this.getGALabel(entryPoint),
+				'value': null,
+				'params': {},
+				'trackingMethod': 'internal'
+			});
 			$.storage.set(InWikiGameEntryPointTracker.ENTRY_POINT_STORAGE_KEY, null);
 		}
 	},
 	getGALabel: function(entryPoint) {
 		return 'game-entry-point-' + entryPoint;
-	},
-	//todo: extract class
-	trackClick: function (category, action, label, value, params) {
-		var trackingObj = {
-			ga_category: category,
-			ga_action: action,
-			ga_label: label
-		};
-
-		if (value) {
-			trackingObj['ga_value'] = value;
-		}
-
-		if (params) {
-			$.extend(trackingObj, params);
-		}
-
-		WikiaTracker.trackEvent(
-			'trackingevent',
-			trackingObj,
-			'ga'
-		);
 	}
 }
