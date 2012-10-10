@@ -3,13 +3,13 @@ package com.wikia.webdriver.Common.Properties;
 import java.io.File;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 
 import com.wikia.webdriver.Common.Core.Global;
 import com.wikia.webdriver.Common.Core.XMLFunctions;
-import com.wikia.webdriver.Common.Logging.PageObjectLogging;
 
 public class Properties {
 
@@ -89,7 +89,7 @@ public class Properties {
 		{
 			setPropertiesManually();
 		}		
-		getWikiVersion();
+//		getWikiVersion();
 		setVariables();
 	}
 	
@@ -115,7 +115,7 @@ public class Properties {
 	
 	private static void getWikiVersion()
 	{
-		WebDriver versionDriver = new HtmlUnitDriver();
+		WebDriver versionDriver = new HtmlUnitDriver(true);
 		versionDriver.get(Global.DOMAIN+"wiki/Special:Version");
 		WebElement versionTable = versionDriver.findElement(By.xpath("//td[contains(text(), 'Code')]"));
 		Global.WIKI_VERSION = versionTable.getText();
