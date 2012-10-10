@@ -548,7 +548,12 @@ AdConfig.DART.getDcoptKV = function(slotname){
 };
 
 AdConfig.DART.getCustomVarAB = function() {
-	var ab = window.top.Wikia.AbTest.getTreatmentGroup( "AD_LOAD_TIMING" );
+	var ab;
+
+	if ( typeof window.top.Wikia.AbTest != 'undefined' ) {
+		ab = window.top.Wikia.AbTest.getTreatmentGroup( "AD_LOAD_TIMING" );
+	}
+
 	return ab ? 'ab=e1g' + ab + ';' : '';
 };
 
