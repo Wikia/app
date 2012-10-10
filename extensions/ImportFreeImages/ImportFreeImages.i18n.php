@@ -26,6 +26,9 @@ $messages['en'] = array(
 	'importfreeimages_size_medium' => 'Medium',
 	'importfreeimages_size_large' => 'Large',
 	'importfreeimages_size_original' => 'Original',
+	'importfreeimages_size_large_square' => 'Large square',
+	'importfreeimages_size_medium_640' => '640 px',
+	'importfreeimages_size_small_320' => '320 px',
 );
 
 /** Message documentation (Message documentation)
@@ -1099,6 +1102,7 @@ $messages['pl'] = array(
 	'importfreeimages_size_medium' => 'Średni',
 	'importfreeimages_size_large' => 'Duży',
 	'importfreeimages_size_original' => 'Oryginalny',
+	'importfreeimages_size_large_square' => 'Duży kwadrat',
 );
 
 /** Piedmontese (Piemontèis)
