@@ -8,13 +8,30 @@ class SassUtil {
 	const DEFAULT_OASIS_THEME = 'oasis';
 
 	/**
-	 * Returns complete set of sass parameters including theme settings
-	 * and wide wiki indicator if it's the case
+	 * Returns complete set of sass parameters including theme settings set by user
+	 * and webapp application settings.
 	 */
 	public static function getSassSettings() {
-		global $wgOasisHD, $wgOasisFluid, $wgOasisGrid;
-
 		$params = self::getOasisSettings();
+
+		$params = array_merge($params, self::getApplicationThemeSettings());
+
+		ksort( $params );
+
+		return $params;
+	}
+	
+	/**
+	 * Returns a set of sass parameters set by the webapp that should not be saved to wiki themesettings
+	 * For example, skin width is an webapp, application, setting.  It is not user controllable.
+	 * Rationale: User-set theme settings and skin logic should be kept separate.
+	 *            User-set theme settings should be saved.
+	 *            Non-settable settings should be driven programmatically.
+	 */
+	public static function getApplicationThemeSettings() {
+		global $wgOasisHD, $wgOasisFluid, $wgOasisGrid;
+		
+		$params = array();
 
 		if ( $wgOasisHD ) {
 			$params['widthType'] = 1;
@@ -27,9 +44,7 @@ class SassUtil {
 		if ( $wgOasisGrid ) {
 			$params['widthType'] = 3;
 		}
-
-		ksort( $params );
-
+		
 		return $params;
 	}
 

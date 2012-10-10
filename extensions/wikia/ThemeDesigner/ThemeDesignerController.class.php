@@ -24,6 +24,9 @@ class ThemeDesignerController extends WikiaController {
 		// current settings
 		$this->themeSettings = $themeSettings->getSettings();
 
+		// application theme settings (not user settable)
+		$this->applicationThemeSettings = SassUtil::getApplicationThemeSettings();
+
 		// recent versions
 		$themeHistory = array_reverse($themeSettings->getHistory());
 

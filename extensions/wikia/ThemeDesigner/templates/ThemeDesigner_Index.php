@@ -22,6 +22,7 @@
 		var themeHistory = <?= json_encode($themeHistory) ?>;
 		var themeSettings = <?= json_encode($themeSettings) ?>;
 		var themes = <?= json_encode($wg->OasisThemes) ?>;
+		var applicationThemeSettings = <?= json_encode($applicationThemeSettings) ?>;
 	</script>
 
 	<!--[if lt IE 8]>

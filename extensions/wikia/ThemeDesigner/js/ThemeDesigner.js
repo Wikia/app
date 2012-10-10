@@ -686,7 +686,7 @@ var ThemeDesigner = {
 
 			$().log('applySettings, reloadCSS');
 
-			var settingsToLoad = ThemeDesigner.settings;
+			var settingsToLoad = $.extend({}, ThemeDesigner.settings, window.applicationThemeSettings);
 
 			var sassUrl = $.getSassCommonURL('/skins/oasis/css/oasis.scss', settingsToLoad);
 			document.getElementById('PreviewFrame').contentWindow.ThemeDesignerPreview.loadSASS(sassUrl);
