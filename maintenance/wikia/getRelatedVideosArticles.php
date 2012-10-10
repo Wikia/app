@@ -235,6 +235,7 @@
 	$failed = 0;
 
 	foreach( $wikis as $wikiId => $detail ) {
+		$counter++;
 		echo "[$counter of $total] Wiki $wikiId ";
 		$wiki = WikiFactory::getWikiById( $wikiId );
 		if ( !empty($wiki) && $wiki->city_public == 1 ) {
@@ -265,8 +266,6 @@
 			echo "......... NOT FOUND or CLOSED\n";
 			$failed++;
 		}
-
-		$counter++;
 	}
 
 	echo "Total Wikis: ".$counter.", Success: ".($counter-$failed).", Failed: $failed\n\n";
