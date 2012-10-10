@@ -326,17 +326,13 @@ var WikiaBar = {
 			cookieData = {
 				expires: expireDate,
 				path: '/',
-				domain: 'wikia.com'
+				domain: window.wgCookieDomain
 			};
 
 		if (this.isUserAnon() && !this.isMainWikiaBarLang()) {
 			cookieData.expires = this.WIKIA_BAR_HIDDEN_ANON_NML_TTL;
 		} else if (!this.isUserAnon) {
 			cookieData.expires = this.WIKIA_BAR_HIDDEN_USER_TTL;
-		}
-
-		if (window.wgDevelEnvironment) {
-			cookieData.domain = 'wikia-dev.com';
 		}
 
 		$.cookie(key, hiddenState, cookieData);
