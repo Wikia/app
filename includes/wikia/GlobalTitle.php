@@ -158,6 +158,22 @@ class GlobalTitle extends Title {
 		return $this->mTextform;
 	}
 
+	/**
+	 * Get the text form (spaces not underscores of the title with namespace
+	 * @return string
+	 * @author tor
+	 */
+	public function getPrefixedText() {
+		$ns = $this->getNsText();
+		$text = $this->getText();
+
+		if ( empty( $ns ) ) {
+			return $text;	
+		} else {
+			return $ns . ':' . $text;
+		}
+	}
+
 	public function getCityId() {
 		return $this->mCityId;
 	}

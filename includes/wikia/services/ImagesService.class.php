@@ -17,19 +17,6 @@ class ImagesService extends Service {
 
 		$dbname = WikiFactory::IDtoDB($wikiId);
 
-		if (!empty($app->wg->DevelEnvironment)) {
-			/**
-			 * TODO: FOR TESTING IN DEV ENVIRONMENT ONLY
-			 *     BEST TO REMOVE BEFORE RELEASE
-			 */
-			if ($dbname == 'dehauptseite') {
-				$dbname = 'de';
-			}
-			if ($dbname == 'enmarveldatabase') {
-				$dbname = 'marvel';
-			}
-		}
-
 		$param = array(
 			'action' => 'imagecrop',
 			'imgId' => $pageId,
@@ -44,6 +31,28 @@ class ImagesService extends Service {
 
 		$app->wf->ProfileOut(__METHOD__);
 		return array('src' => $imageSrc, 'page' => $imagePage);
+	}
+
+	public static function getImageOriginalUrl( $wikiId, $pageId ) {
+		$app = F::app();
+
+		$app->wf->ProfileIn(__METHOD__);
+
+		$dbname = WikiFactory::IDtoDB($wikiId);
+
+		$title = GlobalTitle::newFromId( $pageId, $wikiId );
+
+		$param = array(
+			'action' => 'query',
+			'prop' => 'imageinfo',
+			'iiprop' => 'url',
+			'titles' => $title->getPrefixedText(),
+		);
+
+		$response = ApiService::foreignCall($dbname, $param);
+
+		$app->wf->ProfileOut(__METHOD__);
+		return array( 'src' => $imageSrc, 'page' => $imagePage );
 	}
 
 	/**
