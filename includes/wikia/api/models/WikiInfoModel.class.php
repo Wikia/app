@@ -23,7 +23,14 @@ class WikiInfoModel extends WikiaModel {
 	 * @return string The domain name, without protocol
 	 */
 	public function getDomainByWikiId( $wikiId ){
-		return str_replace( 'http://', '', WikiFactory::getVarValueByName( 'wgServer', $wikiId ) );
+		$domain = WikiFactory::getVarValueByName( 'wgServer', $wikiId );
+		$ret = null;
+
+		if ( !empty( $domain ) ) {
+			$ret = str_replace( 'http://', '',  $domain );
+		}
+
+		return $ret;
 	}
 
 	/**
@@ -34,7 +41,14 @@ class WikiInfoModel extends WikiaModel {
 	 * @return string The name of the vertical (e.g. Gaming, Entertainment, etc.)
 	 */
 	public function getVerticalByWikiId( $wikiId ){
-		return WikiFactory::getCategory( $wikiId )->cat_name;
+		$cat = WikiFactory::getCategory( $wikiId );
+		$ret = null;
+
+		if ( !empty( $cat ) ) {
+			$ret =  $cat->cat_name;
+		}
+
+		return $ret;
 	}
 
 	/**
@@ -57,18 +71,24 @@ class WikiInfoModel extends WikiaModel {
 			$wikis = DataMartService::getTopWikisByPageviews( DataMartService::PERIOD_ID_WEEKLY, self::MAX_RESULTS, $lang, $hub, 1 /* only pubic */ );
 
 			foreach ( $wikis as $wikiId => $wiki ) {
+				//fetching data from WikiFactory
+				//the table is indexed and values cached separately
+				//so making one query for all of them or many small
+				//separate ones doesn't make any big difference while
+				//this respects WF's data abstraction layer
+				$name = WikiFactory::getVarValueByName( 'wgSitename', $wikiId );
+				$hubName = ( !empty( $hub ) ) ? $hub : $this->getVerticalByWikiId( $wikiId );
+				$langCode = WikiFactory::getVarValueByName( 'wgLanguageCode', $wikiId );
+				$topic = WikiFactory::getVarValueByName( 'wgWikiTopics', $wikiId );
+				$domain = $this->getDomainByWikiId( $wikiId );
+
 				$results[] = array(
 					'id' => $wikiId,
-					//fetching data from WikiFactory
-					//the table is indexed and values cached separately
-					//so making one query for all of them or many small
-					//separate ones doesn't make any big difference while
-					//this respects WF's data abstraction layer
-					'name' => WikiFactory::getVarValueByName( 'wgSitename', $wikiId ),
-					'hub' => ( !empty( $hub ) ) ? $hub : $this->getVerticalByWikiId( $wikiId ),
-					'language' => WikiFactory::getVarValueByName( 'wgLanguageCode', $wikiId ),
-					'topic' => WikiFactory::getVarValueByName( 'wgWikiTopics', $wikiId ),
-					'domain' => $this->getDomainByWikiId( $wikiId )
+					'name' => ( !empty( $name ) ) ? $name : null,
+					'hub' => $hubName,
+					'language' => ( !empty( $langCode ) ) ? $langCode : null,
+					'topic' => ( !empty( $topic ) ) ? $topic : null,
+					'domain' => $domain
 				);
 			}
 
