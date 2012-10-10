@@ -52,6 +52,9 @@ class SDElement {
 			if(!in_array( $propertyName, self::$excludedNames )) {
 				$element->addProperty( F::build( 'SDElementProperty', array( $propertyName, $propertyValue, $propertyType) ) );
 			}
+			elseif($propertyName == '@context') {
+				//var_dump($propertyName);
+			}
 		}
 
 		return $element;
