@@ -879,7 +879,7 @@ function wfMsgHTMLwithLanguage($key, $lang, $options = array(), $params = array(
 		}
 
 		// notify wfMsgHTMLwithLanguageAndAlternative() that we didn't get a match
-		if ( !$found ) $msgRichRawFallbacked++;	
+		if ( !$found ) $msgRichFallbacked++;	
 
 		if($msgRichFallbacked > $msgPlainFallbacked || wfEmptyMsg($keyHTML, $msgRich)) {
 			$msgRich = null;
