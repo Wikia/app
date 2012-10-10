@@ -8,6 +8,7 @@ $wgExtensionCredits['other'][] = array(
 );
 
 $wgHooks['MakeGlobalVariablesScript'][] = 'Track::addGlobalVars';
+$wgHooks['WikiaSkinTopScripts'][] = 'Track::onWikiaSkinTopScripts';
 
 class Track {
 	const BASE_URL = 'http://a.wikia-beacon.com/__track';
@@ -46,11 +47,19 @@ class Track {
 	}
 
 	public static function getViewJS ($param=null) {
-		$url = Track::getURL('view', '', $param);
+		global $wgDevelEnvironment, $wgJsMimeType;
 
-		$script = <<<SCRIPT1
+		// Fake beacon and varnishTime values for development environment
+		if ( !empty( $wgDevelEnvironment ) ) {
+			$script = '<script>var beacon_id = "ThisIsFake", varnishTime = "' . date( "r" ) . '";</script>';
+
+		} else {
+			$url = Track::getURL('view', '', $param);
+
+			$script = <<<SCRIPT1
+<!-- Wikia Beacon Tracking -->
 <noscript><img src="$url&amp;nojs=1" width="1" height="1" border="0" alt="" /></noscript>
-<script type="text/javascript">
+<script>
 (function() {
 	var result = RegExp("wikia_beacon_id=([A-Za-z0-9_-]{10})").exec(document.cookie);
 	if(result) {
@@ -67,6 +76,7 @@ class Track {
 })();
 </script>
 SCRIPT1;
+		}
 
 		return $script;
 	}
@@ -98,6 +108,11 @@ SCRIPT1;
 		if ($wgUser->getId() && $wgUser->getId() > 0) {
 			$vars['wgTrackID'] = $wgUser->getId();
 		}
+		return true;
+	}
+
+	public static function onWikiaSkinTopScripts( &$vars, &$scripts ) {
+		$scripts .= Track::getViewJS();
 		return true;
 	}
 }

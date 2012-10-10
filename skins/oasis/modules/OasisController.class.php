@@ -398,15 +398,6 @@ class OasisController extends WikiaController {
 		$this->wikiaScriptLoader = '';
 
 		$jsAssetGroups = array( 'oasis_blocking' );
-
-		if ( !empty( $wgEnableAbTesting ) ) {
-			$pkg = F::build('AbTesting')->getJsPackage();
-
-			if(!empty($pkg)){
-				$jsAssetGroups[] = $pkg;
-			}
-		}
-
 		wfRunHooks('OasisSkinAssetGroupsBlocking', array(&$jsAssetGroups));
 		$blockingScripts = $this->assetsManager->getURL($jsAssetGroups);
 
@@ -515,23 +506,23 @@ class OasisController extends WikiaController {
 <script type="text/javascript">
 	var wsl_assets = {$assets};
 EOT;
+
 		if ($this->jsAtBottom) {
 			$jsLoader .= <<<EOT
-				if ( typeof window.EXP_AD_LOAD_TIMING != 'undefined' && (window.wgLoadAdDriverOnLiftiumInit || (window.getTreatmentGroup && (getTreatmentGroup(EXP_AD_LOAD_TIMING) == TG_AS_WRAPPERS_ARE_RENDERED)))) {
-					toload = wsl_assets.oasis_nojquery_shared_js.concat(wsl_assets.references);
-				} else {
-					toload = wsl_assets.oasis_shared_js.concat(wsl_assets.references);
-				}
+if ( window.Wikia.AbTest && ( window.wgLoadAdDriverOnLiftiumInit || Wikia.AbTest.inTreatmentGroup( "AD_LOAD_TIMING", "AS_WRAPPERS_ARE_RENDERED" ) ) ) {
+	toload = wsl_assets.oasis_nojquery_shared_js.concat(wsl_assets.references);
+} else {
+	toload = wsl_assets.oasis_shared_js.concat(wsl_assets.references);
+}
 EOT;
-		}
-		else {
+		} else {
 			$jsLoader .= <<<EOT
-				var toload = wsl_assets.oasis_shared_js.concat(wsl_assets.references);
+var toload = wsl_assets.oasis_shared_js.concat(wsl_assets.references);
 EOT;
 		}
 		$jsLoader .= <<<EOT
-			(function(){ wsl.loadScript(toload); })();
-		</script>
+	(function(){ wsl.loadScript(toload); })();
+</script>
 EOT;
 
 		$tpl = $this->app->getSkinTemplateObj();
@@ -566,8 +557,8 @@ EOT;
 			$this->adsABtesting = <<<EOT
 				<script type="text/javascript">/*<![CDATA[*/
 					(function(){
-						if (typeof window.EXP_AD_LOAD_TIMING != 'undefined' && (window.wgLoadAdDriverOnLiftiumInit || window.getTreatmentGroup && (getTreatmentGroup(EXP_AD_LOAD_TIMING) == TG_AS_WRAPPERS_ARE_RENDERED))) {
-							wsl.loadScript([].concat(window.getJqueryUrl()).concat({$jquery_ads}));
+						if ( window.Wikia.AbTest && ( window.wgLoadAdDriverOnLiftiumInit || Wikia.AbTest.inTreatmentGroup( "AD_LOAD_TIMING", "AS_WRAPPERS_ARE_RENDERED" ) ) ) {
+							wsl.loadScript([].concat( window.getJqueryUrl() ).concat( $jquery_ads ));
 						}
 					})();
 				/*]]>*/</script>

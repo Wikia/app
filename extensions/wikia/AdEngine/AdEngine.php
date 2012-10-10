@@ -888,7 +888,7 @@ class AdEngine {
 		$js = "LiftiumOptions = " . json_encode($options) . ";\n";
 		if (WikiaPageType::isSearch() || (!$wgTitle->getNamespace() == NS_SPECIAL && !BodyController::isEditPage())) {
 			$js .= <<<EOT
-				if (typeof EXP_AD_LOAD_TIMING == 'undefined' || (!window.wgLoadAdDriverOnLiftiumInit && window.getTreatmentGroup && (getTreatmentGroup(EXP_AD_LOAD_TIMING) == TG_ONLOAD))) {
+				if ( !window.wgLoadAdDriverOnLiftiumInit && ( !window.Wikia.AbTest || !Wikia.AbTest.inTreatmentGroup( "AD_LOAD_TIMING", "ONLOAD" ) ) ) {
 					LiftiumOptions['hasMoreCalls'] = true;
 					LiftiumOptions['isCalledAfterOnload'] = true;
 					LiftiumOptions['maxLoadDelay'] = 6000;

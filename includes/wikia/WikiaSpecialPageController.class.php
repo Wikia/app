@@ -11,6 +11,7 @@
  *
  * Methods automagically called from SpecialPage class via __call method:
  * @method setHeaders
+ * @method checkPermissions
  * @method displayRestrictionError
  */
 class WikiaSpecialPageController extends WikiaController {

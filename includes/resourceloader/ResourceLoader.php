@@ -37,7 +37,7 @@ class ResourceLoader {
 
 	/** Associative array mapping module name to info associative array */
 	protected $moduleInfos = array();
- 
+
 	/** Associative array mapping framework ids to a list of names of test suite modules */
 	/** like array( 'qunit' => array( 'mediawiki.tests.qunit.suites', 'ext.foo.tests', .. ), .. ) */
 	protected $testModuleNames = array();
@@ -377,7 +377,7 @@ class ResourceLoader {
 	public function getModuleNames() {
 		return array_keys( $this->moduleInfos );
 	}
- 
+
  	/**
 	 * Get a list of test module names for one (or all) frameworks.
 	 * If the given framework id is unknkown, or if the in-object variable is not an array,
@@ -1200,5 +1200,63 @@ class ResourceLoader {
 		}
 		return $this->moduleInfos[$name];
 	}
+
+	/**
+	 * Build a load.php URL using OutputPage instance to get  most of the required information
+	 *
+	 * @param OutputPage $out
+	 * @param string|array $modules Module names
+	 * @param string $only
+	 * @param bool|string $user User name (true to get it from OutputPage)
+	 * @param string $version
+	 * @param array $extraQuery
+	 * @return string
+	 */
+	public static function makeCustomURL( OutputPage $out, $modules, $only = ResourceLoaderModule::TYPE_COMBINED, $user = null, $version = null,
+			$extraQuery = array() ) {
+		if ( $user === true ) {
+			$user = $out->getUser()->getName();
+		} else if ( $user === false || $user === null ) {
+			$user = null;
+		} else {
+			$user = (string)$user;
+		}
+		$url = ResourceLoader::makeLoaderURL(
+			$modules,
+			$out->getLanguage()->getCode(),
+			$out->getSkin()->getSkinName(),
+			$user,
+			$version, // version; not determined yet
+			ResourceLoader::inDebugMode(),
+			$only === ResourceLoaderModule::TYPE_COMBINED ? null : $only,
+			$out->isPrintable(),
+			$out->getRequest()->getBool( 'handheld' ),
+			$extraQuery
+		);
+		return $url;
+	}
+
+	/**
+	 * Build a script tag to load.php URL using OutputPage instance to get most of the required information
+	 *
+	 * @param OutputPage $out
+	 * @param string|array $modules Module names
+	 * @param string $only
+	 * @param bool|string $user User name (true to get it from OutputPage)
+	 * @param string $version
+	 * @param array $extraQuery
+	 * @return string
+	 */
+	public static function makeCustomLink( OutputPage $out, $modules, $only = ResourceLoaderModule::TYPE_COMBINED, $user = false, $version = null,
+			$extraQuery = array() ) {
+		$url = ResourceLoader::makeCustomURL( $out, $modules, $only, $user, $version, $extraQuery );
+		if ( $only === ResourceLoaderModule::TYPE_STYLES ) {
+			$link = Html::linkedStyle( $url );
+		} else {
+			$link = Html::linkedScript( $url );
+		}
+		return $link;
+	}
+
 	/* Wikia change - end */
 }

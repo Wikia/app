@@ -1,9 +1,9 @@
 <?php
 
 class AdProviderAdDriver implements iAdProvider {
-	
+
 	const HIGH_LOADPRIORITY_FLOOR = 11;
-	
+
 	public $enable_lazyload = true;
 
 	protected static $instance = false;
@@ -40,7 +40,7 @@ class AdProviderAdDriver implements iAdProvider {
 				$extraClasses .= ' ' . implode(' ', $params['extraClasses']);
 			}
 		}
-		
+
 		if (strpos($slotname, 'EXIT_STITIAL') === FALSE && strpos($slotname, 'MODAL') === FALSE) {
 			$out .= '<div id="' . htmlspecialchars($slotname) . '" class="wikia-ad noprint'.$extraClasses.'">';
 		}
@@ -71,20 +71,20 @@ EOT;
 		else {
 			$out .= <<<EOT
 	if(!window.adslots) {
-	       window.adslots = [];
+		window.adslots = [];
 	}
 	window.adslots.push(["$slotname", "{$slot['size']}", "DART", {$slot['load_priority']}]);
 EOT;
 			if ($slot['load_priority'] >= self::HIGH_LOADPRIORITY_FLOOR) {
 				$out .= <<<EOT
-	if (window.wgLoadAdDriverOnLiftiumInit || (window.getTreatmentGroup && (getTreatmentGroup(EXP_AD_LOAD_TIMING) == TG_AS_WRAPPERS_ARE_RENDERED))) {
+	if ( window.wgLoadAdDriverOnLiftiumInit || window.Wikia.AbTest && Wikia.AbTest.inTreatmentGroup( "AD_LOAD_TIMING", "AS_WRAPPERS_ARE_RENDERED" ) ) {
 		if (window.adDriverCanInit) {
 			AdDriverDelayedLoader.prepareSlots(AdDriverDelayedLoader.highLoadPriorityFloor);
 		}
 	}
-	
+
 EOT;
-				
+
 			}
 		}
 
@@ -95,7 +95,7 @@ EOT;
 			$out .= '</div>';
 		}
 
-		// 2012/05/16 wlee: for purposes of ads A/B/C test, Liftium 
+		// 2012/05/16 wlee: for purposes of ads A/B/C test, Liftium
 		// setup code is emitted in Oasis_Index.php
 		//$out .= AdProviderLiftium::getInstance()->getSetupHtml(array('isCalledAfterOnload'=>1, 'hasMoreCalls'=>1, 'maxLoadDelay'=>6000));
 
@@ -115,12 +115,12 @@ EOT;
 
 		return $out;
 	}
-	
+
 	private $slotsToCall = array();
 	public function addSlotToCall($slotname){
 		$this->slotsToCall[]=$slotname;
 	}
+
 	public function batchCallAllowed(){ return false; }
 	public function getBatchCallHtml(){ return false; }
-	
 }

@@ -11,15 +11,6 @@ class AnalyticsProviderGA_Urchin implements iAnalyticsProvider {
 		}
 		$called = true;
 
-		$script = '';
-
-		// Load the OneDot javascript <s>after</s> before GA
-		// GA needs AB::getTreatmentGroup needs beacon
-		// TODO: refactor Track into AnalyticsProviderOnedot
-		if (class_exists('Track')) {
-			$script .= Track::getViewJS();
-		}
-
 		$setDomainName = '';
 		if(strpos($_SERVER['SCRIPT_URI'], '.wikia.com/') !== false) {
 			$setDomainName = '_gaq.push([\'_setDomainName\', \'.wikia.com\']);';
@@ -41,30 +32,17 @@ urchinTracker = function() {
 </script>
 SCRIPT2;
 */
-		$script .= <<<SCRIPT2
+		$script = <<<SCRIPT2
 <script type="text/javascript">
   function getCustomVarPage() {
     if (window.wgIsMainpage) return 'mainpage';
 
     return 'other';
   }
-  
-  function getCustomVarAB() {
-    var ab = 'error';
-    
-    if (window.getTreatmentGroup) {
-      ab = getTreatmentGroup(1);
-      if (ab == 1 || ab == 2 || ab == 3) {
-        ab = 'e1 g' + ab;
-      } else {
-        ab = 'no group';
-      }
-    } else {
-      ab = 'no function';
-    }
 
-    //console.log(ab);
-    return ab || 'impossible';
+  function getCustomVarAB() {
+    var ab = window.Wikia.AbTest && Wikia.AbTest.getTreatmentGroup(1);
+    return ab ? 'e1 g' + ab : 'no group';
   }
 
   function getCustomVarSlot() {

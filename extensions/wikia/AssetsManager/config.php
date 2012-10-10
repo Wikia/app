@@ -258,6 +258,7 @@ $config['oasis_nojquery_shared_js'] = array(
 		'//extensions/wikia/AssetsManager/js/AssetsManager.js',
 		'//extensions/wikia/JSMessages/js/JSMessages.js',
 		'//extensions/wikia/CategorySelect/CategorySelect.view.js',
+		'//extensions/wikia/WikiaStyleGuide/js/Form.js',
 
 		// oasis specific files
 		'//resources/wikia/oasis_tracking.js',
@@ -278,7 +279,6 @@ $config['oasis_nojquery_shared_js'] = array(
 		'//skins/oasis/js/isTouchScreen.js',
 		'//skins/oasis/js/tabs.js',
 		'//skins/oasis/js/SharingToolbar.js',
-		'//skins/oasis/js/WikiaForm.js',
 	)
 );
 
@@ -747,7 +747,7 @@ $config['mini_editor_rte_js'] = array(
 
 $config['chat_js2'] = array(
 	'type' => AssetsManager::TYPE_JS,
-	'assets' => array( 
+	'assets' => array(
 		'#group_oasis_jquery',
 
 		// shared libraries
@@ -1094,7 +1094,7 @@ $config['abtesting'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => array( 'monobook', 'oasis', 'wikiamobile' ),
 	'assets' => array(
-		'//extensions/wikia/AbTesting/js/AbTesting.js',
+		'//extensions/wikia/AbTesting/js/AbTest.js',
 	)
 );
 

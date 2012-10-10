@@ -1,0 +1,138 @@
+@import "skins/oasis/css/core/color";
+@import "skins/oasis/css/mixins/arrow";
+@import "skins/oasis/css/mixins/border-radius";
+@import "skins/oasis/css/mixins/clearfix";
+
+$abTesting-color-border: mix($color-page, $color-text, 30);
+$abTesting-color-hover: mix($color-page, $color-text, 80);
+$abTesting-color-text-warning: #c27500;
+
+.AbTestingEditForm {
+	.input-group {
+		clear: none;
+		float: none;
+		display: inline-block;
+		width: 400px;
+		&.error {
+			color: $abTesting-color-text-warning;
+			.error-msg {
+				@include clearfix;
+				p {
+					color: $abTesting-color-text-warning;
+					padding: 5px 0;
+				}
+				button {
+					margin-right: 5px;
+				}
+			}
+		}
+		&.experiment-groups {
+			display: block;
+			border: 1px solid $abTesting-color-border;
+			margin: 10px 0;
+			width: 615px;
+			.input-group {
+				width: 600px;
+				input, textarea {
+					width: 580px;
+				}
+				select {
+					width: 596px;
+				}
+			}
+			legend {
+				font-size: 14px;
+				font-weight: bold;
+				padding: 5px;
+			}
+		}
+		&.fullwidth {
+			display: block;
+			width: 800px;
+			textarea {
+				width: 800px;
+			}
+		}
+		&.general-errors {
+			border: 1px solid $abTesting-color-border;
+			margin-bottom: 10px;
+			padding: 5px;
+			width: 800px;
+		}
+		input, textarea {
+			width: 380px;
+		}
+		select {
+			width: 396px;
+		}
+	}
+	.add-new {
+		border-top: 1px solid $abTesting-color-border;
+		margin-top: 5px;
+		padding-top: 5px;
+	}
+	.ui-datepicker {
+		margin-top: 5px;
+	}
+}
+
+.AbTestEditor {
+	width: 100%;
+	tr.collapsed + tr {
+		display: none;
+	}
+	tr.exp:hover, tr.exp:hover td {
+		background: $abTesting-color-hover;
+		cursor: pointer;
+	}
+	.arrow-nav {
+		width: 15px;
+	}
+	.arrow {
+		@include arrow(6px, $color-text);
+	}
+	.collapsed .arrow {
+		@include arrow(6px, $color-text, 'up');
+	}
+	.actions {
+		width: 50px;
+	}
+	.sprite, .sprite-small {
+		display: inline-block;
+		vertical-align: middle;
+	}
+	.WikiaTable {
+		margin: 0;
+		width: 100%;
+	}
+	.details > td {
+		margin: 0;
+		padding: 0 0 0 42px;
+	}
+	.exp-throbber {
+		min-height: 20px;
+		position: relative;
+		padding: 0;
+		margin: 0;
+		width: 100%;
+		height: 100%;
+	}
+	.versions.WikiaTable {
+		border-left-width: 1px;
+		border-left-style: solid;
+		th {
+			// override default .WikiaTable color
+			background: inherit;
+		}
+		tr:last-child td {
+			border-bottom: 0;
+		}
+	}
+	.exp-add td {
+		padding-left: 10px;
+	}
+}
+
+#ui-datepicker-div .ui-datepicker-buttonpane button {
+	line-height: normal;
+}

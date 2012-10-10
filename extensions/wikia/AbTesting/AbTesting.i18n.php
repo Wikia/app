@@ -10,12 +10,26 @@ $messages = array();
 $messages['en'] = array(
 	'abtesting' => 'A/B Testing',
 	'abtesting-desc' => 'The A/B Testing extension is used by Wikia to test what effects different features or settings have on actual users.',
-	
-	'abtesting-create-experiment-heading' => 'Create Experiment',
-	'abtesting-create-experiment-submit' => 'Create',
-	'abtesting-create-experiment-exp-name' => 'Experiment name (this will become a varaible so make it short but descriptive)',
-	'abtesting-create-experiment-treatment-groups' => 'Treatment Groups',
 
+	'abtesting-heading-id' => 'ID',
+	'abtesting-heading-name' => 'Name',
+	'abtesting-heading-description' => 'Description',
+
+	'abtesting-heading-start-time' => 'Start Time',
+	'abtesting-heading-end-time' => 'End Time',
+	'abtesting-heading-ga-slot' => 'GA Slot',
+	'abtesting-heading-group' => 'Group',
+	'abtesting-heading-control-group' => 'Control Group',
+	'abtesting-heading-ranges' => 'Ranges (0-99)',
+	'abtesting-heading-treatment-groups' => 'Treatment Groups',
+
+	'abtesting-create-experiment' => 'Create New Experiment',
+	'abtesting-add-experiment-title' => 'Add Experiment',
+	'abtesting-edit-experiment-title' => 'Edit Experiment',
+	'abtesting-add-treatment-group' => 'Add Treatment Group',
+
+	'abtesting-edit-button' => 'Edit',
+	'abtesting-save-button' => 'Save',
 );
 
 
@@ -23,8 +37,5 @@ $messages['en'] = array(
  * qqq - Documentation for the messages.
  */
 $messages['qqq'] = array(
-	'abtesting-create-experiment-heading' => 'The heading for the Create Experiment form.',
-	'abtesting-create-experiment-submit' => 'Text on the button to submit the Create Experiment form',
-	'abtesting-create-experiment-exp-name' => 'The text label near the field to enter the name of the experiment to create in the Create Experiment form.',
 
 );

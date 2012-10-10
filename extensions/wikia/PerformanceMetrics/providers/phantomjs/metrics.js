@@ -225,9 +225,9 @@ page.onInitialized = function () {
 	});
 
 	// AB testing setup
-	// @see /extensions/wikia/AbTesting/js/AbTesting.js
+	// @see /extensions/wikia/AbTesting/js/AbTest.js
 	if (abGroup) {
-		page.evaluate(new Function("window.abTreatments = {1: '" + abGroup + "'};"));
+		page.evaluate(new Function("window.Wikia.AbTest.treatmentGroups = {'1': '" + abGroup + "'};"));
 	}
 };
 
@@ -519,7 +519,7 @@ function renderMetrics() {
 	}));
 
 	notices.push('A/B testing group: ' + page.evaluate(function() {
-		return window.getTreatmentGroup && getTreatmentGroup(1);
+		return window.Wikia.AbTest.getTreatmentGroup(1);
 	}));
 
 	// add log lines to notices

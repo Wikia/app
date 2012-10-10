@@ -69,7 +69,6 @@ var AdProviderAdDriver2 = function (helper, WikiaDart, ScriptWriter, WikiaTracke
 					hop(slotname);
 				}
 
-
 			}
 		);
 	}

@@ -47,9 +47,9 @@
 @import "core/successerror";
 @import "core/SpeechBubble";
 @import "core/ArticleAfterComments";
-@import "core/WikiaForm";
 @import "core/SharingToolbar";
 @import "core/GlobalNotification";
+@import "core/WikiaBar";
 @import "resources/wikia/libraries/bootstrap/tooltip";
 @import "resources/wikia/libraries/bootstrap/popover";
 
@@ -63,6 +63,7 @@
 @import "extensions/wikia/ImageLazyLoad/css/ImageLazyLoad";
 @import "extensions/wikia/UserLogin/css/UserLoginGlobal";
 @import "extensions/wikia/VideoHandlers/css/VideoHandlers";
+@import "extensions/wikia/WikiaStyleGuide/css/Form";
 
 // CSS files need leading slash
 @import "/extensions/wikia/CreatePage/css/CreatePage.css";
@@ -72,6 +73,3 @@
 // WikiaPhotoGallery - slideshows slidding (BugId:1296)
 // TODO: load on demand using JSView
 @import "extensions/wikia/WikiaPhotoGallery/css/slideshow";
-
-// WikiaBar extension - theme designer needs that to apply styles
-@import "core/WikiaBar.scss";

@@ -78,7 +78,7 @@ $dropdown = array(
 	array(
 		"id" => "UISGMenuButtonFirst",
 		"text" => "First Item"
-	), 
+	),
 	array(
 		"id" => "UISGMenuButtonSecond",
 		"text" => "Second Item"
@@ -215,6 +215,7 @@ $("#UISGContentModalShortcutButton").click(function() {
 
 <h2>Form</h2>
 <?php
+// See: /extensions/wikia/WikiaStyleGuide/templates/WikiaStyleGuideForm_index.php
 $uisgSampleForm = array (
 	'action' => '',
 	'method' => 'GET',
@@ -222,7 +223,7 @@ $uisgSampleForm = array (
         array(
             // Main input attributes
             'label' => 'A Text Input',
-            'type' => 'text',	// for full list of types, look at /skins/oasis/modules/templates/WikiaForm_Index.php
+            'type' => 'text',
             'name' => 'uisgformsampletext',
             // extra attributes (all optional)
             'attributes' => array(
@@ -238,7 +239,7 @@ $uisgSampleForm = array (
         array(
             // Main input attributes
             'label' => 'A Text Input',
-            'type' => 'text',	// for full list of types, look at /skins/oasis/modules/templates/WikiaForm_Index.php
+            'type' => 'text',
             'name' => 'uisgformsampletext',
             // extra attributes (all optional)
             'attributes' => array(
@@ -246,7 +247,7 @@ $uisgSampleForm = array (
         ),
     )
 );
-echo F::app()->renderView('WikiaForm', 'Index', array('form' => $uisgSampleForm));
+echo F::app()->renderView('WikiaStyleGuideForm', 'index', array('form' => $uisgSampleForm));
 ?>
 
 <h2>System Notification (aka Global Notification)</h2>

@@ -82,7 +82,7 @@
 		);
 	}
 
-	echo $app->renderView('WikiaForm', 'Index', array('form' => $form));
+	echo $app->renderView('WikiaStyleGuideForm', 'index', array('form' => $form));
 
 	// 3rd party providers buttons
 	if (!$isMonobookOrUncyclo) echo $app->renderView('UserLoginSpecial', 'Providers');

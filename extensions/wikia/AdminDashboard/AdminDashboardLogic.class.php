@@ -42,9 +42,11 @@ class AdminDashboardLogic {
 
 			// NOTE: keep this list in alphabetical order
 			static $exclusionList = array(
+				"AbTesting",
 				"ApiExplorer",
 				"ApiGate",
 				"Chat",
+				"CloseWiki",
 				"Code",
 				"Confirmemail",
 				"Connect",
@@ -55,7 +57,6 @@ class AdminDashboardLogic {
 				"CreateNewWiki",
 				"CreateTopList",
 				"Crunchyroll",
-				"CloseWiki",
 				"EditAccount",
 				"EditTopList",
 				"Following",
@@ -86,7 +87,6 @@ class AdminDashboardLogic {
 				"PromoteImageReview",
 				"ScavengerHunt",
 				"Search",
-				"WikiaSearch",
 				"Signup",
 				"SiteWideMessages",
 				"SponsorshipDashboard",
@@ -94,18 +94,19 @@ class AdminDashboardLogic {
 				"ThemeDesigner",
 				"ThemeDesignerPreview",
 				"UserLogin",
-				"UserSignup",
+				"UserManagement",
 				"UserPathPrediction",
+				"UserSignup",
 				"Version",
 				"Videos",
 				"WhereIsExtension",
 				"WikiActivity",
 				"WikiaHubsV2",
+				"WikiaSearch",
 				"WikiaStyleGuide",
 				"WikiFactory",
 				"WikiFactoryReporter",
 				"WikiStats",
-				"UserManagement",
 			);
 			return (!in_array($alias, $exclusionList));
 		}

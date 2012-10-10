@@ -3,6 +3,8 @@
  * To be used with .WikiaForm DOM elements only
  * This code should only change the visual aesthetics of the form.
  * DO NOT PLACE ANY BUSINESS LOGIC HERE
+ *
+ * TODO: refactor to Wikia.Form
  */
 var WikiaForm = function(el) {
 	this.el = $(el);
@@ -123,8 +125,8 @@ WikiaForm.prototype.clearSuccessMsg = function(inputGroup) {
 };
 
 WikiaForm.prototype.clearGenericError = function(inputGroup) {
-	inputGroup.hide().find('.error-msg').remove();	
+	inputGroup.hide().find('.error-msg').remove();
 }
 WikiaForm.prototype.clearGenericSuccess = function(inputGroup) {
-	inputGroup.hide().find('.success-msg').remove();	
+	inputGroup.hide().find('.success-msg').remove();
 }

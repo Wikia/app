@@ -68,6 +68,6 @@
 	$form['isInvalid'] = !empty($result) && empty($errParam) && !empty($msg);
 	$form['errorMsg'] = !empty($msg) ? $msg : '';
 
-	echo F::app()->renderView('WikiaForm', 'Index', array('form' => $form));
+	echo F::app()->renderView('WikiaStyleGuideForm', 'index', array('form' => $form));
 ?>
 </div>

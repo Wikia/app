@@ -128,7 +128,7 @@
 		);
 	}
 
-	echo F::app()->renderView('WikiaForm', 'Index', array('form' => $form));
+	echo F::app()->renderView('WikiaStyleGuideForm', 'index', array('form' => $form));
 ?>
 	</div>
 </section>

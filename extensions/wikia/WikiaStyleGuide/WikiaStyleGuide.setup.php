@@ -9,7 +9,7 @@
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'WikiaStyleGuide',
 );
- 
+
 $dir = dirname(__FILE__) . '/';
 $app = F::app();
 

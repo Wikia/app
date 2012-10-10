@@ -9,6 +9,11 @@
 class ResourceLoaderHooks {
 
 	static protected $resourceLoaderInstance;
+	static protected $assetsManagerGroups = array(
+//		'skins.oasis.blocking' => 'oasis_blocking',
+//		'skins.oasis.core' => 'oasis_shared_core',
+//		'wikia.ads.adengine2' => 'adengine2_js',
+	);
 
 	/**
 	 * @static
@@ -29,6 +34,13 @@ class ResourceLoaderHooks {
 	 * @return bool true because it's a hook
 	 */
 	static public function onResourceLoaderRegisterModules( ResourceLoader $resourceLoader ) {
+		self::registerSources($resourceLoader);
+		self::registerAssetsManagerGroups($resourceLoader);
+
+		return true;
+	}
+
+	static protected function registerSources( ResourceLoader $resourceLoader ) {
 		global $wgScriptPath, $wgScriptExtension, $wgMedusaHostPrefix, $wgCdnRootUrl, $wgDevelEnvironment,
 			   $wgStagingEnvironment, $wgCityId, $wgEnableResourceLoaderRewrites;
 
@@ -72,6 +84,44 @@ class ResourceLoaderHooks {
 
 		$resourceLoader->setSource('local',$sources['local']);
 		$resourceLoader->addSource('common',$sources['common']);
+
+		return true;
+	}
+
+	static protected function registerAssetsManagerGroups( ResourceLoader $resourceLoader ) {
+		if ( empty( self::$assetsManagerGroups ) ) {
+			return true;
+		}
+
+		$assetsConfig = new AssetsConfig();
+		foreach (self::$assetsManagerGroups as $moduleName => $groupName) {
+			$type = $assetsConfig->getGroupType($groupName);
+			$key = null;
+			switch ($type) {
+				case AssetsManager::TYPE_JS:
+					$key = 'scripts';
+					break;
+				case AssetsManager::TYPE_CSS:
+				case AssetsManager::TYPE_SCSS:
+					$key = 'styles';
+					break;
+			}
+			if ( empty( $key ) ) {
+				// todo: log error
+				continue;
+			}
+
+			$assets = $assetsConfig->resolve($groupName,false,false);
+			foreach ($assets as $k => $v) {
+				if ( !preg_match('#^(extensions|resources|skins)/#', $v) ) {
+					unset($assets[$k]);
+				}
+			}
+			$assets = array_values($assets);
+			$module = array();
+			$module[$key] = $assets;
+			$resourceLoader->register($moduleName,$module);
+		}
 
 		return true;
 	}
@@ -183,6 +233,10 @@ class ResourceLoaderHooks {
 		$source = false;
 		foreach ($modules as $moduleName) {
 			$module = $resourceLoaderInstance->getModule($moduleName);
+
+			if ( !$module ) {
+				continue;
+			}
 
 			$moduleSource = $module->getSource();
 

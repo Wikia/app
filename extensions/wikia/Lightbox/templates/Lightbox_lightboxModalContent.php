@@ -148,7 +148,7 @@
 					    )
 					);
 				?>
-				<?= F::app()->renderView('WikiaForm', 'Index', array('form' => $form)); ?>
+				<?= F::app()->renderView('WikiaStyleGuideForm', 'index', array('form' => $form)); ?>
 				<div class="social-links">
 					<ul>
 						{{#networks}}
@@ -193,11 +193,11 @@
 						    )
 						);
 					?>
-					<?= F::app()->renderView('WikiaForm', 'Index', array('form' => $formHeader)); ?>
+					<?= F::app()->renderView('WikiaStyleGuideForm', 'index', array('form' => $formHeader)); ?>
 					{{#embedMarkup}}
-						<?= F::app()->renderView('WikiaForm', 'Index', array('form' => $formEmbed)); ?>
+						<?= F::app()->renderView('WikiaStyleGuideForm', 'index', array('form' => $formEmbed)); ?>
 					{{/embedMarkup}}
-					<?= F::app()->renderView('WikiaForm', 'Index', array('form' => $formFilePage)); ?>
+					<?= F::app()->renderView('WikiaStyleGuideForm', 'index', array('form' => $formFilePage)); ?>
 				</div>
 				<div class="email">
 					<?php
@@ -226,12 +226,12 @@
 							)
 						);
 					?>
-					<?= F::app()->renderView('WikiaForm', 'Index', array('form' => $form)); ?>
+					<?= F::app()->renderView('WikiaStyleGuideForm', 'index', array('form' => $form)); ?>
 				</div>
 			</div>
 		</div>
 	</script>
-	
+
 	<script id="LightboxErrorMessage" type="text/template">
 		<p><?= wfMsg('lightbox-no-media-error-header') ?> <?= wfMsg('lightbox-no-media-error', $wg->Sitename) ?></p>
 	</script>

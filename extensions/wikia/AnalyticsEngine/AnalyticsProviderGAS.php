@@ -12,10 +12,6 @@ class AnalyticsProviderGAS implements iAnalyticsProvider {
 
 		$script = '';
 
-		if (class_exists('Track')) {
-			$script .= Track::getViewJS();
-		}
-
 		return $script;
 	}
 

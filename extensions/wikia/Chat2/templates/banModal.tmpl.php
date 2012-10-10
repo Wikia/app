@@ -1,6 +1,6 @@
 <?php
 
-// Build the modal's form with WikiaForm
+// Build the modal's form with WikiaStyleGuideForm
 $form = array(
 	'inputs' => array(),
 );
@@ -46,4 +46,4 @@ $reasonRow = array(
 array_push($form['inputs'], $reasonRow);
 
 // return the form HTML
-echo F::app()->renderView('WikiaForm', 'Index', array('form' => $form));
+echo F::app()->renderView('WikiaStyleGuideForm', 'index', array('form' => $form));

@@ -1,5 +1,5 @@
-@import "../mixins/border-radius";
-@import "../mixins/forms";
+@import "skins/oasis/css/mixins/border-radius";
+@import "skins/oasis/css/mixins/forms";
 
 .WikiaForm {
 	> fieldset {
@@ -54,14 +54,14 @@
 				} @else {
 					color: #3d8d42;
 				}
-	
+
 			}
 			/* redesign work in progress, DO NOT REMOVE - hyun Jan 23, 2012
 			color: mix(#ff0000, #d4d4d4, 75%);
 			@if $is-dark-wiki {
 				color: mix(#ff0000, #2b2b2b, 60%);
 			}
-			
+
 			input[type=text],
 			input[type=password] {
 				background-color: mix($color-page, yellow, 75%);
@@ -69,7 +69,7 @@
 					background-color: mix($color-page, yellow, 92%);
 				}
 			}
-			
+
 			.error-msg {
 				border: 1px solid mix($color-page, #000000, 90%);
 				@include box-shadow(0, 1px, 2px, mix($color-page, #000000, 86%));

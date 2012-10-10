@@ -8,9 +8,10 @@
  * @namespace WikiaScriptLoader
  */
 
-var WikiaScriptLoader = {};
+(function(window){
 
-(function(){
+	var WikiaScriptLoader = {};
+
 	/**
 	 * @private
 	 */
@@ -133,18 +134,19 @@ var WikiaScriptLoader = {};
 	 * @public
 	 */
 
-	this.buildScript = buildScript;
+	WikiaScriptLoader.buildScript = buildScript;
 
-	this.loadScript = function(urls, callback){
+	WikiaScriptLoader.loadScript = function(urls, callback){
 		if(useDOMInjection)
 			injectNode('js', urls, {callback: callback});
 		else
 			writeScript(urls, callback);
 	};
 
-	this.loadCSS = function(urls, media) {
+	WikiaScriptLoader.loadCSS = function(urls, media) {
 		injectNode('css', urls, {media: media});
 	};
-}).apply(WikiaScriptLoader);
 
-window.wsl = WikiaScriptLoader;
+	window.wsl = WikiaScriptLoader;
+
+})(window);

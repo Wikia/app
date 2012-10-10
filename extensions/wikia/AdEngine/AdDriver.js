@@ -3,6 +3,8 @@
 /* requires Liftium.js */
 /* requires extensions/wikia/AdEngine/ghost */
 
+var abTest = window.Wikia.AbTest && new Wikia.AbTest( "AD_LOAD_TIMING" );
+
 ///// BEGIN AdDriver
 var AdDriver = {
 	adProviderAdDriver: 'AdDriver',
@@ -748,15 +750,13 @@ AdDriverDelayedLoader.loadNext = function() {
 			AdDriverDelayedLoader.loadNext();
 		}
 	}
-	else if(typeof EXP_AD_LOAD_TIMING != "undefined"){
-		if (window.getTreatmentGroup && (window.wgLoadAdDriverOnLiftiumInit || getTreatmentGroup(EXP_AD_LOAD_TIMING) == TG_AS_WRAPPERS_ARE_RENDERED)) {
-			if (AdDriverDelayedLoader.runFinalize) {
-				AdDriverDelayedLoader.finalize();
-			}
-		}
-		else {
+	else if ( ( window.wgLoadAdDriverOnLiftiumInit || window.Wikia.AbTest && Wikia.AbTest.inTreatmentGroup( "AD_LOAD_TIMING", "AS_WRAPPERS_ARE_RENDERED" ) ) ) {
+		if (AdDriverDelayedLoader.runFinalize) {
 			AdDriverDelayedLoader.finalize();
 		}
+	}
+	else {
+		AdDriverDelayedLoader.finalize();
 	}
 
 	if (!AdDriverDelayedLoader.adDriverItems.length && typeof Liftium != 'undefined' && Liftium) {
@@ -841,6 +841,7 @@ AdDriverDelayedLoader.getNextSlotFromBuffer = function(loadPriorityFloor) {
 
 	return null;
 };
+
 AdDriverDelayedLoader.startCalled = false;
 AdDriverDelayedLoader.load = function() {
 	Wikia.log('load', 5, 'AdDriverDelayedLoader');
@@ -888,17 +889,16 @@ if (!window.adslots) {
 	window.adslots = [];
 }
 
-if (window.getTreatmentGroup) {	// any page without getTreatmentGroup() defined doesn't have ads'
-	var tgId = getTreatmentGroup(EXP_AD_LOAD_TIMING);
-
-	if (!window.wgLoadAdDriverOnLiftiumInit && tgId != TG_AS_WRAPPERS_ARE_RENDERED) {
+// Any page without abTest doesn't have ads
+if (abTest) {
+	if ( !window.wgLoadAdDriverOnLiftiumInit && !abTest.inTreatmentGroup( "AS_WRAPPERS_ARE_RENDERED" ) ) {
 Wikia.log('(launch, stage 1)', 3, 'AdDriver');
 		for (var i=0; i < window.adslots.length; i++) {
 			AdDriverDelayedLoader.appendItem(new AdDriverDelayedLoaderItem(window.adslots[i][0], window.adslots[i][1], window.adslots[i][2]));
 		}
 	}
 
-	if (!window.wgLoadAdDriverOnLiftiumInit && tgId == TG_ONLOAD) {
+	if ( !window.wgLoadAdDriverOnLiftiumInit && abTest.inTreatmentGroup( "ONLOAD" ) ) {
 Wikia.log('(launch, stage 2)', 3, 'AdDriver');
 		$(window).load(function() {
 Wikia.log('(launch, stage 3)', 3, 'AdDriver');
@@ -906,10 +906,9 @@ Wikia.log('(launch, stage 3)', 3, 'AdDriver');
 		});
 	}
 	else {
-
 		var adDriverFuncsToExecute = [];
 
-		if (window.wgLoadAdDriverOnLiftiumInit || tgId == TG_AS_WRAPPERS_ARE_RENDERED) {
+		if ( window.wgLoadAdDriverOnLiftiumInit || abTest.inTreatmentGroup( "AS_WRAPPERS_ARE_RENDERED" ) ) {
 			adDriverFuncsToExecute.push( function () {
 				window.adDriverCanInit = true;
 				AdDriverDelayedLoader.prepareSlots(AdDriverDelayedLoader.highLoadPriorityFloor);
@@ -944,7 +943,6 @@ Wikia.log('(launch, stage 3)', 3, 'AdDriver');
 			for(var i=0; i<adDriverFuncsToExecute.length; i++) {
 				adDriverFuncsToExecute[i]();
 			}
-
 		});
 	}
 }

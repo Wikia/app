@@ -172,23 +172,25 @@ abstract class WikiaSkin extends SkinTemplate {
 	public function getTopScripts() {
 		$scripts = '';
 		$vars = array(
-			// macbre: quick fix for undefined JS variables
-			'EXP_AD_LOAD_TIMING' => 1,
-			'AB_CONFIG' => array(),
-			'TG_ONLOAD' => 1,
-			'TG_AFTER_DEPENDENCIES' => 2,
-			'TG_AS_WRAPPERS_ARE_RENDERED' => 3,
+			'Wikia' => new stdClass(),
 			'wgJqueryUrl' => AssetsManager::getInstance()->getURL( 'jquery' ),
 		);
 
 		$this->wf->runHooks( 'WikiaSkinTopScripts', array( &$vars, &$scripts, $this ) );
 
+		$scriptModules = array();
+		$this->wf->runHooks( 'WikiaSkinTopModules', array( &$scriptModules, $this ) );
+		if ( !empty($scriptModules) ) {
+			$scripts .= "<script>window.mw || ( window.mw = { loader: { state: function() {} } } );</script>";
+			$scripts .= ResourceLoader::makeCustomLink( $this->wg->out, $scriptModules, 'scripts' );
+		}
+
 		return self::makeInlineVariablesScript($vars) . $scripts;
 	}
-	
+
 	// expose protected methods from Skin object
 	// we don't need buildSidebar()
-	
+
 	public function buildPersonalUrls() {
 		return parent::buildPersonalUrls();
 	}
@@ -196,15 +198,15 @@ abstract class WikiaSkin extends SkinTemplate {
 	public function buildContentNavigationUrls() {
 		return parent::buildContentNavigationUrls();
 	}
-	
+
 	public function buildContentActionUrls( $content_navigation ) {
 		return parent::buildContentActionUrls( $content_navigation );
 	}
-	
+
 	public function buildNavUrls() {
 		return parent::buildNavUrls();
 	}
-	
+
 	static function makeInlineVariablesScript( $data ) {
 		$wf = F::app()->wf;
 		$wf->profileIn( __METHOD__ );
