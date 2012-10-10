@@ -61,7 +61,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			->setGroupResults	( $searchConfig->isInterWiki() || $this->getVal('grouped', false) )
 		 ;
 
-		$this->setNamespacesFromRequest( $searchConfig );
+		$this->setNamespacesFromRequest( $searchConfig, $this->wg->User );
 
 		if($this->isCorporateWiki()) {
 			OasisController::addBodyClass('inter-wiki-search');
@@ -301,18 +301,20 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 	/**
 	 * Called in index action. Sets the SearchConfigs namespaces based on MW-core NS request style.
-	 * @param WikiaSearchConfig $searchConfig
+	 * @see    WikiSearchControllerTest::testSetNamespacesFromRequest
+	 * @param  WikiaSearchConfig $searchConfig
 	 * @return boolean true
 	 */
-	private function setNamespacesFromRequest( WikiaSearchConfig $searchConfig ) {
-		$searchableNamespaces = SearchEngine::searchableNamespaces();
+	private function setNamespacesFromRequest( WikiaSearchConfig $searchConfig, User $user ) {
+		$searchEngine = F::build( 'SearchEngine' );
+		$searchableNamespaces = $searchEngine->searchableNamespaces();
 		$namespaces = array();
 		foreach($searchableNamespaces as $i => $name) {
 		    if ( $this->getVal('ns'.$i, false) ) {
 		        $namespaces[] = $i;
 		    }
 		}
-		if (empty($namespaces) && $this->wg->User->getOption('searchAllNamespaces')) {
+		if ( empty($namespaces) && $user->getOption('searchAllNamespaces')) {
 		    $namespaces = array_keys($searchableNamespaces);
 		}
 		

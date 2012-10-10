@@ -562,7 +562,91 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 		        $method->invoke( $this->searchController, $mockSkinWikiaMobile ),
 		        'WikiaSearchController::handleSkinSettings should always return true.'
 		);
+	}
+	
+	/**
+	 * @covers WikiaSearchController::setNamespacesFromRequest
+	 */
+	public function testSetNamespacesFromRequest() {
+		$mockSearchEngine	=	$this->getMock( 'SearchEngine', array( 'searchableNamespaces', 'DefaultNamespaces' ) );
+		$searchableArray	=	array( 0 => 'Article', 14 => 'Category', 6 => 'File' );
+		$defaultArray		=	array( 0, 14 );
+		$mockRequest		=	$this->getMock( 'WikiaRequest', array( 'getVal' ), array( array() ) );
+		$mockUser			=	$this->getMock( 'User', array( 'getOption' ) );
 		
+		$mockSearchEngine
+			->staticExpects	( $this->any() )
+			->method		( 'searchableNamespaces' )
+			->will			( $this->returnValue( $searchableArray ) )
+		;
+		$mockSearchEngine
+			->staticExpects	( $this->any() )
+			->method		( 'DefaultNamespaces' )
+			->will			( $this->returnValue( $defaultArray ) )
+		;
+		$mockRequest
+			->expects		( $this->any() )
+			->method		( 'getVal' )
+			->will			( $this->returnValue( false ) )
+		;
+		$mockUser
+			->expects		( $this->at( 0 ) )
+			->method		( 'getOption' )
+			->with			( 'searchAllNamespaces' )
+			->will			( $this->returnValue( false ) )
+		;
+		$mockUser
+			->expects		( $this->at( 1 ) )
+			->method		( 'getOption' )
+			->with			( 'searchAllNamespaces' )
+			->will			( $this->returnValue( true ) )
+		;
+		
+		$this->mockClass( 'SearchEngine', $mockSearchEngine );
+		$this->mockApp();
+		$searchConfig = F::build( 'WikiaSearchConfig' );
+		
+		$method = new ReflectionMethod( 'WikiaSearchController', 'setNamespacesFromRequest' );
+		$method->setAccessible( true );
+		
+		$this->searchController->setRequest( $mockRequest );
+		
+		$this->assertTrue(
+				$method->invoke( $this->searchController, $searchConfig, $mockUser ),
+				'WikiaSearchController::setNamespacesFromRequest should return true.'
+		);
+		$this->assertEquals(
+		        $defaultArray,
+		        $searchConfig->getNamespaces(),
+		        'WikiaSearchController::setNamespacesFromRequest should set an empty array that causes WikiaSearchConfig::getNamespaces ' . 
+				'to populate namespaces with SearchEngine::DefaultNamespaces if no namespaces are set in the request, and the user has not chosen to search all namespaces..'
+		);
+		$this->assertTrue(
+		        $method->invoke( $this->searchController, $searchConfig, $mockUser ),
+		        'WikiaSearchController::setNamespacesFromRequest should return true.'
+		);
+		$this->assertEquals(
+		        array_keys( $searchableArray ),
+		        $searchConfig->getNamespaces(),
+		        'WikiaSearchController::setNamespacesFromRequest should set namespaces to all namespaces if the user has chosen to search all namespaces, and no namespaces are passed in the request.'
+		);
+		$mockRequest = $this->getMock( 'WikiaRequest', array( 'getVal' ), array( array() ) );
+		$mockRequest
+			->expects	( $this->at( 1 ) )
+			->method	( 'getVal' )
+			->with		( 'ns14', false )
+			->will		( $this->returnValue( true ) )
+		;
+		$this->searchController->setRequest( $mockRequest );
+		$this->assertTrue(
+		        $method->invoke( $this->searchController, $searchConfig, $mockUser ),
+		        'WikiaSearchController::setNamespacesFromRequest should return true.'
+		);
+		$this->assertEquals(
+				array( 14 ),
+				$searchConfig->getNamespaces(),
+				'WikiaSearchController::setNamespacesFromRequest should set namespaces in WikiaSearchConfig if they are passed in the request.'
+		);
 	}
 	
 	/**
