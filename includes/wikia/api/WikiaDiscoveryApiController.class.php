@@ -1,11 +1,15 @@
 <?php
 /**
- * Controller to brows information about Wikia's API
+ * Controller to browse information about Wikia's API
  *
  * @author  Federico "Lox" Lucignano <federico@wikia-inc.com>
  */
 
-class WikiaApiDiscoveryController extends WikiaApiController {
+class WikiaDiscoveryApiController extends WikiaApiController {
+	public function index() {
+		$this->forward( __CLASS__, 'listControllers');
+	}
+
 	/**
 	 * Lists all the registered API controllers
 	 *

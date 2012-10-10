@@ -124,8 +124,8 @@ include_once( "$IP/lib/ApiGate/config.php" );
 $wgAutoloadClasses[ "WikiaApiController"            ] = "{$IP}/includes/wikia/api/WikiaApiController.class.php";
 
 //Wikia API controllers/modules
-$app->registerApiController( 'WikiaApiDiscoveryController', "{$IP}/includes/wikia/api/WikiaApiDiscoveryController.class.php" );
-$app->registerApiController( 'WikiInfoController', "{$IP}/includes/wikia/api/WikiInfoController.class.php" );
+$app->registerApiController( 'WikiaDiscoveryApiController', "{$IP}/includes/wikia/api/WikiaDiscoveryApiController.class.php" );
+$app->registerApiController( 'WikiInfoApiController', "{$IP}/includes/wikia/api/WikiInfoApiController.class.php" );
 
 /**
  * Wikia API end

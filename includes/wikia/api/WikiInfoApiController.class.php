@@ -5,33 +5,39 @@
  * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
  */
 
-class WikiInfoController extends WikiaApiController {
-	const MAX_FIND_WIKIS_RESULTS = 250;
+class WikiInfoApiController extends WikiaApiController {
+	const MAX_RESULTS = 250;
+	const ITEMS_PER_BATCH = 25;
 
 	/**
-	 * Get the top wikis by pageviews optionally filtering by vertical (hub) and language
+	 * Get the top wikis by pageviews optionally filtering by vertical (hub) and/or language
 	 *
 	 * @requestParam string $hub [OPTIONAL] The name of the vertical (e.g. Gaming, Entertainment,
 	 * Lifestyle, etc.) to use as a filter
 	 * @requestParam string $lang [OPTIONAL] The language code (e.g. en, de, fr, es, it, etc.) to use as a filter
-	 * @requestParam integer $limit [OPTIONAL] The maximum number of results to fetch, defaults to 10
+	 * @requestParam integer $limit [OPTIONAL] The maximum number of results to fetch, defaults to 25
 	 *
-	 * @responseParam array wikis The list of top wikis by pageviews matching the optional filtering
+	 * @responseParam array $items The list of top wikis by pageviews matching the optional filtering
+	 * @responseParam integer $total The total number of results
+	 * @responseParam integer $currentBatch The index of the current batch/page
+	 * @responseParam integer $batches The total number of batches/pages
+	 * @responseParam integer $next The amount of items in the next batch/page
 	 */
 	public function getTopWikis(){
 		$this->wf->profileIn( __METHOD__ );
 
 		$hub = trim( $this->request->getVal( 'hub', null ) );
 		$lang = trim( $this->getVal( 'lang', null ) );
-		$limit = $this->request->getInt( 'limit', 25 );
-		$memKey = $this->app->wf->SharedMemcKey( __METHOD__, $hub, $lang, $limit );
+		$limit = $this->request->getInt( 'limit', self::ITEMS_PER_BATCH );
+		$batch = $this->request->getInt( 'batch', 1 );
+		$memKey = $this->app->wf->SharedMemcKey( __METHOD__, $this->getVersion(), $hub, $lang, $limit );
 		$results = $this->app->wg->Memc->get( $memKey );
 
 		if ( !is_array( $results ) ) {
 			$results = array();
 			//On devboxes use a 90-days span as DataMart
 			//data is seldomly updated there
-			$wikis = DataMartService::getTopWikisByPageviews( $limit, $lang, $hub, 1 /* only pubic */, ( $this->wg->DevelEnvironment ) ? 90 : 7 );
+			$wikis = DataMartService::getTopWikisByPageviews( self::MAX_RESULTS, $lang, $hub, 1 /* only pubic */, ( $this->wg->DevelEnvironment ) ? 90 : 7 );
 
 			foreach ( $wikis as $wikiId => $wiki ) {
 				$results[] = array(
@@ -52,7 +58,10 @@ class WikiInfoController extends WikiaApiController {
 			$this->app->wg->Memc->set( $memKey, $results, 86400 /* 24h */ );
 		}
 
-		$this->setVal( 'wikis', $results );
+		foreach ( $this->wf->PaginateArray( $results, $limit, $batch ) as $name => $value ) {
+			$this->response->setVal( $name, $value );
+		}
+
 		$this->response->setCacheValidity(
 			604800 /* 1 week */,
 			604800 /* 1 week */,
@@ -65,13 +74,30 @@ class WikiInfoController extends WikiaApiController {
 		$this->wf->profileOut( __METHOD__ );
 	}
 
-	public function findWikis(){
+	/**
+	 * Finds wikis which name or topic match a keyword optionally filtering by vertical (hub) and/or language,
+	 * the total amount of results is limited to 250 items
+	 *
+	 * @requestParam string $keyword search term
+	 * @requestParam string $hub [OPTIONAL] The name of the vertical (e.g. Gaming, Entertainment,
+	 * Lifestyle, etc.) to use as a filter
+	 * @requestParam string $lang [OPTIONAL] The language code (e.g. en, de, fr, es, it, etc.) to use as a filter
+	 * @requestParam integer $limit [OPTIONAL] The number of items per each batch/page, defaults to 25
+	 * @requestParam integer $batch [OPTIONAL] The batch/page index to retrieve, defaults to 1
+	 *
+	 * @responseParam array $items The list of wikis matching the keyword and the optional filtering
+	 * @responseParam integer $total The total number of results
+	 * @responseParam integer $currentBatch The index of the current batch/page
+	 * @responseParam integer $batches The total number of batches/pages
+	 * @responseParam integer $next The amount of items in the next batch/page
+	 */
+	public function searchWikis(){
 		$this->wf->profileIn( __METHOD__ );
 
 		$keyword = trim( $this->request->getVal( 'keyword', '' ) );
 		$hub = trim( $this->request->getVal( 'hub', null ) );
 		$lang = trim( $this->getVal( 'lang', null ) );
-		$limit = $this->request->getInt( 'limit', 25 );
+		$limit = $this->request->getInt( 'limit', self::ITEMS_PER_BATCH );
 		$batch = $this->request->getInt( 'batch', 1 );
 		$hubId = null;
 		$wikis = array();
@@ -87,10 +113,12 @@ class WikiInfoController extends WikiaApiController {
 			}
 
 			if ( empty( $hub ) || ( !empty( $hub ) && is_integer( $hubId ) ) ) {
-				$memKey = $this->app->wf->SharedMemcKey( __METHOD__, str_replace( ' ', '_', $keyword ), $hub, $lang );
+				$memKey = $this->app->wf->SharedMemcKey( __METHOD__, $this->getVersion(),  str_replace( ' ', '_', $keyword ), $hub, $lang );
 				$wikis = $this->app->wg->Memc->get( $memKey );
 
 				if ( !is_array( $wikis ) ) {
+					$this->wf->profileIn( $memKey );
+
 					$db = $this->wf->GetDB( DB_SLAVE, array(), $this->wg->ExternalSharedDB );
 
 					$keyword = mysql_real_escape_string( $keyword );
@@ -115,7 +143,7 @@ class WikiInfoController extends WikiaApiController {
 						$queryParts[] = "AND ccm.cat_id = {$hubId}";
 					}
 
-					$queryParts[] = 'LIMIT ' . self::MAX_FIND_WIKIS_RESULTS;
+					$queryParts[] = 'ORDER BY cl.city_title LIMIT ' . self::MAX_RESULTS;
 
 
 					//manual query as the DataBase class doesn't allow for LEFT JOIN
@@ -141,6 +169,7 @@ class WikiInfoController extends WikiaApiController {
 					}
 
 					$this->app->wg->Memc->set( $memKey, $wikis, 86400 /* 24h */ );
+					$this->wf->profileOut( $memKey );
 				}
 			}
 		}
