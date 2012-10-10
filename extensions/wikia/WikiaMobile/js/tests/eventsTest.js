@@ -9,7 +9,7 @@ describe("Test event object", function() {
 		var events;
 
 		runs(function(){
-			require('events', function(eve){
+			require(['events'], function(eve){
 				events = eve;
 			})
 		});
