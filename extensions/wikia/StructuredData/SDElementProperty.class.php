@@ -2,7 +2,7 @@
 /**
  * @author ADi
  */
-class SDElementProperty {
+class SDElementProperty implements SplObserver {
 	protected $type = 'rdf:Literal';
 	protected $name = null;
 	protected $value = null;
@@ -54,4 +54,19 @@ class SDElementProperty {
 
 		return $array;
 	}
+
+	/**
+	 * (PHP 5 &gt;= 5.1.0)<br/>
+	 * Receive update from subject
+	 * @link http://php.net/manual/en/splobserver.update.php
+	 * @param SplSubject|SDElement $subject <p>
+	 * The <b>SplSubject</b> notifying the observer of an update.
+	 * </p>
+	 * @return void
+	 */
+	public function update(SplSubject $subject) {
+		$this->type = $subject->getContext()->getType( $this->name );
+	}
+
+
 }

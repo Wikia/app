@@ -53,9 +53,11 @@ class StructuredDataAPIClient {
 
 	}
 
-	public function getTemplate( $objectType ) {
-		$response =json_decode( $this->call(  $this->getVocabsPath() . str_replace(':', '/', $objectType) . '?template=true' ) );
-		return $this->isValidResponse($response);
+	public function getTemplate( $objectType, $inJson = false ) {
+		$rawResponse = $this->call(  $this->getVocabsPath() . str_replace(':', '/', $objectType) . '?template=true' );
+		$response =json_decode( $rawResponse );
+
+		return $inJson ? $rawResponse : $this->isValidResponse($response);
 	}
 
 	public function getContext( $contextUrl, $relative = true ) {

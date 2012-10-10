@@ -57,7 +57,7 @@ class StructuredDataController extends WikiaSpecialPageController {
 		$objectType = $this->request->getVal( 'objectType', false );
 
 		if(!empty($objectType)) {
-			$template = $this->APIClient->getTemplate( $objectType );
+			$template = $this->APIClient->getTemplate( $objectType, true );
 
 			$this->response->setBody( $template );
 		}
