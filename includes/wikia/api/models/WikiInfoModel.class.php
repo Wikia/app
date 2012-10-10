@@ -73,7 +73,7 @@ class WikiInfoModel extends WikiaModel {
 			foreach ( $wikis as $wikiId => $wiki ) {
 				//fetching data from WikiFactory
 				//the table is indexed and values cached separately
-				//so making one query for all of them or many small
+				//so making one query for all of them or a few small
 				//separate ones doesn't make any big difference while
 				//this respects WF's data abstraction layer
 				$name = WikiFactory::getVarValueByName( 'wgSitename', $wikiId );
