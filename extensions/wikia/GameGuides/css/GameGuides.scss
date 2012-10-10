@@ -54,13 +54,9 @@ html {
 
 body {
 	background: $backgroundColor;
-
 	padding: 10px 20px;
-
 	color: $textColor;
-
 	font-family: 'Roboto-Thin';
-
 	line-height: 1.7em;
 }
 
@@ -123,7 +119,6 @@ a {
 	&.validLink {
 		color: $linkColor;
 		pointer-events: auto;
-
 		border-bottom: 1px dotted $linkColor;
 	}
 
