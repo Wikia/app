@@ -33,7 +33,7 @@ class WikiInfoApiController extends WikiaApiController {
 		$lang = trim( $this->getVal( 'lang', null ) );
 		$limit = $this->request->getInt( 'limit', self::ITEMS_PER_BATCH );
 		$batch = $this->request->getInt( 'batch', 1 );
-		$results = $this->model->getTopWikis ($lang, $hub );
+		$results = $this->model->getTopWikis ( $lang, $hub );
 		$batches = $this->wf->PaginateArray( $results, $limit, $batch );
 
 		foreach ( $batches as $name => $value ) {
