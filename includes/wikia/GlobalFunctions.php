@@ -812,6 +812,8 @@ function wfMsgHTMLwithLanguage($key, $lang, $options = array(), $params = array(
 	$msgPlainRaw = MessageCache::singleton()->get($langKey, true, $lang, $fullKey);
 	$msgPlainRawEmpty = wfEmptyMsg($langKey, $msgPlainRaw);
 
+	$found = false;
+
 	foreach ( Language::getFallbacksFor( $lang ) as $fallbackLang ) {
 		if ($fallbackLang == $wgContLanguageCode) {
 			$fullKey = false;
@@ -829,9 +831,13 @@ function wfMsgHTMLwithLanguage($key, $lang, $options = array(), $params = array(
 			$msgPlainFallbacked++;
 		}
 		if ($msgPlainRaw != $msgPlainRawLang && !$msgPlainRawEmpty && !$msgPlainRawLangEmpty) {
+			$found = true;
 			break;
 		}
 	}
+
+	// notify wfMsgHTMLwithLanguageAndAlternative() that we didn't get a match
+	if ( !$found ) $msgPlainFallbacked++;
 
 	if ($wantHTML) {
 		$keyHTML = $key . '-HTML';
@@ -849,6 +855,8 @@ function wfMsgHTMLwithLanguage($key, $lang, $options = array(), $params = array(
 		$msgRichRaw = MessageCache::singleton()->get($langKeyHTML, true, $lang, $fullKey);
 		$msgRichRawEmpty = wfEmptyMsg($langKeyHTML, $msgRichRaw);
 
+		$found = false;
+
 		foreach ( Language::getFallbacksFor( $lang ) as $fallbackLang ) {
 			if ($fallbackLang == $wgContLanguageCode) {
 				$fullKey = false;
@@ -865,9 +873,13 @@ function wfMsgHTMLwithLanguage($key, $lang, $options = array(), $params = array(
 				$msgRichFallbacked++;
 			}
 			if ($msgRichRaw != $msgRichRawLang && !$msgRichRawEmpty && !wfEmptyMsg($keyHTML, $msgRichRawLang)) {
+				$found = true;
 				break;
 			}
 		}
+
+		// notify wfMsgHTMLwithLanguageAndAlternative() that we didn't get a match
+		if ( !$found ) $msgRichRawFallbacked++;	
 
 		if($msgRichFallbacked > $msgPlainFallbacked || wfEmptyMsg($keyHTML, $msgRich)) {
 			$msgRich = null;
