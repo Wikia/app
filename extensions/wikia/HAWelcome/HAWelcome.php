@@ -129,7 +129,7 @@ class HAWelcomeJob extends Job {
 					$this->mSysop = $this->getLastSysop();
 					$gEG = $this->mSysop->getEffectiveGroups();
 					$isSysop = in_array('sysop', $gEG);
-					$isStaff = in_array('staff', $gEG) || in_array( 'helper', $gEG );
+					$isStaff = in_array('staff', $gEG);
 					unset($gEG);
 					$tmpTitle     = $wgTitle;
 					$sysopPage    = $this->mSysop->getUserPage()->getTalkPage();
@@ -713,14 +713,16 @@ class HAWelcomeJob extends Job {
 		 * bots can't welcome
 		 */
 		if( !in_array( "bot", $groups ) ) {
-			if( $sysop === "@sysop" ) {
+                        global $wgMemc;
+                        $sysopId = $wgMemc->get( wfMemcKey( "last-sysop-id" ) );
+                        
+			if( $sysop === "@sysop" || !empty( $sysopId ) ) {
 				$result = in_array( "sysop", $groups ) ? true : false;
-			}
+                        }
 			else {
 				$result =
 					in_array( "sysop", $groups ) ||
-					in_array( "staff", $groups ) ||
-					in_array( "helper", $groups )
+					in_array( "staff", $groups )
 						? true : false;
 			}
 		}
@@ -734,12 +736,7 @@ class HAWelcomeJob extends Job {
 
 		$list = array();
 
-		$cond = array(
-			'ug_group' => array(
-				'staff',
-				'helper'
-			)
-		);
+		$cond = array( 'ug_group' => array( 'staff' ) );
 
 		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
 
