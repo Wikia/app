@@ -128,7 +128,7 @@ class WikiInfoController extends WikiaApiController {
 							'name' => $row->name,
 							//getting this as a separate query since it would require
 							//a double join, that would complicate the situation with
-							//the query's performances
+							//the query's performance
 							'hub' => ( !empty( $hub ) ) ? $hub : $this->getWikiHubById( $row->id ),
 							'language' => $row->lang,
 							//WF stores strings as serialized data
@@ -149,7 +149,7 @@ class WikiInfoController extends WikiaApiController {
 			$this->response->setVal( $name, $value );
 		}
 
-		//store only for 24h to allow new wikis we want to push
+		//store only for 24h to allow new wikis
 		//to appear in a reasonable amount of time in the search
 		//results
 		$this->response->setCacheValidity(
