@@ -555,7 +555,8 @@ class SiteWideMessages extends SpecialPage {
 							'hubId'			=> $mHubId,
 							'clusterId'     => $mClusterId,
 						),
-						TASK_QUEUED
+						TASK_QUEUED,
+						BatchTask::PRIORITY_HIGH
 					);
 					$result['taskId'] = $oTask->getID();
 				} else {
@@ -581,7 +582,8 @@ class SiteWideMessages extends SpecialPage {
 											'hubId'			=> $mHubId,
 											'clusterId'     => $mClusterId,
 										),
-										TASK_QUEUED
+										TASK_QUEUED,
+										BatchTask::PRIORITY_HIGH
 									);
 									$result['taskId'] = $oTask->getID();
 									break;
@@ -604,7 +606,8 @@ class SiteWideMessages extends SpecialPage {
 											'hubId'			=> $mHubId,
 											'clusterId'     => $mClusterId,
 										),
-										TASK_QUEUED
+										TASK_QUEUED,
+										BatchTask::PRIORITY_HIGH
 									);
 									$result['taskId'] = $oTask->getID();
 									break;
@@ -627,7 +630,8 @@ class SiteWideMessages extends SpecialPage {
 											'hubId'				=> $mHubId,
 											'clusterId'     	=> $mClusterId,
 										),
-										TASK_QUEUED
+										TASK_QUEUED,
+										BatchTask::PRIORITY_HIGH
 									);
 									$result['taskId'] = $oTask->getID();
 									break;
@@ -653,7 +657,8 @@ class SiteWideMessages extends SpecialPage {
 											'hubId'			=> $mHubId,
 											'clusterId'     => $mClusterId,
 										),
-										TASK_QUEUED
+										TASK_QUEUED,
+										BatchTask::PRIORITY_HIGH
 									);
 									$result['taskId'] = $oTask->getID();
 									break;
@@ -679,7 +684,8 @@ class SiteWideMessages extends SpecialPage {
 											'hubId'			=> $mHubId,
 											'clusterId'     => $mClusterId,
 										),
-										TASK_QUEUED
+										TASK_QUEUED,
+										BatchTask::PRIORITY_HIGH
 									);
 									$result['taskId'] = $oTask->getID();
 									break;
@@ -742,7 +748,8 @@ class SiteWideMessages extends SpecialPage {
 											'hubId'			=> $mHubId,
 											'clusterId'     => $mClusterId,
 										),
-										TASK_QUEUED
+										TASK_QUEUED,
+										BatchTask::PRIORITY_HIGH
 									);
 									$result['taskId'] = $oTask->getID();
 									break;
@@ -765,7 +772,8 @@ class SiteWideMessages extends SpecialPage {
 											'hubId'				=> $mHubId,
 											'clusterId'     	=> $mClusterId,
 										),
-										TASK_QUEUED
+										TASK_QUEUED,
+										BatchTask::PRIORITY_HIGH
 									);
 									$result['taskId'] = $oTask->getID();
 									break;
@@ -797,7 +805,8 @@ class SiteWideMessages extends SpecialPage {
 											'hubId'				=> $mHubId,
 											'clusterId'     	=> $mClusterId,
 										),
-										TASK_QUEUED
+										TASK_QUEUED,
+										BatchTask::PRIORITY_HIGH
 									);
 									$result['taskId'] = $oTask->getID();
 									break;
@@ -832,7 +841,8 @@ class SiteWideMessages extends SpecialPage {
 											'hubId'				=> $mHubId,
 											'clusterId'     	=> $mClusterId,
 										),
-										TASK_QUEUED
+										TASK_QUEUED,
+										BatchTask::PRIORITY_HIGH
 									);
 									$result['taskId'] = $oTask->getID();
 									break;
