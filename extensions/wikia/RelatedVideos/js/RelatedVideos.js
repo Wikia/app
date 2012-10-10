@@ -338,10 +338,12 @@ var RelatedVideos = {
 		}
 	},
 
-	recalculateLength: function(){
+	recalculateLength: function(increment){
 		// Update video tally text
 		var numberElem = this.rvTallyCount;
-		numberElem.text( parseInt(numberElem.text()) + 1 );
+		numberElem.text( parseInt(numberElem.text()) + increment );
+
+		this.totalVideos = this.totalVideos + increment;
 
 		// Update carousel progress
 		var numberItems = this.totalVideos;
@@ -393,8 +395,7 @@ var RelatedVideos = {
 					.prependTo( RelatedVideos.rvContainer )
 					.fadeOut( 0 )
 					.fadeIn( 'slow', function(){
-						RelatedVideos.totalVideos += 1;
-						RelatedVideos.recalculateLength();
+						RelatedVideos.recalculateLength(1);
 					});
 				RelatedVideos.regroup();
 			}
@@ -470,8 +471,7 @@ var RelatedVideos = {
 					});
 				} else {
 					$(parentItem).remove();
-					RelatedVideos.totalVideos -= 1;
-					RelatedVideos.recalculateLength();
+					RelatedVideos.recalculateLength(-1);
 					RelatedVideos.lazyLoad();
 					RelatedVideos.regroup();
 				}
