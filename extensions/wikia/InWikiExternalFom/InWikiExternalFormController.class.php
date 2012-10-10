@@ -8,6 +8,7 @@ class InWikiExternalFormController  extends WikiaSpecialPageController {
 	public function index() {
 		$this->wg->SuppressPageHeader = true;
 		$this->wg->SuppressSpotlights = true;
+		$this->response->addAsset("extensions/wikia/InWikiExternalForm/js/InWikiExternalForm.js");
 	}
 }
 

@@ -1,9 +1,9 @@
-var InWikiGameTracking = {
-	init: function(jsonObject) {
+var InWikiExternalForm = {
+	init: function() {
 		WikiaTracker.trackClick({
-			'category': 'in-wiki-game',
+			'category': 'in-wiki-external-form',
 			'action': WikiaTracker.ACTIONS.IMPRESSION,
-			'label': 'game-page',
+			'label': 'form-impression',
 			'value': null,
 			'params': {},
 			'trackingMethod': 'internal'
@@ -12,5 +12,5 @@ var InWikiGameTracking = {
 }
 
 $(function () {
-	InWikiGameTracking.init();
+	InWikiExternalForm.init();
 });
