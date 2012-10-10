@@ -97,4 +97,34 @@ class WikiInfoApiController extends WikiaApiController {
 
 		$this->wf->profileOut( __METHOD__ );
 	}
+
+	public function getPromotionData() {
+		$this->wf->profileIn( __METHOD__ );
+
+		$ids = $this->request->getVal( 'ids', null);
+		$hub = trim( $this->request->getVal( 'hub', null ) );
+		$lang = trim( $this->request->getVal( 'lang', null ) );
+
+		if ( !empty( $ids ) ) {
+			$ids = explode( ',', $ids );
+		}
+
+		$results = $this->model->getPromotionData( $ids, $lang, $hub );
+
+		$this->setVal( 'items', $results );
+
+		//store only for 24h to allow new wikis
+		//to appear in a reasonable amount of time in the search
+		//results
+		//$this->response->setCacheValidity(
+		//	86400 /* 24h */,
+		//	86400 /* 24h */,
+		//	array(
+		//		WikiaResponse::CACHE_TARGET_BROWSER,
+		//		WikiaResponse::CACHE_TARGET_VARNISH
+		//	)
+		//);
+
+		$this->wf->profileOut( __METHOD__ );
+	}
 }

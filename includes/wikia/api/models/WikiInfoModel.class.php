@@ -9,6 +9,34 @@ class WikiInfoModel extends WikiaModel {
 	const CACHE_VERSION = '1';
 	const MAX_RESULTS = 250;
 
+	const FLAG_NEW = 1;
+	const FLAG_HOT = 2;
+	const FLAG_PROMOTED = 4;
+	const FLAG_BLOCKED = 8;
+	const FLAG_OFFICIAL = 16;
+
+	/**
+	 * Get the domain of a wiki by its' ID
+	 *
+	 * @param integer $wikiId The wiki's ID
+	 *
+	 * @return string The domain name, without protocol
+	 */
+	public function getDomainByWikiId( $wikiId ){
+		return str_replace( 'http://', '', WikiFactory::getVarValueByName( 'wgServer', $wikiId ) );
+	}
+
+	/**
+	 * Get the vertical name for a wiki by its' ID
+	 *
+	 * @param integer $wikiId The wiki's ID
+	 *
+	 * @return string The name of the vertical (e.g. Gaming, Entertainment, etc.)
+	 */
+	public function getVerticalByWikiId( $wikiId ){
+		return WikiFactory::getCategory( $wikiId )->cat_name;
+	}
+
 	/**
 	 * Get the top wikis by pageviews optionally filtering by vertical (hub) and/or language
 	 *
@@ -46,7 +74,7 @@ class WikiInfoModel extends WikiaModel {
 				);
 			}
 
-			$this->app->wg->Memc->set( $memKey, $results, 86400 /* 24h */ );
+			$this->wg->Memc->set( $memKey, $results, 86400 /* 24h */ );
 		}
 
 		$this->wf->profileOut( __METHOD__ );
@@ -71,15 +99,17 @@ class WikiInfoModel extends WikiaModel {
 		if ( !empty( $keyword ) ) {
 			$hubId = null;
 
-			if ( !empty( $hub ) && is_string( $hub ) ) {
-				//this has it's own memcache layer (24h)
-				$hubData = WikiFactoryHub::getInstance()->getCategoryByName( $hub );
+			if ( !empty( $hub ) ) {
+				if ( is_string( $hub ) ) {
+					//this has it's own memcache layer (24h)
+					$hubData = WikiFactoryHub::getInstance()->getCategoryByName( $hub );
 
-				if ( is_array( $hubData ) ) {
-					$hubId = $hubData['id'];
+					if ( is_array( $hubData ) ) {
+						$hubId = $hubData['id'];
+					}
+				} elseif ( is_integer( $hub ) ) {
+					$hubId = $hub;
 				}
-			} elseif ( is_integer( $hub ) ) {
-				$hubId = $hub;
 			}
 
 			if ( empty( $hub ) || ( !empty( $hub ) && is_integer( $hubId ) ) ) {
@@ -136,7 +166,7 @@ class WikiInfoModel extends WikiaModel {
 						);
 					}
 
-					$this->app->wg->Memc->set( $memKey, $wikis, 86400 /* 24h */ );
+					$this->wg->Memc->set( $memKey, $wikis, 86400 /* 24h */ );
 				}
 			}
 		}
@@ -145,25 +175,95 @@ class WikiInfoModel extends WikiaModel {
 		return $wikis;
 	}
 
-	/**
-	 * Get the domain of a wiki by its' ID
-	 *
-	 * @param integer $wikiId The wiki's ID
-	 *
-	 * @return string The domain name, without protocol
-	 */
-	public function getDomainByWikiId( $wikiId ){
-		return str_replace( 'http://', '', WikiFactory::getVarValueByName( 'wgServer', $wikiId ) );
-	}
+	public function getPromotionData( $wikiIds = null, $lang = null, $hub = null ) {
+		$this->wf->ProfileIn(__METHOD__);
 
-	/**
-	 * Get the vertical name for a wiki by its' ID
-	 *
-	 * @param integer $wikiId The wiki's ID
-	 *
-	 * @return string The name of the vertical (e.g. Gaming, Entertainment, etc.)
-	 */
-	public function getVerticalByWikiId( $wikiId ){
-		return WikiFactory::getCategory( $wikiId )->cat_name;
+		$md5 = null;
+
+		if ( !empty( $wikiIds ) && is_array( $wikiIds ) ) {
+			$md5 = md5( implode( '', $wikiIds ) );
+		}
+
+		$memKey = $this->wf->SharedMemcKey( __METHOD__, self::CACHE_VERSION, $md5, $lang, $hub );
+		$results = null;//$this->wg->Memc->get( $memKey );
+
+		if ( !is_array( $results ) ) {
+			$db = $this->getSharedDB();
+			$where = array(
+				'cv.city_id = cl.city_id',
+				'cl.city_public' => 1,
+				'cv.city_main_image IS NOT NULL',
+				'(cv.city_flags & ' . self::FLAG_BLOCKED . ') != ' . self::FLAG_BLOCKED,
+			);
+
+			if ( !empty( $wikiIds ) && is_array( $wikiIds ) ) {
+				$list = '';
+				$count = count( $wikiIds ) - 1;
+
+				foreach ( $wikiIds as $index => $id ) {
+					$id = ((int) $id);
+
+					if ( $id > 0 ) {
+						$list .= ((int) $id) . ( ( $index < $count ) ? ',' : '');
+					}
+				}
+
+				$where[] = 'cv.city_id IN (' . $list . ')';
+			}
+
+			if ( !empty( $hub ) ) {
+				$hubId = null;
+
+				if ( is_string( $hub ) ) {
+					//this has it's own memcache layer (24h)
+					$hubData = WikiFactoryHub::getInstance()->getCategoryByName( $hub );
+
+					if ( is_array( $hubData ) ) {
+						$hubId = $hubData['id'];
+					}
+				} elseif ( is_integer( $hub ) ) {
+					$hubId = $hub;
+				}
+
+				$where['cv.city_vertical'] = $hubId;
+			}
+
+			if ( !empty( $lang ) ) {
+				$where['cv.city_lang_code'] = mysql_real_escape_string( $lang );
+			}
+
+			$rows = $db->select(
+				array( 'city_visualization AS cv', 'city_list AS cl' ),
+				array(
+					'cv.city_id AS id',
+					'cv.city_vertical AS hub_id',
+					'cv.city_main_image AS main_image',
+					'cv.city_description AS description',
+					'cv.city_headline AS headline',
+					'cl.city_title AS title',
+					'cl.city_url AS url',
+					'cv.city_flags AS flags',
+				),
+				$where,
+				__METHOD__
+			);
+
+			while( $row = $db->fetchObject( $rows ) ) {
+				$results[$row->id] = array(
+					'hubId' => $row->hub_id,
+					'mainImage' => $row->main_image,
+					'description' => $row->description,
+					'headline' => $row->headline,
+					'title' => $row->title,
+					'url' => $row->url,
+					'flags' => $row->flags
+				);
+			}
+
+			$this->wg->Memc->set( $memKey, $results, 86400 /* 24h */ );
+		}
+
+		$this->wf->ProfileOut(__METHOD__);
+		return $results;
 	}
 }
