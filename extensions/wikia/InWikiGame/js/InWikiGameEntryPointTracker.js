@@ -5,9 +5,17 @@ var InWikiGameEntryPointTracker = {
 		$('.WikiNav .subnav-2a').click(this.onEntryPointClick);
 	},
 	onEntryPointClick: function(event) {
-		var target = event.target;
-		$().log(target);
-		//$.storage.set(InWikiGameEntryPointTracker.ENTRY_POINT_STORAGE_KEY, target);
+		var target = $(event.target);
+		var localStorageValue = null;
+
+		if( target.hasClass('in-wiki-game-rail-link') ) {
+			localStorageValue = 'rail-link';
+		} else if( target.attr('href') == '/wiki/Play' ) {
+		//TODO: investigate and implement if possible adding custom CSS class in WikiaNav then change the condition above
+			localStorageValue = 'nav-link';
+		}
+
+		$.storage.set(InWikiGameEntryPointTracker.ENTRY_POINT_STORAGE_KEY, localStorageValue);
 	}
 }
 
