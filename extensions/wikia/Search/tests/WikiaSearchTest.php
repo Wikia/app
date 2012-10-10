@@ -558,7 +558,7 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 		        'WikiaSearch::getSelectQuery should set the highlighting alternate field to be non-dynamic html.'
 		);
 		$this->assertEquals(
-				300,
+				100,
 				$highlighting->getMaxAlternateFieldLength(),
 				'WikiaSearch::getSelectQuery should set the highlighting alternate field length to 300 by default.'	
 		);

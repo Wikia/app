@@ -458,7 +458,7 @@ class WikiaSearch extends WikiaObject {
 					 ->setSimplePrefix				( self::HL_MATCH_PREFIX )
 					 ->setSimplePostfix				( self::HL_MATCH_POSTFIX )
 					 ->setAlternateField			( 'html' )
-					 ->setMaxAlternateFieldLength	( F::app()->checkSkin( 'wikiamobile' ) ? 100 : 300 )
+					 ->setMaxAlternateFieldLength	( 100 )
 		;
 		
 		$query->addFilterQuery( array(
