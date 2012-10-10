@@ -1,21 +1,17 @@
 <?php
 /**
- * Controller to browse information about Wikia's API
+ * Controller to brows information about Wikia's API
  *
  * @author  Federico "Lox" Lucignano <federico@wikia-inc.com>
  */
 
-class DiscoverApiController extends WikiaApiController {
-	public function index() {
-		$this->forward( __CLASS__, 'getList');
-	}
-
+class WikiaApiDiscoveryController extends WikiaApiController {
 	/**
 	 * Lists all the registered API controllers
 	 *
-	 * @responseParam array controllers A list of API controller names
+	 * @responseParam array controllers A list of controllers' names
 	 */
-	public function getList() {
+	public function listControllers() {
 		$controllers = array();
 
 		foreach ( array_keys( $this->wg->WikiaApiControllers ) as $c ) {

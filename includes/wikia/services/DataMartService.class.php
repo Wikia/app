@@ -94,42 +94,42 @@
 
 		/**
 		 * Get top wikis by pageviews over a specified span of time, optionally filtering by
-		 * public status, language and vertical (hub)
+		 * public status and language
 		 *
-		 * @param integer $periodId The interval of time to take into consideration, one of PERIOD_ID_WEEKLY,
-		 * PERIOD_ID_MONTHLY or PERIOD_ID_QUARTERLY
-		 * @param integer $limit The maximum amount of results, defaults to 200
-		 * @param string $lang (optional) The language code to use as a filter (e.g. en for English),
-		 * null for alll (default)
-		 * @param string $hub (optional) The vertical name to use as a filter (e.g. Gaming), null for all (default)
-		 * @param integer $public (optional) Filter results by public status, one of 0, 1 or null (for both, default)
+		 * @param integer $limit The maximum amount of results
+		 * @param string $lang (optional) The language code to use as a filter (e.g. en for English)
+		 * @param string $hub (optional) The vertical name to use as a filter (e.g. Gaming)
+		 * @param integer $public (optional) Filter results by public status
+		 * @param integer $interval The interval of time to take into consideration, in days
 		 *
 		 * @return array $topWikis [ array( wikiId => pageviews ) ]
 		 */
-		public static function getTopWikisByPageviews( $periodId, $limit = 200, $lang = null, $hub = null, $public = null ) {
+		public static function getTopWikisByPageviews( $limit = 200, $lang = null, $hub = null, $public = null, $interval = 30 ) {
 			$app = F::app();
+
 			$app->wf->ProfileIn( __METHOD__ );
 
-			$cacheVersion = 2;
 			$limitDefault = 200;
 			$limitUsed = ( $limit > $limitDefault ) ? $limit : $limitDefault ;
 
-			switch ( $periodId ) {
-				case self::PERIOD_ID_WEEKLY:
+			switch($interval) {
+				case 7:
 					$field = 'pageviews_7day';
 					break;
-				case self::PERIOD_ID_QUARTERLY:
-					$field = 'pageviews_90day';
-					break;
-				case self::PERIOD_ID_MONTHLY:
+				case 30:
 				default:
 					$field = 'pageviews_30day';
 					break;
+				case 90:
+					$field = 'pageviews_90day';
+					break;
 			}
 
-			$memKey = $app->wf->SharedMemcKey( 'datamart', 'topwikis', $cacheVersion, $field, $limitUsed, $lang, $hub, $public );
-			$getData = function() use ( $app, $limitUsed, $lang, $hub, $public, $field ) {
-				$app->wf->ProfileIn( __CLASS__ . '::TopWikisQuery' );
+			$memKey = $app->wf->SharedMemcKey( 'datamart', 'topwikis', $limitUsed, $lang, $hub, $public, $field, 5 );
+
+			$getData = function() use ($limitUsed, $lang, $hub, $public, $field) {
+				$app = F::app();
+
 				$topWikis = array();
 
 				if ( !empty( $app->wg->StatsDBEnabled ) ) {
@@ -138,18 +138,16 @@
 					$tables = array('report_wiki_recent_pageviews as r');
 					$where = array();
 
-					if ( !empty( $lang ) ) {
-						$lang = $db->addQuotes( $lang );
-						$where[] = "r.lang = {$lang}";
+					if ( !is_null( $lang ) ) {
+						$where[] = "r.lang = '{$lang}'";
 					}
 
-					if ( !empty( $hub ) ) {
-						$hub = $db->addQuotes( $hub );
-						$where[] = "r.hub_name = {$hub}";
+					if ( !is_null( $hub ) ) {
+						$where[] = "r.hub_name = '{$hub}'";
 					}
 
 					// Default to showing all wikis
-					if ( is_integer( $public ) ) {
+					if ( !is_null( $public ) ) {
 						$tables[] = 'dimension_wikis AS d';
 						$where[] = 'r.wiki_id = d.wiki_id';
 						$where[] = "d.public = {$public}";
@@ -168,13 +166,11 @@
 							'LIMIT'    => $limitUsed
 						)
 					);
-
 					while ( $row = $db->fetchObject( $result ) ) {
 						$topWikis[ $row->id ] = $row->pageviews;
 					}
 				};
 
-				$app->wf->ProfileOut( __CLASS__ . '::TopWikisQuery' );
 				return $topWikis;
 			};
 
@@ -182,6 +178,7 @@
 			$topWikis = array_slice( $topWikis, 0, $limit, true );
 
 			$app->wf->ProfileOut( __METHOD__ );
+
 			return $topWikis;
 		}
 

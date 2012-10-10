@@ -121,14 +121,11 @@ $wgWikiaAPIControllers = array();
 include_once( "$IP/lib/ApiGate/config.php" );
 
 //Wikia API base controller, all the others extend this class
-$app->registerClass( 'WikiaApiController', "{$IP}/includes/wikia/api/WikiaApiController.class.php" );
+$wgAutoloadClasses[ "WikiaApiController"            ] = "{$IP}/includes/wikia/api/WikiaApiController.class.php";
 
-//Wikia API models
-$app->registerClass( 'WikisModel', "{$IP}/includes/wikia/api/models/WikisModel.class.php" );
-
-//Wikia API controllers
-$app->registerApiController( 'DiscoverApiController', "{$IP}/includes/wikia/api/DiscoverApiController.class.php" );
-$app->registerApiController( 'WikisApiController', "{$IP}/includes/wikia/api/WikisApiController.class.php" );
+//Wikia API controllers/modules
+$app->registerApiController( 'WikiaApiDiscoveryController', "{$IP}/includes/wikia/api/WikiaApiDiscoveryController.class.php" );
+$app->registerApiController( 'WikiInfoController', "{$IP}/includes/wikia/api/WikiInfoController.class.php" );
 
 /**
  * Wikia API end

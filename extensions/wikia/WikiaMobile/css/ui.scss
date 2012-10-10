@@ -14,12 +14,15 @@ html {
 	//avoid webkit's automatic text adjustment
 	//ie. make text bigger when in landscape
 	-webkit-text-size-adjust: none;
+
 	word-wrap: break-word;
+
 	font-family: Helvetica, Roboto, "Lucida Grande", arial, sans-serif;
 }
 
 html, body {
 	overflow-x: hidden;
+
 	margin: 0;
 	padding: 0;
 }

@@ -15,7 +15,6 @@ var ScriptWriter = function(log, ghostwriter, document) {
 				script: { src: url },
 				done: function() {
 					log('DONE injectScriptByUrl: (' + url + ' to slot: ' + elementId + ')', 5, module);
-					log('ghostwriter.flushloadhandlers()', 1, 'GWFLUSH');
 					ghostwriter.flushloadhandlers();
 					if (typeof(callback) === 'function') {
 						callback();
@@ -34,7 +33,6 @@ var ScriptWriter = function(log, ghostwriter, document) {
 				script: { text: text },
 				done: function() {
 					log('DONE injectScriptByText: (' + text.substr(0, 20) + '... to slot: ' + elementId + ')', 5, module);
-					log('ghostwriter.flushloadhandlers()', 1, 'GWFLUSH');
 					ghostwriter.flushloadhandlers();
 					if (typeof(callback) === 'function') {
 						callback();
