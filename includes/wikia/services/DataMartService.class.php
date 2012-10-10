@@ -108,9 +108,9 @@
 		 */
 		public static function getTopWikisByPageviews( $periodId, $limit = 200, $lang = null, $hub = null, $public = null ) {
 			$app = F::app();
-
 			$app->wf->ProfileIn( __METHOD__ );
 
+			$cacheVersion = 2;
 			$limitDefault = 200;
 			$limitUsed = ( $limit > $limitDefault ) ? $limit : $limitDefault ;
 
@@ -124,12 +124,12 @@
 				case self::PERIOD_ID_MONTHLY:
 				default:
 					$field = 'pageviews_30day';
+					break;
 			}
 
-			$memKey = $app->wf->SharedMemcKey( 'datamart', 'topwikis', $limitUsed, $lang, $hub, $public, $field, 6 );
-			$getData = function() use ($limitUsed, $lang, $hub, $public, $field) {
-				$app = F::app();
-
+			$memKey = $app->wf->SharedMemcKey( 'datamart', 'topwikis', $cacheVersion, $field, $limitUsed, $lang, $hub, $public );
+			$getData = function() use ( $app, $limitUsed, $lang, $hub, $public, $field ) {
+				$app->wf->ProfileIn( __CLASS__ . '::TopWikisQuery' );
 				$topWikis = array();
 
 				if ( !empty( $app->wg->StatsDBEnabled ) ) {
@@ -139,10 +139,12 @@
 					$where = array();
 
 					if ( !empty( $lang ) ) {
+						$lang = $db->addQuotes( $lang );
 						$where[] = "r.lang = '{$lang}'";
 					}
 
 					if ( !empty( $hub ) ) {
+						$hub = $db->addQuotes( $hub );
 						$where[] = "r.hub_name = '{$hub}'";
 					}
 
@@ -172,6 +174,7 @@
 					}
 				};
 
+				$app->wf->ProfileOut( __CLASS__ . '::TopWikisQuery' );
 				return $topWikis;
 			};
 
@@ -179,7 +182,6 @@
 			$topWikis = array_slice( $topWikis, 0, $limit, true );
 
 			$app->wf->ProfileOut( __METHOD__ );
-
 			return $topWikis;
 		}
 
