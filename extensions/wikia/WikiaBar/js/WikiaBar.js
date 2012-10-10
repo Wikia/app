@@ -19,22 +19,23 @@ var WikiaBar = {
 	},
 	wikiaBarHidden: true,
 	wikiaBarWrapperObj: null,
+	wikiaBarCollapseWrapperObj: null,
 	isSampledEvent: function () {
 		return this.WIKIA_BAR_SAMPLING_RATIO >= Math.floor((Math.random() * 100 + 1));
 	},
 	bindTracking: function () {
 		this.wikiaBarWrapperObj.click($.proxy(this.clickTrackingHandler, this));
-		$('.WikiaBarCollapseWrapper').click($.proxy(this.clickTrackingHandler, this));
+		this.wikiaBarCollapseWrapperObj.click($.proxy(this.clickTrackingHandler, this));
 	},
 	init: function () {
 		this.wikiaBarWrapperObj = $('#WikiaBarWrapper');
+		this.wikiaBarCollapseWrapperObj = $('.WikiaBarCollapseWrapper');
 		this.bindTracking();
 
-		var WikiaBarWrapperArrow = this.wikiaBarWrapperObj.find('.arrow');
-
+		var wikiaBarWrapperArrow = this.wikiaBarWrapperObj.find('.arrow');
 		//hidding/showing the bar events
-		WikiaBarWrapperArrow.click($.proxy(this.onShownClick, this));
-		$('.WikiaBarCollapseWrapper .wikia-bar-collapse').click($.proxy(this.onHiddenClick, this));
+		wikiaBarWrapperArrow.click($.proxy(this.onShownClick, this));
+		this.wikiaBarCollapseWrapperObj.find('.wikia-bar-collapse').click($.proxy(this.onHiddenClick, this));
 
 		if (!this.isUserAnon()) {
 			this.handleLoggedInUsersWikiaBar();
@@ -43,13 +44,13 @@ var WikiaBar = {
 		}
 
 		//tooltips
-		WikiaBarWrapperArrow.popover({
+		wikiaBarWrapperArrow.popover({
 			placement: "wikiaBar",
-			content: WikiaBarWrapperArrow.data('tooltip')
+			content: wikiaBarWrapperArrow.data('tooltip')
 		});
 		$('.wikia-bar-collapse').popover({
 			placement: "wikiaBar",
-			content: WikiaBarWrapperArrow.data('tooltipshow')
+			content: wikiaBarWrapperArrow.data('tooltipshow')
 		});
 
 		return true;
@@ -174,13 +175,13 @@ var WikiaBar = {
 	},
 	show: function () {
 		$('#WikiaNotifications').removeClass('hidden');
-		$('.WikiaBarCollapseWrapper').addClass('hidden');
+		this.wikiaBarCollapseWrapperObj.addClass('hidden');
 		this.wikiaBarWrapperObj.removeClass('hidden');
 		this.wikiaBarHidden = false;
 	},
 	hide: function () {
 		$('#WikiaNotifications').addClass('hidden');
-		$('.WikiaBarCollapseWrapper').removeClass('hidden');
+		this.wikiaBarCollapseWrapperObj.removeClass('hidden');
 		this.wikiaBarWrapperObj.addClass('hidden');
 		this.wikiaBarHidden = true;
 	},
