@@ -18,7 +18,7 @@ abstract class WikiaApiController extends WikiaController {
 	 * Flags the API method as requiring a valid ApiGate Key
 	 *
 	 * @example
-	 * class MyApiController extends WikiaApiController {
+	 * class MyApiController extends WikiaApi {
 	 *     public function myApiMethod() {
 	 *         $this->requireKey();
 	 *         ...

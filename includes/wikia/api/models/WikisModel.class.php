@@ -5,7 +5,7 @@
  * @author Federico "Lox" Lucignano <federico.lox@gmail.com>
  */
 
-class WikiInfoModel extends WikiaModel {
+class WikisModel extends WikiaModel {
 	const CACHE_VERSION = '3';
 	const MAX_RESULTS = 250;
 

@@ -5,13 +5,13 @@
  * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
  */
 
-class WikiInfoApiController extends WikiaApiController {
+class WikisApiController extends WikiaApiController {
 	const ITEMS_PER_BATCH = 25;
 
 	private $model = null;
 
 	public function init() {
-		$this->model = new WikiInfoModel();
+		$this->model = new WikisModel();
 	}
 
 	/**
@@ -28,7 +28,7 @@ class WikiInfoApiController extends WikiaApiController {
 	 * @responseParam integer $batches The total number of batches/pages
 	 * @responseParam integer $next The amount of items in the next batch/page
 	 */
-	public function getTopWikis() {
+	public function getList() {
 		$hub = trim( $this->request->getVal( 'hub', null ) );
 		$lang = trim( $this->getVal( 'lang', null ) );
 		$limit = $this->request->getInt( 'limit', self::ITEMS_PER_BATCH );
@@ -67,7 +67,7 @@ class WikiInfoApiController extends WikiaApiController {
 	 * @responseParam integer $batches The total number of batches/pages
 	 * @responseParam integer $next The amount of items in the next batch/page
 	 */
-	public function searchWikis() {
+	public function getByString() {
 		$this->wf->profileIn( __METHOD__ );
 
 		$keyword = trim( $this->request->getVal( 'keyword', '' ) );
@@ -97,7 +97,7 @@ class WikiInfoApiController extends WikiaApiController {
 		$this->wf->profileOut( __METHOD__ );
 	}
 
-	public function getPromotionData() {
+	public function getDetails() {
 		$this->wf->profileIn( __METHOD__ );
 
 		$ids = $this->request->getVal( 'ids', null);

@@ -124,11 +124,11 @@ include_once( "$IP/lib/ApiGate/config.php" );
 $app->registerClass( 'WikiaApiController', "{$IP}/includes/wikia/api/WikiaApiController.class.php" );
 
 //Wikia API models
-$app->registerClass( 'WikiInfoModel', "{$IP}/includes/wikia/api/models/WikiInfoModel.class.php" );
+$app->registerClass( 'WikisModel', "{$IP}/includes/wikia/api/models/WikisModel.class.php" );
 
 //Wikia API controllers
-$app->registerApiController( 'WikiaDiscoveryApiController', "{$IP}/includes/wikia/api/WikiaDiscoveryApiController.class.php" );
-$app->registerApiController( 'WikiInfoApiController', "{$IP}/includes/wikia/api/WikiInfoApiController.class.php" );
+$app->registerApiController( 'DiscoverApiController', "{$IP}/includes/wikia/api/DiscoverApiController.class.php" );
+$app->registerApiController( 'WikisApiController', "{$IP}/includes/wikia/api/WikisApiController.class.php" );
 
 /**
  * Wikia API end
