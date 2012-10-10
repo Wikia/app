@@ -88,6 +88,9 @@ class WikiInfoModel extends WikiaModel {
 	 * @param string $lang [OPTIONAL] The language code (e.g. en, de, fr, es, it, etc.) to use as a filter
 	 *
 	 * @return array A collection of results with id, name, hub, language, topic, domain
+	 *
+	 * @deprecated
+	 * @todo remove as soon as WikiaSearch public API is ready
 	 */
 	public function getWikisByKeyword( $keyword, $lang = null, $hub = null ) {
 		$this->wf->profileIn( __METHOD__ );
@@ -117,7 +120,7 @@ class WikiInfoModel extends WikiaModel {
 				if ( !is_array( $wikis ) ) {
 					$db = $this->getSharedDB();
 
-					$keyword = mysql_real_escape_string( $keyword );
+					$keyword = $db->addQuotes( $keyword );
 					$varId = (int) WikiFactory::getVarByName( 'wgWikiTopics', null )->cv_variable_id;
 
 					$queryParts = array( "SELECT  cl.city_id AS id, cl.city_lang AS lang, cl.city_title AS name ,cv.cv_value AS topic FROM city_list AS cl LEFT JOIN city_variables AS cv ON cl.city_id = cv.cv_city_id AND cv.cv_variable_id = {$varId}" );
@@ -129,7 +132,7 @@ class WikiInfoModel extends WikiaModel {
 					$queryParts[] = "WHERE cl.city_public = 1";
 
 					if ( !empty( $lang ) ) {
-						$lang = mysql_real_escape_string( $lang );
+						$lang = $db->addQuotes( $lang );
 						$queryParts[] = "AND cl.city_lang = '{$lang}'";
 					}
 
@@ -229,7 +232,7 @@ class WikiInfoModel extends WikiaModel {
 			}
 
 			if ( !empty( $lang ) ) {
-				$where['cv.city_lang_code'] = mysql_real_escape_string( $lang );
+				$where['cv.city_lang_code'] = $db->addQuotes( $lang );
 			}
 
 			$rows = $db->select(
