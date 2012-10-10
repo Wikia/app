@@ -901,6 +901,8 @@ class WikiaPhotoGallery extends ImageGallery {
 
 					$thumbHtml .= Xml::openElement('img', $imgAttribs);
 					$thumbHtml .= $videoOverlay;
+
+					wyvlog( $thumbHtml );
 				} else {
 					$thumbHtml = $image['linkTitle'];
 				}
