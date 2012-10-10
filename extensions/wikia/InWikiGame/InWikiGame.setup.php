@@ -25,10 +25,12 @@ $app->registerClass('InWikiGameHelper', $dir . '/InWikiGameHelper.class.php');
 $app->registerClass('InWikiGameParserTag', $dir . '/InWikiGameParserTag.class.php');
 $app->registerClass('InWikiGameController', $dir . '/InWikiGameController.class.php');
 $app->registerClass('InWikiGameRailController', $dir . '/InWikiGameRailController.class.php');
+$app->registerClass('InWikiGameHooks', $dir . '/InWikiGameHooks.class.php');
 
 // hooks
 $app->registerHook('GetRailModuleList', 'InWikiGameHelper', 'onGetRailModuleList');
 $app->registerHook('ParserFirstCallInit', 'InWikiGameParserTag', 'onParserFirstCallInit');
+$app->registerHook('WikiaAssetsPackages', 'InWikiGameHooks', 'onWikiaAssetsPackages');
 
 // i18n mapping
 $app->registerExtensionMessageFile('InWikiGame', $dir . '/InWikiGame.i18n.php');
