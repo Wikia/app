@@ -1,10 +1,14 @@
 package com.wikia.webdriver.PageObjects.PageObject.CreateNewWiki;
 
+import java.util.List;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.Select;
 
+import com.wikia.webdriver.Common.Core.CommonFunctions;
 import com.wikia.webdriver.Common.Logging.PageObjectLogging;
 import com.wikia.webdriver.PageObjects.PageObject.BasePageObject;
 
@@ -24,6 +28,12 @@ public class CreateNewWikiPageObjectStep1 extends BasePageObject{
 	private WebElement successIcon;
 	@FindBy(className="next") 
 	private WebElement submitButton;
+	@FindBy(css="select[name='wiki-language']") 
+	private WebElement languageSelector;
+	@FindBy(css="#ChangeLang") 
+	private WebElement languageSelectorTrigger;
+	@FindBy(css=".domain-country") 
+	private WebElement languageSelectedIndicator;
 	
 	
 	
@@ -32,6 +42,24 @@ public class CreateNewWikiPageObjectStep1 extends BasePageObject{
 		super(driver);
 		PageFactory.initElements(driver, this);
 		// TODO Auto-generated constructor stub
+	}
+	
+	public void selectLanguage(String lang)
+	{
+		languageSelectorTrigger.click();
+		waitForElementByElement(languageSelector);
+		Select language = new Select(languageSelector);
+		List<WebElement> langList = language.getOptions();
+		for (int i=0; i<langList.size(); i++)
+		{
+			String langDropElement = langList.get(i).getText();
+			if (langDropElement.contains(lang+":"))
+			{				
+				language.selectByIndex(i);
+				CommonFunctions.assertString(lang+".", languageSelectedIndicator.getText());
+				break;
+			}
+		}
 	}
 	
 	/**

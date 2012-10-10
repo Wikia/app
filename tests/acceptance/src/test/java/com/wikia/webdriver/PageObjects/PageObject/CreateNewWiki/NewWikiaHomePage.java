@@ -49,7 +49,7 @@ public class NewWikiaHomePage extends WikiBasePageObject{
 	
 	public void verifyUserLoggedIn(String userName)
 	{
-		waitForElementByCss("header#WikiaHeader a[href*='/User:"+userName+"']");
+		waitForElementByCss("header#WikiaHeader a[href*=':"+userName+"']");
 		PageObjectLogging.log("vefifyUserLoggedIn ", "Verified that user: "+userName+" is logged in", true);
 	}
 
