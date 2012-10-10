@@ -44,7 +44,6 @@ class WikiFeaturesHelper extends WikiaModel {
 	public static $release_date = array (
 		'wgEnableChat' => '2011-08-01',					// Chat
 		'wgOasisNavV2' => '2011-10-05',					// WikiNav
-		'wgEnableWallExt' => '2012-01-26',				// Wall
 		'wgShowTopListsInCreatePage' => '2012-02-12',	// Top 10 Lists
 		'wgEnableAchievementsExt' => '2012-02-12',		// Achievements
 	);
