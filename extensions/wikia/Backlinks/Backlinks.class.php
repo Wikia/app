@@ -123,8 +123,7 @@ class Backlinks
 	/**
 	 * Called by maintenance script.
 	 */
-	static function initTable()
-	{
+	static function initTable() {
 		wfProfileIn(__METHOD__);
 
 		// create db handler
@@ -132,8 +131,10 @@ class Backlinks
 
 		if (! $dbr->tableExists(self::TABLE_NAME) ) {
 			try {
-				$dbr->query(self::tableCreateSql(), __METHOD__);
-			} catch (Exception $e) {
+				$source = dirname(__FILE__) . "patch-create-wikia_page_backlinks.sql";
+				$db->sourceFile( $source );
+			}
+			catch (Exception $e) {
 				wfProfileOut(__METHOD__);
 				return $e;
 			}
@@ -143,25 +144,6 @@ class Backlinks
 
 		wfProfileOut(__METHOD__);
 		return "Table ".self::TABLE_NAME." already exists.";
-	}
-
-	static function tableCreateSql()
-	{
-		$tableName = self::TABLE_NAME;
-		return <<<ENDTABLE
-CREATE TABLE `{$tableName}` (
-	`source_page_id` INT NOT NULL,
-	`target_page_id` INT NOT NULL,
-	`backlink_text` VARCHAR(255),
-	`count` INT,
-	PRIMARY KEY (`source_page_id`, `target_page_id`, `backlink_text`),
-	KEY `wikia_page_backlinks_source_page_id` (`source_page_id`),
-	KEY `wikia_page_backlinks_target_page_id` (`target_page_id`)
-) ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8
-COLLATE = utf8_bin;
-ENDTABLE;
-
 	}
 
 	/**
@@ -176,6 +158,8 @@ ENDTABLE;
 			'mysql' => 'patch-create-wikia_page_backlinks.sql',
 		);
 
+		wfProfileIn( __METHOD__ );
+
 		$type = $updater->getDB()->getType();
 		if( isset( $map[$type] ) ) {
 			$sql = dirname( __FILE__ ) . "/" . $map[ $type ];
@@ -183,6 +167,8 @@ ENDTABLE;
 		} else {
 			throw new MWException( "Backlinks extension does not currently support $type database." );
 		}
+		wfProfileIn( __METHOD__ );
+
 		return true;
 	}
 }
