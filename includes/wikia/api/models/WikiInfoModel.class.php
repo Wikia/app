@@ -133,7 +133,7 @@ class WikiInfoModel extends WikiaModel {
 
 					if ( !empty( $lang ) ) {
 						$lang = $db->addQuotes( $lang );
-						$queryParts[] = "AND cl.city_lang = '{$lang}'";
+						$queryParts[] = "AND cl.city_lang = {$lang}";
 					}
 
 					$queryParts[] = "AND (cl.city_title LIKE '%{$keyword}%' OR cv.cv_value LIKE '%{$keyword}%')";
