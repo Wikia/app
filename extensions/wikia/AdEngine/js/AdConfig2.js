@@ -97,7 +97,7 @@ var AdConfig2 = function (
 			return adProviderEvolve;
 		}
 		if (slot[2] === 'AdDriver2') {
-			return adProviderAdDriver;
+			return adProviderAdDriver2;
 		}
 		if (slot[2] === 'AdDriver') {
 			return adProviderAdDriver;
@@ -136,7 +136,7 @@ var AdConfig2 = function (
 
 		// Then our dart (high value traffic)
 		if (highValueCountries[country]) {
-			return adProviderAdDriver;
+			return adProviderAdDriver2;
 		}
 
 		}
