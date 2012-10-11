@@ -2,7 +2,7 @@ var SlotTweaker = function(log, document, undef) {
 	'use strict';
 
 	var logGroup = 'SlotTweaker'
-		, removeClass, removeDefaultHeight, hide
+		, removeClass, removeDefaultHeight, hide, removeTopButtonIfNeeded
 		, defaultHeightClass = 'default-height'
 		, rclass = /[\t\r\n]/g
 	;
@@ -25,6 +25,18 @@ var SlotTweaker = function(log, document, undef) {
 		}
 	};
 
+	// TODO: fix it, it's a hack!
+	removeTopButtonIfNeeded = function(slotname) {
+		var slot = document.getElementById(slotname);
+
+		if (slot && slotname.indexOf('LEADERBOARD') !== -1
+			&& slot.offsetHeight
+			&& (slot.offsetHeight < 90 || slot.offsetHeight >= 95)
+		) {
+			hide('TOP_BUTTON');
+		}
+	};
+
 	hide = function(slotname) {
 		var slot = document.getElementById(slotname);
 
@@ -37,6 +49,7 @@ var SlotTweaker = function(log, document, undef) {
 
 	return {
 		removeDefaultHeight: removeDefaultHeight,
+		removeTopButtonIfNeeded: removeTopButtonIfNeeded,
 		hide: hide
 	};
 };

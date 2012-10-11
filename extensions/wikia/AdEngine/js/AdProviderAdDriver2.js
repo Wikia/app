@@ -60,6 +60,7 @@ var AdProviderAdDriver2 = function (helper, WikiaDart, ScriptWriter, WikiaTracke
 				if (typeof(window.adDriverLastDARTCallNoAds[slotname]) == 'undefined' || !window.adDriverLastDARTCallNoAds[slotname]) {
 					log(slotname + ' was filled by DART', 5, 'AdProviderAdDriver2');
 					slotTweaker.removeDefaultHeight(slotname);
+					slotTweaker.removeTopButtonIfNeeded(slotname);
 					//AdDriver.adjustSlotDisplay(AdDriverDelayedLoader.currentAd.slotname);
 				}
 				else {
