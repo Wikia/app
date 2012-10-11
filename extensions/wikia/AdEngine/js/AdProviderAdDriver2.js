@@ -6,7 +6,6 @@ var AdProviderAdDriver2 = function (helper, WikiaDart, ScriptWriter, WikiaTracke
 		'TOP_LEADERBOARD':{'tile':2, 'size':'728x90,468x60,980x130,980x65', 'loc':'top', 'dcopt':'ist'},
 		'TOP_RIGHT_BOXAD':{'tile':1, 'size':'300x250,300x600', 'loc':'top'}
 		, 'WIKIA_BAR_BOXAD_1':{'size':'320x50'}
-		, 'TOP_BUTTON': {'tile': 3, size:'292x90', 'loc': 'top'}
 	};
 
 	function canHandleSlot(slot) {
