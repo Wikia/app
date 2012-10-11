@@ -107,6 +107,21 @@ abstract class ApiWrapper {
 		return $this->videoId;
 	}
 
+	public function isIngestion() {
+		return false;
+	}
+
+	public function getNonemptyMetadata() {
+		$meta = $this->getMetadata();
+		// get rid of empty fields - no need to store them in db
+		foreach( $meta as $k => $v) {
+			if($v === '') {
+				unset($meta[$k]);
+			}
+		}
+		return $meta;
+	}
+
 /*
 	protected function isIngestedFromFeed() {
 
@@ -419,15 +434,8 @@ abstract class IngestionApiWrapper extends PseudoApiWrapper {
 		return $this->videoName;
 	}
 
-	public function getNonemptyMetadata() {
-		$meta = $this->getMetadata();
-		// get rid of empty fields - no need to store them in db
-		foreach( $meta as $k => $v) {
-			if($v === '') {
-				unset($meta[$k]);
-			}
-		}
-		return $meta;
+	public function isIngestion() {
+		return true;
 	}
 
 }

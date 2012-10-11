@@ -114,7 +114,7 @@ class VideoFileUploader {
 
 		/* create a reference to article that will contain uploaded file */
 		$titleText =  $this->getDestinationTitle();
-		if( !($this->getApiWrapper() instanceof IngestionApiWrapper ) ) {
+		if( !($this->getApiWrapper()->isIngestion() ) ) {
 			// only sanitize name for external uploads
 			// video ingestion handles sanitization by itself
 			$titleText = self::sanitizeTitle( $titleText );
@@ -146,7 +146,7 @@ class VideoFileUploader {
 		$file->setVideoId( $this->getVideoId() );
 
 		/* ingestion video won't be able to load anything so we need to spoon feed it the correct data */
-		if( $this->getApiWrapper() instanceof IngestionApiWrapper ) {
+		if( $this->getApiWrapper()->isIngestion() ) {
 			$meta = $this->getApiWrapper()->getNonemptyMetadata();
 			$file->forceMetadata( serialize($meta) );
 		}

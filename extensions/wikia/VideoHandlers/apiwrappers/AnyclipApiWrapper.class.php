@@ -2,6 +2,8 @@
 
 class AnyclipApiWrapper extends ApiWrapper {
 
+	protected $ingestion = true;
+
 	protected static $API_URL = 'http://apis.anyclip.com/api/clip/$1/';
 	protected static $CACHE_KEY = 'anyclipapi';
 	protected static $CACHE_KEY_VERSION = 0.2;
@@ -22,14 +24,21 @@ class AnyclipApiWrapper extends ApiWrapper {
 			$query = explode( 'clipid=', array_pop($parsed) );
 			$videoId = array_pop( $query );
 
+			$apiWrapper = new static( $videoId );
+			$apiWrapper->ingestion = false;
+
 			wfProfileOut( __METHOD__ );
 
-			return new static( $videoId );
+			return $apiWrapper;
 		}
 
 		wfProfileOut( __METHOD__ );
 
 		return null;
+	}
+
+	public function isIngestion() {
+		return $this->ingestion;
 	}
 
 	public function getDescription() {
