@@ -14,7 +14,7 @@ define('layout', ['sections', 'media', require.optional('cache')], function(sect
 		tables = d.querySelectorAll(selector),
 		processedSections = [],
 		tablesKey = 'wideTables' + wgStyleVersion,
-		ttl = 604800,//7days
+		ttl = 604800, //7days
 		assets,
 		width,
 		process = function(res){
@@ -69,7 +69,7 @@ define('layout', ['sections', 'media', require.optional('cache')], function(sect
 	media.init(images);
 
 	//page width
-	window.addEventListener('resize', function(){
+	window.addEventListener('viewportsize', function(){
 		width = pageContent.offsetWidth;
 	});
 
