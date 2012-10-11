@@ -4,19 +4,8 @@
  * Image lazy loading
  */
 /*global define*/
-define('lazyload', ['thumbnailer'], function (thumbnailer) {
+define('lazyload', ['thumbnailer', 'layout'], function (thumbnailer, layout) {
 	'use strict';
-
-	var win = window,
-		//used to help browser not to reflow to much after lazyload
-		//20 is a margin around page
-		pageWidth = win.innerWidth - 20;
-
-	win.addEventListener('viewportsize', function(){
-		setTimeout(function(){
-			pageWidth = win.innerWidth - 20;
-		}, 200);
-	});
 
 	return function(elements, background) {
 		var x = 0,
@@ -24,6 +13,7 @@ define('lazyload', ['thumbnailer'], function (thumbnailer) {
 			img,
 			src,
 			imageWidth,
+			pageWidth = layout.getPageWidth(),
 			onLoad = function(img){
 				return function(){
 					var url = this.src;
@@ -56,5 +46,5 @@ define('lazyload', ['thumbnailer'], function (thumbnailer) {
 			//don't do any animation if image is already loaded
 			img.complete ? displayImage(elm, src) : img.onload = onLoad(elm);
 		}
-	}
+	};
 });
