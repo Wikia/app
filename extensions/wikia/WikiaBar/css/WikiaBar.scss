@@ -217,10 +217,6 @@ $animationSpeed: 200ms;
 		position: relative;
 		text-align: left;
 		width: $width-outside;
-		&:after {
-			background: transparent;
-			position: relative;
-		}
 	}
 	.arrow {
 		background-image: url(/extensions/wikia/WikiaBar/images/arrowDown.png); /* base64 */

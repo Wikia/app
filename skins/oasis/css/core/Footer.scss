@@ -29,15 +29,6 @@
 		position: absolute;
 		top: 0;
 		width: $width-outside + 10px;
-		&:after {
-			background: url(/skins/oasis/images/sprite.png) 0 -32px no-repeat; /* $wgCdnStylePath */
-			content: " ";
-			height: 12px;
-			left: 5px;
-			position: absolute;
-			top: 20px;
-			width: 1000px;
-		}
 		&.small {
 			left: -5px;
 			margin-left: auto;
