@@ -23,7 +23,7 @@
 
 					var t = this,
 						oTime = opt.timeout,
-						time = (typeof oTime == 'undefined') ? 5000 : (typeof oTime == 'number' ? oTime : false);
+						time = (typeof oTime === 'undefined') ? 5000 : (typeof oTime === 'number' ? oTime : false);
 
 					if(d.body.className.indexOf('hasToast') > -1){
 						wkTst.innerHTML = msg;
@@ -52,8 +52,8 @@
 			},
 
 			hide: function(){
-					wkTst.className = 'hide clsIco';
-				}
+				wkTst.className = 'hide clsIco';
 			}
+		};
 	}
 })();
