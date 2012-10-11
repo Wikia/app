@@ -225,7 +225,7 @@ var WikiaPhotoGalleryView = {
 		var self = this;
 
 		this.log('lazy loading images...');
-		$('.gallery-image-wrapper').find('img[data-src]').each(
+		$('.gallery-image-wrapper').find('img[data-src]:not(.lzyPlcHld)').each(
 			function() {
 				var image = $(this);
 
