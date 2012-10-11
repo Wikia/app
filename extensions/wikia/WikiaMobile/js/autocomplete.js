@@ -1,4 +1,4 @@
-define('suggest', function(){
+define('autocomplete', function(){
 var reEscape = /(\/|\.|\*|\+|\?|\||\(|\)|\[|\]|\{|\}|\\)/g,
 	input,
 	list,
@@ -14,7 +14,7 @@ var reEscape = /(\/|\.|\*|\+|\?|\||\(|\)|\[|\]|\{|\}|\\)/g,
 		var curVal = currentValue,
 			cr;
 
-		if(curVal != ''){
+		if(curVal !== ''){
 			cr = cachedResponse[curVal];
 
 			if (cr && cr[0].length > 0) {

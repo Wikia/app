@@ -256,7 +256,7 @@ define('topbar', ['querystring', 'loader', 'toc', 'events', require.optional('ad
                 ttl: 604800,
                 callback: function(res){
                     Wikia.processScript(res.scripts[0]);
-                    require(['suggest'], function(sug){
+                    require(['autocomplete'], function(sug){
                         sug({
                             url: wgServer + '/api.php' + '?action=opensearch',
                             input: searchInput,
