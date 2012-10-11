@@ -24,6 +24,7 @@ var RUNNER_TEMP_PATH = '/tmp/run-test.js.' + (new Date()).getTime() + '.html',
 	decoratorOptionRegex = new RegExp('@test-([^\n]+)', 'gi'),
 	includeTestFileRegex = new RegExp('^.*\\/tests\\/[^\\/]+\\.js$'),
 	excludeTestFileRegex = new RegExp('^\\.\\.\\/tests\\/.*\\.js$'),
+	trailingSlashRegex = new RegExp('\\/$'),
 	jsFileRegex = new RegExp('^(.*)\\.js$'),
 	cssFileRegex = new RegExp('^(.*)\\.(css|sass|scss)$'),
 	tests = [],
@@ -78,6 +79,16 @@ function scanDirectory( path, output, callback ) {
 	}
 }
 
+function testSuite(path, output) {
+	path = path.replace(trailingSlashRegex, '');
+
+	scanDirectory(path, output, function(arg) {
+		return (!excludeTestFileRegex.test(arg) && includeTestFileRegex.test(arg));
+	});
+
+	output.reverse();
+}
+
 function onPageLoaded( status ) {
 	timer && clearTimeout( timer );
 
@@ -127,7 +138,7 @@ function processTest( test ) {
 				testOptions[t].push(tokens[1]);
 			}else if( t == 'screen-resolution' && tokens[1] ){
 				var res = tokens[1].split('x', 2);
-	
+
 				testOptions[t] = {
 					width: res[0],
 					height: res[1]
@@ -224,16 +235,20 @@ sys.args.forEach(function(item){
 	}
 });
 
+// show entire suite
 if(!options.params.length){
-	scanDirectory('..',tests,function(arg) {
-		return (!excludeTestFileRegex.test(arg) && includeTestFileRegex.test(arg));
-	});
-
-	tests.reverse();
+	testSuite('..', tests);
 
 }else{
 	options.params.forEach(function(item){
-		tests.push(item);
+		// scope by directory
+		if (item.indexOf('.js') < 0) {
+			testSuite(item, tests);
+
+		// file
+		} else {
+			tests.push(item);
+		}
 	});
 }
 
@@ -295,7 +310,7 @@ function outputTestsResult() {
 		var testResult = testResults[i];
 
 		console.log( '\nRunning ' + stylize( testResult.name, 'bold' ) );
-		
+
 		for (var suiteName in testResult.suites) {
 
 			console.log(stylize(suiteName, 'bold'));
@@ -336,7 +351,7 @@ function outputTestsResult() {
 			}
 		}
 	}
-	
+
 	var status = (errors + failures) == 0,
 		passed = tests - errors - failures - skipped;
 
@@ -345,7 +360,7 @@ function outputTestsResult() {
 	}else{
 		passed = '0 passed';
 	}
-	
+
 	if (errors == 1) {
 		errors = stylize( '1 error', 'lightred' );
 	} else if (errors > 1) {
@@ -353,7 +368,7 @@ function outputTestsResult() {
 	} else {
 		errors = '0 errors';
 	}
-	
+
 	if (failures == 1) {
 		failures = stylize('1 failure', 'lightred');
 	}else if (failures > 1) {
@@ -369,7 +384,7 @@ function outputTestsResult() {
 	}
 
 	console.log('Ran ' + tests + ' tests with ' + passed + ' and ' + failures + ' and ' + errors + skipped + ' in ' + Math.round( time * 100 )/100 + ' seconds');
-	
+
 	return status;
 }
 
