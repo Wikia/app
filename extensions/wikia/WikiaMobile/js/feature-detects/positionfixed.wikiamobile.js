@@ -16,7 +16,7 @@ Features.addTest('positionfixed', function(){
 		omversion = !!operammobilematch && operammobilematch[ 1 ],
 		w = window;
 
-	return (! //this ! is intended here as logic is inverted it finds browsers with no positionfixed support
+	return !( //this ! is intended here as logic is inverted it finds browsers with no positionfixed support
 	// iOS 4.3 and older : Platform is iPhone/Pad/Touch and Webkit version is less than 534 (ios5)
 		( ( platform.indexOf( "iPhone" ) > -1 || platform.indexOf( "iPad" ) > -1  || platform.indexOf( "iPod" ) > -1 ) && wkversion && wkversion < 534 )
 			||
@@ -25,8 +25,8 @@ Features.addTest('positionfixed', function(){
 			||
 			( operammobilematch && omversion < 7458 )
 			||
-			//Android lte 2.1: Platform is Android and Webkit version is less than 533 (Android 2.2)
-			( ua.indexOf( "Android" ) > -1 && wkversion && wkversion < 533 )
+			//Android lte 2.1: Platform is Android and Webkit version is less than 534 (Android 2.2)
+			( ua.indexOf( "Android" ) > -1 && wkversion && wkversion < 534 )
 			||
 			// Firefox Mobile before 6.0 -
 			( ffversion && ffversion < 6 )
