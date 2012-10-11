@@ -15,23 +15,33 @@ class WikiaSearchIndexer extends WikiaObject {
 	const WIKIPAGES_CACHE_TTL	= 604800;
 	
 	/**
+	 * Don't dump anything out during a full reindex
+	 * @var int
+	 */
+	const REINDEX_DEFAULT		= 0;
+	
+	/**
+	 * Be verbose during reindexing
+	 * @var int
+	 */
+	const REINDEX_VERBOSE		= 1;
+	
+	/**
 	 * Used to determine whether we have registered the onParserClearState hook
 	 * @var boolean
 	 */
 	protected $parserHookActive	= false;
 	
 	/**
-	 * ParserClearState hook handler, called internally.
-	 * @static
-	 * @param $parser Parser
-	 * @return bool
+	 * Handles dependency injection for solarium client
+	 * @param Solarium_Client $client
 	 */
-	public static function onParserClearState( &$parser ) {
-		// prevent from caching when indexer is running to avoid infrastructure overload
-		$parser->getOutput()->setCacheTime(-1);
-		return true;
+	public function __construct( Solarium_Client $client ) {
+	    $this->client = $client;
+	    $this->client->setAdapter('Solarium_Client_Adapter_Curl');
+	    parent::__construct();
 	}
-	
+		
 	/**
 	 * Used to generate indexing data for a number of page IDs on a given  wiki
 	 * @see WikiaSearchController::getPages()
@@ -154,7 +164,6 @@ class WikiaSearchIndexer extends WikiaObject {
 		$result['wid']			= (int) $this->wg->CityId;
 		$result['pageid']		= $page->getId();
 		$result['id']			= $result['wid'] . '_' . $result['pageid'];
-		$result['sitename']		= $this->wg->Sitename;
 		$result['title']		= $title;
 		$result['canonical']	= $canonical;
 		$result['html']			= html_entity_decode($html, ENT_COMPAT, 'UTF-8');
@@ -209,11 +218,15 @@ class WikiaSearchIndexer extends WikiaObject {
 				'\+s'											=>	' ',
 		);
 		
+		if ( $this->wg->ExternalSharedDB === null ) {
+			$pageData['wid'] = $this->wg->SearchWikiId;
+		}
+		
 		foreach ($regexes as $re => $repl ) {
 			$html = preg_replace( "/$re/mU", $repl, $html );
 		}
 		
-		$pageData['html']							=	strip_tags( $html );
+		$pageData['html'] = strip_tags( $html );
 		
 		foreach ( WikiaSearch::$languageFields as $field ) {
 			if ( isset( $pageData[$field] ) ) {
@@ -222,7 +235,86 @@ class WikiaSearchIndexer extends WikiaObject {
 		}
 
 		return F::build( 'Solarium_Document_ReadWrite', array( $pageData ) );
+	}
+	
+	/**
+	 * Iterates over a set of Solarium_Document_ReadWrite instances and reindexes them
+	 * @param  array $documents
+	 * @return bool true
+	 */
+	public function reindexBatch( array $documents = array(), $verbosity = self::REINDEX_DEFAULT ) {
+		$updateHandler = $this->client->createUpdate();
+		$updateHandler->addDocuments( $documents );
+		$updateHandler->addCommit();
+		try {
+			$this->client->update( $updateHandler );
+			$confirmationString = count( $documents ) . " document(s) updated\n";
+			if ( $verbosity == self::REINDEX_VERBOSE ) {
+				echo $confirmationString;
+			}
+		} catch ( Exception $e ) {
+			$id = rand(1000, 9999);
+			Wikia::Log( __METHOD__, $id, $e);
+			if ( $verbosity == self::REINDEX_VERBOSE ) {
+				echo "There was an error updating the index. Please search for {$id} in the logs.\n";
+			}
+		}
 		
+		return true;
+	}
+	
+	/**
+	 * Given a set of page IDs, deletes by query
+	 * @param  array $documentIds
+	 * @return bool true
+	 */
+	public function deleteBatch( array $documentIds = array(), $verbosity = self::REINDEX_DEFAULT ) {
+	    $updateHandler = $this->client->createUpdate();
+	    foreach ( $documentIds as $id ) {
+		    $updateHandler->addDeleteQuery( WikiaSearch::valueForField( 'id', $id ) );
+	    }
+		$updateHandler->addCommit();
+	    try {
+	        $this->client->update( $updateHandler );
+	        $confirmationString = implode(' ', $documentIds). ' ' . count( $documentIds ) . " document(s) deleted\n";
+	        if ( $verbosity == self::REINDEX_VERBOSE ) {
+	            echo $confirmationString;
+	        }
+	    } catch ( Exception $e ) {
+	        $id = rand(1000, 9999);
+	        Wikia::Log( __METHOD__, $id, $e);
+	        if ( $verbosity == self::REINDEX_VERBOSE ) {
+	            echo "There was an error deleting from the index. Please search for {$id} in the logs.\n";
+			}
+		}
+
+		return true;
+	}
+	
+	/**
+	 * Written to work as a hook
+	 * @param int $pageId
+	 */
+	public function reindexPage( $pageId ) {
+		Wikia::log( __METHOD__, '', $pageId );
+		$document = $this->getSolrDocument( $pageId );
+		$this->reindexBatch( array( $document ) );
+		
+		return true;
+	}
+	
+	/**
+	 * Written to work as a hook
+	 * @param int $pageId
+	 */
+	public function deleteArticle( $pageId) {
+		
+		$cityId	= $this->wg->cityId ?: $this->wg->SearchWikiId;
+		$id		= sprintf( '%s_%s', $cityId, $pageId );
+		
+		$this->deleteBatch( array( $id ) );
+		
+		return true;
 	}
 	
 	/**
@@ -368,5 +460,60 @@ class WikiaSearchIndexer extends WikiaObject {
 	
 	    wfProfileOut(__METHOD__);
 	    return  $api->getResultData();
+	}
+	
+	/**
+	 * MediaWiki Hooks
+	 */
+
+	/**
+	 * ParserClearState hook handler, called internally.
+	 * @static
+	 * @param $parser Parser
+	 * @return bool
+	 */
+	public static function onParserClearState( &$parser ) {
+	    // prevent from caching when indexer is running to avoid infrastructure overload
+	    $parser->getOutput()->setCacheTime(-1);
+	    return true;
+	}
+	
+	/**
+	 * Sends delete request to article if it gets deleted
+	 * @param WikiPage $article
+	 * @param User $user
+	 * @param integer $reason
+	 * @param integer $id
+	 */
+	public function onArticleDeleteComplete( &$article, User &$user, $reason, $id ) {
+		return $this->deleteArticle( $id );
+	}
+	
+	/**
+	 * Reindexes the page
+	 * @param WikiPage $article
+	 * @param User $user
+	 * @param string $text
+	 * @param string $summary
+	 * @param bool $minoredit
+	 * @param bool $watchthis
+	 * @param string $sectionanchor
+	 * @param array $flags
+	 * @param Revision $revision
+	 * @param int $status
+	 * @param int $baseRevId
+	 */
+	public function onArticleSaveComplete( &$article, &$user, $text, $summary,
+	        $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId ) {
+		return $this->reindexPage( $article->getTitle()->getArticleID() );
+	}
+	
+	/**
+	 * Reindexes page on undelete
+	 * @param Title $title
+	 * @param int $create
+	 */
+	public function onArticleUndelete( $title, $create ) {
+		return $this->reindexPage( $title->getArticleID() );
 	}
 }
