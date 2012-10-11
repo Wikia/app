@@ -19,7 +19,8 @@ var AdProviderLiftium2Dom = function (WikiaTracker, log, document, slotTweaker) 
 		'PREFOOTER_RIGHT_BOXAD':{'size':'300x250'},
 		'INVISIBLE_1':{'size':'0x0'},
 		'INCONTENT_BOXAD_1':{'size':'300x250'},
-		'WIKIA_BAR_BOXAD_1':{'size':'300x250'}
+		'WIKIA_BAR_BOXAD_1':{'size':'300x250'},
+		'TOP_BUTTON': {'size':'292x90'}
 	};
 
 	canHandleSlot = function(slot) {
