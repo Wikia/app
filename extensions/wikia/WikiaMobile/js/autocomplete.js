@@ -2,6 +2,7 @@ define('autocomplete', function(){
 var reEscape = /(\/|\.|\*|\+|\?|\||\(|\)|\[|\]|\{|\}|\\)/g,
 	input,
 	list,
+	clear,
 	suggestions = [],
 	currentValue,
 	cachedResponse = [],
@@ -74,11 +75,15 @@ var reEscape = /(\/|\.|\*|\+|\?|\||\(|\)|\[|\]|\{|\}|\\)/g,
 	}
 
 	return function (options) {
-		input = options.input;
-		list = options.list;
 		serviceUrl = options.url;
 
-		var clear = options.clear;
+		if(!serviceUrl){
+			throw 'url not provided';
+		}
+
+		input = options.input;
+		list = options.list;
+		clear = options.clear;
 
 		currentValue = input.value.trim();
 		getSuggestions();
@@ -101,13 +106,6 @@ var reEscape = /(\/|\.|\*|\+|\?|\||\(|\)|\[|\]|\{|\}|\\)/g,
 			input.parentElement.scrollIntoView();
 		});
 
-		clear.addEventListener('click', function(){
-			input.value = '';
-			list.innerHTML = '';
-			clear.className = 'clsIco hide';
-			input.focus();
-		});
-
 		list.addEventListener('click', function(ev){
 			var target = ev.target,
 				title;
@@ -124,5 +122,12 @@ var reEscape = /(\/|\.|\*|\+|\?|\||\(|\)|\[|\]|\{|\}|\\)/g,
 				input.parentElement.submit();
 			}
 		});
-	}
+
+		clear && clear.addEventListener('click', function(){
+			input.value = '';
+			list.innerHTML = '';
+			clear.className = 'clsIco hide';
+			input.focus();
+		});
+	};
 });
