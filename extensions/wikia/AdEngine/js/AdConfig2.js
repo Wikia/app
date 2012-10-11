@@ -39,8 +39,7 @@ var AdConfig2 = function (
 		'TEST_HOME_TOP_RIGHT_BOXAD':true,
 		'TEST_TOP_RIGHT_BOXAD':true,
 		'TOP_LEADERBOARD':true,
-		'TOP_RIGHT_BOXAD':true,
-		'TOP_BUTTON':true
+		'TOP_RIGHT_BOXAD':true
 	};
 
 	// copy of CommonSettings wgHighValueCountries
