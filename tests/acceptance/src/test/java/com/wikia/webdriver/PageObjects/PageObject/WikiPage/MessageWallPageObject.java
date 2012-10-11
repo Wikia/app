@@ -132,15 +132,27 @@ public class MessageWallPageObject extends WikiBasePageObject{
 	
 	public void writeBoldMessage(String title, String message) {	
 		
+try {Thread.sleep(3000);} catch (InterruptedException e) {}
 		messageTitleField.click();
+		try {Thread.sleep(3000);} catch (InterruptedException e) {}
 		messageTitleField.sendKeys(title);
+		try {Thread.sleep(3000);} catch (InterruptedException e) {}
 		triggerMessageArea();
+		try {Thread.sleep(3000);} catch (InterruptedException e) {}
 		waitForElementByElement(messageWallIFrame);
-		boldButton.click();
+		try {Thread.sleep(3000);} catch (InterruptedException e) {}
+		jQueryClick("span.cke_button.cke_off.cke_button_bold a .cke_icon");
+//		boldButton.click();
+		try {Thread.sleep(3000);} catch (InterruptedException e) {}
 		messageTitleField.sendKeys(Keys.TAB);
+		try {Thread.sleep(3000);} catch (InterruptedException e) {}
 		driver.switchTo().frame(messageWallIFrame);
+		try {Thread.sleep(3000);} catch (InterruptedException e) {}
+//		jQueryClick("span.cke_button.cke_off.cke_button_bold a .cke_icon");
 		waitForElementByElement(messageBodyField);
+		// wyglada na to ze to ponizsza metoda powoduje wylaczenie sie bold buttona
 		messageBodyField.sendKeys(message);
+		try {Thread.sleep(3000);} catch (InterruptedException e) {}
 		driver.switchTo().defaultContent();
 		PageObjectLogging.log("writeBoldMessage", "bold message is written, title: "+title+" body: "+message, true, driver);
 		

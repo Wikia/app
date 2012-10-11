@@ -286,6 +286,25 @@ public class MessageWallTests extends TestTemplate
 		wall.removeMessage("reason");
 	}
 	
+	@Test(groups = { "MessageWall016", "MessageWall" })
+	public void MessageWall_016_WriteBoldMessage() {
+
+		CommonFunctions.logOut(Properties.userName, driver);
+		MessageWallPageObject wall = new MessageWallPageObject(driver,Global.DOMAIN);
+		String timeStamp = wall.getTimeStamp();
+		String title = "QATitle" + timeStamp;
+		String message = "QAMessage" + timeStamp;
+		String titleEdit = "QATitle" + timeStamp + "edit";
+		String messageEdit = "QAMessage" + timeStamp + "edit";
+		CommonFunctions.logIn(Properties.userName, Properties.password);
+		wall.openMessageWall(Properties.userName);
+		wall.writeBoldMessage(title, message);
+		wall.clickPostButton();
+		wall.verifyPostedMessageWithTitle(title, message);
+		wall.editMessage(titleEdit, messageEdit);
+		wall.verifyPostedMessageWithTitle(titleEdit, messageEdit);
+
+	}
 //	@Test(groups = { "MessageWall00x", "MessageWall" })
 //	public void MessageWall_00x_WriteAndEditMessage() {
 //
