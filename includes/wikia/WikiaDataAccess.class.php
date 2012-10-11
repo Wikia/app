@@ -75,7 +75,7 @@ class WikiaDataAccess {
 			return $result;
 		};
 
-		$result = $tryCache();
+		$result = $tryCache($key);
 
 		if( is_null($result) ) {
 
@@ -84,7 +84,7 @@ class WikiaDataAccess {
 			if( $wasLocked && $gotLock ) {
 				self::unlock( $keyLock );
 				$gotLock = false;
-				$result = $tryCache();
+				$result = $tryCache($key);
 			}
 
 			if( is_null($result) ) {
@@ -101,6 +101,8 @@ class WikiaDataAccess {
 			$now = $app->wf->Timestamp( TS_UNIX );
 			if( $result['time'] >= $now - $cacheTime ) {
 				// still fresh enough
+			} else {
+				// we could use the data, but maybe we should regenerate
 				list($gotLock, $wasLocked) = self::lock( $keyLock, false );
 
 				if( !$wasLocked && $gotLock ) {
