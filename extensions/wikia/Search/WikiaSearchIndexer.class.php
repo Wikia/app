@@ -185,6 +185,47 @@ class WikiaSearchIndexer extends WikiaObject {
 	}
 	
 	/**
+	 * Generates a Solr document from a page ID
+	 * @param  int $pageId
+	 * @return Solarium_Document_ReadWrite 
+	 */
+	public function getSolrDocument( $pageId ) {
+		
+		$pageData = $this->getPage( $pageId );
+		
+		$html = $pageData['html'];
+		
+		$regexes = array(
+				'\+s'											=>	' ',
+				'<span[^>]*editsection[^>]*>.*?<\/span>'		=>	'',
+				'<img[^>]*>'									=>	'',
+				'<\/img>'										=>	'',
+				'<noscript>.*?<\/noscript>'						=>	'',
+				'<div[^>]*picture-attribution[^>]*>.*?<\/div>'	=>	'',
+				'<ol[^>]*references[^>]*>.*?<\/ol>'				=>	'',
+				'<sup[^>]*reference[^>]*>.*?<\/sup>'			=>	'',
+				'<script .*?<\/script>'							=>	'',
+				'<style .*?<\/style>'							=>	'',
+				'\+s'											=>	' ',
+		);
+		
+		foreach ($regexes as $re => $repl ) {
+			$html = preg_replace( "/$re/mU", $repl, $html );
+		}
+		
+		$pageData['html']							=	strip_tags( $html );
+		
+		foreach ( WikiaSearch::$languageFields as $field ) {
+			if ( isset( $pageData[$field] ) ) {
+				$pageData[WikiaSearch::field( $field )] = $pageData[$field];
+			}
+		}
+
+		return F::build( 'Solarium_Document_ReadWrite', array( $pageData ) );
+		
+	}
+	
+	/**
 	 * Makes a handful of MediaWiki API requests to get metadata about a page
 	 * @see WikiaSearchIndexer::getPage()
 	 * @param Article $page

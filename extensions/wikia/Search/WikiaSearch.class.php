@@ -68,7 +68,7 @@ class WikiaSearch extends WikiaObject {
 	 * @see WikiaSearch::field
 	 * @staticvar array
 	 */
-	private static $languageFields  = array(
+	public static $languageFields  = array(
 			'title',
 	        'html',
 	        'wikititle',
