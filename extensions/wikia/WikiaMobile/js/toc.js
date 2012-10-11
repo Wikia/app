@@ -72,9 +72,41 @@ define('toc', ['track', 'sections'], function toc(track, sections){
 		}
 	}
 
+	function getToc(list) {
+		var toc = [],
+			section,
+			link,
+			ul,
+			parent;
+
+		for(var i = 0, l = list.length; i < l; i++){
+			section = list[i];
+			link = section.children[0].href;
+			ul = section.children[1];
+			parent = { section: link.slice(link.indexOf('#') + 1) };
+
+			ul && (parent.children = getToc(ul.children));
+
+			toc.push(parent);
+		}
+
+		return toc;
+	}
+
+	function getList(){
+		var toc = [];
+
+		if(table || (table = d.getElementById('toc'))){
+			toc = getToc(table.getElementsByClassName('toclevel-1'));
+		}
+
+		return toc;
+	}
+
 	return {
 		init: init,
 		open: open,
-		close: close
-	}
+		close: close,
+		getList: getList
+	};
 });
