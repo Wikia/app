@@ -513,8 +513,6 @@ define('media', ['modal', 'loader', 'querystring', require.optional('popover'), 
 			if(shareBtn) {shareBtn.style.display = 'none';}
 		},
 		init: init,
-		cleanup: function(){
-			removeZoom();
-		}
+		cleanup: removeZoom
 	};
 });
