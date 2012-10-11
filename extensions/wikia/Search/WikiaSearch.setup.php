@@ -51,7 +51,7 @@ $solariumConfig = array(
 );
 
 //@todo configs for this?
-$searchMaster = $wgExternalSharedDB ? 'search-s6' : 'search-internal';
+$searchMaster = $wgExternalSharedDB ? 'search-s6' : 'staff-search-s1';
 
 $indexerSolariumConfig = array(
 		'adapteroptions'	=> array(

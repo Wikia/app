@@ -424,15 +424,21 @@ class WikiaSearchIndexer extends WikiaObject {
 			return $result;
 		}
 	
-		$db = $this->wf->GetDB( DB_SLAVE, array(), $this->wg->statsDB );
-		$row = $db->selectRow(
-				array( 'page_views' ),
-				array(	'SUM(pv_views) as "monthly"',
-						'SUM(CASE WHEN pv_ts >= DATE_SUB(DATE(NOW()), INTERVAL 7 DAY) THEN pv_views ELSE 0 END) as "weekly"' ),
-				array(	'pv_city_id' => (int) $this->wg->CityId,
-						'pv_ts >= DATE_SUB(DATE(NOW()), INTERVAL 30 DAY)' ),
-				__METHOD__
-		);
+		if ( $this->wg->statsDBEnabled ) {
+			try {
+				$db = $this->wf->GetDB( DB_SLAVE, array(), $this->wg->statsDB );
+				$row = $db->selectRow(
+						array( 'page_views' ),
+						array(	'SUM(pv_views) as "monthly"',
+								'SUM(CASE WHEN pv_ts >= DATE_SUB(DATE(NOW()), INTERVAL 7 DAY) THEN pv_views ELSE 0 END) as "weekly"' ),
+						array(	'pv_city_id' => (int) $this->wg->CityId,
+								'pv_ts >= DATE_SUB(DATE(NOW()), INTERVAL 30 DAY)' ),
+						__METHOD__
+				);
+			} catch ( Exception $e ) { 
+				Wikia::log( __METHOD__, '', $e );
+			}
+		}
 	
 		// a pinch of defensive programming
 		if ( !$row ) {
