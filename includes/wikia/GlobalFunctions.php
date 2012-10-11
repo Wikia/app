@@ -227,6 +227,9 @@ function wfGetBreadCrumb( $cityId = 0 ) {
 	if( !empty( $wgCats ) ) {
 		return $wgCats;
 	}
+	if ( empty ($wgExternalSharedDB)) {
+		return $wgCats;
+	}
 
 	wfProfileIn( $method );
 	$memckey = 'cat_structure';
