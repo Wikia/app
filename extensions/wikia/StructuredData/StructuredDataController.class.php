@@ -55,7 +55,7 @@ class StructuredDataController extends WikiaSpecialPageController {
 		if(!empty($id)) {
 			try {
 				$sdsObject = $this->structuredData->getSDElement( $id );
-			} catch( Exception $e ) {
+			} catch( WikiaException $e ) {
 				$this->app->wg->Out->setStatusCode ( 404 );
 			}
 		} else {

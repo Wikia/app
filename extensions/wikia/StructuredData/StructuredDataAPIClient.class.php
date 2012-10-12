@@ -52,7 +52,7 @@ class StructuredDataAPIClient {
 
 	public function getCollection( $type ) {
 
-		$rawResponse = $this->call( rtrim( $this->getApiPath(), '/' ) . "?withType=".$type."");
+		$rawResponse = $this->call( rtrim( $this->getApiPath(), '/' ) . '?withType=' . urlencode($type) );
 		$response = json_decode( $rawResponse );
 		$collection = array();
 		foreach ( $response->{"@graph"} as $obj ) {
