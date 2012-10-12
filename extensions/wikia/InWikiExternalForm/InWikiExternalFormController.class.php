@@ -8,8 +8,9 @@ class InWikiExternalFormController  extends WikiaSpecialPageController {
 	public function index() {
 		$this->wg->SuppressPageHeader = true;
 		$this->wg->SuppressSpotlights = true;
-		$this->formUrl = WikiFactory::getVarValueByName('wgInWikiExternalFormUrl',$this->wg->cityId);
+		$this->formUrl = $this->wg->InWikiExternalFormUrl;
 		$this->response->addAsset("extensions/wikia/InWikiExternalForm/js/InWikiExternalForm.js");
+		$this->wg->out->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/InWikiExternalForm/js/InWikiExternalForm.scss'));
 	}
 }
 
