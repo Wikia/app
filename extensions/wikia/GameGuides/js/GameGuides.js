@@ -18,16 +18,14 @@
 	//handling grabing all links on a page;
 	function Photos(){
 		this.getList = function(){
-			require(['media'], function(m){
-				var images = m.getImages(),
-					links = [];
+			var images = Array.prototype.slice.call(document.images),
+				links = [];
 
-				for(var i = 0, l = images.length; i < l; i++){
-					links[i] = images[i].url;
-				}
+			for(var i = 0, l = images.length; i < l; i++){
+				links[i] = images[i].getAttribute('data-src') || images[i].src;
+			}
 
-				return links;
-			});
+			return JSON.stringify(links);
 		};
 	}
 
@@ -37,7 +35,7 @@
 		return new Photos();
 	};
 
-	window.Photos = Photos;
+	w.Photos = Photos;
 
 	w.changeFontType = function(){
 		if(html.className.indexOf('serif') > -1) {
