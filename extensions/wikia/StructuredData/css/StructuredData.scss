@@ -1,0 +1,14 @@
+.WikiaForm {
+	.input-group {
+		input[type="text"], textarea {
+			width: 500px;
+		}
+		&.in-view-mode input[type="text"], textarea {
+			border: none;
+			box-shadow: none;
+			background-color: transparent;
+			color: black !important;
+			font-weight: bold;
+		}
+	}
+}
