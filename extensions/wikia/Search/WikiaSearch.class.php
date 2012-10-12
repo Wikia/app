@@ -514,7 +514,7 @@ class WikiaSearch extends WikiaObject {
 				->setQueryParser		( 'edismax' )
 		;
 		
-		if ( ! empty( $this->wg->SharedExternalDB ) ) {
+		if ( $this->wg->SharedExternalDB !== null ) {
 			$dismax
 				->setPhraseFields		( $queryFieldsString )
 				->setBoostQuery			( $this->getBoostQueryString( $searchConfig ) )

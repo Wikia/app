@@ -639,6 +639,10 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 	 * @covers WikiaSearch::getNestedQuery
 	 */
 	public function testGetNestedQuery() {
+		
+		$this->mockGlobalVariable( 'wgSharedExternalDB', 'whatever' );
+		$this->mockApp();
+		
 		$mockClient			=	$this->getMock( 'Solarium_Client' );
 		$wikiaSearch		=	F::build( 'WikiaSearch', array( $mockClient ) );
 		$searchConfig		=	F::build( 'WikiaSearchConfig' ); /** @var WikiaSearchConfig $searchConfig **/
