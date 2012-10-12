@@ -9,7 +9,7 @@ var InWikiGame = {
 		var entryPoint = this.getEntryPoint();
 		iframeUrl = (entryPoint !== null) ? (iframeUrl + '-' + entryPoint) : iframeUrl;
 
-		$('.InWikiGameWrapper').click(function() {
+		$('.InWikiGameWrapper a').click(function(e) {
 			var iframe = $(
 				'<iframe></iframe>',
 				{
@@ -29,6 +29,7 @@ var InWikiGame = {
 				});
 			});
 			$(this).html(iframe);
+			e.preventDefault();
 		});
 	},
 	getEntryPoint: function() {
