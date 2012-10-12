@@ -38,7 +38,6 @@ class WikiaSearchIndexer extends WikiaObject {
 	 */
 	public function __construct( Solarium_Client $client ) {
 	    $this->client = $client;
-	    $this->client->setAdapter('Solarium_Client_Adapter_Curl');
 	    parent::__construct();
 	}
 		
@@ -161,8 +160,8 @@ class WikiaSearchIndexer extends WikiaObject {
 		// clear output buffer in case we want get more pages
 		$this->wg->Out->clearHTML();
 	
-		$result['wid']			= (int) $this->wg->CityId;
-		$result['pageid']		= $page->getId();
+		$result['wid']			= empty( $this->wg->ExternalSharedDB ) ? $this->wg->SearchWikiId : (int) $this->wg->CityId;
+		$result['pageid']		= $pageId;
 		$result['id']			= $result['wid'] . '_' . $result['pageid'];
 		$result['title']		= $title;
 		$result['canonical']	= $canonical;
@@ -218,10 +217,6 @@ class WikiaSearchIndexer extends WikiaObject {
 				'\+s'											=>	' ',
 		);
 		
-		if ( $this->wg->ExternalSharedDB === null ) {
-			$pageData['wid'] = $this->wg->SearchWikiId;
-		}
-		
 		foreach ($regexes as $re => $repl ) {
 			$html = preg_replace( "/$re/mU", $repl, $html );
 		}
@@ -238,12 +233,18 @@ class WikiaSearchIndexer extends WikiaObject {
 	}
 	
 	/**
-	 * Iterates over a set of Solarium_Document_ReadWrite instances and reindexes them
-	 * @param  array $documents
+	 * Iterates over a set of page IDs reindexes their articles
+	 * @param  array $documentIds
 	 * @return bool true
 	 */
-	public function reindexBatch( array $documents = array(), $verbosity = self::REINDEX_DEFAULT ) {
+	public function reindexBatch( array $documentIds = array(), $verbosity = self::REINDEX_DEFAULT ) {
 		$updateHandler = $this->client->createUpdate();
+		
+		$documents = array();
+		foreach ($documentIds as $id ) {
+			$documents[] = $this->getSolrDocument( $id );
+		}
+		
 		$updateHandler->addDocuments( $documents );
 		$updateHandler->addCommit();
 		try {
@@ -336,40 +337,34 @@ class WikiaSearchIndexer extends WikiaObject {
 	
 		$result['backlinks'] = isset($data['query']['backlinks_count'] ) ? $data['query']['backlinks_count'] : 0;  
 	
-		$data = $this->callMediaWikiAPI( array(
-				'pageids'	=> $page->getId(),
-				'action'	=> 'query',
-				'prop'		=> 'info|categories',
-				'inprop'	=> 'url|created|views|revcount',
-				'meta'		=> 'siteinfo',
-				'siprop'	=> 'statistics|wikidesc|variables|namespaces|category'
-		));
-	
-		if( isset( $data['query']['pages'][$page->getId()] ) ) {
-			$pageData = $data['query']['pages'][$page->getId()];
-			$result['views']	= $pageData['views'];
-			$result['revcount']	= $pageData['revcount'];
-			$result['created']	= $pageData['created'];
-			$result['touched']	= $pageData['touched'];
-		}
-	
-		$result['categories'] = array();
-	
-		if ( isset( $pageData['categories'] ) ) {
-			foreach ( $pageData['categories'] as $category ) {
-				$result['categories'][] = implode( ':', array_slice( explode( ':', $category['title'] ), 1 ) );
+		if (! empty( $this->wg->ExternalSharedDB ) ) {
+			$data = $this->callMediaWikiAPI( array(
+					'pageids'	=> $page->getId(),
+					'action'	=> 'query',
+					'prop'		=> 'info|categories',
+					'inprop'	=> 'url|created|views|revcount',
+					'meta'		=> 'siteinfo',
+					'siprop'	=> 'statistics|wikidesc|variables|namespaces|category'
+			));
+		
+			if( isset( $data['query']['pages'][$page->getId()] ) ) {
+				$pageData = $data['query']['pages'][$page->getId()];
+				$result['views']	= $pageData['views'];
+				$result['revcount']	= $pageData['revcount'];
+				$result['created']	= $pageData['created'];
+				$result['touched']	= $pageData['touched'];
 			}
-		}
-	
-		$result['hub'] 			= isset($data['query']['category']['catname']) ? $data['query']['category']['catname'] : '';
-		$result['wikititle']	= isset($data['query']['wikidesc']['pagetitle']) ? $data['query']['wikidesc']['pagetitle'] : '';
-	
-		$statistics = $data['query']['statistics'];
-		if( is_array($statistics) ) {
-			$result['wikipages']	= $statistics['pages'];
-			$result['wikiarticles']	= $statistics['articles'];
-			$result['activeusers']	= $statistics['activeusers'];
-			$result['wiki_images']	= $statistics['images'];
+		
+			$result['categories'] = array();
+		
+			if ( isset( $pageData['categories'] ) ) {
+				foreach ( $pageData['categories'] as $category ) {
+					$result['categories'][] = implode( ':', array_slice( explode( ':', $category['title'] ), 1 ) );
+				}
+			}
+		
+			$result['hub'] 			= isset($data['query']['category']['catname']) ? $data['query']['category']['catname'] : '';
+			$result['wikititle']	= isset($data['query']['wikidesc']['pagetitle']) ? $data['query']['wikidesc']['pagetitle'] : '';
 		}
 	
 		$result['redirect_titles'] = $this->getRedirectTitles($page);
@@ -441,7 +436,7 @@ class WikiaSearchIndexer extends WikiaObject {
 		}
 	
 		// a pinch of defensive programming
-		if ( !$row ) {
+		if ( ! isset( $row ) ) {
 			$row = new stdClass();
 			$row->weekly = 0;
 			$row->monthly = 0;
@@ -492,7 +487,12 @@ class WikiaSearchIndexer extends WikiaObject {
 	 * @param integer $id
 	 */
 	public function onArticleDeleteComplete( &$article, User &$user, $reason, $id ) {
-		return $this->deleteArticle( $id );
+		try {
+			return $this->deleteArticle( $id );
+		} catch ( Exception $e ) {
+		    Wikia::log( __METHOD__, '', $e );
+		    return true;
+		}
 	}
 	
 	/**
@@ -511,7 +511,12 @@ class WikiaSearchIndexer extends WikiaObject {
 	 */
 	public function onArticleSaveComplete( &$article, &$user, $text, $summary,
 	        $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId ) {
-		return $this->reindexPage( $article->getTitle()->getArticleID() );
+		try {
+			return $this->reindexBatch( array( $article->getTitle()->getArticleID() ) );
+		} catch ( Exception $e ) {
+		    Wikia::log( __METHOD__, '', $e );
+		    return true;
+		}
 	}
 	
 	/**
@@ -520,6 +525,11 @@ class WikiaSearchIndexer extends WikiaObject {
 	 * @param int $create
 	 */
 	public function onArticleUndelete( $title, $create ) {
-		return $this->reindexPage( $title->getArticleID() );
+		try {
+			return $this->reindexBatch( array( $title->getArticleID() ) );
+		} catch ( Exception $e ) {
+			Wikia::log( __METHOD__, '', $e );
+			return true;
+		}
 	}
 }

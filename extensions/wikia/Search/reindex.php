@@ -10,6 +10,12 @@ require_once( "commandLine.inc" );
 
 include("$IP/extensions/wikia/Search/WikiaSearch.setup.php");
 
+$wgUser = User::newFromName('Owen Davis');
+$wgTitle = Title::newMainPage();
+$c = RequestContext::getMain();
+$c->setUser($wgUser);
+$c->setTitle($wgTitle);
+
 $indexer = F::build( 'WikiaSearchIndexer' );
 
 $dbr = wfGetDB( DB_MASTER );
