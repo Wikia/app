@@ -1,6 +1,7 @@
 <?php
 /**
  * @author ADi
+ * @author Jacek Jursza
  */
 
 class StructuredDataController extends WikiaSpecialPageController {
@@ -15,7 +16,18 @@ class StructuredDataController extends WikiaSpecialPageController {
 	 */
 	protected $structuredData = null;
 
+	protected $mainObjectList = null;
+
 	public function __construct() {
+
+		$this->mainObjectList = array(
+			"cod:Character" => "Characters",
+			"cod:Faction" => "Factions",
+			"cod:Timeline" => "Timelines",
+			"cod:Weapon" => "Weapons",
+			"cod:WeaponClass" => "Weapon Class"
+		);
+
 		// parent SpecialPage constructor call MUST be done
 		parent::__construct( 'StructuredData', '', false );
 
@@ -29,8 +41,9 @@ class StructuredDataController extends WikiaSpecialPageController {
 
 	public function index() {
 		$this->wg->Out->addHTML( F::build('JSSnippets')->addToStack( array( "/extensions/wikia/StructuredData/js/StructuredData.js" ) ) );
-
 		//$this->response->addAsset('extensions/wikia/StructuredData/css/StructuredData.scss');
+
+		$this->setVal( "mainObjects", $this->mainObjectList );
 	}
 
 	public function getObject() {
@@ -48,6 +61,11 @@ class StructuredDataController extends WikiaSpecialPageController {
 
 	public function getCollection() {
 
+		$objectType = $this->request->getVal( 'objectType', false );
+		if( !empty( $objectType ) ) {
+			$collection = $this->APIClient->getCollection( $objectType );
+			$this->response->setVal( "list", $collection );
+		}
 	}
 
 	public function getTemplate() {

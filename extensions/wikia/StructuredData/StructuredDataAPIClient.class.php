@@ -1,6 +1,7 @@
 <?php
 /**
  * @author ADi
+ * @author Jacek Jursza
  */
 class StructuredDataAPIClient {
 	const VOCABS_PATH = 'vocabs';
@@ -49,13 +50,25 @@ class StructuredDataAPIClient {
 		return $this->isValidResponse($response);
 	}
 
-	public function getCollection() {
+	public function getCollection( $type ) {
 
+		$rawResponse = $this->call( rtrim( $this->getApiPath(), '/' ) . "?withType=".$type."");
+		$response = json_decode( $rawResponse );
+		$collection = array();
+		foreach ( $response->{"@graph"} as $obj ) {
+
+			$collection[] = array(  "id" => $obj->id,
+						"name" => $obj->{"schema:name"},
+						"type" => $obj->type
+			);
+		}
+
+		return $collection;
 	}
 
 	public function getTemplate( $objectType, $inJson = false ) {
 		$rawResponse = $this->call(  $this->getVocabsPath() . str_replace(':', '/', $objectType) . '?template=true' );
-		$response =json_decode( $rawResponse );
+		$response = json_decode( $rawResponse );
 
 		return $inJson ? $rawResponse : $this->isValidResponse($response);
 	}
