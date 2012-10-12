@@ -358,9 +358,14 @@ $config['gameguides_js'] = array(
 		'//resources/wikia/libraries/zepto/zepto.getcss.js',
 		'//resources/wikia/libraries/zepto/zepto.wikiamobile.js',
 
+		//groups
+		'#group_wikiamobile_tables_js',
+		'#group_wikiamobile_scroll_js',
+
 		//modules
 		'//extensions/wikia/WikiaMobile/js/toc.js',
 		'//extensions/wikia/WikiaMobile/js/lazyload.js',
+		'//extensions/wikia/WikiaMobile/js/tables.js',
 		'//extensions/wikia/WikiaMobile/js/track.js',
 		'//extensions/wikia/WikiaMobile/js/events.js',
 		'//extensions/wikia/WikiaMobile/js/loader.js',
