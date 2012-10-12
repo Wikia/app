@@ -170,7 +170,7 @@ packages :
 					'_source/plugins/table/plugin.js',
 					'_source/plugins/tabletools/plugin.js',
 					//'_source/plugins/specialchar/plugin.js',
-					//'_source/plugins/tab/plugin.js',
+					'_source/plugins/tab/plugin.js',
 					//'_source/plugins/templates/plugin.js',
 					//'_source/plugins/toolbar/plugin.js',
 					'_source/plugins/undo/plugin.js',
