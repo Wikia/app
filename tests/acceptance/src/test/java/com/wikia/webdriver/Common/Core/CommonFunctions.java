@@ -92,38 +92,43 @@ public class CommonFunctions
 	
 	public static void logIn(String userName, String password)
 	{
-		try
-		{
-//			clickLogInAjax();
-//			typeInUserName(userName);
-//			try {
-//				Thread.sleep(500);
-//			} catch (InterruptedException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//			typeInUserPass(password);
-//			clickSubmitLoginButton(userName);			
-//			verifyUserIsLoggedIn(userName);
-			driver   = DriverProvider.getWebDriver();
-			String temp = driver.getCurrentUrl();
-			driver.get(Global.DOMAIN + "wiki/Special:UserLogin");
-			WebElement userNameField = driver.findElement(By.cssSelector("#WikiaArticle input[name='username']"));
-			WebElement passwordField = driver.findElement(By.cssSelector("#WikiaArticle input[name='password']"));
-			WebElement submitButton = driver.findElement(By.cssSelector("#WikiaArticle input[class='login-button big']"));
-			userNameField.sendKeys(userName);
-			passwordField.sendKeys(password);
-			submitButton.click();
-			driver.findElement(By.cssSelector(".AccountNavigation a[href*='User:"+userName+"']"));//only for verification
-			driver.get(temp);
-			driver.findElement(By.cssSelector(".AccountNavigation a[href*='User:"+userName+"']"));	
+		driver   = DriverProvider.getWebDriver();
+		String temp = driver.getCurrentUrl();
+		try{
+		driver.get(Global.DOMAIN + "wiki/Special:UserLogin");
 		}
 		catch (TimeoutException e)
 		{
 			PageObjectLogging.log("logIn", "page loads for more than 30 seconds", true, driver);
 		}
-		
-		
+		WebElement userNameField = driver.findElement(By.cssSelector("#WikiaArticle input[name='username']"));
+		WebElement passwordField = driver.findElement(By.cssSelector("#WikiaArticle input[name='password']"));
+		WebElement submitButton = driver.findElement(By.cssSelector("#WikiaArticle input[class='login-button big']"));
+		userNameField.sendKeys(userName);
+		passwordField.sendKeys(password);
+		try{
+			submitButton.click();
+		}
+		catch (TimeoutException e)
+		{
+			PageObjectLogging.log("logIn", "page loads for more than 30 seconds", true, driver);
+			try{
+				driver.navigate().refresh();
+			}
+			catch (TimeoutException f)
+			{
+				PageObjectLogging.log("logIn", "page loads for more than 30 seconds", true, driver);
+			}
+		}
+		driver.findElement(By.cssSelector(".AccountNavigation a[href*='User:"+userName+"']"));//only for verification
+		try{
+			driver.get(temp);				
+		}
+		catch (TimeoutException e)
+		{
+			PageObjectLogging.log("logIn", "page loads for more than 30 seconds", true, driver);
+		}
+		driver.findElement(By.cssSelector(".AccountNavigation a[href*='User:"+userName+"']"));			
 //		driver   = DriverProvider.getWebDriver();
 //		wait = new WebDriverWait(driver, 30);
 //		WebElement logInAjaxElem = driver.findElement(logInAjax);
