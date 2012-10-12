@@ -356,4 +356,24 @@ public class MessageWallTests extends TestTemplate
 
 	}
 	
+	@Test(groups = { "MessageWall020", "MessageWall" })
+	public void MessageWall_020_WriteAndEditMessageWithoutTitle() {
+
+		CommonFunctions.logOut(Properties.userName, driver);
+		MessageWallPageObject wall = new MessageWallPageObject(driver,Global.DOMAIN);
+		String timeStamp = wall.getTimeStamp();
+		String message = "QAMessage" + timeStamp;
+		String titleEdit = "QATitle" + timeStamp + "edit";
+		String messageEdit = "QAMessage" + timeStamp + "edit";
+		CommonFunctions.logIn(Properties.userName, Properties.password);
+		wall.openMessageWall(Properties.userName);
+		wall.writeMessageNoTitle(message);
+		wall.clickPostNotitleButton();
+		wall.verifyPostedMessageWithoutTitle(Properties.userName, message);
+		wall.editMessage(titleEdit, messageEdit);
+		wall.verifyPostedMessageWithTitle(titleEdit, messageEdit);
+		wall.removeMessage("reason");	
+
+	}
+	
 }

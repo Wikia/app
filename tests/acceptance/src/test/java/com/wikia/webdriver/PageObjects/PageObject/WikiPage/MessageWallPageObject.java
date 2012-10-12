@@ -167,9 +167,10 @@ public class MessageWallPageObject extends WikiBasePageObject{
 		waitForElementByElement(messageWallIFrame);
 		messageTitleField.sendKeys(Keys.TAB);
 		driver.switchTo().frame(messageWallIFrame);
+		waitForElementByElement(messageBodyField);
 		messageBodyField.sendKeys(message);
 		driver.switchTo().defaultContent();
-		PageObjectLogging.log("writeMessage", "message is written, body: "+message, true, driver);
+		PageObjectLogging.log("writeMessageNoTitle", "message without title is written, body: "+message, true, driver);
 	}
 	
 	private void verifyImageInMessageEditMode()
