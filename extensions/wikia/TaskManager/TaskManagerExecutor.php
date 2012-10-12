@@ -168,34 +168,9 @@ class TaskManagerExecutor {
 		$aRunning = array();
 		$dbr = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 
+		wfProfileIn( __METHOD__ );
 		try {
-			#--- first check if any task have state TASK_STARTED
-			$oRes = $dbr->select(
-			array( "wikia_tasks" ),
-				array( "*" ),
-				array(
-					"task_status" => TASK_STARTED,
-					"task_type" => !empty($this->mTasksClasses) ? array_keys($this->mTasksClasses) : ''
-				),
-				__METHOD__
-			);
-
-			while( $oRow = $dbr->fetchObject( $oRes ) ) {
-				$aStarted[] = $dbr->addQuotes( $oRow->task_type );
-				$aRunning[] = $oRow->task_id;
-				$this->log( "Task in progress: id={$oRow->task_id} type={$oRow->task_type}" );
-			}
-			$dbr->freeResult( $oRes );
-
-			if( count($aStarted) ) {
-				$sCondition = implode(",", $aStarted );
-				$aCondition = array( "task_type NOT IN ({$sCondition})" );
-			}
-			else {
-				$aCondition = null;
-			}
 			$aCondition["task_status"] = TASK_QUEUED;
-			$aCondition["task_type"] = !empty($this->mTasksClasses) ? array_keys($this->mTasksClasses) : '';
 
 			/**
 			 * then get first from top sorted by priority and timestamp
@@ -211,13 +186,7 @@ class TaskManagerExecutor {
 		catch( DBError $e ) {
 			$this->log( "Connection error: " . $e->getMessage() );
 		}
-
-		/**
-		 * check TTL of tasks, close if needed
-		 */
-		if( count( $aRunning ) ) {
-			$this->checkTTL( $aRunning );
-		}
+		wfProfileOut( __METHOD__ );
 
 		/**
 		 * eventually run task from queue

@@ -486,7 +486,8 @@ class CreateWiki {
 				"data"    => $this->mNewWiki,
 				"server"  => rtrim( $this->mNewWiki->url, "/" )
 			),
-			TASK_QUEUED
+			TASK_QUEUED,
+			BatchTask::PRIORITY_HIGH
 		);
 		wfDebugLog( "createwiki", __METHOD__ . ": Local maintenance task added\n", true );
 

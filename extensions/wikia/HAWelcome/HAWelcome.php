@@ -715,7 +715,7 @@ class HAWelcomeJob extends Job {
 		if( !in_array( "bot", $groups ) ) {
                         global $wgMemc;
                         $sysopId = $wgMemc->get( wfMemcKey( "last-sysop-id" ) );
-                        
+
 			if( $sysop === "@sysop" || !empty( $sysopId ) ) {
 				$result = in_array( "sysop", $groups ) ? true : false;
                         }
