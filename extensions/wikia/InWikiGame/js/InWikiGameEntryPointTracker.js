@@ -9,10 +9,10 @@ var InWikiGameEntryPointTracker = {
 		var localStorageValue = null;
 
 		if( target.hasClass('in-wiki-game-rail-link') ) {
-			localStorageValue = 'rail-link';
+			localStorageValue = 'railLink';
 		} else if( target.attr('href') == '/wiki/Play' ) {
 		//TODO: investigate and implement if possible adding custom CSS class in WikiaNav then change the condition above
-			localStorageValue = 'nav-link';
+			localStorageValue = 'navLink';
 		}
 
 		$.storage.set(InWikiGameEntryPointTracker.ENTRY_POINT_STORAGE_KEY, localStorageValue);
