@@ -1,8 +1,10 @@
 var InWikiGame = {
+	storageEntryPoint: null,
 	init: function(jsonObject) {
 		//http://www.realmofthemadgod.com/?entrypt=rmg-wiki---en@73--subid1-subid2-subid3
 		//subid1 = current location
 		//subid2 = entry point
+		this.storageEntryPoint = $.storage.get(InWikiGameEntryPointTracker.ENTRY_POINT_STORAGE_KEY) || 'direct';
 		var iframeUrl = 'http://www.realmofthemadgod.com/?entrypt=rmg-wiki---en@73--';
 		iframeUrl += this.getTitle();
 
@@ -22,7 +24,7 @@ var InWikiGame = {
 				WikiaTracker.trackClick({
 					'category': 'in-wiki-game',
 					'action': WikiaTracker.ACTIONS.CLICK_LINK_BUTTON,
-					'label': 'game-iframe-placeholder-click',
+					'label': 'iframe-entry-point-' + InWikiGame.storageEntryPoint,
 					'value': null,
 					'params': {},
 					'trackingMethod': 'internal'
@@ -33,13 +35,11 @@ var InWikiGame = {
 		});
 	},
 	getEntryPoint: function() {
-		var entryPoint = $.storage.get(InWikiGameEntryPointTracker.ENTRY_POINT_STORAGE_KEY);
-
-		if( entryPoint !== null ) {
+		if( this.storageEntryPoint !== null ) {
 			WikiaTracker.trackClick({
 				'category': 'in-wiki-game',
-				'action': WikiaTracker.ACTIONS.CLICK,
-				'label': this.getGALabel(entryPoint),
+				'action': WikiaTracker.ACTIONS.IMPRESSION,
+				'label': 'placeholder-entry-point-' + this.storageEntryPoint,
 				'value': null,
 				'params': {},
 				'trackingMethod': 'internal'
@@ -48,12 +48,9 @@ var InWikiGame = {
 			$.storage.set(InWikiGameEntryPointTracker.ENTRY_POINT_STORAGE_KEY, null);
 		}
 
-		return entryPoint;
+		return this.storageEntryPoint;
 	},
 	getTitle: function() {
 		return ( window.wgTitle ) ? window.wgTitle : 'undefined';
-	},
-	getGALabel: function(entryPoint) {
-		return 'game-entry-point-' + entryPoint;
 	}
 }
