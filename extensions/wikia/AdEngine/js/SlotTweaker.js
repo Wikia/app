@@ -27,13 +27,17 @@ var SlotTweaker = function(log, document, undef) {
 
 	// TODO: fix it, it's a hack!
 	removeTopButtonIfNeeded = function(slotname) {
-		var slot = document.getElementById(slotname);
+		var slot = document.getElementById(slotname)
+			, topAds = document.getElementById('WikiaTopAds')
+		;
 
 		if (slot && slotname.indexOf('LEADERBOARD') !== -1
 			&& slot.offsetHeight
 			&& (slot.offsetHeight < 90 || slot.offsetHeight >= 95)
 		) {
 			hide('TOP_BUTTON');
+			removeClass(topAds, 'WikiaTopButtonLeft');
+			removeClass(topAds, 'WikiaTopButtonRight');
 		}
 	};
 
