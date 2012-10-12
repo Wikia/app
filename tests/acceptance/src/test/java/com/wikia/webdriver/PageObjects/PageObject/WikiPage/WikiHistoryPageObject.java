@@ -13,8 +13,6 @@ public class WikiHistoryPageObject extends WikiBasePageObject{
 
 	protected String articlename;
 	
-	@FindBy(css="//strong[contains(text(), 'History')]")
-	protected static WebElement historyHeadLine;
 	@FindBy(css=".historysubmit:first")
 	private WebElement compareRevisionsTopButton;
 	@FindBy(css=".historysubmit:last")

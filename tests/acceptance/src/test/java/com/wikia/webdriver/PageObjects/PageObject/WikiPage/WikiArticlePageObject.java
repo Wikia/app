@@ -18,8 +18,8 @@ public class WikiArticlePageObject extends WikiBasePageObject {
 	
 	protected String articlename;
 	
-//	@FindBy(css="a[accesskey='e']")
-//	private WebElement editButton;
+	@FindBy(css="div.WikiaPageHeaderDiffHistory")
+	private WebElement historyHeadLine;
 	@FindBy(css="section.RelatedVideosModule")
 	private WebElement rVModule;
 	@FindBy(css="input.videoUrl")
@@ -357,7 +357,7 @@ public class WikiArticlePageObject extends WikiBasePageObject {
 	public WikiHistoryPageObject openHistoryPage()
 	{
 		driver.get(driver.getCurrentUrl() + "?action=history");
-		waitForElementByElement(WikiHistoryPageObject.historyHeadLine);
+		waitForElementByElement(historyHeadLine);
 		return new WikiHistoryPageObject(driver, articlename, articlename);
 	}
 

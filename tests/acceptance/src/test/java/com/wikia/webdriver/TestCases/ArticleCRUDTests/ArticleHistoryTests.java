@@ -17,13 +17,8 @@ public class ArticleHistoryTests extends TestTemplate
 	private String pageName;
 	private String articleText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
 	private String articleTextEdit = "Brand new content";
-	private String commentText = "Lorem ipsum dolor sit amet, comment";
-	private String commentTextEdit = "Brand new comment";
-	private String replyText = "Brand new reply";
-	private String videoURL = "http://www.youtube.com/watch?v=pZB6Dg1RJ_o";
-	private String Caption = "QAcaption1";
 	
-	@Test
+	@Test(groups={"ArticleHistoryTests_001", "ArticleCRUDAdmin"})
 	public void RecoverPreviousVersion()
 	{
 		CommonFunctions.logOut(Properties.userName, driver);
@@ -56,7 +51,7 @@ public class ArticleHistoryTests extends TestTemplate
 		CommonFunctions.logOut(Properties.userNameStaff, driver);
 	}
 	
-	@Test
+	@Test(groups={"ArticleHistoryTests_002", "ArticleCRUDAdmin"})
 	public void RollbackVersion()
 	{
 		CommonFunctions.logOut(Properties.userName, driver);
@@ -94,5 +89,4 @@ public class ArticleHistoryTests extends TestTemplate
 		article.verifyDeletedArticlePage(pageName);
 		CommonFunctions.logOut(Properties.userNameStaff, driver);
 	}
-
 }
