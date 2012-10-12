@@ -378,21 +378,25 @@ function finishConnectingUser(client, socket ){
 	storage.getRoomState(client.roomId, function(nodeChatModel) {	
 		// Initial connection of the user (unless they're already connected).
 		var connectedUser = nodeChatModel.users.findByName(client.username);
-		if(!connectedUser) {
-			connectedUser = new models.User({
-				name: client.username,
-				avatarSrc: client.avatarSrc,
-				isModerator: client.isChatMod,
-				isCanGiveChatMode: client.isCanGiveChatMode,
-				isStaff: client.isStaff,
-				editCount: client.editCount,
-				since: client.wikiaSince
-			});
-		
-			nodeChatModel.users.add(connectedUser);
-			logger.debug('[getConnectedUser] new user: ' + connectedUser.get('name') + ' on client: ' + client.sessionId);
-		}
-		client.myUser = connectedUser;
+                newConnectedUser = new models.User({
+                	name: client.username,
+                        avatarSrc: client.avatarSrc,
+                        isModerator: client.isChatMod,
+                        isCanGiveChatMode: client.isCanGiveChatMode,
+                        isStaff: client.isStaff,
+                        editCount: client.editCount,
+                        since: client.wikiaSince
+                });
+
+
+		if(connectedUser) {
+			nodeChatModel.users.remove(connectedUser);
+		}		
+
+		nodeChatModel.users.add(newConnectedUser);
+		connectedUser = newConnectedUser;
+		logger.debug('[getConnectedUser] new user: ' + connectedUser.get('name') + ' on client: ' + client.sessionId);
+		client.myUser = newConnectedUser;
 
 		if( client.ATTEMPTED_NAME != client.myUser.get('name') ){
 			logger.warning("\t\t============== POSSIBLE IDENTITY PROBLEM!!!!!! - BEG ==============");
@@ -640,15 +644,15 @@ function giveChatMod(client, socket, msg){
 	var giveChatModCommand = new models.GiveChatModCommand();
 	giveChatModCommand.mport(msg);
 
-	var userToPromoteName = giveChatModCommand.get('userToPromote');
+	var userNameToPromote = giveChatModCommand.get('userToPromote');
 		
-	mwBridge.giveChatMod(client.roomId, userToPromoteName, client.userKey, function(data){
+	mwBridge.giveChatMod(client.roomId, userNameToPromote, client.userKey, function(data){
 		// Build a user that looks like the one that got banned... then kick them!
 			
 		storage.getRoomState(client.roomId, function(nodeChatModel) {	
 			// Initial connection of the user (unless they're already connected).
-			var promotedUser = nodeChatModel.users.findByName(userToPromote);
-			promotedUser.set('isChatMod', true);
+			var promotedUser = nodeChatModel.users.findByName(userNameToPromote);
+			promotedUser.set('isModerator', true);
 
 			broadcastInlineAlert(client, socket, 'chat-inlinealert-a-made-b-chatmod', [client.myUser.get('name'), promotedUser.get('name')], function() {
 				storage.setUserData(client.roomId, promotedUser.get('name'), promotedUser.attributes, null, null, function() {
