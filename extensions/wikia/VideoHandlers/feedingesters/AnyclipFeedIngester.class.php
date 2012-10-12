@@ -271,4 +271,8 @@ class AnyclipFeedIngester extends VideoFeedIngester {
 		return sha1( $input );
 	}
 
+	protected function getUrlContent($url) {
+		return Http::get( $url, 'default', $options = array( 'sslVerifyCert' => false ) );
+	}
+
 }
