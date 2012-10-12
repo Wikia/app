@@ -18,7 +18,7 @@ class AnyclipVideoHandler extends VideoHandler {
 		$height =  $this->getHeight( $width );
 
 		$html = <<<EOT
-<div id="AnyClipPlayer" style="width: {$width}px; height: {$height}px;"></div>
+<div id="AnyClipPlayer-{$this->videoId}" style="width: {$width}px; height: {$height}px;"></div>
 EOT;
 
 		if ( $autoplay ) {
@@ -27,14 +27,14 @@ EOT;
 	$.when(
 		$.getScript('http://player.anyclip.com/embed/AnyClipPlayer.js')
 	).done(function() {
-		AnyClipPlayer.load(["#AnyClipPlayer", {clipID:"{$this->videoId}", autoPlay:true}]);
+		AnyClipPlayer.load(["#AnyClipPlayer-{$this->videoId}", {clipID:"{$this->videoId}", autoPlay:true}]);
 	});
 </script>
 EOT;
 		} else {
 			$html .= <<<EOT
 <script type="text/javascript" src="http://player.anyclip.com/embed/AnyClipPlayer.js"></script>
-<script type="text/javascript">AnyClipPlayer.load(["#AnyClipPlayer", {clipID:"{$this->videoId}"}]);</script>
+<script type="text/javascript">AnyClipPlayer.load(["#AnyClipPlayer-{$this->videoId}", {clipID:"{$this->videoId}"}]);</script>
 EOT;
 		}
 
