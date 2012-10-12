@@ -45,7 +45,7 @@ if (isset($_GET['solrhost']) || isset($_GET['solrport'])) {
 // some of this stuff can't be trusted evidently.
 $wgSolrHost = $wgExternalSharedDB ? $wgSolrHost : 'staff-search-s1';
 $wgSolrPort = $wgExternalSharedDB ? $wgSolrPort : 8983;
-$wgSolrUseProxy = $wgExternalSharedDB ? $wgSolrUseProxy : false;
+$wgSolrUseProxy = $wgExternalSharedDB ? !empty($wgSolrUseProxy) : false;
 $wgWikiaSearchUseProxy = $wgExternalSharedDB ? $wgWikiaSearchUseProxy : false;
 
 $solariumConfig = array(
@@ -61,11 +61,11 @@ $searchMaster = $wgExternalSharedDB ? 'search-s6' : 'staff-search-s1';
 
 $indexerSolariumConfig = array(
 		'adapteroptions'	=> array(
-			'host' => $searchMaster, 
+			'host' => $searchMaster,
 			'port' => 8983,
 			'path' => '/solr/',
 		)
-); 
+);
 
 if ($wgWikiaSearchUseProxy && isset($wgSolrProxy)) {
 	$solariumConfig['adapteroptions']['proxy'] = $wgSolrProxy;

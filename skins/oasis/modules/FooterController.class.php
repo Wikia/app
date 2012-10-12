@@ -2,9 +2,7 @@
 class FooterController extends WikiaController {
 
 	public function executeIndex() {
-		global $wgTitle,
-			   $wgContentNamespaces,
-			   $wgShowMyToolsOnly,
+		global $wgShowMyToolsOnly,
 			   $wgEnableWikiaBarExt,
 			   $wgSuppressToolbar;
 
@@ -33,6 +31,9 @@ class FooterController extends WikiaController {
 
 	static protected $toolbarService = null;
 
+	/**
+	 * @return OasisToolbarService
+	 */
 	protected function getToolbarService() {
 		if (empty(self::$toolbarService)) {
 			self::$toolbarService = new OasisToolbarService();
@@ -70,7 +71,6 @@ class FooterController extends WikiaController {
 		if (isset($params['toolbar']) && is_array($params['toolbar'])) {
 			$data = $service->jsonToList($params['toolbar']);
 			if (!empty($data)) {
-				global $wgUser;
 				$this->status = $service->save($data);
 			}
 		}
