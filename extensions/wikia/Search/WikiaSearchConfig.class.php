@@ -180,7 +180,8 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 		$mwNamespace 	= F::build( 'MWNamespace' );
 		$queryNamespace	= $mwNamespace->getCanonicalIndex( array_shift( explode( ':', strtolower( $query ) ) ) );
 		if ( $queryNamespace ) {
-		    if ( !in_array( $queryNamespace, $this->getNamespaces() ) ) {
+			$namespaces = $this->getNamespaces();
+		    if ( empty( $namespaces ) || (! in_array( $queryNamespace, $namespaces ) ) ) {
 		        $this->params['queryNamespace'] = $queryNamespace;
 		    } 
 		    $query = implode( ':', array_slice( explode( ':', $query ), 1 ) );
@@ -239,6 +240,11 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 		}
 		$queryNamespaceArray = (isset($this->params['queryNamespace'])) ? array($this->params['queryNamespace']) : array(); 
 		$this->params['namespaces'] = array_unique( array_merge($namespaces, $queryNamespaceArray) );
+		
+		if (! is_array( $this->params['namespaces'] ) ) {
+			$this->params['namespaces'] = array();
+		}
+		
 		return $this->params['namespaces'];
 	}
 	
