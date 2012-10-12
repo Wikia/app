@@ -39,16 +39,14 @@ var AdProviderLiftium2Dom = function (wikiaTracker, log, document, slotTweaker, 
 	// adapted for Evolve + simplified copy of AdDriverDelayedLoader.callLiftium
 	fillInSlot = function(slot) {
 		var slotname = slot[0]
-			, slotsize = slot[1]
+			, slotsize = slotMap[slotname].size
 			, adDiv = document.createElement("div")
 			, adIframe = document.createElement("iframe")
-			, s = slotsize.split('x')
+			, s = slotsize && slotsize.split('x')
 		;
 
 		log('fillInSlot', 5, logGroup);
 		log(slot, 5, logGroup);
-
-		slotsize = slotMap[slotname].size || slotsize;
 		log('size: ' + slotsize, 7, logGroup);
 
 		// TODO: move the following to Liftium.js and refactor
