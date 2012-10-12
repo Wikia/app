@@ -114,7 +114,8 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 				array(
 					'page_list' => $deletionList,
 				),
-				TASK_QUEUED
+				TASK_QUEUED,
+				BatchTask::PRIORITY_HIGH
 			);
 		}
 
