@@ -100,7 +100,7 @@ h2, h3, .collSec {
 	background-image: linear-gradient(to right, $mainGreen 30%, $sectionGrey 50%);
 
 	-webkit-transition: background-position .3s linear, color .3s;
-	-webkit-transition-delay: .15s;
+	-webkit-transition-delay: .05s;
 
 	&.open {
 		color: $mainGreen;
@@ -157,13 +157,13 @@ $width: 1;
 	border-color: $textColor transparent transparent transparent;
 
 	-webkit-transition: -webkit-transform .3s;
-	-webkit-transition-delay: .15s;
+	-webkit-transition-delay: .05s;
 	-webkit-transform-origin: 50% 25%;
 	-moz-transition: -moz-transform .3s;
-	-moz-transition-delay: .1s;
+	-moz-transition-delay: .05s;
 	-moz-transform-origin: 50% 25%;
 	transition: transform .3s;
-	transition-delay: .1s;
+	transition-delay: .05s;
 	transform-origin: 50% 25%;
 
 	&:after {
