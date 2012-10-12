@@ -9,7 +9,6 @@
 
 define('sections', ['events'], function(ev){
 	var d = document,
-		article = d.getElementById('mw-content-text'),
 		fragment = d.createDocumentFragment(),
 		click = ev.click,
 		callbacks = {
@@ -48,7 +47,8 @@ define('sections', ['events'], function(ev){
 	function init(){
 		//avoid running if there are no sections which are direct children of the article section
 		if(d.querySelector('#mw-content-text > h2')){
-			var contents = article.childNodes,
+			var article = d.getElementById('mw-content-text'),
+				contents = article.childNodes,
 				root = fragment,
 				x,
 				y = contents.length,
