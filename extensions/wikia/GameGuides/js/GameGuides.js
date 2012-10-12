@@ -5,7 +5,7 @@
 	html.addEventListener('click', function(ev){
 		var t = ev.target;
 
-		if(t.tagName == 'A') {
+		if(t.tagName === 'A') {
 			ev.preventDefault();
 			Ponto.invoke(
 				'Linker',
@@ -15,7 +15,7 @@
 				}
 			);
 		}
-	});
+	}, true);
 
 	//handling grabing all links on a page;
 	function Photos(){
@@ -58,8 +58,8 @@
 			l = links.length,
 			link;
 
-		while(link = links[l--]){
-			if(link.href.match(server)) {
+		while(link = links[--l]){
+			if(link.href.match(server) !== null) {
 				link.className += ' validLink';
 			}
 		}
