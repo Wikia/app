@@ -2047,8 +2047,8 @@ class Parser {
 						wfProfileOut( __METHOD__."-interwiki" );
 						continue;
 					}
+					wfProfileOut( __METHOD__."-interwiki" );
 				} # wikia
-				wfProfileOut( __METHOD__."-interwiki" );
 
 				if ( $ns == NS_FILE ) {
 					wfProfileIn( __METHOD__."-image" );
