@@ -377,7 +377,7 @@ function finishConnectingUser(client, socket ){
 	
 	storage.getRoomState(client.roomId, function(nodeChatModel) {	
 		// Initial connection of the user (unless they're already connected).
-		var connectedUser = nodeChatModel.users.find(function(user){return user.get('name') == client.username;});
+		var connectedUser = nodeChatModel.users.findByName(client.username);
 		if(!connectedUser) {
 			connectedUser = new models.User({
 				name: client.username,
@@ -640,21 +640,25 @@ function giveChatMod(client, socket, msg){
 	var giveChatModCommand = new models.GiveChatModCommand();
 	giveChatModCommand.mport(msg);
 
-	var userToPromote = giveChatModCommand.get('userToPromote');
-	
-	mwBridge.giveChatMod(client.roomId, userToPromote, client.userKey, function(data){
+	var userToPromoteName = giveChatModCommand.get('userToPromote');
+		
+	mwBridge.giveChatMod(client.roomId, userToPromoteName, client.userKey, function(data){
 		// Build a user that looks like the one that got banned... then kick them!
-		promotedUser = new models.User({name: userToPromote});
+			
+		storage.getRoomState(client.roomId, function(nodeChatModel) {	
+			// Initial connection of the user (unless they're already connected).
+			var promotedUser = nodeChatModel.users.findByName(userToPromote);
+			promotedUser.set('isChatMod', true);
 
-		// Broadcast inline-alert saying that A has made B a chatmoderator.
-		broadcastInlineAlert(client, socket, 'chat-inlinealert-a-made-b-chatmod', [client.myUser.get('name'), promotedUser.get('name')], function(){
-			// Force the user to reconnect so that their real state is fetched again and is broadcast to all users (whose models will be updated).
-			var promotedClientId = sessionIdsByKey[config.getKey_userInRoom(promotedUser.get('name'), client.roomId)];
-			if(typeof promotedClientId != 'undefined'){
-				socket.socket(promotedClientId).json.send({
-					event: 'forceReconnect'
+			broadcastInlineAlert(client, socket, 'chat-inlinealert-a-made-b-chatmod', [client.myUser.get('name'), promotedUser.get('name')], function() {
+				storage.setUserData(client.roomId, promotedUser.get('name'), promotedUser.attributes, null, null, function() {
+					// Broadcast the user as an update to everyone in the room
+					broadcastToRoom(client, socket, {
+						event: 'updateUser',
+						data: promotedUser.xport()
+					});
 				});
-			}
+			});
 		});
 	},function(data){
 		sendInlineAlertToClient(client, data.error, data.errorWfMsg, data.errorMsgParams);
@@ -737,7 +741,7 @@ function setStatus(client, socket, setStatusData){
 					event: 'updateUser',
 					data: userToUpdate.xport()
 				});
-			});			
+			});
 		} else {
 			logger.warning("Attempted to set status for user '" + userName + "', but that user was not found in room '" + roomId + "'");
 		}
