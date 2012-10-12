@@ -90,7 +90,7 @@ define('tables', ['events', 'track', 'layout'], function(ev, track, layout){
 
 		if(!inited && handledTables.length > 0){
 			inited = true;
-			w.addEventListener('resize', function(){
+			w.addEventListener('viewportsize', function(){
 				var table, isWrapped, isBig, wasWrapped,
 					maxWidth = layout.getPageWidth();
 
