@@ -91,13 +91,4 @@ var WikiaNotificationsApp = {
 
 $(function() {
 	WikiaNotificationsApp.init();
-
-	$('body').on({
-		'meebo-visible': function() {
-			$('#WikiaNotifications').addClass('meebo');
-		},
-		'meebo-hidden': function() {
-			$('#WikiaNotifications').removeClass('meebo');
-		}
-	});
 });

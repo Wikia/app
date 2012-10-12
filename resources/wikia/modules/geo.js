@@ -1,5 +1,5 @@
 /**
- * Geo-location utility used mainly for advertisement (e.g. Meebo, AdConfig)
+ * Geo-location utility used mainly for advertisement (e.g. AdConfig)
  */
 
 /*global define*/
@@ -44,7 +44,6 @@
 		};
 	}
 
-	//namespace, window.Geo is legacy support for Meebo, see /extensions/wikia/Geo/geo.js
 	//this depends on cookies.js and will fail if window.Wikia.Cookies is not defined
 	context.Geo = context.Wikia.geo = geo(context.Wikia.Cookies);
 
