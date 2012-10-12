@@ -838,9 +838,7 @@ var NodeChatController = $.createClass(NodeRoomController,{
 		var updatedUser = new models.User();
 		updatedUser.mport(message.data);
 
-		var connectedUser = this.model.users.find(function(user){
-								return user.get('name') == updatedUser.get('name');
-							});
+		var connectedUser = this.model.users.findByName(updatedUser.get('name'));
 
 		if(typeof connectedUser != "undefined"){
 			// Is this the right way to do it?
