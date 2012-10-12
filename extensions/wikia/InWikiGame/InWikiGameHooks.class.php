@@ -16,7 +16,6 @@ class InWikiGameHooks {
 	 */
 	public function onWikiaAssetsPackages(&$out, &$jsPackages, &$scssPackages) {
 		$jsPackages[] = 'wikia/InWikiGame/js/InWikiGameEntryPointTracker.js';
-		$jsPackages[] = 'wikia/InWikiGame/js/InWikiGameTracking.js';
 		return true;
 	}
 }
