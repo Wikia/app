@@ -67,6 +67,6 @@ define('share', ['cache'], function (cache) {
 					}
 				});
 			}
-		}
-	}
+		};
+	};
 });
