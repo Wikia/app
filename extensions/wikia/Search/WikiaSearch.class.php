@@ -68,7 +68,7 @@ class WikiaSearch extends WikiaObject {
 	 * @see WikiaSearch::field
 	 * @staticvar array
 	 */
-	private static $languageFields  = array(
+	public static $languageFields  = array(
 			'title',
 	        'html',
 	        'wikititle',
@@ -511,23 +511,28 @@ class WikiaSearch extends WikiaObject {
 		$queryFieldsString = $this->getQueryFieldsString( $searchConfig );
 		
 		$dismax	->setQueryFields		( $queryFieldsString )
+				->setQueryParser		( 'edismax' )
+		;
+		
+		if ( ! empty( $this->wg->SharedExternalDB ) ) {
+			$dismax
 				->setPhraseFields		( $queryFieldsString )
 				->setBoostQuery			( $this->getBoostQueryString( $searchConfig ) )
 				->setMinimumMatch		( $searchConfig->getMinimumMatch() )
-				->setQueryParser		( 'edismax' )
 				->setPhraseSlop			( 3 )
 				->setTie				( 0.01 )
-		;
-		
-		if (! $searchConfig->getSkipBoostFunctions() ) {
-		    $dismax->setBoostFunctions( 
-	    		implode(' ',
-		            $searchConfig->isInterWiki()
-		            ? $this->interWikiBoostFunctions
-		            : $this->onWikiBoostFunctions
-		    	)
-		    );
+			;
+			if (! $searchConfig->getSkipBoostFunctions() ) {
+			    $dismax->setBoostFunctions(
+			            implode(' ',
+			                    $searchConfig->isInterWiki()
+			                    ? $this->interWikiBoostFunctions
+			                    : $this->onWikiBoostFunctions
+			            )
+			    );
+			}
 		}
+		
 		wfProfileOut( __METHOD__ );
 		return $nestedQuery;
 	}

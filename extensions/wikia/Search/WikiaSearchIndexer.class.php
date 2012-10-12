@@ -15,23 +15,32 @@ class WikiaSearchIndexer extends WikiaObject {
 	const WIKIPAGES_CACHE_TTL	= 604800;
 	
 	/**
+	 * Don't dump anything out during a full reindex
+	 * @var int
+	 */
+	const REINDEX_DEFAULT		= 0;
+	
+	/**
+	 * Be verbose during reindexing
+	 * @var int
+	 */
+	const REINDEX_VERBOSE		= 1;
+	
+	/**
 	 * Used to determine whether we have registered the onParserClearState hook
 	 * @var boolean
 	 */
 	protected $parserHookActive	= false;
 	
 	/**
-	 * ParserClearState hook handler, called internally.
-	 * @static
-	 * @param $parser Parser
-	 * @return bool
+	 * Handles dependency injection for solarium client
+	 * @param Solarium_Client $client
 	 */
-	public static function onParserClearState( &$parser ) {
-		// prevent from caching when indexer is running to avoid infrastructure overload
-		$parser->getOutput()->setCacheTime(-1);
-		return true;
+	public function __construct( Solarium_Client $client ) {
+	    $this->client = $client;
+	    parent::__construct();
 	}
-	
+		
 	/**
 	 * Used to generate indexing data for a number of page IDs on a given  wiki
 	 * @see WikiaSearchController::getPages()
@@ -151,10 +160,9 @@ class WikiaSearchIndexer extends WikiaObject {
 		// clear output buffer in case we want get more pages
 		$this->wg->Out->clearHTML();
 	
-		$result['wid']			= (int) $this->wg->CityId;
-		$result['pageid']		= $page->getId();
+		$result['wid']			= empty( $this->wg->ExternalSharedDB ) ? $this->wg->SearchWikiId : (int) $this->wg->CityId;
+		$result['pageid']		= $pageId;
 		$result['id']			= $result['wid'] . '_' . $result['pageid'];
-		$result['sitename']		= $this->wg->Sitename;
 		$result['title']		= $title;
 		$result['canonical']	= $canonical;
 		$result['html']			= html_entity_decode($html, ENT_COMPAT, 'UTF-8');
@@ -185,6 +193,132 @@ class WikiaSearchIndexer extends WikiaObject {
 	}
 	
 	/**
+	 * Generates a Solr document from a page ID
+	 * @param  int $pageId
+	 * @return Solarium_Document_ReadWrite 
+	 */
+	public function getSolrDocument( $pageId ) {
+		
+		$pageData = $this->getPage( $pageId );
+		
+		$html = $pageData['html'];
+		
+		$regexes = array(
+				'\+s'											=>	' ',
+				'<span[^>]*editsection[^>]*>.*?<\/span>'		=>	'',
+				'<img[^>]*>'									=>	'',
+				'<\/img>'										=>	'',
+				'<noscript>.*?<\/noscript>'						=>	'',
+				'<div[^>]*picture-attribution[^>]*>.*?<\/div>'	=>	'',
+				'<ol[^>]*references[^>]*>.*?<\/ol>'				=>	'',
+				'<sup[^>]*reference[^>]*>.*?<\/sup>'			=>	'',
+				'<script .*?<\/script>'							=>	'',
+				'<style .*?<\/style>'							=>	'',
+				'\+s'											=>	' ',
+		);
+		
+		foreach ($regexes as $re => $repl ) {
+			$html = preg_replace( "/$re/mU", $repl, $html );
+		}
+		
+		$pageData['html'] = strip_tags( $html );
+		
+		foreach ( WikiaSearch::$languageFields as $field ) {
+			if ( isset( $pageData[$field] ) ) {
+				$pageData[WikiaSearch::field( $field )] = $pageData[$field];
+			}
+		}
+
+		return F::build( 'Solarium_Document_ReadWrite', array( $pageData ) );
+	}
+	
+	/**
+	 * Iterates over a set of page IDs reindexes their articles
+	 * @param  array $documentIds
+	 * @return bool true
+	 */
+	public function reindexBatch( array $documentIds = array(), $verbosity = self::REINDEX_DEFAULT ) {
+		$updateHandler = $this->client->createUpdate();
+		
+		$documents = array();
+		foreach ($documentIds as $id ) {
+			$documents[] = $this->getSolrDocument( $id );
+		}
+		
+		$updateHandler->addDocuments( $documents );
+		$updateHandler->addCommit();
+		try {
+			$this->client->update( $updateHandler );
+			$confirmationString = count( $documents ) . " document(s) updated\n";
+			if ( $verbosity == self::REINDEX_VERBOSE ) {
+				echo $confirmationString;
+			}
+		} catch ( Exception $e ) {
+			$id = rand(1000, 9999);
+			Wikia::Log( __METHOD__, $id, $e);
+			if ( $verbosity == self::REINDEX_VERBOSE ) {
+				echo "There was an error updating the index. Please search for {$id} in the logs.\n";
+			}
+		}
+		
+		return true;
+	}
+	
+	/**
+	 * Given a set of page IDs, deletes by query
+	 * @param  array $documentIds
+	 * @return bool true
+	 */
+	public function deleteBatch( array $documentIds = array(), $verbosity = self::REINDEX_DEFAULT ) {
+	    $updateHandler = $this->client->createUpdate();
+	    foreach ( $documentIds as $id ) {
+		    $updateHandler->addDeleteQuery( WikiaSearch::valueForField( 'id', $id ) );
+	    }
+		$updateHandler->addCommit();
+	    try {
+	        $this->client->update( $updateHandler );
+	        $confirmationString = implode(' ', $documentIds). ' ' . count( $documentIds ) . " document(s) deleted\n";
+	        if ( $verbosity == self::REINDEX_VERBOSE ) {
+	            echo $confirmationString;
+	        }
+	    } catch ( Exception $e ) {
+	        $id = rand(1000, 9999);
+	        Wikia::Log( __METHOD__, $id, $e);
+	        if ( $verbosity == self::REINDEX_VERBOSE ) {
+	            echo "There was an error deleting from the index. Please search for {$id} in the logs.\n";
+			}
+		}
+
+		return true;
+	}
+	
+	/**
+	 * Written to work as a hook
+	 * @param int $pageId
+	 */
+	public function reindexPage( $pageId ) {
+		Wikia::log( __METHOD__, '', $pageId );
+		$document = $this->getSolrDocument( $pageId );
+		$this->reindexBatch( array( $document ) );
+		
+		return true;
+	}
+	
+	/**
+	 * Written to work as a hook
+	 * @param int $pageId
+	 */
+	public function deleteArticle( $pageId) {
+		
+		$cityId	= $this->wg->cityId ?: $this->wg->SearchWikiId;
+		$id		= sprintf( '%s_%s', $cityId, $pageId );
+		
+		$this->deleteBatch( array( $id ) );
+		
+		return true;
+	}
+	
+	/**
 	 * Makes a handful of MediaWiki API requests to get metadata about a page
 	 * @see WikiaSearchIndexer::getPage()
 	 * @param Article $page
@@ -203,40 +337,34 @@ class WikiaSearchIndexer extends WikiaObject {
 	
 		$result['backlinks'] = isset($data['query']['backlinks_count'] ) ? $data['query']['backlinks_count'] : 0;  
 	
-		$data = $this->callMediaWikiAPI( array(
-				'pageids'	=> $page->getId(),
-				'action'	=> 'query',
-				'prop'		=> 'info|categories',
-				'inprop'	=> 'url|created|views|revcount',
-				'meta'		=> 'siteinfo',
-				'siprop'	=> 'statistics|wikidesc|variables|namespaces|category'
-		));
-	
-		if( isset( $data['query']['pages'][$page->getId()] ) ) {
-			$pageData = $data['query']['pages'][$page->getId()];
-			$result['views']	= $pageData['views'];
-			$result['revcount']	= $pageData['revcount'];
-			$result['created']	= $pageData['created'];
-			$result['touched']	= $pageData['touched'];
-		}
-	
-		$result['categories'] = array();
-	
-		if ( isset( $pageData['categories'] ) ) {
-			foreach ( $pageData['categories'] as $category ) {
-				$result['categories'][] = implode( ':', array_slice( explode( ':', $category['title'] ), 1 ) );
+		if (! empty( $this->wg->ExternalSharedDB ) ) {
+			$data = $this->callMediaWikiAPI( array(
+					'pageids'	=> $page->getId(),
+					'action'	=> 'query',
+					'prop'		=> 'info|categories',
+					'inprop'	=> 'url|created|views|revcount',
+					'meta'		=> 'siteinfo',
+					'siprop'	=> 'statistics|wikidesc|variables|namespaces|category'
+			));
+		
+			if( isset( $data['query']['pages'][$page->getId()] ) ) {
+				$pageData = $data['query']['pages'][$page->getId()];
+				$result['views']	= $pageData['views'];
+				$result['revcount']	= $pageData['revcount'];
+				$result['created']	= $pageData['created'];
+				$result['touched']	= $pageData['touched'];
 			}
-		}
-	
-		$result['hub'] 			= isset($data['query']['category']['catname']) ? $data['query']['category']['catname'] : '';
-		$result['wikititle']	= isset($data['query']['wikidesc']['pagetitle']) ? $data['query']['wikidesc']['pagetitle'] : '';
-	
-		$statistics = $data['query']['statistics'];
-		if( is_array($statistics) ) {
-			$result['wikipages']	= $statistics['pages'];
-			$result['wikiarticles']	= $statistics['articles'];
-			$result['activeusers']	= $statistics['activeusers'];
-			$result['wiki_images']	= $statistics['images'];
+		
+			$result['categories'] = array();
+		
+			if ( isset( $pageData['categories'] ) ) {
+				foreach ( $pageData['categories'] as $category ) {
+					$result['categories'][] = implode( ':', array_slice( explode( ':', $category['title'] ), 1 ) );
+				}
+			}
+		
+			$result['hub'] 			= isset($data['query']['category']['catname']) ? $data['query']['category']['catname'] : '';
+			$result['wikititle']	= isset($data['query']['wikidesc']['pagetitle']) ? $data['query']['wikidesc']['pagetitle'] : '';
 		}
 	
 		$result['redirect_titles'] = $this->getRedirectTitles($page);
@@ -291,18 +419,24 @@ class WikiaSearchIndexer extends WikiaObject {
 			return $result;
 		}
 	
-		$db = $this->wf->GetDB( DB_SLAVE, array(), $this->wg->statsDB );
-		$row = $db->selectRow(
-				array( 'page_views' ),
-				array(	'SUM(pv_views) as "monthly"',
-						'SUM(CASE WHEN pv_ts >= DATE_SUB(DATE(NOW()), INTERVAL 7 DAY) THEN pv_views ELSE 0 END) as "weekly"' ),
-				array(	'pv_city_id' => (int) $this->wg->CityId,
-						'pv_ts >= DATE_SUB(DATE(NOW()), INTERVAL 30 DAY)' ),
-				__METHOD__
-		);
+		if ( $this->wg->statsDBEnabled ) {
+			try {
+				$db = $this->wf->GetDB( DB_SLAVE, array(), $this->wg->statsDB );
+				$row = $db->selectRow(
+						array( 'page_views' ),
+						array(	'SUM(pv_views) as "monthly"',
+								'SUM(CASE WHEN pv_ts >= DATE_SUB(DATE(NOW()), INTERVAL 7 DAY) THEN pv_views ELSE 0 END) as "weekly"' ),
+						array(	'pv_city_id' => (int) $this->wg->CityId,
+								'pv_ts >= DATE_SUB(DATE(NOW()), INTERVAL 30 DAY)' ),
+						__METHOD__
+				);
+			} catch ( Exception $e ) { 
+				Wikia::log( __METHOD__, '', $e );
+			}
+		}
 	
 		// a pinch of defensive programming
-		if ( !$row ) {
+		if ( ! isset( $row ) ) {
 			$row = new stdClass();
 			$row->weekly = 0;
 			$row->monthly = 0;
@@ -327,5 +461,75 @@ class WikiaSearchIndexer extends WikiaObject {
 	
 	    wfProfileOut(__METHOD__);
 	    return  $api->getResultData();
+	}
+	
+	/**
+	 * MediaWiki Hooks
+	 */
+
+	/**
+	 * ParserClearState hook handler, called internally.
+	 * @static
+	 * @param $parser Parser
+	 * @return bool
+	 */
+	public static function onParserClearState( &$parser ) {
+	    // prevent from caching when indexer is running to avoid infrastructure overload
+	    $parser->getOutput()->setCacheTime(-1);
+	    return true;
+	}
+	
+	/**
+	 * Sends delete request to article if it gets deleted
+	 * @param WikiPage $article
+	 * @param User $user
+	 * @param integer $reason
+	 * @param integer $id
+	 */
+	public function onArticleDeleteComplete( &$article, User &$user, $reason, $id ) {
+		try {
+			return $this->deleteArticle( $id );
+		} catch ( Exception $e ) {
+		    Wikia::log( __METHOD__, '', $e );
+		    return true;
+		}
+	}
+	
+	/**
+	 * Reindexes the page
+	 * @param WikiPage $article
+	 * @param User $user
+	 * @param string $text
+	 * @param string $summary
+	 * @param bool $minoredit
+	 * @param bool $watchthis
+	 * @param string $sectionanchor
+	 * @param array $flags
+	 * @param Revision $revision
+	 * @param int $status
+	 * @param int $baseRevId
+	 */
+	public function onArticleSaveComplete( &$article, &$user, $text, $summary,
+	        $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId ) {
+		try {
+			return $this->reindexBatch( array( $article->getTitle()->getArticleID() ) );
+		} catch ( Exception $e ) {
+		    Wikia::log( __METHOD__, '', $e );
+		    return true;
+		}
+	}
+	
+	/**
+	 * Reindexes page on undelete
+	 * @param Title $title
+	 * @param int $create
+	 */
+	public function onArticleUndelete( $title, $create ) {
+		try {
+			return $this->reindexBatch( array( $title->getArticleID() ) );
+		} catch ( Exception $e ) {
+			Wikia::log( __METHOD__, '', $e );
+			return true;
+		}
 	}
 }

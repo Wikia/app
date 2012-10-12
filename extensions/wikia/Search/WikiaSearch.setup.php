@@ -32,7 +32,7 @@ $app->registerClass('WikiaSearchAjaxController',	$dir . 'WikiaSearchAjaxControll
 $app->registerSpecialPage('WikiaSearch',	'WikiaSearchController');
 $app->registerSpecialPage('Search',			'WikiaSearchController');
 
-global $wgSolrProxy, $wgSolrHost, $wgWikiaSearchUseProxy;
+global $wgSolrProxy, $wgSolrHost, $wgWikiaSearchUseProxy, $wgExternalSharedDB;
 
 $wgSolrHost = isset($_GET['solrhost']) ? $_GET['solrhost'] : $wgSolrHost;
 
@@ -42,6 +42,12 @@ if (isset($_GET['solrhost']) || isset($_GET['solrport'])) {
      $wgWikiaSearchUseProxy = false;
 }
 
+// some of this stuff can't be trusted evidently.
+$wgSolrHost = $wgExternalSharedDB ? $wgSolrHost : 'staff-search-s1';
+$wgSolrPort = $wgExternalSharedDB ? $wgSolrPort : 8983;
+$wgSolrUseProxy = $wgExternalSharedDB ? $wgSolrUseProxy : false;
+$wgWikiaSearchUseProxy = $wgExternalSharedDB ? $wgWikiaSearchUseProxy : false;
+
 $solariumConfig = array(
 		'adapteroptions'	=> array(
 			'host' => ( !empty( $wgSolrHost ) ? $wgSolrHost : 'localhost'),
@@ -49,6 +55,17 @@ $solariumConfig = array(
 			'path' => '/solr/',
 		)
 );
+
+//@todo configs for this?
+$searchMaster = $wgExternalSharedDB ? 'search-s6' : 'staff-search-s1';
+
+$indexerSolariumConfig = array(
+		'adapteroptions'	=> array(
+			'host' => $searchMaster, 
+			'port' => 8983,
+			'path' => '/solr/',
+		)
+); 
 
 if ($wgWikiaSearchUseProxy && isset($wgSolrProxy)) {
 	$solariumConfig['adapteroptions']['proxy'] = $wgSolrProxy;
@@ -59,6 +76,7 @@ F::addClassConstructor( 'Solarium_Client', array( 'solariumConfig' => $solariumC
 
 
 F::addClassConstructor( 'WikiaSearch', array( 'client' => F::build('Solarium_Client') ) );
+F::addClassConstructor( 'WikiaSearchIndexer', array( 'client' => F::build('Solarium_Client', array( 'solariumConfig' => $indexerSolariumConfig ) ) ) );
 
 /**
  * message files
@@ -74,6 +92,12 @@ $app->registerHook('GetPreferences', 'WikiaSearch', 'onGetPreferences');
  * hooks
  */
 $app->registerHook('WikiaMobileAssetsPackages', 'WikiaSearchController', 'onWikiaMobileAssetsPackages');
+
+if (! $wgExternalSharedDB ) {
+	$app->registerHook('ArticleDeleteComplete', 'WikiaSearchIndexer', 'onArticleDeleteComplete');
+	$app->registerHook('ArticleSaveComplete', 'WikiaSearchIndexer', 'onArticleSaveComplete');
+	$app->registerHook('ArticleUndelete', 'WikiaSearchIndexer', 'onArticleUndelete');
+}
 
 $wgExtensionCredits['other'][] = array(
 	'name'				=> 'Wikia Search',
