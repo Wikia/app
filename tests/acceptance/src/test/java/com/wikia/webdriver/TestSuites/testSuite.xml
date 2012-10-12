@@ -16,6 +16,7 @@
 			<class name="com.wikia.webdriver.TestCases.ArticleCRUDTests.ArticleCRUDTestsAnonymous"/> 
 			<class name="com.wikia.webdriver.TestCases.ArticleCRUDTests.ArticleFeaturesCRUDTestsAdmin"/> 
 			<class name="com.wikia.webdriver.TestCases.ArticleCRUDTests.ArticleFeaturesCRUDTestsAnonymous"/>  
+			<class name="com.wikia.webdriver.TestCases.MessageWallTests.MessageWallTests"/>  
 			<!--class name="com.wikia.webdriver.TestCases.AdTests.AdsInSearchTests"/--> 
 		</classes>
 	</test>
