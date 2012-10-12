@@ -39,14 +39,8 @@ $use-dark-icons: false;
 		height: 28px;
 		margin-top: 0;
 		position: static;
-		width: 43px;
 		vertical-align: top;
-
-		&:hover {
-			@include linear-gradient(darken($color-buttons, 4%), top, darken($color-button-highlight, 4%), 35%, darken($color-buttons, 4%), 65%);
-			text-decoration: none;
-		}
-
+		width: 43px;
 		img.sprite.search {
 			height: 16px;
 			width: 19px;
