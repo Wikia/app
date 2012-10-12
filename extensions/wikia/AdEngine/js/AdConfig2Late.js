@@ -3,15 +3,14 @@ var AdConfig2Late = function (
 	log, window
 
 	// AdProviders
-	, adProviderAdDriver2
 	, adProviderGamePro
 	, adProviderLiftium2Dom
 	, adProviderNull
 ) {
 	'use strict';
 
-	var log_group = 'AdConfig2'
-		, city_lang = window.wgContentLanguage
+	var logGroup = 'AdConfig2'
+		, cityLang = window.wgContentLanguage
 		, getProvider
 		, fakeLiftium = {}
 	;
@@ -19,8 +18,8 @@ var AdConfig2Late = function (
 	getProvider = function(slot) {
 		var slotname = slot[0];
 
-		log('getProvider', 5, log_group);
-		log(slot, 5, log_group);
+		log('getProvider', 5, logGroup);
+		log(slot, 5, logGroup);
 
 		if (slot[2] === 'Liftium2') {
 			return adProviderLiftium2Dom;
@@ -30,7 +29,7 @@ var AdConfig2Late = function (
 		}
 
 		// First ask GamePro (german lang wiki)
-		if (city_lang === 'de') {
+		if (cityLang === 'de') {
 			if (slotname === 'PREFOOTER_RIGHT_BOXAD' || slotname === 'LEFT_SKYSCRAPER_3' || slotname === 'TOP_RIGHT_BUTTON') {
 				return adProviderNull;
 			}

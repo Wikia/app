@@ -7,17 +7,14 @@
 (function(log, WikiaTracker, window, ghostwriter, document, Geo, Cookies) {
 	var adConfig
 		, scriptWriter
-		, wikiaDart
-		, adProviderAdDriver2
-		, adProviderAdDriver2Helper
+		, slotTweaker
+		, fakeLiftium = {}
 		, adProviderGamePro
 		, adProviderLiftium2Dom
-		, slotTweaker
 		, adProviderNull
-		, fakeLiftium = {}
 	;
 
-	// TODO: make this less reliable on order of execution
+	// TODO: make Liftium and AdEngine2 less reliable on order of execution
 	fakeLiftium.callInjectedIframeAd = function(sizeOrSlot, iframeElement, placement) {
 		return window.Liftium.callInjectedIframeAd(sizeOrSlot, iframeElement, placement);
 	};
@@ -28,12 +25,6 @@
 	// TODO: ad provider error
 	adProviderNull = AdProviderNull(log, slotTweaker);
 
-	wikiaDart = WikiaDartHelper(log, window, document, Geo);
-
-	adProviderAdDriver2Helper = AdProviderAdDriver2Helper(log, window, Cookies);
-	adProviderAdDriver2 = AdProviderAdDriver2(
-		adProviderAdDriver2Helper, wikiaDart, scriptWriter, WikiaTracker, log, window, Geo, slotTweaker
-	);
 	adProviderGamePro = AdProviderGamePro(scriptWriter, WikiaTracker, log, window, document);
 	adProviderLiftium2Dom = AdProviderLiftium2Dom(WikiaTracker, log, document, slotTweaker, fakeLiftium);
 
@@ -41,7 +32,6 @@
 		log, window
 
 		// AdProviders:
-		, adProviderAdDriver2
 		, adProviderGamePro
 		, adProviderLiftium2Dom
 		, adProviderNull

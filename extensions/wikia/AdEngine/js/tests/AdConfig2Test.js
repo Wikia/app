@@ -64,7 +64,7 @@ test('getProvider use AdDriver2 for high value countries', function() {
 	);
 
 	equal(adConfig.getProvider(['foo']), adProviderLaterMock, 'adProviderLaterMock');
-	equal(adConfig.getProvider([highValueSlot]), adProviderAdDriverMock, 'adProviderAdDriver2Mock'); // TODO change back after the rollout
+	equal(adConfig.getProvider([highValueSlot]), adProviderAdDriver2Mock, 'adProviderAdDriver2Mock'); // TODO change back after the rollout
 });
 
 test('getProvider use Evolve(RS) for NZ (only if provider accepts)', function() {

@@ -35,6 +35,7 @@ var SlotTweaker = function(log, document, undef) {
 			&& slot.offsetHeight
 			&& (slot.offsetHeight < 90 || slot.offsetHeight >= 95)
 		) {
+			log('#' + slotname + ' height: ' + slot.offsetHeight + ' not standard, removing TOP_BUTTON', 3, logGroup);
 			hide('TOP_BUTTON');
 			removeClass(topAds, 'WikiaTopButtonLeft');
 			removeClass(topAds, 'WikiaTopButtonRight');
