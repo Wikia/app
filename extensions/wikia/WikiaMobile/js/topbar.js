@@ -12,10 +12,12 @@ define('topbar', ['querystring', 'loader', 'toc', 'events', require.optional('ad
 		loc = w.location,
 		wkPrfTgl = d.getElementById('wkPrfTgl'),
 		navBar = d.getElementById('wkTopNav'),
+		navigationTgl = d.getElementById('wkNavTgl'),
 		wkPrf = d.getElementById('wkPrf'),
 		searchInput = d.getElementById('wkSrhInp'),
 		searchSug = d.getElementById('wkSrhSug'),
 		searchForm = d.getElementById('wkSrhFrm'),
+		searchTgl = d.getElementById('wkSrhTgl'),
 		wkNavMenu,
 		wikiNavHeader,
 		wikiNavH1,
@@ -79,7 +81,7 @@ define('topbar', ['querystring', 'loader', 'toc', 'events', require.optional('ad
 		}
 	}
 
-	searchForm.addEventListener('submit', function(ev){
+	searchForm && searchForm.addEventListener('submit', function(ev){
 		if(searchInput.value === '') {
 			ev.preventDefault();
 		}else{
@@ -89,7 +91,7 @@ define('topbar', ['querystring', 'loader', 'toc', 'events', require.optional('ad
 		}
 	});
 
-	d.getElementById('wkSrhTgl').addEventListener('click', function(event){
+	searchTgl && searchTgl.addEventListener('click', function(event){
 		event.preventDefault();
 		if(navBar.className.indexOf('srhOpn') > -1){
 			closeDropDown();
@@ -197,7 +199,7 @@ define('topbar', ['querystring', 'loader', 'toc', 'events', require.optional('ad
 		navSetUp = true;
 	}
 
-	d.getElementById('wkNavTgl').addEventListener('click', function(event){
+	navigationTgl && navigationTgl.addEventListener('click', function(event){
 		event.preventDefault();
 		if(navBar.className.indexOf('fllNav') > -1){
 			closeDropDown();
