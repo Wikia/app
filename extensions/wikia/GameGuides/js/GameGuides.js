@@ -1,6 +1,4 @@
 (function(html, w){
-	var server = new RegExp(wgServer + '/(wiki\/)?', 'i');
-
 	//handling clicking on a link
 	html.addEventListener('click', function(ev){
 		var t = ev.target;
@@ -11,7 +9,7 @@
 				'Linker',
 				'goTo',
 				{
-					link: t.href.replace(server, '')
+					title: t.title.replace(/ /g, '_')
 				}
 			);
 		}
@@ -54,29 +52,19 @@
 	};
 
 	$(function(){
-		var	links = Array.prototype.slice.call(document.getElementsByTagName('a')),
-			l = links.length,
-			link;
-
-		while(link = links[--l]){
-			if(link.href.match(server) !== null) {
-				link.className += ' validLink';
-			}
-		}
-
-		require(['toc'], function(toc){
-			Ponto.invoke(
-				'Article',
-				'data',
-				{
-					data: {
-						title: wgTitle,
-						articleId: wgArticleId
-					},
-					toc: toc.getList()
-				}
-			);
-		});
+//		require(['toc'], function(toc){
+//			Ponto.invoke(
+//				'Article',
+//				'data',
+//				{
+//					data: {
+//						title: wgTitle,
+//						articleId: wgArticleId
+//					},
+//					toc: toc.getList()
+//				}
+//			);
+//		});
 	});
 })(document.documentElement, this);
 

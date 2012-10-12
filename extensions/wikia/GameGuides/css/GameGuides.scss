@@ -14,7 +14,6 @@
 
 //dependencies
 @import "../../WikiaMobile/css/ui";
-@import "../../WikiaMobile/css/tables";
 @import "../../WikiaMobile/css/infobox";
 @import "../../WikiaMobile/css/sections";
 @import "../../WikiaMobile/css/images";
@@ -121,7 +120,7 @@ a {
 	color: $textColor;
 	pointer-events: none;
 
-	&.validLink {
+	&[title] {
 		color: $linkColor;
 		pointer-events: auto;
 
