@@ -121,7 +121,6 @@ $config['oasis_noads_extensions_js'] = array(
 		'//extensions/wikia/MiniEditor/js/MiniEditor.js',
 		'#group_articlecomments_js', // needs to load after MiniEditor
 		'//extensions/FBConnect/fbconnect.js',
-		'//extensions/wikia/Meebo/meebo.js', // depends on geo.js from #oasis_ads_js
 		'//extensions/wikia/GlobalNotification/GlobalNotification.js',
 		'//skins/oasis/js/GlobalModal.js',  // This needs to load last after all common extensions, please keep this last.
 		'//extensions/wikia/UserLogin/js/UserLogin.js',
@@ -613,7 +612,7 @@ $config['monobook_js'] = array(
 		'//extensions/wikia/GlobalNotification/GlobalNotification.js',
 		'//extensions/wikia/WikiaTracker/js/WikiaTracker_config.js',
 		'//extensions/wikia/WikiaTracker/js/WikiaTracker.js',
-		
+
 		'//resources/wikia/libraries/bootstrap/tooltip.js',
 		'//resources/wikia/libraries/bootstrap/popover.js',
 	)
