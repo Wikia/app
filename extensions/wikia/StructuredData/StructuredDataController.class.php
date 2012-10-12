@@ -46,19 +46,30 @@ class StructuredDataController extends WikiaSpecialPageController {
 		$this->setVal( "mainObjects", $this->mainObjectList );
 	}
 
+	/**
+	 * Display HTML page with SDS object details. SDS object hash should be passes in
+	 * 'id' request parameter
+	 */
 	public function showObject() {
-
+		$sdsObject = null;
 		$id = $this->request->getVal( 'id', false );
-		$object = $this->structuredData->getSDElement( $id );
-		$this->setVal('sdsObject', $object);
-
+		if(!empty($id)) {
+			try {
+				$sdsObject = $this->structuredData->getSDElement( $id );
+			} catch( Exception $e ) {
+				$this->app->wg->Out->setStatusCode ( 404 );
+			}
+		} else {
+			$this->app->wg->Out->setStatusCode ( 400 );
+		}
+		$this->setVal('sdsObject', $sdsObject);
 	}
 
-	public function getObject($id = null) {
+	public function getObject() {
 		// force json format
 		$this->getResponse()->setFormat( 'json' );
 
-		if (!$id) $id = $this->request->getVal( 'id', false );
+		$id = $this->request->getVal( 'id', false );
 
 		if(!empty($id)) {
 			$object = $this->structuredData->getSDElement( $id );
