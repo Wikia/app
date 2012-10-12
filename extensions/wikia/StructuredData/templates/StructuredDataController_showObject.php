@@ -1,3 +1,3 @@
 <pre><?php
-print_r($sdsObject);
+print_r( $sdsObject->toArray() );
 ?></pre>
