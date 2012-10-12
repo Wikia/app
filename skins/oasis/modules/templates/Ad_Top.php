@@ -1,5 +1,6 @@
 <?php
 echo '<div class="WikiaTopAds'.$topAdsExtraClasses.'" id="WikiaTopAds">';
+echo '<div class="WikiaTopAdsInner">';
 
 if (WikiaPageType::isWikiaHub()) {
 	echo F::app()->renderView('Ad', 'Index', array('slotname' => 'HOME_TOP_LEADERBOARD'));
@@ -23,5 +24,6 @@ if ($wg->EnableTopButton) {
 	echo F::app()->renderView('Ad', 'Index', array('slotname' => 'TOP_BUTTON'));
 }
 
+echo '</div>';
 echo '</div>';
 ?>
