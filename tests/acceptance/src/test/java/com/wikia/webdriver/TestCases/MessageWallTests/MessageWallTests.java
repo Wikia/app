@@ -270,44 +270,90 @@ public class MessageWallTests extends TestTemplate
 	}
 	
 	
-//	@Test(groups = { "MessageWall016", "MessageWall" })
-//	public void MessageWall_016_WriteBoldMessage() {
-//
-//		CommonFunctions.logOut(Properties.userName, driver);
-//		MessageWallPageObject wall = new MessageWallPageObject(driver,Global.DOMAIN);
-//		String timeStamp = wall.getTimeStamp();
-//		String title = "QATitle" + timeStamp;
-//		String message = "QAMessage" + timeStamp;
-//		String titleEdit = "QATitle" + timeStamp + "edit";
-//		String messageEdit = "QAMessage" + timeStamp + "edit";
-//		CommonFunctions.logIn(Properties.userName, Properties.password);
-//		wall.openMessageWall(Properties.userName);
-//		wall.writeBoldMessage(title, message);
-//		wall.clickPostButton();
-//		wall.verifyPostedMessageWithTitle(title, message);
-//		wall.editMessage(titleEdit, messageEdit);
-//		wall.verifyPostedMessageWithTitle(titleEdit, messageEdit);
-//
-//	}
+	@Test(groups = { "MessageWall015", "MessageWall" })
+	public void MessageWall_015_WriteBoldMessage() {
+
+		CommonFunctions.logOut(Properties.userName, driver);
+		MessageWallPageObject wall = new MessageWallPageObject(driver,Global.DOMAIN);
+		String timeStamp = wall.getTimeStamp();
+		String title = "QATitle" + timeStamp;
+		String message = "QAMessage" + timeStamp;
+		CommonFunctions.logIn(Properties.userName, Properties.password);
+		wall.openMessageWall(Properties.userName);
+		wall.writeBoldMessage(title, message);
+		wall.clickPostButton();
+		wall.verifyPostedBoldMessageWithTitle(title, message);
+		wall.removeMessage("reason");
+
+	}
 	
-//	@Test(groups = { "MessageWall00x", "MessageWall" })
-//	public void MessageWall_00x_WriteAndEditMessage() {
-//
-//		CommonFunctions.logOut(Properties.userName, driver);
-//		MessageWallPageObject wall = new MessageWallPageObject(driver,Global.DOMAIN);
-//		String timeStamp = wall.getTimeStamp();
-//		String title = "QATitle" + timeStamp;
-//		String message = "QAMessage" + timeStamp;
-//		String titleEdit = "QATitle" + timeStamp + "edit";
-//		String messageEdit = "QAMessage" + timeStamp + "edit";
-//		CommonFunctions.logIn(Properties.userName, Properties.password);
-//		wall.openMessageWall(Properties.userName);
-//		wall.writeMessage(title, message);
-//		wall.clickPostButton();
-//		wall.verifyPostedMessageWithTitle(title, message);
-//		wall.editMessage(titleEdit, messageEdit);
-//		wall.verifyPostedMessageWithTitle(titleEdit, messageEdit);
-//
-//	}
+	@Test(groups = { "MessageWall016", "MessageWall" })
+	public void MessageWall_016_WriteBoldMessagePreview() {
+		
+		CommonFunctions.logOut(Properties.userName, driver);
+		MessageWallPageObject wall = new MessageWallPageObject(driver,Global.DOMAIN);
+		String timeStamp = wall.getTimeStamp();
+		String title = "QATitle" + timeStamp;
+		String message = "QAMessage" + timeStamp;
+		CommonFunctions.logIn(Properties.userName, Properties.password);
+		wall.openMessageWall(Properties.userName);
+		wall.writeBoldMessage(title, message);
+		wall.clickPreviewButton();
+		wall.clickPublishButton();
+		wall.verifyPostedBoldMessageWithTitle(title, message);	
+		wall.removeMessage("reason");	}
+	
+	@Test(groups = { "MessageWall017", "MessageWall" })
+	public void MessageWall_017_WriteItalicMessage() {
+		CommonFunctions.logOut(Properties.userName, driver);
+		MessageWallPageObject wall = new MessageWallPageObject(driver,Global.DOMAIN);
+		String timeStamp = wall.getTimeStamp();
+		String title = "QATitle" + timeStamp;
+		String message = "QAMessage" + timeStamp;
+		CommonFunctions.logIn(Properties.userName, Properties.password);
+		wall.openMessageWall(Properties.userName);
+		wall.writeItalicMessage(title, message);
+		wall.clickPostButton();
+		wall.verifyPostedItalicMessageWithTitle(title, message);	
+		wall.removeMessage("reason");	
+	}
+	
+	@Test(groups = { "MessageWall018", "MessageWall" })
+	public void MessageWall_018_WriteItalicMessagePreview() {
+		CommonFunctions.logOut(Properties.userName, driver);
+		MessageWallPageObject wall = new MessageWallPageObject(driver,Global.DOMAIN);
+		String timeStamp = wall.getTimeStamp();
+		String title = "QATitle" + timeStamp;
+		String message = "QAMessage" + timeStamp;
+		CommonFunctions.logIn(Properties.userName, Properties.password);
+		wall.openMessageWall(Properties.userName);
+		wall.writeItalicMessage(title, message);
+		wall.clickPreviewButton();
+		wall.clickPublishButton();
+		wall.verifyPostedItalicMessageWithTitle(title, message);	
+		wall.removeMessage("reason");	
+	}
+	
+	
+	@Test(groups = { "MessageWall019", "MessageWall" })
+	public void MessageWall_019_WriteAndEditMessage() {
+
+		CommonFunctions.logOut(Properties.userName, driver);
+		MessageWallPageObject wall = new MessageWallPageObject(driver,Global.DOMAIN);
+		String timeStamp = wall.getTimeStamp();
+		String title = "QATitle" + timeStamp;
+		String message = "QAMessage" + timeStamp;
+		String titleEdit = "QATitle" + timeStamp + "edit";
+		String messageEdit = "QAMessage" + timeStamp + "edit";
+		CommonFunctions.logIn(Properties.userName, Properties.password);
+		wall.openMessageWall(Properties.userName);
+		wall.writeMessage(title, message);
+		wall.clickPostButton();
+		wall.verifyPostedMessageWithTitle(title, message);
+		wall.editMessage(titleEdit, messageEdit);
+		wall.verifyPostedMessageWithTitle(titleEdit, messageEdit);
+		wall.removeMessage("reason");	
+
+	}
 	
 }

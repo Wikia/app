@@ -14,8 +14,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-import com.google.inject.Key;
-import com.sun.mail.imap.protocol.BODY;
 import com.wikia.webdriver.Common.Core.Global;
 import com.wikia.webdriver.Common.Logging.PageObjectLogging;
 import com.wikia.webdriver.PageObjects.PageObject.WikiBasePageObject;
@@ -28,6 +26,8 @@ public class MessageWallPageObject extends WikiBasePageObject{
 	private WebElement messageWallEditIFrame;
 	@FindBy(css="#WallMessageTitle")
 	private WebElement messageTitleField;
+	@FindBy(css="ul .msg-title textarea:nth-child(2)")
+	private WebElement messageTitleEditField2;
 	@FindBy(xpath="//ul[@class='comments']//textarea[2]")
 	private WebElement messageTitleEditField;
 	@FindBy(css="body#bodyContent")
@@ -130,32 +130,34 @@ public class MessageWallPageObject extends WikiBasePageObject{
 		PageObjectLogging.log("writeMessage", "message is written, title: "+title+" body: "+message, true, driver);
 	}
 	
-	public void writeBoldMessage(String title, String message) {	
-		
-try {Thread.sleep(3000);} catch (InterruptedException e) {}
-		messageTitleField.click();
-		try {Thread.sleep(3000);} catch (InterruptedException e) {}
-		messageTitleField.sendKeys(title);
-		try {Thread.sleep(3000);} catch (InterruptedException e) {}
+	
+	public void writeBoldMessage(String title, String message) {
+		writeSpecialMessage(title, message, "Bold");
+	}
+	public void writeItalicMessage(String title, String message) {
+		writeSpecialMessage(title, message, "Italic");
+	}
+	
+	public void writeSpecialMessage(String title, String message, String special) {	
+		String specialKey = "Not Initialized";
+		if (special.equals("Bold")) {
+			specialKey = "b";
+		}
+		if (special.equals("Italic")) {
+			specialKey = "i";
+		}
+		messageTitleField.sendKeys(title);		
 		triggerMessageArea();
-		try {Thread.sleep(3000);} catch (InterruptedException e) {}
 		waitForElementByElement(messageWallIFrame);
-		try {Thread.sleep(3000);} catch (InterruptedException e) {}
 		jQueryClick("span.cke_button.cke_off.cke_button_bold a .cke_icon");
-//		boldButton.click();
-		try {Thread.sleep(3000);} catch (InterruptedException e) {}
 		messageTitleField.sendKeys(Keys.TAB);
-		try {Thread.sleep(3000);} catch (InterruptedException e) {}
 		driver.switchTo().frame(messageWallIFrame);
-		try {Thread.sleep(3000);} catch (InterruptedException e) {}
-//		jQueryClick("span.cke_button.cke_off.cke_button_bold a .cke_icon");
 		waitForElementByElement(messageBodyField);
-		// wyglada na to ze to ponizsza metoda powoduje wylaczenie sie bold buttona
 		messageBodyField.sendKeys(message);
-		try {Thread.sleep(3000);} catch (InterruptedException e) {}
+		messageBodyField.sendKeys(Keys.LEFT_CONTROL + "a" );
+		messageBodyField.sendKeys(Keys.LEFT_CONTROL + specialKey );	
 		driver.switchTo().defaultContent();
-		PageObjectLogging.log("writeBoldMessage", "bold message is written, title: "+title+" body: "+message, true, driver);
-		
+		PageObjectLogging.log("write"+special+"Message", special + " message is written, title: "+title+" body: "+message, true, driver);		
 	}
 
 	public void writeMessageNoTitle(String message)
@@ -273,6 +275,12 @@ try {Thread.sleep(3000);} catch (InterruptedException e) {}
 		PageObjectLogging.log("verifyPostedBoldMessageWithTitle", "bold message with title verified", true, driver);		
 	}
 	
+	public void verifyPostedItalicMessageWithTitle(String title, String message) {
+		waitForTextToBePresentInElementByElement(messageTitle, title);
+		waitForTextToBePresentInElementByElement(messageBody.findElement(By.cssSelector("i")), message);
+		PageObjectLogging.log("verifyPostedItalicMessageWithTitle", "italic message with title verified", true, driver);		
+	}
+	
 	public void verifyPostedMessageWithLinks(String internallink, String externallink) {
 		List<WebElement> links = messageBody.findElements(By.cssSelector("a"));
 		waitForTextToBePresentInElementByElement(links.get(0), internallink);
@@ -348,19 +356,29 @@ try {Thread.sleep(3000);} catch (InterruptedException e) {}
 	
 	private void writeEditMessage(String title, String message)
 	{
-//		waitForElementByElement(messageWallEditIFrame);
-		messageTitleField.click();
-		messageTitleField.sendKeys(Keys.TAB);
-		driver.switchTo().frame(messageWallEditIFrame);
-		waitForElementByElement(messageBodyField);
+		WebElement elem = driver.switchTo().activeElement();
+		messageWallIFrame = elem;
+
+		driver.switchTo().frame(messageWallIFrame);
+
 		messageBodyField.clear();
 		messageBodyField.sendKeys(message);
 		driver.switchTo().defaultContent();
+		
+		waitForElementByElement(messageWallIFrame);
+		messageTitleEditField2.click();
+		messageTitleEditField2.sendKeys(Keys.TAB);
+		driver.switchTo().frame(messageWallIFrame);
+		messageBodyField.sendKeys(message);
+		
+		driver.switchTo().defaultContent();
+		
 		waitForElementByElement(messageTitleEditField);
-		messageTitleEditField.clear();
-		messageTitleEditField.sendKeys(title);
+		messageTitleEditField2.clear();
+		messageTitleEditField2.sendKeys(title);
 		waitForElementByElement(saveEditButton);
 		saveEditButton.click();
+		PageObjectLogging.log("writeEditMessage", "message edited", true, driver);
 	}
 	
 	public void editMessage(String title, String message)
@@ -455,6 +473,9 @@ try {Thread.sleep(3000);} catch (InterruptedException e) {}
 	}
 
 
+	}
+
+
 
 
 
@@ -466,4 +487,4 @@ try {Thread.sleep(3000);} catch (InterruptedException e) {}
 
 
 	
-}
+
