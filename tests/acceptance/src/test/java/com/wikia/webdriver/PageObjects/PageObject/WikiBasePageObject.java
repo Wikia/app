@@ -209,7 +209,13 @@ public class WikiBasePageObject extends BasePageObject {
 	}
 
 	public WikiArticlePageObject OpenArticle(String wikiArticle) {
-		driver.get(Domain+"wiki/"+wikiArticle);
+		try{
+			driver.get(Domain+"wiki/"+wikiArticle);
+		}
+		catch (TimeoutException e)
+		{
+			PageObjectLogging.log("OpenArticle", "page loads for more than 30 seconds", true);
+		}
 		return new WikiArticlePageObject(driver, Domain, wikiArticle);
 	}
 	
