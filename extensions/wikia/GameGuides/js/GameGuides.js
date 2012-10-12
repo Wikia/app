@@ -67,10 +67,11 @@
 		require(['toc'], function(toc){
 			Ponto.invoke(
 				'Article',
-				'date',
+				'data',
 				{
 					data: {
-
+						title: wgTitle,
+						articleId: wgArticleId
 					},
 					toc: toc.getList()
 				}
