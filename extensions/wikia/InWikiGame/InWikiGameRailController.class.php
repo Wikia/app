@@ -7,35 +7,38 @@
  * @author Sebastian Marzjan
  */
 class InWikiGameRailController extends WikiaController {
+	/**
+	 * @desc For the first time we're trying it only on one wiki
+	 */
+	const ROTMG_CITY_ID = 175762;
+
+	const ARTICLE_WITH_GAME_TEXT = 'Play';
 
 	/**
 	 * @desc The idea is to look for an element in WF variable and if it's there display the rail module with proper image and link
 	 */
 	public function executeIndex() {
-		$this->wg->out->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/InWikiGame/css/InWikiGameRail.scss'));
-		//once we agree about this solution and get assets we'll put it into WikiFactory
-		$fakeWikiFactoryArr = array(
-			175762 => array( //rotmg wiki id
-				'background-img-url' => array(
-					'width' => 279,
-					'height' => 181,
-					'src' => 'http://images.wikia.com/lotr/images/e/e3/Thehobbit.png',
-				),
-				'article-with-game-url' => 'http://rotmg.nandy.wikia-dev.com/wiki/Play'
-			),
-		);
-
-		if( in_array($this->wg->cityId, array_keys($fakeWikiFactoryArr)) ) {
-			$cfg = $fakeWikiFactoryArr[$this->wg->cityId];
-
-			$this->img = new stdClass();
-			$this->img->width = $cfg['background-img-url']['width'];
-			$this->img->height = $cfg['background-img-url']['height'];
-			$this->img->src = $cfg['background-img-url']['src'];
-
-			$this->gameUrl = $cfg['article-with-game-url'];
+		//for the first time we're doing it only for ROTMG wiki then we'll use solution with WikiFactory
+		if( $this->wg->cityId == self::ROTMG_CITY_ID ) {
+			$this->response->addAsset('extensions/wikia/InWikiGame/css/InWikiGameRail.scss');
+			$this->gameUrl = $this->getGameUrl();
 		} else {
 			$this->skipRendering();
 		}
 	}
+
+	/**
+	 * @return String artilce's page address
+	 */
+	protected function getGameUrl() {
+		$url = '#';
+		$title = Title::newFromText(self::ARTICLE_WITH_GAME_TEXT);
+
+		if( $title instanceof Title ) {
+			$url = $title->getFullUrl();
+		}
+
+		return $url;
+	}
+
 }
