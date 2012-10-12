@@ -1,8 +1,8 @@
-var AdProviderLiftium2Dom = function (WikiaTracker, log, document, slotTweaker) {
+var AdProviderLiftium2Dom = function (wikiaTracker, log, document, slotTweaker, Liftium) {
 	'use strict';
 
-	var log_group = 'AdProviderLiftium2'
-		, adNum = 200 // TODO global-ize it!
+	var logGroup = 'AdProviderLiftium2'
+		, adNum = 200 // TODO global-ize it (move to Liftium?)!
 		, slotMap
 		, canHandleSlot
 		, fillInSlot
@@ -26,8 +26,8 @@ var AdProviderLiftium2Dom = function (WikiaTracker, log, document, slotTweaker) 
 	canHandleSlot = function(slot) {
 		var slotname = slot[0];
 
-		log('canHandleSlot', 5, log_group);
-		log(slot, 5, log_group);
+		log('canHandleSlot', 5, logGroup);
+		log(slot, 5, logGroup);
 
 		if (slotMap[slotname]) {
 			return true;
@@ -38,28 +38,24 @@ var AdProviderLiftium2Dom = function (WikiaTracker, log, document, slotTweaker) 
 
 	// adapted for Evolve + simplified copy of AdDriverDelayedLoader.callLiftium
 	fillInSlot = function(slot) {
-		log('fillInSlot', 5, log_group);
-		log(slot, 5, log_group);
+		var slotname = slot[0]
+			, slotsize = slot[1]
+			, adDiv = document.createElement("div")
+			, adIframe = document.createElement("iframe")
+			, s = slotsize.split('x')
+		;
 
-		slot[1] = slotMap[slot[0]].size || slot[1];
-		log([slot[0], slot[1]], 7, log_group);
+		log('fillInSlot', 5, logGroup);
+		log(slot, 5, logGroup);
 
-		// this is *NOT* needed, liftium has it's own slot tracking
-		//WikiaTracker.trackAdEvent('liftium.slot2', {'ga_category':'slot2/' + slot[1], 'ga_action':slot[0], 'ga_label':'liftium'}, 'ga');
+		slotsize = slotMap[slotname].size || slotsize;
+		log('size: ' + slotsize, 7, logGroup);
 
-		callLiftium(slot[0], slot[1]);
-	};
+		// TODO: move the following to Liftium.js and refactor
 
-	// c&p from Lifitum.callIframeAd
-	callLiftium = function(slotname, size) {
-		log('callLiftium', 5, log_group);
-		log([slotname, size], 5, log_group);
+		adNum += 1;
+		adDiv.id = 'Liftium_' + slotsize + '_' + adNum;
 
-		var adDiv = document.createElement("div");
-		adDiv.id = "Liftium_" + size + '_' + (++adNum);
-
-		var adIframe = document.createElement("iframe");
-		var s = size.split("x");
 		adIframe.width = s[0];
 		adIframe.height = s[1];
 		adIframe.scrolling = "no";
@@ -73,8 +69,8 @@ var AdProviderLiftium2Dom = function (WikiaTracker, log, document, slotTweaker) 
 		adDiv.appendChild(adIframe);
 		document.getElementById(slotname).appendChild(adDiv);
 
-		LiftiumOptions.placement = slotname;
-		Liftium.callInjectedIframeAd(size, document.getElementById(slotname + '_iframe'));
+		Liftium.callInjectedIframeAd(slotsize, document.getElementById(slotname + '_iframe'), slotname);
+
 		slotTweaker.removeDefaultHeight(slotname);
 	};
 
@@ -83,5 +79,4 @@ var AdProviderLiftium2Dom = function (WikiaTracker, log, document, slotTweaker) 
 		, canHandleSlot: canHandleSlot
 		, fillInSlot: fillInSlot
 	};
-
 };

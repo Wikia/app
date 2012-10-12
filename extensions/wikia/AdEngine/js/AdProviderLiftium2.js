@@ -1,3 +1,5 @@
+// TODO: Remove
+
 var AdProviderLiftium2 = function (scriptWriter, WikiaTracker, log, window, slotTweaker) {
 	'use strict';
 

@@ -102,13 +102,17 @@ Liftium.buildChain = function(slotname) {
 	var networks = [];
 	Liftium.chain[slotname] = [];
 
-	// Store the placement, clear the source 
-	if (window.LiftiumPlacement) {
-		Liftium.slotPlacements[slotname] = window.LiftiumPlacement;
-		window.LiftiumPlacement = null;
+	// Store the placement, clear the source
+	if (Liftium.slotPlacements[slotname]) {
+		Liftium.d('Slot placement for ' + slotname + ' already set to ' + Liftium.slotPlacements[slotname], 7);
 	} else {
-		Liftium.slotPlacements[slotname] = LiftiumOptions.placement;
-		LiftiumOptions.placement = null;
+		if (window.LiftiumPlacement) {
+			Liftium.slotPlacements[slotname] = window.LiftiumPlacement;
+			window.LiftiumPlacement = null;
+		} else {
+			Liftium.slotPlacements[slotname] = LiftiumOptions.placement;
+			LiftiumOptions.placement = null;
+		}
 	}
 
 	// 1x1 is the same thing as 0x0
@@ -367,11 +371,16 @@ Liftium.callIframeAd = function(slotname, tag, adIframe){
 };
 
 
-Liftium.callInjectedIframeAd = function (sizeOrSlot, iframeElement){
+Liftium.callInjectedIframeAd = function (sizeOrSlot, iframeElement, placement){
 	Liftium.d("Calling injected Iframe Ad for " + sizeOrSlot, 1);
 
 	var slotname = Liftium.getContainingDivId(iframeElement); 
 	Liftium.d("It's " + iframeElement.id + " inside " + slotname + " div", 3);
+
+	if (placement) {
+		Liftium.d('Setting placement of slot ' + slotname + ' to ' + placement, 3);
+		Liftium.slotPlacements[slotname] = placement;
+	}
 
 	// this is a(n ugly?) shortcut, the right name would be slotname's parent div
 	var placement = iframeElement.id.replace(/_iframe$/, "");

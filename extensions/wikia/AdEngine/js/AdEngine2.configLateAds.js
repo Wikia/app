@@ -11,11 +11,16 @@
 		, adProviderAdDriver2
 		, adProviderAdDriver2Helper
 		, adProviderGamePro
-		, adProviderLiftium2
 		, adProviderLiftium2Dom
 		, slotTweaker
 		, adProviderNull
+		, fakeLiftium = {}
 	;
+
+	// TODO: make this less reliable on order of execution
+	fakeLiftium.callInjectedIframeAd = function(sizeOrSlot, iframeElement, placement) {
+		return window.Liftium.callInjectedIframeAd(sizeOrSlot, iframeElement, placement);
+	};
 
 	scriptWriter = ScriptWriter(log, ghostwriter, document);
 	slotTweaker = SlotTweaker(log, document);
@@ -30,8 +35,7 @@
 		adProviderAdDriver2Helper, wikiaDart, scriptWriter, WikiaTracker, log, window, Geo, slotTweaker
 	);
 	adProviderGamePro = AdProviderGamePro(scriptWriter, WikiaTracker, log, window, document);
-	adProviderLiftium2 = AdProviderLiftium2(scriptWriter, WikiaTracker, log, window, slotTweaker);
-	adProviderLiftium2Dom = AdProviderLiftium2Dom(WikiaTracker, log, document, slotTweaker);
+	adProviderLiftium2Dom = AdProviderLiftium2Dom(WikiaTracker, log, document, slotTweaker, fakeLiftium);
 
 	adConfig = AdConfig2Late(
 		log, window
@@ -39,7 +43,6 @@
 		// AdProviders:
 		, adProviderAdDriver2
 		, adProviderGamePro
-		, adProviderLiftium2
 		, adProviderLiftium2Dom
 		, adProviderNull
 	);
