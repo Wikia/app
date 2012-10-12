@@ -214,7 +214,7 @@ class GameGuidesModel{
 									->setLength		( $totalLimit )
 									->setCityId		( $this->app->wg->CityId );
 
-				$resultSet = $wikiaSearch->doSearch( $term, $wikiaSearchConfig );
+				$resultSet = $wikiaSearch->doSearch( $wikiaSearchConfig );
 
 				$found = $resultSet->getResultsFound();
 				$count = 0;
