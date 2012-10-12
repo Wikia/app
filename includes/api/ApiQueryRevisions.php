@@ -539,6 +539,7 @@ class ApiQueryRevisions extends ApiQueryBase {
 			// formatComment() calls wfMsg() among other things
 			return 'anon-public-user-private';
 		}
+		$this->getMain()->setCacheMaxAge('3600');
 		return 'public';
 	}
 
