@@ -76,7 +76,8 @@ function lw_ImageServingFallback(ImageServing $imageServing, $n, &$out){
 		$articleIds = array();
 		foreach($articleTitlesToTry as $titleStr){
 			$title = Title::newFromText( $titleStr );
-			if(is_object($title)){
+			// Titles with & break image serving, causing an endless loop here  -- owen hack fix
+			if( (strpos($titleStr, "&") == false) && is_object($title)){
 				$articleId = $title->getArticleID();
 				$article = Article::newFromID( $articleId );
 				if(is_object($article)){
