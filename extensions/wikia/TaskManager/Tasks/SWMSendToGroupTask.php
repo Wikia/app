@@ -865,9 +865,8 @@ class SWMSendToGroupTask extends BatchTask {
 
 		$wikiDB = WikiFactory::IDtoDB($wikiID);
 		$this->addLog("Look into selected wiki for users that have a specific editcount [operator = {$params['editCountOption']}, from = {$params['editCountStart']}, to = {$params['editCountEnd']}, wiki_id = $wikiID, wiki_db = $wikiDB]");
-		$dbr = wfGetDB( DB_SLAVE );
-		$dbr->selectDB( $wikiDB );
-		$res = $dbr->select(
+		$db = wfGetDB( DB_SLAVE, array(), $wikiDB );
+		$res = $db->select(
 			array( 'revision' ),
 			array( 'rev_user', 'count(*) as editcnt' ),
 			'',
@@ -878,10 +877,10 @@ class SWMSendToGroupTask extends BatchTask {
 			)
 		);
 
-		while ( $row = $dbr->fetchObject( $res ) ) {
+		while ( $row = $db->fetchObject( $res ) ) {
 			$sqlValues[] = "($wikiID, {$row->rev_user}, {$params['messageId']}, " . MSG_STATUS_UNSEEN . ')';
 		}
-		$dbr->freeResult( $res );
+		$db->freeResult( $res );
 		$this->addLog("Add records about new message to right users [wiki_id = $wikiID, wiki_db = $wikiDB, number of users = " . count( $sqlValues ) . "]");
 		if ( count( $sqlValues ) ) {
 			$result = $this->sendMessageHelperToUsers( $sqlValues );
@@ -907,6 +906,7 @@ class SWMSendToGroupTask extends BatchTask {
 		$sqlValues = array();
 		$having = '';
 		$dbr = wfGetDB( DB_SLAVE );
+		$usersSentTo = array(); // Temp hack until multi-wiki per user issue fixed
 
 		switch ( $params['editCountOption'] ) {
 			case 'more':
@@ -924,8 +924,8 @@ class SWMSendToGroupTask extends BatchTask {
 
 		foreach ( $wikisDB as $wikiID => $wikiDB ) {
 			$this->addLog("Look into selected wiki for users that have a specific editcount [operator = {$params['editCountOption']}, from = {$params['editCountStart']}, to = {$params['editCountEnd']}, wiki_id = $wikiID, wiki_db = $wikiDB]");
-			$dbr->selectDB( $wikiDB );
-			$res = $dbr->select(
+			$db = wfGetDB( DB_SLAVE, array(), $wikiDB );
+			$res = $db->select(
 				array( 'revision' ),
 				array( 'rev_user', 'count(*) as editcnt' ),
 				'',
@@ -936,10 +936,13 @@ class SWMSendToGroupTask extends BatchTask {
 				)
 			);
 
-			while ( $row = $dbr->fetchObject( $res ) ) {
-				$sqlValues[] = "($wikiID, {$row->rev_user}, {$params['messageId']}, " . MSG_STATUS_UNSEEN . ')';
+			while ( $row = $db->fetchObject( $res ) ) {
+				if ( !in_array( $row->rev_user, $usersSentTo ) ) { // Temp hack until multi-wiki per user issue fixed
+					$sqlValues[] = "($wikiID, {$row->rev_user}, {$params['messageId']}, " . MSG_STATUS_UNSEEN . ')';
+					$usersSentTo[] = $row->rev_user;
+				}
 			}
-			$dbr->freeResult( $res );
+			$db->freeResult( $res );
 			$this->addLog("Add records about new message to right users [wiki_id = $wikiID, wiki_db = $wikiDB, number of users = " . count( $sqlValues ) . "]");
 		}
 		$this->addLog( 'Add records about new message to right users [number of wikis = ' . count( $wikisDB ) . ', number of users = ' . count( $sqlValues ) . ']' );
