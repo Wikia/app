@@ -215,45 +215,72 @@ class CreateWikiLocalJob extends Job {
 	 * @return boolean status
 	 */
 	private function setWelcomeTalkPage() {
-		global $wgUser;
+		global $wgUser, $wgEnableWallExt;
 		$saveUser = $wgUser;
 
-		Wikia::log( __METHOD__, "talk", "Setting welcome talk page on new wiki" );
+		Wikia::log( __METHOD__, "talk", "Setting welcome talk page on new wiki or Wall" );
+
+		Wikia::log( __METHOD__, "vars", "sitename: {$this->wikiaName}; language: {$this->wikiaLang}" );
+		/**
+		 * set apropriate staff member
+		 */
+		$wgUser = Wikia::staffForLang( $this->wikiaLang );
+		$wgUser = ( $wgUser instanceof User ) ? $wgUser : User::newFromName( "Angela" );
+
+		$talkParams = array(
+			$this->mFounder->getName(),
+			$wgUser->getName(),
+			$wgUser->getRealName(),
+			$this->wikiaName
+		);
+
+		$wallTitle = false;
+		if (! empty( $this->wikiaLang ) ) {
+			$wallTitle = wfMsgExt( "autocreatewiki-welcometalk-wall-title", array( 'language' => $this->wikiaLang ) );
+		}
+
+		if( ! $wallTitle ) {
+			$wallTitle = wfMsg( "autocreatewiki-welcometalk-wall-title" );
+		}
+
+		if( !empty($wgEnableWallExt) ) {
+			$msg = "autocreatewiki-welcometalk-wall";
+		} else {
+                        $msg = "autocreatewiki-welcometalk";
+		}
+
+		$talkBody = false;
+		if (! empty( $this->wikiaLang ) ) {
+			/**
+			 * custom lang translation
+			 */
+			$talkBody = wfMsgExt( $msg, array( 'language' => $this->wikiaLang ), $talkParams );
+		}
+
+		if( ! $talkBody ) {
+			/**
+			 * wfMsgExt should always return message, but just in case...
+			 */
+			$talkBody = wfMsg( $msg, $talkParams );
+		}
+
+		if( !empty($wgEnableWallExt) ) {
+			$wallMessage = F::build('WallMessage', array($talkBody, $this->mFounder->getName(), $wgUser, $wallTitle, false, array(), false, false), 'buildNewMessageAndPost');
+			if( $wallMessage === false ) {
+				return false;
+			}
+			if($admin) {
+				$wallMessage->setPostedAsBot($wgUser);
+				$wallMessage->sendNotificationAboutLastRev();
+			}
+
+			Wikia::log( __METHOD__, "wall", $this->mFounder->getName() );
+			return true;
+		}
 
 		$talkPage = $this->mFounder->getTalkPage();
 		if( $talkPage ) {
 			Wikia::log( __METHOD__, "talk", $talkPage->getFullUrl() );
-
-			Wikia::log( __METHOD__, "vars", "sitename: {$this->wikiaName}; language: {$this->wikiaLang}" );
-
-			/**
-			 * set apropriate staff member
-			 */
-			$wgUser = Wikia::staffForLang( $this->wikiaLang );
-			$wgUser = ( $wgUser instanceof User ) ? $wgUser : User::newFromName( "Angela" );
-
-			$talkParams = array(
-				$this->mFounder->getName(),
-				$wgUser->getName(),
-				$wgUser->getRealName(),
-				$this->wikiaName
-			);
-
-			$talkBody = false;
-			if (! empty( $this->wikiaLang ) ) {
-				/**
-				 * custom lang translation
-				 */
-				$talkBody = wfMsgExt( "autocreatewiki-welcometalk", array( 'language' => $this->wikiaLang ), $talkParams );
-			}
-
-			if( ! $talkBody ) {
-				/**
-				 * wfMsgExt should always return message, but just in case...
-				 */
-				$talkBody = wfMsg( "autocreatewiki-welcometalk", $talkParams );
-			}
-
 			/**
 			 * and now create talk article
 			 */
