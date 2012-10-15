@@ -32,6 +32,10 @@ class CategoryExhibitionSectionMedia extends CategoryExhibitionSection {
 					if ( !is_object( $image ) || $image->height == 0 || $image->width == 0 ){
 						$imageSrc = '';
 					} else {
+						if ( WikiaFileHelper::isFileTypeVideo($image) ) {
+							$elementClass .= ' video';
+						}
+
 						$proportions = $image->width / $image->height;
 						if ( $proportions < 1 ){
 							$calculatedWidth = floor( $proportions * $this->thumbWidth );
