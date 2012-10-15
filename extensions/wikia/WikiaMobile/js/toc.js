@@ -47,7 +47,7 @@ define('toc', ['track', 'sections'], function toc(track, sections){
 				if(a){
 					track.event('toc', track.CLICK, {label: 'element'});
 
-					sections.scrollTo(node.getAttribute('href').substr(1));
+					sections.open(node.getAttribute('href').substr(1), true);
 				}
 			}, true);
 		}
