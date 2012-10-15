@@ -18,7 +18,8 @@ class RelatedVideosHookHandler {
 	public function onBeforePageDisplay( OutputPage $out, $skin ) {
 		wfProfileIn(__METHOD__);
 
-		if( F::app()->checkSkin( 'oasis', $skin ) ) {
+		// don't load it on edit pages (perf improvement)
+		if( F::app()->checkSkin( 'oasis', $skin ) && !BodyController::isEditPage() ) {
 			$assetsManager = F::build( 'AssetsManager', array(), 'getInstance' );
 			$scssPackage = 'relatedvideos_scss';
 			$jsPackage = 'relatedvideos_js';
