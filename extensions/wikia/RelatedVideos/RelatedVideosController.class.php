@@ -317,7 +317,7 @@ class RelatedVideosController extends WikiaController {
 			;
 
 			$searchResultSet = $search->doSearch( $searchConfig );
-			$resultCount = $searchResultSet->getResultNum();
+			$resultCount = $searchResultSet->getResultsNum();
 		}
 
 
