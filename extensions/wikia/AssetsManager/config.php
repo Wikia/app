@@ -112,7 +112,6 @@ $config['oasis_noads_extensions_js'] = array(
 		'//extensions/wikia/VideoHandlers/js/VideoHandlers.js',
 		'//extensions/wikia/RelatedPages/js/RelatedPages.js',
 		'//extensions/wikia/CreatePage/js/CreatePage.js',
-		'//extensions/wikia/ImageLightbox/ImageLightbox.js',
 		'//extensions/wikia/Lightbox/js/LightboxLoader.js',
 		'//extensions/wikia/ImageLazyLoad/js/ImageLazyLoad.js',
 		'//extensions/wikia/AjaxLogin/AjaxLoginBindings.js',
@@ -985,7 +984,7 @@ $config['wikiahubs_scss_wikiamobile'] = array(
 		'type' => AssetsManager::TYPE_SCSS,
 		'skin' => 'wikiamobile',
 		'assets' => array(
-				'//extensions/wikia/WikiaHubs/css/WikiaHubs.wikiamobile.scss'
+			'//extensions/wikia/WikiaHubs/css/WikiaHubs.wikiamobile.scss'
 		)
 );
 
@@ -995,7 +994,7 @@ $config['wikiahubs_v2'] = array(
 		'type' => AssetsManager::TYPE_JS,
 		'skin' => array('oasis'),
 		'assets' => array(
-				'//extensions/wikia/WikiaHubsV2/js/WikiaHubsV2.js'
+			'//extensions/wikia/WikiaHubsV2/js/WikiaHubsV2.js'
 		)
 );
 
@@ -1003,7 +1002,7 @@ $config['wikiahubs_v2_modal'] = array(
 		'type' => AssetsManager::TYPE_JS,
 		'skin' => array('oasis', 'wikiamobile'),
 		'assets' => array(
-				'//extensions/wikia/WikiaHubsV2/js/WikiaHubsV2Modals.js'
+			'//extensions/wikia/WikiaHubsV2/js/WikiaHubsV2Modals.js'
 		)
 );
 
@@ -1011,7 +1010,7 @@ $config['wikiahubs_v2_scss'] = array(
 		'type' => AssetsManager::TYPE_SCSS,
 		'skin' => array('oasis'),
 		'assets' => array(
-				'//extensions/wikia/WikiaHubsV2/css/WikiaHubsV2.scss'
+			'//extensions/wikia/WikiaHubsV2/css/WikiaHubsV2.scss'
 		)
 );
 
@@ -1019,7 +1018,7 @@ $config['wikiahubs_v2_scss_mobile'] = array(
 		'type' => AssetsManager::TYPE_SCSS,
 		'skin' => array('wikiamobile'),
 		'assets' => array(
-				'//extensions/wikia/WikiaHubsV2/css/WikiaHubsV2Mobile.scss'
+			'//extensions/wikia/WikiaHubsV2/css/WikiaHubsV2Mobile.scss'
 		)
 );
 

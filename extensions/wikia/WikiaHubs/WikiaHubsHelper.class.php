@@ -53,6 +53,7 @@ class WikiaHubsHelper {
 	public function onWikiaAssetsPackages(&$out, &$jsPackages, &$scssPackages) {
 		if (HubService::isCurrentPageAWikiaHub()) {
 			$jsPackages[] = 'wikia/WikiaHubs/js/WikiaHubs.js';
+			$jsPackages[] = 'wikia/ImageLightbox/ImageLightbox.js';
 			$scssPackages[] = 'wikia/WikiaHubs/css/WikiaHubs.scss';
 		}
 
