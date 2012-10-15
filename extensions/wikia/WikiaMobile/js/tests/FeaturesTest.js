@@ -4,7 +4,7 @@
  */
 
 /*global describe, it, runs, waitsFor, expect, require, document*/
-describe("Test features module", function () {
+describe("Features module", function () {
 	'use strict';
 
 	it('should be defined', function(){
