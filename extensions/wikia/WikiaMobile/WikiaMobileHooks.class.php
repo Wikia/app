@@ -184,6 +184,7 @@ class WikiaMobileHooks extends WikiaObject{
 		$this->wf->profileIn( __METHOD__ );
 		if ( $this->app->checkSkin( 'wikiamobile', $skin ) && in_array( 'broken', $options ) ) {
 			$ret = $text;
+			$this->wf->profileOut( __METHOD__ );
 			return false;
 		}
 
