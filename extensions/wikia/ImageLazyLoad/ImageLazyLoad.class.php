@@ -85,12 +85,10 @@ class ImageLazyLoad extends WikiaObject {
 					$this->app->wg->Parser->lazyLoadedImagesCount = 0;
 				}
 
+				// not used here, still important for regular images
+				// which are not part of galleries
 				$this->app->wg->Parser->lazyLoadedImagesCount += 1;
 
-				// Skip first few images in article
-				if ( $this->app->wg->Parser->lazyLoadedImagesCount < 3 ) {
-					return true;
-				}
 			}
 
 			$image['thumbnail-src'] = $this->wf->BlankImgUrl();

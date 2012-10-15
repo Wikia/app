@@ -72,7 +72,7 @@ $(function() {
 
 			var scrollTop = $(window).scrollTop();
 			var scrollSpeed = Math.abs( scrollTop - this.lastScrollTop );
-			scrollSpeed = Math.min(scrollSpeed, 2000)*3 + 500;
+			scrollSpeed = Math.min(scrollSpeed, 1000)*3 + 200;
 			this.lastScrollTop = scrollTop;
 			var scrollBottom = scrollTop + $(window).height() + scrollSpeed;
 			scrollTop = scrollTop - scrollSpeed;
