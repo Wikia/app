@@ -61,6 +61,7 @@ class StructuredDataController extends WikiaSpecialPageController {
 		} else {
 			$this->app->wg->Out->setStatusCode ( 400 );
 		}
+		$this->response->addAsset('extensions/wikia/StructuredData/css/StructuredData.scss');
 		$this->setVal('sdsObject', $sdsObject);
 	}
 

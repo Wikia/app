@@ -1,14 +1,25 @@
-.WikiaForm {
-	.input-group {
-		input[type="text"], textarea {
-			width: 500px;
-		}
-		&.in-view-mode input[type="text"], textarea {
-			border: none;
-			box-shadow: none;
-			background-color: transparent;
-			color: black !important;
-			font-weight: bold;
+.SDObject {
+	h1 {
+		padding-top: 10px;
+	}
+	h3 {
+		padding-bottom: 5px;
+	}
+	dl {
+		margin: 0 0 1em 0;
+		
+	}
+	dd {
+		margin: 0;
+		padding-bottom: 15px;
+	}
+	
+	.SDObjectDetails {
+		font-style: italic;
+		
+		dt {
+			float: left;
+			padding-right: 10px;
 		}
 	}
 }
