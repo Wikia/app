@@ -37,7 +37,7 @@ class WikiaDataAccess {
 	 * otherwise gets the data and sets caches the result before returning it
 	 * @author Piotr Bablok <pbablok@wikia-inc.com>
 	 */
-	static function simpleCached( $getData, $key, $cacheTime ) {
+	static function simpleCached( $key, $cacheTime, $getData ) {
 		$app = F::app();
 
 		$result = $app->wg->Memc->get( $key );
@@ -61,7 +61,7 @@ class WikiaDataAccess {
 	*    the same data as the first thread
 	* @author Piotr Bablok <pbablok@wikia-inc.com>
 	*/
-	static function cachedGated( $getData, $key, $cacheTime ) {
+	static function cachedGated( $key, $cacheTime, $getData ) {
 		$app = F::app();
 
 		$keyLock = $key . ':lock';
@@ -174,4 +174,4 @@ class WikiaDataAccess {
 //$key = 'MyModule:MyFunction-version:1-user:Abc';
 //$cacheTime = 5; // seconds
 //
-//$myPreciousData = WikiaDataAccess::simpleCached( $getData, $key, $cacheTime );
+//$myPreciousData = WikiaDataAccess::simpleCached( $key, $cacheTime, $getData );
