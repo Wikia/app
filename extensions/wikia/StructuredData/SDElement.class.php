@@ -45,6 +45,29 @@ class SDElement implements SplSubject {
 	}
 
 	/**
+	 * Return a property based on its schema name
+	 * @return SDElementProperty
+	 */
+	public function getProperty( $name ) {
+		foreach($this->properties as $property) {
+			echo $property->getName();
+			if ( $property->getName() == $name )
+				return $property;
+		}
+		return null;
+	}
+
+	/**
+	 * Return element's name
+	 * @return string
+	 */
+	public function getName() {
+		$name = $this->getProperty( 'schema:name' );
+		if ( empty( $name ) ) return null;
+		return $name->getValue();
+	}
+
+	/**
 	 * @param \SDContext $context
 	 */
 	public function setContext($context) {
