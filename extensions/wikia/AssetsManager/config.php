@@ -58,6 +58,7 @@ $config['adengine2_js'] = array(
 		'//extensions/wikia/AdEngine/js/Krux.js',
 		'//extensions/wikia/AdEngine/js/SlotTweaker.js',
 		'//extensions/wikia/AdEngine/js/LazyQueue.js',
+		'//extensions/wikia/AdEngine/js/ExpiringStorage.js',
 		'//extensions/wikia/AdEngine/js/ScriptWriter.js',
 		'//extensions/wikia/AdEngine/js/AdEngine2.js',
 
