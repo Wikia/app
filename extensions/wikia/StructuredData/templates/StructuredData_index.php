@@ -1,6 +1,4 @@
 Hello Structured World!
-
-
 <ul>
 <?php foreach ( $mainObjects as $objectClass => $objectName ) { ?>
 
@@ -13,4 +11,4 @@ Hello Structured World!
 
 
 <? } ?>
-</ul>>>>>>>> .r61608
+</ul>
