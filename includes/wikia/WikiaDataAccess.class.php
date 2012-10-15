@@ -51,6 +51,15 @@ class WikiaDataAccess {
 	}
 
 	/**
+	 * Purges cached object
+	 * intended to use with function WikiaDataAccess::cache
+	 * @author Piotr Bablok <pbablok@wikia-inc.com>
+	 */
+	static function cachePurge( $key ) {
+		F::app()->wg->Memc->delete( $key );
+	}
+
+	/**
 	* returns cached data if possible
 	* if cached data is older than $cacheTime but fresher than twice that time
 	*  - first thread to request it will start getting data
@@ -125,6 +134,19 @@ class WikiaDataAccess {
 		return $result['data'];
 	}
 
+	/**
+	 * Purges cached object
+	 * Forces object regeneration even if another thread hold the lock
+	 * intended to use with function WikiaDataAccess::cacheWithLock
+	 * @author Piotr Bablok <pbablok@wikia-inc.com>
+	 */
+	static function cacheWithLockPurge( $key ) {
+		$Memc = F::app()->wg->Memc;
+		$keyLock = $key . ':lock';
+		$key .= '-withDate';
+		$Memc->delete( $keyLock );
+		$Memc->delete( $key );
+	}
 
 	/***********************************
 	 * Private functions
