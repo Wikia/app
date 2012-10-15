@@ -51,8 +51,7 @@ class AssetsManagerTest extends WikiaBaseTest {
 	public function duplicateAssetsDataProvider() {
 		$dataSets = array();
 
-
-		$config = F::build('AssetsConfig');
+		$config = F::build('AssetsConfig'); /* @var $config AssetsConfig */
 		// single assets
 		$packages = $config->getGroupNames();
 		foreach ($packages as $name) {
