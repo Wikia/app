@@ -8,6 +8,11 @@
 
 class WikiaStructuredDataTest extends WikiaBaseTest {
 
+	public function setUp() {
+		$this->setupFile =  dirname(__FILE__) . '/../StructuredData.setup.php';
+		parent::setUp();
+	}
+
 	private $codCharacterTemplate = '{"@context":"/contexts/cod.jsonld","type":"cod:Character","schema:description":null,"wikia:wikiText":[],"schema:name":null,"schema:url":null,"schema:video":[],"wikia:element":[],"schema:audio":[],"wikia:elementIn":[],"schema:photos":[],"wikia:restriction":null,"wikia:includeWith":[],"wikia:playableIn":[],"wikia:playable":null,"wikia:characterIn":[],"cod:voiceActor":[],"schema:birthDate":null,"wikia:weapon":[],"cod:status":null,"cod:rank":null,"cod:timeline":[]}';
 
 	private $codContext = '{
