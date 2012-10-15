@@ -32,8 +32,29 @@ class ForumHooksHelper {
 			$indexPage = F::build('Title', array('Forum', NS_SPECIAL), 'newFromText' );
 			$path = array_merge($this->getPath($wallMessage), array($path[1]));
 		}
+	
 		return true;
 	}
+
+	public function onWallHistoryHeader($title, &$path, &$response, &$request) {
+		if(MWNamespace::getSubject($title->getNamespace()) == NS_WIKIA_FORUM_BOARD) {
+			$app = F::App();
+			
+			$response->setVal( 'pageTitle' , wfMsg('forum-board-history-title'));
+			$app->wg->Out->setPageTitle( wfMsg('forum-board-history-title') );
+			
+			$indexPage = F::build('Title', array('Forum', NS_SPECIAL), 'newFromText' );
+			$path = array(
+				$this->getIndexPath(),
+				array(
+					'title' =>	wfMsg( 'forum-board-title', $title->getText()),
+					'url' => $title->getFullUrl()
+				)
+			);
+		}
+		return true;
+	}
+
 
 	public function onWallHeader($title, &$path, &$response, &$request) {
 		if( $title->getNamespace() === NS_WIKIA_FORUM_BOARD) {

@@ -134,6 +134,10 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
 	'forum-recentchanges-thread-history-link' => 'thread history',
 	'forum-recentchanges-closed-thread' => 'closed thread "[[$1|$2]]" from [[$3|$4]]',
 	'forum-recentchanges-reopened-thread' => 'reopened thread "[[$1|$2]]" from [[$3|$4]]',
+	
+	/* history */
+	
+	'forum-board-history-title' => 'board history'
 );
 
 $messages['qqq'] = array(
