@@ -7,3 +7,11 @@
 	margin: 0 auto;
 	width: $width-outside;
 }
+
+.WikiaBarWrapper.SeasonsWikiaBar {
+	background-color: #004c7e;
+	background-image: none;
+	.wikia-bar.wikia-bar-anon {
+		background-image: none;
+	}
+}
