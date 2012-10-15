@@ -103,7 +103,7 @@ public class CommonFunctions
 		}
 		WebElement userNameField = driver.findElement(By.cssSelector("#WikiaArticle input[name='username']"));
 		WebElement passwordField = driver.findElement(By.cssSelector("#WikiaArticle input[name='password']"));
-		WebElement submitButton = driver.findElement(By.cssSelector("#WikiaArticle input[class='login-button big']"));
+		WebElement submitButton = driver.findElement(By.cssSelector("#WikiaArticle input[value='Log in']"));
 		userNameField.sendKeys(userName);
 		passwordField.sendKeys(password);
 		try{
@@ -122,7 +122,9 @@ public class CommonFunctions
 		}
 		driver.findElement(By.cssSelector(".AccountNavigation a[href*='User:"+userName+"']"));//only for verification
 		try{
-			driver.get(temp);				
+			if(!temp.contains("Special:UserLogout")){
+				driver.get(temp);				
+			}
 		}
 		catch (TimeoutException e)
 		{
@@ -227,7 +229,6 @@ public class CommonFunctions
 	 */
 	public static void logOut(String userName, WebDriver driver)
 	{
-		
 		wait = new WebDriverWait(driver, 30);
 		try{			
 			driver.get(Global.DOMAIN+"wiki/Special:UserLogout?noexternals=1");
@@ -235,7 +236,7 @@ public class CommonFunctions
 		catch (TimeoutException e)
 		{
 			PageObjectLogging.log("logOut", "page loads for more than 30 seconds", true);
-		}
+		}	
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("a[data-id='login']")));
 		PageObjectLogging.log("logOut", "uses is logged out", true, driver);
 	}
