@@ -41,32 +41,13 @@ define('toc', ['track', 'sections'], function toc(track, sections){
 				var node = ev.target,
 					a = (node.nodeName == 'A');
 
+				//if anchor was clicked dont trigger tracking event of close
 				(table.className.indexOf('open') > -1 ? close : open)(a);
 
 				if(a){
 					track.event('toc', track.CLICK, {label: 'element'});
 
-					var elm = d.getElementById(node.getAttribute('href').substr(1)),
-						h2 = elm;
-
-					//find in what section is the header
-					while(h2.nodeName != 'H2'){
-						h2 = (elm.parentNode.className.indexOf('artSec') > -1) ? h2.parentNode.previousElementSibling : h2.parentNode;
-					}
-
-					//open section if necessarry
-					if(h2.className.indexOf('open') == -1){
-						sections.toggle(h2);
-					}
-
-					//scroll header into view
-					//if the page is long that is the way I found it reliable
-					//without calling it like that android sometimes did not scroll at all
-					//and iOS sometimes scrolled to a wrong place
-					elm.scrollIntoView();
-					setTimeout(function(){
-						elm.scrollIntoView();
-					}, 50);
+					sections.scrollTo(node.getAttribute('href').substr(1));
 				}
 			}, true);
 		}
@@ -75,15 +56,21 @@ define('toc', ['track', 'sections'], function toc(track, sections){
 	function getToc(list) {
 		var toc = [],
 			section,
-			link,
+			a,
+			id,
 			ul,
 			parent;
 
 		for(var i = 0, l = list.length; i < l; i++){
 			section = list[i];
-			link = section.children[0].href;
+			a = section.children[0];
+			id = a.hash.slice(1);
 			ul = section.children[1];
-			parent = { section: link.slice(link.indexOf('#') + 1) };
+
+			parent = {
+				id: id,
+				name: a.getElementsByClassName('toctext')[0].innerText
+			};
 
 			ul && (parent.children = getToc(ul.children));
 
@@ -93,20 +80,18 @@ define('toc', ['track', 'sections'], function toc(track, sections){
 		return toc;
 	}
 
-	function getList(){
-		var toc = [];
-
-		if(table || (table = d.getElementById('toc'))){
-			toc = getToc(table.getElementsByClassName('toclevel-1'));
-		}
-
-		return toc;
-	}
-
 	return {
 		init: init,
 		open: open,
 		close: close,
-		getList: getList
+		get: function(){
+			var toc = [];
+
+			if(table || (table = d.getElementById('toc'))){
+				toc = getToc(table.getElementsByClassName('toclevel-1'));
+			}
+
+			return toc;
+		}
 	};
 });
