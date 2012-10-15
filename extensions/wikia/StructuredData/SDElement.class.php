@@ -102,7 +102,7 @@ class SDElement implements SplSubject {
 				$element->addProperty( F::build( 'SDElementProperty', array( $propertyName, $propertyValue, $propertyType) ) );
 			}
 			elseif($propertyName == '@context') {
-				$context->addResource( $propertyValue );
+				$context->addResource( $propertyValue, true, $element->getType() );
 			}
 		}
 

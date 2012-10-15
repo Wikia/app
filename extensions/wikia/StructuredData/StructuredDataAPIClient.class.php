@@ -51,7 +51,6 @@ class StructuredDataAPIClient {
 	}
 
 	public function getCollection( $type ) {
-
 		$rawResponse = $this->call( rtrim( $this->getApiPath(), '/' ) . '?withType=' . urlencode($type) );
 		$response = json_decode( $rawResponse );
 		$collection = array();
@@ -66,15 +65,22 @@ class StructuredDataAPIClient {
 		return $collection;
 	}
 
-	public function getTemplate( $objectType, $inJson = false ) {
+	public function getTemplate( $objectType, $asJson = false ) {
 		$rawResponse = $this->call(  $this->getVocabsPath() . str_replace(':', '/', $objectType) . '?template=true' );
 		$response = json_decode( $rawResponse );
 
-		return $inJson ? $rawResponse : $this->isValidResponse($response);
+		return $asJson ? $rawResponse : $this->isValidResponse($response);
 	}
 
 	public function getContext( $contextUrl, $relative = true ) {
 		$response = json_decode( $this->call( ( $relative ? $this->baseUrl : '' ) . $contextUrl ) );
 		return $this->isValidResponse($response);
+	}
+
+	public function getObjectDescription( $objectType, $asJson = false ) {
+		$rawResponse = $this->call( $this->getVocabsPath() . str_replace(':', '/', $objectType) );
+		$response = json_decode( $rawResponse );
+
+		return $asJson ? $rawResponse : $this->isValidResponse($response);
 	}
 }

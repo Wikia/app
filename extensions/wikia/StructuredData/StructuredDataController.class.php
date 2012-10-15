@@ -78,6 +78,18 @@ class StructuredDataController extends WikiaSpecialPageController {
 		}
 	}
 
+	public function getObjectDescription() {
+		// force json format
+		$this->getResponse()->setFormat( 'json' );
+
+		$objectType = $this->request->getVal( 'objectType', false );
+		if( !empty( $objectType ) ) {
+			$description = $this->APIClient->getObjectDescription( $objectType, true );
+
+			$this->response->setBody( $description );
+		}
+	}
+
 	public function getCollection() {
 
 		$objectType = $this->request->getVal( 'objectType', false );
