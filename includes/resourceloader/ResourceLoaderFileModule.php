@@ -462,7 +462,12 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 				return AssetsManager::getInstance()->getSassLocalURL($path,false);
 				break;
 			default:
-				return "{$this->remoteBasePath}/$path";
+				$url = "{$this->remoteBasePath}/$path";;
+
+				// apply domain sharding
+				$url = wfReplaceAssetServer( $url );
+
+				return $url;
 		}
 	}
 

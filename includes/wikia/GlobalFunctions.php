@@ -175,6 +175,34 @@ function wfReplaceImageServer( $url, $timestamp = false ) {
 }
 
 /**
+ * Returns a link to the same asset after applying domain sharding
+ *
+ * @see wfReplaceImageServer
+ * @author Władysław Bodzek
+ * @param $url string URL to an asset
+ * @return string URL after applying domain sharding
+ */
+function wfReplaceAssetServer( $url ) {
+	global $wgImagesServers;
+
+	wikia::log(__FUNCTION__,false,$url,true);
+
+	$matches = array();
+	if ( preg_match("#^(?<a>(https?:)?//(slot[0-9]+\\.)?images)(?<b>\\.wikia\\.nocookie\\.net/.*)\$#",$url,$matches) ) {
+		$hash = sha1($url);
+		$inthash = ord($hash);
+
+		$serverNo = $inthash%($wgImagesServers-1);
+		$serverNo++;
+
+		$url = $matches['a'] . ($serverNo) . $matches['b'];
+
+	}
+
+	return $url;
+}
+
+/**
  * 	@author Krzysztof Zmudziński <kaz3t@wikia.com>
  *	Returns array of review reason id
  */

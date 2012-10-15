@@ -267,10 +267,17 @@ class ResourceLoaderHooks {
 			$url = $loadScript . "$params/$modules";
 			$url = wfExpandUrl( $url, PROTO_RELATIVE );
 
-			return false;
+			// apply domain sharding
+			$url = wfReplaceAssetServer( $url );
+		} else {
+			// just a copy&paste from ResourceLoader::makeLoaderURL :-(
+			$url = wfExpandUrl( wfAppendQuery( $loadScript, $query ) . '&*', PROTO_RELATIVE );
 		}
 
-		return true;
+		// apply domain sharding
+		$url = wfReplaceAssetServer( $url );
+
+		return false;
 	}
 
 	public static function onResourceLoaderMakeQuery( $modules, &$query ) {

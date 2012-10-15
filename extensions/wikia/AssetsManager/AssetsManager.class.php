@@ -222,6 +222,9 @@ class AssetsManager {
 
 		$url = $prefix . $this->getAMLocalURL( 'sass', $scssFilePath, $params );
 
+		// apply domain sharding
+		$url = wfReplaceAssetServer( $url );
+
 		wfProfileOut( __METHOD__ );
 		return $url;
 	}
@@ -275,6 +278,8 @@ class AssetsManager {
 	}
 
 	/**
+	 * Returns domainless URL to an asset
+	 *
 	 * @author Inez Korczyński <korczynski@gmail.com>
 	 * @return string Relative URL to one file
 	 */
@@ -300,13 +305,17 @@ class AssetsManager {
 		global $wgCdnRootUrl;
 		if ($minify !== null ? $minify : $this->mMinify) {
 			// Using $wgCdnRootUrl here because it doesn't contain a cb value (getAMLocalURL will add one)
-			return $wgCdnRootUrl . $this->getAMLocalURL('one', $filePath, array('minify' => 1));
+			$url = $wgCdnRootUrl . $this->getAMLocalURL('one', $filePath, array('minify' => 1));
 		} else {
 			// We always need to use common host for static assets since it has
 			// the information about the slot which is otherwise not available
 			// in varnish (BugId: 33905)
-			return $this->mCommonHost . $this->getOneLocalURL($filePath, $minify);
+			$url = $this->mCommonHost . $this->getOneLocalURL($filePath, $minify);
 		}
+		// apply domain sharding
+		$url = wfReplaceAssetServer( $url );
+
+		return $url;
 	}
 
 	/**
@@ -354,20 +363,29 @@ class AssetsManager {
 
 			// When AssetsManager works in "combine" mode return URL to the combined package
 			if ( !$isEmpty ) {
-				$URLs[] = $prefix . $this->getAMLocalURL('group', $groupName, $params);
+				$url = $prefix . $this->getAMLocalURL('group', $groupName, $params);
+
+				// apply domain sharding
+				$url = wfReplaceAssetServer( $url );
+
+				$URLs[] = $url;
 			}
 		} else {
 			foreach($assets as $asset) {
 				if(substr($asset, 0, 10) == '#external_') {
-					$URLs[] = substr($asset, 10);
+					$url = substr($asset, 10);
 				} else if(Http::isValidURI($asset)) {
-					$URLs[] = $asset;
+					$url = $asset;
 				} else {
 					// We always need to use common host for static assets since it has
 					// the information about the slot which is otherwise not available
 					// in varnish (BugId: 33905)
-					$URLs[] = $this->getOneCommonURL($asset,$minify);
+					$url = $this->getOneCommonURL($asset,$minify);
 				}
+				// apply domain sharding
+				$url = wfReplaceAssetServer( $url );
+
+				$URLs[] = $url;
 			}
 		}
 
