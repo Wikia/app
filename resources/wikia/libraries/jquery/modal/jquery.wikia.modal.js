@@ -1,4 +1,17 @@
 /*global AdDriverDelayedLoader: true */
+(function($) {
+
+var numValue = function (value) {
+	return parseInt(value, 10) || 0;
+};
+
+/**
+ *  Replacement for $().outerWidth().  $().outerWidth() is overridden by jQuery UI inclusion by the users directly onto their wiki's Common.js or Wikia.js, so we cannot depend on $().outerWidth() to work correctly.
+ */
+var getOuterWidth = function(element) {
+	$element = $(element);
+	return $element.width() + numValue($element.css('padding-left')) + numValue($element.css('padding-right')) + numValue($element.css('border-left-width')) + numValue($element.css('border-right-width'));
+};
 
 //Modal
 $.fn.extend({
@@ -99,13 +112,13 @@ $.fn.extend({
 				width: modalWidth,
 				height: options.height,
 				zIndex: zIndex + 1
-			}).css("margin-left", -wrapper.outerWidth()/2);
+			}).css("margin-left", -getOuterWidth(wrapper)/2);
 
 		} else {
 			wrapper
 				.width(settings.width)
 				.css({
-					marginLeft: -wrapper.outerWidth() / 2,
+					marginLeft: -getOuterWidth(wrapper) / 2,
 					top: wrapper.getModalTopOffset(),
 					zIndex: zIndex + 1
 				})
@@ -318,7 +331,7 @@ $.fn.extend({
 
 		wrapper
 			.width(width)
-			.css('marginLeft', -wrapper.outerWidth() >> 1)
+			.css('marginLeft', -getOuterWidth(wrapper) >> 1)
 			.log('resizeModal: #' + this.attr('id') + ' resized to ' + width + 'px');
 	},
 
@@ -330,3 +343,5 @@ $.fn.extend({
 		return $('.modalWrapper');
 	}
 });
+
+}(jQuery));
