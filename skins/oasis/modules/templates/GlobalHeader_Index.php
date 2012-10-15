@@ -5,7 +5,7 @@
 		</div>
 	</div>
 <? endif; ?>
-<header id="WikiaHeader" class="WikiaHeader">
+<header id="WikiaHeader" class="WikiaHeader<?= (empty($wg->WikiaSeasonsGlobalHeader) ? '' : ' WikiaSeasonsGlobalHeader') ?>">
 	<div class="wikia-header-mask">
 		<div class="page-width-container">
 			<? if ( !empty($isGameStarLogoEnabled )) echo F::app()->renderView('GameStarLogo', 'Index'); ?>
@@ -31,6 +31,7 @@
 							<? endif ?>
 						</ul>
 					</li>
+					<?= (empty($wg->WikiaSeasonsGlobalHeader) ? '' : F::app()->renderView('WikiaSeasons', 'globalHeaderLights', array())); ?>
 				</ul>
 			</nav>
 			<?= F::app()->renderView('AccountNavigation', 'Index') ?>

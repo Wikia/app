@@ -1,7 +1,7 @@
 @import "../../../../skins/oasis/css/core/layout";
 
 .WikiaSeasonsPencilUnit {
-	background-image: url(/extensions/wikia/WikiaSeasons/images/time_to_play_pencil_unit.jpg); /* base64 */
+	background-image: url(/extensions/wikia/WikiaSeasons/images/time-to-play-pencil-unit.jpg); /* base64 */
 	display: block;
 	height: 60px;
 	margin: 0 auto;
@@ -15,5 +15,18 @@
 		background-image: url(/extensions/wikia/WikiaSeasons/images/wikiabar-lights.png); /* base64 */
 		background-position: 50%;
 		background-repeat: no-repeat;
+	}
+}
+
+.WikiaHeader.WikiaSeasonsGlobalHeader {
+	.wikia-header-mask {
+		background-image: url(/extensions/wikia/WikiaSeasons/images/time-to-play-header-bg.png); /* base64 */
+	}
+	.wikia-seasons-header-lights {
+		background-image: url(/extensions/wikia/WikiaSeasons/images/time-to-play-header-lights.png); /* base64 */
+		display: block;
+		height: 34px;
+		margin: 0 10px 0 0;
+		width: 238px;
 	}
 }
