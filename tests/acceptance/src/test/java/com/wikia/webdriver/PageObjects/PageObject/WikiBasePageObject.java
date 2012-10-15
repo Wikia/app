@@ -113,7 +113,7 @@ public class WikiBasePageObject extends BasePageObject {
 	public void waitForSuccesDialogAndReturnToEditing() {
 		waitForElementByElement(videoReturnToEditing);
 		waitForElementClickableByElement(videoReturnToEditing);
-		videoReturnToEditing.click();
+		clickAndWait(videoReturnToEditing);
 		PageObjectLogging.log("WaitForSuccesDialogAndReturnToEditing", "Wait For Succes dialog and click on 'return to editing'", true, driver);
 		
 	}
@@ -136,7 +136,7 @@ public class WikiBasePageObject extends BasePageObject {
 	 * 	 */
 	public void clickAddAvideo() {
 		waitForElementClickableByElement(videoAddVideoButton);
-		videoAddVideoButton.click();
+		clickAndWait(videoAddVideoButton);
 		PageObjectLogging.log("ClickAddAvideo", "Click 'Add a video'", true, driver);
 		
 	}
@@ -149,7 +149,7 @@ public class WikiBasePageObject extends BasePageObject {
 	public void clickVideoNextButton() {
 		waitForElementByElement(videoNextButton);
 		waitForElementClickableByElement(videoNextButton);
-		videoNextButton.click();
+		clickAndWait(videoNextButton);
 		PageObjectLogging.log("ClickVideoNextButton", "Left Click Next button", true, driver);
 			
 	}
@@ -175,7 +175,7 @@ public class WikiBasePageObject extends BasePageObject {
 	public void clickOnAddPhotoButton2() {
 		waitForElementByElement(addPhotoButton);
 		waitForElementClickableByElement(addPhotoButton);
-		addPhotoButton.click();
+		clickAndWait(addPhotoButton);
 		PageObjectLogging.log("ClickOnAddPhotoButton2", "Left Click on add 'Photo' button.", true, driver);	
 	}
 	
@@ -187,7 +187,7 @@ public class WikiBasePageObject extends BasePageObject {
 	public void waitForModalAndClickAddThisPhoto() {
 		waitForElementByElement(imageUploadModal);
 		waitForElementClickableByElement(addThisPhotoLink);
-		addThisPhotoLink.click();
+		clickAndWait(addThisPhotoLink);
 		PageObjectLogging.log("WaitForModalAndClickAddThisPhoto", "Wait for modal and click on 'add this photo' under the first seen photo", true, driver);
 	}
 	
@@ -224,9 +224,7 @@ public class WikiBasePageObject extends BasePageObject {
 	{
 		String temp = Domain;
 		try{
-			if (Global.BROWSER.equals("CHROME")){
-				temp = Domain + "?noexternals=1";
-			}
+			temp = Domain + "?noexternals=1";
 			driver.get(temp);
 		}
 		catch (TimeoutException e)
@@ -239,13 +237,7 @@ public class WikiBasePageObject extends BasePageObject {
 	
 	public void openRandomArticle()
 	{
-		try{
-			randomPageButton.click();
-		}
-		catch (TimeoutException e)
-		{
-			PageObjectLogging.log("logOut", "page loads for more than 30 seconds", true);
-		}
+		clickAndWait(randomPageButton);
 		PageObjectLogging.log("openRandomArticle", "random page button clicked", true);
 	}
 	
@@ -293,13 +285,8 @@ public class WikiBasePageObject extends BasePageObject {
 	private void selectPageLayout(int number)
 	{
 		List<WebElement> list = driver.findElements(layoutList);
-		try{
-			click(list.get(number));
-		}
-		catch (TimeoutException e)
-		{
-			PageObjectLogging.log("logIn", "page loads for more than 30 seconds", true, driver);
-		}
+		clickAndWait(list.get(number));
+		PageObjectLogging.log("selectPageLayout", "wiki layout selected", true, driver);
 	}
 	
 	private void typeInArticleName(String name)
@@ -316,7 +303,8 @@ public class WikiBasePageObject extends BasePageObject {
 	
 	private void clickAddPageButton()
 	{
-		click(addArticleButton);
+		clickAndWait(addArticleButton);
+		PageObjectLogging.log("clickAddPageButton", "add button clicked", true, driver);
 	}
 	
 	public void verifyDeletedArticlePage(String pageName)
@@ -331,20 +319,13 @@ public class WikiBasePageObject extends BasePageObject {
 	public void clickEditDropDown()
 	{
 		waitForElementByElement(editDropDown);
-//		clickActions(editDropDown);
-		try{
-			editDropDown.click();
-		}
-		catch(Exception e)
-		{
-			PageObjectLogging.log("createNewArticle", e.toString(), false);
-		}
+		clickAndWait(editDropDown);
 		PageObjectLogging.log("clickEditDropDown", "edit drop-down clicked", true);
 	}
 	
 	public WikiArticleEditMode clickEditButton(String pageName)
 	{
-		editButton.click();
+		clickAndWait(editButton);
 		PageObjectLogging.log("clickEditButton", "edit button clicked", true);
 		return new WikiArticleEditMode(driver, Domain, pageName);
 	}
@@ -353,7 +334,6 @@ public class WikiBasePageObject extends BasePageObject {
 	{
 		waitForElementByElement(deleteButton);
 		clickActions(deleteButton);
-//		deleteButton.click();
 		PageObjectLogging.log("clickDeleteButtonInDropDown", "delete button in drop-down clicked", true);
 	}
 	
@@ -363,15 +343,7 @@ public class WikiBasePageObject extends BasePageObject {
 		waitForElementByElement(deleteCommentReasonField);
 		deleteCommentReasonField.clear();
 		deleteCommentReasonField.sendKeys("QAReason");
-//		executeScript("document.querySelectorAll('#wpConfirmB')[0].click()");
-		try{
-			deleteConfirmationButton.click();			
-		}
-		catch(TimeoutException e)
-		{
-			PageObjectLogging.log("logOut", "page loads for more than 30 seconds", true);
-		}
-		
+		clickAndWait(deleteConfirmationButton);
 		waitForElementByElement(deleteCommentConfirmationMessage);
 		
 	}
@@ -382,14 +354,7 @@ public class WikiBasePageObject extends BasePageObject {
 		waitForElementByElement(deleteCommentReasonField);
 		deleteCommentReasonField.clear();
 		deleteCommentReasonField.sendKeys("QAReason");
-//		executeScript("document.querySelectorAll('#wpConfirmB')[0].click()");
-		try{
-			deleteConfirmationButton.click();			
-		}
-		catch(TimeoutException e)
-		{
-			PageObjectLogging.log("logOut", "page loads for more than 30 seconds", true);
-		}
+		clickAndWait(deleteConfirmationButton);
 		String temp = atricleName.replace("_", " ");
 		waitForElementByXPath("//div[@class='msg' and contains(text(), '\""+temp+"\" has been deleted.')]");
 	}
@@ -412,14 +377,14 @@ public class WikiBasePageObject extends BasePageObject {
 		waitForElementByElement(confirmRenamePageButton);
 		renameArticleField.clear();
 		renameArticleField.sendKeys(articleNewName);
-		confirmRenamePageButton.click();
+		clickAndWait(confirmRenamePageButton);
 		waitForElementByXPath("//b[contains(text(), '\""+articleName+"\" has been renamed \""+articleNewName+"\"')]");
 	}
 	
 	private void clickUndeleteArticle()
 	{
 		waitForElementByElement(undeleteButton);
-		undeleteButton.click();
+		clickAndWait(undeleteButton);
 		waitForElementByElement(restoreButton);
 		PageObjectLogging.log("clickUndeleteArticle", "undelete article button clicked", true, driver);
 	}
@@ -427,7 +392,7 @@ public class WikiBasePageObject extends BasePageObject {
 	private void clickRestoreArticleButton()
 	{
 		waitForElementByElement(restoreButton);
-		restoreButton.click();
+		clickAndWait(restoreButton);
 		waitForElementByXPath("//div[@class='msg' and contains(text(), 'This page has been restored.')]");
 		PageObjectLogging.log("clickUndeleteArticle", "undelete article button clicked", true, driver);
 	}

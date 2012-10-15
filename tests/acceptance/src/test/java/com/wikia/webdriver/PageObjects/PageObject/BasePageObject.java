@@ -9,6 +9,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.Point;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -153,8 +154,19 @@ public class BasePageObject{
 		}
 		catch(Exception e)
 		{
-			
 			PageObjectLogging.log("click", Throwables.getStackTraceAsString(e), false);
+		}
+	}
+	
+	public void clickAndWait(WebElement pageElem)
+	{
+		try{
+			CommonFunctions.scrollToElement(pageElem);
+			pageElem.click();
+		}
+		catch(TimeoutException e)
+		{
+			PageObjectLogging.log("clickAndWait", "page loaded for more then 30 seconds after click", true);
 		}
 	}
 	/**
@@ -620,7 +632,7 @@ public class BasePageObject{
 	public void customizeToolbar_ClickCustomize() {
 		waitForElementByElement(customizeToolbar_CustomizeButton);
 		waitForElementClickableByElement(customizeToolbar_CustomizeButton);
-		click(customizeToolbar_CustomizeButton);
+		clickAndWait(customizeToolbar_CustomizeButton);
 		PageObjectLogging.log("customizeToolbar_ClickCustomize", "Clicks on 'Customize' button.", true, driver);
 		
 	}
@@ -633,7 +645,7 @@ public class BasePageObject{
 	public void customizeToolbar_ClickOnResetDefaults() {
 		waitForElementByElement(customizeToolbar_ResetDefaultsButton);
 		waitForElementClickableByElement(customizeToolbar_ResetDefaultsButton);
-		customizeToolbar_ResetDefaultsButton.click();
+		clickAndWait(customizeToolbar_ResetDefaultsButton);
 		PageObjectLogging.log("customizeToolbar_ClickOnResetDefaults", "Click on 'ResetDefaults' button.", true, driver);
 		
 	}
@@ -675,7 +687,7 @@ public class BasePageObject{
 	public void customizeToolbar_saveInRenameItemDialog() {
 		waitForElementByElement(customizeToolbar_SaveItemDialogInput);
 		waitForElementClickableByElement(customizeToolbar_SaveItemDialogInput);
-		customizeToolbar_SaveItemDialogInput.click();
+		clickAndWait(customizeToolbar_SaveItemDialogInput);
 		PageObjectLogging.log("customizeToolbar_saveInRenameItemDialog", "Click on 'save' button on Rename Item dialog.", true, driver);
 		
 	}
@@ -689,7 +701,7 @@ public class BasePageObject{
 	public void customizeToolbar_ClickOnFoundTool(String Tool) {
 		waitForElementByCss("div.autocomplete div[title='"+Tool+"']");
 		waitForElementClickableByCss("div.autocomplete div[title='"+Tool+"']");
-		driver.findElement(By.cssSelector("div.autocomplete div[title='"+Tool+"']")).click();
+		clickAndWait(driver.findElement(By.cssSelector("div.autocomplete div[title='"+Tool+"']")));
 		PageObjectLogging.log("customizeToolbar_ClickOnFoundTool", "Click on "+Tool, true, driver);
 		
 	}
@@ -708,11 +720,11 @@ public class BasePageObject{
 			// Unfortunately Firefox can't click on this parent element, so the code must be browser-dependent
 			WebElement parent = element.findElement(By.xpath(".."));
 			waitForElementClickableByElement(parent);
-			parent.click();
+			clickAndWait(parent);
 		}
 		else {
 			waitForElementClickableByElement(element);
-			click(element);
+			clickAndWait(element);
 		}
 		PageObjectLogging.log("customizeToolbar_ClickOnFoundTool", "Click on "+Tool_dataname, true, driver);
 	}
@@ -786,13 +798,6 @@ public class BasePageObject{
 	 * @author Michal Nowierski
 	 */
 	public void customizeToolbar_ClickOnToolRemoveButton(String Tool) {
-		By By1 = By.cssSelector("ul.options-list li[data-caption='"+Tool+"']");
-//		By By2 = By.cssSelector("ul.options-list li[data-caption='"+Tool+"'] img.trash");
-//		Point Elem1_location = driver.findElement(By1).getLocation();
-//		CommonFunctions.MoveCursorToElement(Elem1_location);
-//		waitForElementByBy(By2);
-//		waitForElementClickableByBy(By2);
-//		driver.findElement(By2).click();
 		jQueryClick("ul.options-list li[data-caption=\""+Tool+"\"] img.trash");
 		PageObjectLogging.log("customizeToolbar_ClickOnToolRemoveButton", "Remove Tool with id "+Tool+" from Toolbar List", true, driver);
 	}
@@ -874,7 +879,7 @@ public class BasePageObject{
 	public void customizeToolbar_ClickOnSaveButton() {
 		waitForElementByElement(customizeToolbar_SaveButton);
 		waitForElementClickableByElement(customizeToolbar_SaveButton);
-		customizeToolbar_SaveButton.click();
+		clickAndWait(customizeToolbar_SaveButton);
 		PageObjectLogging.log("customizeToolbar_ClickOnSaveButton", "Click on 'save' button.", true, driver);
 		
 	}
