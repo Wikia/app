@@ -1,6 +1,7 @@
 package com.wikia.webdriver.PageObjects.PageObject;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -41,13 +42,25 @@ public class HomePageObject extends BasePageObject{
 	
 	public void openHomePage()
 	{
-		driver.get(Global.LIVE_DOMAIN);
-		driver.getCurrentUrl();
+		try{
+			driver.get(Global.LIVE_DOMAIN);			
+		}
+		catch (TimeoutException e)
+		{
+			PageObjectLogging.log("openHomePage", "timeouted when opening homepage", true);
+		}
+		try{
+			driver.getCurrentUrl();			
+		}
+		catch (TimeoutException e)
+		{
+			PageObjectLogging.log("openHomePage", "timeouted when opening homepage", true);
+		}
 	}
 	
 	public void triggerLoginOverlay()
 	{
-		LoginOverlay.click();
+		clickAndWait(LoginOverlay);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("input[name='username']")));
 	}
 	
@@ -60,13 +73,13 @@ public class HomePageObject extends BasePageObject{
 	public void forgotYourPasswordClick()
 	{
 		waitForElementByElement(ForgotYourPassword);
-		ForgotYourPassword.click();
+		clickAndWait(ForgotYourPassword);
 		waitForElementByCss("div#UserLoginDropdown div.error-msg");
 	}
 	
 	public CreateNewWikiPageObjectStep1 startAWiki()
 	{
-		startWikiButton.click();	
+		clickAndWait(startWikiButton);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("form[name='label-wiki-form']")));
 		if (Global.LIVE_DOMAIN.contains("preview"))
 		{
@@ -81,7 +94,7 @@ public class HomePageObject extends BasePageObject{
 	public HubBasePageObject OpenHub(String Hub){
 		PageObjectLogging.log("OpenHub", "Opening "+Hub, true, driver);
 		if (Hub.equals("VideoGamesHub")) {
-			OpenVideoGamesHub.click();
+			clickAndWait(OpenVideoGamesHub);
 			waitForElementByElement(hubsHeroCarousel);
 			if (Global.LIVE_DOMAIN.contains("preview"))
 			{
@@ -93,7 +106,7 @@ public class HomePageObject extends BasePageObject{
 			return new VideoGamesHubPageObject(driver);
 		}
 		if (Hub.equals("EntertainmentHub")) {
-			OpenEntertainmentHub.click();
+			clickAndWait(OpenEntertainmentHub);
 			waitForElementByElement(hubsHeroCarousel);
 			if (Global.LIVE_DOMAIN.contains("preview"))
 			{
@@ -105,7 +118,7 @@ public class HomePageObject extends BasePageObject{
 			return new EntertainmentHubPageObject(driver);	
 		}
 		if (Hub.equals("LifestyleHub")) {
-			OpenLifestyleHub.click();
+			clickAndWait(OpenLifestyleHub);
 			waitForElementByElement(hubsHeroCarousel);
 			if (Global.LIVE_DOMAIN.contains("preview"))
 			{
