@@ -27,7 +27,7 @@
 ?>
 
 <div class="SDObject" id="SDObject">
-	<h1><?php echo $SDObject['id']; ?></h1>
+	<h1><strong><?php echo $sdsObject->getName(); ?></strong></h1>
 	<dl class="SDObjectDetails">
 		<dt>Type:</dt>
 		<dd><?php echo $SDObject['type']; ?></dd>
@@ -41,6 +41,24 @@
 			<?php switch ($property['type']) :
 				case 'xsd:anyURI' : ?>
 					<a href="<?php echo $property['value']; ?>" title="<?php echo $property['value']; ?>"><?php echo $property['value'] ?></a>
+				<?php break; ?>
+				<?php case '@set' ?>
+					<ul>
+						<?php foreach ($property['value'] as $test) : ?>
+							<li>
+								<pre><?php print_r($test) ?></pre>	
+							</li>
+						<?php endforeach ?>
+					</ul>
+				<?php break; ?>
+				<?php case '@list' ?>
+					<ol>
+						<?php foreach ($property['value'] as $test) : ?>
+							<li>
+								<pre><?php print_r($test) ?></pre>
+							</li>
+						<?php endforeach ?>
+					</ol>
 				<?php break; ?>
 				<?php default : ?>
 					<?php echo $property['value']; ?>
