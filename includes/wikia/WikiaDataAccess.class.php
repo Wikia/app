@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Abstraction classes for SQL data access
+ * Abstraction classes for SQL data access (or any other external resource)
  * Intended to simplify code that retrieves data from SQL and caches results
  * Supports few methods of caching
  * @author Piotr Bablok <pbablok@wikia-inc.com>
@@ -37,7 +37,7 @@ class WikiaDataAccess {
 	 * otherwise gets the data and sets caches the result before returning it
 	 * @author Piotr Bablok <pbablok@wikia-inc.com>
 	 */
-	static function simpleCached( $key, $cacheTime, $getData ) {
+	static function cache( $key, $cacheTime, $getData ) {
 		$app = F::app();
 
 		$result = $app->wg->Memc->get( $key );
@@ -61,7 +61,7 @@ class WikiaDataAccess {
 	*    the same data as the first thread
 	* @author Piotr Bablok <pbablok@wikia-inc.com>
 	*/
-	static function cachedGated( $key, $cacheTime, $getData ) {
+	static function cacheWithLock( $key, $cacheTime, $getData ) {
 		$app = F::app();
 
 		$keyLock = $key . ':lock';
@@ -174,4 +174,4 @@ class WikiaDataAccess {
 //$key = 'MyModule:MyFunction-version:1-user:Abc';
 //$cacheTime = 5; // seconds
 //
-//$myPreciousData = WikiaDataAccess::simpleCached( $key, $cacheTime, $getData );
+//$myPreciousData = WikiaDataAccess::cache( $key, $cacheTime, $getData );

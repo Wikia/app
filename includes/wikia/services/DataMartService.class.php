@@ -178,7 +178,7 @@
 				return $topWikis;
 			};
 
-			$topWikis = WikiaDataAccess::simpleCached( $memKey, 43200 /* 12 hours */, $getData );
+			$topWikis = WikiaDataAccess::cache( $memKey, 43200 /* 12 hours */, $getData );
 			$topWikis = array_slice( $topWikis, 0, $limit, true );
 
 			$app->wf->ProfileOut( __METHOD__ );
