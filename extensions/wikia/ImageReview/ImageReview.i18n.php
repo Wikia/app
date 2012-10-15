@@ -12,8 +12,8 @@ $messages['en'] = array(
 	'imagereview-state-0' => 'Unreviewed',
 	'imagereview-state-1' => 'In review',
 	'imagereview-state-2' => 'Approved',
-	'imagereview-state-3' => 'Rejected',
-	'imagereview-state-4' => 'Deleted',
+	'imagereview-state-3' => 'Deleted',
+	'imagereview-state-4' => 'Rejected',
 	'imagereview-state-5' => 'Questionable',
 
 	'imagereview-imagepage-header' => 'Image Review history',
