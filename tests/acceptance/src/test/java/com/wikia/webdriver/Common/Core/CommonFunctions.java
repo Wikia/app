@@ -230,7 +230,7 @@ public class CommonFunctions
 		
 		wait = new WebDriverWait(driver, 30);
 		try{			
-			driver.get(Global.DOMAIN+"wiki/Special:UserLogout?returnto=User "+userName+"&noexternals=1");
+			driver.get(Global.DOMAIN+"wiki/Special:UserLogout?noexternals=1");
 		}
 		catch (TimeoutException e)
 		{
