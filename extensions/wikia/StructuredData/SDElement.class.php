@@ -50,7 +50,6 @@ class SDElement implements SplSubject {
 	 */
 	public function getProperty( $name ) {
 		foreach($this->properties as $property) {
-			echo $property->getName();
 			if ( $property->getName() == $name )
 				return $property;
 		}
