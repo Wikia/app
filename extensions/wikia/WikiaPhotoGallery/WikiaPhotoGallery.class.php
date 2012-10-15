@@ -145,6 +145,20 @@ class WikiaPhotoGallery extends ImageGallery {
 	}
 
 	/**
+	 * set parser cache key 
+	 */
+	 
+	public function recordParserOption(&$parser) {
+		if($this->mType == self::WIKIA_PHOTO_SLIDER) {
+			/** 
+			 * because slider tag contains elements of interface we need to 
+			 * inform parser to vary parser cache key by user lang option
+			 **/
+			$parser->mOutput->recordOption('userlang');	
+		}
+	}
+
+	/**
 	 * Get value of parsed parameter
 	 */
 	public function getParam($name) {
@@ -346,7 +360,7 @@ class WikiaPhotoGallery extends ImageGallery {
 	/**
 	 * Parse content of <gallery> tag (add images with captions and links provided)
 	 */
-	public function parse() {
+	public function parse(&$parser = null) {
 		wfProfileIn(__METHOD__);
 
 		//use images passed inside <gallery> tag
@@ -443,6 +457,10 @@ class WikiaPhotoGallery extends ImageGallery {
 
 		if(empty($this->mData['id'] )) {
 			$this->mData['id'] = self::$galleriesCounter++;
+		}
+		
+		if(!empty($parser)) {
+			$this->recordParserOption($parser);
 		}
 
 		wfProfileOut(__METHOD__);

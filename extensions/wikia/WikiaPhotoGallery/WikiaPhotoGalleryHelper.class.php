@@ -43,7 +43,7 @@ class WikiaPhotoGalleryHelper {
 	 */
 	static public function setup(&$ig, &$text, &$params) {
 		wfProfileIn(__METHOD__);
-
+		
 		$ig = new WikiaPhotoGallery();
 
 		// store content of <gallery> tag
@@ -64,8 +64,7 @@ class WikiaPhotoGalleryHelper {
 	 * Allow this extension to use its own "parser" for <gallery> tag content
 	 */
 	static public function beforeRenderImageGallery(&$parser, &$ig) {
-		$ig->parse();
-
+		$ig->parse($parser);
 		// by returning false we're telling MW parser to return gallery's HTML immediatelly
 		return false;
 	}
