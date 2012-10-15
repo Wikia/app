@@ -46,6 +46,9 @@ class SDContext extends WikiaObject {
 				if(isset($data->{"@type"})) {
 					$this->types[$typeName] = $data->{"@type"};
 				}
+				else if(isset($data->{"@container"})) {
+					$this->types[$typeName] = $data->{"@container"};
+				}
 			}
 		}
 	}
