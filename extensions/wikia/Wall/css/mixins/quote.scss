@@ -1,0 +1,11 @@
+@import 'skins/oasis/css/mixins/clearfix';
+@import '../WallColors.scss';
+
+@mixin message-quote() {
+	@include clearfix;
+	background-color: $color-wall-infobox;
+	border: 1px solid $color-wall-border;
+	font-style: italic;
+	margin: 8px 0;
+	padding: 10px;
+}

@@ -3,7 +3,8 @@
 // Overrides: /extensions/wikia/MiniEditor/core/content.scss
 //
 
-@import "../../../Wall/css/WallColors";
+@import "extensions/wikia/Wall/css/WallColors";
+@import "extensions/wikia/Wall/css/mixins/quote";
 
 html {
 	#bodyContent {
@@ -18,11 +19,7 @@ html {
 		}
 		
 		.quote {
-			background-color: $color-wall-infobox;
-			border: 1px solid $color-wall-border;
-			font-style: italic;
-			margin-top: 5px;
-			padding: 10px;
+			@include message-quote;
 		}
 	}
 }
