@@ -37,32 +37,66 @@
 
 	w.Photos = Photos;
 
-	w.changeFontType = function(){
-		if(html.className.indexOf('serif') > -1) {
-			html.className = html.className.replace(' serif', '');
-		}else{
-			html.className += ' serif';
-		}
+	function Font(){
+		this.toggleType = function(){
+			if(html.className.indexOf('serif') > -1) {
+				html.className = html.className.replace(' serif', '');
+
+				return 'sans-serif';
+			}else{
+				html.className += ' serif';
+
+				return 'serif';
+			}
+		};
+
+		this.setSize = function(size){
+			size = Math.max(Math.min(~~size, 200), 50);
+			html.style.fontSize = size + '%';
+
+			return size;
+		};
+	}
+
+	Ponto.PontoBaseHandler.derive(Font);
+
+	Font.getInstance = function(){
+		return new Font();
 	};
 
-	w.setFontSize = function(size){
-		html.style.fontSize = Math.max(Math.min(~~size, 200), 50) + '%';
-	};
+	w.Font = Font;
+
+	require(['sections'], function(s){
+		function Sections(){
+			this.open = s.open;
+			this.close = s.close;
+			this.toggle = s.toggle;
+		}
+
+		Ponto.PontoBaseHandler.derive(Sections);
+
+		Sections.getInstance = function(){
+			return s;
+		};
+
+		w.Sections = Sections;
+	});
 
 	$(function(){
-//		require(['toc'], function(toc){
-//			Ponto.invoke(
-//				'Article',
-//				'data',
-//				{
-//					data: {
-//						title: wgTitle,
-//						articleId: wgArticleId
-//					},
-//					toc: toc.getList()
-//				}
-//			);
-//		});
+		require(['toc'], function(toc){
+			Ponto.invoke(
+				'Article',
+				'data',
+				{
+					data: {
+						title: wgTitle,
+						articleId: wgArticleId,
+						cityId: wgCityId
+					},
+					toc: toc.get()
+				}
+			);
+		});
 	});
 })(document.documentElement, this);
 
