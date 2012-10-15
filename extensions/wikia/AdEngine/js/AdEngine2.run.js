@@ -4,6 +4,7 @@
 		, adEngine
 		, scriptWriter
 		, wikiaDart
+		, expiringStorage
 		, adProviderAdDriver
 		, adProviderAdDriver2Helper
 		, adProviderAdDriver2
@@ -12,7 +13,6 @@
 		, adProviderGamePro
 		, adProviderLater
 		, adProviderNull
-		, adSlotsQueue
 		, slotTweaker
 		, lazyQueue = LazyQueue()
 
@@ -26,9 +26,10 @@
 	slotTweaker = SlotTweaker(log, document);
 	scriptWriter = ScriptWriter(log, ghostwriter, document);
 	wikiaDart = WikiaDartHelper(log, window, document, Geo, Krux);
+	expiringStorage = ExpiringStorage(log, JSON);
 
 	adProviderAdDriver = AdProviderAdDriver(log, window);
-	adProviderAdDriver2Helper = AdProviderAdDriver2Helper(log, window, Cookies);
+	adProviderAdDriver2Helper = AdProviderAdDriver2Helper(log, window, expiringStorage);
 	adProviderAdDriver2 = AdProviderAdDriver2(
 		adProviderAdDriver2Helper, wikiaDart, scriptWriter, WikiaTracker, log, window, Geo, slotTweaker
 	);

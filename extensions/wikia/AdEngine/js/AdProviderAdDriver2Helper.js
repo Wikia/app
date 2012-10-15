@@ -1,4 +1,8 @@
-var AdProviderAdDriver2Helper = function (log, window, Cookies) {
+var AdProviderAdDriver2Helper = function (log, window, expiringStorage) {
+
+	var storage = expiringStorage.makeStorage(window.localStorage)
+		, forgetAdsShownAfterTime = 3600 * 1000 // an hour
+	;
 
 	// TODO refactor...
 	// AdDriver c&p begin
@@ -9,8 +13,8 @@ var AdProviderAdDriver2Helper = function (log, window, Cookies) {
 		var cookieValue = false;
 
 		try {
-				var lastDARTCallNoAdCookie = Cookies.get('adDriverLastDARTCallNoAd');
-				cookieValue = AdDriver_getLastDARTCallNoAdFromStorageContents(lastDARTCallNoAdCookie, slotname);
+			var lastDARTCallNoAdCookie = storage.getItem('adDriverLastDARTCallNoAd');
+			cookieValue = AdDriver_getLastDARTCallNoAdFromStorageContents(lastDARTCallNoAdCookie, slotname);
 		}
 		catch (e) {
 			log(e.message, 1, 'AdProviderAdDriver2');
@@ -24,13 +28,15 @@ var AdProviderAdDriver2Helper = function (log, window, Cookies) {
 	function AdDriver_getLastDARTCallNoAdFromStorageContents(lastDARTCallNoAdStorage, slotname) {
 		log('getLastDARTCallNoAdFromStorageContents ' + lastDARTCallNoAdStorage + ', ' + slotname, 5, 'AdProviderAdDriver2');
 
-		var value = false;
+		var value = false
+			, now = window.wgNow || new Date()
+		;
 
 		if (typeof(lastDARTCallNoAdStorage) != 'undefined' && lastDARTCallNoAdStorage) {
 			var slotnameTimestamps = JSON.parse(lastDARTCallNoAdStorage);
 			for (var i = 0; i < slotnameTimestamps.length; i++) {
 				if (slotnameTimestamps[i].slotname == slotname) {
-					if (parseInt(slotnameTimestamps[i].ts) + 3600 * 1000 > window.wgNow.getTime()) {
+					if (parseInt(slotnameTimestamps[i].ts, 10) + forgetAdsShownAfterTime > now.getTime()) {
 						value = true;
 					}
 					break;
@@ -58,8 +64,8 @@ var AdProviderAdDriver2Helper = function (log, window, Cookies) {
 		var cookieNum = 0;
 
 		try {
-				var numCallStorage = Cookies.get(storageName);
-				cookieNum = AdDriver_getNumCallFromStorageContents(numCallStorage, slotname);
+			var numCallStorage = storage.getItem(storageName);
+			cookieNum = AdDriver_getNumCallFromStorageContents(numCallStorage, slotname);
 		}
 		catch (e) {
 			log(e.message, 1, 'AdProviderAdDriver2');
@@ -71,14 +77,16 @@ var AdProviderAdDriver2Helper = function (log, window, Cookies) {
 	function AdDriver_getNumCallFromStorageContents(numCallStorage, slotname) {
 		log('getNumCallFromStorageContents ' + numCallStorage + ', ' + slotname, 5, 'AdProviderAdDriver2');
 
-		var num = 0;
+		var num = 0
+			, now = window.wgNow || new Date()
+		;
 
 		if (typeof(numCallStorage) != 'undefined' && numCallStorage) {
 			var slotnameObjs = JSON.parse(numCallStorage);
 			for (var i = 0; i < slotnameObjs.length; i++) {
 				if (slotnameObjs[i].slotname == slotname) {
-					if (parseInt(slotnameObjs[i].ts) + 3600 * 1000 > window.wgNow.getTime()) {
-						num = parseInt(slotnameObjs[i].num);
+					if (parseInt(slotnameObjs[i].ts, 10) + forgetAdsShownAfterTime > now.getTime()) {
+						num = parseInt(slotnameObjs[i].num, 10);
 						break;
 					}
 				}
@@ -107,27 +115,29 @@ var AdProviderAdDriver2Helper = function (log, window, Cookies) {
 	function AdDriver_incrementNumCall(storageName, slotname) {
 		log('incrementNumCall ' + storageName + ', ' + slotname, 5, 'AdProviderAdDriver2');
 
-		var newSlotnameObjs = new Array();
-		var numInCookie = 0;
-		var slotnameInStorage = false;
+		var newSlotnameObjs = new Array()
+			, numInCookie = 0
+			, slotnameInStorage = false
+			, now = window.wgNow || new Date()
+		;
 
-			try {
-				var numCallStorage = Cookies.get(storageName);
-				var incrementResult = AdDriver_incrementStorageContents(numCallStorage, slotname);
-				slotnameInStorage = incrementResult.slotnameInStorage;
-				numInCookie = incrementResult.num;
-				newSlotnameObjs = incrementResult.newSlotnameObjs;
-			}
-			catch (e) {
-				log(e.message, 1, 'AdProviderAdDriver2');
-			}
+		try {
+			var numCallStorage = storage.getItem(storageName);
+			var incrementResult = AdDriver_incrementStorageContents(numCallStorage, slotname);
+			slotnameInStorage = incrementResult.slotnameInStorage;
+			numInCookie = incrementResult.num;
+			newSlotnameObjs = incrementResult.newSlotnameObjs;
+		}
+		catch (e) {
+			log(e.message, 1, 'AdProviderAdDriver2');
+		}
 
-			if (!slotnameInStorage) {
-				newSlotnameObjs.push( {slotname : slotname, num : ++numInCookie, ts : window.wgNow.getTime()} );
-			}
+		if (!slotnameInStorage) {
+			newSlotnameObjs.push( {slotname : slotname, num : ++numInCookie, ts : window.wgNow.getTime()} );
+		}
 
-			var cookieOptions = {hoursToLive: 1, path: '/'};	// do not set cookie domain
-			Cookies.set(storageName, JSON.stringify(newSlotnameObjs), cookieOptions);
+		// Save in storage for one hour
+		storage.setItem(storageName, JSON.stringify(newSlotnameObjs), forgetAdsShownAfterTime);
 
 		return numInCookie;
 	}
@@ -144,9 +154,9 @@ var AdProviderAdDriver2Helper = function (log, window, Cookies) {
 			for (var i = 0; i < slotnameObjs.length; i++) {
 				if (slotnameObjs[i].slotname == slotname) {
 					slotnameInStorage = true;
-					if (parseInt(slotnameObjs[i].ts) + 3600 * 1000 > window.wgNow.getTime()) {
-						num = parseInt(slotnameObjs[i].num);
-						timestamp = parseInt(slotnameObjs[i].ts);
+					if (parseInt(slotnameObjs[i].ts, 10) + forgetAdsShownAfterTime > window.wgNow.getTime()) {
+						num = parseInt(slotnameObjs[i].num, 10);
+						timestamp = parseInt(slotnameObjs[i].ts, 10);
 					}
 					newSlotnameObjs.push( {slotname : slotname, num : ++num, ts : window.wgNow.getTime()} );
 				}
@@ -175,7 +185,7 @@ var AdProviderAdDriver2Helper = function (log, window, Cookies) {
 			var newSlotnameTimestamps = new Array();
 			var slotnameInStorage = false;
 			try {
-				var lastDARTCallNoAdCookie = Cookies.get('adDriverLastDARTCallNoAd');
+				var lastDARTCallNoAdCookie = storage.getItem('adDriverLastDARTCallNoAd');
 				var setResult = AdDriver_setLastDARTCallNoAdInStorageContents(lastDARTCallNoAdCookie, slotname, value);
 				newSlotnameTimestamps = setResult.newSlotnameTimestamps;
 				slotnameInStorage = setResult.slotnameInStorage;
@@ -189,8 +199,8 @@ var AdProviderAdDriver2Helper = function (log, window, Cookies) {
 			}
 
 			if (newSlotnameTimestamps.length) {
-				var cookieOptions = {hoursToLive: 1, path: '/'};	// do not set cookie domain
-				Cookies.set('adDriverLastDARTCallNoAd', JSON.stringify(newSlotnameTimestamps), cookieOptions);
+				// Save in storage for one hour
+				storage.setItem('adDriverLastDARTCallNoAd', JSON.stringify(newSlotnameTimestamps), forgetAdsShownAfterTime);
 			}
 
 		return value;
