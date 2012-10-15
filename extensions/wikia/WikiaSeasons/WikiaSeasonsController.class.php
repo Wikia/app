@@ -12,11 +12,11 @@ class WikiaSeasonsController extends WikiaController {
 	 * @desc Renders additional container above section#WikiaPage
 	 */
 	public function pencilUnit() {
-		//only renders the container -- assets has been loaded by globalHeaderLights()
+		//only renders the container -- assets are loaded in oasis.scss
 	}
 
 	public function globalHeaderLights() {
-		$this->response->addAsset("extensions/wikia/WikiaSeasons/css/WikiaSeasons.scss");
+		//only renders the container -- assets are loaded in oasis.scss
 	}
 
 }
