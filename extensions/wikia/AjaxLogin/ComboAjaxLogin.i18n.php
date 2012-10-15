@@ -216,6 +216,16 @@ $messages['diq'] = array(
 	'comboajaxlogin-connectmarketing-back' => '&laquo; Peyd bê',
 );
 
+/** Greek (Ελληνικά)
+ * @author Glavkos
+ */
+$messages['el'] = array(
+	'comboajaxlogin-createlog' => 'Συνδεθείτε ή δημιουργήστε ένα λογαριασμό',
+	'comboajaxlogin-actionmsg' => 'Για να εκτελέσετε αυτήν την ενέργεια, πρέπει πρώτα να συνδεθείτε ή να δημιουργήσετε ένα λογαριασμό',
+	'comboajaxlogin-connectmarketing-back' => '&laquo; Πίσω',
+	'comboajaxlogin-connectmarketing-forward' => 'Αρχίστε &raquo;',
+);
+
 /** Spanish (español)
  * @author Absay
  * @author Crazymadlover
@@ -362,6 +372,15 @@ Inténteo de novo ou [[Special:Contact|informe do problema]].',
 <br />
 (Se xa ten unha conta, pode <a href="#">acceder ao sistema</a> como de costume, pero non poderá editar.)</p>',
 	'comboajaxlogin-ajaxerror' => 'Wikia non responde. Comprobe a súa conexión.',
+);
+
+/** Hebrew (עברית)
+ * @author Yova
+ */
+$messages['he'] = array(
+	'comboajaxlogin-createlog' => 'התחבר או הירשם',
+	'comboajaxlogin-actionmsg' => 'על מנת לבצע פעולה זו עליך קודם כל להתחבר או להרשם',
+	'comboajaxlogin-actionmsg-protected' => 'על מנת לבצע פעולה זו עליך קודם כל להתחבר או להרשם',
 );
 
 /** Hungarian (magyar)

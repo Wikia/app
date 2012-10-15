@@ -271,6 +271,10 @@ $messages['ms'] = array(
 	'landingpage-start-exploring-text' => 'Cari topik kegemaran anda atau layari topik kegemaran komuniti di bawah.',
 	'landingpage-readfaq' => 'Ada apa-apa soalan? Baca FAQ kami &gt;',
 	'landingpage-text' => 'Di Wikia, anda boleh <strong>berhubung sesama insan</strong> yang sama <strong>perkara yang diminati dan digemari</strong> dengan anda. Di sin, anda boleh mencari kumpulan anda, membuat ulasan dan suntingan, ataupun <strong>membuka tapak web dan komuniti sendiri</strong>.',
+	'landingpage-language-links' => '* English|en
+* Bahasa Indonesia|id
+* 日本語|ja
+* 中文|zh',
 	'landingpage-buttons-learn-more' => 'Ketahui lebih lanjut &gt;',
 );
 

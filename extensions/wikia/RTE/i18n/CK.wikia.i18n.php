@@ -126,6 +126,7 @@ $messages['en'] = array(
 /** Message documentation (Message documentation)
  * @author EugeneZelenko
  * @author NavaRose
+ * @author Nemo bis
  * @author Sam Wang
  * @author Siebrand
  */
@@ -144,6 +145,7 @@ $messages['qqq'] = array(
 	'rte-ck-media-edit' => '{{Identical|Modify}}',
 	'rte-ck-modeSwitch-toWysiwyg' => 'A type of editor that makes code easier to read/edit and easy for new editors.',
 	'rte-ck-signature-label' => '{{Identical|Signature}}',
+	'rte-ck-templateDropDown-chooseAnotherTpl' => 'See [[mw:Help:Magic words]] for the term.',
 	'rte-ck-templateDropDown-label' => '{{Identical|Template}}',
 	'rte-ck-templateEditor-dialog-insert' => '{{Identical|Insert}}',
 	'rte-ck-templateEditor-dialog-magicWordsLink' => '{{doc-important|Do not translate the namespace part "Help:"}}',

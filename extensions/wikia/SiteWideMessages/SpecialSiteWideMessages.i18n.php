@@ -1990,6 +1990,10 @@ $messages['nb'] = array(
 	'swm-mode-users-editcount-between' => 'Mellom',
 	'swm-error-editcount-tolessthanfrom' => 'Den øvre begrensningen på brukerens antall redigeringer er mindre enn den nedre grensen.',
 	'swm-error-editcount-notnumber' => 'Antallet redigeringer må være et gyldig tall.',
+	'swm-label-mode-wikis-created' => 'Wikiens opprettelsesdato',
+	'swm-mode-wikis-created-after' => 'Etter',
+	'swm-mode-wikis-created-before' => 'Før',
+	'swm-mode-wikis-created-between' => 'Mellom',
 );
 
 /** Nepali (नेपाली)

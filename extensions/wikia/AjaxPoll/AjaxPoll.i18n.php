@@ -162,13 +162,14 @@ $messages['diq'] = array(
 
 /** Greek (Ελληνικά)
  * @author Evropi
+ * @author Glavkos
  */
 $messages['el'] = array(
 	'ajaxpoll-percentVotes' => '$1%&nbsp;όλων των ψήφων',
 	'ajaxpoll-thankyou' => 'Ευχαριστούμε για την ψήφο σας!',
 	'ajaxpoll-summary' => 'Η ψηφοφορία δημιουργήθηκε στις $1, $2 και μέχρι στιγμής $3 άτομα έχουν ψηφίσει.',
 	'ajaxpoll-submit' => 'Ψηφίστε!',
-	'ajaxpoll-closed' => 'Η ψηφοφορία έχει κλείσει. Απολαύστε τα αποτελέσματα.',
+	'ajaxpoll-closed' => 'Η ψηφοφορία έχει κλείσει τώρα. Απολαύστε τα αποτελέσματα.',
 	'ajaxpoll-submitting' => 'Παρακαλώ περιμένετε, υποβάλλοντας την ψήφο σας...',
 );
 

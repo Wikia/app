@@ -195,7 +195,28 @@ $messages['br'] = array(
  * @author BroOk
  */
 $messages['ca'] = array(
-	'categoryselect-code-view-placeholder' => 'Afegeix categories aquí, p.e. [[Categoria:Nom]]',
+	'categoryselect-desc' => "Proporciona una interfície per gestionar les categories dels articles sense editar tot l'article.",
+	'categoryselect-code-view' => 'Vista de codi',
+	'categoryselect-code-view-placeholder' => 'Afegeix categories aquí, per exemple: [[Categoria:Nom]]',
+	'categoryselect-visual-view' => 'Vista visual',
+	'categoryselect-infobox-caption' => 'Opcions de categoria',
+	'categoryselect-infobox-category' => 'Posa el nom de la categoria:',
+	'categoryselect-infobox-sortkey' => 'Classifica aquest article a la categoria "$1" amb el nom:',
+	'categoryselect-addcategory-button' => 'Afegir categoria',
+	'categoryselect-addcategory-edit' => 'Afegir una categoria',
+	'categoryselect-suggest-hint' => 'Pressiona "Enter" quan acabis',
+	'categoryselect-tooltip' => "'''Nou!''' Barra d'etiquetes de categoria. Prova-la o dóna-li un cop d'ull a l'[[Help:CategorySelect|ajuda]] per aprendre més",
+	'categoryselect-unhandled-syntax' => 'Detectada sintaxis immanejable - impossible canviar al mode visual.',
+	'categoryselect-edit-summary' => 'Afegint categories',
+	'categoryselect-empty-name' => 'Posa el nom de la categoria (part abans de |)',
+	'categoryselect-button-save' => 'Desa',
+	'categoryselect-button-cancel' => 'Cancel·la',
+	'categoryselect-error-not-exist' => "L'article [id=$1] no existeix.",
+	'categoryselect-error-user-rights' => "Error de drets d'usuari.",
+	'categoryselect-error-db-locked' => 'La base de dades està bloquejada.',
+	'categoryselect-edit-abort' => "La modificació que has intentat fer ha estat avortada per un ganxo d'extensió.",
+	'tog-disablecategoryselect' => "Desactivar el mòdul de categories (només s'aplica si l'edició en mode visual està desactivada).",
+	'tog-disablecategoryselect-v2' => "Desactivar el mòdul de categories (només s'aplica si l'edició en mode visual està desactivada).",
 );
 
 /** Sorani Kurdish (کوردی) */

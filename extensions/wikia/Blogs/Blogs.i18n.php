@@ -615,6 +615,7 @@ $messages['ca'] = array(
 	'create-blog-listing-sortby' => 'Classificar per',
 	'create-blog-listing-sortby-author' => 'Autor',
 	'blog-defaulttitle' => 'Blocs',
+	'blog-readfullpost' => 'Llegir més',
 	'blog-added' => 'afegit',
 	'blog-edited' => 'editat',
 	'blog-page' => 'Bloc',

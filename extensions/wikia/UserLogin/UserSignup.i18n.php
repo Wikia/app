@@ -3540,6 +3540,22 @@ Nais mo bang tabanan ang kung anong mga e-liham ang matatanggap mo? Magpunta sa:
 	'usersignup-facebook-problem' => 'Nagkaroon ng isang suliranin sa pakikipag-ugnayan sa Facebook. Paki subukan ulit mamaya.',
 );
 
+/** Ukrainian (українська)
+ * @author Wildream
+ */
+$messages['uk'] = array(
+	'usersignup-page-title' => 'Приєднатися до Wikia',
+	'usersignup-page-captcha-label' => 'Blurry Word',
+	'usersignup-error-username-length' => "На жаль, ім'я участника не може бути довшим за {{PLURAL:$1|один символ|$1 символів}",
+	'usersignup-error-invalid-user' => "Недопустиме ім'я користувача. Будь ласка, спробуйте ще раз!",
+	'usersignup-error-invalid-email' => 'Будь ласка введіть справжню e-mail адресу.',
+	'usersignup-error-symbols-in-username' => "На жаль, ім'я користувача може містити лише букви і цифри.",
+	'usersignup-error-empty-email' => 'Будь ласка, введіть вашу адресу електронної пошти.',
+	'usersignup-error-empty-username' => 'Будь ласка, заповніть поле для імені користувача.',
+	'usersignup-error-already-confirmed' => 'Ви вже підтвердили цю адресу електронної пошти.',
+	'usersignup-error-throttled-email' => 'Вам було відправлено занадто багато листів з підтвердженням. Будь ласка, спробуйте ще раз, але трохи пізніше.',
+);
+
 /** Simplified Chinese (中文（简体）‎)
  * @author Sam Wang
  */

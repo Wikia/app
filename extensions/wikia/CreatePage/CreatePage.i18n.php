@@ -707,6 +707,7 @@ $messages['he'] = array(
 
 /** Hungarian (magyar)
  * @author Dani
+ * @author Dj
  * @author Enbéká
  * @author Glanthor Reviol
  * @author TK-999
@@ -739,6 +740,7 @@ Elmehetsz a(z) <a href="$1 ">$2</a>-höz, vagy átnevezheted az oldalt.',
 Kérünk, használj más címet.',
 	'createpage-error-article-blocked' => 'Sajnáljuk, jelenleg nem hozhatod létre ezt az oldalt.',
 	'tog-createpagedefaultblank' => 'Üres lap alapértelmezett használata új oldal létrehozásakor',
+	'tog-createpagepopupdisabled' => '"Új szócikk létrehozása" letiltása (nem javasolt)',
 	'newpagelayout' => '[[File:Placeholder|right|300px]]
 Írd az oldalad első bekezdését ide.
 

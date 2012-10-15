@@ -559,6 +559,7 @@ Wikia
 
 /** Greek (Ελληνικά)
  * @author Evropi
+ * @author Glavkos
  */
 $messages['el'] = array(
 	'article-comments-comments' => 'Σχόλια ($1)',
@@ -577,6 +578,7 @@ $messages['el'] = array(
 	'article-comments-next-page' => 'Επόμενο',
 	'article-comments-page-spacer' => '&#160...&#160',
 	'article-comments-empty-comment' => "Δεν μπορείτε να δημοσιεύσετε ένα κενό σχόλιο. <a href='$1'>Θέλετε να το διαγράψτε αυτό αντ' αυτού;</a>",
+	'wikiamobile-article-comments-replies' => 'απαντήσεις',
 );
 
 /** Esperanto (Esperanto)
@@ -971,6 +973,7 @@ $messages['he'] = array(
 	'article-comments-history' => 'היסטוריה',
 	'article-comments-error' => 'לא ניתן היה לשמור את התגובה',
 	'article-comments-fblogin' => 'אנא <a href="$1" rel="nofollow">התחבר בעזרת פייסבוק</a> על מנת לפרסם תגובה בוויקי זו!',
+	'article-comments-comment-cannot-add' => 'אינך יכול להוסיף תגובה לערך',
 	'article-comments-show-all' => 'הצגת כל התגובות',
 );
 

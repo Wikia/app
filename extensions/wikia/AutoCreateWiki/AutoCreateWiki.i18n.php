@@ -3670,7 +3670,7 @@ Wiki, którą utworzyłeś, jest aktualnie dostępna na stronie <$1>.
 
 Umieściliśmy na Twojej stronie dyskusji (<$5>) trochę informacji i porad, aby pomóc Ci na początku. Jeśli napotkasz jakieś problemy, możesz znaleźć pomoc na stronie <http://pomoc.wikia.com>.
 
-Możesz także odwiedzić forum w Centrum Społeczności - <http://spolecznosc.wikia.com/wiki/Forum:Strona_g%C5%82%C3%B3wna> aby znaleźć odpowiedzi na nurtujące Cię pytania.
+Możesz także odwiedzić forum w Centrum Społeczności - <http://spolecznosc.wikia.com/wiki/Forum:Strona_główna> aby znaleźć odpowiedzi na nurtujące Cię pytania.
 
 Życzymy powodzenia przy tworzeniu nowego projektu!
 

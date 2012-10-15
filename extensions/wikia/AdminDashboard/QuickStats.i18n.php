@@ -192,6 +192,21 @@ $messages['diq'] = array(
 	'quickstats-number-shortening-billions' => '$1B',
 );
 
+/** Greek (Ελληνικά)
+ * @author Glavkos
+ */
+$messages['el'] = array(
+	'quickstats-header-date' => 'Ημερομηνία',
+	'quickstats-header-views' => 'Επισκέψεις',
+	'quickstats-header-edits' => 'Επεξεργασίες',
+	'quickstats-header-photos' => 'Φωτογραφίες',
+	'quickstats-header-likes' => 'Αρέσει',
+	'quickstats-totals-label' => 'Σύνολα',
+	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Δείτε περισσότερα στατιστικά]]',
+	'quickstats-number-shortening' => '$1K',
+	'quickstats-number-shortening-millions' => '$1M',
+);
+
 /** Esperanto (Esperanto)
  * @author Tradukisto
  */
@@ -488,6 +503,7 @@ $messages['ms'] = array(
 	'quickstats-header-edits' => 'Suntingan',
 	'quickstats-header-photos' => 'Gambar',
 	'quickstats-header-likes' => 'Suka',
+	'quickstats-date-format' => 'd M',
 	'quickstats-totals-label' => 'Jumlah',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Lihat banyak lagi statistik]]',
 	'quickstats-number-shortening' => '$1K',
