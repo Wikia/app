@@ -8,15 +8,15 @@
  */
 class WikiaSeasonsController extends WikiaController {
 
+	public function globalHeaderLights() {
+		$this->response->addAsset("extensions/wikia/WikiaSeasons/css/WikiaSeasons.scss");
+	}
+
 	/**
 	 * @desc Renders additional container above section#WikiaPage
 	 */
 	public function pencilUnit() {
-		//only renders the container -- assets are loaded in oasis.scss
-	}
-
-	public function globalHeaderLights() {
-		//only renders the container -- assets are loaded in oasis.scss
+		//only renders the container -- assets are loaded in pencilUnit()
 	}
 
 }
