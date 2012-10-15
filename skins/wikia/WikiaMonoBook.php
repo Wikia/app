@@ -91,20 +91,11 @@ abstract class WikiaSkinMonoBook extends WikiaSkin {
 
 	// load skin-specific JS files from MW (wikibits, user and site JS) - BugId:960
 	public function onSkinGetHeadScripts(&$scripts) {
-		global $wgEnableAbTesting, $wgResourceBasePath;
+		global $wgResourceBasePath;
 		$scripts .= "\n<!--[if lt IE 8]><script src=\"". $wgResourceBasePath ."/resources/wikia/libraries/json2/json2.js\"></script><![endif]-->";
 		$scripts .= "\n<!--[if lt IE 9]><script src=\"". $wgResourceBasePath ."/resources/wikia/libraries/html5/html5.min.js\"></script><![endif]-->";
 
 		$packages = array( 'monobook_js' );
-
-		if ( !empty( $wgEnableAbTesting ) ) {
-			$pkg = F::build('AbTesting')->getJsPackage();
-
-			if(!empty($pkg)){
-				//make abtesting code load before all the others
-				array_unshift( $packages, $pkg  );
-			}
-		}
 
 		$srcs = AssetsManager::getInstance()->getURL( $packages );
 
