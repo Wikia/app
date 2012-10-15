@@ -5,7 +5,7 @@
  */
 
 /*global describe, it, runs, waitsFor, expect, require, document*/
-describe("Test autocomplete module", function () {
+describe("Autocomplete module", function () {
 	'use strict';
 
 	var async = new AsyncSpec(this);

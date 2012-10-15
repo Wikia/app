@@ -5,7 +5,7 @@
  */
 
 /*global describe, it, runs, waitsFor, expect, require, document*/
-describe("Test toast module", function () {
+describe("Toast module", function () {
 	'use strict';
 	var async = new AsyncSpec(this);
 

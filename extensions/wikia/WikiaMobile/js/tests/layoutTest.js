@@ -13,7 +13,7 @@
  */
 
 /*global describe, it, runs, waitsFor, expect, require, document*/
-describe("Test layout module", function () {
+describe("Layout module", function () {
 	'use strict';
 	var async = new AsyncSpec(this);
 

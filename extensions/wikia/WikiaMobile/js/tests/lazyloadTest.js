@@ -15,7 +15,7 @@
  */
 
 /*global describe, it, runs, waitsFor, expect, require, document*/
-describe("Test lazyload module", function () {
+describe("Lazyload module", function () {
 	'use strict';
 
 	var async = new AsyncSpec(this);

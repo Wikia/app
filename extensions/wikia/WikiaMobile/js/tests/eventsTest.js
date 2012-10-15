@@ -4,7 +4,7 @@
  @test-require-asset /extensions/wikia/WikiaMobile/js/events.js
  */
 
-describe("Test event object", function() {
+describe("Event module", function() {
 	it("check if events are set", function() {
 		var events;
 

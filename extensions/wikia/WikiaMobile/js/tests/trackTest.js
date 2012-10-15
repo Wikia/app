@@ -6,7 +6,7 @@
  */
 
 /*global describe, it, runs, waitsFor, expect, require, document*/
-describe("Test track module", function () {
+describe("Track module", function () {
 	'use strict';
 	var async = new AsyncSpec(this);
 

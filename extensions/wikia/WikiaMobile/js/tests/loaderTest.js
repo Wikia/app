@@ -5,7 +5,7 @@
  */
 
 /*global describe, it, runs, waitsFor, expect, require, document*/
-describe("Test loader module", function () {
+describe("Loader module", function () {
 	'use strict';
 	var async = new AsyncSpec(this);
 

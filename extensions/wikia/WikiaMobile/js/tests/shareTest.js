@@ -7,7 +7,7 @@
  */
 
 /*global describe, it, runs, waitsFor, expect, require, document*/
-describe("Test share module", function () {
+describe("Share module", function () {
 	'use strict';
 	var async = new AsyncSpec(this);
 

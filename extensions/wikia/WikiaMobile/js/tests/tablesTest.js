@@ -14,7 +14,7 @@
  */
 
 /*global describe, it, runs, waitsFor, expect, require, document*/
-describe("Test tables module", function () {
+describe("Tables module", function () {
 	'use strict';
 	var async = new AsyncSpec(this);
 

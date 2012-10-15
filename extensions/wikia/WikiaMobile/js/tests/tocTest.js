@@ -8,7 +8,7 @@
  @test-require-asset /extensions/wikia/WikiaMobile/js/toc.js
  */
 
-describe("Test Toc Module", function() {
+describe("Toc module", function() {
 	var async = new AsyncSpec(this);
 
 	async.beforeEach(function(done){
