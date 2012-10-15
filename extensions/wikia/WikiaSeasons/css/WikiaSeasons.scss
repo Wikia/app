@@ -10,8 +10,10 @@
 
 .WikiaBarWrapper.SeasonsWikiaBar {
 	background-color: #004c7e;
-	background-image: none;
+	background-image: url(/extensions/wikia/WikiaSeasons/images/wikiabar-snowflakes.png); /* base64 */
 	.wikia-bar.wikia-bar-anon {
-		background-image: none;
+		background-image: url(/extensions/wikia/WikiaSeasons/images/wikiabar-lights.png); /* base64 */
+		background-position: 50%;
+		background-repeat: no-repeat;
 	}
 }
