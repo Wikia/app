@@ -225,5 +225,5 @@ define('sections', ['events'], function(ev){
 				}
 			}
 		}
-	}
+	};
 });
