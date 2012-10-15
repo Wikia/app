@@ -125,8 +125,14 @@ class WikiaStructuredDataTest extends WikiaBaseTest {
 		$a = $sdElement->toArray();
 		$description = $this->getPropertyBySchemaName($a, 'schema:description' );
 
-		$this->assertEquals( $description['type'], 'rdf:Literal' );
+		$this->assertEquals( $description['type']['name'], 'rdf:Literal' );
 		$this->assertEquals( $description['label'], 'description' );
+
+		$characterIn = $this->getPropertyBySchemaName($a, 'wikia:characterIn' );
+		//$this->assertEquals( $characterIn['type'], 'rdf:Literal' );
+		$this->assertTrue( is_array( $characterIn[ 'value' ] ) );
+
+		//print_r( $characterIn );
 
 	}
 }
