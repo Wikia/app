@@ -125,15 +125,50 @@ define('sections', ['events'], function(ev){
 		});
 	}
 
-	function toggle(h2){
-		if(h2 && isOpen(h2)){
-			close(h2);
-		}else{
-			open(h2);
+	function toggle(h2, scroll){
+		if(h2){
+			if(isOpen(h2)){
+				close(h2);
+			}else{
+				open(h2, scroll);
+			}
 		}
 	}
 
-	function open(h2) {
+	function find(heading){
+		if(typeof heading === 'string') {
+			heading = d.getElementById(heading.replace(/ /, '_'));
+		}
+
+		if(heading) {
+			var h2 = heading;
+
+			//find in what section is the header
+			while(h2.nodeName !== 'H2'){
+				h2 = (heading.parentNode.className.indexOf('artSec') > -1) ? h2.parentNode.previousElementSibling : h2.parentNode;
+			}
+
+			return [heading, h2];
+		}
+
+		return [];
+	}
+
+	function scrollTo(header){
+		//scroll header into view
+		//if the page is long that is the way I found it reliable
+		//without calling it like that android sometimes did not scroll at all
+		//and iOS sometimes scrolled to a wrong place
+		header.scrollIntoView();
+		setTimeout(function(){
+			header.scrollIntoView();
+		}, 50);
+	}
+
+	function open(id, scroll) {
+		var headers = find(id),
+			h2 = headers[1];
+
 		if(h2 && !isOpen(h2)) {
 			var next = h2.nextElementSibling;
 
@@ -141,11 +176,16 @@ define('sections', ['events'], function(ev){
 			next.className += OPENCLASS;
 
 			fireEvent('open', next);
-			//track(['section', 'open']);
+		}
+
+		if(scroll && headers[0]){
+			scrollTo(headers[0]);
 		}
 	}
 
-	function close(h2) {
+	function close(id) {
+		var h2 = find(id)[1];
+
 		if(h2 && isOpen(h2)) {
 			var next = h2.nextElementSibling;
 
@@ -153,7 +193,6 @@ define('sections', ['events'], function(ev){
 			next.className = next.className.replace(OPENCLASS, '');
 
 			fireEvent('close', next);
-			//track(['section', 'close']);
 		}
 	}
 
