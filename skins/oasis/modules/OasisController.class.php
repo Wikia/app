@@ -4,8 +4,6 @@ class OasisController extends WikiaController {
 
 	private static $extraBodyClasses = array();
 
-	private $printStyles;
-
 	/* @var AssetsManager */
 	private $assetsManager;
 
@@ -25,17 +23,18 @@ class OasisController extends WikiaController {
 	public function init() {
 		wfProfileIn(__METHOD__);
 		$skinVars = $this->app->getSkinTemplateObj()->data;
+
 		$this->assetsManager = F::build( 'AssetsManager', array(), 'getInstance' );
-		$this->pagetitle = $skinVars['pagetitle'];
-		$this->displaytitle = $skinVars['displaytitle'];
-		$this->mimetype = $skinVars['mimetype'];
+		$this->pageTitle = $skinVars['pagetitle'];
+		$this->displayTitle = $skinVars['displaytitle'];
+		$this->mimeType = $skinVars['mimetype'];
 		$this->charset = $skinVars['charset'];
 		$this->dir = $skinVars['dir'];
 		$this->lang = $skinVars['lang'];
-		$this->pageclass = $skinVars['pageclass'];
-		$this->pagecss = $skinVars['pagecss'];
-		$this->skinnameclass = $skinVars['skinnameclass'];
-		$this->bottomscripts = $skinVars['bottomscripts'];
+		$this->pageClass = $skinVars['pageclass'];
+		$this->pageCss = $skinVars['pagecss'];
+		$this->skinNameClass = $skinVars['skinnameclass'];
+		$this->bottomScripts = $skinVars['bottomscripts'];
 		// initialize variables
 		$this->comScore = null;
 		$this->quantServe = null;
@@ -113,8 +112,6 @@ class OasisController extends WikiaController {
 			)
 		);
 
-		$this->showAllowRobotsMetaTag = !$this->wg->DevelEnvironment;
-
 		$this->isUserLoggedIn = $wgUser->isLoggedIn();
 
 		// TODO: move to CreateNewWiki extension - this code should use a hook
@@ -140,18 +137,19 @@ class OasisController extends WikiaController {
 			$this->body = !empty($params['body']) ? $params['body'] : F::app()->renderView('Body', 'Index');
 			wfProfileOut(__METHOD__ . ' - renderBody');
 		}
+
 		// get microdata for body tag
 		$this->itemType = self::getItemType();
 
 		$skin = RequestContext::getMain()->getSkin(); /* @var $skin WikiaSkin */
 		// this is bad but some extensions could have added some scripts to bottom queue
 		// todo: make it not run twice during each request
-		$this->bottomscripts = $skin->bottomScripts();
+		$this->bottomScripts = $skin->bottomScripts();
 
 		// generate list of CSS classes for <body> tag
-		$bodyClasses = array('mediawiki', $this->dir, $this->pageclass);
+		$bodyClasses = array('mediawiki', $this->dir, $this->pageClass);
 		$bodyClasses = array_merge($bodyClasses, self::$extraBodyClasses);
-		$bodyClasses[] = $this->skinnameclass;
+		$bodyClasses[] = $this->skinNameClass;
 
 		if(Wikia::isMainPage()) {
 			$bodyClasses[] = 'mainpage';
@@ -175,21 +173,18 @@ class OasisController extends WikiaController {
 
 		$this->bodyClasses = $bodyClasses;
 
-    	//reset, this ensures no duplication in CSS links
-		$this->printStyles = array();
-		$this->csslinks = '';
-
 		if (is_array($scssPackages)) {
 			foreach ($scssPackages as $package) {
 				$wgOut->addStyle($this->assetsManager->getSassCommonURL('extensions/'.$package));
 			}
 		}
 
+    	// Reset (this ensures no duplication in CSS links)
+		$this->cssLinks = '';
+		$this->cssPrintLinks = '';
+
 		foreach ( $skin->getStyles() as $s ) {
-			// Remove the non-inlined media="print" CSS from the normal array and add it to another so that it can be loaded asynchronously at the bottom of the page.
-			if ( !empty( $s['url'] ) && stripos($s['tag'], 'media="print"')!== false) {
-				$this->printStyles[] = $s['url'];
-			} else if ( !empty($s['url']) ) {
+			if ( !empty($s['url']) ) {
 				$tag = $s['tag'];
 				if ( !empty( $wgAllInOne ) ) {
 					$url = $this->minifySingleAsset($s['url']);
@@ -197,34 +192,36 @@ class OasisController extends WikiaController {
 						$tag = str_replace($s['url'],$url,$tag);
 					}
 				}
-				$this->csslinks .= $tag;
+
+				// Print styles will be loaded separately at the bottom of the page
+				if ( stripos($tag, 'media="print"') !== false ) {
+					$this->cssPrintLinks .= $tag;
+
+				} else {
+					$this->cssLinks .= $tag;
+				}
 			} else {
-				$this->csslinks .= $s['tag'];
+				$this->cssLinks .= $s['tag'];
 			}
 		}
 
-		$this->headlinks = $wgOut->getHeadLinks();
-		$this->headitems = $skin->getHeadItems();
+		$this->headLinks = $wgOut->getHeadLinks();
+		$this->headItems = $skin->getHeadItems();
 
-		$this->pagetitle = htmlspecialchars( $this->pagetitle );
-		$this->displaytitle = htmlspecialchars( $this->displaytitle );
-		$this->mimetype = htmlspecialchars( $this->mimetype );
+		$this->pageTitle = htmlspecialchars( $this->pageTitle );
+		$this->displayTitle = htmlspecialchars( $this->displayTitle );
+		$this->mimeType = htmlspecialchars( $this->mimeType );
 		$this->charset = htmlspecialchars( $this->charset );
 
 		wfProfileOut(__METHOD__ . ' - skin Operations');
 
 		$this->topScripts = $wgOut->topScripts;
 
-		// printable CSS (to be added at the bottom of the page)
-		// FIXME: move to renderPrintCSS() method
-		$this->printableCss = $this->renderPrintCSS(); // The HTML for the CSS links (whether async or not).
-
 		if (is_array($jsPackages)) {
 			foreach ($jsPackages as $package) {
 				$wgOut->addScriptFile($this->wg->ExtensionsPath . '/' . $package);
 			}
 		}
-
 
 		// setup loading of JS/CSS using WSL (WikiaScriptLoader)
 		$this->loadJs();
@@ -263,42 +260,15 @@ class OasisController extends WikiaController {
 			$this->ivw = AnalyticsEngine::track('IVW', AnalyticsEngine::EVENT_PAGEVIEW);
 		}
 
-		$this->mainsassfile = 'skins/oasis/css/oasis.scss';
+		$this->mainSassFile = 'skins/oasis/css/oasis.scss';
 
 		if (!empty($wgEnableAdminDashboardExt) && AdminDashboardLogic::displayAdminDashboard($this->app, $wgTitle)) {
 			$this->displayAdminDashboard = true;
 		} else {
 			$this->displayAdminDashboard = false;
 		}
+
 		wfProfileOut(__METHOD__);
-	} // end executeIndex()
-
-	/**
-	 * @author Sean Colombo. Macbre
-	 */
-	private function renderPrintCSS() {
-		global $wgRequest;
-		wfProfileIn( __METHOD__ );
-
-		// add SASS for printable version of Oasis
-		$this->printStyles[] = $this->assetsManager->getSassCommonURL( 'skins/oasis/css/print.scss' );
-
-		// render the output
-		$ret = '';
-
-		if ($wgRequest->getVal('printable')) {
-			// render <link> tags for print preview
-			foreach ( $this->printStyles as $url ) {
-				$ret .= "<link rel=\"stylesheet\" href=\"{$url}\" />\n";
-			}
-		} else {
-			// async download
-			$cssReferences = json_encode( $this->printStyles );
-			$ret = Html::inlineScript("setTimeout(function(){wsl.loadCSS({$cssReferences}, 'print')}, 100)");
-		}
-
-		wfProfileOut( __METHOD__ );
-		return $ret;
 	}
 
 	private function rewriteJSlinks( $link ) {
@@ -408,21 +378,6 @@ class OasisController extends WikiaController {
 
 			$this->wikiaScriptLoader .= "<script type=\"$wgJsMimeType\" src=\"$blockingFile\"></script>";
 		}
-
-		/*
-		// gen=js is no longer used in 1.19 - @author: wladek
-		// TODO: remove after confirmation
-
-		// BugId:20929 - tell (or trick) varnish to store the latest revisions of Wikia.js and Common.js.
-		$oTitleWikiaJs	= Title::newFromText( 'Wikia.js',  NS_MEDIAWIKI );
-		$oTitleCommonJs	= Title::newFromText( 'Common.js', NS_MEDIAWIKI );
-		$iMaxRev = max( (int) $oTitleWikiaJs->getLatestRevID(), (int) $oTitleCommonJs->getLatestRevID() );
-		unset( $oTitleWikiaJs, $oTitleCommonJs );
-
-		// Load SiteJS / common.js separately, after all other js files (moved here from oasis_shared_js)
-		$siteJS = Title::newFromText('-')->getFullURL('action=raw&smaxage=86400&maxrev=' . $iMaxRev . '&gen=js&useskin=oasis');
-		$jsReferences[] = ( !empty( $wgSpeedBox ) && !empty( $wgDevelEnvironment ) ) ? $this->rewriteJSlinks( $siteJS ) : $siteJS;
-		*/
 
 		// move JS files added to OutputPage to list of files to be loaded using WSL
 		$scripts = RequestContext::getMain()->getSkin()->getScripts();
@@ -538,9 +493,9 @@ EOT;
 		// experiment: squeeze calls to mw.loader.load() to make fewer HTTP requests
 		if ($this->jsAtBottom) {
 			$jsFiles = $this->jsFiles;
-			$bottomScripts = $this->bottomscripts;
+			$bottomScripts = $this->bottomScripts;
 			$this->squeezeMediawikiLoad($jsFiles,$bottomScripts);
-			$this->bottomscripts = $bottomScripts;
+			$this->bottomScripts = $bottomScripts;
 			$this->jsFiles = $jsFiles;
 		}
 

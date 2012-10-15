@@ -1,11 +1,12 @@
-// merge Oasis CSS with CSS files from MW core
+// Legacy
 @import "/skins/common/shared.css";
 @import "/skins/wikia/shared.css";
 
+// Layout
 @import "core/layout";
-@import "wikiagrid";	// Grid layout
+@import "wikiagrid";
 
-// Mixins (http://sass-lang.com/docs/yardoc/file.SASS_REFERENCE.html#mixins) These files are in oasis/css/mixins/(name).scss //
+// Mixins
 @import "mixins/bodytext";
 @import "mixins/border-radius";
 @import "mixins/border-opacity";
@@ -17,12 +18,10 @@
 @import "mixins/opacity";
 @import "mixins/wordmark";
 
-// Oasis Features //
+// Core
 @import "core/buttons";
 @import "core/ads";
 @import "core/typography";
-
-// Oasis Core //
 @import "core/sprite";
 @import "core/color";
 @import "core/reset";
@@ -37,7 +36,7 @@
 @import "core/WikiHeaderV2";
 @import "core/PageHeader";
 @import "core/Search";
-@import "core/article"; //MediaWiki article formatting (monobook.css replacement)
+@import "core/article";
 @import "core/tablepager";
 @import "core/Footer";
 @import "core/Notifications";
@@ -50,13 +49,13 @@
 @import "core/SharingToolbar";
 @import "core/GlobalNotification";
 @import "core/WikiaBar";
+@import "core/jquery.ui.autocomplete"; // TODO: load on demand
+
+// Bootstrap
 @import "resources/wikia/libraries/bootstrap/tooltip";
 @import "resources/wikia/libraries/bootstrap/popover";
 
-// styling for jQuery UI autocomplete
-@import "core/jquery.ui.autocomplete";
-
-// Ubiquitous modules that should be combined here to save space. Each file should contain a comment w/its name so we can see what was packaged. //
+// Extensions (only include here if used on the majority of page views!)
 @import "modules/LatestPhotos";
 @import "extensions/wikia/Blogs/css/oasis";
 @import "extensions/wikia/RelatedPages/RelatedPages";
@@ -64,16 +63,14 @@
 @import "extensions/wikia/UserLogin/css/UserLoginGlobal";
 @import "extensions/wikia/VideoHandlers/css/VideoHandlers";
 @import "extensions/wikia/WikiaStyleGuide/css/Form";
-
-// CSS files need leading slash
+@import "extensions/wikia/WikiaPhotoGallery/css/slideshow"; // TODO: load on demand
+@import "extensions/wikia/WikiaBar/css/WikiaBar";
+@import "extensions/wikia/WikiaSeasons/css/WikiaSeasonsBar";
 @import "/extensions/wikia/CreatePage/css/CreatePage.css";
 @import "/extensions/FBConnect/css/fbModal.css";
 @import "/extensions/wikia/AjaxLogin/AjaxLogin.css";
 
-// WikiaPhotoGallery - slideshows slidding (BugId:1296)
-// TODO: load on demand using JSView
-@import "extensions/wikia/WikiaPhotoGallery/css/slideshow";
-
-// WikiaBar - sitewide
-@import "extensions/wikia/WikiaBar/css/WikiaBar.scss";
-@import "extensions/wikia/WikiaSeasons/css/WikiaSeasonsBar.scss";
+// Print
+@media print {
+	@import "print";
+}
