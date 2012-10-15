@@ -1,1 +1,0 @@
-<div class="WikiaSeasonsBar"></div>

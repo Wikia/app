@@ -15,9 +15,7 @@
 
 <?= empty($wg->GlobalHeaderFullWidth) ? '' : F::app()->renderView('Ad', 'Top') ?>
 
-<?php if( !empty($wg->EnableWikiaSeasonsExt) ): ?>
-	<?= F::app()->renderView('WikiaSeasons', 'renderBar', array()); ?>
-<?php endif; ?>
+<?= empty($wg->WikiaSeasonsPencilUnit) ? '' : F::app()->renderView('WikiaSeasons', 'pencilUnit', array()); ?>
 
 <section id="WikiaPage" class="WikiaPage<?= empty( $wg->OasisNavV2 ) ? '' : ' V2' ?><?= !empty($isGridLayoutEnabled) ? ' WikiaGrid' : '' ?>">
 	<div id="WikiaPageBackground" class="WikiaPageBackground"></div>
