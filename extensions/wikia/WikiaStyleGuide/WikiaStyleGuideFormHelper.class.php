@@ -1,7 +1,7 @@
 <?php
 class WikiaStyleGuideFormHelper {
 	private static $formSupportedTopLevelAttributes = array( 'action', 'class', 'id', 'method', 'name' );
-	private static $inputSupportedTopLevelAttributes = array( 'id', 'name', 'value' );
+	private static $inputSupportedTopLevelAttributes = array( 'class', 'id', 'name', 'value' );
 	private static $inputTypesToWrapWithLabel = array( 'checkbox', 'radio' );
 
 	public static function getAttributes( $target, $source, $attributes ) {
