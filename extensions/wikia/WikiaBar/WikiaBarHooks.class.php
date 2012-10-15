@@ -57,12 +57,6 @@ class WikiaBarHooks {
 		return true;
 	}
 
-	public static function onWikiaAssetsPackages(&$out, &$jsPackages, &$scssPackages) {
-		$jsPackages[] = 'wikia/WikiaBar/js/WikiaBar.js';
-		$scssPackages[] = 'wikia/WikiaBar/css/WikiaBar.scss';
-		return true;
-	}
-
 	public static function onMakeGlobalVariablesScript(Array &$vars) {
 		wfProfileIn(__METHOD__);
 

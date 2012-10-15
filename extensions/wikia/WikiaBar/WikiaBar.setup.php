@@ -26,7 +26,6 @@ $app->registerClass('WikiaBarFailsafeDataValidator', $dir . 'models/WikiaBarFail
 /**
  * hooks
  */
-$app->registerHook('WikiaAssetsPackages', 'WikiaBarHooks', 'onWikiaAssetsPackages');
 $app->registerHook('MakeGlobalVariablesScript', 'WikiaBarHooks', 'onMakeGlobalVariablesScript');
 $app->registerHook('WikiFactoryChanged', 'WikiaBarHooks', 'onWikiFactoryVarChanged');
 $app->registerHook('WikiFactoryVarSave::AfterErrorDetection', 'WikiaBarHooks', 'onWFAfterErrorDetection');

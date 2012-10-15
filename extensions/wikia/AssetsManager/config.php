@@ -125,6 +125,7 @@ $config['oasis_noads_extensions_js'] = array(
 		'//skins/oasis/js/GlobalModal.js',  // This needs to load last after all common extensions, please keep this last.
 		'//extensions/wikia/UserLogin/js/UserLogin.js',
 		'//extensions/wikia/AdEngine/js/Krux.run.js', // Needs to load after Krux.js, jQuery and AdEngine2.run.js
+		'//extensions/wikia/WikiaBar/js/WikiaBar.js', // WikiaBar is enabled sitewide
 	)
 );
 
