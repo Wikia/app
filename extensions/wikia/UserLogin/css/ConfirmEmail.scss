@@ -1,0 +1,52 @@
+@import "../../../../skins/oasis/css/mixins/border-radius";
+@import "../../../../skins/oasis/css/core/color";
+
+.ConfirmEmail {
+	margin-bottom: 200px;
+	width: 500px;
+	p {
+		margin: 40px 0 0;
+	}
+	.email-form {
+		display: none;
+		left: -7px;
+		margin-top: 20px;
+		position: relative;
+		&.show {
+			display: block;
+		}
+		input[name=email] {
+			width: 200px;
+		}
+	}
+	.general-messaging {
+		font-size: 16px;
+		margin: 40px 0 15px;
+		p {
+			margin: 0;
+		}
+	}
+	.change-email-msg {
+		position: relative;
+		.email-tooltip {
+			@include border-radius(6px);
+			background-color: $color-buttons;
+			color: white;
+			cursor: default;
+			display: block;
+			font-size: 10px;
+			height: 12px;
+			line-height: 12px;
+			position: absolute;
+			right: -13px;
+			text-align: center;
+			top: -4px;
+			width: 12px;
+		}
+	}
+	.ResendConfirmation {
+		.input-group {
+			padding: 0;
+		}
+	}
+}

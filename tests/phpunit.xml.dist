@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit bootstrap="bootstrap.php"
+         backupGlobals="false"
+         backupStaticAttributes="false"
+         colors="false"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         stopOnFailure="false"
+         syntaxCheck="true"
+         processIsolation="false">
+         <testsuite name="Wikia Test Suite">
+            <directory>./unit/</directory>
+         </testsuite>
+         <testsuite name="Wikia Includes Test Suite">
+            <directory>../includes/wikia/</directory>
+         </testsuite>
+         <testsuite name="Facebook Connect Extension">
+            <directory>../extensions/FBConnect/</directory>
+         </testsuite>
+         <testsuite name="Wikia Extensions Test Suite">
+            <directory>../extensions/wikia/</directory>
+         </testsuite>
+         <testsuite name="Wikia Maintenance Test Suite">
+            <directory>../maintenance/wikia/tests/</directory>
+         </testsuite>
+         <!-- DO NOT run MW tests. These tests are dropping db tables, including users -->
+         <!--
+         <testsuite name="MediaWiki Test Suite">
+            <directory>../maintenance/tests/</directory>
+         </testsuite>
+         -->
+         <groups>
+             <exclude>
+                 <group>Broken</group>
+                 <group>Stub</group>
+             </exclude>
+         </groups>
+         <filter>
+             <blacklist>
+                 <directory>../bin</directory>
+                 <directory>../config</directory>
+                 <directory>../docs</directory>
+                 <directory>../images</directory>
+                 <directory>../languages</directory>
+                 <directory>../lib</directory>
+                 <directory>../maintenance</directory>
+                 <directory>../math</directory>
+                 <directory>../serialized</directory>
+                 <directory>../static</directory>
+                 <directory>../t</directory>
+                 <directory>../tests</directory>
+             </blacklist>
+         </filter>
+</phpunit>

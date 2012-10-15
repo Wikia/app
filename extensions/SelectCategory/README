@@ -1,0 +1,111 @@
+--------------------------------------------------------------------------
+README for the CategoryTree extension
+Copyright © 2006 by Leon Weber & Manuel Schneider
+Licenses: GNU General Public Licence (GPL)
+          GNU Free Documentation License (GFDL)
+--------------------------------------------------------------------------
+
+The SelectCategory extensions provides three functions:
+- It shows a list of all categories (unless a custom root category is con-
+  figured) in their hierarchical structure on the edit page.
+
+- It strips all categories linked within a page upon editing and selects 
+  them in the category list list.
+
+- It adds selected categories from the list to the text body of the page
+  on saving.
+
+
+INSTALLING
+--------------------------------------------------------------------------
+
+Copy the SelectCategory directory into the extensions folder of your
+MediaWiki installation. Then add the following lines to your
+LocalSettings.php file (near the end):
+
+  require_once( 'extensions/SelectCategory/SelectCategory.php' );
+
+PARAMETERS
+--------------------------------------------------------------------------
+
+$wgSelectCategoryNamespaces
+ - Defines in which namespaces the Extension
+  should be active. All namespaces are already predefined in the array. Set
+  a specific namespace to true to enable or to false to disable the extension.
+  Active per default are: Media, Main, Project, Image, Help, Category.
+ - Example
+  $wgSelectCategoryNamespaces[NS_PROJECT] = false;
+  $wgSelectCategoryNamespaces[NS_CATEGORY] = false;
+ - Or
+  $wgSelectCategoryNamespaces     = array(
+       NS_MEDIA                => true,
+       NS_MAIN                 => true,
+       NS_TALK                 => false,
+       NS_USER                 => false,
+       NS_USER_TALK            => false,
+       NS_PROJECT              => true,
+       NS_PROJECT_TALK         => false,
+       NS_IMAGE                => true,
+       NS_IMAGE_TALK           => false,
+       NS_MEDIAWIKI            => false,
+       NS_MEDIAWIKI_TALK       => false,
+       NS_TEMPLATE             => false,
+       NS_TEMPLATE_TALK        => false,
+       NS_HELP                 => true,
+       NS_HELP_TALK            => false,
+       NS_CATEGORY             => true,
+       NS_CATEGORY_TALK        => false
+  );
+
+$wgSelectCategoryRoot
+ - Set a specific root category depending the namespace. Only categories within
+  this root will be displayed when editing a page in a certain namespace.
+  Useful on big wiki sites to keep the database load down.
+  If not set (default) the extension searches for all root categories and
+  displays them including all children. 
+ - Example
+  $wgSelectCategoryRoot = array(
+       NS_MEDIA                => false,
+       NS_MAIN                 => "My Article Root Category",
+       NS_TALK                 => false,
+       NS_USER                 => false,
+       NS_USER_TALK            => false,
+       NS_PROJECT              => false,
+       NS_PROJECT_TALK         => false,
+       NS_IMAGE                => "My Image Root Category",
+       NS_IMAGE_TALK           => false,
+       NS_MEDIAWIKI            => false,
+       NS_MEDIAWIKI_TALK       => false,
+       NS_TEMPLATE             => false,
+       NS_TEMPLATE_TALK        => false,
+       NS_HELP                 => false,
+       NS_HELP_TALK            => false,
+       NS_CATEGORY             => false,
+       NS_CATEGORY_TALK        => false
+  );
+
+$wgSelectCategoryEnableSubpages
+ - Defines if the extension should be active when editing subpages.
+   Default is true, as subpages are disabled in MediaWiki by default.
+ - Example:
+   $wgSelectCategoryEnableSubpages = false;
+
+APPEARANCE
+--------------------------------------------------------------------------
+
+To customize the design of the select box use the CSS id "SelectCategoryBox"
+and attach your own settings to [[MediaWiki:Monobook.css]] or your users
+[[User:USERNAME/Monobook.css]].
+
+BUGS, CONTACT
+--------------------------------------------------------------------------
+
+For bug reports or feature requests file a bug on bugzilla.wikimedia.org
+under the product "MediaWiki extensions" and its component "SelectCategory".
+
+Alternatively you can reach us on 
+- Leon Weber:       <leon@leonweber.de>
+- Manuel Schneider: <manuel.schneider@wikimedia.ch>
+
+The download and description page of this extension can be found at:
+http://www.mediawiki.org/wiki/Extension:SelectCategory

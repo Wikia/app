@@ -1,0 +1,95 @@
+.es-contextView {
+	position: absolute;
+	z-index: 2;
+}
+
+.es-contextView-icon {
+	position: absolute;
+	background-repeat: no-repeat;
+	width: 15px;
+	height: 15px;
+	display: none;
+	cursor: pointer;
+	border: solid 1px #cccccc;
+	-webkit-border-radius: 1em;
+	-moz-border-radius: 1em;
+	-o-border-radius: 1em;
+	border-radius: 1em;
+	background-color: white;
+	-webkit-box-shadow: 0 0.25em 1em 0 rgba(0,0,0,0.25);
+	-moz-box-shadow: 0 0.25em 1em 0 rgba(0,0,0,0.25);
+	box-shadow: 0 0.25em 1em 0 rgba(0,0,0,0.25);
+	z-index: 4;
+}
+
+.es-contextView-position-start .es-contextView-icon {
+	top: -12px;
+	left: -8px;
+}
+
+.es-contextView-position-end .es-contextView-icon {
+	top: -6px;
+	left: -8px;
+}
+
+.es-contextView-position-above .es-contextView-icon {
+	background-image: url(images/arrow-up.png);
+	background-position: 4px 4px;
+}
+
+.es-contextView-position-below .es-contextView-icon {
+	background-image: url(images/arrow-down.png);
+	background-position: 4px 5px;
+}
+.es-contextView-position-above .es-contextView-icon:hover,
+.es-contextView-position-below .es-contextView-icon:hover {
+	border-color: #b3d6f6;
+}
+
+.es-contextView-position-above .es-menuView {
+	bottom: -4px;
+}
+
+.es-contextView-position-below .es-menuView {
+	top: 2px;
+}
+
+.es-contextView-inspectors {
+	position: absolute;	
+}
+
+.es-contextView-position-above .es-inspector {
+	bottom: -4px;
+}
+
+.es-contextView-position-below .es-inspector {
+	top: 2px;
+}
+
+.es-contextView-panels {
+	position: absolute;
+	border: solid 1px #cccccc;
+	-webkit-border-radius: 0.25em;
+	-moz-border-radius: 0.25em;
+	-o-border-radius: 0.25em;
+	border-radius: 0.25em;
+	background-color: rgba(255,255,255,0.95);
+	-webkit-box-shadow: 0 0.25em 1em 0 rgba(0,0,0,0.25);
+	-moz-box-shadow: 0 0.25em 1em 0 rgba(0,0,0,0.25);
+	box-shadow: 0 0.25em 1em 0 rgba(0,0,0,0.25);
+	padding: 0.33em 0;
+}
+
+.es-contextView-panel {
+	display: none;
+	padding: 1em;
+}
+
+.es-contextView-toolbar {
+	padding: 0.33em 0.66em;
+	white-space: nowrap;
+}
+
+.es-contextView .es-toolbarGroup {
+	border: none;
+}

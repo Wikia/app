@@ -1,0 +1,142 @@
+# Force the test runner to ensure the extension is loaded
+!! hooks
+poem
+!! endhooks
+
+#Regression tests for existing functionality, to ensure nothing was broken.
+!! test
+<poem>
+!! input
+<poem>
+this
+is
+a
+test
+</poem>
+!! result
+<div class="poem">
+<p>this<br />
+is<br />
+a<br />
+test
+</p>
+</div>
+
+!! end
+
+!!test
+  <poem> with recursive parsing
+!!input
+<poem>
+this ''is'' a '''test'''
+</poem>
+!! result
+<div class="poem">
+<p>this <i>is</i> a <b>test</b>
+</p>
+</div>
+
+!!end
+
+
+!!test
+  <poem> with leading whitespace
+!!input
+<poem>
+
+   test
+
+</poem>
+!! result
+<div class="poem">
+<p><br />
+&#160;&#160;&#160;test<br />
+</p>
+</div>
+
+!!end
+
+!!test
+Horizontal rule
+!!input
+<poem>
+some
+-----
+text
+</poem>
+!!result
+<div class="poem">
+<p>some<br />
+</p>
+<hr /><br />
+<p>text
+</p>
+</div>
+
+!!end
+
+#test for new poem/nowiki feature; should fail without new enhancement.
+!! test 2
+example of <nowiki> without <poem>
+!!options
+disabled
+!! input
+<nowiki>
+this
+is
+a
+test
+</nowiki>
+!! result
+<p>
+this
+is
+a
+test
+
+</p>
+!! end
+
+!! test
+  nested <poem><nowiki>
+!! input
+<poem><nowiki>
+this
+is
+a
+test
+</nowiki></poem>
+!! result
+<div class="poem">
+<p><br />
+this<br />
+is<br />
+a<br />
+test<br />
+
+</p>
+</div>
+
+!!end
+
+!! test 5
+  nested <poem><nowiki> with formatting
+!! input
+<poem><nowiki>
+this
+'''is'''
+a
+test
+</nowiki></poem>
+!! result
+<div class="poem">
+<p><br />
+this<br />
+'''is'''<br />
+a<br />
+test<br />
+
+</p>
+</div>
+
+!! end

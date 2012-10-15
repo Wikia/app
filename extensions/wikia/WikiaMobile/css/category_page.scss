@@ -1,0 +1,154 @@
+@import 'variables.scss';
+
+@import 'mixins/linear-gradient.scss';
+@import 'mixins/box-shadow.scss';
+
+#wkCatExh {
+	margin: 20px auto;
+	display: table;
+	text-align: center;
+}
+
+.wkExhItm {
+	position: relative;
+	display: inline-block;
+	width: 135px;
+	height: 135px;
+	margin: 5px;
+	text-align: left;
+
+	img {
+		width: 100%;
+		height: 100%;
+
+		pointer-events: none;
+	}
+
+	a {
+		display: block;
+		height: 100%;
+	}
+}
+
+.exhPlcHld {
+	width: 135px;
+	height: 135px;
+	background-color: $link-color;
+	background-image:  url('/extensions/wikia/WikiaMobile/images/exhibition-placeholder.png'); /* base64 */
+	display: inline-block;
+}
+
+.wkExhTtl {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	padding: 5px;
+	background-color: rgba(0,0,0,.6);
+	color: white;
+	font-size: small;
+	line-height: 15px;
+
+	pointer-events: none;
+
+	span {
+		height: 30px;
+		display: table-cell;
+		vertical-align: bottom
+	}
+
+}
+
+.alphaSec {
+	header {
+		line-height: 50px;
+	}
+	
+	.cnt {
+		display: block;
+		position: absolute;
+		bottom: 3px;
+		line-height: 15px;
+		left: 20px;
+	}
+
+	li {
+		&.sub {
+			//to remove redundancy image comes from ui.scss
+			background-origin: content-box;
+			padding-right: 10px;
+		}
+	}
+}
+
+.pagMore, .pagLess {
+	display: none;
+	background-color: rgb(240,240,240);
+	width: 100%;
+	line-height: 50px;
+	text-align: center;
+
+	&.visible {
+		display: block;
+	}
+
+	&.active {
+		@include box-shadow(inset 0 30px 20px -20px rgba(0,0,0,.4));
+		background-color: $border-color;
+		padding: 5px 0;
+		-webkit-transition: background-color .5s;
+		-moz-transition: background-color .5s;
+		-o-transition: background-color .5s;
+		transition: background-color .5s;
+
+		//hide the text and make it take no space without adding
+		//yet another wrapping element...
+		color: transparent;
+		line-height: 0;
+		height: 50px;
+	}
+}
+
+#expAll {
+	float: right;
+	
+	&.exp {
+		.expand {
+			display: none;
+		}
+		.collapse{
+			display: block;
+		}
+	}
+	.expand {
+		display: block;
+	}
+	.collapse {
+		display: none;
+	}
+}
+
+#catTtl{
+	font-size: medium;
+	color: $page-text-alternate-color;
+	font-weight: 100;
+	margin-left: 5px;
+}
+
+header {
+	&:after {
+		content: ".";
+		display: block;
+		height: 0;
+		font-size:0;
+		clear: both;
+		visibility:hidden;
+	}
+}
+
+@media screen and (min-width:321px) {
+	.wkExhItm, .exhPlcHld {
+		width: 105px;
+		height: 105px;
+	}
+}

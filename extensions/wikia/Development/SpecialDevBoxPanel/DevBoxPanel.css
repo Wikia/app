@@ -1,0 +1,73 @@
+
+/* For simplicity */
+div.skinKiller {
+	background-color:white;
+	color:black;
+	
+	padding:5px;
+}
+div.skinKiller a{
+	color:#00f;
+}
+
+table td{
+	vertical-align:top;
+}
+
+table.devBoxPanel ul{
+	list-style:none;
+}
+
+table.devBoxPanel li {
+	margin:0;
+	padding:5px;
+	border:1px #000 solid;
+}
+
+table.devBoxPanel li.dbp-alreadyInstalled{
+	background-color:#cfc;
+}
+
+table.devBoxPanel li.dbp-recommended{
+	background-color:#fcc;
+}
+
+table.devBoxPanel li.dbp-available{
+	background-color:#fff;
+}
+
+span.dbp-rightButtons{
+	display:inline;
+	float:right;
+}
+
+table.devbox-settings{
+	border-spacing:0;
+	border-collapse:collapse;
+}
+table.devbox-settings td{
+	padding:5px;
+	border:1px #000 solid;
+}
+table.devbox-settings .odd{
+	background-color:#ddd;
+}
+
+div.devbox-success{
+	border:2px #080 dotted;
+	background-color:#cfc;
+	padding:10px;
+	font-weight:bold;
+}
+div.devbox-error{
+	border:2px #800 dotted;
+	background-color:#fcc;
+	padding:10px;
+	font-weight:bold;
+}
+
+div.attention{
+	background-color:#ff8;
+	padding:5px;
+	border: 2px #000 dotted;
+}

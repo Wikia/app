@@ -1,0 +1,22 @@
+/**
+ * Default styling for jQuery UI autocomplete dropdowns
+ *
+ * TODO: move to jquery.ui.core ResourceLoader module and load on-demand
+ *
+ * @author macbre
+ */
+
+@import "../mixins/menus";
+
+.ui-autocomplete {
+  @include menu-regular;
+  @include border-radius-se(3px);
+  @include border-radius-sw(3px);
+  @include box-shadow(3px, 3px, 6px, darken($color-page, 9%));
+  & > li > a {
+    font-size: 12px;
+    &.ui-state-hover {
+      background: $color-menu-highlight;
+    }
+  }
+}

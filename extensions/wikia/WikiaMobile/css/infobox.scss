@@ -1,0 +1,42 @@
+@import "variables.scss";
+//mixins
+@import "mixins/box-shadow.scss";
+@import "mixins/box-sizing.scss";
+
+#wkMainCnt{
+	table{
+		&.infobox {
+			border: 1px solid $border-color;
+			@include box-shadow($shadow);
+			font-size: small;
+			padding: 8px;
+			max-width: 100%;
+			margin: 10px auto;
+
+			img {
+				max-width: 100%;
+				height: auto;
+			}
+
+			th {
+				text-align: left;
+			}
+
+			td{
+				padding: 0 6px;
+
+				&[colspan='2']{
+					text-align: center;
+					padding: 0;
+
+					b{
+						display: block;
+						width: 100%;
+						margin: 12px 0 15px;
+						border-bottom: 1px solid $border-color;
+					}
+				}
+			}
+		}
+	}
+}

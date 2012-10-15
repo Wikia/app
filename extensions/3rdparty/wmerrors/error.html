@@ -1,0 +1,645 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/2002/REC-xhtml1-20020801/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+ <head>
+  <title>Wikia Error</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="author" content="Adapted from content by Mark Ryan, with translation by many people; see http://meta.Wikimedia.org/wiki/Multilingual_error_messages"/>
+  <meta name="copyright" content="(c) 2005-2007 Mark Ryan and others. Text licensed under the GNU Free Documentation License. http://www.gnu.org/licenses/fdl.txt"/>
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-288915-41");
+pageTracker._trackPageview("/error/BlueScreen");
+pageTracker._trackEvent("error", "BlueScreen");
+} catch(err) {}</script>
+
+  <style type="text/css"><!--
+   body {
+     background-color: #dbe5df;
+	  color: black;
+     font-family: "Gill Sans MT", "Gill Sans", "Trebuchet MS", Helvetica, sans-serif;
+     margin-left: 0px;
+     margin-right: 0px;
+    }
+   .TechnicalStuff {
+     font-style: italic;
+     text-align: center;
+     font-size: 0.8em;
+     padding-bottom: 0.8em;
+    }
+   .BottomStrip {
+     background: #9fbfd8;
+     text-align: center;
+     font-size: 0.85em;
+    }
+   .RightToLeft {
+     direction: rtl;
+    }
+   .Lines {
+     width: 100%;
+     height: 1px;
+     overflow: hidden;
+     font-size: 0.5px;
+    }
+   .ContentArea {
+     background-color: white;
+	  color: black;
+     padding-left: 10%;
+     padding-right: 10%;
+     padding-top: 0.8em;
+     font-size: 1.0em;
+    }
+   a:hover {
+     color: red;
+    }
+   a.BottomLinks {
+     color: #000000;
+     text-decoration: none;
+    }
+   a.BottomLinks:hover {
+     color: red;
+     text-decoration: none;
+    }
+   h1, h2 {
+     margin: 0px;
+     font-size: 1.0em;
+    }
+   h3.LanguageHeading {
+     font-weight: bold
+    }
+   #ErrorTitleDiv {
+     background: #9fbfd8;
+     font-size: 1.2em;
+     font-weight: bold;
+     text-align: center;
+    }
+   #FoundationNameDiv {
+     background: #dbe5df;
+     font-size: 1.5em;
+     font-family: "Gill Sans MT", "Gill Sans", Helvetica, Humanist, sans-serif;
+     font-weight: bold;
+     text-transform: uppercase;
+     text-align: center;
+     width: 100%;
+     padding-top:0.8em;
+    }
+   #TopLinks {
+     text-align: center;
+     font-size: 0.8em
+    }
+   -->
+  </style>
+
+  <script type="text/javascript"><!-- Begin
+
+   // The first column of this array is for the local language name of Wikia
+   // ('Wikia' should be used for all Latin-based languages)
+   // The second column of the array is the localised language word for 'Error'.
+   var LanguageDetails = new Array();
+   LanguageDetails['cs'] = new Array( "Wikia", "Chyba" );
+   LanguageDetails['da'] = new Array( "Wikia", "Fejl" );
+   LanguageDetails['de'] = new Array( "Wikia", "Fehler" );
+   LanguageDetails['en'] = new Array( "Wikia", "Error" );
+   LanguageDetails['es'] = new Array( "Wikia", "Error" );
+   LanguageDetails['et'] = new Array( "Wikia", "Viga" );
+   LanguageDetails['fi'] = new Array( "Wikia", "Virhe" );
+   LanguageDetails['fr'] = new Array( "Wikia", "Erreur" );
+   LanguageDetails['id'] = new Array( "Wikia", "Error" );
+   LanguageDetails['it'] = new Array( "Wikia", "Errore" );
+   LanguageDetails['no'] = new Array( "Wikia", "Feil" );
+   LanguageDetails['nl'] = new Array( "Wikia", "Fout" );
+   LanguageDetails['pl'] = new Array( "Wikia", "Błąd" );
+   LanguageDetails['pt'] = new Array( "Wikia", "Erro" );
+   LanguageDetails['ro'] = new Array( "Wikia", "Eroare" );
+   LanguageDetails['ru'] = new Array( "Wikia", "Ошибка" );
+   LanguageDetails['sv'] = new Array( "Wikia", "Fel" );
+
+   function ShowLanguage(WhichLanguage){
+
+     // Set the localised language version of the Wikia heading and page title
+     document.getElementById('FoundationName').innerHTML = LanguageDetails[WhichLanguage][0]
+     document.title = LanguageDetails[WhichLanguage][1] + ' - ' + LanguageDetails[WhichLanguage][0]
+
+     // Set the localised language version of the heading word for 'error'
+     document.getElementById('ErrorName').innerHTML = LanguageDetails[WhichLanguage][1]
+
+     for (var LanguageAbbr in LanguageDetails) {
+
+      // The following arrangement attempts to minimise the number of document modifications made when switching languages
+
+      if (LanguageAbbr != WhichLanguage && document.getElementById(LanguageAbbr).style.display == '') {
+        // This bit kicks in for each inactive language during the initial page collapse, and on a language when switching away from that language
+        document.getElementById(LanguageAbbr).style.display = 'none' // hide the inactive language section
+        document.getElementById(LanguageAbbr + '_link').style.fontWeight = '' //unbolden its language link
+        document.getElementById(LanguageAbbr + '_head').style.display = 'none' // hide its language heading
+       }
+      else if (LanguageAbbr == WhichLanguage && document.getElementById(LanguageAbbr).style.display == 'none') {
+        // This bit kicks in for the new active language only when switching to it from a different language (i.e. not during initial page collapse)
+        document.getElementById(WhichLanguage).style.display = '' // show the active language section
+        document.getElementById(WhichLanguage + '_link').style.fontWeight = 'bold' // bolden the active language link
+       }
+      else if (LanguageAbbr == WhichLanguage && document.getElementById(LanguageAbbr).style.display == '') {
+        // This bit kicks in during initial page collapse with the active language, and when you attempt to switch to the currently-visible language
+        document.getElementById(WhichLanguage + '_link').style.fontWeight = 'bold' // bolden the active language link
+        document.getElementById(LanguageAbbr + '_head').style.display = 'none' // hide its language heading
+       }
+
+     }
+
+
+    }
+
+   function Startup(){
+
+     // Hide the top links bar, which is only there for navigation when there's no javascript
+     document.getElementById('TopLinks').style.display = 'none'
+
+     // Look at the current URL, and if it matches an available language, show that. E.g. fr.wiktionary.org -> show 'fr'
+     var CurrentLocation = new String(window.location.href)
+     var CurrentSubdomain = CurrentLocation.slice(CurrentLocation.lastIndexOf('//') + 2, CurrentLocation.indexOf('.'))
+     for (var LanguageAbbr in LanguageDetails) {
+       if (LanguageAbbr == CurrentSubdomain) {
+         ShowLanguage(LanguageAbbr);
+         return;
+        }
+      }
+
+     // If it is a hyphenated language code in the URL, try to go to its root language
+     if (CurrentSubdomain.indexOf('-') != -1) {
+       var RootLanguage = CurrentSubdomain.slice(0, CurrentSubdomain.indexOf('-'))
+       for (var LanguageAbbr in LanguageDetails) {
+         if (LanguageAbbr == RootLanguage) {
+           ShowLanguage(LanguageAbbr);
+           return;
+          }
+        }
+      }
+
+     // This part was for wikimedia's secure server and isn't relevant here
+     if (CurrentSubdomain == 'secure') {
+       var SecureSubdomain = CurrentLocation.split('/')
+       for (var LanguageAbbr in LanguageDetails) {
+         if (LanguageAbbr == SecureSubdomain[4]) {
+           ShowLanguage(LanguageAbbr);
+           return;
+          }
+        }
+      }
+
+     // Attempt to detect the user's browser or system language using browser-specific methods, and use that if it matches an available language
+     if (navigator.userLanguage) var language = navigator.userLanguage // use the user's preferred language (non-Gecko)
+     else if (navigator.appName == 'Netscape') var language = navigator.language // use the only language information available to Gecko
+     else var language = navigator.browserLanguage // get the browser language information in non-Gecko browsers (IE, Opera, Konqueror)
+     // Compare the returned language against the list of languages on the error page
+     for (var LanguageAbbr in LanguageDetails) {
+       if (language.indexOf(LanguageAbbr) != -1) {
+         ShowLanguage(LanguageAbbr);
+         return;
+        }
+      }
+
+     // Show English as a fail-all
+     ShowLanguage('en');
+
+    }
+
+   function RefreshPage(){
+
+     // Refresh the page, preferably from cache, upon someone clicking 'try again'
+     window.location.reload(false)
+
+    }
+
+   // End -->
+  </script>
+
+ </head>
+
+ <body link="#24442E" text="#000000" vlink="#24442E" alink="#FF0000" onload="Startup();">
+
+  <!-- Wikia title -->
+  <div id="FoundationNameDiv">
+   <h1 id="FoundationName">Wikia</h1>
+  </div>
+
+  <!-- Shadow-style gradient -->
+  <div class="Lines" style="background-color:#ccd4cf;"></div>
+  <div class="Lines" style="background-color:#bdc3bf;"></div>
+  <div class="Lines" style="background-color:#adb1af;"></div>
+  <div class="Lines" style="background-color:#9ea09f;"></div>
+  <div class="Lines" style="background-color:#dbe5df;"></div>
+
+  <!-- 'Error' title -->
+  <div id="ErrorTitleDiv">
+   <h2 id="ErrorName">Error</h2>
+  </div>
+
+  <!-- This section of language links shows at the top of the page for navigation only when javascript is not available. -->
+  <div id="TopLinks">
+
+   <!-- Shadow-style gradient -->
+   <div class="Lines" style="background-color:#9d9fa1;"></div>
+   <div class="Lines" style="background-color:#a8aeb4;"></div>
+   <div class="Lines" style="background-color:#b4bec6;"></div>
+   <div class="Lines" style="background-color:#c0ced8;"></div>
+
+   <a href="#Indonesian" class="BottomLinks" onclick="ShowLanguage('id')">Bahasa Indonesia</a>
+   <a href="#Czech" class="BottomLinks" onclick="ShowLanguage('cs')">Česky</a>
+   <a href="#Danish" class="BottomLinks" onclick="ShowLanguage('da')">Dansk</a>
+   <a href="#German" class="BottomLinks" onclick="ShowLanguage('de')">Deutsch</a>
+   <a href="#Estonian" class="BottomLinks" onclick="ShowLanguage('et')">Eesti</a>
+   <a href="#English" class="BottomLinks" onclick="ShowLanguage('en')">English</a>
+   <a href="#Spanish" class="BottomLinks" onclick="ShowLanguage('es')">Español</a>
+   <a href="#French" class="BottomLinks" onclick="ShowLanguage('fr')">Français</a>
+   <a href="#Italian" class="BottomLinks" onclick="ShowLanguage('it')">Italiano</a>
+   <br/>
+   <a href="#Dutch" class="BottomLinks" onclick="ShowLanguage('nl')">Nederlands</a>
+   <a href="#Norwegian" class="BottomLinks" onclick="ShowLanguage('no')">Norsk (Bokmål)</a>
+   <a href="#Polish" class="BottomLinks" onclick="ShowLanguage('pl')">Polski</a>
+   <a href="#Portuguese" class="BottomLinks" onclick="ShowLanguage('pt')">Português</a>
+   <a href="#Romanian" class="BottomLinks" onclick="ShowLanguage('ro')">Română</a>
+   <a href="#Russian" class="BottomLinks" onclick="ShowLanguage('ru')">Русский</a>
+   <a href="#Finnish" class="BottomLinks" onclick="ShowLanguage('fi')">Suomi</a>
+   <a href="#Swedish" class="BottomLinks" onclick="ShowLanguage('sv')">Svenska</a>
+  </div>
+
+  <!-- Shadow-style gradient -->
+  <div class="Lines" style="background-color:#8f8f8f"></div>
+  <div class="Lines" style="background-color:#acacac"></div>
+  <div class="Lines" style="background-color:#c6c6c6"></div>
+  <div class="Lines" style="background-color:#dbdbdb"></div>
+  <div class="Lines" style="background-color:#eaeaea"></div>
+  <div class="Lines" style="background-color:#f4f4f4"></div>
+
+
+  <!-- BEGIN CONTENT AREA -->
+  <div class="ContentArea">
+
+   <div id="en" lang="en">
+    <h3 id="en_head" class="LanguageHeading">
+     <a name="English">English</a>
+    </h3>
+	<p>Our servers are currently experiencing a technical problem. This is probably temporary and should be fixed soon. Please <a href="javascript:" onclick="RefreshPage(); return false">try again</a> in a few minutes.</p>
+    <p>If the problem persists, you may check our <a href="http://www.facebook.com/wikia">Facebook</a> ; and <a href="http://www.twitter.com/wikia">Twitter</a> ; feeds for more information on the outage.</p>
+        <hr noshade="noshade" size="1px" width="80%" />
+    <div class="TechnicalStuff">
+     If you report this error to the Wikia System Administrators, please include the details below.<br/>
+    </div>
+   </div>
+
+
+
+   <div id="cs" lang="cs">
+    <div id="cs_head">
+     <hr noshade="noshade" size="1px" width="100%"/>
+     <h3 class="LanguageHeading">
+      <a name="Czech">
+       Česky
+      </a>
+     </h3>
+    </div>
+    <p>Naše servery mají momentálně technické problémy. Pravděpodobně se jedná o dočasnou závadu, která by měla být brzy opravena. Prosíme, zkuste za několik minut <a href="javascript:" onclick="RefreshPage(); return false">stránku nahrát znovu</a>.</p>
+    <p>Další informace lze získat na IRC kanálu <a href="irc://chat.freenode.net/Wikia">#Wikia</a> v <a href="http://www.freenode.net">síti FreeNode</a>.</p>
+
+    <hr noshade="noshade" size="1px" width="80%" />
+    <div class="TechnicalStuff">
+     Pokud hlásíte tuto chybu administrátorům systémů Wikia, prosíme připojte následující podrobnosti.<br/>
+    </div>
+   </div>
+
+   <div id="da" lang="da">
+    <div id="da_head">
+     <hr noshade="noshade" size="1px" width="100%"/>
+     <h3 class="LanguageHeading">
+      <a name="Danish">
+       Dansk
+      </a>
+     </h3>
+    </div>
+    <p>Wikias servere har i øjeblikket tekniske problemer. <a href="javascript:" onclick="RefreshPage(); return false">Prøv venligst igen</a> om få minutter.</p>
+    <p>For nærmere information kan du besøge <a href="http://www.freenode.net">FreeNode</a> IRC kanalen <a href="irc://chat.freenode.net/Wikia">#Wikia</a>.</p>
+    <hr noshade="noshade" size="1px" width="80%" />
+    <div class="TechnicalStuff">
+     Hvis du rapporterer denne fejl til Wikias systemadministratorer, så vedlæg venligst de detaljerede oplysninger herunder.<br/>
+    </div>
+   </div>
+
+   <div id="de" lang="de">
+    <div id="de_head">
+     <hr noshade="noshade" size="1px" width="100%"/>
+     <h3 class="LanguageHeading">
+      <a name="German">
+       Deutsch
+      </a>
+     </h3>
+    </div>
+    <p>Bei den Servern der Wikia sind gerade technische Probleme aufgetreten. Bitte versuche es in ein paar Minuten <a href="javascript:" onclick="RefreshPage(); return false">noch einmal</a>.</p>
+    <p>Genauere Informationen gibt es im Channel <a href="irc://chat.freenode.net/Wikia">#Wikia</a> des IRC-Netzwerkes <a href="http://www.freenode.net">Freenode</a>.</p>
+
+    <hr noshade="noshade" size="1px" width="80%" />
+    <div class="TechnicalStuff">
+     Wenn du einem Wikia-Systemadministrator diesen Fehler meldest, gib bitte die folgenden Details an.<br/>
+    </div>
+   </div>
+
+
+
+   <div id="es" lang="es">
+    <div id="es_head">
+     <hr noshade="noshade" size="1px" width="100%"/>
+     <h3 class="LanguageHeading">
+      <a name="Spanish">
+       Español
+      </a>
+     </h3>
+    </div>
+    <p>Los servidores de Wikia están teniendo dificultades técnicas. Este problema es temporal y esperamos arreglarlo cuanto antes. Por favor intenta <a href="javascript:" onclick="RefreshPage(); return false">acceder nuevamente</a> dentro de unos minutos.</p>
+    <p>Puedes obtener más información en el canal <a href="irc://chat.freenode.net/Wikia">#Wikia</a> de la red IRC <a href="http://www.freenode.net">FreeNode</a>.</p>
+
+    <hr noshade="noshade" size="1px" width="80%"/>
+    <div class="TechnicalStuff">
+     Si informas de este error a los administradores del sistema, por favor indica los detalles siguientes.<br/>
+    </div>
+   </div>
+
+   <div id="et" lang="et">
+    <div id="et_head">
+     <hr noshade="noshade" size="1px" width="100%"/>
+     <h3 class="LanguageHeading">
+      <a name="Estonian">
+       Eesti
+      </a>
+     </h3>
+    </div>
+    <p>Wikia Sihtasutuse serveris on viga. Palun <a href="javascript:" onclick="RefreshPage(); return false">proovi uuesti</a>.</p>
+    <p>Lisa infot võid saada kanalist <a href="irc://chat.freenode.net/Wikia">#Wikia</a> <a href="http://www.freenode.net">FreeNoden IRC-võrgust</a>.</p>
+
+    <hr noshade="noshade" size="1px" width="80%"/>
+    <div class="TechnicalStuff">
+     Kui teatate sellest veast Wikia süsteemiadministraatoritele, siis palun pange kaasa alltoodud üksikasjad.<br/>
+    </div>
+   </div>
+
+
+
+   <div id="fi" lang="fi">
+    <div id="fi_head">
+     <hr noshade="noshade" size="1px" width="100%"/>
+     <h3 class="LanguageHeading">
+      <a name="Finnish">
+       Suomi
+      </a>
+     </h3>
+    </div>
+    <p>Wikia-säätiön palvelimilla on tapahtunut virhe. <a href="javascript:" onclick="RefreshPage(); return false">Yritä uudelleen</a> hetken kuluttua.</p>
+    <p>Lisätietoja saa <a href="http://www.freenode.net">Freenode</a>-verkon IRC-kanavalta <a href="irc://chat.freenode.net/Wikia">#Wikia</a>.</p>
+    <hr noshade="noshade" size="1px" width="80%"/>
+    <div class="TechnicalStuff">
+     Jos ilmoitat tästä virheestä Wikian ylläpitäjille, liitä mukaan alla olevat tiedot.<br/>
+    </div>
+   </div>
+
+   <div id="fr" lang="fr">
+    <div id="fr_head">
+     <hr noshade="noshade" size="1px" width="100%"/>
+     <h3 class="LanguageHeading">
+      <a name="French">
+       Français
+      </a>
+     </h3>
+    </div>
+    <p>Les serveurs de  Wikia ont détecté une erreur. Merci de patienter quelques minutes avant de <a href="javascript:" onclick="RefreshPage(); return false">réessayer</a>.</p>
+    <p>Pour de plus amples informations, veuillez visiter le canal <a href="irc://chat.freenode.net/Wikia">#Wikia</a> du réseau <a href="http://www.freenode.net">IRC freenode</a>.</p>
+
+    <hr noshade="noshade" size="1px" width="80%"/>
+    <div class="TechnicalStuff">
+     Si vous signalez cette erreur aux administrateurs système de Wikia, veuillez indiquer les détails ci-dessous.<br/>
+    </div>
+   </div>
+
+
+
+   <div id="id" lang="id">
+    <div id="id_head">
+     <hr noshade="noshade" size="1px" width="100%"/>
+     <h3 class="LanguageHeading">
+      <a name="Indonesian">
+       Bahasa Indonesia
+      </a>
+     </h3>
+    </div>
+    <p>Server Yayasan Wikia sedang mengalami masalah untuk sementara waktu. Silahkan <a href="javascript:" onclick="RefreshPage(); return false">coba beberapa saat lagi</a>.</p>
+    <p>Anda bisa mendapatkan informasi lebih lanjut dari <a href="irc://chat.freenode.net/Wikia">#Wikia</a> channel di <a href="http://www.freenode.net">Freenode IRC network</a>.</p>
+
+    <hr noshade="noshade" size="1px" width="80%"/>
+    <div class="TechnicalStuff">
+     Jika Anda melaporkan kesalahan ini kepada Pengurus Sistem Wikia, harap cantumkan detil berikut.<br/>
+    </div>
+   </div>
+
+   <div id="it" lang="it">
+    <div id="it_head">
+     <hr noshade="noshade" size="1px" width="100%"/>
+     <h3 class="LanguageHeading">
+      <a name="Italian">
+       Italiano
+      </a>
+     </h3>
+    </div>
+    <p>I server della Wikia hanno al momento qualche problema tecnico. Per favore, <a href="javascript:" onclick="RefreshPage(); return false">riprova</a> tra qualche minuto.</p>
+    <p>Per ulteriori informazioni puoi visitare il canale <a href="irc://chat.freenode.net/Wikia">#Wikia</a> sulla rete IRC di <a href="http://www.freenode.net">FreeNode</a>.</p>
+    <hr noshade="noshade" size="1px" width="80%"/>
+    <div class="TechnicalStuff">
+     Includi i seguenti dettagli se segnali questo errore agli amministratori di sistema di Wikia.<br/>
+    </div>
+   </div>
+
+
+
+   <div id="nl" lang="nl">
+    <div id="nl_head">
+     <hr noshade="noshade" size="1px" width="100%"/>
+     <h3 class="LanguageHeading">
+      <a name="Dutch">
+       Nederlands
+      </a>
+     </h3>
+    </div>
+    <p>Onze servers hebben op dit moment een technisch probleem. Dit is waarschijnlijk tijdelijk en wordt zo snel mogelijk verholpen. <a href="javascript:" onclick="RefreshPage(); return false">Probeer het opnieuw</a> over enkele minuten.</p>
+    <p>Voor meer informatie kunt u terecht op het kanaal <a href="irc://chat.freenode.net/Wikia">#Wikia</a> op het <a href="http://www.freenode.net">FreeNode IRC-netwerk</a>.</p>
+
+    <hr noshade="noshade" size="1px" width="80%"/>
+    <div class="TechnicalStuff">
+     Indien u deze fout meldt aan de systeembeheerders van Wikia, vermeld dan alstublieft onderstaande details.<br/>
+    </div>
+   </div>
+
+   <div id="no" lang="no">
+    <div id="no_head">
+     <hr noshade="noshade" size="1px" width="100%"/>
+     <h3 class="LanguageHeading">
+      <a name="Norwegian">
+       Norsk (Bokmål)
+      </a>
+     </h3>
+    </div>
+    <p>Wikia servere har funnet en feil. <a href="javascript:" onclick="RefreshPage(); return false">Prøv på nytt</a> litt senere.</p>
+    <p>For mer informasjon, besøk kanalen <a href="irc://chat.freenode.net/Wikia">#Wikia</a>.</p>
+    <hr noshade="noshade" size="1px" width="80%"/>
+    <div class="TechnicalStuff">
+     Hvis du rapporterer denne feilen til Wikias systemadministratorer, vennligst ta med detaljene fra denne siden.<br/>
+    </div>
+   </div>
+
+   <div id="pl" lang="pl">
+    <div id="pl_head">
+     <hr noshade="noshade" size="1px" width="100%"/>
+     <h3 class="LanguageHeading">
+      <a name="Polish">
+       Polski
+      </a>
+     </h3>
+    </div>
+    <p>Serwery Wikia mają w tej chwili problemy techniczne. <a href="javascript:" onclick="RefreshPage(); return false">Spróbuj ponownie później</a>.</p>
+    <p>W celu uzyskania dokładniejszych informacji możesz odwiedzić kanał <a href="irc://chat.freenode.net/Wikia">#Wikia</a> na sieci IRC <a href="http://www.freenode.net">FreeNode</a>.</p>
+    <hr noshade="noshade" size="1px" width="80%"/>
+    <div class="TechnicalStuff">
+     Jeśli zamierzasz zgłosić ten błąd administratorom Wikia załącz także poniższe szczegóły.<br/>
+    </div>
+   </div>
+
+   <div id="pt" lang="pt">
+    <div id="pt_head">
+     <hr noshade="noshade" size="1px" width="100%"/>
+     <h3 class="LanguageHeading">
+      <a name="Portuguese">
+       Português
+      </a>
+     </h3>
+    </div>
+    <p>Os servidores da Wikia estão com dificuldades técnicas. Por favor, <a href="javascript:" onclick="RefreshPage(); return false">tente novamente</a> dentro de alguns minutos.</p>
+    <p>Para mais informações, pode tentar o canal <a href="irc://chat.freenode.net/Wikia">#Wikia</a> na rede de <a href="http://www.freenode.net">IRC FreeNode</a>.</p>
+
+    <hr noshade="noshade" size="1px" width="80%"/>
+    <div class="TechnicalStuff">
+     Se você informar esse erro para os administradores do sistema da Wikia, por favor indique os detalhes seguintes.<br/>
+    </div>
+   </div>
+
+   <div id="ro" lang="ro">
+    <div id="ro_head">
+     <hr noshade="noshade" size="1px" width="100%"/>
+     <h3 class="LanguageHeading">
+      <a name="Romanian">
+       Română
+      </a>
+     </h3>
+    </div>
+    <p>Serverele Wikia întâmpină în acest moment dificultăţi tehnice. Vă rugăm să <a href="javascript:" onclick="RefreshPage(); return false">încercaţi din nou</a> în câteva minute.</p>
+    <p>Pentru mai multe informaţii vizitaţi canalul <a href="irc://chat.freenode.net/Wikia">#Wikia</a> pe reţeaua <a href="http://www.freenode.net">FreeNode IRC</a>.</p>
+    <hr noshade="noshade" size="1px" width="80%"/>
+    <div class="TechnicalStuff">
+     Dacă raportaţi această eroare administratorilor de sistem ai Wikia, vă rugăm includeţi detaliile de mai jos.<br/>
+    </div>
+   </div>
+
+   <div id="ru" lang="ru">
+    <div id="ru_head">
+     <hr noshade="noshade" size="1px" width="100%"/>
+     <h3 class="LanguageHeading">
+      <a name="Russian">
+       Русский
+      </a>
+     </h3>
+    </div>
+    <p>В настоящее время наши серверы испытывают технические проблемы. Вероятно, это временные трудности, которые будут исправлены в ближайшее время. Пожалуйста, <a href="javascript:" onclick="RefreshPage(); return false">обновите страницу</a> через несколько минут.</p>
+    <p>Если проблемы не исчезают, посетите наши каналы на <a href="http://www.facebook.com/wikia.ru">Facebook</a> или <a href="http://twitter.com/#!/wikia_ru">Twitter</a> для получения более подробной информации о неполадках.</p>
+    <hr noshade="noshade" size="1px" width="80%"/>
+    <div class="TechnicalStuff">
+     Если вы хотите сообщить об этой ошибке системным администраторам Wikia, пожалуйста, включите в сообщение текст ниже.<br/>
+    </div>
+   </div>
+
+
+
+   <div id="sv" lang="sv">
+    <div id="sv_head">
+     <hr noshade="noshade" size="1px" width="100%"/>
+     <h3 class="LanguageHeading">
+      <a name="Swedish">
+       Svenska
+      </a>
+     </h3>
+    </div>
+    <p>Wikias servrar har för tillfället tekniska problem. Du kan <a href="javascript:" onclick="RefreshPage(); return false">försöka igen</a> om någon minut.</p>
+    <p>För mer information kan du besöka <a href="irc://chat.freenode.net/Wikia">#Wikia</a> på <a href="http://www.freenode.net">FreeNode IRC</a>.</p>
+    <hr noshade="noshade" size="1px" width="80%"/>
+    <div class="TechnicalStuff">
+     Om du rapporterar detta fel till Wikias systemadministratörer, var god inkludera detaljerna nedan.<br/>
+    </div>
+   </div>
+
+
+
+   <!-- Technical details of the error; shows all the time, with any language -->
+   <div class="TechnicalStuff">
+    <bdo dir="ltr">
+        PHP fatal error in $file line $line: <br/>
+        $message
+    </bdo>
+    <div id="AdditionalTechnicalStuff"></div>
+   </div>
+  </div>
+
+  <!-- Shadow-style gradient -->
+  <div class="Lines" style="background-color:#f4f4f4;"></div>
+  <div class="Lines" style="background-color:#eaeaea;"></div>
+  <div class="Lines" style="background-color:#dbdbdb;"></div>
+  <div class="Lines" style="background-color:#c6c6c6;"></div>
+  <div class="Lines" style="background-color:#acacac;"></div>
+  <div class="Lines" style="background-color:#dbe5df;"></div>
+
+  <!-- The top row of the language links at the foot of the page -->
+  <div class="BottomStrip">
+   <a href="#Indonesian" class="BottomLinks" id="id_link" onclick="ShowLanguage('id')">Bahasa Indonesia</a>
+   <a href="#Czech" class="BottomLinks" id="cs_link" onclick="ShowLanguage('cs')">Česky</a>
+   <a href="#Danish" class="BottomLinks" id="da_link" onclick="ShowLanguage('da')">Dansk</a>
+   <a href="#German" class="BottomLinks" id="de_link" onclick="ShowLanguage('de')">Deutsch</a>
+   <a href="#Estonian" class="BottomLinks" id="et_link" onclick="ShowLanguage('et')">Eesti</a>
+   <a href="#English" class="BottomLinks" id="en_link" onclick="ShowLanguage('en')">English</a>
+   <a href="#Spanish" class="BottomLinks" id="es_link" onclick="ShowLanguage('es')">Español</a>
+   <a href="#French" class="BottomLinks" id="fr_link" onclick="ShowLanguage('fr')">Français</a>
+   <a href="#Italian" class="BottomLinks" id="it_link" onclick="ShowLanguage('it')">Italiano</a>
+   <a href="#Dutch" class="BottomLinks" id="nl_link" onclick="ShowLanguage('nl')">Nederlands</a>
+  </div>
+
+  <!-- Shadow-style gradient -->
+  <div class="Lines" style="background-color:#9d9fa1;"></div>
+  <div class="Lines" style="background-color:#a8aeb4;"></div>
+  <div class="Lines" style="background-color:#b4bec6;"></div>
+  <div class="Lines" style="background-color:#c0ced8;"></div>
+
+  <!-- The bottom row of the language links at the foot of the page -->
+  <div style="text-align:center; font-size:0.85em;background:#cbddeb;">
+   <a href="#Norwegian" class="BottomLinks" id="no_link" onclick="ShowLanguage('no')">Norsk (Bokmål)</a>
+   <a href="#Polish" class="BottomLinks" id="pl_link" onclick="ShowLanguage('pl')">Polski</a>
+   <a href="#Portuguese" class="BottomLinks" id="pt_link" onclick="ShowLanguage('pt')">Português</a>
+   <a href="#Romanian" class="BottomLinks" id="ro_link" onclick="ShowLanguage('ro')">Română</a>
+   <a href="#Russian" class="BottomLinks" id="ru_link" onclick="ShowLanguage('ru')">Русский</a>
+   <a href="#Finnish" class="BottomLinks" id="fi_link" onclick="ShowLanguage('fi')">Suomi</a>
+   <a href="#Swedish" class="BottomLinks" id="sv_link" onclick="ShowLanguage('sv')">Svenska</a>
+  </div>
+
+  <!-- Shadow-style gradient -->
+  <div class="Lines" style="background-color:#9ea09f;"></div>
+  <div class="Lines" style="background-color:#adb1af;"></div>
+  <div class="Lines" style="background-color:#bdc3bf;"></div>
+  <div class="Lines" style="background-color:#ccd4cf;"></div>
+
+ </body>
+</html>

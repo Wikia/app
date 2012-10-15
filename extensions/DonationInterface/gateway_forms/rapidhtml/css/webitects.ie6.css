@@ -1,0 +1,35 @@
+/* style for IE6 + IE5.5 + IE5.0 */
+.gainlayout {
+    height: 0 !important;
+}
+
+/* fix the input sizes on the billing address form */
+span.name-first input{
+    width: 140px !important;
+}
+span.name-last input{
+    width: 140px !important;
+}
+span.loc-street input{
+    width: 305px !important;
+}
+span.loc-city input{
+    width: 140px !important;
+}
+span.loc-postal input{
+    width: 48px !important;
+}
+#emailAdd{
+    width: 305px !important;
+}
+#select-credit-card{
+    margin-bottom: 10px;
+}
+
+#donate, #donate-content{
+    width: 340px !important;
+}
+
+#where-content, #step1wrapper, #step2wrapper, #step3wrapper{
+    width: 330px !important;
+}

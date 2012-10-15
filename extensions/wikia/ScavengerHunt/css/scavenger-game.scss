@@ -1,0 +1,136 @@
+@import "../../../../skins/oasis/css/core/color";
+
+.scavenger-clue-image {
+	position: absolute;
+}
+
+.scavenger-hidden-image {
+	cursor: pointer;
+	position: absolute;
+	z-index: 1100;
+}
+
+.scavenger-start-button {
+	position: absolute;
+	input {
+		font-size: 18px;
+		height: auto;
+		margin: 5px;
+		padding: 10px;
+	}
+}
+
+#scavenger-progress-clue-area {
+	display: none;
+	text-align: center;
+	table {
+		height: 100%;
+		width:100%;
+	}
+}
+
+#scavenger-progress-clue-area-inner {
+	display: table-cell;
+	vertical-align: middle;
+}
+
+.scavenger-share-button {
+	margin-bottom: 15px;
+	text-align: right;
+}
+
+.scavenger-clue-text {
+	font-size: 16px;
+	line-height: 22px;
+	div {
+		color: $color-links;
+		margin-bottom: 16px;
+	}
+}
+
+.scavenger-clue-button {
+	padding: 20px 0;
+	text-align: right;
+	a.button, input.wikia-button {
+		font-size: 18px;
+		height: auto;
+		padding: 10px;
+		margin-left: 5px;
+	}
+}
+
+#scavengerClueModal, #scavengerGoodbyeModal {
+	h1, .modalContent {
+		border: none;
+		margin-bottom: 0;
+	}
+}
+
+#scavengerConflictMessage {
+	color: $color-buttons;
+	display: none;
+	font-weight: bold;
+	margin: 10px 0px 10px 0px;
+}
+
+#scavengerEntryFormModal {
+	h1, .modalContent {
+		border: none;
+		padding: 10px;
+	}
+
+	.scavenger-clue-question, label {
+		font-size: 16px;
+		margin-bottom: 4px;
+	}
+
+	.scavenger-entry-form {
+		&>textarea, &>input, &>label {
+			display: block;
+		}
+		&>textarea, &>input {
+			border: 1px solid $color-page-border;
+			margin-bottom: 12px;
+			width: 99%;
+			&:focus {
+				border-color: $color-links;
+			}
+		}
+		&>textarea {
+			height: 60px;
+		}
+		&>input {
+			height: 22px;
+		}
+	}
+}
+
+/* new styles, SH 2.0 - clean up those above */
+.scavenger-progress-image {
+	cursor: pointer;
+	position: absolute;
+}
+
+.scavenger-progress-image-bg {
+	position: absolute;
+}
+
+.scavenger-ingame-image {
+	cursor: pointer;
+	position: absolute;
+	z-index: 1;
+}
+
+#scavenger-hunt-progress-bar {
+	bottom: 0;
+	height: 0;
+	position: fixed;
+	right: 0;
+	width: 0;
+	z-index: 1001; /* 1 above toolbar */
+}
+
+#scavenger-hunt-progress-bar-clue {
+/*	visibility: hidden;*/
+	z-index: 1100; /* allows 100 elements between progress bar background and a clue box */
+}

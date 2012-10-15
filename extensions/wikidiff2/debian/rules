@@ -1,0 +1,22 @@
+#!/usr/bin/make -f
+
+# The PHP header files are not designed to be run with C++, they hit this 
+# warning a lot.
+CXXFLAGS=-Wno-write-strings
+
+%:
+	dh $@
+
+override_dh_auto_configure:
+	# Slightly hacked here to make it work with other PHP installations
+	# earlier in the path, so I don't have to make chroots. Really it should just
+	# be phpize && dh_auto_configure.
+	/usr/bin/phpize
+	dh_auto_configure -- --with-php-config=/usr/bin/php-config
+
+override_dh_auto_test:
+
+override_dh_auto_install:
+	INSTALL_ROOT=$(CURDIR)/debian/php-wikidiff2 make install
+	install -m 0755 -d $(CURDIR)/debian/php-wikidiff2/etc/php5/conf.d
+	install -m 0644 wikidiff2.ini $(CURDIR)/debian/php-wikidiff2/etc/php5/conf.d/wikidiff2.ini

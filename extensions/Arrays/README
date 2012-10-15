@@ -1,0 +1,30 @@
+== About ==
+
+The 'Arrays' extension (former 'ArrayExtension') Enhances the parser with functions
+to handle arrays within wiki markup text.
+
+* Website: http://www.mediawiki.org/wiki/Extension:Arrays
+* Authors: Li Ding, Jie Bao, Daniel Werner < danweetz@web.de >
+* License: MIT license
+
+
+== Installation ==
+
+Once you have downloaded the code, place the 'Array' directory within your
+MediaWiki 'extensions' directory. Then add the following code to your
+[[Manual:LocalSettings.php|LocalSettings.php]] file:
+
+ # Arrays
+ require_once( "$IP/extensions/Arrays/Arrays.php" );
+ 
+Be aware of breaking behavioral changes introduced after version 1.3.2. There is a
+new configuration variable '$egArraysCompatibilityMode' for switching back to old
+behavior though. For further information see the 'RELEASE-NOTES' file.
+
+ 
+== Contributing ==
+
+If you have bug reports or feature requests, please add them to the 'Arrays'
+Talk page [0]. You can also send them to Daniel Werner < danweetz@web.de >
+
+[0] http://www.mediawiki.org/w/index.php?title=Extension_talk:Arrays

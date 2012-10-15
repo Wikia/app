@@ -1,0 +1,58 @@
+@import "../../../../skins/oasis/css/core/color";
+@import "../../../../skins/oasis/css/mixins/clearfix";
+
+$separators: mix($color-page-border, $color-page, 50%);
+
+#WikiaRail.WikiaRail .WallHistoryRail.module {
+	h1 {
+		margin-bottom: 4px;
+	}
+	ul {
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
+		@include clearfix;
+		li {
+			min-height: 30px;
+    		padding-left: 10px;
+    		padding-top: 10px;
+			border-bottom: 1px solid $separators;
+			.avatar {
+				float: left;
+			}
+			.realname {
+				color: $color-alternate-text;
+			}
+			.names {
+				a{
+			  		line-height: 17px;
+			  	}
+				font-size: 13px;
+				padding-top: 1px;	
+			}			
+			.names,
+			.actionlinks {
+				display: block;
+				margin: 0 0 0 40px;
+			}
+			.actionlinks {
+			 	height: 20px;
+				list-style-type: none;
+				padding: 0;
+				visibility:hidden;
+				font-size: 11px;
+				li {
+					display: inline;
+					margin: 0;
+					padding: 0 12px 0 0;
+					border: 0;
+				}
+			}
+		}
+		li:hover {
+			.actionlinks {
+				visibility:visible;
+			}
+		}
+	}
+}

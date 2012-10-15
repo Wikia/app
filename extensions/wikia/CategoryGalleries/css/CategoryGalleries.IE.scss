@@ -1,0 +1,17 @@
+@import "../../../../skins/oasis/css//core/color";
+
+.category-gallery-item {
+	img {
+		border: 1px solid mix($color-page, #000, 60%);
+	}
+	
+	.snippet {
+		border: 1px solid mix($color-page, #000, 60%);
+	}
+}
+
+/* IE7 hack */
+*:first-child+html .category-gallery-item {
+	display: inline;
+	zoom: 1;
+}

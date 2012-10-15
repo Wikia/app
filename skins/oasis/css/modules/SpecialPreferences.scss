@@ -1,0 +1,46 @@
+@import "../mixins/clearfix";
+@import "../core/color";
+@import "../mixins/box-sizing";
+
+#preftoc {
+	@include clearfix;
+	clear: both;
+	list-style: none;
+	margin-left: -10px;
+	padding: 0 10px;
+	width: 100%;
+	li {
+		float: left;
+		margin: 0;
+	}
+	& > .selected {
+		
+	}
+}
+.mainLegend {
+	display: none;
+}
+
+.WikiaArticle fieldset {
+	border: 0;
+	margin: 40px 0;
+	padding: 0;
+	legend {
+		@include box-sizing;
+		border-bottom: solid 1px $color-headline-border;
+		display: block;
+		font-size: 18px;
+		overflow: hidden;
+		padding: 0;
+		position: relative;
+		top: -10px;
+		width: 100%;
+		&.mainLegend {
+			display: none;
+		}
+	}
+}
+
+.mw-label {
+	font-weight: bold;
+}

@@ -1,0 +1,271 @@
+//mixins
+@import "../../WikiaMobile/css/mixins/box-shadow.scss";
+@import "../../WikiaMobile/css/variables.scss";
+
+//vars
+$comment-left-margin: $page-padding + 60px;
+$comment-top-margin: 10px;
+$submit-border-radius: 5px;
+$commentBg: rgb(246,246,246);
+
+.js{
+	#wkComm {
+		.rpl {
+			display: block;
+		}
+	}
+
+	#commMore{
+		display: block;
+	}
+
+	.sub-comments{
+ 	    display: none;
+ 	}
+}
+
+.viewAll::before{
+	content: '|';
+	margin-right: 7px;
+	color: grey;
+}
+
+.commFrm{
+	position: relative;
+    margin: 5px 0;
+	display: -webkit-box;
+	display: -moz-box;
+	display: box;
+
+	&.open{
+		height: 100px;
+	}
+
+	&::before, &::after{
+	    content: '';
+		display: table;
+		clear: both;
+	}
+
+	.wkInp {
+		padding: 9px;
+
+		&:focus{
+			height: 96px;
+		}
+	}
+
+	.wkMblLdr{
+		position: absolute;
+		left: 0;
+		top: 0;
+
+		span{
+			position: absolute;
+        	top: 3px;
+        	left: 45%;
+        }
+	}
+}
+
+.commSbt{
+	height: 40px;
+	font-size: small;
+	margin: 0;
+}
+
+.rpl {
+    margin: $comment-top-margin 0 0 60px;
+	border-top: 1px solid $border-color;
+	color: $link-color;
+	line-height: 40px;
+	font-weight: 100;
+	padding-left: 5px;
+	display: none;
+	position: relative;
+
+	span {
+		height: 100%;
+		display: inline-block;
+		padding-right: 7px;
+	}
+
+	&::after, &::before {
+		border-style: solid;
+		border-width: 10px;
+		content: '';
+		height: 0;
+		position: absolute;
+		left: 10px;
+		width: 0;
+	}
+
+	&::before {
+		border-color: transparent transparent $border-color transparent;
+		top: -21px;
+	}
+
+	&::after{
+		border-color: transparent transparent $page-background-color transparent;
+		top: -19px;
+	}
+}
+
+#wkComUl{
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.sub-comments{
+	list-style: none;
+	padding: 0;
+	margin: 10px 0 1px 0;
+
+	&>.comment:first-child{
+		position: relative;
+
+		&::after, &::before {
+			border-style: solid;
+			border-width: 10px;
+			content: '';
+			height: 0;
+			position: absolute;
+			left: 80px;
+			width: 0;
+		}
+
+		&::before {
+			border-color: transparent transparent $border-color transparent;
+			top: -21px;
+		}
+
+		&::after{
+			border-color: transparent transparent $page-background-color transparent;
+			top: -19px;
+		}
+	}
+}
+
+.comment{
+	border-top: 1px solid $border-color;
+	padding-top: $page-padding;
+
+	.msg{
+		border-left: none;
+		margin: 0 0 0 $comment-left-margin;
+		padding-left: 0;
+
+		.by{
+			font-weight: bold;
+		}
+
+		.txt{
+			p:first-child{
+				margin: 0;
+				padding: 0;
+			}
+		}
+
+		.date{
+			color: $page-text-alternate-color;
+			font-size: small;
+
+			a{
+				color: $page-text-alternate-color;
+			}
+		}
+	}
+
+	.avatar{
+		float: left;
+	}
+}
+
+#commMore, #commPrev{
+	display: none;
+	border-top: 1px solid rgb(227, 227, 227);
+	line-height: 50px;
+	text-align: center;
+	margin: 0 -10px;
+	-webkit-transition: background-color .5s;
+	-moz-transition: background-color .5s;
+	transition: background-color .5s;
+
+	&.pag{
+		display: block;
+	}
+
+	&.active{
+		@include box-shadow(inset 0 30px 20px -20px rgba(0,0,0,.4));
+		background-color: $border-color;
+		padding: $page-padding 0;
+
+		//hide the text and make it take no space without adding
+		//yet another wrapping element...
+		color: transparent;
+		line-height: 0;
+	}
+}
+
+#commMore{
+	margin-bottom: $page-padding;
+}
+
+#wkMdlWrp.cmnMdl{
+   	background-color: white;
+   	min-height: 100%;
+   	height: auto;
+   	max-width: 100%;
+
+   	#wkMdlTB{
+   		line-height: 30px;
+   		padding-left: 10px;
+		text-transform: uppercase;
+		font-size: 0.9em;
+   	}
+
+    #wkMdlCnt{
+        background-color: inherit;
+        margin-top: 30px;
+    	color: #000;
+
+		& > li{
+			list-style: none;
+			background-color: $commentBg;
+    		margin-bottom: 10px;
+       		padding-bottom: 1px;
+		}
+    }
+
+    blockquote{
+    	margin-left: 70px;
+    	border: none;
+    }
+
+    .sub-comments{
+    	display: block;
+    	background-color: white;
+    	padding-left: 10px;
+    }
+
+    .comment{
+    	padding-bottom: 10px;
+    }
+
+    .avatar{
+    	margin-left: 5px;
+    }
+
+    .rpl{
+    	display: none;
+    }
+
+    .msg{
+    	padding-right: 10px;
+    }
+
+    .commFrm {
+    	margin: 10px;
+    }
+}

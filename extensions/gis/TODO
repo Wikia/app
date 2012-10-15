@@ -1,0 +1,13 @@
+- Fix // !JF1 tagged lines
+- Save geo coordinates on render, not on save.
+  The current implementation does not work with templates.
+- Finish the special page's type selector
+- Area support
+- Feature classes/codes. Use
+  http://download.geonames.org/export/dump/featureCodes.txt ?
+  * "Add geo-tagging"-wizard?
+- Add maps
+- Fix KML
+- Add WFS support
+- Change queries so that they make use of the tile index
+- Benchmark queries

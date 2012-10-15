@@ -1,0 +1,66 @@
+@import "../../../../skins/oasis/css/core/color";
+@import "../../../../skins/oasis/css/mixins/box-shadow";
+
+.ContentWarning {
+	display: none;
+	margin: 0 15px;
+	min-height: 300px;
+
+	&.WikiaArticle {
+		@include clear-box-shadow();
+		border: 0;
+		float: none;
+		padding: 0;
+		width: auto;
+	}
+
+	button {
+		margin-right: 10px;
+	}
+
+	h2 {
+		border: 0;
+		font-size: 200%;
+		line-height: 120%;
+	}
+
+	p {
+		padding: 0;
+	}
+
+	.warning {
+		margin: 10px 0;
+	}
+}
+
+.ShowContentWarning {
+	&.skin-monobook,
+	&.skin-uncyclopedia {
+		.firstHeading,
+		#siteNotice {
+			display: none;
+		}
+
+		#bodyContent {
+			overflow: hidden;
+			visibility: hidden;
+			width: 0;
+		}
+	}
+
+	.WikiaMainContent,
+	.WikiaRail {
+		overflow: hidden;
+		visibility: hidden;
+		width: 0;
+	}
+
+	.ContentWarning {
+		display: block;
+	}
+
+	.adm-dash-search,
+	.WikiaWideTablesWrapper {
+		display: none;
+	}
+}

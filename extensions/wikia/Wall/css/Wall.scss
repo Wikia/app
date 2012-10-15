@@ -1,0 +1,886 @@
+@import "../../../../skins/oasis/css/core/color";
+@import "../../../../skins/oasis/css/mixins/border-radius";
+@import "../../../../skins/oasis/css/mixins/clearfix";
+@import "../../../../skins/oasis/css/mixins/box-sizing";
+@import "../../../../skins/oasis/css/mixins/box-shadow";
+@import "../../../../skins/oasis/css/mixins/opacity";
+
+@import "WallColors";
+@import "WallDimensions";
+@import "WallSortingBar";
+@import "RelatedTopics";
+
+$tooltip-padding: 10px 14px;
+
+/* IE7 targeted hacks */
+html>body #Wall textarea { *width: 96%; }
+html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9999px; }
+
+#Wall.Wall {
+	ul.comments { list-style: none; }
+	ul.replies { list-style: none; }
+}
+
+.WikiaPage .WikiaRail {
+	padding-top: 15px;
+}
+
+.Wall {
+	&.Board {
+		.deleteorremove-infobox {
+			margin-left: 75px;
+		}
+	}
+	ul {
+		margin: 0;
+	}
+	.avatar {
+		position: relative;
+	}
+	/* Indenting for posts and replies */
+	.comments {
+		margin-left: 0;
+		.speech-bubble-message:hover {
+			.buttons {
+				display: block;
+			}
+			.editor-open .buttons{
+				display: none;
+			}
+		}
+		.SpeechBubble {
+			.buttons-monobook{
+				display: none;
+			}
+			.buttons {
+				display: none;
+				bottom: 0;
+				right: 0;
+			}
+			margin: 0;
+			margin-bottom: 20px;
+			padding-top: 5px;
+			position: relative;
+			.highlight {
+				position: absolute;
+				top: 0; left: 0; width: 100%; height: 100%;
+				background: yellow;
+			}
+			.msg-title {
+				font-weight: bold;
+				font-size: 18px;
+
+				a {
+					color: $color-text;
+					text-decoration: none;
+				}
+			}
+			.msg-body {
+				@include clearfix;
+				word-wrap: break-word;
+			}
+			.quote-of {
+				text-align: right;
+			}
+			> ul { margin-left: 75px; }
+			border: none; // -top: 1px solid $color-wall-border;
+			padding-top: 12px;
+			margin-bottom: 0px;
+		}
+
+		ul.replies > li { // replies only
+			position: relative;
+			clear: both; /* without it replies on Monobook are looking baaad */
+			&:first-child:before {
+				content: '';
+				position: absolute;
+				height: 0px; width: 0px;
+				border-width: 8px;
+				border-style: solid;
+				border-color: transparent transparent $color-wall-border transparent;
+				left: 28px; top: -16px;
+				visibility: visible;
+			}
+			&:first-child:after {
+				content: '';
+				position: absolute;
+				height: 0px; width: 0px;
+				border-width: 8px;
+				border-style: solid;
+				border-color: transparent transparent $color-page transparent;
+				left: 28px; top: -15px;
+				visibility: visible;
+			}
+		}
+		.stafflogo {
+			background: none no-repeat scroll 0 0 transparent;
+			background: url("/extensions/wikia/StaffSig/images/WikiaStaff.png"); /* $wgCdnStylePath */
+			bottom: -1px;
+			display: inline-block;
+			height: 12px;
+			margin: 0;
+			padding: 0;
+			width: 41px;
+			position: relative;
+		}
+	}
+	
+	.replies .speech-bubble-message .voting-controls .votes.notlink {
+		display: none;
+	}
+
+	.speech-bubble-message {
+		padding: 5px 10px 0px 8px;
+		text-align: left;
+		.voting-controls {
+			float: right;
+			a {
+				cursor: pointer;
+				font-size: 12px;
+				text-decoration: none;
+			}
+			.votes {
+				&.notlink {
+					color: $color-text;
+					cursor: default;
+					display: inline;
+				}
+			}
+		}
+	}
+	.speech-bubble-message p:first-child { margin-top: 0 !important; }
+	.speech-bubble-message p:last-child { margin-bottom: 0 !important; }
+
+	/* only messages, not replies */
+	ul.comments > li.message {
+		border-bottom: 1px solid $color-wall-border;
+		padding-top: 15px;
+		padding-bottom: 30px;
+
+	  	> .speech-bubble-message {
+			@include border-radius($wall-border-radius);
+			background: $color-wall-bubble;
+			border: none;
+			padding: 10px;
+			margin-bottom: 15px;
+
+			&:before {
+				border: none;
+			}
+
+			&:after {
+				border-color: $color-wall-bubble $color-wall-bubble transparent transparent;
+				border-width: 12px;
+			}
+		}
+
+		> .speech-bubble-message-removed {
+			text-align: center;
+			@include border-radius($wall-border-radius);
+			background: $color-wall-bubble;
+			border: none;
+			padding: 10px 20px;
+	  	}
+
+		&:last-child { border-bottom: none; }
+	}
+
+	/* inputs on page */
+	textarea:-moz-placeholder { color: $color-wall-text-placeholder }
+	textarea::-webkit-input-placeholder { color: $color-wall-text-placeholder }
+	textarea {
+		@include box-sizing;
+		@include border-radius($wall-border-radius-inputs);
+		background: $color-wall-input;
+		color: $color-text;
+		border: none;
+		outline: none;
+		width: 100%;
+		line-height: inherit;
+		padding: 7px 10px 7px 10px;
+		resize: none;
+		margin: 0;
+		display: block;
+		overflow: hidden;
+		font-size: 13px;
+
+		&:focus {
+			@include box-shadow(0px, 0px, 4px, $color-wall-input-focus-shadow );
+			background: $color-wall-input-focus;
+			color: $color-text;
+		}
+	}
+	.new-message textarea {
+		background: $color-wall-input-new;
+		font-size: 14px;
+		&.title { height: 30px; margin-bottom: 10px; }
+		&.body { height: 70px; }
+		&:focus { background: $color-wall-input-focus; color: $color-text; }
+	}
+	.new-reply textarea{ height: 30px; line-height: normal; }
+	ul.comments > li.message li.message textarea { border: 1px solid $color-wall-border; }
+	ul.comments > li.message > .speech-bubble-message textarea { font-size: 13px; }
+	ul.comments > li.message > .speech-bubble-message textarea.title { font-size: 18px; font-weight: bold; }
+
+	/* edit message */
+	ul.comments > li.message > .speech-bubble-message {
+		.msg-title textarea {
+			font-size: 13px;
+			font-weight: normal;
+			height: 32px;
+			line-height: 18px;
+			margin-bottom: 10px;
+
+			&:focus {
+				@include box-shadow(0px, 0px, 4px, $color-wall-input-focus-shadow);
+				background: $color-wall-input-focus;
+				color: $color-text;
+			}
+		}
+
+		.msg-body textarea {
+			font-size: 13px;
+			height: 100px;
+			margin-top: 10px;
+		}
+	}
+
+	.msg-toolbar {
+		@include clearfix;
+		position: relative;
+	}
+
+	.edit-buttons {
+		display: none;
+		float: right;
+		margin-top: 10px;
+
+		.wikia-button {
+			float: right;
+			margin-left: 10px;
+		}
+	}
+	
+	.toolbar {
+		position: relative;
+		z-index: 2;	/* overlapping with msg-toolbar */
+	}
+
+	/* only replies */
+	ul.comments > li.message ul.replies > li {
+		border-top: 1px solid $color-wall-border;
+	}
+	ul.comments > li.message li.message {
+		.speech-bubble-message {
+			background: none;
+			border: none;
+			margin-bottom: 10px;
+			//margin-right: 16px;
+			margin-left: 40px;
+			padding-top: 0px;
+			&:before {
+				border: none;
+			}
+			&:after {
+				border: none;
+			}
+		}
+		&.message-removed {
+			text-align: center;
+			color: $color-alternate-text;
+			font-size: 11px;
+			padding-bottom: 5px;
+			padding-top: 5px;
+		}
+		&.message-removed.show {
+			border: none;
+			&:first-child:before {
+				display: none;
+			}
+			&:first-child:after {
+				display: none;
+			}
+		}
+	}
+
+	/* Post new message (top of the wall) */
+	.SpeechBubble.new-message {
+		margin-bottom: 30px;
+		position: relative;
+		.preview { margin-left: 10px; margin-right: 10px; }
+		.speech-bubble-message {
+			@include border-radius($wall-border-radius);
+			//@include box-shadow(0,0,6px,$color-wall-bubble);
+			background: $color-wall-bubble;
+			border: none;
+			padding: 10px;
+			&:before {
+				border: none;
+			}
+			&:after {
+				border-color: $color-wall-bubble $color-wall-bubble transparent transparent;
+			}
+		}
+
+		.no-title-container {
+			position: relative;
+			float: right;
+			.no-title-warning {
+				@include border-radius($wall-border-radius);
+				position: absolute;
+				width: 200px;
+				font-size: 12px;
+				line-height: 19px;
+				height: 19px;
+				top: 4px;
+				left: -204px;
+				background: mix($color-wall-input, $color-error, 70%);
+				text-align: center;
+				display: none;
+				z-index: 50;
+			}
+		}
+
+		#WallMessageSubmit {
+			float: right;
+			margin-top: 10px;
+			margin-left: 10px;
+		}
+
+		#WallMessagePreview, #WallMessagePreviewCancel {
+			float: right;
+			margin-top: 10px;
+			margin-left: 10px;
+		}
+		.speech-bubble-buttons {
+			@include clearfix;
+			display: none;
+		}
+	}
+
+	.preview-title {
+		font-weight: bold;
+		font-size: 18px;
+	}
+
+	.preview-bubble {
+		background: $color-wall-bubble-preview !important;
+		&:after { border-color: $color-wall-bubble-preview $color-wall-bubble-preview transparent transparent !important; }
+	}
+
+	.replies .preview-bubble {
+		background: $color-wall-bubble-preview-reply !important;
+		padding: 5px 10px 5px 10px !important;
+		&:before { display: none !important; }
+		&:after { display: none !important; }
+	}
+
+	/* Post reply to message (beneath each message thread) */
+	.new-reply {
+		margin-bottom: 0;
+
+		&.open {
+			margin-bottom: 40px;
+
+			button {
+				display: block;
+			}
+
+			textarea {
+				line-height: inherit;
+			}
+
+			.speech-bubble-avatar {
+				display: block;
+			}
+
+			.speech-bubble-message {
+				margin-left: 40px;
+			}
+		}
+
+		&.loading {
+			.loadingAjax {
+				display: block;
+			}
+		}
+
+		.speech-bubble-avatar {
+			display: none;
+			img {
+				//@include opacity(25);
+			}
+		}
+		.speech-bubble-message {
+			padding: 0;
+			background: none;
+			border: none;
+			margin-left: 0px;
+			&:before {
+				border: none;
+			}
+			&:after {
+				border: none;
+			}
+			textarea {
+				border: 1px solid $color-page-border;
+			}
+		}
+		button {
+			display: none;
+			//position: absolute;
+			float: right;
+			margin-top: 10px;
+			margin-left: 10px;
+			position: relative;
+		}
+	}
+
+	/* change background of inputs when they are disabled (submitting) */
+	.new-message input[disabled=disabled],
+	.new-message textarea[disabled=disabled],
+	.new-reply textarea[disabled=disabled] {
+		opacity: 0.8;
+	}
+
+	#WallMessageSubmit, .replyButton {
+		padding-left: 20px;
+		padding-right: 20px;
+	}
+
+	.loadingAjax {
+		background: url(/skins/common/images/ajax.gif) 0 2px; /* $wgCdnStylePath */
+		display: none;
+		float: right;
+		height: 20px;
+		margin: 10px 0 0 0;
+		padding: 0;
+		width: 16px;
+	}
+
+	.load-more{
+		//@include border-radius(4px);
+		border-top: 1px solid $color-wall-border;
+		//border-bottom: 1px solid $color-page-border;
+		//margin-left:75px;
+		margin: 9px 16px 0px 0px;
+		//padding: 3px 5px;
+		text-align: center;
+		a {
+			display: block;
+			//background: $loadmore_bg;
+			background: transparent;
+			border-bottom: none;
+			padding-top: 10px;
+			padding-bottom: 10px;
+			width: 100%;
+			height: 100%;
+			&:hover {
+				//background: $loadmore_bg_h;
+				text-decoration: underline;
+			}
+		}
+	}
+
+	.speech-bubble-message .buttons {
+		ul {
+			list-style: none; margin: 0; padding: 0;
+			li { padding: 0; margin: 0; }
+			li a { padding: 12px; font-size: 11px; }
+		}
+	}
+
+	/* element used to hide original wikitext before edit starts */
+	.before-edit { display: none }
+
+	a.vote {
+		position: relative;
+		top: -5px;
+		img {
+			@include opacity(20);
+			background-image: url("/extensions/wikia/Forum/imageGenerator/kudo_20x20.png");	/* $wgCdnStylePath */
+			cursor: pointer;
+		}
+		&.inprogress,
+		&.voted {
+			img {
+				@include opacity(50);
+			}
+		}
+	}
+
+	.follow {
+		@include opacity(70);
+		background-image: none;
+		display: block;
+		float: right;
+		margin-left: 5px;
+		min-width: 60px;
+		text-align: center;
+		&:hover { 
+			@include opacity(100);
+			background-image: none;
+		}
+		
+	}
+
+	.follow.secondary {
+		background-image: none;
+		&:hover { background-image: none; }
+	}
+	.follow:not(.secondary) {
+		opacity: 0.7;
+	}
+	.follow:not(.secondary):hover {
+		opacity: 1;
+	}
+
+	.edited-by {
+		@include clearfix;
+		font-size: 14px;
+		font-weight: bold;
+		margin-bottom: 5px;
+		margin-top: 6px;
+
+		.subtle {
+			color: $color-alternate-text;
+			font-weight: normal;
+			font-size: 12px;
+			margin-left: 5px;
+		}
+	}
+
+	.timestamp {
+		float: left;
+
+		a, span {
+			color: $color-alternate-text; font-size: 10px;
+			text-decoration: none;
+			.timeago-fmt { display: none; }
+			&:hover {
+				text-decoration: none;
+				.timeago { display: none; }
+				.timeago-fmt { display: inline; }
+			}
+			&.username { color: $color-links; }
+		}
+	}
+
+	.tools {
+		font-size: 11px;
+		.sprite.edit-pencil {
+			background: url(/skins/common/images/common/pencil.png) no-repeat 0 0; /* $wgCdnStylePath */
+			height: 18px;
+			width: 12px;
+		}
+		.sprite-small.delete {
+			background: url(/skins/common/images/common/trashcan.png) no-repeat 0 0; /* $wgCdnStylePath */
+			height: 18px;
+			width: 12px;
+		}
+	}
+	.stafflogo {
+		img { margin-bottom: 1px; margin-left: 3px; }
+	}
+	.highlight {
+		display: none;
+	}
+	
+	&.Thread {
+		@include clearfix;
+		margin-bottom: 100px;
+	}
+}
+
+#WikiaConfirm {
+	textarea.wall-action-reason {
+		width: 370px;
+		height: 70px;
+		line-height: 1.5em;
+		padding: 7px 10px;
+		font-size: 13px;
+		font-family: "Helvetica", "Arial", sans-serif;
+		margin: 3px 0;
+	}
+	#notify-admin {
+		margin-left: 0;
+		margin-right: 5px;
+	}
+	.modalToolbar button {
+		margin: 3px;
+	}
+}
+
+.subtle {
+	color: $color-alternate-text;
+	font-size: 10px;
+	line-height: normal;
+	margin-bottom: 5px;
+}
+
+.message-undo-remove {
+	margin: 5px;
+	cursor: pointer;
+}
+
+.BreadCrumbs {
+	@include clearfix;
+	font-size: 14px;
+	border-bottom: 1px solid $color-wall-border;
+	line-height: 20px;
+	padding: 3px 0 5px;
+	.removed {
+		color: $color-alternate-text;
+		padding-left: 7px;
+	}
+	.separator {
+		padding: 0 3px;
+		position: relative;
+		top: -1px;
+	}
+	& + #WikiaArticle .comments > .SpeechBubble {
+		padding-top: 30px;
+	}
+}
+
+.skin-monobook {
+	#WallBrickHeader {
+		padding-left: 0;
+		font-size: 188%;
+	}
+	&.ns-1201 #contentSub {
+		display: none;
+	}
+	.BreadCrumbs {
+		padding-top: 10px;
+	}
+	#Wall {
+		.avatar { float: left; }
+		& .speech-bubble-message { margin-right: 0px; }
+		& .new-message .speech-bubble-message,
+		& .comments > .SpeechBubble.message > .speech-bubble-message {
+			margin-left: 75px;
+		}
+		.SpeechBubble {
+			margin-right: 0px;
+			&.open .speech-bubble-message {
+				margin-left: 50px;
+			}
+			.SpeechBubble {
+				&:before, &:after { display: none; }
+			}
+		}
+		.speech-bubble-message {
+			margin: 0;
+			padding: 0;
+			background: none;
+		}
+		.comments .SpeechBubble .msg-title a {
+			color: black;
+		}
+		.message .message .speech-bubble-message {
+			margin-left: 50px;
+		}
+		.buttons-monobook{
+			display: block;
+		}
+		.buttons {
+			display: none;
+		}
+		textarea{
+			background: white;
+			color: black;
+			border: black;
+			border: solid;
+			border-width: 1px;
+		}
+		.SortingBar {
+			background: white;
+			color: black;
+			border: black;
+			border: solid;
+			border-width: 1px;
+		}
+		.timestamp {
+			width: 100%;
+			margin-bottom: 5px;
+			.buttonswrapper {
+				float: right;
+				a {
+					margin: 0 10px 0 5px;
+				}
+			}
+		}
+	}
+}
+
+.WallGreeting {
+	@include clearfix;
+	h2 .editsection {
+		display: none;
+	}
+}
+
+.SpeechBubble {
+	div.removed-info {
+		display: none;
+	}
+	&.hide {
+		div {
+			display: none;
+			&.removed-info {
+				display: block;
+			}
+		}
+		blockquote {
+			display: none;
+		}
+	}
+}
+
+.deleteorremove-infobox {
+	display: block;
+	margin: 0 0 10px;
+	background: $color-wall-infobox;
+	font-size: 12px;
+	border-top: 1px dashed $color-page-border;
+	padding: 10px;
+	position: relative;
+	text-align: left;
+	&.empty {
+		display: none;
+	}
+	&.hide {
+		display: none;
+	}
+	.deleteorremove-bubble {
+		@include border-radius(3px);
+		@include box-shadow(2px, 2px, 4px, $color-wall-infobox-delete);
+
+		display: block;
+		padding: 5px 10px 5px 5px;
+		background: $color-page;
+		border: 1px solid $color-wall-border;
+		position: relative;
+		div.avatar {
+			display: block;
+			float: left;
+			margin: 5px 0 0 5px;
+		}
+		.message {
+			@include clearfix;
+			display: block;
+			margin-left: 40px;
+			color: $color-alternate-text;
+			.reason { color: $color-text; font-size: 13px; margin-top: -2px; }
+		}
+		&.tail {
+			&:before, &:after {
+				content: '';
+				position: absolute;
+				bottom: 10px;
+				right: -19px;
+				width: 0px;
+				height: 0px;
+				border-style: solid;
+				border-width: 10px;
+			}
+			&:after {
+				border-color: transparent transparent transparent $color-page;
+				z-index: 2;
+			}
+			&:before {
+				border-color: transparent transparent transparent $color-wall-border;
+				right: -20px;
+				z-index: 1;
+			}
+		}
+	}
+	.deleteorremove-container {
+		td {
+			vertical-align: bottom;
+		}
+		.message-restore {
+			position: relative;
+			z-index: 1;
+			margin: 0 0 10px 10px;
+		}
+	}
+}
+
+.replies .message-removed {
+	.deleteorremove-infobox {
+		position: static;
+		background: none;
+		margin: -10px 0px 0px -20px;
+		border: none;
+		table {
+			background-color: transparent;
+		}
+		.message-restore {
+			margin-right: 0;
+		}
+		&:before {
+			position: absolute;
+			content: '';
+			background: $color-wall-infobox;
+			height: 100%;
+			width: 100%;
+			padding-right: 30px;
+			padding-bottom: 5px;
+			border-top: 1px dashed $color-page-border;
+			border-left: 5px solid $color-buttons;
+			z-index: -1;
+		}
+		&:after {
+			position: absolute;
+			bottom: -1px;
+			left: -15px;
+			content: '';
+			background: $color-wall-infobox;
+			height: 0;
+			width: 100%;
+			padding-right: 30px;
+			border-bottom: 1px dashed $color-page-border;
+			z-index: 2;
+		}
+	}
+}
+
+.Wall, 
+.WallPreview {
+	.quote {
+		background-color: $color-wall-infobox;
+		border: 1px solid $color-wall-border;
+		font-style: italic;
+		margin: 8px 0;
+		padding: 10px;
+	}
+}
+
+#WallTooltipMeta {
+	display: none;
+}
+
+.WallPreview {
+	border: 1px solid $color-wall-border;
+	font-size: 13px;
+	min-height: 300px;
+	position: relative;
+	padding: 10px;
+	.WikiaArticle {
+		padding: 0;
+		.msg-title {
+			font-weight: bold;
+			font-size: 18px;
+			span {
+				color: $color-text;
+				text-decoration: none;
+			}
+		}
+	}
+}
+// Vote tooltip styles
+.tooltip-text {
+	padding: $tooltip-padding;
+}

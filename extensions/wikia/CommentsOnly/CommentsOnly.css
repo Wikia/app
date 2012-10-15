@@ -1,0 +1,21 @@
+.WikiaArticle {
+	min-height: 0;
+}
+
+.WikiaArticleComments {
+	border-top: 0;
+	margin-top: 5px;
+	padding-top: 0;
+}
+
+.WikiaPageHeader {
+	margin-bottom: 0;
+}
+
+.WikiaPageHeader details {
+	margin-bottom: 0;
+}
+
+#WikiaArticleBottomAd {
+	display: none;
+}

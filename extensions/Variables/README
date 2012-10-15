@@ -1,0 +1,26 @@
+== About ==
+
+The 'Variables' extension for MediaWiki introduces parser functions for defining page-scoped
+variables within wiki pages.
+
+* Website: https://www.mediawiki.org/wiki/Extension:Variables
+* Authors: Rob Adams, Tom Hempel, Xiloynaha and Daniel Werner
+* License: Public domain
+
+
+== Installation ==
+
+Once you have downloaded the code, place the 'Variables' directory within your
+MediaWiki 'extensions' directory. Then add the following code to your
+[[Manual:LocalSettings.php|LocalSettings.php]] file:
+
+ # Variables
+ require_once( "$IP/extensions/Variables/Variables.php" );
+
+ 
+== Contributing ==
+
+If you have bug reports or feature requests, please add them to the ''Variables''
+Talk page [0]. You can also send them to Daniel Werner < danweetz@web.de >
+
+[0] https://www.mediawiki.org/w/index.php?title=Extension_talk:Variables

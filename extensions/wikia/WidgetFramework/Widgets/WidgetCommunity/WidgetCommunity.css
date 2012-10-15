@@ -1,0 +1,42 @@
+.WidgetCommunity dd {
+	max-height: none;
+	padding: 0;
+}
+
+.activityfeed img.sprite {
+	margin-left: -20px;
+}
+
+.WidgetCommunity .community_header {
+	border-bottom-style: solid;
+	border-bottom-width: 1px;
+	padding: 2px 4px;
+}
+
+.WidgetCommunity .article_count {
+	font-size: 15pt;
+	font-weight: bold;
+}
+
+.WidgetCommunity .toolbar {
+	height: 1%;
+	text-align: right;
+	overflow: hidden;
+}
+
+.WidgetCommunity .widgetfeed {
+	margin-top: 4px;
+	margin-left: 25px;
+}
+
+.WidgetCommunity .widgetfeed li {
+	height: 1%;
+	margin-bottom: 4px;
+	position: relative;
+}
+
+.WidgetCommunity li strong {
+	font-weight: bold;
+	font-size: 10pt;
+	position: relative;
+}

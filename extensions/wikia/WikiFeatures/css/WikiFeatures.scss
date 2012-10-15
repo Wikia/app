@@ -1,0 +1,249 @@
+@import "../../../../skins/oasis/css/mixins/bodytext";
+@import "../../../../skins/oasis/css/mixins/border-radius";
+@import "../../../../skins/oasis/css/mixins/box-shadow";
+@import "../../../../skins/oasis/css/mixins/clearfix";
+@import "../../../../skins/oasis/css/mixins/gradient";
+@import "../../../../skins/oasis/css/mixins/transform";
+@import "../../../../skins/oasis/css/mixins/transition";
+@import "../../../../skins/oasis/css/core/color";
+
+.WikiFeatures {
+	padding: 10px;
+	>h2 {
+		border-bottom: 1px solid $color-page-border;
+		font-size: 28px;
+		padding: 5px 0 15px 50px;
+		&.heading-features {
+			background: url(/extensions/wikia/WikiFeatures/images/icon_features_big.png) no-repeat 5px 0; /* $wgCdnStylePath */
+		}
+		&.heading-labs {
+			background: url(/extensions/wikia/WikiFeatures/images/icon_labs_big.png) no-repeat 5px 0; /* $wgCdnStylePath */
+		}
+	}
+	>.creative {
+		font-size: 16px;
+		line-height: 26px;
+		margin-top: 15px;
+	}
+	.features {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		.feature {
+			@include clearfix;
+			border-top: 1px solid $color-page-border;
+			padding: 30px 0 30px 0;
+			h3 {
+				border-bottom: 1px solid $color-page-border;
+				font-size: 20px;
+				margin: 0;
+				padding: 0 0 5px 0;
+			}
+			&:first-child {
+				border-top: 0;
+			}
+			.representation {
+				border: 1px solid $color-page-border;
+				float: left;
+				height: 100px;
+				position: relative;
+				width: 150px;
+				.promo-text {
+					color: red;
+					display: block;
+					font-size: 14px;
+					text-align: center;
+					font-weight: bold;
+				}
+				&.promotion {
+					.promo-text {
+						color: white;
+						left: 0;
+						position: absolute;
+						top: 0;
+						width: 100px;
+						z-index: 5;
+						@include transform-origin(0 0);
+						@include transform(translate(-17px, 54px) rotate(-45deg));
+
+					}
+					&:after {
+						background: url(/extensions/wikia/WikiFeatures/images/new_ribbon.png); /* $wgCdnStylePath */
+						content: "";
+						height: 93px;
+						left: -6px;
+						position: absolute;
+						top: -6px;
+						width: 93px;
+					}
+				}
+			}
+
+			.details {
+				margin: 0 190px 0 165px;
+			}
+			.actions {
+				float: right;
+				.slider {
+					@include border-radius(14px);
+					@include box-shadow(0, 2px, 5px, #999, true);
+					background-color: #eeeded;
+					border: 1px solid #a6a6a6;
+					cursor: pointer;
+					display: block;
+					height: 26px;
+					position: relative;
+					width: 107px;
+					.texton {
+						color: #FFFFFF;
+						display: none;
+						font-weight: bold;
+						margin-left: 5px;
+						position: absolute;
+						text-align: center;
+						top: 2px;
+						width: 70px;
+					}
+					.textoff {
+						color: #000;
+						font-weight: bold;
+						margin-left: 32px;
+						position: absolute;
+						text-align: center;
+						top: 2px;
+						width: 70px;
+					}
+					.button {
+						@include border-radius(14px);
+						@include linear-gradient(#f2f2f2, top, #F2F2F2, 35%, #D8D8D8, 65%);
+						@include transition-shorthand(left 350ms);
+						border: 1px solid #a6a6a6;
+						display: block;
+						height: 26px;
+						left: -1px;
+						padding: 0;
+						position: absolute;
+						top: -1px;
+						width: 26px;
+						z-index: 1;
+					}
+					&.on {
+						@include linear-gradient(#477c0f, top, #477c0f, 0%, #85cd38, 100%);
+						.texton {
+							display: block;
+						}
+						.textoff {
+							display: none;
+						}
+						.button {
+							left: 80px;
+						}
+					}
+				}
+				.feedback {
+					margin-top: 5px;
+					>img {
+						position: relative;
+						top: -1px;
+					}
+				}
+				.active-on {
+					font-size: 11px;
+				}
+			}
+		}
+	}
+}
+
+.FeedbackDialog {
+	display: none;
+	.feature-highlight {
+		float: right;
+		margin-left: 30px;
+		text-align: center;
+		width: 302px;
+		h2 {
+			font-size: 14px;
+			font-weight: bold;
+		}
+		img {
+			border: 1px solid black;
+			width: 300px;
+		}
+	}
+
+	label {
+		font-weight: bold;
+	}
+
+	.input-group {
+		clear: both;
+		margin-top: 10px;
+	}
+
+	.comment-group {
+		text-align: right;
+		label {
+			clear: both;
+			float: left;
+		}
+	}
+
+	textarea {
+		height: 10em;
+		width: 660px;
+		&.invalid {
+			border: 1px solid #f00;
+			&:focus {
+				@include box-shadow(0px, 0px, 6px, #f00);
+			}
+		}
+	}
+
+	input[type=submit],
+	.status-msg {
+		float: right;
+		margin-left: 20px
+	}
+
+	.status-msg {
+		color: #090;
+	}
+
+	.invalid {
+		color: #f00;
+	}
+}
+
+.modalWrapper .FeedbackDialog {
+	display: block;
+}
+
+.DeactivateDialog {
+	display: none;
+	p {
+		margin-bottom: 10px;
+	}
+	nav {
+		bottom: 10px;
+		position: absolute;
+		right: 10px;
+	}
+}
+
+.modalWrapper .DeactivateDialog {
+	display: block;
+}
+
+.star-rating {
+	@include clearfix;
+	>img {
+		background: url('/extensions/wikia/WikiFeatures/images/star-inactive.png'); /* base64 */
+		height: 16px;
+		float: left;
+		width: 16px;
+		&.active {
+			background: url('/extensions/wikia/WikiFeatures/images/star-active.png'); /* base64 */
+		}
+	}
+}

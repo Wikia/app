@@ -1,0 +1,12 @@
+.article-sidebar {
+	border-left: 1px solid #AAA;
+	float: right;
+	min-height: 300px;
+	padding-left: 10px;
+	position: relative;
+	width: 300px;
+}
+
+.article-sidebar h2.first {
+	margin-top: 0px;
+}

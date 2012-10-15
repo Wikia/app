@@ -1,0 +1,66 @@
+
+#wiki_logo{
+	position:static;
+	float:left;
+}
+
+.lyricsMinimalTop{
+	min-width:984px;
+	overflow:hidden;
+}
+
+#lyricsMinimalTop_leader{
+	float:left;
+	height:122px; /* the logo is 155px tall, and we're going to pad the box by 33px */
+	padding-top:33px; /* centers a 768x90 leaderboard vertically */
+}
+
+#wikia_page{
+	margin: 0px;
+	top: 0px;
+}
+
+.rtMatcher{
+	display:none;
+}
+
+
+
+
+/* TODO: MOVE SOME OF THIS OUT INTO AN APP-SPECIFIC CSS THEME-FILE */
+#body, #wikia_page{
+	background-color:#000;
+	color:#fff;
+	border:0px;
+}
+#bodyContent a{
+	color:#22f;
+}
+.wikiaSkinLyricsMinimal .lyricbox{
+	border: 0px;
+	background-color:#000;
+	color:#fff;
+	padding-top:0px;
+}
+.wikiaSkinLyricsMinimal #catlinks{
+	background-color:inherit;
+	border-color:#444;
+	color:#444;
+	display:none;
+}
+.usermessage{
+	display:none;
+}
+#fb-root{ /* not sure if the page will actually load faster with this displayed none */
+	display:none;
+}
+
+/* Hide everything in the main content... */
+#bodyContent  ul, #bodyContent .plainlinks, #bodyContent h2, .songfooter-fake-h2{
+	display:none;
+}
+
+/* TARGETS THE "This album is by 'Whoever' on the album 'Whatever (1999)'" and the 'View GN lyrics' stuff. */
+#bodyContent p {
+	display:none;
+}

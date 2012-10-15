@@ -1,0 +1,9 @@
+/*sequencer page helper code (included on all sequence namespace pages) NOT currently active*/
+
+mv_addLoadEvent(sequence_edit_check);
+
+function sequence_edit_check(){
+	if($j('#ca-edit').hasClass("selected")){
+		alert('setup sequencer swap');
+	}
+}

@@ -1,0 +1,13 @@
+# This is a comment
+# Scalar tests
+Scalar
+scalar = scalar value
+
+# Arrays tests
+Arrays
+array[]    = key1: value1
+array[]    = key2: value2
+overload[] = key1: value1, key1: value2
+array2[]   = key1: { sub1: val1,  sub2: val2 }, key2: { sub3: val3, sub4: val4 }
+array3     = key3: value3, key4: value4
+array4[]   = { key1: val1, { val2, val3 } }

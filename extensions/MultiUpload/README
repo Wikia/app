@@ -1,0 +1,38 @@
+== WikiHow:MultipleUpload Extension ==
+
+This is a simple extension to upload multiple photos at once. It makes
+as much use of Special:Upload as it can. There are some issues when a
+warning and an error is encountered in one upload attempt.
+
+
+=== Requirements ===
+
+* PHP 5.x
+* This has been tested on Mediawiki 1.6.7, so it should work on later versions. 
+
+
+=== Installation ===
+
+Download the extension from here http://www.wikihow.com/x/multipleupload.tar,
+in your base Mediawiki directory. It will place SpecialMultipleUpload.php
+in your extensions directory.
+
+Add the line
+
+	require_once("extensions/MultiUpload/MultiUpload.php");
+
+to your LocalSettings.php file.
+
+
+=== Configuration ===
+
+You can change the maximum number of files a user can upload at once by
+changing $wgMaxUploadFiles. Then all you have to do is put a link somewhere
+to Special:MultipleUpload.
+
+=== License ===
+ * @author Travis Derouin <travis@wikihow.com>
+ * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
+ * @homepage http://www.wikihow.com/WikiHow:MultipleUpload-Extension
+
+

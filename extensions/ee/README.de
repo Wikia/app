@@ -1,0 +1,28 @@
+External Editor Helper application (EE)
+Erik Moeller, 2005
+
+Lizenz: Public domain
+
+Funktion: Erlaubt die Verwendung beliebiger externer Applikationen zur
+Bearbeitung oder Anzeige von Ressourcen im Web, z.B. in einem Wiki.
+
+Anwendungsbeispiel: Sie möchten ein Bild in einem Wiki bearbeiten.
+Wenn das Wiki die Verwendung von application/external-editor unterstuezt,
+sollten Sie in der Naehe des Bildes einen entsprechenden Bearbeitungs-Link
+finden. Nachdem Sie diesen Link anklicken, schickt das Wiki eine 
+Ressourcen-Beschreibungsdatei an den Web-Browser, die den MIME-Typ
+application/external-editor hat. Der Web-Browser laedt darauf hin diese
+Hilfsapplikation, die wiederum das Bild herunter laedt und das gewuenschte 
+Bildbearbeitungsprogramm startet. Nach dem Speichern der Datei wird die 
+veraenderte Datei ueber ein definiertes Interface wieder zurueck auf den 
+Server geladen.
+
+Benutzung: Verknuepfen Sie in Ihrem Web-Browser ee.pl mit dem MIME-Typ
+application/external-editor. Konfigurieren Sie Editoren und Anzeige-
+programme, in dem Sie in ee.cfg Applikationen mit MIME-Typen 
+assoziieren. Um Dateien hochzuladen, muessen auch Authentifizierungs-
+Informationen fuer die gewuenschten Websites in der Konfigurationsdatei
+eingetragen werden.
+
+Installation: Lesen sie die Datei INSTALL für detaillierte Installations-
+Anweisungen unter Unix und Windows (Englisch).

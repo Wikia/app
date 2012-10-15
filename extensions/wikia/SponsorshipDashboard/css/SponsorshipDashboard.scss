@@ -1,0 +1,207 @@
+@import "../../../../skins/oasis/css//core/color";
+
+.sponsorship-dashboard-panel-chart {
+	margin-top: 35px;
+	margin-left: 10px;
+	height: 400px;
+}
+
+.sponsorship-dashboard-panel-variables {
+	margin: 25px 0  0 35px;
+}
+
+.sponsorship-dashboard-panel-header {
+	height: 60px;
+	margin: 20px 35px 0px 35px;
+	width: 910px;
+	font-size: 12px;
+	
+	.datepicker {
+		float: left;
+		padding: 5px;
+	}
+}
+
+.sponsorship-dashboard-actions {
+	height: 30px;
+	text-align: right;
+	.wikia-menu-button {
+		margin-right: 45px;
+	}
+}
+
+.sd-select-deselect-all {
+	margin-top: 15px;
+}
+
+input[type="checkbox"] {
+	margin: 5px;
+	padding: 0px;
+}
+
+.colorHolder {
+	width: 23px;
+	height: 23px;
+	display: inline-block;
+	margin-top:2px;
+}
+
+.sponsorship-dashboard-panel-body {
+	margin-left: 20px;
+}
+
+.sponsorship-dashboard-panel-cachedate {
+	font-style: italic;
+	font-size: 11px;
+	text-align: right;
+	height: 40px;
+	margin-right: 45px;
+	width: 910px;
+}
+
+.sd-variable-wrapper {
+	width: 450px;
+	display: inline-block;
+}
+
+.placeholder {
+	width:930px;
+	height:400px;
+}
+
+h2.title {
+	margin: 40px 0 10px 0;
+}
+
+div.sponsorship-dashboard-description {
+	margin: 0px 35px 0px 35px;
+	font-size: 13px;
+	strong.bigFont {
+		font-size: 16px;
+	}
+}
+
+.overviewWrapper {
+	float:right;
+	margin:0px;
+	
+	.overview {
+		width:200px;
+		height:35px;
+		cursor:col-resize;
+		float: right;
+	}
+
+	.overviewLabel {
+		margin-left: 10px;
+		width:200px;
+		text-align: right;
+		margin-right: 5px;
+		line-height: 30px;
+		height: 20px;
+	}
+}
+
+.toolTip {
+	position: absolute;
+	display: none;
+	color: #000;
+	padding: 2px;
+	background-color: #fff;
+	opacity: 0.80;
+	z-index: 99px;
+}
+
+.hubposition {
+	text-align: right;
+	margin-right: 40px;
+}
+
+.choices {
+	margin-left: 20px;
+}
+
+h3.sponsorship-dashboard-show {
+	margin: 0px 0px 10px 0px;
+}
+
+div.sponsorship-dashboard-form-text {
+	display: inline;
+	vertical-align:text-top;
+	line-height: 5px;
+	margin: 10px 0 10px 0
+}
+
+div.tabs-container {
+	margin-bottom: 20px;
+}
+
+div.tickLabels {
+	div {
+		color: $color-text;
+	}
+}
+
+.sponsorship-dashboard-nodata {
+	text-align: center;
+}
+
+p.sponsorship-dashboard-choices {
+	margin: 5px 5px 10px;
+}
+
+ul.subcats{
+	margin: 0px 0px 0px 0px;
+	padding: 0;
+	display: inline-block;
+}
+
+ul.subcats li{
+	display: inline;
+}
+
+ul.subcats li a{
+	float: left; text-decoration: none;
+	padding: 5px 11px;
+	margin: 5px 0;
+	border-left: 1px solid #000;
+}
+
+ul.subcats li.first a{
+	border: 0px solid #000;
+}
+
+ul.tabs {
+	margin: 0.4em 0px 0.5em 0;
+}
+
+.sponsorship-dashboard-table {
+
+	font-size: 12px;
+	width: 900px;
+	margin: 5px 35px;
+	thead {
+		font-weight: bold;
+		line-height: 14px;
+		td {
+			vertical-align: top;
+		}
+	}
+	td {
+		padding: 5px;
+		margin: 0px;
+		border-bottom: 1px solid  mix($color-page, $color-text, 70%);
+	}
+	td.sponsorship-dashboard-collumn-date {
+		font-weight: bold;
+		width: 80px;
+	}
+}
+
+.sponsorship-dashboard-error-msg {
+
+	border: 2px solid red;
+	padding: 5px 10px;
+}
+
+/* end of FF3.0 hack */

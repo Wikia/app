@@ -1,0 +1,56 @@
+ul.watched-list {
+	clear: both;
+	float: left;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	width: 98%;
+}
+
+.watched-list li {
+	float: left;
+	margin: 0;
+	padding: 0;
+	position: relative;
+	width: 30%;
+}
+
+.watched-list li span {
+	display: block;
+	margin-left: 25px;
+}
+
+.watched-list .unwatch {
+	width: 25px;
+	float:left;
+	margin: 0px;
+}
+
+.ajax-show-more {
+	font-size:15px;
+}
+
+.ajax-unwatch {
+	float: left;
+	margin: 3px 0 0 2px;
+	position: relative;
+	visibility: hidden;
+}
+
+.otherNs {
+	visibility: hidden;
+}
+
+.hideInfoSpan {
+	float:left;
+	margin-right:10px;
+}
+
+/* Oasis specific fixes */
+.skin-oasis .watched-list li {
+	width: 49%;
+}
+
+.skin-oasis .ajax-unwatch {
+	margin: 0 0 0 5px;
+}

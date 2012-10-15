@@ -1,0 +1,35 @@
+@import "color";
+@import "layout";
+@import "../mixins/border-radius";
+
+#SharingToolbar {
+	$share-background-color: transparentize($color-page, 0.65);
+	@if lightness($color-page) < 50 {
+		$share-background-color: transparentize($color-page, 0.7);
+	}
+	@include border-radius(5px);
+	background-color: $share-background-color;
+	display: none;
+	padding: 3px;
+	position: absolute;
+	left: $width-outside + 8px;
+	top: 10px;
+	width: 55px;
+	&.fixed {
+		left: 50%;
+		position: fixed;
+		margin-left: ($width-outside/2) + 7px;
+	}
+	.wikia-button {
+		font-size: 11px;
+		margin-top: 10px;
+		.sprite {
+			height: 12px;
+		}
+		padding-left: 5px;
+		padding-right: 5px;
+	}
+	>:first-child {
+		margin: 0 0 5px 0;
+	}
+}

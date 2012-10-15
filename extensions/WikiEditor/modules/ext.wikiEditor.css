@@ -1,0 +1,24 @@
+/*
+ * CSS for WikiEditor
+ */
+
+/* This ID (#editform) could change in MediaWiki */
+form#editform {
+	margin: 0;
+	padding: 0;
+}
+/* These IDs (#wpSummaryLabel and #wpSummary) could change in MediaWiki */
+#wpSummary, #wpSummaryLabel {
+	margin-bottom: 1em;
+}
+/* This ID (#wpTextbox1) could change in MediaWiki */
+.wikiEditor-ui textarea#wpTextbox1 {
+	border: none;
+	padding: 0;
+	margin: -1px;
+	line-height: 1.5em;
+	resize: vertical;
+}
+.wikiEditor-ui .wikiEditor-ui-text > textarea#wpTextbox1 {
+	margin: 0;
+}

@@ -1,0 +1,3 @@
+recursive-include src *.py *.js
+recursive-include tests *.py *.js
+recursive-include examples *.py *.js *.html

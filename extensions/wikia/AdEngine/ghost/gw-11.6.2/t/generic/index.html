@@ -1,0 +1,48 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+  "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <title>A simple testsuite for asynchronous `document.write` (such as that from extsrc.js)</title>
+    <style type="text/css">
+      span { background-color: red; }
+      #info { background-color: #ffc; border: 1px solid red; margin-bottom: 15px; padding: 5px; max-width: 960px; }
+    </style>
+  </head>
+  <body>
+    
+    <script type=text/deferscript defersrc="../fixtures/async-document-write-test/write_text_a.js"></script>
+    <p>This text is in between scripts A and B</p>
+    <script type=text/deferscript defersrc="../fixtures/async-document-write-test/write_text_b.js"></script>
+    
+    <script type=text/deferscript defersrc="../fixtures/async-document-write-test/write_opening_tag.js"></script>
+    This text should be part of a header
+    <script type=text/deferscript defersrc="../fixtures/async-document-write-test/write_closing_tag.js"></script>
+    
+    <p>The following line should be green</p>
+    <p>
+      <script type=text/deferscript defersrc="../fixtures/async-document-write-test/nested_inline.js"></script>
+    </p>
+    <p>The following line should be blue</p>
+    <p>
+      <script type=text/deferscript defersrc="../fixtures/async-document-write-test/nested_external.js"></script>
+    </p>
+    <script type=text/deferscript defersrc="../fixtures/async-document-write-test/write_opening_tag_with_style.js"></script>
+    <script type=text/deferscript defersrc="../fixtures/async-document-write-test/write_closing_tag_with_style.js"></script>
+                 
+    <script type=text/deferscript defersrc="../fixtures/async-document-write-test/ordered_1.js"></script>
+    <script type=text/deferscript defersrc="../fixtures/async-document-write-test/ordered_2.js"></script>
+    <script type=text/deferscript defersrc="../fixtures/async-document-write-test/ordered_3.js"></script>
+    
+    <script type=text/deferscript>
+      var __testVariable = 1;
+    </script>
+    <script type=text/deferscript defersrc="../fixtures/async-document-write-test/redeclare_variable.js"></script>
+    <script type=text/deferscript>
+      document.write('Redeclared variable value is: ' + __testVariable + ' (should be 2)');
+    </script>
+    
+    <script src="../../lib/gw.min.js"></script>
+ <script>ghostwriter.loadscripts();</script> 
+  </body>
+</html>

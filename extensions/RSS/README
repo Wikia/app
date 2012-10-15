@@ -1,0 +1,11 @@
+== About ==
+
+Displays an RSS feed on a wiki page.
+See http://www.mediawiki.org/wiki/Extension:RSS
+
+== Credits to other projects ==
+
+* MagpieRSS
+This extension includes code from the MagpieRSS library.
+MagpieRSS provides an XML-based (expat) RSS parser in PHP,
+and is released under the GPL.

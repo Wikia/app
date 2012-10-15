@@ -1,0 +1,264 @@
+@font-face {
+	font-family: 'Droid Serif';
+	src: local('Droid Serif'), local('DroidSerif'), url(extensions/wikia/GameGuides/fonts/DroidSerif.ttf) format('truetype');
+	font-weight: 400;
+}
+
+@font-face {
+	font-family: 'Roboto-Thin';
+	src: local('Roboto Thin'), local('RobotoThin'), url(file:///android_asset/fonts/RobotoThin.ttf), url(extensions/wikia/GameGuides/fonts/RobotoThin.ttf) format('truetype');
+	font-weight: 100;
+}
+
+@import "../../WikiaMobile/css/variables";
+
+//dependencies
+@import "../../WikiaMobile/css/ui";
+@import "../../WikiaMobile/css/infobox";
+@import "../../WikiaMobile/css/sections";
+@import "../../WikiaMobile/css/images";
+@import "../../WikiaMobile/css/videos";
+@import "../../WikiaMobile/css/image_stack";
+@import '../../WikiaMobile/css/modal';
+@import '../../WikiaMobile/css/media_modal';
+@import '../../WikiaMobile/css/image_placeholder';
+@import '../../WikiaMobile/css/loader';
+
+$mainGreen: rgb(171,197,97);
+$halfMainGreen: rgba(171,197,97,.5);
+
+$sectionGrey: rgb(41, 41, 41);
+
+$linkColor: rgb(172,172,172);
+$textColor: rgb(233,233,233);
+
+$backgroundColor: rgb(20,20,20);
+
+//I use it in a lot of places so it makes sense to have it here
+//The faster the better as it is not rendering but browser does calculation based on it
+*{
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+html {
+	background: $backgroundColor;
+
+	font-size: 1em;
+
+	&.serif {
+		font-family: 'Droid Serif', serif;
+	}
+}
+
+body {
+	background: $backgroundColor;
+
+	padding: 10px 20px;
+
+	color: $textColor;
+
+	font-family: 'Roboto-Thin';
+
+	line-height: 1.7em;
+}
+
+h1, h2, h3{
+	margin: 10px 0 0 0;
+	font-weight: 100;
+}
+
+#mw-content-text {
+	background: $backgroundColor;
+}
+
+#pageName {
+	color: $textColor;
+	font-weight: 800;
+	font-size: 1.2em;
+}
+
+h2, h3, .collSec {
+	color: $textColor;
+}
+
+.collSec {
+	border-top: none;
+
+	padding-bottom: 10px;
+	padding-top: 0;
+
+	font-size: 1.1em;
+	text-transform: uppercase;
+
+	background-repeat: no-repeat;
+	background-position: 100% 100%;
+	background-size: 300% 1px;
+	background-image: -webkit-gradient(linear, left top, right top, color-stop( 30%, $mainGreen ), color-stop( 50%, $sectionGrey ));
+	background-image: -webkit-linear-gradient(left, $mainGreen 30%, $sectionGrey 50%);
+	background-image: linear-gradient(to right, $mainGreen 30%, $sectionGrey 50%);
+
+	-webkit-transition: background-position .3s linear, color .3s;
+	-webkit-transition-delay: .05s;
+
+	&.open {
+		color: $mainGreen;
+		background-position: 0 100%;
+	}
+
+	.chev {
+		top: 23%;
+		width: 0;
+		height: 0;
+	}
+}
+
+a {
+	text-decoration: none;
+
+	color: $textColor;
+	pointer-events: none;
+
+	&[title] {
+		color: $linkColor;
+		pointer-events: auto;
+
+		border-bottom: 1px dotted $linkColor;
+	}
+
+	.link &, .thumb & {
+		border-bottom: none;
+	}
+}
+
+.reference {
+	display: none;
+}
+
+dd {
+	margin-left: 15px;
+}
+
+//hmmm
+#va-titleicons, #toc {
+	display: none;
+}
+
+$size: 10;
+$width: 1;
+
+.chev {
+	position: relative;
+
+	width: 0;
+	height: 0;
+	border: $size + px solid;
+	border-color: $textColor transparent transparent transparent;
+
+	-webkit-transition: -webkit-transform .3s;
+	-webkit-transition-delay: .05s;
+	-webkit-transform-origin: 50% 25%;
+	-moz-transition: -moz-transform .3s;
+	-moz-transition-delay: .05s;
+	-moz-transform-origin: 50% 25%;
+	transition: transform .3s;
+	transition-delay: .05s;
+	transform-origin: 50% 25%;
+
+	&:after {
+		content: '';
+		position: absolute;
+
+		left: ( -$size + $width ) + px;
+		top: ( -$size - 1 ) + px;
+		width: 0;
+		height: 0;
+
+		border: ( $size - $width ) + px solid;
+		border-color: $backgroundColor transparent transparent transparent;
+	}
+}
+
+.open .chev {
+	border-top-color: $mainGreen;
+	-webkit-transform: rotateZ(-180deg);
+	-moz-transform: rotateZ(-180deg);
+	transform: rotateZ(-180deg);
+}
+
+.wikitable, .sortable{
+	border:1px solid $border-color;
+
+	th{
+		white-space:nowrap;
+	}
+
+	td{
+		border:1px solid $border-color;
+		white-space:nowrap;
+	}
+}
+
+table {
+	font-size: 1em;
+	line-height: inherit;
+}
+
+//handling wide Tables
+.bigTable{
+	position: relative;
+
+	max-width: 100%;
+	padding: 5px;
+	margin-top: $page-padding;
+
+	border-right: 1px solid $halfMainGreen;
+
+	background-color: #222;
+
+	font-size: .8em;
+
+	-webkit-transition: border .2s;
+	-moz-transition: border .2s;
+	-o-transtion: border .2s;
+
+	table {
+		pointer-events: none;
+	}
+
+	&.active {
+		table {
+			pointer-events: auto;
+		}
+	}
+}
+
+//if native scroll is available:
+.overflow .bigTable {
+	overflow: auto;
+	-webkit-overflow-scrolling: touch;
+}
+
+//if not
+.no-overflow .bigTable {
+	overflow: hidden;
+}
+
+//images
+figure {
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+
+	img {
+		border: 1px solid rgb(42, 42, 42);
+	}
+
+	.thumbcaption {
+		position: relative;
+
+		background: none;
+
+		white-space: normal;
+		color: rgb(187, 187, 187);
+	}
+}

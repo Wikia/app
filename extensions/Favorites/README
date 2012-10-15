@@ -1,0 +1,38 @@
+This extension provides the ability for users to create a list of 
+favorites. It works separately from the Watchlist, and provides the 
+ability to also embed your users' lists of favorites on a page (such as 
+on the main page). 
+
+== Database schema == 
+
+A 'favoritelist' table is added to the wiki's database. This table 
+contains the list of items that have been added to each user's favorite 
+list. 
+
+The table must be present for the wiki to function once the extension is 
+enabled 
+
+== Installation == 
+
+To enable the extension, add the following line to your 
+LocalSettings.php file: 
+
+require_once("$IP/extensions/Favorites/Favorites.php"); 
+
+You must then create and populate the new database table. 
+
+The easiest way to do this is to run MediaWiki's standard updater: 
+php maintenance/update.php 
+
+If you do not have command-line access to your server, you can manually 
+apply the favorites.sql file's commands to your database (check for 
+proper table prefix, etc). 
+
+== Configuration Parameters == 
+
+If using the Vector skin, you may want to also add the "Star" icon to 
+your navigation bar. To do this, add the following line '''above''' the 
+"require_once" line in your LocalSettings.php file: 
+
+$wgUseIconFavorite = true; 
+

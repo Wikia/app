@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Jasmine Spec Runner</title>
+		<!--DEPENDENCIES-->
+		<script>
+			(function() {
+				var jasmineEnv = jasmine.getEnv();
+				jasmineEnv.addReporter(new jasmine.PhantomReporter());
+
+				window.onload = function() {
+					jasmineEnv.execute();
+				};
+			})();
+		</script>
+	</head>
+	<body>
+	</body>
+</html>

@@ -1,0 +1,55 @@
+@import "../../../../skins/oasis/css/core/color";
+
+.activity-type-talk.activity-ns-1201 span.wall-owner { position: relative; font-size: 12px; }
+
+table.wallfeed {
+	margin-top: 3px;
+	font-size: 12px;
+	td {
+		margin: 0;
+		padding: 0;
+		
+		p {
+			border: 0;
+			margin: 0 0 5px 10px;
+			padding: 0;
+			line-height: 150%;
+			&.author {
+				margin-bottom: 5px;
+				a {
+					font-weight: bold;
+					text-decoration: none;
+				}
+			}
+			.username {
+				margin-left: 5px;
+				color: $color-alternate-text;
+			}
+		}
+		
+		time {
+			font-size: 11px;
+			color: $color-alternate-text;
+			display: inline-block;
+		}
+		
+		img.avatar {
+			border: 1px solid #a0a0a0;
+			height: 30px; /* fb#23779 */
+			margin-top: 5px;
+			width: 30px; /* fb#23779 */
+		}
+	}
+	
+	/* ugly hacks for WikiActivity architecture [display of added photos to message wall posts], not proud of this code */
+	tr[data-type=inserted-image] {
+		.activityfeed-details-label {
+			visibility: hidden;
+			em { position: absolute; left: 85px; visibility: visible; }
+		}
+		ul.activityfeed-inserted-media {
+			padding-top: 20px !important;
+			li { padding: 0; }
+		}
+	}
+}

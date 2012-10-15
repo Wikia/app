@@ -1,0 +1,96 @@
+@import "../../../../skins/oasis/css/core/color";
+@import "../../../../skins/oasis/css/core/layout";
+@import "../../../../skins/oasis/css/mixins/arrow";
+@import "../../../../skins/oasis/css/mixins/border-radius";
+@import "../../../../skins/oasis/css/mixins/box-shadow";
+@import "../../../../skins/oasis/css/mixins/opacity";
+
+@import "DropdownColors";
+
+$ddHeight: 20px;
+
+.WikiaDropdown {
+	font-size: 12px;
+	position: relative;
+
+	.dropdown {
+		@include border-radius(3px);
+		@include box-shadow(0, 3px, 6px, $Dropdown-color-shadow);
+
+		background-color: $Dropdown-color-background;
+		border: 1px solid $Dropdown-color-border;
+		display: none;
+		left: 0;
+		margin-bottom: 10px;
+		min-width: 200px;
+		overflow-x: hidden;
+		overflow-y: auto;
+		position: absolute;
+		top: $ddHeight+1;
+		z-index: $zTop;
+	}
+	
+	&.disable {
+		@include opacity(50);
+	}
+
+	.dropdown-list {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+
+	.dropdown-item {
+		display: block;
+		line-height: $ddHeight;
+		margin: 0;
+		
+		label {
+			cursor: pointer;
+			display: block;
+			padding: 0 10px;
+		}
+
+		&:hover {
+			background-color: $Dropdown-color-hover-background;
+		}
+
+		&.selected {
+			background-color: $Dropdown-color-selected-background;
+		}
+	}
+
+	&.open .dropdown {
+		display: block;
+	}
+
+	.selected-items {
+		@include border-radius(3px);
+
+		background-color: $Dropdown-color-background;
+		border: 1px solid $Dropdown-color-border;
+		cursor: pointer;
+		line-height: $ddHeight;
+		min-height: $ddHeight;
+		min-width: 180px;
+		padding: 0 25px 0 10px;
+		position: relative;
+
+		.arrow {
+			@include arrow(4px, $Dropdown-color-arrow);
+			@include opacity(70);
+			position: absolute;
+			right: 10px;
+			top: 45%;
+		}
+
+		&:hover {
+			background-color: $Dropdown-color-hover-background;
+			.arrow {
+				@include opacity(100);
+			}
+		}
+
+	}
+
+}

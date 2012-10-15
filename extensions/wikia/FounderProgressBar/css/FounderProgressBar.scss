@@ -1,0 +1,378 @@
+@import "../../../../skins/oasis/css/mixins/border-radius";
+@import "../../../../skins/oasis/css/mixins/box-shadow";
+@import "../../../../skins/oasis/css/mixins/clearfix";
+@import "../../../../skins/oasis/css/mixins/gradient";
+@import "../../../../skins/oasis/css/mixins/opacity";
+@import "../../../../skins/oasis/css/mixins/transform";
+@import "../../../../skins/oasis/css/core/layout";
+@import "../../../../skins/oasis/css/core/color";
+
+$color-founder-progress-preview-top: $color-page;
+$color-founder-progress-preview-bottom: darken($color-page, 4%);
+$color-founder-progress-preview-border: lighten($color-page-border, 6%);
+$color-founder-progress-header-highlight: $color-module-highlight;
+$color-founder-progress-header-highlight-alternate: darken($color-module-highlight, 2%);
+$color-founder-progress-header-shadow-alternate: darken($color-module-highlight, 9%);
+$color-founder-progress-header-shadow: $color-module-shadow;
+$color-founder-progress-indicator-arrow: mix($color-page, #000, 95%);
+$color-founder-progress-header-text: $color-text;
+$color-founder-progress-text-alternate: $color-text;
+$color-founder-progress-list-border-shadow: #e2e2e2;
+@if $is-dark-wiki {
+	$color-founder-progress-indicator-arrow: mix($color-page, #FFF, 90%);
+	$color-founder-progress-list-border-shadow: #333;
+}
+
+#FounderProgressWidget {
+	.preview {
+		@include linear-gradient($color-page, top, $color-founder-progress-preview-top, 10%, $color-founder-progress-preview-bottom, 100%);
+		border: 1px solid $color-founder-progress-preview-border;
+		position: relative;
+		.founder-progress-bar {
+			margin: 10px;
+		}
+		.founder-progress-bar-click-area {
+			cursor: pointer;
+			height: 95px;
+			left: 10px;
+			position: absolute;
+			top: 10px;
+			width: 95px;
+			z-index: 1;
+		}
+		.numeric-progress {
+			font-size: 36px;
+			left: 0;
+			margin: 10px;
+			padding-top: 28px;
+			position: absolute;
+			text-align: center;
+			top: 0;
+			width: 95px;
+			.percentage {
+				font-size: 14px;
+				font-weight: bold;
+				position: relative;
+				top: -14px;
+			}
+		}
+		header {
+			background-color: $color-founder-progress-indicator-arrow;
+			height: 63px;
+			padding: 7px 20px 0 0;
+			position: absolute;
+			right: 0;
+			text-align: right;
+			top: 17px;
+			width: 120px;
+			h1 {
+				color: $color-founder-progress-text-alternate;
+				font-size: 16px;
+				line-height: 20px;
+				margin: 0;
+			}
+			.list-toggle {
+				color: $color-alternate-text;
+				font-size: 11px;
+				font-style: italic;
+				.hide-full-list {
+					display: none;
+				}
+			}
+			&:after {
+				border: 35px solid transparent;
+				border-right-style: solid;
+				border-right-width: 18px;
+				border-right-color: $color-founder-progress-indicator-arrow;
+				content: "";
+				height: 0;
+				left: -53px;
+				position: absolute;
+				top: 0;
+				width: 0;
+			}
+		}
+		.completion-message {
+			background-color: $color-page;
+			border: 1px solid $color-founder-progress-preview-border;
+			font-size: 13px;
+			line-height: 23px;
+			margin: 10px;
+			padding: 30px 10px 10px 10px;
+			position: relative;
+			.close {
+				position: absolute;
+				top: 10px;
+				right: 10px;
+			}
+		}
+		.activities {
+			margin: 10px;
+			.activity {
+				border: 1px solid $color-founder-progress-preview-border;
+				margin-top: 10px;
+				&:first-child {
+					margin-top: 0px;
+				}
+				.label {
+					@include clearfix;
+					@include linear-gradient($color-founder-progress-header-shadow, top, $color-founder-progress-header-highlight, 40%, $color-founder-progress-header-shadow, 100%);
+					color: $color-founder-progress-text-alternate;
+					padding: 10px;
+					position: relative;
+					.activity-name {
+						float: left;
+						font-weight: bold;
+						width: 190px;
+					}
+					.chevron {
+						border: 5px solid transparent;
+						border-top: 5px solid $color-founder-progress-text-alternate;
+						height: 0;
+						right: 12px;
+						position: absolute;
+						top: 12px;
+						width: 0;
+					}
+					&:hover {
+						cursor: pointer;
+					}
+				}
+				.description {
+					background: $color-page;
+					line-height: 23px;
+					padding: 10px;
+					position: relative;
+					.actions {
+						margin-top: 10px;
+						position: relative;
+						text-align: right;
+						.skip {
+							color: $color-alternate-text;
+							left: 0;
+							position: absolute;
+							top: 5px;
+						}
+					}
+				}
+				&.active {
+					.label {
+						@include linear-gradient($color-founder-progress-header-shadow-alternate, top, $color-founder-progress-header-shadow, 55%, $color-founder-progress-header-shadow-alternate, 100%);
+						color: $color-founder-progress-header-text;
+						.chevron {
+							border-top: 5px solid transparent;
+							border-bottom: 5px solid $color-founder-progress-text-alternate;
+							top: 7px;
+						}
+					}
+					.description {
+						&:before {
+							border: 9px solid transparent;
+							border-top: 7px solid $color-founder-progress-header-shadow-alternate; 
+							content: "";
+							left: 35px;
+							position: absolute;
+							top: 0;
+							width: 0;
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+.FounderProgressList {
+	@include box-shadow(2px, 2px, 2px, $color-founder-progress-list-border-shadow, false, 0);
+	border: 1px solid $color-founder-progress-preview-border;
+	position: relative; 
+	width: 698px;
+	z-index: 7;
+	>nav {
+		@include box-shadow(0, 3px, 6px, $color-founder-progress-list-border-shadow);
+		background: $color-page;
+		height: 20px;
+		padding: 9px 10px 10px 14px;
+		position: relative;
+		z-index: 5;
+		.back-to-dash {
+			font-size: 13px;
+			line-height: 23px;
+			padding-left: 5px;
+			&:before {
+				border: 6px solid transparent;
+				border-right: 6px solid $color-alternate-text;
+				content: "";
+				display: block;
+				float: left;
+				left: -5px;
+				position: relative;
+				top: 5px;
+				width: 0;
+			}
+		}
+	}
+	header {
+		@include linear-gradient($color-founder-progress-header-highlight-alternate, top, $color-founder-progress-header-highlight, 0%, $color-founder-progress-header-highlight-alternate, 25%, $color-founder-progress-header-shadow, 100%);
+		padding: 20px 40px;
+		h1 {
+			font-size: 16px;
+			font-weight: bold;
+		}
+		p {
+			margin-top: 8px;
+			line-height: 20px;
+		}
+	}
+	.tasks {
+		position: relative;
+		z-index: 5;
+		.task {
+			border-top: 1px solid $color-founder-progress-preview-border;
+			.chevron {
+				border: 5px solid transparent;
+				height: 0;
+				right: 25px;
+				position: absolute;
+				width: 0;
+			}
+			&.collapsed {
+				.chevron {
+					border-top: 5px solid $color-founder-progress-header-text;
+					top: 10px;
+				}
+			}
+			&.expanded {
+				.chevron {
+					border-bottom: 5px solid $color-founder-progress-header-text;
+					top: 5px;
+				}
+			}
+			.task-label {
+				@include linear-gradient($color-founder-progress-header-shadow, top, $color-founder-progress-header-highlight, 40%, $color-founder-progress-header-shadow, 100%);
+				color: $color-founder-progress-header-text;
+				cursor: pointer;
+				font-size: 16px;
+				font-weight: bold;
+				padding: 7px 20px;
+				position: relative;
+				.sub-label {
+					color: $color-text;
+					font-size: 12px;
+					font-weight: normal;
+					margin-left: 20px;
+				}
+				.lock {
+					background-image: url(/extensions/wikia/AdminDashboard/images/icons.png);	/* $wgCdnStylePath */
+					background-repeat: no-repeat;
+					background-position: -650px 0;	
+					height: 17px;
+					margin-left: 5px;
+					position: relative;
+					top: 2px;
+					width: 13px;
+				}
+			}
+			.task-group {
+				background: $color-page;
+				padding: 20px 0 10px 31px;
+				*zoom: 1;	/* IE7 */
+				&:after {
+					clear: left;
+					content: "";
+					display: block;
+				}
+			}
+		}
+	}
+	.activities {
+		float: left;
+		margin-left: 18px;
+		width: 200px;
+		.activity {
+			cursor: default;
+			position: relative;
+			.activity-label {
+				color: $color-founder-progress-header-text;
+				font-size: 13px;
+				margin-bottom: 10px;
+			}
+			&.completed .activity-label,
+			&.locked .activity-label {
+				color: $color-alternate-text;
+			}
+			.activity-checkmark {
+				background-image: url(/extensions/wikia/AdminDashboard/images/icons.png);	/* $wgCdnStylePath */
+				background-repeat: no-repeat;
+				background-position: -663px 0;	
+				height: 12px;
+				left: -15px;
+				position: absolute;
+				top: 2px;
+				width: 12px;
+			}
+			.activity-description {
+				bottom: 0px;
+				display: none;
+				padding-bottom: 25px;
+				position: absolute;
+				width: 250px;
+				z-index: 9;
+				.description {
+					@include box-shadow(2px, 2px, 2px, $color-founder-progress-list-border-shadow, false, 0);
+					background: $color-page;
+					border: 1px solid $color-founder-progress-preview-border;
+					position: relative;
+					p {
+						line-height: 23px;
+						padding: 0 10px 10px 15px;
+						position: relative;
+						z-index: 9;
+					}
+					h4 {
+						font-size: 13px;
+						font-weight: bold;
+						margin: 10px 10px 5px 15px;
+					}
+					.actions {
+						background-color: $color-founder-progress-header-shadow;
+						padding: 5px;
+						position: relative;
+						text-align: right;
+						z-index: 9;
+						.skip, .completed, .skipped {
+							left: 15px;
+							position: absolute;
+							top: 10px;
+						}
+						.skip {
+							color: $color-alternate-text;
+						}
+					}
+					em {
+						display: block;
+						font-style: italic;
+						margin-top: 10px;
+					}
+					>.tail {
+						bottom: -15px;
+						left: 25px;
+						position: absolute;
+					}
+				}
+			}
+		}
+	}
+	>.tail {
+		position: absolute;
+		right: -25px;
+		top: 76px;
+	}
+	.shadowColorContainer {	/* this only exists to pass css shadow color to javascript, it should be visibly hidden */
+		background-color: $color-founder-progress-list-border-shadow;
+	}
+}
+
+.ControlCenterRail {
+	position: relative;
+}

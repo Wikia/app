@@ -1,0 +1,9 @@
+/* Fixes a conflict between Mediawiki and WYMeditor styles */
+.wym_dropdown h2 {
+	margin-bottom: 0 !important;
+}
+
+/* We don't use classes */
+.wym_classes {
+	display: none;
+}

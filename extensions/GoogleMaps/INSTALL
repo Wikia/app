@@ -1,0 +1,5 @@
+1. Make sure this GoogleMaps folder is in your "extensions" directory
+
+2. Add this to the end of LocalSettings.php:
+
+require_once( "extensions/GoogleMaps/GoogleMaps.php" );

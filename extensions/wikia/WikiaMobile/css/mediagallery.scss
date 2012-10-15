@@ -1,0 +1,125 @@
+@import 'mixins/transition.scss';
+
+#wkGal {
+	width: 100%;
+	height: 100%;
+
+	opacity: 0;
+
+	text-align: center;
+	line-height: 0;
+
+	-webkit-transition: opacity .4s, -webkit-transform .4s;
+	-moz-transition: opacity .4s, -moz-transform .4s;
+	transition: opacity .4s, transform .4s;
+
+	-webkit-transform: scale(2) translateZ(0);
+
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+	-webkit-backface-visibility: hidden;
+}
+
+.wkMedGal {
+	#wkGal {
+		opacity: 1;
+		-webkit-transform: scale(1) translateZ(0);
+	}
+
+	#wkGalPag {
+		opacity: 1;
+	}
+
+	#wkGalTgl {
+		opacity: 1;
+		background-image: url('/extensions/wikia/WikiaMobile/images/gallery_blue.png'); /* base64 */
+	}
+}
+
+.galPlc {
+	position: relative;
+	display: inline-block;
+	height: 100px;
+	width: 100px;
+	margin: 2px;
+}
+
+.galPlc.img {
+	background-size: 50%;
+	background-color: rgb(45,45,45);
+
+	-webkit-transition: -webkit-transform .2s, opacity .2s;
+	-moz-transition: -moz-transform .2s, opacity .2s;
+	transition: transform .2s, opacity .2s;
+
+
+	&.this{
+		border: 4px solid rgba(0, 108, 176, .5);
+	}
+
+	&.load {
+		opacity: 0;
+		-webkit-transform: scale(.7);
+		-moz-transform: scale(.7);
+		transform: scale(.7);
+	}
+
+	&.loaded {
+		background-size: cover;
+		opacity: 1;
+		-webkit-transform: scale(1);
+		-moz-transform: scale(1);
+		transform: scale(1);
+	}
+}
+
+#wkGalTgl {
+	opacity: 1;
+}
+
+#wkGalPag {
+	position: relative;
+	bottom: 25px;
+
+	width: 100%;
+	max-height: 25px;
+
+	opacity: 0;
+
+	text-align: center;
+
+	-webkit-transition: opacity .6s, -webkit-transform .3s;
+	-moz-transition: opacity .6s, -moz-transform .3s;
+	-o-transition: opacity .6s, transform .3s;
+	transition: opacity .6s, transform .3s;
+	-webkit-backface-visibility: hidden;
+
+	.dot {
+		background-color: rgb(111, 111, 111);
+		border-radius: 200px; //iphone 3 does not support % so I make it bigger than width&height to make it round
+		padding: 4px;
+		margin: 5px;
+		display: inline-block;
+		position: relative;
+		@include transition(background-color .4s);
+
+		&.curr {
+			background-color: rgb(0, 108, 176);
+		}
+
+		div{
+			z-index: 1; //this should be above parent for bigger clickable area
+			position: absolute;
+			top: -5px;
+			left: -5px;
+			width: 18px;
+			height: 18px;
+		}
+	}
+}
+
+@media screen and (min-width: 600px){
+	.galPlc {
+		width: 140px;
+		height: 140px;
+	}
+}

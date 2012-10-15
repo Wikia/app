@@ -1,0 +1,36 @@
+<!-- Some Ad Networks use iframes.  This must be served from the same site as the original
+	Athena object due to XSS limitations.
+
+	DON'T serve it from the CDN. It won't work because the domain won't match. It must 
+	be an exact match, not just wikia.com, unless you hack with document.domain
+ -->
+<html>
+<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+<script type="text/javascript">
+// Assign an id to the containing iframe, then pass that id to get the slot
+var frameid = "frameid_" + Math.random();
+window.frameElement.id = frameid;
+
+// TODO: support for nested iframes. Soon.
+
+top.Athena.debug("Athena.hop being called inside iframe from " + window.location.href, 2);
+
+slotname = top.Athena.getSlotnameFromDom(frameid);
+
+// Note a simple Athena.hop can not be used here, because it needs to do the document.write
+// in the current frame
+var thisTag = top.Athena.getNextTag(slotname);
+top.Athena.debug("Config for ad being called from inside iframe = " + top.Athena.print_r(thisTag), 6);
+
+// Print the tag, wrapped in a try/catch so that errors don't prevent the rest of
+// our javascript from loading.
+document.write("<!-- Writing in Athena.hop.iframe.html -->");
+try {
+	document.write(thisTag['tag']);
+} catch (e) {
+	top.Athena.reportError("Error loading ads from iframe = " + top.Athena.print_r(e));
+}
+document.write("<!-- /Writing in Athena.hop.iframe.html -->");
+</script>
+</body>
+</html>

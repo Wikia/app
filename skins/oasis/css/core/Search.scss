@@ -1,0 +1,107 @@
+@import "color";
+@import "layout";
+@import "../mixins/border-radius";
+@import "../mixins/box-shadow";
+@import "../mixins/clearfix";
+@import "../mixins/gradient";
+@import "../mixins/forms";
+@import "../mixins/menus";
+
+$use-dark-icons: false;
+@if lightness($color-buttons) > 50 {
+	$use-dark-icons: true;
+}
+
+.WikiaSearch {
+	@include clearfix;
+	margin-bottom: 10px;
+	position: relative;
+
+	input[type="text"] {
+		@include input-field;
+		background: lighten($color-page, 5%);
+		color: $color-text;
+		height: 18px;
+		float: left;
+		font-size: 15px;
+		margin-right: 8px;
+		padding: 4px 9px;
+		width: $wikia-search-base-width + 29px;
+	}
+
+	input[type="text"]:focus {
+		background: lighten($color-page, 10%);
+	}
+
+	.wikia-button {
+		@include border-radius(3px);
+		float: left;
+		height: 28px;
+		margin-top: 0;
+		position: static;
+		vertical-align: top;
+		width: 43px;
+		img.sprite.search {
+			height: 16px;
+			width: 19px;
+		}
+	}
+
+	input[type="submit"] {
+		display: none;
+	}
+
+	.autocomplete {
+		@include menu-regular;
+		@include border-radius-se(3px);
+		@include border-radius-sw(3px);
+		@include box-shadow(3px, 3px, 6px, darken($color-page, 9%));
+		border-width: 1px;
+		border-top: 0;
+		cursor: pointer;
+		margin-top: 2px;
+		padding: 5px 1px;
+		position: relative;
+		width: 245px;
+		z-index: $zTop;
+		div {
+			font-size: 12px;
+			line-height: 25px;
+			padding: 5px 9px;
+		}
+		.redirect {
+			color: $color-alternate-text;
+			display: block;
+			font-size: 10px;
+			line-height: 12px;
+			position: relative;
+			top: -4px;
+		}
+		.selected {
+			background: $color-menu-highlight;
+		}
+	}
+}
+
+.mw-search-result-shoutout > .mw-search-result-title {
+	font-size: 108%;
+	font-weight: bold;
+}
+
+.mw-search-result-redirect {
+	color: $color-alternate-text;
+
+	.mw-search-result-title {
+		color: $color-alternate-text;
+	}
+}
+
+// WikiaNav - begin
+.wikinav2 {
+	.WikiaRail > .WikiaSearch,
+	.WikiaSearchHeader > .WikiaSearch {
+		padding-bottom: 0px;
+		margin-bottom: 10px;
+	}
+}
+// WikiaNav - end

@@ -1,0 +1,160 @@
+@import "../../../../skins/oasis/css/core/color";
+@import "../../../../skins/oasis/css/mixins/box-shadow";
+@import "../../../../skins/oasis/css/mixins/clearfix";
+@import "../../../../skins/oasis/css/mixins/opacity";
+
+@import "ChatSprite";
+
+.UserStatsMenu {
+	background: $color-page;
+	display: none;
+	font-size: 12px;
+
+	.info {
+		@include clearfix;
+		background: $color-menu-highlight;
+		line-height: 15px;
+		padding: 5px;
+		position: relative;
+
+		img {
+			border: 1px solid $color-page-border;
+			float: left;
+		}
+
+		ul {
+			list-style: none;
+			margin: 0;
+			margin-left: 32px;
+
+			li {
+				line-height: 15px;
+				margin: 0;
+				overflow: hidden;
+				white-space: nowrap;
+			}
+
+			.username {
+				font-size: 13px;
+				font-weight: bold;
+				margin-bottom: 2px;
+			}
+		}
+	}
+
+	.actions {
+		ul {
+			list-style: none;
+			margin: 5px 0;
+
+			li {
+				color: $color-links;
+				cursor: pointer;
+				margin: 0;
+				padding: 5px 10px;
+				line-height: 16px;
+				white-space: nowrap;
+
+				a {
+					color: $color-links;
+					&:hover {
+						text-decoration: none;
+					}
+				}
+
+				.icon {
+					@include sprite-Chat-base;
+					@include opacity(40);
+					display: inline-block;
+					height: 18px;
+					width: 19px;
+				}
+
+				.label {
+					padding-left: 5px;
+				}
+
+				&.message-wall .icon,
+				&.talk-page .icon {
+					@include sprite-Chat('menu-message_wall' + $sprite-normal);
+				}
+
+				&.contribs .icon {
+					@include sprite-Chat('menu-contributions' + $sprite-normal);
+				}
+
+				&.private .icon {
+					@include sprite-Chat('menu-private_message' + $sprite-normal);
+				}
+
+				&.private-block .icon {
+					@include sprite-Chat('menu-private_message_block' + $sprite-normal);
+				}
+
+				&.give-chat-mod .icon {
+					@include sprite-Chat('menu-chat_mod' + $sprite-normal);
+				}
+
+				&.kick .icon {
+					@include sprite-Chat('menu-kick' + $sprite-normal);
+				}
+
+				&.ban .icon {
+					@include sprite-Chat('menu-ban' + $sprite-normal);
+				}
+
+				&:hover {
+					background-color: $color-menu-highlight;
+
+					.icon {
+						@include opacity(70);
+					}
+
+					&.message-wall .icon,
+					&.talk-page .icon {
+						@include sprite-Chat('menu-message_wall' + $sprite-hover);
+					}
+
+					&.contribs .icon {
+						@include sprite-Chat('menu-contributions' + $sprite-hover);
+					}
+
+					&.private .icon {
+						@include sprite-Chat('menu-private_message' + $sprite-hover);
+					}
+
+					&.private-block .icon {
+						@include sprite-Chat('menu-private_message_block' + $sprite-hover);
+					}
+
+					&.give-chat-mod .icon {
+						@include sprite-Chat('menu-chat_mod' + $sprite-hover);
+					}
+
+					&.kick .icon {
+						@include sprite-Chat('menu-kick' + $sprite-hover);
+					}
+
+					&.ban .icon {
+						@include sprite-Chat('menu-ban' + $sprite-hover);
+					}
+				}
+			}
+		}
+
+		.separator {
+			margin: 5px;
+			border: 0;
+			border-top: $color-page-border 1px solid;
+		}
+	}
+}
+.popover .UserStatsMenu {
+	display: block;
+}
+.ChatWindow .UserStatsMenu {
+	@include box-shadow(0, 0, 12px, $color-body);
+	border: 3px solid $color-body;
+	position: absolute;
+	z-index: 100;
+}

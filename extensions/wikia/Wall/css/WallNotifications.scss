@@ -1,0 +1,297 @@
+@import "../../../../skins/oasis/css/core/color";
+@import "../../../../skins/oasis/css/mixins/gradient";
+@import "../../../../skins/oasis/css/mixins/menus";
+@import "../../../../skins/oasis/css/mixins/box-shadow";
+@import "../../../../skins/oasis/css/mixins/border-radius";
+
+#AccountNavigation.AccountNavigation {
+	right: 60px;
+}
+
+/* IE7 targeted hacks */
+html>body #WallNotifications .avatars { *float: left; }
+
+
+#WallNotifications {
+  &.prehide {
+    visibility:hidden;
+  }
+	.bubbles {
+		background-image: url(/skins/common/images/bubbles.png); /* base64 */
+		background-repeat: no-repeat;
+		width: 34px;
+		height: 20px;
+		&.reddot #bubbles_count {
+			@include border-radius(15px);
+			background: red;
+			//border: 1px solid white;
+		}
+		#bubbles_count {
+			position: relative;
+			left: 16px;
+			top: -6px;
+			font-size: 12px;
+			text-align: center;
+			display: inline-block;
+			padding: 0px 4px 0px 4px;
+			line-height: 14px;
+		}
+	}
+	.notifications-wiki-count-container {
+		position: absolute;
+		right: 20px;
+		.notifications-wiki-count {
+			@include border-radius(15px);
+			background: red;
+			font-size: 12px;
+			text-align: center;
+			display: inline-block;
+			padding: 0px 4px 0px 4px;
+			line-height: 14px;
+			margin-top: 2px;
+			margin-right: 5px;
+		}
+	}
+	line-height: 20px;
+	list-style: none;
+	position: absolute;
+	top: 1px;
+	right: 10px;
+	.notifications-empty { color: $color-text; width: 250px; text-align: center; }
+	li { border: none; margin: 0; padding: 0; }
+	&>li {
+		height: 27px;
+		padding: 6px 10px 0 10px;
+		position: relative;
+		&:hover {
+			@include linear-gradient(false, top, rgba(#000, 0), 0, #000, 100%);
+		}
+		&.nohover:hover {
+			background: transparent;
+		}
+		&:last-child a {
+			border: none;
+		}
+	}
+	a {
+		//border-right: 1px solid mix($color-header-text, $color-header, 20%);
+		border: none;
+		display: inline-block;
+		//padding: 0 15px;
+		&:hover {
+			text-decoration: none;
+		}
+		.avatars {
+			vertical-align: top;
+			display: inline-block;
+			text-align: left;
+			margin: 0;
+			padding: 0;
+			position: relative;
+			width: 45px;
+			height: 45px;
+			top: 5px;
+			left: 5px;
+
+			.avatars_2_1 .avatar { left: -2px; top: -2px; }
+			.avatars_2_2 .avatar { left:  2px; top:  2px; }
+			.avatars_3_1 .avatar { left: -3px; top: -3px; }
+			.avatars_3_2 .avatar { left:  0px; top:  0px; }
+			.avatars_3_3 .avatar { left:  3px; top:  3px; }
+
+			.avatar {
+				position: absolute;
+			}
+		}
+		.notification {
+			display: inline-block;
+			//width: 190px;
+			white-space: normal;
+			font-size: 10px;
+			line-height: 1.5em;
+			.timeago { display: block; font-size: 10px; padding-top: 3px; padding-bottom: 3px;}
+			.msg-title {
+				padding-top: 3px;
+				padding-bottom: 2px;
+				width: 185px;
+				display: block;
+			}
+			.msg-body {
+				width: 185px;
+				display: block;
+			}
+		}
+	}
+	.subnav {
+		@include menu-heavy;
+		padding: 0px; // overwrite from menu-heavy
+		//> li:first-child { 		border-top: 1px solid $color-page-border; } // overwrite from menu-heavy
+		display: block;
+		top: -9999px;
+		right: 9999px;
+		margin-bottom: 20px;
+		width: 250px;
+		&.show {
+			right: 0;
+			top: 33px;
+		}
+		li {
+			float: none;
+			height: auto;
+			border-top: 1px solid $color-page-border;
+			margin: 0;
+			padding: 0;
+		}
+		&>li {
+			border: none;
+			width: 100%;
+			height: auto;
+			&:hover {
+				background-image: none;
+			}
+		}
+		li.unread_notification:not(.admin_notification) .notification {
+			width: 190px;
+		}
+		li.unread_notification a {
+			background: mix($color-buttons, $color-page, 10%);
+			@if $is-dark-wiki {
+				background: mix($color-buttons, $color-page, 20%);
+			}
+		}
+		li.read_notification a {
+			color: mix($color-text, $color-page, 50%);
+		}
+		li.admin_notification a {
+			padding-left: 17px;
+			position: relative;
+		}
+		li.admin_notification a:before {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 7px;
+			height: 100%;
+			background: $color-buttons;
+			content: '';
+		}
+		a {
+			&:hover {
+				@include box-shadow(0,0,8px, mix($color-buttons, $color-page, 25%), inset, 0);
+				background: mix($color-buttons, $color-page, 15%) !important;
+				@if $is-dark-wiki {
+					@include box-shadow(0,0,8px, mix($color-buttons, $color-page, 40%), inset, 0);
+					background: mix($color-buttons, $color-page, 30%) !important;
+				}
+			}
+			color: $color-text;
+			padding: 10px 5px;
+			display: block;
+			white-space: nowrap;
+			&:visited, &:active { color: $color-text; }
+			time, .timeago { color: $color-alternate-text; }
+			.msg-title { font-weight: bold; font-size: 12px; }
+		}
+		&:before {
+			content: '';
+			height: 20px;
+			position: absolute;
+			width: 100%;
+			top: 100%;
+			left: 0px;
+			background: none;
+		}
+		.notifications-header {
+			position: relative;
+			cursor: default;
+			overflow: hidden;
+			span {
+				color: $color-text; font-size: 13px; font-weight: bold;
+				padding-top: 1px;
+				padding-left: 10px;
+				background: $color-page;
+			}
+		}
+		.notifications-wiki-header {
+			@include linear-gradient(black, top, #333, 0, #000, 100%);
+			z-index: 1;
+			color: white; font-size: 13px; font-weight: normal;
+			padding-top: 3px;
+			padding-bottom: 2px;
+			padding-left: 10px;
+			cursor: pointer;
+			position: relative;
+		}
+
+		.notifications-for-wiki {
+			.chevron { border-color: transparent transparent transparent white; margin: 6px 7px 0px 8px; position: absolute; right: 0px; }
+		 	.notifications-for-wiki-list { display: none; }
+		 }
+		.notifications-for-wiki.show {
+			.chevron { border-color: white transparent transparent transparent; margin: 8px 10px 0px 5px;}
+			.notifications-for-wiki-list { display: block; }
+		}
+	}
+	#wall-notifications-markasread {
+		position: absolute;
+		top: 2px;
+		right: 10px;
+	}
+	#wall-notifications-markasread, #wall-notifications-markasread * {
+		@include border-radius(3px);
+		color: $color-links;
+		cursor: pointer;
+		text-align: right;
+		font-weight: normal;
+		font-size: 11px;
+
+	}
+	#wall-notifications-markasread-sub-opts {
+		display: none;
+	}
+	#wall-notifications-markasread-all-wikis,
+	#wall-notifications-markasread-this-wiki,
+	#wall-notifications-markasread-sub {
+		cursor: pointer;
+		padding-right: 5px;
+		padding-left: 5px;
+		&:hover {
+			cursor: pointer;
+			text-decoration: underline;
+			//@include box-shadow(0,0,8px, mix($color-buttons, $color-page, 25%), inset);
+			//background: mix($color-buttons, $color-page, 15%) !important;
+			//@if $is-dark-wiki {
+				//@include box-shadow(0,0,8px, mix($color-buttons, $color-page, 40%), inset);
+				//background: mix($color-buttons, $color-page, 30%) !important;
+			//}
+		}
+	}
+	#wall-notifications-markasread-sub.disabled { opacity: 0.5; cursor: default; }
+	#wall-notifications-markasread-sub.disabled:hover { background: none !important; text-decoration: none; }
+}
+
+#WallNotificationsReminder {
+	@include border-radius(3px);
+	@include box-shadow(0px, 2px, 5px, darken($color-page,12%), 0, 0);
+	background: $color-page;
+	border: 1px solid $color-page-border;
+	@if $is-dark-wiki {
+		@include box-shadow(0px, 2px, 5px, darken($color-page,7%), 0, 0);
+		background: $color-module-background;
+		border: 1px solid $color-page-border;
+	}
+	position: fixed;
+	top: 20px;
+	right: 20px;
+	border: 1px solid $color-page-border;
+	color: $color-links;
+	padding: 10px;
+	display: none;
+	span {
+		width: 1em;
+		overflow: hidden;
+	}
+	a {
+		cursor: pointer;
+	}
+}

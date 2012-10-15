@@ -1,0 +1,15 @@
+.formblock .data2 {
+	left: 520px;
+	margin: 0;
+	padding-left: 0;
+	position: absolute;
+	top: 0;
+	width: 300px;
+}
+
+#AWCInfoBirthday {
+	left: -20px;
+	padding-left: 535px;
+	position: relative;
+	width: auto;
+}

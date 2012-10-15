@@ -1,0 +1,20 @@
+#userPageFollowedHead span{
+	 float: right;
+	 font-size:9pt;
+}
+
+.followedList {
+	list-style:none inside none;
+	float:left;
+	margin-left:4px;
+	margin-top:0;
+	margin-bottom:20px;
+}
+
+#ShowMoreFollowed {
+	float:right;
+}
+
+#follow_more_link {
+	float: right;
+}

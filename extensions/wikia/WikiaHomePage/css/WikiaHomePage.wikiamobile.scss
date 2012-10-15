@@ -1,0 +1,101 @@
+@import '../../../../skins/oasis/css/core/color';
+@import '../../../../skins/oasis/css/mixins/clearfix';
+
+.wkhome {
+	>h1 {
+		font-size: 1.6em;
+		line-height: 1.2em;
+	}
+	>h2 {
+		font-size: 1.05em;
+	}
+	.wkhome-section {
+		@include clearfix;
+		margin-top: 10px;
+		&.wkhome-games .wkhome-hero {
+			border-top: 5px solid $color-wikiahome-videogames;
+		}
+		&.wkhome-entertainment .wkhome-hero {
+			border-top: 5px solid $color-wikiahome-entertainment;
+		}
+		&.wkhome-lifestyle .wkhome-hero {
+			border-top: 5px solid $color-wikiahome-lifestyle;
+		}
+		&.wkhome-community .wkhome-hero {
+			background-color: #f4f4f4;
+			border-top: 5px solid $color-wikiahome-community;
+			height: 100px;
+			img {
+				background-image: url('/extensions/wikia/WikiaHomePage/images/communitycentral-en-mobile.png'); /* base64 */
+				background-position: 0 0;
+				background-repeat: no-repeat;
+				height: 62px;
+				left: 23px;
+				position: absolute;
+				top: 16px;
+				width: 250px;
+			}
+		}
+		&.wkhome-community-de .wkhome-hero {
+			img {
+				background-image: url('/extensions/wikia/WikiaHomePage/images/communitycentral-de-mobile.png'); /* base64 */
+				background-position: 0 0;
+			}
+		}
+
+		p {
+			letter-spacing: -0.05em;
+			line-height: 1.5em;
+			font-size: 0.95em;
+			margin-top: 0;
+		}
+		.wkhome-hero {
+			display: block;
+			float: left;
+			position: relative;
+			margin: 0 10px 10px 0;
+			width: 300px;
+			h2 {
+				background-color: rgba(0, 0, 0, 0.5);
+				bottom: 0;
+				color: white;
+				display: block;
+				font-size: 1.2em;
+				font-weight: bolder;
+				left: 0;
+				margin: 0;
+				padding: 10px;
+				position: absolute;
+				width: 300px;
+			}
+			img {
+				display: block;
+
+			}
+		}
+	}
+}
+
+/* overrides */
+#wkMainCntHdr {
+	display: none;
+}
+
+#wkWrdMrk {
+	display: none;
+}
+
+#wkTopBar {
+	&:before {
+		background-image: url('/extensions/wikia/WikiaHomePage/images/wikialogo-mobile.png'); /* base64 */
+		background-position: 0 0px;
+		background-repeat: no-repeat;
+		content: " ";
+		display: block;
+		height: 19px;
+		left: 10px;
+		position: absolute;
+		top: 10px;
+		width: 67px;
+	}
+}

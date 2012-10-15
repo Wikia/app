@@ -1,0 +1,14 @@
+@import "../../../../skins/oasis/css/core/color";
+
+@mixin divider {
+	border-top: solid 1px $color-page-border;
+	margin-top: 25px;
+	text-align: center;
+	> span {
+		background-color: $color-page;
+		display: inline-block;
+		padding: 0 21px;
+		position: relative;
+		top: -12px;
+	}
+}

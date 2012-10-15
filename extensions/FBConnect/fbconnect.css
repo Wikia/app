@@ -1,0 +1,78 @@
+/* Info about Facebook Connect on page Special:Connect */
+#specialconnect_info, #specialconnect_box {
+	font-family: "Lucida Grande", Tahoma, Verdana, Arial, sans-serif;
+}
+
+#specialconnect_info p {
+	font-size: 14px;
+	color: #888;
+	margin: 16px 0;
+}
+
+#specialconnect_info th, #specialconnect_info td {
+	color: #333;
+	text-align: left;
+	vertical-align: top;
+	padding: 0 10px 0 0;
+}
+
+/* Login and Connect boxes */
+#specialconnect_boxarea {
+	border-collapse: collapse;
+	width: 92%;
+	margin: 28px 0;
+}
+
+#specialconnect_boxarea .box_left, #specialconnect_boxarea .box_right {
+	vertical-align: top;
+	width: 50%;
+	padding: 0 14px;
+}
+
+.box_left #specialconnect_box {
+	float: right;
+}
+
+.box_right #specialconnect_box {
+	float: left;
+}
+
+/* Facebook-styled box */
+#specialconnect_box .box_content {
+	color: #333;
+	font-size: 12px;
+	font-weight: normal;
+	margin: 0;
+	padding: 0;
+}
+
+#specialconnect_box h1 {
+	color: #333;
+	font-size: 13px;
+	font-weight: bold;
+	border-top: 1px solid #94A3C4;
+	border-bottom: 1px solid #CCCCCC;
+	background-color: #D8DFEA;
+}
+
+#specialconnect_box h1 p {
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+#specialconnect_box h1, #specialconnect_box .box_content {
+	margin-bottom: 2px;
+	padding: 1px 5px;
+}
+
+.box_left #specialconnect_box h1, .box_left #specialconnect_box .box_content {  
+	padding-right: 120px;
+}
+
+.box_left #specialconnect_box img {
+	float: right;
+	border-collapse: collapse;
+	margin: 7px;
+	padding: 0;
+	width: 100px;
+}

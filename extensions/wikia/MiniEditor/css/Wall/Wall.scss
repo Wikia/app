@@ -1,0 +1,113 @@
+@import "../../../Wall/css/WallColors";
+@import "../../../../../skins/oasis/css/mixins/box-shadow";
+@import "../../../../../skins/oasis/css/mixins/clearfix";
+
+.Wall {
+	.MiniEditorWrapper {
+		@include clearfix;
+
+		.loading-background {
+			background-color: $color-wall-input;
+		}
+
+		.editarea {
+			textarea {
+				background-color: $color-wall-input;
+				border: 0;
+
+				&.focused {
+					background-color: $color-wall-input-focus;
+				}
+			}
+		}
+
+		.toolbar {
+			float: left;
+		}
+
+		.speech-bubble-buttons {
+			@include clearfix;
+			float: right;
+		}
+
+		.edit-buttons {
+			margin-top: 10px;
+		}
+
+		&.active {
+			.edited-by {
+				margin: 10px 0;
+			}
+		}
+		
+		&.focused {
+			.editarea {
+				@include box-shadow(0px, 0px, 4px, $color-wall-input-focus-shadow);
+			}
+		}
+		
+		&.mode-source {
+			textarea {
+				overflow: auto;
+			}
+		}
+	}
+
+	.new-message {
+		.editarea {
+			margin-bottom: 0px;
+
+			textarea {
+				background-color: $color-wall-input-new;
+			}
+		}
+
+		.loading-background {
+			background-color: $color-wall-input-new;
+		}
+		
+		textarea.body {
+			font-size: 13px;
+		}
+		
+		textarea.body {
+			&::-webkit-input-placeholder {
+				font-size: 14px;
+			}
+			&:-moz-placeholder {
+				font-size: 14px;			
+			}
+			
+		}
+	}
+
+	.new-reply {
+		textarea {
+			line-height: normal; // Before activation
+		}
+		.active {
+			.speech-bubble-message {
+				margin-left: 40px;
+			}
+
+			.speech-bubble-avatar {
+				display: block;
+			}
+		}
+		.mode-source {
+			textarea {
+				line-height: inherit; // After activation (RTE disabled)
+			}
+		}
+		.editor-closed {
+			textarea {
+				line-height: normal; // Editor is shrunken down
+			}
+		}
+		
+		.editarea {
+			border: solid 1px $color-page-border;
+			margin-bottom: 0px;
+		}
+	}
+}

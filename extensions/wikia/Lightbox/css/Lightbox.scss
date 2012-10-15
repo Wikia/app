@@ -1,0 +1,578 @@
+@import "../../../../skins/oasis/css/mixins/arrow";
+@import "../../../../skins/oasis/css/mixins/background-opacity";
+@import "../../../../skins/oasis/css/mixins/border-radius";
+@import "../../../../skins/oasis/css/mixins/box-shadow";
+@import "../../../../skins/oasis/css/mixins/clearfix";
+@import "../../../../skins/oasis/css/mixins/opacity";
+@import "../../../../skins/oasis/css/mixins/transition";
+@import "../../../../skins/oasis/css/core/color";
+@import "mixins/sprite-Lightbox";
+
+$lightbox-overlay-show-duration: 200ms;
+$lightbox-overlay-hide-duration: 600ms;
+
+// Default and hover icons depend on button darkness
+$sprite-normal: '_black';
+$sprite-hover: '_white';
+
+@if (lightness($color-secondary-button) < 50) {
+	$sprite-normal: '_white';
+	$sprite-hover: '_black';
+}
+
+// shadow color
+$color-shadow: #aaa;
+@if $is-dark-wiki {
+	$color-shadow: #000;
+}
+
+$color-more: mix($color-page, $color-text, 25%);
+$color-more-border: darken($color-page, 20%);
+@if $is-dark-wiki {
+	$color-more-border: lighten($color-page, 10%);
+}
+$color-lightbox-border: mix($color-page-border, $color-page, 75%);
+
+.LightboxModal {
+	overflow: hidden;
+	&.overlay-hidden {
+		.lightbox-arrows span,
+		.LightboxCarousel,
+		.LightboxHeader {
+			@include transition-shorthand(opacity $lightbox-overlay-hide-duration ease-out);
+			@include opacity(0);
+		}
+		// Fix IE8 issues with css transitions
+		.lightbox-arrows span.disabled, .Wikia-video-play-button {
+			@include opacity(0);
+		}
+	}
+	&.more-info-mode, &.share-mode {
+		>.close {
+			display: block;
+		}
+		.lightbox-arrows,
+		.LightboxHeader,
+		.LightboxCarousel,
+		.media {
+			display: none;
+		}
+	}
+	&.more-info-mode .more-info {
+		display: block;
+	}
+	&.share-mode .share {
+		display: block;
+	}
+	&.pinned-mode {
+		.media {
+			margin: 81px 0;
+		}
+		&.video-lightbox {
+			.media {
+				margin: 90px 0;
+			}		
+		}
+		.LightboxCarousel,
+		.LightboxHeader {
+			@include box-shadow( 0, 0, 0, #fff, false, 0);
+		}
+	}
+	.WikiaLightbox {
+		height: 100%;
+	}
+	>.close {
+		display: none;
+		z-index: 3;
+	}
+	.more-info h1 {
+		float: left;
+	}
+	.more-info, .share {
+		display: none;
+		padding: 20px 30px;
+		h1 {
+			font-size: 18px;
+		}
+		h2 {
+			font-size: 15px;
+			font-weight: bold;
+			margin-top: 50px;
+		}
+		.more-info-close:before, .share-close:before {
+			@include arrow(5px, $color-text, 'left');
+			content: "";
+			display: block;
+			float: left;
+			margin: 5px 7px 0 -3px;
+		}
+		.more-info-details {
+			float: right;
+			max-height: 520px;
+			overflow: auto;
+			overflow-x: hidden;
+			width: 650px;
+		}
+		.hero {
+			background: black;
+			border: 1px solid $color-lightbox-border;
+			height: 150px;
+			text-align: center;
+			width: 250px;
+			float: left;
+			display: table;
+			.hero-inner {
+				display: table-cell;
+				vertical-align: middle;
+			}
+			img {
+				max-height: 150px;
+				max-width: 250px;
+				display: block;
+				margin: auto;
+			}
+		}
+		.content {
+			@include clearfix;
+			clear: both;
+			margin-top: 25px;
+			
+			input[type="text"] {
+				width: 350px;
+			}
+			
+			.share-form {
+				float: right;
+				width: 650px;		
+				.WikiaForm {
+					margin: 20px 0 0 -7px; // left align with title while keeping room for error bg
+				}
+			}
+			.bottom-forms {
+				@include clearfix;
+				clear: both;
+				padding-top: 85px;
+				> div {
+					float: left;
+					width: 450px;
+					padding-bottom: 5px;
+					&:first-child {
+						border-right: 1px solid $color-page-border;
+						margin-right: 25px;
+					}
+				}
+			}
+			.social-links{
+				li, ul {
+					list-style: none;
+				}
+				li {
+					float: left;
+					margin-right: 10px;
+					a {
+						@include sprite-Lightbox-deep;
+						display: block;
+						width: 32px;
+						height: 32px;
+					}
+				}
+			}
+		}
+	}
+	.share h2 {
+		font-size: 14px;
+		font-weight: bold;
+		margin-top: 0;
+	}
+	.modalContent {
+		margin: 0;
+		height: 100%;
+	}
+	.media {
+		text-align: center;
+		height: 100%;
+		line-height: 100%;
+		overflow: hidden;
+		img {
+			vertical-align: middle;
+		}
+	}
+	.user-details {
+		.avatar {
+			border: 1px solid $color-lightbox-border;
+			height: 16px;
+			margin-right: 2px;
+			position: relative;
+			top: 4px;
+			width: 16px;
+		}
+		.posted-in-article {
+			&:before {
+				content: ', ';
+			}
+			&:first-child:before {
+				content: '';
+			}
+		}
+	}
+	.video-media {
+		height: auto;
+		margin-top: 90px;
+		embed, object, > div {
+			display: block;
+			margin: 0 auto;
+		}
+	}
+	.wikiaThrobber {
+		z-index: 0;	/* resetting throbber mask */	
+	}
+	#LightboxPreload {
+		position: absolute;
+		top: -99999999px;
+		left: -99999999px;
+	}
+	.toolbar {
+		margin-bottom: 7px;
+	}
+	.icon {
+		display: block;
+		height: 20px;
+		margin-right: 42px;
+		padding: 0;
+		width: 28px;
+		&:after {
+			@include sprite-Lightbox-base;
+			content: '';
+			display: block;
+			text-align: center;
+			margin: 3px auto;
+		}
+		&.expand:after {
+			@include sprite-Lightbox('large_lightbox'+$sprite-normal);
+			height: 15px;
+			width: 18px;
+			margin-left: 6px;
+		}
+		&.pin:after {
+			@include sprite-Lightbox('filmstrip_open'+$sprite-normal);
+			height: 15px;
+			width: 22px;
+		}
+		&.pin.active:after {
+			@include sprite-Lightbox('filmstrip_close'+$sprite-normal);
+		}
+	}
+	.LightboxHeader,
+	.LightboxCarousel {
+		@include background-opacity($color-page, 90);
+		@include box-shadow( 0px, 0px, 5px, $color-shadow, false, 0);
+		@include opacity(100);
+		@include transition-shorthand(opacity $lightbox-overlay-show-duration ease-out);
+		position: absolute;
+		-webkit-backface-visibility: hidden;	/* flicker fix for webkit transition */
+		/* ie8 fix - opacity filter will not apply on positioned/floated elements to ie8 unless "filter: inherit" is applied to every element down to the actual element - fb:32565 */
+		.avatar,
+		.carousel,
+		.close,
+		div {
+			filter: inherit;
+		}
+		/* end ie8 fix */
+	}
+	.LightboxCarousel {
+		@include clearfix;
+		border-top: 1px solid $color-page-border;
+		bottom: 0;
+		height: 110px;
+		position: absolute;
+		width: 100%;
+		.progress {
+			margin-left: 42px;
+			min-height: 21px;
+			b {
+				font-weight: bold;
+			}
+			&.invisible {
+				visibility: hidden;
+			}
+		}
+		.toolbar {
+			li {
+				float: right;
+				margin-left: 4px;
+			}
+		}		
+		.LightboxCarouselContainer {
+			margin-left: 40px;
+			height: 55px;
+			overflow: hidden;
+			padding: 3px 0px;
+			position: relative;
+			width: 880px;
+			& > div {
+				position: relative;
+			}
+			ul {
+				@include clearfix;
+				position: absolute;
+			}
+			li {
+				float: left;
+				margin: 0 5px 0 3px;
+				width: 90px;
+				height: 55px;
+				line-height: 55px;
+				overflow: hidden;
+				&.active {
+					outline: 3px solid $color-buttons;
+				}
+				&.more-items{
+					line-height: normal;
+					overflow: hidden;
+					text-align: left;
+					p {
+						color: $color-more;
+						height: 100%;
+						font-size: 11px;
+						padding: 5px 10px 0 14px;
+						vertical-align: middle;
+						&:before {
+							@include box-shadow( 0px, 0px, 5px, $color-shadow, false, 1px);
+							content: " ";
+							border-left: 1px solid $color-more-border;
+							display: block;
+							float: left;
+							height: 100%;
+							margin-left: -14px;
+							margin-top: -5px;
+							width: 0px;
+
+						}
+						span {
+							font-size: 14px;
+							&:before {
+								content: "+";
+							}
+						}
+					}
+				}
+			}
+			img {
+				width: 90px;
+				height: 55px;
+				cursor: pointer;
+				display: block;
+			}
+		}
+		.carousel-arrow {
+			cursor: pointer;			
+			&.next {
+				height: 56px;
+				clear: right;
+				display: block;
+				float: right;
+				&:after {
+					@include arrow(8px, $color-buttons, 'right');				
+					content: " ";
+					display: block;
+					margin: 20px -3px 0 0;
+				}
+			}
+			&.previous {
+				height: 56px;
+				float: left;
+				display: block;
+				&:after {
+					@include arrow(8px, $color-buttons, 'left');
+					content: " ";
+					display: block;
+					margin: 20px 0 0 -3px;
+				}
+			}
+			&.disabled {
+				@include opacity(40);
+				cursor: default;
+			}
+		}
+		.content {
+			padding: 10px 20px;
+		}
+	}
+	
+	.show-ads .LightboxCarousel {
+		@include clearfix;
+		.wikia-ad {
+			width: 318px;
+			float: right;
+			padding-top: 5px;
+		}
+		.LightboxCarouselInner {
+			float: left;
+			width: 665px;
+		}
+		.LightboxCarouselContainer {
+			margin-left: 20px;
+			width: 588px;
+		}
+		.content{
+			border-right: 1px solid $color-page-border;
+			width: 625px;		
+		}
+		.icon {
+			margin-right: 21px;			
+		}
+		.progress {
+			margin-left: 22px;
+		}
+		.carousel-arrow {
+			&.next {
+				margin-right: -10px;
+			}
+			&.previous {
+				margin-left: -10px;			
+			}
+		}
+	}
+	
+	.modal_interstitial {
+		display: none;
+		text-align: center;
+		margin-top: 114px; // TODO: ad another top margin to small lifitum ads (if possible)
+	}
+	
+	.LightboxHeader {
+		border-bottom: 1px solid $color-lightbox-border;
+		height: 50px;
+		padding: 20px 20px 10px;
+		top: 0;
+		width: 960px;
+		z-index: 2;
+		h1 {
+			float: left; 
+			font-size: 18px;
+			line-height: 22px;
+			max-width: 600px;	/* compensation for i18n on .see-full-size-link */
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			margin-top: 0;
+		}
+		.caption {
+			clear: left;
+			margin-top: 2px;
+		}
+		.close {
+			margin: 0;
+		}
+		.more-info-button, .share-button {
+			float: right;
+			margin-left: 5px;
+			&:before {
+				@include sprite-Lightbox-base;
+				content: '';
+				display: block;
+				float: left;
+				width: 14px;
+				height: 14px;
+				margin: 4px 4px 0 -3px;
+			}
+		}
+		.more-info-button{ 
+			&:before {
+				@include sprite-Lightbox('more_info'+$sprite-normal);
+				margin-top: 3px;	
+			}
+		}
+		.share-button {
+			margin-right: 20px;
+			&:before {
+				@include sprite-Lightbox('share'+$sprite-normal);	
+			}		
+		}
+		.user-details {
+			clear: left;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			width: 650px;
+		}
+	}
+	.see-full-size-link, .video-views {
+		border-left: 1px solid $color-shadow;
+		font-size: 11px;
+		margin-left: 10px;
+		padding-left: 10px;
+	}
+
+	// Left right arrows in lightbox (not carousel arrows)
+	.lightbox-arrows {
+		span {
+			@include opacity(65); 
+			@include transition-shorthand(opacity $lightbox-overlay-show-duration ease-out);
+			cursor: pointer;
+			display: block;
+			height: 100%;
+			width: 50%;
+			position: absolute;
+			top: 0px;
+
+			&:after {
+				@include sprite-Lightbox-base;
+				content: '';
+				display: block;
+				height: 60px;
+				margin-top: -30px;
+				position: absolute;
+				top: 50%;
+				width: 50px;
+			}
+			&:hover {
+				@include opacity(100);
+			}
+			&.disabled {
+				display: none;
+			}
+		}
+		.next {
+			right: 0px;
+			&:after {
+				@include sprite-Lightbox('arrow_large_next');
+				right: 20px;
+			}
+		}
+		.previous {
+			left: 0px;
+			&:after {
+				left: 20px;
+				@include sprite-Lightbox('arrow_large_previous');
+			}
+		}
+	}
+
+	&.video-lightbox {
+		// video lightbox arrow hit area is smaller so it doesn't overlap videos
+		.lightbox-arrows span {
+			width: 100px;
+		}
+
+		.see-full-size-link {
+			display: none;
+		}
+		.video-views {
+			font-size: 12px;
+		}
+	}
+	&.image-lightbox {
+		.video-views {
+			display: none;
+		}
+	}
+	b {
+		font-weight: bold;
+	}
+}
+
+// Error template styles
+.modalWrapper .modalToolbar .close {
+	margin: 0;
+}

@@ -1,0 +1,74 @@
+#openid_form {
+	width: 470px;	
+}
+
+#openid_form legend {
+	font-weight: bold;
+}
+
+#openid_input_area {
+	clear: both;
+	padding: 20px;
+	margin: 5px;
+}
+#openid_btns {
+}
+#openid_highlight {
+	padding: 3px;
+	background-color: #FFFCC9;
+	float: left;
+}
+.openid_large_btn {
+	width: 100px;
+	height: 60px;
+	border: 2px solid #DDD;
+	margin: 3px;
+	float: left;
+	background: #fff no-repeat top left;
+}
+.openid_small_btn {
+	width: 24px;
+	height: 24px;
+	border: 1px solid #DDD;
+	margin: 3px;
+	float: left;
+	background: #fff no-repeat top left;
+}	
+
+.openid_selected {
+	border: 2px solid orange;
+}
+
+a.openid_large_btn:focus {
+	outline: none;
+}
+a.openid_large_btn:focus {
+	-moz-outline-style: none;
+}
+
+#openid_large_providers {
+}
+#openid_small_providers_icons {
+}
+
+#openid_provider_openid_icon { /*@embed*/background-image: url(icons/openid_large.png); }
+#openid_provider_google_icon { background-image: url(icons/google_large.png); }
+#openid_provider_yahoo_icon { background-image: url(icons/yahoo_large.png); }
+#openid_provider_aol_icon { background-image: url(icons/aol_large.png); }
+
+#openid_provider_myopenid_icon { background-image: url(icons/myopenid_small.png); }
+#openid_provider_livejournal_icon { background-image: url(icons/livejournal_small.png); }
+#openid_provider_vox_icon { background-image: url(icons/vox_small.png); }
+#openid_provider_wordpress_icon { background-image: url(icons/wordpress_small.png); }
+#openid_provider_blogger_icon { background-image: url(icons/blogger_small.png); }
+#openid_provider_flickr_icon { background-image: url(icons/flickr_small.png); }
+#openid_provider_verisign_icon { background-image: url(icons/verisign_small.png); }
+#openid_provider_vidoop_icon { background-image: url(icons/vidoop_small.png); }
+#openid_provider_claimid_icon { background-image: url(icons/claimid_small.png); }
+
+#openid_url {
+	background: url(icons/openid-inputicon.png) no-repeat;
+	background-color: #fff;
+	color: #000;
+	padding-left: 18px;
+}

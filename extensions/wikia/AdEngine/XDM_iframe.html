@@ -1,0 +1,13 @@
+<html>
+<body>
+</body>
+<script src="http://athena-ads.wikia.com/athena/XDM.js"></script>
+<script>
+// Methods that are ok to call.
+XDM.allowedMethods = [ "Athena.hop", "Athena.iframeHop", "AthenaTest.testPassed"];
+function XDM_onload (){
+	XDM.executeMessage(window.location.search);
+}
+window.onload = XDM_onload;
+</script>
+</html>

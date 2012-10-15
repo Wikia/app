@@ -1,0 +1,454 @@
+@import "color";
+@import "layout";
+@import "../mixins/box-shadow";
+@import "../mixins/clearfix";
+@import "../mixins/gradient";
+@import "../mixins/opacity";
+
+.WikiaPage {
+	border-bottom: 1px solid $color-page-border;
+	border-left: 1px solid $color-page-border;
+	border-right: 1px solid $color-page-border;
+	margin: -59px auto -39px;
+	padding-top: 59px;
+	/* temp grid transition code - integrate into main, then remove after grid is fully rolled out */
+	&.WikiaGrid {
+		.WikiaSearchHeader {
+			width: 330px;
+		}
+		.WikiaPageHeader {
+			margin-left: 0;
+			margin-right: 0;
+		}
+		.WikiaArticle {
+			padding: 0;
+		}
+	}
+	/* end temp grid transition code */
+	&.V2 {
+		padding-top: 0;
+		margin: 0px auto -39px;
+	}
+	position: relative;
+	width: $width-outside;
+	z-index: 1;
+	>h1:first-child {
+		display: none;
+	}
+	.WikiaPageBackground {
+		@include opacity($page-opacity);
+		background: $color-page;
+		height: 100%;
+		left: 0;
+		position: absolute;
+		top: 0;
+		width: 100%;
+	}
+	.WikiaPageContentWrapper {
+		@include clearfix;
+		position: relative;
+	}
+}
+
+/**
+ * IMPORTANT (21-Aug-2012, FB:45031): Integrate this code into base css above after transition.
+ * This is currently an override depending on skin switch.
+ */
+.oasis-split-skin {
+	.WikiaPage {
+		border-top: 1px solid $color-page-border;
+		margin: 0 auto 0px;
+		padding-top: 0;
+	}
+}
+
+.WikiaMainContent {
+	float: left;
+	position: relative;
+	width: $width-outside - 320px;
+	z-index: 1;
+	// one column layout (no right rail)
+	.oasis-one-column & {
+		width: $width-outside;
+		&.grid-6 {
+			width: $width-outside - 20px;
+		}
+	}
+
+	a.new,
+	a.new:visited {
+		color: #CC2200;
+	}
+}
+
+.WikiaArticleCategories {
+	@include linear-gradient($color-module-shadow, top, $color-page, 50%, $color-module-shadow, 100%);
+
+	border: 1px solid $color-page-border;
+	clear: both;
+	line-height: 1.8em;
+	padding: 10px;
+	margin: 10px;
+	h1 {
+		display: none;
+	}
+}
+
+.WikiaArticleFooter {
+	padding: 10px;
+}
+
+#WikiaArticleBottomAd {
+	@include clearfix;
+	margin: 50px 10px 35px;
+}
+
+/* temp transition code until grid is fully rolled out, remove and integrate after transition */
+.WikiaPage.WikiaGrid #WikiaArticleBottomAd {
+    clear: both;
+    margin: 0;
+}
+/* end temp transistion code */
+
+#PREFOOTER_LEFT_BOXAD {
+	float: left;
+	margin: 0 15px;
+}
+#PREFOOTER_RIGHT_BOXAD {
+	margin: 0 15px;
+}
+
+.WikiaRail {
+	float: right;
+	padding: 0 $width-gutter;
+	width: $width-rail;
+	&.grid-2 {
+		padding: 0;
+	}
+	.module {
+		@include clearfix;
+		background: $color-page;
+		border: 1px solid $color-page-border;
+		@if lightness($color-page) < 50 {
+			background: $color-module-background;
+			border: 1px solid $color-page-border;
+		}
+		margin-bottom: 10px;
+		padding: 20px 15px 15px;
+		position: relative;
+		word-wrap: break-word;
+
+		header {
+			left: -3px;
+			font-size: 15px;
+			padding: 8px;
+			position: absolute;
+			width: $width-rail - 12px;
+		}
+		details {
+			em {
+				float: left;
+			}
+		}
+		.wikia-button {
+			float: right;
+		}
+		.more {
+			float: right;
+			font-size: 10px;
+			font-weight: bold;
+		}
+		p {
+			line-height: 21px;
+			margin: 0;
+			padding: 0;
+		}
+
+		.wikia-button {
+			font-weight: normal;
+		}
+
+		h1 {
+			font: {
+				size: 17px;
+				weight: bold;
+			}
+			margin: {
+				top: 0px;
+				bottom: 25px;
+			}
+			padding-left: 2px;
+		}
+
+		h2 {
+			@extend h1;
+			clear: both;
+
+			margin: {
+				top: 0;
+				bottom: 10px;
+			}
+			padding-top: 15px;
+			/*border-top: 1px solid $color-page-border;*/
+		}
+
+		b {
+			font-weight: bold;
+		}
+		i {
+			font-style: italic;
+		}
+
+		.line-top {
+			border-top: solid 1px $color-page-border;
+		}
+
+		.chevron {
+			border-top-color: $color-text;
+		}
+	}
+}
+
+#TOP_BOXAD {
+	img {
+		display: block;
+	}
+}
+
+.tally {
+	@include clearfix;
+	font-size: 10px;
+	line-height: 1.3em;
+	padding-left: 2px;
+	text-transform: uppercase;
+	em {
+		float: left;
+		font-size: 30px;
+		font-style: normal;
+		letter-spacing: -1px;
+		line-height: 26px;
+		margin-right: 2px;
+	}
+	span {
+		float: left;
+		&.fixedwidth {
+			width: 61px;
+		}
+	}
+}
+
+.WikiaPagesOnWikiModule {
+	padding-top: 9px;
+	h1 {
+		display: none;
+	}
+	.sprite.new {
+		margin: 0 5px;
+		position: relative;
+		top: 1px;
+	}
+	a {
+		padding-right: 5px;
+	}
+	.wikia-button {
+		margin-bottom: 0.5em;
+	}
+}
+
+.WikiaActivityModule {
+	h1.activity-heading {
+		margin-bottom: 0;
+	}
+	ul {
+		list-style: none;
+		margin: 10px 0;
+	}
+	li {
+		font-size: 12px;
+		padding: 6px 3px 6px 30px;
+		position: relative;
+		&:first-child {
+			border: 0;
+		}
+		em {
+			display: inline-block;
+			font-size: 14px;
+			line-height: 17px;
+			width: 270px;
+		}
+	}
+	.sprite {
+		position: absolute;
+		left: 3px;
+		top: 8px;
+	}
+	.edited-by {
+		font-size: 11px;
+		margin-top: 2px;
+		a {
+			color: $color-links;
+			font-size: 11px;
+		}
+	}
+	a {
+		font-weight: normal;
+	}
+	.page-title {
+		font-size: 14px;
+	}
+	.more {
+		font-weight: bold;
+	}
+}
+
+.WikiaImageModule {
+	h1 {
+		display: none;
+	}
+	img {
+		margin: 10px 0;
+	}
+	.caption {
+		margin-bottom: 10px;
+		text-align: center;
+	}
+}
+
+#WikiaSpotlightsModule {
+	display: none;
+	padding: 8px 8px 8px 15px;
+	header {
+		background-color: $color-header;
+		height: 36px;
+		left: -2px;
+		padding: 3px 0 0 0;
+		position: absolute;
+		width: auto;
+		h1 {
+			@include linear-gradient($color-header, left, $color-header-alt, 0, $color-header, 100%);
+			border-bottom: 2px solid $color-page;
+			border-top: 1px solid $color-page;
+			color: $color-header-text;
+			display: block;
+			font-size: 15px;
+			font-weight: normal;
+			height: 33px;
+			margin: 0;
+			padding: 0 11px;
+			.logo {
+				filter:progid:DXImageTransform.Microsoft.Matrix(Dx=0, Dy=0, M11=0.7, M12=0, M21=0, M22=0.7);
+				-moz-transform: matrix(0.7, 0, 0, 0.7, -16px, -3px);
+				-webkit-transform: matrix(0.7, 0, 0, 0.7, -15, -2);
+				left: 8px;
+				position: relative;
+				top: 7px;
+			}
+		}
+		.banner-corner-left {
+			border: 1px solid transparent;
+			border-color: $color-header $color-header transparent transparent;
+			bottom: 0;
+			width: 0;
+		}
+		.banner-corner-right {
+			border: 19px solid transparent;
+			border-right-width: 20px;
+			border-right-color: $color-module-background;
+			position: absolute;
+			right: 0px;
+			top: 0px;
+		}
+	}
+	ul {
+		margin-top: 65px;
+		list-style: none;
+		li {
+			@include clearfix;
+			height: 95px;
+			margin-bottom: 30px;
+			.highlight {
+				float: left;
+				margin-right: 10px;
+				img {
+					border: 1px solid $color-page-border;
+					height: 95px;
+					width: 95px;
+				}
+			}
+			em {
+				display: block;
+				font-weight: bold;
+				margin-bottom: 2px;
+			}
+			.seemore {
+				display: block;
+				font-size: 12px;
+				font-weight: normal;
+				margin-top: 2px;
+			}
+		}
+		/* remove placeholder later */
+		.placeholder {
+			background-color: red;
+		}
+	}
+	.WikiaSpotlight {
+		background-color: transparent;
+		display: block;
+		margin: 30px 0;
+		img {
+			display: block;
+		}
+	}
+	.wikia-button {
+		margin: 0 12px 12px 0;
+		padding: 0 7px;
+	}
+}
+
+#RIGHT_SKYSCRAPER {
+	@extend .module;
+	text-align: center;
+	img {
+		margin: 40px auto;
+	}
+}
+
+.WikiaSpotlight {
+	background-color: $color-page;
+	color: $color-text;
+	display: inline-block;
+	width: 270px;
+}
+
+#contentSub {
+	font-size: 14px;
+	line-height: 16px;
+	padding: 10px;
+
+	.commentslikes {
+		display: inline;
+		font-size: 12px;
+		a:hover {
+			text-decoration: none;
+		}
+	}
+}
+
+.wikiaThrobber {
+	@include opacity(75);
+	background: url("/skins/common/images/ajax.gif") no-repeat scroll center $color-page;/* $wgCdnStylePath */
+	height: 100%;
+	left: 0;
+	width: 100%;
+	position: absolute;
+	top: 0;
+	z-index: 2;
+}
+
+
+.ContentWarning {
+	#WikiaMainContent, #WikiaRail {
+		display: none; 
+	}
+}

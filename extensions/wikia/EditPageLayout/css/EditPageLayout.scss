@@ -1,0 +1,405 @@
+@import "../../../../skins/oasis/css/core/color";
+@import "../../../../skins/oasis/css/core/layout";
+@import "../../../../skins/oasis/css/mixins/bodytext";
+@import "../../../../skins/oasis/css/mixins/border-radius";
+@import "../../../../skins/oasis/css/mixins/box-shadow";
+@import "../../../../skins/oasis/css/mixins/clearfix";
+@import "../../../../skins/oasis/css/mixins/gradient";
+@import "../../../../skins/oasis/css/mixins/opacity";
+@import "../../../../skins/oasis/css/mixins/wordmark";
+@import "../../../../skins/oasis/css/mixins/yui-suggest";
+
+// Colors
+@import "core/colors";
+
+// Mixins
+@import "mixins/button-resize";
+@import "mixins/gradients";
+@import "mixins/inputs";
+@import "mixins/splotch";
+@import "mixins/sprite-edit-page";
+
+// Core
+@import "core/buttons";
+@import "core/dimensions";
+@import "core/dropdowns";
+@import "core/header";
+@import "core/modals";
+@import "core/modules";
+@import "core/notices";
+@import "core/tabs";
+@import "core/toolbar";
+@import "core/wide";
+
+body {
+	padding: 0;
+	&.EditPageScrollable {
+		overflow-y: auto;
+	}
+}
+
+#WikiaPage {
+	border-bottom: none;
+	margin: 0 auto;
+	padding: 0;
+	z-index: auto;
+}
+
+// remove global header shadow
+#WikiaHeader {
+	nav:before {
+		background: none;
+	}
+}
+
+#EditPage {
+	@include clearfix;
+	background: $color-epl-page-secondary;
+	overflow: hidden;
+	position: relative;
+
+	// trick to overcome reseting CSS from Oasis core
+	b {
+		font-weight: bold;
+	}
+	i {
+		font-style: italic;
+	}
+
+	// fix for BugId:10773
+	&:after {
+		display: none;
+	}
+}
+
+#EditPageMain {
+	float: left;
+
+	// - 1px for #EditPageRail border. Fixes BugId:16911.
+	width: $width-outside - $width-rail-epl - 1px;
+}
+
+#EditPageRail {
+	@include box-shadow(-2px, 2px, 2px, $color-epl-gradient-shadow, false, 0);
+	background-color: $color-epl-page-tertiary;
+	border-left: 1px solid $color-page-border;
+	float: right;
+	width: $width-rail-epl;
+
+	// Make sure the box shadow of #EditPageRail is layered on top of #EditPageMain
+	position: relative;
+	z-index: 2;
+
+	.rail-auto-height {
+		position: relative; // IE 7 needs this
+		overflow: hidden;
+
+		> * {
+			width: $width-rail-epl;
+		}
+	}
+}
+
+#EditPageEditorWrapper {
+	padding-left: 10px;
+	
+	&.hasPreloads {
+		.editpage-editarea {
+			border-top: 1px solid $color-page-border;
+		}
+	}
+}
+
+.editpage-intro {
+	border-color: $color-page-border;
+	border-style: solid;
+	border-width: 0 1px 1px 1px;
+	margin-bottom: 10px;
+	position: relative;
+
+	// scroll area
+	> .editpage-intro-wrapper {
+		max-height: 80px;
+		overflow: hidden;
+
+		// preload content
+		> div {
+			@include bodytext;
+			background-color: $color-epl-page-tertiary;
+			color: $color-text;
+			padding: 5px;
+		}
+
+		// links
+		a {
+			color: $color-links;
+		}
+	}
+
+	// expanded state
+	&.expanded {
+		> .editpage-intro-wrapper {
+			max-height: 150px;
+			overflow: auto;
+			> div {
+				// give space for "less" link
+				padding-bottom: 35px;
+			}
+		}
+	}
+
+	// expand link
+	> .expand {
+		@include opacity(80);
+		background-color: $color-page;
+		bottom: 5px;
+		color: $color-links;
+		cursor: pointer;
+		display: none;
+		font-size: 11px;
+		position: absolute;
+		padding: 5px;
+		right: 15px;
+		text-align: center;
+		&:hover {
+			text-decoration: none;
+		}
+		> label {
+			cursor: pointer;
+		}
+		> span {
+			font-size: 14px;
+			font-weight: bold;
+		}
+	}
+}
+
+#EditPageEditor {
+	position: relative;
+	
+	&.noFooter {
+		margin-bottom: 10px;
+		
+		.editpage-editarea {
+			border-bottom: 1px solid $color-page-border;
+		}
+	}
+
+	// source mode tweak
+	textarea {
+		@include epl-editorarea;
+		border: 0;
+		line-height: 140%;
+	}
+
+	#diff {
+		@include bodytext;
+		background-color: $color-epl-header-secondary;
+		border: 1px solid $color-page-border;
+		margin: 10px 0;
+		padding: 5px;
+
+		table {
+			.diff-addedline,
+			.diff-context,
+			.diff-deletedline {
+				color: $color-epl-notices-color;
+			}
+		}
+	}
+
+	#myedit {
+		background-color: $color-epl-header-secondary;
+		border: 1px solid $color-page-border;
+		color: $color-text;
+		padding: 10px;
+
+		> textarea {
+			background-color: $color-epl-page-secondary;
+			color: $color-text;
+			height: 400px;
+			resize: none;
+		}
+	}
+
+	// wrapper for edit area
+	.editpage-editarea {
+		border-left: 1px solid $color-page-border;
+		position: relative;
+		
+		textarea {
+			color: $color-text;
+			background-color: $color-page;
+
+			// hide when replaced by ckeditor
+			&.replaced {
+				display: none;
+			}
+		}
+
+		.cke_browser_ie7 iframe {
+			width: 99.5% !important; // override element style
+		}
+	}
+
+	.loading-indicator {
+		.loading-background, .loading-message {
+			background-color: $color-page;
+			position: absolute;
+			display: block;
+		}
+
+		.loading-background {
+			z-index: 100;
+			//@include opacity(75);
+			display: block;
+			left: 0;
+			right: 0;
+			top: 0;
+			bottom: 0;
+		}
+
+		.loading-message {
+			background: transparent;
+			z-index: 101;
+			top: 20%;
+			width: 100%;
+			text-align: center;
+			color: $color-links;
+
+			.loading-throbber, .loading-text {
+				display: inline-block;
+				vertical-align: middle;
+				padding: 10px;
+				zoom: 1;
+			}
+
+			.loading-throbber {
+				background: $color-page url(/skins/common/images/ajax.gif) no-repeat 50% 50%; /* $wgCdnStylePath */
+				width: 16px;
+				height: 16px;
+			}
+
+			.loading-text {
+				padding-left: 9px;
+				font-size: 16px;
+			}
+		}
+	}
+}
+
+#EditPageDialog {
+	.loading {
+		left: 50%;
+		position: absolute;
+		top: 50%;
+	}
+	&.preview {
+		.modalContent {
+			border-color: transparent;
+			padding: 0;
+			.ArticlePreview {
+				border: 1px solid $color-page-border;
+				overflow-y: scroll;
+				min-height: 320px;
+				padding: 10px;
+                .global-notification {
+                    /* FB#48494 - change nav2 error styling for modal preview */
+                    width: auto;
+                }
+			}
+			/**
+			 *	FB#8087 - styling for interlanguage links in RTE popup preview
+			 */
+			.WikiaArticleInterlang {
+			    h3 {
+			        margin: 2px 14px 0 0;
+					font: {
+						size: 14px;
+						weight: normal;
+					}
+				}
+				ul {
+					list-style: none;
+				}
+			}
+		}
+	}
+}
+
+#EditPagePreviewEditSummary {
+	display: table-cell;
+	height: 50px;
+	padding-top: 13px;
+	vertical-align: middle;
+	> p {
+		line-height: 18px;
+	}
+}
+
+#EditPageHiddenFields {
+	display: none;
+}
+
+#editform {
+	position: relative;
+}
+
+.EditPagePermissionError {
+	#EditPageToolbar {
+		height: 38px;
+	}
+
+	#EditPageRail {
+		> .module {
+			display: none;
+			&.module_page_controls {
+				@include gradient-module;
+				display: block;
+				height: 300px;
+				> .module_content {
+					visibility: hidden;
+				}
+			}
+			&.module_license {
+				display: block;
+			}
+		}
+	}
+}
+
+/* modal dialog (page title, captcha) */
+#HiddenFieldsDialog {
+	input {
+		display: block;
+	}
+	input[type="text"],
+	textarea {
+		width: 100%;
+	}
+}
+
+/* RT #74340: add styling for LinkSuggest */
+.link-suggest-container {
+	@include yui-suggest;
+	position: absolute;
+}
+
+// TODO: try to "hide" stuff listed below in PHP
+#csMainContainer,
+.templatesUsed,
+.printfooter,
+#toolbar,
+#talkpagetext,
+.mw-editTools,
+.plb-edit-page-make-layout {
+	display: none;
+}
+
+#EditPageHeader h1 {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 300px;
+
+}

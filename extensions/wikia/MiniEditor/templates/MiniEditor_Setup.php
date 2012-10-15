@@ -1,0 +1,1 @@
+<form id='RTEFakeForm'></form>

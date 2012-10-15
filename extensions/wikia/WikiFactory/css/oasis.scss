@@ -1,0 +1,46 @@
+@import "../../../../skins/oasis/css/core/color";
+@import "../../../../skins/oasis/css/mixins/menus";
+
+#WikiFactoryDomainSelector {
+	.autocomplete {
+		@include menu-regular;
+		margin-top: 2px;
+		overflow: hidden;
+		position: relative;
+		top: 3px;
+		width: 270px;
+		.selected {
+			background: $color-menu-highlight;
+		}
+	}
+}
+
+#cityselect {z-index:9000} /* for IE z-index of absolute divs inside relative divs issue */
+#citydomain {z-index:0;} /* abs for ie quirks */
+
+#WikiFactoryDomainSelector {
+	position: relative;
+	z-index: 10
+}
+
+#citydomain {
+	width: 350px;
+}
+
+.wk-form-row {
+	list-style-type: none;
+	display: inline;
+	margin:0;
+
+	li {
+		display: inline;
+	}
+
+	label {
+		width: 10em;
+		float: left;
+		text-align: left;
+		vertical-align: middle;
+		margin: 5px 0 0 0;
+	}
+}

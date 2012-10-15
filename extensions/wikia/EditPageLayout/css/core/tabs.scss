@@ -1,0 +1,45 @@
+#EditPageTabs {
+	bottom: -1px;
+	position: absolute;
+	right: $width-rail-epl;
+
+	.cke_button {
+		@include border-radius(5px);
+		@include border-radius-se(0);
+		@include border-radius-sw(0);
+		background-color: $color-epl-gradient-light;
+		border: 1px solid $color-page-border;
+		border-bottom: 0;
+		display: inline-block;
+		margin-left: 3px;
+		padding: 1px 0;
+		zoom: 1; // ie
+
+		> a {
+			outline: none;
+			cursor: pointer;
+			text-decoration: none;
+		}
+		&:first-child {
+			margin-left: 0;
+		}
+		&.cke_off {
+			background-color: $color-epl-hover;
+			border-bottom: 1px solid $color-page-border;
+			padding-bottom: 0;
+
+			&:hover {
+				background-color: mix($color-epl-hover, $color-epl-gradient-light, 75%);
+			}
+		}
+		.cke_label {
+			display: inline-block;
+			font-size: 11px;
+			padding: 3px 6px;
+		}
+	}
+
+	.cke_separator {
+		display: none;
+	}
+}

@@ -1,0 +1,19 @@
+== MassEditRegex ==
+Copyright © 2009 Adam Nielsen <malvineous@shikadi.net>
+GNU General Public License 2.0 or later
+http://www.gnu.org/copyleft/gpl.html
+
+Edit a list of pages in a single operation by applying a regular expression 
+to each page's content.
+
+See http://www.mediawiki.org/wiki/Extension:MassEditRegex for full instructions.
+
+Briefly:
+
+  1. Add to LocalSettings.php:
+
+    require_once ( "$IP/extensions/MassEditRegex/MassEditRegex.php" );
+    // Allow administrators to use Special:MassEditRegex
+    $wgGroupPermissions['sysop']['masseditregex'] = true;
+
+  2. Go to [[Special:MassEditRegex]]

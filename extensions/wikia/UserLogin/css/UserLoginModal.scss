@@ -1,0 +1,38 @@
+@import "../../../../skins/oasis/css/mixins/opacity";
+@import "../../../../skins/oasis/css/mixins/transition";
+@import "../mixins/divider";
+
+.UserLoginModal {
+	@include transition-shorthand(200ms opacity ease-in-out);
+	@include opacity(100);
+	height: auto;
+	margin: 0 auto 15px;
+	padding: 10px 0 0 0;
+	width: 264px;
+	input[type=text],
+	input[type=password] {
+		width: 234px;
+	}
+	input[type=submit].big {
+		width: 250px;
+	}
+	.general-errors {
+		display: none;
+	}
+	.get-account {
+		margin: 15px 0 20px;
+	}
+	.sso-login {
+		text-align: center;
+	}
+	.sso-login-divider {
+		@include divider;
+		margin-top: 40px;
+	}
+	.submits {
+		margin-top: 25px;
+	}
+	.wikia-button-facebook {
+		margin-top: 12px;
+	}
+}

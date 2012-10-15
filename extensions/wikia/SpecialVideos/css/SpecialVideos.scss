@@ -1,0 +1,100 @@
+@import "../../../../skins/oasis/css/core/color";
+@import "../../../../skins/oasis/css/mixins/bodytext";
+@import "../../../../skins/oasis/css/mixins/border-radius";
+@import "../../../../skins/oasis/css/mixins/box-shadow";
+@import "../../../../skins/oasis/css/mixins/clearfix";
+@import "../../../../skins/oasis/css/mixins/gradient";
+@import "../../../../skins/oasis/css/mixins/opacity";
+
+$placeholder-bg-img: url(/extensions/wikia/SpecialVideos/images/AddVideoIcons_Dark.png);  /* base64 */
+$placeholder-bg-color: darken($color-page, 10%);
+@if $is-dark-wiki {
+	$placeholder-bg-img: url(/extensions/wikia/SpecialVideos/images/AddVideoIcons_Light.png);  /* base64 */
+	$placeholder-bg-color: lighten($color-page, 10%);
+}
+
+.addVideo {
+	margin-top: 2px;
+	vertical-align: top;
+	img.sprite {
+		background-color: transparent;
+		background-repeat: no-repeat;
+		&.addRelatedVideo {
+			background-image: url(/extensions/wikia/RelatedVideos/images/AddVideo_Icon.png);  /* base64 */
+			height: 22px;
+			width: 30px;
+			float: left;
+		}
+	}
+}
+
+.ContentHeader {
+	@include clearfix;
+	border-bottom: 1px solid $color-page-border;
+	padding: 8px 0 18px;
+	margin-bottom: 18px;
+	
+	> label {
+		display: block;
+		float: left;
+		font-weight: bold;
+		line-height: 21px;
+		margin-right: 8px;
+	}
+	
+	.WikiaDropdown {
+		float:left;
+		.dropdown {
+			@include box-shadow(0, 0, 0, transparent, 0, 0);
+			width: 215px;
+		}
+		strong {
+			font-weight: normal;
+		}
+	}
+}
+
+.VideoGrid {
+	@include clearfix;
+	border-bottom: 1px solid $color-page-border;
+	margin-bottom: 18px;	
+	// Override article p styles
+	p, p + p {
+		margin: 0;
+	}
+	.video {
+		margin-bottom: 8px;
+	}
+	.grid-2, .grid-2.alpha {
+		margin-bottom: 18px;
+	}
+	.alpha {
+		clear: both;
+	}
+	.add-video-placeholder {
+		@include opacity(50);
+		background-image: $placeholder-bg-img;
+		background-color: $placeholder-bg-color;
+		background-position: 50% 50%;
+		background-repeat: no-repeat;
+		border: 1px solid $color-page-border;
+		cursor: pointer;
+		height: 205px;
+		margin-bottom: 8px;
+		width: 100%;
+		
+		&:hover {
+			@include opacity(65);
+		}
+	}
+	.posted-in {
+		overflow: hidden;
+		padding-right: 5px;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+}
+
+.messageHolder {
+	display: none;
+}

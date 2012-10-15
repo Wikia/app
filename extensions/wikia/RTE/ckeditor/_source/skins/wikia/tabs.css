@@ -1,0 +1,23 @@
+.cke_skin_wikia .cke_tabs {
+	height: 20px;
+	position: absolute;
+	top: -20px;
+	right: 320px;
+}
+
+.cke_skin_wikia .cke_tabs .cke_icon {
+	display: none !important;
+}
+
+.cke_skin_wikia .cke_tabs .cke_label {
+	font-size: 9px;
+	line-height: 15px;
+}
+
+.cke_skin_wikia .cke_tabs .cke_button a {
+	-moz-box-shadow: none;
+	box-shadow: none;
+	border: none;
+	height: 15px;
+	width: auto;
+}

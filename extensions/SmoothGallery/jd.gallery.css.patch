@@ -1,0 +1,40 @@
+--- ../../SmoothGallery-1.0.1/css/jd.gallery.css	2006-12-23 11:35:13.000000000 -0600
++++ jd.gallery.css	2007-03-16 19:07:02.000000000 -0500
+@@ -81,7 +81,7 @@
+ .jdGallery div.carouselContainer
+ {
+ 	position: absolute;
+-	height: 135px;
++	height: 160px;
+ 	width: 100%;
+ 	z-index: 10;
+ 	margin: 0px;
+@@ -111,7 +111,7 @@
+ 	margin: 0px;
+ 	left: 0;
+ 	top: 0;
+-	height: 115px;
++	height: 140px;
+ 	background: #333;
+ 	color: #fff;
+ 	text-indent: 0;
+@@ -122,7 +122,7 @@
+ {
+ 	position: absolute;
+ 	width: 100%;
+-	height: 78px;
++	height: 123px;
+ 	top: 10px;
+ 	left: 0;
+ 	overflow: hidden;
+@@ -212,8 +212,10 @@
+ {
+ 	left: 0;
+ 	top: 0;
++	/*
+ 	width: 100%;
+ 	height: 100%;
++	*/
+ }
+ 
+ .withArrows a.open

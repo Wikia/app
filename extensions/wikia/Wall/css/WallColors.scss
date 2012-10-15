@@ -1,0 +1,32 @@
+@import "../../../../skins/oasis/css/core/color";
+
+// light theme
+$color-wall-border: mix($color-page-border, $color-page, 50%);
+$color-wall-bubble: mix($color-buttons, $color-page, 15%);
+$color-wall-bubble-preview: mix($color-error, $color-wall-bubble, 10%);
+$color-wall-bubble-preview-reply: mix($color-error, $color-page, 5%);
+$color-wall-infobox: darken($color-page, 3%);
+$color-wall-infobox-delete: darken($color-wall-infobox, 4%);
+$color-wall-input: lighten($color-page, 3%);
+$color-wall-input-focus: lighten($color-page, 6%);
+$color-wall-input-focus-shadow: mix($color-buttons, $color-page, 100%);
+$color-wall-input-new: mix($color-wall-bubble, $color-wall-input, 20%);
+$color-wall-text-placeholder: mix($color-text, $color-page, 50%);
+$color-wall-shadow: darken($color-page, 12%);
+$color-wall-error: mix($color-wall-input, $color-error, 70%);
+
+// dark theme
+@if $is-dark-wiki {
+	$color-wall-bubble: mix($color-buttons, $color-page, 30%);
+	$color-wall-infobox: lighten($color-page, 3%);
+	$color-wall-infobox-delete: darken($color-wall-infobox, 3%);
+	$color-wall-input: lighten($color-page, 5%);
+	$color-wall-input-focus: lighten($color-page, 10%);
+	$color-wall-input-new: mix($color-wall-bubble, $color-wall-input, 30%);
+	$color-wall-shadow: darken($color-page, 7%);
+
+	// very dark theme
+	@if lightness($color-wall-bubble) < 30 {
+		$color-wall-bubble: mix($color-buttons, $color-page, 40%);
+	}
+}

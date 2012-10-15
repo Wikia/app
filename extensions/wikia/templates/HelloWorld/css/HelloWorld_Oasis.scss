@@ -1,0 +1,10 @@
+@import "../../../../../skins/oasis/css/core/color";
+
+.WikiaArticle h1 {
+	background: tan;
+}
+
+.HelloWorldAjax {
+	border: 1px dashed $color-page-border;
+	padding: 10px;
+}

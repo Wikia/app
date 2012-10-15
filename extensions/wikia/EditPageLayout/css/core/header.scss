@@ -1,0 +1,102 @@
+#EditPageHeader {
+	@include box-shadow(0, -4px, 2px, $color-epl-header-shadow, true, 0);
+	background-color: $color-epl-header;
+	border-bottom: 1px solid $color-page-border;
+	height: $height-epl-header;
+	padding-left: 20px;
+	position: relative;
+	vertical-align: top;
+
+	// scale down wiki logo
+	> .wordmark {
+		@include wordmark;
+		@include clearfix;
+		color: $color-epl-header-text;
+		display: inline-block;
+		float: left;
+		height: $height-epl-header;
+		margin-right: 20px;
+		width: auto;
+		img {
+			float: left;
+			height: 45px;
+		}
+		// text wordmark should be vertically centered
+		&.text {
+			> a {
+				display: inline-block;
+				line-height: $height-epl-header;
+			}
+		}
+	}
+	> h2 {
+		color: $color-epl-header-text;
+		font-size: 14px;
+		line-height: 21px;
+		// BugId:7024 - override per-wiki custom CSS
+		margin: 0;
+		padding: 0;
+	}
+	> h1 {
+		display: inline-block;
+		float: left;
+		font-size: 19px;
+		line-height: 17px;
+		padding: 0;
+		zoom: 1; // ie
+		> a {
+			color: $color-epl-header-text;
+		}
+		.hiddenTitle {
+			display: none;
+		}
+	}
+}
+
+// "edit title" button
+#EditPageTitle {
+	cursor: pointer;
+	display: none;
+	font-size: 11px;
+	margin: 0 4px;
+	text-decoration: none;
+	> img {
+		margin: 4px;
+		vertical-align: top;
+	}
+}
+
+// JS enabled pencil button - it should only be visible when hovered over #EditPageHeader
+#EditPageHeader:hover {
+	> #EditPageTitle.enabled {
+		display: inline;
+	}
+}
+
+/* Need [Help]? */
+#HelpLink {
+	bottom: 25px;
+	color: $color-epl-header-text;
+	position: absolute;
+	right: 21px;
+	> a {
+		color: $color-epl-header-text;
+	}
+}
+
+/* (X) notifications */
+#NotificationsLink {
+	bottom: 5px;
+	line-height: 13px;
+	position: absolute;
+	right: 21px;
+	> a {
+		color: $color-epl-header-text;
+
+		// splotch
+		> span {
+			@include splotch;
+			margin-right: 5px;
+		}
+	}
+}

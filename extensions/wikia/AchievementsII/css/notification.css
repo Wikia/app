@@ -1,0 +1,111 @@
+.AchievementsNotification {
+	-moz-border-radius-bottomleft: 12px;
+	-moz-border-radius-bottomright: 12px;
+	-webkit-border-bottom-left-radius: 12px;
+	-webkit-border-bottom-right-radius: 12px;
+	border-bottom-left-radius: 12px;
+	border-bottom-right-radius: 12px;
+	border-style: solid;
+	border-width: 0 4px 4px;
+	height: 110px;
+	left: 50%;
+	margin-left: -400px;
+	overflow: hidden;
+	position: fixed;
+	top: 0;
+	width: 800px;
+	z-index: 9000;
+}
+
+.AchievementsNotification img {
+	float: left;
+	height: 90px;
+	margin: 10px 15px 0 10px;
+	width: 90px;
+}
+
+.AchievementsNotification .text {
+	float: left;
+	margin-top: 15px;
+	width: 480px;
+}
+
+.AchievementsNotification h1 {
+	font-size: 18px;
+	font-weight: bold;
+	/* override #bodyContent h1 :( */
+	margin: 0 0 4px !important;
+}
+
+.AchievementsNotification p {
+	font-size: 13px;
+	margin: 0 0 8px 0;
+}
+
+.AchievementsNotification a {
+	font-size: 15px;
+}
+
+.AchievementsNotification .points {
+	background-repeat: no-repeat;
+	float: right;
+	font-size: 32px;
+	font-weight: bold;
+	height: 90px;
+	line-height: 26px;
+	padding: 25px 0 0 10px;
+	text-align: center;
+	width: 195px;
+}
+
+.AchievementsNotification .points span {
+	left: 5px;
+	position: relative;
+}
+
+.AchievementsNotification .bronze {
+	background-image: url(../images/bronze-circle-bg.png);
+}
+
+.AchievementsNotification .silver {
+	background-image: url(../images/silver-circle-bg.png);
+}
+
+.AchievementsNotification .gold {
+	background-image: url(../images/gold-circle-bg.png);
+}
+
+.AchievementsNotification .platinum {
+	background-image: url(../images/platinum-circle-bg.png);
+}
+
+
+/*** What's all this stuff? ***/
+/*
+.AchievementsNotification .points span#shift {
+	font-size: 24px;
+}
+
+.AchievementsNotification dl dt {
+	float: left;
+	font-size: 16px;
+	margin-right: 10px;
+	text-align: right;
+	width: 240px;
+}
+
+.AchievementsNotification dl dd {
+	float: left;
+	text-align: left;
+	width: 300px;
+}
+
+.AchievementsNotification dl dd input {
+	font-size: 16px;
+	padding: 4px;
+}
+
+.AchievementsNotification big {
+	font-size: 15px;
+}
+*/

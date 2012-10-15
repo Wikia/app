@@ -1,0 +1,34 @@
+#moodbar-tooltip-overlay-wrap {
+	width: 285px;
+	position: absolute;
+	left: 12.5em;
+	top: 2.5em;
+	background: #ff9933;
+	padding: 2px;
+}
+
+#moodbar-tooltip-pointy {
+	position: absolute;
+	top: -15px;
+	left: 15px;
+	/* @embed */
+	background: url(images/tooltip-pokey.png);
+	background-repeat: no-repeat;
+	background-position: left;
+	height: 17px;
+	width: 15px;
+}
+
+#moodbar-tooltip-overlay {
+	background: #fefac6;
+	padding: 10px;
+}
+
+#moodbar-tooltip-overlay #moodbar-tooltip-title {
+	font-weight: bold;
+	font-size: 0.75em;
+}
+
+#moodbar-tooltip-overlay #moodbar-tooltip-subtitle {
+	font-size: 0.7em;
+}

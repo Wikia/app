@@ -1,0 +1,355 @@
+// Inter-wiki search - currently for the SearchV2 extension
+// Mixins
+@import "../../../../skins/oasis/css/mixins/gradient";
+@import "../../../../skins/oasis/css/mixins/bodytext";
+@import "../../../../skins/oasis/css/mixins/border-radius";
+@import "../../../../skins/oasis/css/mixins/clearfix";
+
+// Oasis Page Modules //
+@import "../../../../skins/oasis/css/core/color";
+
+$use-dark-icons: false;
+@if lightness($color-buttons) > 50 {
+	$use-dark-icons: true;
+}
+
+$color-search-form-background: darken($color-page, 5%);
+@if $is-dark-wiki {
+	$color-search-form-background: darken(lighten($color-page, 20%), 15%);
+}
+
+$color-search-ads-background: mix($color-buttons, $color-page, 5%);
+@if $is-dark-wiki {
+	$color-search-ads-background: lighten($color-search-ads-background, 5%);
+}
+
+$form-side-padding: 12px;
+$form-negative-side-padding: $form-side-padding*-1;
+
+.Search {
+	// Search form
+	.WikiaSearch {
+		background: $color-search-form-background;
+		margin-bottom: 12px;
+		padding: $form-side-padding;
+		padding-bottom: 0;
+
+		input[type="search"], input[type="text"] {
+			height: 24px;
+			margin-right: 12px;
+			padding: 3px 10px;
+			width: 536px;
+			background-color: $color-page;
+		}
+
+		button {
+			float: none;
+			height: 31px;
+			width: 62px;
+		}
+
+		p {
+			margin-top: 0;
+		}
+		fieldset {
+			border: 0;
+			padding: 5px 0;
+			margin: 0;
+		}
+
+		.tabs {
+			margin: 24px $form-negative-side-padding 0;
+			padding: 0 $form-side-padding - 1px;
+		}
+
+		.AdvancedSearch {
+			// temporary disablead - part of search redesign project 
+			// to be restyled when new mockup approved 
+			// (https://internal.wikia-inc.com/wiki/Search/Redesign/Story_3)
+			
+			//background: $color-page;
+			//border-bottom: 1px solid $color-page-border;
+			//margin: 0px $form-negative-side-padding 0;
+			//padding-bottom: 18px;
+
+			label {
+				display: inline-block;
+				width: 25%;
+				line-height: 23px;
+			}
+			h3 {
+				font-size: inherit;
+				margin: 0;
+				padding: 14px 0;
+			}
+		}
+	}
+	.result-count {
+		color: $color-alternate-text;
+		margin-bottom: 0;
+		text-align: right;
+
+		span {
+			text-transform: capitalize;
+		}
+	}
+	// TODO: Make this a global style?
+	.subtle {
+		color: $color-alternate-text;
+	}
+	.Results {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+	.result {
+		@include clearfix;
+		list-style: none;
+		margin: 0 0 19px 0;
+		padding: 0;
+
+		h1, h3 {
+			font-size: 16px;
+			margin: 0;
+		}
+		ul {
+			@include clearfix;
+			list-style: none;
+			margin: 0;
+		}
+
+		li {
+			color: $color-alternate-text;
+			float: left;
+			list-style: none;
+			margin: 0;
+
+			&:before {
+				content: "\00a0|\00a0";
+			}
+
+			&:first-child:before {
+				content: "";
+			}
+		}
+		article {
+			@include clearfix;
+			line-height: 19px;
+		}
+		.grouped-result {
+			width: 280px;
+			float: left;
+			margin: 9px 0 9px 40px;
+
+			h1 {
+				font-size: inherit;
+			}
+
+			&.new-row {
+				clear: left;
+			}
+		}
+		.redirect-title {
+			margin: 0;
+			padding: 0;
+			color: $color-alternate-text;
+		}
+		a.image {
+			float: left;
+			margin: 0 10px 5px 0;
+		}
+	}
+	.searchmatch {
+		font-weight: bold;
+	}
+	.wikia-paginator {
+		padding-top: 5px;
+	}
+}
+
+.WikiaSearchAds {
+	background-color: $color-search-ads-background;
+	padding: $form-side-padding;
+	padding-bottom: 0;
+	&.SearchAdsBottom {
+		margin-top: 12px;
+	}
+	&.SearchAdsTop {
+		margin-bottom: 12px;
+	}
+	h3 {
+		font-size: 14px;
+		margin: 0;
+		padding: 0 0 12px 0;
+	}
+	.list {
+		list-style: none;
+		margin: 0;
+		min-height: 216px;
+		padding: 0;
+		&.loading {
+			background: url(/skins/common/images/ajax.gif) no-repeat 50% 50%; /* $wgCdnStylePath */
+		}
+	}
+	.unit {
+		height: 60px;
+		line-height: 16px;
+		margin: 0;
+		padding: 0 0 12px 0;
+	}
+	.link {
+		font-size: 16px;
+	}
+	.result-link {
+		color: $color-alternate-text;
+		&:hover {
+			color: $color-links;
+		}
+	}
+}
+.inter-wiki-search {
+	.WikiaTopAds {
+		margin-bottom: 15px;
+	}
+	.WikiaSearch {
+		padding-bottom: 12px;
+	}
+}
+.mw-search-formheader { // Quick style fix for now. Will fix tomorrow
+	@include clearfix;
+}
+
+// ****************************
+// WIKIA SEARCH LAYOUT REDESIGN
+// ****************************
+$color-search-form-background: mix($color-page, #000, 97%);
+@if $is-dark-wiki {
+	$color-search-form-background: mix($color-page, #fff, 90%);
+}
+$color-search-grid-border: mix($color-page-border, #fff, 50%);
+@if $is-dark-wiki {
+	$color-search-grid-border: mix($color-page-border, #000, 95%);
+}
+$color-tabs-background: mix($color-page, #000, 97%);
+@if $is-dark-wiki {
+	$color-tabs-background: mix($color-page, #fff, 85%);
+}
+$color-tabs-hover-background: mix($color-page, #000, 98%);
+@if $is-dark-wiki {
+	$color-tabs-hover-background: mix($color-page, #fff, 90%);
+}
+$color-search-ads-background: mix($color-buttons, $color-page, 3%);
+@if $is-dark-wiki {
+	$color-search-ads-background: mix($color-buttons, $color-page, 12%);
+}
+.Search.this-wiki {
+	.WikiaSearch {
+		border-top: 1px solid $color-search-grid-border;
+		border-bottom: 1px solid $color-search-grid-border;
+		margin: 0;
+		padding: 9px 10px;	
+		p {
+			font-size: 15px;
+			font-weight: bold;
+			padding-top: 5px;
+		}
+		input[type="text"] {
+			margin-right: 10px;
+			width: 389px;
+		}
+		button {
+			height: 32px;
+			width: 64px;
+		}
+	}
+	.search-tabs, 
+	.SearchAdsTopWrapper {
+		border-top: 1px solid $color-search-grid-border;
+		margin-top: 35px;
+	} 
+	.search-tabs {
+		padding-right: 10px;
+		li {
+			font-size: 14px;
+			font-weight: bold;
+			line-height: 28px;
+			list-style: none;
+			margin: 0;
+			&:first-child {
+				margin-top: 10px;
+			}
+		}
+		a {
+			display: block;
+			min-height: 31px;
+			padding-left: 10px;
+			text-decoration: none;
+			&:hover {
+				background-color: $color-tabs-hover-background;
+			}
+		}
+		.selected a {
+			background-color: $color-tabs-background;
+			color: $color-text;
+		}
+		
+	}
+	.results-wrapper > p {
+		border-bottom: 1px solid $color-search-grid-border;
+		color: $color-text;
+		line-height: 13px;
+		margin: 0;
+		margin-bottom: 10px;
+		overflow: hidden; 
+		padding: 11px 0;
+		text-align: left;
+		text-overflow: ellipsis;
+		white-space: nowrap; 
+	}
+	.result {
+		margin-bottom: 13px;
+		word-wrap: break-word;
+		h1 {
+			font-size: 14px;
+			font-weight: bold;
+			line-height: 28px;
+		}
+		li {
+			float: none;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap; 
+		}
+		.redirect-title .result-link, 
+		ul .result-link {
+			color: $color-alternate-text;
+		}
+	}
+	.wikia-paginator ul {
+		text-align: left;
+	}
+	.WikiaSearchAds {
+		padding: 10px 10px 0 10px;
+		h3 {
+			padding-bottom: 10px;
+		}
+		.unit {
+			height: auto;
+			padding: 10px 0;
+			&:first-child {
+				padding-top: 0;
+			}
+		}
+		.link {
+			 font-size: 14px;
+			 font-weight: bold;
+			 line-height: 18px;
+		}
+	}
+	.SearchAdsTopWrapper {
+		padding: 10px 0 0 10px;
+	}
+	.SearchAdsBottom {
+		margin-top: 20px;
+	}
+}

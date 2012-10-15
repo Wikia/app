@@ -1,0 +1,808 @@
+.WikiaPhotoGalleryEditorPage {
+	display: none;
+	height: 460px;
+	/*overflow: auto;*/
+	position: relative;
+}
+
+#WikiaPhotoGalleryEditor .WikiaPhotoGalleryEditorPageInner {
+	padding: 0 15px;
+	position: relative;
+}
+
+#WikiaPhotoGalleryEditor .modalContent {
+	*display: block; /* IE7 */
+}
+
+/* generic stuff */
+.WikiaPhotoGalleryProgress {
+	background: transparent url(http://images.wikia.com/common/skins/common/images/ajax.gif) no-repeat 50% 50%;
+}
+
+img.WikiaPhotoGalleryProgress {
+	background: none;
+	display: none;
+	margin-left: 10px;
+}
+
+.WikiaPhotoGalleryEditorPageInner h1 {
+	border-bottom: solid 1px #aaa;
+	clear: both;
+	font-size: 1.4em;
+	font-weight: bold;
+	letter-spacing: -1px;
+	margin: 10px 0;
+	padding: 10px 0;
+}
+
+.WikiaPhotoGalleryEditorPageInner p {
+	margin: 1em 0;
+}
+
+#WikiaPhotoGalleryEditor td {
+	border-bottom: solid 1px #ccc;
+	padding: 8px 0;
+}
+
+/* slider from jQuery UI */
+#WikiaPhotoGalleryEditor .ui-slider {
+	-moz-border-radius: 4px;
+	border: solid 1px #aaa;
+	cursor: pointer;
+	display: inline-block;
+	height: 5px;
+	margin: 0 5px;
+	position: relative;
+}
+
+#WikiaPhotoGalleryEditor .ui-slider small {
+	position: absolute;
+	top: 10px;
+}
+
+#WikiaPhotoGalleryEditor .ui-slider-handle {
+	background-color: #e6e6e6;
+	border: solid 1px #d3d3d3;
+	cursor: default;
+	color: #555;
+	height: 16px;
+	margin-left: -4px;
+	top: -7px;
+	width: 8px;
+	position: absolute;
+}
+
+#WikiaPhotoGalleryEditor .ui-slider-tooltip {
+	display: none;
+	left: 48%;
+	padding: 2px 5px;
+	position: absolute;
+	top: -35px;
+}
+
+/* option columns */
+#WikiaPhotoGalleryEditor .WikiaPhotoGalleryOptionsColumn {
+	float: left;
+	line-height: 2em;
+	margin-right: 50px;
+}
+
+#WikiaPhotoGalleryEditor .WikiaPhotoGalleryOptionsColumn td {
+	border: none;
+	padding: 0 0 2px 0;
+	vertical-align: middle;
+	text-align: left;
+}
+
+#WikiaPhotoGalleryEditor .WikiaPhotoGalleryOptionsColumn .ui-slider {
+	display: block;
+	margin: 20px 0;
+}
+
+.WikiaPhotoGalleryOptionsColumn input[type="checkbox"],
+.WikiaPhotoGalleryOptionsColumn select {
+	vertical-align: middle;
+}
+
+.WikiaPhotoGalleryOptionsColumn label {
+	margin: 0 20px 0 5px;
+}
+
+/* Feed checkbox */
+#WikiaPhotoGalleryFeedInUse,
+#WikiaPhotoGallerySlideshowFeedInUse,
+#WikiaPhotoGallerySlideshowRecentUploads {
+	margin: 0 5px 0 0;
+}
+
+/* Choose type */
+#WikiaPhotoGalleryEditor .WikiaPhotoGalleryEditorChooseType td {
+	border: none;
+	padding: 15px 0;
+	text-align: center;
+	vertical-align: top;
+}
+
+#WikiaPhotoGalleryEditor .WikiaPhotoGalleryEditorChooseType td.border {
+	border-right: solid 1px #ccc;
+}
+
+/* Upload */
+#WikiaPhotoGalleryEditorUploadTable h1 {
+	font-size: 1.8em;
+}
+
+/* Search field */
+#WikiaPhotoGallerySearch {
+	float: right;
+	margin-top: 10px;
+}
+
+#WikiaPhotoGallerySearch input[type="text"] {
+	width: 193px;
+}
+
+#WikiaPhotoGallerySearch button {
+	*width: 35px; /* IE7 */
+}
+
+/* search results */
+#WikiaPhotoGallerySearchResultsChooser {
+    padding-bottom: 10px;
+}
+
+#WikiaPhotoGallerySearchResultsChooser span {
+	font-weight: bold;
+}
+
+#WikiaPhotoGallerySearchResultsChooser span.clickable {
+	cursor: pointer;
+	font-weight: normal;
+	text-decoration: underline;
+}
+
+#WikiaPhotoGallerySearchResults {
+	border: solid 1px #aaa;
+	height: 260px;
+	margin-bottom: 10px;
+	overflow: auto;
+	position: relative;
+}
+
+.WikiaPhotoGalleryResults {
+	list-style: none;
+}
+
+.WikiaPhotoGalleryResults li {
+	float: left;
+	margin: 15px;
+	padding: 5px;
+	position: relative;
+}
+
+.WikiaPhotoGalleryResults li.selected {
+	border-style: solid;
+	border-width: 1px;
+	margin: 14px;
+}
+
+.WikiaPhotoGalleryResults li label {
+	background-position: 50% 50%;
+	background-repeat: no-repeat;
+	display: block;
+	height: 90px;
+	width: 120px;
+}
+
+.WikiaPhotoGalleryResults li input {
+	bottom: 5px;
+	position: absolute;
+	right: 5px;
+}
+
+#WikiaPhotoGallerySearchResultsSelect {
+	float: right;
+	display: none;
+}
+
+#WikiaPhotoGallerySearchResults.WikiaPhotoGalleryProgress ul {
+	display: none !important;
+}
+
+/* upload */
+#WikiaPhotoGalleryImageUploadForm {
+	height: 25px;
+	overflow: hidden;
+	position: relative;
+}
+
+#WikiaPhotoGalleryImageUpload {
+	-moz-opacity: 0;
+	filter:alpha(opacity:0);
+	opacity: 0;
+	position: absolute;
+	top: 0;
+	width: 175px;
+	z-index: 200;
+}
+
+#WikiaPhotoGalleryImageUploadButton {
+	left: 2px;
+	position: absolute;
+	top: 2px;
+}
+
+#WikiaPhotoGalleryImageUploadForm #WikiaPhotoGalleryUploadProgress {
+	position: absolute;
+	top: 2px;
+	left: 150px;
+}
+
+/* Upload conflict */
+#WikiaPhotoGalleryEditorConflictTable {
+	width: 100%;
+}
+
+#WikiaPhotoGalleryEditorConflictTable td {
+	border: none;
+	text-align: center;
+}
+
+#WikiaPhotoGalleryEditorConflictTable h1 {
+	border: none;
+	font-size: 1.3em;
+}
+
+#WikiaPhotoGalleryEditorConflictThumbs td {
+	height: 230px;
+	vertical-align: middle;
+}
+
+/* Photo options */
+.WikiaPhotoGalleryEditorPageInner .WikiaPhotoGalleryEditorCaptionWrapper {
+	margin-right: 250px;
+	position: relative;
+}
+
+#WikiaPhotoGalleryLinkEditor,
+#WikiaPhotoSlideshowLinkEditor {
+	margin-right: 250px;
+	margin-top: 50px;
+}
+
+#WikiaPhotoGalleryLink,
+#WikiaPhotoSlideshowLink,
+#WikiaPhotoSlideshowLinkText,
+#WikiaPhotoSliderLink,
+#WikiaPhotoSliderLinkText,
+#WikiaPhotoGalleryEditorCaption {
+	width: 99%;
+}
+
+#WikiaPhotoGalleryEditorCaptionImagePreview {
+	position: absolute;
+	right: 15px;
+	top: 110px;
+}
+
+/* Caption editor toolbar */
+#WikiaPhotoGalleryEditorCaptionToolbar {
+	position: absolute;
+	top: -22px;
+}
+
+#WikiaPhotoGalleryEditorCaptionToolbar img {
+	cursor: pointer;
+}
+
+/* toolbar with Save / Cancel buttons */
+#WikiaPhotoGalleryEditor .WikiaPhotoGalleryEditorToolbar a {
+	margin-right: 5px;
+}
+
+#WikiaPhotoGalleryEditorSave {
+	float: right;
+    position: relative;
+}
+
+/* tabs */
+#WikiaPhotoGalleryOptionsTabs {
+	margin: 10px 0;
+	min-height: 150px;
+}
+
+#WikiaPhotoGalleryOptionsTabs .WikiaPhotoGalleryOptionsTab {
+	display: none;
+	padding: 20px 0;
+}
+
+/* slider */
+.WikiaPhotoGallerySlider input {
+	text-align: center;
+	width: 40px;
+}
+
+/* color picker */
+.WikiaPhotoGalleryColorPicker {
+	border: solid 1px #aaa;
+	cursor: pointer;
+	display: inline-block;
+	padding: 1px;
+	position: relative;
+	vertical-align: middle;
+}
+
+.WikiaPhotoGalleryColorPicker span {
+	display: block;
+	height: 16px;
+	width: 16px;
+}
+
+.WikiaPhotoGalleryEditorPage .WikiaPhotoGalleryColorPickerPopUp {
+	background-color: #fff;
+	border: solid 1px #cacaca;
+	-moz-box-shadow: 0 0 10px 1px #aaa;
+	-webkit-box-shadow: 0 0 10px 1px #aaa;
+	display: none;
+	position: absolute;
+	padding: 5px 10px;
+	width: 80px;
+	z-index: 2;
+}
+
+.ImageOptionTip {
+	color: #9f9f9f;
+	font-style: italic;
+}
+
+.WikiaPhotoGalleryColorPickerPopUp label {
+	display: block;
+	margin: 5px 0;
+}
+
+.WikiaPhotoGalleryColorPickerPopUp input {
+	margin: 5px 0;
+	width: 70px;
+}
+
+.WikiaPhotoGalleryColorPickerPopUp button {
+	float: right;
+	margin: 5px 0;
+}
+
+.WikiaPhotoGalleryColorPickerPopUp hr {
+	clear: both;
+	width: 70px;
+}
+
+.WikiaPhotoGalleryColorPickerPopUp ul {
+	margin: 5px 0;
+}
+
+.WikiaPhotoGalleryColorPickerPopUp ul li {
+	border: solid 1px #aaa;
+	float: left;
+	margin: 0 5px 5px 0;
+	padding: 1px;
+}
+
+.WikiaPhotoGalleryColorPicker span.transparent-color, .WikiaPhotoGalleryColorPickerPopUp span.transparent-color{
+	background-image: url(../images/colorpicker_transparent.png);
+	background-repeat: no-repeat;
+}
+
+.WikiaPhotoGalleryColorPickerPopUp ul li, .WikiaPhotoGalleryColorPickerPopUp ul li span {
+	height: 16px;
+	width: 16px;
+}
+
+.WikiaPhotoGalleryColorPickerPopUp ul li.empty {
+	border: none;
+}
+
+.WikiaPhotoGalleryColorPickerPopUp ul li span {
+	cursor: pointer;
+	display: block;
+}
+
+/* gallery preview */
+.WikiaPhotoGalleryEditorPageInner .preview {
+	border: solid 1px #aaa;
+	height: 240px;
+	min-height: 0;
+	position: relative;
+}
+
+#WikiaPhotoGalleryEditorPreview {
+	/*height: 395px;*/
+	height: 460px;
+}
+
+/* slider (50-300px) */
+#WikiaPhotoGalleryEditorPreviewOptions #WikiaPhotoGalleryEditorPreviewSlider {
+	width: 250px;
+}
+
+/* RT #59234 */
+.WikiaPhotoGalleryPreviewPage h1 {
+	margin-top: -20px;
+}
+
+/* gallery/slideshow preview */
+#WikiaPhotoGalleryEditor .preview {
+	overflow: auto;
+}
+
+#WikiaPhotoGalleryEditor .preview .WikiaPhotoGalleryPreview {
+	padding: 10px 5px;
+}
+
+.WikiaPhotoGalleryPreviewCaption {
+	font-weight: bold;
+	text-align: center;
+}
+
+#WikiaPhotoGalleryEditor .preview .WikiaPhotoGalleryPreviewItem {
+	display: inline-block;
+	position: relative;
+	vertical-align: top;
+}
+
+#WikiaPhotoGalleryEditor .preview .WikiaPhotoGalleryPreviewItem .thumb {
+	text-align: left;
+}
+
+#WikiaPhotoGalleryEditor .preview .WikiaPhotoGalleryPreviewItemImage {
+	background: #f9f9f9;
+	display: table-cell;
+	vertical-align: middle;
+}
+
+#WikiaPhotoGalleryEditor .preview .WikiaPhotoGalleryPreviewItemImageCell {
+	border: none !important;
+	padding: 0 !important;
+}
+
+#WikiaPhotoGalleryEditor .preview .WikiaPhotoGalleryPreviewItemLink {
+	background-image: url(../images/link.png);
+	height: 16px;
+	position: absolute;
+	right: 5px;
+	bottom: 2px;
+	width: 16px;
+	display: block;
+	cursor: pointer;
+	z-index: 1;
+}
+
+.WikiaPhotoGalleryPreviewItemCaption {
+	display: block;
+	cursor: pointer;
+}
+
+.WikiaPhotoGalleryPreviewPlaceholderCaption {
+	color: #9f9f9f !important;
+	font-style: italic;
+	text-decoration: none !important;
+	display: block;
+	line-height: 1.5em;
+	padding: 5px 0;
+}
+
+#WikiaPhotoGalleryEditor .preview .WikiaPhotoGalleryPreviewItemAddCaption {
+	color: #9f9f9f !important;
+	font-style: italic;
+	text-decoration: none !important;
+}
+
+/* hide error from Cite extension when <ref> is used in image caption */
+.WikiaPhotoGalleryPreviewItemCaption strong.error {
+	display: none;
+}
+
+#WikiaPhotoGalleryEditor .preview .WikiaPhotoGalleryPreviewItemPlaceholder .image {
+	cursor:pointer;
+}
+
+/* selected image highlight */
+#WikiaPhotoGalleryEditor .preview .WikiaPhotoGalleryPreviewItemHover {
+	border-style: solid;
+	border-width: 1px;
+	margin: 0 !important;
+}
+
+#WikiaPhotoGalleryEditor .preview .WikiaPhotoGalleryPreviewItemHover .WikiaPhotoGalleryPreviewItemImage {
+	background: transparent;
+	border-color: transparent;
+}
+
+/* drag&drop stuff */
+.WikiaPhotoGalleryPreviewDDPlaceholder {
+	background: #f9f9f9;
+	border: dashed 1px #cbcbcb;
+	display: inline-block;
+	margin: 1px;
+	opacity: 0.5;
+}
+
+.WikiaPhotoGalleryPreviewDraggable {
+	cursor: move;
+}
+
+/* onhover menu */
+.WikiaPhotoGalleryPreviewItemMenu {
+	display: none;
+	/*opacity: 0.75;*/
+	padding: 2px 3px;
+	position: absolute;
+	right: 0;
+	top: 0;
+}
+
+.WikiaPhotoGalleryPreviewItemMenu a {
+	color: #fff;
+	font-size: 0.85em;
+	margin: 0 2px;
+	text-decoration: none;
+}
+
+/* slideshow preview */
+#WikiaPhotoGallerySlideshowEditorPreview .WikiaPhotoGalleryPreview .WikiaPhotoGalleryPreviewItem {
+	background-position: 50% 50%;
+	background-repeat: no-repeat;
+	margin: 1px !important;
+	overflow: hidden;
+	padding: 0;
+}
+
+#WikiaPhotoGallerySlideshowEditorPreview .WikiaPhotoGalleryPreview .WikiaPhotoGalleryPreviewRecentlyUploaded,
+#WikiaPhotoGallerySlideshowEditorPreview .WikiaPhotoGalleryPreview .WikiaPhotoGalleryPreviewFeed,
+#WikiaPhotoGalleryEditorPreview .WikiaPhotoGalleryPreview .WikiaPhotoGalleryPreviewFeed {
+	opacity: 0.5;
+}
+
+#WikiaPhotoGallerySlideshowEditorPreview .WikiaPhotoGalleryPreview .WikiaPhotoGalleryPreviewItemHover {
+	background-color: transparent;
+	border-style: none;
+	margin: 1px !important;
+}
+
+#WikiaPhotoGallerySlideshowEditorPreview .WikiaPhotoGalleryPreview .WikiaPhotoGalleryPreviewItemLink {
+	bottom: 3px;
+	z-index: 1;
+}
+
+#WikiaPhotoGallerySlideshowEditorPreview .WikiaPhotoGalleryPreview .WikiaPhotoGalleryPreviewSlideshowCaptionWrapper {
+	background-color: #000;
+	bottom: 0;
+	color: #fff;
+	left: 0;
+	max-height: 45px;
+	opacity: 0.75;
+	position: absolute;
+	text-align: left;
+	width: 100%;
+}
+
+#WikiaPhotoGallerySlideshowEditorPreview .WikiaPhotoGalleryPreview .WikiaPhotoGalleryPreviewSlideshowCaption {
+	cursor: pointer;
+	display: block;
+	line-height: 1.5em;
+	opacity: 1;
+	padding: 3px 25px 3px 5px;
+}
+
+#WikiaPhotoGallerySlideshowEditorPreview .WikiaPhotoGalleryPreview .WikiaPhotoGalleryPreviewSlideshowCaption a {
+	color: #fff !important;
+}
+
+#WikiaPhotoGallerySlideshowEditorPreview .WikiaPhotoGalleryPreview .WikiaPhotoGalleryPreviewSlideshowCaption em {
+	color: #ccc;
+	font-style: italic;
+}
+
+/* edit conflicts */
+#WikiaPhotoGalleryEditConflictIntro {
+	padding-left: 30px !important;
+	text-indent: -22px;
+}
+
+#WikiaPhotoGalleryEditConflict textarea {
+	height: 260px;
+	margin: 10px 0;
+}
+
+#WikiaPhotoGalleryEditConflict p {
+	margin: 10px 0;
+}
+
+/* MW suggest */
+.suggestWrapper {
+	position: relative;
+}
+
+#WikiaPhotoGalleryEditor .os-suggest {
+	left: 0 !important;
+	top: 0 !important;
+}
+
+#WikiaPhotoGalleryEditor .os-suggest-result,
+#WikiaPhotoGalleryEditor .os-suggest-result-hl {
+	border: none;
+	padding: 2px;
+}
+
+/* modal alerts */
+#WikiaPhotoGalleryAlert p {
+	padding: 10px 5px;
+}
+
+#WikiaPhotoGalleryAlert .modalToolbar {
+	text-align: right;
+}
+
+#WikiaPhotoGalleryShowSaveQuitDialog p {
+	font-size: 0.9em;
+	line-height: 1.4em;
+	padding: 8px 5px;
+}
+
+#WikiaPhotoGalleryShowSaveQuitDialog a {
+	margin: 0 0 0 4px;
+}
+
+#WikiaPhotoGalleryOrientation{
+	margin: 0;
+	padding: 0;
+}
+
+#WikiaPhotoGalleryOrientation > li {
+	background-color: transparent;
+	background-image: url(../images/orientation_option_sprite.png);
+	list-style: none;
+	width: 34px;
+	height: 34px;
+	display: block;
+	float:left;
+	margin: 0 4px 0;
+	padding: 0;
+	background-repeat: no-repeat;
+	cursor: pointer;
+}
+
+/* Oasis */
+.skin-oasis #WikiaPhotoGalleryEditor {
+	margin-top: -30px;
+}
+
+.skin-oasis #WikiaPhotoGalleryEditor .WikiaPhotoGalleryOptionsColumn  {
+	margin-right: 25px;
+}
+
+/* Slider */
+
+#WikiaPhotoGallerySliderType{
+	margin: 0;
+	padding: 0;
+}
+
+#WikiaPhotoGallerySliderType > li {
+	background-color: transparent;
+	background-image: url(../images/slider-type-sprite.png);
+	list-style: none;
+	width: 103px;
+	height: 51px;
+	display: block;
+	float:left;
+	margin: 10px;
+	padding: 0;
+	background-repeat: no-repeat;
+	cursor: pointer;
+}
+
+
+/* slider preview */
+#WikiaPhotoGallerySliderEditorPreview .WikiaPhotoGalleryPreview .WikiaPhotoGalleryPreviewItem {
+	background-position: 50% 50%;
+	background-repeat: no-repeat;
+	margin: 1px !important;
+	overflow: hidden;
+	padding: 0;
+}
+
+#WikiaPhotoGallerySliderEditorPreview .WikiaPhotoGalleryPreview .WikiaPhotoGalleryPreviewRecentlyUploaded,
+#WikiaPhotoGallerySliderEditorPreview .WikiaPhotoGalleryPreview .WikiaPhotoGalleryPreviewFeed,
+#WikiaPhotoGalleryEditorPreview .WikiaPhotoGalleryPreview .WikiaPhotoGalleryPreviewFeed {
+	opacity: 0.5;
+}
+
+#WikiaPhotoGallerySliderEditorPreview .WikiaPhotoGalleryPreview .WikiaPhotoGalleryPreviewItemHover {
+	background-color: transparent;
+	border-style: none;
+	margin: 1px !important;
+}
+
+#WikiaPhotoGallerySliderEditorPreview .WikiaPhotoGalleryPreview .WikiaPhotoGalleryPreviewItemLink {
+	bottom: 3px;
+	z-index: 1;
+}
+
+#WikiaPhotoGallerySliderEditorPreview .WikiaPhotoGalleryPreview .WikiaPhotoGalleryPreviewSlideshowCaptionWrapper {
+	background-color: #000;
+	bottom: 0;
+	color: #fff;
+	left: 0;
+	max-height: 45px;
+	opacity: 0.75;
+	position: absolute;
+	text-align: left;
+	width: 100%;
+}
+
+#WikiaPhotoGallerySliderEditorPreview .WikiaPhotoGalleryPreview .WikiaPhotoGalleryPreviewSlideshowCaption {
+	cursor: pointer;
+	display: block;
+	line-height: 1.5em;
+	opacity: 1;
+	padding: 3px 25px 3px 5px;
+}
+
+#WikiaPhotoGallerySliderEditorPreview .WikiaPhotoGalleryPreview .WikiaPhotoGalleryPreviewSlideshowCaption a {
+	color: #fff !important;
+}
+
+#WikiaPhotoGallerySliderEditorPreview .WikiaPhotoGalleryPreview .WikiaPhotoGalleryPreviewSlideshowCaption em {
+	color: #ccc;
+	font-style: italic;
+}
+
+#WikiaPhotoGallerySlideshowEditorPreview .WikiaPhotoGalleryPreview .WikiaPhotoGalleryPreviewSliderCaptionWrapper {
+	bottom: 0;
+	left: 0;
+	max-height: 45px;
+	opacity: 0.75;
+	position: absolute;
+	text-align: left;
+	width: 100%;
+}
+
+p.SliderTitle {
+	font-size: 20px;
+	margin: 5px 0px 0px;
+}
+
+p.SliderDescription {
+	font-size: 12px;
+	margin: 1px;
+}
+
+p.SliderLink {
+	font-size: 12px;
+	margin: 5px 0px;
+	padding-left: 15px;
+	background-image: url(../images/link.png);
+	background-repeat: no-repeat;
+}
+
+#WikiaPhotoGalleryImageUploadSize { 
+	display: none;
+	font-weight: bold;
+	float: right;
+	margin: 6px;
+}
+
+.WikiaPhotoGallerySliderItemNumber {
+	position: absolute;
+	padding: 8px;
+	color: #FFF;
+	font-size: 14px;
+	background-color: #AAA;
+}
+
+.WikiaPhotoGallerySliderItemNumberWarning {
+	position: absolute;
+	padding: 8px;
+	color: #FFF;
+	font-size: 14px;
+	background-color: #F00;
+}

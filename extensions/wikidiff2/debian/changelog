@@ -1,0 +1,30 @@
+php-wikidiff2 (1.1.2-1) lucid-wikimedia; urgency=low
+  * Fixed bug 26354 (added class to dummy cells containing &nbsp;)
+  * Fixed bug 25697 (empty context lines not showing)
+
+ -- Roan Kattouw <rkattouw@wikimedia.org>  Tue, 03 Jan 2012 14:15:41 +0100
+
+php5-wikidiff2 (1.1.1-1) lucid; urgency=low
+
+  * Fixed bug 33331 (word breaking around punctuation)
+
+ -- Tim Starling <tstarling@wikimedia.org>  Fri, 23 Dec 2011 15:33:40 +1100
+
+php5-wikidiff2 (1.1.0-2) lucid; urgency=low
+
+  * Include a config file so the extension loads
+
+ -- Mark Bergsma <mark@wikimedia.org>  Tue, 08 Feb 2011 12:50:21 +0000
+
+php5-wikidiff2 (1.1.0-1) lucid; urgency=low
+
+  * New non-swig version
+
+ -- Tim Starling <tstarling@wikimedia.org>  Sun, 20 Jun 2010 17:45:37 +1000
+
+php5-wikidiff2 (1.0.2-1) unstable; urgency=low
+
+  * Initial release as deb package
+
+ -- Brion Vibber <brion@wikimedia.org>  Tue, 21 Aug 2007 18:03:07 +0000
+

@@ -1,0 +1,308 @@
+<html>
+<!-- TODO:
+	rvsection passed in edit
+	clean up statuses
+-->
+<body>
+<!-- Jquery is required for the API itself -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+<!-- Jquery UI is just used for this test page -->
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js"></script>
+<!-- Tabs ripped from http://jqueryui.com/demos/tabs/ -->
+<link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/cupertino/jquery-ui.css"/>
+<link rel="stylesheet" type="text/css" href="style.css"/>
+<script type="text/javascript">
+	$(function() {
+		$("#tabs").tabs({
+			collapsible: true
+		});
+	});
+</script>
+<!-- End tabs setup -->
+<script src="Mediawiki.js"></script>
+<script>
+// Set up the cookie prefix, which is set in Mediawiki as $wgCookiePrefix
+Mediawiki.cookiePrefix = "wikicities";
+var match = window.location.search.match(/js_debug=([0-9])/);
+if (match !== null){
+        Mediawiki.debugLevel = match[1];
+}
+</script>
+<!-- End Mediawiki API setup -->
+
+<div id="tabs">
+	<ul>
+		<li><a href="#tabs-1">Login/</a></li>
+		<li><a href="#tabs-2">Create/Delete Article</a></li>
+		<li><a href="#tabs-3">Pull Article</a></li>
+		<li><a href="#tabs-4">Edit Article</a></li>
+		<li><a href="#tabs-5">Parse Text</a></li>
+		<li><a href="#tabs-6">Get Image Url</a></li>
+	</ul>
+
+<div id="tabs-1">
+	<div id="loginForm">
+	<form onSubmit="return handleLoginForm(this)">
+	<label class="formLabel">Username:</label> <input type="text" name="lgname" size="10">
+	<label class="formLabel">Password:</label> <input type="password" name="lgpassword" size="10"> <br />
+	<input type="submit" value="Login">
+	</form>
+	</div>
+
+	<div id="logoutForm" style="display:none">
+		You are logged in.
+		<input type="button" value="Logout" onClick="Mediawiki.logout(function(){
+			$('#logoutForm').hide();
+			$('#loginForm').fadeIn();
+		})"/>
+	</div>
+
+	<script>
+	if (Mediawiki.isLoggedIn()){
+		$("#loginForm").hide();
+		$("#logoutForm").fadeIn();
+	}
+
+	function handleLoginForm(f){
+		try { 
+			Mediawiki.updateStatus("Logging in...");
+			Mediawiki.login(f.lgname.value, f.lgpassword.value, loginWorked, apiFailed);
+		} catch (e) {
+			Mediawiki.updateStatus( "Error logging in:" + Mediawiki.print_r(e));	
+		}
+		return false; // Return false so that the form doesn't submit
+	}
+	function loginWorked (){
+		Mediawiki.updateStatus("Login successful");
+		$("#loginForm").fadeOut();
+		$("#logoutForm").fadeIn();
+	}
+
+	function apiFailed(reqObj, msg, error){
+       		Mediawiki.waitingDone();
+		if (typeof msg == "undefined" && typeof reqObj == "string"){
+			msg = reqObj;
+		} else if (typeof msg == "object"){
+               		msg = Mediawiki.print_r(msg);
+		}
+		Mediawiki.updateStatus("ERROR from API: " + msg, true);
+	}
+	</script>
+</div>
+
+<!-- ############## Create/Delete an article ############## -->
+<div id="tabs-2">
+	<form onSubmit="return handleCreateArticle(this)">
+	Create a new article named: <input type="text" name="new_title"> <input type="submit" value="Create">
+	</form>
+	<div id="articleStatus"></div>
+	<script>
+	function handleCreateArticle (f){
+		Mediawiki.updateStatus("Creating article...");
+		try { 
+			normalizedTitle = Mediawiki.getNormalizedTitle(f.new_title.value);
+			f.new_title.value = normalizedTitle;
+			Mediawiki.editArticle({"title": normalizedTitle, "createonly": true, "summary": "testing new api", "text": "page automatically created using Nick's api"}, createArticleSuccess, apiFailed);
+		} catch (e) {
+			Mediawiki.updateStatus( "Error creating article:" + Mediawiki.print_r(e));	
+		}
+		return false; // Return false so that the form doesn't submit
+	}
+	function createArticleSuccess(){
+		Mediawiki.updateStatus("Article created");
+		$("#articleStatus").html("Article created! <a href='/wiki/" + normalizedTitle + "'>" + normalizedTitle + "</a> " + 
+			"<input type=button value=delete onClick='Mediawiki.deleteArticle(\"" + normalizedTitle + "\", null, deleteArticleSuccess, apiFailed)'/>");
+	}
+	function deleteArticleSuccess(){
+		Mediawiki.updateStatus(normalizedTitle + " deleted");
+		$("#articleStatus").hide();	
+	}
+	</script>
+</div>
+
+<!-- ############## Pull down an article ############## -->
+
+<div id="tabs-3">
+	<form onSubmit="return handlePullArticle(this)" id="pullArticleForm">
+		<input type="text" name="articleName" value="Main_Page" id="articleName">
+		<input type="submit" value="Pull Article"/> <br />
+		Section: <input type="text" name="section" size="3"><br />
+		<input type="checkbox" name="redirects"/> Resolve Redirects <br />
+		<input type="checkbox" name="parseText"/> Return HTML (instead of Mediawiki Text)
+	</form>
+	<div id="pulledArticle">
+	</div>
+
+	<script>
+	function fillInArticle(result){
+		var html;
+		if (result === null){
+			html = document.getElementById("pullArticleForm").articleName.value + " does not exist";
+		} else if (document.getElementById("pullArticleForm").parseText.checked){
+			html = result;
+		} else {
+			html  = '<pre>' + result + '</pre>';
+		}
+		document.getElementById("pulledArticle").innerHTML = html;
+		Mediawiki.updateStatus("Article pulled");
+	}
+
+	function handlePullArticle (f) {
+		try { 
+		var articleName = f.articleName.value;
+
+		if (f.parseText.checked) {
+			Mediawiki.updateStatus("Fetching " + articleName + "...");
+			Mediawiki.pullArticleHtml(articleName, fillInArticle, true);
+		} else {
+			Mediawiki.updateStatus("Normalizing " + articleName + "...");
+			var cleanName = Mediawiki.getNormalizedTitle(articleName);
+			document.getElementById("pullArticleForm").articleName.value = cleanName;
+
+			var options = {};
+			if (f.redirects.checked) {
+				options.redirects = true;
+			}
+			if (f.section.value != "") {
+				options.rvsection = f.section.value;
+			}
+			Mediawiki.updateStatus("Fetching " + cleanName + "...");
+			Mediawiki.pullArticleContent(cleanName, fillInArticle, options);
+		}
+		} catch (e) {
+			Mediawiki.error("Error pulling article: " + Mediawiki.print_r(e));
+		}
+
+		return false; // So the form doesn't submit
+	}
+	</script>
+
+</div>
+
+<!-- ############## Edit an article ############## -->
+
+<div id="tabs-4">
+	<form onSubmit="return handleEditNameForm(this)">
+		<input type="text" name="article_name_edit" value="Main_Page" id="article_name_edit">
+		<input type="submit" value="Pull Article"/> <br />
+		Section: <input type="text" name="section" size="3"><br />
+	</form>
+	<div id="editFormHtml" style="display:none">
+	<hr />	
+	<form onSubmit="return handleEditForm(this)">
+	<textarea name="article" rows="12" cols="80" id="article_textarea"></textarea><br />
+	Summary: <input type="text" name="summary" id="article_summary_edit"/>
+	<input type="submit" value="Save Article"/> <br />
+	</form>
+	</div>
+
+	<script>
+	function handleEditForm(result){
+		try { 
+			Mediawiki.updateStatus("Saving article...");
+			Mediawiki.editArticle({
+				"title": $("#article_name_edit").val(),
+				"summary": $("#article_summary_edit").val(),
+				"text": $("#article_textarea").val()}, editArticleSuccess, apiFailed);
+		} catch (e) {
+			Mediawiki.updateStatus( "Error editing article:" + Mediawiki.print_r(e));	
+		}
+		return false; // Return false so that the form doesn't submit
+	}
+
+	function editArticleSuccess(){
+		Mediawiki.updateStatus("Article saved");
+	}
+
+	function fillInEditForm(result){
+		var html;
+		if (result === null){
+			document.getElementById("article_textarea").value = '';
+			Mediawiki.updateStatus("Article '" + $("#article_name_edit").val() + "' does not exist, saving will create a new one");
+		} else {
+			document.getElementById("article_textarea").value = result;
+			Mediawiki.updateStatus("Article ready for edit");
+		}
+		$("#editFormHtml").fadeIn();
+	}
+
+	function handleEditNameForm (f) {
+		try { 
+		var articleName = f.article_name_edit.value;
+		Mediawiki.updateStatus("Normalizing " + articleName + "...");
+		var cleanName = Mediawiki.getNormalizedTitle(articleName);
+		f.article_name_edit.value = cleanName;
+
+		var options = {};
+		if (f.section.value != "") {
+			options.rvsection = f.section.value;
+		}
+		Mediawiki.updateStatus("Pulling up " + cleanName + "...");
+		Mediawiki.pullArticleContent(cleanName, fillInEditForm, options);
+		} catch (e) {
+			Mediawiki.error("Error pulling article: " + Mediawiki.print_r(e));
+		}
+
+		return false; // So the form doesn't submit
+	}
+
+	</script>
+</div>
+
+<!-- ############## Parse text ############# -->
+
+
+<div id="tabs-5">
+	<div id="parseFormHtml">
+	<form onSubmit="return handleParseForm(this)">
+	Text:<br />
+	<textarea name="text" rows="12" cols="40" id="parse_textarea"></textarea> 
+	<textarea name="result" rows="12" cols="40" id="result_textarea">Result will appear here...</textarea><br />
+	<input type="submit" value="Parse"/> <br />
+	</form>
+	</div>
+
+	<script>
+	function handleParseForm(f){
+		try { 
+			Mediawiki.updateStatus("Parsing Text...");
+			var html = Mediawiki.parse($("#parse_textarea").val());
+			$("#result_textarea").val(html);
+			Mediawiki.updateStatus("Text Parsed");
+
+		} catch (e) {
+			Mediawiki.updateStatus( "Error parsing text:" + Mediawiki.print_r(e));	
+		}
+		return false; // Return false so that the form doesn't submit
+	}
+	</script>
+</div>
+
+
+<!-- ############## Get Image Url ############# -->
+
+<div id="tabs-6">
+	<form onSubmit="return handleImageForm(this)">
+		<input type="text" name="image_name" value="Wiki.png" id="article_name_edit">
+		<input type="submit" value="Pull Image"/> <br />
+	</form>
+	<div id="image_holder" style="display:none">
+		<img id="image1"/> 
+	</div>
+	<script>
+	function handleImageForm(f){
+		var url = Mediawiki.getImageUrl(f.image_name.value);
+		if (!Mediawiki.e(url)){
+			Mediawiki.updateStatus("Image url: " + url);
+			document.getElementById("image1").src = url;
+			$("#image_holder").fadeIn();
+		} else {
+			Mediawiki.updateStatus("Error pulling image. File does not exist?", true);
+		}
+		return false;
+	}
+	</script>
+</div>
+
+
+</div> <!-- /div id=tabs -->

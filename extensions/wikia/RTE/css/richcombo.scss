@@ -1,0 +1,75 @@
+/**
+ * Style CKeditor's combo panel
+ */
+
+@import "../../../../skins/oasis/css/core/color";
+@import "../../../../skins/oasis/css/core/layout";
+@import "../../../../skins/oasis/css/mixins/bodytext";
+@import "../ckeditor/_source/skins/wikia/panel";
+
+html.cke_skin_wikia_container {
+	visibility: visible;
+}
+
+.cke_panel_grouptitle {
+	display: none;
+}
+
+body.cke_panel_frame {
+	background-color: $color-page;
+}
+
+ul.cke_panel_list {
+	font-family: Helvetica, Arial, sans-serif;
+	margin: 19px 0 0 0;
+
+	> li {
+		@include bodytext;
+		line-height: 30px;
+		margin: 2px 0;
+		padding: 0;
+
+		> a {
+			border: none;
+			outline: none;
+			padding: 0 5px;
+		}
+
+		&.cke_selected > a,
+		> a:hover,
+		> a:focus,
+		> a:active {
+			background-color: $color-tools-nav;
+			border: none;
+		}
+
+		p,
+		h1,
+		h2,
+		h3,
+		h4,
+		h5,
+		h6,
+		pre {
+			color: $color-text;
+			font-weight: normal;
+			margin: 0;
+			padding: 0;
+		}
+
+		h2 {
+			border-bottom: solid 1px $color-headline-border;
+			display: inline;
+			font-size: 18px;
+		}
+		h3 {
+			font-size: 16px;
+		}
+		h4 {
+			font-size: 14px;
+		}
+		h5 {
+			font-size: 12px;
+		}
+	}
+}

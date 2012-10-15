@@ -1,0 +1,3 @@
+-- allow longer length of proposal text
+ALTER TABLE /*$wgDBprefix*/qp_question_proposals
+  MODIFY COLUMN proposal_text text NOT NULL;

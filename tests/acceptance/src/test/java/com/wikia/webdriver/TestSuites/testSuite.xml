@@ -1,0 +1,23 @@
+<!DOCTYPE suite SYSTEM "http://beust.com/testng/testng-1.0.dtd" >
+<suite name="Wikia test suite">
+	<test name="testing" preserve-order = "true"> <!-- parallel="classes" thread-count="2"  -->
+		<classes>
+			<!-- Base functionality tests -->
+			<class name="com.wikia.webdriver.TestCases.CreateAWikiTests.CreateAWikiTests_latin"/>
+			<class name="com.wikia.webdriver.TestCases.CreateAWikiTests.CreateAWikiTests_nonLatin"/>
+			<class name="com.wikia.webdriver.TestCases.CreateAWikiTests.CreateAWikiTests_logInFieldValidation"/>
+			<class name="com.wikia.webdriver.TestCases.CreateAWikiTests.CreateAWikiTests_lang"/>
+			<class name="com.wikia.webdriver.TestCases.ImageServing"/>
+			<class name="com.wikia.webdriver.TestCases.HubsTests"/>
+			<class name="com.wikia.webdriver.TestCases.CustomizeToolbarTests"/>
+			<class name="com.wikia.webdriver.TestCases.SignUpTests.SignUpTests_account_creation"/>
+			<class name="com.wikia.webdriver.TestCases.ChatTests"/>
+			<class name="com.wikia.webdriver.TestCases.ArticleCRUDTests.ArticleCRUDTestsAdmin"/> 
+			<class name="com.wikia.webdriver.TestCases.ArticleCRUDTests.ArticleCRUDTestsAnonymous"/> 
+			<class name="com.wikia.webdriver.TestCases.ArticleCRUDTests.ArticleFeaturesCRUDTestsAdmin"/> 
+			<class name="com.wikia.webdriver.TestCases.ArticleCRUDTests.ArticleFeaturesCRUDTestsAnonymous"/>  
+			<class name="com.wikia.webdriver.TestCases.MessageWallTests.MessageWallTests"/>  
+			<!--class name="com.wikia.webdriver.TestCases.AdTests.AdsInSearchTests"/--> 
+		</classes>
+	</test>
+</suite>

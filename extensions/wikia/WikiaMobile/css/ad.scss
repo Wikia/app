@@ -1,0 +1,90 @@
+@import 'variables';
+@import 'mixins/transition';
+
+//variables
+$slotFooterWidth: 300px;//some networks use this instead of 320
+$slotFooterWidthMax: 320px;
+$slotFooterHeight: 50px;
+$slotFooterMargin: 2px;
+$slotFooterColor: #666;
+
+#wkAdPlc {
+	position: relative;
+
+	&.anim{
+	    opacity: 0;
+	 	-webkit-transform: translateY(75px);
+		-moz-transform: translate3d(0,75px,0);
+		transform: translateY(75px);
+	}
+
+	&.show {
+		-webkit-transition: opacity .75s, -webkit-transform .75s;
+		-webkit-tap-highlight-color: rgba( 0,0,0,0 );
+		-webkit-focus-ring-color: rgba( 0,0,0,0 );
+	}
+
+	&.over {
+		z-index: $top-layer-z-index;
+	}
+
+	&.fixed {
+		background-color: $slotFooterColor;
+		bottom: 0;
+		margin: 0;
+		padding: 0;
+		position: fixed;
+		width: 100%;
+	}
+
+	&.jsfix {
+		position: absolute;
+	}
+}
+
+#wkAdCls {
+	background-color: $slotFooterColor;
+	border-radius: 5px 0 0 0;
+	color: white;
+	text-transform: uppercase;
+	font-size: x-small;
+	line-height: 20px;
+	padding: 0 8px;
+	position: absolute;
+	right: 0;
+	top: -19px;
+	display: none;
+
+	//bigger clickable area
+	&:after {
+		content: '';
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		height: 40px;
+		width: 100%;
+	}
+
+	//close button shows only when the Ad has position fixed
+	//ATM the close button is only for the footer Ad
+	//since interstitials should have it in the creative itself
+	.footer.fixed.show & {
+		display: block;
+	}
+}
+
+#wkAdWrp {
+	.footer & {
+		//Footer Ad
+		//force Ad content to stick in place
+		//and don't exceed allowed dimensions
+		margin: $slotFooterMargin auto;
+		max-width: $slotFooterWidthMax;
+		max-height: $slotFooterHeight;
+	}
+
+	//.interstitial & {
+		//interstitial ad
+		//uncomment and complete when/if needed
+	//}
+}

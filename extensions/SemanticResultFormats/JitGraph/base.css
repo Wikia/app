@@ -1,0 +1,85 @@
+div#center-container {
+    width:100%;
+    /* height:600px; */
+    display: block;
+    /* background-color:#1a1a1a; */
+    background-color:#eee;
+    border:  1px solid #94B8DC;
+    color:#ccc;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    position: relative;
+}
+
+div.graph_legend {
+	display:  block;
+	margin:  5px;
+	padding:  5px;
+}
+
+div.graph_legend ul{
+	display: block;
+	color:  red;
+}
+
+div.graph_legend ul li {
+	color:  red;
+}
+
+.text {
+    margin: 7px;
+}
+
+#inner-details {
+    font-size:0.8em;
+    list-style:none;
+    margin:7px;
+}
+
+#log {
+    position:absolute;
+    top:10px;
+    font-size:1.0em;
+    font-weight:bold;
+    color:#23A4FF;
+}
+
+
+div.infovis {
+    position:relative;
+    width:100%;
+    height:600px;
+    margin:auto;
+    overflow:hidden;
+}
+
+/*TOOLTIPS*/
+.tip {
+    color: #111;
+    width: 139px;
+    background-color: white;
+    border:1px solid #ccc;
+    -moz-box-shadow:#555 2px 2px 8px;
+    -webkit-box-shadow:#555 2px 2px 8px;
+    -o-box-shadow:#555 2px 2px 8px;
+    box-shadow:#555 2px 2px 8px;
+    opacity:0.9;
+    filter:alpha(opacity=90);
+    font-size:10px;
+    font-family:Verdana, Geneva, Arial, Helvetica, sans-serif;
+    padding:7px;
+}
+
+span.progressBar {
+	position:  absolute;
+	top:  10px;
+	left:  10px;
+}
+
+img.progressGreen {
+	background: url(images/progressbg_green.gif) top left no-repeat;
+}
+
+span.progressText{
+	color:  #000000;
+}

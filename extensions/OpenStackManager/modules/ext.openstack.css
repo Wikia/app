@@ -1,0 +1,10 @@
+.Nova_col {
+max-width: 50em;
+overflow: hidden;
+}
+.Nova_cell {
+vertical-align: top;
+}
+#novaaction  {
+font-size: 67%;
+}

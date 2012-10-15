@@ -1,0 +1,965 @@
+This file lists changes on this extension. Localisation updates are done
+through translatewiki.net and are not listed here.
+
+0.17.2 - 22 January 2012
+  * Added $wgIncludeLegacyJavaScript, $wgLegacyJavaScriptGlobals,
+    $wgResourceBasePath, $wgResourceLoaderMaxQueryLength,
+    $wgResourceLoaderMinifierMaxLineLength,
+    $wgResourceLoaderMinifierStatementsOnOwnLine, $wgResourceLoaderValidateJS,
+    $wgResourceLoaderValidateStaticJS, $wgEnableJavaScriptTest,
+    $wgJavaScriptTestConfig, $wgExtraGenderNamespaces,
+    $wgSitemapNamespacesPriorities, $wgAutopromoteOnce, $wgCanonicalServer,
+    $wgExiv2Command, $wgAllowSchemaUpdates, $wgCleanupPresentationalAttributes,
+    $wgSend404Code, $wgDebugToolbar, $wgDeprecationReleaseLimit,
+    $wgAggregateStatsID, $wgArticleCountMethod, $wgCachePrefix,
+    $wgCopyUploadsDomains, $wgDisableUploadScriptChecks, $wgUploadStashMaxAge,
+    $wgUpdateCompatibleMetadata, $wgEnableAutoRotation,
+    $wgExcludeFromThumbnailPurge, $wgImageMagickIdentifyCommand,
+    $wgSVGMetadataCutoff, $wgExportAllowAll, $wgQueryPageDefaultLimit,
+    $wgAutopromoteOnceLogInRC, $wgPasswordResetRoutes,
+    $wgEnableSearchContributorsByIP and $wgVaryOnXFP.
+  * Removed $wgResourceLoaderMinifyJSVerticalSpace, $wgAPICacheHelp,
+    $wgMathDirectory, $wgMathPath, $wgProto, $wgTexvc, $wgDBts2schema,
+    $wgSysopRangeBans, $wgSysopUserBans, $wgUseTeX, $wgTexvcBackgroundColor,
+    $wgMathCheckFiles, $wgAllowUserSkin, $wgLogAutocreatedAccounts and
+    $wgCheckCopyrightUpload.
+
+0.17.1 - 14 January 2012
+  Fixed a JavaScript error.
+
+0.17.0 - 13 January 2012
+  Rewrote the extension to use local context instead of global variables where
+  possible.
+  THIS VERSION NOW REQUIRES MediaWiki 1.18 TO WORK.
+
+
+0.16.3 - 3 March 2011
+  Updated the extension to work with the current development version.
+
+0.16.2 - 2 March 2011
+  * Added $wgUseCombinedLoginLink, $wgResourceLoaderMinifyJSVerticalSpace,
+    $wgEnableSelenium, $wgSeleniumConfigFile, $wgDBtestuser, $wgDBtestpassword,
+    $wgUploadStashScalerBaseUrl, $wgSQLiteDataDirMode, $wgAllowJavaUploads,
+    $wgUserEmailConfirmationTokenExpiry, $wgFileCacheDepth,
+    $wgInvalidateCacheOnLocalSettingsChange, wgEditPageFrameOptions and
+    $wgLivePasswordStrengthChecks
+  * Removed $wgServerName, $wgCategoryPrefixedDefaultSortkey, $wgWeakPasswords,
+    $wgSecureLoginStickHTTPS and $wgExternalAuthConfig
+
+0.16.1 - 24 February 2011
+  Use an extension function rather than SetupAfterCache hook when delaying
+  settings extraction.
+
+0.16.0 - 22 February 2011
+  Rewrote the extension to use the ressource loader and jQuery.
+  THIS VERSION NOW REQUIRES MediaWiki 1.17 TO WORK.
+
+
+0.15.38 - 2 December 2010
+  Updated CentralNotice, CodeReview, Collection, FlaggedRevs, GroupsSidebar and
+  SemanticForms extensions.
+
+0.15.37 - 11 November 2010
+  * Added $wgAllUnicodeFixes, $wgUpgradeKey, $wgResourceLoaderDebug,
+    $wgResourceLoaderInlinePrivateModules, $wgResourceLoaderMaxage,
+    $wgResourceLoaderUseESI, $wgDeletedDirectory, $wgLoadScript,
+    $wgUploadMissingFileUrl, $wgPasswordSenderName, $wgAdditionalMailParams,
+    $wgBetterDirectionality, $wgCanonicalLanguageLinks, $wgActiveUserDays,
+    $wgCategoryCollation, $wgAdaptiveMessageCache, $wgAllowAsyncCopyUploads,
+    $wgSecureLogin, $wgSecureLoginStickHTTPS, $wgWeakPasswords,
+    $wgExternalAuthConf and $wgLicenseTerms.
+  * Removed $wgJQueryVersion, $wgJQueryMinified, $wgJQueryOnEveryPage,
+    $wgDisableSearchContext, $wgUseZhdaemon, $wgZhdaemonHost, $wgZhdaemonPort,
+    $wgColorErrors and $wgUseMemCached.
+
+0.15.36 - 2 September 2010
+  Updated CategoryTree, FancyCaptcha, FlaggedRevs, SemanticForms and
+  SemanticMediaWiki extensions.
+
+0.15.35 - 8 August 2010
+  Updated CategoryWatch, CodeReview and Woopra extensions.
+
+0.15.34 - 4 July 2010
+  Updated FlaggedRevs and Translate extensions.
+
+0.15.33 - 3 July 2010
+  Added $wgSqlMode.
+
+0.15.32 - 23 June 2010
+  Updated Translate extension.
+
+0.15.31 - 18 June 2010
+  Updated CentralNotice, CommentPages and Translate extensions.
+
+0.15.30 - 9 June 2010
+  Updated Collection extension.
+
+0.15.29 - 1 June 2010
+  Updated CategoryTree extension.
+
+0.15.28 - 29 May 2010
+  Updated SematicMediaWiki extension.
+
+0.15.27 - 26 May 2010
+  Updated SemanticMediaWiki and Translate extensions.
+
+0.15.26 - 10 May 2010
+  Added $wgCommandLineDarkBg, $wgDBadminuser, $wgDBadminpassword.
+
+0.15.25 - 9 May 2010
+  $wgSQLiteDataDirMode removed in MediaWiki 1.17.
+
+0.15.24 - 7 May 2010
+  Added $wgJQueryVersion, $wgJQueryMinified and $wgJQueryOnEveryPage.
+
+0.15.23 - 2 May 2010
+  * (bug 23379) Settings based on radio button now longer throw errors if
+    nothing is selected
+  * Added $wgLocalStylePath and $wgVectorShowVariantName.
+
+0.15.22 - 25 April 2010
+  Added $wgAllowImageTag and $wgLogAutocreatedAccounts.
+
+0.15.21 - 19 April 2010
+  Updated OggHandler, SemanticDrilldown, UsageStatistics and Widgets extensions.
+
+0.15.20 - 18 April 2010
+  * Removed BoardVote and Click extensions
+  * Updated AdvancedRandom, AjaxQueryPages, AjaxShowEditors, APC, CategoryFeed,
+    ChangeAuthor, cldr, ConfirmAccount, CrossNamespaceLinks, EditCount,
+    ImportUsers, Interwiki, Nuke, Renameuser, UsageStatistics, UserContactLinks,
+    UserRightsNotif and WhoIsWatching extensions
+  * Updated scripts/findSettings.php to display extensions that aren't installed
+
+0.15.19 - 11 April 2010
+  Updated Collection and FlaggedRevs extensions.
+
+0.15.18 - 31 March 2010
+  Fixed API module to work with current version of MediaWiki.
+
+0.15.17 - 28 March 2010
+  Fixed $wgDnsBlacklistUrls' type.
+
+0.15.16 - 21 March 2010
+  * Removed $wgUseMetadataEdit, $wgMetadataWhitelist and $wgCheckDBSchema
+  * Added $wgGalleryOptions and $wgAllowUserCssPrefs
+
+0.15.15 - 17 March 2010
+  * Fixed scripts/findSettings.php to work with current version of MediaWiki.
+  * Updated CodeReview, ContactPage, FlaggedRevs and SemanticMediaWiki
+    extensions.
+
+0.15.14 - 3 February 2010
+  Updated CodeReview extension.
+
+0.15.13 - 25 February 2010
+  Removed support of UsernameBlacklist extension.
+
+0.15.12 - 20 February 2010
+  Added 'settings-file' option to $wgConfigureAdditionalExtensions.
+
+0.15.11 - 19 February 2010
+  * Added $wgFixArabicUnicode, $wgFixMalayalamUnicode, $wgDebugPrintHttpHeaders,
+    $wgDebugTimestamps, $wgMemCachedTimeout, $wgBlockDisablesLogin,
+    $wgAsyncHTTPTimeout and $wgSearchSuggestCacheExpiry
+  * Removed $wgFixArchaicUnicode, $wgDebugSquid and $wgSquidResponseLimit
+
+0.15.10 - 18 February 2010
+  Added support for GroupsSidebar, QPoll, SendmailToWiki, TemplateInfo,
+  Validator and Wikilog extensions.
+
+0.15.9 - 17 February 2010
+  Updated CentralAuth, CodeReview, ExternalData, FlaggedRevs, DynamicPageList,
+  OggHandler, OpenID, SemanticForms and Translate extensions.
+
+0.15.8 - 15 February 2010
+  Added $wgConfigureDisabledExtensions to be able to disable some extensions.
+
+0.15.7 - 14 February 2010
+  Updated InspectCache, PurgeCache and Watchers extensions.
+
+0.15.6 - 11 February 2010
+  Added support for InspectCache extension.
+
+0.15.5 - 18 January 2010
+  * Added $wgFixArchaicUnicode, $wgAdvertisedFeedTypes, $wgCountTotalSearchHits,
+    $wgEnableDnsBlacklist, $wgDnsBlacklistUrls and $wgExtensionAssetsPath
+  * Removed $wgWikiId, $wgSearchMySQLTotalHits, $wgEnableSorbs and $wgSorbsUrl
+
+0.15.4 - 16 January 2010
+  Updated scripts/findSettings.php's ignore list.
+
+0.15.3 - 12 January 2010
+  Now using $wgExtensionAssetsPath for the path to Configure.js/.css.
+
+0.15.2 - 5 January 2010
+  scripts/writePHP.php now uses NS_FILE and NS_FILE_TALK rather than NS_IMAGE
+  and NS_IMAGE_TALK
+
+0.15.1 - 30 December 2009
+  * scripts/manage.php now adds a reason while reverting to a version.
+  * fixed a bug introduced in 0.14.19, Special:ViewConfig was unable to display
+    diffs
+
+0.15.0 - 29 December 2009
+  * Updated maintenance scripts to subclass the Maintenance class and moved them
+    to the scripts/ subdirectory
+  * Moved some files to subdirectories
+
+
+0.14.19 - 28 December 2009
+  (bug 21957) Removed broken Special:ViewConfig's "Read only mode"
+
+0.14.18 - 27 December 2009
+  * Updated ignored settings list in scripts/findSettings.php.
+  * Updated AbuseFilter, AmazonPlus, BreadCrumbs, Collection, ExternalData,
+    FlaggedRevs, LocalisationUpdate, OggHandler, RT, SemanticDrilldown,
+    SemanticMediaWiki, Translate and WikiAtHome extensions
+  * Removed Makesysop and Makebot extensions
+
+0.14.17 - 26 December 2009
+  * Added $wgWikiId, $wgCrossSiteAJAXdomains, $wgCrossSiteAJAXdomainExceptions,
+    $wgAPICacheHelp, $wgAPICacheHelpTimeout, $wgCapitalLinkOverrides,
+    $wgPreviewOnOpenNamespaces, $wgEnableTooltipsAndAccesskeys, $wgHtml5,
+    $wgWellFormedXml, $wgAllowMicrodataAttributes, $wgAllowRdfaAttributes,
+    $wgHtml5Version, $wgAPIRequestLog, $wgShowDBErrorBacktrace,
+    $wgVectorUseIconWatch, $wgVectorUseSimpleSearch, $wgDBAhandler,
+    $wgBlockCIDRLimit, $wgUploadMaintenance, $wgUseInstantCommons,
+    $wgIllegalFileChars, $wgImgAuthDetails, $wgImgAuthPublicTest,
+    $wgShowArchiveThumbnails, $wgParserTestRemote, $wgRegisterInternalExternals,
+    $wgTexvcBackgroundColor, $wgMathCheckFiles, $wgExternalAuthType,
+    $wgExternalAuthConfig, $wgAutocreatePolicy, $wgEnableOpenSearchSuggest,
+    $wgSearchMySQLTotalHits, $wgSquidResponseLimit and $wgUseXVO
+  * Removed $wgEnableHtmlDiff, $wgLogQueries, $wgCopyUploadTimeout,
+    $wgActiveUserDays and $wgActiveUserEditCount
+
+0.14.16 - 25 December 2009
+  scripts/findSettings.php now ignores some MediaWiki settings.
+
+0.14.15 - 26 November 2009
+  Removed ScriptLoader usage (removed from MediaWiki).
+
+0.14.14 - 19 September 2009
+  Updated Collection, FlaggedRevs and OggHandler extensions.
+
+0.14.13 - 24 August 2009
+  The ScriptLoader will now be used to serve the Configure.js file
+
+0.14.12 - 17 August 2009
+  (bug 19058) Added configure-old-summary-datetime message for better date and
+  time localisation in configure-old-summary message
+
+0.14.11 - 16 August 2009
+  * (bug 19057) Added user name parameter to configure-viewconfig-line message
+  * (bug 19058) Added user name parameter to configure-old-summary message
+  * Updated AuthorProtect, Babel, CategoryOnUpload, Collection, ConfirmAccount,
+    EditOwn, EditUser, ExternalData, FlaggedRevs, LocalisationUpdate,
+    OggHandler, RT, SemanticForms, SemanticMediaWiki, TorBlock, Translate,
+    Uniwiki - Generic Edit Page, WebChat and WikiAtHome extensions.
+
+0.14.10 - 15 August 2009
+  Added support for ReplaceSet, RT, UploadBlacklist, UsageStatistics,
+  UserContactLinks, UserImages, UserOptionStats, UserRightsNotification, Vote,
+  Watchers, WatchSubpages, WebChat, WhatIsMyIP, WhoIsWatching, WhosOnline,
+  WikiAtHome, WikimediaIncubator, WikimediaMessages, WikiTextLoggedInOut,
+  Woopra, YouTubeAuthSub and WikiArticleFeeds extensions
+
+0.14.9 - 12 July 2009
+  Changed Uniwiki extensions names to have "Uniwiki" rather than "UW".
+
+0.14.8 - 29 June 2009
+  * Added $wgNamespacesToBeSearchedHelp, $wgRevokePermissions,
+    $wgDevelopmentWarnings, $wgCacheDirectory, $wgLocalisationCacheConf,
+    $wgDjvuTxt, $wgRedirectOnLogin, $wgHiddenPrefs, $wgSessionHandler,
+    $wgSearchEverythingOnlyLoggedIn.
+  * Removed $wgNamespacesToBeSearchedProject, $wgEnableSerializedMessages,
+    $wgLocalMessageCache, $wgCheckSerialized.
+
+0.14.7 - 26 June 2009
+  Updated Semantic Forms extension.
+
+0.14.6 - 18 June 2009
+  Added support for PageCSS, PageNotice, PhpHighlight and PurgeCache extensions.
+
+0.14.5 - 16 June 2009
+  SemanticDrilldown, SemanticForms and SemanticResultFormats extensions now
+  require Semantic MediaWiki extension to be enabled.
+
+0.14.4 - 14 June 2009
+  * Extensions are now case-insensitively sorted on Special:Extensions.
+  * Added support for Widgets extension.
+
+0.14.3 - 11 June 2009
+  Updated Semantic MediaWiki extension.
+
+0.14.2 - 7 June 2009
+  Updated AbuseFilter, CheckUser, ParserFunctions, SyntaxHighlight_GeSHi and
+  Translate extensions.
+
+0.14.1 - 6 June 2009
+  Added support for LocalisationUpdate.
+
+0.14.0 - 2 June 2009
+  Now use SiteConfiguration::loadFullData() to load full configuration data.
+  THIS VERSION NOW REQUIRES MediaWiki 1.16 TO WORK.
+
+
+0.13.20 - 30 May 2009
+  Changed Configure special pages's order in Special:AdminLinks.
+
+0.13.19 - 25 May 2009
+  * Added support for External Data, Semantic Forms, Semantic Drilldown,
+    Semantic MediaWiki and Semantic Result Formats extensions
+  * Hook added for Admin Links extension to add links to Configure's
+    special pages
+
+0.13.18 - 16 May 2009
+  Added support for Admin Links extension.
+
+0.13.17 - 6 May 2009
+  Added support for Purge extension.
+
+0.13.16 - 5 May 2009
+  Updated ErrorHandler extension.
+
+0.13.15 - 3 May 2009
+  When using Farmer extension, Special:Farmer/admin will now link to
+  Special:Configure and Special:Extensions.
+
+0.13.14 - 29 April 2009
+  Changed section for some settings in Special:Configure.
+
+0.13.13 - 28 April 2009
+  Updated CodeReview and SkinPerPage extensions.
+
+0.13.12 - 27 April 2009
+  * Added support for the Drafts extension
+  * (bugs 16828, 18582) Fixed some JavaScript issues on Internet Explorer.
+
+0.13.11 - 26 April 2009
+  Removed obsolete translateSettings.php maintenance script.
+
+0.13.10 - 19 April 2009
+  Updated AbuseFilter, FlaggedRevs and OpenID extensions.
+
+0.13.9 - 4 April 2009
+  Settings that weren't taken into account when using database handler with
+  $wgConfigureAllowDeferSetup = true are now ignored with that configuration.
+
+0.13.8 - 1 April 2009
+  Added $wgUseImageResize, $wgCopyUploadTimeout, $wgInvalidUsernameCharacters
+  and $wgUserrightsInterwikiDelimiter.
+
+0.13.7 - 24 March 2009
+  Added $wgExportFromNamespaces.
+
+0.13.6 - 23 March 2009
+  Updated AbuseFilter and FlaggedRevs extensions.
+
+0.13.5 - 20 March 2009
+  * Updated CodeReview and FlaggedRevs extensions.
+  * Fixed a bug when using PostgresSQL with database handler: old versions
+    were inaccessible
+
+0.13.4 - 19 March 2009
+  Added the possibility to pass some definitions to load_txt_def.
+  Users who compiled an older version of load_txt_def must recompile it.
+
+0.13.3 - 17 March 2009
+  Added $wgTiffThumbnailType.
+
+0.13.2 - 13 March 2009
+  * extensions activation is now correct when previewing
+  * Fixed some PHP errors in Special:Extensions
+
+0.13.1 - 12 March 2009
+  (bug 17112) Added dependencies checking for extensions.
+
+0.13.0 - 11 March 2009
+  Rewrote extension definitions handling, now using text file.
+
+
+0.12.11 - 7 March 2009
+  * Added documentation url for Find Spam
+  * Fixed $wgCentralAuthAutoLoginWikis array type
+  * Marked that CentralNotice requires a schema change
+
+0.12.10 - 6 March 2009
+  Updated ParserFunctions' documentation link.
+
+0.12.9 - 5 March 2009
+  The left column on Special:Extension no longer overlaps the bottom of the
+  page.
+
+0.12.8 - 3 March 2009
+  Updated FlaggedRevs and Cite extensions.
+
+0.12.7 - 2 March 2009
+  Added $wgSummarySpamRegex and $wgAPIMaxUncachedDiffs.
+
+0.12.6 - 25 February 2009
+  Added $wgUseTagFilter.
+
+0.12.5 - 24 February 2009
+  Added foreign key constraint in the PostgreSQL's schema.
+  User who used sql/configure.pg.sql schema in older versions can use the
+  sql/patch-cs_id_fkey.pg.sql patch.
+
+0.12.4 - 19 February 2009
+  Groups in $wgGroupPermissions are now sorted alphabetically.
+
+0.12.3 - 18 February 2009
+  Added $wgAPIMaxResultSize, $wgShowDebug, $wgPreprocessorCacheThreshold and
+  $wgExportMaxLinkDepth.
+
+0.12.2 - 9 February 2009
+  (bug 17403) Boolean settings set to false when the default value is true are
+  now properly recognised.
+
+0.12.1 - 7 February 2009
+  * Updated AbuseFilter and FlaggedRevs extensions
+  * Removed obsolete extensions DeletedContributions, LinkSearch and Newuserlog
+
+0.12.0 - 6 February 2009
+  Added support for PostgreSQL when using database handler.
+
+
+0.11.16 - 2 February 2009
+  * Added new section "Pages" on Special:Configure
+  * Changed order of some sections
+
+0.11.15 - 29 January 2009
+  New setting $wgConfigureAllowDeferSetup to allow to defer part of
+  efConfigureSetup() when using database handler.
+
+0.11.14 - 26 January 2009
+  Added $wgMaxRedirects, $wgInvalidRedirectTargets, $wgNoFollowDomainExceptions
+  and $wgUseTwoButtonsSearchForm.
+
+0.11.13 - 25 January 2009
+  Added support for ImportUsers extension.
+
+0.11.12 - 21 January 2009
+  * Added support for all Uniwiki extensions
+  * Fixed a bug on Special:Extensions, default settings values are now correctly
+    displayed.
+
+0.11.11 - 19 January 2009
+  Added support for StalePages extension.
+
+0.11.10 - 17 January 2009
+  Fixed "You are not allowed to read this setting" error for all settings on
+  Special:Extensions when $wgConfigureEditableSettings is an non-empty array.
+
+0.11.9 - 16 January 2009
+  Added support for $wgNewPasswordExpiry.
+
+0.11.8 - 14 January 2009
+  Added support for APCOND_AGE_FROM_EDIT condition of $wgAutopromote.
+
+0.11.7 - 10 January 2009
+  * Added support for Redirect extension
+  * Fixed Special:Extensions: was sometimes throwing an error when saving the
+    configuration
+  * (bug 16953) Fixed error on Special:Configure and Special:ViewConfig
+  * Added $wgImplicitGroups to the default list of editable settings
+  * Enabled extension are no more resetted when after an edit on
+    Special:Configure
+
+0.11.6 - 7 January 2009
+  * Added support for OpenID, NewUserMessage and ReplaceText extensions.
+  * Updated GoogleAdSense extension.
+
+0.11.5 - 31 December 2008
+  Fixed Special:Extensions: some settings using radio buttons had no radio
+  button pre-selected, resulting in an error when saving settings.
+
+0.11.4 - 30 December 2008
+  Updated FlaggedRevs extension.
+
+0.11.3 - 22 December 2008
+  * Missing rights while executing API module now result in warnings rather than
+    errors.
+  * Fixed type of $wgRedirectSources
+
+0.11.2 - 18 December 2008
+  Added support for APCOND_ISIP and APCOND_IPINRANGE conditions of
+  $wgAutopromote.
+
+0.11.1 - 13 December 2008
+  Added $wgEnableSerializedMessages.
+
+0.11.0 - 11 December 2008
+  * efConfigureSetup() now delayed until cache objects are set with database
+    handler to avoid some issues with maintenance scripts.
+  * Removed $wgNullFile
+  * Added support for $wgAutopromote
+  THIS VERSION NOW REQUIRES MediaWiki 1.14 TO WORK.
+
+
+0.10.18 - 10 December 2008
+  * Added $wgExtraNamespaces, $wgLocaltimezone and
+    $wgExemptFromUserRobotsControl to the default list of editable settings.
+  * Success message now displayed through a post-save redirect, instead of
+    showing it on the POST-ed page.
+
+0.10.17 - 9 December 2008
+  If $wgConfigureWikis is an array, a selector-box is displayed instead of a
+  text box with a list of allowed values.
+
+0.10.16 - 7 December 2008
+  $wgLogo doesn't need anymore configure-all right to be modified.
+
+0.10.15 - 5 December 2008
+  * Fixed PHP notices on Special:ViewConfig.
+  * Added $wgNullFile
+
+0.10.14 - 4 December 2008
+  * Added support for $wgRateLimits
+  * Don't show [+] for sections in TOC with only one subsection
+
+0.10.13 - 3 December 2008
+  * JavaScript-based setting search in Special:Configure, Special:Extensions
+    and Special:ViewConfig
+  * Hidden settings now have a summary
+  * Added a search box at the top Special:ViewConfig to display versions for a
+    specific wiki
+
+0.10.12 - 2 December 2008
+  * Fix a problem of duplicate files with the same timestamp if two users save
+    a new version at the same time
+  * Fixed some queries to be more efficient
+
+0.10.11 - 1 December 2008
+  * New reason field in Special:Configure and Special:Extension to allow users
+    to put a comment for each version
+  * File handler now uses PHP files instead of serialized files.
+  NOTE FOR PEOPLE USING FILES HANDLER: OLD SERIALIZED  FILES WON'T WORK ANYMORE
+  IN THIS VERSION, PLEASE RUN THE scripts/migrateFiles.php SCRIPT.
+
+0.10.10 - 30 November 2008
+  * Editable settings are now restricted by default to some settings, if you
+    want to have all of them, set $wgConfigureEditableSettings = array(); in
+    LocalSettings.php
+  * Inline preview of logo
+  * Removed $wgValidSkinNames
+
+0.10.9 - 27 November 2008
+  Added $wgConfigureExtensionsVar and $wgConfigureOnlyUseVarForExt to allow
+  enabling extensions by setting a variable rather than directly include the
+  file. 
+
+0.10.8 - 26 November 2008
+  * Stopped displaying settings which can't be edited in Special:Configure.
+    These can be viewed at Special:ViewConfig.
+  * Introduced explicit whitelisting of settings, rather than blacklisting
+    of other settings.
+  * Some usability cleanup.
+  * Fixed javascript bug with 'Delete this entry' buttons in previous version.
+  * Fixed type of $wgRightsUrl
+
+0.10.7 - 25 November 2008
+  * Added diff links for the versions at the top of Special:Configure and
+    Special:Extensions
+  * Added links for the user who made each config change.
+  THIS REQUIRES A DATABASE SCHEMA UPDATE FOR PEOPLE USING DATABASE HANDLER.
+  Please apply sql/patch-cv_user_reason.sql if you used the database schema on
+  an older version than this one.
+
+0.10.6 - 24 November 2008
+  * Fixed overflowing bug for small screens in Special:Configure
+  * Added $wgConfigureExtDir to allow to change the extensions base directory
+
+0.10.5 - 23 November 2008
+  * New section "Popular settings" replacing "General settings" at the beginning
+    of Special:Configure
+  * Hide massive settings like group permissions with a collapse box
+  * Fixed a fatal error in scripts/writePHP.php
+
+0.10.4 - 22 November 2008
+  * MediaWiki: added $wgNamespacesToBeSearchedProject and $wgUsePrivateIPs.
+  * Extensions: updated CodeReview and OggHandler; added OpenSearchXml.
+
+0.10.3 - 21 November 2008
+  Fixed a bug in preview diffs.
+
+0.10.2 - 20 November 2008
+  Added a border to all table cells.
+
+0.10.1 - 19 November 2008
+  * Added links for APC and User Merge extensions.
+  * Settings descriptions are now also shown on differences.
+
+0.10.0 - 15 November 2008
+  * Added $wgConfigureFileSystemCache to allow file-system cache (only with
+    database handler)
+  * Added description for each setting.
+  * API module can now be disabled with $wgConfigureAPI.
+  * Removed $wgNamespacesToBeSearchedProject.
+
+
+0.9.7 - 14 November 2008
+  * Added SocialProfile, SpamRegex and UserMerge extensions.
+  * Updated Inputbox extension.
+
+0.9.6 - 13 November 2008
+  * Version list on Special:ViewConfig now uses a pager.
+  * Listed version at the top Special:Configure and Special:Extension are only
+    shown when they contain the configuration for the wiki being modified.
+
+0.9.5 - 12 November 2008
+  Added $wgNamespacesToBeSearchedProject.
+
+0.9.4 - 9 November 2008
+  Fixed type of $wgPasswordAttemptThrottle.
+
+0.9.3 - 8 November 2008
+  Version listing on Special:ViewConfig now doesn't load the whole configuration
+  for each version when using database handler.
+
+0.9.2 - 6 November 2008
+  Fixed a bug in settings merging (introduced in version 0.8.10).
+
+0.9.1 - 5 November 2008
+  * MediaWiki: added $wgAllowUserSkin, $wgDebugLogPrefix, $wgEnotifUseRealName
+    and $wgImageMagickTempDir.
+  * Extensions: updated AbsenteeLandlord, CentralNotice, CodeReview and
+    Collection.
+
+0.9.0 - 1 November 2008
+  Added database-based storage.
+
+
+0.8.12 - 30 October 2008
+  * Added $wgFilterLogTypes and $wgRC2UDPInterwikiPrefix.
+  * Fixed type of $wgNoFollowNsExceptions.
+
+0.8.11 - 28 October 2008
+  * Added the possibiliy to restrict extensions settings in
+    $wgConfigureAdditionalExtensions.
+  * Updated Asksql extension
+
+0.8.10 - 26 October 2008
+  Settings which have the same value as in DefaultSettings.php are now removed
+  from the saved configuration.
+
+0.8.9 - 25 October 2008
+  Removed $wgNamespacesToBeSearchedProject.
+
+0.8.8 - 23 October 2008
+  Added $wgNamespacesToBeSearchedProject.
+
+0.8.7 - 22 October 2008
+  Added Special:Configure, Special:Extensions and Special:ViewConfig to
+  "Wiki data and tools" group on Special:SpecialPages.
+
+0.8.6 - 21 October 2008
+  Updated Collection extension.
+
+0.8.5 - 17 October 2008
+  Added $wgMaxShellTime.
+
+0.8.4 - 16 October 2008
+  Don't display JavaScript buttons on read-only associative arrays.
+
+0.8.3 - 15 October 2008
+  * Fixed a JavaScript error in Special:Extensions.
+  * Limit to ten the old versions shown at the top of Special:Configure and
+    Special:Extensions.
+
+0.8.2 - 14 October 2008
+  Added $wgMaxAnimatedGifArea.
+
+0.8.1 - 13 October 2008
+  Updated CentralAuth extension.
+
+0.8.0 - 12 October 2008
+  Added a read-only API module.
+
+
+0.7.19 - 11 October 2008
+  Removed $wgMajorSiteNoticeID.
+
+0.7.18 - 10 October 2008
+  Added $wgUniversalEditButton and $wgEdititis.
+
+0.7.17 - 8 Octobre 2008
+  Added $wgMajorSiteNoticeID and $wgFixDoubleRedirects.
+
+0.7.16 - 4 October 2008
+  Updated Autoincrement extension.
+
+0.7.15 - 3 October 2008
+  Added support for CodeReview extension.
+
+0.7.14 - 30 September 2008
+  Removed $wgArticlePathForCurid, added $wgShellLocale.
+
+0.7.13 - 28 September 2008
+  Added $wgArticlePathForCurid and $wgExternalLinkTarget.
+
+0.7.12 - 24 September 2008
+  * Updated ConfirmAccount extension
+  * Added some new extensions
+
+0.7.11 - 22 September 2008
+  $wgCachedMessageArrays is obsolete since MediaWiki 1.8.0.
+
+0.7.10 - 21 September 2008
+  * scripts/findSettings.php now works for extensions (--ext option)
+  * Updated extensions settings
+
+0.7.9 - 20 September 2008
+  Dropped $wgDBminWordLen, was obsolete since MediaWiki 1.6.0.
+
+0.7.8 - 17 September 2008
+  Added $wgRenderHashAppend.
+
+0.7.7 - 16 September 2008
+  Added $wgMetadataWhitelist and $wgUseMetadataEdit.
+
+0.7.6 - 15 September 2008
+  Added $wgNewUserLog.
+
+0.7.5 - 12 September 2008
+  Now support $wgExternalStores.
+
+0.7.4 - 10 September 2008
+  Don't throw a fatal error on Special:ViewConfig when efConfigureSetup() isn't
+  called.
+
+0.7.3 - 8 September 2008
+  (bug 14744) Custom rights defined in $wgRestrictionLevels are now configurable
+  in $wgGroupPermissions (require MediaWiki 1.13+).
+
+0.7.2 - 7 September 2008
+  Added $wgEnableImageWhitelist and $wgSpecialPageCacheUpdates.
+
+0.7.1 - 29 August 2008
+  Added $wgPhpCli and $wgLinkHolderBatchSize.
+
+0.7.0 - 26 August 2008
+  * Added scripts/writePHP.php, a maintenance script that write the
+    configuration in PHP code
+  * Changed status to beta
+
+
+0.6.15 - 22 August 2008
+  $wgAjaxSearch is obsolete in 1.14 +
+
+0.6.14 - 18 August 2008
+  Removed $wgEnablePersistentCookies, added $wgRestrictDisplayTitle.
+
+0.6.13 - 16 August 2008
+  Added "empty" option for $wgConfigureAdditionalExtensions.
+
+0.6.12 - 15 August 2008
+  Added $wgEnablePersistentCookies and $wgEnableHtmlDiff.
+
+0.6.11 - 13 August 2008
+  Added --alpha option to scripts/findSettings.php script.
+
+0.6.10 - 12 August 2008
+  Updated extensions settings.
+
+0.6.9 - 11 August 2008
+  Added $wgSQLiteDataDirMode.
+
+0.6.8 - 10 August 2008
+  Added $wgCategoryPrefixedDefaultSortkey.
+
+0.6.7 - 8 August 2008
+ Added $wgDisableTitleConversion, $wgPasswordAttemptThrottle and
+ $wgOverrideSiteFeed.
+
+0.6.6 - 1 August 2008
+  Added $wgCleanSignatures.
+
+0.6.5 - 28 July 2008
+  Added $wgHandheldStyle and $wgHandheldForIPhone.
+
+0.6.4 - 24 July 2008
+  Added $wgExemptFromUserRobotsControl.
+
+0.6.3 - 22 July 2008
+  * MediaWiki: Added $wgCookiePrefix
+  * Extensions: Updated FlaggedRevs
+
+0.6.2 - 18 July 2008
+  * maintenance scripts now use MW_INSTALL_PATH env variable to locate the wiki.
+  * scripts/findSettings.php was broken since 0.6.0, now fixed.
+  * Renamed $wgDefaultDirectoryChmod to $wgDirectoryMode.
+
+0.6.1 - 17 July 2008
+  * Added $wgDefaultDirectoryChmod and $wgDiff
+  * Fixed array type of $wgContentNamespaces
+
+0.6.0 - 16 July 2008
+  Added following settings to configure Configure itself:
+  * $wgConfigureAdditionalExtensions: custom extensions
+  * $wgConfigureViewRestrictions: read restrictions
+  * $wgConfigureEditRestrictions: edit restrictions
+  * $wgConfigureNotEditableSettings: not editable settings
+  See Configure.php for further documentation about these settings.
+
+
+0.5.7 - 14 July 2008
+  Updated FlaggedRevs extension.
+
+0.5.6 - 13 July 2008
+  Added support for ErrorHandler extension.
+
+0.5.5 - 12 July 2008
+  Rewrote interwiki configuration:
+  * added $wgConfigureWiki to configure it
+  * added form in Special:Configure and Special:Extensions for authorized users
+  * right requested is *-interwiki (configure-interwiki, ...)
+
+0.5.4 - 11 July 2008
+  * Removed $wgTrackLinkChanges.
+  * Updated extension's settings.
+
+0.5.3 - 9 July 2008
+  Added $wgTrackLinkChanges.
+
+0.5.2 - 8 July 2008
+  Added $wgConfigureUpdateCacheEpoch to choose if $wgCacheEpoch should be
+  updated when saving changes in Special:Configure.
+
+0.5.1 - 7 July 2008
+  (bug 14742) Fixed default value of $wgExternalDiffEngine.
+
+0.5.0 - 6 July 2008
+  * Added support for extensions
+  * Rewrote JavaScript
+
+
+0.4.7 - 3 July 2008
+  Renamed $wgAdditionalXMLTypes to $wgXMLMimeTypes.
+
+0.4.6 - 2 July 2008
+  Added $wgAdditionalXMLTypes.
+
+0.4.5 - 25 June 2008
+  Added localized names for special pages.
+
+0.4.4 - 15 June 2008
+  Added scripts/manage.php maintenance script to do maintenance with
+  configuration files.
+
+0.4.3 - 12 June 2008
+  $wgEnableCascadingProtection is obsolete in 1.13 +
+
+0.4.2 - 10 June 2008
+  Added $wgRC2UDPOmitBots.
+
+0.4.1 - 9 June 2008
+  It's now possible to preview changes in Special:Configure.
+
+0.4.0 - 8 June 2008
+  Added a difference engine to see differences between versions in
+  Special:ViewConfig.
+
+
+0.3.11 - 5 June 2008
+  Added $wgActiveUserEditCount and $wgActiveUserDays.
+
+0.3.10 - 4 June 2008
+  Added $wgSpecialVersionShowHooks.
+
+0.3.9 - 31 May 2008
+  Removed $wgPerLanguageCaching.
+
+0.3.8 - 30 May 2008
+  Fixed display of not editable settings.
+
+0.3.7 - 28 May 2008
+  * If $wgLocalMessageCache is set to an empty value, message cache won't use
+    anymore files to cache localisations.
+  * Fixed type of $wgNonincludableNamespaces.
+
+0.3.6 - 27 May 2008
+  Added configure-section-groups-notallowed message, was missing.
+
+0.3.5 - 25 May 2008
+  * Fixed a bug, Special:ViewConfig was checking for viewconfigure-all right
+    instead of viewconfig-all.
+  * In Special:ViewConfig, unviewabled setting are now displayed in grey.
+  * Fixed security issues
+
+0.3.4 - 24 May 2008
+  Added $wgPerLanguageCaching.
+
+0.3.3 - 23 May 2008
+  * Link setting to documentation on www.mediawiki.org.
+  * Added $wgMaximumMovedPages.
+  * $wgSitemapNamespaces now looks like other namespace settings.
+
+0.3.2 - 22 May 2008
+  Added Special:ViewConfig to allow sysop by default to see the current
+  configuration.
+
+0.3.1 - 17 May 2008
+  * Added $wgRCFilterByAge, $wgRCLinkLimits and $wgRCLinkDays
+  * Modified section of some settings.
+
+0.3.0 - 12 May 2008
+  Added JavaScript to allow to add or remove items in associative array and
+  in $wgGroupPermissions. The latter require ajax enabled to work.
+
+
+0.2.8 - 10 May 2008
+  * Load prefs.js in 1.13 +
+  * Added $wgUseAutomaticEditSummaries.
+
+0.2.7 - 8 May 2008
+  Added $wgSQLiteDataDir.
+
+0.2.6 - 7 May 2008
+  * Use User::getAllGroups() if available.
+  * Added $wgSharedPrefix and $wgSharedTables.
+
+0.2.5 - 6 May 2008
+  Removed $wgSharedDBtables.
+
+0.2.4 - 5 May 2008
+  Added a stylesheet for tables and descriptions at the top of it.
+
+0.2.3 - 4 May 2008
+  Added $wgSharedDBtables, $wgAdvancedSearchHighlighting and
+  $wgSearchHighlightBoundaries.
+
+0.2.2 - 3 May 2008
+  * Fixed a bug when $wgSharedDB is set to an empty string
+  * Added $wgDBpassword and $wgAllowImageMoving to the list of settings
+  * Added an option to configuration findSettings.php to also compare
+    DefaultSettings.php with online documentation
+
+0.2.1 - 2 May 2008
+  Added a maintenance script to find missing settings in this extension and
+  added missing settings found with it.
+
+0.2.0 - 1 May 2008
+  Rewrote the part that generate the form, will now use $settings variable that
+  is defined Configure.settings.php to put the variables into groups.
+
+
+0.1.5 - 26 April 2008
+  Now check that the directory used to store the settings is writable.
+
+0.1.4 - 23 April 2008
+  Now support $wgImageLimits.
+
+0.1.3 - 22 April 2008
+  Now support $wgNamespaceProtection.
+
+0.1.2 - 21 April 2008
+  Now support $wgGroupPermissions, $wgAddGroups, $wgRemoveGroups,
+  $wgGroupsAddToSelf and $wgGroupsRemoveFromSelf.
+
+0.1.1 - 20 April 2008
+  Now treats an empty an empty text area as an empty array, was breaking some
+  settings.
+
+0.1.0 - 18 April 2008
+  Initial version of the extension.

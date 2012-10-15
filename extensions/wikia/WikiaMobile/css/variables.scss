@@ -1,0 +1,80 @@
+//Global variables
+
+//base colors
+$page-background-color: #FFF;
+$page-text-color: #3A3A3A;
+$page-text-alternate-color: #8F8F8F;
+$link-color: #006CB0;
+$link-color-wikia: get_command_line_param("color-links", #006CB0);
+$section-text-color: $link-color;
+$shadow-color: #DDD;
+$border-color: #E3E3E3;
+$table-shadow-color: rgb(191,211,230);
+$activeGradient1: rgb(70,147,214);
+$activeGradient2: rgb(46,106,174);
+
+//sections
+$section-title-font-size: 1.5em;
+$section-title-margin: 10px 0;
+$section-title-padding: 5px 0;
+
+//layout
+$page-padding: 10px;
+
+//z-index
+$top-layer-z-index: 2000000;
+$highest-z-index: 1000000;
+
+//footer
+$footerBackground: #3d3d3d;
+$footerTextColor: #DDD;
+
+//navigation menu
+$arrowcolor: grey;
+$openMenuLength: 500px;
+$menuBackgroundColor: #555;
+$menuSecondColor: #333;
+
+//navigation bar
+$navBarColorFirst: get_command_line_param("color-page", #FFF);
+$navBarColorSecond: mix($navBarColorFirst, #000000, 80%);
+@if lightness($navBarColorFirst) < 50 {
+	$navBarColorSecond: mix($navBarColorFirst, #ffffff, 80%);
+}
+
+$navBarWordmarkText:mix( mix($navBarColorSecond, #000000, 70%), $link-color-wikia, 80%);
+
+@if lightness($navBarColorFirst) < 50 {
+	$navBarWordmarkText:mix( mix($navBarColorSecond, #ffffff, 70%), $link-color-wikia, 60%);
+}
+
+$searchOpenBackground: #474747;
+$searchOpenBorder: #878787;
+
+$dividerColorFirst: mix($navBarColorFirst, #000000, 80%);
+$dividerColorSecond: darken($navBarColorFirst, 20%);
+
+//loader
+$loaderSpeed: 1.5s;
+
+//image placeholder
+$imagePlaceholderBackground: #EEE;
+
+//slider
+$shadowColor: #222;
+$descriptionBackgroundColor: #000;
+$descriptionTextColor: #FFF;
+
+//modal
+$modal-text-color: #FFF;
+
+//shadow
+$shadow: 0 0 10px $shadow-color;
+
+//error
+$error-bg-color: rgb(249,223,224);
+$error-color: #ed1c24;
+
+//inputs
+$input-bg-color: #F2F2F2;
+$placeholder-color: #888;

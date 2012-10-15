@@ -1,0 +1,110 @@
+#EditPageToolbar {
+	@include box-shadow(0, 4px, 2px, $color-epl-gradient-shadow, false, 0);
+	@include linear-gradient($color-epl-gradient, top, $color-epl-gradient-light, 50%, $color-epl-gradient-dark, 100%);
+	@include clearfix;
+	padding: 0 15px;
+	position: relative;
+	border-bottom: solid 1px $color-page-border;
+
+	.cke_buttons {
+		@include clearfix;
+		display: block;
+		padding: 5px 0;
+		&.cke_toolbar_format_expanded {
+			border-top: solid 1px $color-page-border;
+			padding-top: 5px;
+		}
+	}
+	.editpage-toolbar .cke_buttons {
+		padding: 2px 0 1px;
+	}
+	.cke_toolbar_expand {
+		> a {
+			color: $color-text;
+			cursor: pointer;
+			display: none;
+			height: 22px;
+			position: absolute;
+			text-align: center;
+			width: 40px;
+			label {
+				cursor: inherit;
+				font-size: 10px;
+			}
+			span {
+				display: block;
+				font-size: 14px;
+				font-weight: bold;
+				line-height: 10px;
+			}
+			&.expand {
+				top: 8px;
+				right: 10px;
+			}
+			&.collapse {
+				top: 45px;
+				right: 10px;
+			}
+			&:hover {
+				text-decoration: none;
+			}
+		}
+	}
+
+	.cke_more_buttons {
+		cursor: pointer;
+		float: left;
+		margin-top: 23px;
+		margin-left: 10px;
+	}
+
+	.cke_toolbar_widescreen {
+		@include clearfix;
+		border-top: solid 1px $color-page-border;
+		padding-top: 5px;
+		.cke_toolbar_insert {
+			border-right: solid 1px $color-page-border;
+			float: left;
+			margin-top: 5px;
+			padding: 0 5px 0 0;
+		}
+		> .right {
+			clear: right;
+			float: right;
+			width: 220px;
+			> span {
+				display: inline-block;
+			}
+			&.right-bottom{
+				padding-bottom: 5px;
+			}
+		}
+		.cke_license {
+			line-height: 12px;
+		}
+	}
+
+	// buttons separator
+	.cke_separator {
+		@include linear-gradient($color-epl-separator, top, $color-epl-separator-tips, 0%, $color-epl-separator, 10%, $color-epl-separator, 90%, $color-epl-separator-tips, 100%);
+		display: inline-block;
+		float: left;
+		height: 30px;
+		margin: -1px 5px;
+		width: 1px;
+	}
+
+	> .cke_toolbar_source {
+		color: $color-text;
+		padding: 8px 6px 4px;
+		.cke_toolbar_expand {
+			display: inline-block;
+			margin: 0 0 2px 10px;
+			.expand {
+				position: relative;
+				right: 0;
+				top: 0;
+			}
+		}
+	}
+}

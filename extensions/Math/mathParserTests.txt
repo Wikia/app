@@ -1,0 +1,167 @@
+
+!! test
+pre-save transform: comment containing math
+!! options
+pst
+!! input
+<!-- <math>data</math> -->
+!!result
+<!-- <math>data</math> -->
+!!end
+
+#!! test
+#BUG 1887: A <math> with a thumbnail- we don't render math in the parsertests by default,
+#so math is not stripped and turns up as escaped &lt;math&gt; tags.
+#!! input
+#[[Image:foobar.jpg|thumb|<math>2+2</math>]]
+#!! result
+#<div class="thumb tright"><div class="thumbinner" style="width:182px;"><a href="/wiki/File:Foobar.jpg" class="image"><img alt="" src="http://example.com/images/3/3a/Foobar.jpg" width="180" height="20" class="thumbimage" /></a>  <div class="thumbcaption"><div class="magnify"><a href="/wiki/File:Foobar.jpg" class="internal" title="Enlarge"><img src="/skins/common/images/magnify-clip.png" width="15" height="11" alt="" /></a></div>&lt;math&gt;2+2&lt;/math&gt;</div></div></div>
+#
+#!! end
+
+!! test
+BUG 1887, part 2: A <math> with a thumbnail- math enabled
+!! options
+math
+!! input
+[[Image:foobar.jpg|thumb|<math>2+2</math>]]
+!! result
+<div class="thumb tright"><div class="thumbinner" style="width:182px;"><a href="/wiki/File:Foobar.jpg" class="image"><img alt="" src="http://example.com/images/3/3a/Foobar.jpg" width="180" height="20" class="thumbimage" /></a>  <div class="thumbcaption"><div class="magnify"><a href="/wiki/File:Foobar.jpg" class="internal" title="Enlarge"><img src="/skins/common/images/magnify-clip.png" width="15" height="11" alt="" /></a></div><span class="texhtml" dir="ltr">2 + 2</span></div></div></div>
+
+!! end
+
+#!! test
+#Math section safety when disabled
+#!! input
+#<math><script>alert(document.cookies);</script></math>
+#!! result
+#<p>&lt;math&gt;&lt;script&gt;alert(document.cookies);&lt;/script&gt;&lt;/math&gt;
+#</p>
+#!! end
+
+!! test
+BUG 26380: Add \widetilde support to match \widehat
+!! input
+<math>\widehat{x}</math>
+<math>\widetilde{x}</math>
+!! result
+<p><img class="tex" alt="\widehat{x}" src="/images/math/9/9/8/998309e831dfb051f233c92b4b8a825b.png" />
+<img class="tex" alt="\widetilde{x}" src="/images/math/e/9/e/e9e91996778a6d6f5cdf4cc951955206.png" />
+</p>
+!! end
+
+!! test
+BUG 27324: Euro symbol for math
+!! input
+<math>\euro 200</math>
+<math>\geneuro</math>
+<math>\geneuronarrow</math>
+<math>\geneurowide</math>
+<math>\officialeuro</math>
+!! result
+<p><span class="texhtml" dir="ltr">&#8364;200</span>
+<img class="tex" alt="\geneuro" src="/images/math/9/8/b/98b63c235ee187a38267e0e170b10e9d.png" />
+<img class="tex" alt="\geneuronarrow" src="/images/math/a/a/4/aa4a1ed370f4ee705c6930384bf89502.png" />
+<img class="tex" alt="\geneurowide" src="/images/math/4/4/0/4404468e6187fb04e4f7e1f15e550825.png" />
+<img class="tex" alt="\officialeuro" src="/images/math/d/7/0/d708de0eed23dbd6f02b99ea9073547b.png" />
+</p>
+!! end
+
+!! test
+BUG 27754: Archaic Greek letters for math (may require texlive-lang-greek)
+!! input
+<math>\digamma</math><!-- Lowercase digamma was already available -->
+<math>\Coppa\coppa\varcoppa</math>
+<math>\Digamma</math>
+<math>\Koppa\koppa</math>
+<math>\Sampi\sampi</math>
+<math>\Stigma\stigma\varstigma</math>
+!! result
+<p><img class="tex" alt="\digamma" src="/images/math/2/f/0/2f057b6e514c8ca2d9cf9a3e549f8865.png" />
+<img class="tex" alt="\Coppa\coppa\varcoppa" src="/images/math/8/3/0/8308ee5003aa36112414cad8ef874f85.png" />
+<img class="tex" alt="\Digamma" src="/images/math/5/c/f/5cfd6e5df6c87798542dca2e22c1e7cb.png" />
+<img class="tex" alt="\Koppa\koppa" src="/images/math/5/2/5/52593a0cdac178d165985ac014788b97.png" />
+<img class="tex" alt="\Sampi\sampi" src="/images/math/e/9/d/e9dabb19e4c27bf23d3c2a3629474562.png" />
+<img class="tex" alt="\Stigma\stigma\varstigma" src="/images/math/7/b/9/7b9233276816994a33a5e968202cef6e.png" />
+</p>
+!! end
+
+!! test
+BUG 19547: Apostrophe / single quotes in math \text{...}
+!! input
+<math>\text{next years}</math>
+<math>\text{next year's}</math>
+<math>\text{`next' year}</math>
+!! result
+<p><span class="texhtml" dir="ltr">next years</span>
+<span class="texhtml" dir="ltr">next year's</span>
+<span class="texhtml" dir="ltr">`next' year</span>
+</p>
+!! end
+
+!! test
+BUG 6722: Spacing fix for functions in math HTML output
+!! input
+<math>\sin x</math>
+<math>\sin(x)</math>
+<math>\sin{x}</math>
+
+<math>\sin x \,</math>
+<math>\sin(x) \,</math>
+<math>\sin{x} \,</math>
+!!result
+<p><span class="texhtml" dir="ltr">sin&#160;<i>x</i></span>
+<span class="texhtml" dir="ltr">sin(<i>x</i>)</span>
+<span class="texhtml" dir="ltr">sin&#160;<i>x</i></span>
+</p><p><img class="tex" alt="\sin x \," src="/images/math/7/6/a/76a8e1a01bd233c1e4e16d63b2bbf939.png" />
+<img class="tex" alt="\sin(x) \," src="/images/math/1/6/c/16c69b0a3658d3b398f72c518d869a03.png" />
+<img class="tex" alt="\sin{x} \," src="/images/math/8/3/9/839639707da39f691e702c2399cbf943.png" />
+</p>
+!! end
+
+!! test
+BUG 18912: Add \sen function for Spanish sin to math
+!! input
+<math>\sen x</math>
+<math>\sen(x)</math>
+<math>\sen{x}</math>
+
+<math>\sen x \,</math>
+<math>\sen(x) \,</math>
+<math>\sen{x} \,</math>
+!! result
+<p><span class="texhtml" dir="ltr">sen&#160;<i>x</i></span>
+<span class="texhtml" dir="ltr">sen(<i>x</i>)</span>
+<span class="texhtml" dir="ltr">sen&#160;<i>x</i></span>
+</p><p><img class="tex" alt="\sen x \," src="/images/math/0/a/c/0ac592b8f31b4698766c50c532f446a7.png" />
+<img class="tex" alt="\sen(x) \," src="/images/math/b/b/5/bb5469d24fcdd52aa60cb9ee90ba697d.png" />
+<img class="tex" alt="\sen{x} \," src="/images/math/d/4/8/d4882a4bcf5db1da3e30d905da8b394e.png" />
+</p>
+!! end
+
+!! test
+BUG 18912: \operatorname{sen} x gets wrong spacing in math
+!! input
+<math>\operatorname{sen}</math>
+!! result
+<p><img class="tex" alt="\operatorname{sen}" src="/images/math/f/a/9/fa9660c7eb053ca8d3c9a87fa86635d9.png" />
+</p>
+!! end
+
+!! test
+BUG 31442: Multiple math accents without braces fails to parse
+!! input
+<math>\dot \vec B</math>
+!! result
+<p><img class="tex" alt="\dot \vec B" src="/images/math/e/6/4/e64939568ecb506a86a392373cec0458.png" />
+</p>
+!! end
+
+!! test
+BUG 31442: Math accents with math font fail to parse if braces not used
+!! input
+<math>\tilde \mathcal{M}</math>
+!! result
+<p><img class="tex" alt="\tilde \mathcal{M}" src="/images/math/5/5/0/55072ce6ef8c840c4b7687bd8a028bde.png" />
+</p>
+!! end

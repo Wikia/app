@@ -1,0 +1,11 @@
+php-cloudfiles (1.6.1) karmic; urgency=low
+
+  * Update to 1.6.1.
+
+ -- Chmouel Boudjnah <chmouel@chmouel.com>  Tue, 08 Dec 2009 19:01:16 +0000
+
+php-cloudfiles (1.0.4-1) stable; urgency=low
+
+  * Initial package.
+
+ -- Chmouel Boudjnah <chmouel@chmouel.com>  Thu, 13 Aug 2009 16:15:22 +0100

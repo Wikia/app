@@ -1,0 +1,40 @@
+This extension contains local language names for different languages extracted
+from CLDR data.
+
+== Installation ==
+Include it in LocalSettings.php:
+ include("$IP/extensions/cldr/cldr.php");
+
+== Updating data ==
+
+Download newest data from CLDR site:
+ http://www.unicode.org/cldr/repository_access.html
+
+Example:
+ wget http://www.unicode.org/Public/cldr/2.0.1/core.zip
+ unzip core.zip -d core
+ php rebuild.php
+
+== Usage ==
+<source lang=php>
+	if ( is_callable( array( 'LanguageNames', 'getNames' ) ) ) {
+		$languages = LanguageNames::getNames( 'en' ,
+			LanguageNames::FALLBACK_NORMAL,
+			LanguageNames::LIST_MW_AND_CLDR
+		);
+	} else {
+		// If need to display something, use this as fallback
+		$languages = Language::getLanguageNames( false );
+	}
+</source>
+
+=== Parameters ===
+
+For fallback:
+* '''FALLBACK_NATIVE''': Go straight to MediaWiki's name entries
+* '''FALLBACK_NORMAL''': Go trough the fallback chain
+
+For which languages to return:
+* '''LIST_MW_SUPPORTED''': Only languages that has localisation in MediaWiki
+* '''LIST_MW''': All languages that are in Names.php
+* '''LIST_MW_AND_CLDR''': All languages that are either in MediaWiki or in cldr

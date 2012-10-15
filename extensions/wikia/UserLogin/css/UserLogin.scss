@@ -1,0 +1,61 @@
+@import "../../../../skins/oasis/css/mixins/border-radius";
+@import "../../../../skins/oasis/css/mixins/gradient";
+@import "../../../../skins/oasis/css/mixins/box-shadow";
+@import "../../../../skins/oasis/css/mixins/clearfix";
+@import "../../../../skins/oasis/css/mixins/bodytext";
+@import "../../../../skins/oasis/css/core/color";
+@import "../mixins/divider";
+
+$input-width: 230px;
+
+.UserLogin {
+	.WikiaForm {
+		margin: 25px auto 0;
+		width: $input-width + 30px;
+		.forgot-password {
+			margin: 10px 7px;
+		}
+		input[type=text],
+		input[type=password] {
+			width: $input-width;
+		}
+		.error-msg {
+			width: $input-width + 18px;
+		}
+		.login-button {
+			width: $input-width + 18px;
+		}
+		.submits {
+			margin-top: 25px;
+		}
+	}
+	> .sso-login {
+		margin: 0 auto;
+		text-align: center;
+		width: $input-width;
+		> .sso-login-divider {
+			@include divider;
+		}
+	}
+	.subheading {
+		border-bottom: 0;
+		font-size: 16px;
+		margin-top: 0;
+	}
+	&.ChangePassword {
+		.subheading {
+			float: left;
+			margin-top: 0;
+			width: 250px;
+		}
+	}
+	&.UserConfirm {
+		margin-bottom: 200px;
+	}
+}
+
+.WikiaPageHeader {
+	h2 {
+		display: none;
+	}
+}

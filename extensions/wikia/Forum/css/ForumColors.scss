@@ -1,0 +1,5 @@
+$Forum-color-board-thread-hover: darken($color-page, 2%);
+
+@if $is-dark-wiki {
+	$Forum-color-board-thread-hover: lighten($color-page, 2%);
+}

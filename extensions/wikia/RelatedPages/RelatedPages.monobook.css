@@ -1,0 +1,28 @@
+.RelatedPagesModule ul {
+	list-style: none;
+}
+
+.RelatedPagesModule ul li {
+	float: left;
+	line-height: 1.4em;
+	margin-left: 25px;
+	padding: 0;
+	position: relative;
+	width: 200px;
+}
+
+.RelatedPagesModule ul li:first-child {
+	margin-left: 0;
+}
+
+.RelatedPagesModule ul li img {
+	width: 200px;
+	height: 100px;
+	display: inline-block;
+}
+
+.RelatedPagesModule ul li .articleSnippet {
+	height: 100px;
+	overflow: hidden;
+	width: 190px;
+}

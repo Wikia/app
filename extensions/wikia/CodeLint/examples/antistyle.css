@@ -1,0 +1,49 @@
+body#foo.test {
+	background: white;
+	color: green;
+	background: blue;
+	padding-left: 0px;
+	padding: none;
+}
+
+#selector {
+	color: #ffff;
+	pading: 0;
+	margin-left: 42;
+	border: none !important;
+}
+
+.empty {}
+
+.odd.selected {
+	/* I think we can allow this one */
+	background: #f1f1f1;
+}
+
+.inline {
+	display: inline;
+	width: 100px;
+	padding: 2px 5px;
+}
+
+table
+	border: solid 1px #000;
+	
+
+/* IE6 specific fix */
+* html #bar {
+ 	border: none;
+}
+
+/* browser specific prefixes */
+#box {
+	-moz-box-shadow: 1px;
+	-webkit-box-shadow: 2px;
+	-moz-border-radius: 5px;
+	text-shadow: none;
+	textshadow: none;
+}
+
+#box:hover {
+	background-color: blue;
+}

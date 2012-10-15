@@ -1,0 +1,52 @@
+STATUS:
+======
+
+This software is beta. There are bugs and missing features. But it is
+basically usable, and you are encouraged to try it (with caution). Also, please
+hack Liquid Threads and make it more awesome.
+
+INSTALLATION:
+============
+
+1. Rename this directory to extensions/LiquidThreads inside your
+   MediaWiki directory.
+2. Add database tables from lqt.sql using the sql.php MediaWiki tool.
+   (On Unix, if the current directory is the MediaWiki root directory, you can
+   say "php maintenance/sql.php extensions/LiquidThreads/lqt.sql".)
+   If you haven't created the AdminSettings.php file, you will have to do that
+   first; see http://www.mediawiki.org/wiki/Manual:AdminSettings.php
+   Alternatively, you can run lqt.sql manually (you can use the command
+   "mysql -u $USER -p -e 'source lqt.sql'" on Unix), but you might have to
+   edit it first, and replace the /*$wgDBprefix*/ and /*$wgDBTableOptions*/
+   strings with the corresponding settings.
+3. Add this line to the end of your LocalSettings.php:
+   require_once( "$IP/extensions/LiquidThreads/LiquidThreads.php" );
+
+Liquid Threads uses namespace numbers 90, 91, 92, and 93. If you are using
+another extension which uses any of these numbers, you should have Liquid
+Threads use different numbers by adding something like the following to your
+LocalSettings.php, *before* including LiquidThreads.php:
+
+$egLqtNamespaceNumbers = array(
+    'Thread' => 100,
+    'Thread_talk' => 101,
+    'Summary' => 102,
+    'Summary_talk' => 103
+);
+
+CONTACT:
+=======
+
+* Andrew Garrett
+* agarrett@wikimedia.org
+* werdna in #mediawiki on irc.freenode.net
+
+CREDITS:
+=======
+
+Originally written by David McCabe, sponsered by COL.org, Wikia.com, and the Google
+Summer of Code, with lots of help from Erik Möller, Brion Vibber, and the kind
+folks on #mediawiki.
+
+Now maintained by Andrew Garrett from the Wikimedia Foundation
+

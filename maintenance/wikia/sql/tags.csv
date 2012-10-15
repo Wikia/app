@@ -1,0 +1,628 @@
+City ID,Wiki Name,Hub,URL,Platform,PC,Xbox 360,PS3,Wii,Handheld,Mobile,Movie,TV,Comics/Manga,Novel,Genres,Action/Adventure,Anime,Casual,Comedy,Drama,Family,Fantasy,Fighting,FPS,Horror,MMO,Music,Mystery,RPG,RTS,Sci-Fi,Simulation,Demos,Adults (18-35),Adults (35+)
+",Teens (14-17),Kids (13),Male,Female
+410,yugioh,Entertainment,http://yugioh.wikia.com/,,PC,Xbox 360,,Wii,Handheld,,Movie,TV,Comics/Manga,,,Action/Adventure,Anime,,,,,Fantasy,Fighting,,,,,,,,Sci-Fi,,,,,Teens (14-17),Kids (13),Male
+147,starwars,Entertainment,http://starwars.wikia.com/,,PC,Xbox 360,PS3,Wii,Handheld,Mobile,Movie,,,,,Action/Adventure,,,,,Family,Fantasy,Fighting,,,MMO,,,,,Sci-Fi,,,Adults (18-35),Adults (35+),Teens (14-17) ,Kids (13),Male,Female
+1318,naruto,Entertainment,http://naruto.wikia.com/,,,Xbox 360,PS3,Wii,Handheld,,Movie,TV,Comics/Manga,,,Action/Adventure,Anime,,,,,Fantasy,Fighting,,,,,,,,,,,,,Teens (14-17),Kids (13),Male
+3747,enbleach,Entertainment,http://bleach.wikia.com/,,,,,Wii,,,Movie,TV,Comics/Manga,,,,Anime,,,,,,Fighting,,,,,,,,Sci-Fi,,,,,Teens (14-17),Kids (13),Male
+1081,onepiece,Entertainment,http://onepiece.wikia.com/,,,,,,,,,TV,Comics/Manga,,,Action/Adventure,Anime,,,,,,,,,,,,,,,,,,,Teens (14-17),Kids (13),Male
+509,harrypotter,Entertainment,http://harrypotter.wikia.com/,,,,,,,,Movie,,,Novel,,,,,,,Family,Fantasy,,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),Kids (13),Male,Female
+1055,digimon,Entertainment,http://digimon.wikia.com/,,PC,Xbox 360,PS3,Wii,Handheld,Mobile,Movie,TV,Comics/Manga,,,Action/Adventure,Anime,,,,Family,Fantasy,Fighting,,,,,,,,,,,,,Teens (14-17),Kids (13),Male,Female
+2233,enmarveldatabase,Entertainment,http://marvel.wikia.com/,,PC,Xbox 360,PS3,Wii,Handheld,Mobile,Movie,,Comics/Manga,,,Action/Adventure,,,,,Family,Fantasy,,,,,,,,,Sci-Fi,,,Adults (18-35),Adults (35+),Teens (14-17),Kids (13),Male,Female
+831,muppet,Entertainment,http://muppet.wikia.com/,,,,,,,,Movie,TV,Comics/Manga,,,,,,Comedy,,Family,Fantasy,,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),Kids (13),Male,Female
+11432,lostpedia,Entertainment,http://lostpedia.wikia.com/,,,,,,,,,TV,,,,Action/Adventure,,,,Drama,,Fantasy,,,,,,,,,Sci-Fi,,,Adults (18-35),Adults (35+),Teens (14-17),,Male,Female
+530,dragonball,Entertainment,http://dragonball.wikia.com/,,PC,XBox 360,PS3,Wii,Handheld,,Movie,TV,Comics/Manga,,,Action/Adventure,Anime,,,,,Fantasy,,,,,,,,,,,,Adults (18-35),,Teens (14-17),Kids (13),Male
+38188,jamescameronsavatar,Entertainment,http://james-camerons-avatar.wikia.com/,,,,,,,,Movie,,,,,Action/Adventure,,,,Drama,,Fantasy,Fighting,,,,,,,,Sci-Fi,,,Adults (18-35),Adults (35+),Teens (14-17),,Male,Female
+125,tardis,Entertainment,http://tardis.wikia.com/,,,,,,,,,TV,,,,Action/Adventure,,,,,,Fantasy,,,Horror,,,Mystery,,,Sci-Fi,,,Adults (18-35),Adults (35+)
+6092,bakugan,Entertainment,http://bakugan.wikia.com/,,,XBox 360,PS3,Wii,,,,TV,Comics/Manga,,,Action/Adventure,Anime,,,,,Fantasy,Fighting,,,,,,,,Sci-Fi,,,,,Teens (14-17),,Male
+2237,endcdatabase,Entertainment,http://dc.wikia.com/,,,XBox 360,PS3,Wii,,,Movie,TV,Comics/Manga,,,Action/Adventure,,,,,Family,Fantasy,,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),Kids (13),Male,Female
+5687,twilightsaga,Entertainment,http://twilightsaga.wikia.com/,,,,,,,,Movie,,,Novel,,Action/Adventure,,,,Drama,,Fantasy,,,,,,,,,,,,Adults (18-35),,Teens (14-17),,,Female
+119,stargate,Entertainment,http://stargate.wikia.com/,,,,,,,,Movie,TV,,,,Action/Adventure,,,,,,Fantasy,,,,,,,,,Sci-Fi,,,Adults (18-35),Adults (35+),Teens (14-17),,Male
+7976,totaldramaisland,Entertainment,http://totaldramaisland.wikia.com/,,,,,,,,,TV,,,,,Anime,,Comedy,Drama,Family,,,,,,,,,,,,,,,Teens (14-17),,,Female
+411,transformers,Entertainment,http://transformers.wikia.com/,,,,,,,,Movie,TV,Comics/Manga,,,Action/Adventure,Anime,,,,,Fantasy,Fighting,,,,,,,,Sci-Fi,,,,,Teens (14-17),,Male
+932,gundam,Entertainment,http://gundam.wikia.com/,,PC,XBox 360,PS3,Wii,Handheld,,,TV,Comics/Manga,,,Action/Adventure,Anime,,,,,Fantasy,Fighting,,,,,,,,Sci-Fi,,,,,Teens (14-17),,Male
+6390,phineasandferb,Entertainment,http://phineasandferb.wikia.com/,,,,,,,,,TV,,,,,Anime,,Comedy,,Family,,,,,,,,,,,,,,,Teens (14-17),Kids (13),Male,Female
+532,avatar,Entertainment,http://avatar.wikia.com/,,,,,Wii,Handheld,,,TV,,,,Action/Adventure,Anime,,,,,Fantasy,Fighting,,,,,,,,,,,,,Teens (14-17),Kids (13),Male
+3124,Ben10,Entertainment,http://ben10.wikia.com/,,,,,,,,,TV,,,,Action/Adventure,Anime,,,,Family,Fantasy,,,,,,,,,Sci-Fi,,,,,,Kids (13),Male,Female
+376,familyguy,Entertainment,http://familyguy.wikia.com/,,,,,,,,,TV,,,,,Anime,,Comedy,,,,,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male,Female
+1014,smallville,Entertainment,http://smallville.wikia.com/,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Adults (18-35),,Teens (14-17),,Male,Female
+323,startrek,Entertainment,http://memory-beta.wikia.com/,,,,,,,,Movie,TV,,,,Action/Adventure,,,,,,Fantasy,,,,,,,,,Sci-Fi,,,Adults (18-35),Adults (35+),Teens (14-17),,Male
+159,lotr,Entertainment,http://lotr.wikia.com/,,,,,,,,Movie,,,Novel,,Action/Adventure,,,,Drama,Family,Fantasy,,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male,Female
+2956,terminator,Entertainment,http://terminator.wikia.com/,,,,,,,,Movie,,,,,Action/Adventure,,,,,,Fantasy,Fighting,,,,,,,,Sci-Fi,,,Adults (18-35),,Teens (14-17),,Male
+1581,scrubs,Entertainment,http://scrubs.wikia.com/,,,,,,,,,TV,,,,,,,Comedy,Drama,Family,,,,,,,,,,,,,Adults (18-35),,Teens (14-17),,,Female
+11764,hetalia,Entertainment,http://hetalia.wikia.com/,,,,,,,,,TV,Comics/Manga,,,Action/Adventure,Anime,,,,,fantasy,Fighting,,,,,,,,,,,,,Teens (14-17),,Male
+4014,reborn,Entertainment,http://reborn.wikia.com/,,,,,,,,,TV,Comics/Manga,,,Action/Adventure,Anime,,,,,,Fighting,,,,,,,,,,,Adults (18-35),,Teens (14-17),,Male
+673,simpsons,Entertainment,http://simpsons.wikia.com/,,,,,,,,Movie,TV,,,,,Anime,,Comedy,,,,,,,,,,,,,,,Adults (18-35),Adults (35+),teens (14-17),,Male,Female
+3989,archiesonic,Entertainment,http://archiesonic.wikia.com/,,,,,,,,,,Comics/Manga,,,Action/Adventure,Anime,,,,,fantasy,Fighting,,,,,,,,Sci-Fi,,,,,Teens (14-17),Kids (13),Male
+1714,warriors,Entertainment,http://warriors.wikia.com/,,,,,,,,Movie,TV,,,,,Anime,,Comedy,,family,fantasy,,,,,,,,,,,,,,,Kids (13),Male,Female
+2860,Spongebob,Entertainment,http://spongebob.wikia.com/
+3166,Batman,Entertainment,http://batman.wikia.com/,,PC,XBox 360,PS3,Wii,Handheld,,Movie,TV,Comics/Manga,,,Action/Adventure,Anime,,,Drama,,Fantasy,Fighting,,,,,,,,Sci-Fi,,,Adults (18-35),,Teens (14-17),Kids (13),Male
+3313,olympians,Entertainment,http://percyjackson.wikia.com/,,,,,,,,Movie,,,Novel,,Action/Adventure,,,,Drama,Family,Fantasy,,,,,,,,,,,,,,Teens (14-17),Kids (13),Male,Female
+977,charmed,Entertainment,http://charmed.wikia.com/,,,,,,,,,TV,,,,,,,,Drama,,Fantasy,,,,,,,,,,,,Adults (18-35),,Teens (14-17),,Female,Female
+739,buffy,Entertainment,http://buffy.wikia.com/,,,,,,,,Movie,TV,,,,,,,,Drama,,Fantasy,,,,,,,,,,,,Adults (18-35) ,,,,Female
+528,godzilla,Entertainment,http://godzilla.wikia.com/,,,,,,Handheld,,Movie,TV,,,,Action/Adventure,,,,,,Fantasy,,,,,,,,,Sci-Fi,,,Adults (18-35) ,Adults (35+),Teens (14-17),,Male,Female
+730,wot,Entertainment,http://wot.wikia.com/,,PC,,,,,,,,,Novel,,Action/Adventure,,,,,,Fantasy,Fighting,,,,,,,,Sci-Fi,,,Adults (18-35),,Teens (14-17),,Male
+4097,pixar,Entertainment,http://pixar.wikia.com/,,,,,,,,Movie,TV,,,,,Anime,,Comedy,Drama,Family,Fantasy,,,,,,,,,,,,Adults (18-35),,Teens (14-17),Kids (13)
+2866,fma,Entertainment,http://fma.wikia.com/,,,,,,Handheld,,,TV,Comics/Manga,,,Action/Adventure,Anime,,,,,Fantasy,Fighting,,,,,,RPG,,,,,,,Teens (14-17),,Male
+6276,fairytail,Entertainment,http://fairytail.wikia.com/,,,,,,,,Movie,TV,,Novel,,,,,,,Family,Fantasy,,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),Kids (13),Male,Female
+835,southpark,Entertainment,http://southpark.wikia.com/,,,,,,,,Movie,TV,,,,,Anime,,Comedy,,,,,,,,,,,,,,,Adults (18-35),adults (35+),Teens (14-17),,Male,Female
+684,24,Entertainment,http://24.wikia.com/,,,,,,,,,TV,,,,Action/Adventure,,,,Drama,,,Fighting,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male,Female
+7857,vocaloid,Entertainment,http://vocaloid.wikia.com/,,PC,,,,Handheld,Mobile,,,,,,,Anime,,,,family,Fantasy,,,,MMO,Music,,,,,Simulation,,Adults (18-35),Adults (35+),Teens (14-17),Kids (13),Male,Female
+6877,codegeass,Entertainment,http://codegeass.wikia.com/,,,,,,,,,TV,Comics/manga,,,Action/Adventure,Anime,,,,,Fantasy,Fighting,,,,,,,,,,,,,teens (14-17),,Male
+393,dcanimated,Entertainment,http://dcanimated.wikia.com/,,PC,XBox 360,PS3,Wii,Handheld,,Movie,TV,Comics/Manga,,,Action/Adventure,Anime,,,Drama,Family,Fantasy,Fighting,,,,,,,,Sci-Fi,,,Adults (18-35),Adults (35+),Teens (14-17),Kids (13),Male,Female
+8015,souleater,Entertainment,http://souleater.wikia.com/,,,,,Wii,,Mobile,,TV,Comics/Manga,,,Action/Adventure,Anime,,,,,Fantasy,Fighting,,,,,,,,,,,,,Teens (14-17),,Male
+2889,ed,Entertainment,http://ed.wikia.com/,,,,,,,,,TV,,,,,Anime,,Comedy,,Family,,,,,,,,,,,,,,,,Kids (13),Male,Female
+3914,enshamanking,Entertainment,http://shamanking.wikia.com/,,,,,,Handheld,,,TV,Comics/Manga,,,Action/Adventure,Anime,,,,,Fantasy,Fighting,,,,,,,,Sci-Fi,,,,,Teens (14-17),,Male
+374,disney,Entertainment,http://disney.wikia.com/,,PC,,,Wii,Handheld,Mobile,Movie,TV,,,,,Anime,,Comedy,,Family,Fantasy,,,,,,,,,,,,,,Teens (14-17),Kids (13),Male,Female
+8246,dinosaurking,Entertainment,http://dinosaurking.wikia.com/,,,,,,Handheld,,,TV,Comics/Manga,,,Action/Adventure,Anime,,,,,fantasy,Fighting,,,,,,,,,,,,,Teens (14-17),Kids (13),Male
+2111,degrassi,Entertainment,http://degrassi.wikia.com/,,,,,,,,,TV,,,,,,,,Drama,,,,,,,,,,,,,,Adults (18-35),,Teens (14-17),,Male,Female
+4490,christmasspecials,Entertainment,http://christmas-specials.wikia.com/,,,,,,,,Movie,TV,,,,,Anime,,Comedy,Drama,Family,,,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17)
+1668,pirates,Entertainment,http://pirates.wikia.com/,,PC,,,,Handheld,,Movie,,,,,Action/Adventure,,,Comedy,Drama,Family,fantasy,Fighting,,,,,,,,,,,Adults (18-35),,Teens (14-17),Kids (13),Male,Female
+645,inheritance,Entertainment,http://inheritance.wikia.com/,,PC,XBox 360,,,,,Movie,,,Novel,,Action/Adventure,,,,,,Fantasy,,,,,,,,,,,,Adults (18-35),,Teens (14-17),,Male
+310,inuyasha,Entertainment,http://inuyasha.wikia.com/,,,,,,,,Movie,TV,Comics/Manga,,,Action/Adventure,,,,,,Fantasy,Fighting,,,,,,,,,,,,,Teens (14-17),,Male
+46732,robotchicken3,Entertainment,http://robotchicken.wikia.com/,,,,,,,,,TV,,,,,Anime,,Comedy,,,,,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male,Female
+8818,secretsaturdays,Entertainment,http://secretsaturdays.wikia.com/,,,,,,,,,TV,,,,Action/Adventure,Anime,,,,,,Fighting,,,,,,,,Sci-Fi,,,,,,Kids (13),Male,Female
+3156,narutofanon,Entertainment,http://narutofanon.wikia.com/,,,XBox 360,PS3,Wii,Handheld,,Movie,TV,Comics/Manga,,,Action/Adventure,Anime,,,,,Fantasy,Fighting,,,,,,,,,,,,,Teens (14-17),,Male
+3581,deathnote,Entertainment,http://deathnote.wikia.com/,,,,,,,,,TV,comics/Manga,,,Action/Adventure,Anime,,,,,Fantasy,,,Horror,,,,,,,,,,,Teens (14-17),,Male,Female
+9144,barney,Entertainment,http://barney.wikia.com/,,,,,,,,Movie,TV,,,,,,,,,Family,,,,,,,,,,,,,,,,Kids (13),Male,Female
+4045,dexter,Entertainment,http://dexter.wikia.com/,,,,,,,,,TV,,,,Action/Adventure,,,,Drama,,,,,Horror,,,Mystery,,,,,,Adults (18-35),adults (35+),Teens (14-17),,Male,Female
+706,redwall,Entertainment,http://redwall.wikia.com/,,,,,,,,Movie,,,Novel,,Action/Adventure,Anime,,,Drama,Family,Fantasy,Fighting,,,,,,,,,,,Adults (18-35),,Teens (14-17),Kids (13),Male,Female
+6786,dgrayman,Entertainment,http://dgrayman.wikia.com/,,,,,,,,,TV,Comics/Manga,,,Action/Adventure,Anime,,,,,Fantasy,,,,,,,,,,,,Adults (18-35),,Teens (14-17),,Male,Female
+534,futurama,Entertainment,http://futurama.wikia.com/,,,,,,,,,TV,,,,,Anime,,comedy,,,,,,,,,,,,,,,Adults (18-35),,Teens (14-17),,Male,Female
+1417,sot,Entertainment,http://sot.wikia.com/,,,,,,,,,TV,,Novel,,Action/Adventure,,,,,,Fantasy,Fighting,,,,,,,,,,,Adults (18-35),,Teens (14-17),,Male
+745,stexpanded,Entertainment,http://stexpanded.wikia.com/,,,,,,,,,,,,,,,,,,,Fantasy,,,,,,,,,,,,,,Teens (14-17),,Male
+36908,elementsthegame,Entertainment,http://elementsthegame.wikia.com/
+2429,gijoe,Entertainment,http://gijoe.wikia.com/,,,,PS3,Wii,,,Movie,TV,Comics/Manga,,,Action/Adventure,Anime,,,,,,Fighting,,,,,,,,,,,Adults (18-35),,Teens (14-17),Kids (13),Male
+19794,flashforward,Entertainment,http://flashforward.wikia.com/,,,,,,,,,TV,,,,Action/Adventure,,,,Drama,,,,,,,,,,,Sci-Fi,,,Adults (18-35),,Teens (14-17),,Male,Female
+9863,trueblood,Entertainment,http://trueblood.wikia.com/,,,,,,,,,TV,,,,,,,,Drama,,Fantasy,,,Horror,,,,,,,,,Adults (18-35),,Teens (14-17),,,Female
+690,indianajones,Entertainment,http://indianajones.wikia.com/,,,XBox 360,PS3,Wii,Handheld,,Movie,TV,,Novel,,Action/Adventure,,,,Drama,Family,,Fighting,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male,Female
+353,horrormovies,Entertainment,http://horror-movies.wikia.com/,,,,,,,,Movie,,,,,Action/Adventure,,,,Drama,,Fantasy,Fighting,,Horror,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male,Female
+6327,dollhouse,Entertainment,http://dollhouse.wikia.com/,,,,,,,,,TV,,,,Action/Adventure,,,,Drama,,,Fighting,,,,,,,,Sci-Fi,,,Adults (18-35),Adults (35+),Teens (14-17),,Male,Female
+6589,entertainment1,Entertainment,http://entertainment.wikia.com/,,,,,,,,Movie,TV,Comics/Manga,Novel,,Action/Adventure,Anime,,Comedy,Drama,Family,Fantasy,Fighting,,Horror,,Music,Mystery,,,Sci-Fi,,,Adults (18-35),Adults (35+),Teens (14-17),Kids (13),Male,Female
+4073,enfairlyoddparents,Entertainment,http://fairlyoddparents.wikia.com/,,,,,,,,,TV,,,,Action/Adventure,Anime,,Comedy,,Family,Fantasy,,,,,,,,,,,,,,,Kids (13),Male,Female
+1845,house,Entertainment,http://house.wikia.com/,,,,,,,,,TV,,,,,,,,Drama,,,,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male,Female
+25,babylon5,Entertainment,http://babylon5.wikia.com/,,PC,,,,,,,TV,,,,Action/Adventure,,,,Drama,,,Fighting,,,,,,,,Sci-Fi,,,Adults (18-35),Adults (35+),Teens (14-17),,Male,Female
+644,swfanon,Entertainment,http://swfanon.wikia.com/,,PC,XBox 360,PS3,Wii,Handheld,,Movie,TV,,,,Action/Adventure,,,,Drama,,,Fighting,,,,,,,,Sci-Fi,,,Adults (18-35),Adults (35+),Teens (14-17),,Male,Female
+312,lawandorder,Entertainment,http://lawandorder.wikia.com/,,,,,,,,,TV,,,,Action/Adventure,,,,Drama,,,,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,,Female
+1705,farscape,Entertainment,http://farscape.wikia.com/,,,,,,,,,TV,,,,Action/Adventure,,,,Drama,,,Fighting,,,,,,,,Sci-Fi,,,Adults (18-35),Adults (35+),Teens (14-17),,Male,Female
+1231,aliens,Entertainment,http://aliens.wikia.com/,,,,,,,,Movie,TV,,,,,,,,,,Fantasy,,,,,,,,,Sci-Fi,,,Adults (18-35),,Teens (14-17),,Male
+5618,happytreefriends,Entertainment,http://happytreefriends.wikia.com/,,,,,,,,,TV,Comics/Manga,,,,Anime,,Comedy,,,Fantasy,,,,,,,,,,,,Adults (18-35),,Teens (14-17),,Male,Female
+5912,shugochara,Entertainment,http://shugochara.wikia.com/,,,,,,,,,TV,Comics/Manga,,,,Anime,,,,Family,Fantasy,,,,,,,,,,,,Adults (18-35),,Teens (14-17),Kids (13),,Female
+5880,robotwars,Entertainment,http://robotwars.wikia.com/,,,,,,,,,TV,,,,,,,,,,,,,,,,,,,Sci-Fi,,,Adults (18-35),Adults (35+),Teens (14-17),,Male
+1573,theoffice,Entertainment,http://theoffice.wikia.com/,,,,,,,,,TV,,,,,,,Comedy,Drama,,,,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male,Female
+7107,coronationstreet,Entertainment,http://coronationstreet.wikia.com/,,,,,,,,,TV,,,,,,,,Drama,,,,,,,,,,,,,,Adults (18-35),Adults (35+),,,,Female
+543,xfiles,Entertainment,http://x-files.wikia.com/,,,,,,,,Movie,TV,,,,Action/Adventure,,,,,,,,,,,,Mystery,,,Sci-Fi,,,Adults (18-35),Adults (35+),Teens (14-17),,Male,Female
+6342,icarly,Entertainment,http://icarly.wikia.com/,,,,,,,,,TV,,,,,,,Comedy,Drama,Family,,,,,,,,,,,,,,,Teens (14-17),Kids (13),,Female
+10246,thatguywiththeglasses,Entertainment,http://thatguywiththeglasses.wikia.com/,,PC,,,,,,,,,,,,,,Comedy,,,,,,,,,,,,,,,Adults (18-35),,Teens (14-17),,Male,Female
+4039,airgear,Entertainment,http://airgear.wikia.com/,,,,,,,,,TV,Comics/Manga,,,Action/Adventure,Anime,,,,,Fantasy,Fighting,,,,,,,,,,,Adults (18-35),,Teens (14-17),,Male
+1585,ghostbusters,Entertainment,http://ghostbusters.wikia.com/,,PC,XBox 360,PS3,Wii,Handheld,,Movie ,TV,,,,Action/Adventure,Anime,,Comedy,,Family,Fantasy,,,,,,,,,Sci-Fi,,,Adults (18-35),Adults (35+),Teens (14-17),,Male,Female
+8978,totaldramaislandfanfiction,Entertainment,http://totaldramaislandfanfiction.wikia.com/,,,,,,,,,TV,,,,,Anime,,Comedy,,Family,,,,,,,,,,,,,,,,Kids (13),,Female
+26579,darkerthanblack,Entertainment,http://darkerthanblack.wikia.com/,,,,,,,,,TV,Comics/Manga,,,Action/Adventure,Anime,,,,,Fantasy,Fighting,,,,,,,,Sci-Fi,,,Adults (18-35),,Teens (14-17),,Male
+7017,chowder,Entertainment,http://chowder.wikia.com/,,,,,,,,,TV,,,,,Anime,,Comedy,,Family,Fantasy,,,,,,,,,,,,,,,Kids (13),Male,Female
+1538,avp,Entertainment,http://avp.wikia.com/,,,,,,,,Movie,,,,,Action/Adventure,,,,,,,Fighting,,,,,,,,Sci-Fi,,,Adults (18-35),Adults (35+),Teens (14-17),,Male
+1766,jurassicpark,Entertainment,http://jurassicpark.wikia.com/,,,,,,Handheld,,Movie,,,,,Action/Adventure,,,,,,,,,,,,,,,Sci-Fi,,,Adults (18-35),,Teens (14-17),,Male,Female
+6521,yuyuhakusho,Entertainment,http://yuyuhakusho.wikia.com/,,,,,,Handheld,,Movie,TV,Comics/Manga,,,Action/Adventure,Anime,,,,,Fantasy,Fighting,,,,,,,,,,,Adults (18-35),,Teens (14-17),,Male
+3606,darth,Entertainment,http://darth.wikia.com/,,,,,,,,Movie,,,,,Action/Adventure,,,Comedy,,,,,,,,,,,,Sci-Fi,,,Adults (18-35),Adults (35+),Teens (14-17),,Male
+1659,matrixfilms,Entertainment,http://matrix.wikia.com/,,,,,,,,Movie,,,,,Action/Adventure,,,,,,,Fighting,,,,,,,,Sci-Fi,,,Adults (18-35),Adults (35+),Teens (14-17),,Male
+642,dune,Entertainment,http://dune.wikia.com/,,,,,,,,Movie,,,Novel,,Action/Adventure,,,,,,Fantasy,Fighting,,,,,,,,Sci-Fi,,,Adults (18-35),Adults (35+),,,Male
+1912,knd,Entertainment,http://knd.wikia.com/,,,,,,,,,TV,,,,,Anime,,Comedy,,Family,,,,,,,,,,,,,,,,Kids (13),Male,Female
+7403,vampireknight,Entertainment,http://vampireknight.wikia.com/,,,,,,,,,TV,Comics/Manga,,,Action/Adventure,Anime,,,,,Fantasy,Fighting,,,,,,,,,,,Adults (18-35),,Teens (14-17),,Male
+12114,criminalminds,Entertainment,http://criminalminds.wikia.com/,,,,,,,,,TV,,,,Action/Adventure,,,,Drama,,,,,,,,,,,,,,Adults (18-35),Adults (35+),,,Male,Female
+847,lost,Entertainment,http://lost.wikia.com/,,,,,,,,,TV,,,,Action/Adventure,,,,Drama,,,,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male,Female
+339,nickelodeon,Entertainment,http://nickelodeon.wikia.com/,,,,,,,,Movie,TV,Comics/Manga,Novel,,Action/Adventure,Anime,,Comedy,Drama,Family,Fantasy,,,,,,Mystery,,,Sci-Fi,,,Adults (18-35),,Teens (14-17),Kids (13),Male,Female
+1248,rvb,Entertainment,http://rvb.wikia.com/,,,,,,,,,TV,,,,Action/Adventure,Anime,,,,,,Fighting,,,,,,,,,,,Adults (18-35),Adults (35+),,,Male
+822,narnia,Entertainment,http://narnia.wikia.com/,,,,,,,,Movie,,,Novel,,Action/Adventure,,,,Drama,Family,Fantasy,,,,,,,,,,,,Adults (18-35),,Teens (14-17),Kids (13),Male,Female
+3834,teentitans,Entertainment,http://teentitans.wikia.com/,,,,,,,,,TV,,,,Action/Adventure,Anime,,,,Family,Fantasy,Fighting,,,,,,,,Sci-Fi,,,,,Teens (14-17),Kids (13),Male
+20838,poohadventures,Entertainment,http://poohadventures.wikia.com/,,,,,,,,,TV,,,,,Anime,,Comedy,,,,,,,,,,,,,,,Adults (18-35),,,,Male
+9565,merlin1,Entertainment,http://merlin.wikia.com/,,,,,,,,,TV,,,,Action/Adventure,,,,Drama,Family,Fantasy,,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male,Female
+2501,ccs,Entertainment,http://ccs.wikia.com/,,,,,,,,Movie,TV,Comics/Manga,,,Action/Adventure,Anime,,,Drama,,Fantasy,,,,,,,,,Sci-Fi,,,Adults (18-35),,Teens (14-17),,Male,Female
+8247,watchmen,Entertainment,http://watchmen.wikia.com/,,,,,,,,Movie,,Comics/Manga,,,Action/Adventure,,,,Drama,,Fantasy,,,,,,,,,Sci-Fi,,,Adults (18-35),Adults (35+),,,Male
+26337,glee,Entertainment,http://glee.wikia.com/,,,,,,,,,TV,,,,,,,Comedy,Drama,Family,,,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,,Female
+11531,iceage,Entertainment,http://iceage.wikia.com/,,,,,,,,Movie,,,,,Action/Adventure,Anime,,Comedy,,Family,Fantasy,,,,,,,,,,,,Adults (18-35),,Teens (14-17),Kids (13),Male,Female
+518,turtledove,Entertainment,http://turtledove.wikia.com/,,,,,,,,,,,Novel,,,,,,Drama,,Fantasy,,,,,,,,,Sci-Fi,,,Adults (18-35),Adults (35+),,,Male,Female
+6971,greenlantern,Entertainment,http://greenlantern.wikia.com/,,,,,,,,,TV,Comics/Manga,,,Action/Adventure,Anime,,,Drama,Family,Fantasy,,,,,,,,,Sci-Fi,,,Adults (18-35),Adults (35+),,,Male
+12193,tdicamps,Entertainment,http://tdicamps.wikia.com/,,,,,,,,,TV,,,,Action/Adventure,Anime,,Comedy,Drama,,Fantasy,,,,,,,,,,Simulation,,,,Teens (14-17),Kids (13),Male,Female
+5527,bleachfanfiction,Entertainment,http://bleachfanfiction.wikia.com/,,,,,,,,,TV,,,,Action/Adventure,Anime,,,Drama,,Fantasy,,,,,,,,,Sci-Fi,Simulation,,Adults (18-35),,Teens (14-17),,Male
+1715,landbeforetime,Entertainment,http://landbeforetime.wikia.com/,,,,,,,,Movie,TV,,,,,Anime,,Comedy,Drama,Family,Fantasy,,,,,,,,,,,,Adults (18-35),,,Kids (13),Male,Female
+2257,ncis,Entertainment,http://ncis.wikia.com/,,,,,,,,,TV,,,,Action/Adventure,,,,Drama,,,,,,,,Mystery,,,,,,Adults (18-35),Adults (35+),,,Male,Female
+2934,monk,Entertainment,http://monk.wikia.com/,,,,,,,,,TV,,,,Action/Adventure,,,Comedy,Drama,,,,,,,,,,,,,,Adults (18-35),Adults (35+),,,Male,Female
+12194,huntik,Entertainment,http://huntik.wikia.com/,,,,,,,,Movie,TV,Comics/Manga,,,Action/Adventure,Anime,,,Drama,,,,,,,,,,,Sci-Fi,,,Adults (18-35),,Teens (14-17),,Male
+2632,americandad,Entertainment,http://americandad.wikia.com/,,,,,,,,,TV,,,,,Anime,,Comedy,,,,,,,,,,,,,,,Adults (18-35),,Teens (14-17),,Male
+1795,mst3k,Entertainment,http://mst3k.wikia.com/,,,,,,,,Movie,TV,,,,,,,Comedy,,,,,,,,,,,,Sci-Fi,,,Adults (18-35),Adults (35+),Teens (14-17),,Male
+7683,cleveland,Entertainment,http://cleveland.wikia.com/,,,,,,,,,TV,,,,,Anime,,Comedy,,,,,,,,,,,,,,,Adults (18-35),Adults (35+),,,Male
+545,honorverse,Entertainment,http://honorverse.wikia.com/,,,,,,,,,,,Novel,,Action/Adventure,,,,,,Fantasy,,,,,,,,,Sci-Fi,,,Adults (18-35),,Teens (14-17),,Male,Female
+10124,umineko,Entertainment,http://umineko.wikia.com/,,,,,,,,,,Comics/Manga,,,Action/Adventure,Anime,,,Drama,,,,,,,,,,,,,,Adults (18-35),,Teens (14-17),,Male
+2969,godfather,Entertainment,http://godfather.wikia.com/,,,,,,,,Movie,,,Novel,,Action/Adventure,,,,Drama,,,,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male
+1295,xmen,Entertainment,http://x-men.wikia.com/,,,,,,,,Movie,TV,Comics/Manga,Novel,,Action/Adventure,Anime,,,Drama,Family,Fantasy,,,,,,,,,Sci-Fi,,,Adults (18-35),,Teens (14-17),Kids (13),Male,Female
+4913,alvin,Entertainment,http://alvin.wikia.com/,,,,,,,,Movie,TV,Comics/Manga,,,Action/Adventure,Anime,,Comedy,,Family,,,,,,,,,,,,,,,Teens (14-17),Kids (13),Male,Female
+7275,berserk,Entertainment,http://berserk.wikia.com/,,,,,,,,,,Comics/Manga,,,Action/Adventure,Anime,,,,,Fantasy,Fighting,,Horror,,,,,,Sci-Fi,,,Adults (18-35),Adults (35+),Teens (14-17),,Male
+3040,darrenshan,Entertainment,http://cirquedufreak.wikia.com/,,,,,,,,Movie,,,Novel,,Action/Adventure,,,,,Family,Fantasy,,,,,,,,,Sci-Fi,,,Adults (18-35),,Teens (14-17),Kids (13),Male,Female
+7116,fringe,Entertainment,http://fringe.wikia.com/,,,,,,,,,TV,,,,Action/Adventure,,,,Drama,,Fantasy,,,,,,,,,Sci-Fi,,,Adults (18-35),Adults (35+),,,Male,Female
+6294,marvelmovies,Entertainment,http://marvel-movies.wikia.com/,,,,,,,,Movie,,,,,Action/Adventure,Anime,,Comedy,Drama,Family,Fantasy,Fighting,,,,,,,,Sci-Fi,,,Adults (18-35),Adults (35+),Teens (14-17),Kids (13),Male,Female
+2895,zombie,Entertainment,http://zombie.wikia.com/,,,,,,,,Movie,TV,Comics/Manga,Novel,,Action/Adventure,Anime,,Comedy,Drama,Family,Fantasy,Fighting,,Horror,,,Mystery,,,Sci-Fi,,,Adults (18-35),Adults (35+),Teens (14-17),,Male
+8225,disneyvillains,Entertainment,http://disneyvillains.wikia.com/,,,,,,,,Movie,TV,Comics/Manga,,,Action/Adventure,Anime,,Comedy,,Family,Fantasy,Fighting,,,,,,,,Sci-Fi,,,Adults (18-35),,Teens (14-17),Kids (13),Male,Female
+2390,bttf,Entertainment,http://bttf.wikia.com/,,,,,,,,Movie,,,,,Action/Adventure,,,Comedy,,Family,,,,,,,,,,Sci-Fi,,,Adults (18-35),,Teens (14-17),,Male,Female
+48,anime,Entertainment,http://anime.wikia.com/,,,,,,,,Movie,TV,Comics/Manga,Novel,,Action/Adventure,Anime,,Comedy,Drama,Family,Fantasy,Fighting,,,,,,,,Sci-Fi,,,Adults (18-35),,Teens (14-17),Kids (13),Male,Female
+1228,friends,Entertainment,http://friends.wikia.com/,,,,,,,,,TV,,,,,,,Comedy,,,,,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,,Female
+7163,claymore,Entertainment,http://claymore.wikia.com/,,,,,,,,,,Comics/Manga,,,Action/Adventure,Anime,,,Drama,,Fantasy,Fighting,,,,,,,,Sci-Fi,,,Adults (18-35),,Teens (14-17),,Male
+4122,keroro,Entertainment,http://keroro.wikia.com/,,,,,,,,,,Comics/Manga,,,Action/Adventure,Anime,,,,,Fantasy,,,,,,,,,Sci-Fi,,,Adults (18-35),,Teens (14-17),,Male
+695,spiderman,Entertainment,http://spiderman.wikia.com/,,PC,Xbox 360,PS3,Wii,Handheld,,Movie,TV,Comics/Manga,,,Action/Adventure,Anime,,,Drama,Family,Fantasy,Fighting,,,,,,,,Sci-Fi,,,Adults (18-35),Adults (35+),Teens (14-17),Kids (13),Male
+12029,pdsh,Entertainment,http://pdsh.wikia.com/,,,,,,,,,,Comics/Manga,,,Action/Adventure,Anime,,,Drama,Family,Fantasy,Fighting,,,,,Mystery,,,Sci-Fi,,,Adults (18-35),Adults (35+),Teens (14-17),,Male
+11798,pffanon,Entertainment,http://pffanon.wikia.com/,,,,,,,,,TV,,Novel,,Action/Adventure,Anime,Casual,Comedy,Drama,Family,Fantasy,,,,,,,,,,Simulation,,,,Teens (14-17),,Male,Female
+5563,haruhi,Entertainment,http://haruhi.wikia.com/,,,,,,,,,,Comics/Manga,Novel,,Action/Adventure,Anime,,,Drama,Family,Fantasy,,,,,,Mystery,,,Sci-Fi,,,Adults (18-35),,Teens (14-17),,Male,Female
+5360,primeval,Entertainment,http://primeval.wikia.com/,,,,,,,,,TV,,,,Action/Adventure,,,,,,Fantasy,,,,,,,,,Sci-Fi,,,Adults (18-35),,Teens (14-17),,Male
+9650,mrmen,Entertainment,http://mrmen.wikia.com/,,,,,,,,,TV,,Novel,,,Anime,,Comedy,,Family,Fantasy,,,,,,,,,,,,,,Teens (14-17),Kids (13),Male,Female
+4610,ippo,Entertainment,http://ippo.wikia.com/,,,,,,,,,TV,Comics/Manga,,,Action/Adventure,Anime,,,,,Fantasy,Fighting,,,,,,,,,,,Adults (18-35),,Teens (14-17),,Male
+7768,mahousenseinegima,Entertainment,http://negima.wikia.com/,,,,,,,,,TV,Comics/Manga,,,Action/Adventure,Anime,,Comedy,Drama,,Fantasy,,,,,,,,,Sci-Fi,,,Adults (18-35),,Teens (14-17),,Male,Female
+3917,andromeda,Entertainment,http://andromeda.wikia.com/,,,,,,,,,TV,,,,Action/Adventure,,,,Drama,,Fantasy,,,,,,,,,Sci-Fi,,,Adults (18-35),Adults (35+),Teens (14-17),,Male
+537,sailormoon,Entertainment,http://sailormoon.wikia.com/,,,,,,,,,TV,Comics/Manga,,,Action/Adventure,Anime,,Comedy,Drama,,Fantasy,Fighting,,,,,,,,Sci-Fi,,,Adults (18-35),,Teens (14-17),,Male,Female
+681,desperate,Entertainment,http://desperate.wikia.com/,,,,,,,,,TV,,,,,,,,Drama,,,,,,,,,,,,,,Adults (18-35),Adults (35+),,,,Female
+1544,villains,Entertainment,http://villains.wikia.com/,,,,,,,,Movie,TV,Comics/Manga,Novel,,Action/Adventure,Anime,,,,,Fantasy,Fighting,,,,,,,,Sci-Fi,,,Adults (18-35),,Teens (14-17),,Male
+8311,hellsing,Entertainment,http://hellsing.wikia.com/,,,,,,,,,TV,Comics/Manga,,,Action/Adventure,Anime,,,,,Fantasy,Fighting,,,,,,,,Sci-Fi,,,Adults (18-35),,Teens (14-17),,Male
+4727,starshiptroopers,Entertainment,http://starshiptroopers.wikia.com/,,,,,,,,Movie,TV,,Novel,,Action/Adventure,Anime,,,,,,Fighting,,,,,,,,Sci-Fi,,,Adults (18-35),Adults (35+),Teens (14-17),,Male
+5278,jjba,Entertainment,http://jjba.wikia.com/,,,,,,,,,TV,Comics/Manga,,,Action/Adventure,Anime,,,,,Fantasy,Fighting,,,,,,RPG,,Sci-Fi,,,Adults (18-35),,Teens (14-17),,Male
+7736,gantz,Entertainment,http://gantz.wikia.com/,,,,,,,,,TV,Comics/Manga,,,Action/Adventure,Anime,,,,,Fantasy,Fighting,,,,,,,,Sci-Fi,,,Adults (18-35),,Teens (14-17),,Male
+1752,girlgenius,Entertainment,http://girlgenius.wikia.com/,,,,,,,,,,Comics/Manga,,,Action/Adventure,Anime,,,Drama,,Fantasy,,,,,,,,,Sci-Fi,,,Adults (18-35),,Teens (14-17),,,Female
+9483,sanctuary,Entertainment,http://sanctuary.wikia.com/,,,,,,,,,TV,,,,Action/Adventure,,,,Drama,,Fantasy,,,,,,,,,Sci-Fi,,,Adults (18-35),Adults (35+),,,Male,Female
+165,firefly,Entertainment,http://firefly.wikia.com/,,,,,,,,Movie,,Comics/Manga,Novel,,Action/Adventure,,,,Drama,,Fantasy,,,,,,,,,Sci-Fi,,,Adults (18-35),Adults (35+),Teens (14-17),,Male,Female
+3765,reboot,Entertainment,http://reboot.wikia.com/,,,,,,,,Movie,TV,,,,Action/Adventure,Anime,,,,Family,Fantasy,,,,,,,,,Sci-Fi,,,,,Teens (14-17),,Male ,Female
+759,lionking,Entertainment,http://lionking.wikia.com/,,PC,Xbox 360,PS3,,Handheld,,Movie,TV,Comics/Manga,,,,Anime,,Comedy,Drama,Family,Fantasy,,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),Kids (13),Male,Female
+2180,greysanatomy,Entertainment,http://greysanatomy.wikia.com/,,,,,,,,,TV,,,,,,,,Drama,,,,,,,,,,,,,,Adults (18-35),Adults (35+),,,,Female
+1304,waldo,Entertainment,http://waldo.wikia.com/,,,,,,,,,TV,Comics/Manga,Novel,,,,,,,Family,,,,,,,,,,,,,Adults (18-35),,Teens (14-17),Kids (13),Male,Female
+2143,sawfilms,Entertainment,http://sawfilms.wikia.com/,,,,,,,,Movie,,,,,,,,,,,,,,Horror,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male,Female
+13275,applesparkles,Entertainment,http://applesparkles.wikia.com/,,,,,,,,Movie,,Comics/Manga,Novel,,,,,Comedy,Drama,,Fantasy,,,,,,,,,,,,Adults (18-35),,Teens (14-17),Kids (13),,Female
+4095,wizardsofwaverlyplace,Entertainment,http://wizardsofwaverlyplace.wikia.com/,,,,,,,,,TV,,,,Action/Adventure,,,Comedy,Drama,Family,Fantasy,,,,,,,,,,,,,,Teens (14-17),,Male,Female
+1550,heroes,Entertainment,http://heroes.wikia.com/,,,,,,,,,TV,Comics/Manga,Novel,,Action/Adventure,,,,Drama,,Fantasy,,,,,,,,,Sci-Fi,,,Adults (18-35),Adults (35+),Teens (14-17),,Male,Female
+12734,heyarnold,Entertainment,http://heyarnold.wikia.com/,,,,,,,,,TV,,,,,,,,,Family,,,,,,,,,,,,,,,,Kids (13),Male,Female
+7273,memory_gamma,Entertainment,http://memory-gamma.wikia.com/,,,,,,,,Movie,TV,Comics/Manga,Novel,,Action/Adventure,Anime,,Comedy,Drama,Family,Fantasy,Fighting,,Horror,,,Mystery,,,Sci-Fi,,,Adults (18-35),Adults (35+),Teens (14-17),,Male
+4428,supernatural,Entertainment,http://supernatural.wikia.com/,,,,,,,,,TV,,,,Action/Adventure,,,,Drama,,Fantasy,,,,,,Mystery,,,Sci-Fi,,,Adults (18-35),Adults (35+),,,Male,Female
+6708,winx,Entertainment,http://winx.wikia.com/,,,,,,,,Movie,TV,,Novel,,Action/Adventure,Anime,,,,Family,Fantasy,,,,,,,,,,,,,,Teens (14-17),Kids (13)
+10540,spongefan,Entertainment,http://spongefan.wikia.com/,,,,,,,,Movie,TV,,,,,Anime,,Comedy,,Family,Fantasy,,,,,,,,,,,,,,,Kids (13),Male,Female
+14161,gintama,Entertainment,http://gintama.wikia.com/,,,,,,,,,TV,,,,Action/Adventure,Anime,,,,,Fantasy,,,,,,,,,,,,Adults (18-35),,Teens (14-17),,Male,Female
+1703,zatchbell,Entertainment,http://zatchbell.wikia.com/,,,,,,,,,TV,Comics/Manga,,,Action/Adventure,Anime,,,,,Fantasy,,,,,,,,,,,,Adults (18-35),,Teens (14-17),,Male
+6724,ginga,Entertainment,http://ginga.wikia.com/,,,,,,,,,,Comics/Manga,,,Action/Adventure,Anime,,,,,Fantasy,,,,,,,,,,,,Adults (18-35),,Teens (14-17),,Male,Female
+7445,flapjack,Entertainment,http://flapjack.wikia.com/,,,,,,,,,TV,,,,Action/Adventure,Anime,,Comedy,,Family,Fantasy,,,,,,,,,,,,Adults (18-35),,Teens (14-17),Kids (13),Male,Female
+3502,dp,Entertainment,http://dannyphantom.wikia.com/,,,,,,,,,TV,,,,Action/Adventure,Anime,,,,Family,Fantasy,,,,,,,,,Sci-Fi,,,,,Teens (14-17),Kids (13),Male,Female
+7858,whentheycry,Entertainment,http://whentheycry.wikia.com/,,,,,,,,,TV,Comics/Manga,,,Action/Adventure,Anime,,,Drama,,Fantasy,,,,,,,,,,,,Adults (18-35),,Teens (14-17),,Male,Female
+693,kanzaka,Entertainment,http://kanzaka.wikia.com/,,,,,,,,,TV,Comics/Manga,,,Action/Adventure,Anime,,,Drama,,Fantasy,Fighting,,,,,,,,Sci-Fi,,,Adults (18-35),,Teens (14-17),,Male
+13501,kuroshitsuji,Entertainment,http://kuroshitsuji.wikia.com/,,,,,,,,,,Comics/Manga,,,Action/Adventure,Anime,,,,,Fantasy,,,,,,,,,,,,Adults (18-35),,Teens (14-17),,Male
+3764,bobobo,Entertainment,http://bobobo.wikia.com/,,,,,,,,,TV,,,,Action/Adventure,Anime,,,,,Fantasy,,,,,,,,,,,,Adults (18-35),,Teens (14-17),,Male
+7876,coldcase,Entertainment,http://coldcase.wikia.com/,,,,,,,,,TV,,,,Action/Adventure,,,,Drama,,,,,,,,Mystery,,,,,,Adults (18-35),Adults (35+),,,Male,Female
+5975,kamenrider,Entertainment,http://kamenrider.wikia.com/,,,,,,,,,TV,,,,Action/Adventure,Anime,,,,Family,,,,,,,,,,Sci-Fi,,,,,,Kids (13),Male,Female
+4026,kinnikuman,Entertainment,http://kinnikuman.wikia.com/,,,,,,,,,,Comics/Manga,,,Action/Adventure,Anime,,,,,Fantasy,,,,,,,,,,,,Adults (18-35),,Teens (14-17),,Male
+1863,oz,Entertainment,http://oz.wikia.com/,,,,,,,,,TV,,,,Action/Adventure,,,,Drama,,,,,,,,,,,,,,Adults (18-35),Adults (35+),,,Male,Female
+4055,onetreehill,Entertainment,http://onetreehill.wikia.com/,,,,,,,,,TV,,,,,,,,Drama,,,,,,,,,,,,,,Adults (18-35),,Teens (14-17),,,Female
+1624,prisonbreak,Entertainment,http://prisonbreak.wikia.com/,,,,,,,,,TV,,,,,,,,Drama,,,,,,,,,,,,,,Adults (18-35),,Teens (14-17),,,Female
+53422,zimwiki,Entertainment,http://zim.wikia.com/,,,,,,,,,TV,,,,Action/Adventure,Anime,,,,Family,,,,,,,,,,Sci-Fi,,,Adults (18-35),,,Kids (13),Male
+10774,medabots,Entertainment,http://medabots.wikia.com/,,,,,,,,,TV,,,,,Anime,,,,,,,,,,,,,,Sci-Fi,,,Adults (18-35),,Teens (14-17),,Male
+3655,beyblade,Entertainment,http://beyblade.wikia.com/,,,,,,,,,,Comics/Manga,,,,Anime,,,,,Fantasy,,,,,,,,,,,,Adults (18-35),,Teens (14-17),,Male
+3328,cartoonnetwork,Entertainment,http://cartoonnetwork.wikia.com/,,,,,,,,,TV,,,,Action/Adventure,Anime,,Comedy,Drama,Family,Fantasy,Fighting,,,,,,,,Sci-Fi,,,Adults (18-35),Adults (35+),Teens (14-17),Kids (13),Male,Female
+4728,kingofthehill,Entertainment,http://kingofthehill.wikia.com/,,,,,,,,,TV,,,,,Anime,,Comedy,,,,,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male
+14948,lostspoilers,Entertainment,http://lostspoilers.wikia.com/,,,,,,,,,TV,,,,,,,,Drama,,,,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male,Female
+4093,suitelife,Entertainment,http://suitelife.wikia.com/,,,,,,,,,TV,,,,,,,Comedy,,Family,,,,,,,,,,,,,,,,Kids (13),,Female
+9801,gurennlagann,Entertainment,http://gurennlagann.wikia.com/,,,,,,,,,,Comics/Manga,,,,Anime,,,,,Fantasy,,,,,,,,,,,,,,Teens (14-17),,Male
+14026,zhongji,Entertainment,http://zhongji.wikia.com/,,,,,,,,,TV,,,,Action/Adventure,,,,Drama,,,,,,,,,,,Sci-Fi,,,Adults (18-35),,,,Male
+631,comics,Entertainment,http://comics.wikia.com/,,,,,,,,,,Comics/Manga,,,Action/Adventure,Anime,,Comedy,Drama,Family,Fantasy,,,,,,,,,Sci-Fi,,,Adults (18-35),,Teens (14-17),,Male
+968,looneytunes,Entertainment,http://looneytunes.wikia.com/,,,,,,,,,TV,,,,Action/Adventure,Anime,,Comedy,,Family,Fantasy,,,,,,,,,,,,,,,Kids (13),Male,Female
+3340,chuck,Entertainment,http://chuck-nbc.wikia.com/,,,,,,,,,TV,,,,Action/Adventure,,,Comedy,,,,,,,,,,,,Sci-Fi,,,Adults (18-35),,,,Male
+5173,mynameisearl,Entertainment,http://mynameisearl.wikia.com/,,,,,,,,,TV,,,,,,,Comedy,,,,,,,,,,,,,,,Adults (18-35),Adults (35+),,,Male,Female
+1178,superman,Entertainment,http://superman.wikia.com/,,,,PS3,,Handheld,,Movie,TV,Comics/Manga,Novel,,Action/Adventure,Anime,,,Drama,Family,Fantasy,Fighting,,,,,,,,Sci-Fi,,,Adults (18-35),Adults (35+),Teens (14-17),Kids (13),Male,Female
+4930,powerpuff,Entertainment,http://powerpuff.wikia.com/,,,,,,,,,TV,,,,,Anime,,,,Family,,,,,,,,,,,,,,,Teens (14-17),Kids (13),,Female
+11946,stupidmariobros,Entertainment,http://stupidmariobros.wikia.com/,,,,,,,,,TV,,,,Action/Adventure,,,Comedy,,,,,,,,,,,,,,,Adults (18-35),,,,Male
+7589,twohalfmen,Entertainment,http://twohalfmen.wikia.com/,,,,,,,,,TV,,,,,,,Comedy,,,,,,,,,,,,,,,Adults (18-35),,,,Male,Female
+6954,riddick,Entertainment,http://riddick.wikia.com/,,,Xbox 360,PS3,,,,Movie,,Comics/Manga,Novel,,Action/Adventure,,,,Drama,,Fantasy,Fighting,,,,,,,,Sci-Fi,,,Adults (18-35),Adults (35+),Teens (14-17),,Male,Female
+38969,vampirediaries,Entertainment,http://vampirediaries.wikia.com/,,,,,,,,,TV,,Novel,,,,,,Drama,,,,,,,,,,,Sci-Fi,,,Adults (18-35),,Teens (14-17),,,Female
+4082,drawntogether,Entertainment,http://drawntogether.wikia.com/,,,,,,,,,TV,,,,,Anime,,Comedy,,,Fantasy,,,,,,,,,,,,Adults (18-35),,,,Male
+42328,edfanon,Entertainment,http://edfanon.wikia.com/,,,,,,,,,TV,,,,,,,,,Family,Fantasy,,,,,,,,,,,,,,Teens (14-17),,Male,Female
+25735,enanimanga,Entertainment,http://animanga.wikia.com/,,,,,,,,Movie,TV,Comics/Manga,Novel,,Action/Adventure,Anime,,,,,Fantasy,Fighting,,Horror,,,,,,Sci-Fi,,,Adults (18-35),,Teens (14-17),,Male ,Female
+2731,xiaolinshowdown,Entertainment,http://xiaolinshowdown.wikia.com/,,,,,,,,,TV,,,,Action/Adventure,Anime,,Comedy,,Family,Fantasy,,,,,,,,,,,,Adults (18-35),,Teens (14-17),Kids (13),Male,Female
+4084,evangelion,Entertainment,http://evangelion.wikia.com/,,,,,,,,,TV,,,,Action/Adventure,Anime,,,Drama,,Fantasy,,,,,,,,,Sci-Fi,,,Adults (18-35),,Teens (14-17),,Male,Female
+8267,8bittheater,Entertainment,http://8bittheater.wikia.com/,,,,,,,,,,Comics/Manga,,,Action/Adventure,Anime,,Comedy,,,,Fighting,,,,,,,,,,,Adults (18-35),,,,Male
+10535,kenichi,Entertainment,http://kenichi.wikia.com/,,,,,,,,,TV,Comics/Manga,,,Action/Adventure,Anime,,,,,Fantasy,Fighting,,,,,,,,,,,Adults (18-35),,Teens (14-17),,Male,Female
+827,thebill,Entertainment,http://thebill.wikia.com/,,,,,,,,,TV,,,,Action/Adventure,,,,,,,,,,,,,,,,,,Adults (18-35),Adults (35+),,,Male,Female
+11078,smbz,Entertainment,http://smbz.wikia.com/,,,,,,,,,TV,,,,Action/Adventure,,,,,,,,,,,,,,,,,,Adults (18-35),,Teens (14-17),,Male
+4531,underworld,Entertainment,http://underworld.wikia.com/,,,,,,,,Movie,,,,,Action/Adventure,,,,,,Fantasy,Fighting,,,,,,,,Sci-Fi,,,Adults (18-35),,Teens (14-17),,Male,Female
+5919,eiga,Entertainment,http://eiga.wikia.com/,,,,,,,,Movie,,,,,Action/Adventure,Anime,Casual,Comedy,,Family,Fantasy,Fighting,,Horror,,,,,,Sci-Fi,,,Adults (18-35),Adults (35+),Teens (14-17),,Male
+2446,imagecomics,Entertainment,http://imagecomics.wikia.com/,,,,,,,,,,Comics/Manga,,,Action/Adventure,Anime,,,,,Fantasy,Fighting,,Horror,,,,,,Sci-Fi,,,Adults (18-35),,Teens (14-17),,Male,Female
+2769,meerkats,Entertainment,http://meerkats.wikia.com/,,,,,,,,,TV,,,,,,,,,Family,,,,,,,,,,,,,Adults (18-35),,Teens (14-17),,Male,Female
+662,darkshadows,Entertainment,http://darkshadows.wikia.com/,,,,,,,,Movie,TV,Comics/Manga,Novel,,Action/Adventure,,,,,,Fantasy,,,Horror,,,,,,Sci-Fi,,,Adults (18-35),,,,Male
+2154,scoobydoo,Entertainment,http://scoobydoo.wikia.com/,,,,,,,,Movie,TV,,,,Action/Adventure,,,,,Family,,,,,,,,,,,,,,,Teens (14-17),Kids (13),Male,Female
+3294,harrypotterfanon,Entertainment,http://harrypotterfanon.wikia.com/,,,,,,,,Movie,,,Novel,,Action/Adventure,,,,,Family,Fantasy,,,,,,,,,,,,Adults (18-35),,Teens (14-17),,Male,Female
+5414,peel,Entertainment,http://peel.wikia.com/,,,,,,,,,TV,,,,,,,,,,,,,,,,,,,,,,,,,Kids (13),Male,Female
+8646,athfwiki,Entertainment,http://aqua-teen-hunger-force.wikia.com/,,,,,,,,Movie,TV,,,,Action/Adventure ,Anime,,,,,,,,,,,,,,Sci-Fi,,,Adults (18-35),,Teens (14-17),,Male
+6363,oots,Entertainment,http://oots.wikia.com/,,,,,,,,,TV,Comics/Manga,,,Action/Adventure,Anime,,,,,Fantasy,,,,,,,,,,,,Adults (18-35),,Teens (14-17),,Male
+9229,rosariovampire,Entertainment,http://rosariovampire.wikia.com/,,,,,,,,,TV,,,,Action/Adventure,,,,,,,,,,,,,,,Sci-Fi,,,Adults (18-35),,,,Male,Female
+6482,h2o,Entertainment,http://h2o.wikia.com/,,,,,,,,,TV,,Novel,,,,,,,Family,Fantasy,,,,,,,,,,,,,,Teens (14-17),Kids (13),,Female
+7540,disneychannel,Entertainment,http://disneychannel.wikia.com/,,,,,,,,Movie,TV,Comics/Manga,,,Action/Adventure,,,,,,Fantasy,,,,,,,,,Sci-Fi,,,Adults (18-35),Adults (35+),Teens (14-17),,Male
+6801,90210,Entertainment,http://90210.wikia.com/,,,,,,,,,TV,,,,,,,,,,,,,,,,,,,,,,Adults (18-35),,Teens (14-17),,,Female
+15605,nanoha,Entertainment,http://nanoha.wikia.com/,,,,,,,,,TV,,,,Action/Adventure,Anime,,,,,Fantasy,,,,,,,,,,,,Adults (18-35),,Teens (14-17),,Male,Female
+4828,bigbangtheory,Entertainment,http://bigbangtheory.wikia.com/,,,,,,,,,TV,,,,,,,Comedy,,,,,,,,,,,,,,,Adults (18-35),,,,Male,Female
+1353,highlander,Entertainment,http://highlander.wikia.com/,,,,,,,,Movie,TV,,,,Action/Adventure,,,,,,Fantasy,Fighting,,,,,,,,,,,Adults (18-35),,,,Male
+24104,stoked,Entertainment,http://stoked.wikia.com/,,,,,,,,,TV,,,,,Anime,,Comedy,,Family,,,,,,,,,,,,,,,Teens (14-17),Kids (13),,Female
+3049,thetribe,Entertainment,http://thetribe.wikia.com/,,,,,,,,,TV,,,,Action/Adventure,,,,,,,,,,,,,,,,,,Adults (18-35),,,,Male,Female
+867,bionic,Entertainment,http://bionic.wikia.com/,,,,,,,,,TV,,,,Action/Adventure,,,,,,,,,,,,,,,Sci-Fi,,,Adults (18-35),Adults (35+),,,Male
+812,hercxena,Entertainment,http://hercxena.wikia.com/,,,,,,,,Movie,TV,,,,Action/Adventure,,,,,,Fantasy,,,,,,,,,,,,Adults (18-35),Adults (35+),,,Male
+8256,theodoretugboat,Entertainment,http://theodoretugboat.wikia.com/,,,,,,,,,TV,,,,,,,,,Family,,,,,,,,,,,,,Adults (18-35),,,Kids (13),Male,Female
+680,candh,Entertainment,http://calvinandhobbes.wikia.com/,,,,,,,,,,Comics/Manga,,,,,,Comedy,,Family,,,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),Kids (13),Male,Female
+2753,tamorapierce,Entertainment,http://tamorapierce.wikia.com/,,,,,,,,,,,Novel,,Action/Adventure,,,,,,Fantasy,,,,,,,,,,,,Adults (18-35),,Teens (14-17),,,Female
+4859,tugs,Entertainment,http://tugs.wikia.com/,,,,,,,,,TV,,,,,,,,,Family,,,,,,,,,,,,,Adults (18-35),,,Kids (13),Male,Female
+6444,marvelanimated,Entertainment,http://marvelanimated.wikia.com/,,,,,,,,,TV,,,,Action/Adventure,Anime,,,,Family,,,,,,,,,,Sci-Fi,,,Adults (18-35),,Teens (14-17),,Male
+379,artemisfowl,Entertainment,http://artemisfowl.wikia.com/,,,,,,,,,,Comics/Manga,,,Action/Adventure,Anime,,,,,Fantasy,,,,,,,,,,,,Adults (18-35),,Teens (14-17),,Male
+775,westwing,Entertainment,http://westwing.wikia.com/,,,,,,,,,TV,,,,Action/Adventure,,,,,,,,,,,,,,,,,,Adults (18-35),Adults (35+),,,Male ,Female
+3708,metalocalypse,Entertainment,http://dethklok.wikia.com/,,,,,,,,,TV,,,,Action/Adventure,Anime,,Comedy,,,,,,,,,,,,,,,Adults (18-35),,,,Male
+5461,tsubasa,Entertainment,http://tsubasa.wikia.com/,,,,,,,,,,Comics/Manga,,,Action/Adventure,Anime,,,,,Fantasy,,,,,,,,,,,,Adults (18-35),,Teens (14-17),,,Female
+1865,fanfiction,Entertainment,http://fanfiction.wikia.com/,,,,,,,,Movie,TV,Comics/Manga,Novel,,Action/Adventure,Anime,Casual,Comedy,,Family,Fantasy,Fighting,,Horror,,,Mystery,,,Sci-Fi,,,Adults (18-35),Adults (35+),Teens (14-17),,Male,Female
+490,wowwiki,Gaming,http://www.wowwiki.com/,,PC,,,,,,,,,Novel,,,,,,,,Fantasy,,,,MMO,,,RPG,RTS,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (87%),Female (13%)
+10150,dragonage,Gaming,http://dragonage.wikia.com/,,PC,Xbox 360,PS3,,,,,,,Novel,,,,,,,,Fantasy,,,,,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (73%),Female (27%)
+304,runescape,Gaming,http://runescape.wikia.com/,,PC,,,,,,,,,,,,,,,,,Fantasy,,,,MMO,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),Kids (13),Male (58%),Female (42%)
+3125,Callofduty,Gaming,http://callofduty.wikia.com/,,PC,Xbox 360,PS3,Wii,Handheld,Mobile,,,,,,,,,,,,,,FPS,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (66%),Female (34%)
+3035,fallout,Gaming,http://fallout.wikia.com/,,PC,Xbox 360,PS3,Wii,Handheld,Mobile,,,,,,Action/Adventure,,,,,,,,FPS,,,,,RPG,,Sci-Fi,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (68%),Female (32%)
+1657,ffxi,Gaming,http://wiki.ffxiclopedia.org/,,PC,Xbox 360,,,,,,,,,,,,,,,,Fantasy,,,,MMO,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (66%),Female (34%)
+351,tibiawiki,Gaming,http://tibia.wikia.com/,,PC,,,,,,,,,,,,,,,,,Fantasy,,,,MMO,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (57%),Female (43%)
+174,finalfantasy,Gaming,http://finalfantasy.wikia.com/,,PC,Xbox 360,PS3,Wii,Handheld,Mobile,Movie,,Manga,Novel,,,,,,,,Fantasy,,,,MMO,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (62%),Female (38%)
+11954,borderlands,Gaming,http://borderlands.wikia.com/,,PC,Xbox 360,PS3,,,,,,,,,,,,,,,,,FPS,,,,,RPG,,Sci-Fi,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (72%),Female (28%)
+462,halo,Gaming,http://halo.wikia.com/,,PC,Xbox 360,,,,,,,,Novel,,,,,,,,,,FPS,,,,,,RTS,Sci-Fi,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (68%),Female (32%)
+26,guildwars,Gaming,http://guildwars.wikia.com/,,PC,,,,,,,,,,,,,,,,,Fantasy,,,,MMO,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (65%),Female (35%)
+324,eq2i,Gaming,http://eq2.wikia.com/,,PC,,,,,,,,,,,,,,,,,Fantasy,,,,MMO,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (66%),Female (34%)
+12955,pvx,Gaming,http://pvx.wikia.com/,,PC,,,,,,,,,,,,,,,,,Fantasy,,,,MMO,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (66%),Female (34%)
+3491,masseffect,Gaming,http://masseffect.wikia.com/,,PC,Xbox 360,,,,,,,,Novel,,,,,,,,,,,,,,,RPG,,Sci-Fi,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (77%),Female (23%)
+1346,kingdomhearts,Gaming,http://kingdomhearts.wikia.com/,,,,,,Handheld,Mobile,,,,,,Action/Adventure,,,,,,,,,,,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (58%),Female (42%)
+4541,gtawiki,Gaming,http://gta.wikia.com/,,PC,Xbox 360,PS3,,Handheld,Mobile,,,,,,Action/Adventure,,,,,,,,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (64%),Female (36%)
+3510,assassinscreed,Gaming,http://assassinscreed.wikia.com/,,PC,Xbox 360,PS3,,Handheld,Mobile,,,,Novel,,Action/Adventure,,,,,,,,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (65%),Female (35%)
+602,dofus,Gaming,http://dofuswiki.wikia.com/,,PC,,,,,,,,,,,,,,,,,Fantasy,,,,MMO,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (59%),Female (41%)
+6961,left4dead,Gaming,http://left4dead.wikia.com/,,PC,Xbox 360,,,,,,,,,,,,,,,,,,FPS,Horror,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (66%),Female (34%)
+444,zelda,Gaming,http://zelda.wikia.com/,,,,,Wii,Handheld,,,,,,,Action/Adventure,,,,,,Fantasy,,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),Kids (13),Male (61%),Female (39%)
+11424,lastremnant,Gaming,http://lastremnant.wikia.com/,,PC,Xbox 360,,,,,,,,,,,,,,,,Fantasy,,,,,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (68%),Female (32%)
+1249,residentevil,Gaming,http://residentevil.wikia.com/,,PC,Xbox 360,PS3,Wii,Handheld,Mobile,Movie,,Comics,Novel,,Action/Adventure,,,,,,,,FPS,Horror,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (63%),Female (37%)
+3234,monsterhunter,Gaming,http://monsterhunter.wikia.com/,,PC,,,Wii,Handheld,,,,,,,,,,,,,Fantasy,,,,,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (64%),Female (36%)
+9579,mafiawars,Gaming,http://mafiawars.wikia.com/,,PC,,,,,,,,,,,,,Casual,,,,,,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (56%),Female (44%)
+105,sims,Gaming,http://sims.wikia.com/,,PC,,,Wii,Handheld,,,,,,,,,Casual,,,,,,,,,,,,,,Simulation,,Adults (18-35),Adults (35+),Teens (14-17),Kids (13),Male (51%),Female (49%)
+795,halflife,Gaming,http://half-life.wikia.com/,,PC,Xbox 360,PS3,,,,,,,,,,,,,,,,,FPS,,,,,,,Sci-Fi,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (71%),Female (29%)
+401,megaman,Gaming,http://megaman.wikia.com/,,,Xbox 360,PS3,Wii,Handheld,,,,,,,Action/Adventure,,,,,,,,,,,,,,,Sci-Fi,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (66%),Female (34%)
+663,sonic,Gaming,http://sonic.wikia.com/,,PC,Xbox 360,PS3,Wii,Handheld,,,,Comics,,,Action/Adventure,,Casual,,,,,Fighting,,,,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),Kids (13),Male (57%),Female (43%)
+2714,ssb,Gaming,http://super-smash-bros.wikia.com/,,,,,Wii,,,,,,,,,,,,,,,Fighting,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (62%),Female (38%)
+7356,touhou,Gaming,http://touhou.wikia.com/,,PC,,,,,,,,Manga,Novel,,,,,,,,,Fighting,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (73%),Female (27%)
+3490,bioshock,Gaming,http://bioshock.wikia.com/,,PC,Xbox 360,PS3,,,,,,,,,,,,,,,,,FPS,,,,,,,Sci-Fi,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (68%),Female (32%)
+5409,oblivion,Gaming,http://oblivion.wikia.com/,,PC,Xbox 360,PS3,,,,,,,,,,,,,,,Fantasy,,,,,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (67%),Female (33%)
+5445,sealonline,Gaming,http://sealonline.wikia.com/,,PC,,,,,,,,,,,,,,,,,Fantasy,,,,MMO,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (60%),Female (40%)
+634,metalgear,Gaming,http://metalgear.wikia.com/,,,,PS3,,Handheld,Mobile,,,Comics,Novel,,Action/Adventure,,,,,,,,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (69%),Female (31%)
+2022,silenthill,Gaming,http://silenthill.wikia.com/,,PC,Xbox 360,PS3,Wii,Handheld,Mobile,Movie,,Comics,Novel,,Action/Adventure,,,,,,,,,Horror,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (61%),Female (39%)
+3405,fable,Gaming,http://fable.wikia.com/,,PC,Xbox 360,,,,,,,,,,,,,,,,Fantasy,,,,,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (63%),Female (37%)
+458,starcraft,Gaming,http://starcraft.wikia.com/,,PC,,,,,,,,,Novel,,,,,,,,,,,,,,,,RTS,Sci-Fi,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (71%),Female (29%)
+6139,deadspace,Gaming,http://deadspace.wikia.com/,,PC,Xbox 360,PS3,,,,,,,,,,,,,,,,,FPS,Horror,,,,,,Sci-Fi,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (68%),Female (32%)
+1239,swg,Gaming,http://swg.wikia.com/,,PC,,,,,,,,,,,,,,,,,,,,,MMO,,,RPG,,Sci-Fi,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (66%),Female (34%)
+691,forgottenrealms,Gaming,http://forgottenrealms.wikia.com/,,,,,,,,,,,,,,,,,,,Fantasy,,,,,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (67%),Female (33%)
+49688,farmville,Gaming,http://farmville.wikia.com/,,PC,,,,,,,,,,,,,Casual,,,,,,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (54%),Female (46%)
+941,fireemblem,Gaming,http://fireemblem.wikia.com/,,,,,Wii,Handheld,,,,Manga,,,,Anime,,,,,Fantasy,,,,,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (63%),Female (37%)
+5813,megamitensei,Gaming,http://megamitensei.wikia.com/,,PC,,,Wii,Handheld,,,,Manga,,,,Anime,,,,,,,,,,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (64%),Female (36%)
+635,metroid,Gaming,http://metroid.wikia.com/,,,,,Wii,Handheld,,,,,,,Action/Adventure,,,,,,,,,,,,,,,Sci-Fi,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (66%),Female (34%)
+255,diablo,Gaming,http://diablo.wikia.com/,,PC,,,,,,,,,,,,,,,,,Fantasy,,,,,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (69%),Female (31%)
+1122,ratchet,Gaming,http://ratchet.wikia.com/,,,,PS3,,Handheld,,,,,,,Action/Adventure,,,,,,,,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (64%),Female (36%)
+896,cnc,Gaming,http://cnc.wikia.com/,,PC,Xbox 360,PS3,,Handheld,,,,,,,,,,,,,,,,,,,,,RTS,Sci-Fi,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (68%),Female (32%)
+3595,nwn2,Gaming,http://nwn2.wikia.com/,,PC,,,,,,,,,,,,,,,,,Fantasy,,,,,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (75%),Female (25%)
+10022,deadfrontier,Gaming,http://deadfrontier.wikia.com/,,PC,,,,,,,,,,,,,,,,,,,,Horror,MMO,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (57%),Female (43%)
+2428,rappelz,Gaming,http://rappelz.wikia.com/,,PC,,,,,,,,,,,,,,,,,Fantasy,,,,MMO,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (63%),Female (37%)
+4492,streetfighter,Gaming,http://streetfighter.wikia.com/,,PC,Xbox 360,PS3,,,,,,,,,,,,,,,,Fighting,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (69%),Female (31%)
+74,pokemon,Gaming,http://pokemon.wikia.com/,,,,,Wii,Handheld,,Movie,TV,Manga,,,,Anime,,,,,,,,,,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),Kids (13),Male (59%),Female (41%)
+3443,witcher,Gaming,http://witcher.wikia.com/,,PC,,,,,,,,,,,,,,,,,,,,,,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (75%),Female (25%)
+51,doom,Gaming,http://doom.wikia.com/,,PC,,,,,,Movie,,,,,,,,,,,,,FPS,Horror,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (71%),Female (29%)
+10821,fishwrangler,Gaming,http://fishwrangler.wikia.com/,,PC,,,,,,,,,,,,,Casual,,,,,,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (47%),Female (53%)
+3085,spore,Gaming,http://spore.wikia.com/,,PC,,,,,Mobile,,,,,,,,,,,,,,,,,,,,RTS,,Simulation,,Adults (18-35),Adults (35+),Teens (14-17),,Male (61%),Female (39%)
+2395,clubpenguin,Gaming,http://clubpenguin.wikia.com/,,PC,,,,,,,,,,,,,,,,,,,,,MMO,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),Kids (13),Male (49%),Female (51%)
+1129,dothack,Gaming,http://dothack.wikia.com/,,,,PS3,,,,,,Manga,,,,Anime,,,,,,,,,,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (61%),Female (39%)
+8043,wizard101,Gaming,http://wizard101.wikia.com/,,PC,,,,,,,,,,,,,,,,,Fantasy,,,,MMO,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),Kids (13),Male (54%),Female (46%)
+501,warhammer40k,Gaming,http://warhammer40k.wikia.com/,,,,,,,,,,,,,,,,,,,,,,,,,,,RTS,Sci-Fi,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (70%),Female (30%)
+31354,sacredseasons,Gaming,http://sacredseasons.wikia.com/,,PC,,,,,,,,,,,,,,,,,Fantasy,,,,MMO,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),Kids (13),Male (63%),Female (37%)
+702,nethack,Gaming,http://nethack.wikia.com/,,PC,,,,Handheld,Mobile,,,,,,,,,,,,,,,,,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (76%),Female (24%)
+49812,asheron,Gaming,http://asheron.wikia.com/,,PC,,,,,,,,,,,,,,,,,Fantasy,,,,MMO,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (66%),Female (34%)
+1610,aselia,Gaming,http://aselia.wikia.com/,,PC,Xbox 360,,Wii,Handheld,Mobile,,,,,,,Anime,,,,,,,,,MMO,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (62%),Female (38%)
+2935,godofwar,Gaming,http://godofwar.wikia.com/,,,,PS3,,Handheld,Mobile,,,,,,Action/Adventure,,,,,,,,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (65%),Female (35%)
+2965,soulcalibur,Gaming,http://soulcalibur.wikia.com/,,,Xbox 360,PS3,Wii,Handheld,,,,,,,,,,,,,,Fighting,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (62%),Female (38%)
+1407,castlevania,Gaming,http://castlevania.wikia.com/,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (68%),Female (32%)
+2728,kirby,Gaming,http://kirby.wikia.com/,,,,,Wii,Handheld,,,,Comics/Manga,,,Action/Adventure,,,,,,,,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),Kids (13),Male (59%),Female (41%)
+2531,gearsofwar,Gaming,http://gearsofwar.wikia.com/,,PC,Xbox 360,,,,,,,,,,,,,,,,,,FPS,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (65%),Female (35%)
+5269,domo,Gaming,http://domo.wikia.com/,,PC,,,,,,,,,,,,,,,,,,,,,MMO,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (56%),Female (44%)
+7232,elona,Gaming,http://elona.wikia.com/,,PC,,,,,,,,,,,,,,,,,,,,,,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (75%),Female (25%)
+2166,nwn,Gaming,http://nwn.wikia.com/,,PC,,,,,,,,,,,,,,,,,,,,,,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (72%),Female (28%)
+1425,devilmaycry,Gaming,http://devilmaycry.wikia.com/,,PC,Xbox 360,PS3,,,,,,,,,Action/Adventure,,,,,,,,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (61%),Female (39%)
+3534,tekken,Gaming,http://tekken.wikia.com/,,,Xbox 360,PS3,,Handheld,,,,,,,,,,,,,,Fighting,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (63%),Female (37%)
+912,dynastywarriors,Gaming,http://dynastywarriors.wikia.com/,,PC,Xbox 360,PS3,,Handheld,,,,,,,Action/Adventure,,,,,,,,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (60%),Female (40%)
+949,mortalkombat,Gaming,http://mortalkombat.wikia.com/,,,Xbox 360,PS3,,Handheld,,,,,,,Action/Adventure,,,,,,,Fighting,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (61%),Female (39%)
+583,animalcrossing,Gaming,http://animalcrossing.wikia.com/,,,,,Wii,Handheld,,,,,,,,,,,,,,,,,,,,,,,Simulation,,Adults (18-35),Adults (35+),Teens (14-17),Kids (13),Male (53%),Female (47%)
+2719,warhammeronline,Gaming,http://warhammeronline.wikia.com/,,PC,,,,,,,,,,,,,,,,,Fantasy,,,,MMO,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (71%),Female (29%)
+5748,snk,Gaming,http://snk.wikia.com/,,PC,Xbox 360,PS3,Wii,Handheld,Mobile,,,Manga,,,Action/Adventure,Anime,,,,,,Fighting,,,,,,,,,Simulation,,Adults (18-35),Adults (35+),Teens (14-17),,Male (64%),Female (36%)
+5850,ikariam,Gaming,http://ikariam.wikia.com/,,PC,,,,,,,,,,,,,,,,,,,,,,,,,RTS,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (66%),Female (34%)
+63627,darksiders,Gaming,http://darksiders.wikia.com/,,,Xbox 360,PS3,,,,,,,,,Action/Adventure,,,,,,Fantasy,,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (73%),Female (27%)
+14764,leagueoflegends,Gaming,http://leagueoflegends.wikia.com/,,PC,,,,,,,,,,,,,,,,,,,,,,,,,RTS,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (77%),Female (23%)
+991,alicesoft,Gaming,http://alicesoft.wikia.com/,,PC,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (79%),Female (21%)
+2634,supcom,Gaming,http://supcom.wikia.com/,,PC,Xbox 360,,,,,,,,,,,,,,,,,,,,,,,,RTS,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (75%),Female (25%)
+3814,cityofheroes,Gaming,http://cityofheroes.wikia.com/,,PC,,,,,,,,,,,,,,,,,,,,,MMO,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (66%),Female (34%)
+6679,twewy,Gaming,http://twewy.wikia.com/,,,,,,Handheld,,,,,,,,,,,,,,,,,,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (63%),Female (37%)
+1242,nintendo,Gaming,http://nintendo.wikia.com/,,,,,Wii,Handheld,,,,,,,Action/Adventure,,,,,,,Fighting,,,,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),Kids (13),Male (57%),Female (43%)
+2144,goldensun,Gaming,http://goldensun.wikia.com/,,,,,,Handheld,,,,,,,,,,,,,,,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (63%),Female (37%)
+3489,stalker,Gaming,http://stalker.wikia.com/,,PC,,,,,,,,,,,,,,,,,,,FPS,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (77%),Female (23%)
+8243,adventurequestworlds,Gaming,http://adventurequestworlds.wikia.com/,,PC,,,,,,,,,,,,,,,,,Fantasy,,,,MMO,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (43%),Female (57%)
+503,ogame,Gaming,http://ogame.wikia.com/,,PC,,,,,,,,,,,,,,,,,,,,,MMO,,,,,Sci-Fi,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (68%),Female (32%)
+3775,typemoon,Gaming,http://typemoon.wikia.com/,,PC,,,,,,,,,,,Action/Adventure,,,,,,,Fighting,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (70%),Female (30%)
+8534,combatarms,Gaming,http://combatarms.wikia.com/,,PC,,,,,,,,,,,,,,,,,,,FPS,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (70%),Female (30%)
+3646,jakanddaxter,Gaming,http://jakanddaxter.wikia.com/,,,,,,Handheld,,,,,,,Action/Adventure,,,,,,,,FPS,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (60%),Female (40%)
+381,whitewolf,Gaming,http://whitewolf.wikia.com/,,,,,,,,,,,Novel,,,,,,,,,,,,,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (63%),Female (37%)
+1097,cybernations,Gaming,http://cybernations.wikia.com/,,PC,,,,,,,,,,,,,,,,,,,,,,,,,,,Simulation,,Adults (18-35),Adults (35+),Teens (14-17),,Male (59%),Female (41%)
+13773,battleforge,Gaming,http://battleforge.wikia.com/,,PC,,,,,,,,,,,,,,,,,,,,,,,,,RTS,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (73%),Female (27%)
+17016,sdgo,Gaming,http://sdgo.wikia.com/,,PC,,,,,,,,,,,,,,,,,,,FPS,,MMO,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (69%),Female (31%)
+60566,castleage,Gaming,http://castleage.wikia.com/,,PC,,,,,,,,,,,,,,,,,,,,,,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (63%),Female (37%)
+9911,fusionfall,Gaming,http://fusionfall.wikia.com/,,PC,,,,,,,,,,,,,,,,,,,,,MMO,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),Kids (13),Male (56%),Female (44%)
+5413,lostodyssey,Gaming,http://lostodyssey.wikia.com/,,,Xbox 360,,,,,,,,,,,,,,,,Fantasy,,,,,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (68%),Female (32%)
+729,eve,Gaming,http://eve.wikia.com/,,PC,,,,,,,,,,,,,,,,,,,,,MMO,,,RPG,,Sci-Fi,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (78%),Female (22%)
+7297,mcleodgaming,Gaming,http://mcleodgaming.wikia.com/,,PC,,,,,,,,,,,,,Casual,,,,,,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (56%),Female (44%)
+5329,shaiya,Gaming,http://shaiya.wikia.com/,,PC,,,,,,,,,,,,,,,,,Fantasy,,,,MMO,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (59%),Female (41%)
+5481,uncharted,Gaming,http://uncharted.wikia.com/,,,,PS3,,,,,,,,,Action/Adventure,,,,,,,,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (70%),Female (30%)
+4470,saintsrow,Gaming,http://saintsrow.wikia.com/,,PC,Xbox 360,PS3,,,,,,,,,Action/Adventure,,,,,,,,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (64%),Female (36%)
+4988,burnout,Gaming,http://burnout.wikia.com/,,PC,Xbox 360,PS3,,,,,,,,,,,,,,,,,,,,,,,,,Simulation,,Adults (18-35),Adults (35+),Teens (14-17),,Male (68%),Female (32%)
+8186,danball,Gaming,http://danball.wikia.com/,,PC,,,,,,,,,,,,,Casual,,,,,,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (51%),Female (49%)
+3505,aion,Gaming,http://aion.wikia.com/,,PC,,,,,,,,,,,,,,,,,Fantasy,,,,MMO,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (69%),Female (31%)
+3697,resistance,Gaming,http://resistance.wikia.com/,,,,PS3,,,,,,,,,,,,,,,,,FPS,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (67%),Female (33%)
+30260,brutallegend,Gaming,http://brutallegend.wikia.com/,,,Xbox 360,PS3,,,,,,,,,Action/Adventure,,,,,,,,,,,,,,RTS,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (68%),Female (32%)
+2453,chaotic,Gaming,http://chaotic.wikia.com/,,PC,,,,,,,,Manga,,,,,,,,,,,,,,,,,RTS,,,,Adults (18-35),Adults (35+),Teens (14-17),Kids (13),Male (60%),Female (40%)
+5940,championsonline,Gaming,http://championsonline.wikia.com/,,PC,Xbox 360,,,,,,,,,,,,,,,,,,,,MMO,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (76%),Female (24%)
+8923,aruarose,Gaming,http://aruarose.wikia.com/,,PC,,,,,,,,,,,,,,,,,,,,,MMO,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (59%),Female (41%)
+2261,freeciv,Gaming,http://freeciv.wikia.com/,,PC,,,,,,,,,,,,,,,,,,,,,,,,,RTS,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (73%),Female (27%)
+808,pikmin,Gaming,http://pikmin.wikia.com/,,,,,Wii,,,,,,,,,,,,,,,,,,,,,,RTS,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (60%),Female (40%)
+2871,littlebigplanet,Gaming,http://littlebigplanet.wikia.com/,,,,PS3,,,,,,,,,Action/Adventure,,,,,,,,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (64%),Female (36%)
+3759,banjokazooie,Gaming,http://banjokazooie.wikia.com/,,,Xbox 360,,,Handheld,,,,,,,Action/Adventure,,,,,,,,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (62%),Female (38%)
+5682,disgaea,Gaming,http://disgaea.wikia.com/,,,,PS3,,Handheld,,,,,,,,,,,,,,,,,,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (70%),Female (30%)
+8953,dndta,Gaming,http://dndta.wikia.com/,,PC,,,,,,,,,,,,,Casual,,,,,,,,,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (64%),Female (36%)
+9006,castlecrashers,Gaming,http://castlecrashers.wikia.com/,,,Xbox 360,PS3,,,,,,,,,Action/Adventure,,,,,,,,,,,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (66%),Female (34%)
+23334,vampirewars,Gaming,http://vampirewars.wikia.com/,,PC,,,,,,,,,,,,,Casual,,,,,,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (63%),Female (37%)
+11648,mysims,Gaming,http://mysims.wikia.com/,,,,,Wii,,,,,,,,,,Casual,,,,,,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),Kids (13),Male (52%),Female (48%)
+10115,zomg,Gaming,http://zomg.wikia.com/,,PC,,,,,,,,,,,,,,,,,,,,,MMO,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (41%),Female (59%)
+179,l5r,Gaming,http://l5r.wikia.com/,,,,,,,,,,,,,,,,,,,Fantasy,,,,,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (67%),Female (33%)
+60012,heroesofgaia,Gaming,http://heroesofgaia.wikia.com/,,PC,,,,,,,,,,,,,,,,,,,,,MMO,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (74%),Female (26%)
+3473,mario,Gaming,http://mario.wikia.com/,,,,,Wii,Handheld,,,,,,,Action/Adventure,,Casual,,,,,,,,,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),Kids (13),Male (58%),Female (42%)
+5419,earthbound,Gaming,http://earthbound.wikia.com/,,,,,,Handheld,,,,,,,,,,,,,,,,,,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (65%),Female (35%)
+3236,aoc,Gaming,http://aoc.wikia.com/,,PC,,,,,,,,,,,,,,,,,Fantasy,,,,MMO,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (75%),Female (25%)
+8314,grandchase,Gaming,http://grandchase.wikia.com/,,PC,,,,,,,,,,,,,,,,,,,,,MMO,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (58%),Female (42%)
+1903,acecombat,Gaming,http://acecombat.wikia.com/,,,Xbox 360,,,Handheld,Mobile,,,,,,,,,,,,,,,,,,,,,,Simulation,,Adults (18-35),Adults (35+),Teens (14-17),,Male (64%),Female (36%)
+2249,starfox,Gaming,http://starfox.wikia.com/,,,,,Wii,Handheld,,,,,,,Action/Adventure,,,,,,,,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (63%),Female (37%)
+6690,starocean,Gaming,http://starocean.wikia.com/,,,Xbox 360,PS3,,Handheld,,,,Manga,,,,Anime,,,,,,,,,,,,RPG,,Sci-Fi,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (64%),Female (36%)
+6018,funorb,Gaming,http://funorb.wikia.com/,,PC,,,,,,,,,,,,,Casual,,,,,,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (57%),Female (43%)
+2963,fear,Gaming,http://fear.wikia.com/,,PC,Xbox 360,PS3,,,,,,,,,,,,,,,,,FPS,Horror,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (64%),Female (36%)
+11217,sigmastorm2,Gaming,http://sigmastorm2.wikia.com/,,PC,,,,,,,,,,,,,,,,,,,,,MMO,,,RPG,,Sci-Fi,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (50%),Female (50%)
+8248,atlantica,Gaming,http://atlantica.wikia.com/,,PC,,,,,,,,,,,,,,,,,,,,,MMO,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (69%),Female (31%)
+4382,aceattorney,Gaming,http://aceattorney.wikia.com/,,,,,Wii,Handheld,Mobile,,,,,,Action/Adventure,,,,,,,,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (61%),Female (39%)
+11592,dissidia,Gaming,http://dissidia.wikia.com/,,,,,,Handheld,,,,,,,,,,,,,,Fighting,,,,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (67%),Female (33%)
+4684,bullygame,Gaming,http://bullygame.wikia.com/,,PC,Xbox 360,,Wii,,,,,,,,Action/Adventure,,,,,,,,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (58%),Female (42%)
+8299,rom,Gaming,http://rom.wikia.com/,,PC,,,,,,,,,,,,,,,,,Fantasy,,,,MMO,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (68%),Female (32%)
+5711,potbs,Gaming,http://potbs.wikia.com/,,PC,,,,,,,,,,,,,,,,,,,,,MMO,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (69%),Female (31%)
+2229,splintercell,Gaming,http://splintercell.wikia.com/,,PC,Xbox 360,PS3,Wii,Handheld,Mobile,,,,,,Action/Adventure,,,,,,,,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (66%),Female (34%)
+749,crashbandicoot,Gaming,http://crashbandicoot.wikia.com/,,,Xbox 360,PS3,Wii,Handheld,,,,,,,Action/Adventure,,,,,,,,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (57%),Female (43%)
+4899,spyro,Gaming,http://spyro.wikia.com/,,,Xbox 360,PS3,Wii,Handheld,,,,,,,Action/Adventure,,,,,,,,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (56%),Female (44%)
+4471,princeofpersia,Gaming,http://princeofpersia.wikia.com/,,PC,Xbox 360,PS3,Wii,Handheld,Mobile,,,,,,Action/Adventure,,,,,,,,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (64%),Female (36%)
+17960,infamous,Gaming,http://infamous.wikia.com/,,,Xbox 360,PS3,,,,,,,,,Action/Adventure,,,,,,,,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (68%),Female (32%)
+6453,wonderlandonline,Gaming,http://wonderlandonline.wikia.com/,,PC,,,,,,,,,,,,,,,,,,,,,MMO,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (53%),Female (47%)
+659,ageofempires,Gaming,http://ageofempires.wikia.com/,,PC,,,,,,,,,,,,,,,,,,,,,,,,,RTS,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (65%),Female (35%)
+38091,anno1404,Gaming,http://anno1404.wikia.com/,,PC,,,,,,,,,,,,,,,,,,,,,,,,,RTS,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (73%),Female (27%)
+6851,enrohan,Gaming,http://rohan.wikia.com/,,PC,,,,,,,,,,,,,,,,,Fantasy,,,,MMO,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),Kids (13),Male (66%),Female (34%)
+7930,chrono,Gaming,http://chrono.wikia.com/,,,,,,Handheld,,,,Comics/Manga,,,,,,,,,,,,,,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),Kids (13),Male (66%),Female (34%)
+3923,falloutmods,Gaming,http://falloutmods.wikia.com/,,PC,Xbox 360,,,,,,,,,,Action/Adventure,,,,,,,,FPS,,,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),Kids (13),Male (73%),Female (27%)
+999,gaia,Gaming,http://gaia.wikia.com/,,,,,,,,,,,,,,,Casual,,,Family,,,,,MMO,,,RPG,,,,,Adults (18-35),,Teens (14-17),Kids (13),Male (41%),Female (59%)
+2962,guitarhero,Gaming,http://guitarhero.wikia.com/,,PC,Xbox 360,PS3,Wii,Handheld,Mobile,,,,,,,,Casual,,,,,,,,,Music,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (58%),Female (42%)
+5699,sinsofasolarempire,Gaming,http://sinsofasolarempire.wikia.com/,,PC,,,,,,,,,,,,,,,,,,,,,,,,,RTS,,,,Adults (18-35),,Teens (14-17),,Male (75%),Female (25%)
+7875,dragonica,Gaming,http://dragonica.wikia.com/,,PC,,,,,,,,,,,Action/Adventure,,,,,,Fantasy,,,,MMO,,,RPG,,,,,Adults (18-35),,Teens (14-17),,Male (67%),Female (33%)
+3563,Killzone,Gaming,http://killzone.wikia.com/,,,,PS3,,Handheld,,,,,,,,,,,,,,,FPS,,,,,,,,,,Adults (18-35),,Teens (14-17),,Male (66%),Female (34%)
+572,homeworld,Gaming,http://homeworld.wikia.com/,,PC,,,,,,,,,,,,,,,,,,,,,,,,,RTS,,,,Adults (18-35),,Teens (14-17),,Male (73%),Female (27%)
+13411,prototype,Gaming,http://prototype.wikia.com/,,PC,Xbox 360,PS3,,,,,,Comics/Manga,,,Action/Adventure,,,,,,,,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (64%),Female (36%)
+823,maplestory,Gaming,http://maplestory.wikia.com/,,PC,,,,,,,,,,,,,,,,,,,,,MMO,,,RPG,,,,,Adults (18-35),,Teens (14-17),Kids (13),Male (62%),Female (38%)
+5315,entravian,Gaming,http://travian.wikia.com/,,PC,,,,,,,,,,,,,,,,,,,,,MMO,,,RPG,,,,,Adults (18-25),Adults (35+),Teens (14-17),,Male (65%),Female (35%)
+22439,plantsvszombies,Gaming,http://plantsvszombies.wikia.com/,,PC,,,,,Mobile,,,,,,,,,,,,,,,,,,,,RTS,,,,Adults (18-25),,Teens (14-17),,Male (61%),Female (39%)
+23338,ghostx,Gaming,http://ghostx.wikia.com/,,PC,,,,,,,,,,,,,,,,,,,,,MMO,,,RPG,,,,,Adults (18-25),,Teens (14-17),,Male (64%),Female (36%)
+5622,timesplitters,Gaming,http://timesplitters.wikia.com/,,PC,Xbox 360,PS3,,,,,,,,,,,,,,,,,FPS,,,,,,,,,,Adults (18-25),Adults (35+),Teens (14-17),,Male (60%),Female (40%)
+2953,fallenearth,Gaming,http://fallenearth.wikia.com/,,PC,,,,,,,,,,,,,,,,,,,FPS,,MMO,,,RPG,,,,,Adults (18-35),,Teens (14-17),,Male (77%),Female (23%)
+7542,guilty_gear,Gaming,http://guilty-gear.wikia.com/,,,Xbox 360,,,,,,,,,,,,,,,,,Fighting,,,,,,,,,,,Adults (18-35),,Teens (14-17),,Male (62%),Female (38%)
+4691,armyoftwo,Gaming,http://armyoftwo.wikia.com/,,,Xbox 360,PS3,,,,,,,,,,,,,,,,,FPS,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (67%),Female (33%)
+3694,legostarwars,Gaming,http://legostarwars.wikia.com/,,PC,,,,Handheld,,,,,,,Action/Adventure,,,,,Family,,,,,,,,,,,,,,,Teens (14-17),Kids (13),Male (57%),Female (43%)
+6216,deadrising,Gaming,http://deadrising.wikia.com/,,PC,Xbox 360,PS3,Wii,,,,,,,,Action/Adventure,,,,,,,,,Horror,,,,RPG,,,,,Adults (18-35),,Teens (14-17),,Male (62%),Female (38%)
+4105,valkyrieprofile,Gaming,http://valkyrieprofile.wikia.com/,,,,PS3,,Handheld,,,,,,,,,,,,,,,,,,,,RPG,,,,,Adults (18-35),,Teens (14-17),,Male (62%),Female (38%)
+1167,galciv,Gaming,http://galciv.wikia.com/,,PC,,,,,,,,,,,,,,,,,,,,,,,,,RTS,,,,Adults (18-35),,Teens (14-17),,Male (76%),Female (24%)
+12620,dragcave,Gaming,http://dragcave.wikia.com/,,PC,,,,,,,,,,,,,Casual,,,Family,,,,,,,,,,,,,Adults (18-35),,Teens (14-17),,Male (49%),Female (51%)
+43611,dungeons,Gaming,http://dungeons.wikia.com/,,,,,,Handheld,,,,,,,,,,,,,Fantasy,,,,,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (67%),Female (33%)
+23312,vsrecommendedgames,Gaming,http://vsrecommendedgames.wikia.com/,,PC,Xbox 360,PS3,Wii,Handheld,Mobile,,,,,,Action/Adventure,Anime,Casual,Comedy,Drama,Family,Fantasy,Fighting,FPS,Horror,MMO,Music,Mystery,RPG,RTS,Sci-Fi,Simulation,,Adults (18-35),,Teens (14-17),,Male (83%),Female (17%)
+6117,deadoralive,Gaming,http://deadoralive.wikia.com/,,,Xbox 360,,,,,,,,,,,,,,,,,Fighting,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (61%),Female (39%)
+3071,Talesofpirates,Gaming,http://talesofpirates.wikia.com/,,PC,,,,,,,,,,,,,,,,,,,,,MMO,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (55%),Female (45%)
+38,creatures,Gaming,http://creatures.wikia.com/,,PC,,,,Handheld,,,,,,,,,,,,,Fantasy,,,,,,,,,,Simulation,,Adults (18-35),Adults (35+),Teens (14-17),,Male (59%),Female (41%)
+6247,ninjagaiden,Gaming,http://ninjagaiden.wikia.com/,,,Xbox 360,PS3,,,,,,,,,Action/Adventure,,,,,,,,,,,,,,,,,,Adults (18-35),,Teens (14-17),,Male (66%),Female (34%)
+5942,metalslug,Gaming,http://metalslug.wikia.com/,,PC,Xbox 360,PS3,Wii,Handheld,,,,,,,,,,,,,,,FPS,,,,,,,,,,Adults (18-35),,Teens (14-17),,Male (61%),Female (39%)
+6220,nomoreheroes,Gaming,http://nomoreheroes.wikia.com/,,,Xbox 360,PS3,Wii,,,,,,,,Action/Adventure,,,,,,,,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (67%),Female (33%)
+5700,costuming,Gaming,http://halocostuming.wikia.com/,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17) ,Kids (13),Male (64%),Female (36%)
+4654,wolfenstein,Gaming,http://wolfenstein.wikia.com/,,PC,Xbox 360,PS3,,Handheld,Mobile,,,,,,,,,,,,,,FPS,,,,,,,Sci-Fi,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (65%),Female (35%)
+6546,duelmasters,Gaming,http://duelmasters.wikia.com/,,,,,,Handheld,,,TV,Comics/Manga,,,,Anime,,,,,,,,,,,,,,,,,Adults (18-35),,Teens (14-17),,Male (58%),Female (42%)
+4495,zootycoon,Gaming,http://zootycoon.wikia.com/,,PC,,,,Handheld,Mobile,,,,,,,,,,,,,,,,,,,,,,Simulation,,Adults (18-35),Adults (35+),Teens (14-17),Kids (13),Male (47%),Female (53%)
+12045,spelunky,Gaming,http://spelunky.wikia.com/,,PC,,,,,,,,,,,Action/Adventure,,,,,,,,,,,,,,,,,,Adults (18-35),,Teens (14-17),,Male (74%),Female (26%)
+568,xenosaga,Gaming,http://xenosaga.wikia.com/,,,,PS3,,Handheld,Mobile,,TV,Comics/Manga,Novel,,,,,,,,,,,,,,,RPG,,,,,Adults (18-35),,Teens (14-17),,Male (63%),Female (27%)
+4361,lunia,Gaming,http://lunia.wikia.com/,,PC,,,,,,,,,,,Action/Adventure,,,,,,,,,,MMO,,,RPG,,,,,Adults (18-35),,Teens (14-17),,Male (75%),Female (25%)
+11841,lunaonline,Gaming,http://lunaonline.wikia.com/,,PC,,,,,,,,,,,,,,,,,,,,,MMO,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (61%),Female (39%)
+2712,quake,Gaming,http://quake.wikia.com/,,PC,Xbox 360,PS3,,,Mobile,,,,,,,,,,,,,,FPS,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (65%),Female (35%)
+5641,civ4,Gaming,http://civ4.wikia.com/,,PC,,,,,,,,,,,,,,,,,,,,,,,,,RTS,,,,Adults (18-35),,Teens (14-17),,Male (74%),Female (26%)
+3656,board8,Gaming,http://board8.wikia.com/,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Adults (18-35),,Teens (14-17),,Male (69%),Female (31%)
+4818,thief,Gaming,http://thief.wikia.com/,,PC,,,,,,,,,,,Action/Adventure,,,,,,,,,,,,,,,,,,Adults (18-35),,Teens (14-17),,Male (69%),Female (31%)
+839,starwarsexodus,Gaming,http://starwars-exodus.wikia.com/,,PC,,,,,,,TV,,,,,,,,,,,,,,MMO,,,RPG,,Sci-Fi,,,Adults (18-35),Adults (35+),Teens (14-17),Kids (13),Male (61%),Female (39%)
+193,dnd,Gaming,http://dnd.wikia.com/,,PC,,,,,,,,,,,,,,,,,Fantasy,,,,MMO,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (69%),Female (31%)
+7541,legobatman,Gaming,http://legobatman.wikia.com/,,PC,Xbox 360,PS3,Wii,Handheld,,Movie,,,,,Action/Adventure,,,,,Family,,,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (58%),Female (42%)
+9147,regnum,Gaming,http://regnum.wikia.com/,,PC,,,,,,,,,,,,,,,,,Fantasy,,,,MMO,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (63%),Female (27%)
+3709,madnesscombat,Gaming,http://madnesscombat.wikia.com/,,PC,,,,,,,,,,,Action/Adventure,,,,,,,Fighting,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (56%),Female (44%)
+17397,suda51,Gaming,http://suda51.wikia.com/,,PC,Xbox 360,PS3,Wii,Handheld,,,,,,,Action/Adventure,Anime,,,,,,Fighting,,,,,,,,,Simulation,,Adults (18-35),Adults (35+),Teens (14-17),,Male (66%),Female (34%)
+4230,overlord,Gaming,http://overlord.wikia.com/,,PC,Xbox 360,PS3,Wii,Handheld,,,,,,,Action/Adventure,,,,,,,,,,,,,,RTS,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (64%),Female (36%)
+3444,crysis,Gaming,http://crysis.wikia.com/,,PC,,,,,,,,,,,,,,,,,,,FPS,,,,,,,Sci-Fi,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (72%),Female (28%)
+21679,dinorpg,Gaming,http://dinorpg.wikia.com/,,PC,,,,,Mobile,,,,,,,,,,,,,,,,MMO,,,RPG,RTS,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (66%),Female (34%)
+5998,demigod,Gaming,http://demigod.wikia.com/,,PC,,,,,,,,,,,Action/Adventure,,,,,,,,FPS,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (74%),Female (26%)
+52158,mobsters2,Gaming,http://mobsters2.wikia.com/,,PC,,,,,,,,,,,,,,,,,,,,,MMO,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (58%),Female (42%)
+61130,islandparadise,Gaming,http://islandparadise.wikia.com/,,PC,,,,,,,,,,,,,,,,,,,,,MMO,,,,RTS,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (34%),Female (66%)
+27487,havenandhearth,Gaming,http://havenandhearth.wikia.com/,,PC,,,,,,,,,,,,,,,,,,,,,MMO,,,RPG,,,,,Adults (18-25),Adults (35+),Teens (14-17),,Male,Female
+4413,mariokart,Gaming,http://mariokart.wikia.com/,,,,,Wii,Handheld,,,,,,,,,,,,Family,,,,,,,,,,,Simulation,,Adults (18-25),Adults (35+),Teens (14-17),,Male (57%),Female (43%)
+4904,folkloregame,Gaming,http://folkloregame.wikia.com/,,,,PS3,,,,,,,,,Action/Adventure,,,,,,,,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (60%),Female (40%)
+2846,dragonquest,Gaming,http://dragonquest.wikia.com/,,,,PS3,Wii,Handheld,,,,,,,,,,,,,,,,,,,,RPG,,,,,Adults (18-25),Adults (35+),Teens (14-17),,Male (63%),Female (27%)
+12814,sryth,Gaming,http://sryth.wikia.com/,,PC,,,,,,,,,,,,,,,,,,,,,MMO,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (58%),Female (42%)
+3342,darkfall,Gaming,http://darkfall.wikia.com/,,PC,,,,,,,,,,,,,,,,,Fantasy,,FPS,,MMO,,,RPG,RTS,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (76%),Female (24%)
+430,cs,Gaming,http://counterstrike.wikia.com/,,PC,Xbox 360,,,,,,,,,,,,,,,,,,FPS,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (70%),Female (30%)
+5344,fallfromheaven,Gaming,http://fallfromheaven.wikia.com/,,PC,,,,,,,,,,,,,,,,,,,,,,,,,RTS,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (69%),Female (31%)
+1057,hitman,Gaming,http://hitman.wikia.com/,,PC,Xbox 360,PS3,Wii,,,,,,,,Action/Adventure,,,,,,,,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (68%),Female (32%)
+6307,istaria,Gaming,http://istaria.wikia.com/,,PC,,,,,,,,,,,,,,,,,,,,,MMO,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (59%),Female (41%)
+6558,vgsales,Gaming,http://vgsales.wikia.com/,,PC,Xbox 360,PS3,Wii,Handheld,,,,,,,,,,,,,,,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (71%),Female (29%)
+1079,evn,Gaming,http://evn.wikia.com/,,PC,,,,,,,,,,,,,,,,,,,,,,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (74%),Female (26%)
+3432,piratesonline,Gaming,http://piratesonline.wikia.com/,,PC,,,,,,,,,,,,,,,,Family,Fantasy,,,,MMO,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),Kids (13),Male (55%),Female (45%)
+1002,traveller,Gaming,http://traveller.wikia.com/,,,,,,Handheld,,,,,,,,,,,,,,,,,,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (69%),Female (31%)
+1230,u5lazarus,Gaming,http://ultima.wikia.com/,,PC,,PS3,Wii,,,,,,,,,,,,,,,,,,,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (72%),Female (28%)
+876,freelancer,Gaming,http://freelancer.wikia.com/,,PC,,,,,,,,,,,,,,,,,,,,,,,,,,,Simulation,,Adults (18-35),Adults (35+),Teens (14-17),,Male (70%),Female (30%)
+63564,agarest,Gaming,http://agarest.wikia.com/,,,Xbox 360,PS3,,,,,,,,,,,,,,,,,,,,,,RPG,RTS,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male,Female
+6106,sly,Gaming,http://sly.wikia.com/,,,,PS3,,,,,,,,,Action/Adventure,,,,,,,,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (58%),Female (42%)
+13831,adwr,Gaming,http://adwr.wikia.com/,,PC,,,,,,,,,,,,,,,,,,,,,,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (65%),Female (35%)
+387,eberron,Gaming,http://eberron.wikia.com/,,,,,,Handheld,,,,,,,,,,,,,,,,,,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (74%),Female (26%)
+5018,unhalo,Gaming,http://unhalo.wikia.com/,,,Xbox 360,,,,,,,,,,,,,,,,,,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (62%),Female (38%)
+5757,advancewars,Gaming,http://advancewars.wikia.com/,,,,,Wii,Handheld,,,,,,,,,,,,,,,,,,,,,RTS,,,,Adults (18-35),Adults (35+),Teens (14-17),Kids (13),Male (63%),Female (27%)
+4403,fzero,Gaming,http://fzero.wikia.com/,,,,,Wii,,,,,Comics/Manga,,,,,,,,,,,,,,,,,,,Simulation,,Adults (18-35),Adults (35+),Teens (14-17),,Male (62%),Female (38%)
+4869,vivapinata,Gaming,http://vivapinata.wikia.com/,,PC,Xbox 360,,,,,,,,,,,,,,,,,,,,,,,,,,Simulation,,Adults (18-35),Adults (35+),Teens (14-17),Kids (13),Male (59%),Female (41%)
+4193,teamfortress,Gaming,http://teamfortress.wikia.com/,,PC,,,,,,,,,,,,,,,,,,,FPS,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (69%),Female (31%)
+2369,swgames,Gaming,http://swgames.wikia.com/,,PC,Xbox 360,PS3,Wii,Handheld,,,,,,,Action/Adventure,,,,,,,,FPS,,MMO,,,RPG,,Sci-Fi,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (62%),Female (38%)
+6066,toohuman,Gaming,http://toohuman.wikia.com/,,,Xbox 360,,,,,,,,,,Action/Adventure,,,,,,,,,,,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (69%),Female (31%)
+32585,jdf2p,Gaming,http://jdf2p.wikia.com/,,PC,,,,,,,,,,,,,,,,,,,,,MMO,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (65%),Female (35%)
+6398,bloodyroar,Gaming,http://bloodyroar.wikia.com/,,,Xbox 360,PS3,Wii,,,,,,,,,,,,,,,Fighting,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (57%),Female (43%)
+6531,goldeneye,Gaming,http://goldeneye.wikia.com/,,,,,Wii,,,,,,,,,,,,,,,,FPS,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (68%),Female (32%)
+37152,blazblue,Gaming,http://blazblue.wikia.com/,,PC,Xbox 360,PS3,,,,,,,,,,,,,,,,Fighting,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (61%),Female (39%)
+4774,jadeempire,Gaming,http://jadeempire.wikia.com/,,PC,Xbox 360,,,,,,,,,,Action/Adventure,,,,,,,,,,,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (73%),Female (27%)
+4075,punchout,Gaming,http://punchout.wikia.com/,,,,,Wii,,,,,,,,,,,,,,,Fighting,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),Kids (13),Male (61%),Female (39%)
+832,suikoden,Gaming,http://suikoden.wikia.com/,,,,PS3,,Handheld,,,,,,,,,,,,,,,,,,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (66%),Female (34%)
+3280,granadoespada,Gaming,http://sotnw.wikia.com/,,PC,,,,,,,,,,,,,,,,,Fantasy,,,,MMO,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (59%),Female (41%)
+7231,houseofthedead,Gaming,http://houseofthedead.wikia.com/,,PC,Xbox 360,,Wii,,,Movie,,,,,,,,,,,,,FPS,Horror,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male,Female
+6354,encompanyofheroes,Gaming,http://companyofheroes.wikia.com/,,PC,,,,,,,,,,,,,,,,,,,,,,,,,RTS,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (69%),Female (31%)
+11925,lostplanet,Gaming,http://lostplanet.wikia.com/,,PC,Xbox 360,PS3,,,,,,,,,,,,,,,,,FPS,,,,,RPG,,Sci-Fi,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (64%),Female (36%)
+11903,mkfusion,Gaming,http://mkfusion.wikia.com/,,,,,Wii,Handheld,,Movie,TV,Comics/Manga,,,Action/Adventure,,,,,Family,,,,,,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),Kids (13),Male (62%),Female (38%)
+1706,elderscrolls,Gaming,http://elderscrolls.wikia.com/,,PC,Xbox 360,,,,,,,,,,,,,,,,,,,,,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (67%),Female (33%)
+6186,legoindianajones,Gaming,http://legoindianajones.wikia.com/,,PC,Xbox 360,PS3,Wii,Handheld,,Movie,,,,,Action/Adventure,,,,,,,,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),Kids (13),Male (58%),Female (42%)
+60236,eu2opia,Gaming,http://eu2opia.wikia.com/,,PC,,,,,,,,,,,,,,,,,,,,,MMO,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male,Female
+62596,allods,Gaming,http://allods.wikia.com/,,PC,,,,,,,,,,,,,,,,,,,,,MMO,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (68%),Female (32%)
+13821,igames_new,Gaming,http://iphonegames.wikia.com/,,,,,,,Mobile,,,,,,Action/Adventure,,Casual,,,,Fantasy,Fighting,FPS,Horror,MMO,Music,Mystery,RPG,RTS,Sci-Fi,Simulation,,Adults (18-35),Adults (35+),Teens (14-17),,Male (66%),Female (24%)
+19,guilds,Gaming,http://neopets.wikia.com/,,PC,,,,,,,,,,,,,,,,,Fantasy,,,,,,,,,,Simulation,,Adults (18-35),Adults (35+),Teens (14-17),Kids (13),Male (41%),Female (59%)
+4652,spellborn,Gaming,http://spellborn.wikia.com/,,PC,,,,,,,,,,,,,,,,,,,,,MMO,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (68%),Female (32%)
+2857,rainbowsix,Gaming,http://rainbowsix.wikia.com/,,PC,Xbox 360,PS3,,Handheld,Mobile,,,,,,,,,,,,,,FPS,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (66%),Female (34%)
+5876,secretofthesolstice,Gaming,http://secretofthesolstice.wikia.com/,,PC,,,,,,,,,,,,,,,,,,,,,MMO,,,RPG,,,,,Adults (18-25),Adults (35+),Teens (14-17),,Male (58%),Female (42%)
+6674,fiestaonline,Gaming,http://fiestaonline.wikia.com/,,PC,,,,,,,,,,,,,,,,,,,,,MMO,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (58%),Female (42%)
+8231,nodiatis,Gaming,http://nodiatis.wikia.com/,,PC,,,,,,,,,,,,,,,,,,,,,MMO,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (65%),Female (35%)
+409,aokb,Gaming,http://anarchyonline.wikia.com/,,PC,,,,,,,,,,,,,,,,,,,,,MMO,,,RPG,,Sci-Fi,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (71%),Female (29%)
+939,aq,Gaming,http://adventurequest.wikia.com/,,PC,,,,,,,,,,,Action/Adventure,,,,,,Fantasy,,,,MMO,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (48%),Female (52%)
+7174,donkeykong,Gaming,http://donkeykong.wikia.com/,,,,,Wii,Handheld,,,,,,,Action/Adventure,,,,,Family,,,,,,,,,,,Simulation,,Adults (18-35),Adults (35+),Teens (14-17),,Male (58%),Female (42%)
+34551,brawlhacks,Gaming,http://brawlhacks.wikia.com/,N/A,,,,,,,,,,,N/A,,,,,,,,,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (69%),Female (31%)
+3048,Skyrates,Gaming,http://skyrates.wikia.com/,,PC,,,,,,,,,,,Action/Adventure,,,,,,,,,,MMO,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (64%),Female (36%)
+4487,9dragons,Gaming,http://9dragons.wikia.com/,,PC,,,,,,,,,,,,,,,,,,Fighting,,,MMO,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (66%),Female (34%)
+4963,dukenukem,Gaming,http://dukenukem.wikia.com/,,PC,Xbox 360,PS3,Wii,Handheld,,,,,,,Action/Adventure,,,,,,,,FPS,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (67%),Female (33%)
+6421,asdastory,Gaming,http://asdastory.wikia.com/,,PC,,,,,,,,,,,Action/Adventure,,,,,,Fantasy,,,,MMO,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (59%),Female (41%)
+15650,rks,Gaming,http://rks.wikia.com/,,PC,,,,,,,,,,,Action/Adventure,Anime,,,,,,Fighting,,,,,,,,,Simulation,,Adults (18-35),Adults (35+),Teens (14-17),,Male (64%),Female (36%)
+2503,enmightandmagic,Gaming,http://mightandmagic.wikia.com/,,PC,,,Wii,,,,,,,,,,,,,,,,,,,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (69%),Female (31%)
+1405,codelyoko,Gaming,http://codelyoko.wikia.com/,,,,PS3,Wii,Handheld,,,TV,,,,Action/Adventure,Anime,,Comedy,,,Fantasy,,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (54%),Female (36%)
+395,poker,Gaming,http://poker.wikia.com/,Card game,,,,,,,,,,,N/A,,,,,,,,,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (64%),Female (36%)
+7723,patapon,Gaming,http://patapon.wikia.com/,,,,,,Handheld,,,,,,,,,,,,Family,,,,,,,,,RTS,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (62%),Female (38%)
+2405,flyff,Gaming,http://flyff.wikia.com/,,PC,,,,,,,,,,,Action/Adventure,Anime,,,,,Fantasy,Fighting,,,MMO,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (61%),Female (39%)
+9620,paradisa,Gaming,http://paradisa.wikia.com/,,PC,,,,,,,,,,,,,,,,,Fantasy,,,,,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (54%),Female (46%)
+3354,LegacyOfKain,Gaming,http://legacyofkain.wikia.com/,,PC,Xbox 360,PS3,Wii,,,,,,,,Action/Adventure,,,,,,,,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male,Female
+4295,darkorbit,Gaming,http://darkorbit.wikia.com/,,PC,,,,,,,,,,,,,,,,,,,,,MMO,,,RPG,,Sci-Fi,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (58%),Female (42%)
+10455,falloutfanon,Gaming,http://falloutfanon.wikia.com/,Fan-fiction,,,,,,,,,,,N/A,,,,,,,,,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male,Female
+10293,fighunter,Gaming,http://fighunter.wikia.com/,,PC,,,,,,,,,,,,,,,,,,,FPS,,,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (58%),Female (42%)
+3580,Universeatwar,Gaming,http://universeatwar.wikia.com/,,PC,Xbox 360,,,,,,,,,,,,,,,,,,,,,,,,RTS,Sci-Fi,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (64%),Female (36%)
+7032,manhunt,Gaming,http://manhunt.wikia.com/,,PC,Xbox 360,PS3,,,,,,,,,Action/Adventure,,,,,,,,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male,Female
+2768,darkrunescape,Gaming,http://darkrunescape.wikia.com/,,PC,,,,,,,,,,,,,,,,,Fantasy,,,,MMO,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (59%),Female (41%)
+1677,secondlife,Gaming,http://secondlife.wikia.com/,,PC,,,,,,,,,,,,,,,,,,,,,,,,,,,Simulation,,Adults (18-35),Adults (35+),Teens (14-17),,Male (62%),Female (38%)
+5930,kingoffighters,Gaming,http://kingoffighters.wikia.com/,,PC,Xbox 360,PS3,Wii,Handheld,,Movie,,,,,,,,,,,,,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male,Female
+1139,battlefield,Gaming,http://battlefield.wikia.com/,,PC,Xbox 360,PS3,,,,,,,,,Action/Adventure,,,,,,,,FPS,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (70%),Female (30%)
+582,oddworld,Gaming,http://oddworld.wikia.com/,,PC,Xbox 360,PS3,,Handheld,,,,,,,,,,,,,,,,,,,,,,,Simulation,,Adults (18-35),Adults (35+),Teens (14-17),,Male (61%),Female (39%)
+7446,runescapeclans,Gaming,http://runescapeclans.wikia.com/,N/A,,,,,,,,,,,N/A,,,,,,,,,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (58%),Female (42%)
+4849,fightingfantasy,Gaming,http://fightingfantasy.wikia.com/,,,,,,,,,,,Novel,,,,,,,,,,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (57%),Female (43%)
+6009,monsterrancher,Gaming,http://monsterrancher.wikia.com/,,PC,,PS3,,Handheld,,,,,,,,,,,,,,,,,,,,,,,Simulation,,Adults (18-35),Adults (35+),Teens (14-17),,Male (60%),Female (40%)
+10170,titanquest,Gaming,http://titanquest.wikia.com/,,PC,,,,,,,,,,,Action/Adventure,,,,,,,,,,,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (71%),Female (29%)
+6270,rayman,Gaming,http://rayman.wikia.com/,,PC,Xbox 360,PS3,Wii,Handheld,,,,,,,Action/Adventure,,,,,,,,,,,,,,,,Simulation,,Adults (18-35),Adults (35+),Teens (14-17),,Male (61%),Female (39%)
+3691,mercs,Gaming,http://mercs.wikia.com/,,PC,Xbox 360,PS3,,,,,,,,,Action/Adventure,,,,,,,,FPS,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (68%),Female (32%)
+10744,axisandallies,Gaming,http://axisandallies.wikia.com/,Board game,PC,,,,,,,,,,,,,,,,Family,,,,,,,,,RTS,,Simulation,,Adults (18-35),Adults (35+),Teens (14-17),,Male (72%),Female (28%)
+3991,runescapefanfiction,Gaming,http://runescapefanfiction.wikia.com/,Fan-fiction,,,,,,,,,,,N/A,,,,,,,,,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (59%),Female (41%)
+5652,shadowhearts,Gaming,http://shadowhearts.wikia.com/,,,,PS3,,,,,,,,,,,,,,,,,,,,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male,Female
+15364,restaurantcity,Gaming,http://restaurantcity.wikia.com/,,PC (Facebook),,,,,,,,,,,,,,,,,,,,,,,,,RTS,,Simulation,,Adults (18-35),Adults (35+),Teens (14-17),,Male (52%),Female (48%)
+8226,mirrorsedge,Gaming,http://mirrorsedge.wikia.com/,,PC,Xbox 360,PS3,,,,,,,,,Action/Adventure,,,,,,,,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (64%),Female (36%)
+8173,artonelico,Gaming,http://artonelico.wikia.com/,,,,PS3,,,,,,,,,,,,,,,,,,,,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (63%),Female (27%)
+2958,spectrobes,Gaming,http://spectrobes.wikia.com/,,,,,,Handheld,,,,,,,,,,,,,Fantasy,,,,,,,RPG,,,,,Adults (18-25),Adults (35+),Teens (14-17),,Male (57%),Female (43%)
+10272,jamlegend,Gaming,http://jamlegend.wikia.com/,,PC,,,,,,,,,,,,,Casual,,,,,,,,,,,,,,,,Adults (18-25),Adults (35+),Teens (14-17),,Male (64%),Female (36%)
+13710,endrakensang,Gaming,http://en.drakensang.wikia.com/,,PC,,,,,,,,,,,,,,,,,Fantasy,,,,,,,RPG,,,,,Adults (18-25),Adults (35+),Teens (14-17),,Male (64%),Female (36%)
+4901,superrobotwars,Gaming,http://superrobotwars.wikia.com/,,,Xbox 360,PS3,Wii,Handheld,,,,,,,,Anime,,,,,,,,,,,,RPG,,,,,Adults (18-25),Adults (35+),Teens (14-17),,Male (68%),Female (32%)
+28210,scribblenauts,Gaming,http://scribblenauts.wikia.com/,,,,,,Handheld,,,,,,,,,Casual,,,,,,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (60%),Female (40%)
+15503,mybrute,Gaming,http://mybrute.wikia.com/,,PC,,,,,,,,,,,,,Casual,,,,,,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (57%),Female (43%)
+5124,darkcloud,Gaming,http://darkcloud.wikia.com/,,,,PS3,,,,,,,,,,,,,,,Fantasy,,,,,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (56%),Female (44%)
+4657,kongregate,Gaming,http://kongregate.wikia.com/,,PC,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (66%),Female (34%)
+392,rct,Gaming,http://rct.wikia.com/,,PC,,,,,,,,,,,,,,,,,,,,,,,,,,,Simulation,,Adults (18-35),Adults (35+),Teens (14-17),,Male (59%),Female (41%)
+5514,traumacentergame,Gaming,http://traumacentergame.wikia.com/,,,,,Wii,Handheld,,,,,,,,,,,,,,,,,,,,,,,Simulation,,Adults (18-35),Adults (35+),Teens (14-17),,Male (53%),Female (47%)
+10294,telepath,Gaming,http://telepath.wikia.com/,,PC,,,,,,,,,,,,,Casual,,,,Fantasy,,,,,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (54%),Female (36%)
+2486,openarena,Gaming,http://openarena.wikia.com/,,PC,,,,,,,,,,,,,,,,,,,FPS,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (74%),Female (26%)
+7000,pwo,Gaming,http://pwo.wikia.com/,,PC,,,,,,,,,,,,,,,,,,,,,MMO,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (58%),Female (42%)
+13222,redfaction,Gaming,http://redfaction.wikia.com/,,PC,Xbox 360,PS3,,Handheld,Mobile,,,,,,,,,,,,,,FPS,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (66%),Female (34%)
+830,ragnarok,Gaming,http://ragnarok2.wikia.com/,,PC,,,,,,,,,,,,,,,,,,,,,MMO,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male,Female
+5425,turok,Gaming,http://turok.wikia.com/,,PC,Xbox 360,PS3,,Handheld,,,,,,,,,,,,,,,FPS,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (60%),Female (40%)
+4843,papermario,Gaming,http://papermario.wikia.com/,,,,,Wii,,,,,,,,,,,,,,,,,,,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (56%),Female (44%)
+31815,tetris,Gaming,http://tetris.wikia.com/,,PC,Xbox 360,PS3,Wii,Handheld,Mobile,,,,,,,,Casual,,,,,,,,,,,,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male (64%),Female (36%)
+11440,theshatareu,Gaming,http://theshatareu.wikia.com/,,PC,,,,,,,,,,,,,,,,,Fantasy,,,,MMO,,,RPG,,,,,Adults (18-35),Adults (35+),Teens (14-17),,Male,Female
+2307,solarcooking,Green,http://solarcooking.wikia.com/
+43967,techteamqa9,Green,http://techteam-qa9.wikia.com/
+73021,londonbirders,Green,http://londonbirders.wikia.com/
+425,uncyclo,Humor,http://uncyclopedia.wikia.com/
+2020,wikiality,Humor,http://wikiality.wikia.com/
+3355,cookbook_import,Lifestyle,http://recipes.wikia.com/
+4486,vintagepatterns,Lifestyle,http://vintagepatterns.wikia.com/
+40,genealogy,Lifestyle,http://familypedia.wikia.com/
+57428,totaldramaroleplay,Lifestyle,http://totaldramaroleplay.wikia.com/
+71,howto,Lifestyle,http://how-to.wikia.com/
+1124,naked,Lifestyle,http://naked.wikia.com/
+769,petdiabetes,Lifestyle,http://petdiabetes.wikia.com/
+743,lgbt,Lifestyle,http://lgbt.wikia.com/
+43339,lyricwiki,Music,http://lyrics.wikia.com/
+14198,utau,Music,http://utau.wikia.com/
+13022,ladygaga,Music,http://ladygaga.wikia.com/
+9963,ibanez,Music,http://ibanez.wikia.com/
+75203,musrecommendedalbums,Music,http://musrecommendedalbums.wikia.com/
+2944,duranduran,Music,http://duranduran.wikia.com/
+84,music,Music,http://music.wikia.com/
+4867,visualkei,Music,http://visualkei.wikia.com/
+3211,symbolism,Philosophy,http://symbolism.wikia.com/
+20,religionwiki,Philosophy,http://religion.wikia.com/
+2321,sfhomeless,Politics,http://sfhomeless.wikia.com/
+78,future,Science,http://future.wikia.com/
+283,prowrestling,Sports,http://prowrestling.wikia.com/
+1031,guns,Sports,http://guns.wikia.com/
+7387,startingstrength,Sports,http://startingstrength.wikia.com/
+1763,icehockey,Sports,http://icehockey.wikia.com/
+547,ewrestling,Sports,http://ewrestling.wikia.com/
+3069,CAW,Sports,http://caw.wikia.com/
+1562,nascar,Sports,http://thirdturn.wikia.com/
+29116,sasukepedia,Sports,http://sasukepedia.wikia.com/
+4181,chdk,Technology,http://chdk.wikia.com/
+2827,vim,Technology,http://vim.wikia.com/
+238,mpd,Technology,http://mpd.wikia.com/
+26326,magiclantern,Technology,http://magiclantern.wikia.com/
+2575,youtube,Technology,http://youtube.wikia.com/
+564,ppro,Technology,http://premierepro.wikia.com/
+72982,sppf,Technology,http://sppf.wikia.com/
+30,delphi,Technology,http://delphi.wikia.com/
+4286,yahoomediaplayer,Technology,http://yahoomediaplayer.wikia.com/
+4099,itlaw,Technology,http://itlaw.wikia.com/
+2352,colinux,Technology,http://colinux.wikia.com/
+11464,screenplayprohd,Technology,http://screenplayprohd.wikia.com/
+984,lego,Toys,http://lego.wikia.com/
+2569,ttte,Toys,http://ttte.wikia.com/
+277,powerrangers,Toys,http://powerrangers.wikia.com/
+891,bionicle,Toys,http://bionicle.wikia.com/
+2973,hotwheels,Toys,http://hotwheels.wikia.com/
+2061,tmnt,Toys,http://tmnt.wikia.com/
+4830,zoids,Toys,http://zoids.wikia.com/
+6454,mylegonetwork,Toys,http://mylegonetwork.wikia.com/
+7985,americangirl,Toys,http://americangirl.wikia.com/
+3928,custombionicle,Toys,http://custombionicle.wikia.com/
+3687,yoyo,Toys,http://yoyowiki.org/
+9900,matchbox,Toys,http://matchbox.wikia.com/
+11001,twf,Toys,http://twf.wikia.com/
+177,wikicities,Wikia,http://www.wikia.com/
+95,scratchpad,Wikia,http://scratchpad.wikia.com/
+43952,techteamqa10,Wikia,http://techteam-qa10.wikia.com/
+3322,help,Wikia,http://help.wikia.com/
+11557,answers,Wikianswers,http://answers.wikia.com/

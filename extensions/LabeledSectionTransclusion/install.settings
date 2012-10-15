@@ -1,0 +1,5 @@
+#the base module - required
+require_once( "{{path}}/lst.php" );
+#optional enhancement to allow transclusion by visual headings,
+#this can be commented out to disable the #lsth function.
+require_once( "{{path}}/lsth.php" );

@@ -1,0 +1,177 @@
+<?php
+/**
+ *
+ * Copyright © 2007 Xarax <jodeldi@gmx.de>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ * http://www.gnu.org/copyleft/gpl.html
+ */
+
+/**
+ * inspired by djvuimage from Brion Vibber
+ * modified and written by xarax
+ */
+
+class PdfImage {
+
+	/**
+	 * @param $filename
+	 */
+	function __construct( $filename ) {
+		$this->mFilename = $filename;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function isValid() {
+		return true;
+	}
+
+	/**
+	 * @return array|bool
+	 */
+	public function getImageSize() {
+		$data = $this->retrieveMetadata();
+		$size = self::getPageSize( $data, 1 );
+
+		if( $size ) {
+			$width = $size['width'];
+			$height = $size['height'];
+			return array( $width, $height, 'Pdf',
+				"width=\"$width\" height=\"$height\"" );
+		}
+		return false;
+	}
+
+	/**
+	 * @param $data array
+	 * @param $page
+	 * @return array|bool
+	 */
+	public static function getPageSize( $data, $page ) {
+		global $wgPdfHandlerDpi;
+
+		if( isset( $data['pages'][$page]['Page size'] ) ) {
+			$o = $data['pages'][$page]['Page size'];
+		} elseif( isset( $data['Page size'] ) ) {
+			$o = $data['Page size'];
+		} else {
+			$o = false;
+		}
+
+		if ( $o ) {
+			if( isset( $data['pages'][$page]['Page rot'] ) ) {
+				$r = $data['pages'][$page]['Page rot'];
+			} elseif( isset( $data['Page rot'] ) ) {
+				$r = $data['Page rot'];
+			} else {
+				$r = 0;
+			}
+			$size = explode( 'x', $o, 2 );
+
+			if ( $size ) {
+				$width  = intval( trim( $size[0] ) / 72 * $wgPdfHandlerDpi );
+				$height = explode( ' ', trim( $size[1] ), 2 );
+				$height = intval( trim( $height[0] ) / 72 * $wgPdfHandlerDpi );
+				if ( ( $r/90 ) & 1 ) {
+					// Swap width and height for landscape pages
+					$t = $width;
+					$width = $height;
+					$height = $t;
+				}
+
+				return array(
+					'width' => $width,
+					'height' => $height
+				);
+			}
+		}
+
+		return false;
+	}
+
+	/**
+	 * @return array|bool|null
+	 */
+	public function retrieveMetaData() {
+		global $wgPdfInfo, $wgPdftoText;
+
+		if ( $wgPdfInfo ) {
+			wfProfileIn( 'pdfinfo' );
+			$cmd = wfEscapeShellArg( $wgPdfInfo ) .
+				" -enc UTF-8 " . # Report metadata as UTF-8 text...
+				" -l 9999999 " . # Report page sizes for all pages
+				wfEscapeShellArg( $this->mFilename );
+			$retval = '';
+			$dump = wfShellExec( $cmd, $retval );
+			$data = $this->convertDumpToArray( $dump );
+			wfProfileOut( 'pdfinfo' );
+		} else {
+			$data = null;
+		}
+
+		# Read text layer
+		if ( isset( $wgPdftoText ) ) {
+			wfProfileIn( 'pdftotext' );
+			$cmd = wfEscapeShellArg( $wgPdftoText ) . ' '. wfEscapeShellArg( $this->mFilename ) . ' - ';
+			wfDebug( __METHOD__.": $cmd\n" );
+			$retval = '';
+			$txt = wfShellExec( $cmd, $retval );
+			wfProfileOut( 'pdftotext' );
+			if( $retval == 0 ) {
+				$txt = str_replace( "\r\n", "\n", $txt );
+				$pages = explode( "\f", $txt );
+				foreach( $pages as $page => $pageText ) {
+					# Get rid of invalid UTF-8, strip control characters
+					# Note we need to do this per page, as \f page feed would be stripped.
+					$pages[$page] = UtfNormal::cleanUp( $pageText );
+				}
+				$data['text'] = $pages;
+			}
+		}
+		return $data;
+	}
+
+	/**
+	 * @param $dump string
+	 * @return array|bool
+	 */
+	protected function convertDumpToArray( $dump ) {
+		if ( strval( $dump ) == '' ) {
+			return false;
+		}
+
+		$lines = explode( "\n", $dump );
+		$data = array();
+
+		foreach( $lines as $line ) {
+			$bits = explode( ':', $line, 2 );
+			if( count( $bits ) > 1 ) {
+				$key = trim( $bits[0] );
+				$value = trim( $bits[1] );
+				$matches = array();
+				// "Page xx rot" will be in poppler 0.20's pdfinfo output
+				// See https://bugs.freedesktop.org/show_bug.cgi?id=41867
+				if( preg_match( '/^Page +(\d+) (size|rot)$/', $key, $matches ) ) {
+					$data['pages'][$matches[1]][$matches[2] == 'size' ? 'Page size' : 'Page rot'] = $value;
+				} else {
+					$data[$key] = $value;
+				}
+			}
+		}
+		return $data;
+	}
+}

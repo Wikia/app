@@ -1,0 +1,48 @@
+<?php
+/**
+ * Generic operation result for FileRepo-related operations
+ *
+ * @file
+ * @ingroup FileRepo
+ */
+
+/**
+ * Generic operation result class for FileRepo-related operations
+ * @ingroup FileRepo
+ */
+class FileRepoStatus extends Status {
+	/**
+	 * Factory function for fatal errors
+	 *
+	 * @param $repo FileRepo
+	 *
+	 * @return FileRepoStatus
+	 */
+	static function newFatal( $repo /*, parameters...*/ ) {
+		$params = array_slice( func_get_args(), 1 );
+		$result = new self( $repo );
+		call_user_func_array( array( &$result, 'error' ), $params );
+		$result->ok = false;
+		return $result;
+	}
+
+	/**
+	 * @param $repo FileRepo
+	 * @param $value
+	 * @return FileRepoStatus
+	 */
+	static function newGood( $repo = false, $value = null ) {
+		$result = new self( $repo );
+		$result->value = $value;
+		return $result;
+	}
+
+	/**
+	 * @param $repo FileRepo
+	 */
+	function __construct( $repo = false ) {
+		if ( $repo ) {
+			$this->cleanCallback = $repo->getErrorCleanupFunction();
+		}
+	}
+}

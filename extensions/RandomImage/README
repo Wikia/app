@@ -1,0 +1,121 @@
+RANDOM IMAGE EXTENSION
+
+	Version 1.4
+	© 2006-2007 Rob Church
+
+This is free software licenced under the GNU General Public Licence. Please
+see http://www.gnu.org/copyleft/gpl.html for further details, including the
+full text and terms of the licence.
+
+== Overview ==
+
+The Random Image extension adds a <randomimage> tag to the MediaWiki parser
+which allows for randomisation of multimedia content on a page.
+
+When the tag is rendered, a random image is selected from those uploaded and
+inserted at the location of the tag. Users can select a custom size, float
+and provide a caption for the resulting image; captions can also be pulled
+from the image description page.
+
+== Requirements ==
+
+This version of the RandomImage extension requires MediaWiki 1.10.0 or above.
+
+== Installation ==
+
+To install the extension, place all extension files into a `RandomImage`
+directory within your MediaWiki `extensions` directory, then edit
+`LocalSettings.php` and add the following line
+
+	require_once( "{$IP}/extensions/RandomImage/RandomImage.php" );
+
+Installation can be verified through the Special:Version page on the wiki.
+
+== Use ==
+
+The tag can be used in two forms:
+
+	<randomimage />
+		Produces an image using an automatic caption (see below)
+	<randomimage></randomimage>
+		Produces an image with a preset caption (text inside the tags)
+		
+The tag also supports the following attributes:
+
+	size
+		Set the image width (default is the user's thumbnail width)
+	float
+		Float the image; valid values are 'left', 'center' and 'right'
+	choices
+		Confines image selection to a pipe-delimited list of images
+		
+For example:
+
+	<randomimage size="100" float="left" choices="Apple.jpg|Pear.jpg" />
+
+== Caption ==
+
+If no caption is specified, one will be pulled, if possible, from the
+image description page.
+
+If the description page contains text wrapped in <randomcaption>
+</randomcaption> tags, then this will be used as the caption. The tags
+are ignored during normal page views. Otherwise, the first paragraph of
+the page text will be used as the caption.
+
+== Selection ==
+
+On wikis where non-images are uploaded (e.g. sound and video files, or
+documents, etc.), the extension might select a non-image file. There are
+few performance-efficient means of limiting those files selected.
+
+If $wgRandomImageStrict is switched on, a more complex database query will
+be performed, with a greater performance cost, which will ensure only images
+with an "image" major MIME type are selected.
+
+By default, this option has the same value as $wgMiserMode. You may wish to
+switch it off if all of the content on your wiki has an appropriate renderer.
+
+== Caching ==
+
+By default, the output is cached in the regular parser cache. This can be
+advantageous on larger sites which need to use caching to reduce the effects
+of load, however, it means that content is not 100% dynamic.
+
+To disable the parser cache on pages which use the <randomimage> tag, set
+$wgRandomImageNoCache = true; in LocalSettings.php (after the call to include
+the extension file). This will affect all users, and might incur additional
+overhead on pageviews.
+
+== Change log ==
+
+August 20, 2007
+Version 1.4
+	Support automatic caption retrieval from image description pages
+	Limit database selections to files with "IMAGE" major MIME types
+	Fix regression; "size" was ignored under most circumstances
+	Force thumbnailing of images
+	Fix issues with inconsistent thumbnail behaviour
+
+August 15, 2007
+Version 1.3
+	Major refactor; class split into own file
+	Add option to confine image selection to user-defined choices
+
+June 6, 2007
+Version 1.2
+	Bug fix and minor code tweaks
+	If no image is selected in the first pass, a further attempt is made
+
+December 17, 2006
+Version 1.1
+	Introduced $wgRandomImageNoCache to disable parser cache on pages using
+	the tag; defaults to off
+
+June 9, 2006
+Version 1.0
+	Initial release
+	
+== Feedback ==
+
+All feedback, bug reports, etc. welcome via robchur {at} gmail {dot} com.

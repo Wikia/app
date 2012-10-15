@@ -1,0 +1,38 @@
+Work in progress. :)
+
+Please see https://www.mediawiki.org/wiki/Future/Parser_development for some
+information on how to get started with these tests and the current parser
+architecture.
+
+Needed npm modules:
+* pegjs
+* colors
+* html5
+* jquery
+* jsdom
+* diff
+* libxmljs (requires native compilation)
+* optimist (for argument handling)
+* webworker (not needed for parserTests)
+
+== Running parserTests.js ==
+
+For parserTests, you also need MediaWiki's parser test cases (parserTests.txt)
+either in a phase3 checkout parallel to extensions (tried by default). You can
+also specify a test case file as an argument.
+
+Then, in this directory, try:
+
+node ./parserTests.js
+
+Several options are available for parserTests:
+
+node ./parserTests.js --help
+
+Enjoy!
+
+== Running roundtrip tests ==
+
+Round-trip tests are not yet ported to the current parser architecture. The
+focus so far has been on parserTests and getting the parser architecture in
+shape, but we'll get back to round-trip tests eventually.

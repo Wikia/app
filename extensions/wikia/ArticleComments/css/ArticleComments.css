@@ -1,0 +1,95 @@
+/* This stylesheet is only used in Monobook. You're probably looking for: /skins/oasis/css/core/ArticleComments.scss */
+
+.skin-monobook .WikiaArticleComments.loading {
+	background: url(/skins/common/images/ajax.gif) no-repeat 50% 50%; /* $wgCdnStylePath */
+	border-top: 1px solid #CCC;
+	height: 48px;
+	margin: 10px;
+	padding-top: 10px;
+}
+
+.skin-monobook .WikiaArticleComments h1 {
+	border: 0;
+	line-height: 25px;
+	margin: 0;
+	padding: 0;
+}
+
+.skin-monobook .WikiaArticleComments form {
+	margin: 0;
+}
+
+.skin-monobook .WikiaArticleComments .article-comm-form {
+	margin-bottom: 10px;
+	margin-left: 65px;
+}
+
+.skin-monobook .WikiaArticleComments .article-comm-form textarea,
+.skin-monobook .WikiaArticleComments .article-comm-input textarea {
+	display: block;
+	margin-bottom: 10px;
+	padding: 0;
+	width: 100%;
+}
+
+.skin-monobook .WikiaArticleComments .comments {
+	margin: 0;
+}
+
+.skin-monobook .WikiaArticleComments .speech-bubble-avatar {
+	float: left;
+}
+
+.skin-monobook .WikiaArticleComments .speech-bubble-message {
+	border: 1px solid #CCC;
+	margin: 0 0 15px 65px;
+	padding: 10px;
+	position: relative;
+}
+
+.skin-monobook .WikiaArticleComments .speech-bubble-message .edited-by .buttons {
+	bottom: 5px;
+	float: right;
+	position: absolute;
+	right: 5px;
+	zoom: 1;
+}
+
+.skin-monobook .WikiaArticleComments .speech-bubble-message .edited-by .tools {
+	display: inline-block;
+	float: right;
+	margin-right: 10px;
+	margin-top: 3px;
+	visibility: hidden;
+}
+
+.skin-monobook .WikiaArticleComments .speech-bubble-message:hover .edited-by .tools {
+	visibility: visible;
+}
+
+.skin-monobook .WikiaArticleComments .article-comm-input .buttons input {
+	float: right;
+	margin-left: 10px;
+}
+
+/* Are these still used? */
+#article-comm-fbMonit {
+	height:100px;
+	margin: 0px 0px 5px 185px;
+	width: 450px;
+	padding: 6px;
+	background-color: white;
+	border: 1px solid #999;
+}
+
+#fbCommentMessage {
+	background-color: #EEE;
+	height: 100px;
+	text-align: center;
+	width: 450px;
+	display: none;
+}
+
+#fbCommentText {
+	padding-top: 38px;
+}

@@ -1,0 +1,61 @@
+@import "../../../../skins/oasis/css/core/color";
+@import "../../../../skins/oasis/css/mixins/border-radius";
+@import "../../../../skins/oasis/css/mixins/clearfix";
+
+@import "WallColors";
+
+.related-topics {
+	@include clearfix;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	.related-topic,
+	.edit-topic {
+		@include border-radius(3px);
+		$color-topic: lighten($color-text, 70%);
+		background-color: $color-topic;
+		float: left;
+		font-size: 12px;
+		list-style: none;
+		margin-right: 10px;
+		padding: 1px 5px 1px 21px;
+		position: relative;
+	}
+	
+	.related-topic:before {
+		background-repeat: no-repeat;
+		background-image: url('/extensions/wikia/Wall/images/forums-topic-icon.png'); /* $base64 */
+		content: "";
+		display: block;
+		height: 13px;
+		left: 7px;
+		position: absolute;
+		top: 4px;
+		width: 11px;
+	}
+	
+	.edit-topic {
+		padding-left: 7px;
+		.edit-pencil {
+			left: -1px;
+			position: relative;
+			top: -1px;
+		}
+	}
+}
+
+h4.related-topics-heading {
+	font-size: 12px;
+	margin-bottom: 0;
+	margin-top: 15px;
+}
+
+.message-topic-edit {
+	display: none;
+	.message-topic {
+		display: block;
+		label {
+			display: none;
+		}
+	}
+}

@@ -1,0 +1,43 @@
+<SecurePoll>
+<election>
+<configuration>
+<title>Approval test</title>
+<ballot>approval</ballot>
+<tally>range</tally>
+<primaryLang>en</primaryLang>
+<startDate>2009-07-19T00:00:00Z</startDate>
+<endDate>2019-08-10T00:00:00Z</endDate>
+<id>40</id>
+<property name="admins">Tim</property>
+<message name="title" lang="en">Approval test</message>
+<message name="intro" lang="en">Approval test intro</message>
+<message name="jump-text" lang="en">Approval test jump text</message>
+<message name="return-text" lang="en">Approval test return text</message>
+<auth>local</auth>
+<question>
+<id>41</id>
+<message name="text" lang="en">Approval test question</message>
+<option>
+<id>42</id>
+<message name="text" lang="en">AAAA</message>
+<message name="text" lang="fr">AAAA fr</message>
+</option>
+<option>
+<id>43</id>
+<message name="text" lang="en">B</message>
+<message name="text" lang="fr">B fr</message>
+</option>
+<option>
+<id>44</id>
+<message name="text" lang="en">C</message>
+<message name="text" lang="fr">C fr</message>
+</option>
+<option>
+<id>45</id>
+<message name="text" lang="en">D</message>
+<message name="text" lang="fr">D fr</message>
+</option>
+</question>
+</configuration>
+</election>
+</SecurePoll>

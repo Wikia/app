@@ -1,0 +1,135 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+	<title>WikiEditor</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<!--[if gte IE 8]>
+		<style>
+			/* IE8 ONLY - This is how we are fixing the double-height of BR tags when they are alone in a P tag */
+			p > br  {
+				display: none;
+			}
+			p > br + br  {
+				display: block;
+			}
+		</style>
+	<![endif]--> 
+	<style>
+		body {
+			margin: 0;
+			padding: 0;
+			width: 100%;
+			height: 100%;
+			font-family: monospace;
+			font-size: 9.5pt;
+			line-height: 1.5em;
+			overflow-x: auto; /* Use horizontal scroller if needed; for Firefox 2, not needed in Firefox 3 */
+			white-space: pre-wrap; /* css-3 */
+			white-space: -moz-pre-wrap !important; /* Mozilla, since 1999 */
+			white-space: -pre-wrap; /* Opera 4-6 */
+			white-space: -o-pre-wrap; /* Opera 7 */
+			word-wrap: break-word; /* Internet Explorer 5.5+ */
+		}
+		body.pasting {
+			white-space: normal;
+		}
+		p {
+			margin: 0;
+			padding: 0;
+		}
+		/* General WikiEditor stuff */
+		.wikiEditor-nodisplay {
+			display: none !important;
+		}
+		.wikiEditor-tab {
+			padding-left: 4em;
+		}
+		/* WikiEditor Templates */
+		.wikiEditor-templates .wikiEditor-template {
+			color: silver;
+		}
+		/* WikiEditor TemplateEditor */
+		.wikiEditor-templateEditor .wikiEditor-template-text-shrunken{
+			height: 1px !important;
+			width: 1px !important;
+			overflow: hidden;
+			float: right;
+		}
+		.wikiEditor-templateEditor .wikiEditor-template-text-visible{
+			padding: 0.5em 4px;
+			padding-top: 1.25em;
+			margin-top: -0.95em;
+			background: #F3F3F3 url(images/templateEditor/text-base.png) repeat-x scroll center top;
+			display: block;
+			width: 100%;
+			border-bottom: solid 1px #cccccc;
+		}
+		.wikiEditor-templateEditor .wikiEditor-template {
+			display: inline-block;
+			font-size: 12px;
+		}
+		.wikiEditor-templateEditor .wikiEditor-template-name {
+			cursor: pointer;
+			vertical-align: -2px;
+			display: inline-block;
+			height: 16px;
+			margin-bottom: -1px;
+			margin-right: 2px;
+			overflow: hidden;
+			background: url(images/templateEditor/name-base.png) 0 0 repeat-x #e8e8e8;
+			color: #000000;
+			font-family: monospace;
+			text-decoration: none;
+			padding-left: 0.33em;
+			line-height: 16px;
+		}
+		.wikiEditor-templateEditor .wikiEditor-template-expand {
+			cursor: pointer;
+			vertical-align: -2px;
+			display: inline-block;
+			margin-left: 2px;
+			height: 16px;
+			margin-bottom: -1px;
+			line-height: 16px;
+			overflow: hidden;
+			width: 13px;
+			background-position: 50%;
+		}
+		.wikiEditor-templateEditor .wikiEditor-template-dialog {
+			cursor: pointer;
+			vertical-align: -18%;
+			display: inline-block;
+			height: 16px;
+			overflow: hidden;
+			width: 22px;
+			background-position: 50%;
+		}
+		.wikiEditor-templateEditor .wikiEditor-template-name:hover {
+			text-decoration: underline;
+		}
+		.wikiEditor-templateEditor .wikiEditor-template-expanded .wikiEditor-template-expand {
+			background-image: url(images/templateEditor/collapse.png);
+		}
+		.wikiEditor-templateEditor .wikiEditor-template-expanded .wikiEditor-template-dialog {
+			background-image: url(images/templateEditor/dialog-expanded.png);
+		}
+		.wikiEditor-templateEditor .wikiEditor-template-collapsed .wikiEditor-template-expand {
+			background-image: url(images/templateEditor/expand.png);
+		}
+		.wikiEditor-templateEditor .wikiEditor-template-collapsed .wikiEditor-template-dialog {
+			background-image: url(images/templateEditor/dialog-collapsed.png);
+		}
+		.wikiEditor-templateEditor .wikiEditor-template-expanded {
+			display: block;
+		}
+		.wikiEditor-templateEditor .wikiEditor-template .wikiEditor-template-text {
+			
+		}
+		.wikiEditor-templateEditor .wikiEditor-template-end, .wikiEditor-template-start {
+			color: blue;
+			cursor: pointer;
+		}
+	</style>
+</head>
+<body></body>
+</html>

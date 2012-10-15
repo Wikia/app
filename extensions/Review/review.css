@@ -1,0 +1,48 @@
+#review_sidebar_range {
+font-size:80%;
+}
+
+#review_sidebar_note {
+font-size:80%;
+}
+
+#review_statistics_table {
+	border:1px solid black;
+	border-spacing:1px;
+	border-collapse: collapse;
+}
+
+#review_statistics_table_cell {
+	border:1px solid black;
+	padding:2px;
+	text-align:center;
+	font-size:80%;
+}
+
+#review_statistics_table_header {
+	border:1px solid black;
+	padding:2px;
+}
+
+#review_has_been_stored {
+	color:red;
+	font-size:80%;
+}
+
+#review_radio_1_of_2 { background-color:#FF0000; }
+#review_radio_2_of_2 { background-color:#00FF00; }
+
+#review_radio_1_of_3 { background-color:#FF0000; }
+#review_radio_2_of_3 { background-color:#FFFF00; }
+#review_radio_3_of_3 { background-color:#00FF00; }
+
+#review_radio_1_of_4 { background-color:#FF0000; }
+#review_radio_2_of_4 { background-color:#FF6400; }
+#review_radio_3_of_4 { background-color:#64FF00; }
+#review_radio_4_of_4 { background-color:#00FF00; }
+
+#review_radio_1_of_5 { background-color:#FF0000; }
+#review_radio_2_of_5 { background-color:#FF6400; }
+#review_radio_3_of_5 { background-color:#FFFF00; }
+#review_radio_4_of_5 { background-color:#64FF00; }
+#review_radio_5_of_5 { background-color:#00FF00; }

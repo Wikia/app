@@ -1,0 +1,83 @@
+For more documentation, see http://www.dsmw.org
+
+== DSMW 1.1 ==
+
+* Compatibility with MediaWiki 1.17.
+* Stylized all files using the stylize.php script.
+* Added propper i18n support.
+
+== DSMW 1.0 ==
+* Tested with MW-1.16.0
+* better user interface with Ajax
+* DSMW handle the Attachments (Issue fixed: 8478)
+* Issue fixed: 8578
+* Issue fixed: 10485
+* causal link has been added in patchs
+* SiteID semantic annotation has been added in the patches
+* A tab has been added to each article page. This tab allows to open a page
+  which contains data about DSMW formalized using Semantic Results format
+  extension (The tab doesn't appear if SRF isn't installed).
+* A special page has been added which shows general data about DSMW. (also needs
+  SRF extension to accessible).
+
+== DSMW 0.7 ==
+* This version take in account new features of SMW 1.5 and in this case the
+  multi-valued properties (http://semantic-mediawiki.org/wiki/Help:Installation_1.5.0#N-ary_.28multivalued.29_properties)
+  So if you are using DSMW 0.7 with SMW versions < SMW 1.5.0, read the section
+  "== Since SMW 1.5 ==" in the INSTALL file.
+* The "back" link leads to the "DSMW Admin functions" page (issue fixed: 9501)
+* Table (with prefix) creation problem fixed (issue fixed: 9522)
+* "Test URL" modified (issue fixed: 9529)
+
+== DSMW 0.6.1 ==
+* Added a test on the "allow_url_fopen" directive and on the load of "curl"
+  extension to define whether or not DSMW can run on the server.
+
+== DSMW 0.6 ==
+* Number of selected pages in the proceedings of the "Push" has been set to 5000
+  (issue fixed: 9302)
+* There is now a link to the "DSMW Admin functions" special page in the DSMW tab
+  page. (issue fixed: 9308)
+* BasicBot.php file is normalized. (^M removed) (issue fixed: 9299)
+* Issue fixed: 9311
+* The installation procedure has been simplified. See INSTALL file.
+  (issue fixed: 9300)
+* (issue fixed: 9310)
+* The way PullFeed are created has been improved (issue fixed: 9340)
+* The directive "allow_url_fopen" in the php.ini file does no longer restrict
+  the use of DSMW, the "file_get_contents" function has been removed (except in
+  the tests). (issue fixed: 9462)
+
+== DSMW 0.5 ==
+* Internal features modification in order to speed up the reactivity of DSMW.
+* After performing the action "update properties type" in "DSMW Settings", the
+  "back" link leads now back to the "DSMW Settings". (issue fixed: 9026)
+* The script that creates automatically the DSMW database tables takes now in
+  consideration the database prefix. (issue fixed: 9024)
+
+== DSMW 0.4 ==
+
+* The GMP library is no longer necessary but is used if it is installed
+  (issue fixed: 8610)
+* New feature "Articles update" in "DSMW Settings" that updates all the articles
+  existing before the installation of DSMW and makes them editable (via DSMW
+  algorithm) and so they can be published.
+  (issues fixed: 8917)
+* Pages with "spaces" in the title can be published and integrated (pulled)
+  (issue fixed: 8826)
+
+== DSMW 0.3.2 ==
+
+* New installation process (INSTALL FILE point(3)), the database tables are 
+  created automatically. (issue fixed: 8778)
+* New Special page "DSMW Settings".
+* New feature "Article update" in "DSMW Settings" that updates the "Main Page"
+  and makes it editable (via DSMW algorithm) and so it can be published.
+  (issues fixed: 8824, 8782)
+* The feature "Update properties type" that was previously in the
+  "DSMW admin functions" page is now in the "DSMW Settings" special page.
+* Better formatting of the DSMW wikipages (Patch,Changeset, Pullfeed, Pushfeed)
+  (issues fixed: 8730, 8731)
+* Every page can be published except the pages in the DSMW namespaces (Patch,
+  Changeset, Pullfeed, Pushfeed), functional tests added (issue fixed: 8828)
+

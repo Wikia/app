@@ -1,0 +1,498 @@
+/* Filters */
+
+#fbd-filters {
+	position: absolute;
+	width: 15em;
+	left: 0; /* needed for ie6 & ie7 */
+}
+
+#fbd-filters form {
+	margin: 0;
+	padding: 1em;
+	background-color: #e8f2f8;
+}
+
+#fbd-about {
+	display: inline-block;
+	font-size: 0.8em;
+	margin-top: 0.5em;
+}
+
+#fbd-description-text,
+#fbd-stats {
+	padding: 0 0 1em 0;
+}
+
+#fbd-filters-title {
+	font-size: 1.2em;
+	margin: 0;
+	padding: 0;
+	border-bottom: 1px solid black;
+}
+
+#fbd-filters-types {
+	margin: 0.5em 0 0 0;
+	padding: 0;
+	border: none;
+}
+
+.fbd-filters-check {
+	float: left;
+}
+.fbd-filters-label {
+	display: inline;
+	margin: 0.5em 0 0 0;
+	padding: 0;
+	font-weight: bold;
+	color: #000000;
+}
+
+.fbd-filters-input {
+	margin: 0.25em 0 0.25em 0.75em;
+	width: 9em;
+}
+
+#fbd-filters-types ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	list-style-type: none;
+}
+
+#fbd-filters-types li {
+	margin: 0 0 0 0.75em;
+	padding: 0;
+	list-style: none;
+	list-style-image: none; /* ie 7 fix */
+}
+
+#fbd-filters-types label {
+	padding-left: 18px;
+	background-position: left 45%;
+	background-repeat: no-repeat;
+}
+
+#fbd-filters-type-praise-label {
+	/* @embed */
+	background-image: url(images/filter-praise.png);
+}
+
+#fbd-filters-type-confusion-label {
+	/* @embed */
+	background-image: url(images/filter-confusion.png);
+}
+
+#fbd-filters-type-issues-label {
+	/* @embed */
+	background-image: url(images/filter-issues.png);
+}
+
+#fbd-filters-set {
+	margin: 1em 0 0 0;
+}
+
+/* Leader Board */
+.fbd-leaderboard {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+.fbd-leaderboard li {
+	margin: 0;
+	padding: 2px 10px;
+	list-style: none;
+	font-weight:600;
+}
+
+.fbd-leaderboard li.even {
+	background: #EFEFEF;
+}
+.fbd-leaderboard li span {
+	float:right;
+	color: #777777;
+	display:block
+}
+
+.fbd-leaderboard-top-responders {
+	margin-top: 15px;
+}
+
+.fbd-leaderboard-top-responders h5 {
+	border-bottom: 1px solid #000000;
+	padding-bottom: 0;
+}
+
+/* Tool Tip */
+
+.fbd-tooltip-overlay-wrap {
+	width: 296px;
+	position: absolute;
+	left: 1em;
+	top: 5.25em;
+	background: #ff9933;
+	padding: 2px;
+}
+
+.fbd-tooltip-pointy {
+	position: absolute;
+	top: -15px;
+	left: 15px;
+	/* @embed */
+	background: url(images/tooltip-pokey.png);
+	background-repeat: no-repeat;
+	background-position: left;
+	height: 17px;
+	width: 15px;
+}
+
+.fbd-tooltip-overlay {
+	background: #fefac6;
+	padding: 10px;
+}
+
+.fbd-tooltip-title {
+	font-weight: bold;
+	font-size: 0.75em;
+	/* embed */
+	background: url(images/mb-icon-16x16-alert.png) 2px top no-repeat;
+	line-height: 18px;
+	padding-left: 26px;
+}
+
+.fbd-tooltip-close {
+	color: #FF9933;
+	float: right;
+	margin: 0 2px;
+}
+
+/* List */
+
+#fbd-list {
+	margin: 0 20px 0 16em;
+	padding: 0;
+	min-height: 20em;
+	list-style: none;
+	list-style-image: none; /* ie 7 fix */
+	min-height: 500px;
+}
+
+.client-nojs #fbd-list-more {
+	display: none;
+}
+
+.client-js #fbd-list-newer-older {
+	display: none;
+}
+
+#fbd-list-more,
+#fbd-list-newer-older {
+	margin: 1em 0 0 13em;
+	padding: 0.5em;
+	background-color: #e8f2f8;
+}
+
+#fbd-list-more a,
+#fbd-list-more span,
+#fbd-list-newer a,
+#fbd-list-older a,
+#fbd-list-newer .fbd-page-disabled,
+#fbd-list-older .fbd-page-disabled {
+	font-size: 1.4em;
+	background-repeat: no-repeat;
+}
+
+#fbd-list-more {
+	text-align: center;
+}
+
+#fbd-list-more a {
+	/* @embed */
+	background-image: url(images/page-more.png);
+	background-position: left center;
+	padding-left: 20px;
+}
+
+#fbd-list-newer {
+	float: left;
+}
+
+#fbd-list-newer a,
+#fbd-list-newer .fbd-page-disabled {
+	background-position: left center;
+	padding-left: 20px;
+}
+
+#fbd-list-more.mw-ajax-loader {
+	/* Undo the repositioning done in shared.css. Padding is set to 0.5em above. */
+	position: static;
+}
+
+.mw-ajax-loader {
+	/* Undo padding due to it destroying the layout for inline response */
+	padding: 8px 16px 0 16px !important;
+}
+
+/* The images here are named -ltr instead of -left and -rtl instead of -right
+ * because ResourceLoader flips -ltr and -rtl in URLs, but not -left and -right
+ */
+#fbd-list-newer a {
+	/* @embed */
+	background-image: url(images/page-active-ltr.png);
+}
+
+#fbd-list-newer .fbd-page-disabled {
+	/* @embed */
+	background-image: url(images/page-disabled-ltr.png);
+}
+
+#fbd-list-older {
+	float: right;
+}
+
+#fbd-list-older a,
+#fbd-list-older .fbd-page-disabled {
+	background-position: right center;
+	padding-right: 20px;
+}
+
+#fbd-list-older a {
+	/* @embed */
+	background-image: url(images/page-active-rtl.png);
+}
+
+#fbd-list-older .fbd-page-disabled {
+	/* @embed */
+	background-image: url(images/page-disabled-rtl.png);
+}
+
+.fbd-page-disabled {
+	color: #c6c6c6;
+}
+
+.fbd-item {
+	border-bottom: 1px solid silver;
+	position: relative;
+	padding-top: 0.5em;
+	padding-right: 1em;
+	cursor: pointer;
+}
+
+.fbd-hover {
+	background-color: #EFEFEF;
+}
+
+.fbd-item-emoticon {
+	float: left;
+	margin-right: 0.5em;
+	width: 75px;
+	height: 90px;
+	background-position: center top;
+	background-repeat: no-repeat;
+}
+
+.fbd-item-emoticon-label {
+	display: block;
+	margin-top: 66px;
+	text-align: center;
+}
+
+.fbd-item-emoticon-happy {
+	/* @embed */
+	background-image: url(images/emoticon-happy.png);
+}
+.fbd-item-emoticon-confused {
+	/* @embed */
+	background-image: url(images/emoticon-confused.png);
+}
+.fbd-item-emoticon-sad {
+	/* @embed */
+	background-image: url(images/emoticon-sad.png);
+}
+
+.fbd-ajax-response {
+	padding:1.5em 2em;
+}
+
+.fbd-item-response {
+	line-height: 2.1em;
+	position: relative;
+	float: left;
+}
+
+.fbd-item-response-icon {
+	float: left;
+	display: block;
+	height: 56px;
+	width: 56px;
+	background-position: center center;
+	background-repeat: no-repeat;
+	padding: 8px 16px;
+	position: relative;
+	top: -16px;
+}
+
+.fbd-item-response > p {
+	padding: 0;
+	margin: 0;
+	line-height:2.1em;
+}
+
+.fbd-item-response-success {
+	/* @embed */
+	background-image: url(images/response-success.png);
+}
+
+.fbd-item-response-error {
+	/* @embed */
+	background-image: url(images/response-error.png);
+}
+
+.fbd-ajax-response > div > .fbd-ajax-heading {
+	font-size: 1.5em;
+	font-weight: bold;
+	display: block;
+}
+
+.fbd-ajax-response > div > .fbd-ajax-text {
+	color: #262626;
+	display: block;
+}
+
+.fbd-item-response-collapsed {
+	display: inline-block;
+	/* @embed */
+	background: url(images/respondtothis-collapsed.png) left top no-repeat;
+	width: 10px;
+	height: 12px;
+}
+
+.fbd-item-response-expanded {
+	display: inline-block;
+	/* @embed */
+	background: url(images/respondtothis-expanded.png) left top no-repeat;
+	width: 12px;
+	height: 10px;
+}
+
+.fbd-item-send-response-icon {
+	display: inline-block;
+	/* @embed */
+	background: url(images/send-response-arrow.png) left top no-repeat;
+	width: 8px;
+	height: 8px;
+}
+
+.fbd-item-userName {
+	font-size: 1.2em;
+	margin: 0;
+	padding: 0;
+	display: inline; /* ie7 fix */
+}
+
+.fbd-item-userLinks{
+	font-size: 1em;
+}
+
+.fbd-item-time {
+	font-size: 1.2em;
+	float: right;
+	display: inline; /* ie7 fix */
+}
+
+.fbd-item-message {
+	font-size: 1.4em;
+	margin-top: 0.25em;
+	margin-left: 81px;
+	min-height: 40px;
+}
+
+.fbd-response-text {
+	height: 5em;
+	overflow: hidden;
+}
+
+.fbd-response-text-invalid {
+	border: 2px solid #CC0000;
+}
+
+.fbd-response-preview-spinner {
+	height: 32px;
+	line-height: 32px;
+}
+
+.fbd-response-preview-block {
+	width:100%; /* ie7 fix */
+}
+
+.fbd-response-wikitext{
+	background-color: #FDFFE7;
+	border: 1px solid #FCEB92;
+	padding: 5px;
+}
+
+.fbd-item-permalink,
+.fbd-item-show,
+.fbd-item-hide,
+.fbd-item-reason {
+	float: right;
+	font-size: 0.8em;
+	margin-left: 0.2em;
+	margin-right: 0.2em;
+}
+
+.fbd-item-permalink,
+.fbd-item-show,
+.fbd-item-hide {
+	visibility: hidden;
+}
+
+.fbd-hover .fbd-item-permalink,
+.fbd-hover .fbd-item-show,
+.fbd-hover .fbd-item-hide,
+.fbd-hover .fbd-item-reason {
+	visibility: visible;
+}
+
+.fbd-respond-link {
+	font-size: 1.1em;
+	cursor: pointer;
+	letter-spacing: -0.01em;
+}
+.fbd-respond-link:hover {
+	text-decoration: none;
+}
+.fbd-item-restore {
+	font-size: 0.8em;
+	color: silver;
+}
+.fbd-hidden {
+	color: silver;
+}
+.fbd-response-form {
+	margin: 0em 0 1em 81px;
+}
+.fbd-response-form b {
+	font-size: 1em;
+}
+.fbd-response-form small,
+.fbd-response-form .small{
+	font-size: 0.8em;
+	color: #262626;
+}
+.fbd-response-formNote {
+	float: right;
+}
+.fbd-response-submit,
+.fbd-response-preview {
+	float: right;
+}
+.center {
+	text-align: center;
+}
+.red-bold {
+	font-weight: bold;
+	color: #CC0000;
+}
+.fbd-clearfix {
+	clear: both;
+}

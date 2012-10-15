@@ -1,0 +1,15 @@
+/**
+ * Stylesheet for 'Tasks' extension.
+ */
+td.tasks_status_bgcol_open {
+	background-color: #FF9999
+}
+td.tasks_status_bgcol_assigned {
+	background-color: #FFF380
+}
+td.tasks_status_bgcol_closed {
+	background-color: #99FF99
+}
+td.tasks_status_bgcol_wontfix {
+	background-color: #9999FF
+}

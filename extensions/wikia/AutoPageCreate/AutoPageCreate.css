@@ -1,0 +1,27 @@
+a.new, #quickbar a.new {
+	color: #002bb8 !important;
+}
+
+a.new:visited, #quickbar a.new:visited {
+	color: #5A3696 !important;
+}
+
+#page_tabs a {
+	color: inherit !important;
+}
+
+#NoArticleTextNotice {
+	background: #ff9;
+	color: #000;
+	font-size: 140%;
+	margin-bottom: 2px;
+	padding: 5px;
+	position: relative;
+	text-align: center;
+}
+
+#NoArticleTextNoticeClose {
+	position: absolute;
+	right: 4px;
+	top: 4px;
+}

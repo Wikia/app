@@ -1,0 +1,30 @@
+.WidgetAnswers dt.widget_title {
+	background: #252525 url(http://images.wikia.com/common/extensions/wikia/WidgetFramework/Widgets/WidgetAnswers/wikianswers.png) 0px -1px no-repeat;
+	color: #252525;
+	font-size: 0.01em;
+	height: 15px;
+}
+.WidgetAnswers dd.widget_contents {
+	padding: 0;
+}
+.ask_form {
+	background: #CCC;
+	padding: 5px 3px !important;
+}
+.widget_answers_note {
+	background: #CCC;
+	color: #000;
+	font-size: 9pt;
+	padding: 3px !important;
+}
+.widget_answers_note a {
+	color: #002BB8 !important;
+}
+.answers_ask_field {
+	background: #FFF url(http://images.wikia.com/common/extensions/wikia/WidgetFramework/Widgets/WidgetAnswers/field_bg.png) repeat-x;
+	border: 1px solid #093;
+	color: #999;
+	margin: 0 !important;
+	padding: 2px !important;
+	width: 95% !important;
+}

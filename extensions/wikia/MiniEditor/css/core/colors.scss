@@ -1,0 +1,26 @@
+//
+// These are default colors. They can be overridden in extension stylesheets
+//
+
+@import "../../../../../skins/oasis/css/core/color";
+@import "../../../EditPageLayout/css/core/colors";
+
+// Wrapper
+$color-MiniEditor: $color-speech-bubble;
+$color-MiniEditor-focus: darken($color-MiniEditor, 10%);
+@if $is-dark-wiki {
+	$color-MiniEditor-focus: lighten($color-MiniEditor, 10%);
+}
+
+// Buttons
+$color-MiniEditor-button: $color-epl-button;
+$color-MiniEditor-button-hover: $color-epl-hover;
+$color-MiniEditor-button-active: $color-epl-button-active;
+$color-MiniEditor-button-border: $color-epl-button-border;
+$color-MiniEditor-button-shadow: $color-epl-button-shadow;
+$color-MiniEditor-button-separator: $color-epl-button-border;
+$color-MiniEditor-button-text: $color-text;
+
+// Loading status indicator
+$color-MiniEditor-loading: $color-page;
+$color-MiniEditor-loading-text: $color-links;

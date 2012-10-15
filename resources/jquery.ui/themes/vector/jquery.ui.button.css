@@ -1,0 +1,147 @@
+/* Button
+----------------------------------*/
+
+.ui-button { display: inline-block; position: relative; padding: 0; margin-right: .1em; text-decoration: none !important; cursor: pointer; text-align: center; zoom: 1; overflow: visible; } /* the overflow property removes extra width in IE */
+.ui-button-icon-only { width: 2.2em; } /* to make room for the icon, a width needs to be set here */
+button.ui-button-icon-only { width: 2.4em; } /* button elements seem to need a little more width */
+.ui-button-icons-only { width: 3.4em; } 
+button.ui-button-icons-only { width: 3.7em; } 
+
+/*button text element */
+.ui-button .ui-button-text { display: block; line-height: 1.4em;  }
+.ui-button-text-only .ui-button-text { padding: 0.3em 1em 0.25em 1em; }
+.ui-button-icon-only .ui-button-text, .ui-button-icons-only .ui-button-text { padding: 0.3em; text-indent: -9999999px; }
+.ui-button-text-icon-primary .ui-button-text, .ui-button-text-icons .ui-button-text { padding: 0.3em 1em 0.25em 2.1em; }
+.ui-button-text-icon-secondary .ui-button-text, .ui-button-text-icons .ui-button-text { padding: 0.3em 2.1em 0.25em 1em; }
+.ui-button-text-icons .ui-button-text { padding-left: 2.1em; padding-right: 2.1em; }
+/* for older versions of jQuery UI */
+.ui-button-text-icon .ui-button-text { padding: 0.3em 1em 0.3em 2.1em; }
+
+/* no icon support for input elements, provide padding by default */
+input.ui-button { padding: 0.3em 1em; }
+
+/*button icon element(s) */
+.ui-button-icon-only .ui-icon, .ui-button-text-icon-primary .ui-icon, .ui-button-text-icon-secondary .ui-icon, .ui-button-text-icons .ui-icon, .ui-button-text-icon .ui-icon, .ui-button-icons-only .ui-icon { position: absolute; top: 50%; margin-top: -9px; }
+.ui-button-icon-only .ui-icon { left: 50%; margin-left: -8px; }
+.ui-button-text-icon-primary .ui-button-icon-primary, .ui-button-text-icon .ui-button-icon-primary, .ui-button-text-icons .ui-button-icon-primary, .ui-button-icons-only .ui-button-icon-primary { left: 0.5em; }
+.ui-button-text-icon-secondary .ui-button-icon-secondary, .ui-button-text-icon .ui-button-icon-secondary, .ui-button-text-icons .ui-button-icon-secondary, .ui-button-icons-only .ui-button-icon-secondary { right: 0.5em; }
+
+/*button sets*/
+.ui-buttonset { margin-right: 7px; }
+.ui-buttonset .ui-button { margin-left: 0; margin-right: -.3em; }
+
+/* workarounds */
+button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra padding in Firefox */
+
+body .ui-button {
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+	margin: 0.5em 0 0.5em 0.4em !important;
+	border: 1px solid #a6a6a6 !important;
+	/* @embed */
+	background: #f2f2f2 url(images/button-off.png) repeat-x scroll 50% 100% !important;
+	cursor: pointer;
+	font-size: 1em;
+	line-height: 1.4em;
+	width: auto;
+	overflow: visible;
+}
+body .ui-button:hover {
+	border-color: #6e7273;
+	/* @embed */
+	background: #e1e1e1 url(images/button-over.png) repeat-x scroll 50% 100% !important;
+}
+body .ui-button:active,
+body .ui-button:focus {
+	border-color: #707271;
+	/* @embed */
+	background: #bfbfbf url(images/button-down.png) repeat-x scroll 50% 100% !important;
+}
+body .ui-button.disabled {
+	color: #7f7f7f;
+	border-color: #cccccc;
+	/* @embed */
+	background: #f2f2f2 url(images/button-disabled.png) repeat-x scroll 50% 100% !important;	
+}
+/* Disables the annoying dashed border Firefox puts on active buttons */
+body  button.ui-button::-moz-focus-inner { 
+	border: 0; 
+}
+
+/* Green buttons */
+
+body .ui-button.ui-button-green {
+	color: white;
+	border-color: #97af7e !important;
+	/* @embed */
+	background: #85c940 url(images/button-off-green.png) repeat-x scroll 50% 100% !important;
+}
+body .ui-button.ui-button-green:hover {
+	border-color: #778e61;
+	/* @embed */
+	background: #77ad40 url(images/button-over-green.png) repeat-x scroll 50% 100% !important;
+}
+body .ui-button.ui-button-green:active,
+body .ui-button.ui-button-green:focus {
+	border-color: #61b000;
+	/* @embed */
+	background: #54a800 url(images/button-down-green.png) repeat-x scroll 50% 100% !important;
+}
+body .ui-button.ui-button-green.disabled {
+	color: #7f7f7f;
+	border-color: #b8d29f;
+	/* @embed */
+	background: #c9cfc3 url(images/button-disabled-green.png) repeat-x scroll 50% 100% !important;	
+}
+
+/* Blue buttons */
+
+body .ui-button.ui-button-blue {
+	color: white;
+	border-color: #407ec9 !important;
+	/* @embed */
+	background: #407ec9 url(images/button-off-blue.png) repeat-x scroll 50% 100% !important;
+}
+body .ui-button.ui-button-blue:hover {
+	border-color: #245289;
+	/* @embed */
+	background: #4071ad url(images/button-over-blue.png) repeat-x scroll 50% 100% !important;
+}
+body .ui-button.ui-button-blue:active,
+body .ui-button.ui-button-blue:focus {
+	border-color: #003980;
+	/* @embed */
+	background: #004daa url(images/button-down-blue.png) repeat-x scroll 50% 100% !important;
+}
+body .ui-button.ui-button-blue.disabled {
+	border-color: #9eafc6;
+	/* @embed */
+	background: #c3c8cf url(images/button-disabled-blue.png) repeat-x scroll 50% 100% !important;	
+}
+
+/* Red buttons */
+
+body .ui-button.ui-button-red {
+	color: white;
+	border-color: #af977e !important;
+	/* @embed */
+	background: #c9404c url(images/button-off-red.png) repeat-x scroll 50% 100% !important;
+}
+body .ui-button.ui-button-red:hover {
+	border-color: #8e7761;
+	/* @embed */
+	background: #ad404a url(images/button-over-red.png) repeat-x scroll 50% 100% !important;
+}
+body .ui-button.ui-button-red:active,
+body .ui-button.ui-button-red:focus {
+	border-color: #b06100;
+	/* @embed */
+	background: #aa000f url(images/button-down-red.png) repeat-x scroll 50% 100% !important;
+}
+body .ui-button.ui-button-red.disabled {
+	color: #7f7f7f;
+	border-color: #c3acae;
+	/* @embed */
+	background: #cfc3c4 url(images/button-disabled-red.png) repeat-x scroll 50% 100% !important;	
+}

@@ -1,0 +1,82 @@
+@import "../../../../skins/oasis/css/core/color";
+@import "../../../../skins/oasis/css/mixins/arrow";
+@import "../../../../skins/oasis/css/mixins/border-radius";
+@import "../../../../skins/oasis/css/mixins/box-shadow";
+@import "../../../../skins/oasis/css/mixins/box-sizing";
+@import "../../../../skins/oasis/css/mixins/clearfix";
+@import "../../../../skins/oasis/css/mixins/opacity";
+
+@import "../../Wall/css/WallColors";
+
+.ContentHeader {
+	@include clearfix;
+	border-bottom: 1px solid $color-wall-border;
+	border-top: 1px solid $color-wall-border;
+	padding: 10px 0;
+	
+	&.Topic {
+		border-top: 0px; 	
+	}
+
+	.activity {
+		float: left;
+	}
+
+	.sorting {
+		cursor: pointer;
+		float: right;
+		position: relative;
+
+		.arrow {
+			@include arrow(4px, $color-text);
+			margin-left: 5px;
+		}
+
+		.menu {
+			@include border-radius-se(3px);
+			@include border-radius-sw(3px);
+			@include box-shadow(0px, 2px, 5px, $color-wall-shadow);
+			border-top: 1px solid $color-wall-border;
+			background: $color-page;
+			display: none;
+			list-style: none;
+			margin: 0;
+			position: absolute;
+			left: -10px;
+			top: 0;
+			z-index: 1;
+
+			li {
+				&:hover {
+					background: $color-wall-bubble;
+				}
+
+				&.current {
+					font-weight: bold;
+				}
+
+				.option {
+					color: $color-text;
+					cursor: pointer;
+					padding: 5px 10px;
+					display: block;
+					text-decoration: none;
+					white-space: nowrap;
+				}
+			}
+		}
+
+		.selected {
+			@include border-radius(3px);
+			display: inline-block;
+			vertical-align: center;
+
+			&:hover {
+			}
+		}
+	}
+}
+
+#WallTooltipMeta { 
+	display: none; 
+} 

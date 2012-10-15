@@ -1,0 +1,190 @@
+For a documentation of all features, see
+http://semantic-mediawiki.org/wiki/Semantic_Result_Formats
+
+
+== SRF 1.7.1 ==
+
+Released on Match 8, 2012.
+
+* Fixed issue with the graphlenegd parameter in the graph format (bug 33745).
+* Added 'default' parameter to math formats (bug 34983).
+
+New formats in this version are:
+* tree, ultree, oltree (written by Stephan Gambke)
+* JitGraph (still in alpha, disabled by default) (written by Alex Shapovalov) (bug 32877)
+* filtered (still in alpha, disabled by default) (written by Stephan Gambke)
+
+== SRF 1.7 ==
+
+Released on January 1, 2012.
+
+* Compatibility with SMW 1.7 and later.
+* Dropped support for MediaWiki 1.15.x and SMW < 1.7.
+* Added warning message to jqplotpie and jqplotbar shown when there are no results instead of a non-working chart.
+* Added value distribution support to jqplotpie and jqplotbar.
+* Added min parameter to jqplotbar to set the minimun value for the Y-axis.
+* Added pointlabel parameter to jqplotbar and chartlegend, legendlocation,
+  datalabels and datalabeltype parameters to jqplotpie based on a patches by James Hong Kong.
+* Made array and hash formats compatible with 'Array' extension 2.0 and 'HashTables' 1.0.
+* Added summary parameter to the icalendar format.
+
+New formats in this version are:
+* valuerank (written by DaSch)
+* D3Line, D3Bar and D3Treemap (written by James Hong Kong) (requires MW 1.17 or later)
+
+== SRF 1.6.2 ==
+
+Released on September 18, 2011.
+
+* Fixed error in math printer when there are no numerical results. 
+* Fixed vCard compatibility with SMW 1.6 and later.
+* Fixed array compatibility with SMW 1.6 and later.
+* Added median and product formats to the list of default enabled formats.
+
+== SRF 1.6.1 ==
+
+Released on August 20, 2011.
+
+* Fixed rendering bug in the tagcloud format occuring for inline queries.
+* Fixed jqPlotBar and jqPlotPie rendering on Special:Ask and other special pages. 
+* Cleaned up the jqPlotBar format somewhat.
+* Dropped compatibility with SMW < 1.6 for the tagcloud format.
+
+== SRF 1.6 ==
+
+Released on July 30, 2011.
+
+Changes in this version:
+* Added compatibility with SMW 1.6.
+* Rewrote math formats for efficiency, correct recursion and handling of multiple numerical properties.
+* Cleaned up the graph format.
+* Fixed division by zero issue (oh shii~) in the tagcloud format.
+* Added parameter descriptions to the graph and ploticus formats. 
+* Added support for SMW 1.6 style parameter handling to the tagcloud format.
+* Somewhat cleaned up the BibTeX format.
+* Fixed double HTML escaping issue in the tagcloud format.
+* Added fileextensions parameter to the Gallery format and added missing parameter description messages.
+
+New formats in this version are:
+* product (written by Jeroen De Dauw)
+* median (written by Jeroen De Dauw)
+
+== SRF 1.5.3 ==
+
+Released on February 9, 2011.
+
+Changes in this version:
+* Support for images specified by properties in the gallery format.
+* Fixes to the calendar and jqplot formats.
+* Improvements to the timeline and eventline formats.
+
+New formats in this version are:
+* tagcloud (written by Jeroen De Dauw)
+
+== SRF 1.5.2 ==
+
+Released on January 11 2011.
+
+Changes in this version:
+* Handling for ResourceLoader in MediaWiki 1.17+ added for
+  'timeline', 'eventline', 'jqplotbar' and 'jqplotpie' formats.
+* Visualization improvements for 'process' format.
+
+== SRF 1.5.1 ==
+
+Released on August 26 2010.
+
+New formats in this version are:
+* jqplotbar (written by Sanyam Goyal and Yaron Koren)
+* jqplotpie (written by Sanyam Goyal and Yaron Koren)
+
+Other changes:
+* Added support for 'semantic' extension type, added by SMW 1.5.2 and above.
+
+== SRF 1.5 ==
+
+Released on June 22 2010.
+
+New formats in this version are:
+* gallery (written by Rowan Rodrik van der Molen)
+
+Changes in this version:
+* the functions getName() and getParameters() were added to most formats, for use in Special:Ask
+* a 'lang' parameter was added to the 'calendar' format
+* improvements in 'exhibit' result format
+** new facet styles (slider and search)
+
+== SRF 1.4.5 ==
+
+Released on June 3 2009.
+
+New formats in this version are:
+* outline (written by Yaron Koren)
+
+Other changes:
+* the 'ploticus' format was disabled, due to a security hole
+* the 'calendar' format no longer requires disabling of caching
+* imagemap links were fixed for the 'graph' format
+* handling was added for the Admin Links extension
+
+== SRF 1.4.4 ==
+
+Released on April 16 2009.
+
+* improvements in 'exhibit' result format:
+** required scripts, styles, images largely included (no remote server access needed)
+** fixes for Timeline
+** Usage of Google Maps now requires to set a Google Maps key (as obtained from Google)
+   in LocalSettings.php:
+   $wgGoogleMapsKey = 'yourkey';
+   If this is not set, the "maps" view will be disabled.
+** many formatting improvements
+** improved compatibility with Internet Explorer (esp. IE8)
+** only Timeline and Map will access a remote server now
+
+* other changes:
+** a getName() method was added to many of the formats
+** SRF_ParserFunctions.php file added, holding parser functions for use by
+'calendar' format.
+
+== SRF 1.4.3 ==
+
+Released on March 2 2009.
+
+New formats in this version are:
+* bibtex (written by Steren Giannini)
+
+Also, handling of templates was added to the 'calendar' format by David
+Loomer.
+
+== SRF 1.4.2 ==
+
+Released on February 10 2009.
+
+The initialization of formats was changed to use the global $srfgFormats
+variable, instead of the srfInit() function.
+
+New formats in this version are:
+* ploticus (written by Joel Natividad)
+* exhibit (written by Fabian Howahl and using code from MIT CSAIL)
+* average (written by Yaron Koren)
+* min (written by Yaron Koren)
+* max (written by Yaron Koren)
+* sum (written by Nathan Yergler)
+* moved existing formats 'vcard' and 'icalendar' from SMW
+
+== SRF 1.4.0 ==
+
+Released on November 26 2008.
+
+This is the initial release of Semantic Result Formats. The version number
+was chosen in order to be aligned to the Semantic MediaWiki core distribution.
+SRF 1.4.0 is compatible to SMW 1.4.0 and thus equally versioned.
+
+The initial sets of Semantic Result Formats are:
+* calendar (written by Yaron Koren)
+* eventline (written by Markus Krötzsch and based on code by MIT's Simile group)
+* googlebar (written by Denny Vrandecic)
+* googlepie (written by Denny Vrandecic)
+* graph (written by Frank Dengler)
+* timeline (written by Markus Krötzsch and based on code by MIT's Simile group)

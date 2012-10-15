@@ -1,0 +1,20 @@
+//
+// Styles the content inside of the editor iframe.
+// Overrides: /extensions/wikia/RTE/css/content.scss
+//
+
+@import "../../../../../skins/oasis/css/mixins/clearfix"; 
+
+html.resizing {
+	overflow-y: hidden;
+}
+
+#bodyContent {
+	margin-bottom: 0;
+	word-wrap: break-word;
+
+	&.WikiaArticle {
+		@include clearfix;
+		min-height: 0;
+	}
+}

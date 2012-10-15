@@ -1,0 +1,24 @@
+.interwiki-interlanguage {
+	list-style-type: none;
+	list-style-image: none;
+	text-align: right;
+	padding-right: .5em !important; 
+}
+
+.interwiki-interlanguage > a {
+	padding-left: 11px;
+	background-repeat: no-repeat;
+	background-position: left center;
+}
+
+.interwiki-interlanguage > a:link, .interwiki-interlanguage > a:visited {
+	/* @embed */
+	background-image: url(InterlanguageLinks-Asset-Pencil.png);
+	color: #797979 !important;
+}
+
+.interwiki-interlanguage > a:hover {
+	/* @embed */
+	background-image: url(InterlanguageLinks-Asset-Pencil-Hover.png);
+	color: #0645AD !important;
+}

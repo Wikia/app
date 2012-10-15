@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://wikimedia-fundraising-1.17.localhost.wikimedia.org/" />
+<title>form.payflowpro</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">form.payflowpro</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/index.php/Special:PayflowProGateway</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=fname</td>
+	<td>Testy</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=lname</td>
+	<td>Testerton</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=emailAdd</td>
+	<td>no-reply@wikimedia.org</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=amount</td>
+	<td>100</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=card_num</td>
+	<td>378282246310005</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=cvv</td>
+	<td>123</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=year</td>
+	<td>label=2020</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=street</td>
+	<td>123 Test Street</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=city</td>
+	<td>D</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=street</td>
+	<td>123 G Street</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=city</td>
+	<td>Davis</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=state</td>
+	<td>label=California</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=zip</td>
+	<td>95616</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=country</td>
+	<td>label=United States</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=input.button-plain</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>Your credit card could not be validated.</td>
+	<td></td>
+</tr>
+</tbody></table>
+</body>
+</html>

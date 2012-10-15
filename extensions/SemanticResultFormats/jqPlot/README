@@ -1,0 +1,13 @@
+The result formats contained in this directory are query printers for
+Semantic MediaWiki that display charts using the jqPlot Javascript library:
+
+http://www.jqplot.com/
+
+jqPlot itself uses the jQuery Javascript library.
+
+Currently the directory holds two query printers, for bar and pie charts.
+
+For more information about the jqPlot result formats, see:
+
+* http://semantic-mediawiki.org/wiki/Help:jqplotpie_format
+* http://semantic-mediawiki.org/wiki/Help:jqplotbar_format

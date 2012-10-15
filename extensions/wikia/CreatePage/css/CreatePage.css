@@ -1,0 +1,101 @@
+/* FILE: /extensions/wikia/CreatePage/css/CreatePage.css */
+#CreatePageContainer {
+	padding: 8px;
+}
+
+#CreatePageDialogHeader {
+	margin-bottom: 20px;
+	margin-top: 8px;
+}
+
+#CreatePageDialogSub {
+	font-weight: bold;
+	margin-bottom: 8px;
+}
+
+#CreatePageDialogChoose {
+	font-weight: bold;
+	margin-top: 10px;
+	margin-bottom: 8px;
+}
+
+#CreatePageDialogChoices {
+	margin-bottom: 8px;
+	height: 280px;
+    overflow-y: auto;
+	overflow-x: hidden;
+	list-style-type: none;
+	margin: 0;
+}
+
+#wpCreatePageDialogTitle {
+	width: 100%;
+}
+
+#CreatePageContainer .chooser {
+	float: left;
+	width: 48%;
+	text-align: center;
+	margin-bottom: 12px;
+}
+
+#CreatePageContainer div img {
+	margin-top: 8px;
+}
+
+.wikiaSkinMonaco #CreatePageDialogWrapper {
+	margin-top: -62px;
+}
+
+.chooser div {
+	width: 80%;
+	padding: 1em 1em 1em 1em;
+}
+
+#CreatePageDialogChoices .accent {
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+}
+
+#CreatePageDialogButton {
+	clear: both;
+}
+
+#CreatePageDialogTitleErrorMsg {
+	margin-top: 8px;
+}
+
+.CreatePageError {
+	font-weight: bold;
+	color: red;
+}
+
+#CreatePageDialogChoices li.long {
+	width: 100%;
+	min-height: 87px;
+	margin-bottom: 5px;
+	text-align: left;
+}
+
+#CreatePageDialogChoices li.long div {
+	margin-left: 88px;
+	padding: 12px 0 0;
+	margin-top: 0;
+}
+
+#CreatePageDialogChoices li.long div span {
+	font-size:14px;
+}
+
+#CreatePageDialogChoices li.long input {
+	float: left;
+	border-top-width: 7px;
+	margin-top: 32px;
+}
+
+#CreatePageDialogChoices li.long img {
+	float: left;
+	width: 55px;
+	margin-left:6px;
+	margin-top:10px;
+}

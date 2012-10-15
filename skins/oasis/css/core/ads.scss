@@ -1,0 +1,205 @@
+@import "color";
+@import "layout";
+@import "../mixins/clearfix";
+
+/** Leaderboards **/
+#LEFT_SKYSCRAPER_2, #LEFT_SKYSCRAPER_3, #HOME_TOP_LEADERBOARD, #TOP_LEADERBOARD, #CORP_TOP_LEADERBOARD, #HUB_TOP_LEADERBOARD {
+	text-align: center;
+	&.jumbo-leaderboard {
+		margin-left: 0;
+		margin-right: 0;
+	}
+	>div {
+		margin-left: auto;
+		margin-right: auto;
+	}
+	>div[id^=Liftium_] {
+		text-align: center;
+	}
+}
+#CORP_TOP_LEADERBOARD.default-height, #HOME_TOP_LEADERBOARD.default-height, #HUB_TOP_LEADERBOARD.default-height, #TOP_LEADERBOARD.default-height {
+	height: 90px;
+}
+.WikiaTopAds {
+	@include clearfix;
+	padding-top: 10px;
+	position: relative;
+	&.WikiaTopButtonLeft {
+		#CORP_TOP_LEADERBOARD, #HOME_TOP_LEADERBOARD, #HUB_TOP_LEADERBOARD, #TOP_LEADERBOARD {
+			float: right;
+			margin: 0 10px 0 0;
+			padding: 0;
+		}
+		#TOP_BUTTON {
+			margin: 0 0 0 10px;
+			padding: 0;
+		}
+	}
+	&.WikiaTopButtonRight {
+		#CORP_TOP_LEADERBOARD, #HOME_TOP_LEADERBOARD, #HUB_TOP_LEADERBOARD, #TOP_LEADERBOARD {
+			float: left;
+			margin: 0 0 0 10px;
+			padding: 0;
+		}
+		#TOP_BUTTON {
+			margin: 0 10px 0 0;
+			padding: 0;
+		}
+	}
+}
+
+/**
+ * IMPORTANT (21-Aug-2012, FB:45031): Integrate this code into base css above after transition.
+ * This is currently an override depending on skin switch.
+ */
+.oasis-split-skin {
+	.WikiaTopAds {
+		margin: 0 auto;
+		padding: 10px 0;
+		width: $width-outside;
+	}
+	.wikia-ad {
+		>img {
+			float: right;	/* invisible tracking pixel is taking up height for some reason.  taking it out of the flow for now */
+		}
+	}
+}
+
+/** Skyscrapers **/
+#LEFT_SKYSCRAPER_2 {
+	@extend section;
+}
+#LEFT_SKYSCRAPER_3 {
+	clear: both;
+	position: absolute;
+	right: 80px;
+	top: -640px;
+}
+
+
+/** Box ads **/
+.home-top-right-ads {
+	float: right;
+}
+#HOME_TOP_RIGHT_BOXAD {
+	margin-bottom: 10px;
+	position: relative;
+	width: 300px;
+	z-index: 100;
+}
+/* grid layout transition temp code.  remove and integrate into main code after transition is complete */
+.WikiaGrid {
+	.SelfServeUrl {
+		line-height: 10px;
+		margin: 0;
+		position: relative;
+		top: -16px;
+	}
+	#HOME_TOP_RIGHT_BOXAD,
+	#TOP_RIGHT_BOXAD {
+		background-color: mix($color-page, $color-page-opposite, 95%);
+		margin-bottom: 0;
+		padding: 15px;
+	}
+} 
+/* end transistion temp code */
+
+#TOP_RIGHT_BOXAD, #CORP_TOP_RIGHT_BOXAD {
+	margin-bottom: 10px;
+	z-index: 100;
+}
+#CORP_TOP_RIGHT_BOXAD.default-height, #HOME_TOP_RIGHT_BOXAD.default-height, #TOP_RIGHT_BOXAD.default-height {
+	height: 250px;
+}
+#PREFOOTER_LEFT_BOXAD.default-height, #PREFOOTER_RIGHT_BOXAD.default-height {
+	height: 250px;
+}
+
+
+/** Button ads **/
+#HOME_TOP_RIGHT_BUTTON {
+	display: none;
+}
+.home-top-right-button-visible {
+	display: block;
+	margin-bottom: 10px;
+}
+
+
+/** Spotlights **/
+#SPOTLIGHT_GLOBALNAV_1, #SPOTLIGHT_GLOBALNAV_2, #SPOTLIGHT_GLOBALNAV_3 {
+	width: 269px;
+	&.SPOTLIGHT_GLOBALNAV {
+		width: 255px;	
+	}
+}
+// changes for $wgEnableSpotlightsV2
+.GlobalNavigation { 
+	.subnav { 
+		.SPOTLIGHT_GLOBALNAV {
+			left: 10px;
+			margin-top: 17px;
+			position: relative;
+		}
+	}
+}
+.WikiaFooter { 
+	section {
+		.SPOTLIGHT_FOOTER {
+			padding: 0px 28px 33px;
+			.WikiaSpotlight {
+				height: 123px;
+				width: 255px;
+			}
+		}
+	}
+	@if $oasisWidthType == 1 {
+		.FooterAd {
+			width: $width-outside;
+		}
+	}
+}
+
+/** Invisible ads **/
+#HOME_INVISIBLE_TOP, #INVISIBLE_TOP, #INVISIBLE_1, #INVISIBLE_2 {
+	position: absolute;
+}
+
+
+/** Mainpage styling **/
+/*
+On hold for now
+.WikiaMainPageBanner {
+	background: url(/skins/oasis/images/temp_main_page_banner.jpg) no-repeat; /* $wgCdnStylePath /
+	height: 200px;
+	margin-bottom: -10px;
+	*margin-bottom: 10px; //IE7
+	margin-bottom: 10px\9; //IE8
+}
+#HOME_TOP_LEADERBOARD {
+	@include linear-gradient(transparent, top, rgba($color-page, .0001), 90%, $color-page, 100%);
+	height: 200px;
+}
+//Appropriate margins around different size ads
+#HOME_TOP_LEADERBOARD div[id*="728x90"] {
+	padding-top: 40px;
+}
+*/
+
+/** DART calls for INVISIBLE slots return a pixel. Hide this pixel. **/
+body >a >img[src$="noad.gif"] {
+	position: absolute;
+	z-index: 0;
+}
+
+.SelfServeUrl {
+	color: #666;
+	font-size: 10px;
+	margin: -10px 0 10px 0;
+	text-align: center;
+}
+
+.home-top-right-ads .SelfServeUrl {
+	position: relative;
+	z-index: 100;
+}

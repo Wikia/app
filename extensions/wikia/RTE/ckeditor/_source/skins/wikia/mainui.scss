@@ -1,0 +1,155 @@
+/*
+Copyright (c) 2003-2009, CKSource - Frederico Knabben. All rights reserved.
+For licensing, see LICENSE.html or http://ckeditor.com/license
+*/
+
+@import "../../../../../../../skins/oasis/css/core/color";
+
+.cke_skin_wikia
+{
+	display: block;
+	_display: inline-block;
+}
+
+/* Main editor only settings. */
+.cke_skin_wikia .cke_wrapper
+{
+	display: block;
+	position: relative; /* RT #39114 */
+}
+
+.cke_skin_wikia .cke_browser_iequirks .cke_wrapper
+{
+	background-image: none;
+}
+
+.cke_skin_wikia .cke_editor
+{
+	border-collapse: separate;
+	display: inline-table;
+	vertical-align: top;
+	width: 100%;
+}
+
+.cke_skin_wikia .ltr .cke_browser_ie iframe
+{
+	margin-right: -10px;
+}
+
+.cke_skin_wikia .rtl .cke_browser_ie iframe
+{
+	margin-left: -10px;
+}
+
+.cke_skin_wikia .cke_browser_opera .cke_editor.cke_skin_wikia .cke_resizer
+{
+	display: table;
+}
+
+.cke_skin_wikia .cke_contents
+{
+	overflow: hidden;
+}
+
+.cke_skin_wikia .cke_hc .cke_contents
+{
+	border: 1px solid black;
+}
+
+.cke_skin_wikia .cke_contents iframe
+{
+	background-color: $color-page;
+	color: $color-text;
+}
+
+.cke_skin_wikia .cke_focus
+{
+	outline: auto 5px -webkit-focus-ring-color;
+}
+
+.cke_skin_wikia textarea.cke_source
+{
+	border: 0;
+	color: $color-text;
+	font-family: monospace;
+	font-size: 13px;
+	line-height: 140%;
+	background-color: $color-page;
+	white-space: pre;
+	overflow: auto;
+}
+
+.cke_skin_wikia .cke_resizer
+{
+	width: 12px;
+	height: 12px;
+	margin-right: 7px;
+	margin-top: 9px;
+	display: block;
+	float: right;
+	background-position: 0 -1428px;
+	background-repeat: no-repeat;
+	cursor: se-resize;
+}
+
+.cke_skin_wikia .cke_rtl .cke_resizer
+{
+	cursor: sw-resize;
+	/* resizer_rtl.gif*/
+	background-position: 0 -1455px;
+	float: left;
+}
+
+.cke_skin_wikia .cke_maximized .cke_resizer
+{
+	display: none;
+}
+
+/* macbre: add IE8 due to RT #140917 */
+.cke_skin_wikia .cke_browser_ie7 .cke_contents textarea,
+.cke_skin_wikia .cke_browser_ie8 .cke_contents textarea
+{
+	position: absolute;
+}
+
+.cke_skin_wikia .cke_browser_ie.cke_browser_quirks .cke_contents iframe
+{
+	position: absolute;
+	top: 0;
+}
+
+/* Chrome fixes */
+/* RT #37587 */
+.cke_skin_wikia .cke_browser_webkit textarea.cke_source {
+	white-space: pre-wrap;
+}
+
+/* resize iframe */
+.cke_skin_wikia .cke_browser_webkit iframe {
+	white-space: normal;
+}
+
+/* All voice labels are not displayed. (RT #57894) */
+.cke_skin_wikia .cke_voice_label
+{
+	display: none;
+}
+
+.cke_skin_wikia legend.cke_voice_label
+{
+	display: none;
+}
+
+.cke_skin_wikia .cke_browser_ie legend.cke_voice_label
+{
+	position: absolute;
+	display: block;
+	width: 0;
+	height: 0;
+	overflow: hidden;
+}
+
+/* Restore the container visibility */
+html .cke_skin_wikia {
+	visibility: visible;
+}

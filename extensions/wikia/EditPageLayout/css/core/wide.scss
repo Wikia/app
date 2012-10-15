@@ -1,0 +1,195 @@
+.editpage-visualwidemode {
+	#EditPageRail {
+		position: absolute;
+		top: 0;
+		right: 0;
+		.buttons{
+			.wikia-menu-button, .control-button{
+				margin-top: 0;
+			}
+		}
+		.module {
+			border-left: 0px;
+			@include clear-box-shadow;
+		}
+		.module_content {
+			background-color: transparent;
+			background-image: none;
+			padding-bottom: 10px;
+		}
+	}
+	#EditPageMain {
+		width: $width-outside;
+	}
+	#EditPageToolbar {
+		padding-right: 15px + $width-rail-epl  - 10;
+		.cke_toolbar_expand {
+			> a {
+				right: 20px + $width-rail-epl  - 10;
+			}
+		}
+	}
+}
+
+.editpage-sourcewidemode.mode-source {
+	#EditPageEditorWrapper {
+		padding-right: 10px;
+	}
+
+	/* vertical bar with an arrow to show/hide the rail */
+	.editpage-widemode-trigger {
+		border-left: 1px solid $color-page-border;
+		bottom: 0;
+		cursor: pointer;
+		display: block;
+		position: absolute;
+		right: $width-rail-epl;
+		top: 0;
+		width: 10px;
+		z-index: 1;
+
+		.arrow {
+			border: 0 solid transparent;
+			border-left-color: $color-text;
+			border-width: 4px 0 4px 4px;
+			height: 0;
+			left: 50%;
+			margin-left: -2px;
+			margin-top: -4px;
+			position: absolute;
+			top: 50%;
+			width: 0;
+		}
+	}
+
+	/* vertical bar styling when right rail is hidden */
+	&.editpage-sourcewidemode-on {
+		.editpage-widemode-trigger {
+			left: auto;
+			right: 0px;
+			.arrow {
+				border-width: 4px 4px 4px 0;
+				border-left-color: transparent;
+				border-right-color: $color-text;
+			}
+		}
+		.rail-auto-height {
+			display: none;
+		}
+		label[for="wpSummary"] {
+			display: none !important; // Yeah, this is lame, but the #EditPage selectors need to be refactored to .EditPage as to not clobber specificity.
+		}
+	}
+
+	/* right rail adjustments */
+	&.editpage-sourcewidemode-on {
+		#EditPageRail {
+			@include clear-box-shadow;
+			background-color: transparent;
+			border-left: 0;
+			height: 39px !important; /* bugid: 9207 */
+			position: absolute;
+			top: 0;
+			right: 0;
+			.module {
+				@include clear-box-shadow;
+				display: none;
+				border-left: 0px;
+			}
+			.module_content {
+				background-color: transparent;
+				background-image: none;
+			}
+		}
+		#EditPageMain {
+			width: $width-outside;// - 10;
+		}
+		#EditPageToolbar {
+			margin-right: -6px;
+			padding-right: 15px + $width-rail-epl  - 10;
+		}
+		.cke_toolbar_expand {
+			> a {
+				right: 20px + $width-rail-epl  - 10;
+			}
+		}
+	}
+
+	/* page controls styling */
+	$page-controls-wide-width: 640px;
+	&.editpage-sourcewidemode-on {
+		.cke_toolbar_source {
+			width: $width-outside - $page-controls-wide-width - 65;
+		}
+		#EditPageRail {
+			width: auto;
+			.module_page_controls {
+				// resetting module styling - start
+				display: block;
+				margin-left: 0;
+				// resetting module styling - end
+
+				.module_content {
+					position: relative;
+					width: $page-controls-wide-width;
+				}
+
+				// checkboxes
+				label {
+					left: 285px;
+					position: absolute;
+					text-align: left;
+					top: 10px;
+				}
+				// summary box
+				textarea {
+					position: absolute;
+					top: 9px;
+					left: 3px;
+					height: 15px;
+					padding: 2px;
+					margin: 0;
+				}
+				// save button
+				#wpSave {
+					position: absolute;
+					top: 0;
+					right: 15px;
+				}
+				// preview button
+				.wikia-menu-button {
+					position: absolute;
+					top: 0;
+					right: 140px;
+				}
+			}
+		}
+	}
+}
+
+/* CreateBlogPost specific fixes (BugId:9852) */
+.page-Special_CreateBlogPage .editpage-sourcewidemode.mode-source {
+	 #EditPageRail .module_page_controls {
+		.wpIsCommentingEnabled {
+			top: 2px;
+		}
+		.wpMinoredit {
+			top: 18px;
+		}
+	}
+}
+
+/* IE7 only fixes */
+/* BugId:6349 */
+#EditPage.editpage-visualwidemode {
+	#EditPageToolbar {
+		*background-color: transparent;
+		*z-index: 2;
+	}
+	.cke_modulebutton.cke_opened {
+		*z-index: 3;
+	}
+	.cke_panel_dropdown {
+		*z-index: 2;
+	}
+}

@@ -1,0 +1,170 @@
+@import "../../../../skins/oasis/css/mixins/opacity";
+@import "../../../../skins/oasis/css/mixins/transition";
+
+.WikiaMosaicSlider {
+	color: white;
+	display: none;
+	
+	a {
+		color: #fff;
+		text-decoration: none;
+	}
+	.wikia-mosaic-slider-region {
+		float: left;
+		height: 210px;
+		overflow: hidden;
+		position: relative;
+		width: 320px;
+		.wikia-mosaic-slider-panorama {
+			@include transition-shorthand(left 400ms ease-in-out);
+			left: 0;
+			height: 210px;
+			position: absolute;
+			top: 0;
+			width: 1600px;
+			.wikia-mosaic-hero-image {
+				img {
+					float: left;
+					height: 210px;
+					width: 320px;
+				}
+			}
+		}
+		.wikia-mosaic-slider-description-mask,
+		.wikia-mosaic-slider-description {
+			bottom: 0;
+			height: 45px;
+			left: 0;
+			position: absolute;
+			width: 320px;
+		}
+		
+		.wikia-mosaic-slider-description-mask {
+			@include opacity(50);
+			background: black;
+			z-index: 5;
+		}
+		
+		.wikia-mosaic-slider-description {
+			overflow: hidden;
+			white-space: nowrap;
+			z-index: 10;
+			.image-description {
+				display: block;
+				font-size: 14px;
+				line-height: 14px;
+				margin: 5px;
+				padding: 0;
+			}
+			p, .description-more {
+				margin: 0 5px;
+				padding: 0;
+			}
+			.wikia-mosaic-short-title {
+				display: none;
+			}
+		}
+	}
+	
+	.wikia-mosaic-thumb-region {
+		.wikia-mosaic-slide {
+			cursor: pointer;
+			float: right;
+			height: 100px;
+			margin: 10px 0 0 10px;
+			position: relative;
+			width: 155px;
+			z-index: 1;
+			
+			&:first-child {
+				margin-top: 0;
+			}
+			
+			&.last {
+				margin-left: 0;
+			}
+			
+			&.selected {
+				@include opacity(50);
+			}
+			
+			.wikia-mosaic-hero-image {
+				display: none;
+			}
+			a {
+				//position: relative;
+				z-index: 1;
+				.wikia-mosaic-thumb-image {
+					height: 100px;
+					width: 155px;
+				}
+			}
+			
+			.wikia-mosaic-description-mask,
+			.wikia-mosaic-description {
+				bottom: 0;
+				height: 25px;
+				left: 0;
+				position: absolute;
+				width: 155px;
+			}
+			
+			.wikia-mosaic-description-mask {
+				@include opacity(50);
+				background: black;
+				z-index: 5;
+			}
+			
+			.wikia-mosaic-description {
+				overflow: hidden;
+				white-space: nowrap;
+				z-index: 10;
+				.image-description {
+					display: none;
+					font-size: 14px;
+					line-height: 14px;
+					margin: 5px;
+					padding: 0;
+				}
+				p {
+					display: none;
+				}
+				.wikia-mosaic-short-title {
+					font-size: 14px;
+					line-height: 14px;
+					margin: 5px;
+					padding: 0;
+				}
+			}
+		}
+		.wikia-mosaic-slider-description span, .wikia-mosaic-slide span {
+			display: block;
+		}
+	}
+}
+
+/* temp transition code until grid is fully rolled out, remove and integrate after transition */
+.WikiaPage.WikiaGrid .WikiaMosaicSlider {
+	.wikia-mosaic-slider-region {
+		width: 330px;
+		.wikia-mosaic-slider-panorama {
+			width: 1650px;
+		}
+		.wikia-mosaic-slider-description-mask,
+		.wikia-mosaic-slider-description {
+			width: 330px;
+		}
+	}
+
+	.wikia-mosaic-thumb-region {
+		.wikia-mosaic-slide {
+			width: 160px;
+			a {
+				.wikia-mosaic-thumb-image {
+					width: 160px;
+				}
+			}
+		}
+	}
+}
+/* end temp transistion code */

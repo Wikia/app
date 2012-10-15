@@ -1,0 +1,75 @@
+.ThemeDesignerPicker {
+	@include box-shadow(0, 0, 10px, #CCC);
+	background: #FFF;
+	border: 5px solid #accfe5;
+	display: none;
+	padding-bottom: 10px;
+	position: absolute;
+	width: 235px;
+	z-index: 3;
+	.color {
+		display: none;
+		.swatches {
+			background: url(/extensions/wikia/ThemeDesigner/images/color_shadow.png) bottom center no-repeat; /* $wgCdnStylePath */
+		}
+	}
+	.image {
+		display: none;
+		.swatches {
+			background: url(/extensions/wikia/ThemeDesigner/images/image_shadow.png) bottom center no-repeat; /* $wgCdnStylePath */
+			li, img {
+				height: 50px;
+				width: 60px;
+			}
+			.no-image {
+				background: #EEE url(/extensions/wikia/ThemeDesigner/images/void_button.png) 50% 27px no-repeat; /* $wgCdnStylePath */
+				font-size: 9px;
+				text-align: center;
+			}
+		}
+	}
+	&.color {
+		display: block;
+		.color {
+			display: block;
+		}
+	}
+	&.image {
+		display: block;
+		width: 311px;
+		.image {
+			display: block;
+		}
+	}
+	h1 {
+		margin: 10px 20px 5px;
+	}
+	.swatches {
+		@include clearfix;
+		padding: 0 15px 10px 20px;
+		li {
+			border: 1px solid #FFF;
+			cursor: pointer;
+			display: block;
+			float: left;
+			height: 16px;
+			margin: 0 7px 7px 0;
+			outline: 1px solid #999;
+			width: 16px;
+		}
+	}
+}
+.ColorNameForm {
+	@include clearfix;
+	margin: 0 20px;
+	input[type="text"] {
+		width: 145px;
+	}
+	input[type="submit"] {
+		float: right;
+	}
+}
+.BackgroundImageForm {
+	@include clearfix;
+	margin: 0 20px;
+}

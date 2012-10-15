@@ -1,0 +1,155 @@
+@import "color";
+@import "layout";
+@import "../mixins/bodytext";
+@import "../mixins/border-opacity";
+@import "../mixins/border-radius";
+@import "../mixins/box-shadow";
+@import "../mixins/clearfix";
+@import "../mixins/gradient";
+@import "../mixins/opacity";
+
+$modal-border-opacity: 80;
+@if $is-dark-wiki {
+	$modal-border-opacity: 60;
+}
+
+.modalWrapper {
+	@include box-shadow(0, 10px, 60px, mix($color-page, #000));
+	background: $color-page;
+	border-width: 5px;
+	border-style: solid;
+	@include border-opacity($color-body, $modal-border-opacity);
+	color: $color-text;
+	position: absolute;
+	>h1 {
+		color: $color-links;
+		font-size: 22px;
+		margin: 20px 60px 20px 20px;
+		overflow: hidden;
+	}
+	.close {
+		@include clearfix;
+		float: right;
+		margin: 20px 20px 0 0;
+		z-index: 1;
+	}
+	.neutral {
+		background: transparent;
+	}
+	.modalToolbar {
+		text-align: right;
+		background: transparent;
+		margin-top: 20px;
+
+		a {
+			margin-left: 10px;
+		}
+	}
+	
+	#WikiaConfirmOk {
+		margin-left: 2px;
+	}
+}
+
+.modalContent {
+	@include clearfix;
+	@include bodytext;
+	display: block;
+	margin: 0 20px 20px 20px;
+        .MyToolsConfiguration {
+            .options-list {
+                line-height: 1;
+            }
+        }
+}
+
+.blackout {
+	background: $color-page;
+	left: 0;
+	opacity: .8;
+	position: absolute;
+	top: 0;
+	width: 100%;
+}
+
+// modify "YUI" extensions (VET / WMU)
+yui-overlay, .yui-panel-container {
+	position: absolute;
+	z-index: $zTop + 2 !important;
+}
+
+.yui-panel {
+	left: 0;
+	position: relative;
+	top: 0;
+}
+
+.mask {
+	background: $color-page;
+	margin-top: -30px;
+	@include opacity(80);
+	position: fixed;
+	z-index: $zTop + 1 !important;
+}
+
+.editor .mask {
+	margin-top: 0px;
+}
+
+.skin-oasis {
+
+  #ImageUpload {
+    background: $color-page;
+  }
+
+	#ImageUpload,
+	#VideoEmbed {
+		@include box-shadow(0, 10px, 60px, mix($color-page, #000));
+		border: 5px solid $color-buttons; 
+		border-color: transparentize($color-buttons, 0.7); // for browser that do support RGBa
+		padding: 35px 5px 5px 5px !important;
+		position: absolute;
+		width: auto !important;
+		h1 {
+			color: $color-links;
+			font-size: 22px;
+		}
+		.close {
+			position: static;
+			margin-top: 4px;
+			vertical-align: baseline;
+		}
+	}
+	#ImageUploadClose,
+	#VideoEmbedClose {
+		@include border-radius(3px);
+		@include linear-gradient($color-buttons, top, $color-button-highlight, 8%, $color-buttons, 13%);
+		height: 19px;
+		padding: 0;
+		right: 5px;
+		text-align: center;
+		width: 19px;
+		a {
+			display: none;
+		}
+	}
+	#ImageUploadBorder,
+	#VideoEmbedBorder {
+		display: none;
+	}
+	#ImageUploadBody {
+		height: 480px;
+	}
+	#ImageUploadProgress1,
+	#VideoEmbedProgress1 {
+		visibility: hidden;
+	}
+	.yui-back {
+		display: inline-block;
+		margin: 0 5px 0 0;
+	}
+	#VideoEmbedConflict .yui-back,
+	#ImageUploadConflict .yui-back {
+		bottom: 15px;
+	}
+}

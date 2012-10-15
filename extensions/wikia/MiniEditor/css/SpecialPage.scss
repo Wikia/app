@@ -1,0 +1,87 @@
+@import "../../../../skins/oasis/css/core/color";
+@import "../../../../skins/oasis/css/mixins/box-shadow";
+
+@import "core/colors";
+
+.SpecialPageWrapper {
+	padding: 20px;
+	width: 500px;
+
+	h3 {
+		margin: 0;
+		padding: 5px 10px;
+	}
+
+	.MiniEditorWrapper {
+		background-color: $color-MiniEditor;
+		margin-bottom: 10px;
+		padding: 10px;
+
+		.editarea {
+			background-color: $color-page;
+			border: 1px $color-page-border solid;
+			padding: 5px;
+
+			.body {
+				background-color: $color-page;
+				border: 0;
+				color: $color-alternate-text;
+				height: 75px;
+				width: 100%;
+			}
+		}
+
+		.buttons {
+			display: none;
+			margin-top: 10px;
+			text-align: right;
+
+			button {
+				cursor: pointer;
+				padding: 0 8px;
+			}
+		}
+
+		&.focused .editarea {
+			@include box-shadow(0px, 0px, 4px, $color-MiniEditor-focus);
+		}
+
+		&#Edit {
+			margin-left: 20px;
+			position: relative;
+
+			.body {
+				color: $color-text;
+			}
+
+			.buttons {
+				bottom: 20px;
+				position: absolute;
+				right: 20px;
+			}
+
+			&.mode-wysiwyg, &.mode-source {
+				.buttons {
+					bottom: auto;
+					position: static;
+					right: auto;
+				}
+			}
+		}
+
+		&#Reply {
+			background-color: transparent;
+			margin-left: 20px;
+			padding: 0;
+
+			.body {
+				height: 12px;
+			}
+
+			.toolbar {
+				margin-top: 0;
+				padding: 10px 5px;
+			}
+		}
+	}
+}

@@ -1,0 +1,234 @@
+/**
+ * This file is used for styling the edit area of CKeditor
+ */
+@import "../../../../skins/oasis/css/oasis";
+
+head {
+	// fb#5654 Editor reskin: Firefox loading effect issue
+	// IMPORTANT !!!!
+	// DON'T REMOVE THIS CSS RULE
+	// THAT'S REQUIRED TO CHECK IF THIS FILE IS LOADED INSIDE VISUAL EDITOR
+	color: green;
+}
+
+#bodyContent {
+	background: $color-page;
+	color: $color-text;
+	padding-left: 6px;
+	overflow-y: auto;
+	margin-bottom: 35px;
+	
+	a {
+		color: $color-links;
+	}
+	
+	// Add verticle dotted lines to tables when selected
+	table.article-table.article-table-selected {
+		th, td {
+			border-right: 1px $color-page-border dashed;
+		}
+		th:first-child, td:first-child {	
+			border-left: 1px $color-page-border dashed;
+		}
+	}
+}
+
+/**
+ * Spell Checker
+ */
+.spellchecker-misspell {
+	background: transparent url("data:image/gif;base64,R0lGODlhBAADAIABAP8NDQAAACH5BAEAAAEALAAAAAAEAAMAAAIFRB5mGQUAOw==") repeat-x center bottom !important;
+}
+
+// RTEcontent.css
+/**
+ * images
+ */
+img.image,
+img.media-placeholder,
+img.video {
+	cursor: move !important;
+}
+
+/* thumbs */
+img.thumb,
+img.frame {
+	background: $color-article-thumb-background;
+	border: 1px solid $color-article-thumb-border;
+	clear: right;
+	display: inline;
+	float: right;
+	margin: 6px 0 10px 18px;
+	padding: 3px;
+}
+
+img.alignLeft {
+	clear: left;
+	display: inline;
+	float: left;
+	margin: 6px 18px 10px 0;
+}
+
+img.alignNone {
+	display: block;
+	float: none;
+	margin: 6px 18px 10px 0;
+}
+
+img.alignCenter {
+	display: block;
+	margin: 0 auto;
+}
+
+img.alignRight {
+	clear: right;
+	display: block;
+	float: right;
+	margin: 0 0 0 auto;
+}
+
+/* border */
+img.border {
+	border: 1px solid $color-article-thumb-border;
+}
+
+/* caption indicator */
+img.withCaption {
+	background-image: url('/extensions/wikia/RTE/images/imageCaption.png');/* $wgCdnStylePath */
+	background-repeat: no-repeat;
+	padding-bottom: 25px;
+}
+
+/* BugId:6457 */
+.WikiaArticle {
+	h2 {
+		overflow: visible;
+	}
+}
+
+/**
+ *  placeholders
+ */
+img.placeholder {
+	background-image: url(/extensions/wikia/RTE/ckeditor/_source/skins/wikia/icons.png);/* $wgCdnStylePath */
+	background-position: 0 -1294px;
+	height: 16px !important;
+	margin: 0 3px 3px 3px;
+	width: 16px !important;
+}
+
+img.placeholder-comment {
+	background-position: 0 -1280px;
+}
+
+/* Add Image / Add Video */
+img.media-placeholder {
+	background-position: 50% 50%;
+	background-repeat: no-repeat;
+	border: 1px solid $color-article-thumb-border;
+	clear: both;
+	margin: 2px;
+	&.alignCenter {
+		margin: 0 auto;
+	}
+}
+
+img.image-placeholder {
+	background-image: url(/extensions/wikia/RTE/images/imagePlaceholder.png);/* $wgCdnStylePath */
+}
+
+img.video-placeholder {
+	background-image: url(/extensions/wikia/RTE/images/videoPlaceholder.png);/* $wgCdnStylePath */
+}
+
+/* Language customization */
+.lang-en img.image-placeholder {
+	background-image: url(/extensions/wikia/RTE/images/imagePlaceholderEn.png);/* $wgCdnStylePath */
+}
+
+/* Wikia Image Gallery placeholders */
+img.image-gallery {
+	background-image: url(/extensions/wikia/WikiaPhotoGallery/images/gallery-placeholder.png);/* $wgCdnStylePath */
+	display: block;
+}
+
+img.image-gallery-slider {
+	background-image: url(/extensions/wikia/WikiaPhotoGallery/images/slider-placeholder.png);/* $wgCdnStylePath */
+	display: block;
+}
+
+img.image-slideshow {
+	background-image: url(/extensions/wikia/WikiaPhotoGallery/images/slideshow-placeholder.png);/* $wgCdnStylePath */
+
+	&.alignLeft {
+		float: left;
+		margin-right: 18px;
+	}
+
+	&.alignCenter {
+		margin: 0 auto;
+	}
+
+	&.alignRight {
+		float: right;
+	}
+}
+
+/* Wikia Poll placeholder */
+img.placeholder-poll {
+	background-image: url(/extensions/wikia/WikiaPoll/images/poll-placeholder.png);/* $wgCdnStylePath */
+	float: left;
+	height: 200px;
+	width: 300px;
+}
+
+/* redlinks (RT #87906) */
+a.new {
+	color: #cc2200 !important;
+}
+
+/* RT #89023 */
+h1 {
+	display: block !important;
+}
+
+/* dropdowns */
+.cke_panel_grouptitle {
+	background-color: $color-menu-highlight;
+	color: $color-text;
+}
+
+.cke_panel_block {
+	a {
+		border: none;
+		&:hover,
+		&:focus,
+		&:active {
+			background-color: $color-menu-highlight;
+			text-decoration: none;
+		}
+	}
+}
+
+/* style format dropdown */
+.cke_panel_listItem {
+	&.cke_selected a {
+		border: solid 1px $color-module-shadow;
+		background-color: $color-menu-highlight;
+	}
+	h2 {
+		font-size: 18px;
+	}
+	h3 {
+		font-size: 16px;
+	}
+	h4 {
+		font-size: 14px;
+	}
+	h5 {
+		font-size: 12px;
+	}
+	pre {
+		font-family: monospace;
+	}
+}

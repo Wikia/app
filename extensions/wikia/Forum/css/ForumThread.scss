@@ -1,0 +1,73 @@
+@import "../../../../skins/oasis/css/core/color";
+@import "../../../../skins/oasis/css/mixin/clearfix";
+
+/**
+ * The functionality of Forum Thread is exactly the same as Wall.
+ * Forum Thread is a css haxx of Wall Thread.
+ */
+#Wall.Thread {
+	.avatar {
+		border: 0;
+	}
+	.comments >.message {
+		>.speech-bubble-message {
+			margin-right: 0;
+			position: relative;
+			.edited-by {
+				left: 10px;
+				position: absolute;
+				top: 10px;
+			}
+			.follow {
+				margin-left: 10px;
+				padding-left: 5px;
+				padding-right: 5px;
+			}
+			.msg-title {
+				padding-top: 25px;
+			}
+		}
+		>.replies {
+			>.message {
+				margin-right: 0;
+			}
+			.new-reply {
+				.speech-bubble-avatar {
+					display: block;
+					float: left;
+				}
+				.speech-bubble-message {
+					margin-left: 35px;
+				}
+			}
+		}
+	}
+	.message {
+		.edited-by {
+			margin: 0;
+		}
+		.editarea,
+		.msg-body {
+			margin: 5px 0;
+		}
+		.MiniEditorWrapper.active {
+			.edited-by {
+				margin: 0;
+			}
+		}
+	}
+}
+
+/* oasis only styles */
+body.skin-monobook {
+	#Wall.Thread {
+		.comments >.message {
+			>.speech-bubble-message {
+				.edited-by {
+					left: 0;
+					top: 0;
+				}
+			}
+		}
+	}
+}

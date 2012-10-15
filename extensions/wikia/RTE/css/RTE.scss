@@ -1,0 +1,689 @@
+/**
+ * This file is used for styling the edit page
+ */
+@import "../../../../skins/oasis/css/core/color";
+@import "../../../../skins/oasis/css/mixins/border-radius";
+@import "../../../../skins/oasis/css/mixins/box-shadow";
+@import "../../../../skins/oasis/css/mixins/clearfix";
+@import "../../../../skins/oasis/css/mixins/gradient";
+
+/* positioning for first run notice */
+#editform {
+	position: relative;
+}
+
+/* hide MW textarea */
+#wpTextbox1 {
+	visibility: hidden;
+}
+/* hide edit tools in wysiwyg mode */
+.rte_wysiwyg .mw-editTools {
+	display: none;
+}
+
+/* loading indicator */
+.RTEloading #cke_contents_wpTextbox1 {
+	background: #ddd url(/skins/common/images/ajax.gif) no-repeat 50% 50% !important; /* $wgCdnStylePath */
+	overflow: hidden;
+	position: relative;
+}
+
+/* hide textarea */
+.RTEloading .cke_contents iframe {
+	/* RT #56006 */
+	display: none;
+}
+
+.RTEloading .cke_contents textarea {
+	position: absolute !important;
+	left: -10000px;
+}
+
+.RTEloading.rte_wysiwyg .cke_toolbar_tab,
+.RTEloading.rte_source #mw-toolbar {
+	visibility: hidden !important;
+}
+
+.RTEloading.rte_wysiwyg .cke_toolbar_tab .cke_button_source {
+	visibility: visible;
+}
+
+/* RT #37254 / #37260 */
+.cke_browser_ie #cke_contents_wpTextbox1 {
+	position: static !important;
+}
+
+/* hide stuff */
+#mw-anon-edit-warning,
+#toolbar {
+	display: none;
+}
+
+/* MW suggest */
+.cke_dialog_body .os-suggest {
+	background-color: window;
+	border: 1px solid #aaa;
+	left: 0 !important;
+	top: 17px !important;
+	z-index: 20000;
+}
+
+.cke_dialog_body .os-suggest-results {
+	width: 500px !important;
+}
+
+.cke_dialog_body .os-suggest-result-hl,
+.cke_dialog_body .os-suggest-result-hl span {
+	background-color: highlight !important;
+	color: highlighttext !important;
+}
+
+/* jQuery "alerts" and "confirms" */
+.RTEModal p {
+	font-size: 0.9em;
+	line-height: 1.4em;
+	padding: 8px 5px;
+}
+
+.RTEModal .RTEConfirmButtons {
+	border-top-style: solid;
+	border-top-width: 1px;
+	padding: 5px;
+	text-align: right;
+}
+
+.RTEModal .RTEConfirmButtons a {
+	margin: 0 0 0 4px;
+}
+
+/* div for placeholder previews / image menus */
+#RTEOverlay {
+	position: absolute;
+	z-index: 100;
+}
+
+/* hide placeholder preview / image menu in source mode */
+.rte_source #RTEOverlay div {
+	display: none;
+}
+
+/* image previews */
+#RTEMediaOverlays {
+	left: 11px;
+	position: absolute;
+}
+
+.RTEMediaOverlay {
+	display: none;
+	position: absolute;
+}
+
+.RTEMediaMenu {
+	display: none;
+	font-size: 11px;
+	height: 14px;
+	opacity: 0.9;
+	padding: 4px;
+	position: absolute;
+	right: 0;
+	top: 0;
+	white-space: nowrap;
+	z-index: 2; // place it over caption
+}
+
+.RTEMediaMenu span {
+	cursor: pointer;
+	padding: 0 3px;
+}
+
+.RTEMediaCaption {
+	background: #f9f9f9;
+	border: solid 1px #ccc;
+	border-top: none;
+	display: none;
+	font-size: 11px;
+	left: 0;
+	line-height: 16px;
+	padding: 3px;
+	position: relative;
+}
+
+/* template previews */
+#RTEPlaceholderPreviews {
+	left: 11px;
+	position: absolute;
+}
+
+.RTEPlaceholderPreview {
+	display: none;
+	font-size: 12px;
+	padding-top: 9px;
+	position: absolute;
+	.chevron {
+		display: block;
+		position: absolute;
+		top: -6px;
+		left: 0;
+		border-width: 7px;
+		border-color: transparent;
+		border-bottom-color: #d5d5d5;
+		z-index: 5;
+	}
+	.chevronBackground {
+		border-width: 6px;
+		border-bottom-color: #fff;
+		z-index: 6;
+		top: -3px;
+		left: 1px;
+	}
+	&.bottom {
+		padding: 0 0 9px 0;
+		.chevron {
+			bottom: -4px;
+			top: auto;
+			border-top-color: #d5d5d5;
+			border-bottom-color: transparent;
+		}
+		.chevronBackground {
+			bottom: -2px;
+			border-top-color: #fff;
+			border-bottom-color: transparent;
+		}
+	}
+}
+
+.RTEPlaceholderPreviewLoading .RTEPlaceholderPreviewInner {
+	background: #fff url(/skins/common/images/ajax.gif) no-repeat 50% 50%; /* $wgCdnStylePath */
+	height: 30px;
+}
+
+.RTEPlaceholderPreviewInner {
+	background-color: #fff;
+	border: solid 1px #d5d5d5;
+	padding: 2px;
+	width: 350px;
+}
+
+.RTEPlaceholderPreviewTitleBar {
+	font-weight: bold;
+	padding: 3px 5px;
+	position: relative;
+	white-space: nowrap;
+}
+
+.RTEPlaceholderPreviewTitleBar span {
+	background: transparent url(/skins/oasis/images/sprite.png) no-repeat -1146px -81px; /* $wgCdnStylePath */
+	cursor: pointer;
+	height: 12px;
+	position: absolute;
+	right: 5px;
+	width: 12px;
+}
+
+/* info line */
+.RTEPlaceholderPreviewIntro {
+	border-bottom: solid 1px #aaa;
+	color: #3a3a3a;
+	cursor: default;
+	font-style: italic;
+	padding: 3px 0;
+}
+
+/* preview area */
+.RTEPlaceholderPreviewCode {
+	color: #3a3a3a;
+	cursor: default;
+	min-height: 75px;
+	max-height: 350px;
+	overflow: auto;
+	padding: 4px;
+	_height: 75px; /* for IE */
+}
+
+.RTEPlaceholderPreviewExpanded {
+	max-height: 10000px !important;
+}
+
+.RTEPlaceholderPreviewCode * {
+	float: none !important; /* RT #37692 */
+	cursor: default !important;
+}
+
+.RTEPlaceholderPreviewPreformatted {
+	font-family: monospace;
+	white-space: pre;
+}
+
+/* [edit] / [delete] */
+.RTEPlaceholderPreviewTools {
+	border-top: solid 1px #aaa;
+	padding: 3px;
+	text-align: right;
+}
+
+.RTEPlaceholderPreviewTools a {
+	cursor: pointer;
+	margin: 0 10px 0 0;
+}
+
+/* wikia editor pop-ups */
+.wikiaEditorDialog h1,
+.wikiaEditorDialog span.templateEditorHeader {
+	font-size: 2.2em;
+}
+
+.wikiaEditorDialog h2 {
+	font-size: 1.5em;
+	font-weight: bold;
+}
+
+.wikiaEditorDialog hr {
+	background: #000;
+	height: 1px;
+	width: 100%;
+}
+
+.cke_skin_wikia.linkEditorDialog .cke_dialog {
+	xwidth: 500px;
+}
+.cke_skin_wikia.linkEditorDialog .cke_dialog_page_contents{
+	margin-top: -20px;
+}
+.cke_skin_wikia.linkEditorDialog .cke_dialog_ui_text label {
+	display: block;
+	margin-bottom: 5px;
+}
+.cke_skin_wikia.linkEditorDialog .link-type-note {
+	float: right;
+	position: relative;
+	top: 26px;
+	width: 200px;
+}
+.cke_skin_wikia.linkEditorDialog .link-type-note .link-icon,
+.cke_skin_wikia.linkEditorDialog .link-type-note .sprite,
+.cke_skin_wikia.linkEditorDialog .link-type-note span {
+	float: right;
+}
+.cke_skin_wikia.linkEditorDialog .link-type-note .sprite{
+	width: 16px;
+	height: 16px;
+}
+.cke_skin_wikia.linkEditorDialog .link-type-note .link-icon {
+	background: url(/extensions/wikia/RTE/ckeditor/_source/skins/wikia/icons.png) left top no-repeat; /* $wgCdnStylePath */
+	height: 16px;
+	margin-right: 3px;
+	width: 16px;
+}
+.cke_skin_wikia.linkEditorDialog .link-type-note .link-icon.link-yes {
+	background-position: left -527px;
+}
+.cke_skin_wikia.linkEditorDialog .link-type-note .link-icon.link-no {
+	background-position: left -542px;
+}
+
+/* dialog loading indicator */
+.wikiaEditorLoading .cke_dialog_body {
+	background: transparent url(/skins/common/images/ajax.gif) no-repeat 50% 50%; /* $wgCdnStylePath */
+}
+
+.wikiaEditorLoading .cke_dialog_body * {
+	visibility: hidden !important;
+}
+
+.wikiaEditorDialog .loading {
+	background: transparent url(/skins/common/images/ajax.gif) no-repeat 50% 50% !important; /* $wgCdnStylePath */
+}
+
+/* template editor - search and list of templates*/
+div.templateEditorDialog .cke_dialog_tabs {
+	display: none;
+}
+
+div.templateEditorDialog .cke_dialog_contents {
+	margin-top: 0;
+}
+
+div.templateEditorDialog .cke_browser_ie7 .cke_dialog_contents {
+	position: relative;
+	top: -15px;
+}
+
+/* RT #37688  */
+div.templateEditorDialog .cke_browser_ie8 .cke_dialog_contents {
+	position: relative;
+	top: 8px;
+}
+
+/* RT #37689 */
+div.templateEditorDialog .cke_browser_ie .cke_dialog_body {
+	width: 800px !important;
+}
+
+#templateLinkToHelp {
+	color: #0080C0;
+	cursor: pointer;
+	font-size: 1em;
+	font-weight: bold;
+}
+
+#templateEditorHotTemplates,
+#templateEditorMagicWords {
+	height: 140px;
+	list-style: none;
+	margin: 5px 0;
+	overflow: auto;
+}
+
+#templateEditorHotTemplates li,
+#templateEditorMagicWords li {
+	padding: 4px 0;
+}
+
+#templateEditorHotTemplates {
+	width: 510px;
+}
+
+#templateEditorHotTemplates li {
+	float: left;
+	width: 240px;
+}
+
+#templateEditorHotTemplates a,
+#templateEditorMagicWords a {
+	color: #0080C0;
+	cursor: pointer;
+	font-size: 13px;
+	text-decoration: none;
+}
+
+/* template editor - parameters editor */
+#templateEditorTemplateName {
+	display: inline;
+	margin-right: 30px;
+}
+
+#templateEditorIntro a {
+	color: #0080C0;
+	cursor: pointer;
+}
+
+#templateEditorIntro p {
+	font-size: 14px;
+	margin: 5px 0 10px 0;
+}
+
+#templateParameters {
+	height: 250px;
+	overflow: auto;
+}
+
+#templateParameters label {
+	display: block;
+	font-weight: normal;
+	margin-top: 5px;
+}
+
+#templateParameters dd {
+	margin: 0;
+}
+
+.wikiaEditorDialog textarea {
+	border: solid 1px #000;
+	font-family: monospace;
+	width: 300px;
+}
+
+#templateParameters textarea {
+	height: 32px;
+}
+
+#templatePreview {
+	height: 250px;
+	overflow: auto;
+	position: relative;
+	width: 310px;
+}
+
+#templatePreview * {
+	float: none !important;
+	white-space: normal;
+}
+
+#templatePreview a {
+	color: #002BB8;
+	cursor: pointer !important;
+}
+
+#templatePreview a:hover {
+	text-decoration: underline !important;
+}
+
+.templateEditorDialog .cke_dialog_choose_another_tpl .cke_dialog_ui_button {
+	width: 200px !important;
+}
+
+/* positioning of footer buttons in step #2 */
+.templateEditorDialog .cke_dialog_footer_buttons {
+	width: 100% !important;
+}
+
+.templateEditorDialog .cke_dialog_footer .cke_dialog_ui_hbox_first {
+	text-align: left;
+}
+
+.templateEditorDialog .cke_dialog_footer .cke_dialog_ui_hbox_child {
+	text-align: right;
+}
+
+.templateEditorDialog .cke_dialog_footer .cke_dialog_ui_hbox_last {
+	display: none; /* hide fake "Cancel" button */
+}
+
+/* fix alignment of "Preview" button */
+.cke_dialog_contents div[name=step2] .cke_dialog_ui_hbox_child {
+	text-align: center;
+	vertical-align: middle;
+}
+
+/* template editor - advanced */
+#templateAdvEditorSource {
+	height: 285px;
+}
+
+#templateAdvPreview {
+	height: 285px;
+	overflow: auto;
+	width: 100%;
+}
+
+/* link editor */
+/* RT #37688 */
+div.linkEditorDialog .cke_browser_ie8 .cke_dialog_title {
+	height: 38px;
+}
+
+/* comment editor - show title */
+.commentEditorDialog textarea.cke_dialog_ui_input_textarea {
+	height: 130px;
+}
+
+/* dropdown lists */
+.cke_skin_wikia .cke_panel.cke_format_panel,
+.cke_skin_wikia .cke_panel.cke_format_panel iframe /* BugId:5678 */
+{
+	height: 212px;
+	width: 200px;
+}
+
+.cke_skin_wikia .cke_template_panel {
+	height: 155px !important;
+	width: 220px !important;
+}
+
+/* image / video toolbar items */
+#editform .RTEImageButton .cke_icon {
+	background-position: 0 -1247px;
+}
+
+#editform .RTEGalleryButton .cke_icon {
+	background-position: 0 -1311px;
+}
+
+#editform .RTEVideoButton .cke_icon {
+	background-position: 0 -1232px;
+}
+
+#editform .RTEMUTButton .cke_icon {
+	background-position: 0 -1232px;
+}
+
+#editform .RTESignatureButton .cke_icon {
+	background-position: 0 -1216px;
+}
+
+#editform .RTEWidescreenButton .cke_icon {
+	background-position: 0 -1264px;
+}
+
+/* poll icon */
+#editform .RTEPollButton .cke_icon {
+	background-position: 0 -1328px;
+}
+
+
+/* link suggest - RT #37690 */
+.RTEloading .link-suggest-container,
+.rte_wysiwyg .link-suggest-container {
+	display: none;
+}
+
+/* min width of editor (RT #38820) */
+#wikia_page {
+	min-width: 350px;
+}
+
+/* CK on-hover menus */
+#RTEOverlay {
+	margin-top: 15px;
+	.color1 {
+		background-color: mix($color-buttons, $color-page, 5%);
+		color: $color-text;
+	}
+	.RTEMediaCaption {
+		background-color: $color-article-thumb-background;
+		border-color: $color-article-thumb-border;
+		cursor: default;
+		a {
+			cursor: default;
+		}
+	}
+}
+
+/* CK modal tweaks */
+.skin-oasis.rte,
+.skin-oasis.MiniEditor {
+	.cke_dialog {
+		border: 5px solid $color-body;
+		padding: 15px 15px 0 15px;
+	}
+	.blackout {
+		background-color: $color-page !important;
+	}
+	.cke_dialog_body {
+		background: transparent;
+		border: none;
+		margin-bottom: 15px;
+		padding: 0;
+	}
+	.cke_dialog_title,
+	.cke_dialog_footer {
+		background: $color-page !important;
+		border: none;
+		padding: 5px 0;
+	}
+	.cke_dialog_title {
+		color: $color-buttons !important;
+		font-size: 19px;
+		margin-right: 50px;
+	}
+	.cke_dialog_contents {
+		padding: 10px;
+	}
+	.cke_dialog_footer {
+		text-align: left;
+		border-bottom: none;
+		border-top: none;
+		padding-left: 10px;
+	}
+	.cke_dialog_close_button {
+		@include border-radius(3px);
+		@include linear-gradient($color-buttons, top, $color-button-highlight, 8%, $color-buttons, 13%);
+		height: 19px;
+		text-align: center;
+		width: 19px;
+		.sprite.close {
+			cursor: pointer;
+			margin-top: 4px;
+			position: static;
+		}
+	}
+
+	/* CK modal tabs */
+	.cke_dialog .tabs {
+		background: transparent;
+		overflow: hidden;
+		.cke_dialog_tab {
+			@include border-radius-nw(5px);
+			@include border-radius-ne(5px);
+			@include linear-gradient($color-tab-background, top, $color-tab-background-top, 50%, $color-tab-background-bottom, 100%);
+			border: none;
+			color: $color-text;
+			display: inline-block;
+			font-size: 11px;
+			margin: 0;
+			padding: 6px 25px 3px;
+			position: relative;
+			top: 5px;
+			&:hover {
+				text-decoration: none;
+			}
+			.chevron {
+				display: none;
+			}
+		}
+		.cke_dialog_tab_selected {
+			@include linear-gradient($color-active-tab-background-top, top, $color-active-tab-background-top, 50%, $color-active-tab-background-bottom, 100%);
+			@include box-shadow(-3px, 7px, 7px, $color-active-tab-shadow);
+			color: $color-button-text;
+			font-weight: bold;
+			margin-top: 0;
+			padding: 8px 25px;
+			top: 1px;
+			.chevron {
+				border-color: transparent transparent $color-page;
+				border-style: solid;
+				border-width: 3px;
+				bottom: 1px;
+				display: block;
+				left: 50%;
+				height: 3px;
+				position: absolute;
+				width: 0;
+			}
+		}
+	}
+}
+
+// Used to control the visibility of editor content
+.client-js {
+	.editarea,
+	.editpage-editarea {
+		.cke_skin_wikia {
+			visibility: hidden;
+
+			&.visible {
+				visibility: visible;
+			}
+		}
+	}
+}

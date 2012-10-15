@@ -1,0 +1,26 @@
+/** @todo remove includes and bind in main oasis.scss **/
+// Mixins
+@import "../mixins/gradient";
+@import "../mixins/bodytext";
+
+// Oasis Page Modules //
+@import "../core/color";
+
+.mw-search-results {
+	.searchresult {
+		@include bodytext;
+	}
+}
+
+// increase search box width just on this page
+.WikiaSearch {
+	input[type="search"], input[type="text"] {
+		width: 608px;
+	}
+}
+
+.WikiaArticle {
+	ul {
+		margin-left: 0px;
+	}
+}

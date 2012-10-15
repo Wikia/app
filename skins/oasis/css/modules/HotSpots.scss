@@ -1,0 +1,61 @@
+@import "../core/color";
+@import "../mixins/clearfix";
+@import "../mixins/border-radius";
+
+$color-hot_1: #CC0033;
+$color-hot_2: #FF9900;
+$color-hot_3: #FFCC00;
+$color-hot_4: #339900;
+$color-hot_5: #006699;
+
+.HotSpotsModule {
+	p {
+		margin-bottom: 5px;
+	}
+	h1 {
+		margin-bottom: 15px;
+	}
+	li {
+		@include clearfix;
+		border-top: solid 1px $color-page-border;
+		&:first-child {
+			border-top: none;
+		}
+		div div { /* the rounded-highlighted area */
+			@include border-radius(5px);
+			color: white;
+			float: left;
+			text-align: center;
+			margin:  10px 10px 10px 0;
+			padding: 3px 15px;
+		}
+		big, small {
+			display: inline-block;
+			line-height: 25px;
+			vertical-align: middle;
+		}
+		big {
+			font-size: 22px;
+			margin-right: 5px;
+		}
+		span {
+			display: block;
+			padding: 9px 0;
+		}
+		.hot-spot-severity-1 {
+			background-color: $color-hot_1;
+		}
+		.hot-spot-severity-2 {
+			background-color: $color-hot_2;
+		}
+		.hot-spot-severity-3 {
+			background-color: $color-hot_3;
+		}
+		.hot-spot-severity-4 {
+			background-color: $color-hot_4;
+		}
+		.hot-spot-severity-5 {
+			background-color: $color-hot_5;
+		}
+	}
+}

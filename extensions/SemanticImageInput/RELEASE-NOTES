@@ -1,0 +1,13 @@
+These are the release notes for the Semantic Image Input extension.
+	
+Extension page on mediawiki.org: https://www.mediawiki.org/wiki/Extension:Semantic_Image_Input
+Latest version of the release notes: http://svn.wikimedia.org/viewvc/mediawiki/trunk/extensions/SemanticImageInput/RELEASE-NOTES?view=co
+
+=== Version 0.1 ===
+2011-11-xx
+
+Initial release with these features:
+
+* Image input that automatically fetches the first image from a Wikipedia page.
+* Wikipedia redirect resolving.
+* Support for multiple instance templates in forms.

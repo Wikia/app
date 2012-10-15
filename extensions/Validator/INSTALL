@@ -1,0 +1,39 @@
+These is the install file for the Validator extension.
+	
+Extension page on mediawiki.org: https://www.mediawiki.org/wiki/Extension:Validator
+Latest version of the install file: http://svn.wikimedia.org/viewvc/mediawiki/trunk/extensions/Validator/INSTALL?view=co
+
+
+== Requirements ==
+
+Validator requires:
+
+* MediaWiki 1.16 or above ( MediaWiki 1.18 or above recommended)
+* PHP 5.2 or above (PHP 5.3 or above recommended)
+
+== Download ==
+
+You can get the code directly from SVN. Tags can be obtained via
+
+ svn checkout http://svn.wikimedia.org/svnroot/mediawiki/tags/extensions/Validator/REL_version
+
+Where 'version' is the version number of the tag, such as 0_1. A list of available tags can be found at
+
+ http://svn.wikimedia.org/svnroot/mediawiki/tags/extensions/Validator/
+
+The latest code can be obtained from trunk:
+
+ svn checkout http://svn.wikimedia.org/svnroot/mediawiki/trunk/extensions/Validator/
+
+Most extensions that requite Validator come bundled with a compatible copy and automatically
+include it for you.
+
+== Installation ==
+
+Once you have downloaded the code, place the ''Validator'' directory within your MediaWiki
+'extensions' directory. Then add the following code to your [[Manual:LocalSettings.php|LocalSettings.php]] file:
+
+# Validator
+require_once( "$IP/extensions/Validator/Validator.php" );
+
+This should be done before any extension using Validator.

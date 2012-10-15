@@ -1,0 +1,316 @@
+/**
+ * FlaggedRevs Stylesheet
+ * @author Aaron Schulz
+ */
+
+/* Standard User Interface */
+div.flaggedrevs_basic,
+div.flaggedrevs_quality,
+div.flaggedrevs_pristine,
+div.flaggedrevs_notice {
+	border: 1px solid #aaa;
+	padding: 5px;
+	font-weight: normal;
+	line-height: 1.5em;
+	margin: .5em 1em 0em 0em;
+	text-align: center;
+	clear: both;
+}
+div.flaggedrevs_short_basic img {
+	vertical-align: text-bottom;
+}
+div.flaggedrevs_basic {
+	background-color: #f0f8ff;
+}
+div.flaggedrevs_quality {
+	background-color: #e1ffe1;
+}
+div.flaggedrevs_pristine {
+	background-color: #ffffe3;
+}
+div.flaggedrevs_notice {
+	background-color: #f9f9f9;
+}
+
+table.flaggedrevs_editnotice,
+table.flaggedrevs_viewnotice {
+	padding: 3px;
+	border: 2px solid #6cc8f3;
+	background-color: #f9f9f9;
+	text-align: left;
+	width: 100%;
+	clear: both;
+}
+
+div.flaggedrevs_diffnotice,
+div.flaggedrevs_preview {
+	border: 1px solid #a7d7f9;
+	padding: 5px;
+	text-align: center;
+	clear: both;
+}
+div.flaggedrevs_diffnotice {
+	font-size: 85%;
+	background-color: #f9f9f9;
+}
+div.flaggedrevs_preview {
+	background-color: #eaf2fd;
+	color: black;
+}
+
+span.flaggedrevs_important {
+	font-size: 115%;
+	font-weight: bold;
+}
+
+div.flaggedrevs_notes {
+	border: 1px solid #aaa;
+	background-color: #f9f9f9;
+	padding: 5px;
+	font-size: 85%;
+	margin-left: 50px;
+	margin-right: 50px;
+	text-align: center;
+}
+
+.fr-text-value {
+	width: 100px;
+}
+
+.fr-marker-20,
+.fr-marker-40,
+.fr-marker-60,
+.fr-marker-80,
+.fr-marker-100 {
+	background-position: bottom left;
+	background-repeat: no-repeat;
+	padding-bottom: 3px;
+}
+
+.fr-marker-20 {
+	/* @embed */
+	background-image: url('img/bar_20.png');
+}
+.fr-marker-40 {
+	/* @embed */
+	background-image: url('img/bar_40.png');
+}
+.fr-marker-60 {
+	/* @embed */
+	background-image: url('img/bar_60.png');
+}
+.fr-marker-80 {
+	/* @embed */
+	background-image: url('img/bar_80.png');
+}
+.fr-marker-100 {
+	/* @embed */
+	background-image: url('img/bar_100.png');
+}
+
+/* Short User Interface */
+div.flaggedrevs_short {
+	border: 1px solid #ccc;
+	background-color: #ffffff;
+	font-size: 95%;
+	font-weight: normal;
+	margin: 0 0 0 1em;
+	line-height: 16px;
+	padding: 2px;
+	float: right;
+}
+
+/* @noflip */
+.sitedir-ltr div.flaggedrevs_short {
+	float: right;
+	margin: 0 0 0 1em;
+}
+
+/* @noflip */
+.sitedir-rtl div.flaggedrevs_short {
+	float: left;
+	margin: 0 1em 0 0;
+}
+
+div.flaggedrevs_short_basic {
+	white-space: nowrap;
+}
+
+div.flaggedrevs_short_details {
+	border: 1px solid #aaa;
+	background-color: #ffffff;
+	padding: 5px;
+	position: absolute;
+	top: 0;
+	right: -2px;
+	width: 25em;
+}
+
+/* @noflip */
+.sitedir-ltr div.flaggedrevs_short_details {
+	right: -2px;
+	left: auto;
+}
+
+/* @noflip */
+.sitedir-rtl div.flaggedrevs_short_details {
+	left: -2px;
+	right: auto;
+}
+
+.fr-text {
+	height: 1em;
+	line-height: 1em;
+	margin: 0px 7px 0px 0px;
+	padding: 0px;
+	font-weight: bold;
+	width: 80px;
+}
+
+.fr-value20,
+.fr-value40,
+.fr-value60,
+.fr-value80,
+.fr-value100 {
+	height: 1em;
+	line-height: 1em;
+	width: 95px;
+	float: left;
+	background-repeat: no-repeat;
+	background-position: 50% 50%;
+	text-align: center;
+}
+
+.fr-value20 {
+	/* @embed */
+	background-image: url('img/fr-marker-20.png');
+}
+.fr-value40 {
+	/* @embed */
+	background-image: url('img/fr-marker-40.png');
+}
+.fr-value60 {
+	/* @embed */
+	background-image: url('img/fr-marker-60.png');
+}
+.fr-value80 {
+	/* @embed */
+	background-image: url('img/fr-marker-80.png');
+}
+.fr-value100 {
+	/* @embed */
+	background-image: url('img/fr-marker-100.png');
+}
+
+/* Both User Interfaces */
+.flaggedrevs-color-0 {
+	background-color: #f9f9f9;
+}
+.flaggedrevs-color-1 {
+	background-color: #f0f8ff;
+}
+.flaggedrevs-color-2 {
+	background-color: #e1ffe1;
+}
+.flaggedrevs-color-3 {
+	background-color: #ffffe3;
+}
+
+.flaggedrevs-pending {
+	background-color: #ffeeaa;
+}
+.flaggedrevs-unreviewed {
+	background-color: #faebd7;
+}
+
+a.fr-toggle-symbol {
+	color: blue;
+	white-space: nowrap;
+	font-family: monospace;
+	font-weight: bold;
+	cursor: pointer;
+	margin: 0 .3em 0 .3em;
+}
+
+a.fr-toggle-text {
+	color: blue;
+	font-weight: bold;
+	cursor: pointer;
+}
+
+img.fr-toggle-arrow {
+	cursor: pointer;
+}
+
+li.fr-hist-stable-margin {
+	margin-top: 2em;
+}
+
+img.flaggedrevs-icon {
+	margin-right: .2em;
+	margin-left: .2em;
+}
+
+.fr-diff-ratings {
+	font-size: 90%;
+	font-weight: bold;
+	line-height: 1em;
+	width: 100%;
+}
+
+.fr-diff-to-stable {
+	line-height: 1em;
+}
+
+.fr-hist-basic-user,
+.fr-hist-quality-user,
+.fr-hist-basic-auto,
+.fr-hist-quality-auto {
+	font-weight: bold;
+}
+
+/* RC pending changes notice */
+.fr-watchlist-pending-notice {
+	padding: 3px;
+	margin: 5px;
+	border: 1px solid #990000;
+	background-color: #FEECD7;
+}
+
+/* Special pages */
+.fr-pending-long {
+	background-color: #f5ecec;
+}
+.fr-pending-long2 {
+	background-color: #f5dddd;
+}
+.fr-pending-long3 {
+	background-color: #e2caca;
+}
+
+.fr-unreviewed-unwatched {
+	background-color: #faebd7;
+}
+
+span.fr-under-review {
+	background-color: yellow;
+	font-weight: bold;
+}
+
+.mw-fr-reviewlink {
+	font-weight: bold;
+}
+
+/* History items */
+.mw-fr-hist-difflink {
+	font-size: 85%;
+}
+
+/* Diff items */
+#mw-fr-diff-headeritems {
+	direction: ltr;
+}
+
+#mw-fr-stablediff {
+	background-color: white;
+}

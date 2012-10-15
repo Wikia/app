@@ -1,0 +1,35 @@
+
+WikiaEditor global events
+
+	* Global Triggers
+		- wikiaeditor( namespace ) - WikiaEditor code has been loaded
+
+	* Initialization
+		- newInstance( plugins, config ) - new instance is being created, constructor arguments may be altered here
+
+
+WikiaEditor instance events
+
+	* Initialization - synchronous
+		- initConfig( editor ) - init phase #1 - config overrides by plugins should happen here
+		- beforeInit( editor ) - init phase #2 - editor extends should happen here
+		- init( editor ) - init phase #3 - the actual initialization should happen here
+		- initEditor( editor, editorElement ) - editor initialization - load the actual editor
+		- initDom( editor ) - load the other spaces content
+
+	* Initialization - asynchronous
+		- uiReady( editor ) - UI is ready now and you are able to create UI elements now
+			(will be called in initDom at the earliest)
+		- editorReady( editor ) - editor is ready
+
+	* State tracking
+		- state( editor, newState ) - state has just been changed to newState
+		- mode( editor, newMode ) - mode has just been switched to newMode
+
+	* UI elements related
+		- uiAddElement( editor, name, definition ) - UI element was just added
+		- uiAddHandler( editor, type, handler ) - UI element handler was just added
+		- uiAddExternalProvider( editor, externalProvider ) - external UI elements provider
+			was just added
+		- uiFetchDefaults( editor, elements ) - UI manager is about to add default UI elements
+			from config (good place to alter this list eg. add or remove some entries from elements)

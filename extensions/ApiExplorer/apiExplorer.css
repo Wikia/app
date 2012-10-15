@@ -1,0 +1,96 @@
+
+#apEx{
+	display:none;
+}
+#apEx_intro{
+	margin-bottom:15px;
+}
+#apEx_loading{
+	display:none;
+}
+
+#apEx div.paramName{
+	margin-bottom:10px;
+}
+dt.collapsible{
+	margin-bottom:15px;
+}
+dt.collapsed{
+	width:35%;
+	min-width:300px; /* gives less "wall of green" effect when list is loaded & will still expand when the module is clicked on */
+}
+
+#apEx div.paramName h2, .paramContent{
+	padding:10px;
+	margin:0px;
+}
+dd.paramContent{ /* even with the rule above, this is still needed in order to have higher specificity than other statements in the skin */
+	margin:0px;
+}
+
+.paramContent{
+	border-left: 2px solid #023c71;
+	border-right: 2px solid #023c71;
+}
+div.paramContent{ /* Top level*/
+	background-color: #d3eaff;
+}
+dd.paramContent{ /* per-module */
+	background-color:#c4e19f;
+}
+
+.collapsible h2, .collapsible h3{
+	/* Make it into a bar */
+	margin:0px;
+	text-decoration:none;
+	cursor:pointer;
+	border:2px solid #023c71;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+
+	/* Not collapsed... so hide the bottom border so it bleeds into the rest */
+	border-bottom:0px;
+	border-bottom-left-radius:0px;
+	border-bottom-right-radius:0px;
+}
+.collapsible.collapsed h2, .collapsible.collapsed h3, .paramContent{
+	/* Collapsed state for h2, h3 or expanded for content... show bottom border & rounded corners */
+	border-bottom:2px solid #023c71;
+	border-bottom-left-radius:10px;
+	border-bottom-right-radius:10px;
+}
+
+#apEx div.collapsible h2{
+	/* Pretty gradient background for top-level button (blue) */
+	background-image: -ms-linear-gradient(top, #2C85D6 0%, #00396D 100%);
+	background-image: -moz-linear-gradient(top, #2C85D6 0%, #00396D 100%);
+	background-image: -o-linear-gradient(top, #2C85D6 0%, #00396D 100%);
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #2C85D6), color-stop(1, #00396D));
+	background-image: -webkit-linear-gradient(top, #2C85D6 0%, #00396D 100%);
+	background-image: linear-gradient(top, #2C85D6 0%, #00396D 100%);
+
+	color:white;
+}
+
+.collapsed div, .collapsed dl, .collapsed dt, .collapsed dd{
+	display:none;
+}
+
+
+/** Second-level of style... the dts **/
+#apEx dt h3, #apEx dt dd{
+	border-color: #567c26;
+	box-shadow: 4px 4px 4px #888888;
+}
+#apEx dt h3{
+	padding:5px;
+
+	/* Pretty gradient for module-level buttons (green) */
+	background-image: -ms-linear-gradient(top, #D7F3B3 0%, #6DA822 100%);
+	background-image: -moz-linear-gradient(top, #D7F3B3 0%, #6DA822 100%);
+	background-image: -o-linear-gradient(top, #D7F3B3 0%, #6DA822 100%);
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #D7F3B3), color-stop(1, #6DA822));
+	background-image: -webkit-linear-gradient(top, #D7F3B3 0%, #6DA822 100%);
+	background-image: linear-gradient(top, #D7F3B3 0%, #6DA822 100%);
+}

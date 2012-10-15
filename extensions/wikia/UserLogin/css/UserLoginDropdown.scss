@@ -1,0 +1,65 @@
+@import "../../../../skins/oasis/css/core/color";
+@import "../../../../skins/oasis/css/mixins/border-radius";
+@import "../../../../skins/oasis/css/mixins/gradient";
+@import "../../../../skins/oasis/css/mixins/box-shadow";
+@import "../../../../skins/oasis/css/mixins/clearfix";
+@import "../../../../skins/oasis/css/mixins/bodytext";
+@import "../../../../skins/oasis/css/mixins/forms";
+@import "../../../../skins/oasis/css/mixins/opacity";	//not needed?
+@import "../../../../skins/oasis/css/mixins/transition";	//not needed?
+@import "../../../../skins/oasis/css/mixins/menus";
+@import "../mixins/divider";
+
+.AccountNavigation .UserLoginDropdown {
+	background-color: $color-page;
+	color: $color-text;
+	font-size: 11px;
+	padding: 15px 8px;
+	width: 141px;
+	/* global form overrides */
+	&.show {
+		top: 33px;
+	}
+	.WikiaForm {
+		label {
+			font-size: 11px;
+			&:first-child {
+				margin-top: 0;
+			}
+		}
+		input[type=text],
+		input[type=password] {
+			font-size: 11px;
+			height: 14px;
+			padding: 3px;
+			width: 119px;
+		}
+		input[type=submit] {
+			margin: 10px 0 0;
+		}
+		.forgot-password {
+			font-size: 11px;
+			margin-top: 5px;
+		}
+		.general-errors {
+			display: none;
+		}
+	}
+	> .sso-login {
+		> .sso-login-divider {
+			@include divider;
+		}
+		.sso-login-facebook {
+			font-size: 10px;
+			height: 16px;
+			line-height: 10px;
+			margin-left: 6px;
+			padding: 0 9px 0 0;
+			> img {
+				margin: 0 4px 0 2px;
+				position: relative;
+				top: 1px;
+			}
+		}
+	}
+}

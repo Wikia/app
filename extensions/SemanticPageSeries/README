@@ -1,0 +1,43 @@
+The Semantic Page Series extension enables the generation of a series of pages
+from one Semantic Form.
+
+For details see https://www.mediawiki.org/Extension:Semantic_Page_Series
+
+The development of this extension was sponsored by Prescient Software
+(www.prescientsoftware.co.uk).
+
+== Dependencies ==
+
+This extension was developed for MediaWiki 1.17 with at least Semantic
+MediaWiki 1.5.3 and Semantic Forms 2.4 installed. Other version might work, but
+are not tested.
+
+
+== Installation ==
+
+1. Download the package. Unpack the folder inside /extensions (so that the files
+   are in /extensions/SemanticPageSeries, rename the folder if necessary).
+
+2. In your LocalSettings.php, add the following line to the end of the file:
+
+   require_once("$IP/extensions/SemanticPageSeries/SemanticPageSeries.php");
+
+
+=== Configuration parameters ===
+
+The following settings may be used:
+
+* $spsgPageGenerationLimits to specify the maximum number of pages that may be
+  generated per request by a member of a user group. If a user is in more than
+  one group, the highest number is used.
+
+  Default setting:
+
+    $spsgPageGenerationLimits = array(
+      '*' => 0,
+      'user' => 10,
+      'sysop' => SPS_NOLIMIT
+    );
+
+If you want to use these settings, just include them in LocalSettings.php AFTER
+the require_once("$IP/extensions/SemanticPageSeries/SemanticPageSeries.php");

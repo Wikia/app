@@ -1,0 +1,105 @@
+@import "layout";
+@import "../mixins/border-radius";
+
+.global-notification {
+	padding: 8px 10px;
+	margin: 0 10px 10px;
+	.msg{
+		font-size: 13px;
+		line-height: 16px;
+	}
+	.close {
+		float: right;
+		height: 14px;
+		width: 14px;
+		margin: 0;
+		img {
+			height: 11px;
+			width: 12px;
+		}
+	}
+}
+
+.global-notification {
+	@include box-shadow(0px, 2px, 5px, darken($color-page,12%));
+	width: 958px;
+	z-index: $zTop + 1;
+	&.confirm { // Green
+		background: #92CD8E;
+		border: 1px solid #7EB37D;
+		border-top-width: 0;
+		color: #28482E;
+		.close{
+			background-color: mix(#92CD8E , #000000, 15%);
+		}
+	}
+	&.notify { // Blue
+		background: #7ABFDD;
+		border: 1px solid #6DA8C1;
+		border-top-width: 0;
+		color: #22424F;
+		.close{
+			background-color: mix(#7ABFDD, #000000, 15%);
+		}
+	}
+	&.error { // Red
+		background: #E56667;
+		border: 1px solid #C859CA;
+		border-top-width: 0;
+		color: #511616;
+		.close{
+			background-color: mix(#E56667, #000000, 15%);
+		}
+	}
+	&.warn { // Yellow
+		background: #F2CF60;
+		border: 1px solid #D2B554;
+		border-top-width: 0;
+		color: #524616;
+		.close{
+			background-color: mix(#F2CF60, #000000, 15%);
+		}
+	}
+	&.float {
+		position: fixed;
+		top: 0;
+	}
+}
+
+/* temp transition code until grid is fully rolled out, remove and integrate after transition */
+.wikia-grid .global-notification {
+      width: 988px;
+}
+/* end temp transistion code */
+
+/**
+ * IMPORTANT (21-Aug-2012, FB:45031): Integrate this code into base css above after transition.
+ * This is currently an override depending on skin switch.
+ */
+.oasis-split-skin .global-notification {
+	@include box-shadow(0px, 2px, 5px, darken($color-body,12%));
+	margin: 0 auto;
+	&.float {
+		left: 50%;
+		margin-left: -489px;
+	}
+}
+
+.modalWrapper >.global-notification {
+	@include box-shadow(0, 0, 0, #000);
+	margin: auto;
+	width: auto;
+	.close {
+		display: none;
+	}
+	&.float {
+		position: absolute;
+		left: 0;
+		width: 100%;
+		margin: 0;
+		padding: 0;
+	}
+	.msg {
+		padding: 8px 10px;
+	}
+}

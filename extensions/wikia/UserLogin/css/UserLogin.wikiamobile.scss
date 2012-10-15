@@ -1,0 +1,112 @@
+@import "../../WikiaMobile/css/variables";
+
+//mixins
+@import "../../WikiaMobile/css/mixins/linear-gradient";
+
+$spacing: 5px;
+
+.js{
+	//hide the message box in case JS is enabled, we'll use the toast notification instead
+	#wkLgnMsg{
+		display: none;
+	}
+}
+
+#wkLgn{
+	text-align: center;
+	padding: 10px;
+
+	input {
+		width: 100%;
+		height: 40px;
+		margin: 0 0 20px 0;
+		font-size: large;
+	}
+
+	label {
+		color: $page-text-alternate-color;
+		display: block;
+		font-size: medium;
+		text-align: left;
+	}
+
+	.inpErr {
+		margin-bottom: 0;
+		border: 2px solid $error-bg-color;
+	}
+
+	.wkErr{
+		margin: 0 0 20px 0;
+		border-radius: 0 0 3px 3px;
+	}
+
+	a {
+		text-align: left;
+		padding-left: 10px;
+		margin-bottom: 20px;
+	}
+
+	.hide {
+		display: none;
+	}
+
+	.show {
+		display: block;
+	}
+
+	//needs to select parent to override "#wkLgn input" rule
+	#wkLgnRcvBtn {
+		display: none;
+
+		&.show{
+			display: block;
+		}
+	}
+}
+
+//facebook button
+#ssoFbBtn{
+	@include linear-gradient(#5E7BB2, #3C62A1);
+	border: 1px solid #AFBDD6;
+	border-radius: 2px;
+	color: #fff;
+	padding: $spacing $spacing*2;
+	font-weight: 100;
+	margin-top: 20px;
+
+	&[disabled]{
+		background-color: grey;
+		background-image: none;
+	}
+}
+
+#fbLogo {
+	// TODO: use base64
+	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAgCAYAAADnnNMGAAAB1klEQVR42r2Vu0oDQRSGNQmokCLaiOAFiZWNaSz0FaxFsBFtfALBylJB8BEsLBQLMWohWAgpfQHFIIl4wQsiGLSwyvhtmAOTQ6Kbya4/fMzM7p7zc87MJB1axphOZ74Ap/AJgaoBiKE22ev4RfnzKxPQ8CXBPXAMJsAx0PI3IbggBlAVEwH5mRCYtONiLaOVmCm1bXIBxsGtos6Q+UHL7SIuTWBZkqiWiSosP+z77ZZNCOoltgy6EtEqZHmWg0nmIz6VZAguSYuUyRv060Q+lWRIVHJ77xg9QzYSE2hm8gJjbZuQJEHCG+mVYyaVDHqZ2E1cgnlYJtGrPsLW7J1hlnECpizTPMv9acJHm6BPkr6I7ou6ER2GqWTDOGKtTfQ90SZrYSpZ1/GCfiaoymdCmxCgk1d1CwUkRt8M42FMtkBLDAS9JzIvM/SFMZnj4yPYhX3WFUnmgr4gDzv22xPmK17/JwReSjeU2S3LtO89SUAKkpAmUVESq/bcw6j9ZUhJjM+N7ybwWkzU5t/BkE7UrokYxGNiEIrPBNx2iaIzIbG0q9FdiaESpE5Z9Hsit9ytBCI/XUK8ewLmX+8JRFpJqckP5BMMR1FJF5yR9BGKzIUHKMCAj8kPNcxBpRzc084AAAAASUVORK5CYII=);
+	background-repeat: no-repeat;
+	background-size: 15px;
+	height: 20px;
+	width: 20px;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+#ssoSep{
+	margin: 20px auto;
+	text-align: center;
+	width: 100%;
+
+	&::before, &::after{
+		border-top: 1px solid $border-color;
+		content: '';
+		display: inline-block;
+		margin: 0 $page-padding;
+		position: relative;
+		top: -5px;
+		width: 110px;
+	}
+}
+
+#wkLgnRcvLnk {
+	display: block;
+}

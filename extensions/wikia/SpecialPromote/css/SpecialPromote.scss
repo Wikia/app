@@ -1,0 +1,269 @@
+@import "../../../../skins/oasis/css/core/color.scss";
+@import "../../../../skins/oasis/css/mixins/box-shadow.scss";
+@import "../../../../skins/oasis/css/mixins/border-radius";
+
+.WikiaArticle {
+	&.SpecialPromoteArticle {
+	    border-bottom: none;
+	}
+	.UploadTool {
+		margin: 0 15px 150px 15px;
+		.introduction {
+			font-size: 14px;
+			margin: 25px 0 65px 0;
+		}
+		fieldset {
+			border: none;
+			legend {
+				border-bottom: 1px solid $color-page-border;
+				clear: both;
+				display: block;
+				float: left;
+				font-size: 18px;
+				font-weight: 900;
+				margin-bottom: 35px;
+				padding: 0 0 6px 0;
+				width: 580px;
+			}
+			.input-group {
+				padding: 5px;
+			}
+			label {
+				display: block;
+				font-size: 16px;
+				float: left;
+				margin: 2px 5px 7px 0;
+			}
+			.upload-button {
+				margin: 0 0 10px 0;
+			}
+			p.error {
+				display: block;
+				clear: both;
+			}
+			input {
+				width: 562px;
+				float: left;
+				clear: left;
+			}
+			.headline-wrapper {
+				clear: left;
+				float: left;
+				width: 580px;
+				p {
+					float: right;
+					&.error {
+						float: left;
+					}
+				}
+			}
+			.description-wrapper {
+				clear: left;
+				float: left;
+				margin-bottom: 35px;
+				width: 580px;
+				p {
+					float: right;
+					&.error {
+						float: left;
+					}
+				}
+			}
+			textarea {
+				width: 562px;
+				height: 210px;
+			}
+			.explanatory-copy {
+				color: mix($color-page, $color-text, 30%);
+				float: left;
+				line-height: 1.4em;
+				margin: 25px 0 0 30px;
+				padding: 1px 3px 3px 3px;
+				width: 310px;
+			}
+            .main-image .explanatory-copy {
+                margin-top: 0;
+            }
+            .more-images .explanatory-copy {
+                margin-top: 0;
+            }
+            .error label, .error .headline-character-counter, .error .character-counter {
+				@if $is-dark-wiki {
+					color: mix(#ff0000, #2b2b2b, 60%);
+				} @else {
+					color: mix(#ff0000, #d4d4d4, 75%);
+				}
+			}
+		}
+		.button {
+			display: inline-block;
+			margin-top: 65px;
+			padding-right: 60px;
+			padding-left: 60px;
+		}
+		.large-photo {
+			@include box-shadow(0, 0, 5px, mix($color-page, #000000, 90%), true, 1px);
+			float: left;
+			width: 560px;
+			@if $is-dark-wiki {
+			 background-color: mix($color-page, #ffffff, 85%);
+		 	} @else {
+				 background-color: mix($color-page, #000000, 95%);
+		 	}
+			height: 374px;
+			padding: 10px;
+			position: relative;
+			#curMainImageName {
+				width: 560px;
+				height: 374px;
+			}
+		}
+		.modify-remove {
+			background-color: rgba(255, 255, 255, 0.5);
+			display: none;
+			right: 10px;
+			top: 10px;
+			position: absolute;
+			padding: 8px;
+			z-index: 1;
+			&.show {
+				display: block;
+			}
+		}
+		.status {
+			position: absolute;
+			bottom: 10px;
+			right: 10px;
+			.rejected {
+				background-color: rgba(255, 255, 255, 0.9);
+				height: 374px;
+				width: 560px;
+			}
+			.hidden {
+				display: none;
+			}
+			p {
+				bottom: 0;
+				margin: 0;
+				position: absolute;
+				right: 0;
+				text-align: right;
+				width: 560px;
+			}
+			span {
+				background-color: rgba(255, 255, 255, 0.7);
+				color: #000;
+				font-weight: normal;
+				line-height: 25px;
+				margin: 0;
+				padding: 5px;
+			}
+			img {
+				padding-bottom: 3px;
+				width: 16px;
+				height: 16px;
+				background-repeat: no-repeat;
+				&.ok {
+					background-image: url('/extensions/wikia/SpecialPromote/images/correct.png'); /* base64 */
+				}
+				&.error {
+					background-image: url('/extensions/wikia/SpecialPromote/images/x.png'); /* base64 */
+				}
+			}
+		}
+		.main-image {
+			margin-bottom: 0;
+		}
+		.more-images {
+			margin: 35px 0 0;
+		}
+		.small-photos {
+			@include box-shadow(0, 0, 5px, mix($color-page, #000000, 90%), true, 1px);
+			width: 580px;
+			min-height: 110px;
+			float: left;
+			@if $is-dark-wiki {
+				background-color: mix($color-page, #ffffff, 85%);
+			} @else {
+				background-color: mix($color-page, #000000, 95%);
+			}
+			overflow: hidden;
+			padding-bottom: 10px;
+			.small-photos-wrapper {
+				position: relative;
+				float: left;
+				height: 100px;
+				margin: 10px 0px 0 10px;
+				width: 180px;
+			}
+			.modify-remove {
+				right: 0;
+				top: 0;
+			}
+			.status {
+				bottom: 0;
+				right: 0;
+				.rejected {
+					height: 100px;
+					width: 180px;
+				}
+				p {
+					width: 180px;
+				}
+			}
+		}
+		.status-bar {
+			border-bottom: 1px solid #ccc;
+			font-size: 14px;
+			margin-top: 30px;
+			padding-bottom: 30px;
+			.status-icon {
+				background-color: $color-buttons;
+				color: #fff;
+				display: block;
+				float: left;
+				font-size: 11px;
+				line-height: 11px;
+				margin-top: 3px;
+				padding: 2px;
+				@include border-radius(2px);
+			}
+			.status-arrow {
+				border-bottom: 6px solid transparent;
+				border-left: 6px solid $color-buttons;
+				border-top: 5px solid transparent;
+				display: block;
+				font-size: 11px;
+				float: left;
+				height: 0;
+				margin: 5px 8px 0 0;
+				width: 0;
+			}
+		}
+		strong {
+			font-size: 18px;
+			margin-top: 25px;
+		}
+	}
+}
+
+.modalContent .submit-buttons {
+	margin: 34px 0 0 0;
+	padding: 0;
+	#cancel-button {
+		float: right;
+		margin-right: 10px;
+	}
+}
+
+.SpecialUploadForm {
+	.input-group {
+		clear:both;
+		&.submit-buttons {
+			width: 100%;
+		}
+		.submit {
+			float: right;
+		}
+	}
+}

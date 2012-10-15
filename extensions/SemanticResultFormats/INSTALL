@@ -1,0 +1,76 @@
+== Requirements ==
+
+Semantic Result Formats requires:
+* MediaWiki 1.16 or above
+* Semantic MediaWiki 1.7 or above
+* PHP 5.2 or above
+
+For older setups, SRF 1.6.x can be used, which has these requirements:
+* MediaWiki 1.15 or above
+* Semantic MediaWiki 1.5.1 to 1.6.1
+* PHP 5.2 or above
+
+== Installation ==
+
+Installation instructions are available online in a more convenient form for
+reading at:
+
+ https://www.mediawiki.org/wiki/Extension:Semantic_Result_Formats
+
+Copy all files into MediaWiki's extensions folder, either by using SVN or by
+extracting an installation package. You need to enter one line to your local
+settings (somewhere after the inclusion of Semantic MediaWiki):
+
+ require_once("$IP/extensions/SemanticResultFormats/SemanticResultFormats.php");
+
+If nothing else is added, a default set of formats is enabled. These are the
+the formats that satisfy the following criteria:
+
+* they do not require further software to be installed (besides SMW),
+* they do not transmit any data to external websites, not even by making client
+  browsers request any static external resources (such as an externally hosted
+  image file),
+* they are considered reasonably stable and secure.
+
+Currently, these default formats thus are:
+'vcard', 'icalendar', 'calendar', 'timeline', 'eventline', 'bibtex', 'outline',
+'gallery', 'jqplotbar', 'jqplotpie', 'sum', 'average', 'min', 'max', 'tagcloud',
+'median', 'product', 'valuerank', 'array', 'tree', 'ultree', 'oltree',
+'D3Line'¹, 'D3Bar'¹, 'D3Treemap'¹, 'filtered'¹, 'hash'².
+
+¹ from MediaWiki 1.17 onwards
+² with HashTables extension installed
+
+To add more formats to this list, you can add lines like:
+
+ $srfgFormats[] = 'googlebar';
+
+... or you can override the set of formats entirely, with a call like:
+
+ $srfgFormats = array( 'calendar', 'timeline' );
+
+There are some formats that you may not want to include because they may
+not follow certain policies within your wiki; the formats 'googlebar' and
+'googlepie', for instance, send data to external web services for rendering,
+which may be considered a data leak.
+
+Notes on specific formats:
+* eventline: requires Javascript to render.
+* exhibit: requires Javascript to render; requires access to Javascript files
+  hosted by MIT (not locally included), but does not send any data to MIT
+  (besides the requester's IP and the URL of the site with the query). Some
+  subformats of Exhibit, like the Google Maps view, send data to Google for
+  rendering.
+* googlebar: sends data to Google for rendering.  Googlebar requires
+  access to the Google servers in order to render.
+* googlepie: sends data to Google for rendering.  Googlepie requires
+  access to the Google servers in order to render.
+* graph: in order to get the graph format to run, you first must have
+  the MediaWiki Graph extension running.
+* jqplotbar: requires Javascript to render.
+* jqplotpie: requires Javascript to render.
+* process: in order to get the process format to run, you first must
+  have the MediaWiki Graph extension running
+* ploticus: requires that the Ploticus application be installed on the
+  server.
+* timeline: requires Javascript to render.

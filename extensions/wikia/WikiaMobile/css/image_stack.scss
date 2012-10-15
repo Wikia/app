@@ -1,0 +1,40 @@
+@import "../../WikiaMobile/css/variables";
+
+//Used to style slideshows, galleries and group of images
+.js #wkMainCnt {
+	.wkImgStk.grp {
+		.thumb {
+			margin: 1px;
+		}
+		figure{
+			border: none;
+			margin: 0;
+		}
+		figure:nth-of-type(n+2), figcaption {
+			display: none;
+		}
+		footer {
+			display: block;
+		}
+	}
+}
+
+.wkImgStk {
+	&.grp {
+		footer {
+			display: none;
+		}
+	}
+	ul {
+		display: none;
+	}
+}
+
+.wkStkFtr {
+	font-size: small;
+	color: rgb(157,157,157);
+	padding-left: 20px;
+	background-position: left;
+	background-repeat: no-repeat;
+	background-image:  url('/extensions/wikia/WikiaMobile/images/image_stack.png'); /* base64 */
+}

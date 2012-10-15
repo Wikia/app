@@ -1,0 +1,104 @@
+.activityfeed {
+	margin-left: 20px;
+}
+
+.activityfeed > li {
+	height: 1%;
+	list-style: none;
+	margin-bottom: 15px;
+}
+
+.activityfeed.shortlist > li {
+	margin-bottom: 4px;
+}
+.activityfeed img.sprite {
+	margin-left: -20px;
+}
+.activityfeed em {
+	font-style: normal;
+	font-weight: bold;
+}
+
+.activityfeed strong {
+	font-size: 1.1em;
+	font-weight: bold;
+}
+
+.activityfeed.shortlist strong {
+	display: inline;
+}
+.activityfeed cite {
+	display: block;
+	font-size: 9pt;
+}
+
+.activityfeed.shortlist cite {
+	display: inline;
+}
+
+.activityfeed table {
+	margin-top: 5px;
+}
+
+.activityfeed td {
+	line-height: 1.3em;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	vertical-align: top;
+}
+td.activityfeed-details-label {
+	font-size: 9pt;
+	padding-right: 10px;
+	white-space: nowrap;
+}
+
+.myhome-feed-more {
+	border-top: 1px solid #CCC;
+	border-bottom: 1px solid #CCC;
+	margin-bottom: 20px;
+	text-align: center;
+}
+
+.myhome-feed-loading .myhome-feed-more {
+	background: transparent url(http://images.wikia.com/common/skins/common/progress-wheel.gif?20091023) no-repeat 50% 50%;
+}
+
+.myhome-feed-loading .myhome-feed-more a {
+	visibility: hidden;
+}
+
+/* Images / videos */
+#myhome-image-preview,
+#myhome-video-player {
+	padding: 2px 0 0 !important;
+}
+
+#myhome-image-preview-popup {
+	min-height: 150px;
+	min-width: 150px;
+}
+
+.activityfeed-inserted-media li {
+	border: solid 1px #ccc;
+	float: left;
+	margin: 4px 4px 4px 0;
+	position: relative;
+}
+
+.activityfeed-inserted-media li a {
+	cursor: pointer;
+	display: table-cell;
+	height: 160px;
+	text-align: center;
+	vertical-align: middle;
+	width: 160px;
+}
+
+.myhome-video-play {
+	background: transparent url(http://images.wikia.com/common/extensions/wikia/MyHome/images/play.png?20091023) no-repeat 50% 50%;
+	left: 0;
+	height: 160px;
+	position: absolute;
+	top: 0;
+	width: 160px;
+}

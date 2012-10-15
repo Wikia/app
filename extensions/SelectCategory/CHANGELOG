@@ -1,0 +1,51 @@
+* v0.8.1 - 2011-06-07
+  - Fix for code structure and variable names (Yaron Koren)
+
+* v0.8
+  - using JQuery Treeview to collapse / expand branches
+
+* v0.7dev
+  - Update to comply to the current MediaWiki core (Patch by Lambert Lum)
+  - Changed the user interface to use checkboxes instead of scrolling lists
+	  for selecting (Patch by Lambert Lum)
+  - Fixed to work with category names containing spaces
+  - Fixed a possible raw sql injection problem
+  - Update to survive category loops
+  - Indent subcategories like in a tree
+  - Set our hook functions immediately instead of setting them from the fnSelectCategory()
+    entry function. This is to avoid some weird race condition someone experienced where
+    the hooks where called before fnSelectCategory(), so they weren't set yet. (Patch by
+    Lambert Lum)
+  - Avoid an array indexing error (Patch by Lambert Lum)
+
+* v0.6 - 2008-01-19
+  - using wfLoadExtensionMessages now, all messages in one file
+
+* v0.5 - 2007-10-12
+  - fixed problem with additional newline at sectionedits
+  - preserve category sortkeys
+  - don't show up on sectionedits
+  - make extension work with preview
+  - removed warning when no category is selected
+  - leading blanks will not be removed anymore
+  thanks to Daniel Arnold (sortkey, sectionedit) and Samuel Gélineau
+  (blanks, preview, warning)
+
+* v0.4 - 2006-17-12
+  - added checks of global configuration variables before setting them
+  - changed $wgSelectCategoryRoot into an array of namespaces
+
+* v0.3 - 2006-12-12
+  - added $wgSelectCategoryEnableSubpages
+  - disambiguation of page title in database query
+  - removed minor flaws
+
+* v0.2 - 2006-11-30
+  - integration into upload form
+  - added localised messages
+  - major bugfixes in category listing
+
+* v0.1 - 2006-11-24
+  - first working version
+  - supports edit form
+

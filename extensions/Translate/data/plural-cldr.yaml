@@ -1,0 +1,206 @@
+locales:
+  af: Default
+  ak: One-zero
+  am: One-zero
+  ar: Arabic
+  az: Zero
+  be: Rule J
+  bem: Default
+  bg: Default
+  bh: One-zero
+  bm: Zero
+  bn: Default
+  bo: Zero
+  br: Rule S
+  brx: Default
+  bs: Rule J
+  ca: Default
+  ccg: Default
+  chr: Default
+  cs: Rule K
+  cy: Rule P
+  da: Default
+  de: Default
+  dz: Zero
+  el: Default
+  en: Default
+  eo: Default
+  es: Default
+  et: Default
+  eu: Default
+  fa: Zero
+  ff: Rule E
+  fi: Default
+  fil: One-zero
+  fo: Default
+  fr: Rule E
+  fur: Default
+  fy: Default
+  ga: Has-dual
+  gl: Default
+  gsw: Default
+  gu: Default
+  guw: One-zero
+  ha: Default
+  he: Default
+  hi: One-zero
+  hr: Rule J
+  hu: Zero
+  id: Zero
+  ig: Zero
+  ii: Zero
+  is: Default
+  it: Default
+  iu: Has-dual
+  iw: Default
+  ja: Zero
+  jv: Zero
+  ka: Zero
+  kab: Rule E
+  kde: Zero
+  kea: Zero
+  km: Zero
+  kn: Zero
+  ko: Zero
+  ku: Default
+  lag: Rule Q
+  lb: Default
+  ln: One-zero
+  lo: Zero
+  lt: Rule I
+  lv: Rule F
+  mas: Default
+  mg: One-zero
+  mk: Rule O
+  ml: Default
+  mn: Default
+  mo: Rule H
+  mr: Default
+  ms: Zero
+  mt: Rule N
+  my: Zero
+  nah: Default
+  nb: Default
+  ne: Default
+  nl: Default
+  nn: Default
+  "no": Default
+  nso: One-zero
+  nyn: Default
+  om: Default
+  or: Default
+  pa: Default
+  pap: Default
+  pl: Rule L
+  ps: Default
+  pt: Default
+  pt_PT: Default
+  rm: Default
+  ro: Rule H
+  ru: Rule J
+  sah: Zero
+  saq: Default
+  se: Has-dual
+  ses: Zero
+  sg: Zero
+  sh: Rule J
+  shi: Rule R
+  sk: Rule K
+  sl: Rule M
+  sma: Has-dual
+  smi: Has-dual
+  smj: Has-dual
+  smn: Has-dual
+  sms: Has-dual
+  so: Default
+  sq: Default
+  sr: Rule J
+  ssy: Default
+  sv: Default
+  sw: Default
+  syr: Default
+  ta: Default
+  te: Default
+  th: Zero
+  ti: One-zero
+  tk: Default
+  tl: One-zero
+  to: Zero
+  tr: Zero
+  #tzm:
+  uk: Rule J
+  ur: Default
+  vi: Zero
+  wa: One-zero
+  wae: Default
+  wo: Zero
+  xog: Default
+  yo: Zero
+  zh: Zero
+  zu: Default
+rulesets:
+  Arabic:
+    few: n mod 100 in 3..10
+    many: n mod 100 in 11..99
+    one: n is 1
+    two: n is 2
+    zero: n is 0
+  Default:
+    one: n is 1
+  Has-dual:
+    one: n is 1
+    two: n is 2
+  One-zero:
+    one: n in 0..1
+  Rule E:
+    one: n within 0..2 and n is not 2
+  Rule F:
+    one: n mod 10 is 1 and n mod 100 is not 11
+    zero: n is 0
+  Rule H:
+    few: n is 0 OR n is not 1 AND n mod 100 in 1..19
+    one: n is 1
+  Rule I:
+    few: n mod 10 in 2..9 and n mod 100 not in 11..19
+    one: n mod 10 is 1 and n mod 100 not in 11..19
+  Rule J:
+    few: n mod 10 in 2..4 and n mod 100 not in 12..14
+    many: n mod 10 is 0 or n mod 10 in 5..9 or n mod 100 in 11..14
+    one: n mod 10 is 1 and n mod 100 is not 11
+  Rule K:
+    few: n in 2..4
+    one: n is 1
+  Rule L:
+    few: n mod 10 in 2..4 and n mod 100 not in 12..14
+    many: n is not 1 and n mod 10 in 0..1 or n mod 10 in 5..9 or n mod 100 in 12..14
+    one: n is 1
+  Rule M:
+    few: n mod 100 in 3..4
+    one: n mod 100 is 1
+    two: n mod 100 is 2
+  Rule N:
+    few: n is 0 or n mod 100 in 2..10
+    many: n mod 100 in 11..19
+    one: n is 1
+  Rule O:
+    one: n mod 10 is 1 and n is not 11
+  Rule P:
+    few: n is 3
+    many: n is 6
+    one: n is 1
+    two: n is 2
+    zero: n is 0
+  Rule Q:
+    one: n within 0..2 and n is not 0 and n is not 2
+    zero: n is 0
+  Rule R:
+    few: n in 2..10
+    one: n within 0..1
+  Rule S:
+    few: n is 3
+    many: n is 6
+    one: n is 1
+    two: n is 2
+    zero: n is 0
+  Zero: []
+

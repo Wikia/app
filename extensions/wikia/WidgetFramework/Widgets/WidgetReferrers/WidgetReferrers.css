@@ -1,0 +1,7 @@
+.WidgetReferers dd {
+	overflow: hidden;
+}
+.widgetReferrersDomainTag {
+	line-height: 1.3em;
+	margin: 2px 5px; 
+}

@@ -1,0 +1,86 @@
+Index: libavformat/ogg2.c
+===================================================================
+--- libavformat/ogg2.c	(revision 10293)
++++ libavformat/ogg2.c	(working copy)
+@@ -466,8 +466,9 @@
+ ogg_get_length (AVFormatContext * s)
+ {
+     ogg_t *ogg = s->priv_data;
+-    int idx = -1, i;
+-    offset_t size, end;
++    int i, streams_found;
++    offset_t size, search_start, search_end;
++	int64_t duration;
+ 
+     if(s->pb.is_streamed)
+         return 0;
+@@ -479,33 +480,49 @@
+     size = url_fsize(&s->pb);
+     if(size < 0)
+         return 0;
+-    end = size > MAX_PAGE_SIZE? size - MAX_PAGE_SIZE: size;
++    search_start = size > MAX_PAGE_SIZE? size - MAX_PAGE_SIZE: size;
++	search_end = size;
+ 
+     ogg_save (s);
+-    url_fseek (&s->pb, end, SEEK_SET);
+ 
+-    while (!ogg_read_page (s, &i)){
+-        if (ogg->streams[i].granule != -1 && ogg->streams[i].granule != 0 &&
+-            ogg->streams[i].codec)
+-            idx = i;
+-    }
++	/* Seek back from the end of the file until we find the duration of all of the streams */
++	streams_found = 0;
++	while (streams_found < ogg->nstreams && search_start > 0) {
++		url_fseek (&s->pb, search_start, SEEK_SET);
++		while (!ogg_read_page (s, &i) && url_ftell (&s->pb) < search_end) {
++			if (ogg->streams[i].granule != -1 && ogg->streams[i].granule != 0 && 
++				ogg->streams[i].codec) 
++			{
++				duration = ogg_gptopts (s, i, ogg->streams[i].granule);
++				if (s->streams[i]->duration == AV_NOPTS_VALUE) {
++					s->streams[i]->duration = duration;
++					streams_found++;
++				} else if (duration > s->streams[i]->duration) {
++					s->streams[i]->duration = duration;
++				}
++			}
++		}
++		search_start -= MAX_PAGE_SIZE;
++		search_end -= MAX_PAGE_SIZE;
++	}
+ 
+-    if (idx != -1){
+-        s->streams[idx]->duration =
+-            ogg_gptopts (s, idx, ogg->streams[idx].granule);
+-    }
++    ogg->size = size;
+ 
+-    ogg->size = size;
++	/* Go back to the start and find the start time for each stream */
+     ogg_restore (s, 0);
+     ogg_save (s);
+-    while (!ogg_read_page (s, &i)) {
+-        if (i == idx && ogg->streams[i].granule != -1 && ogg->streams[i].granule != 0)
+-            break;
+-    }
+-    if (i == idx) {
+-        s->streams[idx]->start_time = ogg_gptopts (s, idx, ogg->streams[idx].granule);
+-        s->streams[idx]->duration -= s->streams[idx]->start_time;
+-    }
++	streams_found = 0;
++	/* Reset the start time to AV_NOPTS_VALUE, just in case it isn't already */
++	for (i = 0; i < ogg->nstreams; i++) {
++		s->streams[i]->start_time = AV_NOPTS_VALUE;
++	}
++    while (!ogg_read_page (s, &i) && streams_found < ogg->nstreams) {
++		if (s->streams[i]->start_time == AV_NOPTS_VALUE && ogg->streams[i].granule != -1) {
++			streams_found++;
++			s->streams[i]->start_time = ogg_gptopts (s, i, ogg->streams[i].granule);
++    	    s->streams[i]->duration -= s->streams[i]->start_time;
++		}
++	}
+     ogg_restore (s, 0);
+ 
+     return 0;

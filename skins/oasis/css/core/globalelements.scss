@@ -1,0 +1,21 @@
+@import "color";
+
+.avatar {
+	border: 1px solid $color-page;
+}
+.chevron {
+	border-color: #FFF transparent transparent;
+	border-style: solid;
+	border-width: 4px;
+	width: 0;
+	vertical-align: middle;
+	margin-top: 2px;
+}
+
+.banner-corner-left,
+.banner-corner-right {
+	border-style: solid;
+	border-width: 2px;
+	position: absolute;
+	width: 0;
+}

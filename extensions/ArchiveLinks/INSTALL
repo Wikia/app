@@ -1,0 +1,22 @@
+To install add the following to LocalSettings.php
+
+	require_once( "$IP/extensions/ArchiveLinks/ArchiveLinks.php" );
+
+Configuration settings are in the array $wgArchiveLinksConfig, which is currently defined in ArchiveLinks.php for testing purposes.
+
+	$wgArchiveLinksConfig = array (
+		'archive_service' => 'wikiwix',
+		'use_multiple_archives' => false,
+		'run_spider_in_loop' => false,
+	);
+
+archive_service has the following options:
+
+*wikiwix (this is wikiwix.org's archive)
+*internet_archive (this is archive.org's wayback machine)
+*webcitation (this is webcitation.org's service)
+*local (this is the local filestore, currently not working)
+
+use_multiple_archives must be false for the time being.
+
+run_spider_in_loop should be false for the time being.

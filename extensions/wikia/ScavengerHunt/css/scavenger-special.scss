@@ -1,0 +1,198 @@
+@import "../../../../skins/oasis/css/mixins/gradient";
+@import "../../../../skins/oasis/css/core/color";
+@import "../../../../skins/oasis/css/mixins/box-shadow";
+
+
+.scavengerhunt-list-table {
+	margin-bottom:10px;
+	width: 100%;
+	thead {
+		td {
+			@include linear-gradient($color-secondary-button, top, $color-secondary-button-highlight, 35%, $color-secondary-button, 65%);
+			border-top: 1px solid $color-page-border;
+			border-bottom: 1px solid $color-page-border;
+			color: $color-text;
+			font-weight: bold;
+			&:first-child {
+				border-left: 1px solid $color-page-border;
+			}
+			&:last-child {
+				border-right: 1px solid $color-page-border;
+			}
+		}
+	}
+	td {
+		padding:7px;
+	}
+	tbody {
+		td {
+			border-bottom: 1px solid $color-page-border;
+			.edit {
+				color: $color-text;
+			}
+		}
+	}
+}
+
+.WikiaPageHeader .scavengerhunt-add-button {
+    margin-left: 20px;
+    margin-top: 5px;
+}
+
+.scavenger-form {
+
+	div {
+		margin-top: 10px;
+		padding-top: 10px;
+
+		.scavengerhunt-editor-tips-sprite {
+			float: right;
+			width: 320px;
+			opacity: 0.7;
+			margin-top: 45px;
+		}
+		
+		.scavengerhunt-editor-tips {
+			float: right;
+			width: 320px;
+			opacity: 0.7
+		}
+	}
+	
+	.form-errorbox {
+		background-color: #FFF;
+		border: 1px solid #f41010;
+		@include box-shadow(0, 0, 12px, mix( #f41010, #000, 60%));
+		color: #f41010;
+		width: 950px;
+		margin-left: 10px;
+		padding-top: 0px;
+		
+		ul {
+			margin: 5px 10px 10px 30px;
+			list-style: disc;
+			display: inline-block;
+			width: 420px;
+			vertical-align: top;
+			li {
+				list-style: disc;
+				margin-left: 25px;
+				width: 390px;
+				padding: 2px 2px 2px 10px;
+			}
+		}
+		div.error-head {
+			padding: 0px;
+			margin: 10px 10px 0px 10px;
+			div {
+				font-size: 13.5px;
+				text-decoration: underline;
+				margin: 0px;
+				padding: 0px;
+				display: inline-block;
+			}
+			img {
+				margin-right: 10px;
+			}
+		}
+	}
+
+	fieldset {
+		width: 610px;
+		padding: 0 10px 10px;
+		margin: 0 0 10px;
+		border: 2px solid $color-page-border;
+		legend {
+			font-style: italic;
+			padding-bottom: 0;
+		}
+	}
+
+	.scavenger-formfield {
+/*		@include box-shadow(1px, 1px, 6px, $color-buttons);*/
+		margin: 10px 4px 10px 4px;
+		padding: 0 10px 10px 10px;
+/*		border: 2px solid $color-buttons;*/
+	}
+
+	.scavenger-half-dimension-box-wrapper {
+		width: 610px;
+	}
+
+	.scavenger-half-dimension-box {
+		display: inline-block;
+		width: 300px;
+		text-align: right;
+	}
+
+	.scavenger-formfield-simple {
+		margin: 10px 4px 10px 4px;
+		padding: 0 10px 10px 10px;
+	}
+
+	textarea, input[type="text"] {
+		width: 600px;
+	}
+
+	label {
+		font-size:14px;
+	}
+
+	textarea {
+		font-size:14px;
+		font-family: Helvetica, Arial, sans-serif;
+	}
+
+	input, textarea {
+		&.sh-error {
+			border: 1px solid #f41010;
+			@include box-shadow(0, 0, 12px, mix( #f41010, #000, 60%));
+		}
+
+	}
+
+	textarea {
+		height: 100px;
+		line-height: 20px;
+		padding-left: 5px;
+	}
+
+	input[type="text"], select {
+		line-height: 30px;
+		height: 30px;
+		font-size:14px;
+		font-family: Helvetica, Arial, sans-serif;
+		padding: 1px 1px 1px 5px;
+		&.scavenger-image {
+			width: 484px;
+		}
+		&.scavenger-image-offset {
+			margin-left: 10px;
+			width: 40px;
+		}
+	}
+
+	.removeSection {
+		float: right;
+	}
+}
+
+#scavenger-hunt-progress-info {
+	background: InfoBackground;
+	cursor: pointer;
+	padding: 10px;
+	position: fixed;
+	right: 31px;
+	top: 55px;
+	z-index: 1001;
+}
+
+#scavenger-hunt-progress-preview {
+	border: 1px solid red;
+	bottom: 20px;
+	height: 0;
+	position: fixed;
+	right: 20px;
+	width: 0;
+	z-index: 1001; /* 1 above toolbar */
+}

@@ -1,0 +1,21 @@
+/* CSS StyleSheet for Drafts extensions */
+
+#drafts-list-box {
+	margin-bottom: 10px;
+	padding-left: 10px;
+	padding-right: 10px;
+	border: red solid 1px;
+}
+
+#drafts-list-table {
+	margin-left: -5px;
+	margin-right:-5px;
+}
+
+#drafts-list-table td, #drafts-list-table th {
+	text-align: left;
+}
+
+.rtl #drafts-list-table td, .rtl #drafts-list-table th {
+	text-align: right;
+}

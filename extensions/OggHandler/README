@@ -1,0 +1,88 @@
+This extension provides a media handler for the Ogg container format. When
+enabled, a player will be automatically embedded in the image description page, 
+or any wiki page using the same syntax as for images. 
+
+To install this extension, add the following to the end of your LocalSettings.php:
+
+    require( "$IP/extensions/OggHandler/OggHandler.php" );
+
+oggThumb
+--------
+
+oggThumb is the best utility currently available for creating still images from
+Theora videos. Unfortunately, that's not saying much, it is quite immature. 
+
+It can be found in the oggvideotools package in some Linux distributions, or 
+you can download the source from:
+
+http://dev.streamnik.de/oggvideotools.html
+
+Versions 0.8 (which is the current release at the time of writing) and earlier 
+are effectively unusable, due to the lack of an output filename parameter. A 
+fix has been applied in the pre-release version, and is expected to be released 
+in version 0.9. In the meantime, if you have a Subversion client, you can get 
+the development version using:
+
+svn co https://oggvideotools.svn.sourceforge.net/svnroot/oggvideotools oggvideotools
+
+For best results, oggThumb should be used with libtheora 1.1 or later. 
+
+To enable oggThumb, put the following after the require line in your 
+LocalSettings.php:
+
+   $wgOggThumbLocation = '/path/to/oggThumb';
+
+FFmpeg
+------
+
+FFmpeg can be used to produce still images from Theora videos, but it suffers
+from a number of bugs. Some are fixed in the current development version, some
+are not. The most serious of these is an inability to create thumbnails where no
+keyframe exists between the requested point and the end of the file -- a
+situation which is quite common for videos with only one keyframe.
+
+To enable FFmpeg, set the FFmpeg binary location with:
+
+    $wgFFmpegLocation = '/path/to/ffmpeg';
+
+after the require line in LocalSettings.php. The default is "/usr/bin/ffmpeg". 
+If $wgOggThumbLocation is set to something other than false, FFmpeg will not be
+used.
+
+Cortado
+-------
+
+Wikimedia uses Cortado Java applet from Xiph.org.
+
+A .jar file compiled from this tree is provided in the OggHandler directory for
+your convenience.
+
+For information about Cortado see:
+
+    http://theora.org/cortado/
+
+See LICENSE.cortado, LICENSE.jheora and LICENSE.smoke for license information. 
+
+PEAR File_Ogg
+-------------
+
+OggHandler developer Tim Starling forked the PEAR File_Ogg package and improved 
+it significantly in order to support this extension. He has now taken over 
+maintainership of File_Ogg and merged his changes into the latest release. 
+This extension will now work with either the bundled File_Ogg class, or a 
+File_Ogg package from PEAR with version 0.3.0 or greater. It is licensed under 
+the LGPL.
+
+http://pear.php.net/package/File_Ogg
+
+As per the usual convention, the PEAR base directory (the one with PEAR.php in 
+it) must be in your include_path.
+
+Graphics
+--------
+
+The icons play.png, pause.png, stop.png and info.png are from the Crystal Project:
+
+   http://www.everaldo.com/crystal/
+
+They are licensed under the LGPL. 

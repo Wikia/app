@@ -1,0 +1,203 @@
+$height-designer: 250px;
+$height-toolbar: 45px;
+$color-borders: #CECECE;
+
+@import "../../../../skins/oasis/css/core/color";
+@import "../../../../skins/oasis/css/core/globalelements";
+@import "../../../../skins/oasis/css/core/reset";
+@import "../../../../skins/oasis/css/mixins/gradient";
+@import "../../../../skins/oasis/css/mixins/clearfix";
+@import "../../../../skins/oasis/css/mixins/border-radius";
+@import "../../../../skins/oasis/css/mixins/box-shadow";
+@import "../../../../skins/oasis/css/core/color";
+@import "../../../../skins/oasis/css/core/buttons";
+@import "../../../../skins/oasis/css/core/typography";
+
+body {
+	background: #F5F5F5;
+	color: #666;
+	font-family: Helvetica, Arial, sans-serif;
+	font-size: 13px;
+	margin: 0;
+	overflow: hidden;
+}
+
+.Designer {
+	height: $height-designer;
+	position: relative;
+	h1 {
+		font-size: 18px;
+	}
+	h2 {
+		font-size: 13px;
+	}
+	.form-questionmark {
+		background: url(/extensions/wikia/ThemeDesigner/images/question-light.png); /* $wgCdnStylePath */
+		height: 12px;
+		width: 12px;
+		display: inline-block;
+	}
+
+}
+
+.Navigation {
+	@include linear-gradient(transparent, left, #F5F5F5, 95%, #CCC, 100%);
+	height: $height-designer;
+	left: 50%;
+	margin-left: -500px;
+	position: absolute;
+	width: 100px;
+	li {
+		@include linear-gradient(transparent, left, #F5F5F5, 0%, #E1E1E1, 95%, #CCC, 100%);
+		border-bottom: 1px solid $color-borders;
+		&.selected {
+			@include box-shadow(-2px, 0, 2px, #CCC);
+			background: #FFF;
+			a {
+				color: #2070AD;
+				&:hover {
+					text-decoration: none;
+				}
+			}
+		}
+	}
+	a {
+		color: #67a7d7;
+		display: block;
+		font-weight: bold;
+		padding: 12px 10px;
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+}
+
+
+.Toolbar {
+	@include linear-gradient(#cfe1ed, top, #cfe1ed, 0%, #a6c4dc, 100%);
+	border-bottom: 1px solid #999;
+	bottom: 0;
+	height: 45px;
+	position: absolute;
+	width: 100%;
+	.inner {
+		margin: 0 auto;
+		position: relative;
+		width: 1000px;
+		button {
+			position: absolute;
+			top: 12px;
+			&.save {
+				right: 130px;
+				*width: 150px;
+			}
+			&.cancel {
+				right: 10px;
+				width: 100px;
+			}
+		}
+		.history {
+			cursor: pointer;
+			display: inline-block;
+			font-size: 10px;
+			left: 20px;
+			position: relative;
+			top: 10px;
+			.revisions {
+				background: #7392a7;
+				border: 1px solid #fff;
+				color: #fff;
+				display: inline-block;
+				font-size: 16px;
+				margin-right: 3px;
+				padding: 2px 5px 0;
+			}
+			.chevron {
+				border-color: #2070AD transparent transparent;
+			}
+			ul {
+				@include box-shadow(0, 4px, 6px, #999);
+				background-color: #fff;
+				border: 3px solid #eee;
+				cursor: normal;
+				display: none;
+				left: -5px;
+				min-width: 150px;
+				padding: 5px;
+				position: absolute;
+				top: -5px;
+				li {
+					border-top: 1px solid #eee;
+					cursor: pointer;
+					padding: 5px;
+					white-space: nowrap;
+					&:first-child {
+						border-top: none;
+					}
+					&:hover {
+						background-color: #cce1ef;
+					}
+					.wikia-chiclet-button {
+						margin-right: 3px;
+						vertical-align: middle;
+						img {
+							background: url(/extensions/wikia/ThemeDesigner/images/icon-return.png) top left transparent no-repeat; /* $wgCdnStylePath */
+							height: 12px;
+							left: 3px;
+							position: relative;
+							top: 3px;
+							width: 14px;
+						}
+					}
+				}
+			}
+		}
+	}
+	.mode {
+		color: #2070AD;
+		font-size: 21px;
+		left: 5px;
+		position: relative;
+		top: 12px;
+	}
+}
+
+section {
+	background: #FFF;
+	border-right: 1px solid $color-borders;
+	display: none;
+	height: $height-designer;
+	left: 50%;
+	margin-left: -400px;
+	position: absolute;
+	width: 900px;
+}
+
+fieldset {
+	border-left: 1px solid $color-borders;
+	float: left;
+	height: 165px;
+	margin: 15px 0 15px 14px;
+	&:first-child {
+		border-left: 0;
+	}
+}
+
+h1 {
+	margin-bottom: 8px;
+}
+
+.PreviewFrame {
+	height: 100px; /* initial settings - JS will change it */
+	width: 100%;
+}
+
+#ColorTester {
+	background-color: transparent;
+	display: none;
+}
+
+@import "../../../../extensions/wikia/ThemeDesigner/css/ThemeTab";
+@import "../../../../extensions/wikia/ThemeDesigner/css/CustomizeTab";
+@import "../../../../extensions/wikia/ThemeDesigner/css/WordmarkTab";
+@import "../../../../extensions/wikia/ThemeDesigner/css/Picker";

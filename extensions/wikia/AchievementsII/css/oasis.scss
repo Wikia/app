@@ -1,0 +1,245 @@
+@import "../../../../skins/oasis/css/core/color";
+@import "../../../../skins/oasis/css/mixins/clearfix";
+@import "../../../../skins/oasis/css/mixins/border-radius";
+@import "../../../../skins/oasis/css/mixins/gradient";
+
+/* fix for Oasis */
+#leaderboard-body .list-heading {
+	overflow: hidden;
+	height: 20px;
+}
+
+.badges {
+	strong {
+		font {
+			weight: bold;
+			size: 13px;
+		}
+		font-weight: bold;
+		display: inline-block;
+		margin: {
+			top: 5px;
+			bottom: 3px;
+		}
+	}
+	.badge-text {
+		@include clearfix;
+		font-size: 13px;
+		line-height: 20px;
+		padding: {
+			bottom: 8px;
+		}
+		p {
+			margin-left: 50px;
+		}
+	}
+
+	li {
+		border-bottom: 1px solid $color-page-border;
+		margin: 10px 2px 7px 0;
+		padding-bottom: 0px;
+		clear: both;
+		&:last-child {
+			border-bottom: none;
+		}
+		position: relative;
+	}
+
+	.badge-icon-earnable {
+		float: left;
+		margin: {
+			right: 8px;
+			top: 3px;
+		}
+	}
+	.sponsored-link {
+		display: inline-block;
+		float: left;
+	}
+}
+
+.profile-hover { // /** the popup when mouse stays over badge **/
+	@include clearfix;
+	display: none;
+	padding: 5px 10px;
+	min-width: 270px;
+	
+	&.sponsored-hover {
+		padding: 0 0 0 0;
+		border: {
+			color:$color-buttons;
+			style: solid;
+			top-width: 3px;
+			right-width: 3px;
+			left-width: 3px;
+			bottom: none;
+		}
+
+		img {
+			margin: 0 0 0 0;
+		}
+
+		& > .earned {
+			clear: both;
+			font-size: 10px;
+			font-weight: bold;
+			text-align: right;
+			color: $color-button-text;
+			background-color: $color-buttons;
+			line-height: 20px;
+			margin: 0 0 0 0;
+		}
+	}
+
+	h3 {
+		font-size: 13px;
+		font-weight: bold;
+		margin-bottom: 3px;
+		text-align: left;
+	}
+
+	p{
+		font-size: 11px;
+		text-align: left;
+	}
+
+	.profile-hover-text {
+		float: right;
+		width: 170px;
+
+		p {
+			font-size: 11px;
+			line-height: 18px;
+		}
+	}
+
+	img {
+		float: left;
+		margin-top: 4px;
+	}
+}
+.popover .profile-hover {
+	display: block;
+}
+
+/* rail in the right side */
+.WikiaLatestEarnedBadgesModule {
+	.clearfix { /** @todo questionable **/
+		@include clearfix;
+	}
+}
+
+.WikiaRail {
+	& > div.AchievementsModule {
+		.achievements-leaderboard-button {
+			clear: both;
+			margin: {
+				top: 10px;
+				bottom: 10px;
+			}
+		}
+		.data-details {
+			margin: {
+				top: 10px;
+				bottom: 5px;
+			}
+			line-height: 10px;
+			text-transform: uppercase;
+		}
+		.view-all {
+			cursor: pointer;
+			margin: {
+				top: 10px;
+				bottom: 5px;
+			}
+			@include clearfix;
+		}
+		ul.badges-icons {
+			list-style-type: none;
+			margin-top: 20px;
+			@include clearfix;
+			li {
+				display: inline-block;
+				border-bottom: none!important;
+				margin: 7px 0;
+				padding: 0;
+				img {
+					float: left;
+				}
+				/* IE7 fixes - RT #72881 */
+				*clear: none;
+				*float: left;
+			}
+
+		}
+		.badge-text {
+			padding {
+				margin-top: 13px;
+			}
+		}
+		.badges-more {
+			display: none;
+		}
+		.more {
+			font-weight: normal;
+		}
+		.line-top {
+			margin-top: 10px;
+			@include clearfix;
+		}
+
+		/* IE7 fix - RT #72881 */
+		& > div {
+			*display: inline;
+		}
+	}
+	
+	& > div.UserProfileAchievementsModule {
+
+		.data {
+			@include clearfix;
+
+			.data-details, .data-details > p {
+				margin: 0px;
+				font-size: 11px;
+				line-height: 13px;
+
+				a {
+					font: {
+						weight: normal;
+						size: 11px;
+					}
+
+				}
+			}
+
+			.tally {
+				float: left;
+				width: 180px;
+			}
+
+			.ranking {
+				text-align: right;
+				float: right;
+			}
+		}
+
+		.more {
+			font-weight: bold;
+		}
+
+		ul {
+			li {
+				border: none;
+
+				p {
+					line-height: 13px;
+				}
+
+				.badge-icon-earnable {
+					margin-top: 0px
+				}
+			}
+		}
+	}
+}

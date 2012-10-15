@@ -1,0 +1,49 @@
+<!DOCTYPE HTML>
+<html> 
+<head> 
+<title> Script Loader Test </title> 
+<style type=text/css> 
+script.second { background-position: 99px; }
+script.third { background-position: 98px; }
+</style> 
+</head> 
+<body class=yui3-skin-sam >
+<div id="log"></div> 
+<script charset="utf-8" src="http://yui.yahooapis.com/3.1.1/build/yui/yui-min.js"></script>
+<script charset="utf-8" src="t0.js"></script> 
+<div style="border: 5px solid black;">
+</div> 
+<p> 
+Below Script 
+
+<script type="text/javascript">
+//alert(sequence); 
+window.a= [], window.c= [];
+function addbtn(){ 
+	var b= document.createElement("BUTTON"),
+		fc= document.body.firstChild
+	; 
+	b.innerHTML= 'Load'; 
+	b.onclick= function(){ 
+		test();
+		this.onclick= null; 
+		this.disabled= true; 
+	}
+	document.body.insertBefore(b, fc); 
+}
+
+YUI({ logInclude: { TestRunner: true } })
+	.use("console", "test", tester); 
+function tester(Y){
+	window.Y= Y; 
+	var 
+		yc= new Y.Console({ newestOnTop: false, height: "400px" })
+	; 
+	yc.render("#log"); 
+	addbtn(); 
+}
+
+</script> 
+
+</body> 
+</html> 

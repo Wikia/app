@@ -1,0 +1,9 @@
+@import "../../../../skins/oasis/css/core/color";
+
+$Dropdown-color-arrow: $color-text;
+$Dropdown-color-background: $color-page;
+$Dropdown-color-border: $color-page-border;
+$Dropdown-color-hover-background: mix($color-buttons, $color-page, 10%);
+$Dropdown-color-hover-border: mix($color-buttons, $color-page, 30%);
+$Dropdown-color-selected-background: $color-menu-highlight;
+$Dropdown-color-shadow: darken($color-page, 9%);

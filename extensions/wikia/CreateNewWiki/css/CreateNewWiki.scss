@@ -1,0 +1,407 @@
+$color-borders: #CECECE;
+
+@import "../../../../skins/oasis/css/mixins/border-radius";
+@import "../../../../skins/oasis/css/mixins/box-shadow";
+@import "../../../../skins/oasis/css/mixins/clearfix";
+@import "../../../../skins/oasis/css/mixins/gradient";
+@import "../../../../skins/oasis/css/mixins/opacity";
+@import "../../../../skins/oasis/css/core/color";
+@import "../../../../skins/oasis/css/core/layout";
+
+@import "../../ThemeDesigner/css/ThemeTab";
+
+.WikiaPage {
+	border: none;
+	.WikiaPageBackground {
+		@include linear-gradient(false, top, #01386e, 20%, #2185da, 70%, #fff, 100%);
+	}
+}
+
+.CorporateFooter {
+	display: none;
+}
+
+.WikiaHeader {
+	width: $width-outside + 8px;
+}
+
+.WikiaFooter {
+	padding-bottom: 10px;
+	section {
+		display: none;
+	}
+}
+
+.AccountNavigation {
+	display: none;
+}
+
+#CreateNewWiki {
+	background: white;
+	border: 10px solid #8ac342;
+	color: #747474;
+	font-size: 12px;
+	font-weight: normal;
+	margin: 135px auto 0;
+	padding: 30px 30px 60px 75px;
+	position: relative;
+	width: 500px;
+	h1 {
+		display: none;
+	}
+	h2 {
+		border: none;
+		color: #2c85d6;
+		font-size: 23px;
+		font-weight: bold;
+		line-height: 26px;
+		margin: 0 0 14px;
+	}
+	nav {
+		bottom: 10px;
+		position: absolute;
+		&.next-controls {
+			right: 20px;
+		}
+		&.back-controls {
+			left: 20px;
+		}
+	}
+	input[type=text],
+	input[type=password] {
+
+		background: #e2f1fe;
+		border: 1px solid #dbdbdb;
+		font-size: 17px;
+		outline: 0;
+		padding: 0.3em;
+		&:focus {
+			@include box-shadow(0px, 0px, 6px, #2b5e94);
+		}
+	}
+	label {
+		/* following !important is used because the existing template has inline styles */
+		font-weight: normal !important;
+		font-size: 17px !important;
+		line-height: 23px;
+		&[for=wpRemember],
+		&[for=wpMarketingOptIn] {
+			font-size: 12px !important;
+		}
+	}
+	.creative {
+		font-size: 17px;
+	}
+	.wiki-domain-container {
+		position: relative;
+		img {
+			bottom: 4px;
+			position: absolute;
+			left: -40px;
+		}
+	}
+	.steps {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+	.awesome-box {
+		left: -122px;
+		position: absolute;
+		top: -127px;
+	}
+	.error-msg {
+		color: red;
+		font-size: 12px;
+		font-style: italic;
+	}
+}
+
+#StepsIndicator {
+	margin: 0;
+	padding: 0;
+	position: absolute;
+	right: 10px;
+	top: 10px;
+	li {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+	.step {
+		@include border-radius(5px);
+		background-color: #f4f4f4;
+		float: left;
+		height: 10px;
+		margin-left: 10px;
+		width: 10px;
+		&.active {
+			background-color: #fe5a1d;
+		}
+	}
+}
+
+#NameWiki {
+	width: 500px;
+	form {
+		font-size: 17px;
+		label {
+			display: block;
+			margin-top: 15px;
+		}
+		input[type=text],
+		input[type=password] {
+			width: 365px;
+		}
+		.language-default {
+			font-size: 12px;
+			margin-top: 20px;
+		}
+		.language-choice {
+			display: none;
+		}
+	}
+}
+
+#Auth {
+	display: none;
+	width: 700px;
+	.login-msg {
+		display: none;
+		text-align: right;
+		.fb_button {
+			clear: left;
+		}
+	}
+	.signup {
+		display: none;
+	}
+	.signup-msg {
+	}
+	.signup-msg,
+	.login-msg {
+		left: 473px;
+		position: absolute;
+		top: 95px;
+	}
+	.fb_button {
+				
+	}
+	nav {
+		.signup {
+			display: none;
+		}
+	}
+	.modalToolbar {
+		display: none;
+	}
+	.facebook.login {
+		@include clearfix;
+		float: left;
+		margin: -40px 0 0 67px;
+		padding-bottom: 10px;
+		text-align: center;
+		>span {
+			display: block;
+			margin: 6px 0;
+			text-align: center;
+		}
+	}
+	.plain {
+		font-size: 12px;
+	}
+	.captcha {
+		p:first-child {
+			height: 0;
+			float: right;
+			img {
+				margin-right: 67px;
+			}
+		}
+	}
+}
+
+#AjaxLoginBox {
+	margin-bottom: 20px;
+}
+
+div#userloginErrorBox3 {
+	margin-top: 2em;
+}
+
+#labelFor_wpRemember2Ajax {
+	font-size: 12px;
+}
+
+#wpLoginattempt {
+	display: none;
+}
+
+#AjaxLoginConnectMarketing {
+	display: none;
+}
+
+.skin-oasis #AjaxLoginSlider {
+	div.ajax-login-slider-panel {
+		padding: 0;
+		width: auto;
+	}
+}
+
+#userajaxloginform {
+	input[type=text],
+	input[type=password] {
+		width: 380px;
+	}
+}
+
+.wpAjaxLoginInput .captcha .captchadesc {
+	line-height: 16px;
+}
+
+#termsOfUse {
+	margin-top: -5px;
+	p {
+		margin-top: 0;
+	}
+}
+
+#UserAuth {
+	@include clearfix;
+	display: none;
+	width: 600px;
+	.UserLoginModal {
+		border-right: 1px solid $color-borders;
+		margin: 0 0 15px 0;
+		padding: 10px 90px 0 0;
+	}
+	.signup-loginmodal {
+		float: left;
+	}
+	.signup-marketing {
+		float: right;
+		padding: 30px;
+		width: 175px;
+	}
+	.get-account {
+		display: none;
+	}
+	.keeploggedin {
+		display: none;
+	}
+}
+
+#DescWiki {
+	display: none;
+	width: 700px;
+	ol {
+		left: 515px;
+		margin: 0;
+		padding: 0;
+		position: absolute;
+		top: 100px;
+		width: 265px;
+		li {
+			@include linear-gradient(#0255a1, top, #0255a1, 50%, #2b84d6, 100%);
+			@include border-radius(10px);
+			@include box-shadow(1px, 1px, 1px, #000);
+			color: #f6f2f3;
+			font-size: 15px;
+			font-weight: bold;
+			list-style: none;
+			margin-bottom: 10px;
+			padding:10px;
+			.tip-creative {
+				font-size: 14px;
+				font-weight: normal;
+			}
+		}
+	}
+	textarea {
+		font-size: 17px;
+		height: 220px;
+		padding: 0;
+		resize: none;
+		width: 425px;
+		&.placeholder {
+			color: #aaa;
+		}
+	}
+	label {
+		margin-top: 10px;
+		display: block;
+	}
+}
+
+#ThemeWiki {
+	display: none;
+	width: 650px;
+	.ThemeTab {
+		height: 150px;
+		left: 45px;
+		position: absolute;
+		top: 125px;
+		.slider {
+			height: 106px;
+			top: 0;
+			width: 608px;
+			ul {
+				list-style: none;
+				margin: 0;
+				li {
+					padding-bottom: 0;
+					padding-top: 0;
+					label{ 
+						display: none;
+					}
+				}
+			}
+		}
+		.chevron {
+			top: 37px;
+			&.next {
+				left: 645px;
+			}
+		}
+	}
+	.instruction {
+		margin-top: 175px;
+	}
+}
+
+#UpgradeWiki {
+	display: none;
+	width: 625px;
+	.marketing {
+		font-size: 17px;
+		position: relative;
+		.upgrade {
+			@include linear-gradient(#8ddd56, top, #8ddd56, 20%, #74af39, 100%);
+			border: 1px solid #74af39;
+			font-size: 18px;
+			height: auto;
+			left: 430px;
+			padding: 9px 12px;
+			position: absolute;
+			top: 40px;
+			&:hover {
+				@include linear-gradient(#7dbf43, top, #7dbf43, 20%, #74af39, 100%);
+			}
+			&:active {
+				@include linear-gradient(#74af39, top, #74af39, 20%, #8ddd56, 100%);
+			}
+		}
+	}
+	ul {
+		@include clearfix;
+		clear: both;
+		margin: 15px 50px;
+		width: 400px;
+		li {
+			float: left;
+			font-size: 15px;
+			line-height: 25px;
+			width: 200px;
+		}
+	}
+}

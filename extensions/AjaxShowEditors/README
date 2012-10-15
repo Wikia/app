@@ -1,0 +1,18 @@
+'''Ajax Show Editors'''
+
+Requires: MediaWiki 1.10 (r19554)
+
+Author: Ashar Voultoiz, based on an idea by Tim Starling
+
+URL: http://www.mediawiki.org/wiki/Extension:Ajax_Show_Editors
+
+== Install ==
+
+You must load up a new table in your database. The schema is available
+in the file 'patch-editings.sql'.
+
+Then you can enable the extension in your LocalSettings.php:
+
+  require_once('extensions/AjaxShowEditors/AjaxShowEditors.php');
+
+Then go edit a page.

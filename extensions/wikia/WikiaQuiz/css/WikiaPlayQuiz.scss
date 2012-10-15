@@ -1,0 +1,647 @@
+@import "../../../../skins/oasis/css/mixins/border-radius";
+@import "../../../../skins/oasis/css/mixins/box-shadow";
+@import "../../../../skins/oasis/css/mixins/clearfix";
+@import "../../../../skins/oasis/css/mixins/gradient";
+@import "../../../../skins/oasis/css/mixins/opacity";
+@import "../../../../skins/oasis/css/mixins/transform";
+@import "../../../../skins/oasis/css/mixins/transition";
+@import "../../../../skins/oasis/css/core/color";
+@import "../../../../skins/oasis/css/core/layout";
+
+
+$base-z: 5;
+$frame-z: $base-z + 1;
+$floor-z: $base-z - 5;
+$question-color: #ddd;
+$panel-width: 840px;
+$panel-height: 580px;
+
+// generic shapes
+
+/**
+ * Generic bubble shape.
+ * Notes:
+ * - positioning should be done on individual implementation.  this is only for visual styling.
+ * - overwrite &:after (the tail) left attribute on implementor to position tail in center.
+ */
+$bubble-padding: 50px;
+$bubble-color-alt: $color-header-alt;
+@if lightness($bubble-color-alt) < 25 {
+	$bubble-color-alt: mix($color-header-alt, #fff, 60%);
+}
+$dark-wiki: 1;
+@if lightness($color-page) < 50 {
+	$dark-wiki: 0;
+}
+
+.quiz-bubble {
+	@include border-radius(10px);
+	@include box-shadow(0, 2px, 5px, #000);
+	@include linear-gradient($color-header, top, $bubble-color-alt, 0, $color-header, 100%);
+	color: $color-header-text;
+	font-size: 28px;
+	line-height: 36px;
+	padding: $bubble-padding;
+	position: absolute;
+	text-align: center;
+
+	&:after {
+		bottom: -40px;
+		border: 20px solid transparent;
+		border-top-color: $color-header;
+		content: "";
+		left: 0;	// overwrite on implementor
+		height: 0;
+		position: absolute;
+		width: 0;
+	}
+}
+
+/**
+ * Quiz
+ */
+.WikiaQuiz {
+	$box-shadow-color: #555;
+	@if $dark-wiki == 1 {
+		$box-shadow-color: #777;
+	}
+	@include box-shadow(0, 0, 15px, $box-shadow-color);
+	height: $panel-height;
+	margin: 0 auto;
+	position: relative;
+	overflow: hidden;
+	width: $panel-width;
+	ol, ul {
+		margin: 0;
+		padding: 0;
+	}
+	>div {
+		z-index: $base-z;
+	}
+	.quiz-frame {
+		border: 10px solid $color-body;
+		height: $panel-height - 20px;
+		position: absolute;
+		width: $panel-width - 20px;
+		z-index: 0;
+	}
+	.title-image {
+		@include box-shadow(0, 2px, 10px, #000, false, -5px);
+		border: 5px solid white;
+		position: absolute;
+		top: 30px;
+		&.image1 {
+			@include transform(translate(17px, 0) rotate(-6deg));
+			height: 205px;
+			left: 40px;
+			top: 50px;
+			width: 205px;
+			z-index: $floor-z;
+		}
+		&.image2 {
+			height: 250px;
+			left: 270px;
+			width: 250px;
+			z-index: $floor-z + 1;
+		}
+		&.image3 {
+			@include transform-rotate(5deg);
+			height: 205px;
+			left: 545px;
+			top: 50px;
+			width: 205px;
+			z-index: $floor-z;
+		}
+	}
+	.title-screen {
+		@include box-shadow(0, 0, 25px, #000, true, 5px);
+		background: mix($color-body, #fff, 90%);
+		display: block; // temp
+		height: $panel-height;
+		width: $panel-width;
+		.title {
+			$width: 415px;
+			$visual-width: $width + ($bubble-padding * 2);
+			bottom: 125px;
+			left: ($panel-width - $visual-width) / 2;
+			width: $width;
+			z-index: $base-z;
+			&:after {
+				left: ($visual-width - $bubble-padding)/2;
+			}
+		}
+	}
+	.count-down {
+		display: none;
+		height: $panel-height;
+		left: 0;
+		position: absolute;
+		top: 0;
+		width: $panel-width;
+		.number {
+			@include border-radius(100px);
+			@include box-shadow(0, 5px, 20px, #000, false, -5px);
+			@include linear-gradient($color-header, top, $bubble-color-alt, 0, $color-header, 100%);
+			color: $color-header-text;
+			font-size: 144px;
+			height: 110px;
+			left: 50%;
+			margin-left: -100px;
+			padding-top: 90px;
+			position: absolute;
+			text-align: center;
+			top: 120px;
+			width: 200px;
+			z-index: $base-z;
+		}
+		.cadence {
+			font-size: 28px;
+			margin: 340px auto 0 auto;
+			text-align: center;
+		}
+		.title-image {
+			@include opacity(20);
+		}
+	}
+	.questions {
+		position: absolute;
+		left: $panel-width;
+		top: 0;
+		.question-set {
+			display: none;
+			height: $panel-height;
+			position: relative;
+			width: $panel-width;
+			.question-bubble {
+				$bubble-visual-width: 630px;
+				$bubble-width: $bubble-visual-width - (20 * 2);
+				bottom: 175px; //360px shifted
+				height: 122px;
+				left: ($panel-width - $bubble-visual-width) / 2;
+				line-height: 32px;
+				padding: 50px 20px 0;
+				width: $bubble-width;
+				z-index: $frame-z + 1;
+				&:after {
+					position: absolute;
+					left: ($bubble-visual-width - $bubble-padding)/2;
+				}
+			}
+			.question-label {
+				$logical-height: 116px;
+				$border-radius: $logical-height/2;
+				$padding-top: 25px;
+				$height: $logical-height - $padding-top;
+				$width: 116px;
+				@include border-radius($border-radius);
+				background-color: $color-body;
+				color: white;
+				font-size: 12px;
+				height: $height;
+				left: $panel-width/2 - $width/2;
+				padding-top: $padding-top;
+				position: absolute;
+				text-align: center;
+				top: 60px;
+				width: $width;
+				z-index: $base-z;
+				.number {
+					display: block;
+					font-size: 42px;
+					line-height: 44px;
+				}
+			}
+			.question-image {
+				@include box-shadow(0, 2px, 10px, #000, false, -5px);
+				@include transform-rotate(-6deg);
+				border: 5px solid white;
+				height: 155px;
+				left: 30px;
+				position: absolute;
+				top: 30px;
+				width: 155px;
+				z-index: $frame-z + 2;
+			}
+			.question-number {
+				$logical-height: 510px;
+				$border-radius: $logical-height/2;
+				$padding-top: 25px;
+				$height: $logical-height - $padding-top;
+				$width: 510px;
+				@include border-radius($border-radius);
+				@include opacity(10);
+				background-color: #999;
+				color: white;
+				font-size: 450px;
+				height: $height;
+				left: $panel-width/2 - $width/2;
+				line-height: 450px;
+				padding-top: $padding-top;
+				position: absolute;
+				text-align: center;
+				top: -50px;
+				width: $width;
+				z-index: $floor-z;
+			}
+			.answers {
+				display: none;
+				font-size: 19px;
+				left: 50%;
+				line-height: 27px;
+				list-style: none;
+				margin-left: -367px;
+				position: absolute;
+				text-align: center;
+				top: 200px;
+				width: 735px;
+				z-index: $base-z;
+				.answer {
+					cursor: pointer;
+					float: left;
+					margin-left: 25px;
+					position: relative;
+					.answer-label {
+						margin-top: 175px;
+						width: 165px;
+					}
+					.representation {
+						@include box-shadow(0, 2px, 10px, #000, false, -5px);
+						@include linear-gradient($color-buttons, top, mix($color-buttons, #fff, 60%), 0, $color-buttons, 100%);
+						background-color: $color-buttons;
+						border: 5px solid white;
+						color: $color-button-text;
+						display: table-cell;
+						height: 155px;
+						position: absolute;
+						vertical-align: middle;
+						width: 155px;
+						//@include transition-shorthand(scale 400ms);
+						&.text {
+							height: 125px;
+							padding-top: 30px;
+						}
+					}
+					&.hover .representation {
+						border-color: $color-links;
+						@include transform-scale(1.1);
+					}
+					&.selected .representation {
+						border-color: white;
+					}
+					&:first-child {
+						margin-left: 0;
+					}
+					.anchor-hack {
+						height: 1px;
+						width: 165px;
+						&:hover {
+							cursor: default;
+						}
+					}
+				}
+			}
+			.video {
+				bottom: 100px;
+				display: none;
+				left: 30px;
+				position: absolute;
+			}
+			&:first-child {
+				display: block;
+			}
+			.explanation {
+				display: none;
+				position: absolute;
+				right: 50px;
+				top: 50px;
+				width: 400px;
+				.answer-response {
+					padding-bottom: 10px;
+					padding-top: 10px;
+					width: 300px;
+					&:after {
+						left: 185px;
+					}
+				}
+				.correct-answer {
+					font-size: 30px;
+					margin-top: 100px;
+					text-align: center;
+				}
+				.answer-explanation {
+					font-size: 15px;
+					margin: 20px;
+				}
+				button {
+					position: absolute;
+					top: 380px;
+					right: 0;
+				}
+			}
+			&.video {
+				.answers {
+					left: auto;
+					margin-left: 0;
+					right: 30px;
+					text-align: left;
+					top: 165px;
+					width: 200px;
+					.answer {
+						float: none;
+						margin: 0;
+						.representation {
+							@include box-shadow(0, 0, 0, transparent);
+							background: transparent;
+							border: 0;
+							border-top: 1px solid $color-page-border;
+							color: $color-links;
+							display: block;
+							height: auto;
+							padding: 15px 10px;
+							position: static;
+							width: auto;
+						}
+						.answer-label {
+							margin-top: 0;
+						}
+						&.hover .representation {
+							@include transform-scale(1);
+							@include box-shadow(0, 0, 5px, #333);
+							background: $color-menu-highlight;
+						}
+						&:first-child {
+							.representation {
+								border: 0;
+							}
+						}
+					}
+				}
+				.explanation {
+					left: 50%;
+					margin-left: -200px;
+					padding-top: 40px;
+					right: auto;
+
+					.correct-answer-image {
+						@include box-shadow(0, 2px, 10px, #000, false, -5px);
+						@include linear-gradient($color-buttons, top, mix($color-buttons, #fff, 60%), 0, $color-buttons, 100%);
+						border: 5px solid white;
+						left: -80px;
+						position: absolute;
+						top: 135px;
+						img {
+							height: 155px;
+							width: 155px;
+						}
+					}
+					&.video-image {
+						.correct-answer {
+							margin-left: 100px;
+							margin-right: -100px;
+							text-align: left;
+						}
+						.answer-explanation {
+							margin-left: 100px;
+							margin-right: -100px;
+							text-align: left;
+						}
+					}
+				}
+			}
+		}
+ 	}
+ 	.quiz-end {
+ 		display: none;
+		text-align: center;
+		.congratulations {
+			left: 100px;
+			top: -30px;
+			width: 500px;
+			&:after {
+				left: 290px;
+			}
+		}
+		.score-panel {
+			color: $color-buttons;
+			font-size: 17px;
+			font-weight: bold;
+			height: 245px;
+			margin: 155px auto 0;
+			position: relative;
+			width: 400px;
+			.score {
+				$logical-height: 180px;
+				$border-radius: $logical-height/2;
+				$padding-top: 15px;
+				$height: $logical-height - $padding-top;
+				$width: 180px;
+				@include border-radius($border-radius);
+				background-color: $color-links;
+				color: white;
+				font-size: 125px;
+				height: $height;
+				line-height: 150px;
+				margin: 10px auto;
+				padding-top: $padding-top;
+				text-align: center;
+				vertical-align: text-top;
+				width: $width;
+				z-index: $floor-z;
+				&.full {
+					font-size: 90px;
+				}
+				.percentage {
+					font-size: 0.2em;
+					position: relative;
+					top: -2em;
+				}
+			}
+			.continue {
+				position: absolute;
+				right: 0;
+				bottom: 0;
+			}
+		}
+	}
+	.quiz-email {
+ 		display: none;
+ 		.quiz-bubble {
+	 		left: 70px;
+			line-height: 32px;
+			padding: 50px 20px 0;
+			top: 50px;
+			width: 620px;
+			z-index: 20;
+			&:after {
+				display: none;
+			}
+	 		small {
+	 			display: block;
+	 			font-size: 12px;
+	 		}
+	 	}
+	}
+	.quiz-thanks {
+		display: none;
+		.thanks {
+			left: 50%;
+			margin-left: -300px;
+			padding: 40px 0;
+			top: 75px;
+			width: 600px;
+			z-index: $base-z;
+			&:after {
+				left: 285px;
+			}
+			a {
+				color: $color-header-text;
+				text-decoration: underline;
+			}
+		}
+		.title-image {
+			@include opacity(20);
+		}
+	}
+	.more-info {
+		margin-top: 320px;
+		position: relative;
+		text-align: center;
+		z-index: $base-z;
+		h2 {
+			border-bottom: none;
+		}
+		ul {
+			li {
+				margin: 10px 0;
+			}
+		}
+	}
+	.correct-icon, .wrong-icon {
+		@include opacity(99);
+		@include transition-shorthand(all 200ms ease-in);
+		height: 136px;
+		left: 25px;
+		position: absolute;
+		top: 25px;
+		width: 132px;
+		z-index: frame-z + 1;
+		&.effect {
+			@include opacity(0);
+			@include transform(translate(0,-136px) scale(2));
+		}
+	}
+	.correct-icon {
+		background: url(/extensions/wikia/WikiaQuiz/images/correct.png) no-repeat; /* $wgCdnStylePath */
+	}
+	.wrong-icon {
+		background: url(/extensions/wikia/WikiaQuiz/images/wrong.png) no-repeat; /* $wgCdnStylePath */
+	}
+	.mute-control {
+		bottom: 8px;
+		position: absolute;
+		right: 15px;
+	}
+}
+
+.QuizStatus {
+	@include linear-gradient($color-header, top, mix($color-header, #fff, 80%), 18%, mix($color-header, #fff, 90%), 35%, $color-header, 53%);
+	@include border-radius(7px);
+	@include box-shadow(0, 2px, 5px, #111);
+	top: -85px;
+	height: 55px;
+	margin: 0 auto;
+	position: relative;
+	text-align: center;
+	width: $panel-width + 14px;
+	img {
+		position: absolute;
+		left: 15px;
+	}
+	button {
+		@include box-shadow(0, 0, 8px, #fff);
+		position: relative;
+		top: 15px;
+	}
+	.progress-bar {
+		display: none;
+		height: 14px;
+		margin: 0 auto;
+		padding-top: 20px;
+		width: 110px;
+		.indicator {
+			@include border-radius(7px);
+			background-color: mix($color-header, #fff, 70%);
+			float: left;
+			height: 14px;
+			margin-left: 10px;
+			width: 14px;
+			&:first-child {
+				margin-left: 0px;
+			}
+			&.on {
+				@include transition-shorthand(background 400ms);
+				background-color: $color-body;
+			}
+		}
+	}
+	/* decorators */
+	&:before, &:after {
+		background-color: $color-header;
+		content: "";
+		height: 14px;
+		position: absolute;
+		bottom: -7px;
+		width: 7px;
+	}
+	&:before {
+		@include border-radius-sw(7px);
+		left: 0;
+	}
+	&:after {
+		@include border-radius-se(7px);
+		right: 0;
+	}
+}
+
+.quiz-facebook {
+	@include linear-gradient(false, top, $color-module-highlight, 60%, $color-module-shadow, 100%);
+	border: 1px solid $color-page-border;
+	height: 73px;
+	margin: 0 auto 0;
+	position: relative;
+	top: -40px;
+	width: $panel-width - 2;
+	.challenge {
+		background-color: #c3c3c3;
+		$challenge-text-color: black;
+		color: $challenge-text-color;
+		font-size: 16px;
+		height: 48px;
+		padding-top: 25px;
+		position: relative;
+		text-align: center;
+		width: 230px;
+		&:after {
+			border: 37px solid transparent;
+			border-left-style: solid;
+			border-left-width: 18px;
+			border-left-color: #c3c3c3;
+			content: "";
+			height: 0;
+			position: absolute;
+			right: -54px;
+			top: 0;
+			width: 0;
+		}
+	}
+	.fblike {
+		position: absolute;
+		right: 0;
+		top: 5px;
+	}
+}
+
+/* Overwrites */
+.WikiaPageHeader h2,.commentslikes,.wikia-menu-button {
+	display: none;
+}

@@ -1,0 +1,43 @@
+
+== License ==
+
+Copyright 2006 Evan Prodromou (http://vinismo.com/en/User:Evan)
+Copyright 2008 Mark Jaroski (http://vinismo.com/en/User:Evan)
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
+== Authors ==
+
+Mark Jaroski <mark@geekhive.net>
+Evan Prodromou <evan@vinismo.com>
+
+This software is a major rewrite of Evan's original Mediawiki RDF
+extension, but based on Dave Becket's librdf (Redland) library, rather than
+the PHP native library used in the original.  This allows for a more
+RDF-centered approach to data storage among other benefits.
+
+== Pre-requisites ==
+
+* librdf - The redland libraries by David Beckett
+* php5-librdf - The redland SWIG-generated PHP libraries
+* LibRDF - An objected oriented PHP5 wrapper by David Shea
+
+== Bugs ==
+
+Bugs or feature requests can be sent to the author at
+mark@geekhive.net.  The TODO file in this distribution has stuff I
+think needs to be todone; + marks show things I've already done, and -
+shows things that are yet to be done.
+

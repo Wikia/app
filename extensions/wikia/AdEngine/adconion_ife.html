@@ -1,0 +1,21 @@
+<html> 
+<head></head> 
+<body marginheight="0" marginwidth="0" style="margin: 0px;"> 
+<script type="text/javascript"> 
+(function() {
+
+  function loadScript(url) {
+    document.write('<s' + 'cript type="text/javascript" src="' + url
+      + '"></s' + 'cript>');
+    }
+
+    if ("https:" == document.location.protocol) {
+      loadScript("https://cdns.amgdgt.com/base/js/v1/amgdgt-util.js");
+      loadScript("https://cdns.amgdgt.com/base/js/v1/amgdgt-ife.js");
+    } else {
+      loadScript("http://cdn.amgdgt.com/base/js/v1/amgdgt-util.js");
+      loadScript("http://cdn.amgdgt.com/base/js/v1/amgdgt-ife.js");
+    }
+})();
+</script> 
+</html>

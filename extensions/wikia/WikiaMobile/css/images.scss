@@ -1,0 +1,99 @@
+//mixins
+@import "variables.scss";
+
+@import "mixins/transition.scss";
+
+$image-border: 1px solid $border-color;
+
+figure{
+	text-align: center;
+	margin: 10px 0;
+	//without this 'a' adds empty space beteween img and bottom line
+	line-height: 0;
+	position: relative;
+
+	a {
+		display: inline-block;
+	}
+}
+
+.thumb, .link {
+	display: table;
+	margin: 5px auto;
+}
+
+.thumbcaption {
+	pointer-events: none;
+
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+
+	padding: 5px;
+	font-size: .8em;
+	line-height: 1em;
+	min-height: 25px;
+
+	background-color: rgba(0,0,0,.6);
+
+	color: white;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+
+	.link & {
+		padding-right: 15px;
+	}
+
+	a {
+		color: inherit;
+		text-decoration: underline;
+	}
+
+	&:before {
+		position: absolute;
+		right: 0;
+		top: 0;
+
+		height: 25px;
+		width: 15px;
+		background-size: 15px;
+		background-position: center;
+
+		-webkit-transform: rotate(-90deg);
+		-moz-transform: rotate(-90deg);
+		transform: rotate(-90deg);
+	}
+}
+
+.lazy {
+	background-size: 70px;
+	display: none;
+	background-color: $imagePlaceholderBackground;
+
+	.js & {
+		display: inline;
+	}
+}
+
+noscript img {
+	height: auto;
+}
+
+img {
+	max-width: 100%;
+	@include transition(opacity .2s);
+
+	&.load {
+		opacity: .1;
+	}
+
+	&.loaded {
+		background-image: none;
+		background-color: transparent;
+		opacity: 1;
+		width: auto;
+		height: auto;
+	}
+}

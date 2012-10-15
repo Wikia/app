@@ -1,0 +1,217 @@
+#EditPage {
+	.cke_button {
+		> a {
+			@include border-radius(4px);
+			background-color: $color-epl-button;
+			border: solid 1px $color-epl-button-border;
+			cursor: default;
+			display: inline-block;
+			float: left;
+			height: 26px;
+			margin: 0 5px;
+			width: 26px;
+
+			&:hover {
+				@include gradient-button-hover;
+			}
+		}
+		.cke_label {
+			display: none;
+			cursor: inherit;
+			font-size: 10px;
+			color: $color-text;
+			white-space: nowrap;
+
+			// ck reset
+			padding-top: 0;
+			padding-left: 0;
+			padding-right: 0;
+			padding-bottom: 0;
+			height: auto;
+			line-height: normal;
+			vertical-align: baseline;
+			float: none;
+		}
+		&.cke_on {
+			> a {
+				@include box-shadow(-1px, 1px, 2px, $color-epl-button-shadow, true);
+				background-color: $color-epl-button-active;
+				border-top-color: $color-epl-button-border;
+				border-right-color: $color-epl-button-border;
+			}
+		}
+		&.cke_disabled {
+			> a {
+				@include opacity(20);
+				zoom: 1; /* IE fix to make opacity work */
+			}
+		}
+		&.cke_hidden {
+			display: none;
+		}
+		&.cke_button_big {
+			> a {
+				display: inline-block;
+				height: 51px;
+				margin: 0 5px;
+				position: relative;
+				width: 51px;
+				.cke_label {
+					bottom: 0;
+					display: block;
+					left: 0;
+					overflow: hidden;
+					position: absolute;
+					text-align: center;
+					width: 51px;
+				}
+			}
+		}
+	}
+
+	// Button icons
+	.cke_button {
+		.cke_icon {
+			@include sprite-edit-page-base;
+			display: inline-block;
+			height: 16px;
+			width: 16px;
+			margin: 5px;
+		}
+		// BugId: 7234
+		&.cke_button_big a {
+			cursor: pointer;
+		}
+		&.cke_button_big .cke_icon {
+			height: 32px;
+			width: 48px;
+			margin: 3px 1px;
+		}
+		.cke_button_bold .cke_icon {
+			@include sprite-edit-page('bold-' + $sprite-theme, 16px, 16px);
+		}
+		.cke_button_italic .cke_icon {
+			@include sprite-edit-page('italic-' + $sprite-theme, 16px, 16px);
+		}
+		.cke_button_link .cke_icon {
+			@include sprite-edit-page('addlink-' + $sprite-theme, 16px, 16px);
+		}
+		.cke_button_bulletedlist .cke_icon {
+			@include sprite-edit-page('unordered-' + $sprite-theme, 16px, 16px);
+		}
+		.cke_button_numberedlist .cke_icon {
+			@include sprite-edit-page('ordered-' + $sprite-theme, 16px, 16px);
+		}
+		.cke_button_indent .cke_icon {
+			@include sprite-edit-page('indent-' + $sprite-theme, 16px, 16px);
+		}
+		.cke_button_outdent .cke_icon {
+			@include sprite-edit-page('outdent-' + $sprite-theme, 16px, 16px);
+		}
+		.cke_button_justifyleft .cke_icon {
+			@include sprite-edit-page('alignleft-' + $sprite-theme, 16px, 16px);
+		}
+		.cke_button_justifycenter .cke_icon {
+			@include sprite-edit-page('aligncenter-' + $sprite-theme, 16px, 16px);
+		}
+		.cke_button_justifyright .cke_icon {
+			@include sprite-edit-page('alignright-' + $sprite-theme, 16px, 16px);
+		}
+		.cke_button_undo .cke_icon {
+			@include sprite-edit-page('undo-' + $sprite-theme, 16px, 16px);
+		}
+		.cke_button_redo .cke_icon {
+			@include sprite-edit-page('redo-' + $sprite-theme, 16px, 16px);
+		}
+		.cke_button_underline .cke_icon {
+			@include sprite-edit-page('underline-' + $sprite-theme, 16px, 20px);
+			@include button-icon-resize-square(16px, 20px);
+		}
+		.cke_button_strike .cke_icon {
+			@include sprite-edit-page('strike-' + $sprite-theme, 22px, 16px);
+			@include button-icon-resize-square(22px, 16px);
+		}
+		.cke_button_signature .cke_icon {
+			@include sprite-edit-page('signature-' + $sprite-theme, 26px, 22px);
+			@include button-icon-resize(26px, 22px);
+		}
+	}
+	.RTEImageButton.cke_button_big .cke_icon {
+		@include sprite-edit-page('photo', 48px, 32px);
+	}
+	.RTEGalleryButton.cke_button_big .cke_icon {
+		@include sprite-edit-page('gallery', 48px, 32px);
+	}
+	.RTESlideshowButton.cke_button_big .cke_icon {
+		@include sprite-edit-page('slideshow', 48px, 32px);
+	}
+	.RTESliderButton.cke_button_big .cke_icon {
+		@include sprite-edit-page('slider', 48px, 32px, 0, 1px);
+	}
+	.RTEVideoButton.cke_button_big .cke_icon {
+		@include sprite-edit-page('video', 48px, 32px);
+	}
+	.RTEMUTButton.cke_button_big .cke_icon {
+		@include sprite-edit-page('video', 48px, 32px);
+	}
+	.RTEMUTButton.cke_button_big a {
+		position: relative;
+		.cke_icon {
+			position: relative;
+		}
+		.cke_icon:after {
+			@include border-radius-nw(3px);
+			@include border-radius-ne(3px);
+			position: absolute;
+			content: 'BETA';
+			background-color: #ff8080; /* for IE8 */
+			background-color: rgba(255,0,0,0.4);
+			left: -2px;
+			top: -4px;
+			text-align: center;
+			width: 53px;
+			color: $color-page;
+		}
+	}
+	.RTEPollButton.cke_button_big .cke_icon {
+		@include sprite-edit-page('poll', 48px, 32px);
+	}
+	.cke_button_table.cke_button_big .cke_icon {
+		@include sprite-edit-page('table', 48px, 32px);
+	}
+	.module_templates .cke_button_big .cke_icon {
+		@include sprite-edit-page('puzzle_piece', 48px, 32px, 2px);
+	}
+
+	// Buttons with label (Signature, Underline, Highlight)
+	.cke_label_button {
+		> a {
+			width: auto;
+		}
+		.cke_icon {
+			float: left;
+		}
+		.cke_label {
+			display: inline;
+			line-height: 26px;
+			padding: 0 4px;
+		}
+	}
+
+	.cke_panelbutton,
+	.cke_modulebutton {
+		position: relative;
+	}
+
+	.cke_buttons {
+		@include clearfix;
+	}
+}
+
+#EditPageTabs {
+	.cke_button {
+		.cke_label {
+			color: $color-text;
+		}
+	}
+}

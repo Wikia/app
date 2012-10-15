@@ -1,0 +1,213 @@
+/**
+ * CSS stylesheet for Configure extension
+ *
+ * @author Alexandre Emsenhuber
+ * @license GPLv2 or higher
+ * @ingroup Extensions
+ */
+
+/**
+ * Toc
+ */
+
+td.config-col-toc, td.config-col-toc-hidden {
+	vertical-align: top;
+}
+
+td.config-col-toc {
+	border-right: 1px solid #999;
+	margin-right: .5em;
+}
+
+td.config-col-form {
+	width: 100%;
+	vertical-align: top;
+}
+
+td.config-col-form fieldset {
+	border: none;
+	width: 100%;
+}
+
+td.config-col-form fieldset > legend {
+	display: none;
+}
+
+ul.configtoc {
+	vertical-align: top;
+}
+
+ul.configtoc, ul.configtoc > li > ul {
+	list-style-type: none !important;
+	list-style-image: none !important;
+	line-height: 1em !important;
+}
+
+ul.configtoc > li, ul.configtoc > li > ul > li {
+	white-space: nowrap;
+}
+
+ul.configtoc > li, ul.configtoc > li > ul > li {
+	background-color: #fefefe;
+}
+
+ul.configtoc > li > a.selected {
+	background-color: #ddddff;
+}
+
+.config-toc-delimiter {
+	border-top: 1px solid #bbb;
+	width: 100%;
+}
+
+td.configure-left-column {
+	width: 25%;
+}
+
+/**
+ * tables borders
+ */
+
+fieldset.configsection {
+	padding: 0 0 0 1em;
+}
+
+table.assoc,
+table.ns-array,
+table.ns-text,
+table.group-bool,
+table.group-array,
+table.promotion-conds {
+	border: 1px solid #777;
+}
+
+table.configure-table td,
+table.assoc td,
+table.ns-array td,
+table.ns-text td,
+table.group-bool td,
+table.group-array td,
+table.promotion-conds td {
+	padding: 6px;
+	margin: 0;
+	border-bottom: 1px solid #777;
+	border-spacing: 0;
+}
+
+table.assoc td.button,
+table.ns-array td.button,
+table.ns-text td.button,
+table.group-bool td.button,
+table.group-array td.button,
+table.promotion-conds td.button {
+	width: 10em;
+}
+
+table.configure-table th,
+table.assoc th,
+table.ns-array th,
+table.ns-text th,
+table.group-bool th,
+table.group-array th,
+table.promotion-conds th {
+	border-bottom: 1px solid #667;
+	background-color: #dde;
+}
+
+td.configure-grouparray-group {
+	width: 15em;
+}
+
+table.configure-table,
+table.assoc,
+table.ns-array,
+table.ns-text,
+table.group-bool,
+table.group-array,
+table.promotion-conds {
+	border-spacing: 0;
+	width: 100%;
+}
+
+table.configure-table-ext tr > td {
+	border: none;	
+}
+
+/**
+ * links
+ */
+a.configure-doc,
+a.configure-doc:hover,
+a.configure-doc:active {
+	color: #021488;
+}
+
+a.configure-doc:visited {
+	color: #0318d8;
+}
+
+.configure-customised {
+	background-color: #eef;
+}
+
+/**
+ * disabled settings
+ */
+table.disabled > tr > td > hr {
+	border: 0 !important;
+	color: #777 !important;
+	background-color: #777 !important;
+
+}
+
+span.array-disabled, span.disabled {
+	text-decoration: line-through;
+	color: #888;
+	font-style: italic;
+}
+
+span.array {
+	font-style: italic;
+}
+
+/**
+ * JavaScript stuff
+ */
+td.button {
+	border: 0 !important;
+}
+
+input.button-add {
+	float: left;
+}
+
+.configure-biglist-toggle-link {
+	display: block;
+	float: right;
+}
+
+.configure-biglist-placeholder {
+	background-color: #ccd;
+	text-align: center;
+}
+
+table.configure-array-table {
+	width: 100%;
+}
+
+/**
+ * diffs
+ */
+h3.config-diff-section {
+	margin-top: .5em;
+	background-color: #aaa;
+}
+
+h4.config-diff-group {
+	margin-top: .3em;
+	text-decoration: underline;
+}
+
+td.configure-setting {
+	font-weight: normal;
+}

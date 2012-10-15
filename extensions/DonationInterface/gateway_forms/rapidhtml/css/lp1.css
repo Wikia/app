@@ -1,0 +1,95 @@
+/* Pitch */
+#pitch {
+ height: 236px;
+ background-image: none;
+ background-position: right top;
+ background-repeat: no-repeat;
+ background-color: #1e1e1e;
+ border: 1px solid gray;
+ border-bottom-width: 0;
+}
+#pitch-head {
+ width: 50%;
+ font-size: 1.75em;
+ line-height: 1.5em;
+ color: white;
+ margin-top: 16px;
+ margin-{{#feq:{{{dir}}}|rtl|right|left}}: 24px;
+}
+#pitch-body {
+ width: 50%;
+ font-size: 1em;
+ line-height: 1.5em;
+ color: white;
+ margin-top: 16px;
+ margin-left: 24px;
+}
+/* Appeal #appeal removed */
+#appeal-head {
+ font-size: 1.5em;
+ line-height: 1.125em;
+ padding-bottom: 0.5em;
+ padding-top: 0.125em;
+}
+#appeal-body {
+ padding: 0.2em 0em;
+ font-size: 1.125em;
+ margin-bottom: 1em;
+}
+/* Donate  #donate removed */
+#donate-content {
+ background-color: #CCE7CD;
+ border: 1px solid #5eac58;
+}
+#donate-head {
+ font-size: 1.5em;
+ line-height: 1.125em;
+ padding-bottom: 0.5em;
+ padding-top: 0.125em;
+ border-color: #5eac58;
+}
+#donate-body {
+ font-size: 1.25em;
+}
+ 
+.donate-body-small {
+  font-size: .75em;
+  margin-bottom:1em;
+}
+ 
+input.button, select#input_currency_code {
+ font-size: 95%;
+}
+ 
+#amount-table {
+ background-color: #CCE7CD;
+}
+ 
+table {
+ background-color: transparent;
+}
+ 
+#footer {
+ background-image: none !important;
+}
+ 
+#mw-head-base {
+ height: 1em !important;
+}
+ 
+#mw-panel div.portal {
+ display: none !important;
+}
+ 
+#p-namespaces, #p-views, #p-cactions, #p-search, #p-personal, #catlinks, #firstHeading, #contentSub, #siteSub {
+ display: none;
+}
+ 
+div#content {
+ background-color: transparent !important;
+ background-image: none !important;
+}
+ 
+div#mw-head-base {
+ background-image: none !important;
+}

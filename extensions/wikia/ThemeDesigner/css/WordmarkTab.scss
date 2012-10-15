@@ -1,0 +1,140 @@
+@import "../../../../skins/oasis/css/core/color";
+@import "../../../../skins/oasis/css/mixins/box-shadow";
+@import "../../../../skins/oasis/css/mixins/opacity";
+
+$previewheight: 65px;
+$previewwidth: 250px;
+
+.WordmarkTab {
+	#or {
+		background: #FFF;
+		bottom: 1px;
+		display: block;
+		float: right;
+		position: relative;
+		right: -25px;
+		padding: 5px;
+	}	
+	fieldset {
+		width: 260px;
+		height: 175px;
+	}
+	button, input[type='submit'] {
+		margin-top: 5px;
+	}
+	h2{
+		margin-bottom: 5px;
+	}
+	.graphic{
+		padding: 0 15px;
+		.preview {
+			border: 1px solid #eaeaea;
+			color: #CCC;
+			height: $previewheight;
+			margin-top: 10px;
+			position: relative;
+			width: $previewwidth;
+			.wordmark {
+				cursor: pointer;
+				&.selected {
+					@include box-shadow(0px, 0px, 5px, #72ADD5);
+					border-color: #72ADD5;
+					cursor: default;
+				}
+			}
+			a {
+				background: #FFF;
+				color: #666;
+				display: none;
+				padding:2px;
+				position: absolute;
+				right: 0;
+				top: 0;
+			}
+			span{
+				display: block;
+				text-align: center;
+				line-height: $previewheight;
+			}
+			&.active{
+				border: 0;
+				float: left;
+				width: auto;
+				span { 
+					display: none;
+				}
+				&:hover {
+					a {
+						display: block;
+					}
+				}
+			}
+		}
+	}
+	.favicon {
+		padding: 0 15px;
+		.preview {
+			color: #CCC;
+			border: 1px solid #eaeaea;
+			display: block;
+			float: left;
+			margin-top: 10px;
+			height: 16px;
+			overflow: visible; 
+			width: 16px;
+			img {
+				float: left;
+				margin-right: 5px; 
+			}
+			span {
+				display: block;
+				margin-left: 21px;
+			}
+			a {
+				background: #FFF;
+				color: #666;
+				display: none;	
+			}
+			&.active{
+				border: 0;
+				width: $previewwidth;
+				span{
+					display: none;
+				}
+				&:hover {
+					a {
+						display: block;
+					}
+				}
+			}
+		}
+	}
+	.controls {
+		@include clearfix;
+		margin-bottom: 10px;
+		li {
+			float: left;
+			margin-right: 10px;
+		}
+	}
+	#wordmark-edit-button {
+		margin-top: 15px;
+	}
+	#wordmark-shield {
+		@include opacity(75);
+		background: #FFF;
+		display: none;
+		left: 0;
+		position: absolute;
+		top: 0;
+	}
+}
+body .tooltip {
+	.tooltip-inner {
+		background-color: white;
+		border: 1px solid #EAEAEA;
+	}
+	&.right .tooltip-arrow {
+		border-right: 5px solid white;
+	}
+}

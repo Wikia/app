@@ -1,0 +1,21 @@
+.mw-sp-translate-table.wikitable tr:hover td {
+	background: white;
+}
+
+.mw-sp-langstats-toggleall {
+	text-align: right;
+}
+
+.mw-sp-langstats-toggle {
+	float: right;
+}
+
+.mw-sp-langstats-collapser,
+.mw-sp-langstats-collapser a {
+	cursor: n-resize;
+}
+
+.mw-sp-langstats-expander,
+.mw-sp-langstats-expander a {
+	cursor: s-resize;
+}

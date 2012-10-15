@@ -1,0 +1,93 @@
+/* alternate table styling */
+/* NOTE: main table styling is in _article.scss */
+
+@import "color";
+@import "../mixins/gradient";
+
+.WikiaDataTable {
+	@include linear-gradient($color-module-highlight, top, $color-module-highlight, 40%, $color-module-shadow, 100%);
+	border: 1px solid $color-page-border;
+	border-collapse: collapse;
+	text-align: right;
+	width: 100%;
+	th, td {
+		padding: 10px 10px 7px 0;
+		&:first-child {
+			color: $color-buttons;
+			padding-left: 10px;
+			text-align: left;
+		}
+	}
+	thead {
+		th {
+			color: $color-button-highlight;
+		}
+	}
+	.totals {
+		td {
+			background: $color-page;
+			color: $color-button-highlight;
+			height: 36px;
+			font-size: 16px;
+			padding: 0 10px 0 0;
+			&:first-child {
+				padding: 0;
+				.pointer {
+					background: $color-buttons;
+					color: $color-button-text;
+					font-size: 13px;
+					height: 26px;
+					margin-right: 10px;
+					padding: 10px 0 0 10px;
+					position: relative;
+					&:before {
+						border: 18px solid transparent;
+						border-left: 10px solid $color-buttons;
+						content: "";
+						height: 0;
+						position: absolute;
+						right: -28px;
+						bottom: 0;
+						width: 0;
+					}
+				}
+			}
+		}
+	}
+	tfoot {
+		.supplemental-info {
+			text-align: right;
+		}
+	}
+	tbody {
+		tr {
+			border-top: 1px solid $color-page-border;
+			&:first-child {
+				border-top: none;
+			}
+			td {
+
+			}
+		}
+	}
+}
+
+.WikiaTable { // This parallels table.article-table in _article.scss
+	background: darken($color-page, 2%);
+	border-collapse: collapse;
+	border: 0px none $color-page-border;
+	margin: 1em 1em 1em 0;
+
+	th, td {
+		border-bottom: 1px $color-page-border solid;
+		padding: 6px 12px;
+	}
+	th {
+		background: darken($color-page, 5%);
+		text-align: left;
+	}
+	caption {
+		font-weight: bold;
+	}
+}
+

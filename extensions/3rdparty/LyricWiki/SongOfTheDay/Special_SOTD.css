@@ -1,0 +1,65 @@
+td.label {
+	text-align: right;
+}
+input[type=text], textarea {
+	width: 280px;
+	margin-right: 1em;
+}
+textarea {
+	max-width: 280px;
+	min-width: 280px;
+	height: 100px;
+	min-height: 100px;
+	max-height: 350px
+}
+.sotd-error {
+	background-color: #FFCCCC;
+}
+.sotd-error-col {
+	vertical-align: top;
+	background-color: #FFCCCC;
+	padding: 1em;
+}
+span.sotd-navlinks {
+	font-size: 85%;
+}
+#manage-sotd th {
+	border-top: 1px solid black;
+	background-color: #C0C0C0;
+}
+#manage-sotd table {
+	border-collapse: collapse;
+}
+#manage-sotd td, #manage-sotd th, #edit-sotd td {
+	border-bottom: 1px solid black;
+	padding: 3px 12px;
+}
+#manage-sotd .submit td {
+	border: none;
+	padding-top: 8px;
+}
+#manage-sotd td.id {
+	text-align: right;
+	padding: 3px 8px;
+}
+#manage-sotd tr.pending {
+	background-color: #FFFFFF;
+}
+#manage-sotd tr.modified {
+	background-color: #FFCAA0;
+}
+#manage-sotd tr.suitable {
+	background-color: #EEFFEE;
+}
+#manage-sotd tr.declined {
+	background-color: #FFE0E8;
+}
+#manage-sotd tr.accepted {
+	background-color: #C0FFC0;
+}
+#edit-sotd td form {
+	display: inline;
+}
+td.ta-center {
+	text-align: center;
+}

@@ -1,0 +1,37 @@
+/*
+Document   : infobox
+Created on : Nov 3, 2011, 12:41:29 PM
+Author     : wlee
+*/
+@import "../../../../../skins/oasis/css/mixins/opacity";
+
+.jwplayer-infobox {
+	
+	cursor: pointer;
+	display: none;
+	margin: 10px 10px 0 10px;
+	width: 95%;
+	
+	.jwplayer-infobox-background {
+		@include opacity(60);
+		background: black;
+		height: 100%;
+		position: absolute;
+		width: 100%;
+	}
+	
+	.jwplayer-infobox-content {
+		color: #dddddd;
+		font-size: 14px;
+		font-weight: bold;
+		line-height: 18px;
+		padding: 5px;
+		position: relative;
+		text-align: left;
+		&.small {
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+	}
+}

@@ -1,0 +1,20 @@
+.mw-translate-spsl-translators {
+	line-height: 200%;
+}
+
+.mw-special-SupportedLanguages h2 {
+	font-weight: bold;
+	margin-top: 2em;
+}
+
+.tagcloud {
+	line-height: 200%;
+	margin: 5em;
+	text-align: center;
+}
+
+.tagcloud .tag {
+	white-space: nowrap;
+	margin: 0.5ex;
+	color: black;
+}

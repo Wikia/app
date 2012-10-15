@@ -1,0 +1,172 @@
+.CustomizePlatinum {
+	font-size: 14px;
+}
+
+.customize-platinum-badge {
+	float: left;
+	line-height: normal;
+	min-width: 725px;
+	padding: 0;
+}
+
+.customize-platinum-badge span.tip{
+	font-size: 10px;
+}
+
+.readonly span.tip{
+	display: none;
+}
+
+.customize-platinum-badge label {
+	font-weight: bold;
+}
+
+.customize-platinum-badge legend {
+	margin-left: 5px;
+	padding: 10px 5px;
+}
+.customize-platinum-badge legend input[type="text"], 
+.customize-platinum-badge legend span {
+	font-size: 16px;
+	font-weight: bold;
+}
+.customize-platinum-badge legend label {
+	font-size: 12px;
+	font-weight: normal;
+}
+
+.customize-platinum-badge .column {
+	float: left;
+	padding-left: 10px;
+	width: 230px;
+}
+
+.customize-platinum-badge .sponsored-fields {
+	margin-top: 10px;
+}
+
+.customize-platinum-badge .sponsored-fields-1 {
+	padding-bottom: 5px;
+}
+
+.customize-platinum-badge .sponsored-fields-3 p {
+	font-size: 12px;
+}
+
+.sponsored-fields input[type=text] {
+	width: 100%;
+	display: block;
+}
+
+.sponsored-fields input {
+	margin-bottom: 10px;
+}
+
+.customize-platinum-badge .sponsored-fields-3 label {
+	display: block;
+}
+
+.sponsored-fields label[for=hover_content] {
+	display: none;
+}
+
+.customize-platinum-badge .sponsored-fields-3 {
+	padding-top: 10px;
+}
+
+.customize-platinum-badge .sponsored-fields-2{
+	text-align: center;
+}
+
+.customize-platinum-badge .sponsored-fields-3{
+	border-top: 1px solid #AAA;
+	margin-bottom: 20px;
+}
+
+.editable .badges .profile-hover.sponsored-hover > .earned {
+	display:block;
+}
+
+.customize-platinum-badge textarea {
+	display: block;
+	height: 50px;
+	margin-bottom: 10px;
+	width: 220px;
+}
+
+.customize-platinum-badge .badge-preview, .sponsored-fields .hover-content-preview {
+	border-style: dashed;
+	border-width: 1px;
+	display: block;
+	height: 90px;
+	margin-bottom: 10px;
+	padding: 5px;
+	width: 90px;
+	-moz-border-radius: 5px;
+}
+
+.customize-platinum-badge .commands {
+	background-image: -moz-linear-gradient(top, rgba(0,0,0,.1), rgba(0,0,0,0) 50%);
+	background-image: -webkit-gradient(linear, 0% 0%, 0% 50%, from(rgba(0,0,0,.1)), to(rgba(0,0,0,0)));
+	border-top-width: 1px;
+	border-top-style: solid;
+	clear: both;
+	padding: 5px 10px;
+}
+.customize-platinum-badge .button-save, .customize-platinum-badge .button-cancel {
+	display: none;
+}
+
+/*** Grouped to stay DRY ***/
+.customize-platinum-badge, .commands {
+	border-color: #AAA;
+}
+
+/*** New box ***/
+.customize-platinum-badge.new {
+	background-image: -moz-linear-gradient(top, rgba(255,255,153,0), rgb(255,255,153));
+	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(255,255,153,0)), to(rgb(255,255,153)));
+}
+.customize-platinum-badge.new .awarded-to,
+.customize-platinum-badge.new legend input[type="checkbox"],
+.customize-platinum-badge.new legend label {
+	display: none;
+}
+
+/*** Edit mode ***/
+.customize-platinum-badge.editable legend span,
+.customize-platinum-badge.editable p {
+	display: none;
+}
+
+/*** Readonly mode ***/
+.customize-platinum-badge.readonly input[type="file"],
+.customize-platinum-badge.readonly .award-to,
+.customize-platinum-badge.readonly input[type="text"],
+.customize-platinum-badge.readonly textarea {
+	display: none;
+}
+.customize-platinum-badge [readonly="readonly"] {
+	background: transparent;
+	border: 0;
+}
+
+span.input-suggestion {
+	font-size:9px;
+}
+
+fieldset.readonly span.input-suggestion {
+	display:none;
+}
+
+/*sponsored achievement hover preview (the template uses the oasis,scss files too*/
+.editable .sponsored-fields label[for=hover_content] {
+	display: block;
+}
+
+.sponsored-fields .sponsored-fields-2 .badges .sponsored-hover{
+	display: inline-block;
+	position: relative;
+	margin-bottom: 10px;
+	text-align: left;
+}

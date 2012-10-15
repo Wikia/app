@@ -1,0 +1,118 @@
+@import "../../../../../skins/oasis/css/mixins/box-shadow";
+@import "../../../../../skins/oasis/css/mixins/clearfix";
+
+@import "../core/colors";
+
+.WikiaArticleComments {
+	.MiniEditorWrapper {
+		.editarea {
+			background-color: $color-page;
+			border: solid 1px $color-page-border;
+
+			textarea {
+				background-color: $color-page;
+				border: 0;
+				color: $color-text;
+				margin: 0;
+				outline: none;
+				padding: 0;
+				resize: none;
+				// BugId:30853
+				&.wikiaEditor {
+					font-family: Consolas,"Eupheima UCAS",Ayuthaya,Menlo,monospace;
+					font-size: 13.5px;
+				}
+			}
+
+			> br {
+				display: none;
+			}
+		}
+
+		.buttons {
+			bottom: 0;
+			float: right;
+			margin-top: 10px;
+			position: relative;
+			right: 0;
+		}
+
+		.toolbar {
+			float: left;
+		}
+
+		&.focused {
+			.editarea {
+				@include box-shadow(0px, 0px, 4px, $color-MiniEditor-focus);
+			}
+		}
+	}
+
+	// New Message
+	#article-comments > .MiniEditorWrapper {
+		#article-comm-form {
+			margin: 0 0 25px 65px;
+
+			textarea {
+				width: 100%;
+			}
+		}
+
+		.session {
+			margin: 0;
+
+			img {
+				float: none;
+				padding: 0;
+			}
+		}
+
+		.buttons {
+			.wikia-button, .throbber {
+				margin-left: 5px;
+				margin-right: 0;
+			}
+		}
+	}
+
+	// Messages
+	.comments > .SpeechBubble {
+		.article-comm-edit-box {
+			@include clearfix;
+			margin-top: 10px;
+
+			.editarea > br {
+				display: none;
+			}
+
+			form {
+				margin: 0;
+			}
+		}
+	}
+
+	// Editing
+	.article-comm-input {
+		.MiniEditorWrapper {
+			form {
+				margin-bottom: 0;
+			}
+
+			.buttons {
+				margin-top: 10px;
+			}
+
+			.loading-indicator {
+				display: block;
+			}
+
+			&.ckeditorsuite {
+				.editarea {
+					textarea.wikiaEditor {
+						visibility: hidden;
+					}
+				}
+			}
+		}
+	}
+}

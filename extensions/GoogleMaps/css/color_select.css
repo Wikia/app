@@ -1,0 +1,125 @@
+.color_select_box {
+	position:absolute;
+	width:290px;
+	line-height:290px;
+	border:outset 2px;
+	background-color:#cccccc;
+	padding:2px;
+	z-index:100000;
+}
+
+.sv_select_box_bg {
+	width:256px;
+	line-height:256px;
+	border:solid 1px #000;
+	padding:0px;
+	float:left;
+}
+
+.sv_select_box {
+	width:256px;
+	line-height:256px;
+	border:solid 0px #000;
+	padding:0px;
+	float:left;
+	/* Mozilla doesn't support crazy MS image filters, so it will ignore the following */
+	/* filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, src='sv_blend.png'); */
+}
+
+/* IE ignores css styles with [attributes], so it will skip the following. */
+.sv_select_box[class] {
+	background:url('../images/sv_blend.png') top left no-repeat;
+}
+
+.h_select_box {
+	width:20px;
+	height:256px;
+	line-height:256px;
+	border:solid 1px #000;
+	padding:0px;
+	margin:0px;
+	margin-left:5px;
+	float:left;
+	background-image:url('../images/hue_blend.png');
+}
+
+.hue_cursor {
+	position:absolute;
+	border:solid 1px #000;
+	height:2px;
+	line-height:2px;
+	width:22px;
+	padding:0px;
+	margin-left:-2px;
+}
+
+.sv_crosshair_horiz_cursor {
+	position:absolute;
+	border:solid 0px #000;
+	border-top-width:1px;
+	background-color:transparent;
+	height:0px;
+	line-height:0px;
+	width:257px;
+	padding:0px;
+}
+
+.sv_crosshair_vert_cursor {
+	position:absolute;
+	border:solid 0px #000;
+	background-color:#000;
+	height:257px;
+	/* _margin-top:-257px;  /* Needed because IE sucks */
+	width:1px;
+	padding:0px;
+}
+
+.sv_crosshair_center_cursor {
+	position:absolute;
+	border:solid 1px #000;
+	background-color:#ffffff;
+	height:7px;
+	line-height:7px;
+	width:7px;
+	padding:0px;
+	z-index:100002;
+}
+
+.color_box {
+	float:left;
+	clear:left;
+	margin-top:5px;
+	border:solid 1px #000;
+	width:256px;
+	height:20px;
+	line-height:30px;
+}
+
+.color_value_box {
+	float:right;
+	border:solid 1px #000;
+	margin:2px;
+	vertical-align:middle;
+	padding-left:2px;
+	height:15px;
+	line-height:15px;
+	font-family:courier, fixed;
+	font-size:8pt;
+	background-color:#ffffff;
+	width:11ex;
+}
+
+.ok_button {
+	float:right;
+	text-align:center;
+	vertical-align:middle;
+	border:outset 1px #000;
+	margin-top:5px;
+	margin-right:5px;
+	width:20px;
+	height:20px;
+	line-height:20px;
+	font-family:helvetica, sans-serif;
+	font-size:8pt;
+	cursor:pointer;
+}

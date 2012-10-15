@@ -1,0 +1,35 @@
+@import "../../../../skins/oasis/css/core/color";
+@import "../../../../skins/oasis/css/mixins/opacity";
+
+@mixin centered($height, $hor: center, $ver: middle) {
+	height: $height;
+	line-height: $height;
+	text-align: $hor;
+	vertical-align: $ver;
+}
+
+@mixin tool($margin-left: 10px, $cursor: pointer) {
+	@include centered($item-height);
+	margin-left: $margin-left;
+
+	a {
+		cursor: $cursor;
+	}
+}
+
+@mixin error {
+	span.error, p.error {
+		color: $color-error;
+		font-size: smaller;
+	}
+}
+
+@mixin blockInput {
+	@include opacity(75);
+	background: url("/skins/common/images/ajax.gif") no-repeat scroll center $color-page;/* $wgCdnStylePath */
+	height: 100%;
+	width: 100%;
+	position: absolute;
+	z-index: 2;
+	cursor: wait;
+}

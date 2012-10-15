@@ -1,0 +1,358 @@
+@import "../../../../skins/oasis/css/mixins/border-radius";
+@import "../../../../skins/oasis/css//mixins/box-shadow";
+@import "../../../../skins/oasis/css//mixins/clearfix";
+@import "../../../../skins/oasis/css//core/color";
+@import "../../TopLists/css/mixins";
+
+$thumb-size-width: 130px;
+$thumb-size-height: 115px;
+$thumb-border-top: 4px;
+$thumb-border-bottom: 5px;
+$thumb-border-left: 5px;
+$thumb-border-right: 6px;
+$details-fg-color: $color-button-text;
+$details-bg-color: $color-buttons;
+
+$color-inctive-button: mix($color-page, #000, 60%);
+@if lightness($color-page) < 50 {
+	$color-inctive-button: lighten($color-inctive-button, 25%);
+}
+
+@if lightness($color-page) < 80 {
+		$color: lighten($color, 20%);
+	}
+
+
+#toplists-loading-screen {
+	@include blockInput;
+}
+
+.category-gallery-form {
+
+	margin: 0 5px 5px 5px;
+	text-align: right;
+
+	a {
+		vertical-align: middle;
+	}
+
+	.wikia-menu-button {
+
+		li{
+			float: none;
+		}
+	}
+
+	#category-exhibition-display-new {
+
+		display: inline-block;
+		position: relative;
+		width: 14px;
+		height: 14px;
+		background-image: url('/extensions/wikia/CategoryExhibition/img/icon-category-images-inactive.png'); /* base64 */
+		background-repeat: no-repeat;
+		background-position: center;
+
+		div {
+			position: absolute;
+			background-color: $color-inctive-button;
+			width: 5px;
+			height: 5px;
+			margin: 0px;
+			padding: 0px;
+		}
+
+		&.active {
+			div {
+				background-color: $color-buttons;
+			}
+			background-image: url('/extensions/wikia/CategoryExhibition/img/icon-category-images-active.png'); /* base64 */
+		}
+
+		#cat-exh-new-one {
+			top: 2px;
+			left: 1px;
+		}
+		#cat-exh-new-two {
+			top: 8px;
+			left: 7px;
+		}
+		#cat-exh-new-three {
+			top: 2px;
+			left: 7px;
+		}
+		#cat-exh-new-four {
+			top: 8px;
+			left: 1px;
+		}
+
+	}
+
+	#category-exhibition-display-old {
+		display: inline-block;
+		position: relative;
+		width: 14px;
+		height: 14px;
+		background-image: url('/extensions/wikia/CategoryExhibition/img/icon-category-list-inactive.png'); /* base64 */
+		background-repeat: no-repeat;
+		background-position: center;
+
+		div {
+			position: absolute;
+			background-color: $color-inctive-button;
+			width: 11px;
+			height: 1px;
+			margin: 0px;
+			padding: 0px;
+		}
+
+		&.active {
+			div {
+				background-color: $color-buttons;
+			}
+			background-image: url('/extensions/wikia/CategoryExhibition/img/icon-category-list-active.png'); /* base64 */
+		}
+
+		#cat-exh-old-one {
+			top: 3px;
+			left: 3px;
+		}
+		#cat-exh-old-two {
+			top: 5px;
+			left: 3px;
+		}
+		#cat-exh-old-three {
+			top: 7px;
+			left: 3px;
+		}
+		#cat-exh-old-four {
+			top: 9px;
+			left: 3px;
+		}
+		#cat-exh-old-five {
+			top: 11px;
+			left: 3px;
+		}
+	}
+}
+
+.category-gallery {
+	position: relative;
+	width: 100%;
+	margin: 6px auto;
+	padding: 0;
+	overflow: hidden;
+	clear: both;
+
+	.category-gallery-holder {
+
+		width: 1600px;
+		.category-gallery-room1 {
+			vertical-align: top;
+			border: 0px;
+			display: inline-block;
+			position: relative;
+			width: 670px;
+		}
+		.category-gallery-room2 {
+			vertical-align: top;
+			border: 0px;
+			display: inline-block;
+			width: 670px;
+			position: relative;
+		}
+
+	}
+
+	br {
+		position: relative;
+		float: left;
+		display: block;
+		width: 100%;
+		clear: both;
+	}
+
+	hr {
+		$color: a3a3a3;
+		@include clearfix;
+		display: block;
+		position: relative;
+		float: left;
+
+		width: 100%;
+		border-top: 1px solid $color;
+		border-width: 1px 0 0 0;
+		height: 1px;
+	}
+}
+
+.category-gallery-item {
+
+	position: relative;
+	display: inline-block;
+	width: $thumb-size-width + $thumb-border-left + $thumb-border-right;
+	margin: 10px;
+	height: $thumb-size-height + $thumb-border-top + $thumb-border-bottom + 16px;
+	vertical-align: top;
+
+	a, a:hover, a:visited {
+		color: $color-text;
+		text-decoration:none;
+		display: block;
+	}
+	div.category-gallery-placeholder {
+
+		display: block;
+		padding: $thumb-border-top $thumb-border-right $thumb-border-bottom $thumb-border-left;
+		width: $thumb-size-width;
+		height: $thumb-size-height;
+		background-image: url('/extensions/wikia/CategoryExhibition/img/Icon_category_content.png'); /* $wgCdnStylePath */
+		background-repeat: no-repeat;
+		background-position: center;
+	}
+
+	img {
+		@include box-shadow(0, 0, 5px, mix($color-page, #000, 60%));
+
+		position: absolute;
+		padding: $thumb-border-top $thumb-border-right $thumb-border-bottom $thumb-border-left;
+		background-color: $color-page;
+	}
+
+	.snippet {
+		@include box-shadow(0, 0, 5px, mix($color-page, #000, 60%));
+
+		position: absolute;
+		padding: $thumb-border-top $thumb-border-right $thumb-border-bottom $thumb-border-left;
+		width: $thumb-size-width;
+		height: $thumb-size-height;
+		overflow: hidden;
+		background-color: $color-page;
+
+		.quote {
+			font-style: normal;
+			font-weight: bold;
+			font-size: 40px;
+			color: $color-text;
+			position: absolute;
+			display: block;
+			left: 7px;
+			top: 17px;
+			padding: 0;
+		}
+
+		.text {
+			font-family: Helvetica,Arial,sans-serif; /* overriden in Monaco */
+			font-style: normal;
+			font-size: 13px;
+			font-weight: bold;
+			color: $color-text;
+			position: relative;
+			display: block;
+			margin: 0;
+			padding: 0;
+			padding-left: 24px;
+			padding-top: 13px;
+			line-height: 17px;
+			height: 85px;
+			overflow: hidden;
+		}
+	}
+
+	.title {
+
+		@include border-radius-ne(9px);
+		@include border-radius-se(9px);
+		position: relative;
+		display: inline-block;
+		background-color: $details-bg-color;
+		color: $details-fg-color;
+		padding: 3px 5px 3px;
+		margin-top: $thumb-size-height + $thumb-border-top - 9px;
+		line-height: 16px;
+		max-height: 32px;
+		max-width: $thumb-size-width + 5px;
+		overflow: hidden;
+		font-weight: normal;
+		font-size: 11px;
+	}
+}
+
+.category-gallery-media {
+
+	list-style: none;
+	position: relative;
+	display: inline-block;
+	width: $thumb-size-width + $thumb-border-left + $thumb-border-right;
+	margin: 5px 10px 10px;
+	vertical-align: top;
+	text-align: center;
+
+	a, a:hover, a:visited {
+		color: $color-links;
+		text-decoration:none;
+		display: block;
+	}
+
+	img {
+		@include box-shadow(0, 0, 5px, mix($color-page, #000, 60%));
+
+/*		position: absolute;*/
+		padding: $thumb-border-top $thumb-border-right $thumb-border-bottom $thumb-border-left;
+		background-color: $color-page;
+		margin-left: auto;
+		margin-right: auto;
+	}
+	.category-gallery-item-play {
+
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		background: transparent url(/extensions/wikia/MyHome/images/play.png) no-repeat 50% 50%; /* $wgCdnStylePath */
+		z-index: 100;
+		top: $thumb-border-top - 30px ;
+	}
+
+	.title {
+		position: relative;
+		text-align: left;
+		display: block;
+		font-size: 11px;
+		padding: 4px;
+		margin: 0px;
+		max-height: 11px;
+		overflow: hidden;
+		width: $thumb-size-width + $thumb-border-left + $thumb-border-right;
+	}
+
+	.title.bigger {
+
+		height: 24px;
+
+		a {
+			display: inline;
+
+		}
+	}
+
+	span.Wikia-video-play-button {
+		padding: 4px 6px 5px 5px;
+	}
+
+	span.category-gallery-placeholder {
+
+		display: block;
+		padding: $thumb-border-top $thumb-border-right $thumb-border-bottom $thumb-border-left;
+		width: $thumb-size-width;
+		height: $thumb-size-height;
+		background-image: url('/extensions/wikia/CategoryExhibition/img/Icon_category_content.png'); /* $wgCdnStylePath */
+		background-repeat: no-repeat;
+		background-position: center;
+	}
+
+}
+category-gallery-paginator{
+	position: relative;
+	height: 50px;
+
+}

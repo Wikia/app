@@ -1,0 +1,14 @@
+
+/* Preprocessor template for iterating the stats items */
+COMMAND(total_acquired) /* Total number of acquired locks */
+COMMAND(total_releases) /* Total number of released locks */
+COMMAND(hashtable_entries) /* Number of locks currently held */
+COMMAND(processing_workers) /* Number of workers currently doing work */
+COMMAND(waiting_workers) /* Number of workers currently waiting for a lock */
+COMMAND(connect_errors) /* Clients whose connection couldn't be served */
+COMMAND(failed_sends) /* Number of send() calls which didn't succeed */
+COMMAND(full_queues) /* Number of times locks were refused because the queue already had so many workers */
+COMMAND(lock_mismatch) /* Number of times a user tried to do a lock without a previous release */
+COMMAND(release_mismatch) /* Number of times a user tried to do a release without a previous lock */
+COMMAND(processed_count) /* Count of processing */
+

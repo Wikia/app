@@ -1,0 +1,147 @@
+these are some notes on how to hookup this special page into the email system
+
+==here is how to generate the URL params==
+
+we have to send 3 params in the url:
+* email
+* timestamp
+* token
+
+order doesnt matter, but its best to try to keep these in that order
+
+#3 is a salted hash of #1 and #2, so you need to get 1 and 2 static before you can find #3
+
+here is an easy way i've been doing it
+$eparams = array(
+	'email' => the address the mail is being sent to,
+	'timestamp' => time()
+	);
+$eparams['token'] = wfGenerateUnsubToken($eparams['email'], $eparams['timestamp']);
+/*this function exists in the Wikia global functions file, and is available (and its salt) to all wikis.
+ it exists outside of this extension for  <iforget the reasons, but sean+artur+jasonc had some good ones> */
+ 
+==here is how to generate the URL==
+
+for now, for "easier that way" reasons, (also because theres an unsquashed bug with userdata across clusters...)
+we're pointing all unsub links to central, where the master version of 'user' lives.
+
+$unsubTitle = GlobalTitle::newFromText('Unsubscribe', NS_SPECIAL, 177);
+
+will give us a title object pointing to http://community.wikia.com/wiki/Special:Unsubscribe
+
+using this, just do:
+ $url = $unsubTitle->getFullURL($eparams);
+ 
+ and you've got your url
+ 
+==inserting it into the system==
+
+this is where i'm leaving the project to someone else.
+i've tried a number of times to do so successfully, and have come against a number of roadblocks I cant get past at the moment.
+
+here are things I know (in hopes to give <next person> an edge):
+
+* UserMailer::send() and UserMailer::sendHtml()
+read these, learn these, KNOW these. its where you will likely do your most work
+
+* major roadblock 1
+usermailer::send (for some legacy MW reason) can take an array of addresses as the TO,
+and MW will construct the email headers correct to send 1 email to multiple recipients properly.
+
+(::sendhtml does not accept multiple addreses, halts if you try, and was easier to mod)
+
+this is a problem for us, as the unsub url has to be specific for 1 user's email.
+i had asked around on IRC, and checked a bunch of extensions, and no one knows of any extensions,
+(esp ones used at wikia), that actually use this mutli-TO functionality.
+
+you have two options (i tried them both)
+------------------------------------------
+option alpha) change the code to REJECT mutli-TO attempts, and know after that check that email passed in is singular,
+and can be used to generate the unsub link.
+
+pro) easy quick hack, little code change to core functions
+con) your changing the way a core function works, and redefining what all of known MW knows about sending email.
+
+------------------------------------------
+option beta) let the code still accept array of people, and change it to transfer a single addres into being an array of 1 item.
+then change the code after that to loop over the (now, always an array) of addreses,
+and on each loop (being a different address), generate a new unsub link,
+and on each loop, send a seperate email for each address.
+
+pro) you still accept multiple-TO lists, and to the outside world, the function hasnt changed.
+con) substantial refactoring of code (the core stuff is legacy and old, and messy), but no real change in functionality
+------------------------------------------
+
+
+with either option, there is still the problem that i couldnt find a solution to,
+(mostly because of lack of input, help, or management for this task)
+
+where to add the actual link (and text) to each message body?
+
+the crude method i was told to use, was just append it to the message body and "deal with this later",
+but later has to come eventually, so what ever choice you make, know that you will have to "fix" it later
+
+the stickler being, there are 2 types of emails really:
+* email notification (enotif, aka, watchlist)
+* non-watchlist
+
+both of the mail functions get passed a "Category" parameter, to identify what type of email it is (used in tracking headers that happens elsewhere).
+you NEED to check this, as there are some of these that you DONT want to append a unsub to.
+examples:
+* SpecialContact (which gets sent to comteam in RT)
+* SpecialContactCC (which gets sent to users as a copy of their just sent Special:Contact submition)
+there are more, but the project fell apart in testing before i could go down the list.
+the full list of types is in dataware.email_types. and uberfuzzy has a list of text descriptions somewhere
+
+check with Artur, or the CAN-SPAM text its self, on which type of emails we need to have an unsub on:
+transactional vs non-transational.
+which boils down to "i pushed a button" vs "automated" mostly
+
+the (most) of our emails system works, is done with "template" messages.
+lots of $VARIABLE type things that get replaced at some stage of the code.
+lots of $VARIALES exists, that arent used, or can be used, or were-used and removed.
+
+these "templates" are in the code someplace, but most have been over-written on messaging over the years.
+also, each of them likely has a translation version (also on messaging)
+also, each wiki can in theory also override this (but only a few wikis have ever done so)
+
+it would be nice if we could use these, and hack in a $UNSUBLINK variable that could be added to the templates,
+and let the replacer system add it into the message.
+
+but, we cant depend on (staff, translators, wikis) to keep this in their templates,
+and we HAVE to have this link in all emails for CAN-SPAM reasons (i think).
+so we HAVE to just blindly, and crudely, and ugly-ly, append it to the body text.
+
+note:
+the ::send() sends plain text emails
+the ::sendHtml() sends *surprise* html emails
+
+but you have to make changes to both.
+
+the reason i bring this up, is that in good html email protocol,
+HTML email contains a plain text version that limited mail readers can fall back to
+(lots of MIME boundry magic stuff here that you dont have to worry about, there are functions that do this)
+
+so, if at all possible, try to keep the changes to the plain text versions body the same in both functions.
+
+---------------------------------
+one last problem i never solved:
+
+the actual text(s) (slightly different wording is needed based on your plain/html linking)
+your going to put in the emails, needs to be defined, and needs to get translated ASAP.
+
+i didnt add it to this extensions, as its not really part of this extension.
+it needs to be put somewhere global, so that no matter what "wiki scope" the email generation happens,
+it can get to these messages (this extension might only be enabled on central, i never got an answer)
+
+
+
+
+
+this is pretty much everything i know about this project,
+ and i wish the best to who ever manager to get this hooked into the mail system.
+ 
+oh, and what ever you do/change TEST STUFF. email is the lifeblood of wikis, and we break stuff far too often.
+
+-chris 'uberfuzzy' stafford. 
+Tuesday, November 16, 2010

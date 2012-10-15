@@ -1,0 +1,158 @@
+
+// @autosprite-start
+@mixin sprite-MiniEditor-base() {
+	background-color: transparent;
+	background-image: url('/extensions/wikia/MiniEditor/images/sprite-MiniEditor.png'); /* wgCdnStylePath */
+	background-repeat: no-repeat;
+}
+@mixin sprite-MiniEditor($imageName,$width: 0,$height: 0,$offset-x: 0,$offset-y: 0) {
+	$image-x: -1;
+	$image-y: -1;
+	$image-width: -1;
+	$image-height: -1;
+	// @autosprite-image-details: addpicture.png@72,0,6290e3827247de41549304313f75cd3c
+	@if $imageName == 'addpicture' {
+		$image-x: 72px;
+		$image-y: 0px;
+		$image-width: 26px;
+		$image-height: 20px;
+	}
+	// @autosprite-image-details: addvideo.png@110,0,3fe0a232e5ac4afaaf9b39b78b80f0ed
+	@if $imageName == 'addvideo' {
+		$image-x: 110px;
+		$image-y: 0px;
+		$image-width: 26px;
+		$image-height: 20px;
+	}
+	// @autosprite-image-details: bold-dark.png@148,0,e5a8d237ce30f58cc6f363875b7e440c
+	@if $imageName == 'bold-dark' {
+		$image-x: 148px;
+		$image-y: 0px;
+		$image-width: 11px;
+		$image-height: 13px;
+	}
+	// @autosprite-image-details: bold-light.png@171,0,f073074a8062570610bc007c8c08047a
+	@if $imageName == 'bold-light' {
+		$image-x: 171px;
+		$image-y: 0px;
+		$image-width: 11px;
+		$image-height: 13px;
+	}
+	// @autosprite-image-details: italic-dark.png@194,0,63dc13a1a137d4c45e2fb5d8ec6f7592
+	@if $imageName == 'italic-dark' {
+		$image-x: 194px;
+		$image-y: 0px;
+		$image-width: 5px;
+		$image-height: 13px;
+	}
+	// @autosprite-image-details: italic-light.png@211,0,1c3b3f13374835de4dca2415aa609506
+	@if $imageName == 'italic-light' {
+		$image-x: 211px;
+		$image-y: 0px;
+		$image-width: 5px;
+		$image-height: 13px;
+	}
+	// @autosprite-image-details: link-dark.png@228,0,d27553c4dc172f9d58944e9b0281fcb4
+	@if $imageName == 'link-dark' {
+		$image-x: 228px;
+		$image-y: 0px;
+		$image-width: 16px;
+		$image-height: 16px;
+	}
+	// @autosprite-image-details: link-light.png@256,0,b0bbbc8e9258b95da3ff53a4a45fb3df
+	@if $imageName == 'link-light' {
+		$image-x: 256px;
+		$image-y: 0px;
+		$image-width: 16px;
+		$image-height: 16px;
+	}
+	// @autosprite-image-details: source-dark.png@284,0,2d8a39cc07d99aa64c07aab59777cc1b
+	@if $imageName == 'source-dark' {
+		$image-x: 284px;
+		$image-y: 0px;
+		$image-width: 14px;
+		$image-height: 12px;
+	}
+	// @autosprite-image-details: source-light.png@310,0,cead4b01388e1bd10a0f53b0c2aff380
+	@if $imageName == 'source-light' {
+		$image-x: 310px;
+		$image-y: 0px;
+		$image-width: 14px;
+		$image-height: 12px;
+	}
+	// @autosprite-image-details: visual-dark.png@336,0,a568ff438c9bf8cf0a1a35ab81f4fe71
+	@if $imageName == 'visual-dark' {
+		$image-x: 336px;
+		$image-y: 0px;
+		$image-width: 17px;
+		$image-height: 12px;
+	}
+	// @autosprite-image-details: visual-light.png@365,0,ceaa2e37c571b5b19839fcdf59eadcad
+	@if $imageName == 'visual-light' {
+		$image-x: 365px;
+		$image-y: 0px;
+		$image-width: 17px;
+		$image-height: 12px;
+	}
+	@if $image-x != -1 {
+		$position-x: 0px - $image-x;
+		$position-y: 0px - $image-y;
+		@if $width > 0 {
+			$position-x: $position-x + ( $width - $image-width ) / 2;
+		}
+		@if $height > 0 {
+			$position-y: $position-y + ( $height - $image-height ) / 2;
+		}
+		@if $offset-x != 0 {
+			$position-x: $position-x + $offset-x;
+		}
+		@if $offset-y != 0 {
+			$position-y: $position-y + $offset-y;
+		}
+		background-position: $position-x $position-y;
+	}
+}
+@mixin sprite-MiniEditor-full($imageName, $width: 0, $height: 0,$offset-x: 0,$offset-y: 0) {
+	@include sprite-MiniEditor-base;
+	@include sprite-MiniEditor($imageName,$width,$height,$offset-x,$offset-y);
+}
+@mixin sprite-MiniEditor-deep($width: 0,$height: 0) {
+	@include sprite-MiniEditor-base;
+	&.addpicture {
+		@include sprite-MiniEditor('addpicture',$width,$height);
+	}
+	&.addvideo {
+		@include sprite-MiniEditor('addvideo',$width,$height);
+	}
+	&.bold-dark {
+		@include sprite-MiniEditor('bold-dark',$width,$height);
+	}
+	&.bold-light {
+		@include sprite-MiniEditor('bold-light',$width,$height);
+	}
+	&.italic-dark {
+		@include sprite-MiniEditor('italic-dark',$width,$height);
+	}
+	&.italic-light {
+		@include sprite-MiniEditor('italic-light',$width,$height);
+	}
+	&.link-dark {
+		@include sprite-MiniEditor('link-dark',$width,$height);
+	}
+	&.link-light {
+		@include sprite-MiniEditor('link-light',$width,$height);
+	}
+	&.source-dark {
+		@include sprite-MiniEditor('source-dark',$width,$height);
+	}
+	&.source-light {
+		@include sprite-MiniEditor('source-light',$width,$height);
+	}
+	&.visual-dark {
+		@include sprite-MiniEditor('visual-dark',$width,$height);
+	}
+	&.visual-light {
+		@include sprite-MiniEditor('visual-light',$width,$height);
+	}
+}
+// @autosprite-end

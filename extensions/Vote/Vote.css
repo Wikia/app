@@ -1,0 +1,44 @@
+/**
+ * CSS file for the Vote extension
+ *
+ * @file
+ * @ingroup Extensions
+ * @author Rob Church <robchur@gmail.com>
+ *
+ * Please see the LICENCE file for terms of use and redistribution
+ */
+table.mw-votedata td, th {
+	padding: 2px;
+}
+
+table.mw-votedata th {
+	background-color: #999999;
+	text-align: left;
+}
+
+table.mw-votedata tr {
+	background-color: #CCCCCC;
+}
+
+table.mw-votedata tr:hover {
+	background-color: #FFFFCC;
+}
+
+table.mw-votedata td.right {
+	text-align: right;
+}
+
+p.mw-voteresultslink {
+	float: right;
+	font-size: 90%;
+}
+
+p.mw-votesuccess {
+	color: #006600;
+	font-weight: bold;
+}
+
+p.mw-voteerror {
+	color: #CC0000;
+	font-weight: bold;
+}

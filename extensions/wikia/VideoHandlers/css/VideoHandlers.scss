@@ -1,0 +1,103 @@
+/* VideoHandlers.scss */
+
+@import "../../../../skins/oasis/css/mixins/opacity";
+@import "../../../../skins/oasis/css/mixins/border-radius";
+@import "../../../../skins/oasis/css/mixins/box-sizing";
+@import "../../../../skins/oasis/css/mixins/background-opacity";
+
+.WikiaPage a.image.video {
+	display: inline-block;
+}
+
+.Wikia-video-play-button {
+   background-image: url(/extensions/wikia/VideoHandlers/images/PlayBtn_100Alpha.png); /* wgCdnStylePath */
+   background-position:center center;
+   background-repeat:no-repeat;
+   display:block;
+   position:absolute;
+   z-index:100;
+   @include opacity(65);
+   cursor: pointer;
+}
+
+.Wikia-video-play-button.min {
+    background-image: url(/extensions/wikia/VideoHandlers/images/PlayBtn_35x35.png); /* wgCdnStylePath */
+}
+.Wikia-video-play-button.mid {
+    background-image: url(/extensions/wikia/VideoHandlers/images/PlayBtn_50x50.png); /* wgCdnStylePath */
+}
+.Wikia-video-play-button.max {
+    background-image: url(/extensions/wikia/VideoHandlers/images/PlayBtn_85x85.png); /* wgCdnStylePath */
+}
+
+a:hover .Wikia-video-play-button, .Wikia-video-play-button:hover {
+    @include opacity(95);
+}
+
+.video-thumbnail .timer, .video .timer {
+    position: absolute;
+    right: 3px;
+    bottom: 3px;
+    color: white;
+    font-size: 11px;
+    line-height: 14px;
+    background-color: black;
+    padding: 1px 4px 1px 6px;
+    @include border-radius(4px);
+}
+
+.video {
+	.info-overlay {
+		@include background-opacity(#000, 50); 
+		@include box-sizing;
+		color: #FFF;
+		display: block;
+		font-family: "Helvetica", "Arial", sans-serif;
+		font-size: 12px;
+		height: 40px;
+		line-height: 17px;
+		margin-top: -40px;
+		padding: 4px 5px;
+		position: relative;
+		text-align: left;
+		.info-overlay-title {
+			display: block;
+			font-size: 14px;
+			font-weight: bold;
+			float: left;
+			overflow: hidden;
+			padding-right: 3px;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+		.info-overlay-duration {
+			display: inline-block;
+			padding-top: 1px;
+			font-size: 12px;
+			font-weight: bold;
+		}
+	}
+	&:hover {
+		text-decoration: none;
+		.info-overlay {
+			text-decoration: none !important;
+		}
+	}
+}
+
+.Wikia-video-title-bar {
+   background-color:black;
+   position:absolute;
+   z-index:99;  
+   text-align:left;
+   @include opacity(50);       
+}
+
+.Wikia-video-title-bar .title { display:block; text-decoration:none; color:white; padding-left:5px; overflow-x: hidden; white-space: nowrap;  }
+.Wikia-video-title-bar .info { display:block; text-decoration:none; color:white; font-size:11px; padding-left:5px; }
+
+// Fix styles in monobook
+
+.skin-monobook a.image.video {
+	display: inline-block;
+}

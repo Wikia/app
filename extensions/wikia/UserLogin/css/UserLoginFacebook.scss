@@ -1,0 +1,124 @@
+@import "../../../../skins/oasis/css/core/color";
+@import "../../../../skins/oasis/css/mixins/box-shadow";
+@import "../../../../skins/oasis/css/mixins/clearfix";
+@import "../../../../skins/oasis/css/mixins/opacity";
+@import "../../../../skins/oasis/css/mixins/transition";
+@import "../mixins/submitpane";
+
+.UserLoginFacebook {
+	@include transition-shorthand(200ms opacity ease-in-out);
+	@include opacity(100);
+	height: auto;
+}
+
+.UserLoginFacebookWrapper {
+	@include clearfix;
+}
+
+.UserLoginFacebookLeft {
+	border-right: solid 1px #e4e4e5;
+	float: left;
+	padding: 20px 0 20px 70px;
+	margin-right: 50px;
+	width: 350px;
+	.modal-pane {
+		@include submitpane;
+	}
+	.WikiaForm {
+		.input-group {
+			width: 256px;
+			input[type=text],
+			input[type=password] {
+				width: 238px;
+			}
+		}
+	}
+}
+
+.UserLoginFacebookRight {
+	float: left;
+	padding-top: 30px;
+	width: 200px;
+	> h1 {
+		font-size: 17px;
+	}
+	> p {
+		font-size: 14px;
+		padding: 19px 0;
+	}
+	> .wikia-button {
+		display: inline-block;
+		margin: 33px 0;
+	}
+}
+
+.FacebookSignupConfigHeader {
+	clear: both;
+	display: block;
+	margin-top: 25px;
+	text-decoration: none;
+	.chevron {
+		@include opacity(50);
+		border-top-color: $color-links;
+		border-bottom-color: $color-page;
+		float: left;
+		height: 2px;
+		vertical-align: bottom;
+		margin: 8px 4px 0 0;
+	}
+	.hide {
+		display: none;
+	}
+	.show {
+		display: block;
+	}
+	&.on {
+		.chevron {
+			border-bottom-color: $color-links;
+			border-top-color: $color-page;
+			margin: 3px 4px 0 0;
+		}
+		.hide {
+			display: block;
+		}
+		.show {
+			display: none;
+		}
+	}
+}
+
+.FacebookSignupConfig {
+	display: none;
+	margin: 2px 0 -7px 0;
+	> fieldset {
+		@include box-shadow(0, 0, 5px, mix($color-page, #000000, 90%), true, 1px);
+		@if $is-dark-wiki {
+			background-color: mix($color-page, #ffffff, 85%);
+		} @else {
+			background-color: mix($color-page, #000000, 95%);
+		}
+		> .input-group {
+			padding: 0 12px;
+			width: 300px;
+			p {
+				font-weight: bold;
+				padding: 17px 0;
+			}
+			input[type=checkbox] {
+				margin-right: 26px;
+				padding-left: 17px;
+			}
+		}
+		> div:nth-child(even) {
+			float: left;
+		}
+		> div:nth-child(odd) {
+			clear: right;
+			float: right;
+		}
+		.indented label {
+			padding-left: 42px;
+			text-indent: -42px;
+		}
+	}
+}

@@ -1,0 +1,66 @@
+MiniEditor: FAQ
+================================================================================
+
+1) How do I enable this extension?
+
+	Set the variable $wgEnableMiniEditorExt to 'true' in wiki settings. In the
+	extension you will be integrating with, add a call to MiniEditor's loadAssets()
+	function to include any required assets. If you want to include custom CSS or
+	JavaScript specifically for your extension, you may pass an array of files to
+	load into the 'additionalAssets' parameter (see example).
+
+Example:
+--------------------------------------------------------------------------------
+
+		if ($this->wg->enableMiniEditorExt) {
+			$this->sendRequest('MiniEditor', 'loadAssets', array(
+				'additionalAssets' => array(
+					'extensions/wikia/MiniEditor/js/MyExtension.js', 
+					'extensions/wikia/MiniEditor/css/MyExtension.scss'
+				)
+			));
+		}
+
+--------------------------------------------------------------------------------
+
+2) How do I embed MiniEditor in my templates?
+
+	Template rendering should always be done inside a check to see if the extension
+	is enabled by checking the value of $wg->enableMiniEditorExt. There are four
+	templates: Header, Footer, Editor_Header and Editor_Footer. Header and Footer
+	are used to wrap the entire editing area, including anything the editor will
+	need to know about (like buttons). the Editor_Header and Editor_Footer
+	templates are used to wrap the original editing area, adding a toolbar and
+	loading status indicator.
+
+Example:
+--------------------------------------------------------------------------------
+
+		<? if ( $wg->enableMiniEditorExt ):
+			echo $app->getView( 'MiniEditorController', 'Header', array(
+				'attributes' => array(
+					'data-min-height' => 100,
+					'data-max-height' => 400
+				)
+			))->render();
+		endif; ?>
+		<div id="MyExtension">
+			<? if ( $wg->enableMiniEditorExt ):
+				echo $app->getView( 'MiniEditorController', 'Editor_Header' )->render(); 
+			endif; ?>
+			<textarea class="body"></textarea>
+			<? if ( $wg->enableMiniEditorExt ):
+				echo $app->getView( 'MiniEditorController', 'Editor_Footer' )->render(); 
+			endif; ?>
+		</div>
+		<? if ( $wg->enableMiniEditorExt ):
+			echo $app->getView( 'MiniEditorController', 'Footer' )->render(); 
+		endif; ?>
+
+--------------------------------------------------------------------------------
+
+3) How do I invoke the MiniEditor plugin?
+
+	The MiniEditor can be invoked as a jQuery plugin: $('.selector').miniEditor();
+	Refer to the examples inside of "/extensions/wikia/MiniEditor/js" for more
+	information.

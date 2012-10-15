@@ -1,0 +1,167 @@
+.achievements-title {
+	border-bottom: 0;
+	font-size: 23px;
+	margin: 0 0 13px 0 !important;
+}
+
+#about-achievements {
+	padding: 5px;
+	margin-bottom: 15px;
+}
+
+#about-achievements p {
+	padding: 0 0 0 0;
+	margin: 0 0 0 0;
+	font-size: 13px;
+}
+
+#leaderboard-body {
+	float:left;
+	max-width: 700px;
+	min-height: 300px;
+	margin-right: -320px;
+	background: transparent;
+	width: 100%;
+	position: relative;
+}
+.leaderboard-body-inner{
+  margin-right: 265px;
+}
+
+ul#leaderboard {
+	margin: 0 !important;
+}
+
+ul#leaderboard li {
+	list-style: none !important;
+	height: 38px;
+	padding: 3px 20px 3px 5px !important;
+	margin: 0 !important;
+	background: transparent;
+	border-bottom-style: solid;
+	border-bottom-width: 1px;
+	overflow: auto;
+}
+
+ul#leaderboard li.list-heading {
+	padding: 0;
+	height: 16px;
+	font-size: 11px;
+	overflow: hidden;
+}
+
+ul#leaderboard #rank-label {
+	float: left;
+	margin-left: 10px;
+}
+
+ul#leaderboard #member-label {
+	float: left;
+	margin-left: 30px;
+}
+
+ul#leaderboard #points-label {
+	float: right;
+}
+
+#leaderboard li a:hover {
+	text-decoration: none;
+}
+
+#leaderboard .user-avatar, #leaderboard .user-rank, #leaderboard .user-name, #leaderboard .user-score {
+	float: left;
+	line-height: 38px;
+	vertical-align: middle;
+	margin-left: 20px;
+}
+#leaderboard .user-name{
+	max-width: 185px;
+	overflow:hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+#leaderboard .user-avatar {
+	padding-top:6px;
+}
+
+#leaderboard .user-score {
+	float: right;
+	margin-left: 5px;
+	font-weight: bold;
+}
+
+#leaderboard .user-rank {
+	font-size: 14px;
+	font-weight: bold;
+	width: 45px;
+	height: 38px;
+	margin-left: 0;
+	position: relative;
+}
+
+#leaderboard .user-rank > span {
+	display:block;
+	text-align: right;
+	width: 27px;
+}
+
+#leaderboard .user-rank > img {
+	position:absolute;
+	top:14px;
+	right: 4px;
+}
+
+#leaderboard-body #legend {
+	margin-top: 10px;
+	font-style: italic;
+}
+
+/*#leaderboard-sidebar {
+  min-height: 300px;
+  float: left;
+}
+*/
+.article-sidebar .recent-badges {
+	margin: 18px 0 5px 0;
+	list-style-type:none;
+	list-style-image:none;
+}
+
+.article-sidebar .recent-badges li {
+	margin: 0 0 23px 0;
+	padding: 0 0 0 0;
+	font-size: 12px;
+	line-height: 1.2em;
+	position: relative;
+}
+
+.article-sidebar .recent-badges li > img {
+	float: left;
+	margin-bottom:-7px;/*small fix for avoiding hovers side-effect in WebKit*/
+}
+
+.article-sidebar .badge-text {
+	margin-left:92px;
+	width: auto;
+	min-height: 82px;
+}
+
+.article-sidebar .badge-text p {
+	font-size:12px;
+	line-height: 20px;
+}
+
+.article-sidebar .badge-text strong{
+	font-size:14px;
+}
+
+.article-sidebar .recent-badges p {
+	margin: 0;
+	padding: 0;
+}
+
+.article-sidebar .badge-title {
+	font-weight: bold;
+	margin-top: 2px;
+}

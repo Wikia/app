@@ -1,0 +1,14 @@
+Source: poolcounter
+Section: web
+Priority: extra
+Maintainer: Tim Starling <tstarling@wikimedia.org>
+Build-Depends: debhelper (>= 7), libevent-dev, build-essential
+Standards-Version: 3.8.3
+
+Package: poolcounter
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Network resource manager by Platonides for Wikimedia.
+  Manages a network-wide maximum process count in a computing cluster,
+  such as a web server cluster. A client is available for MediaWiki, 
+  which limits resources dedicated to parsing a given article.

@@ -1,0 +1,113 @@
+@import "../../../../skins/oasis/css/core/color";
+@import "../../../../skins/oasis/css/mixins/border-radius";
+@import "../../../../skins/oasis/css/mixins/clearfix";
+
+.UPPLightbox {
+		
+	.tab-content li {
+		@include clearfix;
+		font-size: 14px;
+	}
+	
+	.column {
+		float: left;
+		padding: 0 10px;
+		width: 350px;
+		label:first-child {
+			margin-top: 0;
+		}
+		&.avatar {
+			width: 150px;
+		}
+		&.avatar-options {
+			width: 540px;
+		}
+	}
+	
+	label {
+		display: block;
+		margin-top: 20px;
+	}
+	
+	input[type=text] {
+		font-size: 14px;
+		padding: 3px;
+		width: 250px;
+	}
+
+	.tweet-at {
+		position: absolute;
+		margin: 5px 0 0 3px;
+	}
+	input[name="twitter"] {
+		padding-left: 15px;
+		width: 235px;
+	}
+	
+	.favorite-wikis {
+		@include clearfix;
+		-webkit-appearance: textfield;
+		-moz-appearance: textfield;
+		border: 1px solid $color-page-border;
+		padding: 3px;
+		width: 250px;
+		li {
+			@include border-radius(5px);
+			background: mix($color-page, $color-text, 92%);
+			float: left;
+			font-size: 12px;
+			line-height: normal;
+			margin: 3px;
+			max-width: 225px;
+			padding: 0 20px 0 5px;
+			position: relative;
+			&.join-more-wikis {
+				background: transparent;
+				border: 1px solid $color-page-border;
+				color: $color-alternate-text;
+			}
+		}
+		span {
+			display: inline-block;
+			line-height: 20px;
+			max-width: 200px;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+		.delete {
+			cursor: pointer;
+			position: absolute;
+			right: 3px;
+			top: 3px;
+		}
+	}
+	.favorite-wikis-refresh {
+		position: absolute;
+		margin-left: 265px;
+		background-color: $color-buttons;
+		img {
+			background: url(/extensions/wikia/UserProfilePageV3/images/icon-return.png); /* $wgCdnStylePath */
+			height: 12px;
+			left: 3px;
+			top: 3px;
+			width: 14px;		
+		}
+	}
+	
+	#facebookPage a, #hideEditsWikis {
+		display: block;
+		font-size: 11px;
+		line-height: 11px;
+		text-align: right;
+		width: 260px;
+	}
+	
+	#facebookConnectAvatar label {
+		margin-top: 20px;
+	}
+	.sample-avatars li {
+		float: left;
+		margin-right: 10px;
+	}
+}

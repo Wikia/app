@@ -1,0 +1,142 @@
+<script type="text/javascript">
+	mw.loader.load('gc.form.rapidhtml.webitects.bt');
+	// these must go through RapidHTML and thus are inline
+	var amountErrors = ["#general|escape",'#retryMsg|escape','#amount|escape'];
+	var billingErrors = ['#fname|escape','#lname|escape','#city|escape','#country|escape','#street|escape','#state|escape','#zip|escape','#emailAdd|escape'];
+	var paymentErrors = ['#card_num|escape','#card_type|escape','#cvv|escape'];
+	var actionURL = "@action";
+	var scriptPath = "@script_path";
+</script>
+<!--[if lt IE 7]>
+<script type="text/javascript">
+	mw.loader.load('gc.form.rapidhtml.webitects.ie6');
+</script>
+<style type="text/css">
+	body{
+		behavior: url("@script_path/skins/vector/csshover.min.htc");
+	}
+</style><![endif]-->
+<!--[if IE 7]>
+<style>
+	.gainlayout {
+		zoom: 1;
+		height: 1%;
+	}
+</style>
+<![endif]-->
+
+<div class="ltr">
+	<table id="layouttable">
+		<tr>
+			<td>
+				<div id="appeal">
+					<div id="appeal-content">
+						<h2 id="appeal-head"> <span class="mw-headline">{{LanguageSwitch|2011FR/@appeal/title|@language}}</span></h2>
+						<div id="appeal-body" class="plainlinks">{{LanguageSwitch|2011FR/@appeal/text|@language}}</div>
+					</div>
+				</div>
+			</td>
+			<td>
+				<div id="donate">
+					<div id="donate-content">
+						<div id="donate-body" style="padding: 0 1em;">
+							<form method="post" name="paypalcontribution">
+								<div id="step1header"><h3>%donate_interface-amount-legend% <span id="selected-amount">@amount @currency_code</span></h3></div>
+								<div id="amtErrorMessages" class="small"></div>
+								<div id="step2header"><h3>%donate_interface-billing-address% <span class="mute" id="change-billing" style="display: none;">(<a href="#">%donate_interface-change%</a>)</span></h3></div>
+								<div id="step2wrapper">
+									<div id="billing-content" class="gainlayout">
+										<div id="billingErrorMessages" class="small"></div>
+										<div id="paymentErrorMessages" class="small"></div>
+										<div class="name-fields">
+											<span class="name-first"><input class="txt" id="fname" name="fname" title="%donate_interface-donor-fname%" value="@fname" placeholder="%donate_interface-donor-fname%"/></span>
+											<span class="name-last"><input class="txt" id="lname" name="lname" title="%donate_interface-donor-lname%" value="@lname" placeholder="%donate_interface-donor-lname%"/></span>
+										</div>
+										<div class="loc-fields">
+											<!-- TODO: add locality to translation -->
+											<span class="loc-street"><input class="txt" id="street" name="street" title="%donate_interface-donor-street%" value="@street" placeholder="%donate_interface-donor-street%"/></span>
+											<span class="loc-city"><input class="txt" id="city" name="city" title="Suburb / Town" value="@city" placeholder="Suburb / Town"/></span>
+											<span class="loc-state">
+											<select id="state" name="state" class="txt" value="@state" >
+												<option value="">%donate_interface-donor-state%</option>
+												<option value="ACT">ACT</option>
+												<option value="NSW">NSW</option>
+												<option value="NT">NT</option>
+												<option value="QLD">QLD</option>
+												<option value="SA">SA</option>
+												<option value="TAS">TAS</option>
+												<option value="VIC">VIC</option>
+												<option value="WA">WA</option>
+											</select>
+											</span>
+											<span class="loc-postal"><input class="txt" id="zip" name="zip" title="%donate_interface-postal%" value="@zip" placeholder="%donate_interface-donor-postal%"/></span>
+										</div>
+										<p><input class="txt" title="%donate_interface-donor-email%" id="emailAdd" name="emailAdd" value="@emailAdd" placeholder="%donate_interface-donor-email%"/></p>
+										<div id="bt-continue" style="margin-top: 10px;"> <input class="btn" id="bt-continueBtn" type="button" value="%donate_interface-continue%" /></div>
+										<div id="bpay">
+											<img src="@script_path/extensions/DonationInterface/gateway_forms/includes/BPAY_Landscape_MONO.gif" alt="BPAY" width="100" >
+											<p>&reg; Registered to BPAY Pty Ltd ABN 69 079 137 518</p>
+										</div>
+									</div>
+								</div>
+
+								
+
+								<input type="hidden" name="returnto" value="Thank_You/en" />
+								<input type="hidden" value="0" name="PaypalRedirect" id="PaypalRedirect">
+
+								<input type="hidden" value="@amount" name="amount" />
+								<input type="hidden" value="AU" name="country" id="country" />
+								<input type="hidden" value="AUD" name="currency_code" />
+								<input type="hidden" value="@utm_source" name="utm_source"/>
+								<input type="hidden" value="@utm_medium" name="utm_medium"/>
+								<input type="hidden" value="@utm_campaign" name="utm_campaign"/>
+								<input type="hidden" value="@language" name="language"/>
+								<input type="hidden" value="@referrer" name="referrer"/>
+								<input type="hidden" value="@comment" name="comment"/>
+								<input type="hidden" value="@comment-option" name="comment-option"/>
+								<input type="hidden" value="1" name="email-opt"/>
+								<input type="hidden" value="@token" name="token"/>
+								<input type="hidden" value="@order_id"  name="order_id"/>
+								<input type="hidden" value="@numAttempt" name="numAttempt"/>
+								<input type="hidden" value="@contribution_tracking_id" name="contribution_tracking_id"/>
+								<input type="hidden" value="@data_hash" name="data_hash"/>
+								<input type="hidden" value="@owa_session" name="owa_session"/>
+								<input type="hidden" value="@owa_ref" name="owa_ref"/>
+								<!-- new required fields -->
+								<input type="hidden" value="@gateway" name="gateway"/>
+								<!-- required fields for bt and dd -->
+								<input type="hidden" value="obt" name="payment_method"/>
+								<input type="hidden" value="bpay" name="payment_submethod"/>
+							</form>
+							<div id="where-content">
+								{{LanguageSwitch|2011FR/core-appeal-whitebox-nodiv|@language}}
+							</div>
+						</div>
+					</div>
+					<p id="informationsharing">%donate_interface-informationsharing|url%</p>
+					<table>
+						<tr>
+							<td>
+								<ul id="moreinfolinks">
+									<li><a href="https://wikimediafoundation.org/wiki/Special:LandingCheck?basic=true&landing_page=Monthly_donations&language=@language&uselang=@language&country=@country">%donate_interface-monthly-donation%</a></li>
+									<li><a href="https://wikimediafoundation.org/wiki/Special:LandingCheck?basic=true&landing_page=Ways_to_Give&language=@language&uselang=@language&country=@country">%donate_interface-otherways-short%</a></li>
+									<li><a href="https://wikimediafoundation.org/wiki/Special:LandingCheck?basic=true&landing_page=FAQ&language=@language&uselang=@language&country=@country">%donate_interface-faqs%</a></li>
+									<li><a href="https://wikimediafoundation.org/wiki/Special:LandingCheck?basic=true&landing_page=Tax_Deductibility&language=@language&uselang=@language&country=@country">%donate_interface-tax-info%</a></li>
+								</ul>
+							</td>
+							<td>@verisign_logo</td>
+						</tr>
+					</table>
+				</div>
+			</td>
+		</tr>
+	</table>
+
+
+
+</div>
+
+<!-- Wikimedia Project logo
+<li id="footer-copyrightico"><a href="//wikimediafoundation.org/"><img src="//bits.wikimedia.org/images/wikimedia-button.png" width="88" height="31" alt="Wikimedia Foundation"/></a></li> 
+ -->

@@ -1,0 +1,109 @@
+@import "color";
+@import "layout";
+@import "../mixins/border-radius";
+@import "../mixins/gradient";
+@import "../mixins/menus";
+@import "../mixins/opacity";
+@import "../mixins/wordmark";
+
+.WikiHeader {
+	clear: both;
+	margin: 0 0 15px;
+	padding: 10px 10px 9px;
+	position: relative;
+	z-index: 1000; // BugId:2516
+	.wordmark {
+		@include wordmark;
+		color: $color-links;
+		&.graphic {
+			overflow: hidden;
+		}
+	}
+	a:hover {
+		text-decoration: none;
+	}
+	nav {
+		bottom: 9px;
+		left: 260px;
+		position: absolute;
+		width: 460px;
+		>h1 {
+			display: none;
+		}
+	}
+	li {
+		display: table-cell;
+		*float: left;
+		font-size: 13px;
+		padding: .4em 0;
+		position: relative;
+		vertical-align: bottom;
+		*width: 24%;
+		&:hover {
+			@include linear-gradient(mix($color-links, $color-page, 20%), top, $color-page, 0%, mix($color-links, $color-page, 20%), 100%);
+		}
+		&:first-child a {
+			border: 0;
+		}
+		a {
+			border-left: 1px solid mix($color-text, $color-page);
+			color: $color-text;
+			display: block;
+			padding: 0 8px;
+			position: relative;
+		}
+	}
+	.subnav {
+		@include menu-regular;
+		display: none;
+		min-width: 150px;
+		padding: 5px;
+		top: -9999px;
+		z-index: $zTop;
+		li {
+			*float: none;
+			*width: auto;
+			padding: 0;
+			a {
+				border: 0;
+				padding: 8px 4px;
+				white-space: nowrap;
+				font-size: 13px;
+			}
+			&:first-child {
+				border-top: 0;
+			}
+		}
+		.edit-menu {
+			text-align: right;
+			a {
+				font-size: 0.7em;
+			}
+		}
+	}
+	.buttons {
+		bottom: 15px;
+		right: 10px;
+		position: absolute;
+		text-align: right;
+		width: 270px;
+		a {
+			@include border-radius(3px);
+			font-size: 11px;
+			height: 17px;
+			line-height: 18px;
+			img {
+				left: -2px;
+				position: relative;
+				top: 0;
+				vertical-align: text-bottom;
+			}
+		}
+		a:first-child {
+			margin-right: 5px;
+		}
+	}
+	.chevron {
+		border-top-color: $color-text;
+	}
+}

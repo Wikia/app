@@ -1,0 +1,131 @@
+@import "../mixins/clearfix";
+@import "../mixins/border-radius";
+@import "color";
+
+.WikiaUserPagesHeader {
+	@include clearfix;
+	margin-bottom: 10px;
+	padding: 0 10px 6px;
+	position: relative;
+	h1 {
+		display: inline;
+		font-size: 24px;
+		margin: 0 10px 0 0;
+		small {
+			font-size: 12px;
+		}
+	}
+	.commentslikes {
+		display: inline;
+		line-height: 26px;
+		vertical-align: top;
+	}
+
+	.sync-profile-button {
+		position: absolute;
+		top: 28px;
+		right: 25px;
+		padding-left: 5px !important;
+
+		img {
+			position: relative;
+			top: 1px;
+			padding-right: 3px;
+		}
+	}
+
+
+	.wikia-avatar {
+		border: 2px solid $color-page;
+		float: left;
+		margin: 1px 7px 2px 2px;
+		position: relative;
+		ul {
+			background: $color-page;
+			border: 2px solid $color-links;
+			display: none;
+			left: -2px;
+			list-style: none;
+			margin: 0;
+			position: absolute;
+			top: 102px;
+			width: 102px;
+			z-index: 100;
+			a {
+				color: $color-text;
+				display: block;
+				padding: 4px 4px 2px;
+				text-decoration: none;
+				&:hover {
+					background: $color-menu-highlight;
+				}
+			}
+			li {
+				border-top: 1px solid $color-page-border;
+				line-height: normal;
+				&:first-child {
+					border: 0;
+				}
+			}
+		}
+	}
+	.wikia-avatar-menu:hover {
+		border-color: $color-links;
+		ul {
+			display: block;
+		}
+	}
+	.avatar-link {
+		border: 1px solid $color-page-border;
+		display: block;
+		.avatar {
+			border: none;
+			display: block;
+		}
+	}
+	span {
+		display: block;
+	}
+	.member-since {
+		font-size: 10px;
+		line-height: 14px;
+		position: relative;
+		top: -1px;
+	}
+	.member-edits {
+		font-size: 30px;
+		line-height: 30px;
+		vertical-align: text-bottom;
+		sup {
+			font-size: 10px;
+			position: relative;
+			text-transform: uppercase;
+			top: -14px;
+		}
+	}
+	.tabs-container {
+		&:before {
+			background: url(/skins/oasis/images/sprite.png) 0 -48px no-repeat; /* $wgCdnStylePath */
+			bottom: 0;
+			content: " ";
+			height: 8px;
+			left: 0;
+			position: absolute;
+			width: 550px;
+		}
+		bottom: 0;
+		left: 120px;
+		overflow: hidden;
+		position: absolute;
+		width: 550px;
+		.tabs {
+			border-bottom: none;
+			margin-bottom: 10px;
+		}
+	}
+	.wikia-button,
+	.wikia-menu-button {
+		float: right;
+		margin-left: 10px;
+	}
+}

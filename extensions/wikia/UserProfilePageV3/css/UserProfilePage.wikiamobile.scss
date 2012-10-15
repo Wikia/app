@@ -1,0 +1,93 @@
+@import 'extensions/wikia/WikiaMobile/css/variables';
+@import 'extensions/wikia/WikiaMobile/css/mixins/linear-gradient';
+
+.mst{
+	border: 1px solid $border-color;
+	border-radius: 5px;
+	line-height: 23px;
+	margin-bottom: 10px;
+	width: 100%;
+}
+
+.mstHhdr{
+	@include linear-gradient(rgb(38,148,225), rgb(17,105,178));
+	border-radius: 5px 5px 0 0;
+	color: white;
+	overflow: hidden;
+	width: 100%;
+	word-wrap: break-word;
+}
+
+em{
+	font-style: normal;
+	margin-right: 5px;
+}
+.mstAvaImg{
+	border: 1px solid $border-color;
+	max-height: 60px;
+	max-width: 60px;
+}
+.mstHgr{
+	display: block;
+	margin: 10px;
+	margin-left: 82px;
+	position: relative;
+}
+.mstNm{
+	display: inline;
+	font-size: 22px;
+}
+.mstRn, .mstEd{
+	font-size: 14px;
+	margin: 0;
+}
+.mstEd {
+	text-transform: lowercase;
+}
+.mstAva{
+	float:left;
+	height: 62px;
+	width: 62px;
+	margin: 10px;
+}
+.mstGr{
+	@include linear-gradient(rgb(81,158,216), rgb(74,154,212));
+	border-radius: 5px;
+	display: inline-block;
+	line-height: 20px;
+	padding: 2px 5px;
+	position: relative;
+	text-transform: uppercase;
+	top: -3px;
+	margin-top: 3px;
+}
+.mstInf{
+	font-size: 14px;
+	padding-left: 20px;
+	padding: 10px
+}
+.mstUl{
+	list-style: none;
+	margin: 0;
+	padding: 0;
+
+	span {
+		color: #A1A1A1;
+		display: block;
+		font-size: small;
+		font-weight: bold;
+		text-transform: uppercase;
+	}
+}
+
+.mstSectLi{
+	padding-top: 16px;
+
+	&:first-child {
+		padding-top: 0;
+	}
+}
+
+.mstLi {
+	padding-top: 5px;
+}

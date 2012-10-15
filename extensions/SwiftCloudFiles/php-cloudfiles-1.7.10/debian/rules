@@ -1,0 +1,13 @@
+#!/usr/bin/make -f
+
+include /usr/share/cdbs/1/rules/debhelper.mk
+#include /usr/share/cdbs/1/rules/patchsys-quilt.mk
+
+# In order to regenerate 'debian/control' :
+#   DEB_AUTO_UPDATE_DEBIAN_CONTROL=yes fakeroot debian/rules clean
+# Then check manually if everything's ok
+
+
+binary-predeb/php-cloudfiles::
+	find debian/php-cloudfiles -depth \( -name ".cvsignore" -o -name ".arch-ids" -o -name '*.swp' \) -exec rm -rf {} \;
+	find debian/php-cloudfiles -type f -executable -exec chmod -x {} \;

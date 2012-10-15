@@ -1,0 +1,26 @@
+<!doctype html> 
+<html> <head> </head> <body> 
+<script type=text/deferscript> 
+var spongecellParams = {  clickTag: "http://ads.undertone.com/c?oaparams=2__bannerid=195069__campaignid=32224__zoneid=13433__UTLCA=1__cb=036a7b5efcda4df5bddc30f845428bf8__bk=lmld6r__id=dberua75ljryha0hpll60i79e__oadest=",  siteId: "SPONGECELL_SITE_ID"  };
+</script> 
+<script type=text/deferscript defersrc=spongecell.js></script> 
+<script src="../../src/ghostwriter.js"></script> 
+<script src="../../src/loadhandlers.js"></script> 
+<script src="../../src/domtree.js"></script> 
+<script src="../../src/domelement.js"></script> 
+<script src="../../src/htmlstreamparser.js"></script> 
+<script src="../../src/scriptloader.js"></script> 
+<script src="../../src/capabilities.js"></script> 
+
+
+<script src="../../lib/gw.min.js" ></script>
+
+<script> 
+ghostwriter.handlers.check= function(tn, attributes){ 
+	flog("got a new one " + tn) 
+	return true
+}
+setTimeout(ghostwriter.loadscripts, 250); 
+</script> 
+</body> 
+</html> 

@@ -1,0 +1,33 @@
+.WidgetCategoryCloud ul, .WidgetCategoryCloud li {
+display: inline;
+list-style: none;
+}
+
+.WidgetCategoryCloud li a.cloud0 { font-size:  80%; font-weight: 400 }
+.WidgetCategoryCloud li a.cloud1 { font-size:  85%; font-weight: 400 }
+.WidgetCategoryCloud li a.cloud2 { font-size:  90%; font-weight: 400 }
+.WidgetCategoryCloud li a.cloud3 { font-size: 100%; font-weight: 400 }
+.WidgetCategoryCloud li a.cloud4 { font-size: 110%; font-weight: 400 }
+.WidgetCategoryCloud li a.cloud5 { font-size: 120%; font-weight: 500 }
+.WidgetCategoryCloud li a.cloud6 { font-size: 130%; font-weight: 600 }
+.WidgetCategoryCloud li a.cloud7 { font-size: 150%; font-weight: 700 }
+.WidgetCategoryCloud li a.cloud8 { font-size: 170%; font-weight: 800 }
+.WidgetCategoryCloud li a.cloud9 { font-size: 200%; font-weight: 900 }
+
+.WidgetCategoryCloud .widget_title {
+display: block;
+}
+
+.WidgetCategoryCloud {
+border: 1px solid #000;
+}
+
+.WidgetCategoryCloud dt {
+border-bottom: 2px dotted #A9C5EB;
+font-size: 110%;
+padding-left: 0px;
+}
+
+.WidgetCategoryCloud dd {
+max-height:none;
+}

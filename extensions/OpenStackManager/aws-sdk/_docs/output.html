@@ -1,0 +1,796 @@
+<h1 id="changelog:1.2.5heidegger">Changelog: 1.2.5 &#8220;Heidegger&#8221;</h1>
+
+<p>Launched Thursday, February 24, 2011</p>
+
+<h2 id="newfeatureshighlightssummary">New Features &amp; Highlights (Summary)</h2>
+
+<ul>
+<li>Support for AWS CloudFormation has been added to the SDK.</li>
+<li>Bug fixes and enhancements:
+<ul>
+<li><a href="https://forums.aws.amazon.com/thread.jspa?threadID=59532">PHP API change_content_type() broken</a></li>
+<li><a href="https://forums.aws.amazon.com/thread.jspa?threadID=60989">Bug setting OriginAccessIdentity for a Cloudfront distribution config</a></li>
+</ul></li>
+</ul>
+
+<h2 id="serviceclasses">Service Classes</h2>
+
+<h3 id="amazoncloudformation">AmazonCloudFormation</h3>
+
+<ul>
+<li><strong>New:</strong> Support for AWS CloudFormation has been added to the SDK.</li>
+</ul>
+
+<h3 id="amazoncloudfront">AmazonCloudFront</h3>
+
+<ul>
+<li><strong>Fixed:</strong> Issues around <code>update_xml_config()</code> have been resolved.</li>
+</ul>
+
+<h3 id="amazons3">AmazonS3</h3>
+
+<ul>
+<li><strong>Fixed:</strong> Issues around <code>change_content_type()</code> have been resolved.</li>
+</ul>
+
+<hr />
+
+<h1 id="changelog:1.2.4goltanna">Changelog: 1.2.4 &#8220;Goltanna&#8221;</h1>
+
+<p>Launched Wednesday, February 16, 2011</p>
+
+<h2 id="newfeatureshighlightssummary">New Features &amp; Highlights (Summary)</h2>
+
+<ul>
+<li>Support for IAM account aliases and server certificates has been added to the SDK.</li>
+<li>Support for Amazon S3 Website Configuration has been added to the SDK.</li>
+<li>Documentation updates for Amazon RDS and AWS Import/Export.</li>
+<li>Updated all documentation blocks to adhere to the PHPDoc format. This enables a greater number of tools to take advantage of the SDK documentation.</li>
+<li>Rolled out a major update to the SDK API Reference.</li>
+</ul>
+
+<h2 id="serviceclasses">Service Classes</h2>
+
+<h3 id="amazoniam">AmazonIAM</h3>
+
+<ul>
+<li><strong>New:</strong> Support for IAM account aliases and server certificates has been added to the SDK.</li>
+</ul>
+
+<h3 id="amazonimportexport">AmazonImportExport</h3>
+
+<ul>
+<li><strong>New:</strong> Documentation has been updated to note the new US West region support.</li>
+</ul>
+
+<h3 id="amazonrds">AmazonRDS</h3>
+
+<ul>
+<li><strong>New:</strong> Documentation has been updated to note the new support for MySQL 5.5.</li>
+</ul>
+
+<h3 id="amazons3">AmazonS3</h3>
+
+<ul>
+<li><strong>New:</strong> Support for Amazon S3 Website Configuration has been added to the SDK.</li>
+</ul>
+
+<hr />
+
+<h1 id="changelog:1.2.3fayth">Changelog: 1.2.3 &#8220;Fayth&#8221;</h1>
+
+<p>Launched Tuesday, January 25, 2010</p>
+
+<h2 id="newfeatureshighlightssummary">New Features &amp; Highlights (Summary)</h2>
+
+<ul>
+<li>Support for Amazon Simple Email Service has been added to the SDK.</li>
+</ul>
+
+<h2 id="serviceclasses">Service Classes</h2>
+
+<h3 id="amazonses">AmazonSES</h3>
+
+<ul>
+<li><strong>New:</strong> Support for Amazon Simple Email Service has been added to the SDK.</li>
+</ul>
+
+<hr />
+
+<h1 id="changelog:1.2.2esper">Changelog: 1.2.2 &#8220;Esper&#8221;</h1>
+
+<p>Launched Tuesday, January 18, 2011</p>
+
+<h2 id="newfeatureshighlightssummary">New Features &amp; Highlights (Summary)</h2>
+
+<ul>
+<li>Support for Amazon Elastic Beanstalk has been added to the SDK.</li>
+<li>Bug fixes and enhancements:
+<ul>
+<li><a href="https://forums.aws.amazon.com/thread.jspa?threadID=55174">AWS PHP S3 Library is not working out of the box</a></li>
+<li><a href="https://forums.aws.amazon.com/thread.jspa?threadID=54541">Problem with create_mpu_object() and streaming_read_callback() in S3</a></li>
+<li><a href="https://github.com/Uranium235/aws-sdk-for-php/compare/Streaming">Integrated Uranium235&#8217;s GitHub contributions</a></li>
+</ul></li>
+</ul>
+
+<h2 id="serviceclasses">Service Classes</h2>
+
+<h3 id="amazonelasticbeanstalk">AmazonElasticBeanstalk</h3>
+
+<ul>
+<li><strong>New:</strong> Support for AWS Elastic Beanstalk has been added to the SDK.</li>
+</ul>
+
+<h3 id="amazons3">AmazonS3</h3>
+
+<ul>
+<li><strong>Fixed:</strong> Major improvements to transferring data over streams.</li>
+</ul>
+
+<h2 id="utilityclasses">Utility classes</h2>
+
+<h3 id="requestcore">RequestCore</h3>
+
+<ul>
+<li><strong>New:</strong> Upgraded to version 1.4.</li>
+<li><strong>Fixed:</strong> Major improvements to transferring data over streams.</li>
+</ul>
+
+<hr />
+
+<h1 id="changelog:1.2.1dio">Changelog: 1.2.1 &#8220;Dio&#8221;</h1>
+
+<p>Launched Friday, January 14, 2011</p>
+
+<h2 id="newfeatureshighlightssummary">New Features &amp; Highlights (Summary)</h2>
+
+<ul>
+<li>Support for S3 Response Headers has been added to the SDK.</li>
+<li>Bug fixes and enhancements:
+<ul>
+<li><a href="https://forums.aws.amazon.com/thread.jspa?threadID=56893">copy_object failed between regions</a></li>
+<li><a href="https://forums.aws.amazon.com/thread.jspa?threadID=56561">Possible S3 bug with multiple buckets?</a></li>
+</ul></li>
+</ul>
+
+<h2 id="serviceclasses">Service Classes</h2>
+
+<h3 id="amazons3">AmazonS3</h3>
+
+<ul>
+<li><strong>New:</strong> Support for S3 Response Headers has been added to the SDK.</li>
+<li><strong>New:</strong> Documentation for Amazon S3 has been updated to include large object support details.</li>
+<li><strong>New:</strong> The <code>abort_multipart_uploads_by_date()</code> method has been added to the SDK, which aborts multipart uploads that were initiated before a specific date.</li>
+<li><strong>Fixed:</strong> Resolved an issue where the resource prefix wasn&#8217;t being reset correctly.</li>
+</ul>
+
+<h2 id="utilityclasses">Utility classes</h2>
+
+<h3 id="cfarray">CFArray</h3>
+
+<ul>
+<li><strong>New:</strong> Instantiating the class without passing an array will use an empty array instead.</li>
+<li><strong>New:</strong> Added the <code>compress()</code> method which removes null values from the array.</li>
+<li><strong>New:</strong> Added the <code>reindex()</code> method which reindexes all array elements starting at zero.</li>
+</ul>
+
+<h2 id="compatibilitytest">Compatibility Test</h2>
+
+<ul>
+<li><strong>New:</strong> The command-line compatibility test now color-codes the responses.</li>
+</ul>
+
+<hr />
+
+<h1 id="changelog:1.2cloud">Changelog: 1.2 &#8220;Cloud&#8221;</h1>
+
+<p>Launched Friday, December 3, 2010</p>
+
+<h2 id="newfeatureshighlightssummary">New Features &amp; Highlights (Summary)</h2>
+
+<ul>
+<li>Support for Amazon AutoScaling, Amazon Elastic MapReduce, and Amazon Import/Export Service has been added to the SDK.</li>
+<li>Support for metric alarms has been added to Amazon CloudWatch.</li>
+<li>Support for batch deletion has been added to Amazon SimpleDB.</li>
+<li>Bug fixes and enhancements:
+<ul>
+<li><a href="https://forums.aws.amazon.com/thread.jspa?threadID=53028">EU Region DNS problem</a></li>
+<li><a href="https://forums.aws.amazon.com/thread.jspa?threadID=55884">[SimpleDB] Conditional PUT</a></li>
+<li><a href="https://forums.aws.amazon.com/thread.jspa?threadID=55210">Suggestions for the PHP SDK</a></li>
+<li><a href="https://forums.aws.amazon.com/thread.jspa?threadID=54888">Updating a distribution config</a></li>
+<li><a href="https://forums.aws.amazon.com/thread.jspa?threadID=54532">Problem with curlopt parameter in S3</a></li>
+<li><a href="https://forums.aws.amazon.com/thread.jspa?threadID=55169">AmazonS3::get_object_list() doesn&#8217;t consider max-keys option</a></li>
+</ul></li>
+</ul>
+
+<h2 id="baseruntimeclass">Base/Runtime class</h2>
+
+<ul>
+<li><strong>New:</strong> Added support for an alternate approach to instantiating classes which allows for method chaining (PHP 5.3+).</li>
+<li><strong>Changed:</strong> Moved <code>CHANGELOG.md</code>, <code>CONTRIBUTORS.md</code>, <code>LICENSE.md</code> and <code>NOTICE.md</code> into a new <code>_docs</code> folder.</li>
+<li><strong>Changed:</strong> Renamed the <code>samples</code> directory to <code>_samples</code>.</li>
+<li><strong>Changed:</strong> Changed the permissions for the SDK files from <code>0755</code> to <code>0644</code>.</li>
+<li><strong>Fixed:</strong> Resolved an issue where attempting to merge cURL options would fail.</li>
+</ul>
+
+<h2 id="serviceclasses">Service Classes</h2>
+
+<h3 id="amazonas">AmazonAS</h3>
+
+<ul>
+<li><strong>New:</strong> Support for the Amazon AutoScaling Service has been added to the SDK.</li>
+</ul>
+
+<h3 id="amazoncloudfront">AmazonCloudFront</h3>
+
+<ul>
+<li><strong>Fixed:</strong> Resolved an issue where the incorrect formatting of an XML element prevented the ability to update the list of trusted signers.</li>
+</ul>
+
+<h3 id="amazoncloudwatch">AmazonCloudWatch</h3>
+
+<ul>
+<li><strong>New:</strong> Support for the Amazon CloudWatch <code>2010-08-01</code> service release expands Amazon&#8217;s cloud monitoring offerings with custom alarms.</li>
+<li><strong>Changed:</strong> The changes made to the <code>get_metric_statistics()</code> method are backwards-incompatible with the previous release. The <code>Namespace</code> and <code>Period</code> parameters are now required and the parameter order has changed.</li>
+</ul>
+
+<h3 id="amazonemr">AmazonEMR</h3>
+
+<ul>
+<li><strong>New:</strong> Support for the Amazon Elastic MapReduce Service has been added to the SDK.</li>
+</ul>
+
+<h3 id="amazonimportexport">AmazonImportExport</h3>
+
+<ul>
+<li><strong>New:</strong> Support for the Amazon Import/Export Service has been added to the SDK.</li>
+</ul>
+
+<h3 id="amazons3">AmazonS3</h3>
+
+<ul>
+<li><strong>Fixed:</strong> Resolved an issue in the <code>create_bucket()</code> method that caused the regional endpoint to be reset to US-Standard.</li>
+<li><strong>Fixed:</strong> Resolved an issue in the <code>get_object_list()</code> method where the <code>max-keys</code> parameter was ignored.</li>
+</ul>
+
+<h3 id="amazonsdb">AmazonSDB</h3>
+
+<ul>
+<li><strong>New:</strong> Support for <code>BatchDeleteAttributes</code> has been added to the SDK.</li>
+<li><strong>Fixed:</strong> Resolved an issue where the <code>Expected</code> condition was not respected by <code>put_attributes()</code> or <code>delete_attributes()</code>.</li>
+</ul>
+
+<h2 id="utilityclasses">Utility classes</h2>
+
+<h3 id="cfcomplextype">CFComplexType</h3>
+
+<ul>
+<li><strong>New:</strong> You can now assign a <code>member</code> parameter to prefix all list identifiers.</li>
+<li><strong>Changed:</strong> The <code>option_group()</code> method is now <code>public</code> instead of <code>private</code>.</li>
+<li><strong>Changed:</strong> Rewrote the <code>to_query_string()</code> method to avoid the use of PHP&#8217;s <code>http_build_query()</code> function because it uses <code>urlencode()</code> internally instead of <code>rawurlencode()</code>.</li>
+</ul>
+
+<h3 id="cfhadoopstep">CFHadoopStep</h3>
+
+<ul>
+<li><strong>New:</strong> Simplifies the process of working with Hadoop steps in Amazon EMR.</li>
+</ul>
+
+<h3 id="cfmanifest">CFManifest</h3>
+
+<ul>
+<li><strong>New:</strong> Simplifies the process of constructing YAML manifest documents for Amazon Import/Export Service.</li>
+</ul>
+
+<h3 id="cfstepconfig">CFStepConfig</h3>
+
+<ul>
+<li><strong>New:</strong> Simplifies the process of working with step configuration in Amazon EMR.</li>
+</ul>
+
+<h2 id="third-partylibraries">Third-party Libraries</h2>
+
+<h3 id="cachecore">CacheCore</h3>
+
+<ul>
+<li><strong>Changed:</strong> The <code>generate_timestamp()</code> method is now <code>protected</code> instead of <code>private</code>.</li>
+</ul>
+
+<hr />
+
+<h1 id="changelog:1.1barret">Changelog: 1.1 &#8220;Barret&#8221;</h1>
+
+<p>Launched Wednesday, November 10, 2010</p>
+
+<h2 id="newfeatureshighlightssummary">New Features &amp; Highlights (Summary)</h2>
+
+<ul>
+<li>Support for Amazon ELB, Amazon RDS and Amazon VPC has been added to the SDK.</li>
+<li>Support for the Amazon S3 multipart upload feature has been added to the SDK. This feature enables developers upload large objects in a series of requests for improved upload reliability.</li>
+<li>Support for the Amazon CloudFront custom origin (2010-11-01 release) feature has been added to the SDK. This feature enables developers to use custom domains as sources for Amazon CloudFront distributions.</li>
+<li>The <code>AmazonS3</code> class now supports reading from and writing to open file resources in addition to the already-supported file system paths.</li>
+<li>You can now seek to a specific byte-position within a file or file resource and begin streaming from that point when uploading or downloading objects.</li>
+<li>The methods <code>get_bucket_filesize()</code>, <code>get_object_list()</code>, <code>delete_all_objects()</code> and <code>delete_all_object_versions()</code> are no longer limited to 1000 entries and will work correctly for all entries.</li>
+<li>Requests that have errors at the cURL level now throw exceptions containing the error message and error code returned by cURL.</li>
+<li>Bug fixes and enhancements:
+<ul>
+<li><a href="http://developer.amazonwebservices.com/connect/thread.jspa?threadID=52748">Bug in Samples</a></li>
+<li><a href="http://developer.amazonwebservices.com/connect/thread.jspa?threadID=53028">EU Region DNS problem</a></li>
+<li><a href="http://developer.amazonwebservices.com/connect/thread.jspa?threadID=52976">AmazonS3 get_bucket_object_count</a></li>
+<li><a href="http://developer.amazonwebservices.com/connect/thread.jspa?threadID=53418">S3: get_object_list() fatal error</a></li>
+<li><a href="http://developer.amazonwebservices.com/connect/thread.jspa?threadID=54244">S3 get_object_metadata() problems</a></li>
+<li><a href="http://developer.amazonwebservices.com/connect/thread.jspa?threadID=53117">Bug in authenticate in sdk.class.php</a></li>
+<li><a href="http://developer.amazonwebservices.com/connect/thread.jspa?threadID=52987">How to use Prefix with &#8220;get_object_list&#8221;?</a></li>
+<li><a href="http://developer.amazonwebservices.com/connect/thread.jspa?threadID=52798">SignatureDoesNotMatch with utf-8 in SimpleDB</a></li>
+<li><a href="http://developer.amazonwebservices.com/connect/thread.jspa?threadID=52787">Suggestion for the PHP SDK concerning streaming</a></li>
+<li><a href="http://developer.amazonwebservices.com/connect/thread.jspa?threadID=53786">get_bucket_filesize only returns filesize for first 1000 objects</a></li>
+</ul></li>
+</ul>
+
+<h2 id="baseruntimeclass">Base/Runtime class</h2>
+
+<ul>
+<li><strong>Changed:</strong> Port numbers other than 80 and 443 are now part of the signature.</li>
+<li><strong>Changed:</strong> When putting UTF-8 characters via HTTP <code>POST</code>, a <code>SignatureDoesNotMatch</code> error would be returned. This was resolved by specifying the character set in the <code>Content-Type</code> header.</li>
+</ul>
+
+<h2 id="serviceclasses">Service Classes</h2>
+
+<h3 id="amazoncloudfront">AmazonCloudFront</h3>
+
+<ul>
+<li><strong>New:</strong> Support for the Amazon CloudFront non-S3 origin feature (2010-11-01 release) has been added to the SDK. This feature enables developers to use non-S3 domains as sources for Amazon CloudFront distributions.</li>
+</ul>
+
+<h3 id="amazonec2">AmazonEC2</h3>
+
+<ul>
+<li><strong>New:</strong> Support for Amazon Virtual Private Cloud has been added to the SDK.</li>
+</ul>
+
+<h3 id="amazonelb">AmazonELB</h3>
+
+<ul>
+<li><strong>New:</strong> Support for Amazon Elastic Load Balancing Service has been added to the SDK.</li>
+</ul>
+
+<h3 id="amazoniam">AmazonIAM</h3>
+
+<ul>
+<li><strong>Fixed:</strong> Removed <code>set_region()</code> as IAM only supports a single endpoint.</li>
+</ul>
+
+<h3 id="amazonrds">AmazonRDS</h3>
+
+<ul>
+<li><strong>New:</strong> Support for Amazon Relational Database Service has been added to the SDK.</li>
+</ul>
+
+<h3 id="amazons3">AmazonS3</h3>
+
+<ul>
+<li><strong>New:</strong> Support for the Amazon S3 multipart upload feature has been added to the SDK. This feature enables developers upload large objects in a series of requests for improved upload reliability.</li>
+<li><strong>New:</strong> The <code>fileUpload</code> and <code>fileDownload</code> options now support reading from and writing to open file resources in addition to the already-supported file system paths.</li>
+<li><strong>Fixed:</strong> In Amazon S3, requests directly to the eu-west endpoint must use the path-style URI. The set_region() method now takes this into account.</li>
+<li><strong>Fixed:</strong> As of version 1.0.1, CFSimpleXML extends SimpleXMLIterator instead of SimpleXMLElement. This prevented the <code>__call()</code> magic method from firing when <code>get_object_list()</code> was used.</li>
+<li><strong>Fixed:</strong> The <code>preauth</code> option for the <code>get_object_list()</code> method has been removed from the documentation as it is not supported.</li>
+<li><strong>Fixed:</strong> The methods <code>get_bucket_filesize()</code>, <code>get_object_list()</code>, <code>delete_all_objects()</code> and <code>delete_all_object_versions()</code> are no longer limited to 1000 entries and will work correctly for all entries.</li>
+<li><strong>Fixed:</strong> Using <code>delete_bucket()</code> to force-delete a bucket now works correctly for buckets with more than 1000 versions.</li>
+<li><strong>Fixed:</strong> The response from the <code>get_object_metadata()</code> method now includes all supported HTTP headers, including metadata stored in <code>x-amz-meta-</code> headers.</li>
+<li><strong>Fixed:</strong> Previously, if the <code>get_object_metadata()</code> method was called on a non-existant object, metadata for the alphabetically-next object would be returned.</li>
+</ul>
+
+<h3 id="amazonsqs">AmazonSQS</h3>
+
+<ul>
+<li><strong>New:</strong> The <code>get_queue_arn()</code> method has been added to the <code>AmazonSQS</code> class, which converts a queue URI to a queue ARN.</li>
+</ul>
+
+<h2 id="utilityclasses">Utility classes</h2>
+
+<h3 id="cfsimplexml">CFSimpleXML</h3>
+
+<ul>
+<li><strong>New:</strong> Added <code>to_string()</code> and <code>to_array()</code> methods.</li>
+</ul>
+
+<h2 id="third-partylibraries">Third-party Libraries</h2>
+
+<h3 id="requestcore">RequestCore</h3>
+
+<ul>
+<li><strong>New:</strong> Upgraded to version 1.3.</li>
+<li><strong>New:</strong> Added <code>set_seek_position()</code> for seeking to a byte-position in a file or file resource before starting an upload.</li>
+<li><strong>New:</strong> Added support for reading from and writing to open file resources.</li>
+<li><strong>Fixed:</strong> Improved the reporting for cURL errors.</li>
+</ul>
+
+<h2 id="compatibilitytest">Compatibility Test</h2>
+
+<ul>
+<li><strong>Fixed:</strong> Fixed the links to the Getting Started Guide.</li>
+</ul>
+
+<hr />
+
+<h1 id="changelog:1.0.1aeris">Changelog: 1.0.1 &#8220;Aeris&#8221;</h1>
+
+<p>Launched Tuesday, October 12, 2010</p>
+
+<h2 id="newfeatureshighlightssummary">New Features &amp; Highlights (Summary)</h2>
+
+<ul>
+<li>Improved support for running XPath queries against the service response bodies.</li>
+<li>Added support for request retries and exponential backoff.</li>
+<li>Added support for HTTP request/response header logging.</li>
+<li>Bug fixes and enhancements:
+<ul>
+<li><a href="http://developer.amazonwebservices.com/connect/thread.jspa?threadID=52748">Bug in Samples</a></li>
+<li><a href="http://developer.amazonwebservices.com/connect/thread.jspa?threadID=52305">Can&#8217;t set ACL on object using the SDK</a></li>
+<li><a href="http://developer.amazonwebservices.com/connect/thread.jspa?threadID=52738">Range requests for S3 - status codes 200, 206</a></li>
+<li><a href="http://developer.amazonwebservices.com/connect/thread.jspa?threadID=52652">S3 change_storage_redundancy() function clears public-read ACL</a></li>
+</ul></li>
+</ul>
+
+<h2 id="baseruntimeclass">Base/Runtime class</h2>
+
+<ul>
+<li><strong>New:</strong> Added support for request retries and exponential backoff for all <code>500</code> and <code>503</code> HTTP status codes.</li>
+<li><strong>New:</strong> Added the <code>enable_debug_mode()</code> method to enable HTTP request/response header logging to <code>STDERR</code>.</li>
+</ul>
+
+<h2 id="serviceclasses">Service Classes</h2>
+
+<h3 id="amazons3">AmazonS3</h3>
+
+<ul>
+<li><strong>Fixed:</strong> Lots of tweaks to the documentation.</li>
+<li><strong>Fixed:</strong> The <code>change_content_type()</code>, <code>change_storage_redundancy()</code>, <code>set_object_acl()</code>, and <code>update_object()</code> methods now respect the existing content-type, storage redundancy, and ACL settings when updating.</li>
+<li><strong>New:</strong> Added the <code>get_object_metadata()</code> method has been added as a singular interface for obtaining all available metadata for an object.</li>
+</ul>
+
+<h2 id="utilityclasses">Utility Classes</h2>
+
+<h3 id="cfarray">CFArray</h3>
+
+<ul>
+<li><strong>New:</strong> Added the <code>each()</code> method which accepts a callback function to execute for each entry in the array. Works similarly to <a href="http://api.jquery.com/each">jQuery&#8217;s each()</a>.</li>
+<li><strong>New:</strong> Added the <code>map()</code> method which accepts a callback function to execute for each entry in the array. Works similarly to <a href="http://api.jquery.com/map">jQuery&#8217;s map()</a>.</li>
+<li><strong>New:</strong> Added the <code>reduce()</code> method which accepts a callback function to execute for each entry in the array. Works similarly to <a href="http://github.com/symfony/symfony/blob/master/src/Symfony/Component/DomCrawler/Crawler.php">DomCrawler reduce()</a> from the <a href="http://symfony-reloaded.org">Symfony 2</a> Preview Release.</li>
+<li><strong>New:</strong> Added the <code>first()</code> and <code>last()</code> methods to return the first and last nodes in the array, respectively.</li>
+</ul>
+
+<h3 id="cfinfo">CFInfo</h3>
+
+<ul>
+<li><strong>New:</strong> Retrieves information about the current installation of the AWS SDK for PHP.</li>
+</ul>
+
+<h3 id="cfsimplexml">CFSimpleXML</h3>
+
+<ul>
+<li><strong>New:</strong> Added the <code>query()</code> method, which allows for XPath queries while the results are wrapped in a <code>CFArray</code> response.</li>
+<li><strong>New:</strong> Added the <code>parent()</code> method, which allows for traversing back up the document tree.</li>
+<li><strong>New:</strong> Added the <code>stringify()</code> method, which typecasts the value as a string.</li>
+<li><strong>New:</strong> Added the <code>is()</code> and <code>contains()</code> methods, which allow for testing whether the XML value is or contains a given value, respectively.</li>
+<li><strong>Changed:</strong> Now extends the <code>SimpleXMLIterator</code> class, which in-turn extends the <code>SimpleXMLElement</code> class. This adds new iterator methods to the <code>CFSimpleXML</code> class.</li>
+</ul>
+
+<h2 id="third-partylibraries">Third-party Libraries</h2>
+
+<h3 id="cachecore">CacheCore</h3>
+
+<ul>
+<li><strong>New:</strong> Upgraded to version 1.2.</li>
+<li><strong>New:</strong> Added a static <code>init</code> method that allows for chainable cache initialization (5.3+).</li>
+</ul>
+
+<h3 id="requestcore">RequestCore</h3>
+
+<ul>
+<li><strong>New:</strong> Added <code>206</code> as a successful status code (i.e., Range GET).</li>
+</ul>
+
+<h2 id="compatibilitytest">Compatibility Test</h2>
+
+<ul>
+<li><strong>Fixed:</strong> Some of the links in the compatibility test were missing. These have been fixed.</li>
+</ul>
+
+<hr />
+
+<h1 id="changelog:awssdkforphp1.0">Changelog: AWS SDK for PHP 1.0</h1>
+
+<p>Launched Tuesday, September 28, 2010</p>
+
+<p>This is a complete list of changes since we forked from the CloudFusion 2.5.x trunk build.</p>
+
+<h2 id="newfeatureshighlightssummary">New Features &amp; Highlights (Summary)</h2>
+
+<ul>
+<li>The new file to include is <code>sdk.class.php</code> rather than <code>cloudfusion.class.php</code>.</li>
+<li>Because of the increased reliance on <a href="http://json.org">JSON</a> across AWS services, the minimum supported version is now PHP 5.2 (<a href="http://www.php.net/ChangeLog-5.php#5.2.0">Released in November 2006</a>; Justified by these <a href="http://wpdevel.wordpress.com/2010/07/09/suggest-topics-for-the-july-15-2010-dev/comment-page-1/#comment-8542">WordPress usage statistics</a> and the fact that <a href="http://www.php.net/archive/2010.php#id2010-07-22-1">PHP 5.2 has been end-of-life&#8217;d</a> in favor of 5.3).</li>
+<li>Up-to-date service support for <a href="http://aws.amazon.com/ec2">EC2</a>, <a href="http://aws.amazon.com/s3">S3</a>, <a href="http://aws.amazon.com/sqs">SQS</a>, <a href="http://aws.amazon.com/simpledb">SimpleDB</a>, <a href="http://aws.amazon.com/cloudwatch">CloudWatch</a>, and <a href="http://aws.amazon.com/cloudfront">CloudFront</a>.</li>
+<li>Added service support for <a href="http://aws.amazon.com/sns">SNS</a>.</li>
+<li>Limited testing for third-party API-compatible services such as <a href="http://open.eucalyptus.com">Eucalyptus</a>, <a href="http://open.eucalyptus.com">Walrus</a> and <a href="http://sandbox.google.com/storage">Google Storage</a>.</li>
+<li>Improved the consistency of setting complex data types across services. (Required some backwards-incompatible changes.)</li>
+<li>Added new APIs and syntactic sugar for SimpleXML responses, batch requests and response caching.</li>
+<li>Moved away from <em>global</em> constants in favor of <em>class</em> constants.</li>
+<li>Minor, but notable improvements to the monkey patching support.</li>
+<li>Added a complete list of bug fix and patch contributors. Give credit where credit is due. ;)</li>
+</ul>
+
+<p><strong>Note: ALL backwards-incompatible changes are noted below. Please review the changes if you are upgrading.</strong> We&#8217;re making a small number of backwards-incompatible changes in order to improve the consistency across services. We&#8217;re making these changes <em>now</em> so that we can ensure that future versions will always be backwards-compatible with the next major version change.</p>
+
+<h2 id="filestructure">File structure</h2>
+
+<p>The package file structure has been refined in a few ways:</p>
+
+<ul>
+<li>All service-specific classes are inside the <code>/services/</code> directory.</li>
+<li>All utility-specific classes are inside the <code>/utilities/</code> directory.</li>
+<li>All third-party classes are inside the <code>/lib/</code> directory.</li>
+</ul>
+
+<h2 id="baseruntimeclass">Base/Runtime class</h2>
+
+<ul>
+<li><strong>Fixed:</strong> Resolved issues: <a href="http://code.google.com/p/tarzan-aws/issues/detail?id=206">#206</a>.</li>
+<li><strong>New:</strong> The following global constants have been added: <code>CFRUNTIME_NAME</code>, <code>CFRUNTIME_VERSION</code>, <code>CFRUNTIME_BUILD</code>, <code>CFRUNTIME_URL</code>, and <code>CFRUNTIME_USERAGENT</code></li>
+<li><strong>New:</strong> Now supports camelCase versions of the snake_case method names. (e.g. <code>getObjectList()</code> will get translated to <code>get_object_list()</code> behind the scenes.)</li>
+<li><strong>New:</strong> Added <code>set_resource_prefix()</code> and <code>allow_hostname_override()</code> (in addition to <code>set_hostname()</code>) to support third-party, API-compatible services.</li>
+<li><strong>New:</strong> Added new caching APIs: <code>cache()</code> and <code>delete_cache()</code>, which work differently from the methods they replace. See docs for more information.</li>
+<li><strong>New:</strong> Added new batch request APIs, <code>batch()</code> and <code>CFBatchRequest</code> which are intended to replace the old <code>returnCurlHandle</code> optional parameter.</li>
+<li><strong>New:</strong> Will look for the <code>config.inc.php</code> file first in the same directory (<code>./config.inc.php</code>), and then fallback to <code>~/.aws/sdk/config.inc.php</code>.</li>
+<li><strong>Changed:</strong> Renamed the <code>CloudFusion</code> base class to <code>CFRuntime</code>.</li>
+<li><strong>Changed:</strong> <code>CloudFusion_Exception</code> has been renamed as <code>CFRuntime_Exception</code>.</li>
+<li><strong>Changed:</strong> Renamed the <code>CloudFusion::$enable_ssl</code> property to <code>CFRuntime::$use_ssl</code>.</li>
+<li><strong>Changed:</strong> Renamed the <code>CloudFusion::$set_proxy</code> property to <code>CFRuntime::$proxy</code>.</li>
+<li><strong>Changed:</strong> <code>CFRuntime::disable_ssl()</code> no longer takes any parameters. Once SSL is off, it is always off for that class instance.</li>
+<li><strong>Changed:</strong> All date-related constants are now class constants of the <code>CFUtilities</code> class (e.g. <code>CFUtilities::DATE_FORMAT_ISO8601</code>).
+<ul>
+<li>Use <code>CFUtilities::konst()</code> if you&#8217;re extending classes and need to do something such as <code>$this-&gt;util::DATE_FORMAT_ISO8601</code> but keep getting the <code>T_PAAMAYIM_NEKUDOTAYIMM</code> error.</li>
+</ul></li>
+<li><strong>Changed:</strong> All <code>x-cloudfusion-</code> and <code>x-tarzan-</code> HTTP headers are now <code>x-aws-</code>.</li>
+<li><strong>Changed:</strong> <code>CloudFusion::autoloader()</code> is now in its own separate class: <code>CFLoader::autoloader()</code>. This prevents it from being incorrectly inherited by extending classes.</li>
+<li><strong>Changed:</strong> <code>RequestCore</code>, <code>ResponseCore</code> and <code>SimpleXMLElement</code> are now extended by <code>CFRequest</code>, <code>CFResponse</code> and <code>CFSimpleXML</code>, respectively. These new classes are now used by default.</li>
+<li><strong>Changed:</strong> Changes to monkey patching:
+<ul>
+<li>You must now extend <code>CFRequest</code> instead of <code>RequestCore</code>, and then pass that class name to <code>set_request_class()</code>.</li>
+<li>You must now extend <code>CFResponse</code> instead of <code>ResponseCore</code>, and then pass that class name to <code>set_response_class()</code>.</li>
+<li>You can now monkey patch <code>CFSimpleXML</code> (extended from <code>SimpleXMLElement</code>) with <code>set_parser_class()</code>.</li>
+<li>You can now monkey patch <code>CFBatchRequest</code> with <code>set_batch_class()</code>.</li>
+<li>No changes for monkey patching <code>CFUtilities</code> with <code>set_utilities_class()</code>.</li>
+</ul></li>
+<li><strong>Removed:</strong> Removed ALL existing <em>global</em> constants and replaced them with <em>class</em> constants.</li>
+<li><strong>Removed:</strong> Removed <code>cache_response()</code> and <code>delete_cache_response()</code>.</li>
+</ul>
+
+<h2 id="serviceclasses">Service classes</h2>
+
+<h3 id="amazoncloudfront">AmazonCloudFront</h3>
+
+<ul>
+<li><strong>Fixed:</strong> Resolved issues: <a href="http://code.google.com/p/tarzan-aws/issues/detail?id=124">#124</a>, <a href="http://code.google.com/p/tarzan-aws/issues/detail?id=225">#225</a>, <a href="http://code.google.com/p/tarzan-aws/issues/detail?id=229">#229</a>, <a href="http://code.google.com/p/tarzan-aws/issues/detail?id=232">#232</a>, <a href="http://code.google.com/p/tarzan-aws/issues/detail?id=239">#239</a>.</li>
+<li><strong>Fixed:</strong> Fixed an issue where <code>AmazonCloudFront</code> sent a <code>RequestCore</code> user agent in requests.</li>
+<li><strong>New:</strong> Class is now up-to-date with the <a href="http://docs.amazonwebservices.com/AmazonCloudFront/2010-07-15/APIReference/">2010-07-15</a> API release.</li>
+<li><strong>New:</strong> Added <em>class</em> constants for deployment states: <code>STATE_INPROGRESS</code> and <code>STATE_DEPLOYED</code>.</li>
+<li><strong>New:</strong> Now supports streaming distributions.</li>
+<li><strong>New:</strong> Now supports HTTPS (as well as HTTPS-only) access.</li>
+<li><strong>New:</strong> Now supports Origin Access Identities. Added <code>create_oai()</code>, <code>list_oais()</code>, <code>get_oai()</code>, <code>delete_oai()</code>, <code>generate_oai_xml()</code> and <code>update_oai_xml()</code>.</li>
+<li><strong>New:</strong> Now supports private (signed) URLs. Added <code>get_private_object_url()</code>.</li>
+<li><strong>New:</strong> Now supports default root objects.</li>
+<li><strong>New:</strong> Now supports invalidation.</li>
+<li><strong>New:</strong> Added <code>get_distribution_list()</code>, <code>get_streaming_distribution_list()</code> and <code>get_oai_list()</code> which return simplified arrays of identifiers.</li>
+<li><strong>Changed:</strong> Replaced all of the remaining <code>CDN_*</code> constants with <em>class</em> constants.</li>
+</ul>
+
+<h3 id="amazoncloudwatch">AmazonCloudWatch</h3>
+
+<ul>
+<li><strong>New:</strong> Added new <em>class</em> constants: <code>DEFAULT_URL</code>, <code>REGION_US_E1</code>, <code>REGION_US_W1</code>, <code>REGION_EU_W1</code>, and <code>REGION_APAC_SE1</code>.</li>
+<li><strong>New:</strong> Now supports the <em>Northern California</em>, <em>European</em> and <em>Asia-Pacific</em> regions.</li>
+<li><strong>New:</strong> The <em>global</em> <code>CW_DEFAULT_URL</code> constant has been replaced by <code>AmazonCloudFront::DEFAULT_URL</code>.</li>
+</ul>
+
+<h3 id="amazonec2">AmazonEC2</h3>
+
+<ul>
+<li><strong>Fixed:</strong> Resolved issues: <a href="http://code.google.com/p/tarzan-aws/issues/detail?id=124">#124</a>, <a href="http://code.google.com/p/tarzan-aws/issues/detail?id=131">#131</a>, <a href="http://code.google.com/p/tarzan-aws/issues/detail?id=138">#138</a>, <a href="http://code.google.com/p/tarzan-aws/issues/detail?id=139">#139</a>, <a href="http://code.google.com/p/tarzan-aws/issues/detail?id=154">#154</a>, <a href="http://code.google.com/p/tarzan-aws/issues/detail?id=173">#173</a>, <a href="http://code.google.com/p/tarzan-aws/issues/detail?id=200">#200</a>, <a href="http://code.google.com/p/tarzan-aws/issues/detail?id=233">#233</a>.</li>
+<li><strong>New:</strong> Class is now up-to-date with the <a href="http://docs.amazonwebservices.com/AWSEC2/2010-06-15/APIReference/">2010-06-15</a> API release.</li>
+<li><strong>New:</strong> Now supports <a href="http://developer.amazonwebservices.com/connect/entry.jspa?externalID=865&amp;categoryID=87">Paid AMIs</a>.</li>
+<li><strong>New:</strong> Now supports <a href="http://developer.amazonwebservices.com/connect/entry.jspa?externalID=992&amp;categoryID=87">Multiple instance types</a>.</li>
+<li><strong>New:</strong> Now supports <a href="http://developer.amazonwebservices.com/connect/entry.jspa?externalID=1344&amp;categoryID=87">Elastic IPs</a>.</li>
+<li><strong>New:</strong> Now supports <a href="http://developer.amazonwebservices.com/connect/entry.jspa?externalID=1344&amp;categoryID=87">Availability Zones</a>.</li>
+<li><strong>New:</strong> Now supports <a href="http://developer.amazonwebservices.com/connect/entry.jspa?externalID=1665&amp;categoryID=87">Elastic Block Store</a>.</li>
+<li><strong>New:</strong> Now supports <a href="http://developer.amazonwebservices.com/connect/entry.jspa?externalID=1765&amp;categoryID=87">Windows instances</a>.</li>
+<li><strong>New:</strong> Now supports the <a href="http://developer.amazonwebservices.com/connect/entry.jspa?externalID=1926&amp;categoryID=87">European region</a>.</li>
+<li><strong>New:</strong> Now supports the <em>Northern California</em> and <em>Asia-Pacific</em> regions.</li>
+<li><strong>New:</strong> Now supports <a href="http://developer.amazonwebservices.com/connect/entry.jspa?externalID=2213&amp;categoryID=87">Reserved instances</a>.</li>
+<li><strong>New:</strong> Now supports <a href="http://developer.amazonwebservices.com/connect/entry.jspa?externalID=2843&amp;categoryID=87">Shared snapshots</a>.</li>
+<li><strong>New:</strong> Now supports <a href="http://developer.amazonwebservices.com/connect/entry.jspa?externalID=3105&amp;categoryID=87">EBS AMIs</a>.</li>
+<li><strong>New:</strong> Now supports <a href="http://developer.amazonwebservices.com/connect/entry.jspa?externalID=3215&amp;categoryID=87">Spot instances</a>.</li>
+<li><strong>New:</strong> Now supports <a href="http://developer.amazonwebservices.com/connect/entry.jspa?externalID=3965&amp;categoryID=87">Cluster Compute Instances</a>.</li>
+<li><strong>New:</strong> Now supports <a href="http://developer.amazonwebservices.com/connect/entry.jspa?externalID=3965&amp;categoryID=87">Placement Groups</a>.</li>
+<li><strong>New:</strong> Added new <em>class</em> constants for regions: <code>REGION_US_E1</code>, <code>REGION_US_W1</code>, <code>REGION_EU_W1</code>, <code>REGION_APAC_SE1</code>.</li>
+<li><strong>New:</strong> Added new <em>class</em> constants for run-state codes: <code>STATE_PENDING</code>, <code>STATE_RUNNING</code>, <code>STATE_SHUTTING_DOWN</code>, <code>STATE_TERMINATED</code>, <code>STATE_STOPPING</code>, <code>STATE_STOPPED</code>.</li>
+<li><strong>New:</strong> Added support for decrypting the Administrator password for Microsoft Windows instances.</li>
+<li><strong>New:</strong> Instead of needing to pass <code>Parameter.0</code>, <code>Parameter.1</code>, &#8230;<code>Parameter.n</code> individually to certain methods, you can now reliably pass a string for a single value or an indexed array for a list of values.</li>
+<li><strong>New:</strong> Limited tested has been done with the Eucalyptus EC2-clone.</li>
+<li><strong>Changed:</strong> The <code>$account_id</code> parameter has been removed from the constructor.</li>
+<li><strong>Changed:</strong> The <em>global</em> <code>EC2_LOCATION_US</code> and <code>EC2_LOCATION_EU</code> constants have been replaced.</li>
+<li><strong>Changed:</strong> The <code>set_locale()</code> method has been renamed to <code>set_region()</code>. It accepts any of the region constants.</li>
+</ul>
+
+<h3 id="amazoniam">AmazonIAM</h3>
+
+<ul>
+<li><strong>New:</strong> Up-to-date with the <a href="http://docs.amazonwebservices.com/sns/2010-03-31/api/">2010-03-31</a> API release.</li>
+</ul>
+
+<h3 id="amazons3">AmazonS3</h3>
+
+<ul>
+<li><strong>Fixed:</strong> Resolved issues: <a href="http://code.google.com/p/tarzan-aws/issues/detail?id=31">#31</a>, <a href="http://code.google.com/p/tarzan-aws/issues/detail?id=72">#72</a>, <a href="http://code.google.com/p/tarzan-aws/issues/detail?id=123">#123</a>, <a href="http://code.google.com/p/tarzan-aws/issues/detail?id=156">#156</a>, <a href="http://code.google.com/p/tarzan-aws/issues/detail?id=199">#199</a>, <a href="http://code.google.com/p/tarzan-aws/issues/detail?id=201">#201</a>, <a href="http://code.google.com/p/tarzan-aws/issues/detail?id=203">#203</a>, <a href="http://code.google.com/p/tarzan-aws/issues/detail?id=207">#207</a>, <a href="http://code.google.com/p/tarzan-aws/issues/detail?id=208">#208</a>, <a href="http://code.google.com/p/tarzan-aws/issues/detail?id=209">#209</a>, <a href="http://code.google.com/p/tarzan-aws/issues/detail?id=210">#210</a>, <a href="http://code.google.com/p/tarzan-aws/issues/detail?id=212">#212</a>, <a href="http://code.google.com/p/tarzan-aws/issues/detail?id=216">#216</a>, <a href="http://code.google.com/p/tarzan-aws/issues/detail?id=217">#217</a>, <a href="http://code.google.com/p/tarzan-aws/issues/detail?id=226">#226</a>, <a href="http://code.google.com/p/tarzan-aws/issues/detail?id=228">#228</a>, <a href="http://code.google.com/p/tarzan-aws/issues/detail?id=234">#234</a>, <a href="http://code.google.com/p/tarzan-aws/issues/detail?id=235">#235</a>.</li>
+<li><strong>Fixed:</strong> Fixed an issue where <code>AmazonS3</code> sent a <code>RequestCore</code> user agent in requests.</li>
+<li><strong>New:</strong> Now supports the <em>Northern California</em> and <em>Asia-Pacific</em> regions.</li>
+<li><strong>New:</strong> Now supports the new <em>EU (Ireland)</em> REST endpoint.</li>
+<li><strong>New:</strong> Now supports MFA Delete.</li>
+<li><strong>New:</strong> Now supports Conditional Copy.</li>
+<li><strong>New:</strong> Now supports Reduced Redundancy Storage (RRS). Added <code>change_storage_redundancy()</code>.</li>
+<li><strong>New:</strong> Now supports Object Versioning. Added <code>enable_versioning()</code>, <code>disable_versioning</code>, <code>get_versioning_status()</code>, and <code>list_bucket_object_versions()</code>.</li>
+<li><strong>New:</strong> Now supports Bucket Policies. Added <code>set_bucket_policy()</code>, <code>get_bucket_policy()</code>, and <code>delete_bucket_policy()</code>.</li>
+<li><strong>New:</strong> Now supports Bucket Notifications. Added <code>create_bucket_notification()</code>, <code>get_bucket_notifications()</code>, and <code>delete_bucket_notification()</code>.</li>
+<li><strong>New:</strong> Added <em>class</em> constants for regions: <code>REGION_US_E1</code>, <code>REGION_US_W1</code>, <code>REGION_EU_W1</code>, <code>REGION_APAC_SE1</code>.</li>
+<li><strong>New:</strong> Added <em>class</em> constants for storage types: <code>STORAGE_STANDARD</code> and <code>STORAGE_REDUCED</code>.</li>
+<li><strong>New:</strong> Enhanced <code>create_object()</code> with the ability to upload a file from the file system.</li>
+<li><strong>New:</strong> Enhanced <code>get_object()</code> with the ability to download a file to the file system.</li>
+<li><strong>New:</strong> Enhanced <code>get_bucket_list()</code> and <code>get_object_list()</code> with performance improvements.</li>
+<li><strong>New:</strong> Enhanced all GET operations with the ability to generate pre-authenticated URLs. This is the same feature as <code>get_object_url()</code> has had, applied to all GET operations.</li>
+<li><strong>New:</strong> Limited testing with Walrus, the Eucalyptus S3-clone.</li>
+<li><strong>New:</strong> Limited testing with Google Storage.</li>
+<li><strong>Changed:</strong> Replaced all of the remaining <code>S3_*</code> constants with <em>class</em> constants: <code>self::ACL_*</code>, <code>self::GRANT_*</code>, <code>self::USERS_*</code>, and <code>self::PCRE_ALL</code>.</li>
+<li><strong>Changed:</strong> Changed the function signature for <code>create_object()</code>. The filename is now passed as the second parameter, while the remaining options are now passed as the third parameter. This behavior now matches all of the other object-related methods.</li>
+<li><strong>Changed:</strong> Changed the function signature for <code>head_object()</code>, <code>delete_object()</code>, and <code>get_object_acl()</code>. The methods now accept optional parameters as the third parameter instead of simply <code>returnCurlHandle</code>.</li>
+<li><strong>Changed:</strong> Changed the function signature for <code>get_object_url()</code> and <code>get_torrent_url()</code>. Instead of passing a number of seconds until the URL expires, you now pass a string that <code>strtotime()</code> understands (including <code>60 seconds</code>).</li>
+<li><strong>Changed:</strong> Changed the function signature for <code>get_object_url()</code>. Instead of passing a boolean value for <code>$torrent</code>, the last parameter is now an <code>$opt</code> variable which allows you to set <code>torrent</code> and <code>method</code> parameters.</li>
+<li><strong>Changed:</strong> Changed how <code>returnCurlHandle</code> is used. Instead of passing <code>true</code> as the last parameter to most methods, you now need to explicitly set <code>array('returnCurlHandle' =&gt; true)</code>. This behavior is consistent with the implementation in other classes.</li>
+<li><strong>Changed:</strong> Optional parameter names changed in <code>list_objects()</code>: <code>maxKeys</code> is now <code>max-keys</code>.</li>
+<li><strong>Changed:</strong> <code>get_bucket_locale()</code> is now called <code>get_bucket_region()</code>, and returns the response body as a <em>string</em> for easier comparison with class constants.</li>
+<li><strong>Changed:</strong> <code>get_bucket_size()</code> is now called <code>get_bucket_object_count()</code>. Everything else about it is identical.</li>
+<li><strong>Changed:</strong> <code>head_bucket()</code> is now called <code>get_bucket_headers()</code>. Everything else about it is identical.</li>
+<li><strong>Changed:</strong> <code>head_object()</code> is now called <code>get_object_headers()</code>. Everything else about it is identical.</li>
+<li><strong>Changed:</strong> <code>create_bucket()</code> has two backward-incompatible changes:
+<ul>
+<li>Method now <strong>requires</strong> the region (formerly <em>locale</em>) to be set.</li>
+<li>Method takes an <code>$acl</code> parameter so that the ACL can be set directly when creating a new bucket.</li>
+</ul></li>
+<li><strong>Changed:</strong> Bucket names are now validated. Creating a new bucket now requires the more stringent DNS-valid guidelines, while the process of reading existing buckets follows the looser path-style guidelines. This change also means that the reading of path-style bucket names is now supported, when previously they weren’t.</li>
+<li><strong>Removed:</strong> Removed <code>store_remote_file()</code> because its intended usage repeatedly confused users, and had potential for misuse. If you were using it to upload from the local file system, you should be using <code>create_object</code> instead.</li>
+<li><strong>Removed:</strong> Removed <code>copy_bucket()</code>, <code>replace_bucket()</code>, <code>duplicate_object()</code>, <code>move_object()</code>, and <code>rename_object()</code> because only a small number of users used them, and they weren&#8217;t very robust anyway.</li>
+<li><strong>Removed:</strong> Removed <code>get_bucket()</code> because it was just an alias for <code>list_objects()</code> anyway. Use the latter from now on &#8212; it&#8217;s identical.</li>
+</ul>
+
+<h3 id="amazonsdb">AmazonSDB</h3>
+
+<ul>
+<li><strong>Fixed:</strong> Resolved issues: <a href="http://code.google.com/p/tarzan-aws/issues/detail?id=205">#205</a>.</li>
+<li><strong>New:</strong> Class is now up-to-date with the <a href="http://docs.amazonwebservices.com/AmazonSimpleDB/2009-04-15/DeveloperGuide/">2009-04-15</a> API release.</li>
+<li><strong>Changed:</strong> Changed the function signatures for <code>get_attributes()</code> and <code>delete_attributes()</code> to improve consistency.</li>
+</ul>
+
+<h3 id="amazonsns">AmazonSNS</h3>
+
+<ul>
+<li><strong>New:</strong> Up-to-date with the <a href="http://docs.amazonwebservices.com/sns/2010-03-31/api/">2010-03-31</a> API release.</li>
+</ul>
+
+<h3 id="amazonsqs">AmazonSQS</h3>
+
+<ul>
+<li><strong>Fixed:</strong> Resolved issues: <a href="http://code.google.com/p/tarzan-aws/issues/detail?id=137">#137</a>, <a href="http://code.google.com/p/tarzan-aws/issues/detail?id=213">#213</a>, <a href="http://code.google.com/p/tarzan-aws/issues/detail?id=219">#219</a>, <a href="http://code.google.com/p/tarzan-aws/issues/detail?id=220">#220</a>, <a href="http://code.google.com/p/tarzan-aws/issues/detail?id=221">#221</a>, <a href="http://code.google.com/p/tarzan-aws/issues/detail?id=222">#222</a>.</li>
+<li><strong>Fixed:</strong> In CloudFusion 2.5, neither <code>add_permission()</code> nor <code>remove_permission()</code> were functional. They are now working.</li>
+<li><strong>New:</strong> Now supports the <em>Northern California</em> and <em>Asia-Pacific</em> regions.</li>
+<li><strong>New:</strong> Now supports the new <em>US-East (N. Virginia)</em> endpoint.</li>
+<li><strong>New:</strong> Now supports the new <em>EU (Ireland)</em> endpoint.</li>
+<li><strong>New:</strong> Added new <em>class</em> constants for regions: <code>REGION_US_E1</code>, <code>REGION_US_W1</code>, <code>REGION_EU_W1</code>, and <code>REGION_APAC_SE1</code>.</li>
+<li><strong>Changed:</strong> Because we now support multiple region endpoints, queue names alone are no longer sufficient for referencing your queues. As such, you must now use a full-queue URL instead of just the queue name.</li>
+<li><strong>Changed:</strong> The <em>global</em> <code>SQS_LOCATION_US</code> and <code>SQS_LOCATION_EU</code> constants have been replaced.</li>
+<li><strong>Changed:</strong> Renamed <code>set_locale()</code> as <code>set_region()</code>. It accepts any of the region constants.</li>
+<li><strong>Changed:</strong> Changed the function signature for <code>list_queues()</code>. See the updated API reference.</li>
+<li><strong>Changed:</strong> Changed the function signature for <code>set_queue_attributes()</code>. See the updated API reference.</li>
+<li><strong>Changed:</strong> Changed how <code>returnCurlHandle</code> is used. Instead of passing <code>true</code> as the last parameter to most methods, you now need to explicitly set <code>array('returnCurlHandle' =&gt; true)</code>. This behavior is consistent with the implementation in other classes.</li>
+<li><strong>Changed:</strong> Function signature changed in <code>get_queue_attributes()</code>. The <code>$attribute_name</code> parameter is now passed as a value in the <code>$opt</code> parameter.</li>
+</ul>
+
+<h3 id="amazonsqsqueue">AmazonSQSQueue</h3>
+
+<ul>
+<li><strong>Removed:</strong> <code>AmazonSQSQueue</code> was a simple wrapper around the AmazonSDB class. It generally failed as an object-centric approach to working with SQS, and as such, has been eliminated. Use the <code>AmazonSQS</code> class instead.</li>
+</ul>
+
+<h2 id="utilityclasses">Utility Classes</h2>
+
+<h3 id="cfarray">CFArray</h3>
+
+<ul>
+<li><strong>New:</strong> Extends <code>ArrayObject</code>.</li>
+<li><strong>New:</strong> Simplified typecasting of SimpleXML nodes to native types (e.g. integers, strings).</li>
+</ul>
+
+<h3 id="cfbatchrequest">CFBatchRequest</h3>
+
+<ul>
+<li><strong>New:</strong> Provides a higher-level API for executing batch requests.</li>
+</ul>
+
+<h3 id="cfcomplextype">CFComplexType</h3>
+
+<ul>
+<li><strong>New:</strong> Used internally by several classes to handle various complex data-types (e.g. single or multiple values, <code>Key.x.Subkey.y.Value</code> combinations).</li>
+<li><strong>New:</strong> Introduces a way to convert between JSON, YAML, and the PHP equivalent of Lists and Maps (nested associative arrays).</li>
+</ul>
+
+<h3 id="cfrequest">CFRequest</h3>
+
+<ul>
+<li><strong>New:</strong> Sets some project-specific settings and passes them to the lower-level RequestCore.</li>
+</ul>
+
+<h3 id="cfresponse">CFResponse</h3>
+
+<ul>
+<li><strong>New:</strong> No additional changes from the base <code>ResponseCore</code> class.</li>
+</ul>
+
+<h3 id="cfpolicy">CFPolicy</h3>
+
+<ul>
+<li><strong>New:</strong> Used for constructing Base64-encoded, JSON policy documents to be passed around to other methods.</li>
+</ul>
+
+<h3 id="cfsimplexml">CFSimpleXML</h3>
+
+<ul>
+<li><strong>New:</strong> Extends <code>SimpleXMLElement</code>.</li>
+<li><strong>New:</strong> Simplified node retrieval. All SimpleXML-based objects (e.g. <code>$response-&gt;body</code>) now have magic methods that allow you to quickly retrieve nodes with the same name
+<ul>
+<li>e.g. <code>$response-&gt;body-&gt;Name()</code> will return an array of all SimpleXML nodes that match the <code>//Name</code> XPath expression.</li>
+</ul></li>
+</ul>
+
+<h3 id="cfutilities">CFUtilities</h3>
+
+<ul>
+<li><strong>Fixed:</strong> <code>to_query_string()</code> now explicitly passes a <code>&amp;</code> character to <code>http_build_query()</code> to avoid configuration issues with MAMP/WAMP/XAMP installations.</li>
+<li><strong>Fixed:</strong> <code>convert_response_to_array()</code> has been fixed to correctly return an all-array response under both PHP 5.2 and 5.3. Previously, PHP 5.3 returned a mix of <code>array</code>s and <code>stdClass</code> objects.</li>
+<li><strong>New:</strong> Added <code>konst()</code> to retrieve the value of a class constant, while avoiding the <code>T_PAAMAYIM_NEKUDOTAYIM</code> error. Misspelled because <code>const</code> is a reserved word.</li>
+<li><strong>New:</strong> Added <code>is_base64()</code> to determine whether or not a string is Base64-encoded data.</li>
+<li><strong>New:</strong> Added <code>decode_uhex()</code> to decode <code>\uXXXX</code> entities back into their unicode equivalents.</li>
+<li><strong>Changed:</strong> Changed <code>size_readable()</code>. Now supports units up to exabytes.</li>
+<li><strong>Changed:</strong> Moved the <code>DATE_FORMAT_*</code> <em>global</em> constants into this class as <em>class</em> constants.</li>
+<li><strong>Removed:</strong> Removed <code>json_encode_php51()</code> now that the minimum required version is PHP 5.2 (which includes the JSON extension by default).</li>
+<li><strong>Removed:</strong> Removed <code>hex_to_base64()</code>.</li>
+</ul>
+
+<h2 id="third-partylibraries">Third-party Libraries</h2>
+
+<h3 id="cachecore">CacheCore</h3>
+
+<ul>
+<li><strong>New:</strong> Upgraded to version 1.1.1.</li>
+<li><strong>New:</strong> Now supports both the <a href="http://php.net/memcache">memcache</a> extension, but also the newer, faster <a href="http://php.net/memcached">memcached</a> extension. Prefers <code>memcached</code> if both are installed.</li>
+<li><strong>Deprecated:</strong> Support for MySQL and PostgreSQL as storage mechanisms has been <strong>deprecated</strong>. Since they&#8217;re using PDO, they&#8217;ll continue to function (as we&#8217;re maintaining SQLite support via PDO), but we recommend migrating to using APC, XCache, Memcache or SQLite if you&#8217;d like to continue using response caching.</li>
+<li>New BSD licensed</li>
+<li><a href="http://github.com/skyzyx/cachecore">http://github.com/skyzyx/cachecore</a></li>
+</ul>
+
+<h3 id="requestcore">RequestCore</h3>
+
+<ul>
+<li><strong>New:</strong> Upgraded to version 1.2.</li>
+<li><strong>New:</strong> Now supports streaming up and down.</li>
+<li><strong>New:</strong> Now supports &#8220;rolling&#8221; requests for better scalability.</li>
+<li>New BSD licensed</li>
+<li><a href="http://github.com/skyzyx/requestcore">http://github.com/skyzyx/requestcore</a></li>
+</ul>

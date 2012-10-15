@@ -1,0 +1,3 @@
+== Changes since 1.0 ==
+* Fixed buggy message handling by making ChangeAuthor::loadMessages() the static
+  function it's supposed to be.

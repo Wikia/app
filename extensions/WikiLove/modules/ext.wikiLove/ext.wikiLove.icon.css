@@ -1,0 +1,46 @@
+/* include fix from r87101 here for older versions; these three blocks can become deprecated later */
+div.vectorTabs span {
+	display: inline-block;
+	/* @embed */
+	background-image: url(images/tab-break.png);
+	background-position: bottom right;
+	background-repeat: no-repeat;
+}
+
+div.vectorTabs li a {
+	background-image: none;
+}
+
+div.vectorTabs li#ca-wikilove {
+	line-height: 1.4em; /* account for scripts with tall ascenders */
+}
+
+#ca-unwatch.icon,
+#ca-watch.icon {
+	margin-right: 0px;
+}
+
+/* icon style */
+#ca-wikilove.icon a {
+	margin: 0;
+	padding: 0;
+	outline: none;
+	display: block;
+	width: 27px;
+	/* This hides the text but shows the background image */
+	padding-top: 3.1em;
+	margin-top: 0;
+	/* Only applied in IE6 */
+	margin-top: -0.8em !ie;
+	height: 0;
+	overflow: hidden;
+	/* @embed */
+	background-image: url(images/heart-icons-red.png);
+}
+#ca-wikilove.icon a {
+	background-position: 5px 60%;
+}
+#ca-wikilove.icon a:hover,
+#ca-wikilove.icon a:focus {
+	background-position: -19px 60%;
+}

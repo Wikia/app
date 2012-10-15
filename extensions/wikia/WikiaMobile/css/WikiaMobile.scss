@@ -1,0 +1,279 @@
+//dependencies
+@import "variables.scss";
+@import "main_page";
+@import "infobox";
+@import "sections";
+@import "images";
+@import "videos";
+@import "categories";
+@import "footer";
+@import "navigation";
+@import "search_page";
+@import "related_pages";
+@import "image_stack";
+@import "ad";
+@import "category_page";
+@import 'ui';
+@import 'chevrons';
+@import 'modal';
+@import 'media_modal';
+@import 'toc';
+@import 'search';
+@import 'image_placeholder';
+@import 'loader';
+
+//mixins
+@import "mixins/transition.scss";
+@import "mixins/box-shadow.scss";
+
+html {
+	border: none;
+	cursor: pointer;
+}
+
+body {
+	background-color: $footerBackground;
+	color: $page-text-color;
+	font-size: medium;
+	line-height: 25px;
+}
+
+#wkCurtain {
+	display: none;
+	height: 100%;
+	width: 100%;
+
+	position: absolute;
+	left: 0;
+	top: 0;
+
+	background-color: rgba(0,0,0,.4);
+
+	z-index: 100;
+
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+.hidden {
+	position: relative;
+
+	#wkCurtain {
+		display: block;
+	}
+
+}
+
+#wkMainCntHdr {
+	border-bottom: 1px solid $border-color;
+	padding: $page-padding 50px $page-padding $page-padding;
+	position: relative;
+
+	h1{
+		float: left;
+		max-width: 100%;
+		margin: 0;
+		//default 25px looks cramped
+		line-height: 30px;
+		font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Roboto, "Lucida Grande", arial, sans-serif;
+	}
+
+	.wkShr{
+		position: absolute;
+		right: 5px;
+	}
+}
+
+a {
+	color: $link-color;
+	text-decoration: none;
+}
+
+#wkPage {
+	//I want page to be at least 305px long to be able to show share
+	min-height: 305px;
+	background-color: white;
+	padding-top: 10px;
+}
+//for browsers that don't know that these should be block
+//all our browsers support these (Removed by Jakub Olek according to: http://caniuse.com/#search=figu)
+//section, article, header, footer, aside, figure, figcaption {
+//	display: block;
+//}
+
+#wkMainCnt{
+	padding: $page-padding;
+	padding-bottom: 1px;
+	//fixes for fluid content
+	.tvetnone {
+		width: 100% !important;
+		text-align: center;
+    }
+	//end of fluiding thead content
+}
+
+blockquote {
+	border-left: 1px solid $border-color;
+	padding-left: 5px;
+	margin: 15px;
+}
+
+.printfooter {
+	display: none;
+}
+
+.js .wkShr {
+	display: inline-block;
+}
+
+.wkShr {
+	display: none;
+	position: relative;
+	width: 50px;
+	height: 25px;
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+	background-position: center;
+	background-repeat: no-repeat;
+	background-image:  url('/extensions/wikia/WikiaMobile/images/share_grey.png'); /* base64 */
+	background-size: 50%;
+
+	&.on {
+		z-index: 5;
+		background-image:  url('/extensions/wikia/WikiaMobile/images/share_blue.png'); /* base64 */
+
+		&::before {
+			border-style: solid;
+			border-width: 11px;
+			content: '';
+			height: 0;
+			position: absolute;
+			width: 0;
+		}
+
+		&::after {
+			border-style: solid;
+			border-width: 10px;
+			content: '';
+			height: 0;
+			position: absolute;
+			width: 0;
+		}
+
+		&.top {
+			&::after {
+				border-color: white transparent transparent transparent;
+				top:-16px;
+				left:50%;
+				margin-left:-10px;
+			}
+			&::before {
+				border-color: $link-color transparent transparent transparent;
+				top: -15px;
+				left:50%;
+				margin-left:-11px;
+			}
+		}
+		&.bottom {
+			&::after {
+				border-color: transparent transparent white transparent;
+				bottom:-16px;
+				left:50%;
+				margin-left:-10px;
+			}
+			&::before {
+				border-color: transparent transparent $link-color transparent;
+				bottom:-15px;
+				left:50%;
+				margin-left:-11px;
+			}
+		}
+		&.left {
+			&::after {
+				border-color: transparent transparent transparent white;
+				left:-16px;
+				top:1px;
+			}
+			&::before {
+				border-color: transparent transparent transparent $link-color;
+				left: -15px;
+			}
+		}
+		&.right {
+			&::after {
+				border-color: transparent white transparent transparent;
+				right:-16px;
+				top:1px;
+			}
+			&::before {
+				border-color: transparent $link-color transparent transparent;
+				right: -15px;
+			}
+		}
+	}
+}
+
+#wkTst{
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+	position: absolute;
+	margin: 10px auto;
+	padding: 10px 20px;
+	border-radius: 5px;
+	top: 75px;
+	left: 10px;
+	right: 10px;
+	font-weight: 100;
+	background-color: white;
+	-webkit-transition: opacity .5s ease-out, -webkit-transform .5s;
+	-moz-transition: opacity .5s ease-out, -moz-transform .5s;
+	transition: opacity .5s ease-out, transform .5s;
+	-webkit-transform: translateZ(0);
+	@include box-shadow(0 0 30px -10px $shadowColor);
+	text-align: center;
+	border: 1px solid grey;
+	background-position: 98% 20%;
+	background-size: 8px;
+	z-index: $top-layer-z-index;
+
+	&.show {
+		border-color: $link-color;
+		pointer-events: auto;
+		opacity: 1;
+	}
+
+	&.hide {
+		pointer-events: none;
+		opacity: 0;
+		-webkit-transform: translateY(20px);
+		-moz-transform: translateY(20px);
+		-o-transform: translateY(20px);
+		transform: translateY(20px);
+	}
+
+	&.err{
+		border-color: red;
+	}
+}
+
+//article comments header
+#wkArtCom{
+    margin: 10px 0;
+}
+.js{
+   	#wkComm {
+   		display: none;
+
+   		&.open{
+   			display: block;
+   		}
+    }
+
+	#wkShowCom{
+ 		display: none;
+ 	}
+}
+
+#wkShowCom{
+	text-transform: none;
+	font-size: small;
+	display: blaock;
+	float: right;
+}

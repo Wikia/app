@@ -1,0 +1,28 @@
+.ppOvr {
+	.wkLst {
+		margin: 0;
+		padding: 0;
+	}
+
+	li {
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: 30px;
+		padding: 0;
+	}
+
+	.facebookShr{
+		background-image: url('/extensions/wikia/WikiaMobile/images/facebook_logo.png'); /* base64 */
+		background-size: 15px;
+	}
+}
+
+.twitterShr{
+	background-image: url('/extensions/wikia/WikiaMobile/images/twitter_logo.png'); /* base64 */
+}
+.plusoneShr{
+	background-image: url('/extensions/wikia/WikiaMobile/images/googleplusone_logo.png'); /* base64 */
+}
+.emailShr{
+	background-image: url('/extensions/wikia/WikiaMobile/images/email.png'); /* base64 */
+}

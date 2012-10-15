@@ -1,0 +1,36 @@
+@import "color";
+@import "../mixins/bodytext";
+
+.WikiaArticleAfterComments {
+	@include bodytext;
+	padding: 0 10px;
+	position: relative;
+	z-index: 1;
+	h1, h2, h3, h4, h5, h6 {
+		margin: .5em 0 .2em;
+	}
+	h2 {
+		border-bottom: solid 1px $color-headline-border;
+		font-size: 18px;
+		margin-top: 14px;
+		overflow: hidden;
+	}
+	a.new,
+	a.new:visited {
+		color: #cc2200;
+	}
+	ul, ol {
+		margin: 0.4em 0 0.5em 2.5em;
+	}
+
+	ol {
+		list-style: decimal;
+	}
+
+	ul {
+		list-style: square;
+	}
+	p {
+		margin: 0.4em 0 0.5em;
+	}
+}

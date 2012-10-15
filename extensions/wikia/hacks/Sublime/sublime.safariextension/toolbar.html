@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Hello World</title>
+	<script type="text/javascript" charset="utf-8">
+		function dispatch(name, data) {
+			safari.application.activeBrowserWindow.activeTab.page.dispatchMessage(name, data);		
+		}
+	</script>
+	<style>
+		body {
+			margin: 0;
+		}
+		.right {
+			float: right;
+		}
+	</style>
+</head>
+
+<body>
+	<span class="right">
+		<button onclick="dispatch('command', 'save');">Save</button>
+	</span>
+	
+	Edit with Wikia:
+	<button onclick="dispatch('format', 'bold');">Bold</button>
+	<button>Italic</button>
+	<button>Underline</button>
+
+</body>
+
+</html>

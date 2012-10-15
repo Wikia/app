@@ -1,0 +1,252 @@
+#csSuggestContainer {
+	position: relative;
+	top: 4px;
+	left: 0;
+}
+
+#csMainContainer {
+	position: relative;
+}
+
+.csViewMode#csMainContainer, .csEditMode#csMainContainer {
+	border: 1px solid #AAA;
+	padding: 5px 5px 2px 5px;
+	position: relative;
+}
+
+#csItemsContainer {
+	position: relative;
+}
+
+#csHintContainer {
+	background: #DDD;
+	border: 1px solid #777;
+	color: #000;
+	display: none;
+	font-size: 11px;
+	padding: 2px 4px;
+	position: absolute;
+}
+
+#csCategoryInput {
+	background: transparent;
+	border: 0;
+	color: inherit;
+	display: block;
+	float: left;
+	outline: none;
+}
+
+.csEditMode #csCategoryInput {
+	float: none;
+	border: 1px solid;
+	height: 22px;
+	padding-top: 4px;
+	padding-left: 4px;
+}
+
+.csEditMode #csItemsContainer .CSitem {
+	border: none;
+	background: none;
+    white-space: normal !important;
+}
+
+.csEditMode .listmark {
+    text-align: center;
+    font-size: 11px;
+    width: 38px;
+}
+
+.csEditMode #csCategoryInput {
+    width: 100%;
+   	margin-bottom: 0;
+}
+
+.csEditMode#csMainContainer {
+	border: none;
+}
+.csEditMode #csItemsContainer {
+    margin-top: 10px;
+}
+
+.csEditMode .CSitem .edit {
+	margin-left: 8px;
+}
+
+
+.csEditMode .CSitem .delete {
+    margin-left: 4px;
+    margin-right: 2px;
+}
+
+.csEditMode #csItemsContainer .CSitem {
+	font-size: 13px !important;
+}
+
+
+.csEditMode #csItemsContainer .CSitem img.sprite-small{
+	display: none;
+}
+
+
+.csEditMode #csItemsContainer .CSitem.ui-sortable-helper {
+	white-space: nowrap;
+}
+
+
+.csEditMode #csItemsContainer .CSitem:hover img{
+	display: inline-block;
+}
+
+.csEditMode #csItemsContainer .CSitem:hover .listmark{
+	display: none;
+}
+
+
+
+#csSwitchViewContainer {
+	display: none;
+	float: right;
+	white-space: pre;
+}
+
+#csButtonsContainer {
+	float: right;
+}
+
+.CSitem {
+	background: #9Cf;
+	border: 1px solid #82add8;
+	color: #000;
+	cursor: default;
+	display: block;
+	float: left;
+	font-size: 11px;
+	line-height: 16px;
+	margin: 0 5px 3px 0;
+	padding: 0 5px;
+	position: relative;
+	white-space: nowrap;
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+}
+
+.CSitem .sprite-small {
+	cursor: pointer;
+}
+.CSitem .sprite-small.sort, .CSitem .sprite-small.sorted {
+	margin-left: 5px;
+}
+.CSitem .sprite-small.add {
+	margin-right: 3px;
+}
+
+.CSaddCategory {
+	background: #DDD;
+	border-color: #BBB;
+	cursor: pointer;
+}
+
+.CSitemOuter {
+	padding: 0 35px 0 4px;
+}
+
+.CSitemOuterAddCategory {
+	margin: 0 4px 0 18px;
+}
+
+.CSitem:hover {
+	text-decoration: none;
+}
+
+.CSitem:visited, .CSitem:active {
+	color: black;
+}
+
+.CSsuggestHover {
+	background-color: #D2E3FF;
+}
+
+/** View mode **/
+.csViewMode {
+	border: none !important;
+}
+
+.csViewMode #csButtonsContainer {
+	float: none;
+	margin: 25px -10px -12px -10px;
+	padding: 5px;
+}
+
+.csViewMode #csItemsContainer {
+	padding: 5px 0;
+}
+
+.csLoading {
+	background-image: url('http://images.wikia.com/common/skins/common/images/ajax.gif');
+	background-repeat: no-repeat;
+	background-position: 99% 50%;
+}
+
+.csSaving {
+	background-image: url('http://images.wikia.com/common/skins/common/images/ajax.gif');
+	background-repeat: no-repeat;
+	background-position: 99% 50%;
+}
+
+/** IE6 fixes **/
+* html #csMainContainer,
+* html .CSitem {
+	height: 1%;
+}
+
+/* fix for YUI AutoComplete in CategorySelect */
+* html #article,
+* html #csMainContainer {
+	z-index: 10 !important;
+}
+
+* html .csViewMode #csButtonsContainer {
+	margin: 0;
+}
+
+/* copied from monaco/css/widgets.css for Answers skin */
+.wikiaSkinMonaco .yui-ac-content {
+	background: #FFFFFF none repeat scroll 0 0;
+	border: 1px solid #808080 !important;
+	color: #000000;
+	overflow: hidden;
+	position: absolute;
+	width: 250px;
+	z-index: 9050;
+}
+
+.wikiaSkinMonaco .yui-ac-content ul {
+	float: none !important;
+	list-style-image: none !important;
+	margin: 0 !important;
+	padding: 0 !important;
+	width: 250px;
+}
+
+.wikiaSkinMonaco .yui-ac-content li {
+	cursor: default;
+	float:none !important;
+	font-size: 9pt;
+	margin: 0 !important;
+	padding: 1px 0 0 3px;
+	white-space: nowrap;
+}
+
+/* rt#26278 */
+.catlinks-allhidden {
+	display: block !important;
+}
+
+/* rt#20523 */
+#csInfoboxCategory,
+#csInfoboxSortKey {
+	margin: 2px 0 10px 0;
+	width: 98%;
+}

@@ -1,0 +1,113 @@
+.securepoll-old-vote {
+	color: #666;
+}
+.securepoll-struck-vote td {
+	text-decoration: line-through;
+}
+.securepoll-popup {
+	padding: 0.5em 1em 0.5em 1em;
+	border: outset;
+	position: absolute;
+	height: 7em;
+	width: 38em;
+	display: none;
+	background-color: #ffffdd;
+	overflow: auto;
+	z-index: 3;
+}
+.securepoll-confirm-button {
+	width: 16%;
+	margin-left: 16%;
+	margin-right: 16%;
+}
+#securepoll-strike-spinner {
+	display: none;
+	margin-left: auto;
+	margin-right: auto;
+	width: 30px;
+}
+.securepoll-detail-header {
+	font-weight: bold;
+	width: 20%;
+}
+.securepoll-trans-table {
+	width: 100%;
+}
+.securepoll-error-box {
+	font-size: larger;
+	border: 2px solid;
+	padding: .5em 1em;
+	margin-bottom: 2em;
+	color: #000;
+	border-color: red;
+	background-color: #fff2f2;
+}
+.securepoll-option-preferential {
+	margin-bottom: 0.5em;
+}
+
+.securepoll-table {
+	margin: 1em 1em 1em 0;
+	background: #f9f9f9;
+	border: thin #aaa solid;
+	border-collapse: collapse;
+}
+.securepoll-table th, .securepoll-table td {
+	border: thin #aaa solid;
+	padding: 0.4em;
+}
+.securepoll-table th {
+	background: #f2f2f2;
+	text-align: center;
+}
+.securepoll-table caption {
+	font-weight: bold;
+}
+
+.securepoll-ballot-table {
+	border-collapse: collapse;
+}
+.securepoll-ballot-table th {
+	font-weight: bold;
+	text-align: center;
+	border: thin #999 solid;
+	padding: 0 1.5em;
+}
+.securepoll-ballot-table td {
+	text-align: center;
+	border-left: thin #999 solid;
+	border-right: thin #999 solid;
+	border-bottom: thin #bbb dotted;
+	padding: 0 1.5em;
+}
+.securepoll-ballot-table td.securepoll-ballot-optlabel { /* High specificity */
+	text-align: left;
+}
+.securepoll-ballot-row:hover {
+	background: #eeeeff;
+}
+.securepoll-error-location {
+	margin: 1px 1em 1px 1px;
+	border: 2px transparent solid;
+	padding: 1px;
+}
+.securepoll-error-jump {
+	margin-right: 0.5em;
+}
+.securepoll-election-closed {
+	color: #aaa;
+}
+
+.securepoll-results th {
+	padding-right:5px;
+	text-align: left;
+}
+
+tr.securepoll-exhausted th, tr.securepoll-exhausted td {
+	font-style: italic;
+	border-top: 1px solid #aaa;
+}
+
+tr.securepoll-spoilt {
+	font-style: italic;
+}

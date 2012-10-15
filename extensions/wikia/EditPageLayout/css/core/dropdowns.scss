@@ -1,0 +1,97 @@
+#EditPage {
+	.cke_panel_dropdown {
+		@include box-shadow(0, 0, 8px, $color-page-border);
+		color: $color-text;
+		background-color: $color-epl-button;
+		border: solid 1px $color-epl-button-border;
+		z-index: 300;
+		.module {
+			margin-left: 0;
+			width: $width-rail-epl;
+		}
+	}
+
+	.cke_panelbutton, .cke_modulebutton {
+		float: left;
+	}
+		
+	// Rich combo, module buttons
+	.cke_rcombo, .cke_panelbutton, .cke_modulebutton {
+		&.cke_opened {
+			a {
+				position: relative;
+				z-index: 1101;
+			}
+		}
+		a {
+			@include border-radius(4px);
+			background-color: $color-epl-button;
+			border: solid 1px $color-epl-button-border;
+			color: $color-text;
+			cursor: default;
+			display: inline-block;
+			float: left;
+			height: 26px;
+			margin: 0 5px;
+			white-space: nowrap;
+			text-decoration: none;
+			span {
+				vertical-align: middle;
+			}
+			.cke_text {
+				display: inline-block;
+				height: 26px;
+				line-height: 26px;
+				margin: 0 7px;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				width: 60px;
+			}
+			&:hover {
+				@include gradient-button-hover;
+			}
+		}
+		.cke_icon, .cke_label {
+			display: none;
+		}
+		&.cke_opened {
+			a,
+			a:hover {
+				@include box-shadow(0, 0, 8px, $color-page-border);
+				background-color: $color-epl-gradient-light;
+				background-image: none; // remove linear-gradient effect
+				color: $color-text;
+			}
+		}
+
+		// open button (up/down arrow)
+		.cke_openbutton {
+			display: inline-block;
+			width: 0;
+			height: 0;
+			margin: 0 7px 0 2px;
+			border: 0 solid transparent;
+			border-width: 4px 4px 0;
+			border-top-color: $color-text;
+		}
+		&.cke_opened .cke_openbutton {
+			border-width: 0 4px 4px;
+			border-top-color: transparent;
+			border-bottom-color: black;
+		}
+	}
+}
+
+.cke_skin_wikia {
+	.cke_panel.cke_rcombopanel {
+		@include border-radius(4px);
+		@include box-shadow(0, 0, 8px, $color-page-border);
+		@include gradient-module;
+		border: solid 1px $color-epl-button-border;
+		position: relative;
+		top: -15px;
+		iframe {
+			overflow: hidden;
+		}
+	}
+}

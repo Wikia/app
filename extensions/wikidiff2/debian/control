@@ -1,0 +1,12 @@
+Source: php-wikidiff2
+Section: web
+Priority: optional
+Maintainer: Tim Starling <tstarling@wikimedia.org>
+Build-Depends: debhelper (>= 7.0.50), php5-dev, libthai-dev, pkg-config
+Standards-Version: 3.7.2
+
+Package: php-wikidiff2
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, php5-common, libthai0
+Description: MediaWiki diff plugin for PHP 5
+ Faster diff plugin for MediaWiki under PHP 5

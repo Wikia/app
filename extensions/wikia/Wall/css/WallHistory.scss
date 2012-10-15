@@ -1,0 +1,173 @@
+@import "../../../../skins/oasis/css/mixins/border-radius";
+@import "../../../../skins/oasis/css/core/color";
+@import "../../../../skins/oasis/css/mixins/clearfix";
+@import "../../../../skins/oasis/css/mixins/box-sizing";
+@import "../../../../skins/oasis/css/mixins/box-shadow";
+@import "../../../../skins/oasis/css/mixins/opacity";
+
+
+@import "Wall"
+
+;
+$separators: mix($color-page-border, $color-page, 50%);
+
+.WallHistory {
+	nav {
+		font-size: 14px;
+		margin: 10px 0 10px 5px;
+	}
+}
+
+#WallHistory,
+#WallThreadHistory {
+	margin: 0;
+	padding: 0 0 30px 0;
+	width: 100%;
+	tr {
+		.avatar {
+			display: inline;
+			padding: 15px 10px 15px 20px;
+		}
+		.wrapper {
+			display: table-cell;
+		}
+		td {
+			.actions {
+				font-size: 11px;
+			}
+		}
+	}
+	.msgid sup {
+		display: inline-block;
+		left: 4px;
+		position: relative;
+		top: 4px;
+	}
+	.msgid {
+		white-space: nowrap;
+		color: $color-alternate-text;
+		font-size: 15px;
+		font-weight: bold;
+	}
+	.creation {
+		font-weight: bold;
+	}
+	a.username,
+	small {
+		color: $color-alternate-text;
+	}
+	.threadHistory,
+	.timestamp {
+		color: $color-alternate-text;
+		font-size: 11px;
+		white-space: nowrap;
+	}
+	.threadHistory {
+		visibility:hidden;
+	}
+	.timestamp {
+		float: right;
+	}
+	.wrapper {
+		display: block;
+		margin: 8px 0 0 0;
+		.actions {
+			text-align: right;
+			float: right;
+			margin: -10px 0 0 0;
+			a {
+			 	height: 17px;
+				display: block;
+				font-size: 11px;
+			}
+		}
+	}
+	.summaryBubble:before {
+		content: "";
+		border-color: transparent transparent $color-page-border;
+		border-style: solid;
+		border-width: 10px;
+		content: "";
+		height: 0;
+		left: 10px;
+		position: absolute;
+		top: -21px;
+		width: 0;
+	}
+	.summaryBubble:after {
+		border-color: transparent transparent $color-page;
+		@if lightness($color-page) < 50 {
+			border-color: transparent transparent $color-module-background;
+		}
+		border-style: solid;
+		border-width: 10px;
+		content: "";
+		height: 0;
+		left: 10px;
+		position: absolute;
+		top: -20px;
+		width: 0;
+	}
+	.summaryBubble {
+		@include box-shadow(0px, 2px, 5px, darken($color-page,12%));
+		background: $color-page;
+		border: 1px solid $color-page-border;
+		@if lightness($color-page) < 50 {
+			@include box-shadow(0px, 2px, 5px, darken($color-page,7%));
+			background: $color-module-background;
+			border: 1px solid $color-page-border;
+		}
+		position: relative;
+		display: inline-block;
+		border-radius: 3px;
+		max-width: 421px;
+		margin: 0 0 15px 110px;
+		padding: 0 7px;
+		label {
+			color: $color-alternate-text;
+			font-size: 11px;
+			padding: 3px;
+		}
+	}
+	.border {
+		td {
+			border-bottom: 1px solid $separators;
+		}
+	}
+}
+
+#WallHistory {
+	tr.info-entry {
+		td {
+			padding: 15px 0 0 0;
+		}
+	}
+	tr.border {
+		td {
+			padding: 0 0 15px 0;
+		}
+	}
+	.summaryBubble {
+		margin: 15px 0 0 110px;
+	}
+}
+
+body.skin-monobook {
+	.Wall .SortingBar, .WallHistory .SortingBar {
+		background: white;
+	}
+	#WallHistory  {
+		.summaryBubble, #WallThreadHistory .summaryBubbl {
+			background: white;
+		}
+		
+		.summaryBubble:after, #WallThreadHistory .summaryBubble:after  {
+			background: white;
+		}
+		
+			
+		.summaryBubble:after, #WallThreadHistory .summaryBubble:before  {
+			background: white;
+		}
+	}
+}

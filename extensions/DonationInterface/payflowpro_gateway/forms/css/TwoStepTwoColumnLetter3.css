@@ -1,0 +1,185 @@
+table#donation_amount {
+	background-color:transparent;
+	border:1px solid #AAAAAA;
+	border-collapse:collapse;
+	width: 394px;
+}
+table#donation_amount td {
+	border:1px solid #AAAAAA;
+}
+table#donation_amount td.amount_header {
+	background-color:#eef2f7;
+	font-size:90%;
+}
+table#donation_amount td.amount_data {
+	background-color:#daf2db;
+}
+h3.cc_header {
+	padding-bottom: 0;
+	margin-bottom: 0;
+	font-weight: normal;
+}
+div#payflowpro_gateway-donate-addl-info-text {
+	font-size: 90%;
+	line-height: 120%;
+    padding-top: 12px;
+}
+div#payflowpro_gateway-donate-submessage {
+	font-size: 90%;
+	line-height: 120%;
+}
+#payflow-table-donor td.label, #payflow-table-comment td.label, #payflow-table-cc td.label {
+	white-space: nowrap;
+    display: block;
+    padding-right: 1em;
+    text-align: right;
+    width: 94px;
+}
+
+
+.payflow-cc-form-section {
+    float: none;
+    margin-right: 0em;
+    margin-bottom: 1em;
+}
+
+#payflowpro_gateway-cc_form_container {
+    width: 100%;
+}
+
+#payflowpro_gateway-cc_form_form {
+    width: 475px;
+    float: right;
+    margin-left: 2em;
+    padding-left: 2em;
+    border-left: 1px solid #BBBBBB;
+}
+
+#payflowpro_gateway-cc_form_letter {
+    height: 100%;
+}
+
+#payflowpro_gateway-cc_form_letter p {
+    font-size: 1.125em;
+    margin-bottom: 1.2em;
+}
+
+#payflowpro_gateway-personal-info {
+	margin-right:0 !important;
+}
+
+#payflowpro_gateway-donate-addl-info-secure-logos {
+	float: left;
+	margin-right: 2em;
+}
+
+#payflowpro_gateway-cc_form_letter_inside {	
+	padding-top: .5em;
+}
+
+#payflowpro_gateway-cc_otherways {
+	padding-top: .5em;
+	display: block;
+}
+#payflowpro_gateway-donate-addl-info {
+	margin-top:2em !important;
+	margin-bottom:1em !important;
+}
+
+#appeal {
+	background-color:transparent;
+	border-color:transparent;
+	border-style:solid;
+	border-width:1px 0 1px 1px;
+	padding:16px 24px 24px;
+}
+#appeal-head {
+	font-size:1.5em;
+	line-height:1.125em;
+	padding-bottom:0.5em;
+	padding-top:0.125em;
+}
+#appeal-body {
+	font-size:1.125em;
+	margin-bottom:1em;
+	padding:0.2em 0;
+}
+#donate {
+}
+#donate-head {
+	border:none;
+	font-size:1.5em;
+	line-height:1.125em;
+	padding-bottom:0em;
+	padding-top:0.125em;
+}
+#donate-body {
+	font-size:1.125em;
+	margin-bottom:1em;
+}
+
+/* Move the form up */
+#mw-head-base {
+	height: 1em !important;
+}
+
+/* Hiding content border */
+table {
+	background-color: transparent;
+}
+div#content {
+	background-color: transparent !important;
+	background-image: none !important;
+}
+div#mw-head-base {
+	background-image: none !important;
+}
+#footer {
+	background-image: none !important;
+}
+
+/* Hiding stuff we don't need */
+h1#firstHeading, div#contentSub {
+	display: none;
+}
+
+/* NEW STUFF */
+#greenBackground{
+    padding:16px 24px;
+	width:300px;
+    background-color:#CCE7CD;
+	border:1px solid #5EAC58;
+}
+p#informationsharing {
+    width: 318px;
+    padding: 0 15px;
+    line-height: 14px;
+    font-size: 11px;
+}
+ul#moreinfolinks li{
+    list-style: none !important;
+    list-style-image: none !important;
+}
+h3.amount_header {
+	padding: 0 0 0.4em 0;
+	margin-bottom: 0;
+	font-weight: normal;
+}
+
+table#payflow-table-donor{
+    /*margin-left: 10px;*/
+}
+
+/* Form inputs */
+input#fname, input#lname {
+    width: 130px;
+}
+input#street, input#card_num, input#emailAdd {
+    width: 271px;
+}
+input#city {
+	width: 135px;
+}
+input#zip {
+	width: 65px;
+}

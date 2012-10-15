@@ -1,0 +1,283 @@
+@import "../../../../skins/oasis/css/core/color";
+@import "../../../../skins/oasis/css/mixins/gradient";
+@import "../../../../skins/oasis/css/mixins/border-radius";
+@import "../../../../skins/oasis/css/mixins/clearfix";
+@import "../../../../skins/oasis/css/mixins/box-shadow";
+@import "../../../../skins/oasis/css/core/layout";
+@import "../../../../skins/oasis/css/mixins/bodytext";
+
+$radius-user-profile-masthead: 5px;
+
+$color-user-profile-masthead-aka: #CCC;
+@if lightness($color-button-text) < 50 {
+	$color-user-profile-masthead-aka: #333;
+}
+
+$y-user-profile-masthead-links-icon: -17px;
+$color-masthead: $color-page;
+@if lightness($color-page) < 50 {
+	$y-user-profile-masthead-links-icon: 0;
+	$color-masthead: mix($color-buttons, $color-page, 30%); /* logic from Wall */
+	@if lightness($color-masthead) < 30 {
+		$color-masthead: mix($color-buttons, $color-page, 40%); /* logic from Wall */
+	}
+}
+
+$color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%), 40%);
+
+/* Temporary - waiting for UI Styleguide team */
+@import "modalFix";
+
+
+.WikiaUserPagesHeader {
+	@if $page-opacity == 100 {
+		@include linear-gradient($color-user-profile-gradient-bottom, top, $color-page, 0%, $color-user-profile-gradient-bottom, 100%); 
+	}
+	&.WikiaBlogPostHeader, &.WikiaBlogListingHeader {
+		background: transparent;
+		padding: 0 10px 6px;
+		position: relative;
+		
+		// Largely copied from _UserPagesHeader.scss
+		h1 {
+			display: inline;
+			font-size: 24px;
+			margin: 0 10px 0 0;
+			small {
+				font-size: 12px;
+			}
+		}
+
+		.wikia-button,
+		.wikia-menu-button {
+			float: right;
+			margin-left: 10px;
+			z-index: 1;
+		}
+	}
+}
+
+.UserProfileMastheadSearch {
+	float: right;
+	margin-right: 15px;
+	width: $wikia-search-base-width + 100px;
+}
+
+.UserProfileMasthead {
+	clear: both;
+	padding: 0 15px;
+	position: relative;
+	min-height: 150px;
+	.masthead-avatar {
+		left: 15px;
+		position: absolute;
+		text-align: right;
+		top: 0;
+		width: 148px;
+		.avatar {
+			border: 4px solid $color-page;
+			display: inline-block;
+			max-height: 140px;
+			max-width: 140px;
+		}
+		span {
+			display: none;
+		}
+		&:hover span {
+			display: block;
+		}
+	}
+	.masthead-info {
+		// Top radius included to ensure that the top corners are hidden behind the hgroup radius
+		@include border-radius-nw($radius-user-profile-masthead * 2);
+		@include border-radius-ne($radius-user-profile-masthead * 2);
+		@include border-radius-sw($radius-user-profile-masthead);
+		@include border-radius-se($radius-user-profile-masthead);
+		@include box-shadow(0px, 2px, 10px, rgba(0,0,0,.25));
+		
+		@include clearfix;	
+		background: $color-masthead;
+		margin-left: 165px;
+		margin-bottom: 20px;
+		position: relative;
+		
+		&:hover {
+			#userIdentityBoxEdit {
+				display: block;
+			}
+		}
+		
+		>div {
+			float: left;
+			padding: 20px 25px;
+			width: 320px;
+		}
+		hgroup {
+			@include border-radius-nw($radius-user-profile-masthead);
+			@include border-radius-ne($radius-user-profile-masthead);
+			@include linear-gradient($color-buttons, top, $color-button-highlight, 0%, $color-buttons, 100%);
+			color: $color-button-text;
+			overflow: auto;
+			padding: 8px 25px;
+		}
+		h1 {
+			display: inline;
+			font-size: 30px;
+			font-weight: bold;
+			line-height: 38px;
+		}
+		.tag {
+			@include border-radius(3px);
+			background: mix($color-button-highlight, $color-page, 80%);
+			display: inline-block;
+			margin-left: 10px;
+			padding: 2px 5px;
+			position: relative;
+			text-transform: uppercase;
+			top: -4px;
+			+.tag {
+				margin-left: 0;
+			}
+		}
+		h2 {
+			display: inline;
+			font-size: 24px;
+			font-weight: lighter;
+			margin: 0;
+			span {
+				color: $color-user-profile-masthead-aka;
+				margin: 0 1px 0 6px;
+			}
+		}
+	}
+	
+	.masthead-info-lower {
+		position: relative;
+		&:before {
+			border-color: $color-masthead $color-masthead transparent transparent;
+			border-style: solid;
+			border-width: 14px;
+			content: ' ';
+			display: block;
+			height: 1px;
+			left: -28px;
+			position: absolute;
+			top: 0px;
+			width: 1px;
+		}
+	}
+	
+	.tally {
+		margin-bottom: 25px;
+		em {
+			margin-right: 5px;
+		}
+	}
+
+	.links {
+		@include clearfix;
+		li {
+			float: left;
+			margin-right: 1em;		
+		}
+		.icon {
+			@include border-radius(50px);
+			background: $color-links url(/extensions/wikia/UserProfilePageV3/images/UPP-sprite.png); /* $wgCdnStylePath */
+			height: 17px;
+			position: relative;
+			top: .3em;
+			width: 17px;
+			&.twitter {
+				background-position: 0 $y-user-profile-masthead-links-icon;
+			}
+			&.website {
+				background-position: -16px $y-user-profile-masthead-links-icon;			
+			}
+			&.facebook {
+				background-position: -32px $y-user-profile-masthead-links-icon;			
+			}
+		}
+		.zero {
+			color: $color-alternate-text;
+			.icon {
+				background-color: $color-alternate-text;
+			}
+		}
+	}	
+
+	.wikis {
+		margin-top: 13px;
+		span {
+			color: $color-alternate-text;
+			float: left;
+			font-weight: bold;
+			margin-right: 10px;
+			text-align: right;
+			text-transform: uppercase;
+			width: 85px;
+		}
+		ul {
+			float: left;
+			width: 225px;
+			li {
+				float: left;
+				margin-right: 1em;
+				max-width: 225px;
+				overflow: hidden;
+				padding-bottom: .4em;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+		}
+	}
+	
+	.details {
+		@include bodytext;
+		font-size: 14px;
+		line-height: 17px;
+		li {
+			padding-top: 10px;
+			&:first-child {
+				padding-top: 0;
+			}
+		}
+		span {
+			color: $color-alternate-text;
+			font-size: 12px;
+			font-weight: bold;
+			text-transform: uppercase;
+		}
+	}
+	
+	&.zero-state {
+		.masthead-info > div {
+			padding-top: 10px;
+			padding-bottom: 10px;
+		}
+		
+		#userIdentityBoxEdit {
+			display: block;
+		}
+	}
+}
+
+#userIdentityBoxEdit {
+	display: none;
+	margin-top: 10px;
+	position: absolute;
+	right: 10px;
+	img {
+		position: relative;
+		top: 2px;
+	}
+}
+
+.UserProfileActionButton {
+	padding: 10px 0;
+	text-align: right;
+}
+
+.WikiaRail,	/* remove this override after grid layout transition */
+.WikiaRail.grid-2 {	/* keep this after transition, but not this comment itself */
+	padding-top: 10px;
+}

@@ -1,0 +1,23 @@
+/* MultiSelectDropdown depends on Dropdown */
+
+@import "../../../../skins/oasis/css/core/color";
+@import "../../../../skins/oasis/css/core/layout";
+@import "../../../../skins/oasis/css/mixins/arrow";
+@import "../../../../skins/oasis/css/mixins/border-radius";
+@import "../../../../skins/oasis/css/mixins/box-shadow";
+@import "../../../../skins/oasis/css/mixins/opacity";
+
+@import "DropdownColors";
+
+.WikiaDropdown {
+	&.MultiSelect {
+		.dropdown {
+			top: 0;
+		}
+		.dropdown-item {
+			input[type="checkbox"] {
+				margin-right: 10px;
+			}
+		}
+	}
+}

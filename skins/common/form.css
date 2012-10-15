@@ -1,0 +1,114 @@
+/*** FORM STYLES ***/
+form.highlightform {
+	min-width: 700px;
+	position: relative;
+}
+form.highlightform * {
+	position: relative;
+}
+#highlightform li { 
+	list-style-image:none;
+	list-style-position:outside;
+	list-style-type:none;
+}
+div.formhighlight {
+	background: #dbe7ff;	
+	position: absolute;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;	
+}
+.formblock {
+	overflow: hidden;	
+	padding: 10px 0;
+	position: relative;
+	width: 100%;
+	z-index: 1;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+}
+.formblock ul {
+	overflow: hidden;	
+	padding: 10px 0;
+}
+.formblock .label {
+	font-weight: bold;
+	float: left;
+	width: 175px;
+}
+.label label {
+	display: block;
+	padding-left: 15px;	
+	font-size: 9pt;
+}
+.label label.required {
+	background: url(http://images.wikia.com/common/skins/common/required.png) 5px .3em no-repeat;	
+}
+.formblock .data1 {
+	float: left;
+	padding-left: 10px;
+	width: 350px;	
+}
+.formblock .data1 input {
+	width: 200px;	
+}
+.formblock .data1 select {
+	width: 250px;	
+}
+#highlightform .formblock ul.col2 .data1 {
+	float: none;
+	margin-left: 175px;
+	padding-right: 15px;
+	width: auto;	
+}
+#highlightform .formblock li.data2 {
+	margin-left: 520px;
+	padding-right: 15px;
+	padding-left: 15px;
+}
+.formblock .birthdate {
+	width: auto !important;
+}
+.selected {
+	background: #dbe7ff;	
+}
+.note {
+	color: #666;
+	font-size: 9pt;
+	font-style: italic;
+}
+.selected .note {
+	color: #333;
+}
+.toolbar {
+	border-top-style: solid;
+	border-top-width: 1px;
+	padding: 5px;
+}
+
+.legend {
+	margin-bottom: 5px;
+	text-align: right;	
+}
+
+/*** ERROR HANDLING***/
+div.error {
+	background: #FFE;
+	border: 1px solid #98988E;
+	margin: 0 0 10px 0;
+	padding: 10px;
+}
+form div.error {
+	font-family: sans-serif;
+	font-size: x-small;
+	margin: 10px 10px 0 0;	
+}
+label.error {
+	color: #C00;	
+}
+input.error, select.error {
+	border: 1px solid #C00;
+	font-size:10pt;
+}
+.error-status {
+	padding-left:5px;
+}

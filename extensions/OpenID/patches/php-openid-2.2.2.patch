@@ -1,0 +1,81 @@
+diff -bru _Auth//OpenID/Consumer.php Auth//OpenID/Consumer.php
+--- _Auth//OpenID/Consumer.php	2010-04-29 22:41:05.000000000 +0200
++++ Auth//OpenID/Consumer.php	2011-02-03 12:17:42.000000000 +0100
+@@ -666,7 +666,7 @@
+                                         '_completeInvalid');
+ 
+         return call_user_func_array(array($this, $method),
+-                                    array($message, &$endpoint, $return_to));
++                                    array($message, $endpoint, $return_to));
+     }
+ 
+     /**
+@@ -1181,7 +1181,7 @@
+         // oidutil.log('Performing discovery on %s' % (claimed_id,))
+         list($unused, $services) = call_user_func($this->discoverMethod,
+                                                   $claimed_id,
+-												  &$this->fetcher);
++												  $this->fetcher);
+ 
+         if (!$services) {
+             return new Auth_OpenID_FailureResponse(null,
+diff -bru _Auth//OpenID/Server.php Auth//OpenID/Server.php
+--- _Auth//OpenID/Server.php	2010-04-29 22:41:05.000000000 +0200
++++ Auth//OpenID/Server.php	2011-02-03 12:18:56.000000000 +0100
+@@ -1704,7 +1704,7 @@
+     {
+         if (method_exists($this, "openid_" . $request->mode)) {
+             $handler = array($this, "openid_" . $request->mode);
+-            return call_user_func($handler, &$request);
++            return call_user_func($handler, $request);
+         }
+         return null;
+     }
+diff -bru _Auth//OpenID/TrustRoot.php Auth//OpenID/TrustRoot.php
+--- _Auth//OpenID/TrustRoot.php	2010-04-29 22:41:05.000000000 +0200
++++ Auth//OpenID/TrustRoot.php	2011-02-03 12:19:24.000000000 +0100
+@@ -413,7 +413,7 @@
+     }
+ 
+     call_user_func_array($discover_function,
+-                         array($relying_party_url, &$fetcher));
++                         array($relying_party_url, $fetcher));
+ 
+     $return_to_urls = array();
+     $matching_endpoints = Auth_OpenID_extractReturnURL($endpoints);
+diff -bru _Auth//Yadis/Manager.php Auth//Yadis/Manager.php
+--- _Auth//Yadis/Manager.php	2010-04-29 22:41:05.000000000 +0200
++++ Auth//Yadis/Manager.php	2011-02-03 12:20:44.000000000 +0100
+@@ -413,7 +413,7 @@
+ 
+             list($yadis_url, $services) = call_user_func($discover_cb,
+                                                          $this->url,
+-                                                         &$fetcher);
++                                                         $fetcher);
+ 
+             $manager = $this->createManager($services, $yadis_url);
+         }
+diff -bru _Auth//Yadis/XRDS.php Auth//Yadis/XRDS.php
+--- _Auth//Yadis/XRDS.php	2010-04-29 22:41:05.000000000 +0200
++++ Auth//Yadis/XRDS.php	2011-02-03 12:19:58.000000000 +0100
+@@ -429,7 +429,7 @@
+ 
+                 foreach ($filters as $filter) {
+ 
+-                    if (call_user_func_array($filter, array(&$service))) {
++                    if (call_user_func_array($filter, array($service))) {
+                         $matches++;
+ 
+                         if ($filter_mode == SERVICES_YADIS_MATCH_ANY) {
+diff -bru _Auth//Yadis/Yadis.php Auth//Yadis/Yadis.php
+--- _Auth//Yadis/Yadis.php	2010-04-29 22:41:05.000000000 +0200
++++ Auth//Yadis/Yadis.php	2011-02-03 12:20:26.000000000 +0100
+@@ -141,7 +141,7 @@
+     }
+ 
+     $yadis_result = call_user_func_array($discover_func,
+-                                         array($input_url, &$fetcher));
++                                         array($input_url, $fetcher));
+ 
+     if ($yadis_result === null) {
+         return array($input_url, array());

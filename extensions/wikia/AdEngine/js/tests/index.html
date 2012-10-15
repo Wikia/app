@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Ad* Tests</title>
+
+		<!-- Load test framework -->
+		<link rel="stylesheet" href="../../../../../tests/lib/qunit/qunit.css">
+		<script src="../../../../../tests/lib/qunit/qunit.js"></script>
+
+		<!-- AdConfig -->
+		<script src="../AdConfig2.js"></script>
+		<script src="AdConfig2Test.js"></script>
+
+		<!-- AdConfigLate -->
+		<script src="../AdConfig2Late.js"></script>
+		<script src="AdConfig2LateTest.js"></script>
+
+		<!-- LazyQueue -->
+		<script src="../LazyQueue.js"></script>
+		<script src="LazyQueueTest.js"></script>
+
+		<!-- AdEngine -->
+		<script src="../AdEngine2.js"></script>
+		<script src="AdEngine2Test.js"></script>
+
+		<!-- AdProviderCommon is not really testable :-( -->
+
+		<!-- AdProviderEvolveRS -->
+		<script src="../AdProviderEvolveRS.js"></script>
+		<script src="AdProviderEvolveRSTest.js"></script>
+
+		<!-- AdProviderGamePro -->
+		<script src="../AdProviderGamePro.js"></script>
+		<script src="AdProviderGameProTest.js"></script>
+
+		<!-- AdProviderEvolve -->
+		<script src="../AdProviderEvolve.js"></script>
+		<script src="AdProviderEvolveTest.js"></script>
+
+		<!-- AdProviderNull -->
+		<script src="../AdProviderNull.js"></script>
+		<script src="AdProviderNullTest.js"></script>
+
+		<!-- AdProviderLater -->
+		<script src="../AdProviderLater.js"></script>
+		<script src="AdProviderLaterTest.js"></script>
+
+		<!-- AdProviderLiftium2 -->
+		<script src="../AdProviderLiftium2.js"></script>
+		<script src="AdProviderLiftium2Test.js"></script>
+
+		<!-- Crazy deprecated/old stuff now -->
+		<script>
+		/**
+		 * AdConfig.js have a strong dependency on Wikia.geo.getGeoData function which is not
+		 * available in test environment so we are mocking it here. It can't be defined in module
+		 * setup because it is too late (AdConfig.js calls that function just after it is loaded).
+		 * This problem should be solved in a better way.
+		 */
+		Wikia = {};
+		Wikia.geo = {getGeoData: function() {}};
+		</script>
+		<script src="../../../../../resources/wikia/modules/cookies.js"></script>
+		<script src="../../AdConfig.js"></script>
+		<script src="../../AdDriverGP.js"></script>
+		<script src="AdDriverGPTest.js"></script>
+		<script src="AdDriverTest.js"></script>
+	</head>
+	<body>
+		<h1 id="qunit-header">Ad* Tests</h1>
+		<h2 id="qunit-banner"></h2>
+		<h2 id="qunit-userAgent"></h2>
+		<ol id="qunit-tests"></ol>
+		<div id="qunit-fixture">test markup</div>
+	</body>
+</html>

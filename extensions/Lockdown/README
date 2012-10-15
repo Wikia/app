@@ -1,0 +1,155 @@
+--------------------------------------------------------------------------
+README for the Lockdown extension
+Copyright © 2006 Daniel Kinzler
+Licenses: GNU General Public Licence (GPL)
+          GNU Free Documentation License (GFDL)
+--------------------------------------------------------------------------
+
+The Lockdown extension implements a way to retrict access to specific
+namespaces and special pages to a given set of user groups. This provides
+a more fine grained security model than the one provided by the default 
+$wgGroupPermissions and $wgNamespaceRestrictions settings.
+
+<http://mediawiki.org/wiki/Extension:Lockdown>
+
+The Lockdown extension was originally written by Daniel Kinzler in 2007
+and is released under the GNU General Public Licence (GPL). 
+
+The following pages about the security model used by MediaWiki per
+default may be helpful to understand the instructions below:
+
+* <http://www.mediawiki.org/wiki/Help:Managing_user_rights>
+* <http://www.mediawiki.org/wiki/Manual:$wgGroupPermissions>
+
+
+== WARNING: restricting read access not fully possible ==
+
+Mediawiki is not designed to be a CMS, or to protect sensitive data. 
+To the contrary, it was designed to be as open as possible. Thus it does
+not support full featured, air-tight protection of private content.
+
+This extension can be used to apply read-restrictions to namespaces,
+limiting read access to specific groups. Note however that there may be
+several ways in which data thusly protected may be "leaked" to the public:
+
+* it is possible to include protected pages as templates, making them
+  readable. This is addressed by the $wgNonincludableNamespaces setting
+  introduced in MW 1.10, revision 19934.
+
+* it is possible to export pages without having read-access to them using
+  Special:Export. This has been fixed in MW 1.10, revision 19935.
+
+* Content of newly created pages, and changes to existing pages, are shown
+  in the RSS/Atom feeds provided by Special:recentchanges, without checking
+  read permission. This has been fixed in MW 1.10, revision 19944.
+
+* Read-Permission only applies to page content. "Hidden" pages are still
+  listed in categories, Special:Allpages, etc. Also, changes to "hidden" 
+  pages are still shown Special:Recentchanges, etc, including the edit
+  summary.
+
+* Excerpts of page content may be shown by Special:Search, regardless of
+  read permission.
+
+There are probably more "holes" in the read protection system. So, 
+denying read access should be seens as a "nothing to see here, move
+along", rather than a guarantee of secrecy.
+
+
+== Installing ==
+
+Copy the Lockdown directory into the extensions folder of your 
+MediaWiki installation. Then add the following lines to your
+LocalSettings.php file (near the end):
+
+  require_once( "$IP/extensions/Lockdown/Lockdown.php" );
+
+  $wgSpecialPageLockdown['Export'] = array('user');
+
+  $wgNamespacePermissionLockdown[NS_PROJECT]['edit'] = array('user');
+
+The settings for $wgSpecialPageLockdown and $wgNamespacePermissionLockdown
+are just examples - see below for details.
+
+
+== Configuration ==
+
+Note that the Lockdown extension can only be used to *restrict* access,
+not to *grant* it. If access is denied by some build-in setting of
+MediaWiki, it cannot be allowed using the Lockdown extension.
+
+
+=== $wgSpecialPageLockdown ===
+
+$wgSpecialPageLockdown allows you to specify for each special page which
+user groups have access to it. For example, to limit the use of 
+Special:Export to logged in users, use this in LocalSettings.php:
+
+    $wgSpecialPageLockdown['Export'] = array('user');
+
+Note that some special pages "natively" require a specific permission.
+For example, Special:Userrights, which can be used to assign user groups,
+required the "userrights" permission (granted only to the "bureaucrat"
+group per default). This restriction can not be overridden using the
+Lockdown extension.
+
+=== $wgActionLockdown === 
+
+$wgActionLockdown allows you to specify for each actionwhich user groups
+have access to it. For example, to limit the use of the history page to
+logged in users, use this in LocalSettings.php:
+
+    $wgActionLockdown['history'] = array('user');
+
+Note that some actions can not be locked down this way. In particular, it
+will not work for the ajax action.
+
+
+=== $wgNamespacePermissionLockdown ===
+
+$wgNamespacePermissionLockdown lets you restrict which user groups have
+which permissions on which namespace. For example, to grant only members
+of the sysop group write access to the project namespace, use this:
+
+    $wgNamespacePermissionLockdown[NS_PROJECT]['edit'] = array('sysop');
+
+Wildcards for either the namespace or the permission (but not both at once)
+are supported. More specific definitions take precedence:
+
+    $wgNamespacePermissionLockdown[NS_PROJECT]['*'] = array('sysop');
+    $wgNamespacePermissionLockdown[NS_PROJECT]['read'] = array('*');
+
+    $wgNamespacePermissionLockdown['*']['move'] = array('autoconfirmed');
+
+The first two lines restrict all permissions in the project namespace to
+members of the sysop group, but still allow reading to anyone. The third
+line limits page moves in all namespaces to members of the autoconfirmed
+group.
+
+Note that this way, you cannot *grant* permissions that have not been
+allowed by the build-in $wgGroupPermissions setting. The following does
+*not* allow regular users to patrol edits in the main namespace:
+
+    $wgNamespacePermissionLockdown[NS_MAIN]['patrol'] = array('user');
+
+Instead, you would have to grant this right in $wgGroupPermissions first,
+and then restrict it again using $wgNamespacePermissionLockdown:
+
+    $wgGroupPermissions['user']['patrol'] = true;
+
+    $wgNamespacePermissionLockdown['*']['patrol'] = array('sysop');
+    $wgNamespacePermissionLockdown[NS_MAIN]['patrol'] = array('user');
+
+Note that when restricting read-access to a namespace, the restriction can
+easily be circumvented if the user has write access to any other namespace:
+by including a read-protected page as a template, it can be made visible.
+To avoid this, you would have to forbid the use of pages from that namespace
+as templates, by adding the namespace's ID to $wgNonincludableNamespaces
+(this feature was introduced in MediaWiki 1.10, revision 19934):
+
+    $wgNamespacePermissionLockdown[NS_PROJECT]['read'] = array('user');
+    $wgNonincludableNamespaces[] = NS_PROJECT;
+
+PLEASE READ THE SECTION "WARNING: restricting read access not fully possible"
+FOR MORE INFORMATION ABOUT THE LIMITATIONS OF RESTRICTING READ ACCESS!
+

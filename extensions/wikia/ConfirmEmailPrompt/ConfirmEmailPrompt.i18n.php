@@ -1,0 +1,196 @@
+<?php
+
+$messages = array();
+
+$messages['en'] = array(
+	'confirmemailprompt-desc' => 'Displays a warning message if a user has an unconfirmed e-mail address',
+	'confirmemailprompt-error' => 'Is this your e-mail address: <strong>$1</strong>? [[$2|Confirm it]] or [[$3|change it]].',
+);
+
+/** Message documentation (Message documentation)
+ * @author Siebrand
+ */
+$messages['qqq'] = array(
+	'confirmemailprompt-desc' => '{{desc}}',
+	'confirmemailprompt-error' => 'Message displayed if a user has an unconfirmed e-mail address. Parameters:
+* $1 is an e-mail address
+* $2 is a link to the e-mail address confirmation
+* $3 is a link to the e-mail address change form',
+);
+
+/** Czech (česky)
+ * @author Jezevec
+ */
+$messages['cs'] = array(
+	'confirmemailprompt-desc' => 'Zobrazit varování pokud nemá uživatel potvrzený email',
+	'confirmemailprompt-error' => 'Je toto vaše emailová adresa: <strong>$1</strong>? [[$2|Potvrďte ji]] nebo [[$3|ji změňte]].',
+);
+
+/** German (Deutsch)
+ * @author Tiin
+ */
+$messages['de'] = array(
+	'confirmemailprompt-desc' => 'Zeigt eine Warnmeldung, wenn ein Benutzer eine unbestätigte E-Mail-Adresse hat',
+	'confirmemailprompt-error' => 'Ist das deine E-Mail-Adresse: <strong>$1</strong>? [[$2|Bestätige sie]] oder [[$3|ändere sie]].',
+);
+
+/** Spanish (español)
+ * @author DJ Nietzsche
+ */
+$messages['es'] = array(
+	'confirmemailprompt-desc' => 'Muestra un mensaje de advertencia si el usuario tiene una dirección de correo electrónico no confirmada',
+	'confirmemailprompt-error' => '¿Es esta su dirección de correo electrónico?: <strong>$1</strong> ? [[$2| Confirmarla]] o [[$3|cambiarla]].',
+);
+
+/** Finnish (suomi)
+ * @author VezonThunder
+ */
+$messages['fi'] = array(
+	'confirmemailprompt-desc' => 'Näyttää varoituksen, jos käyttäjällä on vahvistamaton sähköpostiosoite',
+	'confirmemailprompt-error' => 'Onko tämä sähköpostiosoitteesi: <strong>$1</strong>? [[$2|Vahvista se]] tai [[$3|muuta sitä]].',
+);
+
+/** French (français)
+ * @author Wyz
+ */
+$messages['fr'] = array(
+	'confirmemailprompt-desc' => 'Affiche un message d’avertissement si un utilisateur a une adresse de courriel qui n’a pas été confirmée',
+	'confirmemailprompt-error' => 'Est-ce votre adresse de courriel : <strong>$1</strong> ? [[$2|Confirmer]] ou [[$3|la changer]].',
+);
+
+/** Galician (galego)
+ * @author Toliño
+ */
+$messages['gl'] = array(
+	'confirmemailprompt-desc' => 'Mostra unha mensaxe de advertencia se o usuario ten un enderezo de correo electrónico non confirmado',
+	'confirmemailprompt-error' => 'É este o seu enderezo de correo electrónico: <strong>$1</strong>? [[$2|Confírmeo]] ou [[$3|modifíqueo]].',
+);
+
+/** Hungarian (magyar)
+ * @author Dj
+ */
+$messages['hu'] = array(
+	'confirmemailprompt-desc' => 'Figyelmeztető üzenetet jelenít meg, ha a szerkesztő email címe nincs megerősítve',
+	'confirmemailprompt-error' => 'Ez az email címed? <strong>$1</strong>? [[$2Erősítsed meg]] vagy [[$3|változtasd meg!]].',
+);
+
+/** Interlingua (interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'confirmemailprompt-desc' => 'Presenta un aviso si un usator ha un adresse de e-mail non confirmate',
+	'confirmemailprompt-error' => 'Es iste le adresse de e-mail tue: <strong>$1</strong>? [[$2|Confirma lo]] o [[$3|cambia lo]].',
+);
+
+/** Italian (italiano)
+ * @author Leviathan 89
+ */
+$messages['it'] = array(
+	'confirmemailprompt-desc' => "Visualizza una notifica se l'utente ha un indirizzo e-mail non confermato",
+	'confirmemailprompt-error' => 'È questa la tua e-mail: <strong>$1</strong>? [[$2|Confermala]] o [[$3|cambiala]].',
+);
+
+/** Basa Banyumasan (Basa Banyumasan)
+ * @author StefanusRA
+ */
+$messages['map-bms'] = array(
+	'confirmemailprompt-desc' => 'Tidokna pesen pengetan nek panganggo duwe alamat imel sing durung dikonfirmasi',
+	'confirmemailprompt-error' => 'Apa kiye alamat imele Rika: <strong>$1</strong>? [[$2|Konfirmasi kiye]] utawa [[$3|ganti kiye]].',
+);
+
+/** Macedonian (македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'confirmemailprompt-desc' => 'Прикажува предупредување ако корисникот има непотврдена е-пошта',
+	'confirmemailprompt-error' => 'Дали ова е вашата е-пошта: <strong>$1</strong>? [[$2|Потврдете ја]] или [[$3|сменете ја]].',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'confirmemailprompt-desc' => 'Memaparkan pesanan amaran jika seseorang pengguna mempunyai alamat e-mel yang belum disahkan',
+	'confirmemailprompt-error' => 'Adakah ini alamat e-mel anda: <strong>$1</strong>? [[$2|Sahkan]] atau [[$3|tukar]].',
+);
+
+/** Norwegian Bokmål (norsk (bokmål)‎)
+ * @author Audun
+ */
+$messages['nb'] = array(
+	'confirmemailprompt-desc' => 'Viser en advarsel dersom en bruker har en ubekreftet e-postadresse',
+	'confirmemailprompt-error' => 'Er dette e-postadressen din: <strong>$1</strong>? [[$2|Bekreft den]] eller [[$3|endre den]].',
+);
+
+/** Dutch (Nederlands)
+ * @author Siebrand
+ */
+$messages['nl'] = array(
+	'confirmemailprompt-desc' => 'Geeft een waarschuwing weer als een gebruiker een niet-bevestigd e-mailadres heeft',
+	'confirmemailprompt-error' => 'Is dit uw e-mailadres: <strong>$1</strong>? [[$2|Bevestig het]] of [[$3|wijzig het]].',
+);
+
+/** Polish (polski)
+ * @author Woytecr
+ */
+$messages['pl'] = array(
+	'confirmemailprompt-desc' => 'Wyświetla ostrzeżenie, jeżeli użytkownik nie potwierdził adresu e-mail',
+	'confirmemailprompt-error' => 'Czy to jest twój adres e-mail: <strong>$1</strong>? [[$2|Potwierdź go]] lub [[$3|zmień]].',
+);
+
+/** Piedmontese (Piemontèis)
+ * @author Borichèt
+ */
+$messages['pms'] = array(
+	'confirmemailprompt-desc' => "A smon un mëssagi d'avertiment se n'utent a l'ha n'adrëssa ëd pòsta eletrònica nen confirmà",
+	'confirmemailprompt-error' => "É-lo costa soa adrëssa ëd pòsta eletrònica: <strong>$1</strong>? [[$2|Ch'a la confirma]] o [[$3|ch'a la cangia]].",
+);
+
+/** Portuguese (português)
+ * @author SandroHc
+ */
+$messages['pt'] = array(
+	'confirmemailprompt-desc' => 'Exibe uma mensagem de aviso se um utilizador tiver um endereço de e-mail não confirmado',
+	'confirmemailprompt-error' => 'Este é o seu endereço de e-mail: <strong>$1</strong>? [[$2|Confirmar]] ou [[$3|modifica-lo]].',
+);
+
+/** Russian (русский)
+ * @author DCamer
+ * @author Kuzura
+ */
+$messages['ru'] = array(
+	'confirmemailprompt-desc' => 'Отображает предупреждающее сообщение, если у пользователя не подтвержден адрес электронной почты.',
+	'confirmemailprompt-error' => 'Это ваш адрес электронной почты: <strong>$1</strong>? [[$2|подтвердить его]] или [[$3|изменить его]].',
+);
+
+/** Swedish (svenska)
+ * @author WikiPhoenix
+ */
+$messages['sv'] = array(
+	'confirmemailprompt-desc' => 'Visar ett varningsmeddelande om en användare har en obekräftad e-postadress',
+	'confirmemailprompt-error' => 'Är detta din e-postadress: <strong>$1</strong>? [[$2|Bekräfta den]] eller [[$3|ändra den]].',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'confirmemailprompt-desc' => 'Nagpapakita ng isang mensahe ng babala kapag ang isang tagagamit ay mayroong isang hindi pa natitiyak na tirahan ng e-liham',
+	'confirmemailprompt-error' => 'Ito ba ang iyong tirahang e-liham: <strong>$1</strong>? [[$2|Tiyakin ito]] o [[$3|baguhin ito]].',
+);
+
+/** Tatar (Cyrillic script) (татарча)
+ * @author Ajdar
+ */
+$messages['tt-cyrl'] = array(
+	'confirmemailprompt-desc' => 'Әгәр катнашучының электрон почта адресы күрсәтелмәгән икән, кисәтүче хәбәр чыгара.',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Xiao Qiao
+ */
+$messages['vi'] = array(
+	'confirmemailprompt-desc' => 'Hiển thị một thông điệp cảnh báo nếu một người dùng có địa chỉ thư điện tử chưa được xác nhận',
+	'confirmemailprompt-error' => 'Đây có phải là địa chỉ e-mail của bạn: <strong>$1</strong>? [[$2|Xác nhận nó]] hoặc [[$3|thay đổi nó]].',
+);
+

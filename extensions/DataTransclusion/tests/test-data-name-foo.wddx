@@ -1,0 +1,1 @@
+<wddxPacket version='1.0'><header/><data><struct><var name='response'><struct><var name='content'><struct><var name='foo'><struct><var name='name'><string>foo</string></var><var name='id'><number>3</number></var><var name='info'><string>test 1</string></var></struct></var></struct></var></struct></var></struct></data></wddxPacket>

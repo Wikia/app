@@ -1,0 +1,10 @@
+$color-chat-gray: mix($color-text, $color-page);
+$color-chat-you: mix($color-text, $color-page, 5);
+$color-chat-live: $color-buttons;
+$color-chat-live-text: $color-button-text;
+$color-chat-live-corner: mix($color-chat-live, #000);
+$color-chat-avatar-border: $color-page-border;
+
+$color-rail-headline-top: mix($color-text, $color-page, 5);
+$color-rail-headline-bottom: mix($color-text, $color-page, 20);
+$color-rail-headline-border: mix($color-text, $color-page, 35);

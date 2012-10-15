@@ -1,0 +1,44 @@
+/*
+		Table pager (e.g. Special:Imagelist)
+		- remove underlines from the navigation link
+		- collapse borders
+		- set the borders to outsets (similar to Special:Allmessages)
+		- remove line wrapping for all td and th, set background color
+		- restore line wrapping for the last two table cells (description and size)
+	*/
+
+@import "color";
+
+@if lightness($color-page) < 35 {
+
+	.TablePager_nav a { text-decoration: none; }
+	.TablePager { border-collapse: collapse; }
+	.TablePager, .TablePager td, .TablePager th {
+		border: 1px solid $color-page;
+		padding: 0 0.15em 0 0.15em;
+	}
+	.TablePager th {
+		background-color: darken($color-page, 5%);
+		color: #FFF
+	}
+	.TablePager td { background-color: $color-page; color: $color-text }
+	.TablePager td.highlited { background-color: lighten( $color-page, 5% ) }
+	.TablePager tr:hover td { background-color: lighten($color-page, 15%) }
+
+} @else {
+
+	.TablePager_nav a { text-decoration: none; }
+	.TablePager { border-collapse: collapse; }
+	.TablePager, .TablePager td, .TablePager th {
+		border: 1px solid #aaaaaa;
+		padding: 0 0.15em 0 0.15em;
+	}
+	.TablePager th {
+		background-color: darken($color-page, 10%);
+		color: darken($color-text, 10%)
+	}
+	.TablePager td { background-color: lighten( $color-page, 10% ); color: darken( $color-text, 5% ) }
+	.TablePager td.highlited { background-color: darken( $color-page, 5% ) }
+	.TablePager tr:hover td { background-color: darken( $color-page, 15% ) }
+
+}

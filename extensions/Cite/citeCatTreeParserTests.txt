@@ -1,0 +1,25 @@
+# Force the test runner to ensure the extension is loaded
+!! hooks
+ref
+references
+categorytree
+!! endhooks
+
+!! test 
+Bug 20748 - <references /> doesn't work after category tree in some cases
+!! input
+<ref>ref</ref>
+
+<categorytree showcount=on>Articles tagged for deletion and rescue</categorytree>
+<references />
+!! result
+<p><sup id="cite_ref-0" class="reference"><a href="#cite_note-0">[1]</a></sup>
+</p>
+<div class=" CategoryTreeTag" data-ct-mode="0" data-ct-options="{&amp;quot;mode&amp;quot;:0,&amp;quot;hideprefix&amp;quot;:20,&amp;quot;showcount&amp;quot;:true,&amp;quot;namespaces&amp;quot;:false}"><div class="CategoryTreeSection"><div class="CategoryTreeItem"><span class="CategoryTreeEmptyBullet">[<b>×</b>] </span> <a class="CategoryTreeLabel  CategoryTreeLabelNs14 new CategoryTreeLabelCategory" href="/index.php?title=Category:Articles_tagged_for_deletion_and_rescue&amp;action=edit&amp;redlink=1">Articles tagged for deletion and rescue</a>‎ <span title="Contains 0 subcategories, 0 pages, and 0 files" dir="ltr">(empty)</span></div>
+		<div class="CategoryTreeChildren" style="display:block"><i class="CategoryTreeNotice">no subcategories</i></div></div>
+		</div>
+<ol class="references"><li id="cite_note-0"><a href="#cite_ref-0">↑</a> <span class="reference-text">ref</span>
+</li></ol>
+
+!! end
+

@@ -1,0 +1,4 @@
+
+$wgUseAjax = true; //enable AJAX support
+require_once( "{{path}}/TalkHere.php" );
+

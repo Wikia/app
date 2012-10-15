@@ -1,0 +1,876 @@
+<mediawiki xmlns="http://www.mediawiki.org/xml/export-0.4/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mediawiki.org/xml/export-0.4/ http://www.mediawiki.org/xml/export-0.4.xsd" version="0.4" xml:lang="fr">
+  <siteinfo>
+    <sitename>Wikipédia</sitename>
+    <base>http://fr.wikipedia.org/wiki/Accueil</base>
+    <generator>MediaWiki 1.16alpha-wmf</generator>
+    <case>first-letter</case>
+    <namespaces>
+      <namespace key="-2">Média</namespace>
+      <namespace key="-1">Spécial</namespace>
+      <namespace key="0" />
+      <namespace key="1">Discussion</namespace>
+      <namespace key="2">Utilisateur</namespace>
+      <namespace key="3">Discussion utilisateur</namespace>
+      <namespace key="4">Wikipédia</namespace>
+      <namespace key="5">Discussion Wikipédia</namespace>
+      <namespace key="6">Fichier</namespace>
+      <namespace key="7">Discussion fichier</namespace>
+      <namespace key="8">MediaWiki</namespace>
+      <namespace key="9">Discussion MediaWiki</namespace>
+      <namespace key="10">Modèle</namespace>
+      <namespace key="11">Discussion modèle</namespace>
+      <namespace key="12">Aide</namespace>
+      <namespace key="13">Discussion aide</namespace>
+      <namespace key="14">Catégorie</namespace>
+      <namespace key="15">Discussion catégorie</namespace>
+      <namespace key="100">Portail</namespace>
+      <namespace key="101">Discussion Portail</namespace>
+      <namespace key="102">Projet</namespace>
+      <namespace key="103">Discussion Projet</namespace>
+      <namespace key="104">Référence</namespace>
+      <namespace key="105">Discussion Référence</namespace>
+    </namespaces>
+  </siteinfo>
+  <page>
+    <title>JMaki</title>
+    <id>1423913</id>
+    <revision>
+      <id>32642150</id>
+      <timestamp>2008-08-22T05:57:25Z</timestamp>
+      <contributor>
+        <username>Analphabot</username>
+        <id>167728</id>
+      </contributor>
+      <minor/>
+      <comment>robot  Modifie: [[en:JMaki]]</comment>
+      <text xml:space="preserve">'''jMaki''' est un [[framework]] [[Asynchronous JavaScript and XML|AJAX]] qui a la particularité d'utiliser le [[glisser-déposer]] pour facilement créer des applications web en JavaScript en utilisant [[Java (langage)|Java]], [[PHP: Hypertext Preprocessor|PHP]], et [[Phobos]]. Il fonctionne avec l'[[environnement de développement intégré]] [[Netbeans]] ou [[Eclipse (logiciel)|Eclipse]], et via Catalina, le conteneur de servlet de [[Tomcat]]. Il est disponible sous [[licence BSD]].
+
+Il utilise les widgets présents dans d'autres framework tel [[Dojo Toolkit|Dojo]], Script.aculo.us, Yahoo!, widgets RSS et de chat et encapsule le tout dans des tags [[JavaServer Pages|JSP 2.0]] ou [[JavaServer Faces|JSF 1.1]], pour le traiter comme du code Java. &lt;ref&gt;[http://www.lemondeinformatique.fr/actualites/lire-sun-dope-sa-strategie-ajax-19469.html Sun dope sa stratégie Ajax - Actualités Architecture logicielle - Le Monde Informatique&lt;!-- Titre généré automatiquement --&gt;]&lt;/ref&gt;
+
+== Histoire ==
+[[Sun Microsystems]] à dévoilé jMaki lors de la conférence Ajax Experience 2006 (Ajaxian) :
+
+''&quot;jMaki is a lightweight, client/server framework for creating JavaScript-centric Web 2.0 applications. You can use jMaki when developing with PHP, Portlets, Facelets, Java, and JavaScript.&quot;''&lt;ref&gt;[http://ajaxian.com/index.php?s=jMaki&amp;searchbutton=Go Ajaxian&lt;!-- Titre généré automatiquement --&gt;]&lt;/ref&gt;
+
+== Caractéristiques fonctionnelles ==
+
+Il crée à la fois un en tête ainsi qu'un code. Le widget est immédiatement visible en rechargeant la page depuis le navigateur. Les propriétés sont accessibles depuis le bouton '''jMaki'''.
+
+== Références ==
+&lt;references/&gt;
+
+== Voir aussi ==
+* [[Cadre d'Application AJAX]]
+* [[GlassFish]]
+
+=== Liens et documents externes ===
+* [https://ajax.dev.java.net/ Project jMaki]
+* [https://ajax.dev.java.net/screencast/jMakiDemo/jMakiDemo.html Screencast de jMaki]
+* [https://ajax.dev.java.net/nonav/gallery/index.html#0 Galerie d'exemples de jMaki] [http://javaserver.org/jmaki/]
+* [https://ajax.dev.java.net/developer.html Ressources pour Développeur]
+
+{{Portail logiciels libres}}
+
+[[Catégorie:Framework Java]]
+[[Catégorie:AJAX]]
+
+[[en:JMaki]]
+[[ru:JMaki]]</text>
+    </revision>
+  </page>
+  <page>
+    <title>ZK (informatique)</title>
+    <id>1382159</id>
+    <revision>
+      <id>41325163</id>
+      <timestamp>2009-05-25T21:40:10Z</timestamp>
+      <contributor>
+        <username>Manu1400</username>
+        <id>71277</id>
+      </contributor>
+      <comment>liste à puces et divers</comment>
+      <text xml:space="preserve">{{Infobox Logiciel
+| nom = ZK
+| image = 
+| description = Simple and Rich
+| dernière version = 3.5.1
+| date de dernière version = {{Date|8|octobre|2008}}
+| environnement = [[Multiplate-forme]]
+| type = [[Ajax (programming)|Ajax Web Framework]]
+| licence = [[GNU General Public License| GNU General Public License]] / Commercial
+| site web = [http://www.zkoss.org www.zkoss.org]
+| développeur = [http://www.potix.com Potix Corporation]
+}}
+{{wikibookspar|fr|ZK|}}
+
+'''ZK''' est un [[framework]] [[open source]] web 2.0, proposant une interaction utilisateur (UI) riche. Zk permet tout autant de définir rapidement des interfaces graphiques via une syntaxe XML ou un éditeur Wysiwig que de manipuler directement les objets en JAVA.
+
+Le traitement des événements se fait coté serveur relié depuis le navigateur via le moteur javascript de Zk. Pour l'utilisateur du [[framework]], tout ce passe comme si l'interface graphique était gérée entièrement coté serveur. Il est aussi intuitif d'ajouter, enlever, modifier des composants graphiques qu'en SWING. Le moteur de Zk se chargeant de répercuter automatiquement les modifications dans le navigateur du client.
+
+Il est tout autant possible de définir une application relativement classique, comme avec des [[framework]] tel que [[Struts]] et [[JavaServer Faces]]. Les JSP sont remplacées par des fichier XML. Le code EL est lui aussi de la partie et chaque événement (validation d'un formulaire...) donnera lieu à changement de page.
+
+Il est au contraire aussi possible de designer l'interface graphique sans aucun rechargement de page, le contenu étant mis à jour dynamiquement via AJAX. Le comportement est alors proche d'une interface graphique classique, raisonnablement rapide, mais sans toutefois avoir la même réactivité.
+
+De nombreux tag et composants graphiques sont inclus dans le [[framework]] afin de faciliter la tache au quotidien : saisie de date avec calendrier, fenêtres, popups, menus, arborescences, grilles et peuvent être mélanger à du code XHTML.
+
+Utiliser les composants graphiques prédéfinis et les assembler permettra de se passer totalement de code [[javascript]]. Si vous désirez toutefois un comportement bien spécifique, vous devrez créer vos propres composants et gérer aussi la partie cliente en [[javascript]].
+
+Avantage :
+
+Utiliser le [[framework]] ZK basé sur un moteur AJAX, permet :
+
+* de développer des interfaces à la fois riche et design.
+* de gagner du temps par rapport aux frameworks WEB classiques
+* de coder de manière simple (proche d'une application SWING ou AWT)
+* d'avoir une application WEB full JAVA (aussi bien les traitements que les interfaces) sans la moindre ligne de Javascript à taper.
+* ZK s'intègre parfaitement avec toute technologie JAVA : JMS, Hibernates, JAVA EE 5...
+
+Inconvénients :
+
+* Le code généré est très intrusif : table dans des table dans des div etc... ce qui amène à une customisation des composants difficile.
+* La performance dépend du navigateur et de la machine. La fluidité ne sera pas celle d'une interface graphique classique.
+* La technologie est non standard, soutenue uniquement par une petite société.
+* La licence payante pour une utilisation commerciale (beaucoup de frameworks concurrents sont 100% gratuits).
+
+== Pré-requis système ==
+* [[Machine virtuelle Java|J2RE]] version 1.4 or supérieure
+* Un serveur Web supportant les [[servlet]]s
+
+== Pré-requis de compétences en programmation ==
+=== Requis ===
+* JAVA, 
+* HTML/CSS, 
+* XML
+
+==ZUML==
+
+'''ZUML''' (ZK User Interface Markup Language) un langage de balise (markup language) pour une définition d’interface utilisateur 
+
+== Liens externes ==
+* [http://www.zkoss.org ZK Home]
+* [http://www.zkoss.org/doc/tutorial-fr.dsp Tutorial]
+* [http://www.zkoss.org/demo ZK Live Demo]
+{{portail informatique}}
+
+[[Catégorie:Framework Java]]
+[[Catégorie:AJAX]]
+
+[[en:ZK (framework)]]
+[[es:ZK Framework]]
+[[ro:ZK]]
+[[ru:ZK Framework]]
+[[zh:ZK]]</text>
+    </revision>
+  </page>
+  <page>
+    <title>XMLHttpRequest</title>
+    <id>299773</id>
+    <revision>
+      <id>41746893</id>
+      <timestamp>2009-06-07T05:54:23Z</timestamp>
+      <contributor>
+        <username>SassoBot</username>
+        <id>519895</id>
+      </contributor>
+      <minor/>
+      <comment>robot  Ajoute: [[tk:XMLHttpRequest]]</comment>
+      <text xml:space="preserve">{{ébauche|informatique}}
+
+'''XMLHttpRequest''' est un objet ActiveX ou [[Javascript]] qui permet d'obtenir des données au format [[Extensible Markup Language|XML]], [[JSON]], mais aussi [[Hypertext Markup Language|HTML]], ou encore texte simple à l'aide de requêtes [[Hypertext Transfer Protocol|HTTP]].
+
+On explique le succès récent de l'objet et la très grande utilisation qui en est faite actuellement (parfois au détriment de l'[[Accessibilité du Web|accessibilité]] d'un site) par la simple création du nom [[Asynchronous JavaScript And XML|AJAX]].
+
+== Historique ==
+XMLHttpRequest a d'abord été développé par [[Microsoft]], en tant qu'objet [[ActiveX]], pour [[Internet Explorer]] 5.0. (septembre [[1998]]). Il a ensuite été repris et implémenté successivement sous [[Mozilla]] 1.0 (mai 2002), [[Safari (logiciel)|Safari]] 1.2 (février 2004), [[Konqueror]] 3.4 (mars 2005) puis [[Opera]] 8.0 (avril 2005).
+
+En raison de ces implémentations plutôt récentes, l'objet n'est pas supporté par les navigateurs dits de « vieille génération ».
+
+En avril [[2006]], il a été proposé pour devenir une recommandation&lt;ref&gt; [http://www.xul.fr/XMLHttpRequest.html L'objet XMLHttpRequest] en français, ou {{en}} [http://www.w3.org/TR/XMLHttpRequest]&lt;/ref&gt; du [[World Wide Web Consortium|W3C]].
+
+L'utilisation de XMLHttpRequest nécessite l'utilisation du langage javascript.
+
+Les navigateurs l'implémentent de différentes façons : ActiveX pour Internet Explorer, objet pour les autres. La création de l'objet se fait donc différemment selon le navigateur. De plus, pour créer l'ActiveX sous Internet Explorer, il est possible de tester plusieurs versions. Toutefois, après la création de l'objet, les méthodes et attributs sont les mêmes pour tous les navigateurs.
+
+[[Microsoft]] a été le premier à incorporer (septembre [[1998]]) des fonctionnalités XMLHttp dans son navigateur [[Internet Explorer]] (5 à 7)  sous forme d'un [[ActiveX]] ( ie &lt; 7 ) sous le nom MSXML.
+Les développeurs du projet mozilla ont alors implémenté leur version de XMLHTTP sous le nom XMLHttpRequest dans la version [[Mozilla]] 1.0 (mai 2002).
+D'autres navigateurs implémenteront XMLHttp : [[Safari (logiciel)|Safari]] 1.2 (février 2004), [[Konqueror]] 3.4 (mars 2005), [[Opera]] 8.0 (avril 2005), icab 3.0b352.
+
+Le [[World Wide Web Consortium]] essaie alors de standariser les API en publiant les spécifications de l'API dans sa version 1 sous le nom XMLHttpRequest le 15 avril 2007 et version 2 le 25 février 2008. Ainsi plusieurs implémentations de XMLHttpRequest existent. Pour supporter toutes ces versions une API javascript ([[AJAX]]) de haut niveau permet de faire abstraction des différentes implémentations et versions de XMLHttpRequest.
+
+La norme XMLHttpRequest aura un successeur, HMLHttpRequest Level 2 et on envisage de la  compléter par l'utilisation d'autres technologies:
+* Le W3C propose Access control pour échanger des données avec des serveurs sur des domaines différents,
+* Microsoft propose XDomainRequest depuis Internet Explorer 8 qui pourrait remplacer ou compléter XHR selon les cas.
+
+== Création d'un objet XMLHttpRequest ==
+Quel que soit le navigateur :
+
+&lt;source lang=&quot;javascript&quot;&gt;
+function createXhrObject()
+{
+    if (window.XMLHttpRequest)
+        return new XMLHttpRequest();
+
+    if (window.ActiveXObject)
+    {
+        var names = [
+            &quot;Msxml2.XMLHTTP.6.0&quot;,
+            &quot;Msxml2.XMLHTTP.3.0&quot;,
+            &quot;Msxml2.XMLHTTP&quot;,
+            &quot;Microsoft.XMLHTTP&quot;
+        ];
+        for(var i in names)
+        {
+            try{ return new ActiveXObject(names[i]); }
+            catch(e){}
+        }
+    }
+    window.alert(&quot;Votre navigateur ne prend pas en charge l'objet XMLHTTPRequest.&quot;);
+    return null; // non supporté
+}
+xhr = createXhrObject();
+&lt;/source&gt;
+
+== Avantages et inconvénients ==
+L'avantage principal est dans le côté asynchrone. La page entière ne doit plus être rechargée en totalité lorsqu'une partie doit changer ce qui entraîne un gain de temps et une meilleure interaction avec le serveur et donc le client. 
+
+Les inconvénients résident dans le fait que 
+* XMLHttpRequest en version actuelle ne peut se connecter qu'à un seul domaine serveur en utilisant le protocole [[http]] 
+* que le navigateur doit être compatible [[javascript]].
+* que les internautes à navigation spéciale (ex. navigateur vocal) ont du mal à savoir ce qui doit être lu (ce qui a changé) sur la page : c'est un problème d'accessibilité, que la norme [[WAI-ARIA]] devrait résoudre pour les applications qui la respectent.
+
+Le contenu dynamique affiché par l'utilisation de javascript explique pourquoi le navigateur ne peut pas avoir le même comportement qu'une page [[Hypertext Markup Language|html]] chargée dans sa totalité (enregistrement des liens, marque page, bouton retour).
+
+D'autres différences existent:
+* le déboguage du javascript est un cauchemar en utilisant une fenêtre (alert), une zone div ou la ligne de commande (console), heureusement des outils comme [[Firebug]] ou [[Microsoft Visual Studio|Visual studio]] améliorent le déboguage.
+* le nombre de requêtes pouvant s'exécuter en même temps dépend du navigateur.
+
+==Récursivité==
+
+La récursivité n'est pas assurée. Ainsi du code javascript présent dans la page chargée via XMLHttpRequest ne sera pas exécuté.
+
+Il faut extraire le code javascript depuis la page mère afin de l'exécuter.
+
+Le code suivant exécute le javascript présent entre des balises &lt;script&gt;&lt;/script&gt; dans la page fille, après l'avoir chargé comme décrit précédemment :
+
+&lt;source lang=&quot;javascript&quot;&gt;
+if (XHR.readyState == 4)
+{
+	document.getElementById('contenu').innerHTML = XHR.responseText;
+	var js = document.getElementById('contenu').getElementsByTagName('script');
+	for( var i in js )
+	{
+		eval(js[i].text);
+	}
+}
+&lt;/source&gt;
+
+==Voir aussi==
+*[[Asynchronous JavaScript And XML|AJAX]]
+*[[Cadre d'Application AJAX]]
+*[http://www.w3schools.com/dom/dom_http.asp API de l'objet XMLHttpRequest]
+
+== Références ==
+&lt;references /&gt;
+
+{{Portail informatique}}
+
+[[Catégorie:HTTP]]
+[[Catégorie:AJAX]]
+[[Catégorie:JavaScript]]
+[[Catégorie:Microsoft]]
+
+[[cs:XMLHttpRequest]]
+[[de:XMLHttpRequest]]
+[[en:XMLHttpRequest]]
+[[es:XMLHttpRequest]]
+[[is:XMLHttpRequest]]
+[[it:XMLHttpRequest]]
+[[ja:XMLHttpRequest]]
+[[nl:XMLHTTP]]
+[[pl:XMLHTTP]]
+[[pt:XMLHttpRequest]]
+[[ro:XMLHttpRequest]]
+[[ru:XMLHttpRequest]]
+[[sv:XMLHttpRequest]]
+[[th:XMLHttpRequest]]
+[[tk:XMLHttpRequest]]
+[[tr:XMLHttpRequest]]
+[[uk:XMLHttpRequest]]
+[[zh:XMLHTTP]]</text>
+    </revision>
+  </page>
+  <page>
+    <title>Archetype JavaScript Framework</title>
+    <id>2828782</id>
+    <revision>
+      <id>41224075</id>
+      <timestamp>2009-05-23T05:10:19Z</timestamp>
+      <contributor>
+        <username>Pautard</username>
+        <id>58456</id>
+      </contributor>
+      <comment>/* Liens */ liste de diffusion et non mailing list !</comment>
+      <text xml:space="preserve">{{ébauche|informatique}}
+
+{{Infobox Logiciel
+| nom = Archetype
+| dernière version = 0.1.5
+| date de dernière version = {{Date|23|février|2008}}
+| environnement = [[Cross-platform]] (navigateur Web)
+| type = [[Ajax_(programming)|Ajax Web Framework]]
+| licence = [[MIT License| Licence MIT]]
+| site web = [http://archetypejs.org archetypejs.org]
+| développeur = Florian Traverse, Matthieu Lux, soutenu par [[Atos Worldline]]
+}}
+
+==Présentation==
+Archetype est un framework JavaScript, écrit au dessus de [[:en:Prototype Javascript Framework|Prototype(en)]] dont le but est l'industrialisation du Javascript côté client.
+
+Celui-ci vise à simplifier le développement et l'écriture du JavaScript, ainsi qu'à inciter aux bonnes pratiques de développement pour rendre le code plus lisible et plus maintenable, notamment en utilisant le [[Javascript discret]].
+
+Le framework offre des possibilités que l'on retrouve d'habitude côté serveur, telles que:
+* Gestion de dépendance
+* Interprêtation de template
+* Séparation Modèle Vue Contrôleur
+* Système de log
+* Communication inter-composant par broadcast d'évènements (permettant aux différents objets de ne pas être inter-dépendants).
+
+Afin de simplifier les développements, le framework fonctionne sur le principe de [[:en:Convention over Configuration|Convention over Configuration(en)]], ceci ayant le double avantage d'organiser les développements de façon homogène et de diminuer la configuration requise pour obtenir ce que l'on désire.
+
+En outre, le concept de Composant, sorte de &quot;super objet&quot;, accompagné des MethodBuilder, permet au framework d'associer des services transversaux aux Composants, visant à simplifier l'écriture et le développement, ainsi que de faciliter les tâches courantes que posent le développement d'une application Web (... 2.0). Ce principe se rapproche de la [[Programmation orientée aspect]]. 
+
+Grâce à ces fonctionnalités, il devient aisé, même pour des débutants en Javascript, de développer des [[Rich Internet Application|RIA]] utilisant un Front entièrement Javascript, communiquant par le biais d'[[Asynchronous JavaScript and XML|Ajax]], se basant soit sur les capacités Ajax de [[:en:Prototype Javascript Framework|Prototype(en)]], soit sur les capacités de chargement de Javascript du framework, soit en utilisant un framework dédié à la couche de transport, tel que [[:en:DWR (Java)|DWR (en)]] ou [[YAWS RPC]].
+
+== Liens ==
+* [http://archetypejs.org Site officiel]
+* [http://archetypejs.blogspot.com Blog des développeurs]
+* [http://sourceforge.net/project/showfiles.php?group_id=194362 Téléchargement]
+* [http://groups.google.com/group/archetype-user Liste de diffusion]
+* [http://sourceforge.net/projects/archetypejs/ Projet Sourceforge]
+* [http://bug.archetypejs.org Bug Tracker]
+
+[[Catégorie:AJAX]]</text>
+    </revision>
+  </page>
+  <page>
+    <title>Asynchronous JavaScript and XML</title>
+    <id>285488</id>
+    <revision>
+      <id>46225681</id>
+      <timestamp>2009-10-28T11:24:33Z</timestamp>
+      <contributor>
+        <username>Zandr4</username>
+        <id>431770</id>
+      </contributor>
+      <comment>Annulation des modifications 46225629 de [[Spécial:Contributions/Dreamcastman|Dreamcastman]] ([[User talk:Dreamcastman|d]]) vandalisme</comment>
+      <text xml:space="preserve">{{Voir homonymes|Ajax}}
+'''AJAX''' est un [[acronyme]] signifiant {{lang|en|''[[Asynchronisme|Asynchronous]] [[JavaScript]] and [[Extensible Markup Language|XML]]''}} (« XML et Javascript asynchrones ») et désignant une solution [[informatique]] libre pour le développement d'[[application (informatique)|applications]] [[World Wide Web|Web]]. 
+
+À l'image de [[DHTML]] ou de [[LAMP]], AJAX n'est pas une technologie en elle-même, mais un terme qui évoque l'utilisation conjointe d'un ensemble de technologies libres couramment utilisées sur le Web:
+* [[Hypertext Markup Language|HTML]] (ou [[XHTML]]) pour la structure sémantique des informations ;
+* [[Feuilles de style en cascade|CSS]] pour la présentation des informations ;
+* [[Document Object Model|DOM]] et [[JavaScript]] pour afficher et interagir dynamiquement avec l'information présentée ;
+* l'objet [[XMLHttpRequest]] pour échanger et manipuler les données de manière asynchrone avec le serveur Web.
+* [[Extensible Markup Language|XML]] pour remplacer le format des données informatives (JSON) et visuelles (HTML).
+
+En alternative au format XML, les applications AJAX peuvent utiliser les fichiers texte ou [[JSON]].
+
+Les applications AJAX peuvent être utilisées au sein des [[navigateurs Web]] qui supportent les technologies décrites précédemment. Parmi eux, on trouve [[Firefox|Mozilla Firefox]], [[Internet Explorer]], [[Konqueror]], [[Google Chrome]], [[Safari (logiciel)|Safari]] et [[Opera]].
+
+==Histoire==
+
+Le terme AJAX a été introduit par [[Jesse James Garrett]] (informaticien américain), le 18 février 2005, dans un article sur le site Web ''Adaptive Path''&lt;ref&gt;{{en}} [http://www.adaptivepath.com/publications/essays/archives/000385.php L'article de Jesse James Garrett] qui a lancé le nom Ajax ([http://www.scriptol.fr/ajax/ajax-garrett.php traduction])&lt;/ref&gt;. Depuis, il a rapidement gagné en popularité.
+
+Les éléments qui composent AJAX (Javascript, DOM, XML, ...) et leur utilisation pour générer des interactions asynchrones sont de loin antérieurs à l'apparition du terme. 
+
+En 2001, l'objet [[XMLHttp]], apparu avec la bibliothèque MSXML, point de départ de cette technique, fut développé à l'origine par [[Microsoft]] pour [[Internet Explorer]] 5 en tant qu'objet [[ActiveX]], puis intégré en tant qu'objet navigateur natif nommé [[XMLHttpRequest]] par [[Mozilla]], ce qui permit aux autres navigateurs de l'intégrer car ActiveX n'est utilisé que par Internet Explorer.
+
+== Comparaison avec les applications Web traditionnelles ==
+
+Les applications Web traditionnelles permettent aux utilisateurs d'effectuer des choix (suivre un lien, remplir et valider un formulaire). Une requête est alors envoyée au [[serveur HTTP]], qui agit en fonction de l'action et des données reçues, et renvoie une nouvelle page (dans le jargon du Web, ces requêtes sont dites « synchrones »). Ce fonctionnement consomme inutilement une partie de la bande passante, une grande partie du code (X)HTML étant commune aux différentes pages de l'application. Et parce qu'une requête au serveur HTTP doit être réalisée à chaque interaction avec l'application, le temps de réponse de l'application dépend fortement du temps de réponse du serveur HTTP. Cela conduit à des interfaces utilisateur plus lentes que leurs équivalentes natives. Les navigateurs actuels mettent les éléments communs en cache, donc le chargement de pages nouvelles n'oblige pas le serveur à redonner les mêmes éléments à chaque fois.
+
+Les applications utilisant les techniques AJAX, quant à elles, peuvent envoyer des requêtes au serveur HTTP pour récupérer uniquement les données nécessaires en utilisant la requête HTTP [[XMLHttpRequest]] ; ces requêtes sont dites « asynchrones ». Les [[Feuilles de style en cascade|feuilles de style]] (CSS) sont utilisées pour la présentation des informations au sein des pages Web. Le langage [[JavaScript]] côté client est utilisé pour interpréter la réponse du serveur HTTP et pour effectuer des traitements (affichages de menus déroulants, saisies...). Les applications sont alors plus réactives, la quantité de données échangées entre le navigateur et le serveur HTTP étant fortement réduite. Le temps de traitement de la requête côté serveur est également réduit, une partie du traitement étant réalisée sur l'ordinateur d'où provient la requête.
+
+En contrepartie, le chargement de la première page peut être pénalisé si l'application utilise une [[Bibliothèque logicielle|bibliothèque]] AJAX volumineuse (certaines bibliothèques pèsent plus de {{Unité|500|ko}}, mais cela reste rare).
+
+== Approches côté serveur==
+
+Un des points critiques dans la programmation avec AJAX est la nécessité d'une architecture [[client-serveur|client/serveur]], mais des solutions en mode déconnecté ({{lang|en|''offline''}} en anglais) commencent à voir le jour (fonctionnement du poste client sans nécessité d'être relié au réseau Internet ou à l'Intranet d'une entreprise). AJAX n'a pas besoin de code actif sur le serveur (seul le code JavaScript est actif sur le poste client), ce dernier étant un serveur Web se contentant d'envoyer les pages Web vers le poste client. Car les langages employés sont de type interprétés et sont exécutés directement au sein du navigateur du poste client. Il n'est donc pas nécessaire de déployer ou de mettre à jour une machine virtuelle (comme pour Java par exemple) sur le poste client. Ainsi AJAX est une solution portable, ses différents composants suivant les standards du [[World Wide Web Consortium|W3C]].
+Malgré tout, des technologies supplémentaires peuvent être employées côté serveur, notamment pour la gestion des données au format XML, ou comme par exemple des langages de script et des bases de données ([[PHP]] et [[MySQL]] par exemple). 
+
+Ces choix sortent du périmètre d'AJAX, mais peuvent apporter de nombreux services supplémentaires ou complémentaires :
+* [[Java (langage)|Java]] fournit une technologie à maturité avec un support des [[processus léger|processus légers]] ({{lang|en|''threads''}}) et un important soutien de la communauté [[Open Source]].
+* [[PHP: Hypertext Preprocessor|PHP]] possède aussi un fort soutien de la communauté [[Open Source]], notamment la version 5 plus performante sur la gestion du [[simpleXML|XML]] en natif.
+* [[Perl (langage)|Perl]] propose notamment [[Catalyst (logiciel)|Catalyst]].
+* [[Python (langage)|Python]] est un langage de script complet et largement utilisé mais moins que Java ou PHP sur les serveurs ([[Google]]  l'utilise largement).
+* [[ColdFusion]] avec les librairies CFjavax, Neuromancer, Sarissa, etc.
+* [[UNIFACE|Uniface]] 9.3 implémente Ajax avec ses Pages dynamiques
+
+== La concurrence ==
+La concurrence pour l'affichage de contenus dynamiques au sein d'une page Web est la suivante :
+* [[Adobe Flash|Flash]] et [[Adobe Flex|Flex]] ([[Adobe Systems]]),
+* [[JavaFX]] ([[Sun Microsystems]]),
+* [[Microsoft Silverlight|Silverlight]] ([[Microsoft]]),
+* [[UNIFACE|Uniface]] ([[Compuware]]),
+* [[XForms]], le standard de formulaire proposé par le [[W3C]].
+
+== Avantages et inconvénients ==
+
+L'avantage de cette méthode est d'abord la vitesse à laquelle une application AJAX répond aux actions de l'utilisateur, qui sont traitées (en partie au moins) localement par le navigateur. Respectant en grande partie les standards Web (W3C et IETF), AJAX possède également des qualités de portabilité. Très vite déployé, AJAX permet d'abaisser les coûts de développement de petites applications, ainsi que les coûts de renouvellement de parc informatique; car AJAX fonctionne avec des ressources matérielles relativement faibles : simples postes clients ne nécessitant pas beaucoup de mémoire (contrairement aux technologies JAVA), simple navigateur, simple serveur Web. Seule condition : choisir un navigateur respectant les standards et acceptant en outre l'emploi du langage JavaScript (et en particulier l'objet XMLHttpRequest), ou bien adapter le code de façon à ce que les pages Web soient lues par tout type de navigateur (ces navigateurs étant de plus en plus rares) ainsi que par les utilisateurs ne souhaitant pas activer les fonctionnalités JavaScript de leur navigateur compatible.
+
+L'utilisateur d'applications AJAX doit en effet autoriser l'exécution de code Javascript par son navigateur, ce qui peut laisser craindre des problèmes de sécurité (cependant il existe des antivirus bloqueurs de scripts efficaces). N'utilisant pas le composant JavaScript standard XMLHTTP, les versions d'[[Internet Explorer]] 5 ou 6 pour [[Microsoft Windows|Windows]] doivent autoriser les ActiveX, contrairement aux autres navigateurs ([[Firefox]], [[Safari (logiciel)|Safari]], [[Opera]], etc.), cependant la version 7 d'IE est compatible.
+Il est donc conseillé de tester les applications AJAX sur chaque type de navigateur, en raison du non respect des normes Web par certains éditeurs de navigateurs.
+
+Un autre inconvénient est la question du [[référencement]] puisque les [[robot d'indexation|robots d'indexation]] ne sont pas en mesure d'indexer les contenus engendrés dynamiquement.
+
+En modifiant le contexte de navigation sans que l'utilisateur n'en soit nécessairement averti (en fonction de son mode d'accès au Web), AJAX pose de nombreuses questions d'[[Accessibilité du Web|accessibilité]]. C'est le cas notamment pour les utilisateurs de [[Lecteur d'écran|lecteurs d'écran]] ou de dispositifs d'agrandissement (loupes virtuelles).
+
+Enfin, différents cas de failles de sécurité de type « injection de code » ont été signalés en 2005 et 2006 avec des solutions AJAX déployées de façon standard. À cet égard, il faut rappeler que dans leur majorité les applications informatiques déployées de façon standard sont vulnérables. Cette recommandation n'est pas propre à AJAX, elle est valable pour toute technologie et tout développement. Comme pour presque toute application informatique, une sécurisation du code, du serveur et des postes clients est donc nécessaire avec AJAX. Ceci se traduira d'abord par une sécurisation du serveur Web et des bibliothèques de code JavaScript, ainsi que, côté poste client par la mise à jour du navigateur et l'installation d'un antivirus bloqueur de scripts malveillants.
+
+Comme pour tout développement Web, établir une connexion par le protocole sécurisé https est également une solution pour sécuriser les échanges entre les postes clients et le serveur distribuant les pages Web.
+&lt;!-- Note d'un lecteur à compléter :
+AJAX est un concept récent (2005) qui selon les experts arrivera à maturité en 2008. Cette technique de développement manque donc de références et de modèles. Il est donc indispensable de relativiser, de prendre du recul et de comparer les avantages et inconvénients d'AJAX aux solutions alternatives : java ou flash qui présentent de plus grands dangers en termes de sécurité et qui ne sont pas des normes ouvertes. --&gt;
+
+== Environnements de développement AJAX ==
+Pour faciliter l’utilisation de ces technologies, de nombreux frameworks ont été mis en place. Il s’agit en général d’un ensemble de bibliothèques javascript permettant de réaliser les traitements asynchrones et d’offrir une ergonomie avancée grâce à une palette d’objets graphiques aboutis. 
+
+Dans un souci d’industrialisation, nombre de ces frameworks ont été couplés à des frameworks de conception web.
+
+On estime à plus de 500 le nombre de frameworks Javascript actuels. 
+Les principaux sont dans l'article [[Cadre d'Application AJAX|Frameworks Ajax]].
+
+Côté serveur, le principe même d'Ajax implique que nous avons le choix de la technologie. Cependant, certaines technologies orientées événementiel ont un fort potentiel de productivité.
+* [[Ruby]], et spécialement [[Ruby on Rails]]
+* [[Microsoft .NET|.NET]] 2.0 de [[Microsoft]] développe un framework pour ASP.Net (Microsoft ASP.Net Ajax).
+* Morfik WebOS AppsBuilder de [[MORFIK]] est un [[EDI]] complet pour des applications AJAX avec un 'designer' visuel et le choix du langage de programmation (Pascal, Basic, Java, C#).
+* Une nouvelle approche permet de se défaire du développement Javascript, souvent jugé coûteux et complexe. Cette approche vise à industrialiser le développement et est symbolisée par des frameworks tels que [[GWT]] ou [[Echo (Framework)|Echo2]].
+
+En parallèle est développée une ASP.NET Ajax Control Toolkit, qui offre de nombreux contrôles « prêts à l’emploi » pour les développeurs utilisant Visual Studio 2005. On y trouve actuellement une trentaine de contrôles mais Microsoft en prévoit 50 à 100, tous fournis avec leur source.
+Il existe aussi un tutoriel sur le site pour créer ses propres contrôles Toolkit qui utilisent la technologie Ajax .NET.
+
+De plus, on a vu récemment arriver le [[design pattern]] « [[Comet (informatique)|Comet]] », qui propose des solutions pour effectuer du ''[[Server push|push]]'' de données grâce à Ajax.
+
+=== Open AJAX ===
+[[International Business Machines Corporation|IBM]] a créé [[#Open AJAX|Open AJAX]] Initiative, un groupe de promotion de cette technologie avec des partenaires tels que [[24SevenOffice]], [[Adobe Systems]], [[BEA Systems]], [[Borland]], the Dojo Foundation, Eclipse Foundation, [[Google]], [[Ilog]], [[Yahoo!]], [[OpenLaszlo | Laszlo Systems]], [[Mozilla Corporation]], [[Novell]], Openwave Systems, [[Systems, applications, and products for data processing|SAP]], [[Oracle Corporation|Oracle]], [[Red Hat]], Tibco, [[Zend]] et [[Zimbra]]&lt;ref&gt;[http://www.openajax.org OpenAjax Alliance&lt;!-- Titre généré automatiquement --&gt;]&lt;/ref&gt;.
+
+Le premier résultat de cette initiative est l'''AJAX Toolkit Framework''&lt;ref&gt;[http://www.eclipse.org/proposals/atf/ Description du projet] hébergé par eclipse.org&lt;/ref&gt; ([[Ajax_Toolkit_Framework|ATF]]), un projet qui vise à proposer des outils pour le développement d'applications AJAX dans l'outil de développement [[Eclipse (logiciel)|Eclipse]]. Ce projet s'appuie entre autres sur la contribution initiale d'IBM et divers [[framework]]s AJAX [[open source]] (tels que [[Dojo Toolkit|Dojo]] ou [[Rico]]).
+
+== Notes et références ==
+&lt;references /&gt;
+
+==Voir aussi==
+=== Articles connexes ===
+*[[XMLHttpRequest]]
+*[[JavaScript]]
+*[[Cadre d'Application AJAX]]
+*[[Conception de site Web]]
+*[[DHTML]]
+
+=== Liens externes ===
+* {{fr}} {{dmoz|{{PAGENAME}}|http://www.dmoz.org/World/Français/Informatique/Programmation/Langages/JavaScript/AJAX/|Asynchronous JavaScript and XML}}
+
+{{portail|informatique}}
+
+[[Catégorie:AJAX|*]]
+[[Catégorie:Technologie web]]
+[[Catégorie:Programmation informatique]]
+[[Catégorie:Web 2.0]]
+[[Catégorie:Interface Riche| ]]
+
+{{Lien BA|de}}
+
+[[af:AJAX]]
+[[ar:أجاكس]]
+[[bg:AJAX]]
+[[bn:এজ্যাক্স (ওয়েব প্রোগ্রামিং কৌশল)]]
+[[ca:Ajax (programació)]]
+[[cs:Asynchronous JavaScript and XML]]
+[[da:Ajax (programmering)]]
+[[de:Ajax (Programmierung)]]
+[[en:Ajax (programming)]]
+[[es:AJAX]]
+[[eu:Ajax (programazioa)]]
+[[fa:آژاکس (برنامه‌نویسی)]]
+[[fi:Ajax (ohjelmointi)]]
+[[ga:AJAX]]
+[[gl:AJAX]]
+[[he:AJAX (תכנות)]]
+[[hu:Ajax (programozás)]]
+[[hy:AJAX]]
+[[id:AJAX]]
+[[it:AJAX]]
+[[ja:Ajax]]
+[[ka:Ajax]]
+[[ko:Ajax]]
+[[lt:AJAX]]
+[[mk:AJAX]]
+[[ml:അജാക്സ് (കംപ്യൂട്ടര്‍ പ്രോഗ്രാമിങ്ങ്)]]
+[[mn:Ajax (программчлал)]]
+[[ms:Ajax]]
+[[nl:Asynchronous JavaScript and XML]]
+[[nn:AJAX]]
+[[no:Ajax (programmering)]]
+[[pl:AJAX]]
+[[pt:AJAX (programação)]]
+[[ro:Ajax (programare)]]
+[[ru:AJAX]]
+[[sl:AJAX (programiranje)]]
+[[sq:Ajax (programim)]]
+[[sv:AJAX]]
+[[ta:ஏஜாக்ஸ்]]
+[[th:เอแจ็กซ์]]
+[[tk:Ajax (programmirleme)]]
+[[tr:AJAX (programlama)]]
+[[uk:AJAX]]
+[[vi:Ajax (lập trình)]]
+[[zh:AJAX]]</text>
+    </revision>
+  </page>
+  <page>
+    <title>AxsJAX</title>
+    <id>2890257</id>
+    <revision>
+      <id>35332105</id>
+      <timestamp>2008-11-16T22:24:14Z</timestamp>
+      <contributor>
+        <username>Nodulation</username>
+        <id>202115</id>
+      </contributor>
+      <minor/>
+      <comment>portail logiciels libres</comment>
+      <text xml:space="preserve">{{Ébauche|informatique}}
+{{Infobox Logiciel
+| nom=AxsJAX 
+| logo=
+| image=
+| description=
+| développeur=[[Google]]
+| dernière version=
+| date de dernière version= {{Date|31|mars|2008|en informatique}}
+| version avancée=
+| date de version avancée=
+| environnement=[[Multiplate-forme]] 
+| langue=
+| type=[[Framework]] [[Web]]
+| licence=[[Licence Apache|Licence Apache 2.0]] 
+| site web=[http://code.google.com/p/google-axsjax/]
+}}
+
+[[AJAX]] permet de déployer des applications riches dans les navigateurs web. Le [[framework]] d''''AxsJAX''' permet l'injection de composants accessibles dans ces applications. Ceci permet aux utilisateurs de technologies adaptatives telles que les navigateurs parlants ou les [[lecteur d'écran|lecteurs d'écran]] l'utilisation de ces applications avec un niveau identique d'interactivité.
+
+AxsJAX (Accessible AJAX) permet une augmentation de l'accessibilité en respectant les standards définis par la norme [[ARIA]] du [[W3C]]. Les prérequis pour en bénéficier sont : 
+
+1. Un navigateur web moderne comme Firefox à partir de la version 2.0 ou qui respecte le standard W3C ARIA. 
+2. Des technologies adaptatives  qui respecte le standard W3C ARIA. 
+3. En particulier, beaucoup des améliorations permises par AxsJAX dépendent de la capacité des lecteurs d'écran et des navigateurs parlants à traiter correctement les mises à jour asynchrones de portions d'une page Web.
+
+Le framework AxsJAX permet l'injection de composant adaptatifs dans des applications web 2.0 applications en utilisant l'une de ces technologies : 
+
+* Avec un [[bookmarklet]] : des petites bribes de Javascript que sont utilisés pour créer des signets intelligents. 
+* En utilisant [[Greasemonkey]] : une puissante extension du navigateur qui permet aux utilisateurs finaux de personnaliser le rendu des sites Web à l'aide de scripts. 
+* En utilisant [[Fire Vox]] : Fire Vox, une extension libre qui transforme le navigateur en navigateur parlant, injecte automatiquement des scripts AxsJAX si l'option correspondante est sélectionnée.
+
+{{Portail|informatique|logiciels libres}}
+
+[[Catégorie:AJAX]]
+
+[[en:AxsJAX]]</text>
+    </revision>
+  </page>
+  <page>
+    <title>WAI-ARIA</title>
+    <id>3039431</id>
+    <revision>
+      <id>45637722</id>
+      <timestamp>2009-10-10T18:43:56Z</timestamp>
+      <contributor>
+        <username>Vxl</username>
+        <id>45028</id>
+      </contributor>
+      <comment>tradution (suite)</comment>
+      <text xml:space="preserve">{{ébauche|internet}}
+'''WAI-ARIA''' ''{{lang|en|texte=([[Web Accessibility Initiative]] - Accessible Rich Interactive Applications)}}'' est une spécification technique du {{lang|en|texte=[[World Wide Web Consortium|W3C]]}} en cours de rédaction&lt;ref&gt;{{en}} [http://www.w3.org/TR/wai-aria/ Accessible Rich Internet Applications (WAI-ARIA) Version 1.0&lt;!-- Bot generated title --&gt;]&lt;/ref&gt;.
+
+L'objectif est d'accroître l'accessibilité des contenus dynamiques et des composantes des interfaces dynamiques développées à l'aide d'Ajax, HTML, Javascript et technologies associées. Le HTML ne propose pas de fonctionnalité permettant de créer du contenu dynamique ni des interfaces de contrôle mais permet l'insertion d'applets (Flash, Java) et de scripts traités côté client (généralement Javascript). Les développeurs web utilisent de plus en plus le Javascript pour créer les interfaces de contrôle qu'ils ne peuvent créer à l'aide de HTML seul. Ils utilisent également ces scripts pour actualiser une partie de la page sans pour autant rechercher l'ensemble de la page depuis le serveur web. Ces techniques sont dites des applications internet &quot;riches&quot;. Ces interfaces et ces sections actualisées ne sont souvent pas accessibles aux utilisateurs souffrant de handicaps, notamment à ceux utilisant des lecteurs d'écran ou à ceux ne pouvant pas utiliser de souris ni d'équipement équivalent.
+
+ARIA décrit comment ajouter de la sémantique et des métadatas aux contenus HTML afin de rendre les contrôles d'interface et les contenus dynamiques plus accessibles. Par exemple, il devient possible d'identifier une liste de liens en tant que menu de navigation et d'indiquer s'il son état est plié ou déplié. Quoique conçu pour traiter de l'accessibilité en HTML, l'utilisation de WAI-ARIA n'est pas nécessairement restreinte au HTML mais peut être étendue à d'autres langages comme {{lang|en|texte=Scalable Vector Graphics}} (SVG).
+
+ARIA permet aux [[Page web|pages Web]] (ou à des parties de pages) de se déclarer comme des applications plutôt que comme de simples [[Pages Web statique|documents statiques]], par l'ajout de rôle, de propriétés ou d'états d'information vers des applications web dynamiques. 
+
+ARIA est destinée à être utilisée par les développeurs d'[[Application web|applications Web]], les [[Navigateur web|navigateurs web]] (ou agents utilisateurs), les [[Technologie d'assistance|technologies d'assistance]] (ou [[ATS]]), et les outils d'évaluation à l'accessibilité&lt;ref&gt;{{en}} [http://www.w3.org/WAI/intro/aria Présentation de WAI-ARIA&lt;!-- Bot generated title --&gt;]&lt;/ref&gt;.
+
+
+
+
+== Compatibilité ==
+ARIA serait d'ors et déjà supporté par la plupart des navigateurs : Opera 9.5+, Firefox 1.5+, IE8 beta, et Safari 4. ARIA serait déjà partiellement utilisé par certaines technologies d'assistance : [[JAWS]] 7.1+, Window-Eyes 5.5+, [[NVDA]], [[Zoomtext]] 9+.&lt;ref&gt;{{en}} [http://dev.opera.com/articles/view/introduction-to-wai-aria/ Introduction to WAI ARIA] &lt;/ref&gt;
+
+
+== Notes &amp; références ==
+&lt;references /&gt;
+
+== Voir aussi ==
+
+* [[Accessibilité du Web]]
+* [[Asynchronous JavaScript and XML|Ajax]]
+* [[Rich Internet Application]]
+
+&lt;!-- à traduire de la page []
+* [[Universal design]]
+--&gt;
+
+
+[[Catégorie:Accessibilité numérique]]
+[[Catégorie:AJAX]]
+[[Catégorie:Web 2.0]]
+
+[[ar:WAI-ARIA]]
+[[de:Accessible Rich Internet Applications]]
+[[en:WAI-ARIA]]
+[[it:Wai-aria]]</text>
+    </revision>
+  </page>
+  <page>
+    <title>Google Web Toolkit</title>
+    <id>1760305</id>
+    <revision>
+      <id>46630724</id>
+      <timestamp>2009-11-09T16:20:57Z</timestamp>
+      <contributor>
+        <username>Olivier101</username>
+        <id>142111</id>
+      </contributor>
+      <comment>/* Historique des versions */</comment>
+      <text xml:space="preserve">'''''Google Web Toolkit''''' ('''GWT''')  est un ensemble d'outils logiciels développé par [[Google]], permettant de créer et maintenir des applications web dynamiques mettant en oeuvre [[JavaScript]], en utilisant le langage et les outils [[Java (technologie)|Java]]. C'est un [[logiciel libre]] distribué selon les termes de la [[licence Apache]] 2.0.
+
+GWT met l'accent sur des solutions efficaces et réutilisables aux problèmes rencontrés habituellement par le développement [[AJAX]] : difficulté du débogage JavaScript, gestion des appels asynchrones, problèmes de compatibilité entre navigateurs, gestion de l'historique et des favoris, etc.
+
+== Principe ==
+
+GWT est articulé autour d'un concept original : lors de la phase de développement, l'application est écrite en [[Java (technologie)|Java]] de façon classique, dans un [[environnement de développement intégré]] Java, et peut être déboguée avec les outils Java habituels. Une fois l'application prête à être déployée, le [[compilateur]] GWT la traduit en pur [[Javascript]], avec support automatique et transparent pour les principaux navigateurs ([[Internet Explorer]], [[Firefox]], [[Mozilla]], [[Safari]], [[Opera]]). Le code JavaScript généré utilise des techniques d'[[HTML dynamique]] et de manipulation du DOM ([[Document Object Model]]) pour les aspects dynamiques de l'interface.
+
+Ce principe est rendu possible par les différents composants de GWT:
+* le compilateur Java vers JavaScript
+* un navigateur spécialement modifié pour permettre l'exécution (et le débogage) de code Java natif sans nécessiter la compilation JavaScript
+* une bibliothèque d'émulation JRE : il s'agit d'une implémentation en JavaScript d'un sous-ensemble de la bibliothèque de classes Java standard (en particulier quasiment tout le package java.lang et une partie de java.util)
+* une bibliothèque de composants graphiques contenant des [[Composant d'interface graphique|''widgets'']] de base permettant la construction d'une interface graphique
+
+GWT est souvent appelé abusivement un ''[[framework]]'', mais n'en est pas véritablement un car il impose peu de choses au développeur; comme son nom l'indique, il s'agit d'une boîte à outils qui offre des solutions permettant de développer plus facilement des solutions web/AJAX de dernière génération, en profitant des outils et compétences Java existants, et en faisant abstraction de la complexité habituellement liée à ce genre de technologies.
+
+== Fiche technique ==
+
+* Composants graphiques dynamiques et réutilisables
+* Mécanisme d'appels [[Remote_procedure_call|RPC]] simple
+* Gestion de l'historique de navigation (boutons précédent/suivant du navigateur)
+* Possibilité de déboguer l'application avec un [[débogueur]] Java
+* Gestion transparente des différences de comportement entre [[Navigateur web|navigateurs]]
+* Intégration avec [[JUnit]]
+* [[Internationalisation de logiciel|Internationalisation]] simplifiée
+* Possibilité d'intégrer du JavaScript directement dans le code source grâce à une technique appelée JSNI (JavaScript Native Interface)
+* Support des [[Bibliothèque logicielle|bibliothèques]] [[Google]] API (notamment [[Google Gears]])
+* Complètement [[Open Source]]
+* Le développement se fait en pur Java, ce qui permet les contrôles de cohérence à la compilation (contrairement à JavaScript qui est interprété), le refactoring automatisé, etc.
+* Disponibilité de nombreuses bibliothèques tierces qui étendent les fonctionnalités de GWT
+
+== Widgets disponibles ==
+
+On trouve dans GWT un ensemble de [[Composant d'interface graphique|widgets]] permettant de construire une interface utilisateur : 
+
+* Panneaux
+* Boutons
+* Cases à cocher
+* Tables / Grilles
+* Boîtes de dialogues
+* Primitive HTML (dont les images et les hyperliens)
+* Menus et barres de menus
+* Fenêtres défilantes
+* Onglets
+* Arbres
+
+Lorsque c'est possible et viable, les widgets GWT utilisent le contrôle natif HTML équivalent (par ex. Checkbox génère un élément INPUT de type checkbox), mais il est aussi possible de construire des widgets entièrement synthétiques.
+
+Bien qu'offrant des fonctionnalités plus évoluées que les composants HTML, la bibliothèque de widgets GWT reste spartiate lorsqu'on veut créer une IHM avancée; c'est pourquoi des bibliothèques tierces ont vu le jour. On peut citer:
+* [http://extjs.com/products/gxt/ Ext-GWT] (appelé aussi GXT), un portage de [http://extjs.com/products/extjs/ Ext-JS] en GWT, 
+* [http://gwt.components.googlepages.com/ GWT Component Library], 
+* [http://code.google.com/p/gwt-ext/ gwt-ext], un wrapper qui permet d'utiliser les composants Ext-JS en GWT (abandonné depuis par son créateur),
+* [http://gwt-widget.sourceforge.net/ GWT Widget Library],
+* [http://gwtiger.org/ GWTiger]
+* [http://code.google.com/p/smartgwt/ SmartGWT], un wrapper de la librairie javascript SmartClient
+
+Notez que si les wrappers GWT de librairies javascript sont souvent riches en composants, ils ne respectent pas la philosophie de GWT (Le code javascript n'est pas entièrement compilé par GWT et des bugs de ces librairies sont toujours présents, ...)
+
+== Historique des versions ==
+* GWT 1.7  {{Date|13|juillet|2009|en informatique}}
+* GWT 1.6  {{Date|7|avril|2009|en informatique}}
+* GWT 1.5  {{Date|29|août|2008|en informatique}}
+* GWT 1.4  {{Date|28|août|2007|en informatique}}
+* GWT 1.3  {{Date|5|février|2007|en informatique}}
+* GWT 1.2  {{Date|16|novembre|2006|en informatique}}
+* GWT 1.1  {{Date|11|août|2006|en informatique}}
+* GWT 1.0  {{Date|17|mai|2006|en informatique}}
+
+La version 2.0 est en cours de finalisation et devrait être publiée avant la fin de 2009. Le second milestone (GWT 2.0 milestone 2) a été mis à disposition le {{Date|22|octobre|2009|en informatique}}.
+
+==Environnements de développement==
+De par sa conception, GWT est indépendant de tout [[Environnement de développement intégré|IDE]] et peut s'intégrer très facilement dans n'importe lequel d'entre eux. Cependant, il existe des [[plugin]]s qui facilitent le développement d'une application GWT :
+* [http://www.instantiations.com/gwtdesigner/ GWT Designer] est un plugin payant pour [[Eclipse (logiciel)|Eclipse]] dérivé de WindowsBuilder Pro, qui offre des outils de design graphique.
+* [http://www.gdevelop.com/?q=node/2 gwtDeveloper] est un éditeur [[What you see is what you get|WYSIWYG]] pour JDeveloper.
+* [http://www.jetbrains.net/confluence/display/IDEADEV/GWT+Studio+plugin GWT Studio plugin] est un plugin pour IntelliJ IDEA qui prend en charge les aspects de création d'artefacts spécifiques à GWT, les contrôles de validité (''inspectors''), les actions de refactoring, de lancement, etc.
+* [http://www.cypal.in/studio Cypal Studio] est un plugin pour Eclipse qui offre des fonctionnalités similaires. Il est limité à la version 1.5 de GWT
+* [http://gwt4nb.dev.java.net/ GWT4NB] est un plugin GWT pour [[NetBeans]].
+
+Enfin, en même temps que GWT 1.6, Google a sorti un [http://code.google.com/eclipse/ plugin pour Eclipse] qui intègre à la fois les aspects GWT et [[Google App Engine]].
+
+==Avantages et inconvénients==
+
+* En mode ''hosted'', l'application s'exécute sous forme de bytecode Java tout comme une application normale; par conséquent toutes les possibilités de [http://java.sun.com/j2se/1.5.0/docs/guide/jpda/architecture.html débogage natif de Java] sont utilisables.
+
+* L'utilisation du mécanisme de [[Remote procedure call|RPC]] propre à GWT ne permet de communiquer qu'avec un service développé à cet effet. Néanmoins, l'accès à toutes sortes de services est possible via HTTP, en particulier aux [http://fr.wikipedia.org/wiki/Web_service Web Services] utilisant [[Simple object access protocol|SOAP]] et autres services encodant les données avec [[Json|JSON]].
+
+* Le code JavaScript généré est d'une taille conséquente. Néanmoins, les mécanisme de cache côté client permettent d'éviter le rechargement si le code n'a pas changé.
+
+* Le code Javascript généré est difficilement lisible. Cependant, dans l'esprit des concepteurs de GWT ce code n'est pas destiné à être lu ou optimisé par un humain, mais uniquement par le navigateur; selon ce point de vue on peut considérer JavaScript comme l'équivalent de ce qu'est l'assembleur aux langages de haut niveau. Il existe tout de même des options permettant de générer du code moins dense et plus lisible, au détriment de la taille des fichiers générés et de la performance.
+
+* La phase de compilation GWT est relativement longue, et croît avec le nombre de classes et le nombre de permutations (combinaisons navigateur+langue). Ceci s'explique par les nombreuses optimisations statiques effectuées par le compilateur GWT. Il est toutefois possible de restreindre le nombre de permutations générées.
+
+* L'utilisation de GWT ne doit pas faire oublier les aspects sécurité [http://groups.google.com/group/Google-Web-Toolkit/web/security-for-gwt-applications].
+
+* Comme tous les frameworks RIA, GWT peut poser des problèmes d'accessibilité [http://blog.octo.com/accessibilite-du-web-description-et-enjeux-22/].
+
+==Future version 2.0==
+La nouvelle version 2.0 de GWT offrira plusieurs nouveautés, parmi lesquelles:
+* In-Browser Development Mode (appelé encore Out Of Process Hosted Mode, OOPHM): avant la version 2.0, le hosted mode embarquait une version modifiée d'un navigateur pour permettre d'exécuter et déboguer la version bytecode de l'application durant le développement. Avec la version 2.0, le hosted mode, rebaptisé &quot;development mode&quot;, permet l'utilisation de n'importe quel navigateur (supporté), au travers d'un plugin. Le plugin communique avec le shell du development mode via TCP/IP, ce qui autorise le débogage croisé (par exemple, déboguer une application dans Internet Explorer sous Windows depuis un shell de development mode tournant sous Linux)
+* Code splitting: en s'appuyant sur des indications du développeur dans le code source, le compilateur GWT est capable de diviser le code JavaScript généré en plusieurs parties de plus petite taille, au lieu d'un unique bloc. Ceci permettra de réduire le temps de démarrage de l'application en diminuant la taille du téléchargement initial.
+* construction d'interface déclarative: au moyen d'un format XML, la nouvelle fonctionnalité nommée &quot;UiBinder&quot; offrira la possibilité de créer les interfaces utilisateur de façon déclarative, par opposition à la création au travers de code Java. Ceci permet une séparation propre de la construction de l'interface et de l'implémentation du comportement dynamique de celle-ci.
+* Groupement de ressources: l'interface ClientBundle permettra de grouper de façon transparente des ressources de toute nature (images, CSS, texte, binaire) qui seront transférées ensemble en une seule opération, réduisant ainsi le nombre d'allers-retours entre le client et le serveur, et diminuant du même coup la latence.
+
+Comme le nouveau &quot;development mode&quot; a supprimé la plupart du code écrit spécifiquement pour une plateforme cible, la nouvelle version sera distribuée sous forme d'un unique fichier (contre un par plateforme comme c'était le cas avec les versions précédentes).
+
+== Produits concurrents ==
+Approche « à la GWT » (le client est prégénéré) :
+* Flex/Air
+* Silverlight
+* JavaFX dans une certaine mesure
+* [http://pyjs.org/ Pyjamas] (pour python)
+
+Approche RIA classique (HTML et JavaScript générés à partir du serveur) :
+* Wickets
+* [[Ext (JavaScript)|ExtJS]]
+* [[Echo (Framework)|Echo]]
+* [[SwingWeb]]
+* [[ZK (informatique)|ZK]]
+
+== Voir aussi ==
+
+=== Article connexe ===
+* [[Google]]
+
+=== Liens externes ===
+* {{en}} [http://code.google.com/webtoolkit/ Page d'accueil du projet GWT]
+* {{en}} [http://www.ongwt.com/ OnGWT] : actualités sur GWT
+* {{fr}} [http://moritan.developpez.com/tutoriels/java/gwt/premier/projet/ Un premier projet avec GWT]
+* {{fr}} [http://www.mkhelif.fr/2008/07/03/gwt-introduction-au-framework.html Introduction à GWT]
+* {{fr}} [http://blog.octo.com/accessibilite-du-web-description-et-enjeux-22/ Accessibilité du web : Description et Enjeux] : un article sur l'accessibilité et les RIAs 
+* {{en}} [http://google.wikia.com/wiki/Google_Web_Toolkit Unofficial GWT resources]
+* {{en}} [http://www.gwtnow.com/ GWT now]
+
+{{Google}}
+{{Portail|logiciels libres|Google}}
+
+[[Catégorie:Service Google]]
+[[Catégorie:Web 2.0]]
+[[Catégorie:AJAX]]
+[[Catégorie:Framework_de_programmation]]
+
+[[bg:Google Web Toolkit]]
+[[de:Google Web Toolkit]]
+[[en:Google Web Toolkit]]
+[[es:Google Web Toolkit]]
+[[hu:Google Web Toolkit]]
+[[ja:Google Web Toolkit]]
+[[nl:Google Web Toolkit]]
+[[pl:Google Web Toolkit]]
+[[pt:Google Web Toolkit]]
+[[ru:Google Web Toolkit]]
+[[sk:Google Web Toolkit]]
+[[uk:Google Web Toolkit]]</text>
+    </revision>
+  </page>
+  <page>
+    <title>Server push</title>
+    <id>4003791</id>
+    <revision>
+      <id>45695726</id>
+      <timestamp>2009-10-12T09:48:39Z</timestamp>
+      <contributor>
+        <ip>82.228.144.145</ip>
+      </contributor>
+      <comment>/* HTTP server push */</comment>
+      <text xml:space="preserve">{{traduction incomplète}}
+Le '''Server Push''' est un mode de communication [[client-serveur]] dans lequel le dialogue est initié par le serveur. Cette technologie s'oppose donc au fonctionnement « classique » des transactions web où le client ouvre le dialogue, et ''tire'' vers lui l'information (''pull'').
+
+== Description ==
+Afin de permettre son fonctionnement, la technologie ''push'' impose une autorisation préalable du client sur le modèle de l'''abonnement''. Le client s'abonne au service et dès qu'une nouvelle information est disponible, elle est envoyée par le serveur.
+
+Des applications telles que la [[visioconférence]] ou la [[messagerie instantanée]] sont de parfaits exemples d'utilisation de cette technologie : dès que le serveur central reçoit un message (ou n'importe quel autre type de données) de l'un des participants il l'envoie aux autres. Les réseaux [[IRC]] et [[P2P]] fonctionnent sur le même principe.
+
+Le [[Protocole de communication|protocole]] [[SMTP]] des [[courriel]]s fonctionne aussi sur le principe du ''server push'', bien qu'une partie de la transaction complète soit en mode ''pull' (protocoles [[IMAP]] et [[POP3]]). Les [[clients de messagerie]] modernes simulent le ''push'' en interrogeant fréquemment le serveur sur l'arrivée eventuelle de nouveau courrier. Notons toutefois que le protocole IMAP supporte nativement le ''push'' grâce à la commande IDLE.
+
+== Technologies ==
+=== HTTP server push ===
+Le '''HTTP server push''' (parfois nommé HTTP streaming) est le nom donné à la technologie ''push'' appliquée au protocole [[HTTP]]. Plusieurs méthodes permettent d'aboutir à un ''push'' serveur, la plus commune étant d'empêcher le serveur de clore la transaction. La connexion client-serveur reste ainsi ouverte, ce qui permet de mettre à jour instantanément les données chez les clients liés et évite de créer des queues parfois coûteuses du côté serveur. Cette fonctionnalité est disponible sur le serveur [[Apache HTTP Server|Apache]] via [[Common Gateway Interface|CGI]].
+
+Une autre possibilité pour réaliser le ''push'' est d'utiliser l'en-tête [[Multipurpose Internet Mail Extensions|Mime]] ''multipart/x-mixed-replace'', mis en place par le navigateur [[Netscape Navigator]] en [[1995 en informatique|1995]]&lt;ref&gt;[http://docs.rinet.ru/HTMLnya/ch38.htm Client pull/Server push implementations]&lt;/ref&gt;&lt;ref&gt;[http://www.oreilly.com/openbook/cgi/ch06_06.html CGI Programming on the World Wide Web] O'Reilly book explaining how to use Netscape server-push&lt;/ref&gt;. Bien que la plupart des navigateurs récents soient à même d'exploiter cet en-tête, [[Microsoft]] n'envisage toujours pas de doter son navigateur de cette technologie&lt;ref&gt;[http://victor.transformadora.com/Oreilly/wdesign/xhtml/ch13_03.htm Server-Push Documents (HTML &amp; XHTML: The Definitive Guide)] O'Reilly book explaining server-push&lt;/ref&gt;.
+
+Le [[WHATWG]] travaille actuellement à la standardisation de cette technologie : le ''Server Sent Event''&lt;ref&gt;{{cite web|url=http://www.whatwg.org/specs/web-apps/current-work/#server-sent-events|titre=Spécifications du HTML5}}&lt;/ref&gt; qui, pour l'instant, n'est implémentée (partiellement) que par le seul le navigateur [[Opera]]&lt;ref&gt;{{en}} {{cite web|url=http://my.opera.com/WebApplications/blog/show.dml/438711|accessdate=2007-03-23|date=2006-09-01|titre=Event Streaming to Web Browsers}}&lt;/ref&gt;{{,}}&lt;ref&gt;{{en}} {{cite web|url=http://operawatch.com/news/2006/09/opera-takes-the-lead-with-ajax-support-among-browsers-more-efficient-streaming.html|accessdate=2007-03-23|date=2007-09-01|titre=Opera takes the lead with AJAX support among browsers: More efficient streaming}}&lt;/ref&gt;. À la différence du modèle créé par Netscape, le ''server sent event'' est basé sur la création du nouveau type Mime ''text/event-stream'', dont les données seront directement exploitables à travers l'arbre [[DOM]].
+
+===Java pushlet===
+Le '''Java pushlet''' ([[mot-valise]] créé à partir de ''push'' et ''[[applet]]'') est une technique développée pour les apllications web en [[Java (langage)|Java]], bien qu'elle soit maintenant utilisé dans d'autres [[framework]]s. Ici, le serveur exploite l'utilisation de [[connexion persistante|connexions persistantes]] (voir aussi l'article sur [[Hypertext_Transfer_Protocol#HTTP_1.1|HTTP 1.1]]). Comme pour les autres méthodes, le serveur ne clôt pas le dialogue avec son client, et berne ce dernier, le laissant en mode de chargement et lui envoyant régulièrement de petites instructions en [[JavaScript]] afin de rafraîchir la page. L'intérêt de cette méthode réside dans le fait que le client n'a pas besoin ni d'applet, ni de [[plugin]] pour garder sa connexion ouverte&lt;ref&gt;[http://www.pushlets.com/doc/whitepaper-toc.html Pushlets introduction]&lt;/ref&gt;&lt;ref&gt;[http://www.javaworld.com/jw-03-2000/jw-03-pushlet.html JavaWorld article about pushlets]
+&lt;/ref&gt;. Toutefois, cette méthode souffre d'un sérieux inconvénient qui se situe au niveau du timeout autorisé par le browser, qui implique un rafraîchissement manuel de la page.
+
+&lt;!--
+===Long polling===
+Long polling is a variation of the traditional polling technique and allows to emulate information push from a server to a client. With long polling, the client requests information from the server in a similar way to a normal poll. However, if the server does not have any information available for the client, instead of sending an empty response, the server holds the request and waits for some information to be available. Once the information becomes available (or after a suitable timeout), a complete response is sent to the client. The client will normally then immediately re-request information from the server, so that the server will almost always have an available waiting request that it can use to deliver data in response to an event.
+
+Long polling is itself not a push technology, but can be used under circumstances where a real push is not possible.
+
+===Other technologies===
+The term [[Comet (programming)|Comet]] has been used to describe push technologies applied to [[Ajax (programming)|Ajax]] web applications. It's an [[umbrella term]] for a combination of web technologies such as ''HTTP server push'' and ''long polling'' (see above).
+
+XMPP is often used for push applications as well, especially the PubSub extensions. Apple uses this technology for its Mobile Me push support.
+
+BOSH is an long-lived HTTP technique used in XMPP, but that can be used on the web. The specification (XEP-0124: Bidirectional-streams Over Synchronous HTTP (BOSH)) reads: This specification defines a transport protocol that emulates the semantics of a long-lived, bidirectional TCP connection between two entities (such as a client and a server) by efficiently using multiple synchronous HTTP request/response pairs without requiring the use of frequent polling or chunked responses.
+
+--&gt;
+==Voir aussi==
+* [[Client-serveur|Architecture client-serveur]]
+* [[Transfert de fichier]]
+* [[Lecture en continu]]
+* [[Asynchronous JavaScript and XML|Ajax]]
+* [[Comet (informatique)|Comet]]
+
+==Références==
+* {{Traduction/Référence|en|Push technology}}
+&lt;references/&gt;
+
+==Liens externes==
+* {{en}} [http://www.w3.org/Architecture/9709_Workshop/ W3C Push Workshop]
+* {{en}} [http://ajaxpatterns.org/HTTP_Streaming HTTP Streaming with Ajax]
+* {{en}} [http://www.whatwg.org/specs/web-apps/current-work/multipage/comms.html#comms HTML 5 Draft with Server-sent events]
+
+{{portail|informatique}}
+
+[[Category:Technique d'Internet]]
+[[Category:Conception de sites web]]
+[[Category:Web 2.0]]
+[[Category:AJAX]]
+
+[[ca:Tecnologia de tramesa automàtica]]
+[[de:Push-Dienst]]
+[[en:Push technology]]
+[[es:Tecnología Push]]
+[[ja:Push技術]]
+[[pt:Tecnologia Push]]</text>
+    </revision>
+  </page>
+</mediawiki>

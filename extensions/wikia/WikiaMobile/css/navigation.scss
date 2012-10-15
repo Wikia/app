@@ -1,0 +1,429 @@
+//dependencies
+@import "variables.scss";
+
+//mixins
+@import "mixins/linear-gradient.scss";
+@import "mixins/box-sizing.scss";
+@import "mixins/box-shadow.scss";
+@import "mixins/transition.scss";
+
+#wkWrdMrk {
+	line-height: 40px;
+	font-size: x-large;
+	color: $navBarWordmarkText;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	position: absolute;
+	left: 5px;
+	right: 140px;
+	top: 2px;
+}
+
+#wkImgMrk {
+	height: 40px;
+	padding: 2px 5px;
+}
+
+#wkNavTgl {
+	background-image:  url('/extensions/wikia/WikiaMobile/images/topbar_menu.png'); /* base64 */
+}
+
+#wkPrfTgl {
+	&.lgdout{
+		background-image:  url('/extensions/wikia/WikiaMobile/images/user_loggedout.png'); /* base64 */
+	}
+
+	&.lgdin {
+		text-align: center;
+
+		img {
+			margin: 8px;
+			border-radius: 3px;
+		}
+	}
+}
+
+
+#wkTopBar {
+	height: 40px;
+	@include linear-gradient($navBarColorFirst, $navBarColorSecond);
+}
+
+#wkPrf{
+	display: none;
+	background-color: white;
+	border-bottom: 5px solid $searchOpenBackground;
+
+	#wkLgn{
+		background-color: white;
+	}
+
+	li{
+		a{
+			font-weight: 800;
+		}
+
+		.chg:before {
+			background-size: 16px;
+			float:right;
+			height:16px;
+			width:16px;
+			margin:5px;
+			-webkit-transform:rotate(-90deg);
+			-moz-transform:rotate(-90deg);
+			transform:rotate(-90deg);
+		}
+	}
+}
+
+.logout{
+	background-color: #F2F2F2;
+}
+
+#wkTopNav {
+	position: relative;
+	height: 40px;
+	background-color: white;
+	-webkit-tap-highlight-color: rgba( 0,0,0,0 );
+	-webkit-focus-ring-color: rgba( 0,0,0,0 );
+	@include box-shadow(0 0 5px black);
+
+	&.fllNav {
+		z-index: $highest-z-index+1;
+		background-color: white;
+
+		#wkTopBar{
+			border-bottom: 1px solid white;
+		}
+
+		#wkNavTgl {
+			background-color: $searchOpenBackground;
+			border-color: white;
+			border-style: solid;
+			border-width: 1px 1px 0 1px;
+		}
+	}
+
+	&.prf {
+		z-index: $highest-z-index+1;
+
+		#wkTopBar{
+			border-bottom: 1px solid white;
+		}
+
+		#wkPrfTgl {
+			background-color: $searchOpenBackground;
+			border-color: white;
+			border-style: solid;
+			border-width: 1px 1px 0 1px;
+		}
+
+		#wkPrf{
+			display: block;
+		}
+	}
+
+	&.open{
+		@include box-shadow(0 0 1px 9999999px rgba(0,0,0,.6));
+	}
+
+	.tgl {
+		float: right;
+		width: 45px;
+		height: 40px;
+		background-repeat: no-repeat;
+		background-position: center;
+		background-size: 50%;
+	}
+
+	.wkPrfHead{
+		font-weight: 100;
+		background: $searchOpenBackground;
+		line-height: 30px;
+		color: white;
+		padding-left: 10px;
+
+		&.up{
+			text-transform: uppercase;
+			padding-left: 10px;
+		}
+
+		.avatar{
+			margin: -2px 10px 0 4px;
+			vertical-align: middle;
+		}
+	}
+}
+
+.js {
+	#wkNavBack {
+		display: block;
+	}
+
+	#wkNavMenu {
+		display: none;
+		position: relative;
+
+		ul {
+			border-bottom: 5px solid $searchOpenBackground;
+
+			list-style: none;
+			background-color: white;
+
+			position: absolute;
+			top: 0;
+
+			width: 100%;
+			padding: 0;
+
+			-webkit-transition: -webkit-transform .5s;
+			-moz-transition: -moz-transform .5s;
+			transition: transform .5s;
+
+			-webkit-transform: translateZ(0);
+			-moz-transform: translateZ(0);
+			transform: translateZ(0);
+
+			li {
+				padding-right: 20px;
+
+				//to remove redundancy style for .cld is moved to ui.scss
+				a {
+					font-weight: 800;
+				}
+
+				span {
+					color: $link-color;
+				}
+			}
+		}
+
+		.lvl3 {
+			left: 100%;
+			display: none;
+		}
+
+		.lvl2 {
+			top: 50px;
+			left: 100%;
+			display: none;
+		}
+
+		.cur{
+			display: block;
+		}
+
+		&.cur1 {
+			header a {
+				opacity: 0;
+			}
+		}
+
+		&.cur2 {
+			#lvl1 {
+				-webkit-transform: translate(-100%);
+				-moz-transform: translate(-100%);
+				transform: translate(-100%);
+			}
+		}
+
+		&.cur3 {
+
+			#lvl1 {
+				-webkit-transform: translate(-200%) ;
+				-moz-transform: translate(-200%);
+				transform: translate(-200%);
+			}
+		}
+
+		header {
+			h1 {
+				float: none;
+				font-weight: bold;
+				margin: 0 50px;
+			}
+			a {
+				display: block;
+			}
+		}
+	}
+}
+
+#wkNav {
+	display: none;
+	-webkit-tap-highlight-color: rgba( 0,0,0,0 );
+	-webkit-focus-ring-color: rgba( 0,0,0,0 );
+
+	.cld > a, .cld > span {
+		pointer-events: none;
+	}
+
+	.fllNav & {
+		display: block;
+
+		#wkNavMenu {
+			display: block;
+		}
+	}
+}
+
+#wkNavMenu {
+	header {
+		color: $link-color;
+		line-height: 50px;
+
+		background: white;
+
+		a {
+			-webkit-transition: opacity .5s;
+			-moz-transition: opacity .5s;
+			-o-transition: opacity .5s;
+			transition: opacity .5s;
+		}
+
+		h1 {
+		    border-top: none;
+			text-align: center;
+			font-size: medium;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			margin: 0;
+			float: left;
+
+			&.anim {
+				-webkit-animation: slideIn .5s ease;
+				-moz-animation: slideIn .5s ease;
+			}
+
+			&.animNext {
+				-webkit-animation: slide .5s ease;
+				-moz-animation: slide .5s ease;
+			}
+
+			&.animBack {
+				-webkit-animation: slideBack .5s ease;
+				-moz-animation: slideBack .5s ease;
+			}
+		}
+	}
+}
+
+@-webkit-keyframes slideIn {
+	0% {
+		opacity: 0;
+		-webkit-transform: translate(30%);
+	}
+
+	100% {
+		opacity: 1;
+		-webkit-transform: translate(0);
+	}
+}
+
+@-webkit-keyframes slide {
+	0% {
+		-webkit-transform: translate(0);
+	}
+	50%{
+		opacity: 0;
+		-webkit-transform: translate(-30%);
+	}
+	51%{
+		opacity: 0;
+		-webkit-transform: translate(30%);
+	}
+	100% {
+		-webkit-transform: translate(0);
+	}
+}
+
+@-webkit-keyframes slideBack {
+	0% {
+		-webkit-transform: translate(0);
+	}
+	50%{
+		opacity: 0;
+		-webkit-transform: translate(30%);
+	}
+	51%{
+		opacity: 0;
+		-webkit-transform: translate(-30%);
+	}
+	100% {
+		-webkit-transform: translate(0);
+	}
+}
+
+@-moz-keyframes slideIn {
+	0% {
+		opacity: 0;
+		-webkit-transform: translate(30%);
+	}
+
+	100% {
+		opacity: 1;
+		-webkit-transform: translate(0);
+	}
+}
+
+@-moz-keyframes slide {
+	0% {
+		-webkit-transform: translate(0);
+	}
+	50%{
+		opacity: 0;
+		-webkit-transform: translate(-30%);
+	}
+	51%{
+		opacity: 0;
+		-webkit-transform: translate(30%);
+	}
+	100% {
+		-webkit-transform: translate(0);
+	}
+}
+
+@-moz-keyframes slideBack {
+	0% {
+		-webkit-transform: translate(0);
+	}
+	50%{
+		opacity: 0;
+		-webkit-transform: translate(30%);
+	}
+	51%{
+		opacity: 0;
+		-webkit-transform: translate(-30%);
+	}
+	100% {
+		-webkit-transform: translate(0);
+	}
+}
+
+#lvl1{
+	margin: 0;
+	padding: 0;
+}
+
+#wkNavLink {
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: 50px;
+	height: 50px;
+	background-position: center;
+}
+
+#wkNavBack {
+	color: inherit;
+	display: none;
+
+	float: left;
+}
+
+//default style if js is disabled
+#wkNavMenu header a {
+	display: none;
+}

@@ -1,0 +1,100 @@
+/**
+ * The main CSS file for the Semantic Calendar extension.
+ */
+
+table.navigation_table {
+	width: 100%;
+	padding-bottom: 20px;
+}
+table.navigation_table tr td.month_name {
+	font-size: xx-large;
+}
+table.navigation_table tr td.nav_links {
+	text-align: center;
+	font-weight: bold;
+}
+table.navigation_table tr td.nav_form {
+	text-align: right;
+}
+table.month_calendar {
+	border-collapse: collapse;
+}
+table.month_calendar tr {
+}
+table.month_calendar td {
+	width: 150px;
+	border: 1px #888888 solid;
+	padding: 0px;
+	vertical-align: top;
+}
+table.month_calendar td div.day {
+	background: white;
+	min-height: 15px;
+	min-width: 15px;
+	padding: 5px;
+	margin: 0px 0px 3px 3px;
+	float: right;
+	text-align: center;
+	vertical-align: middle;
+	font-weight: bold;
+	font-size: larger;
+	color: #555555;
+	border-left: 1px #cccccc solid;
+	border-bottom: 1px #cccccc solid;
+}
+table.month_calendar td div.day_other_month {
+	background: #eeeeee;
+	color: #aaaaaa;
+	border: none;
+}
+table.month_calendar td div.day_other_month {
+	background: #fcffb1;
+	color: #aaaaaa;
+}
+table.month_calendar td div.main {
+	min-height: 80px;
+	padding: 4px;
+	height: 100%;
+}
+table.month_calendar td div.main p {
+	line-height: 125%;
+}
+table.month_calendar td.today div.day {
+	background: #dbe8f9;
+	color: black;
+	border-left: 1px #999999 solid;
+	border-bottom: 1px #999999 solid;
+}
+table.month_calendar td.today div.main {
+	background: #f9f9f9;
+}
+table.month_calendar tr.header {
+	vertical-align: middle;
+}
+table.month_calendar tr.header td {
+	padding: 30px 10px 10px 10px;
+	border: 0;
+	text-align: center;
+	font-size: x-large;
+}
+table.month_calendar tr.weekdays {
+	border-top: 1px black solid;
+	font-weight: bold;
+	background: #dbe8f9;
+}
+table.month_calendar tr.weekdays td {
+	border: 0;
+	text-align: center;
+	vertical-align: middle;
+	color: #555555;
+	padding: 8px 2px 2px 2px;
+}
+table.month_calendar td div.colored-entry {
+	border: 1px #f4f4d2 solid;
+	background: #ffffdd;
+	margin: 4px 0 4px 0;
+}
+table.month_calendar td div.colored-entry p {
+	margin: 0;
+	padding: 2px 0 2px 6px;
+}

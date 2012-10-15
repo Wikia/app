@@ -1,0 +1,14 @@
+.thread-collapse-control a {
+	display: block;
+	outline: none;
+	width: 17px;
+	height: 17px;
+	/* @embed */
+	background: url(../images/thread_collapse_control_expanded.gif) 0 0 no-repeat;
+	text-indent: -9999px;
+	overflow: hidden;
+}
+.thread-collapse-control a.thread-control-collapsed {
+	/* @embed */
+	background: url(../images/thread_collapse_control_collapsed.gif) 0 0 no-repeat;
+}

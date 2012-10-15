@@ -1,0 +1,114 @@
+@import "skins/oasis/css/mixins/border-radius";
+@import "skins/oasis/css/mixins/forms";
+
+.WikiaForm {
+	> fieldset {
+		border: 0;
+		margin: 0;
+		padding: 0;
+	}
+	.input-group {
+		clear: both;
+		float: left;
+		font-size: 13px;
+		line-height: 13px;
+		margin-bottom: 5px;
+		padding: 5px 7px;
+		input[type=text],
+		input[type=password],
+		textarea {
+			@include wikia-form-input-field;
+		}
+		label {
+			display: block;
+			line-height: 15px;
+			margin: 0 0 5px 0;
+			.sprite {
+				margin: -4px 0 0 3px;
+			}
+		}
+		strong {
+			font-weight: bold;
+		}
+		&.error, &.success {
+			@include border-radius(3px);
+			@if $is-dark-wiki {
+				background-color: mix($color-page, #ffffff, 85%);
+			} @else {
+				background-color: mix($color-page, #000000, 95%);
+			}
+			.error-msg {
+				font-size: 11px;
+				margin-top: 5px;
+				@if $is-dark-wiki {
+					color: mix(#ff0000, #2b2b2b, 60%);
+				} @else {
+					color: mix(#ff0000, #d4d4d4, 75%);
+				}
+			}
+			.success-msg {
+				font-size: 11px;
+				margin-top: 5px;
+				@if $is-dark-wiki {
+					color: #b5e3b5;
+				} @else {
+					color: #3d8d42;
+				}
+
+			}
+			/* redesign work in progress, DO NOT REMOVE - hyun Jan 23, 2012
+			color: mix(#ff0000, #d4d4d4, 75%);
+			@if $is-dark-wiki {
+				color: mix(#ff0000, #2b2b2b, 60%);
+			}
+
+			input[type=text],
+			input[type=password] {
+				background-color: mix($color-page, yellow, 75%);
+				@if $is-dark-wiki {
+					background-color: mix($color-page, yellow, 92%);
+				}
+			}
+
+			.error-msg {
+				border: 1px solid mix($color-page, #000000, 90%);
+				@include box-shadow(0, 1px, 2px, mix($color-page, #000000, 86%));
+				@if $is-dark-wiki {
+					background-color: mix($color-page, #ffffff, 85%);
+					border: 1px solid mix($color-page, #ffffff, 90%);
+					@include box-shadow(0, 1px, 2px, mix($color-page, #000000, 86%));
+				}
+				border-top: 0;
+				font-size: 12px;
+				line-height: 15px;
+				margin: 0 1px 0 0;// off by one bug
+				padding: 8px;
+				@include border-radius-se(3px);
+				@include border-radius-sw(3px);
+			}
+			*/
+		}
+		&.general-errors {
+			.error-msg {
+				margin-top: 0;
+			}
+		}
+	}
+	.spacer {
+		clear: both;
+	}
+	input[type=submit].link {
+		@include border-radius(0);
+		background: none;
+		border: none;
+		color: $color-links;
+		line-height: 13px;
+		padding: 0;
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+	.submits {
+		padding: 0 7px;
+	}
+}

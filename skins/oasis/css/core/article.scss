@@ -1,0 +1,531 @@
+@import "color";
+@import "layout";
+@import "../mixins/bodytext";
+@import "../mixins/border-radius";
+@import "../mixins/clearfix";
+@import "../mixins/gradient";
+
+.WikiaArticle {
+	@include bodytext;
+	padding: 0 $width-gutter;
+	position: relative;
+	min-height: 250px;
+	z-index: 1;
+	h1, h2, h3, h4, h5, h6 {
+		margin: .5em 0 .2em;
+	}
+	h1 {
+		font-size: 24px;
+	}
+	h2 {
+		border-bottom: solid 1px $color-headline-border;
+		font-size: 18px;
+		margin-top: 30px;
+		overflow: hidden;
+	}
+	h3 {
+		font-size: 16px;
+	}
+	h4 {
+		font-size: 14px;
+	}
+	h5 {
+		font-size: 12px;
+	}
+	h6 {
+		font-size: 11px;
+	}
+	.editsection {
+		float: none;
+		font-size: 13px;
+		margin-left: 10px;
+		vertical-align: baseline;
+		img {
+			vertical-align: text-bottom;
+		}
+	}
+	h1, h5, h6 {
+		.editsection {
+			display: none;
+		}
+	}
+	.noarticletext {
+		border: 1px solid $color-article-toc-border;
+		padding: 0 13px;
+	}
+
+	b, strong {
+		font-weight: bold;
+	}
+
+	i, em {
+		font-style: italic;
+	}
+
+	sup {
+		font-size: 11px;
+		line-height: 0;
+		vertical-align: super;
+	}
+
+	sub {
+		font-size: 11px;
+		line-height: 0;
+		vertical-align: sub;
+	}
+
+	ul, ol {
+		margin: 0.4em 0 0.5em 2.5em;
+	}
+
+	ol {
+		list-style: decimal;
+	}
+
+	ul {
+		list-style: square;
+	}
+
+	li {
+		line-height: 20px;
+		margin: 3px 0;
+	}
+
+	dl {
+		margin: 1em 0;
+	}
+
+	dt {
+		font-weight: bold;
+		margin-bottom: 1px;
+	}
+
+	dd {
+		margin-bottom: 1px;
+		margin-left: 24px;
+	}
+
+	img {
+		vertical-align: middle;
+	}
+
+	blockquote {
+		margin: 12px 40px;
+	}
+
+	.center {
+		text-align: center;
+		width: 100%;
+		* {
+			margin-left: auto;
+			margin-right: auto;
+		}
+	}
+	.thumbborder {
+		border: 1px solid $color-article-thumb-border;
+	}
+	.floatright {
+		clear: right;
+		float: right;
+		position: relative;
+		margin: 0 0 6px 6px;
+		border: 0;
+	}
+	.floatleft {
+		float: left;
+		clear: left;
+		position: relative;
+		margin: 0 6px 6px 0;
+		border: 0;
+	}
+	.thumbinner {
+		//background-color: $color-article-thumb-background;
+		@include linear-gradient($color-article-thumb-background, top, $color-page, 0%, $color-article-thumb-background, 100%);
+		border: 1px solid $color-article-thumb-border;
+		overflow: hidden;
+		padding: 3px;
+		text-align: center;
+	}
+	.thumbcaption {
+		line-height: 18px;
+		padding: 4px 1px 0 1px;
+		text-align: left;
+	}
+	.tright {
+		clear: right;
+		float: right;
+		margin: 0 0 16px 16px;
+	}
+	.tleft {
+		float: left;
+		clear: left;
+		margin: 0 16px 16px 0;
+	}
+	.magnify {
+		float: right;
+		margin-top: 4px;
+	}
+
+	.picture-attribution {
+		display: block;
+		font-size: 11px;
+		margin-right: 16px;
+		text-align: left;
+	}
+	.picture-attribution .avatar {
+		margin-right: 3px;
+		vertical-align: middle;
+	}
+
+	.toc {
+		background-color: $color-article-toc-background;
+		border: 1px solid $color-article-toc-border;
+		border-collapse: separate;
+		margin: 1em 0;
+		padding: 5px;
+		ul {
+			margin: 0;
+			list-style: none;
+			ul {
+				margin-left: 2em;
+			}
+			li {
+				margin: 0;
+			}
+		}
+	}
+	#toctitle {
+		text-align: center;
+		h2 {
+			border: none;
+			display: inline;
+			font-size: 14px;
+		}
+		.toctoggle {
+			font-size: 12px;
+		}
+	}
+	p {
+		margin: 0.4em 0 0.5em;
+	}
+	p + p {
+		margin: 1em 0;
+	}
+	pre {
+		background-color: $color-module-shadow;
+		border: 1px solid $color-page-border;
+		line-height: 14px;
+		overflow: auto;
+		padding: 12px;
+	}
+	.printfooter {
+		display: none;
+	}
+
+	// FIXME: anyone still using gopher?
+	a.external, a[href^="gopher://"] {
+		&:after {
+			background-image: url(/skins/oasis/images/sprite.png);	/* $wgCdnStylePath */
+			background-position: top right;
+			background-repeat: no-repeat;
+			content: "";
+			display: inline-block;
+			height: 16px;
+			padding: 0px 3px 0 0;
+			vertical-align: text-top;
+			width: 10px;
+		}
+	}
+
+	// RT #75154
+	.plainlinks {
+		a {
+			background-image: none;
+			padding-right: 0;
+			&:after {
+				display: none;
+			}
+		}
+	}
+
+	#filetoc {
+		text-align: center;
+		border: 1px solid $color-article-toc-border;
+		background-color: $color-article-toc-background;
+		padding: 5px;
+		font-size: 12px;
+		margin-bottom: 5px;
+		margin-left: 0;
+		margin-right: 0;
+		li {
+			display: inline;
+			list-style-type: none;
+			padding-right: 23px;
+		}
+	}
+
+	.mw_metadata {
+		th, td {
+			background-color: transparent;
+			border: 1px solid $color-page-border;
+		}
+	}
+
+	// highlight selected reference (ported from Vector skin)
+	.references > li:target {
+		background-color: mix($color-page, $color-links, 85%);
+	}
+
+	// video gallery
+	ul.gallery {
+		margin-left: 0;
+	}
+	div.gallerybox, li.gallerybox{
+		div.thumb {
+			background: $color-article-thumb-background;
+			border: 1px solid $color-article-thumb-border;
+		}
+	}
+	li.gallerybox {
+		border: 1px solid $color-page-border;
+	}
+
+	// for special pages
+	fieldset {
+		border: solid 1px $color-links;
+		margin: 1em 0;
+		padding: 0 1em 1em;
+		legend {
+			padding: 7px;
+		}
+	}
+	.infobox {
+		border: 1px solid $color-page-border;
+		background-color: mix($color-page, #000, 95%);
+		color: $color-text;
+		margin-bottom: 0.5em;
+		margin-left: 1em;
+		padding: 0.2em;
+		float: right;
+		clear: right;
+		&[width="100%"] {	/* fb:8918 - 100% width support */
+			float: none;
+			margin-left: 0;
+		}
+	}
+
+	// /** categories **/
+	#mw-pages {
+		h3 {
+			font-weight: bold;
+		}
+		ul {
+			margin-left: 16px;
+		}
+	}
+
+	//history page
+	#pagehistory li {
+		border-style: none;
+		&.selected {
+			background-color: $color-pagehistory;
+			border-style: dashed;
+		}
+	}
+	//diff page
+	td.diff-context {
+		background-color: $color-diff-context;
+	}
+	td.diff-deletedline,
+	td.diff-addedline {
+		color: #000;
+	}
+	table.diff, td.diff-otitle, td.diff-ntitle  {
+		background-color: $color-page;
+	}
+
+	.fbconnect-synced-profile {
+		border-bottom: solid 1px $color-page-border;
+		margin-bottom: 5px;
+		padding-bottom: 5px;
+
+		th {
+			width: 25%;
+			text-align: right;
+			padding-right: 10px;
+			vertical-align: top;
+		}
+
+		td {
+			margin-left: 8px;
+			padding-right: 10px;
+		}
+	}
+
+	.wikiaPlaceholder > div {
+		text-align: center;
+	}
+	.fullMedia {
+		word-wrap: break-word;
+	}
+}
+
+/**
+ * FB#24380 - Make wikia-infobox styling work in RTE popup previews (out of .WikiaArticle)
+ * Actually now it's a global rule as agreed with Liz
+ */
+.wikia-infobox {
+	$cell-width: 225px;
+
+	border: 1px $color-page-border solid;
+	float: right;
+	line-height: 12px;
+	padding: 15px 8px 8px 8px;
+
+	margin: {
+		top: 0px;
+		right: 0px;
+		bottom: 16px;
+		left: 16px;
+	}
+
+	@include bodytext;
+	line-height: 15px;
+	width: $cell-width + 20 +2;
+
+	td {
+		overflow: hidden;
+		padding: 2px 3px 7px;
+		vertical-align: top;
+	}
+
+	th {
+		@extend td;
+		font-weight: bold;
+		text-align: left;
+		vertical-align: top;
+		width: 20%;
+
+		&.wikia-infobox-header {
+			font-size: 17px;
+			font-weight: bold;
+			margin-top: 20px;
+			padding: 5px 3px 8px;
+			text-align: left;
+		}
+		// sections separator
+		.wikia-infobox-section-header {
+			border-top: 1px $color-page-border solid;
+			margin-top: 7px;
+			padding-top: 20px;
+		}
+	}
+
+	.wikia-infobox-image {
+		overflow: hidden;
+		padding: 0;
+		text-align: center;
+		width: $cell-width;
+	}
+
+	.wikia-infobox-caption {
+		font-size: 12px;
+		text-align: center;
+	}
+
+	.wikia-infobox-caption { padding-bottom /*\**/: 10px\9 } // /** dirty IE hack, affects all versions till 8**/
+}
+
+// RT #70017: wikitable class for skinning normal tables
+table.wikitable {
+	background: darken($color-page, 2%);
+	border-collapse: collapse;
+	border: 1px $color-page-border solid;
+	color: $color-text;
+	margin: 1em 1em 1em 0;
+
+	th, td {
+		border: 1px darken($color-page, 35%) solid;
+		padding: 0.2em;
+	}
+	> tr > th,  > * > tr > th {
+		background: darken($color-page, 5%);
+		text-align: center;
+	}
+	caption {
+		font-weight: bold;
+	}
+}
+
+.article-table { // This parallels WikiaTable in _table.scss
+	@extend .WikiaTable
+}
+
+// /** Interlang Links **/
+.WikiaArticleInterlang {
+	margin: 10px;
+	padding: 10px;
+	clear: both;
+
+	h3 {
+		float: left;
+		margin-right: 5px;
+	}
+
+	ul {
+		li {
+			border-left: 1px solid $color-page-border;
+			float: left;
+			line-height: 15px;
+			margin-bottom: 6px;
+			padding-left: 5px;
+			padding-right: 5px;
+
+			&:first-child {
+				border: none;
+				padding-left: 0px;
+			}
+			/*&:last-child {
+				border: none;
+			}*/
+			&.more-link {
+				border: none;
+			}
+			&.more {
+				display: none;
+			}
+		}
+	}
+}
+
+
+// /** WikiaWideTables **/
+.WikiaWideTablesWrapper {
+	position: relative;
+	&.border {
+		border-right: 1px dashed $color-page-border;
+	}
+	>.table {
+		overflow: hidden;
+	}
+	>.popout {
+		cursor: pointer;
+		position: absolute;
+		right: -12px;
+		top: 0;
+		&.float {
+			position: fixed;
+			left: 50%;
+			right: auto;
+		}
+	}
+}
+
+// Needed for article comments lazy loading
+.WikiaArticleComments.loading {
+	background: url(/skins/common/images/ajax.gif) no-repeat 50% 50%; /* $wgCdnStylePath */
+	border-top: 1px solid $color-page;
+	height: 16px;
+	margin: 10px;
+	padding-top: 10px;
+}

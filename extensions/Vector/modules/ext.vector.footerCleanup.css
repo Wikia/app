@@ -1,0 +1,87 @@
+/* Prototype code to show collapsing left nav options */
+#editpage-bottom {
+	background-color: #F3F3F3;
+	border: 1px solid silver;
+	border-top: none;
+	padding: 20px 170px 20px 170px;
+	margin-right: -2px;
+}
+
+#editpage-bottom input.inline-hint {
+	color: #999999;
+	font-style: italic;
+}
+.collapsible-list {
+	border-top: 1px solid silver;
+	border-bottom: 1px solid silver;
+}
+.collapsible-list {
+	border-top: 1px solid silver;
+	border-bottom: 1px solid silver;
+	padding: 3px 2px;
+}
+.collapsible-list ul {
+	display: block;
+	padding: 0 0 0 14px;
+}
+.collapsible-list.collapsed label {
+	/* @embed */
+	background: url(../images/vector/collapsibleNav/arrow-down.png?1) 0 50% no-repeat;
+	padding: 4px  0 3px 1.5em;
+	margin-bottom: 0px;
+}
+.collapsible-list.expanded label {
+	/* @embed */
+	background: url(../images/vector/collapsibleNav/arrow-right.png?1) 0 50% no-repeat;
+	padding: 4px  0 3px 1.5em;
+	margin-bottom: 0px;
+}
+
+#editpage-bottom .editOptions {
+	width: 100%;
+}
+#editpage-bottom #wpSummaryLabel,
+#editpage-bottom #editpage-summary-fields,
+#editpage-bottom .editButtons {
+	float: left;
+}
+#editpage-bottom #wpSummaryLabel{
+	width: 150px;
+	margin-left: -150px;
+	position: relative;
+}
+#editpage-bottom #editpage-summary-fields {
+	width: 100%;
+	margin-right: -100%;
+}
+#editpage-bottom #editpage-summary-fields input.mw-summary {
+	width: 95%;
+}
+#editpage-bottom .editButtons {
+	width: 150px;
+	margin-right: -150px;
+	float: right;
+	position: relative;
+}
+#editpage-bottom #editpage-copywarn {
+	margin-left: -150px;
+	margin-right: 10px;
+}
+/* Why don't we use self clearing floats anywhere? */
+
+#editpage-bottom .editOptions:after {
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
+}
+#editpage-bottom .editOptions {
+	display: inline-block;
+}
+* html #editpage-bottom  .editOptions { 
+	height: 1%;
+}
+#editpage-bottom .editOptions { 
+	display:block;
+}

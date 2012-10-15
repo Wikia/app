@@ -1,0 +1,23 @@
+/* RC pending account request notice */
+.mw-confirmaccount-bar {
+	padding: 3px;
+	margin: 5px;
+	border: 1px solid #990000;
+	background-color: #f9f9f9;
+}
+
+.mw-confirmaccount-type-0 {
+	background-color: #f0fff0;
+}
+
+.mw-confirmaccount-body-0 {
+	background-color: #f9f9f9;
+}
+
+.mw-confirmaccount-type-1 {
+	background-color: #f0ffff;
+}
+
+.mw-confirmaccount-body-1 {
+	background-color: #f9f9f9;
+}

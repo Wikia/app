@@ -1,0 +1,214 @@
+/**
+ * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
+ *
+ * Styles for the creation/editing UI of TopLists extension, Oasis skin
+ */
+@import "../../../../skins/oasis/css/core/color";
+@import "../../../../skins/oasis/css/mixins/border-radius";
+@import "../../../../skins/oasis/css/mixins/gradient";
+@import "../../../../skins/oasis/css/mixins/forms";
+@import "../../../../skins/oasis/css/mixins/opacity";
+@import "mixins";
+
+$item-height: 60px;
+$item-width: 415px;
+
+#toplists-loading-screen {
+	@include blockInput;
+	margin-top: -20px;
+	padding-top: 90px;
+}
+
+#toplists-list-body {
+	.ListRelatedArticle {
+		margin-bottom: 22px;
+	}
+
+	ul {
+		list-style-type: none;
+		padding: 0;
+		margin: 30px 0 0 0;
+		
+		li {
+			@include border-radius(5px);
+			width: $item-width;
+			border: 1px solid $color-page-border;
+			background-color: $color-module-shadow;
+			padding: 8px;
+			margin-bottom: 25px;
+			position: relative;
+
+			span {
+				margin-left: 25px;				
+			}
+
+			span.author {
+				margin: 0px;
+			}
+
+			div.No1 {
+				background: url("/extensions/wikia/TopLists/images/sprites.png") no-repeat scroll 10px 0 transparent;/* $wgCdnStylePath */
+				font-size: 18px;
+				height: 65px;
+				width: 60px;
+				line-height: 30px;
+				padding-top: 13px;
+				position: absolute;
+				top: -20px;
+				color: #000000;
+			}
+
+			.NotVotable{
+				padding-top: 10px;
+			}
+
+			.ItemNumber {
+				
+				position: absolute;
+				color: #999999; /*$color-module-highlight;*/
+
+				span {
+					display: block;
+				}
+				
+				float: left;
+				margin-right: 15px;
+				
+				font: {
+					size: 20px;
+					weight: bold;
+				}
+
+				button {
+					position: relative;
+					
+					.chevron {
+						border: {
+							color: transparent transparent $color-page transparent;
+							width: 8px 4px;
+						}
+						position: relative;
+						top: -5px;
+						left: -3px;
+					}
+
+					&.VoteButton {
+						visibility: hidden;
+						max-width: 80px;
+						overflow: hidden;
+					}
+				}
+
+				.Voted {
+					@include border-radius(5px);
+					background-color: #527A3E;
+					color: $color-button-text;
+					display: block;
+					height: 21px;
+					line-height: 21px;
+					margin: 0px;
+					padding: 0px;
+					position: relative;
+					top: -25px;
+					left: -5px;
+					overflow: hidden;
+					max-width: 85px;
+					width: 85px;
+					text-align: center;
+					font: {
+						size: 12px;
+						weight: normal;
+					}
+
+					span {
+						background: url("/extensions/wikia/TopLists/images/sprites.png") no-repeat scroll -67px 0 transparent;/* $wgCdnStylePath */
+						position:absolute;
+						left:2px;
+						margin-left:3px;
+						margin-top:3px;
+						width:16px;
+						height:15px;
+						display:none;
+					}
+				}
+			}
+
+			.ItemContent {
+				font-size: 17px;
+				width: 288px;
+				padding-left: 87px;
+				overflow: hidden;
+
+				p {
+					margin: 0;
+				}
+
+				.author {
+					display: block;
+					font-size: 10px;
+				}
+
+				.HotItem {
+					background: url("/extensions/wikia/TopLists/images/sprites.png") no-repeat scroll 0 -86px transparent;/* $wgCdnStylePath */
+					position: absolute;
+					width: 72px;
+					height: 23px;
+					bottom: -2px;
+					right: -7px;
+
+					span {
+						color: $color-error;
+						display: block;
+						font-size: 12px;
+						line-height: 14px;
+						text-align: right;
+						position: absolute;
+						right: 18px;
+						top: -7px;
+						width: 150px;
+					}
+				}
+			}
+
+			.ItemVotes {
+				position: absolute;
+				top: 0;
+				right: 0;
+				padding: 17px 10px;
+				line-height: 11px;
+				text-align: right;
+			}
+
+			.NewItemForm {
+				@include error;
+				padding-left: 72px;
+				
+				input[type="text"] {
+					@include input-field;
+				}
+
+				button {
+					margin-top: 10px;
+				}
+
+				p {
+					margin: 0;
+				}
+			}
+		}
+	}
+	
+	.create-new-list {
+		h5 {
+			font-weight: bold;
+			font-size: 14px;
+		 	em {
+		 		color: red;
+		 		font-style: normal;
+		 	}
+		}
+		.createtoplist {
+			padding: 2px 7px 0;
+		}
+	}
+}

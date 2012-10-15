@@ -1,0 +1,15 @@
+/**
+ * CSS definitions for the Approved Revs extension
+ */
+p.approvedRevsEditWarning {
+	font-weight: bold;
+}
+span.approvedAndLatestMsg {
+}
+span.notLatestMsg {
+}
+span.approvedRevIsLatest {
+}
+span.approvedRevNotLatest {
+	font-style: italic;
+}

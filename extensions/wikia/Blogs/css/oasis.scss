@@ -1,0 +1,252 @@
+@import "../../../../skins/oasis/css/core/color";
+@import "../../../../skins/oasis/css/mixins/clearfix";
+
+/* FILE: /extensions/wikia/Blogs/css/oasis.scss */
+
+.WikiaBlogPostHeader {
+	background: none;
+	border-bottom: 1px solid $color-page-border;
+	.commentslikes {
+		bottom: 10px;
+		position: absolute;
+		right: 0;
+	}
+	.author-details {
+		@include clearfix;
+		*display: inline;
+		padding: 8px 0;
+		.avatar {
+			float: left;
+			margin-right: 5px;
+		}
+		.post-author {
+			font-weight: bold;
+		}
+		a {
+			color: $color-links;
+		}
+	}
+}
+
+.WikiaBlogListingHeader {
+	padding-bottom: 25px;
+}
+
+// /** hide blog listing rendered for Monaco ***/
+.wikiaSkinMonaco .WikiaBlogListing,
+.skin-oasis #wk_blogs_article {
+	display: none;
+}
+.skin-oasis .WikiaBlogListing,
+.wikiaSkinMonaco #wk_blogs_article {
+	display: block !important; // has to !important to override inline CSS
+}
+.wk_blogs_panel {
+	display: none;
+}
+
+// styling for Oasis blog listing
+.WikiaBlogListing {
+	ul {
+		list-style: none;
+		margin: 0;
+		padding: 0 10px;
+	}
+	h1 {
+		font-size: 22px;
+		margin: 0 90px 0 0;
+	}
+	.WikiaBlogListingPost {
+		border-bottom: 1px solid $color-page-border;
+		padding: 20px 0;
+	}
+	.commentslikes {
+		position: absolute;
+		right: 10px;
+		top: 20px;
+	}
+	.avatar {
+		border: 1px solid $color-page-border;
+		float: left;
+	}
+	.author-details {
+		@include clearfix;
+		margin: 0 0 10px 63px;
+		span {
+			display: block;
+			a, a:visited {
+				font-weight: bold;
+			}
+		}
+	}
+	p {
+		margin: 0;
+		.read-more {
+			margin: 0 20px;
+		}
+	}
+}
+
+.WikiaBlogListingPost {
+	padding-bottom: 0px;
+	position: relative;
+	.commentslikes {
+		a:hover {
+			text-decoration: none;
+		}
+	}
+	&:last-child {
+		border: none;
+	}
+	blockquote {
+		margin: 0;
+	}
+}
+
+// /** styling for Oasis blog listing box and rail module **/
+
+.WikiaBlogListingBox {
+	display: block !important;
+	line-height: 16px;
+
+	.wikia-button {	 // /** adding padding to make the button look wider **/
+		float: right;
+		margin-top: -1px;
+		padding: 0px 5px;
+		a {
+			color: white;
+		}
+	}
+	.commentslikes {
+		bottom: 16px;
+		position: absolute;
+		right: 0px;
+		a {
+			font-weight: normal;
+		}
+	}
+	ul {
+		margin: 15px 0 0;
+		h1 {
+			margin-bottom: 0 !important;
+		}
+		.WikiaBlogListingPost {
+			@include clearfix;
+			border-top: solid 1px $color-page-border;
+			list-style: none;
+			padding: 10px 0;
+			position: relative;
+			&:first-child {
+				border: none;
+			}
+			h1,
+			details span,
+			.author-details span {
+				padding-left: 0;
+			}
+			h1 {
+				font-weight: bold;
+				margin: 0;
+			}
+			.author-details {
+				margin-left: 35px;
+			}
+		}
+	}
+	img {
+		vertical-align: middle
+	}
+	h1 {
+		padding-bottom: 0px;
+		a {
+			font-size: 12px;
+		}
+	}
+	h3 {
+		font-weight: bold;
+		font-size: 17px;
+		line-height: 17px;
+		margin-left: 0px;
+	}
+
+	.reload {
+		display: inline-block;
+		position: relative;
+		top: -2px;
+	}
+
+	.avatar { // /** the avatar **/
+		float: left;
+		height: 25px;
+		margin: {
+			right: 1px;
+			top: 3px;
+		}
+		width: 25px;
+	}
+
+	details,
+	.author-details {
+		span { // /** the date **/
+			font-size: 10px;
+			a {
+				font-size: 10px;
+			}
+		}
+	}
+	blockquote {
+		@include clearfix;
+		overflow: hidden;
+		clear: both;
+		padding: {
+			top: 7px;
+			bottom: 19px;
+		}
+		.read-more {
+			a {
+				font-size: 11px;
+			}
+		}
+		p {
+			line-height: 21px;
+		}
+	}
+}
+
+.WikiaArticle .WikiaBlogListingBox {
+	width: 282px;
+		ul {
+			border: 1px solid $color-page-border;
+			padding: 0px 8px 8px;
+		}
+	}
+
+// /** styling for Create blog listing box special page **/
+
+.categoryCloudSection {
+	border: 1px solid lightgray;
+	padding: 15px;
+}
+
+.wpCategoryTextarea {
+	display: none;
+}
+
+#wpCategoryInput,#wpCategoryButton {
+	margin: 4px 2px 0;
+}
+
+wpCategoryInput {
+width:230px;
+}
+
+.matches-info {
+color:#060;
+font-style:italic;
+margin-right:1em;
+}
+
+#blogPostForm div.formErrors {
+color:red;
+font-size:120%;
+}

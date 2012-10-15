@@ -1,0 +1,445 @@
+/**
+ * CSS in this file is used by *all* skins.
+ */
+
+/* Hide picture attribution (re-shown in oasis.scss for Oasis)*/
+.picture-attribution {
+	display: none;
+}
+
+/* WikiaImageGallery: CSS for modified <gallery> tag */
+.wikia-gallery {
+	list-style: none;
+	margin: 16px 0;
+	padding: 0;
+}
+
+.wikia-gallery-caption {
+	font-weight: bold;
+	text-align: center;
+}
+
+.wikia-gallery-row {
+	white-space: nowrap;
+}
+
+.wikia-gallery-item {
+	display: inline-block;
+	padding: 1em;
+	vertical-align: top;
+	white-space: normal;
+	margin:1px;
+	text-align:left;
+}
+
+.wikia-gallery-item .thumb {
+	margin: 0;
+	overflow: visible;
+	position: relative;
+	text-align: center;
+}
+
+.wikia-gallery-item .thumb a.image {
+	background-position: 50% 50%;
+	background-repeat: no-repeat;
+	display: block;
+	height: 100%;
+	line-height: 1px;
+	overflow: hidden;
+	text-decoration: none;
+	vertical-align: middle;
+	width: 100%;
+}
+
+.wikia-gallery-item .thumb div {
+	margin: 0 auto;
+}
+
+.wikia-gallery-item .thumb .gallery-image-wrapper {
+	border-style: solid;
+}
+
+.wikia-gallery-item .thumb .gallery-image-wrapper .broken-image {
+	display: table-cell;
+	line-height: 15px;
+	vertical-align: middle;
+}
+
+/* bordersize  */
+.wikia-gallery-border-none .thumb .gallery-image-wrapper {
+	border: none;
+}
+
+.wikia-gallery-border-small .thumb .gallery-image-wrapper {
+	border-width: 1px;
+}
+
+.wikia-gallery-border-medium .thumb .gallery-image-wrapper {
+	border-width: 2px;
+}
+
+.wikia-gallery-border-large .thumb .gallery-image-wrapper{
+	border-width: 5px;
+}
+
+/* transparent border */
+.wikia-gallery-border-transparent .wikia-gallery-item .thumb {
+	background: transparent;
+	border-width: 0;
+}
+
+/* captionalign  */
+.wikia-gallery-captions-center .wikia-gallery-item {
+	text-align: center;
+}
+
+.wikia-gallery-captions-right .wikia-gallery-item {
+	text-align: right;
+}
+
+/* captionsize  */
+.wikia-gallery-caption-size-small .lightbox-caption {
+	font-size: 9px;
+}
+
+.wikia-gallery-caption-size-medium .lightbox-caption {
+	font-size: 12px;
+}
+
+.wikia-gallery-caption-size-large .lightbox-caption {
+	font-size: 16px;
+}
+
+/* position  */
+.wikia-gallery-position-center {
+	text-align: center;
+}
+
+.wikia-gallery-position-right {
+	text-align: right;
+}
+
+/* spacing */
+.wikia-gallery-spacing-small .wikia-gallery-item {
+	padding: 5px;
+}
+
+.wikia-gallery-spacing-medium .wikia-gallery-item {
+	padding: 15px;
+}
+
+
+.wikia-gallery-spacing-large .wikia-gallery-item {
+	padding: 25px;
+}
+
+.wikia-gallery-captions-left .wikia-gallery-item .lightbox-caption,
+.wikia-gallery-captions-right .wikia-gallery-item .lightbox-caption {
+	padding: 3px;
+}
+
+.wikia-gallery-captions-center .wikia-gallery-item .lightbox-caption {
+	padding: 3px 0 3px 0;
+}
+
+/* captions within images */
+.wikia-gallery-item .thumb .lightbox-caption {
+	bottom: 0;
+	left: 0;
+	position: absolute;
+	text-align: left;
+}
+
+/* captions below images */
+.wikia-gallery-item > .lightbox-caption {
+	margin-top: 10px;
+	display:block;
+}
+
+.wikia-gallery-captions-center .thumb .lightbox-caption {
+	text-align: center;
+	width: 100%;
+}
+
+.wikia-gallery-captions-right .thumb .lightbox-caption {
+	left: auto;
+	right: 0;
+	text-align: right;
+}
+
+
+
+/* WikiaImageGallery: CSS for image slideshow */
+.wikia-slideshow {
+	clear: both;
+}
+
+.wikia-slideshow-wrapper {
+	position: relative;
+	z-index: 1;
+}
+
+.slideshow-center .wikia-slideshow-wrapper {
+	margin: 0 auto;
+}
+
+.wikia-slideshow-caption {
+	font-weight: bold;
+	text-align: center;
+}
+
+.wikia-slideshow-images-wrapper {
+	padding: 5px;
+}
+
+.wikia-slideshow-images {
+	list-style: none !important;
+	margin: 0 !important;
+	overflow: hidden;
+	position: relative;
+}
+
+ul.wikia-slideshow-images li { /* ul adds specificity to override .WikiaArticle li's top margin */
+	background-position: 50% 50%;
+	background-repeat: no-repeat;
+	display: none;
+	height: 100%;
+	left: 0;
+	position: absolute;
+	top: 0;
+	width: 100%;
+	text-align: center;
+	margin-top: 0;
+}
+
+/* Vertical centering trick: http://css-tricks.com/centering-in-the-unknown */
+.wikia-slideshow-images li:before {
+	content: '';
+	display: inline-block;
+	height: 100%;
+	vertical-align: middle;
+}
+
+.wikia-slideshow-images li img {
+	display: inline-block;
+	vertical-align: middle;
+	cursor: pointer;
+}
+
+.wikia-slideshow-images li.wikia-slideshow-first-image {
+	display: block;
+}
+
+.wikia-slideshow-images label {
+	display: none;
+}
+
+.wikia-slideshow-link-overlay {
+	display: none;
+}
+
+.wikia-slideshow-wrapper .hover .wikia-slideshow-link-overlay {
+	background-color: #000;
+	color: #fff;
+	display: block;
+	left: 0;
+	opacity: 0.8;
+	padding: 6px 10px;
+	position: absolute;
+	top: 0;
+}
+
+/* hide image links (pop-out / link) on skins different then Monaco and Oasis */
+.wikia-slideshow-images .wikia-slideshow-image {
+	display: none;
+}
+
+/* hide new blog listing box on Monobook */
+body.skin-monobook .WikiaBlogListingBox {
+	display: none;
+}
+body.skin-monobook .WikiaBlogListing {
+	display: none;
+}
+
+/* show on Monaco and Oasis */
+body.skin-oasis .wikia-slideshow-images .wikia-slideshow-image,
+body.wikiaSkinMonaco .wikia-slideshow-images .wikia-slideshow-image {
+	cursor: pointer;
+	display: block;
+	height: 100%;
+	left: 40px;
+	position: absolute;
+	top: 0;
+}
+
+.wikia-slideshow-image-caption {
+	background: #000;
+	bottom: 0;
+	color: #fff;
+	left: 0;
+	max-height: 50px;
+	opacity: 0.75;
+	position: absolute;
+	width: 100%;
+}
+
+.wikia-slideshow-image-caption-inner {
+	display: block;
+	font-size: 0.95em;
+	margin: 8px;
+	opacity: 1;
+	text-align: left;
+}
+
+.wikia-slideshow .wikia-slideshow-image-caption-inner a {
+	color: #fff !important;
+}
+
+/* Prev / next toolbar */
+.wikia-slideshow-sprite {
+	background-image: url(/extensions/wikia/WikiaPhotoGallery/images/slideshow-sprite.png); /* $wgCdnStylePath */
+	background-repeat: no-repeat;
+}
+
+.wikia-slideshow-prev-next a {
+	cursor: pointer;
+	display: block;
+	height: 60px;
+	width: 40px;
+	z-index: 1000;
+}
+
+.wikia-slideshow-prev {
+	background-position: -160px 15px;
+	left: 0;
+	position: absolute;
+}
+
+.wikia-slideshow-next {
+	background-position: -187px 15px;
+	position: absolute;
+	right: 0;
+}
+
+/* glow effect */
+.wikia-slideshow-prev:hover {
+	background-position: -240px 15px;
+}
+
+.wikia-slideshow-next:hover {
+	background-position: -268px 15px;
+}
+
+.wikia-slideshow-toolbar {
+	height: 20px;
+	padding: 5px 0;
+}
+
+.wikia-slideshow-toolbar .wikia-slideshow-toolbar-counter {
+	background-color: transparent;
+	border-left-style: solid;
+	border-left-width: 1px;
+	font-size: 0.9em;
+	margin: 0 6px;
+	padding: 2px 6px;
+}
+
+.wikia-slideshow-toolbar .wikia-slideshow-popout {
+	cursor: pointer;
+}
+
+.wikia-slideshow-toolbar a {
+	margin: 0 3px !important;
+}
+
+/* Video gallery */
+div.tnone {
+	float: none;
+	clear: both;
+}
+
+div.videobox {
+	background-color: #f9f9f9;
+}
+
+.bigButtonContainer {
+	margin-top: -11px;
+	top: 50%;
+	position: absolute;
+}
+
+/* Macbre: RT #21087 - begin */
+.wikiaPlaceholder .bigButton {
+	float: none;
+	display: inline;
+	margin: 0 auto;
+	padding: 0 0 0 4px;
+}
+
+.wikiaPlaceholder .bigButton {
+	float: none;
+}
+
+.wikiaPlaceholder .bigButton big {
+	padding: 3px 3px 3px 9px;
+}
+
+.wikiaPlaceholder .bigButton small {
+	background-position: -295px 0;
+	padding: 3px;
+	position: static;
+	width: 5px;
+}
+
+.wikiaPlaceholder .thumbcaption {
+	left: 0;
+}
+
+/* VET <videogallery> stuff follows */
+div.gallerybox div.thumb {
+	background: #F9F9F9;
+	border: 1px solid #ccc;
+	width: 300px;
+}
+
+.gallerybox .thumbcaption {
+	position: absolute !important;
+	bottom: 0 !important;
+	padding: 5px !important;
+	font-size: 88%;
+}
+
+.thumb embed {
+	vertical-align: middle;
+}
+
+.gallerybox .thumbcaption hr {
+	color: #cccccc;
+}
+
+.videobox {
+	position: relative;
+}
+
+.video-add-wrapper {
+	line-height: 250px;
+}
+
+div.main-page-tag-rcs {
+	position: relative;
+	width: 300px;
+	float: right;
+	clear: right;
+}
+
+div.main-page-tag-lcs-collapsed {
+	overflow: hidden;
+	height: 1%; 
+}
+
+div.main-page-tag-lcs-exploded {
+	float: left;
+	width: 100%;
+	position: relative;
+}

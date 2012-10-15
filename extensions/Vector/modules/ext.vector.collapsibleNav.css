@@ -1,0 +1,56 @@
+/* Prototype code to show collapsing left nav options */
+#mw-panel.collapsible-nav div.portal {
+	/* @embed */
+	background-image:url(images/portal-break.png);
+	background-position:left top;
+	background-repeat:no-repeat;
+	padding: 0.25em 0 !important;
+	margin: -11px 9px 10px 11px;
+}
+#mw-panel.collapsible-nav div.portal h5 {
+	color: #4D4D4D;
+	font-weight: normal;
+	/* @embed */
+	background: url(images/open.png) left center no-repeat;
+	padding: 4px  0 3px 1.5em;
+	margin-bottom: 0px;
+}
+#mw-panel.collapsible-nav div.collapsed h5 {
+	color: #0645AD;
+	/* @embed */
+	background: url(images/closed-ltr.png) left center no-repeat;
+	margin-bottom: 0px;
+}
+#mw-panel.collapsible-nav div h5:hover {
+	cursor: pointer;
+	text-decoration: none;
+}
+#mw-panel.collapsible-nav div.collapsed h5:hover {
+	text-decoration: underline;
+}
+#mw-panel.collapsible-nav div.portal div.body {
+	background: none !important;
+	padding-top: 0px;
+	display: none;
+}
+#mw-panel.collapsible-nav div.persistent div.body {
+	display: block;
+}
+#mw-panel.collapsible-nav div.first h5 {
+	display: none;
+}
+#mw-panel.collapsible-nav div.persistent h5 {
+	background: none !important;
+	padding-left: 0.7em;
+	cursor: default;
+}
+#mw-panel.collapsible-nav div.portal div.body ul li {
+	padding: 0.25em 0;
+}
+#mw-panel.collapsible-nav div.first {
+	background-image: none;
+	margin-top: 0px;
+}
+#mw-panel.collapsible-nav div.persistent div.body {
+	margin-left: 0.5em;
+}

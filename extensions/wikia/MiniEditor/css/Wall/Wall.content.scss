@@ -1,0 +1,28 @@
+//
+// Styles the content inside of the editor iframe.
+// Overrides: /extensions/wikia/MiniEditor/core/content.scss
+//
+
+@import "../../../Wall/css/WallColors";
+
+html {
+	#bodyContent {
+		background-color: $color-wall-input;
+
+		&.new-message {
+			background-color: $color-wall-input-new;
+		}
+
+		&.focused {
+			background-color: $color-wall-input-focus;
+		}
+		
+		.quote {
+			background-color: $color-wall-infobox;
+			border: 1px solid $color-wall-border;
+			font-style: italic;
+			margin-top: 5px;
+			padding: 10px;
+		}
+	}
+}

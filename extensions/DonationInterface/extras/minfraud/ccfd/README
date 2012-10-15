@@ -1,0 +1,63 @@
+Maxmind Credit Card Fraud Detection Service PHP API Version 1.49
+
+===============
+Example scripts
+
+See Example.php for complete example how to use this API with the CCFD service.
+See Example_telv.php for complete example how to use this API with the Telephone Verification service.
+See Example_locv.php for complete example how to use this API with the Location Verification service.
+These scripts can be run from the shell.
+
+==================================
+API Documentation for CCFD service
+
+$ccfs = new CreditCardFraudDetection;
+  This creates a new CreditCardFraudDetection object
+
+$ccfs->isSecure
+  If isSecure is set to 0 then it uses regular HTTP.
+  If isSecure is set to 1 then it uses Secure HTTPS (requires Curl PHP binding)
+
+$ccfs->input($hash)
+  Takes a hash and uses it as input for the server.
+  See http://www.maxmind.com/app/ccv for details on input fields.
+
+$ccfs->query();
+  Queries the server with the fields passed to the input method
+  and stores the output.
+
+$hash = $ccfs->output();
+  Returns the output from the server.
+  See http://www.maxmind.com/app/ccv for details on output fields.
+
+============
+Secure HTTPS
+
+If you want secure HTTPS then you need to have
+the Curl PHP binding, the curl libary and the OpenSSL libary.
+
+You can download the curl libary at
+http://curl.haxx.se/download.html
+http://curl.haxx.se/docs/install.html for installation details
+
+If you do not have curl PHP binding then you should install it.
+See the web page 
+http://curl.haxx.se/libcurl/php/install.html for details
+
+It is recommended that you install these packages in this order
+install the OpenSSL libary first
+then install the Curl libary second
+then install the Curl PHP binding last
+
+Secure HTTPS is off by default.
+If you have the Curl PHP binding, the Curl libary 
+and the OpenSSL libary then you can turn on Secure HTTPS 
+by setting:
+$ccfs->isSecure = 1;
+where $ccfs is the CreditCardFraudDetection object.
+
+===============================
+Copyright (c) 2008, MaxMind, Inc
+
+All rights reserved.  This package is licensed under the LGPL.  For details see
+the COPYING file.

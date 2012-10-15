@@ -1,0 +1,163 @@
+@import 'variables.scss';
+@import 'mixins/linear-gradient.scss';
+@import 'mixins/box-sizing.scss';
+
+//I use it in a lot of places so it makes sense to have it here
+//The faster the better as it is not rendering but browser does calculation based on it
+*{
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+html {
+	//avoid webkit's automatic text adjustment
+	//ie. make text bigger when in landscape
+	-webkit-text-size-adjust: none;
+
+	word-wrap: break-word;
+
+	font-family: Helvetica, Roboto, "Lucida Grande", arial, sans-serif;
+}
+
+html, body {
+	overflow-x: hidden;
+
+	margin: 0;
+	padding: 0;
+}
+
+// Error Box
+.wkErr {
+	background-color: $error-bg-color;
+	color: $error-color;
+	text-align: left;
+	padding-left: 10px;
+}
+
+// Button
+.wkBtn {
+	display: inline-block;
+	-webkit-box-flex: 1;
+	-moz-box-flex: 1;
+	box-flex: 1;
+	font-size: medium;
+	padding: 5px 10px;
+	border: 1px solid $border-color;
+	border-radius: 5px;
+	font-weight: 100;
+	margin: 10px;
+	color: #6A6A6A;
+	@include linear-gradient(rgb(253,253,251), rgb(239,239,239));
+
+	&.main {
+		@include linear-gradient(rgb(38,148,225), rgb(17,105,178));
+		color: white;
+	}
+}
+
+.wkInp {
+	display: block;
+	-webkit-box-flex: 50;
+	-moz-box-flex: 50;
+	box-flex: 50;
+	-webkit-appearance: none;
+	border-radius: 0;
+	padding: 0 10px;
+	border: 1px solid $border-color;
+	background-color: $input-bg-color;
+	font-size: 1em;
+	font-weight: 100;
+	height: 40px;
+}
+
+::-webkit-input-placeholder {
+	color: $placeholder-color;
+}
+:-moz-placeholder {
+	color: $placeholder-color;
+}
+
+// List
+.wkLst {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+
+	li {
+		border-bottom: 1px solid $border-color;
+
+		& > a, & > span {
+			display: block;
+			width: 100%;
+			padding: 12px 10px;
+		}
+
+		&:last-child {
+			border-bottom: none;
+		}
+	}
+}
+
+.cld {
+	background-position: right;
+	background-origin: content-box;
+
+	a, span {
+		padding-right: 15px;
+	}
+}
+
+//Pop over menu
+.ppOvr {
+	display: none;
+	position: absolute;
+	border-radius: 5px;
+	border: 1px solid $link-color;
+	background-color: white;
+	width: 50px;
+	height: auto;
+	min-height: 30px;
+
+	.on & {
+		display: block;
+	}
+}
+
+//counter displayed mainly in lists or on ArticleComments seaction
+.cnt {
+	position: relative;
+	bottom: 1px;
+
+	margin: 0 10px;
+	padding: 1px 4px;
+
+	color: #999;
+	font-size: small;
+	font-weight:100;
+
+	background: #F2F2F2;
+
+	border-radius: 3px;
+
+	pointer-events: none;
+}
+
+//classes with images to avoid loading them more than once
+.clsIco{
+	background-repeat: no-repeat;
+	background-image: url('/extensions/wikia/WikiaMobile/images/close.png'); /* base64 */
+}
+
+#wkNavLink, .cld {
+	background-repeat: no-repeat;
+	background-size: 10px;
+	background-image:  url('/extensions/wikia/WikiaMobile/images/chevron-blue-right.png'); /* base64 */
+}
+
+//chevrons
+.chg:before, .link .thumbcaption:before {
+	content:'';
+	background-image: url('/extensions/wikia/WikiaMobile/images/chevron-grey-down.png'); /* base64 */
+	background-repeat: no-repeat;
+}

@@ -1,0 +1,89 @@
+Semantic Internal Objects Extension
+
+        Version 0.6.8
+        Yaron Koren
+
+This is free software licensed under the GNU General Public License. Please
+see http://www.gnu.org/copyleft/gpl.html for further details, including the
+full text and terms of the license.
+
+== Overview ==
+
+Semantic Internal Objects is an extension to MediaWiki that defines a
+parser function, '#set_internal', that is used to define "internal objects"
+within the Semantic MediaWiki system. There are complex types of
+information sometimes known as 'n-ary relations' that involve more than one
+data value associated together. A simple example is in a cooking recipe; a
+recipe may call for 1 cup of flour, and the values "1", "cup" and "flour"
+must be encoded together; by themselves, the values are not meaningful (the
+third value has meaning, though not all of the meaning it could have). Such
+information can be stored already in SMW using multi-valued properties,
+though this approach is not flexible and currently leads to querying problems.
+Instead, #set_internal can be used to define "internal objects" within a page,
+which can then be queried as normal SMW pages would; a row of a recipe would
+be a good example of data that could be defined using #set_internal.
+
+The syntax of #set_internal is as follows:
+
+{{#set_internal:object_to_page_property
+|property1=value1
+|property2=value2
+...
+}}
+
+A sample call to #set_internal would be:
+
+{{#set_internal:Has recipe
+|Has quantity=1
+|Has unit=cup
+|Has ingredient=flour
+}}
+
+This call would be placed in a page for a recipe, and it would define an object
+that had an automatically-generated name; if it were in a page called "Carrot
+cake", for instance, the object would be called "Carrot cake#1". If that page
+had subsequent calls to #set_internal, the objects that those calls generated
+would be called "Carrot cake#2", "Carrot cake#3", etc.
+
+It should be noted that #set_internal does not display anything to the screen;
+display of the values has to be handled separately (this can be done easily
+if the function is called from a template).
+
+Internal objects, once stored, can be queried as if they were wiki pages. So
+the following query would show a table of all the recipes that contain more
+than 1/2 a cup of flour, and the number of cups they contain:
+
+{{#ask:[[Has recipe::+]][[Has ingredient::flour]][[Has unit::cup]][[Has quantity::>.5]]
+|mainlabel=-
+|? Has recipe
+|? Has quantity
+}}
+
+Note the "mainlabel=-" parameter in the query: that hides the names of the
+internal objects from users, since those names are meaningless.
+
+For more information, see the extension homepage at:
+http://www.mediawiki.org/wiki/Extension:Semantic_Internal_Objects
+
+== Requirements ==
+
+This version of the Semantic Internal Objects extension requires MediaWiki 1.11
+or higher and Semantic MediaWiki 1.5.2 or higher.
+
+== Installation ==
+
+To install the extension, place the entire 'SemanticInternalObjects' directory
+within your MediaWiki 'extensions' directory, then add the following
+line to your 'LocalSettings.php' file:
+
+     require_once( "$IP/extensions/SemanticInternalObjects/SemanticInternalObjects.php" );
+
+== Contact ==
+
+Most comments, questions, suggestions and bug reports should be sent to
+the Semantic MediaWiki mailing list:
+
+ https://lists.sourceforge.net/lists/listinfo/semediawiki-user
+
+If possible, please add "[SIO]" at the beginning of the subject line, to
+clarify the subject matter.

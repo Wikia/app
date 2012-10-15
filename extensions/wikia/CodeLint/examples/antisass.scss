@@ -1,0 +1,12 @@
+.selector {
+	/* background property should be followed by a comment with $wgCdnStylePath */
+	background: white url(/skins/common/images/ajax.gif) no-repeat 50% 50%;
+}
+
+#foo {
+	background-image: url(/skins/common/images/ajax.gif); /* $wgCdnStylePath */
+	.bar {
+		padding: 0px;
+		borderleft: none;
+	}
+}

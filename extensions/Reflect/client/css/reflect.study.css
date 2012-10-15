@@ -1,0 +1,58 @@
+#reflected .survey_prompt {
+	margin-top: 10px;		
+}
+
+
+#reflected .survey_prompt {
+	padding: 5px;
+	background-color: #c1f6c2;
+	border: 1px solid #089C57;	
+}
+
+#reflected .survey_prompt:hover {
+   background-color: #8fd98f;
+}
+
+
+#reflected .survey_intro {
+	font-size:90%;
+	font-weight:bold;
+}
+
+#reflected .click_to_answer {
+   font-size: 85%;
+}
+
+#reflected .survey_intro li {
+}
+
+#reflected .survey_intro li.survey_label {
+   float:left;
+   width:90%;
+   cursor:pointer;
+}
+
+#reflected .survey_intro li.cancel_survey {
+   float:right;
+	position:relative;
+	left: 5px;
+}
+
+#reflected .survey_intro li.cancel_survey .skip:hover {
+	background-color: #aaa;
+}
+
+#reflected .survey_intro button{
+    border:none;
+    background-color:inherit;
+    padding:0;
+    cursor:pointer;
+}
+
+#reflected .skip img {
+	width: 15px;
+}
+
+#reflected .survey_prompt fieldset {
+	padding: 4px;
+}

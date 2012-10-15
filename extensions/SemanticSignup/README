@@ -1,0 +1,56 @@
+1. INTRO
+
+This is SemanticSignup version 0.1.0
+
+This is a MediaWiki extension built on top of Semantic MediaWiki
+and SemanticForms extensions and intended to be used with them.
+
+It is recommended to read these extensions' manuals before this one.
+
+2. USAGE
+
+This extension tweaks user registration process in order to make 
+users populate their user pages with semantic data at registration time.
+Whenever the user registration form is requested the user is redirected
+to the Semantic Signup special page where he has to enter the usual
+account data and some additional information into a semantic form.
+When the form is submitted, the usual account information is used 
+to register the new user account and a new User:<Username> page is 
+populated with the additional data.
+
+3. INSTALLATION
+
+1. Create a semantic form for user pages (see the SemanticForms manual
+for details). Use the <signupfields /> tag to insert the user account 
+input fields (e. g. username password and all that stuff) into this form -
+this is required for the form to be suitable for account registration.
+
+2. Insert the following lines into your LocalSettings.php:
+
+require_once('extensions/SemanticSignup/includes/SES_Main.php');
+$sesSignupFormName = 'MyFormName';
+$sesSignupBotName ='SignupBotName';
+
+where "MyFormName" should be replaced with whatever the form 
+created at step 1 is called (the namespace title - i.e. "Form:" - should not be included)
+and "SignupBotName" is a name of a bot user account that will be used by SemanticSignup (you might need to create one).
+
+4. CONFIGURATION
+
+$sesSignupFormName controls the form which is displayed by the Semantic Signup
+special page.
+
+$sesRealNameRequired controls whether real name is required to register an account.
+
+$sesSignupBotName controls the name of a bot account used by SemanticSignup. 
+Currently the extension makes use of it when getting the signup form only 
+in order to avoid it being disabled if an anonymous user hasn't got "edit" permissions.
+
+5. SUPPORT & DONATIONS
+
+This extension was created by Serhii Kutnii mnkutster@gmail.com.
+
+The project home page is http://semanticsignup.sourceforge.net/.
+
+The bug and feature request tracker is available at 
+https://sourceforge.net/tracker/?atid=1126589&group_id=250562&func=browse

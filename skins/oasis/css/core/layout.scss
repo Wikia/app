@@ -1,0 +1,35 @@
+// Highest z-index //
+$zTop: 20000000;
+
+// Dimension Variables //
+$oasisWidthType: get_command_line_param("widthType", 0);
+
+$width-outside: 1000px;
+$wikia-search-base-width: 200px;
+
+/* $wgOasisHD */
+@if $oasisWidthType == 1 {
+	$width-outside: 1200px;
+}
+
+/* $wgOasisFluid */
+@if $oasisWidthType == 2 {
+	$width-outside: auto;
+}
+
+/* $wgOasisGrid */
+@if $oasisWidthType == 3 {
+	$width-outside: 1030px;
+	$wikia-search-base-width: 230px;
+}
+
+$width-rail: 300px;
+
+/* We often use this amount of padding or margin to separate elements in our layout.
+ * For example, .WikiaRail has this much padding on the left and right to not touch the edge of the page or the article content.
+ * .WikiaArticle does the same.
+ */
+$width-gutter: 10px;
+
+/* wikiaheader-width for the globalheader and gamestarlogo */
+$wikiaheader-width: $width-outside + 14px;

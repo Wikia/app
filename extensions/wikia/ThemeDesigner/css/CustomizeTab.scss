@@ -1,0 +1,29 @@
+.CustomizeTab {
+	.page {
+		padding-left: 40px;
+	}
+	li {
+		float: left;
+		margin-right: 30px;
+		img {
+			border: 1px solid $color-borders;
+			cursor: pointer;
+			display: block;
+			height: 50px;
+			margin: 3px 0;
+			width: 50px;
+		}
+		.background-image {
+			height: 100px;
+			width: 120px;
+		}
+	}
+	ul {
+		@include clearfix;
+	}
+}
+
+.OpacitySlider {
+	margin-top: 12px;
+	width: 84px;
+}

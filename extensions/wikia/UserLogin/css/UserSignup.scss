@@ -1,0 +1,137 @@
+@import "../../../../skins/oasis/css/mixins/clearfix";
+@import "../../../../skins/oasis/css/mixins/forms";
+@import "../../../../skins/oasis/css/mixins/wordmark";
+@import "../../../../skins/oasis/css/core/color";
+@import "../mixins/submitpane";
+@import "../mixins/divider";
+
+.WikiaSignup {
+	margin: 50px 25px 50px 15px;
+	>.pageheading {
+		border: 0;
+		font-size: 32px;
+		line-height: 38px;
+		margin: 0;
+		font-weight: bold;
+	}
+	>.subheading {
+		font-weight: normal;
+		margin: 0;
+	}
+	.wiki-info {
+		float: left;
+		width: 250px;
+		p {
+			margin: 30px 0;
+			padding-right: 50px;
+		}
+		.wordmark.text {
+			margin-top: 28px;
+		}
+	}
+	.marketing {
+		float: right;
+		width: 250px;
+		.benefit {
+			@include clearfix;
+			margin: 30px 0;
+			p {
+				padding-right: 15px;
+			}
+		}
+		.avatars,
+		.wikis {
+			float: left;
+			height: 74px;
+			list-style: none;
+			margin: 0;
+			width: 74px;
+			.avatar {
+				border: 1px solid $color-page-border;
+				float: left;
+				margin: 0 5px 5px 0;
+				padding: 0;
+			}
+			.wiki {
+				border: 1px solid $color-page-border;
+				height: 18px;
+				margin: 0 0 5px 0;
+				padding: 0;
+				width: 65px;
+				img {
+					margin: 0;
+					padding: 0;
+					vertical-align: top;
+				}
+			}
+		}
+		h2 {
+			border: 0;
+			font-size: 16px;
+			font-weight: bold;
+			margin: 0;
+		}
+		h3 {
+			font-size: 12px;
+			font-weight: bold;
+			line-height: 13px;
+			margin: 0 0 0 80px;
+		}
+		p {
+			font-size: 12px;
+			line-height: 16px;
+			margin-left: 80px;
+		}
+	}
+	.form-container {
+		margin: 0 auto;
+		width: 270px;
+		.input-group {
+			width: 256px;
+		}
+		input[type=text],
+		input[type=password] {
+			width: 237px;
+		}
+		.captcha {
+			.fancy-captcha {
+				p {
+					margin: 0;
+				}
+				#wpCaptchaWord {
+					@include wikia-form-input-field;
+					display: inline;
+					width: 105px;
+				}
+				img {
+					background-color: white;
+					border: 1px solid $color-page-border;
+					float: right;
+					height: 32px;
+					text-align: center;
+					width: 122px;
+				}
+			}
+		}
+		.submit-pane {
+			@include submitpane;
+		}
+	}
+	.wordmark {
+		@include wordmark;
+	}
+
+	.sso-login {
+		margin: 0 auto;
+		text-align: center;
+		width: 270px;
+
+		.sso-login-divider {
+			@include divider;
+		}
+	}
+}
+
+.modalWrapper.WikiaArticle {
+	position: absolute;
+}

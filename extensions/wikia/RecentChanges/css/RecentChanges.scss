@@ -1,0 +1,42 @@
+@import "../../../../skins/oasis/css/mixins/clearfix";
+@import "../../../../skins/oasis/css/mixins/opacity";
+
+@import "../../WikiaStyleGuide/css/DropdownColors";
+
+.rc-conntent {
+	min-height: 200px;
+}
+
+.mw-recentchanges-table {
+	@include clearfix;
+
+	td.mw-label,
+	td.mw-input {
+		vertical-align: middle;
+	}
+
+	.WikiaDropdown {
+		float: left;
+		margin-top: 1px;
+		margin-right: 10px;
+
+		.toolbar {
+			background-color: $Dropdown-color-shadow;
+			border-bottom: 1px solid $Dropdown-color-border;
+			line-height: 30px;
+			padding: 0 10px;
+
+			input[type="checkbox"] {
+				margin-right: 10px;
+
+				&.modified {
+					@include opacity(50);
+				}
+			}
+
+			label {
+				display: block;
+			}
+		}
+	}
+}

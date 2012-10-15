@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Hello World</title>
+	<script type="text/javascript" charset="utf-8">
+
+		function performCommand(event) {
+
+	    if (event.command === "toggleToolbar") {
+
+				//hide or show toolbar
+				toggleToolbar();
+				
+ 			}
+ 			
+		}
+
+		function toggleToolbar() {
+			const bars = safari.extension.bars;
+			for (var i = 0; i < bars.length; ++i) {
+				var bar = bars[i];
+				if (bar.identifier === "editor") {
+					if (bar.visible) {
+						bar.hide();
+						safari.application.activeBrowserWindow.activeTab.page.dispatchMessage("makeUnEditable");
+					} else {
+						bar.show();
+						console.log("global calling makeEditable");
+						safari.application.activeBrowserWindow.activeTab.page.dispatchMessage("makeEditable");
+					}
+				}
+			}
+		};
+
+		function validateCommand(event) {
+	    if (event.command === "toggleToolbar") {
+				// Disable the button if there is no URL loaded in the tab.
+				event.target.disabled = !event.target.browserWindow.activeTab.url;
+			}
+		}
+ 
+
+		function handleMessage(msgEvent) {
+			var messageName = msgEvent.name;
+			var messageData = msgEvent.message;
+			
+			if (messageName == "toggleToolbar") {
+				toggleToolbar();
+			}
+		}
+ 	
+		// if event handlers are in the global HTML page,
+		// register with application:
+		safari.application.addEventListener("command", performCommand, true);
+		safari.application.addEventListener("validate", validateCommand, true);
+		safari.application.addEventListener("message", handleMessage, false);
+		
+	</script>
+</head>
+
+<body>
+</body>
+
+</html>

@@ -1,0 +1,23 @@
+.swiperPage {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+
+	&.next{
+		left: 100%;
+	}
+
+	&.prev {
+		left: -100%;
+	}
+}
+
+section.swiperPage {
+	display: table;
+
+	> div{
+		display: table-cell;
+		vertical-align: middle;
+	}
+}

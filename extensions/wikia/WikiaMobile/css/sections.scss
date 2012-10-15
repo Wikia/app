@@ -1,0 +1,86 @@
+@import 'variables.scss';
+
+h1, h2, h3{
+	font-weight: normal;
+	margin: $section-title-margin;
+}
+
+.js{
+	.artSec {
+		display: none;
+	}
+
+	//reveal section chevrons when JS is enabled
+	.collSec{
+		.chev{
+			display: inline;
+		}
+	}
+}
+
+.artSec {
+	position: relative;
+	padding-bottom: 30px;
+
+	&.open {
+		overflow: hidden;
+		display: block;
+	}
+
+	ul {
+		//there is already a padding so if this is not 0 it gets way too big
+		padding: 0;
+	}
+
+	&::after{
+		content: '';
+		display: block; 
+		height: 0; 
+		font-size:0;
+		clear: both;
+		visibility:hidden;
+	}
+}
+
+.goBck {
+	color: $page-text-alternate-color;
+	float: right;
+	padding: 5px;
+	position: absolute;
+	bottom: 0;
+	right: 0;
+}
+
+.collSec {
+	border-top: 1px solid $border-color;
+	color: $section-text-color;
+	min-height: $section-title-font-size;
+	padding: $page-padding 27px 0 0;
+	position: relative;
+	//lest make our sections a little bit more sexy
+	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Roboto, "Lucida Grande", arial, sans-serif;
+
+	word-break: break-word;
+
+    .chev {
+		pointer-events: none;
+
+		display: none; //hidden by default, will be revealed via JS
+		width: 22px;
+		height: 22px;
+		background-size: 75%;
+		position: absolute;
+		right: 0;
+		top: 37%;
+    }
+
+	//TODO:Find it in core and do not print it out in mobile skin
+	.editsection {
+		display: none;
+	}
+}
+
+#wkMainCntFtr .collSec{
+	text-transform: uppercase;
+	font-size: medium;
+}

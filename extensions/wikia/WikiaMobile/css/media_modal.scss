@@ -1,0 +1,91 @@
+//mixins
+@import "mixins/transition.scss";
+
+@import "pager.scss";
+
+#wkMdlImages {
+	width: 100%;
+	height: 100%;
+
+	div{
+		z-index: 18;
+		height: 100%;
+		background-repeat: no-repeat;
+		background-position: 50%;
+		background-size: contain;
+		-webkit-tap-highlight-color: rgba(0,0,0,0);
+	}
+}
+
+.chnImg {
+	position: absolute;
+	display: block;
+	z-index: 19;
+	top: 0;
+	height: 100%;
+	width: 15%;
+	background-repeat: no-repeat;
+	background-position: center;
+	@include transition(opacity .5s ease-in);
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+
+	.hdn & {
+		opacity: .2;
+	}
+
+	&::after{
+		content: '';
+		bottom: 50%;
+    	border-width: 10px;
+    	border-style: solid;
+    	position: absolute;
+	}
+}
+
+#nxtImg {
+	right: 0;
+	&::after{
+		border-color: transparent transparent transparent rgb(157,157,157);
+		right: 10px;
+	}
+}
+
+#prvImg {
+	left: 0;
+	&::after{
+		border-color: transparent rgb(157,157,157) transparent transparent;
+		left: 10px;
+	}
+}
+
+#wkShrImg {
+	float: left;
+	margin: 2px 0;
+}
+
+#wkVi * {
+ 	width: 72%;
+	height: 80%;
+}
+
+#wkVi {
+	height: 100%;
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+	vertical-align: middle;
+}
+
+#wkGalTgl {
+	opacity: .1;
+	position: absolute;
+	left: 50%;
+	margin-left: -25px;
+	width: 50px;
+	height: 30px;
+	background-image: url('/extensions/wikia/WikiaMobile/images/gallery_gray.png'); /* base64 */
+	background-size: 40%;
+	background-repeat: no-repeat;
+	background-position: center;
+}

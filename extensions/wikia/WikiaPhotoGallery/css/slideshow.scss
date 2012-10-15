@@ -1,0 +1,7 @@
+@import "slideshow-nav";
+
+.wikia-slideshow {
+	.wikia-slideshow-prev-next {
+		@include slideshow-nav;
+	}
+}
