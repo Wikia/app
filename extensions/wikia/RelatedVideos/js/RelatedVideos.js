@@ -1,4 +1,4 @@
-/*global jwplayer:true, WikiaHubs */
+/*global jwplayer:true, WikiaHubs, RelatedVideosIds */
 var RelatedVideos = {
 
 	maxRooms: 1,
@@ -286,7 +286,7 @@ var RelatedVideos = {
 					type: 'GET',
 					format: 'json',
 					data: {
-						videoTitle: window.RelatedVideosIds[idx + i],
+						videoTitle: window.RelatedVideosIds[idx + i].title,
 						preloaded: true
 					}, 
 					callback: function(data) {

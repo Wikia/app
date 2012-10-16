@@ -19,14 +19,17 @@
 				<? 
 				if( isset($videos) && is_array($videos) ){
 					
-					$videoTitles = array();
+					$videoArray = array();
 					$i = 1;
 
 					echo '<div class="group">';
 
 					foreach( $videos as $id => $video ){
 						// Cache video ids in their already randomized order
-						$videoTitles[] = $video['title'];
+						$videoArray[] = array(
+							"title" => $video['title'], 
+							"thumb" => $video['thumbnailData']['thumb'],
+						);
 
 						if( $i <= 6 ) {
 							echo F::app()->renderView(
@@ -47,7 +50,8 @@
 					}
 					echo '</div>';
 					
-					echo '<script type="text/javascript"> window.RelatedVideosIds = ' . json_encode($videoTitles) . '</script>';
+					// RelatedVideosIds used in RelatedVideos.js and Lightbox.js
+					echo '<script type="text/javascript"> window.RelatedVideosIds = ' . json_encode($videoArray) . '</script>';
 					
 				} ?>
 			</div>
