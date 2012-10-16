@@ -30,16 +30,16 @@ class WikiaSearchAjaxController extends WikiaController {
         $cityId = $isInterWiki ? 0 : $this->wg->CityId;
 
         $params = array(
-        		'page'			=>	$page,
-				'length'		=>	self::RESULTS_PER_PAGE,
-            	'cityId'		=>	$cityId,
-            	'groupResults'	=>	$isInterWiki,
-            	'rank'			=>	$rank,
-            	'hub'			=>	$hub,
-        		'query'			=>	$query,
-        		);
-        
-        $searchConfig = F::build( 'WikiaSearchConfig', $params );
+			'page'			=>	$page,
+			'length'		=>	self::RESULTS_PER_PAGE,
+			'cityId'		=>	$cityId,
+			'groupResults'	=>	$isInterWiki,
+			'rank'			=>	$rank,
+			'hub'			=>	$hub,
+			'query'			=>	$query,
+		);
+
+        $searchConfig = F::build( 'WikiaSearchConfig', array( $params ) );
 
         $results = $this->wikiaSearch->doSearch( $searchConfig );
 
