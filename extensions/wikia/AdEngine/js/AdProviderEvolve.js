@@ -1,4 +1,4 @@
-var AdProviderEvolve = function (ScriptWriter, WikiaTracker, log, window, document, Krux) {
+var AdProviderEvolve = function (ScriptWriter, WikiaTracker, log, window, document, Krux, evolveHelper) {
 	var slotMap = {
 		'HOME_TOP_LEADERBOARD':{'tile':1, 'size':'728x90', 'dcopt':'ist'},
 		'HOME_TOP_RIGHT_BOXAD':{'tile':2, 'size':'300x250,300x600'},
@@ -41,13 +41,13 @@ var AdProviderEvolve = function (ScriptWriter, WikiaTracker, log, window, docume
 		log('getUrl', 5, 'AdProviderEvolve');
 		log([slotname, size], 5, 'AdProviderEvolve');
 
-		var sect = getSect();
+		var sect = evolveHelper.getSect();
 		var url = 'http://' +
 			'n4403ad' +
 			'.doubleclick.net/' +
 			'adj' + '/' +
 			'gn.wikia4.com' + '/' +
-			 sect + ';' +
+			sect + ';' +
 			'sect=' + sect + ';' +
 			'mtfInline=true;' +
 			'pos=' + slotname + ';' +
@@ -62,31 +62,6 @@ var AdProviderEvolve = function (ScriptWriter, WikiaTracker, log, window, docume
 
 		log(url, 7, 'AdProviderEvolve');
 		return url;
-	}
-
-	function getSect() {
-		log('getSect', 5, 'AdProviderEvolve');
-
-		var kv = window.wgDartCustomKeyValues || '';
-		var hub = window.cscoreCat || '';
-
-		var sect;
-		if (window.wgDBname == 'wikiaglobal') {
-			sect = 'home';
-		} else if (kv.indexOf('movie') != -1) {
-			sect = 'movies';
-		} else if (kv.indexOf('tv') != -1) {
-			sect = 'tv';
-		} else if (hub == 'Entertainment') {
-			sect = 'entertainment';
-		} else if (hub == 'Gaming') {
-			sect = 'gaming';
-		} else {
-			sect = 'ros';
-		}
-
-		log(sect, 7, 'AdProviderEvolve');
-		return sect;
 	}
 
 	// c&p WikiaDartHelper.getZone1
@@ -207,7 +182,7 @@ var AdProviderEvolve = function (ScriptWriter, WikiaTracker, log, window, docume
 	if (window.wgInsideUnitTest) {
 		iface.sanitizeSlotname = sanitizeSlotname;
 		iface.getUrl = getUrl;
-		iface.getSect = getSect;
+		iface.getSect = evolveHelper.getSect;
 	}
 
 	return iface;

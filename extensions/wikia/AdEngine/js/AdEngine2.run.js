@@ -4,6 +4,7 @@
 		, adEngine
 		, scriptWriter
 		, wikiaDart
+		, evolveHelper
 		, expiringStorage
 		, adProviderAdDriver
 		, adProviderAdDriver2Helper
@@ -26,6 +27,7 @@
 	slotTweaker = SlotTweaker(log, document);
 	scriptWriter = ScriptWriter(log, ghostwriter, document);
 	wikiaDart = WikiaDartHelper(log, window, document, Geo, Krux);
+	evolveHelper = EvolveHelper(log, window);
 	expiringStorage = ExpiringStorage(log, JSON);
 
 	adProviderAdDriver = AdProviderAdDriver(log, window);
@@ -33,8 +35,8 @@
 	adProviderAdDriver2 = AdProviderAdDriver2(
 		adProviderAdDriver2Helper, wikiaDart, scriptWriter, WikiaTracker, log, window, Geo, slotTweaker
 	);
-	adProviderEvolve = AdProviderEvolve(scriptWriter, WikiaTracker, log, window, document, Krux);
-	adProviderEvolveRS = AdProviderEvolveRS(scriptWriter, WikiaTracker, log, window, document);
+	adProviderEvolve = AdProviderEvolve(scriptWriter, WikiaTracker, log, window, document, Krux, evolveHelper);
+	adProviderEvolveRS = AdProviderEvolveRS(scriptWriter, WikiaTracker, log, window, document, evolveHelper);
 	adProviderGamePro = AdProviderGamePro(scriptWriter, WikiaTracker, log, window, document);
 	adProviderNull = AdProviderNull(log, slotTweaker);
 
