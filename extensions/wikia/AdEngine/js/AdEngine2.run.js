@@ -35,7 +35,7 @@
 	adProviderAdDriver2 = AdProviderAdDriver2(
 		adProviderAdDriver2Helper, wikiaDart, scriptWriter, WikiaTracker, log, window, Geo, slotTweaker
 	);
-	adProviderEvolve = AdProviderEvolve(scriptWriter, WikiaTracker, log, window, document, Krux, evolveHelper);
+	adProviderEvolve = AdProviderEvolve(scriptWriter, WikiaTracker, log, window, document, Krux, evolveHelper, slotTweaker);
 	adProviderEvolveRS = AdProviderEvolveRS(scriptWriter, WikiaTracker, log, window, document, evolveHelper);
 	adProviderGamePro = AdProviderGamePro(scriptWriter, WikiaTracker, log, window, document);
 	adProviderNull = AdProviderNull(log, slotTweaker);
