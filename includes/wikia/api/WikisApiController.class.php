@@ -70,7 +70,7 @@ class WikisApiController extends WikiaApiController {
 	public function getByString() {
 		$this->wf->profileIn( __METHOD__ );
 
-		$keyword = trim( $this->request->getVal( 'keyword', '' ) );
+		$keyword = trim( $this->request->getVal( 'string', '' ) );
 		$hub = trim( $this->request->getVal( 'hub', null ) );
 		$lang = trim( $this->getVal( 'lang', null ) );
 		$limit = $this->request->getInt( 'limit', self::ITEMS_PER_BATCH );
@@ -87,7 +87,7 @@ class WikisApiController extends WikiaApiController {
 		//results
 		$this->response->setCacheValidity(
 			86400 /* 24h */,
-			86400 /* 24h */,
+			85400 /* 24h */,
 			array(
 				WikiaResponse::CACHE_TARGET_BROWSER,
 				WikiaResponse::CACHE_TARGET_VARNISH

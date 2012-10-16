@@ -134,13 +134,13 @@ class WikisModel extends WikiaModel {
 			}
 
 			if ( empty( $hub ) || ( !empty( $hub ) && is_integer( $hubId ) ) ) {
-				$memKey = $this->wf->SharedMemcKey( __METHOD__, self::CACHE_VERSION,  md5( $keyword ), $hubId, $lang );
+				$memKey = $this->wf->SharedMemcKey( __METHOD__, self::CACHE_VERSION,  md5( strtolower( $keyword ) ), $hubId, $lang );
 				$wikis = $this->app->wg->Memc->get( $memKey );
 
 				if ( !is_array( $wikis ) ) {
 					$db = $this->getSharedDB();
 
-					$keyword = $db->addQuotes( $keyword );
+					$keyword = $db->addQuotes( "%{$keyword}%" );
 					$varId = (int) WikiFactory::getVarByName( 'wgWikiTopics', null )->cv_variable_id;
 
 					$queryParts = array( "SELECT  cl.city_id AS id, cl.city_lang AS lang, cl.city_title AS name ,cv.cv_value AS topic FROM city_list AS cl LEFT JOIN city_variables AS cv ON cl.city_id = cv.cv_city_id AND cv.cv_variable_id = {$varId}" );
@@ -156,14 +156,13 @@ class WikisModel extends WikiaModel {
 						$queryParts[] = "AND cl.city_lang = {$lang}";
 					}
 
-					$queryParts[] = "AND (cl.city_title LIKE '%{$keyword}%' OR cv.cv_value LIKE '%{$keyword}%')";
+					$queryParts[] = "AND (cl.city_title LIKE {$keyword} OR cl.city_url LIKE {$keyword} OR cv.cv_value LIKE {$keyword})";
 
 					if ( is_integer( $hubId ) ) {
 						$queryParts[] = "AND ccm.cat_id = {$hubId}";
 					}
 
 					$queryParts[] = 'ORDER BY cl.city_title LIMIT ' . self::MAX_RESULTS;
-
 
 					//manual query as the DataBase class doesn't allow for LEFT JOIN
 					//which is required in this specific case
@@ -187,7 +186,7 @@ class WikisModel extends WikiaModel {
 						);
 					}
 
-					$this->wg->Memc->set( $memKey, $wikis, 86400 /* 24h */ );
+					$this->wg->Memc->set( $memKey, $wikis, 43200 /* 12h */ );
 				}
 			}
 		}
