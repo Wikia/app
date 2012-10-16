@@ -23,7 +23,6 @@ CKEDITOR.plugins.add('rte-dialog',
 
 				// @see http://www.mediawiki.org/wiki/ResourceLoader/JavaScript_Deprecations#mwsuggest.js
 				// uses CSS rules from 'wikia.jquery.ui' module
-			
 				node.autocomplete({
 					minLength: 2,
 					source: function( request, response ) {
@@ -33,7 +32,7 @@ CKEDITOR.plugins.add('rte-dialog',
 								format: 'json',
 								action: 'opensearch',
 								search: request.term,
-								namespace: namespaces.join('|')
+								namespace: namespaces ? namespaces.join('|') : ''
 								// WARNING: Regardless what the API documentation says, MediaWiki's
 								// PrefixSearch::defaultSearchBackend() supports only one namespace
 								// and falls back to NS_MAIN when multiple namespaces given.
