@@ -73,6 +73,8 @@ class StructuredDataAPIClient {
 	}
 
 	public function getContext( $contextUrl, $relative = true ) {
+		// @todo: fix when Gregg fixes template context url (right now it's a non-existing /contexts/cod.jsonld
+		$contextUrl = str_replace('cod.jsonld', 'callofduty.jsonld', $contextUrl);
 		$response = json_decode( $this->call( ( $relative ? $this->baseUrl : '' ) . $contextUrl ) );
 		return $this->isValidResponse($response);
 	}
