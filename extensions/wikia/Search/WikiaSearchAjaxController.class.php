@@ -41,7 +41,7 @@ class WikiaSearchAjaxController extends WikiaController {
         
         $searchConfig = F::build( 'WikiaSearchConfig', $params );
 
-        $results = $this->wikiaSearch->doSearch( $query, $searchConfig );
+        $results = $this->wikiaSearch->doSearch( $searchConfig );
 
         $text = $this->app->getView('WikiaSearch', 'WikiaMobileResultList', array(
                 'currentPage'=> $page,
