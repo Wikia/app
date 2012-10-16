@@ -6,7 +6,6 @@ var AdProviderLiftium2Dom = function (wikiaTracker, log, document, slotTweaker, 
 		, slotMap
 		, canHandleSlot
 		, fillInSlot
-		, callLiftium
 	;
 
 	slotMap = {

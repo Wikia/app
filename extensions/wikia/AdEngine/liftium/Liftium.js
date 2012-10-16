@@ -371,15 +371,15 @@ Liftium.callIframeAd = function(slotname, tag, adIframe){
 };
 
 
-Liftium.callInjectedIframeAd = function (sizeOrSlot, iframeElement, placement){
+Liftium.callInjectedIframeAd = function (sizeOrSlot, iframeElement, slotPlacement){
 	Liftium.d("Calling injected Iframe Ad for " + sizeOrSlot, 1);
 
 	var slotname = Liftium.getContainingDivId(iframeElement); 
 	Liftium.d("It's " + iframeElement.id + " inside " + slotname + " div", 3);
 
-	if (placement) {
-		Liftium.d('Setting placement of slot ' + slotname + ' to ' + placement, 3);
-		Liftium.slotPlacements[slotname] = placement;
+	if (slotPlacement) {
+		Liftium.d('Setting placement of slot ' + slotname + ' to ' + slotPlacement, 3);
+		Liftium.slotPlacements[slotname] = slotPlacement;
 	}
 
 	// this is a(n ugly?) shortcut, the right name would be slotname's parent div
@@ -1340,12 +1340,14 @@ Liftium.init = function (callback) {
 
 	// TODO remove! an ugly hack for AdDriver transparency
 	var callback2 = function() {
-		if (typeof callback === 'function') callback();
+		if (typeof callback === 'function') {
+			callback();
+		}
 		if (window.AdEngine_loadLateAds) {
 			Liftium.d("AdEngine_run_later", 1);
 			window.AdEngine_loadLateAds();
 		}
-	}
+	};
 
 	Liftium.pullGeo();
 	Liftium.pullConfig(callback2);
@@ -2072,7 +2074,7 @@ Liftium.setPageVar = function(name, value){
 Liftium.setTagStat = function (tag_id, type){
 	Liftium.d("Setting a " + type + " stat for " + tag_id, 6);
 
-	var pieces = Liftium.tagStats.split(','), holder = [];
+	var pieces = Liftium.tagStats.split(',');
 	if (pieces.length > Liftium.statMax){
 		// If too may, take off the first one
 		pieces.shift();
@@ -2237,7 +2239,9 @@ Liftium.trackQcseg = function() {
 
 		var empty = true;
 		for (var i in qcseg.segments) {
-			if (typeof qcseg.segments[i] != "object") continue;
+			if (typeof qcseg.segments[i] != "object") {
+				continue;
+			}
 
 			if (Liftium.e(qcseg.segments[i])) {
 				//Liftium.trackEvent(Liftium.buildTrackUrl(["quantcast", "segments", "empty"]), "UA-17475676-9");
@@ -2617,7 +2621,7 @@ if (LiftiumOptions.error_beacon !== false ){
 
 
 // Gentlemen, Start your optimization!
-if (Liftium.empty(LiftiumOptions.offline) && LiftiumOptions.autoInit != false){
+if (Liftium.empty(LiftiumOptions.offline) && LiftiumOptions.autoInit !== false){
 	Liftium.init();
 }
 
