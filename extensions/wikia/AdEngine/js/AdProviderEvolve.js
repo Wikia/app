@@ -1,4 +1,4 @@
-var AdProviderEvolve = function (ScriptWriter, WikiaTracker, log, window, document, Krux, evolveHelper) {
+var AdProviderEvolve = function (ScriptWriter, WikiaTracker, log, window, document, Krux, evolveHelper, slotTweaker) {
 	var slotMap = {
 		'HOME_TOP_LEADERBOARD':{'tile':1, 'size':'728x90', 'dcopt':'ist'},
 		'HOME_TOP_RIGHT_BOXAD':{'tile':2, 'size':'300x250,300x600'},
@@ -31,7 +31,10 @@ var AdProviderEvolve = function (ScriptWriter, WikiaTracker, log, window, docume
 		slotTimer2[slot[0]] = new Date().getTime();
 		log('slotTimer2 start for ' + slot[0], 7, 'AdProviderEvolve');
 
-		ScriptWriter.injectScriptByUrl(slot[0], getUrl(slot[0], slot[1]));
+		ScriptWriter.injectScriptByUrl(slot[0], getUrl(slot[0], slot[1]), function() {
+			slotTweaker.removeDefaultHeight(slot[0]);
+			slotTweaker.removeTopButtonIfNeeded(slot[0]);
+		});
 	}
 
 	var ord = Math.round(Math.random() * 23456787654);
