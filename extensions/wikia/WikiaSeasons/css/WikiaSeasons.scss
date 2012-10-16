@@ -12,11 +12,9 @@
 	.wikia-header-mask {
 		background-image: url(/extensions/wikia/WikiaSeasons/images/time-to-play-header-bg.png); /* base64 */
 	}
-	.wikia-seasons-header-lights {
+	.page-width-container {
 		background-image: url(/extensions/wikia/WikiaSeasons/images/time-to-play-header-lights.png); /* base64 */
-		display: block;
-		height: 34px;
-		margin: 0 10px 0 0;
-		width: 238px;
+		background-position: 50% center;
+		background-repeat: no-repeat;
 	}
 }
