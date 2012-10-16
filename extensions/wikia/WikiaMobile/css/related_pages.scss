@@ -27,7 +27,7 @@ $itemPadding: 6px;
 		a {
 			color: inherit;
 			padding: $itemPadding $itemPadding/2 $itemPadding 112px;
-			height: 62px;
+			min-height: 62px;
 
 			img {
 				position: absolute;
