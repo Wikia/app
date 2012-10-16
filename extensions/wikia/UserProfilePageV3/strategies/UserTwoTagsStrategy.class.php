@@ -8,8 +8,9 @@ class UserTwoTagsStrategy extends UserTagsStrategyBase {
 	 * @var array
 	 */
 	protected $groupsRank = array(
-		'sysop' => 5,
-		'helper' => 4,
+		'sysop' => 6,
+		'helper' => 5,
+		'adminmentor' => 4,
 		'vstf' => 3,
 		'council' => 2,
 		'chatmoderator' => 1,
