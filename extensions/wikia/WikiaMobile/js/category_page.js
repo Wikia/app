@@ -5,7 +5,7 @@
  * @param loader.js loader
  * @param track.js track
  */
-/* global $, wgTitle */
+/* global wgTitle */
 require(['events', 'loader', 'track'], function (events, loader, track) {
 	'use strict';
 
@@ -13,15 +13,27 @@ require(['events', 'loader', 'track'], function (events, loader, track) {
 		expAll = document.getElementById('expAll'),
 		elements,
 		wkCatExh = document.getElementById('wkCatExh'),
-		categorySection = document.getElementsByClassName('alphaSec')[0];
+		categorySection = document.getElementsByClassName('alphaSec')[0],
+		i,
+		l;
 
 	if (expAll) {
-		elements = $('.alphaSec .artSec, .alphaSec .collSec');
-		expAll.addEventListener(clickEvent, function () {
-			if ($(this).toggleClass('exp').hasClass('exp')) {
-				elements.addClass('open');
+		elements = document.querySelectorAll('.alphaSec .artSec, .alphaSec .collSec');
+		l = elements.length;
+
+		expAll.addEventListener(clickEvent, function() {
+			if (this.className.indexOf('exp') > -1) {
+				this.className = this.className.replace(' exp', '');
+
+				for(i = 0; i < l; i++){
+					elements[i].className = elements[i].className.replace(' open', '');
+				}
 			} else {
-				elements.removeClass('open');
+				this.className += ' exp';
+
+				for(i = 0; i < l; i++){
+					elements[i].className += ' open';
+				}
 			}
 		});
 	}
@@ -55,7 +67,7 @@ require(['events', 'loader', 'track'], function (events, loader, track) {
 	/**
 	 * @param MouseEvent event
 	 */
-	$('.pagMore, .pagLess').bind(clickEvent, function (event) {
+	function onClick(event) {
 		event.preventDefault();
 		var self = this,
 			forward = (self.className.indexOf('pagMore') > -1),
@@ -104,5 +116,13 @@ require(['events', 'loader', 'track'], function (events, loader, track) {
 				next.className = 'pagMore' + (batch < ~~(parent.getAttribute('data-batches')) ? ' visible' : '');
 			}
 		});
+	}
+
+	categorySection.addEventListener(clickEvent, function(ev){
+		var t = ev.target;
+
+		if(t.className.indexOf('pag') > -1) {
+			onClick.call(t, ev);
+		}
 	});
 });
