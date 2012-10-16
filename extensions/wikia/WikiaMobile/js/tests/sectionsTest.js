@@ -53,7 +53,7 @@ describe("Sections module", function () {
 
 	async.it('should open/close/toggle section', function(done){
 
-		document.body.innerHTML = '<div id="mw-content-text"><h2>one</h2><p>test</p>test<p>test</p><p>test</p><h2>two</h2><p>test</p><div>test</div></div>';
+		document.body.innerHTML = '<div id="mw-content-text"><div></div><h2 id="one">one</h2><p>test</p>test<p>test</p><p>test</p><h2>two</h2><p>test</p><div>test</div></div>';
 
 		require(['sections'], function(sections){
 			sections.init();
@@ -83,6 +83,15 @@ describe("Sections module", function () {
 				expect(h2s[i].className).not.toMatch('open');
 				expect(h2s[i].nextElementSibling.className).not.toMatch('open');
 			}
+
+			sections.open('one');
+			expect(h2s[0].className).toMatch('open');
+			expect(h2s[0].nextElementSibling.className).toMatch('open');
+
+
+			sections.close('one');
+			expect(h2s[0].className).not.toMatch('open');
+			expect(h2s[0].nextElementSibling.className).not.toMatch('open');
 
 			done();
 		});
