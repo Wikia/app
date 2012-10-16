@@ -1,6 +1,7 @@
 /*
  @test-framework Jasmine
  @test-require-asset /resources/wikia/libraries/modil/modil.js
+ @test-require-asset /extensions/wikia/JSMessages/js/JSMessages.wikiamobile.js
  @test-require-asset /extensions/wikia/WikiaTracker/js/WikiaTracker.js
  @test-require-asset /extensions/wikia/WikiaMobile/js/events.js
  @test-require-asset /extensions/wikia/WikiaMobile/js/track.js
