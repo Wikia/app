@@ -1,11 +1,10 @@
 <?php
+/**
+ * City Visualization model for Wikia.com homepage grid
+ *
+ * @todo refactor, the queries should be part of /includes/wikia/models/WikisModel.class.php
+ */
 class CityVisualization extends WikiaModel {
-	const FLAG_NEW = 1;
-	const FLAG_HOT = 2;
-	const FLAG_PROMOTED = 4;
-	const FLAG_BLOCKED = 8;
-	const FLAG_OFFICIAL = 16;
-
 	//todo: think of better solution (WikiFactory variable?)
 	const GERMAN_CORPORATE_SITE_ID = 111264;
 	const ENGLISH_CORPORATE_SITE_ID = 80433;
@@ -234,7 +233,7 @@ class CityVisualization extends WikiaModel {
 			'city_visualization.city_main_image is not null',
 			'city_visualization.city_lang_code' => $contLang,
 			'city_visualization.city_vertical' => $verticalId,
-			'(city_visualization.city_flags & ' . self::FLAG_BLOCKED . ') != ' . self::FLAG_BLOCKED,
+			'(city_visualization.city_flags & ' . WikisModel::FLAG_BLOCKED . ') != ' . WikisModel::FLAG_BLOCKED,
 		);
 		$joinConds = array(
 			'city_list' => array(
@@ -752,23 +751,23 @@ class CityVisualization extends WikiaModel {
 	}
 
 	public static function isNewWiki($wikiFlags) {
-		return (($wikiFlags & self::FLAG_NEW) == self::FLAG_NEW);
+		return (($wikiFlags & WikisModel::FLAG_NEW) == WikisModel::FLAG_NEW);
 	}
 
 	public static function isHotWiki($wikiFlags) {
-		return (($wikiFlags & self::FLAG_HOT) == self::FLAG_HOT);
+		return (($wikiFlags & WikisModel::FLAG_HOT) == WikisModel::FLAG_HOT);
 	}
 
 	public static function isOfficialWiki($wikiFlags) {
-		return (($wikiFlags & self::FLAG_OFFICIAL) == self::FLAG_OFFICIAL);
+		return (($wikiFlags & WikisModel::FLAG_OFFICIAL) == WikisModel::FLAG_OFFICIAL);
 	}
 
 	public static function isPromotedWiki($wikiFlags) {
-		return (($wikiFlags & self::FLAG_PROMOTED) == self::FLAG_PROMOTED);
+		return (($wikiFlags & WikisModel::FLAG_PROMOTED) == WikisModel::FLAG_PROMOTED);
 	}
 
 	public static function isBlockedWiki($wikiFlags) {
-		return (($wikiFlags & self::FLAG_BLOCKED) == self::FLAG_BLOCKED);
+		return (($wikiFlags & WikisModel::FLAG_BLOCKED) == WikisModel::FLAG_BLOCKED);
 	}
 
 	public function getTargetWikiId($langCode) {

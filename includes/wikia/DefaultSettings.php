@@ -123,12 +123,8 @@ include_once( "$IP/lib/ApiGate/config.php" );
 //Wikia API base controller, all the others extend this class
 $app->registerClass( 'WikiaApiController', "{$IP}/includes/wikia/api/WikiaApiController.class.php" );
 
-//Wikia API models
-$app->registerClass( 'WikisModel', "{$IP}/includes/wikia/api/models/WikisModel.class.php" );
-
 //Wikia API controllers
 $app->registerApiController( 'DiscoverApiController', "{$IP}/includes/wikia/api/DiscoverApiController.class.php" );
-$app->registerApiController( 'WikisApiController', "{$IP}/includes/wikia/api/WikisApiController.class.php" );
 
 /**
  * Wikia API end
@@ -226,6 +222,9 @@ $wgAutoloadClasses['WikiService'] = $IP . '/includes/wikia/services/WikiService.
 $wgAutoloadClasses['DataMartService'] = $IP . '/includes/wikia/services/DataMartService.class.php';
 $wgAutoloadClasses['VideoService'] = $IP . '/includes/wikia/services/VideoService.class.php';
 $wgAutoloadClasses['SassService']  =  $IP.'/includes/wikia/services/SassService.php';
+
+// data models
+$wgAutoloadClasses['WikisModel'] = "{$IP}/includes/wikia/models/WikisModel.class.php";
 
 // modules
 $wgAutoloadClasses['SimpleSearchService']  =  $IP.'/includes/wikia/services/SimpleSearchService.class.php';

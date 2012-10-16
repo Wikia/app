@@ -276,16 +276,16 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 
 		switch($type) {
 			case self::FLAG_TYPE_BLOCK:
-				$result = $this->helper->setFlag($wikiId, CityVisualization::FLAG_BLOCKED, $corpWikiId, $langCode);
+				$result = $this->helper->setFlag($wikiId, WikisModel::FLAG_BLOCKED, $corpWikiId, $langCode);
 				break;
 			case self::FLAG_TYPE_UNBLOCK:
-				$result = $this->helper->removeFlag($wikiId, CityVisualization::FLAG_BLOCKED, $corpWikiId, $langCode);
+				$result = $this->helper->removeFlag($wikiId, WikisModel::FLAG_BLOCKED, $corpWikiId, $langCode);
 				break;
 			case self::FLAG_TYPE_PROMOTE:
-				$result = $this->helper->setFlag($wikiId, CityVisualization::FLAG_PROMOTED, $corpWikiId, $langCode);
+				$result = $this->helper->setFlag($wikiId, WikisModel::FLAG_PROMOTED, $corpWikiId, $langCode);
 				break;
 			case self::FLAG_TYPE_DEMOTE:
-				$result = $this->helper->removeFlag($wikiId, CityVisualization::FLAG_PROMOTED, $corpWikiId, $langCode);
+				$result = $this->helper->removeFlag($wikiId, WikisModel::FLAG_PROMOTED, $corpWikiId, $langCode);
 				break;
 			default:
 				$result = false;

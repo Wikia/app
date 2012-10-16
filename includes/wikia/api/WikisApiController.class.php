@@ -2,6 +2,8 @@
 /**
  * Controller to fetch informations about wikis
  *
+ * Available only on the www.wikia.com main domain.
+ *
  * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
  */
 
@@ -33,7 +35,7 @@ class WikisApiController extends WikiaApiController {
 		$lang = trim( $this->getVal( 'lang', null ) );
 		$limit = $this->request->getInt( 'limit', self::ITEMS_PER_BATCH );
 		$batch = $this->request->getInt( 'batch', 1 );
-		$results = $this->model->getTopWikis ( $lang, $hub );
+		$results = $this->model->getTop( $lang, $hub );
 		$batches = $this->wf->PaginateArray( $results, $limit, $batch );
 
 		foreach ( $batches as $name => $value ) {
@@ -75,7 +77,7 @@ class WikisApiController extends WikiaApiController {
 		$lang = trim( $this->getVal( 'lang', null ) );
 		$limit = $this->request->getInt( 'limit', self::ITEMS_PER_BATCH );
 		$batch = $this->request->getInt( 'batch', 1 );
-		$results = $this->model->getWikisByKeyword($keyword, $lang, $hub );
+		$results = $this->model->getByString($keyword, $lang, $hub );
 		$batches = $this->wf->PaginateArray( $results, $limit, $batch );
 
 		foreach ( $batches as $name => $value ) {
@@ -100,29 +102,59 @@ class WikisApiController extends WikiaApiController {
 	public function getDetails() {
 		$this->wf->profileIn( __METHOD__ );
 
-		$ids = $this->request->getVal( 'ids', null);
-		$hub = trim( $this->request->getVal( 'hub', null ) );
-		$lang = trim( $this->request->getVal( 'lang', null ) );
+		$ids = $this->request->getVal( 'ids', null );
 
 		if ( !empty( $ids ) ) {
 			$ids = explode( ',', $ids );
 		}
 
-		$results = $this->model->getPromotionData( $ids, $lang, $hub );
+		$results = $this->model->getDetails( $ids );
+
+		foreach ( $results as &$res ) {
+			//image data transformation
+			$imageUrl = null;
+			$img = $this->wf->findFile( $res['image'] );
+
+			if ( !empty( $img ) ) {
+				$imageUrl = $img->getFullUrl();
+			}
+
+			$res['image'] = $imageUrl;
+
+			//flags data transformation
+			$flags = array();
+			//those flags are used internally,
+			//they shouldn't be exposed via the API
+			$blacklist = array( 'blocked', 'promoted' );
+
+			foreach ( $res['flags'] as $name => $val ) {
+				if ( $val == true && !in_array( $name, $blacklist ) ) {
+					$flags[] = $name;
+				}
+			}
+
+			$res['flags'] = $flags;
+
+			//remove redundant data available via other methods
+			unset( $res['hubId'] );
+			unset( $res['lang'] );
+			unset( $res['url'] );
+			unset( $res['name'] );
+		}
 
 		$this->setVal( 'items', $results );
 
 		//store only for 24h to allow new wikis
 		//to appear in a reasonable amount of time in the search
 		//results
-		//$this->response->setCacheValidity(
-		//	86400 /* 24h */,
-		//	86400 /* 24h */,
-		//	array(
-		//		WikiaResponse::CACHE_TARGET_BROWSER,
-		//		WikiaResponse::CACHE_TARGET_VARNISH
-		//	)
-		//);
+		$this->response->setCacheValidity(
+			86400 /* 24h */,
+			86400 /* 24h */,
+			array(
+				WikiaResponse::CACHE_TARGET_BROWSER,
+				WikiaResponse::CACHE_TARGET_VARNISH
+			)
+		);
 
 		$this->wf->profileOut( __METHOD__ );
 	}
