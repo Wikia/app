@@ -27,17 +27,22 @@
 ?>
 
 <div class="SDObject" id="SDObject">
+
 	<h1><strong><?php echo $sdsObject->getName(); ?></strong></h1>
 	<dl class="SDObjectDetails">
 		<dt>Type:</dt>
 		<dd><?php echo $SDObject['type']; ?></dd>
 	</dl>
+	
 	<h3>Object properties:</h3>
 	<dl class="SDObjectProperties">
 	<?php foreach ( $SDObject['properties'] as $property ) : ?>
+	
 		<?php if (empty($property['value']) || $property['value'] == null) { continue; } ?>
+		
 		<dt><?php echo ucfirst(preg_replace('/([A-Z])/', ' ${1}', $property['label'])); ?>:</dt>
 		<dd>
+		
 			<?php switch ($property['type']) :
 				case 'xsd:anyURI' : ?>
 					<a href="<?php echo $property['value']; ?>" title="<?php echo $property['value']; ?>"><?php echo $property['value'] ?></a>
@@ -64,7 +69,9 @@
 					<?php echo $property['value']; ?>
 				<?php break; ?>
 			<?php endswitch; ?>
+			
 		</dd>
 	<?php endforeach; ?>
+	
 	</dl>
 </div>
