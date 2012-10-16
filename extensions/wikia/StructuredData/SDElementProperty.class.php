@@ -3,7 +3,7 @@
  * @author ADi
  */
 class SDElementProperty implements SplObserver {
-	protected $type = array( 'name' => 'rdf:Literal', 'range' => null );
+	protected $type = array( 'name' => 'rdf:Literal', 'range' => null, 'missing' => true );
 	protected $name = null;
 	protected $label = '';
 	protected $value = null;
@@ -50,7 +50,6 @@ class SDElementProperty implements SplObserver {
 						$v->object = $SDElement->toArray();
 					}
 					catch(WikiaException $e) {
-						//var_dump($e);
 						$v->object = null;
 					}
 				}
