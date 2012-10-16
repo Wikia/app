@@ -571,6 +571,55 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		CommonFunctions.logOut(Properties.userName2, driver);
 	}	
 	
+//	@Test(groups={"ArticleFeaturesCRUDAdmin_016", "ArticleFeaturesCRUDAdmin"})
+//	public void ArticleCRUDAdmin_016_AddTable()
+//	{
+//		CommonFunctions.logOut(Properties.userName, driver);
+//		CommonFunctions.logIn(Properties.userNameStaff, Properties.passwordStaff);
+//		WikiBasePageObject wiki = new WikiBasePageObject(driver, Global.DOMAIN);
+//		pageName = "QAarticle"+wiki.getTimeStamp();
+//		wiki.openWikiPage();
+//		WikiArticleEditMode edit = wiki.createNewArticle(pageName, 1);
+//		edit.deleteArticleContent();
+//		edit.clickOnVisualButton();
+//		edit.clickOnAddTableButton();
+//		edit.verifyTableModal();
+//		edit.clickOKonTableModal();
+//		edit.verifyTableAppears();
+//		WikiArticlePageObject article = edit.clickOnPublishButton();
+//		article.VerifyTheTableOnThePage();
+//		CommonFunctions.logOut(Properties.userName2, driver);		
+//	}	
+//	
+//	@Test(groups={"ArticleFeaturesCRUDAdmin_017", "ArticleFeaturesCRUDAdmin"})
+//	public void ArticleCRUDAdmin_017_EditTable()
+//	{
+//		CommonFunctions.logOut(Properties.userName, driver);
+//		CommonFunctions.logIn(Properties.userNameStaff, Properties.passwordStaff);
+//		WikiBasePageObject wiki = new WikiBasePageObject(driver, Global.DOMAIN);
+//		pageName = "QAarticle"+wiki.getTimeStamp();
+//		wiki.openWikiPage();
+//		WikiArticleEditMode edit = wiki.createNewArticle(pageName, 1);
+//		edit.deleteArticleContent();
+//		edit.clickOnVisualButton();
+//		edit.clickOnAddTableButton();
+//		edit.verifyTableModal();
+//		edit.clickOKonTableModal();
+//		edit.verifyTableAppears();
+//		WikiArticlePageObject article = edit.clickOnPublishButton();
+//		article.VerifyTheTableOnThePage();
+//		edit = article.edit();
+//		edit.verifyTableAppears();
+//		edit.tablePupulateCell(1,1, "first");
+//		edit.tablePupulateCell(1,2, "second");
+//		edit.tablePupulateCell(2,1, "third");
+//		edit.tablePupulateCell(2,2, "fourth");
+//		edit.tablePupulateCell(3,1, "fifth");
+//		edit.tablePupulateCell(3,2, "sixth");
+//		
+//		CommonFunctions.logOut(Properties.userName2, driver);		
+//	}	
+	
 
 	
 

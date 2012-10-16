@@ -76,6 +76,14 @@ public class WikiArticleEditMode extends WikiArticlePageObject {
 	private WebElement searchFieldImageInLightBox;
 	@FindBy(css="img.sprite.search")
 	private WebElement searchButtonImageInLightBox;
+	@FindBy(css="span.cke_button_table a")
+	private WebElement tableButton;
+	@FindBy(css="div.cke_dialog.modalWrapper")
+	private WebElement tableModal;
+	@FindBy(css="a.cke_dialog_ui_button.wikia-button")
+	private WebElement tableModalOKbutton;
+	@FindBy(css="table.article-table")
+	private WebElement VisualModeTable;
 	
 
 	
@@ -119,8 +127,87 @@ public class WikiArticleEditMode extends WikiArticlePageObject {
 		waitForElementClickableByCss(ObjectCss);
 		ObjectButton = driver.findElement(By.cssSelector(ObjectCss));
 		ObjectButton.click();
-		PageObjectLogging.log("ClickOnAddObjectButton", "Edit Article: "+articlename+", on wiki: "+Domain+"", true, driver);
+		PageObjectLogging.log("ClickOnAddObjectButton", "Click on: "+Object+"-button, on wiki: "+Domain+"", true, driver);
 		
+	}
+	
+	/**
+	 * Left Click on add Table button.
+	 *  
+	 * @author Michal Nowierski
+	 */
+	public void clickOnAddTableButton() {
+		
+		waitForElementByElement(tableButton);
+		waitForElementClickableByElement(tableButton);
+		tableButton.click();
+		PageObjectLogging.log("clickOnAddTableButton", "Click on: table-button, on wiki: "+Domain+"", true, driver);
+		
+	}
+	
+	/**
+	 * wait for table modal
+	 *  
+	 * @author Michal Nowierski
+	 */
+	public void verifyTableModal() {
+		
+		waitForElementByElement(tableModal);
+		PageObjectLogging.log("waitForTableModal", "wait for table modal", true, driver);
+		
+	}
+	/**
+	 * Click OK on table modal
+	 *  
+	 * @author Michal Nowierski
+	 */
+	public void clickOKonTableModal() {
+		
+		waitForElementByElement(tableModalOKbutton);
+		waitForElementClickableByElement(tableModalOKbutton);
+		tableModalOKbutton.click();
+		PageObjectLogging.log("clickOKonTableModal", "Click OK on table modal", true, driver);
+	}
+		
+	/**
+	 * Verify that the table has appeared in the visual mode
+	 *  
+	 * @author Michal Nowierski
+	 */
+	public void verifyTableAppears() {
+		waitForElementByElement(visualModeIFrame);
+		driver.switchTo().frame(visualModeIFrame);
+		waitForElementByElement(VisualModeTable);
+		driver.switchTo().defaultContent();
+		PageObjectLogging.log("verifyTableAppeared", "Verify that the table has appeared in the visual mode", true, driver);
+}
+	
+	
+	/**
+	 * Populate table cell
+	 *  
+	 * @author Michal Nowierski
+	 * @param string value - text to be present in the cell
+	 * @param j row index
+	 * @param i column index
+	 */
+	public void tablePupulateCell(int i, int j, String value) {
+		waitForElementByElement(visualModeIFrame);
+		driver.switchTo().frame(visualModeIFrame);
+		waitForElementByElement(VisualModeTable);
+		String cellHtmlMarkupTag = "td";
+		if (i == 1) {
+			//populating the head of table means that there will be <th> </th> markup tag
+			cellHtmlMarkupTag = "th";
+		}
+		WebElement cell = VisualModeTable.findElement(By.cssSelector("tr:nth-child("+i+")")).findElement(By.cssSelector(""+cellHtmlMarkupTag+":nth-child("+j+")"));
+		VisualModeTable.sendKeys("dada");
+		cell.click();
+		int x = cell.getLocation().getX();
+		int y = cell.getLocation().getY();
+		cell.sendKeys(value);
+		driver.switchTo().defaultContent();
+		PageObjectLogging.log("tablePupulateCell", "Verify that the table has appeared in the visual mode", true, driver);
 	}
 
 

@@ -16,6 +16,7 @@ import com.wikia.webdriver.PageObjects.PageObject.WikiBasePageObject;
 
 public class WikiArticlePageObject extends WikiBasePageObject {
 	
+
 	protected String articlename;
 	
 	@FindBy(css="div.WikiaPageHeaderDiffHistory")
@@ -38,6 +39,8 @@ public class WikiArticlePageObject extends WikiBasePageObject {
 	private WebElement editCommentButton;
 	@FindBy(css="input[id*='article-comm-reply']")
 	private WebElement submitReplyButton;
+	@FindBy(css="table.article-table")
+	private WebElement TableOnWikiaArticle;
 	
 	private By ImageOnWikiaArticle = By.cssSelector("div.WikiaArticle figure a img");
 	private By VideoOnWikiaArticle = By.cssSelector("div.WikiaArticle span.Wikia-video-play-button");
@@ -203,6 +206,16 @@ public class WikiArticlePageObject extends WikiBasePageObject {
 	public void VerifyTheImageOnThePage() {
 		waitForElementByBy(ImageOnWikiaArticle);
 		PageObjectLogging.log("VerifyTheImageOnThePage", "Verify that the image appears on the page", true, driver);
+	}
+	
+	/**
+	 * Verify that the table appears on the page
+	 *  
+	 * @author Michal Nowierski
+	 */
+	public void VerifyTheTableOnThePage() {
+		waitForElementByElement(TableOnWikiaArticle);
+		PageObjectLogging.log("VerifyTheTableOnThePage", "Verify that the table appears on the page", true, driver);
 	}
 	
 	/**
