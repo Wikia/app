@@ -82,7 +82,7 @@
 		w.Sections = Sections;
 	});
 
-	$(function(){
+	window.addEventListener('load', function(){
 		require(['toc'], function(toc){
 			Ponto.invoke(
 				'Article',
