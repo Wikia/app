@@ -35,6 +35,9 @@ $wgStructuredDataConfig = array(
 	'schemaPath' => 'callofduty'
 );
 
+F::addClassConstructor( 'StructuredDataAPIClient', array( 'baseUrl' => $wgStructuredDataConfig['baseUrl'], 'apiPath' => $wgStructuredDataConfig['apiPath'], 'schemaPath' => $wgStructuredDataConfig['schemaPath'] ) );
+F::addClassConstructor( 'StructuredData', array( 'apiClient' => F::build( 'StructuredDataAPIClient' )));
+
 /**
  * message files
  */

@@ -17,11 +17,16 @@ class StructuredData {
 		$this->APIClient = $apiClient;
 	}
 
-	public function getSDElement($id) {
+	/**
+	 * @param int $id
+	 * @param int $elementDepth
+	 * @return SDElement
+	 */
+	public function getSDElement($id, $elementDepth = 0) {
 		$element = $this->APIClient->getObject($id);
 		$template = $this->APIClient->getTemplate( $element->type );
 
-		$SDElement = F::build( 'SDElement', array( 'template' => $template, 'context' => $this->context, 'data' => $element ), 'newFromTemplate');
+		$SDElement = F::build( 'SDElement', array( 'template' => $template, 'context' => $this->context, 'data' => $element, 'depth' => $elementDepth ), 'newFromTemplate');
 
 		return $SDElement;
 	}

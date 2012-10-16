@@ -36,6 +36,28 @@ class SDElementProperty implements SplObserver {
 		return $this->value;
 	}
 
+	public function expandValue(StructuredData $structuredData, $elementDepth) {
+		$value = $this->value;
+		if(is_object($value) && isset($value->id)) {
+			$value = array( $value );
+		}
+
+		if(is_array($value)) {
+			foreach($value as $v) {
+				if(isset($v->id)) {
+					try {
+						$SDElement = $structuredData->getSDElement($v->id, $elementDepth+1);
+						$v->object = $SDElement->toArray();
+					}
+					catch(WikiaException $e) {
+						//var_dump($e);
+						$v->object = null;
+					}
+				}
+			}
+		}
+	}
+
 	public function setName($name) {
 		$this->name = $name;
 	}
