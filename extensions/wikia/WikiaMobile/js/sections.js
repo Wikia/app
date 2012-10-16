@@ -7,7 +7,7 @@
  * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
  */
 
-define('sections', ['events'], function(ev){
+define('sections', ['events', 'JSMessages'], function(ev, msg){
 	var d = document,
 		fragment = d.createDocumentFragment(),
 		click = ev.click,
@@ -57,7 +57,7 @@ define('sections', ['events'], function(ev){
 				nodeName,
 				isH2,
 				addNoSect = true,
-				goBck = '<span class=goBck>&uarr; ' + $.msg('wikiamobile-hide-section') + '</span>';
+				goBck = '<span class=goBck>&uarr; ' + msg('wikiamobile-hide-section') + '</span>';
 
 			for (x=0; x < y; x++) {
 				node = contents[x];
@@ -144,7 +144,7 @@ define('sections', ['events'], function(ev){
 			var h2 = heading;
 
 			//find in what section is the header
-			while(h2.nodeName !== 'H2'){
+			while(!h2.nodeName.match(/H[12]/)){
 				h2 = (heading.parentNode.className.indexOf('artSec') > -1) ? h2.parentNode.previousElementSibling : h2.parentNode;
 			}
 

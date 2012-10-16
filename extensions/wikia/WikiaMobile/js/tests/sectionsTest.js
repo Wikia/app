@@ -2,6 +2,7 @@
  @test-framework Jasmine
  @test-require-asset /resources/wikia/libraries/modil/modil.js
  @test-require-asset /resources/wikia/libraries/zepto/zepto-0.8.js
+ @test-require-asset /extensions/wikia/JSMessages/js/JSMessages.wikiamobile.js
  @test-require-asset /extensions/wikia/WikiaMobile/js/events.js
  @test-require-asset /extensions/wikia/WikiaMobile/js/sections.js
  */
@@ -11,7 +12,9 @@ describe("Sections module", function () {
 	'use strict';
 	var async = new AsyncSpec(this);
 
-	$.msg = function(a){return a};
+	define.mock('JSMessages', function(){
+		return 'TEST';
+	});
 
 	async.it('should be defined', function(done){
 		require(['sections'], function(sections){

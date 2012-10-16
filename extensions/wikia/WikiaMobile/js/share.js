@@ -9,7 +9,7 @@
  *
  * @author Jakub Olek
  */
-define('share', ['cache'], function (cache) {
+define('share', ['cache', 'JSMessages'], function (cache, msg) {
 	'use strict';
 
 	var shrData,
@@ -28,21 +28,21 @@ define('share', ['cache'], function (cache) {
 			var cacheKey = 'shareButtons' + wgStyleVersion;
 
 			function handle(html){
-				if(!link){
-					cnt.innerHTML = html.replace($1, pageUrl).replace($2, shrPageTxt).replace($3, shrMailPageTxt).replace($4, shrPageTxt);
-				}else{
+				if(link){
 					var imgUrl = pageUrl + '?file=' + encodeURIComponent(encodeURIComponent(link));
 					cnt.innerHTML = html.replace($1, imgUrl).replace($2, shrImgTxt).replace($3, shrMailImgTxt).replace($4, shrImgTxt);
+				}else{
+					cnt.innerHTML = html.replace($1, pageUrl).replace($2, shrPageTxt).replace($3, shrMailPageTxt).replace($4, shrPageTxt);
 				}
 			}
 
 			if(!shrData){
 				shrData = cache.get(cacheKey);
 				Wikia.processStyle(cache.get(cacheKey + 'style'));
-				shrPageTxt = $.msg('wikiamobile-sharing-page-text', wgTitle, wgSitename);
-				shrMailPageTxt = encodeURIComponent($.msg('wikiamobile-sharing-email-text', shrPageTxt));
-				shrImgTxt = $.msg('wikiamobile-sharing-modal-text', $.msg('wikiamobile-sharing-media-image'), wgTitle, wgSitename);
-				shrMailImgTxt = encodeURIComponent($.msg('wikiamobile-sharing-email-text', shrImgTxt));
+				shrPageTxt = msg('wikiamobile-sharing-page-text', wgTitle, wgSitename);
+				shrMailPageTxt = encodeURIComponent(msg('wikiamobile-sharing-email-text', shrPageTxt));
+				shrImgTxt = msg('wikiamobile-sharing-modal-text', msg('wikiamobile-sharing-media-image'), wgTitle, wgSitename);
+				shrMailImgTxt = encodeURIComponent(msg('wikiamobile-sharing-email-text', shrImgTxt));
 			}
 
 			if(shrData){

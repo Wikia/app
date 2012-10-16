@@ -5,7 +5,7 @@
  * @author Jakub 'Student' Olek
  **/
 
-require(['loader', 'toast', 'modal', 'events', 'track'], function(loader, toast, modal, events, track){
+require(['loader', 'toast', 'modal', 'events', 'track', 'JSMessages'], function(loader, toast, modal, events, track, msg){
 	/** @private **/
 
 	var d = document,
@@ -23,9 +23,9 @@ require(['loader', 'toast', 'modal', 'events', 'track'], function(loader, toast,
 		clickEvent = events.click,
 		firstPage,
 		commsUl = d.getElementById('wkComUl'),
-		postReply = $.msg('wikiamobile-article-comments-post-reply'),
-		view = $.msg('wikiamobile-article-comments-view'),
-		replies = $.msg('wikiamobile-article-comments-replies'),
+		postReply = msg('wikiamobile-article-comments-post-reply'),
+		view = msg('wikiamobile-article-comments-view'),
+		replies = msg('wikiamobile-article-comments-replies'),
 		postComm = d.getElementsByClassName('commFrm')[0].cloneNode(true);
 
 	postComm.getElementsByClassName('wkInp')[0].setAttribute('placeholder', postReply);
@@ -83,7 +83,7 @@ require(['loader', 'toast', 'modal', 'events', 'track'], function(loader, toast,
 
 			target.blur();
 
-			toast.show($.msg('wikiamobile-article-comments-login-post'), {error: true});
+			toast.show(msg('wikiamobile-article-comments-login-post'), {error: true});
 
 			require('topbar', function(t){
 				t.openProfile('comm-' + (prev ? (prev.id || 'wkComm') : elm.parentElement.id));

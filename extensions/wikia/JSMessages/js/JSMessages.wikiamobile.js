@@ -1,52 +1,60 @@
 /* globals Zepto */
-(function($){
+define('JSMessages', function(){
+	'use strict';
+
 	/**
 	 * JS version of wfMsg()
 	 *
 	 * Examples:
 	 *
-	 *  $.msg('foo');
-	 *  $.msg('bar', 'test', 'foo');
+	 *  require('JSMessages', function(msg){
 	 *
-	 * @param string key - message name
-	 * @param string param - message parameter #1
-	 * @param string param - message parameter #2
+	 *  	msg('foo');
+	 *  	msg('bar', 'test', 'foo');
+	 *
+	 *		msg.get();
+	 *
+	 *		msg.getForContent();
+	 *  })
+	 *
+	 *
+	 * @param key string - message name
+	 * @param param string - message parameter #1
+	 * @param param string - message parameter #2
 	 * ...
 	 * @return string - localised message
 	 */
-	$.msg = function() {
+	function msg() {
 		// get the first function parameter
+		// then the rest are parameters to a message
 		var key = Array.prototype.shift.call(arguments),
-			// then the rest of parameters as message arguments
-			params = arguments;
+			// default value to be returned
+			ret = key;
 
-		// default value to be returned
-		var ret = false;
-
-		if (typeof wgMessages != 'undefined') {
+		if (window.wgMessages) {
 			ret = wgMessages[key] || ret;
 
 			// replace $1, $2, $3, ...  with parameters provided
-			if (ret !== false && params && params.length) {
-				$.each(params, function(i, param) {
-					ret = ret.replace(new RegExp('\\$' + parseInt(i+1), 'g'), param);
-				});
+			if (arguments && ret !== key && arguments.length) {
+				for(var i = 0, l = arguments.length; i < l; i++){
+					ret = ret.replace(new RegExp('\\$' + (i+1), 'g'), arguments[i]);
+				}
 			}
 		}
 
-		return ret !== false ? ret : ('<' + key + '>');
-	};
+		return ret;
+	}
 
 	/**
 	 * Load messages from given package(s)
 	 *
-	 * @param string/array packages - package name or list of packages
-	 * @param function callback - function to call when request is completed
-	 * @param string language - optionally language code (fallbacks to user language)
+	 * @param packages string/array - package name or list of packages
+	 * @param callback function - function to call when request is completed
+	 * @param language string - optionally language code (fallbacks to user language)
 	 */
-	$.getMessages = function(packages, callback, language) {
+	 msg.get = function(packages, callback, language) {
 		// list of packages was given
-		if (typeof packages != 'string') {
+		if (typeof packages !== 'string') {
 			packages = Array.prototype.join.call(packages, ',');
 		}
 
@@ -64,7 +72,7 @@
 
 			Wikia.processScript(result);
 
-			if (typeof callback == 'function') {
+			if (typeof callback === 'function') {
 				callback();
 			}
 		}, 'script');
@@ -73,7 +81,9 @@
 	/**
 	 * Load messages from given package(s) using content language
 	 */
-	$.getMessagesForContent = function(packages, callback) {
-		this.getMessages(packages, callback, window.wgContentLanguage);
+	msg.getForContent = function(packages, callback) {
+		this.get(packages, callback, window.wgContentLanguage);
 	};
-})(Zepto);
+
+	return msg;
+});

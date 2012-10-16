@@ -4,7 +4,7 @@
  *
  * @author Jakub "Student" Olek
  */
-define('media', ['modal', 'loader', 'querystring', require.optional('popover'), 'track', 'events', require.optional('share'), require.optional('cache')], function(modal, loader, qs, popover, track, events, share, cache){
+define('media', ['JSMessages', 'modal', 'loader', 'querystring', require.optional('popover'), 'track', 'events', require.optional('share'), require.optional('cache')], function(msg, modal, loader, qs, popover, track, events, share, cache){
 	'use strict';
 	/** @private **/
 
@@ -193,7 +193,7 @@ define('media', ['modal', 'loader', 'querystring', require.optional('popover'), 
 
 					img.onerror = function(){
 						loader.hide(currentImage);
-						handleError($.msg('wikiamobile-image-not-loaded'));
+						handleError(msg('wikiamobile-image-not-loaded'));
 					};
 
 					loader.show(currentImage, {

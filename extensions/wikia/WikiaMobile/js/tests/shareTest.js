@@ -3,6 +3,7 @@
  @test-require-asset /resources/wikia/libraries/modil/modil.js
  @test-require-asset /resources/wikia/libraries/zepto/zepto-0.8.js
  @test-require-asset /resources/wikia/modules/cache.js
+ @test-require-asset /extensions/wikia/JSMessages/js/JSMessages.wikiamobile.js
  @test-require-asset /extensions/wikia/WikiaMobile/js/share.js
  */
 
@@ -18,7 +19,11 @@ describe("Share module", function () {
 	window.wgTitle = 'Test';
 	window.wgSitename = 'Test Wiki';
 
-	$.msg = function(){return 'MSG'};
+	define.mock('JSMessages', function(){
+		return function(){
+			return 'TEST';
+		}
+	});
 
 	define.mock('cache', {
 		get: function(){return false}
