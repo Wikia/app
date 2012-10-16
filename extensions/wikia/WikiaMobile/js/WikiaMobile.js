@@ -2,7 +2,7 @@
 //needs to run ASAP (before onload actually happens)
 //so it's processed separately from the rest
 //to avoid delays
-/* global $ */
+
 (function (w) {
 	'use strict';
 	var onload = function onload() {
@@ -27,7 +27,7 @@
 })(window);
 
 //init
-$(function () {
+window.addEventListener('load', function () {
 	'use strict';
 	require(['layout', 'querystring', require.optional('topbar'), require.optional('toc'), 'events', require.optional('share'), require.optional('popover'), require.optional('cookies'), 'track'],
 		function (layout, qs, topbar, toc, events, share, popover, cookies, track) {
