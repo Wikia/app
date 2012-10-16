@@ -53,7 +53,7 @@ define('layout', ['sections', 'media', require.optional('cache')], function(sect
 	if(tables && tables.length > 0){
 		assets = cache && cache.get(tablesKey);
 
-		if(window.wgGameGuides || assets){
+		if(Features.gameguides || assets){
 			process(assets);
 		}else{
 			Wikia.getMultiTypePackage({

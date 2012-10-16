@@ -1,4 +1,6 @@
-(function($){
+(function(Wikia){
+	"use strict";
+
 	//TODO: split this library in different files: zepto.resources.js, zepto.loader.js, etc.
 	//then use AssetsManager config to group them together
 
@@ -19,15 +21,6 @@
 	}
 
 	/* @public */
-
-	//console polyfill
-	if(!window.console){
-		function nil(){
-			void(0);
-		}
-
-		window.console = {error: nil, warn: nil, info: nil, log: nil};
-	}
 	
 	//process scripts injected via innerHTML which are not executed by default
 	//this would run once again also the ones that where not added to the element
@@ -50,7 +43,7 @@
 //		}
 //	}
 
-	$.getSassURL = function(rootURL, scssFilePath, params) {
+	Wikia.getSassURL = function(rootURL, scssFilePath, params) {
 
 		var url = processedSassUrls[scssFilePath];
 
@@ -63,24 +56,24 @@
 		}
 
 		return url;
-	}
+	};
 
-	$.getSassCommonURL = function(scssFilePath, params) {
-		return $.getSassURL(wgCdnRootUrl, scssFilePath, params);
-	}
+	Wikia.getSassCommonURL = function(scssFilePath, params) {
+		return Wikia.getSassURL(wgCdnRootUrl, scssFilePath, params);
+	};
 
-	$.getSassLocalURL = function(scssFilePath, params) {
-		return $.getSassURL(wgServer, scssFilePath, params);
-	}
+	Wikia.getSassLocalURL = function(scssFilePath, params) {
+		return Wikia.getSassURL(wgServer, scssFilePath, params);
+	};
 
-	$.getScript = function( resource, onComplete ) {
+	Wikia.getScript = function( resource, onComplete ) {
 		var scriptElement = document.createElement( 'script' );
 		scriptElement.src = resource;
 		scriptElement.onload = onComplete;
 		document.head.appendChild( scriptElement );
 	};
 
-	$.getResources = function( resources, callback ) {
+	Wikia.getResources = function( resources, callback ) {
 		var length = resources.length,
 			remaining = length,
 			resource,
@@ -92,7 +85,7 @@
 			// all files have been downloaded
 			if(remaining == 0 && typeof callback == 'function')
 				callback();
-		};
+		}
 
 		// download files
 		for ( var n = 0; n < length; n++ ) {
@@ -115,43 +108,42 @@
 			}else{
 				throw 'unknown resource format (' + resource + ')';
 			}
-		};
+		}
 	};
 
 	/**
 	* Loads library file if it's not already loaded and fires callback
 	*/
-	$.loadLibrary = function(name, file, typeCheck, callback, failureFn) {
-		if (typeCheck === 'undefined'){
-			$.getScript(
-				file,
-				function() {
-					if (typeof callback == 'function') callback();
-				},
-				failureFn
-			);
-		}else
-			if(typeof callback == 'function') callback();
-	};
+//	Wikia.loadLibrary = function(name, file, typeCheck, callback, failureFn) {
+//		if (typeCheck === 'undefined'){
+//			$.getScript(
+//				file,
+//				function() {
+//					if (typeof callback == 'function') callback();
+//				},
+//				failureFn
+//			);
+//		}else
+//			if(typeof callback == 'function') callback();
+//	};
 
-	$.loadGoogleMaps = function(callback) {
-		window.onGoogleMapsLoaded = function() {
-			delete window.onGoogleMapsLoaded;
-			if (typeof callback === 'function') {
-				callback();
-			}
-		};
+//	$.loadGoogleMaps = function(callback) {
+//		window.onGoogleMapsLoaded = function() {
+//			delete window.onGoogleMapsLoaded;
+//			if (typeof callback === 'function') {
+//				callback();
+//			}
+//		};
+//
+//		$.loadLibrary('GoogleMaps',
+//			'http://maps.googleapis.com/maps/api/js?sensor=false&callback=onGoogleMapsLoaded',
+//			typeof (window.google && google.maps),
+//			function() {}
+//		);
+//	};
 
-		$.loadLibrary('GoogleMaps',
-			'http://maps.googleapis.com/maps/api/js?sensor=false&callback=onGoogleMapsLoaded',
-			typeof (window.google && google.maps),
-			function() {}
-		);
-	};
-
-	$.nirvana = {
-		sendRequest: function(attr){
-			var type = (attr.type &&  attr.type.toUpperCase()) || 'POST',
+	Wikia.sendRequest = function(attr){
+			var type = (attr.type && attr.type.toUpperCase()) || 'POST',
 				format = (attr.format && attr.format.toLowerCase()) || 'json',
 				formats = {'json':1, 'jsonp':1, 'html':1},
 				data = attr.data || {},
@@ -179,30 +171,39 @@
 				success: callback,
 				error: onErrorCallback
 			});
-		},
-
-		getJson: function(controller, method, data, callback, onErrorCallback){
-			$.nirvana.sendRequest({
-				controller: controller,
-				method: method,
-				data: data,
-				type: 'GET',
-				format: 'json',
-				callback: callback,
-				onErrorCallback: onErrorCallback
-			});
-		},
-
-		postJson: function(controller, method, data, callback, onErrorCallback){
-			$.nirvana.sendRequest({
-				controller: controller,
-				method: method,
-				data: data,
-				type: 'POST',
-				format: 'json',
-				callback: callback,
-				onErrorCallback: onErrorCallback
-			});
-		}
 	};
-})(Zepto);
+
+	Wikia.param = function(params){
+		var ret = [];
+		if(params) {
+			for(var param in params){
+				if(params.hasOwnProperty(param)){
+					ret.push(param + '=' + params[param]);
+				}
+			}
+		}
+		return ret.join('&');
+	};
+
+
+//		getJson: function(controller, method, data, callback, onErrorCallback){
+//			Wikia.nirvana.sendRequest({
+//				controller: controller,
+//				method: method,
+//				data: data,
+//				type: 'GET',
+//				callback: callback,
+//				onErrorCallback: onErrorCallback
+//			});
+//		},
+//
+//		postJson: function(controller, method, data, callback, onErrorCallback){
+//			Wikia.nirvana.sendRequest({
+//				controller: controller,
+//				method: method,
+//				data: data,
+//				callback: callback,
+//				onErrorCallback: onErrorCallback
+//			});
+//		}
+})(Wikia);
