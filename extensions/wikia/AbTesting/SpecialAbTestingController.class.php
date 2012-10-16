@@ -392,6 +392,9 @@ class SpecialAbTestingController extends WikiaSpecialPageController {
 		$this->setVal('errors',(array)$errors);
 	}
 
+	/**
+	 * @return AbTestingData
+	 */
 	protected function getAbData() {
 		if ( !$this->abData ) {
 			$this->abData = new AbTestingData();
@@ -399,6 +402,9 @@ class SpecialAbTestingController extends WikiaSpecialPageController {
 		return $this->abData;
 	}
 
+	/**
+	 * @return AbTesting
+	 */
 	protected function getAbTesting() {
 		if ( !$this->abTesting ) {
 			$this->abTesting = new AbTesting();
