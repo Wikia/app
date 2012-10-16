@@ -11,7 +11,7 @@
  * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
  */
 
-/*global window, document, define, require, setTimeout, setInterval, clearInterval, Features, $, AdConfig*/
+/*global window, document, define, require, setTimeout, setInterval, clearInterval, Features, AdConfig*/
 define('ads', ['events', 'domwriter', 'cookies', 'track'], function (ev, dw, ck, track) {
 	'use strict';
 
@@ -342,7 +342,7 @@ define('ads', ['events', 'domwriter', 'cookies', 'track'], function (ev, dw, ck,
 	 * Module initialization
 	 */
 
-	window.addEventListener('DOMContentLoaded', function () {
+	$(function () {
 		adSlot = d.getElementById('wkAdPlc');
 		contentWrapper = d.getElementById('wkAdWrp');
 
