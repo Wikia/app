@@ -1,5 +1,9 @@
 <?php
 
+	if (!$sdsObject) {
+		die('Requested object doesn\'t exist!');
+	}
+
 	// Array of SD object properties 
 	$SDObject = $sdsObject->toArray(); 
 	
@@ -40,10 +44,18 @@
 	
 		<?php if (empty($property['value']) || $property['value'] == null) { continue; } ?>
 		
+		<?php if (array_key_exists('missing', $property['type'])) : ?>
+			<dt><?php echo ucfirst(preg_replace('/([A-Z])/', ' ${1}', $property['label'])); ?>:</dt>
+			<dd>
+				<pre><?php print_r($property['value']) ?></pre>
+			</dd>
+			<?php continue; ?>
+		<?php endif ?>
+		
 		<dt><?php echo ucfirst(preg_replace('/([A-Z])/', ' ${1}', $property['label'])); ?>:</dt>
 		<dd>
-		
-			<?php switch ($property['type']) :
+			
+			<?php switch ($property['type']['name']) :
 				case 'xsd:anyURI' : ?>
 					<a href="<?php echo $property['value']; ?>" title="<?php echo $property['value']; ?>"><?php echo $property['value'] ?></a>
 				<?php break; ?>
