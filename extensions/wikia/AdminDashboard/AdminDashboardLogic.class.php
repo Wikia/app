@@ -90,6 +90,7 @@ class AdminDashboardLogic {
 				"Signup",
 				"SiteWideMessages",
 				"SponsorshipDashboard",
+				"StructuredData",
 				"TaskManager",
 				"ThemeDesigner",
 				"ThemeDesignerPreview",

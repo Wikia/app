@@ -50,13 +50,26 @@ class StructuredDataAPIClient {
 		return $this->isValidResponse($response);
 	}
 
+	public function getObjectByURL( $url ) {
+		$response = json_decode( $this->call( rtrim( $this->getApiPath(), '/' ) . '?schema_url=' . urlencode($url) ) );
+
+		if(isset($response->{"@graph"})) {
+			return array_shift( $response->{"@graph"} );
+		}
+		else {
+			throw new WikiaException('SD API Error: ' . $url . ' object not found');
+		}
+	}
+
 	public function getCollection( $type ) {
 		$rawResponse = $this->call( rtrim( $this->getApiPath(), '/' ) . '?withType=' . urlencode($type) );
 		$response = json_decode( $rawResponse );
 		$collection = array();
 		foreach ( $response->{"@graph"} as $obj ) {
 
-			$collection[] = array(  "id" => $obj->id,
+			$collection[] = array(
+						"id" => $obj->id,
+						"url" => ( isset($obj->{"schema:url"}) ? $obj->{"schema:url"} : null ),
 						"name" => $obj->{"schema:name"},
 						"type" => $obj->type
 			);

@@ -78,6 +78,16 @@ class SDElement implements SplSubject {
 	}
 
 	/**
+	 * Return element's url
+	 * @return string
+	 */
+	public function getUrl() {
+		$url = $this->getProperty( 'schema:url' );
+		if ( empty( $url ) ) return null;
+		return $url->getValue();
+	}
+
+	/**
 	 * @param \SDContext $context
 	 */
 	public function setContext($context) {
@@ -141,6 +151,7 @@ class SDElement implements SplSubject {
 			'id' => $this->getId(),
 			'type' => $this->getType(),
 			'name' => $this->getName(),
+			'url' => $this->getUrl(),
 			'properties' => $properties,
 			'depth' => $this->getDepth()
 		);

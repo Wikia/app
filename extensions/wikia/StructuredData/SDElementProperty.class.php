@@ -46,7 +46,7 @@ class SDElementProperty implements SplObserver {
 			foreach($value as $v) {
 				if(isset($v->id)) {
 					try {
-						$SDElement = $structuredData->getSDElement($v->id, $elementDepth+1);
+						$SDElement = $structuredData->getSDElementById($v->id, $elementDepth+1);
 						$v->object = $SDElement->toArray();
 					}
 					catch(WikiaException $e) {
