@@ -89,7 +89,7 @@ require(['loader', 'querystring', 'events'], function(loader, qs, events){
 		});
 	}
 
-	$(function(){
+	window.addEventListener('load', function(){
 		wkArtCom = document.getElementById('wkArtCom');
 		collSec = wkArtCom.getElementsByClassName('collSec')[0];
 		wkComm = document.getElementById('wkComm');
