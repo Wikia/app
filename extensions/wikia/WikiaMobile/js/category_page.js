@@ -88,7 +88,7 @@ require(['events', 'loader', 'track'], function (events, loader, track) {
 
 		self.className += ' active';
 
-		$.nirvana.sendRequest({
+		Wikia.sendRequest({
 			controller: 'WikiaMobileController',
 			method: 'getCategoryBatch',
 			format: 'html',
