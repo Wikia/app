@@ -1,5 +1,5 @@
 if (window.wgEnableKruxTargeting) {
-	$(function() {
+	$(window).load(function() {
 		window.AdEngine_loadKruxLater(Krux);
 	});
 }
