@@ -2215,7 +2215,7 @@ Liftium.geoForTracking = function(country) {
 };
 
 Liftium.trackQcseg = function() {
-	c = Liftium.cookie("qcseg");
+	var c = Liftium.cookie("qcseg");
 	Liftium.d("Quantcast cookie: " + c, 5);
 	if (Liftium.e(c)) {
 		//Liftium.trackEvent(Liftium.buildTrackUrl(["quantcast", "none"]), "UA-17475676-9");
@@ -2228,7 +2228,7 @@ Liftium.trackQcseg = function() {
 	}
 
 	try {
-		qcseg = eval("(" + c + ")");
+		var qcseg = JSON.parse(c);
 		Liftium.d("Quantcast cookie parsed:", 7, qcseg);
 		if (Liftium.e(qcseg.segments)) {
 			//Liftium.trackEvent(Liftium.buildTrackUrl(["quantcast", "empty"]), "UA-17475676-9");
