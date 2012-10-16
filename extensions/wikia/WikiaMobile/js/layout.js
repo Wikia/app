@@ -8,7 +8,7 @@
  */
 define('layout', ['sections', 'media', require.optional('cache')], function(sections, media, cache) {
 	var d = document,
-		pageContent = d.getElementById('mw-content-text'),
+		pageContent = d.getElementById('mw-content-text') || d.getElementById('wkMainCnt'),
 		images = d.getElementsByClassName('media'),
 		selector = 'table:not(.toc):not(.infobox)',
 		tables = d.querySelectorAll(selector),
