@@ -236,7 +236,7 @@ class GameGuidesController extends WikiaController {
 			)
 		);
 
-		$this->response->setVal( 'cb', $this->wg->CacheBuster );
+		$this->response->setVal( 'cb', $this->wg->StyleVersion );
 	}
 
 	/**
