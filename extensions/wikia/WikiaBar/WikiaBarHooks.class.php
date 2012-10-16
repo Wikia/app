@@ -2,7 +2,6 @@
 
 class WikiaBarHooks {
 	private static $PROHIBITED_DBNAMES = array('answers');
-	private static $PROHIBITED_SPECIAL_PAGES = array('CreateNewWiki');
 
 	public static function onWikiFactoryVarChanged($cv_name, $city_id, $value) {
 		$app = F::app();
@@ -70,16 +69,14 @@ class WikiaBarHooks {
 				$vars['wgEnableWikiaBarExt'] = true;
 			}
 		} else {
-			if(self::isWikiaBarSuppressed()) {
+			if(self::isWikiaBarSuppressedByExtensions()) {
 				$vars['wgEnableWikiaBarExt'] = false;
-				F::app()->wg->suppressWallNotifications = true;
 			} else {
 				$vars['wgEnableWikiaBarExt'] = true;
 			}
 		}
 		$vars['wgEnableWikiaBarAds'] = true;
 		$vars['wgWikiaBarMainLanguages'] = $app->wg->WikiaBarMainLanguages;
-		$vars['wgDevelEnvironment'] = $app->wg->DevelEnvironment;
 
 		wfProfileOut(__METHOD__);
 		return true;
@@ -87,11 +84,11 @@ class WikiaBarHooks {
 
 	protected static function isWikiaBarConfig($city_id, $cv_name) {
 		/* we're interested only in community Wiki */
-		return ($city_id == 177 && $cv_name == 'wgWikiaBarConfig');
+		return ($city_id == WikiaBarModel::WIKIA_BAR_CONFIG_WIKI_ID && $cv_name == 'wgWikiaBarConfig');
 	}
-	
-	public static function isWikiaBarSuppressed() {
-		$suppressed = F::app()->wg->request->getVal('createNewWiki',null);
+
+	public static function isWikiaBarSuppressedByExtensions() {
+		$suppressed = F::app()->wg->atCreateNewWikiPage;
 		return !empty($suppressed);
 	}
 }

@@ -24,6 +24,7 @@ class WallNotificationsController extends WikiaController {
 			$this->response->setVal('user', $this->wg->User);
 		}
 
+		$this->response->setVal('suppressWallNotifications',$this->areNotificationsSuppressedByExtensions());
 		$this->response->setVal('user', $this->wg->User);
 
 		wfProfileOut(__METHOD__);
@@ -115,6 +116,11 @@ class WallNotificationsController extends WikiaController {
 		$this->response->setVal( 'authors', $authors );
 		$this->response->setVal( 'title', $data->title );
 		$this->response->setVal( 'iso_timestamp',  wfTimestamp(TS_ISO_8601, $data->timestamp ));
+	}
+
+	private function areNotificationsSuppressedByExtensions() {
+		$suppressed = F::app()->wg->atCreateNewWikiPage;
+		return !empty($suppressed);
 	}
 
 	private function fixNotificationURL($url) {

@@ -11,8 +11,7 @@ class WikiaBarDataModel extends WikiaBarModelBase {
 	public function getData() {
 		$this->wf->profileIn(__METHOD__);
 
-		/* Config is stored on community Wiki */
-		$wikiaBarConfigMessage = WikiFactory::getVarValueByName('wgWikiaBarConfig', 177, true);
+		$wikiaBarConfigMessage = WikiFactory::getVarValueByName('wgWikiaBarConfig', self::WIKIA_BAR_CONFIG_WIKI_ID, true);
 
 		if (
 			!empty($wikiaBarConfigMessage)

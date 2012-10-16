@@ -1,4 +1,4 @@
-<? if($user->isLoggedIn() && empty(F::app()->wg->suppressWallNotifications)): ?>
+<? if($user->isLoggedIn() && empty($suppressWallNotifications)): ?>
 	<ul id="WallNotifications" class="WallNotifications <?php if($prehide): ?>prehide<?php endif; ?>">
 		<li>
 			<div class="bubbles">

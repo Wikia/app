@@ -11,6 +11,9 @@ abstract class WikiaBarModelBase extends WikiaModel {
 	protected $lang;
 	protected $vertical;
 
+	// id of wiki storing WikiaBar config
+	const WIKIA_BAR_CONFIG_WIKI_ID = 177;
+
 	public function setLang($lang) {
 		$this->lang = $lang;
 	}
