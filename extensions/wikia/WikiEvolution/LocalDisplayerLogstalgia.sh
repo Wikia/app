@@ -1,3 +1,4 @@
+#!/bin/sh
 
 echo "Set Wiki name : "
 read wikiname

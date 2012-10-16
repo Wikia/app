@@ -1,3 +1,4 @@
+#!/bin/sh
 
 echo "Set Wiki id : "
 read wiki_id
