@@ -342,7 +342,7 @@ define('ads', ['events', 'domwriter', 'cookies', 'track'], function (ev, dw, ck,
 	 * Module initialization
 	 */
 
-	$(function () {
+	window.addEventListener('DOMContentLoaded', function () {
 		adSlot = d.getElementById('wkAdPlc');
 		contentWrapper = d.getElementById('wkAdWrp');
 
