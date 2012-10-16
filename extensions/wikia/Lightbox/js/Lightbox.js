@@ -135,7 +135,7 @@ var Lightbox = {
 					.click();
 				
 				var trackingTitle = Lightbox.getTitleForTracking();
-				LightboxTracker.track(WikiaTracker.ACTIONS.CLICK, null, null, {title: trackingTitle, type: Lightbox.current.type});
+				LightboxTracker.track(WikiaTracker.ACTIONS.CLICK, 'lightboxShare', null, {title: trackingTitle, type: Lightbox.current.type});
 				
 				Lightbox.openModal.share.shareUrl = json.shareUrl; // cache shareUrl for email share
 				Lightbox.setupShareEmail();
