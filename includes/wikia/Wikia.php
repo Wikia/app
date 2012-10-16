@@ -35,6 +35,7 @@ $wgHooks['RecentChange_save']        [] = "Wikia::recentChangesSave";
 $wgHooks['MediaWikiPerformAction']   [] = "Wikia::onPerformActionMemcachePurge";
 $wgHooks['MediaWikiPerformAction']   [] = "Wikia::onPerformActionNewrelicNameTransaction";
 $wgHooks['SkinTemplateOutputPageBeforeExec'][] = "Wikia::onSkinTemplateOutputPageBeforeExec";
+$wgHooks['OutputPageCheckLastModified'][] = 'Wikia::onOutputPageCheckLastModified';
 
 /**
  * This class have only static methods so they can be used anywhere
@@ -1875,4 +1876,20 @@ class Wikia {
 		}
 		return true;
 	}
+
+	/**
+	 * Force article Last-Modified header to include modification time of app and config repos
+	 *
+	 * @param $modifiedTimes array List of components modification time
+	 * @return true
+	 */
+	public static function onOutputPageCheckLastModified( &$modifiedTimes ) {
+		global $IP, $wgWikiaConfigDirectory;
+
+		$modifiedTimes['wikia_app'] = filemtime("$IP/includes/specials/SpecialVersion.php");
+		$modifiedTimes['wikia_config'] = filemtime("$wgWikiaConfigDirectory/CommonSettings.php");
+
+		return true;
+	}
+
 }
