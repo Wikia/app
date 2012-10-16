@@ -57,7 +57,7 @@ UserLoginAjaxForm.prototype.ajaxLogin = function() {
 
 UserLoginAjaxForm.prototype.submitLoginHandler = function(json) {
 	$().log(json);
-	$('.error-msg').remove();
+	this.form.find('.error-msg').remove();
 	this.form.find('.input-group').removeClass('error');
 	var result = json['result'],
 		callback;
@@ -150,7 +150,6 @@ UserLoginAjaxForm.prototype.retrieveLoginToken = function(params) {
 
 UserLoginAjaxForm.prototype.mailPassword = function(e) {
 	e.preventDefault();
-	$('.error-msg').remove();
 	this.form.find('.input-group').removeClass('error');
 	this.form.find('.error-msg').remove();
 	$().log('mailing password');
