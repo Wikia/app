@@ -82,7 +82,8 @@
 		w.Sections = Sections;
 	});
 
-	window.addEventListener('load', function(){
+
+	window.addEventListener('DOMContentLoaded', function(){
 		require(['toc'], function(toc){
 			Ponto.invoke(
 				'Article',

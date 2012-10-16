@@ -1,6 +1,5 @@
 <?= $globals; ?>
 <script>
-wgGameGuides = true;
 wgMessages = <?= json_encode( $messages ); ?>;
 </script>
 <h2 id=pageName><?= $title; ?></h2>

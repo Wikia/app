@@ -346,6 +346,7 @@ $config['gameguides_js'] = array(
 
 		//feature detection
 		'//extensions/wikia/WikiaMobile/js/feature-detects/overflow.wikiamobile.js',
+		'//extensions/wikia/GameGuides/js/isGameGuides.js',
 
 		//polyfills
 		'//resources/wikia/polyfills/outerhtml.js',
