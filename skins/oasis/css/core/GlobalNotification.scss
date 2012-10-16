@@ -67,10 +67,11 @@
 }
 
 /* temp transition code until grid is fully rolled out, remove and integrate after transition */
-.wikia-grid .global-notification {
-    width: 988px;
-	&.float {
-		left: 50%;
+.wikia-grid {
+	.global-notification {
+    	width: 988px;
+	}
+	&.oasis-split-skin .global-notification.float {
 		margin-left: -505px;
 	}
 }
