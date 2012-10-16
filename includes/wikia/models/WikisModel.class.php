@@ -2,7 +2,7 @@
 /**
  * Model for Wikia-specific information about wikis
  *
- * @author Federico "Lox" Lucignano <federico.lox@gmail.com>
+ * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
  */
 
 class WikisModel extends WikiaModel {
@@ -213,6 +213,14 @@ class WikisModel extends WikiaModel {
 		return $wikis;
 	}
 
+	/**
+	 * Get details about one or more wikis
+	 *
+	 * @param Array $wikiIds An array of one or more wiki ID's
+	 *
+	 * @return Array A collection of results, the index is the wiki ID and each item has a name,
+	 * url, lang, hubId, headline, desc, image and flags index.
+	 */
 	public function getDetails( Array $wikiIds = null ) {
 		$this->wf->ProfileIn(__METHOD__);
 

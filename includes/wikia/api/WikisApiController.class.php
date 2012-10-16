@@ -29,6 +29,8 @@ class WikisApiController extends WikiaApiController {
 	 * @responseParam integer $currentBatch The index of the current batch/page
 	 * @responseParam integer $batches The total number of batches/pages
 	 * @responseParam integer $next The amount of items in the next batch/page
+	 *
+	 * @example http://www.wikia.com/wikia.php?controller=WikisApi&method=getList&hub=Gaming&lang=en&format=json
 	 */
 	public function getList() {
 		$hub = trim( $this->request->getVal( 'hub', null ) );
@@ -68,6 +70,8 @@ class WikisApiController extends WikiaApiController {
 	 * @responseParam integer $currentBatch The index of the current batch/page
 	 * @responseParam integer $batches The total number of batches/pages
 	 * @responseParam integer $next The amount of items in the next batch/page
+	 *
+	 * @example http://www.wikia.com/wikia.php?controller=WikisApi&method=getByString&string=call+of+duty&hub=Gaming&lang=en&format=json
 	 */
 	public function getByString() {
 		$this->wf->profileIn( __METHOD__ );
@@ -99,6 +103,17 @@ class WikisApiController extends WikiaApiController {
 		$this->wf->profileOut( __METHOD__ );
 	}
 
+	/**
+	 * Get details about one or more wikis.
+	 *
+	 * @requestParam string $ids A string with a comma-separated list of
+	 * wiki ID's
+	 *
+	 * @responseParam array A list of results with the wiki ID as the index,
+	 * each item has a headline, desc, image and flags property
+	 *
+	 * @example http://www.wikia.com/wikia.php?controller=WikisApi&method=getDetails&ids=3125,490&format=json
+	 */
 	public function getDetails() {
 		$this->wf->profileIn( __METHOD__ );
 
