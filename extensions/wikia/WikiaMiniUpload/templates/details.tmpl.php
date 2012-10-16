@@ -85,7 +85,7 @@ global $wgExtensionsPath, $wgBlankImgUrl;
 			<h3><?= wfMsg('wmu-licensing') ?></h3>
 			<span id="ImageUploadLicenseSpan" >
 			<?php
-				$licenses = new Licenses(array('id' => 'ImageUploadLicense', 'name' => 'ImageUploadLicense'));
+				$licenses = new Licenses(array('id' => 'ImageUploadLicense', 'name' => 'ImageUploadLicense', 'fieldname' => 'ImageUploadLicense'));
 				echo $licenses->getInputHTML(null);
 			?>
 			</span>

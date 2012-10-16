@@ -10,7 +10,7 @@ class UploadPhotosController extends WikiaController {
 	public function executeIndex() {
 		wfProfileIn(__METHOD__);
 
-		$licenses = new Licenses(array('id' => 'wpLicense', 'name' => 'License', 'fieldname' => 'wpLicense'));
+		$licenses = new Licenses(array('id' => 'wpLicense', 'name' => 'wpLicense', 'fieldname' => 'wpLicense'));
 		$this->licensesHtml = $licenses->getInputHTML(null);
 
 		wfProfileOut(__METHOD__);
