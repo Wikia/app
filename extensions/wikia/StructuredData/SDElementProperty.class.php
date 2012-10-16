@@ -3,7 +3,7 @@
  * @author ADi
  */
 class SDElementProperty implements SplObserver {
-	protected $type = 'rdf:Literal';
+	protected $type = array( 'name' => 'rdf:Literal', 'range' => null );
 	protected $name = null;
 	protected $label = '';
 	protected $value = null;
