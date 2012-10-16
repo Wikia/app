@@ -12,7 +12,7 @@ var LatestActivity = {
 			callback: function(html) {
 				// IE would lose styling otherwise
 				if ($.browser.msie) {
-					$('#WikiaRecentActivity').empty().append(html);
+					$('#WikiaRecentActivity').empty().append($(html).children());
 				}
 				else {
 					$('#WikiaRecentActivity').replaceWith(html);
