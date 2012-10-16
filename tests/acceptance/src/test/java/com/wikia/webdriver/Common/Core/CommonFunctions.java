@@ -103,7 +103,7 @@ public class CommonFunctions
 		}
 		WebElement userNameField = driver.findElement(By.cssSelector("#WikiaArticle input[name='username']"));
 		WebElement passwordField = driver.findElement(By.cssSelector("#WikiaArticle input[name='password']"));
-		WebElement submitButton = driver.findElement(By.cssSelector("#WikiaArticle input[value='Log in']"));
+		WebElement submitButton = driver.findElement(By.cssSelector("#WikiaArticle input.login-button.big"));
 		userNameField.sendKeys(userName);
 		passwordField.sendKeys(password);
 		try{
