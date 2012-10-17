@@ -269,10 +269,7 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 		$iconsWhere = array();
 		while ( $row = $db->fetchObject($result) ) {
 			$record = "(wiki_id = {$row->wiki_id} and page_id = {$row->page_id})";
-
-			// filter out ICO files, as these are not supported
-			$imageTitle = GlobalTitle::newFromId( $row->page_id, $row->wiki_id );
-			if ( "ico" == pathinfo( strtolower( $imageTitle->getText() ), PATHINFO_EXTENSION) ) {
+			if ( "ico" == pathinfo($row->page_title_lower, PATHINFO_EXTENSION) ) {
 				$iconsWhere[] = $record;
 			} else {
 				$rows[] = $row;
