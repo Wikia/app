@@ -17,7 +17,7 @@ var InWikiGame = {
 				{
 					'src': iframeUrl,
 					'width': '800px',
-					'height': '792px'
+					'height': '600px'
 				}
 			);
 			iframe.load(function() {
