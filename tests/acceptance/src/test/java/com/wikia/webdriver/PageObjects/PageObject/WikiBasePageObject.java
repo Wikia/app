@@ -311,7 +311,8 @@ public class WikiBasePageObject extends BasePageObject {
 	{
 		pageName = pageName.replace("_", " ");
 		waitForElementByXPath("//h1[contains(text(), '"+pageName+"')]");
-		waitForElementByXPath("//p[contains(text(), 'This page has been deleted.')]");
+//		waitForElementByXPath("//p[contains(text(), 'This page has been deleted.')]");
+//		waitForElementByXPath("//a[@class='wikia-button' and contains(text(), 'Create')]");
 		waitForElementByXPath("//b[contains(text(), 'This page needs content. You can help by adding a sentence or a photo!')]");
 		PageObjectLogging.log("verifyDeletedArticlePage", "deleted article page verified", true);
 	}
