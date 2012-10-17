@@ -70,8 +70,8 @@
 				case 'xsd:anyURI' : ?>
 					<a href="<?php echo $wgServer . '/' . $propertyValue; ?>" title="<?php echo $propertyValue; ?>"><?php echo $propertyValue; ?></a>
 				<?php break; ?>
-				<?php case '@set' ?>
-				<?php case '@list' ?>
+				<?php case '@set': ?>
+				<?php case '@list': ?>
 					<?php $listTag = ($propertyType['name'] == '@set') ? 'ul' : 'ol'; ?>
 					<<?= $listTag?>>
 						<?php foreach ($propertyValue as $reference) : ?>
