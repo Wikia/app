@@ -371,8 +371,10 @@ function initializeCategories(cats) {
 	}
 
 	// Filter out duplicate categories on init
-	categories = removeDuplicatecategories();
-
+	if(categories.length) {
+		categories = removeDuplicatecategories();
+	}
+	
 	//inform PHP what source should it use [this field exists only in 'edit page' mode]
 	var $wpCategorySelectSourceType = $('#wpCategorySelectSourceType');
 	if ($wpCategorySelectSourceType.length > 0 && window.csMode === 'json') {
