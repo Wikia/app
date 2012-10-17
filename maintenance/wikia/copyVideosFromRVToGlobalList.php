@@ -54,7 +54,7 @@
 
 		// get all global videos
 		$globalVideos = array();
-		if ( empty($globalList) && $globalList->exists() ) {
+		if ( empty($globalList) ) {
 			$globalList = RelatedVideosNamespaceData::createGlobalList();
 		} else {
 			$globalData = $globalList->getData();
