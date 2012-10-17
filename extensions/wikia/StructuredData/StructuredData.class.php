@@ -40,4 +40,17 @@ class StructuredData {
 		return $SDElement;
 	}
 
+	public function onParserFirstCallInit( Parser &$parser ) {
+		$parser->setHook( 'data', array( $this, 'dataParserHook' ) );
+		return true;
+	}
+
+	public function dataParserHook( $input, $args, $parser ) {
+		var_dump($this);
+		// callofduty:Character/Dimitri_Petrenko/schema:birthDate
+		var_dump( $input );
+		var_dump( $args );
+
+		return "dupa!";
+	}
 }

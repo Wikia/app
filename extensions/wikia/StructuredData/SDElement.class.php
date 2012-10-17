@@ -55,6 +55,10 @@ class SDElement implements SplSubject {
 		return $this->depth;
 	}
 
+	public function getProperties() {
+		return $this->properties;
+	}
+
 	/**
 	 * Return a property based on its schema name
 	 * @return SDElementProperty

@@ -16,7 +16,7 @@ require_once( $dir . '../../../lib/HTTP/Request.php');
 /**
  * hooks
  */
-//$app->registerHook('OutputPageBeforeHTML', 'HelloWorld', 'onOutputPageBeforeHTML');
+$app->registerHook('ParserFirstCallInit', 'StructuredData', 'onParserFirstCallInit');
 
 /**
  * controllers
