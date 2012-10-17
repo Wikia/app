@@ -7,28 +7,6 @@
 	// Array of SD object properties 
 	$properties = $sdsObject->getProperties(); 
 	
-	//varDump($properties);
-	
-	// Alphabetically sort object properties labels
-	function aasort(&$array, $key) {
-		
-		$sorter = array();
-		$sortingResult = array();
-		reset($array);
-		
-		foreach ($array as $index => $value) {
-			$sorter[$index] = $value[$key];	
-		}
-		asort($sorter);
-		
-		foreach ($sorter as $index => $value) {
-			$sortingResult[$index] = $array[$index];
-		}
-		$array = $sortingResult;
-	
-	}
-	//aasort($SDObject['properties'], "label");
-	
 ?>
 
 <div class="SDObject" id="SDObject">
@@ -41,6 +19,7 @@
 	
 	<h3>Object properties:</h3>
 	<dl class="SDObjectProperties">
+	
 	<?php foreach ( $properties as $property ) : ?>
 		
 		<?php 
@@ -49,9 +28,21 @@
 			$propertyLabel = $property->getLabel();
 			$propertyName = $property->getName();
 			$proprtyHTML = $property->render();
-			
-			if($proprtyHTML !== false) { echo $proprtyHTML; continue; }
 		?>
+		
+		<?php // Render HTML using renderers  ?>
+		
+		<?php if($proprtyHTML !== false) : ?>
+			<dt><?php echo ucfirst(preg_replace('/([A-Z])/', ' ${1}',$propertyLabel)); ?>:</dt>
+			<dd>
+				<?php echo $proprtyHTML;?>
+			</dd>
+			<?php continue; ?>
+		<?php endif; ?>
+		
+		
+		<?php // CharacterIn problematic property hack!!!! ?>
+		
 		<?php if (array_key_exists('missing', $propertyType)) : ?>
 			<dt><?php echo ucfirst(preg_replace('/([A-Z])/', ' ${1}',$propertyLabel)); ?>:</dt>
 			<dd>
@@ -60,52 +51,56 @@
 			<?php continue; ?>
 		<?php endif ?>
 		
+		
+		<?php // Render properties manually ?>
+		
 		<dt><?php echo ucfirst(preg_replace('/([A-Z])/', ' ${1}', $propertyLabel)); ?>:</dt>
 		<dd>
+		
+			<?php // display 'empty' for empty object properties ?>
 			<?php if (empty($propertyValue)) : ?>
 				<span class="empty">empty</span> 
 				<?php continue; ?>
 			<? endif ?>
+			
 			<?php switch ($propertyType['name']) :
-				case 'xsd:anyURI' : ?>
-					<a href="<?php echo $wgServer . '/' . $propertyValue; ?>" title="<?php echo $propertyValue; ?>"><?php echo $propertyValue; ?></a>
-				<?php break; ?>
-				<?php case '@set': ?>
-				<?php case '@list': ?>
+				
+				// ordered and unordered list template
+				case '@set':
+				case '@list': ?>
 					<?php $listTag = ($propertyType['name'] == '@set') ? 'ul' : 'ol'; ?>
 					<<?= $listTag?>>
 						<?php foreach ($propertyValue as $reference) : ?>
+							
+							<?php // Render list using renderers ?>
 							<?php 
 								$referenceHTML = false;
 								if (!is_null($reference->object)) {
 									$referenceHTML = $reference->object->render( SD_CONTEXT_SPECIAL );
 								}
-								if ($referenceHTML !== false) { echo $referenceHTML; continue; }
+								if ($referenceHTML !== false) { 
+									echo $referenceHTML; 
+									continue;
+								}	
 							?>
-							<?php if ($propertyName == 'schema:photos') : ?>
-								<li>	
-									<figure>
-										<img src="<?php echo $reference->object['properties'][6]['value']; ?>" alt="<?php echo $test->object['name']; ?>" />
-										<figcaption><?php echo $reference->object['name']; ?></figcaption>
-									</figure>
-									<a href="<?php echo $test->object['url'] ?>" title="<?php echo $reference->object['name']; ?>"><?php echo $reference->object['url'] ?></a>
-								</li>
-							<?php else : ?>
-								<li>
-									<pre><?php print_r($reference) ?></pre>	
+							
+							<?php // Render list manually if needed…? ?>
+							<pre><?php print_r($reference) ?></pre>
 								
-								</li>
-							<?php endif; ?>
 						<?php endforeach ?>
 					</<?= $listTag?>>
 				<?php break; ?>
+				
+				
 				<?php default : ?>
+				
+					<?php // Default template for simple properties like string, date, boolean ?>
 					<?php echo $propertyValue; ?>
 				<?php break; ?>
+				
 			<?php endswitch; ?>
 			
 		</dd>
-	<?php endforeach; ?>
-	
+	<?php endforeach; ?>	
 	</dl>
 </div>
