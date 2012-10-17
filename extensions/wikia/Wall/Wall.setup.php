@@ -245,6 +245,6 @@ $wgGroupPermissions['staff']['notifyeveryone'] = true;
 $wgGroupPermissions['helper']['notifyeveryone'] = true;
 
 $wgGroupPermissions['*']['wallfastadmindelete'] = false;
-$wgGroupPermissions['sysop']['wallfastadmindelete'] = true;
+$wgGroupPermissions['sysop']['wallfastadmindelete'] = false;
 $wgGroupPermissions['vstf']['wallfastadmindelete'] = true;
 $wgGroupPermissions['staff']['wallfastadmindelete'] = true;
