@@ -1,0 +1,1 @@
+<a href="<?php echo $object->getValue(); ?>"><?php echo $object->getValue(); ?></a>
