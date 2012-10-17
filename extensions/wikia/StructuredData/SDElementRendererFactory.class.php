@@ -9,7 +9,7 @@ class SDElementRendererFactory {
 		$this->config = $config;
 	}
 
-	public function getRenderer(SDObject $object, $context = 'default') {
+	public function getRenderer(SDObject $object, $context = SD_CONTEXT_DEFAULT) {
 
 		if(isset($this->config['renderers'][$object->getTypeName()])) {
 

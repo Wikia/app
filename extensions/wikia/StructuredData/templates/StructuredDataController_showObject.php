@@ -78,7 +78,7 @@
 							<?php 
 								$referenceHTML = false;
 								if (!is_null($reference->object)) {
-									$referenceHTML = $reference->object->render();
+									$referenceHTML = $reference->object->render( SD_CONTEXT_SPECIAL );
 								}
 								if ($referenceHTML !== false) { echo $referenceHTML; continue; }
 							?>

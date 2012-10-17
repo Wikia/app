@@ -11,7 +11,7 @@ abstract class SDObject {
 	abstract public function getName();
 	abstract public function getTypeName();
 
-	public function hasRenderer( $context = 'default' ) {
+	public function hasRenderer( $context = SD_CONTEXT_DEFAULT ) {
 		/** @var $rendererFactory SDElementRendererFactory */
 		$rendererFactory = F::build( 'SDElementRendererFactory' );
 		$this->renderer = $rendererFactory->getRenderer($this, $context);
@@ -19,7 +19,7 @@ abstract class SDObject {
 		return (bool) $this->renderer;
 	}
 
-	public function render( $context = 'default' ) {
+	public function render( $context = SD_CONTEXT_DEFAULT ) {
 		return $this->hasRenderer($context) ? $this->renderer->render() : false;
 	}
 
