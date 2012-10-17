@@ -277,6 +277,7 @@ public class WikiBasePageObject extends BasePageObject {
 	{
 		waitForElementByElement(createArticleButton);
 		waitForElementClickableByElement(createArticleButton);
+//		jQueryClick(".createpage");
 		executeScript("document.querySelectorAll('.createpage')[0].click()");
 		waitForElementByElement(driver.findElement(layoutList));
 		PageObjectLogging.log("clickCreateArticleButton", "create article button clicked", true);
@@ -406,11 +407,12 @@ public class WikiBasePageObject extends BasePageObject {
 	
 	public WikiArticleEditMode createNewArticle(String pageName, int layoutNumber)
 	{
-		clickContributeButton();
-		clickCreateArticleButton();
-		selectPageLayout(layoutNumber);
-		typeInArticleName(pageName);
-		clickAddPageButton();
+//		clickContributeButton();
+//		clickCreateArticleButton();
+//		selectPageLayout(layoutNumber);
+//		typeInArticleName(pageName);
+//		clickAddPageButton();
+		driver.get(Global.DOMAIN+"index.php?title="+pageName+"&action=edit&useFormat="+layoutNumber);
 		String pageNameEnc = pageName.replace("_", " ");
 		waitForElementByElement(driver.findElement(By.cssSelector("a[title='"+pageNameEnc+"']")));
 		return new WikiArticleEditMode(driver, Domain, pageName);
