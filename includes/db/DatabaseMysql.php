@@ -45,7 +45,8 @@ class DatabaseMysql extends DatabaseBase {
 			error_log( sprintf("SQL (%s): %d: %s", $wgDBname, $err_num, $error) );
 			error_log( "SQL: invalid query: $sql" );
 			if ( $err_num == 1213 ) { /* deadlock*/ 
-				Wikia::debugBacktrace( "MOLI: Deadlock:\n $error\n " );
+				error_log( "MOLI: deadlock: $error " );
+				Wikia::debugBacktrace( "MOLI: Deadlock: " );
 			}
 		}
 		return $ret;
