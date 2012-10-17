@@ -38,7 +38,11 @@ class AssetsManagerTest extends WikiaBaseTest {
 	public function testDuplicateAssets( $setName, $files ) {
 		$counts = array();
 		foreach ($files as $file) {
-			@$counts[$file]++;
+			if (empty($counts[$file])) {
+				$counts[$file] = 0;
+			}
+
+			$counts[$file]++;
 		}
 		foreach ($counts as $k => $v) {
 			if ( $v <= 1 ) {
