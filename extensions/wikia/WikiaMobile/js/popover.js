@@ -30,7 +30,7 @@
 				cnt;
 
 			if(elm){
-				elm.addEventListener('tap', function(event){
+				elm.addEventListener('click', function(event){
 					if(this.className.indexOf('on') > -1){
 						close(event);
 					}else{
