@@ -202,6 +202,7 @@ function addCategoryBase(category, params, index, checkdupes) {
 	extractedParams = extractSortkey(category);
 	category = extractedParams.name;
 	params.sortkey = extractedParams.sort + params.sortkey;
+	params.category = category;
 
 	if (category == '') {
 		alert(csEmptyName);
@@ -212,8 +213,8 @@ function addCategoryBase(category, params, index, checkdupes) {
 	if(checkdupes){
 		for (var c=0; c < categories.length; c++) {
 			if (categories[c] === null) continue;
-			
-			if(categoryIsDuplicate(category, categories[c])) {
+
+			if(categoryIsDuplicate(params, categories[c])) {
 				return false;
 			}
 		}
