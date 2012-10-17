@@ -86,7 +86,11 @@ class WallHistoryController extends WallController {
 		$this->response->setVal('wallOwnerName', $wallOwnerName);
 
 		if( $this->isThreadLevel ) {
+			$this->response->setVal( 'pageTitle' , wfMsg('wall-thread-history-title'));
 			wfRunHooks('WallHistoryThreadHeader', array($title, $wallMessage, &$path, &$this->response, &$this->request));
+		} else {
+			$this->response->setVal( 'pageTitle' , wfMsg('wall-history-title'));
+			wfRunHooks('WallHistoryHeader', array($title, &$path, &$this->response, &$this->request));
 		}
 		
 		$this->response->setVal('path', $path);

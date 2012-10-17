@@ -112,6 +112,15 @@
 		<? endif; ?>
 		
 		<a href="#" class="quote-button"><?= wfMsg('wall-message-quote-button') ?></a>
+		
+		<? if( $canClose ): ?>
+		 	<a href="#" class="close-thread"> <?= wfMsg('wall-message-close-thread'); ?> </a>
+		 <? endif; ?>
+		 
+		<? if( $canReopen): ?>
+		 	<a href="#" class="reopen-thread"> <?= wfMsg('wall-message-reopen-thread'); ?> </a>
+		<? endif; ?>
+		
 		<? if( $showViewSource ): ?>
 			<a href="#" class="source-message"> <?= wfMsg('user-action-menu-view-source'); ?> </a>
 		<? endif; ?>
@@ -131,7 +140,6 @@
 		<?php if( $canDelete ): ?>
 			<img src="<?= $wgBlankImgUrl ?>" class="sprite-small delete"><a href="#" class="delete-message"><?= wfMsg('wall-message-delete'); ?></a>
 		<?php endif; ?>
-
 
 		 <? if( $canNotifyeveryone ): ?>
 		 	<a href="#" class="edit-notifyeveryone" data-dir="1"> <?= wfMsg('wall-message-notifyeveryone'); ?> </a>

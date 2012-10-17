@@ -286,12 +286,14 @@ class WallHooksHelper {
 		$page = $app->wg->Request->getVal('page', 1);
 
 		if( !empty( $title ) ) {
-			if( $title->getNamespace() === NS_USER_WALL  && !$title->isSubpage() ) {
+			if(  WallHelper::isWallNamespace( $title->getNamespace() )  && !$title->isTalkPage() && !$title->isSubpage() ) {
+				$app->wg->SuppressPageHeader = true;
 				$app->wg->Out->addHTML( $app->renderView( 'WallHistoryController', 'index', array( 'title' => $title, 'page' => $page) ) );
 				return false;
 			}
 
-			if( $title->getNamespace() === NS_USER_WALL_MESSAGE ) {
+			if(  WallHelper::isWallNamespace( $title->getNamespace() ) && $title->isTalkPage() ) {
+				$app->wg->SuppressPageHeader = true;
 				$app->wg->Out->addHTML( $app->renderView( 'WallHistoryController', 'index', array( 'title' => $title, 'page' => $page, 'threadLevelHistory' => true ) ) );
 				return false;
 			}
@@ -312,7 +314,7 @@ class WallHooksHelper {
 	public function onGetHistoryDescription( &$description ){
 		$app = F::app();
 
-		if( $app->wg->Title->getNamespace() === NS_USER_WALL || $app->wg->Title->getNamespace() === NS_USER_WALL_MESSAGE) {
+		if( WallHelper::isWallNamespace( $app->wg->Title->getNamespace() ) ) {
 			$description = '';
 		}
 
@@ -332,7 +334,7 @@ class WallHooksHelper {
 		$title = $app->wg->Title;
 		$action = $app->wg->Request->getText('action');
 
-		if ($title instanceof Title && $title->getNamespace() === NS_USER_WALL_MESSAGE) {
+		if ($title instanceof Title && $title->isTalkPage()  &&  WallHelper::isWallNamespace( $title->getNamespace() ) ){
 			if ( is_array($items) ) {
 				foreach($items as $k=>$value) {
 					if( $value['type'] == 'follow' ) {
@@ -344,7 +346,7 @@ class WallHooksHelper {
 			}
 		}
 
-		if( $title instanceof Title && $title->getNamespace() === NS_USER_WALL_MESSAGE || $title->getNamespace() === NS_USER_WALL  && !$title->isSubpage() && empty($action) ) {
+		if( $title instanceof Title &&  WallHelper::isWallNamespace( $title->getNamespace() )  && !$title->isSubpage() && empty($action) ) {
 			$item = array(
 					'type' => 'html',
 					'html' => XML::element('a', array('href' => $title->getFullUrl('action=history')), wfMsg('wall-toolbar-history') )

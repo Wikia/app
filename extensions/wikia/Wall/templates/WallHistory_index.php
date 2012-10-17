@@ -1,15 +1,15 @@
 <div class="WallHistory">
 <? if( empty($wallmessageNotFound) ): ?>
 	<?
-	
 		echo F::App()->getView('Wall', 'brickHeader', array(
-			//'messageTitle' => wfMsg('wall-history-title'),
 			'path' => $path 
 		))->render();
 	?>
 
 	<div class="SortingBar">
-		<div id="pageTitle"><?php if( $isThreadLevelHistory ): ?> <?php echo wfMsg('wall-thread-history-title'); ?> <?php else: ?> <?php echo wfMsg('wall-history-title'); ?> <?php endif; ?> </div>
+		<div id="pageTitle">
+			<?= $pageTitle; ?> 
+		</div>
 		<div class="SortingMenu">
 			<span class="SortingSelected"><?= $sortingSelected; ?></span>
 			<ul class="SortingList">
@@ -141,7 +141,9 @@
 		<p><?= wfMsg('wall-message-not-found-in-db'); ?></p>
 	</div>
 	<div class="SortingBar">
-		<div id="pageTitle"><?php if( $isThreadLevelHistory ): ?> <?php echo wfMsg('wall-thread-history-title'); ?> <?php else: ?> <?php echo wfMsg('wall-history-title'); ?> <?php endif; ?> </div>
+		<div id="pageTitle">
+			<?= $pageTitle; ?> 
+		</div>
 		<div class="SortingMenu">
 			<span class="SortingSelected"><?= $sortingSelected; ?></span>
 			<ul class="SortingList">

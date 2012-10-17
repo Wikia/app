@@ -528,7 +528,11 @@ var Wall = $.createClass(Object, {
 				},
 				callback: this.proxy(function(json) {
 					if(json.status) {
-						UserLoginAjaxForm.prototype.reloadPage();
+						if(UserLoginAjaxForm) {
+							UserLoginAjaxForm.prototype.reloadPage();	
+						} else {
+							window.location.reload();
+						}
 					}
 				})
 			});
