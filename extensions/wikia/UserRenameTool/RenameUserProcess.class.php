@@ -287,10 +287,6 @@ class RenameUserProcess {
 			return false;
 		}
 
-		// invalidate all user data in memcached
-		$this->invalidateUser($oldTitle->getText());
-		$this->invalidateUser($newTitle->getText());
-
 		//validate new username and disable validation for old username
 		$olduser = User::newFromName($oldTitle->getText(), false);
 		$newuser = User::newFromName($newTitle->getText(), 'creatable');
