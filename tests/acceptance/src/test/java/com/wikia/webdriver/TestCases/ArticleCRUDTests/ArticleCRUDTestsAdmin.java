@@ -101,9 +101,6 @@ public class ArticleCRUDTestsAdmin extends TestTemplate{
 		WikiArticlePageObject article = edit.clickOnPublishButton();
 		article.verifyPageTitle(pageName);
 		article.verifyArticleText(articleText);
-		article.deleteArticle(pageName);
-		article.openArticle(pageName);
-		article.verifyDeletedArticlePage(pageName);
 		CommonFunctions.logOut(Properties.userNameStaff, driver);
 	}
 	/*
@@ -134,9 +131,6 @@ public class ArticleCRUDTestsAdmin extends TestTemplate{
 		article = edit.clickOnPublishButton();
 		article.verifyPageTitle(pageName);
 		article.verifyArticleText(articleTextEdit);
-		article.deleteArticle(pageName);
-		article = article.openArticle(pageName);
-		article.verifyDeletedArticlePage(pageName);
 		CommonFunctions.logOut(Properties.userNameStaff, driver);
 	}
 	
@@ -166,9 +160,6 @@ public class ArticleCRUDTestsAdmin extends TestTemplate{
 		article.clickSubmitButton();
 		article.verifyComment(commentText, Properties.userNameStaff);
 		article.deleteComment(commentText);
-		edit.deleteArticle(pageName);
-		edit.openArticle(pageName);
-		edit.verifyDeletedArticlePage(pageName);
 		CommonFunctions.logOut(Properties.userNameStaff, driver);
 	}
 	/*
@@ -202,9 +193,6 @@ public class ArticleCRUDTestsAdmin extends TestTemplate{
 		article.clickSubmitButton(Properties.userNameStaff);
 		article.verifyComment(commentTextEdit, Properties.userNameStaff);
 		article.deleteComment(commentTextEdit);
-		edit.deleteArticle(pageName);
-		edit.openArticle(pageName);
-		edit.verifyDeletedArticlePage(pageName);
 		CommonFunctions.logOut(Properties.userNameStaff, driver);
 	}
 	
@@ -235,9 +223,6 @@ public class ArticleCRUDTestsAdmin extends TestTemplate{
 		article.openArticle(pageName);
 		article.verifyPageTitle(pageName);
 		article.verifyArticleText(articleText);
-		article.deleteArticle(pageName);
-		article.openArticle(pageName);
-		article.verifyDeletedArticlePage(pageName);
 		CommonFunctions.logOut(Properties.userNameStaff, driver);
 	}
 	/*
@@ -265,9 +250,6 @@ public class ArticleCRUDTestsAdmin extends TestTemplate{
 		article.renameArticle(pageName, pageName+"moved");
 		article.verifyPageTitle(pageName+"moved");
 		article.verifyArticleText(articleText);
-		article.deleteArticle(pageName+"moved");
-		article.openArticle(pageName+"moved");
-		article.verifyDeletedArticlePage(pageName+"moved");
 		CommonFunctions.logOut(Properties.userNameStaff, driver);
 	}
 	
@@ -299,9 +281,6 @@ public class ArticleCRUDTestsAdmin extends TestTemplate{
 		article.verifyComment(commentText, Properties.userNameStaff);
 		article.replyComment(commentText, replyText);
 		article.deleteComment(commentText);
-		edit.deleteArticle(pageName);
-		edit.openArticle(pageName);
-		edit.verifyDeletedArticlePage(pageName);
 		CommonFunctions.logOut(Properties.userNameStaff, driver);
 	}
 

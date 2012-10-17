@@ -44,12 +44,6 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		edit.verifyTheObjectOnThePreview("gallery");
 		WikiArticlePageObject article = edit.clickOnPublishButtonPreview();
 		article.verifyTheObjectOnThePage("gallery");
-		edit = article.edit();
-		edit.deleteArticleContent();
-		article = edit.clickOnPublishButton();
-		article.deleteArticle(pageName);
-		article.openArticle(pageName);
-		article.verifyDeletedArticlePage(pageName);
 		CommonFunctions.logOut(Properties.userName2, driver);
 	}
 	
@@ -92,9 +86,6 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		edit.verifyObjectInEditMode("gallery");
 		article = edit.clickOnPublishButton();
 		article.verifyGalleryPosion("right");
-		article.deleteArticle(pageName);
-		article.openArticle(pageName);
-		article.verifyDeletedArticlePage(pageName);
 		CommonFunctions.logOut(Properties.userName2, driver);
 	}
 	
@@ -131,9 +122,6 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		edit.verifyTheGalleryNotOnTheArticleEditMode();
 		article = edit.clickOnPublishButton();
 		article.verifyTheGalleryNotOnThePage();
-		article.deleteArticle(pageName);
-		article.openArticle(pageName);
-		article.verifyDeletedArticlePage(pageName);
 		CommonFunctions.logOut(Properties.userName2, driver);
 	}
 	
@@ -162,12 +150,6 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		edit.verifyTheObjectOnThePreview("slideshow");
 		WikiArticlePageObject article = edit.clickOnPublishButtonInPreviewMode();
 		article.verifyTheObjectOnThePage("slideshow");
-		edit = article.edit();
-		edit.deleteArticleContent();
-		article = edit.clickOnPublishButton();
-		article.deleteArticle(pageName);
-		article.openArticle(pageName);
-		article.verifyDeletedArticlePage(pageName);
 		CommonFunctions.logOut(Properties.userNameStaff, driver);
 	}
 	
@@ -209,9 +191,6 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		article = edit.clickOnPublishButton();
 		article.verifyTheObjectOnThePage("slideshow");
 		article.verifySlideshowPosition("right");
-		article.deleteArticle(pageName);
-		article.openArticle(pageName);
-		article.verifyDeletedArticlePage(pageName);
 		CommonFunctions.logOut(Properties.userNameStaff, driver);
 	}
 	
@@ -245,9 +224,6 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		edit.verifyTheSlideshowNotOnTheArticleEditMode();
 		article = edit.clickOnPublishButton();
 		article.verifyTheSlideshowNotOnThePage();
-		article.deleteArticle(pageName);
-		article.openArticle(pageName);
-		article.verifyDeletedArticlePage(pageName);
 		CommonFunctions.logOut(Properties.userName2, driver);
 	}
 	
@@ -278,12 +254,6 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		edit.verifyTheObjectOnThePreview("slider");
 		WikiArticlePageObject article = edit.clickOnPublishButtonInPreviewMode();
 		article.verifyTheObjectOnThePage("slider");
-		edit = article.edit();
-		edit.deleteArticleContent();
-		article = edit.clickOnPublishButton();
-		article.deleteArticle(pageName);
-		article.openArticle(pageName);
-		article.verifyDeletedArticlePage(pageName);
 		CommonFunctions.logOut(Properties.userName, driver);	
 	}
 	
@@ -326,9 +296,6 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		article = edit.clickOnPublishButton();
 		article.verifyTheObjectOnThePage("slider");
 		article.verifySliderThumbnailsPosition("horizontal");
-		article.deleteArticle(pageName);
-		article.openArticle(pageName);
-		article.verifyDeletedArticlePage(pageName);
 		CommonFunctions.logOut(Properties.userName, driver);	
 	}
 	
@@ -362,9 +329,6 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		edit.verifyTheSliderNotOnTheArticleEditMode();
 		article = edit.clickOnPublishButton();
 		article.verifyTheSlideshowNotOnThePage();
-		article.deleteArticle(pageName);
-		article.openArticle(pageName);
-		article.verifyDeletedArticlePage(pageName);
 		CommonFunctions.logOut(Properties.userName2, driver);
 	}
 	
@@ -393,12 +357,6 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		edit.verifyTheVideoOnThePreview();
 		WikiArticlePageObject article = edit.clickOnPublishButtonInPreviewMode();
 		article.verifyTheVideoOnThePage();
-		edit = article.edit();
-		edit.deleteArticleContent();
-		article = edit.clickOnPublishButton();
-		article.deleteArticle(pageName);
-		article.openArticle(pageName);
-		article.verifyDeletedArticlePage(pageName);
 		CommonFunctions.logOut(Properties.userName2, driver);
 	}	
 	
@@ -433,9 +391,6 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		edit.verifyVideoInEditMode(Caption2);
 		article = edit.clickOnPublishButton();
 		article.verifyTheVideoOnThePage();
-		article.deleteArticle(pageName);
-		article.openArticle(pageName);
-		article.verifyDeletedArticlePage(pageName);
 		CommonFunctions.logOut(Properties.userName2, driver);
 	}
 	
@@ -468,9 +423,6 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		edit.verifyTheVideoNotOnTheArticleEditMode();
 		article = edit.clickOnPublishButton();
 		article.verifyTheVideoNotOnThePage();
-		article.deleteArticle(pageName);
-		article.openArticle(pageName);
-		article.verifyDeletedArticlePage(pageName);
 		CommonFunctions.logOut(Properties.userName2, driver);
 	}
 	
@@ -497,12 +449,6 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		edit.verifyTheCaptionOnThePreview(Caption);
 		WikiArticlePageObject article = edit.clickOnPublishButtonInPreviewMode();
 		article.VerifyTheImageOnThePage();
-		edit = article.edit();
-		edit.deleteArticleContent();
-		article = edit.clickOnPublishButton();
-		article.deleteArticle(pageName);
-		article.openArticle(pageName);
-		article.verifyDeletedArticlePage(pageName);
 		CommonFunctions.logOut(Properties.userName2, driver);
 	}
 	
@@ -533,9 +479,6 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		edit.verifyTheCaptionOnThePreview(Caption2);
 		WikiArticlePageObject article = edit.clickOnPublishButtonInPreviewMode();
 		article.VerifyTheImageOnThePage();
-		article.deleteArticle(pageName);
-		article.openArticle(pageName);
-		article.verifyDeletedArticlePage(pageName);
 		CommonFunctions.logOut(Properties.userName2, driver);
 	}
 	
@@ -565,9 +508,6 @@ public class ArticleFeaturesCRUDTestsAdmin extends TestTemplate
 		edit.verifyTheImageNotOnTheArticleEditMode();
 		article = edit.clickOnPublishButton();
 		article.verifyTheImageNotOnThePage();
-		article.deleteArticle(pageName);
-		article.openArticle(pageName);
-		article.verifyDeletedArticlePage(pageName);
 		CommonFunctions.logOut(Properties.userName2, driver);
 	}	
 	

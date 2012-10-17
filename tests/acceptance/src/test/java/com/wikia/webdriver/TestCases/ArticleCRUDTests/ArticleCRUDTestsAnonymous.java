@@ -64,12 +64,6 @@ public class ArticleCRUDTestsAnonymous extends TestTemplate{
 		WikiArticlePageObject article = edit.clickOnPublishButton();
 		article.verifyPageTitle(pageName);
 		article.verifyArticleText(articleText);
-		CommonFunctions.logIn(Properties.userNameStaff, Properties.passwordStaff);
-		article.openArticle(pageName);
-		article.deleteArticle(pageName);
-		article.openArticle(pageName);
-		article.verifyDeletedArticlePage(pageName);
-		CommonFunctions.logOut(Properties.userNameStaff, driver);
 	}
 	/*
 	 * TestCase005
@@ -98,12 +92,6 @@ public class ArticleCRUDTestsAnonymous extends TestTemplate{
 		article = edit.clickOnPublishButton();
 		article.verifyPageTitle(pageName);
 		article.verifyArticleText(articleTextEdit);
-		CommonFunctions.logIn(Properties.userNameStaff, Properties.passwordStaff);
-		article.openArticle(pageName);
-		article.deleteArticle(pageName);
-		article.openArticle(pageName);
-		article.verifyDeletedArticlePage(pageName);
-		CommonFunctions.logOut(Properties.userNameStaff, driver);
 	}
 	
 	/* 
@@ -130,12 +118,6 @@ public class ArticleCRUDTestsAnonymous extends TestTemplate{
 		article.writeOnCommentArea(commentText);
 		article.clickSubmitButton();
 		article.verifyComment(commentText, "A Wikia contributor");
-		CommonFunctions.logIn(Properties.userNameStaff, Properties.passwordStaff);
-		article.openArticle(pageName);
-		article.deleteArticle(pageName);
-		article.openArticle(pageName);
-		article.verifyDeletedArticlePage(pageName);
-		CommonFunctions.logOut(Properties.userNameStaff, driver);
 	}
 	
 	/* 
@@ -163,12 +145,6 @@ public class ArticleCRUDTestsAnonymous extends TestTemplate{
 		article.clickSubmitButton();
 		article.verifyComment(commentText, "A Wikia contributor");
 		article.replyComment(commentText, replyText);
-		CommonFunctions.logIn(Properties.userNameStaff, Properties.passwordStaff);
-		article.openArticle(pageName);
-		article.deleteArticle(pageName);
-		article.openArticle(pageName);
-		article.verifyDeletedArticlePage(pageName);
-		CommonFunctions.logOut(Properties.userNameStaff, driver);
 	}	
 	
 	@DataProvider
