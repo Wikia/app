@@ -41,15 +41,15 @@ class WikiaSearchArticleMatch {
 	 * @return Article
 	 */
 	public function getArticle() {
-		return $this->hasRedirect() ? $this->redirect : $this->article;
+		return $this->article;
 	}
 	
 	/**
-	 * Always returns the article passed during construction
+	 * Return the redirected article if there is a redirect; otherwise return article.
 	 * @return Article
 	 */
-	public function getOriginalArticle() {
-		return $this->article;
+	public function getCanonicalArticle() {
+		return $this->hasRedirect() ? $this->redirect : $this->article;
 	}
 	
 	/**

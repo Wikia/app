@@ -243,7 +243,7 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 		}
 
 		$articleMatch	= $this->searchConfig->getArticleMatch();
-		$article		= $articleMatch->getArticle();
+		$article		= $articleMatch->getCanonicalArticle();
 		$title			= $article->getTitle();
 		$articleId		= $article->getID();
 		
@@ -277,7 +277,7 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 		
 		$result->setText( $snippet );
 		if ( $articleMatch->hasRedirect() ) {
-			$result->setVar( 'redirectTitle', $articleMatch->getOriginalArticle()->getTitle() );
+			$result->setVar( 'redirectTitle', $articleMatch->getArticle()->getTitle() );
 		}
 		
 		$result->setVar( 'id', $articleMatchId );

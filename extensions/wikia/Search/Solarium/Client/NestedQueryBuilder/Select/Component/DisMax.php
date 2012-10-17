@@ -68,7 +68,7 @@ class Solarium_Client_NestedQueryBuilder_Select_Component_DisMax extends Solariu
     /**
      * @see Solarium_Client_NestedQueryBuilder::getDefType()
      */
-    public function getDefType($query)
+    public function getDefType( Solarium_Query_Select $query )
     {
         return $query->getComponent(Solarium_Query_Select::COMPONENT_DISMAX)->getQueryParser();
     }

@@ -27,13 +27,7 @@ class WikiaSearchArticleMatchTest extends WikiaSearchBaseTest {
 		$this->assertInstanceOf(
 				'Article',
 				$articleMatch->getArticle(),
-				'WikiaSearchArticleMatch should return the canonical article when calling getArticle().'
-		);
-		
-		$this->assertInstanceOf(
-				'Article',
-				$articleMatch->getOriginalArticle(),
-				'WikiaSearchArticleMatch should return the original article, canonical or not, when calling getOriginal Article().'
+				'WikiaSearchArticleMatch should return the original article, canonical or not, when calling getArticle().'
 		);
 		
 		$this->assertEquals(
@@ -48,9 +42,9 @@ class WikiaSearchArticleMatchTest extends WikiaSearchBaseTest {
 		);
 		
 		$this->assertEquals(
-				$articleMatch->getOriginalArticle(),
+				$articleMatch->getCanonicalArticle(),
 				$articleMatch->getArticle(),
-				'A canonical article as the constructor param should be returned as both original and main article in WikiaSearchArticleMatch.'
+				'A canonical article as the constructor param should be returned as both canonical and main article in WikiaSearchArticleMatch.'
 		);
 		
 	}
@@ -82,15 +76,15 @@ class WikiaSearchArticleMatchTest extends WikiaSearchBaseTest {
 		$articleMatch = F::build( 'WikiaSearchArticleMatch', array( $mockArticle ) );
 		
 		$this->assertInstanceOf(
-				'Article',
-				$articleMatch->getArticle(),
-				'WikiaSearchArticleMatch should return the canonical article when calling getArticle().' 
+		        'Article',
+		        $articleMatch->getCanonicalArticle(),
+		        'WikiaSearchArticleMatch should return an article when calling getCanonicalArticle().'
 		);
 		
-		$this->assertInstanceOf( 
+		$this->assertInstanceOf(
 				'Article',
-				$articleMatch->getOriginalArticle(),
-				'WikiaSearchArticleMatch should return the original article, canonical or not, when calling getOriginal Article().' 
+				$articleMatch->getArticle(),
+				'WikiaSearchArticleMatch should return the original article when calling getArticle().' 
 		);
 		
 		$this->assertEquals(
@@ -106,15 +100,15 @@ class WikiaSearchArticleMatchTest extends WikiaSearchBaseTest {
 		);
 		
 		$this->assertNotEquals(
-				$articleMatch->getOriginalArticle(),
 				$articleMatch->getArticle(),
-				'A non-canonical original article match should default to the redirect when calling getArticle.'
+				$articleMatch->getCanonicalArticle(),
+				'A non-canonical original article match should default to the redirect when calling getCanonicalArticle.'
 		);
 		
 		$this->assertEquals(
-				$articleMatch->getArticle(), 
-				$articleMatch->getRedirect(),
-				'A non-canonical original article match should default to the redirect when calling getArticle.'
+				$articleMatch->getRedirect(), 
+				$articleMatch->getCanonicalArticle(),
+				'A non-canonical original article match should default to the redirect when calling getCanonicalArticle.'
 		);
 		
 		

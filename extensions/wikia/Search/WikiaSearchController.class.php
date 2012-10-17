@@ -280,6 +280,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		if ( !empty($articleMatch) && $this->getVal('fulltext', '0') === '0') {
 		
 		    $article = $articleMatch->getArticle();
+		    
 		    $title = $article->getTitle();
 		
 		    $this->wf->RunHooks( 'SpecialSearchIsgomatch', array( &$title, $searchConfig->getOriginalQuery() ) );
