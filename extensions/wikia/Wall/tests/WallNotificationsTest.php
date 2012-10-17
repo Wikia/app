@@ -45,6 +45,7 @@ class WallNotificationsTest extends PHPUnit_Framework_TestCase
 		$notification = $this->getMock('WallNotificationEntity',array('isMain') );
 
 		$notification->data = new StdClass();
+		$notification->data_noncached = new StdClass();
 
 		$notification->data->wall_userid = '123';
 		$notification->data->msg_author_id = '567';

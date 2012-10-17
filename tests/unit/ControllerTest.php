@@ -29,7 +29,7 @@ class ControllerTest extends WikiaBaseTest {
 		// Since the service::index method does not set the proper template variable, we get a warning notice
 		error_reporting(E_NOTICE);
 		$result = F::app()->renderView('UnitTestService', 'Index');
-		$this->assertContains("\nNotice: Undefined variable: foo", $result);
+		$this->assertContains("Undefined variable: foo", $result);
 	}
 
 	function testWikiaSpecialPageLink() {
