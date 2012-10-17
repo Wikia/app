@@ -31,7 +31,7 @@ $app->registerSpecialPage('StructuredData', 'StructuredDataController');
 $wgStructuredDataConfig = array(
 	//'baseUrl' => 'http://data.wikia.net/',
 	'baseUrl' => 'http://data-stage.wikia.net/',
-	'apiPath' => 'api/v0/',
+	'apiPath' => 'api/v0.1/',
 	'schemaPath' => 'callofduty'
 );
 

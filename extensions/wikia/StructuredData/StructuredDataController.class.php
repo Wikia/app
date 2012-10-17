@@ -21,11 +21,11 @@ class StructuredDataController extends WikiaSpecialPageController {
 	public function __construct() {
 
 		$this->mainObjectList = array(
-			"cod:Character" => "Characters",
-			"cod:Faction" => "Factions",
-			"cod:Timeline" => "Timelines",
-			"cod:Weapon" => "Weapons",
-			"cod:WeaponClass" => "Weapon Class"
+			"callofduty:Character" => "Characters",
+			"callofduty:Faction" => "Factions",
+			"callofduty:Timeline" => "Timelines",
+			"callofduty:Weapon" => "Weapons",
+			"callofduty:WeaponClass" => "Weapon Class"
 		);
 
 		// parent SpecialPage constructor call MUST be done
