@@ -182,11 +182,6 @@ function inputFocus(e) {
 	$(e.target).val("").addClass('focus');
 }
 
-// ignore case of first character of category
-function ignoreCapitalization(str){
-	return str.slice(0,1).toUpperCase() + str.slice(1);
-}
-
 function addCategoryBase(category, params, index, checkdupes) {
 	if (params === undefined) {
 		params = {
@@ -213,13 +208,13 @@ function addCategoryBase(category, params, index, checkdupes) {
 		return;
 	}
 
-	// Check if category name, outertag and sort key are all the same.  If they are, don't add to categories array
+	// Don't add duplicate categories
 	if(checkdupes){
 		for (var c=0; c < categories.length; c++) {
 			if (categories[c] === null) continue;
-
-			if(ignoreCapitalization(category) == ignoreCapitalization(categories[c].category) && params.outerTag == categories[c].outerTag && params.sortkey == categories[c].sortkey){
-				return;
+			
+			if(categoryIsDuplicate(category, categories[c])) {
+				return false;
 			}
 		}
 	}
@@ -329,6 +324,40 @@ function generateWikitextForCategories() {
 	return categoriesStr;
 }
 
+function categoryIsDuplicate(cat1, cat2) {
+
+	// Check if category name, outertag and sort key are all the same.  If they are, don't add to categories array
+	if(cat1.category.toLowerCase() == cat2.category.toLowerCase()
+		&& cat1.outerTag == cat2.outerTag 
+		&& cat1.sortkey == cat2.sortkey
+	){
+		return true;
+	}
+	return false;
+}
+
+function removeDuplicatecategories() {
+	// Cache unique categories
+	// We know the first category isn't a dupe yet
+	var nonDupes = [categories[0]];
+
+	// Loop through all categories, skipping the first one
+	for (var c = 1; c < categories.length; c++) {
+		// Compare category with cached unique categories (nonDupes)
+		for (var d = 0, nonDupesLength = nonDupes.length; d < nonDupesLength; d++) {
+			if(categoryIsDuplicate(categories[c], nonDupes[d])){
+				break;
+			} 
+			// Last iteration
+			if(d == nonDupes.length - 1) {
+				nonDupes.push(categories[c]);
+			}
+		}
+	}
+
+	return nonDupes;
+}
+
 function initializeCategories(cats) {
 	window.fixCategoryRegexp = new RegExp('\\[\\[(?:' + csCategoryNamespaces + '):([^\\]]+)]]', 'i');
 
@@ -339,6 +368,9 @@ function initializeCategories(cats) {
 	} else {
 		categories = cats;
 	}
+
+	// Filter out duplicate categories on init
+	categories = removeDuplicatecategories();
 
 	//inform PHP what source should it use [this field exists only in 'edit page' mode]
 	var $wpCategorySelectSourceType = $('#wpCategorySelectSourceType');
