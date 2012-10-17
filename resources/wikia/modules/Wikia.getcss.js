@@ -9,10 +9,11 @@
  * http://code.google.com/p/javascript-dominoes/
  *
  * With simple changes to make it work
- * with Zepto
+ * with Wikia namespace
  * by Jakub Olek jakubolek (at) wikia-inc.com
  */
-(function (window, document, Zepto) {
+
+(function (window, document, Wikia) {
 
 	var head = document.getElementsByTagName('head')[0],
 		loadedCompleteRegExp = /loaded|complete/,
@@ -20,9 +21,9 @@
 		callbacksNb = 0,
 		timer;
 
-	Zepto.getCSS = function (url, options, callback) {
+	Wikia.getCSS = function (url, options, callback) {
 
-		if (Zepto.isFunction(options)) {
+		if (typeof options === 'function') {
 			callback = options;
 			options  = {};
 		}
@@ -116,4 +117,4 @@
 		}
 		head.appendChild(link);
 	};
-})(this, this.document, this.Zepto);
+})(this, document, Wikia);

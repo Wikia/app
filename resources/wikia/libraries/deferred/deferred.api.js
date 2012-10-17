@@ -1,26 +1,26 @@
 /*global deferred, Zepto*/
 
 /**
- * Extends Zepto to have $.Deferred() compatible API
+ * Extends Wikia to have Wikia.Deferred() compatible API
  *
  * @see https://github.com/heavylifters/deferred-js
  * @see http://api.jquery.com/category/deferred-object/
  * @author macbre
  */
 
-(function (deferred, $) {
+(function (deferred, Wikia) {
 	'use strict';
 
-	$.Deferred = deferred.deferred;
-	$.when = function () {
+	Wikia.Deferred = deferred.deferred;
+	Wikia.when = function () {
 		return deferred.all(arguments);
 	};
 
 	// jQuery's done() = deferred.js's then() with just a first parameter past
-	$.Deferred.prototype.done = $.Deferred.prototype.then;
+	Wikia.Deferred.prototype.done = Wikia.Deferred.prototype.then;
 
 	// jQuery specific "wrapping" promise object
-	$.Deferred.prototype.promise = function () {
+	Wikia.Deferred.prototype.promise = function () {
 		var self = this;
 
 		return {
@@ -39,4 +39,4 @@
 		};
 	};
 
-}(deferred, Zepto));
+}(deferred, Wikia));

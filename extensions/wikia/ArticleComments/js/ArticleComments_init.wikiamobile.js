@@ -58,7 +58,7 @@ require(['loader', 'querystring', 'events'], function(loader, qs, events){
 	function init(){
 		loader.show(wkArtCom, {center: true, size:'40px'});
 
-		$.nirvana.sendRequest({
+		Wikia.nirvana.sendRequest({
 			controller: 'ArticleCommentsController',
 			method: 'WikiaMobileCommentsPage',
 			data: {
@@ -89,7 +89,7 @@ require(['loader', 'querystring', 'events'], function(loader, qs, events){
 		});
 	}
 
-	window.addEventListener('load', function(){
+	Wikia(function(){
 		wkArtCom = document.getElementById('wkArtCom');
 		collSec = wkArtCom.getElementsByClassName('collSec')[0];
 		wkComm = document.getElementById('wkComm');

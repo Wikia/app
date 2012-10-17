@@ -7,6 +7,11 @@
  * ie. Sections, Images, Galleries etc.
  */
 define('layout', ['sections', 'media', require.optional('cache')], function(sections, media, cache) {
+	'use strict';
+
+	//init sections
+	sections.init();
+
 	var d = document,
 		pageContent = d.getElementById('mw-content-text') || d.getElementById('wkMainCnt'),
 		images = d.getElementsByClassName('media'),
@@ -33,21 +38,18 @@ define('layout', ['sections', 'media', require.optional('cache')], function(sect
 			}
 
 			require(['tables'], function(t){
-				t.process($(selector).not('.artSec table, table table'));
+				t.process(Wikia.not('.artSec table, table table', tables));
 
 				sections.addEventListener('open', function(){
 					var index = ~~this.getAttribute('data-index');
 
 					if(!processedSections[index]){
-						t.process($(this).find(selector).not('table table'));
+						t.process(Wikia.not('table table', this.querySelectorAll(selector)));
 						processedSections[index] = true;
 					}
 				});
 			});
 		};
-
-	//init sections
-	sections.init();
 
 	//tables
 	if(tables && tables.length > 0){

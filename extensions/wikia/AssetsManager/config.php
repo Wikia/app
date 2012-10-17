@@ -326,7 +326,8 @@ $config['gameguides_js'] = array(
 
 		//libraries/frameworks
 		'//resources/wikia/libraries/Ponto/ponto.js',
-		'//resources/wikia/libraries/zepto/zepto-0.8.js',
+		'//resources/wikia/modules/Wikia.wikiamobile.js',
+		'//resources/wikia/modules/Wikia.getcss.js',
 		'//resources/wikia/libraries/modil/modil.js',
 
 		//core modules
@@ -356,10 +357,6 @@ $config['gameguides_js'] = array(
 		'//extensions/wikia/AssetsManager/js/AssetsManager.js',
 		'//extensions/wikia/JSMessages/js/JSMessages.wikiamobile.js',
 		'//extensions/wikia/JSSnippets/js/JSSnippets.js',
-
-		//framework extensions
-		'//resources/wikia/libraries/zepto/zepto.getcss.js',
-		'//resources/wikia/libraries/zepto/zepto.wikiamobile.js',
 
 		//groups
 		'#group_wikiamobile_tables_js',
@@ -418,15 +415,6 @@ $config['wikiamobile_js_head'] = array(
 	'assets' => array(
 		//set js class as fast as possible to make styling as fast as possible
 		'//extensions/wikia/WikiaMobile/js/html_js_class.js',
-
-		//libraries/frameworks
-		'//resources/wikia/libraries/zepto/zepto-0.8.js',
-		'//resources/wikia/libraries/modil/modil.js',
-
-		//core modules
-		'//resources/wikia/modules/querystring.js',
-		'//resources/wikia/modules/cookies.js',
-		'//resources/wikia/modules/log.js'//depends on querystring.js and cookies.js
 	)
 );
 
@@ -435,6 +423,16 @@ $config['wikiamobile_js_body_minimal'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'wikiamobile',
 	'assets' => array(
+		//libraries/frameworks
+		'//resources/wikia/modules/Wikia.wikiamobile.js',
+		'//resources/wikia/modules/Wikia.getcss.js',
+		'//resources/wikia/libraries/modil/modil.js',
+
+		//core modules
+		'//resources/wikia/modules/querystring.js',
+		'//resources/wikia/modules/cookies.js',
+		'//resources/wikia/modules/log.js',//depends on querystring.js and cookies.js
+
 		//feature detection
 		'//extensions/wikia/WikiaMobile/js/features.js',
 		'//extensions/wikia/WikiaMobile/js/feature-detects/positionfixed.wikiamobile.js',
@@ -472,8 +470,7 @@ $config['wikiamobile_js_body_full'] = array(
 		'//extensions/wikia/JSSnippets/js/JSSnippets.js',
 
 		//framework extensions
-		'//resources/wikia/libraries/zepto/zepto.getcss.js',
-		'//resources/wikia/libraries/zepto/zepto.wikiamobile.js',
+
 
 		//modules
 		'//extensions/wikia/WikiaMobile/js/lazyload.js',
