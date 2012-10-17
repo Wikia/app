@@ -15,41 +15,45 @@ class WallNotificationsTest extends PHPUnit_Framework_TestCase
 {
 	public function testNotifyEveryoneForMainThread() {
 		$wn = $this->getMock('WallNotifications', array('sendEmails','addNotificationLinks'));
-		
+
 		$notification = $this->getMock('WallNotificationEntity',array('isMain') );
-		
+
+		$notification->data = new StdClass();
+
 		$notification->data->wall_userid = '123';
 		$notification->data->msg_author_id = '567';
 		$notification->data->wall_username = 'LoremIpsum';
 		$notification->data->title_id = 555;
-		
+
 		$wn
 			->expects($this->once())
 			->method('sendEmails')
 			->with($this->anything(), $this->equalTo($notification) );
-			
+
 		$wn
 			->expects($this->once())
 			->method('addNotificationLinks')
 			->with($this->equalTo(array('123'=>'123')), $this->equalTo($notification));
-		
+
 		$wn->notifyEveryone($notification);
 	}
 
 
 	public function testNotifyEveryoneForReply() {
 		$wn = $this->getMock('WallNotifications', array('sendEmails','addNotificationLinks','getWatchlist'));
-		
+
 		$notification = $this->getMock('WallNotificationEntity',array('isMain') );
-		
+
+		$notification->data = new StdClass();
+
 		$notification->data->wall_userid = '123';
 		$notification->data->msg_author_id = '567';
 		$notification->data->wall_username = 'LoremIpsum';
 		$notification->data->title_id = 555;
 		$notification->data_noncached->parent_title_dbkey = 'dbkey';
-		
+
 		$users = array('123'=>'123','234'=>'234');
-		
+
 		$wn
 			->expects($this->once())
 			->method('getWatchlist')
@@ -59,25 +63,25 @@ class WallNotificationsTest extends PHPUnit_Framework_TestCase
 			->expects($this->once())
 			->method('sendEmails')
 			->with($this->anything(), $this->equalTo($notification) );
-			
+
 		$wn
 			->expects($this->once())
 			->method('addNotificationLinks')
 			->with($this->equalTo( $users ), $this->equalTo($notification));
-		
+
 		$wn->notifyEveryone($notification);
 	}
 
 	public function someDataProvider() {
 		$tests = array();
-		
+
 		$uniqueId = 5555;
 		$entityKey = '505_212';
 		$authorId = 6666;
 		$isReply = false;
 		$read = false;
 		$notifyeveryone = false;
-		
+
 		$dataS = array(
 			'notification' => array(
 				0 => 4444
@@ -92,8 +96,8 @@ class WallNotificationsTest extends PHPUnit_Framework_TestCase
 				)
 			)
 		);
-		
-		
+
+
 		$dataF = array(
 			'notification' => array(
 				0 => 4444,
@@ -116,13 +120,13 @@ class WallNotificationsTest extends PHPUnit_Framework_TestCase
 				)
 			)
 		);
-		
+
 		$tests[] = array( null, null, $uniqueId, $entityKey, $authorId, $isReply, $read, $dataS, $dataF );
-		
+
 		$dataS = $dataF;
-		
+
 		$entityKey = '404_102';
-		
+
 		$dataF = array(
 			'notification' => array(
 				0 => 4444,
@@ -144,14 +148,14 @@ class WallNotificationsTest extends PHPUnit_Framework_TestCase
 					'notifyeveryone' => $notifyeveryone
 				)
 			)
-		);		
-		
+		);
+
 		$tests[] = array( null, null, $uniqueId, $entityKey, $authorId, $isReply, $read, $dataS, $dataF );
-		
+
 		$authorId2 = 7777;
 		$entityKey  = '505_212';
 		$entityKey2 = '404_103';
-		
+
 		$dataF = array(
 			'notification' => array(
 				0 => 4444,
@@ -177,14 +181,14 @@ class WallNotificationsTest extends PHPUnit_Framework_TestCase
 				)
 			)
 		);
-		
+
 		$tests[] = array( null, null, $uniqueId, $entityKey2, $authorId2, $isReply, $read, $dataS, $dataF );
-		
+
 		$dataS = $dataF;
-		
+
 		$authorId3 = 7778;
 		$entityKey3 = '404_104';
-		
+
 		$dataF = array(
 			'notification' => array(
 				0 => 4444,
@@ -210,15 +214,15 @@ class WallNotificationsTest extends PHPUnit_Framework_TestCase
 					'notifyeveryone' => $notifyeveryone
 				)
 			)
-		);		
-		
+		);
+
 		$tests[] = array( null, null, $uniqueId, $entityKey3, $authorId3, $isReply, $read, $dataS, $dataF );
-		
+
 		$dataS = $dataF;
-		
+
 		$authorId4 = 7779;
 		$entityKey4 = '404_105';
-		
+
 		$dataF = array(
 			'notification' => array(
 				0 => 4444,
@@ -244,14 +248,14 @@ class WallNotificationsTest extends PHPUnit_Framework_TestCase
 					'notifyeveryone' => $notifyeveryone
 				)
 			)
-		);		
-		
+		);
+
 		$tests[] = array( null, null, $uniqueId, $entityKey4, $authorId4, $isReply, $read, $dataS, $dataF );
-		
+
 		$dataS = $dataF;
-		
+
 		$entityKey5 = '404_106';
-		
+
 		$dataF = array(
 			'notification' => array(
 				0 => 4444,
@@ -277,10 +281,10 @@ class WallNotificationsTest extends PHPUnit_Framework_TestCase
 					'notifyeveryone' => $notifyeveryone
 				)
 			)
-		);		
-		
-		$tests[] = array( null, null, $uniqueId, $entityKey5, $authorId4, $isReply, $read, $dataS, $dataF );		
-		
+		);
+
+		$tests[] = array( null, null, $uniqueId, $entityKey5, $authorId4, $isReply, $read, $dataS, $dataF );
+
 		return $tests;
 	}
 	/**
@@ -293,8 +297,8 @@ class WallNotificationsTest extends PHPUnit_Framework_TestCase
 
 		$this->assertEquals($dataS, $dataF);
 	}
-	
-	
-	
+
+
+
 }
 
