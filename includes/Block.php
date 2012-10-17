@@ -126,7 +126,7 @@ class Block {
 			array( 'ipb_id' => $id ),
 			__METHOD__
 		);
-		if ( $res && /** Wikia change start **/$res instanceof ResultWrapper /** Wikia change end **/ ) {
+		if ( $res ) {
 			return Block::newFromRow( $res );
 		} else {
 			return null;
