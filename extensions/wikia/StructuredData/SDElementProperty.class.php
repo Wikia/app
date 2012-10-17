@@ -2,7 +2,7 @@
 /**
  * @author ADi
  */
-class SDElementProperty implements SplObserver {
+class SDElementProperty extends SDObject implements SplObserver {
 	protected $type = array( 'name' => 'rdf:Literal', 'range' => null, 'missing' => true );
 	protected $name = null;
 	protected $label = '';
@@ -106,4 +106,7 @@ class SDElementProperty implements SplObserver {
 		}
 	}
 
+	public function getTypeName() {
+		return $this->type['name'];
+	}
 }

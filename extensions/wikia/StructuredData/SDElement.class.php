@@ -2,7 +2,7 @@
 /**
  * @author ADi
  */
-class SDElement implements SplSubject {
+class SDElement extends SDObject implements SplSubject {
 	private $id = 0;
 	private $depth = 0;
 	private static $excludedNames = array(
@@ -206,5 +206,7 @@ class SDElement implements SplSubject {
 		}
 	}
 
-
+	public function getTypeName() {
+		return $this->type;
+	}
 }
