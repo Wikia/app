@@ -16,7 +16,7 @@ class SDElementRendererFactory {
 			$templateName = $this->config['renderers'][$object->getTypeName()];
 			$templatePath = $this->config['renderersPath'] . $templateName . '.php';
 			if(file_exists( $templatePath )) {
-				$view = F::app()->getView( 'StructuredData', '', array('object' => $object) );
+				$view = F::app()->getView( 'StructuredData', $templateName, array('object' => $object) );
 				$view->setTemplatePath( $templatePath );
 				return $view;
 			}
