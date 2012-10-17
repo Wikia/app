@@ -72,6 +72,17 @@ class SDElement extends SDObject implements SplSubject {
 	}
 
 	/**
+	 * get property value
+	 * @param string $name
+	 * @param mixed $default
+	 * @return mixed
+	 */
+	public function getPropertyValue( $name, $default = null ) {
+		$property = $this->getProperty( $name );
+		return ($property instanceof SDElementProperty) ? $property->getValue() : $default;
+	}
+
+	/**
 	 * Return element's name
 	 * @return string
 	 */
