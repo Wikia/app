@@ -1,5 +1,12 @@
 var AdProviderEvolve = function (ScriptWriter, WikiaTracker, log, window, document, Krux, evolveHelper, slotTweaker) {
-	var slotMap = {
+	var slotMap
+		, logGroup = 'AdProviderEvolve'
+		, ord = Math.round(Math.random() * 23456787654)
+		, slotTimer2 = {}
+		, slotForSkin = 'INVISIBLE_1'
+	;
+
+	slotMap = {
 		'HOME_TOP_LEADERBOARD':{'tile':1, 'size':'728x90', 'dcopt':'ist'},
 		'HOME_TOP_RIGHT_BOXAD':{'tile':2, 'size':'300x250,300x600'},
 		'LEFT_SKYSCRAPER_2':{'tile':3, 'size':'160x600'},
@@ -17,27 +24,88 @@ var AdProviderEvolve = function (ScriptWriter, WikiaTracker, log, window, docume
 			return true;
 		}
 
+		if (slotname === slotForSkin) {
+			return true;
+		}
+
 		return false;
 	}
-
-	var slotTimer2 = {};
 
 	function fillInSlot(slot) {
 		log('fillInSlot', 5, 'AdProviderEvolve');
 		log(slot, 5, 'AdProviderEvolve');
 
-		WikiaTracker.trackAdEvent('liftium.slot2', {'ga_category':'slot2/' + slot[1], 'ga_action':slot[0], 'ga_label':'evolve'}, 'ga');
+		var slotname = slot[0]
+			, slotsize = slot[1]
+		;
 
-		slotTimer2[slot[0]] = new Date().getTime();
-		log('slotTimer2 start for ' + slot[0], 7, 'AdProviderEvolve');
+		WikiaTracker.trackAdEvent('liftium.slot2', {
+			'ga_category': 'slot2/' + slotsize, 'ga_action': slotname, 'ga_label': 'evolve'
+		}, 'ga');
 
-		ScriptWriter.injectScriptByUrl(slot[0], getUrl(slot[0], slot[1]), function() {
-			slotTweaker.removeDefaultHeight(slot[0]);
-			slotTweaker.removeTopButtonIfNeeded(slot[0]);
-		});
+		slotTimer2[slotname] = new Date().getTime();
+		log('slotTimer2 start for ' + slotname, 7, 'AdProviderEvolve');
+
+		if (slotname === slotForSkin) {
+			ScriptWriter.injectScriptByUrl(
+				slot[0], 'http://cdn.triggertag.gorillanation.com/js/triggertag.js',
+				function() {
+					log('(invisible triggertag) ghostwriter done', 5, logGroup);
+					ScriptWriter.injectScriptByText(slotname, getReskinAndSilverScript(slotname, slotsize));
+				}
+			);
+		} else {
+			ScriptWriter.injectScriptByUrl(slotname, getUrl(slotname, slotsize), function() {
+				slotTweaker.removeDefaultHeight(slotname);
+				slotTweaker.removeTopButtonIfNeeded(slotname);
+			});
+		}
 	}
 
-	var ord = Math.round(Math.random() * 23456787654);
+	function getReskinAndSilverScript(slotname) {
+		log('getReskinSilverScript', 5, logGroup);
+
+		var script = ''
+			, kv = getKv(slotname)
+		;
+
+		//<!-- BEGIN TRIGGER TAG INITIALIZATION -->
+		//script += '<script type="text/javascript" src="http://cdn.triggertag.gorillanation.com/js/triggertag.js"></script>' + '\n';
+		//script += '<script type="text/javascript">' + '\n';
+		script += "getTrigger('8057');" + '\n';
+		//script += '</script>' + '\n';
+
+		//<!-- BEGIN GN Ad Tag for Wikia 1000x1000 entertainment -->
+		//script += '<script type="text/javascript">' + '\n';
+		script += "if ((typeof(f406815)=='undefined' || f406815 > 0) ) {" + '\n';
+		script += "document.write('<scr'+'ipt src=\"http://n4403ad.doubleclick.net/adj/gn.wikia4.com/";
+		script += kv + ";sz=1000x1000;tile=1;ord=" + ord + "?\" type=\"text/javascript\"></scr'+'ipt>');" + '\n';
+		script += '}' + '\n';
+		//script += '</script>' + '\n';
+
+		//<!-- BEGIN GN Ad Tag for Wikia 47x47 entertainment -->
+		//script += '<script type="text/javascript">' + '\n';
+		script += "if ((typeof(f406785)=='undefined' || f406785 > 0) ) {" + '\n';
+		script += "document.write('<scr'+'ipt src=\"http://n4403ad.doubleclick.net/adj/gn.wikia4.com/";
+		script += kv + ";sz=47x47;tile=2;ord=" + ord + "?\" type=\"text/javascript\"></scr'+'ipt>');" + '\n';
+		script += '}' + '\n';
+		//script += '</script>' + '\n';
+
+		log(script, 7, logGroup);
+		return script;
+	}
+
+	function getKv(slotname) {
+		var sect = evolveHelper.getSect();
+
+		return sect + ';' +
+			'sect=' + sect + ';' +
+			'mtfInline=true;' +
+			'pos=' + slotname + ';' +
+			WikiaDartHelper_getZone1() +
+			WikiaDartHelper_getCustomKeyValues() +
+			WikiaDartHelper_getKruxKV();
+	}
 
 	// adapted for Evolve + simplified copy of AdConfig.DART.getUrl
 	function getUrl(slotname, size) {
@@ -50,14 +118,8 @@ var AdProviderEvolve = function (ScriptWriter, WikiaTracker, log, window, docume
 			'.doubleclick.net/' +
 			'adj' + '/' +
 			'gn.wikia4.com' + '/' +
-			sect + ';' +
-			'sect=' + sect + ';' +
-			'mtfInline=true;' +
-			'pos=' + slotname + ';' +
-			 WikiaDartHelper_getZone1() +
-			 WikiaDartHelper_getCustomKeyValues() +
-			 WikiaDartHelper_getKruxKV() +
-			'sz=' + slotMap[slotname].size + ';' +
+			getKv(slotname) +
+			'sz=' + size + ';' +
 			(slotMap[slotname].dcopt ? 'dcopt=' + slotMap[slotname].dcopt + ';' : '') +
 			'type=pop;type=int;' + // TODO remove?
 			'tile=' + slotMap[slotname].tile + ';' +
@@ -185,7 +247,6 @@ var AdProviderEvolve = function (ScriptWriter, WikiaTracker, log, window, docume
 	if (window.wgInsideUnitTest) {
 		iface.sanitizeSlotname = sanitizeSlotname;
 		iface.getUrl = getUrl;
-		iface.getSect = evolveHelper.getSect;
 	}
 
 	return iface;

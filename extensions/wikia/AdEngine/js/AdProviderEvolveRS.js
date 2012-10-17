@@ -1,3 +1,5 @@
+// TODO: remove
+
 var AdProviderEvolveRS = function(ScriptWriter, WikiaTracker, log, window, document, evolveHelper) {
 	var logGroup = 'AdProviderEvolveRS'
 		, canHandleSlot
