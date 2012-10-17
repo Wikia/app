@@ -9,14 +9,14 @@ class SDElementRendererFactory {
 		$this->config = $config;
 	}
 
-	public function getRenderer(SDObject $object) {
+	public function getRenderer(SDObject $object, $context = 'default') {
 
 		if(isset($this->config['renderers'][$object->getTypeName()])) {
 
 			$templateName = $this->config['renderers'][$object->getTypeName()];
 			$templatePath = $this->config['renderersPath'] . $templateName . '.php';
 			if(file_exists( $templatePath )) {
-				$view = F::app()->getView( 'StructuredData', $templateName, array('object' => $object) );
+				$view = F::app()->getView( 'StructuredData', $templateName, array( 'object' => $object, 'context' => $context ) );
 				$view->setTemplatePath( $templatePath );
 				return $view;
 			}

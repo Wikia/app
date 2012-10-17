@@ -1,1 +1,1 @@
-<img src="<?= $object->getProperty('schema:thumbnailUrl'); ?>" />
+<img src="<?= $object->getProperty('schema:contentURL')->getValue(); ?>" />
