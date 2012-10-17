@@ -56,7 +56,7 @@ class CreateNewWikiControllerTest extends WikiaBaseTest {
 
 		$wgUser = $this->getMock('User');
 
-		$response = $app->sendRequest('CreateNewWiki', 'executeCreateWiki');
+		$response = $app->sendRequest('CreateNewWiki', 'CreateWiki');
 
 		$this->assertEquals("ok", $response->getVal('status'));
 		$this->assertEquals($siteName, $response->getVal('siteName'));
@@ -84,7 +84,7 @@ class CreateNewWikiControllerTest extends WikiaBaseTest {
 			->with($this->equalTo('AutoCreateWiki::checkWikiNameIsCorrect'), $this->equalTo($wikiName), $this->equalTo($wikiLang))
 			->will($this->returnValue(""));
 
-		$response = $app->sendRequest('CreateNewWiki', 'executeCheckWikiName');
+		$response = $app->sendRequest('CreateNewWiki', 'CheckWikiName');
 
 		$this->assertEquals("", $response->getVal('res'));
 	}

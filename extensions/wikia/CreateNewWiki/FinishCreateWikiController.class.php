@@ -7,7 +7,7 @@ class FinishCreateWikiController extends WikiaController {
 	/**
 	 * Loads params from cookie.
 	 */
-	public function executeLoadState() {
+	protected function LoadState() {
 		wfProfileIn(__METHOD__);
 		if(!empty($_COOKIE['createnewwiki'])) {
 			$this->params = json_decode($_COOKIE['createnewwiki'], true);
@@ -20,7 +20,7 @@ class FinishCreateWikiController extends WikiaController {
 	/**
 	 * empty method for almost static template
 	 */
-	public function executeWikiWelcomeModal() {
+	public function WikiWelcomeModal() {
 		wfProfileIn(__METHOD__);
 		
 		wfProfileOut(__METHOD__);
@@ -32,15 +32,17 @@ class FinishCreateWikiController extends WikiaController {
 	 * Main wiki creation happens on www, and it will redirect to the newly created wiki.
 	 * The values are read from the session and only accessible by the admin.
 	 */
-	public function executeFinishCreate() {
+	public function FinishCreate() {
 		global $wgUser, $wgSitename;
 		
 		if ( !$wgUser->isAllowed( 'finishcreate' ) ) {
 			return false;
 		}
 
+		$this->skipRendering();
+
 		global $wgOut;
-		$this->executeLoadState();
+		$this->LoadState();
 		
 		$mainPage = wfMsgForContent( 'mainpage' );
 		

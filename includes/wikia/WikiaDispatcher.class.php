@@ -78,13 +78,10 @@ class WikiaDispatcher {
 				// map X to executeX method names for things that used to be modules
 				if (!method_exists($controller, $method)) {
 					$method = ucfirst( $method );
+					// This will throw an exception if the template is missing
+					// Refactor the offending class to not use executeXYZ methods or set format in request params
 					if ($format == WikiaResponse::FORMAT_HTML) {
-						try {
-							$response->getView()->setTemplate( $controllerName, $method );
-						} catch( Exception $e ) {
-						//"quick", dirty fix for fb#49392
-							Wikia::log(__METHOD__, false, 'ERROR: Possible fatal error because of change old oasis modules to controllers -- template not found.');
-						}
+						$response->getView()->setTemplate( $controllerName, $method );
 					}
 					$method = "execute{$method}";
 					$params = $request->getParams();  // old modules expect params in a different place

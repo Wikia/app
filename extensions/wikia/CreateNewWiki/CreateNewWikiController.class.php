@@ -3,7 +3,7 @@ class CreateNewWikiController extends WikiaController {
 
 	const DAILY_USER_LIMIT = 2;
 
-	public function executeIndex() {
+	public function index() {
 		global $wgSuppressWikiHeader, $wgSuppressPageHeader, $wgSuppressFooter, $wgSuppressAds, $wgSuppressToolbar, $fbOnLoginJsOverride, $wgRequest, $wgUser;
 		wfProfileIn( __METHOD__ );
 
@@ -25,7 +25,7 @@ class CreateNewWikiController extends WikiaController {
 		$fbconnected = $wgRequest->getVal('fbconnected');
 		$fbreturn = $wgRequest->getVal('fbreturn');
 		if((!empty($fbconnected) && $fbconnected === '1') || (!empty($fbreturn) && $fbreturn === '1')) {
-			$this->executeLoadState();
+			$this->LoadState();
 			$this->currentStep = 'DescWiki';
 		} else {
 			$this->currentStep = '';
@@ -76,7 +76,7 @@ class CreateNewWikiController extends WikiaController {
 	 * Ajax call to validate domain.
 	 * Called via nirvana dispatcher
 	 */
-	public function executeCheckDomain() {
+	public function CheckDomain() {
 		wfProfileIn(__METHOD__);
 		global $wgRequest;
 
@@ -92,7 +92,7 @@ class CreateNewWikiController extends WikiaController {
 	/**
 	 * Ajax call for validate wiki name.
 	 */
-	public function executeCheckWikiName() {
+	public function CheckWikiName() {
 		wfProfileIn(__METHOD__);
 
 		$wgRequest = $this->app->getGlobal('wgRequest'); /* @var $wgRequest WebRequest */
@@ -106,9 +106,9 @@ class CreateNewWikiController extends WikiaController {
 	}
 
 	/**
-	 * Creates wiki
+	 * Ajax call to Create wiki
 	 */
-	public function executeCreateWiki() {
+	public function CreateWiki() {
 		wfProfileIn(__METHOD__);
 		$wgRequest = $this->app->getGlobal('wgRequest'); /* @var $wgRequest WebRequest */
 		$wgDevelDomains = $this->app->getGlobal('wgDevelDomains');
@@ -195,7 +195,6 @@ class CreateNewWikiController extends WikiaController {
 			}
 		}
 
-
 		wfProfileOut(__METHOD__);
 	}
 
@@ -209,7 +208,7 @@ class CreateNewWikiController extends WikiaController {
 	/**
 	 * Loads params from cookie.
 	 */
-	public function executeLoadState() {
+	protected function LoadState() {
 		wfProfileIn(__METHOD__);
 		if(!empty($_COOKIE['createnewwiki'])) {
 			$this->params = json_decode($_COOKIE['createnewwiki'], true);
@@ -226,7 +225,7 @@ class CreateNewWikiController extends WikiaController {
 	 *
 	 * @author Maciej B?aszkowski <marooned at wikia-inc.com>
 	 */
-	public function executeUpgradeToPlus() {
+	public function UpgradeToPlus() {
 		global $wgRequest;
 		wfProfileIn( __METHOD__ );
 
@@ -251,7 +250,7 @@ class CreateNewWikiController extends WikiaController {
 		wfProfileOut( __METHOD__ );
 	}
 
-	public function executePhalanx() {
+	public function Phalanx() {
 		global $wgRequest;
 		wfProfileIn( __METHOD__ );
 
