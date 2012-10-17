@@ -17,4 +17,11 @@ require_once 'PHPUnit/Autoload.php';
 
 define('PHPUnit_MAIN_METHOD', 'PHPUnit_TextUI_Command::main');
 
+// Wikia change - start
+error_reporting(E_ALL);
+set_error_handler(function($errno, $errstr, $errfile, $errline) {
+	echo "$errstr ($errfile @ $errline)\n";
+});
+// Wikia change - end
+
 PHPUnit_TextUI_Command::main();
