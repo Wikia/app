@@ -12,12 +12,13 @@ class SDElementRendererFactory {
 	public function getRenderer(SDObject $object) {
 
 		if(isset($this->config['renderers'][$object->getTypeName()])) {
-			$className = $this->config['renderers'][$object->getTypeName()];
-			$classPath = $this->config['rendere'] . $className . '.class.php';
-			if(file_exists( $classPath )) {
-				include_once( $classPath );
 
-				return F::build( $className, array( 'object' => $object) );
+			$templateName = $this->config['renderers'][$object->getTypeName()];
+			$templatePath = $this->config['renderersPath'] . $templateName . '.php';
+			if(file_exists( $templatePath )) {
+				$view = F::app()->getView( 'StructuredData', '', array('object' => $object) );
+				$view->setTemplatePath( $templatePath );
+				return $view;
 			}
 			else {
 				throw new WikiaException('SDElementRenderer not found for type: ' . $object->getTypeName() );

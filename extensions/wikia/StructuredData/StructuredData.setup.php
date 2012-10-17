@@ -36,10 +36,9 @@ $wgStructuredDataConfig = array(
 	'baseUrl' => 'http://data-stage.wikia.net/',
 	'apiPath' => 'api/v0.1/',
 	'schemaPath' => 'callofduty',
-	'renderersPath' => $dir . 'renderers/',
+	'renderersPath' => $dir . 'templates/renderers/',
 	'renderers' => array(
-		'schema:photos' => 'PhotosRenderer',
-		'schema:ImageObject' => 'ImageObjectRenderer'
+		'schema:ImageObject' => 'ImageObject'
 	)
 );
 
