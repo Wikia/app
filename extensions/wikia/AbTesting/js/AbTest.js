@@ -20,7 +20,7 @@ var _AbTest = Wikia.AbTest || {},
 	tracker = window.WikiaTracker;
 
 // Internal logging, becomes a no-op if window.console isn't present
-var log = typeof console == 'object' ? function( methodName, message ) {
+var log = (window.console && console.log) ? function( methodName, message ) {
 	console.log( 'Wikia.AbTest' + ( message ? '.' + methodName + '()' : '' ) + ':', message );
 } : function() {};
 
