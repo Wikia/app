@@ -76,11 +76,13 @@
 					<<?= $listTag?>>
 						<?php foreach ($propertyValue as $reference) : ?>
 							<?php 
-								if (empty($reference->object)) {continue;}
-								varDump($reference->object);
-								die;
+							varDump($propertyValue);
+								//echo get_class($reference->object);
+								//continue;
+								//if ($reference->object == null) {continue;}
 								$referenceHTML = $reference->object->render();
-								if ($referenceHTML !== false) { echo $referenceHTML; continue; }
+								continue;
+								if ($referenceHTML !== false) { echo 'test' . $referenceHTML; continue; }
 							?>
 							<?php if ($propertyName == 'schema:photos') : ?>
 								<li>	
