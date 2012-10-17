@@ -154,7 +154,7 @@ function wfDevBoxForceWiki(&$wikiFactoryLoader){
 		// Final sanity check to make sure our database exists
 		if ($forcedWikiDomain != DEVBOX_DEFAULT_WIKI_DOMAIN) {
 			$dbname = WikiFactory::DomainToDB($forcedWikiDomain);
-			$db1 = wfGetDB( DB_SLAVE, "dump", $wgWikiFactoryDB );
+			$db1 = wfGetDB( DB_SLAVE, "dump", $wgWikiFactoryDB . '_c1');
 			$db2 = wfGetDB( DB_SLAVE, "dump", $wgWikiFactoryDB . '_c2'); // lame
 
 			$devbox_dbs = array_merge(getDevBoxOverrideDatabases($db1), getDevBoxOverrideDatabases($db2));
