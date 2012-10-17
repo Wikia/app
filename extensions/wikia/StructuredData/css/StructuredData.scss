@@ -12,6 +12,10 @@
 	dd {
 		margin: 0;
 		padding-bottom: 15px;
+		.empty {
+			color: red;
+			font-style: italic;
+		}
 	}
 	
 	.SDObjectDetails {
