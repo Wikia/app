@@ -214,7 +214,7 @@ class RelatedVideosNamespaceData {
 	 * @param Array $list
 	 * @return string wikitext
 	 */
-	protected function serializeList(Array $list) {
+	public function serializeList(Array $list) {
 
 		wfProfileIn( __METHOD__ );
 		$text = '';
