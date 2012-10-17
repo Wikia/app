@@ -13,7 +13,7 @@ var AdProviderAdDriver2Helper = function (log, window, expiringStorage) {
 		var cookieValue = false;
 
 		try {
-			var lastDARTCallNoAdCookie = storage.getItem('adDriverLastDARTCallNoAd');
+			var lastDARTCallNoAdCookie = storage.getItem('adDriverLastDARTCallNoAd2');
 			cookieValue = AdDriver_getLastDARTCallNoAdFromStorageContents(lastDARTCallNoAdCookie, slotname);
 		}
 		catch (e) {
@@ -52,7 +52,7 @@ var AdProviderAdDriver2Helper = function (log, window, expiringStorage) {
 
 		var num = 0;
 
-		num = AdDriver_getNumCall('adDriverNumDARTCall', slotname);
+		num = AdDriver_getNumCall('adDriverNumDARTCall2', slotname);
 		log(slotname + ' has ' + num + ' DART calls', 3, 'AdProviderAdDriver2');
 
 		return num;
@@ -109,7 +109,7 @@ var AdProviderAdDriver2Helper = function (log, window, expiringStorage) {
 	function AdDriver_incrementNumAllCall(slotname) {
 		log('incrementNumAllCall ' + slotname, 5, 'AdProviderAdDriver2');
 
-		return AdDriver_incrementNumCall('adDriverNumAllCall', slotname);
+		return AdDriver_incrementNumCall('adDriverNumAllCall2', slotname);
 	}
 
 	function AdDriver_incrementNumCall(storageName, slotname) {
@@ -185,7 +185,7 @@ var AdProviderAdDriver2Helper = function (log, window, expiringStorage) {
 			var newSlotnameTimestamps = new Array();
 			var slotnameInStorage = false;
 			try {
-				var lastDARTCallNoAdCookie = storage.getItem('adDriverLastDARTCallNoAd');
+				var lastDARTCallNoAdCookie = storage.getItem('adDriverLastDARTCallNoAd2');
 				var setResult = AdDriver_setLastDARTCallNoAdInStorageContents(lastDARTCallNoAdCookie, slotname, value);
 				newSlotnameTimestamps = setResult.newSlotnameTimestamps;
 				slotnameInStorage = setResult.slotnameInStorage;
@@ -200,7 +200,7 @@ var AdProviderAdDriver2Helper = function (log, window, expiringStorage) {
 
 			if (newSlotnameTimestamps.length) {
 				// Save in storage for one hour
-				storage.setItem('adDriverLastDARTCallNoAd', JSON.stringify(newSlotnameTimestamps), forgetAdsShownAfterTime);
+				storage.setItem('adDriverLastDARTCallNoAd2', JSON.stringify(newSlotnameTimestamps), forgetAdsShownAfterTime);
 			}
 
 		return value;
