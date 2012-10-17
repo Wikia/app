@@ -52,7 +52,7 @@ function wfWikiAnswersGlobalHeaderIndex( &$moduleObject, &$params) {
 	global $wgLang;
 	$userlang = $wgLang->getCode();
 	$userlang = $userlang == 'en' ? '' : "?uselang=$userlang";
-	$moduleObject->createWikiUrl = "http://www.wikia.com/Special:CreateAnswers$userlang";
+	$moduleObject->createWikiUrl = "http://www.wikia.com/Special:CreateWiki$userlang";
 	$moduleObject->createWikiText = wfMsgHtml('createwikipagetitle');
 	return true;
 }
