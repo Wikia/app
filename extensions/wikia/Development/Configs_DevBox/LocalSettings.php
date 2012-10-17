@@ -101,6 +101,10 @@ $wgGoogleMapsKey = 'ABQIAAAAH6bdoxGNhXgildFjnRAQjBTsndpDQKTEb03AQ6hTlU-KPVq60xQd
 $wgAddGroups['staff'] = true;
 $wgRemoveGroups['staff'] = true;
 
+if ( is_null( $wgDBcluster ) ) {
+	$wgDBcluster = 'c1';
+} 
+
 ##### /MAKE ANY CHANGES _BEFORE_ HERE THAT YOU  WANT TO SHOW UP ON DEVBOXES BY DEFAULT BUT STILL BE OVERRIDABLE #####
 
 require_once( dirname( $wgWikiaLocalSettingsPath ) . '/../DevBoxSettings.php' );
