@@ -2506,8 +2506,6 @@ HTML
 	 */
 	protected function showConflict() {
 		global $wgOut;
-		$this->textbox2 = $this->textbox1;
-		$this->textbox1 = $this->getContent();
 		if ( wfRunHooks( 'EditPageBeforeConflictDiff', array( &$this, &$wgOut ) ) ) {
 			$wgOut->wrapWikiMsg( '<h2>$1</h2>', "yourdiff" );
 
