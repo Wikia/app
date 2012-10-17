@@ -851,11 +851,11 @@ class RTEReverseParser {
 				if ( (strlen($textContentOriginal) > strlen($data['link'])) ) {
 					if (substr($textContentOriginal, 0, strlen($data['link'])) == $data['link']) {
 						$possibleTrail = substr($textContentOriginal, strlen($data['link']));
-
 						// check against trail valid characters regexp
-						if (preg_match(self::getTrailRegex(), $possibleTrail)) {
-							$trail = $possibleTrail;
-						}
+						// if there are matches, and there are no trailing characters
+						// fbId::45461 - [[Tower|Towers of Wizardry]] should not convert to [[Tower]]s of Wizardry
+						preg_match(self::getTrailRegex(), $possibleTrail, $matches);
+						$trail = $matches && empty($matches[2]) ? $matches[1] : $trail;						
 					}
 				}
 
