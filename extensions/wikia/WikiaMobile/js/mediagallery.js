@@ -27,7 +27,7 @@ define('mediagallery', ['media', 'modal', 'pager', 'thumbnailer', 'lazyload', 't
 		imgsPerPage = 9;
 
 	function init(){
-		modalWrapper.addEventListener('tap', function (ev) {
+		modalWrapper.addEventListener('click', function (ev) {
 			var target = ev.target;
 
 			//go to a specific page
