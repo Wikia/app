@@ -176,7 +176,7 @@ var AdProviderAdDriver2Helper = function (log, window, expiringStorage) {
 	function AdDriver_incrementNumDARTCall(slotname) {
 		log('incrementNumDARTCall ' + slotname, 5, 'AdProviderAdDriver2');
 
-		return AdDriver_incrementNumCall('adDriverNumDARTCall', slotname);
+		return AdDriver_incrementNumCall('adDriverNumDARTCall2', slotname);
 	}
 
 	function AdDriver_setLastDARTCallNoAd(slotname, value) {
