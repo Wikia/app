@@ -116,7 +116,7 @@ class WikiaStructuredDataTest extends WikiaBaseTest {
 		$structuredData = F::build( 'StructuredData', array( 'apiClient' => $apiClient ));
 		$id = '501849c96e7f187909000001';
 
-		$sdElement = $structuredData->getSDElement( $id );
+		$sdElement = $structuredData->getSDElementById( $id );
 		$this->isInstanceOf( 'SDElement', $sdElement );
 		$this->assertEquals( $sdElement->getId(), $id );
 		$this->assertEquals( $sdElement->getType(), 'cod:Character' );
