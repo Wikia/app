@@ -14,15 +14,16 @@
 (function( window, Wikia, undefined ) {
 
 var _AbTest = Wikia.AbTest || {},
-	console = window.console || {},
 	serverTimeString = window.varnishTime,
 	serverTime = new Date( serverTimeString ).getTime() / 1000,
 	tracker = window.WikiaTracker;
 
-// Internal logging, becomes a no-op if window.console isn't present
-var log = (window.console && console.log) ? function( methodName, message ) {
-	console.log( 'Wikia.AbTest' + ( message ? '.' + methodName + '()' : '' ) + ':', message );
-} : function() {};
+var log = function( methodName, message ) {
+	// Internal logging, becomes a no-op if window.console isn't present
+	if ( window.console && window.console.log ) {
+		window.console.log( 'Wikia.AbTest' + ( message ? '.' + methodName + '()' : '' ) + ':', message );
+	}
+};
 
 // The AbTest class. Instantiating is not required but it allows you to provide
 // an experiment context to all of the function calls. You may also call all
