@@ -5,8 +5,9 @@
 	}
 
 	// Array of SD object properties 
-	$SDObject = $sdsObject->toArray(); 
+	$properties = $sdsObject->getProperties(); 
 	
+	//varDump($properties);
 	
 	// Alphabetically sort object properties labels
 	function aasort(&$array, $key) {
@@ -26,43 +27,62 @@
 		$array = $sortingResult;
 	
 	}
-	aasort($SDObject['properties'], "label");
+	//aasort($SDObject['properties'], "label");
 	
 ?>
 
 <div class="SDObject" id="SDObject">
 
-	<h1><strong><?php echo $SDObject['name']; ?></strong></h1>
+	<h1><strong><?php echo $sdsObject->getName(); ?></strong></h1>
 	<dl class="SDObjectDetails">
 		<dt>Type:</dt>
-		<dd><?php echo $SDObject['type']; ?></dd>
+		<dd><?php echo $sdsObject->getType(); ?></dd>
 	</dl>
 	
 	<h3>Object properties:</h3>
 	<dl class="SDObjectProperties">
-	<?php foreach ( $SDObject['properties'] as $property ) : ?>
+	<?php foreach ( $properties as $property ) : ?>
 		
-		<?php if (array_key_exists('missing', $property['type'])) : ?>
-			<dt><?php echo ucfirst(preg_replace('/([A-Z])/', ' ${1}', $property['label'])); ?>:</dt>
+		<?php 
+			$propertyType = $property->getType();
+			$propertyValue = $property->getValue();
+			$propertyLabel = $property->getLabel();
+			$propertyName = $property->getName();
+			$proprtyHTML = $property->render();
+			
+			if($proprtyHTML !== false) { echo $proprtyHTML; continue; }
+		?>
+		<?php if (array_key_exists('missing', $propertyType)) : ?>
+			<dt><?php echo ucfirst(preg_replace('/([A-Z])/', ' ${1}',$propertyLabel)); ?>:</dt>
 			<dd>
-				<pre><?php print_r($property['value']) ?></pre>
+				<pre><?php print_r($propertyValue) ?></pre>
 			</dd>
 			<?php continue; ?>
 		<?php endif ?>
 		
-		<dt><?php echo ucfirst(preg_replace('/([A-Z])/', ' ${1}', $property['label'])); ?>:</dt>
+		<dt><?php echo ucfirst(preg_replace('/([A-Z])/', ' ${1}', $propertyLabel)); ?>:</dt>
 		<dd>
-			<?php if (empty($property['value']) || $property['value'] == null) { echo '<span class="empty">empty</span>'; continue; } ?>
-			
-			<?php switch ($property['type']['name']) :
+			<?php if (empty($propertyValue)) : ?>
+				<span class="empty">empty</span> 
+				<?php continue; ?>
+			<? endif ?>
+			<?php switch ($propertyType['name']) :
 				case 'xsd:anyURI' : ?>
-					<a href="<?php echo $wgServer . '/' . $property['value']; ?>" title="<?php echo $property['value']; ?>"><?php echo $property['value'] ?></a>
+					<a href="<?php echo $wgServer . '/' . $propertyValue; ?>" title="<?php echo $propertyValue; ?>"><?php echo $propertyValue; ?></a>
 				<?php break; ?>
 				<?php case '@set' ?>
-					<ul>
-						<?php foreach ($property['value'] as $reference) : ?>
-							<?php if ($property['name'] == 'schema:photos') : ?>
-								<?php if ($test->object == null) {continue;} ?>
+				<?php case '@list' ?>
+					<?php $listTag = ($propertyType['name'] == '@set') ? 'ul' : 'ol'; ?>
+					<<?= $listTag?>>
+						<?php foreach ($propertyValue as $reference) : ?>
+							<?php 
+								if (empty($reference->object)) {continue;}
+								varDump($reference->object);
+								die;
+								$referenceHTML = $reference->object->render();
+								if ($referenceHTML !== false) { echo $referenceHTML; continue; }
+							?>
+							<?php if ($propertyName == 'schema:photos') : ?>
 								<li>	
 									<figure>
 										<img src="<?php echo $reference->object['properties'][6]['value']; ?>" alt="<?php echo $test->object['name']; ?>" />
@@ -77,19 +97,10 @@
 								</li>
 							<?php endif; ?>
 						<?php endforeach ?>
-					</ul>
-				<?php break; ?>
-				<?php case '@list' ?>
-					<ol>
-						<?php foreach ($property['value'] as $reference) : ?>
-							<li>
-								<pre><?php print_r($reference) ?></pre>
-							</li>
-						<?php endforeach ?>
-					</ol>
+					</<?= $listTag?>>
 				<?php break; ?>
 				<?php default : ?>
-					<?php echo $property['value']; ?>
+					<?php echo $propertyValue; ?>
 				<?php break; ?>
 			<?php endswitch; ?>
 			
