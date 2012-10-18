@@ -96,6 +96,10 @@ function wfCreatePageSetupVars(Array &$vars ) {
 
 	$vars['ContentNamespacesText'] = $contentNamespaces;
 
+	if ( RequestContext::getMain()->getTitle()->isSpecial('CreatePage') ) {
+		$vars['wgAction'] = RequestContext::getMain()->getRequest()->getVal( 'action', 'edit' );
+	}
+
 	return true;
 }
 
