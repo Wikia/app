@@ -1,7 +1,7 @@
 <?php
 $values = $object->getValues();
 if (empty($values)):?>
-<span class="empty">empty</span>
+<p class="empty">empty</p>
 <?php else:
 	echo ($rendererName == '@list') ? '<ol>' : '<ul>';
 	foreach($values as $reference) {

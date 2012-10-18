@@ -9,13 +9,48 @@
 		margin: 0 0 1em 0;
 		
 	}
+	dt {
+		font-size: 14px;
+	}
 	dd {
 		margin: 0;
+	}
+	& > dl > dd {
+		padding-left: 15px;
 		padding-bottom: 15px;
 		.empty {
 			color: red;
 			font-style: italic;
 		}
+	}
+	figure {
+		border: 1px solid #ccc;
+		background-color: #eee;
+		clear: both;
+		float: left;
+		margin-bottom: 10px;
+		padding: 15px;
+	}
+	figcaption {
+		padding-top: 10px;
+		text-align: center;
+	}
+	ul {
+		margin: 0;
+	}
+	ul li {
+		list-style: none;
+	}
+	li {
+		clear: both;
+		padding: 10px 0;
+		dl {	
+			clear: both;
+		}
+	}
+	.in-property {
+		font-size: 12px;
+		padding-top: 10px;
 	}
 	
 	.SDObjectDetails {

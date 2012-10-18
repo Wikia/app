@@ -30,26 +30,20 @@
 			$proprtyHTML = $property->render( SD_CONTEXT_SPECIAL );
 		?>
 		
+		
 		<?php // Render HTML using renderers  ?>
 		
 		<?php if($proprtyHTML !== false) : ?>
 			<dt><?php echo ucfirst(preg_replace('/([A-Z])/', ' ${1}',$propertyLabel)); ?>:</dt>
 			<dd>
 				<?php echo $proprtyHTML;?>
+				<dl>
+					<dt class="in-property">Wiki Text example:</dt>
+					<dd><pre><?php echo $propertyName; ?></pre></dd>
+				</dl>
 			</dd>
 			<?php continue; ?>
 		<?php endif; ?>
-		
-		
-		<?php // CharacterIn problematic property hack!!!! ?>
-		
-		<?php if (array_key_exists('missing', $propertyType)) : ?>
-			<dt><?php echo ucfirst(preg_replace('/([A-Z])/', ' ${1}',$propertyLabel)); ?>:</dt>
-			<dd>
-				<pre><?php print_r($propertyValue) ?></pre>
-			</dd>
-			<?php continue; ?>
-		<?php endif ?>
 		
 		
 		<?php // Render properties manually ?>
@@ -59,12 +53,19 @@
 		
 			<?php // display 'empty' for empty object properties ?>
 			<?php if (empty($propertyValue)) : ?>
-				<span class="empty">empty</span> 
+				<p class="empty">empty</p>
+				<dl>
+					<dt class="in-property">Wiki Text example:</dt>
+					<dd><pre><?php echo $propertyName; ?></pre></dd>
+				</dl> 
 				<?php continue; ?>
 			<? endif ?>
 
-			<?php echo $propertyValue; ?>
-
+			<p><?php echo $propertyValue; ?></p>
+			<dl>
+				<dt class="in-property">Wiki Text example:</dt>
+				<dd><pre><?php echo $propertyName; ?></pre></dd>
+			</dl>
 		</dd>
 	<?php endforeach; ?>	
 	</dl>
