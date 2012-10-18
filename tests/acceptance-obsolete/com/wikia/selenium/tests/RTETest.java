@@ -134,6 +134,8 @@ public class RTETest extends BaseTest {
 				"[[#Foo]] 123",
 				"[[/foo]] 123",
 				"[[foo & bar]]",
+				"[[Tower|Towers of Wizardry]]",
+				"[[Tower]]s",
 				"[[File:6.jpg]] 123",
 				"[[File:6.jpg|thumb|caption]] 123",
 				"[[File:6.jpg|center]] 123",
