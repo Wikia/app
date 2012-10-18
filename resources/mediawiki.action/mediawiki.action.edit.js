@@ -3,6 +3,20 @@
 
 	isReady = false;
 
+	// Wikia change - begin - @author: wladek
+	// prepare the list of standard buttons that are available in the sprite image
+	var standardButtons = {};
+	if ( mw.config.get( 'skin' ) == 'oasis' ) {
+		$.each(
+			'bold italic link extlink headline image media math nowiki sig hr wmu wpg vet'.split(' '),
+			function(i,v){
+				var k = v == 'sig' ? 'signature' : v;
+				standardButtons['mw-editbutton-' + k] = 'button-'+v;
+			}
+		);
+	}
+	// Wikia change - end - @author: wladek
+
 	toolbar = {
 		$toolbar: false,
 		buttons: [],
@@ -23,6 +37,10 @@
 			if (toolbar.$toolbar.length === 0) {
 				return false;
 			}
+			// use blank source image if it's a standard button
+			if ( imageId && standardButtons[imageId] ) {
+				imageFile = mw.config.get( 'wgBlankImgUrl' );
+			}
 			// Wikia change - end
 
 			var image = $('<img>', {
@@ -39,6 +57,12 @@
 			} );
 
 			// Wikia change - start
+			// add appropriate classes if it's a standard button
+			var userLanguage = mw.config.get( 'wgUserLanguage' );
+			if ( imageId && standardButtons[imageId] ) {
+				image.addClass(standardButtons[imageId]);
+				image.addClass(userLanguage+'-'+standardButtons[imageId]);
+			}
 			// add onclick handlers (@author macbre)
 			if (typeof onClick === 'function') {
 				image.on('click', onClick);

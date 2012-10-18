@@ -18,6 +18,7 @@
 @import "mixins/inputs";
 @import "mixins/splotch";
 @import "mixins/sprite-edit-page";
+@import "mixins/sprite-edit-mw-toolbar";
 
 // Core
 @import "core/buttons";
@@ -402,4 +403,8 @@ body {
     text-overflow: ellipsis;
     width: 300px;
 
+}
+
+.mw-toolbar-editbutton {
+	@include sprite-edit-mw-toolbar-deep-embed(23px,23px);
 }

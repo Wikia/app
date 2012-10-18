@@ -4,6 +4,8 @@
 
 		protected $name = '';
 		protected $source = '';
+		protected $sourceFiles = array();
+		protected $cssClassMap = array();
 		protected $scss = '';
 		protected $sprite = '';
 		protected $postprocess = array();
@@ -97,6 +99,18 @@
 					if (in_array(strtolower($info['extension']),array('jpg','jpeg','png','gif'))) {
 						$list[$prefix . $file] = array();
 					}
+				}
+			}
+			return $list;
+		}
+
+		protected function getFileList() {
+			if ( empty( $this->sourceFiles ) ) {
+				$list = $this->scandir();
+			} else {
+				$list = array();
+				foreach ($this->sourceFiles as $file) {
+					$list[$file] = array();
 				}
 			}
 			return $list;
@@ -279,6 +293,8 @@
 		 * @return array
 		 */
 		protected function getSassImageAttributes() {
+			global $IP;
+
 			$images = array();
 			foreach ($this->images as $file => $data) {
 				$name = $file;
@@ -286,8 +302,13 @@
 				if ($i !== false) {
 					$name = substr($name,0,$i);
 				}
+				$relPath = $this->source
+					. (substr($this->source,-1) == '/' ? '' : '/')
+					. $file;
+				$relPath = wfRelativePath( $relPath, realpath($IP) );
 				$images[] = array(
 					'file' => $file,
+					'relPath' => $relPath,
 					'name' => $name,
 					'x' => $data['x'].'px',
 					'y' => $data['y'].'px',
@@ -296,7 +317,36 @@
 					'details' => "{$data['x']},{$data['y']},{$data['md5']}",
 				);
 			}
+
 			return $images;
+		}
+
+		/**
+		 * Returns a CSS class name by the given image
+		 *
+		 * @param $name string Image name
+		 * @return string CSS class name
+		 */
+		protected function getCssClassName( $name ) {
+			echo " >> $name\n";
+			$className = $name;
+			echo " 2> $className\n";
+			if ( isset( $this->cssClassMap[$className]) ) {
+				$className = $this->cssClassMap[$className];
+			}
+			$className = preg_replace("#^(\\.\\./)*#",'',$className);
+			echo " 3> $className\n";
+			if ( isset( $this->cssClassMap[$className]) ) {
+				$className = $this->cssClassMap[$className];
+			}
+			$className = preg_replace("/[^-a-zA-Z0-9]/",'-',$className);
+			echo " 4> $className\n";
+			if ( isset( $this->cssClassMap[$className] ) ) {
+				$className = $this->cssClassMap[$className];
+			}
+			$className = preg_replace("/[^-a-zA-Z0-9]/",'-',$className);
+			echo " 5> $className\n";
+			return $className;
 		}
 
 		/**
@@ -309,12 +359,22 @@
 			$name = $this->name;
 			$spriteUrl = substr($this->sprite,strlen(realpath($IP)));
 			$images = $this->getSassImageAttributes();
+			$contents = '';
 
 			/** mixin sprite-NAME-base **/
-			$contents = <<<EOF
+			$contents .= <<<EOF
 @mixin sprite-{$name}-base() {
 	background-color: transparent;
 	background-image: url('{$spriteUrl}'); /* wgCdnStylePath */
+	background-repeat: no-repeat;
+}
+
+EOF;
+
+			/** mixin sprite-NAME-base-embed **/
+			$contents .= <<<EOF
+@mixin sprite-{$name}-base-embed() {
+	background-color: transparent;
 	background-repeat: no-repeat;
 }
 
@@ -364,11 +424,61 @@ EOF;
 
 EOF;
 
+			/** mixin sprite-NAME-embed **/
+			$contents .= <<<EOF
+@mixin sprite-{$name}-embed(\$imageName,\$width: 0,\$height: 0,\$offset-x: 0,\$offset-y: 0) {
+	\$image-width: -1;
+	\$image-height: -1;
+
+EOF;
+			foreach ($images as $image) {
+				$contents .= <<<EOF
+	// @autosprite-image-details: {$image['file']}@{$image['details']}
+	@if \$imageName == '{$image['name']}' {
+		\$image-width: {$image['width']};
+		\$image-height: {$image['height']};
+		background-image: url('/{$image['relPath']}'); /* base64 */
+	}
+
+EOF;
+			}
+
+			$contents .= <<<EOF
+	@if \$image-width != -1 {
+		\$position-x: 0px;
+		\$position-y: 0px;
+		@if \$width > 0 {
+			\$position-x: \$position-x + ( \$width - \$image-width ) / 2;
+		}
+		@if \$height > 0 {
+			\$position-y: \$position-y + ( \$height - \$image-height ) / 2;
+		}
+		@if \$offset-x != 0 {
+			\$position-x: \$position-x + \$offset-x;
+		}
+		@if \$offset-y != 0 {
+			\$position-y: \$position-y + \$offset-y;
+		}
+		background-position: \$position-x \$position-y;
+	}
+}
+
+EOF;
+
 			/** mixin sprite-NAME-full **/
 			$contents .= <<<EOF
 @mixin sprite-{$name}-full(\$imageName, \$width: 0, \$height: 0,\$offset-x: 0,\$offset-y: 0) {
 	@include sprite-{$name}-base;
 	@include sprite-{$name}(\$imageName,\$width,\$height,\$offset-x,\$offset-y);
+}
+
+EOF;
+
+			/** mixin sprite-NAME-full-embed **/
+			$contents .= <<<EOF
+@mixin sprite-{$name}-full-embed(\$imageName, \$width: 0, \$height: 0,\$offset-x: 0,\$offset-y: 0) {
+	@include sprite-{$name}-base-embed;
+	@include sprite-{$name}-embed(\$imageName,\$width,\$height,\$offset-x,\$offset-y);
 }
 
 EOF;
@@ -380,7 +490,7 @@ EOF;
 
 EOF;
 			foreach ($images as $image) {
-				$className = preg_replace("/[^-a-zA-Z0-9]/",'-',$image['name']);
+				$className = $this->getCssClassName($image['name']);
 				$contents .= <<<EOF
 	&.{$className} {
 		@include sprite-{$name}('{$image['name']}',\$width,\$height);
@@ -393,6 +503,28 @@ EOF;
 }
 
 EOF;
+
+			/** mixin sprite-NAME-deep-embed **/
+			$contents .= <<<EOF
+@mixin sprite-{$name}-deep-embed(\$width: 0,\$height: 0) {
+	@include sprite-{$name}-base-embed;
+
+EOF;
+			foreach ($images as $image) {
+				$className = $this->getCssClassName($image['name']);
+				$contents .= <<<EOF
+	&.{$className} {
+		@include sprite-{$name}-embed('{$image['name']}',\$width,\$height);
+	}
+
+EOF;
+			}
+
+			$contents .= <<<EOF
+}
+
+EOF;
+
 
 
 			return $contents;
@@ -433,7 +565,7 @@ EOF;
 		 */
 		public function process( $minimizeConflicts = true) {
 			// gather information about existing images
-			$this->images = $this->scandir();
+			$this->images = $this->getFileList();
 			if ($minimizeConflicts) {
 				$this->analyzeExistingSassFile();
 			}
