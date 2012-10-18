@@ -1,7 +1,7 @@
 <?php
 //require_once dirname(__FILE__) . '/../UAD.php';
 
-class UADTest extends PHPUnit_Framework_TestCase {
+class UADTest extends WikiaBaseTest {
 
 	const TEST_TOKEN_ID = 10;
 

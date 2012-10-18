@@ -1,9 +1,13 @@
 <?php
 //Warning: If you break the tests contained in this file, please contact the Mobile Team. Thanks.
 
-require_once(dirname(__FILE__) . '/../WikiaMobileSharingService.class.php');
+class WikiaMobileSharingServiceTest extends WikiaBaseTest {
 
-class WikiaMobileSharingServiceTest extends PHPUnit_Framework_TestCase{
+	public function setUp() {
+		$this->setupFile = dirname(__FILE__) . '/../WikiaMobileSharingService.class.php';
+		parent::setUp();
+	}
+
 	const MESSAGE = '|MESSAGE|';
 	const URL = '|URL|';
 	const LANGUAGE = '|LANG|';

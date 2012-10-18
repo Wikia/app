@@ -1,7 +1,5 @@
 <?php
 
-require_once(dirname(__FILE__) . '/../Wall.setup.php');
-
 // update namespaces (only required for testing)
 $wgCanonicalNamespaceNames = $wgCanonicalNamespaceNames + $wgExtraNamespaces;
 
@@ -11,8 +9,13 @@ class testWallNotifications extends WallNotifications {
 	}
 }
 
-class WallNotificationsTest extends PHPUnit_Framework_TestCase
-{
+class WallNotificationsTest extends WikiaBaseTest {
+
+	public function setUp() {
+		$this->setupFile = dirname(__FILE__) . '/../Wall.setup.php';
+		parent::setUp();
+	}
+
 	public function testNotifyEveryoneForMainThread() {
 		$wn = $this->getMock('WallNotifications', array('sendEmails','addNotificationLinks'));
 
