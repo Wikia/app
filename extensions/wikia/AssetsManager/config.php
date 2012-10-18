@@ -333,30 +333,28 @@ $config['gameguides_js'] = array(
 		//core modules
 		'//resources/wikia/modules/querystring.js',
 
-		//feature detection
-		'//extensions/wikia/WikiaMobile/js/features.js',
-		'//extensions/wikia/WikiaMobile/js/feature-detects/positionfixed.wikiamobile.js',
-
-		// deferred.js - jQuery-free implementation (BugId:34943)
-		'//resources/wikia/libraries/deferred/deferred.js',
-		'//resources/wikia/libraries/deferred/deferred.api.js',
-
 		//tracker
 		'//extensions/wikia/WikiaTracker/js/WikiaTracker_config.js',
 		'//extensions/wikia/WikiaTracker/js/WikiaTracker.js',
-
-		//feature detection
-		'//extensions/wikia/WikiaMobile/js/feature-detects/overflow.wikiamobile.js',
-		'//extensions/wikia/GameGuides/js/isGameGuides.js',
-
-		//polyfills
-		'//resources/wikia/polyfills/outerhtml.js',
-		'//extensions/wikia/WikiaMobile/js/viewport.js',
 
 		//platform components
 		'//extensions/wikia/AssetsManager/js/AssetsManager.js',
 		'//extensions/wikia/JSMessages/js/JSMessages.wikiamobile.js',
 		'//extensions/wikia/JSSnippets/js/JSSnippets.js',
+
+		//feature detection
+		'//extensions/wikia/WikiaMobile/js/features.js',
+		'//extensions/wikia/WikiaMobile/js/feature-detects/positionfixed.wikiamobile.js',
+		'//extensions/wikia/WikiaMobile/js/feature-detects/overflow.wikiamobile.js',
+		'//extensions/wikia/GameGuides/js/isGameGuides.js',
+
+		// deferred.js - jQuery-free implementation (BugId:34943)
+		'//resources/wikia/libraries/deferred/deferred.js',
+		'//resources/wikia/libraries/deferred/deferred.api.js',
+
+		//polyfills
+		'//resources/wikia/polyfills/outerhtml.js',
+		'//extensions/wikia/WikiaMobile/js/viewport.js',
 
 		//groups
 		'#group_wikiamobile_tables_js',
