@@ -147,7 +147,7 @@ function embedYouTube($input, $argv, $parser )
 
 	if (!empty($ytid))
 	{
-		$url = "http://www.youtube.com/v/{$ytid}&enablejsapi=1&playerapiid={$ytid}"; // it's not mistake, there should be &, not ?
+		$url = "http://www.youtube.com/v/{$ytid}&enablejsapi=1&version=2&playerapiid={$ytid}"; // it's not mistake, there should be &, not ?
 		return "<object type=\"application/x-shockwave-flash\" data=\"{$url}\" width=\"{$width}\" height=\"{$height}\" id=\"YT_{$ytid}\"><param name=\"movie\" value=\"{$url}\"/><param name=\"wmode\" value=\"transparent\"/><param name=\"allowScriptAccess\" value=\"always\"/></object>";
 	}
 }
