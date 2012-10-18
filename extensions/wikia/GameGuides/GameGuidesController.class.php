@@ -133,6 +133,14 @@ class GameGuidesController extends WikiaController {
 		//This will always return json
 		$this->response->setFormat( 'json' );
 
+		$this->response->setCacheValidity(
+			self::VARNISH_CACHE_TIME,
+			self::VARNISH_CACHE_TIME,
+			array(
+				WikiaResponse::CACHE_TARGET_VARNISH
+			)
+		);
+
 		//set mobile skin as this is based on it
 		RequestContext::getMain()->setSkin(
 			Skin::newFromKey( 'wikiamobile' )
@@ -150,12 +158,51 @@ class GameGuidesController extends WikiaController {
 		) : null;
 
 		if ( !is_null( $relatedPages ) ) {
-			$this->response->setVal( 'relatedPages', $relatedPages->getVal( 'pages' ) );
+			$relatedPages = $relatedPages->getVal('pages');
+
+			if ( !empty ( $relatedPages ) ) {
+				$this->response->setVal( 'relatedPages', $relatedPages );
+			}
 		}
 
 		$this->response->setVal( 'html', $this->sendSelfRequest( 'renderPage', array(
 			'title' => $titleName
 		) )->toString() );
+	}
+
+	/**
+	 * @param string $method method name
+	 * @param array $parameters parameters that are part of a url
+	 * @return string url to be purged
+	 */
+	static function getVarnishUrl( $method = 'index', $parameters = array() ){
+		$app = F::app();
+
+		$url = $app->wg->Server . '/wikia.php?';
+
+		$params = array(
+			'controller' => str_replace( 'Controller', '', __CLASS__ ),
+			'method' => $method
+		);
+
+		$params = array_merge( $params, $parameters );
+
+		return $url . http_build_query( $params );
+	}
+
+	/**
+	 * @param $title Title
+	 * @param $urls String[]
+	 * @return bool
+	 */
+	static function onTitleGetSquidURLs( $title, &$urls ){
+		$urls[] = GameGuidesController::getVarnishUrl( 'getPage', array(
+			'title' => $title->getPartialURL()
+		));
+
+		var_dump($urls);exit();
+
+		return true;
 	}
 
 	/**

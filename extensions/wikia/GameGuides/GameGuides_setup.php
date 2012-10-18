@@ -51,6 +51,7 @@ F::build( 'JSMessages' )->registerPackage( 'GameGuidesContentMsg', array(
 
 //hooks
 $app->registerHook( 'GameGuidesContentSave', 'GameGuidesController', 'onGameGuidesContentSave' );
+$app->registerHook( 'TitleGetSquidURLs', 'GameGuidesController', 'onTitleGetSquidURLs' );
 
 
 //the only globals needed in Game Guides
