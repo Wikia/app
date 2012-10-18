@@ -315,9 +315,10 @@ function SharedHelpHook(&$out, &$text) {
 				}
 				$wgMemc->set($sharedRedirectsArticlesKey, $articleLink, 60*60*12);
 			}
+                        $helpSitename = WikiFactory::getVarValueByName( 'wgSitename', $wgHelpWikiId );
 
 			// "this text is stored..."
-			$info = '<div class="sharedHelpInfo plainlinks" style="text-align: right; font-size: smaller;padding: 5px">' . wfMsgExt('shared_help_info', 'parseinline', $sharedServer . $sharedArticlePathClean . $articleLink ) . '</div>';
+			$info = '<div class="sharedHelpInfo plainlinks" style="text-align: right; font-size: smaller;padding: 5px">' . wfMsgExt('shared_help_info', 'parseinline', $sharedServer . $sharedArticlePathClean . $articleLink, $helpSitename ) . '</div>';
 
 			if(strpos($text, '"noarticletext"') > 0) {
 				$text = '<div style="border: solid 1px; padding: 10px; margin: 5px" class="sharedHelp">' . $info . $content . '<div style="clear:both"></div></div>';
@@ -344,7 +345,9 @@ function SharedHelpEditPageHook(&$editpage) {
 		return true;
 	}
 
-	$msg = '<div style="border: solid 1px; padding: 10px; margin: 5px" class="sharedHelpEditInfo">'.wfMsgExt('shared_help_edit_info', 'parseinline', $wgTitle->getDBkey()).'</div>';
+        $helpSitename = WikiFactory::getVarValueByName( 'wgSitename', $wgHelpWikiId );
+
+	$msg = '<div style="border: solid 1px; padding: 10px; margin: 5px" class="sharedHelpEditInfo">'.wfMsgExt('shared_help_edit_info', 'parseinline', $wgTitle->getDBkey(), $helpSitename).'</div>';
 
 	$editpage->editFormPageTop .= $msg;
 
