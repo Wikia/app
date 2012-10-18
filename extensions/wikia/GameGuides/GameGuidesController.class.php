@@ -61,6 +61,7 @@ class GameGuidesController extends WikiaController {
 	 * @responseParam see GameGuidesModel::getWikiContents
 	 * @see GameGuidesModel::getWikiContents
 	 */
+
 	public function listWikiContents(){
 		$this->wf->profileIn( __METHOD__ );
 		
@@ -124,11 +125,12 @@ class GameGuidesController extends WikiaController {
 	}
 
 	/**
-	 * Api entry point to get a page and globals and messages that are relevant to the page
+	 * @brief Api entry point to get a page and globals and messages that are relevant to the page
 	 *
 	 * @example wikia.php?controller=GameGuides&method=getPage&title={Title}
 	 */
 	public function getPage(){
+		//This will always return json
 		$this->response->setFormat( 'json' );
 
 		//set mobile skin as this is based on it
@@ -138,11 +140,14 @@ class GameGuidesController extends WikiaController {
 
 		$titleName = $this->getVal( 'title' );
 
-		$relatedPages = ( !empty( $this->wg->EnableRelatedPagesExt ) &&
+		$relatedPages = (
+			!empty( $this->wg->EnableRelatedPagesExt ) &&
 			empty( $this->wg->MakeWikiWebsite ) &&
-			empty( $this->wg->EnableAnswers ) ) ? $this->app->sendRequest( 'RelatedPagesController', 'index', array(
+			empty( $this->wg->EnableAnswers ) ) ?
+			$this->app->sendRequest( 'RelatedPagesController', 'index', array(
 				'categories' => $this->wg->Title->getParentCategories()
-			) ) : null;
+			)
+		) : null;
 
 		if ( !is_null( $relatedPages ) ) {
 			$this->response->setVal( 'relatedPages', $relatedPages->getVal( 'pages' ) );
@@ -153,18 +158,23 @@ class GameGuidesController extends WikiaController {
 		) )->toString() );
 	}
 
+	/**
+	 * @brief this is a function that return rendered article
+	 *
+	 * @requestParam String title of a page
+	 */
 	public function renderPage(){
 		$titleName = $this->request->getVal( 'title' );
 
-		$params = array(
-			'action' => 'parse',
-			'page' => $titleName,
-			'prop' => 'text',
-			'redirects' => 1,
-			'useskin' => 'wikiamobile'
+		$html = ApiService::call(
+			array(
+				'action' => 'parse',
+				'page' => $titleName,
+				'prop' => 'text',
+				'redirects' => 1,
+				'useskin' => 'wikiamobile'
+			)
 		);
-
-		$html = ApiService::call( $params );
 
 		$globals = $this->sendSelfRequest( 'getGlobals' );
 
@@ -175,12 +185,12 @@ class GameGuidesController extends WikiaController {
 	}
 
 	/**
-	 * helper function to build a GameGuidesSpecial Preview
+	 * @brief helper function to build a GameGuidesSpecial Preview
 	 * it returns a page and all 'global' assets
 	 */
 	public function renderFullPage(){
 		$resources = $this->sendRequest( 'AssetsManager', 'getMultiTypePackage', array(
-			'scripts' => 'gameguides_js,wikiamobile_scroll_js,wikiamobile_tables_js',
+			'scripts' => 'gameguides_js',
 			'styles' => '//extensions/wikia/GameGuides/css/GameGuides.scss'
 		) );
 
@@ -202,13 +212,19 @@ class GameGuidesController extends WikiaController {
 		$this->response->setVal( 'css', $styles );
 	}
 
+	/**
+	 * @brief function that returns a valid and current link to resources of GG
+	 *
+	 * @responseParam String url to current resources
+	 * @responseParam Integer cb current style version number
+	 */
 	public function getResourcesUrl(){
 		$this->response->setFormat( 'json' );
 
 		$this->response->setVal( 'url',
 			AssetsManager::getInstance()->getMultiTypePackageURL(
 				array(
-					'scripts' => 'gameguides_js,wikiamobile_tables_js,wikiamobile_scroll_js',
+					'scripts' => 'gameguides_js',
 					'styles' => '//extensions/wikia/GameGuides/css/GameGuides.scss'
 				),
 				true
@@ -216,15 +232,6 @@ class GameGuidesController extends WikiaController {
 		);
 
 		$this->response->setVal( 'cb', $this->wg->StyleVersion );
-	}
-
-	/**
-	 * Simple API Call to get latest CB value
-	 *
-	 * @return Integer CB Value
-	 */
-	public function getCB(){
-		$this->setVal( 'cb', $this->wg->CacheBuster );
 	}
 
 	/**
@@ -280,7 +287,7 @@ class GameGuidesController extends WikiaController {
 	}
 
 	/**
-	 * Whenever data is saved in GG Content Managment Tool
+	 * @brief Whenever data is saved in GG Content Managment Tool
 	 * purge Varnish cache for it
 	 *
 	 * @return bool
