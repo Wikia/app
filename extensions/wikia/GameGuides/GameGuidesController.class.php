@@ -42,7 +42,6 @@ class GameGuidesController extends WikiaController {
 	 */
 	public function listWikis(){
 		$this->wf->profileIn( __METHOD__ );
-		$this->track( array( 'list_games' ) );
 		
 		$limit = $this->request->getInt( 'limit', null );
 		$batch = $this->request->getInt( 'batch', 1 );
@@ -51,8 +50,7 @@ class GameGuidesController extends WikiaController {
 		foreach( $result as $key => $value ){
 			$this->response->setVal( $key, $value );
 		}
-		
-		
+
 		$this->wf->profileOut( __METHOD__ );
 	}
 	
@@ -65,7 +63,6 @@ class GameGuidesController extends WikiaController {
 	 */
 	public function listWikiContents(){
 		$this->wf->profileIn( __METHOD__ );
-		$this->track( array( 'list_wiki_contents', $this->wg->DBname ) );
 		
 		$result = $this->mModel->getWikiContents();
 		
@@ -90,7 +87,6 @@ class GameGuidesController extends WikiaController {
 		$this->wf->profileIn( __METHOD__ );
 		
 		$category = $this->getVal('category');
-		$this->track( array( 'list_category_contents', $this->wg->DBname, $category ) );
 		
 		$limit = $this->request->getInt( 'limit', null );
 		$batch = $this->request->getInt( 'batch', 1 );
@@ -116,8 +112,6 @@ class GameGuidesController extends WikiaController {
 	public function search(){
 		$this->wf->profileIn( __METHOD__ );
 		
-		$this->track( array( 'local_search', $this->wg->DBname ) );
-		
 		$term = $this->request->getVal( 'term' );
 		$limit = $this->request->getInt( 'limit', GameGuidesModel::SEARCH_RESULTS_LIMIT );
 		$result = $this->mModel->getSearchResults( $term, $limit );
@@ -127,21 +121,6 @@ class GameGuidesController extends WikiaController {
 		}
 		
 		$this->wf->profileOut( __METHOD__ );
-	}
-	
-	/**
-	 * @brief Tracks API requests via Scribe
-	 * 
-	 * @param array $trackingData Required, a set of strings/numbers that will be concatenated with '/'
-	 * 
-	 * @see MobileStatsController
-	 */
-	private function track( $trackingData ){
-		$this->sendRequest( 'MobileStats', 'track', array(
-			'appName' => self::APP_NAME,
-			'URIData' => $trackingData,
-			'platform' => $this->mPlatform
-		) );
 	}
 
 	/**

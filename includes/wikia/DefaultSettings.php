@@ -235,9 +235,6 @@ $wgAutoloadClasses['SimpleSearchTooManyResultsException']  =  $IP.'/includes/wik
 $wgAutoloadClasses['SimpleSearchDisabledException']  =  $IP.'/includes/wikia/services/SimpleSearchController.class.php';
 $wgAutoloadClasses['SimpleSearchEngineException']  =  $IP.'/includes/wikia/services/SimpleSearchController.class.php';
 $wgAutoloadClasses['SimpleSearchEmptyKeyException']  =  $IP.'/includes/wikia/services/SimpleSearchController.class.php';
-$wgAutoloadClasses['MobileStatsController']  =  $IP.'/includes/wikia/services/MobileStatsController.class.php';
-$wgAutoloadClasses['MobileStatsExternalRequestException']  =  $IP.'/includes/wikia/services/MobileStatsController.class.php';
-$wgAutoloadClasses['MobileStatsMissingParametersException']  =  $IP.'/includes/wikia/services/MobileStatsController.class.php';
 
 // modules
 $wgAutoloadClasses['OasisController'] = $IP.'/skins/oasis/modules/OasisController.class.php';
