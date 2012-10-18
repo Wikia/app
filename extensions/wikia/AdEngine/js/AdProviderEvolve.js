@@ -51,11 +51,11 @@ var AdProviderEvolve = function (ScriptWriter, WikiaTracker, log, window, docume
 				slot[0], 'http://cdn.triggertag.gorillanation.com/js/triggertag.js',
 				function() {
 					log('(invisible triggertag) ghostwriter done', 5, logGroup);
-					ScriptWriter.injectScriptByText(slotname, getReskinAndSilverScript(slotname, slotsize));
+					ScriptWriter.injectScriptByText(slotname, getReskinAndSilverScript(slotname));
 				}
 			);
 		} else {
-			ScriptWriter.injectScriptByUrl(slotname, getUrl(slotname, slotsize), function() {
+			ScriptWriter.injectScriptByUrl(slotname, getUrl(slotname), function() {
 				slotTweaker.removeDefaultHeight(slotname);
 				slotTweaker.removeTopButtonIfNeeded(slotname);
 			});
@@ -108,21 +108,26 @@ var AdProviderEvolve = function (ScriptWriter, WikiaTracker, log, window, docume
 	}
 
 	// adapted for Evolve + simplified copy of AdConfig.DART.getUrl
-	function getUrl(slotname, size) {
-		log('getUrl', 5, 'AdProviderEvolve');
-		log([slotname, size], 5, 'AdProviderEvolve');
+	function getUrl(slotname) {
+		log('getUrl ' + slotname, 5, 'AdProviderEvolve');
 
-		var sect = evolveHelper.getSect();
-		var url = 'http://' +
+		var sect = evolveHelper.getSect()
+			, url
+			, dcopt = slotMap[slotname].dcopt
+			, size = slotMap[slotname].size
+			, tile = slotMap[slotname].tile
+		;
+
+		url = 'http://' +
 			'n4403ad' +
 			'.doubleclick.net/' +
 			'adj' + '/' +
 			'gn.wikia4.com' + '/' +
 			getKv(slotname) +
 			'sz=' + size + ';' +
-			(slotMap[slotname].dcopt ? 'dcopt=' + slotMap[slotname].dcopt + ';' : '') +
+			(dcopt ? 'dcopt=' + dcopt + ';' : '') +
 			'type=pop;type=int;' + // TODO remove?
-			'tile=' + slotMap[slotname].tile + ';' +
+			'tile=' + tile + ';' +
 			'ord=' + ord + '?';
 
 		log(url, 7, 'AdProviderEvolve');
