@@ -4,6 +4,7 @@
 	var htmlProto = HTMLElement.prototype,
 		fired;
 
+	//'polyfill' for a conistent matchesSelector
 	htmlProto.matchesSelector = htmlProto.matchesSelector ||
 		htmlProto.webkitMatchesSelector ||
 		htmlProto.mozMatchesSelector ||

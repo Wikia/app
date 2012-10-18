@@ -326,8 +326,8 @@ $config['gameguides_js'] = array(
 
 		//libraries/frameworks
 		'//resources/wikia/libraries/Ponto/ponto.js',
-		'//resources/wikia/modules/Wikia.wikiamobile.js',
-		'//resources/wikia/modules/Wikia.getcss.js',
+		'//extensions/wikia/WikiaMobile/js/Wikia.utils.js',
+		'//extensions/wikia/WikiaMobile/js/Wikia.getcss.js',
 		'//resources/wikia/libraries/modil/modil.js',
 
 		//core modules
@@ -424,8 +424,8 @@ $config['wikiamobile_js_body_minimal'] = array(
 	'skin' => 'wikiamobile',
 	'assets' => array(
 		//libraries/frameworks
-		'//resources/wikia/modules/Wikia.wikiamobile.js',
-		'//resources/wikia/modules/Wikia.getcss.js',
+		'//extensions/wikia/WikiaMobile/js/Wikia.utils.js',
+		'//extensions/wikia/WikiaMobile/js/Wikia.getcss.js',
 		'//resources/wikia/libraries/modil/modil.js',
 
 		//core modules
