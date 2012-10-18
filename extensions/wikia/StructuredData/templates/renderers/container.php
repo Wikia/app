@@ -3,7 +3,7 @@ $values = $object->getValues();
 if (empty($values)):?>
 <span class="empty">empty</span>
 <?php else:
-	echo ($templateName == 'list') ? '<ol>' : '<ul>';
+	echo ($rendererName == '@list') ? '<ol>' : '<ul>';
 	foreach($values as $reference) {
 		echo '<li>';
 		$referenceHTML = false;
@@ -21,6 +21,6 @@ if (empty($values)):?>
 
 	}
 
-	echo ($templateName == 'list') ? '</ol>' : '</ul>';
+	echo ($rendererName == '@list') ? '</ol>' : '</ul>';
 	?>
 <?php endif;?>
