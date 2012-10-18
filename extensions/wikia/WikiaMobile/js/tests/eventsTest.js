@@ -5,28 +5,21 @@
  */
 
 describe("Event module", function() {
-	it("check if events are set", function() {
-		var events;
 
-		runs(function(){
-			require(['events'], function(eve){
-				events = eve;
-			})
-		});
+	var async = new AsyncSpec(this);
 
-		waitsFor(function(){
+	async.it("check if events are set", function(done) {
 
-			if ( events ){
-				expect(events).toBeDefined();
-				expect(events.click).toMatch('click');
-				expect(events.size).toMatch('resize');
-				expect(events.touch).toMatch('touchstart');
-				expect(events.move).toMatch('touchmove');
-				expect(events.end).toMatch('touchend');
-				expect(events.cancel).toMatch('touchcancel');
-			}
+		require(['events'], function(events){
+			expect(events).toBeDefined();
+			expect(events.click).toMatch('click');
+			expect(events.size).toMatch('resize');
+			expect(events.touch).toMatch('touchstart');
+			expect(events.move).toMatch('touchmove');
+			expect(events.end).toMatch('touchend');
+			expect(events.cancel).toMatch('touchcancel');
 
-			return events;
-		}, 'events to be set', 200);
+			done();
+		})
 	});
 });
