@@ -38,7 +38,9 @@ $wgStructuredDataConfig = array(
 	'renderersPath' => $dir . 'templates/renderers/',
 	'renderers' => array(
 		'schema:ImageObject' => 'ImageObject',
-		'xsd:anyURI' => 'anyURI'
+		'xsd:anyURI' => 'anyURI',
+		'@set' => 'container',
+		'@list' => 'container'
 	)
 );
 

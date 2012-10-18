@@ -27,7 +27,7 @@
 			$propertyValue = $property->getValue();
 			$propertyLabel = $property->getLabel();
 			$propertyName = $property->getName();
-			$proprtyHTML = $property->render();
+			$proprtyHTML = $property->render( SD_CONTEXT_SPECIAL );
 		?>
 		
 		<?php // Render HTML using renderers  ?>
@@ -62,44 +62,9 @@
 				<span class="empty">empty</span> 
 				<?php continue; ?>
 			<? endif ?>
-			
-			<?php switch ($propertyType['name']) :
-				
-				// ordered and unordered list template
-				case '@set':
-				case '@list': ?>
-					<?php $listTag = ($propertyType['name'] == '@set') ? 'ul' : 'ol'; ?>
-					<<?= $listTag?>>
-						<?php foreach ($property->getValues() as $reference) : ?>
-							
-							<?php // Render list using renderers ?>
-							<?php 
-								$referenceHTML = false;
-								if (!is_null($reference->object)) {
-									$referenceHTML = $reference->object->render( SD_CONTEXT_SPECIAL );
-								}
-								if ($referenceHTML !== false) { 
-									echo $referenceHTML; 
-									continue;
-								}	
-							?>
-							
-							<?php // Render list manually if needed…? ?>
-							<pre><?php print_r($reference) ?></pre>
-								
-						<?php endforeach ?>
-					</<?= $listTag?>>
-				<?php break; ?>
-				
-				
-				<?php default : ?>
-				
-					<?php // Default template for simple properties like string, date, boolean ?>
-					<?php echo $propertyValue; ?>
-				<?php break; ?>
-				
-			<?php endswitch; ?>
-			
+
+			<?php echo $propertyValue; ?>
+
 		</dd>
 	<?php endforeach; ?>	
 	</dl>
