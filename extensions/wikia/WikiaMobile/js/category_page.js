@@ -9,16 +9,17 @@
 require(['events', 'loader', 'track'], function (events, loader, track) {
 	'use strict';
 
-	var clickEvent = events.click,
-		expAll = document.getElementById('expAll'),
+	var d = document,
+		clickEvent = events.click,
+		expAll = d.getElementById('expAll'),
 		elements,
-		wkCatExh = document.getElementById('wkCatExh'),
-		categorySection = document.getElementsByClassName('alphaSec')[0],
+		wkCatExh = d.getElementById('wkCatExh'),
+		categorySection = d.getElementsByClassName('alphaSec')[0],
 		i,
 		l;
 
 	if (expAll) {
-		elements = document.querySelectorAll('.alphaSec .artSec, .alphaSec .collSec');
+		elements = d.querySelectorAll('.alphaSec .artSec, .alphaSec .collSec');
 		l = elements.length;
 
 		expAll.addEventListener(clickEvent, function() {
@@ -88,7 +89,7 @@ require(['events', 'loader', 'track'], function (events, loader, track) {
 
 		self.className += ' active';
 
-		Wikia.sendRequest({
+		Wikia.nirvana.sendRequest({
 			controller: 'WikiaMobileController',
 			method: 'getCategoryBatch',
 			format: 'html',
