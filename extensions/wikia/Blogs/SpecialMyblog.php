@@ -1,6 +1,6 @@
 <?php
 
-class SpecialMyblog extends UnlistedSpecialPage {
+class SpecialMyblog extends RedirectSpecialPage {
 
 var $mAllowedRedirectParams = array();
         
