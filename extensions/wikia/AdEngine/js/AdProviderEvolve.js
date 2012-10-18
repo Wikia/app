@@ -4,6 +4,7 @@ var AdProviderEvolve = function (ScriptWriter, WikiaTracker, log, window, docume
 		, ord = Math.round(Math.random() * 23456787654)
 		, slotTimer2 = {}
 		, slotForSkin = 'INVISIBLE_1'
+		, hoppedSlots = {}
 	;
 
 	slotMap = {
@@ -56,8 +57,10 @@ var AdProviderEvolve = function (ScriptWriter, WikiaTracker, log, window, docume
 			);
 		} else {
 			ScriptWriter.injectScriptByUrl(slotname, getUrl(slotname), function() {
-				slotTweaker.removeDefaultHeight(slotname);
-				slotTweaker.removeTopButtonIfNeeded(slotname);
+				if (!hoppedSlots[slotname]) {
+					slotTweaker.removeDefaultHeight(slotname);
+					slotTweaker.removeTopButtonIfNeeded(slotname);
+				}
 			});
 		}
 	}
@@ -192,6 +195,8 @@ var AdProviderEvolve = function (ScriptWriter, WikiaTracker, log, window, docume
 		slotname = sanitizeSlotname(slotname);
 		var size = (slotMap[slotname].size || '0x0').replace(/,.*/, '');
 		log([slotname, size], 7, 'AdProviderEvolve');
+
+		hoppedSlots[slotname] = true;
 
 		var time = new Date().getTime() - slotTimer2[slotname];
 		log('slotTimer2 end for ' + slotname + ' after ' + time + ' ms', 7, 'AdProviderEvolve');
