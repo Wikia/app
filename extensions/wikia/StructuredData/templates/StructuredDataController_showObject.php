@@ -70,7 +70,7 @@
 				case '@list': ?>
 					<?php $listTag = ($propertyType['name'] == '@set') ? 'ul' : 'ol'; ?>
 					<<?= $listTag?>>
-						<?php foreach ($propertyValue as $reference) : ?>
+						<?php foreach ($property->getValues() as $reference) : ?>
 							
 							<?php // Render list using renderers ?>
 							<?php 
