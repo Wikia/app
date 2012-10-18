@@ -15,7 +15,7 @@
  * @see PaypalPaymentService
  * @author Wojciech Szela <wojtek@wikia-inc.com>
  */
-class PaypalPaymentServiceTest extends PHPUnit_Framework_TestCase {
+class PaypalPaymentServiceTest extends WikiaBaseTest {
 	const TEST_TOKEN         = 'EC-00000001';
 	const TEST_REQID         = 'REQ-0000001';
 	const TEST_BAID          = 'BA-00000001';
@@ -28,11 +28,14 @@ class PaypalPaymentServiceTest extends PHPUnit_Framework_TestCase {
 	const TEST_PAYMENTTYPE   = 'TEST PT';
 	const TEST_PENDINGREASON = 'TEST PR';
 
+	/* @var $paypalService PaypalPaymentService */
 	private $paypalService;
 
 	protected function setUp() {
 		$this->paypalService = new PaypalPaymentService(array());
 		$this->dbCleanup();
+
+		parent::setUp();
 	}
 
 	protected function tearDown() {
