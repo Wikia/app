@@ -103,6 +103,7 @@ $wgAutoloadClasses['WikiaException'] = $IP . '/includes/wikia/nirvana/WikiaExcep
 $wgAutoloadClasses['WikiaDispatchedException'] = $IP . '/includes/wikia/nirvana/WikiaDispatchedException.class.php';
 
 $wgAutoloadClasses['WikiaBaseTest'] = $IP . '/includes/wikia/tests/WikiaBaseTest.class.php';
+$wgAutoloadClasses['WikiaAppMock'] = $IP . '/includes/wikia/tests/WikiaAppMock.class.php';
 
 // Since we use this everywhere, we will just set up a global app reference now.
 F::setInstance( 'App', new WikiaApp() );

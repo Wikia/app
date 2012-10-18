@@ -1,11 +1,18 @@
 <?php
-require_once dirname(__FILE__) . '/../EditPageLayout_setup.php';
 
-class EditPageLayoutTest extends PHPUnit_Framework_TestCase {
+class EditPageLayoutTest extends WikiaBaseTest {
 
+	public function setUp() {
+		$this->setupFile = dirname(__FILE__) . '/../EditPageLayout_setup.php';
+		parent::setUp();
+	}
+
+	/**
+	 * @param Title $title
+	 * @return EditPageLayout
+	 */
 	private function editPageFactory(Title $title) {
 		$article = WF::build('Article', array($title));
-
 		return WF::build('EditPageLayout', array($article));
 	}
 
