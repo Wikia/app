@@ -232,9 +232,29 @@ class LocalRepo extends FileRepo {
 	}
 
 	/**
+	 * wikia change
+	 * 
+	 * we need fresh data after uploding new file
+	 * 
+	 */
+
+	function forceMaster() {
+		$this->forceMaster = true;
+	}
+
+
+	/**
 	 * Get a connection to the slave DB
 	 */
+	 
 	function getSlaveDB() {
+		
+		/* wikia change */
+		if(!empty($this->forceMaster)) {
+			return wfGetDB( DB_MASTER );	
+		}
+		/* wikia change end */
+		
 		return wfGetDB( DB_SLAVE );
 	}
 

@@ -11,6 +11,8 @@ var ThemeDesigner = {
 
 		// settings history
 		this.history = window.themeHistory;
+		
+		$().log(this.history);
 
 		// themes
 		this.themes = window.themes;
@@ -543,6 +545,9 @@ var ThemeDesigner = {
 		event.preventDefault();
 		event.stopPropagation();
 		ThemeDesigner.settings = ThemeDesigner.history[$(this).index()]['settings'];
+		
+		$().log(ThemeDesigner.settings);
+		
 		ThemeDesigner.applySettings(true, true);
 	},
 

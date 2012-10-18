@@ -88,6 +88,17 @@ class ThemeSettings {
 		
 		return $settings;
 	}
+	
+	public function getFreshURL($name, $definedName) {
+		$title = Title::newFromText($definedName, NS_FILE);
+		if( $definedName != $name ) {
+			$file = OldLocalFile::newFromArchiveName($title, RepoGroup::singleton()->getLocalRepo(), $name);
+			return wfReplaceImageServer($file->getUrl());
+		} else {
+			$file = new LocalFile($title, RepoGroup::singleton()->getLocalRepo());
+			return wfReplaceImageServer($file->getUrl());
+		}
+	}
 
 	public function getHistory() {
 		if(!empty($GLOBALS[self::WikiFactoryHistory])) {
@@ -99,6 +110,10 @@ class ThemeSettings {
 			$history = array();
 		}
 		
+		foreach($history as $key => $val) {
+			$history[$key]['settings']['background-image'] = $this->getFreshURL($val['settings']['background-image-name'], ThemeSettings::BackgroundImageName);
+		}
+				
 		return $history;
 	}
 
@@ -114,7 +129,8 @@ class ThemeSettings {
 
 			$settings['favicon-image-url'] = $file->getURL();
 			$settings['favicon-image-name'] = $file->getName();
-
+			
+			$file->repo->forceMaster();
 			$history = $file->getHistory(1);
 			if(count($history) == 1) {
 				$oldFaviconFile = array('url' => $history[0]->getURL(), 'name' => $history[0]->getArchiveName());
@@ -129,7 +145,8 @@ class ThemeSettings {
 
 			$settings['wordmark-image-url'] = $file->getURL();
 			$settings['wordmark-image-name'] = $file->getName();
-
+			
+			$file->repo->forceMaster();
 			$history = $file->getHistory(1);
 			if(count($history) == 1) {
 				$oldFile = array('url' => $history[0]->getURL(), 'name' => $history[0]->getArchiveName());
@@ -148,7 +165,8 @@ class ThemeSettings {
 			$imageServing = new ImageServing(null, 120, array("w"=>"120", "h"=>"100"));
 			$settings['user-background-image'] = $file->getURL();
 			$settings['user-background-image-thumb'] = wfReplaceImageServer($file->getThumbUrl( $imageServing->getCut($file->getWidth(), $file->getHeight(), "origin")."-".$file->getName()));
-
+			
+ 			$file->repo->forceMaster();
 			$history = $file->getHistory(1);
 			if(count($history) == 1) {
 				$oldBackgroundFile = array('url' => $history[0]->getURL(), 'name' => $history[0]->getArchiveName());
