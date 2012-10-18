@@ -40,15 +40,24 @@ class StructuredDataController extends WikiaSpecialPageController {
 	}
 
 	public function index() {
-		$objectUrl = $this->getPar();
+		$par = $this->getPar();
 
-		if(empty($objectUrl)) {
+		if(empty($par)) {
 			$this->wg->Out->addHTML( F::build('JSSnippets')->addToStack( array( "/extensions/wikia/StructuredData/js/StructuredData.js" ) ) );
 			$this->response->addAsset('extensions/wikia/StructuredData/css/StructuredData.scss');
 			$this->setVal( "mainObjects", $this->mainObjectList );
 		}
 		else {
-			$this->request->setVal( 'url', $objectUrl );
+			$pos = strpos($par, '/');
+			if ( $pos !== false) {
+				$type = substr($par, 0, $pos);
+				$name = str_replace( '_', ' ', substr($par, $pos + 1) );
+				$this->request->setVal( 'type', $type );
+				$this->request->setVal( 'name', $name );
+			} //else {
+				$this->request->setVal( 'url', $par );
+			//}
+
 
 			$this->forward( 'StructuredData', 'showObject' );
 		}
@@ -63,6 +72,18 @@ class StructuredDataController extends WikiaSpecialPageController {
 
 		$id = $this->request->getVal( 'id', false );
 		$url = $this->request->getVal( 'url', false );
+		/*
+		$type = $this->request->getVal( 'type', false );
+		$name = $this->request->getVal( 'name', false );
+
+		if ( !empty( $type ) && !empty( $name ) ) {
+			try {
+				$sdsObject = $this->structuredData->getSDElementByTypeAndName( $type, $name );
+			} catch( WikiaException $e ) {
+				$this->app->wg->Out->setStatusCode ( 404 );
+			}
+		}
+		*/
 
 		if(!empty($id)) {
 			try {

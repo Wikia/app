@@ -32,6 +32,11 @@ class StructuredData {
 		return $this->getSDElement( $element, $elementDepth );
 	}
 
+	public function getSDElementByTypeAndName($type, $name, $elementDepth = 0) {
+		$element = $this->APIClient->getObjectByTypeAndName($type, $name);
+		return $this->getSDElement( $element, $elementDepth );
+	}
+
 	private function getSDElement(stdClass $element, $elementDepth = 0) {
 		$template = $this->APIClient->getTemplate( $element->type );
 

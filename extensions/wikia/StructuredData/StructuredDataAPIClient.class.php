@@ -60,6 +60,13 @@ class StructuredDataAPIClient {
 		}
 	}
 
+	public function getObjectByTypeAndName($type, $name) {
+		echo rtrim( $this->getApiPath(), '/' ) . '?withType=' . urlencode($type) . '&withProperty='.urlencode('schema:name').'&withValue=' .urlencode($name) ;
+		$response = json_decode( $this->call( rtrim( $this->getApiPath(), '/' ) . '?withType=' . urlencode($type) . '&withProperty='.urlencode('schema:name').'&withValue=' .urlencode($name) ) );
+		print_r($response);
+		die();
+	}
+
 	public function getCollection( $type ) {
 		$rawResponse = $this->call( rtrim( $this->getApiPath(), '/' ) . '?withType=' . urlencode($type) );
 		$response = json_decode( $rawResponse );

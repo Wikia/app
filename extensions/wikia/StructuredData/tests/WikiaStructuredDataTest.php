@@ -100,7 +100,16 @@ class WikiaStructuredDataTest extends WikiaBaseTest {
 	 * Check the basic SDElement features
 	 */
 	public function testSDElement() {
-		$apiClient =  $this->getMock( 'StructuredDataAPIClient', array('getTemplate', 'getContext', 'getObject'), array('http://localhost/', 'api/v0/', 'callofduty') );
+		$mock_cache = $this->getMock('stdClass', array('get', 'set'));
+		$mock_cache->expects($this->any())
+			->method('get')
+			->will($this->returnValue(null));
+		$mock_cache->expects($this->any())
+			->method('set');
+		$this->mockGlobalVariable('wgMemc', $mock_cache, 0);
+		$this->mockApp();
+
+		$apiClient =  $this->getMock( 'StructuredDataAPIClient', array('getTemplate', 'getContext', 'getObject'), array('http://localhost/', 'api/v0.1/', 'callofduty') );
 		$apiClient->expects( $this->any() )
 			->method( 'getTemplate' )
 			->will( $this->returnValue( json_decode( $this->codCharacterTemplate ) ) );
