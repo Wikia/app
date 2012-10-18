@@ -1,8 +1,36 @@
+/**
+ * This is a Wikia 'framework'
+ * or rather bunch of util functions to help developing
+ * WikiaMobile skin
+ *
+ * we decided not to use any frameworks as all we actually need is
+ * addEventListener, find some elements and do some operations on array
+ *
+ * Frameworks like Zepto or jqMobi are nice
+ * but with a cost of downloading another 9/10kb of data
+ * If we don't have to load it its a win, and we dont
+ *
+ * This is just a place for functions that otherwise need some bigger boilerplates
+ */
 (function(w){
 	"use strict";
 
 	var htmlProto = HTMLElement.prototype,
-		fired;
+		fired,
+		//then use AssetsManager config to group them together
+		processedSassUrls = {},
+		isProcessedSassUrl,
+		isJs = /\.js(\?(.*))?$/,
+		isCss = /\.css(\?(.*))?$/,
+		isSass = /\.scss/;
+
+	function getAssetsManagerQuery(path, type, params){
+		return window.wgAssetsManagerQuery.
+			replace('%1$s', type).
+			replace('%2$s', path).
+			replace('%3$s', encodeURIComponent(Wikia.param(params || window.sassParams))).
+			replace('%4$d', window.wgStyleVersion);
+	}
 
 	//'polyfill' for a conistent matchesSelector
 	htmlProto.matchesSelector = htmlProto.matchesSelector ||
@@ -10,16 +38,12 @@
 		htmlProto.mozMatchesSelector ||
 		htmlProto.oMatchesSelector;
 
-	w.addEventListener('load', function(){
+	w.addEventListener('DOMContentLoaded', function(){
 		fired = true;
 	});
 
 	var Wikia = function(func){
-		if(fired){
-			func();
-		}else{
-			w.addEventListener('load', func);
-		}
+		fired ? func() : w.addEventListener('DOMContentLoaded', func);
 	};
 
 	Wikia.not = function(selector, elements){
@@ -38,10 +62,9 @@
 		return ret;
 	};
 
-	//then use AssetsManager config to group them together
-
 	Wikia.param = function(params){
 		var ret = [];
+
 		if(params) {
 			for(var param in params){
 				if(params.hasOwnProperty(param)){
@@ -49,6 +72,7 @@
 				}
 			}
 		}
+
 		return ret.join('&');
 	};
 
@@ -64,14 +88,7 @@
 		var req = new XMLHttpRequest();
 
 		if(type === 'GET' && data){
-
-			if(url.indexOf('?') > -1){
-				url += '&';
-			}else{
-				url += '?';
-			}
-
-			url += Wikia.param(data);
+			url += (url.indexOf('?') > -1 ? '&' : '?') + Wikia.param(data);
 			data = null;
 		}
 
@@ -96,22 +113,7 @@
 		req.send(data ? Wikia.param(data) : null);
 	};
 
-	/** @private **/
-
-	var processedSassUrls = {},
-		isProcessedSassUrl = new RegExp(getAssetsManagerQuery('.*', 'sass', '###').replace(encodeURIComponent(Wikia.param('###')), '.*').replace(/\//g, '\\/')),
-		isJs = /\.js(\?(.*))?$/,
-		isCss = /\.css(\?(.*))?$/,
-		isSass = /\.scss/;
-
-	function getAssetsManagerQuery(path, type, params){
-		return window.wgAssetsManagerQuery.
-			replace('%1$s', type).
-			replace('%2$s', path).
-			replace('%3$s', encodeURIComponent(Wikia.param(params || window.sassParams))).
-			replace('%4$d', window.wgStyleVersion);
-	}
-
+	isProcessedSassUrl = new RegExp(getAssetsManagerQuery('.*', 'sass', '###').replace(encodeURIComponent(Wikia.param('###')), '.*').replace(/\//g, '\\/'));
 
 	Wikia.getSassURL = function(rootURL, scssFilePath, params) {
 
@@ -169,11 +171,11 @@
 				type = null;
 			}
 
-			if(typeof resource == 'function'){
-				resource.call($, onComplete);
-			}else if(type == 'css' || isCss.test(resource) || isSass.test(resource)){
+			if(typeof resource === 'function'){
+				resource.call(Wikia, onComplete);
+			}else if(type === 'css' || isCss.test(resource) || isSass.test(resource)){
 				Wikia.getCSS(resource, onComplete);
-			}else if(type == 'js' || isJs.test(resource)){
+			}else if(type === 'js' || isJs.test(resource)){
 				Wikia.getScript(resource, onComplete);
 			}else{
 				throw 'unknown resource format (' + resource + ')';
