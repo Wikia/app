@@ -39,6 +39,9 @@ var Lightbox = {
 		
 		// Add template to modal
 		Lightbox.openModal.find(".modalContent").html(LightboxLoader.templateHtml);
+		if ($('#MODAL_RECTANGLE').length) {
+			window.adslots2.push(['MODAL_RECTANGLE']);
+		}
 		
 		if(!Lightbox.initialFileDetail['exists']) {
 			// We're showing an error template
@@ -449,12 +452,12 @@ var Lightbox = {
 
 			// Resize modal
 			Lightbox.openModal.css(css);
-	
-			$('#MODAL_INTERSTITIAL').show();
-			
+
+			window.adslots2.push(['MODAL_INTERSTITIAL']);
+
 			// Set flag to indicate we're showing an ad (for arrow click handler)
 			Lightbox.ads.adIsShowing = true;
-			
+
 			// Ad's been shown, don't show it again. 
 			Lightbox.ads.adWasShown = true;
 		},

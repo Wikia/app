@@ -1,6 +1,6 @@
 <? //  Important: If you change this template, update lightboxVersion in LightboxLoader.js to bust browser cache  ?>
 
-<div class="WikiaLightbox<? echo $showAds ? ' show-ads' : '' ?>">
+<div class="WikiaLightbox<? echo $showAdModalRectangle ? ' show-ads' : '' ?>">
 	<!-- Keep media at the top so everything stacks on top of this, without the need to mess with z-index -->
 	<div class="media">
 	</div>
@@ -13,9 +13,11 @@
 		<span id="LightboxPrevious" class="arrow previous"></span>
 	</div>
 
-	<? if($showAds) { ?>
-		<div id="MODAL_INTERSTITIAL" class="wikia-ad noprint modal_interstitial">
-			<?= AdEngine::getInstance()->getAd('MODAL_INTERSTITIAL', array('ghostwriter'=>true)); ?>
+	<? if($showAdModalInterstitial) { ?>
+		<div class="modal_interstitial ad-centered-wrapper">
+			<div>
+				<div id="MODAL_INTERSTITIAL" class="wikia-ad noprint"></div>
+			</div>
 		</div>
 	<? } ?>
 
@@ -36,10 +38,8 @@
 	 			</div>
 			</div>
 		</div>
-		<? if($showAds) { ?>
-			<div id="MODAL_RECTANGLE" class="wikia-ad noprint">
-				<?= AdEngine::getInstance()->getAd('MODAL_RECTANGLE', array('ghostwriter'=>true)); ?>
-			</div>
+		<? if($showAdModalRectangle) { ?>
+			<div id="MODAL_RECTANGLE" class="wikia-ad noprint"></div>
 		<? } ?>
 	</div>
 
