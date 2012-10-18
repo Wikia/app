@@ -216,4 +216,9 @@ class SDElement extends SDObject implements SplSubject {
 	public function getTypeName() {
 		return $this->type;
 	}
+
+	public function getRendererNames() {
+		return array($this->getTypeName());
+	}
+
 }

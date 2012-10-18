@@ -128,6 +128,9 @@ class SDElementProperty extends SDObject implements SplObserver {
 		return $this->type['name'];
 	}
 
+	public function getRendererNames() {
+		return array($this->getName(), $this->getTypeName());
+	}
 	/*
 	public function render( $context = SD_CONTEXT_DEFAULT ) {
 		$result = parent::render( $context );
