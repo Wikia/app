@@ -9,7 +9,6 @@ class WikiaMobileSharingService extends WikiaService{
 	public function index(){
 		$this->wf->profileIn( __METHOD__ );
 
-
 		/**
 		 * @var $socialSharingService SocialSharingService
 		 */
