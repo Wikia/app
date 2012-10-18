@@ -43,7 +43,7 @@ class StructuredDataController extends WikiaSpecialPageController {
 		$par = $this->getPar();
 
 		if(empty($par)) {
-			$this->wg->Out->addHTML( F::build('JSSnippets')->addToStack( array( "/extensions/wikia/StructuredData/js/StructuredData.js" ) ) );
+			$this->response->addAsset('/extensions/wikia/StructuredData/js/StructuredData.js');
 			$this->response->addAsset('extensions/wikia/StructuredData/css/StructuredData.scss');
 			$this->setVal( "mainObjects", $this->mainObjectList );
 		}
