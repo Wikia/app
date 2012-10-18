@@ -243,6 +243,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 			$this->wf->SetupSession();
 		}
 
+		/* @var $loginForm LoginForm */
 		$loginForm = F::build( 'LoginForm', array(&$this->wg->request) );
 		$loginForm->load(); // MW1.19 uses different form fields names
 

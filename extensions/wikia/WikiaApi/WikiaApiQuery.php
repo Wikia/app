@@ -355,7 +355,7 @@ class WikiaApiQuery extends ApiQueryBase {
 	}
 
 	#---
-	protected function addTables($value) {
+	protected function addTables($value, $alias = NULL) {
 		if ($this->getActionName() == 'query') {
 			parent::addTables($value);
 		} else {
@@ -452,7 +452,7 @@ class WikiaApiQuery extends ApiQueryBase {
 	}
 
 	#---
-	protected function select($method) {
+	protected function select($method, $extraQuery = array()) {
 		if ($this->getActionName() == 'query') {
 			$res = parent::select($method);
 		} else {
