@@ -51,53 +51,86 @@ class StructuredData {
 	}
 
 	public function dataParserHook( $input, $args, $parser ) {
-		// callofduty:Character/Dimitri_Petrenko/schema:birthDate
-		//callofduty:Weapon/M16/callofduty:weaponClass[2]/name
-
 		$result = '';
 		$inputData = $this->parseHookInput($input);
 
-		// @todo hack! :-)
-		if($inputData['url'] == 'callofduty:Weapon/M16') {
-			$SDElement = $this->getSDElementById('50258c6fac50ed470f00000c');
-		}
-		else {
-			$SDElement = $this->getSDElementByURL($inputData['url']);
+		// @todo hack! :-) remove when API will be working again..
+		switch( $inputData['url'] ) {
+			case 'callofduty:Weapon/M16':
+				$SDElement = $this->getSDElementById('50258c6fac50ed470f00000c');
+				break;
+			case 'callofduty:Character/Dimitri_Petrenko':
+				$SDElement = $this->getSDElementById('50258490ac50ed479a000005');
+				break;
+			default:
+				$SDElement = $this->getSDElementByURL($inputData['url']);
 		}
 
 		if($SDElement instanceof SDElement) {
 			$currentElement = $SDElement;
 			do {
 				$propertyName = array_shift( $inputData['propertyChain'] );
+				$valueIndex = null;
+
+				if(empty($propertyName)) {
+					break;
+				}
+
+				$matches = array();
+				preg_match('/([a-z,0-9,:,_]{1,})\[(\d{1,})\]/i', $propertyName, $matches);
+				if(count($matches) == 3) {
+					$propertyName = $matches[1];
+					$valueIndex = $matches[2];
+				}
+
 				$property = $currentElement->getProperty( $propertyName );
 				if($property instanceof SDElement) {
 					$currentElement = $property;
 				}
 				elseif($property instanceof SDElementProperty ) {
-					$result = $property->getValue();
+					if(!count($inputData['propertyChain']) && is_null($valueIndex)) {
+						// last element in chain, try to render it
+						$result = $property->render();
+						if($result !== false) {
+							$currentElement = null;
+							break;
+						}
+					}
+
+					$result = $property->getValue( !is_null($valueIndex) ? $valueIndex : 0 );
+
 					if(is_object($result) && ($result->object instanceof SDElement)) {
 						$currentElement = $result->object;
 					}
+					elseif(!empty($result)) {
+						$currentElement = null;
+						$renderedResult = $property->render();
+						if($renderedResult !== false) {
+							$result = $renderedResult;
+						}
+					}
 					else {
+						$result = "Unknown value: " . $propertyName . ( !empty($valueIndex) ? "[$valueIndex]" : "" );
 						$currentElement = null;
 					}
 				}
 				else {
-					$result = 'Unknown property: ' . $propertyName;
+					$result = "Unknown property: " . $propertyName;
 					$currentElement = null;
 				}
 			}
 			while( $currentElement instanceof SDElement );
+
+			if($currentElement instanceof SDElement) {
+				$result = $currentElement->render();
+			}
 		}
 		return $result;
 	}
 
 	private function parseHookInput( $input ) {
-
 		$inputParts = explode( '/', $input );
 		if( count( $inputParts ) >= 2 ) {
-			//$object['type'] = ;
-			//$object['name'] = ;
 			$object['url'] = $inputParts[0] . '/' . $inputParts[1];
 			$object['propertyChain'] = array_slice( $inputParts, 2, count($inputParts) );
 		}

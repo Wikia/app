@@ -221,4 +221,10 @@ class SDElement extends SDObject implements SplSubject {
 		return array($this->getTypeName());
 	}
 
+	public function render( $context = SD_CONTEXT_DEFAULT ) {
+		// @todo render link in a proper way here, or move to renderers factory
+		$result = parent::render( $context );
+		return ( $result !== false ) ? $result : '<a href="/wiki/Special:StructuredData?method=showObject&id='.$this->getId().'">'. htmlspecialchars( $this->getName() ) . '</a>';
+	}
+
 }
