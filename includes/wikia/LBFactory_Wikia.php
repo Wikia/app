@@ -13,7 +13,7 @@
 class LBFactory_Wikia extends LBFactory_Multi {
 
 	function getSectionForWiki( $wiki = false ) {
-		global $wgDBname, $wgDBcluster, $smwgUseExternalDB;
+		global $wgDBname, $wgDBcluster, $smwgUseExternalDB, $wgLBDefaultSection;
 
 		if ( $this->lastWiki === $wiki ) {
 			return $this->lastSection;
@@ -46,7 +46,7 @@ class LBFactory_Wikia extends LBFactory_Multi {
 			if ( isset( $wgDBcluster ) ) {
 				$section = $wgDBcluster;
 			} else {
-				$section = 'DEFAULT';
+				$section = $wgLBDefaultSection;
 			}
 		}
 		else {
@@ -54,7 +54,7 @@ class LBFactory_Wikia extends LBFactory_Multi {
 			$section = WikiFactory::getVarValueByName( 'wgDBcluster', WikiFactory::DBtoID( $wiki ) );
 			if ( empty( $section ) ) {
 				// ...or not
-				$section = 'DEFAULT';
+				$section = $wgLBDefaultSection;
 			}
 		}
 		$this->lastSection = $section;

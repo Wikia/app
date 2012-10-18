@@ -986,3 +986,8 @@ $wgResourceLoaderCssMinifier = false;
  * @var false|callback
  */
 $wgWikiaIsCentralWiki = false;
+
+/**
+ * default LB section for database connection
+ */
+$wgLBDefaultSection = 'DEFAULT';
