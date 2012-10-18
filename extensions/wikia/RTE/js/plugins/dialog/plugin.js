@@ -46,7 +46,10 @@ CKEDITOR.plugins.add('rte-dialog',
 								}
 							}
 						);
-					}
+					},
+					// bugid: 43228 -- default jquery ui can't calculate the correct z-index in this context; 
+					// this is the lowest order of magnitude decimal value we could get away with.
+					open: function(event, ui) { $(this).autocomplete('widget').css('z-index', 100000000);  }
 				});
 				node.data('suggestSetUp', true);
 
