@@ -12,6 +12,8 @@
 
 abstract class CodeLint {
 
+	const GITHUB_ROOT = 'https://github.com/Wikia/app';
+
 	// file name pattern - used when linting directories
 	protected $filePattern = null;
 
@@ -201,28 +203,27 @@ abstract class CodeLint {
 		);
 
 		if ($cache['fileName'] !== $fileName) {
-			// svn blame WallHistory.class.php 2> /dev/null |  head -n 100 | tail -n 1
-			$lines = explode("\n", wfShellExec("svn blame --use-merge-history {$fileName}"));
+			exec("git blame --root {$fileName}", $lines);
 
 			$cache['fileName'] = $fileName;
 			$cache['lines'] = $lines;
 		}
 
-		$blameLine = $cache['lines'][$line-1];
+		$blameLine = $cache['lines'][$line];
 
 		// parse blame line
-		// G 666     author 	doSomething();
+		// c860b634 (emil 2008-08-26 09:43:40 +0000   6)  * @file
 		if ($blameLine != '') {
-			list($rev, $author, ) = preg_split('#\\s+#', trim(substr($blameLine, 1)), 3);
+			list($rev, $author, ) = explode(' ', $blameLine);
 
 			$ret = array(
-				'rev' => intval($rev),
-				'author' => $author
+				'rev' => trim($rev, '^ '),
+				'author' => trim($author, '( ')
 			);
 		}
 		else {
 			$ret = array(
-				'rev' => 0,
+				'rev' => '',
 				'author' => 'none'
 			);
 		}

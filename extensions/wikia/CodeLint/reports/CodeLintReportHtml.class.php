@@ -23,7 +23,7 @@ class CodeLintReportHtml extends CodeLintReport {
 		$totalTime = 0;
 
 		foreach($results as &$fileEntry) {
-			$fileEntry['blameUrl'] = $this->getTracBlameUrl($fileEntry['fileChecked']);
+			$fileEntry['blameUrl'] = $this->getBlameUrl($fileEntry['fileChecked']);
 
 			$totalTime += $fileEntry['time'];
 		}

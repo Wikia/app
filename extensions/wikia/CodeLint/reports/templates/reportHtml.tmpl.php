@@ -161,7 +161,7 @@
 				<td><?= ($n+1) ?></td>
 				<td><?= htmlspecialchars($entry['error']) ?></td>
 				<td><?= implode(', ', $blameLinks) ?></td>
-				<td><?= $entry['blame']['author'] ?> @ <a href="http://trac.wikia-code.com/changeset/<?= $entry['blame']['rev'] ?>">r<?= $entry['blame']['rev'] ?></a></td>
+				<td><?= $entry['blame']['author'] ?> @ <a href="<?= CodeLint::GITHUB_ROOT ?>/commit/<?= $entry['blame']['rev'] ?>"><?= $entry['blame']['rev'] ?></a></td>
 			</tr>
 <?php
 		}

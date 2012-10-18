@@ -12,7 +12,7 @@
 
 class CodeLintReportText extends CodeLintReport {
 
-	const FORMAT = "%3d | %-80s %3s | %20s | %s @ r%d\n";
+	const FORMAT = "%3d | %-80s %3s | %20s | %s @ %s\n";
 
 	/**
 	 * Return report for a given set of results
@@ -26,7 +26,7 @@ class CodeLintReportText extends CodeLintReport {
 		$totalTime = 0;
 
 		foreach($results as $fileEntry) {
-			$tracUrl = $this->getTracBlameUrl($fileEntry['fileChecked']);
+			$tracUrl = $this->getBlameUrl($fileEntry['fileChecked']);
 
 			$report .= $line;
 			$report .= "File: {$fileEntry['fileChecked']}\n";

@@ -22,7 +22,7 @@ class CodeLintReportBlame extends CodeLintReport {
 		$ret = array();
 
 		foreach($results as $fileEntry) {
-			$tracUrl = $this->getTracBlameUrl($fileEntry['fileChecked']);
+			$tracUrl = $this->getBlameUrl($fileEntry['fileChecked']);
 
 			if (!empty($fileEntry['errors'])) {
 				foreach($fileEntry['errors'] as $entry) {
