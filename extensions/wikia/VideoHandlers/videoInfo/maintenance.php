@@ -85,30 +85,32 @@
 	$removed = 0;
 	$videoList = array();
 
+	// create table or patch table schema
+	$video = new VideoInfo();
 	if ( !$isDryrun ) {
-		// create table or patch table schema
-		$video = new VideoInfo();
 		$video->createTableVideos();
+	}
 
-		echo "Create video_info table.\n";
+	echo "Create video_info table.\n";
 
-		// remove deleted local videos
-		$sql = <<<SQL
-			SELECT video_title
-			FROM video_info
-			LEFT JOIN image ON video_info.video_title = image.img_name
-			WHERE image.img_name is null AND video_info.premium = 0
+	// remove deleted local videos
+	$sql = <<<SQL
+		SELECT video_title
+		FROM video_info
+		LEFT JOIN image ON video_info.video_title = image.img_name
+		WHERE image.img_name is null AND video_info.premium = 0
 SQL;
 
-		$result = $db->query( $sql, __METHOD__ );
+	$result = $db->query( $sql, __METHOD__ );
 
-		while( $row = $db->fetchObject($result) ) {
-			printText( "Deleted video (local): $row->video_title" );
+	while( $row = $db->fetchObject($result) ) {
+		printText( "Deleted video (local): $row->video_title" );
+		if ( !$isDryrun ) {
 			$video->setVideoTitle( $row->video_title );
 			$video->deleteVideo();
-			printText( "..... DELETED.\n" );
-			$removed++;
 		}
+		printText( "..... DELETED.\n" );
+		$removed++;
 	}
 
 	// get embedded videos (premium)
