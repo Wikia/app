@@ -24,7 +24,6 @@ class StructuredDataAPIClient {
 
 		$this->httpRequest->addHeader( 'Accept', 'application/ld+json' );
 		$this->httpRequest->sendRequest();
-
 		return $this->httpRequest->getResponseBody();
 	}
 
@@ -88,6 +87,8 @@ class StructuredDataAPIClient {
 	public function getContext( $contextUrl, $relative = true ) {
 		// @todo: fix when Gregg fixes template context url (right now it's a non-existing /contexts/cod.jsonld
 		$contextUrl = str_replace('cod.jsonld', 'callofduty.jsonld', $contextUrl);
+		$contextUrl = str_replace('schema.jsonld', 'callofduty.jsonld', $contextUrl);
+
 		$response = json_decode( $this->call( ( $relative ? $this->baseUrl : '' ) . $contextUrl ) );
 		return $this->isValidResponse($response);
 	}

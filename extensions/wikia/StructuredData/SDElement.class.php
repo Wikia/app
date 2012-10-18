@@ -87,9 +87,7 @@ class SDElement extends SDObject implements SplSubject {
 	 * @return string
 	 */
 	public function getName() {
-		$name = $this->getProperty( 'schema:name' );
-		if ( empty( $name ) ) return null;
-		return $name->getValue();
+		return $this->getPropertyValue( 'schema:name' );
 	}
 
 	/**
@@ -97,9 +95,7 @@ class SDElement extends SDObject implements SplSubject {
 	 * @return string
 	 */
 	public function getUrl() {
-		$url = $this->getProperty( 'schema:url' );
-		if ( empty( $url ) ) return null;
-		return $url->getValue();
+		return $this->getPropertyValue( 'schema:url' );
 	}
 
 	/**

@@ -10,7 +10,7 @@ $app->registerClass('StructuredData', $dir . 'StructuredData.class.php');
 $app->registerClass('SDObject', $dir . 'SDObject.class.php');
 $app->registerClass('SDElement', $dir . 'SDElement.class.php');
 $app->registerClass('SDElementProperty', $dir . 'SDElementProperty.class.php');
-$app->registerClass('SDElementRenderer', $dir . 'SDElementRenderer.class.php');
+//$app->registerClass('SDElementRenderer', $dir . 'SDElementRenderer.class.php');
 $app->registerClass('SDElementRendererFactory', $dir . 'SDElementRendererFactory.class.php');
 $app->registerClass('SDContext', $dir . 'SDContext.class.php');
 

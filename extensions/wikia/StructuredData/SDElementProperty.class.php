@@ -3,7 +3,7 @@
  * @author ADi
  */
 class SDElementProperty extends SDObject implements SplObserver {
-	protected $type = array( 'name' => 'rdf:Literal', 'range' => null, 'missing' => true );
+	protected $type = array( 'name' => '@set', 'range' => null );
 	protected $name = null;
 	protected $label = '';
 	protected $value = null;
@@ -32,9 +32,28 @@ class SDElementProperty extends SDObject implements SplObserver {
 		$this->value = $value;
 	}
 
-	public function getValue() {
-		return $this->value;
+	//public function getValue() {
+	//	return ( in_array( $this->getTypeName(), array( '@set', '@list' ) ) && !is_array( $this->value ) ) ? array( $this->value ) : $this->value;
+	//}
+
+	public function getValue( $index = 0 ) {
+		$value = null;
+		$values = $this->getValues();
+
+		if(is_array( $values ) && isset($values[$index])) {
+			$value = $values[$index];
+		}
+		elseif(!is_array( $values )) {
+			$value = $values;
+		}
+
+		return $value;
 	}
+
+	public function getValues() {
+		return ( in_array( $this->getTypeName(), array( '@set', '@list' ) ) && !is_array( $this->value ) ) ? array( $this->value ) : $this->value;
+	}
+
 
 	public function expandValue(StructuredData $structuredData, $elementDepth) {
 		$value = $this->value;
@@ -82,7 +101,7 @@ class SDElementProperty extends SDObject implements SplObserver {
 				'type' => $this->type,
 				'name' => $this->name,
 				'label' => $this->label,
-				'value' => $this->value
+				'value' => $this->value //$this->getValues()
 			);
 		}
 
@@ -108,4 +127,11 @@ class SDElementProperty extends SDObject implements SplObserver {
 	public function getTypeName() {
 		return $this->type['name'];
 	}
+
+	/*
+	public function render( $context = SD_CONTEXT_DEFAULT ) {
+		$result = parent::render( $context );
+		return ( $result !== false ) ? $result : $this->getValue();
+	}
+	*/
 }

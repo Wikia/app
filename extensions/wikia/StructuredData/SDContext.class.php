@@ -33,6 +33,8 @@ class SDContext extends WikiaObject {
 			$this->resources[$resourceUrl] = $resourceData;
 		}
 
+		// @todo tmp hack! remove when API will be fixed back
+		$elementType = null;
 		if(!empty($elementType)) {
 			$descriptionCacheKey = $this->wf->SharedMemcKey( 'SDContextDescription', $resourceUrl );
 			$objectDescriptionData = $this->wg->Memc->get( $descriptionCacheKey );
