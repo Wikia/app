@@ -96,8 +96,9 @@
 
 			return {
 				changeContent: changeContent,
-				close: close
-			}
-		}
+				close: close,
+				open: open
+			};
+		};
 	}
 })();
