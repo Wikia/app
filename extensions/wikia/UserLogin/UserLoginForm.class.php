@@ -43,9 +43,6 @@ class UserLoginForm extends LoginForm {
 		}
 
 		$this->wpUserBirthDay = strtotime( $this->wpBirthYear . '-' . $this->wpBirthMonth . '-' . $this->wpBirthDay );
-
-		// set marketing email to true
-		$this->mMarketingOptIn = true;
 	}
 
 	// add new account
@@ -83,7 +80,7 @@ class UserLoginForm extends LoginForm {
 		$emailTextTemplate = F::app()->renderView( "UserLogin", "GeneralMail", array('language' => $u->getOption('language'), 'type' => 'account-creation-email') );
 		$result = $this->mailPasswordInternal( $u, false, 'usersignup-account-creation-email-subject', 'usersignup-account-creation-email-body', $emailTextTemplate );
 		if( !$result->isGood() ) {
-			$this->mainLoginForm( wfMsg( 'userlogin-error-mail-error', $result->getMessage() ) );
+			$this->mainLoginForm( wfMessage( 'userlogin-error-mail-error', $result->getMessage() )->parse() );
 			return false;
 		} else {
 			$this->mainLoginForm( wfMsgExt( 'usersignup-account-creation-email-sent', array('parseinline'), $this->mEmail, $this->username ), 'success' );

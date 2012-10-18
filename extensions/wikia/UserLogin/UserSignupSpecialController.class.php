@@ -357,7 +357,7 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 
 			if( !$result->isGood() ) {
 				$this->result = 'error';
-				$this->msg = $this->wf->Msg( 'userlogin-error-mail-error', $result->getMessage() );
+				$this->msg = $this->wf->Message( 'userlogin-error-mail-error', $result->getMessage() )->parse();
 			}
 		}
 	}

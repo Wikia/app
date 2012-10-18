@@ -243,7 +243,6 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 			$this->wf->SetupSession();
 		}
 
-		/* @var $loginForm LoginForm */
 		$loginForm = F::build( 'LoginForm', array(&$this->wg->request) );
 		$loginForm->load(); // MW1.19 uses different form fields names
 
@@ -284,7 +283,6 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 					$this->userLoginHelper->clearPasswordThrottle( $loginForm->mUsername );
 
 					$this->result = 'ok';
-					$this->wgUserName = $this->wg->User->getName();
 				break;
 
 			case LoginForm::NEED_TOKEN:
@@ -430,7 +428,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 				$result = $loginForm->mailPasswordInternal( $user, true, 'userlogin-password-email-subject', 'userlogin-password-email-body', $emailTextTemplate );
 				if( !$result->isGood() ) {
 					$this->result = 'error';
-					$this->msg = $this->wf->Msg('userlogin-error-mail-error', $result->getMessage() );
+					$this->msg = $this->wf->Message('userlogin-error-mail-error', $result->getMessage() )->parse();
 				} else {
 					$this->result = 'ok';
 					$this->msg = $this->wf->Msg('userlogin-password-email-sent', $loginForm->mUsername );
