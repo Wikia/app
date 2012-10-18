@@ -185,8 +185,6 @@ function wfReplaceImageServer( $url, $timestamp = false ) {
 function wfReplaceAssetServer( $url ) {
 	global $wgImagesServers;
 
-	wikia::log(__FUNCTION__,false,$url,true);
-
 	$matches = array();
 	if ( preg_match("#^(?<a>(https?:)?//(slot[0-9]+\\.)?images)(?<b>\\.wikia\\.nocookie\\.net/.*)\$#",$url,$matches) ) {
 		$hash = sha1($url);
