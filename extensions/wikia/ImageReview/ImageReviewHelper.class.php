@@ -268,16 +268,8 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 		$updateWhere = array();
 		$iconsWhere = array();
 		while ( $row = $db->fetchObject($result) ) {
-			$record = "(wiki_id = {$row->wiki_id} and page_id = {$row->page_id})";
-
-			// filter out ICO files, as these are not supported
-			$imageTitle = GlobalTitle::newFromId( $row->page_id, $row->wiki_id );
-			if ( "ico" == pathinfo( strtolower( $imageTitle->getText() ), PATHINFO_EXTENSION) ) {
-				$iconsWhere[] = $record;
-			} else {
-				$rows[] = $row;
-				$updateWhere[] = $record;
-			}
+			$rows[] = $row;
+			$updateWhere[] = $record;
 		}
 		$db->freeResult( $result );
 
@@ -313,24 +305,19 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 				__METHOD__
 			);
 		}
-
-		if ( count($iconsWhere) > 0 ) {
-			$db->update(
-				'image_review',
-				array( 'state' => ImageReviewStatuses::STATE_ICO_IMAGE),
-				array( implode(' OR ', $iconsWhere) ),
-				__METHOD__
-			);
-		}
 		$db->commit();
 
 		$imageList = $invalidImages = $unusedImages = array();
 		foreach( $rows as $row) {
+			$record = "(wiki_id = {$row->wiki_id} and page_id = {$row->page_id})";
+
 			if (count($imageList) < self::LIMIT_IMAGES) {
 				$img = ImagesService::getImageSrc( $row->wiki_id, $row->page_id );
 
 				if ( empty( $img['src'] ) ) {
-					$invalidImages[] = "(wiki_id = {$row->wiki_id} and page_id = {$row->page_id})";
+					$invalidImages[] = $record;
+				} elseif ( 'ico' == pathinfo( strtolower( $img['src'] ), PATHINFO_EXTENSION ) ) {
+					$iconsWhere[] = $record;
 				} else {
 					$imageList[] = array(
 						'wikiId' => $row->wiki_id,
@@ -357,6 +344,16 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 				array( implode(' OR ', $invalidImages) ),
 				__METHOD__
 			);
+			$commit = true;
+		}
+
+		if ( count($iconsWhere) > 0 ) {
+			$db->update(
+					'image_review',
+					array( 'state' => ImageReviewStatuses::STATE_ICO_IMAGE),
+					array( implode(' OR ', $iconsWhere) ),
+					__METHOD__
+				   );
 			$commit = true;
 		}
 
