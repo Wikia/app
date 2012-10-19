@@ -64,12 +64,6 @@ public class CreateNewWikiTest extends BaseTest {
 		session().select("//select[@name='wiki-category']", "value=3");
 		session().click("//li[@id='DescWiki']/form/nav/input[@class='next']");
 		waitForElementVisible("ThemeWiki", this.getTimeout());
-		/* temporarily commenting out because we might add it back in later 
-		if (language.equals("en")) {
-			session().click("//li[@id='ThemeWiki']/nav/input[@class='next']");
-			waitForElementVisible("UpgradeWiki", this.getTimeout());
-			clickAndWait("//li[@id='UpgradeWiki']/nav/input[@class='next']");
-		} else {*/
 		clickAndWait("//li[@id='ThemeWiki']/nav/input[@class='next']");
 		waitForElement("WikiWelcome", this.getTimeout());
 		waitForElementVisible("WikiWelcome", this.getTimeout());
@@ -127,10 +121,6 @@ public class CreateNewWikiTest extends BaseTest {
 		session().click("//li[@id='DescWiki']/form/nav/input[@class='next']");
 		waitForElementVisible("ThemeWiki", this.getTimeout());
 		clickAndWait("//li[@id='ThemeWiki']/nav/input[@class='next']");
-		/*
-		waitForElementVisible("UpgradeWiki", this.getTimeout());
-		clickAndWait("//li[@id='UpgradeWiki']/nav/input[@class='next']");
-		*/
 		waitForElement("WikiWelcome", this.getTimeout());
 		waitForElementVisible("WikiWelcome", this.getTimeout());
 	}
@@ -175,8 +165,6 @@ public class CreateNewWikiTest extends BaseTest {
 		session().click("//li[@id='DescWiki']/form/nav/input[@class='next']");
 		waitForElementVisible("ThemeWiki", this.getTimeout());
 		clickAndWait("//li[@id='ThemeWiki']/nav/input[@class='next']");
-		// waitForElementVisible("UpgradeWiki", this.getTimeout());
-		// clickAndWait("//li[@id='UpgradeWiki']/nav/input[@class='next']");
 		waitForElement("WikiWelcome", this.getTimeout());
 		waitForElementVisible("WikiWelcome", this.getTimeout());
 	}
