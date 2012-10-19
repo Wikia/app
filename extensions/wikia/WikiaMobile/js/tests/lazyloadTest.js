@@ -36,7 +36,7 @@ describe("Lazyload module", function () {
 	});
 
 	async.it('should lazyload images', function(done){
-		document.body.innerHTML = '<section id="mw-content-text"><img alt="Sectionals2.jpg" width="480" height="207" data-src="/usr/wikia/source/trunk/extensions/wikia/WikiaMobile/js/tests/fixtures/blank.png" class="lazy media" data-params="[{&quot;name&quot;:&quot;Sectionals2.jpg&quot;,&quot;full&quot;:&quot;/usr/wikia/source/trunk/extensions/wikia/WikiaMobile/js/tests/fixtures/blank.png&quot;}]"></section>';
+		document.body.innerHTML = '<section id="mw-content-text"><img alt="Sectionals2.jpg" width="480" height="207" data-src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" class="lazy media" data-params="[{&quot;name&quot;:&quot;Sectionals2.jpg&quot;,&quot;full&quot;:&quot;data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D&quot;}]"></section>';
 
 		require(['lazyload'], function(lazyload){
 
@@ -46,10 +46,10 @@ describe("Lazyload module", function () {
 
 			setInterval(function(){
 				if(img.src){
-					expect(img.src).toMatch('blank.png');
+					expect(img.src).toMatch('data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D');
 					done();
 				}
-			},100);
+			},10);
 		});
 	});
 
