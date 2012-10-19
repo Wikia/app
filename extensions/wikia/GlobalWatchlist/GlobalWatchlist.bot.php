@@ -821,7 +821,8 @@ class GlobalWatchlistBot {
 									"gwa_rev_id"	=> $oWatchLists->page_revision,
 									"gwa_timestamp"	=> $oWatchLists->page_timestamp
 								),
-								__METHOD__
+								__METHOD__,
+								array('IGNORE')
 							);
 							$wlNbr++;
 							$mCntUsers++;
