@@ -6,7 +6,7 @@
 	// Wikia change - begin - @author: wladek
 	// prepare the list of standard buttons that are available in the sprite image
 	var standardButtons = {};
-	if ( mw.config.get( 'skin' ) == 'oasis' ) {
+	if ( mw.config.get( 'wgIsEditPage' ) ) {
 		$.each(
 			'bold italic link extlink headline image media math nowiki sig hr wmu wpg vet'.split(' '),
 			function(i,v){
