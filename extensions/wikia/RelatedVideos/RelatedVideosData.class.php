@@ -137,7 +137,6 @@ class RelatedVideosData {
 	}
 
 	public function removeVideo($articleId, $title, $isExternal) {
-
 		wfProfileIn( __METHOD__ );
 		// general validation
 		if ( empty( $title ) ) {
@@ -171,7 +170,7 @@ class RelatedVideosData {
 		// standardize format of title
 		$titleObj = F::build('Title', array($title), 'newFromText');
 		$title = $titleObj->getText();
-		$entry = $rvn->createEntry($title, $isExternal);
+		$entry = $rvn->createEntry($title, $isExternal); /** @var $rvs RelatedVideosNamespaceData */
 
 		// check video exists
 		$rvs = F::build('RelatedVideosService');

@@ -34,7 +34,7 @@ class RelatedVideosController extends WikiaController {
 		$this->linkToSeeMore = !empty($this->app->wg->EnableSpecialVideosExt) ? SpecialPage::getTitleFor("Videos")->escapeLocalUrl() : Title::newFromText(WikiaVideoPage::getVideosCategory())->getFullUrl();
 		$this->videos = $videos;
 
-		$mediaService = F::build( 'MediaQueryService' );
+		$mediaService = F::build( 'MediaQueryService' ); /** @var $mediaService MediaQueryService */
 		$this->totalVideos = $this->wg->Lang->formatNum( $mediaService->getTotalVideos() );
 	}
 
@@ -209,7 +209,7 @@ class RelatedVideosController extends WikiaController {
 		$rvd = F::build( 'RelatedVideosData' );
 		$retval = $rvd->addVideo( $articleId, $url );
 		if ( is_array( $retval ) ) {
-			$rvs = F::build( 'RelatedVideosService' );
+			$rvs = F::build( 'RelatedVideosService' ); /** @var $rvs RelatedVideosService */
 			$data = $rvs->getRelatedVideoDataFromMaster( $retval );
 			if ( empty($wgRelatedVideosOnRail) ) {
 				$this->setVal( 'html', $this->app->renderView( 'RelatedVideos', 'getCaruselElement', array( 'video' => $data, 'preloaded' => 1 ) ));
@@ -228,7 +228,7 @@ class RelatedVideosController extends WikiaController {
 		$articleId = $this->getVal( 'articleId', '' );
 		$title = urldecode( $this->getVal( 'title', '' ) );
 		$external = $this->getVal( 'external', 0 );
-		$rvd = F::build( 'RelatedVideosData' );
+		$rvd = F::build( 'RelatedVideosData' ); /** @var $rvd RelatedVideosData */
 		$retval = $rvd->removeVideo( $articleId, $title, $external );
 		if ( is_string( $retval ) ) {
 			$this->setVal( 'error', $retval );

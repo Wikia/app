@@ -42,7 +42,7 @@ var RelatedVideos = {
 			this.handleSeeMorePlaceholder();
 		} else {
 			// Hubs
-			this.totalVideos = this.loadedCount;		
+			this.totalVideos = this.loadedCount;
 		}
 
 		if( this.rvModule.hasClass('RelatedHubsVideos') ) {
@@ -471,7 +471,6 @@ var RelatedVideos = {
 					});
 				} else {
 					$(parentItem).remove();
-					RelatedVideos.recalculateLength(-1);
 					RelatedVideos.lazyLoad();
 					RelatedVideos.regroup();
 				}
