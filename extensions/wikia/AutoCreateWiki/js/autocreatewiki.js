@@ -27,14 +27,6 @@ ACWikiRequest.NameCallback = function( res ) {
 		}
 	}
 };
-/* ajax fail
-    failure: function( oResponse ) {
-        YAHOO.log( "simple replace failure " + oResponse.responseText );
-		YAHOO.util.Dom.setStyle(err, 'display', 'block');
-    },
-    timeout: 50000
-};
-*/
 
 ACWikiRequest.checkDomain = function(e) {
 	var err = $("#wiki-domain-error-status");
