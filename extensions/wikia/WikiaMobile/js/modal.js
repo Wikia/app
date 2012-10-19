@@ -167,8 +167,8 @@ define('modal', ['loader', 'events', require.optional('ads')], function modal(lo
 			//otherwise it forgets to scroll...
 			setTimeout(function(){
 				if(!stopScrolling){
-					w.scrollTo(0, position);
 					wrapper.style.top = position + 'px';
+					w.scrollTo(0, position);
 				}
 
 				wrapper.className = 'zoomer';
@@ -198,7 +198,7 @@ define('modal', ['loader', 'events', require.optional('ads')], function modal(lo
 				},310);
 
 				ads && ads.fix();
-			},200);
+			},10);
 
 			opened = false;
 		}
