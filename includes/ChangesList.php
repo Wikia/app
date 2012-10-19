@@ -679,11 +679,9 @@ class EnhancedChangesList extends ChangesList {
 	 */
 	public function recentChangesLine( &$baseRC, $watched = false ) {
 		wfProfileIn( __METHOD__ );
-
+		
 		# Create a specialised object
 		$rc = RCCacheEntry::newFromParent( $baseRC );
-
-		$curIdEq = array( 'curid' => $rc->mAttribs['rc_cur_id'] );
 
 		# If it's a new day, add the headline and flush the cache
 		$date = $this->getLanguage()->date( $rc->mAttribs['rc_timestamp'], true );
@@ -698,7 +696,9 @@ class EnhancedChangesList extends ChangesList {
 
 		# Should patrol-related stuff be shown?
 		$rc->unpatrolled = $this->showAsUnpatrolled( $rc );
-
+		
+		$linksCache = $this->lineLinksCache($rc, $rc->unpatrolled);
+		
 		$showdifflinks = true;
 		# Make article link
 		$type = $rc->mAttribs['rc_type'];
@@ -707,17 +707,16 @@ class EnhancedChangesList extends ChangesList {
 		if( $type == RC_MOVE || $type == RC_MOVE_OVER_REDIRECT ) {
 		// New unpatrolled pages
 		} elseif( $rc->unpatrolled && $type == RC_NEW ) {
-			$clink = Linker::linkKnown( $rc->getTitle(), null, array(),
-				array( 'rcid' => $rc->mAttribs['rc_id'] ) );
+			$clink = $linksCache['clink_unpatrolled'];
 		// Log entries
 		} elseif( $type == RC_LOG ) {
 			if( $logType ) {
 				$logtitle = SpecialPage::getTitleFor( 'Log', $logType );
 				$logpage = new LogPage( $logType );
-				$logname = $logpage->getName()->escaped();
+				$logname = $logpage->getName()->escaped(); 
 				$clink = '(' . Linker::linkKnown( $logtitle, $logname ) . ')';
 			} else {
-				$clink = Linker::link( $rc->getTitle() );
+				$clink = $linksCache['clink'];
 			}
 			$watched = false;
 		// Log entries (old format) and special pages
@@ -726,7 +725,7 @@ class EnhancedChangesList extends ChangesList {
 			$clink = '';
 		// Edits
 		} else {
-			$clink = Linker::linkKnown( $rc->getTitle() );
+			$clink = $linksCache['clink'];
 		}
 
 		# Don't show unusable diff links
@@ -740,58 +739,25 @@ class EnhancedChangesList extends ChangesList {
 		$rc->timestamp = $time;
 		$rc->numberofWatchingusers = $baseRC->numberofWatchingusers;
 
-		# Make "cur" and "diff" links.  Do not use link(), it is too slow if
-		# called too many times (50% of CPU time on RecentChanges!).
-		$thisOldid = $rc->mAttribs['rc_this_oldid'];
-		$lastOldid = $rc->mAttribs['rc_last_oldid'];
-		if( $rc->unpatrolled ) {
-			$rcIdQuery = array( 'rcid' => $rc->mAttribs['rc_id'] );
-		} else {
-			$rcIdQuery = array();
-		}
-		$querycur = $curIdEq + array( 'diff' => '0', 'oldid' => $thisOldid );
-		$querydiff = $curIdEq + array( 'diff' => $thisOldid, 'oldid' =>
-			$lastOldid ) + $rcIdQuery;
-
 		if( !$showdifflinks ) {
 			$curLink = $this->message['cur'];
 			$diffLink = $this->message['diff'];
-		} elseif( in_array( $type, array( RC_NEW, RC_LOG, RC_MOVE, RC_MOVE_OVER_REDIRECT ) ) ) {
-			if ( $type != RC_NEW ) {
-				$curLink = $this->message['cur'];
-			} else {
-				$curUrl = htmlspecialchars( $rc->getTitle()->getLinkURL( $querycur ) );
-				$curLink = "<a href=\"$curUrl\" tabindex=\"{$baseRC->counter}\">{$this->message['cur']}</a>";
-			}
-			$diffLink = $this->message['diff'];
 		} else {
-			$diffUrl = htmlspecialchars( $rc->getTitle()->getLinkURL( $querydiff ) );
-			$curUrl = htmlspecialchars( $rc->getTitle()->getLinkURL( $querycur ) );
-			$diffLink = "<a href=\"$diffUrl\" tabindex=\"{$baseRC->counter}\">{$this->message['diff']}</a>";
-			$curLink = "<a href=\"$curUrl\" tabindex=\"{$baseRC->counter}\">{$this->message['cur']}</a>";
+			$rc->curlink  = $linksCache['cur'];
+			$rc->difflink = $linksCache['diff'];			
 		}
-
+		
 		# Make "last" link
 		if( !$showdifflinks || !$lastOldid ) {
 			$lastLink = $this->message['last'];
-		} elseif( in_array( $type, array( RC_LOG, RC_MOVE, RC_MOVE_OVER_REDIRECT ) ) ) {
-			$lastLink = $this->message['last'];
 		} else {
-			$lastLink = Linker::linkKnown( $rc->getTitle(), $this->message['last'],
-				array(), $curIdEq + array('diff' => $thisOldid, 'oldid' => $lastOldid) + $rcIdQuery );
+			$rc->lastlink = $linksCache['last'];			
 		}
 
 		# Make user links
-		if( $this->isDeleted( $rc, Revision::DELETED_USER ) ) {
-			$rc->userlink = ' <span class="history-deleted">' . wfMsgHtml( 'rev-deleted-user' ) . '</span>';
-		} else {
-			$rc->userlink = Linker::userLink( $rc->mAttribs['rc_user'], $rc->mAttribs['rc_user_text'] );
-			$rc->usertalklink = Linker::userToolLinks( $rc->mAttribs['rc_user'], $rc->mAttribs['rc_user_text'] );
-		}
 
-		$rc->lastlink = $lastLink;
-		$rc->curlink  = $curLink;
-		$rc->difflink = $diffLink;
+		$rc->userlink = $linksCache['userlink'];
+		$rc->usertalklink = $linksCache['usertalklink']; 
 
 		# Put accumulated information into the cache, for later display
 		# Page moves go on their own line
@@ -819,6 +785,77 @@ class EnhancedChangesList extends ChangesList {
 
 		return $ret;
 	}
+
+	public function lineLinksCache($rc, $unpatrolled) {
+		wfProfileIn( __METHOD__ );
+		global $wgMemc;
+		
+		$memcKey = wfMemcKey( __METHOD__, $rc->mAttribs['rc_id'], $unpatrolled, $this->getLanguage()->getCode() );
+		$out = $wgMemc->get($memcKey);
+		if(!empty($out)) {
+			wfProfileOut( __METHOD__ );
+			return $out;
+		}
+		
+		$out = array();
+		
+		if( $this->isDeleted( $rc, Revision::DELETED_USER ) ) {
+			$out['userlink'] = ' <span class="history-deleted">' . wfMsgHtml( 'rev-deleted-user' ) . '</span>';
+			$out['usertalklink'] = null;
+		} else {
+			$out['userlink'] = Linker::userLink( $rc->mAttribs['rc_user'], $rc->mAttribs['rc_user_text'] );
+			$out['usertalklink'] = Linker::userToolLinks( $rc->mAttribs['rc_user'], $rc->mAttribs['rc_user_text'] );
+		}
+		
+		$out['clink'] = Linker::linkKnown( $rc->getTitle() );
+		$out['clink_unpatrolled'] = Linker::linkKnown( $rc->getTitle(), null, array(), array( 'rcid' => $rc->mAttribs['rc_id'] ) );
+				
+				
+		# Make "cur" and "diff" links.  Do not use link(), it is too slow if
+		# called too many times (50% of CPU time on RecentChanges!).
+		$thisOldid = $rc->mAttribs['rc_this_oldid'];
+		$lastOldid = $rc->mAttribs['rc_last_oldid'];
+		if( $unpatrolled ) {
+			$rcIdQuery = array( 'rcid' => $rc->mAttribs['rc_id'] );
+		} else {
+			$rcIdQuery = array();
+		}
+		
+		$curIdEq = array( 'curid' => $rc->mAttribs['rc_cur_id'] );
+
+		$querycur = $curIdEq + array( 'diff' => '0', 'oldid' => $thisOldid );
+		$querydiff = $curIdEq + array( 'diff' => $thisOldid, 'oldid' =>
+			$lastOldid ) + $rcIdQuery;
+
+		if( in_array( $rc->mAttribs['rc_type'], array( RC_NEW, RC_LOG, RC_MOVE, RC_MOVE_OVER_REDIRECT ) ) ) {
+			if ( $type != RC_NEW ) {
+				$out['cur'] = $this->message['cur'];
+			} else {
+				$curUrl = htmlspecialchars( $rc->getTitle()->getLinkURL( $querycur ) );
+				$out['cur'] = "<a href=\"$curUrl\" tabindex=\"{$baseRC->counter}\">{$this->message['cur']}</a>";
+			}
+			$diffLink = $this->message['diff'];
+		} else {
+			$diffUrl = htmlspecialchars( $rc->getTitle()->getLinkURL( $querydiff ) );
+			$curUrl = htmlspecialchars( $rc->getTitle()->getLinkURL( $querycur ) );
+			$out['diff'] = "<a href=\"$diffUrl\" tabindex=\"{$baseRC->counter}\">{$this->message['diff']}</a>";
+			$out['cur'] = "<a href=\"$curUrl\" tabindex=\"{$baseRC->counter}\">{$this->message['cur']}</a>";
+		}
+		
+		# Make "last" link
+		if( in_array( $type, array( RC_LOG, RC_MOVE, RC_MOVE_OVER_REDIRECT ) ) ) {
+			$out['last'] = $this->message['last'];
+		} else {
+			$out['last'] = Linker::linkKnown( $rc->getTitle(), $this->message['last'],
+				array(), $curIdEq + array('diff' => $thisOldid, 'oldid' => $lastOldid) + $rcIdQuery );
+		}
+				
+		$wgMemc->set($memcKey, $out);
+		
+		wfProfileOut( __METHOD__ );
+		return $out;
+	}
+
 
 	/**
 	 * Enhanced RC group

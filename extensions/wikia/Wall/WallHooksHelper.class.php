@@ -1925,16 +1925,22 @@ class WallHooksHelper {
 		wfProfileIn(__METHOD__);
 
 		$app = F::app();
-
+		static $cache = array();
+		
 		if( !empty($app->wg->EnableWallExt) ) {
-			$messageWallPage = Title::makeTitle(NS_USER_WALL, $userText);
-			$userTalkLink = Linker::link(
-				$messageWallPage,
-				wfMsgHtml('wall-message-wall-shorten'),
-				array(),
-				array(),
-				array('known', 'noclasses')
-			);
+			if(empty($cache[$userText])) {
+				$messageWallPage = Title::makeTitle(NS_USER_WALL, $userText);
+				$userTalkLink = Linker::link(
+					$messageWallPage,
+					wfMsgHtml('wall-message-wall-shorten'),
+					array(),
+					array(),
+					array('known', 'noclasses')
+				);
+				$cache[$userText] = $userTalkLink;
+			} else {
+				$userTalkLink = $cache[$userText];
+			}
 		}
 
 		wfProfileOut(__METHOD__);
