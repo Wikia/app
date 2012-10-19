@@ -162,7 +162,6 @@ class GlobalWatchlistBot {
 					'email'	=> $oUser->getEmail()
 				);
 
-				$oUser = null;
 				unset($oUser);
 			}
 			$dbr->freeResult( $oResource );
@@ -511,6 +510,9 @@ class GlobalWatchlistBot {
 					$sCommand .= "--debug";
 				}
 
+				# send email to user
+				$this->printDebug( $sCommand ) ;
+				
 				$log = wfShellExec($sCommand, $retval);
 
 				if ($retval) {
