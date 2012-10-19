@@ -10,6 +10,9 @@ require ( dirname( __FILE__ ) . '/includes/WebStart.php' );
 
 // Construct a tag for newrelic -- wgRequest is global in this scope
 if( function_exists( 'newrelic_name_transaction' ) ) {
+	if ( function_exists( 'newrelic_disable_autorum') ) {
+		newrelic_disable_autorum();
+	}
 	if (is_object($wgRequest)) {
 		$controller = $wgRequest->getVal( 'controller' );
 		$method = $wgRequest->getVal( 'method' );

@@ -37,7 +37,10 @@ if ( isset( $_SERVER['MW_COMPILED'] ) ) {
 
 // Construct a tag for newrelic -- wgRequest is global in this scope
 if( function_exists( 'newrelic_name_transaction' ) ) {
-        if (is_object($wgRequest)) {
+	if ( function_exists( 'newrelic_disable_autorum') ) {
+		newrelic_disable_autorum();
+	}
+	if (is_object($wgRequest)) {
 		$sharedWiki = (preg_match("/^slot[0-9]\$/",$wgDBname) || $wgDBname == 'devbox') ? "shared" : "local";
 		$only = $wgRequest->getVal( 'only', 'full' );
 		$modules = ResourceLoaderContext::expandModuleNames( $wgRequest->getVal( 'modules' ) );
