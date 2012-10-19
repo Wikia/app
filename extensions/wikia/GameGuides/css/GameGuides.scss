@@ -6,7 +6,7 @@
 
 @font-face {
 	font-family: 'Roboto-Thin';
-	src: local('Roboto Thin'), local('RobotoThin'), url(file:///android_asset/fonts/RobotoThin.ttf), url(extensions/wikia/GameGuides/fonts/RobotoThin.ttf) format('truetype');
+	//src: local('Roboto Thin'), local('RobotoThin'), url(extensions/wikia/GameGuides/fonts/RobotoThin.ttf), url(file:///android_asset/fonts/RobotoThin.ttf) format('truetype');
 	font-weight: 100;
 }
 
@@ -119,6 +119,10 @@ a {
 
 	color: $textColor;
 	pointer-events: none;
+
+	img, span {
+		pointer-events: none;
+	}
 
 	&[title]:not(.external):not(.extiw) {
 		color: $linkColor;

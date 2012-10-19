@@ -3,7 +3,7 @@
 	html.addEventListener('click', function(ev){
 		var t = ev.target;
 
-		if(t.tagName === 'A') {
+		if(t.tagName === 'A' && t.hasAttribute('title')) {
 			ev.preventDefault();
 			Ponto.invoke(
 				'Linker',
