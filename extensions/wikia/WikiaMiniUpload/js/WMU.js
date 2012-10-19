@@ -70,27 +70,27 @@ if (typeof WMU_box_filled == 'undefined') {
 }
 
 if( 'view' == wgAction ) {
-		wmu_back = '',
-		wmu_imagebutton = '',
-		wmu_close = '',
-		wmu_warn1 = '',
-		wmu_warn2 = '',
-		wmu_warn3 = '',
-		wmu_bad_extension = '',
-		wmu_show_message = '',
-		wmu_hide_message = '',
-		wmu_title = '',
-		wmu_max_thumb = '',
-		wmu_no_protect = '',
-		wmu_no_rights = '',
-		badfilename = '',
-		file_extensions = '',
-		file_blacklist = '',
-		check_file_extensions = '',
-		strict_file_extensions = '',
-		user_blocked = false,
-		user_disallowed = false,
-		user_protected = false;
+	window.wmu_back = '',
+	window.wmu_imagebutton = '',
+	window.wmu_close = '',
+	window.wmu_warn1 = '',
+	window.wmu_warn2 = '',
+	window.wmu_warn3 = '',
+	window.wmu_bad_extension = '',
+	window.wmu_show_message = '',
+	window.wmu_hide_message = '',
+	window.wmu_title = '',
+	window.wmu_max_thumb = '',
+	window.wmu_no_protect = '',
+	window.wmu_no_rights = '',
+	window.badfilename = '',
+	window.file_extensions = '',
+	window.file_blacklist = '',
+	window.check_file_extensions = '',
+	window.strict_file_extensions = '',
+	window.user_blocked = false,
+	window.user_disallowed = false,
+	window.user_protected = false;
 }
 
 function WMU_setSkip(){
