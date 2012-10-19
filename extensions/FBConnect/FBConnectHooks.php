@@ -722,10 +722,7 @@ HTML;
 				$msg =  Xml::element("img", array("id" => "fbMsgImage", "src" => $wgServer.'/skins/common/fbconnect/fbiconbig.png' ));
 				$msg .= "<p>".wfMsg('fbconnect-connect-msg', array("$1" => $pref->getFullUrl() ))."</p>";
 				/** Wikia change - starts  @author Andrzej 'nAndy' Łukaszewski */
-				global $wgEnableFounderProgressBarExt;
-				if( !empty($wgEnableFounderProgressBarExt) ) {
-					wfRunHooks('FounderProgressBarOnFacebookConnect', array());
-				}
+				wfRunHooks('FounderProgressBarOnFacebookConnect');
 				/** Wikia change - ends */
 			}
 		}
