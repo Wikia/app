@@ -3,7 +3,7 @@
 	html.addEventListener('click', function(ev){
 		var t = ev.target;
 
-		if(t.tagName === 'A' && t.hasAttribute('title')) {
+		if(t.tagName === 'A' && t.hasAttribute('title') && t.className.indexOf('image') == -1) {
 			ev.preventDefault();
 			Ponto.invoke(
 				'Linker',
@@ -84,20 +84,20 @@
 
 
 	window.addEventListener('DOMContentLoaded', function(){
-		require(['toc'], function(toc){
-			Ponto.invoke(
-				'Article',
-				'data',
-				{
-					data: {
-						title: wgTitle,
-						articleId: wgArticleId,
-						cityId: wgCityId
-					},
-					toc: toc.get()
-				}
-			);
-		});
+//		require(['toc'], function(toc){
+//			Ponto.invoke(
+//				'Article',
+//				'data',
+//				{
+//					data: {
+//						title: wgTitle,
+//						articleId: wgArticleId,
+//						cityId: wgCityId
+//					},
+//					toc: toc.get()
+//				}
+//			);
+//		});
 	});
 })(document.documentElement, this);
 

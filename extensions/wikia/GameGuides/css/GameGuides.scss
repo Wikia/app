@@ -34,14 +34,6 @@ $textColor: rgb(233,233,233);
 
 $backgroundColor: rgb(20,20,20);
 
-//I use it in a lot of places so it makes sense to have it here
-//The faster the better as it is not rendering but browser does calculation based on it
-*{
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	box-sizing: border-box;
-}
-
 html {
 	background: $backgroundColor;
 
@@ -120,7 +112,7 @@ a {
 	color: $textColor;
 	pointer-events: none;
 
-	img, span {
+	img:not(.media), span {
 		pointer-events: none;
 	}
 
@@ -134,6 +126,10 @@ a {
 	.link &, .thumb & {
 		border-bottom: none;
 	}
+}
+
+figure a {
+	pointer-events: auto;
 }
 
 .reference {
