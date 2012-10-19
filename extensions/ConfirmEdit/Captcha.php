@@ -514,10 +514,13 @@ class SimpleCaptcha {
 	function confirmUserCreate( $u, &$message ) {
 		global $wgCaptchaTriggers, $wgUser;
 		if ( $wgCaptchaTriggers['createaccount'] ) {
+			/*	Wikia edit, fbId::47248 No one will be allowed to skip captcha for user creation.
+				Commenting this section out, but feel free to uncomment it if situation changes.
 			if ( $wgUser->isAllowed( 'skipcaptcha' ) ) {
 				wfDebug( "ConfirmEdit: user group allows skipping captcha on account creation\n" );
 				return true;
 			}
+			end Wikia edit fbId::47248 */
 			if ( $this->isIPWhitelisted() )
 				return true;
 
