@@ -18,7 +18,7 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 		'by priority and recency' => 1,
 		'oldest first' => 2,
 	);
-	
+
 	function __construct() {
 		parent::__construct();
 		$this->user_id = $this->wg->user->getId();
@@ -43,7 +43,7 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 
 		foreach ( $images as $image ) {
 			$sqlWhere[ $image['state'] ][] = "( wiki_id = $image[wikiId] AND page_id = $image[pageId]) ";
-			
+
 			if ( $image['state'] == ImageReviewStatuses::STATE_DELETED ) {
 				$deletionList[] = array( $image['wikiId'], $image['pageId'] );
 			}
@@ -128,9 +128,9 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 	 */
 	public function resetAbandonedWork() {
 		wfProfileIn( __METHOD__ );
-		
+
 		$db = $this->getDatawareDB( DB_MASTER );
-		
+
 		$timeLimit = ( $this->wg->DevelEnvironment ) ? 1 : 3600; // 1 sec
 		$review_start = wfTimestamp(TS_DB, time() - $timeLimit );
 
@@ -194,7 +194,7 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 	public function refetchImageListByTimestamp( $timestamp ) {
 		$this->wf->ProfileIn( __METHOD__ );
 
-		$db = $this->getDatawareDB( DB_SLAVE ); 
+		$db = $this->getDatawareDB( DB_SLAVE );
 
 		// try to re-fetch the previuos set of images
 		// TODO: optimize it, so we don't do it on every request
@@ -204,14 +204,14 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 		$result = $db->select(
 			array( 'image_review' ),
 			array( 'wiki_id, page_id, state, flags, priority' ),
-			array( 
-				'review_start'	=> $review_start, 
+			array(
+				'review_start'	=> $review_start,
 				'reviewer_id'	=> $this->user_id
 			),
 			__METHOD__,
-			array( 
+			array(
 				'ORDER BY' => 'priority desc, last_edited desc',
-				'LIMIT' => self::LIMIT_IMAGES 
+				'LIMIT' => self::LIMIT_IMAGES
 			)
 		);
 
@@ -253,14 +253,14 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 		// get images
 		$db = $this->getDatawareDB( DB_MASTER );
 		$result = $db->query('
-			SELECT pages.page_title_lower, image_review.wiki_id, image_review.page_id, image_review.state, image_review.flags, image_review.priority 
+			SELECT pages.page_title_lower, image_review.wiki_id, image_review.page_id, image_review.state, image_review.flags, image_review.priority
 			FROM (
-				SELECT image_review.wiki_id, image_review.page_id, image_review.state, image_review.flags, image_review.priority 
+				SELECT image_review.wiki_id, image_review.page_id, image_review.state, image_review.flags, image_review.priority
 				FROM `image_review`
-				WHERE state = ' . $state . ' AND top_200 = false 
-				ORDER BY ' . $this->getOrder($order) . ' 
+				WHERE state = ' . $state . ' AND top_200 = false
+				ORDER BY ' . $this->getOrder($order) . '
 				LIMIT ' . self::LIMIT_IMAGES_FROM_DB . '
-			) as image_review 
+			) as image_review
 			LEFT JOIN pages ON (image_review.wiki_id=pages.page_wikia_id) AND (image_review.page_id=pages.page_id)'
 		);
 
@@ -268,13 +268,8 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 		$updateWhere = array();
 		$iconsWhere = array();
 		while ( $row = $db->fetchObject($result) ) {
-			$record = "(wiki_id = {$row->wiki_id} and page_id = {$row->page_id})";
-			if ( "ico" == pathinfo($row->page_title_lower, PATHINFO_EXTENSION) ) {
-				$iconsWhere[] = $record;
-			} else {
-				$rows[] = $row;
-				$updateWhere[] = $record;
-			}
+			$rows[] = $row;
+			$updateWhere[] = $record;
 		}
 		$db->freeResult( $result );
 
@@ -298,11 +293,11 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 				'review_start' => $review_start,
 				'state' => $target_state
 			);
-			
+
 			if ( $state == ImageReviewStatuses::STATE_QUESTIONABLE || $state == ImageReviewStatuses::STATE_REJECTED ) {
 				$values[] = "review_end = '0000-00-00 00:00:00'";
 			}
-			
+
 			$db->update(
 				'image_review',
 				$values,
@@ -310,24 +305,19 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 				__METHOD__
 			);
 		}
-
-		if ( count($iconsWhere) > 0 ) {
-			$db->update(
-				'image_review',
-				array( 'state' => ImageReviewStatuses::STATE_ICO_IMAGE),
-				array( implode(' OR ', $iconsWhere) ),
-				__METHOD__
-			);
-		}
 		$db->commit();
 
 		$imageList = $invalidImages = $unusedImages = array();
 		foreach( $rows as $row) {
+			$record = "(wiki_id = {$row->wiki_id} and page_id = {$row->page_id})";
+
 			if (count($imageList) < self::LIMIT_IMAGES) {
 				$img = ImagesService::getImageSrc( $row->wiki_id, $row->page_id );
 
 				if ( empty( $img['src'] ) ) {
-					$invalidImages[] = "(wiki_id = {$row->wiki_id} and page_id = {$row->page_id})";
+					$invalidImages[] = $record;
+				} elseif ( 'ico' == pathinfo( strtolower( $img['src'] ), PATHINFO_EXTENSION ) ) {
+					$iconsWhere[] = $record;
 				} else {
 					$imageList[] = array(
 						'wikiId' => $row->wiki_id,
@@ -348,7 +338,7 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 		if ( count($invalidImages) > 0 ) {
 			$db->update(
 				'image_review',
-				array( 
+				array(
 					'state' => ImageReviewStatuses::STATE_INVALID_IMAGE
 				),
 				array( implode(' OR ', $invalidImages) ),
@@ -357,10 +347,20 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 			$commit = true;
 		}
 
+		if ( count($iconsWhere) > 0 ) {
+			$db->update(
+					'image_review',
+					array( 'state' => ImageReviewStatuses::STATE_ICO_IMAGE),
+					array( implode(' OR ', $iconsWhere) ),
+					__METHOD__
+				   );
+			$commit = true;
+		}
+
 		if ( count($unusedImages) > 0 ) {
 			$db->update(
 				'image_review',
-				array( 
+				array(
 					'reviewer_id = null',
 					'state' => $state
 				),
@@ -433,7 +433,7 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 				__METHOD__,
 				array(
 					'GROUP BY'=> 'city_id',
-					'ORDER BY' => 'cnt desc', 
+					'ORDER BY' => 'cnt desc',
 					'HAVING' => 'cnt > 10000'
 				)
 			);
@@ -458,10 +458,10 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 			$this->wf->ProfileOut( __METHOD__ );
 			return $total;
 		}
-		
+
 		$db = $this->getDatawareDB( DB_SLAVE );
 		$where = array( 'state in (' . ImageReviewStatuses::STATE_QUESTIONABLE . ',' . ImageReviewStatuses::STATE_REJECTED . ')' );
-		
+
 		$list = $this->getWhitelistedWikis();
 		if ( !empty($list) ) {
 			$where[] = 'wiki_id not in('.implode(',', $list).')';
@@ -477,8 +477,8 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 		);
 
 		$total = array(
-			'reviewer' => 0, 
-			'unreviewed' => 0, 
+			'reviewer' => 0,
+			'unreviewed' => 0,
 			'questionable' => 0,
 			'rejected' => 0,
 		);
@@ -529,8 +529,9 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 
 		$dbr = $this->getDatawareDB( DB_SLAVE );
 
+		// TODO: use Database::select helper here
 		$res = $dbr->query( "select review_state, reviewer_id, count( page_id ) as count from
-		image_review_stats WHERE review_end BETWEEN '{$startDate}' AND '{$endDate}' group by review_state, reviewer_id with rollup" );
+		image_review_stats WHERE review_end BETWEEN '{$startDate}' AND '{$endDate}' group by review_state, reviewer_id with rollup", __METHOD__ );
 
 		while ( $row = $dbr->fetchRow( $res ) ) {
 			if ( is_null( $row['review_state'] ) ) {
