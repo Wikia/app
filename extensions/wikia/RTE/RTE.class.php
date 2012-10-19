@@ -812,8 +812,7 @@ HTML
 		}
 		else if ( strpos($sAgent, 'Gecko/') !== false )
 		{
-			$iVersion = (int)substr($sAgent, strpos($sAgent, 'Gecko/') + 6, 8) ;
-			$ret = ($iVersion >= 20030210) ;
+			$ret = true;
 		}
 		else if ( strpos($sAgent, 'Opera/') !== false )
 		{
