@@ -26,10 +26,19 @@ class VideosController extends WikiaController {
 	 * @responseParam string error - error message
 	 */
 	public function addVideo() {
-		$url = urldecode( $this->getVal( 'url', '' ) );
-
 		if ( !$this->wg->User->isLoggedIn() ) {
-			$this->error = $this->wg->Msg( 'videos-error-not-logged-in' );
+			$this->error = $this->wf->Msg( 'videos-error-not-logged-in' );
+			return;
+		}
+
+		$url = urldecode( $this->getVal( 'url', '' ) );
+		if ( empty( $url ) ) {
+			$this->error = $this->wf->Msg( 'videos-error-no-video-url' );
+			return;
+		}
+
+		if ( $this->wg->User->isBlocked() ) {
+			$this->error = $this->wf->Msg( 'videos-error-blocked-user' );
 			return;
 		}
 

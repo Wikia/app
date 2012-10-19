@@ -204,7 +204,22 @@ class RelatedVideosController extends WikiaController {
 	public function addVideo() {
 		global $wgRelatedVideosOnRail;
 
+		if ( !$this->wg->User->isLoggedIn() ) {
+			$this->error = $this->wf->Msg( 'videos-error-not-logged-in' );
+			return;
+		}
+
 		$url = urldecode( $this->getVal( 'url', '' ) );
+		if ( empty( $url ) ) {
+			$this->error = $this->wf->Msg( 'videos-error-no-video-url' );
+			return;
+		}
+
+		if ( $this->wg->User->isBlocked() ) {
+			$this->error = $this->wf->Msg( 'videos-error-blocked-user' );
+			return;
+		}
+
 		$articleId = $this->getVal( 'articleId', '' );
 		$rvd = F::build( 'RelatedVideosData' );
 		$retval = $rvd->addVideo( $articleId, $url );
