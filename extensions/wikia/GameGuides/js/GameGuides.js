@@ -84,20 +84,20 @@
 
 
 	window.addEventListener('DOMContentLoaded', function(){
-//		require(['toc'], function(toc){
-//			Ponto.invoke(
-//				'Article',
-//				'data',
-//				{
-//					data: {
-//						title: wgTitle,
-//						articleId: wgArticleId,
-//						cityId: wgCityId
-//					},
-//					toc: toc.get()
-//				}
-//			);
-//		});
+		require(['toc'], function(toc){
+			Ponto.invoke(
+				'Article',
+				'data',
+				{
+					data: {
+						title: wgTitle,
+						articleId: wgArticleId,
+						cityId: wgCityId
+					},
+					toc: toc.get()
+				}
+			);
+		});
 	});
 })(document.documentElement, this);
 
