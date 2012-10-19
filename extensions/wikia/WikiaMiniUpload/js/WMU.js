@@ -70,7 +70,7 @@ if (typeof WMU_box_filled == 'undefined') {
 }
 
 if( 'view' == wgAction ) {
-	var wmu_back = '',
+		wmu_back = '',
 		wmu_imagebutton = '',
 		wmu_close = '',
 		wmu_warn1 = '',
