@@ -2,9 +2,6 @@
 	h1 {
 		padding-top: 10px;
 	}
-	h3 {
-		padding-bottom: 5px;
-	}
 	dl {
 		margin: 0 0 1em 0;
 		
@@ -15,13 +12,17 @@
 	dd {
 		margin: 0;
 	}
-	& > dl > dd {
-		padding-left: 15px;
-		padding-bottom: 15px;
-		.empty {
-			color: red;
-			font-style: italic;
-		}
+	caption {
+		text-align: left;
+		padding-bottom: 10px;
+	}
+	th, td {
+		float: none !important;
+		display: table-cell !important;
+	}
+	.empty {
+		color: red;
+		font-style: italic;
 	}
 	figure {
 		border: 1px solid #ccc;
