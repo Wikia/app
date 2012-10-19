@@ -334,12 +334,22 @@ jQuery( document ).ready( function ( $ ) {
 		switch ( e.target.id ) {
 			case 'mSendModeWikisH':
 			case 'mSendModeWikisC':
-			case 'mSendModeWikisW':
 				$( '#mSendModeUsersA' ).prop( 'disabled', true );
 				$( '#mSendModeUsersReg' ).prop( 'disabled', true );
 				$( '#mSendModeUsersIP' ).prop( 'disabled', true );
 				if ( $( '#mSendModeUsersA' ).prop( 'checked' ) ||
-					$( '#mSendModeUsersReg' ).prop( 'checked' )||
+					$( '#mSendModeUsersReg' ).prop( 'checked' ) ||
+					$( '#mSendModeUsersIP' ).prop( 'checked' )
+				) {
+					$( '#mSendModeUsersC' ).prop( 'checked', true );
+				}
+				break;
+			case 'mSendModeWikisW':
+				$( '#mSendModeUsersA' ).prop( 'disabled', true );
+				$( '#mSendModeUsersReg' ).prop( 'disabled', true );
+				$( '#mSendModeUsersIP' ).prop( 'disabled', false );
+				if ( $( '#mSendModeUsersA' ).prop( 'checked' ) ||
+					$( '#mSendModeUsersReg' ).prop( 'checked' ) ||
 					$( '#mSendModeUsersIP' ).prop( 'checked' )
 				) {
 					$( '#mSendModeUsersC' ).prop( 'checked', true );
@@ -359,8 +369,11 @@ jQuery( document ).ready( function ( $ ) {
 			case 'mSendModeUsersU':
 			case 'mSendModeUsersM':
 				$( '#mSendModeWikisA' ).prop( 'disabled', true );
+				$( '#mSendModeWikisC' ).prop( 'disabled', true );
 				$( '#mSendModeWikisH' ).prop( 'disabled', true );
 				$( '#mSendModeWikisW' ).prop( 'disabled', true );
+				$( '#mSendModeWikisM' ).prop( 'disabled', true );
+				$( '#mSendModeWikisD' ).prop( 'disabled', true );
 				$( 'input.swm-lang-checkbox' ).prop( 'disabled', true );
 				break;
 			case 'mSendModeUsersIP':
@@ -368,6 +381,8 @@ jQuery( document ).ready( function ( $ ) {
 				$( '#mSendModeWikisC' ).prop( 'disabled', true );
 				$( '#mSendModeWikisH' ).prop( 'disabled', true );
 				$( '#mSendModeWikisW' ).prop( 'disabled', false );
+				$( '#mSendModeWikisM' ).prop( 'disabled', false );
+				$( '#mSendModeWikisD' ).prop( 'disabled', false );
 				$( 'input.swm-lang-checkbox' ).prop( 'disabled', false );
 				break;
 			case 'mSendModeUsersReg':
@@ -375,6 +390,8 @@ jQuery( document ).ready( function ( $ ) {
 				$( '#mSendModeWikisC' ).prop( 'disabled', true );
 				$( '#mSendModeWikisH' ).prop( 'disabled', true );
 				$( '#mSendModeWikisW' ).prop( 'disabled', true );
+				$( '#mSendModeWikisM' ).prop( 'disabled', true );
+				$( '#mSendModeWikisD' ).prop( 'disabled', true );
 				$( 'input.swm-lang-checkbox' ).prop( 'disabled', false );
 				break;
 			case 'mSendModeUsersEC':
@@ -382,6 +399,8 @@ jQuery( document ).ready( function ( $ ) {
 				$( '#mSendModeWikisC' ).prop( 'disabled', true );
 				$( '#mSendModeWikisH' ).prop( 'disabled', true );
 				$( '#mSendModeWikisW' ).prop( 'disabled', false );
+				$( '#mSendModeWikisM' ).prop( 'disabled', false );
+				$( '#mSendModeWikisD' ).prop( 'disabled', false );
 				$( 'input.swm-lang-checkbox' ).prop( 'disabled', false );
 				break;
 			default:
@@ -393,6 +412,8 @@ jQuery( document ).ready( function ( $ ) {
 				$( '#mSendModeWikisA' ).prop( 'disabled', false );
 				$( '#mSendModeWikisH' ).prop( 'disabled', false );
 				$( '#mSendModeWikisW' ).prop( 'disabled', false );
+				$( '#mSendModeWikisM' ).prop( 'disabled', false );
+				$( '#mSendModeWikisD' ).prop( 'disabled', false );
 				$( 'input.swm-lang-checkbox' ).prop( 'disabled', false );
 		}
 	}
