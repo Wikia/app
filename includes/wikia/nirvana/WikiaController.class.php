@@ -45,7 +45,10 @@ abstract class WikiaController extends WikiaDispatchableObject {
 				}
 				$data = array(
 					'method' => $method->name,
-					'formats' => array( 'html', 'json' ),
+					//TODO: we need a better way to detect available formats
+					//for now let's disable this hardcoded list as API controllers
+					//allow only for JSON and some normal controllers have to HTML
+					//'formats' => array( 'html', 'json' ),
 					//'formats' => $this->allowedRequests[$method->name],
 					'description' => $comment
 				);

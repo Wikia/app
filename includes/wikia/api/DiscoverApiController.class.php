@@ -39,6 +39,9 @@ class DiscoverApiController extends WikiaApiController {
 			}
 		}
 
+		//This is an exception, API controllers are forced to return
+		//JSON data.
+		$this->response->setFormat( 'html' );
 		$this->response->setVal( 'controllers', $controllers );
 	}
 }

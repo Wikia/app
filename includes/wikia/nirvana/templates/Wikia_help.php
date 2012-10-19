@@ -1,12 +1,8 @@
-<h2><?= $class; ?></h2>
+<h1>Wikia API</h1>
+<h2><?= $class; ?> Controller</h2>
 <dl>
  <?php foreach( $methods as $method ): ?>
- <dt><?= $method['method']; ?></dt>
- <dd><?= $method['description']; ?>
-  <p>
-  <strong>Formats:</strong>
-  <?= implode( ', ', $method['formats'] ); ?>
-  </p>
- </dd>
+ <dt><strong><?= $method['method']; ?></strong></dt>
+ <dd><?= $method['description']; ?></dd>
  <?php endforeach; ?>
 </dl>
