@@ -906,7 +906,6 @@ class SWMSendToGroupTask extends BatchTask {
 		$sqlValues = array();
 		$having = '';
 		$dbr = wfGetDB( DB_SLAVE );
-		$usersSentTo = array(); // Temp hack until multi-wiki per user issue fixed
 
 		switch ( $params['editCountOption'] ) {
 			case 'more':
@@ -937,10 +936,7 @@ class SWMSendToGroupTask extends BatchTask {
 			);
 
 			while ( $row = $db->fetchObject( $res ) ) {
-				if ( !in_array( $row->rev_user, $usersSentTo ) ) { // Temp hack until multi-wiki per user issue fixed
-					$sqlValues[] = "($wikiID, {$row->rev_user}, {$params['messageId']}, " . MSG_STATUS_UNSEEN . ')';
-					$usersSentTo[] = $row->rev_user;
-				}
+				$sqlValues[] = "($wikiID, {$row->rev_user}, {$params['messageId']}, " . MSG_STATUS_UNSEEN . ')';
 			}
 			$db->freeResult( $res );
 			$this->addLog("Add records about new message to right users [wiki_id = $wikiID, wiki_db = $wikiDB, number of users = " . count( $sqlValues ) . "]");
@@ -1299,7 +1295,7 @@ class SWMSendToGroupTask extends BatchTask {
 				array('user_id', 'wiki_id'),
 				array('wiki_id IN (' . implode(',', array_keys($wikisDB)) . ')'),
 				__METHOD__,
-				array('GROUP BY' => 'user_id')
+				array('GROUP BY' => 'wiki_id, user_id')
 			);
 
 			//step 3 of 3: add records about new message to right users
@@ -1349,7 +1345,7 @@ class SWMSendToGroupTask extends BatchTask {
 				array('user_id', 'wiki_id'),
 				array('wiki_id IN (' . implode(',', array_keys($wikisDB)) . ')', "(single_group = '$groupName' OR all_groups " . $groupNameLike .")"),
 				__METHOD__,
-				array('GROUP BY' => 'user_id')
+				array('GROUP BY' => 'wiki_id, user_id')
 			);
 
 			//step 3 of 3: add records about new message to right users

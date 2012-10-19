@@ -22,13 +22,14 @@ CREATE index removed_mode_expire_date ON messages_text (msg_removed,msg_mode,msg
 -- Messages metadata
 CREATE TABLE IF NOT EXISTS `messages_status`
 (
-	`msg_wiki_id`      int (9),
+	`msg_wiki_id`      int (9)  unsigned   NOT NULL    default 0,
 	`msg_recipient_id` int (10) unsigned   NOT NULL    default 0,
 	`msg_id`           int (7)  unsigned   NOT NULL,
 	`msg_status`       tinyint             NOT NULL,
 	`msg_date`         timestamp           NOT NULL    default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
-	PRIMARY KEY (`msg_recipient_id`, `msg_id`),
+	PRIMARY KEY (`msg_wiki_id`, `msg_recipient_id`, `msg_id`),
 	KEY `msg_id` (`msg_id`),
 	KEY `msg_wiki_id_idx` (`msg_wiki_id`)
 );
+CREATE INDEX msg_recipient_msg_id ON messages_status (msg_recipient_id, msg_id);
 -- msg_status: 0 = unseen, 1 = seen, 2 = dismissed

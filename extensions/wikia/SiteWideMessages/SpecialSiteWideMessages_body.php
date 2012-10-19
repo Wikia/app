@@ -510,6 +510,9 @@ class SiteWideMessages extends SpecialPage {
 			if ($dbResult) {
 				$dbInsertResult = true;
 				$result['msgId'] = $DB->insertId();
+				if ( is_null( $mWikiId ) ) {
+					$mWikiId = 0;
+				}
 
 				if ($mSendModeUsers == 'USER') {
 					if (!is_null($mRecipientId) && !is_null($result['msgId'])) {
@@ -1063,7 +1066,7 @@ class SiteWideMessages extends SpecialPage {
 			. ' AND msg_status IN (' . join(',', $status) . ')'
 			. ' AND (msg_expire IS NULL OR msg_expire > ' . $DB->AddQuotes(date('Y-m-d H:i:s')) . ')'
 			. ' AND msg_removed = ' . MSG_REMOVED_NO
-			. " AND (msg_wiki_id IS NULL OR msg_wiki_id = $localCityId)"
+			. " AND (msg_wiki_id = 0 OR msg_wiki_id = $localCityId)"
 			. ';'
 			, __METHOD__
 		);
@@ -1162,7 +1165,7 @@ class SiteWideMessages extends SpecialPage {
 			. ' AND msg_status IN (' . MSG_STATUS_UNSEEN . ', ' . MSG_STATUS_SEEN . ')'
 			. ' AND (msg_expire IS NULL OR msg_expire > ' . $DB->AddQuotes(date('Y-m-d H:i:s')) . ')'
 			. ' AND msg_removed = ' . MSG_REMOVED_NO
-			. " AND (msg_wiki_id IS NULL OR msg_wiki_id = $localCityId )"
+			. " AND (msg_wiki_id = 0 OR msg_wiki_id = $localCityId )"
 			. ';'
 			, __METHOD__
 		);
@@ -1228,7 +1231,7 @@ class SiteWideMessages extends SpecialPage {
 					  'REPLACE INTO ' . MSG_STATUS_DB
 					. ' (msg_wiki_id, msg_recipient_id, msg_id, msg_status)'
 					. ' VALUES ('
-					. 'NULL , '
+					. '0 , '
 					. $DB->AddQuotes($userID) . ', '
 					. $DB->AddQuotes($tmpMsgId) . ', '
 					. MSG_STATUS_SEEN
@@ -1279,7 +1282,7 @@ class SiteWideMessages extends SpecialPage {
 			' AND msg_status IN (' . MSG_STATUS_UNSEEN . ', ' . MSG_STATUS_SEEN . ')' .
 			' AND (msg_expire IS NULL OR msg_expire > ' . $dbr->addQuotes( date( 'Y-m-d H:i:s' ) ) . ')' .
 			' AND msg_removed = ' . MSG_REMOVED_NO .
-			" AND (msg_wiki_id IS NULL OR msg_wiki_id = $localCityId )" .
+			" AND (msg_wiki_id = 0 OR msg_wiki_id = $localCityId )" .
 			';'
 			, __METHOD__
 		);
@@ -1349,43 +1352,59 @@ class SiteWideMessages extends SpecialPage {
 
 	static function dismissMessage($messageID) {
 		global $wgUser, $wgMemc, $wgExternalSharedDB, $wgTitle, $wgRequest;
+		wfProfileIn( __METHOD__ );
 		$userID = $wgUser->GetID();
 		if (wfReadOnly()) {
+			wfProfileOut( __METHOD__ );
 			return wfMsg('readonly');
 		} elseif ( !$wgUser->isLoggedIn() ) {
 			$wgRequest->response()->setcookie( 'swm-' . $messageID, 1, time() + 86400 /*24h*/ );
 		} elseif ($userID) {
 			$DB = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 
-			$dbResult = $DB->Query (
-				  'SELECT msg_wiki_id'
-				. ' FROM ' . MSG_STATUS_DB
-				. ' WHERE msg_id = ' . $DB->AddQuotes($messageID)
-				. ' AND msg_recipient_id = ' . $DB->AddQuotes($userID)
-				. ';'
-				, __METHOD__
+			$dbResult = $DB->select(
+				array( MSG_STATUS_DB ),
+				array( 'msg_wiki_id' ),
+				array(
+					'msg_id' => $messageID,
+					'msg_recipient_id' => $userID
+				),
+				__METHOD__
 			);
 
 			$mWikiId = null;
 
-			if ($oMsg = $DB->FetchObject($dbResult)) {
+			if ($oMsg = $DB->fetchObject($dbResult)) {
 				$mWikiId = $oMsg->msg_wiki_id;
 			}
 			if ($dbResult !== false) {
-				$DB->FreeResult($dbResult);
+				$DB->freeResult($dbResult);
 			}
 
-			$dbResult = (boolean)$DB->Query (
-				  'REPLACE INTO ' . MSG_STATUS_DB
-				. ' (msg_wiki_id, msg_recipient_id, msg_id, msg_status)'
-				. ' VALUES ('
-				. $DB->AddQuotes($mWikiId). ', '
-				. $DB->AddQuotes($userID) . ', '
-				. $DB->AddQuotes($messageID) . ', '
-				. MSG_STATUS_DISMISSED
-				. ');'
-				, __METHOD__
-			);
+			if ( is_null( $mWikiId ) ) {
+				$dbResult = (boolean)$DB->insert(
+					MSG_STATUS_DB,
+					array(
+						'msg_wiki_id' => 0,
+						'msg_recipient_id' => $userID,
+						'msg_id' => $messageID,
+						'msg_status' => MSG_STATUS_DISMISSED
+					),
+					__METHOD__
+				);
+			} else {
+				$dbResult = (boolean)$DB->update(
+					MSG_STATUS_DB,
+					array(
+						'msg_status' => MSG_STATUS_DISMISSED
+					),
+					array(
+						'msg_recipient_id' => $userID,
+						'msg_id' => $messageID
+					),
+					__METHOD__
+				);
+			}
 
 			//purge the cache
 			$key = 'wikia:talk_messages:' . $userID . ':' . str_replace(' ', '_', $wgUser->getName());
@@ -1399,8 +1418,10 @@ class SiteWideMessages extends SpecialPage {
 			$DB->commit();
 
 			wfDebug(basename(__FILE__) . ' || ' . __METHOD__ . " || WikiId=$mWikiId, messageID=$messageID, result=" . ($dbResult ? 'true':'false') . "\n");
+			wfProfileOut( __METHOD__ );
 			return (bool)$dbResult;
 		}
+		wfProfileOut( __METHOD__ );
 		return false;
 	}
 
