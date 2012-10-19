@@ -120,7 +120,7 @@ a {
 	color: $textColor;
 	pointer-events: none;
 
-	&[title] {
+	&[title]:not(.external):not(.extiw) {
 		color: $linkColor;
 		pointer-events: auto;
 
