@@ -159,8 +159,18 @@
 		protected function findImages( $articles ) {
 			wfProfileIn(__METHOD__);
 			$articleIds = array_keys($articles);
-			$imageServing = new ImageServing( $articleIds, $this->confThumbWidth, $this->confThumbProportion );
-			$result = $imageServing->getImages(1);
+			$result = array();
+			foreach($articleIds as $articleId) {
+				$imageServing = new ImageServing( array($articleId), $this->confThumbWidth, $this->confThumbProportion );
+				$images = $imageServing->getImages(1);
+				if(
+					!empty($images)
+					&& !empty($images[$articleId])
+					&& is_array($images[$articleId])
+				) {
+					$result[$articleId] = array_shift($images);
+				}
+			}
 			wfProfileOut(__METHOD__);
 			return $result;
 		}
