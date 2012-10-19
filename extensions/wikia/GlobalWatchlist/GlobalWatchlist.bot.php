@@ -458,8 +458,8 @@ class GlobalWatchlistBot {
 				2 => ( $iBlogsCount > 0 ) ? $sDigestsBlogsHTML : $this->getLocalizedMsg( 'globalwatchlist-no-blog-page-found', $oUserLanguage ),
 			);
 
-			$sMessageHTML = $this->getLocalizedMsg( 'globalwatchlist-digest-email-body-HTML', $oUserLanguage );
-			if ( !wfEmptyMsg( 'globalwatchlist-digest-email-body-HTML', $sMessageHTML ) ) {
+			$sMessageHTML = $this->getLocalizedMsg( 'globalwatchlist-digest-email-body-html', $oUserLanguage );
+			if ( !wfEmptyMsg( 'globalwatchlist-digest-email-body-html', $sMessageHTML ) ) {
 				$sBodyHTML = wfMsgReplaceArgs( $sMessageHTML, $aEmailArgs );
 			}
 		}
