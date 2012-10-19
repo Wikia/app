@@ -1,0 +1,4 @@
+#logo {
+	background-image: url("/images/logo.png"); }
+* html #logo {
+	background-image: url("/images/logo.gif"); }

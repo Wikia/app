@@ -1,0 +1,20 @@
+@mixin test($one: 'foo', $two: 'bar') {
+	one: $one;
+	two: $two;
+}
+
+default {
+	@include test();
+}
+
+one {
+	@include test('one');
+}
+
+two {
+	@include test($two: 'two');
+}
+
+both {
+	@include test('one', 'two');
+}
