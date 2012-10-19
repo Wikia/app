@@ -191,6 +191,7 @@ class WikiaFileHelper extends Service {
 		if ( !empty($duration) ) {
 			$attribs = array(
 				'class' => 'info-overlay-duration',
+				'itemprop' => 'duration',
 			);
 
 			$html = Xml::element( 'span', $attribs, "($duration)", false );
@@ -401,6 +402,62 @@ class WikiaFileHelper extends Service {
 		return array( $truncatedList, $isTruncated );
 	}
 
+	public static function inflateArrayWithVideoData( &$arr, Title $title, $width=150, $height=75, $force16x9Ratio=false ) {
+
+		$arr['ns'] = $title->getNamespace();
+		$arr['nsText'] = $title->getNsText();
+		$arr['dbKey'] = $title->getDbKey();
+		$arr['title'] = $title->getText();
+
+		if ( $title instanceof GlobalTitle ) { //wfFindFile works with Title only
+			$oTitle = Title::newFromText( $arr['nsText'].':'.$arr['dbKey'] );
+		} else {
+			$oTitle = $title;
+		}
+		$arr['url'] = $oTitle->getFullURL();
+
+		$file = wfFindFile( $oTitle );
+		if ( !empty( $file ) ) {
+			$thumb = $file->transform( array( 'width'=>$width, 'height'=>$height ) );
+
+			$htmlParams = array(
+				'custom-title-link' => $oTitle,
+				'duration' => true,
+				'linkAttribs' => array( 'class' => 'video-thumbnail' )
+			);
+			if( $force16x9Ratio ) {
+				$htmlParams['src'] = self::thumbUrl2thumbUrl( $thumb->getUrl(), 'video', $width, $height );
+				$thumb->width = $width;
+				$thumb->height = $height;
+			}
+
+			$arr['thumbnail'] = $thumb->toHtml( $htmlParams );
+		}
+	}
+
+	/**
+	 * Convert thumbnail to different size.
+	 *
+	 * This is just a PHP port of JS Wikia.Thumbnailer.getThumbURL(), see thumbnailer.js for more details
+	 *
+	 * @todo consider implementing that logic inside ThumbnailVideo::toHtmml() directly
+	 * @author ADi
+	 */
+	public static function thumbUrl2thumbUrl( $thumbUrl, $type, $width = 50, $height = 0 ) {
+		$width .= ($height ? '' : 'px');
+
+		// URL points to a thumbnail, remove crop and size
+		//The URL of a thumbnail is in the following format:
+		//http://domain/image_path/image.ext/thumbnail_options.ext
+		//so return the URL till the last / to remove the options
+		$thumbUrl = substr($thumbUrl, 0, strripos($thumbUrl, '/'));
+
+		$tokens = explode('/', $thumbUrl);
+		$last = $tokens[count($tokens)-1];
+		$tokens[] = $width . ($height ? 'x' . $height : '-') . ( ($type == 'video' || $type == 'nocrop') ? '-' : 'x2-' ) . $last . '.png';
+
+		return implode('/', $tokens);
+	}
 	// format duration from second to h:m:s
 	public static function formatDuration( $sec ) {
 		$hms = "";

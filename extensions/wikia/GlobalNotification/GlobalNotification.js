@@ -12,14 +12,19 @@ var GlobalNotification = {
 			GlobalNotification.setUpClose();
 		}
 	},
-	createDom: function() {
+	createDom: function(element) {
 		// create and store dom
 		if(!GlobalNotification.dom.length) {
 			GlobalNotification.dom = $( '<div class="global-notification"><button class="close wikia-chiclet-button"><img src="' + stylepath + '/oasis/images/icon_close.png"></button><div class="msg"></div></div>' ).hide();
 			GlobalNotification.setUpClose();
 		}
-		if(GlobalNotification.isModal()) {
+		// allow notification wrapper element to be passed by extension (used for YUI modal in VET)
+		if(element instanceof jQuery) {
+			element.prepend( GlobalNotification.dom ).show();
+		// handle standard modal implementation
+		} else if(GlobalNotification.isModal()) {
 			GlobalNotification.modal.prepend( GlobalNotification.dom );
+		// handle non-modal implementation
 		} else {
 			if($('.oasis-split-skin').length) {
 				$('.WikiaHeader').after( GlobalNotification.dom );
@@ -29,10 +34,10 @@ var GlobalNotification = {
 		}
 		GlobalNotification.msg = GlobalNotification.dom.find( '.msg' );
 	},
-	show: function(content, type) {
+	show: function(content, type, element) {
 		GlobalNotification.content = content;
 		var callback = function() {
-			GlobalNotification.createDom();
+			GlobalNotification.createDom(element);
 			GlobalNotification.msg.html( GlobalNotification.content );
 			GlobalNotification.dom.removeClass('confirm, error, notify, warn').addClass(type);
 			// Share scroll event with WikiaFooterApp's toolbar floating (BugId:33365)
@@ -59,7 +64,7 @@ var GlobalNotification = {
 		}
 	},
 	isModal: function() {
-		GlobalNotification.modal = $( '.modalWrapper' );
+		GlobalNotification.modal = $( '.modalWrapper, .yui-panel' );
 		if ( GlobalNotification.modal.length > 0 && GlobalNotification.modal.is( ':visible' ) ) {
 			return true;
 		}

@@ -8,6 +8,7 @@
 @import "../mixins/gradient";
 @import "../mixins/opacity";
 
+
 $modal-border-opacity: 80;
 @if $is-dark-wiki {
 	$modal-border-opacity: 60;
@@ -98,18 +99,14 @@ yui-overlay, .yui-panel-container {
 
 .skin-oasis {
 
-  #ImageUpload {
-    background: $color-page;
-  }
-
 	#ImageUpload,
 	#VideoEmbed {
 		@include box-shadow(0, 10px, 60px, mix($color-page, #000));
 		border: 5px solid $color-buttons; 
 		border-color: transparentize($color-buttons, 0.7); // for browser that do support RGBa
-		padding: 35px 5px 5px 5px !important;
+		padding: 35px 5px 5px 5px;
 		position: absolute;
-		width: auto !important;
+		width: auto;
 		h1 {
 			color: $color-links;
 			font-size: 22px;
@@ -119,6 +116,11 @@ yui-overlay, .yui-panel-container {
 			margin-top: 4px;
 			vertical-align: baseline;
 		}
+	}
+	#ImageUpload {
+		background: $color-page;
+		padding: 35px 5px 5px 5px !important;
+		width: auto !important;
 	}
 	#ImageUploadClose,
 	#VideoEmbedClose {

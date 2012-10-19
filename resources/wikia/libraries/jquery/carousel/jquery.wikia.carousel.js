@@ -284,6 +284,14 @@
 			updateArrows();
 		};
 
+        this.resetPosition = function () {
+            // call this method to move the carousel to the left without
+            // visual scrolling effect (which moveToIndex(0) does)
+            // this is useful after we replace items in carousel
+            dom.carousel.css('left', 0);
+            states.currIndex = 0;
+        }
+
 		return this.each(function() {
 
 			// if there's an awkward number of thumbnails, add empty <li>'s to fill the space
