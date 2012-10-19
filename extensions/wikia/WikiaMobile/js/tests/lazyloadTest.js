@@ -25,11 +25,31 @@ describe("Lazyload module", function () {
 	window.wgStyleVersion = 123;
 
 	async.it('should be defined', function(done){
+		document.body.innerHTML = '<section id="mw-content-text"></section>';
+
 		require(['lazyload'], function(lazyload){
 
 			expect(lazyload).toBeDefined();
 
 			done();
+		});
+	});
+
+	async.it('should lazyload images', function(done){
+		document.body.innerHTML = '<section id="mw-content-text"><img alt="Sectionals2.jpg" width="480" height="207" data-src="/usr/wikia/source/trunk/extensions/wikia/WikiaMobile/js/tests/fixtures/blank.png" class="lazy media" data-params="[{&quot;name&quot;:&quot;Sectionals2.jpg&quot;,&quot;full&quot;:&quot;/usr/wikia/source/trunk/extensions/wikia/WikiaMobile/js/tests/fixtures/blank.png&quot;}]"></section>';
+
+		require(['lazyload'], function(lazyload){
+
+			lazyload(document.getElementsByTagName('img'));
+
+			var img = document.getElementsByTagName('img')[0];
+
+			setInterval(function(){
+				if(img.src){
+					expect(img.src).toMatch('blank.png');
+					done();
+				}
+			},100);
 		});
 	});
 
