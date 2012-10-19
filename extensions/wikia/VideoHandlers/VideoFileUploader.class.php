@@ -263,7 +263,24 @@ class VideoFileUploader {
 		return $this->sVideoId;
 	}
 
-	
+	/*
+	 * Geberates unique Title for new video
+	 * the function checks if given title exists
+	 * and if so, it's adding a postfix recursively
+	 * @param string $title
+	 * @return Title $oTitle
+	 */
+	public function getUniqueTitle( $title, $level=0 ) {
+
+		$oTitle = Title::newFromText( $title, NS_FILE );
+		if ( !empty( $oTitle ) && $oTitle->exists() ) {
+			$newTitleObject = $oTitle->getBaseText() . '-' . $level;
+			return VideoFileUploader::getUniqueTitle( $newTitleObject, ($level+1) );
+		}
+		return $oTitle;
+	}
+
+
 	/**
 	 * Create a video using LocalFile framework
 	 * @param string $provider provider whose API will be used to fetch video data

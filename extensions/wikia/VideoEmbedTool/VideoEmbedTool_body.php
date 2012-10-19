@@ -218,14 +218,14 @@ class VideoEmbedTool {
 				return wfMsg('vet-warn3');
 			}
 
-			$nameFile = VideoFileUploader::sanitizeTitle($name);
-			$titleFile = Title::newFromText($nameFile, NS_FILE);
-			if (empty($titleFile)) {
+			$nameFile = VideoFileUploader::sanitizeTitle( $name );
+         	$titleFile = VideoFileUploader::getUniqueTitle( $nameFile );
+         	if (empty($titleFile)) {
 				header('X-screen-type: error');
 				return wfMsg ( 'vet-name-incorrect' );
 			}
 			// by definition, WikiaFileHelper::useVideoHandlersExtForEmbed() == true
-			$nameSanitized = $nameFile;
+			$nameSanitized = $titleFile->getBaseText();
 			$title = $titleFile;
 
 			$extra = 0;
