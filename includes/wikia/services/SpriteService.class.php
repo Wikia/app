@@ -58,7 +58,7 @@
 		protected function analyzeExistingSassFile() {
 			$contents = (string)@file_get_contents($this->scss);
 
-			$lines = split("\r?\n",$contents);
+			$lines = preg_split("/\r?\n/",$contents);
 			foreach ($lines as $line) {
 				$matches = array();
 				if (preg_match("/@autosprite-([^:]+):[ \t\r\n]*(.*)\$/", trim($line), $matches)) {
