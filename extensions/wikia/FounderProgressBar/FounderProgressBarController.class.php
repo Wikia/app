@@ -1,5 +1,4 @@
 <?php
-
 class FounderProgressBarController extends WikiaController {
 	
 	/**
@@ -47,7 +46,7 @@ class FounderProgressBarController extends WikiaController {
 				FT_TOTAL_EDIT_300 => "total-edit%",
 				FT_BONUS_PHOTO_ADD_10 => "bonus-photo-add%",
 				FT_BONUS_PAGE_ADD_5 => "bonus-page-add%",
-				FT_BONUS_EDIT_50 => "bonus-edit%",			
+				FT_BONUS_EDIT_50 => "bonus-edit%",
 				FT_COMPLETION => "completion"
 			);
 
@@ -84,7 +83,7 @@ class FounderProgressBarController extends WikiaController {
 				FT_TOTAL_EDIT_300 => 300,
 				FT_BONUS_PHOTO_ADD_10 => 10,
 				FT_BONUS_PAGE_ADD_5 => 5,
-				FT_BONUS_EDIT_50 => 50,			
+				FT_BONUS_EDIT_50 => 50,
 				FT_COMPLETION => 1
 		);
 
@@ -119,7 +118,7 @@ class FounderProgressBarController extends WikiaController {
 				FT_UNCATEGORIZED_VISIT => array("newFromText", "UncategorizedPages", NS_SPECIAL),
 				FT_BONUS_PHOTO_ADD_10 => array("newFromText", "Upload", NS_SPECIAL),
 				FT_BONUS_PAGE_ADD_5 => array("newFromText", "CreatePage", NS_SPECIAL),
-				FT_BONUS_EDIT_50 => array("newFromText", "WikiActivity", NS_SPECIAL),		
+				FT_BONUS_EDIT_50 => array("newFromText", "WikiActivity", NS_SPECIAL),
 				FT_TOTAL_EDIT_300 => array("newFromText", "CreatePage", NS_SPECIAL),
 		);
 		
@@ -127,14 +126,14 @@ class FounderProgressBarController extends WikiaController {
 		if (defined('NS_BLOG_ARTICLE')) {
 			$this->urls[FT_BLOGPOST_ADD] = array("newFromText", $this->wg->User->getName(), NS_BLOG_ARTICLE);
 		} else {
-			$this->urls[FT_BLOGPOST_ADD] = array("newFromText", $this->wg->User->getName(), NS_USER);			
+			$this->urls[FT_BLOGPOST_ADD] = array("newFromText", $this->wg->User->getName(), NS_USER);
 		}
 		
 		// This list contains additional "bonus" tasks that can be completed if all other tasks are skipped or completed
 		$this->bonus_tasks = array (
 				FT_BONUS_PHOTO_ADD_10,
 				FT_BONUS_PAGE_ADD_5,
-				FT_BONUS_EDIT_50			
+				FT_BONUS_EDIT_50
 		);
 		
 		// tracked events on the frontend
@@ -223,7 +222,7 @@ class FounderProgressBarController extends WikiaController {
 			
 			while($row = $dbr->fetchObject($res)) {
 				$task_id = $row->task_id;
-				if ($task_id == 1000) continue;  // Make sure the "completion" task does not show up as a task
+				if ($task_id == FT_COMPLETION) continue;  // Make sure the "completion" task does not show up as a task
 				$list[$task_id] = array (
 					"task_id" => $task_id,
 					"task_count" => $row->task_count,
@@ -293,7 +292,7 @@ class FounderProgressBarController extends WikiaController {
 	public function doTask() {
 		$wiki_id = $this->wg->CityId;
 		$task_id = $this->request->getVal("task_id");
-		
+
 		if (! isset($this->counters[$task_id])) {
 			$this->setVal('result', 'error');
 			$this->setVal('error', 'invalid task_id');
@@ -328,7 +327,6 @@ class FounderProgressBarController extends WikiaController {
 		}
 		$actions_completed = (int) $row['task_count'];
 		$actions_remaining = $this->counters[$task_id] - $actions_completed;
-
 		$this->setVal('actions_completed', $actions_completed);
 		$this->setVal('actions_remaining', $actions_remaining);
 		$this->setVal('result', 'OK');
@@ -343,7 +341,7 @@ class FounderProgressBarController extends WikiaController {
 				array('task_count' => '0', $completedSQL),
 				array('wiki_id' => $wiki_id, 'task_id' => $task_id)
 			);
-			$this->setVal('result', "task_completed");		
+			$this->setVal('result', "task_completed");
 			// Check to see if we got to 100% complete
 			FounderProgressBarHooks::allTasksComplete(true);
 			// Open bonus task if necessary
@@ -351,8 +349,8 @@ class FounderProgressBarController extends WikiaController {
 		}
 		$dbw->commit();
 		// DB update was done, so force refresh of memcache data
-		$this->sendSelfRequest("getLongTaskList", array("use_master" => true));						
-		
+		$this->sendSelfRequest("getLongTaskList", array("use_master" => true));
+
 	}
 	
 	/**
@@ -389,7 +387,7 @@ class FounderProgressBarController extends WikiaController {
 		// Do this before the memcache clear so that we load correct data into memcache if a bonus task is added
 		$this->setVal("bonus_tasks_unlocked", $this->openBonusTask());
 		// DB updated so clear memcache val
-		$this->sendSelfRequest("getLongTaskList", array("use_master" => true));						
+		$this->sendSelfRequest("getLongTaskList", array("use_master" => true));
 		$this->setVal("result", "OK");
 	}
 	
@@ -403,7 +401,7 @@ class FounderProgressBarController extends WikiaController {
 		$list = $response->getVal('list');
 		if (isset($list[$task_id])) {
 			$this->setVal('task_completed', $list[$task_id]['task_completed']);
-		} 	
+		}
 	}
 	
 	public function widget() {

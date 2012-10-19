@@ -41,6 +41,11 @@ class FounderProgressBarHooks {
 			if ($app->wg->EnableTopListsExt && $title->getNamespace() == NS_TOPLIST) {
 				$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_TOPTENLIST_ADD));
 			}
+
+			// edit profile page X
+			if ($title->getNamespace() == NS_USER && $title->getText() == $app->wg->User->getName()) {
+				$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_PROFILE_EDIT));
+			}
 		}
 
 		// Tasks related to updating existing pages
@@ -89,6 +94,7 @@ class FounderProgressBarHooks {
 			if ($title->getNamespace() == NS_USER && $title->getText() == $app->wg->User->getName()) {
 				$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_PROFILE_EDIT));
 			}
+
 			// if page contains gallery tag
 			if (stripos ($text, "<gallery") !== false) {
 				$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_GALLERY_ADD));
@@ -98,7 +104,6 @@ class FounderProgressBarHooks {
 			if (stripos ($text, "<video") !== false || stripos($text, "[[Video:") !== false ) {
 				$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_VIDEO_ADD));
 			}
-
 		}
 
 		wfProfileOut(__METHOD__);
@@ -210,7 +215,7 @@ class FounderProgressBarHooks {
 		$memKey = $app->wf->MemcKey('FounderTasksCompleted');
 		$task_complete = $app->wg->Memc->get($memKey);
 		if (empty($task_complete)) {
-			$response = $app->sendRequest('FounderProgressBar',"isTaskComplete", array("task_id" => "1000"));
+			$response = $app->sendRequest('FounderProgressBar',"isTaskComplete", array("task_id" => FT_COMPLETION));
 			$completed = $response->getVal('task_completed', 0);
 			// Completion task set, and once set it can never be undone
 			if ($completed) {
