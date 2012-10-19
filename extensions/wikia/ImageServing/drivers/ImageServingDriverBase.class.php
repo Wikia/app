@@ -121,16 +121,28 @@ abstract class ImageServingDriverBase {
 	function formatResult($imageList ,$dbOut, $limit) {
 		wfProfileIn( __METHOD__ );
 
+		$articlesWithImages = array();
 		$out = array();
-		foreach( $imageList as $key => $value  ) {
-			if( isset($dbOut[ $key ]) ) {
-				foreach($value as $key2 => $value2) {
-					if (empty($out[$key2]) || count($out[$key2]) < $limit) {
-						$out[$key2][] = array(
-							"name" => $key,
-							"url" => $this->imageServing->getUrl($key, $dbOut[$key]['img_width'], $dbOut[$key]['img_height']));
+
+		foreach( $imageList as $fileName => $articleIds  ) {
+			if( isset($dbOut[ $fileName ]) ) {
+				foreach($articleIds as $articleId => $value2) {
+					if(empty($articlesWithImages[$articleId])) {
+						$articlesWithImages[$articleId] = array();
+						$out[$articleId] = array();
 					}
+					$articlesWithImages[$articleId][$value2] = $fileName;
 				}
+			}
+		}
+
+		foreach($articlesWithImages as $articleId => &$articleMedia) {
+			ksort($articleMedia);
+			while(count($out[$articleId]) < $limit && !empty($articleMedia)) {
+				$fileName = array_shift($articleMedia);
+				$out[$articleId][] = array(
+					"name" => $fileName,
+					"url" => $this->imageServing->getUrl($fileName, $dbOut[$fileName]['img_width'], $dbOut[$fileName]['img_height']));
 			}
 		}
 

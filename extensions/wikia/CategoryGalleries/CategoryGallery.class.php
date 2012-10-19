@@ -5,7 +5,7 @@
 	 */
 	class CategoryGallery {
 
-		const CACHE_TTL = 21600;
+		const CACHE_TTL = 21600; // 6*60*60
 
 		const DEFAULT_WIDTH = 130;
 		const DEFAULT_HEIGHT = 115;
