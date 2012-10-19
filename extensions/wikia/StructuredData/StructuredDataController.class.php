@@ -25,7 +25,8 @@ class StructuredDataController extends WikiaSpecialPageController {
 			"callofduty:Faction" => "Factions",
 			"callofduty:Timeline" => "Timelines",
 			"callofduty:Weapon" => "Weapons",
-			"callofduty:WeaponClass" => "Weapon Class"
+			"callofduty:WeaponClass" => "Weapon Class",
+			"callofduty:Mission" => "Missions"
 		);
 
 		// parent SpecialPage constructor call MUST be done
