@@ -221,7 +221,7 @@ class RTEParser extends Parser {
 		// get "unparsed" caption from original wikitext and store parsed one as 'captionParsed'
 		if ($params['caption'] != '') {
 			$wikitext = trim($data['wikitext'], '[]');
-			$wikitextParts = explode('|', $wikitext);
+			$wikitextParts = self::explodeImageArgs( $wikitext );
 
 			// let's assume caption is the last part of image wikitext
 			$originalCaption = end($wikitextParts);
@@ -678,5 +678,46 @@ class RTEParser extends Parser {
 		wfProfileOut(__METHOD__);
 
 		return $ret;
+	}
+	
+	/**
+	 * Correctly splits out pipe-separated image arguments (solves bugid: 2240)
+	 * @param  string $wikiText
+	 * @return array 
+	 */
+	public static function explodeImageArgs( $wikiText ) {
+		wfProfileIn(__METHOD__);
+		$bracketContext = false;
+		$counter		= 0;
+		$results		= array();
+		$length			= strlen( $wikiText );
+		$substr			= '';
+		
+		while ( $counter < $length ) {
+			$char = $wikiText[$counter++];
+			
+			switch ( $char ) {
+				case ']':
+				    $bracketContext = false;
+				    $substr .= $char;
+				    break;
+				case '|':
+					if (! $bracketContext ) {
+						$results[] = $substr;
+						$substr = '';
+						break;
+					}
+				case '[':
+				    $bracketContext = true;
+				default:
+					$substr .= $char;
+			}
+		}
+		
+		if ( ! empty( $substr ) ) {
+			$results[]  = $substr;
+		}
+		wfProfileOut(__METHOD__);
+		return $results;
 	}
 }
