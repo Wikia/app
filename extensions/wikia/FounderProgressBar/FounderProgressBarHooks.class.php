@@ -176,6 +176,21 @@ class FounderProgressBarHooks {
 		return true;
 	}
 
+	/**
+	 * @desc Sends a request to update facebook connect founder progress bar task
+	 *
+	 * @return bool true because it's a hook
+	 */
+	public function onFacebookConnect() {
+		// Quick exit if tasks are all completed
+		if( self::allTasksComplete() ) {
+			return true;
+		}
+
+		F::app()->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_FB_CONNECT));
+		return true;
+	}
+
 	// When a bonus task is enabled it is added to the full task list
 	public static function bonusTaskEnabled($task_id) {
 		$data = F::app()->sendRequest('FounderProgressBar', 'getLongTaskList', array())->getData();

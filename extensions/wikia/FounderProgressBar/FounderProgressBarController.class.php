@@ -366,7 +366,7 @@ class FounderProgressBarController extends WikiaController {
 		$task_skipped = $this->request->getVal("task_skipped", 1);
 		//if (empty($task_id)) throw error;
 		//if (empty($task_skipped)) throw error;
-		if (in_array($task_id, $this->bonus_tasks)) {		
+		if (in_array($task_id, $this->bonus_tasks)) {
 			$this->setVal('result', 'error');
 			$this->setVal('error', 'illegal_task');
 			return;
@@ -450,8 +450,8 @@ class FounderProgressBarController extends WikiaController {
 					$activityFull['list'][$task_id]["task_timestamp"] = strtotime($activityFull['list'][$task_id]["task_timestamp"]);
 				}
 				$bonusTask["task_timestamp"] = $this->wf->TimeFormatAgo($activityFull['list'][$task_id]["task_timestamp"]);
-				$bonusTask["task_locked"] = 0;	
-			} else {				
+				$bonusTask["task_locked"] = 0;
+			} else {
 				$bonusTask["task_completed"] = 0;
 				$bonusTask["task_locked"] = 1;
 			}
@@ -510,7 +510,7 @@ class FounderProgressBarController extends WikiaController {
 			return wfMsgExt($messageStr, array('parsemag'), $number);
 		} 
 		// Default case
-		$messageStr = "founderprogressbar-". $messageStr . "-" . $type;			
+		$messageStr = "founderprogressbar-". $messageStr . "-" . $type;
 		return wfMsg($messageStr);
 	}
 	
@@ -568,7 +568,7 @@ class FounderProgressBarController extends WikiaController {
 			foreach ($this->bonus_tasks as $bonus_task_id) {
 				if (!isset($list[$bonus_task_id])) {
 					$sql = "INSERT IGNORE INTO founder_progress_bar_tasks SET wiki_id=$wiki_id, task_id=$bonus_task_id";
-					$dbw = $this->getDB(DB_MASTER);			
+					$dbw = $this->getDB(DB_MASTER);
 					$dbw->query ($sql);
 					$dbw->commit();
 				}
