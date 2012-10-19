@@ -265,7 +265,7 @@ class CreateWikiLocalJob extends Job {
 		}
 
 		if( !empty($wgEnableWallExt) ) {
-			$wallMessage = F::build('WallMessage', array($talkBody, $this->mFounder->getName(), $wgUser, $wallTitle, false, array(), false, false), 'buildNewMessageAndPost');
+			$wallMessage = F::build('WallMessage', array($talkBody, $this->mFounder->getName(), $wgUser, $wallTitle, false, array(), true, false), 'buildNewMessageAndPost');
 			if( $wallMessage === false ) {
 				return false;
 			}
