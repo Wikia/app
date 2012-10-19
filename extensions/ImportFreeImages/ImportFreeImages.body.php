@@ -86,6 +86,7 @@ class ImportFreeImages {
 				'per_page' => $this->resultsPerPage,
 				'license' => implode( ',', $this->licenses ),
 				'sort' => $this->sortBy,
+				'extras' => 'original_format',
 			)
 		);
 		$this->restoreStrictWarnings();

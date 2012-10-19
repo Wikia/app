@@ -122,9 +122,11 @@ class SpecialImportFreeImages extends SpecialPage {
 			$title_esc = htmlspecialchars( $photo['title'], ENT_QUOTES );
 			$username_esc = htmlspecialchars( $owner['username'], ENT_QUOTES );
 			$thumb_esc = htmlspecialchars( "http://farm{$photo['farm']}.static.flickr.com/{$photo['server']}/{$photo['id']}_{$photo['secret']}_{$ifi->thumbType}.jpg", ENT_QUOTES );
+			$format = isset($photo['originalformat']) ? $photo['originalformat'] : '.jpg';
 			$link = $specialUploadTitle->escapeLocalURL( array(
 				'wpSourceType' => 'IFI',
-				'wpFlickrId' => $photo['id']
+				'wpFlickrId' => $photo['id'],
+				'wpDestFile' => $photo['title'].'.'.$format
 			) );
 
 			if ( $i % $ifi->resultsPerRow == 0 ) {
