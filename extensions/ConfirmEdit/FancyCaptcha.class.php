@@ -176,6 +176,10 @@ class FancyCaptcha extends SimpleCaptcha {
 	function showImage() {
 		global $wgOut;
 
+		/* Wikia change start */
+		$error = null;
+		/* Wikia change end */
+
 		$wgOut->disable();
 
 		$info = $this->retrieveCaptcha();
@@ -204,8 +208,19 @@ class FancyCaptcha extends SimpleCaptcha {
 				wfStreamFile( $file );
 				return true;
 			}
+			/* Wikia change start */
+			else {
+				$error = 'File ' . $file . ' does not exist';
+			}
+			/* Wikia change end*/
 		}
-		wfHttpError( 500, 'Internal Error', 'Requested bogus captcha image' );
+		/* Wikia change start */
+		else {
+			$error = 'Info is empty';
+		}
+		wfHttpError( 404, '404 not found', 'Requested non-existing captcha image' );
+		Wikia::log(__METHOD__,'','Captcha returned 404: ' . $error);
+		/* Wikia change end */
 		return false;
 	}
 
