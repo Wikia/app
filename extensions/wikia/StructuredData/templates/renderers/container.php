@@ -12,13 +12,9 @@ if (empty($values)):?>
 		}
 		if ($referenceHTML !== false) {
 			echo $referenceHTML;
-		} else {
-			if (is_object($reference) &&  isset($reference->id)) {
-				$name = (!is_null($reference->object)) ? $reference->object->getName() : 'id:'.$reference->id;
-				echo '<a href="?method=showObject&id='.$reference->id.'">'.htmlspecialchars($name).'</a>';
-			} else {
-				echo '<pre>';print_r($reference);echo '</pre>';
-			}
+		}
+		else {
+			echo $reference;
 		}
 		echo '</li>';
 
