@@ -10,7 +10,7 @@
 			$this->setupFile = dirname(__FILE__) . '/../UserLogin.setup.php';
 			parent::setUp();
 		}
-		
+
 		protected function setUpMock() {
 			$mock_cache = $this->getMock('stdClass', array('set', 'delete'));
 			$mock_cache->expects($this->any())
@@ -419,7 +419,7 @@
 			);
 			$status7 = Status::newFatal('');
 			$mockLoginFormParams7 = array( 'mailPasswordInternal' => $status7 );
-			$expMsg7 = wfMsg('userlogin-error-mail-error', $status7->getMessage());
+			$expMsg7 = wfMsgExt('userlogin-error-mail-error', array('parseinline'), $status7->getMessage());
 
 			// User - email sent
 			$status8 = Status::newGood();
