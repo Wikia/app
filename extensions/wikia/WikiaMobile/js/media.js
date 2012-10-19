@@ -441,7 +441,7 @@ define('media', ['JSMessages', 'modal', 'loader', 'querystring', require.optiona
 				},
 				onEnd: function(n){
 					//make sure user changed page
-					if(current != n) {
+					if(current !== n) {
 						track.event('modal', track.PAGINATE, {
 							label: current > n ? 'previous' : 'next'
 						});

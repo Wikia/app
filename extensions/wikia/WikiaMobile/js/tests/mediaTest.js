@@ -1,5 +1,6 @@
 /*
  @test-framework Jasmine
+ @test-require-asset /extensions/wikia/WikiaMobile/js/Wikia.utils.js
  @test-require-asset /extensions/wikia/WikiaTracker/js/WikiaTracker.js
  @test-require-asset /resources/wikia/libraries/modil/modil.js
  @test-require-asset /extensions/wikia/JSMessages/js/JSMessages.wikiamobile.js
@@ -16,7 +17,12 @@ describe("Media module", function () {
 	'use strict';
 	var async = new AsyncSpec(this);
 
+	window.sassParams = '';
+	window.wgAssetsManagerQuery = "/__am/%4$d/%1$s/%3$s/%2$s";
+	window.wgStyleVersion = 1234567890;
 	window.Features = {};
+
+	Wikia.getMultiTypePackage = function(){};
 
 	async.it('should be defined', function(done){
 		require(['media'], function(media){
@@ -54,6 +60,20 @@ describe("Media module", function () {
 
 			expect(imgs[5].isVideo).toBeDefined();
 			expect(imgs[5].isVideo).toBe(true);
+
+			done();
+		});
+	});
+
+	async.it('should open modal', function(done){
+
+		document.body.innerHTML += "<div id=wkMdlWrp><div id=wkMdlTB><div id=wkMdlTlBar></div><div id=wkMdlClo class=clsIco></div></div><div id=wkMdlCnt></div><div id=wkMdlFtr></div></div>";
+
+		require(['media'], function(media){
+			media.openModal(0);
+
+			expect(document.getElementById('wkMdlWrp').className).toBe(' imgMdl');
+			expect(document.getElementById('wkMdlTlBar').childElementCount).toBe(2);
 
 			done();
 		});
