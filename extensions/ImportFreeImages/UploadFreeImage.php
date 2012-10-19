@@ -36,7 +36,7 @@ class UploadFreeImage extends UploadFromUrl {
 	public function initializeFromRequest( &$request ) {
 		return $this->initialize(
 			$request->getText( 'wpDestFile' ),
-	 		self::getUrl( $request->getText( 'wpFlickrId' ), $request->getText( 'wpSize' ) ),
+	 		self::getUrl( $request->getText( 'wpFlickrId' ), $request->getText( 'Size' ) ),
 			false
 		);
 	}
