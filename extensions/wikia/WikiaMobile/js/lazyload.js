@@ -21,7 +21,7 @@ define('lazyload', ['thumbnailer', 'layout'], function (thumbnailer, layout) {
 					setTimeout(function(){
 						displayImage(img, url);
 					}, 200);
-				}
+				};
 			},
 			displayImage = function(img, url){
 				background ? img.style.backgroundImage = 'url(' + url + ')' : img.src = url;
