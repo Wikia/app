@@ -13,7 +13,7 @@ if( function_exists( 'newrelic_name_transaction' ) ) {
 	if (is_object($wgRequest)) {
 		$controller = $wgRequest->getVal( 'controller' );
 		$method = $wgRequest->getVal( 'method' );
-		newrelic_name_transaction( "$controller/$method" );
+		newrelic_name_transaction( "/nirvana/$controller/$method" );
 	}
 }
 

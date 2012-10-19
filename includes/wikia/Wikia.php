@@ -1773,7 +1773,7 @@ class Wikia {
 		if( function_exists( 'newrelic_name_transaction' ) ) {
 			$loggedin = $user->isLoggedIn() ? 'user' : 'anon';
 			$action = $wiki->getAction();
-			newrelic_name_transaction( "$action/$loggedin/$wgVersion" );
+			newrelic_name_transaction( "/action/$action/$loggedin/$wgVersion" );
 		}
 		return true;
 	}

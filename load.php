@@ -46,7 +46,7 @@ if( function_exists( 'newrelic_name_transaction' ) ) {
 		} else {
 			$modules = count($modules) . '/' . implode( ',', $modules );
 		}
-		newrelic_name_transaction( "load.php/$sharedWiki/$only/$modules" );
+		newrelic_name_transaction( "/load/$sharedWiki/$only/$modules" );
 		if ( function_exists( 'newrelic_add_custom_parameter' ) ) {
 			newrelic_add_custom_parameter( 'skin', $wgRequest->getVal( 'skin' ) );
 			newrelic_add_custom_parameter( 'lang', $wgRequest->getVal( 'lang' ) );
