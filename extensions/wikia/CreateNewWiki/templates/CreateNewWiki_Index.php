@@ -174,18 +174,6 @@
 				<input type="button" value="<?= wfMsg('cnw-next') ?>" class="next">
 			</nav>
 		</li>
-		<li id="UpgradeWiki" class="step">
-			<h2><?= wfMsg('cnw-upgrade-headline') ?></h2>
-			<p class="creative"><?= wfMsg('cnw-upgrade-creative') ?></p>
-			<div class="marketing">
-				<?= wfMsg('cnw-upgrade-marketing') ?>
-				<input type="button" value="<?= wfMsg('cnw-upgrade-now') ?>" class="upgrade">
-			</div>
-			<nav class="next-controls">
-				<span class="submit-error finish-status"></span>
-				<input type="button" value="<?= wfMsg('cnw-upgrade-decline') ?>" class="next">
-			</nav>
-		</li>
 	</ol>
 	<ul id="StepsIndicator">
 		<?php

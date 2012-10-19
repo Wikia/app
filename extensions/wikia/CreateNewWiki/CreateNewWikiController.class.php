@@ -218,38 +218,6 @@ class CreateNewWikiController extends WikiaController {
 		wfProfileOut(__METHOD__);
 	}
 
-	/**
-	 * Checks if WikiPayment is enabled and handles fetching PayPal token - if disabled, displays error message
-	 *
-	 * TODO: review and remove
-	 *
-	 * @author Maciej B?aszkowski <marooned at wikia-inc.com>
-	 */
-	public function UpgradeToPlus() {
-		global $wgRequest;
-		wfProfileIn( __METHOD__ );
-
-		$cityId = $wgRequest->getVal('cityId');
-
-		if (method_exists('SpecialWikiPayment', 'fetchPaypalToken')) {
-			$data = SpecialWikiPayment::fetchPaypalToken($cityId);
-			if (empty($data['url'])) {
-				$this->status = 'error';
-				$this->caption = wfMsg('owb-step4-error-caption');
-				$this->content = wfMsg('owb-step4-error-token-content');
-			} else {
-				$this->status = 'ok';
-				$this->data = $data;
-			}
-		} else {
-			$this->status = 'error';
-			$this->caption = wfMsg('owb-step4-error-caption');
-			$this->content = wfMsg('owb-step4-error-upgrade-content');
-		}
-
-		wfProfileOut( __METHOD__ );
-	}
-
 	public function Phalanx() {
 		global $wgRequest;
 		wfProfileIn( __METHOD__ );

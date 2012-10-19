@@ -174,14 +174,6 @@ var WikiBuilder = {
 			});
 		});
 
-		// Upgrade event handlers
-		$('#UpgradeWiki nav .next').click(function() {
-			WikiBuilder.gotoMainPage();
-		});
-		$('#UpgradeWiki .upgrade').click(function() {
-			WikiBuilder.upgradeToWikiaPlus();
-		});
-
 		// Set current step on page load
 		if(WikiBuilderCfg['currentstep']) {
 			var pane = $('#' + WikiBuilderCfg['currentstep']);
@@ -360,27 +352,6 @@ var WikiBuilder = {
 		}
 	},
 
-	// TODO: review and remove
-	upgradeToWikiaPlus: function() {
-		$.nirvana.sendRequest({
-			controller: 'CreateNewWiki',
-			method: 'UpgradeToPlus',
-			data: {
-				cityId: WikiBuilder.cityId
-			},
-			callback: function(res) {
-				if (res.status == 'ok') {
-					location.href = res.data.url;
-				} else {
-					$.showModal(res.caption, res.content);
-				}
-			},
-			onErrorCallback: function() {
-				WikiBuilder.generateAjaxErrorMsg();
-			}
-		});
-	},
-
 	gotoMainPage: function() {
 		WikiBuilder.nextButtons.attr('disabled', true);
 		if(WikiBuilder.createStatus && WikiBuilder.createStatus == 'ok' && WikiBuilder.finishCreateUrl) {
@@ -418,7 +389,6 @@ var WikiBuilder = {
 				if(WikiBuilder.createStatus && WikiBuilder.createStatus == 'ok') {
 					WikiBuilder.cityId = res.cityId;
 					WikiBuilder.finishCreateUrl = (res.finishCreateUrl.indexOf('.com/wiki/') < 0 ? res.finishCreateUrl.replace('.com/','.com/wiki/') : res.finishCreateUrl);
-					$('#UpgradeWiki .wiki-name').html(res.siteName);
 				} else {
 					$('#ThemeWiki .next-controls input').attr('disabled', 'true');
 					$.showModal(res.statusHeader, WikiBuilder.createStatusMessage);
