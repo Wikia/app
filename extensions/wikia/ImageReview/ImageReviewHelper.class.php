@@ -269,7 +269,7 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 		$iconsWhere = array();
 		while ( $row = $db->fetchObject($result) ) {
 			$rows[] = $row;
-			$updateWhere[] = $record;
+			$updateWhere[] = "(wiki_id = {$row->wiki_id} and page_id = {$row->page_id})";
 		}
 		$db->freeResult( $result );
 
@@ -330,7 +330,7 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 					);
 				}
 			} else {
-				$unusedImages[] = "(wiki_id = {$row->wiki_id} and page_id = {$row->page_id})";
+				$unusedImages[] = $record;
 			}
 		}
 
