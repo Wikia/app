@@ -113,9 +113,8 @@
 		req.send(data ? Wikia.param(data) : null);
 	};
 
-	isProcessedSassUrl = new RegExp(getAssetsManagerQuery('.*', 'sass', '###').replace(encodeURIComponent(Wikia.param('###')), '.*').replace(/\//g, '\\/'));
-
 	Wikia.getSassURL = function(rootURL, scssFilePath, params) {
+		if(!isProcessedSassUrl) isProcessedSassUrl = new RegExp(getAssetsManagerQuery('.*', 'sass', '###').replace(encodeURIComponent(Wikia.param('###')), '.*').replace(/\//g, '\\/'));
 
 		var url = processedSassUrls[scssFilePath];
 
