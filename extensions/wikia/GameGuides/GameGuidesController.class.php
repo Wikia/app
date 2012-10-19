@@ -200,8 +200,6 @@ class GameGuidesController extends WikiaController {
 			'title' => $title->getPartialURL()
 		));
 
-		var_dump($urls);exit();
-
 		return true;
 	}
 
