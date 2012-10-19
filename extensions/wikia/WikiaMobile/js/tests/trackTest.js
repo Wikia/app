@@ -28,6 +28,7 @@ describe("Track module", function () {
 			expect(track.PAGINATE).toEqual(WikiaTracker.ACTIONS.PAGINATE);
 			expect(track.IMAGE_LINK).toEqual(WikiaTracker.ACTIONS.CLICK_LINK_IMAGE);
 			expect(track.TEXT_LINK).toEqual(WikiaTracker.ACTIONS.CLICK_LINK_TEXT);
+
 			done();
 		});
 	});
