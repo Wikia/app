@@ -1351,8 +1351,7 @@ class SWMSendToGroupTask extends BatchTask {
 			//step 3 of 3: add records about new message to right users
 			while ($row = $dbr->FetchObject($dbResult)) {
 				//if the group is 'staff' - display (==send) the message on a local wiki [John's request, 2008-03-06] - Marooned
-				//if the group is 'sysop' - as above, FB#1159, 2011-08-17 - Marooned
-				$wikiID = in_array($params['groupName'], array('staff', 'sysop')) ? 'NULL' : $row->wiki_id;
+				$wikiID = in_array($params['groupName'], array('staff')) ? 'NULL' : $row->wiki_id;
 				$sqlValues[] = "($wikiID, {$row->user_id}, {$params['messageId']}, " . MSG_STATUS_UNSEEN . ')';
 			}
 			$dbr->FreeResult($dbResult);
