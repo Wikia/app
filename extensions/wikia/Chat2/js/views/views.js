@@ -72,6 +72,14 @@ var ChatView = Backbone.View.extend({
 		// Linkify [[Pipes|Pipe-notation]] in bracketed links.
 		var exp = /\[\[([^\[\|\]\r\n\t]*)\|([^\[\]\|\r\n\t]*)\]\]/ig;
 		text = text.replace(exp, function(wholeMatch, article, linkText) {
+			if (!linkText) { // Parse "pipe-trick" links, eg. [[User:Example|]] expands to <a href="/wiki/User:Example">Example</a>
+				var colonLocation = article.indexOf(":");
+				if (colonLocation == -1) {
+					linkText = article;
+				} else {
+					linkText = article.substring(colonLocation+1);
+				}
+			}
 			return linkify(article, linkText);
 		});
 

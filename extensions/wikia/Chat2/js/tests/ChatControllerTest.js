@@ -115,4 +115,15 @@ test("processText links", function() {
 		'<a href="http://potentially_dangerous_site.com/#http://poznan.mech.wikia-dev.com/wiki/Click%20here">http://potentially_dangerous_site.com/#http://poznan.mech.wikia-dev.com/wiki/Click here</a>',
 		'showing potentially dangerous URL as a local link (bugid:44524)');
 
+    equal(c.processText('[[Namespace:Test pipe trick|]]'),
+ 		   '<a href="http://poznan.mech.wikia-dev.com/wiki/Namespace:Test_pipe_trick">Test pipe trick</a>',
+ 		   'pipe-trick link with namespace');
+
+    equal(c.processText('[[Test pipe trick|]]'),
+ 		   '<a href="http://poznan.mech.wikia-dev.com/wiki/Test_pipe_trick">Test pipe trick</a>',
+ 		   'pipe-trick link without namespace');
+
+    equal(c.processText('[[Namespace:Test_pipe_trick:Foo:bar|]]'),
+ 		   '<a href="http://poznan.mech.wikia-dev.com/wiki/Namespace:Test_pipe_trick:Foo:bar">Test pipe trick:Foo:bar</a>',
+ 		   'pipe-trick link with namespace and multiple colons');
 });
