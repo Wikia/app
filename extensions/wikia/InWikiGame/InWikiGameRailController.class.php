@@ -10,7 +10,7 @@ class InWikiGameRailController extends WikiaController {
 	/**
 	 * @desc For the first time we're trying it only on one wiki
 	 */
-	const ROTMG_CITY_ID = 175762;
+	const ROTMG_CITY_ID = 98328;
 
 	const ARTICLE_WITH_GAME_TEXT = 'Play';
 

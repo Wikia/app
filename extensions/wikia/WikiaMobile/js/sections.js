@@ -45,10 +45,11 @@ define('sections', ['events'], function(ev){
 	}
 
 	function init(){
+		var article = d.getElementById('mw-content-text');
+
 		//avoid running if there are no sections which are direct children of the article section
 		if(d.querySelector('#mw-content-text > h2')){
-			var article = d.getElementById('mw-content-text'),
-				contents = article.childNodes,
+			var contents = article.childNodes,
 				root = fragment,
 				x,
 				y = contents.length,

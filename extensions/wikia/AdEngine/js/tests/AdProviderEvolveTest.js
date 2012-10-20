@@ -15,11 +15,12 @@ test('sanitizeSlotname', function() {
 		, scriptWriterMock
 		, windowMock = {wgInsideUnitTest: true}
 		, documentMock
-		, kruxMock = {}
+		, kruxMock
+		, evolveHelperMock = {}
 		, adProviderEvolve;
 
 	adProviderEvolve = AdProviderEvolve(
-		scriptWriterMock, wikiaTrackerMock, logMock, windowMock, documentMock, kruxMock
+		scriptWriterMock, wikiaTrackerMock, logMock, windowMock, documentMock, kruxMock, evolveHelperMock
 	);
 
     equal(adProviderEvolve.sanitizeSlotname('foo'), '', 'foo');
@@ -34,59 +35,33 @@ test('getUrl', function() {
 		, windowMock = {wgInsideUnitTest: true}
 		, documentMock
 		, kruxMock = {}
-		, adProviderEvolve;
+		, evolveHelperMock = {getSect: function() {return 'randomsection';}}
+		, adProviderEvolve
+		, expected
+		, actual
+	;
 
 	adProviderEvolve = AdProviderEvolve(
-		scriptWriterMock, wikiaTrackerMock, logMock, windowMock, documentMock, kruxMock
+		scriptWriterMock, wikiaTrackerMock, logMock, windowMock, documentMock, kruxMock, evolveHelperMock
 	);
 
 	windowMock.wgDBname = null;
 	windowMock.wgDartCustomKeyValues = null;
 	windowMock.cscoreCat = null;
 
-	var expected = 'http://n4403ad.doubleclick.net/adj/gn.wikia4.com/ros;sect=ros;mtfInline=true;pos=TOP_LEADERBOARD;sz=728x90;dcopt=ist;type=pop;type=int;tile=1;ord=1234567890?';
+	expected = 'http://n4403ad.doubleclick.net/adj/gn.wikia4.com/randomsection;sect=randomsection;mtfInline=true;pos=TOP_LEADERBOARD;sz=728x90;dcopt=ist;type=pop;type=int;tile=1;ord=1234567890?';
 	expected = expected.replace(/;ord=[0-9]+\?$/, ''); // ord is random cb
 
-	var actual = adProviderEvolve.getUrl('TOP_LEADERBOARD', '728x90');
+	actual = adProviderEvolve.getUrl('TOP_LEADERBOARD');
 	actual = actual.replace(/;ord=[0-9]+\?$/, ''); // ord is random cb
 
-	equal(actual, expected, 'TOP_LEADERBOARD');
-});
+	expected = 'http://n4403ad.doubleclick.net/adj/gn.wikia4.com/randomsection;sect=randomsection;mtfInline=true;pos=TOP_RIGHT_BOXAD;sz=300x250,300x600;type=pop;type=int;tile=2;ord=1234567890?';
+	expected = expected.replace(/;ord=[0-9]+\?$/, ''); // ord is random cb
 
-test('getSect', function() {
-	var wikiaTrackerMock
-		, logMock = function() {}
-		, scriptWriterMock
-		, windowMock = {wgInsideUnitTest: true}
-		, documentMock
-		, kruxMock = {}
-		, adProviderEvolve;
+	actual = adProviderEvolve.getUrl('TOP_RIGHT_BOXAD');
+	actual = actual.replace(/;ord=[0-9]+\?$/, ''); // ord is random cb
 
-	adProviderEvolve = AdProviderEvolve(
-		scriptWriterMock, wikiaTrackerMock, logMock, windowMock, documentMock, kruxMock
-	);
-
-	windowMock.wgDBname = null;
-	windowMock.wgDartCustomKeyValues = null;
-	windowMock.cscoreCat = null;
-
-	equal(adProviderEvolve.getSect(), 'ros', 'ros');
-
-	windowMock.wgDartCustomKeyValues = 'foo=bar;media=tv';
-	windowMock.cscoreCat = 'Entertainment';
-
-	equal(adProviderEvolve.getSect(), 'tv', 'tv entertainment');
-
-	windowMock.wgDartCustomKeyValues = 'foo=bar';
-	windowMock.cscoreCat = 'Entertainment';
-
-	equal(adProviderEvolve.getSect(), 'entertainment', 'foo entertainment');
-
-	windowMock.wgDartCustomKeyValues = 'foo=bar;media=movie';
-	windowMock.cscoreCat = 'Entertainment';
-
-	equal(adProviderEvolve.getSect(), 'movies', 'movie entertainment');
-
+	equal(actual, expected, 'TOP_RIGHT_BOXAD');
 });
 
 test('Evolve canHandleSlot AU', function() {
@@ -94,11 +69,13 @@ test('Evolve canHandleSlot AU', function() {
 		, logMock = function() {}
 		, scriptWriterMock
 		, documentMock
+		, windowMock = {wgInsideUnitTest: true}
 		, kruxMock = {}
+		, evolveHelperMock = {}
 		, adProviderEvolve;
 
 	adProviderEvolve = AdProviderEvolve(
-		scriptWriterMock, wikiaTrackerMock, logMock, window, documentMock, kruxMock
+		scriptWriterMock, wikiaTrackerMock, logMock, windowMock, documentMock, kruxMock, evolveHelperMock
 	);
 
 	equal(adProviderEvolve.canHandleSlot(['TOP_LEADERBOARD']), true, 'TOP_LEADERBOARD');
