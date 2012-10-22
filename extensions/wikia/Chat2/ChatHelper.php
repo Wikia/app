@@ -222,7 +222,7 @@ class ChatHelper {
 			if(!empty($user) && Chat::getBanInformation($wgCityId, $user) !== false && $wgUser->isAllowed( 'chatmoderator' ) ) {
 				$revert = "(" . "<a class='chat-change-ban' data-user-id='{$paramArray[1]}' href='#'>" . wfMsg( 'chat-ban-log-change-ban-link') . "</a>" . ")";
 			}
-		} elseif ( $logaction === 'chatconnect' ) {
+		} elseif ( $logaction === 'chatconnect'  && !empty($paramArray) ) {
 			$ipLinks = array();
 			if ( $wgUser->isAllowed( 'multilookup' ) ) {
 				$mlTitle = GlobalTitle::newFromText( 'MultiLookup', NS_SPECIAL, 177 );

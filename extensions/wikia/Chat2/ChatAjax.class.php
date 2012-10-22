@@ -4,11 +4,6 @@ class ChatAjax {
 	const INTERNAL_POLLING_DELAY_MICROSECONDS = 500000;
 	const CHAT_AVATAR_DIMENSION = 28;
 
-
-	static protected function getUserIPMemcKey($userId, $address, $date) {
-		return $userId . '_' .  $address . '_' . $date . '_v1';
-	}
-
 	/**
 	 * This is the ajax-endpoint that the node server will connect to in order to get the currently logged-in user's info.
 	 * The node server will pass the same cookies that the client has set, and this will allow this ajax request to be
@@ -102,44 +97,6 @@ class ChatAjax {
 			}
 
 			$retVal['editCount'] = $stats['edits'];
-		}
-
-		if ($retVal['isLoggedIn'] && $retVal['canChat']) {
-			// record the IP of the connecting user.
-			// use memcache so we order only one (user, ip) pair each day
-			$ip = $wgRequest->getVal('address');
-			$memcKey = self::getUserIPMemcKey($data['user_id'], $ip, date("Y-m-d"));
-			$entry = $wgMemc->get( $memcKey, false );
-
-			if ( empty($entry) ) {
-				$wgMemc->set($memcKey, true, 86400 /*24h*/);
-				$log = WF::build( 'LogPage', array( 'chatconnect', false, false ) );
-				$log->addEntry( 'chatconnect', SpecialPage::getTitleFor('Chat'), '', array($ip), $user);
-
-				$dbw = wfGetDB( DB_MASTER );
-				$cuc_id = $dbw->nextSequenceValue( 'cu_changes_cu_id_seq' );
-				$rcRow = array(
-						'cuc_id'         => $cuc_id,
-						'cuc_namespace'  => NS_SPECIAL,
-						'cuc_title'      => 'Chat',
-						'cuc_minor'      => 0,
-						'cuc_user'       => $user->getID(),
-						'cuc_user_text'  => $user->getName(),
-						'cuc_actiontext' => wfMsgForContent( 'chat-checkuser-join-action' ),
-						'cuc_comment'    => '',
-						'cuc_this_oldid' => 0,
-						'cuc_last_oldid' => 0,
-						'cuc_type'       => CUC_TYPE_CHAT,
-						'cuc_timestamp'  => $dbw->timestamp(),
-						'cuc_ip'         => IP::sanitizeIP( $ip ),
-						'cuc_ip_hex'     => $ip ? IP::toHex( $ip ) : null,
-						'cuc_xff'        => '',
-						'cuc_xff_hex'    => null,
-						'cuc_agent'      => null
-				);
-				$dbw->insert( 'cu_changes', $rcRow, __METHOD__ );
-				$dbw->commit();
-			}
 		}
 
 		wfProfileOut( __METHOD__ );

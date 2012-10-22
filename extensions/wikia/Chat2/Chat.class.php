@@ -415,6 +415,8 @@ class Chat {
 
 		wfProfileIn(__METHOD__);
 
+		self::addConnectionLogEntry();
+		
 		if( $wgDevelEnvironment ) {
 		//devbox
 			return true;
@@ -441,6 +443,58 @@ class Chat {
 		}
 
 		wfProfileOut(__METHOD__);
+	}
+
+	/**
+	 * Add Chat log entry to "Special:log"
+	 */
+
+	public static function addConnectionLogEntry() {
+		global $wgMemc, $wgUser;
+		wfProfileIn(__METHOD__);
+		
+		// record the IP of the connecting user.
+		// use memcache so we order only one (user, ip) pair 3 min to avoide flooding the log
+		$ip = wfGetIP();
+		$memcKey = self::getUserIPMemcKey($wgUser->getID(), $ip );
+		$entry = $wgMemc->get( $memcKey, false );
+
+		if ( empty($entry) ) {
+			$wgMemc->set($memcKey, true, 60*3 /*3 min*/);  
+			$log = WF::build( 'LogPage', array( 'chatconnect', false, false ) );
+			$log->addEntry( 'chatconnect', SpecialPage::getTitleFor('Chat'), '', array($ip), $wgUser);
+
+			$dbw = wfGetDB( DB_MASTER );
+			$cuc_id = $dbw->nextSequenceValue( 'cu_changes_cu_id_seq' );
+			$rcRow = array(
+					'cuc_id'         => $cuc_id,
+					'cuc_namespace'  => NS_SPECIAL,
+					'cuc_title'      => 'Chat',
+					'cuc_minor'      => 0,
+					'cuc_user'       => $wgUser->getID(),
+					'cuc_user_text'  => $wgUser->getName(),
+					'cuc_actiontext' => wfMsgForContent( 'chat-checkuser-join-action' ),
+					'cuc_comment'    => '',
+					'cuc_this_oldid' => 0,
+					'cuc_last_oldid' => 0,
+					'cuc_type'       => CUC_TYPE_CHAT,
+					'cuc_timestamp'  => $dbw->timestamp(),
+					'cuc_ip'         => IP::sanitizeIP( $ip ),
+					'cuc_ip_hex'     => $ip ? IP::toHex( $ip ) : null,
+					'cuc_xff'        => '',
+					'cuc_xff_hex'    => null,
+					'cuc_agent'      => null
+			);
+			$dbw->insert( 'cu_changes', $rcRow, __METHOD__ );
+			$dbw->commit();
+		}
+
+		wfProfileOut(__METHOD__);
+	} 
+
+
+	static protected function getUserIPMemcKey($userId, $address) {
+		return $userId . '_' .  $address . '_v1';
 	}
 
 	/**
