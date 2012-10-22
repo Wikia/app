@@ -77,4 +77,13 @@ $messages['qqq'] = array(
 	'quicktools-bot-reason' => 'Reason for adding bot flag',
 	'quicktools-botflag-add' => 'Label for button to add bot flag',
 	'quicktools-botflag-remove' => 'Label for button to remove bot flag',
+	'quicktools-createuserpage-link' => 'Link in the account navigation menu to create user page.',
+	'quicktools-createuserpage-reason' => 'Edit summary used when creating user page',
+	'quicktools-createuserpage-success' => 'Success message displayed when user page was successfully created',
+	'quicktools-createuserpage-exists' => 'Message displayed when the user page already exists',
+	'quicktools-createuserpage-error' => 'Error message shown when creating user page failed',
+	'quicktools-adopt-contrib-link' => 'Link name on Special:Contributions for approving adoption request for user',
+	'quicktools-adopt-reason' => 'Summary used in the rights change when approving adoption request for user',
+	'quicktools-adopt-success' => 'Success message displayed when user rights change was successful',
+	'quicktools-adopt-error' => 'Error message displayed when user rights change failed',
 );
