@@ -31,16 +31,6 @@ define('MSG_REMOVED_YES', '1');
 class SiteWideMessagesMaintenance {
 
 	/**
-	 * __construct
-	 *
-	 * constructor
-	 *
-	 */
-	public function __construct() {
-		#--- init stuffs here
-	}
-
-	/**
 	 * execute
 	 *
 	 * Main entry point, only public function
@@ -52,11 +42,11 @@ class SiteWideMessagesMaintenance {
 	 * @return status of operations
 	 */
 	public function execute() {
-		global $wgExternalSharedDB;
-		require_once('commandLine.inc');
-		$DB = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
+		global $wgExternalSharedDB, $IP;
+		require_once($IP . '/maintenance/commandLine.inc');
+		$dbr = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
 
-		$dbResult = (boolean)$DB->Query (
+		$dbResult = (boolean) $dbr->Query (
 			  'DELETE'
 			. ' FROM ' . MSG_STATUS_DB
 			. ' WHERE msg_id IN ('
@@ -64,7 +54,7 @@ class SiteWideMessagesMaintenance {
 			. '  FROM ' . MSG_TEXT_DB
 			. '  WHERE'
 			. '  msg_removed = ' . MSG_REMOVED_YES
-			. '  OR msg_expire < ' . $DB->AddQuotes(date('Y-m-d H:i:s'))
+			. '  OR msg_expire < ' . $dbr->AddQuotes(date('Y-m-d H:i:s'))
 			. ' );'
 			, __METHOD__
 		);
