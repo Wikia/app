@@ -360,12 +360,6 @@ HTML
 
 		wfProfileIn(__METHOD__);
 
-		// check browser compatibility
-		if (!self::isCompatibleBrowser()) {
-			RTE::log('editor is disabled because of unsupported browser');
-			self::disableEditor('browser');
-		}
-
 		// check useeditor URL param (wysiwyg / source / mediawiki)
 		$useEditor = $wgRequest->getVal('useeditor', false);
 
@@ -772,67 +766,5 @@ HTML
 
 		wfProfileOut(__METHOD__);
 		return true;
-	}
-
-	/**
-	 * Check whether current browser is compatible with RTE
-	 *
-	 * FCKeditor - The text editor for Internet - http://www.fckeditor.net
-	 * Copyright (C) 2003-2009 Frederico Caldeira Knabben
-	 */
-	private static function isCompatibleBrowser() {
-		wfProfileIn(__METHOD__);
-
-		if ( isset( $_SERVER ) && isset($_SERVER['HTTP_USER_AGENT'])) {
-			$sAgent = $_SERVER['HTTP_USER_AGENT'] ;
-		}
-		else {
-			global $HTTP_SERVER_VARS ;
-			if ( isset( $HTTP_SERVER_VARS ) && isset($HTTP_SERVER_VARS['HTTP_USER_AGENT']) ) {
-				$sAgent = $HTTP_SERVER_VARS['HTTP_USER_AGENT'] ;
-			}
-			else {
-				global $HTTP_USER_AGENT ;
-				$sAgent = $HTTP_USER_AGENT ;
-			}
-		}
-
-		RTE::log(__METHOD__, $sAgent);
-
-		$ret = false;
-
-		if ( strpos($sAgent, 'Chrome') !== false )
-		{
-			$ret = true;
-		}
-		else if ( strpos($sAgent, 'MSIE') !== false && strpos($sAgent, 'mac') === false && strpos($sAgent, 'Opera') === false )
-		{
-			$iVersion = (float)substr($sAgent, strpos($sAgent, 'MSIE') + 5, 3) ;
-			$ret = ($iVersion >= 7.0) ;
-		}
-		else if ( strpos($sAgent, 'Gecko/') !== false )
-		{
-			$ret = true;
-		}
-		else if ( strpos($sAgent, 'Opera/') !== false )
-		{
-			$fVersion = (float)substr($sAgent, strpos($sAgent, 'Opera/') + 6, 4) ;
-			$ret = ($fVersion >= 9.5) ;
-		}
-		else if ( strpos($sAgent, 'Mobile') !== false && strpos($sAgent, 'Safari') !== false )
-		{
-			// disable for mobile devices from Apple (RT #38829)
-			$ret = false;
-		}
-		else if ( preg_match( "|AppleWebKit/(\d+)|i", $sAgent, $matches ) )
-		{
-			$ret = ( $matches[1] >= 522 ) ;
-		}
-
-		RTE::log(__METHOD__, $ret ? 'yes' : 'no');
-
-		wfProfileOut(__METHOD__);
-
-		return $ret;
 	}
 }
