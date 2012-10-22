@@ -99,6 +99,11 @@
 
 				var editorBottomBorder = mainHeight - nodeHeight - toolbarHeight - introHeight - editCustomHeight - editNoticeHeight - talkPageIntroHeight - diffContainerHeight;
 				dimensions.nodeHeight = parseInt(viewportHeight - topOffset - editorBottomBorder - window.WikiaBar.getWikiaBarOffset());
+
+				if( dimensions.nodeHeight < this.minPageHeight ) {
+				//bugId: 49405; it happens usually with big differences between two revisions of an article (while undoing)
+					dimensions.nodeHeight = this.minPageHeight;
+				}
 			}
 			/** End of Wikia change **/
 
