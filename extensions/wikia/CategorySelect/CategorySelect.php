@@ -529,12 +529,9 @@ function CategorySelectGetCategoryLinksEnd(&$categoryLinks) {
  * @author Maciej Błaszkowski <marooned at wikia-inc.com>
  */
 
-//TODO
 function CategorySelectGenerateHTMLforEditRaw($categories, $text = '') {
 
-	$result = '
-		<script type="text/javascript">document.write(\'<style type="text/css">#csWikitextContainer {display: none}</style>\');</script>
-		<div class="csEditMode" style="display:none" id="csMainContainer"> ' . $text . '
+	$result = '<div class="csEditMode" id="csMainContainer"> ' . $text . '
 			<input placeholder="'.wfMsg('categoryselect-addcategory-edit').'" data-placeholder="'.wfMsg('categoryselect-addcategory-edit').'" id="csCategoryInput" type="text" />
 			<div id="csSuggestContainer">
 				<div id="csHintContainer">' . wfMsg('categoryselect-suggest-hint') . '</div>
@@ -559,7 +556,7 @@ function CategorySelectGenerateHTMLforEdit($formId = '') {
 
 	// use SCSS file for Oasis
 	if ( F::app()->checkSkin( 'oasis' ) ) {
-		$cssFile = AssetsManager::getInstance()->getSassCommonURL('/extensions/wikia/CategorySelect/oasis.scss');
+		$cssFile = AssetsManager::getInstance()->getSassCommonURL('/extensions/wikia/CategorySelect/CategorySelect.scss');
 	}
 	else {
 		$cssFile = "{$wgExtensionsPath}/wikia/CategorySelect/CategorySelect.css";
@@ -578,7 +575,7 @@ function CategorySelectGenerateHTMLforEdit($formId = '') {
 /**
  * Add required HTML and JS variables [for 'view article' mode]
  *
- * @author Maciej Błaszkowski <marooned at wikia-inc.com>>
+ * @author Maciej Błaszkowski <marooned at wikia-inc.com>
  * @author macbre
  */
 function CategorySelectGenerateHTMLforView() {

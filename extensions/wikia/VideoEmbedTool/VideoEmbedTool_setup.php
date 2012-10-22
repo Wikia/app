@@ -85,8 +85,6 @@ function VETSetup($editform) {
 	global $wgOut, $wgExtensionsPath, $wgHooks;
 	if( get_class(RequestContext::getMain()->getSkin()) === 'SkinOasis' ) {
 		$wgHooks['MakeGlobalVariablesScript'][] = 'VETSetupVars';
-		$wgOut->addScript('<script type="text/javascript" src="'.$wgExtensionsPath.'/wikia/VideoEmbedTool/js/VET.js"></script>');
-		$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/VideoEmbedTool/css/VET.scss'));
 	}
 	return true;
 }

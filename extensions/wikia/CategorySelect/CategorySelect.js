@@ -329,7 +329,7 @@ function categoryIsDuplicate(cat1, cat2) {
 
 	// Check if category name, outertag and sort key are all the same.  If they are, don't add to categories array
 	if(cat1.category.toLowerCase() == cat2.category.toLowerCase()
-		&& cat1.outerTag == cat2.outerTag 
+		&& cat1.outerTag == cat2.outerTag
 		&& cat1.sortkey == cat2.sortkey
 	){
 		return true;
@@ -348,7 +348,7 @@ function removeDuplicatecategories() {
 		for (var d = 0, nonDupesLength = nonDupes.length; d < nonDupesLength; d++) {
 			if(categoryIsDuplicate(categories[c], nonDupes[d])){
 				break;
-			} 
+			}
 			// Last iteration
 			if(d == nonDupes.length - 1) {
 				nonDupes.push(categories[c]);
@@ -374,7 +374,7 @@ function initializeCategories(cats) {
 	if(categories.length) {
 		categories = removeDuplicatecategories();
 	}
-	
+
 	//inform PHP what source should it use [this field exists only in 'edit page' mode]
 	var $wpCategorySelectSourceType = $('#wpCategorySelectSourceType');
 	if ($wpCategorySelectSourceType.length > 0 && window.csMode === 'json') {
@@ -525,16 +525,16 @@ function collapseAutoComplete() {
 	if ((csType != 'module') && $('#csCategoryInput').css('display') != 'none' && $('#csWikitextContainer').css('display') != 'block') {
 		$('#csHintContainer').show();
 	}
-        var wikiaMainContent = $('#WikiaMainContent');
-        $('#WikiaFooter').css('z-index', Math.min(1, wikiaMainContent.css('z-index')));
-        wikiaMainContent.css('z-index', 1);
+    var wikiaMainContent = $('#WikiaMainContent');
+    $('#WikiaFooter').css('z-index', Math.min(1, wikiaMainContent.css('z-index')));
+    wikiaMainContent.css('z-index', 1);
 }
 
 function expandAutoComplete(sQuery , aResults) {
 	$('#csHintContainer').hide();
-        var wikiaFooter = $('#WikiaFooter');
-        $('#WikiaMainContent').css('z-index', Math.max(2, wikiaFooter.css('z-index')));
-        wikiaFooter.css('z-index', 1);
+    var wikiaFooter = $('#WikiaFooter');
+    $('#WikiaMainContent').css('z-index', Math.max(2, wikiaFooter.css('z-index')));
+    wikiaFooter.css('z-index', 1);
 }
 
 function regularEditorSubmit(e) {
@@ -579,8 +579,22 @@ function initAutoComplete() {
 		$.when(
 			// gets JS code with categoryArray global variable with a list of all categories
 			$.getScript(wgServer + wgScriptPath + '?action=ajax&rs=CategorySelectGetCategories'),
+			// FIXME: use $.loadJQueryAutocomplete()
 			$.loadYUI()
 		).then(function() {
+			/*
+			$('#csCategoryInput').autocomplete({
+				appendTo: '#csMainContainer',
+				lookup: categoryArray,
+				minLength: 3,
+				maxHeight: 1000,
+				onSelect: function(value, data, event) {
+					console.log(value, data, event);
+				},
+				selectedClass: 'selected',
+				width: '270px'
+			});
+			*/
 			// Init datasource
 			var oDataSource = getCategoriesDataSource();
 
@@ -648,10 +662,8 @@ function initHandlers() {
 function showCSpanel() {
 	$.when(
 		$.getJSON(wgScript, {action: 'ajax', rs: 'CategorySelectGenerateHTMLforView', uselang: wgUserLanguage}),
-		mw.loader.use('jquery.ui.sortable'),
-		$.getResources([
-			$.getSassCommonURL('/extensions/wikia/CategorySelect/oasis.scss')
-		])
+		$.getResource($.getSassCommonURL('/extensions/wikia/CategorySelect/CategorySelect.scss')),
+		mw.loader.use('jquery.ui.sortable')
 	).
 	then(function(ajaxData) {
 		var data = ajaxData[0];
@@ -724,7 +736,7 @@ function csCancel() {
 	$('#csAddCategorySwitch').show();
 }
 
-initCatSelectForEdit = function() {
+function initCatSelectForEdit() {
 	initHandlers();
 	$('#csCategoryInput').focus(initAutoComplete);
 	initSourceModeSuggest();
@@ -732,7 +744,7 @@ initCatSelectForEdit = function() {
 	initializeCategories();
 	$('#csHintContainer').hide();
 	$('#csMainContainer').show();
-}
+};
 
 // BugId:2823
 $(window).bind('editTitleUpdated', function(ev, title) {

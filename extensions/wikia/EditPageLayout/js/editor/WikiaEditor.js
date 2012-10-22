@@ -13,6 +13,57 @@
 	WE.instanceId = '';
 	WE.instanceCount = 0;
 
+	// Lazy loaded components manager
+	// Would be nice to use resource loader for this, but we can't load Sass files there :(
+	WE.load = (function() {
+		var components = {
+			VideoEmbedTool: {
+				loaded: false,
+				requires: [
+					$.loadYUI(),
+					$.getResources([
+						$.getSassCommonURL('extensions/wikia/VideoEmbedTool/css/VET.scss'),
+						wgResourceBasePath + '/extensions/wikia/VideoEmbedTool/js/VET.js'
+					])
+				]
+			},
+			WikiaMiniUpload: {
+				loaded: false,
+				requires: [
+					$.loadYUI(),
+					$.loadJQueryAIM(),
+					$.getResources([
+						wgResourceBasePath + '/extensions/wikia/WikiaMiniUpload/css/WMU.css',
+						wgResourceBasePath + '/extensions/wikia/WikiaMiniUpload/js/WMU.js'
+					])
+				]
+			}
+		};
+
+		return function( name ) {
+			var component = components[ name ],
+				deferred = new $.Deferred();
+
+			if ( component ) {
+				if ( component.loaded ) {
+					deferred.resolve();
+
+				} else {
+
+					component.loaded = true;
+					deferred = $.when.apply( null, component.requires );
+				}
+
+			} else {
+				deferred.reject({
+					error: 'WikiaEditor.use: invalid component name "' + name + '"'
+				});
+			}
+
+			return deferred.promise();
+		}
+	})();
+
 	// Update the current instance
 	WE.setInstanceId = function(instanceId, event, forceEvents) {
 		var editor;
@@ -383,7 +434,7 @@
 
 		buildClickHandler: function( config ) {
 			var editor = this.editor;
-
+console.log('buildClickHandler:', config);
 			if (config.forceLogin && wgUserName == null && typeof UserLogin != 'undefined') {
 				config.click = function() {
 					UserLogin.rteForceLogin();

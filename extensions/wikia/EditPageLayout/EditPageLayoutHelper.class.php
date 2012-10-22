@@ -51,17 +51,6 @@ class EditPageLayoutHelper {
 			Wikia::setVar('OasisEntryControllerName', 'EditPageLayout');
 		}
 
-		// macbre: load YUI on edit page (it's always loaded using $.loadYUI)
-		// PLB has problems with $.loadYUI not working correctly in Firefox (callback is fired to early)
-		/*
-		$srcs = F::build('AssetsManager',array(),'getInstance')->getGroupCommonURL('yui');
-		$wgJsMimeType = $this->app->wg->JsMimeType;
-		foreach($srcs as $src) {
-			$this->out->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$src}\"></script>");
-		}
-		*/
-		$this->out->addModules('wikia.yui');
-
 		// Disable custom JS while loading the edit page on MediaWiki JS pages and user subpages (BugID: 41449)
 		if ( ( $editedArticle->getTitle()->getNamespace() === NS_MEDIAWIKI
 			&& substr( $editedArticle->getTitle()->getText(), -3 ) === '.js' )

@@ -5,10 +5,6 @@
 		return typeof window.WikiaPhotoGallery != 'undefined';
 	};
 
-	var checkVET = function() {
-		return typeof window.VET_show == 'function';
-	};
-
 	var getTextarea = function() {
 		return WikiaEditor.getInstance().getEditbox()[0];
 	};
@@ -19,9 +15,10 @@
 		titleId: 'wikia-editor-media-image-tooltip',
 		className: 'RTEImageButton',
 		forceLogin: true,
-		clicksource: function() { 
-			//debugger;
-			WMU_show({}); 
+		clicksource: function() {
+			WikiaEditor.load( 'WikiaMiniUpload' ).done(function() {
+				WMU_show({});
+			});
 		},
 		ckcommand: 'addimage'
 	};
@@ -80,9 +77,16 @@
 		titleId: 'wikia-editor-media-video-tooltip',
 		className: 'RTEVideoButton',
 		forceLogin: true,
-		clicksource: function() { VET_show({target: {id:"mw-editbutton-vet"}}); },
-		ckcommand: 'addvideo',
-		precondition: checkVET
+		clicksource: function() {
+			WikiaEditor.load( 'VideoEmbedTool' ).done(function() {
+				VET_show({
+					target: {
+						id: 'mw-editbutton-vet'
+					}
+				});
+			});
+		},
+		ckcommand: 'addvideo'
 	};
 
 	buttons['SourceBold'] = {
