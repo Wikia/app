@@ -203,3 +203,27 @@ body >a >img[src$="noad.gif"] {
 	position: relative;
 	z-index: 100;
 }
+
+/** Exitstitial ad */
+#ExitstitialInfobox {
+	p {
+		border-bottom: 1px solid #ccc;
+		padding-bottom: 5px;
+	}
+	.close-exitstitial-ad {
+		text-align: center;
+		font-size: 120%;
+	}
+	.ad-wrapper {
+		display: table;
+		margin: 20px auto;
+		height: 400px;
+		> div {
+			display: table-cell;
+			vertical-align: middle;
+			> div {
+				display: inline-block;
+			}
+		}
+	}
+}
