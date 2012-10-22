@@ -125,6 +125,8 @@
 			<a href="#" class="source-message"> <?= wfMsg('user-action-menu-view-source'); ?> </a>
 		<? endif; ?>
 
+                <a href="<?= $threadHistoryLink ?>" class="thread-history"> <?= wfMsg('history_short'); ?> </a>
+
 		<?php if( $canEdit ): ?>
 			<img src="<?= $wgBlankImgUrl ?>" class="sprite edit-pencil"><a href="#" class="edit-message"><?= wfMsg('wall-message-edit'); ?></a>
 		<?php endif; ?>
