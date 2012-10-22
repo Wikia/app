@@ -415,3 +415,4 @@ $(function () {
 		WikiaBar.init();
 	}
 });
+
