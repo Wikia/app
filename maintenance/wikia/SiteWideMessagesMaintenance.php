@@ -11,4 +11,3 @@ require_once("$IP/extensions/wikia/SiteWideMessages/SiteWideMessagesMaintenance.
 
 $oMaintenance = new SiteWideMessagesMaintenance();
 $oMaintenance->execute();
-?>

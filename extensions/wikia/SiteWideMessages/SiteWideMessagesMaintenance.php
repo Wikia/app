@@ -42,8 +42,7 @@ class SiteWideMessagesMaintenance {
 	 * @return status of operations
 	 */
 	public function execute() {
-		global $wgExternalSharedDB, $IP;
-		require_once($IP . '/maintenance/commandLine.inc');
+		global $wgExternalSharedDB;
 		$dbr = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
 
 		$dbResult = (boolean) $dbr->Query (
