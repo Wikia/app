@@ -342,7 +342,7 @@ Liftium.callIframeAd = function(slotname, tag, adIframe){
 
 		// expandable slots via in-tag-name magic phrase
 		// eg. 300x250 with "foo 600x250 bar"
-		var fs = tag.tag_name.match(/ [0-9]+x[0-9]+ /);
+		var fs = tag.tag_name && tag.tag_name.match(/ [0-9]+x[0-9]+ /);
 		if (fs) {
 			fs = fs[0].match(/[0-9]+x[0-9]+/);
 			fs = fs[0].split("x");
@@ -416,7 +416,7 @@ Liftium.callInjectedIframeAd = function (sizeOrSlot, iframeElement, slotPlacemen
 
 	// expandable slots via in-tag-name magic phrase
 	// eg. 300x250 with "foo 600x250 bar"
-	var fs = t.tag_name.match(/ [0-9]+x[0-9]+ /);
+	var fs = t.tag_name && t.tag_name.match(/ [0-9]+x[0-9]+ /);
 	if (fs) {
 		fs = fs[0].match(/[0-9]+x[0-9]+/);
 		fs = fs[0].split("x");
