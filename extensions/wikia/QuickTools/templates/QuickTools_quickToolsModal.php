@@ -12,6 +12,7 @@
 		<label for="quicktools-block-length"><?= wfMessage( 'quicktools-label-block-length' )->escaped() ?></label>
 		<input id="quicktools-block-length" type="text" value="<?= htmlspecialchars( $blocklength ) ?>" />
 	</div>
+	<div class="spacer"></div>
 	<div class="button-column">
 		<button class="wikia-button" id="quicktools-rollback-all"><?= wfMessage( 'quicktools-rollback-all' )->escaped() ?></a>
 		<button class="wikia-button" id="quicktools-revert-all"><?= wfMessage( 'quicktools-revert-all' )->escaped() ?></a>
