@@ -1,0 +1,10 @@
+.QuickToolsModal .button-column {
+	width: 45%;
+	float: left;
+	padding: 5px;
+}
+
+.QuickToolsModal .wikia-button {
+	display: block;
+	margin: 5px;
+}

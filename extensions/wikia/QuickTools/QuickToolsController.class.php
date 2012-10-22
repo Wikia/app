@@ -1,0 +1,234 @@
+<?php
+/**
+ * Controller class for QuickTools actions
+ *
+ * @author grunny
+ */
+class QuickToolsController extends WikiaController  {
+	public function __construct() {
+		$this->app = F::app();
+	}
+
+	/**
+	 * Method to generate QuickTools modal
+	 */
+	public function quickToolsModal() {
+		$this->setVal( 'username', $this->request->getVal( 'username' ) );
+		$this->setVal( 'timestamp', $this->wf->Timestamp( TS_DB, strtotime( '-1 week' ) ) );
+		$this->setVal( 'blocklength', '3 days' );
+		if ( in_array( 'bot', $this->wg->User->getGroups() ) ) {
+			$this->setVal( 'botflag', 'remove' );
+		} else {
+			$this->setVal( 'botflag', 'add' );
+		}
+	}
+
+	/**
+	 * Block the target user account
+	 */
+	public function blockUser() {
+		$this->wf->ProfileIn( __METHOD__ );
+		if ( !$this->wg->User->isAllowed( 'quicktools' ) ) {
+			$this->response->setVal( 'success', false );
+			$this->response->setVal( 'error', wfMessage( 'quicktools-permissionerror' )->plain() );
+			$this->wf->ProfileOut( __METHOD__ );
+			return true;
+		}
+		$target = $this->request->getVal( 'target' );
+		$blockLength = $this->request->getVal( 'length' );
+		$summary = $this->request->getVal( 'summary' );
+
+		$data = array(
+			'Target' => $target,
+			'Reason' => array(
+				is_null( $summary ) ? '' : $summary,
+				'other',
+				is_null( $summary ) ? '' : $summary
+			),
+			'Expiry' => $blockLength,
+			'HardBlock' => true,
+			'CreateAccount' => true,
+			'AutoBlock' => true,
+			'DisableEmail' => true,
+			'DisableUTEdit' => false,
+			'AlreadyBlocked' => true,
+			'Watch' => false,
+			'Confirm' => true,
+		);
+
+		$retval = SpecialBlock::processForm( $data, $this->getContext() );
+		if ( $retval !== true ) {
+			$this->response->setVal( 'success', false );
+			$this->response->setVal( 'error', wfMessage( $retval )->escaped() );
+			$this->wf->ProfileOut( __METHOD__ );
+			return true;
+		}
+		$this->response->setVal( 'success', true );
+		$this->response->setVal( 'message', wfMessage( 'quicktools-success-block', $target )->escaped() );
+
+		$this->wf->ProfileOut( __METHOD__ );
+		return true;
+	}
+
+	/**
+	 * Revert and/or delete all the target user's edits on a wiki
+	 */
+	public function revertAll() {
+		$this->wf->ProfileIn( __METHOD__ );
+		if ( !$this->wg->User->isAllowed( 'quicktools' ) ) {
+			$this->response->setVal( 'success', false );
+			$this->response->setVal( 'error', wfMessage( 'quicktools-permissionerror' )->plain() );
+			$this->wf->ProfileOut( __METHOD__ );
+			return true;
+		}
+
+		$target = $this->request->getVal( 'target' );
+		$time = $this->request->getVal( 'time' );
+		$summary = $this->request->getVal( 'summary' );
+		$rollback = $this->request->getBool( 'dorollback' );
+		$delete = $this->request->getBool( 'dodeletes' );
+
+		$time = $this->wf->Timestamp( TS_UNIX, $time );
+		if ( !$time ) {
+			$this->response->setVal( 'success', false );
+			$this->response->setVal( 'error', wfMessage( 'quicktools-invalidtime' )->plain() );
+			$this->wf->ProfileOut( __METHOD__ );
+			return true;
+		}
+
+		$time = $this->wf->Timestamp( TS_MW, $time );
+
+		$titles = $this->getRollbackTitles( $target, $time );
+
+		if( empty( $titles ) ) {
+			$this->response->setVal( 'success', false );
+			$this->response->setVal( 'error', wfMessage( 'quicktools-notitles' )->plain() );
+			$this->wf->ProfileOut( __METHOD__ );
+			return true;
+		}
+
+		foreach ( $titles as $title ) {
+			$status = $this->rollbackTitle( $title, $target, $time, $summary, $rollback, $delete );
+		}
+		$this->response->setVal( 'success', true );
+		$successMessage = 'quicktools-success' . ( $rollback ? '-rollback' : '' ) . ( $delete ? '-delete' : '' );
+		$this->response->setVal( 'message', wfMessage( $successMessage, $target )->escaped() );
+
+		$this->wf->ProfileOut( __METHOD__ );
+		return true;
+	}
+
+	/**
+	 * Get all pages that should be rolled back for a given user
+	 *
+	 * @param $user String a name to check against rev_user_text
+	 * @param $time String Timestamp to revert since
+	 * @return Array of page titles to revert
+	 */
+	private function getRollbackTitles( $user, $time ) {
+		$this->wf->ProfileIn( __METHOD__ );
+		$dbr = $this->wf->GetDB( DB_SLAVE );
+		$titles = array();
+		$time = $dbr->addQuotes( $time );
+		$results = $dbr->select(
+			array( 'page', 'revision' ),
+			array( 'page_namespace', 'page_title' ),
+			array( 
+				'page_latest = rev_id', 
+				'rev_user_text' => $user,
+				"rev_timestamp >= {$time}",
+			),
+			__METHOD__,
+			array(
+				'ORDER BY' => 'page_namespace, page_title',
+				'LIMIT' => 500,
+			)
+		);
+		while ( $row = $dbr->fetchObject( $results ) ) {
+			$titles[] = Title::makeTitle( $row->page_namespace, $row->page_title );
+		}
+
+		$this->wf->ProfileOut( __METHOD__ );
+		return $titles;
+	}
+
+	/**
+	 * Rollback edits and/or delete page creations by user
+	 *
+	 * @param $title String The page name to perform reverts on
+	 * @param $user String Username of user to revert
+	 * @param $time String Timestamp to revert edits since
+	 * @param $summary String Edit summary to give for reverts and deleted
+	 * @param $rollback Boolean Whether or not to perform rollbacks (default: true)
+	 * @param $delete Boolean Whether or not to perform deletions (default: true)
+	 * @return true on success, false on failure
+	 */
+	private function rollbackTitle( $title, $user, $time, $summary, $rollback = true, $delete = true ) {
+		$this->wf->ProfileIn( __METHOD__ );
+		// build article object and find article id
+		$article = new Article( $title );
+		$pageId = $article->getID();
+
+		// check if article exists
+		if ( $pageId <= 0 ) {
+			$this->wf->ProfileOut( __METHOD__ );
+			return false;
+		}
+
+		// fetch revisions from this article
+		$dbr = $this->wf->GetDB( DB_SLAVE );
+		$res = $dbr->select(
+			'revision',
+			array( 'rev_id', 'rev_user_text', 'rev_timestamp' ),
+			array(
+				'rev_page' => $pageId,
+			),
+			__METHOD__,
+			array(
+				'ORDER BY' => 'rev_id DESC',
+			)
+		);
+
+		// find the newest edit done by other user
+		$revertRevId = false;
+		while ( $row = $dbr->fetchObject( $res ) ) {
+			if ( $row->rev_user_text !== $user || $row->rev_timestamp < $time ) {
+				$revertRevId = $row->rev_id;
+				break;
+			} 
+		}
+		$dbr->freeResult( $res );
+
+		if ( $revertRevId && $rollback ) { // found an edit by other user - reverting
+			$rev = Revision::newFromId( $revertRevId );
+			$text = $rev->getRawText();
+			$flags = EDIT_UPDATE|EDIT_MINOR;
+			if ( $this->wg->User->isAllowed( 'bot' ) ) {
+				$flags |= EDIT_FORCE_BOT;
+			}
+			$status = $article->doEdit( $text, $summary, $flags );
+			if ( $status->isOK() ) {
+				$this->wf->ProfileOut( __METHOD__ );
+				return true;
+			} else {
+				$this->wf->ProfileOut( __METHOD__ );
+				return false;
+			}
+		} elseif ( !$revertRevId && $delete ) { // no edits by other users - deleting page
+			$title = $article->getTitle();
+			$file = $title->getNamespace() == NS_FILE ? wfLocalFile( $title ) : false;
+			if ( $file ) {
+				$oldimage = null; // Must be passed by reference
+				$status = FileDeleteForm::doDelete( $title, $file, $oldimage, $reason, false )->isOK();
+			} else {
+				$status = $article->doDeleteArticle( $summary );
+			}
+			if ( $status ) {
+				$this->wf->ProfileOut( __METHOD__ );
+				return true;
+			}
+		}
+		$this->wf->ProfileOut( __METHOD__ );
+		return false;
+	}
+}
