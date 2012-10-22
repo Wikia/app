@@ -80,7 +80,8 @@ function wfAdEngineSetupJSVars(Array &$vars) {
 		$wgAdDriverCookieLifetime, $wgHighValueCountries, $wgDartCustomKeyValues,
 		$wgUser, $wgEnableWikiAnswers, $wgAdDriverUseCookie, $wgAdDriverUseExpiryStorage,
 		$wgEnableAdMeldAPIClient, $wgEnableAdMeldAPIClientPixels,
-		$wgLoadAdDriverOnLiftiumInit;
+		$wgLoadAdDriverOnLiftiumInit, $wgOutboundScreenRedirectDelay,
+		$wgAdsInterstitialsEnabled;
 
 	$wgNoExternals = $wgRequest->getBool('noexternals', $wgNoExternals);
 
@@ -127,6 +128,13 @@ function wfAdEngineSetupJSVars(Array &$vars) {
 	// Answers sites
 	if (!empty($wgEnableWikiAnswers)) {
 		$vars['wgEnableWikiAnswers'] = $wgEnableWikiAnswers;
+	}
+
+	if (!empty($wgOutboundScreenRedirectDelay)) {
+		$vars['wgOutboundScreenRedirectDelay'] = $wgOutboundScreenRedirectDelay;
+	}
+	if (!empty($wgAdsInterstitialsEnabled)) {
+		$vars['wgAdsInterstitialsEnabled'] = $wgAdsInterstitialsEnabled;
 	}
 
 	/*
