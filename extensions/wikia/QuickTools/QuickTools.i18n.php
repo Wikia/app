@@ -13,6 +13,7 @@ $messages = array();
  */
 $messages['en'] = array(
 	'quicktools' => 'QuickTools',
+	'quicktools-desc' => 'A collection of tools to make fighting spam and vandalism easier, and other tasks for staff and volunteers easier',
 	'quicktools-contrib-link' => 'Quick Tools',
 	'quicktools-invalidtime' => 'Invalid time provided',
 	'quicktools-notitles' => 'No titles to revert',

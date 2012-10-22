@@ -11,7 +11,7 @@
 
 $wgExtensionCredits['antispam'][] = array(
 	'name' => 'QuickTools',
-	'description' => 'A collection of tools to make fighting spam and vandalism easier',
+	'descriptionmsg' => 'quicktools-desc',
 	'author' => array(
 		'[http://community.wikia.com/wiki/User:Grunny Daniel Grunwell (grunny)]'
 	),
