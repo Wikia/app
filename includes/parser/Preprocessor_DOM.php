@@ -1140,7 +1140,12 @@ class PPFrame_DOM implements PPFrame {
 					global $wgRTEParserEnabled;
 					if(!empty($wgRTEParserEnabled)) {
 						if($RTEext_2) {
-							if(strpos($contextNode->nodeValue, 'table') !== false) {
+							// BugId:17510 (catch REAL HTML tables only)
+							if (
+								strpos($contextNode->nodeValue, '<table') !== false
+								||
+								strpos($contextNode->nodeValue, '</table>') !== false
+							) {
 								RTE::$edgeCases[] = 'COMPLEX.11';
 							}
 						}
