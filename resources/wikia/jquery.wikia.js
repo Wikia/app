@@ -108,7 +108,7 @@ $.fn.getModal = function(url, id, options) {
 $.showModal = function(title, content, options) {
 	options = (typeof options != 'object') ? {} : options;
 
-	var header = $('<h1>').html(title),
+	var header = $('<h1>').text(title),
 		dialog = $('<div>').html(content).prepend(header).appendTo('body'),
 		wrapper;
 
