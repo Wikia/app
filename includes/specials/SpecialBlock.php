@@ -651,7 +651,11 @@ class SpecialBlock extends FormSpecialPage {
 		$block->mHideName = $data['HideUser'];
 
 		if( !wfRunHooks( 'BlockIp', array( &$block, &$performer ) ) ) {
-			return array( 'hookaborted' );
+			if (User::newFromName( $block->getRedactedName() )->isAllowed("unblockable")) {
+				return array( 'staffpowers-ipblock-abort' );
+			} else {
+				return array( 'hookaborted' );
+			}
 		}
 
 		# Try to insert block. Is there a conflicting block?
