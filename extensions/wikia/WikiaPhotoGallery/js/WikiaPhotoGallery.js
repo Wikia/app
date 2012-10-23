@@ -352,6 +352,8 @@ var WikiaPhotoGallery = {
 								dimensions.width = this.GALLERY_SLIDER_WIDTH;
 								dimensions.height = this.GALLERY_SLIDER_HEIGHT;
 							} else {
+                                position = gallery.params.position || 'right';
+                                node.addClass('align' + position.substr(0,1).toUpperCase() + position.substr(1));
 								dimensions.width = '185';
 								dimensions.height = '185';
 							}
