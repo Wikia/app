@@ -2,6 +2,7 @@
 
 class ImageServingTest extends SpecialPage {
 
+	/* @var MostvisitedpagesPageIS */
     private $mpp = null;
 
 	function __construct() {
@@ -26,12 +27,11 @@ class ImageServingTest extends SpecialPage {
 			break;
 		}
 
-
 		if( $wgRequest->getVal("article","") != "")  {
 			$title = Title::newFromText($wgRequest->getVal("article"),NS_MAIN);
 			$test = new ImageServing(array($title->getArticleId()), $this->size, $this->prop);
 
-			foreach ($test->getImages(20) as $key => $value){
+			foreach ($test->getImages(20) as $value){
 				$wgOut->addHTML( "<b>".$title->getText()."</b><br><br>");
 				foreach ($value as $value2) {
 					$wgOut->addHTML("<img src='{$value2['url']}' /> <br>");
@@ -40,7 +40,6 @@ class ImageServingTest extends SpecialPage {
 			};
 			return ;
 		}
-
 
 		$wgOut->addHTML(Xml::element("a", array("href" => $wgTitle->getLocalURL("option=1")), wfMsg('imageserving-option1') )."<br>" );
 		$wgOut->addHTML(Xml::element("a", array("href" => $wgTitle->getLocalURL("option=2")), wfMsg('imageserving-option2') )."<br>" );
@@ -55,8 +54,9 @@ class ImageServingTest extends SpecialPage {
         $this->mpp->doQuery($wgRequest->getVal("offset",0), 20, $show );
     }
 
-    function getResult() { return $this->mpp->getResult(); }
-
+    function getResult() {
+		return $this->mpp->getResult();
+	}
 }
 
 class MostvisitedpagesPageIS extends MostvisitedpagesPage {
@@ -94,7 +94,7 @@ class MostvisitedpagesPageIS extends MostvisitedpagesPage {
 				$result->title = Xml::element("a", array("href" => $title->getLocalURL()), $title->getFullText()."(".$title->getArticleId().")") ;
 				$is = new ImageServing(array($title->getArticleId()), $this->size, $this->prop );
 				$result->title .= "<div>";
-				foreach ($is->getImages(1) as $key => $value){
+				foreach ($is->getImages(1) as $value){
 					foreach ($value as $value2) {
 						$result->title .= "<img src='{$value2['url']}' /> <br>";
 						$result->title .= $value2['name']."<br>";
@@ -108,4 +108,3 @@ class MostvisitedpagesPageIS extends MostvisitedpagesPage {
 		return $res;
 	}
 }
-

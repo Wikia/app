@@ -85,32 +85,37 @@
 					viewportHeight: viewportHeight
 				};
 
-			/** Start of Wikia change @author nAndy **/
-			//FIXME: talk to Władek/Macbre about better way of making it and moving this logic maybe to new class which extends this one
-			if( window.wgEnableWikiaBarExt ) {
-				var mainHeight = $('#EditPageMain').height() || 0,
-					nodeHeight = node.height() || 0,
-					toolbarHeight = $('#EditPageToolbar').height() || 0,
-					introHeight = $('#EditPageIntro').outerHeight(true) || 0,
-					editNoticeHeight = $('#EditPageEditNotice').outerHeight(true) || 0,
-					editCustomHeight = $('#EditPageCustomIntro').outerHeight(true) || 0,
-					talkPageIntroHeight = $('#EditPageTalkPageIntro').outerHeight(true) || 0,
-					diffContainerHeight = $('#diff').outerHeight(true) || 0;
-
-				var editorBottomBorder = mainHeight - nodeHeight - toolbarHeight - introHeight - editCustomHeight - editNoticeHeight - talkPageIntroHeight - diffContainerHeight;
-				dimensions.nodeHeight = parseInt(viewportHeight - topOffset - editorBottomBorder - window.WikiaBar.getWikiaBarOffset());
+			if( window.wgEnableWikiaBarExt && typeof(window.WikiaBar) === 'object' ) {
+			//old admin tool bar had position relative and was always at the bottom
+			//with the admin tool bar in WikiaBar container we want it to be at the bottom but
+			//to have the page hight fit viewportHeight
+				dimensions.nodeHeight = this.getDimensionsWithWikiaBar(dimensions.nodeHeight);
 			}
-			/** End of Wikia change **/
 
 			return dimensions;
+		},
+
+		getDimensionsWithWikiaBar: function(nodeHeight) {
+			var editorHeight = $('#EditPage').outerHeight(true) || 0,
+				editorToolbarHeight = $('#EditPageToolbar').height() || 0,
+				editPageEditorWrapperHeight = $('#EditPageEditorWrapper').outerHeight(true) || 0,
+				editorBottomBorder = editorHeight - editorToolbarHeight - editPageEditorWrapperHeight,
+				wikiaBarOffset = window.WikiaBar.getWikiaBarOffset(),
+				newEditAreaHeight = parseInt( (nodeHeight - editorBottomBorder - wikiaBarOffset), 10);
+
+			//bugId:49405; quick fix for edit page with a really, really long diff
+			return (newEditAreaHeight <= 0) ? this.minPageHeight : newEditAreaHeight;
 		},
 
 		resize: function() {
 			switch(this.mode) {
 				// resize editor area
 				case 'editarea':
-					if (this.editbox && this.getHeightToFit(this.editbox).viewportHeight > this.minPageHeight) {
-						this.editbox.height(this.getHeightToFit(this.editbox).nodeHeight);
+					if( this.editbox ) {
+						var cachedDimensions = this.getHeightToFit(this.editbox);
+						if( cachedDimensions.viewportHeight > this.minPageHeight ) {
+							this.editbox.height(cachedDimensions.nodeHeight);
+						}
 					}
 					break;
 

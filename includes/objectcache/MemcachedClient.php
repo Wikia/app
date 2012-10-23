@@ -981,6 +981,10 @@ class MWMemcached {
 
 			} else {
 				$this->_debugprint( "Error parsing memcached response\n" );
+				// Wikia change - begin
+				// @author macbre (BugId:27916)
+				Wikia::logBacktrace(__METHOD__);
+				// Wikia change - end
 				return 0;
 			}
 		}

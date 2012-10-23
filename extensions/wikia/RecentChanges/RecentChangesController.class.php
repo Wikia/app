@@ -39,9 +39,11 @@ class RecentChangesController extends WikiaController {
 				'label' => $index === 0 ? $this->wf->Msg( 'blanknamespace' ) : $name
 			);
 		}
-
-		$rcfs = new RecentChangesFiltersStorage($this->wg->User);
-		$selected = $rcfs->get();
+		
+		if ( empty( $selected ) ) {
+			$rcfs = new RecentChangesFiltersStorage($this->wg->User);
+			$selected = $rcfs->get();
+		}
 		
 		$this->html = $this->app->renderView( 'WikiaStyleGuideDropdownController', 'multiSelect', array(
 			'options' => $options,

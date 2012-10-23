@@ -69,22 +69,6 @@
 			} );
 		},
 
-		checkPageExists: function( pageName ) {
-			$.getJSON( mw.util.wikiScript( 'api' ), {
-				action: 'query',
-				prop: 'revisions',
-				titles: pageName,
-				format: 'json'
-			} ).done( function ( data ) {
-				var	pageIds = Object.keys( data.query.pages ),
-					pageId = pageIds[0];
-				if( pageId !== '-1' ) {
-					return true;
-				}
-				return false;
-			} );
-		},
-
 		showResult: function( result, message ) {
 			var $bodyContent = ( mw.config.get( 'skin' ) === 'oasis' ? $( '.WikiaPageContentWrapper' ) : mw.util.$content );
 			$bodyContent.prepend(

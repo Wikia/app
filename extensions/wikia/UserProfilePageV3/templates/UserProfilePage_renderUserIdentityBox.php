@@ -64,6 +64,7 @@
 				<? endif; ?>
 			</div>
 
+			<? if( !$isBlocked ): ?>
 			<ul class="links">
 				<? if( !empty($user['twitter']) ): ?>
 					<li class="twitter">
@@ -113,6 +114,7 @@
 					<? endif; ?>
 				<? endif; ?>
 			</ul>
+			<? endif; ?>
 
 			<? if( (!array_key_exists('hideEditsWikis', $user) || !$user['hideEditsWikis']) && !empty($user['topWikis']) && is_array($user['topWikis']) ): ?>
 			<ul class="wikis">
