@@ -18,7 +18,7 @@ $app->registerClass('WikiaSpecialVersionController',	$dir . 'WikiaSpecialVersion
 /**
  * special pages
  */
-$app->registerSpecialPage('Version', 'WikiaSpecialVersion');
+$app->registerSpecialPage('Version', 'WikiaSpecialVersionController');
 
 /**
  * message files
