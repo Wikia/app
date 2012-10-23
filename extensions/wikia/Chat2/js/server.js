@@ -580,27 +580,32 @@ function kick(client, socket, msg){
     kickCommand.mport(msg);	
 
 	var userToKick = kickCommand.get('userToKick');
-	var kickedUser = new models.User({name: userToKick});
-	if ( client.myUser.get('isModerator') !== true) {
-		sendInlineAlertToClient(client, '', 'chat-kick-you-need-permission', []);
-	} else if ( kickedUser.get('isModerator') === true && client.myUser.get('isCanGiveChatMode') !== true ) {
-		sendInlineAlertToClient(client, '', 'chat-kick-cant-kick-moderator', []);
-	} else {
-    	var kickEvent = new models.KickEvent({
-    		kickedUserName: kickedUser.get('name'),
-    		moderatorName: client.myUser.get('name')
-    	});
-    	broadcastToRoom(client, socket, { 
-    			event: 'kick',
-    			data: kickEvent.xport()		
-    		},
-    		null,
-    		function() {
-    			client.donotSendPart = true;
-    			kickUserFromRoom(client, socket, kickedUser, client.roomId);
-    		}
-    	);
-	}
+\	storage.getRoomState(client.roomId, function(nodeChatModel) {
+		var kickedUser = nodeChatModel.users.findByName(userToKick);
+		if (typeof kickedUser !== "undefined") {
+			if ( client.myUser.get('isModerator') !== true) {
+				sendInlineAlertToClient(client, '', 'chat-kick-you-need-permission', []);
+			} else if ( kickedUser.get('isCanGiveChatMode') || ( kickedUser.get('isModerator') === true && client.myUser.get('isCanGiveChatMode') !== true ) ) {
+				sendInlineAlertToClient(client, '', 'chat-kick-cant-kick-moderator', []);
+			} else {
+				var kickEvent = new models.KickEvent({
+					kickedUserName: kickedUser.get('name'),
+					moderatorName: client.myUser.get('name')
+				});
+				broadcastToRoom(client, socket, {
+						event: 'kick',
+						data: kickEvent.xport()
+					},
+					null,
+					function() {
+						client.donotSendPart = true;
+						kickUserFromRoom(client, socket, kickedUser, client.roomId);
+					}
+				);
+			}
+		}
+	});
+
 } // end kick()
 
 /**
