@@ -477,29 +477,17 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 		);
 
 		$total = array(
-			'reviewer' => 0,
 			'unreviewed' => 0,
 			'questionable' => 0,
 			'rejected' => 0,
 		);
 		while( $row = $db->fetchObject($result) ) {
 			$total[$row->state] = $row->total;
-
-			// Rollup row with Reviewer total count
-		/*	if ($row->reviewer_id == $reviewer_id && ($row->state > ImageReviewStatuses::STATE_IN_REVIEW)) {
-				$total['reviewer'] += $row->total;
-			}
-			// Rollup row with total unreviewed
-			if ($row->state == ImageReviewStatuses::STATE_UNREVIEWED) {
-				$total['unreviewed'] += $row->total;
-			}
-			// Rollup row with total questionable
-			if ($row->state == ImageReviewStatuses::STATE_QUESTIONABLE) {
-				$total['questionable'] += $row->total;
-			} */
 		}
-	//	$total['reviewer'] = $this->wg->Lang->formatNum($total['reviewer']);
-	//	$total['unreviewed'] = $this->wg->Lang->formatNum($total['unreviewed']);
+
+		if ( array_key_exists( ImageReviewStatuses::STATE_UNREVIEWED, $total ) ) {
+			$total['unreviewed'] = $this->wg->Lang->formatNum($total[ImageReviewStatuses::STATE_UNREVIEWED]);
+		}
 		if ( array_key_exists( ImageReviewStatuses::STATE_QUESTIONABLE, $total ) ) {
 			$total['questionable'] = $this->wg->Lang->formatNum($total[ImageReviewStatuses::STATE_QUESTIONABLE]);
 		}
