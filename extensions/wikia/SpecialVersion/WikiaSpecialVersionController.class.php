@@ -24,9 +24,11 @@ class WikiaSpecialVersionController extends WikiaSpecialPageController
 	}
 	
 	public function index() {
-		$title = F::build( 'Title', array( 'Special:Version' ), 'newFromText' );
-		$popts = F::build('ParserOptions', array( RequestContext::getMain() ), 'newFromContext' ); 
+		$title = F::build( 'Title', array( 'Version' ), 'newFromText' );
+		$popts = F::build('ParserOptions', array( RequestContext::getMain() ), 'newFromContext' );
+
 		$this->wg->Title = $title;
+		$this->app->wg->Out->setPageTitle( $title );
 		
 		$this->setVal( 'copyRightAndAuthorList',		$this->wg->Parser->parse( $this->version->getCopyrightAndAuthorList(), $title, $popts )->getText() );
 		$this->setVal( 'softwareInformation',			$this->wg->Parser->parse( $this->version->softwareInformation(), $title, $popts )->getText() );
