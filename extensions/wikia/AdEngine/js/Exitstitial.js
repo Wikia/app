@@ -8,10 +8,10 @@
 		, modalWidth = 840
 		, adSlot = 'EXIT_STITIAL_BOXAD_1'
 		, redirectDelay = window.wgOutboundScreenRedirectDelay || 10
-		, enabled = window.wgAdsInterstitialsEnabled
+		, enabled = window.wgEnableOutboundScreenExt && window.wgShowAds && window.wgAdsShowableOnPage
 	;
 
-	// Check external links should be ad-guarded
+	// Check if external links should be ad-guarded
 	if (!enabled) {
 		return;
 	}
