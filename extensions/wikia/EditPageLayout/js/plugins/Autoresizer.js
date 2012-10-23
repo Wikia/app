@@ -85,30 +85,37 @@
 					viewportHeight: viewportHeight
 				};
 
-			if( window.wgEnableWikiaBarExt ) {
-				dimensions.nodeHeight = this.getHeighToFitWithWikiaBar(dimensions.nodeHeight);
+			if( window.wgEnableWikiaBarExt && typeof(window.WikiaBar) === 'object' ) {
+			//old admin tool bar had position relative and was always at the bottom
+			//with the admin tool bar in WikiaBar container we want it to be at the bottom but
+			//to have the page hight fit viewportHeight
+				dimensions.nodeHeight = this.getDimensionsWithWikiaBar(dimensions.nodeHeight);
 			}
 
 			return dimensions;
 		},
 
-		getHeighToFitWithWikiaBar: function(currentHeight) {
-			var editPageHeight = $('#EditPage').outerHeight(true) || 0;
-			var editPageToolbarHeight = $('#EditPageToolbar').height() || 0;
-			var editPageMainHeight = $('#EditPageEditorWrapper').outerHeight(true) || 0;
-			var editorBottomBorder = parseInt((editPageHeight - editPageToolbarHeight - editPageMainHeight), 10);
-			var wikiaBarOffset = window.WikiaBar.getWikiaBarOffset();
-			var newEditAreaHeight = parseInt( (currentHeight - editorBottomBorder - wikiaBarOffset), 10);
+		getDimensionsWithWikiaBar: function(nodeHeight) {
+			var editorHeight = $('#EditPage').outerHeight(true) || 0,
+				editorToolbarHeight = $('#EditPageToolbar').height() || 0,
+				editPageEditorWrapperHeight = $('#EditPageEditorWrapper').outerHeight(true) || 0,
+				editorBottomBorder = editorHeight - editorToolbarHeight - editPageEditorWrapperHeight,
+				wikiaBarOffset = window.WikiaBar.getWikiaBarOffset(),
+				newEditAreaHeight = parseInt( (nodeHeight - editorBottomBorder - wikiaBarOffset), 10);
 
-			return (newEditAreaHeight <= this.minPageHeight) ? this.minPageHeight: newEditAreaHeight;
+			//bugId:49405; quick fix for edit page with a really, really long diff
+			return (newEditAreaHeight <= 0) ? this.minPageHeight : newEditAreaHeight;
 		},
 
 		resize: function() {
 			switch(this.mode) {
 				// resize editor area
 				case 'editarea':
-					if (this.editbox && this.getHeightToFit(this.editbox).viewportHeight > this.minPageHeight) {
-						this.editbox.height(this.getHeightToFit(this.editbox).nodeHeight);
+					if( this.editbox ) {
+						var cachedDimensions = this.getHeightToFit(this.editbox);
+						if( cachedDimensions.viewportHeight > this.minPageHeight ) {
+							this.editbox.height(cachedDimensions.nodeHeight);
+						}
 					}
 					break;
 
