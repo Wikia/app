@@ -52,7 +52,7 @@
 
 			} else {
 				deferred.reject({
-					error: 'WikiaEditor.use: invalid component name "' + name + '"'
+					error: 'WikiaEditor.load: invalid component name "' + name + '"'
 				});
 			}
 
