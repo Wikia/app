@@ -40,7 +40,7 @@ class MostvisitedpagesSpecialPage extends SpecialPage {
 }
 
 class MostvisitedpagesPage extends QueryPage {
-	private $data = array();
+	protected $data = array();
 	private $show = false;
 	var $mArticle = "";
 	var $mArticleId = "";
