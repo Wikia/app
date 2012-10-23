@@ -23,7 +23,7 @@ $app->registerSpecialPage('Version', 'WikiaSpecialVersionController');
 /**
  * message files
  */
-$app->registerExtensionMessageFile('WikiaSearch', $dir . 'WikiaSearch.i18n.php' );
+$app->registerExtensionMessageFile('WikiaSpecialVersion', $dir . 'WikiaSpecialVersion.i18n.php' );
 
 $wgExtensionCredits['other'][] = array(
 	'name'				=> 'Wikia Special:Version',
