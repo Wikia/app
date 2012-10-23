@@ -8,3 +8,8 @@
 	</section>
 	<?= $app->renderPartial('ForumSpecial', 'boards', array('boards' => $boards, 'lastPostByMsg' => $lastPostByMsg, 'isEditMode' => false ) ) ?>
 </section>
+
+
+<? if($showOldForumLink): ?>
+	<a href="<?= $oldForumLink ?>"> <?= wfMsg('forum-specialpage-oldforum-link'); ?></a>
+<? endif; ?>
