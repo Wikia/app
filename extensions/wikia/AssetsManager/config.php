@@ -101,7 +101,6 @@ $config['oasis_ads_js'] = array(
 		'#group_liftium_ads_js',
 
 		'//extensions/wikia/AdEngine/liftium/AdsInContent.js',
-		'//extensions/wikia/AdEngine/js/Exitstitial.js',
 
 		'//extensions/wikia/AdEngine/AdDriver.js',
 		'//extensions/wikia/AdEngine/AdDriverGP.js',
@@ -291,6 +290,7 @@ $config['oasis_anon_js'] = array(
 	'assets' => array(
 		'//skins/oasis/js/LatestActivity.js',
 		'//skins/oasis/js/AnonTOC.js',
+		'//extensions/wikia/AdEngine/js/Exitstitial.js',
 		'//extensions/wikia/UserLogin/js/UserLoginFacebook.js',
 		'//extensions/wikia/UserLogin/js/UserLoginFacebookForm.js',
 	)
