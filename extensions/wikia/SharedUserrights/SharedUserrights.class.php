@@ -112,7 +112,6 @@ class UserRights {
 		 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
 	 */
 	static function userEffectiveGroups(&$user, &$groups) {
-		echo 'got here for ' . $user->getName();
 		$groups = array_unique(array_merge($groups, self::getGlobalGroups($user)));
 		return $groups;
 	}
