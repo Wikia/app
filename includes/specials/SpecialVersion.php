@@ -182,19 +182,59 @@ class SpecialVersion extends SpecialPage {
 		return $version;
 	}
 
+	protected static function isSHA1( $str ) {
+		return !!preg_match( '/^[0-9A-F]{40}$/i', $str );
+	}
+
+	protected static function getHeadSHA1( $dir ) {
+		$gitDir = "$dir/.git";
+		if ( !is_dir( $gitDir ) ) {
+			return false;
+		}
+
+		$head = (string)@file_get_contents("$gitDir/HEAD");
+		if ( preg_match( "/ref: (.*)/", $head, $m ) ) {
+			$headRef = rtrim( $m[1] );
+		} else {
+			$headRef = rtrim( $head );
+		}
+		if ( self::isSHA1($headRef) ) {
+			return $head;
+		}
+
+		if ( empty( $headRef ) ) {
+			return false;
+		}
+
+		$head = rtrim( (string)@file_get_contents("$gitDir/$headRef") );
+		if ( self::isSHA1($head) ) {
+			return $head;
+		}
+
+		return false;
+	}
+
 	/** Return a string of the Wikia version with SVN revision */
 	public static function getWikiaVersion() {
-		global $wgWikiaConfRevision;
+		global $wgWikiaConfRevision, $IP, $wgWikiaConfigDirectory;
 		if (preg_match('/\/wikia\/(slot[0-9]\/)?(tags\/)?([^\/]+)/', '$HeadURL$', $matches)) {
 			$wikia_release = $matches[1] . $matches[3];
+		} else if ( ($headSHA = self::getHeadSHA1($IP)) ) {
+			$wikia_release = "git/" . (substr($headSHA,0,10)) . "...";
+		} else if ( file_exists("$IP/wikia.version.txt") ) {
+			$wikia_release = (string)@file_get_contents("$IP/wikia.version.txt");
 		} else {
-			$wikia_release = '';
+			$wikia_release = '(not-detected)';
 		}
 
 		if (preg_match('/\/(svn\/)?tags\/wikia-conf\/([^\/]+)/', $wgWikiaConfRevision, $matches)) {
 			$conf_release = $matches[2];
+		} else if ( ($headSHA = self::getHeadSHA1($wgWikiaConfigDirectory)) ) {
+			$conf_release = "git/" . (substr($headSHA,0,8)) . "...";
+		} else if ( file_exists("$wgWikiaConfigDirectory/wikia.version.txt") ) {
+			$conf_release = (string)@file_get_contents("$wgWikiaConfigDirectory/wikia.version.txt");
 		} else {
-			$conf_release = 'trunk';
+			$conf_release = '(not-detected)';
 		}
 
 		return "Code: $wikia_release, Config: $conf_release";
