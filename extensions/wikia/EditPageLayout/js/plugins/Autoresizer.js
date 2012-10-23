@@ -85,29 +85,22 @@
 					viewportHeight: viewportHeight
 				};
 
-			/** Start of Wikia change @author nAndy **/
-			//FIXME: talk to Władek/Macbre about better way of making it and moving this logic maybe to new class which extends this one
 			if( window.wgEnableWikiaBarExt ) {
-				var mainHeight = $('#EditPageMain').height() || 0,
-					nodeHeight = node.height() || 0,
-					toolbarHeight = $('#EditPageToolbar').height() || 0,
-					introHeight = $('#EditPageIntro').outerHeight(true) || 0,
-					editNoticeHeight = $('#EditPageEditNotice').outerHeight(true) || 0,
-					editCustomHeight = $('#EditPageCustomIntro').outerHeight(true) || 0,
-					talkPageIntroHeight = $('#EditPageTalkPageIntro').outerHeight(true) || 0,
-					diffContainerHeight = $('#diff').outerHeight(true) || 0;
-
-				var editorBottomBorder = mainHeight - nodeHeight - toolbarHeight - introHeight - editCustomHeight - editNoticeHeight - talkPageIntroHeight - diffContainerHeight;
-				dimensions.nodeHeight = parseInt(viewportHeight - topOffset - editorBottomBorder - window.WikiaBar.getWikiaBarOffset());
-
-				if( dimensions.nodeHeight < this.minPageHeight ) {
-				//bugId: 49405; it happens usually with big differences between two revisions of an article (while undoing)
-					dimensions.nodeHeight = this.minPageHeight;
-				}
+				dimensions.nodeHeight = this.getHeighToFitWithWikiaBar(dimensions.nodeHeight);
 			}
-			/** End of Wikia change **/
 
 			return dimensions;
+		},
+
+		getHeighToFitWithWikiaBar: function(currentHeight) {
+			var editPageHeight = $('#EditPage').outerHeight(true) || 0;
+			var editPageToolbarHeight = $('#EditPageToolbar').height() || 0;
+			var editPageMainHeight = $('#EditPageEditorWrapper').outerHeight(true) || 0;
+			var editorBottomBorder = parseInt((editPageHeight - editPageToolbarHeight - editPageMainHeight), 10);
+			var wikiaBarOffset = window.WikiaBar.getWikiaBarOffset();
+			var newEditAreaHeight = parseInt( (currentHeight - editorBottomBorder - wikiaBarOffset), 10);
+
+			return (newEditAreaHeight <= this.minPageHeight) ? this.minPageHeight: newEditAreaHeight;
 		},
 
 		resize: function() {
