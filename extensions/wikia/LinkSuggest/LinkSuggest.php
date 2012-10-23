@@ -132,7 +132,7 @@ function getLinkSuggest() {
 	} else {
 		$key = wfMemcKey( __METHOD__, md5( $query.'_'.$wgRequest->getText('format').$wgRequest->getText('nospecial', '') ) );
 	}
-	
+
 	if (strlen($query) < 3) {
 		// enforce minimum character limit on server side
 		$out = $wgRequest->getText('format') == 'json'
@@ -275,14 +275,14 @@ function getLinkSuggest() {
 	}
 
 	$db->freeResult( $res );
-	
+
 	if($wgRequest->getText('nospecial', 0) != 1) {
 		// bugid 29988: include special pages
 		// (registered in SpecialPage::$mList, not in the DB like a normal page)
 		if (($namespaces == array('-1')) && (strlen($query) > 0)) {
 			$specialPagesByAlpha = SpecialPageFactory::getList();
 			$specialPagesByAlpha = get_object_vars($specialPagesByAlpha);
-			
+
 			ksort($specialPagesByAlpha, SORT_STRING);
 			array_walk( $specialPagesByAlpha,
 				function($val,$key) use (&$results, $query) {
@@ -326,7 +326,7 @@ function getLinkSuggest() {
 }
 
 function linkSuggestFormatResults($db, $res, $query, &$redirects, &$results, &$exactMatchRow) {
-	global $wgLinkSuggestLimit;	
+	global $wgLinkSuggestLimit;
 	while(($row = $db->fetchObject($res)) && count($results) < $wgLinkSuggestLimit ) {
 
 		if (strtolower($row->page_title) == $query) {

@@ -51,7 +51,7 @@ function VET_editVideo() {
 
 	var callback = {
 		success: function(o) {
-		
+
 			var data = FCK.wysiwygData[VET_refid];
 
 			VET_displayDetails(o.responseText, data);
@@ -62,7 +62,7 @@ function VET_editVideo() {
 
 				if ( (typeof (data.thumbnail) != "undefined" && data.thumbnail ) ||
 		             (typeof (data.thumb) != "undefined" && data.thumb ) ) {
-		
+
 		             $("#VideoEmbedThumbOption").attr('checked', 'checked');
 		             $('#VET_StyleThumb').addClass('selected');
 		        }  else {
@@ -71,7 +71,7 @@ function VET_editVideo() {
 		        	 $("#VideoEmbedThumbOption").attr('checked', '');
 		             $("#VideoEmbedNoThumbOption").attr('checked', 'checked');
 		             $('#VET_StyleThumb').removeClass('selected');
-		             $('#VET_StyleNoThumb').addClass('selected');     
+		             $('#VET_StyleNoThumb').addClass('selected');
 		        }
 
 				if(data.align && data.align == 'left') {
@@ -81,13 +81,13 @@ function VET_editVideo() {
 				} else {
 					$('#VideoEmbedLayoutRight').attr('checked', 'checked').parent().addClass('selected');
 				}
-				
+
 				if(data.width) {
 					VET_readjustSlider( data.width );
 					VET_width = data.width;
 					$('#VideoEmbedManualWidth').val(VET_width);
 				}
-				
+
 			}, 200);
 			if(data.caption) {
 				$G('VideoEmbedCaption').value = data.caption;
@@ -598,7 +598,7 @@ function VET_loadMain() {
 			if ( window.wgEnableAjaxLogin == true && $('#VideoEmbedLoginMsg').exists() ) {
 				$('#VideoEmbedLoginMsg').click(openLogin).css('cursor', 'pointer').log('VET: ajax login enabled');
 			}
-			
+
 			// Add suggestions and search to VET
 			VETExtended.init();
 		}
@@ -760,15 +760,15 @@ function VET_displayDetails(responseText, dataFromEditMode) {
 		var thumbSize = [image.width, image.height];
 		VET_orgThumbSize = null;
 	}
-	
+
 	var value = 335;
-	
+
 	if (dataFromEditMode && dataFromEditMode.width) {
 		value = dataFromEditMode.width;
 	}
-	
-	function initSlider() {	
-			
+
+	function initSlider() {
+
 		$('.WikiaSlider').slider({
 			min: 100,
 			max: 670,
@@ -838,7 +838,7 @@ function VET_displayDetails(responseText, dataFromEditMode) {
 	}
 
 	VET_indicator(1, false);
-	
+
 	$('#VideoEmbedCaption').placeholder();
 }
 
@@ -1100,7 +1100,7 @@ function VET_close(e) {
 	if(e) {
 		YAHOO.util.Event.preventDefault(e);
 	}
-	
+
 	errorDiv.hide();
 
 	VET_panel.hide();
@@ -1151,9 +1151,9 @@ function VET_sendQueryEmbed(query) {
 				VET_displayDetails(o.responseText);
 			}
 			VET_indicator(1, false);
-			
-			
-			
+
+
+
 		}
 	}
 	VET_indicator(1, true);
@@ -1172,17 +1172,17 @@ function VET_sendQueryEmbed(query) {
 var VETExtended = {
 
 	canFatch: true, // flag for blocking fetching if it's in progress or no more items to fetch
-	
-	// object for caching stuff for suggestions 
+
+	// object for caching stuff for suggestions
 	suggestionsCachedStuff: {
-		
-		cashedSuggestions: [], 
+
+		cashedSuggestions: [],
 		fetchedResoultsCount: 0
 	},
-	
-	// object for caching stuff for search 
+
+	// object for caching stuff for search
 	searchCachedStuff: {
-		
+
 		inSearchMode: false,
 		currentKeywords: '',
 		fetchedResoultsCount: 0,
@@ -1192,18 +1192,18 @@ var VETExtended = {
 	init: function() {
 
 		var that = this;
-		
+
 		// reset cached stuff on init if some old values preserved
 		this.searchCachedStuff.currentKeywords = '';
 		this.searchCachedStuff.inSearchMode = false;
 		this.suggestionsCachedStuff.cashedSuggestions = [];
 		this.suggestionsCachedStuff.fetchedResoultsCount = 0;
-		
-		// load mustache as deferred object and then make request for suggestions 
+
+		// load mustache as deferred object and then make request for suggestions
 		$.when(
 			$.loadMustache()
 		).done($.proxy(this.fetchSuggestions, this));
-		
+
 		// cache selectors
 		this.cachedSelectors = {
 			carousel: $('#VET-suggestions'),
@@ -1218,7 +1218,7 @@ var VETExtended = {
 			positionOptions: $('#VideoEmbedLayoutRow'),
 			searchDropDown: $('#VET-search-dropdown')
 		};
-		
+
 		// set search type to local if premium disabled
 		if (this.cachedSelectors.searchDropDown.attr('data-selected') === 'local') {
 			this.searchCachedStuff.searchType = 'local';
@@ -1237,23 +1237,23 @@ var VETExtended = {
 			event.preventDefault();
 			var videoTitle = $("img", this).attr("data-video");
 			that.fetchVideoPlayer(videoTitle);
-			
+
 			// remove in-preview class from previously check item if exists
 			that.removeInPreview();
-			
+
 			// cache current in preview element in carousel
 			that.cachedSelectors.inPreview = $(this).parents('li').addClass('in-preview');
 		});
-		
+
 		// attach handlers - close preview
 		this.cachedSelectors.previewWrapper.on('click', '#VET-preview-close', function(event) {
-			event.preventDefault();	
+			event.preventDefault();
 			that.cachedSelectors.previewWrapper.stop().slideUp('slow', function() {
 				that.cachedSelectors.videoWrapper.children().remove();
 				that.removeInPreview();
-			});	
+			});
 		});
-		
+
 		// attach handlers - add video button from preview
 		this.cachedSelectors.previewWrapper.on('click', '#VET-add-from-preview', function(event) {
 			event.preventDefault();
@@ -1279,16 +1279,16 @@ var VETExtended = {
 
             that.isCarouselCheck();
 		});
-		
+
 		// attach handlers - search
 		this.cachedSelectors.searchForm.submit(function(event) {
 			event.preventDefault();
 			var keywords = $(this).find('#VET-search-field').val();
 			if(keywords !== '' && that.searchCachedStuff.currentKeywords !== keywords) {
 
-				// switch fetch more handler to fetch search mode; 
+				// switch fetch more handler to fetch search mode;
 				that.searchCachedStuff.inSearchMode = true;
-				
+
 				// stop proccesing previous fetching request (exp. using search when still loading suggestions on init)
 				if(that.requestInProgress) {
 					that.requestInProgress.abort();
@@ -1298,38 +1298,38 @@ var VETExtended = {
 				that.searchCachedStuff.fetchedResoultsCount = 0;
 				that.searchCachedStuff.currentKeywords = keywords;
 				that.canFatch = true;
-				
+
 				// cleanup carousel if new search phrase
 				that.cachedSelectors.closePreviewBtn.click();
 				that.cachedSelectors.carousel.find('li').remove();
 				that.cachedSelectors.carousel.find('p').removeClass('show');
-	
-				
-				
+
+
+
 				that.cachedSelectors.suggestionsWrapper.startThrobbing();
-				
+
 				that.fetchSearch();
 			}
 		});
-		
+
 		// attach handlers - close preview on VET modal close (IE bug fix)
 		$('#VideoEmbedClose').click(function(){
 			that.cachedSelectors.closePreviewBtn.click();
 		});
-		
+
 		// attach handlers - bottom close modal button
 		$('#bottom-close-button').click(function(event){
 			event.preventDefault();
 			VET_close();
 		});
-		
+
 		// attach handlers - selection border around position options in video display options tab
 		$('#VideoEmbedDetails').on('click', '#VideoEmbedLayoutRow span, #VideoEmbedSizeRow span', function() {
-			
+
 			var parent = $(this).parent();
 			parent.find('span').removeClass('selected');
 			$(this).addClass('selected');
-			
+
 			// show/hide caption input for "Style" option
 			if ($(this).is('#VET_StyleThumb')) {
 				parent.children('p').removeClass('show');
@@ -1339,7 +1339,7 @@ var VETExtended = {
 				parent.children('p').addClass('show');
 			}
 		});
-		
+
 		// attach handler - submit display options tab
 		$('#VideoEmbedDetails').on('submit', '#VET-display-options', function(event) {
 			event.preventDefault();
@@ -1349,8 +1349,8 @@ var VETExtended = {
 			event.preventDefault();
 			VET_doEditVideo();
 		});
-		 
-		
+
+
 		// create dropdown for search filters
 		this.cachedSelectors.searchDropDown.wikiaDropdown({
 			onChange: function(e, $target) {
@@ -1366,23 +1366,23 @@ var VETExtended = {
 				}
 			}
 		});
-		
+
 	},
-	
+
 	// METHOD: Remove selected state from in-preview thumbnail
 	removeInPreview: function() {
-	
+
 		if (this.cachedSelectors.inPreview) {
 			this.cachedSelectors.inPreview.removeClass('in-preview');
 		}
-		
+
 	},
 
 	// METHOD: Trim titles
 	trimTitles: function(data) {
-	
+
 		var item;
-		
+
 		// trim video titles to two lines
 		for ( var i in data.items ) {
 			item = data.items[i];
@@ -1393,29 +1393,29 @@ var VETExtended = {
 				}
 			}
 		}
-		
+
 	},
-	
+
 	// METHOD: add items to carousel
 	addSuggestions: function(data) {
-		
+
 		var html,
 			template = '{{#items}}<li><figure>{{{thumbnail}}}<figcaption><strong>{{trimTitle}}</strong></figcaption></figure><a href="{{url}}" title="{{title}}">Add video</a></li>{{/items}}';
-		
+
 		html = $.mustache(template, data);
 		this.cachedSelectors.carousel.find('ul').append(html);
-		
+
 	},
-	
+
 	// METHOD: create carousel instance
 	createCarousel: function() {
-	
+
 		var that = this,
 			itemsShown = 5; // items displayed per carousel slide
-		
+
 		// show carousel if suggestions returned
 		this.cachedSelectors.carouselWrapper.addClass('show');
-		
+
 		// create carousel instance
 		this.carouselInstance = this.cachedSelectors.carousel.carousel({
 			transitionSpeed: 500,
@@ -1429,35 +1429,35 @@ var VETExtended = {
 						that.fetchSuggestions();
 					} else {
 						that.fetchSearch();
-					}	
+					}
 				}
 			}
 		});
-		
+
 	},
-	
+
 	// METHOD: Update carousel after adding new items
 	updateCarousel: function() {
 		this.carouselInstance.updateCarouselItems();
 		this.carouselInstance.updateCarouselWidth();
 		this.carouselInstance.updateCarouselArrows();
 	},
-	
+
 	// METHOD: update carousel after adding new items or create one if not already created
 	isCarouselCheck: function() {
-	
+
 		if (this.cachedSelectors.carouselWrapper.hasClass('show')) {
 			this.updateCarousel();
 		} else {
-			this.createCarousel();	
+			this.createCarousel();
 		}
-		
+
 	},
-	
+
 
 	// METHOD: show preview of the selected video
 	showVideoPreview: function(data) {
-	
+
 		var previewWrapper = this.cachedSelectors.previewWrapper,
 			videoWrapper = this.cachedSelectors.videoWrapper;
 		if ( data.playerAsset && data.playerAsset.length > 0 ) { // screenplay special case
@@ -1468,17 +1468,17 @@ var VETExtended = {
 		} else {
 			videoWrapper.html('<div class="Wikia-video-enabledEmbedCode">'+data.videoEmbedCode+'</div>');
 		}
-		
+
 		// expand preview is hidden
 		if (!previewWrapper.is(':visible')) {
 			previewWrapper.stop().slideDown('slow');
 		}
-		
+
 	},
-	
+
 	// METHOD: fech player embed code
 	fetchVideoPlayer: function(title) {
-		
+
 		var that = this;
 
 		$.nirvana.sendRequest({
@@ -1504,61 +1504,61 @@ var VETExtended = {
 
 	// METHOD: fetch part of suggestions
 	fetchSuggestions: function() {
-	
+
 		var that = this,
-			svStart = this.suggestionsCachedStuff.fetchedResoultsCount, // index - start fetching from item number... 
+			svStart = this.suggestionsCachedStuff.fetchedResoultsCount, // index - start fetching from item number...
 			svSize = 20; // number of requested items
-			
+
 		if (this.canFatch === true) {
 			this.canFatch = false; // fetching in progress
-		
+
 			this.requestInProgress = $.nirvana.sendRequest({
 				controller: 'VideoEmbedToolController',
 				method: 'getSuggestedVideos',
 				type: 'get',
 				data: {
-					svStart: svStart,  
-					svSize: svSize, 
-					articleId: wgArticleId	
+					svStart: svStart,
+					svSize: svSize,
+					articleId: wgArticleId
 				},
 				callback: function(data) {
 					var i,
 						items = data.items,
 						length = items.length;
-					
+
 					if (length > 0) {
-						
+
 						that.trimTitles(data);
 						that.addSuggestions(data);
-						
+
 						// update results counter
 						that.suggestionsCachedStuff.fetchedResoultsCount = data.nextStartFrom;
-						
+
 						// cache fetched items
 						for (i = 0; i < length; i += 1) {
 							that.suggestionsCachedStuff.cashedSuggestions.push(items[i]);
 						}
-						
+
 						that.isCarouselCheck();
 						that.canFatch = true;
-					} 
+					}
 				}
 			});
 		}
-		
+
 	},
-				
+
 	// METHOD: fetch part of search results
 	fetchSearch: function() {
-		
+
 		var that = this,
 			svStart = this.searchCachedStuff.fetchedResoultsCount,
 			svSize = 20; // number of requested items
 			phrase = this.searchCachedStuff.currentKeywords;
-			
+
 		if (this.canFatch === true) {
 			this.canFatch = false; // fetching in progress
-		
+
 			this.requestInProgress = $.nirvana.sendRequest({
 				controller: 'VideoEmbedToolController',
 				method: 'search',
@@ -1570,43 +1570,43 @@ var VETExtended = {
 					type: that.searchCachedStuff.searchType
 				},
 				callback: function(data) {
-					
+
 					var i,
 						items = data.items,
 						length = items.length;
-					
+
 					// show results count
 					that.updateResultCaption( data.caption );
-										
+
 					if (length > 0) {
-						
+
 						// update results counter
 						that.searchCachedStuff.fetchedResoultsCount = data.nextStartFrom;
-						
+
 						that.trimTitles(data);
 						that.addSuggestions(data);
-						
+
 						// reset carousel container to the first slide position
 						if (svStart === 0) {
 							that.cachedSelectors.carousel.resetPosition();
 						}
-						
+
 					} else if (that.searchCachedStuff.fetchedResoultsCount === 0) {
 						// show no results found for new search with not results returned from controller
-						that.cachedSelectors.carousel.find('p').addClass('show');	
+						that.cachedSelectors.carousel.find('p').addClass('show');
 					}
 
 					if (that.suggestionsCachedStuff.cashedSuggestions.length > 0)
 						that.cachedSelectors.backToSuggestions.addClass('show');
-					
-					that.isCarouselCheck();						
+
+					that.isCarouselCheck();
 					that.canFatch = true;
 					that.cachedSelectors.suggestionsWrapper.stopThrobbing();
-					
+
 				}
 			});
 		}
-		
+
 	}
-	
+
 };

@@ -20,22 +20,18 @@
 			VideoEmbedTool: {
 				loaded: false,
 				requires: [
-					$.loadYUI(),
-					$.getResources([
-						$.getSassCommonURL('extensions/wikia/VideoEmbedTool/css/VET.scss'),
-						wgResourceBasePath + '/extensions/wikia/VideoEmbedTool/js/VET.js'
-					])
+					$.loadYUI,
+					$.getSassCommonURL('extensions/wikia/VideoEmbedTool/css/VET.scss'),
+					wgResourceBasePath + '/extensions/wikia/VideoEmbedTool/js/VET.js'
 				]
 			},
 			WikiaMiniUpload: {
 				loaded: false,
 				requires: [
-					$.loadYUI(),
-					$.loadJQueryAIM(),
-					$.getResources([
-						wgResourceBasePath + '/extensions/wikia/WikiaMiniUpload/css/WMU.css',
-						wgResourceBasePath + '/extensions/wikia/WikiaMiniUpload/js/WMU.js'
-					])
+					$.loadYUI,
+					$.loadJQueryAIM,
+					wgResourceBasePath + '/extensions/wikia/WikiaMiniUpload/css/WMU.css',
+					wgResourceBasePath + '/extensions/wikia/WikiaMiniUpload/js/WMU.js'
 				]
 			}
 		};
@@ -51,7 +47,7 @@
 				} else {
 
 					component.loaded = true;
-					deferred = $.when.apply( null, component.requires );
+					deferred = $.when( $.getResources( component.requires ) );
 				}
 
 			} else {
@@ -434,7 +430,7 @@
 
 		buildClickHandler: function( config ) {
 			var editor = this.editor;
-console.log('buildClickHandler:', config);
+
 			if (config.forceLogin && wgUserName == null && typeof UserLogin != 'undefined') {
 				config.click = function() {
 					UserLogin.rteForceLogin();
