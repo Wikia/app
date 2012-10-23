@@ -580,7 +580,7 @@ function kick(client, socket, msg){
     kickCommand.mport(msg);	
 
 	var userToKick = kickCommand.get('userToKick');
-\	storage.getRoomState(client.roomId, function(nodeChatModel) {
+	storage.getRoomState(client.roomId, function(nodeChatModel) {
 		var kickedUser = nodeChatModel.users.findByName(userToKick);
 		if (typeof kickedUser !== "undefined") {
 			if ( client.myUser.get('isModerator') !== true) {
