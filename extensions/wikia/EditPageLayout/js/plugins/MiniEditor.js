@@ -92,6 +92,19 @@
 			if (!this.isReady) {
 				this.isReady = true;
 			}
+
+			this.editor.getEditbox().on(
+				'keyup',
+				$.proxy(function(event) {
+					this.buttons.removeAttr('disabled');
+				}, this)
+			);
+			this.editor.on(
+				'mode',
+				$.proxy(function(event) {
+					this.buttons.removeAttr('disabled');
+				}, this)
+			);
 		},
 
 		editorBeforeReady: function() {
@@ -189,7 +202,7 @@
 		showButtons: function() {
 			if (this.buttonsWrapper.length) {
 				this.buttonsWrapper.slideDown();
-				this.buttons.show().removeAttr('disabled');
+				this.buttons.show();
 			}
 		},
 
