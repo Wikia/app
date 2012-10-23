@@ -31,7 +31,7 @@ class WikiaSpecialVersion extends SpecialVersion
 	 * @see SpecialVersion
 	 * @return string
 	 */
-	public static function softwareInformation()
+	public static function getSoftwareList()
 	{
 		
 	    $dbr = wfGetDB( DB_SLAVE );
@@ -47,24 +47,6 @@ class WikiaSpecialVersion extends SpecialVersion
 	    // Allow a hook to add/remove items.
 	    wfRunHooks( 'SoftwareInfo', array( &$software ) );
 	
-	    $out = Xml::element( 'h2', array( 'id' => 'mw-version-software' ), wfMsg( 'version-software' ) ) .
-	    Xml::openElement( 'table', array( 'class' => 'wikitable', 'id' => 'sv-software' ) ) .
-	    "<tr>
-				<th>" . wfMsg( 'version-software-product' ) . "</th>
-				<th>" . wfMsg( 'version-software-version' ) . "</th>
-			</tr>\n
-			<tr>
-				<td>Wikia</td>
-				<td>" . self::getWikiaVersion() . "</td>
-			</tr>\n";
-	
-	    foreach( $software as $name => $version ) {
-	        $out .= "<tr>
-				<td>" . $name . "</td>
-				<td dir=\"ltr\">" . $version . "</td>
-			</tr>\n";
-	    }
-	
-	    return $out . Xml::closeElement( 'table' );
+	    return $software;
 	}
 }
