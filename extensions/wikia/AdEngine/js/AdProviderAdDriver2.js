@@ -4,8 +4,9 @@ var AdProviderAdDriver2 = function (helper, WikiaDart, ScriptWriter, WikiaTracke
 		'HOME_TOP_RIGHT_BOXAD':{'tile':1, 'size':'300x250,300x600', 'loc':'top'},
 		'LEFT_SKYSCRAPER_2':{'tile':3, 'size':'160x600,120x600', 'loc':'middle'},
 		'TOP_LEADERBOARD':{'tile':2, 'size':'728x90,468x60,980x130,980x65', 'loc':'top', 'dcopt':'ist'},
-		'TOP_RIGHT_BOXAD':{'tile':1, 'size':'300x250,300x600', 'loc':'top'}
-		, 'WIKIA_BAR_BOXAD_1':{'size':'320x50'}
+		'TOP_RIGHT_BOXAD':{'tile':1, 'size':'300x250,300x600', 'loc':'top'},
+		'WIKIA_BAR_BOXAD_1':{'size':'320x50'},
+		'EXIT_STITIAL_BOXAD_1':{'size':'600x400,300x250'}
 	};
 
 	function canHandleSlot(slot) {
