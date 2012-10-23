@@ -82,7 +82,7 @@ var UserLoginModal = {
 	},
 	init: function() {
 		// attach event handler
-		var editpromptable = $("#ca-viewsource, #te-editanon, .loginToEditProtectedPage, .upphotoslogin");
+		var editpromptable = $("#te-editanon, .loginToEditProtectedPage, .upphotoslogin");
 
 		// add .editsection on wikis with anon editing disabled
 		if ( window.wgDisableAnonymousEditing ) {
