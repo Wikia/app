@@ -1,7 +1,7 @@
 <?php
 /*
- * @author Inez Korczyński
- * @author Bartek Łapiński
+ * @author Inez KorczyÅ„ski
+ * @author Bartek Å�apiÅ„ski
  */
 
 class WikiaMiniUpload {
@@ -379,6 +379,7 @@ class WikiaMiniUpload {
 
 		$extraId = $wgRequest->getVal('extraId');
 		$newFile =  true;
+		$file = null;
 
 		if($name !== NULL) {
 			$name = urldecode( $name );
@@ -527,7 +528,10 @@ class WikiaMiniUpload {
 			$title = Title::newFromText($mwname, 6);
 		}
 
-		$file = wfFindFile($title);
+		if ( is_null($file) ) {
+			$file = wfFindFile( $title );
+		}
+
 		if (!is_object($file)) {
 			header('X-screen-type: error');
 			return 'File was not found!';
