@@ -1,7 +1,7 @@
 <?php
 /*
- * @author Inez KorczyÅ„ski
- * @author Bartek Å�apiÅ„ski
+ * @author Inez Korczyński
+ * @author Bartek Łapiński
  */
 
 class WikiaMiniUpload {
