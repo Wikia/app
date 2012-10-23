@@ -23,7 +23,7 @@ class WikiaSpecialVersion extends SpecialVersion
 	 */
 	private function getGitBranch()
 	{
-		return `git branch | grep '*' | perl -pe 's/^\* ([^ ]+).*$/$1/g'`;
+		return `git branch | grep '*' | perl -pe 's/^\* (\S+).*$/$1/g'`;
 	}
 	
 	/**
