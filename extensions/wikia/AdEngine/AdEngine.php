@@ -81,7 +81,7 @@ function wfAdEngineSetupJSVars(Array &$vars) {
 		$wgUser, $wgEnableWikiAnswers, $wgAdDriverUseCookie, $wgAdDriverUseExpiryStorage,
 		$wgEnableAdMeldAPIClient, $wgEnableAdMeldAPIClientPixels,
 		$wgLoadAdDriverOnLiftiumInit, $wgOutboundScreenRedirectDelay,
-		$wgAdsInterstitialsEnabled;
+		$wgEnableOutboundScreenExt;
 
 	$wgNoExternals = $wgRequest->getBool('noexternals', $wgNoExternals);
 
@@ -133,8 +133,8 @@ function wfAdEngineSetupJSVars(Array &$vars) {
 	if (!empty($wgOutboundScreenRedirectDelay)) {
 		$vars['wgOutboundScreenRedirectDelay'] = $wgOutboundScreenRedirectDelay;
 	}
-	if (!empty($wgAdsInterstitialsEnabled)) {
-		$vars['wgAdsInterstitialsEnabled'] = $wgAdsInterstitialsEnabled;
+	if (!empty($wgEnableOutboundScreenExt)) {
+		$vars['wgEnableOutboundScreenExt'] = $wgEnableOutboundScreenExt;
 	}
 
 	/*
