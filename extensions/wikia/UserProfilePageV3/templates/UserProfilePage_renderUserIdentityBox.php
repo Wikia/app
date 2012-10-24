@@ -6,17 +6,19 @@
 <section id="UserProfileMasthead" class="UserProfileMasthead <?= $zeroStateCssClass ?>" itemscope itemtype="http://schema.org/Person">
 	<div class="masthead-avatar">
 		<img src="<?= $user['avatar']; ?>" itemprop="image" class="avatar">
-		
-		<? if( $canEditProfile ): ?>
-			<span>
-				<img src="<?= $wgBlankImgUrl ?>" class="sprite edit-pencil"> <a href="#" id="userAvatarEdit"><?= wfMsg('user-identity-box-edit-avatar'); ?></a>
-			</span>
-		<? endif; ?>
-		<?php if( $canRemoveAvatar ): ?>
-			<span>
-				<img src="<?= $wgBlankImgUrl ?>" class="sprite trash"> <a id="UserAvatarRemove" data-name="<?= $user['name']; ?>"  href="#" data-confirm="<?= htmlspecialchars(wfMsg('user-identity-remove-confirmation')); ?>"><?= wfMsg('user-identity-box-delete-avatar'); ?></a>
-			</span>
-		<?php endif; ?>
+
+		<div class="avatar-controls">
+			<? if( $canEditProfile ): ?>
+				<span>
+					<img src="<?= $wgBlankImgUrl ?>" class="sprite edit-pencil"> <a href="#" id="userAvatarEdit"><?= wfMsg('user-identity-box-edit-avatar'); ?></a>
+				</span>
+			<? endif; ?>
+			<?php if( $canRemoveAvatar ): ?>
+				<span>
+					<img src="<?= $wgBlankImgUrl ?>" class="sprite trash"> <a id="UserAvatarRemove" data-name="<?= $user['name']; ?>"  href="#" data-confirm="<?= htmlspecialchars(wfMsg('user-identity-remove-confirmation')); ?>"><?= wfMsg('user-identity-box-delete-avatar'); ?></a>
+				</span>
+			<?php endif; ?>
+		</div>
 	</div>
 	
 	<div class="masthead-info">

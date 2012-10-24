@@ -80,12 +80,17 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 			max-height: 140px;
 			max-width: 140px;
 		}
-		span {
-			display: none;
-		}
-		&:hover span {
-			display: block;
-		}
+        .avatar-controls {
+           display: none;
+        }
+        &:hover .avatar-controls {
+          display: block;
+          position: absolute;
+          z-index: 1000;
+        }
+        span {
+          float: right;
+        }
 	}
 	.masthead-info {
 		// Top radius included to ensure that the top corners are hidden behind the hgroup radius
