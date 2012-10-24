@@ -141,6 +141,9 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
 
 	/* Old version of forum */
 	'forum-specialpage-oldforum-link' => 'Old forum Archives',
+	
+	/* board admin page messages */
+	'forum-admin-create-new-board-label' => 'Create New Board',
 
 	'forum-admin-link-label' => 'Manage Boards',
 
@@ -157,7 +160,7 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
 	'forum-autoboard-body-4' => 'Got a question about the wiki, or the topic? Ask your questions here!',
 
 	'forum-autoboard-title-5' => 'Fun and Games',
-	'forum-autoboard-body-5' => 'This board is for off-topic conversation -- a place to hang out with your $WIKINAME friends.'
+	'forum-autoboard-body-5' => 'This board is for off-topic conversation -- a place to hang out with your $WIKINAME friends.',
 );
 
 $messages['qqq'] = array(
@@ -195,4 +198,5 @@ $messages['qqq'] = array(
 * $5 is optional username and you can use it with GENDER parameter',
 
 	'forum-admin-link-label' => 'a call-to-action label for link that will take wiki admins to forum board admin page',
+	'forum-admin-create-new-board-label' => 'Button label to create a new forum board',
 );

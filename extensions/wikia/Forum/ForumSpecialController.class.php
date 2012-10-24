@@ -65,6 +65,9 @@ class ForumSpecialController extends WikiaSpecialPageController {
 			return false;  // skip rendering
 		}
 		
+		// set assets
+		$this->response->addAsset('extensions/wikia/Forum/css/ForumBoardEdit.scss');
+		
 		$this->boards = F::build( 'Forum' )->getBoardList();
 		
 		$this->wf->profileOut( __METHOD__ );
