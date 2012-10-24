@@ -10,13 +10,16 @@ class ForumController extends WallBaseController {
 
 	public function init() {
 		$this->response->addAsset('extensions/wikia/Forum/css/Forum.scss');
+	}
+	
+	public function setIsForum() {
 		$this->response->setJsVar('wgIsForum', true);
 		$this->wg->IsForum = true;
 	}
 
 	public function board() {
 		parent::index();
-			
+		$this->setIsForum();
 		F::build('JSMessages')->enqueuePackage('Wall', JSMessages::EXTERNAL);
 
 		$this->response->addAsset('forum_js');
@@ -63,7 +66,8 @@ class ForumController extends WallBaseController {
 
 	public function boardThread() {
 		$this->wf->ProfileIn( __METHOD__ );
-
+		
+		$this->setIsForum();
 		$wallMessage = $this->getWallMessage();
 		if( !($wallMessage instanceof WallMessage) ) {
 			$this->forward(__CLASS__, 'message_error');
@@ -298,5 +302,14 @@ class ForumController extends WallBaseController {
 	
 	public function messageTopic() {
 		// stub function
+	}
+	
+	/**
+	 * render html for old forum info   
+	 */
+	 
+	public function oldForumInfo() {
+		//TODO: include some css build some urls
+		return true;
 	}
 }

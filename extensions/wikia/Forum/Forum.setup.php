@@ -53,6 +53,12 @@ $app->registerHook( 'WallMessageDeleted', 'ForumHooksHelper', 'onWallMessageDele
 $app->registerHook( 'NotificationGetNotificationMessage', 'ForumNotificationPlugin', 'onGetNotificationMessage' );
 $app->registerHook( 'NotificationGetMailNotificationMessage', 'ForumNotificationPlugin', 'onGetMailNotificationMessage' );
 
+//old forum archive 
+$app->registerHook('getUserPermissionsErrors', 'ForumHooksHelper', 'onGetUserPermissionsErrors');
+$app->registerHook('PageHeaderIndexAfterActionButtonPrepared', 'ForumHooksHelper', 'onPageHeaderIndexAfterActionButtonPrepared');
+$app->registerHook('ArticleViewHeader', 'ForumHooksHelper', 'onArticleViewHeader');
+
+
 include( $dir . '/Forum.namespace.setup.php' );
 
 // permissions
@@ -68,3 +74,8 @@ $wgRevokePermissions['vstf']['forum'] = true;
 
 $wgGroupPermissions['*']['boardedit'] = false;
 $wgGroupPermissions['staff']['boardedit'] = true;
+
+$wgGroupPermissions['*']['forumoldedit'] = false;
+$wgGroupPermissions['staff']['forumoldedit'] = true;
+$wgGroupPermissions['sysop']['forumoldedit'] = true;
+$wgGroupPermissions['bureaucrat']['forumoldedit'] = true;

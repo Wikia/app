@@ -112,14 +112,12 @@ var AdConfig2 = function (
 
 		// TODO refactor highValueSlots check to the top of the whole config
 		if (highValueSlots[slotname]) {
-
-		// First ask GamePro (german lang wiki)
-		if (city_lang === 'de') {
-			if (adProviderGamePro.canHandleSlot(slot)) {
-				return adProviderGamePro;
+			// First ask GamePro (german lang wiki)
+			if (city_lang === 'de') {
+				if (adProviderGamePro.canHandleSlot(slot)) {
+					return adProviderGamePro;
+				}
 			}
-		}
-
 		}
 
 		// Next Evolve (AU, CA, and NZ traffic)
@@ -134,12 +132,12 @@ var AdConfig2 = function (
 
 		// TODO refactor highValueSlots check to the top of the whole config
 		if (highValueSlots[slotname]) {
-
-		// Then our dart (high value traffic)
-		if (highValueCountries[country]) {
-			return adProviderAdDriver2;
-		}
-
+			// Then our dart (high value traffic)
+			if (highValueCountries[country]) {
+				if (adProviderAdDriver2.canHandleSlot(slot)) {
+					return adProviderAdDriver2;
+				}
+			}
 		}
 
 		return adProviderLater;

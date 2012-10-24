@@ -21,10 +21,13 @@ class AdEngine2Controller extends WikiaController {
 	public static function areAdsShowableOnPage() {
 		$wg = F::app()->wg;
 
+		$title = $wg->Title;
+
 		$runAds = $wg->Out->isArticle()
 			|| WikiaPageType::isSearch()
 			|| WikiaPageType::isForum()
-			|| WikiaPageType::isWikiaHub();
+			|| WikiaPageType::isWikiaHub()
+			|| (defined('NS_WIKIA_PLAYQUIZ') && $title->inNamespace(NS_WIKIA_PLAYQUIZ));
 
 			// Can be re-enabled after AdDriver2.js is implemented:
 			// || $wg->Title->isSpecial('Leaderboard');

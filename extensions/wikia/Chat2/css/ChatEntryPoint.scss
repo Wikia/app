@@ -168,6 +168,12 @@ body.skin-oasis .ChatMonobookEntryPoint {
 	word-wrap: break-word;
 }
 
+// use full width on main pages using grid (BugId:51408)
+.main-page-tag-lcs .ChatEntryPoint,
+.main-page-tag-rcs .ChatEntryPoint {
+	width: auto;
+}
+
 /* IE7 hackery */
 .WikiaRail {
 	*position: relative;

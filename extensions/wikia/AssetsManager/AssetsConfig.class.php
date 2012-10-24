@@ -87,10 +87,10 @@ class AssetsConfig {
 
 		if (!empty($wgUseJQueryFromCDN) && empty($params['noexternals'])) {
 			$url = $minify
-				? '#external_http://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js'
-				: '#external_http://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.js';
+				? '#external_http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js'
+				: '#external_http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.js';
 		} else {
-			$url = 'resources/jquery/jquery-1.8.1.js';
+			$url = 'resources/jquery/jquery-1.8.2.js';
 		}
 
 		return array($url);
