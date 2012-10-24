@@ -738,7 +738,7 @@ var NodeChatController = $.createClass(NodeRoomController,{
 				});
 
 				var newChatEntry = new models.InlineAlert({text: $.msg('chat-user-allow', wgUserName, this.sanitizeHtml(privateUser.get('name')) ) });
-				this.chats.privates[ user.get('roomId') ].socket.send(newChatEntry.xport());
+				this.chats.privates[ privateUser.get('roomId') ].socket.send(newChatEntry.xport());
 			}
 		}, this));
 
