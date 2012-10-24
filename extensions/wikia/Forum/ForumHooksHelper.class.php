@@ -114,7 +114,7 @@ class ForumHooksHelper {
 	public static function getUserPermissionsErrors( &$title, &$user, $action, &$result ) {
 		$result = null;
 		if ( $title->getNamespace() == NS_WIKIA_FORUM_BOARD ) {
-			if ( (!$user->isAllowed( 'boardedit' )) && ($action == 'create' || $action == 'edit') ) {
+			if ( (!$user->isAllowed( 'boardedit' ) && $user->getName() !=  Forum::AUTOCREATE_USER ) && ($action == 'create' || $action == 'edit')) {
 				$result = array( 'badaccess-group0' );
 				return false;
 			}

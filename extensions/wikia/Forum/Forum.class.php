@@ -7,15 +7,16 @@
 class Forum extends WikiaModel {
 
 	const ACTIVE_DAYS = 7;
-
+	const AUTOCREATE_USER = 'Wikia';
+	
 	/**
 	 * get list of board
 	 * @return array boards
 	 */
-	public function getBoardList() {
+	public function getBoardList($db = DB_SLAVE) {
 		$this->wf->profileIn( __METHOD__ );
 
-		$db = $this->wf->GetDB( DB_SLAVE );
+		$db = $this->wf->GetDB( $db );
 
 		// get board list
 		$result = $db->select(
@@ -44,13 +45,6 @@ class Forum extends WikiaModel {
 		$this->wf->profileOut( __METHOD__ );
 
 		return $boards;
-	}
-
-	public function getRecentUsers() {
-		$this->wf->profileIn( __METHOD__ );
-		
-		
-		$this->wf->profileOut( __METHOD__ );		
 	}
 	
 	/**
@@ -129,33 +123,73 @@ class Forum extends WikiaModel {
 		$this->clearCacheTotalThreads( self::ACTIVE_DAYS );
 	}
 	
-	public function haveOldForums() {
+	public function hasAtLeast( $ns, $count ) {
 		$this->wf->ProfileIn( __METHOD__ );
-		$out = WikiaDataAccess::cache( wfMemcKey(__METHOD__), 24*60*60 /* one day */, function() {
-			$app = F::App();
-			$db = $app->wf->GetDB( DB_SLAVE );
 
+		$out = WikiaDataAccess::cache( wfMemcKey('Forum_hasAtLeast', $ns, $count), 24*60*60 /* one day */, function() use ($ns, $count) {
+			$app = F::App();
+			$db = $app->wf->GetDB( DB_MASTER );
 			// check if there is more then 5 forum pages (5 is number of forum pages from starter)
 			// limit 6 is faster solution then count(*) and the compare in php
 			$result = $db->select(
 				array( 'page' ),
 				array( 'page_id' ),
-				array( 'page_namespace' => NS_FORUM ),
+				array( 'page_namespace' => $ns ),
 				__METHOD__,
-				array( 'LIMIT' => '6' )
+				array( 'LIMIT' => $count + 1 )
 			);
-			
-			$count = $db->numRows($result);
+
+			$rowCount = $db->numRows($result);
 			//string value is a work around for false value problem in memc
-			if($count > 5) {
+			if($rowCount > $count) {
 				return "YES";
 			} else {
 				return "NO";
 			}
-		}); 
+		});
+
+		return $out == "YES";
+		$this->wf->ProfileOut( __METHOD__ );
+	}
+	
+	public function haveOldForums() {
+		return $this->hasAtLeast(NS_FORUM, 5);
+	}
+	
+	public function createBoard($titletext, $body, $bot = false) {
+		$this->wf->ProfileIn( __METHOD__ );
+		$title = Title::newFromText($titletext, NS_WIKIA_FORUM_BOARD); 
+		$article  = new Article( $title );
+		$editPage = new EditPage( $article );
+			
+		$editPage->edittime = $article->getTimestamp();
+		$editPage->textbox1 = $body;
+			
+		$result = array();
+		$retval = $editPage->internalAttemptSave( $result, $bot );
+		$this->wf->ProfileOut( __METHOD__ );
+	}
+	
+	public function createDefaultBoard() {
+		$this->wf->ProfileIn( __METHOD__ );
+		$app = F::App();
+
+		if(!$this->hasAtLeast(NS_WIKIA_FORUM_BOARD, 0)) {
+			WikiaDataAccess::cachePurge( wfMemcKey('Forum_hasAtLeast', NS_WIKIA_FORUM_BOARD, 0) );
+			/* the wgUser swap is the only way to create page as other user then current */	
+			$tmpUser = $app->wg->User;
+			$app->wg->User = User::newFromName( Forum::AUTOCREATE_USER );
+			for($i = 1; $i < 2; $i++) {
+				$this->createBoard(wfMsg('forum-autoboard-title-'.$i), wfMsg('forum-autoboard-title-'.$i), true);	
+			}
+			
+			$app->wg->User = $tmpUser; 
+	
+			return true;
+		}
+		
+		return false;
 		
 		$this->wf->ProfileOut( __METHOD__ );
-		return $out === "YES";
 	}
-
 }

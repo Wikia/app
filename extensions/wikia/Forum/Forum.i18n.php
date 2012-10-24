@@ -134,15 +134,30 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
 	'forum-recentchanges-thread-history-link' => 'thread history',
 	'forum-recentchanges-closed-thread' => 'closed thread "[[$1|$2]]" from [[$3|$4]]',
 	'forum-recentchanges-reopened-thread' => 'reopened thread "[[$1|$2]]" from [[$3|$4]]',
-	
+
 	/* history */
-	
+
 	'forum-board-history-title' => 'board history',
-	
+
 	/* Old version of forum */
 	'forum-specialpage-oldforum-link' => 'Old forum Archives',
-	
+
 	'forum-admin-link-label' => 'Manage Boards',
+
+	'forum-autoboard-title-1' => 'General Discussion',
+	'forum-autoboard-body-1' => 'This board is for general conversations about the wiki.',
+
+	'forum-autoboard-title-2' => 'News and Announcements',
+ 	'forum-autoboard-body-2' => 'Breaking news and information!',
+
+ 	'forum-autoboard-title-3' => 'New on $WIKINAME',
+	'forum-autoboard-body-3' => "Want to share something that's just been posted on the wiki, or congratulate somebody for an outstanding contribution?",
+
+	'forum-autoboard-title-4' => 'Questions and Answers',
+	'forum-autoboard-body-4' => 'Got a question about the wiki, or the topic? Ask your questions here!',
+
+	'forum-autoboard-title-5' => 'Fun and Games',
+	'forum-autoboard-body-5' => 'This board is for off-topic conversation -- a place to hang out with your $WIKINAME friends.'
 );
 
 $messages['qqq'] = array(

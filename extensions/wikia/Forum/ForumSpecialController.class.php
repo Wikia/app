@@ -36,7 +36,16 @@ class ForumSpecialController extends WikiaSpecialPageController {
 		$this->editUrl = $this->wg->Title->getFullUrl('action=editmode');
 
 		$forum = F::build( 'Forum' );
+
 		$this->boards = $forum->getBoardList();
+
+		/* if the Board is empty we will create defult board */
+		//TODO: move create to wikilabs hook
+		if($forum->createDefaultBoard()) {
+			$this->boards = $forum->getBoardList(DB_MASTER);
+		} else {
+			$this->boards = $forum->getBoardList();
+		}
 
 		if($forum->haveOldForums()) {
 			$this->showOldForumLink = true;
