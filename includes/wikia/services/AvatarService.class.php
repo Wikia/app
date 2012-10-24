@@ -46,16 +46,22 @@ class AvatarService extends Service {
 
 	/**
 	 * Get URL to user page / Special:Contributions
+	 * Accepts a namespace constant to support alternate user pages, like blogs.
+	 * @param  string $userName
+	 * @param  int    $ns
+	 * @return string $url
 	 */
-	static function getUrl($userName) {
+	static function getUrl($userName, $ns = NS_USER) {
 		wfProfileIn(__METHOD__);
 
 		static $linksCache;
 
 		$url = '';
+		
+		$cacheSignature = "{$userName}_{$ns}";
 
-		if( isset($linksCache[$userName]) ) {
-			$url = $linksCache[$userName];
+		if( isset($linksCache[$cacheSignature]) ) {
+			$url = $linksCache[$cacheSignature];
 		} else {
 			if (User::isIP($userName)) {
 				// anon: point to Special:Contributions
@@ -63,13 +69,13 @@ class AvatarService extends Service {
 			}
 			else {
 				// user: point to user page
-				$userPage = Title::newFromText($userName, NS_USER);
+				$userPage = Title::newFromText($userName, $ns);
 				if ( !is_null( $userPage ) ) {
 					$url = $userPage->getLocalUrl();
 				}
 			}
 
-			$linksCache[$userName] = $url;
+			$linksCache[$cacheSignature] = $url;
 		}
 
 		wfProfileOut(__METHOD__);

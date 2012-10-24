@@ -431,6 +431,9 @@ class UserPagesHeaderController extends WikiaController {
 		// link to user page
 		$this->userPage = AvatarService::getUrl($this->userName);
 
+		// link to user blog page
+		$this->userBlogPage = AvatarService::getUrl( $this->userName, 500 );
+
 		// user stats (edit points, account creation date)
 		$this->stats = $this->getStats($this->userName);
 
