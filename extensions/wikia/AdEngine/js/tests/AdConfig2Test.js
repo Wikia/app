@@ -40,10 +40,10 @@ test('getProvider use AdDriver2 for high value countries', function() {
 		, adProviderGameProMock = {name: 'GameProMock', canHandleSlot: function() {return false;}}
 		, adProviderEvolveMock = {name: 'EvolveMock', canHandleSlot: function() {return false;}}
 		, adProviderEvolveRSMock = {name: 'EvolveRSMock', canHandleSlot: function() {return false;}}
-		, adProviderAdDriver2Mock = {name: 'AdDriver2Mock'}
+		, adProviderAdDriver2Mock = {name: 'AdDriver2Mock', canHandleSlot: function() {return true;}}
 		, adProviderAdDriverMock = {name: 'AdDriverMock'}
 		, adProviderLaterMock = {name: 'LaterMock'}
-		, geoMock = {getCountryCode:function() {return 'hi-value-country'}}
+		, geoMock = {getCountryCode: function() {return 'hi-value-country'}}
 		, logMock = function() {}
 		, windowMock = {wgHighValueCountries: {'hi-value-country': true, 'another-hi-value-country': true}}
 		, documentMock = {documentElement: {offsetHeight: 99999}}
