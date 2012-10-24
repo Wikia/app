@@ -82,6 +82,7 @@ class RelatedVideosData {
 			return wfMsg('related-videos-error-permission-article');
 		}*/
 
+		/** @var $videoService VideoService */
 		$videoService = F::build( 'VideoService' );
 		$retval = $videoService->addVideo( $url );
 		if ( !is_array($retval) ) {

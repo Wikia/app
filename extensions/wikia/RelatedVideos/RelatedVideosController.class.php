@@ -221,7 +221,7 @@ class RelatedVideosController extends WikiaController {
 		}
 
 		$articleId = $this->getVal( 'articleId', '' );
-		$rvd = F::build( 'RelatedVideosData' );
+		$rvd = F::build( 'RelatedVideosData' ); /** @var $rvd RelatedVideosData */
 		$retval = $rvd->addVideo( $articleId, $url );
 		if ( is_array( $retval ) ) {
 			$rvs = F::build( 'RelatedVideosService' ); /** @var $rvs RelatedVideosService */
