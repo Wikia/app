@@ -25,8 +25,6 @@ class ForumSpecialController extends WikiaSpecialPageController {
 			$this->forward('ForumSpecial', 'editMode');
 		}
 		
-		
-		
 		$this->wg->Out->setPageTitle($this->wf->msg('forum-forum-title', $this->wg->Sitename));
 
 		$action = $this->getVal('action', '');
@@ -52,6 +50,11 @@ class ForumSpecialController extends WikiaSpecialPageController {
 	
 	public function editMode() {
 		$this->wf->profileIn( __METHOD__ );
+		
+		if (!$this->wg->User->isAllowed( 'forumadmin' )) {
+			$this->displayRestrictionError();
+			return false;  // skip rendering
+		}
 		
 		$this->boards = F::build( 'Forum' )->getBoardList();
 		
