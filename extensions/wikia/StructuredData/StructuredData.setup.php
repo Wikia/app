@@ -44,7 +44,6 @@ $wgStructuredDataConfig = array(
 	)
 );
 
-define('SD_CONTEXT_UNKNOWN', -1);
 define('SD_CONTEXT_DEFAULT', 0);
 define('SD_CONTEXT_SPECIAL', 1);
 
