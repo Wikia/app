@@ -137,10 +137,7 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
 	
 	/* history */
 	
-	'forum-board-history-title' => 'board history',
-	
-	/* Old version of forum */
-	'forum-specialpage-oldforum-link' => 'Old forum Archives'
+	'forum-board-history-title' => 'board history'
 );
 
 $messages['qqq'] = array(

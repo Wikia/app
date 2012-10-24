@@ -128,34 +128,5 @@ class Forum extends WikiaModel {
 	public function clearCacheTotalActiveThreads() {
 		$this->clearCacheTotalThreads( self::ACTIVE_DAYS );
 	}
-	
-	public function haveOldForums() {
-		$this->wf->ProfileIn( __METHOD__ );
-		$out = WikiaDataAccess::cache( wfMemcKey(__METHOD__), 24*60*60 /* one day */, function() {
-			$app = F::App();
-			$db = $app->wf->GetDB( DB_SLAVE );
-
-			// check if there is more then 5 forum pages (5 is number of forum pages from starter)
-			// limit 6 is faster solution then count(*) and the compare in php
-			$result = $db->select(
-				array( 'page' ),
-				array( 'page_id' ),
-				array( 'page_namespace' => NS_FORUM ),
-				__METHOD__,
-				array( 'LIMIT' => '6' )
-			);
-			
-			$count = $db->numRows($result);
-			//string value is a work around for false value problem in memc
-			if($count > 5) {
-				return "YES";
-			} else {
-				return "NO";
-			}
-		}); 
-		
-		$this->wf->ProfileOut( __METHOD__ );
-		return $out === "YES";
-	}
 
 }

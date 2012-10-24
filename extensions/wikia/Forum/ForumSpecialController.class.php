@@ -35,13 +35,6 @@ class ForumSpecialController extends WikiaSpecialPageController {
 
 		$this->boards = F::build( 'Forum' )->getBoardList();
 
-		if($forum->haveOldForums()) {
-			$this->showOldForumLink = true;
-			$this->oldForumLink = Title::newFromText('Index', NS_FORUM)->getFullUrl();
-		} else {
-			$this->showOldForumLink = false;
-		}
-		
 		$this->wf->profileOut( __METHOD__ );
 	}
 	
