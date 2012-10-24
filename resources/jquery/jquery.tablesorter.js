@@ -285,7 +285,7 @@
 			}
 
 			if ( !this.sortDisabled ) {
-				var $th = $( this ).addClass( table.config.cssHeader ).attr( 'title', msg[1] );
+				var $th = $( this ).addClass( table.config.cssHeader ).attr( 'title', msg[1]).append('<div><span class="chevron"></span><span class="chevron"></span></div>');
 			}
 
 			// add cell to headerList
