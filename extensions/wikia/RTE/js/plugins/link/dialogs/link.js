@@ -44,7 +44,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 			$(".link-type-note img")[0].className = 'sprite external';
 
 			// disable suggestions on the name box if external url
-		}else if( mode == 'internal' ){
+		}else if( mode == 'internal' ) {
 			radios = linkDialog.getContentElement('internal','linktype');
 			if( radios.getValue() != 'wiki' ){
 				radios.setValue('wiki');
@@ -52,7 +52,23 @@ CKEDITOR.dialog.add( 'link', function( editor )
 			checkStatus();
 
 			// setup MW suggest
-			linkDialog.enableSuggesionsOn(linkDialog.getContentElement('internal', 'name'));
+			linkDialog.
+				enableSuggesionsOn(linkDialog.getContentElement('internal', 'name')).
+				then(function(node) {
+					var dialog = this;
+
+					// synchronize "label" field with values from autosuggest dropdown (BugId:51413)
+					node.autocomplete({
+						select: function(ev, ui) {
+							var value = ui.item && ui.item.label,
+								labelField = dialog.getContentElement('internal', 'label');
+
+							if (typeof value !== 'undefined') {
+								labelField.setValue(value);
+							}
+						}
+					});
+				});
 		}
 	};
 
