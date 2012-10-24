@@ -40,13 +40,13 @@ class WikiaSpecialVersion extends SpecialVersion
 	    // be loaded here, so feel free to use wfMsg*() in the 'name'. Raw HTML or wikimarkup
 	    // can be used.
 	    $software = array();
-	    $software['<a href="nofollow" class="external text" href="https://www.mediawiki.org/">MediaWiki</a>'] = self::getVersionLinked();
-	    $software['<a href="nofollow" class="external text" href="http://www.php.net/">PHP</a>'] = phpversion() . " (" . php_sapi_name() . ")";
+	    $software['[https://www.mediawiki.org MediaWiki]'] = self::getVersionLinked();
+	    $software['[http://www.php.net/ PHP]'] = phpversion() . " (" . php_sapi_name() . ")";
 	    $software[$dbr->getSoftwareLink()] = $dbr->getServerInfo();
 	
 	    // Allow a hook to add/remove items.
 	    wfRunHooks( 'SoftwareInfo', array( &$software ) );
-	
-	    return $software;
+	    
+		return $software;
 	}
 }

@@ -30,6 +30,11 @@ class WikiaSpecialVersionController extends WikiaSpecialPageController
 		$this->wg->Title = $title;
 		$this->app->wg->Out->setPageTitle( $title );
 		
+		$softwareListPrepped = array();
+		foreach ( $this->version->getSoftwareList() as $key => $val ) {
+			$softwareListPrepped[$this->wg->Parser->parse( $key, $title, $popts )->getText()] = $this->wg->Parser->parse( $val, $title, $popts ) ->getText();
+		}
+
 		$this->setVal( 'copyRightAndAuthorList',		$this->wg->Parser->parse( $this->version->getCopyrightAndAuthorList(), $title, $popts )->getText() );
 		$this->setVal( 'softwareInformation',			$this->wg->Parser->parse( $this->version->softwareInformation(), $title, $popts )->getText() );
 		$this->setVal( 'extensionCredit',				$this->wg->Parser->parse( $this->version->getExtensionCredits(), $title, $popts )->getText() );
@@ -40,6 +45,6 @@ class WikiaSpecialVersionController extends WikiaSpecialPageController
 		$this->setVal( 'versionSoftwareMessage',		$this->wf->Message( 'version-software' ) );
 		$this->setVal( 'versionSoftwareProductMessage',	$this->wf->Message( 'version-software-product' ) );
 		$this->setVal( 'versionSoftwareVersionMessage', $this->wf->Message( 'version-software-version' ) );
-		$this->setVal( 'versionSoftwareList',			$this->version->getSoftwareList() );
+		$this->setVal( 'versionSoftwareList',			$softwareListPrepped );
 	}
 }
