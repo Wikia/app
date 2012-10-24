@@ -16,10 +16,10 @@ class Forum extends WikiaModel {
 	public function getBoardList($db = DB_SLAVE) {
 		$this->wf->profileIn( __METHOD__ );
 
-		$db = $this->wf->GetDB( $db );
+		$dbw = $this->wf->GetDB( $db );
 
 		// get board list
-		$result = $db->select(
+		$result = $dbw->select(
 			array( 'page' ),
 			array( 'page_id, page_title' ),
 			array( 'page_namespace' => NS_WIKIA_FORUM_BOARD ),
@@ -28,9 +28,14 @@ class Forum extends WikiaModel {
 		);
 
 		$boards = array();
-		while ( $row = $db->fetchObject($result) ) {
+		while ( $row = $dbw->fetchObject($result) ) {
 			$boardId = $row->page_id;
-			$title = F::build( 'Title', array( $boardId ), 'newFromID' );
+			if($db == DB_MASTER) {
+				$title = Title::newFromID( $boardId, Title::GAID_FOR_UPDATE );	
+			} else {
+				$title = Title::newFromID( $boardId );
+			}
+			
 			if( $title instanceof Title ) {
 				$board = F::build( 'ForumBoard', array( $boardId ), 'newFromId' );
 				$boardInfo = $board->getBoardInfo();
@@ -158,6 +163,17 @@ class Forum extends WikiaModel {
 	
 	public function createBoard($titletext, $body, $bot = false) {
 		$this->wf->ProfileIn( __METHOD__ );
+
+		if( strlen($titletext) < 4 || strlen($body) < 4 ) {
+			$this->wf->ProfileOut( __METHOD__ );
+			return false;
+		}
+		
+		if( strlen($body) > 255 || strlen($titletext) > 40 ) {
+			$this->wf->ProfileOut( __METHOD__ );
+			return false;
+		}
+		
 		$title = Title::newFromText($titletext, NS_WIKIA_FORUM_BOARD); 
 		$article  = new Article( $title );
 		$editPage = new EditPage( $article );
@@ -167,6 +183,7 @@ class Forum extends WikiaModel {
 			
 		$result = array();
 		$retval = $editPage->internalAttemptSave( $result, $bot );
+
 		$this->wf->ProfileOut( __METHOD__ );
 	}
 	
@@ -179,8 +196,14 @@ class Forum extends WikiaModel {
 			/* the wgUser swap is the only way to create page as other user then current */	
 			$tmpUser = $app->wg->User;
 			$app->wg->User = User::newFromName( Forum::AUTOCREATE_USER );
-			for($i = 1; $i < 2; $i++) {
-				$this->createBoard(wfMsg('forum-autoboard-title-'.$i), wfMsg('forum-autoboard-title-'.$i), true);	
+			for($i = 1; $i <=5 ; $i++) {
+				$body = wfMsgForContent('forum-autoboard-body-'.$i );
+				$title = wfMsgForContent('forum-autoboard-title-'.$i );
+				//TODO: check with TOR
+				$title = str_replace('$WIKINAME', $app->wg->Sitename, $title);
+				$body = str_replace('$WIKINAME', $app->wg->Sitename, $body);
+
+				$this->createBoard($title, $body, true);	
 			}
 			
 			$app->wg->User = $tmpUser; 
