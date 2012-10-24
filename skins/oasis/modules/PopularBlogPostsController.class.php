@@ -23,7 +23,7 @@ class PopularBlogPostsController extends WikiaController {
 	//				"style" => "add additionalClass if necessary"
 			);
 
-			$this->body = BlogTemplateClass::parseTag($input, $params, $wgParser);
+			$this->body = BlogTemplateClass::parseTag($input, $params, $this->wg->Parser);
 			if (substr($this->body, 0, 9) == '<p><br />') {
 				$this->body = '<p>'.substr($this->body, 9);
 			}
