@@ -16,8 +16,8 @@ if( empty( $wgAnswersScript ) ) {
 }
 
 function efLatestQuestionsInit() {
-	global $wgLatestQuestionsOnlyForAnons, $wgUser, $wgHooks;
-	if( empty( $wgLatestQuestionsOnlyForAnons ) || $wgUser->isAnon() ) {
+	global $wgLatestQuestionsOnlyForAnons, $wgUser, $wgHooks, $wgEnableAnswers;
+	if( $wgEnableAnswers && ( empty( $wgLatestQuestionsOnlyForAnons ) || $wgUser->isAnon() ) ) {
 		$wgHooks['AjaxAddScript'][] = 'wfLatestQuestionsAjaxAddScript';
 		$wgHooks['GetRailModuleList'][] = 'wfLatestQuestionsAddModule';
 		$wgHooks['MakeGlobalVariablesScript'][] = 'wfLatestQuestionsJSVariables';
