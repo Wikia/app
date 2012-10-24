@@ -186,9 +186,9 @@ class RTEAjax {
 	}
 
 	/**
-	 * Get localisation
+	 * Get messages script (format specific to CKEditor)
 	 */
-	static public function i18n() {
+	static public function getMessagesScript() {
 		// code of requested language
 		global $wgLang;
 		$lang = $wgLang->getCode();
@@ -196,6 +196,17 @@ class RTEAjax {
 		// get CK messages array
 		$messages = RTELang::getMessages($lang);
 		$js = "CKEDITOR.lang['{$lang}'] = " . json_encode($messages) . ';';
+
+		return $js;
+	}
+
+
+	/**
+	 * @deprecated
+	 * Get localisation entry point
+	 */
+	static public function i18n() {
+		$js = self::getMessagesScript();
 
 		$ret = new AjaxResponse($js);
 		$ret->setContentType('application/x-javascript');

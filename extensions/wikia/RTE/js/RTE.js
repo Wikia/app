@@ -451,7 +451,7 @@ CKEDITOR.getUrl = function( resource ) {
 		RTE.log('language "' + lang + '" requested');
 
 		// fetch JSON with language definition from backend
-		var url = window.wgServer + wgScript + '?action=ajax&rs=RTEAjax&method=i18n&uselang=' + lang +
+		var url = window.wgServer + '/wikia.php?controller=RTE&method=i18n&uselang=' + lang +
 			'&cb=' + window.wgJSMessagesCB;
 
 		return url;
