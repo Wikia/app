@@ -345,6 +345,11 @@ class LogEventsList {
 
 		// Extract extra parameters
 		$paramArray = LogPage::extractParams( $row->log_params );
+
+		/* Wikia Change */
+		$paramArray = $this->fixParamArray( $row, $paramArray );
+		/* Wikia Change - End */
+
 		// Add review/revert links and such...
 		$revert = $this->logActionLinks( $row, $title, $paramArray, $comment );
 
