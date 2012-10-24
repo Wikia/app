@@ -241,7 +241,7 @@ function wfShortenText($text, $chars = 25){
         $text = mb_substr( $text, 0, max( mb_strrpos( $text, ' '), mb_strrpos( $text, '/' ) ) );
     }
 
-    $text = $text . "...";
+    $text .= wfMsg('ellipsis');
     return $text;
 }
 
