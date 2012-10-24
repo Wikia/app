@@ -208,10 +208,90 @@ class ForumHooksHelper {
 	*/
 
 	public function onWallMessageDeleted(&$mw, &$response) {
-                $title = $mw->getTitle();
-                if($title->getNamespace() == NS_WIKIA_FORUM_BOARD_THREAD ) {
+		$title = $mw->getTitle();
+		if($title->getNamespace() == NS_WIKIA_FORUM_BOARD_THREAD ) {
 			$response->setVal( 'returnTo', wfMsg('forum-thread-deleted-return-to', $mw->getWallTitle()->getText()) );
 		}
 		return true;
 	}
+	
+	/**
+	 * @brief Block any attempts of editing anything in NS_FORUM namespace
+	 *
+	 * @return true
+	 *
+	 * @author Tomasz Odrobny
+	 **/
+
+	function onGetUserPermissionsErrors( Title &$title, User &$user, $action, &$result) {
+		if($action == 'read') {
+			return true;
+		}
+		
+        $ns = $title->getNamespace();
+
+        #check namespace(s)
+        if($ns == NS_FORUM || $ns == NS_FORUM_TALK ) {
+        	if(!$this->canEditOldForum($user)) {
+	 			$result = array('protectedpagetext');
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
+	/**
+	 * override button on forum 
+	 */
+
+	public function onPageHeaderIndexAfterActionButtonPrepared($response, $ns, $skin) {
+        $app = F::App();
+		$title = $app->wg->Title;
+		
+        $ns = $title->getNamespace();
+        #check namespace(s)
+        if($ns == NS_FORUM || $ns == NS_FORUM_TALK ) {
+      		if(!$this->canEditOldForum($app->wg->User)) {
+				$action = array(
+					'class' => '',
+					'text' => $app->wf->Msg('viewsource'),
+					'href' => $title->getLocalUrl(array('action' => 'edit')),
+					'id' => 'ca-viewsource',
+					'primary' => 1
+				);
+	 			
+	 			$response->setVal('actionImage', MenuButtonController::LOCK_ICON);
+	 
+				$response->setVal('action', $action);
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	/**
+	 * helper function for onGetUserPermissionsErrors/onPageHeaderIndexAfterActionButtonPrepared
+	 */
+	
+	public function canEditOldForum($user) {
+		return $user->isAllowed('forumoldedit');
+	}
+	
+	/**
+	 * show the info box for old forums
+	 */
+	
+	public function onArticleViewHeader(&$article, &$outputDone, &$useParserCache) {
+		$title = $article->getTitle();
+		$ns = $title->getNamespace();
+		#check namespace(s)
+        if($ns == NS_FORUM || $ns == NS_FORUM_TALK ) {
+			$app = F::App();
+			$html =	$app->renderView('Forum', 'oldForumInfo' );
+			$app->wg->Out->addHTML($html);
+		}
+		return true;
+	}
+	
 }
