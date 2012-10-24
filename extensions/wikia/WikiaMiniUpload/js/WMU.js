@@ -47,7 +47,7 @@ var WMU_panel = null,
 	WMU_slider = null,
 	WMU_thumbSize = null,
 	WMU_orgThumbSize = null,
-	WMU_width = null,
+	WMU_width = null, // real width of full sized image
 	WMU_height = null,
 	WMU_widthChanges = 1,
 	WMU_refid = null,
@@ -115,6 +115,7 @@ function WMU_loadDetails() {
 			$G('ImageUploadBack').style.display = 'none';
 
 			setTimeout(function() {
+				// FIXME: FCK is mocked here so this code would still work even though we're not using FCK anymore
 				if(!FCK.wysiwygData[WMU_refid].thumb) {
 					$G('ImageUploadFullOption').click();
 				}
@@ -123,15 +124,14 @@ function WMU_loadDetails() {
 				}
 				if(FCK.wysiwygData[WMU_refid].width) {
 					WMU_slider.setValue(FCK.wysiwygData[WMU_refid].width / (WMU_slider.getRealValue() / WMU_slider.getValue()), true);
-					WMU_width = FCK.wysiwygData[WMU_refid].width;
-					MWU_imageWidthChanged( WMU_width );
+					MWU_imageWidthChanged();
 					$G( 'ImageUploadSlider' ).style.visibility = 'visible';
 					$G( 'ImageUploadInputWidth' ).style.visibility = 'visible';
 					$G( 'ImageUploadWidthCheckbox' ).checked = true;
-					$G( 'ImageUploadManualWidth' ).value = WMU_width;
+					$G( 'ImageUploadManualWidth' ).value = FCK.wysiwygData[WMU_refid].width;
 					WMU_manualWidthInput( $G( 'ImageUploadManualWidth' ) );
 				}
-			}, 200);
+			}, 100);
 
 			if(FCK.wysiwygData[WMU_refid].caption) {
 				$G('ImageUploadCaption').value = FCK.wysiwygData[WMU_refid].caption;
@@ -1195,7 +1195,7 @@ function WMU_box_in_article() {
  This function is run if modifying an existing image in the article
  with a precise width set.
  */
-function MWU_imageWidthChanged(changes) {
+function MWU_imageWidthChanged() {
 
 	var image = $G('ImageUploadThumb').firstChild;
 	if( !$G( 'ImageUploadWidthCheckbox' ).checked ) {
