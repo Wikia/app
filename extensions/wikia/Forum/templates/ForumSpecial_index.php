@@ -1,5 +1,8 @@
 <section id="Forum" class="Forum">
 	<!-- Admin Edit here -->
+	<? if($canEdit): ?>
+		<a class="button admin-link" href="<?= $editUrl ?>"><?= $wf->Msg('forum-admin-link-label') ?></a>
+	<? endif; ?>
 	<h3>
 		<?= $blurbHeading ?>
 	</h3>

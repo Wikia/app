@@ -25,6 +25,8 @@ class ForumSpecialController extends WikiaSpecialPageController {
 			$this->forward('ForumSpecial', 'editMode');
 		}
 		
+		
+		
 		$this->wg->Out->setPageTitle($this->wf->msg('forum-forum-title', $this->wg->Sitename));
 
 		$action = $this->getVal('action', '');
@@ -32,8 +34,11 @@ class ForumSpecialController extends WikiaSpecialPageController {
 		$this->blurb = $this->wf->MsgExt('forum-specialpage-blurb', 'parse');
 		$this->blurbHeading = $this->wf->Msg('forum-specialpage-blurb-heading');
 		$this->lastPostByMsg = $this->wf->Msg('forum-specialpage-board-lastpostby');
+		$this->canEdit = $this->wg->User->isAllowed( 'forumadmin' );
+		$this->editUrl = $this->wg->Title->getFullUrl('action=editmode');
 
-		$this->boards = F::build( 'Forum' )->getBoardList();
+		$forum = F::build( 'Forum' );
+		$this->boards = $forum->getBoardList();
 
 		if($forum->haveOldForums()) {
 			$this->showOldForumLink = true;
