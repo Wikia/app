@@ -435,9 +435,13 @@ $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 	}
 	
 	.modal_interstitial {
-		display: none;
-		text-align: center;
-		margin-top: 114px; // TODO: ad another top margin to small lifitum ads (if possible)
+		height: 100%;
+		> div {
+			padding-bottom: 30px;
+		}
+		.wikia-ad {
+			position: relative;
+		}
 	}
 	
 	.LightboxHeader {
