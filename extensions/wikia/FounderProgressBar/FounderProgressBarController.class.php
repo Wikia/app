@@ -1,6 +1,6 @@
 <?php
 class FounderProgressBarController extends WikiaController {
-	
+
 	/**
 	 * Initialize static data
 	 */
@@ -9,12 +9,12 @@ class FounderProgressBarController extends WikiaController {
 	var $urls;
 	var $bonus_tasks;
 	var $click_events;
-	
+
 	public function init() {
 		// Messages are defined in the i18n file
 		// Each message in i18n has a -label -description and -action version
 		// If the message name has a % in it that means a $1 substitution is done
-		$this->messages = array ( 
+		$this->messages = array (
 				FT_PAGE_ADD_10 => "page-add%",
 				FT_THEMEDESIGNER_VISIT => "themedesigner-visit",
 				FT_MAINPAGE_EDIT => "mainpage-edit",
@@ -94,7 +94,7 @@ class FounderProgressBarController extends WikiaController {
 				FT_MAINPAGE_EDIT => array("newMainPage"),
 				FT_PHOTO_ADD_10 => array("newFromText", "Upload", NS_SPECIAL),
 				FT_CATEGORY_ADD_3 => array("newFromText", wfMsg('founderprogressbar-browse-page-name'), NS_CATEGORY),
-				FT_COMMCENTRAL_VISIT => wfMsg('founderprogressbar-commcentral-visit-url'), 
+				FT_COMMCENTRAL_VISIT => wfMsg('founderprogressbar-commcentral-visit-url'),
 				FT_WIKIACTIVITY_VISIT => array("newFromText", "WikiActivity", NS_SPECIAL),
 				FT_PROFILE_EDIT => array("newFromText", $this->wg->User->getName(), NS_USER),
 				FT_PHOTO_ADD_20 => array("newFromText", "Upload", NS_SPECIAL),
@@ -121,21 +121,21 @@ class FounderProgressBarController extends WikiaController {
 				FT_BONUS_EDIT_50 => array("newFromText", "WikiActivity", NS_SPECIAL),
 				FT_TOTAL_EDIT_300 => array("newFromText", "CreatePage", NS_SPECIAL),
 		);
-		
+
 		// This task is optional on some wikis
 		if (defined('NS_BLOG_ARTICLE')) {
 			$this->urls[FT_BLOGPOST_ADD] = array("newFromText", $this->wg->User->getName(), NS_BLOG_ARTICLE);
 		} else {
 			$this->urls[FT_BLOGPOST_ADD] = array("newFromText", $this->wg->User->getName(), NS_USER);
 		}
-		
+
 		// This list contains additional "bonus" tasks that can be completed if all other tasks are skipped or completed
 		$this->bonus_tasks = array (
 				FT_BONUS_PHOTO_ADD_10,
 				FT_BONUS_PAGE_ADD_5,
 				FT_BONUS_EDIT_50
 		);
-		
+
 		// tracked events on the frontend
 		$this->click_events = array(
 				FT_THEMEDESIGNER_VISIT => true,
@@ -147,10 +147,10 @@ class FounderProgressBarController extends WikiaController {
 				FT_UNCATEGORIZED_VISIT => true,
 		);
 	}
-	
+
 	/**
 	 * @desc Get the short list of available founder tasks
-	 * 
+	 *
 	 * @requestParam list array of Founder tasks already gotten from getLongTaskList
 	 * @responseParam list array of Founder tasks that are not completed or skipped, max of 2
 	 */
@@ -167,35 +167,42 @@ class FounderProgressBarController extends WikiaController {
 			$list = $response->getVal('list');
 			$data = $response->getVal('data');
 		}
-				
+
 		$short_list = array();
 		// Grab the first two available items from the long list
 		foreach ($list as $id => $item) {
 			if ($item['task_skipped'] == 0 && $item['task_completed'] == 0 && $item['task_id'] < 500) {
 				$short_list[$id] = $item;
 			}
-			if (count($short_list) == 2) break; 
+			if (count($short_list) == 2) break;
 		}
-		
+
 		$this->setVal('list', $short_list);
 		$this->setVal('data', $data);
 	}
-	
+
+	/**
+	 * @param int $db_type
+	 * @return Database
+	 */
 	public function getDb($db_type=DB_SLAVE) {
 		return $this->app->runFunction( 'wfGetDB', $db_type, array(), $this->wg->ExternalSharedDB);
 	}
-	
+
+	/**
+	 * @return Memcache
+	 */
 	public function getMCache() {
 		return $this->app->getGlobal('wgMemc');
 	}
 
 	/**
 	 * @desc Get all founder tasks with more details (available, completed, skipped)
-	 * 
+	 *
 	 * @requestParam bool use_master true/false
 	 * @responseParam list array of Founder actions in the format:
 	 */
-	
+
 	public function getLongTaskList () {
 
 		// Try to defeat potential race conditions by connecting to master for reads, default to slave
@@ -217,9 +224,10 @@ class FounderProgressBarController extends WikiaController {
 			$res = $dbr->select(
 				'founder_progress_bar_tasks',
 				array('task_id', 'task_count', 'task_completed', 'task_skipped', 'task_timestamp'),
-				array('wiki_id' => $this->wg->CityId)
-				);
-			
+				array('wiki_id' => $this->wg->CityId),
+				__METHOD__
+			);
+
 			while($row = $dbr->fetchObject($res)) {
 				$task_id = $row->task_id;
 				if ($task_id == FT_COMPLETION) continue;  // Make sure the "completion" task does not show up as a task
@@ -231,7 +239,7 @@ class FounderProgressBarController extends WikiaController {
 					"task_timestamp" => $this->wf->TimeFormatAgo($row->task_timestamp),
 					);
 			}
-			
+
 			if (!empty($list)) {
 				$this->getMCache()->set($memKey, $list, 60*60); // 1 hour
 			}
@@ -246,14 +254,14 @@ class FounderProgressBarController extends WikiaController {
 
 	/**
 	 * @desc Get one founder tasks only
-	 * 
+	 *
 	 * @requestParam int task_id The ID of the task completed
 	 * @requestParam bool use_master true/false
 	 * @responseParam list array of Founder actions in the format:
 	 */
-	
+
 	public function getSingleTask() {
-		
+
 		$task_id = $this->request->getVal("task_id");
 		$use_master = $this->request->getval("use_master", false);
 		$db_type = $use_master ? DB_MASTER : DB_SLAVE;
@@ -263,8 +271,9 @@ class FounderProgressBarController extends WikiaController {
 			$res = $dbr->select(
 				'founder_progress_bar_tasks',
 				array('task_id', 'task_count', 'task_completed', 'task_skipped', 'task_timestamp'),
-				array('task_id' => $task_id, 'wiki_id' => $this->wg->CityId)
-				);
+				array('task_id' => $task_id, 'wiki_id' => $this->wg->CityId),
+				__METHOD__
+			);
 
 			$row = $res->fetchRow();
 			$list[$task_id] = array (
@@ -273,14 +282,14 @@ class FounderProgressBarController extends WikiaController {
 				"task_completed" => $row['task_completed'],
 				"task_skipped" => $row['task_skipped'],
 				"task_timestamp" => $this->wf->TimeFormatAgo($row['task_timestamp']),
-				);
+			);
 			$this->setVal("list", $list);
 		} else {
 			$this->setVal('result', 'error');
-			$this->setVal('error', 'invalid task_id');	
+			$this->setVal('error', 'invalid task_id');
 		}
 	}
-	
+
 	/**
 	 * @desc
 	 * @requestParam int task_id The ID of the task completed
@@ -288,7 +297,7 @@ class FounderProgressBarController extends WikiaController {
 	 * @responseParam int tasks_completed number of tasks completed so far
 	 * @responseParam int tasks_remaining number of tasks remaining
 	 */
-	
+
 	public function doTask() {
 		$wiki_id = $this->wg->CityId;
 		$task_id = $this->request->getVal("task_id");
@@ -306,18 +315,19 @@ class FounderProgressBarController extends WikiaController {
 			return;
 		}
 		$dbw = $this->getDB(DB_MASTER);
-		$sql = "INSERT INTO founder_progress_bar_tasks 
-			SET wiki_id=$wiki_id, 
-				task_id=$task_id, 
+		$sql = "INSERT INTO founder_progress_bar_tasks
+			SET wiki_id=$wiki_id,
+				task_id=$task_id,
 				task_count=1
 			ON DUPLICATE KEY UPDATE task_count = task_count + 1";
-		$dbw->query ($sql);
+		$dbw->query($sql, __METHOD__);
 		$res = $dbw->select (
-				'founder_progress_bar_tasks',
-				array('task_id', 'task_count'),
-				array('wiki_id' => $wiki_id, 'task_id' => $task_id)
-			);
-		
+			'founder_progress_bar_tasks',
+			array('task_id', 'task_count'),
+			array('wiki_id' => $wiki_id, 'task_id' => $task_id),
+			__METHOD__
+		);
+
 		$row = $dbw->fetchRow($res);
 		if (!$row) {
 			// Some kind of crazy error happened?
@@ -339,7 +349,8 @@ class FounderProgressBarController extends WikiaController {
 			$dbw->update(
 				'founder_progress_bar_tasks',
 				array('task_count' => '0', $completedSQL),
-				array('wiki_id' => $wiki_id, 'task_id' => $task_id)
+				array('wiki_id' => $wiki_id, 'task_id' => $task_id),
+				__METHOD__
 			);
 			$this->setVal('result', "task_completed");
 			// Check to see if we got to 100% complete
@@ -352,16 +363,16 @@ class FounderProgressBarController extends WikiaController {
 		$this->sendSelfRequest("getLongTaskList", array("use_master" => true));
 
 	}
-	
+
 	/**
 	 * @desc
-	 * @requestParam int task_id The ID of the task to skip 
+	 * @requestParam int task_id The ID of the task to skip
 	 * @requestParam int task_skipped 1 to skip, 0 to "un-skip"
 	 * @responseParam string result OK or error
 	 */
-	
+
 	public function skipTask() {
-		
+
 		$task_id = $this->request->getVal("task_id");
 		$task_skipped = $this->request->getVal("task_skipped", 1);
 		//if (empty($task_id)) throw error;
@@ -380,7 +391,8 @@ class FounderProgressBarController extends WikiaController {
 			array(
 					'task_id' => $task_id,
 					'wiki_id' => $this->wg->CityId
-			)
+			),
+			__METHOD__
 		);
 		$dbw->commit();
 		// Checks if everything is completed or skipped and possibly open up a bonus task
@@ -390,7 +402,7 @@ class FounderProgressBarController extends WikiaController {
 		$this->sendSelfRequest("getLongTaskList", array("use_master" => true));
 		$this->setVal("result", "OK");
 	}
-	
+
 	/**
 	 * @requestParam int task_id
 	 * @responseParam int task_completed 0 or 1+  (bonus tasks can be completed more than once)
@@ -403,19 +415,19 @@ class FounderProgressBarController extends WikiaController {
 			$this->setVal('task_completed', $list[$task_id]['task_completed']);
 		}
 	}
-	
+
 	public function widget() {
 		global $wgBlankImgUrl;
 		$this->response->addAsset( 'extensions/wikia/FounderProgressBar/css/FounderProgressBar.scss' );
 		$this->response->addAsset( 'extensions/wikia/FounderProgressBar/js/modernizr.custom.founder.js' );
 		$this->response->addAsset( 'extensions/wikia/FounderProgressBar/js/FounderProgressBar.js' );
 		$this->response->setVal("wgBlankImgUrl", $wgBlankImgUrl);
-		
+
 		$activityFull = F::app()->sendRequest('FounderProgressBar', 'getLongTaskList', array())->getData();
 		$activityListPreview = F::app()->sendRequest( 'FounderProgressBar', 'getShortTaskList', array('list' => $activityFull))->getData();
-		
+
 		$showCompletionMessage = false;
-		
+
 		$activeTaskList = array();
 		$skippedTaskList = array();
 		$bonusTaskList = array();
@@ -457,10 +469,10 @@ class FounderProgressBarController extends WikiaController {
 			}
 			$bonusTask["task_skippable"] = 0;
 			$bonusTask["task_is_bonus"] = 1;
-			
+
 			$bonusTaskList[] = $bonusTask;
 		}
-		
+
 		$this->response->setVal('progressData', $activityListPreview['data']);
 		$this->response->setVal('activityListPreview', $activityListPreview['list']);
 		$this->response->setVal('activeTaskList', $activeTaskList);
@@ -469,7 +481,7 @@ class FounderProgressBarController extends WikiaController {
 		$this->response->setVal('clickEvents', $this->click_events);
 		$this->response->setVal('showCompletionMessage', $showCompletionMessage);
 	}
-	
+
 	public function getNextTask() {
 		$excluded_task_id = $this->request->getVal('excluded_task_id', '');
 		$shortList = F::app()->sendRequest( 'FounderProgressBar', 'getShortTaskList', array())->getData();
@@ -489,18 +501,20 @@ class FounderProgressBarController extends WikiaController {
 		}
 		$this->response->setVal('html', $html);
 	}
-	
+
 	// Messages defined in i18n file
 	// Each message in i18n has a -label -description and -action version
 	// This helper function will get the proper message for the proper type
-	// If a task has a % at the end of the name then a $1 substitution is done,  
+	// If a task has a % at the end of the name then a $1 substitution is done,
 	private function getMsgForTask($task_id, $type) {
-
 		// For development, return placeholder messages if a message is not defined
-		if (! isset($this->messages[$task_id]) ) {
-			if ($type == "label") return "Task $type";
-			if ($type == "description") return "Task $type Placeholder";
-			if ($type == "action") return "Call to action Label";
+		// don't show it on production (BugId:45724)
+		if (!empty($this->wg->DevelEnvironment)) {
+			if (! isset($this->messages[$task_id]) ) {
+				if ($type == "label") return "Task $type";
+				if ($type == "description") return "Task $type Placeholder";
+				if ($type == "action") return "Call to action Label";
+			}
 		}
 
 		$messageStr = $this->messages[$task_id];
@@ -508,12 +522,12 @@ class FounderProgressBarController extends WikiaController {
 			$number = $this->counters[$task_id];
 			$messageStr = "founderprogressbar-". str_replace('%', $number, $messageStr) . "-" . $type;  // Chop off the %
 			return wfMsgExt($messageStr, array('parsemag'), $number);
-		} 
+		}
 		// Default case
 		$messageStr = "founderprogressbar-". $messageStr . "-" . $type;
 		return wfMsg($messageStr);
 	}
-	
+
 	// Build URLs by lookup into $this->urls
 	private function buildURLs(Array &$list) {
 		foreach ($list as $task_id => $data) {
@@ -523,7 +537,7 @@ class FounderProgressBarController extends WikiaController {
 			$list[$task_id]["task_url"] = $this->getURLForTask($task_id);
 		}
 	}
-	
+
 	// URL list defined above in init()
 	private function getURLForTask($task_id) {
 
@@ -548,7 +562,7 @@ class FounderProgressBarController extends WikiaController {
 
 	// Check task list, and if all tasks are completed or skipped open a bonus task
 	private function openBonusTask() {
-		
+
 		$response = $this->sendSelfRequest("getLongTaskList", array("use_master" => true));
 		$list = $response->getVal('list');
 
@@ -556,9 +570,9 @@ class FounderProgressBarController extends WikiaController {
 		if (isset($list[$this->bonus_tasks[0]])) {
 			return false;
 		}
-		
+
 		$total_tasks = count($list);
-		$tasks_completed_or_skipped = 0; 
+		$tasks_completed_or_skipped = 0;
 		foreach ($list as $task) {
 			if ($task["task_skipped"] || $task["task_completed"]) $tasks_completed_or_skipped += 1;
 		}
@@ -569,7 +583,7 @@ class FounderProgressBarController extends WikiaController {
 				if (!isset($list[$bonus_task_id])) {
 					$sql = "INSERT IGNORE INTO founder_progress_bar_tasks SET wiki_id=$wiki_id, task_id=$bonus_task_id";
 					$dbw = $this->getDB(DB_MASTER);
-					$dbw->query ($sql);
+					$dbw->query($sql, __METHOD__);
 					$dbw->commit();
 				}
 			}
@@ -577,11 +591,11 @@ class FounderProgressBarController extends WikiaController {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Returns array of task data
 	 * @param Array $list
-	 * @param Arra $data 
+	 * @param Array $data
 	 */
 	private function getCompletionData(Array $list) {
 		$data = array();
