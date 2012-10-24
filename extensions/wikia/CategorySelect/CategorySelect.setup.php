@@ -14,13 +14,8 @@
  *
  * To activate this functionality, place this file in your extensions/
  * subdirectory, and add the following line to LocalSettings.php:
- *     require_once("$IP/extensions/wikia/CategorySelect/CategorySelect.php");
+ *     require_once("$IP/extensions/wikia/CategorySelect/CategorySelect.setup.php");
  */
-
-if (!defined('MEDIAWIKI')) {
-	echo "This is MediaWiki extension named CategorySelect.\n";
-	exit(1) ;
-}
 
 $wgExtensionCredits['other'][] = array(
 	'name' => 'CategorySelect',
@@ -29,9 +24,19 @@ $wgExtensionCredits['other'][] = array(
 	'description-msg' => 'categoryselect-desc',
 );
 
-$wgExtensionFunctions[] = 'CategorySelectInit';
-$wgExtensionMessagesFiles['CategorySelect'] = dirname(__FILE__) . '/CategorySelect.i18n.php';
-$wgAutoloadClasses['CategorySelect'] = dirname(__FILE__) . '/CategorySelect_body.php';
+$app = F::app();
+$dir = dirname( __FILE__ ) . '/';
+
+// Classes
+$app->registerClass( 'CategorySelect', $dir . 'CategorySelect.class.php' );
+
+// TODO: necessary?
+$app->registerExtensionFunction( 'CategorySelectInit' );
+
+// Messages
+$app->registerExtensionMessageFile( 'CategorySelect', $dir . 'CategorySelect.i18n.php' );
+
+// TODO: these probably should be somewhere else...
 $wgAjaxExportList[] = 'CategorySelectAjaxParseCategories';
 $wgAjaxExportList[] = 'CategorySelectAjaxSaveCategories';
 $wgAjaxExportList[] = 'CategorySelectGenerateHTMLforView';
@@ -547,14 +552,14 @@ function CategorySelectGenerateHTMLforEdit($formId = '') {
 	global $wgOut, $wgExtensionsPath, $wgCategorySelectMetaData;
 
 	$wgOut->addScript("<script type=\"text/javascript\">var formId = '$formId';</script>");
-	$wgOut->addScript("<script type=\"text/javascript\" src=\"$wgExtensionsPath/wikia/CategorySelect/CategorySelect.js\"></script>");
+	$wgOut->addScript("<script type=\"text/javascript\" src=\"$wgExtensionsPath/wikia/CategorySelect/js/CategorySelect.js\"></script>");
 
 	// use SCSS file for Oasis
 	if ( F::app()->checkSkin( 'oasis' ) ) {
-		$cssFile = AssetsManager::getInstance()->getSassCommonURL('/extensions/wikia/CategorySelect/CategorySelect.scss');
+		$cssFile = AssetsManager::getInstance()->getSassCommonURL('/extensions/wikia/CategorySelect/css/ategorySelect.scss');
 	}
 	else {
-		$cssFile = "{$wgExtensionsPath}/wikia/CategorySelect/CategorySelect.css";
+		$cssFile = "{$wgExtensionsPath}/wikia/CategorySelect/css/CategorySelect.css";
 	}
 
 	$wgOut->addExtensionStyle($cssFile);

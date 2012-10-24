@@ -17,11 +17,6 @@
  *     require_once("$IP/extensions/wikia/CategorySelect/CategorySelect.php");
  */
 
-if (!defined('MEDIAWIKI')) {
-	echo "This is MediaWiki extension named CategorySelect.\n";
-	exit(1) ;
-}
-
 class CategorySelect {
 	private static $categories, $maybeCategory, $maybeCategoryBegin, $outerTag, $nodeLevel, $frame, $categoryNamespace, $tagsWhiteList;
 
