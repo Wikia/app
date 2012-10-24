@@ -64,6 +64,7 @@ include( $dir . '/Forum.namespace.setup.php' );
 // permissions
 $wgAvailableRights[] = 'forum';
 $wgAvailableRights[] = 'boardedit';
+$wgAvailableRights[] = 'forumadmin';
 
 $wgGroupPermissions['*']['forum'] = false;
 $wgGroupPermissions['staff']['forum'] = true;
@@ -79,3 +80,7 @@ $wgGroupPermissions['*']['forumoldedit'] = false;
 $wgGroupPermissions['staff']['forumoldedit'] = true;
 $wgGroupPermissions['sysop']['forumoldedit'] = true;
 $wgGroupPermissions['bureaucrat']['forumoldedit'] = true;
+
+$wgGroupPermissions['*']['forumadmin'] = false;
+$wgGroupPermissions['staff']['forumadmin'] = true;
+$wgGroupPermissions['sysop']['forumadmin'] = true;

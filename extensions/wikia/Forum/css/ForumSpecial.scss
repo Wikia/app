@@ -23,6 +23,10 @@
 			margin: 0;
 		}
 	}
+	
+	.admin-link {
+		float: right;
+	}
 
 	.board {
 		margin: 1em 0 0 0;
@@ -38,4 +42,5 @@
 		color: $color-alternate-text;
 		margin: 0;
 	}
+
 }

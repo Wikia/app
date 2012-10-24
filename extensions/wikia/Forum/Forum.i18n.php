@@ -140,7 +140,9 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
 	'forum-board-history-title' => 'board history',
 	
 	/* Old version of forum */
-	'forum-specialpage-oldforum-link' => 'Old forum Archives'
+	'forum-specialpage-oldforum-link' => 'Old forum Archives',
+	
+	'forum-admin-link-label' => 'Manage Boards',
 );
 
 $messages['qqq'] = array(
@@ -176,4 +178,6 @@ $messages['qqq'] = array(
 * $2 is thread title
 * $4 is thread owner
 * $5 is optional username and you can use it with GENDER parameter',
+
+	'forum-admin-link-label' => 'a call-to-action label for link that will take wiki admins to forum board admin page',
 );
