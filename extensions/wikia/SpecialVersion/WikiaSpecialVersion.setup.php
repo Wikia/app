@@ -12,8 +12,8 @@ $dir = dirname(__FILE__) . '/';
 /**
  * classes
  */
-$app->registerClass('WikiaSpecialVersion',				$dir . 'WikiaSpecialVersion.class.php');
-$app->registerClass('WikiaSpecialVersionController',	$dir . 'WikiaSpecialVersionController.class.php');
+$app->registerClass('WikiaSpecialVersion', $dir . 'WikiaSpecialVersion.class.php');
+$app->registerClass('WikiaSpecialVersionController', $dir . 'WikiaSpecialVersionController.class.php');
 
 /**
  * special pages

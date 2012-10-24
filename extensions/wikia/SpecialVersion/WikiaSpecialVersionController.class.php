@@ -35,16 +35,16 @@ class WikiaSpecialVersionController extends WikiaSpecialPageController
 			$softwareListPrepped[$this->wg->Parser->parse( $key, $title, $popts )->getText()] = $this->wg->Parser->parse( $val, $title, $popts ) ->getText();
 		}
 
-		$this->setVal( 'copyRightAndAuthorList',		$this->wg->Parser->parse( $this->version->getCopyrightAndAuthorList(), $title, $popts )->getText() );
-		$this->setVal( 'softwareInformation',			$this->wg->Parser->parse( $this->version->softwareInformation(), $title, $popts )->getText() );
-		$this->setVal( 'extensionCredit',				$this->wg->Parser->parse( $this->version->getExtensionCredits(), $title, $popts )->getText() );
-		$this->setVal( 'ip',							str_replace( '--', ' - ', htmlspecialchars( $this->getContext()->getRequest()->getIP() ) ) );
-		$this->setVal( 'wikiaVersion',					$this->version->getWikiaVersion() );
-		$this->setVal( 'versionLicenseMessage',			$this->wf->Message( 'version-license' ) );
-		$this->setVal( 'versionLicenseInfoMessage',		$this->wf->Message( 'version-license-info' ) );
-		$this->setVal( 'versionSoftwareMessage',		$this->wf->Message( 'version-software' ) );
-		$this->setVal( 'versionSoftwareProductMessage',	$this->wf->Message( 'version-software-product' ) );
+		$this->setVal( 'copyRightAndAuthorList', $this->wg->Parser->parse( $this->version->getCopyrightAndAuthorList(), $title, $popts )->getText() );
+		$this->setVal( 'softwareInformation', $this->wg->Parser->parse( $this->version->softwareInformation(), $title, $popts )->getText() );
+		$this->setVal( 'extensionCredit', $this->wg->Parser->parse( $this->version->getExtensionCredits(), $title, $popts )->getText() );
+		$this->setVal( 'ip', str_replace( '--', ' - ', htmlspecialchars( $this->getContext()->getRequest()->getIP() ) ) );
+		$this->setVal( 'wikiaVersion', $this->version->getWikiaVersion() );
+		$this->setVal( 'versionLicenseMessage', $this->wf->Message( 'version-license' ) );
+		$this->setVal( 'versionLicenseInfoMessage', $this->wf->Message( 'version-license-info' ) );
+		$this->setVal( 'versionSoftwareMessage', $this->wf->Message( 'version-software' ) );
+		$this->setVal( 'versionSoftwareProductMessage', $this->wf->Message( 'version-software-product' ) );
 		$this->setVal( 'versionSoftwareVersionMessage', $this->wf->Message( 'version-software-version' ) );
-		$this->setVal( 'versionSoftwareList',			$softwareListPrepped );
+		$this->setVal( 'versionSoftwareList', $softwareListPrepped );
 	}
 }
