@@ -180,16 +180,17 @@ body >a >img[src$="noad.gif"] {
 		font-size: 120%;
 		text-align: center;
 	}
-	.ad-wrapper {
-		display: table;
-		height: 400px;
-		margin: 20px auto;
+}
+
+.ad-centered-wrapper {
+	display: table;
+	height: 400px;
+	margin: 20px auto;
+	> div {
+		display: table-cell;
+		vertical-align: middle;
 		> div {
-			display: table-cell;
-			vertical-align: middle;
-			> div {
-				display: inline-block;
-			}
+			display: inline-block;
 		}
 	}
 }
