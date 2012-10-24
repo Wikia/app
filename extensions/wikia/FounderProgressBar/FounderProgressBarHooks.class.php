@@ -99,11 +99,6 @@ class FounderProgressBarHooks {
 			if (stripos ($text, "<gallery") !== false) {
 				$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_GALLERY_ADD));
 			}
-
-			// if page contains video tag
-			if (stripos ($text, "<video") !== false || stripos($text, "[[Video:") !== false ) {
-				$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_VIDEO_ADD));
-			}
 		}
 
 		wfProfileOut(__METHOD__);
@@ -117,7 +112,6 @@ class FounderProgressBarHooks {
 	 *
 	 */
 	function onUploadComplete (&$image) {
-
 		// Quick exit if tasks are all completed
 		if (self::allTasksComplete()) {
 			return true;
@@ -188,6 +182,24 @@ class FounderProgressBarHooks {
 		}
 
 		F::app()->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_FB_CONNECT));
+		return true;
+	}
+
+	/**
+	 * @desc Sends a request to update add video founder progress bar task
+	 *
+	 * @return bool true because it's a hook
+	 */
+	public function onAfterVideoFileUploaderUpload($result) {
+		// Quick exit if tasks are all completed
+		if( self::allTasksComplete() ) {
+			return true;
+		}
+
+		if( $result instanceof FileRepoStatus && $result->ok ) {
+			F::app()->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_VIDEO_ADD));
+		}
+
 		return true;
 	}
 
