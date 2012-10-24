@@ -231,7 +231,7 @@ Liftium.buildQueryString = function(nvpairs, sep){
 };
 
 
-Liftium.callAd = function (sizeOrSlot, iframe) {
+Liftium.callAd = function (sizeOrSlot, slotPlacement) {
 	if (LiftiumOptions.offline){
 		Liftium.d("Not printing tag because LiftiumOptions.offline is set");
 		return false;
@@ -256,7 +256,13 @@ Liftium.callAd = function (sizeOrSlot, iframe) {
 	}
 
 	// Write out a _load div and call the ad
-	var slotname = Liftium.getUniqueSlotname(sizeOrSlot); 
+	var slotname = Liftium.getUniqueSlotname(sizeOrSlot);
+
+	if (slotPlacement) {
+		Liftium.d('Setting placement of slot ' + slotname + ' to ' + slotPlacement, 3);
+		Liftium.slotPlacements[slotname] = slotPlacement;
+	}
+
 	document.write('<div id="' + slotname + '">');
 	Liftium._callAd(slotname);
 	document.write("</div>");
