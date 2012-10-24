@@ -28,7 +28,7 @@
 					, $modal
 					, $modalBody = $('<div></div>')
 					, $modalText = $('<p></p>').text($.msg('adengine-exitstitial-redirecting') + ' ')
-					, $modalAd = $('<div class="ad-wrapper"></div>')
+					, $modalAd = $('<div class="ad-centered-wrapper"></div>')
 					, $ad = $('<div class="wikia-ad noprint"></div>').attr('id', adSlot)
 					, $modalSkip = $('<div class="close-exitstitial-ad"></div>')
 					, $skipAd = $('<a></a>').attr('href', url).text($.msg('adengine-exitstitial-button'))
