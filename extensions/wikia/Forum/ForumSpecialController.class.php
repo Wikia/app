@@ -37,8 +37,6 @@ class ForumSpecialController extends WikiaSpecialPageController {
 
 		$forum = F::build( 'Forum' );
 
-		$this->boards = $forum->getBoardList();
-
 		/* if the Board is empty we will create defult board */
 		//TODO: move create to wikilabs hook
 		if($forum->createDefaultBoard()) {
@@ -46,7 +44,8 @@ class ForumSpecialController extends WikiaSpecialPageController {
 		} else {
 			$this->boards = $forum->getBoardList();
 		}
-
+		
+		
 		if($forum->haveOldForums()) {
 			$this->showOldForumLink = true;
 			$this->oldForumLink = Title::newFromText('Index', NS_FORUM)->getFullUrl();
