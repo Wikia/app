@@ -15,5 +15,7 @@
 		<?= $avatar ?>
 		<span class="post-author"><a href="<?= htmlspecialchars($userPage) ?>"><?= htmlspecialchars($userName) ?></a></span>
 		<span><?= $editTimestamp ?></span>
+		<span><a href="<?= htmlspecialchars($userBlogPage) ?>">User blog:<?= $userName ?></a></span>
+		
 	</div>
 </header>
