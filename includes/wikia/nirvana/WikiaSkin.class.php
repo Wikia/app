@@ -212,6 +212,14 @@ abstract class WikiaSkin extends SkinTemplate {
 	public function buildNavUrls() {
 		return parent::buildNavUrls();
 	}
+	
+	public function subPageSubtitle() {
+		// bugid: 51048 -- don't show subpage link for blog content
+		if ( $this->wg->Title->getNamespace() > 599 || $this->wg->Title->getNamespace() < 500 ) { 
+			return parent::subPageSubtitle();
+		}
+		return '';
+	}
 
 	static function makeInlineVariablesScript( $data ) {
 		$wf = F::app()->wf;
