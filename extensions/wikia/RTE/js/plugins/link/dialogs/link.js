@@ -9,25 +9,30 @@ CKEDITOR.dialog.add( 'link', function( editor )
 		linkTextDirty = false,
 		existsTimeout;
 
-	var checkStatus = function() {
+	function checkStatus() {
 		var pageName = CKEDITOR.dialog.getCurrent().getContentElement('internal','name').getValue();
 		if( pageName ){
 			$(".link-type-note span").html(editor.lang.link.status.checking);
 			$(".link-type-note img")[0].className = 'sprite progress';
 
 			// check our page name for validity
-			RTE.ajax('checkInternalLink', {title: pageName}, function(data){
-				if( data.exists ){
-					$(".link-type-note span").html(editor.lang.link.status.exists);
-					$(".link-type-note img")[0].className = 'link-icon link-yes';
-				}else{
-					$(".link-type-note span").html(editor.lang.link.status.notexists);
-					$(".link-type-note img")[0].className = 'link-icon link-no';
-				}
+			RTE.ajax('checkInternalLink', {title: pageName}, function(data) {
+				setLinkExistance(data.exists);
 			});
 		}
 		existsTimeout = null;
-	};
+	}
+
+	function setLinkExistance(exists) {
+		if( exists ){
+			$(".link-type-note span").html(editor.lang.link.status.exists);
+			$(".link-type-note img")[0].className = 'link-icon link-yes';
+		}
+		else {
+			$(".link-type-note span").html(editor.lang.link.status.notexists);
+			$(".link-type-note img")[0].className = 'link-icon link-no';
+		}
+	}
 
 	var setMode = function( mode ) {
 		var linkDialog = CKEDITOR.dialog.getCurrent(),
@@ -65,6 +70,9 @@ CKEDITOR.dialog.add( 'link', function( editor )
 
 							if (typeof value !== 'undefined') {
 								labelField.setValue(value);
+
+								// validate a link (BugId:51414)
+								setLinkExistance(true);
 							}
 						}
 					});
