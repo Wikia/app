@@ -697,7 +697,7 @@ class EnhancedChangesList extends ChangesList {
 		# Should patrol-related stuff be shown?
 		$rc->unpatrolled = $this->showAsUnpatrolled( $rc );
 		
-		$linksCache = $this->lineLinksCache($rc, $rc->unpatrolled);
+		$linksCache = $this->lineLinksCache($rc, $rc->unpatrolled, $baseRC->counter);
 		
 		$showdifflinks = true;
 		# Make article link
@@ -747,6 +747,7 @@ class EnhancedChangesList extends ChangesList {
 			$rc->difflink = $linksCache['diff'];			
 		}
 		
+		$lastOldid = $rc->mAttribs['rc_last_oldid'];		
 		# Make "last" link
 		if( !$showdifflinks || !$lastOldid ) {
 			$lastLink = $this->message['last'];
@@ -786,11 +787,11 @@ class EnhancedChangesList extends ChangesList {
 		return $ret;
 	}
 
-	public function lineLinksCache($rc, $unpatrolled) {
+	public function lineLinksCache($rc, $unpatrolled, $counter) {
 		wfProfileIn( __METHOD__ );
 		global $wgMemc;
 		
-		$memcKey = wfMemcKey( __METHOD__, $rc->mAttribs['rc_id'], $unpatrolled, $this->getLanguage()->getCode() );
+		$memcKey = wfMemcKey( __METHOD__, $rc->mAttribs['rc_id'], $unpatrolled, $this->getLanguage()->getCode(), $counter);
 		$out = $wgMemc->get($memcKey);
 		if(!empty($out)) {
 			wfProfileOut( __METHOD__ );
@@ -826,24 +827,24 @@ class EnhancedChangesList extends ChangesList {
 		$querycur = $curIdEq + array( 'diff' => '0', 'oldid' => $thisOldid );
 		$querydiff = $curIdEq + array( 'diff' => $thisOldid, 'oldid' =>
 			$lastOldid ) + $rcIdQuery;
-
-		if( in_array( $rc->mAttribs['rc_type'], array( RC_NEW, RC_LOG, RC_MOVE, RC_MOVE_OVER_REDIRECT ) ) ) {
+		$type = $rc->mAttribs['rc_type'];
+		if( in_array( $type, array( RC_NEW, RC_LOG, RC_MOVE, RC_MOVE_OVER_REDIRECT ) ) ) {
 			if ( $type != RC_NEW ) {
 				$out['cur'] = $this->message['cur'];
 			} else {
 				$curUrl = htmlspecialchars( $rc->getTitle()->getLinkURL( $querycur ) );
-				$out['cur'] = "<a href=\"$curUrl\" tabindex=\"{$baseRC->counter}\">{$this->message['cur']}</a>";
+				$out['cur'] = "<a href=\"$curUrl\" tabindex=\"{$counter}\">{$this->message['cur']}</a>";
 			}
-			$diffLink = $this->message['diff'];
+			$out['diff'] = $this->message['diff'];
 		} else {
 			$diffUrl = htmlspecialchars( $rc->getTitle()->getLinkURL( $querydiff ) );
 			$curUrl = htmlspecialchars( $rc->getTitle()->getLinkURL( $querycur ) );
-			$out['diff'] = "<a href=\"$diffUrl\" tabindex=\"{$baseRC->counter}\">{$this->message['diff']}</a>";
-			$out['cur'] = "<a href=\"$curUrl\" tabindex=\"{$baseRC->counter}\">{$this->message['cur']}</a>";
+			$out['diff'] = "<a href=\"$diffUrl\" tabindex=\"{$counter}\">{$this->message['diff']}</a>";
+			$out['cur'] = "<a href=\"$curUrl\" tabindex=\"{$counter}\">{$this->message['cur']}</a>";
 		}
 		
 		# Make "last" link
-		if( in_array( $type, array( RC_LOG, RC_MOVE, RC_MOVE_OVER_REDIRECT ) ) ) {
+		if( in_array(  $type, array( RC_LOG, RC_MOVE, RC_MOVE_OVER_REDIRECT ) ) ) {
 			$out['last'] = $this->message['last'];
 		} else {
 			$out['last'] = Linker::linkKnown( $rc->getTitle(), $this->message['last'],

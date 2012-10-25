@@ -91,3 +91,12 @@
 	}
 }
 
+// Add color theming support for MediaWiki jQuery TableSorter plugin (overwritting jquery.tablesorter.css styles)
+table.jquery-tablesorter.sortable th.headerSort .chevron {
+	border-top-color: $color-text;
+	&:first-child {
+		border-color: transparent transparent $color-text;
+	}
+}
+
+

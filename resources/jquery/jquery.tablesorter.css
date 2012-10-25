@@ -1,18 +1,22 @@
 /* Table Sorting */
 table.jquery-tablesorter th.headerSort {
-	/* @embed */
-	background-image: url(images/sort_both.gif);
 	cursor: pointer;
-	background-repeat: no-repeat;
-	background-position: 50% 75%;
-	padding-bottom: 21px;
 	text-align: center;
 }
-table.jquery-tablesorter th.headerSortUp {
-	/* @embed */
-	background-image: url(images/sort_up.gif);
+table.jquery-tablesorter th.headerSort .chevron {
+    border-top-color: #000;
+    display: block;
+    margin: 1px auto;
 }
-table.jquery-tablesorter th.headerSortDown {
-	/* @embed */
-	background-image: url(images/sort_down.gif);
+table.jquery-tablesorter th.headerSort .chevron:first-child {
+    border-color: transparent transparent #000;
+}
+table.jquery-tablesorter th.headerSortUp .chevron {
+    visibility: hidden;
+}
+table.jquery-tablesorter th.headerSortUp .chevron:first-child {
+    visibility: visible;
+}
+table.jquery-tablesorter th.headerSortDown .chevron:first-child {
+    visibility: hidden;
 }

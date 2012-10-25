@@ -19,6 +19,7 @@ $wgAutoloadClasses['RTEMagicWord'] = "$dir/RTEMagicWord.class.php";
 $wgAutoloadClasses['RTEMarker'] = "$dir/RTEMarker.class.php";
 $wgAutoloadClasses['RTEParser'] = "$dir/RTEParser.class.php";
 $wgAutoloadClasses['RTEReverseParser'] = "$dir/RTEReverseParser.class.php";
+$wgAutoloadClasses['RTEController'] = "$dir/RTEController.class.php";
 
 // hooks
 $wgHooks['EditPage::showEditForm:initial'][] = 'RTE::init';

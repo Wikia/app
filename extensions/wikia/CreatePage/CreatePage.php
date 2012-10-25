@@ -220,7 +220,7 @@ function wfCreatePageAjaxCheckTitle() {
 	else {
 		$oTitle = Title::newFromText( $sTitle, $nameSpace );
 
-		if ( !( $oTitle instanceof Title ) ) {
+		if ( !( $oTitle instanceof Title ) || strpos( $sTitle, "#" ) !== false ) {
 			$result['result'] = 'error';
 			$result['msg'] = wfMsg( 'createpage-error-invalid-title' );
 		}

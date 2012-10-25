@@ -159,6 +159,8 @@ class VideoFileUploader {
 			File::DELETE_SOURCE
 		);
 
+		wfRunHooks('AfterVideoFileUploaderUpload', array($file, $result));
+
 		wfProfileOut(__METHOD__);
 		return $result;
 	}

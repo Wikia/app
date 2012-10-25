@@ -22,12 +22,14 @@ $wgHooks[ 'UploadComplete' ][] = 'FounderProgressBarHooks::onUploadComplete';
 $wgHooks[ 'UploadWordmarkComplete' ][] = 'FounderProgressBarHooks::onUploadWordmarkComplete';
 $wgHooks[ 'AddNewAccount' ][] = 'FounderProgressBarHooks::onAddNewAccount';
 $app->registerHook('FounderProgressBarOnFacebookConnect', 'FounderProgressBarHooks', 'onFacebookConnect');
+$app->registerHook('AfterVideoFileUploaderUpload', 'FounderProgressBarHooks', 'onAfterVideoFileUploaderUpload');
 
 // On wiki creation or WikiFactory enable add db columns
 $wgHooks['CreateWikiLocalJob-complete'][] = "FounderProgressBarHooks::onWikiCreation";
 
 // Define founder event constants
 // FIXME: Right now you must edit FounderProgressBarHooks::initRecords() and WikiFactoryHooks::FounderProgressBar if you add new tasks
+// FIXME: please use class constants instead of defines
 define('FT_PAGE_ADD_10', 10);
 define('FT_THEMEDESIGNER_VISIT', 20);
 define('FT_MAINPAGE_EDIT', 30);

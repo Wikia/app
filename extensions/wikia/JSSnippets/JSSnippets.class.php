@@ -38,7 +38,8 @@ class JSSnippets extends WikiaObject {
 		$this->wf->profileIn( __METHOD__ );
 		$js = "";
 		$assetsManager = F::build( 'AssetsManager', array(), 'getInstance' ); /* @var $assetsManager AssetsManager */
-		$skin = $this->wg->user->getSkin();
+		$userSkinKey = $this->wg->user->getOption('skin');
+		$skin = (! empty( $userSkinKey ) ) ? F::build( 'Skin', array( $userSkinKey ), 'newFromKey' ) : RequestContext::getMain()->getSkin();
 		$isWikiaSkin = ( $skin instanceof WikiaSkin );
 
 		$entry = array(

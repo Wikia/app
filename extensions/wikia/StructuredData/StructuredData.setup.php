@@ -50,8 +50,3 @@ define('SD_CONTEXT_SPECIAL', 1);
 F::addClassConstructor( 'StructuredDataAPIClient', array( 'baseUrl' => $wgStructuredDataConfig['baseUrl'], 'apiPath' => $wgStructuredDataConfig['apiPath'], 'schemaPath' => $wgStructuredDataConfig['schemaPath'] ) );
 F::addClassConstructor( 'StructuredData', array( 'apiClient' => F::build( 'StructuredDataAPIClient' )));
 F::addClassConstructor( 'SDElementRendererFactory', array( 'config' => $wgStructuredDataConfig ) );
-
-/**
- * message files
- */
-//$app->registerExtensionMessageFile('StructuredData', $dir . 'StructuredData.i18n.php');

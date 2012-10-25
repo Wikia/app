@@ -39,7 +39,7 @@
 			this.buttonsWrapper = this.editor.getSpace('buttons');
 
 			if (this.buttonsWrapper.length) {
-				this.buttons = this.buttonsWrapper.find('button');
+				this.buttons = this.buttonsWrapper.find('button, input[submit]');
 			}
 		},
 
@@ -92,6 +92,19 @@
 			if (!this.isReady) {
 				this.isReady = true;
 			}
+
+			this.editor.getEditbox().on(
+				'keyup',
+				$.proxy(function(event) {
+					this.buttons.removeAttr('disabled');
+				}, this)
+			);
+			this.editor.on(
+				'mode',
+				$.proxy(function(event) {
+					this.buttons.removeAttr('disabled');
+				}, this)
+			);
 		},
 
 		editorBeforeReady: function() {
@@ -149,6 +162,12 @@
 
 			// Trigger editorActivated
 			this.editor.fire('editorActivated', event);
+
+			var replacedElement = this.editor.getEditorElement();
+			if(replacedElement.is('textarea') && typeof this.editor.ck != "undefined") {
+				replacedElement.val("");
+			}
+
 		},
 
 		editorReset: function() {
@@ -189,7 +208,7 @@
 		showButtons: function() {
 			if (this.buttonsWrapper.length) {
 				this.buttonsWrapper.slideDown();
-				this.buttons.show().removeAttr('disabled');
+				this.buttons.show();
 			}
 		},
 

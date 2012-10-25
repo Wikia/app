@@ -13,37 +13,37 @@
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
 class ApiGeocode extends ApiBase {
-	
+
 	public function __construct( $main, $action ) {
 		parent::__construct( $main, $action );
 	}
-	
+
 	public function execute() {
 		global $wgUser;
-		
+
 		if ( !$wgUser->isAllowed( 'geocode' ) || $wgUser->isBlocked() ) {
 			$this->dieUsageMsg( array( 'badaccess-groups' ) );
-		}			
-		
+		}
+
 		$params = $this->extractRequestParams();
-		
+
 		$results = array();
-		
+
 		foreach ( array_unique( $params['locations'] ) as $location ) {
 			$result = MapsGeocoders::geocode( $location, $params['service'] );
-			
+
 			$results[$location] = array(
 				'count' => $result === false ? 0 : 1,
 				'locations' => array()
 			);
-			
+
 			if ( $result !== false ) {
 				$results[$location]['locations'][] = $result;
 			}
-			
+
 			$this->getResult()->setIndexedTagName( $results[$location]['locations'], 'location' );
 		}
-		
+
 		$this->getResult()->addValue(
 			null,
 			'results',
@@ -68,36 +68,36 @@ class ApiGeocode extends ApiBase {
 			),
 		);
 	}
-	
+
 	public function getParamDescription() {
 		return array(
 			'locations' => 'The locations to geocode',
 			'service' => 'The geocoding service to use',
 		);
 	}
-	
+
 	public function getDescription() {
 		return array(
 			'API module for geocoding.'
 		);
 	}
-	
+
 	public function getPossibleErrors() {
 		return array_merge( parent::getPossibleErrors(), array(
 			array( 'missingparam', 'locations' ),
 		) );
 	}
 
-	protected function getExamples() {
+	public function getExamples() {
 		return array(
 			'api.php?action=geocode&locations=new york',
 			'api.php?action=geocode&locations=new york|brussels|london',
 			'api.php?action=geocode&locations=new york&service=geonames',
 		);
-	}	
-	
+	}
+
 	public function getVersion() {
 		return __CLASS__ . ': $Id: ApiGeocode.php 95376 2011-08-24 06:29:50Z jeroendedauw $';
-	}		
-	
+	}
+
 }

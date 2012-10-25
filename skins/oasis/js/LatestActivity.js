@@ -1,6 +1,8 @@
 var LatestActivity = {
 	init: function() {
-		LatestActivity.lazyLoadContent();
+		if ( !$('#WikiaRecentActivity').empty() ) {
+			LatestActivity.lazyLoadContent();
+		}
 	},
 
 	lazyLoadContent: function() {

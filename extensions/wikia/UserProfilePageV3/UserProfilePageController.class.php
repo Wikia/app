@@ -111,6 +111,7 @@ class UserProfilePageController extends WikiaController {
 
 		$userData = $userIdentityBox->getFullData();
 
+		$this->setVal('isBlocked', ($user->isBlocked() || $user->isBlockedGlobally()));
 		$this->setVal('zeroStateCssClass', ($userData['showZeroStates']) ? 'zero-state' : '');
 
 		$this->setVal('user', $userData);

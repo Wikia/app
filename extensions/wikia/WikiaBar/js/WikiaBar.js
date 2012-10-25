@@ -360,9 +360,9 @@ var WikiaBar = {
 
 		return (result >= 0);
 	},
-	getWikiaBarOffset: function () {
-		//this method is being used in our RTE plugin therefore we don't use here cached jQuery object this.WikiaBarWrapperObj
-		var wikiaBarHeight = $("#WikiaBarWrapper").outerHeight() || 0;
+	getWikiaBarOffset: function() {
+	//this method is being used in our RTE plugin therefore we don't use here cached jQuery object this.WikiaBarWrapperObj
+		var wikiaBarHeight = $("#WikiaBarWrapper").outerHeight(true) || 0;
 		return (this.wikiaBarHidden) ? 0 : wikiaBarHeight;
 	},
 	//todo: extract class

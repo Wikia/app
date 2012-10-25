@@ -13,20 +13,20 @@
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
 class ApiEditWatchlistGroup extends ApiBase {
-	
+
 	public function __construct( $main, $action ) {
 		parent::__construct( $main, $action );
 	}
-	
+
 	public function execute() {
 		global $wgUser;
-		
+
 		if ( !$wgUser->isAllowed( 'semanticwatchgroups' ) || $wgUser->isBlocked() ) {
 			$this->dieUsageMsg( array( 'badaccess-groups' ) );
 		}
-		
+
 		$params = $this->extractRequestParams();
-		
+
 		$group = new SWLGroup(
 			$params['id'],
 			$params['name'],
@@ -35,7 +35,7 @@ class ApiEditWatchlistGroup extends ApiBase {
 			$params['properties'],
 			$params['concepts']
 		);
-		
+
 		$this->getResult()->addValue(
 			null,
 			'success',
@@ -75,7 +75,7 @@ class ApiEditWatchlistGroup extends ApiBase {
 			),
 		);
 	}
-	
+
 	public function getParamDescription() {
 		return array(
 			'id' => 'The ID of the watchlist group to edit',
@@ -86,26 +86,26 @@ class ApiEditWatchlistGroup extends ApiBase {
 			'concepts' => 'The concepts this watchlist group covers',
 		);
 	}
-	
+
 	public function getDescription() {
 		return array(
 			'API module to modify semantic watchlist groups.'
 		);
 	}
-		
+
 	public function getPossibleErrors() {
 		return array_merge( parent::getPossibleErrors(), array(
 		) );
 	}
 
-	protected function getExamples() {
+	public function getExamples() {
 		return array(
 			'api.php?action=editswlgroup&id=42&name=My group of awesome&properties=Has awesomeness|Has epicness&categories=Awesome stuff',
 		);
-	}	
-	
+	}
+
 	public function getVersion() {
 		return __CLASS__ . ': $Id: ApiEditWatchlistGroup.php 88433 2011-05-19 22:00:17Z jeroendedauw $';
-	}		
-	
+	}
+
 }

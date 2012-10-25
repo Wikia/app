@@ -18,10 +18,10 @@ class SDFilter {
 	var $input_type = null;
 	var $allowed_values;
 	var $possible_applied_filters = array();
-	
+
 	static function loadAllFromPageSchema( $psSchemaObj ){
-		$filters_ps = array();		
-		$template_all = $psSchemaObj->getTemplates();						
+		$filters_ps = array();
+		$template_all = $psSchemaObj->getTemplates();
 		foreach ( $template_all as $template ) {
 			$field_all = $template->getFields();
 			foreach( $field_all as $fieldObj ) {
@@ -38,7 +38,7 @@ class SDFilter {
 				$prop_array = $fieldObj->getObject('semanticmediawiki_Property');
 				$f->property = $prop_array['name'];
 				$f->escaped_property = str_replace( array( ' ', "'" ), array( '_', "\'" ), $f->property );
-				$f->is_relation = true;				
+				$f->is_relation = true;
 				if ( array_key_exists( 'Type', $prop_array ) && $prop_array['Type'] != 'Page' ) {
 					$f->is_relation = false;
 				}
@@ -57,13 +57,13 @@ class SDFilter {
 					$f->allowed_values = $filter_array['Values'];
 				} else {
 					$f->allowed_values = array();
-				}				
+				}
 				$filters_ps[] = $f ;
 			}
-		}				
+		}
 		return $filters_ps;
 	}
-	
+
 	static function load( $filter_name ) {
 		$f = new SDFilter();
 		$f->name = $filter_name;
@@ -144,7 +144,7 @@ class SDFilter {
 	function getTimePeriodValues() {
 		$possible_dates = array();
 		$property_value = $this->escaped_property;
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE, 'smw' );
 		if ( $this->time_period == wfMsg( 'sd_filter_month' ) ) {
 			$fields = "YEAR(value_xsd), MONTH(value_xsd)";
 		} else {
@@ -154,7 +154,7 @@ class SDFilter {
 		$smw_ids = $dbr->tableName( 'smw_ids' );
 		$sql = <<<END
 	SELECT $fields, count(*)
-	FROM semantic_drilldown_values sdv 
+	FROM semantic_drilldown_values sdv
 	JOIN $smw_attributes a ON sdv.id = a.s_id
 	JOIN $smw_ids p_ids ON a.p_id = p_ids.smw_id
 	WHERE p_ids.smw_title = '$property_value'
@@ -188,7 +188,7 @@ END;
 
 		$possible_values = array();
 		$property_value = $this->escaped_property;
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE, 'smw' );
 		if ( $this->is_relation ) {
 			$property_table_name = $dbr->tableName( 'smw_rels2' );
 			$property_table_nickname = "r";
@@ -202,7 +202,7 @@ END;
 		$prop_ns = SMW_NS_PROPERTY;
 		$sql = <<<END
 	SELECT $value_field, count(DISTINCT sdv.id)
-	FROM semantic_drilldown_values sdv 
+	FROM semantic_drilldown_values sdv
 	JOIN $property_table_name $property_table_nickname ON sdv.id = $property_table_nickname.s_id
 
 END;
@@ -235,7 +235,7 @@ END;
 	 * and for getting the set of 'None' values.
 	 */
 	function createTempTable() {
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE, 'smw' );
 		$smw_ids = $dbr->tableName( 'smw_ids' );
 		if ( $this->is_relation ) {
 			$table_name = $dbr->tableName( 'smw_rels2' );
@@ -265,7 +265,7 @@ END;
 	 * Deletes the temporary table.
 	 */
 	function dropTempTable() {
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE, 'smw' );
 		// DROP TEMPORARY TABLE would be marginally safer, but it's
 		// not supported on all RDBMS's.
 		$sql = "DROP TABLE semantic_drilldown_filter_values";

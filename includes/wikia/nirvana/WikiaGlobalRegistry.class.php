@@ -24,6 +24,7 @@
  * @property MemCache memc
  * @property Language ContLang
  * @property String ArticlePath
+ * @property Boolean DevelEnvironment
  *
  *
  */

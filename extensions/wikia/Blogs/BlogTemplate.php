@@ -1008,11 +1008,13 @@ class BlogTemplateClass {
 
 		wfProfileIn( __METHOD__ );
 		
-		/** 
-		 * because this parser tag contains elements of interface we need to 
-		 * inform parser to vary parser cache key by user lang option
-		 **/
-		$parser->mOutput->recordOption('userlang');
+		if ( $parser->mOutput !== null ) {
+			/** 
+			 * because this parser tag contains elements of interface we need to 
+			 * inform parser to vary parser cache key by user lang option
+			 **/
+			$parser->mOutput->recordOption('userlang');
+		}
 		
 		$result = "";
 

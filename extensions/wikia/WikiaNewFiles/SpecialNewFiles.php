@@ -252,6 +252,7 @@ function wfSpecialWikiaNewFiles ( $par, $specialPage ) {
 
 function getLinkedFiles ( $image ) {
 	global $wgMemc;
+	$anchorLength = 60;
 
 	wfProfileIn( __METHOD__ );
 	$cacheKey = wfMemcKey( __METHOD__, $image->img_name );
@@ -281,7 +282,7 @@ function getLinkedFiles ( $image ) {
 		$sk = RequestContext::getMain()->getSkin();
 		foreach ( $data as $row ) {
 			$name = Title::makeTitle( $row['ns'], $row['title'] );
-			$links[] = $sk->link( $name, null, array( 'class' => 'wikia-gallery-item-posted' ) );
+			$links[] = $sk->link( $name, wfShortenText($name, $anchorLength), array( 'class' => 'wikia-gallery-item-posted' ) );
 		}
 	}
 

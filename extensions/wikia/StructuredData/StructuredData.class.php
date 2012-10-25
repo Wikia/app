@@ -23,7 +23,7 @@ class StructuredData {
 	 * @return SDElement
 	 */
 	public function getSDElementById($id, $elementDepth = 0) {
-		$element = $this->APIClient->getObject($id);
+		$element = $this->APIClient->getObject( $id );
 		return $this->getSDElement( $element, $elementDepth );
 	}
 

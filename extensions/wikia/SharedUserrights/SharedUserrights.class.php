@@ -47,6 +47,54 @@ class UserRights {
 		return self::$globalGroup[$user->mId];
 	}
 
+	static function addGlobalGroup( $user, $group ) {
+		global $wgExternalSharedDB, $wgWikiaGlobalUserGroups;
+
+		if ( !in_array( $group, $wgWikiaGlobalUserGroups ) ) {
+			return true;
+		}
+
+		$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
+		if( $user->getId() ) {
+			$dbw->insert( 'user_groups',
+					array(
+						'ug_user'  => $user->getID(),
+						'ug_group' => $group,
+					     ),
+					__METHOD__,
+					array( 'IGNORE' ) );
+		}
+
+		// return false to prevent group from being added to local DB
+		return false;
+	}
+
+	static function removeGlobalGroup( $user, $group ) {
+		global $wgExternalSharedDB, $wgWikiaGlobalUserGroups;
+
+		if ( !in_array( $group, $wgWikiaGlobalUserGroups ) ) {
+			return true;
+		}
+
+		$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
+		$dbw->delete( 'user_groups',
+				array(
+					'ug_user'  => $user->getID(),
+					'ug_group' => $group,
+				     ), __METHOD__ );
+		// Remember that the user was in this group
+		$dbw->insert( 'user_former_groups',
+				array(
+					'ufg_user'  => $user->getID(),
+					'ufg_group' => $group,
+				     ),
+				__METHOD__,
+				array( 'IGNORE' ) );
+
+		// return true to let the User class clean up any residual staff rights stored locally
+		return true;
+	}
+
 	/**
 	 * check if we are on central wiki (shared db)
 	 *
@@ -61,12 +109,10 @@ class UserRights {
 	/**
 	 * hook handler
 	 *
-	 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
+		 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
 	 */
 	static function userEffectiveGroups(&$user, &$groups) {
-		if (!self::isCentralWiki()) {
-			$groups = array_unique(array_merge($groups, self::getGlobalGroups($user)));
-		}
+		$groups = array_unique(array_merge($groups, self::getGlobalGroups($user)));
 		return $groups;
 	}
 
@@ -77,10 +123,8 @@ class UserRights {
 	 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
 	 */
 	static function showEditUserGroupsForm(&$user, &$groups) {
-		//if not on central, block changing global rights
-		if (!self::isCentralWiki()) {
-			$groups = array_unique(array_merge($groups, self::getGlobalGroups($user)));
-		}
+		$groups = array_unique(array_merge($groups, self::getGlobalGroups($user)));
+
 		return true;
 	}
 

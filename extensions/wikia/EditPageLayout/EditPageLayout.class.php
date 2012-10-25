@@ -536,24 +536,11 @@ class EditPageLayout extends EditPage {
 	 * Parameters are the same as OutputPage:readOnlyPage()
 	 * Redirect to the article page if redlink=1
 	 */
-	function readOnlyPage( $source = null, $protected = false, $reasons = array(), $action = null ) {
+	function displayPermissionsError( $permErrors ) {
 		$this->mIsReadOnlyPage = true;
 		$this->helper->addJsVariable( 'wgEditPageIsReadOnly', true );
 
-		$bridge = F::build('EditPageOutputBridge',array($this,$this->mCoreEditNotices)); /* @var $bridge EditPageOutputBridge */
-		parent::readOnlyPage($source, $protected, $reasons, $action);
-		$bridge->close();
-
-		//$this->mCoreEditNotices->get( ??? )->setSummary( $this->app->wf->msgExt( 'editpagelayout-blocked-user' ) );
-		$this->mCoreEditNotices->remove( 'templatesUsed' );
-		$this->mCoreEditNotices->remove( 'viewsourcetext' );
-		$this->mCoreEditNotices->remove( false );
-
-		$this->textbox1 = $source;
-		$this->out->clearHTML();
-		$this->out->addHtml('<div id="myedit">');
-		$this->showTextbox1( array( 'readonly' ) );
-		$this->out->addHtml('</div>');
+		parent::displayPermissionsError($permErrors);
 	}
 
 	public function isReadOnlyPage() {

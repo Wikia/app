@@ -21,11 +21,13 @@ var AdConfig2Late = function (
 		log('getProvider', 5, logGroup);
 		log(slot, 5, logGroup);
 
-		if (slot[2] === 'Liftium2') {
-			return adProviderLiftium2Dom;
-		}
-		if (slot[2] === 'Liftium2Dom') {
-			return adProviderLiftium2Dom;
+		if (slot[2] === 'Liftium2' || slot[2] === 'Liftium2Dom') {
+			if (adProviderLiftium2Dom.canHandleSlot(slot)) {
+				return adProviderLiftium2Dom;
+			} else {
+				log('#' + slotname + ' disabled. Forced Liftium2, but it can\'t handle it', 7, logGroup);
+				return adProviderNull;
+			}
 		}
 
 		// First ask GamePro (german lang wiki)
