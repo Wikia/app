@@ -620,6 +620,7 @@ class MediaWiki {
 		 * Wikia Change - begin
 		 */
 		if( function_exists( 'newrelic_name_transaction' ) ) {
+			global $wgUser, $wgVersion;
 			$ns = $title->getNamespaceKey('');
 			if( $title->isSpecialPage() ) {
 				list( $thisName, /* $subpage */ ) = SpecialPageFactory::resolveAlias( $title->getDBkey() );
@@ -630,6 +631,12 @@ class MediaWiki {
 				}
 			} else {
 				newrelic_name_transaction('Index/'.$ns);
+			}
+			if ( function_exists( 'newrelic_add_custom_parameter' ) ) {
+				$loggedIn = $wgUser->isLoggedIn() ? 'user' : 'anon';
+				newrelic_add_custom_parameter( 'loggedIn', $loggedIn );
+				newrelic_add_custom_parameter( 'action', $action );
+				newrelic_add_custom_parameter( 'version', $wgVersion );
 			}
 		}
 		/*
