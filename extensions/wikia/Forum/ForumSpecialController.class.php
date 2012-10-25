@@ -66,9 +66,22 @@ class ForumSpecialController extends WikiaSpecialPageController {
 		
 		// set assets
 		$this->response->addAsset('extensions/wikia/Forum/css/ForumBoardEdit.scss');
+		$this->response->addAsset('extensions/wikia/Forum/js/ForumBoardEdit.js');
 		
 		$this->boards = F::build( 'Forum' )->getBoardList();
 		
 		$this->wf->profileOut( __METHOD__ );
 	}
+	
+	public function createNewBoardModal() {
+		$this->wf->profileIn( __METHOD__ );
+		
+		if (!$this->wg->User->isAllowed( 'forumadmin' )) {
+			$this->displayRestrictionError();
+			return false;  // skip rendering
+		}
+		
+		$this->wf->profileOut( __METHOD__ );
+	}
+
 }

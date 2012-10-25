@@ -144,6 +144,9 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
 	
 	/* board admin page messages */
 	'forum-admin-create-new-board-label' => 'Create New Board',
+	'forum-admin-create-new-board-modal-heading' => 'Create a new board',
+	'forum-admin-create-new-board-title' => 'Board Title',
+	'forum-admin-create-new-board-description' => 'Board Description',
 
 	'forum-admin-link-label' => 'Manage Boards',
 
@@ -199,7 +202,6 @@ $messages['qqq'] = array(
 
 	'forum-admin-link-label' => 'a call-to-action label for link that will take wiki admins to forum board admin page',
 	'forum-admin-create-new-board-label' => 'Button label to create a new forum board',
-
 	'forum-autoboard-title-1' => 'Title for default board.The length of this message needs to be between 4 and 40.',
 	'forum-autoboard-body-1' => 'Description for default board.The length of this message needs to be between 4 and 255.',
 
@@ -213,5 +215,9 @@ $messages['qqq'] = array(
 	'forum-autoboard-body-4' => 'Description for default board.The length of this message needs to be between 4 and 255.',
 
 	'forum-autoboard-title-5' => 'Title for default board.The length of this message needs to be between 4 and 40.',
-	'forum-autoboard-body-5' => 'Description for default board.The length of this message needs to be between 4 and 255.'
+	'forum-autoboard-body-5' => 'Description for default board.The length of this message needs to be between 4 and 255.',
+
+	'forum-admin-create-new-board-modal-heading' => 'Modal heading for create a new board dialog',
+	'forum-admin-create-new-board-title' => 'Form input label for board title',
+	'forum-admin-create-new-board-description' => 'Form input label board description',
 );
