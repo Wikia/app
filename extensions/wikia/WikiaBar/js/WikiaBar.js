@@ -4,9 +4,11 @@ var WikiaBar = {
 	WIKIA_BAR_STATE_ANON_NML_KEY: 'AnonNotMainLangWikiaBar_0.0001',
 	WIKIA_BAR_HIDDEN_ANON_ML_TTL: 24 * 60 * 1000, //millieseconds
 	WIKIA_BAR_HIDDEN_ANON_NML_TTL: 180 * 24 * 60 * 1000, //millieseconds
-	WIKIA_BAR_STATE_USER_KEY_SUFFIX: 'UserWikiaBar_1.0002',
+	WIKIA_BAR_STATE_USER_KEY_SUFFIX: 'UserWikiaBar_1.0004',
 	WIKIA_BAR_MAX_MESSAGE_PARTS: 5,
 	WIKIA_BAR_SAMPLING_RATIO: 10, // integer (0-100): 0 - no tracking, 100 - track everything */
+	WIKIA_BAR_SHOWN_STATE_VALUE: 'shown',
+	WIKIA_BAR_HIDDEN_STATE_VALUE: 'hidden',
 	messageConfig: {
 		index: 0,
 		container: null,
@@ -256,26 +258,28 @@ var WikiaBar = {
 		});
 	},
 	changeLoggedInUserStateBar: function () {
-		var changeState = this.isWikiaBarHidden() ? 'shown' : 'hidden';
-
+		var changeState = this.isWikiaBarHidden() ? this.WIKIA_BAR_SHOWN_STATE_VALUE : this.WIKIA_BAR_HIDDEN_STATE_VALUE;
 		this.doWikiaBarAnimationDependingOnState(changeState);
 		this.setLocalStorageData(changeState);
 
 		$.nirvana.sendRequest({
 			controller: 'WikiaBarController',
 			method: 'changeUserStateBar',
+			data: {
+				changeTo: changeState
+			},
 			type: 'post',
 			format: 'json'
 		});
 	},
 	onGetLoggedInUserStateBarAndChangeLocalStorage: function (response) {
-		var state = response.results.wikiaBarState || 'shown';
+		var state = response.results.wikiaBarState || this.WIKIA_BAR_SHOWN_STATE_VALUE;
 		this.setLocalStorageData(state);
 	},
 	onGetLoggedInUserStateBarAndChangeLocalStorageError: function () {
 	},
 	doWikiaBarAnimationDependingOnState: function (state) {
-		if (state === 'shown') {
+		if (state === this.WIKIA_BAR_SHOWN_STATE_VALUE) {
 			this.show();
 		} else {
 			this.hide();
