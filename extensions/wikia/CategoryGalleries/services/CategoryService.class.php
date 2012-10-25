@@ -5,6 +5,7 @@
 	 * @author wladek
 	 */
 	class CategoryService extends Service {
+		const CACHE_VERSION = 1;
 
 		/**
 		 * Cache time-to-live (int seconds)
@@ -43,7 +44,7 @@
 		 */
 		static public function getKey( $tokens = null ) {
 			$args = func_get_args();
-			array_unshift($args,'categoryservice');
+			array_unshift($args, 'categoryservice', self::CACHE_VERSION );
 			return call_user_func_array('wfMemcKey',$args);
 		}
 
@@ -66,7 +67,7 @@
 		 */
 		static protected function getPageViews( $pageIds ) {
 			global $wgStatsDB, $wgCityId, $wgDevelEnvironment, $wgStatsDBEnabled;
-			
+
 			wfProfileIn(__METHOD__);
 
 			if ( empty($pageIds)  ) {
@@ -74,60 +75,15 @@
 				return is_array($pageIds) ? array() : 0;
 			}
 
-			if ( empty($wgDevelEnvironment) && !empty( $wgStatsDBEnabled ) ) {
-				// production version
-				$dbr = wfGetDB( DB_SLAVE, null, $wgStatsDB );
-				$res = $dbr->select(
-					array( 'specials.page_views_summary_articles' ),
-					array( 'page_id', 'pv_views' ),
-					array(
-						'city_id' => $wgCityId,
-						'page_id' => $pageIds,
-					),
-					__METHOD__,
-					array(
-						'ORDER BY' => 'pv_views DESC',
-					)
-				);
-
-				if ( $dbr->numRows( $res ) == 0 ) {
-					$lastMonth = strftime( "%Y%m%d", time() - 30 * 24 * 60 * 60 );
-					$res = $dbr->select(
-						array( 'page_views_articles' ),
-						array( 'pv_page_id as page_id', 'sum(pv_views) as pv_views' ),
-						array(
-							'pv_city_id' => $wgCityId,
-							'pv_page_id' => $pageIds,
-							'pv_use_date > ' . $lastMonth
-						),
-						__METHOD__,
-						array(
-							'GROUP BY' => 'pv_page_id',
-							'ORDER BY' => 'sum(pv_views) DESC'
-						)
-					);
-				}
-			} else {
-				// devbox version
-				$dbr = wfGetDB( DB_SLAVE );
-				$res = $dbr->select(
-					array( 'page_visited' ),
-					array( 'article_id as page_id', 'count as pv_views' ),
-					array(
-						'article_id' => $pageIds,
-					),
-					__METHOD__,
-					array(
-						'ORDER BY' => 'pv_views DESC',
-					)
-				);
-			}
-
+			//fix for BugId:33086
+			//use DataMart for pageviews data as all the other
+			//data sources are stale/obsolete
 			$data = array();
-			if( $res !== false ){
-				while ($row = $res->fetchObject($res)) {
-					$data[intval($row->page_id)] = intval($row->pv_views);
-				}
+			$ids = ( is_array ( $pageIds ) ) ? $pageIds : array( $pageIds );
+			$rows = DataMartService::getTopArticlesByPageview( $wgCityId, $ids, null, false, count( $ids ) );
+
+			foreach( $rows as $id => $pv ) {
+				$data[intval( $id )] = intval( $pv );
 			}
 
 			// If asked with plain integer return a single integer too
@@ -151,88 +107,60 @@
 			global $wgDevelEnvironment;
 
 			wfProfileIn(__METHOD__);
-			
+
 			$articles = array();
-			if (empty($wgDevelEnvironment)) {
-				// production version
-				$dbr = wfGetDB( DB_SLAVE );
-				$res = $dbr->select(
-					array( 'page', 'categorylinks' ),
-					array( 'page_id', 'page_title', 'page_namespace'  ),
-					array(
-						'cl_to' => $this->dbkey,
-						'page_namespace' => $namespace,
-					),
-					__METHOD__,
-					array(),
-					array( 'categorylinks'  => array( 'INNER JOIN', 'cl_from = page_id' ) )
-				);
+			$dbr = wfGetDB( DB_SLAVE );
+			$res = $dbr->select(
+				array( 'page', 'categorylinks' ),
+				array( 'page_id', 'page_title', 'page_namespace'  ),
+				array(
+					'cl_to' => $this->dbkey,
+					'page_namespace' => $namespace,
+				),
+				__METHOD__,
+				array(),
+				array( 'categorylinks'  => array( 'INNER JOIN', 'cl_from = page_id' ) )
+			);
 
-				if($res !== false){
-					$pages = array();
-					while ($row = $res->fetchObject($res)) {
-						$pages[intval($row->page_id)] = $row;
-					}
-					$pageIds = array_keys($pages);
+			if($res !== false){
+				$pages = array();
 
-					$pageViews = self::getPageViews($pageIds);
-					$articles = array();
-					$entries = 0;
-					foreach ($pageViews as $pageId => $views) {
-						if ($entries >= $count)
-							break;
-						if (empty($pages[$pageId]))
-							continue;
-						$page = $pages[$pageId];
-						$articles[$pageId] = array(
-							'page_id' => $pageId,
-							'page_title' => $page->page_title,
-							'page_namespace' => $page->page_namespace,
-							'views' => $views,
-						);
-						$entries++;
-						unset($pages[$pageId]);
-					}
-					foreach ($pages as $page) {
-						if ($entries >= $count)
-							break;
-						$page->page_id = intval($page->page_id);
-						$articles[$page->page_id] = array(
-							'page_id' => $page->page_id,
-							'page_title' => $page->page_title,
-							'page_namespace' => $page->page_namespace,
-							'views' => 0,
-						);
-						$entries++;
-					}
-				}
-			} else {
-				// devbox version
-				$dbr = wfGetDB( DB_SLAVE, 'category' );
-				$res = $dbr->select(
-					array( 'page', 'categorylinks', 'page_visited' ),
-					array( 'page_id', 'page_title', 'page_namespace', 'count'  ),
-					array(
-						'cl_to' => $this->dbkey,
-						'page_namespace' => $namespace,
-					),
-					__METHOD__,
-					array( 'ORDER BY' => 'count DESC' ,
-//						'USE INDEX' => array( 'categorylinks' => 'cl_sortkey' ),
-						'LIMIT'    => $count ),
-					array( 'categorylinks'  => array( 'INNER JOIN', 'cl_from = page_id' ),
-						'page_visited' => array( 'LEFT JOIN', 'article_id = page_id' ) )
-				);
-
-				$articles = array();
 				while ($row = $res->fetchObject($res)) {
-					$pageId = intval($row->page_id);
+					$pages[intval($row->page_id)] = $row;
+				}
+
+				$pageIds = array_keys($pages);
+				$pageViews = self::getPageViews($pageIds);
+				$articles = array();
+				$entries = 0;
+
+				foreach ($pageViews as $pageId => $views) {
+					if ($entries >= $count)
+						break;
+					if (empty($pages[$pageId]))
+						continue;
+					$page = $pages[$pageId];
 					$articles[$pageId] = array(
 						'page_id' => $pageId,
-						'page_title' => $row->page_title,
-						'page_namespace' => $row->page_namespace,
-						'views' => $row->count,
+						'page_title' => $page->page_title,
+						'page_namespace' => $page->page_namespace,
+						'views' => $views,
 					);
+					$entries++;
+					unset($pages[$pageId]);
+				}
+
+				foreach ($pages as $page) {
+					if ($entries >= $count)
+						break;
+					$page->page_id = intval($page->page_id);
+					$articles[$page->page_id] = array(
+						'page_id' => $page->page_id,
+						'page_title' => $page->page_title,
+						'page_namespace' => $page->page_namespace,
+						'views' => 0,
+					);
+					$entries++;
 				}
 			}
 
@@ -252,9 +180,10 @@
 			global $wgMemc;
 
 			wfProfileIn(__METHOD__);
-			
+
 			$key = self::getTopArticlesKey($this->dbkey,$namespace);
 			$data = $wgMemc->get($key);
+
 			if (!is_array($data) || $data['count'] < $count) {
 				$articles = $this->fetchTopArticlesInfo($count,$namespace);
 				$lastArticle = count($articles) > 0 ? end($articles) : null;
@@ -291,7 +220,7 @@
 			}
 
 			global $wgMemc;
-			
+
 			wfProfileIn(__METHOD__);
 
 			$id = $article->getID();
@@ -340,7 +269,7 @@
 		 */
 		static public function onTitleMoveComplete( &$title, &$newtitle, &$user, $pageid, $redirid ) {
 			global $wgMemc;
-			
+
 			wfProfileIn(__METHOD__);
 
 			$article = Article::newFromID($pageid);
@@ -386,12 +315,12 @@
 			global $wgMemc;
 
 			wfProfileIn(__METHOD__);
-			
+
 			$catDBkey = $catTitle->getDBKey();
 			$key = self::getTopArticlesKey($catDBkey, $ns);
 			$wgMemc->delete($key);
 			wfRunHooks('CategoryService::invalidateTopArticles',array($catTitle,$ns));
-			
+
 			wfProfileOut(__METHOD__);
 		}
 
