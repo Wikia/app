@@ -175,6 +175,29 @@ class Linker {
 		}
 		$options = (array)$options;
 
+		// Create a unique key from the arguments and cache the results of this
+		// method call for the rest of this request
+		global $wgLinkerUnique;
+		$parts = array($target->getDBkey(), $html);
+		foreach ($customAttribs as $key => $value) {
+			$parts[] = $key;
+			$parts[] = $value;
+		}
+		foreach ($query as $key => $value) {
+			$parts[] = $key;
+			$parts[] = $value;
+		}
+		foreach ($options as $key => $value) {
+			$parts[] = $key;
+			$parts[] = $value;
+		}
+		$key = implode(':', $parts);
+
+		if (array_key_exists($key, $wgLinkerUnique)) {
+			wfProfileOut( __METHOD__ );
+			return $wgLinkerUnique[$key];
+		}
+
 		$dummy = new DummyLinker; // dummy linker instance for bc on the hooks
 
 		$ret = null;
@@ -222,6 +245,8 @@ class Linker {
 		if ( wfRunHooks( 'LinkEnd', array( $dummy, $target, $options, &$html, &$attribs, &$ret ) ) ) {
 			$ret = Html::rawElement( 'a', $attribs, $html );
 		}
+
+		$wgLinkerUnique[$key] = $ret;
 
 		wfProfileOut( __METHOD__ );
 		return $ret;
