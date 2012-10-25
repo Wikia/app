@@ -156,8 +156,11 @@
 		top: -7px;
 	}
 }
-
-
+// BugId: 51299 - position relative needed only for notifications which are now part of WikiaBar
+// TODO: remove this rule and position relative from line 11 if we decide to remove code generating notifications form Footer_index.PHP template
+.WikiaFooter.notifications-with-wikia-bar {
+	position: static;
+}
 .CorporateFooter  {
 	@include clearfix;
 	clear: both;
