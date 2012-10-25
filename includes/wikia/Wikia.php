@@ -33,7 +33,7 @@ $wgHooks['ContributionsToolLinks']   [] = 'Wikia::onContributionsToolLinks';
 # changes in recentchanges (MultiLookup)
 $wgHooks['RecentChange_save']        [] = "Wikia::recentChangesSave";
 $wgHooks['MediaWikiPerformAction']   [] = "Wikia::onPerformActionMemcachePurge";
-$wgHooks['MediaWikiPerformAction']   [] = "Wikia::onPerformActionNewrelicNameTransaction";
+//$wgHooks['MediaWikiPerformAction']   [] = "Wikia::onPerformActionNewrelicNameTransaction"; disable to gather different newrelic statistics
 $wgHooks['SkinTemplateOutputPageBeforeExec'][] = "Wikia::onSkinTemplateOutputPageBeforeExec";
 $wgHooks['OutputPageCheckLastModified'][] = 'Wikia::onOutputPageCheckLastModified';
 
@@ -1768,6 +1768,8 @@ class Wikia {
 	}
 
 	// Hook to Construct a tag for newrelic
+	// TEMPORARLY DISABLED
+	// @deprecated
 	static public function onPerformActionNewrelicNameTransaction($output, $article, $title, User $user, $request, $wiki ) {
 		global $wgVersion;
 		if( function_exists( 'newrelic_name_transaction' ) ) {

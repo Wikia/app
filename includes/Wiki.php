@@ -616,6 +616,26 @@ class MediaWiki {
 		$action = $this->getAction();
 		$wgTitle = $title;
 
+		/*
+		 * Wikia Change - begin
+		 */
+		if( function_exists( 'newrelic_name_transaction' ) ) {
+			$ns = $title->getNamespaceKey('');
+			if( $title->isSpecialPage() ) {
+				list( $thisName, /* $subpage */ ) = SpecialPageFactory::resolveAlias( $title->getDBkey() );
+				if(is_string($thisName)) {
+					newrelic_name_transaction('Index/'.$ns.'/'.$thisName);
+				} else {
+					newrelic_name_transaction('Index/'.$ns);
+				}
+			} else {
+				newrelic_name_transaction('Index/'.$ns);
+			}
+		}
+		/*
+		 * Wikia Change - end
+		 */
+
 		if ( $wgUseFileCache && $title->getNamespace() >= 0 ) {
 			wfProfileIn( 'main-try-filecache' );
 			if ( HTMLFileCache::useFileCache( $this->context ) ) {
