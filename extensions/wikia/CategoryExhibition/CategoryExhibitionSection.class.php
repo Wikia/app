@@ -4,6 +4,7 @@
  * Main Category Gallery class
  */
 class CategoryExhibitionSection {
+	const CACHE_VERSION = 2;
 
 	protected $thumbWidth = 130;
 	protected $thumbHeight = 115;
@@ -57,19 +58,22 @@ class CategoryExhibitionSection {
 			}
 		}
 		if (!is_array($mNamespace)){
-			$mNamespace = (int)$mNamespace;
+			$ns = (int)$mNamespace;
 		} else {
-			$mNamespace = implode(',', $mNamespace);
+			$ns = implode(',', $mNamespace);
 		}
 
 		switch ( $this->getSortType() ){
 			case 'mostvisited':
-				$res = CategoryDataService::getMostVisited( $sCategoryDBKey, $mNamespace, false, $negative );
+				if ( !is_array( $mNamespace ) ) {
+					$mNamespace = array( (int) $mNamespace );
+				}
 
+				$res = CategoryDataService::getMostVisited( $sCategoryDBKey, $mNamespace, false, $negative );
 				//FB#26239 - fall back to alphabetical order if most visited data is empty
-				return ( !empty( $res ) ) ? $res : CategoryDataService::getAlphabetical( $sCategoryDBKey, $mNamespace, $negative );
-			case 'alphabetical': return CategoryDataService::getAlphabetical( $sCategoryDBKey, $mNamespace, $negative );
-			case 'recentedits': return CategoryDataService::getRecentlyEdited( $sCategoryDBKey, $mNamespace, $negative );
+				return ( !empty( $res ) ) ? $res : CategoryDataService::getAlphabetical( $sCategoryDBKey, $ns, $negative );
+			case 'alphabetical': return CategoryDataService::getAlphabetical( $sCategoryDBKey, $ns, $negative );
+			case 'recentedits': return CategoryDataService::getRecentlyEdited( $sCategoryDBKey, $ns, $negative );
 		}
 		return array();
 	}
@@ -393,7 +397,8 @@ class CategoryExhibitionSection {
 			$this->getSortType(),
 			$this->isVerify(),
 			($wgVideoHandlersVideosMigrated ? 1 : 0),
-			$this->getTouched($this->categoryTitle)
+			$this->getTouched($this->categoryTitle),
+			self::CACHE_VERSION
 		);
 	}
 
@@ -413,7 +418,7 @@ class CategoryExhibitionSection {
 	protected function getTouchedKey($title) {
 		//fb#24914
 		if( $title instanceof Title ) {
-			$key = wfMemcKey( 'category_touched', $title->getDBKey() );
+			$key = wfMemcKey( 'category_touched', $title->getDBKey(), self::CACHE_VERSION );
 			return $key;
 		} else {
 			Wikia::log(__METHOD__, '', '$title not an instance of Title');
