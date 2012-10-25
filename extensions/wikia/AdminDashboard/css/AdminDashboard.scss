@@ -303,7 +303,6 @@ $color-highlight-column: rgba($color-page, 0);
 }
 
 .AdminDashboardStub {
-	padding-left:10px;
 	#siteSub {
 		display: inline;
 		font-size: 90%;
@@ -316,7 +315,7 @@ $color-highlight-column: rgba($color-page, 0);
 		font-size: 84%;
 		line-height: 1.2em;
 		margin: 0 0 1.4em 1em;
-		padding: 5px;
+		padding: 0;
 		width: auto;
 	}
 }
