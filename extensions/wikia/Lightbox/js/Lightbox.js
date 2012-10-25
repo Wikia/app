@@ -396,7 +396,10 @@ var Lightbox = {
 	ads: {
 		// should user see ads?
 		showAds: function() {
-			return $('#MODAL_INTERSTITIAL').length;
+			if (Geo.getCountryCode() === 'US') {
+				return $('#MODAL_INTERSTITIAL').length;
+			}
+			return false;
 		},
 		// show an ad after this number of unique images/videos are shown
 		adMediaCount: 2, 
