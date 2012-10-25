@@ -111,6 +111,23 @@ class WikiaBarController extends WikiaController {
 	}
 
 	/**
+	 * @desc Gets Wikia Bar display state from user_properties table. If it's not set will return default value WIKIA_BAR_SHOWN_STATE_VALUE
+	 */
+	public function getUserStateBar() {
+		$results = new stdClass();
+
+		if( $this->wg->User->isLoggedIn() ) {
+			$results->wikiaBarState = $this->wg->User->getOption(self::WIKIA_BAR_STATE_OPTION_NAME, self::WIKIA_BAR_SHOWN_STATE_VALUE);
+			$results->success = true;
+		} else {
+			$results->error = wfMsg('wikiabar-get-state-error');
+			$results->success = false;
+		}
+
+		$this->results = $results;
+	}
+
+	/**
 	 * @desc Sets Wikia Bar display state in user_properties table
 	 * @param String $state
 	 */

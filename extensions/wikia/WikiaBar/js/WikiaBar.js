@@ -241,7 +241,6 @@ var WikiaBar = {
 		var cachedState = this.getLocalStorageData();
 
 		if (cachedState === null) {
-			this.changeLoggedInUserStateBar();
 			this.getLoggedInUserStateBarAndChangeLocalStorage();
 		} else {
 			this.doWikiaBarAnimationDependingOnState(cachedState);
@@ -250,8 +249,8 @@ var WikiaBar = {
 	getLoggedInUserStateBarAndChangeLocalStorage: function () {
 		$.nirvana.sendRequest({
 			controller: 'WikiaBarController',
-			method: 'changeUserStateBar',
-			type: 'post',
+			method: 'getUserStateBar',
+			type: 'get',
 			format: 'json',
 			callback: $.proxy(this.onGetLoggedInUserStateBarAndChangeLocalStorage, this),
 			onErrorCallback: $.proxy(this.onGetLoggedInUserStateBarAndChangeLocalStorageError, this)
@@ -275,6 +274,7 @@ var WikiaBar = {
 	onGetLoggedInUserStateBarAndChangeLocalStorage: function (response) {
 		var state = response.results.wikiaBarState || this.WIKIA_BAR_SHOWN_STATE_VALUE;
 		this.setLocalStorageData(state);
+		this.doWikiaBarAnimationDependingOnState(state);
 	},
 	onGetLoggedInUserStateBarAndChangeLocalStorageError: function () {
 	},
