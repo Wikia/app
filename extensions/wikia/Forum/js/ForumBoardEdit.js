@@ -13,11 +13,25 @@
 			data: {
 			},
 			callback: function(html) {
-				var createNewBoardDialog = $(html).makeModal({
+				var dialog = $(html).makeModal({
 					width: 600
 				});
-				createNewBoardDialog.on('click.CreateNewBoard', '.cancel', function(e) {
-					createNewBoardDialog.closeModal();
+				dialog.on('click.CreateNewBoard', '.cancel', function(e) {
+					dialog.closeModal();
+				}).on('click.CreateNewBoard', '.submit', function(e) {
+					$.nirvana.sendRequest({
+						controller: 'ForumExternalController',
+						method: 'createNewBoard',
+						format: 'json',
+						data: {
+							boardTitle: dialog.find('input[name=boardTitle]').val(),
+							boardDescription: dialog.find('input[name=boardTitle]').val()
+						},
+						callback: function (json) {
+							console.log(json);
+							alert('save returned, check console');
+						}
+					});
 				});
 			}
 		});
