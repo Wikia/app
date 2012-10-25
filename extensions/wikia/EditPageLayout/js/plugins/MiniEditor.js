@@ -39,7 +39,7 @@
 			this.buttonsWrapper = this.editor.getSpace('buttons');
 
 			if (this.buttonsWrapper.length) {
-				this.buttons = this.buttonsWrapper.find('button');
+				this.buttons = this.buttonsWrapper.find('button, input[submit]');
 			}
 		},
 
@@ -162,6 +162,12 @@
 
 			// Trigger editorActivated
 			this.editor.fire('editorActivated', event);
+
+			var replacedElement = this.editor.getEditorElement();
+			if(replacedElement.is('textarea') && typeof this.editor.ck != "undefined") {
+				replacedElement.val("");
+			}
+
 		},
 
 		editorReset: function() {
