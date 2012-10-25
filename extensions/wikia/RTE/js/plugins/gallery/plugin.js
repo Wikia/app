@@ -6,8 +6,10 @@ CKEDITOR.plugins.add('rte-gallery',
 		editor.on('wysiwygModeReady', function() {
 			// get all gallery placeholders
 			var gallery = RTE.getEditor().find('.image-gallery');
-
 			self.setupGallery(gallery);
+			if ($.browser.msie ) {
+				gallery.addClass( 'alignLeft' );
+			}
 		});
 
 		// check existance of WikiaPhotoGallery extension
