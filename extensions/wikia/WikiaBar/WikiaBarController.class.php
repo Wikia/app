@@ -92,51 +92,28 @@ class WikiaBarController extends WikiaController {
 	}
 
 	/**
-	 * @desc Checks users properties for WikiaBar display state and changes it to oposite
+	 * @desc Handles AJAX request and changes wikia bar display state
 	 */
 	public function changeUserStateBar() {
-		$results = $this->getWikiaBarState();
-		$state = $results->wikiaBarState;
-		$isShown = ($state === self::WIKIA_BAR_SHOWN_STATE_VALUE) ? true : false;
+		$results = new stdClass();
+		$changeTo = $this->request->getVal('changeTo', false);
 
-		if( $isShown && $results->success ) {
-			$results->wikiaBarState = self::WIKIA_BAR_HIDDEN_STATE_VALUE;
-			$results->success = true;
-		} else if( !$isShown && $results->success ) {
-			$results->wikiaBarState = self::WIKIA_BAR_SHOWN_STATE_VALUE;
-			$results->success = true;
+		if( !$changeTo || !in_array($changeTo, array(self::WIKIA_BAR_SHOWN_STATE_VALUE, self::WIKIA_BAR_HIDDEN_STATE_VALUE)) ) {
+			$results->error = wfMsg('wikiabar-change-state-error');
+			$results->success = false;
 		} else {
-			//results from WikiaBarController::getWikiaBarState()
+			$results->wikiaBarState = $changeTo;
+			$results->success = true;
 		}
 
-		$this->setWikiaBarState($results->wikiaBarState);
+		$this->setWikiaBarState($changeTo);
 		$this->results = $results;
 	}
 
 	/**
-	 * @desc Returns 'shown' or 'hidden' strings which discribe WikiaBar display state
-	 * @return String
+	 * @desc Sets Wikia Bar display state in user_properties table
+	 * @param String $state
 	 */
-	public function getWikiaBarState() {
-		$results = new stdClass();
-
-		if( $this->wg->User->isAnon() ) {
-			$state = self::WIKIA_BAR_SHOWN_STATE_VALUE;
-			$results->success = false;
-		} else {
-			$state = $this->wg->User->getOption(self::WIKIA_BAR_STATE_OPTION_NAME);
-			if( is_null($state) ) {
-				$state = self::WIKIA_BAR_SHOWN_STATE_VALUE;
-			}
-
-			$results->success = true;
-		}
-
-		$results->wikiaBarState = $state;
-		$this->results = $results;
-		return $results;
-	}
-
 	protected function setWikiaBarState($state) {
 		$this->wg->User->setOption(self::WIKIA_BAR_STATE_OPTION_NAME, $state);
 		$this->wg->User->saveSettings();
