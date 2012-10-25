@@ -337,7 +337,7 @@ class BlogTemplateClass {
 	 * @author macbre
 	 */
 	public static function parseTagForParser($input, $params, $parser, $frame = null, $returnPlainData = false) {
-		
+
 		$res = self::parseTag($input, $params, $parser, $frame, $returnPlainData);
 
 		/* Parser in MW1.16 allows to change the way of parsing custom tags */
@@ -1007,15 +1007,17 @@ class BlogTemplateClass {
 		global $wgExtensionsPath, $wgStylePath, $wgRequest;
 
 		wfProfileIn( __METHOD__ );
-		
-		if ( $parser->mOutput !== null ) {
-			/** 
-			 * because this parser tag contains elements of interface we need to 
-			 * inform parser to vary parser cache key by user lang option
-			 **/
+
+		/**
+		 * because this parser tag contains elements of interface we need to
+		 * inform parser to vary parser cache key by user lang option
+		 **/
+
+		/* @var $parser Parser */
+		if ( ($parser instanceof Parser) && ($parser->mOutput instanceof ParserOutput) ) {
 			$parser->mOutput->recordOption('userlang');
 		}
-		
+
 		$result = "";
 
 		self::$aTables = self::$aWhere = self::$aOptions = array();
