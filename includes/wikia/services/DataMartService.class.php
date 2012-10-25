@@ -441,7 +441,7 @@
 		 * @param integer $wikiId A valid Wiki ID to fetch the list from
 		 * @param Array $articleIds [OPTIONAL] A list of article ID's to restrict the list
 		 * @param Array $namespaces [OPTIONAL] A list of namespace ID's to restrict the list (inclusive)
-		 * @param boolean $excludeNamespaces Sets $namespaces as an exclusive list
+		 * @param boolean $excludeNamespaces [OPTIONAL] Sets $namespaces as an exclusive list, defaults to false
 		 * @param integer $limit [OPTIONAL] The maximum number of items in the list, defaults to 200
 		 *
 		 * @return Array The list, the key contains article ID's and each item as a "namespace_id" and "pageviews" key
