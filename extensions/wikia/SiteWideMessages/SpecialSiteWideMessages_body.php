@@ -1060,7 +1060,7 @@ class SiteWideMessages extends SpecialPage {
 		$dbResult = $DB->Query (
 			  'SELECT msg_wiki_id, msg_id AS id, msg_lang as lang'
 			. ' FROM ' . MSG_TEXT_DB
-			. ' LEFT JOIN ' . MSG_STATUS_DB . ' USE INDEX(PRIMARY) USING (msg_id)'
+			. ' LEFT JOIN ' . MSG_STATUS_DB . ' USING (msg_id)'
 			. ' WHERE msg_mode = ' . MSG_MODE_SELECTED
 			. ' AND msg_recipient_id = ' . $DB->AddQuotes($user->GetID())
 			. ' AND msg_status IN (' . join(',', $status) . ')'
@@ -1159,7 +1159,7 @@ class SiteWideMessages extends SpecialPage {
 		$dbResult = $DB->Query (
 			  'SELECT msg_wiki_id, msg_id AS id, msg_text AS text, msg_expire AS expire, msg_lang AS lang, msg_status AS status'
 			. ' FROM ' . MSG_TEXT_DB . ' USE INDEX(removed_mode_expire_date)'
-			. ' LEFT JOIN ' . MSG_STATUS_DB . ' USE INDEX(PRIMARY) USING (msg_id)'
+			. ' LEFT JOIN ' . MSG_STATUS_DB . ' USING (msg_id)'
 			. ' WHERE msg_mode = ' . MSG_MODE_SELECTED
 			. ' AND msg_recipient_id = ' . $DB->AddQuotes($user->GetID())
 			. ' AND msg_status IN (' . MSG_STATUS_UNSEEN . ', ' . MSG_STATUS_SEEN . ')'
@@ -1275,7 +1275,7 @@ class SiteWideMessages extends SpecialPage {
 		$dbResult = $dbr->query(
 			'SELECT msg_wiki_id, msg_id AS id, msg_text AS text, msg_expire AS expire, msg_lang AS lang, msg_status AS status' .
 			' FROM ' . MSG_TEXT_DB . ' USE INDEX(removed_mode_expire_date)' .
-			' LEFT JOIN ' . MSG_STATUS_DB . ' USE INDEX(PRIMARY) USING (msg_id)' .
+			' LEFT JOIN ' . MSG_STATUS_DB . ' USING (msg_id)' .
 			' WHERE msg_mode = ' . MSG_MODE_SELECTED .
 			' AND msg_recipient_id = 0' .
 			' AND msg_recipient_name = ' . $dbr->addQuotes( MSG_RECIPIENT_ANON ) .
