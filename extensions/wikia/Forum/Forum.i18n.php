@@ -199,4 +199,19 @@ $messages['qqq'] = array(
 
 	'forum-admin-link-label' => 'a call-to-action label for link that will take wiki admins to forum board admin page',
 	'forum-admin-create-new-board-label' => 'Button label to create a new forum board',
+
+	'forum-autoboard-title-1' => 'Title for default board.The length of this message needs to be between 4 and 40.',
+	'forum-autoboard-body-1' => 'Description for default board.The length of this message needs to be between 4 and 255.',
+
+	'forum-autoboard-title-2' => 'Title for default board.The length of this message needs to be between 4 and 40.',
+	'forum-autoboard-body-2' => 'Description for default board.The length of this message needs to be between 4 and 255.',
+
+	'forum-autoboard-title-3' => 'Title for default board.The length of this message needs to be between 4 and 40.',
+	'forum-autoboard-body-3' => 'Description for default board.The length of this message needs to be between 4 and 255.',
+
+	'forum-autoboard-title-4' => 'Title for default board.The length of this message needs to be between 4 and 40.',
+	'forum-autoboard-body-4' => 'Description for default board.The length of this message needs to be between 4 and 255.',
+
+	'forum-autoboard-title-5' => 'Title for default board.The length of this message needs to be between 4 and 40.',
+	'forum-autoboard-body-5' => 'Description for default board.The length of this message needs to be between 4 and 255.'
 );
