@@ -9,6 +9,7 @@
 	position: relative;
 	padding-top: 10px;
 	text-align: center;
+	z-index: 0;
 	.WikiaTopAdsInner {
 		@include clearfix;
 		display: inline-block;
