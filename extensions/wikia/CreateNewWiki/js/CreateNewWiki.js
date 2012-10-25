@@ -389,8 +389,12 @@ var WikiBuilder = {
 				if(WikiBuilder.createStatus && WikiBuilder.createStatus == 'ok') {
 					WikiBuilder.cityId = res.cityId;
 					WikiBuilder.finishCreateUrl = (res.finishCreateUrl.indexOf('.com/wiki/') < 0 ? res.finishCreateUrl.replace('.com/','.com/wiki/') : res.finishCreateUrl);
+
+					// unblock "Next" button (BugId:51519)
+					$('#ThemeWiki .next-controls input').
+						attr('disabled', false).
+						addClass('enabled'); // for QA with love
 				} else {
-					$('#ThemeWiki .next-controls input').attr('disabled', 'true');
 					$.showModal(res.statusHeader, WikiBuilder.createStatusMessage);
 				}
 			},

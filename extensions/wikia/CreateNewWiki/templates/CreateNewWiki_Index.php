@@ -171,7 +171,7 @@
 			<p class="instruction creative"><?= wfMsg('cnw-theme-instruction') ?></p>
 			<nav class="next-controls">
 				<span class="submit-error finish-status"></span>
-				<input type="button" value="<?= wfMsg('cnw-next') ?>" class="next">
+				<input type="button" value="<?= wfMsg('cnw-next') ?>" class="next" disabled>
 			</nav>
 		</li>
 	</ol>
