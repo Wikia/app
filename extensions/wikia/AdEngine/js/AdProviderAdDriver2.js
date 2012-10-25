@@ -34,12 +34,13 @@ var AdProviderAdDriver2 = function (helper, WikiaDart, ScriptWriter, WikiaTracke
 
 		var slotname = slot[0];
 
-		if (helper.AdDriver_isLastDARTCallNoAd(slot[0]) && helper.AdDriver_getNumDARTCall(slot[0]) >= helper.AdDriver_getMinNumDARTCall(Geo.getCountryCode())) {
-			log('last call no ad && reached # of calls for this geo', 5, 'AdProviderAdDriver2');
-			if (slotname.indexOf('MODAL') === -1) {
+		// Always have an ad for MODAL_INTERSTITIAL
+		if (slotname !== 'MODAL_INTERSTITIAL') {
+			if (helper.AdDriver_isLastDARTCallNoAd(slot[0]) && helper.AdDriver_getNumDARTCall(slot[0]) >= helper.AdDriver_getMinNumDARTCall(Geo.getCountryCode())) {
+				log('last call no ad && reached # of calls for this geo', 5, 'AdProviderAdDriver2');
 				window.adslots2.push([slotname, slot[1], 'Liftium2', slot[3]]);
+				return;
 			}
-			return;
 		}
 
 		slot[1] = slotMap[slotname].size || slot[1];
