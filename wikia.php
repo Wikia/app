@@ -13,10 +13,10 @@ if( function_exists( 'newrelic_name_transaction' ) ) {
 	if ( function_exists( 'newrelic_disable_autorum') ) {
 		newrelic_disable_autorum();
 	}
-	if (is_object($wgRequest)) {
-		$controller = $wgRequest->getVal( 'controller' );
-		$method = $wgRequest->getVal( 'method' );
-		newrelic_name_transaction( "/nirvana/$controller/$method" );
+	newrelic_name_transaction('Nirvana');
+	if ( function_exists( 'newrelic_add_custom_parameter' ) && is_object($wgRequest)) {
+		newrelic_add_custom_parameter( 'controller', $wgRequest->getVal( 'controller' ) );
+		newrelic_add_custom_parameter( 'method', $wgRequest->getVal( 'method' ) );
 	}
 }
 
