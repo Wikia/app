@@ -190,13 +190,13 @@ class FounderProgressBarHooks {
 	 *
 	 * @return bool true because it's a hook
 	 */
-	public function onAfterVideoFileUploaderUpload($result) {
+	public function onAfterVideoFileUploaderUpload(File $file, FileRepoStatus $result) {
 		// Quick exit if tasks are all completed
 		if( self::allTasksComplete() ) {
 			return true;
 		}
 
-		if( $result instanceof FileRepoStatus && $result->ok ) {
+		if( $result->ok ) {
 			F::app()->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_VIDEO_ADD));
 		}
 
