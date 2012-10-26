@@ -53,6 +53,11 @@ class ImageReviewTask extends BatchTask {
 
 			list( $wikiId, $imageId) = $imageData;
 
+			if ( !WikiFactory::isPublic( $wikiId ) ) {
+				$this->log( "Wiki ID $wikiId has been disabled" );
+				continue;
+			}
+
 			$dbname = WikiFactory::getWikiByID( $wikiId );
 			if ( !$dbname ) continue;
 
