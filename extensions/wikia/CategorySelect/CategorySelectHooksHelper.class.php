@@ -71,7 +71,7 @@ class CategorySelectHooksHelper {
 		} else if ( $action == 'view' && !$title->exists() == 0 ) {
 
 		// Disable for anon "confirm purge" page
-		} else if ( $action == 'purge' && $wgUser->isAnon() && !$wgRequest->wasPosted() ) ) {
+		} else if ( $action == 'purge' && $wgUser->isAnon() && !$wgRequest->wasPosted() ) {
 
 		// Add hooks for view/purge pages
 		} else if ( $action == 'view' || $action == 'purge' ) {

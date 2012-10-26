@@ -25,6 +25,8 @@ $dir = dirname( __FILE__ ) . '/';
 
 // Classes
 $app->registerClass( 'CategorySelect', $dir . 'CategorySelect.class.php' );
+$app->registerClass( 'CategorySelectController', $dir . 'CategorySelectController.class.php' );
+$app->registerClass( 'CategorySelectHooksHelper', $dir . 'CategorySelectHooksHelper.class.php' );
 
 // Hooks
 $app->registerExtensionFunction( 'CategorySelectHooksHelper::onInit' );
