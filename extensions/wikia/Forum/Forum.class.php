@@ -54,6 +54,27 @@ class Forum extends WikiaModel {
 	}
 	
 	/**
+	 * get count of boards
+	 * @return int board count
+	 */
+	public function getBoardCount($db = DB_SLAVE) {
+		$this->wf->profileIn( __METHOD__ );
+
+		$dbw = $this->wf->GetDB( $db );
+
+		// get board list
+		$result = (int) $dbw->selectField(
+			array( 'page' ),
+			array( 'count(*) as cnt' ),
+			array( 'page_namespace' => NS_WIKIA_FORUM_BOARD ),
+			__METHOD__,
+			array()
+		);
+		
+		return $result['cnt'];
+	}
+	
+	/**
 	 * get total threads excluding deleted and removed threads
 	 * @param integer $days
 	 * @return integer $totalThreads

@@ -407,6 +407,14 @@ class CommentsIndex extends WikiaModel {
 	}
 
 	/**
+	 * get parent comemnt index
+	 */
+
+	public function getParentCommentId() {
+		return $this->parentCommentId;
+	}
+
+	/**
 	 * update schema on comments_index table
 	 */
 	public function patchTableCommentsIndexV1() {

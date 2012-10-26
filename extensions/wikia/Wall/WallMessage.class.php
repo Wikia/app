@@ -11,8 +11,6 @@ class WallMessage {
 	protected $cityId = 0;
 	protected static $permissionsCache = array(); //permissions cache
 	protected static $wallURLCache = array();
-	protected static $topObjectCache;
-	protected $commentIndex;
 	/**
 	 * @var $commentsIndex CommentsIndex
 	 */
@@ -31,7 +29,6 @@ class WallMessage {
 		wfProfileIn(__METHOD__);
 		$this->title = $title;
 		$this->articleComment = $articleComment;
-		$this->commentsIndex = F::build( 'CommentsIndex' );
 		$app = F::App();
 		//TODO: inject this
 		$this->cityId = $app->wg->CityId;
@@ -189,6 +186,13 @@ class WallMessage {
 		$this->order = $val;
 		wfProfileOut( __METHOD__ );
 		return $val;
+	}
+
+	public function getCommentsIndex() {
+		if(empty($this->commentsIndex)) {
+			$this->commentsIndex = CommentsIndex::newFromId( $this->getId() );
+		}
+		return $this->commentsIndex;
 	}
 
 	public function getOrderId($for_update = false) {
@@ -527,27 +531,25 @@ class WallMessage {
 	public function getTopParentObj(){
 		wfProfileIn(__METHOD__);
 
-		$key = $this->getArticleComment()->getTopParent();
-		if( !empty(self::$topObjectCache[$key]) ) {
-			wfProfileOut(__METHOD__);
-			return self::$topObjectCache[$key];
-		}
-
-		$obj = $this->getArticleComment()->getTopParentObj();
-
-		if( empty($obj) ) {
+		static $topObjectCache = array();
+		
+		//TODO: some cache or pre setting of parentPageId during list fetching
+		
+		$index = $this->getCommentsIndex();
+		if(empty($index)) {
 			wfProfileOut(__METHOD__);
 			return null;
 		}
-
-		if($obj instanceof ArticleComment){
+		
+		$id = $index->getParentCommentId();
+		if( !empty($topObjectCache[$id]) ) {
 			wfProfileOut(__METHOD__);
-			self::$topObjectCache[$key] = WallMessage::newFromArticleComment($obj);
-			return self::$topObjectCache[$key];
-		} else {
-			wfProfileOut(__METHOD__);
-			return null;
+			return $topObjectCache[$id];
 		}
+
+		wfProfileOut(__METHOD__);
+		$topObjectCache[$id] = WallMessage::newFromId($id);
+		return $topObjectCache[$id];
 	}
 
 	public function isMain() {
@@ -559,6 +561,7 @@ class WallMessage {
 	}
 
 	public function getTopParentText($titleText) {
+		//TODO: getTopParentObj ?
 		return $this->getArticleComment()->explodeParentTitleText($titleText);
 	}
 
@@ -1166,22 +1169,22 @@ class WallMessage {
 	protected function setInCommentsIndex( $prop, $value, $useMaster = false ) {
 		$commentId = $this->getId();
 		if ( !empty($commentId) ) {
-			$this->commentsIndex = F::build( 'CommentsIndex', array( $commentId ), 'newFromId' );
-			if ( $this->commentsIndex instanceof CommentsIndex ) {
+			$commentsIndex = $this->getCommentsIndex();
+			if ( $commentsIndex instanceof CommentsIndex ) {
 				switch( $prop ) {
-					case WPP_WALL_ARCHIVE : $this->commentsIndex->updateArchived( $value );
+					case WPP_WALL_ARCHIVE: $commentsIndex->updateArchived( $value );
 											break;
-					case WPP_WALL_ADMINDELETE : $this->commentsIndex->updateDeleted( $value );
-												$lastChildCommentId = $this->commentsIndex->getParentLastCommentId( $useMaster );
-												$this->commentsIndex->updateParentLastCommentId( $lastChildCommentId );
+					case WPP_WALL_ADMINDELETE: $commentsIndex->updateDeleted( $value );
+												$lastChildCommentId = $commentsIndex->getParentLastCommentId( $useMaster );
+												$commentsIndex->updateParentLastCommentId( $lastChildCommentId );
 
-												wfRunHooks( 'EditCommentsIndex', array($this->getTitle(), $this->commentsIndex) );
+												wfRunHooks( 'EditCommentsIndex', array($this->getTitle(), $commentsIndex) );
 												break;
-					case WPP_WALL_REMOVE : $this->commentsIndex->updateRemoved( $value );
-											$lastChildCommentId = $this->commentsIndex->getParentLastCommentId( $useMaster );
-											$this->commentsIndex->updateParentLastCommentId( $lastChildCommentId );
+					case WPP_WALL_REMOVE: $commentsIndex->updateRemoved( $value );
+											$lastChildCommentId = $commentsIndex->getParentLastCommentId( $useMaster );
+											$commentsIndex->updateParentLastCommentId( $lastChildCommentId );
 
-											wfRunHooks( 'EditCommentsIndex', array($this->getTitle(), $this->commentsIndex) );
+											wfRunHooks( 'EditCommentsIndex', array($this->getTitle(), $commentsIndex) );
 											break;
 				}
 			}
