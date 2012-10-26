@@ -17,7 +17,8 @@
 		, lazyQueue = LazyQueue()
 
 		, queueForLateAds
-		, adConfigForLateAds;
+		, adConfigForLateAds
+	;
 
 	// Construct Ad Engine
 	adEngine = AdEngine2(log, lazyQueue);
