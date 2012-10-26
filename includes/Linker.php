@@ -175,9 +175,10 @@ class Linker {
 		}
 		$options = (array)$options;
 
+		/* Wikia change begin - @author: garth */
 		// Create a unique key from the arguments and cache the results of this
 		// method call for the rest of this request
-		global $wgLinkerUnique;
+		static $linkCache;
 		$parts = array($target->getDBkey(), $html);
 		foreach ($customAttribs as $key => $value) {
 			$parts[] = $key;
@@ -193,10 +194,11 @@ class Linker {
 		}
 		$key = implode(':', $parts);
 
-		if (array_key_exists($key, $wgLinkerUnique)) {
+		if (array_key_exists($key, $linkCache)) {
 			wfProfileOut( __METHOD__ );
-			return $wgLinkerUnique[$key];
+			return $linkCache[$key];
 		}
+		/* Wikia change - end */
 
 		$dummy = new DummyLinker; // dummy linker instance for bc on the hooks
 
@@ -246,7 +248,9 @@ class Linker {
 			$ret = Html::rawElement( 'a', $attribs, $html );
 		}
 
-		$wgLinkerUnique[$key] = $ret;
+		/* Wikia change begin - @author: garth */
+		$linkCache[$key] = $ret;
+		/* Wikia change - end */
 
 		wfProfileOut( __METHOD__ );
 		return $ret;
