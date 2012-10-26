@@ -135,11 +135,22 @@ window.WikiaTracker = (function(){
 		}
 
 		//delay at the end to make sure all of the above was at least invoked
-		if (data && data.href) {
-			setTimeout(function() {
-				document.location = data.href;
-			}, 100);
+		if (data && data.href ) {
+			if( data.button === 1 ) {
+				invokeDelayedMiddleClickEvent(data.href);
+			} else {
+				invokeDelayedLeftClickEvent(data.href);
+			}
 		}
+	}
+
+	function invokeDelayedLeftClickEvent(location) {
+		setTimeout(function() {
+			document.location = data.href;
+		}, 100);
+	}
+
+	function invokeDelayedMiddleClickEvent(location) {
 	}
 
 	/**
