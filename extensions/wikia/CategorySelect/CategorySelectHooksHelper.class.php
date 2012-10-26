@@ -10,108 +10,26 @@
 
 class CategorySelectHooksHelper {
 
-	public static function onInit( $forceInit = false ) {
-		global $wgRequest, $wgUser, $wgHooks;
-		wfProfileIn(__METHOD__);
-
-		if ($wgRequest->getVal('usecatsel','') == "no") {
-			wfProfileOut(__METHOD__);
-			return true;
-		}
-
-		if ( (!$forceInit) && (!$wgUser->isAllowed('edit')) ){
-			wfProfileOut(__METHOD__);
-			return true;
-		}
-
-		//don't use CategorySelect for undo edits
-		$undoafter = $wgRequest->getVal('undoafter');
-		$undo = $wgRequest->getVal('undo');
-		$diff = $wgRequest->getVal('diff');
-		$oldid = $wgRequest->getVal('oldid');
-		$action = $wgRequest->getVal('action', 'view');
-		if (($undo > 0 && $undoafter > 0) || $diff || ($oldid && $action != 'edit' && $action != 'submit')) {
-			wfProfileOut(__METHOD__);
-			return true;
-		}
-
-		$wgHooks['MediaWikiPerformAction'][] = 'CategorySelectHooksHelper::onMediaWikiPerformAction';
-		$wgHooks['GetPreferences'][] = 'CategorySelectHooksHelper::onGetPreferences';
-
-		wfProfileOut(__METHOD__);
-	}
-
-	public static function onMediaWikiPerformAction( $output, $article, $title, $user, $request, $mediawiki, $force = false ) {
-		global $wgHooks, $wgRequest, $wgUser, $wgContentNamespaces;
-		wfProfileIn(__METHOD__);
+	/**
+	 * Display category box on edit page
+	 */
+	function onEditFormMultiEditForm( $rows, $cols, $ew, $textbox ) {
+		global $wgRequest, $wgOut;
 
 		$action = $wgRequest->getVal( 'action', 'view' );
-		$supportedSkins = array( 'SkinAnswers', 'SkinOasis' );
-
-		// User has disabled this extension in their preferences
-		if ( $wgUser->getOption( 'disablecategoryselect' ) == true ) {
-
-		// Skin is not supported
-		} else if ( !in_array( get_class( RequestContext::getMain()->getSkin() ), $supportedSkins ) ) {
-
-		// Namespace not supported. Supported namespaces are:
-		// - For view: content
-		// - For edit: content, file, user, category, video, special
-		} else if ( !$force && ( ( ( $action == 'view' || $action == 'purge' ) && !in_array( $title->mNamespace, array_merge( $wgContentNamespaces, array( NS_FILE, NS_CATEGORY, NS_VIDEO ) ) ) )
-			|| !in_array( $title->mNamespace, array_merge( $wgContentNamespaces, array( NS_FILE, NS_USER, NS_CATEGORY, NS_VIDEO, NS_SPECIAL ) ) )
-			|| ( $title->mNamespace == NS_TEMPLATE ) ) ) {
-
-		// Disable on CSS and JS user subpages
-		} else if ( $title->isCssJsSubpage() ) {
-
-		// Disable when user will see the source instead of the editor, see RT#25246
-		} else if ( !$title->quickUserCan( 'edit' ) && ( $title->mNamespace != NS_SPECIAL ) ) {
-
-		// Disable on non-existant article pages
-		} else if ( $action == 'view' && !$title->exists() ) {
-
-		// Disable for anon "confirm purge" page
-		} else if ( $action == 'purge' && $wgUser->isAnon() && !$wgRequest->wasPosted() ) {
-
-		// Add hooks for view/purge pages
-		} else if ( $action == 'view' || $action == 'purge' ) {
-			$wgHooks[ 'Skin::getCategoryLinks::begin' ][] = 'CategorySelectHooksHelper::onSkinGetCategoryLinksBegin';
-			$wgHooks[ 'Skin::getCategoryLinks::end' ][] = 'CategorySelectHooksHelper::onSkinGetCategoryLinksEnd';
-
-		// Add hooks for edit/submit pages
-		} else if ( $force || $action == 'edit' || $action == 'submit' ) {
-			$wgHooks[ 'EditPage::importFormData' ][] = 'CategorySelectHooksHelper::onEditPageImportFormData';
-			$wgHooks[ 'EditPage::getContent::end' ][] = 'CategorySelectHooksHelper::onEditPageGetContentEnd';
-			$wgHooks[ 'EditPage::CategoryBox' ][] = 'CategorySelectHooksHelper::onEditPageCategoryBox';
-			$wgHooks[ 'EditPage::showEditForm:fields' ][] = 'CategorySelectHooksHelper::onEditPageShowEditFormFields';
-			$wgHooks[ 'EditPageGetDiffText' ][] = 'CategorySelectHooksHelper::onEditPageGetDiffText';
-			$wgHooks[ 'EditForm::MultiEdit:Form' ][] = 'CategorySelectHooksHelper::onEditFormMultiEditForm';
-			$wgHooks[ 'MakeGlobalVariablesScript' ][] = 'CategorySelectHooksHelper::onMakeGlobalVariablesScript';
+		if ( $action != 'view' && $action != 'purge' ) {
+			CategorySelect::SelectCategoryAPIgetData( $textbox );
+			$wgOut->addHTML( F::app()->renderView( 'CategorySelect', 'editPage', array( 'formId' => 'editform' ) ) );
 		}
-
-		wfProfileOut(__METHOD__);
 		return true;
 	}
 
 	/**
-	 * Set global variables for javascript
+	 * Remove hidden category box from edit page.
+	 * Returning false ensures formatHiddenCategories will not be called.
 	 */
-	function onMakeGlobalVariablesScript( Array &$vars ) {
-		global $wgParser, $wgContLang;
-
-		$vars['csAddCategoryButtonText'] = wfMsg('categoryselect-addcategory-button');
-		$vars['csInfoboxCaption'] = wfMsg('categoryselect-infobox-caption');
-		$vars['csInfoboxCategoryText'] = wfMsg('categoryselect-infobox-category');
-		$vars['csInfoboxSortkeyText'] = wfMsg('categoryselect-infobox-sortkey');
-		$vars['csInfoboxSave'] = wfMsg('save');
-		$vars['csEmptyName'] = wfMsg('categoryselect-empty-name');
-		$vars['csDefaultSort'] = $wgParser->getDefaultSort();
-		$vars['csCategoryNamespaces'] = 'Category|' . $wgContLang->getNsText(NS_CATEGORY);
-		$vars['csDefaultNamespace'] = $wgContLang->getNsText(NS_CATEGORY);
-		$vars['csCodeView'] = wfMsg('categoryselect-code-view');
-		$vars['csVisualView'] = wfMsg('categoryselect-visual-view');
-
-		return true;
+	function onEditPageCategoryBox( &$editform ) {
+		return false;
 	}
 
 	/**
@@ -126,21 +44,14 @@ class CategorySelectHooksHelper {
 	}
 
 	/**
-	 * Remove hidden category box from edit page.
-	 * Returning false ensures formatHiddenCategories will not be called.
+	 * Add categories to article for DiffEngine
 	 */
-	function onEditPageCategoryBox( &$editform ) {
-		return false;
-	}
-
-	/**
-	 * Add hidden field with category metadata
-	 *
-	 * @param EditPage $editPage
-	 * @param OutputPage $out
-	 */
-	function onEditPageShowEditFormFields( $editPage, $out ) {
-		$out->addHTML( F::app()->renderView( 'CategorySelect', 'editPageMetaData' ) );
+	function onEditPageGetDiffText( $editPage, &$newtext ) {
+		global $wgCategorySelectCategoriesInWikitext;
+		//add categories only for whole article editing
+		if ($editPage->section == '' && isset($wgCategorySelectCategoriesInWikitext)) {
+			$newtext .= $wgCategorySelectCategoriesInWikitext;
+		}
 		return true;
 	}
 
@@ -193,28 +104,142 @@ class CategorySelectHooksHelper {
 	}
 
 	/**
-	 * Add categories to article for DiffEngine
+	 * Add hidden field with category metadata
+	 *
+	 * @param EditPage $editPage
+	 * @param OutputPage $out
 	 */
-	function onEditPageGetDiffText( $editPage, &$newtext ) {
-		global $wgCategorySelectCategoriesInWikitext;
-		//add categories only for whole article editing
-		if ($editPage->section == '' && isset($wgCategorySelectCategoriesInWikitext)) {
-			$newtext .= $wgCategorySelectCategoriesInWikitext;
-		}
+	function onEditPageShowEditFormFields( $editPage, $out ) {
+		$out->addHTML( F::app()->renderView( 'CategorySelect', 'editPageMetaData' ) );
 		return true;
 	}
 
 	/**
-	 * Display category box on edit page
+	 * Toggle CS in user preferences
 	 */
-	function onEditFormMultiEditForm( $rows, $cols, $ew, $textbox ) {
-		global $wgRequest, $wgOut;
+	function onGetPreferences( $user, &$preferences ) {
+		global $wgEnableUserPreferencesV2Ext;
+		if ($wgEnableUserPreferencesV2Ext) {
+			$section = 'editing/starting-an-edit';
+			$message = wfMsg('tog-disablecategoryselect-v2');
 
-		$action = $wgRequest->getVal('action', 'view');
-		if ($action != 'view' && $action != 'purge') {
-			CategorySelect::SelectCategoryAPIgetData($textbox);
-			$wgOut->addHTML( F::app()->getView( 'CategorySelect', 'editPage', array( 'formId' => 'editform' ) ) );
+		} else {
+			$section = 'editing/editing-experience';
+			$message = wfMsg('tog-disablecategoryselect');
 		}
+
+		$preferences['disablecategoryselect'] = array(
+			'type' => 'toggle',
+			'section' => $section,
+			'label' => $message,
+		);
+
+		return true;
+	}
+
+	/**
+	 * Determine whether or not to enable the extension
+	 */
+	public static function onInit( $forceInit = false ) {
+		global $wgRequest, $wgUser, $wgHooks;
+		wfProfileIn( __METHOD__ );
+
+		// Don't use CategorySelect for undo edits
+		$undoafter = $wgRequest->getVal( 'undoafter' );
+		$undo = $wgRequest->getVal( 'undo' );
+		$diff = $wgRequest->getVal( 'diff' );
+		$oldid = $wgRequest->getVal( 'oldid' );
+		$action = $wgRequest->getVal( 'action', 'view' );
+
+		// Disable if usecatsel=no is passed in url params or if user is not allowed to edit and we aren't forcing init
+		if ( $wgRequest->getVal( 'usecatsel', '' ) == 'no' || ( !$forceInit && !$wgUser->isAllowed( 'edit' ) ) ) {
+
+		// Disable CategorySelect for undo edits
+		} else if ( ( $undo > 0 && $undoafter > 0) || $diff || ( $oldid && $action != 'edit' && $action != 'submit' ) ) {
+
+		// Enable CategorySelect
+		} else {
+			$wgHooks['GetPreferences'][] = 'CategorySelectHooksHelper::onGetPreferences';
+			$wgHooks['MediaWikiPerformAction'][] = 'CategorySelectHooksHelper::onMediaWikiPerformAction';
+		}
+
+		wfProfileOut( __METHOD__ );
+		return true;
+	}
+
+	/**
+	 * Set global variables for javascript
+	 */
+	function onMakeGlobalVariablesScript( Array &$vars ) {
+		global $wgParser, $wgContLang;
+
+		$vars['csAddCategoryButtonText'] = wfMsg('categoryselect-addcategory-button');
+		$vars['csInfoboxCaption'] = wfMsg('categoryselect-infobox-caption');
+		$vars['csInfoboxCategoryText'] = wfMsg('categoryselect-infobox-category');
+		$vars['csInfoboxSortkeyText'] = wfMsg('categoryselect-infobox-sortkey');
+		$vars['csInfoboxSave'] = wfMsg('save');
+		$vars['csEmptyName'] = wfMsg('categoryselect-empty-name');
+		$vars['csDefaultSort'] = $wgParser->getDefaultSort();
+		$vars['csCategoryNamespaces'] = 'Category|' . $wgContLang->getNsText(NS_CATEGORY);
+		$vars['csDefaultNamespace'] = $wgContLang->getNsText(NS_CATEGORY);
+		$vars['csCodeView'] = wfMsg('categoryselect-code-view');
+		$vars['csVisualView'] = wfMsg('categoryselect-visual-view');
+
+		return true;
+	}
+
+	/**
+	 * Add hooks for view and edit pages
+	 */
+	public static function onMediaWikiPerformAction( $output, $article, $title, $user, $request, $mediawiki, $force = false ) {
+		global $wgHooks, $wgRequest, $wgUser, $wgContentNamespaces;
+		wfProfileIn( __METHOD__ );
+
+		$action = $wgRequest->getVal( 'action', 'view' );
+		$supportedSkins = array( 'SkinAnswers', 'SkinOasis' );
+
+		// User has disabled this extension in their preferences
+		if ( $wgUser->getOption( 'disablecategoryselect' ) == true ) {
+
+		// Skin is not supported
+		} else if ( !in_array( get_class( RequestContext::getMain()->getSkin() ), $supportedSkins ) ) {
+
+		// Namespace not supported. Supported namespaces are:
+		// - For view: content
+		// - For edit: content, file, user, category, video, special
+		} else if ( !$force && ( ( ( $action == 'view' || $action == 'purge' ) && !in_array( $title->mNamespace, array_merge( $wgContentNamespaces, array( NS_FILE, NS_CATEGORY, NS_VIDEO ) ) ) )
+			|| !in_array( $title->mNamespace, array_merge( $wgContentNamespaces, array( NS_FILE, NS_USER, NS_CATEGORY, NS_VIDEO, NS_SPECIAL ) ) )
+			|| ( $title->mNamespace == NS_TEMPLATE ) ) ) {
+
+		// Disable on CSS and JS user subpages
+		} else if ( $title->isCssJsSubpage() ) {
+
+		// Disable when user will see the source instead of the editor, see RT#25246
+		} else if ( !$title->quickUserCan( 'edit' ) && ( $title->mNamespace != NS_SPECIAL ) ) {
+
+		// Disable on non-existant article pages
+		} else if ( $action == 'view' && !$title->exists() ) {
+
+		// Disable for anon "confirm purge" page
+		} else if ( $action == 'purge' && $wgUser->isAnon() && !$wgRequest->wasPosted() ) {
+
+		// Add hooks for view/purge pages
+		} else if ( $action == 'view' || $action == 'purge' ) {
+			$wgHooks[ 'Skin::getCategoryLinks::begin' ][] = 'CategorySelectHooksHelper::onSkinGetCategoryLinksBegin';
+			$wgHooks[ 'Skin::getCategoryLinks::end' ][] = 'CategorySelectHooksHelper::onSkinGetCategoryLinksEnd';
+
+		// Add hooks for edit/submit pages
+		} else if ( $force || $action == 'edit' || $action == 'submit' ) {
+			$wgHooks[ 'EditPage::importFormData' ][] = 'CategorySelectHooksHelper::onEditPageImportFormData';
+			$wgHooks[ 'EditPage::getContent::end' ][] = 'CategorySelectHooksHelper::onEditPageGetContentEnd';
+			$wgHooks[ 'EditPage::CategoryBox' ][] = 'CategorySelectHooksHelper::onEditPageCategoryBox';
+			$wgHooks[ 'EditPage::showEditForm:fields' ][] = 'CategorySelectHooksHelper::onEditPageShowEditFormFields';
+			$wgHooks[ 'EditPageGetDiffText' ][] = 'CategorySelectHooksHelper::onEditPageGetDiffText';
+			$wgHooks[ 'EditForm::MultiEdit:Form' ][] = 'CategorySelectHooksHelper::onEditFormMultiEditForm';
+			$wgHooks[ 'MakeGlobalVariablesScript' ][] = 'CategorySelectHooksHelper::onMakeGlobalVariablesScript';
+		}
+
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
