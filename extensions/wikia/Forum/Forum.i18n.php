@@ -164,6 +164,12 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
 
 	'forum-autoboard-title-5' => 'Fun and Games',
 	'forum-autoboard-body-5' => 'This board is for off-topic conversation -- a place to hang out with your $WIKINAME friends.',
+	
+	/* board creation validation messages */
+	
+	'forum-board-title-validation-invalid' => 'Board name contains invalid characters',
+	'forum-board-title-validation-length' => 'Board name length should be between 4 and 40',
+	'forum-board-description-validation-length' => 'Board description should be between 4 and 255',
 );
 
 $messages['qqq'] = array(
@@ -220,4 +226,10 @@ $messages['qqq'] = array(
 	'forum-admin-create-new-board-modal-heading' => 'Modal heading for create a new board dialog',
 	'forum-admin-create-new-board-title' => 'Form input label for board title',
 	'forum-admin-create-new-board-description' => 'Form input label board description',
+	
+	/* board creation validation messages */
+	
+	'forum-board-title-validation-invalid' => 'Display on board create in case of validation error ',
+	'forum-board-title-validation-length' => 'Display on board create in case of validation error ',
+	'forum-board-description-validation-length' => 'Display on board create in case of validation error '
 );

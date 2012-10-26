@@ -27,21 +27,40 @@ class ForumExternalController extends WallExternalController {
 		
 		$boardTitle = $this->getVal('boardTitle', '');
 		$boardDescription = $this->getVal('boardDescription', '');
+		 
+		$this->status = 'error';
+		$this->errorfield = '';
+		$this->errormsg = '';
 		
-		$status = 'error';
-		$errorfield = '';
-		$errormsg = '';
+		// Reject illegal characters.
+		$rxTc = Title::getTitleInvalidRegex();
+		if ( preg_match( $rxTc, $boardTitle ) ) {
+			$this->errorfield = 'title';
+			$this->errormsg = wfMsg('forum-board-title-validation-invalid');
+			return true;
+		}
 		
-		/* backend magic happens here */
+		$titleLength = strlen( $boardTitle );
+		if( $titleLength > 40 || $titleLength < 4 ) {
+			$this->errorfield = 'boardTitle';
+			$this->errormsg = wfMsg( 'forum-board-title-validation-length' );	
+			return true;		
+		}
 		
-		/* mock data, remove after backend magic */
-		$status = 'ok';
-		$errorfield = 'boardTitle';
-		$errormsg = 'Wow title broke';
+		$descriptionLength = strlen( $boardDescription );
 		
-		$this->status = $status;
-		$this->errorfield = $errorfield;
-		$this->errormsg = $errormsg;
+		if( $descriptionLength > 255 || $descriptionLength < 4 ) {
+			$this->errorfield = 'boardDescription';
+			$this->errormsg = wfMsg( 'forum-board-description-validation-length' );
+			return true;			
+		}
+
+		$forum = new Forum();
+		$forum->createBoard($boardTitle, $boardDescription);	
+
+		$this->status = 'ok';;
+		$this->errorfield = '';
+		$this->errormsg = '';
 	}
 
 	protected function replyToMessageBuildResponse($context, $reply) {

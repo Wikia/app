@@ -4,7 +4,6 @@ class ForumHooksHelper {
 	/**
 	 * Render the alternative version of thread page
 	 */
-
 	public function onWallBeforeRenderThread($title, $wm) {
 		$app = F::App();
 		if($title->getNamespace() == NS_WIKIA_FORUM_BOARD_THREAD) {
@@ -113,14 +112,17 @@ class ForumHooksHelper {
 
 	public static function getUserPermissionsErrors( &$title, &$user, $action, &$result ) {
 		$result = null;
-		if ( $title->getNamespace() == NS_WIKIA_FORUM_BOARD ) {
-			if ( (!$user->isAllowed( 'boardedit' ) && $user->getName() !=  Forum::AUTOCREATE_USER ) && ($action == 'create' || $action == 'edit')) {
-				$result = array( 'badaccess-group0' );
-				return false;
-			}
+		
+		if(Forum::$allowToEditBoard == true ) {
+			return true;
 		}
-
-		return true;
+		
+		if($action == 'read' || $title->getNamespace() != NS_WIKIA_FORUM_BOARD ) {
+			return true;
+		} 
+		
+		$result = array('protectedpagetext');
+		return false;
 	}
 
 	public function onWallContributionsLine($pageNamespace, $wallMessage, $wfMsgOptsBase, &$ret ) {

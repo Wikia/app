@@ -8,7 +8,8 @@ class Forum extends WikiaModel {
 
 	const ACTIVE_DAYS = 7;
 	const AUTOCREATE_USER = 'Wikia';
-	
+	//controlling from outside if use can edit/create/delete board page
+	static  $allowToEditBoard = false;	
 	/**
 	 * get list of board
 	 * @return array boards
@@ -174,6 +175,7 @@ class Forum extends WikiaModel {
 			return false;
 		}
 		
+		Forum::$allowToEditBoard = true;		
 		$title = Title::newFromText($titletext, NS_WIKIA_FORUM_BOARD); 
 		$article  = new Article( $title );
 		$editPage = new EditPage( $article );
@@ -183,7 +185,7 @@ class Forum extends WikiaModel {
 			
 		$result = array();
 		$retval = $editPage->internalAttemptSave( $result, $bot );
-
+		Forum::$allowToEditBoard = false;		
 		$this->wf->ProfileOut( __METHOD__ );
 	}
 	

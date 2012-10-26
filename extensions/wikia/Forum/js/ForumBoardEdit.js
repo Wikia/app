@@ -30,7 +30,7 @@
 						format: 'json',
 						data: {
 							boardTitle: dialog.find('input[name=boardTitle]').val(),
-							boardDescription: dialog.find('input[name=boardTitle]').val()
+							boardDescription: dialog.find('input[name=boardDescription]').val()
 						},
 						callback: function (json) {
 							$().log(json);
