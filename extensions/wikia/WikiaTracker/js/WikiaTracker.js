@@ -80,6 +80,7 @@ window.WikiaTracker = (function(){
 		eventName = eventName || mainEventName,
 		data = data || {},
 		trackingMethod = trackingMethod || 'none',
+		mouseButton = data.button || false,
 		gaqArgs = [];
 
 		// If clicking a link that will unload the page before tracking can happen,
@@ -136,7 +137,7 @@ window.WikiaTracker = (function(){
 
 		//delay at the end to make sure all of the above was at least invoked
 		if (data && data.href ) {
-			if( data.button === 1 ) {
+			if( mouseButton === 1 ) {
 				invokeDelayedMiddleClickEvent(data.href);
 			} else {
 				invokeDelayedLeftClickEvent(data.href);
@@ -146,11 +147,14 @@ window.WikiaTracker = (function(){
 
 	function invokeDelayedLeftClickEvent(location) {
 		setTimeout(function() {
-			document.location = data.href;
+			document.location = location;
 		}, 100);
 	}
 
 	function invokeDelayedMiddleClickEvent(location) {
+		setTimeout(function() {
+			window.open(location, '_blank');
+		}, 100);
 	}
 
 	/**
