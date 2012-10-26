@@ -16,11 +16,11 @@
 	 */
 	function getWikis( $condition ) {
 		global $wgExternalSharedDB;
-		
+
 		wfProfileIn( __METHOD__ );
-		
+
 		$wikis = array();
-		
+
 		$db = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 		$result = $db->select(
 			'user_temp',
@@ -28,14 +28,14 @@
 			array( $condition ),
 			__METHOD__
 		);
-		
+
 		while ( $row = $db->fetchObject($result) ) {
 			$wikis[] = $row->user_wiki_id;
 		}
 		$db->freeResult( $result );
-		
+
 		wfProfileOut( __METHOD__ );
-		
+
 		return $wikis;
 	}
 
@@ -47,9 +47,9 @@
 	 */
 	function getScope( &$fromUserId, &$toUserId, $condition ) {
 		global $wgExternalSharedDB;
-		
+
 		wfProfileIn( __METHOD__ );
-		
+
 		$db = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 		$row = $db->selectRow(
 			array( 'user_temp' ),
@@ -57,7 +57,7 @@
 			array( $condition ),
 			__METHOD__
 		);
-		
+
 		if ( $row ) {
 			if ( empty($fromUserId) && !empty($row->fromUserId) ) {
 				$fromUserId = $row->fromUserId - 1;
@@ -66,7 +66,7 @@
 				$toUserId = $row->toUserId;
 			}
 		}
-		
+
 		wfProfileOut( __METHOD__ );
 	}
 
@@ -79,12 +79,12 @@
 	 */
 	function getTempUsers( $fromUserId, $toUserId, $condition ) {
 		global $wgExternalSharedDB;
-		
+
 		wfProfileIn( __METHOD__ );
-		
+
 		$users = array();
 		$where = $condition." and user_id > $fromUserId and user_id <= $toUserId ";
-		
+
 		$db = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 		$result = $db->select(
 			'user_temp',
@@ -92,17 +92,17 @@
 			array( $where ),
 			__METHOD__
 		);
-		
+
 		while ( $row = $db->fetchObject($result) ) {
 			$users[] = $row->user_name;
 		}
 		$db->freeResult( $result );
-		
+
 		wfProfileOut( __METHOD__ );
-		
+
 		return $users;
 	}
-	
+
 	/**
 	 * remove user from user_temp table
 	 * @param integer $fromUserId
@@ -125,7 +125,7 @@
 			$cnt = 0;
 			do {
 				$to = ( $toUserId - $fromUserId > $range ) ? $fromUserId + $range : $toUserId ;
-				echo "Removing temp user (UserId $fromUserId to $to)...\n";
+				echo "Removing temp user (UserId $fromUserId to $to):\n";
 				$users = getTempUsers( $fromUserId, $to, $condition );
 				$cnt = $cnt + count($users);
 				foreach ( $users as $username ) {
@@ -137,15 +137,15 @@
 					$spoof = new SpoofUser( $username );
 					$spoof->removeRecord();
 					
-					echo "Removed temp user (id=$id) from database.\n";
+					echo "\tRemoved temp user (id=$id) from database.\n";
 				}
 
 				$fromUserId = $to;
 			} while ( $fromUserId < $toUserId );
-			
+
 			echo "Total $cnt temp users removed from database.\n";
 		}
-		
+
 		wfProfileOut( __METHOD__ );
 	}
 
@@ -160,17 +160,17 @@
 		global $wgCityId, $wgServer;
 
 		wfProfileIn( __METHOD__ );
-		
+
 		$condition .= " and user_wiki_id = ".$wgCityId;
-		
+
 		// get scope
 		if ( empty($fromUserId) || empty($toUserId) ) {
 			getScope( $fromUserId, $toUserId, $condition );
 		}
-		
+
 		// update url
 		$wgServer = WikiFactory::getVarValueByName( 'wgServer', $wgCityId );
-		
+
 		$cnt = 0;
 		do {
 			$to = ( $toUserId - $fromUserId > $range ) ? $fromUserId + $range : $toUserId ;
@@ -178,7 +178,7 @@
 			$users = getTempUsers( $fromUserId, $to, $condition );
 			foreach ( $users as $username ) {
 				$tempUser = TempUser::getTempUserFromName( $username );
-				
+
 				// send reminder email
 				$user = $tempUser->mapTempUserToUser();
 				$userLoginHelper = F::build( 'UserLoginHelper' );
@@ -195,9 +195,9 @@
 
 			$fromUserId = $to;
 		} while ( $fromUserId < $toUserId );
-		
+
 		echo "WikiId $wgCityId: Total $cnt confirmation reminder emails sent.\n";
-		
+
 		wfProfileOut( __METHOD__ );
 	}
 
@@ -211,7 +211,7 @@
 		die( "Usage: php maintenance.php [--from_userid] [--to_userid] [--range] [--cleanup] [--reminder] [--wiki_reminder] [--help]
 		--from_userid		from user id
 		--to_userid			to user id
-		--range				range of user (default = 1000)
+		--range				range of user (default = 10000)
 		--cleanup			remove older temp user (user's registered date is older than 30 days)
 		--reminder			send reminder (user's registered date = 7 days ago) for ALL wikis
 		--wiki_reminder		send reminder for CURRENT wiki only
@@ -229,31 +229,32 @@
 	if ( isset($options['to_userid']) && !is_numeric($options['to_userid']) ) {
 		die( "Error: Invalid to_userid." );
 	}
-	
+
 	if ( empty($wgCityId) ) {
 		die( "Error: Invalid wiki id." );
 	}
-	
-	$range = (isset($options['range'])) ? intval($options['range']) : 1000 ;
+
+	$range = (isset($options['range'])) ? intval($options['range']) : 10000 ;
 	$fromUserId = (isset($options['from_userid'])) ? intval($options['from_userid']) : 0 ;
 	$toUserId = (isset($options['to_userid'])) ? intval($options['to_userid']) : 0 ;
-	
+
 	$cleanupCondition = "date(user_registration) < curdate() - interval 30 day";
 	$reminderCondition = "date(user_registration) = curdate() - interval 7 day";
-	
+
 	// remove old temp user
 	if ( isset($options['cleanup']) ) {
 		removeOldTempUser( $fromUserId, $toUserId, $range, $cleanupCondition );
 	}
-	
+
 	// send reminder for all wikis
 	if ( isset($options['reminder']) ) {
 		// get list of wikis
 		$wikis = getWikis( $reminderCondition );
-		
+
 		// send reminder for each wiki
 		foreach( $wikis as $wikiId) {
 			$cmd = "SERVER_ID={$wikiId} php {$IP}/extensions/wikia/UserLogin/maintenance.php --conf={$wgWikiaLocalSettingsPath} --wiki_reminder";
+			echo "Command: $cmd\n";
 			$result = wfShellExec( $cmd, $retval );
 			if ($retval) {
 				echo "Error code $retval: $result \n";
@@ -263,7 +264,7 @@
 		}
 		echo "Reminder emails sent for ".count($wikis)." wikis.\n";
 	}
-	
+
 	// send reminder for current wiki
 	if ( isset($options['wiki_reminder']) ) {
 		sendReminder( $fromUserId, $toUserId, $range, $reminderCondition );
