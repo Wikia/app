@@ -25,12 +25,14 @@ $app->registerClass('WikiaSearchResult', 			$dir . 'WikiaSearchResult.class.php'
 $app->registerClass('WikiaSearchResultSet', 		$dir . 'WikiaSearchResultSet.class.php');
 $app->registerClass('WikiaSearchArticleMatch',		$dir . 'WikiaSearchArticleMatch.class.php');
 $app->registerClass('WikiaSearchAjaxController',	$dir . 'WikiaSearchAjaxController.class.php');
+$app->registerClass('WikiaVideoSearchController',	$dir . 'WikiaVideoSearchController.class.php');
 
 /**
  * special pages
  */
 $app->registerSpecialPage('WikiaSearch',	'WikiaSearchController');
 $app->registerSpecialPage('Search',			'WikiaSearchController');
+$app->registerSpecialPage('VideoSearch',	'WikiaVideoSearchController');
 
 global $wgSolrProxy, $wgSolrHost, $wgWikiaSearchUseProxy, $wgExternalSharedDB;
 
