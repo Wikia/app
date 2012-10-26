@@ -30,8 +30,11 @@ div.video-search-results {
 <fieldset id="video-search-form-wrapper">
 	<legend>Video Search</legend>
 	<form id="video-search-form">
+		<em>Choose One:</em><br>
 		<label for="pageid">Page ID</label>
-		<input id="video-search-pageid" name="pageid">
+		<input id="video-search-pageid" name="pageid" value="<?= $submittedPageId ?>"><br>
+		<label for="pageid">Page Title</label>
+		<input id="video-search-pagetitle" name="pagetitle" value="<?= $submittedTitle ?>">
 		<input type="submit">
 	</form>
 </fieldset>

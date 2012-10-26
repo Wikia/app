@@ -22,13 +22,20 @@ class WikiaVideoSearchController extends WikiaSpecialPageController {
 	
 	
 	public function index() {
+		$this->submittedTitle  = '';
+		$this->submittedPageId = '';
+		if ( ($title = $this->getVal( 'pagetitle', false )) && (!empty($title)) ) {
+			$this->submittedTitle = $title;
+			$this->title = F::build( 'Title', array( $title ), 'newFromText' );
+		} else if ( $pageId = $this->getVal( 'pageid', false ) ) {
+			$this->submittedPageId = $pageId;
+			$this->title = F::build( 'Title', array( $pageId ), 'newFromId' );
+		}
 		
-		if ( $pageId = $this->getVal( 'pageid', false ) ) {
-			$this->title = F::build( 'Title', array( $pageId ), 'newFromId' ); 
+		if ( isset( $this->title ) ) {
+			$this->mltResults = $this->getRelatedVideosForPage();
 			
-			$this->mltResults = $this->getRelatedVideosForPage( $pageId );
-			
-			$this->searchResults = $this->getRelatedVideosBySearchForPage( $pageId );
+			$this->searchResults = $this->getRelatedVideosBySearchForPage();
 		}
 		
 		$this->wikiMltResults = $this->getRelatedVideosForWiki( $this->wg->CityId );
