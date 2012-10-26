@@ -302,6 +302,24 @@ $color-highlight-column: rgba($color-page, 0);
 	}
 }
 
+.AdminDashboardStub {
+	#siteSub {
+		display: inline;
+		font-size: 90%;
+		font-style: italic;
+		font-weight: normal;
+		text-align: right;
+	}
+	#contentSub, #contentSub2 {
+		color: #7D7D7D;
+		font-size: 84%;
+		line-height: 1.2em;
+		margin: 0 0 1.4em 1em;
+		padding: 0;
+		width: auto;
+	}
+}
+
 // Oasis overwrites
 .WikiaArticle {
 	@include box-shadow(1px, 1px, 1px, $color-admin-article-box-shadow);
