@@ -6,21 +6,13 @@
  * A CategorySelect extension for MediaWiki
  * Provides an interface for managing categories in article without editing whole article
  *
- * @author Maciej Błaszkowski (Marooned) <marooned at wikia-inc.com>
- * @date 2009-01-13
- * @copyright Copyright (C) 2009 Maciej Błaszkowski, Wikia Inc.
- * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
- * @package MediaWiki
- *
- * To activate this functionality, place this file in your extensions/
- * subdirectory, and add the following line to LocalSettings.php:
- *     require_once("$IP/extensions/wikia/CategorySelect/CategorySelect.php");
+ * @author Maciej Błaszkowski (Marooned) <marooned@wikia-inc.com>
  */
 
 class CategorySelect {
 	private static $categories, $maybeCategory, $maybeCategoryBegin, $outerTag, $nodeLevel, $frame, $categoryNamespace, $tagsWhiteList;
 
-	static function SelectCategoryAPIgetData($wikitext, $force = false) {
+	public static function SelectCategoryAPIgetData($wikitext, $force = false) {
 		global $wgCategorySelectMetaData;
 
 		//this function is called from different hooks - parse article only once
@@ -66,6 +58,38 @@ class CategorySelect {
 		$wgCategorySelectMetaData = array('wikitext' => rtrim($modifiedWikitext), 'categories' => $categories);
 		wfProfileOut( __METHOD__ );
 		return $wgCategorySelectMetaData;
+	}
+
+	/**
+	 * Change format of categories metadata
+	 *
+	 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
+	 */
+	public function changeFormat($categories, $from, $to) {
+		if ($from == 'json') {
+			$categories = $categories == '' ? array() : json_decode($categories, true);
+		}
+
+		if ($to == 'wiki') {
+			$categoriesStr = '';
+			if ( is_array($categories) && !empty($categories) ) {
+				foreach($categories as $c) {
+					if (empty($c)) continue;	//skip "null" keys created by JS
+					$catTmp = "\n[[" . $c['namespace'] . ':' . $c['category'] . ($c['sortkey'] == '' ? '' : ('|' . $c['sortkey'])) . ']]';
+					if ($c['outerTag'] != '') {
+						$catTmp = '<' . $c['outerTag'] . '>' . $catTmp . '</' . $c['outerTag'] . '>';
+					}
+					$categoriesStr .= $catTmp;
+				}
+			}
+			return $categoriesStr;
+		} elseif ($to == 'array') {
+			return $categories;
+		}
+
+		if ($from == 'array' && $to == 'json') {
+			return json_encode($categories);
+		}
 	}
 
 	static private function parseNode(&$root, $outerTag = '') {

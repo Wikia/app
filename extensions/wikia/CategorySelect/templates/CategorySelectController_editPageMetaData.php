@@ -1,0 +1,1 @@
+<input type="hidden" id="wpCategorySelect" name="wpCategorySelect" value="<?= $categories ?>">
