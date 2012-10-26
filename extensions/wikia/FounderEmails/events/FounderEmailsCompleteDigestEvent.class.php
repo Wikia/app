@@ -53,22 +53,19 @@ class FounderEmailsCompleteDigestEvent extends FounderEmailsEvent {
 				self::addParamsUser($cityID, $user->getName(), $emailParams);
 
 				$langCode = $user->getOption( 'language' );
-				// Only send digest emails for English users until translation is done
-				if ($langCode == 'en') {
-					$links = array(
-						'$WIKINAME' => $emailParams['$WIKIURL'],
-					);
+				$links = array(
+					'$WIKINAME' => $emailParams['$WIKIURL'],
+				);
 
-					$mailSubject = strtr(wfMsgExt('founderemails-email-complete-digest-subject', array('content')), $emailParams);
-					$mailBody = strtr(wfMsgExt('founderemails-email-complete-digest-body', array('content','parsemag'), $emailParams['$UNIQUEVIEWS'], $emailParams['$USEREDITS'], $emailParams['$USERJOINS']), $emailParams);
-					$mailBodyHTML = F::app()->renderView("FounderEmails", "GeneralUpdate", array_merge($emailParams, array('language' => 'en', 'type' => 'complete-digest')));
-					$mailBodyHTML = strtr($mailBodyHTML, FounderEmails::addLink($emailParams,$links));
-					$mailCategory = FounderEmailsEvent::CATEGORY_COMPLETE_DIGEST.(!empty($langCode) && $langCode == 'en' ? 'EN' : 'INT');
+				$mailSubject = strtr(wfMsgExt('founderemails-email-complete-digest-subject', array('content')), $emailParams);
+				$mailBody = strtr(wfMsgExt('founderemails-email-complete-digest-body', array('content','parsemag'), $emailParams['$UNIQUEVIEWS'], $emailParams['$USEREDITS'], $emailParams['$USERJOINS']), $emailParams);
+				$mailBodyHTML = F::app()->renderView("FounderEmails", "GeneralUpdate", array_merge($emailParams, array('language' => 'en', 'type' => 'complete-digest')));
+				$mailBodyHTML = strtr($mailBodyHTML, FounderEmails::addLink($emailParams,$links));
+				$mailCategory = FounderEmailsEvent::CATEGORY_COMPLETE_DIGEST.(!empty($langCode) && $langCode == 'en' ? 'EN' : 'INT');
 
-					// Only send email if there is some kind of activity to report
-					if ($emailParams['$UNIQUEVIEWS'] > 0 || $emailParams['$USERJOINS'] > 0 || $emailParams['$USEREDITS'] > 0 ) {
-						$founderEmailObj->notifyFounder( $user, $this, $mailSubject, $mailBody, $mailBodyHTML, $cityID, $mailCategory );
-					}
+				// Only send email if there is some kind of activity to report
+				if ($emailParams['$UNIQUEVIEWS'] > 0 || $emailParams['$USERJOINS'] > 0 || $emailParams['$USEREDITS'] > 0 ) {
+					$founderEmailObj->notifyFounder( $user, $this, $mailSubject, $mailBody, $mailBodyHTML, $cityID, $mailCategory );
 				}
 			}
 		}
