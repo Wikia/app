@@ -80,7 +80,9 @@ abstract class ResourceLoaderGlobalWikiModule extends ResourceLoaderWikiModule {
 	}
 
 	protected function getContent( $title, $titleText, $options = array() ) {
+		global $wgCityId;
 		$content = null;
+
 		if ( $title instanceof GlobalTitle ) {
 			// todo: think of pages like NS_MAIN:Test/code.js that are pulled
 			// from dev.wikia.com
@@ -89,14 +91,19 @@ abstract class ResourceLoaderGlobalWikiModule extends ResourceLoaderWikiModule {
 				return null;
 			}
 			*/
-			$content = $title->getContent();
+
+			if ( WikiFactory::isWikiPrivate( $title->getCityId() ) == false ) {
+				$content = $title->getContent();
+			}
 
 		// Try to load the contents of an article before falling back to a message (BugId:45352)
-		} else {
+		} elseif ( WikiFactory::isWikiPrivate( $wgCityId ) == false ) {
 			$revision = Revision::newFromTitle( $title );
+
 			if ($revision) {
 				$content = $revision->getRawText();
 			}
+
 			// Fall back to parent logic
 			if ( !$content ) {
 				$content = parent::getContent( $title, $options );
