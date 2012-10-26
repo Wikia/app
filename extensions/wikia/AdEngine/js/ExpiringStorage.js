@@ -1,4 +1,4 @@
-var ExpiringStorage = function(log, JSON) {
+var ExpiringStorage = function(log) {
 	'use strict';
 
 	var logGroup = 'ExpiringStorage'
