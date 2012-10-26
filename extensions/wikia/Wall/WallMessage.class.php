@@ -116,7 +116,7 @@ class WallMessage {
 				return false;
 			}
 
-			$acStatus = F::build( 'ArticleComment', array( $body, $user, $userPageTitle, $parent->getTitle()->getArticleId() , null ), 'doPost' );
+			$acStatus = F::build( 'ArticleComment', array( $body, $user, $userPageTitle, $parent->getId() , null ), 'doPost' );
 		}
 
 		if( $acStatus === false ) {
@@ -199,7 +199,7 @@ class WallMessage {
 		wfProfileIn(__METHOD__);
 		if($for_update) {
 			wfProfileOut(__METHOD__);
-			return wfGetWikiaPageProp(WPP_WALL_COUNT, $this->getTitle()->getArticleId(), DB_MASTER);
+			return wfGetWikiaPageProp(WPP_WALL_COUNT, $this->getId(), DB_MASTER);
 		}
 
 		if($this->order != 0) {
@@ -373,7 +373,7 @@ class WallMessage {
 				$wne->addNotificationToQueue($notif);
 			} else {
 				$this->getArticleComment()->removeMetadata('notify_everyone');
-				$pageId = $this->getArticleComment()->getTitle()->getArticleId();
+				$pageId = $this->getId();
 				$wne->removeNotificationFromQueue($pageId);
 				$this->doSaveMetadata($app->wg->User, wfMsgForContent('wall-message-update-removed-highlight-summary') );
 			}
@@ -407,9 +407,7 @@ class WallMessage {
 		$wall_owner = User::newFromName(  $parts[0], false);
 
 		if( empty($wall_owner) ) {
-			error_log('EMPTY_WALL_OWNER: (id)'. $this->getArticleComment()->getArticleTitle()->getArticleID());
-			error_log('EMPTY_WALL_OWNER: (basetext)'. $this->getArticleComment()->getArticleTitle()->getBaseText());
-			error_log('EMPTY_WALL_OWNER: (fulltext)'. $this->getArticleComment()->getArticleTitle()->getFullText());
+			error_log('EMPTY_WALL_OWNER: (id)'. $this->getId());
 		}
 		return $wall_owner;
 	}
@@ -456,7 +454,7 @@ class WallMessage {
 				return $order;
 			} else {
 				wfProfileOut(__METHOD__);
-				return $this->getArticleId();
+				return $this->getId();
 			}
 		}
 	}
@@ -470,10 +468,10 @@ class WallMessage {
 		}
 
 		if($this->isMain()){
-			$id = $this->getArticleId();
+			$id = $this->getId();
 		} else {
 			$topParent = $this->getTopParentObj();
-			$id = $topParent->getArticleId();
+			$id = $topParent->getId();
 		}
 
 
@@ -494,11 +492,6 @@ class WallMessage {
 		$title = $this->getArticleComment()->getTitle();
 		$articleId = $this->getArticleComment()->getTitle()->getArticleId();
 
-		if( $articleId === 0 && $title instanceof Title ) {
-		//message was deleted and never restored
-			$articleId = $this->helper->getArticleId_forDeleted($title->getText(), $articleData);
-		}
-
 		if( $articleId === false ) {
 			Wikia::log(__METHOD__, false, "WALL_NO_ARTILE_ID" . print_r(array('$title' => $title), true));
 			$articleId = 0;
@@ -511,7 +504,7 @@ class WallMessage {
 	 * @deprecated Probably we'll remove it it was supposed to return article timestamp but the article doesn't seem right one. more info in WallMessage::remove()
 	 */
 	public function getArticleTimestamp(&$articleData = null) {
-		$articleId = $this->getArticleComment()->getTitle()->getArticleId();
+		$articleId = $this->getId();
 
 		if( $articleId !== 0 ) {
 			$article = Article::newFromID($articleId);
@@ -522,7 +515,7 @@ class WallMessage {
 	}
 
 	public function getWallUrl() {
-		return $this->getArticleComment()->getArticleTitle()->getFullUrl();
+		return $this->getArticleTitle()->getFullUrl();
 	}
 
 	/**
@@ -558,11 +551,6 @@ class WallMessage {
 			return true;
 		}
 		return false;
-	}
-
-	public function getTopParentText($titleText) {
-		//TODO: getTopParentObj ?
-		return $this->getArticleComment()->explodeParentTitleText($titleText);
 	}
 
 	public function isWallOwner(User $user) {
@@ -681,7 +669,7 @@ class WallMessage {
 			return $this->voteVoteHelper;
 		}
 		$app = F::App();
-		$this->voteVoteHelper = F::build('VoteHelper', array($app->wg->User, $this->title->getArticleId()));
+		$this->voteVoteHelper = F::build('VoteHelper', array( $app->wg->User, $this->getId() ) );
 		return $this->voteVoteHelper;
 	}
 
@@ -910,7 +898,7 @@ class WallMessage {
 	}
 
 	protected function customActionNotifyRC($user, $action, $reason) {
-		$articleId = $this->getArticleId();
+		$articleId = $this->getId();
 		$target =  $this->getTitle();
 
 		RecentChange::notifyLog(
