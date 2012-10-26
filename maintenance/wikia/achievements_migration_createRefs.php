@@ -23,7 +23,7 @@ while( $row = $result->fetchRow() ) {
 				'user_id' => $user,
 				'wiki_id' => $wiki
 			);
-			$dbw->insert( 'ach_user_counters_refs', $ins );
+			$dbw->insert( 'ach_user_counters_refs', $ins, __METHOD__, array('IGNORE') );
 		}
 	}
 }
