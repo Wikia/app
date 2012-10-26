@@ -8,6 +8,12 @@
  */
 class AdminDashboardSpecialPageController extends WikiaSpecialPageController {
 
+	private $pagesWithSubtitle = array ( 
+            'Watchlist', 
+            'EditWatchlist', 
+            'EditWatchlist/raw' 
+        );
+
 	public function __construct() {
 		parent::__construct('AdminDashboard', '', false);
 	}
@@ -106,11 +112,14 @@ class AdminDashboardSpecialPageController extends WikiaSpecialPageController {
 		}
 		$page = $this->getVal('page', '');
 		if(empty($page)) {
-			$headerText = SpecialPage::getLocalNameFor($this->getVal('headerText', ''));
-		} else {
-			$headerText = SpecialPage::getLocalNameFor($page);
-		}
+                        $page = ($this->getVal('headerText', ''));
+                }
+		$headerText = SpecialPage::getLocalNameFor($page);
 		$this->headerText = $headerText;
+                if( in_array($page, $this->pagesWithSubtitle) ) {
+                    $this->tagline = $this->msg('tagline');
+                    $this->subtitle = $this->wg->Out->getSubtitle();
+                }
 	}
 
 	/**
