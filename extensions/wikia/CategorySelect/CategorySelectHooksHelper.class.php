@@ -68,7 +68,7 @@ class CategorySelectHooksHelper {
 		} else if ( !$title->quickUserCan( 'edit' ) && ( $title->mNamespace != NS_SPECIAL ) ) {
 
 		// Disable on non-existant article pages
-		} else if ( $action == 'view' && !$title->exists() == 0 ) {
+		} else if ( $action == 'view' && !$title->exists() ) {
 
 		// Disable for anon "confirm purge" page
 		} else if ( $action == 'purge' && $wgUser->isAnon() && !$wgRequest->wasPosted() ) {
