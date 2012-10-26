@@ -38,7 +38,11 @@
 								if(json.status === 'ok') {
 									UserLoginAjaxForm.prototype.reloadPage(); // reload, waiting on pull request
 								} else if(json.status === 'error') {
-									form.showInputError(json.errorfield, json.errormsg);
+									if(json.errorfield) {
+										form.showInputError(json.errorfield, json.errormsg);
+									} else {
+										form.showGenericError(json.errormsg);
+									}
 									buttons.removeAttr('disabled');
 								}
 							}
