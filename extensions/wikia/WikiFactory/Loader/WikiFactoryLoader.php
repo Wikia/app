@@ -811,9 +811,7 @@ class WikiFactoryLoader {
 	}
 
 	/**
-	 * LocalToGlobalPermissions
-	 *
-	 * this routine is used for converting string with permissions stored
+	 * This routine is used for converting string with permissions stored
 	 * in WikiFactory variable
 	 *
 	 * variable value (string) looks like:
@@ -829,15 +827,16 @@ class WikiFactoryLoader {
 	 * @access public
 	 * @static
 	 *
-	 * @param string $local: string with permissions
+	 * @param string $settings: string with permissions
 	 *
 	 * @return array with permissions
 	 */
-	public function LocalToGlobalPermissions( $local ) {
-		global $wgGroupPermissions;
-
+	static public function parsePermissionsSettings( $settings ) {
 		wfProfileIn( __METHOD__ );
-		$lines = explode( ",", $local );
+
+		$lines = explode( ",", $settings );
+		$permissions = array();
+
 		foreach( $lines as $line ) {
 			$parts = explode( "|", $line );
 			/**
@@ -846,9 +845,40 @@ class WikiFactoryLoader {
 			if ( count( $parts ) != 3 ) {
 				continue;
 			}
-			$wgGroupPermissions[trim($parts[0])][trim($parts[1])] = (bool)trim($parts[2]);
+
+			$permissions[trim($parts[0])][trim($parts[1])] = (bool)trim($parts[2]);
 		}
+
 		wfProfileOut( __METHOD__ );
+		return $permissions;
+	}
+
+	/**
+	 * LocalToGlobalPermissions
+	 *
+	 * Merges per-wiki permissions settings set in WF
+	 * with the global ones in wgGroupPermissions
+	 *
+	 * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
+	 * @access public
+	 *
+	 * @param string $local: string with permissions
+	 *
+	 * @return array with permissions
+	 * @see parsePermissionsSettings
+	 */
+	public function LocalToGlobalPermissions( $local ) {
+		global $wgGroupPermissions;
+		$permissions = self::parsePermissionsSettings( $local );
+
+		foreach ( $permissions as $group => $rights ) {
+			//override or add groups and rights
+			$wgGroupPermissions[$group] = array_merge(
+				( !isset( $wgGroupPermissions[$group] ) ? array() : $wgGroupPermissions[$group] ),
+				$rights
+			);
+		}
+
 		return $wgGroupPermissions;
 	}
 
