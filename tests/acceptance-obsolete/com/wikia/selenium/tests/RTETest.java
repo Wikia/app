@@ -230,6 +230,7 @@ public class RTETest extends BaseTest {
 				"<p style=\"text-indent:4em\">foo</p>",
 				"<p style=\"text-align: center; height: 3em;\">&#160;</p>",
 				"<p style=\"text-align: center; height: 3em;\">123&#160;456</p>",
+				"<p class=\"mainpage-button\">Habitats</p>",  //BugId: 47994
 				"foo<p>bar</p>",
 				"foo\n<p>bar</p>",
 				"foo\n\n<p>bar</p>",
