@@ -48,7 +48,7 @@ var ExpiringStorage = function(log, JSON) {
 			}
 		};
 
-		if (typeof(storage) === 'object'
+		if (storage && typeof(storage) === 'object'
 			&& typeof(storage.getItem) === 'function'
 			&& typeof(storage.setItem) === 'function'
 			&& typeof(storage.removeItem) === 'function'
