@@ -16,9 +16,14 @@
 				var dialog = $(html).makeModal({
 					width: 600
 				});
+				
+				var form = new WikiaForm(dialog.find('.WikiaForm')),
+					buttons = window.asdf = dialog.find('button');
+				
 				dialog.on('click.CreateNewBoard', '.cancel', function(e) {
 					dialog.closeModal();
 				}).on('click.CreateNewBoard', '.submit', function(e) {
+					buttons.attr('disabled', true);
 					$.nirvana.sendRequest({
 						controller: 'ForumExternalController',
 						method: 'createNewBoard',
@@ -28,8 +33,15 @@
 							boardDescription: dialog.find('input[name=boardTitle]').val()
 						},
 						callback: function (json) {
-							console.log(json);
-							alert('save returned, check console');
+							$().log(json);
+							if(json) {
+								if(json.status === 'ok') {
+									UserLoginAjaxForm.prototype.reloadPage(); // reload, waiting on pull request
+								} else if(json.status === 'error') {
+									form.showInputError(json.errorfield, json.errormsg);
+									buttons.removeAttr('disabled');
+								}
+							}
 						}
 					});
 				});

@@ -14,8 +14,9 @@ class ForumExternalController extends WallExternalController {
 	/**
      * Create new board ajax call
      * @request boardTitle - title of the board
-     * @request boardDescriptiont - description of the board (optional)
+     * @request boardDescription - description of the board (optional)
      * @response status - [ok|error|accessdenied]
+     * @response errorfield - optional error field.  nullable
      * @response errormsg - optional error message.  nullable
      */
 	public function createNewBoard() {
@@ -28,14 +29,18 @@ class ForumExternalController extends WallExternalController {
 		$boardDescription = $this->getVal('boardDescription', '');
 		
 		$status = 'error';
+		$errorfield = '';
 		$errormsg = '';
 		
 		/* backend magic happens here */
 		
 		/* mock data, remove after backend magic */
 		$status = 'ok';
+		$errorfield = 'boardTitle';
+		$errormsg = 'Wow title broke';
 		
 		$this->status = $status;
+		$this->errorfield = $errorfield;
 		$this->errormsg = $errormsg;
 	}
 
