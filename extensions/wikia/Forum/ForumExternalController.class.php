@@ -35,7 +35,7 @@ class ForumExternalController extends WallExternalController {
 		// Reject illegal characters.
 		$rxTc = Title::getTitleInvalidRegex();
 		if ( preg_match( $rxTc, $boardTitle ) ) {
-			$this->errorfield = 'title';
+			$this->errorfield = 'boardTitle';
 			$this->errormsg = wfMsg('forum-board-title-validation-invalid');
 			return true;
 		}
