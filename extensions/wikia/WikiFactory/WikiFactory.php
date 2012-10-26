@@ -2899,34 +2899,33 @@ class WikiFactory {
 		return $aWikis;
 	}
 
-        /**
-         * fetching a number of wikis with select variable set to $val
-         * @param integer $varId
-         * @param string $type
-         * @param mixed $val
-         * @param string $likeVal
-         */
+	/**
+	* fetching a number of wikis with select variable set to $val
+	* @param integer $varId
+	* @param string $type
+	* @param mixed $val
+	* @param string $likeVal
+	*/
 
-        static public function getCountOfWikisWithVar( $varId, $type, $selectedCond ,$val, $likeVal = '' ) {
-            global $wgExternalSharedDB;
-            $dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
+	static public function getCountOfWikisWithVar( $varId, $type, $selectedCond ,$val, $likeVal = '' ) {
+		global $wgExternalSharedDB;
+		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
 
-            $selectedVal = serialize( $val );
-            $aTables = array( 'city_variables', 'city_list' );
-            $varId = mysql_real_escape_string( $varId );
-            $aWhere = array(
-                'city_id = cv_city_id',
-                "cv_variable_id = '$varId'"
-            );
+		$selectedVal = serialize( $val );
+		$aTables = array( 'city_variables', 'city_list' );
+		$varId = mysql_real_escape_string( $varId );
+		$aWhere = array(
+			'city_id = cv_city_id',
+			"cv_variable_id = '$varId'"
+		);
 
-            if( 'full' == $type ) {
-                $aWhere[] = "cv_value " . $dbr->buildLike( $dbr->anyString(), $likeVal, $dbr->anyString() );
-            } else {
-                $aWhere[] = "cv_value $selectedCond '$selectedVal'";
-            }
+		if( 'full' == $type ) {
+			$aWhere[] = "cv_value " . $dbr->buildLike( $dbr->anyString(), $likeVal, $dbr->anyString() );
+		} else {
+			$aWhere[] = "cv_value $selectedCond '$selectedVal'";
+		}
 
-            $oRow = $dbr->selectRow( $aTables, 'COUNT(1) AS cnt', $aWhere, __METHOD__ );
-
-            return $oRow->cnt;
-        }
+		$oRow = $dbr->selectRow( $aTables, 'COUNT(1) AS cnt', $aWhere, __METHOD__ );
+		return $oRow->cnt;
+	}
 };
