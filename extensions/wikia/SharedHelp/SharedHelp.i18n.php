@@ -13,6 +13,8 @@ $messages = array();
 $messages['en'] = array(
 	'sharedhelp-desc' => 'Takes pages from [[w:c:Help|Help Wikia]] and inserts them into the {{ns:help}} namespace on this wiki',
 	'sharedhelp-autotalkcreate-summary' => 'Talk page created automatically',
+	'sharedhelp-searchprofile' => 'Help pages',
+	'sharedhelp-searchprofile-tooltip' => 'Search Help pages',
 );
 
 /** Message documentation (Message documentation)
@@ -20,6 +22,8 @@ $messages['en'] = array(
  */
 $messages['qqq'] = array(
 	'sharedhelp-desc' => '{{desc}}',
+	'sharedhelp-searchprofile' => 'Search profile link name displayed in left sidebar on search',
+	'sharedhelp-searchprofile-tooltip' => 'Tooltip for search profile link',
 );
 
 /** Arabic (العربية)
