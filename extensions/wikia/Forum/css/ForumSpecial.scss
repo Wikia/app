@@ -1,4 +1,5 @@
-@import '../../../../skins/oasis/css/core/color';
+@import 'skins/oasis/css/core/color';
+@import 'skins/oasis/css/mixins/clearfix';
 
 .Forum {
 	h3 {
@@ -11,12 +12,12 @@
 	}
 
 	.activity {
-		color: $color-alternate-text;
+		color: $color-text;
 		list-style: none;
 		margin: 0;
 		position: absolute;
 		right: 0;
-		top: 0;
+		top: 0.5em;
 
 		li {
 			display: inline;
@@ -29,7 +30,10 @@
 	}
 
 	.board {
-		margin: 1em 0 0 0;
+		@include clearfix;
+		border-top: 1px dotted $color-alternate-text;
+		margin: 0;
+		padding: 12px 0;
 		position: relative;
 	}
 
@@ -37,9 +41,14 @@
 		list-style: none;
 		margin: 0;
 	}
+	
+	.description {
+		color: $color-alternate-text;
+	}
 
 	.last-post {
-		color: $color-alternate-text;
+		clear: both;
+		color: $color-text;
 		margin: 0;
 	}
 

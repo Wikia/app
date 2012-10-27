@@ -1,4 +1,7 @@
-@import "../../../../skins/oasis/css/mixins/clearfix";
+@import "skins/oasis/css/core/color";
+@import "skins/oasis/css/mixins/clearfix";
+
+
 
 .ForumBoardEdit {
 	header {
@@ -6,6 +9,22 @@
 		margin-top: 10px;
 		.create-new-board-button {
 			float: right;
+		}
+	}
+	.board {
+		@include clearfix;
+		.editControls {
+			display: inline;
+			position: relative;
+			top: -2px;
+			.sprite {
+				cursor: pointer;
+			}
+		}
+		.heading {
+			h4 {
+				display: inline;
+			}
 		}
 	}
 }
