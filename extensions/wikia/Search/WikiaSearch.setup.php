@@ -33,9 +33,9 @@ $app->registerClass('WikiaVideoSearchController',	$dir . 'WikiaVideoSearchContro
 $app->registerSpecialPage('WikiaSearch',	'WikiaSearchController');
 $app->registerSpecialPage('Search',			'WikiaSearchController');
 
-global $wgSolrProxy, $wgSolrHost, $wgWikiaSearchUseProxy, $wgExternalSharedDB, $wgEnabledRelatedVideoSearch;
+global $wgSolrProxy, $wgSolrHost, $wgWikiaSearchUseProxy, $wgExternalSharedDB, $wgEnableRelatedVideoSearch;
 
-if ( $wgEnableRelatedVideoSearch ) {
+if (! empty( $wgEnableRelatedVideoSearch ) ) {
 	$app->registerSpecialPage('VideoSearch',	'WikiaVideoSearchController');
 }
 
