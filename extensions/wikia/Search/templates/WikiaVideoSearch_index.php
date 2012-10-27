@@ -95,5 +95,18 @@ div.video-search-results {
 		<h3>No results for <i><?= $wikiQuery ?></i> in video wiki</h3>
 	<? endif; ?>
 	</section>
-	
+</div>
+<div class ="video-search-results">
+	<section>
+	<? if ( $wikiMltResults ) : ?>
+		<h3>Video Search Against <i><?= $combinedQuery ?></i></h3>
+		<ul>
+		<? foreach ( $combinedSearchResults as $url => $resultFields ) : ?>
+			<li><a href="<?=$url?>"><?= $resultFields['title_en'] ?></a></li>
+		<? endforeach; ?>
+		</ul>
+	<? else: ?>
+		<h3>No Results for <i><?= $combinedQuery ?></i></h3>
+	<? endif; ?>
+	</section>
 </div>

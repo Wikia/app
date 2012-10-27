@@ -32,14 +32,17 @@ class WikiaVideoSearchController extends WikiaSpecialPageController {
 			$this->title = F::build( 'Title', array( $pageId ), 'newFromId' );
 		}
 		
+		$this->wikiMltResults = $this->getRelatedVideosForWiki( $this->wg->CityId );
+		$this->wikiSearchResults = $this->getRelatedVideosBySearchForWiki( $this->wg->CityId );
+		
 		if ( isset( $this->title ) ) {
 			$this->mltResults = $this->getRelatedVideosForPage();
 			
 			$this->searchResults = $this->getRelatedVideosBySearchForPage();
+			
+			$this->combinedSearchResults = $this->getRelatedVideosBySearchForPageAndWiki();
+			
 		}
-		
-		$this->wikiMltResults = $this->getRelatedVideosForWiki( $this->wg->CityId );
-		$this->wikiSearchResults = $this->getRelatedVideosBySearchForWiki( $this->wg->CityId );
 	}
 	
 	protected function getRelatedVideosForPage() {
@@ -101,6 +104,29 @@ class WikiaVideoSearchController extends WikiaSpecialPageController {
 		$searchResultSet = $this->wikiaSearch->doSearch( $searchConfig );
 		
 		return $this->prepareResultSet( $searchResultSet );
+		
+	}
+	
+	protected function getRelatedVideosBySearchForPageAndWiki( ) {
+		
+		$searchConfig = F::build( 'WikiaSearchConfig' );
+		$searchConfig	->setCityId	( WikiaSearch::VIDEO_WIKI_ID )
+						->setStart	( 0 )
+						->setSize	( 20 )
+		;
+
+		$relatedVideosParams = array( 'video_wiki_only'=>true, 'start'=>0, 'size'=>20 );
+		
+		$this->combinedQuery = sprintf( '%s %s', $this->title, $this->wikiQuery );
+
+		$searchConfig	->setQuery		( $this->combinedQuery )
+						->setVideoSearch( true )
+						->setPageId		( false )
+		;
+
+		$searchResultSet = $this->wikiaSearch->doSearch( $searchConfig );
+		
+		return $this->prepareResultSet( $searchResultSet, $this->title->getArticleID() );
 		
 	}
 	
