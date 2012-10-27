@@ -126,6 +126,7 @@ class SWMSendToGroupTask extends BatchTask {
 					case 'ACTIVE':
 					case 'GROUP':
 					case 'EDITCOUNT':
+					case 'ANONS':
 						$result = $this->sendMessageToListOfWikis( $args );
 						break;
 				}
@@ -137,6 +138,7 @@ class SWMSendToGroupTask extends BatchTask {
 					case 'ACTIVE':
 					case 'GROUP':
 					case 'EDITCOUNT':
+					case 'ANONS':
 						$result = $this->sendMessageToWikisByCreationDate( $args );
 						break;
 				}
