@@ -32,9 +32,13 @@ $app->registerClass('WikiaVideoSearchController',	$dir . 'WikiaVideoSearchContro
  */
 $app->registerSpecialPage('WikiaSearch',	'WikiaSearchController');
 $app->registerSpecialPage('Search',			'WikiaSearchController');
-$app->registerSpecialPage('VideoSearch',	'WikiaVideoSearchController');
 
-global $wgSolrProxy, $wgSolrHost, $wgWikiaSearchUseProxy, $wgExternalSharedDB;
+global $wgSolrProxy, $wgSolrHost, $wgWikiaSearchUseProxy, $wgExternalSharedDB, $wgEnabledRelatedVideoSearch;
+
+if ( $wgEnableRelatedVideoSearch ) {
+	$app->registerSpecialPage('VideoSearch',	'WikiaVideoSearchController');
+}
+
 
 $wgSolrHost = isset($_GET['solrhost']) ? $_GET['solrhost'] : $wgSolrHost;
 
