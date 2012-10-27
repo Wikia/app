@@ -316,7 +316,7 @@ function SharedHelpHook(&$out, &$text) {
 				}
 				$wgMemc->set($sharedRedirectsArticlesKey, $articleLink, 60*60*12);
 			}
-                        $helpSitename = WikiFactory::getVarValueByName( 'wgSitename', $wgHelpWikiId );
+			$helpSitename = WikiFactory::getVarValueByName( 'wgSitename', $wgHelpWikiId );
 
 			// "this text is stored..."
 			$info = '<div class="sharedHelpInfo plainlinks" style="text-align: right; font-size: smaller;padding: 5px">' . wfMsgExt('shared_help_info', 'parseinline', $sharedServer . $sharedArticlePathClean . $articleLink, $helpSitename ) . '</div>';
@@ -346,7 +346,7 @@ function SharedHelpEditPageHook(&$editpage) {
 		return true;
 	}
 
-        $helpSitename = WikiFactory::getVarValueByName( 'wgSitename', $wgHelpWikiId );
+	$helpSitename = WikiFactory::getVarValueByName( 'wgSitename', $wgHelpWikiId );
 
 	$msg = '<div style="border: solid 1px; padding: 10px; margin: 5px" class="sharedHelpEditInfo">'.wfMsgExt('shared_help_edit_info', 'parseinline', $wgTitle->getDBkey(), $helpSitename).'</div>';
 
