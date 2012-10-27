@@ -25,6 +25,7 @@ $wgHooks['OutputPageBeforeHTML'][] = 'SharedHelpHook';
 $wgHooks['EditPage::showEditForm:initial'][] = 'SharedHelpEditPageHook';
 $wgHooks['LinkBegin'][] = 'SharedHelpLinkBegin';
 $wgHooks['WikiaCanonicalHref'][] = 'SharedHelpCanonicalHook';
+$wgHooks['SpecialSearchProfiles'][] = 'efSharedHelpSearchProfilesHook';
 
 
 /* in MW 1.19 WantedPages::getSQL hook changes into WantedPages::getQueryInfo */
@@ -522,6 +523,36 @@ function SharedHelpCanonicalHook( &$url ) {
 		$sharedServer = WikiFactory::getVarValueByName( 'wgServer', $wgHelpWikiId );
 		$titleUrl = $wgTitle->getLinkURL();
 		$url = $sharedServer . $titleUrl;
+	}
+
+	return true;
+}
+
+/**
+ * Adds a Help search filter on the Help Wiki
+ */
+function efSharedHelpSearchProfilesHook( &$profiles ) {
+	global $wgCityId, $wgHelpWikiId;
+	if ( empty( $wgHelpWikiId ) || $wgCityId != $wgHelpWikiId ) {
+		return true;
+	}
+	$helpSearchProfile = array(
+		'message' => 'sharedhelp-searchprofile',
+		'tooltip' => 'sharedhelp-searchprofile-tooltip',
+		'namespaces' => array( NS_HELP )
+	);
+
+	if ( !array_key_exists( 'advanced', $profiles ) ) {
+		$profiles['help'] = $helpSearchProfile;
+	} else {
+		$newProfiles = array();
+		foreach ( $profiles as $key => $value ) {
+			if ( $key === 'advanced' ) {
+				$newProfiles['help'] = $helpSearchProfile;
+			}
+			$newProfiles[$key] = $value;
+		}
+		$profiles = $newProfiles;
 	}
 
 	return true;
