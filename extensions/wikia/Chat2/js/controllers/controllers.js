@@ -709,7 +709,7 @@ var NodeChatController = $.createClass(NodeRoomController,{
 					'hidden':  true
 				});
 
-				var newChatEntry = new models.InlineAlert({text: $.msg( 'chat-user-blocked', wgUserName, this.sanitizeHtml(userClear.get('name')) ) });
+				var newChatEntry = new models.InlineAlert({wfMsg: 'chat-user-blocked', msgParams: [wgUserName, this.sanitizeHtml(userClear.get('name')) ] });
 				this.chats.privates[ user.get('roomId') ].socket.send(newChatEntry.xport());
 
 				if(this.chats.privates[ user.get('roomId') ].active) {
