@@ -8,8 +8,16 @@
 				<? if ($isEditMode): ?>
 					<div class="editControls">
 						<!-- Admin editControls here -->
+						<img src="<?= $wf->BlankImgUrl() ?>" class="sprite edit-pencil">
+						<img src="<?= $wf->BlankImgUrl() ?>" class="sprite trash">
 					</div>
 				<? endif; ?>
+			</div>
+			<p class="description grid-3 alpha">
+				This is a hardcoded placeholder for board description.  Remove me and replace me with real data please.
+			</p>
+			<div class="grid-1">
+				<!-- placeholder for future feature -->
 			</div>
 			<ul class="activity">
 				<li class="threads"><?= $wf->MsgExt( 'forum-specialpage-board-threads', array( 'parsemag' ), $board['threadCount'] ) ?></li>
