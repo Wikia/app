@@ -86,6 +86,7 @@ class SWMSendToGroupTask extends BatchTask {
 				switch ($args['sendModeUsers']) {
 					case 'ALL':
 					case 'ACTIVE':
+					case 'ANONS':
 						$result = $this->sendMessageToHub($args);
 						break;
 
@@ -316,6 +317,16 @@ class SWMSendToGroupTask extends BatchTask {
 									'Group: %s, Hub ID: %s<br/>' .
 									'Sender: %s [id: %d]',
 									$args['groupName'],
+									$args['hubId'],
+									$args['senderName'],
+									$args['senderId']
+								);
+								break;
+
+							case 'ANONS':
+								$desc = sprintf('SiteWideMessages :: Send to all anon users on a hub<br/>' .
+									'Hub ID: %s<br/>' .
+									'Sender: %s [id: %d]',
 									$args['hubId'],
 									$args['senderName'],
 									$args['senderId']
@@ -1057,7 +1068,24 @@ class SWMSendToGroupTask extends BatchTask {
 		}
 		$DB->FreeResult($dbResult);
 
-		$result = $this->sendMessageHelperToActive($DB, $wikisDB, $params);
+		if ( $params['sendModeUsers'] === 'ANONS' ) {
+			$this->log( 'Send message to anoymous users (on specified wikis) [number of wikis = ' . count( $wikisDB ) . ']' );
+			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
+			foreach ( array_keys( $wikisDB ) as $mWikiId ) {
+				$sqlValues[] = array(
+					'msg_wiki_id' => $mWikiId,
+					'msg_recipient_id' => 0,
+					'msg_id' => $params['messageId'],
+					'msg_status' => MSG_STATUS_UNSEEN
+				);
+			}
+			$result = (boolean)$dbw->insert(
+				MSG_STATUS_DB,
+				$sqlValues
+			);
+		} else {
+			$result = $this->sendMessageHelperToActive($DB, $wikisDB, $params);
+		}
 
 		return $result;
 	}
