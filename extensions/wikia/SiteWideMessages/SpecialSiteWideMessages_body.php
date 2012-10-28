@@ -648,6 +648,7 @@ class SiteWideMessages extends SpecialPage {
 								case 'ALL':
 								case 'ACTIVE':
 								case 'GROUP':
+								case 'ANONS':
 									//add task to TaskManager
 									$oTask = new SWMSendToGroupTask();
 									$oTask->createTask(
