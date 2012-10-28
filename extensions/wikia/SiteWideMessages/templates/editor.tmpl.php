@@ -332,7 +332,6 @@
 jQuery( document ).ready( function ( $ ) {
 	function grayOut( e ) {
 		switch ( e.target.id ) {
-			case 'mSendModeWikisH':
 			case 'mSendModeWikisC':
 				$( '#mSendModeUsersA' ).prop( 'disabled', true );
 				$( '#mSendModeUsersReg' ).prop( 'disabled', true );
@@ -344,17 +343,8 @@ jQuery( document ).ready( function ( $ ) {
 					$( '#mSendModeUsersC' ).prop( 'checked', true );
 				}
 				break;
+			case 'mSendModeWikisH':
 			case 'mSendModeWikisW':
-				$( '#mSendModeUsersA' ).prop( 'disabled', true );
-				$( '#mSendModeUsersReg' ).prop( 'disabled', true );
-				$( '#mSendModeUsersIP' ).prop( 'disabled', false );
-				if ( $( '#mSendModeUsersA' ).prop( 'checked' ) ||
-					$( '#mSendModeUsersReg' ).prop( 'checked' ) ||
-					$( '#mSendModeUsersIP' ).prop( 'checked' )
-				) {
-					$( '#mSendModeUsersC' ).prop( 'checked', true );
-				}
-				break;
 			case 'mSendModeWikisM':
 			case 'mSendModeWikisD':
 				$( '#mSendModeUsersA' ).prop( 'disabled', true );
@@ -379,7 +369,7 @@ jQuery( document ).ready( function ( $ ) {
 			case 'mSendModeUsersIP':
 				$( '#mSendModeWikisA' ).prop( 'disabled', false );
 				$( '#mSendModeWikisC' ).prop( 'disabled', true );
-				$( '#mSendModeWikisH' ).prop( 'disabled', true );
+				$( '#mSendModeWikisH' ).prop( 'disabled', false );
 				$( '#mSendModeWikisW' ).prop( 'disabled', false );
 				$( '#mSendModeWikisM' ).prop( 'disabled', false );
 				$( '#mSendModeWikisD' ).prop( 'disabled', false );
