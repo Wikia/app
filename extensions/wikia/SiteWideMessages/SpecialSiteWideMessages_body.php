@@ -529,20 +529,6 @@ class SiteWideMessages extends SpecialPage {
 						);
 						$dbInsertResult &= $dbResult;
 					}
-				} elseif ( $mSendModeWikis != 'WIKIS' && $mSendModeWikis != 'CREATED' && $mSendModeUsers == 'ANONS' ) {
-					if ( !is_null( $result['msgId'] ) ) {
-						$dbResult = (boolean)$DB->query(
-							'INSERT INTO ' . MSG_STATUS_DB .
-							' (msg_wiki_id, msg_recipient_id, msg_id, msg_status)' .
-							' VALUES (' .
-							$DB->addQuotes( $mWikiId ). ', 0, ' .
-							$DB->addQuotes( $result['msgId'] ) . ', ' .
-							MSG_STATUS_UNSEEN .
-							');'
-							, __METHOD__
-						);
-						$dbInsertResult &= $dbResult;
-					}
 				} elseif ( $mSendModeUsers == 'USERS' ) {
 					$oTask = new SWMSendToGroupTask();
 					$oTask->createTask(
@@ -567,6 +553,22 @@ class SiteWideMessages extends SpecialPage {
 						case 'ALL':
 							switch ($mSendModeUsers) {
 								case 'ALL':
+									break;
+
+								case 'ANONS':
+									if ( !is_null( $result['msgId'] ) ) {
+										$dbResult = (boolean)$DB->query(
+											'INSERT INTO ' . MSG_STATUS_DB .
+											' (msg_wiki_id, msg_recipient_id, msg_id, msg_status)' .
+											' VALUES (' .
+											$DB->addQuotes( $mWikiId ). ', 0, ' .
+											$DB->addQuotes( $result['msgId'] ) . ', ' .
+											MSG_STATUS_UNSEEN .
+											');'
+											, __METHOD__
+										);
+										$dbInsertResult &= $dbResult;
+									}
 									break;
 
 								case 'ACTIVE':
@@ -730,6 +732,22 @@ class SiteWideMessages extends SpecialPage {
 											. ' (msg_wiki_id, msg_recipient_id, msg_id, msg_status)'
 											. ' VALUES ' . implode(',', $sqlValues)
 											. ';'
+											, __METHOD__
+										);
+										$dbInsertResult &= $dbResult;
+									}
+									break;
+
+								case 'ANONS':
+									if ( !is_null( $result['msgId'] ) ) {
+										$dbResult = (boolean)$DB->query(
+											'INSERT INTO ' . MSG_STATUS_DB .
+											' (msg_wiki_id, msg_recipient_id, msg_id, msg_status)' .
+											' VALUES (' .
+											$DB->addQuotes( $mWikiId ). ', 0, ' .
+											$DB->addQuotes( $result['msgId'] ) . ', ' .
+											MSG_STATUS_UNSEEN .
+											');'
 											, __METHOD__
 										);
 										$dbInsertResult &= $dbResult;
