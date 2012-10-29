@@ -56,7 +56,9 @@ var ExpiringStorage = function(log, JSON) {
 			return {
 				getItem: getItem,
 				setItem: setItem,
-				removeItem: storage.removeItem
+				removeItem: function(item) {
+					storage.removeItem(item);
+				}
 			};
 		}
 
