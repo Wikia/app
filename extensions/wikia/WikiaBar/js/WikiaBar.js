@@ -9,6 +9,7 @@ var WikiaBar = {
 	WIKIA_BAR_SAMPLING_RATIO: 10, // integer (0-100): 0 - no tracking, 100 - track everything */
 	WIKIA_BAR_SHOWN_STATE_VALUE: 'shown',
 	WIKIA_BAR_HIDDEN_STATE_VALUE: 'hidden',
+	cutMessagePrecision: 20, // integer: 1 - best precision but low performance, 20 - low precision but high performance
 	messageConfig: {
 		index: 0,
 		container: null,
@@ -97,24 +98,30 @@ var WikiaBar = {
 			lastSpaceIndex = -1,
 			cutIndex = -1;
 
-		for (var j = 0, length = messageArray.length ; j < length ; j++) {
-			if (messageArray[j] == ' ') {
-				lastSpaceIndex = j;
-			}
-			tempMessage = tempMessage + messageArray[j];
+		for (var j = 0, length = messageArray.length ; j < length ; j
+			+=this.cutMessagePrecision) {
+			tempMessage = tempMessage + messageArray.join("").substr(j,
+				this.cutMessagePrecision);
 			tempMessageObject = $('<span></span>').text(tempMessage);
 			container.html(tempMessageObject);
 			if (tempMessageObject.width() >= this.messageConfig.container.width()) {
-				if (lastSpaceIndex == -1) {
-					cutIndex = j;
-				} else {
-					cutIndex = ((lastSpaceIndex + 1) < length) ? (lastSpaceIndex + 1) : lastSpaceIndex;
-				}
+				cutIndex = j - this.cutMessagePrecision;
 				break;
 			}
 		}
 
-		return ((cutIndex == -1) ? messageArray : messageArray.slice(0, cutIndex));
+		if (cutIndex == -1) {
+			temp = messageArray;
+		}
+		else {
+			temp = messageArray.slice(0, cutIndex);
+			lastIndexOfSpace = temp.lastIndexOf(" ");
+			if (lastIndexOfSpace < cutIndex) {
+				temp = messageArray.slice(0, lastIndexOfSpace);
+			}
+		}
+
+		return temp;
 	},
 	messageFadeIn: function () {
 		var currentMsgIndex = this.messageConfig.index,
