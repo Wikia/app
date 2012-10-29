@@ -228,13 +228,6 @@ $wgAutoloadClasses['SassService']  =  $IP.'/includes/wikia/services/SassService.
 $wgAutoloadClasses['WikisModel'] = "{$IP}/includes/wikia/models/WikisModel.class.php";
 
 // modules
-$wgAutoloadClasses['SimpleSearchService']  =  $IP.'/includes/wikia/services/SimpleSearchService.class.php';
-$wgAutoloadClasses['SimpleSearchTooManyResultsException']  =  $IP.'/includes/wikia/services/SimpleSearchController.class.php';
-$wgAutoloadClasses['SimpleSearchDisabledException']  =  $IP.'/includes/wikia/services/SimpleSearchController.class.php';
-$wgAutoloadClasses['SimpleSearchEngineException']  =  $IP.'/includes/wikia/services/SimpleSearchController.class.php';
-$wgAutoloadClasses['SimpleSearchEmptyKeyException']  =  $IP.'/includes/wikia/services/SimpleSearchController.class.php';
-
-// modules
 $wgAutoloadClasses['OasisController'] = $IP.'/skins/oasis/modules/OasisController.class.php';
 $wgAutoloadClasses['BodyController'] = $IP.'/skins/oasis/modules/BodyController.class.php';
 $wgAutoloadClasses['BodyContentOnlyController'] = $IP.'/skins/oasis/modules/BodyContentOnlyController.class.php';
