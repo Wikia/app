@@ -137,24 +137,18 @@ window.WikiaTracker = (function(){
 
 		//delay at the end to make sure all of the above was at least invoked
 		if (data && data.href ) {
-			if( mouseButton === 1 ) {
-				invokeDelayedMiddleClickEvent(data.href);
-			} else {
-				invokeDelayedLeftClickEvent(data.href);
-			}
+			setTimeout(function() {
+				invokeDelayedClickEvent(data.href, mouseButton);
+			}, 100);
 		}
 	}
 
-	function invokeDelayedLeftClickEvent(location) {
-		setTimeout(function() {
+	function invokeDelayedClickEvent(location, button) {
+		if( button === 1 ) {
+			window.open(location);
+		} else {
 			document.location = location;
-		}, 100);
-	}
-
-	function invokeDelayedMiddleClickEvent(location) {
-		setTimeout(function() {
-			window.open(location, '_blank');
-		}, 100);
+		}
 	}
 
 	/**
