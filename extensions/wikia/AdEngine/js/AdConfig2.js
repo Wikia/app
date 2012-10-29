@@ -108,7 +108,8 @@ var AdConfig2 = function (
 			}
 		}
 
-		if (adProviderAdDriver2.canHandleSlot(slot)) {
+		// Non-high-value slots goes to ad provider Later, so GamePro can grab them later
+		if (highValueSlots[slotname] && adProviderAdDriver2.canHandleSlot(slot)) {
 			return adProviderAdDriver2;
 		}
 

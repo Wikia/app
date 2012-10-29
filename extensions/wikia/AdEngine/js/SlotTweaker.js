@@ -1,4 +1,4 @@
-var SlotTweaker = function(log, document, undef) {
+var SlotTweaker = function(log, document) {
 	'use strict';
 
 	var logGroup = 'SlotTweaker'
