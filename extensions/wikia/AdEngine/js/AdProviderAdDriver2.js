@@ -1,110 +1,227 @@
-var AdProviderAdDriver2 = function (helper, WikiaDart, ScriptWriter, WikiaTracker, log, window, Geo, slotTweaker) {
-	var slotMap = {
-		'HOME_TOP_LEADERBOARD':{'tile':2, 'size':'728x90,468x60,980x130,980x65', 'loc':'top', 'dcopt':'ist'},
-		'HOME_TOP_RIGHT_BOXAD':{'tile':1, 'size':'300x250,300x600', 'loc':'top'},
-		'LEFT_SKYSCRAPER_2':{'tile':3, 'size':'160x600,120x600', 'loc':'middle'},
-		'TOP_LEADERBOARD':{'tile':2, 'size':'728x90,468x60,980x130,980x65', 'loc':'top', 'dcopt':'ist'},
-		'TOP_RIGHT_BOXAD':{'tile':1, 'size':'300x250,300x600', 'loc':'top'},
-		'WIKIA_BAR_BOXAD_1':{'size':'320x50'},
-		'EXIT_STITIAL_BOXAD_1':{'size':'600x400,300x250'},
-		'MODAL_INTERSTITIAL':{'size':'600x400','loc':'modal'},
-		'MODAL_RECTANGLE':{'size':'300x100','loc':'modal'}
+// TODO: move WikiaTracker outside
+
+var AdProviderAdDriver2 = function(wikiaDart, scriptWriter, WikiaTracker, log, window, Geo, slotTweaker, expiringStorage) {
+	'use strict';
+
+	var logGroup = 'AdProviderAdDriver2'
+		, slotMap
+		, storage = expiringStorage.makeStorage(window.localStorage)
+		, forgetAdsShownAfterTime = 3600 * 1000 // an hour
+		, incrementItemInStorage
+		, fillInSlot, canHandleSlot
+		, formatTrackTime
+		, country = Geo.getCountryCode()
+		, now = window.wgNow || new Date()
+		, highValueCountries, defaultHighValueCountries
+		, isHighValueCountry, maxCallsToDART
+	;
+
+	// copy of CommonSettings wgHighValueCountries
+	defaultHighValueCountries = {
+		'CA': 3,
+		'DE': 3,
+		'DK': 3,
+		'ES': 3,
+		'FI': 3,
+		'FR': 3,
+		'GB': 3,
+		'IT': 3,
+		'NL': 3,
+		'NO': 3,
+		'SE': 3,
+		'UK': 3,
+		'US': 3
 	};
 
-	function canHandleSlot(slot) {
-		var slotname = slot[0];
+	highValueCountries = window.wgHighValueCountries || defaultHighValueCountries;
 
-		log('canHandleSlot', 5, 'AdProviderAdDriver2');
-		log([slotname], 5, 'AdProviderAdDriver2');
+	// Fetch number of calls to make to DART
+	if (country) {
+		maxCallsToDART = highValueCountries[country.toUpperCase()];
+	}
+	maxCallsToDART = maxCallsToDART || 0;
+	isHighValueCountry = !!maxCallsToDART;
 
-		if (slotMap[slotname]) {
+	slotMap = {
+		'EXIT_STITIAL_BOXAD_1': {'size':'600x400,300x250', 'tile':2, 'loc': "exit"},
+		'HOME_TOP_LEADERBOARD': {'size':'728x90,468x60,980x130,980x65', 'tile':2, 'loc':'top', 'dcopt':'ist'},
+		'HOME_TOP_RIGHT_BOXAD': {'size':'300x250,300x600', 'tile':1, 'loc':'top'},
+		'LEFT_SKYSCRAPER_2': {'size':'160x600,120x600', 'tile':3, 'loc':'middle'},
+		'LEFT_SKYSCRAPER_3': {'size': '160x600', 'tile': 6, 'loc': "footer"},
+		'MODAL_INTERSTITIAL': {'size':'600x400','tile':2,'loc':'modal'},
+		'MODAL_RECTANGLE': {'size':'300x100','tile':2,'loc':'modal'},
+		'TOP_LEADERBOARD': {'size':'728x90,468x60,980x130,980x65', 'tile':2, 'loc':'top', 'dcopt':'ist'},
+		'TOP_RIGHT_BOXAD': {'size':'300x250,300x600', 'tile':1, 'loc':'top'},
+		'WIKIA_BAR_BOXAD_1': {'size':'320x50', 'tile': 4, 'loc': "bottom"}
+	};
+
+// FORMES SLOTS {
+//		'CORP_TOP_LEADERBOARD': {'tile':2, 'loc': 'top', 'dcopt': 'ist'},
+//		'CORP_TOP_RIGHT_BOXAD': {'tile':1, 'loc': 'top'},
+//		'DOCKED_LEADERBOARD': {'tile': 8, 'loc': "bottom"},
+//		'EXIT_STITIAL_BOXAD_2': {'tile':3, 'loc': "exit"},
+//		'EXIT_STITIAL_INVISIBLE': {'tile':1, 'loc': "exit", 'dcopt': "ist"},
+//		'FOOTER_BOXAD': {'tile': 5, 'loc': "footer"},
+//		'HOME_INVISIBLE_TOP': {'tile':12, 'loc': "invisible"},
+//		'HOME_LEFT_SKYSCRAPER_1': {'tile':3, 'loc': "top"},
+//		'HOME_LEFT_SKYSCRAPER_2': {'tile':3, 'loc': "middle"},
+//		'HOME_TOP_RIGHT_BUTTON': {'tile': 3, 'loc': "top"},
+//		'HUB_TOP_LEADERBOARD': {'tile':2, 'loc': 'top', 'dcopt': 'ist'},
+//		'INCONTENT_BOXAD_1': {'tile':4, 'loc': "middle"},
+//		'INCONTENT_BOXAD_2': {'tile':5, 'loc': "middle"},
+//		'INCONTENT_BOXAD_3': {'tile':6, 'loc': "middle"},
+//		'INCONTENT_BOXAD_4': {'tile':7, 'loc': "middle"},
+//		'INCONTENT_BOXAD_5': {'tile':8, 'loc': "middle"},
+//		'INCONTENT_LEADERBOARD_1': {'tile':4, 'loc': "middle"},
+//		'INCONTENT_LEADERBOARD_2': {'tile':5, 'loc': "middle"},
+//		'INCONTENT_LEADERBOARD_3': {'tile':6, 'loc': "middle"},
+//		'INCONTENT_LEADERBOARD_4': {'tile':7, 'loc': "middle"},
+//		'INCONTENT_LEADERBOARD_5': {'tile':8, 'loc': "middle"},
+//		'INVISIBLE_1': {'tile':10, 'loc': "invisible"},
+//		'INVISIBLE_2': {'tile':11, 'loc': "invisible"},
+//		'INVISIBLE_MODAL': {'tile':14, 'loc': "invisible"},
+//		'INVISIBLE_TOP': {'tile':13, 'loc': "invisible"},
+//		'JWPLAYER': {'tile': 2, 'loc': "top"},
+//		'LEFT_SKYSCRAPER_1': {'tile': 3, 'loc': "top"},
+//		'MIDDLE_RIGHT_BOXAD': {'tile': 1, 'loc': "middle"},
+//		'MODAL_VERTICAL_BANNER': {'tile':2, 'loc': "modal"},
+//		'PREFOOTER_BIG': {'tile': 5, 'loc': "footer"},
+//		'PREFOOTER_LEFT_BOXAD': {'tile': 5, 'loc': "footer"},
+//		'PREFOOTER_RIGHT_BOXAD': {'tile': 5, 'loc': "footer"},
+//		'TEST_HOME_TOP_RIGHT_BOXAD': {'tile': 1, 'loc': "top"},
+//		'TEST_TOP_RIGHT_BOXAD': {'tile': 1, 'loc': "top"},
+//		'TOP_BUTTON': {'tile': 3, 'loc': 'top'},
+//		'TOP_RIGHT_BUTTON': {'tile': 3, 'loc': "top"}
+// }
+
+	incrementItemInStorage = function(storageKey) {
+		log('incrementNumCall ' + storageKey, 5, logGroup);
+
+		var numCallForSlot = storage.getItem(storageKey, now) || 0;
+
+		numCallForSlot += 1;
+		storage.setItem(storageKey, numCallForSlot, forgetAdsShownAfterTime);
+
+		return numCallForSlot;
+	};
+
+	canHandleSlot = function(slotinfo) {
+		log(['canHandleSlot', slotinfo], 5, logGroup);
+
+		if (slotMap[slotinfo[0]]) {
 			return true;
 		}
-
 		return false;
-	}
+	};
 
-	var slotTimer2 = {};
+	fillInSlot = function(slotinfo) {
+		log(['fillInSlot', slotinfo], 5, logGroup);
 
-	// adapted and simplified copy of AdDriverDelayedLoader.loadNext
-	// and AdDriverDelayedLoader.callDART
-	function fillInSlot(slot) {
-		log('fillInSlot', 5, 'AdProviderAdDriver2');
-		log(slot, 5, 'AdProviderAdDriver2');
+		var slotname = slotinfo[0]
 
-		var slotname = slot[0];
+			, slotsize = slotMap[slotname].size
+			, loc = slotMap[slotname].loc
+			, dcopt = slotMap[slotname].dcopt
+
+			// Do this when DART hops or doesn't handle
+			, error = function() {
+				slotinfo[2] = 'Liftium2';
+				window.adslots2.push(slotinfo);
+			}
+
+			// Do this when filling slot by DART
+			, success = function() {
+				slotTweaker.removeDefaultHeight(slotname);
+				slotTweaker.removeTopButtonIfNeeded(slotname);
+			}
+
+			, noAdStorageKey = 'adDriverLastDARTCallNoAd3_' + slotname
+			, numCallForSlotStorageKey = 'adDriverNumAllCall3_' + slotname
+
+			, noAdLastTime = storage.getItem(noAdStorageKey) || false
+			, numCallForSlot = storage.getItem(numCallForSlotStorageKey, now) || 0
+			, url
+
+			, hopTimer, hopTime
+		;
+
+		if (!isHighValueCountry) {
+			error();
+			return;
+		}
+
+		if (window.wgUserName && !window.wgUserShowAds) {
+			dcopt = false;
+		}
 
 		// Always have an ad for MODAL_INTERSTITIAL
 		if (slotname !== 'MODAL_INTERSTITIAL') {
-			if (helper.AdDriver_isLastDARTCallNoAd(slot[0]) && helper.AdDriver_getNumDARTCall(slot[0]) >= helper.AdDriver_getMinNumDARTCall(Geo.getCountryCode())) {
-				log('last call no ad && reached # of calls for this geo', 5, 'AdProviderAdDriver2');
-				window.adslots2.push([slotname, slot[1], 'Liftium2', slot[3]]);
+			// Otherwise check if there was ad last time
+			// If not, check if desired number of DART calls were made
+			if (noAdLastTime && numCallForSlot >= maxCallsToDART) {
+				log('There was no ad for this slot last time and reached max number of calls to DART', 5, logGroup);
+				log({slot: slotname, numCalls: numCallForSlot, maxCalls: maxCallsToDART, geo: country}, 6, logGroup);
+				error();
 				return;
 			}
 		}
 
-		slot[1] = slotMap[slotname].size || slot[1];
-		log([slotname, slot[1]], 7, 'AdProviderAdDriver2');
+		WikiaTracker.trackAdEvent('liftium.slot2', {
+			ga_category: 'slot2/' + slotsize,
+			ga_action: slotname,
+			ga_label: 'addriver2'
+		}, 'ga');
 
-		// increment number of pageviews
-		helper.AdDriver_incrementNumAllCall(slotname);
+		hopTimer = new Date().getTime();
+		log('hopTimer start for ' + slotname, 7, logGroup);
 
-		WikiaTracker.trackAdEvent('liftium.slot2', {'ga_category':'slot2/' + slot[1], 'ga_action':slotname, 'ga_label':'addriver2'}, 'ga');
+		incrementItemInStorage(numCallForSlotStorageKey);
+		storage.removeItem(noAdStorageKey);
 
-		slotTimer2[slotname] = new Date().getTime();
-		log('slotTimer2 start for ' + slotname, 7, 'AdProviderAdDriver2');
+		url = wikiaDart.getUrl({
+			slotname: slotname,
+			slotsize: slotsize,
+			dcopt: dcopt,
+			loc: loc
+		});
 
-		helper.AdDriver_incrementNumDARTCall(slotname);
-		helper.AdDriver_setLastDARTCallNoAd(slotname, null);
+		scriptWriter.injectScriptByUrl(slotname, url, function() {
+			/**
+			 * Our DART server when having no ads returns
+			 *
+			 * window.adDriverLastDARTCallNoAds[slotname] = true
+			 *
+			 * We're handling this here.
+			 */
+			if (window.adDriverLastDARTCallNoAds && window.adDriverLastDARTCallNoAds[slotname]) {
+				log(slotname + ' was not filled by DART', 2, logGroup);
+				storage.setItem(noAdStorageKey, true, forgetAdsShownAfterTime);
 
-		var url = WikiaDart.AdConfig_DART_getUrl(slotname, slot[1], false, 'AdDriver');
-		ScriptWriter.injectScriptByUrl(
-			slotname, url,
-			function() {
+				// Track hop time
+				hopTime = new Date().getTime() - hopTimer;
+				log('slotTimer2 end for ' + slotname + ' after ' + hopTime + ' ms', 7, logGroup);
+				WikiaTracker.trackAdEvent('liftium.hop2', {
+					ga_category: 'hop2/addriver2',
+					ga_action: 'slot ' + slotname,
+					ga_label: formatTrackTime(hopTime, 5)
+				}, 'ga');
 
-				// TODO switch to addriver2_hop
-				if (typeof(window.adDriverLastDARTCallNoAds[slotname]) == 'undefined' || !window.adDriverLastDARTCallNoAds[slotname]) {
-					log(slotname + ' was filled by DART', 5, 'AdProviderAdDriver2');
-					slotTweaker.removeDefaultHeight(slotname);
-					slotTweaker.removeTopButtonIfNeeded(slotname);
-					//AdDriver.adjustSlotDisplay(AdDriverDelayedLoader.currentAd.slotname);
-				}
-				else {
-					log(slotname + ' was not filled by DART', 2, 'AdProviderAdDriver2');
-					helper.AdDriver_setLastDARTCallNoAd(slotname, window.wgNow.getTime());
-
-					hop(slotname);
-				}
-
+				error();
+			} else {
+				log(slotname + ' was filled by DART', 5, logGroup);
+				success();
 			}
-		);
-	}
+		});
+	};
 
-	function hop(slotname) {
-		log('hop', 5, 'AdProviderAdDriver2');
-		log(slotname, 5, 'AdProviderAdDriver2');
-
-		//slotname = sanitizeSlotname(slotname);
-		var size = (slotMap[slotname].size || '0x0').replace(/,.*/, '');
-		log([slotname, size], 7, 'AdProviderAdDriver2');
-
-		var time = new Date().getTime() - slotTimer2[slotname];
-		log('slotTimer2 end for ' + slotname + ' after ' + time + ' ms', 7, 'AdProviderAdDriver2');
-		WikiaTracker.trackAdEvent('liftium.hop2', {'ga_category':'hop2/addriver2', 'ga_action':'slot ' + slotname, 'ga_label':formatTrackTime(time, 5)}, 'ga');
-
-		window.adslots2.push([slotname, size, 'Liftium2', null]);
-	}
-
-	// copy of Liftium.formatTrackTime
-	// TODO refactor out... AdEngine2Helper? WikiaTracker?
-	function formatTrackTime(t, max) {
+	formatTrackTime = function(t, max) {
 		if (isNaN(t)) {
-			log('Error, time tracked is NaN: ' + t, 7, 'AdProviderEvolve');
+			log('Error, time tracked is NaN: ' + t, 7, logGroup);
 			return "NaN";
 		}
 
 		if (t < 0) {
-			log('Error, time tracked is a negative number: ' + t, 7, 'AdProviderEvolve');
+			log('Error, time tracked is a negative number: ' + t, 7, logGroup);
 			return "negative";
 		}
 
@@ -114,7 +231,7 @@ var AdProviderAdDriver2 = function (helper, WikiaDart, ScriptWriter, WikiaTracke
 		}
 
 		return t.toFixed(1);
-	}
+	};
 
 	return {
 		name: 'AdDriver2',
