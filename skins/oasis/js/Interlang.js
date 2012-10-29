@@ -1,15 +1,18 @@
 (function($) {
 
 var Interlang = {
+	node: false,
+
 	init: function() {
-		$('.WikiaArticleInterlang .more-link').click(Interlang.showAll);
+		this.node = $('.WikiaArticleInterlang');
+		$('.more-link', this.node).click($.proxy(this.showAll, this));
 	},
 
 	showAll: function(ev) {
 		ev.preventDefault();
 
-		$('.WikiaArticleInterlang .more-link').hide();
-		$('.WikiaArticleInterlang .more').show();
+		$('.more-link', this.node).hide();
+		$('.more', this.node).show();
 	}
 };
 
