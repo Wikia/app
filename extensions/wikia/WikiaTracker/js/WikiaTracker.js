@@ -80,13 +80,14 @@ window.WikiaTracker = (function(){
 		eventName = eventName || mainEventName,
 		data = data || {},
 		trackingMethod = trackingMethod || 'none',
-		mouseButton = data.button || false,
+		isLink = (data && data.href) ? true : false,
+		isMiddleClick = (data.button && data.button === 1) ? true : false,
 		gaqArgs = [];
 
 		// If clicking a link that will unload the page before tracking can happen,
 		// let's stop the default event and delay 100ms changing location (at the bottom)
 		// FIXME: this doesn't work in Firefox (there is no global event object there).
-		if (data && data.href && typeof event != 'undefined') {
+		if( isLink && typeof event != 'undefined' && !isMiddleClick ) {
 			event.preventDefault();
 		}
 
@@ -136,18 +137,10 @@ window.WikiaTracker = (function(){
 		}
 
 		//delay at the end to make sure all of the above was at least invoked
-		if (data && data.href ) {
+		if( isLink && !isMiddleClick ) {
 			setTimeout(function() {
-				invokeDelayedClickEvent(data.href, mouseButton);
+				document.location = location;
 			}, 100);
-		}
-	}
-
-	function invokeDelayedClickEvent(location, button) {
-		if( button === 1 ) {
-			window.open(location);
-		} else {
-			document.location = location;
 		}
 	}
 
