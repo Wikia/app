@@ -241,13 +241,19 @@ class WikiaSearch extends WikiaObject {
 	 */
 	public function getRelatedVideos( WikiaSearchConfig $searchConfig ) {
 	    wfProfileIn(__METHOD__);
-	
-	    $filterQuery = sprintf( '(%s OR %s) AND %s', 
-	    						self::valueForField( 'wid', 		$searchConfig->getCityId() ),
-	    						self::valueForField( 'wid', 		self::VIDEO_WIKI_ID, array( 'boost' => 2 ) ),
-	    						self::valueForField( 'is_video', 	'true' )
-	    						);
-	    								
+
+		if ( $searchConfig->getCityId() !== self::VIDEO_WIKI_ID ) {
+			$filterQuery = sprintf( '(%s OR %s) AND %s',
+				self::valueForField( 'wid', 		$searchConfig->getCityId() ),
+				self::valueForField( 'wid', 		self::VIDEO_WIKI_ID, array( 'boost' => 2 ) ),
+				self::valueForField( 'is_video', 	'true' )
+			);
+		} else {
+			$filterQuery = sprintf( '%s AND %s',
+				self::valueForField( 'wid', $searchConfig->getCityId() ),
+				self::valueForField( 'is_video', 'true' )
+			);
+		}
 	
 	    $query = self::valueForField( 'wid', $searchConfig->getCityId() );
 	    if ( $searchConfig->getPageId() != false ) {
