@@ -1275,7 +1275,7 @@ var VETExtended = {
 			that.cachedSelectors.closePreviewBtn.click();
             that.cachedSelectors.carousel.find('li').remove();
             that.addSuggestions({items: that.suggestionsCachedStuff.cashedSuggestions});
-            that.cachedSelectors.carousel.resetPosition();
+            if (that.cachedSelectors.carousel.resetPosition) that.cachedSelectors.carousel.resetPosition();
 
             that.isCarouselCheck();
 		});
@@ -1588,7 +1588,7 @@ var VETExtended = {
 						
 						// reset carousel container to the first slide position
 						if (svStart === 0) {
-							that.cachedSelectors.carousel.resetPosition();
+							if (that.cachedSelectors.carousel.resetPosition) that.cachedSelectors.carousel.resetPosition();
 						}
 						
 					} else if (that.searchCachedStuff.fetchedResoultsCount === 0) {
