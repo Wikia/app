@@ -3,7 +3,6 @@ var AdConfig2 = function (
 	log, window, document, Geo
 
 	// adProviders
-	, adProviderAdDriver
 	, adProviderAdDriver2
 	, adProviderEvolve
 	, adProviderEvolveRS
@@ -101,7 +100,7 @@ var AdConfig2 = function (
 			return adProviderAdDriver2;
 		}
 		if (slot[2] === 'AdDriver') {
-			return adProviderAdDriver;
+			return adProviderAdDriver2;
 		}
 		if (slot[2] === 'Liftium2') {
 			return adProviderLater;
