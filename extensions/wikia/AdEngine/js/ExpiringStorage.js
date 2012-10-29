@@ -22,7 +22,11 @@ var ExpiringStorage = function(log) {
 				, data = JSON.stringify({v: value, e: expires})
 			;
 
-			storage.setItem(key, data);
+			// Call to "setItem" is wrapped in try..catch in order to avoid throwing an error when user is using Safari in private browsing mode
+			// - which does not allow writing to localStorage
+			try {
+				storage.setItem(key, data);
+			} catch(err) { }
 		};
 
 		/**
