@@ -9,10 +9,12 @@
 
 	body {
 		min-height: 100%;
-	}
 
-	#wkAdPlc, #wkTopNav, #wkPage, #wkFtr, #pageName{
-		display: none;
+		//hide all childs of body that is not #wkMdlWrp
+		//see bugid: 49662
+		& > *:not(#wkMdlWrp) {
+			display: none;
+		}
 	}
 }
 
@@ -79,7 +81,7 @@
 	height: 100%;
 	background-color: $footerBackground;
 
-	&>p{
+	& > p {
 		margin: 0;
 	}
 }
