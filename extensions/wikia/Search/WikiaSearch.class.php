@@ -152,10 +152,10 @@ class WikiaSearch extends WikiaObject {
 
 			$searchConfig	->setLength		( self::GROUP_RESULTS_GROUPINGS_LIMIT )
 							->setIsInterWiki( true )
-							->setStart		( ( (int) $searchConfig->getLength() ) * ( ( (int) $searchConfig->getPage() ) - 1 ) )
 			;
+		}
 
-		} else {
+		if ( $searchConfig->getPage() > 1 ) {
 			$searchConfig	->setStart		( ( $searchConfig->getPage() - 1 ) * $searchConfig->getLength() );
 		}
 		
@@ -241,19 +241,13 @@ class WikiaSearch extends WikiaObject {
 	 */
 	public function getRelatedVideos( WikiaSearchConfig $searchConfig ) {
 	    wfProfileIn(__METHOD__);
-		
-	    if ( $searchConfig->getCityId() !== self::VIDEO_WIKI_ID ) {
-		    $filterQuery = sprintf( '(%s OR %s) AND %s', 
-		    						self::valueForField( 'wid', 		$searchConfig->getCityId() ),
-		    						self::valueForField( 'wid', 		self::VIDEO_WIKI_ID, array( 'boost' => 2 ) ),
-		    						self::valueForField( 'is_video', 	'true' )
-		    						);
-	    } else {
-	    	$filterQuery = sprintf( '%s AND %s', 
-	    							self::valueForField( 'wid', $searchConfig->getCityId() ), 
-	    							self::valueForField( 'is_video', 'true' ) 
-	    							);
-	    }    
+	
+	    $filterQuery = sprintf( '(%s OR %s) AND %s', 
+	    						self::valueForField( 'wid', 		$searchConfig->getCityId() ),
+	    						self::valueForField( 'wid', 		self::VIDEO_WIKI_ID, array( 'boost' => 2 ) ),
+	    						self::valueForField( 'is_video', 	'true' )
+	    						);
+	    								
 	
 	    $query = self::valueForField( 'wid', $searchConfig->getCityId() );
 	    if ( $searchConfig->getPageId() != false ) {
