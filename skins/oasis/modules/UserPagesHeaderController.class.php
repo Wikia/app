@@ -438,7 +438,9 @@ class UserPagesHeaderController extends WikiaController {
 			// user blog page message
 			$this->userBlogPageMessage = $this->wf->Message( 'user-blog-url-link', $this->userName );
 		}
-
+		if ($this->app->wg->Request->getVal('action') == 'history' || $this->app->wg->Request->getCheck( 'diff' ) ) {
+                	$this->navLinks = Wikia::link($this->app->wg->title, wfMsg('oasis-page-header-back-to-article'), array(), array(), 'known');
+                }
 		// user stats (edit points, account creation date)
 		$this->stats = $this->getStats($this->userName);
 

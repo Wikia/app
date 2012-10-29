@@ -20,4 +20,7 @@
 		<? endif; ?>
 		
 	</div>
+	<? if (isset($navLinks)) : ?> 
+                <?= $navLinks ?>
+        <? endif; ?> 
 </header>
