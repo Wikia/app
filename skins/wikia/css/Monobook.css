@@ -318,3 +318,15 @@ body.ajax * {
 	padding: 0;
 }
 
+/* Fix Monobook WikiaPhotoGallery Slider issues */
+.wikiaPhotoGallery-slider-body .description h2 {
+    color: #fff;
+    padding: 0;
+}
+.wikiaPhotoGallery-slider-body .wikia-button {
+    background-color: #fff;
+    border: 1px solid #aaa;
+    display: inline-block;
+    padding: 2px 5px;
+}
+
