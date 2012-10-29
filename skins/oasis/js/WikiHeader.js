@@ -1,183 +1,4 @@
-/*global ChatEntryPoint: true */
 var WikiHeader = {
-	isDisplayed: false,
-
-	settings: {
-		mouseoverDelay: 300,
-		mouseoutDelay: 350
-	},
-
-	init: function() {
-
-		//Variables
-		WikiHeader.nav = $("header.WikiHeader").children("nav");
-		WikiHeader.navLI = WikiHeader.nav.children("ul").children("li");
-		WikiHeader.subnav = WikiHeader.nav.find(".subnav");
-		WikiHeader.mouseoverTimerRunning = false;
-
-		WikiHeader.positionNav();
-
-		//Events
-		WikiHeader.navLI
-			.children("a").focus(function(){
-				WikiHeader.hideNav();
-				WikiHeader.showSubNav($(this).parent("li"));
-			});
-
-		if(!$().isTouchscreen()) {
-			WikiHeader.navLI.hover(WikiHeader.mouseover, WikiHeader.mouseout);
-		} else {
-			WikiHeader.navLI.click(WikiHeader.click);
-		}
-
-		//Accessibility Events
-		//Show when any inner anchors are in focus
-
-		// IE9 focus handling fix - see BugId:5914.
-		// Assume keyboard-based navigation (IE9 focus handling fix).
-		var suppressOnFocus = false;
-
-		WikiHeader.subnav.find("a")
-			// Switch to browser's default onfocus behaviour when mouse-based navigation is detected  (IE9 focus handling fix).
-			.bind('mousedown', function() { suppressOnFocus = true; })
-			// Switch back to keyboard-based navigation mode  (IE9 focus handling fix).
-			.bind('mouseup', function() { suppressOnFocus = false; })
-			// The onfocus behaviour intended only for keyboard-based navigation (IE9 focus handling fix).
-			.focus(function(event) {
-				if ( !suppressOnFocus ) {
-					WikiHeader.hideNav();
-					WikiHeader.showSubNav($(event.currentTarget).closest(".subnav").parent("li"));
-				}
-			});
-
-		//Hide when focus out of first and last anchor
-		WikiHeader.nav.children("ul").find("li:first-child a").focusout(WikiHeader.hideNav);
-		WikiHeader.subnav.last().find("li:last-child a").focusout(WikiHeader.hideNav);
-
-		//Mouse out of browser
-		$(document).mouseout(function(e){
-			if(WikiHeader.isDisplayed) {
-				var from = e.relatedTarget || e.toElement;
-				if(!from || from.nodeName == 'HTML'){
-					WikiHeader.hideNav();
-				}
-			}
-		});
-
-		if ( (window.wgIsWikiNavMessage) && (wgAction == "edit") ) {
-			$('#wpSave').hide();
-		}
-	},
-
-	click: function(event) {
-		var subnav = $(this).children('.subnav');
-		if (subnav.length && !subnav.hasClass('opened')) {
-			event.preventDefault();
-			WikiHeader.hideNav();
-			WikiHeader.showSubNav(event.currentTarget);
-			WikiHeader.subnav.removeClass('opened');
-			subnav.addClass('opened');
-		}
-	},
-
-	mouseover: function(event) {
-
-		//Hide all subnavs except for this one
-		var otherSubnavs = WikiHeader.subnav.not($(this).find(".subnav"));
-		if($('body').data('accessible')) {
-			otherSubnavs.css("top", "-9999px");
-		} else {
-			otherSubnavs.hide();
-		}
-
-		//Cancel mouseoutTimer
-		clearTimeout(WikiHeader.mouseoutTimer);
-
-		if ($(event.relatedTarget).closest("#WikiHeader nav li").length == 0) {
-			//Mouse is not coming from within the nav.
-
-			//Delay before showing subnav.
-			WikiHeader.mouseoverTimer = setTimeout(function() {
-				WikiHeader.showSubNav(event.currentTarget);
-				WikiHeader.mouseoverTimerRunning = false;
-			}, WikiHeader.settings.mouseoverDelay);
-			WikiHeader.mouseoverTimerRunning = true;
-
-		} else {
-			//Mouse IS coming from within the nav
-
-			//Don't show subnavs when quickly moving mouse horizontally through wiki nav
-			if (WikiHeader.mouseoverTimerRunning) {
-				//Stop current timer
-				clearTimeout(WikiHeader.mouseoverTimer);
-				WikiHeader.mouseoverTimerRunning = false;
-
-				//Start new timer
-				WikiHeader.mouseoverTimer = setTimeout(function() {
-					WikiHeader.showSubNav(event.currentTarget);
-				}, WikiHeader.settings.mouseoverDelay);
-				WikiHeader.mouseoverTimerRunning = true;
-
-			} else {
-				//Mouseover timer isn't running, so show subnavs immediately
-				WikiHeader.showSubNav(this);
-			}
-		}
-
-	},
-
-	mouseout: function(event) {
-
-		if ($(event.relatedTarget).closest("#WikiHeader nav li").length == 0) {
-			//Mouse has exited the nav.
-
-			//Stop mouseoverTimer
-			clearTimeout(WikiHeader.mouseoverTimer);
-			WikiHeader.mouseoverTimerRunning = false;
-
-			//Start mouseoutTimer
-			WikiHeader.mouseoutTimer = setTimeout(WikiHeader.hideNav, WikiHeader.settings.mouseoutDelay);
-
-		} else {
-			//Mouse is still within the nav
-
-			//Hide nav immediately
-			WikiHeader.hideNav();
-		}
-
-	},
-
-	showSubNav: function(parent) {
-		var subnav = $(parent).children('ul');
-
-		if (subnav.exists()) {
-			WikiHeader.isDisplayed = true;
-			subnav.css("top", WikiHeader.navtop).show();
-		}
-	},
-
-	hideNav: function() {
-		WikiHeader.isDisplayed = false;
-		//Hide subnav
-		if($('body').data('accessible')) {
-			WikiHeader.subnav.css("top", "-9999px");
-		} else {
-			WikiHeader.subnav.hide();
-		}
-	},
-
-	positionNav: function() {
-		//This runs once. Sets the proper top position of the subnav. Can't be calculated earlier because custom font loading can adjust wiki nav height.
-		WikiHeader.navtop = WikiHeader.nav.height();
-	}
-};
-
-$(function() {
-	WikiHeader.init();
-});
-
-// v2
-var WikiHeaderV2 = {
 	lastSubnavClicked: -1,
 	isDisplayed: false,
 	activeL1: null,
@@ -188,37 +9,37 @@ var WikiHeaderV2 = {
 	},
 
 	log: function(msg) {
-		$().log(msg, 'WikiHeaderV2');
+		$().log(msg, 'WikiHeader');
 	},
 
 	init: function(isValidator) {
 		//Variables
-		WikiHeaderV2.nav = $('header.WikiHeaderRestyle').children('nav');
-		WikiHeaderV2.navLI = WikiHeaderV2.nav.children('ul').children('li');
-		WikiHeaderV2.subnav2 = WikiHeaderV2.nav.find('.subnav-2');
-		WikiHeaderV2.subnav2LI = WikiHeaderV2.subnav2.children('li');
-		WikiHeaderV2.subnav3 = WikiHeaderV2.nav.find('.subnav-3');
+		this.nav = $('#WikiHeader > nav');
+		this.navLI = this.nav.children('ul').children('li');
+		this.subnav2 = this.nav.find('.subnav-2');
+		this.subnav2LI = this.subnav2.children('li');
+		this.subnav3 = this.nav.find('.subnav-3');
 
-		WikiHeaderV2.positionNav();
+		this.positionNav();
 
 		//Events
-		WikiHeaderV2.navLI
-			.click(WikiHeaderV2.mouseclickL1)
+		this.navLI
+			.click(this.mouseclickL1)
 			.children('a').focus(function(){
-				WikiHeaderV2.showSubNavL2($(this).parent('li'));
+				WikiHeader.showSubNavL2($(this).parent('li'));
 			});
 
-		WikiHeaderV2.subnav2LI
-			.click(WikiHeaderV2.mouseclickL2)
+		this.subnav2LI
+			.click(this.mouseclickL2)
 			.children('a').focus(function(){
-				WikiHeaderV2.hideNavL3();
-				WikiHeaderV2.showSubNavL3($(this).parent('li'));
+				WikiHeader.hideNavL3();
+				WikiHeader.showSubNavL3($(this).parent('li'));
 			});
 
 		//Apply a hover state if the device is not touch enabled
 		if(!$().isTouchscreen()) {
-			WikiHeaderV2.navLI.hover(WikiHeaderV2.mouseoverL1, WikiHeaderV2.mouseoutL1);
-			WikiHeaderV2.subnav2LI.hover(WikiHeaderV2.mouseoverL2, WikiHeaderV2.mouseoutL2);
+			this.navLI.hover(this.mouseoverL1, this.mouseoutL1);
+			this.subnav2LI.hover(this.mouseoverL2, this.mouseoutL2);
 		}
 
 		//Accessibility Events
@@ -228,7 +49,7 @@ var WikiHeaderV2 = {
 		// Assume keyboard-based navigation (IE9 focus handling fix).
 		var suppressOnFocus = false;
 
-		WikiHeaderV2.subnav3.find('a')
+		this.subnav3.find('a')
 			// Switch to browser's default onfocus behaviour when mouse-based navigation is detected  (IE9 focus handling fix).
 			.bind('mousedown', function() {suppressOnFocus = true;})
 			// Switch back to keyboard-based navigation mode  (IE9 focus handling fix).
@@ -236,20 +57,20 @@ var WikiHeaderV2 = {
 			// The onfocus behaviour intended only for keyboard-based navigation (IE9 focus handling fix).
 			.focus(function(event) {
 				if ( !suppressOnFocus ) {
-					WikiHeaderV2.hideNavL3();
-					WikiHeaderV2.showSubNavL3($(event.currentTarget).closest('.subnav').parent('li'));
+					WikiHeader.hideNavL3();
+					WikiHeader.showSubNavL3($(event.currentTarget).closest('.subnav').parent('li'));
 				}
 			});
 		//Hide when focus out of first and last anchor
-		WikiHeaderV2.subnav3.find('li:first-child a').focusout(WikiHeaderV2.hideNavL3);
-		WikiHeaderV2.subnav3.last().find('li:last-child a').focusout(WikiHeaderV2.hideNavL3);
+		this.subnav3.find('li:first-child a').focusout(this.hideNavL3);
+		this.subnav3.last().find('li:last-child a').focusout(this.hideNavL3);
 
 		//Mouse out of browser
 		$(document).mouseout(function(e){
-			if(WikiHeaderV2.isDisplayed) {
+			if(WikiHeader.isDisplayed) {
 				var from = e.relatedTarget || e.toElement;
 				if(!from || from.nodeName == 'HTML'){
-					WikiHeaderV2.hideNavL3();
+					WikiHeader.hideNavL3();
 				}
 			}
 		});
@@ -258,7 +79,7 @@ var WikiHeaderV2 = {
 		if (!isValidator) {
 			var itemsRemoved = 0;
 
-			WikiHeaderV2.subnav2.each(function(i) {
+			this.subnav2.each(function(i) {
 				var menu = $(this),
 					items = menu.children('li').reverse();
 
@@ -287,7 +108,7 @@ var WikiHeaderV2 = {
 			});
 
 			if (itemsRemoved > 0) {
-				WikiHeaderV2.log('items removed: ' + itemsRemoved);
+				this.log('items removed: ' + itemsRemoved);
 			}
 		}
 	},
@@ -295,20 +116,20 @@ var WikiHeaderV2 = {
 	mouseclickL1: function(event) {
 		if( !$(this).hasClass('marked') ){
 			event.preventDefault();
-			WikiHeaderV2.subnav2LI.removeClass('marked2');
-			WikiHeaderV2.navLI.removeClass('marked');
-			WikiHeaderV2.hideNavL3();
+			WikiHeader.subnav2LI.removeClass('marked2');
+			WikiHeader.navLI.removeClass('marked');
+			WikiHeader.hideNavL3();
 			$(this).addClass('marked');
 
 			//Hide all subnavs except for this one
-			var otherSubnavs = WikiHeaderV2.subnav2.not(  );
+			var otherSubnavs = WikiHeader.subnav2.not(  );
 			if( $('body').data('accessible') ) {
 				otherSubnavs.css('top', '-9999px');
 			} else {
 				otherSubnavs.hide();
 			}
-			WikiHeaderV2.activeL1 = this;
-			WikiHeaderV2.showSubNavL2(this);
+			WikiHeader.activeL1 = this;
+			WikiHeader.showSubNavL2(this);
 		}
 
 		// Handle chat link
@@ -322,26 +143,26 @@ var WikiHeaderV2 = {
 	mouseoverL1: function(event) {
 		var self = this;
 		// this menu is already opened - don't do anything
-		if (WikiHeaderV2.activeL1 === self) {
+		if (WikiHeader.activeL1 === self) {
 			return;
 		}
 
 		WikiHeader.mouseoverTimer = setTimeout(function() {
 			//Hide all subnavs except for this one
-			WikiHeaderV2.navLI.removeClass('marked');
-			WikiHeaderV2.hideNavL3();
+			WikiHeader.navLI.removeClass('marked');
+			WikiHeader.hideNavL3();
 
 			$(self).addClass('marked');
 			//Hide all subnavs except for this one
-			var otherSubnavs = WikiHeaderV2.subnav2.not(  );
+			var otherSubnavs = WikiHeader.subnav2.not(  );
 			if( $('body').data('accessible') ) {
 				otherSubnavs.css('top', '-9999px');
 			} else {
 				otherSubnavs.hide();
 			}
-			WikiHeaderV2.activeL1 = self;
-			WikiHeaderV2.showSubNavL2(self);
-		}, WikiHeaderV2.settings.mouseoverDelay);
+			WikiHeader.activeL1 = self;
+			WikiHeader.showSubNavL2(self);
+		}, WikiHeader.settings.mouseoverDelay);
 	},
 
 	mouseoutL1: function(event) {
@@ -351,10 +172,10 @@ var WikiHeaderV2 = {
 
 	mouseclickL2: function(event) {
 		//Hide all subnavs except for this one
-		var otherSubnavs = WikiHeaderV2.subnav3.not($(this).find('.subnav'));
+		var otherSubnavs = WikiHeader.subnav3.not($(this).find('.subnav'));
 
 		if ( $(this).find('.subnav').exists() && !$(this).hasClass( 'marked2') ){
-			WikiHeaderV2.hideNavL3();
+			WikiHeader.hideNavL3();
 			event.preventDefault();
 			$(this).addClass('marked2');
 			if($('body').data('accessible')) {
@@ -362,7 +183,7 @@ var WikiHeaderV2 = {
 			} else {
 				otherSubnavs.hide();
 			}
-			WikiHeaderV2.showSubNavL3( event.currentTarget );
+			WikiHeader.showSubNavL3( event.currentTarget );
 		}
 	},
 
@@ -374,7 +195,7 @@ var WikiHeaderV2 = {
 
 		WikiHeader.mouseoverTimer = setTimeout(function() {
 			//Hide all subnavs except for this one
-			var otherSubnavs = WikiHeaderV2.subnav3.not($(self).find('.subnav'));
+			var otherSubnavs = WikiHeader.subnav3.not($(self).find('.subnav'));
 
 			if($('body').data('accessible')) {
 				otherSubnavs.css('top', '-9999px');
@@ -385,8 +206,8 @@ var WikiHeaderV2 = {
 			// remove other active states
 			$(self).siblings().removeClass('marked2');
 
-			WikiHeaderV2.showSubNavL3(self);
-		}, WikiHeaderV2.settings.mouseoverDelay);
+			WikiHeader.showSubNavL3(self);
+		}, WikiHeader.settings.mouseoverDelay);
 	},
 
 	mouseoutL2: function() {
@@ -394,8 +215,8 @@ var WikiHeaderV2 = {
 		clearTimeout(WikiHeader.mouseoverTimer);
 
 		WikiHeader.mouseoutTimer = setTimeout(function() {
-			WikiHeaderV2.hideNavL3();
-		}, WikiHeaderV2.settings.mouseoutDelay);
+			WikiHeader.hideNavL3();
+		}, WikiHeader.settings.mouseoutDelay);
 	},
 
 	showSubNavL2: function(parent) {
@@ -413,27 +234,27 @@ var WikiHeaderV2 = {
 		if (subnav.exists()) {
 			$(parent).addClass('marked2');
 
-			WikiHeaderV2.isDisplayed = true;
-			subnav.css('top', WikiHeaderV2.navtop).show();
+			WikiHeader.isDisplayed = true;
+			subnav.css('top', WikiHeader.navtop).show();
 		}
 	},
 
 	hideNavL3: function() {
-		WikiHeaderV2.isDisplayed = false;
-		WikiHeaderV2.lastSubnavClicked = -1;
-		WikiHeaderV2.subnav2LI.removeClass('marked2');
+		WikiHeader.isDisplayed = false;
+		WikiHeader.lastSubnavClicked = -1;
+		WikiHeader.subnav2LI.removeClass('marked2');
 
 		//Hide subnav
 		if($('body').data('accessible')) {
-			WikiHeaderV2.subnav3.css('top', '-9999px');
+			WikiHeader.subnav3.css('top', '-9999px');
 		} else {
-			WikiHeaderV2.subnav3.hide();
+			WikiHeader.subnav3.hide();
 		}
 	},
 
 	positionNav: function() {
 		//This runs once. Sets the proper top position of the subnav. Can't be calculated earlier because custom font loading can adjust wiki nav height.
-		WikiHeaderV2.navtop = WikiHeaderV2.nav.height() - 7;
+		WikiHeader.navtop = WikiHeader.nav.height() - 7;
 	},
 
 	firstMenuValidator: function() {
@@ -451,7 +272,7 @@ var WikiHeaderV2 = {
 			}
 			else {
 				returnVal = false;
-				WikiHeaderV2.log('menu level #1 not valid');
+				WikiHeader.log('menu level #1 not valid');
 			}
 		});
 
@@ -461,7 +282,7 @@ var WikiHeaderV2 = {
 
 		if (widthLevelFirst > 550) {
 			returnVal = false;
-			WikiHeaderV2.log('menu level #1 not valid');
+			WikiHeader.log('menu level #1 not valid');
 		}
 
 		return returnVal;
@@ -484,7 +305,7 @@ var WikiHeaderV2 = {
 
 			if (widthLevelSecond > maxWidth) {
 				returnVal = false;
-				WikiHeaderV2.log('menu level #2 not valid');
+				WikiHeader.log('menu level #2 not valid');
 			}
 			widthLevelSecond = 0;
 
@@ -496,7 +317,7 @@ var WikiHeaderV2 = {
 };
 
 $(function() {
-	WikiHeaderV2.init();
+	WikiHeader.init();
 
 	// modify preview dialog
 	if (window.wgIsWikiNavMessage) {
@@ -512,9 +333,9 @@ $(function() {
 		$(window).bind('EditPageAfterRenderPreview', function(ev, previewNode) {
 			// don't style wiki nav like article content
 			previewNode.removeClass('WikiaArticle');
-			WikiHeaderV2.init(true);
-			var firstMenuValid = WikiHeaderV2.firstMenuValidator(),
-				secondMenuValid = WikiHeaderV2.secondMenuValidator(),
+			WikiHeader.init(true);
+			var firstMenuValid = WikiHeader.firstMenuValidator(),
+				secondMenuValid = WikiHeader.secondMenuValidator(),
 				menuParseError = !!previewNode.find('nav > ul').attr('data-parse-errors'),
 				errorMessages = [];
 
