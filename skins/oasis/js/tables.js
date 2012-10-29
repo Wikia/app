@@ -1,3 +1,4 @@
+(function($) {
 var WikiaWideTables = {
 	settings: {
 		article: $("#WikiaArticle"),
@@ -136,9 +137,10 @@ var WikiaWideTables = {
 			}
 		});
 	}
-
 };
 
 $(function() {
 	WikiaWideTables.init();
 });
+
+}(jQuery));

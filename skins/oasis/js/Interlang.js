@@ -1,15 +1,20 @@
+(function($) {
+
 var Interlang = {
 	init: function() {
 		$('.WikiaArticleInterlang .more-link').click(Interlang.showAll);
 	},
-	
-	showAll: function() {
+
+	showAll: function(ev) {
+		ev.preventDefault();
+
 		$('.WikiaArticleInterlang .more-link').hide();
 		$('.WikiaArticleInterlang .more').show();
-		 return false;
 	}
 };
 
 $(function() {
 	Interlang.init();
 });
+
+}(jQuery));
