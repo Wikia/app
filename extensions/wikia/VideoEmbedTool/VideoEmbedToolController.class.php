@@ -91,7 +91,6 @@ class VideoEmbedToolController extends WikiaController {
 		if ( !empty( $phrase ) && strlen( $phrase ) > 0 ) {
 			$wikiaSearchConfig->setQuery( $phrase );
 			$search = F::build( 'WikiaSearch' );  /* @var $search WikiaSearch */
-			$search->setNamespaces( array(NS_FILE) );
 
 			$response = $this->processSearchResponse( $search->doSearch( $wikiaSearchConfig ), $svStart, $svSize, $trimTitle );
 		}
