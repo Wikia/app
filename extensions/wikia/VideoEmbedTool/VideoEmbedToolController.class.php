@@ -30,21 +30,23 @@ class VideoEmbedToolController extends WikiaController {
 			$svSize = $this->request->getInt( 'svSize', 20 );
 			$trimTitle = $this->request->getInt( 'trimTitle', 0 );
 
-			// fetching more results to make sure we will get desired number of results in the end
-			$relatedVideosParams = array( 'video_wiki_only'=>true, 'start'=>$svStart, 'size'=>$svSize*2 );
+			$wikiaSearchConfig = F::build( 'WikiaSearchConfig' );  /* @var $wikiaSearchConfig WikiaSearchConfig */
+			$wikiaSearchConfig  ->setStart( $svStart )
+								->setLength( $svSize*2 )   // fetching more results to make sure we will get desired number of results in the end
+								->setCityID( WikiaSearch::VIDEO_WIKI_ID );
 			$articleId = $this->request->getInt('articleId', 0 );
 
 			if ( $articleId > 0 ) {
-				$relatedVideosParams['pageId'] = $articleId;
+				$wikiaSearchConfig->setPageId( $articleId );
 			}
 
 			$search = F::build( 'WikiaSearch' );  /* @var $search WikiaSearch */
-			$response = $search->getRelatedVideos( $relatedVideosParams, 'object' );
+			$response = $search->getRelatedVideos( $wikiaSearchConfig );
 
-			if ( !$response->hasResults() && !empty($relatedVideosParams['pageId']) && ( $this->request->getVal('debug') != 1 ) ) {
+			if ( !$response->hasResults() && ( $articleId > 0 ) && ( $this->request->getVal('debug') != 1 ) ) {
 				// if nothing for specify article, do general search
-				unset( $relatedVideosParams['pageId'] );
-				$response = $search->getRelatedVideos( $relatedVideosParams, 'object' );
+				$wikiaSearchConfig->setPageId( false );
+				$response = $search->getRelatedVideos( $wikiaSearchConfig );
 			}
 
 			//TODO: fill $currentVideosByTitle array with unwated videos
@@ -73,25 +75,24 @@ class VideoEmbedToolController extends WikiaController {
 
 		$svSize = $svSize < 1 ? 1 : $svSize;
 
-		$methodParams = array(
-			'cityId' => WikiaSearch::VIDEO_WIKI_ID,
-			'startFromResultNumber' => $svStart,
-			'length' => $svSize*2 	// fetching more results to make sure we will get desired number of results in the end
-		);
+		$wikiaSearchConfig = F::build( 'WikiaSearchConfig' );  /* @var $wikiaSearchConfig WikiaSearchConfig */
+		$wikiaSearchConfig  ->setStart( $svStart )
+							->setLength( $svSize*2 )   // fetching more results to make sure we will get desired number of results in the end
+							->setVideoSearch( true )
+							->setNamespaces( array( NS_FILE ) );
 
 		if($searchType == 'premium') {
-			$methodParams['cityId'] = WikiaSearch::VIDEO_WIKI_ID;
+			$wikiaSearchConfig->setCityID( WikiaSearch::VIDEO_WIKI_ID );
 		}
 		else {
-			$methodParams['cityId'] = $this->wg->CityId;
-			$methodParams['videoSearch'] = true;
+			$wikiaSearchConfig->setCityID( $this->wg->CityId );
 		}
 
 		if ( !empty( $phrase ) && strlen( $phrase ) > 0 ) {
+			$wikiaSearchConfig->setQuery( $phrase );
 			$search = F::build( 'WikiaSearch' );  /* @var $search WikiaSearch */
-			$search->setNamespaces( array(NS_FILE) );
 
-			$response = $this->processSearchResponse( $search->doSearch($phrase, $methodParams), $svStart, $svSize, $trimTitle );
+			$response = $this->processSearchResponse( $search->doSearch( $wikiaSearchConfig ), $svStart, $svSize, $trimTitle );
 		}
 
 		$result = array (

@@ -26,13 +26,13 @@ class VideoEmbedTool {
                 $out .= '</script>';
 
 		global $wgBlankImgUrl;
-		$out = '<div class="reset" id="VideoEmbed">';
+				$out = '<div class="reset" id="VideoEmbed">';
+                $out .= '<div id="VideoEmbedError"></div>';
                 $out .= '<div id="VideoEmbedBorder"></div>';
                 $out .= '<div id="VideoEmbedProgress1" class="VideoEmbedProgress"></div>';
-		$out .= '<div id="VideoEmbedBack"><img src="'.$wgBlankImgUrl.'" id="fe_vetback_img" class="sprite back" alt="'.wfMsg('vet-back').'" /><a href="#">' . wfMsg( 'vet-back' ) . '</a></div>' ;
-		$out .= '<div id="VideoEmbedClose"><img src="'.$wgBlankImgUrl.'" id="fe_vetclose_img" class="sprite close" alt="'.wfMsg('vet-close').'" /><a href="#">' . wfMsg( 'vet-close' ) . '</a></div>';
+                $out .= '<div id="VideoEmbedBack"><img src="'.$wgBlankImgUrl.'" id="fe_vetback_img" class="sprite back" alt="'.wfMsg('vet-back').'" /><a href="#">' . wfMsg( 'vet-back' ) . '</a></div>' ;
                 $out .= '<div id="VideoEmbedBody">';
-                $out .= '<div id="VideoEmbedError"></div>';
+                $out .= '<div id="VideoEmbedClose"><img src="'.$wgBlankImgUrl.'" id="fe_vetclose_img" class="sprite close" alt="'.wfMsg('vet-close').'" /><a href="#">' . wfMsg( 'vet-close' ) . '</a></div>';
                 $out .= '<div id="VideoEmbedMain">' . $this->loadMain() . '</div>';
                 $out .= '<div id="VideoEmbedDetails" style="display: none;"></div>';
                 $out .= '<div id="VideoEmbedConflict" style="display: none;"></div>';
@@ -44,10 +44,13 @@ class VideoEmbedTool {
 	}
 
 	function loadMain( $error = false ) {
+		global $wgContLanguageCode, $wgVETNonEnglishPremiumSearch;
+
 		$tmpl = new EasyTemplate(dirname(__FILE__).'/templates/');
 		$tmpl->set_vars(array(
 				'result' => '',
-				'error'  => $error
+				'error'  => $error,
+				'vet_premium_videos_search_enabled' => ($wgContLanguageCode == 'en') || $wgVETNonEnglishPremiumSearch
 				)
 		);
 		return $tmpl->render("main");
@@ -93,7 +96,7 @@ class VideoEmbedTool {
 	}
 
 	function insertVideo() {
-		global $wgRequest, $wgUser, $wgContLang;
+		global $wgRequest, $wgUser;
 
 		$url = $wgRequest->getVal( 'url' );
 
@@ -130,9 +133,7 @@ class VideoEmbedTool {
 		} else { // if not a partner video try to parse link for File:
 			$file = null;
 			// get the video name
-			$nsFileTranslated = $wgContLang->getNsText(NS_FILE);
-			// added $nsFileTransladed to fix bugId:#48874
-			$pattern = '/(File:|Video:|'.$nsFileTranslated.':)(.+)$/';
+			$pattern = '/(File:|Video:)(.+)$/';
 			if (preg_match($pattern, $url, $matches)) {
 				$file = wfFindFile( $matches[2] );
 				if ( !$file ) { // bugID: 26721
@@ -148,13 +149,7 @@ class VideoEmbedTool {
 			else {
 				if ( $isNonPremium ) {
 					header('X-screen-type: error');
-
-					if ( !empty(F::app()->wg->allowNonPremiumVideos) ) {
-						return $e->getMessage();
-					}
-
-					// return wfMessage("videohandler-non-premium")->parse(); //TODO: re-instate html links once VETUpgrade branch is merged into trunk (Liz)
-					return wfMsg( 'videohandler-non-premium' );
+					return wfMessage('videohandler-non-premium')->parse();
 				}
 				header('X-screen-type: error');
 				return wfMsg( 'vet-bad-url' );
@@ -207,8 +202,6 @@ class VideoEmbedTool {
 				header('X-screen-type: error');
 				return wfMsg ( 'vet-name-incorrect' );
 			}
-
-			wfRunHooks( 'AddPremiumVideo', array( $title ) );
 		} else { // needs to upload
 			// sanitize name and init title objects
 			$name = VideoFileUploader::sanitizeTitle($name);
@@ -218,14 +211,14 @@ class VideoEmbedTool {
 				return wfMsg('vet-warn3');
 			}
 
-			$nameFile = VideoFileUploader::sanitizeTitle( $name );
-         	$titleFile = VideoFileUploader::getUniqueTitle( $nameFile );
-         	if (empty($titleFile)) {
+			$nameFile = VideoFileUploader::sanitizeTitle($name);
+			$titleFile = Title::newFromText($nameFile, NS_FILE);
+			if (empty($titleFile)) {
 				header('X-screen-type: error');
 				return wfMsg ( 'vet-name-incorrect' );
 			}
 			// by definition, WikiaFileHelper::useVideoHandlersExtForEmbed() == true
-			$nameSanitized = $titleFile->getBaseText();
+			$nameSanitized = $nameFile;
 			$title = $titleFile;
 
 			$extra = 0;

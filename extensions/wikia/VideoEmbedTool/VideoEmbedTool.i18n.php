@@ -27,7 +27,7 @@ $messages['en'] = array(
 	'vet-width' => 'Width',
 	'vet-layout' => 'Position',
 	'vet-style' => 'Style',
-	'vet-caption' => 'Caption',
+ 	'vet-caption' => 'Caption',
  	'vet-no-caption' => 'No caption',
 	'vet-optional' => ' (Optional)',
 	'vet-insert2' => 'Insert video',
@@ -91,6 +91,7 @@ $messages['en'] = array(
 	'vet-search-results-WVL' => 'We found $1 results for "$2" on Wikia Video Library',
 	'vet-search-results-local' => 'We found $1 results for "$2" on this Wiki',
 	'vet-search-filter-caption' => 'Search filter',
+
 );
 
 /** Message documentation (Message documentation)
@@ -135,7 +136,6 @@ $messages['qqq'] = array(
 	'vet-center' => 'New feature that will be released soon. Label for video center position layout option',
 	'vet-style' => 'New feature that will be released soon. Style label in display options (plain image or with border and caption)',
 	'vet-no-caption' => 'New feature that will be released soon. Info that no caption is available for plain image style option',
-	'vet-search-filter-caption' => 'New feature that will be released soon. Label for dropdown with search filter options',
 	'vet-video-wiki' => 'dropdown label for search filter - Wikia Video Library'
 );
 
