@@ -186,8 +186,8 @@ class GameGuidesModel{
 	 * @param string $term the term to search for
 	 * @param integer $totalLimit [OPTIONAL] the maximum total number of results to fetch from the search index
 	 *
-	 * @return array a results set produced by SimpleSearchController::localSearch
-	 * @see SimpleSearchController::localSearch
+	 * @return array a results set produced by WikiaSearch
+	 * @see WikiaSearch
 	 */
 	public function getSearchResults( $term, $totalLimit = self::SEARCH_RESULTS_LIMIT ){
 		$this->app->wf->profileIn( __METHOD__ );
