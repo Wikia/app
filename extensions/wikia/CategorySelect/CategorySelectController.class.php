@@ -172,20 +172,16 @@ class CategorySelectController extends WikiaController {
 	 * Formerly "CategorySelectGenerateHTMLforEditRaw"
 	 */
 	public function editPage() {
+		$this->response->addAsset( 'extensions/wikia/CategorySelect/js/CategorySelect.js' );
+		$this->response->addAsset( 'extensions/wikia/CategorySelect/css/CategorySelect.scss' );
+
 		$categories = '';
 		if ( !empty( $this->wg->CategorySelectMetaData ) ) {
 			$categories = CategorySelect::changeFormat( $this->wg->CategorySelectMetaData[ 'categories' ], 'array', 'wiki' );
 		}
 
-		$this->response->addAsset( 'extensions/wikia/CategorySelect/js/CategorySelect.js' );
-		$this->response->addAsset( AssetsManager::getInstance()->getSassCommonURL( '/extensions/wikia/CategorySelect/css/CategorySelect.scss' ) );
-
-		$text = '';
-		wfRunHooks ('CategorySelect:beforeDisplayingEdit', array ( &$text ) );
-
 		$this->response->setVal( 'categories', $categories );
 		$this->response->setVal( 'formId', $this->request->getVal( 'formId', '' ) );
-		$this->response->setVal( 'text', $text );
 	}
 
 	/**
