@@ -155,7 +155,9 @@ class WikiaSearch extends WikiaObject {
 							->setStart		( ( (int) $searchConfig->getLength() ) * ( ( (int) $searchConfig->getPage() ) - 1 ) )
 			;
 
-		} else {
+		}
+
+		if ( $searchConfig->getPage() > 1 ) {
 			$searchConfig	->setStart		( ( $searchConfig->getPage() - 1 ) * $searchConfig->getLength() );
 		}
 		
