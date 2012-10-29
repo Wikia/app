@@ -3,6 +3,10 @@ table.jquery-tablesorter th.headerSort {
 	cursor: pointer;
 	text-align: center;
 }
+table.jquery-tablesorter th.headerSort div {
+    display: inline-block;
+    height: 14px;
+}
 table.jquery-tablesorter th.headerSort .chevron {
     border-top-color: #000;
     display: block;
