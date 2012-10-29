@@ -7,7 +7,6 @@
 		, evolveHelper
 		, expiringStorage
 		, adProviderAdDriver
-		, adProviderAdDriver2Helper
 		, adProviderAdDriver2
 		, adProviderEvolve
 		, adProviderEvolveRS
@@ -30,11 +29,7 @@
 	evolveHelper = EvolveHelper(log, window);
 	expiringStorage = ExpiringStorage(log, JSON);
 
-	adProviderAdDriver = AdProviderAdDriver(log, window);
-	adProviderAdDriver2Helper = AdProviderAdDriver2Helper(log, window, expiringStorage);
-	adProviderAdDriver2 = AdProviderAdDriver2(
-		adProviderAdDriver2Helper, wikiaDart, scriptWriter, WikiaTracker, log, window, Geo, slotTweaker
-	);
+	adProviderAdDriver2 = AdProviderAdDriver2(wikiaDart, scriptWriter, WikiaTracker, log, window, Geo, slotTweaker, expiringStorage);
 	adProviderEvolve = AdProviderEvolve(scriptWriter, WikiaTracker, log, window, document, Krux, evolveHelper, slotTweaker);
 	adProviderEvolveRS = AdProviderEvolveRS(scriptWriter, WikiaTracker, log, window, document, evolveHelper);
 	adProviderGamePro = AdProviderGamePro(scriptWriter, WikiaTracker, log, window, document);
@@ -49,7 +44,6 @@
 		log, window, document, Geo
 
 		// AdProviders:
-		, adProviderAdDriver
 		, adProviderAdDriver2
 		, adProviderEvolve
 		, adProviderEvolveRS
