@@ -637,9 +637,15 @@ class WikiaMiniUpload {
 			if($caption != '') {
 				if($size == 'full') {
 					$tag .= '|frame';
+					if($layout != 'right') {
+						$tag .= '|'.$layout;
+					}
 				}
 				$tag .= '|'.$caption.']]';
 			} else {
+				if($size == 'full') {
+					$tag .= '|'.$layout;
+				}
 				$tag .= ']]';
 			}
 		}

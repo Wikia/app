@@ -1219,7 +1219,7 @@ function MWU_imageWidthChanged() {
 }
 
 function MWU_imageSizeChanged(size) {
-	YAHOO.util.Dom.setStyle(['ImageWidthRow', 'ImageLayoutRow'], 'display', size == 'thumb' ? '' : 'none');
+	YAHOO.util.Dom.setStyle(['ImageWidthRow'], 'display', size == 'thumb' ? '' : 'none');
 
 	if($G('ImageUploadThumb')) {
 		var image = $G('ImageUploadThumb').firstChild;
