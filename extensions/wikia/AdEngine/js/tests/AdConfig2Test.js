@@ -45,6 +45,7 @@ test('getProvider use AdDriver2 for high value slots', function() {
 		, windowMock = {wgHighValueCountries: {'hi-value-country': true, 'another-hi-value-country': true}}
 		, documentMock = {documentElement: {offsetHeight: 99999}}
 		, adConfig
+		, highValueSlot = 'TOP_LEADERBOARD'
 	;
 
 	adConfig = AdConfig2(
@@ -59,7 +60,8 @@ test('getProvider use AdDriver2 for high value slots', function() {
 		, adProviderNullMock
 	);
 
-	equal(adConfig.getProvider(['foo']), adProviderAdDriver2Mock, 'adProviderAdDriver2Mock');
+	equal(adConfig.getProvider(['foo']), adProviderLaterMock, 'adProviderLaterMock');
+	equal(adConfig.getProvider([highValueSlot]), adProviderAdDriver2Mock, 'adProviderAdDriver2Mock');
 });
 
 test('getProvider use Evolve(RS) for NZ (only if provider accepts)', function() {
