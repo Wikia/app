@@ -1,10 +1,29 @@
 @import "skins/oasis/css/core/WikiaSlider";
+@import "../../../../skins/oasis/css/core/color";
+@import "../../../../skins/oasis/css/mixins/gradient";
+@import "../../../../skins/oasis/css/mixins/border-radius";
+@import "../../../../skins/oasis/css/mixins/clearfix";
+@import "../../../../skins/oasis/css/mixins/box-shadow";
+@import "../../../../skins/oasis/css/mixins/opacity";
+@import "../../../../skins/oasis/css/mixins/box-sizing-border-box";
+@import "../../../../skins/oasis/css/mixins/clearfix";
+@import "../../../../skins/oasis/css/mixins/box-shadow";
 
-#VideoEmbed {
-	padding: 25px 10px 10px;
+$color-inactive-button: darken($color-secondary-button, 50%);
+@if lightness($color-page) < 50 {
+	$color-inactive-button: lighten($color-secondary-button, 50%);
+}
+
+$color-related-videos-background: darken($color-page, 20%);
+@if lightness($color-page) < 50 {
+	$color-inactive-button: lighten($color-page, 20%);
+}
+
+.skin-oasis #VideoEmbed {
+	padding: 25px 0 20px;
 	position: relative;
-	width: 812px;
-	background-color: #fff;
+	width: 960px;
+	background-color: $color-page;
 }
 #VideoEmbedBorder {
 	background-color: #000;
@@ -19,35 +38,24 @@
 }
 
 #VideoEmbedTitle {
-	margin-top: -15px;
-}
-
-#VideoEmbedTitle2 {
-	margin-top: -15px;
+	padding-left: 20px;
 }
 
 #VideoEmbedSuccess {
 	line-height: 2em;
 	margin-bottom: 10px;
 }
-
-#VideoEmbedUrl {
-	width: 450px;
-	padding: 2px;
-	font-family: sans-serif;
-	margin-bottom: 10px;
-}
-
 #VideoEmbedMainMesg {
 	margin-top: 6px;
 }
 
-#VideoEmbedName {
-	width: 315px;
+#VideoEmbedName, #VideoEmbedCaption {
+	width: 394px;
 }
 
 #VideoEmbedUrlSubmit {
-	float: right;
+	float: left;
+	margin-top: 27px;
 }
 
 #VideoEmbedSearch label {
@@ -56,22 +64,17 @@
 	letter-spacing: -1px;
 }
 
-#VideoEmbedCaption {
-	width: 250px;
-}
-
 .v-float-right {
 	float: right;
 }
 
 #VideoEmbedBody {
-	background: #FFF;
+	background: $color-page;
+	min-height: 25px;
 	opacity: 1;
 	overflow: hidden;
-	padding: 15px;
 	position: relative;
-	width: 760px;
-	color: #000 !important;
+	color: $color-text !important;
 }
 #VideoEmbed h1 {
 	color: #222;
@@ -112,13 +115,9 @@
 }
 
 #VideoEmbedClose {
-	right: 30px;
-	padding-left: 18px;
-	position: absolute;
 	z-index: 10000;
-	top: 5px;
-	margin-top: 15px;
-	margin-right: 15px;
+	float: right;
+	margin: 0px 20px 0 0;
 }
 #VideoEmbedClose a {
 	color: #FFF;
@@ -237,7 +236,6 @@
 
 /***INSERT OPTIONS***/
 .VideoEmbedOptionsTable {
-	color: #000;
 	padding-top: 20px;
 	width: 100%;
 }
@@ -279,22 +277,28 @@ VideoEmbedOptionsTable img {
 }
 #VideoEmbedSlider {
 	float: left;
-	margin-right: 20px;
-	width: 208px;
+	margin-right: 18px;
+	margin-top: 11px;
+	width: 310px;
+	a {
+		cursor: pointer;
+	}
 }
 
 #VideoEmbedError {
-	background: #252525;
-	color: #FFF;
-	font-size: 11pt;
-	font-weight: bold;
-	left: 2px;
-	padding: 30px 20px 30px 20px !important;
-	position: absolute;
-	text-align: center;
-	top: 2px;
-	width: 656px;
+	@include box-shadow( 0, 0, 0, #fff, false, 0);
+	margin: -25px 0 10px 0;
+	width: 960px;
 	display: none;
+	
+	.global-notification {
+		margin: 0;
+		padding: 10px 20px;
+		width: 918px;
+		.close {
+			display: none;
+		}
+	}
 }
 #VideoEmbedError a {
 	color: #EEE;
@@ -344,32 +348,389 @@ VideoEmbedOptionsTable img {
 	margin-left: 4px;
 }
 
-
-#VideoEmbedManualWidth {
-	width: 36px;
-	height: 16px;
-}
-
 #VideoEmbedToolProvidersTable td {
 	background: #fff;
 }
-
-#VideoReplaceLink {
-	font-size: 0.9em;
-	width: 400px;
-}
-
-#VideoReplaceLink p {
-	line-height: 1.5em;
-	float: left;
-}
-
 .vetnone {
 	float: none;
 	clear: none;
 }
 
+#VideoReplaceLink {
+	clear: both;
+	padding-top: 20px;
+}
+
 #VideoEmbedConflict,
 #VideoEmbedSummary {
-	margin-top: -15px;
+	padding: 0 20px;
+}
+
+//*************************************
+// 
+// NEW VET STUFF - SUGGESTIONS + SEARCH
+//
+// author: Rafal Leszczynski
+//
+//*************************************
+#VideoEmbedBody {
+	.WikiaForm {
+		border-bottom: 1px solid $color-page-border;
+		
+		padding: 20px 0;
+		@include clearfix;
+		.input-group {
+			padding: 0;
+			margin: 0;
+			& > div {
+				float: left;
+			}
+			#VideoEmbedUrl {
+				width: 395px;
+				margin-right: 7px;
+			}
+			label {
+				float: left;
+				font-size: 18px;
+				font-weight: bold;
+				padding: 8px 28px 0 0;
+				&.with-info-p {
+					padding-top: 31px;
+				}
+			}
+			input[type="text"] {
+				padding: 6px 8px;
+			}
+		}
+		p {
+			font-size: 12px;
+			line-height: 18px;
+			padding-bottom: 5px;
+		}
+		.VET-search-field {
+			width: 340px;
+		}
+	}
+}
+#VideoEmbedMain strong {
+	font-size: 12px;
+	font-weight: bold;
+}
+#VET-search-submit {
+	margin-left: 2px;	
+}
+.VET-carousel-wrapper {
+	display: none;
+	&.show {
+		display: block;
+	}
+	.back-link {
+		cursor: pointer;
+		display: none;
+		float: right;
+		padding-top: 11px;
+		&.show {
+			display: block;
+		}
+	}
+	.results {
+		display: none;
+		float: left;
+		padding: 11px 0 7px;
+		&.show {
+			display: block;
+		}
+	}
+	.VET-preview {
+		background-color: mix($color-page-opposite, $color-page, 3%);
+		clear: both;
+		display: none;
+		height: 250px;
+		padding: 10px 0;
+		position: relative;
+		text-align: center;
+		.VET-preview-close {
+			cursor: pointer;
+			position: absolute;
+			padding: 0 5px;
+			right: 8px;
+			top: 11px;
+		}
+		.VET-add-from-preview {
+			position: absolute;
+			bottom: 10px;
+			right: 10px;
+		}
+		.VET-video-wrapper {
+			display: inline-block;
+		}
+	}
+}
+.VET-suggestions-wrapper {
+	@include box-shadow(0, 0, 5px, mix($color-page, #000000, 90%), true, 1px);
+	@if $is-dark-wiki {
+		background-color: mix($color-page, #ffffff, 85%);
+	} @else {
+		 background-color: mix($color-page, #000000, 95%);
+	}
+	clear: both;
+	overflow: hidden;
+	padding: 25px 6px;
+	position: relative;
+	& > div {
+		float: left;
+	}
+	.wikiaThrobber {
+		float: none;
+		z-index: 102; // fixed problem with thumbnail play icons displayed on top of throbber
+	}
+	.button {
+		height: 89px;
+		width: 15px;
+		&.secondary {
+			@include linear-gradient($color-secondary-button, top, $color-secondary-button-highlight, 35%, $color-secondary-button, 65%);
+			&:hover {
+				@include linear-gradient($color-secondary-button, top, $color-secondary-button, 5%, $color-secondary-button, 50%);
+			}
+		}
+		&.scrollleft {
+			.chevron {
+				border-color: transparent $color-buttons transparent transparent;
+				border-width: 11px;
+				margin: 35px -9px;
+			}
+			&.disabled {
+				img {
+					border-color: transparent $color-inactive-button transparent transparent;
+				}
+			}
+		}
+		&.scrollright {
+			.chevron {
+				border-color: transparent transparent transparent $color-buttons;
+				border-width: 11px;
+				margin: 35px 4px;
+			}
+			&.disabled {
+				img {
+					border-color: transparent transparent transparent $color-inactive-button;
+				}
+			}
+		}
+		&.disabled {
+			@include opacity(50);
+			@include linear-gradient($color-secondary-button, left, $color-secondary-button, 5%, $color-secondary-button, 50%);
+			cursor: auto;
+		}
+	}
+	p {
+		color: mix($color-page, $color-text, 50%);
+		display: none;
+		font-size: 24px;
+		font-weight: bold;
+		padding-top: 40px;
+		text-align: center;
+		&.show {
+			display: block;
+		}
+	}
+	.VET-suggestions {
+		height: 158px;
+		margin: 0 5px;
+		overflow: hidden;
+		position: relative;
+		width: 824px; 
+		& > div {
+			position: relative;
+		}
+	}
+	ul {
+		position: relative;
+		width: 50000px;
+	}
+	li {
+		@include box-sizing-border-box;
+		text-align: center;
+		float: left;
+		font-size: 12px;
+		line-height: 18px;
+		padding-right: 6px;
+		width: 166px;
+		&.in-preview .Wikia-video-play-button {
+			@include box-sizing-border-box;
+			border: 4px solid $color-buttons;
+			@include opacity(100);
+		}
+		&:last {
+			padding-right: 0;
+			width: 160px;
+		}
+		figure {
+			padding-bottom: 10px;
+			text-align: left;
+			figcaption {
+				height: 36px;
+				padding-top: 5px;
+				overflow: hidden;
+			}
+			a {
+				background-color: #000;
+				display: block;
+				overflow: hidden;
+				position: relative;
+				height: 90px;
+				.timer {
+					bottom: 3px;
+					right: 4px;
+				}
+			}
+		}
+	}
+}
+.VET-preview {
+	clear: both;
+}
+#bottom-close-button {
+	float: right;
+	margin-right: 20px;
+}
+#VideoEmbedDetails {
+	padding: 0 20px;
+	.WikiaForm {
+		border: none;
+		padding: 30px 0 0;
+		.VideoEmbedNoBorder {
+			clear: both;
+			float: right;
+			padding-top: 80px;
+		}
+	}
+}
+#VideoEmbedThumb {
+	float: right;
+	p {
+		padding-top: 5px;
+		text-align: center;
+	}
+}
+#VideoEmbedSizeRow.input-group p {
+	clear: left;
+	display: none;
+	float: left;
+	padding: 6px 0;
+	margin-top: 20px;
+	&.show {
+		display: block;
+	}
+}
+#VideoEmbedBody #VideoEmbedManualWidth {
+	padding: 6px;
+	width: 28px;
+	height: 16px;
+}
+#VideoEmbedBody .preview-options {
+	float: left;
+	width: 540px;
+	#VideoEmbedNameRow {
+		padding-top: 0;
+	}
+	#VideoEmbedInputWidth {
+		border: none;
+		margin: 0;
+		input {
+			display: inline-block;
+		}
+	}
+	#VideoEmbedCaption {
+		display: none;
+		clear: left;
+		float: left;
+		margin-top: 20px;
+		&.show {
+			display: block;
+		}
+	}
+	.input-group {
+		clear: both;
+		padding: 20px 0;
+		border-bottom: 1px solid $color-page-border;
+		width: 540px;
+		.option-label, & > div {
+			float: left;
+		}
+		& > div {
+			width: 412px;
+		}
+		.option-label {
+			font-size: 12px;
+			padding-left: 10px;
+			width: 90px;
+		}
+	}
+	span {
+		border: 2px solid transparent;
+		display: block;
+		float: left;
+		margin-right: 20px;
+		&.selected {
+			border-color: $color-buttons;
+		}
+		input.hidden {
+			// display: none;
+			// hide imputs hack for IE8 - "diaplay none" cause clicking on label doesn't make radio button checked  
+			height: 0px;
+			left: -9999px;
+			position: absolute;
+			width: 0px;
+		}
+		.vet-style-label {
+			background: url("/extensions/wikia/VideoEmbedTool/images/MediatoolsSprite.png") 0px -10px no-repeat; /* $wgCdnStylePath */
+			cursor: pointer;
+			float: none;
+			height: 34px;
+			margin: 1px;
+			overflow: hidden;
+			padding: 0;
+			text-indent: 100%;
+			width: 44px;
+			white-space: nowrap;
+			&.VideoEmbedNoThumbOption {
+				background-position: 0px -49px;
+			}
+		}
+		.vet-layout-label {
+			background: url("/extensions/wikia/VideoEmbedTool/images/MediatoolsSprite.png") 0px -89px no-repeat; /* $wgCdnStylePath */
+			cursor: pointer;
+			float: none;
+			height: 33px;
+			margin: 1px;
+			overflow: hidden;
+			padding: 0;
+			text-indent: 100%;
+			width: 50px;
+			white-space: nowrap;
+			&.VideoEmbedLayoutCenter {
+				background-position: 0px -127px; 
+			}
+			&.VideoEmbedLayoutRight {
+				background-position: 0px -165px; 
+			}
+		}
+	}
+}
+
+
+#VET-search-filter {
+	padding-top: 4px;
+	width:320px;
+	float:right;
+	#VET-search-dropdown {
+	    margin-right:39px;
+	    float:right;
+	    width:180px;
+	    .dropdown { 
+    		width: 215px; 
+    	}
+    }
+    label.dropdown-label { float:right; margin-right:10px; font-weight: bold;  }
 }

@@ -20,7 +20,7 @@ $messages['en'] = array(
  * @author EugeneZelenko
  */
 $messages['qqq'] = array(
-	'wva-add' => '{{Identical|Add}}',
+	'wva-add' => '{{Identical|Add}}'
 );
 
 /** Afrikaans (Afrikaans)
@@ -62,7 +62,7 @@ $messages['az'] = array(
 	'wva-add' => 'Əlavə et',
 );
 
-/** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
+/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -166,7 +166,7 @@ $messages['de'] = array(
 	'wva-thumbnail-upload-failed' => 'Videoeinbettung fehlgeschlagen, kein brauchbares Vorschaubild erhalten',
 );
 
-/** German (formal address) (Deutsch (Sie-Form)‎)
+/** German (formal address) (‪Deutsch (Sie-Form)‬)
  * @author LWChris
  */
 $messages['de-formal'] = array(
@@ -502,7 +502,7 @@ $messages['my'] = array(
 	'wva-add' => 'ပေါင်းထည့်ရန်',
 );
 
-/** Norwegian Bokmål (norsk (bokmål)‎)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -537,7 +537,7 @@ $messages['nl'] = array(
 	'wva-thumbnail-upload-failed' => 'Het inbedden van de video is mislukt. Het was niet mogelijk om een miniatuurafbeelding te maken',
 );
 
-/** Nederlands (informeel)‎ (Nederlands (informeel)‎)
+/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
  * @author Siebrand
  */
 $messages['nl-informal'] = array(
@@ -701,7 +701,7 @@ $messages['si'] = array(
 	'wva-protected' => 'මෙම වීඩියෝව ආරක්‍ෂිතය',
 );
 
-/** Serbian (Cyrillic script) (српски (ћирилица)‎)
+/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Charmed94
  * @author Rancher
  * @author Verlor
@@ -800,7 +800,7 @@ $messages['uk'] = array(
 	'wva-protected' => 'Це відео захищено.',
 );
 
-/** Simplified Chinese (中文（简体）‎)
+/** Simplified Chinese (‪中文（简体）‬)
  * @author Anakmalaysia
  * @author Hydra
  */
