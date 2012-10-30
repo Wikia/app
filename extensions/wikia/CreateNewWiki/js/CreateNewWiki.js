@@ -188,7 +188,7 @@ var WikiBuilder = {
 		this.wikiName.focus();
 		if(this.wikiName.val() || this.wikiDomain.val()) {
 			this.checkDomain();
-			this.checkName();
+			this.checkWikiName();
 		}
 	},
 
@@ -374,12 +374,13 @@ var WikiBuilder = {
 
 	createWiki: function() {
 
-		var that = this;
+		var that = this,
+			throbberWrapper = $('#ThemeWiki .next-controls');
 
 		this.requestKeys();
 		this.solveKeys();
 
-		$('#ThemeWiki .next-controls').startThrobbing();
+		throbberWrapper.startThrobbing();
 
 		$.nirvana.sendRequest({
 			controller: 'CreateNewWiki',
@@ -397,7 +398,7 @@ var WikiBuilder = {
 				that.createStatus = res.status;
 				that.createStatusMessage = res.statusMsg;
 
-				$('#ThemeWiki .next-controls').stopThrobbing();
+				throbberWrapper.stopThrobbing();
 
 				if(that.createStatus && that.createStatus == 'ok') {
 					that.cityId = res.cityId;
