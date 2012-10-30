@@ -83,6 +83,10 @@
 			this.editor.element.addClass('active');
 		},
 
+		editorButtonsActivate: function() {
+			this.buttons.removeAttr('disabled');
+		},
+
 		editorAfterActivated: function() {
 			this.showButtons();
 			this.showToolbar();
@@ -95,16 +99,14 @@
 
 			this.editor.getEditbox().on(
 				'keyup',
-				$.proxy(function(event) {
-					this.buttons.removeAttr('disabled');
-				}, this)
+				$.proxy(this.editorButtonsActivate, this)
 			);
-			this.editor.on(
-				'mode',
-				$.proxy(function(event) {
-					this.buttons.removeAttr('disabled');
-				}, this)
-			);
+			this.editor.on({
+				mode: $.proxy(this.editorButtonsActivate, this),
+				editorAddImage: $.proxy(this.editorButtonsActivate, this),
+				editorAddVideo: $.proxy(this.editorButtonsActivate, this),
+				editorAddLink: $.proxy(this.editorButtonsActivate, this)
+			});
 		},
 
 		editorBeforeReady: function() {
