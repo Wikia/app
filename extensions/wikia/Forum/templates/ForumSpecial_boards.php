@@ -14,7 +14,7 @@
 				<? endif; ?>
 			</div>
 			<p class="description grid-3 alpha">
-				This is a hardcoded placeholder for board description.  Remove me and replace me with real data please.
+				<?= $board['description']; ?>
 			</p>
 			<div class="grid-1">
 				<!-- placeholder for future feature -->

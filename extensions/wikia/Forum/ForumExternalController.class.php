@@ -34,36 +34,21 @@ class ForumExternalController extends WallExternalController {
 		
 		$boardTitle = $this->getVal('boardTitle', '');
 		$boardDescription = $this->getVal('boardDescription', '');
-		 
-		$this->status = 'error';
-		$this->errorfield = '';
-		$this->errormsg = '';
 		
-		// Reject illegal characters.
-		$rxTc = Title::getTitleInvalidRegex();
-		if ( preg_match( $rxTc, $boardTitle ) ) {
-			$this->errorfield = 'boardTitle';
-			$this->errormsg = wfMsg('forum-board-title-validation-invalid');
+		$valid = $this->validateBoardData($boardTitle, $boardDescription);
+		if(!$valid) {
 			return true;
 		}
 		
-		$titleLength = strlen( $boardTitle );
-		if( $titleLength > 40 || $titleLength < 4 ) {
-			$this->errorfield = 'boardTitle';
-			$this->errormsg = wfMsg( 'forum-board-title-validation-length' );	
-			return true;		
-		}
-		
-		$descriptionLength = strlen( $boardDescription );
-		
-		if( $descriptionLength > 255 || $descriptionLength < 4 ) {
-			$this->errorfield = 'boardDescription';
-			$this->errormsg = wfMsg( 'forum-board-description-validation-length' );
-			return true;			
+		$newTitle = Title::newFromText($boardTitle, NS_WIKIA_FORUM_BOARD);
+		if( $newTitle->exists() ) {
+			$this->status = 'error';
+			$this->errormsg = wfMsg('forum-board-title-validation-exists');
+			return true;
 		}
 
 		$forum = new Forum();
-		$forum->createBoard($boardTitle, $boardDescription);	
+		$forum->createBoard($boardTitle, $boardDescription);
 
 		$this->status = 'ok';
 		$this->errorfield = '';
@@ -71,14 +56,14 @@ class ForumExternalController extends WallExternalController {
 	}
 	
 	/**
-	 * Edits existing board
-	 * @request boardId - unique id of the board
-     * @request boardTitle - new title of the board (optional), nullable
-     * @request boardDescription - description of the board (optional), nullable
-     * @response status - [ok|error|accessdenied]
-     * @response errorfield - optional error field.  nullable
-     * @response errormsg - optional error message.  nullable
-	 */
+	* Edits existing board
+	* @request boardId - unique id of the board
+ 	* @request boardTitle - new title of the board (optional), nullable
+ 	* @request boardDescription - description of the board (optional), nullable
+ 	* @response status - [ok|error|accessdenied]
+  	* @response errorfield - optional error field.  nullable
+ 	* @response errormsg - optional error message.  nullable
+	*/
 	public function editBoard() {	
 		$this->status = self::checkAdminAccess();
 		if(!empty($this->status)) {
@@ -92,19 +77,66 @@ class ForumExternalController extends WallExternalController {
 		if(empty($boardId)) {
 			$this->status = 'error';
 			$this->errormsg = wfMsg('forum-board-id-validation-missing');
-			return;
+			return true;
 		}
 		
-		$status = 'ok';
-		$errorfield = '';
-		$errormsg = '';
+		$title = Title::newFromId($boardId);
+		if(empty($title)) {
+			$this->status = 'error';
+			$this->errormsg = wfMsg('forum-board-id-validation-missing');
+			return true;
+		}
 		
-		/* magic happens here */
+		$valid = $this->validateBoardData($boardTitle, $boardDescription);
+		if(!$valid) {
+			return true;
+		}
 		
-		$this->status = $status;
-		$this->errorfield = $errorfield;
-		$this->errormsg = $errormsg;
+		$newTitle = Title::newFromText($boardTitle, NS_WIKIA_FORUM_BOARD);
+		if( $newTitle->exists() && $newTitle->getText() != $title->getText() ) {
+			$this->status = 'error';
+			$this->errormsg = wfMsg('forum-board-title-validation-exists');
+			return true;
+		}
+		
+		$forum = new Forum();
+		$forum->editBoard($boardId, $boardTitle, $boardDescription);
+	
+		$this->status = 'ok';
+		$this->errorfield = '';
+		$this->errormsg = '';
 
+	}
+	
+	public function validateBoardData($boardTitle, $boardDescription) {
+		$this->status = 'error';
+		$this->errorfield = '';
+		$this->errormsg = '';
+		
+		// Reject illegal characters.
+		$rxTc = Title::getTitleInvalidRegex();
+		if ( preg_match( $rxTc, $boardTitle ) ) {
+			$this->errorfield = 'boardTitle';
+			$this->errormsg = wfMsg('forum-board-title-validation-invalid');
+			return false;
+		}
+		
+		$titleLength = strlen( $boardTitle );
+		if( $titleLength > 40 || $titleLength < 4 ) {
+			$this->errorfield = 'boardTitle';
+			$this->errormsg = wfMsg( 'forum-board-title-validation-length' );	
+			return false;		
+		}
+		
+		$descriptionLength = strlen( $boardDescription );
+		
+		if( $descriptionLength > 255 || $descriptionLength < 4 ) {
+			$this->errorfield = 'boardDescription';
+			$this->errormsg = wfMsg( 'forum-board-description-validation-length' );
+			return false;			
+		}
+
+		return true;
 	}
 
 	protected function replyToMessageBuildResponse($context, $reply) {

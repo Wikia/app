@@ -42,6 +42,7 @@ class Forum extends WikiaModel {
 				$boardInfo = $board->getBoardInfo();
 				$boardInfo['id'] = $boardId;
 				$boardInfo['name'] = $title->getText();
+				$boardInfo['description'] = $board->getDescription();
 				$boardInfo['url'] = $title->getFullURL();
 
 				$boards[$boardId] = $boardInfo;
@@ -183,9 +184,32 @@ class Forum extends WikiaModel {
 		return $this->hasAtLeast(NS_FORUM, 5);
 	}
 	
+	/**
+	 *  createBoard 
+	 */
+	 
 	public function createBoard($titletext, $body, $bot = false) {
 		$this->wf->ProfileIn( __METHOD__ );
 
+		$this->createOrEdit(-1, $titletext, $body, $bot);
+	
+		$this->wf->ProfileOut( __METHOD__ );
+	}
+	
+	public function editBoard($id, $titletext, $body, $bot = false) {
+		$this->wf->ProfileIn( __METHOD__ );
+		$this->createOrEdit($id, $titletext, $body, $bot);
+		$this->wf->ProfileOut( __METHOD__ );
+	}
+	
+	
+	/**
+	 *  create or edit board, if $id = -1 then we are creating 
+	 */
+	
+	protected function createOrEdit($id, $titletext, $body, $bot = false) {
+		$this->wf->ProfileIn( __METHOD__ );
+		
 		if( strlen($titletext) < 4 || strlen($body) < 4 ) {
 			$this->wf->ProfileOut( __METHOD__ );
 			return false;
@@ -196,8 +220,24 @@ class Forum extends WikiaModel {
 			return false;
 		}
 		
-		Forum::$allowToEditBoard = true;		
-		$title = Title::newFromText($titletext, NS_WIKIA_FORUM_BOARD); 
+		Forum::$allowToEditBoard = true;	
+		
+		if($id == -1) {
+			$title = Title::newFromText($titletext, NS_WIKIA_FORUM_BOARD);
+		} else {
+			$title = Title::newFromId($id);
+			
+			if($title->getText() != $titletext) {
+				$nt = Title::newFromText($titletext, NS_WIKIA_FORUM_BOARD);
+				if($nt->exists()) {
+					return false;
+				}	
+
+				$title->moveTo( $nt, true, '', false );
+				$title = $nt;
+			}
+		}	 
+		
 		$article  = new Article( $title );
 		$editPage = new EditPage( $article );
 			
@@ -206,7 +246,8 @@ class Forum extends WikiaModel {
 			
 		$result = array();
 		$retval = $editPage->internalAttemptSave( $result, $bot );
-		Forum::$allowToEditBoard = false;		
+		Forum::$allowToEditBoard = false;
+		
 		$this->wf->ProfileOut( __METHOD__ );
 	}
 	
