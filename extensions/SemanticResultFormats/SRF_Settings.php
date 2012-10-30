@@ -21,7 +21,7 @@ if ( !defined( 'SRF_VERSION' ) ) {
 }
 
 # The formats you want to be able to use.
-# See the INSTALL file or this url for more info: https://www.mediawiki.org/wiki/Extension:Semantic_Result_Formats#Installation
+# See the INSTALL file or this url for more info: http://www.mediawiki.org/wiki/Extension:Semantic_Result_Formats#Installation
 $srfgFormats = array(
 	'icalendar',
 	'vcard',

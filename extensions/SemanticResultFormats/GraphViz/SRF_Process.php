@@ -1,7 +1,7 @@
 <?php
 /*******************************************************************************
 *	This file contains the Process Printer for SemanticResultFormats
-*   (https://www.mediawiki.org/wiki/Extension:Semantic_Result_Formats)
+*   (http://www.mediawiki.org/wiki/Extension:Semantic_Result_Formats)
 *
 *	Copyright (c) 2008 - 2009 Frank Dengler and Hans-Jörg Happel
 *
