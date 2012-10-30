@@ -17,15 +17,29 @@ class ForumExternalController extends WallExternalController {
 		}
 		return '';
 	}
+	/**
+	* Change order of the boards
+	* 
+	* @request boardId - id of the board
+	* @request dir - change of the board order
+	*/  
+	
+	public function changeOrder() {
+		$boardId = $this->getVal('boardId', 0);
+		$dir = $this->getVal('dir', 0);
+		
+		
+	}
 	
 	/**
-     * Create new board ajax call
-     * @request boardTitle - title of the board
-     * @request boardDescription - description of the board (optional)
-     * @response status - [ok|error|accessdenied]
-     * @response errorfield - optional error field.  nullable
-     * @response errormsg - optional error message.  nullable
-     */
+ 	* Create new board ajax call
+ 	* @request boardTitle - title of the board
+ 	* @request boardDescription - description of the board (optional)
+ 	* @response status - [ok|error|accessdenied]
+  	* @response errorfield - optional error field.  nullable
+ 	* @response errormsg - optional error message.  nullable
+ 	*/
+ 	
 	public function createNewBoard() {
 		$this->status = self::checkAdminAccess();
 		if(!empty($this->status)) {
@@ -100,6 +114,12 @@ class ForumExternalController extends WallExternalController {
 		}
 		
 		$forum = new Forum();
+		if($forum->getBoardCount() == Forum::BOARD_MAX_NUMBER) {
+			$this->status = 'error';
+			$this->errormsg = wfMsg('forum-board-validation-count',  Forum::BOARD_MAX_NUMBER);
+			return true;			
+		} 
+		
 		$forum->editBoard($boardId, $boardTitle, $boardDescription);
 	
 		$this->status = 'ok';

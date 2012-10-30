@@ -174,7 +174,8 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
 	'forum-board-title-validation-invalid' => 'Board name contains invalid characters',
 	'forum-board-title-validation-length' => 'Board name length should be between 4 and 40',
 	'forum-board-title-validation-exists' => 'A Board of the same name already exists',
-		
+	'forum-board-validation-count' => 'The maximum number of boards is $1',
+	
 	'forum-board-description-validation-length' => 'Board description should be between 4 and 255',
 	'forum-board-id-validation-missing' => 'Board id is missing',
 );
@@ -239,6 +240,7 @@ $messages['qqq'] = array(
 	'forum-board-title-validation-invalid' => 'Display on board create in case of validation error ',
 	'forum-board-title-validation-length' => 'Display on board create in case of validation error ',
 	'forum-board-title-validation-exists' => 'Display on board create in case of validation error ',
+	'forum-board-validation-count' => 'Display on board create in case of validation error ',
 	 
 	'forum-board-description-validation-length' => 'Display on board create in case of validation error ',
 	'forum-board-id-validation-missing' => 'User should not see this message unless they hack the wiki.  Nevertheless, it is a validation error when it is not provided.',

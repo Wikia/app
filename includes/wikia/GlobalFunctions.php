@@ -1246,10 +1246,20 @@ function wfGetWikiaPageProp($type, $pageID, $db = DB_SLAVE, $dbname = '') {
 	);
 
 	if($out = $db->fetchRow($res)) {
-		return unserialize($out['props']);
+		return wfUnserializeProp($out['props']);
 	}
 
 	return null;
+}
+
+/**
+ * this function can be use when we are doing joins with props table 
+ * and we want to unserialize multiple rows of result
+ */
+
+
+function wfUnserializeProp($data) {
+	return unserialize($data);
 }
 
 

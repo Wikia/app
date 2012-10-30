@@ -72,6 +72,27 @@
 		});
 	};
 	
+	function upDown(e) {
+		var boardItem = $(e.target).closest('.board');
+		var anchor = $(e.target).closest('a');
+		
+		var dir = anchor.data('dir');
+		var borderId = boardItem.data('id');
+
+		$.nirvana.sendRequest({
+			controller: 'ForumExternalController',
+			method: 'changeOrder',
+			format: 'json',
+			data: {
+				borderId: boardId,
+				dir: dir,
+			},
+			callback: function (json) {
+				UserLoginAjaxForm.prototype.reloadPage();
+			}
+		});	
+	}
+	
 	/* Board edit event bindings */
 	createNewBoardButton.on('click.CreateNewBoard', '', handleCreateNewBoardButtonClick);
 	boardList.on('click.editBoard', '.board .edit-pencil', handleEditBoardButtonClick);

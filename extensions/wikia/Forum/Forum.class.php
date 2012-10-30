@@ -7,6 +7,7 @@
 class Forum extends WikiaModel {
 
 	const ACTIVE_DAYS = 7;
+	const BOARD_MAX_NUMBER = 50;
 	const AUTOCREATE_USER = 'Wikia';
 	//controlling from outside if use can edit/create/delete board page
 	static  $allowToEditBoard = false;	
@@ -21,9 +22,13 @@ class Forum extends WikiaModel {
 
 		// get board list
 		$result = $dbw->select(
-			array( 'page' ),
-			array( 'page_id, page_title' ),
-			array( 'page_namespace' => NS_WIKIA_FORUM_BOARD ),
+			array( 'page', 'page_wikia_props' ),
+			array( 'page.page_id as page_id, page.page_title as page_title, page_wikia_props.props as order_index'),
+			array( 
+				'page.page_namespace' => NS_WIKIA_FORUM_BOARD,
+				'page_wikia_props.page_id = page.page_id',
+				'page_wikia_props.propname' => WPP_FORUM_ORDER_INDEX
+			),
 			__METHOD__,
 			array( 'ORDER BY' => 'page_title' )
 		);
@@ -44,10 +49,17 @@ class Forum extends WikiaModel {
 				$boardInfo['name'] = $title->getText();
 				$boardInfo['description'] = $board->getDescription();
 				$boardInfo['url'] = $title->getFullURL();
-
+				$boardInfo['order_index'] = wfUnserializeProp($row->order_index);
 				$boards[$boardId] = $boardInfo;
 			}
 		}
+
+		usort($boards, function($a, $b) {
+			if ($a['order_index'] == $b['order_index']) {
+        		return 0;
+    		}
+    		return ($a['order_index'] < $b['order_index']) ? -1 : 1;
+		});
 
 		$this->wf->profileOut( __METHOD__ );
 
@@ -99,7 +111,7 @@ class Forum extends WikiaModel {
 			if ( !empty($days) ) {
 				$sqlWhere[] = "last_touched > curdate() - interval $days day";
 			}
-
+			
 			$row = $db->selectRow(
 				array( 'comments_index', 'page' ),
 				array( 'count(*) cnt' ),
@@ -185,6 +197,31 @@ class Forum extends WikiaModel {
 	}
 	
 	/**
+	 * Backward compatibility for forums created before the order functionality
+	 */
+	
+	public function createOrders() {
+		$this->wf->profileIn( __METHOD__ );
+
+		$dbw = $this->wf->GetDB( DB_MASTER );
+
+		// get board list
+		$result = $dbw->select(
+			array( 'page' ),
+			array( 'page_id, page_title' ),
+			array( 'page_namespace' => NS_WIKIA_FORUM_BOARD ),
+			__METHOD__,
+			array( 'ORDER BY' => 'page_title' )
+		);
+		
+		while ( $row = $dbw->fetchObject($result) ) {
+			wfSetWikiaPageProp(WPP_FORUM_ORDER_INDEX, $row->page_id, $row->page_id);
+		}
+
+		$this->wf->profileOut( __METHOD__ );
+	}
+	
+	/**
 	 *  createBoard 
 	 */
 	 
@@ -198,7 +235,9 @@ class Forum extends WikiaModel {
 	
 	public function editBoard($id, $titletext, $body, $bot = false) {
 		$this->wf->ProfileIn( __METHOD__ );
+		
 		$this->createOrEdit($id, $titletext, $body, $bot);
+		
 		$this->wf->ProfileOut( __METHOD__ );
 	}
 	
