@@ -51,7 +51,7 @@ LocalSettings.php Modifications:
    0 0 * * * MW_INSTALL_PATH=/var/www/wiki /usr/bin/php /var/www/wiki/extension/SemanticResultFormats/Ploticus/SRF_Ploticus_cleanCache.php -v 2>&1 > /var/log/ploticus_cleanCache.log
 
  * $wgEnableUploads (default: false - this is a MediaWiki setting)
-   - must be true. Be sure the upload directory has the proper permissions.  (see https://www.mediawiki.org/wiki/Manual:$wgUploadPath)
+   - must be true. Be sure the upload directory has the proper permissions.  (see http://www.mediawiki.org/wiki/Manual:$wgUploadPath)
    If you MUST use SRF-Ploticus without enabling uploads, you can manually create the 'ploticus' directory under the
    MediaWiki upload directory (Typically, MW_INSTALL_PATH/images).  Further, under the ploticus directory, subdirectories from
    0 to f hex (e.g. 0,1,2...9,a,b,c,d,e,f) should also be created, all with permission 777.
