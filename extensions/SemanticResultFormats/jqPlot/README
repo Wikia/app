@@ -9,5 +9,4 @@ Currently the directory holds two query printers, for bar and pie charts.
 
 For more information about the jqPlot result formats, see:
 
-* http://semantic-mediawiki.org/wiki/Help:jqplotpie_format
-* http://semantic-mediawiki.org/wiki/Help:jqplotbar_format
+http://www.mediawiki.org/wiki/Extension:Semantic_Result_Formats/jqplotbar_and_jqplotpie_formats

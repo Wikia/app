@@ -4,8 +4,6 @@ http://semantic-mediawiki.org/wiki/Semantic_Result_Formats
 
 == SRF 1.7.1 ==
 
-Released on Match 8, 2012.
-
 * Fixed issue with the graphlenegd parameter in the graph format (bug 33745).
 * Added 'default' parameter to math formats (bug 34983).
 
