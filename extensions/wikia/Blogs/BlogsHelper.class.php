@@ -88,7 +88,7 @@ class BlogsHelper {
 		wfProfileIn( __METHOD__ );
 		// schedule a BloglistDeferredPurge job if the article is a blog article.
 		if ( NS_BLOG_ARTICLE == $oArticle->getTitle()->getNamespace() ) {
-			$oJob = new BloglistDeferredPurgeJob;
+			$oJob = new BloglistDeferredPurgeJob( $oArticle->getTitle() );
 			$oJob->insert();
 		}
 		wfProfileOut( __METHOD__ );

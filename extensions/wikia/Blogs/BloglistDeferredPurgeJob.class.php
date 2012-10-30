@@ -15,8 +15,8 @@ class BloglistDeferredPurgeJob extends Job {
 	/**
 	 * The constructor.
 	 */
-	public function __construct() {
-		parent::__construct( 'bloglistDeferredPurge' );
+	public function __construct( $oTitle ) {
+		parent::__construct( 'bloglistDeferredPurge', $oTitle );
 	}
 
 	/**
