@@ -187,6 +187,7 @@ define('mediagallery', ['media', 'modal', 'pager', 'thumbnailer', 'lazyload', 't
 					pageNumber: current
 				});
 				loadImages();
+				updateDots();
 			}
 		});
 
