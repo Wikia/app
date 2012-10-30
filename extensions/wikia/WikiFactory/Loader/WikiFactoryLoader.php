@@ -873,10 +873,9 @@ class WikiFactoryLoader {
 
 		foreach ( $permissions as $group => $rights ) {
 			//override or add groups and rights
-			$wgGroupPermissions[$group] = array_merge(
-				( !isset( $wgGroupPermissions[$group] ) ? array() : $wgGroupPermissions[$group] ),
-				$rights
-			);
+			$wgGroupPermissions[$group] = ( isset( $wgGroupPermissions[$group] ) ) ?
+				array_merge( $rights, $wgGroupPermissions[$group] ) :
+				$rights;
 		}
 
 		return $wgGroupPermissions;
