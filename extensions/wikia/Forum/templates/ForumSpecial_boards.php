@@ -1,6 +1,6 @@
 <ul class="boards">
 	<? foreach($boards as $board): ?>
-		<li class="board board-<?= $board['id'] ?>">
+		<li class="board board-<?= $board['id'] ?>" data-id="<?= $board['id'] ?>">
 			<div class="heading">
 				<h4>
 					<a href="<?= $board['url'] ?>"><?= $board['name'] ?></a>

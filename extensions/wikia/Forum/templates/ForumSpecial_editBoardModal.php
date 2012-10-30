@@ -1,6 +1,6 @@
 <section id="EditBoardModal" class="EditBoardModal">
 	<h1>
-		<?= $wf->Msg('forum-admin-create-new-board-modal-heading') ?>
+		<?= $wf->Msg('forum-admin-edit-board-modal-heading', $boardTitle) ?>
 	</h1>
 
 <?
@@ -9,14 +9,16 @@
 			array(
 				'type' => 'text',
 				'name' => 'boardTitle',
+				'value' => $boardTitle,
 				'isRequired' => true,
-				'label' => wfMsg('forum-admin-create-new-board-title'),
+				'label' => wfMsg('forum-admin-edit-board-title'),
 			),
 			array(
 				'type' => 'text',
 				'name' => 'boardDescription',
+				'value' => $boardDescription,
 				'isRequired' => true,
-				'label' => wfMsg('forum-admin-create-new-board-description')
+				'label' => wfMsg('forum-admin-edit-board-description')
 			),
 		),
 		'method' => 'post',
@@ -31,7 +33,7 @@
 			<?= $wf->Msg('cancel') ?>
 		</button>
 		<button class="submit">
-			<?= $wf->Msg('forum-admin-create-new-board-label') ?>
+			<?= $wf->Msg('save') ?>
 		</button>
 	</div>
 </section>

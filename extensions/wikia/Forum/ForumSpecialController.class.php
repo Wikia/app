@@ -83,5 +83,25 @@ class ForumSpecialController extends WikiaSpecialPageController {
 		
 		$this->wf->profileOut( __METHOD__ );
 	}
+	
+	public function editBoardModal() {
+		$this->wf->profileIn( __METHOD__ );
+		
+		if (!$this->wg->User->isAllowed( 'forumadmin' )) {
+			$this->displayRestrictionError();
+			return false;  // skip rendering
+		}
+		
+		$this->boardId = $this->getVal('boardId', -1);
+		
+		/* backend magic here */
+		
+		// mock data
+		$this->boardId = 1234;
+		$this->boardTitle = 'mock title';
+		$this->boardDescription = 'mock description';
+		
+		$this->wf->profileOut( __METHOD__ );
+	}
 
 }
