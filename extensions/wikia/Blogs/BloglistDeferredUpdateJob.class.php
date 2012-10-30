@@ -1,21 +1,28 @@
 <?php
 /**
- * A DeferrableUpdate for bloglists.
+ * A deferred purge job for bloglists.
  *
  * The class was created in order to fix BugId:25123 - caching issues
  * related to the bloglist tag.
  *
- * @see includes/DeferredUpdates.php
+ * @see http://www.mediawiki.org/wiki/Manual:Job_queue/For_developers
  *
  * @author Michał Roszka (Mix) <mix@wikia-inc.com>
  * @since October 24, 2012
  */
-class BloglistDeferrableUpdate implements DeferrableUpdate {
+class BloglistDeferredPurgeJob extends Job {
+
+	/**
+	 * The constructor.
+	 */
+	public function __construct() {
+		parent::__construct( 'bloglistDeferredPurge' );
+	}
 
 	/**
 	 * The actual update.
 	 */
-	public function doUpdate() {
+	public function run() {
 		wfProfileIn( __METHOD__ );
 
 		$oDB = wfGetDB( DB_SLAVE );
