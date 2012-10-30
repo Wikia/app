@@ -154,7 +154,7 @@ $wgHooks[ 'ArticleInsertComplete' ][] = 'BlogsHelper::OnArticleInsertComplete';
 include( __DIR__ . "/BlogTemplate.php");
 include( __DIR__ . "/BlogArticle.php");
 include( __DIR__ . "/BlogLockdown.php");
-include( __DIR__ . "/BloglistDeferredUpdateJob.class.php" );
+include( __DIR__ . "/BloglistDeferredPurgeJob.class.php" );
 
 /**
  * add task
