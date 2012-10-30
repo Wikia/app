@@ -40,9 +40,15 @@ var WikiBuilder = {
 		});
 
 		// Name Wiki event handlers
+		this.checkNextButtonStep1();
+
 		$('#NameWiki input.next').click(function() {
-			if (!WikiBuilder.wikiDomain.val() || !WikiBuilder.wikiName.val() || $('#NameWiki .wiki-name-error').html() || $('#NameWiki .wiki-domain-error').html() || WikiBuilder.nameAjax || WikiBuilder.domainAjax) {
-				WikiBuilder.nameWikiSubmitError.show().html(WikiBuilderCfg['name-wiki-submit-error']).delay(3000).fadeOut();
+			if (WikiBuilder.isNameWikiSubmitError()) {
+				WikiBuilder.nameWikiSubmitError.
+					show().
+					html(WikiBuilderCfg['name-wiki-submit-error']).
+					delay(3000).
+					fadeOut();
 			} else {
 				WikiBuilder.saveState({
 					wikiName: WikiBuilder.wikiName.val(),
@@ -76,6 +82,7 @@ var WikiBuilder = {
 		});
 		WikiBuilder.wikiDomain.keyup(function() {
 			WikiBuilder.domainAjax = true;
+			WikiBuilder.checkNextButtonStep1();
 			if(WikiBuilder.wdtimer) {
 				clearTimeout(WikiBuilder.wdtimer);
 			}
@@ -83,6 +90,7 @@ var WikiBuilder = {
 		});
 		WikiBuilder.wikiName.keyup(function() {
 			WikiBuilder.nameAjax = true;
+			WikiBuilder.checkNextButtonStep1();
 			var name = $(this).val();
 			name = $.trim(name.replace(/[^a-zA-Z0-9 ]+/g, '')).replace(/ +/g, '-');
 			WikiBuilder.wikiDomain.val(name.toLowerCase()).trigger('keyup');
@@ -233,6 +241,7 @@ var WikiBuilder = {
 		var lang = WikiBuilder.wikiLanguage.val();
 		if(name) {
 			WikiBuilder.nameAjax = true;
+			WikiBuilder.checkNextButtonStep1();
 
 			$.nirvana.sendRequest({
 				controller: 'CreateNewWiki',
@@ -250,6 +259,7 @@ var WikiBuilder = {
 							WikiBuilder.wikiNameError.html('');
 						}
 						WikiBuilder.nameAjax = false;
+						WikiBuilder.checkNextButtonStep1();
 					}
 				}
 			});
@@ -267,6 +277,7 @@ var WikiBuilder = {
 			WikiBuilder.wikiDomain.val(wd);
 			WikiBuilder.showIcon(WikiBuilder.wikiDomainStatus, 'spinner');
 			WikiBuilder.domainAjax = true;
+			WikiBuilder.checkNextButtonStep1();
 			$.nirvana.sendRequest({
 				controller: 'CreateNewWiki',
 				method: 'CheckDomain',
@@ -286,6 +297,7 @@ var WikiBuilder = {
 							WikiBuilder.showIcon(WikiBuilder.wikiDomainStatus, 'ok');
 						}
 						WikiBuilder.domainAjax = false;
+						WikiBuilder.checkNextButtonStep1();
 					}
 				}
 			});
@@ -293,7 +305,32 @@ var WikiBuilder = {
 			WikiBuilder.wikiDomainError.html('');
 			WikiBuilder.showIcon(WikiBuilder.wikiDomainStatus, '');
 		}
+	},
 
+	isNameWikiSubmitError: function() {
+		return !this.wikiDomain.val() ||
+			!this.wikiName.val() ||
+			$('#NameWiki .wiki-name-error').html() ||
+			$('#NameWiki .wiki-domain-error').html() ||
+			this.nameAjax ||
+			this.domainAjax;
+	},
+
+	/**
+	 * Update the state of "Next" button on step #1.
+	 * It depends on two AJAX validation requests which are performed in parallel.
+	 *
+	 * This method is used solely by automated tests (enabled class is added when test can proceed to the next step)
+	 */
+	checkNextButtonStep1: function() {
+		var nextButton = this.nextButtons.eq(0);
+
+		if (this.isNameWikiSubmitError()) {
+			nextButton.removeClass('enabled');
+		}
+		else {
+			nextButton.addClass('enabled');
+		}
 	},
 
 	showIcon: function (el, art) {
