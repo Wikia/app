@@ -119,13 +119,13 @@ window.Wikia.getMultiTypePackage = function(options) {
  */
 window.Wikia.processScript = function(js) {
 	var script = document.createElement('script'),
-		firstScript = document.getElementsByTagName('script')[0];
+		head = document.head || document.getElementsByTagName('head')[0];
 
 	script.type = 'text/javascript';
 	script.text = js;
 
 	// add it to DOM
-	firstScript.parentNode.insertBefore(script, firstScript);
+	head.appendChild(script);
 };
 
 /**
@@ -134,7 +134,9 @@ window.Wikia.processScript = function(js) {
  * css - CSS code to be applied
  */
 window.Wikia.processStyle = function(css) {
-	var style = document.createElement('style');
+	var style = document.createElement('style'),
+		head = document.head || document.getElementsByTagName('head')[0];
+
 	style.type = 'text/css';
 
 	if (style.styleSheet) {
@@ -145,7 +147,7 @@ window.Wikia.processStyle = function(css) {
 		style.appendChild(document.createTextNode(css));
 	}
 
-	document.getElementsByTagName('head')[0].appendChild(style);
+	head.appendChild(style);
 };
 
 /**
