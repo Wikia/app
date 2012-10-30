@@ -418,8 +418,8 @@ class WallNotifications {
 			array(
 				'wl_title' => array($titleDbkey, $userTitle->getDBkey() ),
 				'wl_namespace' => array(MWNamespace::getSubject($ns), MWNamespace::getTalk($ns)),
-                                //THIS hack will be removed after runing script with will clear all notification copy
-                                "((wl_wikia_addedtimestamp > '2012-01-31' and wl_namespace = ".MWNamespace::getSubject($ns).") or ( wl_namespace = " .MWNamespace::getTalk($ns). " ))"
+				//THIS hack will be removed after runing script with will clear all notification copy
+                "((wl_wikia_addedtimestamp > '2012-01-31' and wl_namespace = ".MWNamespace::getSubject($ns).") or ( wl_namespace = " .MWNamespace::getTalk($ns). " ))"
 			), __METHOD__
 		);
 

@@ -56,6 +56,8 @@ class WallMessage {
 			// if you fail from slave try again from master
 			return self::newFromId( $id, true );
 		}
+		
+		wfProfileOut(__METHOD__);
 		return null;
 	}
 
@@ -192,6 +194,7 @@ class WallMessage {
 		if(empty($this->commentsIndex)) {
 			$this->commentsIndex = CommentsIndex::newFromId( $this->getId() );
 		}
+		
 		return $this->commentsIndex;
 	}
 
@@ -423,7 +426,24 @@ class WallMessage {
 	}
 
 	public function getArticleTitle(){
-		return $this->getArticleComment()->getArticleTitle();
+		$commentsIndex = $this->getCommentsIndex();
+		
+		if(empty($commentsIndex)) {
+			return Title::newFromText('empty');			
+		}
+		
+		$pageId = $commentsIndex->getParentPageId();
+		
+		static $cache = array();
+		if(empty($cache[$pageId])) {			
+			$cache[$pageId] = Title::newFromId($pageId);	
+		} 
+		
+		if( empty($cache[$pageId]) ){
+			return Title::newFromText('empty');
+		}
+	
+		return $cache[$pageId];
 	}
 
 	/**

@@ -30,14 +30,6 @@ class Wall {
 		return $wall;
 	}
 
-	static function getParentTitleFromReplyTitle( $titleText ) {
-		wfProfileIn(__METHOD__);
-		$parts = explode('/@', $titleText);
-		if(count($parts) < 3) return null;
-		wfProfileOut(__METHOD__);
-		return $parts[0] . '/@' . $parts[1];
-	}
-
 	public function getId() {
 		return $this->mTitle->getArticleId();
 	}
@@ -52,6 +44,14 @@ class Wall {
 
 	public function getUser() {
 		return User::newFromName($this->mTitle->getBaseText(), false);
+	}
+	
+	public function exists() {
+		$id = (int) $this->getId();
+		if($id != 0) {
+			return true;
+		}
+		return false;
 	}
 
 	public function getUrl() {
@@ -201,7 +201,11 @@ class Wall {
 		wfProfileOut(__METHOD__);
 		return $count;
 	}
-
+	
+	public function moveAllThread($destWallId) {
+//		CommentsIndex::changeParent
+	}
+	
 	public function setMaxPerPage( $val ) {
  		$this->mMaxPerPage = $val;
 	}

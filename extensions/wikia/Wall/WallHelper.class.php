@@ -69,6 +69,7 @@ class WallHelper {
         $user = null;
 
         if( $ns == NS_USER_WALL ) {
+
 			/**
 			 * @var $w Wall
 			 */
@@ -78,6 +79,7 @@ class WallHelper {
 			/**
 			 * @var $wm WallMessage
 			 */
+			 
 			$wm = F::build( 'WallMessage', array( $title ), 'newFromTitle' );
             $user = $wm->getWallOwner();
 		}
@@ -386,37 +388,6 @@ class WallHelper {
 		$wgEnableParserCache = false;
 
 		return $wgParser->parse( $rawtext, $title, $wgOut->parserOptions())->getText();
-	}
-
-	public function getUserFromArticleId_forDeleted($articleId) {
-		/*
-		 * This is ugly way of doing that
-		 * but for removed threads that we only have ArticleId for
-		 * there is no other way (can't create WallMessage object
-		 * for deleted threads)
-		 */
-		$user_id = null;
-
-		$dbr = wfGetDB( DB_SLAVE );
-		$row = $dbr->selectRow( 'archive',
-			array( 'ar_user' ),
-			array( 'ar_page_id' => $articleId ),
-			__METHOD__ );
-
-		if(!empty($row)) $user_id = $row->ar_user;
-
-		if(empty($dbkey)) {
-			// try again from master
-			$dbr = wfGetDB( DB_MASTER );
-			$row = $dbr->selectRow( 'archive',
-				array( 'ar_user' ),
-				array( 'ar_page_id' => $articleId ),
-				__METHOD__ );
-
-			if(!empty($row)) $user_id = $row->ar_user;
-		}
-
-		return User::newFromId( $user_id );
 	}
 
 	public function isDbkeyFromWall($dbkey) {

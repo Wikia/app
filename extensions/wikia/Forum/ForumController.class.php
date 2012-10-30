@@ -21,7 +21,7 @@ class ForumController extends WallBaseController {
 		parent::index();
 		$this->setIsForum();
 		F::build('JSMessages')->enqueuePackage('Wall', JSMessages::EXTERNAL);
-
+ 
 		$this->response->addAsset('forum_js');
 		$this->response->addAsset('extensions/wikia/Forum/css/ForumBoard.scss');
 		$this->response->addAsset('extensions/wikia/Forum/css/MessageTopic.scss');

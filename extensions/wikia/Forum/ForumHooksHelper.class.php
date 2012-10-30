@@ -168,11 +168,10 @@ class ForumHooksHelper {
 	// Hook: clear cache when editing comment
 	public function onEditCommentsIndex( $title, $commentsIndex ) {
 		if ( $title->getNamespace() == NS_WIKIA_FORUM_BOARD_THREAD ) {
-			$parentPageIds = $commentsIndex->getParentPageIds();
-			foreach( $parentPageIds as $parentPageId ) {
-				$board = F::build( 'ForumBoard', array( $parentPageId ), 'newFromId' );
-				$board->clearCacheBoardInfo();
-			}
+			$parentPageId = $commentsIndex->getParentPageId();
+
+			$board = F::build( 'ForumBoard', array( $parentPageId ), 'newFromId' );
+			$board->clearCacheBoardInfo();
 		}
 
 		return true;

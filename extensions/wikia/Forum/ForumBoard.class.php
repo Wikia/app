@@ -21,13 +21,17 @@ class ForumBoard extends WikiaModel {
 	 * get board info: the number of threads, the number of posts, the username and timestamp of the last post
 	 * @return array $info
 	 */
-	public function getBoardInfo() {
+	public function getBoardInfo($db = DB_SLAVE) {
 		$this->wf->ProfileIn( __METHOD__ );
 
-		$memKey = $this->getMemKeyBoardInfo();
-		$info = $this->wg->Memc->get( $memKey );
+		$memKey = $this->wf->MemcKey( 'forum_board_info', $this->boardId );
+		
+		if($db == DB_SLAVE) {
+			$info = $this->wg->Memc->get( $memKey );
+		}
+		
 		if ( empty($info) ) {
-			$db = $this->wf->GetDB( DB_SLAVE );
+			$db = $this->wf->GetDB( $db );
 
 			$row = $db->selectRow(
 				array( 'comments_index' ),
@@ -73,13 +77,17 @@ class ForumBoard extends WikiaModel {
 	 * get number of active threads (exclude deleted and removed threads)
 	 * @return integer activeThreads
 	 */
-	public function getTotalActiveThreads($relatedPageId = 0) {
+	public function getTotalActiveThreads($relatedPageId = 0, $db = DB_SLAVE) {
 		$this->wf->ProfileIn( __METHOD__ );
 
-		$memKey = $this->getMemKeyTotalActiveThreads();
-		$activeThreads = $this->wg->Memc->get( $memKey );
+		$memKey = $this->wf->MemcKey( 'forum_board_active_threads', $this->boardId );
+		
+		if($db == DB_SLAVE) {
+			$activeThreads = $this->wg->Memc->get( $memKey );
+		}
+		
 		if ( !empty($relatedPageId) || $activeThreads === false ) {
-			$db = $this->wf->GetDB( DB_SLAVE );
+			$db = $this->wf->GetDB( $db );
 
 			$filter = 'parent_page_id ='.((int) $this->boardId);
 			
@@ -110,31 +118,12 @@ class ForumBoard extends WikiaModel {
 	}
 
 	/**
-	 * get memcache key of board info
-	 * @return string 
-	 */
-	protected function getMemKeyBoardInfo() {
-		return $this->wf->MemcKey( 'forum_board_info_'.$this->boardId );
-	}
-
-	/**
-	 * get memcache key of active threads
-	 * @return string 
-	 */
-	protected function getMemKeyTotalActiveThreads() {
-		return $this->wf->MemcKey( 'forum_board_active_threads_'.$this->boardId );
-	}
-
-	/**
 	 * clear cache for board info
 	 * @param array $parentPageIds
 	 */
 	public function clearCacheBoardInfo() {
-		$memKey = $this->getMemKeyBoardInfo();
-		$this->wg->Memc->delete( $memKey );
-
-		$memKey = $this->getMemKeyTotalActiveThreads();
-		$this->wg->Memc->delete( $memKey );
+		$this->getBoardInfo(DB_MASTER);
+		$this->getTotalActiveThreads(DB_MASTER);
 
 		$title = F::build( 'Title', array( $this->boardId ), 'newFromID' );
 		if ( $title instanceof Title ) {
