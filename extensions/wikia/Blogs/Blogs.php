@@ -147,6 +147,8 @@ $wgHooks[ 'LinksUpdate' ][] = 'BlogArticle::linksUpdate';
 $wgHooks[ 'UnwatchArticleComplete' ][] = 'BlogArticle::UnwatchBlogComments';
 $wgHooks[ 'AfterCategoriesUpdate'][] = 'BlogArticle::clearCountCache';
 $wgHooks[ 'SpecialSearchProfiles' ][] = 'BlogsHelper::OnSpecialSearchProfiles';
+$wgHooks[ 'ParserBeforeInternalParse' ][] = 'BlogsHelper::OnParserBeforeInternalParse';
+$wgHooks[ 'ArticleInsertComplete' ][] = 'BlogsHelper::OnArticleInsertComplete';
 
 /**
  * load other parts
@@ -154,6 +156,7 @@ $wgHooks[ 'SpecialSearchProfiles' ][] = 'BlogsHelper::OnSpecialSearchProfiles';
 include( dirname( __FILE__ ) . "/BlogTemplate.php");
 include( dirname( __FILE__ ) . "/BlogArticle.php");
 include( dirname( __FILE__ ) . "/BlogLockdown.php");
+include( dirname( __FILE__ ) . "/BloglistDeferrableUpdate.class.php" );
 
 /**
  * add task
