@@ -196,8 +196,16 @@ class Forum extends WikiaModel {
 		return $this->hasAtLeast(NS_FORUM, 5);
 	}
 	
-	public function swapBoards() {
+	public function swapBoards( $boardId1, $boardId2 ) {
+		$orderId1 = wfGetWikiaPageProp(WPP_FORUM_ORDER_INDEX, $boardId1 );
+		$orderId2 = wfGetWikiaPageProp(WPP_FORUM_ORDER_INDEX, $boardId2 );
 		
+		if(empty($orderId1) || empty($orderId2)) {
+			return false;
+		}
+		
+		wfSetWikiaPageProp(WPP_FORUM_ORDER_INDEX, $boardId1, $orderId2);
+		wfSetWikiaPageProp(WPP_FORUM_ORDER_INDEX, $boardId2, $orderId1);	
 	}
 	
 	/**
