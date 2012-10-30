@@ -14,14 +14,13 @@
 		, adProviderLater
 		, adProviderNull
 		, slotTweaker
-		, lazyQueue = LazyQueue()
 
 		, queueForLateAds
 		, adConfigForLateAds
 	;
 
 	// Construct Ad Engine
-	adEngine = AdEngine2(log, lazyQueue);
+	adEngine = AdEngine2(log, LazyQueue);
 
 	// Construct Ad Providers
 	slotTweaker = SlotTweaker(log, document);
