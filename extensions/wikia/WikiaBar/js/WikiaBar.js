@@ -421,9 +421,9 @@ var WikiaBar = {
 	}
 };
 
-$(function () {
-	if (window.wgEnableWikiaBarExt) {
+if (window.wgEnableWikiaBarExt) {
+	$(function () {
 		WikiaBar.init();
-	}
-});
+	});
+}
 
