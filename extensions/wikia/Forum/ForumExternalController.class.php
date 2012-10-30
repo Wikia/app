@@ -27,20 +27,14 @@ class ForumExternalController extends WallExternalController {
 	*/  
 	
 	public function swapOrder() {
+                $boardId1 = $this->getVal('boardId1', 0);
+                $boardId2 = $this->getVal('boardId2', 0);
+
 		$this->status = self::checkAdminAccess();
 		if(!empty($this->status)) {
 			return;
 		}
-		
-		$boardId1 = $this->getVal('boardId1', 0);
-		$boardId2 = $this->getVal('boardId2', 0);
-		
-		// swap magic here
-		
-		// mock data
-		$this->status = "ok";
-	}
-	
+
 	/**
  	* Create new board ajax call
  	* @request boardTitle - title of the board

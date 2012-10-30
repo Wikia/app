@@ -196,6 +196,10 @@ class Forum extends WikiaModel {
 		return $this->hasAtLeast(NS_FORUM, 5);
 	}
 	
+	public function swapBoards() {
+		
+	}
+	
 	/**
 	 * Backward compatibility for forums created before the order functionality
 	 */
@@ -285,6 +289,14 @@ class Forum extends WikiaModel {
 			
 		$result = array();
 		$retval = $editPage->internalAttemptSave( $result, $bot );
+		
+		if($id == -1) {
+			$title = Title::newFromText( $titletext, NS_WIKIA_FORUM_BOARD );
+			if( !empty($title) ) {
+				wfSetWikiaPageProp( WPP_FORUM_ORDER_INDEX,  $title->getArticleId(), $title->getArticleId() );
+			}
+		}
+		
 		Forum::$allowToEditBoard = false;
 		
 		$this->wf->ProfileOut( __METHOD__ );
