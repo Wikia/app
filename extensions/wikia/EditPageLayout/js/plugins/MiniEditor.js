@@ -99,13 +99,23 @@
 
 			this.editor.getEditbox().on(
 				'keyup',
-				$.proxy(this.editorButtonsActivate, this)
+				$.proxy(function() {
+					this.buttons.removeAttr('disabled');
+				}, this)
 			);
 			this.editor.on({
-				mode: $.proxy(this.editorButtonsActivate, this),
-				editorAddImage: $.proxy(this.editorButtonsActivate, this),
-				editorAddVideo: $.proxy(this.editorButtonsActivate, this),
-				editorAddLink: $.proxy(this.editorButtonsActivate, this)
+				mode: $.proxy(function() {
+					this.buttons.removeAttr('disabled');
+				}, this),
+				editorAddImage: $.proxy(function() {
+					this.buttons.removeAttr('disabled');
+				}, this),
+				editorAddVideo: $.proxy(function() {
+					this.buttons.removeAttr('disabled');
+				}, this),
+				editorAddLink: $.proxy(function() {
+					this.buttons.removeAttr('disabled');
+				}, this)
 			});
 		},
 
