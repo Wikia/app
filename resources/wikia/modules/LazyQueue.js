@@ -47,10 +47,10 @@
  * and when loading the library makeQueue and start it.
  */
 
-var LazyQueue = function(undef) {
+var LazyQueue = function() {
 	'use strict';
 
-	var makeQueue = function(queue, callback) {
+	var undef, makeQueue = function(queue, callback) {
 		if (typeof callback !== 'function') {
 			throw new Error('LazyQueue used with callback not being a function');
 		}
