@@ -151,6 +151,11 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
 	'forum-admin-edit-board-modal-heading' => 'Edit $1 board',
 	'forum-admin-edit-board-title' => 'Board Title',
 	'forum-admin-edit-board-description' => 'Board Description',
+	
+	'forum-admin-delete-and-merge-board-modal-heading' => 'Delete Board: $1',
+	'forum-admin-delete-board-title' => 'Confirm that you want to delete by typing in the name of the board you are deleting:',
+	'forum-admin-merge-board-destination' => 'The threads in $1 board will be merged into an existing board.  Choose a board to merge to:',
+	'forum-admin-delete-and-merge-button-label' => 'Delete and Merge',
 
 	'forum-admin-link-label' => 'Manage Boards',
 

@@ -94,12 +94,36 @@ class ForumSpecialController extends WikiaSpecialPageController {
 		
 		$this->boardId = $this->getVal('boardId', -1);
 		
-		$board = ForumBoard::newFromId( $this->boardId );
+		/* backend magic here */
+		
+		// mock data
+		$this->boardId = 1234;
+		$this->boardTitle = 'mock title';
+		$this->boardDescription = 'mock description';
+		
+		$this->wf->profileOut( __METHOD__ );
+	}
+	
+	public function removeBoardModal() {
+		$this->wf->profileIn( __METHOD__ );
+		
+		if (!$this->wg->User->isAllowed( 'forumadmin' )) {
+			$this->displayRestrictionError();
+			return false;  // skip rendering
+		}
+		
+		$this->boardId = $this->getVal('boardId', -1);
 		
 		/* backend magic here */
 		
-		$this->boardTitle = $board->getTitle()->getText();
-		$this->boardDescription = $board->getDescription();
+		// mock data
+		$this->boardId = 1234;
+		$this->boardTitle = 'mock title that is about to get deleted';
+		$this->destinationBoards = array(
+			array('value' => '', 'content' => 'Null board'),
+			array('value' => 1, 'content' => 'mock board 1'),
+			array('value' => 2, 'content' => 'mock board 2'),
+		);
 		
 		$this->wf->profileOut( __METHOD__ );
 	}

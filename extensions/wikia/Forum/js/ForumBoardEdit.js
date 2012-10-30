@@ -3,7 +3,7 @@
 	/* dom cache */
 	var createNewBoardButton = $('#CreateNewBoardButton'),
 		boardList = $('#ForumBoardEdit .boards'),
-		modalCache = {};
+		currentDialog = false;
 		
 	function makeBoardModal(modalMethod, modalData, submissionMethod, submissionData) {
 		var deferred = $.Deferred();
@@ -16,6 +16,8 @@
 				var dialog = $(html).makeModal({
 					width: 600
 				});
+				
+				currentDialog = dialog;
 				
 				dialog.form = new WikiaForm(dialog.find('.WikiaForm'));
 				dialog.buttons = dialog.find('button');
@@ -31,7 +33,7 @@
 						data: $.extend({
 							boardTitle: dialog.find('input[name=boardTitle]').val(),
 							boardDescription: dialog.find('input[name=boardDescription]').val()
-						}, submissionData),
+						}, typeof submissionData === 'function' ? submissionData() : submissionData ),
 						callback: function (json) {
 							$().log(json);
 							if(json) {
@@ -114,12 +116,24 @@
 			boardItem.insertAfter(nextItem);
 		}
 	}
+
+	function handleRemoveBoardButtonClick(e) {
+		var boardItem = $(e.target).closest('.board');
+		var boardId = boardItem.data('id');
+		$.when(makeBoardModal('removeBoardModal', {boardId: boardId}, 'removeBoard', function() {
+			return {
+				destinationBoardId: currentDialog.find('.destinationBoardId option:selected').val()
+			};
+		})).done(function(dialog) {
+			// done
+		});
+	};
 	
 	/* Board edit event bindings */
 	createNewBoardButton.on('click.CreateNewBoard', '', handleCreateNewBoardButtonClick);
-	boardList.on('click.editBoard', '.board .edit-pencil', handleEditBoardButtonClick);
-	
-	boardList.on('click.editBoard', '.board .moveup', handleMoveUpClick);
-	boardList.on('click.editBoard', '.board .movedown', handleMoveDownClick);
+	boardList.on('click.editBoard', '.board .edit-pencil', handleEditBoardButtonClick)
+		.on('click.editBoard', '.board .trash', handleRemoveBoardButtonClick)
+		.on('click.editBoard', '.board .moveup', handleMoveUpClick)
+		.on('click.editBoard', '.board .movedown', handleMoveDownClick);
 	
 })(window, jQuery);
