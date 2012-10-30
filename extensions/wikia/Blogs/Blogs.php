@@ -34,17 +34,15 @@ $wgNamespacesWithSubpages[ NS_BLOG_ARTICLE_TALK ] = true;
 $wgNamespacesWithSubpages[ NS_BLOG_LISTING ] = true;
 $wgNamespacesWithSubpages[ NS_BLOG_LISTING_TALK ] = true;
 
-$dir = dirname( __FILE__ );
-
-$wgExtensionNamespacesFiles[ 'Blogs' ] = "{$dir}/Blogs.namespaces.php";
+$wgExtensionNamespacesFiles[ 'Blogs' ] = __DIR__ . "/Blogs.namespaces.php";
 
 wfLoadExtensionNamespaces( 'Blogs', array( NS_BLOG_LISTING, NS_BLOG_LISTING_TALK, NS_BLOG_ARTICLE, NS_BLOG_ARTICLE_TALK ) );
 
 /**
  * setup function
  */
-$wgAutoloadClasses[ "BlogArticle" ] = $dir . '/BlogArticle.php';
-$wgAutoloadClasses[ "WikiaApiBlogs" ] = $dir . "/api/WikiaApiBlogs.php";
+$wgAutoloadClasses[ "BlogArticle" ] = __DIR__ . '/BlogArticle.php';
+$wgAutoloadClasses[ "WikiaApiBlogs" ] = __DIR__ . "/api/WikiaApiBlogs.php";
 
 global $wgAPIModules;
 $wgAPIModules[ "blogs" ] = "WikiaApiBlogs";
@@ -54,9 +52,9 @@ $wgAPIModules[ "blogs" ] = "WikiaApiBlogs";
 /**
  * messages file
  */
-$wgExtensionMessagesFiles['Blogs'] = $dir . '/Blogs.i18n.php';
-$wgExtensionMessagesFiles['BlogsAliases'] = $dir . '/Blogs.alias.php';
-$wgExtensionMessagesFiles['BlogsMagic'] = $dir . '/Blogs.i18n.magic.php';
+$wgExtensionMessagesFiles['Blogs'] = __DIR__ . '/Blogs.i18n.php';
+$wgExtensionMessagesFiles['BlogsAliases'] = __DIR__ . '/Blogs.alias.php';
+$wgExtensionMessagesFiles['BlogsMagic'] = __DIR__ . '/Blogs.i18n.magic.php';
 
 /**
  * permissions (eventually will be moved to CommonSettings.php)
@@ -99,15 +97,15 @@ $wgGroupPermissions['staff'][ 'blog-auto-follow' ] = true;
 $wgGroupPermissions['helper'][ 'blog-auto-follow' ] = false;
 
 // special pages
-$wgAutoloadClasses['CreateBlogListingPage'] = $dir . '/SpecialCreateBlogListingPage.php';
+$wgAutoloadClasses['CreateBlogListingPage'] = __DIR__ . '/SpecialCreateBlogListingPage.php';
 $wgSpecialPages['CreateBlogListingPage'] = 'CreateBlogListingPage';
 
-$wgAutoloadClasses['SpecialBlogPage'] = $dir . '/SpecialBlogPage.php';
-$wgAutoloadClasses['CreateBlogPage'] = $dir . '/SpecialCreateBlogPage.php';
+$wgAutoloadClasses['SpecialBlogPage'] = __DIR__ . '/SpecialBlogPage.php';
+$wgAutoloadClasses['CreateBlogPage'] = __DIR__ . '/SpecialCreateBlogPage.php';
 $wgSpecialPages['CreateBlogPage'] = 'CreateBlogPage';
 $wgSpecialPages['Myblog'] = 'SpecialMyblog';
-$wgAutoloadClasses['SpecialMyblog'] = $dir . '/SpecialMyblog.php';
-$wgAutoloadClasses['BlogsHelper'] = $dir . '/BlogsHelper.class.php';
+$wgAutoloadClasses['SpecialMyblog'] = __DIR__ . '/SpecialMyblog.php';
+$wgAutoloadClasses['BlogsHelper'] = __DIR__ . '/BlogsHelper.class.php';
 
 // initialize blogs special pages (BugId:7604)
 $wgHooks['BeforeInitialize'][] = 'wfBlogsOnBeforeInitialize';
@@ -120,7 +118,7 @@ function wfBlogsOnBeforeInitialize(&$title, &$article, &$output, User $user, $re
 	$skinName = get_class($user->getSkin());
 
 	if ($skinName == 'SkinMonoBook') {
-		$wgAutoloadClasses['CreateBlogPage'] = dirname(__FILE__) . '/monobook/SpecialCreateBlogPage.php';
+		$wgAutoloadClasses['CreateBlogPage'] = __DIR__ . '/monobook/SpecialCreateBlogPage.php';
 	}
 
 	return true;
@@ -153,14 +151,14 @@ $wgHooks[ 'ArticleInsertComplete' ][] = 'BlogsHelper::OnArticleInsertComplete';
 /**
  * load other parts
  */
-include( dirname( __FILE__ ) . "/BlogTemplate.php");
-include( dirname( __FILE__ ) . "/BlogArticle.php");
-include( dirname( __FILE__ ) . "/BlogLockdown.php");
-include( dirname( __FILE__ ) . "/BloglistDeferrableUpdate.class.php" );
+include( __DIR__ . "/BlogTemplate.php");
+include( __DIR__ . "/BlogArticle.php");
+include( __DIR__ . "/BlogLockdown.php");
+include( __DIR__ . "/BloglistDeferrableUpdate.class.php" );
 
 /**
  * add task
  */
 if( function_exists( "extAddBatchTask" ) ) {
-	extAddBatchTask( dirname(__FILE__)."/BlogTask.php", "blog", "BlogTask" );
+	extAddBatchTask( __DIR__ . "/BlogTask.php", "blog", "BlogTask" );
 }
