@@ -35,4 +35,64 @@ class BlogsHelper {
 
 		return true;
 	}
+
+	/**
+	 * BugId:25123 - Fixes the caching issues related to the bloglist tag.
+	 *
+	 * The method checks for usage of the bloglist tag and sets the page_props
+	 * accordingly.
+	 *
+	 * @param $oParser Object The Parser instance being used.
+	 * @param $sText String The new content.
+	 * @param $oStringState Object The StripState instance being used.
+	 *
+	 * @return Boolean True so the calling function would continue.
+	 *
+	 * @author Michał Roszka (Mix) <mix@wikia-inc.com>
+	 * @since October 24, 2012
+	 *
+	 * @see grep -r 'BugId:25123' *
+	 * @see doc/hooks.txt
+	 */
+	public static function OnParserBeforeInternalParse( &$oParser, &$sText, &$oStripState ) {
+		wfProfileIn( __METHOD__ );
+		// The name of the bloglist tag is defined in a constant.
+		$sRegExp = sprintf( '/<%s[^>]*>(.*)<\/%s>/siU', BLOGTPL_TAG, BLOGTPL_TAG );
+
+		// Set the bloglist property if there is a bloglist tag in the text of the revision.
+		if ( preg_match( $sRegExp, $sText ) ) {
+			$oParser->getOutput()->setProperty( BLOGTPL_TAG, 1 );
+		}
+		wfProfileOut( __METHOD__ );
+		// Always ...
+		return true; // ... to the single purpose of the moment.
+	}
+
+	/**
+	 * BugId:25123 - Fixes the caching issues related to the bloglist tag.
+	 *
+	 * The method schedules a job of class BloglistDeferredPurge
+	 * whenever a blog article is saved.
+	 *
+	 * @param $oArticle WikiPage The article being saved.
+	 *
+	 * @return Boolean True so the calling function would continue.
+	 *
+	 * @author Michał Roszka (Mix) <mix@wikia-inc.com>
+	 * @since October 24, 2012
+	 *
+	 * @see grep -r 'BugId:25123' *
+	 * @see doc/hooks.txt
+	 */
+	public static function OnArticleInsertComplete( &$oArticle ) {
+		wfProfileIn( __METHOD__ );
+		// schedule a BloglistDeferredPurge job if the article is a blog article.
+		if ( NS_BLOG_ARTICLE == $oArticle->getTitle()->getNamespace() ) {
+			$oJob = new BloglistDeferredPurgeJob( $oArticle->getTitle() );
+			$oJob->insert();
+		}
+		wfProfileOut( __METHOD__ );
+		// Always...
+		return true; // ... to the single purpose of the moment.
+	}
 }
