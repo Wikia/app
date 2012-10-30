@@ -36,17 +36,17 @@ div.number {
 <script type="text/javascript">
 jQuery(document).ready( function() {
 	var maxHeight = 0;
-	$('.video-search-results section').each( function() {
-		var height = $(this).height();
-		maxHeight = maxHeight > height ? maxHeight : height;
-	});
-	$('.video-search-results section').height(maxHeight);
-	var maxHeight = 0;
 	$('section ul').each( function() {
 		var height = $(this).height();
 		maxHeight = maxHeight > height ? maxHeight : height;
 	});
 	$('section ul').height(maxHeight);
+	var maxHeight = 0;
+	$('.video-search-results section').each( function() {
+		var height = $(this).height();
+		maxHeight = maxHeight > height ? maxHeight : height;
+	});
+	$('.video-search-results section').height(maxHeight);
 });
 </script>
 
@@ -67,7 +67,6 @@ jQuery(document).ready( function() {
 	<section>
 		<div class="number">I</div>
 	<? if ( $mltResults ) : ?>
-	
 		<h3>MoreLikeThisResults for <?= $title ?></h3>
 		<ul>
 		<? foreach ( $mltResults as  $resultFields ) : ?>
@@ -101,7 +100,6 @@ jQuery(document).ready( function() {
 		</div>
 	</section>
 </div>
-<? endif; ?>
 <div class="video-search-results">	
 	<section>
 		<div class="number">III</div>
@@ -181,3 +179,23 @@ jQuery(document).ready( function() {
 		</div>
 	</section>
 </div>
+<div class ="video-search-results">
+	<section>
+		<div class="number">VII</div>
+	<? if ( $relatedVideoServiceResults ) : ?>
+		<h3>Related Video Service Results for <?=$title?></i></h3>
+		<ul>
+		<? foreach ( $relatedVideoServiceResults as  $resultFields ) : ?>
+			<li><a href="<?=$resultFields['url']?>"><?= $resultFields[WikiaSearch::field('title')] ?></a></li>
+		<? endforeach; ?>
+		</ul>
+	<? else: ?>
+		<h3>No Results from Video Service</i></h3>
+	<? endif; ?>
+		<div class="description">
+			These are the top ten user-elicited videos provided by the related video service. This doesn't touch the search backend.
+			Assume that these would be prepended on any of the above approaches.
+		</div>
+	</section>
+</div>
+<? endif; ?>
