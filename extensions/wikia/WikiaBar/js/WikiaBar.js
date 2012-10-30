@@ -120,12 +120,6 @@ var WikiaBar = {
 		var currentMsgIndex = this.messageConfig.index,
 			messageConfig = this.messageConfig;
 
-		//tracking impressions of the message (not chunk of a long message)
-		if (messageConfig.doTrackImpression && !this.isWikiaBarHidden()) {
-			var GALabel = 'message-' + messageConfig.content[currentMsgIndex].messageNumber + '-appears';
-			this.trackClick('wikia-bar', WikiaTracker.ACTIONS.IMPRESSION, GALabel, null, {});
-		}
-
 		if (currentMsgIndex == (messageConfig.content.length - 1)) { //indexes are counted starting with 0 and length() counts items starting with 1
 			this.messageConfig.index = 0;
 		} else {
