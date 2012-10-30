@@ -62,7 +62,6 @@ class BlogsHelper {
 		// Set the bloglist property if there is a bloglist tag in the text of the revision.
 		if ( preg_match( $sRegExp, $sText ) ) {
 			$oParser->getOutput()->setProperty( BLOGTPL_TAG, 1 );
-			wfDebug( 'Mix ' . __METHOD__ . "\n" );
 		}
 		wfProfileOut( __METHOD__ );
 		// Always ...
@@ -72,8 +71,8 @@ class BlogsHelper {
 	/**
 	 * BugId:25123 - Fixes the caching issues related to the bloglist tag.
 	 *
-	 * The method schedules a deferred update of class
-	 * BloglistDeferrableUpdate whenever a blog article is saved.
+	 * The method schedules a job of class BloglistDeferredPurge
+	 * whenever a blog article is saved.
 	 *
 	 * @param $oArticle WikiPage The article being saved.
 	 *
@@ -87,10 +86,10 @@ class BlogsHelper {
 	 */
 	public static function OnArticleInsertComplete( &$oArticle ) {
 		wfProfileIn( __METHOD__ );
-		// schedule a BloglistDeferrableUpdate update if the article is a blog article.
+		// schedule a BloglistDeferredPurge job if the article is a blog article.
 		if ( NS_BLOG_ARTICLE == $oArticle->getTitle()->getNamespace() ) {
-			DeferredUpdates::addUpdate( new BloglistDeferrableUpdate() );
-			wfDebug( 'Mix ' . __METHOD__ . "\n" );
+			$oJob = new BloglistDeferredPurgeJob;
+			$oJob->insert();
 		}
 		wfProfileOut( __METHOD__ );
 		// Always...

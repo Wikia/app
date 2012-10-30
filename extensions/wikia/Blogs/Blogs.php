@@ -162,3 +162,8 @@ include( __DIR__ . "/BloglistDeferredUpdateJob.class.php" );
 if( function_exists( "extAddBatchTask" ) ) {
 	extAddBatchTask( __DIR__ . "/BlogTask.php", "blog", "BlogTask" );
 }
+
+/**
+ * associated jobs
+ */
+$wgJobClasses['bloglistDeferredPurge'] = 'BloglistDeferredPurgeJob';
