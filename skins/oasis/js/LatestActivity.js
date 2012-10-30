@@ -1,7 +1,7 @@
 var LatestActivity = {
 	wikiaRecentActivityContainer: null,
 	init: function() {
-		if( $('#WikiaRecentActivity').children().length === 0 ) {
+		if( $('#WikiaRecentActivity').exists() ) {
 			this.lazyLoadContent();
 		}
 	},
