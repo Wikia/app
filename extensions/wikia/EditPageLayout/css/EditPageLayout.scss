@@ -106,7 +106,7 @@ body {
 
 #EditPageEditorWrapper {
 	padding-left: 10px;
-	
+
 	&.hasPreloads {
 		.editpage-editarea {
 			border-top: 1px solid $color-page-border;
@@ -180,10 +180,10 @@ body {
 
 #EditPageEditor {
 	position: relative;
-	
+
 	&.noFooter {
 		margin-bottom: 10px;
-		
+
 		.editpage-editarea {
 			border-bottom: 1px solid $color-page-border;
 		}
@@ -230,7 +230,7 @@ body {
 	.editpage-editarea {
 		border-left: 1px solid $color-page-border;
 		position: relative;
-		
+
 		textarea {
 			color: $color-text;
 			background-color: $color-page;
@@ -390,7 +390,6 @@ body {
 }
 
 // TODO: try to "hide" stuff listed below in PHP
-#csMainContainer,
 .templatesUsed,
 .printfooter,
 #toolbar,

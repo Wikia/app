@@ -102,8 +102,8 @@
 				popularTemplates: window.wgEditPagePopularTemplates || [],
 				// editor auto resize mode
 				autoResizeMode: (window.wgEditPageIsConflict || window.wgEditPageFormType == 'diff') ? 'editpage' : 'editarea',
-				// disable Categories module?
-				categoriesDisabled: (typeof window.initCatSelectForEdit != 'function'),
+				// Whether or not CategorySelect is enabled
+				categorySelectEnabled: ( typeof window.wgCategorySelect != 'undefined' ),
 				// initial state of wide screen mode in source mode
 				wideInSourceInitial: window.wgEditPageWideSourceMode,
 				// is wide screen mode in source mode disabled?
