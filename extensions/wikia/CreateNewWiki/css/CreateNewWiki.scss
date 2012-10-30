@@ -66,6 +66,10 @@ $color-borders: #CECECE;
 			input {
 				float: right;
 			}
+			// fix color change when selecting different themes
+			.wikiaThrobber {
+				background-color: #fff;
+			}
 		}
 		&.back-controls {
 			left: 20px;
