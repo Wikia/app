@@ -2,36 +2,36 @@
 	
 	/* dom cache */
 	var createNewBoardButton = $('#CreateNewBoardButton'),
+		boardList = $('#ForumBoardEdit .boards'),
 		modalCache = {};
-	
-	/* Board edit event handlers */
-	function handleCreateNewBoardButtonClick(e) {
+		
+	function makeBoardModal(modalMethod, modalData, submissionMethod, submissionData) {
+		var deferred = $.Deferred();
 		$.nirvana.sendRequest({
 			controller: 'ForumSpecialController',
-			method: 'createNewBoardModal',
+			method: modalMethod,
 			format: 'html',
-			data: {
-			},
+			data: modalData,
 			callback: function(html) {
 				var dialog = $(html).makeModal({
 					width: 600
 				});
 				
-				var form = new WikiaForm(dialog.find('.WikiaForm')),
-					buttons = window.asdf = dialog.find('button');
+				dialog.form = new WikiaForm(dialog.find('.WikiaForm'));
+				dialog.buttons = dialog.find('button');
 				
-				dialog.on('click.CreateNewBoard', '.cancel', function(e) {
+				dialog.on('click.EditBoard', '.cancel', function(e) {
 					dialog.closeModal();
 				}).on('click.CreateNewBoard', '.submit', function(e) {
-					buttons.attr('disabled', true);
+					dialog.buttons.attr('disabled', true);
 					$.nirvana.sendRequest({
 						controller: 'ForumExternalController',
-						method: 'createNewBoard',
+						method: submissionMethod,
 						format: 'json',
-						data: {
+						data: $.extend({
 							boardTitle: dialog.find('input[name=boardTitle]').val(),
 							boardDescription: dialog.find('input[name=boardDescription]').val()
-						},
+						}, submissionData),
 						callback: function (json) {
 							$().log(json);
 							if(json) {
@@ -39,9 +39,9 @@
 									UserLoginAjaxForm.prototype.reloadPage(); // reload, waiting on pull request
 								} else if(json.status === 'error') {
 									if(json.errorfield) {
-										form.showInputError(json.errorfield, json.errormsg);
+										dialog.form.showInputError(json.errorfield, json.errormsg);
 									} else {
-										form.showGenericError(json.errormsg);
+										dialog.form.showGenericError(json.errormsg);
 									}
 									buttons.removeAttr('disabled');
 								}
@@ -49,11 +49,31 @@
 						}
 					});
 				});
+				
+				deferred.resolve(dialog);
 			}
+		});
+		
+		return deferred.promise();
+	};
+	
+	/* Board edit event handlers */
+	function handleCreateNewBoardButtonClick(e) {
+		$.when(makeBoardModal('createNewBoardModal', {}, 'createNewBoard', {})).done(function(dialog) {
+			// done
+		});
+	};
+	
+	function handleEditBoardButtonClick(e) {
+		var boardItem = $(e.target).closest('.board');
+		var boardId = boardItem.data('id');
+		$.when(makeBoardModal('editBoardModal', {boardId: boardId}, 'editBoard', {boardId: boardId})).done(function(dialog) {
+			// done
 		});
 	};
 	
 	/* Board edit event bindings */
 	createNewBoardButton.on('click.CreateNewBoard', '', handleCreateNewBoardButtonClick);
+	boardList.on('click.editBoard', '.board .edit-pencil', handleEditBoardButtonClick);
 	
 })(window, jQuery);

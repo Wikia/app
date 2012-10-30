@@ -147,6 +147,10 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
 	'forum-admin-create-new-board-modal-heading' => 'Create a new board',
 	'forum-admin-create-new-board-title' => 'Board Title',
 	'forum-admin-create-new-board-description' => 'Board Description',
+	
+	'forum-admin-edit-board-modal-heading' => 'Edit $1 board',
+	'forum-admin-edit-board-title' => 'Board Title',
+	'forum-admin-edit-board-description' => 'Board Description',
 
 	'forum-admin-link-label' => 'Manage Boards',
 
@@ -170,6 +174,7 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
 	'forum-board-title-validation-invalid' => 'Board name contains invalid characters',
 	'forum-board-title-validation-length' => 'Board name length should be between 4 and 40',
 	'forum-board-description-validation-length' => 'Board description should be between 4 and 255',
+	'forum-board-id-validation-missing' => 'Board id is missing',
 );
 
 $messages['qqq'] = array(
@@ -231,5 +236,6 @@ $messages['qqq'] = array(
 	
 	'forum-board-title-validation-invalid' => 'Display on board create in case of validation error ',
 	'forum-board-title-validation-length' => 'Display on board create in case of validation error ',
-	'forum-board-description-validation-length' => 'Display on board create in case of validation error '
+	'forum-board-description-validation-length' => 'Display on board create in case of validation error ',
+	'forum-board-id-validation-missing' => 'User should not see this message unless they hack the wiki.  Nevertheless, it is a validation error when it is not provided.',
 );

@@ -11,6 +11,13 @@ class ForumExternalController extends WallExternalController {
 		$this->response->setVal( 'html', $this->app->renderView( 'ForumController', 'board', array('title' => $title, 'page' => $this->request->getVal('page', 1) ) )); 
 	}
 	
+	private function checkAdminAccess() {
+		if(!$this->wg->User->isAllowed('forumadmin')) {
+			return 'accessdenied';
+		}
+		return '';
+	}
+	
 	/**
      * Create new board ajax call
      * @request boardTitle - title of the board
@@ -20,8 +27,8 @@ class ForumExternalController extends WallExternalController {
      * @response errormsg - optional error message.  nullable
      */
 	public function createNewBoard() {
-		if(!$this->wg->User->isAllowed('forumadmin')) {
-			$this->status = 'accessdenied';
+		$this->status = self::checkAdminAccess();
+		if(!empty($this->status)) {
 			return;
 		}
 		
@@ -58,9 +65,46 @@ class ForumExternalController extends WallExternalController {
 		$forum = new Forum();
 		$forum->createBoard($boardTitle, $boardDescription);	
 
-		$this->status = 'ok';;
+		$this->status = 'ok';
 		$this->errorfield = '';
 		$this->errormsg = '';
+	}
+	
+	/**
+	 * Edits existing board
+	 * @request boardId - unique id of the board
+     * @request boardTitle - new title of the board (optional), nullable
+     * @request boardDescription - description of the board (optional), nullable
+     * @response status - [ok|error|accessdenied]
+     * @response errorfield - optional error field.  nullable
+     * @response errormsg - optional error message.  nullable
+	 */
+	public function editBoard() {	
+		$this->status = self::checkAdminAccess();
+		if(!empty($this->status)) {
+			return;
+		}
+
+		$boardId = $this->getVal('boardId', '');
+		$boardTitle = $this->getVal('boardTitle', '');
+		$boardDescription = $this->getVal('boardDescription', '');
+		
+		if(empty($boardId)) {
+			$this->status = 'error';
+			$this->errormsg = wfMsg('forum-board-id-validation-missing');
+			return;
+		}
+		
+		$status = 'ok';
+		$errorfield = '';
+		$errormsg = '';
+		
+		/* magic happens here */
+		
+		$this->status = $status;
+		$this->errorfield = $errorfield;
+		$this->errormsg = $errormsg;
+
 	}
 
 	protected function replyToMessageBuildResponse($context, $reply) {
