@@ -68,7 +68,7 @@ mwmemc.prototype.set = function() {
 module.exports = mwmemc;
 
 /*
-var m = new mwmemc(["10.8.36.106:11000","10.8.36.107:11000"]);
+var m = new mwmemc(["10.8.44.110:11000","10.8.36.107:11000"]);
 var cacheKey = 'muppet:SearchedKeywordsController::index';
 
 m.get( cacheKey, function( err, result ) {
