@@ -62,6 +62,10 @@ $color-borders: #CECECE;
 		position: absolute;
 		&.next-controls {
 			right: 20px;
+			min-width: 150px;
+			input {
+				float: right;
+			}
 		}
 		&.back-controls {
 			left: 20px;
