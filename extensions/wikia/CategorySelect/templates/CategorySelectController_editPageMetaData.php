@@ -1,1 +1,1 @@
-<input type="hidden" id="wpCategorySelect" name="wpCategorySelect" value="<?= $categories ?>">
+<input type="hidden" id="CategorySelectCategories" name="CategorySelectCategories" value="<?= $categories ?>">

@@ -10,19 +10,18 @@
 class CategorySelectController extends WikiaController {
 	const CACHE_TTL_AJAX = 360; // 1 hour
 	const CACHE_TTL_MEMCACHE = 86400; // 1 day
+	const VERSION = 2;
 
 	/**
 	 * Returns all of the categories on the current wiki.
 	 */
 	public function getCategories() {
-		global $wgMemc;
-
 		wfProfileIn(__METHOD__);
 
-		$key = wfMemcKey('CategorySelectGetCategories', 1);
-		$data = $wgMemc->get($key);
+		$key = wfMemcKey('CategorySelectGetCategories', self::VERSION);
+		$data = $this->wg->Memc->get($key);
 
-		if (empty($out)) {
+		if (empty($data)) {
 			$dbr = wfGetDB(DB_SLAVE);
 			$res = $dbr->select(
 				'category',
@@ -32,15 +31,13 @@ class CategorySelectController extends WikiaController {
 				array('ORDER BY' => 'cat_pages DESC',
 				      'LIMIT'    => '10000'));
 
-			$categories = array();
+			$data = array();
 			while($row = $dbr->fetchObject($res)) {
-				$categories[] = str_replace('_', ' ', $row->cat_title);
+				$data[] = str_replace('_', ' ', $row->cat_title);
 			}
 
-			$data = json_encode($categories);
-
 			// TODO: clear the cache when new category is added
-			$wgMemc->set($key, $data, self::CACHE_TTL_MEMCACHE);
+			$this->wg->Memc->set($key, $data, self::CACHE_TTL_MEMCACHE);
 		}
 
 		$this->response->setData( $data );

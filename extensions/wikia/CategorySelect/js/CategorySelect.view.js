@@ -1,4 +1,12 @@
-/* CategorySelect */
+(function( window, $ ) {
+
+var Wikia = window.Wikia || {};
+
+// TODO: CategorySelect code for view pages goes here
+
+})( window, jQuery );
+
+/*
 // Ideally only run on view or purge, but if wgAction is not set, run it to be on the safe side.
 if((typeof wgAction == "undefined") || (wgAction=="view") || (wgAction == "purge")){
 	wgAfterContentAndJS.push(function() {
@@ -16,4 +24,4 @@ if((typeof wgAction == "undefined") || (wgAction=="view") || (wgAction == "purge
 			$('#catlinks').addClass('csLoading');
 		});
 	});
-}
+}*/

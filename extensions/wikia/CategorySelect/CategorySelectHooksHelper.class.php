@@ -11,7 +11,8 @@
 class CategorySelectHooksHelper {
 
 	/**
-	 * Display category box on edit page
+	 * Embed CategorySelect on edit pages. It will be moved later via JavaScript
+	 * into the right rail. See: /extensions/wikia/EditPageLayout/modules/Categories.js
 	 */
 	function onEditFormMultiEditForm( $rows, $cols, $ew, $textbox ) {
 		global $wgRequest, $wgOut;
@@ -171,19 +172,13 @@ class CategorySelectHooksHelper {
 	 * Set global variables for javascript
 	 */
 	function onMakeGlobalVariablesScript( Array &$vars ) {
-		global $wgParser, $wgContLang;
+		$app = F::app();
 
-		$vars['csAddCategoryButtonText'] = wfMsg('categoryselect-addcategory-button');
-		$vars['csInfoboxCaption'] = wfMsg('categoryselect-infobox-caption');
-		$vars['csInfoboxCategoryText'] = wfMsg('categoryselect-infobox-category');
-		$vars['csInfoboxSortkeyText'] = wfMsg('categoryselect-infobox-sortkey');
-		$vars['csInfoboxSave'] = wfMsg('save');
-		$vars['csEmptyName'] = wfMsg('categoryselect-empty-name');
-		$vars['csDefaultSort'] = $wgParser->getDefaultSort();
-		$vars['csCategoryNamespaces'] = 'Category|' . $wgContLang->getNsText(NS_CATEGORY);
-		$vars['csDefaultNamespace'] = $wgContLang->getNsText(NS_CATEGORY);
-		$vars['csCodeView'] = wfMsg('categoryselect-code-view');
-		$vars['csVisualView'] = wfMsg('categoryselect-visual-view');
+		$vars[ 'wgCategorySelect' ] = array(
+			'categoryNamespaces' => 'Category|' . $app->wg->ContLang->getNsText( NS_CATEGORY ),
+			'defaultSortKey' => $app->wg->Parser->getDefaultSort(),
+			'defaultNamespace' => $app->wg->ContLang->getNsText( NS_CATEGORY ),
+		);
 
 		return true;
 	}
@@ -196,6 +191,8 @@ class CategorySelectHooksHelper {
 		wfProfileIn( __METHOD__ );
 
 		$action = $wgRequest->getVal( 'action', 'view' );
+
+		// TODO: Do we still support SkinAnswers?
 		$supportedSkins = array( 'SkinAnswers', 'SkinOasis' );
 
 		// User has disabled this extension in their preferences
@@ -230,12 +227,12 @@ class CategorySelectHooksHelper {
 
 		// Add hooks for edit/submit pages
 		} else if ( $force || $action == 'edit' || $action == 'submit' ) {
-			$wgHooks[ 'EditPage::importFormData' ][] = 'CategorySelectHooksHelper::onEditPageImportFormData';
-			$wgHooks[ 'EditPage::getContent::end' ][] = 'CategorySelectHooksHelper::onEditPageGetContentEnd';
+			$wgHooks[ 'EditForm::MultiEdit:Form' ][] = 'CategorySelectHooksHelper::onEditFormMultiEditForm';
 			$wgHooks[ 'EditPage::CategoryBox' ][] = 'CategorySelectHooksHelper::onEditPageCategoryBox';
+			$wgHooks[ 'EditPage::getContent::end' ][] = 'CategorySelectHooksHelper::onEditPageGetContentEnd';
+			$wgHooks[ 'EditPage::importFormData' ][] = 'CategorySelectHooksHelper::onEditPageImportFormData';
 			$wgHooks[ 'EditPage::showEditForm:fields' ][] = 'CategorySelectHooksHelper::onEditPageShowEditFormFields';
 			$wgHooks[ 'EditPageGetDiffText' ][] = 'CategorySelectHooksHelper::onEditPageGetDiffText';
-			$wgHooks[ 'EditForm::MultiEdit:Form' ][] = 'CategorySelectHooksHelper::onEditFormMultiEditForm';
 			$wgHooks[ 'MakeGlobalVariablesScript' ][] = 'CategorySelectHooksHelper::onMakeGlobalVariablesScript';
 		}
 
