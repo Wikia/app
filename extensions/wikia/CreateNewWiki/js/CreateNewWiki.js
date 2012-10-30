@@ -1,3 +1,4 @@
+/*global UserLoginFacebook: true, UserLoginAjaxForm: true, WikiBuilderCfg: true */
 var WikiBuilder = {
 	registerInit: false,
 	wntimer: false,
@@ -66,7 +67,7 @@ var WikiBuilder = {
 					UserLoginFacebook.callbacks['login-success'] = function() {
 						WikiBuilder.transition('UserAuth', true, '+');
 						UserLoginFacebook.closeSignupModal();
-					}
+					};
 				}
 				if(onFBloaded) {  // FB hax
 					onFBloaded();
@@ -176,7 +177,7 @@ var WikiBuilder = {
 
 		// Set current step on page load
 		if(WikiBuilderCfg['currentstep']) {
-			var pane = $('#' + WikiBuilderCfg['currentstep']);
+			var pane = $('#' + WikiBuilderCfg.currentstep);
 			WikiBuilder.wb.width(pane.width());
 			WikiBuilder.steps.hide();
 			pane.show();
