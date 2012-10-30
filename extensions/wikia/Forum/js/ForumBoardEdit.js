@@ -72,29 +72,54 @@
 		});
 	};
 	
-	function upDown(e) {
-		var boardItem = $(e.target).closest('.board');
-		var anchor = $(e.target).closest('a');
-		
-		var dir = anchor.data('dir');
-		var borderId = boardItem.data('id');
-
+	/* boardId1 should always be before boardId2 */
+	function swapBoards(boardId1, boardId2) {
+		var deferred = $.Deferred();
 		$.nirvana.sendRequest({
 			controller: 'ForumExternalController',
-			method: 'changeOrder',
+			method: 'swapOrder',
 			format: 'json',
 			data: {
-				borderId: boardId,
-				dir: dir,
+				boardId1: boardId1,
+				boardId2: boardId2
 			},
 			callback: function (json) {
-				UserLoginAjaxForm.prototype.reloadPage();
+				if(json.status == 'error') {
+					alert('Something went wrong, please reload the page and try again');	// critical error message that users should not see
+				}
 			}
-		});	
+		});
+		
+		return deferred.promise();
+	}
+	
+	function handleMoveUpClick(e) {
+		var boardItem = $(e.target).closest('.board'),
+			previousItem = boardItem.prev();
+		if(previousItem.exists()) {
+			var boardId1 = boardItem.data('id');
+			var boardId2 = previousItem.data('id');
+			swapBoards(boardId2, boardId1);
+			boardItem.insertBefore(previousItem);
+		}
+	}
+	
+	function handleMoveDownClick(e) {
+		var boardItem = $(e.target).closest('.board'),
+			nextItem = boardItem.next();
+		if(nextItem.exists()) {
+			var boardId1 = boardItem.data('id');
+			var boardId2 = nextItem.data('id');
+			swapBoards(boardId1, boardId2);
+			boardItem.insertAfter(nextItem);
+		}
 	}
 	
 	/* Board edit event bindings */
 	createNewBoardButton.on('click.CreateNewBoard', '', handleCreateNewBoardButtonClick);
 	boardList.on('click.editBoard', '.board .edit-pencil', handleEditBoardButtonClick);
+	
+	boardList.on('click.editBoard', '.board .moveup', handleMoveUpClick);
+	boardList.on('click.editBoard', '.board .movedown', handleMoveDownClick);
 	
 })(window, jQuery);

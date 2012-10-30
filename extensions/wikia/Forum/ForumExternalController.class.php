@@ -17,18 +17,28 @@ class ForumExternalController extends WallExternalController {
 		}
 		return '';
 	}
+	
 	/**
 	* Change order of the boards
 	* 
-	* @request boardId - id of the board
-	* @request dir - change of the board order
+	* @request boardId1 - id of the board
+	* @request boardId2 - id of 2nd board
+	* @request status - [ok|error]
 	*/  
 	
-	public function changeOrder() {
-		$boardId = $this->getVal('boardId', 0);
-		$dir = $this->getVal('dir', 0);
+	public function swapOrder() {
+		$this->status = self::checkAdminAccess();
+		if(!empty($this->status)) {
+			return;
+		}
 		
+		$boardId1 = $this->getVal('boardId1', 0);
+		$boardId2 = $this->getVal('boardId2', 0);
 		
+		// swap magic here
+		
+		// mock data
+		$this->status = "ok";
 	}
 	
 	/**

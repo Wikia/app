@@ -10,8 +10,8 @@
 						<!-- Admin editControls here -->
 						<img src="<?= $wf->BlankImgUrl() ?>" class="sprite edit-pencil">
 						<img src="<?= $wf->BlankImgUrl() ?>" class="sprite trash">
-						<a dir='1'>UP</a>
-						<a dir='-1'>DOWN</a>
+						<img src="<?= $wf->BlankImgUrl() ?>" class="sprite lock moveup">
+						<img src="<?= $wf->BlankImgUrl() ?>" class="sprite lock movedown">
 					</div>
 				<? endif; ?>
 			</div>
