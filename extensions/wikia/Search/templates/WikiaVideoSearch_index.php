@@ -45,8 +45,8 @@ div.video-search-results {
 	
 		<h3>MoreLikeThisResults for <?= $title ?></h3>
 		<ul>
-		<? foreach ( $mltResults as $url => $resultFields ) : ?>
-			<li><a href="<?=$url?>"><?= $resultFields['title_en'] ?></a></li>
+		<? foreach ( $mltResults as  $resultFields ) : ?>
+			<li><a href="<?=$resultFields['url']?>"><?= $resultFields[WikiaSearch::field('title')] ?></a></li>
 		<? endforeach; ?>
 		</ul>
 	<? else: ?>
@@ -58,8 +58,8 @@ div.video-search-results {
 	<? if ( $searchResults ) : ?>
 		<h3>Video Search Against <i><?= $title ?></i></h3>
 		<ul>
-		<? foreach ( $searchResults as $url => $resultFields ) : ?>
-			<li><a href="<?=$url?>"><?= $resultFields['title_en'] ?></a></li>
+		<? foreach ( $searchResults as  $resultFields ) : ?>
+			<li><a href="<?=$resultFields['url']?>"><?= $resultFields[WikiaSearch::field('title')] ?></a></li>
 		<? endforeach; ?>
 		</ul>
 	<? else: ?>
@@ -74,8 +74,8 @@ div.video-search-results {
 	
 		<h3>Wiki-Based MoreLikeThisResults</h3>
 		<ul>
-		<? foreach ( $wikiMltResults as $url => $resultFields ) : ?>
-			<li><a href="<?=$url?>"><?= $resultFields['title_en'] ?></a></li>
+		<? foreach ( $wikiMltResults as  $resultFields ) : ?>
+			<li><a href="<?=$resultFields['url']?>"><?= $resultFields[WikiaSearch::field('title')] ?></a></li>
 		<? endforeach; ?>
 		</ul>
 	<? else: ?>
@@ -87,8 +87,8 @@ div.video-search-results {
 	<? if ( $wikiSearchResults ) : ?>
 		<h3>Video Search Against <i><?= $wikiQuery ?></i></h3>
 		<ul>
-		<? foreach ( $wikiSearchResults as $url => $resultFields ) : ?>
-			<li><a href="<?=$url?>"><?= $resultFields['title_en'] ?></a></li>
+		<? foreach ( $wikiSearchResults as  $resultFields ) : ?>
+			<li><a href="<?=$resultFields['url']?>"><?= $resultFields[WikiaSearch::field('title')] ?></a></li>
 		<? endforeach; ?>
 		</ul>
 	<? else: ?>
@@ -101,12 +101,24 @@ div.video-search-results {
 	<? if ( $wikiMltResults ) : ?>
 		<h3>Video Search Against <i><?= $combinedQuery ?></i></h3>
 		<ul>
-		<? foreach ( $combinedSearchResults as $url => $resultFields ) : ?>
-			<li><a href="<?=$url?>"><?= $resultFields['title_en'] ?></a></li>
+		<? foreach ( $combinedSearchResults as  $resultFields ) : ?>
+			<li><a href="<?=$resultFields['url']?>"><?= $resultFields[WikiaSearch::field('title')] ?></a></li>
 		<? endforeach; ?>
 		</ul>
 	<? else: ?>
 		<h3>No Results for <i><?= $combinedQuery ?></i></h3>
+	<? endif; ?>
+	</section>
+	<section>
+	<? if ( $suggestedVideoResults ) : ?>
+		<h3>Experimental VET Suggested Video Search Results</h3>
+		<ul>
+		<? foreach ( $suggestedVideoResults as  $resultFields ) : ?>
+			<li><a href="<?=$resultFields['url']?>"><?= $resultFields[WikiaSearch::field('title')] ?></a></li>
+		<? endforeach; ?>
+		</ul>
+	<? else: ?>
+		<h3>No Results from Experimental VET Suggested Video Search</h3>
 	<? endif; ?>
 	</section>
 </div>
