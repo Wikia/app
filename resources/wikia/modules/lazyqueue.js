@@ -18,7 +18,7 @@
  *
  * At some time, you can "upgrade" the array to be a lazy queue by calling:
  *
- * Wikia.LazyQueue().makeQueue(myQueue, function(item) {
+ * Wikia.LazyQueue.makeQueue(myQueue, function(item) {
  *  alert(item);
  * });
  *
