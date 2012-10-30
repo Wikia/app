@@ -95,9 +95,12 @@ define('mediagallery', ['media', 'modal', 'pager', 'thumbnailer', 'lazyload', 't
 			thumb,
 			isVideo;
 
-		imgsPerPage = cols * ~~((gal.offsetHeight - 50)/imagesize);
+		current *= imgsPerPage;
+		imgsPerPage = cols * ~~((gal.offsetHeight - 50) / imagesize);
+
+		current = ~~(current / imgsPerPage);
 		pagesNum = 0;
-		dots = '<div class="dot' + ((current === 0) ? ' curr':'') + '" id=dot0><div></div></div>';
+		dots = '<div class="dot' + ((current === 0) ? ' curr' : '') + '" id=dot0><div></div></div>';
 		pages.length = 0;
 		pages[pagesNum] = '<div>';
 
@@ -105,7 +108,7 @@ define('mediagallery', ['media', 'modal', 'pager', 'thumbnailer', 'lazyload', 't
 			if(i > 0 && (i%imgsPerPage) === 0){
 				pages[pagesNum++] += '</div>';
 				pages[pagesNum] = '<div>';
-				dots += '<div class="dot'+((current === pagesNum) ? ' curr':'')+'" id=dot'+pagesNum+'><div></div></div>';
+				dots += '<div class="dot'+ ((current === pagesNum) ? ' curr':'') + '" id=dot' + pagesNum + '><div></div></div>';
 			}
 
 			img = images[i];
@@ -178,7 +181,6 @@ define('mediagallery', ['media', 'modal', 'pager', 'thumbnailer', 'lazyload', 't
 				}
 			},
 			onResize: function(){
-				current = ~~((current * imgsPerPage) / imgsPerPage);
 				prepareGallery();
 				pager.reset({
 					pages: pages,
