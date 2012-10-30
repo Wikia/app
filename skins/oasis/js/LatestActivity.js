@@ -1,7 +1,8 @@
 var LatestActivity = {
+	wikiaRecentActivityContainer: null,
 	init: function() {
-		if ( !$('#WikiaRecentActivity').empty() ) {
-			LatestActivity.lazyLoadContent();
+		if( $('#WikiaRecentActivity').children().length === 0 ) {
+			this.lazyLoadContent();
 		}
 	},
 
@@ -15,8 +16,7 @@ var LatestActivity = {
 				// IE would lose styling otherwise
 				if ($.browser.msie) {
 					$('#WikiaRecentActivity').empty().append($(html).children());
-				}
-				else {
+				} else {
 					$('#WikiaRecentActivity').replaceWith(html);
 				}
 			}
@@ -25,5 +25,5 @@ var LatestActivity = {
 };
 
 $(window).load(function() {
-    LatestActivity.init();
+	LatestActivity.init();
 });
