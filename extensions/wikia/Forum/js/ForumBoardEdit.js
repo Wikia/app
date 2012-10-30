@@ -43,7 +43,7 @@
 									} else {
 										dialog.form.showGenericError(json.errormsg);
 									}
-									buttons.removeAttr('disabled');
+									dialog.buttons.removeAttr('disabled');
 								}
 							}
 						}
