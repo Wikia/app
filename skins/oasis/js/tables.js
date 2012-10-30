@@ -15,7 +15,7 @@ var WikiaWideTables = {
 		if (this.settings.tables.length) {
 
 			//Add styling
-			$.each(that.settings.tables, function() {
+			$.each(this.settings.tables, function() {
 				var table = this,
 					wrapper;
 
@@ -78,7 +78,7 @@ var WikiaWideTables = {
 
 			//Add scroll magic to popout buttons
 			this.settings.popouts = $(".WikiaWideTablesWrapper > .popout");
-			$(window).scroll(that.popoutScrolling);
+			$(window).scroll($.proxy(this.popoutScrolling, this));
 		}
 	},
 
