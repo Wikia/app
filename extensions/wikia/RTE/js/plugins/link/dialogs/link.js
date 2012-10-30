@@ -508,6 +508,8 @@ CKEDITOR.dialog.add( 'link', function( editor )
 				this._.suggestContainer.css('visibility', 'hidden');
 			}
 
+			RTE.getInstanceEditor().fire('editorAddLink');
+
 			RTE.track('link', 'dialog', 'type', type);
 		}
 	};
