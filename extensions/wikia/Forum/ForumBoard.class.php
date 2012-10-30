@@ -1,22 +1,17 @@
 <?php
 
-//TODO: move this to wall class php
+//TODO: move this to wall class php ??
 
 /**
  * Forum Board
  * @author Kyle Florence, Saipetch Kongkatong, Tomasz Odrobny
  */
-class ForumBoard extends WikiaModel {
-
-	protected $boardId = 0;
-
-	static public function newFromId( $id ) {
-		$board = F::build( 'ForumBoard' );
-		$board->boardId = $id;
-
-		return $board;
+class ForumBoard extends Wall {
+	
+	static public function getEmpty() {
+		return new ForumBoard();
 	}
-
+	
 	/**
 	 * get board info: the number of threads, the number of posts, the username and timestamp of the last post
 	 * @return array $info
@@ -24,7 +19,7 @@ class ForumBoard extends WikiaModel {
 	public function getBoardInfo($db = DB_SLAVE) {
 		$this->wf->ProfileIn( __METHOD__ );
 
-		$memKey = $this->wf->MemcKey( 'forum_board_info', $this->boardId );
+		$memKey = $this->wf->MemcKey( 'forum_board_info', $this->getId() );
 		
 		if($db == DB_SLAVE) {
 			$info = $this->wg->Memc->get( $memKey );
@@ -36,7 +31,7 @@ class ForumBoard extends WikiaModel {
 			$row = $db->selectRow(
 				array( 'comments_index' ),
 				array( 'count(if(parent_comment_id=0,1,null)) threads, count(*) posts, max(first_rev_id) rev_id' ),
-				array( 'parent_page_id' => $this->boardId ),
+				array( 'parent_page_id' => $this->getId() ),
 				__METHOD__
 			);
 
@@ -80,7 +75,7 @@ class ForumBoard extends WikiaModel {
 	public function getTotalActiveThreads($relatedPageId = 0, $db = DB_SLAVE) {
 		$this->wf->ProfileIn( __METHOD__ );
 
-		$memKey = $this->wf->MemcKey( 'forum_board_active_threads', $this->boardId );
+		$memKey = $this->wf->MemcKey( 'forum_board_active_threads', $this->getId() );
 		
 		if($db == DB_SLAVE) {
 			$activeThreads = $this->wg->Memc->get( $memKey );
@@ -89,7 +84,7 @@ class ForumBoard extends WikiaModel {
 		if ( !empty($relatedPageId) || $activeThreads === false ) {
 			$db = $this->wf->GetDB( $db );
 
-			$filter = 'parent_page_id ='.((int) $this->boardId);
+			$filter = 'parent_page_id ='.((int) $this->getId());
 			
 			if(!empty($relatedPageId)) {
 				$filter = "comment_id in (select comment_id from wall_related_pages where page_id = {$relatedPageId})";	
@@ -125,7 +120,7 @@ class ForumBoard extends WikiaModel {
 		$this->getBoardInfo(DB_MASTER);
 		$this->getTotalActiveThreads(DB_MASTER);
 
-		$title = F::build( 'Title', array( $this->boardId ), 'newFromID' );
+		$title = F::build( 'Title', array( $this->getId() ), 'newFromID' );
 		if ( $title instanceof Title ) {
 			$title->purgeSquid();
 		}

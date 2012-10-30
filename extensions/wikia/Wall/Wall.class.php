@@ -1,6 +1,6 @@
 <?php
 
-class Wall {
+class Wall extends WikiaModel {
 	protected $mTitle;
 	protected $mCityId;
 
@@ -8,10 +8,19 @@ class Wall {
 	protected $mSorting = false;
 	protected $mRelatedPageId = false;
 	protected $cacheable = true;
+	
+	static public function newFromId( $id ) {
+		$title = Title::newFromId($id);
+		if( empty($title) ) {
+			return null;
+		}
+		return self::newFromTitle( $title );
+	}
 
 	static public function newFromTitle( Title $title ) {
 		wfProfileIn(__METHOD__);
-		$wall = new Wall();
+
+		$wall = self::getEmpty();
 		$wall->mTitle = $title;
 		$wall->mCityId = F::app()->wg->CityId;
 		wfProfileOut(__METHOD__);
@@ -20,14 +29,20 @@ class Wall {
 
 	static public function newFromRelatedPages( Title $title, $relatedPageId ) {
 		wfProfileIn(__METHOD__);
-
-		$wall = new Wall();
+		$wall = self::getEmpty();
 		$wall->mTitle = $title;
 		$wall->mCityId = F::app()->wg->CityId;
 		$wall->mRelatedPageId = (int) $relatedPageId;
 
 		wfProfileOut(__METHOD__);
 		return $wall;
+	}
+	
+	static public function getEmpty() {
+		/* small work around for problem with static constructors and inheritance */
+		//TODO: Look in to Late Static Bindings
+		$className = get_called_class();
+		return new $className();
 	}
 
 	public function getId() {
@@ -36,6 +51,11 @@ class Wall {
 
 	public function getTitle() {
 		return $this->mTitle;
+	}
+	
+	public function getDescription() {
+		$article = new Article($this->getTitle());
+		return $article->getText();
 	}
 
 	public function getRelatedPageId() {

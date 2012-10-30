@@ -94,12 +94,12 @@ class ForumSpecialController extends WikiaSpecialPageController {
 		
 		$this->boardId = $this->getVal('boardId', -1);
 		
+		$board = ForumBoard::newFromId( $this->boardId );
+		
 		/* backend magic here */
 		
-		// mock data
-		$this->boardId = 1234;
-		$this->boardTitle = 'mock title';
-		$this->boardDescription = 'mock description';
+		$this->boardTitle = $board->getTitle()->getText();
+		$this->boardDescription = $board->getDescription();
 		
 		$this->wf->profileOut( __METHOD__ );
 	}
