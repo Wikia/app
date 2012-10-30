@@ -1,12 +1,13 @@
-/*!
+/**
  * LazyQueue module
  *
  * LazyQueue can be used when handling some events needs to be delayed
  * but then handled on the fly.
  *
- * Usage:
+ * @author Piotr Gabryjeluk <rychu@wikia-inc.com>
+ * @author Przemek Piotrowski <nef@wikia-inc.com>
  *
- * You need a simple JavaScript array:
+ * @example You need a simple JavaScript array:
  *
  * var myQueue = [];
  *
@@ -17,7 +18,7 @@
  *
  * At some time, you can "upgrade" the array to be a lazy queue by calling:
  *
- * LazyQueue().makeQueue(myQueue, function(item) {
+ * Wikia.LazyQueue().makeQueue(myQueue, function(item) {
  *  alert(item);
  * });
  *
@@ -47,28 +48,49 @@
  * and when loading the library makeQueue and start it.
  */
 
-var LazyQueue = function() {
+/*global window, define*/
+(function (context) {
 	'use strict';
 
-	var undef, makeQueue = function(queue, callback) {
-		if (typeof callback !== 'function') {
-			throw new Error('LazyQueue used with callback not being a function');
-		}
-		if (queue && queue.shift && queue.length !== undef) {
-			queue.start = function() {
-				while (queue.length > 0) {
-					callback(queue.shift());
-				}
-				queue.push = function(item) {
-					callback(item);
-				};
-			};
-		} else {
-			throw new Error('LazyQueue used with not an array');
-		}
-	};
+	function lazyQueue() {
+		function makeQueue(queue, callback) {
+			if (typeof callback !== 'function') {
+				throw new Error('LazyQueue used with callback not being a function');
+			} else if (queue instanceof Array) {
+				queue.start = function () {
+					while (queue.length > 0) {
+						callback(queue.shift());
+					}
 
-	return {
-		makeQueue: makeQueue
-	};
-};
+					//
+					queue.push = function (item) {
+						callback(item);
+					};
+				};
+			} else {
+				throw new Error('LazyQueue requires an array as the first parameter');
+			}
+		}
+
+		return {
+			makeQueue: makeQueue
+		};
+	}
+
+	//UMD (inclusive as this module needs to be also available via
+	//a namespace for access early in the process)
+
+	//namespace definition
+	if (!context.Wikia) {
+		context.Wikia = {};
+	}
+
+	context.Wikia.LazyQueue = lazyQueue();
+
+	//AMD
+	if (context.define && context.define.amd) {
+		context.define('lazyqueue', function () {
+			return context.Wikia.LazyQueue;
+		});
+	}
+}(window));
