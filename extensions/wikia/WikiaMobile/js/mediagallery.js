@@ -129,13 +129,12 @@ define('mediagallery', ['media', 'modal', 'pager', 'thumbnailer', 'lazyload', 't
 		pages[pagesNum] += '</div>';
 
 		if(pagesNum) {
-			pagination.innerHTML = dots;
-
 			//18 is a width of a single dot
-			paginationWidth = (pagesNum * 18);
+			paginationWidth = ((pagesNum + 1) * 18);
 			dotsPerWidth = ~~(width / 18);
 
 			paginationStyle.width = (paginationWidth > width ? paginationWidth + 'px' : '');
+			pagination.innerHTML = dots;
 		}else{
 			pagination.innerHTML = '';
 		}
