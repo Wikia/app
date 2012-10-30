@@ -371,6 +371,9 @@ var WikiBuilder = {
 	createWiki: function() {
 		WikiBuilder.requestKeys();
 		WikiBuilder.solveKeys();
+
+		$('#ThemeWiki .next-controls').startThrobbing();
+
 		$.nirvana.sendRequest({
 			controller: 'CreateNewWiki',
 			method: 'CreateWiki',
@@ -386,6 +389,9 @@ var WikiBuilder = {
 			callback: function(res) {
 				WikiBuilder.createStatus = res.status;
 				WikiBuilder.createStatusMessage = res.statusMsg;
+
+				$('#ThemeWiki .next-controls').stopThrobbing();
+
 				if(WikiBuilder.createStatus && WikiBuilder.createStatus == 'ok') {
 					WikiBuilder.cityId = res.cityId;
 					WikiBuilder.finishCreateUrl = (res.finishCreateUrl.indexOf('.com/wiki/') < 0 ? res.finishCreateUrl.replace('.com/','.com/wiki/') : res.finishCreateUrl);
