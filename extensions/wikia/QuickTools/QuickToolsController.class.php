@@ -5,9 +5,6 @@
  * @author grunny
  */
 class QuickToolsController extends WikiaController  {
-	public function __construct() {
-		$this->app = F::app();
-	}
 
 	/**
 	 * Method to generate QuickTools modal
