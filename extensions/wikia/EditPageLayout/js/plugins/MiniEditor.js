@@ -95,16 +95,24 @@
 
 			this.editor.getEditbox().on(
 				'keyup',
-				$.proxy(function(event) {
+				$.proxy(function() {
 					this.buttons.removeAttr('disabled');
 				}, this)
 			);
-			this.editor.on(
-				'mode',
-				$.proxy(function(event) {
+			this.editor.on({
+				mode: $.proxy(function() {
+					this.buttons.removeAttr('disabled');
+				}, this),
+				editorAddImage: $.proxy(function() {
+					this.buttons.removeAttr('disabled');
+				}, this),
+				editorAddVideo: $.proxy(function() {
+					this.buttons.removeAttr('disabled');
+				}, this),
+				editorAddLink: $.proxy(function() {
 					this.buttons.removeAttr('disabled');
 				}, this)
-			);
+			});
 		},
 
 		editorBeforeReady: function() {
