@@ -5,8 +5,8 @@ var FirefoxFindFix = {
 
 	init: function() {
 		$(window)
-			.scroll(FirefoxFindFix.analyze)
-			.mousedown(FirefoxFindFix.cancelTimer);
+			.scroll(this.analyze)
+			.mousedown(this.cancelTimer);
 	},
 
 	/**
@@ -19,11 +19,11 @@ var FirefoxFindFix = {
 			var currentScroll = $(window).scrollTop();
 
 			// Did we just scroll a lot?
-			if (currentScroll > FirefoxFindFix.lastScroll + FirefoxFindFix.scrollThreshold) {
-				FirefoxFindFix.adjust();
+			if (currentScroll > this.lastScroll + this.scrollThreshold) {
+				this.adjust();
 			}
 
-			FirefoxFindFix.lastScroll = currentScroll;
+			this.lastScroll = currentScroll;
 		}
 	},
 
@@ -32,12 +32,12 @@ var FirefoxFindFix = {
 	 */
 	adjust: function() {
 		// Scroll a little bit more, just to be safe.
-		$(window).scrollTop($(window).scrollTop() + FirefoxFindFix.scrollThreshold);
+		$(window).scrollTop($(window).scrollTop() + this.scrollThreshold);
 
 		// Start monitoring for a minor shift in highlighted text.
-		FirefoxFindFix.anchorOffset = window.getSelection().anchorOffset;
-		if (!FirefoxFindFix.timer) {
-			FirefoxFindFix.timer = setInterval(FirefoxFindFix.monitorHighlight, 250);
+		this.anchorOffset = window.getSelection().anchorOffset;
+		if (!this.timer) {
+			this.timer = setInterval(this.monitorHighlight, 250);
 		}
 	},
 
@@ -46,9 +46,9 @@ var FirefoxFindFix = {
 	 */
 	monitorHighlight: function() {
 		// Has the offset of the highlighted text changed?
-		if (window.getSelection().anchorOffset != FirefoxFindFix.anchorOffset) {
-			if (FirefoxFindFix.timer) {
-				FirefoxFindFix.adjust();
+		if (window.getSelection().anchorOffset != this.anchorOffset) {
+			if (this.timer) {
+				this.adjust();
 			}
 		}
 	},
@@ -57,9 +57,9 @@ var FirefoxFindFix = {
 	 * Stops the monitoring interval timer
 	 */
 	cancelTimer: function() {
-		if (FirefoxFindFix.timer) {
-			clearInterval(FirefoxFindFix.timer);
-			FirefoxFindFix.timer = null;
+		if (this.timer) {
+			clearInterval(this.timer);
+			this.timer = null;
 		}
 	}
 
