@@ -360,6 +360,12 @@ HTML
 
 		wfProfileIn(__METHOD__);
 
+		// check browser compatibility
+		if (!self::isCompatibleBrowser()) {
+			RTE::log('editor is disabled because of unsupported browser');
+			self::disableEditor('browser');
+		}
+
 		// check useeditor URL param (wysiwyg / source / mediawiki)
 		$useEditor = $wgRequest->getVal('useeditor', false);
 
@@ -767,4 +773,42 @@ HTML
 		wfProfileOut(__METHOD__);
 		return true;
 	}
+
+	/**
+	 * Check whether current browser is compatible with RTE
+	 *
+	 * FCKeditor - The text editor for Internet - http://www.fckeditor.net
+	 * Copyright (C) 2003-2009 Frederico Caldeira Knabben
+	 */
+	private static function isCompatibleBrowser() {
+		wfProfileIn(__METHOD__);
+
+		if ( isset( $_SERVER ) && isset($_SERVER['HTTP_USER_AGENT'])) {
+			$sAgent = $_SERVER['HTTP_USER_AGENT'] ;
+		}
+		else {
+			global $HTTP_SERVER_VARS ;
+			if ( isset( $HTTP_SERVER_VARS ) && isset($HTTP_SERVER_VARS['HTTP_USER_AGENT']) ) {
+				$sAgent = $HTTP_SERVER_VARS['HTTP_USER_AGENT'] ;
+			}
+			else {
+				global $HTTP_USER_AGENT ;
+				$sAgent = $HTTP_USER_AGENT ;
+			}
+		}
+
+		RTE::log(__METHOD__, $sAgent);
+		$ret = true;
+
+		if ( strpos($sAgent, 'Mobile') !== false && strpos($sAgent, 'Safari') !== false ) {
+			// disable for mobile devices from Apple (RT #38829)
+			$ret = false;
+		}
+
+		RTE::log(__METHOD__, $ret ? 'yes' : 'no');
+		wfProfileOut(__METHOD__);
+		return $ret;
+	}
+
+
 }
