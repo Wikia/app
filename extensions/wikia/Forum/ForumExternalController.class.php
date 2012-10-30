@@ -108,6 +108,32 @@ class ForumExternalController extends WallExternalController {
 
 	}
 	
+	/**
+	 * Remove and merge board
+	 * @request boardId - board to remove
+	 * @request boardTitle - board Title for validation
+	 * @request destinationBoardId - board to merge existing threads to
+	 * @response status - [ok|error|accessdenied]
+	 * @response errorfield - optional error field.  nullable
+	 * @response errormsg - optional error message.  nullable
+	 */
+	public function removeBoard() {
+		$this->status = self::checkAdminAccess();
+		if(!empty($this->status)) {
+			return;
+		}
+		
+		$boardId = $this->getVal('boardId', '');
+		$boardTitle = $this->getVal('boardTitle', '');
+		$destinationBoardId = $this->getVal('destinationBoardId', '');
+		
+		/* backend magic */
+		
+		$this->status = 'ok';
+		$this->errorfield = '';
+		$this->errormsg = '';
+	}
+	
 	public function validateBoardData($boardTitle, $boardDescription) {
 		$this->status = 'error';
 		$this->errorfield = '';
