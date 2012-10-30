@@ -75,6 +75,7 @@ var GlobalNotification = {
 	},
 	// Float notification (BugId:33365) 
 	wikiaHeaderHeight: $('#WikiaHeader').height(),
+	// Called from WikiaFooter.js
 	onScroll: function(scrollTop) {
 		if(GlobalNotification.dom && GlobalNotification.dom.length) {
 			var minTop = GlobalNotification.wikiaHeaderHeight;
