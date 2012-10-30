@@ -1783,6 +1783,11 @@ abstract class BaseTemplate extends QuickTemplate {
 			$link = $item;
 			// These keys are used by makeListItem and shouldn't be passed on to the link
 			foreach ( array( 'id', 'class', 'active', 'tag' ) as $k ) {
+				// ** wikia change begin - $item parameter should be an array but we are probably not passing one
+				if (!is_array($link)) {
+					Wikia::log(__METHOD__, false, "makeItemList called with non-array value: $link\n", true);
+				}
+				// ** wikia change end
 				unset( $link[$k] );
 			}
 			if ( isset( $item['id'] ) ) {
