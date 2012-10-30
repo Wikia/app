@@ -1,6 +1,6 @@
 /**
  * @test-framework QUnit
- * @test-require-asset extensions/wikia/AdEngine/js/LazyQueue.js
+ * @test-require-asset resources/wikia/modules/LazyQueue.js
  */
 
 module('LazyQueue');
