@@ -1047,4 +1047,11 @@ Text should be placed on this page if you wish to explain usage, style and polic
 //Pagination service
 'wikia-pagination-prev' => 'Prev',
 'wikia-pagination-next' => 'Next',
+
+//Wiki Navigation special words' labels
+'#voted#' => 'Top voted articles',
+'#popular#' => 'Most popular articles',
+'#visited#' => 'Most visited articles',
+'#newlychanged#' => 'Newly changed articles',
+'#topusers#' => 'Top users'
 ));

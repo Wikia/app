@@ -2,7 +2,7 @@
 
 class NavigationService {
 
-	const version = '0.05';
+	const version = '1';
 	const ORIGINAL = 'original';
 	const PARENT_INDEX = 'parentIndex';
 	const CHILDREN = 'children';

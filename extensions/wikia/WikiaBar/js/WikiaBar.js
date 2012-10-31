@@ -95,7 +95,6 @@ var WikiaBar = {
 	checkMessageWidth: function (messageArray, container) {
 		var tempMessage = '',
 			tempMessageObject,
-			lastSpaceIndex = -1,
 			cutIndex = -1;
 
 		for (var j = 0, length = messageArray.length ; j < length ; j
@@ -115,8 +114,8 @@ var WikiaBar = {
 		}
 		else {
 			temp = messageArray.slice(0, cutIndex);
-			lastIndexOfSpace = temp.lastIndexOf(" ");
-			if (lastIndexOfSpace < cutIndex) {
+			var lastIndexOfSpace = temp.lastIndexOf(" ");
+			if ( (lastIndexOfSpace > -1) && (lastIndexOfSpace < cutIndex) ) {
 				temp = messageArray.slice(0, lastIndexOfSpace);
 			}
 		}

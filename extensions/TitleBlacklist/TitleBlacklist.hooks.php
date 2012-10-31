@@ -14,6 +14,12 @@
 class TitleBlacklistHooks {
 
 	/**
+	 * Added by Wikia
+	 * @var array
+	 */
+	public static $cache = array();
+
+	/**
 	 * getUserPermissionsErrorsExpensive hook
 	 *
 	 * @param $title Title
@@ -30,7 +36,20 @@ class TitleBlacklistHooks {
 			$action = 'create';
 		}
 		if( $action == 'create' || $action == 'edit' || $action == 'upload' ) {
-			$blacklisted = TitleBlacklist::singleton()->userCannot( $title, $user, $action );
+			// Wikia change - begin - @author: wladek
+			// Add in-request cache
+			$cacheKey = serialize(array(
+				$title->getPrefixedText(),
+				$user->getName(),
+				(string)$action,
+			));
+			if ( !array_key_exists($cacheKey,self::$cache) ) {
+				$blacklisted = TitleBlacklist::singleton()->userCannot( $title, $user, $action );
+				self::$cache[$cacheKey] = $blacklisted;
+			} else {
+				$blacklisted = self::$cache[$cacheKey];
+			}
+			// Wikia change - end - @author: wladek
 			if( $blacklisted instanceof TitleBlacklistEntry ) {
 				$result = array( $blacklisted->getErrorMessage( 'edit' ),
 					htmlspecialchars( $blacklisted->getRaw() ),
