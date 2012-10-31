@@ -181,6 +181,7 @@ $messages['en'] = array(
 	'oasis-navigation-v2-create-page' => 'Add a Page',
 	'oasis-navigation-v2-edit-page' => 'Edit this Page',
 	'oasis-navigation-v2-add-photo' => 'Add a Photo',
+	'oasis-navigation-v2-add-video' => 'Add a Video',
 	'oasis-navigation-v2-edit-wikia-local-menu' => 'Edit local Wikia menu',
 	'oasis-navigation-v2-edit-wikia-global-menu' => 'Edit global Wikia menu',
 	'oasis-navigation-v2-edit-this-menu' => 'Edit Wiki Navigation',
