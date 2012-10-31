@@ -183,6 +183,10 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
 	
 	'forum-board-description-validation-length' => 'Board description should be between 4 and 255',
 	'forum-board-id-validation-missing' => 'Board id is missing',
+	
+	/* old forum notification */
+	'forum-old-notification' => 'This forum is obsolete.  Please use the new one.',
+	'forum-old-notification-navigation-button' => 'Go to new Forums',
 );
 
 $messages['qqq'] = array(
