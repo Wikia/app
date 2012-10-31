@@ -293,6 +293,7 @@ $config['oasis_anon_js'] = array(
 		'//extensions/wikia/AdEngine/js/Exitstitial.js',
 		'//extensions/wikia/UserLogin/js/UserLoginFacebook.js',
 		'//extensions/wikia/UserLogin/js/UserLoginFacebookForm.js',
+		'//extensions/wikia/UserLogin/js/UserLoginDropdown.js',
 	)
 );
 
