@@ -1,6 +1,6 @@
 /**
  * @test-framework QUnit
- * @test-require-asset resources/wikia/modules/LazyQueue.js
+ * @test-require-asset resources/wikia/modules/lazyqueue.js
  */
 
 module('LazyQueue');
@@ -16,7 +16,7 @@ test('Queue callback is called for every item in array', function() {
 		callbackCalledWithArgument.push(arg);
 	};
 
-	LazyQueue().makeQueue(queue, callback);
+	Wikia.LazyQueue.makeQueue(queue, callback);
 	queue.start();
 
 	equal(callbackCalledTimes, 3);
@@ -32,7 +32,7 @@ test('Queue callback is not called when queue is empty', function() {
 	callback = function() {
 		callbackCalled = true;
 	};
-	LazyQueue().makeQueue(queue, callback);
+	Wikia.LazyQueue.makeQueue(queue, callback);
 	queue.start();
 	equal(callbackCalled, false);
 });
@@ -48,7 +48,7 @@ test('Queue callback is called for each element pushed after start()', function(
 		callbackCalledWithArguments.push(arg);
 	};
 
-	LazyQueue().makeQueue(queue, callback);
+	Wikia.LazyQueue.makeQueue(queue, callback);
 	queue.start();
 	equal(callbackCalledTimes, 0, 'Callback not called after start');
 
@@ -59,7 +59,7 @@ test('Queue callback is called for each element pushed after start()', function(
 	equal(callbackCalledWithArguments[1], 'item1');
 });
 
-test('LazyQueue() throws if queue is not array', function() {
+test('LazyQueue throws if queue is not array', function() {
 	var thrown = false
 		, nullQueue = null
 		, undefinedQueue
@@ -68,28 +68,28 @@ test('LazyQueue() throws if queue is not array', function() {
 		, callback = function() {};
 
 	try {
-		LazyQueue().start(nullQueue);
+		Wikia.LazyQueue.makeQueue(nullQueue);
 	} catch (e1) {
 		thrown = true;
 	}
 	equal(thrown, true, 'Throws on null');
 
 	try {
-		LazyQueue().start(undefinedQueue);
+		Wikia.LazyQueue.makeQueue(undefinedQueue);
 	} catch (e2) {
 		thrown = true;
 	}
 	equal(thrown, true, 'Throws on undefined');
 
 	try {
-		LazyQueue().start(stringQueue);
+		Wikia.LazyQueue.makeQueue(stringQueue);
 	} catch (e3) {
 		thrown = true;
 	}
 	equal(thrown, true, 'Throws on stringQueue');
 
 	try {
-		LazyQueue().start(intQueue);
+		Wikia.LazyQueue.makeQueue(intQueue);
 	} catch (e4) {
 		thrown = true;
 	}
