@@ -1,6 +1,6 @@
 <section id="EditBoardModal" class="EditBoardModal">
 	<h1>
-		<?= $wf->Msg('forum-admin-delete-and-merge-board-modal-heading', $boardTitle) ?>
+		<?= wfMsg('forum-admin-delete-and-merge-board-modal-heading', $boardTitle) ?>
 	</h1>
 
 <?
@@ -29,10 +29,10 @@
 	
 	<div class="neutral modalToolbar">
 		<button class="secondary cancel">
-			<?= $wf->Msg('cancel') ?>
+			<?= wfMsg('cancel') ?>
 		</button>
 		<button class="submit">
-			<?= $wf->Msg('forum-admin-delete-and-merge-button-label') ?>
+			<?= wfMsg('forum-admin-delete-and-merge-button-label') ?>
 		</button>
 	</div>
 </section>

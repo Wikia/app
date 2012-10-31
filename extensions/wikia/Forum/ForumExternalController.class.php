@@ -85,7 +85,7 @@ class ForumExternalController extends WallExternalController {
   	* @response errorfield - optional error field.  nullable
  	* @response errormsg - optional error message.  nullable
 	*/
-	public function editBoard() {	
+	public function editBoard() {
 		$this->status = self::checkAdminAccess();
 		if(!empty($this->status)) {
 			return;
@@ -153,6 +153,16 @@ class ForumExternalController extends WallExternalController {
 		$boardId = $this->getVal('boardId', '');
 		$boardTitle = $this->getVal('boardTitle', '');
 		$destinationBoardId = $this->getVal('destinationBoardId', '');
+		echo $boardId;
+		exit;
+		//valida dest board
+		$board = ForumBoard::newFromId( $boardId );
+		$destinationBoard = ForumBoard::newFromId( $destinationBoardId );
+		//valid 
+		
+		$board->moveAllThread( $destinationBoard );
+		
+	//	$board->getTitle() != 
 		
 		/* backend magic */
 		

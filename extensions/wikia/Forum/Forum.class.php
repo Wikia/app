@@ -43,7 +43,7 @@ class Forum extends WikiaModel {
 			}
 			
 			if( $title instanceof Title ) {
-				$board = F::build( 'ForumBoard', array( $boardId ), 'newFromId' );
+				$board = ForumBoard::newFromId( $boardId );
 				$boardInfo = $board->getBoardInfo();
 				$boardInfo['id'] = $boardId;
 				$boardInfo['name'] = $title->getText();

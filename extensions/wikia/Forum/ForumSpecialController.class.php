@@ -94,12 +94,12 @@ class ForumSpecialController extends WikiaSpecialPageController {
 		
 		$this->boardId = $this->getVal('boardId', -1);
 		
+		$board = ForumBoard::newFromId( $this->boardId );
+		
 		/* backend magic here */
 		
-		// mock data
-		$this->boardId = 1234;
-		$this->boardTitle = 'mock title';
-		$this->boardDescription = 'mock description';
+		$this->boardTitle = $board->getTitle()->getText();
+		$this->boardDescription = $board->getDescription();
 		
 		$this->wf->profileOut( __METHOD__ );
 	}
@@ -114,16 +114,24 @@ class ForumSpecialController extends WikiaSpecialPageController {
 		
 		$this->boardId = $this->getVal('boardId', -1);
 		
-		/* backend magic here */
+		$board = ForumBoard::newFromId( $this->boardId );
 		
 		// mock data
-		$this->boardId = 1234;
-		$this->boardTitle = 'mock title that is about to get deleted';
+		$this->boardTitle = $board->getTitle()->getText();
+		
+		$forum = new Forum();
+		
+		$list = $forum->getBoardList();
+		
 		$this->destinationBoards = array(
-			array('value' => '', 'content' => 'Null board'),
-			array('value' => 1, 'content' => 'mock board 1'),
-			array('value' => 2, 'content' => 'mock board 2'),
+			array('value' => '', 'content' => 'Null board')
 		);
+		
+		foreach( $list as $value ) {
+			if( $this->boardId != $value['id'] ) {
+				$this->destinationBoards[] = array('value' => $value['id'], 'content' => $value['name'] );	
+			} 
+		}
 		
 		$this->wf->profileOut( __METHOD__ );
 	}

@@ -221,9 +221,9 @@ class Wall extends WikiaModel {
 		wfProfileOut(__METHOD__);
 		return $count;
 	}
-	
-	public function moveAllThread($destWallId) {
-//		CommentsIndex::changeParent
+
+	public function moveAllThread(Wall $dest) {
+		CommentsIndex::changeParent( $this->getId(), $dest->getId() );
 	}
 	
 	public function setMaxPerPage( $val ) {
