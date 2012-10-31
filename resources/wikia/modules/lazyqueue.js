@@ -75,7 +75,6 @@
 		};
 	};
 
-	//AMD
 	if (window.define && window.define.amd) {
 		window.define('lazyqueue', function () {
 			return lazyQueue();
