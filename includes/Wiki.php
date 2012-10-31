@@ -621,19 +621,32 @@ class MediaWiki {
 		 */
 		if( function_exists( 'newrelic_name_transaction' ) ) {
 			global $wgUser, $wgVersion;
-			$ns = $title->getNamespaceKey('');
+			global $wgContLang;
+
+			$loggedIn = $wgUser->isLoggedIn() ? 'user' : 'anon';
+			$ns = $title->getNamespace();
+			$nsKey = MWNamespace::getCanonicalName( $ns );
+			if ( $nsKey === false ) {
+				$nsKey = $ns;
+			} else {
+				$nsKey = $wgContLang->lc( $nsKey );
+				// Uses main
+			}
+			if ( $nsKey == '' ) {
+				$nsKey = 'main';
+			}
+
 			if( $title->isSpecialPage() ) {
 				list( $thisName, /* $subpage */ ) = SpecialPageFactory::resolveAlias( $title->getDBkey() );
 				if(is_string($thisName)) {
-					newrelic_name_transaction('Index/'.$ns.'/'.$thisName);
+					newrelic_name_transaction($loggedIn.'/'.$nsKey.'/'.$thisName);
 				} else {
-					newrelic_name_transaction('Index/'.$ns);
+					newrelic_name_transaction($loggedIn.'/Namespace/'.$nsKey);
 				}
 			} else {
-				newrelic_name_transaction('Index/'.$ns);
+				newrelic_name_transaction($loggedIn.'/Namespace/'.$nsKey);
 			}
 			if ( function_exists( 'newrelic_add_custom_parameter' ) ) {
-				$loggedIn = $wgUser->isLoggedIn() ? 'user' : 'anon';
 				newrelic_add_custom_parameter( 'loggedIn', $loggedIn );
 				newrelic_add_custom_parameter( 'action', $action );
 				newrelic_add_custom_parameter( 'version', $wgVersion );
