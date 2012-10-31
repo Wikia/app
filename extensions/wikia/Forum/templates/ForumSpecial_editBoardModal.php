@@ -9,14 +9,14 @@
 			array(
 				'type' => 'text',
 				'name' => 'boardTitle',
-				'value' => $boardTitle,
+				'value' => htmlspecialchars($boardTitle),
 				'isRequired' => true,
 				'label' => wfMsg('forum-admin-edit-board-title'),
 			),
 			array(
 				'type' => 'text',
 				'name' => 'boardDescription',
-				'value' => $boardDescription,
+				'value' => htmlspecialchars($boardDescription),
 				'isRequired' => true,
 				'label' => wfMsg('forum-admin-edit-board-description')
 			),
