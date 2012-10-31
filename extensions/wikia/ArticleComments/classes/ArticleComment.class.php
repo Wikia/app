@@ -859,24 +859,18 @@ class ArticleComment {
 
 		// Purge squid proxy URLs for ajax loaded content if we are lazy loading
 		if ( !empty( $wgArticleCommentsLoadOnDemand ) ) {
-			$app = F::app();
-
 			$urls = array();
 			$pages = $commentList->getCountPages();
-			$basePath = $app->wf->ExpandUrl( $app->wg->Server . $app->wg->ScriptPath . '/wikia.php' );
-			$params = array(
-				'controller' => 'ArticleCommentsController',
-				'method' => 'Content',
-				'format' => 'html',
-				'articleId' => $title->getArticleId(),
-			);
+			$articleId = $title->getArticleId();
 
 			for ( $page = 1; $page <= $pages; $page++ ) {
 				$params[ 'page' ] = $page;
-				$urls[] = $app->wf->AppendQuery( $basePath, $params );
+				$urls[] = ArticleCommentsController::getUrlToAjaxMethod(
+					'Content',
+					'html',
+					array( 'articleId' => $articleId, 'page' => $page, 'skin' => "true" )
+				);
 			}
-
-			$params[ 'skin' ] = true;
 
 			$squidUpdate = new SquidUpdate( $urls );
 			$squidUpdate->doUpdate();
