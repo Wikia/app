@@ -1076,8 +1076,6 @@ function WMU_insertImage(e, type) {
 		}
 	}
 
-	console.log(params);
-
 	var callback = {
 		success: function(o) {
 
