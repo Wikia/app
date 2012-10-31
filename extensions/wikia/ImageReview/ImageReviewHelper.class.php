@@ -460,7 +460,16 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 		}
 
 		$db = $this->getDatawareDB( DB_SLAVE );
-		$where = array( 'state in (' . ImageReviewStatuses::STATE_QUESTIONABLE . ',' . ImageReviewStatuses::STATE_REJECTED . ')' );
+		$where = array();
+
+		$statesToFetch = array(
+			ImageReviewStatuses::STATE_QUESTIONABLE,
+			ImageReviewStatuses::STATE_REJECTED,
+			ImageReviewStatuses::STATE_UNREVIEWED
+		);
+		$where[] = 'state in (' . $db->makeList( $statesToFetch ) . ')';
+
+		$where[] = 'top_200 = 0';
 
 		$list = $this->getWhitelistedWikis();
 		if ( !empty($list) ) {
