@@ -15,7 +15,14 @@ WikiaEditor.modules.Categories = $.createClass( WikiaEditor.modules.base,{
 	},
 
 	afterAttach: function() {
-		this.el.replaceWith( $( "#CategorySelect" ).categorySelect() );
+		var $categorySelect = $( '#CategorySelect' ),
+			$categorySelectMetadata = $( '#CategorySelectCategories' );
+
+		$categorySelect.categorySelect({
+			categories: JSON.parse( $categorySelectMetadata.val() )
+		});
+
+		this.el.replaceWith( $categorySelect );
 
 		//this.editor.on( 'mode', this.proxy( this.onModeChanged ) );
 
