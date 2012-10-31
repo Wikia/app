@@ -228,18 +228,17 @@ class VideoEmbedTool {
 				$extra++;
 			}
 
-			if (!empty($titleFile)) {
-				$parts = explode('/',$provider);
-				$provider = $parts[1];
-				$oTitle = null;
-				$status = $this->uploadVideoAsFile($provider, $id, $nameSanitized, $oTitle);
-				if ( !$status->ok ) {
-					header('X-screen-type: error');
-					return wfMsg( 'wva-thumbnail-upload-failed' );
-				}
-				$message = wfMsg( 'vet-single-success' );
+			$parts = explode('/',$provider);
+			$provider = $parts[1];
+			$oTitle = null;
+			$status = $this->uploadVideoAsFile($provider, $id, $nameSanitized, $oTitle);
+			if ( !$status->ok ) {
+				header('X-screen-type: error');
+				return wfMsg( 'wva-thumbnail-upload-failed' );
 			}
 		}
+		$message = wfMsg( 'vet-single-success' );
+
 		$ns_vid = $wgContLang->getFormattedNsText( $title->getNamespace() );
 		$caption = $wgRequest->getVal('caption');
 

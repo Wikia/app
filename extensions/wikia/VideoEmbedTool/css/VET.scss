@@ -76,15 +76,22 @@ $color-related-videos-background: darken($color-page, 20%);
 	position: relative;
 	color: $color-text !important;
 }
-#VideoEmbed h1 {
-	color: #222;
-	font-weight: bold;
-	font-size: 15pt;
-	letter-spacing: -1px;
-}
-#VideoEmbed h2 {
-	font-size: 12pt;
-	font-weight: bold;
+#VideoEmbed {
+	h1 {
+		color: #222;
+		font-weight: bold;
+		font-size: 15pt;
+		letter-spacing: -1px;
+	}
+	
+	.VideoEmbedSuccess h1 {
+		margin-bottom: 20px;
+	}
+	
+	#VideoEmbed h2 {
+		font-size: 12pt;
+		font-weight: bold;
+	}
 }
 #VideoEmbedBack {
 	left: 10px;
