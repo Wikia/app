@@ -366,6 +366,7 @@ class OasisController extends WikiaController {
 
 		// load WikiaScriptLoader, AbTesting files, anything that's so mandatory that we're willing to make a blocking request to load it.
 		$this->wikiaScriptLoader = '';
+		$jsReferences = array();
 
 		$jsAssetGroups = array( 'oasis_blocking' );
 		wfRunHooks('OasisSkinAssetGroupsBlocking', array(&$jsAssetGroups));
