@@ -95,6 +95,7 @@ var WikiaBar = {
 	checkMessageWidth: function (messageArray, container, cutMessagePrecision) {
 		var tempMessage = '',
 			tempMessageObject,
+			tempMessageArray,
 			cutIndex = -1;
 
 		for (var j = 0, length = messageArray.length ; j < length ; j+=cutMessagePrecision) {
@@ -111,17 +112,17 @@ var WikiaBar = {
 		}
 
 		if (cutIndex == -1) {
-			temp = messageArray;
+			tempMessageArray = messageArray;
 		}
 		else {
-			temp = messageArray.slice(0, cutIndex);
-			var lastIndexOfSpace = temp.lastIndexOf(" ");
+			tempMessageArray = messageArray.slice(0, cutIndex);
+			var lastIndexOfSpace = tempMessageArray.lastIndexOf(" ");
 			if ( (lastIndexOfSpace > -1) && (lastIndexOfSpace < cutIndex) ) {
-				temp = messageArray.slice(0, lastIndexOfSpace);
+				tempMessageArray = messageArray.slice(0, lastIndexOfSpace);
 			}
 		}
 
-		return temp;
+		return tempMessageArray;
 	},
 	messageFadeIn: function () {
 		var currentMsgIndex = this.messageConfig.index,
