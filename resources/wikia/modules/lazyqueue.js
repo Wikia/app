@@ -48,12 +48,12 @@
  * and when loading the library makeQueue and start it.
  */
 
-/*global window, define*/
-(function (context) {
+/*global window*/
+(function (window) {
 	'use strict';
 
-	function lazyQueue() {
-		function makeQueue(queue, callback) {
+	var lazyQueue = function () {
+		var makeQueue = function (queue, callback) {
 			if (typeof callback !== 'function') {
 				throw new Error('LazyQueue used with callback not being a function');
 			} else if (queue instanceof Array) {
@@ -61,8 +61,6 @@
 					while (queue.length > 0) {
 						callback(queue.shift());
 					}
-
-					//
 					queue.push = function (item) {
 						callback(item);
 					};
@@ -70,27 +68,20 @@
 			} else {
 				throw new Error('LazyQueue requires an array as the first parameter');
 			}
-		}
+		};
 
 		return {
 			makeQueue: makeQueue
 		};
-	}
-
-	//UMD (inclusive as this module needs to be also available via
-	//a namespace for access early in the process)
-
-	//namespace definition
-	if (!context.Wikia) {
-		context.Wikia = {};
-	}
-
-	context.Wikia.LazyQueue = lazyQueue();
+	};
 
 	//AMD
-	if (context.define && context.define.amd) {
-		context.define('lazyqueue', function () {
-			return context.Wikia.LazyQueue;
+	if (window.define && window.define.amd) {
+		window.define('lazyqueue', function () {
+			return lazyQueue();
 		});
+	} else {
+		window.Wikia = window.Wikia || {};
+		window.Wikia.LazyQueue = lazyQueue();
 	}
 }(window));
