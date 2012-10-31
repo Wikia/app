@@ -2,12 +2,22 @@
 
 var defaultNamespace = window.wgCategorySelect.defaultNamespace,
 	defaultSortKey = window.wgCategorySelect.defaultSortKey || window.wgTitle,
+	namespace = 'CategorySelect',
 	rCategoryName = new RegExp( '\\[\\[(?:' + window.wgCategorySelect.categoryNamespaces + '):([^\\]]+)]]', 'i' ),
 	rSortKey = /(?:[^|]+)\|(.+)$/i,
 	Wikia = window.Wikia || {};
 
-// Searches for a category in an array of categories by its index or value.
-// @return {Number} - The index of the category, or -1 if not found.
+/**
+ * Find a category in an array of categories by index or name.
+ *
+ * @param	{Number|String} category
+ *			The name of a category or the index of a category in the array.
+ * @param	{Array} categories
+ *			An array of categories to search in.
+ * @returns	{Number}
+ *			The index of the category that was found, or -1 if the category could
+ *			not be found.
+ */
 function findCategory( category, categories ) {
 	var i, obj,
 		found = -1,
@@ -33,10 +43,17 @@ function findCategory( category, categories ) {
 	return found;
 }
 
+/**
+ * Normalizes a category object.
+ *
+ * @param	{Object|String} category
+ *			The name of a category or an object with category properties.
+ * @returns {Object}
+ *			The normalized category.
+ */
 function normalizeCategory( category ) {
 	var normalized = {
 		namespace: defaultNamespace,
-		outerTag: '',
 		sortKey: defaultSortKey
 	};
 
@@ -73,10 +90,21 @@ var CategorySelect = function( categories ) {
  * @param	{String|Object} category
  *			The category to add.
  * @returns	{Number}
- *			The new length of the categories array.
+ *			The length of the categories array
  */
 CategorySelect.prototype.addCategory = function( category ) {
-	return this.categories.push( normalizeCategory( category ) );
+	var length;
+
+	category = normalizeCategory( category );
+
+	if ( category.name != undefined && category.name != '' ) {
+		length = this.categories.push( category );
+
+	} else {
+		length = this.categories.length;
+	}
+
+	return length;
 };
 
 /**
@@ -92,13 +120,33 @@ CategorySelect.prototype.addCategory = function( category ) {
  *			not be found.
  */
 CategorySelect.prototype.editCategory = function( category, value ) {
-	var index = findCategory( category );
+	var index = findCategory( category, this.categories );
 
 	if ( index >= 0 ) {
 		this.categories[ index ] = normalizeCategory( value );
 	}
 
 	return index;
+};
+
+/**
+ * Gets a category from the categories array.
+ *
+ * @param	{Number|String} category
+ *			The index of a category in the categories array or a string matching a
+ *			category in the array.
+ * @returns	{Object}
+ *			The category object or undefined if the category could not be found.
+ */
+CategorySelect.prototype.getCategory = function( category ) {
+	var obj,
+		index = findCategory( category, this.categories );
+
+	if ( index >= 0 ) {
+		obj = this.categories[ index ];
+	}
+
+	return obj;
 };
 
 /**
@@ -113,7 +161,7 @@ CategorySelect.prototype.editCategory = function( category, value ) {
  */
 CategorySelect.prototype.removeCategory = function( category ) {
 	var value,
-		index = findCategory( category );
+		index = findCategory( category, this.categories );
 
 	if ( index >= 0 ) {
 		value = this.categories.splice( index, 1 );
@@ -125,52 +173,114 @@ CategorySelect.prototype.removeCategory = function( category ) {
 /**
  * jQuery.fn.categorySelect
  * Sits on top of CategorySelect and provides user interface components.
+ *
+ * @param	{Object} options
+ *			The settings to configure the instance with.
  */
-$.fn.categorySelect = function( options ) {
+$.fn.categorySelect = (function() {
 	var cache = {};
 
-	options = $.extend( {}, options, $.fn.categorySelect.options );
-
-	function addCategory( event ) {
-		var $element = $( this );
-
-		$.when( getCategories() ).done(function( categories ) {
-			$element.autocomplete({
-				appendTo: "#CategorySelect",
-				minLength: 3,
-				select: function( event, ui ) {
-					console.log( event, ui );
-					// TODO: actually add the category
-				},
-				source: categories
-			});
-		});
-	}
-
 	function getCategories() {
-		return cache.categories || $.nirvana.sendRequest({
+		return cache.wikiCategories || $.nirvana.sendRequest({
 			controller: 'CategorySelectController',
 			method: 'getCategories',
 			type: 'GET',
-			callback: function( categories ) {
-				cache.categories = categories;
+			callback: function( wikiCategories ) {
+				cache.wikiCategories = wikiCategories;
 			}
 		});
 	}
 
-	// Initialize
-	return this.each(function() {
-		var $element = $( this ),
-			categories = JSON.parse( $( '#CategorySelectCategories' ).val() ),
-			categorySelect = new CategorySelect( categories );
+	return function( options ) {
+		options = $.extend( {}, options, $.fn.categorySelect.options );
 
-		if ( $element.data( 'CategorySelect' ) ) {
-			$element.off( '.CategorySelect' );
-		}
+		return this.each(function() {
+			var $element = $( this ),
+				categorySelect = new CategorySelect( options.categories );
 
-		$element.data( 'CategorySelect', categorySelect );
-		$element.one( 'focus', '.addCategory', addCategory );
-	});
+			function addCategory( event, ui ) {
+				var index,
+					$input = $( this ),
+					value = ui != undefined ? ui.item.value : $input.val();
+
+				// User selected a suggested item from the autocomplete list
+				if ( event.type == 'autocompleteselect'
+					// User pressed the enter key in the input field
+					|| ( event.type == 'keypress' && event.which == 13 ) ) {
+
+					// Prevent the edit form from submitting
+					event.preventDefault();
+
+					// Make sure value isn't empty
+					if ( value != undefined && value != '' ) {
+						addCategoryListItem( categorySelect.addCategory( value ), value );
+						notifyListeners( event, categorySelect.getCategory( index ) );
+
+						// Clear out the input
+						$input.val( '' );
+					}
+				}
+			}
+
+			function addCategoryListItem( index, value ) {
+				$( options.list ).append(
+					$( '<li></li>' ).data( 'categoryIndex', index ).text( value ) );
+			}
+
+			function editCategory( event ) {
+
+			}
+
+			function notifyListeners( event, data ) {
+				$element.triggerHandler( 'update.' + namespace, {
+					data: data || {},
+					event: event || $.Event
+				});
+			}
+
+			function removeCategory( event ) {
+
+			}
+
+			function setupAutocomplete( event ) {
+				var $input = $( this );
+
+				$.when( getCategories() ).done(function( wikiCategories ) {
+					$input.autocomplete( $.extend( options.autocomplete, {
+						select: addCategory,
+						source: wikiCategories
+					}));
+				});
+			}
+
+			// Get rid of previous bindings
+			$element.off( '.' + namespace );
+
+			// Store an instance of CategorySelect in the element
+			$element.data( namespace, categorySelect );
+
+			// Set up jQuery.ui.autocomplete on first focus for the input field
+			$element.one( 'focus.' + namespace, options.input, setupAutocomplete );
+
+			// Listen for key presses on the input field
+			$element.on( 'keypress.' + namespace, options.input, addCategory );
+
+			// Build the initial categories list
+			$.each( options.categories, function( index, category ) {
+				addCategoryListItem( index, category.name );
+			});
+		});
+	}
+})();
+
+$.fn.categorySelect.options = {
+	autocomplete: {
+		appendTo: '#CategorySelect',
+		minLength: 3
+	},
+	categories: [],
+	input: '.addCategory',
+	list: '.categories'
 };
 
 /**
