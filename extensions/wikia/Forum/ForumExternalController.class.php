@@ -153,8 +153,7 @@ class ForumExternalController extends WallExternalController {
 		$boardId = $this->getVal('boardId', '');
 		$boardTitle = $this->getVal('boardTitle', '');
 		$destinationBoardId = $this->getVal('destinationBoardId', '');
-		echo $boardId;
-		exit;
+
 		//valida dest board
 		$board = ForumBoard::newFromId( $boardId );
 		$destinationBoard = ForumBoard::newFromId( $destinationBoardId );
