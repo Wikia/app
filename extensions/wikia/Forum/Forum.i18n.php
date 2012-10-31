@@ -20,8 +20,8 @@ $messages['en'] = array(
 	/* Forum:Special (Index) */
 	'forum-specialpage-blurb-heading' => 'Welcome to {{SITENAME}} Forum!',
 	'forum-specialpage-blurb' => 'This is an early demo of Wikia\'s new Forum feature. If you\'ve got ideas or questions about the feature, please start a thread on the [[Board:General Discussion|General Discussion board]]. Have fun!',
-	'forum-specialpage-board-threads' => '$1 {{PLURAL:$1|thread|threads}}',
-	'forum-specialpage-board-posts' => '$1 {{PLURAL:$1|post|posts}}',
+	'forum-specialpage-board-threads' => '{{formatnum:$1}} {{PLURAL:$1|thread|threads}}',
+	'forum-specialpage-board-posts' => '{{formatnum:$1}} {{PLURAL:$1|post|posts}}',
 	'forum-specialpage-board-lastpostby' => 'Last post by',
 
 	/* Forum Board */
@@ -192,8 +192,8 @@ $messages['qqq'] = array(
 	'forum-specialpage-title' => 'Appears as the main title of the forum and also in the browser title bar.',
 	'forum-specialpage-blurb-heading' => 'Heading for the introduction text.',
 	'forum-specialpage-blurb' => 'A short description of the forum.',
-	'forum-specialpage-board-threads' => 'The count of threads on a board. Parameters: * $1 - the number of threads.',
-	'forum-specialpage-board-posts' => 'The count of posts on a board. Parameters: * $1 - the number of posts.',
+	'forum-specialpage-board-threads' => 'The count of threads on a board. Parameters: * $1 - the number of threads.  Use formatnum for local formatting.',
+	'forum-specialpage-board-posts' => 'The count of posts on a board. Parameters: * $1 - the number of posts.  Use formatnum for local formatting.',
 	'forum-specialpage-board-lastpostby' => '',
 
 	'forum-notification-user1-reply-to-your' => 'Notification when someone replies on your thread. Parameters:
