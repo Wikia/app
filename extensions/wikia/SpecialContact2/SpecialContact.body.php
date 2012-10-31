@@ -118,20 +118,20 @@ class ContactForm extends SpecialPage {
 
 			#malformed email?
 			if (!Sanitizer::validateEmail($this->mEmail)) {
-				$this->err[].= wfMsg('invalidemailaddress');
+				$this->err[] = wfMsg('invalidemailaddress');
 				$this->errInputs['wpEmail'] = true;
 			}
 
 			#empty message text?
 			if( empty($this->mProblemDesc) ) {
-				$this->err[].= wfMsg('specialcontact-nomessage');
+				$this->err[] = wfMsg('specialcontact-nomessage');
 				$this->errInputs['wpContactDesc'] = true;
 			}
 
 			#captcha
 			if(!$wgUser->isLoggedIn()){ // logged in users don't need the captcha (RT#139647)
 				if( class_exists( $wgCaptchaClass ) && !( !empty($info) &&  $captchaObj->keyMatch( $wgRequest->getVal('wpCaptchaWord'), $info )))  {
-					$this->err[].= wfMsg('specialcontact-captchafail');
+					$this->err[] = wfMsg('specialcontact-captchafail');
 					$this->errInputs['wpCaptchaWord'] = true;
 				}
 			}
@@ -361,9 +361,8 @@ class ContactForm extends SpecialPage {
 	 * @access private
 	 */
 	function ShowContactForm( $sub = null ) {
-		global $wgUser, $wgOut, $wgLang;
-		global $wgDBname;
-		global $wgServer, $wgSitename, $wgCaptchaClass;
+		global $wgUser, $wgOut;
+		global $wgServer, $wgCaptchaClass;
 
 		$wgOut->setPageTitle(
 			wfMsg('specialcontact-sectitle', wfMsg('specialcontact-sectitle-'.$sub))
@@ -489,7 +488,7 @@ class ContactForm extends SpecialPage {
 	 * @access private
 	 */
 	function ShowNonForm( $sub = null ) {
-		global $wgUser, $wgOut, $wgLang;
+		global $wgOut;
 
 		$wgOut->setPageTitle(
 			wfMsg('specialcontact-sectitle', wfMsg('specialcontact-sectitle-'.$sub))
