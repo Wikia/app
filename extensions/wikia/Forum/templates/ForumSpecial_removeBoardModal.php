@@ -15,6 +15,7 @@
 			array(
 				'type' => 'select',
 				'name' => 'destinationBoardId',
+				'class' => 'destinationBoardId',
 				'isRequired' => true,
 				'label' => wfMsg('forum-admin-merge-board-destination', $boardTitle),
 				'options' => $destinationBoards,
