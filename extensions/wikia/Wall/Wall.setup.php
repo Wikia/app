@@ -143,7 +143,9 @@ $app->registerHook('SpecialWikiActivityExecute', 'WallHooksHelper', 'onSpecialWi
 $app->registerHook('WantedPages::getQueryInfo', 'WallHooksHelper', 'onWantedPagesGetQueryInfo');
 $app->registerHook('ListredirectsPage::getQueryInfo', 'WallHooksHelper', 'onListredirectsPageGetQueryInfo');
 
-$app->registerHook('AfterLanguageGetNamespaces', 'WallHooksHelper', 'onAfterLanguageGetNamespaces');
+$app->registerHook('BeforeInitialize', 'WallHooksHelper', 'onBeforeInitialize');
+// lazy loaded by the previous hook
+//$app->registerHook('AfterLanguageGetNamespaces', 'WallHooksHelper', 'onAfterLanguageGetNamespaces');
 
 F::build('JSMessages')->registerPackage('Wall', array(
 	'wall-notifications',
