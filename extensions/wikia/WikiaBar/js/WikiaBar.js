@@ -65,7 +65,7 @@ var WikiaBar = {
 			WikiaBarBoxAd.addClass('wikia-ad');
 		}
 	},
-	cutMessageIntoSmallPieces: function (messageArray, container) {
+	cutMessageIntoSmallPieces: function (messageArray, container, cutMessagePrecision) {
 		var returnArray = [],
 			currentMessageArray,
 			originalMessageArray,
@@ -78,7 +78,7 @@ var WikiaBar = {
 			if (typeof messageArrayText == 'string') {
 				originalMessageArray = messageArrayText.split('');
 				do {
-					currentMessageArray = this.checkMessageWidth(originalMessageArray, container);
+					currentMessageArray = this.checkMessageWidth(originalMessageArray, container, cutMessagePrecision);
 					originalCurrentDiffArray = originalMessageArray.slice(
 						currentMessageArray.length,
 						originalMessageArray.length
@@ -92,19 +92,20 @@ var WikiaBar = {
 		container.text('');
 		return returnArray;
 	},
-	checkMessageWidth: function (messageArray, container) {
+	checkMessageWidth: function (messageArray, container, cutMessagePrecision) {
 		var tempMessage = '',
 			tempMessageObject,
 			cutIndex = -1;
 
-		for (var j = 0, length = messageArray.length ; j < length ; j
-			+=this.cutMessagePrecision) {
-			tempMessage = tempMessage + messageArray.join("").substr(j,
-				this.cutMessagePrecision);
+		for (var j = 0, length = messageArray.length ; j < length ; j+=cutMessagePrecision) {
+			tempMessage = tempMessage + messageArray.join("").substr(
+				j,
+				cutMessagePrecision
+			);
 			tempMessageObject = $('<span></span>').text(tempMessage);
 			container.html(tempMessageObject);
 			if (tempMessageObject.width() >= this.messageConfig.container.width()) {
-				cutIndex = j - this.cutMessagePrecision;
+				cutIndex = j - cutMessagePrecision;
 				break;
 			}
 		}
@@ -164,7 +165,8 @@ var WikiaBar = {
 	startSlideShow: function () {
 		this.messageConfig.content = this.cutMessageIntoSmallPieces(
 			this.messageConfig.container.data(this.messageConfig.attributeName),
-			this.messageConfig.container
+			this.messageConfig.container,
+			this.cutMessagePrecision
 		);
 
 		if (typeof this.messageConfig.content == 'object') {
