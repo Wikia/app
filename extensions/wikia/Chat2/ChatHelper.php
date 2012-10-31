@@ -171,9 +171,7 @@ class ChatHelper {
 		// don't load ChatEntryPoint on edit pages (perf optimization)
 		if ( F::app()->checkSkin( 'oasis' ) && !BodyController::isEditPage() ){
 			// TODO: move these to asset manager when we release chat globally
-			$out->addScriptFile($wgResourceBasePath . '/resources/wikia/libraries/bootstrap/popover.js');
 			$out->addScriptFile($wgExtensionsPath . '/wikia/Chat2/js/ChatEntryPoint.js');
-			$out->addStyle(AssetsManager::getInstance()->getSassCommonURL('resources/wikia/libraries/bootstrap/popover.scss'));
 			$out->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/Chat2/css/ChatEntryPoint.scss'));
 		}
 
