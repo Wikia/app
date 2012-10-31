@@ -266,18 +266,37 @@ class VideoFileUploader {
 	}
 
 	/*
-	 * Geberates unique Title for new video
+	 * Generates unique Title for new video
 	 * the function checks if given title exists
-	 * and if so, it's adding a postfix recursively
+	 * and if so, it's adding a postfix
 	 * @param string $title
 	 * @return Title $oTitle
 	 */
 	public function getUniqueTitle( $title, $level=0 ) {
 
+		$numRetry = 3;
+
 		$oTitle = Title::newFromText( $title, NS_FILE );
+
 		if ( !empty( $oTitle ) && $oTitle->exists() ) {
-			$newTitleObject = $oTitle->getBaseText() . '-' . $level;
-			return VideoFileUploader::getUniqueTitle( $newTitleObject, ($level+1) );
+
+			for ( $r = 0; $r <= $numRetry; $r++ ) {
+				$newTitleText = $oTitle->getBaseText() . '-' . $r;
+				$newTitleObject = Title::newFromText( $newTitleText, NS_FILE );
+				if ( !empty( $newTitleObject ) && $newTitleObject->exists() ) {
+
+					if ( $r == $numRetry ) { // stop checking and fallback to timestamp
+						$newTitleText = $oTitle->getBaseText() . '-' . time();
+						$newTitleObject = Title::newFromText( $newTitleText, NS_FILE );
+					}
+					continue;
+
+				} else {
+					break;
+				}
+			}
+
+			return $newTitleObject;
 		}
 		return $oTitle;
 	}
