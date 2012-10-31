@@ -61,13 +61,6 @@ class ImageReviewTask extends BatchTask {
 			$dbname = WikiFactory::getWikiByID( $wikiId );
 			if ( !$dbname ) continue;
 
-			$title = GlobalTitle::newFromId( $imageId, $wikiId );
-
-			if ( !is_object( $title ) ) {
-				$this->log( 'Apparently the article does not exist anymore' );
-				continue;
-			}
-
 			$city_url = WikiFactory::getVarValueByName( "wgServer", $wikiId );
 			if ( empty($city_url) ) continue;
 
@@ -79,7 +72,7 @@ class ImageReviewTask extends BatchTask {
 			$sCommand  = "perl /usr/wikia/backend/bin/run_maintenance --id={$wikiId} --script=wikia/deleteOn.php ";
 			$sCommand .= "-- ";
 			$sCommand .= "-u " . escapeshellarg( $this->mUser ) . " ";
-			$sCommand .= "-t " . escapeshellarg( $title->getPrefixedText() ) . " ";
+			$sCommand .= "--id " . $imageId . " ";
 			if ( $reason ) {
 				$sCommand .= "-r " . escapeshellarg( $reason ) . " ";
 			}

@@ -4,18 +4,19 @@
 # bartek@wikia.com
 
 # delete a batch of pages
-# Usage: php deleteOn.php [-u <user>] [-r <reason>] [-i <interval>] [-t <title>] <listfile>
+# Usage: php deleteOn.php [-u <user>] [-r <reason>] [-i <interval>] [--id <page_id> | -t <title>] <listfile>
 # where
 # 	<listfile> is a file where each line contains the title of a page to be deleted.
 #	<user> is the username
 #	<reason> is the delete reason
 #	<interval> is the number of seconds to sleep for after each delete
 #	<wiki> is the wiki on which we want
-#	<title> is what we want to delete
+#	<page_id> is what we want to delete (in page ID form)
+#	<title> is what we want to delete (in text form)
 
 $oldCwd = getcwd();
 ini_set( "include_path", dirname(__FILE__)."/.." );
-$optionsWithArgs = array( 'u', 'r', 'i', 't' );
+$optionsWithArgs = array( 'u', 'r', 'i', 't', 'id' );
 require_once( 'commandLine.inc' );
 
 chdir( $oldCwd );
@@ -52,9 +53,13 @@ if ( $wgUser->isAnon() ) {
 
 $dbw = wfGetDB( DB_MASTER );
 
-	$page = Title::newFromText( $options['t'] );
+	if ( isset( $options['id'] ) ) {
+		$page = Title::newFromId( $options['id'] );
+	} else {
+		$page = Title::newFromText( $options['t'] );
+	}
 	if ( is_null( $page ) ) {
-		print "Invalid title\n";
+		print "Invalid title or page does not exist\n";
 		exit (1) ;
 	}
 	if( !$page->exists() ) {
