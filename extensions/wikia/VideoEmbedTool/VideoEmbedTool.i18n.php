@@ -88,8 +88,8 @@ $messages['en'] = array(
 	'vet-search-placeholder' => 'Search',
 	'vet-add-from-preview' => 'Add video',
 	'vet-no-results-found' => 'No results found',
-	'vet-search-results-WVL' => 'We found $1 results for "$2" on Wikia Video Library',
-	'vet-search-results-local' => 'We found $1 results for "$2" on this Wiki',
+	'vet-search-results-WVL' => 'We found $1 {{PLURAL:$1|result|results}} for "$2" on Wikia Video Library',
+	'vet-search-results-local' => 'We found $1 {{PLURAL:$1|result|results}} for "$2" on this Wiki',
 	'vet-search-filter-caption' => 'Search filter',
 
 );

@@ -96,7 +96,7 @@ class VideoEmbedToolController extends WikiaController {
 		}
 
 		$result = array (
-			'caption' => $this->wf->Msg( ( ( $searchType == 'premium' ) ? 'vet-search-results-WVL' : 'vet-search-results-local' ), array( $response['totalItemCount'], $phrase ) ),
+			'caption' => $this->wf->MsgExt( ( ( $searchType == 'premium' ) ? 'vet-search-results-WVL' : 'vet-search-results-local' ), array('parsemag'),  $response['totalItemCount'], $phrase ),
 			'totalItemCount' => $response['totalItemCount'],
 			'nextStartFrom' => $response['nextStartFrom'],
 			'currentSetItemCount' => count( $response['items'] ),
@@ -159,7 +159,14 @@ class VideoEmbedToolController extends WikiaController {
 			$nextStartFrom++;
 			if ( count( $data ) == $svSize ) break;
 		}
-		return array( 'totalItemCount' => $response->getResultsFound(), 'nextStartFrom' => $nextStartFrom, 'items' => $data );
+		$totalItemCount = $response->getResultsFound();
+		// sometimes we need to filter some videos out and when there is a small number of results
+		// it's obvious that the number of results shown in the slider does not match
+		// the number stated in the label about
+		// luckily in this case - when there is only one page of results - we
+		// can count the exact number of videos ourselves
+		if (!$svStart && ( count( $data ) < $svSize ) ) $totalItemCount = count( $data );
+		return array( 'totalItemCount' => $totalItemCount, 'nextStartFrom' => $nextStartFrom, 'items' => $data );	
 	}
 
 	public function getEmbedCode() {
