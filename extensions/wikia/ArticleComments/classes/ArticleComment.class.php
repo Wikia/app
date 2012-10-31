@@ -342,6 +342,7 @@ class ArticleComment {
 			if (defined('NS_BLOG_ARTICLE') && $title->getNamespace() == NS_BLOG_ARTICLE) {
 				$props = BlogArticle::getProps($title->getArticleID());
 				$commentingAllowed = isset($props['commenting']) ? (bool)$props['commenting'] : true;
+				$canDelete = $canDelete || $wgUser->isAllowed( 'blog-comments-delete' );
 			}
 
 			if ( ( count( $parts['partsStripped'] ) == 1 ) && $commentingAllowed && !ArticleCommentInit::isFbConnectionNeeded() ) {
