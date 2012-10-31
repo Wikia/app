@@ -803,7 +803,24 @@ class MessageCache {
 
 			$userlang = $popts->setUserLang( $language );
 			$this->mInParser = true;
-			$message = $parser->transformMsg( $message, $popts, $title );
+			// Wikia change - begin - @author: wladek
+			// optimization for cases when transform()/"parsemag" is used
+			// only for processing {{plural:}} or {{formatnum:}}
+			$message = preg_replace_callback("/(?<!{){{(plural|formatnum):((}[^}]|[^}])+)}}/i",
+				function($matches) use ($parser) {
+					$funcName = strtolower($matches[1]);
+					$args = explode('|',$matches[2]);
+					array_unshift($args,$parser);
+					$callback = array( 'CoreParserFunctions', $funcName );
+					return call_user_func_array($callback,$args);
+				},
+				$message);
+
+			// if there's still something to be processed, do the hard work
+			if( strpos( $message, '{{' ) !== false ) {
+				$message = $parser->transformMsg( $message, $popts, $title );
+			}
+			// Wikia change - end
 			$this->mInParser = false;
 			$popts->setUserLang( $userlang );
 		}
