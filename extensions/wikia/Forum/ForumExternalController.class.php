@@ -101,8 +101,8 @@ class ForumExternalController extends WallExternalController {
 			return true;
 		}
 		
-		$title = Title::newFromId($boardId);
-		if(empty($title)) {
+		$board = ForumBoard::newFromId( $boardId );
+		if(empty($board)) {
 			$this->status = 'error';
 			$this->errormsg = wfMsg('forum-board-id-validation-missing');
 			return true;
@@ -127,7 +127,7 @@ class ForumExternalController extends WallExternalController {
 			return true;			
 		} 
 		
-		$forum->editBoard($boardId, $boardTitle, $boardDescription);
+		$forum->editBoard($board, $boardTitle, $boardDescription);
 	
 		$this->status = 'ok';
 		$this->errorfield = '';
@@ -154,16 +154,37 @@ class ForumExternalController extends WallExternalController {
 		$boardTitle = $this->getVal('boardTitle', '');
 		$destinationBoardId = $this->getVal('destinationBoardId', '');
 
-		//valida dest board
+		if($destinationBoardId == '') {
+			$this->status = 'error';
+			$this->errormsg = wfMsg('forum-board-destination-validation-missing');
+			$this->errorfield = 'destinationBoardId';				
+			return true;
+		}
+
 		$board = ForumBoard::newFromId( $boardId );
 		$destinationBoard = ForumBoard::newFromId( $destinationBoardId );
-		//valid 
+
+		if(empty($boardId) || empty($destinationBoardId)) {
+			$this->status = 'error';
+			$this->errormsg = wfMsg('forum-board-id-validation-missing');
+			return true;
+		}
+		
+		
+		if( $boardTitle != $board->getTitle()->getText() ) {
+			$this->status = 'error';
+			$this->errorfield = 'boardTitle';
+			$this->errormsg = wfMsg('forum-board-title-validation-compare-error');
+			return true;
+		}
 		
 		$board->moveAllThread( $destinationBoard );
 		
-	//	$board->getTitle() != 
+		$board->clearCacheBoardInfo();
+		$destinationBoard->clearCacheBoardInfo();
 		
-		/* backend magic */
+		$forum = new Forum();
+		$forum->deleteBoard($board);
 		
 		$this->status = 'ok';
 		$this->errorfield = '';

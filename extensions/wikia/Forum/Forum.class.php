@@ -240,7 +240,7 @@ class Forum extends WikiaModel {
 	public function createBoard($titletext, $body, $bot = false) {
 		$this->wf->ProfileIn( __METHOD__ );
 
-		$this->createOrEdit(-1, $titletext, $body, $bot);
+		$this->createOrEditBoard(null, $titletext, $body, $bot);
 	
 		$this->wf->ProfileOut( __METHOD__ );
 	}
@@ -248,18 +248,20 @@ class Forum extends WikiaModel {
 	public function editBoard($id, $titletext, $body, $bot = false) {
 		$this->wf->ProfileIn( __METHOD__ );
 		
-		$this->createOrEdit($id, $titletext, $body, $bot);
+		$this->createOrEditBoard($id, $titletext, $body, $bot);
 		
 		$this->wf->ProfileOut( __METHOD__ );
 	}
-	
-	
+
 	/**
-	 *  create or edit board, if $id = -1 then we are creating 
-	 */
-	
-	protected function createOrEdit($id, $titletext, $body, $bot = false) {
+	 *  create or edit board, if $board = null then we are creating new one
+	 */	
+	protected function createOrEditBoard($board, $titletext, $body, $bot = false) {
 		$this->wf->ProfileIn( __METHOD__ );
+		$id = null;
+		if( !empty($board) ) {
+			$id = $board->getId();	
+		}
 		
 		if( strlen($titletext) < 4 || strlen($body) < 4 ) {
 			$this->wf->ProfileOut( __METHOD__ );
@@ -273,7 +275,7 @@ class Forum extends WikiaModel {
 		
 		Forum::$allowToEditBoard = true;	
 		
-		if($id == -1) {
+		if($id == null) {
 			$title = Title::newFromText($titletext, NS_WIKIA_FORUM_BOARD);
 		} else {
 			$title = Title::newFromId($id);
@@ -298,13 +300,30 @@ class Forum extends WikiaModel {
 		$result = array();
 		$retval = $editPage->internalAttemptSave( $result, $bot );
 		
-		if($id == -1) {
+		if($id == null) {
 			$title = Title::newFromText( $titletext, NS_WIKIA_FORUM_BOARD );
 			if( !empty($title) ) {
 				wfSetWikiaPageProp( WPP_FORUM_ORDER_INDEX,  $title->getArticleId(), $title->getArticleId() );
 			}
 		}
 		
+		Forum::$allowToEditBoard = false;
+		
+		$this->wf->ProfileOut( __METHOD__ );
+	}
+
+	/**
+	 * delete board 
+	 */
+
+	public function deleteBoard( $board ) {
+		$this->wf->ProfileIn( __METHOD__ );
+		
+		Forum::$allowToEditBoard = true;
+
+		$article  = new Article( $board->getTitle() );
+		$article->doDeleteArticle('', true);
+
 		Forum::$allowToEditBoard = false;
 		
 		$this->wf->ProfileOut( __METHOD__ );

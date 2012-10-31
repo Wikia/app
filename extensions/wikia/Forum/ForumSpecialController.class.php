@@ -124,7 +124,7 @@ class ForumSpecialController extends WikiaSpecialPageController {
 		$list = $forum->getBoardList();
 		
 		$this->destinationBoards = array(
-			array('value' => '', 'content' => 'Null board')
+			array('value' => '', 'content' => wfMsg( 'forum-board-destination-empty' ) )
 		);
 		
 		foreach( $list as $value ) {

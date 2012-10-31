@@ -415,7 +415,7 @@ class CommentsIndex extends WikiaModel {
 	 *  fast moving of comment from one page to another
 	 */ 
 	public static function changeParent($from, $to) {
-		$db = $this->wf->GetDB( DB_MASTER );
+		$db = wfGetDB( DB_MASTER );
 
 		$db->update(
 			'comments_index',
