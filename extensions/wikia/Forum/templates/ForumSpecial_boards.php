@@ -3,7 +3,7 @@
 		<li class="board board-<?= $board['id'] ?>" data-id="<?= $board['id'] ?>">
 			<div class="heading">
 				<h4>
-					<a href="<?= $board['url'] ?>"><?= $board['name'] ?></a>
+					<a href="<?= $board['url'] ?>"><?= htmlspecialchars($board['name']) ?></a>
 				</h4>
 				<? if ($isEditMode): ?>
 					<div class="editControls">
@@ -16,7 +16,7 @@
 				<? endif; ?>
 			</div>
 			<p class="description grid-3 alpha">
-				<?= $board['description']; ?>
+				<?= htmlspecialchars($board['description']) ?>
 			</p>
 			<div class="grid-1">
 				<!-- placeholder for future feature -->

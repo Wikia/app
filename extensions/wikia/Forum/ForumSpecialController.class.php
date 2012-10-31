@@ -129,7 +129,7 @@ class ForumSpecialController extends WikiaSpecialPageController {
 		
 		foreach( $list as $value ) {
 			if( $this->boardId != $value['id'] ) {
-				$this->destinationBoards[] = array('value' => $value['id'], 'content' => $value['name'] );	
+				$this->destinationBoards[] = array('value' => $value['id'], 'content' => htmlspecialchars($value['name']) );	
 			} 
 		}
 		
