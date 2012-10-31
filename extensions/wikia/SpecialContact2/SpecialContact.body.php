@@ -92,6 +92,10 @@ class ContactForm extends SpecialPage {
 
 			// handle custom forms
 			if ( !empty( $par ) && array_key_exists( $par, $this->customForms ) ) {
+				if ( $par === 'rename-account' ) {
+					$this->validateUserName( $wgRequest->getText( 'wpUserNameNew' ) );
+				}
+
 				foreach ( $this->customForms[$par]['vars'] as $var ) {
 					$args[] = $wgRequest->getVal( $var );
 				}
@@ -567,5 +571,64 @@ class ContactForm extends SpecialPage {
 		}
 
 		return false;
+	}
+
+	/**
+	 * Validates username user enters on rename account form
+	 *
+	 * @author grunny
+	 */
+	private function validateUserName( $userName ) {
+		global $wgWikiaMaxNameChars;
+		if ( $userName == '' ) {
+			$this->err[] = wfMsg( 'userlogin-error-noname' );
+			$this->errInputs['wpUserNameNew'] = true;
+			return false;
+		}
+
+		// check if exist in tempUser
+		if ( TempUser::getTempUserFromName( $userName ) ) {
+			$this->err[] = wfMsg( 'userlogin-error-userexists' );
+			$this->errInputs['wpUserNameNew'] = true;
+			return false;
+		}
+
+		// check username length
+		if ( !User::isNotMaxNameChars( $userName ) ) {
+			$this->err[] = wfMsg( 'usersignup-error-username-length', $wgWikiaMaxNameChars );
+			$this->errInputs['wpUserNameNew'] = true;
+			return false;
+		}
+
+		// check valid username
+		if ( !User::isCreatableName( $userName ) ) {
+			$this->err[] = wfMsg( 'usersignup-error-symbols-in-username' );
+			$this->errInputs['wpUserNameNew'] = true;
+			return false;
+		}
+
+		$result = wfValidateUserName( $userName );
+		if ( $result === true ) {
+			$msgKey = '';
+			if ( !wfRunHooks( 'cxValidateUserName', array( $userName, &$msgKey ) ) ) {
+				$result = $msgKey;
+			}
+		}
+
+		if ( $result !== true ) {
+			$msg = '';
+			if ( $result === 'userlogin-bad-username-taken' ) {
+				$msg = wfMsg( 'userlogin-error-userexists' );
+			} else if ( $result === 'userlogin-bad-username-character' ) {
+				$msg = wfMsg( 'usersignup-error-symbols-in-username' );
+			} else if ( $result === 'userlogin-bad-username-length' ) {
+				$msg = wfMsg( 'usersignup-error-username-length', $wgWikiaMaxNameChars );
+			}
+
+			$this->err[] = empty( $msg ) ? $result : $msg;
+			$this->errInputs['wpUserNameNew'] = true;
+			return false;
+		}
+		return true;
 	}
 }
