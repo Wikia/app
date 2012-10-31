@@ -401,7 +401,7 @@ class BlogArticle extends Article {
 			$totalcnt = $rescnt;
 		} else {
 			# Case 3: hopeless.  Don't give a total count at all.
-			return wfMsgExt("blog-subheader-all", 'parse', $wgLang->formatNum( $rescnt ) );
+			return wfMsgExt("blog-subheader", 'parse', $wgLang->formatNum( $rescnt ) );
 		}
 		return wfMsgExt( "blog-subheader-all", 'parse', $wgLang->formatNum( $rescnt ), $wgLang->formatNum( $totalcnt ) );
 	}

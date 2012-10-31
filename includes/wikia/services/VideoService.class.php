@@ -62,7 +62,7 @@ class VideoService extends WikiaModel {
 	protected function addVideoVideoHandlers( $url ) {
 		$title = F::build( 'VideoFileUploader', array($url), 'URLtoTitle' );
 		if ( !$title ) {
-			throw new Exception( $this->wf->Msg('videos-error-unknown', 876463) );
+			throw new Exception( $this->wf->Msg('videos-error-invalid-video-url') );
 		}
 
 		return array( $title, $title->getArticleID(), null );

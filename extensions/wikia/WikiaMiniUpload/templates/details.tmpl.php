@@ -14,7 +14,8 @@ global $wgExtensionsPath, $wgBlankImgUrl;
 
 		<div style="position: relative; z-index: 2">
 			<label><?= wfMsg('wmu-caption') ?></label>
-			<textarea id="ImageUploadCaption"><?= isset($props['default_caption']) ? $props['default_caption'] : '' ?></textarea>
+			<textarea id="ImageUploadCaption"><?= isset($props['default_caption']) ? $props['default_caption'] :
+				'' ?></textarea>
 
 			<a class="backbutton" href="#" style="display:none" ><?= wfMsg('wmu-back') ?></a>
 			<input type="submit" value="<?= wfMsg('wmu-insert2') ?>" onclick="WMU_insertImage(event, 'details');" />
@@ -107,7 +108,8 @@ global $wgExtensionsPath, $wgBlankImgUrl;
 	} else {
 	?>
 	<h3><?= wfMsg('wmu-caption') ?></h3>
-	<input id="ImageUploadReplaceDefault" type="checkbox"> <?= wfMsg('wmu-replace-default-caption') ?>
+	<input id="ImageUploadReplaceDefault" type="checkbox"> <label for="ImageUploadReplaceDefault"><?= wfMsg
+		('wmu-replace-default-caption') ?></label>
 	<?
 	}
 	?>

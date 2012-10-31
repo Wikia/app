@@ -161,7 +161,7 @@ abstract class WikiaDispatchableObject extends WikiaObject {
 	public function getResponse() {
 		return $this->response;
 	}
-	
+
 	// Magic setting of template variables so we don't have to do $this->response->setVal
 	// NOTE: This is the opposite behavior of the Oasis Module
 	// In a module, a public member variable goes to the template
@@ -201,4 +201,24 @@ abstract class WikiaDispatchableObject extends WikiaObject {
 			$this->response->unsetVal($propertyName);
 		}		
 	}
+
+	/**
+	 * get URL that would be used from Ajax Nirvana call to access this method
+	 * primary intended use is for Purging those URLs in Varnish
+	 * @return String url
+	 */
+	public static function getUrlToAjaxMethod($method, $format = 'html', $params = array() ) {
+		$app = F::app();
+		$basePath = $app->wf->ExpandUrl( $app->wg->Server . $app->wg->ScriptPath . '/wikia.php' );
+		$baseParams = array(
+			'controller' => get_called_class(),
+			'method' => $method,
+			'format' => $format,
+		);
+		$params = array_merge( $baseParams, $params );
+		return $app->wf->AppendQuery( $basePath, $params );
+
+	}
+
+
 }

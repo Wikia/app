@@ -1,3 +1,4 @@
+/*global UserLoginFacebook: true, UserLoginAjaxForm: true, WikiBuilderCfg: true */
 var WikiBuilder = {
 	registerInit: false,
 	wntimer: false,
@@ -12,90 +13,100 @@ var WikiBuilder = {
 	domainAjax: false,
 	init: function() {
 		// pre-cache
-		WikiBuilder.wb = $('#CreateNewWiki');
-		WikiBuilder.steps = $('#CreateNewWiki .steps .step');
-		WikiBuilder.loginEntities = $('#Auth .login-msg, #Auth .signup');
-		WikiBuilder.signupEntities = $('#Auth .signup-msg, #Auth .login');
-		WikiBuilder.wikiName = $('#NameWiki input[name=wiki-name]');
-		WikiBuilder.wikiNameStatus = $('#NameWiki .wiki-name-status-icon');
-		WikiBuilder.wikiNameError = $('#NameWiki .wiki-name-error');
-		WikiBuilder.wikiDomain = $('#NameWiki input[name=wiki-domain]');
-		WikiBuilder.wikiDomainError = $('#NameWiki .wiki-domain-error');
-		WikiBuilder.wikiDomainStatus = $('#NameWiki .domain-status-icon');
-		WikiBuilder.wikiDomainCountry = $('#NameWiki .domain-country');
-		WikiBuilder.nameWikiSubmitError = $('#NameWiki .submit-error');
-		WikiBuilder.wikiLanguage = $('#NameWiki select[name=wiki-language]');
-		WikiBuilder.wikiCategory = $('#DescWiki select[name=wiki-category]');
-		WikiBuilder.descWikiSubmitError = $('#DescWiki .submit-error');
-		WikiBuilder.nextButtons = WikiBuilder.wb.find('nav .next');
-		WikiBuilder.finishSpinner = $('#CreateNewWiki .finish-status');
-		WikiBuilder.descWikiNext = $('#DescWiki nav .next');
+		this.wb = $('#CreateNewWiki');
+		this.steps = $('#CreateNewWiki .steps .step');
+		this.loginEntities = $('#Auth .login-msg, #Auth .signup');
+		this.signupEntities = $('#Auth .signup-msg, #Auth .login');
+		this.wikiName = $('#NameWiki input[name=wiki-name]');
+		this.wikiNameStatus = $('#NameWiki .wiki-name-status-icon');
+		this.wikiNameError = $('#NameWiki .wiki-name-error');
+		this.wikiDomain = $('#NameWiki input[name=wiki-domain]');
+		this.wikiDomainError = $('#NameWiki .wiki-domain-error');
+		this.wikiDomainStatus = $('#NameWiki .domain-status-icon');
+		this.wikiDomainCountry = $('#NameWiki .domain-country');
+		this.nameWikiSubmitError = $('#NameWiki .submit-error');
+		this.wikiLanguage = $('#NameWiki select[name=wiki-language]');
+		this.wikiCategory = $('#DescWiki select[name=wiki-category]');
+		this.descWikiSubmitError = $('#DescWiki .submit-error');
+		this.nextButtons = this.wb.find('nav .next');
+		this.finishSpinner = $('#CreateNewWiki .finish-status');
+		this.descWikiNext = $('#DescWiki nav .next');
+
+		var that = this;
 
 		$('#SignupRedirect').submit(function(e){
-			var queryString = 'wikiName=' + WikiBuilder.wikiName.val() +
-				'&wikiDomain=' + WikiBuilder.wikiDomain.val() +
-				'&uselang=' + WikiBuilder.wikiLanguage.find('option:selected').val();
+			var queryString = 'wikiName=' + that.wikiName.val() +
+				'&wikiDomain=' + that.wikiDomain.val() +
+				'&uselang=' + that.wikiLanguage.find('option:selected').val();
 			$().log(queryString);
 			$('#SignupRedirect input[name=returnto]').val(queryString);
 		});
 
 		// Name Wiki event handlers
+		this.checkNextButtonStep1();
+
 		$('#NameWiki input.next').click(function() {
-			if (!WikiBuilder.wikiDomain.val() || !WikiBuilder.wikiName.val() || $('#NameWiki .wiki-name-error').html() || $('#NameWiki .wiki-domain-error').html() || WikiBuilder.nameAjax || WikiBuilder.domainAjax) {
-				WikiBuilder.nameWikiSubmitError.show().html(WikiBuilderCfg['name-wiki-submit-error']).delay(3000).fadeOut();
+			if (that.isNameWikiSubmitError()) {
+				that.nameWikiSubmitError.
+					show().
+					html(WikiBuilderCfg['name-wiki-submit-error']).
+					delay(3000).
+					fadeOut();
 			} else {
-				WikiBuilder.saveState({
-					wikiName: WikiBuilder.wikiName.val(),
-					wikiDomain: WikiBuilder.wikiDomain.val(),
-					wikiLang: WikiBuilder.wikiLanguage.find('option:selected').val()
+				that.saveState({
+					wikiName: that.wikiName.val(),
+					wikiDomain: that.wikiDomain.val(),
+					wikiLang: that.wikiLanguage.find('option:selected').val()
 				});
 				if ($('#Auth').length) {
 					//AjaxLogin.init($('#AjaxLoginLoginForm form:first'));
-					WikiBuilder.handleRegister();
+					that.handleRegister();
 				} else if($('#UserAuth').length) {
 					// Init user auth
-					WikiBuilder.userAuth = {
+					that.userAuth = {
 						el:$('#UserAuth'),
 						loginAjaxForm: new UserLoginAjaxForm('#UserAuth .UserLoginModal', {
 							ajaxLogin: true,
 							callback: function(json) {
-								WikiBuilder.transition('UserAuth', true, '+');
+								that.transition('UserAuth', true, '+');
 							}
 						})
 					};
 					UserLoginFacebook.callbacks['login-success'] = function() {
-						WikiBuilder.transition('UserAuth', true, '+');
+						that.transition('UserAuth', true, '+');
 						UserLoginFacebook.closeSignupModal();
-					}
+					};
 				}
 				if(onFBloaded) {  // FB hax
 					onFBloaded();
 				}
-				WikiBuilder.transition('NameWiki', true, '+');
+				that.transition('NameWiki', true, '+');
 			}
 		});
-		WikiBuilder.wikiDomain.keyup(function() {
-			WikiBuilder.domainAjax = true;
-			if(WikiBuilder.wdtimer) {
-				clearTimeout(WikiBuilder.wdtimer);
+		this.wikiDomain.keyup(function() {
+			that.domainAjax = true;
+			that.checkNextButtonStep1();
+			if(that.wdtimer) {
+				clearTimeout(that.wdtimer);
 			}
-			WikiBuilder.wdtimer = setTimeout(WikiBuilder.checkDomain, 500);
+			that.wdtimer = setTimeout($.proxy(that.checkDomain,that), 500);
 		});
-		WikiBuilder.wikiName.keyup(function() {
-			WikiBuilder.nameAjax = true;
+		this.wikiName.keyup(function() {
+			that.nameAjax = true;
+			that.checkNextButtonStep1();
 			var name = $(this).val();
 			name = $.trim(name.replace(/[^a-zA-Z0-9 ]+/g, '')).replace(/ +/g, '-');
-			WikiBuilder.wikiDomain.val(name.toLowerCase()).trigger('keyup');
-			if(WikiBuilder.wntimer) {
-				clearTimeout(WikiBuilder.wntimer);
+			that.wikiDomain.val(name.toLowerCase()).trigger('keyup');
+			if(that.wntimer) {
+				clearTimeout(that.wntimer);
 			}
-			WikiBuilder.wntimer = setTimeout(WikiBuilder.checkWikiName, 500);
+			that.wntimer = setTimeout($.proxy(that.checkWikiName, that), 500);
 		});
-		WikiBuilder.wikiLanguage.bind('change', function () {
-			WikiBuilder.checkWikiName();
-			WikiBuilder.checkDomain();
-			var selected = WikiBuilder.wikiLanguage.find('option:selected').val();
-			WikiBuilder.wikiDomainCountry.html((selected && selected !== 'en') ? selected + '.' : '');
+		this.wikiLanguage.bind('change', function () {
+			that.checkWikiName();
+			that.checkDomain();
+			var selected = that.wikiLanguage.find('option:selected').val();
+			that.wikiDomainCountry.html((selected && selected !== 'en') ? selected + '.' : '');
 		});
 		$('#ChangeLang').click(function(e) {
 			e.preventDefault();
@@ -105,34 +116,34 @@ var WikiBuilder = {
 		$('#CreateNewWiki nav .back').bind('click', function() {
 			var id = $(this).closest('.step').attr('id');
 			if (id === 'DescWiki') {
-				WikiBuilder.transition('DescWiki', false, '-');
+				that.transition('DescWiki', false, '-');
 				if ($('#Auth').length) {
 					//AjaxLogin.init($('#AjaxLoginLoginForm form:first'));
-					WikiBuilder.handleRegister();
+					that.handleRegister();
 				} else if($('#UserAuth').length) {
-					WikiBuilder.userAuth.loginAjaxForm.retrieveLoginToken({clearCache:true});
-					WikiBuilder.userAuth.loginAjaxForm.submitButton.removeAttr('disabled');
+					that.userAuth.loginAjaxForm.retrieveLoginToken({clearCache:true});
+					that.userAuth.loginAjaxForm.submitButton.removeAttr('disabled');
 				}
 			} else {
-				WikiBuilder.transition(id, false, '-');
+				that.transition(id, false, '-');
 			}
 		});
 
 		// Login/Signup event handlers
 		$('#Auth .signup-msg a').click(function() {
-			WikiBuilder.handleRegister();
+			that.handleRegister();
 		});
 		$('#Auth .login-msg a').click(function() {
-			WikiBuilder.handleLogin();
+			that.handleLogin();
 		});
 		$('#Auth nav input.login').click(function(e) {
 			AjaxLogin.form.submit();
 		});
 
 		// Description event handlers
-		WikiBuilder.descWikiNext.click(function() {
-			WikiBuilder.descWikiNext.attr('disabled', true);
-			var val = WikiBuilder.wikiCategory.find('option:selected').val();
+		this.descWikiNext.click(function() {
+			that.descWikiNext.attr('disabled', true);
+			var val = that.wikiCategory.find('option:selected').val();
 			if(val) {
 				$.nirvana.sendRequest({
 					controller: 'CreateNewWiki',
@@ -144,70 +155,70 @@ var WikiBuilder = {
 						// check phalanx result
 						if (res.msgHeader) {
 							$.showModal(res.msgHeader, res.msgBody);
-							WikiBuilder.descWikiNext.attr('disabled', false);
+							that.descWikiNext.attr('disabled', false);
 						} else {
 							// call create wiki ajax
-							WikiBuilder.saveState({
+							that.saveState({
 								wikiDescription: ($('#Description').val() == WikiBuilderCfg.descriptionplaceholder ? '' : $('#Description').val())
 							}, function() {
-								WikiBuilder.createWiki();
-								WikiBuilder.transition('DescWiki', true, '+');
+								that.createWiki();
+								that.transition('DescWiki', true, '+');
 							});
 						}
 					}
 				});
 			} else {
-				WikiBuilder.descWikiSubmitError.show().html(WikiBuilderCfg['desc-wiki-submit-error']).delay(3000).fadeOut();
-				WikiBuilder.descWikiNext.attr('disabled', false);
+				that.descWikiSubmitError.show().html(WikiBuilderCfg['desc-wiki-submit-error']).delay(3000).fadeOut();
+				that.descWikiNext.attr('disabled', false);
 			}
 		});
 		$('#Description').placeholder();
 
 		// Theme event handlers
 		$('#ThemeWiki nav .next').click(function() {
-			WikiBuilder.saveState(ThemeDesigner.settings, function(){
+			that.saveState(ThemeDesigner.settings, function(){
 				if(WikiBuilderCfg.skipwikiaplus) {
-					WikiBuilder.gotoMainPage();
+					that.gotoMainPage();
 				} else {
-					WikiBuilder.transition('ThemeWiki', true, '+');
+					that.transition('ThemeWiki', true, '+');
 				}
 			});
 		});
 
 		// Set current step on page load
 		if(WikiBuilderCfg['currentstep']) {
-			var pane = $('#' + WikiBuilderCfg['currentstep']);
-			WikiBuilder.wb.width(pane.width());
-			WikiBuilder.steps.hide();
+			var pane = $('#' + WikiBuilderCfg.currentstep);
+			this.wb.width(pane.width());
+			this.steps.hide();
 			pane.show();
 		}
 
 		// onload stuff
-		WikiBuilder.wikiName.focus();
-		if(WikiBuilder.wikiName.val() || WikiBuilder.wikiDomain.val()) {
-			WikiBuilder.checkDomain();
-			WikiBuilder.checkName();
+		this.wikiName.focus();
+		if(this.wikiName.val() || this.wikiDomain.val()) {
+			this.checkDomain();
+			this.checkWikiName();
 		}
 	},
 
 	requestKeys: function() {
-		WikiBuilder.keys = WikiBuilderCfg['cnw-keys'];
+		this.keys = WikiBuilderCfg['cnw-keys'];
 	},
 
 	solveKeys: function() {
 		var v = 0,
 			i;
-		for(i = 0; i < WikiBuilder.keys.length; i++) {
+		for(i = 0; i < this.keys.length; i++) {
 			v *= (i % 5) + 1;
-			v += WikiBuilder.keys[i];
+			v += this.keys[i];
 		}
-		WikiBuilder.answer = v;
+		this.answer = v;
 	},
 
 	handleRegister: function() {
 		AjaxLogin.showRegister();
 		$('#wpRemember').attr('checked', 'true').hide().siblings().hide();
-		if(!WikiBuilder.registerInit) {
+		if(!this.registerInit) {
 			$.getScript(window.wgScript + '?action=ajax&rs=getRegisterJS&uselang=' + window.wgUserLanguage + '&cb=' + wgMWrevId + '-' + wgStyleVersion,
 				function() {
 					$('#Auth nav input.signup').click(function(){
@@ -216,23 +227,25 @@ var WikiBuilder = {
 			});
 		}
 		$('#Auth, #CreateNewWiki').width(700);
-		WikiBuilder.signupEntities.hide();
-		WikiBuilder.loginEntities.show();
+		this.signupEntities.hide();
+		this.loginEntities.show();
 	},
 
 	handleLogin: function() {
 		AjaxLogin.showLogin();
 		AjaxLogin.init($('#AjaxLoginLoginForm form:first'));
 		$('#Auth, #CreateNewWiki').width(600);
-		WikiBuilder.signupEntities.show();
-		WikiBuilder.loginEntities.hide();
+		this.signupEntities.show();
+		this.loginEntities.hide();
 	},
 
 	checkWikiName: function(e) {
-		var name = WikiBuilder.wikiName.val();
-		var lang = WikiBuilder.wikiLanguage.val();
+		var that = this,
+			name = this.wikiName.val(),
+			lang = this.wikiLanguage.val();
 		if(name) {
-			WikiBuilder.nameAjax = true;
+			this.nameAjax = true;
+			this.checkNextButtonStep1();
 
 			$.nirvana.sendRequest({
 				controller: 'CreateNewWiki',
@@ -245,28 +258,31 @@ var WikiBuilder = {
 					if(res) {
 						var response = res['res'];
 						if(response) {
-							WikiBuilder.wikiNameError.html(response);
+							that.wikiNameError.html(response);
 						} else {
-							WikiBuilder.wikiNameError.html('');
+							that.wikiNameError.html('');
 						}
-						WikiBuilder.nameAjax = false;
+						that.nameAjax = false;
+						that.checkNextButtonStep1();
 					}
 				}
 			});
 		} else {
-			WikiBuilder.showIcon(WikiBuilder.wikiNameStatus, '');
-			WikiBuilder.wikiNameError.html('');
+			this.showIcon(this.wikiNameStatus, '');
+			this.wikiNameError.html('');
 		}
 	},
 
 	checkDomain: function(e) {
-		var wd = WikiBuilder.wikiDomain.val();
-		var lang = WikiBuilder.wikiLanguage.val();
+		var that = this,
+			wd = this.wikiDomain.val(),
+			lang = this.wikiLanguage.val();
 		if(wd) {
 			wd = wd.toLowerCase();
-			WikiBuilder.wikiDomain.val(wd);
-			WikiBuilder.showIcon(WikiBuilder.wikiDomainStatus, 'spinner');
-			WikiBuilder.domainAjax = true;
+			this.wikiDomain.val(wd);
+			this.showIcon(this.wikiDomainStatus, 'spinner');
+			this.domainAjax = true;
+			this.checkNextButtonStep1();
 			$.nirvana.sendRequest({
 				controller: 'CreateNewWiki',
 				method: 'CheckDomain',
@@ -279,21 +295,47 @@ var WikiBuilder = {
 					if(res) {
 						var response = res['res'];
 						if(response) {
-							WikiBuilder.wikiDomainError.html(response);
-							WikiBuilder.showIcon(WikiBuilder.wikiDomainStatus, '');
+							that.wikiDomainError.html(response);
+							that.showIcon(that.wikiDomainStatus, '');
 						} else {
-							WikiBuilder.wikiDomainError.html('');
-							WikiBuilder.showIcon(WikiBuilder.wikiDomainStatus, 'ok');
+							that.wikiDomainError.html('');
+							that.showIcon(that.wikiDomainStatus, 'ok');
 						}
-						WikiBuilder.domainAjax = false;
+						that.domainAjax = false;
+						that.checkNextButtonStep1();
 					}
 				}
 			});
 		} else {
-			WikiBuilder.wikiDomainError.html('');
-			WikiBuilder.showIcon(WikiBuilder.wikiDomainStatus, '');
+			this.wikiDomainError.html('');
+			this.showIcon(this.wikiDomainStatus, '');
 		}
+	},
 
+	isNameWikiSubmitError: function() {
+		return !this.wikiDomain.val() ||
+			!this.wikiName.val() ||
+			$('#NameWiki .wiki-name-error').html() ||
+			$('#NameWiki .wiki-domain-error').html() ||
+			this.nameAjax ||
+			this.domainAjax;
+	},
+
+	/**
+	 * Update the state of "Next" button on step #1.
+	 * It depends on two AJAX validation requests which are performed in parallel.
+	 *
+	 * This method is used solely by automated tests (enabled class is added when test can proceed to the next step)
+	 */
+	checkNextButtonStep1: function() {
+		var nextButton = this.nextButtons.eq(0);
+
+		if (this.isNameWikiSubmitError()) {
+			nextButton.removeClass('enabled');
+		}
+		else {
+			nextButton.addClass('enabled');
+		}
 	},
 
 	showIcon: function (el, art) {
@@ -314,7 +356,7 @@ var WikiBuilder = {
 	transition: function (from, next, dot) {
 		var f = $('#' + from);
 		var t = (next ? f.next() : f.prev());
-		var wb = WikiBuilder.wb;
+		var wb = this.wb;
 		var fh = f.height();
 		var fw = f.width();
 		var op = t.css('position');
@@ -353,53 +395,63 @@ var WikiBuilder = {
 	},
 
 	gotoMainPage: function() {
-		WikiBuilder.nextButtons.attr('disabled', true);
-		if(WikiBuilder.createStatus && WikiBuilder.createStatus == 'ok' && WikiBuilder.finishCreateUrl) {
-			location.href = WikiBuilder.finishCreateUrl;
-		} else if(WikiBuilder.createStatus && WikiBuilder.createStatus == 'backenderror') {
-			$.showModal(WikiBuilder.createStatusMessage, WikiBuilder.createStatusMessage);
-		} else if (WikiBuilder.retryGoto < 300) {
-			if(!WikiBuilder.finishSpinner.data('spinning')) {
-				WikiBuilder.finishSpinner.data('spinning', 'true');
-				WikiBuilder.showIcon(WikiBuilder.finishSpinner, 'spinner');
+		this.nextButtons.attr('disabled', true);
+		if(this.createStatus && this.createStatus == 'ok' && this.finishCreateUrl) {
+			location.href = this.finishCreateUrl;
+		} else if(this.createStatus && this.createStatus == 'backenderror') {
+			$.showModal(this.createStatusMessage, this.createStatusMessage);
+		} else if (this.retryGoto < 300) {
+			if(!this.finishSpinner.data('spinning')) {
+				this.finishSpinner.data('spinning', 'true');
+				this.showIcon(this.finishSpinner, 'spinner');
 			}
-			WikiBuilder.retryGoto++;
-			setTimeout(WikiBuilder.gotoMainPage, 200);
+			this.retryGoto++;
+			setTimeout(this.gotoMainPage, 200);
 		}
 	},
 
 	createWiki: function() {
-		WikiBuilder.requestKeys();
-		WikiBuilder.solveKeys();
+
+		var that = this,
+			throbberWrapper = $('#ThemeWiki .next-controls');
+
+		this.requestKeys();
+		this.solveKeys();
+
+		throbberWrapper.startThrobbing();
+
 		$.nirvana.sendRequest({
 			controller: 'CreateNewWiki',
 			method: 'CreateWiki',
 			data: {
 				data: {
-					wName: WikiBuilder.wikiName.val(),
-					wDomain: WikiBuilder.wikiDomain.val(),
-					wLanguage: WikiBuilder.wikiLanguage.find('option:selected').val(),
-					wCategory: WikiBuilder.wikiCategory.find('option:selected').val(),
-					wAnswer: Math.floor(WikiBuilder.answer)
+					wName: that.wikiName.val(),
+					wDomain: that.wikiDomain.val(),
+					wLanguage: that.wikiLanguage.find('option:selected').val(),
+					wCategory: that.wikiCategory.find('option:selected').val(),
+					wAnswer: Math.floor(that.answer)
 				}
 			},
 			callback: function(res) {
-				WikiBuilder.createStatus = res.status;
-				WikiBuilder.createStatusMessage = res.statusMsg;
-				if(WikiBuilder.createStatus && WikiBuilder.createStatus == 'ok') {
-					WikiBuilder.cityId = res.cityId;
-					WikiBuilder.finishCreateUrl = (res.finishCreateUrl.indexOf('.com/wiki/') < 0 ? res.finishCreateUrl.replace('.com/','.com/wiki/') : res.finishCreateUrl);
+				that.createStatus = res.status;
+				that.createStatusMessage = res.statusMsg;
+
+				throbberWrapper.stopThrobbing();
+
+				if(that.createStatus && that.createStatus == 'ok') {
+					that.cityId = res.cityId;
+					that.finishCreateUrl = (res.finishCreateUrl.indexOf('.com/wiki/') < 0 ? res.finishCreateUrl.replace('.com/','.com/wiki/') : res.finishCreateUrl);
 
 					// unblock "Next" button (BugId:51519)
 					$('#ThemeWiki .next-controls input').
 						attr('disabled', false).
 						addClass('enabled'); // for QA with love
 				} else {
-					$.showModal(res.statusHeader, WikiBuilder.createStatusMessage);
+					$.showModal(res.statusHeader, that.createStatusMessage);
 				}
 			},
 			onErrorCallback: function() {
-				WikiBuilder.generateAjaxErrorMsg();
+				that.generateAjaxErrorMsg();
 			}
 		});
 	},

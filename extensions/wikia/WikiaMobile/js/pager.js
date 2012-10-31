@@ -23,9 +23,10 @@ define('pager', function () {
 		})(),
 		setTransform = function(prev, current, next, x){
 			var translate = 'translate3d(' + x + 'px,0,0)';
+
 			current.style.webkitTransform = translate;
-			if(next) {next.style.webkitTransform = translate;}
-			if(prev) {prev.style.webkitTransform = translate;}
+			if (prev) { prev.style.webkitTransform = (x > 0) ? translate : ''; }
+			if (next) { next.style.webkitTransform = (x < 0) ? translate : ''; }
 		},
 		wrap = function(pages){
 			var i = pages.length-1;
@@ -113,12 +114,10 @@ define('pager', function () {
 
 					if(prev = current.previousElementSibling) {
 						prev.className = 'swiperPage prev';
-						//prev.innerHTML = ''
 						if(elem = prev.previousElementSibling) container.removeChild(elem);
 					}
 					if(next = current.nextElementSibling){
 						next.className = 'swiperPage next';
-						//next.innerHTML = '';
 						if(elem = next.nextElementSibling) container.removeChild(elem);
 					}
 				}
@@ -171,8 +170,10 @@ define('pager', function () {
 				setTransform(prev, current, next, toX);
 			},
 			onTouchStart = function(ev){
-				if(isFunction ? !checkCancel() : true)
-					pos = ev.touches[0].pageX;
+				if(ev.touches.length === 1) {
+					if(isFunction ? !checkCancel() : true)
+						pos = ev.touches[0].pageX;
+				}
 			},
 			onTouchMove = function(ev){
 				ev.preventDefault();
@@ -180,9 +181,11 @@ define('pager', function () {
 					setTransform(prev, current, next, ev.touches[0].pageX - pos);
 			},
 			onTouchEnd = function(ev){
-				var delta = ev.changedTouches[0].pageX - pos;
-				if((isFunction ? !checkCancel() : true) && delta !== 0)
-					goTo(delta);
+				if(ev.touches.length === 0) {
+					var delta = ev.changedTouches[0].pageX - pos;
+					if((isFunction ? !checkCancel() : true) && delta !== 0)
+						goTo(delta);
+				}
 			},
 			cleanup = function(onePage){
 				eventsNotAdded = true;

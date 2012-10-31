@@ -1,7 +1,9 @@
 var LatestActivity = {
+	wikiaRecentActivityContainer: null,
 	init: function() {
-		if ( !$('#WikiaRecentActivity').empty() ) {
-			LatestActivity.lazyLoadContent();
+		this.wikiaRecentActivityContainer = $('#WikiaRecentActivity');
+		if( this.wikiaRecentActivityContainer.exists() ) {
+			this.lazyLoadContent();
 		}
 	},
 
@@ -11,19 +13,18 @@ var LatestActivity = {
 			method: 'Index',
 			format: 'html',
 			type: 'GET',
-			callback: function(html) {
+			callback: $.proxy(function(html) {
 				// IE would lose styling otherwise
 				if ($.browser.msie) {
-					$('#WikiaRecentActivity').empty().append($(html).children());
+					this.wikiaRecentActivityContainer.empty().append($(html).children());
+				} else {
+					this.wikiaRecentActivityContainer.replaceWith(html);
 				}
-				else {
-					$('#WikiaRecentActivity').replaceWith(html);
-				}
-			}
+			}, this)
 		});
 	}
 };
 
 $(window).load(function() {
-    LatestActivity.init();
+	LatestActivity.init();
 });

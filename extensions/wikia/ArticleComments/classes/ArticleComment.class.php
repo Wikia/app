@@ -342,6 +342,7 @@ class ArticleComment {
 			if (defined('NS_BLOG_ARTICLE') && $title->getNamespace() == NS_BLOG_ARTICLE) {
 				$props = BlogArticle::getProps($title->getArticleID());
 				$commentingAllowed = isset($props['commenting']) ? (bool)$props['commenting'] : true;
+				$canDelete = $canDelete || $wgUser->isAllowed( 'blog-comments-delete' );
 			}
 
 			if ( ( count( $parts['partsStripped'] ) == 1 ) && $commentingAllowed && !ArticleCommentInit::isFbConnectionNeeded() ) {
@@ -859,24 +860,18 @@ class ArticleComment {
 
 		// Purge squid proxy URLs for ajax loaded content if we are lazy loading
 		if ( !empty( $wgArticleCommentsLoadOnDemand ) ) {
-			$app = F::app();
-
 			$urls = array();
 			$pages = $commentList->getCountPages();
-			$basePath = $app->wf->ExpandUrl( $app->wg->Server . $app->wg->ScriptPath . '/wikia.php' );
-			$params = array(
-				'controller' => 'ArticleCommentsController',
-				'method' => 'Content',
-				'format' => 'html',
-				'articleId' => $title->getArticleId(),
-			);
+			$articleId = $title->getArticleId();
 
 			for ( $page = 1; $page <= $pages; $page++ ) {
 				$params[ 'page' ] = $page;
-				$urls[] = $app->wf->AppendQuery( $basePath, $params );
+				$urls[] = ArticleCommentsController::getUrlToAjaxMethod(
+					'Content',
+					'html',
+					array( 'articleId' => $articleId, 'page' => $page, 'skin' => "true" )
+				);
 			}
-
-			$params[ 'skin' ] = true;
 
 			$squidUpdate = new SquidUpdate( $urls );
 			$squidUpdate->doUpdate();

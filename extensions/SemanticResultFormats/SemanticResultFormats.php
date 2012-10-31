@@ -27,7 +27,7 @@ if ( version_compare( $wgVersion, '1.16', '<' ) ) {
 
 // Show a warning if Semantic MediaWiki is not loaded.
 if ( ! defined( 'SMW_VERSION' ) ) {
-	die( '<b>Error:</b> You need to have <a href="http://semantic-mediawiki.org/wiki/Semantic_MediaWiki">Semantic MediaWiki</a> installed in order to use <a href="https://www.mediawiki.org/wiki/Extension:Semantic Result Formats">Semantic Result Formats</a>.<br />' );
+	die( '<b>Error:</b> You need to have <a href="http://semantic-mediawiki.org/wiki/Semantic_MediaWiki">Semantic MediaWiki</a> installed in order to use <a href="http://www.mediawiki.org/wiki/Extension:Semantic Result Formats">Semantic Result Formats</a>.<br />' );
 }
 
 if ( version_compare( SMW_VERSION, '1.6.2 alpha', '<' ) ) {

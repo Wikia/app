@@ -524,6 +524,14 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 		return $this->host;
 	}
 	
+	/**
+	 * Returns the array of results
+	 * @return array
+	 */
+	public function getResults() {
+		return $this->results;
+	}
+	
 	/*
 	 * Done to return results in json format
 	 * Can be removed after upgrade to 5.4 and specify serialized Json data on WikiaSearchResult

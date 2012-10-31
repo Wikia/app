@@ -238,20 +238,22 @@ class WikiService extends WikiaModel {
 			$dbname = WikiFactory::IDtoDB( $wikiId );
 			if ( !empty($dbname) ) {
 				$db = $this->wf->GetDB( DB_SLAVE, array(), $dbname );
-
-				$row = $db->selectRow(
-					array( 'image' ), 
-					array( 'count(*) cnt' ),
-					array( "img_media_type in ('".MEDIATYPE_BITMAP."', '".MEDIATYPE_DRAWING."')" ),
-					__METHOD__
-				);
-
-				if ( $row ) {
-					$totalImages = intval( $row->cnt );
-				}
-
-				$this->wg->Memc->set( $memKey, $totalImages, 60*60*24 );
+			} else {
+				$db = $this->wf->GetDB( DB_SLAVE );
 			}
+
+			$row = $db->selectRow(
+				array( 'image' ),
+				array( 'count(*) cnt' ),
+				array( "img_media_type in ('".MEDIATYPE_BITMAP."', '".MEDIATYPE_DRAWING."')" ),
+				__METHOD__
+			);
+
+			if ( $row ) {
+				$totalImages = intval( $row->cnt );
+			}
+
+			$this->wg->Memc->set( $memKey, $totalImages, 60*60*24 );
 		}
 
 		$this->wf->ProfileOut( __METHOD__ );

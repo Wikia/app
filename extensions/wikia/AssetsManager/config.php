@@ -57,7 +57,7 @@ $config['adengine2_js'] = array(
 		// core
 		'//extensions/wikia/AdEngine/js/Krux.js',
 		'//extensions/wikia/AdEngine/js/SlotTweaker.js',
-		'//extensions/wikia/AdEngine/js/LazyQueue.js',
+		'//resources/wikia/modules/lazyqueue.js',
 		'//extensions/wikia/AdEngine/js/ExpiringStorage.js',
 		'//extensions/wikia/AdEngine/js/ScriptWriter.js',
 		'//extensions/wikia/AdEngine/js/AdEngine2.js',
@@ -126,6 +126,7 @@ $config['oasis_noads_extensions_js'] = array(
 		'//extensions/wikia/UserLogin/js/UserLogin.js',
 		'//extensions/wikia/AdEngine/js/Krux.run.js', // Needs to load after Krux.js, jQuery and AdEngine2.run.js
 		'//extensions/wikia/WikiaBar/js/WikiaBar.js', // WikiaBar is enabled sitewide
+		'//extensions/wikia/Chat2/js/ChatEntryPoint.js', // Chat is enabled sitewide
 	)
 );
 

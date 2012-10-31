@@ -345,9 +345,11 @@ function WMU_getFirstFree( gallery, box ) {
 }
 
 function WMU_loadMainFromView() {
-	if (UserLogin.isForceLogIn()) {
+	if (wgUserName == null) {
+		UserLogin.rteForceLogin();
 		return;
 	}
+	
 	var callback = function(data) {
 		// first, check if this is a special case for anonymous disabled...
 		if( data.wmu_init_login ) {
@@ -984,7 +986,14 @@ function WMU_insertImage(e, type) {
 	params.push('type='+type);
 	params.push('mwname='+$G('ImageUploadMWname').value);
 	params.push('tempid='+$G('ImageUploadTempid').value);
-	params.push('update_caption='+$G('ImageUploadReplaceDefault').value);
+
+	var captionUpdateInput = $('#ImageUploadReplaceDefault');
+	if (captionUpdateInput.is(':hidden')) {
+		params.push('update_caption=' + captionUpdateInput.val());
+	} else {
+		var isCaptionUpdate = (captionUpdateInput.is(':checked')) ? 'on' : '';
+		params.push('update_caption=' + isCaptionUpdate );
+	}
 
 	if(type == 'overwrite') {
 		params.push('name='+ encodeURIComponent( $G('ImageUploadExistingName').value ) );
