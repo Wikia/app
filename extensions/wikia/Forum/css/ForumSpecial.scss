@@ -1,6 +1,8 @@
 @import 'skins/oasis/css/core/color';
 @import 'skins/oasis/css/mixins/clearfix';
 
+@import 'extensions/wikia/Wall/css/BreadCrumbs';
+
 .Forum {
 	h3 {
 		margin: 10px 0;
@@ -27,6 +29,7 @@
 	
 	.admin-link {
 		float: right;
+		margin: 5px 0;
 	}
 
 	.board {
@@ -38,8 +41,9 @@
 	}
 
 	.boards {
+		clear: both;
 		list-style: none;
-		margin: 0;
+		margin: 10px 0;
 	}
 	
 	.description {

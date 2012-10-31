@@ -6,9 +6,12 @@
 .ForumBoardEdit {
 	header {
 		@include clearfix;
-		margin-top: 10px;
+		margin-top: 5px;
 		.create-new-board-button {
 			float: right;
+		}
+		.BreadCrumbs {
+			border: 0;
 		}
 	}
 	.board {
