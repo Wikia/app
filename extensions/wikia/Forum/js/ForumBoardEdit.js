@@ -122,6 +122,7 @@
 		var boardId = boardItem.data('id');
 		$.when(makeBoardModal('removeBoardModal', {boardId: boardId}, 'removeBoard', function() {
 			return {
+				boardId: boardId,
 				destinationBoardId: currentDialog.find('.destinationBoardId option:selected').val()
 			};
 		})).done(function(dialog) {
