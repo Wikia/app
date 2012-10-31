@@ -52,8 +52,8 @@
 (function (window) {
 	'use strict';
 
-	var lazyQueue = function () {
-		var makeQueue = function (queue, callback) {
+	function lazyQueue() {
+		function makeQueue(queue, callback) {
 			if (typeof callback !== 'function') {
 				throw new Error('LazyQueue used with callback not being a function');
 			} else if (queue instanceof Array) {
@@ -76,9 +76,7 @@
 	};
 
 	if (window.define && window.define.amd) {
-		window.define('lazyqueue', function () {
-			return lazyQueue();
-		});
+		window.define('lazyqueue', lazyQueue);
 	} else {
 		window.Wikia = window.Wikia || {};
 		window.Wikia.LazyQueue = lazyQueue();
