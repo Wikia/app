@@ -136,7 +136,7 @@ class VideoEmbedToolController extends WikiaController {
 			$singleVideoData['wid'] =  $result->getCityId();
 			$singleVideoData['title'] = $result->getTitle();
 
-			if( isset( $excludedVideos[ $singleVideoData['title'] ] ) ) {
+			if( empty($singleVideoData['title']) || isset( $excludedVideos[ $singleVideoData['title'] ] ) ) {
 				// don't suggest this video
 				continue;
 			}
