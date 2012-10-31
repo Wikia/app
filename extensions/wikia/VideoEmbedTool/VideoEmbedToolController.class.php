@@ -15,8 +15,8 @@ class VideoEmbedToolController extends WikiaController {
 	 *   articleId 	 - the suggestions should be related to this article
 	 */
 	public function getSuggestedVideos() {
-		if ( $this->wg->vetEnableSuggestions != true ) {
-			// Return empty set if wgVetEnableSuggestions is not enabled
+		if ( $this->wg->VETEnableSuggestions != true ) {
+			// Return empty set if wgVETEnableSuggestions is not enabled
 			$result = array(
 				'caption' => $this->wf->Msg( 'vet-suggestions' ),
 				'totalItemCount' => 0,
