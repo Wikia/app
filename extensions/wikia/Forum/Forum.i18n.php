@@ -18,6 +18,7 @@ $messages['en'] = array(
 	'forum-header-active-threads' => '<em>{{FORMATNUM:$1}}</em><span>{{PLURAL:$1|Active<br> Discussion|Active<br> Discussions}}</span>',
 
 	/* Forum:Special (Index) */
+	'forum-specialpage-heading' => '{{SITENAME}} Forum',
 	'forum-specialpage-blurb-heading' => 'Welcome to {{SITENAME}} Forum!',
 	'forum-specialpage-blurb' => 'This is an early demo of Wikia\'s new Forum feature. If you\'ve got ideas or questions about the feature, please start a thread on the [[Board:General Discussion|General Discussion board]]. Have fun!',
 	'forum-specialpage-board-threads' => '{{formatnum:$1}} {{PLURAL:$1|thread|threads}}',
@@ -143,6 +144,7 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
 	'forum-specialpage-oldforum-link' => 'Old forum Archives',
 	
 	/* board admin page messages */
+	'forum-admin-page-heading' => '{{SITENAME}} Board Admin',
 	'forum-admin-create-new-board-label' => 'Create New Board',
 	'forum-admin-create-new-board-modal-heading' => 'Create a new board',
 	'forum-admin-create-new-board-title' => 'Board Title',
@@ -241,6 +243,8 @@ $messages['qqq'] = array(
 	'forum-autoboard-title-5' => 'Title for default board.The length of this message needs to be between 4 and 40.',
 	'forum-autoboard-body-5' => 'Description for default board.The length of this message needs to be between 4 and 255.',
 
+	'forum-admin-page-heading' => 'Page label and heading for board admin page',
+	'forum-admin-create-new-board-label' => 'Call to action on creating new board',
 	'forum-admin-create-new-board-modal-heading' => 'Modal heading for create a new board dialog',
 	'forum-admin-create-new-board-title' => 'Form input label for board title',
 	'forum-admin-create-new-board-description' => 'Form input label board description',
