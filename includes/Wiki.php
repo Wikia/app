@@ -630,7 +630,6 @@ class MediaWiki {
 				$nsKey = $ns;
 			} else {
 				$nsKey = $wgContLang->lc( $nsKey );
-				// Uses main
 			}
 			if ( $nsKey == '' ) {
 				$nsKey = 'main';
