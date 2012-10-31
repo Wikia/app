@@ -806,8 +806,13 @@ class MessageCache {
 			// Wikia change - begin - @author: wladek
 			// optimization for cases when transform()/"parsemag" is used
 			// only for processing {{plural:}} or {{formatnum:}}
+			$firstTime = true;
 			$message = preg_replace_callback("/(?<!{){{(plural|formatnum):((}[^}]|[^}])+)}}/i",
-				function($matches) use ($parser) {
+				function($matches) use ($firstTime,$popts,$parser) {
+					if ( $firstTime ) {
+						$firstTime = false;
+						$parser->startExternalParse(new Title('DoesntExistXYZ'),$popts,Parser::OT_PREPROCESS,true);
+					}
 					$funcName = strtolower($matches[1]);
 					$args = explode('|',$matches[2]);
 					array_unshift($args,$parser);
