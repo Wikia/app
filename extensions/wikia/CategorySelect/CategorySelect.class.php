@@ -7,6 +7,7 @@
  * Provides an interface for managing categories in article without editing whole article
  *
  * @author Maciej Błaszkowski (Marooned) <marooned@wikia-inc.com>
+ * @author Kyle Florence <kflorence@wikia-inc.com>
  */
 
 class CategorySelect {
@@ -61,35 +62,46 @@ class CategorySelect {
 	}
 
 	/**
-	 * Change format of categories metadata
-	 *
-	 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
+	 * Change format of categories metadata. Supports:
+	 * array -> json, array -> wikitext, json -> wikitext, json -> array
 	 */
-	public function changeFormat($categories, $from, $to) {
-		if ($from == 'json') {
-			$categories = $categories == '' ? array() : json_decode($categories, true);
+	public function changeFormat( $categories, $from, $to ) {
+		if ( $from == 'json' ) {
+			$categories = $categories == '' ? array() : json_decode( $categories, true );
 		}
 
-		if ($to == 'wiki') {
-			$categoriesStr = '';
-			if ( is_array($categories) && !empty($categories) ) {
-				foreach($categories as $c) {
-					if (empty($c)) continue;	//skip "null" keys created by JS
-					$catTmp = "\n[[" . $c['namespace'] . ':' . $c['category'] . ($c['sortkey'] == '' ? '' : ('|' . $c['sortkey'])) . ']]';
-					if ($c['outerTag'] != '') {
-						$catTmp = '<' . $c['outerTag'] . '>' . $catTmp . '</' . $c['outerTag'] . '>';
+		if ( $to == 'wikitext' ) {
+			$changed = '';
+			if ( !empty( $categories ) && is_array( $categories ) ) {
+				foreach( $categories as $category ) {
+					if ( empty( $category ) ) {
+						continue;
 					}
-					$categoriesStr .= $catTmp;
+
+					$str = "\n[[" . $category[ 'namespace' ] . ':' . $category[ 'name' ];
+
+					if ( !empty( $category[ 'sortkey' ] ) ) {
+						$str .= '|' . $category[ 'sortkey' ];
+					}
+
+					$str .= ']]';
+
+					if ( !empty( $category[ 'outerTag' ] ) ) {
+						$str = '<' . $category[ 'outerTag' ] . '>' . $str . '</' . $category[ 'outerTag' ] . '>';
+					}
+
+					$changed .= $str;
 				}
 			}
-			return $categoriesStr;
-		} elseif ($to == 'array') {
-			return $categories;
+
+		} else if ( $to == 'array' ) {
+			$changed = $categories;
+
+		} else if ( $to == 'json' ) {
+			$changed = json_encode( $categories );
 		}
 
-		if ($from == 'array' && $to == 'json') {
-			return json_encode($categories);
-		}
+		return $changed;
 	}
 
 	static private function parseNode(&$root, $outerTag = '') {
@@ -207,7 +219,7 @@ class CategorySelect {
 							}
 
 							$childOut['text'] = $newNode;
-							$childOut['categories'][] = array('namespace' => $catNamespace, 'category' => $catName, 'outerTag' => $outerTag, 'sortkey' => $sortKey);
+							$childOut['categories'][] = array('namespace' => $catNamespace, 'name' => $catName, 'outerTag' => $outerTag, 'sortkey' => $sortKey);
 						}
 						if (count($childOut['categories'])) {
 							$out = array_merge($out, $childOut['categories']);
@@ -264,7 +276,7 @@ class CategorySelect {
 			$catName = $match[2];
 			$sortKey = '';
 		}
-		self::$categories[] = array('namespace' => $match[1], 'category' => $catName, 'outerTag' => self::$outerTag, 'sortkey' => $sortKey);
+		self::$categories[] = array('namespace' => $match[1], 'name' => $catName, 'outerTag' => self::$outerTag, 'sortkey' => $sortKey);
 		return '';
 	}
 }

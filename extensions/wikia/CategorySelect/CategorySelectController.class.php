@@ -4,6 +4,7 @@
  * CategorySelect controller.
  *
  * @author Maciej Błaszkowski (Marooned) <marooned@wikia-inc.com>
+ * @author Inez Korczyński
  * @author Kyle Florence <kflorence@wikia-inc.com>
  */
 
@@ -16,34 +17,37 @@ class CategorySelectController extends WikiaController {
 	 * Returns all of the categories on the current wiki.
 	 */
 	public function getCategories() {
-		wfProfileIn(__METHOD__);
+		wfProfileIn( __METHOD__ );
 
-		$key = wfMemcKey('CategorySelectGetCategories', self::VERSION);
-		$data = $this->wg->Memc->get($key);
+		$key = wfMemcKey( 'CategorySelectGetCategories', self::VERSION );
+		$data = $this->wg->Memc->get( $key );
 
-		if (empty($data)) {
-			$dbr = wfGetDB(DB_SLAVE);
+		if ( empty( $data ) ) {
+			$dbr = wfGetDB( DB_SLAVE );
 			$res = $dbr->select(
 				'category',
 				'cat_title',
-				array('cat_pages > 0'),
+				array( 'cat_pages > 0' ),
 				__METHOD__,
-				array('ORDER BY' => 'cat_pages DESC',
-				      'LIMIT'    => '10000'));
+				array(
+					'ORDER BY' => 'cat_pages DESC',
+					'LIMIT' => '10000'
+				)
+			);
 
 			$data = array();
-			while($row = $dbr->fetchObject($res)) {
-				$data[] = str_replace('_', ' ', $row->cat_title);
+			while( $row = $dbr->fetchObject( $res ) ) {
+				$data[] = str_replace( '_', ' ', $row->cat_title );
 			}
 
 			// TODO: clear the cache when new category is added
-			$this->wg->Memc->set($key, $data, self::CACHE_TTL_MEMCACHE);
+			$this->wg->Memc->set( $key, $data, self::CACHE_TTL_MEMCACHE );
 		}
 
 		$this->response->setData( $data );
 		$this->response->setFormat( 'json' );
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 	}
 
 	/**
@@ -75,7 +79,7 @@ class CategorySelectController extends WikiaController {
 
 		Wikia::setVar('EditFromViewMode', 'CategorySelect');
 
-		$categories = CategorySelect::changeFormat($categories, 'json', 'wiki');
+		$categories = CategorySelect::changeFormat($categories, 'json', 'wikitext');
 		if ($categories == '') {
 			$result['info'] = 'Nothing to add.';
 		} else {
@@ -174,7 +178,7 @@ class CategorySelectController extends WikiaController {
 
 		$categories = '';
 		if ( !empty( $this->wg->CategorySelectMetaData ) ) {
-			$categories = CategorySelect::changeFormat( $this->wg->CategorySelectMetaData[ 'categories' ], 'array', 'wiki' );
+			$categories = CategorySelect::changeFormat( $this->wg->CategorySelectMetaData[ 'categories' ], 'array', 'wikitext' );
 		}
 
 		$this->response->setVal( 'categories', $categories );

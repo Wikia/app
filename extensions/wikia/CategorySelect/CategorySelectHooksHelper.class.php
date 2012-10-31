@@ -67,11 +67,13 @@ class CategorySelectHooksHelper {
 		global $wgCategorySelectCategoriesInWikitext, $wgContLang, $wgEnableAnswers;
 
 		if ($request->wasPosted()) {
-			$sourceType = $request->getVal('wpCategorySelectSourceType');
-			if ($sourceType == 'wiki') {
-				$categories = "\n" . trim($editPage->safeUnicodeInput($request, 'csWikitext'));
-			} else {	//json
-				$categories = $editPage->safeUnicodeInput($request, 'wpCategorySelectWikitext');
+			$sourceType = $request->getVal('CategorySelectCategoriesType');
+			$categories = $editPage->safeUnicodeInput($request, 'CategorySelectCategories');
+
+			if ($sourceType == 'wikitext') {
+				$categories = "\n" . trim( $categories );
+
+			} else if ($sourceType == 'json') {
 				$categories = CategorySelect::changeFormat($categories, 'json', 'wiki');
 				if (trim($categories) == '') {
 					$categories = '';
@@ -82,7 +84,9 @@ class CategorySelectHooksHelper {
 				$data = CategorySelect::SelectCategoryAPIgetData($editPage->textbox1 . $categories);
 				$editPage->textbox1 = $data['wikitext'];
 				$categories = CategorySelect::changeFormat($data['categories'], 'array', 'wiki');
-			} else {	//saving article
+
+			// Saving article
+			} else {
 				if ( !empty( $wgEnableAnswers ) ) {
 					// don't add categories if the page is a redirect
 					$magicWords = $wgContLang->getMagicWords();
@@ -99,6 +103,7 @@ class CategorySelectHooksHelper {
 				// rtrim needed because of BugId:11238
 				$editPage->textbox1 .= rtrim($categories);
 			}
+
 			$wgCategorySelectCategoriesInWikitext = $categories;
 		}
 		return true;
