@@ -365,7 +365,7 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 	 * @return boolean
 	 */
 	public function hasResults() {
-		return empty( $this->results );
+		return ! empty( $this->results );
 	}
 
 	/**
