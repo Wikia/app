@@ -178,11 +178,14 @@ class Linker {
 		$dummy = new DummyLinker; // dummy linker instance for bc on the hooks
 
 		$ret = null;
+		wfProfileIn(__METHOD__.'-hooks');
 		if ( !wfRunHooks( 'LinkBegin', array( $dummy, $target, &$html,
 		&$customAttribs, &$query, &$options, &$ret ) ) ) {
+			wfProfileOut(__METHOD__.'-hooks');
 			wfProfileOut( __METHOD__ );
 			return $ret;
 		}
+		wfProfileOut(__METHOD__.'-hooks');
 
 		# Normalize the Title if it's a special page
 		$target = self::normaliseSpecialPage( $target );
@@ -219,8 +222,12 @@ class Linker {
 		}
 
 		$ret = null;
+		wfProfileIn(__METHOD__.'-hooks');
 		if ( wfRunHooks( 'LinkEnd', array( $dummy, $target, $options, &$html, &$attribs, &$ret ) ) ) {
+			wfProfileOut(__METHOD__.'-hooks');
 			$ret = Html::rawElement( 'a', $attribs, $html );
+		} else {
+			wfProfileOut(__METHOD__.'-hooks');
 		}
 
 		wfProfileOut( __METHOD__ );

@@ -124,6 +124,7 @@
 		};
 	}
 
+	//UMD
 	// this module needs to be also available via a namespace for access early in the process
 	if (!context.Wikia) {
 		context.Wikia = {};
@@ -132,9 +133,8 @@
 	//namespace
 	context.Wikia.Cookies = cookies();
 
-	if (typeof define != 'undefined' && define.amd) {
-		//AMD
-		define('cookies', function () {
+	if (context.define && context.define.amd) {
+		context.define('cookies', function () {
 			return context.Wikia.Cookies;
 		});
 	}

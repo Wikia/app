@@ -31,6 +31,12 @@
 			return typeof fn === 'function' && fn.apply(scope,arguments);
 		};
 	};
+	function err( msg ) {
+		alert(msg);
+	}
+	function log( msg ) {
+		window.console && console.log && console.log(msg);
+	}
 
 	/* UTILS */
 	var EventEmitter;
@@ -127,6 +133,9 @@
 			this.selfTime = 0;
 		},
 		refreshTotalTime: function( recursive ) {
+			if ( this.selfTime < 0 ) {
+				this.selfTime = 0;
+			}
 			var totalTime = this.selfTime, i;
 			for (i=0;i<this.children.length;i++) {
 				if ( recursive !== false ) {
@@ -156,12 +165,12 @@
 		},
 		endNode: function( id, time, mem ) {
 			if ( this.stack.length < 2 ) {
-				log('trace error');
+				err('trace error');
 				return;
 			}
 			var node = this.stack.pop();
 			if ( !node || node.id !== id ) {
-				log('trace error');
+				err('trace error');
 				return;
 			}
 
@@ -206,7 +215,7 @@
 		}
 	});
 
-	var TreeCut, TreeSelect;
+	var TreeCut, TreeSelect, TreeNullify;
 
 	TreeCut = createClass(Object,{
 		constructor: function( condition ) {
@@ -251,15 +260,60 @@
 		}
 	});
 
+	TreeNullify = createClass(Object,{
+		constructor: function( condition ) {
+			this.condition = condition;
+		},
+		exec: function( node, inBulk ) {
+			if ( !inBulk ) {
+				node = node.clone();
+			}
+			node.traverse(proxy(this.enter,this));
+			if ( !inBulk ) {
+				node.refreshTotalTime();
+			}
+			return node;
+		},
+		enter: function( node ) {
+			if ( this.condition.call(node,node) ) {
+				node.selfTime = 0;
+			}
+		}
+	});
 
 	var TraceData, MethodIndexBuilder;
 
 	TraceData = createClass(EventEmitter,{
 		tree: false,
 		contexts: [],
+		profileTime: 0,
+		profileCount: 0,
+		getProfileTimeEnter: function( node ) {
+			if ( node.id == 'Profiler::noop' ) {
+				this.profileTime += node.selfTime;
+				this.profileCount++;
+			}
+		},
+		adjustProfileTimeEnter: function( node ) {
+			if ( node.id == 'Profiler::noop' ) {
+				node.selfTime = 0;
+			} else {
+				node.selfTime -= this.profileTime;
+				node.parent && (node.parent.selfTime -= this.profileTime);
+			}
+		},
+		fixProfileTime: function() {
+			this.tree.traverse(proxy(this.getProfileTimeEnter,this))
+			if ( this.profileCount > 0 ) {
+				this.profileTime /= this.profileCount;
+				this.tree.traverse(proxy(this.adjustProfileTimeEnter,this))
+				this.tree.refreshTotalTime();
+			}
+		},
 		initFromDom: function() {
 			var builder = new TraceTreeBuilder;
 			this.tree = builder.fromDom();
+			this.fixProfileTime();
 			this.contexts.push(['All',this.tree]);
 		}
 	});
@@ -387,6 +441,7 @@
 						(100.0*method.totalTime/total).toFixed(2),
 						method.calls,
 						'<a href="#" class="method-cut" data-method-id="'+method.id+'">[X]</a> '
+							+ '<a href="#" class="method-nullify" data-method-id="'+method.id+'">[N]</a> '
 							+ '<a href="#" class="method-call" data-method-id="'+method.id+'">'+method.id+'</a>',
 					];
 				html += '<tr>';
@@ -431,7 +486,6 @@
 				dialogClass: 'ui-traceviewer',
 				close: this.proxy(this.modalClosed)
 			};
-			console.log(opts);
 			el.dialog(opts);
 			el.closest('.ui-dialog').css({height:w.height()-20});
 
@@ -469,6 +523,7 @@
 			this.contextList.on('click','a.context-link', this.proxy(this.contextLinkClicked));
 			this.methods.on('click','a.method-call', this.proxy(this.methodClicked));
 			this.methods.on('click','a.method-cut', this.proxy(this.methodCutClicked));
+			this.methods.on('click','a.method-nullify', this.proxy(this.methodNullifyClicked));
 			this.methods.on('click','a.sort-key', this.proxy(this.sortClicked));
 		},
 		show: function() {
@@ -513,6 +568,13 @@
 				methodName = target.data('method-id');
 			if ( methodName ) {
 				this.ctrl.cutDrilldown(this.currentContext,methodName);
+			}
+		},
+		methodNullifyClicked: function( ev ) {
+			var target = $(ev.currentTarget),
+				methodName = target.data('method-id');
+			if ( methodName ) {
+				this.ctrl.nullifyDrilldown(this.currentContext,methodName);
 			}
 		},
 		modalClosed: function() {
@@ -569,24 +631,22 @@
 			this.dialog.show();
 		},
 		selectDrilldown: function( contextId, methodName ) {
-			var contexts = this.data.contexts.slice(0,contextId+1),
-				last = this.data.contexts[contextId],
-				selectCondition = function( node ) {
-					return node.id == methodName;
-				},
-				treeSelect = new TreeSelect(selectCondition);
-			contexts.push([methodName,treeSelect.exec(last[1])]);
-			this.data.contexts = contexts;
-			this.dialog.loadContext(contextId+1);
+			this.drilldown(contextId,TreeSelect,'',methodName);
 		},
 		cutDrilldown: function( contextId, methodName ) {
+			this.drilldown(contextId,TreeCut,'[X] ',methodName);
+		},
+		nullifyDrilldown: function( contextId, methodName ) {
+			this.drilldown(contextId,TreeNullify,'[N] ',methodName);
+		},
+		drilldown: function( contextId, type, captionPrefix, methodName ) {
 			var contexts = this.data.contexts.slice(0,contextId+1),
 				last = this.data.contexts[contextId],
-				selectCondition = function( node ) {
+				condition = function( node ) {
 					return node.id == methodName;
 				},
-				treeCut = new TreeCut(selectCondition);
-			contexts.push(['[X] '+methodName,treeCut.exec(last[1])]);
+				treeMutator = new type(condition);
+			contexts.push([captionPrefix+methodName,treeMutator.exec(last[1])]);
 			this.data.contexts = contexts;
 			this.dialog.loadContext(contextId+1);
 		},
