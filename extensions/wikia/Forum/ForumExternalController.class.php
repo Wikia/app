@@ -156,7 +156,7 @@ class ForumExternalController extends WallExternalController {
 
 		if($destinationBoardId == '') {
 			$this->status = 'error';
-			$this->errormsg = wfMsg('forum-board-destination-validation-missing');
+			$this->errormsg = '';
 			$this->errorfield = 'destinationBoardId';				
 			return true;
 		}
@@ -166,7 +166,7 @@ class ForumExternalController extends WallExternalController {
 
 		if(empty($boardId) || empty($destinationBoardId)) {
 			$this->status = 'error';
-			$this->errormsg = wfMsg('forum-board-id-validation-missing');
+			$this->errormsg = '';
 			return true;
 		}
 		
@@ -174,7 +174,7 @@ class ForumExternalController extends WallExternalController {
 		if( $boardTitle != $board->getTitle()->getText() ) {
 			$this->status = 'error';
 			$this->errorfield = 'boardTitle';
-			$this->errormsg = wfMsg('forum-board-title-validation-compare-error');
+			$this->errormsg = '';
 			return true;
 		}
 		
@@ -191,7 +191,7 @@ class ForumExternalController extends WallExternalController {
 		$this->errormsg = '';
 	}
 	
-	public function validateBoardData($boardTitle, $boardDescription) {
+	private function validateBoardData($boardTitle, $boardDescription) {
 		$this->status = 'error';
 		$this->errorfield = '';
 		$this->errormsg = '';
