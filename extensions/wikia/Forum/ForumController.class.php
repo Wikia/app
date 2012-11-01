@@ -29,17 +29,34 @@ class ForumController extends WallBaseController {
 
 		if($this->wall->getTitle()->getNamespace() == NS_WIKIA_FORUM_TOPIC_BOARD) {
 			$board = F::build( 'ForumBoard', array( 0 ), 'newFromId' );
+
+			if(empty($board)) {
+				$this->forward('Forum', 'boardError');
+				return true;
+			}
+		
 			$this->response->setVal( 'activeThreads', $board->getTotalActiveThreads($this->wall->getRelatedPageId()) );
 			$this->response->setVal( 'isTopicPage', true );
 		} else {
 			$boardId = $this->wall->getId();
 			$board = F::build( 'ForumBoard', array( $boardId ), 'newFromId' );
+			
+			
+			if(empty($board)) {
+				$this->forward('Forum', 'boardError');
+				return true;
+			}
+			
 			$this->response->setVal( 'activeThreads', $board->getTotalActiveThreads() );
 			$this->response->setVal( 'isTopicPage', false );			
 		}
 		
 		$this->app->wg->SuppressPageHeader = true;
 		$this->app->wg->Out->setPageTitle( wfMsg('forum-board-title', $this->wg->title->getBaseText()) );
+	}
+
+	public function boardError() {
+		
 	}
 
 	public function getWallForIndexPage($title) {

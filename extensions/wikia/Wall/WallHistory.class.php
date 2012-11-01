@@ -30,9 +30,25 @@ class WallHistory extends WikiaModel {
 		$this->getDatawareDB(DB_MASTER)->delete(
 			'wall_history', 
 			array(
+				'wiki_id' => $this->wikiId,
 				'page_id ='.((int) $postUserId).' OR parent_page_id = '.((int) $postUserId)
 			)
 		);
+	}
+	
+	public function moveThread( $from, $to ) {
+		$db = wfGetDB( DB_MASTER );
+
+		$db->update(
+			'comments_index',
+			array( 'parent_page_id' => $to ),
+			array( 
+				'parent_page_id' => $from 
+			),
+			__METHOD__
+		);
+		
+		$db->commit();
 	}
 	
 	private function addNewOrEdit($action, $feed, $user) {
