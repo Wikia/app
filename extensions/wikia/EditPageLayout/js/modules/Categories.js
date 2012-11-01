@@ -15,27 +15,23 @@ WikiaEditor.modules.Categories = $.createClass( WikiaEditor.modules.base,{
 	},
 
 	afterAttach: function() {
-		var $categorySelect = $( '#CategorySelect' ),
-			$categorySelectMetadata = $( '#CategorySelectCategories' );
+		var $categories = $( '#categories' ),
+			$categorySelect = $( '#CategorySelect' );
 
-		$categorySelect.categorySelect({
-			categories: JSON.parse( $categorySelectMetadata.val() )
-		});
-
+		// Move #CategorySelect to the right rail
 		this.el.replaceWith( $categorySelect );
 
-		//this.editor.on( 'mode', this.proxy( this.onModeChanged ) );
+		// Update the reference
+		this.el = $categorySelect;
 
-		// start in source mode when using MW editor (useeditor=mediawiki)
-		/*if ( this.editor.mode === 'source' ) {
-			this.onModeChanged();
-		}*/
-	},
+		// Initialize categorySelect
+		$categorySelect.categorySelect({
+			categories: JSON.parse( $categories.val() )
 
-	onModeChanged: function() {
-		if (this.editor.mode != window.csMode /* CategorySelect module mode */) {
-			window.toggleCodeView();
-		}
+		// Update categories metadata when categories change
+		}).on( 'update', function( event, data ) {
+			$categories.val( JSON.stringify( data.categories ) );
+		});
 	}
 });
 

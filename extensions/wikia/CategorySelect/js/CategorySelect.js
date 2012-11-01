@@ -1,77 +1,17 @@
-(function( window, $ ) {
+(function( window, $, undefined ) {
 
 var defaultNamespace = window.wgCategorySelect.defaultNamespace,
 	defaultSortKey = window.wgCategorySelect.defaultSortKey || window.wgTitle,
-	namespace = 'CategorySelect',
-	rCategoryName = new RegExp( '\\[\\[(?:' + window.wgCategorySelect.categoryNamespaces + '):([^\\]]+)]]', 'i' ),
-	rSortKey = /(?:[^|]+)\|(.+)$/i,
+	namespace = 'categorySelect',
+	rCategory = new RegExp( '\\[\\[' +
+		// Category namespace
+		'(' + window.wgCategorySelect.validNamespaces + '):' +
+		// Category name
+		'([^\\]|]+)' +
+		// Category sortKey (optional)
+		'\\|?([^\\]]+)?' +
+	']]', 'i' ),
 	Wikia = window.Wikia || {};
-
-/**
- * Find a category in an array of categories by index or name.
- *
- * @param	{Number|String} category
- *			The name of a category or the index of a category in the array.
- * @param	{Array} categories
- *			An array of categories to search in.
- * @returns	{Number}
- *			The index of the category that was found, or -1 if the category could
- *			not be found.
- */
-function findCategory( category, categories ) {
-	var i, obj,
-		found = -1,
-		length = categories.length;
-
-	if ( length ) {
-
-		// Search for category by index
-		if ( categories[ category ] ) {
-			found = parseInt( category );
-
-		// Search for category by value
-		} else {
-			for ( i = 0; i < length; i++ ) {
-				if ( ( obj = categories[ i ] ) && obj.category == category ) {
-					found = i;
-					break;
-				}
-			}
-		}
-	}
-
-	return found;
-}
-
-/**
- * Normalizes a category object.
- *
- * @param	{Object|String} category
- *			The name of a category or an object with category properties.
- * @returns {Object}
- *			The normalized category.
- */
-function normalizeCategory( category ) {
-	var normalized = {
-		namespace: defaultNamespace,
-		sortKey: defaultSortKey
-	};
-
-	if ( typeof category == 'object' ) {
-		normalized = $.extend( normalized, category );
-
-	} else {
-		normalized.name = category;
-	}
-
-	// Extract name from category -- [[Category:abc]] -> name: "abc"
-	normalized.name = normalized.name.replace( rCategoryName, '$1' );
-
-	// Extract sortkey from category -- "abc|def" -> name: "abc", sortkey: "def"
-	normalized.sortKey = normalized.name.replace( rSortKey, '$1' );
-
-	return normalized;
-}
 
 /**
  * CategorySelect
@@ -82,7 +22,7 @@ function normalizeCategory( category ) {
  */
 var CategorySelect = function( categories ) {
 	this.categories = categories || [];
-}
+};
 
 /**
  * Adds a category to the categories array.
@@ -90,21 +30,10 @@ var CategorySelect = function( categories ) {
  * @param	{String|Object} category
  *			The category to add.
  * @returns	{Number}
- *			The length of the categories array
+ *			The index of the added category.
  */
 CategorySelect.prototype.addCategory = function( category ) {
-	var length;
-
-	category = normalizeCategory( category );
-
-	if ( category.name != undefined && category.name != '' ) {
-		length = this.categories.push( category );
-
-	} else {
-		length = this.categories.length;
-	}
-
-	return length;
+	return ( this.categories.push( this.makeCategory( category ) ) - 1 );
 };
 
 /**
@@ -115,18 +44,13 @@ CategorySelect.prototype.addCategory = function( category ) {
  *			category in the array.
  * @param	{String} value
  *			The new value of the category.
- * @returns	{Number}
- *			The index of the category that was edited, or -1 if the category could
- *			not be found.
  */
 CategorySelect.prototype.editCategory = function( category, value ) {
-	var index = findCategory( category, this.categories );
+	var index = this.indexOf( category );
 
 	if ( index >= 0 ) {
-		this.categories[ index ] = normalizeCategory( value );
+		this.categories[ index ] = this.makeCategory( value );
 	}
-
-	return index;
 };
 
 /**
@@ -139,14 +63,72 @@ CategorySelect.prototype.editCategory = function( category, value ) {
  *			The category object or undefined if the category could not be found.
  */
 CategorySelect.prototype.getCategory = function( category ) {
-	var obj,
-		index = findCategory( category, this.categories );
+	var index = this.indexOf( category );
 
 	if ( index >= 0 ) {
-		obj = this.categories[ index ];
+		return this.categories[ index ];
+	}
+};
+
+/**
+ * Gets the index of a category from the category array.
+ *
+ * @param	{String} category
+ *			The name of a category.
+ * @returns	{Number}
+ *			The index of the category, or -1 if the category was not be found.
+ */
+CategorySelect.prototype.indexOf = function( category ) {
+	var i, length, obj,
+		index = parseInt( category ) || -1;
+
+	if ( ( index < 0 || this.categories[ index ] == undefined ) ) {
+		for ( i = 0, length = this.categories.length; i < length; i++ ) {
+			if ( ( obj = categories[ i ] ) && obj.name == category ) {
+				index = i;
+				break;
+			}
+		}
 	}
 
-	return obj;
+	return index;
+};
+
+/**
+ * Generates a normalized category object.
+ *
+ * @param	{Object|String} category
+ *			The name of a category or an object with category properties.
+ * @returns {Object}
+ *			The normalized category.
+ */
+CategorySelect.prototype.makeCategory = function( category ) {
+	var pieces,
+		base = {
+			namespace: defaultNamespace,
+			sortKey: defaultSortKey
+		};
+
+	if ( typeof category == 'object' ) {
+		category = $.extend( base, category );
+
+	} else {
+		base.name = category;
+		category = base;
+	}
+
+	// Extract more information if name is a wikilink
+	if ( ( pieces = rCategory.exec( category.name ) ) ) {
+		category.namespace = pieces[ 1 ];
+		category.name = pieces[ 2 ];
+
+		// SortKey is optional
+		if ( pieces[ 3 ] != undefined ) {
+			category.sortKey = pieces[ 3 ];
+		}
+	}
+
+	return category;
 };
 
 /**
@@ -155,19 +137,16 @@ CategorySelect.prototype.getCategory = function( category ) {
  * @param	{Number|String} category
  *			The index of a category in the categories array or a string matching a
  *			category in the array.
- * @returns {String|Undefined}
+ * @returns {String}
  *			The value of the category that was removed, or undefined if the category
  *			could not be found.
  */
 CategorySelect.prototype.removeCategory = function( category ) {
-	var value,
-		index = findCategory( category, this.categories );
+	var index = this.indexOf( category );
 
 	if ( index >= 0 ) {
-		value = this.categories.splice( index, 1 );
+		return this.categories.splice( index, 1 );
 	}
-
-	return value;
 };
 
 /**
@@ -192,14 +171,14 @@ $.fn.categorySelect = (function() {
 	}
 
 	return function( options ) {
-		options = $.extend( {}, options, $.fn.categorySelect.options );
+		options = $.extend( {}, $.fn.categorySelect.options, options );
 
 		return this.each(function() {
 			var $element = $( this ),
 				categorySelect = new CategorySelect( options.categories );
 
 			function addCategory( event, ui ) {
-				var index,
+				var category, index,
 					$input = $( this ),
 					value = ui != undefined ? ui.item.value : $input.val();
 
@@ -213,8 +192,16 @@ $.fn.categorySelect = (function() {
 
 					// Make sure value isn't empty
 					if ( value != undefined && value != '' ) {
-						addCategoryListItem( categorySelect.addCategory( value ), value );
-						notifyListeners( event, categorySelect.getCategory( index ) );
+						category = categorySelect.makeCategory( value ),
+						index = categorySelect.addCategory( category );
+
+						addCategoryListItem( index, category );
+
+						notifyListeners( 'update', {
+							index: index,
+							category: category,
+							categories: categorySelect.categories
+						});
 
 						// Clear out the input
 						$input.val( '' );
@@ -222,20 +209,17 @@ $.fn.categorySelect = (function() {
 				}
 			}
 
-			function addCategoryListItem( index, value ) {
-				$( options.list ).append(
-					$( '<li></li>' ).data( 'categoryIndex', index ).text( value ) );
+			function addCategoryListItem( index, category ) {
+				$( options.list ).append( $( '<li></li>' )
+					.data( 'categoryIndex', index ).text( category.name ) );
 			}
 
 			function editCategory( event ) {
 
 			}
 
-			function notifyListeners( event, data ) {
-				$element.triggerHandler( 'update.' + namespace, {
-					data: data || {},
-					event: event || $.Event
-				});
+			function notifyListeners( eventType, data ) {
+				$element.trigger( eventType + '.' + namespace , data );
 			}
 
 			function removeCategory( event ) {
@@ -266,9 +250,7 @@ $.fn.categorySelect = (function() {
 			$element.on( 'keypress.' + namespace, options.input, addCategory );
 
 			// Build the initial categories list
-			$.each( options.categories, function( index, category ) {
-				addCategoryListItem( index, category.name );
-			});
+			$.each( options.categories, addCategoryListItem );
 		});
 	}
 })();

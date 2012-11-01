@@ -2,6 +2,11 @@
 @import "skins/oasis/css/mixins/border-radius";
 @import "skins/oasis/css/mixins/ellipses";
 
+// Hide until moved to the right rail via JavaScript
+#EditPageMain .CategorySelect {
+	display: none;
+}
+
 .CategorySelect {
 	// TODO: styles go here
 }
