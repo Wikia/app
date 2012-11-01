@@ -11,54 +11,88 @@
  */
 
 class CategorySelect {
-	private static $categories, $maybeCategory, $maybeCategoryBegin, $outerTag, $nodeLevel, $frame, $categoryNamespace, $tagsWhiteList;
+	private static $categories;
+	private static $data;
+	private static $frame;
+	private static $maybeCategory;
+	private static $maybeCategoryBegin;
+	private static $namespaces;
+	private static $nodeLevel;
+	private static $outerTag;
+	private static $tagsWhiteList;
 
-	public static function SelectCategoryAPIgetData($wikitext, $force = false) {
-		global $wgCategorySelectMetaData;
+	public static function getData( $wikitext = '', $force = false ) {
+		wfProfileIn( __METHOD__ );
 
-		//this function is called from different hooks - parse article only once
-		if (!$force && is_array($wgCategorySelectMetaData)) {
-			return $wgCategorySelectMetaData;
+		if ( !$force && is_array( self::$data ) ) {
+			return self::$data;
 		}
 
-		wfProfileIn( __METHOD__ );
-		global $wgParser, $wgTitle, $wgContLang, $wgCategorySelectEnabled;
-		//enable changes in Preprocessor and Parser
-		$wgCategorySelectEnabled = true;
-		//prepare Parser
-		$wgParser->startExternalParse($wgTitle, new ParserOptions, OT_WIKI);
-		//get DOM tree [PPNode_DOM class] as an XML string
-		$xml = $wgParser->preprocessToDom($wikitext)->__toString();
-		//disable changes in Preprocessor and Parser
-		$wgCategorySelectEnabled = false;
-		//add ecnoding information
+		$app = F::app();
+
+		// enable changes in Preprocessor and Parser
+		$app->wg->CategorySelectEnabled = true;
+
+		// prepare Parser
+		$app->wg->Parser->startExternalParse( $app->wg->Title, new ParserOptions, OT_WIKI );
+
+		// get DOM tree [PPNode_DOM class] as an XML string
+		$xml = $app->wg->Parser->preprocessToDom( $wikitext )->__toString();
+
+		// disable changes in Preprocessor and Parser
+		$app->wg->CategorySelectEnabled = false;
+
+		// add ecnoding information
 		$xml = '<?xml version="1.0" encoding="UTF-8"?>' . $xml;
 
 		//init variables
 		self::$nodeLevel = 0;
-		self::$categoryNamespace = 'Category|' . $wgContLang->getNsText(NS_CATEGORY);
+		self::getDefaultNamespaces();
 
 		// we will ignore categories added inside following list of tags (BugId:8208)
-		self::$tagsWhiteList = array_keys($wgParser->mTagHooks);
+		self::$tagsWhiteList = array_keys( $app->wg->Parser->mTagHooks );
 
 		//create XML DOM document from provided XML
 		$dom = new DOMDocument();
-		$dom->loadXML($xml);
+		$dom->loadXML( $xml );
+
 		//get everything under main node
-		$root = $dom->getElementsByTagName('root')->item(0);
+		$root = $dom->getElementsByTagName( 'root' )->item( 0 );
 
-		self::$frame = $wgParser->getPreprocessor()->newFrame();
+		self::$frame = $app->wg->Parser->getPreprocessor()->newFrame();
 
-		$categories = self::parseNode($root);
+		$categories = self::parseNode( $root );
 
-		//make wikitext from DOM tree
-		$modifiedWikitext = self::$frame->expand( $root, PPFrame::NO_TEMPLATES | PPFrame::RECOVER_COMMENTS);
-		//replace markers back to wikitext
-		$modifiedWikitext = $wgParser->mStripState->unstripBoth($modifiedWikitext);
+		// make wikitext from DOM tree
+		$modifiedWikitext = self::$frame->expand( $root, PPFrame::NO_TEMPLATES | PPFrame::RECOVER_COMMENTS );
 
-		$wgCategorySelectMetaData = array('wikitext' => rtrim($modifiedWikitext), 'categories' => $categories);
+		// replace markers back to wikitext
+		$modifiedWikitext = $app->wg->Parser->mStripState->unstripBoth( $modifiedWikitext );
+
+		self::$data = array(
+			'wikitext' => rtrim( $modifiedWikitext ),
+			'categories' => $categories
+		);
+
 		wfProfileOut( __METHOD__ );
-		return $wgCategorySelectMetaData;
+
+		return self::$data;
+	}
+
+	public function getDefaultNamespaces() {
+		if ( !empty( self::$namespaces ) ) {
+			return self::$namespaces;
+		}
+
+		$namespaces = F::app()->wg->ContLang->getNsText( NS_CATEGORY );
+
+		if ( strpos( $namespaces, 'Category' ) === false ) {
+			$namespaces = 'Category|' . $namespaces;
+		}
+
+		self::$namespaces = $namespaces;
+
+		return $namespaces;
 	}
 
 	/**
@@ -184,9 +218,9 @@ class CategorySelect {
 
 							//extract category name and sort key for categories with weird syntax (eg. with templates)
 							$newCategory = trim($newCategory, '[]');
-							preg_match('/^(' . self::$categoryNamespace . '):/i', $newCategory, $m);
+							preg_match('/^(' . self::$namespaces . '):/i', $newCategory, $m);
 							$catNamespace = $m[1];
-							$newCategory = preg_replace('/^(?:' . self::$categoryNamespace . '):/i', '', $newCategory);
+							$newCategory = preg_replace('/^(?:' . self::$namespaces . '):/i', '', $newCategory);
 							$len = strlen($newCategory);
 							$pipePos = 0;
 							$curly = $square = 0;
@@ -243,7 +277,7 @@ class CategorySelect {
 	static private function lookForCategory(&$text, $outerTag) {
 		self::$categories = array();
 		self::$outerTag = $outerTag;
-		$text = preg_replace_callback('/\[\[(' . self::$categoryNamespace . '):([^]]+)]]\n?/i', array('self', 'replaceCallback'), $text);
+		$text = preg_replace_callback('/\[\[(' . self::$namespaces . '):([^]]+)]]\n?/i', array('self', 'replaceCallback'), $text);
 		$result = array('text' => $text, 'categories' => self::$categories);
 
 		$maybeIndex = count(self::$maybeCategory);
@@ -256,7 +290,7 @@ class CategorySelect {
 				self::$maybeCategory[$maybeIndex-1]['beginSibblingsBefore'] = self::$maybeCategoryBegin[self::$nodeLevel];
 			}
 		}
-		if (preg_match('/(\[\[(?:' . self::$categoryNamespace . '):.*$)/i', $text, $match)) {
+		if (preg_match('/(\[\[(?:' . self::$namespaces . '):.*$)/i', $text, $match)) {
 			self::$maybeCategory[$maybeIndex] = array('namespace' => $match[1], 'begin' => $match[1], 'level' => self::$nodeLevel);
 			self::$maybeCategoryBegin[self::$nodeLevel] = 0;
 		}

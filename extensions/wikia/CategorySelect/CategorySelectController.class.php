@@ -51,20 +51,6 @@ class CategorySelectController extends WikiaController {
 	}
 
 	/**
-	 * Parse categories via AJAX from wikitext to JSON
-	 * Return error on not handled syntax
-	 */
-	public function parseCategories( $wikitext ) {
-		$data = CategorySelect::SelectCategoryAPIgetData($wikitext);
-		if (trim($data['wikitext']) == '') {	//all categories handled
-			$result['categories'] = $data['categories'];
-		} else {	//unhandled syntax
-			$result['error'] = wfMsg('categoryselect-unhandled-syntax');
-		}
-		return json_encode($result);
-	}
-
-	/**
 	 * Save categories sent via AJAX into article
 	 */
 	public function saveCategories( $articleId, $categories ) {
@@ -148,15 +134,14 @@ class CategorySelectController extends WikiaController {
 	}
 
 	/**
-	 * The template and data needed for article pages.
-	 * Formerly "CategorySelectGenerateHTMLforView"
+	 * The template used for article pages.
 	 */
 	public function articlePage() {
 		$vars = array();
 		CategorySelectHooksHelper::onMakeGlobalVariablesScript( $vars );
 
 		$data = array(
-			'html' => $this->app->renderView( 'CategorySelect', 'articlePage', array() ),
+			'html' => $this->app->renderView( 'CategorySelect', 'articlePage' ),
 			'vars' => $vars,
 		);
 
@@ -169,29 +154,23 @@ class CategorySelectController extends WikiaController {
 	}
 
 	/**
-	 * The template for edit pages.
-	 * Formerly "CategorySelectGenerateHTMLforEditRaw"
+	 * The template used for edit pages.
 	 */
 	public function editPage() {
 		$this->response->addAsset( 'extensions/wikia/CategorySelect/js/CategorySelect.js' );
 		$this->response->addAsset( 'extensions/wikia/CategorySelect/css/CategorySelect.scss' );
-
-		$categories = '';
-		if ( !empty( $this->wg->CategorySelectMetaData ) ) {
-			$categories = CategorySelect::changeFormat( $this->wg->CategorySelectMetaData[ 'categories' ], 'array', 'wikitext' );
-		}
-
-		$this->response->setVal( 'categories', $categories );
-		$this->response->setVal( 'formId', $this->request->getVal( 'formId', '' ) );
 	}
 
 	/**
-	 * Form field metadata to send along with the edit form submission.
+	 * The hidden form fields that store a JSON representation of the categories
+	 * for an article.
 	 */
 	public function editPageMetaData() {
+		$data = CategorySelect::getData();
 		$categories = '';
-		if ( !empty( $this->wg->CategorySelectMetaData ) ) {
-			$categories = htmlspecialchars( CategorySelect::changeFormat( $this->wg->CategorySelectMetaData[ 'categories' ], 'array', 'json' ) );
+
+		if ( !empty( $data ) ) {
+			$categories = htmlspecialchars( CategorySelect::changeFormat( $data[ 'categories' ], 'array', 'json' ) );
 		}
 
 		$this->response->setVal( 'categories', $categories );

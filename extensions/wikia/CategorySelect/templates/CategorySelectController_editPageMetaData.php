@@ -1,2 +1,1 @@
-<input type="hidden" id="CategorySelectCategories" name="CategorySelectCategories" value="<?= $categories ?>">
-<input type="hidden" id="CategorySelectCategoriesType" name="CategorySelectCategoriesType" value="wikitext">
+<input type="hidden" id="categories" name="categories" value="<?= $categories ?>">
