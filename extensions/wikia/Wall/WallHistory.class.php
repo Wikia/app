@@ -37,18 +37,17 @@ class WallHistory extends WikiaModel {
 	}
 	
 	public function moveThread( $from, $to ) {
-		$db = wfGetDB( DB_MASTER );
-
-		$db->update(
-			'comments_index',
+		$this->getDatawareDB(DB_MASTER)->update(
+			'wall_history',
 			array( 'parent_page_id' => $to ),
 			array( 
+				'wiki_id' => $this->wikiId,
 				'parent_page_id' => $from 
 			),
 			__METHOD__
 		);
 		
-		$db->commit();
+		$this->getDatawareDB(DB_MASTER)->commit();
 	}
 	
 	private function addNewOrEdit($action, $feed, $user) {
