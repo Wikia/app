@@ -1,9 +1,9 @@
 <section id="Forum" class="Forum">
 	<!-- Admin Edit here -->
+	<?= $app->renderPartial('ForumSpecial', 'boards', array('boards' => $boards, 'lastPostByMsg' => $lastPostByMsg, 'isEditMode' => false ) ) ?>
 	<? if($canEdit): ?>
 		<a class="button admin-link" href="<?= $editUrl ?>"><?= $wf->Msg('forum-admin-link-label') ?></a>
 	<? endif; ?>
-	<?= $app->renderPartial('ForumSpecial', 'boards', array('boards' => $boards, 'lastPostByMsg' => $lastPostByMsg, 'isEditMode' => false ) ) ?>
 	<h3>
 		<?= $blurbHeading ?>
 	</h3>

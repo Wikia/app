@@ -11,12 +11,18 @@
 				'name' => 'boardTitle',
 				'isRequired' => true,
 				'label' => wfMsg('forum-admin-create-new-board-title'),
+				'attributes' => array(
+					'maxlength' => '40'
+				),
 			),
 			array(
 				'type' => 'text',
 				'name' => 'boardDescription',
 				'isRequired' => true,
-				'label' => wfMsg('forum-admin-create-new-board-description')
+				'label' => wfMsg('forum-admin-create-new-board-description'),
+				'attributes' => array(
+					'maxlength' => '255'
+				),
 			),
 		),
 		'method' => 'post',

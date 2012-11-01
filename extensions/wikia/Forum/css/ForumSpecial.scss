@@ -29,15 +29,17 @@
 	
 	.admin-link {
 		float: right;
-		margin: 5px 0;
 	}
 
 	.board {
 		@include clearfix;
-		border-top: 1px dotted $color-alternate-text;
+		border-bottom: 1px dotted $color-alternate-text;
 		margin: 0;
 		padding: 12px 0;
 		position: relative;
+		&:first-child {
+			border-top: 1px dotted $color-alternate-text;
+		}
 	}
 
 	.boards {

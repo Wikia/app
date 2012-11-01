@@ -12,13 +12,19 @@
 				'value' => htmlspecialchars($boardTitle),
 				'isRequired' => true,
 				'label' => wfMsg('forum-admin-edit-board-title'),
+				'attributes' => array(
+					'maxlength' => '40'
+				),
 			),
 			array(
 				'type' => 'text',
 				'name' => 'boardDescription',
 				'value' => htmlspecialchars($boardDescription),
 				'isRequired' => true,
-				'label' => wfMsg('forum-admin-edit-board-description')
+				'label' => wfMsg('forum-admin-edit-board-description'),
+				'attributes' => array(
+					'maxlength' => '255'
+				),
 			),
 		),
 		'method' => 'post',

@@ -114,7 +114,7 @@ class ForumExternalController extends WallExternalController {
 		}
 		
 		$newTitle = Title::newFromText($boardTitle, NS_WIKIA_FORUM_BOARD);
-		if( $newTitle->exists() && $newTitle->getText() != $title->getText() ) {
+		if( $newTitle->exists() && $newTitle->getText() != $board->getTitle()->getText() ) {
 			$this->status = 'error';
 			$this->errormsg = wfMsg('forum-board-title-validation-exists');
 			return true;
