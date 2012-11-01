@@ -107,7 +107,21 @@ class Hooks {
 		$new_handlers = (array) self::$handlers;
 		$old_handlers = (array) $wgHooks;
 
+		// Wikia change - begin - @author: wladek
+		// optimized merging handlers list
+		$hook_array = array(
+			$event => empty($new_handlers[$event])
+				? $old_handlers[$event]
+				: array_merge(
+					isset( $new_handlers[$event] ) && is_array( $new_handlers[$event] ) ? $new_handlers[$event] : array(),
+					isset( $old_handlers[$event] ) && is_array( $old_handlers[$event] ) ? $old_handlers[$event] : array()
+				),
+		);
+		/*
+		// original upstream version
 		$hook_array = array_merge( $new_handlers, $old_handlers );
+		*/
+		// Wikia change - end - @author: wladek
 
 		if ( !is_array( $hook_array[$event] ) ) {
 			throw new MWException( "Hooks array for event '$event' is not an array!\n" );
