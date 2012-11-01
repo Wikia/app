@@ -57,10 +57,8 @@ class RTEReverseParser {
 			// fix IE bug with &nbsp; being added add the end of HTML
 			$html = str_replace('<p><br data-rte-bogus="true" />&nbsp;</p>', '', $html);
 
-			// fix html entities b0rken by CK
+			// fix &nbsp; entity b0rken by CK
 			$html = str_replace("\xC2\xA0", '&nbsp;', $html);
-			$html = str_replace("\x26", '&amp;', $html);
-			$html = str_replace("\x27", '&apos;', $html);
 
 			wfProfileOut(__METHOD__.'::preFixes');
 
