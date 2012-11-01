@@ -964,9 +964,7 @@ function VET_insertFinalVideo(e, type) {
 							}
 							if ('-1' == VET_gallery) {
 								if (!VET_inGalleryPosition) {
-									if($G('wpTextbox1')){
-										 $G('wpTextbox1').focus();
-									}
+									VET_getTextarea().focus();
 									insertTags( $G('VideoEmbedTag').value, '', '', VET_getTextarea());
 								} else {
 									VET_insertTag( VET_getTextarea(), $G('VideoEmbedTag').value, VET_inGalleryPosition );
