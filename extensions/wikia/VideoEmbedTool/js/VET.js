@@ -964,11 +964,7 @@ function VET_insertFinalVideo(e, type) {
 							}
 							if ('-1' == VET_gallery) {
 								if (!VET_inGalleryPosition) {
-									if (($('#wpTextbox1') == null) || $('#wpTextbox1').is(':hidden')) {
-										VET_getTextarea().focus();
-									} else {
-										$('#wpTextbox1').focus();
-									}
+									VET_getTextarea().focus();
 									insertTags( $G('VideoEmbedTag').value, '', '', VET_getTextarea());
 								} else {
 									VET_insertTag( VET_getTextarea(), $G('VideoEmbedTag').value, VET_inGalleryPosition );
