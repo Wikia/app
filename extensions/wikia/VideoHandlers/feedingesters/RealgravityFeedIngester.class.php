@@ -3,141 +3,171 @@
 class RealgravityFeedIngester extends VideoFeedIngester {
 	protected static $API_WRAPPER = 'RealgravityApiWrapper';
 	protected static $PROVIDER = 'realgravity';
-	protected static $FEED_URL = 'http://mediacast.realgravity.com/vs/2/videos/$1.json?providers=$2&lookup_columns=tag_list,title&search_term=$3&per_page=$4&page=$5';
-	private static $API_PROVIDER_IDS = array('MACHINIMA'=>240);
+	protected static $FEED_URL = 'http://api.realgravity.com/v1/market_content/search.json?content_source_level=marketplace&video_catalog_id=$1&published_since=$2&page=$3&per_page=$4&api_key=$5';
+	private static $API_MARKETPLACES = array(
+		141 => array(
+			'name' => 'HowCast',
+			'categories' => array( 'HowTo', 'Lifestyle' )
+		),
+		202 => array(
+			'name' => 'Howdini',
+			'categories' => array( 'HowTo', 'Lifestyle' )
+		),
+		503 => array(
+			'name' => 'Skee.TV',
+			'categories' => array( 'Lifestyle' )
+		),
+	);
+
 	const API_PAGE_SIZE = 100;
 
-	public function import($content='', $params=array()) {
-
+	public function import( $content = '', $params = array() ) {
 		wfProfileIn( __METHOD__ );
 
 		$numCreated = 0;
 
-		if (!empty($params['keyphrasesCategories'])) {
-			foreach ($params['keyphrasesCategories'] as $keyphrase=>$categories) {
-				$movieParams = array(
-				    'addlCategories'	=> $categories,
-				    'debug'		=> !empty($params['debug']),
-				    'startDate'		=> !empty($params['startDate']) ? $params['startDate'] : '',
-				    'endDate'		=> !empty($params['endDate']) ? $params['endDate'] : ''
-				    );
-				$numCreated += $this->importVideosForKeyphrase($keyphrase, $movieParams);
-			}
+		foreach( self::$API_MARKETPLACES as $id => $info ) {
+			$params['marketplaceId'] = $id;
+			$params['marketplaceName'] = $info['name'];
+			$params['extraCategories'] = $info['categories'];
+			$numCreated += $this->importVideos( $params );
 		}
+
 		wfProfileOut( __METHOD__ );
 
 		return $numCreated;
 	}
 
-	protected function importVideosForKeyphrase($keyword, $params=array()) {
-
+	protected function importVideos( $params = array() ) {
 		wfProfileIn( __METHOD__ );
 
-		$addlCategories = !empty($params['addlCategories']) ? $params['addlCategories'] : array();
-		$debug = !empty($params['debug']);
-		$startDate = !empty($params['startDate']) ? $params['startDate'] : '';
-		$endDate = !empty($params['endDate']) ? $params['endDate'] : '';
+		$addlCategories = ( !empty($params['addlCategories']) ) ? $params['addlCategories'] : array();
+		if ( !empty($params['extraCategories']) ) {
+			$addlCategories = array_merge( $addlCategories, $params['extraCategories'] );
+		}
+		$debug = ( !empty($params['debug']) );
+		$startDate = ( !empty($params['startDate']) ) ? $params['startDate'] : '';
+		$marketplaceId = ( !empty($params['marketplaceId']) ) ? $params['marketplaceId'] : '';
 
-		$articlesCreated = 0;
 		$page = 1;
+		$articlesCreated = 0;
 
 		do {
 			$numVideos = 0;
 
 			// connect to provider API
-			$url = $this->initFeedUrl($keyword, $startDate, $endDate, $page++);
+			$url = $this->initFeedUrl( $marketplaceId, $startDate, $page++ );
 			print("Connecting to $url...\n");
+
 			$req = MWHttpRequest::factory( $url );
 			$status = $req->execute();
 			if( $status->isOK() ) {
 				$response = $req->getContent();
-			}
-			else {
-				print("ERROR: problem downloading content!\n");
+			} else {
+				print("ERROR: problem downloading content.\n");
 				wfProfileOut( __METHOD__ );
+
 				return 0;
 			}
 
 			// parse response
-			$videos = json_decode( $response, true );
-			$numVideos = sizeof($videos['videos']);
+			$response = json_decode( $response, true );
+			$videos = ( empty($response['contents']) ) ? array() : $response['contents'] ;
+
+			$numVideos = count( $videos );
 			print("Found $numVideos videos...\n");
-			for ($i=0; $i<$numVideos; $i++) {
+
+			foreach( $videos as $video ) {
 				$clipData = array();
-				$video = $videos['videos'][$i];
-				$clipData['clipTitle'] = trim($video['title']);
-				$clipData['videoId'] = $video['guid'];
-				$clipData['thumbnail'] = $video['image'];
+				$clipData['titleName'] = trim($video['title']);
+				$clipData['videoId'] = $video['id'];
+				$clipData['altVideoId'] = $video['uuid'];
+				$clipData['thumbnail'] = $video['thumbnail_url'];
 				$clipData['duration'] = $video['duration'];
-				$clipData['published'] = $video['date'];
-				$clipData['category'] = $video['category_name'];
-				$clipData['keywords'] = trim($video['tags']);
+				$clipData['published'] = $video['published_at'];
+				$clipData['category'] = $video['category']['name'];
+				$clipData['keywords'] = $video['category']['name'];
 				$clipData['description'] = trim($video['description']);
-				$clipData['aspectRatio'] = $video['aspect_ratio'];
+				$clipData['ageGate'] = 0;
+				$clipData['hd'] = 0;
+				$clipData['tags'] = $video['tag_list'];
+
+				$clipData['marketplaceName'] = $video['video_catalog']['name'];
+				$clipData['marketplaceId'] = $video['video_catalog']['id'];
+				$clipData['categoryId'] = $video['category']['id'];
 
 				$msg = '';
-				$createParams = array('addlCategories'=>$addlCategories, 'debug'=>$debug);
-				$articlesCreated += $this->createVideo($clipData, $msg, $createParams);
-				if ($msg) {
+				$createParams = array( 'addlCategories' => $addlCategories, 'debug' => $debug );
+				$articlesCreated += $this->createVideo( $clipData, $msg, $createParams );
+				if ( $msg ) {
 					print "ERROR: $msg\n";
 				}
 			}
-		}
-		while ($numVideos == self::API_PAGE_SIZE);
+		} while( $numVideos == self::API_PAGE_SIZE );
 
 		wfProfileOut( __METHOD__ );
 
 		return $articlesCreated;
 	}
 
-	private function initFeedUrl($keyword, $startDate, $endDate, $page=1) {
+	private function initFeedUrl( $marketplaceId, $startDate, $page ) {
 		global $wgRealgravityApiKey;
 
-		$url = str_replace('$1', $wgRealgravityApiKey, static::$FEED_URL);
-		$url = str_replace('$2', self::$API_PROVIDER_IDS['MACHINIMA'], $url);
-		$url = str_replace('$3', urlencode($keyword), $url);
+		$url = str_replace('$1', $marketplaceId, static::$FEED_URL);
+		$url = str_replace('$2', $startDate, $url);
+		$url = str_replace('$3', $page, $url);
 		$url = str_replace('$4', self::API_PAGE_SIZE, $url);
-		$url = str_replace('$5', $page, $url);
-		if ($startDate && $endDate) {
-			$url .= '&date_range=' . $startDate . '..' . $endDate;
-		}
+		$url = str_replace('$5', $wgRealgravityApiKey, $url);
+
 		return $url;
 	}
 
-	protected function generateName(array $data) {
-		$name = $data['clipTitle'];
+	public function generateCategories( array $data, $addlCategories ) {
+		wfProfileIn( __METHOD__ );
 
-		// per parent class's definition, do not sanitize
-
-		return $name;
-	}
-
-	protected function generateCategories(array $data, $addlCategories) {
-		$categories = !empty($addlCategories) ? $addlCategories : array();
+		$categories = ( !empty($addlCategories) ) ? $addlCategories : array();
 		$categories[] = 'RealGravity';
-		$categories[] = 'Games';
+		$categories[] = $data['marketplaceName'];
+
+		wfProfileOut( __METHOD__ );
 
 		return $categories;
 	}
 
-	protected function generateMetadata(array $data, &$errorMsg) {
-		$keywords = explode(',', $data['keywords']);	// keywords is a comma-delimited string
-		array_walk($keywords, array($this, 'trimArrayItem'));
-		$parsedData = array(
-		    'videoId'		=> $data['videoId'],
-		    'thumbnail'		=> $data['thumbnail'],
-		    'duration'		=> $data['duration'],
-		    'published'		=> strtotime($data['published']),
-		    'category'		=> $data['category'],
-		    'keywords'		=> implode(', ', $keywords),
-		    'description'	=> $data['description'],
-		    'aspectRatio'	=> $data['aspectRatio']
-		    );
+	protected function generateName( array $data ) {
+		wfProfileIn( __METHOD__ );
 
-		return $parsedData;
+		$name = $data['titleName'];
+
+		wfProfileOut( __METHOD__ );
+
+		return $name;
 	}
 
-	private function trimArrayItem(&$item, $key) {
-		$item = trim($item);
+	protected function generateMetadata( array $data, &$errorMsg ) {
+		if ( empty($data['videoId']) ) {
+			$errorMsg = 'no video id exists';
+			return 0;
+		}
+
+		$metadata = array(
+			'videoId' => $data['videoId'],
+			'altVideoId' => $data['altVideoId'],
+			'hd' => $data['hd'],
+			'duration' => $data['duration'],
+			'published' => strtotime($data['published']),
+			'ageGate' => $data['ageGate'],
+			'thumbnail' => $data['thumbnail'],
+			'category' => $data['category'],
+			'description' => $data['description'],
+			'keywords' => $data['keywords'],
+			'tags' => $data['tags'],
+			'marketplaceId' => $data['marketplaceId'],
+			'marketplaceName' => $data['marketplaceName'],
+			'categoryId' => $data['categoryId'],
+			);
+
+		return $metadata;
 	}
+
 }
