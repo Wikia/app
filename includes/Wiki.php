@@ -638,12 +638,12 @@ class MediaWiki {
 			if( $title->isSpecialPage() ) {
 				list( $thisName, /* $subpage */ ) = SpecialPageFactory::resolveAlias( $title->getDBkey() );
 				if(is_string($thisName)) {
-					newrelic_name_transaction($loggedIn.'/'.$nsKey.'/'.$thisName);
+					newrelic_name_transaction('mw/'.$loggedIn.'/'.$nsKey.'/'.$thisName);
 				} else {
-					newrelic_name_transaction($loggedIn.'/Namespace/'.$nsKey);
+					newrelic_name_transaction('mw/'.$loggedIn.'/Namespace/'.$nsKey);
 				}
 			} else {
-				newrelic_name_transaction($loggedIn.'/Namespace/'.$nsKey);
+				newrelic_name_transaction('mw/'.$loggedIn.'/Namespace/'.$nsKey);
 			}
 			if ( function_exists( 'newrelic_add_custom_parameter' ) ) {
 				newrelic_add_custom_parameter( 'loggedIn', $loggedIn );
