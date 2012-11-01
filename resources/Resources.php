@@ -623,6 +623,7 @@ return array(
 
 	'mediawiki.action.edit' => array(
 		'scripts' => 'resources/mediawiki.action/mediawiki.action.edit.js',
+		'position' => 'top', // @author: wladek - workaround for JS error: "mw.toolbar is undefined"
 		'dependencies' => array(
 			'jquery.textSelection',
 			'jquery.byteLimit',
