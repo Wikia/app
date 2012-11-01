@@ -119,8 +119,7 @@ class AchUserProfileService {
 			} else {
 				$dbr = wfGetDB(DB_SLAVE);
 				$sql = "SELECT user_id, badge_type_id, badge_lap FROM `ach_user_badges` a1
-					WHERE wiki_id='$wgCityId'
-					AND user_id IN (" . implode(',', $user_ids) . ")
+					WHERE user_id IN (" . implode(',', $user_ids) . ")
 					AND date = (SELECT max(date) from ach_user_badges a2 where a1.user_id = a2.user_id) ";
 			}
 
