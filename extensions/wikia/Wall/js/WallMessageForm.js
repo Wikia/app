@@ -77,7 +77,7 @@ Wall.MessageForm = $.createClass(Observable, {
 	},
 
 	reloadAfterLogin: function() {
-		window.Wikia.reloadPageWithCacheBuster();
+		window.Wikia.CacheBuster.reloadPageWithCacheBuster();
 	},
 
 	getFormat: function() {

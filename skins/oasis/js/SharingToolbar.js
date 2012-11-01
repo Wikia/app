@@ -61,7 +61,7 @@ var SharingToolbar = {
 	},
 	showEmailModal: function(lightboxShareEmailLabel, lightboxSend, lightboxShareEmailLabelAddress, lightboxCancel) {
 		var refreshPage = function() {
-			window.Wikia.reloadPageWithCacheBuster();
+			window.Wikia.CacheBuster.reloadPageWithCacheBuster();
 		};
 
 		$.showCustomModal(

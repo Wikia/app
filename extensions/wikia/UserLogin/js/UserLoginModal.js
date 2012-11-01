@@ -28,7 +28,7 @@ var UserLoginModal = {
 							}
 							callback();
 						} else {
-							UserLoginModal.loginAjaxForm.reloadPage();
+							window.Wikia.CacheBuster.reloadPageWithCacheBuster();
 						}
 					},
 					resetpasscallback: function(res) {

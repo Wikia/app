@@ -529,7 +529,7 @@ var Wall = $.createClass(Object, {
 				callback: this.proxy(function(json) {
 					if(json.status) {
 						if(UserLoginAjaxForm) {
-							window.Wikia.reloadPageWithCacheBuster();	
+							window.Wikia.CacheBuster.reloadPageWithCacheBuster();	
 						} else {
 							window.location.reload();
 						}

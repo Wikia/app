@@ -187,7 +187,6 @@ $config['oasis_jquery'] = array(
 
 		// Wikia plugins
 		'//resources/wikia/jquery.wikia.js',
-		'//resources/wikia/wikia.js',
 		'//resources/wikia/libraries/jquery/nirvana/jquery.wikia.nirvana.js',
 		'//resources/wikia/libraries/jquery/carousel/jquery.wikia.carousel.js',
 		'//resources/wikia/libraries/jquery/modal/jquery.wikia.modal.js',
@@ -213,6 +212,7 @@ $config['oasis_wikia_js'] = array(
 		'//resources/wikia/modules/log.js',
 		'//resources/wikia/modules/thumbnailer.js',
 		'//resources/wikia/modules/geo.js',
+		'//resources/wikia/modules/cachebuster.js',
 	)
 );
 

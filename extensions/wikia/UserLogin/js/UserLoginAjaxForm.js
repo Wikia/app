@@ -69,7 +69,7 @@ UserLoginAjaxForm.prototype.submitLoginHandler = function(json) {
 			callback(json);
 		} else {
 			// reload page if no callback specified
-			window.Wikia.reloadPageWithCacheBuster();
+			window.Wikia.CacheBuster.reloadPageWithCacheBuster();
 		}
 	} else if(result === 'resetpass') {
 		callback = this.options['resetpasscallback'] || '';
