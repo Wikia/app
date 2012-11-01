@@ -1,0 +1,29 @@
+.ui-traceviewer {
+	background: white;
+}
+
+.php-trace-wrapper {
+	width: 99%;
+	height: 99%;
+	overflow: auto;
+}
+.trace-self-time,
+.trace-self-pct,
+.trace-total-time,
+.trace-total-pct,
+.trace-calls {
+	width: 80px;
+	min-width: 80px;
+}
+.trace-method-name {
+	width: 400px;
+}
+
+/*
+.php-trace-table {
+
+	.trace-method-name {
+		width: 300px;
+	}
+}
+*/
