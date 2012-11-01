@@ -7,7 +7,7 @@
 	*/
 
 	function addVideo( &$videoList, $titleName ) {
-		global $isDryrun, $added, $invalid, $duplicate, $dupInDb;
+		global $dryrun, $added, $invalid, $duplicate, $dupInDb;
 
 		$videoInfoHelper = new VideoInfoHelper();
 		$videoData = $videoInfoHelper->getVideoDataByTitle( $titleName );
@@ -16,7 +16,7 @@
 			$titleHash = md5( $videoData['videoTitle'] );
 			if ( !in_array($titleHash, $videoList) ) {
 				$status = true;
-				if ( !$isDryrun ) {
+				if ( !$dryrun ) {
 					$videoInfo = new VideoInfo( $videoData );
 					$status = $videoInfo->addVideo();
 				}
@@ -41,9 +41,9 @@
 	}
 
 	function printText( $text ) {
-		global $isQuiet;
+		global $quiet;
 
-		if ( !$isQuiet ) {
+		if ( !$quiet ) {
 			echo $text;
 		}
 	}
@@ -58,6 +58,8 @@
 		die( "Usage: php maintenance.php [--dry-run] [--help]
 		--dry-run			dry run
 		--quiet				show summary result only
+		--createtable		create video_info table
+		--altertablev1		alter video_info table v1
 		--help				you are reading it right now\n\n" );
 	}
 
@@ -70,8 +72,10 @@
 		die( "Error: In read only mode." );
 	}
 
-	$isDryrun = ( isset($options['dry-run']) );
-	$isQuiet = ( isset($options['quiet']) );
+	$dryrun = ( isset($options['dry-run']) );
+	$quiet = ( isset($options['quiet']) );
+	$createTable = ( isset($options['createtable']) );
+	$alterTableV1 = ( isset($options['altertablev1']) );
 
 	echo "Wiki $wgCityId:\n";
 
@@ -85,13 +89,23 @@
 	$removed = 0;
 	$videoList = array();
 
-	// create table or patch table schema
 	$video = new VideoInfo();
-	if ( !$isDryrun ) {
-		$video->createTableVideos();
+
+	// create table or patch table schema
+	if ( $createTable ) {
+		if ( !$dryrun ) {
+			$video->createTableVideoInfo();
+		}
+		echo "Create video_info table.\n";
 	}
 
-	echo "Create video_info table.\n";
+	// update schema v1
+	if ( $alterTableV1 ) {
+		if ( !$dryrun ) {
+			$video->alterTableVideoInfoV1();
+		}
+		echo "Update video_info table schema (v1).\n";
+	}
 
 	// remove deleted local videos
 	$sql = <<<SQL
@@ -105,7 +119,7 @@ SQL;
 
 	while( $row = $db->fetchObject($result) ) {
 		printText( "Deleted video (local): $row->video_title" );
-		if ( !$isDryrun ) {
+		if ( !$dryrun ) {
 			$video->setVideoTitle( $row->video_title );
 			$video->deleteVideo();
 		}
