@@ -6,17 +6,6 @@
  * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
  */
 (function(){
-	// this module needs to be also available via a namespace for access early in the process
-	if(!window.Wikia) window.Wikia = {};//namespace
-	window.Wikia.log = logger();//late binding
-
-	if(window.define){
-		//AMD
-		define('log', function(){
-			return window.Wikia.log;
-		});
-	}
-
 	function logger(){
 		/** @private **/
 
@@ -110,14 +99,27 @@
 		}
 
 		//init
-		if(window.require){
-			require(['querystring', 'cookies'], init);
+		if(context.require){
+			context.require(['querystring', 'cookies'], init);
 		}else{
-			init(Wikia.Querystring, Wikia.Cookies);
+			init(context.Wikia.Querystring, context.Wikia.Cookies);
 		}
 
 		/** @public **/
 
 		return logMessage;
 	}
-}());
+
+	//UMD
+	//this module needs to be also available via a
+	//namespace for access early in the process
+	if(!context.Wikia) context.Wikia = {};//namespace
+	context.Wikia.log = logger();//late binding
+
+	if(context.define && context.define.amd){
+		//AMD
+		context.define('log', function(){
+			return context.Wikia.log;
+		});
+	}
+}(this));
