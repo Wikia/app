@@ -9,9 +9,6 @@
 (function (context) {
 	'use strict';
 
-	/**
-	 * @private
-	 */
 	function cookies() {
 		/** @private **/
 
@@ -21,9 +18,9 @@
 			data;
 
 		/**
-		 * @private
+		 * Parses cookies string into an object
 		 *
-		 * @return {Object}
+		 * @return {Object} An object representation of the user's cookies
 		 */
 		function fetchCookies() {
 			var cookieString = context.document.cookie,
@@ -51,24 +48,30 @@
 		}
 
 		/**
-		 * @public
+		 * Gets the value of a cookie by name
 		 *
-		 * @param {String} name
+		 * @param {String} name The name of the cookie
 		 *
-		 * @return {Mixed}
+		 * @return {Mixed} The value of the cookie or null
 		 */
 		function get(name) {
 			var val = fetchCookies()[name];
 
-			return (typeof val !== 'undefined') ? val : null;
+			return (typeof val != 'undefined') ? val : null;
 		}
 
 		/**
-		 * @public
+		 * Sets the value of a cookie by name and also return its' string representation
 		 *
-		 * @param {String} name
-		 * @param {Mixed} value
-		 * @param {Object} options
+		 * @param {String} name The name of the cookie
+		 * @param {Mixed} value The value of the cookie
+		 * @param {Object} options Options that apply to the cookie:
+		 * - {Mixed} expires An integer (relative time from now) or a Date instance
+		 * - {String} path The cookie's path
+		 * - {String} domain The domain of validity
+		 * - {Boolean} secure
+		 *
+		 * @return {String} The string representation of the cookie
 		 */
 		function set(name, value, options) {
 			var expDate,
@@ -79,7 +82,7 @@
 
 			options = options || {};
 
-			if (typeof value === 'undefined' || value === null) {
+			if (typeof value == 'undefined' && value === null) {
 				value = '';
 				options.expires = -1;
 			}
@@ -118,14 +121,15 @@
 			return cookieString;
 		}
 
+		/** @public **/
+
 		return {
 			get: get,
 			set: set
 		};
 	}
 
-	//UMD
-	// this module needs to be also available via a namespace for access early in the process
+	//UMD inclusive
 	if (!context.Wikia) {
 		context.Wikia = {};
 	}
