@@ -48,8 +48,7 @@
  * and when loading the library makeQueue and start it.
  */
 
-/*global window*/
-(function (window) {
+(function (context) {
 	'use strict';
 
 	function lazyQueue() {
@@ -68,17 +67,17 @@
 			} else {
 				throw new Error('LazyQueue requires an array as the first parameter');
 			}
-		};
+		}
 
 		return {
 			makeQueue: makeQueue
 		};
-	};
-
-	if (window.define && window.define.amd) {
-		window.define('lazyqueue', lazyQueue);
-	} else {
-		window.Wikia = window.Wikia || {};
-		window.Wikia.LazyQueue = lazyQueue();
 	}
-}(window));
+
+	if (context.define && context.define.amd) {
+		context.define('lazyqueue', lazyQueue);
+	} else {
+		context.Wikia = context.Wikia || {};
+		context.Wikia.LazyQueue = lazyQueue();
+	}
+}(this));
