@@ -99,6 +99,7 @@
 			}else{
 				this.cache[name] = encodeURIComponent(val);
 			}
+			return this;
 		};
 
 		p.getHash = function () {
@@ -107,12 +108,14 @@
 
 		p.setHash = function (h) {
 			this.hash = h;
+			return this;
 		};
 
 		p.excludeHash = function(list){
 			if ((list instanceof Array && list.indexOf(this.hash) > -1) || list === this.hash) {
 				this.hash = '';
 			}
+			return this;
 		};
 
 		p.getPath = function () {
@@ -121,10 +124,12 @@
 
 		p.setPath = function (p) {
 			this.path = p;
+			return this;
 		};
 
 		p.addCb = function () {
 			this.setVal('cb', Math.ceil(Math.random() * 10001));
+			return this;
 		};
 
 		p.goTo = function () {
