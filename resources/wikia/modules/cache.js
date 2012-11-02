@@ -13,12 +13,12 @@
 		undef;
 
 	function cache() {
-		/** @private **/
-
 		var moduleStorage = {};
 
 		/**
 		 * Gets a value from the storage
+		 *
+		 * @private
 		 *
 		 * @param {String} key Storage key
 		 *
@@ -39,6 +39,8 @@
 		/**
 		 * Sets a value in the storage
 		 *
+		 * @private
+		 *
 		 * @param {String} key   Storage key
 		 * @param {Mixed}  value Value to store
 		 */
@@ -52,6 +54,8 @@
 		/**
 		 * Removes a value from the storage
 		 *
+		 * @private
+		 *
 		 * @param {String} key Storage key
 		 */
 		function uniDel(key) {
@@ -63,6 +67,8 @@
 
 		/**
 		 * Save a value under given key
+		 *
+		 * @public
 		 *
 		 * @param {String}  key       Key to save the value at
 		 * @param {Mixed}   value     Any serializable object to store under the key
@@ -85,6 +91,8 @@
 		/**
 		 * Delete the value under given key
 		 *
+		 * @public
+		 *
 		 * @param {String} key Key to delete the value at
 		 */
 		function del(key) {
@@ -94,6 +102,8 @@
 
 		/**
 		 * Get previously saved value. If value is not available or expired, return null
+		 *
+		 * @public
 		 *
 		 * @param {String} key       Key to get
 		 * @param {Date}   customNow [OPTIONAL] Custom now (date object) for computing TTL
@@ -116,8 +126,6 @@
 			return null;
 		}
 
-		/** @public **/
-
 		return {
 			get: get,
 			set: set,
@@ -125,7 +133,7 @@
 		};
 	}
 
-	// Register the module (UMD)
+	//UMD exclusive
 	if (context.define && context.define.amd) {
 		context.define('cache', cache);
 	} else {

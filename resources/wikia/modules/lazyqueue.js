@@ -52,10 +52,10 @@
 	'use strict';
 
 	function lazyQueue() {
-		/** @private **/
-
 		/**
 		 * Turns an array in a LazyQueue
+		 *
+		 * @public
 		 *
 		 * @param {Array} queue An array of values
 		 * @param {Function} callback The callback to apply to each array item
@@ -76,8 +76,6 @@
 				throw new Error('LazyQueue requires an array as the first parameter');
 			}
 		}
-
-		/** @public **/
 
 		return {
 			makeQueue: makeQueue

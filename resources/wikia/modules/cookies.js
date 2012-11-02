@@ -5,13 +5,10 @@
  * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
  **/
 
-/*global define*/
 (function (context) {
 	'use strict';
 
 	function cookies() {
-		/** @private **/
-
 		var cookieReplaceRegEx1 = /^\s*/,
 			cookieReplaceRegEx2 = /\s*$/,
 			lastCookieContent,
@@ -19,6 +16,8 @@
 
 		/**
 		 * Parses cookies string into an object
+		 *
+		 * @private
 		 *
 		 * @return {Object} An object representation of the user's cookies
 		 */
@@ -50,6 +49,8 @@
 		/**
 		 * Gets the value of a cookie by name
 		 *
+		 * @public
+		 *
 		 * @param {String} name The name of the cookie
 		 *
 		 * @return {Mixed} The value of the cookie or null
@@ -62,6 +63,8 @@
 
 		/**
 		 * Sets the value of a cookie by name and also return its' string representation
+		 *
+		 * @public
 		 *
 		 * @param {String} name The name of the cookie
 		 * @param {Mixed} value The value of the cookie
@@ -120,8 +123,6 @@
 			context.document.cookie = cookieString;
 			return cookieString;
 		}
-
-		/** @public **/
 
 		return {
 			get: get,

@@ -9,8 +9,6 @@
 	'use strict';
 
 	function logger() {
-		/** @private **/
-
 		var levels = {
 				user: 1,
 				feedback: 2,
@@ -46,6 +44,8 @@
 		/**
 		 * Selects a viable output (if any) and prints a message/value
 		 *
+		 * @private
+		 *
 		 * @param {Mixed} msg The value to print
 		 * @param {Integer} level The log level
 		 * @param {String} group The log group
@@ -60,6 +60,8 @@
 
 		/**
 		 * Logs a message/value to the console
+		 *
+		 * @public
 		 *
 		 * @param {Mixed} msg The value to print
 		 * @param {Integer} level The log level
@@ -93,6 +95,14 @@
 			return true;
 		}
 
+		/**
+		 * Initializes the module
+		 *
+		 * @private
+		 *
+		 * @param {Object} querystring The QueryString module
+		 * @param {Object} cookies The Cookies module
+		 */
 		function init(querystring, cookies) {
 			var qs = new querystring(),
 				selectedGroups,
@@ -132,8 +142,6 @@
 		} else {
 			init(context.Wikia.Querystring, context.Wikia.Cookies);
 		}
-
-		/** @public **/
 
 		return logMessage;
 	}

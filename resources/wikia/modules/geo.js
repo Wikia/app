@@ -2,18 +2,17 @@
  * Geo-location utility used mainly for advertisement (e.g. AdConfig)
  */
 
-/*global define*/
 (function (context) {
 	'use strict';
 
 	function geo(cookies) {
-		/** @private **/
-
 		var cookieName = 'Geo',
 			geoData = false;
 
 		/**
 		 * Gets the whole data as an object representation
+		 *
+		 * @public
 		 *
 		 * @return {Object} The geo data stored in the user's cookie
 		 */
@@ -29,6 +28,8 @@
 		/**
 		 * Returns the code for the country
 		 *
+		 * @public
+		 *
 		 * @return {String} The country code
 		 */
 		function getCountryCode() {
@@ -38,6 +39,8 @@
 
 		/**
 		 * Returns the code for the continent
+		 *
+		 * @public
 		 *
 		 * @return {String} The contintent code
 		 */
@@ -55,6 +58,7 @@
 		};
 	}
 
+	//UMD inclusive
 	//this depends on cookies.js and will fail if window.Wikia.Cookies is not defined
 	//TODO: Can we remove the double alias in window.Geo and Wikia.geo
 	//and just stick to one?

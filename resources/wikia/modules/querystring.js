@@ -9,12 +9,19 @@
 	'use strict';
 
 	function querystring() {
-		/** @private **/
-
 		var l = context.location,
 			p,
 			u;
 
+		/**
+		 * Checks if an object is empty (no properties)
+		 *
+		 * @private
+		 *
+		 * @param {Object} obj The object to check
+		 *
+		 * @return {Boolean} True if the object has no properties, false otherwise
+		 */
 		function isEmpty(obj) {
 			var key;
 
@@ -29,6 +36,8 @@
 
 		/**
 		 * An object representation of the URL's querystring
+		 *
+		 * @public
 		 *
 		 * @param {String} url The URL to parse for parameters
 		 */
@@ -92,6 +101,8 @@
 		/**
 		 * Return a string representation of a QueryString instance
 		 *
+		 * @public
+		 *
 		 * @return {String} The QueryString instance turned to a String
 		 */
 		p.toString = function () {
@@ -113,6 +124,8 @@
 		/**
 		 * Gets a parameter by name
 		 *
+		 * @public
+		 *
 		 * @param {String} name The parameter's name
 		 * @param {Mixed} defVal The value to return in case the parameter is not found
 		 *
@@ -124,6 +137,8 @@
 
 		/**
 		 * Sets a parameter by name
+		 *
+		 * @public
 		 *
 		 * @param {String} name The parameter's name
 		 * @param {Mixed} val The parameter's value
@@ -139,6 +154,8 @@
 		/**
 		 * Gets the text after the hash (#)
 		 *
+		 * @public
+		 *
 		 * @return {String} The text after the hash
 		 */
 		p.getHash = function () {
@@ -147,6 +164,8 @@
 
 		/**
 		 * Sets the text after the hash (#)
+		 *
+		 * @public
 		 *
 		 * @param {String} hash The text to put after the hash
 		 */
@@ -157,6 +176,8 @@
 		/**
 		 * Gets the path of the URL
 		 *
+		 * @public
+		 *
 		 * @return {String} The path of the URL
 		 */
 		p.getPath = function () {
@@ -166,6 +187,8 @@
 		/**
 		 * Sets the path of the URL
 		 *
+		 * @public
+		 *
 		 * @param {String} path The path of the URL
 		 */
 		p.setPath = function (path) {
@@ -174,6 +197,8 @@
 
 		/**
 		 * Adds a cachebuster to the querystring
+		 *
+		 * @public
 		 */
 		p.addCb = function () {
 			this.setVal('cb', Math.ceil(Math.random() * 10001));
@@ -181,6 +206,8 @@
 
 		/**
 		 * Loads the URL represented by the QueryString instance in the browser
+		 *
+		 * @public
 		 */
 		p.goTo = function () {
 			//TODO: We don't want these to be in url on load, this should be refactored as is valid only for WikiaMobile
@@ -190,8 +217,6 @@
 
 			l.href = this.toString();
 		};
-
-		/** @public **/
 
 		return Querystring;
 	}
