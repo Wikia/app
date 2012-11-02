@@ -15,8 +15,8 @@ class VideoEmbedToolController extends WikiaController {
 	 *   articleId 	 - the suggestions should be related to this article
 	 */
 	public function getSuggestedVideos() {
-		if ( $this->wg->vetEnableSuggestions != true ) {
-			// Return empty set if wgVetEnableSuggestions is not enabled
+		if ( $this->wg->VETEnableSuggestions != true ) {
+			// Return empty set if wgVETEnableSuggestions is not enabled
 			$result = array(
 				'caption' => $this->wf->Msg( 'vet-suggestions' ),
 				'totalItemCount' => 0,
@@ -30,21 +30,23 @@ class VideoEmbedToolController extends WikiaController {
 			$svSize = $this->request->getInt( 'svSize', 20 );
 			$trimTitle = $this->request->getInt( 'trimTitle', 0 );
 
-			// fetching more results to make sure we will get desired number of results in the end
-			$relatedVideosParams = array( 'video_wiki_only'=>true, 'start'=>$svStart, 'size'=>$svSize*2 );
+			$wikiaSearchConfig = F::build( 'WikiaSearchConfig' );  /* @var $wikiaSearchConfig WikiaSearchConfig */
+			$wikiaSearchConfig  ->setStart( $svStart )
+								->setLength( $svSize*2 )   // fetching more results to make sure we will get desired number of results in the end
+								->setCityID( WikiaSearch::VIDEO_WIKI_ID );
 			$articleId = $this->request->getInt('articleId', 0 );
 
 			if ( $articleId > 0 ) {
-				$relatedVideosParams['pageId'] = $articleId;
+				$wikiaSearchConfig->setPageId( $articleId );
 			}
 
 			$search = F::build( 'WikiaSearch' );  /* @var $search WikiaSearch */
-			$response = $search->getRelatedVideos( $relatedVideosParams, 'object' );
+			$response = $search->getRelatedVideos( $wikiaSearchConfig );
 
-			if ( !$response->hasResults() && !empty($relatedVideosParams['pageId']) && ( $this->request->getVal('debug') != 1 ) ) {
+			if ( !$response->hasResults() && ( $articleId > 0 ) && ( $this->request->getVal('debug') != 1 ) ) {
 				// if nothing for specify article, do general search
-				unset( $relatedVideosParams['pageId'] );
-				$response = $search->getRelatedVideos( $relatedVideosParams, 'object' );
+				$wikiaSearchConfig->setPageId( false );
+				$response = $search->getRelatedVideos( $wikiaSearchConfig );
 			}
 
 			//TODO: fill $currentVideosByTitle array with unwated videos
@@ -73,29 +75,28 @@ class VideoEmbedToolController extends WikiaController {
 
 		$svSize = $svSize < 1 ? 1 : $svSize;
 
-		$methodParams = array(
-			'cityId' => WikiaSearch::VIDEO_WIKI_ID,
-			'startFromResultNumber' => $svStart,
-			'length' => $svSize*2 	// fetching more results to make sure we will get desired number of results in the end
-		);
+		$wikiaSearchConfig = F::build( 'WikiaSearchConfig' );  /* @var $wikiaSearchConfig WikiaSearchConfig */
+		$wikiaSearchConfig  ->setStart( $svStart )
+							->setLength( $svSize*2 )   // fetching more results to make sure we will get desired number of results in the end
+							->setVideoSearch( true )
+							->setNamespaces( array( NS_FILE ) );
 
 		if($searchType == 'premium') {
-			$methodParams['cityId'] = WikiaSearch::VIDEO_WIKI_ID;
+			$wikiaSearchConfig->setCityID( WikiaSearch::VIDEO_WIKI_ID );
 		}
 		else {
-			$methodParams['cityId'] = $this->wg->CityId;
-			$methodParams['videoSearch'] = true;
+			$wikiaSearchConfig->setCityID( $this->wg->CityId );
 		}
 
 		if ( !empty( $phrase ) && strlen( $phrase ) > 0 ) {
+			$wikiaSearchConfig->setQuery( $phrase );
 			$search = F::build( 'WikiaSearch' );  /* @var $search WikiaSearch */
-			$search->setNamespaces( array(NS_FILE) );
 
-			$response = $this->processSearchResponse( $search->doSearch($phrase, $methodParams), $svStart, $svSize, $trimTitle );
+			$response = $this->processSearchResponse( $search->doSearch( $wikiaSearchConfig ), $svStart, $svSize, $trimTitle );
 		}
 
 		$result = array (
-			'caption' => $this->wf->Msg( ( ( $searchType == 'premium' ) ? 'vet-search-results-WVL' : 'vet-search-results-local' ), array( $response['totalItemCount'], $phrase ) ),
+			'caption' => $this->wf->MsgExt( ( ( $searchType == 'premium' ) ? 'vet-search-results-WVL' : 'vet-search-results-local' ), array('parsemag'),  $response['totalItemCount'], $phrase ),
 			'totalItemCount' => $response['totalItemCount'],
 			'nextStartFrom' => $response['nextStartFrom'],
 			'currentSetItemCount' => count( $response['items'] ),
@@ -135,7 +136,7 @@ class VideoEmbedToolController extends WikiaController {
 			$singleVideoData['wid'] =  $result->getCityId();
 			$singleVideoData['title'] = $result->getTitle();
 
-			if( isset( $excludedVideos[ $singleVideoData['title'] ] ) ) {
+			if( empty($singleVideoData['title']) || isset( $excludedVideos[ $singleVideoData['title'] ] ) ) {
 				// don't suggest this video
 				continue;
 			}
@@ -158,7 +159,14 @@ class VideoEmbedToolController extends WikiaController {
 			$nextStartFrom++;
 			if ( count( $data ) == $svSize ) break;
 		}
-		return array( 'totalItemCount' => $response->getResultsFound(), 'nextStartFrom' => $nextStartFrom, 'items' => $data );
+		$totalItemCount = $response->getResultsFound();
+		// sometimes we need to filter some videos out and when there is a small number of results
+		// it's obvious that the number of results shown in the slider does not match
+		// the number stated in the label about
+		// luckily in this case - when there is only one page of results - we
+		// can count the exact number of videos ourselves
+		if (!$svStart && ( count( $data ) < $svSize ) ) $totalItemCount = count( $data );
+		return array( 'totalItemCount' => $totalItemCount, 'nextStartFrom' => $nextStartFrom, 'items' => $data );	
 	}
 
 	public function getEmbedCode() {
