@@ -53,23 +53,6 @@
 		<!-- AdProviderLiftium2 -->
 		<script src="../AdProviderLiftium2.js"></script>
 		<script src="AdProviderLiftium2Test.js"></script>
-
-		<!-- Crazy deprecated/old stuff now -->
-		<script>
-		/**
-		 * AdConfig.js have a strong dependency on Wikia.geo.getGeoData function which is not
-		 * available in test environment so we are mocking it here. It can't be defined in module
-		 * setup because it is too late (AdConfig.js calls that function just after it is loaded).
-		 * This problem should be solved in a better way.
-		 */
-		Wikia = {};
-		Wikia.geo = {getGeoData: function() {}};
-		</script>
-		<script src="../../../../../resources/wikia/modules/cookies.js"></script>
-		<script src="../../AdConfig.js"></script>
-		<script src="../../AdDriverGP.js"></script>
-		<script src="AdDriverGPTest.js"></script>
-		<script src="AdDriverTest.js"></script>
 	</head>
 	<body>
 		<h1 id="qunit-header">Ad* Tests</h1>
