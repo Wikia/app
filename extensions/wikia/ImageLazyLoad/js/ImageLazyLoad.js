@@ -60,7 +60,10 @@ $(function() {
 			// so those are new images in DOM
 			var $img = $(image);
 			image.onload = '';
-			image.src = $img.data('src');
+			var dataSrc = $img.data('src');
+			if (dataSrc) {
+				image.src = dataSrc;
+			}
 			$img.removeClass('lzy').removeClass('lzyPlcHld');
 
 		},
