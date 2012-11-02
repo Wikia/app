@@ -5,19 +5,10 @@
  * @author Przemek Piotrowski (Nef) <ppiotr(at)wikia-inc.com>
  * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
  */
-(function(){
-	// this module needs to be also available via a namespace for access early in the process
-	if(!window.Wikia) window.Wikia = {};//namespace
-	window.Wikia.log = logger();//late binding
+(function (context) {
+	'use strict';
 
-	if(window.define){
-		//AMD
-		define('log', function(){
-			return window.Wikia.log;
-		});
-	}
-
-	function logger(){
+	function logger() {
 		/** @private **/
 
 		var levels = {
@@ -29,31 +20,60 @@
 				error: 6,
 				debug: 7,
 				trace: 8,
-				trace_l2:9,
-				trace_l3:10
+				trace_l2: 9,
+				trace_l3: 10
 			},
 			outputLevel = 0,
 			groups = {},
 			groupsString = '',
 			groupsCount = 0,
 			enabled = false,
-			levelsMap = [];
+			levelsMap = [],
+			levelID,
+			p,
+			v;
 
-		for(var p in levels){
-			var v = levels[p];
+		for (p in levels) {
+			if (levels.hasOwnProperty(p)) {
+				v = levels[p];
 
-			if(v)
-				levelsMap[v] = p;
+				if (v) {
+					levelsMap[v] = p;
+				}
+			}
 		}
 
-		function logMessage(msg, level, group){
+		/**
+		 * Selects a viable output (if any) and prints a message/value
+		 *
+		 * @param {Mixed} msg The value to print
+		 * @param {Integer} level The log level
+		 * @param {String} group The log group
+		 */
+		function printMessage(msg, level, group) {
+			if (typeof console !== 'undefined') {
+				console.log((typeof msg !== 'object' ? '%s: %s' : '%s: %o'), group, msg);
+			} else if (typeof opera !== 'undefined') {
+				opera.postError(group + ': ' + msg);
+			}
+		}
+
+		/**
+		 * Logs a message/value to the console
+		 *
+		 * @param {Mixed} msg The value to print
+		 * @param {Integer} level The log level
+		 * @param {String} group The log group
+		 */
+		function logMessage(msg, level, group) {
 			level = level || 'trace';
 
-			if(typeof level == 'number'){
-				if(level < 1)
+			if (typeof level === 'number') {
+				if (level < 1) {
 					level = 1;
-				else if(level > levelsMap.length - 1)
+				} else if (level > levelsMap.length - 1) {
 					level = levelsMap.length - 1;
+				}
 
 				level = levelsMap[level];
 			}
@@ -62,42 +82,39 @@
 			levelID = levels[level];
 			group = group || 'Unknown source';
 
-			if(
-				!enabled ||
-				(typeof msg == "undefined") ||
-				(levelID > outputLevel) ||
-				(groupsCount > 0 && !(group in groups))
-			)
+			if (!enabled ||
+					(typeof msg === "undefined") ||
+					(levelID > outputLevel) ||
+					(groupsCount > 0 && !(groups.hasOwnProperty(group)))) {
 				return false;
+			}
 
 			printMessage(msg, level, group);
 			return true;
 		}
 
-		function printMessage(msg, level, group){
-			if(typeof console != 'undefined')
-				console.log((typeof msg != 'object' ? '%s: %s' : '%s: %o'), group, msg);
-			else if(typeof opera != 'undefined')
-				opera.postError(group + ': ' + msg);
-		}
-
-		function init(querystring, cookies){
+		function init(querystring, cookies) {
 			var qs = new querystring(),
 				selectedGroups,
-				x;
+				x,
+				y,
+				g;
 
 			outputLevel = qs.getVal('log_level') || cookies.get('log_level') || outputLevel;
 
-			if(typeof outputLevel == 'string' && parseInt(outputLevel) != outputLevel)
+			if (levels.hasOwnProperty(outputLevel)) {
 				outputLevel = levels[outputLevel];
+			} else {
+				outputLevel = parseInt( outputLevel, 10);
+			}
 
 			selectedGroups = (qs.getVal('log_group') || cookies.get('log_group') || '').replace(' ', '').replace('|', ',').split(',');
 			groupsString = selectedGroups.join(', ');
 
-			for(x = 0; x < selectedGroups.length; x++){
-				var g = selectedGroups[x];
+			for (x = 0, y = selectedGroups.length; x < y; x++) {
+				g = selectedGroups[x];
 
-				if(g !== ''){
+				if (g !== '') {
 					groups[g] = '';
 					groupsCount++;
 				}
@@ -110,14 +127,28 @@
 		}
 
 		//init
-		if(window.require){
-			require(['querystring', 'cookies'], init);
-		}else{
-			init(Wikia.Querystring, Wikia.Cookies);
+		if (context.require && context.define && context.define.amd) {
+			context.require(['querystring', 'cookies'], init);
+		} else {
+			init(context.Wikia.Querystring, context.Wikia.Cookies);
 		}
 
 		/** @public **/
 
 		return logMessage;
 	}
-}());
+
+	//UMD inclusive
+	if (!context.Wikia) {
+		context.Wikia = {};
+	}
+
+	context.Wikia.log = logger();//late binding
+
+	if (context.define && context.define.amd) {
+		//AMD
+		context.define('log', function () {
+			return context.Wikia.log;
+		});
+	}
+}(this));
