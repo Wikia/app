@@ -185,8 +185,8 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
 	'forum-board-id-validation-missing' => 'Board id is missing',
 	
 	/* old forum notification */
-	'forum-old-notification' => 'This forum is obsolete.  Please use the new one.',
-	'forum-old-notification-navigation-button' => 'Go to new Forums',
+	'forum-old-notification-message' => 'This Forum has been archived',
+	'forum-old-notification-navigation-button' => 'Visit the new Forums',
 );
 
 $messages['qqq'] = array(
