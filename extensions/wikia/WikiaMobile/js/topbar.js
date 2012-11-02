@@ -311,10 +311,10 @@ define('topbar', ['querystring', 'loader', 'toc', 'events', require.optional('ad
 
 					var wkLgn = document.getElementById('wkLgn'),
 						form = wkLgn.getElementsByTagName('form')[0],
-						query = new qs(form.getAttribute('action'));
+						query = (new qs(form.getAttribute('action')))
+							.setVal('returnto', (wgCanonicalSpecialPageName && (wgCanonicalSpecialPageName.match(/Userlogin|Userlogout/)) ? wgMainPageTitle : wgPageName))
+							.setHash(hash);
 
-					query.setVal('returnto', (wgCanonicalSpecialPageName && (wgCanonicalSpecialPageName.match(/Userlogin|Userlogout/)) ? wgMainPageTitle : wgPageName));
-					hash && query.setHash(hash);
 					form.setAttribute('action', query.toString());
 				}
 			});

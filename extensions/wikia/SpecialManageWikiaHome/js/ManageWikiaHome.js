@@ -44,9 +44,7 @@ ManageWikiaHome.prototype = {
 	},
 	changeVisualizationLang: function(e) {
 		var lang = e.target.value;
-		var qs = new window.Wikia.Querystring( window.location.href );
-		qs.setVal('vl', lang);
-		qs.goTo();
+		(new window.Wikia.Querystring()).setVal('vl', lang).goTo();
 	},
 	renderWikiListPage: function(e) {
 		e.preventDefault();

@@ -74,13 +74,9 @@ window.addEventListener('DOMContentLoaded', function () {
 					event.preventDefault();
 					cookies.set('mobilefullsite', 'true');
 
-					var url = new qs();
-					url.setVal('useskin', this.getAttribute('data-skin'));
-					url.addCb();
-					url.goTo();
+					(new qs()).setVal('useskin', this.getAttribute('data-skin')).addCb().goTo();
 				});
 			}
-
 
 			//add curtain
 			d.body.insertAdjacentHTML('beforeend', '<div id=wkCurtain></div>');
