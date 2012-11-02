@@ -1,4 +1,4 @@
-(function(log, WikiaTracker, window, ghostwriter, document, Geo, LazyQueue, Cookies, Krux) {
+(function(log, WikiaTracker, window, ghostwriter, document, Geo, LazyQueue, Cookies, Cache, Krux) {
 	var module = 'AdEngine2.run'
 		, adConfig
 		, adEngine
@@ -27,9 +27,8 @@
 	scriptWriter = ScriptWriter(log, ghostwriter, document);
 	wikiaDart = WikiaDartHelper(log, window, document, Geo, Krux);
 	evolveHelper = EvolveHelper(log, window);
-	expiringStorage = ExpiringStorage(log, JSON);
 
-	adProviderAdDriver2 = AdProviderAdDriver2(wikiaDart, scriptWriter, WikiaTracker, log, window, Geo, slotTweaker, expiringStorage);
+	adProviderAdDriver2 = AdProviderAdDriver2(wikiaDart, scriptWriter, WikiaTracker, log, window, Geo, slotTweaker, Cache);
 	adProviderEvolve = AdProviderEvolve(scriptWriter, WikiaTracker, log, window, document, Krux, evolveHelper, slotTweaker);
 	adProviderEvolveRS = AdProviderEvolveRS(scriptWriter, WikiaTracker, log, window, document, evolveHelper);
 	adProviderGamePro = AdProviderGamePro(scriptWriter, WikiaTracker, log, window, document);
@@ -98,4 +97,4 @@
 		}
 	};
 
-}(Wikia.log, WikiaTracker, window, ghostwriter, document, Geo, Wikia.LazyQueue, Wikia.Cookies, Krux));
+}(Wikia.log, WikiaTracker, window, ghostwriter, document, Geo, Wikia.LazyQueue, Wikia.Cookies, Wikia.Cache, Krux));
